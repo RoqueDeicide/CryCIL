@@ -91,7 +91,7 @@ SMonoActorInfo CScriptbind_ActorSystem::GetActorInfoById(EntityId id)
 	return SMonoActorInfo();
 }
 
-void CScriptbind_ActorSystem::RegisterActorClass(mono::string name, bool isNative)
+void CScriptbind_ActorSystem::RegisterActorClass(mono::string name, bool isNative,  bool isAI)
 {
 	const char *className = ToCryString(name);
 
@@ -103,7 +103,7 @@ void CScriptbind_ActorSystem::RegisterActorClass(mono::string name, bool isNativ
 			return;
 		}
 
-		g_pScriptSystem->GetIGameFramework()->RegisterFactory(className, (CMonoActor *)0, false, (CMonoActor *)0);
+		g_pScriptSystem->GetIGameFramework()->RegisterFactory(className, (CMonoActor *)0, isAI, (CMonoActor *)0);
 	}
 
 	m_monoActorClasses.insert(TActorClasses::value_type(className, isNative ? EMonoActorType_Native : EMonoActorType_Managed));

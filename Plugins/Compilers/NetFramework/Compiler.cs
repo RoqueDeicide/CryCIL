@@ -47,7 +47,7 @@ namespace CryEngine.Compilers.NET
             IScriptRegistrationParams registrationParams = null;
 
             if ((scriptType & ScriptType.Actor) == ScriptType.Actor)
-                registrationParams = TryGetActorParams(type);
+                registrationParams = TryGetActorParams(type, scriptType);
             else if ((scriptType & ScriptType.GameRules) == ScriptType.GameRules)
                 registrationParams = TryGetGamemodeParams(type);
             else if ((scriptType & ScriptType.Entity) == ScriptType.Entity)
@@ -227,9 +227,13 @@ namespace CryEngine.Compilers.NET
         }
 
         #region Actor
-        ActorRegistrationParams TryGetActorParams(Type type)
+        ActorRegistrationParams TryGetActorParams(Type type, ScriptType scriptType)
 		{
-			return new ActorRegistrationParams();
+            var registrationParams = new ActorRegistrationParams();
+
+            registrationParams.isAI = (scriptType & ScriptType.AIActor) == ScriptType.AIActor;
+
+			return registrationParams;
 		}
         #endregion
 

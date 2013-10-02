@@ -76,7 +76,7 @@ protected:
 	static SMonoActorInfo GetActorInfoByChannelId(uint16 channelId);
 	static SMonoActorInfo GetActorInfoById(EntityId id);
 
-	static void RegisterActorClass(mono::string name, bool isNative);
+	static void RegisterActorClass(mono::string name, bool isNative,  bool isAI);
 	static SMonoActorInfo CreateActor(int channelId, mono::string name, mono::string className, Vec3 pos, Quat rot, Vec3 scale);
 	static void RemoveActor(EntityId id);
 

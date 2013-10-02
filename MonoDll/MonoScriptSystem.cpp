@@ -141,7 +141,7 @@ CScriptSystem::CScriptSystem(IGameFramework *pGameFramework)
 
 	RegisterSecondaryBindings();
 
-	pGameFramework->RegisterListener(this, "CryMono", FRAMEWORKLISTENERPRIORITY_GAME);
+	pGameFramework->RegisterListener(this, "CryMono", eFLPriority_Game);
 
 	gEnv->pSystem->GetISystemEventDispatcher()->RegisterListener(&g_systemEventListener_CryMono);
 

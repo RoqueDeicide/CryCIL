@@ -41,12 +41,15 @@ public:
 	virtual bool	IsFallen() const override { return false; }
 	virtual bool	IsDead() const override { return false; }
 	virtual int		IsGod() override { return false; }
-	virtual void	Fall(Vec3 hitPos = Vec3(0,0,0)) override {}
+	virtual void	Fall(Vec3 hitPos = Vec3(0,0,0), float time = 0.0f) override {}
 	virtual bool	AllowLandingBob() override { return false; }
 
 	virtual void	PlayAction(const char *action,const char *extension, bool looping=false) override {}
 	virtual IAnimationGraphState *GetAnimationGraphState() override { return nullptr; }
-	virtual void	ResetAnimationState() override {}
+	virtual void	ResetAnimGraph() override {}
+	virtual void	NotifyAnimGraphTransition(const char *anim) override {}
+	virtual void	NotifyAnimGraphInput(int id, const char *value) override {}
+	virtual void	NotifyAnimGraphInput(int id, int value) override {}
 
 	virtual void CreateScriptEvent(const char *event,float value,const char *str = nullptr) override {}
 	virtual bool BecomeAggressiveToAgent(EntityId entityID) override { return false; }
@@ -68,12 +71,12 @@ public:
 	virtual bool IsFriendlyEntity(EntityId entityId, bool bUsingAIIgnorePlayer = true) const { return false; }
 
 	//virtual Vec3 GetViewAngleOffset();
-	virtual Vec3 GetLocalEyePos() const override { return Vec3(ZERO); }
+	virtual Vec3 GetLocalEyePos(int slot = 0) const override { return Vec3(ZERO); }
 
 	virtual void	CameraShake(float angle,float shift,float duration,float frequency,Vec3 pos,int ID,const char* source="") override {}
 
 	virtual IItem *GetHolsteredItem() const override { return nullptr; }
-	virtual void HolsterItem(bool holster, bool playSelect = true, float selectSpeedBias = 1.0f, bool hideLeftHandObject = true) override {}
+	virtual void HolsterItem(bool holster, bool playSelect = true) override {}
 	//virtual IItem *GetCurrentItem() const;
 	virtual IItem *GetCurrentItem(bool includeVehicle=false) const override { return nullptr; }
 	virtual bool DropItem(EntityId itemId, float impulseScale=1.0f, bool selectNext=true, bool byDeath=false) override { return false; }
@@ -88,6 +91,10 @@ public:
 	virtual IEntity* GetLinkedEntity() const override { return nullptr; }
 
 	virtual uint8 GetSpectatorMode() const override { return 0; }
+
+	virtual void SetSleepTimer(float timer) override {}
+
+	virtual IMaterial *GetReplacementMaterial() override { return nullptr; }
 
 	virtual bool	IsThirdPerson() const override { return true; }
 	virtual void ToggleThirdPerson() override {}
@@ -130,8 +137,6 @@ public:
 	virtual void OnAIProxyEnabled(bool enabled) override {}
 	virtual void OnReturnedToPool() override {}
 	virtual void OnPreparedFromPool() override {}
-
-	virtual bool ShouldMuteWeaponSoundStimulus() const override { return false; }
 	// ~IActor
 
 	// IGameObjectExtension

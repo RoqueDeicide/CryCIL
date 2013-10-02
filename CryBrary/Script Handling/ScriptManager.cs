@@ -273,7 +273,7 @@ namespace CryEngine.Initialization
                             {
                                 var registrationParams = (ActorRegistrationParams)script.RegistrationParams;
 
-                                NativeActorMethods.RegisterActorClass(script.ScriptName, script.Type.Implements(typeof(NativeActor)));
+                                NativeActorMethods.RegisterActorClass(script.ScriptName, script.Type.Implements(typeof(NativeActor)), registrationParams.isAI);
                             }
                             else if (script.RegistrationParams is EntityRegistrationParams)
                             {

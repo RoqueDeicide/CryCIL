@@ -45,25 +45,29 @@ enum EMonoScriptFlags
 	/// </summary>
 	eScriptFlag_CryScriptInstance = BIT(1),
 	/// <summary>
-	/// Scripts directly inheriting from BaseGameRules will utilize this script type.
+	/// Scripts inheriting from GameRules will utilize this script type.
 	/// </summary>
 	eScriptFlag_GameRules = BIT(2),
 	/// <summary>
-	/// Scripts directly inheriting from FlowNode will utilize this script type.
+	/// Scripts inheriting from FlowNode will utilize this script type.
 	/// </summary>
 	eScriptFlag_FlowNode = BIT(3),
 	/// <summary>
-	/// Scripts directly inheriting from Entity will utilize this script type.
+	/// Scripts inheriting from Entity will utilize this script type.
 	/// </summary>
 	eScriptFlag_Entity = BIT(4),
 	/// <summary>
-	/// Scripts directly inheriting from Actor will utilize this script type.
+	/// Scripts inheriting from Actor will utilize this script type.
 	/// </summary>
 	eScriptFlag_Actor = BIT(5),
 	/// <summary>
-	/// Scripts directly inheriting from EntityFlowNode will utilize this script type.
+	/// Scripts inheriting from AIActor will utilize this script type.
 	/// </summary>
-	eScriptFlag_EntityFlowNode = BIT(6),
+	eScriptFlag_AIActor = BIT(6),
+	/// <summary>
+	/// Scripts inheriting from EntityFlowNode will utilize this script type.
+	/// </summary>
+	eScriptFlag_EntityFlowNode = BIT(7),
 };
 
 /// <summary>

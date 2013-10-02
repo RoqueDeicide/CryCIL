@@ -127,6 +127,7 @@
   <ItemGroup>
     <Compile Include="Actor\Actor.cs" />
     <Compile Include="Actor\ActorBase.cs" />
+    <Compile Include="Actor\AIActor.cs" />
     <Compile Include="Actor\Native\ActorInitializationParams.cs" />
     <Compile Include="Actor\ActorNetworking.cs" />
     <Compile Include="Actor\ActorStatics.cs" />

@@ -879,13 +879,13 @@ CCGFAttachment *CScriptbind_Entity::BindAttachmentToCGF(IAttachment *pAttachment
 	return pCGFAttachment;
 }
 
-CSKELAttachment *CScriptbind_Entity::BindAttachmentToCHR(IAttachment *pAttachment, mono::string chr, IMaterial *pMaterial)
+CCHRAttachment *CScriptbind_Entity::BindAttachmentToCHR(IAttachment *pAttachment, mono::string chr, IMaterial *pMaterial)
 {
 	pAttachment->ClearBinding();
 
-	CSKELAttachment *pCHRAttachment = new CSKELAttachment();
+	CCHRAttachment *pCHRAttachment = new CCHRAttachment();
 	pCHRAttachment->m_pCharInstance = gEnv->pCharacterManager->CreateInstance(ToCryString(chr));
-	pCHRAttachment->SetReplacementMaterial(pMaterial, 0);
+	pCHRAttachment->SetReplacementMaterial(pMaterial);
 
 	pAttachment->AddBinding(pCHRAttachment);
 
@@ -897,7 +897,7 @@ class CMonoEntityAttachment : public CEntityAttachment
 public:
 	CMonoEntityAttachment() {}
 
-	virtual void ProcessAttachment(IAttachment *pIAttachment) override
+	void UpdateAttachment(IAttachment *pIAttachment,const QuatT &m, float fZoomAdjustedDistanceFromCamera, uint32 OnRender) override
 	{
 		const QuatTS& quatT = pIAttachment->GetAttWorldAbsolute();
 
@@ -970,7 +970,7 @@ QuatT CScriptbind_Entity::GetAttachmentDefaultRelative(IAttachment *pAttachment)
 IMaterial *CScriptbind_Entity::GetAttachmentMaterial(IAttachment *pAttachment)
 {
 	if(IAttachmentObject *pObject = pAttachment->GetIAttachmentObject())
-		return pObject->GetBaseMaterial();
+		return pObject->GetMaterial();
 
 	return nullptr;
 }
@@ -1252,7 +1252,7 @@ mono::object CScriptbind_Entity::QueryAreas(Vec3 vPos, int maxResults, bool forc
 {
 	SAreaManagerResult *pResults = new SAreaManagerResult[maxResults];
 
-	gEnv->pEntitySystem->GetAreaManager()->QueryAreas(0, vPos, pResults, maxResults);
+	gEnv->pEntitySystem->GetAreaManager()->QueryAreas(vPos, pResults, maxResults);
 
 	IMonoArray *pArray = CreateDynamicMonoArray();
 	IMonoClass *pClass = g_pScriptSystem->GetCryBraryAssembly()->GetClass("AreaQueryResult");

@@ -46,11 +46,13 @@ CMonoActor::~CMonoActor()
 	GetGameObject()->ReleaseView(this);
 	GetGameObject()->ReleaseProfileManager(this);
 
-	if(IActorSystem *pActorSystem = g_pScriptSystem->GetIGameFramework()->GetIActorSystem())
-		pActorSystem->RemoveActor(GetEntityId());
-
 	if(g_pScriptSystem)
+	{
+		if(IActorSystem *pActorSystem = g_pScriptSystem->GetIGameFramework()->GetIActorSystem())
+			pActorSystem->RemoveActor(GetEntityId());
+
 		g_pScriptSystem->RemoveListener(this);
+	}
 }
 
 bool CMonoActor::Init(IGameObject *pGameObject)

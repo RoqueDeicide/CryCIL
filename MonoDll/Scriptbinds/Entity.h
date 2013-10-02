@@ -264,7 +264,7 @@ protected:
 	static IAttachment *GetAttachmentByName(IEntity *pEnt, mono::string name, int slot);
 
 	static CCGFAttachment *BindAttachmentToCGF(IAttachment *pAttachment, mono::string cgf, IMaterial *pMaterial);
-	static CSKELAttachment *BindAttachmentToCHR(IAttachment *pAttachment, mono::string chr, IMaterial *pMaterial);
+	static CCHRAttachment *BindAttachmentToCHR(IAttachment *pAttachment, mono::string chr, IMaterial *pMaterial);
 	static CMonoEntityAttachment *BindAttachmentToEntity(IAttachment *pAttachment, EntityId id);
 	static CLightAttachment *BindAttachmentToLight(IAttachment *pAttachment, CDLight &light);
 	static CEffectAttachment *BindAttachmentToParticleEffect(IAttachment *pAttachment, IParticleEffect *pParticleEffect, Vec3 offset, Vec3 dir, float scale);

@@ -37,7 +37,12 @@ namespace CryEngine.Initialization
                     scriptType |= ScriptType.Entity;
 
                     if (type.Implements<ActorBase>())
+                    {
                         scriptType |= ScriptType.Actor;
+
+                        if (type.Implements<AIActor>())
+                            scriptType |= ScriptType.AIActor;
+                    }
                     else if (type.Implements<GameRules>())
                         scriptType |= ScriptType.GameRules;
                 }
@@ -136,30 +141,34 @@ namespace CryEngine.Initialization
         /// <summary>
         /// All scripts have this flag applied.
         /// </summary>
-        Any = 1,
+        Any = 1 << 0,
         /// <summary>
         /// Scripts deriving from CryScriptInstance.
         /// </summary>
-        CryScriptInstance = 2,
+        CryScriptInstance = 1 << 1,
         /// <summary>
         /// Scripts deriving from GameRules.
         /// </summary>
-        GameRules = 4,
+        GameRules = 1 << 2,
         /// <summary>
         /// Scripts deriving from FlowNode.
         /// </summary>
-        FlowNode = 8,
+        FlowNode = 1 << 3,
         /// <summary>
         /// Scripts deriving from EntityBase.
         /// </summary>
-        Entity = 16,
+        Entity = 1 << 4,
         /// <summary>
         /// Scripts deriving from Actor.
         /// </summary>
-        Actor = 32,
+        Actor = 1 << 5,
+        /// <summary>
+        /// Scripts deriving from AIActor
+        /// </summary>
+        AIActor = 1 << 6,
         /// <summary>
         /// Scripts deriving from EntityFlowNode.
         /// </summary>
-        EntityFlowNode = 64,
+        EntityFlowNode = 1 << 7,
     }
 }
