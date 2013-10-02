@@ -524,6 +524,7 @@
     <ClInclude Include="Headers\IMonoConverter.h" />
     <ClInclude Include="Headers\IMonoDomain.h" />
     <ClInclude Include="Headers\IMonoException.h" />
+    <ClInclude Include="Headers\IMonoMethod.h" />
     <ClInclude Include="Headers\IMonoObject.h" />
     <ClInclude Include="Headers\MonoCommon.h" />
     <ClInclude Include="MonoArray.h" />
@@ -535,6 +536,7 @@
     <ClInclude Include="MonoFlowNode.h" />
     <ClInclude Include="MonoHelpers.h" />
     <ClInclude Include="MonoInput.h" />
+    <ClInclude Include="MonoMethod.h" />
     <ClInclude Include="NativeEntity.h" />
     <ClInclude Include="PathUtils.h" />
     <ClInclude Include="MonoScriptSystem.h" />
@@ -574,6 +576,7 @@
     <ClCompile Include="CPluginCryMono.cpp" />
     <ClCompile Include="CryScriptInstance.cpp" />
     <ClCompile Include="DynMonoArray.cpp" />
+    <ClCompile Include="EntityEventHandling.cpp" />
     <ClCompile Include="FlowManager.cpp" />
     <ClCompile Include="MonoConverter.cpp" />
     <ClCompile Include="MonoCVars.cpp" />
@@ -581,6 +584,7 @@
     <ClCompile Include="MonoEntity.cpp" />
     <ClCompile Include="MonoFlowNode.cpp" />
     <ClCompile Include="MonoInput.cpp" />
+    <ClCompile Include="MonoMethod.cpp" />
     <ClCompile Include="MonoObject.cpp" />
     <ClCompile Include="MonoScriptSystem.cpp" />
     <ClCompile Include="MonoArray.cpp" />

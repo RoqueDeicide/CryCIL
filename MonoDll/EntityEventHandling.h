@@ -37,109 +37,46 @@ struct SMonoAnimationEvent
 };
 
 /// <summary>
-/// Helper method for making sure that we handle events in the same way for both entities and actors.
+/// Helper class for making sure that we handle events in the same way for both entities and actors.
 /// </summary>
-inline void HandleEntityEvent(SEntityEvent &event, IEntity *pEntity, IMonoObject *pScript)
+class CEntityEventHandler
 {
-	switch(event.event)
+public:
+	enum EEntityType
 	{
-	case ENTITY_EVENT_RESET:
-		{
-			bool enterGamemode = event.nParam[0]==1;
+		Entity = 0,
+		Actor,
+	};
 
-			if(!enterGamemode && pEntity->GetFlags() & ENTITY_FLAG_NO_SAVE)
-			{
-				gEnv->pEntitySystem->RemoveEntity(pEntity->GetId());
-				return;
-			}
+	static void CacheMethods();
 
-			pScript->CallMethod("OnEditorReset", enterGamemode);
-		}
-		break;
-	case ENTITY_EVENT_COLLISION:
-		{
-			EventPhysCollision *pCollision = (EventPhysCollision *)event.nParam[0];
+	static void HandleEntityEvent(EEntityType type, SEntityEvent &event, IEntity *pEntity, IMonoObject *pScript);
 
-			SMonoColliderInfo source = SMonoColliderInfo(pCollision, 0);
-			SMonoColliderInfo target = SMonoColliderInfo(pCollision, 1);
+private:
+	static IMonoMethod *m_pOnEditorReset[2];
 
-			IMonoClass *pColliderInfoClass = g_pScriptSystem->GetCryBraryAssembly()->GetClass("ColliderInfo");
+	static IMonoMethod *m_pOnCollision[2];
 
-			IMonoArray *pArgs = CreateMonoArray(6);
+	static IMonoMethod *m_pOnStartGame[2];
+	static IMonoMethod *m_pOnStartLevel[2];
+	static IMonoMethod *m_pOnLevelLoaded[2];
 
-			pArgs->InsertMonoObject(pColliderInfoClass->BoxObject(&source));
-			pArgs->InsertMonoObject(pColliderInfoClass->BoxObject(&target));
+	static IMonoMethod *m_pOnEnterArea[2];
+	static IMonoMethod *m_pOnMoveInsideArea[2];
+	static IMonoMethod *m_pOnLeaveArea[2];
+	static IMonoMethod *m_pOnEnterNearArea[2];
+	static IMonoMethod *m_pOnMoveNearArea[2];
+	static IMonoMethod *m_pOnLeaveNearArea[2];
 
-			pArgs->Insert(pCollision->pt);
-			pArgs->Insert(pCollision->n);
+	static IMonoMethod *m_pOnMove[2];
 
-			pArgs->Insert(pCollision->penetration);
-			pArgs->Insert(pCollision->radius);
+	static IMonoMethod *m_pOnAttach[2];
+	static IMonoMethod *m_pOnDetach[2];
+	static IMonoMethod *m_pOnDetachThis[2];
 
-			pScript->GetClass()->InvokeArray(pScript->GetManagedObject(), "OnCollision", pArgs);
-			SAFE_RELEASE(pArgs);
-		}
-		break;
-	case ENTITY_EVENT_START_GAME:
-		pScript->CallMethod("OnStartGame");
-		break;
-	case ENTITY_EVENT_START_LEVEL:
-		pScript->CallMethod("OnStartLevel");
-		break;
-	case ENTITY_EVENT_LEVEL_LOADED:
-		pScript->CallMethod("OnLevelLoaded");
-		break;
-	case ENTITY_EVENT_ENTERAREA:
-		pScript->CallMethod("OnEnterArea", (EntityId)event.nParam[0], (int)event.nParam[1], (EntityId)event.nParam[2]);
-		break;
-	case ENTITY_EVENT_MOVEINSIDEAREA:
-		pScript->CallMethod("OnMoveInsideArea", (EntityId)event.nParam[0], (int)event.nParam[1], (EntityId)event.nParam[2]);
-		break;
-	case ENTITY_EVENT_LEAVEAREA:
-		pScript->CallMethod("OnLeaveArea", (EntityId)event.nParam[0], (int)event.nParam[1], (EntityId)event.nParam[2]);
-		break;
-	case ENTITY_EVENT_ENTERNEARAREA:
-		pScript->CallMethod("OnEnterNearArea", (EntityId)event.nParam[0], (int)event.nParam[1], (EntityId)event.nParam[2]);
-		break;
-	case ENTITY_EVENT_MOVENEARAREA:
-		pScript->CallMethod("OnMoveNearArea", (EntityId)event.nParam[0], (int)event.nParam[1], (EntityId)event.nParam[2], event.fParam[0]);
-		break;
-	case ENTITY_EVENT_LEAVENEARAREA:
-		pScript->CallMethod("OnLeaveNearArea", (EntityId)event.nParam[0], (int)event.nParam[1], (EntityId)event.nParam[2]);
-		break;
-	case ENTITY_EVENT_XFORM:
-		pScript->CallMethod("OnMove", (EEntityXFormFlags)event.nParam[0]);
-		break;
-	case ENTITY_EVENT_ATTACH:
-		pScript->CallMethod("OnAttach", (EntityId)event.nParam[0]);
-		break;
-	case ENTITY_EVENT_DETACH:
-		pScript->CallMethod("OnDetach", (EntityId)event.nParam[0]);
-		break;
-	case ENTITY_EVENT_DETACH_THIS:
-		pScript->CallMethod("OnDetachThis", (EntityId)event.nParam[0]);
-		break;
-	case ENTITY_EVENT_PREPHYSICSUPDATE:
-		pScript->CallMethod("OnPrePhysicsUpdate");
-		break;
-	case ENTITY_EVENT_ANIM_EVENT:
-		{
-			const AnimEventInstance* pAnimEvent = reinterpret_cast<const AnimEventInstance*>(event.nParam[0]);
-			ICharacterInstance* pCharacter = reinterpret_cast<ICharacterInstance*>(event.nParam[1]);
+	static IMonoMethod *m_pOnAnimEvent[2];
 
-			IMonoClass *pAnimationEventClass = g_pScriptSystem->GetCryBraryAssembly()->GetClass("AnimationEvent");
-
-			SMonoAnimationEvent animEvent(pAnimEvent);
-
-			IMonoArray *pArgs = CreateMonoArray(1);
-
-			pArgs->InsertMonoObject(pAnimationEventClass->BoxObject(&animEvent));
-
-			pScript->GetClass()->InvokeArray(pScript->GetManagedObject(), "OnAnimationEvent", pArgs);
-			SAFE_RELEASE(pArgs);
-		}
-		break;
-	}
-}
+	static IMonoMethod *m_pPrePhysicsUpdate[2];
+};
 
 #endif // __ENTITY_EVENT_HANDLING_H__

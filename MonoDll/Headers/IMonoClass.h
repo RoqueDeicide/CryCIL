@@ -15,6 +15,8 @@
 struct IMonoAssembly;
 struct IMonoArray;
 
+struct IMonoMethod;
+
 /// <summary>
 /// Reference to a Mono class, used to call static methods and etc.
 /// </summary>
@@ -53,26 +55,19 @@ public:
 	virtual mono::object BoxObject(void *object, IMonoDomain *pDomain = nullptr) = 0;
 
 	/// <summary>
-	/// TODO
+	/// Gets a method based on a set of parameters
+	/// Compares the types of the parameters to find the relevant function.
 	/// </summary>
-	virtual mono::object InvokeArray(mono::object object, const char *methodName, IMonoArray *params = nullptr, bool throwOnFail = true) = 0;
+	virtual IMonoMethod *GetMethod(const char *name, IMonoArray *pArgs = nullptr, bool throwOnFail = true) = 0;
 	/// <summary>
-	/// TODO
+	/// Gets methods matching the specified pattern
 	/// </summary>
-	virtual mono::object Invoke(mono::object object, const char *methodName, void **params = nullptr, int numParams = 0, bool throwOnFail = true) = 0;
-
+	virtual IMonoMethod *GetMethod(const char *name, int numParams, bool throwOnFail = true) = 0;
 	/// <summary>
-	/// Gets a managed function as a native function pointer. See example for use case.
-	/// Much faster than standard invoke!
+	/// Gets methods matching the specified pattern
 	/// </summary>
-	/// <example>
-	/// typedef int (*GetHashCode) (mono::object obj);
-	///
-	/// GetHashCode func = pObjectClass->GetMethodThunk("GetHashCode", 0);
-	/// int hashCode = func(myObject);
-	/// </example>
-	virtual void *GetMethodThunk(const char *methodName, int numParams) = 0;
-
+	virtual int GetMethods(const char *name, int numParams, IMonoMethod ***pMethodsOut, int maxMethods, bool throwOnFail = true) = 0;
+	
 	/// <summary>
 	/// Gets the value of a property in the specified instance.
 	/// </summary>

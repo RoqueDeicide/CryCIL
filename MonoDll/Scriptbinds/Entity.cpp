@@ -286,10 +286,13 @@ void CScriptbind_Entity::OnSpawn(IEntity *pEntity,SEntitySpawnParams &params)
 
 bool CScriptbind_Entity::OnRemove(IEntity *pIEntity)
 {
+	if(m_pEntityClass == nullptr)
+		return true;
+
 	IMonoArray *pArgs = CreateMonoArray(1);
 	pArgs->Insert(pIEntity->GetId());
 
-	IMonoObject *pResult = *m_pEntityClass->InvokeArray(NULL, "InternalRemove", pArgs);
+	IMonoObject *pResult = *m_pEntityClass->GetMethod("InternalRemove", 1)->InvokeArray(NULL, pArgs);
 	auto result = pResult->Unbox<bool>();
 
 	SAFE_RELEASE(pArgs);

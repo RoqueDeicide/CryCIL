@@ -169,6 +169,12 @@
     <ClInclude Include="Headers\ICryScriptInstance.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="Headers\IMonoMethod.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="MonoMethod.h">
+      <Filter>Wrappers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -288,6 +294,12 @@
     </ClCompile>
     <ClCompile Include="Scriptbinds\CryPak.cpp">
       <Filter>ScriptBinds\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="MonoMethod.cpp">
+      <Filter>Wrappers</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityEventHandling.cpp">
+      <Filter>EntitySystem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

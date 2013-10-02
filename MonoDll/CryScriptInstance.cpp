@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "CryScriptInstance.h"
 
+IMonoMethod *CCryScriptInstance::m_pGetScriptInstanceById = nullptr;
+
 CCryScriptInstance::CCryScriptInstance(EMonoScriptFlags flags)
 	: m_flags(flags)
 	, m_scriptId(0)
@@ -46,16 +48,17 @@ void CCryScriptInstance::OnReloadComplete()
 
 	IMonoObject *pScriptManager = g_pScriptSystem->GetScriptManager();
 
-	IMonoArray *pArgs = CreateMonoArray(2);
-	pArgs->Insert(m_scriptId);
-	pArgs->Insert(m_flags);
-
-	if(mono::object result = pScriptManager->GetClass()->InvokeArray(pScriptManager->GetManagedObject(), "GetScriptInstanceById", pArgs))
+	if(mono::object result = m_pGetScriptInstanceById->Call(pScriptManager->GetManagedObject(), m_scriptId, m_flags))
 	{
 		SetManagedObject((MonoObject *)result, true);
 	}
 	else
 		MonoWarning("Failed to locate script instance %i after reload!", m_scriptId);
+}
 
-	pArgs->Release();
+void CCryScriptInstance::CacheMethods()
+{
+	IMonoClass *pScriptManagerClass = g_pScriptSystem->GetScriptManager()->GetClass();
+
+	m_pGetScriptInstanceById = pScriptManagerClass->GetMethod("GetScriptInstanceById", 2);
 }

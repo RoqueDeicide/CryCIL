@@ -50,4 +50,12 @@ private:
 	bool OnActionTriggered(EntityId entityId, const ActionId& actionId, int activationMode, float value);
 
 	static TActionHandler<CScriptbind_Input>	s_actionHandler;
+
+public:
+	static void CacheMethods();
+
+private:
+	static IMonoMethod *m_pOnMouseEvent;
+	static IMonoMethod *m_pOnKeyEvent;
+	static IMonoMethod *m_pOnActionTriggered;
 };

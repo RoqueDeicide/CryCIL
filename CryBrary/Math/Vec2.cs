@@ -32,6 +32,8 @@ namespace CryEngine
     [StructLayout(LayoutKind.Sequential, Pack = 4)]
     public struct Vec2 : IEquatable<Vec2>, IFormattable
     {
+        public static readonly Vec2 Zero = new Vec2(0, 0);
+
         /// <summary>
         /// The X component of the vector.
         /// </summary>

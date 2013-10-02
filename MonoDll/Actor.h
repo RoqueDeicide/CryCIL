@@ -191,6 +191,20 @@ protected:
 
 	bool m_bMigrating;
 	bool m_bClient;
+
+public:
+	static void CacheMethods();
+
+private:
+	static IMonoMethod *m_pUpdateView;
+	static IMonoMethod *m_pPostUpdateView;
+
+	static IMonoMethod *m_pInternalNetSerialize;
+	static IMonoMethod *m_pInternalFullSerialize;
+
+	static IMonoMethod *m_pPostSerialize;
+
+	static IMonoMethod *m_pOnRemoteInvocation;
 };
 
 #endif //__ACTOR_H__

@@ -9,8 +9,26 @@ namespace CryEngine
     {
         public static void Interpolate(ref Vec3 actual, Vec3 goal, float speed, float limit = 0)
         {
-            Vec3 delta = goal - actual;
-        
+            var delta = goal - actual;
+
+            if (limit > 0.001f)
+            {
+                float length = delta.Length;
+
+                if (length > limit)
+                {
+                    delta /= length;
+                    delta *= limit;
+                }
+            }
+
+            actual += delta * Min(Time.DeltaTime * speed, 1.0f);
+        }
+
+        public static void Interpolate(ref Vec2 actual, Vec2 goal, float speed, float limit = 0)
+        {
+            var delta = goal - actual;
+
             if (limit > 0.001f)
             {
                 float length = delta.Length;

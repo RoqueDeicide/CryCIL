@@ -39,10 +39,9 @@ public:
 
 	virtual void AddRef() override { ++m_refs; }
 
-	virtual mono::object InvokeArray(mono::object pObject, const char *methodName, IMonoArray *params = nullptr, bool throwOnFail = true) override;
-	virtual mono::object Invoke(mono::object pObject, const char *methodName, void **params = nullptr, int numParams = 0, bool throwOnFail = true) override;
-
-	virtual void *GetMethodThunk(const char *methodName, int numParams) override;
+	virtual IMonoMethod *GetMethod(const char *name, IMonoArray *pArgs, bool throwOnFail = true) override;
+	virtual IMonoMethod *GetMethod(const char *name, int numParams, bool throwOnFail = true) override;
+	virtual int GetMethods(const char *name, int numParams, IMonoMethod ***pMethodsOut, int maxMethods, bool throwOnFail = true) override;
 
 	virtual mono::object GetPropertyValue(mono::object pObject, const char *propertyName, bool throwOnFail = true) override;
 	virtual void SetPropertyValue(mono::object pObject, const char *propertyName, mono::object newValue, bool throwOnFail = true) override;
@@ -69,9 +68,6 @@ public:
 	// ~IMonoObject
 
 private:
-	MonoMethod *GetMonoMethod(const char *name, IMonoArray *pArgs);
-	MonoMethod *GetMonoMethod(const char *name, int numParams);
-
 	MonoProperty *GetMonoProperty(const char *name, bool requireSetter = false, bool requireGetter = false);
 	MonoClassField *GetMonoField(const char *name);
 

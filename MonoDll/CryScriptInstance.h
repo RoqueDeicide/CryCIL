@@ -60,6 +60,12 @@ public:
 private:
 	int m_scriptId;
 	EMonoScriptFlags m_flags;
+
+public:
+	static void CacheMethods();
+
+private:
+	static IMonoMethod *m_pGetScriptInstanceById;
 };
 
 #endif //__CRYSCRIPTINSTANCE_H__

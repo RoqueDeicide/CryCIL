@@ -18,6 +18,13 @@
 
 #include <MonoCommon.h>
 
+IMonoMethod *CMonoEntityExtension::m_pInternalNetSerialize = nullptr;
+IMonoMethod *CMonoEntityExtension::m_pInternalFullSerialize = nullptr;
+
+IMonoMethod *CMonoEntityExtension::m_pPostSerialize = nullptr;
+
+IMonoMethod *CMonoEntityExtension::m_pOnRemoteInvocation = nullptr;
+
 CMonoEntityExtension::CMonoEntityExtension()
 	: m_pScript(nullptr)
 	, m_bInitialized(false)
@@ -96,7 +103,7 @@ void CMonoEntityExtension::ProcessEvent(SEntityEvent &event)
 	if(m_bDestroyed)
 		return;
 	
-	HandleEntityEvent(event, GetEntity(), m_pScript);
+	CEntityEventHandler::HandleEntityEvent(CEntityEventHandler::Entity, event, GetEntity(), m_pScript);
 
 	switch(event.event)
 	{
@@ -148,7 +155,7 @@ void CMonoEntityExtension::FullSerialize(TSerialize ser)
 	IMonoArray *pArgs = CreateMonoArray(1);
 	pArgs->InsertNativePointer(&ser);
 
-	m_pScript->GetClass()->InvokeArray(m_pScript->GetManagedObject(), "InternalFullSerialize", pArgs);
+	m_pInternalFullSerialize->InvokeArray(m_pScript->GetManagedObject(), pArgs);
 	pArgs->Release();
 
 	ser.EndGroup();
@@ -164,7 +171,7 @@ bool CMonoEntityExtension::NetSerialize(TSerialize ser, EEntityAspects aspect, u
 	params[2] = &profile;
 	params[3] = &flags;
 
-	m_pScript->GetClass()->Invoke(m_pScript->GetManagedObject(), "InternalNetSerialize", params, 4);
+	m_pInternalNetSerialize->Invoke(m_pScript->GetManagedObject(),params, 4);
 
 	ser.EndGroup();
 
@@ -173,7 +180,7 @@ bool CMonoEntityExtension::NetSerialize(TSerialize ser, EEntityAspects aspect, u
 
 void CMonoEntityExtension::PostSerialize()
 {
-	m_pScript->CallMethod("PostSerialize");
+	m_pPostSerialize->Invoke(m_pScript->GetManagedObject());
 }
 
 void CMonoEntityExtension::SetPropertyValue(IEntityPropertyHandler::SPropertyInfo propertyInfo, const char *value)
@@ -248,7 +255,7 @@ IMPLEMENT_RMI(CMonoEntityExtension, SvScriptRMI)
 	pNetworkArgs->InsertMonoObject(params.args);
 	pNetworkArgs->Insert(params.targetId);
 
-	pEntityClass->InvokeArray(nullptr, "OnRemoteInvocation", pNetworkArgs);
+	m_pOnRemoteInvocation->InvokeArray(nullptr, pNetworkArgs);
 	pNetworkArgs->Release();
 
 	return true;
@@ -263,8 +270,20 @@ IMPLEMENT_RMI(CMonoEntityExtension, ClScriptRMI)
 	pNetworkArgs->InsertMonoObject(params.args);
 	pNetworkArgs->Insert(params.targetId);
 
-	pEntityClass->InvokeArray(nullptr, "OnRemoteInvocation", pNetworkArgs);
+	m_pOnRemoteInvocation->InvokeArray(nullptr, pNetworkArgs);
 	pNetworkArgs->Release();
 
 	return true;
+}
+
+void CMonoEntityExtension::CacheMethods()
+{
+	IMonoClass *pEntityClass = g_pScriptSystem->GetCryBraryAssembly()->GetClass("Entity");
+
+	m_pInternalNetSerialize = pEntityClass->GetMethod("InternalNetSerialize", 4);
+	m_pInternalFullSerialize = pEntityClass->GetMethod("InternalFullSerialize",1);
+
+	m_pPostSerialize = pEntityClass->GetMethod("PostSerialize");
+
+	m_pOnRemoteInvocation = pEntityClass->GetMethod("OnRemoteInvocation", 3);
 }
