@@ -50,7 +50,7 @@ public:
 
 	static void CacheMethods();
 
-	static void HandleEntityEvent(EEntityType type, SEntityEvent &event, IEntity *pEntity, IMonoObject *pScript);
+	static void HandleEntityEvent(EEntityType type, SEntityEvent &event, IEntity *pEntity, mono::object managedObject);
 
 private:
 	static IMonoMethod *m_pOnEditorReset[2];

@@ -27,6 +27,7 @@ IMonoMethod *CMonoEntityExtension::m_pOnRemoteInvocation = nullptr;
 
 CMonoEntityExtension::CMonoEntityExtension()
 	: m_pScript(nullptr)
+	, m_pManagedObject(nullptr)
 	, m_bInitialized(false)
 	, m_pAnimatedCharacter(nullptr)
 	, m_bDestroyed(false)
@@ -55,6 +56,7 @@ bool CMonoEntityExtension::Init(IGameObject *pGameObject)
 	IEntityClass *pEntityClass = pEntity->GetClass();
 
 	m_pScript = g_pScriptSystem->InstantiateScript(pEntityClass->GetName(), eScriptFlag_Entity);
+	m_pManagedObject = m_pScript->GetManagedObject();
 
 	IMonoClass *pEntityInfoClass = g_pScriptSystem->GetCryBraryAssembly()->GetClass("EntityInitializationParams", "CryEngine.Native");
 
@@ -103,7 +105,7 @@ void CMonoEntityExtension::ProcessEvent(SEntityEvent &event)
 	if(m_bDestroyed)
 		return;
 	
-	CEntityEventHandler::HandleEntityEvent(CEntityEventHandler::Entity, event, GetEntity(), m_pScript);
+	CEntityEventHandler::HandleEntityEvent(CEntityEventHandler::Entity, event, GetEntity(), m_pManagedObject);
 
 	switch(event.event)
 	{
@@ -155,7 +157,7 @@ void CMonoEntityExtension::FullSerialize(TSerialize ser)
 	IMonoArray *pArgs = CreateMonoArray(1);
 	pArgs->InsertNativePointer(&ser);
 
-	m_pInternalFullSerialize->InvokeArray(m_pScript->GetManagedObject(), pArgs);
+	m_pInternalFullSerialize->InvokeArray(m_pManagedObject, pArgs);
 	pArgs->Release();
 
 	ser.EndGroup();
@@ -171,7 +173,7 @@ bool CMonoEntityExtension::NetSerialize(TSerialize ser, EEntityAspects aspect, u
 	params[2] = &profile;
 	params[3] = &flags;
 
-	m_pInternalNetSerialize->Invoke(m_pScript->GetManagedObject(),params, 4);
+	m_pInternalNetSerialize->Invoke(m_pManagedObject, params, 4);
 
 	ser.EndGroup();
 
@@ -180,7 +182,7 @@ bool CMonoEntityExtension::NetSerialize(TSerialize ser, EEntityAspects aspect, u
 
 void CMonoEntityExtension::PostSerialize()
 {
-	m_pPostSerialize->Invoke(m_pScript->GetManagedObject());
+	m_pPostSerialize->Invoke(m_pManagedObject);
 }
 
 void CMonoEntityExtension::SetPropertyValue(IEntityPropertyHandler::SPropertyInfo propertyInfo, const char *value)
