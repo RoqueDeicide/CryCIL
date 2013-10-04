@@ -13,10 +13,6 @@
 #include <IMonoArray.h>
 #include <IMonoClass.h>
 
-IMonoMethod *CMonoFlowNode::m_pInternalRemove = nullptr;
-
-IMonoMethod *CMonoFlowNode::m_pInternalSetTargetEntity = nullptr;
-
 CMonoFlowNode::CMonoFlowNode(SActivationInfo *pActInfo)
 	: m_pScript(nullptr)
 	, m_pActInfo(pActInfo)
@@ -34,7 +30,7 @@ CMonoFlowNode::~CMonoFlowNode()
 {
 	IMonoClass *pFlowNodeClass = g_pScriptSystem->GetCryBraryAssembly()->GetClass("FlowNode", "CryEngine.Flowgraph");
 
-	m_pInternalRemove->Call(nullptr, m_scriptId);
+	pFlowNodeClass->CallMethod("InternalRemove", m_scriptId);
 }
 
 bool CMonoFlowNode::CreatedNode(TFlowNodeId id, const char *name, TFlowNodeTypeId typeId, IFlowNodePtr pNode) 
@@ -163,7 +159,7 @@ void CMonoFlowNode::ProcessEvent(EFlowEvent event, SActivationInfo *pActInfo)
 				pParams->InsertNativePointer(pActInfo->pEntity);
 				pParams->Insert(pActInfo->pEntity->GetId());
 
-				m_pInternalSetTargetEntity->InvokeArray(m_pScript->GetManagedObject(), pParams);
+				m_pScript->GetClass()->GetMethod("InternalSetTargetEntity", 2)->InvokeArray(m_pScript->GetManagedObject(), pParams);
 				pParams->Release();
 			}
 		}
@@ -232,13 +228,4 @@ void CMonoFlowNode::GetConfiguration(SFlowNodeConfig &config)
 		SAFE_RELEASE(pOutputPorts);
 		SAFE_RELEASE(pResult);
 	}
-}
-
-void CMonoFlowNode::CacheMethods()
-{
-	IMonoClass *pFlowNodeClass = g_pScriptSystem->GetCryBraryAssembly()->GetClass("FlowNode", "CryEngine.Flowgraph");
-
-	m_pInternalRemove = pFlowNodeClass->GetMethod("InternalRemove", 1);
-
-	m_pInternalSetTargetEntity = pFlowNodeClass->GetMethod("InternalSetTargetEntity", 2);
 }

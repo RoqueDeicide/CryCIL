@@ -98,14 +98,6 @@ private:
 	ENodeCloneType m_cloneType;
 
 	uint32 m_flags;
-
-public:
-	static void CacheMethods();
-
-private:
-	static IMonoMethod *m_pInternalRemove;
-
-	static IMonoMethod *m_pInternalSetTargetEntity;
 };
 
 struct SMonoInputPortConfig

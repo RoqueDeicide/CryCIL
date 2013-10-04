@@ -118,17 +118,6 @@ protected:
 
 	bool m_bInitialized;
 	bool m_bDestroyed;
-
-public:
-	static void CacheMethods();
-
-	static IMonoMethod *m_pOnRemoteInvocation;
-
-private:
-	static IMonoMethod *m_pInternalNetSerialize;
-	static IMonoMethod *m_pInternalFullSerialize;
-
-	static IMonoMethod *m_pPostSerialize;
 };
 
 #endif

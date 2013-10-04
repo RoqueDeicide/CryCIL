@@ -373,23 +373,12 @@ void CScriptSystem::OnPostUpdate(float fDeltaTime)
 	pArgs->Insert(gEnv->pTimer->GetTimeScale());
 
 	// Updates all scripts and sets Time.FrameTime.
-	m_pScriptManagerOnUpdate->Call(m_pScriptManager->GetManagedObject(), fDeltaTime, gEnv->pTimer->GetFrameStartTime().GetMilliSeconds(), gEnv->pTimer->GetAsyncTime().GetMilliSeconds(), gEnv->pTimer->GetFrameRate(), gEnv->pTimer->GetTimeScale());
+	m_pScriptManager->CallMethod("OnUpdate", fDeltaTime, gEnv->pTimer->GetFrameStartTime().GetMilliSeconds(), gEnv->pTimer->GetAsyncTime().GetMilliSeconds(), gEnv->pTimer->GetFrameRate(), gEnv->pTimer->GetTimeScale());
 }
 
 void CScriptSystem::CacheManagedResources()
 {
-	IMonoClass *pScriptManagerClass = m_pScriptManager->GetClass();
-
-	m_pScriptManagerOnUpdate = pScriptManagerClass->GetMethod("OnUpdate", 5);
-	m_pScriptManagerCreateScriptInstance = pScriptManagerClass->GetMethod("CreateScriptInstance", 5);
-	m_pScriptManagerRemoveInstance = pScriptManagerClass->GetMethod("RemoveInstance", 2);
-
-	CScriptbind_Input::CacheMethods();
-	CCryScriptInstance::CacheMethods();
-	CMonoFlowNode::CacheMethods();
-	CEntityEventHandler::CacheMethods();
-	CMonoActor::CacheMethods();
-	CMonoEntityExtension::CacheMethods();
+	CEntityEventHandler::CacheManagedResources();
 }
 
 void CScriptSystem::OnFileChange(const char *fileName)
@@ -442,7 +431,7 @@ ICryScriptInstance *CScriptSystem::InstantiateScript(const char *scriptName, EMo
 	pScriptCreationArgs->InsertMonoObject((pConstructorParameters != nullptr ? pConstructorParameters->GetManagedObject() : nullptr));
 	pScriptCreationArgs->Insert(throwOnFail);
 
-	mono::object result = m_pScriptManagerCreateScriptInstance->InvokeArray(m_pScriptManager->GetManagedObject(), pScriptCreationArgs);
+	auto result = m_pScriptManager->GetClass()->GetMethod("CreateScriptInstance", 5)->InvokeArray(m_pScriptManager->GetManagedObject(), pScriptCreationArgs);
 	SAFE_RELEASE(pScriptCreationArgs);
 
 	if(!result)
@@ -474,7 +463,7 @@ void CScriptSystem::RemoveScriptInstance(int id, EMonoScriptFlags scriptType)
 	if(id==-1)
 		return;
 
-	m_pScriptManagerRemoveInstance->Call(m_pScriptManager->GetManagedObject(), id, scriptType);
+	m_pScriptManager->CallMethod("RemoveInstance", id, scriptType);
 }
 
 mono::object CScriptSystem::InitializeScriptInstance(ICryScriptInstance *pScriptInstance, IMonoArray *pParams)

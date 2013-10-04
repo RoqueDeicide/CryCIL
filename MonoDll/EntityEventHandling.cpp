@@ -5,72 +5,7 @@
 
 #include "MonoEntity.h"
 
-IMonoMethod *CEntityEventHandler::m_pOnEditorReset[2];
-
-IMonoMethod *CEntityEventHandler::m_pOnCollision[2];
-
-IMonoMethod *CEntityEventHandler::m_pOnStartGame[2];
-IMonoMethod *CEntityEventHandler::m_pOnStartLevel[2];
-IMonoMethod *CEntityEventHandler::m_pOnLevelLoaded[2];
-
-IMonoMethod *CEntityEventHandler::m_pOnEnterArea[2];
-IMonoMethod *CEntityEventHandler::m_pOnMoveInsideArea[2];
-IMonoMethod *CEntityEventHandler::m_pOnLeaveArea[2];
-IMonoMethod *CEntityEventHandler::m_pOnEnterNearArea[2];
-IMonoMethod *CEntityEventHandler::m_pOnMoveNearArea[2];
-IMonoMethod *CEntityEventHandler::m_pOnLeaveNearArea[2];
-
-IMonoMethod *CEntityEventHandler::m_pOnMove[2];
-
-IMonoMethod *CEntityEventHandler::m_pOnAttach[2];
-IMonoMethod *CEntityEventHandler::m_pOnDetach[2];
-IMonoMethod *CEntityEventHandler::m_pOnDetachThis[2];
-
-IMonoMethod *CEntityEventHandler::m_pOnAnimEvent[2];
-
-IMonoMethod *CEntityEventHandler::m_pPrePhysicsUpdate[2];
-
-void CEntityEventHandler::CacheMethods()
-{
-	IMonoClass *pEntityClass = g_pScriptSystem->GetCryBraryAssembly()->GetClass("Entity");
-	CRY_ASSERT(pEntityClass);
-
-	IMonoClass *pActorClass = g_pScriptSystem->GetCryBraryAssembly()->GetClass("Actor");
-	CRY_ASSERT(pActorClass);
-
-#define GET_METHOD(function, name, paramCount) \
-	{ \
-		function[Entity] = pEntityClass->GetMethod(name, paramCount); \
-		function[Actor] = pActorClass->GetMethod(name, paramCount); \
-	}
-
-	GET_METHOD(m_pOnEditorReset, "OnEditorReset", 1);
-
-	GET_METHOD(m_pOnCollision, "OnCollision", 6);
-
-	GET_METHOD(m_pOnStartGame, "OnStartGame", 0);
-	GET_METHOD(m_pOnStartLevel, "OnStartLevel", 0);
-	GET_METHOD(m_pOnLevelLoaded, "OnLevelLoaded", 0);
-
-	GET_METHOD(m_pOnEnterArea, "OnEnterArea", 3);
-	GET_METHOD(m_pOnMoveInsideArea, "OnMoveInsideArea", 3);
-	GET_METHOD(m_pOnLeaveArea, "OnLeaveArea", 3);
-	GET_METHOD(m_pOnEnterNearArea, "OnEnterNearArea", 3);
-	GET_METHOD(m_pOnMoveNearArea, "OnMoveNearArea", 4);
-	GET_METHOD(m_pOnLeaveNearArea, "OnLeaveNearArea", 3);
-
-	GET_METHOD(m_pOnMove, "OnMove", 1);
-
-	GET_METHOD(m_pOnAttach, "OnAttach", 1);
-	GET_METHOD(m_pOnDetach, "OnDetach", 1);
-	GET_METHOD(m_pOnDetachThis, "OnDetachThis", 1);
-
-	GET_METHOD(m_pOnAnimEvent, "OnAnimationEvent", 1);
-
-	GET_METHOD(m_pPrePhysicsUpdate, "OnPrePhysicsUpdate", 0);
-
-#undef GET_METHOD
-}
+IMonoClass *CEntityEventHandler::m_pClass[2];
 
 void CEntityEventHandler::HandleEntityEvent(EEntityType type, SEntityEvent &event, IEntity *pEntity, mono::object managedObject)
 {
@@ -88,7 +23,7 @@ void CEntityEventHandler::HandleEntityEvent(EEntityType type, SEntityEvent &even
 
 			IMonoArray *pParams = CreateMonoArray(1);
 			pParams->Insert(enterGamemode);
-			m_pOnEditorReset[type]->InvokeArray(managedObject, pParams);
+			m_pClass[type]->GetMethod("OnEditorReset", 1)->InvokeArray(managedObject, pParams);
 
 			SAFE_RELEASE(pParams);
 		}
@@ -113,48 +48,48 @@ void CEntityEventHandler::HandleEntityEvent(EEntityType type, SEntityEvent &even
 			pArgs->Insert(pCollision->penetration);
 			pArgs->Insert(pCollision->radius);
 
-			m_pOnCollision[type]->InvokeArray(managedObject, pArgs);
+			m_pClass[type]->GetMethod("OnCollision", 6)->InvokeArray(managedObject, pArgs);
 			SAFE_RELEASE(pArgs);
 		}
 		break;
 	case ENTITY_EVENT_START_GAME:
-		m_pOnStartGame[type]->Invoke(managedObject);
+		m_pClass[type]->GetMethod("OnStartGame")->Invoke(managedObject);
 		break;
 	case ENTITY_EVENT_START_LEVEL:
-		m_pOnStartLevel[type]->Invoke(managedObject);
+		m_pClass[type]->GetMethod("OnStartLevel")->Invoke(managedObject);
 		break;
 	case ENTITY_EVENT_LEVEL_LOADED:
-		m_pOnLevelLoaded[type]->Invoke(managedObject);
+		m_pClass[type]->GetMethod("OnLevelLoaded")->Invoke(managedObject);
 		break;
 	case ENTITY_EVENT_ENTERAREA:
-		m_pOnEnterArea[type]->Call(managedObject, (EntityId)event.nParam[0], (int)event.nParam[1], (EntityId)event.nParam[2]);
+		m_pClass[type]->GetMethod("OnEnterArea", 3)->Call(managedObject, (EntityId)event.nParam[0], (int)event.nParam[1], (EntityId)event.nParam[2]);
 		break;
 	case ENTITY_EVENT_MOVEINSIDEAREA:
-		m_pOnMoveInsideArea[type]->Call(managedObject, (EntityId)event.nParam[0], (int)event.nParam[1], (EntityId)event.nParam[2]);
+		m_pClass[type]->GetMethod("OnMoveInsideArea", 3)->Call(managedObject, (EntityId)event.nParam[0], (int)event.nParam[1], (EntityId)event.nParam[2]);
 		break;
 	case ENTITY_EVENT_LEAVEAREA:
-		m_pOnLeaveArea[type]->Call(managedObject, (EntityId)event.nParam[0], (int)event.nParam[1], (EntityId)event.nParam[2]);
+		m_pClass[type]->GetMethod("OnLeaveArea", 3)->Call(managedObject, (EntityId)event.nParam[0], (int)event.nParam[1], (EntityId)event.nParam[2]);
 		break;
 	case ENTITY_EVENT_ENTERNEARAREA:
-		m_pOnEnterNearArea[type]->Call(managedObject, (EntityId)event.nParam[0], (int)event.nParam[1], (EntityId)event.nParam[2]);
+		m_pClass[type]->GetMethod("OnEnterNearArea", 3)->Call(managedObject, (EntityId)event.nParam[0], (int)event.nParam[1], (EntityId)event.nParam[2]);
 		break;
 	case ENTITY_EVENT_MOVENEARAREA:
-		m_pOnMoveNearArea[type]->Call(managedObject, (EntityId)event.nParam[0], (int)event.nParam[1], (EntityId)event.nParam[2], event.fParam[0]);
+		m_pClass[type]->GetMethod("OnMoveNearArea", 4)->Call(managedObject, (EntityId)event.nParam[0], (int)event.nParam[1], (EntityId)event.nParam[2], event.fParam[0]);
 		break;
 	case ENTITY_EVENT_LEAVENEARAREA:
-		m_pOnLeaveNearArea[type]->Call(managedObject, (EntityId)event.nParam[0], (int)event.nParam[1], (EntityId)event.nParam[2]);
+		m_pClass[type]->GetMethod("OnLeaveNearArea", 3)->Call(managedObject, (EntityId)event.nParam[0], (int)event.nParam[1], (EntityId)event.nParam[2]);
 		break;
 	case ENTITY_EVENT_XFORM:
-		m_pOnMove[type]->Call(managedObject, (EEntityXFormFlags)event.nParam[0]);
+		m_pClass[type]->GetMethod("OnMove", 1)->Call(managedObject, (EEntityXFormFlags)event.nParam[0]);
 		break;
 	case ENTITY_EVENT_ATTACH:
-		m_pOnAttach[type]->Call(managedObject, (EntityId)event.nParam[0]);
+		m_pClass[type]->GetMethod("OnAttach", 1)->Call(managedObject, (EntityId)event.nParam[0]);
 		break;
 	case ENTITY_EVENT_DETACH:
-		m_pOnDetach[type]->Call(managedObject, (EntityId)event.nParam[0]);
+		m_pClass[type]->GetMethod("OnDetach", 1)->Call(managedObject, (EntityId)event.nParam[0]);
 		break;
 	case ENTITY_EVENT_DETACH_THIS:
-		m_pOnDetachThis[type]->Call(managedObject, (EntityId)event.nParam[0]);
+		m_pClass[type]->GetMethod("OnDetachThis", 1)->Call(managedObject, (EntityId)event.nParam[0]);
 		break;
 	case ENTITY_EVENT_ANIM_EVENT:
 		{
@@ -169,14 +104,20 @@ void CEntityEventHandler::HandleEntityEvent(EEntityType type, SEntityEvent &even
 
 			pArgs->InsertMonoObject(pAnimationEventClass->BoxObject(&animEvent));
 
-			m_pOnAnimEvent[type]->InvokeArray(managedObject, pArgs);
+			m_pClass[type]->GetMethod("OnAnimEvent", 1)->InvokeArray(managedObject, pArgs);
 			SAFE_RELEASE(pArgs);
 		}
 		break;
 	case ENTITY_EVENT_PREPHYSICSUPDATE:
 		{
-			m_pPrePhysicsUpdate[type]->Invoke(managedObject);
+			m_pClass[type]->GetMethod("OnPrePhysicsUpdate")->Invoke(managedObject);
 		}
 		break;
 	}
+}
+
+void CEntityEventHandler::CacheManagedResources()
+{
+	m_pClass[Entity] = g_pScriptSystem->GetCryBraryAssembly()->GetClass("Entity");
+	m_pClass[Actor] = g_pScriptSystem->GetCryBraryAssembly()->GetClass("Actor");
 }

@@ -48,35 +48,14 @@ public:
 		Actor,
 	};
 
-	static void CacheMethods();
-
 	static void HandleEntityEvent(EEntityType type, SEntityEvent &event, IEntity *pEntity, mono::object managedObject);
 
-private:
-	static IMonoMethod *m_pOnEditorReset[2];
+	static void CacheManagedResources();
 
-	static IMonoMethod *m_pOnCollision[2];
-
-	static IMonoMethod *m_pOnStartGame[2];
-	static IMonoMethod *m_pOnStartLevel[2];
-	static IMonoMethod *m_pOnLevelLoaded[2];
-
-	static IMonoMethod *m_pOnEnterArea[2];
-	static IMonoMethod *m_pOnMoveInsideArea[2];
-	static IMonoMethod *m_pOnLeaveArea[2];
-	static IMonoMethod *m_pOnEnterNearArea[2];
-	static IMonoMethod *m_pOnMoveNearArea[2];
-	static IMonoMethod *m_pOnLeaveNearArea[2];
-
-	static IMonoMethod *m_pOnMove[2];
-
-	static IMonoMethod *m_pOnAttach[2];
-	static IMonoMethod *m_pOnDetach[2];
-	static IMonoMethod *m_pOnDetachThis[2];
-
-	static IMonoMethod *m_pOnAnimEvent[2];
-
-	static IMonoMethod *m_pPrePhysicsUpdate[2];
+protected:
+	// Unfortunately we have to duplicate entity events across the Entity and Actor classes.
+	// Easy way to get the appropriate class.
+	static IMonoClass *m_pClass[2];
 };
 
 #endif // __ENTITY_EVENT_HANDLING_H__

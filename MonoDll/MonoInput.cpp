@@ -9,10 +9,6 @@
 #include <IMonoClass.h>
 #include <IMonoArray.h> 
 
-IMonoMethod *CScriptbind_Input::m_pOnMouseEvent = nullptr;
-IMonoMethod *CScriptbind_Input::m_pOnKeyEvent = nullptr;
-IMonoMethod *CScriptbind_Input::m_pOnActionTriggered = nullptr;
-
 TActionHandler<CScriptbind_Input>	CScriptbind_Input::s_actionHandler;
 
 CScriptbind_Input::CScriptbind_Input()
@@ -55,7 +51,8 @@ void CScriptbind_Input::OnHardwareMouseEvent(int iX,int iY,EHARDWAREMOUSEEVENT e
 	pParams->Insert(eHardwareMouseEvent);
 	pParams->Insert(wheelDelta);
 
-	m_pOnMouseEvent->InvokeArray(NULL, pParams);
+	IMonoClass *pInputClass = g_pScriptSystem->GetCryBraryAssembly()->GetClass("Input", "CryEngine");
+	pInputClass->GetMethod("OnMouseEvent", 4)->InvokeArray(NULL, pParams);
 	SAFE_RELEASE(pParams);
 }
 
@@ -65,7 +62,8 @@ bool CScriptbind_Input::OnInputEvent(const SInputEvent &event)
 	pParams->Insert(event.keyName.c_str());
 	pParams->Insert(event.value);
 
-	m_pOnKeyEvent->InvokeArray(NULL, pParams);
+	IMonoClass *pInputClass = g_pScriptSystem->GetCryBraryAssembly()->GetClass("Input", "CryEngine");
+	pInputClass->GetMethod("OnKeyEvent", 2)->InvokeArray(NULL, pParams);
 	SAFE_RELEASE(pParams);
 
 	return false;
@@ -83,7 +81,8 @@ bool CScriptbind_Input::OnActionTriggered(EntityId entityId, const ActionId& act
 	pParams->Insert(activationMode);
 	pParams->Insert(value);
 
-	m_pOnActionTriggered->InvokeArray(NULL, pParams);
+	IMonoClass *pInputClass = g_pScriptSystem->GetCryBraryAssembly()->GetClass("Input", "CryEngine");
+	pInputClass->GetMethod("OnActionTriggered", 3)->InvokeArray(NULL, pParams);
 	SAFE_RELEASE(pParams);
 
 	return false;
@@ -94,13 +93,4 @@ void CScriptbind_Input::RegisterAction(mono::string actionName)
 {
 	if(!s_actionHandler.GetHandler(ActionId(ToCryString(actionName))))
 		s_actionHandler.AddHandler(ActionId(ToCryString(actionName)), &CScriptbind_Input::OnActionTriggered);
-}
-
-void CScriptbind_Input::CacheMethods()
-{
-	IMonoClass *pInputClass = g_pScriptSystem->GetCryBraryAssembly()->GetClass("Input", "CryEngine");
-
-	m_pOnMouseEvent = pInputClass->GetMethod("OnMouseEvent", 4);
-	m_pOnKeyEvent = pInputClass->GetMethod("OnKeyEvent", 2);
-	m_pOnActionTriggered = pInputClass->GetMethod("OnActionTriggered", 3);
 }

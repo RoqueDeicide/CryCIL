@@ -148,12 +148,6 @@ protected:
 	std::vector<IMonoScriptBind *> m_localScriptBinds;
 
 	std::vector<IMonoScriptEventListener *> m_listeners;
-
-	// Cached methods
-	IMonoMethod *m_pScriptManagerOnUpdate;
-
-	IMonoMethod *m_pScriptManagerCreateScriptInstance;
-	IMonoMethod *m_pScriptManagerRemoveInstance;
 };
 
 struct SGameRulesInitializationParams
