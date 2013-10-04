@@ -22,15 +22,33 @@ struct IMonoMethod
 	/// Much faster than standard invoke!
 	/// </summary>
 	/// <example>
-	/// typedef int (*GetHashCode) (mono::object obj);
+	/// typedef int (__stdcall *GetHashCode) (mono::object thisObj);
 	///
 	/// GetHashCode func = pMethod->GetMethodThunk();
 	/// int hashCode = func(myObject);
 	/// </example>
 	virtual void *GetMethodThunk() = 0;
 
+	/// <summary>
+	/// Invokes the managed  method with the specified managed array of parameters.
+	/// 'object' points to the managed object we want to invoke on, if null we assume this is a static method.
+	/// </summary>
 	virtual mono::object InvokeArray(mono::object object, IMonoArray *pParams = nullptr) = 0;
+	/// <summary>
+	/// Invokes the managed  method with the specified native array of parameters.
+	/// 'object' points to the managed object we want to invoke on, if null we assume this is a static method.
+	/// </summary>
 	virtual mono::object Invoke(mono::object object, void **pParams = nullptr, int numParams = 0) = 0;
+
+	/// <summary>
+	/// Gets the name of the method
+	/// </summary>
+	virtual const char *GetName() = 0;
+
+	/// <summary>
+	/// Gets the number of parameters in the method.
+	/// </summary>
+	virtual int GetParameterCount() = 0;
 
 	//////////////////////////////////////////////////////
 	// HELPERS

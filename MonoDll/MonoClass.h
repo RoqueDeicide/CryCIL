@@ -50,6 +50,8 @@ public:
 	
 	virtual bool ImplementsClass(const char *className, const char *nameSpace = nullptr) override;
 	virtual bool ImplementsInterface(const char *interfaceName, const char *nameSpace = nullptr, bool bSearchDerivedClasses = true) override;
+	
+	virtual IMonoClass *GetParent() override;
 	// ~IMonoClass
 
 	// IMonoObject

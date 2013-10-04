@@ -93,6 +93,11 @@ public:
 	/// Checks whether this class implements an interface by name.
 	/// </summary>
 	virtual bool ImplementsInterface(const char *interfaceName, const char *nameSpace = nullptr, bool bSearchDerivedClasses = true) = 0;
+
+	/// <summary>
+	/// Gets the parent class this class derives from.
+	/// </summary>
+	virtual IMonoClass *GetParent() = 0;
 };
 
 #endif //__I_MONO_CLASS_H__

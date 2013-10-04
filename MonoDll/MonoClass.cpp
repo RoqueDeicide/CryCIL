@@ -150,15 +150,8 @@ IMonoMethod *CScriptClass::GetMethod(const char *name, IMonoArray *pArgs, bool t
 
 	if(throwOnFail)
 	{
-		if(!g_pScriptSystem->IsInitialized())
-		{
-			CryLogAlways("Failed to locate method %s in class %s", name, GetName());
-		}
-		else if(IMonoAssembly *pCorlibAssembly = g_pScriptSystem->GetCorlibAssembly())
-		{
-			if(IMonoException *pException = g_pScriptSystem->GetCorlibAssembly()->GetException("System", "MissingMethodException", "Failed to locate method %s in class %s", name, GetName()))
-				pException->Throw();
-		}
+		if(IMonoException *pException = g_pScriptSystem->GetCorlibAssembly()->GetException("System", "MissingMethodException", "Failed to locate method %s in class %s", name, GetName()))
+			pException->Throw();
 	}
 
 	return nullptr;
@@ -169,7 +162,6 @@ IMonoMethod *CScriptClass::GetMethod(const char *name, int numParams, bool throw
 	MonoMethodSignature *pSignature = nullptr;
 
 	void *pIterator = 0;
-	int i = 0;
 
 	MonoClass *pClass = (MonoClass *)m_pObject;
 	MonoType *pClassType = mono_class_get_type(pClass);
@@ -430,4 +422,13 @@ bool CScriptClass::ImplementsInterface(const char *interfaceName, const char *na
 	}
 
 	return false;
+}
+
+IMonoClass *CScriptClass::GetParent()
+{
+	MonoClass *pMonoClassParent = mono_class_get_parent((MonoClass *)m_pObject);
+	if(pMonoClassParent == nullptr)
+		return nullptr;
+
+	return m_pDeclaringAssembly->TryGetClass(pMonoClassParent);
 }
