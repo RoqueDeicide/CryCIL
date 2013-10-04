@@ -137,8 +137,6 @@ CScriptSystem::CScriptSystem(IGameFramework *pGameFramework)
 		return;
 	}
 
-	CacheManagedResources();
-
 	RegisterSecondaryBindings();
 
 	pGameFramework->RegisterListener(this, "CryMono", eFLPriority_Game);
@@ -260,6 +258,8 @@ bool CScriptSystem::Reload()
 			m_pScriptManager = pScriptManager;
 			m_pCryBraryAssembly = pCryBraryAssembly;
 
+			CacheManagedResources();
+
 			if(!m_bFirstReload)
 				m_pScriptManager->CallMethod("Deserialize");
 
@@ -299,6 +299,7 @@ bool CScriptSystem::Reload()
 			m_bReloading = false;
 
 			m_bDetectedChanges = false;
+
 			return false;
 		}
 		break;
