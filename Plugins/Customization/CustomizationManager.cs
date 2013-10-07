@@ -18,6 +18,9 @@ namespace CryEngine.CharacterCustomization
         {
             var writeableCdfPath = CryPak.AdjustFileName(initParams.CharacterDefinitionLocation, PathResolutionRules.RealPath | PathResolutionRules.ForWriting);
 
+            var baseCdfPath = Path.Combine(CryPak.GameFolder, initParams.BaseCharacterDefinition);
+            BaseDefinition = XDocument.Load(baseCdfPath);
+
             if (File.Exists(writeableCdfPath))
                 CharacterDefinition = XDocument.Load(writeableCdfPath);
             else
@@ -30,7 +33,7 @@ namespace CryEngine.CharacterCustomization
                     directory = Directory.GetParent(directory.FullName);
                 }
 
-                File.Copy(Path.Combine(CryPak.GameFolder, initParams.BaseCharacterDefinition), writeableCdfPath);
+                File.Copy(baseCdfPath, writeableCdfPath);
 
                 CharacterDefinition = XDocument.Load(writeableCdfPath);
             }
@@ -78,6 +81,13 @@ namespace CryEngine.CharacterCustomization
         public IEnumerable<CharacterAttachmentSlot> Slots { get; set; }
 
         internal XDocument CharacterDefinition { get; set; }
+        internal XDocument BaseDefinition { get; set; }
+
+        internal IEnumerable<XElement> GetAttachmentElements(XDocument definitionDocument)
+        {
+            var attachmentList = definitionDocument.Element("CharacterDefinition").Element("AttachmentList");
+            return attachmentList.Elements("Attachment");
+        }
 
         public CustomizationInitializationParameters InitParameters { get; set; }
 

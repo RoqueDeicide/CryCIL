@@ -85,74 +85,6 @@ namespace CryEngine.CharacterCustomization
 
 		public CharacterAttachment EmptyAttachment { get; set; }
 
-		public bool Write(CharacterAttachment attachment, XElement attachmentElement = null, bool overwrite = true)
-		{
-			if (attachment == null)
-				throw new NullReferenceException("attachment");
-
-			if (attachmentElement == null)
-			{
-				if (MirroredSlots != null && attachment.MirroredChildren != null)
-				{
-					foreach (var mirroredAttachment in attachment.MirroredChildren)
-					{
-						Write(attachment, GetWriteableElement(mirroredAttachment.Slot.Name));
-						mirroredAttachment.Slot.Write(mirroredAttachment, null, false);
-					}
-
-					return true;
-				}
-
-				var currentAttachment = Current;
-				if (currentAttachment != null)
-				{
-					if (currentAttachment.SubAttachmentVariations != null)
-					{
-						foreach (var subAttachment in currentAttachment.SubAttachmentVariations)
-							subAttachment.Slot.Clear();
-					}
-				}
-
-				attachmentElement = GetWriteableElement();
-				if (attachmentElement == null)
-					throw new CustomizationConfigurationException(string.Format("Failed to locate attachments for slot {0}!", Name));
-			}
-
-			if (overwrite || attachment.Name != null)
-				attachmentElement.SetAttributeValue("Name", attachment.Name);
-
-			if (overwrite || attachment.Type != null)
-				attachmentElement.SetAttributeValue("Type", attachment.Type);
-			if (overwrite || attachment.BoneName != null)
-				attachmentElement.SetAttributeValue("BoneName", attachment.BoneName);
-
-			if (overwrite || attachment.Object != null)
-				attachmentElement.SetAttributeValue("Binding", attachment.Object);
-			if (overwrite || attachment.Material != null)
-			{
-				var material = attachment.Material;
-				string materialPath = null;
-
-				if (material != null)
-					materialPath = material.FilePath ?? material.BaseFilePath;
-
-				attachmentElement.SetAttributeValue("Material", materialPath);
-			}
-
-			if (overwrite || attachment.Flags != null)
-				attachmentElement.SetAttributeValue("Flags", attachment.Flags);
-
-			if (overwrite || attachment.Position != null)
-				attachmentElement.SetAttributeValue("Position", attachment.Position);
-			if (overwrite || attachment.Rotation != null)
-				attachmentElement.SetAttributeValue("Rotation", attachment.Rotation);
-
-			if (attachment.SubAttachment != null)
-				attachment.SubAttachment.Slot.Write(attachment.SubAttachment);
-
-			return true;
-		}
-
 		public CharacterAttachmentBrand GetBrand(string name)
 		{
 			if (Brands != null)
@@ -187,15 +119,19 @@ namespace CryEngine.CharacterCustomization
             return null;
         }
 
-		XElement GetWriteableElement(string name = null)
+		public XElement GetWriteableElement(string name = null)
 		{
-            var attachmentList = Manager.CharacterDefinition.Element("CharacterDefinition").Element("AttachmentList");
-			var attachmentElements = attachmentList.Elements("Attachment");
-
 			if (name == null)
 				name = Name;
 
-			return attachmentElements.FirstOrDefault(x => x.Attribute("AName").Value == name);
+            return Manager.GetAttachmentElements(Manager.CharacterDefinition).FirstOrDefault(x => 
+                {
+                    var aNameAttribute = x.Attribute("AName");
+                    if (aNameAttribute == null)
+                        return false;
+
+                    return aNameAttribute.Value == name;
+                });
 		}
 
         public string Name { get; set; }
@@ -219,9 +155,17 @@ namespace CryEngine.CharacterCustomization
                 var attachmentList = Manager.CharacterDefinition.Element("CharacterDefinition").Element("AttachmentList");
 
                 var attachmentElements = attachmentList.Elements("Attachment");
-				var attachmentElement = attachmentElements.FirstOrDefault(x => x.Attribute("AName").Value == Name);
+				var attachmentElement = attachmentElements.FirstOrDefault(x => 
+                    {
+                        var aNameAttribute = x.Attribute("AName");
+                        if (aNameAttribute == null)
+                            return false;
+
+                        return aNameAttribute.Value == Name;
+                    });
+
                 if (attachmentElement == null)
-                    throw new CustomizationConfigurationException(string.Format("Could not find slot element for {0}", Name));
+                    return null;
 
 				foreach (var brand in Brands)
 				{

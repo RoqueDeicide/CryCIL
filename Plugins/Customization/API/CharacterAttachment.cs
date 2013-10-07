@@ -95,6 +95,84 @@ namespace CryEngine.CharacterCustomization
 			}
 		}
 
+        void WriteAttribute(XElement attachmentElement, XElement baseAttachmentElement, string name, object value)
+        {
+            if (value != null)
+                attachmentElement.SetAttributeValue(name, value);
+            else
+            {
+                var baseAttribute = baseAttachmentElement.Attribute(name);
+                if (baseAttribute != null)
+                    value = baseAttribute.Value;
+
+                attachmentElement.SetAttributeValue(name, value);
+            }
+        }
+
+        public bool Write(XElement attachmentElement = null)
+        {
+            if (attachmentElement == null)
+            {
+                if (Slot.MirroredSlots != null && MirroredChildren != null)
+                {
+                    foreach (var mirroredAttachment in MirroredChildren)
+                    {
+                        Write(Slot.GetWriteableElement(mirroredAttachment.Slot.Name));
+                        mirroredAttachment.Write(null);
+                    }
+
+                    return true;
+                }
+
+                var currentAttachment = Slot.Current;
+                if (currentAttachment != null)
+                {
+                    if (currentAttachment.SubAttachmentVariations != null)
+                    {
+                        foreach (var subAttachment in currentAttachment.SubAttachmentVariations)
+                            subAttachment.Slot.Clear();
+                    }
+                }
+
+                attachmentElement = Slot.GetWriteableElement();
+                if (attachmentElement == null)
+                    throw new CustomizationConfigurationException(string.Format("Failed to locate attachments for slot {0}!", Slot.Name));
+            }
+
+            var slotName = attachmentElement.Attribute("AName").Value;
+
+            if (Slot.EmptyAttachment == this)
+            {
+                attachmentElement.RemoveAll();
+
+                attachmentElement.SetAttributeValue("AName", slotName);
+            }
+            else
+            {
+                var baseAttachmentElement = Slot.Manager.GetAttachmentElements(Slot.Manager.BaseDefinition).FirstOrDefault(x => x.Attribute("AName").Value == slotName);
+
+                WriteAttribute(attachmentElement, baseAttachmentElement, "Name", Name);
+
+                WriteAttribute(attachmentElement, baseAttachmentElement, "Type", Type);
+                WriteAttribute(attachmentElement, baseAttachmentElement, "BoneName", BoneName);
+
+                WriteAttribute(attachmentElement, baseAttachmentElement, "Binding", Object);
+
+                var materialPath = Material != null ? (Material.FilePath ?? Material.BaseFilePath) : null;
+                WriteAttribute(attachmentElement, baseAttachmentElement, "Material", materialPath);
+
+                WriteAttribute(attachmentElement, baseAttachmentElement, "Flags", Flags);
+
+                WriteAttribute(attachmentElement, baseAttachmentElement, "Position", Position);
+                WriteAttribute(attachmentElement, baseAttachmentElement, "Rotation", Rotation);
+
+                if (SubAttachment != null)
+                    SubAttachment.Write();
+            }
+
+            return true;
+        }
+
 		public CharacterAttachmentMaterial RandomMaterial
 		{
 			get
