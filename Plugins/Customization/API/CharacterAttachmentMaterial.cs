@@ -106,9 +106,6 @@ namespace CryEngine.CharacterCustomization
 				if (texPathAttribute != null)
 					CustomTexture = texPathAttribute.Value;
 			}
-
-			if(parentMaterial == null)
-				Save();
 		}
 
 		Vec3 ParseColor(string colorString)
@@ -120,11 +117,13 @@ namespace CryEngine.CharacterCustomization
 
 		bool UpdateMaterialElement(XElement materialElement, CharacterAttachmentMaterial material)
 		{
+            Debug.LogAlways("Updating material element for attachment {0} in slot {1}", material.Attachment.Name, material.Attachment.Slot.Name);
 			var modifiedMaterial = false;
 
 			var genMaskAttribute = materialElement.Attribute("StringGenMask");
 			if (genMaskAttribute != null && genMaskAttribute.Value.Contains("%COLORMASKING"))
 			{
+                Debug.LogAlways("Writing color mask");
 				var publicParamsElement = materialElement.Element("PublicParams");
 
 				publicParamsElement.SetAttributeValue("ColorMaskR", material.ColorRed.ToString());

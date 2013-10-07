@@ -158,7 +158,10 @@ namespace CryEngine.CharacterCustomization
 
                 WriteAttribute(attachmentElement, baseAttachmentElement, "Binding", Object);
 
-                var materialPath = Material != null ? (Material.FilePath ?? Material.BaseFilePath) : null;
+                if (Material != null)
+                    Material.Save();
+
+                var materialPath = Material != null ? Material.FilePath : null;
                 WriteAttribute(attachmentElement, baseAttachmentElement, "Material", materialPath);
 
                 WriteAttribute(attachmentElement, baseAttachmentElement, "Flags", Flags);
