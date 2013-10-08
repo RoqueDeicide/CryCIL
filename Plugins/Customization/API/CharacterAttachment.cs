@@ -190,6 +190,35 @@ namespace CryEngine.CharacterCustomization
 			}
 		}
 
+        public CharacterAttachmentMaterial NextMaterial
+        {
+            get
+            {
+                if (Materials == null || Materials.Length == 0)
+                    return null;
+
+                var currentMaterial = Material;
+                CharacterAttachmentMaterial nextMaterial = null;
+
+                for(var i = 0; i < Materials.Length; i++)
+                {
+                    var material = Materials.ElementAt(i);
+
+                    if (material == currentMaterial)
+                    {
+                        if (i < Materials.Length - 1)
+                            nextMaterial = Materials.ElementAt(i + 1);
+                        else
+                            nextMaterial = Materials.ElementAt(0);
+
+                        break;
+                    }
+                }
+
+                return nextMaterial;
+            }
+        }
+
 		public CharacterAttachment RandomSubAttachment
 		{
 			get
