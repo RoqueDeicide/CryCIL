@@ -305,12 +305,12 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <Optimization>MaxSpeed</Optimization>
+      <Optimization>Disabled</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>CEMONO_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>.\;..\;..\..\CryEngine\CryCommon;..\..\CryEngine\CryAction;..\..\SDKs\;..\..\SDKs\boost;Headers;..\mono;..\..\Plugin_SDK\inc</AdditionalIncludeDirectories>
-      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>
       </MinimalRebuild>
@@ -322,7 +322,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <OmitFramePointers>true</OmitFramePointers>
-      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -332,7 +332,7 @@
       <AdditionalLibraryDirectories>Libraries/x86</AdditionalLibraryDirectories>
       <AdditionalDependencies>mono.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
       <ImportLibrary>$(IntDir)$(TargetName).lib</ImportLibrary>
     </Link>
     <PreBuildEvent>
@@ -525,6 +525,7 @@
     <ClInclude Include="Headers\IMonoConverter.h" />
     <ClInclude Include="Headers\IMonoDomain.h" />
     <ClInclude Include="Headers\IMonoException.h" />
+    <ClInclude Include="Headers\IMonoMethod.h" />
     <ClInclude Include="Headers\IMonoObject.h" />
     <ClInclude Include="Headers\MonoCommon.h" />
     <ClInclude Include="MonoArray.h" />
@@ -536,6 +537,7 @@
     <ClInclude Include="MonoFlowNode.h" />
     <ClInclude Include="MonoHelpers.h" />
     <ClInclude Include="MonoInput.h" />
+    <ClInclude Include="MonoMethod.h" />
     <ClInclude Include="NativeEntity.h" />
     <ClInclude Include="PathUtils.h" />
     <ClInclude Include="MonoScriptSystem.h" />
@@ -576,6 +578,7 @@
     <ClCompile Include="CPluginCryMono.cpp" />
     <ClCompile Include="CryScriptInstance.cpp" />
     <ClCompile Include="DynMonoArray.cpp" />
+    <ClCompile Include="EntityEventHandling.cpp" />
     <ClCompile Include="FlowManager.cpp" />
     <ClCompile Include="MonoConverter.cpp" />
     <ClCompile Include="MonoCVars.cpp" />
@@ -583,6 +586,7 @@
     <ClCompile Include="MonoEntity.cpp" />
     <ClCompile Include="MonoFlowNode.cpp" />
     <ClCompile Include="MonoInput.cpp" />
+    <ClCompile Include="MonoMethod.cpp" />
     <ClCompile Include="MonoObject.cpp" />
     <ClCompile Include="MonoScriptSystem.cpp" />
     <ClCompile Include="MonoArray.cpp" />

@@ -115,11 +115,14 @@ protected:
 	void RegisterPriorityBindings();
 	void RegisterSecondaryBindings();
 
+	void CacheManagedResources();
+
 	// The primary app domain, not really used for anything besides holding the script domain. Do *not* unload this at runtime, we cannot execute another root domain again without restarting.
 	CScriptDomain *m_pRootDomain;
 	std::vector<CScriptDomain *> m_domains;
 
 	IMonoDomain *m_pScriptDomain;
+
 	IMonoObject *m_pScriptManager;
 
 	bool m_bFirstReload;

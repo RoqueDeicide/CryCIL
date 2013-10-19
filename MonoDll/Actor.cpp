@@ -18,6 +18,7 @@ CMonoActor::CMonoActor()
 	, m_bClient(false)
 	, m_bMigrating(false)
 	, m_pScript(nullptr)
+	, m_pManagedObject(nullptr)
 {
 	m_currentPhysProfile=GetDefaultProfile(eEA_Physics);
 }
@@ -162,10 +163,10 @@ void CMonoActor::HandleEvent(const SGameObjectEvent &event)
 
 void CMonoActor::ProcessEvent(SEntityEvent& event)
 {
-	if(m_pScript == nullptr)
+	if(m_pManagedObject == nullptr)
 		return;
 
-	HandleEntityEvent(event, GetEntity(), m_pScript);
+	CEntityEventHandler::HandleEntityEvent(CEntityEventHandler::Actor, event, GetEntity(), m_pManagedObject);
 
 	switch (event.event)
 	{
@@ -219,7 +220,10 @@ void CMonoActor::OnScriptInstanceInitialized(ICryScriptInstance *pScriptInstance
 		pObject->Release();
 
 		if(id == GetEntityId())
+		{
 			m_pScript = pScriptInstance;
+			m_pManagedObject = pScriptInstance->GetManagedObject();
+		}
 	}
 }
 
@@ -228,7 +232,7 @@ void CMonoActor::UpdateView(SViewParams &viewParams)
 	void *args[1];
 	args[0] = &viewParams;
 
-	m_pScript->GetClass()->Invoke(m_pScript->GetManagedObject(), "UpdateView", args, 1);
+	m_pScript->GetClass()->GetMethod("UpdateView", 1)->Invoke(m_pManagedObject, args);
 }
 
 void CMonoActor::PostUpdateView(SViewParams &viewParams)
@@ -236,7 +240,7 @@ void CMonoActor::PostUpdateView(SViewParams &viewParams)
 	void *args[1];
 	args[0] = &viewParams;
 
-	m_pScript->GetClass()->Invoke(m_pScript->GetManagedObject(), "PostUpdateView", args, 1);
+	m_pScript->GetClass()->GetMethod("PostUpdateView", 1)->Invoke(m_pManagedObject, args);
 }
 
 bool CMonoActor::SetAspectProfile( EEntityAspects aspect, uint8 profile )
@@ -514,7 +518,7 @@ bool CMonoActor::NetSerialize( TSerialize ser, EEntityAspects aspect, uint8 prof
 	params[2] = &profile;
 	params[3] = &pflags;
 
-	m_pScript->GetClass()->Invoke(m_pScript->GetManagedObject(), "InternalNetSerialize", params, 4);
+	m_pScript->GetClass()->GetMethod("InternalNetSerialize", 4)->Invoke(m_pManagedObject, params);
 
 	ser.EndGroup();
 
@@ -528,7 +532,7 @@ void CMonoActor::FullSerialize(TSerialize ser)
 	IMonoArray *pArgs = CreateMonoArray(1);
 	pArgs->InsertNativePointer(&ser);
 
-	m_pScript->GetClass()->InvokeArray(m_pScript->GetManagedObject(), "InternalFullSerialize", pArgs);
+	m_pScript->GetClass()->GetMethod("InternalFullSerialize", 1)->InvokeArray(m_pManagedObject, pArgs);
 	pArgs->Release();
 
 	ser.EndGroup();
@@ -536,19 +540,19 @@ void CMonoActor::FullSerialize(TSerialize ser)
 
 void CMonoActor::PostSerialize()
 {
-	m_pScript->CallMethod("PostSerialize");
+	m_pScript->GetClass()->GetMethod("PostSerialize")->Invoke(m_pManagedObject);
 }
 
 IMPLEMENT_RMI(CMonoActor, SvScriptRMI)
 {
-	IMonoClass *pActorClass = g_pScriptSystem->GetCryBraryAssembly()->GetClass("Entity");
+	IMonoClass *pEntityClass = g_pScriptSystem->GetCryBraryAssembly()->GetClass("Entity");
 
 	IMonoArray *pNetworkArgs = CreateMonoArray(3);
 	pNetworkArgs->Insert(ToMonoString(params.methodName.c_str()));
 	pNetworkArgs->InsertMonoObject(params.args);
 	pNetworkArgs->Insert(params.targetId);
 
-	pActorClass->InvokeArray(nullptr, "OnRemoteInvocation", pNetworkArgs);
+	pEntityClass->GetMethod("OnRemoteInvocation", 3)->InvokeArray(nullptr, pNetworkArgs);
 	pNetworkArgs->Release();
 
 	return true;
@@ -556,14 +560,14 @@ IMPLEMENT_RMI(CMonoActor, SvScriptRMI)
 
 IMPLEMENT_RMI(CMonoActor, ClScriptRMI)
 {
-	IMonoClass *pActorClass = g_pScriptSystem->GetCryBraryAssembly()->GetClass("Entity");
+	IMonoClass *pEntityClass = g_pScriptSystem->GetCryBraryAssembly()->GetClass("Entity");
 
 	IMonoArray *pNetworkArgs = CreateMonoArray(3);
 	pNetworkArgs->Insert(ToMonoString(params.methodName.c_str()));
 	pNetworkArgs->InsertMonoObject(params.args);
 	pNetworkArgs->Insert(params.targetId);
 
-	pActorClass->InvokeArray(nullptr, "OnRemoteInvocation", pNetworkArgs);
+	pEntityClass->GetMethod("OnRemoteInvocation", 3)->InvokeArray(nullptr, pNetworkArgs);
 	pNetworkArgs->Release();
 
 	return true;

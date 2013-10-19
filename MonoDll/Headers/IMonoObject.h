@@ -6,8 +6,7 @@
 //////////////////////////////////////////////////////////////////////////
 // 18/12/2011 : Created by Filip 'i59' Lundgren
 ////////////////////////////////////////////////////////////////////////*/
-#ifndef __I_MONO_OBJECT_H__
-#define __I_MONO_OBJECT_H__
+#pragma once
 
 #include <IMonoConverter.h>
 #include <MonoCommon.h>
@@ -111,6 +110,8 @@ enum EMonoAnyType
 
 #include <IMonoArray.h>
 #include <IMonoClass.h>
+
+#include <IMonoMethod.h>
 
 /// <summary>
 /// Simple class used to easily convert common C++ types to their C# equivalents.
@@ -302,7 +303,10 @@ struct MonoAnyValue : public ISerializable
 
 inline mono::object IMonoObject::CallMethod(const char *funcName)
 {
-	return GetClass()->Invoke(this->GetManagedObject(), funcName);
+	if(IMonoMethod *pMethod = GetClass()->GetMethod(funcName))
+		return pMethod->Invoke(this->GetManagedObject());
+
+	return nullptr;
 }
 
 template<typename P1> 
@@ -311,9 +315,11 @@ inline mono::object IMonoObject::CallMethod(const char *funcName, const P1 &p1)
 	IMonoArray *pArgs = CreateMonoArray(1);
 	pArgs->Insert(p1);
 
-	mono::object result = GetClass()->InvokeArray(this->GetManagedObject(), funcName, pArgs);
+	mono::object result = nullptr;
+	if(IMonoMethod *pMethod = GetClass()->GetMethod(funcName, pArgs))
+		result = pMethod->InvokeArray(this->GetManagedObject(), pArgs);
+	
 	SAFE_RELEASE(pArgs);
-
 	return result;
 };
 
@@ -324,9 +330,11 @@ inline mono::object IMonoObject::CallMethod(const char *funcName, const P1 &p1, 
 	pArgs->Insert(p1);
 	pArgs->Insert(p2);
 
-	mono::object result = GetClass()->InvokeArray(this->GetManagedObject(), funcName, pArgs);
+	mono::object result = nullptr;
+	if(IMonoMethod *pMethod = GetClass()->GetMethod(funcName, pArgs))
+		result = pMethod->InvokeArray(this->GetManagedObject(), pArgs);
+	
 	SAFE_RELEASE(pArgs);
-
 	return result;
 };
 
@@ -337,10 +345,12 @@ inline mono::object IMonoObject::CallMethod(const char *funcName, const P1 &p1, 
 	pArgs->Insert(p1);
 	pArgs->Insert(p2);
 	pArgs->Insert(p3);
-	
-	mono::object result = GetClass()->InvokeArray(this->GetManagedObject(), funcName, pArgs);
-	SAFE_RELEASE(pArgs);
 
+	mono::object result = nullptr;
+	if(IMonoMethod *pMethod = GetClass()->GetMethod(funcName, pArgs))
+		result = pMethod->InvokeArray(this->GetManagedObject(), pArgs);
+	
+	SAFE_RELEASE(pArgs);
 	return result;
 };
 
@@ -352,10 +362,12 @@ inline mono::object IMonoObject::CallMethod(const char *funcName, const P1 &p1, 
 	pArgs->Insert(p2);
 	pArgs->Insert(p3);
 	pArgs->Insert(p4);
-	
-	mono::object result = GetClass()->InvokeArray(this->GetManagedObject(), funcName, pArgs);
-	SAFE_RELEASE(pArgs);
 
+	mono::object result = nullptr;
+	if(IMonoMethod *pMethod = GetClass()->GetMethod(funcName, pArgs))
+		result = pMethod->InvokeArray(this->GetManagedObject(), pArgs);
+
+	SAFE_RELEASE(pArgs);
 	return result;
 };
 
@@ -368,10 +380,12 @@ inline mono::object IMonoObject::CallMethod(const char *funcName, const P1 &p1, 
 	pArgs->Insert(p3);
 	pArgs->Insert(p4);
 	pArgs->Insert(p5);
-	
-	mono::object result = GetClass()->InvokeArray(this->GetManagedObject(), funcName, pArgs);
-	SAFE_RELEASE(pArgs);
 
+	mono::object result = nullptr;
+	if(IMonoMethod *pMethod = GetClass()->GetMethod(funcName, pArgs))
+		result = pMethod->InvokeArray(this->GetManagedObject(), pArgs);
+
+	SAFE_RELEASE(pArgs);
 	return result;
 };
 
@@ -385,10 +399,12 @@ inline mono::object IMonoObject::CallMethod(const char *funcName, const P1 &p1, 
 	pArgs->Insert(p4);
 	pArgs->Insert(p5);
 	pArgs->Insert(p6);
-	
-	mono::object result = GetClass()->InvokeArray(this->GetManagedObject(), funcName, pArgs);
-	SAFE_RELEASE(pArgs);
 
+	mono::object result = nullptr;
+	if(IMonoMethod *pMethod = GetClass()->GetMethod(funcName, pArgs))
+		result = pMethod->InvokeArray(this->GetManagedObject(), pArgs);
+
+	SAFE_RELEASE(pArgs);
 	return result;
 };
 
@@ -411,5 +427,3 @@ inline void IMonoObject::SetFieldValue(const char *fieldName, mono::object newVa
 {
 	GetClass()->SetFieldValue(this->GetManagedObject(), fieldName, newValue, throwOnFail);
 }
-
-#endif //__I_MONO_OBJECT_H__

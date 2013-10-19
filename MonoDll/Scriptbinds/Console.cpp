@@ -54,7 +54,7 @@ void CScriptbind_Console::OnMonoCmd(IConsoleCmdArgs *cmdArgs)
 	IMonoArray *pArgs = CreateMonoArray(1);
 	pArgs->Insert(cmdArgs->GetCommandLine());
 
-	g_pScriptSystem->GetCryBraryAssembly()->GetClass("ConsoleCommand")->InvokeArray(NULL, "OnCommand", pArgs);
+	g_pScriptSystem->GetCryBraryAssembly()->GetClass("ConsoleCommand")->GetMethod("OnCommand", 1)->InvokeArray(NULL, pArgs);
 	pArgs->Release();
 }
 

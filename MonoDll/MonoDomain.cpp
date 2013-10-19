@@ -143,10 +143,13 @@ IMonoAssembly *CScriptDomain::LoadAssembly(const char *file, bool shadowCopy, bo
 		{
 			if(IMonoClass *pDriverClass = pDebugDatabaseCreator->GetClass("Driver", ""))
 			{
-				IMonoArray *pArgs = CreateMonoArray(1);
-				pArgs->Insert(path);
-				pDriverClass->InvokeArray(NULL, "Convert", pArgs);
-				SAFE_RELEASE(pArgs);
+				if(IMonoMethod *pConvertMethod = pDriverClass->GetMethod("Convert", 1))
+				{
+					IMonoArray *pArgs = CreateMonoArray(1);
+					pArgs->Insert(path);
+					pConvertMethod->InvokeArray(nullptr, pArgs);
+					SAFE_RELEASE(pArgs);
+				}
 			}
 		}
 	}

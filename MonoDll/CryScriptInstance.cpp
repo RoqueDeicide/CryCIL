@@ -45,17 +45,14 @@ void CCryScriptInstance::OnReloadComplete()
 		return;
 
 	IMonoObject *pScriptManager = g_pScriptSystem->GetScriptManager();
+	IMonoClass *pScriptManagerClass = pScriptManager->GetClass();
 
-	IMonoArray *pArgs = CreateMonoArray(2);
-	pArgs->Insert(m_scriptId);
-	pArgs->Insert(m_flags);
+	IMonoMethod *pGetScriptInstanceMethod = pScriptManagerClass->GetMethod("GetScriptInstanceById", 2);
 
-	if(mono::object result = pScriptManager->GetClass()->InvokeArray(pScriptManager->GetManagedObject(), "GetScriptInstanceById", pArgs))
+	if(mono::object result = pGetScriptInstanceMethod->Call(pScriptManager->GetManagedObject(), m_scriptId, m_flags))
 	{
 		SetManagedObject((MonoObject *)result, true);
 	}
 	else
 		MonoWarning("Failed to locate script instance %i after reload!", m_scriptId);
-
-	pArgs->Release();
 }

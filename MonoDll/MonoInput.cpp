@@ -51,7 +51,8 @@ void CScriptbind_Input::OnHardwareMouseEvent(int iX,int iY,EHARDWAREMOUSEEVENT e
 	pParams->Insert(eHardwareMouseEvent);
 	pParams->Insert(wheelDelta);
 
-	GetClass()->InvokeArray(NULL, "OnMouseEvent", pParams);
+	IMonoClass *pInputClass = g_pScriptSystem->GetCryBraryAssembly()->GetClass("Input", "CryEngine");
+	pInputClass->GetMethod("OnMouseEvent", 4)->InvokeArray(NULL, pParams);
 	SAFE_RELEASE(pParams);
 }
 
@@ -61,7 +62,8 @@ bool CScriptbind_Input::OnInputEvent(const SInputEvent &event)
 	pParams->Insert(event.keyName.c_str());
 	pParams->Insert(event.value);
 
-	GetClass()->InvokeArray(NULL, "OnKeyEvent", pParams);
+	IMonoClass *pInputClass = g_pScriptSystem->GetCryBraryAssembly()->GetClass("Input", "CryEngine");
+	pInputClass->GetMethod("OnKeyEvent", 2)->InvokeArray(NULL, pParams);
 	SAFE_RELEASE(pParams);
 
 	return false;
@@ -79,7 +81,8 @@ bool CScriptbind_Input::OnActionTriggered(EntityId entityId, const ActionId& act
 	pParams->Insert(activationMode);
 	pParams->Insert(value);
 
-	GetClass()->InvokeArray(NULL, "OnActionTriggered", pParams);
+	IMonoClass *pInputClass = g_pScriptSystem->GetCryBraryAssembly()->GetClass("Input", "CryEngine");
+	pInputClass->GetMethod("OnActionTriggered", 3)->InvokeArray(NULL, pParams);
 	SAFE_RELEASE(pParams);
 
 	return false;

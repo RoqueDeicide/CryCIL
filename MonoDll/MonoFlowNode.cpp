@@ -30,10 +30,7 @@ CMonoFlowNode::~CMonoFlowNode()
 {
 	IMonoClass *pFlowNodeClass = g_pScriptSystem->GetCryBraryAssembly()->GetClass("FlowNode", "CryEngine.Flowgraph");
 
-	IMonoArray *pParams = CreateMonoArray(1);
-	pParams->Insert(m_scriptId);
-
-	pFlowNodeClass->InvokeArray(nullptr, "InternalRemove", pParams);
+	pFlowNodeClass->CallMethod("InternalRemove", m_scriptId);
 }
 
 bool CMonoFlowNode::CreatedNode(TFlowNodeId id, const char *name, TFlowNodeTypeId typeId, IFlowNodePtr pNode) 
@@ -162,7 +159,7 @@ void CMonoFlowNode::ProcessEvent(EFlowEvent event, SActivationInfo *pActInfo)
 				pParams->InsertNativePointer(pActInfo->pEntity);
 				pParams->Insert(pActInfo->pEntity->GetId());
 
-				m_pScript->GetClass()->InvokeArray(m_pScript->GetManagedObject(), "InternalSetTargetEntity", pParams);
+				m_pScript->GetClass()->GetMethod("InternalSetTargetEntity", 2)->InvokeArray(m_pScript->GetManagedObject(), pParams);
 				pParams->Release();
 			}
 		}

@@ -164,7 +164,7 @@ void CScriptObject::HandleException(MonoObject *pException)
 		args->Insert(isFatal);
 
 		IMonoClass *pDebugClass = pCryBraryAssembly->GetClass("Debug");
-		pDebugClass->InvokeArray(NULL, "DisplayException", args);
+		pDebugClass->GetMethod("DisplayException", 2)->InvokeArray(NULL, args);
 		SAFE_RELEASE(args);
 	}
 	else

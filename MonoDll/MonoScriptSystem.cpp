@@ -49,7 +49,12 @@
 #include "Scriptbinds\CryPak.h"
 
 #include "FlowManager.h"
+#include "MonoFlowNode.h"
 #include "MonoInput.h"
+
+#include "Actor.h"
+
+#include "EntityEventHandling.h"
 
 #include "MonoCVars.h"
 #include "PathUtils.h"
@@ -253,6 +258,8 @@ bool CScriptSystem::Reload()
 			m_pScriptManager = pScriptManager;
 			m_pCryBraryAssembly = pCryBraryAssembly;
 
+			CacheManagedResources();
+
 			if(!m_bFirstReload)
 				m_pScriptManager->CallMethod("Deserialize");
 
@@ -262,7 +269,7 @@ bool CScriptSystem::Reload()
 			IMonoArray *pArgs = CreateMonoArray(2);
 			pArgs->Insert(gEnv->IsEditor());
 			pArgs->Insert(gEnv->IsDedicated());
-			pClass->InvokeArray(NULL, "InitializeGameStatics", pArgs);
+			pClass->GetMethod("InitializeGameStatics", 2)->InvokeArray(nullptr, pArgs);
 			SAFE_RELEASE(pArgs);
 
 			m_pScriptManager->CallMethod("ProcessWaitingScripts", m_bFirstReload);
@@ -292,6 +299,7 @@ bool CScriptSystem::Reload()
 			m_bReloading = false;
 
 			m_bDetectedChanges = false;
+
 			return false;
 		}
 		break;
@@ -357,8 +365,20 @@ void CScriptSystem::OnPostUpdate(float fDeltaTime)
 {
 	FUNCTION_PROFILER_FAST(GetISystem(), PROFILE_SCRIPT, gEnv->bProfilerEnabled);
 
+	IMonoArray *pArgs = CreateMonoArray(5);
+	pArgs->Insert(fDeltaTime);
+	pArgs->Insert(gEnv->pTimer->GetFrameStartTime().GetMilliSeconds());
+	pArgs->Insert(gEnv->pTimer->GetAsyncTime().GetMilliSeconds());
+	pArgs->Insert(gEnv->pTimer->GetFrameRate());
+	pArgs->Insert(gEnv->pTimer->GetTimeScale());
+
 	// Updates all scripts and sets Time.FrameTime.
 	m_pScriptManager->CallMethod("OnUpdate", fDeltaTime, gEnv->pTimer->GetFrameStartTime().GetMilliSeconds(), gEnv->pTimer->GetAsyncTime().GetMilliSeconds(), gEnv->pTimer->GetFrameRate(), gEnv->pTimer->GetTimeScale());
+}
+
+void CScriptSystem::CacheManagedResources()
+{
+	CEntityEventHandler::CacheManagedResources();
 }
 
 void CScriptSystem::OnFileChange(const char *fileName)
@@ -411,7 +431,7 @@ ICryScriptInstance *CScriptSystem::InstantiateScript(const char *scriptName, EMo
 	pScriptCreationArgs->InsertMonoObject((pConstructorParameters != nullptr ? pConstructorParameters->GetManagedObject() : nullptr));
 	pScriptCreationArgs->Insert(throwOnFail);
 
-	mono::object result = m_pScriptManager->GetClass()->InvokeArray(m_pScriptManager->GetManagedObject(), "CreateScriptInstance", pScriptCreationArgs);
+	auto result = m_pScriptManager->GetClass()->GetMethod("CreateScriptInstance", 5)->InvokeArray(m_pScriptManager->GetManagedObject(), pScriptCreationArgs);
 	SAFE_RELEASE(pScriptCreationArgs);
 
 	if(!result)
@@ -452,7 +472,7 @@ mono::object CScriptSystem::InitializeScriptInstance(ICryScriptInstance *pScript
 
 	CRY_ASSERT(pScriptInstance);
 	
-	mono::object result = pScriptInstance->GetClass()->InvokeArray(pScriptInstance->GetManagedObject(), "InternalInitialize", pParams);
+	mono::object result = pScriptInstance->GetClass()->GetMethod("InternalInitialize", pParams->GetSize())->InvokeArray(pScriptInstance->GetManagedObject(), pParams);
 
 	for each(auto listener in m_listeners)
 		listener->OnScriptInstanceInitialized(pScriptInstance);
