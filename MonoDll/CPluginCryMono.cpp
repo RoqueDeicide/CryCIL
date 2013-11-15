@@ -54,7 +54,7 @@ namespace CryMonoPlugin
         gPluginManager = ( PluginManager::IPluginManager* )pPluginManager->GetConcreteInterface( NULL );
         CPluginBaseMinimal::Init( env, startupParams, pPluginManager, sPluginDirectory );
 
-        g_pScriptSystem = new CScriptSystem();
+		g_pScriptSystem = new CScriptSystem(gEnv->pGame->GetIGameFramework());
 
 #pragma warning(push)
 #pragma warning(disable : 4800 )
