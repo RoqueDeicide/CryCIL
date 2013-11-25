@@ -33,7 +33,7 @@ namespace CryMonoPlugin
             {
                 if ( bWasInitialized )
                 {
-                    SAFE_RELEASE(g_pScriptSystem);
+                    SAFE_RELEASE(GetMonoScriptSystem());
 
                     // TODO: Cleanup stuff that can only be cleaned up if the plugin was initialized
                 }
@@ -54,11 +54,11 @@ namespace CryMonoPlugin
         gPluginManager = ( PluginManager::IPluginManager* )pPluginManager->GetConcreteInterface( NULL );
         CPluginBaseMinimal::Init( env, startupParams, pPluginManager, sPluginDirectory );
 
-		g_pScriptSystem = new CScriptSystem(gEnv->pGame->GetIGameFramework());
+		GetMonoScriptSystem() = new CScriptSystem(gEnv->pGame->GetIGameFramework());
 
 #pragma warning(push)
 #pragma warning(disable : 4800 )
-        return bool( g_pScriptSystem );
+        return bool( GetMonoScriptSystem() );
 #pragma warning(pop)
     }
 
@@ -75,7 +75,7 @@ namespace CryMonoPlugin
             {
                 // Flownodes
                 //if(enFactoryType == FT_Flownode)
-					//g_pScriptSystem->RegisterFlownodes();
+					//GetMonoScriptSystem()->RegisterFlownodes();
 			}
         }
 

@@ -37,12 +37,12 @@ CMonoActor::~CMonoActor()
 	GetGameObject()->ReleaseView(this);
 	GetGameObject()->ReleaseProfileManager(this);
 
-	if(g_pScriptSystem)
+	if(IMonoScriptSystem *pScriptSystem = GetMonoScriptSystem())
 	{
-		if(IActorSystem *pActorSystem = g_pScriptSystem->GetIGameFramework()->GetIActorSystem())
+		if (IActorSystem *pActorSystem = static_cast<CScriptSystem *>(pScriptSystem)->GetIGameFramework()->GetIActorSystem())
 			pActorSystem->RemoveActor(GetEntityId());
 
-		g_pScriptSystem->RemoveListener(this);
+		pScriptSystem->RemoveListener(this);
 	}
 }
 
@@ -55,7 +55,7 @@ bool CMonoActor::Init(IGameObject *pGameObject)
 	if (!GetGameObject()->CaptureProfileManager(this))
 		return false;
 
-	g_pScriptSystem->GetIGameFramework()->GetIActorSystem()->AddActor(GetEntityId(), this);
+	static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIActorSystem()->AddActor(GetEntityId(), this);
 
 	m_pAnimatedCharacter = static_cast<IAnimatedCharacter*>(GetGameObject()->AcquireExtension("AnimatedCharacter"));
 	if (m_pAnimatedCharacter)
@@ -107,8 +107,10 @@ bool CMonoActor::ReloadExtension( IGameObject *pGameObject, const SEntitySpawnPa
 	if (!GetGameObject()->BindToNetwork())
 		return false;
 
-	g_pScriptSystem->GetIGameFramework()->GetIActorSystem()->RemoveActor(params.prevId);
-	g_pScriptSystem->GetIGameFramework()->GetIActorSystem()->AddActor(GetEntityId(), this);
+	IGameFramework *pGameFramework = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework();
+
+	pGameFramework->GetIActorSystem()->RemoveActor(params.prevId);
+	pGameFramework->GetIActorSystem()->AddActor(GetEntityId(), this);
 
 	SetAspectProfile(eEA_Physics, eAP_NotPhysicalized);
 
@@ -198,7 +200,6 @@ void CMonoActor::ProcessEvent(SEntityEvent& event)
 		break;
 	case ENTITY_EVENT_XFORM:
 		{
-			CryLogAlways("XForm");
 		}
 		break;
   }  
@@ -405,7 +406,7 @@ bool CMonoActor::SetAspectProfile( EEntityAspects aspect, uint8 profile )
 void CMonoActor::InitLocalPlayer()
 {
 	GetGameObject()->SetUpdateSlotEnableCondition( this, 0, eUEC_WithoutAI );
-	//g_pScriptSystem->GetIGameFramework()->GetIActorSystem()->SetLocalPlayerId(GetEntityId());
+	//static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIActorSystem()->SetLocalPlayerId(GetEntityId());
 }
 
 float CMonoActor::GetHealth() const
@@ -545,7 +546,7 @@ void CMonoActor::PostSerialize()
 
 IMPLEMENT_RMI(CMonoActor, SvScriptRMI)
 {
-	IMonoClass *pEntityClass = g_pScriptSystem->GetCryBraryAssembly()->GetClass("Entity");
+	IMonoClass *pEntityClass = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("Entity");
 
 	IMonoArray *pNetworkArgs = CreateMonoArray(3);
 	pNetworkArgs->Insert(ToMonoString(params.methodName.c_str()));
@@ -560,7 +561,7 @@ IMPLEMENT_RMI(CMonoActor, SvScriptRMI)
 
 IMPLEMENT_RMI(CMonoActor, ClScriptRMI)
 {
-	IMonoClass *pEntityClass = g_pScriptSystem->GetCryBraryAssembly()->GetClass("Entity");
+	IMonoClass *pEntityClass = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("Entity");
 
 	IMonoArray *pNetworkArgs = CreateMonoArray(3);
 	pNetworkArgs->Insert(ToMonoString(params.methodName.c_str()));

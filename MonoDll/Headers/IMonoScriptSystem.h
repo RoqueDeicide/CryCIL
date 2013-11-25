@@ -6,8 +6,7 @@
 //////////////////////////////////////////////////////////////////////////
 // 20/11/2011 : Created by Filip 'i59' Lundgren (Based on version by ins\)
 ////////////////////////////////////////////////////////////////////////*/
-#ifndef __I_MONO_SCRIPT_SYSTEM_H__
-#define __I_MONO_SCRIPT_SYSTEM_H__
+#pragma once
 
 // define if Plugin SDK should be used
 //#define PLUGIN_SDK
@@ -30,6 +29,7 @@ struct IMonoScriptEventListener;
 struct ICryScriptInstance;
 
 struct IGameFramework;
+struct ISystem;
 
 /// <summary>
 /// Script flags are passed to IMonoScriptSystem::InstantiateScript and RemoveScriptInstance as a way to identify scripts more effectively, and to solve the issue with scripts being of multiple types.
@@ -165,6 +165,9 @@ struct IMonoScriptSystem
 	/// </summary>
 	typedef IMonoScriptSystem *(*TEntryFunction)(ISystem* pSystem, IGameFramework *pGameFramework);
 #endif
+
+	// internal storage to avoid having the extra overhead from having to call GetPluginByName all the time.
+	static IMonoScriptSystem *g_pThis;
 };
 
 struct IMonoScriptEventListener
@@ -182,21 +185,12 @@ struct IMonoScriptEventListener
 	virtual void OnShutdown() = 0;
 };
 
+static IMonoScriptSystem *GetMonoScriptSystem()
+{
 #ifdef PLUGIN_SDK
-static IMonoScriptSystem *_pMonoScriptSystem = nullptr; // internal storage to avoid having the extra overhead from having to call GetPluginByName all the time.
-
-static IMonoScriptSystem *GetMonoScriptSystem()
-{
-	if(_pMonoScriptSystem == nullptr)
-		_pMonoScriptSystem = static_cast<IMonoScriptSystem *>(gPluginManager->GetPluginByName("CryMono")->GetConcreteInterface());
-
-	return _pMonoScriptSystem;
-}
-#else
-static IMonoScriptSystem *GetMonoScriptSystem()
-{
-	return gEnv->pMonoScriptSystem;
-}
+	if(IMonoScriptSystem::g_pThis == nullptr)
+		IMonoScriptSystem::g_pThis = static_cast<IMonoScriptSystem *>(gPluginManager->GetPluginByName("CryMono")->GetConcreteInterface());
 #endif
 
-#endif //__I_MONO_SCRIPT_SYSTEM_H__
+	return IMonoScriptSystem::g_pThis;
+}

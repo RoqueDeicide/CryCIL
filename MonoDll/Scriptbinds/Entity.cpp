@@ -175,7 +175,7 @@ CScriptbind_Entity::CScriptbind_Entity()
 
 	//RegisterNativeEntityClass();
 
-	g_pScriptSystem->AddListener(this);
+	GetMonoScriptSystem()->AddListener(this);
 
 	gEnv->pEntitySystem->AddSink(this, IEntitySystem::OnSpawn | IEntitySystem::OnRemove, 0);
 }
@@ -192,13 +192,13 @@ CScriptbind_Entity::~CScriptbind_Entity()
 
 void CScriptbind_Entity::OnReloadComplete()
 {
-	m_pEntityClass = g_pScriptSystem->GetCryBraryAssembly()->GetClass("Entity");
+	m_pEntityClass = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("Entity");
 }
 
 void CScriptbind_Entity::PlayAnimation(IEntity *pEntity, mono::string animationName, int slot, int layer, float blend, float speed, EAnimationFlags flags)
 {
 	// Animation graph input
-	/*if(IGameObject *pGameObject = g_pScriptSystem->GetIGameFramework()->GetGameObject(pEntity->GetId()))
+	/*if(IGameObject *pGameObject = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetGameObject(pEntity->GetId()))
 	{
 		if(IAnimatedCharacter *pAniamtedCharacter = static_cast<IAnimatedCharacter*>(pGameObject->AcquireExtension("AnimatedCharacter")))	
 		{
@@ -277,7 +277,7 @@ void CScriptbind_Entity::OnSpawn(IEntity *pEntity,SEntitySpawnParams &params)
 	if(!IsMonoEntity(className))// && strcmp(className, "[NativeEntity]"))
 		return;
 
-	auto gameObject = g_pScriptSystem->GetIGameFramework()->GetIGameObjectSystem()->CreateGameObjectForEntity(pEntity->GetId());
+	auto gameObject = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIGameObjectSystem()->CreateGameObjectForEntity(pEntity->GetId());
 	if(!gameObject->ActivateExtension(className))
 	{
 		MonoWarning("[CryMono] Failed to activate game object extension %s on entity %i (%s)", className, params.id, params.sName);
@@ -367,7 +367,7 @@ bool CScriptbind_Entity::RegisterEntityClass(SEntityRegistrationParams params)
 	bool result = gEnv->pEntitySystem->GetClassRegistry()->RegisterClass(new CEntityClass(entityClassDesc, pProperties, numProperties));
 
 	static SMonoEntityCreator creator;
-	g_pScriptSystem->GetIGameFramework()->GetIGameObjectSystem()->RegisterExtension(className, &creator, nullptr);
+	static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIGameObjectSystem()->RegisterExtension(className, &creator, nullptr);
 
 	return result;
 }
@@ -397,7 +397,7 @@ mono::object CScriptbind_Entity::SpawnEntity(EntitySpawnParams monoParams, bool 
 			entityInfo.pEntity = pEntity;
 			entityInfo.id = pEntity->GetId();
 
-			if(IGameObject *pGameObject = g_pScriptSystem->GetIGameFramework()->GetGameObject(spawnParams.id))
+			if(IGameObject *pGameObject = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetGameObject(spawnParams.id))
 			{
 				if(CMonoEntityExtension *pEntityExtension = static_cast<CMonoEntityExtension *>(pGameObject->QueryExtension(className)))
 					return pEntityExtension->GetScript()->GetManagedObject();
@@ -405,7 +405,7 @@ mono::object CScriptbind_Entity::SpawnEntity(EntitySpawnParams monoParams, bool 
 				{
 					MonoWarning("[CryMono] Spawned entity of class %s with id %i, but game object extension query failed!", className, pEntity->GetId());
 
-					auto extensionId = g_pScriptSystem->GetIGameFramework()->GetIGameObjectSystem()->GetID(className);
+					auto extensionId = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIGameObjectSystem()->GetID(className);
 					if(extensionId == IGameObjectSystem::InvalidExtensionID)
 						MonoWarning("[CryMono] IGameObjectSystem::GetId returned invalid id for extension %s", className);
 
@@ -430,7 +430,7 @@ void CScriptbind_Entity::RemoveEntity(EntityId id, bool removeNow)
 	{
 		if(!(pEntity->GetFlags() & ENTITY_FLAG_NO_SAVE))
 		{
-			g_pScriptSystem->GetCryBraryAssembly()->GetException("CryEngine", "EntityRemovalException", "Attempted to remove an entity placed via Editor")->Throw();
+			GetMonoScriptSystem()->GetCryBraryAssembly()->GetException("CryEngine", "EntityRemovalException", "Attempted to remove an entity placed via Editor")->Throw();
 			return;
 		}
 
@@ -467,7 +467,7 @@ mono::object CScriptbind_Entity::GetEntitiesByClass(mono::string _class)
 
 	IEntityItPtr pIt = gEnv->pEntitySystem->GetEntityIterator();
 
-	IMonoClass *pEntityIdClass = g_pScriptSystem->GetCryBraryAssembly()->GetClass("EntityId");
+	IMonoClass *pEntityIdClass = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("EntityId");
 	IMonoArray *pEntities = CreateDynamicMonoArray();
 
 	pIt->MoveFirst();
@@ -497,7 +497,7 @@ mono::object CScriptbind_Entity::GetEntitiesByClasses(mono::object classes)
 
 	IEntityItPtr pIt = gEnv->pEntitySystem->GetEntityIterator();
 
-	IMonoClass *pEntityIdClass = g_pScriptSystem->GetCryBraryAssembly()->GetClass("EntityId");
+	IMonoClass *pEntityIdClass = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("EntityId");
 	IMonoArray *pEntities = CreateDynamicMonoArray();
 	
 	pIt->MoveFirst();
@@ -527,7 +527,7 @@ mono::object CScriptbind_Entity::GetEntitiesInBox(AABB bbox, int objTypes)
 {
 	IPhysicalEntity **pEnts = nullptr;
 
-	IMonoClass *pEntityIdClass = g_pScriptSystem->GetCryBraryAssembly()->GetClass("EntityId");
+	IMonoClass *pEntityIdClass = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("EntityId");
 
 	int numEnts = gEnv->pPhysicalWorld->GetEntitiesInBox(bbox.min, bbox.max, pEnts, objTypes);
 	
@@ -554,7 +554,7 @@ mono::object CScriptbind_Entity::QueryProximity(AABB box, mono::string className
 
 	gEnv->pEntitySystem->QueryProximity(query);
 
-	IMonoClass *pEntityIdClass = g_pScriptSystem->GetCryBraryAssembly()->GetClass("EntityId");
+	IMonoClass *pEntityIdClass = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("EntityId");
 	IMonoArray *pEntities = CreateDynamicMonoArray();
 
 	for(int i = 0; i < query.nCount; i++)
@@ -1138,7 +1138,7 @@ void CScriptbind_Entity::RemoteInvocation(EntityId entityId, EntityId targetId, 
 {
 	CRY_ASSERT(entityId != 0);
 
-	IGameObject *pGameObject = g_pScriptSystem->GetIGameFramework()->GetGameObject(entityId);
+	IGameObject *pGameObject = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetGameObject(entityId);
 	CRY_ASSERT(pGameObject);
 
 	CMonoEntityExtension::RMIParams params(args, ToCryString(methodName), targetId);
@@ -1247,7 +1247,7 @@ mono::object CScriptbind_Entity::QueryAreas(EntityId id, Vec3 vPos, int maxResul
 	gEnv->pEntitySystem->GetAreaManager()->QueryAreas(id, vPos, pResults, maxResults);
 
 	IMonoArray *pArray = CreateDynamicMonoArray();
-	IMonoClass *pClass = g_pScriptSystem->GetCryBraryAssembly()->GetClass("AreaQueryResult");
+	IMonoClass *pClass = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("AreaQueryResult");
 
 	for(int i = 0; i < maxResults; i++)
 	{

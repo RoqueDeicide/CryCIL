@@ -30,7 +30,7 @@ CScriptbind_LevelSystem::CScriptbind_LevelSystem()
 
 ILevelInfo *CScriptbind_LevelSystem::GetCurrentLevel()
 {
-	if(ILevel *pLevel = g_pScriptSystem->GetIGameFramework()->GetILevelSystem()->GetCurrentLevel())
+	if(ILevel *pLevel = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetILevelSystem()->GetCurrentLevel())
 		return pLevel->GetLevelInfo();
 
 	return nullptr;
@@ -38,7 +38,7 @@ ILevelInfo *CScriptbind_LevelSystem::GetCurrentLevel()
 
 ILevelInfo *CScriptbind_LevelSystem::LoadLevel(mono::string name)
 {
-	if(ILevel *pLevel = g_pScriptSystem->GetIGameFramework()->GetILevelSystem()->LoadLevel(ToCryString(name)))
+	if(ILevel *pLevel = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetILevelSystem()->LoadLevel(ToCryString(name)))
 		return pLevel->GetLevelInfo();
 
 	return nullptr;
@@ -46,12 +46,12 @@ ILevelInfo *CScriptbind_LevelSystem::LoadLevel(mono::string name)
 
 bool CScriptbind_LevelSystem::IsLevelLoaded()
 {
-	return g_pScriptSystem->GetIGameFramework()->GetILevelSystem()->IsLevelLoaded();
+	return static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetILevelSystem()->IsLevelLoaded();
 }
 
 void CScriptbind_LevelSystem::UnloadLevel()
 {
-	return g_pScriptSystem->GetIGameFramework()->GetILevelSystem()->UnLoadLevel();
+	return static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetILevelSystem()->UnLoadLevel();
 }
 
 mono::string CScriptbind_LevelSystem::GetName(ILevelInfo *pLevelInfo)

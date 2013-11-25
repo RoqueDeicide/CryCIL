@@ -62,7 +62,7 @@ void CScriptbind_Debug::AddAABB(Vec3 pos, AABB aabb, ColorF clr, float timeout)
 
 IPersistantDebug *CScriptbind_Debug::GetIPersistentDebug()
 {
-	return g_pScriptSystem->GetIGameFramework()->GetIPersistantDebug();
+	return static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIPersistantDebug();
 }
 
 CFrameProfiler *CScriptbind_Debug::CreateFrameProfiler(mono::string methodName)

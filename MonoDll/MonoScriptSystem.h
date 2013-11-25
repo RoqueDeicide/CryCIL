@@ -162,6 +162,4 @@ struct SGameRulesInitializationParams
 	IEntity *pEntity;
 };
 
-extern CScriptSystem *g_pScriptSystem;
-
 #endif //__MONO_H__

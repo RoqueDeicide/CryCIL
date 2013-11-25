@@ -21,7 +21,7 @@ struct IMonoMethod;
 /// Reference to a Mono class, used to call static methods and etc.
 /// </summary>
 /// <example>
-/// IMonoScript *pCryNetwork = g_pScriptSystem->GetCustomClass("CryNetwork", "CryEngine");
+/// IMonoScript *pCryNetwork = GetMonoScriptSystem()->GetCustomClass("CryNetwork", "CryEngine");
 /// </example>
 struct IMonoClass
 	: public IMonoObject

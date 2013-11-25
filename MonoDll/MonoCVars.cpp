@@ -5,7 +5,7 @@
 
 void CmdReload(IConsoleCmdArgs *pCmdArgs)
 {
-	g_pScriptSystem->Reload();
+	GetMonoScriptSystem()->Reload();
 }
 
 void SCVars::InitCVars(IConsole *pConsole)
@@ -30,6 +30,8 @@ void SCVars::InitCVars(IConsole *pConsole)
 	REGISTER_CVAR(mono_scriptDirectory, "", nullOrCheatFlag, "If set, CryMono will attempt to load its script files (e.g. *.cs) from this directory. Full path only.");
 
 	REGISTER_CVAR(mono_entityDeleteExtensionOnNetworkBindFailure, 1, nullOrCheatFlag, "If set, the game object extension will delete itself if IGameObject::BindToNetwork returns false in the IGameObjectExtension::Init function");
+
+	REGISTER_CVAR(mono_log, 0, VF_CHEAT, "");
 
 	REGISTER_COMMAND("mono_reload", CmdReload, nullOrCheatFlag, "[Realtime Scripting] Reloads / recompiles all scripts");
 }

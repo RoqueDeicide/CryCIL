@@ -19,6 +19,8 @@ struct SCVars
 
 	int mono_entityDeleteExtensionOnNetworkBindFailure;
 
+	int mono_log;
+
 	SCVars()
 	{
 		memset(this,0,sizeof(SCVars));

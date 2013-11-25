@@ -41,7 +41,7 @@ CFlowManager::CFlowManager()
 
 CFlowManager::~CFlowManager()
 {
-	g_pScriptSystem->EraseBinding(this);
+	static_cast<CScriptSystem *>(GetMonoScriptSystem())->EraseBinding(this);
 }
 
 void CFlowManager::RegisterNode(mono::string monoTypeName)
@@ -52,7 +52,7 @@ void CFlowManager::RegisterNode(mono::string monoTypeName)
 
 	const char *typeName = ToCryString(monoTypeName);
 
-	CFlowManager *pFlowManager = g_pScriptSystem->GetFlowManager();
+	CFlowManager *pFlowManager = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetFlowManager();
 	if(!pFlowManager)
 	{
 		MonoWarning("Aborting registration of node type %s, flow manager was null!", typeName);

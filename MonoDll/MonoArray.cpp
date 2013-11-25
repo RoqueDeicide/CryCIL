@@ -122,7 +122,7 @@ void CScriptArray::InsertAny(MonoAnyValue value, int index)
 
 IMonoClass *CScriptArray::GetClass(MonoClass *pClass)
 {
-	if(CScriptDomain *pDomain = g_pScriptSystem->TryGetDomain(mono_object_get_domain(m_pObject)))
+	if (CScriptDomain *pDomain = static_cast<CScriptSystem *>(GetMonoScriptSystem())->TryGetDomain(mono_object_get_domain(m_pObject)))
 	{
 		MonoClass *pMonoClass = GetMonoClass();
 

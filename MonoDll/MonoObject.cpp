@@ -38,7 +38,7 @@ IMonoClass *CScriptObject::GetClass()
 {
 	if(m_pClass == NULL)
 	{
-		if(CScriptDomain *pDomain = g_pScriptSystem->TryGetDomain(mono_object_get_domain(m_pObject)))
+		if (CScriptDomain *pDomain = static_cast<CScriptSystem *>(GetMonoScriptSystem())->TryGetDomain(mono_object_get_domain(m_pObject)))
 		{
 			MonoClass *pMonoClass = GetMonoClass();
 
@@ -155,7 +155,7 @@ void CScriptObject::HandleException(MonoObject *pException)
 	// Fatal errors override disabling the message box option
 	bool isFatal = g_pMonoCVars->mono_exceptionsTriggerFatalErrors != 0;
 
-	IMonoAssembly *pCryBraryAssembly = g_pScriptSystem->GetCryBraryAssembly();
+	IMonoAssembly *pCryBraryAssembly = GetMonoScriptSystem()->GetCryBraryAssembly();
 
 	if((g_pMonoCVars->mono_exceptionsTriggerMessageBoxes || isFatal) && pCryBraryAssembly)
 	{

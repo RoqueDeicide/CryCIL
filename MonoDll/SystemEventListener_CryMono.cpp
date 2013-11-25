@@ -11,16 +11,16 @@ void CSystemEventListener_CryMono::OnSystemEvent(ESystemEvent event, UINT_PTR wP
 	{
 	case ESYSTEM_EVENT_CHANGE_FOCUS:
 		{
-			if(g_pScriptSystem == nullptr)
+			if(GetMonoScriptSystem() == nullptr)
 				return;
 
-			if(wParam != 0 && g_pScriptSystem->DetectedChanges() && GetFocus())
-				g_pScriptSystem->Reload();
+			if (wParam != 0 && static_cast<CScriptSystem *>(GetMonoScriptSystem())->DetectedChanges() && GetFocus())
+				GetMonoScriptSystem()->Reload();
 		}
 		break;
 	case ESYSTEM_EVENT_SHUTDOWN:
 		{
-			SAFE_RELEASE(g_pScriptSystem);
+			SAFE_RELEASE(IMonoScriptSystem::g_pThis);
 		}
 		break;
 	}

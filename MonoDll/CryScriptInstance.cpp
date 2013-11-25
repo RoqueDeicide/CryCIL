@@ -5,15 +5,15 @@ CCryScriptInstance::CCryScriptInstance(EMonoScriptFlags flags)
 	: m_flags(flags)
 	, m_scriptId(0)
 {
-	g_pScriptSystem->AddListener(this);
+	GetMonoScriptSystem()->AddListener(this);
 }
 
 CCryScriptInstance::~CCryScriptInstance()
 {
-	if(g_pScriptSystem)
+	if(GetMonoScriptSystem())
 	{
-		g_pScriptSystem->ReportScriptInstanceDestroyed(this, m_scriptId);
-		g_pScriptSystem->RemoveListener(this);
+		static_cast<CScriptSystem *>(GetMonoScriptSystem())->ReportScriptInstanceDestroyed(this, m_scriptId);
+		GetMonoScriptSystem()->RemoveListener(this);
 	}
 }
 
@@ -44,7 +44,7 @@ void CCryScriptInstance::OnReloadComplete()
 	if(m_scriptId == 0)
 		return;
 
-	IMonoObject *pScriptManager = g_pScriptSystem->GetScriptManager();
+	IMonoObject *pScriptManager = GetMonoScriptSystem()->GetScriptManager();
 	IMonoClass *pScriptManagerClass = pScriptManager->GetClass();
 
 	IMonoMethod *pGetScriptInstanceMethod = pScriptManagerClass->GetMethod("GetScriptInstanceById", 2);

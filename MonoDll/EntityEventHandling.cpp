@@ -35,7 +35,7 @@ void CEntityEventHandler::HandleEntityEvent(EEntityType type, SEntityEvent &even
 			SMonoColliderInfo source = SMonoColliderInfo(pCollision, 0);
 			SMonoColliderInfo target = SMonoColliderInfo(pCollision, 1);
 
-			IMonoClass *pColliderInfoClass = g_pScriptSystem->GetCryBraryAssembly()->GetClass("ColliderInfo");
+			IMonoClass *pColliderInfoClass = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("ColliderInfo");
 
 			IMonoArray *pArgs = CreateMonoArray(6);
 
@@ -96,7 +96,7 @@ void CEntityEventHandler::HandleEntityEvent(EEntityType type, SEntityEvent &even
 			const AnimEventInstance* pAnimEvent = reinterpret_cast<const AnimEventInstance*>(event.nParam[0]);
 			ICharacterInstance* pCharacter = reinterpret_cast<ICharacterInstance*>(event.nParam[1]);
 
-			IMonoClass *pAnimationEventClass = g_pScriptSystem->GetCryBraryAssembly()->GetClass("AnimationEvent");
+			IMonoClass *pAnimationEventClass = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("AnimationEvent");
 
 			SMonoAnimationEvent animEvent(pAnimEvent);
 
@@ -118,6 +118,6 @@ void CEntityEventHandler::HandleEntityEvent(EEntityType type, SEntityEvent &even
 
 void CEntityEventHandler::CacheManagedResources()
 {
-	m_pClass[Entity] = g_pScriptSystem->GetCryBraryAssembly()->GetClass("Entity");
-	m_pClass[Actor] = g_pScriptSystem->GetCryBraryAssembly()->GetClass("Actor");
+	m_pClass[Entity] = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("Entity");
+	m_pClass[Actor] = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("Actor");
 }

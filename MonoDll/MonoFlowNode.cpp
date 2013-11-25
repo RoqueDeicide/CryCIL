@@ -28,7 +28,7 @@ CMonoFlowNode::CMonoFlowNode(SActivationInfo *pActInfo)
 
 CMonoFlowNode::~CMonoFlowNode()
 {
-	IMonoClass *pFlowNodeClass = g_pScriptSystem->GetCryBraryAssembly()->GetClass("FlowNode", "CryEngine.Flowgraph");
+	IMonoClass *pFlowNodeClass = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("FlowNode", "CryEngine.Flowgraph");
 
 	pFlowNodeClass->CallMethod("InternalRemove", m_scriptId);
 }
@@ -42,14 +42,14 @@ bool CMonoFlowNode::CreatedNode(TFlowNodeId id, const char *name, TFlowNodeTypeI
 
 		const char *typeName = gEnv->pFlowSystem->GetTypeName(typeId);
 
-		ICryScriptInstance *pScript = g_pScriptSystem->InstantiateScript(gEnv->pFlowSystem->GetTypeName(typeId), eScriptFlag_FlowNode);
+		ICryScriptInstance *pScript = GetMonoScriptSystem()->InstantiateScript(gEnv->pFlowSystem->GetTypeName(typeId), eScriptFlag_FlowNode);
 
-		IMonoClass *pNodeInfo = g_pScriptSystem->GetCryBraryAssembly()->GetClass("NodeInitializationParams", "CryEngine.Flowgraph.Native");
+		IMonoClass *pNodeInfo = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("NodeInitializationParams", "CryEngine.Flowgraph.Native");
 		
 		IMonoArray *pArgs = CreateMonoArray(1);
 		pArgs->InsertMonoObject(pNodeInfo->BoxObject(&SMonoNodeInfo(this, id, m_graphId)));
 
-		mono::object result = g_pScriptSystem->InitializeScriptInstance(pScript, pArgs);
+		mono::object result = static_cast<CScriptSystem *>(GetMonoScriptSystem())->InitializeScriptInstance(pScript, pArgs);
 		pArgs->Release();
 		
 		m_pScript = pScript;

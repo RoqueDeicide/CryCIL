@@ -17,8 +17,7 @@ CScriptbind_GameRules::CScriptbind_GameRules()
 //-----------------------------------------------------------------------------
 void CScriptbind_GameRules::RegisterGameMode(mono::string gamemode)
 {
-	// g_pScriptSystem->GetIGameFramework() is set too late, so we'll have to set it earlier in CGameStartup::InitFramework. (g_pScriptSystem->GetIGameFramework() = m_pFramework after the ModuleInitISystem call)
-	if(IGameFramework *pGameFramework = g_pScriptSystem->GetIGameFramework())
+	if(IGameFramework *pGameFramework = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework())
 	{
 		if(IGameRulesSystem *pGameRulesSystem = pGameFramework->GetIGameRulesSystem())
 		{
@@ -33,13 +32,13 @@ void CScriptbind_GameRules::RegisterGameMode(mono::string gamemode)
 //-----------------------------------------------------------------------------
 void CScriptbind_GameRules::AddGameModeAlias(mono::string gamemode, mono::string alias)
 {
-	g_pScriptSystem->GetIGameFramework()->GetIGameRulesSystem()->AddGameRulesAlias(ToCryString(gamemode), ToCryString(alias));
+	static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIGameRulesSystem()->AddGameRulesAlias(ToCryString(gamemode), ToCryString(alias));
 }
 
 //-----------------------------------------------------------------------------
 void CScriptbind_GameRules::AddGameModeLevelLocation(mono::string gamemode, mono::string location)
 {
-	g_pScriptSystem->GetIGameFramework()->GetIGameRulesSystem()->AddGameRulesLevelLocation(ToCryString(gamemode), ToCryString(location));
+	static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIGameRulesSystem()->AddGameRulesLevelLocation(ToCryString(gamemode), ToCryString(location));
 }
 
 //-----------------------------------------------------------------------------
@@ -51,5 +50,5 @@ void CScriptbind_GameRules::SetDefaultGameMode(mono::string gamemode)
 //-----------------------------------------------------------------------------
 EntityId CScriptbind_GameRules::GetPlayer()
 {
-	return g_pScriptSystem->GetIGameFramework()->GetClientActorId();
+	return static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetClientActorId();
 }

@@ -22,6 +22,9 @@
 #include <mono/metadata/environment.h>
 #include <mono/metadata/mono-gc.h>
 
+#include <iostream>
+#include <fstream>
+
 #include <ICmdLine.h>
 #include <ISystem.h>
 
@@ -62,7 +65,8 @@
 #include <Windows.h>
 
 SCVars *g_pMonoCVars = 0;
-CScriptSystem *g_pScriptSystem = 0;
+
+IMonoScriptSystem *IMonoScriptSystem::g_pThis = nullptr;
 
 CScriptSystem::CScriptSystem(IGameFramework *pGameFramework)
 	: m_pRootDomain(nullptr)
@@ -79,11 +83,7 @@ CScriptSystem::CScriptSystem(IGameFramework *pGameFramework)
 {
 	CryLogAlways("Initializing Mono Script System");
 
-#ifndef PLUGIN_SDK
-	gEnv->pMonoScriptSystem = this;
-#endif;
-
-	g_pScriptSystem = this;
+	g_pThis = this;
 
 	m_pCVars = new SCVars();
 	g_pMonoCVars = m_pCVars;
@@ -96,7 +96,6 @@ CScriptSystem::CScriptSystem(IGameFramework *pGameFramework)
 	// Makes sure that Mono sends back exceptions it tries to handle, for CE crash handling.
 	mono_set_signal_chaining(true);
 #endif
-
 
 	string monoCmdOptions = "";
 
@@ -174,8 +173,8 @@ CScriptSystem::~CScriptSystem()
 		(*it)->Release();
 	m_domains.clear();
 
-	if(g_pScriptSystem->GetIGameFramework())
-		g_pScriptSystem->GetIGameFramework()->UnregisterListener(this);
+	if (IGameFramework *pGameFramework = GetIGameFramework())
+		pGameFramework->UnregisterListener(this);
 
 	if(IFileChangeMonitor *pFileChangeMonitor = gEnv->pFileChangeMonitor)
 		pFileChangeMonitor->UnregisterListener(this);
@@ -186,11 +185,9 @@ CScriptSystem::~CScriptSystem()
 
 	SAFE_DELETE(m_pCVars);
 
-	g_pScriptSystem = nullptr;
+	CryLogAlways("Shutdown");
 
-#ifndef PLUGIN_SDK
-	gEnv->pMonoScriptSystem = nullptr;
-#endif
+	g_pThis = nullptr;
 }
 
 bool CScriptSystem::CompleteInit()
@@ -352,6 +349,8 @@ void CScriptSystem::RegisterSecondaryBindings()
 	}
 
 	RegisterBinding(CScriptbind_Input);
+
+	m_methodBindings.clear();
 }
 #undef RegisterBinding
 
@@ -406,7 +405,7 @@ void CScriptSystem::OnFileChange(const char *fileName)
 
 void CScriptSystem::RegisterFlownodes()
 {
-	if(m_pScriptManager && g_pScriptSystem->GetIGameFramework()->GetIFlowSystem())
+	if(m_pScriptManager && GetIGameFramework()->GetIFlowSystem())
 		m_pScriptManager->CallMethod("RegisterFlownodes");
 }
 

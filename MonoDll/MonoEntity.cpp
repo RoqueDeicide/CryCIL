@@ -48,17 +48,17 @@ bool CMonoEntityExtension::Init(IGameObject *pGameObject)
 	IEntity *pEntity = GetEntity();
 	IEntityClass *pEntityClass = pEntity->GetClass();
 
-	m_pScript = g_pScriptSystem->InstantiateScript(pEntityClass->GetName(), eScriptFlag_Entity);
+	m_pScript = GetMonoScriptSystem()->InstantiateScript(pEntityClass->GetName(), eScriptFlag_Entity);
 	m_pManagedObject = m_pScript->GetManagedObject();
 
-	IMonoClass *pEntityInfoClass = g_pScriptSystem->GetCryBraryAssembly()->GetClass("EntityInitializationParams", "CryEngine.Native");
+	IMonoClass *pEntityInfoClass = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("EntityInitializationParams", "CryEngine.Native");
 
 	SMonoEntityInfo entityInfo(pEntity);
 
 	IMonoArray *pArgs = CreateMonoArray(1);
 	pArgs->InsertMonoObject(pEntityInfoClass->BoxObject(&entityInfo));
 
-	g_pScriptSystem->InitializeScriptInstance(m_pScript, pArgs);
+	static_cast<CScriptSystem *>(GetMonoScriptSystem())->InitializeScriptInstance(m_pScript, pArgs);
 	pArgs->Release();
 
 	int numProperties;
@@ -225,7 +225,7 @@ void CMonoEntityExtension::RMIParams::SerializeWith(TSerialize ser)
 		}
 		else
 		{
-			pArgs = g_pScriptSystem->GetScriptDomain()->CreateArray(length);
+			pArgs = GetMonoScriptSystem()->GetScriptDomain()->CreateArray(length);
 
 			for(int i = 0; i < length; i++)
 			{
@@ -243,7 +243,7 @@ void CMonoEntityExtension::RMIParams::SerializeWith(TSerialize ser)
 
 IMPLEMENT_RMI(CMonoEntityExtension, SvScriptRMI)
 {
-	IMonoClass *pEntityClass = g_pScriptSystem->GetCryBraryAssembly()->GetClass("Entity");
+	IMonoClass *pEntityClass = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("Entity");
 
 	IMonoArray *pNetworkArgs = CreateMonoArray(3);
 	pNetworkArgs->Insert(ToMonoString(params.methodName.c_str()));
@@ -258,7 +258,7 @@ IMPLEMENT_RMI(CMonoEntityExtension, SvScriptRMI)
 
 IMPLEMENT_RMI(CMonoEntityExtension, ClScriptRMI)
 {
-	IMonoClass *pEntityClass = g_pScriptSystem->GetCryBraryAssembly()->GetClass("Entity");
+	IMonoClass *pEntityClass = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("Entity");
 
 	IMonoArray *pNetworkArgs = CreateMonoArray(3);
 	pNetworkArgs->Insert(ToMonoString(params.methodName.c_str()));

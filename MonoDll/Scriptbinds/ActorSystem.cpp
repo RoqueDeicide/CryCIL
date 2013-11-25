@@ -60,18 +60,18 @@ void CScriptbind_ActorSystem::OnSpawn(IEntity *pEntity,SEntitySpawnParams &param
 
 	if(actorType != EMonoActorType_None)
 	{
-		if(IActor *pActor = g_pScriptSystem->GetIGameFramework()->GetIActorSystem()->GetActor(pEntity->GetId()))
+		if(IActor *pActor = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIActorSystem()->GetActor(pEntity->GetId()))
 		{
-			ICryScriptInstance *pScript  = g_pScriptSystem->InstantiateScript(pEntity->GetClass()->GetName(), eScriptFlag_Actor);
+			ICryScriptInstance *pScript  = GetMonoScriptSystem()->InstantiateScript(pEntity->GetClass()->GetName(), eScriptFlag_Actor);
 
-			IMonoClass *pActorInfoClass = g_pScriptSystem->GetCryBraryAssembly()->GetClass("ActorInitializationParams", "CryEngine.Native");
+			IMonoClass *pActorInfoClass = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("ActorInitializationParams", "CryEngine.Native");
 
 			SMonoActorInfo actorInfo(pActor);
 
 			IMonoArray *pArgs = CreateMonoArray(1);
 			pArgs->InsertMonoObject(pActorInfoClass->BoxObject(&actorInfo));
 
-			g_pScriptSystem->InitializeScriptInstance(pScript, pArgs);
+			static_cast<CScriptSystem *>(GetMonoScriptSystem())->InitializeScriptInstance(pScript, pArgs);
 			SAFE_RELEASE(pArgs);
 		}
 	}
@@ -79,7 +79,7 @@ void CScriptbind_ActorSystem::OnSpawn(IEntity *pEntity,SEntitySpawnParams &param
 
 SMonoActorInfo CScriptbind_ActorSystem::GetActorInfoByChannelId(uint16 channelId)
 {
-	if(IActor *pActor = g_pScriptSystem->GetIGameFramework()->GetIActorSystem()->GetActorByChannelId(channelId))
+	if(IActor *pActor = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIActorSystem()->GetActorByChannelId(channelId))
 		return SMonoActorInfo(pActor);
 
 	return SMonoActorInfo();
@@ -87,7 +87,7 @@ SMonoActorInfo CScriptbind_ActorSystem::GetActorInfoByChannelId(uint16 channelId
 
 SMonoActorInfo CScriptbind_ActorSystem::GetActorInfoById(EntityId id)
 {
-	if(IActor *pActor = g_pScriptSystem->GetIGameFramework()->GetIActorSystem()->GetActor(id))
+	if(IActor *pActor = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIActorSystem()->GetActor(id))
 		return SMonoActorInfo(pActor);
 
 	return SMonoActorInfo();
@@ -106,9 +106,9 @@ void CScriptbind_ActorSystem::RegisterActorClass(mono::string name, bool isNativ
 		}
 
 		if(isAI)
-			g_pScriptSystem->GetIGameFramework()->RegisterFactory(className, (CMonoAIActor *)0, true, (CMonoAIActor *)0);
+			static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->RegisterFactory(className, (CMonoAIActor *)0, true, (CMonoAIActor *)0);
 		else
-			g_pScriptSystem->GetIGameFramework()->RegisterFactory(className, (CMonoActor *)0, false, (CMonoActor *)0);
+			static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->RegisterFactory(className, (CMonoActor *)0, false, (CMonoActor *)0);
 	}
 
 	m_monoActorClasses.insert(TActorClasses::value_type(className, isNative ? EMonoActorType_Native : EMonoActorType_Managed));
@@ -118,7 +118,7 @@ SMonoActorInfo CScriptbind_ActorSystem::CreateActor(int channelId, mono::string 
 {
 	const char *sClassName = ToCryString(className);
 
-	if(IActor *pActor = g_pScriptSystem->GetIGameFramework()->GetIActorSystem()->CreateActor(channelId, ToCryString(name), sClassName, pos, rot, scale))
+	if(IActor *pActor = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIActorSystem()->CreateActor(channelId, ToCryString(name), sClassName, pos, rot, scale))
 		return SMonoActorInfo(pActor);
 
 	return SMonoActorInfo();
@@ -126,12 +126,12 @@ SMonoActorInfo CScriptbind_ActorSystem::CreateActor(int channelId, mono::string 
 
 void CScriptbind_ActorSystem::RemoveActor(EntityId id)
 {
-	g_pScriptSystem->GetIGameFramework()->GetIActorSystem()->RemoveActor(id);
+	static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIActorSystem()->RemoveActor(id);
 }
 
 EntityId CScriptbind_ActorSystem::GetClientActorId()
 {
-	return g_pScriptSystem->GetIGameFramework()->GetClientActorId();
+	return static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetClientActorId();
 }
 
 float CScriptbind_ActorSystem::GetPlayerHealth(IActor *pActor)
@@ -158,7 +158,7 @@ void CScriptbind_ActorSystem::RemoteInvocation(EntityId entityId, EntityId targe
 {
 	CRY_ASSERT(entityId != 0);
 
-	IGameObject *pGameObject = g_pScriptSystem->GetIGameFramework()->GetGameObject(entityId);
+	IGameObject *pGameObject = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetGameObject(entityId);
 	CRY_ASSERT(pGameObject);
 
 	CMonoEntityExtension::RMIParams params(args, ToCryString(methodName), targetId);

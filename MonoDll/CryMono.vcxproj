@@ -518,6 +518,7 @@
     <ClInclude Include="EntityEventHandling.h" />
     <ClInclude Include="FlowManager.h" />
     <ClInclude Include="FlowBaseNode.h" />
+    <ClInclude Include="Headers\CryMonoInitializationHelpers.h" />
     <ClInclude Include="Headers\ICryScriptInstance.h" />
     <ClInclude Include="Headers\IMonoArray.h" />
     <ClInclude Include="Headers\IMonoAssembly.h" />

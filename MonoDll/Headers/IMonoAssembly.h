@@ -32,7 +32,7 @@ public:
 	/// Note: This does not construct an new instance of the class, only returns an uninitialized IMonoScript. To instantiate a class, see IMonoAssembly::InstantiateClass
 	/// </summary>
 	/// <example>
-	/// IMonoScript *pClass = g_pScriptSystem->GetCryBraryAssembly()->GetCustomClass("Vec3");
+	/// IMonoScript *pClass = GetMonoScriptSystem()->GetCryBraryAssembly()->GetCustomClass("Vec3");
 	/// </example>
 	virtual IMonoClass *GetClass(const char *className, const char *nameSpace = "CryEngine") = 0;
 

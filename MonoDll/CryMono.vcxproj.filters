@@ -175,6 +175,10 @@
     <ClInclude Include="MonoMethod.h">
       <Filter>Wrappers</Filter>
     </ClInclude>
+    <ClInclude Include="AIActor.h" />
+    <ClInclude Include="Headers\CryMonoInitializationHelpers.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -301,6 +305,7 @@
     <ClCompile Include="EntityEventHandling.cpp">
       <Filter>EntitySystem</Filter>
     </ClCompile>
+    <ClCompile Include="AIActor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ScriptBinds">

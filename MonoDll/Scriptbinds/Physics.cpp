@@ -138,7 +138,7 @@ int CScriptbind_Physics::RayWorldIntersection(Vec3 origin, Vec3 dir, int objFlag
 
 #ifndef RELEASE
 			if(!pItem)
-				g_pScriptSystem->GetCryBraryAssembly()->GetException("CryEngine", "NullPointerException")->Throw();
+				GetMonoScriptSystem()->GetCryBraryAssembly()->GetException("CryEngine", "NullPointerException")->Throw();
 #endif
 
 			pSkipEnts[i] = pItem->Unbox<IPhysicalEntity *>();
@@ -155,7 +155,7 @@ int CScriptbind_Physics::RayWorldIntersection(Vec3 origin, Vec3 dir, int objFlag
 
 	if(numHits > 0)
 	{
-		IMonoClass *pRayHitClass = g_pScriptSystem->GetCryBraryAssembly()->GetClass("RaycastHit");
+		IMonoClass *pRayHitClass = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("RaycastHit");
 
 		IMonoArray *pRayHits = CreateMonoArray(numHits);//, pRayHitClass);
 		for(int i = 0; i < numHits; i++)

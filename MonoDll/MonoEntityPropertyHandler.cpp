@@ -80,7 +80,7 @@ void CEntityPropertyHandler::SetProperty(IEntity *pIEntity, int index, const cha
 	EntityId id = pIEntity->GetId();
 
 	CMonoEntityExtension *pEntity = nullptr;
-	if(IGameObject *pGameObject = g_pScriptSystem->GetIGameFramework()->GetGameObject(id))
+	if (IGameObject *pGameObject = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetGameObject(id))
 		pEntity = static_cast<CMonoEntityExtension *>(pGameObject->QueryExtension(pIEntity->GetClass()->GetName()));
 
 	// Only true after game has started, limiting this to changes made in Editor.
@@ -111,7 +111,7 @@ void CEntityPropertyHandler::SetProperty(IEntity *pIEntity, int index, const cha
 
 const char *CEntityPropertyHandler::GetProperty(IEntity *pIEntity, int index) const
 {
-	if(IGameObject *pGameObject = g_pScriptSystem->GetIGameFramework()->GetGameObject(pIEntity->GetId()))
+	if (IGameObject *pGameObject = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetGameObject(pIEntity->GetId()))
 	{
 		if(CMonoEntityExtension *pEntity = static_cast<CMonoEntityExtension *>(pGameObject->QueryExtension(pIEntity->GetClass()->GetName())))
 		{

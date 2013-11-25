@@ -28,7 +28,7 @@ CScriptbind_ViewSystem::CScriptbind_ViewSystem()
 
 unsigned int CScriptbind_ViewSystem::GetView(EntityId id, bool forceCreate)
 {
-	if (IViewSystem *pViewSystem = g_pScriptSystem->GetIGameFramework()->GetIViewSystem())
+	if (IViewSystem *pViewSystem = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIViewSystem())
 	{
 		if(IView *pView = pViewSystem->GetViewByEntityId(id, forceCreate))
 			return pViewSystem->GetViewId(pView);
@@ -39,7 +39,7 @@ unsigned int CScriptbind_ViewSystem::GetView(EntityId id, bool forceCreate)
 
 void CScriptbind_ViewSystem::RemoveView(unsigned int viewId)
 {
-	if (IViewSystem *pViewSystem = g_pScriptSystem->GetIGameFramework()->GetIViewSystem())
+	if (IViewSystem *pViewSystem = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIViewSystem())
 	{
 		if(IView *pView = pViewSystem->GetView(viewId))
 			pView->Release();
@@ -48,7 +48,7 @@ void CScriptbind_ViewSystem::RemoveView(unsigned int viewId)
 
 unsigned int CScriptbind_ViewSystem::GetActiveView()
 {
-	if (IViewSystem *pViewSystem = g_pScriptSystem->GetIGameFramework()->GetIViewSystem())
+	if (IViewSystem *pViewSystem = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIViewSystem())
 		return pViewSystem->GetActiveViewId();
 
 	return 0;
@@ -56,7 +56,7 @@ unsigned int CScriptbind_ViewSystem::GetActiveView()
 
 void CScriptbind_ViewSystem::SetActiveView(unsigned int viewId)
 {
-	if (IViewSystem *pViewSystem = g_pScriptSystem->GetIGameFramework()->GetIViewSystem())
+	if (IViewSystem *pViewSystem = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIViewSystem())
 	{
 		if(pViewSystem->GetView(viewId))
 			pViewSystem->SetActiveView(viewId);
@@ -65,7 +65,7 @@ void CScriptbind_ViewSystem::SetActiveView(unsigned int viewId)
 
 SViewParams GetViewParams(unsigned int viewId)
 {
-	if (IViewSystem *pViewSystem = g_pScriptSystem->GetIGameFramework()->GetIViewSystem())
+	if (IViewSystem *pViewSystem = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIViewSystem())
 	{
 		if(IView *pView = pViewSystem->GetView(viewId))
 			return *pView->GetCurrentParams();
@@ -76,7 +76,7 @@ SViewParams GetViewParams(unsigned int viewId)
 
 void SetViewParams(EntityId viewId, SViewParams &viewParams)
 {
-	if (IViewSystem *pViewSystem = g_pScriptSystem->GetIGameFramework()->GetIViewSystem())
+	if (IViewSystem *pViewSystem = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIViewSystem())
 	{
 		if(IView *pView = pViewSystem->GetView(viewId))
 			pView->SetCurrentParams(viewParams);
@@ -105,7 +105,7 @@ float CScriptbind_ViewSystem::GetViewFieldOfView(unsigned int viewId)
 
 void CScriptbind_ViewSystem::SetViewPosition(unsigned int viewId, Vec3 pos)
 {
-	if (IViewSystem *pViewSystem = g_pScriptSystem->GetIGameFramework()->GetIViewSystem())
+	if (IViewSystem *pViewSystem = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIViewSystem())
 	{
 		if(IView *pView = pViewSystem->GetView(viewId))
 		{
@@ -118,7 +118,7 @@ void CScriptbind_ViewSystem::SetViewPosition(unsigned int viewId, Vec3 pos)
 
 void CScriptbind_ViewSystem::SetViewRotation(unsigned int viewId, Quat rot)
 {
-	if (IViewSystem *pViewSystem = g_pScriptSystem->GetIGameFramework()->GetIViewSystem())
+	if (IViewSystem *pViewSystem = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIViewSystem())
 	{
 		if(IView *pView = pViewSystem->GetView(viewId))
 		{
@@ -131,7 +131,7 @@ void CScriptbind_ViewSystem::SetViewRotation(unsigned int viewId, Quat rot)
 
 void CScriptbind_ViewSystem::SetViewNearPlane(unsigned int viewId, float nearPlane)
 {
-	if (IViewSystem *pViewSystem = g_pScriptSystem->GetIGameFramework()->GetIViewSystem())
+	if (IViewSystem *pViewSystem = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIViewSystem())
 	{
 		if(IView *pView = pViewSystem->GetView(viewId))
 		{
@@ -144,7 +144,7 @@ void CScriptbind_ViewSystem::SetViewNearPlane(unsigned int viewId, float nearPla
 
 void CScriptbind_ViewSystem::SetViewFieldOfView(unsigned int viewId, float fov)						
 {
-	if (IViewSystem *pViewSystem = g_pScriptSystem->GetIGameFramework()->GetIViewSystem())
+	if (IViewSystem *pViewSystem = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIViewSystem())
 	{
 		if(IView *pView = pViewSystem->GetView(viewId))
 		{

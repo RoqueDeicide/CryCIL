@@ -96,7 +96,7 @@ CScriptDomain::~CScriptDomain()
 		}
 	}
 
-	g_pScriptSystem->OnDomainReleased(this);
+	static_cast<CScriptSystem *>(GetMonoScriptSystem())->OnDomainReleased(this);
 }
 
 bool CScriptDomain::SetActive(bool force)
@@ -139,7 +139,7 @@ IMonoAssembly *CScriptDomain::LoadAssembly(const char *file, bool shadowCopy, bo
 #ifndef _RELEASE
 	if(g_pMonoCVars->mono_generateMdbIfPdbIsPresent != 0 && convertPdbToMdb && sAssemblyPath.find("pdb2mdb")==-1)
 	{
-		if(IMonoAssembly *pDebugDatabaseCreator = g_pScriptSystem->GetDebugDatabaseCreator())
+		if (IMonoAssembly *pDebugDatabaseCreator = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetDebugDatabaseCreator())
 		{
 			if(IMonoClass *pDriverClass = pDebugDatabaseCreator->GetClass("Driver", ""))
 			{
@@ -216,12 +216,12 @@ mono::object CScriptDomain::BoxAnyValue(MonoAnyValue &any)
 		return (mono::object)CreateMonoString(any.str);
 	case eMonoAnyType_EntityId:
 		{
-			IMonoClass *pEntityIdClass = g_pScriptSystem->GetCryBraryAssembly()->GetClass("EntityId");
+			IMonoClass *pEntityIdClass = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("EntityId");
 			return pEntityIdClass->BoxObject(&mono::entityId(any.u), this);
 		}
 	case eMonoAnyType_Vec3:
 		{
-			IMonoClass *pVec3Class = g_pScriptSystem->GetCryBraryAssembly()->GetClass("Vec3");
+			IMonoClass *pVec3Class = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("Vec3");
 			
 			Vec3 vec3(any.vec4.x, any.vec4.y, any.vec4.z);
 			return pVec3Class->BoxObject(&vec3, this);
@@ -229,7 +229,7 @@ mono::object CScriptDomain::BoxAnyValue(MonoAnyValue &any)
 		break;
 	case eMonoAnyType_Quat:
 		{
-			IMonoClass *pQuatClass = g_pScriptSystem->GetCryBraryAssembly()->GetClass("Quat");
+			IMonoClass *pQuatClass = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("Quat");
 			
 			return pQuatClass->BoxObject(&any.vec4, this);
 		}
