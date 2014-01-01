@@ -22,6 +22,8 @@
 #include <IGameObject.h>
 #include <IGameFramework.h>
 
+#include <ICryAnimation.h>
+
 std::vector<const char *> CScriptbind_Entity::m_monoEntityClasses = std::vector<const char *>();
 
 IMonoClass *CScriptbind_Entity::m_pEntityClass = nullptr;
@@ -131,11 +133,7 @@ CScriptbind_Entity::CScriptbind_Entity()
 	// ~Attachment
 
 	REGISTER_METHOD(GetJointAbsolute);
-	REGISTER_METHOD(GetJointAbsoluteDefault);
 	REGISTER_METHOD(GetJointRelative);
-	REGISTER_METHOD(GetJointRelativeDefault);
-
-	REGISTER_METHOD(SetJointAbsolute);
 
 	REGISTER_METHOD(SetTriggerBBox);
 	REGISTER_METHOD(GetTriggerBBox);
@@ -1005,26 +1003,14 @@ QuatT CScriptbind_Entity::GetJointAbsolute(IEntity *pEntity, mono::string jointN
 {
 	if(ICharacterInstance *pCharacter = pEntity->GetCharacter(characterSlot))
 	{
-		if(ISkeletonPose *pSkeletonPose = pCharacter->GetISkeletonPose())
+		const IDefaultSkeleton *pDefaultSkeleton = &pCharacter->GetIDefaultSkeleton();
+		ISkeletonPose *pSkeletonPose = pCharacter->GetISkeletonPose();
+
+		if (pSkeletonPose != nullptr)
 		{
-			int16 id = pSkeletonPose->GetJointIDByName(ToCryString(jointName));
+			int16 id = pDefaultSkeleton->GetJointIDByName(ToCryString(jointName));
 			if(id > -1)
 				return pSkeletonPose->GetAbsJointByID(id);
-		}
-	}
-
-	return QuatT();
-}
-
-QuatT CScriptbind_Entity::GetJointAbsoluteDefault(IEntity *pEntity, mono::string jointName, int characterSlot)
-{
-	if(ICharacterInstance *pCharacter = pEntity->GetCharacter(characterSlot))
-	{
-		if(ISkeletonPose *pSkeletonPose = pCharacter->GetISkeletonPose())
-		{
-			int16 id = pSkeletonPose->GetJointIDByName(ToCryString(jointName));
-			if(id > -1)
-				return pSkeletonPose->GetDefaultAbsJointByID(id);
 		}
 	}
 
@@ -1035,43 +1021,18 @@ QuatT CScriptbind_Entity::GetJointRelative(IEntity *pEntity, mono::string jointN
 {
 	if(ICharacterInstance *pCharacter = pEntity->GetCharacter(characterSlot))
 	{
-		if(ISkeletonPose *pSkeletonPose = pCharacter->GetISkeletonPose())
+		const IDefaultSkeleton *pDefaultSkeleton = &pCharacter->GetIDefaultSkeleton();
+		ISkeletonPose *pSkeletonPose = pCharacter->GetISkeletonPose();
+		
+		if (pSkeletonPose != nullptr)
 		{
-			int16 id = pSkeletonPose->GetJointIDByName(ToCryString(jointName));
-			if(id > -1)
+			int16 id = pDefaultSkeleton->GetJointIDByName(ToCryString(jointName));
+			if (id > -1)
 				return pSkeletonPose->GetRelJointByID(id);
 		}
 	}
 
 	return QuatT();
-}
-
-QuatT CScriptbind_Entity::GetJointRelativeDefault(IEntity *pEntity, mono::string jointName, int characterSlot)
-{
-	if(ICharacterInstance *pCharacter = pEntity->GetCharacter(characterSlot))
-	{
-		if(ISkeletonPose *pSkeletonPose = pCharacter->GetISkeletonPose())
-		{
-			int16 id = pSkeletonPose->GetJointIDByName(ToCryString(jointName));
-			if(id > -1)
-				return pSkeletonPose->GetDefaultRelJointByID(id);
-		}
-	}
-
-	return QuatT();
-}
-
-void CScriptbind_Entity::SetJointAbsolute(IEntity *pEntity, mono::string jointName, int characterSlot, QuatT absolute)
-{
-	if(ICharacterInstance *pCharacter = pEntity->GetCharacter(characterSlot))
-	{
-		if(ISkeletonPose *pSkeletonPose = pCharacter->GetISkeletonPose())
-		{
-			int16 id = pSkeletonPose->GetJointIDByName(ToCryString(jointName));
-		//	if(id > -1)
-				//pSkeletonPose->SetAbsJointByID(id, absolute);
-		}
-	}
 }
 
 void CScriptbind_Entity::SetTriggerBBox(IEntity *pEntity, AABB bounds)

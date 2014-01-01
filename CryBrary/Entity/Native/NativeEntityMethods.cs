@@ -192,15 +192,8 @@ namespace CryEngine.Native
         [MethodImpl(MethodImplOptions.InternalCall)]
         extern public static QuatT GetJointAbsolute(IntPtr entPtr, string jointName, int characterSlot);
         [MethodImpl(MethodImplOptions.InternalCall)]
-        extern public static QuatT GetJointAbsoluteDefault(IntPtr entPtr, string jointName, int characterSlot);
-        [MethodImpl(MethodImplOptions.InternalCall)]
         extern public static QuatT GetJointRelative(IntPtr entPtr, string jointName, int characterSlot);
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        extern public static QuatT GetJointRelativeDefault(IntPtr entPtr, string jointName, int characterSlot);
-
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        extern public static void SetJointAbsolute(IntPtr entPtr, string jointName, int characterSlot, QuatT absolute);
-
+       
         [MethodImpl(MethodImplOptions.InternalCall)]
         extern public static void SetTriggerBBox(IntPtr entPtr, BoundingBox bounds);
         [MethodImpl(MethodImplOptions.InternalCall)]

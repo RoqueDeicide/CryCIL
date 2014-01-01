@@ -352,28 +352,6 @@ namespace CryEngine
         }
 
         /// <summary>
-        /// Gets the default absolute of the specified joint
-        /// </summary>
-        /// <param name="jointName">Name of the joint</param>
-        /// <param name="characterSlot">Slot containing the character</param>
-        /// <returns>Default absolute of the specified joint</returns>
-        public QuatT GetJointAbsoluteDefault(string jointName, int characterSlot = 0)
-        {
-            return NativeEntityMethods.GetJointAbsoluteDefault(this.GetIEntity(), jointName, characterSlot);
-        }
-
-        /// <summary>
-        /// Sets the absolute of the specified joint
-        /// </summary>
-        /// <param name="jointName">Name of the joint</param>
-        /// <param name="absolute">New absolute</param>
-        /// <param name="characterSlot">Slot containing the character</param>
-        public void SetJointAbsolute(string jointName, QuatT absolute, int characterSlot = 0)
-        {
-            NativeEntityMethods.SetJointAbsolute(this.GetIEntity(), jointName, characterSlot, absolute);
-        }
-
-        /// <summary>
         /// Gets the relative of the specified joint
         /// </summary>
         /// <param name="jointName">Name of the joint</param>
@@ -382,17 +360,6 @@ namespace CryEngine
         public QuatT GetJointRelative(string jointName, int characterSlot = 0)
         {
             return NativeEntityMethods.GetJointRelative(this.GetIEntity(), jointName, characterSlot);
-        }
-
-        /// <summary>
-        /// Gets the default relative of the specified joint
-        /// </summary>
-        /// <param name="jointName">Name of the joint</param>
-        /// <param name="characterSlot">Slot containing the character</param>
-        /// <returns>Default relative of the specified joint</returns>
-        public QuatT GetJointRelativeDefault(string jointName, int characterSlot = 0)
-        {
-            return NativeEntityMethods.GetJointRelativeDefault(this.GetIEntity(), jointName, characterSlot);
         }
 
         public ParticleEmitter LoadParticleEmitter(ParticleEffect particleEffect, ref ParticleSpawnParameters spawnParams, int slot = -1)

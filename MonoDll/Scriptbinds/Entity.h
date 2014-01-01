@@ -287,11 +287,7 @@ protected:
 	static AABB GetAttachmentObjectBBox(IAttachment *pAttachment);
 
 	static QuatT GetJointAbsolute(IEntity *pEntity, mono::string jointName, int characterSlot);
-	static QuatT GetJointAbsoluteDefault(IEntity *pEntity, mono::string jointName, int characterSlot);
 	static QuatT GetJointRelative(IEntity *pEntity, mono::string jointName, int characterSlot);
-	static QuatT GetJointRelativeDefault(IEntity *pEntity, mono::string jointName, int characterSlot);
-
-	static void SetJointAbsolute(IEntity *pEntity, mono::string jointName, int characterSlot, QuatT absolute);
 
 	static void SetTriggerBBox(IEntity *pEntity, AABB bounds);
 	static AABB GetTriggerBBox(IEntity *pEntity);
