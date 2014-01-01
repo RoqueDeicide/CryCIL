@@ -103,7 +103,7 @@ public:
 
 	virtual void InitLocalPlayer() override;
 
-	virtual const char *GetActorClassName() const override { return "CActor"; }
+	virtual const char *GetActorClassName() const override { return "CMonoActor"; }
 	virtual ActorClass GetActorClass() const override { return (ActorClass)0; }
 
 	virtual const char *GetEntityClassName() const override { return GetEntity()->GetClass()->GetName(); }
