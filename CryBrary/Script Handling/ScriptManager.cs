@@ -352,7 +352,7 @@ namespace CryEngine.Initialization
                     if (assembly == null)
                         continue;
 
-                    var compilerType = assembly.GetTypes().First(x => x.Implements<ICryMonoPlugin>());
+                    var compilerType = assembly.GetTypes().FirstOrDefault(x => x.Implements<ICryMonoPlugin>());
                     Debug.LogAlways("        Initializing CryMono plugin: {0}...", compilerType.Name);
 
                     var compiler = Activator.CreateInstance(compilerType) as ICryMonoPlugin;
@@ -509,7 +509,7 @@ namespace CryEngine.Initialization
                 throw new ArgumentException(string.Format("scriptType: value {0} was not defined in the enum", scriptType));
 #endif
 
-            var script = Scripts.First(x => (x.ScriptType & scriptType) == scriptType && x.ScriptName.Equals(scriptName));
+            var script = Scripts.FirstOrDefault(x => (x.ScriptType & scriptType) == scriptType && x.ScriptName.Equals(scriptName));
             if (script == null)
             {
                 if (throwOnFail)

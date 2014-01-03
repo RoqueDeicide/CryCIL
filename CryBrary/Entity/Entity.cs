@@ -243,7 +243,7 @@ namespace CryEngine
 
             var value = Convert.FromString(propertyType, valueString);
 
-            var member = GetType().GetMember(propertyName).First(x => x.MemberType == MemberTypes.Field || x.MemberType == MemberTypes.Property);
+            var member = GetType().GetMember(propertyName).FirstOrDefault(x => x.MemberType == MemberTypes.Field || x.MemberType == MemberTypes.Property);
             if (member == null)
                 throw new ArgumentException(string.Format("member {0} could not be located", propertyName));
 

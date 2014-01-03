@@ -693,7 +693,7 @@ namespace CryEngine.Serialization
             if (typeName.Contains('+'))
             {
                 var splitString = typeName.Split('+');
-                var ownerType = GetType(splitString.First());
+                var ownerType = GetType(splitString.FirstOrDefault());
 
                 return ownerType.Assembly.GetType(typeName);
             }

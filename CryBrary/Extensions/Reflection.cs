@@ -123,7 +123,7 @@ namespace CryEngine.Extensions
         {
             var attributes = memberInfo.GetAttributes<T>();
             if (attributes.Any())
-                return attributes.First();
+                return attributes.FirstOrDefault();
 
             return null;
         }
