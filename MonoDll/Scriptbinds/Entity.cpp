@@ -24,7 +24,7 @@
 
 #include <ICryAnimation.h>
 
-std::vector<const char *> CScriptbind_Entity::m_monoEntityClasses = std::vector<const char *>();
+std::vector<string> CScriptbind_Entity::m_monoEntityClasses = std::vector<string>();
 
 IMonoClass *CScriptbind_Entity::m_pEntityClass = nullptr;
 
@@ -262,7 +262,7 @@ bool CScriptbind_Entity::IsMonoEntity(const char *className)
 {
 	for each(auto entityClass in m_monoEntityClasses)
 	{
-		if(!strcmp(entityClass, className))
+		if(entityClass == className)
 			return true;
 	}
 
@@ -271,14 +271,16 @@ bool CScriptbind_Entity::IsMonoEntity(const char *className)
 
 void CScriptbind_Entity::OnSpawn(IEntity *pEntity,SEntitySpawnParams &params)
 {
-	const char *className = params.pClass->GetName();
-	if(!IsMonoEntity(className))// && strcmp(className, "[NativeEntity]"))
-		return;
+	const char *className = pEntity->GetClass()->GetName();
 
-	auto gameObject = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIGameObjectSystem()->CreateGameObjectForEntity(pEntity->GetId());
+	if(!IsMonoEntity(className))
+		return;
+	
+	auto gameObject = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIGameObjectSystem()->CreateGameObjectForEntity(params.id);
+	
 	if(!gameObject->ActivateExtension(className))
 	{
-		MonoWarning("[CryMono] Failed to activate game object extension %s on entity %i (%s)", className, params.id, params.sName);
+		MonoWarning("[CryMono] Failed to activate game object extension %s on entity %u (%s)", className, params.id, params.sName);
 	}
 }
 

@@ -329,7 +329,7 @@ protected:
 	static int GetAreaPriority(IArea *pArea);
 	// ~Area manager scriptbinds
 
-	static std::vector<const char *> m_monoEntityClasses;
+	static std::vector<string> m_monoEntityClasses;
 	static IMonoClass *m_pEntityClass;
 };
 
