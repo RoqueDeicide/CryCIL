@@ -132,6 +132,8 @@ public:
 	virtual void OnPreparedFromPool() override {}
 
 	virtual bool ShouldMuteWeaponSoundStimulus() const override { return false; }
+
+	virtual void OnReused(IEntity *pEntity, SEntitySpawnParams &params) override {}
 	// ~IActor
 
 	// IGameObjectExtension
