@@ -156,9 +156,6 @@
     <ClInclude Include="SystemEventListener_CryMono.h">
       <Filter>Mono</Filter>
     </ClInclude>
-    <ClInclude Include="Scriptbinds\Sound.h">
-      <Filter>ScriptBinds</Filter>
-    </ClInclude>
     <ClInclude Include="EntityEventHandling.h">
       <Filter>EntitySystem</Filter>
     </ClInclude>
@@ -292,9 +289,6 @@
     </ClCompile>
     <ClCompile Include="SystemEventListener_CryMono.cpp">
       <Filter>Mono</Filter>
-    </ClCompile>
-    <ClCompile Include="Scriptbinds\Sound.cpp">
-      <Filter>ScriptBinds</Filter>
     </ClCompile>
     <ClCompile Include="Scriptbinds\CryPak.cpp">
       <Filter>ScriptBinds\Utils</Filter>

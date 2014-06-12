@@ -48,7 +48,6 @@
 #include "Scriptbinds\ScriptTable.h" 
 #include "Scriptbinds\CrySerialize.h"
 #include "Scriptbinds\GameObject.h"
-#include "Scriptbinds\Sound.h"
 #include "Scriptbinds\CryPak.h"
 
 #include "FlowManager.h"
@@ -332,7 +331,6 @@ void CScriptSystem::RegisterPriorityBindings()
 	RegisterBinding(CScriptbind_ScriptTable);
 	RegisterBinding(CScriptbind_CrySerialize);
 	RegisterBinding(CScriptbind_GameObject);
-	RegisterBinding(CScriptbind_Sound);
 	RegisterBinding(CScriptbind_CryPak);
 
 	m_pFlowManager = new CFlowManager();
