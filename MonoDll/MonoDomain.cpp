@@ -155,12 +155,15 @@ IMonoAssembly *CScriptDomain::LoadAssembly(const char *file, bool shadowCopy, bo
 	}
 #endif
 
-	MonoAssembly *pMonoAssembly = mono_domain_assembly_open(m_pDomain, path);
-	CRY_ASSERT(pMonoAssembly);
+	if(MonoAssembly *pMonoAssembly = mono_domain_assembly_open(m_pDomain, path))
+	{
+		CScriptAssembly *pAssembly = new CScriptAssembly(this, mono_assembly_get_image(pMonoAssembly), path);
+		m_assemblies.push_back(pAssembly);
 
-	CScriptAssembly *pAssembly = new CScriptAssembly(this, mono_assembly_get_image(pMonoAssembly), path);
-	m_assemblies.push_back(pAssembly);
-	return pAssembly;
+		return pAssembly;
+	}
+
+	return nullptr;
 }
 
 void CScriptDomain::OnAssemblyReleased(CScriptAssembly *pAssembly)
