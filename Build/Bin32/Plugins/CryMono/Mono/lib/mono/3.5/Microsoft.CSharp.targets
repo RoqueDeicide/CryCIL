@@ -22,9 +22,9 @@
 
 	<Target
 		Name="CoreCompile"
-		Inputs="$(MSBuildAllProjects);@(Compile);@(ManifestResourceWithNoCulture);@(ManifestNonResxWithNoCultureOnDisk);@(CompiledLicenseFile);@(DocFileItem);
+		Inputs="$(MSBuildAllProjects);@(Compile);@(ManifestResourceWithNoCulture);@(ManifestNonResxWithNoCultureOnDisk);@(CompiledLicenseFile);
 			$(KeyOriginatorFile);@(ReferencePath);$(Win32Icon);$(Win32Resource)"
-		Outputs="@(IntermediateAssembly)"
+		Outputs="@(DocFileItem);@(IntermediateAssembly)"
 		DependsOnTargets="$(CoreCompileDependsOn)"
 	>
 		<Csc
@@ -53,7 +53,7 @@
 			NoStandardLib="$(NoStdLib)"
 			Optimize="$(Optimize)"
 			OutputAssembly="@(IntermediateAssembly)"
-			PdbFile="$(PdbFile)" 
+			PdbFile="$(PdbFile)"
 			Platform="$(PlatformTarget)"
 			References="@(ReferencePath)"
 			ResponseFiles="$(CompilerResponseFile)"
@@ -96,16 +96,4 @@
 	</Target>
 
 	<Import Project="Microsoft.Common.targets" />
-
-	<PropertyGroup>
-		<CscToolExe Condition="'$(CscToolExe)' == '' and '$(TargetFrameworkVersion)' != 'v4.0' and '$(TargetFrameworkVersion)' != 'v4.5' and '$(OS)' != 'Windows_NT'">gmcs</CscToolExe>
-		<CscToolExe Condition="'$(CscToolExe)' == '' and '$(TargetFrameworkVersion)' != 'v4.0' and '$(TargetFrameworkVersion)' != 'v4.5' and '$(OS)' == 'Windows_NT'">gmcs.bat</CscToolExe>
-
-		<CscToolExe Condition="'$(CscToolExe)' == '' and '$(TargetFrameworkVersion)' == 'v4.5' and '$(OS)' != 'Windows_NT'">mcs</CscToolExe>
-		<CscToolExe Condition="'$(CscToolExe)' == '' and '$(TargetFrameworkVersion)' == 'v4.5' and '$(OS)' == 'Windows_NT'">mcs.bat</CscToolExe>
-		
-		<CscToolExe Condition="'$(CscToolExe)' == '' and '$(TargetFrameworkVersion)' == 'v4.0' and '$(OS)' != 'Windows_NT'">dmcs</CscToolExe>
-		<CscToolExe Condition="'$(CscToolExe)' == '' and '$(TargetFrameworkVersion)' == 'v4.0' and '$(OS)' == 'Windows_NT'">dmcs.bat</CscToolExe>
-	</PropertyGroup>
-
 </Project>

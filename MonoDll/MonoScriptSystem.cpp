@@ -188,11 +188,19 @@ CScriptSystem::~CScriptSystem()
 
 	g_pThis = nullptr;
 }
+#include <cstdlib>
+#include <csignal>
+void HandleSignalAbort(int error)
+{
+	CryLogAlways("Aborted %i", error);
+}
 
 bool CScriptSystem::CompleteInit()
 {
 	CryLogAlways("		Initializing CryMono ...");
-	
+
+	signal(SIGABRT, HandleSignalAbort);
+
 	// Create root domain and determine the runtime version we'll be using.
 	m_pRootDomain = new CScriptDomain(eRV_4_30319);
 	m_domains.push_back(m_pRootDomain);

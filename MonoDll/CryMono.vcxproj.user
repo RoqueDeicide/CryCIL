@@ -7,8 +7,9 @@
     </LocalDebuggerCommandArguments>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">
-    <LocalDebuggerCommand>$(OutDir)..\..\Editor.exe</LocalDebuggerCommand>
+    <LocalDebuggerCommand>$(OutDir)..\..\..\..\Bin64\Editor.exe</LocalDebuggerCommand>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
+    <LocalDebuggerWorkingDirectory>$(OutDir)..\..\..\..\</LocalDebuggerWorkingDirectory>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LocalDebuggerCommand>$(SolutionDir)..\..\..\Bin32\Editor.exe</LocalDebuggerCommand>
@@ -20,7 +21,7 @@
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LocalDebuggerCommand>$(OutDir)..\..\Editor.exe</LocalDebuggerCommand>
+    <LocalDebuggerCommand>$(OutDir)../../../../Bin64/Editor.exe</LocalDebuggerCommand>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

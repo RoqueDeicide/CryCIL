@@ -5,10 +5,10 @@
 # It is necessary for linking the library.
 
 # The name that we can dlopen(3).
-dlname=''
+dlname='../bin/libmonosgen-2.0.dll'
 
 # Names of this library.
-library_names=''
+library_names='libmonosgen-2.0.dll.a'
 
 # The name of the static archive.
 old_library='libmonosgen-2.0.a'
@@ -38,4 +38,4 @@ dlopen=''
 dlpreopen=''
 
 # Directory that this library needs to be installed in:
-libdir='/tmp/install/lib'
+libdir='/usr/local/lib'

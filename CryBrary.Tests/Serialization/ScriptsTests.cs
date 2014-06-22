@@ -21,7 +21,7 @@ namespace CryBrary.Tests.Serialization
 
 			using(var stream = new MemoryStream())
 			{
-				var scriptManager = new ScriptManager();
+				var scriptManager = new ScriptManager(true, "");
 
 				scriptManager.AddScriptInstance(new NativeEntity(1, IntPtr.Zero), ScriptType.Entity);
 				scriptManager.AddScriptInstance(new NativeEntity(2, IntPtr.Zero), ScriptType.Entity);
@@ -129,7 +129,7 @@ namespace CryBrary.Tests.Serialization
 
             using (var stream = new MemoryStream())
             {
-				var scriptManager = new ScriptManager();
+				var scriptManager = new ScriptManager(true, "");
 
 				scriptManager.AddScriptInstance(new TestEntity(), ScriptType.Entity);
 

@@ -1,0 +1,2 @@
+#!/bin/sh
+exec mono --debug $MONO_OPTIONS C:/PROGRA~2/MONO-3~1.3/lib/mono/4.0/vbnc.exe /sdkpath:C:/PROGRA~2/MONO-3~1.3/lib/mono/2.0/ "$@"

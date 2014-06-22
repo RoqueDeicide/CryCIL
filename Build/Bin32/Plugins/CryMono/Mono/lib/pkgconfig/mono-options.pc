@@ -1,4 +1,4 @@
-prefix=C:/PROGRA~2/MONO-3~1.1
+prefix=${pcfiledir}/../..
 assemblies_dir=${prefix}/lib/mono-source-libs
 Sources=${assemblies_dir}/Options.cs
 

@@ -26,7 +26,8 @@
 		<dllentry dll="__Internal" name="MoveMemory" target="mono_win32_compat_MoveMemory"/>
 		<dllentry dll="__Internal" name="ZeroMemory" target="mono_win32_compat_ZeroMemory"/>
 	</dllmap>
-	<dllmap dll="gdiplus" target="/tmp/install/lib/libgdiplus.so" />
-	<dllmap dll="gdiplus.dll" target="/tmp/install/lib/libgdiplus.so" />
-	<dllmap dll="gtkhtml-3.0" target="libgtkhtml-3.8-15.dll"/>
+	<dllmap dll="gdiplus" target="/usr/local/lib/libgdiplus.so" os="!windows"/>
+	<dllmap dll="gdiplus.dll" target="/usr/local/lib/libgdiplus.so"  os="!windows"/>
+	<dllmap dll="gdi32" target="/usr/local/lib/libgdiplus.so" os="!windows"/>
+	<dllmap dll="gdi32.dll" target="/usr/local/lib/libgdiplus.so" os="!windows"/>
 </configuration>

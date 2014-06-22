@@ -460,7 +460,11 @@ namespace CryEngine.Initialization
 
             if (File.Exists(Path.ChangeExtension(assemblyPath, "pdb")))
             {
-				var assembly = Assembly.LoadFrom(Path.Combine(ProjectSettings.MonoFolder, "bin", "pdb2mdb.dll"));
+				var pdb2mdbDllPath = Path.Combine(ProjectSettings.MonoFolder, "bin", "pdb2mdb.dll");
+				if (!File.Exists(pdb2mdbDllPath))
+					return;
+
+				var assembly = Assembly.LoadFrom(pdb2mdbDllPath);
                 var driver = assembly.GetType("Driver");
                 var convertMethod = driver.GetMethod("Convert", BindingFlags.Static | BindingFlags.Public);
 

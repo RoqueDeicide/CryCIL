@@ -11,18 +11,18 @@ namespace CryEngine
     public static class Input
     {
         #region Events
-        static void OnActionTriggered(string action, KeyEvent keyEvent, float value)
+        internal static void OnActionTriggered(string action, KeyEvent keyEvent, float value)
         {
             ActionmapEvents.Invoke(new ActionMapEventArgs(keyEvent, action, value));
         }
 
-        static void OnKeyEvent(string keyName, float value)
+		internal static void OnKeyEvent(string keyName, float value)
         {
             if (KeyEvents != null)
                 KeyEvents(new KeyEventArgs(keyName, value));
         }
 
-        static void OnMouseEvent(int x, int y, MouseEvent mouseEvent, int wheelDelta)
+		internal static void OnMouseEvent(int x, int y, MouseEvent mouseEvent, int wheelDelta)
         {
             MouseDeltaX = MouseX - x;
             MouseDeltaY = MouseY - y;

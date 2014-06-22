@@ -118,8 +118,14 @@ SMonoActorInfo CScriptbind_ActorSystem::CreateActor(int channelId, mono::string 
 {
 	const char *sClassName = ToCryString(className);
 
-	if(IActor *pActor = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIActorSystem()->CreateActor(channelId, ToCryString(name), sClassName, pos, rot, scale))
-		return SMonoActorInfo(pActor);
+	if(IGameFramework *pGameFramework = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework())
+	{
+		if(IActorSystem *pActorSystem = pGameFramework->GetIActorSystem())
+		{
+			if(IActor *pActor = pActorSystem->CreateActor(channelId, ToCryString(name), sClassName, ZERO, IDENTITY, Vec3(1, 1, 1)))
+				return SMonoActorInfo(pActor);
+		}
+	}
 
 	return SMonoActorInfo();
 }

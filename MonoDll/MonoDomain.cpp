@@ -45,6 +45,8 @@ CScriptDomain::CScriptDomain(ERuntimeVersion runtimeVersion)
 	m_pDomain = mono_jit_init_version("CryMono", version);
 	if(!m_pDomain)
 		CryFatalError("Failed to initialize root domain with runtime version %s!", version);
+
+	mono_domain_set_config(m_pDomain, PathUtils::GetBinaryPath(), PathUtils::GetMonoConfigPath().append("mono\\4.5\\machine.config"));
 }
 
 CScriptDomain::CScriptDomain(const char *name, const char *configurationFile, bool setActive)
@@ -55,6 +57,8 @@ CScriptDomain::CScriptDomain(const char *name, const char *configurationFile, bo
 	m_pDomain = mono_domain_create_appdomain(const_cast<char *>(name), const_cast<char *>(configurationFile));
 	CRY_ASSERT(m_pDomain);
 
+	mono_domain_set_config(m_pDomain, PathUtils::GetBinaryPath(), PathUtils::GetMonoConfigPath().append("mono\\4.5\\machine.config"));
+	
 	if(setActive)
 		SetActive();
 }

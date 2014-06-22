@@ -1,0 +1,2 @@
+#!/bin/sh
+exec /usr/local/bin/mono $MONO_OPTIONS C:/cygwin/usr/local/lib/mono/4.5/ilasm.exe "$@"

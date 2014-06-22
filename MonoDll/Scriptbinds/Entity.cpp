@@ -1099,6 +1099,9 @@ IParticleEmitter *CScriptbind_Entity::LoadParticleEmitter(IEntity *pEntity, int 
 
 void CScriptbind_Entity::RemoteInvocation(EntityId entityId, EntityId targetId, mono::string methodName, mono::object args, ERMInvocation target, int channelId)
 {
+	if(!gEnv->bMultiplayer)
+		return;
+
 	CRY_ASSERT(entityId != 0);
 
 	IGameObject *pGameObject = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetGameObject(entityId);
