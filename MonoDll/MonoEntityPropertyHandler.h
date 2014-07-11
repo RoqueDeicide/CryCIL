@@ -53,6 +53,8 @@ public:
 
 	virtual const char* GetDefaultProperty(int index) const { return m_pProperties[index].defaultValue; }
 
+	virtual uint32 GetScriptFlags() const { return 0; }
+
 	virtual void PropertiesChanged(IEntity* entity) {}
 	// -IEntityPropertyHandler
 

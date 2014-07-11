@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- IMPORTANT: Hand edit this file only, the UI doesn't support the filtering used below. -->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <OutDir Condition="'$(Platform)'=='Win32' And '$(IsDedicatedServer)'=='false'">$(PropsFolder)..\..\Bin32\</OutDir>
+    <OutDir Condition="'$(Platform)'=='Win32' And '$(IsDedicatedServer)'=='true'">$(PropsFolder)..\..\Bin32_dedicated\</OutDir>
+    <OutDir Condition="'$(Platform)'=='x64' And '$(IsDedicatedServer)'=='false'">$(PropsFolder)..\..\Bin64\</OutDir>
+    <OutDir Condition="'$(Platform)'=='x64' And '$(IsDedicatedServer)'=='true'">$(PropsFolder)..\..\Bin64_dedicated\</OutDir>
+    <OutDir Condition="'$(IsRC)'=='true'">$(OutDir)rc\</OutDir>
+    <OutDir Condition="'$(IsEditorPlugin)'=='true'">$(OutDir)EditorPlugins\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PreprocessorDefinitions>_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(IsDedicatedServer)'=='true'">DEDICATED_SERVER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(IsEditorPlugin)'=='true'">PLUGIN_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SDKFolder)GPA\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <WarningLevel>Level3</WarningLevel>
+      <TreatWarningAsError Condition="'$(IsRC)'!='true' And '$(IsEditorPlugin)'!='true'">true</TreatWarningAsError>
+      <StringPooling>true</StringPooling>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <ExceptionHandling>false</ExceptionHandling>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <EnableEnhancedInstructionSet Condition="'$(Platform)'=='Win32'">StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalOptions>/Zm200 /d2Zi+ %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Lib>
+      <AdditionalLibraryDirectories Condition="'$(Platform)'=='Win32'">$(SDKFolder);$(SDKFolder)GPA\lib32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="'$(Platform)'=='x64'">$(SDKFolder);$(SDKFolder)GPA\lib64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <TargetMachine Condition="'$(Platform)'=='x64'">MachineX64</TargetMachine>
+      <TargetMachine Condition="'$(Platform)'!='x64'">MachineX86</TargetMachine>
+    </Lib>
+    <Link>
+      <AdditionalLibraryDirectories Condition="'$(Platform)'=='Win32'">$(SDKFolder);$(SDKFolder)GPA\lib32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="'$(Platform)'=='x64'">$(SDKFolder);$(SDKFolder)GPA\lib64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <TargetMachine Condition="'$(Platform)'=='x64'">MachineX64</TargetMachine>
+      <TargetMachine Condition="'$(Platform)'!='x64'">MachineX86</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <LargeAddressAware>true</LargeAddressAware>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <ImportLibrary>$(IntDir)$(TargetName).lib</ImportLibrary>
+      <SubSystem Condition="'$(IsRC)'=='true'">Console</SubSystem>
+      <SubSystem Condition="'$(IsRC)'!='true'">Windows</SubSystem>
+    </Link>
+    <ResourceCompile>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Midl>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment Condition="'$(Platform)'=='Win32'">Win32</TargetEnvironment>
+      <TargetEnvironment Condition="'$(Platform)'=='x64'">X64</TargetEnvironment>
+      <TypeLibraryName>$(IntDir)$(ProjectName).tlb</TypeLibraryName>
+    </Midl>
+    <ProjectReference Condition="'$(StaticLink)'=='true'">
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>true</UseLibraryDependencyInputs>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+</Project>

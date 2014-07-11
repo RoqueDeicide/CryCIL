@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- IMPORTANT: Hand edit this file only, the UI doesn't support the filtering used below. -->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<!-- Please note, making any changes to this file requires you to restart VS and recompile the entire engine to take effect -->
+	
+	<!-- SegWorld, when set to 1, will build with Segmented World support -->
+	<ItemDefinitionGroup Condition="'$(SegWorld)'=='1'">
+		<ClCompile>
+			<PreprocessorDefinitions>SEG_WORLD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+		</ClCompile>
+	</ItemDefinitionGroup>
+	
+	<!-- Oculus, when set to 1, will build with Oculus support (requires Oculus SDK in source tree) -->
+	<ItemDefinitionGroup Condition="'$(Oculus)'!='1'">
+		<ClCompile>
+			<PreprocessorDefinitions>EXCLUDE_OCULUS_SDK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+		</ClCompile>
+	</ItemDefinitionGroup>
+	
+	<!-- Cinemizer, when set to 1, will build with Cinemizer support (requires Cinemizer SDK in source tree) -->
+	<ItemDefinitionGroup Condition="'$(Cinemizer)'!='1'">
+		<ClCompile>
+			<PreprocessorDefinitions>EXCLUDE_CINEMIZER_SDK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+		</ClCompile>
+	</ItemDefinitionGroup>
+	
+	<!-- ParallelBuild, when set to number of CPU cores, may improve build throughput when building from command-line but will use more resources -->
+	<ItemDefinitionGroup Condition="'$(ParallelBuild)'!='' And '$(ParallelBuild)'&gt;'1'">
+		<ClCompile>
+		<!-- MM: In VS, this is set from Tools/Options/Projects and Solutions/Visual C++ Project Settings, however, in plain MSBuild this is not set -->
+		<!-- 0 means number of cores in the machine -->
+		<MaxCompilations>$(ParallelBuild)</MaxCompilations>
+		<ProcessorNumber>$(ParallelBuild)</ProcessorNumber>
+		<MultiProcessorCompilation>true</MultiProcessorCompilation>
+	</ClCompile>
+	
+	</ItemDefinitionGroup>
+	
+	<!-- StlPort, when set to 1, will use STLPORT instead of default toolset STL -->
+	<ItemDefinitionGroup Condition="'$(StlPort)'=='1'">
+		<ClCompile>
+			<AdditionalIncludeDirectories>$(STLport);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+		</ClCompile>
+	</ItemDefinitionGroup>
+	
+	<!-- Enable Engine as a Service (EaaS) configuration) -->
+	<ItemDefinitionGroup>
+		<ClCompile>
+			<PreprocessorDefinitions>IS_EAAS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+		</ClCompile>
+		<ResourceCompile>
+			<PreprocessorDefinitions>IS_EAAS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+		</ResourceCompile>
+	</ItemDefinitionGroup>
+</Project>

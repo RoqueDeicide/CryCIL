@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- IMPORTANT: Hand edit this file only, the UI will break the file. Note that you need to restart VS for changes to take effect -->
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- Default values -->
+  <PropertyGroup>
+    <OutDir>$(PropsFolder)..\..\Bin$(Platform)\</OutDir>
+    <IntDir>$(PropsFolder)..\..\BinTemp\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <GenerateMapFileSwitch>false</GenerateMapFileSwitch>
+    
+    <!-- Set this to true, if you want to load .props from C:\Users\<you>\AppData\Local\Microsoft\MSBuild\v4.0\Microsoft.Cpp.<Platform>.user.props (this is the default VC++ behavior).
+         However it caused problems for some developers that upgraded from VS2008 at some point with global include paths set in that IDE that now conflicted. (Specifically, DXSDK)
+         It's recommended leaving this at false unless these legacy settings are somehow required in your setup -->
+    <ImportLocalAppDataPlatform Condition="'$(ImportLocalAppDataPlatform)'==''">false</ImportLocalAppDataPlatform>
+  </PropertyGroup>
+  
+  <!-- Import other property sheets depending on platform etc -->
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(PropsFolder)StandardSDKs.props" />
+    <Import Project="$(PropsFolder)Common.$(BasePlatform).props" />
+    <Import Project="$(PropsFolder)Common.$(BasePlatform).$(BaseConfiguration).props" />
+    <Import Project="$(PropsFolder)CryEngineFeatures.props" />
+    <Import Project="$(PropsFolder)UserDebugSettings.props" Condition="exists('$(PropsFolder)UserDebugSettings.props')" />
+    <Import Project="$(PropsFolder)GenerateMapFile.props" Condition="exists('$(PropsFolder)GenerateMapFile.props') And '$(IsRC)'!='true' And '$(BasePlatform)'=='Win'" />
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="'$(ImportLocalAppDataPlatform)'=='true' And exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  
+  <!-- Prevent collision of binaries of different configurations -->
+  <PropertyGroup Condition="$(IsLauncher)">
+    <TargetName Condition="$(StaticLink) And '$(BasePlatform)'!='ORBIS'">$(TargetName)_Release</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="!$(IsLauncher) And $(StaticLink)">
+    <OutDir>$(IntDir)</OutDir>
+  </PropertyGroup>
+  
+  <!-- Base address options, controlled by GenerateMapFile.props -->
+  <ItemDefinitionGroup Condition="'$(IsRC)'!='true' And '$(BasePlatform)'=='Win'">
+    <Link>
+      <BaseAddress>@$(PropsFolder)BaseAddress.$(Platform).txt,$(ProjectName)</BaseAddress>
+      <GenerateMapFile Condition="'$(GenerateMapFileSwitch)'!=''">$(GenerateMapFileSwitch)</GenerateMapFile>
+      <MapFileName Condition="'$(GenerateMapFileSwitch)'=='true'">$(OutDir)$(TargetName).map</MapFileName>
+    </Link>
+  </ItemDefinitionGroup>
+</Project>

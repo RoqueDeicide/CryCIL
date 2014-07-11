@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- IMPORTANT: Hand edit this file only, the UI will break the file. Note that you need to restart VS for changes to take effect -->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+ <!-- Deduce the following settings from the 'Configuration' and 'Platform', they are used later by this and other property sheets
+    BaseConfiguration: Debug | Profile | Performance | Release
+    IsDedicatedServer: true | false
+    BasePlatform: Win | Durango | ORBIS
+    IsLauncher: true | false
+    StaticLink: true | false
+    StaticCRT: true | false
+  -->
+  <PropertyGroup Label="UserMacros">
+    <BaseConfiguration>$(Configuration)</BaseConfiguration>
+    <IsDedicatedServer>false</IsDedicatedServer>
+    <BasePlatform>$(Platform)</BasePlatform>
+    <IsLauncher Condition="'$(IsLauncher)'==''">false</IsLauncher>
+    <StaticLink Condition="'$(StaticLink)'==''">false</StaticLink>
+    <StaticCRTSpecified Condition="'$(StaticCRT)'!=''">true</StaticCRTSpecified>
+    <StaticCRT Condition="'$(StaticCRTSpecified)'!='true'">false</StaticCRT>
+    <PropsFolder Condition="'$(PropsFolder)'==''">$(MSBuildThisFileDirectory)</PropsFolder>
+  </PropertyGroup>
+  <PropertyGroup Label="UserMacros" Condition="$(Configuration.Contains('Server Only'))">
+    <BaseConfiguration>$(Configuration.Substring(0, $(Configuration.IndexOf(' '))))</BaseConfiguration>
+    <IsDedicatedServer>true</IsDedicatedServer>
+  </PropertyGroup>
+  <PropertyGroup Label="UserMacros" Condition="'$(Platform)'=='Win32' Or '$(Platform)'=='x64'">
+    <BasePlatform>Win</BasePlatform>
+  </PropertyGroup>
+  <PropertyGroup Label="UserMacros" Condition="$(ProjectName.Contains('Launcher'))">
+    <IsLauncher>true</IsLauncher>
+  </PropertyGroup>
+  <PropertyGroup Label="UserMacros" Condition="'$(Platform)'=='ORBIS' Or '$(BaseConfiguration)'=='Release'">
+    <StaticLink>true</StaticLink>
+  </PropertyGroup>
+  <PropertyGroup Label="UserMacros" Condition="'$(IsRC)'=='true' Or '$(IsEditorPlugin)'=='true'">
+    <!-- Helper for RC projects, use static CRT, but not static linking -->
+    <StaticCRT Condition="'$(StaticCRTSpecified)'!='true'">true</StaticCRT>
+    <StaticLink>false</StaticLink>
+    <IsLauncher Condition="'$(ProjectName)'=='ResourceCompiler'">true</IsLauncher>
+  </PropertyGroup>
+  
+  <!-- We need to set the type of configuration before including VC and MSBuild sheets, because their behavior depends on these properties
+    CharacterSet: MultiByte (Windows, Durango)
+    PlatformToolset: v110 (Windows, Durango)
+    ApplicationEnvironment: title (Durango)
+    ConfigurationType: Application | DynamicLibrary | StaticLibrary
+  -->
+  <PropertyGroup Label="Configuration" Condition="'$(BasePlatform)'=='Win'">
+    <CharacterSet Condition="'$(CharacterSet)'==''">MultiByte</CharacterSet>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(BasePlatform)'=='Durango'">
+    <ApplicationEnvironment>title</ApplicationEnvironment>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <UseDebugLibraries Condition="'$(BaseConfiguration)'!='Debug'">false</UseDebugLibraries>
+    <UseDebugLibraries Condition="'$(BaseConfiguration)'=='Debug'">false</UseDebugLibraries>
+    <CharacterSet Condition="'$(CharacterSet)'==''">NotSet</CharacterSet>
+    <EmbedManifest>false</EmbedManifest>
+    <GenerateManifest>false</GenerateManifest>
+    <PlatformToolset>v110</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="$(IsLauncher)">
+    <ConfigurationType>Application</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="!$(IsLauncher) And $(StaticLink)">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="!$(IsLauncher) And !$(StaticLink)">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+  </PropertyGroup>
+</Project>

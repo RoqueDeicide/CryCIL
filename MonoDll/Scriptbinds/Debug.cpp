@@ -88,8 +88,7 @@ extern "C"
 {
 	_declspec(dllexport) void __cdecl Log(const char *msg, const IMiniLog::ELogType nType)
 	{
-		va_list args;
-		gEnv->pLog->LogV(nType, msg, args);
+		gEnv->pLog->LogV(nType, msg, 0);
 	}
 
 	_declspec(dllexport) void __cdecl Warning(const char *msg)

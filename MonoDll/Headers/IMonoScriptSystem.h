@@ -14,6 +14,14 @@
 #include <IPluginManager.h>
 #endif
 
+#if defined(LINUX)
+#define CRYMONO_LIBRARY "CryMono.so"
+#elif defined(APPLE)
+#define CRYMONO_LIBRARY "CryMono.dylib"
+#else
+#define CRYMONO_LIBRARY "CryMono.dll"
+#endif
+
 struct IMonoScriptManager;
 
 struct IMonoObject;
