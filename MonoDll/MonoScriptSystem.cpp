@@ -65,7 +65,11 @@
 
 SCVars *g_pMonoCVars = 0;
 
+#ifndef PLUGIN_SDK
 IMonoScriptSystem *IMonoScriptSystem::g_pThis = nullptr;
+#else
+IMonoScriptSystem *CScriptSystem::g_pThis = nullptr;
+#endif
 
 CScriptSystem::CScriptSystem(IGameFramework *pGameFramework)
 	: m_pRootDomain(nullptr)

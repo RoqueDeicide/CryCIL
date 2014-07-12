@@ -148,6 +148,10 @@ protected:
 	std::vector<IMonoScriptBind *> m_localScriptBinds;
 
 	std::vector<IMonoScriptEventListener *> m_listeners;
+
+#ifdef PLUGIN_SDK
+	static IMonoScriptSystem *g_pThis;
+#endif
 };
 
 struct SGameRulesInitializationParams

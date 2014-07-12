@@ -67,15 +67,11 @@ namespace CryMonoPlugin
 
             void* GetConcreteInterface( const char* sInterfaceVersion )
             {
-                if( !sInterfaceVersion || strcmp(sInterfaceVersion, CRYMONO_VERSION) == 0 )
-                {
-                    return GetMonoScriptSystem();
-                }
-                else
-                {
-                    return NULL;
-                }
+				return m_pScriptSystem;
             };
+
+		protected:
+			IMonoScriptSystem *m_pScriptSystem;
     };
 
     extern CPluginCryMono* gPlugin;

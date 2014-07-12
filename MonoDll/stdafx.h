@@ -48,6 +48,8 @@
 #define CRYMONO_API
 #endif
 
+//#define PLUGIN_SDK
+
 //////////////////////////////////////////////////////////////////////////
 //! Reports a warning to validator with WARNING severity.
 inline void MonoWarning( const char *format,... ) PRINTF_PARAMS(1, 2);

@@ -56,7 +56,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>.\;%(AdditionalIncludeDirectories);..\..\CryEngine\CryAction;$(SDKFolder);$(SDKFolder)speex-1.0.5\include;$(SDKFolder)CrispRMF-C++-3.0.0\CryCrispWrapper;$(SolutionDir)..\mono;Headers;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\;%(AdditionalIncludeDirectories);..\..\CryEngine\CryAction;$(SDKFolder);$(SDKFolder)speex-1.0.5\include;$(SDKFolder)CrispRMF-C++-3.0.0\CryCrispWrapper;$(SolutionDir)..\mono;Headers;$(SolutionDir)..\..\Plugin_SDK\inc;</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GAMEDLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <WholeProgramOptimization Condition="'$(StaticLink)'=='true'">false</WholeProgramOptimization>
     </ClCompile>
