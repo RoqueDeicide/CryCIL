@@ -36,6 +36,8 @@
 #undef NULL
 #define NULL nullptr
 
+#pragma comment(lib, "monosgen")
+
 #ifndef MONODLL_EXPORTS
 #define MONODLL_EXPORTS
 #endif

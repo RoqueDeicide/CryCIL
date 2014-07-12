@@ -6,17 +6,17 @@
 
 static HMODULE InitCryMono(ISystem *pSystem, IGameFramework *pGameFramework)
 {
-	HMODULE hCryMonoDll = CryLoadLibrary("CryMono.dll");
+	HMODULE hCryMonoDll = CryLoadLibrary(CRYMONO_LIBRARY);
 	if (!hCryMonoDll)
 	{
-		CryFatalError("Could not locate CryMono DLL!");
+		CryFatalError("Could not locate CryMono library!");
 		return false;
 	}
 
-	IMonoScriptSystem::TEntryFunction InitMonoFunc = (IMonoScriptSystem::TEntryFunction)CryGetProcAddress(hCryMonoDll, "InitCryMono");
+	auto InitMonoFunc = (IMonoScriptSystem::TEntryFunction)CryGetProcAddress(hCryMonoDll, "InitCryMono");
 	if (!InitMonoFunc)
 	{
-		CryFatalError("Specified CryMono DLL is not valid!");
+		CryFatalError("Specified CryMono library is not valid!");
 		return false;
 	}
 

@@ -5,7 +5,6 @@
     <MSRKINECTSDK>$(SolutionDir)..\SDKs\KinectSDK</MSRKINECTSDK>
   </PropertyGroup>
   <PropertyGroup>
-    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
     <IncludePath>$(MSRKINECTSDK)\inc;$(IncludePath)</IncludePath>
     <LibraryPath>$(MSRKINECTSDK)\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
