@@ -326,6 +326,10 @@ protected:
 	static int GetAreaPriority(IArea *pArea);
 	// ~Area manager scriptbinds
 
+	// Static object script binds.
+	static IStatObj *GetStaticObjectHandle(IEntity *entityHandle, int slot);
+	static void AssignStaticObject(IEntity *entityHandle, IStatObj *obj, int slot);
+
 	static std::vector<string> m_monoEntityClasses;
 	static IMonoClass *m_pEntityClass;
 };

@@ -185,6 +185,9 @@
     <ClInclude Include="Scriptbinds\NativeString.h">
       <Filter>ScriptBinds\Native Memory</Filter>
     </ClInclude>
+    <ClInclude Include="Scriptbinds\StaticObject.h">
+      <Filter>ScriptBinds\StaticObjects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -318,6 +321,9 @@
     <ClCompile Include="Scriptbinds\NativeString.cpp">
       <Filter>ScriptBinds\Native Memory</Filter>
     </ClCompile>
+    <ClCompile Include="Scriptbinds\StaticObject.cpp">
+      <Filter>ScriptBinds\StaticObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ScriptBinds">
@@ -367,6 +373,9 @@
     </Filter>
     <Filter Include="ScriptBinds\Native Memory">
       <UniqueIdentifier>{f6a88378-6872-48a7-a753-d25486837671}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ScriptBinds\StaticObjects">
+      <UniqueIdentifier>{32b893d5-61d5-4bfc-9231-bf35d3233630}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

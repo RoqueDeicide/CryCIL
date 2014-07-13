@@ -154,6 +154,7 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
     <ClInclude Include="ScriptBinds\MaterialManager.h" />
     <ClInclude Include="Scriptbinds\GameObject.h" />
     <ClInclude Include="Scriptbinds\ScriptTable.h" />
+    <ClInclude Include="Scriptbinds\StaticObject.h" />
     <ClInclude Include="Scriptbinds\Time.h" />
     <ClInclude Include="Scriptbinds\ViewSystem.h" />
     <ClInclude Include="stdafx.h" />
@@ -202,6 +203,7 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
     <ClCompile Include="ScriptBinds\MaterialManager.cpp" />
     <ClCompile Include="Scriptbinds\GameObject.cpp" />
     <ClCompile Include="Scriptbinds\ScriptTable.cpp" />
+    <ClCompile Include="Scriptbinds\StaticObject.cpp" />
     <ClCompile Include="Scriptbinds\ViewSystem.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

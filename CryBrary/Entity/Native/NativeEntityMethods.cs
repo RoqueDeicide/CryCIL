@@ -255,5 +255,10 @@ namespace CryEngine.Native
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		extern public static int GetAreaPriority(IntPtr pArea);
 		// ~Area manager
+
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		public static extern IntPtr GetStaticObjectHandle(IntPtr entityHandle, int slot);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		public static extern IntPtr AssignStaticObject(IntPtr entityHandle, IntPtr statObj, int slot);
 	}
 }

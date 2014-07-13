@@ -9,11 +9,12 @@ using System.Runtime.InteropServices;
 using CryEngine.Initialization;
 using CryEngine.Native;
 using CryEngine.Physics;
+using CryEngine.StaticObjects;
 
 namespace CryEngine
 {
 	/// <summary>
-	/// Represents an CryENGINE entity
+	/// Represents a CryENGINE entity
 	/// </summary>
 	public abstract class EntityBase : CryScriptInstance
 	{
@@ -378,5 +379,43 @@ namespace CryEngine
 		{
 			return ParticleEmitter.TryGet(NativeEntityMethods.LoadParticleEmitter(this.GetIEntity(), slot, particleEffect.Handle, ref spawnParams));
 		}
+		#region Static Objects
+		/// <summary>
+		/// Gets a wrapper around static object located in specified slot.
+		/// </summary>
+		/// <param name="slot">Index of the slot where static object we need is located.</param>
+		/// <returns>
+		/// A wrapper around static object located in specified slot or a disposed <see
+		/// cref="StaticObject" /> instance if slot was empty.
+		/// </returns>
+		public StaticObject GetStaticObject(int slot)
+		{
+			if (this.EntityHandle == null)
+			{
+				throw new ObjectDisposedException
+					("EntityHandle", "Attempt to get a static object from disposed or invalid entity.");
+			}
+			return new StaticObject(NativeEntityMethods.GetStaticObjectHandle(this.EntityHandle, slot));
+		}
+		/// <summary>
+		/// Assigns a static object to a specified slot.
+		/// </summary>
+		/// <param name="staticObject">Static object to assign to the entity.</param>
+		/// <param name="slot">Index of the slot where to put the static object.</param>
+		public void AssignStaticObject(StaticObject staticObject, int slot)
+		{
+			if (staticObject.Disposed)
+			{
+				throw new ObjectDisposedException
+					("staticObject", "Attempt to assign disposed or invalid static object to the entity.");
+			}
+			if (this.EntityHandle == null)
+			{
+				throw new ObjectDisposedException
+					("EntityHandle", "Attempt to assign a static object to disposed or invalid entity.");
+			}
+			NativeEntityMethods.AssignStaticObject(this.EntityHandle, staticObject.handle, slot);
+		}
+		#endregion
 	}
 }
