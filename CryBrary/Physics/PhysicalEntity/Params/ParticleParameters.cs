@@ -65,7 +65,7 @@ namespace CryEngine
 		public Quat q0;	// initial orientation (zero means x along direction of movement, z up)
 		public float minBounceVel;	// velocity threshold for bouncing->sliding switch
 		public float minVel;	// sleep speed threshold
-		IntPtr pColliderToIgnore;	// physical entity to ignore during collisions
+		private IntPtr pColliderToIgnore;	// physical entity to ignore during collisions
 		public int iPierceability;	// pierceability for ray tests; pierceble hits slow the particle down, but don't stop it
 		public int collTypes; // 'objtype' passed to RayWorldntersection
 		public int areaCheckPeriod; // how often (in frames) world area checks are made

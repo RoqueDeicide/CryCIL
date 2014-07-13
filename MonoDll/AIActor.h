@@ -4,6 +4,4 @@
 
 class CMonoAIActor
 	: public CMonoActor
-{
-};
-
+{};

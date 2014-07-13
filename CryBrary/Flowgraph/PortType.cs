@@ -5,48 +5,48 @@ using System.Text;
 
 namespace CryEngine.Flowgraph
 {
-    public enum StringPortType
-    {
-        None,
+	public enum StringPortType
+	{
+		None,
 
-        Sound,
+		Sound,
 
-        DialogLine,
+		DialogLine,
 
-        Texture,
+		Texture,
 
-        Object,
+		Object,
 
-        File,
+		File,
 
-        EquipmentPack,
+		EquipmentPack,
 
-        ReverbPreset,
+		ReverbPreset,
 
-        GameToken,
+		GameToken,
 
-        Material,
+		Material,
 
-        Sequence,
+		Sequence,
 
-        Mission,
+		Mission,
 
-        Animation,
+		Animation,
 
-        AnimationState,
+		AnimationState,
 
-        AnimationStateEx,
+		AnimationStateEx,
 
-        Bone,
+		Bone,
 
-        Attachment,
+		Attachment,
 
-        Dialog,
+		Dialog,
 
-        MaterialParamSlot,
+		MaterialParamSlot,
 
-        MaterialParamName,
+		MaterialParamName,
 
-        MaterialParamCharacterAttachment,
-    }
+		MaterialParamCharacterAttachment,
+	}
 }

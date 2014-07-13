@@ -31,11 +31,11 @@ public:
 	// ~IMonoScriptBind
 
 	// IActionListener
-	virtual void OnAction( const ActionId& action, int activationMode, float value );
+	virtual void OnAction(const ActionId& action, int activationMode, float value);
 	// ~IActionListener
-	
+
 	// IHardwareMouseEventListener
-	virtual void OnHardwareMouseEvent(int iX,int iY,EHARDWAREMOUSEEVENT eHardwareMouseEvent, int wheelDelta = 0);
+	virtual void OnHardwareMouseEvent(int iX, int iY, EHARDWAREMOUSEEVENT eHardwareMouseEvent, int wheelDelta = 0);
 	// ~IHardwareMouseEventListener
 
 	// IInputEventListener

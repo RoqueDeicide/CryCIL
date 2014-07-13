@@ -22,7 +22,7 @@ namespace CryEngine.Flowgraph
 			ScriptManager.Instance.RemoveInstances(ScriptType.FlowNode, instance =>
 			{
 				var node = instance as FlowNode;
-                if (node != null && node.ScriptId == scriptId)
+				if (node != null && node.ScriptId == scriptId)
 				{
 					node.OnRemove();
 

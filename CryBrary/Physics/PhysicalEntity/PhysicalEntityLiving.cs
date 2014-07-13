@@ -7,16 +7,16 @@ using CryEngine.Utilities;
 
 namespace CryEngine.Physics
 {
-    public class PhysicalEntityLiving : PhysicalEntity
-    {
-        internal PhysicalEntityLiving(IntPtr physEntPtr)
-        {
-            Handle = physEntPtr;
-        }
+	public class PhysicalEntityLiving : PhysicalEntity
+	{
+		internal PhysicalEntityLiving(IntPtr physEntPtr)
+		{
+			Handle = physEntPtr;
+		}
 
-        public override PhysicalizationType Type
-        {
-            get { return PhysicalizationType.Living; }
-        }
-    }
+		public override PhysicalizationType Type
+		{
+			get { return PhysicalizationType.Living; }
+		}
+	}
 }

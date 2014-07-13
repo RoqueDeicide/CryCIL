@@ -19,13 +19,12 @@
 #include <MonoCommon.h>
 
 CMonoEntityExtension::CMonoEntityExtension()
-	: m_pScript(nullptr)
+: m_pScript(nullptr)
 	, m_pManagedObject(nullptr)
 	, m_bInitialized(false)
 	, m_pAnimatedCharacter(nullptr)
 	, m_bDestroyed(false)
-{
-}
+{}
 
 CMonoEntityExtension::~CMonoEntityExtension()
 {
@@ -40,7 +39,7 @@ bool CMonoEntityExtension::Init(IGameObject *pGameObject)
 {
 	SetGameObject(pGameObject);
 
-	pGameObject->EnablePhysicsEvent( true, eEPE_OnPostStepImmediate );
+	pGameObject->EnablePhysicsEvent(true, eEPE_OnPostStepImmediate);
 
 	if (!GetGameObject()->BindToNetwork() && g_pMonoCVars->mono_entityDeleteExtensionOnNetworkBindFailure == 1)
 		return false;
@@ -64,9 +63,9 @@ bool CMonoEntityExtension::Init(IGameObject *pGameObject)
 	int numProperties;
 	auto pProperties = static_cast<CEntityPropertyHandler *>(pEntityClass->GetPropertyHandler())->GetQueuedProperties(pEntity->GetId(), numProperties);
 
-	if(pProperties)
+	if (pProperties)
 	{
-		for(int i = 0; i < numProperties; i++)
+		for (int i = 0; i < numProperties; i++)
 		{
 			auto queuedProperty = pProperties[i];
 
@@ -86,24 +85,24 @@ void CMonoEntityExtension::PostInit(IGameObject *pGameObject)
 
 void CMonoEntityExtension::Reset(bool enteringGamemode)
 {
-	if(m_pAnimatedCharacter)
+	if (m_pAnimatedCharacter)
 		m_pAnimatedCharacter->ResetState();
-	else if(m_pAnimatedCharacter = static_cast<IAnimatedCharacter *>(GetGameObject()->QueryExtension("AnimatedCharacter")))
+	else if (m_pAnimatedCharacter = static_cast<IAnimatedCharacter *>(GetGameObject()->QueryExtension("AnimatedCharacter")))
 		m_pAnimatedCharacter->ResetState();
 }
 
 void CMonoEntityExtension::ProcessEvent(SEntityEvent &event)
 {
 	// Don't attempt to send any events to managed code when the entity has been destroyed.
-	if(m_bDestroyed)
+	if (m_bDestroyed)
 		return;
-	
+
 	CEntityEventHandler::HandleEntityEvent(CEntityEventHandler::Entity, event, GetEntity(), m_pManagedObject);
 
-	switch(event.event)
+	switch (event.event)
 	{
 	case ENTITY_EVENT_RESET:
-		Reset(event.nParam[0]==1);
+		Reset(event.nParam[0] == 1);
 		break;
 	case ENTITY_EVENT_DONE:
 		m_bDestroyed = true;
@@ -122,9 +121,9 @@ void CMonoEntityExtension::FullSerialize(TSerialize ser)
 
 	ser.BeginGroup("Properties");
 	auto pPropertyHandler = static_cast<CEntityPropertyHandler *>(pEntity->GetClass()->GetPropertyHandler());
-	for(int i = 0; i < pPropertyHandler->GetPropertyCount(); i++)
+	for (int i = 0; i < pPropertyHandler->GetPropertyCount(); i++)
 	{
-		if(ser.IsWriting())
+		if (ser.IsWriting())
 		{
 			IEntityPropertyHandler::SPropertyInfo propertyInfo;
 			pPropertyHandler->GetPropertyInfo(i, propertyInfo);
@@ -180,7 +179,7 @@ void CMonoEntityExtension::PostSerialize()
 
 void CMonoEntityExtension::SetPropertyValue(IEntityPropertyHandler::SPropertyInfo propertyInfo, const char *value)
 {
-	if(value != nullptr)
+	if (value != nullptr)
 		m_pScript->CallMethod("SetPropertyValue", propertyInfo.name, propertyInfo.type, value);
 }
 
@@ -188,18 +187,17 @@ void CMonoEntityExtension::SetPropertyValue(IEntityPropertyHandler::SPropertyInf
 // Entity RMI's
 ///////////////////////////////////////////////////
 CMonoEntityExtension::RMIParams::RMIParams(mono::object _args, const char *funcName, EntityId target)
-	: methodName(funcName)
+: methodName(funcName)
 	, targetId(target)
 	, args(_args)
-{
-}
+{}
 
 void CMonoEntityExtension::RMIParams::SerializeWith(TSerialize ser)
 {
 	IMonoArray *pArgs;
 	int length;
 
-	if(args != nullptr)
+	if (args != nullptr)
 	{
 		pArgs = *args;
 		length = pArgs->GetSize();
@@ -212,11 +210,11 @@ void CMonoEntityExtension::RMIParams::SerializeWith(TSerialize ser)
 	ser.Value("methodName", methodName);
 	ser.Value("targetId", targetId, 'eid');
 
-	if(length > 0)
+	if (length > 0)
 	{
-		if(ser.IsWriting())
+		if (ser.IsWriting())
 		{
-			for(int i = 0; i < length; i++)
+			for (int i = 0; i < length; i++)
 			{
 				IMonoObject *pItem = *pArgs->GetItem(i);
 				pItem->GetAnyValue().SerializeWith(ser);
@@ -227,7 +225,7 @@ void CMonoEntityExtension::RMIParams::SerializeWith(TSerialize ser)
 		{
 			pArgs = GetMonoScriptSystem()->GetScriptDomain()->CreateArray(length);
 
-			for(int i = 0; i < length; i++)
+			for (int i = 0; i < length; i++)
 			{
 				MonoAnyValue value;
 				value.SerializeWith(ser);

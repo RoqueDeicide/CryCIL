@@ -5,11 +5,11 @@ using System.Text;
 
 namespace CryEngine
 {
-    [AttributeUsage(AttributeTargets.Method)]
-    public sealed class ConsoleCommandAttribute : Attribute
-    {
-        public string Name;
-        public string Comment;
-        public CVarFlags Flags;
-    }
+	[AttributeUsage(AttributeTargets.Method)]
+	public sealed class ConsoleCommandAttribute : Attribute
+	{
+		public string Name;
+		public string Comment;
+		public CVarFlags Flags;
+	}
 }

@@ -9,111 +9,111 @@ using CryEngine.Native;
 
 namespace CryEngine.Lua
 {
-    /// <summary>
-    /// Represents a Lua ScriptTable.
-    /// </summary>
-    public class ScriptTable
-    {
-        #region Statics
-        internal static ScriptTable Get(IntPtr entityPtr)
-        {
-            if (ScriptTables == null)
-                ScriptTables = new List<ScriptTable>();
+	/// <summary>
+	/// Represents a Lua ScriptTable.
+	/// </summary>
+	public class ScriptTable
+	{
+		#region Statics
+		internal static ScriptTable Get(IntPtr entityPtr)
+		{
+			if (ScriptTables == null)
+				ScriptTables = new List<ScriptTable>();
 
-            var scriptPtr = NativeScriptTableMethods.GetScriptTable(entityPtr);
-            if (scriptPtr != IntPtr.Zero)
-            {
-                var scriptTable = ScriptTables.FirstOrDefault(x => x.Handle == scriptPtr);
-                if (scriptTable != default(ScriptTable))
-                    return scriptTable;
+			var scriptPtr = NativeScriptTableMethods.GetScriptTable(entityPtr);
+			if (scriptPtr != IntPtr.Zero)
+			{
+				var scriptTable = ScriptTables.FirstOrDefault(x => x.Handle == scriptPtr);
+				if (scriptTable != default(ScriptTable))
+					return scriptTable;
 
-                scriptTable = new ScriptTable(scriptPtr);
-                ScriptTables.Add(scriptTable);
-                return scriptTable;
-            }
+				scriptTable = new ScriptTable(scriptPtr);
+				ScriptTables.Add(scriptTable);
+				return scriptTable;
+			}
 
-            return null;
-        }
+			return null;
+		}
 
-        public static ScriptTable Get(EntityBase entity)
-        {
-            return Get(entity.GetIEntity());
-        }
+		public static ScriptTable Get(EntityBase entity)
+		{
+			return Get(entity.GetIEntity());
+		}
 
-        /// <summary>
-        /// Global lua script execution
-        /// </summary>
-        /// <param name="buffer"></param>
-        /// <returns>False if execution fails, otherwise true.</returns>
-        public static bool Execute(string buffer)
-        {
-            return NativeScriptTableMethods.ExecuteBuffer(buffer);
-        }
+		/// <summary>
+		/// Global lua script execution
+		/// </summary>
+		/// <param name="buffer"></param>
+		/// <returns>False if execution fails, otherwise true.</returns>
+		public static bool Execute(string buffer)
+		{
+			return NativeScriptTableMethods.ExecuteBuffer(buffer);
+		}
 
-        static List<ScriptTable> ScriptTables { get; set; }
-        #endregion
+		private static List<ScriptTable> ScriptTables { get; set; }
+		#endregion
 
-        internal ScriptTable(IntPtr scriptPtr)
-        {
-            Handle = scriptPtr;
-        }
+		internal ScriptTable(IntPtr scriptPtr)
+		{
+			Handle = scriptPtr;
+		}
 
-        /// <summary>
-        /// Invokes a method on the script table
-        /// </summary>
-        /// <param name="methodName">Name of the method</param>
-        /// <param name="args">Invocation arguments</param>
-        /// <returns>Result or null</returns>
-        public object CallMethod(string methodName, params object[] args)
-        {
-            return NativeScriptTableMethods.CallMethod(Handle, methodName, args);
-        }
+		/// <summary>
+		/// Invokes a method on the script table
+		/// </summary>
+		/// <param name="methodName">Name of the method</param>
+		/// <param name="args">Invocation arguments</param>
+		/// <returns>Result or null</returns>
+		public object CallMethod(string methodName, params object[] args)
+		{
+			return NativeScriptTableMethods.CallMethod(Handle, methodName, args);
+		}
 
-        /// <summary>
-        /// Gets a value within the table.
-        /// </summary>
-        /// <param name="name">Name of the value</param>
-        /// <returns>The value or null</returns>
-        public object GetValue(string name)
-        {
-            return NativeScriptTableMethods.GetValue(Handle, name);
-        }
+		/// <summary>
+		/// Gets a value within the table.
+		/// </summary>
+		/// <param name="name">Name of the value</param>
+		/// <returns>The value or null</returns>
+		public object GetValue(string name)
+		{
+			return NativeScriptTableMethods.GetValue(Handle, name);
+		}
 
-        /// <summary>
-        /// Gets a table within this table.
-        /// </summary>
-        /// <param name="name">Name of the table</param>
-        /// <returns></returns>
-        public ScriptTable GetTable(string name)
-        {
-            var scriptPtr = NativeScriptTableMethods.GetSubScriptTable(Handle, name);
-            if (scriptPtr != IntPtr.Zero)
-            {
-                var scriptTable = ScriptTables.FirstOrDefault(x => x.Handle == scriptPtr);
-                if (scriptTable != default(ScriptTable))
-                    return scriptTable;
+		/// <summary>
+		/// Gets a table within this table.
+		/// </summary>
+		/// <param name="name">Name of the table</param>
+		/// <returns></returns>
+		public ScriptTable GetTable(string name)
+		{
+			var scriptPtr = NativeScriptTableMethods.GetSubScriptTable(Handle, name);
+			if (scriptPtr != IntPtr.Zero)
+			{
+				var scriptTable = ScriptTables.FirstOrDefault(x => x.Handle == scriptPtr);
+				if (scriptTable != default(ScriptTable))
+					return scriptTable;
 
-                scriptTable = new ScriptTable(scriptPtr);
-                ScriptTables.Add(scriptTable);
-                return scriptTable;
-            }
+				scriptTable = new ScriptTable(scriptPtr);
+				ScriptTables.Add(scriptTable);
+				return scriptTable;
+			}
 
-            return null;
-        }
+			return null;
+		}
 
-        /// <summary>
-        /// Handle to the native IScriptTable object
-        /// </summary>
-        internal IntPtr Handle { get; set; }
-    }
+		/// <summary>
+		/// Handle to the native IScriptTable object
+		/// </summary>
+		internal IntPtr Handle { get; set; }
+	}
 
-    enum LuaVariableType
-    {
-        Boolean,
-        Integer,
-        Float,
-        String,
+	internal enum LuaVariableType
+	{
+		Boolean,
+		Integer,
+		Float,
+		String,
 
-        None
-    }
+		None
+	}
 }

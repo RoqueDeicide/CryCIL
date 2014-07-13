@@ -5,10 +5,10 @@ using System.Text;
 
 namespace CryEngine
 {
-    public enum PrePhysicsUpdateMode
-    {
-        Never,
-        Always,
-        WhenAIActivated,
-    }
+	public enum PrePhysicsUpdateMode
+	{
+		Never,
+		Always,
+		WhenAIActivated,
+	}
 }

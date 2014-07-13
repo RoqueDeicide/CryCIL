@@ -29,7 +29,8 @@ struct SMonoActorInfo
 
 	SMonoActorInfo(EntityId entId, int chId)
 		: id(entId)
-		, channelId(chId) {}
+		, channelId(chId)
+	{}
 
 	IEntity *pEntity;
 	IActor *pActor;
@@ -44,7 +45,7 @@ enum EMonoActorType
 	EMonoActorType_None,
 };
 
-class CScriptbind_ActorSystem 
+class CScriptbind_ActorSystem
 	: public IMonoScriptBind
 	, public IEntitySystemSink
 {
@@ -54,9 +55,9 @@ public:
 
 	// IEntitySystemSink
 	virtual bool OnBeforeSpawn(SEntitySpawnParams &params) { return true; }
-	virtual void OnSpawn(IEntity *pEntity,SEntitySpawnParams &params);
+	virtual void OnSpawn(IEntity *pEntity, SEntitySpawnParams &params);
 	virtual bool OnRemove(IEntity *pEntity) { return true; }
-	virtual void OnReused( IEntity *pEntity, SEntitySpawnParams &params) {}
+	virtual void OnReused(IEntity *pEntity, SEntitySpawnParams &params) {}
 	virtual void OnEvent(IEntity *pEntity, SEntityEvent &event) {}
 	// ~IEntitySystemSink
 
@@ -76,7 +77,7 @@ protected:
 	static SMonoActorInfo GetActorInfoByChannelId(uint16 channelId);
 	static SMonoActorInfo GetActorInfoById(EntityId id);
 
-	static void RegisterActorClass(mono::string name, bool isNative,  bool isAI);
+	static void RegisterActorClass(mono::string name, bool isNative, bool isAI);
 	static SMonoActorInfo CreateActor(int channelId, mono::string name, mono::string className, Vec3 pos, Quat rot, Vec3 scale);
 	static void RemoveActor(EntityId id);
 

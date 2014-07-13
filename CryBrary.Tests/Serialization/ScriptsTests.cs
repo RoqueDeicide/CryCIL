@@ -19,7 +19,7 @@ namespace CryBrary.Tests.Serialization
 		{
 			var serializer = new CrySerializer();
 
-			using(var stream = new MemoryStream())
+			using (var stream = new MemoryStream())
 			{
 				var scriptManager = new ScriptManager(true, "");
 
@@ -47,15 +47,15 @@ namespace CryBrary.Tests.Serialization
 				Assert.AreEqual(3, (actorScript.ScriptInstances[0] as NativeActor).Id);
 			}
 		}
-        
-        [Test]
-        public void Serialize_CryScript_List()
-        {
-            var serializer = new CrySerializer();
 
-            using (var stream = new MemoryStream())
-            {
-                var list = new List<CryScript>();
+		[Test]
+		public void Serialize_CryScript_List()
+		{
+			var serializer = new CrySerializer();
+
+			using (var stream = new MemoryStream())
+			{
+				var list = new List<CryScript>();
 
 				CryScript script;
 				if (CryScript.TryCreate(typeof(NativeActor), out script))
@@ -77,58 +77,58 @@ namespace CryBrary.Tests.Serialization
 					list.Add(script);
 				}
 
-                serializer.Serialize(stream, list);
+				serializer.Serialize(stream, list);
 
-                serializer = new CrySerializer();
-                list = serializer.Deserialize(stream) as List<CryScript>;
+				serializer = new CrySerializer();
+				list = serializer.Deserialize(stream) as List<CryScript>;
 
-                Assert.NotNull(list);
-                Assert.IsNotEmpty(list);
+				Assert.NotNull(list);
+				Assert.IsNotEmpty(list);
 
-                Assert.AreEqual(2, list.Count);
+				Assert.AreEqual(2, list.Count);
 
-                var nativeActorScript = list.ElementAt(0);
-                Assert.NotNull(nativeActorScript.ScriptInstances);
-                Assert.AreEqual(2, nativeActorScript.ScriptInstances.Count);
+				var nativeActorScript = list.ElementAt(0);
+				Assert.NotNull(nativeActorScript.ScriptInstances);
+				Assert.AreEqual(2, nativeActorScript.ScriptInstances.Count);
 
-                Assert.NotNull(nativeActorScript.ScriptInstances.ElementAt(0));
-                Assert.AreEqual(759, (nativeActorScript.ScriptInstances.ElementAt(0) as EntityBase).Id);
+				Assert.NotNull(nativeActorScript.ScriptInstances.ElementAt(0));
+				Assert.AreEqual(759, (nativeActorScript.ScriptInstances.ElementAt(0) as EntityBase).Id);
 
-                Assert.NotNull(nativeActorScript.ScriptInstances.ElementAt(1));
-                Assert.AreEqual(5, (nativeActorScript.ScriptInstances.ElementAt(1) as EntityBase).Id);
+				Assert.NotNull(nativeActorScript.ScriptInstances.ElementAt(1));
+				Assert.AreEqual(5, (nativeActorScript.ScriptInstances.ElementAt(1) as EntityBase).Id);
 
-               var  nativeEntityScript = list.ElementAt(1);
+				var nativeEntityScript = list.ElementAt(1);
 
-                Assert.NotNull(nativeEntityScript.ScriptInstances);
-                Assert.AreEqual(3, nativeEntityScript.ScriptInstances.Count);
+				Assert.NotNull(nativeEntityScript.ScriptInstances);
+				Assert.AreEqual(3, nativeEntityScript.ScriptInstances.Count);
 
-                Assert.NotNull(nativeEntityScript.ScriptInstances.ElementAt(0));
-                Assert.AreEqual(987, (nativeEntityScript.ScriptInstances.ElementAt(0) as EntityBase).Id);
+				Assert.NotNull(nativeEntityScript.ScriptInstances.ElementAt(0));
+				Assert.AreEqual(987, (nativeEntityScript.ScriptInstances.ElementAt(0) as EntityBase).Id);
 
-                Assert.NotNull(nativeEntityScript.ScriptInstances.ElementAt(1));
-                Assert.AreEqual(8, (nativeEntityScript.ScriptInstances.ElementAt(1) as EntityBase).Id);
+				Assert.NotNull(nativeEntityScript.ScriptInstances.ElementAt(1));
+				Assert.AreEqual(8, (nativeEntityScript.ScriptInstances.ElementAt(1) as EntityBase).Id);
 
-                Assert.Null(nativeEntityScript.ScriptInstances.ElementAt(2));
-            }
-        }
+				Assert.Null(nativeEntityScript.ScriptInstances.ElementAt(2));
+			}
+		}
 
-        public void DelayedMethod() { }
+		public void DelayedMethod() { }
 
-        class TestEntity : Entity
-        {
-            public TestEntity() { delayedFunc = new DelayedFunc(MyDelayedFunc, 1337); }
-            void MyDelayedFunc() { }
+		private class TestEntity : Entity
+		{
+			public TestEntity() { delayedFunc = new DelayedFunc(MyDelayedFunc, 1337); }
+			private void MyDelayedFunc() { }
 
-            DelayedFunc delayedFunc;
-        }
+			private DelayedFunc delayedFunc;
+		}
 
-        [Test]
-        public void Entity_With_DelayedFunc()
-        {
-            var serializer = new CrySerializer();
+		[Test]
+		public void Entity_With_DelayedFunc()
+		{
+			var serializer = new CrySerializer();
 
-            using (var stream = new MemoryStream())
-            {
+			using (var stream = new MemoryStream())
+			{
 				var scriptManager = new ScriptManager(true, "");
 
 				scriptManager.AddScriptInstance(new TestEntity(), ScriptType.Entity);
@@ -136,7 +136,7 @@ namespace CryBrary.Tests.Serialization
 				serializer.Serialize(stream, scriptManager.Scripts);
 
 				scriptManager.Scripts = serializer.Deserialize(stream) as List<CryScript>;
-            }
-        }
+			}
+		}
 	}
 }

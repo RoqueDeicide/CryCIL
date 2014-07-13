@@ -18,8 +18,7 @@
 
 struct IMonoArray;
 
-
-class CScriptClass 
+class CScriptClass
 	: public CScriptObject
 	, public IMonoClass
 {
@@ -47,10 +46,10 @@ public:
 	virtual void SetPropertyValue(mono::object pObject, const char *propertyName, mono::object newValue, bool throwOnFail = true) override;
 	virtual mono::object GetFieldValue(mono::object pObject, const char *fieldName, bool throwOnFail = true) override;
 	virtual void SetFieldValue(mono::object pObject, const char *fieldName, mono::object newValue, bool throwOnFail = true) override;
-	
+
 	virtual bool ImplementsClass(const char *className, const char *nameSpace = nullptr) override;
 	virtual bool ImplementsInterface(const char *interfaceName, const char *nameSpace = nullptr, bool bSearchDerivedClasses = true) override;
-	
+
 	virtual IMonoClass *GetParent() override;
 	// ~IMonoClass
 

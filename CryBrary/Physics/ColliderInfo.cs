@@ -29,7 +29,7 @@ namespace CryEngine
 	public struct ColliderInfo
 	{
 		public PhysicsForeignIdentifiers foreignId;
-		IntPtr foreignData;
+		private IntPtr foreignData;
 
 		public EntityBase Entity
 		{

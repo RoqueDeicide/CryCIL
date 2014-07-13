@@ -16,7 +16,7 @@
 
 #include <IMonoArray.h>
 
-class CScriptArray 
+class CScriptArray
 	: public CScriptObject
 	, public IMonoArray
 {
@@ -52,14 +52,14 @@ public:
 	// ~IMonoArray
 
 	// IMonoObject
-	virtual void Release(bool triggerGC = true) override 
+	virtual void Release(bool triggerGC = true) override
 	{
-		if(!triggerGC)
+		if (!triggerGC)
 			m_objectHandle = -1;
 
 		delete this;
 	}
-	
+
 	virtual EMonoAnyType GetType() override { return eMonoAnyType_Array; }
 	virtual MonoAnyValue GetAnyValue() override { return MonoAnyValue(); }
 

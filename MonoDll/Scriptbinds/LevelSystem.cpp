@@ -30,7 +30,7 @@ CScriptbind_LevelSystem::CScriptbind_LevelSystem()
 
 ILevelInfo *CScriptbind_LevelSystem::GetCurrentLevel()
 {
-	if(ILevel *pLevel = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetILevelSystem()->GetCurrentLevel())
+	if (ILevel *pLevel = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetILevelSystem()->GetCurrentLevel())
 		return pLevel->GetLevelInfo();
 
 	return nullptr;
@@ -38,7 +38,7 @@ ILevelInfo *CScriptbind_LevelSystem::GetCurrentLevel()
 
 ILevelInfo *CScriptbind_LevelSystem::LoadLevel(mono::string name)
 {
-	if(ILevel *pLevel = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetILevelSystem()->LoadLevel(ToCryString(name)))
+	if (ILevel *pLevel = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetILevelSystem()->LoadLevel(ToCryString(name)))
 		return pLevel->GetLevelInfo();
 
 	return nullptr;
@@ -78,7 +78,7 @@ int CScriptbind_LevelSystem::GetHeightmapSize(ILevelInfo *pLevelInfo)
 {
 	return pLevelInfo->GetHeightmapSize();
 }
-	
+
 int CScriptbind_LevelSystem::GetGameTypeCount(ILevelInfo *pLevelInfo)
 {
 	return pLevelInfo->GetGameTypeCount();
@@ -86,7 +86,7 @@ int CScriptbind_LevelSystem::GetGameTypeCount(ILevelInfo *pLevelInfo)
 
 mono::string CScriptbind_LevelSystem::GetGameType(ILevelInfo *pLevelInfo, int gameType)
 {
-	if(auto pGameType = pLevelInfo->GetGameType(gameType))
+	if (auto pGameType = pLevelInfo->GetGameType(gameType))
 		return ToMonoString(pGameType->name);
 
 	return ToMonoString("");
@@ -99,7 +99,7 @@ bool CScriptbind_LevelSystem::SupportsGameType(ILevelInfo *pLevelInfo, mono::str
 
 mono::string CScriptbind_LevelSystem::GetDefaultGameType(ILevelInfo *pLevelInfo)
 {
-	if(auto pGameType = pLevelInfo->GetDefaultGameType())
+	if (auto pGameType = pLevelInfo->GetDefaultGameType())
 		return ToMonoString(pGameType->name);
 
 	return ToMonoString("");

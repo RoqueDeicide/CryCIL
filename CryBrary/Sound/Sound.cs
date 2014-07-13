@@ -10,13 +10,13 @@ namespace CryEngine
 	public class Sound
 	{
 		#region Statics
-		static Sound TryGet(IntPtr soundPtr)
+		private static Sound TryGet(IntPtr soundPtr)
 		{
 			if (soundPtr == IntPtr.Zero)
 				return null;
 
 			var sound = Sounds.FirstOrDefault(x => x.Handle == soundPtr);
-			if(sound == null)
+			if (sound == null)
 			{
 				sound = new Sound(soundPtr);
 				Sounds.Add(sound);
@@ -25,7 +25,7 @@ namespace CryEngine
 			return sound;
 		}
 
-		static List<Sound> Sounds = new List<Sound>();
+		private static List<Sound> Sounds = new List<Sound>();
 		#endregion
 
 		internal Sound(IntPtr ptr)

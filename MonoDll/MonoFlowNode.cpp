@@ -14,7 +14,7 @@
 #include <IMonoClass.h>
 
 CMonoFlowNode::CMonoFlowNode(SActivationInfo *pActInfo)
-	: m_pScript(nullptr)
+: m_pScript(nullptr)
 	, m_pActInfo(pActInfo)
 	, m_cloneType(eNCT_Instanced)
 	, m_flags(0)
@@ -33,9 +33,9 @@ CMonoFlowNode::~CMonoFlowNode()
 	pFlowNodeClass->CallMethod("InternalRemove", m_scriptId);
 }
 
-bool CMonoFlowNode::CreatedNode(TFlowNodeId id, const char *name, TFlowNodeTypeId typeId, IFlowNodePtr pNode) 
-{ 
-	if(pNode==this)
+bool CMonoFlowNode::CreatedNode(TFlowNodeId id, const char *name, TFlowNodeTypeId typeId, IFlowNodePtr pNode)
+{
+	if (pNode == this)
 	{
 		m_id = id;
 		m_graphId = m_pActInfo->pGraph->GetGraphId();
@@ -45,17 +45,17 @@ bool CMonoFlowNode::CreatedNode(TFlowNodeId id, const char *name, TFlowNodeTypeI
 		ICryScriptInstance *pScript = GetMonoScriptSystem()->InstantiateScript(gEnv->pFlowSystem->GetTypeName(typeId), eScriptFlag_FlowNode);
 
 		IMonoClass *pNodeInfo = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("NodeInitializationParams", "CryEngine.Flowgraph.Native");
-		
+
 		IMonoArray *pArgs = CreateMonoArray(1);
 		pArgs->InsertMonoObject(pNodeInfo->BoxObject(&SMonoNodeInfo(this, id, m_graphId)));
 
 		mono::object result = static_cast<CScriptSystem *>(GetMonoScriptSystem())->InitializeScriptInstance(pScript, pArgs);
 		pArgs->Release();
-		
+
 		m_pScript = pScript;
 		m_scriptId = pScript->GetId();
 
-		if(result)
+		if (result)
 		{
 			IMonoObject *pResult = *result;
 			bool bResult = pResult->Unbox<bool>();
@@ -68,12 +68,12 @@ bool CMonoFlowNode::CreatedNode(TFlowNodeId id, const char *name, TFlowNodeTypeI
 		return false;
 	}
 
-	return true; 
+	return true;
 }
 
 IFlowNodePtr CMonoFlowNode::Clone(SActivationInfo *pActInfo)
 {
-	switch(m_cloneType)
+	switch (m_cloneType)
 	{
 	case eNCT_Singleton:
 		return this;
@@ -92,77 +92,76 @@ IEntity *CMonoFlowNode::GetTargetEntity()
 }
 
 void CMonoFlowNode::ProcessEvent(EFlowEvent event, SActivationInfo *pActInfo)
-{	
+{
 	m_pActInfo = pActInfo;
 
-	if(m_pHookedGraph && m_pScript != nullptr)
+	if (m_pHookedGraph && m_pScript != nullptr)
 	{
 		m_pHookedGraph->UnregisterHook(this);
 		m_pHookedGraph = nullptr;
 	}
 
-	switch(event)
+	switch (event)
 	{
 	case eFE_Activate:
-		{
-			IFlowNodeData *pNodeData = pActInfo->pGraph->GetNodeData(pActInfo->myID);
-			if(!pNodeData)
-				return;
+	{
+						 IFlowNodeData *pNodeData = pActInfo->pGraph->GetNodeData(pActInfo->myID);
+						 if (!pNodeData)
+							 return;
 
-			int numInputPorts = pNodeData->GetNumInputPorts();
-			if(m_flags & EFLN_TARGET_ENTITY)
-				numInputPorts--; // last input is the entity port.
+						 int numInputPorts = pNodeData->GetNumInputPorts();
+						 if (m_flags & EFLN_TARGET_ENTITY)
+							 numInputPorts--; // last input is the entity port.
 
-			for(int i = 0; i < numInputPorts; i++)
-			{
-				if(IsPortActive(i))
-				{
-					switch(GetPortType(pActInfo, i))
-					{
-					case eFDT_Void:
-						m_pScript->CallMethod("OnPortActivated", i);
-						break;
-					case eFDT_Int:
-						m_pScript->CallMethod("OnPortActivated", i, CFlowBaseNodeInternal::GetPortInt(pActInfo, i));
-						break;
-					case eFDT_Float:
-						m_pScript->CallMethod("OnPortActivated", i, CFlowBaseNodeInternal::GetPortFloat(pActInfo, i));
-						break;
-					case eFDT_EntityId:
-						m_pScript->CallMethod("OnPortActivated", i, CFlowBaseNodeInternal::GetPortEntityId(pActInfo, i));
-						break;
-					case eFDT_Vec3:
-						m_pScript->CallMethod("OnPortActivated", i, CFlowBaseNodeInternal::GetPortVec3(pActInfo, i));
-						break;
-					case eFDT_String:
-						m_pScript->CallMethod("OnPortActivated", i, CFlowBaseNodeInternal::GetPortString(pActInfo, i));
-						break;
-					case eFDT_Bool:
-						m_pScript->CallMethod("OnPortActivated", i, CFlowBaseNodeInternal::GetPortBool(pActInfo, i));
-						break;
-					default:
-						break;
-					}
-				}
-			}
-
-		}
+						 for (int i = 0; i < numInputPorts; i++)
+						 {
+							 if (IsPortActive(i))
+							 {
+								 switch (GetPortType(pActInfo, i))
+								 {
+								 case eFDT_Void:
+									 m_pScript->CallMethod("OnPortActivated", i);
+									 break;
+								 case eFDT_Int:
+									 m_pScript->CallMethod("OnPortActivated", i, CFlowBaseNodeInternal::GetPortInt(pActInfo, i));
+									 break;
+								 case eFDT_Float:
+									 m_pScript->CallMethod("OnPortActivated", i, CFlowBaseNodeInternal::GetPortFloat(pActInfo, i));
+									 break;
+								 case eFDT_EntityId:
+									 m_pScript->CallMethod("OnPortActivated", i, CFlowBaseNodeInternal::GetPortEntityId(pActInfo, i));
+									 break;
+								 case eFDT_Vec3:
+									 m_pScript->CallMethod("OnPortActivated", i, CFlowBaseNodeInternal::GetPortVec3(pActInfo, i));
+									 break;
+								 case eFDT_String:
+									 m_pScript->CallMethod("OnPortActivated", i, CFlowBaseNodeInternal::GetPortString(pActInfo, i));
+									 break;
+								 case eFDT_Bool:
+									 m_pScript->CallMethod("OnPortActivated", i, CFlowBaseNodeInternal::GetPortBool(pActInfo, i));
+									 break;
+								 default:
+									 break;
+								 }
+							 }
+						 }
+	}
 		break;
 	case eFE_Initialize:
 		m_pScript->CallMethod("OnInit");
 		break;
 	case eFE_SetEntityId:
-		{
-			if(pActInfo->pEntity)
-			{
-				IMonoArray *pParams = CreateMonoArray(2);
-				pParams->InsertNativePointer(pActInfo->pEntity);
-				pParams->Insert(pActInfo->pEntity->GetId());
+	{
+							if (pActInfo->pEntity)
+							{
+								IMonoArray *pParams = CreateMonoArray(2);
+								pParams->InsertNativePointer(pActInfo->pEntity);
+								pParams->Insert(pActInfo->pEntity->GetId());
 
-				m_pScript->GetClass()->GetMethod("InternalSetTargetEntity", 2)->InvokeArray(m_pScript->GetManagedObject(), pParams);
-				pParams->Release();
-			}
-		}
+								m_pScript->GetClass()->GetMethod("InternalSetTargetEntity", 2)->InvokeArray(m_pScript->GetManagedObject(), pParams);
+								pParams->Release();
+							}
+	}
 		break;
 	case eFE_Update:
 		m_pScript->CallMethod("OnNodeUpdate");
@@ -174,7 +173,7 @@ void CMonoFlowNode::GetConfiguration(SFlowNodeConfig &config)
 {
 	CRY_ASSERT(m_pScript);
 
-	if(mono::object result = m_pScript->CallMethod("GetNodeConfig"))
+	if (mono::object result = m_pScript->CallMethod("GetNodeConfig"))
 	{
 		IMonoObject *pResult = *result;
 
@@ -194,14 +193,14 @@ void CMonoFlowNode::GetConfiguration(SFlowNodeConfig &config)
 
 		auto pInputs = new SInputPortConfig[numInputs + 1];
 
-		for(int i = 0; i < numInputs; i++)
+		for (int i = 0; i < numInputs; i++)
 		{
 			IMonoObject *pInputObject = *pInputPorts->GetItem(i);
 			pInputs[i] = pInputObject->Unbox<SMonoInputPortConfig>().Convert();
 			SAFE_RELEASE(pInputObject);
 		}
 
-		SInputPortConfig nullInputPortConfig = {0};
+		SInputPortConfig nullInputPortConfig ={ 0 };
 		pInputs[numInputs] = nullInputPortConfig;
 
 		config.pInputPorts = pInputs;
@@ -213,14 +212,14 @@ void CMonoFlowNode::GetConfiguration(SFlowNodeConfig &config)
 
 		auto pOutputs = new SOutputPortConfig[numOutputs + 1];
 
-		for(int i = 0; i < numOutputs; i++)
+		for (int i = 0; i < numOutputs; i++)
 		{
 			IMonoObject *pOutputObject = *pOutputPorts->GetItem(i);
 			pOutputs[i] = pOutputObject->Unbox<SMonoOutputPortConfig>().Convert();
 			SAFE_RELEASE(pOutputObject);
 		}
 
-		SOutputPortConfig nullOutputPortConfig = {0};
+		SOutputPortConfig nullOutputPortConfig ={ 0 };
 		pOutputs[numOutputs] = nullOutputPortConfig;
 
 		config.pOutputPorts = pOutputs;

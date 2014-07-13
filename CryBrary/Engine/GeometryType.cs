@@ -5,11 +5,11 @@ using System.Text;
 
 namespace CryEngine
 {
-    public enum GeometryType
-    {
-        None,
-        BoundingBox,
-        Physics,
-        Render
-    }
+	public enum GeometryType
+	{
+		None,
+		BoundingBox,
+		Physics,
+		Render
+	}
 }

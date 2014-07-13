@@ -10,7 +10,7 @@
 
 struct IMonoArray;
 
-namespace mono 
+namespace mono
 {
 	class _object; typedef _object* object;
 };
@@ -53,27 +53,27 @@ struct IMonoMethod
 	//////////////////////////////////////////////////////
 	// HELPERS
 	//////////////////////////////////////////////////////
-	template<typename P1> 
+	template<typename P1>
 	inline mono::object Call(mono::object object, const P1 &p1);
 
-	template<typename P1, typename P2> 
+	template<typename P1, typename P2>
 	inline mono::object Call(mono::object object, const P1 &p1, const P2 &p2);
 
-	template<typename P1, typename P2, typename P3> 
+	template<typename P1, typename P2, typename P3>
 	inline mono::object Call(mono::object object, const P1 &p1, const P2 &p2, const P3 &p3);
 
-	template<typename P1, typename P2, typename P3, typename P4> 
+	template<typename P1, typename P2, typename P3, typename P4>
 	inline mono::object Call(mono::object object, const P1 &p1, const P2 &p2, const P3 &p3, const P4 &p4);
 
-	template<typename P1, typename P2, typename P3, typename P4, typename P5> 
+	template<typename P1, typename P2, typename P3, typename P4, typename P5>
 	inline mono::object Call(mono::object object, const P1 &p1, const P2 &p2, const P3 &p3, const P4 &p4, const P5 &p5);
 
 	template<typename P1, typename P2, typename P3, typename P4, typename P5, typename P6>
 	inline mono::object Call(mono::object object, const P1 &p1, const P2 &p2, const P3 &p3, const P4 &p4, const P5 &p5, const P6 &p6);
 };
 
-template<typename P1> 
-inline mono::object IMonoMethod::Call(mono::object object,const P1 &p1)
+template<typename P1>
+inline mono::object IMonoMethod::Call(mono::object object, const P1 &p1)
 {
 	IMonoArray *pArgs = CreateMonoArray(1);
 	pArgs->Insert(p1);
@@ -84,8 +84,8 @@ inline mono::object IMonoMethod::Call(mono::object object,const P1 &p1)
 	return result;
 };
 
-template<typename P1, typename P2> 
-inline mono::object IMonoMethod::Call(mono::object object,const P1 &p1, const P2 &p2)
+template<typename P1, typename P2>
+inline mono::object IMonoMethod::Call(mono::object object, const P1 &p1, const P2 &p2)
 {
 	IMonoArray *pArgs = CreateMonoArray(2);
 	pArgs->Insert(p1);
@@ -97,8 +97,8 @@ inline mono::object IMonoMethod::Call(mono::object object,const P1 &p1, const P2
 	return result;
 };
 
-template<typename P1, typename P2, typename P3> 
-inline mono::object IMonoMethod::Call(mono::object object,const P1 &p1, const P2 &p2, const P3 &p3)
+template<typename P1, typename P2, typename P3>
+inline mono::object IMonoMethod::Call(mono::object object, const P1 &p1, const P2 &p2, const P3 &p3)
 {
 	IMonoArray *pArgs = CreateMonoArray(3);
 	pArgs->Insert(p1);
@@ -111,8 +111,8 @@ inline mono::object IMonoMethod::Call(mono::object object,const P1 &p1, const P2
 	return result;
 };
 
-template<typename P1, typename P2, typename P3, typename P4> 
-inline mono::object IMonoMethod::Call(mono::object object,const P1 &p1, const P2 &p2, const P3 &p3, const P4 &p4)
+template<typename P1, typename P2, typename P3, typename P4>
+inline mono::object IMonoMethod::Call(mono::object object, const P1 &p1, const P2 &p2, const P3 &p3, const P4 &p4)
 {
 	IMonoArray *pArgs = CreateMonoArray(4);
 	pArgs->Insert(p1);
@@ -126,8 +126,8 @@ inline mono::object IMonoMethod::Call(mono::object object,const P1 &p1, const P2
 	return result;
 };
 
-template<typename P1, typename P2, typename P3, typename P4, typename P5> 
-inline mono::object IMonoMethod::Call(mono::object object,const P1 &p1, const P2 &p2, const P3 &p3, const P4 &p4, const P5 &p5)
+template<typename P1, typename P2, typename P3, typename P4, typename P5>
+inline mono::object IMonoMethod::Call(mono::object object, const P1 &p1, const P2 &p2, const P3 &p3, const P4 &p4, const P5 &p5)
 {
 	IMonoArray *pArgs = CreateMonoArray(5);
 	pArgs->Insert(p1);
@@ -143,7 +143,7 @@ inline mono::object IMonoMethod::Call(mono::object object,const P1 &p1, const P2
 };
 
 template<typename P1, typename P2, typename P3, typename P4, typename P5, typename P6>
-inline mono::object IMonoMethod::Call(mono::object object,const P1 &p1, const P2 &p2, const P3 &p3, const P4 &p4, const P5 &p5, const P6 &p6)
+inline mono::object IMonoMethod::Call(mono::object object, const P1 &p1, const P2 &p2, const P3 &p3, const P4 &p4, const P5 &p5, const P6 &p6)
 {
 	IMonoArray *pArgs = CreateMonoArray(6);
 	pArgs->Insert(p1);

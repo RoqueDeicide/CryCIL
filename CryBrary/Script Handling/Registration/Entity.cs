@@ -2,19 +2,19 @@
 
 namespace CryEngine.Initialization
 {
-    public struct EntityRegistrationParams : IScriptRegistrationParams
-    {
-        public string name;
-        public string category;
+	public struct EntityRegistrationParams : IScriptRegistrationParams
+	{
+		public string name;
+		public string category;
 
-        public string editorHelper;
-        public string editorIcon;
+		public string editorHelper;
+		public string editorIcon;
 
-        public EntityClassFlags flags;
+		public EntityClassFlags flags;
 
-        /// <summary>
-        /// EntityProperty array containing properties.
-        /// </summary>
-        public object[] properties;
-    }
+		/// <summary>
+		/// EntityProperty array containing properties.
+		/// </summary>
+		public object[] properties;
+	}
 }

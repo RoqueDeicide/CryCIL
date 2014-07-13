@@ -5,17 +5,17 @@ using System.Text;
 
 namespace CryEngine
 {
-    public enum CloudShadingParams
-    {
-        SunlightMultiplier = 54,
-        SkylightMultiplier,
+	public enum CloudShadingParams
+	{
+		SunlightMultiplier = 54,
+		SkylightMultiplier,
 
-        SunlightCustomColor,
-        SunlightCustomColorMultiplier,
-        SunlightCustomColorInfluence,
+		SunlightCustomColor,
+		SunlightCustomColorMultiplier,
+		SunlightCustomColorInfluence,
 
-        SkylightCustomColor,
-        SkylightCustomColorMultiplier,
-        SkylightCustomColorInfluence,
-    }
+		SkylightCustomColor,
+		SkylightCustomColorMultiplier,
+		SkylightCustomColorInfluence,
+	}
 }

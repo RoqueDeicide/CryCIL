@@ -34,13 +34,13 @@ public:
 	virtual bool LoadScript(bool bForceReload) { return false; }
 	virtual UserProxyCreateFunc GetUserProxyCreateFunc() const { return m_classDesc.pUserProxyCreateFunc; }
 	virtual void *GetUserProxyData() const { return m_classDesc.pUserProxyData; }
-	virtual IEntityPropertyHandler *GetPropertyHandler() const { return m_classDesc.pPropertyHandler;  }
+	virtual IEntityPropertyHandler *GetPropertyHandler() const { return m_classDesc.pPropertyHandler; }
 	virtual IEntityEventHandler *GetEventHandler() const { return m_classDesc.pEventHandler; }
 	virtual IEntityScriptFileHandler *GetScriptFileHandler() const { return m_classDesc.pScriptFileHandler; }
 	virtual int GetEventCount() { return 0; }
-	virtual IEntityClass::SEventInfo GetEventInfo( int nIndex ) { return IEntityClass::SEventInfo(); }
-	virtual bool FindEventInfo( const char *sEvent,SEventInfo &event ) { return false; }
-	virtual void GetMemoryUsage( ICrySizer *pSizer ) const {}
+	virtual IEntityClass::SEventInfo GetEventInfo(int nIndex) { return IEntityClass::SEventInfo(); }
+	virtual bool FindEventInfo(const char *sEvent, SEventInfo &event) { return false; }
+	virtual void GetMemoryUsage(ICrySizer *pSizer) const {}
 	// ~IEntityClass
 
 protected:

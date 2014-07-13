@@ -5,17 +5,17 @@ using System.Text;
 
 namespace CryEngine
 {
-    public enum SkyLightParams
-    {
-        SunIntensity = 32,
-        SunIntensityMultiplier,
+	public enum SkyLightParams
+	{
+		SunIntensity = 32,
+		SunIntensityMultiplier,
 
-        MieScattering,
-        RayleighScattering,
-        SunAntisotropyFactor,
+		MieScattering,
+		RayleighScattering,
+		SunAntisotropyFactor,
 
-        WaveLengthR,
-        WaveLengthG,
-        WaveLengthB,
-    }
+		WaveLengthR,
+		WaveLengthG,
+		WaveLengthB,
+	}
 }

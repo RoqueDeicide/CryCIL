@@ -23,7 +23,7 @@ namespace CryEngine.CharacterCustomization
 			var subMaterialElements = element.Elements("Submaterial");
 			Submaterials = new CharacterAttachmentMaterial[subMaterialElements.Count()];
 
-			for(var i = 0; i < subMaterialElements.Count(); i++)
+			for (var i = 0; i < subMaterialElements.Count(); i++)
 			{
 				var subMaterialElement = subMaterialElements.ElementAt(i);
 
@@ -108,22 +108,22 @@ namespace CryEngine.CharacterCustomization
 			}
 		}
 
-		Vec3 ParseColor(string colorString)
+		private Vec3 ParseColor(string colorString)
 		{
 			Vec3 color = Vec3.Parse(colorString);
 
 			return new Vec3((float)Math.Pow(color.X / 255, 2.2), (float)Math.Pow(color.Y / 255, 2.2), (float)Math.Pow(color.Z / 255, 2.2));
 		}
 
-		bool UpdateMaterialElement(XElement materialElement, CharacterAttachmentMaterial material)
+		private bool UpdateMaterialElement(XElement materialElement, CharacterAttachmentMaterial material)
 		{
-            Debug.LogAlways("Updating material element for attachment {0} in slot {1}", material.Attachment.Name, material.Attachment.Slot.Name);
+			Debug.LogAlways("Updating material element for attachment {0} in slot {1}", material.Attachment.Name, material.Attachment.Slot.Name);
 			var modifiedMaterial = false;
 
 			var genMaskAttribute = materialElement.Attribute("StringGenMask");
 			if (genMaskAttribute != null && genMaskAttribute.Value.Contains("%COLORMASKING"))
 			{
-                Debug.LogAlways("Writing color mask");
+				Debug.LogAlways("Writing color mask");
 				var publicParamsElement = materialElement.Element("PublicParams");
 
 				publicParamsElement.SetAttributeValue("ColorMaskR", material.ColorRed.ToString());
@@ -180,11 +180,11 @@ namespace CryEngine.CharacterCustomization
 				{
 					var subMaterial = Submaterials.ElementAt(i);
 
-					var modifiedSubMaterial = UpdateMaterialElement(subMaterialElements.FirstOrDefault(x => 
+					var modifiedSubMaterial = UpdateMaterialElement(subMaterialElements.FirstOrDefault(x =>
 						{
 							var nameAttribute = x.Attribute("Name");
 
-							if(nameAttribute != null)
+							if (nameAttribute != null)
 								return nameAttribute.Value == subMaterial.BaseFilePath;
 
 							return false;
@@ -207,7 +207,7 @@ namespace CryEngine.CharacterCustomization
 
 					var fileName = new string(stringChars);
 
-                    FilePath = Path.Combine(Attachment.Slot.Manager.InitParameters.TempDirectory, "Materials", Attachment.Slot.Name, Attachment.Name ?? "unknown", fileName);
+					FilePath = Path.Combine(Attachment.Slot.Manager.InitParameters.TempDirectory, "Materials", Attachment.Slot.Name, Attachment.Name ?? "unknown", fileName);
 				}
 
 				var fullFilePath = CryPak.AdjustFileName(FilePath, PathResolutionRules.RealPath | PathResolutionRules.ForWriting) + ".mtl";
@@ -232,7 +232,7 @@ namespace CryEngine.CharacterCustomization
 				FilePath = BaseFilePath;
 		}
 
-		bool WriteTexture(XElement texturesElement, string textureType, string texturePath)
+		private bool WriteTexture(XElement texturesElement, string textureType, string texturePath)
 		{
 			if (texturePath == null)
 				return false;

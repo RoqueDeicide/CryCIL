@@ -6,30 +6,30 @@ using CryEngine.Physics.Status;
 
 namespace CryEngine.Native
 {
-    public static class NativePhysicsMethods
-    {
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        extern public static IntPtr GetPhysicalEntity(IntPtr entityPointer);
+	public static class NativePhysicsMethods
+	{
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		extern public static IntPtr GetPhysicalEntity(IntPtr entityPointer);
 
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        extern public static PhysicalizationType GetPhysicalEntityType(IntPtr physicalEntPtr);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		extern public static PhysicalizationType GetPhysicalEntityType(IntPtr physicalEntPtr);
 
-        [MethodImplAttribute(MethodImplOptions.InternalCall)]
-        extern public static int RayWorldIntersection(Vec3 origin, Vec3 dir, EntityQueryFlags objFlags, RayWorldIntersectionFlags flags, int maxHits, IntPtr[] skipEnts, out object[] hits);
+		[MethodImplAttribute(MethodImplOptions.InternalCall)]
+		extern public static int RayWorldIntersection(Vec3 origin, Vec3 dir, EntityQueryFlags objFlags, RayWorldIntersectionFlags flags, int maxHits, IntPtr[] skipEnts, out object[] hits);
 
 		[CLSCompliant(false)]
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        extern public static void Physicalize(IntPtr entPtr, PhysicalizationParams physicalizationParams);
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        extern public static void Sleep(IntPtr physicalEntPtr, bool sleep);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		extern public static void Physicalize(IntPtr entPtr, PhysicalizationParams physicalizationParams);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		extern public static void Sleep(IntPtr physicalEntPtr, bool sleep);
 
-        [MethodImpl(MethodImplOptions.InternalCall)]
+		[MethodImpl(MethodImplOptions.InternalCall)]
 		extern public static Vec3 GetVelocity(IntPtr physicalEntPtr);
-        [MethodImpl(MethodImplOptions.InternalCall)]
+		[MethodImpl(MethodImplOptions.InternalCall)]
 		extern public static void SetVelocity(IntPtr physicalEntPtr, Vec3 velocity);
 
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        extern internal static object[] SimulateExplosion(pe_explosion explosion);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		extern internal static object[] SimulateExplosion(pe_explosion explosion);
 
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		extern internal static bool ActionImpulse(IntPtr physEnt, ref PhysicalEntityImpulseAction parameters);
@@ -57,5 +57,5 @@ namespace CryEngine.Native
 		extern public static bool SetSimulationParams(IntPtr physEnt, ref PhysicalSimulationParameters parameters);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		extern public static bool GetSimulationParams(IntPtr physEnt, ref PhysicalSimulationParameters parameters);
-    }
+	}
 }

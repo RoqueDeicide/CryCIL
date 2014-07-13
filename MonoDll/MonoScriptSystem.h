@@ -55,7 +55,7 @@ public:
 	virtual bool Reload() override;
 
 	virtual void AddListener(IMonoScriptEventListener *pListener) override { m_listeners.push_back(pListener); }
-	virtual void RemoveListener(IMonoScriptEventListener *pListener) override { if(!m_bQuitting) stl::find_and_erase(m_listeners, pListener); }
+	virtual void RemoveListener(IMonoScriptEventListener *pListener) override { if (!m_bQuitting) stl::find_and_erase(m_listeners, pListener); }
 
 	virtual void Release() override { delete this; }
 
@@ -63,7 +63,7 @@ public:
 
 	virtual ICryScriptInstance *InstantiateScript(const char *scriptName, EMonoScriptFlags scriptType = eScriptFlag_Any, IMonoArray *pConstructorParameters = nullptr, bool throwOnFail = true) override;
 	virtual void RemoveScriptInstance(int id, EMonoScriptFlags scriptType = eScriptFlag_Any) override;
-	
+
 	virtual IMonoObject *GetScriptManager() override { return m_pScriptManager; }
 
 	virtual IMonoClass *GetCrySerializerClass() override;
@@ -85,12 +85,12 @@ public:
 	virtual void OnFileChange(const char *fileName);
 	// ~IFileChangeMonitor
 
-	// ~IGameFrameworkListener	  	
+	// ~IGameFrameworkListener
 	virtual void OnPostUpdate(float fDeltaTime);
-	virtual void OnSaveGame(ISaveGame* pSaveGame) {} 	
-	virtual void OnLoadGame(ILoadGame* pLoadGame) {}  	
-	virtual void OnLevelEnd(const char* nextLevel) {}  	
-	virtual void OnActionEvent(const SActionEvent& event) {} 	
+	virtual void OnSaveGame(ISaveGame* pSaveGame) {}
+	virtual void OnLoadGame(ILoadGame* pLoadGame) {}
+	virtual void OnLevelEnd(const char* nextLevel) {}
+	virtual void OnActionEvent(const SActionEvent& event) {}
 	// ~IGameFrameworkListener
 
 	CScriptDomain *TryGetDomain(MonoDomain *pDomain);
@@ -102,7 +102,7 @@ public:
 
 	void EraseBinding(IMonoScriptBind *pScriptBind);
 
-	mono::object InitializeScriptInstance(ICryScriptInstance *pScriptInstance, IMonoArray *pParams); 
+	mono::object InitializeScriptInstance(ICryScriptInstance *pScriptInstance, IMonoArray *pParams);
 	void ReportScriptInstanceDestroyed(ICryScriptInstance *pScriptInstance, int scriptId);
 
 	bool DetectedChanges() { return m_bDetectedChanges; }
@@ -157,7 +157,7 @@ protected:
 struct SGameRulesInitializationParams
 {
 	SGameRulesInitializationParams()
-		: id(1)
+	: id(1)
 	{
 		pEntity = gEnv->pEntitySystem->GetEntity(id);
 	}

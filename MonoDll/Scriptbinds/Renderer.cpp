@@ -31,7 +31,7 @@ CScriptbind_Renderer::CScriptbind_Renderer()
 
 void CScriptbind_Renderer::DrawTextToScreen(float xpos, float ypos, float fontSize, ColorF color, bool center, mono::string text)
 {
-	float actualColor[] = { color.r, color.g, color.b, color.a };
+	float actualColor[] ={ color.r, color.g, color.b, color.a };
 
 	gEnv->pRenderer->Draw2dLabel(xpos, ypos, fontSize, actualColor, center, ToCryString(text));
 }
@@ -52,8 +52,8 @@ int CScriptbind_Renderer::UnProjectFromScreen(float sx, float sy, float sz, floa
 }
 
 Vec3 CScriptbind_Renderer::ScreenToWorld(int x, int y)
-{	
-	if(gEnv->pPhysicalWorld)
+{
+	if (gEnv->pPhysicalWorld)
 	{
 		float mouseX, mouseY, mouseZ;
 		Vec3  camPos = gEnv->pSystem->GetViewCamera().GetPosition();
@@ -73,7 +73,7 @@ Vec3 CScriptbind_Renderer::ScreenToWorld(int x, int y)
 
 int CScriptbind_Renderer::LoadTexture(mono::string texturePath)
 {
-	if(ITexture *pTexture = gEnv->pRenderer->EF_LoadTexture(ToCryString(texturePath)))
+	if (ITexture *pTexture = gEnv->pRenderer->EF_LoadTexture(ToCryString(texturePath)))
 		return pTexture->GetTextureID();
 
 	return -1;

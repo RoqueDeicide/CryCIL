@@ -15,12 +15,12 @@
 #include "MonoException.h"
 
 CScriptClass::CScriptClass(MonoClass *pClass, CScriptAssembly *pDeclaringAssembly)
-	: m_pDeclaringAssembly(pDeclaringAssembly)
+: m_pDeclaringAssembly(pDeclaringAssembly)
 	, m_refs(0)
 {
 	CRY_ASSERT(pClass);
 
-	m_pObject = (MonoObject *)pClass; 
+	m_pObject = (MonoObject *)pClass;
 	m_objectHandle = -1;
 	m_pClass = NULL;
 
@@ -34,11 +34,11 @@ CScriptClass::~CScriptClass()
 	m_namespace.clear();
 }
 
-void CScriptClass::Release(bool triggerGC) 
+void CScriptClass::Release(bool triggerGC)
 {
-	if(0 >= --m_refs)
+	if (0 >= --m_refs)
 	{
-		if(!triggerGC)
+		if (!triggerGC)
 			m_objectHandle = -1;
 
 		// Remove this class from the assembly's class registry, and decrement its release counter.
@@ -55,9 +55,9 @@ mono::object CScriptClass::CreateInstance(IMonoArray *pConstructorParams)
 
 	MonoObject *pInstance = mono_object_new(pDomain->GetMonoDomain(), (MonoClass *)m_pObject);
 
-	if(pConstructorParams)
+	if (pConstructorParams)
 	{
-		if(IMonoMethod *pConstructor = GetMethod(".ctor", pConstructorParams))
+		if (IMonoMethod *pConstructor = GetMethod(".ctor", pConstructorParams))
 			pConstructor->InvokeArray((mono::object)pInstance, pConstructorParams);
 	}
 	else
@@ -81,10 +81,10 @@ IMonoMethod *CScriptClass::GetMethod(const char *name, IMonoArray *pArgs, bool t
 	while (pClass != nullptr)
 	{
 		pCurMethod = mono_class_get_methods(pClass, &pIterator);
-		if(pCurMethod == nullptr)
+		if (pCurMethod == nullptr)
 		{
 			pClass = mono_class_get_parent(pClass);
-			if(pClass == mono_get_object_class())
+			if (pClass == mono_get_object_class())
 				break;
 
 			pIterator = 0;
@@ -95,21 +95,21 @@ IMonoMethod *CScriptClass::GetMethod(const char *name, IMonoArray *pArgs, bool t
 		int signatureParamCount = mono_signature_get_param_count(pSignature);
 
 		bool bCorrectName = !strcmp(mono_method_get_name(pCurMethod), name);
-		if(bCorrectName && signatureParamCount == 0 && suppliedArgsCount == 0)
+		if (bCorrectName && signatureParamCount == 0 && suppliedArgsCount == 0)
 			return new CScriptMethod(pCurMethod);
-		else if(bCorrectName && signatureParamCount >= suppliedArgsCount && suppliedArgsCount != 0)
+		else if (bCorrectName && signatureParamCount >= suppliedArgsCount && suppliedArgsCount != 0)
 		{
 			//if(bStatic != (mono_method_get_flags(pCurMethod, nullptr) & METHOD_ATTRIBUTE_STATIC) > 0)
-				//continue;
+			//continue;
 
 			void *pIter = nullptr;
 
 			MonoType *pType = nullptr;
-			for(int i = 0; i < signatureParamCount; i++)
+			for (int i = 0; i < signatureParamCount; i++)
 			{
 				pType = mono_signature_get_params(pSignature, &pIter);
 
-				if(mono::object item = pArgs->GetItem(i))
+				if (mono::object item = pArgs->GetItem(i))
 				{
 					MonoClass *pItemClass = mono_object_get_class((MonoObject *)item);
 					MonoType *pItemType = mono_class_get_type(pItemClass);
@@ -118,23 +118,23 @@ IMonoMethod *CScriptClass::GetMethod(const char *name, IMonoArray *pArgs, bool t
 
 					MonoTypeEnum monoType = (MonoTypeEnum)mono_type_get_type(pType);
 
-					if(itemMonoType != monoType)
+					if (itemMonoType != monoType)
 					{
 						// exceptions:
 						// Anything can be treated as object.
-						if(monoType == MONO_TYPE_OBJECT) {}
+						if (monoType == MONO_TYPE_OBJECT) {}
 						// The runtime confuses things with value types a lot, so ignore parameters that appear with that type.
-						else if(itemMonoType == MONO_TYPE_VALUETYPE || monoType == MONO_TYPE_VALUETYPE) {}
+						else if (itemMonoType == MONO_TYPE_VALUETYPE || monoType == MONO_TYPE_VALUETYPE) {}
 						else
 						{
-							if(MonoClass *pMethodParameterClass = mono_type_get_class(pType))
+							if (MonoClass *pMethodParameterClass = mono_type_get_class(pType))
 							{
-								MonoWarning("Parameter mismatch when searching for method %s in class %s.%s, on parameter %i: Provided type %s.%s does not match expected parameter type %s.%s.", 
+								MonoWarning("Parameter mismatch when searching for method %s in class %s.%s, on parameter %i: Provided type %s.%s does not match expected parameter type %s.%s.",
 									name, mono_class_get_namespace(pClass), mono_class_get_name(pClass), i + 1, mono_class_get_namespace(pItemClass), mono_class_get_name(pItemClass), mono_class_get_namespace(pMethodParameterClass), mono_class_get_name(pMethodParameterClass));
 							}
 							else
 							{
-								MonoWarning("Parameter mismatch when searching for method %s in class %s.%s, on parameter %i: Provided type %s.%s does not match parameter type.", 
+								MonoWarning("Parameter mismatch when searching for method %s in class %s.%s, on parameter %i: Provided type %s.%s does not match parameter type.",
 									name, mono_class_get_namespace(pClass), mono_class_get_name(pClass), i + 1, mono_class_get_namespace(pItemClass), mono_class_get_name(pItemClass));
 							}
 							break;
@@ -142,15 +142,15 @@ IMonoMethod *CScriptClass::GetMethod(const char *name, IMonoArray *pArgs, bool t
 					}
 				}
 
-				if(i + 1 == suppliedArgsCount)
+				if (i + 1 == suppliedArgsCount)
 					return new CScriptMethod(pCurMethod);
 			}
 		}
 	}
 
-	if(throwOnFail)
+	if (throwOnFail)
 	{
-		if(IMonoException *pException = GetMonoScriptSystem()->GetCorlibAssembly()->GetException("System", "MissingMethodException", "Failed to locate method %s in class %s", name, GetName()))
+		if (IMonoException *pException = GetMonoScriptSystem()->GetCorlibAssembly()->GetException("System", "MissingMethodException", "Failed to locate method %s in class %s", name, GetName()))
 			pException->Throw();
 	}
 
@@ -170,10 +170,10 @@ IMonoMethod *CScriptClass::GetMethod(const char *name, int numParams, bool throw
 	while (pClass != nullptr)
 	{
 		pCurMethod = mono_class_get_methods(pClass, &pIterator);
-		if(pCurMethod == nullptr)
+		if (pCurMethod == nullptr)
 		{
 			pClass = mono_class_get_parent(pClass);
-			if(pClass == mono_get_object_class())
+			if (pClass == mono_get_object_class())
 				break;
 
 			pIterator = 0;
@@ -184,23 +184,23 @@ IMonoMethod *CScriptClass::GetMethod(const char *name, int numParams, bool throw
 		int signatureParamCount = mono_signature_get_param_count(pSignature);
 
 		bool bCorrectName = !strcmp(mono_method_get_name(pCurMethod), name);
-		if(bCorrectName && signatureParamCount == numParams)
+		if (bCorrectName && signatureParamCount == numParams)
 			return new CScriptMethod(pCurMethod);
 	}
 
-	if(throwOnFail)
+	if (throwOnFail)
 	{
-		if(!GetMonoScriptSystem()->IsInitialized())
+		if (!GetMonoScriptSystem()->IsInitialized())
 		{
 			CryLogAlways("Failed to locate method %s in class %s", name, GetName());
 		}
-		else if(IMonoAssembly *pCorlibAssembly = GetMonoScriptSystem()->GetCorlibAssembly())
+		else if (IMonoAssembly *pCorlibAssembly = GetMonoScriptSystem()->GetCorlibAssembly())
 		{
-			if(IMonoException *pException = GetMonoScriptSystem()->GetCorlibAssembly()->GetException("System", "MissingMethodException", "Failed to locate method %s in class %s", name, GetName()))
+			if (IMonoException *pException = GetMonoScriptSystem()->GetCorlibAssembly()->GetException("System", "MissingMethodException", "Failed to locate method %s in class %s", name, GetName()))
 				pException->Throw();
 		}
 	}
-	
+
 	return nullptr;
 }
 
@@ -218,10 +218,10 @@ int CScriptClass::GetMethods(const char *name, int numParams, IMonoMethod ***pMe
 	while (pClass != nullptr)
 	{
 		pCurMethod = mono_class_get_methods(pClass, &pIterator);
-		if(pCurMethod == nullptr)
+		if (pCurMethod == nullptr)
 		{
 			pClass = mono_class_get_parent(pClass);
-			if(pClass == mono_get_object_class())
+			if (pClass == mono_get_object_class())
 				break;
 
 			pIterator = 0;
@@ -232,12 +232,12 @@ int CScriptClass::GetMethods(const char *name, int numParams, IMonoMethod ***pMe
 		int signatureParamCount = mono_signature_get_param_count(pSignature);
 
 		bool bCorrectName = !strcmp(mono_method_get_name(pCurMethod), name);
-		if(bCorrectName && signatureParamCount == numParams)
+		if (bCorrectName && signatureParamCount == numParams)
 		{
 			*pMethodsOut[i] = new CScriptMethod(pCurMethod);
 			i++;
 
-			if(i == maxMethods)
+			if (i == maxMethods)
 				return i + 1;
 		}
 	}
@@ -248,18 +248,18 @@ int CScriptClass::GetMethods(const char *name, int numParams, IMonoMethod ***pMe
 mono::object CScriptClass::GetPropertyValue(mono::object object, const char *propertyName, bool throwOnFail)
 {
 	MonoProperty *pProperty = GetMonoProperty(propertyName, false, true);
-	if(pProperty)
+	if (pProperty)
 	{
 		MonoObject *pException = nullptr;
 
 		MonoObject *propertyValue = mono_property_get_value(pProperty, object, nullptr, &pException);
 
-		if(pException)
+		if (pException)
 			HandleException(pException);
-		else if(propertyValue)
+		else if (propertyValue)
 			return (mono::object)propertyValue;
 	}
-	else if(throwOnFail)
+	else if (throwOnFail)
 		GetMonoScriptSystem()->GetCorlibAssembly()->GetException("System", "MissingMemberException", "Failed to locate property %s in class %s", propertyName, GetName())->Throw();
 
 	return nullptr;
@@ -268,30 +268,30 @@ mono::object CScriptClass::GetPropertyValue(mono::object object, const char *pro
 void CScriptClass::SetPropertyValue(mono::object object, const char *propertyName, mono::object newValue, bool throwOnFail)
 {
 	MonoProperty *pProperty = GetMonoProperty(propertyName, true);
-	if(pProperty)
+	if (pProperty)
 	{
 		void *args[1];
 		args[0] = newValue;
 
 		mono_property_set_value(pProperty, object, args, nullptr);
 	}
-	else if(throwOnFail)
+	else if (throwOnFail)
 		GetMonoScriptSystem()->GetCorlibAssembly()->GetException("System", "MissingMemberException", "Failed to locate property %s in class %s", propertyName, GetName())->Throw();
 }
 
 mono::object CScriptClass::GetFieldValue(mono::object object, const char *fieldName, bool throwOnFail)
 {
 	MonoClassField *pField = GetMonoField(fieldName);
-	if(pField)
+	if (pField)
 	{
 		CScriptDomain *pDomain = static_cast<CScriptDomain *>(GetAssembly()->GetDomain());
 
 		MonoObject *fieldValue = mono_field_get_value_object(pDomain->GetMonoDomain(), pField, (MonoObject *)object);
 
-		if(fieldValue)
+		if (fieldValue)
 			return (mono::object)fieldValue;
 	}
-	else if(throwOnFail)
+	else if (throwOnFail)
 		GetMonoScriptSystem()->GetCorlibAssembly()->GetException("System", "MissingFieldException", "Failed to locate field %s in class %s", fieldName, GetName())->Throw();
 
 	return nullptr;
@@ -300,9 +300,9 @@ mono::object CScriptClass::GetFieldValue(mono::object object, const char *fieldN
 void CScriptClass::SetFieldValue(mono::object object, const char *fieldName, mono::object newValue, bool throwOnFail)
 {
 	MonoClassField *pField = GetMonoField(fieldName);
-	if(pField)
+	if (pField)
 		mono_field_set_value((MonoObject *)(object), pField, newValue);
-	else if(throwOnFail)
+	else if (throwOnFail)
 		GetMonoScriptSystem()->GetCorlibAssembly()->GetException("System", "MissingFieldException", "Failed to locate field %s in class %s", fieldName, GetName())->Throw();
 }
 
@@ -316,20 +316,20 @@ MonoProperty *CScriptClass::GetMonoProperty(const char *name, bool requireSetter
 	while (pClass != nullptr)
 	{
 		pCurProperty = mono_class_get_properties(pClass, &pIterator);
-		if(pCurProperty == nullptr)
+		if (pCurProperty == nullptr)
 		{
 			pClass = mono_class_get_parent(pClass);
-			if(pClass == mono_get_object_class())
+			if (pClass == mono_get_object_class())
 				break;
 			pIterator = 0;
 			continue;
 		}
 
-		if(!strcmp(mono_property_get_name(pCurProperty), name))
+		if (!strcmp(mono_property_get_name(pCurProperty), name))
 		{
-			if(requireSetter && mono_property_get_set_method(pCurProperty) == nullptr)
+			if (requireSetter && mono_property_get_set_method(pCurProperty) == nullptr)
 				continue;
-			if(requireGetter && mono_property_get_get_method(pCurProperty) == nullptr)
+			if (requireGetter && mono_property_get_get_method(pCurProperty) == nullptr)
 				continue;
 
 			return pCurProperty;
@@ -349,17 +349,17 @@ MonoClassField *CScriptClass::GetMonoField(const char *name)
 	while (pClass != nullptr)
 	{
 		pCurField = mono_class_get_fields(pClass, &pIterator);
-		if(pCurField == nullptr)
+		if (pCurField == nullptr)
 		{
 			pClass = mono_class_get_parent(pClass);
-			if(pClass == mono_get_object_class())
+			if (pClass == mono_get_object_class())
 				break;
 
 			pIterator = 0;
 			continue;
 		}
 
-		if(!strcmp(mono_field_get_name(pCurField), name))
+		if (!strcmp(mono_field_get_name(pCurField), name))
 			return pCurField;
 	}
 
@@ -368,7 +368,7 @@ MonoClassField *CScriptClass::GetMonoField(const char *name)
 
 mono::object CScriptClass::BoxObject(void *object, IMonoDomain *pDomain)
 {
-	if(pDomain == nullptr)
+	if (pDomain == nullptr)
 		pDomain = GetMonoScriptSystem()->GetActiveDomain();
 
 	return (mono::object)mono_value_box(static_cast<CScriptDomain *>(pDomain)->GetMonoDomain(), (MonoClass *)m_pObject, object);
@@ -380,14 +380,14 @@ bool CScriptClass::ImplementsClass(const char *className, const char *nameSpace)
 
 	while (pClass != nullptr)
 	{
-		if(!strcmp(mono_class_get_name(pClass), className) 
+		if (!strcmp(mono_class_get_name(pClass), className)
 			&& (nameSpace == nullptr || !strcmp(mono_class_get_namespace(pClass), nameSpace)))
 			return true;
 		else
 			CryLogAlways("%s did not match pattern %s", mono_class_get_name(pClass), className);
 
 		pClass = mono_class_get_parent(pClass);
-		if(pClass == mono_get_object_class())
+		if (pClass == mono_get_object_class())
 			break;
 	}
 
@@ -403,20 +403,20 @@ bool CScriptClass::ImplementsInterface(const char *interfaceName, const char *na
 	while (pClass != nullptr)
 	{
 		MonoClass *pCurInterface = mono_class_get_interfaces(pClass, &pIterator);
-		if(pCurInterface == nullptr)
+		if (pCurInterface == nullptr)
 		{
-			if(!bSearchDerivedClasses)
+			if (!bSearchDerivedClasses)
 				return false;
 
 			pClass = mono_class_get_parent(pClass);
-			if(pClass == mono_get_object_class())
+			if (pClass == mono_get_object_class())
 				break;
 
 			pIterator = 0;
 			continue;
 		}
 
-		if(!strcmp(mono_class_get_name(pCurInterface), interfaceName) 
+		if (!strcmp(mono_class_get_name(pCurInterface), interfaceName)
 			&& (nameSpace == nullptr || !strcmp(mono_class_get_namespace(pCurInterface), nameSpace)))
 			return true;
 	}
@@ -427,7 +427,7 @@ bool CScriptClass::ImplementsInterface(const char *interfaceName, const char *na
 IMonoClass *CScriptClass::GetParent()
 {
 	MonoClass *pMonoClassParent = mono_class_get_parent((MonoClass *)m_pObject);
-	if(pMonoClassParent == nullptr)
+	if (pMonoClassParent == nullptr)
 		return nullptr;
 
 	return m_pDeclaringAssembly->TryGetClass(pMonoClassParent);

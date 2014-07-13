@@ -1,10 +1,9 @@
-
 #include "StdAfx.h"
 #include "Actor.h"
 
 #include "MonoScriptSystem.h"
 
-#include "EntityEventHandling.h" 
+#include "EntityEventHandling.h"
 
 #include <IGameRulesSystem.h>
 #include <IViewSystem.h>
@@ -14,7 +13,7 @@
 #include <IMonoClass.h>
 
 CMonoActor::CMonoActor()
-	: m_pAnimatedCharacter(NULL)
+: m_pAnimatedCharacter(NULL)
 	, m_bClient(false)
 	, m_bMigrating(false)
 	, m_pScript(nullptr)
@@ -23,10 +22,9 @@ CMonoActor::CMonoActor()
 	m_currentPhysProfile=GetDefaultProfile(eEA_Physics);
 }
 
-
 CMonoActor::~CMonoActor()
 {
-	GetGameObject()->EnablePhysicsEvent( false, eEPE_OnPostStepImmediate );
+	GetGameObject()->EnablePhysicsEvent(false, eEPE_OnPostStepImmediate);
 
 	if (m_pAnimatedCharacter)
 	{
@@ -37,7 +35,7 @@ CMonoActor::~CMonoActor()
 	GetGameObject()->ReleaseView(this);
 	GetGameObject()->ReleaseProfileManager(this);
 
-	if(IMonoScriptSystem *pScriptSystem = GetMonoScriptSystem())
+	if (IMonoScriptSystem *pScriptSystem = GetMonoScriptSystem())
 	{
 		if (IActorSystem *pActorSystem = static_cast<CScriptSystem *>(pScriptSystem)->GetIGameFramework()->GetIActorSystem())
 			pActorSystem->RemoveActor(GetEntityId());
@@ -50,7 +48,7 @@ bool CMonoActor::Init(IGameObject *pGameObject)
 {
 	SetGameObject(pGameObject);
 
-	if(!GetGameObject()->CaptureView(this))
+	if (!GetGameObject()->CaptureView(this))
 		return false;
 	if (!GetGameObject()->CaptureProfileManager(this))
 		return false;
@@ -59,24 +57,24 @@ bool CMonoActor::Init(IGameObject *pGameObject)
 
 	m_pAnimatedCharacter = static_cast<IAnimatedCharacter*>(GetGameObject()->AcquireExtension("AnimatedCharacter"));
 	if (m_pAnimatedCharacter)
-		GetGameObject()->EnablePhysicsEvent( true, eEPE_OnPostStepImmediate );
+		GetGameObject()->EnablePhysicsEvent(true, eEPE_OnPostStepImmediate);
 
-	if(!GetGameObject()->BindToNetwork())
+	if (!GetGameObject()->BindToNetwork())
 		return false;
 
-	GetEntity()->SetFlags(GetEntity()->GetFlags()|(ENTITY_FLAG_ON_RADAR|ENTITY_FLAG_CUSTOM_VIEWDIST_RATIO));
+	GetEntity()->SetFlags(GetEntity()->GetFlags() | (ENTITY_FLAG_ON_RADAR | ENTITY_FLAG_CUSTOM_VIEWDIST_RATIO));
 
 	GetGameObject()->SetAspectProfile(eEA_Physics, eAP_Alive);
 
-	if(IEntityRenderProxy *pProxy = (IEntityRenderProxy *)GetEntity()->GetProxy(ENTITY_PROXY_RENDER))
+	if (IEntityRenderProxy *pProxy = (IEntityRenderProxy *)GetEntity()->GetProxy(ENTITY_PROXY_RENDER))
 	{
-		if(IRenderNode *pRenderNode = pProxy->GetRenderNode())
+		if (IRenderNode *pRenderNode = pProxy->GetRenderNode())
 			pRenderNode->SetRndFlags(ERF_REGISTER_BY_POSITION, true);
 	}
 
 	GetMonoScriptSystem()->AddListener(this);
 
-	return true; 
+	return true;
 }
 
 void CMonoActor::PostInit(IGameObject *pGameObject)
@@ -84,13 +82,13 @@ void CMonoActor::PostInit(IGameObject *pGameObject)
 	if (m_pAnimatedCharacter)
 		m_pAnimatedCharacter->ResetState();
 
-	if(gEnv->bMultiplayer)
-		GetGameObject()->SetUpdateSlotEnableCondition( this, 0, eUEC_WithoutAI );
+	if (gEnv->bMultiplayer)
+		GetGameObject()->SetUpdateSlotEnableCondition(this, 0, eUEC_WithoutAI);
 	else if (!gEnv->bServer)
-		GetGameObject()->SetUpdateSlotEnableCondition( this, 0, eUEC_VisibleOrInRange );
+		GetGameObject()->SetUpdateSlotEnableCondition(this, 0, eUEC_VisibleOrInRange);
 }
 
-bool CMonoActor::ReloadExtension( IGameObject *pGameObject, const SEntitySpawnParams &params )
+bool CMonoActor::ReloadExtension(IGameObject *pGameObject, const SEntitySpawnParams &params)
 {
 	CRY_ASSERT(GetGameObject() == pGameObject);
 
@@ -102,7 +100,7 @@ bool CMonoActor::ReloadExtension( IGameObject *pGameObject, const SEntitySpawnPa
 		return false;
 
 	// Re-enable the physics post step callback and CollisionLogging (were cleared during ResetGameObject()).
-	GetGameObject()->EnablePhysicsEvent( true, eEPE_OnPostStepImmediate | eEPE_OnCollisionLogged);
+	GetGameObject()->EnablePhysicsEvent(true, eEPE_OnPostStepImmediate | eEPE_OnCollisionLogged);
 
 	if (!GetGameObject()->BindToNetwork())
 		return false;
@@ -117,7 +115,7 @@ bool CMonoActor::ReloadExtension( IGameObject *pGameObject, const SEntitySpawnPa
 	return true;
 }
 
-void CMonoActor::PostReloadExtension( IGameObject * pGameObject, const SEntitySpawnParams &params )
+void CMonoActor::PostReloadExtension(IGameObject * pGameObject, const SEntitySpawnParams &params)
 {
 	CRY_ASSERT(GetGameObject() == pGameObject);
 
@@ -125,12 +123,12 @@ void CMonoActor::PostReloadExtension( IGameObject * pGameObject, const SEntitySp
 		(ENTITY_FLAG_ON_RADAR | ENTITY_FLAG_CUSTOM_VIEWDIST_RATIO | ENTITY_FLAG_TRIGGER_AREAS));
 }
 
-void CMonoActor::SetAuthority( bool auth )
+void CMonoActor::SetAuthority(bool auth)
 {
 	// we've been given authority of this entity, mark the physics as changed
 	// so that we send a current position, failure to do this can result in server/client
 	// disagreeing on where the entity is. most likely to happen on restart
-	if(auth)
+	if (auth)
 		CHANGED_NETWORK_STATE(this, eEA_Physics);
 }
 
@@ -148,7 +146,7 @@ void CMonoActor::HandleEvent(const SGameObjectEvent &event)
 		pEntity->InvalidateTM(ENTITY_XFORM_POS);
 
 		m_bClient = true;
-		
+
 		// always update client's character
 		if (ICharacterInstance * pCharacter = GetEntity()->GetCharacter(0))
 			pCharacter->SetFlags(pCharacter->GetFlags() | CS_FLAG_UPDATE_ALWAYS);
@@ -165,7 +163,7 @@ void CMonoActor::HandleEvent(const SGameObjectEvent &event)
 
 void CMonoActor::ProcessEvent(SEntityEvent& event)
 {
-	if(m_pManagedObject == nullptr)
+	if (m_pManagedObject == nullptr)
 		return;
 
 	CEntityEventHandler::HandleEntityEvent(CEntityEventHandler::Actor, event, GetEntity(), m_pManagedObject);
@@ -177,50 +175,50 @@ void CMonoActor::ProcessEvent(SEntityEvent& event)
 		GetGameObject()->RequestRemoteUpdate(eEA_Physics | eEA_GameClientDynamic | eEA_GameServerDynamic | eEA_GameClientStatic | eEA_GameServerStatic);
 		break;
 	case ENTITY_EVENT_START_GAME:
-		{
-			GetGameObject()->RequestRemoteUpdate(eEA_Physics | eEA_GameClientDynamic | eEA_GameServerDynamic | eEA_GameClientStatic | eEA_GameServerStatic);
+	{
+									GetGameObject()->RequestRemoteUpdate(eEA_Physics | eEA_GameClientDynamic | eEA_GameServerDynamic | eEA_GameClientStatic | eEA_GameServerStatic);
 
-			if (m_pAnimatedCharacter)
-				m_pAnimatedCharacter->ResetState();
-		}
+									if (m_pAnimatedCharacter)
+										m_pAnimatedCharacter->ResetState();
+	}
 		break;
 	case ENTITY_EVENT_RESET:
-		{
-			if (m_pAnimatedCharacter)
-				m_pAnimatedCharacter->ResetState();
+	{
+							   if (m_pAnimatedCharacter)
+								   m_pAnimatedCharacter->ResetState();
 
-			GetGameObject()->RequestRemoteUpdate(eEA_Physics | eEA_GameClientDynamic | eEA_GameServerDynamic | eEA_GameClientStatic | eEA_GameServerStatic);
-		}
+							   GetGameObject()->RequestRemoteUpdate(eEA_Physics | eEA_GameClientDynamic | eEA_GameServerDynamic | eEA_GameClientStatic | eEA_GameServerStatic);
+	}
 		break;
 	case ENTITY_EVENT_INIT:
-		{
-			if (m_pAnimatedCharacter)
-				m_pAnimatedCharacter->ResetState();
-		}
+	{
+							  if (m_pAnimatedCharacter)
+								  m_pAnimatedCharacter->ResetState();
+	}
 		break;
 	case ENTITY_EVENT_XFORM:
-		{
-		}
+	{
+	}
 		break;
-  }  
+	}
 }
 
 void CMonoActor::PostUpdate(float frameTime)
 {
-	if(m_pScript)
+	if (m_pScript)
 		m_pScript->CallMethod("OnPostUpdate");
 }
 
 void CMonoActor::OnScriptInstanceInitialized(ICryScriptInstance *pScriptInstance)
 {
 	mono::object pIdResult = pScriptInstance->GetPropertyValue("Id", false);
-	if(pIdResult)
+	if (pIdResult)
 	{
 		IMonoObject *pObject = *pIdResult;
 		EntityId id = pObject->Unbox<EntityId>();
 		pObject->Release();
 
-		if(id == GetEntityId())
+		if (id == GetEntityId())
 		{
 			m_pScript = pScriptInstance;
 			m_pManagedObject = pScriptInstance->GetManagedObject();
@@ -244,99 +242,99 @@ void CMonoActor::PostUpdateView(SViewParams &viewParams)
 	m_pScript->GetClass()->GetMethod("PostUpdateView", 1)->Invoke(m_pManagedObject, args);
 }
 
-bool CMonoActor::SetAspectProfile( EEntityAspects aspect, uint8 profile )
+bool CMonoActor::SetAspectProfile(EEntityAspects aspect, uint8 profile)
 {
 	bool res(false);
 
 	if (aspect == eEA_Physics)
 	{
-		if (m_currentPhysProfile==profile && !gEnv->pSystem->IsSerializingFile()) //rephysicalize when loading savegame
+		if (m_currentPhysProfile == profile && !gEnv->pSystem->IsSerializingFile()) //rephysicalize when loading savegame
 			return true;
 
-		bool wasFrozen=(m_currentPhysProfile==eAP_Frozen);
+		bool wasFrozen=(m_currentPhysProfile == eAP_Frozen);
 
 		switch (profile)
 		{
 		case eAP_NotPhysicalized:
-			{
-				SEntityPhysicalizeParams params;
-				params.type = PE_NONE;
-				GetEntity()->Physicalize(params);
-			}
+		{
+									SEntityPhysicalizeParams params;
+									params.type = PE_NONE;
+									GetEntity()->Physicalize(params);
+		}
 			res=true;
 			break;
 		case eAP_Spectator:
 		case eAP_Alive:
-			{
-				// if we were asleep, we just want to wakeup
-				if (profile==eAP_Alive && (m_currentPhysProfile==eAP_Sleep))
-				{
-					ICharacterInstance *pCharacter=GetEntity()->GetCharacter(0);
-					if (pCharacter && pCharacter->GetISkeletonAnim())
-					{
-						IPhysicalEntity *pPhysicalEntity=0;
-						Matrix34 delta(IDENTITY);
+		{
+						  // if we were asleep, we just want to wakeup
+						  if (profile == eAP_Alive && (m_currentPhysProfile == eAP_Sleep))
+						  {
+							  ICharacterInstance *pCharacter=GetEntity()->GetCharacter(0);
+							  if (pCharacter && pCharacter->GetISkeletonAnim())
+							  {
+								  IPhysicalEntity *pPhysicalEntity=0;
+								  Matrix34 delta(IDENTITY);
 
-						if (pPhysicalEntity)
-						{
-							IEntityPhysicalProxy *pPhysicsProxy=static_cast<IEntityPhysicalProxy *>(GetEntity()->GetProxy(ENTITY_PROXY_PHYSICS));
-							if (pPhysicsProxy)
-							{
-								GetEntity()->SetWorldTM(delta);
-								pPhysicsProxy->AssignPhysicalEntity(pPhysicalEntity);
-							}
-						}
+								  if (pPhysicalEntity)
+								  {
+									  IEntityPhysicalProxy *pPhysicsProxy=static_cast<IEntityPhysicalProxy *>(GetEntity()->GetProxy(ENTITY_PROXY_PHYSICS));
+									  if (pPhysicsProxy)
+									  {
+										  GetEntity()->SetWorldTM(delta);
+										  pPhysicsProxy->AssignPhysicalEntity(pPhysicalEntity);
+									  }
+								  }
 
-						if(m_pAnimatedCharacter)
-							m_pAnimatedCharacter->ForceRefreshPhysicalColliderMode();
-					}
-				}
-				else
-				{
-				//	Physicalize(wasFrozen?STANCE_PRONE:STANCE_NULL);
+								  if (m_pAnimatedCharacter)
+									  m_pAnimatedCharacter->ForceRefreshPhysicalColliderMode();
+							  }
+						  }
+						  else
+						  {
+							  //	Physicalize(wasFrozen?STANCE_PRONE:STANCE_NULL);
 
-					if (profile==eAP_Spectator)
-					{
-						if (ICharacterInstance *pCharacter=GetEntity()->GetCharacter(0))
-							pCharacter->GetISkeletonPose()->DestroyCharacterPhysics(1);
+							  if (profile == eAP_Spectator)
+							  {
+								  if (ICharacterInstance *pCharacter=GetEntity()->GetCharacter(0))
+									  pCharacter->GetISkeletonPose()->DestroyCharacterPhysics(1);
 
-						if(m_pAnimatedCharacter)
-						{
-							m_pAnimatedCharacter->ForceRefreshPhysicalColliderMode();
-							m_pAnimatedCharacter->RequestPhysicalColliderMode( eColliderMode_Spectator, eColliderModeLayer_Game, "Actor::SetAspectProfile");
-						}
-					}
-					else if (profile==eAP_Alive)
-					{
-						if (m_currentPhysProfile==eAP_Spectator)
-						{
-							if(m_pAnimatedCharacter)
-								m_pAnimatedCharacter->RequestPhysicalColliderMode( eColliderMode_Undefined, eColliderModeLayer_Game, "Actor::SetAspectProfile");
-							
-							if (IPhysicalEntity *pPhysics=GetEntity()->GetPhysics())
-							{
-								if (ICharacterInstance *pCharacter=GetEntity()->GetCharacter(0))
-								{
-									pCharacter->GetISkeletonPose()->DestroyCharacterPhysics(2);
+								  if (m_pAnimatedCharacter)
+								  {
+									  m_pAnimatedCharacter->ForceRefreshPhysicalColliderMode();
+									  m_pAnimatedCharacter->RequestPhysicalColliderMode(eColliderMode_Spectator, eColliderModeLayer_Game, "Actor::SetAspectProfile");
+								  }
+							  }
+							  else if (profile == eAP_Alive)
+							  {
+								  if (m_currentPhysProfile == eAP_Spectator)
+								  {
+									  if (m_pAnimatedCharacter)
+										  m_pAnimatedCharacter->RequestPhysicalColliderMode(eColliderMode_Undefined, eColliderModeLayer_Game, "Actor::SetAspectProfile");
 
-									if (IPhysicalEntity *pCharPhysics=pCharacter->GetISkeletonPose()->GetCharacterPhysics())
-									{
-										pe_params_articulated_body body;
-										body.pHost=pPhysics;
-										pCharPhysics->SetParams(&body);
-									}
-								}
-							}
-						}
-					}
-				}
-			}
+									  if (IPhysicalEntity *pPhysics=GetEntity()->GetPhysics())
+									  {
+										  if (ICharacterInstance *pCharacter=GetEntity()->GetCharacter(0))
+										  {
+											  pCharacter->GetISkeletonPose()->DestroyCharacterPhysics(2);
+
+											  if (IPhysicalEntity *pCharPhysics=pCharacter->GetISkeletonPose()->GetCharacterPhysics())
+											  {
+												  pe_params_articulated_body body;
+												  body.pHost=pPhysics;
+												  pCharPhysics->SetParams(&body);
+											  }
+										  }
+									  }
+								  }
+							  }
+						  }
+		}
 			res=true;
 			break;
 		case eAP_Linked:
 			// make sure we are alive, for when we transition from ragdoll to linked...
 			//if (!GetEntity()->GetPhysics() || GetEntity()->GetPhysics()->GetType()!=PE_LIVING)
-				//Physicalize();
+			//Physicalize();
 			res=true;
 			break;
 		case eAP_Sleep:
@@ -345,16 +343,16 @@ bool CMonoActor::SetAspectProfile( EEntityAspects aspect, uint8 profile )
 			break;
 		case eAP_Ragdoll:
 			// killed while sleeping?
-			/*if (m_currentPhysProfile==eAP_Sleep) 
+			/*if (m_currentPhysProfile==eAP_Sleep)
 				GoLimp();
-			else
+				else
 				RagDollize(false);*/
 			res=true;
 			break;
 		case eAP_Frozen:
 			/*if (!GetEntity()->GetPhysics() || ((GetEntity()->GetPhysics()->GetType()!=PE_LIVING) && (GetEntity()->GetPhysics()->GetType()!=PE_ARTICULATED)))
 				Physicalize();
-			Freeze(true);*/
+				Freeze(true);*/
 			res=true;
 			break;
 		}
@@ -364,38 +362,38 @@ bool CMonoActor::SetAspectProfile( EEntityAspects aspect, uint8 profile )
 
 		if (profile!=eAP_Frozen && wasFrozen)
 		{
-			Freeze(false);
+		Freeze(false);
 
-			if (profile==eAP_Alive)
-			{
-				EStance stance;
-				if (!TrySetStance(stance=STANCE_STAND))
-					if (!TrySetStance(stance=STANCE_CROUCH))
-					{
-						pdyn.bActive=0;
-						pPE->SetParams(&pdyn);
+		if (profile==eAP_Alive)
+		{
+		EStance stance;
+		if (!TrySetStance(stance=STANCE_STAND))
+		if (!TrySetStance(stance=STANCE_CROUCH))
+		{
+		pdyn.bActive=0;
+		pPE->SetParams(&pdyn);
 
-						if (!TrySetStance(stance=STANCE_PRONE))
-							stance=STANCE_NULL;
+		if (!TrySetStance(stance=STANCE_PRONE))
+		stance=STANCE_NULL;
 
-						pdyn.bActive=1;
-						pPE->SetParams(&pdyn);
-					}
-					
-				if (stance!=STANCE_NULL)
-				{
-					m_stance=STANCE_NULL;
-					m_desiredStance=stance;
+		pdyn.bActive=1;
+		pPE->SetParams(&pdyn);
+		}
 
-					UpdateStance();
-				}
+		if (stance!=STANCE_NULL)
+		{
+		m_stance=STANCE_NULL;
+		m_desiredStance=stance;
 
-				GetGameObject()->ChangedNetworkState(IPlayerInput::INPUT_ASPECT);
-			}
+		UpdateStance();
+		}
+
+		GetGameObject()->ChangedNetworkState(IPlayerInput::INPUT_ASPECT);
+		}
 		}
 
 		if (res)
-			ProfileChanged(profile);*/
+		ProfileChanged(profile);*/
 
 		m_currentPhysProfile = profile;
 	}
@@ -405,7 +403,7 @@ bool CMonoActor::SetAspectProfile( EEntityAspects aspect, uint8 profile )
 
 void CMonoActor::InitLocalPlayer()
 {
-	GetGameObject()->SetUpdateSlotEnableCondition( this, 0, eUEC_WithoutAI );
+	GetGameObject()->SetUpdateSlotEnableCondition(this, 0, eUEC_WithoutAI);
 	//static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIActorSystem()->SetLocalPlayerId(GetEntityId());
 }
 
@@ -441,7 +439,7 @@ void CMonoActor::SetMaxHealth(float health)
 	m_pScript->SetPropertyValue("MaxHealth", pDomain->BoxAnyValue(MonoAnyValue(health)));
 }
 
-bool CMonoActor::NetSerialize( TSerialize ser, EEntityAspects aspect, uint8 profile, int pflags )
+bool CMonoActor::NetSerialize(TSerialize ser, EEntityAspects aspect, uint8 profile, int pflags)
 {
 	if (aspect == eEA_Physics)
 	{
@@ -474,14 +472,14 @@ bool CMonoActor::NetSerialize( TSerialize ser, EEntityAspects aspect, uint8 prof
 		}
 
 		// TODO: remove this when craig fixes it in the network system
-		if (profile==eAP_Spectator)
+		if (profile == eAP_Spectator)
 		{
-			int x=0;	
+			int x=0;
 			ser.Value("unused", x, 'skip');
 		}
-		else if (profile==eAP_Sleep)
+		else if (profile == eAP_Sleep)
 		{
-			int x=0;	
+			int x=0;
 			ser.Value("unused1", x, 'skip');
 			ser.Value("unused2", x, 'skip');
 		}
@@ -489,12 +487,12 @@ bool CMonoActor::NetSerialize( TSerialize ser, EEntityAspects aspect, uint8 prof
 		if (type == PE_NONE)
 			return true;
 
-		IEntityPhysicalProxy * pEPP = (IEntityPhysicalProxy *) GetEntity()->GetProxy(ENTITY_PROXY_PHYSICS);
+		IEntityPhysicalProxy * pEPP = (IEntityPhysicalProxy *)GetEntity()->GetProxy(ENTITY_PROXY_PHYSICS);
 		if (ser.IsWriting())
 		{
 			if (!pEPP || !pEPP->GetPhysicalEntity() || pEPP->GetPhysicalEntity()->GetType() != type)
 			{
-				gEnv->pPhysicalWorld->SerializeGarbageTypedSnapshot( ser, type, 0 );
+				gEnv->pPhysicalWorld->SerializeGarbageTypedSnapshot(ser, type, 0);
 				return true;
 			}
 		}
@@ -504,10 +502,10 @@ bool CMonoActor::NetSerialize( TSerialize ser, EEntityAspects aspect, uint8 prof
 		}
 
 		// PLAYERPREDICTION
-    	if(type!=PE_LIVING)
-    	{
-      		pEPP->SerializeTyped( ser, type, pflags );
-    	}
+		if (type != PE_LIVING)
+		{
+			pEPP->SerializeTyped(ser, type, pflags);
+		}
 		// ~PLAYERPREDICTION
 	}
 

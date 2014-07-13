@@ -6,12 +6,12 @@ using CryEngine.Initialization;
 
 namespace CryEngine.Extensions
 {
-    public static class EnumExtensions
-    {
-        public static IEnumerable<T> GetMembers<T>()
-        {
-            return from value in Enum.GetNames(typeof(T))
-                   select (T)Enum.Parse(typeof(T), value);
-        }
-    }
+	public static class EnumExtensions
+	{
+		public static IEnumerable<T> GetMembers<T>()
+		{
+			return from value in Enum.GetNames(typeof(T))
+				   select (T)Enum.Parse(typeof(T), value);
+		}
+	}
 }

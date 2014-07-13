@@ -5,11 +5,11 @@ using System.Text;
 
 namespace CryEngine.Flowgraph.Native
 {
-    struct NodeInitializationParams : IScriptInitializationParams
-    {
-        public IntPtr nodePtr;
+	internal struct NodeInitializationParams : IScriptInitializationParams
+	{
+		public IntPtr nodePtr;
 
-        public UInt16 nodeId;
-        public UInt32 graphId;
-    }
+		public UInt16 nodeId;
+		public UInt32 graphId;
+	}
 }

@@ -35,7 +35,7 @@ IGameObject *CScriptbind_GameObject::GetGameObject(EntityId id)
 
 void CScriptbind_GameObject::EnablePostUpdates(IGameObject *pGameObject, IGameObjectExtension *pExtension, bool enable)
 {
-	if(enable)
+	if (enable)
 		pGameObject->EnablePostUpdates(pExtension);
 	else
 		pGameObject->DisablePostUpdates(pExtension);

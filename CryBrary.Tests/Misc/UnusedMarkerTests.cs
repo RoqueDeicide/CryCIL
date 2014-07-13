@@ -12,7 +12,7 @@ namespace CryBrary.Tests.Misc
 		public void Float()
 		{
 			float myFloat = UnusedMarker.Float;
-            Assert.True(UnusedMarker.IsUnused(myFloat));
+			Assert.True(UnusedMarker.IsUnused(myFloat));
 
 			myFloat = 998.4f;
 			Assert.False(UnusedMarker.IsUnused(myFloat));

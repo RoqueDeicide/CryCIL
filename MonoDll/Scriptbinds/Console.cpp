@@ -45,7 +45,7 @@ void CScriptbind_Console::HandleException(mono::object exception)
 
 void CScriptbind_Console::Execute(mono::string string, bool silent)
 {
-	gEnv->pConsole->ExecuteString(ToCryString(string), silent); 
+	gEnv->pConsole->ExecuteString(ToCryString(string), silent);
 }
 
 #undef GetCommandLine
@@ -80,7 +80,7 @@ void CScriptbind_Console::RegisterCVarString(mono::string name, mono::string &va
 
 void CScriptbind_Console::UnregisterCVar(mono::string name, bool bDelete)
 {
-	gEnv->pConsole->UnregisterVariable(ToCryString(name), bDelete); 
+	gEnv->pConsole->UnregisterVariable(ToCryString(name), bDelete);
 }
 
 void CScriptbind_Console::UnregisterCCommand(mono::string name)
@@ -90,7 +90,7 @@ void CScriptbind_Console::UnregisterCCommand(mono::string name)
 
 bool CScriptbind_Console::HasCVar(mono::string name)
 {
-	if(ICVar *pCVar = gEnv->pConsole->GetCVar(ToCryString(name)))
+	if (ICVar *pCVar = gEnv->pConsole->GetCVar(ToCryString(name)))
 		return true;
 
 	return false;
@@ -98,7 +98,7 @@ bool CScriptbind_Console::HasCVar(mono::string name)
 
 float CScriptbind_Console::GetCVarFloat(mono::string name)
 {
-	if(ICVar *pCVar = gEnv->pConsole->GetCVar(ToCryString(name)))
+	if (ICVar *pCVar = gEnv->pConsole->GetCVar(ToCryString(name)))
 		return pCVar->GetFVal();
 
 	return 0.0f;
@@ -106,7 +106,7 @@ float CScriptbind_Console::GetCVarFloat(mono::string name)
 
 int CScriptbind_Console::GetCVarInt(mono::string name)
 {
-	if(ICVar *pCVar = gEnv->pConsole->GetCVar(ToCryString(name)))
+	if (ICVar *pCVar = gEnv->pConsole->GetCVar(ToCryString(name)))
 		return pCVar->GetIVal();
 
 	return 0;
@@ -114,27 +114,27 @@ int CScriptbind_Console::GetCVarInt(mono::string name)
 
 mono::string CScriptbind_Console::GetCVarString(mono::string name)
 {
-	if(ICVar *pCVar = gEnv->pConsole->GetCVar(ToCryString(name)))
-		return (mono::string )ToMonoString(pCVar->GetString());
+	if (ICVar *pCVar = gEnv->pConsole->GetCVar(ToCryString(name)))
+		return (mono::string)ToMonoString(pCVar->GetString());
 
-	return (mono::string )ToMonoString("");
+	return (mono::string)ToMonoString("");
 }
 
 void CScriptbind_Console::SetCVarFloat(mono::string name, float val)
 {
-	if(ICVar *pCVar = gEnv->pConsole->GetCVar(ToCryString(name)))
+	if (ICVar *pCVar = gEnv->pConsole->GetCVar(ToCryString(name)))
 		pCVar->Set(val);
 }
 
 void CScriptbind_Console::SetCVarInt(mono::string name, int val)
 {
-	if(ICVar *pCVar = gEnv->pConsole->GetCVar(ToCryString(name)))
+	if (ICVar *pCVar = gEnv->pConsole->GetCVar(ToCryString(name)))
 		pCVar->Set(val);
 }
 
 void CScriptbind_Console::SetCVarString(mono::string name, mono::string val)
 {
-	if(ICVar *pCVar = gEnv->pConsole->GetCVar(ToCryString(name)))
+	if (ICVar *pCVar = gEnv->pConsole->GetCVar(ToCryString(name)))
 		pCVar->Set(ToCryString(val));
 }
 

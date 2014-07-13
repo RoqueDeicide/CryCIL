@@ -5,10 +5,10 @@ using System.Text;
 
 namespace CryEngine
 {
-    public enum CVarType
-    {
-        Int,
-        Float,
-        String
-    }
+	public enum CVarType
+	{
+		Int,
+		Float,
+		String
+	}
 }

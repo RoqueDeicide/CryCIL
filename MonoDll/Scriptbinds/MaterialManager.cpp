@@ -39,14 +39,14 @@ CScriptbind_MaterialManager::CScriptbind_MaterialManager()
 
 	REGISTER_METHOD(GetSurfaceTypeId);
 	REGISTER_METHOD(GetSurfaceTypeName);
-    REGISTER_METHOD(GetSurfaceTypeTypeName);
-    REGISTER_METHOD(GetSurfaceTypeFlags);
-    REGISTER_METHOD(GetSurfaceTypeParams);
+	REGISTER_METHOD(GetSurfaceTypeTypeName);
+	REGISTER_METHOD(GetSurfaceTypeFlags);
+	REGISTER_METHOD(GetSurfaceTypeParams);
 }
 
 IMaterial *CScriptbind_MaterialManager::FindMaterial(mono::string name)
 {
-	if(IMaterial *pMaterial = m_pMaterialManager->FindMaterial(ToCryString(name)))
+	if (IMaterial *pMaterial = m_pMaterialManager->FindMaterial(ToCryString(name)))
 		return pMaterial;
 
 	return m_pMaterialManager->LoadMaterial(ToCryString(name), false);
@@ -74,15 +74,15 @@ int CScriptbind_MaterialManager::GetSubmaterialCount(IMaterial *pMaterial)
 
 IMaterial *CScriptbind_MaterialManager::GetMaterial(IEntity *pEntity, int slot)
 {
-	if(IEntityRenderProxy *pRenderProxy =  static_cast<IEntityRenderProxy *>(pEntity->GetProxy(ENTITY_PROXY_RENDER)))
+	if (IEntityRenderProxy *pRenderProxy =  static_cast<IEntityRenderProxy *>(pEntity->GetProxy(ENTITY_PROXY_RENDER)))
 		return pRenderProxy->GetRenderMaterial(slot);
-	
+
 	return nullptr;
 }
 
 void CScriptbind_MaterialManager::SetMaterial(IEntity *pEntity, IMaterial *pMaterial, int slot)
 {
-	if(IEntityRenderProxy *pRenderProxy =  static_cast<IEntityRenderProxy *>(pEntity->GetProxy(ENTITY_PROXY_RENDER)))
+	if (IEntityRenderProxy *pRenderProxy =  static_cast<IEntityRenderProxy *>(pEntity->GetProxy(ENTITY_PROXY_RENDER)))
 		pRenderProxy->SetSlotMaterial(slot, pMaterial);
 }
 
@@ -128,14 +128,14 @@ void SetShaderParamCommon(IMaterial *pMaterial, const char *paramName, UParamVal
 	{
 		SShaderParam param = *it;
 
-		if(!strcmp(paramName, param.m_Name))
+		if (!strcmp(paramName, param.m_Name))
 		{
 			param.SetParam(paramName, &params, par);
 
 			SInputShaderResources res;
 			shaderItem.m_pShaderResources->ConvertToInputResource(&res);
 			res.m_ShaderParams = params;
-			shaderItem.m_pShaderResources->SetShaderParams(&res,shaderItem.m_pShader);
+			shaderItem.m_pShaderResources->SetShaderParams(&res, shaderItem.m_pShader);
 			break;
 		}
 	}

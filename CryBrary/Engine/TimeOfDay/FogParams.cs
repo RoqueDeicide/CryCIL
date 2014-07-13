@@ -5,34 +5,34 @@ using System.Text;
 
 namespace CryEngine
 {
-    public enum FogParams
-    {
-        ColorBottom = 14,
-        ColorBottomMultiplier,
-        HeightBottom,
-        DensityBottom,
+	public enum FogParams
+	{
+		ColorBottom = 14,
+		ColorBottomMultiplier,
+		HeightBottom,
+		DensityBottom,
 
-        ColorTop,
-        ColorTopMultiplier,
-        HeightTop,
-        DensityTop,
+		ColorTop,
+		ColorTopMultiplier,
+		HeightTop,
+		DensityTop,
 
-        ColorHeightOffset,
+		ColorHeightOffset,
 
-        ColorRadial,
-        ColorRadialMultiplier,
-        RadialSize,
-        RadialLobe,
+		ColorRadial,
+		ColorRadialMultiplier,
+		RadialSize,
+		RadialLobe,
 
-        FinalDensityClamp,
+		FinalDensityClamp,
 
-        GlobalDensity,
-        RampStart,
-        RampEnd,
-        RampInfluence,
+		GlobalDensity,
+		RampStart,
+		RampEnd,
+		RampInfluence,
 
-        OceanFogColor = 67,
-        OceanFogColorMultiplier,
-        OceanFogDesnity,
-    }
+		OceanFogColor = 67,
+		OceanFogColorMultiplier,
+		OceanFogDesnity,
+	}
 }

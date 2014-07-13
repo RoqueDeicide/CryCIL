@@ -24,12 +24,11 @@ CScriptbind_CrySerialize::CScriptbind_CrySerialize()
 }
 
 CScriptbind_CrySerialize::~CScriptbind_CrySerialize()
-{
-}
+{}
 
 int CScriptbind_CrySerialize::ConvertPolicy(mono::string policy)
 {
-	if(policy == nullptr)
+	if (policy == nullptr)
 		return 0;
 
 	const char *policyStr = ToCryString(policy);
@@ -37,7 +36,7 @@ int CScriptbind_CrySerialize::ConvertPolicy(mono::string policy)
 	int size = sizeof(policyStr);
 	int result = 0;
 
-	for(int i = 0; i < size; i++)
+	for (int i = 0; i < size; i++)
 		result += policyStr[size - (i + 1)] << (i * 8);
 
 	return result;
@@ -58,7 +57,7 @@ void CScriptbind_CrySerialize::ValueString(ISerialize *ser, mono::string name, m
 	int iPolicy = ConvertPolicy(policy);
 
 	TSerialize serialize = TSerialize(ser);
-	if(!ser->IsReading())
+	if (!ser->IsReading())
 		serialize.Value(ToCryString(name), ToCryString(str), iPolicy);
 	else
 	{

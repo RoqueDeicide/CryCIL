@@ -11,7 +11,7 @@
 #include <mono/metadata/debug-helpers.h>
 
 CScriptObject::CScriptObject(MonoObject *pObject, bool allowGC)
-	: m_pObject(NULL)
+: m_pObject(NULL)
 {
 	SetManagedObject(pObject, allowGC);
 }
@@ -22,11 +22,11 @@ CScriptObject::~CScriptObject()
 	SAFE_RELEASE(m_pClass);
 
 	FreeGCHandle();
-	 
+
 	m_pObject = 0;
 }
 
-MonoClass *CScriptObject::GetMonoClass() 
+MonoClass *CScriptObject::GetMonoClass()
 {
 	MonoClass *pClass = mono_object_get_class(m_pObject);
 	CRY_ASSERT(pClass);
@@ -36,13 +36,13 @@ MonoClass *CScriptObject::GetMonoClass()
 
 IMonoClass *CScriptObject::GetClass()
 {
-	if(m_pClass == NULL)
+	if (m_pClass == NULL)
 	{
 		if (CScriptDomain *pDomain = static_cast<CScriptSystem *>(GetMonoScriptSystem())->TryGetDomain(mono_object_get_domain(m_pObject)))
 		{
 			MonoClass *pMonoClass = GetMonoClass();
 
-			if(CScriptAssembly *pAssembly = pDomain->TryGetAssembly(mono_class_get_image(pMonoClass)))
+			if (CScriptAssembly *pAssembly = pDomain->TryGetAssembly(mono_class_get_image(pMonoClass)))
 				m_pClass = pAssembly->TryGetClass(pMonoClass);
 		}
 	}
@@ -55,36 +55,36 @@ EMonoAnyType CScriptObject::GetType()
 {
 	MonoClass *pMonoClass = GetMonoClass();
 
-	if(pMonoClass==mono_get_boolean_class())
+	if (pMonoClass == mono_get_boolean_class())
 		return eMonoAnyType_Boolean;
-	else if(pMonoClass==mono_get_int32_class())
+	else if (pMonoClass == mono_get_int32_class())
 		return eMonoAnyType_Integer;
-	else if(pMonoClass==mono_get_uint32_class())
+	else if (pMonoClass == mono_get_uint32_class())
 		return eMonoAnyType_UnsignedInteger;
-	else if(pMonoClass==mono_get_int16_class())
+	else if (pMonoClass == mono_get_int16_class())
 		return eMonoAnyType_Short;
-	else if(pMonoClass==mono_get_uint16_class())
+	else if (pMonoClass == mono_get_uint16_class())
 		return eMonoAnyType_UnsignedShort;
-	else if(pMonoClass==mono_get_single_class())
+	else if (pMonoClass == mono_get_single_class())
 		return eMonoAnyType_Float;
-	else if(pMonoClass==mono_get_string_class())
+	else if (pMonoClass == mono_get_string_class())
 		return eMonoAnyType_String;
-	else if(pMonoClass == mono_get_array_class())
+	else if (pMonoClass == mono_get_array_class())
 		return eMonoAnyType_Array;
 	else
 	{
 		const char *className = mono_class_get_name(pMonoClass);
-		if(!strcmp(className, "EntityId"))
+		if (!strcmp(className, "EntityId"))
 			return eMonoAnyType_EntityId;
-		else if(!strcmp(className, "Vec3"))
+		else if (!strcmp(className, "Vec3"))
 			return eMonoAnyType_Vec3;
-		else if(!strcmp(className, "Quat"))
+		else if (!strcmp(className, "Quat"))
 			return eMonoAnyType_Quat;
 		else
 		{
 			string strClassName = className;
 
-			if(!strcmp(strClassName.substr(strClassName.size() - 2, 2).c_str(), "[]"))
+			if (!strcmp(strClassName.substr(strClassName.size() - 2, 2).c_str(), "[]"))
 				return eMonoAnyType_Array;
 		}
 	}
@@ -94,7 +94,7 @@ EMonoAnyType CScriptObject::GetType()
 
 MonoAnyValue CScriptObject::GetAnyValue()
 {
-	switch(GetType())
+	switch (GetType())
 	{
 	case eMonoAnyType_Boolean:
 		return Unbox<bool>();
@@ -103,12 +103,12 @@ MonoAnyValue CScriptObject::GetAnyValue()
 	case eMonoAnyType_UnsignedInteger:
 		return Unbox<uint>();
 	case eMonoAnyType_EntityId:
-		{
-			MonoAnyValue value = Unbox<EntityId>();
-			value.type = eMonoAnyType_EntityId;
+	{
+								  MonoAnyValue value = Unbox<EntityId>();
+								  value.type = eMonoAnyType_EntityId;
 
-			return value;
-		}
+								  return value;
+	}
 	case eMonoAnyType_Short:
 		return Unbox<short>();
 	case eMonoAnyType_UnsignedShort:
@@ -122,12 +122,12 @@ MonoAnyValue CScriptObject::GetAnyValue()
 	case eMonoAnyType_String:
 		return ToCryString((mono::string)GetManagedObject());
 	case eMonoAnyType_Array:
-		{
-			MonoAnyValue any = MonoAnyValue((mono::object)m_pObject);
-			any.type = eMonoAnyType_Array;
+	{
+							   MonoAnyValue any = MonoAnyValue((mono::object)m_pObject);
+							   any.type = eMonoAnyType_Array;
 
-			return any;
-		}
+							   return any;
+	}
 	case eMonoAnyType_Unknown:
 		return MonoAnyValue((mono::object)m_pObject);
 	}
@@ -142,7 +142,7 @@ const char *CScriptObject::ToString()
 	MonoMethod *method = mono_method_desc_search_in_class(mono_method_desc_new("::ToString()", false), GetMonoClass());
 	MonoObject *pResult = mono_runtime_invoke(method, m_pObject, nullptr, &pException);
 
-	if(pException)
+	if (pException)
 		HandleException(pException);
 	else
 		return ToCryString((mono::string)pResult);
@@ -157,7 +157,7 @@ void CScriptObject::HandleException(MonoObject *pException)
 
 	IMonoAssembly *pCryBraryAssembly = GetMonoScriptSystem()->GetCryBraryAssembly();
 
-	if((g_pMonoCVars->mono_exceptionsTriggerMessageBoxes || isFatal) && pCryBraryAssembly)
+	if ((g_pMonoCVars->mono_exceptionsTriggerMessageBoxes || isFatal) && pCryBraryAssembly)
 	{
 		auto args = CreateMonoArray(2);
 		args->InsertMonoObject((mono::object)pException);
@@ -183,7 +183,7 @@ void CScriptObject::SetManagedObject(MonoObject *newObject, bool allowGC)
 	m_pObject = newObject;
 
 	// We need this to allow the GC to collect the class object later on.
-	if(allowGC)
+	if (allowGC)
 		m_objectHandle = mono_gchandle_new(m_pObject, allowGC);
 	else
 		m_objectHandle = -1;
@@ -191,6 +191,6 @@ void CScriptObject::SetManagedObject(MonoObject *newObject, bool allowGC)
 
 void CScriptObject::FreeGCHandle()
 {
-	if(m_objectHandle != -1)
+	if (m_objectHandle != -1)
 		mono_gchandle_free(m_objectHandle);
 }

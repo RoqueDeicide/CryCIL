@@ -10,13 +10,13 @@ PluginManager::IPluginManager* gPluginManager = NULL; //!< pointer to plugin man
 
 extern "C"
 {
-    CRYMONO_API PluginManager::IPluginBase *GetPluginInterface(const char *sInterfaceVersion)
-    {
-        // This function should not create a new interface class each call.
-        static CryMonoPlugin::CPluginCryMono modulePlugin;
-        CryMonoPlugin::gPlugin = &modulePlugin;
-        return static_cast<PluginManager::IPluginBase *>(CryMonoPlugin::gPlugin);
-    }
+	CRYMONO_API PluginManager::IPluginBase *GetPluginInterface(const char *sInterfaceVersion)
+	{
+		// This function should not create a new interface class each call.
+		static CryMonoPlugin::CPluginCryMono modulePlugin;
+		CryMonoPlugin::gPlugin = &modulePlugin;
+		return static_cast<PluginManager::IPluginBase *>(CryMonoPlugin::gPlugin);
+	}
 }
 #else
 #include <Windows.h>
@@ -32,22 +32,22 @@ extern "C"
 }
 #endif
 
-BOOL APIENTRY DllMain( HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved )
+BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved)
 {
-    switch ( ul_reason_for_call )
-    {
-    case DLL_PROCESS_ATTACH:
-        break;
+	switch (ul_reason_for_call)
+	{
+	case DLL_PROCESS_ATTACH:
+		break;
 
-    case DLL_THREAD_ATTACH:
-        break;
+	case DLL_THREAD_ATTACH:
+		break;
 
-    case DLL_THREAD_DETACH:
-        break;
+	case DLL_THREAD_DETACH:
+		break;
 
-    case DLL_PROCESS_DETACH:
-        break;
-    }
+	case DLL_PROCESS_DETACH:
+		break;
+	}
 
-    return TRUE;
+	return TRUE;
 }

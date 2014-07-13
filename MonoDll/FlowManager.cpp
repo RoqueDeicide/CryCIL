@@ -11,7 +11,7 @@
 #include <IGameFramework.h>
 
 CFlowManager::CFlowManager()
-	: m_refs(0)
+: m_refs(0)
 {
 	REGISTER_METHOD(RegisterNode);
 
@@ -47,13 +47,13 @@ CFlowManager::~CFlowManager()
 void CFlowManager::RegisterNode(mono::string monoTypeName)
 {
 	IFlowSystem *pFlowSystem = gEnv->pGame->GetIGameFramework()->GetIFlowSystem();
-	if(!pFlowSystem)
+	if (!pFlowSystem)
 		return;
 
 	const char *typeName = ToCryString(monoTypeName);
 
 	CFlowManager *pFlowManager = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetFlowManager();
-	if(!pFlowManager)
+	if (!pFlowManager)
 	{
 		MonoWarning("Aborting registration of node type %s, flow manager was null!", typeName);
 		return;
@@ -117,7 +117,7 @@ bool CFlowManager::IsOutputConnected(CMonoFlowNode *pNode, int index)
 
 IEntity *CFlowManager::GetTargetEntity(CMonoFlowNode *pNode, EntityId &id)
 {
-	if(IEntity *pEntity = pNode->GetTargetEntity())
+	if (IEntity *pEntity = pNode->GetTargetEntity())
 	{
 		id = pEntity->GetId();
 

@@ -5,11 +5,11 @@ using System.Text;
 
 namespace CryEngine.Serialization
 {
-    public enum SerializationTarget
-    {
-        SaveGame,
-        Network,
-        Script,
+	public enum SerializationTarget
+	{
+		SaveGame,
+		Network,
+		Script,
 		RealtimeScripting
-    }
+	}
 }

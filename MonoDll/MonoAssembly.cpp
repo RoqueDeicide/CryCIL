@@ -15,7 +15,7 @@
 #include <mono/metadata/exception.h>
 
 CScriptAssembly::CScriptAssembly(CScriptDomain *pDomain, MonoImage *pImage, const char *path, bool nativeAssembly)
-	: m_pDomain(pDomain)
+: m_pDomain(pDomain)
 	, m_bNative(nativeAssembly) // true if this assembly was loaded via C++.
 	, m_bDestroying(false)
 	, m_pClass(nullptr)
@@ -23,7 +23,7 @@ CScriptAssembly::CScriptAssembly(CScriptDomain *pDomain, MonoImage *pImage, cons
 	CRY_ASSERT(pImage);
 	m_pImage = pImage;
 	m_pClass = NULL;
-	
+
 	m_path = string(path);
 }
 
@@ -31,7 +31,7 @@ CScriptAssembly::~CScriptAssembly()
 {
 	m_bDestroying = true;
 
-	for(auto it = m_classes.begin(); it != m_classes.end(); ++it)
+	for (auto it = m_classes.begin(); it != m_classes.end(); ++it)
 		delete *it;
 
 	m_classes.clear();
@@ -41,7 +41,7 @@ CScriptAssembly::~CScriptAssembly()
 
 void CScriptAssembly::Release(bool triggerGC)
 {
-	if(m_classes.empty())
+	if (m_classes.empty())
 	{
 		m_pDomain->OnAssemblyReleased(this);
 		// delete assembly should only be directly done by this method and the CScriptDomain dtor, otherwise Release.
@@ -51,19 +51,19 @@ void CScriptAssembly::Release(bool triggerGC)
 
 void CScriptAssembly::OnClassReleased(CScriptClass *pClass)
 {
-	if(!m_bDestroying)
+	if (!m_bDestroying)
 		stl::find_and_erase(m_classes, pClass);
 }
 
 IMonoClass *CScriptAssembly::GetClass()
 {
-	if(m_pClass == NULL)
+	if (m_pClass == NULL)
 	{
 		if (CScriptDomain *pDomain = static_cast<CScriptSystem *>(GetMonoScriptSystem())->TryGetDomain(mono_object_get_domain((MonoObject *)m_pImage)))
 		{
 			MonoClass *pMonoClass = mono_object_get_class((MonoObject *)m_pImage);
 
-			if(CScriptAssembly *pAssembly = pDomain->TryGetAssembly(mono_class_get_image(pMonoClass)))
+			if (CScriptAssembly *pAssembly = pDomain->TryGetAssembly(mono_class_get_image(pMonoClass)))
 				m_pClass = pAssembly->TryGetClass(pMonoClass);
 		}
 	}
@@ -73,8 +73,8 @@ IMonoClass *CScriptAssembly::GetClass()
 }
 
 IMonoClass *CScriptAssembly::GetClass(const char *className, const char *nameSpace)
-{ 
-	if(MonoClass *monoClass = mono_class_from_name(m_pImage, nameSpace, className))
+{
+	if (MonoClass *monoClass = mono_class_from_name(m_pImage, nameSpace, className))
 		return TryGetClass(monoClass);
 
 	MonoWarning("Failed to get class %s.%s", nameSpace, className);
@@ -87,7 +87,7 @@ CScriptClass *CScriptAssembly::TryGetClass(MonoClass *pMonoClass)
 
 	for each(auto pClass in m_classes)
 	{
-		if((MonoClass *)pClass->GetManagedObject() == pMonoClass)
+		if ((MonoClass *)pClass->GetManagedObject() == pMonoClass)
 		{
 			pClass->AddRef();
 			return pClass;
@@ -104,7 +104,7 @@ CScriptClass *CScriptAssembly::TryGetClass(MonoClass *pMonoClass)
 IMonoException *CScriptAssembly::_GetException(const char *nameSpace, const char *exceptionClass, const char *message)
 {
 	MonoException *pException;
-	if(message != nullptr)
+	if (message != nullptr)
 		pException = mono_exception_from_name_msg(m_pImage, nameSpace, exceptionClass, message);
 	else
 		pException = mono_exception_from_name(m_pImage, nameSpace, exceptionClass);
@@ -112,9 +112,9 @@ IMonoException *CScriptAssembly::_GetException(const char *nameSpace, const char
 	return new CScriptException(pException);
 }
 
-mono::object CScriptAssembly::GetManagedObject() 
+mono::object CScriptAssembly::GetManagedObject()
 {
 	CScriptDomain *pDomain = static_cast<CScriptDomain *>(GetDomain());
 
-	return (mono::object)mono_assembly_get_object(pDomain->GetMonoDomain(), mono_image_get_assembly(m_pImage)); 
+	return (mono::object)mono_assembly_get_object(pDomain->GetMonoDomain(), mono_image_get_assembly(m_pImage));
 }

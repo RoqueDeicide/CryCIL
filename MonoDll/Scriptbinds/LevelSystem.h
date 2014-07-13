@@ -41,7 +41,7 @@ private:
 	static mono::string GetDisplayName(ILevelInfo *pLevelInfo);
 
 	static int GetHeightmapSize(ILevelInfo *pLevelInfo);
-	
+
 	static int GetGameTypeCount(ILevelInfo *pLevelInfo);
 	static mono::string GetGameType(ILevelInfo *pLevelInfo, int gameType);
 	static bool SupportsGameType(ILevelInfo *pLevelInfo, mono::string gameTypeName);

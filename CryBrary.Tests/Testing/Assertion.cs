@@ -4,7 +4,7 @@ namespace CryBrary.Tests.UnitTester
 {
 	public class Assertion
 	{
-        [Test]
+		[Test]
 		public void ReferenceEquals_Valid()
 		{
 			var lhs = new object();
@@ -13,16 +13,16 @@ namespace CryBrary.Tests.UnitTester
 			Assert.IsTrue(lhs == rhs);
 		}
 
-        [Test]
+		[Test]
 		public void ReferenceEquals_Invalid()
 		{
 			var lhs = new object();
 			var rhs = new object();
 
-            Assert.Throws<AssertionFailedException>(() =>
-            {
-                Assert.IsTrue(lhs == rhs);
-            });
+			Assert.Throws<AssertionFailedException>(() =>
+			{
+				Assert.IsTrue(lhs == rhs);
+			});
 		}
 	}
 }

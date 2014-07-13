@@ -5,8 +5,8 @@ using System.Text;
 
 namespace CryEngine
 {
-    public class AIActor
-        : Actor
-    {
-    }
+	public class AIActor
+		: Actor
+	{
+	}
 }

@@ -25,7 +25,7 @@ IScriptTable *CScriptbind_ScriptTable::GetScriptTable(IEntity *pEntity)
 
 ScriptAnyValue GetAnyValue(IMonoObject *pObject)
 {
-	switch(pObject->GetType())
+	switch (pObject->GetType())
 	{
 	case eMonoAnyType_String:
 		return ScriptAnyValue(ToCryString((mono::string)pObject->GetManagedObject()));
@@ -44,7 +44,7 @@ ScriptAnyValue GetAnyValue(IMonoObject *pObject)
 
 mono::object ToMonoObject(ScriptAnyValue anyValue)
 {
-	switch(anyValue.type)
+	switch (anyValue.type)
 	{
 	case ANY_TSTRING:
 		return (mono::object)ToMonoString(anyValue.str);
@@ -53,12 +53,12 @@ mono::object ToMonoObject(ScriptAnyValue anyValue)
 	case ANY_TBOOLEAN:
 		return (mono::object)mono_value_box(mono_domain_get(), mono_get_boolean_class(), &anyValue.b);
 	case ANY_TVECTOR:
-		{
-			IMonoClass *pVec3Class = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("Vec3");
+	{
+						IMonoClass *pVec3Class = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("Vec3");
 
-			Vec3 vec(anyValue.vec3.x, anyValue.vec3.y, anyValue.vec3.z);
-			return pVec3Class->BoxObject(&vec);
-		}
+						Vec3 vec(anyValue.vec3.x, anyValue.vec3.y, anyValue.vec3.z);
+						return pVec3Class->BoxObject(&vec);
+	}
 	case ANY_TTABLE:
 		return (mono::object)anyValue.table;
 	default:
@@ -71,16 +71,16 @@ mono::object ToMonoObject(ScriptAnyValue anyValue)
 mono::object CScriptbind_ScriptTable::CallMethod(IScriptTable *pScriptTable, mono::string methodName, mono::object params)
 {
 	HSCRIPTFUNCTION scriptFunction = 0;
-    if (pScriptTable && pScriptTable->GetValue(ToCryString(methodName), scriptFunction))
+	if (pScriptTable && pScriptTable->GetValue(ToCryString(methodName), scriptFunction))
 	{
-		if(!gEnv->pScriptSystem->BeginCall(scriptFunction))
+		if (!gEnv->pScriptSystem->BeginCall(scriptFunction))
 			return nullptr;
 
 		IMonoArray *pArgs = *params;
 
 		gEnv->pScriptSystem->PushFuncParam(pScriptTable);
 
-		for(int i = 0; i < pArgs->GetSize(); i++)
+		for (int i = 0; i < pArgs->GetSize(); i++)
 		{
 			IMonoObject *pItem = *pArgs->GetItem(i);
 
@@ -98,7 +98,7 @@ mono::object CScriptbind_ScriptTable::CallMethod(IScriptTable *pScriptTable, mon
 
 		gEnv->pScriptSystem->ReleaseFunc(scriptFunction);
 		return result;
-    }
+	}
 
 	return nullptr;
 }
@@ -106,7 +106,7 @@ mono::object CScriptbind_ScriptTable::CallMethod(IScriptTable *pScriptTable, mon
 mono::object CScriptbind_ScriptTable::GetValue(IScriptTable *pScriptTable, mono::string keyName)
 {
 	ScriptAnyValue anyValue;
-	if(pScriptTable->GetValueAny(ToCryString(keyName), anyValue))
+	if (pScriptTable->GetValueAny(ToCryString(keyName), anyValue))
 		return ToMonoObject(anyValue);
 
 	return nullptr;
@@ -115,7 +115,7 @@ mono::object CScriptbind_ScriptTable::GetValue(IScriptTable *pScriptTable, mono:
 IScriptTable *CScriptbind_ScriptTable::GetSubScriptTable(IScriptTable *pScriptTable, mono::string subTableName)
 {
 	ScriptAnyValue anyValue;
-	if(pScriptTable->GetValueAny(ToCryString(subTableName), anyValue))
+	if (pScriptTable->GetValueAny(ToCryString(subTableName), anyValue))
 		return anyValue.table;
 
 	return nullptr;
@@ -123,7 +123,7 @@ IScriptTable *CScriptbind_ScriptTable::GetSubScriptTable(IScriptTable *pScriptTa
 
 bool CScriptbind_ScriptTable::ExecuteBuffer(mono::string mBuffer)
 {
-	if(IScriptSystem *pScriptSystem = gEnv->pSystem->GetIScriptSystem())
+	if (IScriptSystem *pScriptSystem = gEnv->pSystem->GetIScriptSystem())
 	{
 		const char *buffer = ToCryString(mBuffer);
 		return pScriptSystem->ExecuteBuffer(buffer + 1, strlen(buffer) - 1);

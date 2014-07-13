@@ -5,16 +5,16 @@ using System.Text;
 
 namespace CryEngine
 {
-    public struct EditorPropertyLimits
-    {
-        public EditorPropertyLimits(float min, float max)
-            : this()
-        {
-            this.min = min;
-            this.max = max;
-        }
+	public struct EditorPropertyLimits
+	{
+		public EditorPropertyLimits(float min, float max)
+			: this()
+		{
+			this.min = min;
+			this.max = max;
+		}
 
-        public float min;
-        public float max;
-    }
+		public float min;
+		public float max;
+	}
 }

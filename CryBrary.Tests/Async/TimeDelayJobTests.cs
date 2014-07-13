@@ -9,40 +9,39 @@ using NUnit.Framework;
 
 namespace CryBrary.Tests.Async
 {
-    public class TimeDelayJobTests
-    {
-        [Test]
-        public void TimeDelayJobTests_NegativeTime_InstantExecution()
-        {
-            // Arrange
-            var job = new TimeDelayJob(TimeSpan.FromSeconds(-1));
+	public class TimeDelayJobTests
+	{
+		[Test]
+		public void TimeDelayJobTests_NegativeTime_InstantExecution()
+		{
+			// Arrange
+			var job = new TimeDelayJob(TimeSpan.FromSeconds(-1));
 
-            // Act
+			// Act
 
-            // Assert
-            Assert.True(job.IsFinished);
-            Assert.True(job.Task.IsCompleted);
-            Assert.False(job.Task.IsCanceled);
-            Assert.False(job.Task.IsFaulted);
-            Assert.True(job.Task.Status == TaskStatus.RanToCompletion);
-        }
+			// Assert
+			Assert.True(job.IsFinished);
+			Assert.True(job.Task.IsCompleted);
+			Assert.False(job.Task.IsCanceled);
+			Assert.False(job.Task.IsFaulted);
+			Assert.True(job.Task.Status == TaskStatus.RanToCompletion);
+		}
 
-        [Test]
-        public void TimeDelayJobTests_2000ms_UpdatedAtTheCorrectTime()
-        {
-            // Arrange
-            var job = new TimeDelayJob(TimeSpan.FromSeconds(2));
+		[Test]
+		public void TimeDelayJobTests_2000ms_UpdatedAtTheCorrectTime()
+		{
+			// Arrange
+			var job = new TimeDelayJob(TimeSpan.FromSeconds(2));
 
-            // Act & assert
-            job.Update(500);
+			// Act & assert
+			job.Update(500);
 
-            Assert.False(job.IsFinished);
+			Assert.False(job.IsFinished);
 
-            job.Update(1499);
-            Assert.False(job.IsFinished);
-            job.Update(1);
-            Assert.True(job.IsFinished);
-        }
-
-    }
+			job.Update(1499);
+			Assert.False(job.IsFinished);
+			job.Update(1);
+			Assert.True(job.IsFinished);
+		}
+	}
 }

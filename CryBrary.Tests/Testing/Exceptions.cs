@@ -5,7 +5,7 @@ namespace CryBrary.Tests.UnitTester
 {
 	public class Exceptions
 	{
-        [Test]
+		[Test]
 		public void Throw_Valid()
 		{
 			var obj = new object();
@@ -16,18 +16,18 @@ namespace CryBrary.Tests.UnitTester
 			});
 		}
 
-        [Test]
+		[Test]
 		public void Throw_Invalid()
 		{
 			object obj = 1;
 
-            Assert.Throws<AssertionFailedException>(() =>
-            {
-                Assert.Throws<InvalidCastException>(() =>
-                {
-                    var myInt = (int)obj;
-                });
-            });
+			Assert.Throws<AssertionFailedException>(() =>
+			{
+				Assert.Throws<InvalidCastException>(() =>
+				{
+					var myInt = (int)obj;
+				});
+			});
 		}
 	}
 }

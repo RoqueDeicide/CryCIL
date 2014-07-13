@@ -9,8 +9,8 @@
 #ifndef __I_MONO_CONVERTER_H__
 #define __I_MONO_CONVERTER_H__
 
-namespace mono 
-{ 
+namespace mono
+{
 	class _string; typedef _string *string;
 	class _object; typedef _object *object;
 }

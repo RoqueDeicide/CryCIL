@@ -5,9 +5,9 @@ using System.Text;
 
 namespace CryEngine
 {
-    internal struct GameRulesInitializationParams : IScriptInitializationParams
-    {
-        public EntityId id;
-        public IntPtr entityPtr;
-    }
+	internal struct GameRulesInitializationParams : IScriptInitializationParams
+	{
+		public EntityId id;
+		public IntPtr entityPtr;
+	}
 }

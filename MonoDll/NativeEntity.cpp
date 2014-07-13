@@ -14,15 +14,14 @@
 #include <MonoCommon.h>
 
 CNativeEntity::CNativeEntity()
-	: m_bInitialized(false)
-{
-}
+: m_bInitialized(false)
+{}
 
 bool CNativeEntity::Init(IGameObject *pGameObject)
 {
 	SetGameObject(pGameObject);
 
-	pGameObject->EnablePhysicsEvent( true, eEPE_OnPostStepImmediate );
+	pGameObject->EnablePhysicsEvent(true, eEPE_OnPostStepImmediate);
 
 	// InternalSpawn
 
@@ -36,35 +35,35 @@ bool CNativeEntity::Init(IGameObject *pGameObject)
 
 void CNativeEntity::ProcessEvent(SEntityEvent &event)
 {
-	switch(event.event)
+	switch (event.event)
 	{
 	case ENTITY_EVENT_LEVEL_LOADED:
 		// OnInit
 		break;
 	case ENTITY_EVENT_RESET:
-		{
-			bool enterGamemode = event.nParam[0]==1;
+	{
+							   bool enterGamemode = event.nParam[0] == 1;
 
-			if(!enterGamemode && GetEntity()->GetFlags() & ENTITY_FLAG_NO_SAVE)
-				gEnv->pEntitySystem->RemoveEntity(GetEntityId());
+							   if (!enterGamemode && GetEntity()->GetFlags() & ENTITY_FLAG_NO_SAVE)
+								   gEnv->pEntitySystem->RemoveEntity(GetEntityId());
 
-			// OnReset
-			
-			Physicalize(); // Testing physicalization in non-managed entities
-		}
+							   // OnReset
+
+							   Physicalize(); // Testing physicalization in non-managed entities
+	}
 		break;
 	case ENTITY_EVENT_COLLISION:
-		{
-			EventPhysCollision *pCollision = (EventPhysCollision *)event.nParam[0];
+	{
+								   EventPhysCollision *pCollision = (EventPhysCollision *)event.nParam[0];
 
-			EntityId targetId = 0;
+								   EntityId targetId = 0;
 
-			IEntity *pTarget = pCollision->iForeignData[0]==PHYS_FOREIGN_ID_ENTITY ? (IEntity*)pCollision->pForeignData[0]:0;
-			if(pTarget)
-				targetId = pTarget->GetId();
+								   IEntity *pTarget = pCollision->iForeignData[0] == PHYS_FOREIGN_ID_ENTITY ? (IEntity*)pCollision->pForeignData[0] : 0;
+								   if (pTarget)
+									   targetId = pTarget->GetId();
 
-			//m_pScript->CallMethod("OnCollision", targetId, pCollision->pt, pCollision->vloc[0].GetNormalizedSafe(), pCollision->idmat[0], pCollision->n);
-		}
+								   //m_pScript->CallMethod("OnCollision", targetId, pCollision->pt, pCollision->vloc[0].GetNormalizedSafe(), pCollision->idmat[0], pCollision->n);
+	}
 		break;
 	case ENTITY_EVENT_START_GAME:
 		//m_pScript->CallMethod("OnStartGame");
@@ -96,12 +95,12 @@ void CNativeEntity::Physicalize()
 	// Unphysicalize
 	{
 		const Ang3 oldRotation = pEntity->GetWorldAngles();
-		const Quat newRotation = Quat::CreateRotationZ( oldRotation.z );
-		pEntity->SetRotation( newRotation );
+		const Quat newRotation = Quat::CreateRotationZ(oldRotation.z);
+		pEntity->SetRotation(newRotation);
 
 		SEntityPhysicalizeParams pp;
 		pp.type = PE_NONE;
-		pEntity->Physicalize( pp );
+		pEntity->Physicalize(pp);
 	}
 	// ~Unphysicalize
 

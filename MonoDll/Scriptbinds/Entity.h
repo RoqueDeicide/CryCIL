@@ -71,10 +71,10 @@ struct SMonoEntityProperty
 struct SMonoEntityInfo
 {
 	SMonoEntityInfo(IEntity *pEnt)
-		: pEntity(pEnt)
+	: pEntity(pEnt)
 		, pAnimatedCharacter(NULL)
 	{
-		if(pEnt != nullptr)
+		if (pEnt != nullptr)
 			id = pEnt->GetId();
 		else
 			id = 0;
@@ -84,8 +84,7 @@ struct SMonoEntityInfo
 		: pEntity(pEnt)
 		, id(entId)
 		, pAnimatedCharacter(NULL)
-	{
-	}
+	{}
 
 	IEntity *pEntity;
 	IAnimatedCharacter *pAnimatedCharacter;
@@ -103,65 +102,64 @@ enum EAnimationFlags
 
 struct SMonoLightParams
 {
-	 mono::string specularCubemap;
-	 mono::string diffuseCubemap;
-	 mono::string lightImage;
-	 mono::string lightAttenMap;
+	mono::string specularCubemap;
+	mono::string diffuseCubemap;
+	mono::string lightImage;
+	mono::string lightAttenMap;
 
-	 ColorF color;
-	 Vec3 origin;
+	ColorF color;
+	Vec3 origin;
 
-	 float shadowBias;
-	 float shadowSlopeBias;
+	float shadowBias;
+	float shadowSlopeBias;
 
-	 float radius;
-	 float specularMultiplier;
+	float radius;
+	float specularMultiplier;
 
-	 float hdrDynamic;
+	float hdrDynamic;
 
-	 float animSpeed;
-	 float coronaScale;
-	 float coronaIntensity;
-	 float coronaDistSizeFactor;
-	 float coronaDistIntensityFactor;
+	float animSpeed;
+	float coronaScale;
+	float coronaIntensity;
+	float coronaDistSizeFactor;
+	float coronaDistIntensityFactor;
 
-	 float shaftSrcSize;
-	 float shaftLength;
-	 float shaftBrightness;
-	 float shaftBlendFactor;
-	 float shaftDecayFactor;
+	float shaftSrcSize;
+	float shaftLength;
+	float shaftBrightness;
+	float shaftBlendFactor;
+	float shaftDecayFactor;
 
-	 float lightFrustumAngle;
-	 float projectNearPlane;
+	float lightFrustumAngle;
+	float projectNearPlane;
 
-	 float shadowUpdateMinRadius;
-	 int16 shadowUpdateRatio;
+	float shadowUpdateMinRadius;
+	int16 shadowUpdateRatio;
 
-	 int lightStyle;
-	 int lightPhase;
-	 int postEffect;
-	 int shadowChanMask;
+	int lightStyle;
+	int lightPhase;
+	int postEffect;
+	int shadowChanMask;
 
-	 uint32 flags;
+	uint32 flags;
 };
 
 class CMonoEntityAttachment;
 
-class CScriptbind_Entity 
+class CScriptbind_Entity
 	: public IMonoScriptBind
 	, public IEntitySystemSink
 	, public IMonoScriptEventListener
 {
-
 public:
 	CScriptbind_Entity();
 	~CScriptbind_Entity();
 
 	// IEntitySystemSink
 	virtual bool OnBeforeSpawn(SEntitySpawnParams &params) { return true; }
-	virtual void OnSpawn(IEntity *pEntity,SEntitySpawnParams &params);
+	virtual void OnSpawn(IEntity *pEntity, SEntitySpawnParams &params);
 	virtual bool OnRemove(IEntity *pEntity);
-	virtual void OnReused( IEntity *pEntity, SEntitySpawnParams &params) {}
+	virtual void OnReused(IEntity *pEntity, SEntitySpawnParams &params) {}
 	virtual void OnEvent(IEntity *pEntity, SEntityEvent &event) {}
 	// ~IEntitySystemSink
 
@@ -301,11 +299,10 @@ protected:
 	static void SetUpdatePolicy(IEntity *pEntity, EEntityUpdatePolicy policy);
 	static EEntityUpdatePolicy GetUpdatePolicy(IEntity *pEntity);
 
-
 	static IParticleEmitter *LoadParticleEmitter(IEntity *pEntity, int slot, IParticleEffect *pEffect, SpawnParams &spawnParams);
-	
+
 	static void RemoteInvocation(EntityId entityId, EntityId targetId, mono::string methodName, mono::object args, ERMInvocation target, int channelId);
-	
+
 	static const CCamera *GetCameraProxy(IEntity *pEntity);
 
 	static bool SetViewDistRatio(IEntity *pEntity, int viewDist);

@@ -11,7 +11,7 @@
 
 #include <IMonoObject.h>
 
-namespace mono 
+namespace mono
 {
 	class _string; typedef _string* string;
 };
@@ -20,7 +20,7 @@ struct IMonoObject;
 
 /// <summary>
 /// Used to wrap arrays sent from C#, and also used when passing arrays of elements from C++.
-/// 
+///
 /// Creating an IMonoArray: IMonoArray *pMyArray = CreateMonoArray(arraySize);
 /// Converting an mono::array: IMonoArray *pConvertedArray = *(mono::array)monoArray;
 /// </summary>
@@ -73,7 +73,7 @@ public:
 	T GetItemUnboxed(int index)
 	{
 		mono::object result = GetItem(index);
-		if(result)
+		if (result)
 		{
 			IMonoObject *pResult = *result;
 			T tResult = pResult->Unbox<T>();

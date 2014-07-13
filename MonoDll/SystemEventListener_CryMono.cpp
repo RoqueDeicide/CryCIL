@@ -7,21 +7,21 @@
 
 void CSystemEventListener_CryMono::OnSystemEvent(ESystemEvent event, UINT_PTR wParam, UINT_PTR lParam)
 {
-	switch(event)
+	switch (event)
 	{
 	case ESYSTEM_EVENT_CHANGE_FOCUS:
-		{
-			if(GetMonoScriptSystem() == nullptr)
-				return;
+	{
+									   if (GetMonoScriptSystem() == nullptr)
+										   return;
 
-			if (wParam != 0 && static_cast<CScriptSystem *>(GetMonoScriptSystem())->DetectedChanges() && GetFocus())
-				GetMonoScriptSystem()->Reload();
-		}
+									   if (wParam != 0 && static_cast<CScriptSystem *>(GetMonoScriptSystem())->DetectedChanges() && GetFocus())
+										   GetMonoScriptSystem()->Reload();
+	}
 		break;
 	case ESYSTEM_EVENT_SHUTDOWN:
-		{
-			GetMonoScriptSystem()->Release();
-		}
+	{
+								   GetMonoScriptSystem()->Release();
+	}
 		break;
 	}
 }

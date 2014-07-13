@@ -7,40 +7,40 @@ using CryEngine.Native;
 
 namespace CryEngine
 {
-    public sealed class Camera
-    {
-        public static Camera Current
-        {
-            get
-            {
-                return TryGet(NativeRendererMethods.GetViewCamera());
-            }
-        }
+	public sealed class Camera
+	{
+		public static Camera Current
+		{
+			get
+			{
+				return TryGet(NativeRendererMethods.GetViewCamera());
+			}
+		}
 
-        internal static Camera TryGet(IntPtr handle)
-        {
-            if (handle == IntPtr.Zero)
-                return null;
+		internal static Camera TryGet(IntPtr handle)
+		{
+			if (handle == IntPtr.Zero)
+				return null;
 
-            var camera = Cameras.FirstOrDefault(x => x.Handle == handle);
-            if (camera != null)
-                return camera;
+			var camera = Cameras.FirstOrDefault(x => x.Handle == handle);
+			if (camera != null)
+				return camera;
 
-            camera = new Camera();
-            camera.Handle = handle;
+			camera = new Camera();
+			camera.Handle = handle;
 
-            Cameras.Add(camera);
+			Cameras.Add(camera);
 
-            return camera;
-        }
+			return camera;
+		}
 
-        static List<Camera> Cameras = new List<Camera>();
+		private static List<Camera> Cameras = new List<Camera>();
 
-        public Matrix34 Matrix { get { return NativeRendererMethods.GetCameraMatrix(Handle); } set { NativeRendererMethods.SetCameraMatrix(Handle, value); } }
-        public Vec3 Position { get { return NativeRendererMethods.GetCameraPosition(Handle); } set { NativeRendererMethods.SetCameraPosition(Handle, value); } }
+		public Matrix34 Matrix { get { return NativeRendererMethods.GetCameraMatrix(Handle); } set { NativeRendererMethods.SetCameraMatrix(Handle, value); } }
+		public Vec3 Position { get { return NativeRendererMethods.GetCameraPosition(Handle); } set { NativeRendererMethods.SetCameraPosition(Handle, value); } }
 
-        public float FieldOfView { get { return NativeRendererMethods.GetCameraFieldOfView(Handle); } }
+		public float FieldOfView { get { return NativeRendererMethods.GetCameraFieldOfView(Handle); } }
 
-        IntPtr Handle { get; set; }
-    }
+		private IntPtr Handle { get; set; }
+	}
 }

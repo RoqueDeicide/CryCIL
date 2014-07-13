@@ -16,7 +16,8 @@
 struct SMonoEntityPropertyInfo
 {
 	SMonoEntityPropertyInfo()
-		: defaultValue("") {}
+	: defaultValue("")
+	{}
 
 	IEntityPropertyHandler::SPropertyInfo info;
 
@@ -27,10 +28,10 @@ class CEntityPropertyHandler : public IEntityPropertyHandler
 {
 public:
 	CEntityPropertyHandler(SMonoEntityPropertyInfo *pProperties, int numProperties);
-	virtual ~CEntityPropertyHandler() {} 
+	virtual ~CEntityPropertyHandler() {}
 
 	// IEntityPropertyHandler interface
-	virtual void GetMemoryUsage( ICrySizer *pSizer ) const { pSizer->Add(m_pProperties); }
+	virtual void GetMemoryUsage(ICrySizer *pSizer) const { pSizer->Add(m_pProperties); }
 	virtual void RefreshProperties() {}
 	virtual void LoadEntityXMLProperties(IEntity* entity, const XmlNodeRef& xml);
 	virtual void LoadArchetypeXMLProperties(const char* archetypeName, const XmlNodeRef& xml) {}
@@ -40,7 +41,7 @@ public:
 
 	virtual bool GetPropertyInfo(int index, SPropertyInfo &info) const
 	{
-		if(index >= m_numProperties)
+		if (index >= m_numProperties)
 			return false;
 
 		info = m_pProperties[index].info;

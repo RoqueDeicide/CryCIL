@@ -6,7 +6,7 @@
 
 #include <ICryScriptInstance.h>
 
-class CCryScriptInstance 
+class CCryScriptInstance
 	: public CScriptObject
 	, public IMonoScriptEventListener
 	, public ICryScriptInstance
@@ -42,7 +42,7 @@ public:
 	virtual MonoAnyValue GetAnyValue() override { return CScriptObject::GetAnyValue(); }
 
 	virtual const char *ToString() override { return CScriptObject::ToString(); }
-	
+
 	/// <summary>
 	/// Returns the object as it is seen in managed code, can be passed directly across languages.
 	/// </summary>

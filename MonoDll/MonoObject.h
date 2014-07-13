@@ -31,12 +31,12 @@ public:
 	MonoClass *GetMonoClass();
 
 	// IMonoObject
-	virtual void Release(bool triggerGC = true) override 
+	virtual void Release(bool triggerGC = true) override
 	{
-		if(!triggerGC)
+		if (!triggerGC)
 			m_objectHandle = -1;
 
-		delete this; 
+		delete this;
 	}
 
 	virtual EMonoAnyType GetType() override;

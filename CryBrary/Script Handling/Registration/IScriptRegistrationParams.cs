@@ -5,5 +5,5 @@ using System.Text;
 
 namespace CryEngine.Initialization
 {
-    public interface IScriptRegistrationParams { }
+	public interface IScriptRegistrationParams { }
 }

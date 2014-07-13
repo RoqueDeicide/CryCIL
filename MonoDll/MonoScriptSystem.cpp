@@ -45,7 +45,7 @@
 #include "Scriptbinds\Entity.h"
 #include "Scriptbinds\Network.h"
 #include "Scriptbinds\Time.h"
-#include "Scriptbinds\ScriptTable.h" 
+#include "Scriptbinds\ScriptTable.h"
 #include "Scriptbinds\CrySerialize.h"
 #include "Scriptbinds\GameObject.h"
 #include "Scriptbinds\CryPak.h"
@@ -72,7 +72,7 @@ IMonoScriptSystem *CScriptSystem::g_pThis = nullptr;
 #endif
 
 CScriptSystem::CScriptSystem(IGameFramework *pGameFramework)
-	: m_pRootDomain(nullptr)
+: m_pRootDomain(nullptr)
 	, m_pCryBraryAssembly(nullptr)
 	, m_pPdb2MdbAssembly(nullptr)
 	, m_pScriptManager(nullptr)
@@ -90,7 +90,7 @@ CScriptSystem::CScriptSystem(IGameFramework *pGameFramework)
 
 	m_pCVars = new SCVars();
 	g_pMonoCVars = m_pCVars;
-	
+
 	// We should look into storing mono binaries, configuration as well as scripts via CryPak.
 	mono_set_dirs(PathUtils::GetMonoLibPath(), PathUtils::GetMonoConfigPath());
 
@@ -102,7 +102,7 @@ CScriptSystem::CScriptSystem(IGameFramework *pGameFramework)
 
 	string monoCmdOptions = "";
 
-	if(auto *pArg = gEnv->pSystem->GetICmdLine()->FindArg(eCLAT_Pre, "monoArgs"))
+	if (auto *pArg = gEnv->pSystem->GetICmdLine()->FindArg(eCLAT_Pre, "monoArgs"))
 		monoCmdOptions.append(pArg->GetValue());
 	// Commandline switch -DEBUG makes the process connect to the debugging server. Warning: Failure to connect to a debugging server WILL result in a crash.
 	// This is currently a WIP feature which requires custom MonoDevelop extensions and other irritating things.
@@ -110,7 +110,7 @@ CScriptSystem::CScriptSystem(IGameFramework *pGameFramework)
 	if (arg != nullptr)
 		monoCmdOptions.append("--debugger-agent=transport=dt_socket,address=127.0.0.1:65432,embedding=1");
 #ifndef _RELEASE
-	else if(g_pMonoCVars->mono_softBreakpoints) // Soft breakpoints not compatible with debugging server
+	else if (g_pMonoCVars->mono_softBreakpoints) // Soft breakpoints not compatible with debugging server
 	{
 		CryLogAlways("		[Performance Warning] Mono soft breakpoints are enabled!");
 
@@ -133,7 +133,7 @@ CScriptSystem::CScriptSystem(IGameFramework *pGameFramework)
 
 	m_pConverter = new CConverter();
 
-	if(!CompleteInit())
+	if (!CompleteInit())
 	{
 		CryLogAlways("CryMono initialization failed!");
 		return;
@@ -145,7 +145,7 @@ CScriptSystem::CScriptSystem(IGameFramework *pGameFramework)
 
 	gEnv->pSystem->GetISystemEventDispatcher()->RegisterListener(&g_systemEventListener_CryMono);
 
-	if(IFileChangeMonitor *pFileChangeMonitor = gEnv->pFileChangeMonitor)
+	if (IFileChangeMonitor *pFileChangeMonitor = gEnv->pFileChangeMonitor)
 		pFileChangeMonitor->RegisterListener(this, "scripts\\");
 
 	CryModuleMemoryInfo memInfo;
@@ -166,20 +166,20 @@ CScriptSystem::~CScriptSystem()
 		listener->OnShutdown();
 	m_listeners.clear();
 
-	for(auto it = m_localScriptBinds.begin(); it != m_localScriptBinds.end(); ++it)
+	for (auto it = m_localScriptBinds.begin(); it != m_localScriptBinds.end(); ++it)
 		delete (*it);
 	m_localScriptBinds.clear();
 
 	SAFE_RELEASE(m_pScriptManager);
 
-	for(auto it = m_domains.rbegin(); it != m_domains.rend(); ++it)
+	for (auto it = m_domains.rbegin(); it != m_domains.rend(); ++it)
 		(*it)->Release();
 	m_domains.clear();
 
 	if (IGameFramework *pGameFramework = GetIGameFramework())
 		pGameFramework->UnregisterListener(this);
 
-	if(IFileChangeMonitor *pFileChangeMonitor = gEnv->pFileChangeMonitor)
+	if (IFileChangeMonitor *pFileChangeMonitor = gEnv->pFileChangeMonitor)
 		pFileChangeMonitor->UnregisterListener(this);
 
 	m_methodBindings.clear();
@@ -222,12 +222,12 @@ bool CScriptSystem::CompleteInit()
 
 bool CScriptSystem::Reload()
 {
-	if((!m_bFirstReload && g_pMonoCVars->mono_realtimeScripting == 0) || m_bReloading)
+	if ((!m_bFirstReload && g_pMonoCVars->mono_realtimeScripting == 0) || m_bReloading)
 		return false;
 
 	m_bReloading = true;
 
-	if(!m_bFirstReload)
+	if (!m_bFirstReload)
 	{
 		for each(auto listener in m_listeners)
 			listener->OnReloadStart();
@@ -247,76 +247,76 @@ bool CScriptSystem::Reload()
 	SAFE_RELEASE(pCtorParams);
 
 	auto result = pScriptManager->CallMethod("Initialize", m_bFirstReload);
-	if(result == nullptr)
+	if (result == nullptr)
 		return false;
 
 	IMonoObject *pResult = *result;
 	auto reloadResult = pResult->Unbox<EScriptReloadResult>();
 	SAFE_RELEASE(pResult);
 
-	switch(reloadResult)
+	switch (reloadResult)
 	{
 	case EScriptReloadResult_Success:
-		{
-			// revert previous domain
-			if(!m_bFirstReload)
-				m_pScriptDomain->Release();
+	{
+										// revert previous domain
+										if (!m_bFirstReload)
+											m_pScriptDomain->Release();
 
-			m_pScriptDomain = pScriptDomain;
-			m_pScriptManager = pScriptManager;
-			m_pCryBraryAssembly = pCryBraryAssembly;
+										m_pScriptDomain = pScriptDomain;
+										m_pScriptManager = pScriptManager;
+										m_pCryBraryAssembly = pCryBraryAssembly;
 
-			CacheManagedResources();
+										CacheManagedResources();
 
-			if(!m_bFirstReload)
-				m_pScriptManager->CallMethod("Deserialize");
+										if (!m_bFirstReload)
+											m_pScriptManager->CallMethod("Deserialize");
 
-			// Set Network.Editor etc.
-			IMonoClass *pClass = m_pCryBraryAssembly->GetClass("Game");
+										// Set Network.Editor etc.
+										IMonoClass *pClass = m_pCryBraryAssembly->GetClass("Game");
 
-			IMonoArray *pArgs = CreateMonoArray(2);
-			pArgs->Insert(gEnv->IsEditor());
-			pArgs->Insert(gEnv->IsDedicated());
-			pClass->GetMethod("InitializeGameStatics", 2)->InvokeArray(nullptr, pArgs);
-			SAFE_RELEASE(pArgs);
+										IMonoArray *pArgs = CreateMonoArray(2);
+										pArgs->Insert(gEnv->IsEditor());
+										pArgs->Insert(gEnv->IsDedicated());
+										pClass->GetMethod("InitializeGameStatics", 2)->InvokeArray(nullptr, pArgs);
+										SAFE_RELEASE(pArgs);
 
-			m_pScriptManager->CallMethod("ProcessWaitingScripts", m_bFirstReload);
+										m_pScriptManager->CallMethod("ProcessWaitingScripts", m_bFirstReload);
 
-			for each(auto listener in m_listeners)
-				listener->OnReloadComplete();
+										for each(auto listener in m_listeners)
+											listener->OnReloadComplete();
 
-			if(!m_bFirstReload && gEnv->IsEditor())
-				gEnv->pFlowSystem->ReloadAllNodeTypes();
+										if (!m_bFirstReload && gEnv->IsEditor())
+											gEnv->pFlowSystem->ReloadAllNodeTypes();
 
-			m_bReloading = false;
-			m_bDetectedChanges = false;
+										m_bReloading = false;
+										m_bDetectedChanges = false;
 
-			return true;
-		}
+										return true;
+	}
 		break;
 	case EScriptReloadResult_Retry:
-		{
-			m_bReloading = false;
-			return Reload();
-		}
+	{
+									  m_bReloading = false;
+									  return Reload();
+	}
 	case EScriptReloadResult_Revert:
-		{
-			pScriptDomain->Release();
-			m_pScriptDomain->SetActive();
+	{
+									   pScriptDomain->Release();
+									   m_pScriptDomain->SetActive();
 
-			m_bReloading = false;
+									   m_bReloading = false;
 
-			m_bDetectedChanges = false;
+									   m_bDetectedChanges = false;
 
-			return false;
-		}
+									   return false;
+	}
 		break;
 	case EScriptReloadResult_Abort:
-		{
-			gEnv->pSystem->Quit();
+	{
+									  gEnv->pSystem->Quit();
 
-			m_bReloading = false;
-		}
+									  m_bReloading = false;
+	}
 		break;
 	}
 
@@ -352,9 +352,9 @@ void CScriptSystem::RegisterPriorityBindings()
 void CScriptSystem::RegisterSecondaryBindings()
 {
 	// Register what couldn't be registered earlier.
-	if(m_methodBindings.size()>0)
+	if (m_methodBindings.size() > 0)
 	{
-		for(TMethodBindings::iterator it = m_methodBindings.begin(); it != m_methodBindings.end(); ++it)
+		for (TMethodBindings::iterator it = m_methodBindings.begin(); it != m_methodBindings.end(); ++it)
 			RegisterMethodBinding((*it).first, (*it).second);
 	}
 
@@ -366,7 +366,7 @@ void CScriptSystem::RegisterSecondaryBindings()
 
 void CScriptSystem::EraseBinding(IMonoScriptBind *pScriptBind)
 {
-	if(!m_bQuitting)
+	if (!m_bQuitting)
 		stl::find_and_erase(m_localScriptBinds, pScriptBind);
 }
 
@@ -394,15 +394,15 @@ void CScriptSystem::OnFileChange(const char *fileName)
 {
 	FUNCTION_PROFILER_FAST(GetISystem(), PROFILE_SCRIPT, gEnv->bProfilerEnabled);
 
-	if(g_pMonoCVars->mono_realtimeScriptingDetectChanges == 0)
+	if (g_pMonoCVars->mono_realtimeScriptingDetectChanges == 0)
 		return;
 
 	const char *fileExt = PathUtil::GetExt(fileName);
-	if(!strcmp(fileExt, "cs") || !strcmp(fileExt, "dll"))
+	if (!strcmp(fileExt, "cs") || !strcmp(fileExt, "dll"))
 	{
 		CryLogAlways("[CryMono] Detected change in file %s, preparing for reload..", fileName);
 
-		if(!GetFocus())
+		if (!GetFocus())
 		{
 			CryLogAlways("CryENGINE did not have focus, waiting..");
 			m_bDetectedChanges = true;
@@ -415,13 +415,13 @@ void CScriptSystem::OnFileChange(const char *fileName)
 
 void CScriptSystem::RegisterFlownodes()
 {
-	if(m_pScriptManager && GetIGameFramework()->GetIFlowSystem())
+	if (m_pScriptManager && GetIGameFramework()->GetIFlowSystem())
 		m_pScriptManager->CallMethod("RegisterFlownodes");
 }
 
 void CScriptSystem::RegisterMethodBinding(const void *method, const char *fullMethodName)
 {
-	if(!IsInitialized())
+	if (!IsInitialized())
 		m_methodBindings.insert(TMethodBindings::value_type(method, fullMethodName));
 	else
 		mono_add_internal_call(fullMethodName, method);
@@ -443,12 +443,12 @@ ICryScriptInstance *CScriptSystem::InstantiateScript(const char *scriptName, EMo
 	auto result = m_pScriptManager->GetClass()->GetMethod("CreateScriptInstance", 5)->InvokeArray(m_pScriptManager->GetManagedObject(), pScriptCreationArgs);
 	SAFE_RELEASE(pScriptCreationArgs);
 
-	if(!result)
+	if (!result)
 		return nullptr;
-	
+
 	pInstance->SetManagedObject((MonoObject *)result, true);
 
-	if(scriptFlags & eScriptFlag_GameRules)
+	if (scriptFlags & eScriptFlag_GameRules)
 	{
 		IMonoClass *pGameRulesInitParamsClass = m_pCryBraryAssembly->GetClass("GameRulesInitializationParams");
 
@@ -469,7 +469,7 @@ ICryScriptInstance *CScriptSystem::InstantiateScript(const char *scriptName, EMo
 
 void CScriptSystem::RemoveScriptInstance(int id, EMonoScriptFlags scriptType)
 {
-	if(id==-1)
+	if (id == -1)
 		return;
 
 	m_pScriptManager->CallMethod("RemoveInstance", id, scriptType);
@@ -480,7 +480,7 @@ mono::object CScriptSystem::InitializeScriptInstance(ICryScriptInstance *pScript
 	FUNCTION_PROFILER_FAST(GetISystem(), PROFILE_SCRIPT, gEnv->bProfilerEnabled);
 
 	CRY_ASSERT(pScriptInstance);
-	
+
 	mono::object result = pScriptInstance->GetClass()->GetMethod("InternalInitialize", pParams->GetSize())->InvokeArray(pScriptInstance->GetManagedObject(), pParams);
 
 	for each(auto listener in m_listeners)
@@ -516,7 +516,7 @@ IMonoDomain *CScriptSystem::CreateDomain(const char *name, const char *configura
 IMonoDomain *CScriptSystem::GetActiveDomain()
 {
 	MonoDomain *pActiveDomain = mono_domain_get();
-	if(pActiveDomain == nullptr)
+	if (pActiveDomain == nullptr)
 		return nullptr;
 
 	return TryGetDomain(pActiveDomain);
@@ -528,7 +528,7 @@ CScriptDomain *CScriptSystem::TryGetDomain(MonoDomain *pMonoDomain)
 
 	for each(auto domain in m_domains)
 	{
-		if(domain->GetMonoDomain() == pMonoDomain)
+		if (domain->GetMonoDomain() == pMonoDomain)
 			return domain;
 	}
 
@@ -540,6 +540,6 @@ CScriptDomain *CScriptSystem::TryGetDomain(MonoDomain *pMonoDomain)
 
 void CScriptSystem::OnDomainReleased(CScriptDomain *pDomain)
 {
-	if(!m_bQuitting)
+	if (!m_bQuitting)
 		stl::find_and_erase(m_domains, pDomain);
 }

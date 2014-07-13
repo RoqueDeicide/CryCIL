@@ -13,8 +13,7 @@ CScriptbind_Network::CScriptbind_Network()
 }
 
 CScriptbind_Network::~CScriptbind_Network()
-{
-}
+{}
 
 bool CScriptbind_Network::IsMultiplayer()
 {

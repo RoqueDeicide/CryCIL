@@ -5,24 +5,24 @@ using System.Text;
 
 namespace CryEngine
 {
-    public enum SkyParams
-    {
-        SkyBrightening = 1,
-        GlobalIlluminationMultiplier = 3,
+	public enum SkyParams
+	{
+		SkyBrightening = 1,
+		GlobalIlluminationMultiplier = 3,
 
-        SunColor,
-        SunColorMultiplier,
-        SunSpecularMultiplier,
+		SunColor,
+		SunColorMultiplier,
+		SunSpecularMultiplier,
 
-        SkyColor,
-        SkyColorMultiplier,
+		SkyColor,
+		SkyColorMultiplier,
 
-        AmbientGroundColor,
-        AmbientGroundColorMultiplier,
+		AmbientGroundColor,
+		AmbientGroundColorMultiplier,
 
-        AmbientMinHeight,
-        AmbientMaxHeight,
+		AmbientMinHeight,
+		AmbientMaxHeight,
 
-        SkyboxMultiplier = 70,
-    }
+		SkyboxMultiplier = 70,
+	}
 }

@@ -31,7 +31,7 @@ namespace CryEngine
 		/// </summary>
 		public PhysicalizationFlags flagsOR;
 		/// <summary>
-		///  when getting
+		/// when getting
 		/// </summary>
 		public PhysicalizationFlags flagsAND;
 	}

@@ -17,13 +17,13 @@ CScriptbind_GameRules::CScriptbind_GameRules()
 //-----------------------------------------------------------------------------
 void CScriptbind_GameRules::RegisterGameMode(mono::string gamemode)
 {
-	if(IGameFramework *pGameFramework = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework())
+	if (IGameFramework *pGameFramework = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework())
 	{
-		if(IGameRulesSystem *pGameRulesSystem = pGameFramework->GetIGameRulesSystem())
+		if (IGameRulesSystem *pGameRulesSystem = pGameFramework->GetIGameRulesSystem())
 		{
 			const char *gameModeStr = ToCryString(gamemode);
 
-			if(!pGameRulesSystem->HaveGameRules(gameModeStr))
+			if (!pGameRulesSystem->HaveGameRules(gameModeStr))
 				pGameRulesSystem->RegisterGameRules(gameModeStr, "GameRules");
 		}
 	}

@@ -6,15 +6,12 @@
 #include <MonoCommon.h>
 
 CScriptMethod::CScriptMethod(MonoMethod *pMonoMethod)
-	: m_pMonoMethod(pMonoMethod)
+: m_pMonoMethod(pMonoMethod)
 	, m_pMonoMethodSignature(nullptr)
-{
-
-}
+{}
 
 CScriptMethod::~CScriptMethod()
-{
-}
+{}
 
 void *CScriptMethod::GetMethodThunk()
 {
@@ -26,9 +23,9 @@ mono::object CScriptMethod::InvokeArray(mono::object object, IMonoArray *pParams
 	MonoObject *pException = nullptr;
 	MonoObject *pResult = mono_runtime_invoke_array(m_pMonoMethod, object, pParams ? (MonoArray *)pParams->GetManagedObject() : nullptr, &pException);
 
-	if(pException)
+	if (pException)
 		CScriptObject::HandleException(pException);
-	else if(pResult)
+	else if (pResult)
 		return (mono::object)pResult;
 
 	return nullptr;
@@ -39,9 +36,9 @@ mono::object CScriptMethod::Invoke(mono::object object, void **pParams, int numP
 	MonoObject *pException = nullptr;
 	MonoObject *pResult = mono_runtime_invoke(m_pMonoMethod, object, pParams, &pException);
 
-	if(pException)
+	if (pException)
 		CScriptObject::HandleException(pException);
-	else if(pResult)
+	else if (pResult)
 		return (mono::object)pResult;
 
 	return nullptr;
@@ -49,7 +46,7 @@ mono::object CScriptMethod::Invoke(mono::object object, void **pParams, int numP
 
 int CScriptMethod::GetParameterCount()
 {
-	if(m_pMonoMethodSignature == nullptr)
+	if (m_pMonoMethodSignature == nullptr)
 		m_pMonoMethodSignature = mono_method_signature(m_pMonoMethod);
 
 	return mono_signature_get_param_count(m_pMonoMethodSignature);

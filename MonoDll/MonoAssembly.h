@@ -20,7 +20,7 @@ struct IMonoArray;
 class CScriptClass;
 class CScriptDomain;
 
-class CScriptAssembly 
+class CScriptAssembly
 	: public IMonoAssembly
 {
 public:

@@ -5,25 +5,25 @@ using System.Text;
 
 namespace CryEngine
 {
-    public enum NightSkyParams
-    {
-        HorizonColor = 40,
-        HorizonColorMultiplier,
-        ZenithColor,
-        ZenithColorMultiplier,
-        ZenithShift,
+	public enum NightSkyParams
+	{
+		HorizonColor = 40,
+		HorizonColorMultiplier,
+		ZenithColor,
+		ZenithColorMultiplier,
+		ZenithShift,
 
-        StarIntensity,
+		StarIntensity,
 
-        MoonColor,
-        MoonColorMultiplier,
+		MoonColor,
+		MoonColorMultiplier,
 
-        MoonInnerCoronaColor,
-        MoonInnerCoronaColorMultiplier,
-        MoonInnerCoronaScale,
+		MoonInnerCoronaColor,
+		MoonInnerCoronaColorMultiplier,
+		MoonInnerCoronaScale,
 
-        MoonOuterCoronaColor,
-        MoonOuterCoronaColorMultiplier,
-        MoonOuterCoronaScale,
-    }
+		MoonOuterCoronaColor,
+		MoonOuterCoronaColorMultiplier,
+		MoonOuterCoronaScale,
+	}
 }

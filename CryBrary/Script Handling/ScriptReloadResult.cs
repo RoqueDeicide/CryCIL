@@ -5,11 +5,11 @@ using System.Text;
 
 namespace CryEngine.Initialization
 {
-    public enum ScriptReloadResult
-    {
-        Abort,
-        Success,
-        Retry,
-        Revert
-    }
+	public enum ScriptReloadResult
+	{
+		Abort,
+		Success,
+		Retry,
+		Revert
+	}
 }

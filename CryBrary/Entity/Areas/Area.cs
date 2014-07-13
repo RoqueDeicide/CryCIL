@@ -9,7 +9,7 @@ namespace CryEngine
 {
 	public struct AreaQueryResult
 	{
-		IntPtr pArea;
+		private IntPtr pArea;
 		public Area Area
 		{
 			get
@@ -56,10 +56,10 @@ namespace CryEngine
 			return area;
 		}
 
-		static List<Area> Areas = new List<Area>();
+		private static List<Area> Areas = new List<Area>();
 		#endregion
 
-		Area(IntPtr ptr)
+		private Area(IntPtr ptr)
 		{
 			Handle = ptr;
 		}

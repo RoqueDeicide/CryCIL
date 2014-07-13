@@ -15,7 +15,7 @@ CDynScriptArray::CDynScriptArray(MonoDomain *pDomain, IMonoClass *pContainingTyp
 	CRY_ASSERT(m_pElementClass);
 
 	SetManagedObject((MonoObject *)mono_array_new(pDomain, m_pElementClass, size), allowGC);
-	
+
 	m_elementSize = mono_array_element_size(mono_array_class_get(m_pElementClass, 1));
 }
 
@@ -28,10 +28,10 @@ void CDynScriptArray::InsertMonoObject(mono::object object, int index)
 {
 	int size = GetSize();
 
-	if(index == -1)
+	if (index == -1)
 		index = m_lastIndex + 1;
 
-	if(index >= size || size == 0)
+	if (index >= size || size == 0)
 	{
 		Resize(index + 1);
 		m_lastIndex = index;
@@ -42,7 +42,7 @@ void CDynScriptArray::InsertMonoObject(mono::object object, int index)
 
 void CDynScriptArray::Remove(int index)
 {
-	if(index == m_lastIndex)
+	if (index == m_lastIndex)
 		Resize(m_lastIndex);
 	else
 		CScriptArray::Remove(index);
@@ -56,7 +56,7 @@ void CDynScriptArray::InsertNativePointer(void *ptr, int index)
 }
 
 void CDynScriptArray::InsertAny(MonoAnyValue value, int index)
-{ 
+{
 	IMonoDomain *pDomain = GetClass()->GetAssembly()->GetDomain();
 
 	InsertMonoObject(pDomain->BoxAnyValue(value), index);

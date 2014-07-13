@@ -65,7 +65,7 @@ public:
 		char szBuffer[4096];
 		va_start(args, message);
 		int count = vsnprintf_s(szBuffer, sizeof(szBuffer), message, args);
-		if ( count == -1 || count >=sizeof(szBuffer) )
+		if (count == -1 || count >= sizeof(szBuffer))
 			szBuffer[sizeof(szBuffer)-1] = '\0';
 		va_end(args);
 

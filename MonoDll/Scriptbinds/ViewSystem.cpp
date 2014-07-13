@@ -30,7 +30,7 @@ unsigned int CScriptbind_ViewSystem::GetView(EntityId id, bool forceCreate)
 {
 	if (IViewSystem *pViewSystem = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIViewSystem())
 	{
-		if(IView *pView = pViewSystem->GetViewByEntityId(id, forceCreate))
+		if (IView *pView = pViewSystem->GetViewByEntityId(id, forceCreate))
 			return pViewSystem->GetViewId(pView);
 	}
 
@@ -41,7 +41,7 @@ void CScriptbind_ViewSystem::RemoveView(unsigned int viewId)
 {
 	if (IViewSystem *pViewSystem = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIViewSystem())
 	{
-		if(IView *pView = pViewSystem->GetView(viewId))
+		if (IView *pView = pViewSystem->GetView(viewId))
 			pView->Release();
 	}
 }
@@ -58,7 +58,7 @@ void CScriptbind_ViewSystem::SetActiveView(unsigned int viewId)
 {
 	if (IViewSystem *pViewSystem = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIViewSystem())
 	{
-		if(pViewSystem->GetView(viewId))
+		if (pViewSystem->GetView(viewId))
 			pViewSystem->SetActiveView(viewId);
 	}
 }
@@ -67,7 +67,7 @@ SViewParams GetViewParams(unsigned int viewId)
 {
 	if (IViewSystem *pViewSystem = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIViewSystem())
 	{
-		if(IView *pView = pViewSystem->GetView(viewId))
+		if (IView *pView = pViewSystem->GetView(viewId))
 			return *pView->GetCurrentParams();
 	}
 
@@ -78,7 +78,7 @@ void SetViewParams(EntityId viewId, SViewParams &viewParams)
 {
 	if (IViewSystem *pViewSystem = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIViewSystem())
 	{
-		if(IView *pView = pViewSystem->GetView(viewId))
+		if (IView *pView = pViewSystem->GetView(viewId))
 			pView->SetCurrentParams(viewParams);
 	}
 }
@@ -107,7 +107,7 @@ void CScriptbind_ViewSystem::SetViewPosition(unsigned int viewId, Vec3 pos)
 {
 	if (IViewSystem *pViewSystem = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIViewSystem())
 	{
-		if(IView *pView = pViewSystem->GetView(viewId))
+		if (IView *pView = pViewSystem->GetView(viewId))
 		{
 			SViewParams params = *pView->GetCurrentParams();
 			params.position = pos;
@@ -120,7 +120,7 @@ void CScriptbind_ViewSystem::SetViewRotation(unsigned int viewId, Quat rot)
 {
 	if (IViewSystem *pViewSystem = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIViewSystem())
 	{
-		if(IView *pView = pViewSystem->GetView(viewId))
+		if (IView *pView = pViewSystem->GetView(viewId))
 		{
 			SViewParams params = *pView->GetCurrentParams();
 			params.rotation = rot;
@@ -133,7 +133,7 @@ void CScriptbind_ViewSystem::SetViewNearPlane(unsigned int viewId, float nearPla
 {
 	if (IViewSystem *pViewSystem = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIViewSystem())
 	{
-		if(IView *pView = pViewSystem->GetView(viewId))
+		if (IView *pView = pViewSystem->GetView(viewId))
 		{
 			SViewParams params = *pView->GetCurrentParams();
 			params.nearplane = nearPlane;
@@ -142,11 +142,11 @@ void CScriptbind_ViewSystem::SetViewNearPlane(unsigned int viewId, float nearPla
 	}
 }
 
-void CScriptbind_ViewSystem::SetViewFieldOfView(unsigned int viewId, float fov)						
+void CScriptbind_ViewSystem::SetViewFieldOfView(unsigned int viewId, float fov)
 {
 	if (IViewSystem *pViewSystem = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIViewSystem())
 	{
-		if(IView *pView = pViewSystem->GetView(viewId))
+		if (IView *pView = pViewSystem->GetView(viewId))
 		{
 			SViewParams params = *pView->GetCurrentParams();
 			params.fov = fov;

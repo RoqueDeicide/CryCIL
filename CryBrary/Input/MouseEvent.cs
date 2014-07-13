@@ -1,19 +1,19 @@
 ﻿namespace CryEngine
 {
-    public enum MouseEvent
-    {
-        Move,
+	public enum MouseEvent
+	{
+		Move,
 
-        LeftButtonDown,
-        LeftButtonUp,
-        LeftButtonDoubleClick,
-        RightButtonDown,
-        RightButtonUp,
-        RightButtonDoubleClick,
-        MiddleButtonDown,
-        MiddleButtonUp,
-        MiddleButtonDoubleClick,
+		LeftButtonDown,
+		LeftButtonUp,
+		LeftButtonDoubleClick,
+		RightButtonDown,
+		RightButtonUp,
+		RightButtonDoubleClick,
+		MiddleButtonDown,
+		MiddleButtonUp,
+		MiddleButtonDoubleClick,
 
-        Wheel,
-    }
+		Wheel,
+	}
 }

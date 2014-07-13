@@ -67,7 +67,7 @@ public:
 	/// Gets methods matching the specified pattern
 	/// </summary>
 	virtual int GetMethods(const char *name, int numParams, IMonoMethod ***pMethodsOut, int maxMethods, bool throwOnFail = true) = 0;
-	
+
 	/// <summary>
 	/// Gets the value of a property in the specified instance.
 	/// </summary>

@@ -24,7 +24,7 @@
 
 struct IMonoArray;
 
-class CMonoFlowNode 
+class CMonoFlowNode
 	: public CFlowBaseNodeInternal
 	, public IFlowGraphHook
 {
@@ -120,11 +120,11 @@ struct SMonoInputPortConfig
 		const char *sUIConfig = uiConfig ? ToCryString(uiConfig) : nullptr;
 
 		IMonoObject *pObject = nullptr;
-		if(defaultValue != 0)
+		if (defaultValue != 0)
 			pObject = *defaultValue;
-			
+
 		SInputPortConfig inputPortConfig;
-		switch(type)
+		switch (type)
 		{
 		case eFDT_Void:
 			inputPortConfig = InputPortConfig_Void(sName, _HELP(sDesc), sHumanName, _UICONFIG(sUIConfig));
@@ -135,11 +135,11 @@ struct SMonoInputPortConfig
 		case eFDT_Float:
 			inputPortConfig = InputPortConfig<float>(sName, pObject ? pObject->Unbox<float>() : 0, _HELP(sDesc), sHumanName, _UICONFIG(sUIConfig));
 			break;
-		case eFDT_EntityId: 
+		case eFDT_EntityId:
 			inputPortConfig = InputPortConfig<EntityId>(sName, pObject ? pObject->Unbox<EntityId>() : 0, _HELP(sDesc), sHumanName, _UICONFIG(sUIConfig));
 			break;
 		case eFDT_Vec3:
-			inputPortConfig = InputPortConfig<Vec3>(sName, pObject ? pObject->Unbox<Vec3>() : Vec3(0,0,0), _HELP(sDesc), sHumanName, _UICONFIG(sUIConfig));
+			inputPortConfig = InputPortConfig<Vec3>(sName, pObject ? pObject->Unbox<Vec3>() : Vec3(0, 0, 0), _HELP(sDesc), sHumanName, _UICONFIG(sUIConfig));
 			break;
 		case eFDT_String:
 			inputPortConfig = InputPortConfig<string>(sName, defaultValue ? ToCryString((mono::string)defaultValue) : "", _HELP(sDesc), sHumanName, _UICONFIG(sUIConfig));
@@ -172,7 +172,7 @@ struct SMonoOutputPortConfig
 		const char *sHumanName = ToCryString(humanName);
 		const char *sDesc = ToCryString(description);
 
-		switch(type)
+		switch (type)
 		{
 		case eFDT_Void:
 			return OutputPortConfig_Void(sName, _HELP(sDesc), sHumanName);
@@ -193,7 +193,6 @@ struct SMonoOutputPortConfig
 		return *(SOutputPortConfig *)0;
 	}
 };
-
 
 struct SMonoNodeConfig
 {

@@ -13,7 +13,7 @@ namespace CryEngine
 		/// <summary>
 		/// Argument was preceeded by a minus sign
 		/// </summary>
-		Pre,	
+		Pre,
 
 		/// <summary>
 		/// Argument was preceeded by a plus sign

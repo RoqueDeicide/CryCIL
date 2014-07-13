@@ -54,9 +54,9 @@ protected:
 
 	static uint16 GetSurfaceTypeId(ISurfaceType *pSurfaceType);
 	static mono::string GetSurfaceTypeName(ISurfaceType *pSurfaceType);
-    static mono::string GetSurfaceTypeTypeName(ISurfaceType *pSurfaceType);
-    static int GetSurfaceTypeFlags(ISurfaceType *pSurfaceType);
-    static ISurfaceType::SPhysicalParams GetSurfaceTypeParams(ISurfaceType *pSurfaceType);
+	static mono::string GetSurfaceTypeTypeName(ISurfaceType *pSurfaceType);
+	static int GetSurfaceTypeFlags(ISurfaceType *pSurfaceType);
+	static ISurfaceType::SPhysicalParams GetSurfaceTypeParams(ISurfaceType *pSurfaceType);
 	// ~Externals
 
 	// IMonoScriptBind

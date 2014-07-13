@@ -32,7 +32,7 @@ protected:
 	static void AddPersistentLine(Vec3 pos, Vec3 end, ColorF clr, float timeout);
 
 	static void AddAABB(Vec3 pos, AABB aabb, ColorF clr, float timeout);
-	//static void 
+	//static void
 	// ~IPersistentDebug
 
 	// Profiling

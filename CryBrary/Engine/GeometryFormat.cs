@@ -5,11 +5,11 @@ using System.Text;
 
 namespace CryEngine
 {
-    public enum GeometryForm
-    {
-        Vertices,
-        Edges,
-        Surface,
-        Volume
-    }
+	public enum GeometryForm
+	{
+		Vertices,
+		Edges,
+		Surface,
+		Volume
+	}
 }

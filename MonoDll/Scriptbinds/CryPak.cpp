@@ -35,7 +35,7 @@ mono::string CScriptbind_CryPak::GetAlias(mono::string name, bool returnSame)
 mono::string CScriptbind_CryPak::AdjustFileName(mono::string src, unsigned int flags)
 {
 	char path[ICryPak::g_nMaxPath];
-	path[sizeof(path) - 1] = 0;
+	path[sizeof(path)-1] = 0;
 
 	return ToMonoString(gEnv->pCryPak->AdjustFileName(ToCryString(src), path, flags));
 }

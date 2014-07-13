@@ -9,14 +9,14 @@ using CryEngine.Flowgraph;
 
 namespace CryEngine.Initialization
 {
-    public struct EntityFlowNodeRegistrationParams : FlowNodeBaseRegistrationParams
-    {
-        public string entityName;
+	public struct EntityFlowNodeRegistrationParams : FlowNodeBaseRegistrationParams
+	{
+		public string entityName;
 
-        public InputPortConfig[] InputPorts { get; set; }
-        public MethodInfo[] InputMethods { get; set; }
+		public InputPortConfig[] InputPorts { get; set; }
+		public MethodInfo[] InputMethods { get; set; }
 
-        public OutputPortConfig[] OutputPorts { get; set; }
-        public MemberInfo[] OutputMembers { get; set; }
-    }
+		public OutputPortConfig[] OutputPorts { get; set; }
+		public MemberInfo[] OutputMembers { get; set; }
+	}
 }

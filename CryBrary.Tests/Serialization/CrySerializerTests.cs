@@ -37,9 +37,9 @@ namespace CryBrary.Tests.Serialization
 			public NestedClass nestedClass { get; set; }
 		}
 
-		static TestClass SetupTestClass()
+		private static TestClass SetupTestClass()
 		{
-			var testClass = new TestClass { Integer = 3, String = "testString", Boolean = true, nestedClass =  new TestClass.NestedClass(TestClass.NestedEnum.Nested_NotQuite) };
+			var testClass = new TestClass { Integer = 3, String = "testString", Boolean = true, nestedClass = new TestClass.NestedClass(TestClass.NestedEnum.Nested_NotQuite) };
 
 			return testClass;
 		}
@@ -47,7 +47,7 @@ namespace CryBrary.Tests.Serialization
 		[Test]
 		public void TestClass_With_MemoryStream()
 		{
-			using(var stream = new MemoryStream())
+			using (var stream = new MemoryStream())
 			{
 				var serializer = new CrySerializer();
 				serializer.Serialize(stream, SetupTestClass());
@@ -70,7 +70,7 @@ namespace CryBrary.Tests.Serialization
 		[Test]
 		public void String_With_MemoryStream()
 		{
-			using(var stream = new MemoryStream())
+			using (var stream = new MemoryStream())
 			{
 				var serializer = new CrySerializer();
 				serializer.Serialize(stream, "Test str1ng_I5 V37y tEsTy%‹Œm´ð!");
@@ -86,7 +86,7 @@ namespace CryBrary.Tests.Serialization
 		[Test]
 		public void List_With_MemoryStream()
 		{
-			using(var stream = new MemoryStream())
+			using (var stream = new MemoryStream())
 			{
 				var list = new List<string> { "test1", "test2" };
 
@@ -108,9 +108,9 @@ namespace CryBrary.Tests.Serialization
 		[Test]
 		public void Dictionary_With_MemoryStream()
 		{
-			using(var stream = new MemoryStream())
+			using (var stream = new MemoryStream())
 			{
-				var dictionary = new Dictionary<string, int> { {"test1", 1 }, { "test2", 2 } };
+				var dictionary = new Dictionary<string, int> { { "test1", 1 }, { "test2", 2 } };
 
 				var serializer = new CrySerializer();
 				serializer.Serialize(stream, dictionary);
@@ -137,7 +137,7 @@ namespace CryBrary.Tests.Serialization
 		[Test]
 		public void Object_Array_With_MemoryStream()
 		{
-			using(var stream = new MemoryStream())
+			using (var stream = new MemoryStream())
 			{
 				var list = new List<object> { "testString", 1337, true };
 
@@ -159,9 +159,9 @@ namespace CryBrary.Tests.Serialization
 		[Test]
 		public void String_Array_With_MemoryStream()
 		{
-			using(var stream = new MemoryStream())
+			using (var stream = new MemoryStream())
 			{
-				var list = new List<object> {"first_string", "second_string", "third_string"};
+				var list = new List<object> { "first_string", "second_string", "third_string" };
 
 				var serializer = new CrySerializer();
 				serializer.Serialize(stream, list.ToArray());
@@ -178,7 +178,7 @@ namespace CryBrary.Tests.Serialization
 			}
 		}
 
-		class Multiple_Reference_Test_Class
+		private class Multiple_Reference_Test_Class
 		{
 			public Multiple_Reference_Test_Class()
 			{
@@ -207,7 +207,7 @@ namespace CryBrary.Tests.Serialization
 		[Test]
 		public void Reference_Object_Serialization()
 		{
-			using(var stream = new MemoryStream())
+			using (var stream = new MemoryStream())
 			{
 				var referenceTestClass = new Multiple_Reference_Test_Class();
 
@@ -219,13 +219,13 @@ namespace CryBrary.Tests.Serialization
 				referenceTestClass = serializer.Deserialize(stream) as Multiple_Reference_Test_Class;
 
 				Assert.AreNotSame(referenceTestClass.ClassWithTestClassReference, referenceTestClass.TestClassSeperate);
-                Assert.AreEqual(referenceTestClass.ClassWithTestClassReference.TestClass, referenceTestClass.TestClassReference);
+				Assert.AreEqual(referenceTestClass.ClassWithTestClassReference.TestClass, referenceTestClass.TestClassReference);
 				/*Assert.AreEqual(referenceTestClass.ClassWithTestClassReference.TestClass, referenceTestClass.TestClassReference, "Objects were not the same; expected hash code: {0} but was: {1}",
 					referenceTestClass.ClassWithTestClassReference.GetHashCode(), referenceTestClass.TestClassReference.GetHashCode());*/
 			}
 		}
 
-		class Class_With_MemberInfo_Member
+		private class Class_With_MemberInfo_Member
 		{
 			public Class_With_MemberInfo_Member()
 			{
@@ -246,7 +246,7 @@ namespace CryBrary.Tests.Serialization
 		[Test]
 		public void Class_With_MemberInfo_Members()
 		{
-			using(var stream = new MemoryStream())
+			using (var stream = new MemoryStream())
 			{
 				var serializer = new CrySerializer();
 
@@ -269,7 +269,7 @@ namespace CryBrary.Tests.Serialization
 		{
 			void PureVirtualMethod();
 		}
-		
+
 		public abstract class BaseClass : Interface
 		{
 			public virtual void NonoverriddenMethod()
@@ -314,7 +314,7 @@ namespace CryBrary.Tests.Serialization
 		[Test]
 		public void Derivation()
 		{
-			using(var stream = new MemoryStream())
+			using (var stream = new MemoryStream())
 			{
 				var serializer = new CrySerializer();
 
@@ -336,14 +336,14 @@ namespace CryBrary.Tests.Serialization
 		public void GenericEnumerableception()
 		{
 			var dictionary = new Dictionary<int, List<TestClass>>();
-			for(int i = 0; i < 10; i++)
+			for (int i = 0; i < 10; i++)
 			{
 				var list = new List<TestClass> { SetupTestClass(), null };
 
 				dictionary.Add(i, list);
 			}
 
-			using(var stream = new MemoryStream())
+			using (var stream = new MemoryStream())
 			{
 				var serializer = new CrySerializer();
 

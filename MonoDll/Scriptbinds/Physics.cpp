@@ -55,12 +55,12 @@ void CScriptbind_Physics::Physicalize(IEntity *pEntity, SMonoPhysicalizeParams p
 	// Unphysicalize
 	{
 		const Ang3 oldRotation = pEntity->GetWorldAngles();
-		const Quat newRotation = Quat::CreateRotationZ( oldRotation.z );
-		pEntity->SetRotation( newRotation );
+		const Quat newRotation = Quat::CreateRotationZ(oldRotation.z);
+		pEntity->SetRotation(newRotation);
 
 		SEntityPhysicalizeParams pp;
 		pp.type = PE_NONE;
-		pEntity->Physicalize( pp );
+		pEntity->Physicalize(pp);
 	}
 	// ~Unphysicalize
 
@@ -78,18 +78,18 @@ void CScriptbind_Physics::Physicalize(IEntity *pEntity, SMonoPhysicalizeParams p
 	pp.nFlagsOR = params.flagsOR;
 	pp.nFlagsAND = params.flagsAND;
 
-	if(params.attachToEntity != 0)
+	if (params.attachToEntity != 0)
 	{
-		if(IPhysicalEntity *pPhysEnt = gEnv->pPhysicalWorld->GetPhysicalEntityById(params.attachToEntity))
+		if (IPhysicalEntity *pPhysEnt = gEnv->pPhysicalWorld->GetPhysicalEntityById(params.attachToEntity))
 			pp.pAttachToEntity = pPhysEnt;
 	}
 
-	if(pp.type == PE_LIVING)
+	if (pp.type == PE_LIVING)
 	{
 		pp.pPlayerDimensions = &params.playerDim;
 		pp.pPlayerDynamics = &params.playerDyn;
 	}
-	else if(pp.type == PE_PARTICLE)
+	else if (pp.type == PE_PARTICLE)
 		pp.pParticle = &params.particleParams;
 
 	pEntity->Physicalize(pp);
@@ -106,7 +106,7 @@ void CScriptbind_Physics::Sleep(IPhysicalEntity *pPhysEnt, bool sleep)
 Vec3 CScriptbind_Physics::GetVelocity(IPhysicalEntity *pPhysEnt)
 {
 	pe_status_dynamics sd;
-	if(pPhysEnt->GetStatus(&sd) != 0)
+	if (pPhysEnt->GetStatus(&sd) != 0)
 		return sd.v;
 
 	return Vec3(0, 0, 0);
@@ -125,19 +125,19 @@ int CScriptbind_Physics::RayWorldIntersection(Vec3 origin, Vec3 dir, int objFlag
 	IPhysicalEntity **pSkipEnts = NULL;
 	int numSkipEnts = 0;
 
-	if(skipEntities)
+	if (skipEntities)
 	{
 		IMonoArray *pSkipEntities = *skipEntities;
 		numSkipEnts = pSkipEntities->GetSize();
 
 		pSkipEnts = new IPhysicalEntity*[numSkipEnts];
 
-		for(int i = 0; i < numSkipEnts; i++)
+		for (int i = 0; i < numSkipEnts; i++)
 		{
 			IMonoObject *pItem = *pSkipEntities->GetItem(i);
 
 #ifndef RELEASE
-			if(!pItem)
+			if (!pItem)
 				GetMonoScriptSystem()->GetCryBraryAssembly()->GetException("CryEngine", "NullPointerException")->Throw();
 #endif
 
@@ -153,12 +153,12 @@ int CScriptbind_Physics::RayWorldIntersection(Vec3 origin, Vec3 dir, int objFlag
 
 	SAFE_DELETE_ARRAY(pSkipEnts);
 
-	if(numHits > 0)
+	if (numHits > 0)
 	{
 		IMonoClass *pRayHitClass = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("RaycastHit");
 
 		IMonoArray *pRayHits = CreateMonoArray(numHits);//, pRayHitClass);
-		for(int i = 0; i < numHits; i++)
+		for (int i = 0; i < numHits; i++)
 			pRayHits->InsertMonoObject(pRayHitClass->BoxObject(&pHits[i]));
 
 		hits = pRayHits->GetManagedObject();
@@ -174,11 +174,11 @@ mono::object CScriptbind_Physics::SimulateExplosion(pe_explosion explosion)
 {
 	gEnv->pPhysicalWorld->SimulateExplosion(&explosion);
 
-	if(explosion.nAffectedEnts > 0)
+	if (explosion.nAffectedEnts > 0)
 	{
 		IMonoArray *pAffectedEnts = CreateMonoArray(explosion.nAffectedEnts);
 
-		for(int i = 0; i < explosion.nAffectedEnts; i++)
+		for (int i = 0; i < explosion.nAffectedEnts; i++)
 			pAffectedEnts->InsertNativePointer(explosion.pAffectedEnts[i]);
 
 		pAffectedEnts->Release();

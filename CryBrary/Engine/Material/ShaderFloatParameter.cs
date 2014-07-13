@@ -5,20 +5,20 @@ using System.Text;
 
 namespace CryEngine
 {
-    public enum ShaderFloatParameter
-    {
-        BlendFalloff,
-        BendDetailLeafAmplitude,
-        BackShadowBias,
-        FresnelPower,
-        DetailBendingFrequency,
-        BendingBranchAmplitude,
-        BlendLayer2Tiling,
-        FresnelScale,
-        FresnelBias,
-        CapOpacityFalloff,
-        BackViewDep,
-        BackDiffuseColorScale,
-        BlendFactor,
-    }
+	public enum ShaderFloatParameter
+	{
+		BlendFalloff,
+		BendDetailLeafAmplitude,
+		BackShadowBias,
+		FresnelPower,
+		DetailBendingFrequency,
+		BendingBranchAmplitude,
+		BlendLayer2Tiling,
+		FresnelScale,
+		FresnelBias,
+		CapOpacityFalloff,
+		BackViewDep,
+		BackDiffuseColorScale,
+		BlendFactor,
+	}
 }

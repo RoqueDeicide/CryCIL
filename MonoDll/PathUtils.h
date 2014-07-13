@@ -20,7 +20,7 @@ public:
 		string binPath = "Bin32\\";
 
 #ifdef WIN64
-		if(!force32)
+		if (!force32)
 			binPath = "Bin64\\";
 #endif
 

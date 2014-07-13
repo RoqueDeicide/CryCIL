@@ -7,29 +7,29 @@ using CryEngine.Flowgraph;
 
 namespace CryEngine.Initialization
 {
-    public struct OutputPortConfig
-    {
-        public OutputPortConfig(string _name, string _humanName, string desc, NodePortType _type, InputPortConfig[] inputPorts, OutputPortConfig[] outputPorts)
-            : this()
-        {
-            name = _name;
-            humanName = _humanName;
-            description = desc;
-            type = _type;
+	public struct OutputPortConfig
+	{
+		public OutputPortConfig(string _name, string _humanName, string desc, NodePortType _type, InputPortConfig[] inputPorts, OutputPortConfig[] outputPorts)
+			: this()
+		{
+			name = _name;
+			humanName = _humanName;
+			description = desc;
+			type = _type;
 
-            inputs = inputPorts.Cast<object>().ToArray();
-            outputs = outputPorts.Cast<object>().ToArray();
-        }
+			inputs = inputPorts.Cast<object>().ToArray();
+			outputs = outputPorts.Cast<object>().ToArray();
+		}
 
-        public string name;
+		public string name;
 
-        public string humanName;
+		public string humanName;
 
-        public string description;
+		public string description;
 
-        public NodePortType type;
+		public NodePortType type;
 
-        public object[] inputs;
-        public object[] outputs;
-    }
+		public object[] inputs;
+		public object[] outputs;
+	}
 }

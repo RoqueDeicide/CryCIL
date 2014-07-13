@@ -44,7 +44,7 @@ namespace CryEngine
 		public float kInertia;    // inertia koefficient, the more it is, the less inertia is; 0 means no inertia
 		public float kInertiaAccel; // inertia on acceleration
 		public float kAirControl; // air control koefficient 0..1, 1 - special value (total control of movement)
-		public float kAirResistance;    // standard air resistance 
+		public float kAirResistance;    // standard air resistance
 		public Vec3 gravity; // gravity vector
 		public float nodSpeed;    // vertical camera shake speed after landings
 		public int bSwimming; // whether entity is swimming (is not bound to ground plane)
@@ -57,9 +57,9 @@ namespace CryEngine
 		public float maxVelGround; // player cannot stand of surfaces that are moving faster than this
 		public float timeImpulseRecover; // forcefully turns on inertia for that duration after receiving an impulse
 		public EntityQueryFlags collTypes; // entity types to check collisions against
-		IntPtr livingEntToIgnore;
-		int bNetwork; // uses extended history information (obsolete)
-		int bActive; // 0 disables all simulation for the character, apart from moving along the requested velocity
-		int iRequestedTime; // requests that the player rolls back to that time and re-exucutes pending actions during the next step
+		private IntPtr livingEntToIgnore;
+		private int bNetwork; // uses extended history information (obsolete)
+		private int bActive; // 0 disables all simulation for the character, apart from moving along the requested velocity
+		private int iRequestedTime; // requests that the player rolls back to that time and re-exucutes pending actions during the next step
 	}
 }

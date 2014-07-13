@@ -10,16 +10,17 @@ namespace CryEngine
 	public enum PathResolutionRules : uint
 	{
 		/// <summary>
-		/// If used, the source path will be treated as the destination path
-		/// and no transformations will be done. Pass this flag when the path is to be the actual
-		/// path on the disk/in the packs and doesn't need adjustment (or after it has come through adjustments already)
-		/// if this is set, AdjustFileName will not map the input path into the master folder (Ex: Shaders will not be converted to Game\Shaders)
+		/// If used, the source path will be treated as the destination path and no transformations
+		/// will be done. Pass this flag when the path is to be the actual path on the disk/in the
+		/// packs and doesn't need adjustment (or after it has come through adjustments already) if
+		/// this is set, AdjustFileName will not map the input path into the master folder (Ex:
+		/// Shaders will not be converted to Game\Shaders)
 		/// </summary>
 		RealPath = 1 << 16,
 
 		/// <summary>
-		/// AdjustFileName will always copy the file path to the destination path:
-		/// regardless of the returned value, szDestpath can be used
+		/// AdjustFileName will always copy the file path to the destination path: regardless of the
+		/// returned value, szDestpath can be used
 		/// </summary>
 		AlwaysCopyDestination = 1 << 17,
 
@@ -64,7 +65,8 @@ namespace CryEngine
 		CheckModPaths = 1 << 27,
 
 		/// <summary>
-		/// if this is set, AdjustFileName will always check the filesystem/disk and not check inside open paks
+		/// if this is set, AdjustFileName will always check the filesystem/disk and not check
+		/// inside open paks
 		/// </summary>
 		NeverInPaks = 1 << 28,
 	}

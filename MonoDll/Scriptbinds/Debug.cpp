@@ -93,6 +93,6 @@ extern "C"
 
 	_declspec(dllexport) void __cdecl Warning(const char *msg)
 	{
-		MonoWarning(msg); 
+		MonoWarning(msg);
 	}
 }

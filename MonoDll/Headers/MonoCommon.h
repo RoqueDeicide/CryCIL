@@ -14,9 +14,9 @@
 #include <IMonoScriptSystem.h>
 #include <IMonoConverter.h>
 
-namespace mono 
+namespace mono
 {
-	class _string; typedef _string* string; 
+	class _string; typedef _string* string;
 	class _object; typedef _object* object;
 
 	struct entityId
@@ -28,13 +28,12 @@ namespace mono
 	};
 };
 
-
 /// <summary>
 /// Converts a C++ string to the C# equivalent.
 /// </summary>
 inline const char *ToCryString(mono::string monoString)
 {
-	if(!monoString)
+	if (!monoString)
 		return "";
 
 	return GetMonoScriptSystem()->GetConverter()->ToString(monoString);
@@ -84,7 +83,7 @@ namespace mono
 
 	typedef _string* string;
 	typedef _object* object;
-}; 
+};
 
 #include <IMonoDomain.h>
 #include <IMonoObject.h>

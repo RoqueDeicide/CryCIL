@@ -9,32 +9,32 @@ using CryEngine.Flowgraph;
 
 namespace CryEngine.Initialization
 {
-    public interface FlowNodeBaseRegistrationParams : IScriptRegistrationParams
-    {
-        InputPortConfig[] InputPorts { get; }
-        MethodInfo[] InputMethods { get; }
+	public interface FlowNodeBaseRegistrationParams : IScriptRegistrationParams
+	{
+		InputPortConfig[] InputPorts { get; }
+		MethodInfo[] InputMethods { get; }
 
-        OutputPortConfig[] OutputPorts { get; }
-        MemberInfo[] OutputMembers { get; }
-    }
+		OutputPortConfig[] OutputPorts { get; }
+		MemberInfo[] OutputMembers { get; }
+	}
 
-    public struct FlowNodeRegistrationParams : FlowNodeBaseRegistrationParams
-    {
-        public string name;
-        public string category;
+	public struct FlowNodeRegistrationParams : FlowNodeBaseRegistrationParams
+	{
+		public string name;
+		public string category;
 
-        public string description;
+		public string description;
 
-        public FlowNodeFilter filter;
+		public FlowNodeFilter filter;
 
-        public FlowNodeType type;
+		public FlowNodeType type;
 
-        public bool hasTargetEntity;
+		public bool hasTargetEntity;
 
-        public InputPortConfig[] InputPorts { get; set; }
-        public MethodInfo[] InputMethods { get; set; }
+		public InputPortConfig[] InputPorts { get; set; }
+		public MethodInfo[] InputMethods { get; set; }
 
-        public OutputPortConfig[] OutputPorts { get; set; }
-        public MemberInfo[] OutputMembers { get; set; }
-    }
+		public OutputPortConfig[] OutputPorts { get; set; }
+		public MemberInfo[] OutputMembers { get; set; }
+	}
 }

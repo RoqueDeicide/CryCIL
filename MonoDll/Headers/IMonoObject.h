@@ -27,19 +27,19 @@ struct IMonoObject
 {
 	inline mono::object CallMethod(const char *funcName);
 
-	template<typename P1> 
+	template<typename P1>
 	inline mono::object CallMethod(const char *funcName, const P1 &p1);
 
-	template<typename P1, typename P2> 
+	template<typename P1, typename P2>
 	inline mono::object CallMethod(const char *funcName, const P1 &p1, const P2 &p2);
 
-	template<typename P1, typename P2, typename P3> 
+	template<typename P1, typename P2, typename P3>
 	inline mono::object CallMethod(const char *funcName, const P1 &p1, const P2 &p2, const P3 &p3);
 
-	template<typename P1, typename P2, typename P3, typename P4> 
+	template<typename P1, typename P2, typename P3, typename P4>
 	inline mono::object CallMethod(const char *funcName, const P1 &p1, const P2 &p2, const P3 &p3, const P4 &p4);
 
-	template<typename P1, typename P2, typename P3, typename P4, typename P5> 
+	template<typename P1, typename P2, typename P3, typename P4, typename P5>
 	inline mono::object CallMethod(const char *funcName, const P1 &p1, const P2 &p2, const P3 &p3, const P4 &p4, const P5 &p5);
 
 	template<typename P1, typename P2, typename P3, typename P4, typename P5, typename P6>
@@ -69,7 +69,7 @@ struct IMonoObject
 	virtual MonoAnyValue GetAnyValue() = 0;
 
 	virtual const char *ToString() = 0;
-	
+
 	/// <summary>
 	/// Returns the object as it is seen in managed code, can be passed directly across languages.
 	/// </summary>
@@ -118,7 +118,7 @@ enum EMonoAnyType
 /// </summary>
 struct MonoAnyValue : public ISerializable
 {
-	MonoAnyValue() : type(eMonoAnyType_Unknown), monoObject(nullptr) { };
+	MonoAnyValue() : type(eMonoAnyType_Unknown), monoObject(nullptr) {};
 	MonoAnyValue(bool value) : type(eMonoAnyType_Boolean) { b = value; }
 	MonoAnyValue(int value) : type(eMonoAnyType_Integer) { i = value; }
 	MonoAnyValue(unsigned int value) : type(eMonoAnyType_UnsignedInteger) { u = value; }
@@ -130,13 +130,13 @@ struct MonoAnyValue : public ISerializable
 	MonoAnyValue(Vec3 value) : type(eMonoAnyType_Vec3) { vec4.x = value.x; vec4.y = value.y; vec4.z = value.z; }
 	MonoAnyValue(Ang3 value) : type(eMonoAnyType_Vec3) { vec4.x = value.x; vec4.y = value.y; vec4.z = value.z; }
 	MonoAnyValue(Quat value) : type(eMonoAnyType_Quat) { vec4.x = value.v.x; vec4.y = value.v.y; vec4.z = value.v.z; vec4.w = value.w; }
-	MonoAnyValue(mono::object value) : type(eMonoAnyType_Unknown), monoObject(value) { };
+	MonoAnyValue(mono::object value) : type(eMonoAnyType_Unknown), monoObject(value) {};
 
 	virtual void SerializeWith(TSerialize ser) override
 	{
 		ser.EnumValue("type", type, eMonoAnyType_Unknown, eMonoAnyType_Last);
 
-		switch(type)
+		switch (type)
 		{
 		case eMonoAnyType_Boolean:
 			ser.Value("boolean", b, 'bool');
@@ -156,114 +156,114 @@ struct MonoAnyValue : public ISerializable
 			ser.Value("float", f);
 			break;
 		case eMonoAnyType_Vec3:
-			{
-				if(ser.IsWriting())
-					ser.Value("vec", Vec3(vec4.x, vec4.y, vec4.z));
-				else
-				{
-					Vec3 v;
-					ser.Value("vec", v);
+		{
+								  if (ser.IsWriting())
+									  ser.Value("vec", Vec3(vec4.x, vec4.y, vec4.z));
+								  else
+								  {
+									  Vec3 v;
+									  ser.Value("vec", v);
 
-					vec4.x = v.x;
-					vec4.y = v.y;
-					vec4.z = v.z;
-				}
-			}
+									  vec4.x = v.x;
+									  vec4.y = v.y;
+									  vec4.z = v.z;
+								  }
+		}
 			break;
 		case eMonoAnyType_Quat:
-			{
-				if(ser.IsWriting())
-					ser.Value("quat", Quat(vec4.w, vec4.x, vec4.y, vec4.z));
-				else
-				{
-					Quat q;
-					ser.Value("quat", q);
+		{
+								  if (ser.IsWriting())
+									  ser.Value("quat", Quat(vec4.w, vec4.x, vec4.y, vec4.z));
+								  else
+								  {
+									  Quat q;
+									  ser.Value("quat", q);
 
-					vec4.w = q.w;
-					vec4.x = q.v.x;
-					vec4.y = q.v.y;
-					vec4.z = q.v.z;
-				}
-			}
+									  vec4.w = q.w;
+									  vec4.x = q.v.x;
+									  vec4.y = q.v.y;
+									  vec4.z = q.v.z;
+								  }
+		}
 			break;
 		case eMonoAnyType_String:
-			{
-				if(ser.IsWriting())
-				{
-					auto serializedString = string(str);
-					ser.Value("str", serializedString); 
-				}
-				else
-				{
-					auto serializedString = string();
-					ser.Value("str", serializedString);
-					str = serializedString.c_str();
-				}
-			}
+		{
+									if (ser.IsWriting())
+									{
+										auto serializedString = string(str);
+										ser.Value("str", serializedString);
+									}
+									else
+									{
+										auto serializedString = string();
+										ser.Value("str", serializedString);
+										str = serializedString.c_str();
+									}
+		}
 			break;
 		case eMonoAnyType_Array:
-			{
-				IMonoScriptSystem *pScriptSystem = GetMonoScriptSystem();
+		{
+								   IMonoScriptSystem *pScriptSystem = GetMonoScriptSystem();
 
-				IMonoArray *pArray = nullptr;
-				int arrayLength;
+								   IMonoArray *pArray = nullptr;
+								   int arrayLength;
 
-				if(ser.IsWriting())
-				{
-					pArray = pScriptSystem->GetConverter()->ToArray(monoObject);
-					arrayLength = pArray->GetSize();
-				}
+								   if (ser.IsWriting())
+								   {
+									   pArray = pScriptSystem->GetConverter()->ToArray(monoObject);
+									   arrayLength = pArray->GetSize();
+								   }
 
-				ser.Value("arrayLength", arrayLength);
+								   ser.Value("arrayLength", arrayLength);
 
-				if(ser.IsWriting())
-				{
-					for(int i = 0; i < arrayLength; i++)
-					{
-						IMonoObject *pItem = *pArray->GetItem(i);
-						pItem->GetAnyValue().SerializeWith(ser);
-						SAFE_RELEASE(pItem);
-					}
-				}
-				else
-				{
-					pArray = pScriptSystem->GetScriptDomain()->CreateArray(arrayLength);
+								   if (ser.IsWriting())
+								   {
+									   for (int i = 0; i < arrayLength; i++)
+									   {
+										   IMonoObject *pItem = *pArray->GetItem(i);
+										   pItem->GetAnyValue().SerializeWith(ser);
+										   SAFE_RELEASE(pItem);
+									   }
+								   }
+								   else
+								   {
+									   pArray = pScriptSystem->GetScriptDomain()->CreateArray(arrayLength);
 
-					for(int i = 0; i < arrayLength; i++)
-					{
-						MonoAnyValue value;
-						value.SerializeWith(ser);
-						pArray->InsertAny(value);
-					}
+									   for (int i = 0; i < arrayLength; i++)
+									   {
+										   MonoAnyValue value;
+										   value.SerializeWith(ser);
+										   pArray->InsertAny(value);
+									   }
 
-					monoObject = pArray->GetManagedObject();
-				}
+									   monoObject = pArray->GetManagedObject();
+								   }
 
-				SAFE_RELEASE(pArray);
-			}
+								   SAFE_RELEASE(pArray);
+		}
 			break;
 		case eMonoAnyType_Unknown:
-			{
-				if(ser.IsWriting())
-				{
-					if(monoObject != nullptr)
-					{
-						IMonoObject *pObject = *monoObject;
-						IMonoClass *pObjectClass = pObject->GetClass();
+		{
+									 if (ser.IsWriting())
+									 {
+										 if (monoObject != nullptr)
+										 {
+											 IMonoObject *pObject = *monoObject;
+											 IMonoClass *pObjectClass = pObject->GetClass();
 
-						CryWarning(VALIDATOR_MODULE_GAME, VALIDATOR_WARNING, "Attempted to serialize unknown managed type %s.%s", pObjectClass->GetNamespace(), pObjectClass->GetName());
-					}
-					else
-						CRY_ASSERT_MESSAGE(false, "Attempted to serialize unknown managed type");
-				}
-			}
+											 CryWarning(VALIDATOR_MODULE_GAME, VALIDATOR_WARNING, "Attempted to serialize unknown managed type %s.%s", pObjectClass->GetNamespace(), pObjectClass->GetName());
+										 }
+										 else
+											 CRY_ASSERT_MESSAGE(false, "Attempted to serialize unknown managed type");
+									 }
+		}
 			break;
 		}
 	}
 
 	void *GetValue()
 	{
-		switch(type)
+		switch (type)
 		{
 		case eMonoAnyType_Boolean:
 			return &b;
@@ -296,34 +296,34 @@ struct MonoAnyValue : public ISerializable
 		int				i;
 		unsigned int	u;
 		const char*		str;
-		struct { float x,y,z,w; } vec4;
+		struct { float x, y, z, w; } vec4;
 		mono::object monoObject;
 	};
 };
 
 inline mono::object IMonoObject::CallMethod(const char *funcName)
 {
-	if(IMonoMethod *pMethod = GetClass()->GetMethod(funcName))
+	if (IMonoMethod *pMethod = GetClass()->GetMethod(funcName))
 		return pMethod->Invoke(this->GetManagedObject());
 
 	return nullptr;
 }
 
-template<typename P1> 
+template<typename P1>
 inline mono::object IMonoObject::CallMethod(const char *funcName, const P1 &p1)
 {
 	IMonoArray *pArgs = CreateMonoArray(1);
 	pArgs->Insert(p1);
 
 	mono::object result = nullptr;
-	if(IMonoMethod *pMethod = GetClass()->GetMethod(funcName, pArgs))
+	if (IMonoMethod *pMethod = GetClass()->GetMethod(funcName, pArgs))
 		result = pMethod->InvokeArray(this->GetManagedObject(), pArgs);
-	
+
 	SAFE_RELEASE(pArgs);
 	return result;
 };
 
-template<typename P1, typename P2> 
+template<typename P1, typename P2>
 inline mono::object IMonoObject::CallMethod(const char *funcName, const P1 &p1, const P2 &p2)
 {
 	IMonoArray *pArgs = CreateMonoArray(2);
@@ -331,14 +331,14 @@ inline mono::object IMonoObject::CallMethod(const char *funcName, const P1 &p1, 
 	pArgs->Insert(p2);
 
 	mono::object result = nullptr;
-	if(IMonoMethod *pMethod = GetClass()->GetMethod(funcName, pArgs))
+	if (IMonoMethod *pMethod = GetClass()->GetMethod(funcName, pArgs))
 		result = pMethod->InvokeArray(this->GetManagedObject(), pArgs);
-	
+
 	SAFE_RELEASE(pArgs);
 	return result;
 };
 
-template<typename P1, typename P2, typename P3> 
+template<typename P1, typename P2, typename P3>
 inline mono::object IMonoObject::CallMethod(const char *funcName, const P1 &p1, const P2 &p2, const P3 &p3)
 {
 	IMonoArray *pArgs = CreateMonoArray(3);
@@ -347,14 +347,14 @@ inline mono::object IMonoObject::CallMethod(const char *funcName, const P1 &p1, 
 	pArgs->Insert(p3);
 
 	mono::object result = nullptr;
-	if(IMonoMethod *pMethod = GetClass()->GetMethod(funcName, pArgs))
+	if (IMonoMethod *pMethod = GetClass()->GetMethod(funcName, pArgs))
 		result = pMethod->InvokeArray(this->GetManagedObject(), pArgs);
-	
+
 	SAFE_RELEASE(pArgs);
 	return result;
 };
 
-template<typename P1, typename P2, typename P3, typename P4> 
+template<typename P1, typename P2, typename P3, typename P4>
 inline mono::object IMonoObject::CallMethod(const char *funcName, const P1 &p1, const P2 &p2, const P3 &p3, const P4 &p4)
 {
 	IMonoArray *pArgs = CreateMonoArray(4);
@@ -364,14 +364,14 @@ inline mono::object IMonoObject::CallMethod(const char *funcName, const P1 &p1, 
 	pArgs->Insert(p4);
 
 	mono::object result = nullptr;
-	if(IMonoMethod *pMethod = GetClass()->GetMethod(funcName, pArgs))
+	if (IMonoMethod *pMethod = GetClass()->GetMethod(funcName, pArgs))
 		result = pMethod->InvokeArray(this->GetManagedObject(), pArgs);
 
 	SAFE_RELEASE(pArgs);
 	return result;
 };
 
-template<typename P1, typename P2, typename P3, typename P4, typename P5> 
+template<typename P1, typename P2, typename P3, typename P4, typename P5>
 inline mono::object IMonoObject::CallMethod(const char *funcName, const P1 &p1, const P2 &p2, const P3 &p3, const P4 &p4, const P5 &p5)
 {
 	IMonoArray *pArgs = CreateMonoArray(5);
@@ -382,7 +382,7 @@ inline mono::object IMonoObject::CallMethod(const char *funcName, const P1 &p1, 
 	pArgs->Insert(p5);
 
 	mono::object result = nullptr;
-	if(IMonoMethod *pMethod = GetClass()->GetMethod(funcName, pArgs))
+	if (IMonoMethod *pMethod = GetClass()->GetMethod(funcName, pArgs))
 		result = pMethod->InvokeArray(this->GetManagedObject(), pArgs);
 
 	SAFE_RELEASE(pArgs);
@@ -401,7 +401,7 @@ inline mono::object IMonoObject::CallMethod(const char *funcName, const P1 &p1, 
 	pArgs->Insert(p6);
 
 	mono::object result = nullptr;
-	if(IMonoMethod *pMethod = GetClass()->GetMethod(funcName, pArgs))
+	if (IMonoMethod *pMethod = GetClass()->GetMethod(funcName, pArgs))
 		result = pMethod->InvokeArray(this->GetManagedObject(), pArgs);
 
 	SAFE_RELEASE(pArgs);

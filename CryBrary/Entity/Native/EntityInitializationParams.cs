@@ -5,10 +5,10 @@ using System.Text;
 
 namespace CryEngine.Native
 {
-    public struct EntityInitializationParams : IScriptInitializationParams
-    {
-        public IntPtr IEntityPtr;
-        public IntPtr IAnimatedCharacterPtr;
-        public EntityId Id;
-    }
+	public struct EntityInitializationParams : IScriptInitializationParams
+	{
+		public IntPtr IEntityPtr;
+		public IntPtr IAnimatedCharacterPtr;
+		public EntityId Id;
+	}
 }

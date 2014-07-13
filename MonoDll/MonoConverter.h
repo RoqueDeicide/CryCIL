@@ -13,7 +13,7 @@
 
 struct IMonoClass;
 
-class CConverter 
+class CConverter
 	: public IMonoConverter
 {
 public:
@@ -22,7 +22,7 @@ public:
 
 	// IMonoConverter
 	virtual const char *ToString(mono::string monoString) override { return mono_string_to_utf8((MonoString *)monoString); }
-	
+
 	virtual IMonoArray *ToArray(mono::object arr) override;
 
 	virtual IMonoObject *ToObject(mono::object obj, bool allowGC = true) override;

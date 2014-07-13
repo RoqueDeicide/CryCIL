@@ -11,7 +11,7 @@
 
 #include "MonoCommon.h"
 
-class CScriptbind_ScriptTable 
+class CScriptbind_ScriptTable
 	: public IMonoScriptBind
 {
 public:

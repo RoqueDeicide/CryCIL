@@ -56,7 +56,7 @@ struct IMonoDomain
 	/// [Native C++]
 	/// IMonoClass *pElementClass = gEnv->pMonoScriptSystem->GetCryBraryAssembly()->GetClass("Vec3");
 	/// CreateArray(3, pElementClass);
-	/// 
+	///
 	/// [Managed]
 	/// Vec3[] myElements;
 	/// </example>

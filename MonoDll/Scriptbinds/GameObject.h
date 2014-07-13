@@ -54,4 +54,3 @@ protected:
 	static bool BindToNetwork(IGameObject *pGameObject, EBindToNetworkMode mode);
 	// ~Externals
 };
-

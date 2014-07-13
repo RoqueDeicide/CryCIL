@@ -5,17 +5,17 @@ using System.Text;
 
 namespace CryEngine
 {
-    public enum PhysicalizationType
-    {
-        None = 0,
-        Static,
-        Rigid,
-        WheeledVehicle,
-        Living,
-        Particle,
-        Articulated,
-        Rope,
-        Soft,
-        Area
-    }
+	public enum PhysicalizationType
+	{
+		None = 0,
+		Static,
+		Rigid,
+		WheeledVehicle,
+		Living,
+		Particle,
+		Articulated,
+		Rope,
+		Soft,
+		Area
+	}
 }

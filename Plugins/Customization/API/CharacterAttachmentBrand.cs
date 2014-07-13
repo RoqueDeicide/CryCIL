@@ -7,7 +7,6 @@ using System.Xml.Linq;
 
 using CryEngine;
 
-
 namespace CryEngine.CharacterCustomization
 {
 	public class CharacterAttachmentBrand
@@ -42,19 +41,19 @@ namespace CryEngine.CharacterCustomization
 			Attachments = slotAttachments;
 		}
 
-        public CharacterAttachment GetAttachment(string name)
-        {
-            foreach (var attachment in Attachments)
-            {
-                if (attachment.Name == name)
-                    return attachment;
-            }
+		public CharacterAttachment GetAttachment(string name)
+		{
+			foreach (var attachment in Attachments)
+			{
+				if (attachment.Name == name)
+					return attachment;
+			}
 
-            if (name == "None")
-                return Slot.EmptyAttachment;
+			if (name == "None")
+				return Slot.EmptyAttachment;
 
-            return null;
-        }
+			return null;
+		}
 
 		public string Name { get; private set; }
 		public string ThumbnailPath { get; private set; }

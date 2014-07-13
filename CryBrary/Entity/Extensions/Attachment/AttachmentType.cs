@@ -5,11 +5,11 @@ using System.Text;
 
 namespace CryEngine
 {
-    public enum AttachmentType
-    {
-        Bone,
-        Face,
-        Skin,
-        CharacterPart
-    }
+	public enum AttachmentType
+	{
+		Bone,
+		Face,
+		Skin,
+		CharacterPart
+	}
 }

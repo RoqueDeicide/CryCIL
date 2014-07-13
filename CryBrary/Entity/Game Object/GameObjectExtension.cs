@@ -7,14 +7,14 @@ using CryEngine.Native;
 
 namespace CryEngine.Advanced
 {
-    public class GameObjectExtension
-    {
-        public bool ReceivePostUpdates
-        {
-            set { NativeGameObjectMethods.EnablePostUpdates(Owner.Handle, Handle, value); }
-        }
+	public class GameObjectExtension
+	{
+		public bool ReceivePostUpdates
+		{
+			set { NativeGameObjectMethods.EnablePostUpdates(Owner.Handle, Handle, value); }
+		}
 
-        public GameObject Owner { get; set; }
-        internal IntPtr Handle { get; set; }
-    }
+		public GameObject Owner { get; set; }
+		internal IntPtr Handle { get; set; }
+	}
 }

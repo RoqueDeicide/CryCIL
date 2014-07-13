@@ -2,7 +2,7 @@
 #include "CryScriptInstance.h"
 
 CCryScriptInstance::CCryScriptInstance(EMonoScriptFlags flags)
-	: m_flags(flags)
+: m_flags(flags)
 	, m_scriptId(0)
 {
 	GetMonoScriptSystem()->AddListener(this);
@@ -10,7 +10,7 @@ CCryScriptInstance::CCryScriptInstance(EMonoScriptFlags flags)
 
 CCryScriptInstance::~CCryScriptInstance()
 {
-	if(GetMonoScriptSystem())
+	if (GetMonoScriptSystem())
 	{
 		static_cast<CScriptSystem *>(GetMonoScriptSystem())->ReportScriptInstanceDestroyed(this, m_scriptId);
 		GetMonoScriptSystem()->RemoveListener(this);
@@ -41,7 +41,7 @@ void CCryScriptInstance::OnReloadStart()
 
 void CCryScriptInstance::OnReloadComplete()
 {
-	if(m_scriptId == 0)
+	if (m_scriptId == 0)
 		return;
 
 	IMonoObject *pScriptManager = GetMonoScriptSystem()->GetScriptManager();
@@ -49,7 +49,7 @@ void CCryScriptInstance::OnReloadComplete()
 
 	IMonoMethod *pGetScriptInstanceMethod = pScriptManagerClass->GetMethod("GetScriptInstanceById", 2);
 
-	if(mono::object result = pGetScriptInstanceMethod->Call(pScriptManager->GetManagedObject(), m_scriptId, m_flags))
+	if (mono::object result = pGetScriptInstanceMethod->Call(pScriptManager->GetManagedObject(), m_scriptId, m_flags))
 	{
 		SetManagedObject((MonoObject *)result, true);
 	}

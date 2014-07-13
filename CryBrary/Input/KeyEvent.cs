@@ -5,36 +5,36 @@ using System.Text;
 
 namespace CryEngine
 {
-    public enum KeyEvent
-    {
-        Invalid = 0,
+	public enum KeyEvent
+	{
+		Invalid = 0,
 
-        /// <summary>
-        /// Used when the action key is pressed
-        /// </summary>
-        OnPress,
+		/// <summary>
+		/// Used when the action key is pressed
+		/// </summary>
+		OnPress,
 
-        /// <summary>
-        /// Used when the action key is released
-        /// </summary>
-        OnRelease,
+		/// <summary>
+		/// Used when the action key is released
+		/// </summary>
+		OnRelease,
 
-        /// <summary>
-        /// Used when the action key is held
-        /// </summary>
-        OnHold,
+		/// <summary>
+		/// Used when the action key is held
+		/// </summary>
+		OnHold,
 
-        Always,
+		Always,
 
-        Retriggerable,
+		Retriggerable,
 
-        NoModifiers,
+		NoModifiers,
 
-        ConsoleCmd,
+		ConsoleCmd,
 
-        /// <summary>
-        /// Used when analog compare op succeeds
-        /// </summary>
-        AnalogCmd
-    }
+		/// <summary>
+		/// Used when analog compare op succeeds
+		/// </summary>
+		AnalogCmd
+	}
 }

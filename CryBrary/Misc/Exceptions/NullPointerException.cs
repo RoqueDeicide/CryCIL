@@ -5,20 +5,20 @@ using System.Text;
 
 namespace CryEngine
 {
-    public class NullPointerException : Exception
-    {
-        public NullPointerException()
-        {
-        }
+	public class NullPointerException : Exception
+	{
+		public NullPointerException()
+		{
+		}
 
-        public NullPointerException(string message)
-            : base(message)
-        {
-        }
+		public NullPointerException(string message)
+			: base(message)
+		{
+		}
 
-        public NullPointerException(string message, Exception inner)
-            : base(message, inner)
-        {
-        }
-    }
+		public NullPointerException(string message, Exception inner)
+			: base(message, inner)
+		{
+		}
+	}
 }

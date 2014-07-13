@@ -23,11 +23,10 @@ class CMonoFlowNode;
 struct SMonoNodeInfo
 {
 	SMonoNodeInfo(CMonoFlowNode *node, TFlowNodeId _id, TFlowGraphId _graphId)
-		: pNode(node)
+	: pNode(node)
 		, id(_id)
 		, graphId(_graphId)
-	{
-	}
+	{}
 
 	CMonoFlowNode *pNode;
 	TFlowNodeId id;
@@ -45,11 +44,11 @@ public:
 	// IFlowNodeFactory
 	virtual void AddRef() override { ++m_refs; }
 	// We want to manually kill this off, since it's used so often.
-	virtual void Release() override { if( 0 >= --m_refs) delete this; }
-	IFlowNodePtr Create( IFlowNode::SActivationInfo *pActInfo ) override;
+	virtual void Release() override { if (0 >= --m_refs) delete this; }
+	IFlowNodePtr Create(IFlowNode::SActivationInfo *pActInfo) override;
 
 	virtual void GetMemoryUsage(ICrySizer * s) const override
-	{ 
+	{
 		SIZER_SUBCOMPONENT_NAME(s, "CFlowManager");
 		s->Add(*this);
 	}
@@ -61,7 +60,7 @@ public:
 	virtual void OnPostScriptCompilation(bool isReload, bool compilationSuccess) {}
 
 	virtual void OnPreScriptReload(bool initialLoad) {}
-	virtual void OnPostScriptReload(bool initialLoad) { if(initialLoad) Reset(); }
+	virtual void OnPostScriptReload(bool initialLoad) { if (initialLoad) Reset(); }
 	// ~IMonoScriptSystemListener
 
 protected:

@@ -14,36 +14,37 @@ using CryEngine.Native;
 
 namespace CryEngine.Initialization
 {
-    public partial class ScriptReloadMessage : Form
-    {
-        public ScriptReloadMessage(Exception exception, bool canRevert)
-        {
-            InitializeComponent();
+	public partial class ScriptReloadMessage : Form
+	{
+		public ScriptReloadMessage(Exception exception, bool canRevert)
+		{
+			InitializeComponent();
 
-            tryAgainButton.Click += (s, a) =>
-                {
-                    Result = ScriptReloadResult.Retry;
-                    Close();
-                };
+			tryAgainButton.Click += (s, a) =>
+				{
+					Result = ScriptReloadResult.Retry;
+					Close();
+				};
 
-            revertButton.Click += (s, a) =>
-                {
-                    Result = ScriptReloadResult.Revert;
-                    Close();
-                };
+			revertButton.Click += (s, a) =>
+				{
+					Result = ScriptReloadResult.Revert;
+					Close();
+				};
 
-            exitButton.Click += (s, a) => 
-                {;
-                    Result = ScriptReloadResult.Abort;
-                    Close();
-                };
+			exitButton.Click += (s, a) =>
+				{
+					;
+					Result = ScriptReloadResult.Abort;
+					Close();
+				};
 
-            if (!canRevert)
-                revertButton.Enabled = false;
+			if (!canRevert)
+				revertButton.Enabled = false;
 
-            errorBox.Text = exception.ToString();
-        }
+			errorBox.Text = exception.ToString();
+		}
 
-        public ScriptReloadResult Result { get; set; }
-    }
+		public ScriptReloadResult Result { get; set; }
+	}
 }
