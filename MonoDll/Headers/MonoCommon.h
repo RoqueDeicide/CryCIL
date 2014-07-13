@@ -12,22 +12,6 @@
 #define __MONO_COMMON_H__
 
 #include <IMonoScriptSystem.h>
-#include <IMonoConverter.h>
-
-namespace mono 
-{
-	class _string; typedef _string* string; 
-	class _object; typedef _object* object;
-
-	struct entityId
-	{
-		entityId() : id(0) {}
-		entityId(EntityId Id) : id(Id) {}
-
-		EntityId id;
-	};
-};
-
 
 /// <summary>
 /// Converts a C++ string to the C# equivalent.
@@ -37,7 +21,7 @@ inline const char *ToCryString(mono::string monoString)
 	if(!monoString)
 		return "";
 
-	return GetMonoScriptSystem()->GetConverter()->ToString(monoString);
+	return GetMonoScriptSystem()->ToString(monoString);
 }
 
 /// <summary>
@@ -73,12 +57,12 @@ namespace mono
 	public:
 		operator IMonoObject *() const
 		{
-			return GetMonoScriptSystem()->GetConverter()->ToObject(const_cast<_object *>(this));
+			return GetMonoScriptSystem()->ToObject(const_cast<_object *>(this));
 		}
 
 		operator IMonoArray *() const
 		{
-			return GetMonoScriptSystem()->GetConverter()->ToArray(const_cast<_object *>(this));
+			return GetMonoScriptSystem()->ToArray(const_cast<_object *>(this));
 		}
 	};
 

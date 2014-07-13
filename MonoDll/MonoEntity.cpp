@@ -14,7 +14,6 @@
 #include <IMonoScriptSystem.h>
 #include <IMonoAssembly.h>
 #include <IMonoClass.h>
-#include <IMonoConverter.h>
 
 #include <MonoCommon.h>
 

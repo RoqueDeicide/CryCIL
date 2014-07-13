@@ -8,7 +8,6 @@
 ////////////////////////////////////////////////////////////////////////*/
 #pragma once
 
-#include <IMonoConverter.h>
 #include <MonoCommon.h>
 
 struct IMonoObject;
@@ -210,7 +209,7 @@ struct MonoAnyValue : public ISerializable
 
 				if(ser.IsWriting())
 				{
-					pArray = pScriptSystem->GetConverter()->ToArray(monoObject);
+					pArray = pScriptSystem->ToArray(monoObject);
 					arrayLength = pArray->GetSize();
 				}
 

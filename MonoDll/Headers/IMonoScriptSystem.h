@@ -22,6 +22,20 @@
 #define CRYMONO_LIBRARY "CryMono.dll"
 #endif
 
+namespace mono 
+{
+	class _string; typedef _string *string; 
+	class _object; typedef _object *object;
+
+	struct entityId
+	{
+		entityId() : id(0) {}
+		entityId(EntityId Id) : id(Id) {}
+
+		EntityId id;
+	};
+};
+
 struct IMonoScriptManager;
 
 struct IMonoObject;
@@ -31,7 +45,6 @@ struct IMonoAssembly;
 struct IMonoDomain;
 
 struct IMonoEntityManager;
-struct IMonoConverter;
 struct IMonoScriptEventListener;
 
 struct ICryScriptInstance;
@@ -158,14 +171,24 @@ struct IMonoScriptSystem
 	virtual IMonoDomain *GetScriptDomain() = 0;
 
 	/// <summary>
-	/// Retrieves an instance of the IMonoConverter; a class used to easily convert C# types to C++ and the other way around.
-	/// </summary>
-	virtual IMonoConverter *GetConverter() = 0;
-
-	/// <summary>
 	/// Call from IGame::RegisterGameFlownodes in order to have CryMono flow nodes appear in the Flowgraph Editor.
 	/// </summary>
 	virtual void RegisterFlownodes() = 0;
+
+	/// <summary>
+	/// Converts a mono string to a const char *.
+	/// </summary>
+	virtual const char *ToString(mono::string monoString) = 0;
+
+	/// <summary>
+	/// Converts a mono array to a IMonoArray. (To provide GetSize, GetItem etc functionality.)
+	/// </summary>
+	virtual IMonoArray *ToArray(mono::object arr) = 0;
+
+	/// <summary>
+	/// Converts an mono object to a IMonoObject.
+	/// </summary>
+	virtual IMonoObject *ToObject(mono::object obj, bool allowGC = true) = 0;
 
 #ifndef PLUGIN_SDK
 	/// <summary>
