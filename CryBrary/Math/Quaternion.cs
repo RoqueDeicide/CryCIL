@@ -969,7 +969,7 @@ namespace CryEngine
 		/// </summary>
 		public void Normalize()
 		{
-			float d = MathHelpers.ISqrt(W * W + V.X * V.X + V.Y * V.Y + V.Z * V.Z);
+			float d = MathHelpers.ReciprocalSquareRoot(W * W + V.X * V.X + V.Y * V.Y + V.Z * V.Z);
 			W *= d; V.X *= d; V.Y *= d; V.Z *= d;
 		}
 		/// <summary>
@@ -982,7 +982,7 @@ namespace CryEngine
 			float d = W * W + V.X * V.X + V.Y * V.Y + V.Z * V.Z;
 			if (d > 1e-8f)
 			{
-				d = MathHelpers.ISqrt(d);
+				d = MathHelpers.ReciprocalSquareRoot(d);
 				W *= d; V.X *= d; V.Y *= d; V.Z *= d;
 			}
 			else

@@ -75,7 +75,7 @@ namespace CryEngine
 				if (lengthSquared < 0.00001f * 0.00001f)
 					return;
 
-				lengthSquared = value * MathHelpers.ISqrt(lengthSquared);
+				lengthSquared = value * MathHelpers.ReciprocalSquareRoot(lengthSquared);
 				X *= lengthSquared;
 				Y *= lengthSquared;
 				Z *= lengthSquared;
@@ -118,7 +118,7 @@ namespace CryEngine
 		{
 			get
 			{
-				float fInvLen = MathHelpers.ISqrt(X * X + Y * Y + Z * Z);
+				float fInvLen = MathHelpers.ReciprocalSquareRoot(X * X + Y * Y + Z * Z);
 				return this * fInvLen;
 			}
 		}
@@ -690,7 +690,7 @@ namespace CryEngine
 		/// </summary>
 		public void Normalize()
 		{
-			float fInvLen = MathHelpers.ISqrt(X * X + Y * Y + Z * Z);
+			float fInvLen = MathHelpers.ReciprocalSquareRoot(X * X + Y * Y + Z * Z);
 			X *= fInvLen; Y *= fInvLen; Z *= fInvLen;
 		}
 		#endregion
@@ -803,7 +803,7 @@ namespace CryEngine
 			float sqrLength = LengthSquared;
 			if (sqrLength > (maxLength * maxLength))
 			{
-				var scale = maxLength * MathHelpers.ISqrt(sqrLength);
+				var scale = maxLength * MathHelpers.ReciprocalSquareRoot(sqrLength);
 				X *= scale;
 				Y *= scale;
 				Z *= scale;

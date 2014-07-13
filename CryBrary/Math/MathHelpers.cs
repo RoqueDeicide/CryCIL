@@ -53,12 +53,12 @@ namespace CryEngine
 			actual += delta * Min(Time.DeltaTime * speed, 1.0f);
 		}
 
-		public static double ISqrt(double d)
+		public static double ReciprocalSquareRoot(double d)
 		{
 			return 1.0 / Math.Sqrt(d);
 		}
 
-		public static float ISqrt(float d)
+		public static float ReciprocalSquareRoot(float d)
 		{
 			return (float)(1.0 / Math.Sqrt(d));
 		}
@@ -89,8 +89,7 @@ namespace CryEngine
 				return q.V * (float)angle;
 			}
 
-			// logarithm of a quaternion, imaginary part (the real
-			// part of the logarithm is always 0)
+			// logarithm of a quaternion, imaginary part (the real part of the logarithm is always 0)
 			return new Vector3(0);
 		}
 
@@ -188,8 +187,7 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// The value for which all absolute numbers smaller than are
-		/// considered equal to zero.
+		/// The value for which all absolute numbers smaller than are considered equal to zero.
 		/// </summary>
 		public const float ZeroTolerance = 1e-6f;
 		/// <summary>
