@@ -10,7 +10,7 @@ using CryEngine.Flowgraph.Native;
 
 namespace CryEngine.Flowgraph
 {
-	public abstract partial class FlowNode : CryScriptInstance
+	public abstract partial class FlowNode
 	{
 		internal static void Register(string typeName)
 		{

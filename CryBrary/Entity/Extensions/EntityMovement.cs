@@ -15,22 +15,22 @@
 
 	public struct PredictedCharacterStates
 	{
-		private object motionParameter;
-		private object motionParameterId;
-		private ushort numParams;
+		public object MotionParameter;
+		public object MotionParameterId;
+		public ushort NumParams;
 	}
 
 	public struct EntityMovementRequest
 	{
-		public EntityMoveType type;
+		public EntityMoveType Type;
 
-		public Vector3 velocity;
-		public Quaternion rotation;
+		public Vector3 Velocity;
+		public Quaternion Rotation;
 
-		public PredictedCharacterStates predictedCharacterStates;
+		public PredictedCharacterStates PredictedCharacterStates;
 
-		public bool allowStrafe;
-		public float proceduralLeaning;
-		public bool jumping;
+		public bool AllowStrafe;
+		public float ProceduralLeaning;
+		public bool Jumping;
 	}
 }

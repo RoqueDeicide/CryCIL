@@ -11,20 +11,22 @@ namespace CryEngine.Physics.Status
 	{
 		public static DynamicsPhysicsStatus Create()
 		{
-			var status = new DynamicsPhysicsStatus();
-
-			status.type = 8;
-
-			status.partid = UnusedMarker.Integer;
-			status.ipart = UnusedMarker.Integer;
+			var status = new DynamicsPhysicsStatus
+			{
+				type = 8,
+				partid = UnusedMarker.Integer,
+				ipart = UnusedMarker.Integer
+			};
 
 			return status;
 		}
 
+		// ReSharper disable NotAccessedField.Local
 		private int type;
 
 		private int partid;
 		private int ipart;
+		// ReSharper restore NotAccessedField.Local
 
 		private Vector3 v; // velocity
 		public Vector3 Velocity { get { return v; } }
@@ -53,8 +55,8 @@ namespace CryEngine.Physics.Status
 		private float mass;	// entity's or part's mass
 		public float Mass { get { return mass; } }
 
-		private float energy;	// kinetic energy; only supported by PE_ARTICULATED currently
-		private int nContacts;
-		private float time_interval; // not used
+		public float Energy;	// kinetic energy; only supported by PE_ARTICULATED currently
+		public int ContactsNumber;
+		public float TimeInterval; // not used
 	}
 }

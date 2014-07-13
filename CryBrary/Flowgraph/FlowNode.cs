@@ -31,11 +31,12 @@ namespace CryEngine.Flowgraph
 			{
 				var outputMember = registrationParams.OutputMembers[i];
 
-				Type type;
-				if (outputMember.MemberType == MemberTypes.Field)
-					type = (outputMember as FieldInfo).FieldType;
-				else
-					type = (outputMember as PropertyInfo).PropertyType;
+				Type type = outputMember.MemberType ==
+					MemberTypes.Field
+					?
+					((FieldInfo)outputMember).FieldType
+					:
+					((PropertyInfo)outputMember).PropertyType;
 
 				bool isGenericType = type.IsGenericType;
 				Type genericType = isGenericType ? type.GetGenericArguments()[0] : typeof(void);
@@ -94,7 +95,7 @@ namespace CryEngine.Flowgraph
 				if (paramType != valueType && paramType != typeof(object))
 				{
 					var typeConverter = TypeDescriptor.GetConverter(paramType);
-					if (typeConverter == null || !typeConverter.CanConvertFrom(valueType))
+					if (!typeConverter.CanConvertFrom(valueType))
 						return;
 
 					value = typeConverter.ConvertFrom(value);
@@ -117,8 +118,8 @@ namespace CryEngine.Flowgraph
 
 		/// <summary>
 		/// Called each frame if node has been set to be regularly updated (See <see
-		/// cref="ReceiveNodeUpdates" />) Preferred over <see cref="OnUpdate" /> due to supporting
-		/// <see cref="GetPortValue" /> within the update loop.
+		/// cref="ReceiveNodeUpdates" />) Preferred over <see cref="CryScriptInstance.OnUpdate" />
+		/// due to supporting <see cref="GetPortValue{T}" /> within the update loop.
 		/// </summary>
 		protected virtual void OnNodeUpdate() { }
 
@@ -165,16 +166,10 @@ namespace CryEngine.Flowgraph
 		public EntityBase TargetEntity { get; private set; }
 
 		#region Overrides
-		/// <summary>
-		/// Called each frame if script has been set to be regularly updated. (See <see
-		/// cref="CryScriptInstance.ReceiveUpdates" />)
-		/// Warning: FlowNode logic such as <see cref="GetPortValue" /> is not supported within this
-		///          update loop, see <see cref="OnNodeUpdate" />.
-		/// </summary>
-		public override void OnUpdate()
-		{
-			base.OnUpdate();
-		}
+		// / <summary> /// Called each frame if script has been set to be regularly updated. (See
+		// <see /// cref="CryScriptInstance.ReceiveUpdates" />) /// Warning: FlowNode logic such as
+		// <see cref="GetPortValue{T}" /> is not supported within /// this update loop, see <see
+		// cref="OnNodeUpdate" />. /// </summary> public override void OnUpdate() { base.OnUpdate(); }
 
 		public override int GetHashCode()
 		{

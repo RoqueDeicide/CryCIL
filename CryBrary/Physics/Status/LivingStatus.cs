@@ -11,14 +11,14 @@ namespace CryEngine.Physics.Status
 	{
 		public static LivingPhysicsStatus Create()
 		{
-			var status = new LivingPhysicsStatus();
-
-			status.type = 2;
+			var status = new LivingPhysicsStatus { type = 2 };
 
 			return status;
 		}
 
+		// ReSharper disable NotAccessedField.Local
 		private int type;
+		// ReSharper restore NotAccessedField.Local
 
 		/// <summary>
 		/// whether entity has no contact with ground
@@ -32,11 +32,11 @@ namespace CryEngine.Physics.Status
 		/// </summary>
 		public float FlyTime { get { return timeFlying; } }
 
-		private Vector3 camOffset; // camera offset
-		private Vector3 vel; // actual velocity (as rate of position change)
-		private Vector3 velUnconstrained; // 'physical' movement velocity
-		private Vector3 velRequested;    // velocity requested in the last action
-		private Vector3 velGround;
+		public Vector3 camOffset; // camera offset
+		public Vector3 vel; // actual velocity (as rate of position change)
+		public Vector3 velUnconstrained; // 'physical' movement velocity
+		public Vector3 velRequested;    // velocity requested in the last action
+		public Vector3 velGround;
 		/// <summary>
 		/// velocity of the object entity is standing on
 		/// </summary>
@@ -56,14 +56,14 @@ namespace CryEngine.Physics.Status
 
 		public SurfaceType GroundSurfaceType { get { return SurfaceType.Get(groundSurfaceIdx); } }
 
-		private int groundSurfaceIdxAux; // contact with the ground that also has default collision flags
-		private IntPtr pGroundCollider;    // only returns an actual entity if the ground collider is not static
-		private int iGroundColliderPart;
-		private float timeSinceStanceChange;
+		public int groundSurfaceIdxAux; // contact with the ground that also has default collision flags
+		public IntPtr pGroundCollider;    // only returns an actual entity if the ground collider is not static
+		public int iGroundColliderPart;
+		public float timeSinceStanceChange;
 		// int bOnStairs; // tries to detect repeated abrupt ground height changes
-		private int bStuck;    // tries to detect cases when the entity cannot move as before because of collisions
-		private IntPtr pLockStep; // internal timestepping lock
-		private int iCurTime; // quantised time
-		private int bSquashed; // entity is being pushed by heavy objects from opposite directions
+		public int bStuck;    // tries to detect cases when the entity cannot move as before because of collisions
+		public IntPtr pLockStep; // internal timestepping lock
+		public int iCurTime; // quantised time
+		public int bSquashed; // entity is being pushed by heavy objects from opposite directions
 	}
 }
