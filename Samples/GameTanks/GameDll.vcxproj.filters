@@ -1,0 +1,232 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Startup Files">
+      <UniqueIdentifier>{3cbf160f-3dbb-4162-af0d-e8159f9778ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EditorGame Files">
+      <UniqueIdentifier>{f10991c2-3a38-4825-bea0-f6bdaa2ca043}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Files">
+      <UniqueIdentifier>{574a7f99-de83-4932-bedd-832106cf565b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utility">
+      <UniqueIdentifier>{de414a49-1540-4c52-a90f-bbb6c2d13957}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameMechanismManager">
+      <UniqueIdentifier>{c9668f64-f47b-4b4b-b25a-9ac03bff4356}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameRules">
+      <UniqueIdentifier>{cac6e1d2-4b92-4e8c-b687-f82b3de968a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HUD">
+      <UniqueIdentifier>{3092d19b-4458-458f-a2a4-ba106e6fd2c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HUD\EventSystems">
+      <UniqueIdentifier>{bbb75a59-4a60-41f7-97b1-e2a4fc7fa3c3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GameDll.cpp">
+      <Filter>Startup Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameStartup.cpp">
+      <Filter>Startup Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EditorGame.cpp">
+      <Filter>EditorGame Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Game Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameActions.cpp">
+      <Filter>Game Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameCVars.cpp">
+      <Filter>Game Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFactory.cpp">
+      <Filter>Game Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ScriptControlledPhysics.cpp">
+      <Filter>Game Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SPAnalyst.cpp">
+      <Filter>Game Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AutoEnum.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\CryWatch.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="NetInputChainDebug.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="ScriptUtils.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\SingleAllocTextBlock.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="StatsAgent.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\StringUtils.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="GameRules.cpp">
+      <Filter>GameRules</Filter>
+    </ClCompile>
+    <ClCompile Include="GameMechanismManager\GameMechanismBase.cpp">
+      <Filter>GameMechanismManager</Filter>
+    </ClCompile>
+    <ClCompile Include="GameMechanismManager\GameMechanismManager.cpp">
+      <Filter>GameMechanismManager</Filter>
+    </ClCompile>
+    <ClCompile Include="StdAfx.cpp" />
+    <ClCompile Include="Utility\CryHash.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="HUD\UIManager.cpp">
+      <Filter>HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="HUD\WarningsManager.cpp">
+      <Filter>HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="HUD\UIDialogs.cpp">
+      <Filter>HUD\EventSystems</Filter>
+    </ClCompile>
+    <ClCompile Include="HUD\UIEntityDynTexTag.cpp">
+      <Filter>HUD\EventSystems</Filter>
+    </ClCompile>
+    <ClCompile Include="HUD\UIEntityTag.cpp">
+      <Filter>HUD\EventSystems</Filter>
+    </ClCompile>
+    <ClCompile Include="HUD\UIGameEvents.cpp">
+      <Filter>HUD\EventSystems</Filter>
+    </ClCompile>
+    <ClCompile Include="HUD\UIInput.cpp">
+      <Filter>HUD\EventSystems</Filter>
+    </ClCompile>
+    <ClCompile Include="HUD\UIMenuEvents.cpp">
+      <Filter>HUD\EventSystems</Filter>
+    </ClCompile>
+    <ClCompile Include="HUD\UIMultiPlayer.cpp">
+      <Filter>HUD\EventSystems</Filter>
+    </ClCompile>
+    <ClCompile Include="HUD\UISettings.cpp">
+      <Filter>HUD\EventSystems</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GameStartup.h">
+      <Filter>Startup Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EditorGame.h">
+      <Filter>EditorGame Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Game Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameActions.h">
+      <Filter>Game Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameCVars.h">
+      <Filter>Game Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFactory.h">
+      <Filter>Game Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ScriptControlledPhysics.h">
+      <Filter>Game Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SPAnalyst.h">
+      <Filter>Game Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AutoEnum.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\CryWatch.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="NetInputChainDebug.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="ScriptUtils.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\SingleAllocTextBlock.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="StatsAgent.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\StringUtils.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="GameRules.h">
+      <Filter>GameRules</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMechanismManager\GameMechanismBase.h">
+      <Filter>GameMechanismManager</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMechanismManager\GameMechanismEvents.h">
+      <Filter>GameMechanismManager</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMechanismManager\GameMechanismManager.h">
+      <Filter>GameMechanismManager</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="StdAfx.h" />
+    <ClInclude Include="ITelemetryCollector.h">
+      <Filter>Game Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\CryHash.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD\UIManager.h">
+      <Filter>HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD\WarningsManager.h">
+      <Filter>HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD\IUIGameEventSystem.h">
+      <Filter>HUD\EventSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD\UIDialogs.h">
+      <Filter>HUD\EventSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD\UIEntityDynTexTag.h">
+      <Filter>HUD\EventSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD\UIEntityTag.h">
+      <Filter>HUD\EventSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD\UIGameEvents.h">
+      <Filter>HUD\EventSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD\UIInput.h">
+      <Filter>HUD\EventSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD\UIMenuEvents.h">
+      <Filter>HUD\EventSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD\UIMultiPlayer.h">
+      <Filter>HUD\EventSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD\UISettings.h">
+      <Filter>HUD\EventSystems</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="GameActions.actions">
+      <Filter>Game Files</Filter>
+    </None>
+    <None Include="Crysis.ico" />
+    <None Include="..\Launcher\Cursor_White.cur" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GameDll.rc" />
+  </ItemGroup>
+</Project>
