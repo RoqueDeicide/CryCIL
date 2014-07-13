@@ -26,23 +26,23 @@ namespace CryEngine.Physics.Status
 		private int partid;
 		private int ipart;
 
-		private Vec3 v; // velocity
-		public Vec3 Velocity { get { return v; } }
+		private Vector3 v; // velocity
+		public Vector3 Velocity { get { return v; } }
 
-		private Vec3 w; // angular velocity
-		public Vec3 AngularVelocity { get { return w; } }
+		private Vector3 w; // angular velocity
+		public Vector3 AngularVelocity { get { return w; } }
 
-		private Vec3 a; // linear acceleration
-		public Vec3 Acceleration { get { return a; } }
+		private Vector3 a; // linear acceleration
+		public Vector3 Acceleration { get { return a; } }
 
-		private Vec3 wa; // angular acceleration
-		public Vec3 AngularAcceleration { get { return wa; } }
+		private Vector3 wa; // angular acceleration
+		public Vector3 AngularAcceleration { get { return wa; } }
 
-		private Vec3 centerOfMass;
+		private Vector3 centerOfMass;
 		/// <summary>
 		/// The center of mass / pivot point for this entity.
 		/// </summary>
-		public Vec3 CenterOfMass { get { return centerOfMass; } }
+		public Vector3 CenterOfMass { get { return centerOfMass; } }
 
 		private float submergedFraction; // percentage of the entity that is underwater; 0..1. not supported for individual parts
 		/// <summary>

@@ -22,7 +22,7 @@ namespace CryEngine
 
 		// Impulse params.
 		public float fExplodeImpulse;            // Outward impulse to apply.
-		public Vec3 vHitImpulse;                    // Hit impulse and center to apply.
-		public Vec3 vHitPoint;
+		public Vector3 vHitImpulse;                    // Hit impulse and center to apply.
+		public Vector3 vHitPoint;
 	}
 }

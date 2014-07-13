@@ -28,7 +28,7 @@ namespace CryEngine.Native
 		[MethodImplAttribute(MethodImplOptions.InternalCall)]
 		extern internal static bool SetGetMaterialParamFloat(IntPtr ptr, string paramName, ref float v, bool get);
 		[MethodImplAttribute(MethodImplOptions.InternalCall)]
-		extern internal static bool SetGetMaterialParamVec3(IntPtr ptr, string paramName, ref Vec3 v, bool get);
+		extern internal static bool SetGetMaterialParamVec3(IntPtr ptr, string paramName, ref Vector3 v, bool get);
 
 		[MethodImplAttribute(MethodImplOptions.InternalCall)]
 		extern internal static int GetShaderParamCount(IntPtr ptr);

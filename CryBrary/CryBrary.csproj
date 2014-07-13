@@ -71,6 +71,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>..\Build\Bin32\Plugins\CryMono\</OutputPath>
@@ -84,6 +85,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Profile|x86'">
     <OutputPath>..\Build\Bin32\Plugins\CryMono\</OutputPath>
@@ -209,11 +211,33 @@
     <Compile Include="Input\MouseEvent.cs" />
     <Compile Include="Input\MouseEventArgs.cs" />
     <Compile Include="Input\SerializableInput.cs" />
+    <Compile Include="Math\Angle.cs" />
+    <Compile Include="Math\BoundingBox.cs" />
+    <Compile Include="Math\BoundingSphere.cs" />
     <Compile Include="Math\Collision.cs" />
+    <Compile Include="Math\Column33.cs" />
+    <Compile Include="Math\Column34.cs" />
+    <Compile Include="Math\Column44.cs" />
+    <Compile Include="Math\Diagonal33.cs" />
+    <Compile Include="Math\EulerAngles.cs" />
+    <Compile Include="Math\Half.cs" />
+    <Compile Include="Math\HalfHelpers.cs" />
+    <Compile Include="Math\MathHelpers.cs" />
+    <Compile Include="Math\Matrix33.cs" />
+    <Compile Include="Math\Matrix34.cs" />
+    <Compile Include="Math\Matrix44.cs" />
     <Compile Include="Math\Plane.cs" />
     <Compile Include="Math\PlaneIntersectionType.cs" />
+    <Compile Include="Math\Quaternion.cs" />
+    <Compile Include="Math\QuaternionTranslation.cs" />
+    <Compile Include="Math\Ray.cs" />
+    <Compile Include="Math\UInt16Vector3.cs" />
+    <Compile Include="Math\Vector2.cs" />
+    <Compile Include="Math\Vector3.cs" />
+    <Compile Include="Math\Vector4.cs" />
     <Compile Include="Misc\AnimationEvent.cs" />
     <Compile Include="Misc\Exceptions\NullPointerException.cs" />
+    <Compile Include="Misc\IConvertibleTo.cs" />
     <Compile Include="Misc\TypeConverters\Color.cs" />
     <Compile Include="Physics\Actions\Impulse.cs" />
     <Compile Include="Physics\BreakageParameters.cs" />
@@ -246,8 +270,6 @@
     <Compile Include="Script Handling\Registration\FlowNode.cs" />
     <Compile Include="Script Handling\Registration\GameRules.cs" />
     <Compile Include="Script Handling\Exceptions\ScriptInstanceDestroyedException.cs" />
-    <Compile Include="Math\Angle.cs" />
-    <Compile Include="Math\QuatT.cs" />
     <Compile Include="Misc\Exceptions\MissingAttributeException.cs" />
     <Compile Include="Extensions\NativeHandleExtensions.cs" />
     <Compile Include="Network\Native\NativeNetworkMethods.cs" />
@@ -323,13 +345,7 @@
       <DependentUpon>ScriptReloadMessage.cs</DependentUpon>
     </Compile>
     <Compile Include="Serialization\CrySerializer.cs" />
-    <Compile Include="Math\BoundingBox.cs" />
-    <Compile Include="Math\BoundingSphere.cs" />
     <Compile Include="Misc\Color.cs" />
-    <Compile Include="Math\Matrix.cs" />
-    <Compile Include="Math\Ray.cs" />
-    <Compile Include="Math\Vec2.cs" />
-    <Compile Include="Math\Vec4.cs" />
     <Compile Include="Serialization\SerializedObjectReference.cs" />
     <Compile Include="Sound\Native\NativeSoundMethods.cs" />
     <Compile Include="Sound\Sound.cs" />
@@ -347,13 +363,11 @@
     <Compile Include="Testing\Results.cs" />
     <Compile Include="Testing\Manager.cs" />
     <Compile Include="Misc\Convert.cs" />
-    <Compile Include="Math\MathHelpers.cs" />
     <Compile Include="Physics\RaycastHit.cs" />
     <Compile Include="Engine\Renderer\Renderer.cs" />
     <Compile Include="Entity\Extensions\EntityMovement.cs" />
     <Compile Include="Misc\Game.cs" />
     <Compile Include="Input\Input.cs" />
-    <Compile Include="Math\Quat.cs" />
     <Compile Include="Entity\Interface.cs" />
     <Compile Include="Script Handling\ScriptInstance.cs" />
     <Compile Include="Attributes\CompilationAttributes.cs" />
@@ -370,7 +384,6 @@
     <Compile Include="GameRules\GameRules.cs" />
     <Compile Include="Misc\PointerWrapper.cs" />
     <Compile Include="Misc\Statistics.cs" />
-    <Compile Include="Math\Vec3.cs" />
     <Compile Include="Engine\CryPak\CryPak.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Script Handling\ScriptManager.cs" />

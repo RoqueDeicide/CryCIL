@@ -35,7 +35,7 @@ namespace CryEngine
 		/// <summary>
 		/// The center of the sphere in three dimensional space.
 		/// </summary>
-		public Vec3 Center;
+		public Vector3 Center;
 
 		/// <summary>
 		/// The radious of the sphere.
@@ -43,19 +43,22 @@ namespace CryEngine
 		public float Radius;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="CryEngine.BoundingBox" /> struct.
+		/// Initializes a new instance of the <see
+		/// cref="CryEngine.BoundingBox" /> struct.
 		/// </summary>
-		/// <param name="center">The center of the sphere in three dimensional space.</param>
+		/// <param name="center">
+		/// The center of the sphere in three dimensional space.
+		/// </param>
 		/// <param name="radius">The radius of the sphere.</param>
-		public BoundingSphere(Vec3 center, float radius)
+		public BoundingSphere(Vector3 center, float radius)
 		{
 			Center = center;
 			Radius = radius;
 		}
 
 		/// <summary>
-		/// Determines if there is an intersection between the current object and a <see
-		/// cref="CryEngine.Ray" />.
+		/// Determines if there is an intersection between the current
+		/// object and a <see cref="CryEngine.Ray" />.
 		/// </summary>
 		/// <param name="ray">The ray to test.</param>
 		/// <returns>Whether the two objects intersected.</returns>
@@ -66,13 +69,13 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines if there is an intersection between the current object and a <see
-		/// cref="CryEngine.Ray" />.
+		/// Determines if there is an intersection between the current
+		/// object and a <see cref="CryEngine.Ray" />.
 		/// </summary>
 		/// <param name="ray">The ray to test.</param>
 		/// <param name="distance">
-		/// When the method completes, contains the distance of the intersection, or 0 if there was
-		/// no intersection.
+		/// When the method completes, contains the distance of the
+		/// intersection, or 0 if there was no intersection.
 		/// </param>
 		/// <returns>Whether the two objects intersected.</returns>
 		public bool Intersects(ref Ray ray, out float distance)
@@ -81,23 +84,24 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines if there is an intersection between the current object and a <see
-		/// cref="CryEngine.Ray" />.
+		/// Determines if there is an intersection between the current
+		/// object and a <see cref="CryEngine.Ray" />.
 		/// </summary>
 		/// <param name="ray">The ray to test.</param>
 		/// <param name="point">
-		/// When the method completes, contains the point of intersection, or <see
-		/// cref="CryEngine.Vec3" /> if there was no intersection.
+		/// When the method completes, contains the point of
+		/// intersection, or <see cref="CryEngine.Vector3" /> if there
+		/// was no intersection.
 		/// </param>
 		/// <returns>Whether the two objects intersected.</returns>
-		public bool Intersects(ref Ray ray, out Vec3 point)
+		public bool Intersects(ref Ray ray, out Vector3 point)
 		{
 			return Collision.RayIntersectsSphere(ref ray, ref this, out point);
 		}
 
 		/// <summary>
-		/// Determines if there is an intersection between the current object and a <see
-		/// cref="CryEngine.Plane" />.
+		/// Determines if there is an intersection between the current
+		/// object and a <see cref="CryEngine.Plane" />.
 		/// </summary>
 		/// <param name="plane">The plane to test.</param>
 		/// <returns>Whether the two objects intersected.</returns>
@@ -107,20 +111,27 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines if there is an intersection between the current object and a triangle.
+		/// Determines if there is an intersection between the current
+		/// object and a triangle.
 		/// </summary>
-		/// <param name="vertex1">The first vertex of the triangle to test.</param>
-		/// <param name="vertex2">The second vertex of the triagnle to test.</param>
-		/// <param name="vertex3">The third vertex of the triangle to test.</param>
+		/// <param name="vertex1">
+		/// The first vertex of the triangle to test.
+		/// </param>
+		/// <param name="vertex2">
+		/// The second vertex of the triagnle to test.
+		/// </param>
+		/// <param name="vertex3">
+		/// The third vertex of the triangle to test.
+		/// </param>
 		/// <returns>Whether the two objects intersected.</returns>
-		public bool Intersects(ref Vec3 vertex1, ref Vec3 vertex2, ref Vec3 vertex3)
+		public bool Intersects(ref Vector3 vertex1, ref Vector3 vertex2, ref Vector3 vertex3)
 		{
 			return Collision.SphereIntersectsTriangle(ref this, ref vertex1, ref vertex2, ref vertex3);
 		}
 
 		/// <summary>
-		/// Determines if there is an intersection between the current object and a <see
-		/// cref="CryEngine.BoundingBox" />.
+		/// Determines if there is an intersection between the current
+		/// object and a <see cref="CryEngine.BoundingBox" />.
 		/// </summary>
 		/// <param name="box">The box to test.</param>
 		/// <returns>Whether the two objects intersected.</returns>
@@ -130,8 +141,8 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines if there is an intersection between the current object and a <see
-		/// cref="CryEngine.BoundingSphere" />.
+		/// Determines if there is an intersection between the current
+		/// object and a <see cref="CryEngine.BoundingSphere" />.
 		/// </summary>
 		/// <param name="sphere">The sphere to test.</param>
 		/// <returns>Whether the two objects intersected.</returns>
@@ -144,8 +155,10 @@ namespace CryEngine
 		/// Determines whether the current objects contains a point.
 		/// </summary>
 		/// <param name="point">The point to test.</param>
-		/// <returns>The type of containment the two objects have.</returns>
-		public bool Contains(ref Vec3 point)
+		/// <returns>
+		/// The type of containment the two objects have.
+		/// </returns>
+		public bool Contains(ref Vector3 point)
 		{
 			return Collision.SphereContainsPoint(ref this, ref point);
 		}
@@ -153,46 +166,64 @@ namespace CryEngine
 		/// <summary>
 		/// Determines whether the current objects contains a triangle.
 		/// </summary>
-		/// <param name="vertex1">The first vertex of the triangle to test.</param>
-		/// <param name="vertex2">The second vertex of the triagnle to test.</param>
-		/// <param name="vertex3">The third vertex of the triangle to test.</param>
-		/// <returns>The type of containment the two objects have.</returns>
-		public ContainmentType Contains(ref Vec3 vertex1, ref Vec3 vertex2, ref Vec3 vertex3)
+		/// <param name="vertex1">
+		/// The first vertex of the triangle to test.
+		/// </param>
+		/// <param name="vertex2">
+		/// The second vertex of the triagnle to test.
+		/// </param>
+		/// <param name="vertex3">
+		/// The third vertex of the triangle to test.
+		/// </param>
+		/// <returns>
+		/// The type of containment the two objects have.
+		/// </returns>
+		public ContainmentType Contains(ref Vector3 vertex1, ref Vector3 vertex2, ref Vector3 vertex3)
 		{
 			return Collision.SphereContainsTriangle(ref this, ref vertex1, ref vertex2, ref vertex3);
 		}
 
 		/// <summary>
-		/// Determines whether the current objects contains a <see cref="CryEngine.BoundingBox" />.
+		/// Determines whether the current objects contains a <see
+		/// cref="CryEngine.BoundingBox" />.
 		/// </summary>
 		/// <param name="box">The box to test.</param>
-		/// <returns>The type of containment the two objects have.</returns>
+		/// <returns>
+		/// The type of containment the two objects have.
+		/// </returns>
 		public ContainmentType Contains(ref BoundingBox box)
 		{
 			return Collision.SphereContainsBox(ref this, ref box);
 		}
 
 		/// <summary>
-		/// Determines whether the current objects contains a <see cref="CryEngine.BoundingSphere" />.
+		/// Determines whether the current objects contains a <see
+		/// cref="CryEngine.BoundingSphere" />.
 		/// </summary>
 		/// <param name="sphere">The sphere to test.</param>
-		/// <returns>The type of containment the two objects have.</returns>
+		/// <returns>
+		/// The type of containment the two objects have.
+		/// </returns>
 		public ContainmentType Contains(ref BoundingSphere sphere)
 		{
 			return Collision.SphereContainsSphere(ref this, ref sphere);
 		}
 
 		/// <summary>
-		/// Constructs a <see cref="CryEngine.BoundingSphere" /> that fully contains the given points.
+		/// Constructs a <see cref="CryEngine.BoundingSphere" /> that
+		/// fully contains the given points.
 		/// </summary>
-		/// <param name="points">The points that will be contained by the sphere.</param>
-		/// <param name="result">
-		/// When the method completes, contains the newly constructed bounding sphere.
+		/// <param name="points">
+		/// The points that will be contained by the sphere.
 		/// </param>
-		public static void FromPoints(Vec3[] points, out BoundingSphere result)
+		/// <param name="result">
+		/// When the method completes, contains the newly constructed
+		/// bounding sphere.
+		/// </param>
+		public static void FromPoints(Vector3[] points, out BoundingSphere result)
 		{
 			// Find the center of all points.
-			Vec3 center = Vec3.Zero;
+			Vector3 center = Vector3.Zero;
 			for (int i = 0; i < points.Length; ++i)
 			{
 				center += points[i];
@@ -205,8 +236,8 @@ namespace CryEngine
 			float radius = 0f;
 			for (int i = 0; i < points.Length; ++i)
 			{
-				// We are doing a relative distance comparasin to find the maximum distance from the
-				// center of our sphere.
+				// We are doing a relative distance comparasin to find
+				// the maximum distance from the center of our sphere.
 				float distance = center.GetDistanceSquared(points[i]);
 
 				if (distance > radius)
@@ -222,11 +253,14 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Constructs a <see cref="CryEngine.BoundingSphere" /> that fully contains the given points.
+		/// Constructs a <see cref="CryEngine.BoundingSphere" /> that
+		/// fully contains the given points.
 		/// </summary>
-		/// <param name="points">The points that will be contained by the sphere.</param>
+		/// <param name="points">
+		/// The points that will be contained by the sphere.
+		/// </param>
 		/// <returns>The newly constructed bounding sphere.</returns>
-		public static BoundingSphere FromPoints(Vec3[] points)
+		public static BoundingSphere FromPoints(Vector3[] points)
 		{
 			BoundingSphere result;
 			FromPoints(points, out result);
@@ -234,15 +268,18 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Constructs a <see cref="CryEngine.BoundingSphere" /> from a given box.
+		/// Constructs a <see cref="CryEngine.BoundingSphere" /> from
+		/// a given box.
 		/// </summary>
-		/// <param name="box">The box that will designate the extents of the sphere.</param>
+		/// <param name="box">
+		/// The box that will designate the extents of the sphere.
+		/// </param>
 		/// <param name="result">
 		/// When the method completes, the newly constructed bounding sphere.
 		/// </param>
 		public static void FromBox(ref BoundingBox box, out BoundingSphere result)
 		{
-			result.Center = Vec3.CreateLerp(box.Minimum, box.Maximum, 0.5f);
+			result.Center = Vector3.CreateLinearInterpolation(box.Minimum, box.Maximum, 0.5f);
 
 			float x = box.Minimum.X - box.Maximum.X;
 			float y = box.Minimum.Y - box.Maximum.Y;
@@ -253,9 +290,12 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Constructs a <see cref="CryEngine.BoundingSphere" /> from a given box.
+		/// Constructs a <see cref="CryEngine.BoundingSphere" /> from
+		/// a given box.
 		/// </summary>
-		/// <param name="box">The box that will designate the extents of the sphere.</param>
+		/// <param name="box">
+		/// The box that will designate the extents of the sphere.
+		/// </param>
 		/// <returns>The newly constructed bounding sphere.</returns>
 		public static BoundingSphere FromBox(BoundingBox box)
 		{
@@ -265,17 +305,19 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Constructs a <see cref="CryEngine.BoundingSphere" /> that is the as large as the total
-		/// combined area of the two specified spheres.
+		/// Constructs a <see cref="CryEngine.BoundingSphere" /> that
+		/// is the as large as the total combined area of the two
+		/// specified spheres.
 		/// </summary>
 		/// <param name="value1">The first sphere to merge.</param>
 		/// <param name="value2">The second sphere to merge.</param>
 		/// <param name="result">
-		/// When the method completes, contains the newly constructed bounding sphere.
+		/// When the method completes, contains the newly constructed
+		/// bounding sphere.
 		/// </param>
 		public static void Merge(ref BoundingSphere value1, ref BoundingSphere value2, out BoundingSphere result)
 		{
-			Vec3 difference = value2.Center - value1.Center;
+			Vector3 difference = value2.Center - value1.Center;
 
 			float length = difference.Length;
 			float radius = value1.Radius;
@@ -296,7 +338,7 @@ namespace CryEngine
 				}
 			}
 
-			Vec3 vector = difference * (1.0f / length);
+			Vector3 vector = difference * (1.0f / length);
 			float min = MathHelpers.Min(-radius, length - radius2);
 			float max = (MathHelpers.Max(radius, length + radius2) - min) * 0.5f;
 
@@ -305,8 +347,9 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Constructs a <see cref="CryEngine.BoundingSphere" /> that is the as large as the total
-		/// combined area of the two specified spheres.
+		/// Constructs a <see cref="CryEngine.BoundingSphere" /> that
+		/// is the as large as the total combined area of the two
+		/// specified spheres.
 		/// </summary>
 		/// <param name="value1">The first sphere to merge.</param>
 		/// <param name="value2">The second sphere to merge.</param>
@@ -324,8 +367,8 @@ namespace CryEngine
 		/// <param name="left">The first value to compare.</param>
 		/// <param name="right">The second value to compare.</param>
 		/// <returns>
-		/// <c>true</c> if <paramref name="left" /> has the same value as <paramref name="right" />;
-		/// otherwise, <c>false</c>.
+		/// <c>true</c> if <paramref name="left" /> has the same value
+		/// as <paramref name="right" />; otherwise, <c>false</c>.
 		/// </returns>
 		public static bool operator ==(BoundingSphere left, BoundingSphere right)
 		{
@@ -338,8 +381,8 @@ namespace CryEngine
 		/// <param name="left">The first value to compare.</param>
 		/// <param name="right">The second value to compare.</param>
 		/// <returns>
-		/// <c>true</c> if <paramref name="left" /> has a different value than <paramref
-		/// name="right" />; otherwise, <c>false</c>.
+		/// <c>true</c> if <paramref name="left" /> has a different
+		/// value than <paramref name="right" />; otherwise, <c>false</c>.
 		/// </returns>
 		public static bool operator !=(BoundingSphere left, BoundingSphere right)
 		{
@@ -347,19 +390,25 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Returns a <see cref="System.String" /> that represents this instance.
+		/// Returns a <see cref="System.String" /> that represents
+		/// this instance.
 		/// </summary>
-		/// <returns>A <see cref="System.String" /> that represents this instance.</returns>
+		/// <returns>
+		/// A <see cref="System.String" /> that represents this instance.
+		/// </returns>
 		public override string ToString()
 		{
 			return string.Format(CultureInfo.CurrentCulture, "Center:{0} Radius:{1}", Center.ToString(), Radius.ToString());
 		}
 
 		/// <summary>
-		/// Returns a <see cref="System.String" /> that represents this instance.
+		/// Returns a <see cref="System.String" /> that represents
+		/// this instance.
 		/// </summary>
 		/// <param name="format">The format.</param>
-		/// <returns>A <see cref="System.String" /> that represents this instance.</returns>
+		/// <returns>
+		/// A <see cref="System.String" /> that represents this instance.
+		/// </returns>
 		public string ToString(string format)
 		{
 			if (format == null)
@@ -369,21 +418,27 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Returns a <see cref="System.String" /> that represents this instance.
+		/// Returns a <see cref="System.String" /> that represents
+		/// this instance.
 		/// </summary>
 		/// <param name="formatProvider">The format provider.</param>
-		/// <returns>A <see cref="System.String" /> that represents this instance.</returns>
+		/// <returns>
+		/// A <see cref="System.String" /> that represents this instance.
+		/// </returns>
 		public string ToString(IFormatProvider formatProvider)
 		{
 			return string.Format(formatProvider, "Center:{0} Radius:{1}", Center.ToString(), Radius.ToString());
 		}
 
 		/// <summary>
-		/// Returns a <see cref="System.String" /> that represents this instance.
+		/// Returns a <see cref="System.String" /> that represents
+		/// this instance.
 		/// </summary>
 		/// <param name="format">The format.</param>
 		/// <param name="formatProvider">The format provider.</param>
-		/// <returns>A <see cref="System.String" /> that represents this instance.</returns>
+		/// <returns>
+		/// A <see cref="System.String" /> that represents this instance.
+		/// </returns>
 		public string ToString(string format, IFormatProvider formatProvider)
 		{
 			if (format == null)
@@ -396,8 +451,8 @@ namespace CryEngine
 		/// Returns a hash code for this instance.
 		/// </summary>
 		/// <returns>
-		/// A hash code for this instance, suitable for use in hashing algorithms and data
-		/// structures like a hash table.
+		/// A hash code for this instance, suitable for use in hashing
+		/// algorithms and data structures like a hash table.
 		/// </returns>
 		public override int GetHashCode()
 		{
@@ -414,14 +469,15 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines whether the specified <see cref="CryEngine.Vec4" /> is equal to this instance.
+		/// Determines whether the specified <see
+		/// cref="CryEngine.Vector4" /> is equal to this instance.
 		/// </summary>
 		/// <param name="value">
-		/// The <see cref="CryEngine.Vec4" /> to compare with this instance.
+		/// The <see cref="CryEngine.Vector4" /> to compare with this instance.
 		/// </param>
 		/// <returns>
-		/// <c>true</c> if the specified <see cref="CryEngine.Vec4" /> is equal to this instance;
-		/// otherwise, <c>false</c>.
+		/// <c>true</c> if the specified <see cref="CryEngine.Vector4"
+		/// /> is equal to this instance; otherwise, <c>false</c>.
 		/// </returns>
 		public bool Equals(BoundingSphere value)
 		{
@@ -429,12 +485,15 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
+		/// Determines whether the specified <see cref="System.Object"
+		/// /> is equal to this instance.
 		/// </summary>
-		/// <param name="value">The <see cref="System.Object" /> to compare with this instance.</param>
+		/// <param name="value">
+		/// The <see cref="System.Object" /> to compare with this instance.
+		/// </param>
 		/// <returns>
-		/// <c>true</c> if the specified <see cref="System.Object" /> is equal to this instance;
-		/// otherwise, <c>false</c>.
+		/// <c>true</c> if the specified <see cref="System.Object" />
+		/// is equal to this instance; otherwise, <c>false</c>.
 		/// </returns>
 		public override bool Equals(object value)
 		{
@@ -449,7 +508,8 @@ namespace CryEngine
 
 #if SlimDX1xInterop
         /// <summary>
-		/// Performs an implicit conversion from <see cref="CryEngine.BoundingSphere" /> to <see
+		/// Performs an implicit conversion from <see
+		/// cref="CryEngine.BoundingSphere" /> to <see
 		/// cref="SlimDX.BoundingSphere" />.
 		/// </summary>
 		/// <param name="value">The value.</param>
@@ -460,7 +520,8 @@ namespace CryEngine
         }
 
         /// <summary>
-		/// Performs an implicit conversion from <see cref="SlimDX.BoundingSphere" /> to <see
+		/// Performs an implicit conversion from <see
+		/// cref="SlimDX.BoundingSphere" /> to <see
 		/// cref="CryEngine.BoundingSphere" />.
 		/// </summary>
 		/// <param name="value">The value.</param>
@@ -473,7 +534,8 @@ namespace CryEngine
 
 #if SlimDX1xInterop
         /// <summary>
-		/// Performs an implicit conversion from <see cref="CryEngine.BoundingSphere" /> to <see
+		/// Performs an implicit conversion from <see
+		/// cref="CryEngine.BoundingSphere" /> to <see
 		/// cref="Microsoft.Xna.Framework.BoundingSphere" />.
 		/// </summary>
 		/// <param name="value">The value.</param>
@@ -484,8 +546,9 @@ namespace CryEngine
         }
 
         /// <summary>
-		/// Performs an implicit conversion from <see cref="Microsoft.Xna.Framework.BoundingSphere"
-		/// /> to <see cref="CryEngine.BoundingSphere" />.
+		/// Performs an implicit conversion from <see
+		/// cref="Microsoft.Xna.Framework.BoundingSphere" /> to <see
+		/// cref="CryEngine.BoundingSphere" />.
 		/// </summary>
 		/// <param name="value">The value.</param>
 		/// <returns>The result of the conversion.</returns>

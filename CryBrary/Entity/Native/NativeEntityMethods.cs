@@ -11,9 +11,9 @@ namespace CryEngine.Native
 		public string Name;
 		public string Class;
 
-		public Vec3 Pos;
-		public Quat Rot;
-		public Vec3 Scale;
+		public Vector3 Pos;
+		public Quaternion Rot;
+		public Vector3 Scale;
 
 		public EntityFlags Flags;
 	}
@@ -91,22 +91,22 @@ namespace CryEngine.Native
 		extern public static void SetSlotFlags(IntPtr ptr, int slot, EntitySlotFlags slotFlags);
 
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		extern public static void SetWorldPos(IntPtr ptr, Vec3 newPos);
+		extern public static void SetWorldPos(IntPtr ptr, Vector3 newPos);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		extern public static Vec3 GetWorldPos(IntPtr ptr);
+		extern public static Vector3 GetWorldPos(IntPtr ptr);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		extern public static void SetPos(IntPtr ptr, Vec3 newPos);
+		extern public static void SetPos(IntPtr ptr, Vector3 newPos);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		extern public static Vec3 GetPos(IntPtr ptr);
+		extern public static Vector3 GetPos(IntPtr ptr);
 
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		extern public static void SetWorldRotation(IntPtr ptr, Quat newAngles);
+		extern public static void SetWorldRotation(IntPtr ptr, Quaternion newAngles);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		extern public static Quat GetWorldRotation(IntPtr ptr);
+		extern public static Quaternion GetWorldRotation(IntPtr ptr);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		extern public static void SetRotation(IntPtr ptr, Quat newAngles);
+		extern public static void SetRotation(IntPtr ptr, Quaternion newAngles);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		extern public static Quat GetRotation(IntPtr ptr);
+		extern public static Quaternion GetRotation(IntPtr ptr);
 
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		extern public static void LoadObject(IntPtr ptr, string fileName, int slot);
@@ -117,7 +117,7 @@ namespace CryEngine.Native
 		extern public static void LoadCharacter(IntPtr ptr, string fileName, int slot);
 
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		extern public static IntPtr AddEntityLink(IntPtr entPtr, string linkName, EntityId otherId, EntityGUID otherGuid, Quat relativeRot, Vec3 relativePos);
+		extern public static IntPtr AddEntityLink(IntPtr entPtr, string linkName, EntityId otherId, EntityGUID otherGuid, Quaternion relativeRot, Vector3 relativePos);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		extern public static object[] GetEntityLinks(IntPtr entPtr);
 		[MethodImpl(MethodImplOptions.InternalCall)]
@@ -130,15 +130,15 @@ namespace CryEngine.Native
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		extern public static EntityId GetEntityLinkTarget(IntPtr linkPtr);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		extern public static Quat GetEntityLinkRelativeRotation(IntPtr linkPtr);
+		extern public static Quaternion GetEntityLinkRelativeRotation(IntPtr linkPtr);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		extern public static Vec3 GetEntityLinkRelativePosition(IntPtr linkPtr);
+		extern public static Vector3 GetEntityLinkRelativePosition(IntPtr linkPtr);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		extern public static void SetEntityLinkTarget(IntPtr linkPtr, EntityId target);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		extern public static void SetEntityLinkRelativeRotation(IntPtr linkPtr, Quat relRot);
+		extern public static void SetEntityLinkRelativeRotation(IntPtr linkPtr, Quaternion relRot);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		extern public static void SetEntityLinkRelativePosition(IntPtr linkPtr, Vec3 relPos);
+		extern public static void SetEntityLinkRelativePosition(IntPtr linkPtr, Vector3 relPos);
 
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		extern public static int LoadLight(IntPtr entPtr, int slot, LightParams lightParams);
@@ -160,19 +160,19 @@ namespace CryEngine.Native
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		extern public static IntPtr BindAttachmentToLight(IntPtr attachmentPtr, ref LightParams lightParams);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		extern public static IntPtr BindAttachmentToParticleEffect(IntPtr attachmentPtr, IntPtr particleEffectPtr, Vec3 offset, Vec3 dir, float scale);
+		extern public static IntPtr BindAttachmentToParticleEffect(IntPtr attachmentPtr, IntPtr particleEffectPtr, Vector3 offset, Vector3 dir, float scale);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		extern public static void ClearAttachmentBinding(IntPtr attachmentPtr);
 
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		extern public static QuatT GetAttachmentAbsolute(IntPtr attachmentPtr);
+		extern public static QuaternionTranslation GetAttachmentAbsolute(IntPtr attachmentPtr);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		extern public static QuatT GetAttachmentRelative(IntPtr attachmentPtr);
+		extern public static QuaternionTranslation GetAttachmentRelative(IntPtr attachmentPtr);
 
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		extern public static QuatT GetAttachmentDefaultAbsolute(IntPtr attachmentPtr);
+		extern public static QuaternionTranslation GetAttachmentDefaultAbsolute(IntPtr attachmentPtr);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		extern public static QuatT GetAttachmentDefaultRelative(IntPtr attachmentPtr);
+		extern public static QuaternionTranslation GetAttachmentDefaultRelative(IntPtr attachmentPtr);
 
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		extern public static IntPtr GetAttachmentMaterial(IntPtr attachmentPtr);
@@ -190,9 +190,9 @@ namespace CryEngine.Native
 		extern public static BoundingBox GetAttachmentObjectBBox(IntPtr attachmentPtr);
 
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		extern public static QuatT GetJointAbsolute(IntPtr entPtr, string jointName, int characterSlot);
+		extern public static QuaternionTranslation GetJointAbsolute(IntPtr entPtr, string jointName, int characterSlot);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		extern public static QuatT GetJointRelative(IntPtr entPtr, string jointName, int characterSlot);
+		extern public static QuaternionTranslation GetJointRelative(IntPtr entPtr, string jointName, int characterSlot);
 
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		extern public static void SetTriggerBBox(IntPtr entPtr, BoundingBox bounds);
@@ -244,14 +244,14 @@ namespace CryEngine.Native
 		extern public static IntPtr GetArea(int areaId);
 
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		extern public static object[] QueryAreas(EntityId id, Vec3 vPos, int maxResults, bool forceCalculation);
+		extern public static object[] QueryAreas(EntityId id, Vector3 vPos, int maxResults, bool forceCalculation);
 
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		extern public static int GetAreaEntityAmount(IntPtr pArea);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		extern public static EntityId GetAreaEntityByIdx(IntPtr pArea, int index);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		extern public static void GetAreaMinMax(IntPtr pArea, ref Vec3 min, ref Vec3 max);
+		extern public static void GetAreaMinMax(IntPtr pArea, ref Vector3 min, ref Vector3 max);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		extern public static int GetAreaPriority(IntPtr pArea);
 		// ~Area manager

@@ -111,7 +111,7 @@ namespace CryEngine
 		/// <param name="rot"></param>
 		/// <param name="scale"></param>
 		/// <returns></returns>
-		public static T Create<T>(int channelId, string name = "Dude", Vec3? pos = null, Quat? rot = null, Vec3? scale = null) where T : ActorBase, new()
+		public static T Create<T>(int channelId, string name = "Dude", Vector3? pos = null, Quaternion? rot = null, Vector3? scale = null) where T : ActorBase, new()
 		{
 			return CreateCommon<T>(typeof(T).Name, channelId, name, pos, rot, scale);
 		}
@@ -126,7 +126,7 @@ namespace CryEngine
 		/// <param name="rot"></param>
 		/// <param name="scale"></param>
 		/// <returns></returns>
-		public static ActorBase Create(Type actorType, int channelId, string name = "Dude", Vec3? pos = null, Quat? rot = null, Vec3? scale = null)
+		public static ActorBase Create(Type actorType, int channelId, string name = "Dude", Vector3? pos = null, Quaternion? rot = null, Vector3? scale = null)
 		{
 			return CreateCommon<ActorBase>(actorType.Name, channelId, name, pos, rot, scale);
 		}
@@ -141,18 +141,18 @@ namespace CryEngine
 		/// <param name="rot"></param>
 		/// <param name="scale"></param>
 		/// <returns></returns>
-		public static ActorBase Create(string className, int channelId, string name = "Dude", Vec3? pos = null, Quat? rot = null, Vec3? scale = null)
+		public static ActorBase Create(string className, int channelId, string name = "Dude", Vector3? pos = null, Quaternion? rot = null, Vector3? scale = null)
 		{
 			return CreateCommon<ActorBase>(className, channelId, name, pos, rot, scale);
 		}
 
-		internal static T CreateCommon<T>(string className, int channelId, string name = "Dude", Vec3? pos = null, Quat? rot = null, Vec3? scale = null) where T : ActorBase
+		internal static T CreateCommon<T>(string className, int channelId, string name = "Dude", Vector3? pos = null, Quaternion? rot = null, Vector3? scale = null) where T : ActorBase
 		{
 			var actor = Get<T>(channelId);
 			if (actor != null)
 				return actor;
 
-			var info = NativeActorMethods.CreateActor(channelId, name, className, pos ?? new Vec3(0, 0, 0), rot ?? Quat.Identity, scale ?? new Vec3(1, 1, 1));
+			var info = NativeActorMethods.CreateActor(channelId, name, className, pos ?? new Vector3(0, 0, 0), rot ?? Quaternion.Identity, scale ?? new Vector3(1, 1, 1));
 			if (info.Id == 0)
 				throw new Exception("Actor creation failed, make sure your IActor implementation is registered with the same name as your managed actor class.");
 

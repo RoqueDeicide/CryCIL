@@ -79,7 +79,7 @@ namespace CryEngine.Serialization
 					m_serializationType = SerializationType.MemberInfo;
 				else
 				{
-					if (m_value is Vec3 && UnusedMarker.IsUnused((Vec3)m_value))
+					if (m_value is Vector3 && UnusedMarker.IsUnused((Vector3)m_value))
 						m_serializationType = SerializationType.UnusedMarker;
 					else if (m_forbiddenTypes.Contains(valueType))
 						m_serializationType = SerializationType.Null;

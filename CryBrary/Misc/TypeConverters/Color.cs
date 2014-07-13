@@ -11,7 +11,7 @@ namespace CryEngine.Misc.TypeConverters
 	{
 		public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
 		{
-			if (sourceType == typeof(Vec3))
+			if (sourceType == typeof(Vector3))
 				return true;
 
 			return base.CanConvertFrom(context, sourceType);
@@ -19,7 +19,7 @@ namespace CryEngine.Misc.TypeConverters
 
 		public override bool CanConvertTo(ITypeDescriptorContext context, Type sourceType)
 		{
-			if (sourceType == typeof(Vec3))
+			if (sourceType == typeof(Vector3))
 				return true;
 
 			return base.CanConvertTo(context, sourceType);
@@ -27,16 +27,16 @@ namespace CryEngine.Misc.TypeConverters
 
 		public override object ConvertFrom(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value)
 		{
-			if (value is Vec3)
-				return new Color((Vec3)value);
+			if (value is Vector3)
+				return new Color((Vector3)value);
 
 			return base.ConvertFrom(context, culture, value);
 		}
 
 		public override object ConvertTo(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, Type destinationType)
 		{
-			if (destinationType == typeof(Vec3))
-				return (Vec3)(Color)value;
+			if (destinationType == typeof(Vector3))
+				return (Vector3)(Color)value;
 
 			return base.ConvertTo(context, culture, value, destinationType);
 		}

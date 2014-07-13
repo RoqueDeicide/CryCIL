@@ -13,7 +13,7 @@ namespace CryEngine
 		public string lightAttenMap;
 
 		public Color color;
-		public Vec3 origin;
+		public Vector3 origin;
 
 		public float shadowBias;
 		public float shadowSlopeBias;

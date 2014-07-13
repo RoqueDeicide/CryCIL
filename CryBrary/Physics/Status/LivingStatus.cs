@@ -32,15 +32,15 @@ namespace CryEngine.Physics.Status
 		/// </summary>
 		public float FlyTime { get { return timeFlying; } }
 
-		private Vec3 camOffset; // camera offset
-		private Vec3 vel; // actual velocity (as rate of position change)
-		private Vec3 velUnconstrained; // 'physical' movement velocity
-		private Vec3 velRequested;    // velocity requested in the last action
-		private Vec3 velGround;
+		private Vector3 camOffset; // camera offset
+		private Vector3 vel; // actual velocity (as rate of position change)
+		private Vector3 velUnconstrained; // 'physical' movement velocity
+		private Vector3 velRequested;    // velocity requested in the last action
+		private Vector3 velGround;
 		/// <summary>
 		/// velocity of the object entity is standing on
 		/// </summary>
-		public Vec3 GroundVelocity { get { return velGround; } }
+		public Vector3 GroundVelocity { get { return velGround; } }
 
 		private float groundHeight;
 		/// <summary>
@@ -48,8 +48,8 @@ namespace CryEngine.Physics.Status
 		/// </summary>
 		public float GroundHeight { get { return groundHeight; } }
 
-		private Vec3 groundSlope;
-		public Vec3 GroundNormal { get { return groundSlope; } }
+		private Vector3 groundSlope;
+		public Vector3 GroundNormal { get { return groundSlope; } }
 
 		private int groundSurfaceIdx;
 		public int GroundSurfaceId { get { return groundSurfaceIdx; } }

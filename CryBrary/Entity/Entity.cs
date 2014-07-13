@@ -103,7 +103,7 @@ namespace CryEngine
 		/// <summary>
 		/// Sent on entity collision.
 		/// </summary>
-		protected virtual void OnCollision(ColliderInfo source, ColliderInfo target, Vec3 hitPos, Vec3 contactNormal, float penetration, float radius) { }
+		protected virtual void OnCollision(ColliderInfo source, ColliderInfo target, Vector3 hitPos, Vector3 contactNormal, float penetration, float radius) { }
 
 		/// <summary>
 		/// Called when game is started (games may start multiple times)
@@ -277,7 +277,7 @@ namespace CryEngine
 					}
 				case EditorPropertyType.Color:
 					{
-						if (type == typeof(Vec3))
+						if (type == typeof(Vector3))
 							return propertyType;
 
 						throw new EntityException("Vector type was specified, but property was not a vector.");
@@ -293,7 +293,7 @@ namespace CryEngine
 				return EditorPropertyType.Float;
 			if (type == typeof(bool))
 				return EditorPropertyType.Bool;
-			if (type == typeof(Vec3))
+			if (type == typeof(Vector3))
 				return EditorPropertyType.Vec3;
 
 			throw new EntityException("Invalid property type specified.");

@@ -18,7 +18,7 @@ namespace CryEngine
 			dyn.kInertia = UnusedMarker.Float;
 			dyn.kInertiaAccel = UnusedMarker.Float;
 			dyn.kAirControl = UnusedMarker.Float;
-			dyn.gravity = UnusedMarker.Vec3;
+			dyn.gravity = UnusedMarker.Vector3;
 			dyn.nodSpeed = UnusedMarker.Float;
 			dyn.mass = UnusedMarker.Float;
 			dyn.bSwimming = UnusedMarker.Integer;
@@ -45,7 +45,7 @@ namespace CryEngine
 		public float kInertiaAccel; // inertia on acceleration
 		public float kAirControl; // air control koefficient 0..1, 1 - special value (total control of movement)
 		public float kAirResistance;    // standard air resistance
-		public Vec3 gravity; // gravity vector
+		public Vector3 gravity; // gravity vector
 		public float nodSpeed;    // vertical camera shake speed after landings
 		public int bSwimming; // whether entity is swimming (is not bound to ground plane)
 		public float mass;    // mass (in kg)

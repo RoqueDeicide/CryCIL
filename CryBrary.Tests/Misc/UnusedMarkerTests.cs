@@ -41,11 +41,11 @@ namespace CryBrary.Tests.Misc
 		[Test]
 		public void Vec3()
 		{
-			Vec3 vec3 = UnusedMarker.Vec3;
-			Assert.True(UnusedMarker.IsUnused(vec3));
+			Vector3 vector3 = UnusedMarker.Vector3;
+			Assert.True(UnusedMarker.IsUnused(vector3));
 
-			vec3 = new Vec3(0, 250, 3);
-			Assert.False(UnusedMarker.IsUnused(vec3));
+			vector3 = new Vector3(0, 250, 3);
+			Assert.False(UnusedMarker.IsUnused(vector3));
 		}
 	}
 }

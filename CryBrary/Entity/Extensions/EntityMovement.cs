@@ -24,8 +24,8 @@
 	{
 		public EntityMoveType type;
 
-		public Vec3 velocity;
-		public Quat rotation;
+		public Vector3 velocity;
+		public Quaternion rotation;
 
 		public PredictedCharacterStates predictedCharacterStates;
 

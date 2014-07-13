@@ -142,7 +142,7 @@ namespace CryEngine.Flowgraph
 				return (T)(object)NativeFlowNodeMethods.GetPortValueInt(Handle, GetInputPortId(port.Method));
 			if (type == typeof(float))
 				return (T)(object)NativeFlowNodeMethods.GetPortValueFloat(Handle, GetInputPortId(port.Method));
-			if (type == typeof(Vec3) || type == typeof(Color))
+			if (type == typeof(Vector3) || type == typeof(Color))
 				return (T)(object)NativeFlowNodeMethods.GetPortValueVec3(Handle, GetInputPortId(port.Method));
 			if (type == typeof(string))
 				return (T)(object)NativeFlowNodeMethods.GetPortValueString(Handle, GetInputPortId(port.Method));

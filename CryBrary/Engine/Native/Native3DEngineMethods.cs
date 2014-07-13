@@ -30,9 +30,9 @@ namespace CryEngine.Native
 		[MethodImplAttribute(MethodImplOptions.InternalCall)]
 		extern internal static void SetTimeOfDayVariableValue(int id, float value);
 		[MethodImplAttribute(MethodImplOptions.InternalCall)]
-		extern internal static void SetTimeOfDayVariableValueColor(int id, Vec3 value);
+		extern internal static void SetTimeOfDayVariableValueColor(int id, Vector3 value);
 
 		[MethodImplAttribute(MethodImplOptions.InternalCall)]
-		extern internal static void ActivatePortal(Vec3 pos, bool activate, string entityName);
+		extern internal static void ActivatePortal(Vector3 pos, bool activate, string entityName);
 	}
 }

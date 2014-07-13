@@ -75,31 +75,31 @@ namespace CryEngine.Utilities
 			return var == 1u << 31;
 		}
 
-		public static Vec3 Vec3
+		public static Vector3 Vector3
 		{
 			get
 			{
-				return new Vec3(Float);
+				return new Vector3(Float);
 			}
 		}
 
-		public static bool IsUnused(Vec3 var)
+		public static bool IsUnused(Vector3 var)
 		{
 			return IsUnused(var.X);
 		}
 
-		public static Quat Quat
+		public static Quaternion Quaternion
 		{
 			get
 			{
-				var q = new Quat();
+				var q = new Quaternion();
 
 				q.W = Float;
 				return q;
 			}
 		}
 
-		public static bool IsUnused(Quat var)
+		public static bool IsUnused(Quaternion var)
 		{
 			return IsUnused(var.W);
 		}

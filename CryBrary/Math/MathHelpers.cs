@@ -7,7 +7,7 @@ namespace CryEngine
 {
 	public static class MathHelpers
 	{
-		public static void Interpolate(ref Vec3 actual, Vec3 goal, float speed, float limit = 0)
+		public static void Interpolate(ref Vector3 actual, Vector3 goal, float speed, float limit = 0)
 		{
 			var delta = goal - actual;
 
@@ -25,7 +25,7 @@ namespace CryEngine
 			actual += delta * Min(Time.DeltaTime * speed, 1.0f);
 		}
 
-		public static void Interpolate(ref Vec2 actual, Vec2 goal, float speed, float limit = 0)
+		public static void Interpolate(ref Vector2 actual, Vector2 goal, float speed, float limit = 0)
 		{
 			var delta = goal - actual;
 
@@ -53,46 +53,6 @@ namespace CryEngine
 			actual += delta * Min(Time.DeltaTime * speed, 1.0f);
 		}
 
-		/// <summary>
-		/// Converts degrees to radians
-		/// </summary>
-		/// <param name="angle"></param>
-		/// <returns></returns>
-		public static double DegreesToRadians(double angle)
-		{
-			return Math.PI * angle / 180.0f;
-		}
-
-		/// <summary>
-		/// Converts degrees to radians
-		/// </summary>
-		/// <param name="angle"></param>
-		/// <returns></returns>
-		public static float DegreesToRadians(float angle)
-		{
-			return (float)Math.PI * angle / 180.0f;
-		}
-
-		/// <summary>
-		/// Converts radians to degrees
-		/// </summary>
-		/// <param name="angle"></param>
-		/// <returns></returns>
-		public static double RadiansToDegrees(double angle)
-		{
-			return angle * (180.0 / Math.PI);
-		}
-
-		/// <summary>
-		/// Converts radians to degrees
-		/// </summary>
-		/// <param name="angle"></param>
-		/// <returns></returns>
-		public static float RadiansToDegrees(float angle)
-		{
-			return (float)(angle * (180.0 / Math.PI));
-		}
-
 		public static double ISqrt(double d)
 		{
 			return 1.0 / Math.Sqrt(d);
@@ -117,7 +77,7 @@ namespace CryEngine
 			cosVal = (float)Math.Sqrt(1.0f - sinVal * sinVal);
 		}
 
-		public static Vec3 Log(Quat q)
+		public static Vector3 Log(Quaternion q)
 		{
 			var lensqr = q.V.LengthSquared;
 			if (lensqr > 0.0f)
@@ -129,11 +89,12 @@ namespace CryEngine
 				return q.V * (float)angle;
 			}
 
-			// logarithm of a quaternion, imaginary part (the real part of the logarithm is always 0)
-			return new Vec3(0);
+			// logarithm of a quaternion, imaginary part (the real
+			// part of the logarithm is always 0)
+			return new Vector3(0);
 		}
 
-		public static Quat Exp(Vec3 v)
+		public static Quaternion Exp(Vector3 v)
 		{
 			var lensqr = v.LengthSquared;
 			if (lensqr > 0.0f)
@@ -142,9 +103,9 @@ namespace CryEngine
 				float s, c;
 				SinCos(len, out s, out c);
 				s /= len;
-				return new Quat(c, v.X * s, v.Y * s, v.Z * s);
+				return new Quaternion(c, v.X * s, v.Y * s, v.Z * s);
 			}
-			return Quat.Identity;
+			return Quaternion.Identity;
 		}
 
 		/// <summary>
@@ -227,8 +188,13 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// The value for which all absolute numbers smaller than are considered equal to zero.
+		/// The value for which all absolute numbers smaller than are
+		/// considered equal to zero.
 		/// </summary>
 		public const float ZeroTolerance = 1e-6f;
+		/// <summary>
+		/// Doubled <see cref="Math.PI" />.
+		/// </summary>
+		public const double PI2 = 2 * Math.PI;
 	}
 }

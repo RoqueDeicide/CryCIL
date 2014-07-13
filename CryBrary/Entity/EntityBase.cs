@@ -48,22 +48,22 @@ namespace CryEngine
 		/// <summary>
 		/// Gets or sets the world space entity position.
 		/// </summary>
-		public Vec3 Position { get { return NativeEntityMethods.GetWorldPos(this.GetIEntity()); } set { NativeEntityMethods.SetWorldPos(this.GetIEntity(), value); } }
+		public Vector3 Position { get { return NativeEntityMethods.GetWorldPos(this.GetIEntity()); } set { NativeEntityMethods.SetWorldPos(this.GetIEntity(), value); } }
 
 		/// <summary>
 		/// Gets or sets the world space entity orientation quaternion.
 		/// </summary>
-		public Quat Rotation { get { return NativeEntityMethods.GetWorldRotation(this.GetIEntity()); } set { NativeEntityMethods.SetWorldRotation(this.GetIEntity(), value); } }
+		public Quaternion Rotation { get { return NativeEntityMethods.GetWorldRotation(this.GetIEntity()); } set { NativeEntityMethods.SetWorldRotation(this.GetIEntity(), value); } }
 
 		/// <summary>
 		/// Gets or sets the local space entity position.
 		/// </summary>
-		public Vec3 LocalPosition { get { return NativeEntityMethods.GetPos(this.GetIEntity()); } set { NativeEntityMethods.SetPos(this.GetIEntity(), value); } }
+		public Vector3 LocalPosition { get { return NativeEntityMethods.GetPos(this.GetIEntity()); } set { NativeEntityMethods.SetPos(this.GetIEntity(), value); } }
 
 		/// <summary>
 		/// Gets or sets the local space entity orientation quaternion.
 		/// </summary>
-		public Quat LocalRotation { get { return NativeEntityMethods.GetRotation(this.GetIEntity()); } set { NativeEntityMethods.SetRotation(this.GetIEntity(), value); } }
+		public Quaternion LocalRotation { get { return NativeEntityMethods.GetRotation(this.GetIEntity()); } set { NativeEntityMethods.SetRotation(this.GetIEntity(), value); } }
 
 		/// <summary>
 		/// Gets or sets the world space entity transformation matrix.
@@ -358,7 +358,7 @@ namespace CryEngine
 		/// <param name="jointName">Name of the joint</param>
 		/// <param name="characterSlot">Slot containing the character</param>
 		/// <returns>Absolute of the specified joint</returns>
-		public QuatT GetJointAbsolute(string jointName, int characterSlot = 0)
+		public QuaternionTranslation GetJointAbsolute(string jointName, int characterSlot = 0)
 		{
 			return NativeEntityMethods.GetJointAbsolute(this.GetIEntity(), jointName, characterSlot);
 		}
@@ -369,7 +369,7 @@ namespace CryEngine
 		/// <param name="jointName">Name of the joint</param>
 		/// <param name="characterSlot">Slot containing the character</param>
 		/// <returns>Relative of the specified joint</returns>
-		public QuatT GetJointRelative(string jointName, int characterSlot = 0)
+		public QuaternionTranslation GetJointRelative(string jointName, int characterSlot = 0)
 		{
 			return NativeEntityMethods.GetJointRelative(this.GetIEntity(), jointName, characterSlot);
 		}

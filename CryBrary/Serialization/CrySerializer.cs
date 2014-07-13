@@ -654,8 +654,8 @@ namespace CryEngine.Serialization
 				objReference.Value = UnusedMarker.UnsignedInteger;
 			else if (type == typeof(float))
 				objReference.Value = UnusedMarker.Float;
-			else if (type == typeof(Vec3))
-				objReference.Value = UnusedMarker.Vec3;
+			else if (type == typeof(Vector3))
+				objReference.Value = UnusedMarker.Vector3;
 		}
 
 		private void ReadType(ObjectReference objReference)
@@ -786,20 +786,20 @@ namespace CryEngine.Serialization
 				obj = (float)StartRead().Value;
 		}
 
-		public void Value(string name, ref Vec3 obj, string policy = null)
+		public void Value(string name, ref Vector3 obj, string policy = null)
 		{
 			if (IsWriting)
 				StartWrite(new ObjectReference(name, obj));
 			else
-				obj = (Vec3)StartRead().Value;
+				obj = (Vector3)StartRead().Value;
 		}
 
-		public void Value(string name, ref Quat obj, string policy = null)
+		public void Value(string name, ref Quaternion obj, string policy = null)
 		{
 			if (IsWriting)
 				StartWrite(new ObjectReference(name, obj));
 			else
-				obj = (Quat)StartRead().Value;
+				obj = (Quaternion)StartRead().Value;
 		}
 
 		public void EnumValue(string name, ref int obj, int first, int last)

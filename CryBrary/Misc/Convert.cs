@@ -29,7 +29,7 @@
 				case EditorPropertyType.Float:
 					return float.Parse(value);
 				case EditorPropertyType.Vec3:
-					return Vec3.Parse(value);
+					return Vector3.Parse(value);
 			}
 
 			return null;

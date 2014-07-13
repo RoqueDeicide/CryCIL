@@ -14,19 +14,19 @@ namespace CryEngine
 	public class Level
 	{
 		#region Statics
-		private static List<Level> levels = new List<Level>();
+		private static readonly List<Level> Levels = new List<Level>();
 
 		internal static Level TryGet(IntPtr ptr)
 		{
 			if (ptr == IntPtr.Zero)
 				return null;
 
-			var level = levels.FirstOrDefault(x => x.Handle == ptr);
+			var level = Levels.FirstOrDefault(x => x.Handle == ptr);
 			if (level != null)
 				return level;
 
 			level = new Level(ptr);
-			levels.Add(level);
+			Levels.Add(level);
 
 			return level;
 		}
@@ -81,7 +81,7 @@ namespace CryEngine
 		public string Path { get { return NativeLevelMethods.GetName(Handle); } }
 
 		/// <summary>
-		/// Gets the heightmap size for this level.
+		/// Gets the height map size for this level.
 		/// </summary>
 		public int HeightmapSize { get { return NativeLevelMethods.GetHeightmapSize(Handle); } }
 
@@ -91,7 +91,7 @@ namespace CryEngine
 		public int SupportedGamerules { get { return NativeLevelMethods.GetGameTypeCount(Handle); } }
 
 		/// <summary>
-		/// Gets the default gamemode for this level.
+		/// Gets the default game mode for this level.
 		/// </summary>
 		public string DefaultGameRules { get { return NativeLevelMethods.GetDefaultGameType(Handle); } }
 
@@ -105,7 +105,7 @@ namespace CryEngine
 		#region Overrides
 		public override bool Equals(object obj)
 		{
-			if (obj != null && obj is Level)
+			if (obj is Level)
 				return this == obj;
 
 			return false;

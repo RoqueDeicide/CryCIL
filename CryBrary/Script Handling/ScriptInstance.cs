@@ -83,8 +83,8 @@ namespace CryEngine
 		public bool IsDestroyed { get; private set; }
 
 		/// <summary>
-		/// Gets the instance script, set in <see cref="CryEngine.Initialization.ScriptManager.CreateScriptInstance(CryEngine.Initialization.CryScript,
-		/// object[], bool)" />.
+		/// Gets the instance script, set in <see
+		/// cref="ScriptManager.CreateScriptInstance(CryScript, object[], bool)" />.
 		/// </summary>
 		public CryScript Script { get; internal set; }
 

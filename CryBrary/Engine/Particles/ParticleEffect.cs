@@ -60,9 +60,9 @@ namespace CryEngine
 		/// <param name="pos">World location to place emitter at.</param>
 		/// <param name="dir">World rotation of emitter, set to Vec3.Up if null.</param>
 		/// <param name="scale">Scale of the emitter.</param>
-		public ParticleEmitter Spawn(Vec3 pos, Vec3? dir = null, float scale = 1f, bool independent = true)
+		public ParticleEmitter Spawn(Vector3 pos, Vector3? dir = null, float scale = 1f, bool independent = true)
 		{
-			return ParticleEmitter.TryGet(NativeParticleEffectMethods.Spawn(Handle, independent, pos, dir ?? Vec3.Up, scale));
+			return ParticleEmitter.TryGet(NativeParticleEffectMethods.Spawn(Handle, independent, pos, dir ?? Vector3.Up, scale));
 		}
 
 		public void Remove()

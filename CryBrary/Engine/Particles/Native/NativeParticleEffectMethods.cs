@@ -8,7 +8,7 @@ namespace CryEngine.Engine.Particles.Native
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		extern internal static IntPtr FindEffect(string effectName, bool loadResources);
 		[MethodImplAttribute(MethodImplOptions.InternalCall)]
-		extern internal static IntPtr Spawn(IntPtr ptr, bool independent, Vec3 pos, Vec3 dir, float scale);
+		extern internal static IntPtr Spawn(IntPtr ptr, bool independent, Vector3 pos, Vector3 dir, float scale);
 		[MethodImplAttribute(MethodImplOptions.InternalCall)]
 		extern internal static void Remove(IntPtr ptr);
 		[MethodImplAttribute(MethodImplOptions.InternalCall)]

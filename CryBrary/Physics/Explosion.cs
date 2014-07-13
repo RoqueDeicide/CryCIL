@@ -13,7 +13,7 @@ namespace CryEngine
 			explosion = new pe_explosion
 			{
 				rminOcc = 0.07f,
-				explDir = new Vec3(0, 0, 1)
+				explDir = new Vector3(0, 0, 1)
 			};
 		}
 
@@ -26,10 +26,10 @@ namespace CryEngine
 			affectedEnts = NativePhysicsMethods.SimulateExplosion(explosion);
 		}
 
-		public Vec3 Epicenter { get { return explosion.epicenter; } set { explosion.epicenter = value; } }
-		public Vec3 EpicenterImpulse { get { return explosion.epicenterImp; } set { explosion.epicenterImp = value; } }
+		public Vector3 Epicenter { get { return explosion.epicenter; } set { explosion.epicenter = value; } }
+		public Vector3 EpicenterImpulse { get { return explosion.epicenterImp; } set { explosion.epicenterImp = value; } }
 
-		public Vec3 Direction { get { return explosion.explDir; } set { explosion.explDir = value; } }
+		public Vector3 Direction { get { return explosion.explDir; } set { explosion.explDir = value; } }
 
 		public float Radius { get { return explosion.r; } set { explosion.r = value; } }
 		public float MinRadius { get { return explosion.rmin; } set { explosion.rmin = value; } }
@@ -58,8 +58,8 @@ namespace CryEngine
 
 	internal struct pe_explosion
 	{
-		public Vec3 epicenter;    // epicenter for the occlusion computation
-		public Vec3 epicenterImp; // epicenter for impulse computation
+		public Vector3 epicenter;    // epicenter for the occlusion computation
+		public Vector3 epicenterImp; // epicenter for impulse computation
 		// the impulse a surface fragment with area dS and normal n gets is:
 		// dS*k*n*max(0,n*dir_to_epicenter)/max(rmin, dist_to_epicenter)^2 k is selected in such way
 		// that at impulsivePressureAtR = k/r^2
@@ -69,7 +69,7 @@ namespace CryEngine
 		public int nGrow; // grow occlusion projections by this amount of cells to allow explosion to reach around corners a bit
 		public float rminOcc; // ignores geometry closer than this for occlusion computations
 		public float holeSize;    // explosion shape for iholeType will be scaled by this holeSize / shape's declared size
-		public Vec3 explDir;    // hit direction, for aligning the explosion boolean shape
+		public Vector3 explDir;    // hit direction, for aligning the explosion boolean shape
 		public int iholeType; // breakability index for the explosion (<0 disables)
 		public bool forceDeformEntities; // force deformation even if breakImpulseScale is zero
 		// filled as results

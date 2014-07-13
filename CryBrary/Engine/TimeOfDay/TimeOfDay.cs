@@ -130,7 +130,7 @@ namespace CryEngine
 			Native3DEngineMethods.SetTimeOfDayVariableValue((int)param, value);
 		}
 
-		public static void SetVariableValue(SkyParams param, Vec3 value)
+		public static void SetVariableValue(SkyParams param, Vector3 value)
 		{
 			Native3DEngineMethods.SetTimeOfDayVariableValueColor((int)param, value);
 		}
@@ -140,7 +140,7 @@ namespace CryEngine
 			Native3DEngineMethods.SetTimeOfDayVariableValue((int)param, value);
 		}
 
-		public static void SetVariableValue(FogParams param, Vec3 value)
+		public static void SetVariableValue(FogParams param, Vector3 value)
 		{
 			Native3DEngineMethods.SetTimeOfDayVariableValueColor((int)param, value);
 		}
@@ -150,7 +150,7 @@ namespace CryEngine
 			Native3DEngineMethods.SetTimeOfDayVariableValue((int)param, value);
 		}
 
-		public static void SetVariableValue(SkyLightParams param, Vec3 value)
+		public static void SetVariableValue(SkyLightParams param, Vector3 value)
 		{
 			Native3DEngineMethods.SetTimeOfDayVariableValueColor((int)param, value);
 		}
@@ -160,7 +160,7 @@ namespace CryEngine
 			Native3DEngineMethods.SetTimeOfDayVariableValue((int)param, value);
 		}
 
-		public static void SetVariableValue(NightSkyParams param, Vec3 value)
+		public static void SetVariableValue(NightSkyParams param, Vector3 value)
 		{
 			Native3DEngineMethods.SetTimeOfDayVariableValueColor((int)param, value);
 		}
@@ -170,7 +170,7 @@ namespace CryEngine
 			Native3DEngineMethods.SetTimeOfDayVariableValue((int)param, value);
 		}
 
-		public static void SetVariableValue(CloudShadingParams param, Vec3 value)
+		public static void SetVariableValue(CloudShadingParams param, Vector3 value)
 		{
 			Native3DEngineMethods.SetTimeOfDayVariableValueColor((int)param, value);
 		}
@@ -180,7 +180,7 @@ namespace CryEngine
 			Native3DEngineMethods.SetTimeOfDayVariableValue((int)param, value);
 		}
 
-		public static void SetVariableValue(SunRaysEffectParams param, Vec3 value)
+		public static void SetVariableValue(SunRaysEffectParams param, Vector3 value)
 		{
 			Native3DEngineMethods.SetTimeOfDayVariableValueColor((int)param, value);
 		}
@@ -190,7 +190,7 @@ namespace CryEngine
 			Native3DEngineMethods.SetTimeOfDayVariableValue((int)param, value);
 		}
 
-		public static void SetVariableValue(ColorGradingParams param, Vec3 value)
+		public static void SetVariableValue(ColorGradingParams param, Vector3 value)
 		{
 			Native3DEngineMethods.SetTimeOfDayVariableValueColor((int)param, value);
 		}
@@ -200,7 +200,7 @@ namespace CryEngine
 			Native3DEngineMethods.SetTimeOfDayVariableValue((int)param, value);
 		}
 
-		public static void SetVariableValue(ShadowParams param, Vec3 value)
+		public static void SetVariableValue(ShadowParams param, Vector3 value)
 		{
 			Native3DEngineMethods.SetTimeOfDayVariableValueColor((int)param, value);
 		}
@@ -210,7 +210,7 @@ namespace CryEngine
 			Native3DEngineMethods.SetTimeOfDayVariableValue((int)param, value);
 		}
 
-		public static void SetVariableValue(HDRParams param, Vec3 value)
+		public static void SetVariableValue(HDRParams param, Vector3 value)
 		{
 			Native3DEngineMethods.SetTimeOfDayVariableValueColor((int)param, value);
 		}

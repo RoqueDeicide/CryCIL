@@ -48,7 +48,7 @@ namespace CryEngine.Flowgraph
 			NativeFlowNodeMethods.ActivateOutputBool(ParentNodePointer, PortId, value);
 		}
 
-		public void Activate(Vec3 value)
+		public void Activate(Vector3 value)
 		{
 			NativeFlowNodeMethods.ActivateOutputVec3(ParentNodePointer, PortId, value);
 		}
@@ -65,8 +65,8 @@ namespace CryEngine.Flowgraph
 				NativeFlowNodeMethods.ActivateOutputString(ParentNodePointer, PortId, System.Convert.ToString(value));
 			else if (value is bool)
 				NativeFlowNodeMethods.ActivateOutputBool(ParentNodePointer, PortId, System.Convert.ToBoolean(value));
-			else if (value is Vec3)
-				NativeFlowNodeMethods.ActivateOutputVec3(ParentNodePointer, PortId, (Vec3)(object)value);
+			else if (value is Vector3)
+				NativeFlowNodeMethods.ActivateOutputVec3(ParentNodePointer, PortId, (Vector3)(object)value);
 			else
 				throw new ArgumentException("Attempted to activate output with invalid value type!");
 		}
@@ -107,8 +107,8 @@ namespace CryEngine.Flowgraph
 				NativeFlowNodeMethods.ActivateOutputString(ParentNodePointer, PortId, System.Convert.ToString(value));
 			else if (value is bool)
 				NativeFlowNodeMethods.ActivateOutputBool(ParentNodePointer, PortId, System.Convert.ToBoolean(value));
-			else if (value is Vec3)
-				NativeFlowNodeMethods.ActivateOutputVec3(ParentNodePointer, PortId, (Vec3)(object)value);
+			else if (value is Vector3)
+				NativeFlowNodeMethods.ActivateOutputVec3(ParentNodePointer, PortId, (Vector3)(object)value);
 			else
 				throw new ArgumentException("Attempted to activate output with invalid value type!");
 		}

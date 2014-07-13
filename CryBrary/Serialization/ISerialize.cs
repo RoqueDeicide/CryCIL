@@ -17,8 +17,8 @@ namespace CryEngine.Serialization
 		void Value(string name, ref bool obj, string policy = null);
 		void Value(string name, ref EntityId obj, string policy = null);
 		void Value(string name, ref float obj, string policy = null);
-		void Value(string name, ref Vec3 obj, string policy = null);
-		void Value(string name, ref Quat obj, string policy = null);
+		void Value(string name, ref Vector3 obj, string policy = null);
+		void Value(string name, ref Quaternion obj, string policy = null);
 		void EnumValue(string name, ref int obj, int first, int last);
 		void EnumValue(string name, ref uint obj, uint first, uint last);
 

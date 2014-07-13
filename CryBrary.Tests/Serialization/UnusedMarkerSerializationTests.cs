@@ -63,10 +63,10 @@ namespace CryBrary.Tests.Serialization
 			{
 				var serializer = new CrySerializer();
 
-				var unused = UnusedMarker.Vec3;
+				var unused = UnusedMarker.Vector3;
 				serializer.Serialize(stream, unused);
 
-				unused = (Vec3)serializer.Deserialize(stream);
+				unused = (Vector3)serializer.Deserialize(stream);
 				Assert.True(UnusedMarker.IsUnused(unused));
 			}
 		}

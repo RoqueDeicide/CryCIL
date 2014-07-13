@@ -11,7 +11,7 @@ namespace CryEngine.Native
 		extern internal static int GetHeight();
 
 		[MethodImplAttribute(MethodImplOptions.InternalCall)]
-		extern internal static Vec3 ScreenToWorld(int x, int y);
+		extern internal static Vector3 ScreenToWorld(int x, int y);
 		[MethodImplAttribute(MethodImplOptions.InternalCall)]
 		extern internal static int UnProjectFromScreen(float sx, float sy, float sz, out float px, out float py, out float pz);
 
@@ -39,9 +39,9 @@ namespace CryEngine.Native
 		extern internal static Matrix34 GetCameraMatrix(IntPtr cameraPtr);
 
 		[MethodImplAttribute(MethodImplOptions.InternalCall)]
-		extern internal static void SetCameraPosition(IntPtr cameraPtr, Vec3 pos);
+		extern internal static void SetCameraPosition(IntPtr cameraPtr, Vector3 pos);
 		[MethodImplAttribute(MethodImplOptions.InternalCall)]
-		extern internal static Vec3 GetCameraPosition(IntPtr cameraPtr);
+		extern internal static Vector3 GetCameraPosition(IntPtr cameraPtr);
 
 		[MethodImplAttribute(MethodImplOptions.InternalCall)]
 		extern internal static float GetCameraFieldOfView(IntPtr cameraPtr);

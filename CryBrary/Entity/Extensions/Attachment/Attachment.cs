@@ -61,7 +61,7 @@ namespace CryEngine
 			NativeEntityMethods.BindAttachmentToLight(Handle, ref lightParams);
 		}
 
-		public void SwitchToParticleEffectObject(ParticleEffect effect, Vec3 offset, Vec3 dir, float scale)
+		public void SwitchToParticleEffectObject(ParticleEffect effect, Vector3 offset, Vector3 dir, float scale)
 		{
 			NativeEntityMethods.BindAttachmentToParticleEffect(Handle, effect.Handle, offset, dir, scale);
 		}
@@ -71,13 +71,13 @@ namespace CryEngine
 			NativeEntityMethods.ClearAttachmentBinding(Handle);
 		}
 
-		public QuatT Absolute { get { return NativeEntityMethods.GetAttachmentAbsolute(Handle); } }
+		public QuaternionTranslation Absolute { get { return NativeEntityMethods.GetAttachmentAbsolute(Handle); } }
 
-		public QuatT Relative { get { return NativeEntityMethods.GetAttachmentRelative(Handle); } }
+		public QuaternionTranslation Relative { get { return NativeEntityMethods.GetAttachmentRelative(Handle); } }
 
-		public QuatT DefaultAbsolute { get { return NativeEntityMethods.GetAttachmentDefaultAbsolute(Handle); } }
+		public QuaternionTranslation DefaultAbsolute { get { return NativeEntityMethods.GetAttachmentDefaultAbsolute(Handle); } }
 
-		public QuatT DefaultRelative { get { return NativeEntityMethods.GetAttachmentDefaultRelative(Handle); } }
+		public QuaternionTranslation DefaultRelative { get { return NativeEntityMethods.GetAttachmentDefaultRelative(Handle); } }
 
 		public string Name { get { return NativeEntityMethods.GetAttachmentName(Handle); } }
 

@@ -30,7 +30,7 @@ namespace CryEngine.Flowgraph.Native
 		[MethodImplAttribute(MethodImplOptions.InternalCall)]
 		extern internal static void ActivateOutputBool(IntPtr nodePtr, int port, bool value);
 		[MethodImplAttribute(MethodImplOptions.InternalCall)]
-		extern internal static void ActivateOutputVec3(IntPtr nodePtr, int port, Vec3 value);
+		extern internal static void ActivateOutputVec3(IntPtr nodePtr, int port, Vector3 value);
 
 		[MethodImplAttribute(MethodImplOptions.InternalCall)]
 		extern internal static int GetPortValueInt(IntPtr nodePtr, int port);
@@ -43,7 +43,7 @@ namespace CryEngine.Flowgraph.Native
 		[MethodImplAttribute(MethodImplOptions.InternalCall)]
 		extern internal static bool GetPortValueBool(IntPtr nodePtr, int port);
 		[MethodImplAttribute(MethodImplOptions.InternalCall)]
-		extern internal static Vec3 GetPortValueVec3(IntPtr nodePtr, int port);
+		extern internal static Vector3 GetPortValueVec3(IntPtr nodePtr, int port);
 
 		[MethodImplAttribute(MethodImplOptions.InternalCall)]
 		extern internal static bool IsOutputConnected(IntPtr nodePtr, int port);

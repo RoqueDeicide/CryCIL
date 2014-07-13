@@ -16,7 +16,7 @@ namespace CryEngine
 			simParams.type = 10;
 
 			simParams.maxTimeStep = UnusedMarker.Float;
-			simParams.gravity = UnusedMarker.Vec3;
+			simParams.gravity = UnusedMarker.Vector3;
 			simParams.minEnergy = UnusedMarker.Float;
 			simParams.damping = UnusedMarker.Float;
 			simParams.iSimClass = UnusedMarker.Integer;
@@ -38,9 +38,9 @@ namespace CryEngine
 		public float maxTimeStep; // maximum time step that entity can accept (larger steps will be split)
 		public float minEnergy; // minimun of kinetic energy below which entity falls asleep (divided by mass)
 		public float damping; // damped velocity = oridinal velocity * (1 - damping*time interval)
-		public Vec3 gravity;	// per-entity gravity (note that if there are any phys areas with gravity, they will override it unless pef_ignore_areas is set
+		public Vector3 gravity;	// per-entity gravity (note that if there are any phys areas with gravity, they will override it unless pef_ignore_areas is set
 		public float dampingFreefall; // damping and gravity used when there are no collisions,
-		public Vec3 gravityFreefall; // NOTE: if left unused, gravity value will be substituted (if provided)
+		public Vector3 gravityFreefall; // NOTE: if left unused, gravity value will be substituted (if provided)
 		public float maxRotVel; // rotational velocity is clamped to this value
 		public float mass;	// either mass of density should be set; mass = density*volume
 		public float density;

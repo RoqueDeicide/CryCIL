@@ -305,10 +305,10 @@ namespace CryBrary.Tests.Serialization
 				IntegerProperty = 13;
 				StringProperty = "TestString";
 
-				Vec3Property = new CryEngine.Vec3(1, 2, 3);
+				this.Vector3Property = new CryEngine.Vector3(1, 2, 3);
 			}
 
-			public CryEngine.Vec3 Vec3Property { get; set; }
+			public CryEngine.Vector3 Vector3Property { get; set; }
 		}
 
 		[Test]
@@ -328,7 +328,7 @@ namespace CryBrary.Tests.Serialization
 				Assert.True(inheritClass.BooleanProperty);
 				Assert.AreEqual(13, inheritClass.IntegerProperty);
 				Assert.AreEqual("TestString", inheritClass.StringProperty);
-				Assert.AreEqual(new CryEngine.Vec3(1, 2, 3), inheritClass.Vec3Property);
+				Assert.AreEqual(new CryEngine.Vector3(1, 2, 3), inheritClass.Vector3Property);
 			}
 		}
 

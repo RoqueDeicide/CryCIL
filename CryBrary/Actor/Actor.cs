@@ -67,7 +67,7 @@ namespace CryEngine
 		/// <summary>
 		/// Sent on entity collision.
 		/// </summary>
-		protected virtual void OnCollision(ColliderInfo source, ColliderInfo target, Vec3 hitPos, Vec3 contactNormal, float penetration, float radius) { }
+		protected virtual void OnCollision(ColliderInfo source, ColliderInfo target, Vector3 hitPos, Vector3 contactNormal, float penetration, float radius) { }
 
 		/// <summary>
 		/// Called when game is started (games may start multiple times)

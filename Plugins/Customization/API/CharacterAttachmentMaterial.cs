@@ -64,7 +64,7 @@ namespace CryEngine.CharacterCustomization
 			}
 
 			var diffuseElement = element.Element("Diffuse");
-			DiffuseColor = UnusedMarker.Vec3;
+			DiffuseColor = UnusedMarker.Vector3;
 
 			if (diffuseElement != null)
 			{
@@ -78,7 +78,7 @@ namespace CryEngine.CharacterCustomization
 			}
 
 			var specularElement = element.Element("Specular");
-			SpecularColor = UnusedMarker.Vec3;
+			SpecularColor = UnusedMarker.Vector3;
 
 			if (specularElement != null)
 			{
@@ -108,11 +108,11 @@ namespace CryEngine.CharacterCustomization
 			}
 		}
 
-		private Vec3 ParseColor(string colorString)
+		private Vector3 ParseColor(string colorString)
 		{
-			Vec3 color = Vec3.Parse(colorString);
+			Vector3 color = Vector3.Parse(colorString);
 
-			return new Vec3((float)Math.Pow(color.X / 255, 2.2), (float)Math.Pow(color.Y / 255, 2.2), (float)Math.Pow(color.Z / 255, 2.2));
+			return new Vector3((float)Math.Pow(color.X / 255, 2.2), (float)Math.Pow(color.Y / 255, 2.2), (float)Math.Pow(color.Z / 255, 2.2));
 		}
 
 		private bool UpdateMaterialElement(XElement materialElement, CharacterAttachmentMaterial material)
@@ -253,18 +253,18 @@ namespace CryEngine.CharacterCustomization
 			return true;
 		}
 
-		public Vec3 ColorRed { get; set; }
-		public Vec3 ColorGreen { get; set; }
-		public Vec3 ColorBlue { get; set; }
-		public Vec3 ColorAlpha { get; set; }
+		public Vector3 ColorRed { get; set; }
+		public Vector3 ColorGreen { get; set; }
+		public Vector3 ColorBlue { get; set; }
+		public Vector3 ColorAlpha { get; set; }
 
 		public string DiffuseTexture { get; set; }
 		public string SpecularTexture { get; set; }
 		public string BumpmapTexture { get; set; }
 		public string CustomTexture { get; set; }
 
-		public Vec3 DiffuseColor { get; set; }
-		public Vec3 SpecularColor { get; set; }
+		public Vector3 DiffuseColor { get; set; }
+		public Vector3 SpecularColor { get; set; }
 
 		/// <summary>
 		/// Path to the mtl file.

@@ -8,13 +8,11 @@ using CryEngine.Native;
 namespace CryEngine
 {
 	/// <summary>
-	/// Represents a CryENGINE material applicable to any ingame object or entity.
+	/// Represents a CryENGINE material applicable to any in-game object or entity.
 	/// </summary>
 	public class Material
 	{
-		private static List<Material> materials = new List<Material>();
-
-		private Material() { }
+		private static readonly List<Material> Materials = new List<Material>();
 
 		internal Material(IntPtr ptr)
 		{
@@ -129,12 +127,12 @@ namespace CryEngine
 			if (ptr == IntPtr.Zero)
 				return null;
 
-			var mat = materials.FirstOrDefault(x => x.Handle == ptr);
+			var mat = Materials.FirstOrDefault(x => x.Handle == ptr);
 			if (mat != null)
 				return mat;
 
 			mat = new Material(ptr);
-			materials.Add(mat);
+			Materials.Add(mat);
 
 			return mat;
 		}
@@ -211,7 +209,7 @@ namespace CryEngine
 		/// <returns>true if successful, otherwise false.</returns>
 		public bool SetParam(string paramName, Color value)
 		{
-			Vec3 vecValue = new Vec3(value.R, value.G, value.B);
+			Vector3 vecValue = new Vector3(value.R, value.G, value.B);
 			var result = NativeMaterialMethods.SetGetMaterialParamVec3(Handle, paramName, ref vecValue, false);
 
 			Opacity = value.A;
@@ -240,14 +238,10 @@ namespace CryEngine
 		/// <returns>true if successful, otherwise false.</returns>
 		public bool TryGetParam(string paramName, out Color value)
 		{
-			Vec3 vecVal = Vec3.Zero;
+			Vector3 vecVal = Vector3.Zero;
 			bool result = NativeMaterialMethods.SetGetMaterialParamVec3(Handle, paramName, ref vecVal, true);
 
-			value = new Color();
-			value.R = vecVal.X;
-			value.G = vecVal.Y;
-			value.B = vecVal.Z;
-			value.A = Opacity;
+			value = new Color { R = vecVal.X, G = vecVal.Y, B = vecVal.Z, A = this.Opacity };
 
 			return result;
 		}
@@ -297,7 +291,7 @@ namespace CryEngine
 		/// </summary>
 		/// <param name="param"></param>
 		/// <param name="value"></param>
-		public void SetShaderParam(ShaderColorParameter param, Vec3 value)
+		public void SetShaderParam(ShaderColorParameter param, Vector3 value)
 		{
 			SetShaderParam(param.GetEngineName(), new Color(value.X, value.Y, value.Z));
 		}
@@ -315,7 +309,7 @@ namespace CryEngine
 		#region Overrides
 		public override bool Equals(object obj)
 		{
-			if (obj != null && obj is Material)
+			if (obj is Material)
 				return this == obj;
 
 			return false;

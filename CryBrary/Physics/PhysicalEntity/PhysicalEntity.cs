@@ -71,7 +71,7 @@ namespace CryEngine.Physics
 			NativeEntityMethods.BreakIntoPieces(Owner.GetIEntity(), 0, 0, breakageParams);
 		}
 
-		public bool AddImpulse(Vec3 vImpulse, Vec3? angImpulse = null, Vec3? point = null)
+		public bool AddImpulse(Vector3 vImpulse, Vector3? angImpulse = null, Vector3? point = null)
 		{
 			var impulse = PhysicalEntityImpulseAction.Create();
 
@@ -88,7 +88,7 @@ namespace CryEngine.Physics
 		/// <summary>
 		/// Gets or sets entity velocity as set by the physics system.
 		/// </summary>
-		public Vec3 Velocity
+		public Vector3 Velocity
 		{
 			get { return NativePhysicsMethods.GetVelocity(Handle); }
 			set { NativePhysicsMethods.SetVelocity(Handle, value); }

@@ -23,9 +23,9 @@ namespace CryEngine.Serialization
 		[MethodImplAttribute(MethodImplOptions.InternalCall)]
 		private static extern void ValueFloat(IntPtr handle, string name, ref float obj, string policy);
 		[MethodImplAttribute(MethodImplOptions.InternalCall)]
-		private static extern void ValueVec3(IntPtr handle, string name, ref Vec3 obj, string policy);
+		private static extern void ValueVec3(IntPtr handle, string name, ref Vector3 obj, string policy);
 		[MethodImplAttribute(MethodImplOptions.InternalCall)]
-		private static extern void ValueQuat(IntPtr handle, string name, ref Quat obj, string policy);
+		private static extern void ValueQuat(IntPtr handle, string name, ref Quaternion obj, string policy);
 
 		[MethodImplAttribute(MethodImplOptions.InternalCall)]
 		private static extern void EnumValue(IntPtr handle, string name, ref int obj, int first, int last);
@@ -88,12 +88,12 @@ namespace CryEngine.Serialization
 			ValueFloat(Handle, name, ref obj, policy);
 		}
 
-		public void Value(string name, ref Vec3 obj, string policy = null)
+		public void Value(string name, ref Vector3 obj, string policy = null)
 		{
 			ValueVec3(Handle, name, ref obj, policy);
 		}
 
-		public void Value(string name, ref Quat obj, string policy = null)
+		public void Value(string name, ref Quaternion obj, string policy = null)
 		{
 			ValueQuat(Handle, name, ref obj, policy);
 		}

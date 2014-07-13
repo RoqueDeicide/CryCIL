@@ -10,19 +10,19 @@ namespace CryEngine.Native
 	{
 		#region Persistent Debug
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		extern internal static void AddPersistentSphere(Vec3 pos, float radius, Color color, float timeout);
+		extern internal static void AddPersistentSphere(Vector3 pos, float radius, Color color, float timeout);
 
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		extern internal static void AddDirection(Vec3 pos, float radius, Vec3 dir, Color color, float timeout);
+		extern internal static void AddDirection(Vector3 pos, float radius, Vector3 dir, Color color, float timeout);
 
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		extern internal static void AddPersistentText2D(string text, float size, Color color, float timeout);
 
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		extern internal static void AddAABB(Vec3 pos, BoundingBox bbox, Color color, float timeout);
+		extern internal static void AddAABB(Vector3 pos, BoundingBox bbox, Color color, float timeout);
 
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		extern internal static void AddPersistentLine(Vec3 pos, Vec3 end, Color color, float timeout);
+		extern internal static void AddPersistentLine(Vector3 pos, Vector3 end, Color color, float timeout);
 		#endregion
 
 		#region Profiling

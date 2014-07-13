@@ -45,7 +45,7 @@ namespace CryEngine
 		/// <summary>
 		/// Velocity at the contact point
 		/// </summary>
-		public Vec3 velocity;
+		public Vector3 velocity;
 		public float mass;
 		public int partId;
 		public short materialId;

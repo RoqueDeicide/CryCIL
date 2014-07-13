@@ -8,26 +8,26 @@ namespace CryEngine
 	/// <summary>
 	/// Quaternion with a translation vector
 	/// </summary>
-	public struct QuatT
+	public struct QuaternionTranslation
 	{
 		/// <summary>
 		/// The quaternion
 		/// </summary>
-		public Quat Q;
+		public Quaternion Q;
 		/// <summary>
 		/// The translation vector and a scalar (for uniform scaling?)
 		/// </summary>
-		public Vec3 T;
+		public Vector3 T;
 
-		public QuatT(Vec3 t, Quat q)
+		public QuaternionTranslation(Vector3 t, Quaternion q)
 		{
 			Q = q;
 			T = t;
 		}
 
-		public QuatT(Matrix34 m)
+		public QuaternionTranslation(Matrix34 m)
 		{
-			Q = new Quat(m);
+			Q = new Quaternion(m);
 			T = m.Translation;
 		}
 
@@ -36,16 +36,16 @@ namespace CryEngine
 			this = Identity;
 		}
 
-		public void SetRotationXYZ(Vec3 rad, Vec3? trans = null)
+		public void SetRotationXYZ(Vector3 rad, Vector3? trans = null)
 		{
-			Q.SetRotationXYZ(rad);
+			Q.SetRotationAroundXYZAxes(rad);
 
 			T = trans.GetValueOrDefault();
 		}
 
-		public void SetRotationAA(float cosha, float sinha, Vec3 axis, Vec3? trans = null)
+		public void SetRotationAA(float cosha, float sinha, Vector3 axis, Vector3? trans = null)
 		{
-			Q.SetRotationAA(cosha, sinha, axis);
+			Q.SetRotationAngleAxis(cosha, sinha, axis);
 			T = trans.GetValueOrDefault();
 		}
 
@@ -55,12 +55,12 @@ namespace CryEngine
 			Q = !Q;
 		}
 
-		public void SetTranslation(Vec3 trans)
+		public void SetTranslation(Vector3 trans)
 		{
 			T = trans;
 		}
 
-		public bool IsEquivalent(QuatT p, float epsilon = 0.05f)
+		public bool IsEquivalent(QuaternionTranslation p, float epsilon = 0.05f)
 		{
 			var q0 = p.Q;
 			var q1 = -p.Q;
@@ -81,7 +81,7 @@ namespace CryEngine
 			}
 		}
 
-		public void Nlerp(QuatT start, QuatT end, float amount)
+		public void Nlerp(QuaternionTranslation start, QuaternionTranslation end, float amount)
 		{
 			var d = end.Q;
 			if ((start.Q | d) < 0) { d = -d; }
@@ -97,13 +97,13 @@ namespace CryEngine
 			T = start.T + (vDiff * amount);
 		}
 
-		public void SetFromVectors(Vec3 vx, Vec3 vy, Vec3 vz, Vec3 pos)
+		public void SetFromVectors(Vector3 vx, Vector3 vy, Vector3 vz, Vector3 pos)
 		{
 			var m34 = new Matrix34();
 			m34.M00 = vx.X; m34.M01 = vy.X; m34.M02 = vz.X; m34.M03 = pos.X;
 			m34.M10 = vx.Y; m34.M11 = vy.Y; m34.M12 = vz.Y; m34.M13 = pos.Y;
 			m34.M20 = vx.Z; m34.M21 = vy.Z; m34.M22 = vz.Z; m34.M23 = pos.Z;
-			this = new QuatT(m34);
+			this = new QuaternionTranslation(m34);
 		}
 
 		public void ClampLengthAngle(float maxLength, float maxAngle)
@@ -112,14 +112,14 @@ namespace CryEngine
 			Q.ClampAngle(maxAngle);
 		}
 
-		public QuatT GetScaled(float scale)
+		public QuaternionTranslation GetScaled(float scale)
 		{
-			return new QuatT(T * scale, Q.GetScaled(scale));
+			return new QuaternionTranslation(T * scale, Q.GetScaled(scale));
 		}
 
 		public bool IsIdentity { get { return Q.IsIdentity && T.IsZero(); } }
 
-		public QuatT Inverted
+		public QuaternionTranslation Inverted
 		{
 			get
 			{
@@ -129,14 +129,14 @@ namespace CryEngine
 			}
 		}
 
-		public Vec3 Column0 { get { return Q.Column0; } }
-		public Vec3 Column1 { get { return Q.Column1; } }
-		public Vec3 Column2 { get { return Q.Column2; } }
-		public Vec3 Column3 { get { return T; } }
+		public Vector3 Column0 { get { return Q.Column0; } }
+		public Vector3 Column1 { get { return Q.Column1; } }
+		public Vector3 Column2 { get { return Q.Column2; } }
+		public Vector3 Column3 { get { return T; } }
 
-		public Vec3 Row0 { get { return Q.Row0; } }
-		public Vec3 Row1 { get { return Q.Row1; } }
-		public Vec3 Row2 { get { return Q.Row2; } }
+		public Vector3 Row0 { get { return Q.Row0; } }
+		public Vector3 Row1 { get { return Q.Row1; } }
+		public Vector3 Row2 { get { return Q.Row2; } }
 
 		public override int GetHashCode()
 		{
@@ -153,7 +153,7 @@ namespace CryEngine
 		}
 
 		#region Statics
-		public static readonly QuatT Identity = new QuatT(Vec3.Zero, Quat.Identity);
+		public static readonly QuaternionTranslation Identity = new QuaternionTranslation(Vector3.Zero, Quaternion.Identity);
 		#endregion
 	}
 }

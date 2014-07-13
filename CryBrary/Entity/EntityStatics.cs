@@ -22,7 +22,7 @@ namespace CryEngine
 		/// <param name="autoInit"></param>
 		/// <param name="flags"></param>
 		/// <returns></returns>
-		public static EntityBase Spawn(string entityName, Type type, Vec3? pos = null, Quat? rot = null, Vec3? scale = null, bool autoInit = true, EntityFlags flags = EntityFlags.CastShadow, params object[] args)
+		public static EntityBase Spawn(string entityName, Type type, Vector3? pos = null, Quaternion? rot = null, Vector3? scale = null, bool autoInit = true, EntityFlags flags = EntityFlags.CastShadow, params object[] args)
 		{
 			return Spawn(entityName, type.Name, pos, rot, scale, autoInit, flags, args);
 		}
@@ -38,7 +38,7 @@ namespace CryEngine
 		/// <param name="autoInit"></param>
 		/// <param name="flags"></param>
 		/// <returns></returns>
-		public static T Spawn<T>(string entityName, Vec3? pos = null, Quat? rot = null, Vec3? scale = null, bool autoInit = true, EntityFlags flags = EntityFlags.CastShadow, params object[] args) where T : Entity, new()
+		public static T Spawn<T>(string entityName, Vector3? pos = null, Quaternion? rot = null, Vector3? scale = null, bool autoInit = true, EntityFlags flags = EntityFlags.CastShadow, params object[] args) where T : Entity, new()
 		{
 			var entity = Spawn(entityName, typeof(T).Name, pos, rot, scale, autoInit, flags, args);
 			if (entity == null)
@@ -62,11 +62,11 @@ namespace CryEngine
 		/// <param name="autoInit"></param>
 		/// <param name="flags"></param>
 		/// <returns></returns>
-		public static EntityBase Spawn(string entityName, string className = "Default", Vec3? pos = null, Quat? rot = null, Vec3? scale = null, bool autoInit = true, EntityFlags flags = EntityFlags.CastShadow, params object[] args)
+		public static EntityBase Spawn(string entityName, string className = "Default", Vector3? pos = null, Quaternion? rot = null, Vector3? scale = null, bool autoInit = true, EntityFlags flags = EntityFlags.CastShadow, params object[] args)
 		{
 			EntityInitializationParams info;
 
-			var ent = NativeEntityMethods.SpawnEntity(new EntitySpawnParams { Name = entityName, Class = className, Pos = pos ?? new Vec3(1, 1, 1), Rot = rot ?? Quat.Identity, Scale = scale ?? new Vec3(1, 1, 1), Flags = flags }, autoInit, out info) as Entity;
+			var ent = NativeEntityMethods.SpawnEntity(new EntitySpawnParams { Name = entityName, Class = className, Pos = pos ?? new Vector3(1, 1, 1), Rot = rot ?? Quaternion.Identity, Scale = scale ?? new Vector3(1, 1, 1), Flags = flags }, autoInit, out info) as Entity;
 			if (ent != null)
 			{
 				ent.OnPostSpawn(args);

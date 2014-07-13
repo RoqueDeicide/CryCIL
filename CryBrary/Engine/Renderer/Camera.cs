@@ -37,7 +37,7 @@ namespace CryEngine
 		private static List<Camera> Cameras = new List<Camera>();
 
 		public Matrix34 Matrix { get { return NativeRendererMethods.GetCameraMatrix(Handle); } set { NativeRendererMethods.SetCameraMatrix(Handle, value); } }
-		public Vec3 Position { get { return NativeRendererMethods.GetCameraPosition(Handle); } set { NativeRendererMethods.SetCameraPosition(Handle, value); } }
+		public Vector3 Position { get { return NativeRendererMethods.GetCameraPosition(Handle); } set { NativeRendererMethods.SetCameraPosition(Handle, value); } }
 
 		public float FieldOfView { get { return NativeRendererMethods.GetCameraFieldOfView(Handle); } }
 

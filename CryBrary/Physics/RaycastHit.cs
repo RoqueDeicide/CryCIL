@@ -97,11 +97,11 @@ namespace CryEngine
 		/// </summary>
 		public int iNode { get { return inode; } }
 
-		internal Vec3 pt;
-		public Vec3 Point { get { return pt; } }
+		internal Vector3 pt;
+		public Vector3 Point { get { return pt; } }
 
-		internal Vec3 n;    // surface normal
-		public Vec3 Normal { get { return n; } }
+		internal Vector3 n;    // surface normal
+		public Vector3 Normal { get { return n; } }
 
 		internal int bTerrain;    // global terrain hit
 		public bool HitTerrain { get { return bTerrain == 1; } }

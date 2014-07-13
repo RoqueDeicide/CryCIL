@@ -19,21 +19,21 @@ namespace CryEngine
 			pparams.mass = UnusedMarker.Float;
 			pparams.size = UnusedMarker.Float;
 			pparams.thickness = UnusedMarker.Float;
-			pparams.wspin = UnusedMarker.Vec3;
+			pparams.wspin = UnusedMarker.Vector3;
 			pparams.accThrust = UnusedMarker.Float;
 			pparams.kAirResistance = UnusedMarker.Float;
 			pparams.kWaterResistance = UnusedMarker.Float;
 			pparams.velocity = UnusedMarker.Float;
-			pparams.heading = UnusedMarker.Vec3;
+			pparams.heading = UnusedMarker.Vector3;
 			pparams.accLift = UnusedMarker.Float;
-			pparams.gravity = UnusedMarker.Vec3;
-			pparams.waterGravity = UnusedMarker.Vec3;
+			pparams.gravity = UnusedMarker.Vector3;
+			pparams.waterGravity = UnusedMarker.Vector3;
 
 			pparams.surface_idx = UnusedMarker.Integer;
-			pparams.normal = UnusedMarker.Vec3;
-			pparams.q0 = UnusedMarker.Quat;
+			pparams.normal = UnusedMarker.Vector3;
+			pparams.q0 = UnusedMarker.Quaternion;
 			pparams.minBounceVel = UnusedMarker.Float;
-			pparams.rollAxis = UnusedMarker.Vec3;
+			pparams.rollAxis = UnusedMarker.Vector3;
 			pparams.flags = (PhysicalizationFlags)UnusedMarker.UnsignedInteger;
 			pparams.pColliderToIgnore = UnusedMarker.IntPtr;
 			pparams.iPierceability = UnusedMarker.Integer;
@@ -50,19 +50,19 @@ namespace CryEngine
 		public float mass;
 		public float size; // pseudo-radius
 		public float thickness; // thickness when lying on a surface (if left unused, size will be used)
-		public Vec3 heading; // direction of movement
+		public Vector3 heading; // direction of movement
 		public float velocity;	// velocity along "heading"
 		public float kAirResistance; // air resistance koefficient, F = kv
 		public float kWaterResistance; // same for water
 		public float accThrust; // acceleration along direction of movement
 		public float accLift; // acceleration that lifts particle with the current speed
 		public int surface_idx;
-		public Vec3 wspin; // angular velocity
-		public Vec3 gravity;	// stores this gravity and uses it if the current area's gravity is equal to the global gravity
-		public Vec3 waterGravity; // gravity when underwater
-		public Vec3 normal; // aligns this direction with the surface normal when sliding
-		public Vec3 rollAxis; // aligns this directon with the roll axis when rolling (0,0,0 to disable alignment)
-		public Quat q0;	// initial orientation (zero means x along direction of movement, z up)
+		public Vector3 wspin; // angular velocity
+		public Vector3 gravity;	// stores this gravity and uses it if the current area's gravity is equal to the global gravity
+		public Vector3 waterGravity; // gravity when underwater
+		public Vector3 normal; // aligns this direction with the surface normal when sliding
+		public Vector3 rollAxis; // aligns this directon with the roll axis when rolling (0,0,0 to disable alignment)
+		public Quaternion q0;	// initial orientation (zero means x along direction of movement, z up)
 		public float minBounceVel;	// velocity threshold for bouncing->sliding switch
 		public float minVel;	// sleep speed threshold
 		private IntPtr pColliderToIgnore;	// physical entity to ignore during collisions

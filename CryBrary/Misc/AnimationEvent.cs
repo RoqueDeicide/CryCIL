@@ -20,7 +20,7 @@ namespace CryEngine
 		/// </summary>
 		string CustomParameter { get; set; }
 		string BonePathName { get; set; }
-		Vec3 vOffset { get; set; }
-		Vec3 vDir { get; set; }
+		Vector3 vOffset { get; set; }
+		Vector3 vDir { get; set; }
 	}
 }

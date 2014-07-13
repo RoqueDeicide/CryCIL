@@ -560,7 +560,7 @@ namespace CryEngine.Compilers.NET
 							defaultVal = "";
 							break;
 						case NodePortType.Vec3:
-							defaultVal = Vec3.Zero;
+							defaultVal = Vector3.Zero;
 							break;
 					}
 				}
@@ -697,7 +697,7 @@ namespace CryEngine.Compilers.NET
 
 				return NodePortType.String;
 			}
-			if (type == typeof(Vec3))
+			if (type == typeof(Vector3))
 				return NodePortType.Vec3;
 			if (type == typeof(Color))
 			{

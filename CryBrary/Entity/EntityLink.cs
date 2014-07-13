@@ -10,9 +10,9 @@ namespace CryEngine
 	public class EntityLink
 	{
 		#region Statics
-		public static EntityLink Create(EntityBase parent, EntityBase slave, string linkName, Vec3? relativePos = null, Quat? relativeRot = null)
+		public static EntityLink Create(EntityBase parent, EntityBase slave, string linkName, Vector3? relativePos = null, Quaternion? relativeRot = null)
 		{
-			return new EntityLink(NativeEntityMethods.AddEntityLink(parent.GetIEntity(), linkName, slave.Id, slave.GUID, relativeRot ?? Quat.Identity, relativePos ?? Vec3.Zero), parent);
+			return new EntityLink(NativeEntityMethods.AddEntityLink(parent.GetIEntity(), linkName, slave.Id, slave.GUID, relativeRot ?? Quaternion.Identity, relativePos ?? Vector3.Zero), parent);
 		}
 
 		public static void RemoveAll(EntityBase parent)
@@ -53,13 +53,13 @@ namespace CryEngine
 
 		public string Name { get { return NativeEntityMethods.GetEntityLinkName(Handle); } }
 
-		public Quat RelativeRotation
+		public Quaternion RelativeRotation
 		{
 			get { return NativeEntityMethods.GetEntityLinkRelativeRotation(Handle); }
 			set { NativeEntityMethods.SetEntityLinkRelativeRotation(Handle, value); }
 		}
 
-		public Vec3 RelativePosition
+		public Vector3 RelativePosition
 		{
 			get { return NativeEntityMethods.GetEntityLinkRelativePosition(Handle); }
 			set { NativeEntityMethods.SetEntityLinkRelativePosition(Handle, value); }

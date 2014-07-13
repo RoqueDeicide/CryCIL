@@ -15,7 +15,7 @@ namespace CryEngine
 		/// </summary>
 		public static int ScreenWidth { get { return NativeRendererMethods.GetWidth(); } }
 
-		public static Vec3 ScreenToWorld(int x, int y)
+		public static Vector3 ScreenToWorld(int x, int y)
 		{
 			return NativeRendererMethods.ScreenToWorld(x, y);
 		}

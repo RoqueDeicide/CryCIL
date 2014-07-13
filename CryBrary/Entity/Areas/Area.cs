@@ -19,7 +19,7 @@ namespace CryEngine
 		}
 
 		float DistanceSquared { get; set; }
-		Vec3 Position { get; set; }
+		Vector3 Position { get; set; }
 		bool Inside { get; set; }
 		bool Near { get; set; }
 	}
@@ -34,7 +34,7 @@ namespace CryEngine
 			return TryGet(NativeEntityMethods.GetArea(areaId));
 		}
 
-		public static IEnumerable<AreaQueryResult> QueryAreas(EntityId id, Vec3 pos, int maxResults, bool forceCalculation)
+		public static IEnumerable<AreaQueryResult> QueryAreas(EntityId id, Vector3 pos, int maxResults, bool forceCalculation)
 		{
 			var objAreas = NativeEntityMethods.QueryAreas(id, pos, maxResults, forceCalculation);
 
