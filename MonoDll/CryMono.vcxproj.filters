@@ -176,6 +176,15 @@
     <ClInclude Include="Headers\CryMonoInitializationHelpers.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="Scriptbinds\CryMarshal.h">
+      <Filter>ScriptBinds\Native Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Scriptbinds\MonoMemory.h">
+      <Filter>ScriptBinds\Native Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="Scriptbinds\NativeString.h">
+      <Filter>ScriptBinds\Native Memory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -300,6 +309,15 @@
       <Filter>EntitySystem</Filter>
     </ClCompile>
     <ClCompile Include="AIActor.cpp" />
+    <ClCompile Include="Scriptbinds\CryMarshal.cpp">
+      <Filter>ScriptBinds\Native Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="Scriptbinds\MonoMemory.cpp">
+      <Filter>ScriptBinds\Native Memory</Filter>
+    </ClCompile>
+    <ClCompile Include="Scriptbinds\NativeString.cpp">
+      <Filter>ScriptBinds\Native Memory</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ScriptBinds">
@@ -346,6 +364,9 @@
     </Filter>
     <Filter Include="ScriptBinds\Entities">
       <UniqueIdentifier>{b72986a0-1186-4c2d-9461-34d62b53b4fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ScriptBinds\Native Memory">
+      <UniqueIdentifier>{f6a88378-6872-48a7-a753-d25486837671}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
