@@ -172,10 +172,10 @@ struct IMonoScriptSystem
 	/// Entry point of the dll, used to set up CryMono when not using the Plugin SDK.
 	/// </summary>
 	typedef IMonoScriptSystem *(*TEntryFunction)(ISystem* pSystem, IGameFramework *pGameFramework);
-#endif
 
 	// internal storage to avoid having the extra overhead from having to call GetPluginByName all the time.
 	static IMonoScriptSystem *g_pThis;
+#endif
 };
 
 struct IMonoScriptEventListener
@@ -196,9 +196,8 @@ struct IMonoScriptEventListener
 static IMonoScriptSystem *GetMonoScriptSystem()
 {
 #ifdef PLUGIN_SDK
-	if(IMonoScriptSystem::g_pThis == nullptr)
-		IMonoScriptSystem::g_pThis = static_cast<IMonoScriptSystem *>(gPluginManager->GetPluginByName("CryMono")->GetConcreteInterface());
-#endif
-
+	return static_cast<IMonoScriptSystem *>(gPluginManager->GetPluginByName("CryMono")->GetConcreteInterface());
+#else
 	return IMonoScriptSystem::g_pThis;
+#endif
 }

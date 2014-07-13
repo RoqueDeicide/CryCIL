@@ -7,6 +7,7 @@ namespace CryMonoPlugin
     CPluginCryMono* gPlugin = NULL;
 
     CPluginCryMono::CPluginCryMono()
+		: m_pScriptSystem(nullptr)
     {
         gPlugin = this;
     }
@@ -31,13 +32,6 @@ namespace CryMonoPlugin
 
             if ( bRet )
             {
-                if ( bWasInitialized )
-                {
-                    SAFE_RELEASE(GetMonoScriptSystem());
-
-                    // TODO: Cleanup stuff that can only be cleaned up if the plugin was initialized
-                }
-
                 // Cleanup like this always (since the class is static its cleaned up when the dll is unloaded)
                 gPluginManager->UnloadPlugin( GetName() );
 
@@ -54,12 +48,9 @@ namespace CryMonoPlugin
         gPluginManager = ( PluginManager::IPluginManager* )pPluginManager->GetConcreteInterface( NULL );
         CPluginBaseMinimal::Init( env, startupParams, pPluginManager, sPluginDirectory );
 
-		GetMonoScriptSystem() = new CScriptSystem(gEnv->pGame->GetIGameFramework());
+		m_pScriptSystem = new CScriptSystem(gEnv->pGame->GetIGameFramework());
 
-#pragma warning(push)
-#pragma warning(disable : 4800 )
-        return bool( GetMonoScriptSystem() );
-#pragma warning(pop)
+        return m_pScriptSystem != nullptr;
     }
 
     bool CPluginCryMono::RegisterTypes( int nFactoryType, bool bUnregister )

@@ -20,7 +20,7 @@ void CSystemEventListener_CryMono::OnSystemEvent(ESystemEvent event, UINT_PTR wP
 		break;
 	case ESYSTEM_EVENT_SHUTDOWN:
 		{
-			SAFE_RELEASE(IMonoScriptSystem::g_pThis);
+			GetMonoScriptSystem()->Release();
 		}
 		break;
 	}
