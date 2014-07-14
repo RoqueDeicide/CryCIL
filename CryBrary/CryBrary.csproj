@@ -215,6 +215,7 @@
     <Compile Include="Math\BoundingBox.cs" />
     <Compile Include="Math\BoundingSphere.cs" />
     <Compile Include="Math\Collision.cs" />
+    <Compile Include="Math\Color32.cs" />
     <Compile Include="Math\Column33.cs" />
     <Compile Include="Math\Column34.cs" />
     <Compile Include="Math\Column44.cs" />
