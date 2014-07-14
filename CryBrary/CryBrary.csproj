@@ -236,6 +236,13 @@
     <Compile Include="Math\Vector2.cs" />
     <Compile Include="Math\Vector3.cs" />
     <Compile Include="Math\Vector4.cs" />
+    <Compile Include="StaticObjects\Meshes\Face.cs" />
+    <Compile Include="StaticObjects\Meshes\IMesh.cs" />
+    <Compile Include="StaticObjects\Meshes\IQTangent.cs" />
+    <Compile Include="StaticObjects\Meshes\ITangent.cs" />
+    <Compile Include="StaticObjects\Meshes\TangentInt16.cs" />
+    <Compile Include="StaticObjects\Meshes\TangentSingle.cs" />
+    <Compile Include="StaticObjects\Meshes\Vertex.cs" />
     <Compile Include="StaticObjects\Native\NativeStaticObjectMethods.cs" />
     <Compile Include="StaticObjects\StaticObject.cs" />
     <Compile Include="Misc\AnimationEvent.cs" />
