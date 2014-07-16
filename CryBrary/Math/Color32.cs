@@ -6,7 +6,7 @@ using System.Text;
 
 using CryEngine.NativeMemory;
 
-namespace CryEngine.Math
+namespace CryEngine
 {
 	/// <summary>
 	/// Encapsulates 32-bit definition of color.
