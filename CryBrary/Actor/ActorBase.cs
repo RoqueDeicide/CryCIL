@@ -81,7 +81,11 @@ namespace CryEngine
 		{
 			var actorInitParams = (ActorInitializationParams)initParams;
 
-			System.Diagnostics.Contracts.Contract.Requires(actorInitParams.ChannelId > 0);
+			//System.Diagnostics.Contracts.Contract.Requires(actorInitParams.ChannelId > 0);
+			if (actorInitParams.ChannelId <= 0)
+			{
+				throw new ArgumentException("Invalid channel identifier used for actor initialization.");
+			}
 			Id = new EntityId(actorInitParams.Id);
 			this.SetIActor(actorInitParams.ActorPtr);
 			this.SetIEntity(actorInitParams.EntityPtr);

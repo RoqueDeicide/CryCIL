@@ -34,7 +34,21 @@ namespace CryEngine.NativeMemory
 		/// <returns>New string.</returns>
 		public static string FromWideString(IntPtr pointer, int length, int symbolSize)
 		{
-			Contract.Requires(pointer != null && length >= 0 && symbolSize > 0);
+			if (pointer == IntPtr.Zero)
+			{
+				throw new NullPointerException
+					("Attempt to convert wide string to System.String while using null pointer.");
+			}
+			if (length < 0)
+			{
+				throw new ArgumentException
+					("Attempt to convert wide string to System.String without specifying valid length.");
+			}
+			if (symbolSize <= 0)
+			{
+				throw new ArgumentException
+					("Attempt to convert wide string to System.String without specifying valid character length.");
+			}
 			if (length == 0)
 			{
 				return "";
@@ -61,7 +75,10 @@ namespace CryEngine.NativeMemory
 		/// <returns>Pointer to the first symbol.</returns>
 		public static NativeArray ToWideString(string text)
 		{
-			Contract.Requires(text != null);
+			if (text == null)
+			{
+				throw new ArgumentNullException("text", "Attempt to create wchar_t string from null string.");
+			}
 			// We use UTF-16, so length of byte array is number of symbols * 2 + 2 bytes for
 			// terminating symbol.
 			byte[] bytes = new byte[text.Length * 2 + 2];

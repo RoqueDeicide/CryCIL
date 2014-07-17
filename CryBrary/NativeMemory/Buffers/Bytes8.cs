@@ -107,17 +107,30 @@ namespace CryEngine.NativeMemory
 		/// Initializes new 8-byte buffer object.
 		/// </summary>
 		/// <param name="array">Array that provides elements to fill new buffer with.</param>
-		/// <param name="shift">Zero-based index of first byte in given array.</param>
-		public Bytes8(byte[] array, ulong shift)
+		/// <param name="startIndex">
+		/// Index of the first element of the array portion from which to start copying bytes.
+		/// </param>
+		/// <param name="count">Number of elements to copy from array.</param>
+		public Bytes8(byte[] array, ulong startIndex, ulong count)
 			: this()
 		{
-			Contract.Requires((ulong)array.LongLength <= shift + this.Length);
-			fixed (byte* buffer = this.Bytes)
+			if (array == null || array.Length == 0)
 			{
-				for (ulong i = 0; i < this.Length; i++)
-				{
-					buffer[i] = array[shift + i];
-				}
+				throw new ArgumentNullException
+					("array", "Array which elements are supposed to be transferred to buffer is null or empty.");
+			}
+			if ((ulong)array.LongLength - startIndex < count)
+			{
+				throw new ArgumentOutOfRangeException
+					("count", "Too many elements are requested to be transferred to buffer.");
+			}
+			if (this.Length < count)
+			{
+				throw new ArgumentException("This buffer is too small.");
+			}
+			for (ulong i = 0, j = startIndex; i < count; i++, j++)
+			{
+				this.Bytes[i] = array[j];
 			}
 		}
 		/// <summary>

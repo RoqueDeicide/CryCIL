@@ -14,7 +14,7 @@ namespace CryEngine.NativeMemory
 	/// Encapsulates 512 bytes worth of data.
 	/// </summary>
 	[StructLayout(LayoutKind.Explicit, Size = 512)]
-	public unsafe struct Buffer512 : IBuffer
+	public struct Buffer512 : IBuffer
 	{
 		#region Fields
 		/// <summary>
@@ -107,19 +107,30 @@ namespace CryEngine.NativeMemory
 		/// Initializes new instance of type <see cref="Buffer64" /> with a portion of the array.
 		/// </summary>
 		/// <param name="array">Array that will provide data.</param>
-		/// <param name="shift">
+		/// <param name="startIndex">
 		/// Index of the first element of the array portion from which to start copying bytes.
 		/// </param>
-		public Buffer512(byte[] array, ulong shift)
+		/// <param name="count">Number of elements to copy from array.</param>
+		public Buffer512(byte[] array, ulong startIndex, ulong count)
 			: this()
 		{
-			Contract.Requires((ulong)array.LongLength < shift + this.Length);
-			fixed (byte* buffer = this.Bytes)
+			if (array == null || array.Length == 0)
 			{
-				for (ulong i = 0; i < this.Length; i++)
-				{
-					buffer[i] = array[i + shift];
-				}
+				throw new ArgumentNullException
+					("array", "Array which elements are supposed to be transferred to buffer is null or empty.");
+			}
+			if ((ulong)array.LongLength - startIndex < count)
+			{
+				throw new ArgumentOutOfRangeException
+					("count", "Too many elements are requested to be transferred to buffer.");
+			}
+			if (this.Length < count)
+			{
+				throw new ArgumentException("This buffer is too small.");
+			}
+			for (ulong i = 0, j = startIndex; i < count; i++, j++)
+			{
+				this.Bytes[i] = array[j];
 			}
 		}
 		/// <summary>

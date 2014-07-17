@@ -27,7 +27,11 @@ namespace CryEngine.NativeMemory
 		/// <returns>Pointer to first byte in the memory cluster.</returns>
 		public static IntPtr AllocateMemory(ulong size)
 		{
-			Contract.Requires(size > 0);
+			if (size == 0)
+			{
+				throw new ArgumentOutOfRangeException
+					("size", "Attempt to allocate a native memory cluster of 0 length.");
+			}
 			IntPtr pointer = NativeMemoryHandlingMethods.AllocateMemory(size);
 			if (pointer == null)
 			{
