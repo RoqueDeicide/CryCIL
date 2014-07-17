@@ -298,7 +298,7 @@ namespace CryEngine.NativeMemory
 			this.ValidateThisInstance();
 			CheckIfBufferHasEnoughData(buffer, offset, count);
 			ValidateBuffer(buffer);
-			this.CheckIfDataCanFit(count);
+			this.CheckIfDataCanFit((ulong)count);
 			// Prepare for reading.
 			this.PrepareToRead();
 			// Start reading.
@@ -334,7 +334,7 @@ namespace CryEngine.NativeMemory
 
 			Byte1 data = new Byte1();
 
-			this.CheckIfDataCanFit((long)data.Length);
+			this.CheckIfDataCanFit(data.Length);
 			this.PrepareToRead();
 
 			data.UnsignedByte = this.CurrentByte;
@@ -352,7 +352,7 @@ namespace CryEngine.NativeMemory
 
 			var data = new Bytes2();
 
-			this.CheckIfDataCanFit((long)data.Length);
+			this.CheckIfDataCanFit(data.Length);
 			this.PrepareToRead();
 
 			data[0] = this.CurrentByte;
@@ -371,7 +371,7 @@ namespace CryEngine.NativeMemory
 
 			var data = new Bytes4();
 
-			this.CheckIfDataCanFit((long)data.Length);
+			this.CheckIfDataCanFit(data.Length);
 			this.PrepareToRead();
 
 			for (ulong i = 0; i < data.Length; i++)
@@ -411,7 +411,7 @@ namespace CryEngine.NativeMemory
 
 			var data = new Buffer32();
 
-			this.CheckIfDataCanFit((long)data.Length);
+			this.CheckIfDataCanFit(data.Length);
 			this.PrepareToRead();
 
 			for (ulong i = 0; i < data.Length; i++)
@@ -431,7 +431,7 @@ namespace CryEngine.NativeMemory
 
 			var data = new Buffer64();
 
-			this.CheckIfDataCanFit((long)data.Length);
+			this.CheckIfDataCanFit(data.Length);
 			this.PrepareToRead();
 
 			for (ulong i = 0; i < data.Length; i++)
@@ -451,7 +451,7 @@ namespace CryEngine.NativeMemory
 
 			var data = new Buffer128();
 
-			this.CheckIfDataCanFit((long)data.Length);
+			this.CheckIfDataCanFit(data.Length);
 			this.PrepareToRead();
 
 			for (ulong i = 0; i < data.Length; i++)
@@ -471,7 +471,7 @@ namespace CryEngine.NativeMemory
 
 			var data = new Buffer256();
 
-			this.CheckIfDataCanFit((long)data.Length);
+			this.CheckIfDataCanFit(data.Length);
 			this.PrepareToRead();
 
 			for (ulong i = 0; i < data.Length; i++)
@@ -491,7 +491,7 @@ namespace CryEngine.NativeMemory
 
 			var data = new Buffer512();
 
-			this.CheckIfDataCanFit((long)data.Length);
+			this.CheckIfDataCanFit(data.Length);
 			this.PrepareToRead();
 
 			for (ulong i = 0; i < data.Length; i++)
@@ -523,7 +523,7 @@ namespace CryEngine.NativeMemory
 			this.ValidateThisInstance();
 			ValidateBuffer(buffer);
 			CheckIfBufferHasEnoughData(buffer, offset, count);
-			this.CheckIfDataCanFit(count);
+			this.CheckIfDataCanFit((ulong)count);
 			this.PrepareToWrite();
 			// Start writing.
 
@@ -861,10 +861,10 @@ namespace CryEngine.NativeMemory
 		}
 
 		// ReSharper disable UnusedParameter.Local
-		private void CheckIfDataCanFit(long count)
+		private void CheckIfDataCanFit(ulong count)
 		// ReSharper restore UnusedParameter.Local
 		{
-			if (this.position + (ulong)count > this.Length)
+			if (this.position + count > this.Length)
 			{
 				throw new OverflowException(String.Format("NativeMemoryStream.{0}: This stream doesn't have access to enough data for operation.", new StackTrace().GetFrame(1).GetMethod().Name));
 			}
