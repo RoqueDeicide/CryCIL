@@ -4,13 +4,11 @@ using System.Diagnostics.Contracts;
 namespace CryEngine
 {
 	/// <summary>
-	/// Represents a quaternion - object that describes rotation by
-	/// specific angle around specific axis.
+	/// Represents a quaternion - object that describes rotation by specific angle around specific axis.
 	/// </summary>
 	/// <remarks>
-	/// Quaternion is basically a rotation. If you use quaternions to
-	/// define orientation of objects then in order to get vector that
-	/// points forward from the object, you need to take <see
+	/// Quaternion is basically a rotation. If you use quaternions to define orientation of objects
+	/// then in order to get vector that points forward from the object, you need to take <see
 	/// cref="Vector3.Forward" /> and rotate it by this quaternion.
 	/// </remarks>
 	public struct Quaternion
@@ -91,73 +89,63 @@ namespace CryEngine
 			}
 		}
 		/// <summary>
-		/// Treating this quaternion as a compressed rotation matrix,
-		/// gets first column of that matrix.
+		/// Treating this quaternion as a compressed rotation matrix, gets first column of that matrix.
 		/// </summary>
 		/// <remarks>
-		/// First column of rotation matrix represents a vector that
-		/// points to the right from the point that is oriented using
-		/// this quaternion.
+		/// First column of rotation matrix represents a vector that points to the right from the
+		/// point that is oriented using this quaternion.
 		/// </remarks>
 		public Vector3 Column0 { get { return new Vector3(2 * (V.X * V.X + W * W) - 1, 2 * (V.Y * V.X + V.Z * W), 2 * (V.Z * V.X - V.Y * W)); } }
 		/// <summary>
-		/// Treating this quaternion as a compressed rotation matrix,
-		/// gets second column of that matrix.
+		/// Treating this quaternion as a compressed rotation matrix, gets second column of that matrix.
 		/// </summary>
 		/// <remarks>
-		/// Second column of rotation matrix represents a vector that
-		/// points forward from the point that is oriented using this quaternion.
+		/// Second column of rotation matrix represents a vector that points forward from the point
+		/// that is oriented using this quaternion.
 		/// </remarks>
 		public Vector3 Column1 { get { return new Vector3(2 * (V.X * V.Y - V.Z * W), 2 * (V.Y * V.Y + W * W) - 1, 2 * (V.Z * V.Y + V.X * W)); } }
 		/// <summary>
-		/// Treating this quaternion as a compressed rotation matrix,
-		/// gets third column of that matrix.
+		/// Treating this quaternion as a compressed rotation matrix, gets third column of that matrix.
 		/// </summary>
 		/// <remarks>
-		/// Third column of rotation matrix represents a vector that
-		/// points up from the point that is oriented using this quaternion.
+		/// Third column of rotation matrix represents a vector that points up from the point that
+		/// is oriented using this quaternion.
 		/// </remarks>
 		public Vector3 Column2 { get { return new Vector3(2 * (V.X * V.Z + V.Y * W), 2 * (V.Y * V.Z - V.X * W), 2 * (V.Z * V.Z + W * W) - 1); } }
 		/// <summary>
-		/// Treating this quaternion as a compressed rotation matrix,
-		/// gets first row of that matrix.
+		/// Treating this quaternion as a compressed rotation matrix, gets first row of that matrix.
 		/// </summary>
 		/// <remarks>
-		/// First row of rotation matrix contains X-coordinates of
-		/// rotation axes.
+		/// First row of rotation matrix contains X-coordinates of rotation axes.
 		/// </remarks>
 		public Vector3 Row0 { get { return new Vector3(2 * (V.X * V.X + W * W) - 1, 2 * (V.X * V.Y - V.Z * W), 2 * (V.X * V.Z + V.Y * W)); } }
 		/// <summary>
-		/// Treating this quaternion as a compressed rotation matrix,
-		/// gets second row of that matrix.
+		/// Treating this quaternion as a compressed rotation matrix, gets second row of that matrix.
 		/// </summary>
 		/// <remarks>
-		/// Second row of rotation matrix contains Y-coordinates of
-		/// rotation axes.
+		/// Second row of rotation matrix contains Y-coordinates of rotation axes.
 		/// </remarks>
 		public Vector3 Row1 { get { return new Vector3(2 * (V.Y * V.X + V.Z * W), 2 * (V.Y * V.Y + W * W) - 1, 2 * (V.Y * V.Z - V.X * W)); } }
 		/// <summary>
-		/// Treating this quaternion as a compressed rotation matrix,
-		/// gets third row of that matrix.
+		/// Treating this quaternion as a compressed rotation matrix, gets third row of that matrix.
 		/// </summary>
 		/// <remarks>
-		/// Third row of rotation matrix contains Z-coordinates of
-		/// rotation axes.
+		/// Third row of rotation matrix contains Z-coordinates of rotation axes.
 		/// </remarks>
 		public Vector3 Row2 { get { return new Vector3(2 * (V.Z * V.X - V.Y * W), 2 * (V.Z * V.Y + V.X * W), 2 * (V.Z * V.Z + W * W) - 1); } }
 		/// <summary>
-		/// Treating this quaternion as a compressed rotation matrix,
-		/// gets value in first column and first row.
+		/// Treating this quaternion as a compressed rotation matrix, gets value in first column and
+		/// first row.
 		/// </summary>
 		public float ForwardX { get { return 2 * (V.X * V.Y - V.Z * W); } }
 		/// <summary>
-		/// Treating this quaternion as a compressed rotation matrix,
-		/// gets value in first column and second row.
+		/// Treating this quaternion as a compressed rotation matrix, gets value in first column and
+		/// second row.
 		/// </summary>
 		public float ForwardY { get { return 2 * (V.Y * V.Y + W * W) - 1; } }
 		/// <summary>
-		/// Treating this quaternion as a compressed rotation matrix,
-		/// gets value in first column and third row.
+		/// Treating this quaternion as a compressed rotation matrix, gets value in first column and
+		/// third row.
 		/// </summary>
 		public float ForwardZ { get { return 2 * (V.Z * V.Y + V.X * W); } }
 		/// <summary>
@@ -189,9 +177,7 @@ namespace CryEngine
 		/// Creates new instance of <see cref="Quaternion" /> struct.
 		/// </summary>
 		/// <param name="angle">Supposedly an angle of rotation.</param>
-		/// <param name="axis">
-		/// Supposedly a vector that represents axis of rotation.
-		/// </param>
+		/// <param name="axis">Supposedly a vector that represents axis of rotation.</param>
 		public Quaternion(float angle, Vector3 axis)
 		{
 			W = angle;
@@ -200,9 +186,7 @@ namespace CryEngine
 		/// <summary>
 		/// Creates new instance of <see cref="Quaternion" /> struct.
 		/// </summary>
-		/// <param name="matrix">
-		/// 3x3 matrix that represents rotation.
-		/// </param>
+		/// <param name="matrix">3x3 matrix that represents rotation.</param>
 		public Quaternion(Matrix33 matrix)
 		{
 			this = FromMatrix33(matrix);
@@ -210,9 +194,7 @@ namespace CryEngine
 		/// <summary>
 		/// Creates new instance of <see cref="Quaternion" /> struct.
 		/// </summary>
-		/// <param name="matrix">
-		/// 3x4 matrix that contains representation of rotation.
-		/// </param>
+		/// <param name="matrix">3x4 matrix that contains representation of rotation.</param>
 		public Quaternion(Matrix34 matrix)
 			: this(new Matrix33(matrix))
 		{
@@ -223,8 +205,7 @@ namespace CryEngine
 		/// The identity <see cref="CryEngine.Quaternion" /> (0, 0, 0, 1).
 		/// </summary>
 		/// <remarks>
-		/// Identity quaternion has W equal to 1, and vector is equal
-		/// to 0.
+		/// Identity quaternion has W equal to 1, and vector is equal to 0.
 		/// </remarks>
 		public static readonly Quaternion Identity = new Quaternion(0.0f, 0.0f, 0.0f, 1.0f);
 		#region Operators
@@ -270,9 +251,7 @@ namespace CryEngine
 		/// <summary>
 		/// Reverses vector of this quaternion.
 		/// </summary>
-		/// <param name="q">
-		/// Quaternion which vector must be reversed.
-		/// </param>
+		/// <param name="q">Quaternion which vector must be reversed.</param>
 		/// <returns>Quaternion with reversed vector.</returns>
 		public static Quaternion operator !(Quaternion q)
 		{
@@ -294,8 +273,8 @@ namespace CryEngine
 		/// <param name="left">Left operand.</param>
 		/// <param name="right">Right operand.</param>
 		/// <returns>
-		/// Quaternion that represents rotation equivalent to rotation
-		/// by left quaternion followed up by rotation by right quaternion.
+		/// Quaternion that represents rotation equivalent to rotation by left quaternion followed
+		/// up by rotation by right quaternion.
 		/// </returns>
 		public static Quaternion operator *(Quaternion left, Quaternion right)
 		{
@@ -306,15 +285,13 @@ namespace CryEngine
 				left.V.X * right.V.Y - left.V.Y * right.V.X + left.W * right.V.Z + left.V.Z * right.W);
 		}
 		/// <summary>
-		/// Calculates quaternion that is a result of division of left
-		/// one by right one.
+		/// Calculates quaternion that is a result of division of left one by right one.
 		/// </summary>
 		/// <param name="left">Left operand.</param>
 		/// <param name="right">Right operand.</param>
 		/// <returns>
-		/// Quaternion that represents rotation equivalent to rotation
-		/// by left quaternion with reversed vector followed up by
-		/// rotation by right quaternion.
+		/// Quaternion that represents rotation equivalent to rotation by left quaternion with
+		/// reversed vector followed up by rotation by right quaternion.
 		/// </returns>
 		public static Quaternion operator /(Quaternion left, Quaternion right)
 		{
@@ -336,9 +313,8 @@ namespace CryEngine
 		/// <param name="left">Left operand.</param>
 		/// <param name="right">Right operand.</param>
 		/// <returns>
-		/// If dot-product of two quaternions is less then zero then
-		/// returns sum of left quaternion and reverse of right one,
-		/// otherwise just returns a sum of two.
+		/// If dot-product of two quaternions is less then zero then returns sum of left quaternion
+		/// and reverse of right one, otherwise just returns a sum of two.
 		/// </returns>
 		public static Quaternion operator %(Quaternion left, Quaternion right)
 		{
@@ -396,13 +372,10 @@ namespace CryEngine
 		#endregion
 		#region Creation
 		/// <summary>
-		/// Creates new quaternion that represents rotation defined by
-		/// given 3x3 matrix.
+		/// Creates new quaternion that represents rotation defined by given 3x3 matrix.
 		/// </summary>
 		/// <param name="m">Matrix that defines the rotation.</param>
-		/// <returns>
-		/// Quaternion that represents rotation defined by given 3x3 matrix.
-		/// </returns>
+		/// <returns>Quaternion that represents rotation defined by given 3x3 matrix.</returns>
 		public static Quaternion FromMatrix33(Matrix33 m)
 		{
 			float s, p, tr = m.M00 + m.M11 + m.M22;
@@ -436,16 +409,12 @@ namespace CryEngine
 			return Quaternion.Identity; // if it ends here, then we have no valid rotation matrix
 		}
 		/// <summary>
-		/// Creates new quaternion that represents rotation by
-		/// specified angle around given axis.
+		/// Creates new quaternion that represents rotation by specified angle around given axis.
 		/// </summary>
 		/// <param name="rad">Angle in radians.</param>
-		/// <param name="axis">
-		/// <see cref="Vector3" /> that represents an axis of rotation.
-		/// </param>
+		/// <param name="axis"><see cref="Vector3" /> that represents an axis of rotation.</param>
 		/// <returns>
-		/// Quaternion that represents rotation by specified angle
-		/// around given axis.
+		/// Quaternion that represents rotation by specified angle around given axis.
 		/// </returns>
 		public static Quaternion CreateRotationAngleAxis(float rad, Vector3 axis)
 		{
@@ -454,17 +423,13 @@ namespace CryEngine
 			return q;
 		}
 		/// <summary>
-		/// Creates new quaternion that represents rotation by
-		/// specified angle around given axis.
+		/// Creates new quaternion that represents rotation by specified angle around given axis.
 		/// </summary>
 		/// <param name="cosha">Cosine of angle of rotation.</param>
 		/// <param name="sinha">Sine of angle of rotation.</param>
-		/// <param name="axis">
-		/// <see cref="Vector3" /> that represents an axis of rotation.
-		/// </param>
+		/// <param name="axis"><see cref="Vector3" /> that represents an axis of rotation.</param>
 		/// <returns>
-		/// Quaternion that represents rotation by specified angle
-		/// around given axis.
+		/// Quaternion that represents rotation by specified angle around given axis.
 		/// </returns>
 		public static Quaternion CreateRotationAngleAxis(float cosha, float sinha, Vector3 axis)
 		{
@@ -473,15 +438,10 @@ namespace CryEngine
 			return q;
 		}
 		/// <summary>
-		/// Creates new quaternion that represents rotation defined by
-		/// Euler angles.
+		/// Creates new quaternion that represents rotation defined by Euler angles.
 		/// </summary>
-		/// <param name="angle">
-		/// Euler angles of rotation in radians.
-		/// </param>
-		/// <returns>
-		/// Quaternion that represents rotation defined by Euler angles.
-		/// </returns>
+		/// <param name="angle">Euler angles of rotation in radians.</param>
+		/// <returns>Quaternion that represents rotation defined by Euler angles.</returns>
 		public static Quaternion CreateRotationAroundXYZAxes(Vector3 angle)
 		{
 			var q = new Quaternion();
@@ -492,9 +452,7 @@ namespace CryEngine
 		/// Creates new quaternion that represents rotation around X-axis.
 		/// </summary>
 		/// <param name="r">Angle of rotation in radians.</param>
-		/// <returns>
-		/// Quaternion that represents rotation around X-axis.
-		/// </returns>
+		/// <returns>Quaternion that represents rotation around X-axis.</returns>
 		public static Quaternion CreateRotationAroundX(float r)
 		{
 			var q = new Quaternion();
@@ -505,9 +463,7 @@ namespace CryEngine
 		/// Creates new quaternion that represents rotation around Y-axis.
 		/// </summary>
 		/// <param name="r">Angle of rotation in radians.</param>
-		/// <returns>
-		/// Quaternion that represents rotation around Y-axis.
-		/// </returns>
+		/// <returns>Quaternion that represents rotation around Y-axis.</returns>
 		public static Quaternion CreateRotationAroundY(float r)
 		{
 			var q = new Quaternion();
@@ -518,9 +474,7 @@ namespace CryEngine
 		/// Creates new quaternion that represents rotation around Z-axis.
 		/// </summary>
 		/// <param name="r">Angle of rotation in radians.</param>
-		/// <returns>
-		/// Quaternion that represents rotation around Z-axis.
-		/// </returns>
+		/// <returns>Quaternion that represents rotation around Z-axis.</returns>
 		public static Quaternion CreateRotationAroundZ(float r)
 		{
 			var q = new Quaternion();
@@ -528,19 +482,17 @@ namespace CryEngine
 			return q;
 		}
 		/// <summary>
-		/// Creates quaternion that represents rotation from first
-		/// vector two the sector via shortest arc.
+		/// Creates quaternion that represents rotation from first vector two the sector via
+		/// shortest arc.
 		/// </summary>
 		/// <param name="one">First vector.</param>
 		/// <param name="two">Second vector.</param>
 		/// <param name="fallbackAxis">
-		/// Axis to use to represent 180 degrees rotation when turns
-		/// out, that two vectors are collinear about point in
-		/// opposite directions.
+		/// Axis to use to represent 180 degrees rotation when turns out, that two vectors are
+		/// collinear about point in opposite directions.
 		/// </param>
 		/// <returns>
-		/// Quaternion that represents rotation from first vector two
-		/// the sector via shortest arc.
+		/// Quaternion that represents rotation from first vector two the sector via shortest arc.
 		/// </returns>
 		public static Quaternion CreateRotationFrom2Vectors(Vector3 one, Vector3 two, Vector3 fallbackAxis = new Vector3())
 		{
@@ -551,16 +503,15 @@ namespace CryEngine
 			return q;
 		}
 		/// <summary>
-		/// Creates new quaternion that represents rotation to given
-		/// vector from <see cref="Vector3.Up" />(?) vector.
+		/// Creates new quaternion that represents rotation to given vector from <see
+		/// cref="Vector3.Up" />(?) vector.
 		/// </summary>
 		/// <remarks>
-		/// This method is used when we need to make an entity to look
-		/// in a direction described by the <paramref name="vdir">vector</paramref>.
+		/// This method is used when we need to make an entity to look in a direction described by
+		/// the <paramref name="vdir">vector</paramref>.
 		/// </remarks>
 		/// <param name="vdir">
-		/// <see cref="Vector3" /> that represents direction to which
-		/// we need to find a rotation.
+		/// <see cref="Vector3" /> that represents direction to which we need to find a rotation.
 		/// </param>
 		public static Quaternion CreateRotationToViewDirection(Vector3 vdir)
 		{
@@ -569,16 +520,13 @@ namespace CryEngine
 			return q;
 		}
 		/// <summary>
-		/// Creates new quaternion that represents rotation to given
-		/// vector from <see cref="Vector3.Up" />(?) vector.
+		/// Creates new quaternion that represents rotation to given vector from <see
+		/// cref="Vector3.Up" />(?) vector.
 		/// </summary>
 		/// <param name="vdir">
-		/// <see cref="Vector3" /> that represents direction to which
-		/// we need to find a rotation.
+		/// <see cref="Vector3" /> that represents direction to which we need to find a rotation.
 		/// </param>
-		/// <param name="r">
-		/// Angle of rotation around forward axis to apply to new quaternion.
-		/// </param>
+		/// <param name="r">Angle of rotation around forward axis to apply to new quaternion.</param>
 		/// <seealso cref="Quaternion.CreateRotationToViewDirection(Vector3)"/>
 		public static Quaternion CreateRotationToViewDirection(Vector3 vdir, float r)
 		{
@@ -589,17 +537,13 @@ namespace CryEngine
 		/// <summary>
 		/// Creates quaternion using normalized linear interpolation algorithm.
 		/// </summary>
-		/// <param name="start">
-		/// Starting position for interpolation.
-		/// </param>
+		/// <param name="start">Starting position for interpolation.</param>
 		/// <param name="end">Ending position for interpolation.</param>
 		/// <param name="amount">
-		/// Value between 0 and 1 that defines "distance" between
-		/// required quaternion and given two.
+		/// Value between 0 and 1 that defines "distance" between required quaternion and given two.
 		/// </param>
 		/// <returns>
-		/// Quaternion that represents rotation between rotations
-		/// defined by given two quaternions.
+		/// Quaternion that represents rotation between rotations defined by given two quaternions.
 		/// </returns>
 		public static Quaternion CreateNormalizedLinearInterpolation(Quaternion start, Quaternion end, float amount)
 		{
@@ -608,20 +552,15 @@ namespace CryEngine
 			return q;
 		}
 		/// <summary>
-		/// Creates quaternion using different normalized linear
-		/// interpolation algorithm.
+		/// Creates quaternion using different normalized linear interpolation algorithm.
 		/// </summary>
-		/// <param name="start">
-		/// Starting position for interpolation.
-		/// </param>
+		/// <param name="start">Starting position for interpolation.</param>
 		/// <param name="end">Ending position for interpolation.</param>
 		/// <param name="amount">
-		/// Value between 0 and 1 that defines "distance" between
-		/// required quaternion and given two.
+		/// Value between 0 and 1 that defines "distance" between required quaternion and given two.
 		/// </param>
 		/// <returns>
-		/// Quaternion that represents rotation between rotations
-		/// defined by given two quaternions.
+		/// Quaternion that represents rotation between rotations defined by given two quaternions.
 		/// </returns>
 		public static Quaternion CreateNormalizedLinearInterpolation2(Quaternion start, Quaternion end, float amount)
 		{
@@ -632,17 +571,13 @@ namespace CryEngine
 		/// <summary>
 		/// Creates quaternion using spherical linear interpolation algorithm.
 		/// </summary>
-		/// <param name="start">
-		/// Starting position for interpolation.
-		/// </param>
+		/// <param name="start">Starting position for interpolation.</param>
 		/// <param name="end">Ending position for interpolation.</param>
 		/// <param name="amount">
-		/// Value between 0 and 1 that defines "distance" between
-		/// required quaternion and given two.
+		/// Value between 0 and 1 that defines "distance" between required quaternion and given two.
 		/// </param>
 		/// <returns>
-		/// Quaternion that represents rotation between rotations
-		/// defined by given two quaternions.
+		/// Quaternion that represents rotation between rotations defined by given two quaternions.
 		/// </returns>
 		public static Quaternion CreateSphericalLinearInterpolation(Quaternion start, Quaternion end, float amount)
 		{
@@ -660,15 +595,12 @@ namespace CryEngine
 		#endregion
 		#region Parsing
 		/// <summary>
-		/// Parses given text and creates quaternion that represents
-		/// this text.
+		/// Parses given text and creates quaternion that represents this text.
 		/// </summary>
 		/// <remarks>
 		/// Correct format = W,X,Y,Z
 		/// </remarks>
-		/// <param name="value">
-		/// Text that contains text representation of quaternion.
-		/// </param>
+		/// <param name="value">Text that contains text representation of quaternion.</param>
 		/// <returns>Quaternion represented by given text.</returns>
 		public static Quaternion Parse(string value)
 		{
@@ -693,14 +625,12 @@ namespace CryEngine
 		#region Interface
 		#region Predicates
 		/// <summary>
-		/// Determines whether this quaternion is sufficiently close
-		/// to another one.
+		/// Determines whether this quaternion is sufficiently close to another one.
 		/// </summary>
 		/// <param name="q">Another quaternion.</param>
 		/// <param name="epsilon">Precision of comparison.</param>
 		/// <returns>
-		/// True, if this quaternion represents rotation equivalent to
-		/// one represented by another quaternion.
+		/// True, if this quaternion represents rotation equivalent to one represented by another quaternion.
 		/// </returns>
 		public bool IsEquivalent(Quaternion q, float epsilon = 0.05f)
 		{
@@ -719,10 +649,7 @@ namespace CryEngine
 		/// Determines whether modulus of this quaternion is equal 1.
 		/// </summary>
 		/// <param name="epsilon">Precision of comparison.</param>
-		/// <returns>
-		/// True, if modulus of this quaternion is approximatly equal
-		/// to 1.
-		/// </returns>
+		/// <returns>True, if modulus of this quaternion is approximatly equal to 1.</returns>
 		public bool IsUnit(float epsilon = 0.05f)
 		{
 			return Math.Abs(1 - ((this | this))) < epsilon;
@@ -738,13 +665,11 @@ namespace CryEngine
 			this = Quaternion.Identity;
 		}
 		/// <summary>
-		/// Sets the value of this quaternion to one that represents
-		/// rotation around given axis by given angle.
+		/// Sets the value of this quaternion to one that represents rotation around given axis by
+		/// given angle.
 		/// </summary>
 		/// <param name="rad">Angle of rotation in radians.</param>
-		/// <param name="axis">
-		/// <see cref="Vector3" /> that defines axis of rotation.
-		/// </param>
+		/// <param name="axis"><see cref="Vector3" /> that defines axis of rotation.</param>
 		public void SetRotationAngleAxis(float rad, Vector3 axis)
 		{
 			float s, c;
@@ -752,26 +677,21 @@ namespace CryEngine
 			SetRotationAngleAxis(c, s, axis);
 		}
 		/// <summary>
-		/// Sets the value of this quaternion to one that represents
-		/// rotation around given axis by given angle.
+		/// Sets the value of this quaternion to one that represents rotation around given axis by
+		/// given angle.
 		/// </summary>
 		/// <param name="cosha">Cosine of angle of rotation.</param>
 		/// <param name="sinha">Sine of angle of rotation.</param>
-		/// <param name="axis">
-		/// <see cref="Vector3" /> that defines axis of rotation.
-		/// </param>
+		/// <param name="axis"><see cref="Vector3" /> that defines axis of rotation.</param>
 		public void SetRotationAngleAxis(float cosha, float sinha, Vector3 axis)
 		{
 			W = cosha;
 			V = axis * sinha;
 		}
 		/// <summary>
-		/// Sets the value of this quaternion to one that represents
-		/// rotation defined by Euler angles.
+		/// Sets the value of this quaternion to one that represents rotation defined by Euler angles.
 		/// </summary>
-		/// <param name="angle">
-		/// <see cref="Vector3" /> that defines Euler angles.
-		/// </param>
+		/// <param name="angle"><see cref="Vector3" /> that defines Euler angles.</param>
 		public void SetRotationAroundXYZAxes(Vector3 angle)
 		{
 			float sx;
@@ -792,8 +712,7 @@ namespace CryEngine
 			V.Z = sz * cy * cx - cz * sy * sx;
 		}
 		/// <summary>
-		/// Sets the value of this quaternion to one that represents
-		/// rotation by given angle around X-axis.
+		/// Sets the value of this quaternion to one that represents rotation by given angle around X-axis.
 		/// </summary>
 		/// <param name="r">Angle of rotation in radians.</param>
 		public void SetRotationAroundX(float r)
@@ -806,8 +725,7 @@ namespace CryEngine
 			V.Z = 0;
 		}
 		/// <summary>
-		/// Sets the value of this quaternion to one that represents
-		/// rotation by given angle around Y-axis.
+		/// Sets the value of this quaternion to one that represents rotation by given angle around Y-axis.
 		/// </summary>
 		/// <param name="r">Angle of rotation in radians.</param>
 		public void SetRotationAroundY(float r)
@@ -820,8 +738,7 @@ namespace CryEngine
 			V.Z = 0;
 		}
 		/// <summary>
-		/// Sets the value of this quaternion to one that represents
-		/// rotation by given angle around Z-axis.
+		/// Sets the value of this quaternion to one that represents rotation by given angle around Z-axis.
 		/// </summary>
 		/// <param name="r">Angle of rotation in radians.</param>
 		public void SetRotationAroundZ(float r)
@@ -834,20 +751,18 @@ namespace CryEngine
 			V.Z = s;
 		}
 		/// <summary>
-		/// Sets the value of this quaternion to one that represents
-		/// rotation from first vector two the sector via shortest arc.
+		/// Sets the value of this quaternion to one that represents rotation from first vector two
+		/// the sector via shortest arc.
 		/// </summary>
 		/// <param name="one">First vector.</param>
 		/// <param name="two">Second vector.</param>
 		/// <param name="fallbackAxis">
-		/// Axis to use to represent 180 degrees rotation when turns
-		/// out, that two vectors are collinear about point in
-		/// opposite directions.
+		/// Axis to use to represent 180 degrees rotation when turns out, that two vectors are
+		/// collinear about point in opposite directions.
 		/// </param>
 		public void SetRotationFrom2Vectors(Vector3 one, Vector3 two, Vector3 fallbackAxis = new Vector3())
 		{
-			// Based on Stan Melax's article in Game Programming Gems
-			// Copy, since cannot modify local
+			// Based on Stan Melax's article in Game Programming Gems Copy, since cannot modify local
 			Vector3 v0 = one;
 			Vector3 v1 = two;
 			v0.Normalize();
@@ -891,16 +806,15 @@ namespace CryEngine
 			}
 		}
 		/// <summary>
-		/// Sets value of this quaternion to value that represents
-		/// rotation to given vector from <see cref="Vector3.Up" />(?) vector.
+		/// Sets value of this quaternion to value that represents rotation to given vector from
+		/// <see cref="Vector3.Up" />(?) vector.
 		/// </summary>
 		/// <remarks>
-		/// This method is used when we need to make an entity to look
-		/// in a direction described by the <paramref name="vdir">vector</paramref>.
+		/// This method is used when we need to make an entity to look in a direction described by
+		/// the <paramref name="vdir">vector</paramref>.
 		/// </remarks>
 		/// <param name="vdir">
-		/// <see cref="Vector3" /> that represents direction to which
-		/// we need to find a rotation.
+		/// <see cref="Vector3" /> that represents direction to which we need to find a rotation.
 		/// </param>
 		public void SetRotationToViewDirection(Vector3 vdir)
 		{
@@ -934,16 +848,13 @@ namespace CryEngine
 			}
 		}
 		/// <summary>
-		/// Sets value of this quaternion to value that represents
-		/// rotation to given vector from <see cref="Vector3.Up" />(?) vector.
+		/// Sets value of this quaternion to value that represents rotation to given vector from
+		/// <see cref="Vector3.Up" />(?) vector.
 		/// </summary>
 		/// <param name="vdir">
-		/// <see cref="Vector3" /> that represents direction to which
-		/// we need to find a rotation.
+		/// <see cref="Vector3" /> that represents direction to which we need to find a rotation.
 		/// </param>
-		/// <param name="r">
-		/// Angle of rotation around forward axis to apply to new quaternion.
-		/// </param>
+		/// <param name="r">Angle of rotation around forward axis to apply to new quaternion.</param>
 		/// <seealso cref="Quaternion.SetRotationToViewDirection(Vector3)"/>
 		public void SetRotationToViewDirection(Vector3 vdir, float r)
 		{
@@ -973,8 +884,7 @@ namespace CryEngine
 			W *= d; V.X *= d; V.Y *= d; V.Z *= d;
 		}
 		/// <summary>
-		/// Normalizes this quaternion or just sets it to identity if
-		/// its too small.
+		/// Normalizes this quaternion or just sets it to identity if its too small.
 		/// </summary>
 		/// <see cref="Quaternion.Identity"/>
 		public void NormalizeSafe()
@@ -1006,14 +916,11 @@ namespace CryEngine
 		/// <summary>
 		/// Sets this quaternion to result of normalized linear interpolation.
 		/// </summary>
-		/// <param name="start">
-		/// Starting quaternion in interpolation.
-		/// </param>
+		/// <param name="start">Starting quaternion in interpolation.</param>
 		/// <param name="end">Ending quaternion in interpolation.</param>
 		/// <param name="amount">
-		/// Number between 0 and 1 that sets position of resulting
-		/// quaternion between <paramref name="start" /> and <paramref
-		/// name="end" />.
+		/// Number between 0 and 1 that sets position of resulting quaternion between <paramref
+		/// name="start" /> and <paramref name="end" />.
 		/// </param>
 		public void NormalizedLinearInterpolation(Quaternion start, Quaternion end, float amount)
 		{
@@ -1028,17 +935,13 @@ namespace CryEngine
 			Normalize();
 		}
 		/// <summary>
-		/// Sets this quaternion to result of normalized linear
-		/// interpolation using a different algorithm.
+		/// Sets this quaternion to result of normalized linear interpolation using a different algorithm.
 		/// </summary>
-		/// <param name="start">
-		/// Starting quaternion in interpolation.
-		/// </param>
+		/// <param name="start">Starting quaternion in interpolation.</param>
 		/// <param name="end">Ending quaternion in interpolation.</param>
 		/// <param name="amount">
-		/// Number between 0 and 1 that sets position of resulting
-		/// quaternion between <paramref name="start" /> and <paramref
-		/// name="end" />.
+		/// Number between 0 and 1 that sets position of resulting quaternion between <paramref
+		/// name="start" /> and <paramref name="end" />.
 		/// </param>
 		public void NormalizedLinearInterpolation2(Quaternion start, Quaternion end, float amount)
 		{
@@ -1056,14 +959,11 @@ namespace CryEngine
 		/// <summary>
 		/// Sets this quaternion to result of spherical linear interpolation.
 		/// </summary>
-		/// <param name="start">
-		/// Starting quaternion in interpolation.
-		/// </param>
+		/// <param name="start">Starting quaternion in interpolation.</param>
 		/// <param name="end">Ending quaternion in interpolation.</param>
 		/// <param name="amount">
-		/// Number between 0 and 1 that sets position of resulting
-		/// quaternion between <paramref name="start" /> and <paramref
-		/// name="end" />.
+		/// Number between 0 and 1 that sets position of resulting quaternion between <paramref
+		/// name="start" /> and <paramref name="end" />.
 		/// </param>
 		public void SphericalLinearInterpolation(Quaternion start, Quaternion end, float amount)
 		{
@@ -1103,12 +1003,9 @@ namespace CryEngine
 		/// Gets quaternion that is this quaternion scaled by given factor.
 		/// </summary>
 		/// <param name="scale">
-		/// Number that represents a scale of new quaternion in
-		/// relation to this one.
+		/// Number that represents a scale of new quaternion in relation to this one.
 		/// </param>
-		/// <returns>
-		/// Quaternion that is this quaternion scaled by given factor.
-		/// </returns>
+		/// <returns>Quaternion that is this quaternion scaled by given factor.</returns>
 		public Quaternion GetScaled(float scale)
 		{
 			return CreateNormalizedLinearInterpolation(Quaternion.Identity, this, scale);
@@ -1135,9 +1032,7 @@ namespace CryEngine
 		/// Determines whether this quaternion is equal to given object.
 		/// </summary>
 		/// <param name="obj">Given object.</param>
-		/// <returns>
-		/// True, if object is quaternion equal to this one.
-		/// </returns>
+		/// <returns>True, if object is quaternion equal to this one.</returns>
 		public override bool Equals(object obj)
 		{
 			if (obj == null)

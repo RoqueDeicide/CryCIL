@@ -71,31 +71,34 @@ namespace CryEngine
 
 	// public override int GetHashCode() { return v.GetHashCode(); }
 
-	// #region Operator overloads public static implicit operator
-	// float(Degree angleObj) { return angleObj.v; }
+	// #region Operator overloads public static implicit operator float(Degree angleObj) { return
+	// angleObj.v; }
 
-	// public static implicit operator Degree(float _angle) { return
-	// new Degree(_angle); }
+	// public static implicit operator Degree(float _angle) { return new Degree(_angle); }
 
-	// public static Degree operator +(Degree lhs, Degree rhs) {
-	// Degree angle = new Degree(lhs.v); angle.Increment(rhs.v);
-	// return angle; }
+	// public static Degree operator +(Degree lhs, Degree rhs) { Degree angle = new Degree(lhs.v);
+	// angle.Increment(rhs.v); return angle; }
 
-	// public static Degree operator -(Degree lhs, Degree rhs) {
-	// Degree angle = new Degree(lhs.v); angle.Decrement(rhs.v);
-	// return angle; }
+	// public static Degree operator -(Degree lhs, Degree rhs) { Degree angle = new Degree(lhs.v);
+	// angle.Decrement(rhs.v); return angle; }
 
-	// public static bool operator <(Degree lhs, Degree rhs) { if
-	// (lhs.v < rhs.v) return true; return false; }
+	// public static bool operator <(Degree lhs, Degree rhs) { if (lhs.v < rhs.v) return true;
+	// return false; }
 
-	// public static bool operator <=(Degree lhs, Degree rhs) { if
-	// (lhs.v <= rhs.v) return true; return false; }
+	// public static bool operator <=(Degree lhs, Degree rhs) { if (lhs.v <= rhs.v) return true;
+	// return false; }
 
-	// public static bool operator >(Degree lhs, Degree rhs) { if
-	// (lhs.v > rhs.v) return true; return false; }
+	// public static bool operator >(Degree lhs, Degree rhs) { if (lhs.v > rhs.v) return true;
+	// return false; }
 
-	// public static bool operator >=(Degree lhs, Degree rhs) { if
-	// (lhs.v >= rhs.v) return true; return false; } #endregion
+	// public static bool operator >=(Degree lhs, Degree rhs) { if (lhs.v >= rhs.v) return true;
+	// return false; } #endregion
+	//
+	//
+	//
+	//
+	//
+	//
 	//
 	//}
 	#endregion
@@ -118,8 +121,7 @@ namespace CryEngine
 		/// </summary>
 		/// <param name="radians">Angle in radians.</param>
 		/// <param name="norm">
-		/// Indicate whether we should normalize the angle, and if so
-		/// then how.
+		/// Indicate whether we should normalize the angle, and if so then how.
 		/// </param>
 		/// <returns>Angle in degrees.</returns>
 		public static float Degree(float radians, NormalizeType norm)
@@ -154,8 +156,7 @@ namespace CryEngine
 		/// </summary>
 		/// <param name="radians">Angle in radians.</param>
 		/// <param name="norm">
-		/// Indicate whether we should normalize the angle, and if so
-		/// then how.
+		/// Indicate whether we should normalize the angle, and if so then how.
 		/// </param>
 		/// <returns>Angle in degrees.</returns>
 		public static double Degree(double radians, NormalizeType norm)
@@ -190,8 +191,7 @@ namespace CryEngine
 		/// </summary>
 		/// <param name="degrees">Angle in degrees.</param>
 		/// <param name="norm">
-		/// Indicate whether we should normalize the angle, and if so
-		/// then how.
+		/// Indicate whether we should normalize the angle, and if so then how.
 		/// </param>
 		/// <returns>Angle in radians.</returns>
 		public static double Radian(double degrees, NormalizeType norm)
@@ -226,8 +226,7 @@ namespace CryEngine
 		/// </summary>
 		/// <param name="degrees">Angle in degrees.</param>
 		/// <param name="norm">
-		/// Indicate whether we should normalize the angle, and if so
-		/// then how.
+		/// Indicate whether we should normalize the angle, and if so then how.
 		/// </param>
 		/// <returns>Angle in radians.</returns>
 		public static float Radian(float degrees, NormalizeType norm)

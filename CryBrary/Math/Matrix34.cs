@@ -18,8 +18,8 @@ namespace CryEngine
 		/// Identity matrix.
 		/// </summary>
 		/// <remarks>
-		/// Identity matrix is a matrix where all elements on main
-		/// diagonal are equal to 1, and all others are zeroed.
+		/// Identity matrix is a matrix where all elements on main diagonal are equal to 1, and all
+		/// others are zeroed.
 		/// </remarks>
 		public static readonly Matrix34 Identity = new Matrix34
 		(
@@ -157,16 +157,11 @@ namespace CryEngine
 		/// <summary>
 		/// Creates new instance of type <see cref="Matrix34" />.
 		/// </summary>
-		/// <param name="s">
-		/// <see cref="Vector3" /> that contains scaling factors.
-		/// </param>
+		/// <param name="s"><see cref="Vector3" /> that contains scaling factors.</param>
 		/// <param name="q">
-		/// <see cref="Quaternion" /> that represents rotation that
-		/// new matrix will represent.
+		/// <see cref="Quaternion" /> that represents rotation that new matrix will represent.
 		/// </param>
-		/// <param name="t">
-		/// <see cref="Vector3" /> that represents translation.
-		/// </param>
+		/// <param name="t"><see cref="Vector3" /> that represents translation.</param>
 		public Matrix34(Vector3 s, Quaternion q, Vector3 t = default(Vector3))
 			: this()
 		{
@@ -175,9 +170,7 @@ namespace CryEngine
 		/// <summary>
 		/// Creates new instance of type <see cref="Matrix34" />.
 		/// </summary>
-		/// <param name="m33">
-		/// <see cref="Matrix33" /> to use to fill first 3 columns.
-		/// </param>
+		/// <param name="m33"><see cref="Matrix33" /> to use to fill first 3 columns.</param>
 		public Matrix34(Matrix33 m33)
 			: this()
 		{
@@ -189,8 +182,7 @@ namespace CryEngine
 
 		#region Properties
 		/// <summary>
-		/// Gets angles of rotations around fixed axes that are
-		/// represented by this matrix.
+		/// Gets angles of rotations around fixed axes that are represented by this matrix.
 		/// </summary>
 		public Vector3 Angles
 		{
@@ -277,8 +269,7 @@ namespace CryEngine
 		/// Apples scaling to the columns of the matrix.
 		/// </summary>
 		/// <param name="s">
-		/// <see cref="Vector3" /> object which X component will scale
-		/// first column, Y - second, Z - third.
+		/// <see cref="Vector3" /> object which X component will scale first column, Y - second, Z - third.
 		/// </param>
 		public void ScaleColumns(Vector3 s)
 		{
@@ -290,8 +281,8 @@ namespace CryEngine
 		/// Apples scaling to the columns of the matrix.
 		/// </summary>
 		/// <param name="s">
-		/// <see cref="Vector4" /> object which X component will scale
-		/// first column, Y - second, Z - third, W - fourth.
+		/// <see cref="Vector4" /> object which X component will scale first column, Y - second, Z -
+		/// third, W - fourth.
 		/// </param>
 		public void ScaleColumns(Vector4 s)
 		{
@@ -305,14 +296,11 @@ namespace CryEngine
 		/// Create a rotation matrix around an arbitrary axis (Eulers Theorem).
 		/// </summary>
 		/// <example>
-		/// <code>Matrix34 m34; Vector3 axis=GetNormalized(
-		/// Vector3(-1.0f,-0.3f,0.0f) ); m34.SetRotationAA( 3.14314f,
-		/// axis, Vector3(5,5,5) );</code>
+		/// <code>Matrix34 m34; Vector3 axis=GetNormalized( Vector3(-1.0f,-0.3f,0.0f) );
+		/// m34.SetRotationAA( 3.14314f, axis, Vector3(5,5,5) );</code>
 		/// </example>
 		/// <param name="rad">Angle of rotation in radians.</param>
-		/// <param name="axis">
-		/// Normalized vector that represents axis of rotation.
-		/// </param>
+		/// <param name="axis">Normalized vector that represents axis of rotation.</param>
 		/// <param name="t">Optional translation vector.</param>
 		public void SetRotationAA(float rad, Vector3 axis, Vector3 t = default(Vector3))
 		{
@@ -433,8 +421,7 @@ namespace CryEngine
 		/// Convert three Euler angle to 3x3 matrix (rotation order:XYZ)
 		/// </summary>
 		/// <example>
-		/// <code>Matrix34 m34; m34.SetRotationXYZ(new
-		/// Vector3(0.5f,0.2f,0.9f), translation);</code>
+		/// <code>Matrix34 m34; m34.SetRotationXYZ(new Vector3(0.5f,0.2f,0.9f), translation);</code>
 		/// </example>
 		/// <param name="rad">Angles of rotation.</param>
 		/// <param name="t">Optional translation vector.</param>
@@ -604,8 +591,7 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// determinant is ambiguous: only the upper-left-submatrix's
-		/// determinant is calculated
+		/// determinant is ambiguous: only the upper-left-submatrix's determinant is calculated
 		/// </summary>
 		/// <returns></returns>
 		public float Determinant()
@@ -622,30 +608,22 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Direct-Matrix-Slerp: for the sake of completeness, I have
-		/// included the following expression for
-		/// Spherical-Linear-Interpolation without using quaternions.
-		/// This is much faster then converting both matrices into
-		/// quaternions in order to do a quaternion slerp and then
-		/// converting the slerped quaternion back into a matrix. This
-		/// is a high-precision calculation. Given two orthonormal 3x3
-		/// matrices this function calculates the shortest possible
-		/// interpolation-path between the two rotations. The
-		/// interpolation curve forms a great arc on the rotation
-		/// sphere (geodesic). Not only does Slerp follow a great arc
-		/// it follows the shortest great arc. Furthermore Slerp has
-		/// constant angular velocity. All in all Slerp is the optimal
-		/// interpolation curve between two rotations. STABILITY
+		/// Direct-Matrix-Slerp: for the sake of completeness, I have included the following
+		/// expression for Spherical-Linear-Interpolation without using quaternions. This is much
+		/// faster then converting both matrices into quaternions in order to do a quaternion slerp
+		/// and then converting the slerped quaternion back into a matrix. This is a high-precision
+		/// calculation. Given two orthonormal 3x3 matrices this function calculates the shortest
+		/// possible interpolation-path between the two rotations. The interpolation curve forms a
+		/// great arc on the rotation sphere (geodesic). Not only does Slerp follow a great arc it
+		/// follows the shortest great arc. Furthermore Slerp has constant angular velocity. All in
+		/// all Slerp is the optimal interpolation curve between two rotations. STABILITY
 		/// PROBLEM: There are two singularities at angle=0 and
-		/// angle=PI. At 0 the interpolation-axis is arbitrary, which
-		/// means any axis will produce the same result because we
-		/// have no rotation. Thats why I'm using (1,0,0). At PI the
-		/// rotations point away from each other and the
-		/// interpolation-axis is unpredictable. In this case I'm also
-		/// using the axis (1,0,0). If the angle is ~0 or ~PI, then we
-		/// have to normalize a very small vector and this can cause
-		/// numerical instability. The quaternion-slerp has exactly
-		/// the same problems. Ivo
+		/// angle=PI. At 0 the interpolation-axis is arbitrary, which means any axis will produce
+		/// the same result because we have no rotation. Thats why I'm using (1,0,0). At PI the
+		/// rotations point away from each other and the interpolation-axis is unpredictable. In
+		/// this case I'm also using the axis (1,0,0). If the angle is ~0 or ~PI, then we have to
+		/// normalize a very small vector and this can cause numerical instability. The
+		/// quaternion-slerp has exactly the same problems. Ivo
 		/// </summary>
 		/// <param name="m"></param>
 		/// <param name="n"></param>
@@ -709,8 +687,7 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// check if we have an orthonormal-base (general case, works
-		/// even with reflection matrices)
+		/// check if we have an orthonormal-base (general case, works even with reflection matrices)
 		/// </summary>
 		/// <param name="threshold"></param>
 		/// <returns></returns>
@@ -768,12 +745,9 @@ namespace CryEngine
 
 		#region Operators
 		/// <summary>
-		/// Extracts <see cref="Matrix33" /> submatrix of <see
-		/// cref="Matrix34" />.
+		/// Extracts <see cref="Matrix33" /> submatrix of <see cref="Matrix34" />.
 		/// </summary>
-		/// <param name="m">
-		/// <see cref="Matrix34" /> to extract 3x3 matrix from.
-		/// </param>
+		/// <param name="m"><see cref="Matrix34" /> to extract 3x3 matrix from.</param>
 		/// <returns>Extracted matrix.</returns>
 		public static explicit operator Matrix33(Matrix34 m)
 		{

@@ -133,8 +133,7 @@ namespace CryEngine
 			}
 		}
 		/// <summary>
-		/// Gets vector which components are absolute values of
-		/// components of this vector.
+		/// Gets vector which components are absolute values of components of this vector.
 		/// </summary>
 		public Vector3 Absolute
 		{
@@ -156,16 +155,12 @@ namespace CryEngine
 		/// <summary>
 		/// Gets or sets the component at the specified index.
 		/// </summary>
-		/// <value>
-		/// The value of the X, Y or Z component, depending on the index.
-		/// </value>
+		/// <value>The value of the X, Y or Z component, depending on the index.</value>
 		/// <param name="index">
-		/// The index of the component to access. Use 0 for the X
-		/// component, 1 for the Y component, 2 for the Z component.
+		/// The index of the component to access. Use 0 for the X component, 1 for the Y component,
+		/// 2 for the Z component.
 		/// </param>
-		/// <returns>
-		/// The value of the component at the specified index.
-		/// </returns>
+		/// <returns>The value of the component at the specified index.</returns>
 		public float this[int index]
 		{
 			get
@@ -222,20 +217,17 @@ namespace CryEngine
 		/// Creates new <see cref="Vector3" />.
 		/// </summary>
 		/// <param name="f">
-		/// <see cref="Single" /> value to assign to all components of
-		/// new vector.
+		/// <see cref="Single" /> value to assign to all components of new vector.
 		/// </param>
 		public Vector3(float f)
 		{
 			X = Y = Z = f;
 		}
 		/// <summary>
-		/// Creates new <see cref="Vector3" /> from specified <see
-		/// cref="Vector2" />.
+		/// Creates new <see cref="Vector3" /> from specified <see cref="Vector2" />.
 		/// </summary>
 		/// <param name="v2">
-		/// <see cref="Vector2" /> that defines X and Y components of
-		/// new vector.
+		/// <see cref="Vector2" /> that defines X and Y components of new vector.
 		/// </param>
 		public Vector3(Vector2 v2)
 		{
@@ -244,8 +236,7 @@ namespace CryEngine
 			Z = 0;
 		}
 		/// <summary>
-		/// Creates new <see cref="Vector3" /> from specified <see
-		/// cref="Quaternion" /> instance.
+		/// Creates new <see cref="Vector3" /> from specified <see cref="Quaternion" /> instance.
 		/// </summary>
 		/// <param name="q">Quaternion that defines new vector.</param>
 		public Vector3(Quaternion q)
@@ -266,14 +257,11 @@ namespace CryEngine
 		/// Creates new <see cref="Vector3" />.
 		/// </summary>
 		/// <param name="values">
-		/// An array of floating point values which specify new vector
-		/// using following rules: <para>If array is null or empty
-		/// zero vector is created.</para><para>If array contains 1
-		/// value it is assigned to all three
-		/// components.</para><para>If array contains 2 values they
-		/// are assigned to first two components while Z is
-		/// zeroed.</para><para>If array contains 3 or more values
-		/// first three values are assigned to vector components.</para>
+		/// An array of floating point values which specify new vector using following rules:
+		/// <para>If array is null or empty zero vector is created.</para><para>If array contains 1
+		/// value it is assigned to all three components.</para><para>If array contains 2 values
+		/// they are assigned to first two components while Z is zeroed.</para><para>If array
+		/// contains 3 or more values first three values are assigned to vector components.</para>
 		/// </param>
 		public Vector3(float[] values)
 		{
@@ -306,13 +294,11 @@ namespace CryEngine
 		/// Creates new <see cref="Vector3" />.
 		/// </summary>
 		/// <param name="values">
-		/// A list of floating point values which specify new vector
-		/// using following rules: <para>If list is null or empty zero
-		/// vector is created.</para><para>If list contains 1 value it
-		/// is assigned to all three components.</para><para>If list
-		/// contains 2 values they are assigned to first two
-		/// components while Z is zeroed.</para><para>If list contains
-		/// 3 or more values first three values are assigned to vector components.</para>
+		/// A list of floating point values which specify new vector using following rules: <para>If
+		/// list is null or empty zero vector is created.</para><para>If list contains 1 value it is
+		/// assigned to all three components.</para><para>If list contains 2 values they are
+		/// assigned to first two components while Z is zeroed.</para><para>If list contains 3 or
+		/// more values first three values are assigned to vector components.</para>
 		/// </param>
 		public Vector3(List<float> values)
 		{
@@ -345,8 +331,7 @@ namespace CryEngine
 		/// Creates new <see cref="Vector3" />.
 		/// </summary>
 		/// <param name="values">
-		/// A <see cref="Dictionary{TKey,TValue}" /> which is used to
-		/// initialize new vector.
+		/// A <see cref="Dictionary{TKey,TValue}" /> which is used to initialize new vector.
 		/// </param>
 		public Vector3(Dictionary<string, float> values)
 		{
@@ -380,9 +365,7 @@ namespace CryEngine
 		/// <summary>
 		/// Creates an array that contains components of this vector.
 		/// </summary>
-		/// <returns>
-		/// An array of 3 elements which contain corresponding vector components.
-		/// </returns>
+		/// <returns>An array of 3 elements which contain corresponding vector components.</returns>
 		public float[] ToArray()
 		{
 			return new float[] { this.X, this.Y, this.Z };
@@ -390,9 +373,7 @@ namespace CryEngine
 		/// <summary>
 		/// Creates a list that contains components of this vector.
 		/// </summary>
-		/// <returns>
-		/// A list of four elements which contain corresponding vector components.
-		/// </returns>
+		/// <returns>A list of four elements which contain corresponding vector components.</returns>
 		public List<float> ToList()
 		{
 			List<float> result = new List<float>(3);
@@ -405,8 +386,8 @@ namespace CryEngine
 		/// Creates a dictionary that contains components of this vector.
 		/// </summary>
 		/// <returns>
-		/// A dictionary which capacity is set to 3 where components
-		/// of the vector can be accessed with keys of same names.
+		/// A dictionary which capacity is set to 3 where components of the vector can be accessed
+		/// with keys of same names.
 		/// </returns>
 		public Dictionary<string, float> ToDictionary()
 		{
@@ -602,8 +583,7 @@ namespace CryEngine
 		/// </summary>
 		/// <param name="vec">Vector to convert.</param>
 		/// <returns>
-		/// <see cref="Color" /> object where R is vector's
-		/// X-component, G - Y, B - Z.
+		/// <see cref="Color" /> object where R is vector's X-component, G - Y, B - Z.
 		/// </returns>
 		public static implicit operator Color(Vector3 vec)
 		{
@@ -613,13 +593,11 @@ namespace CryEngine
 		#endregion
 		#region Modification
 		/// <summary>
-		/// Creates new instance of <see cref="Vector3" /> where Y, Z
-		/// and W components are of this instance and X component is
-		/// specified by given value.
+		/// Creates new instance of <see cref="Vector3" /> where Y, Z and W components are of this
+		/// instance and X component is specified by given value.
 		/// </summary>
 		/// <remarks>
-		/// This method allows to simplify code where this instance is
-		/// a property which you want to modify.
+		/// This method allows to simplify code where this instance is a property which you want to modify.
 		/// </remarks>
 		/// <param name="value">New value for X component.</param>
 		/// <returns>Modified vector.</returns>
@@ -628,13 +606,11 @@ namespace CryEngine
 			return new Vector3(value, this.Y, this.Z);
 		}
 		/// <summary>
-		/// Creates new instance of <see cref="Vector3" /> where X, Z
-		/// and W components are of this instance and Y component is
-		/// specified by given value.
+		/// Creates new instance of <see cref="Vector3" /> where X, Z and W components are of this
+		/// instance and Y component is specified by given value.
 		/// </summary>
 		/// <remarks>
-		/// This method allows to simplify code where this instance is
-		/// a property which you want to modify.
+		/// This method allows to simplify code where this instance is a property which you want to modify.
 		/// </remarks>
 		/// <param name="value">New value for Y component.</param>
 		/// <returns>Modified vector.</returns>
@@ -643,13 +619,11 @@ namespace CryEngine
 			return new Vector3(this.X, value, this.Z);
 		}
 		/// <summary>
-		/// Creates new instance of <see cref="Vector3" /> where X, Y
-		/// and W components are of this instance and Z component is
-		/// specified by given value.
+		/// Creates new instance of <see cref="Vector3" /> where X, Y and W components are of this
+		/// instance and Z component is specified by given value.
 		/// </summary>
 		/// <remarks>
-		/// This method allows to simplify code where this instance is
-		/// a property which you want to modify.
+		/// This method allows to simplify code where this instance is a property which you want to modify.
 		/// </remarks>
 		/// <param name="value">New value for Z component.</param>
 		/// <returns>Modified vector.</returns>
@@ -658,19 +632,13 @@ namespace CryEngine
 			return new Vector3(this.X, this.Y, value);
 		}
 		/// <summary>
-		/// Creates new <see cref="Vector3" /> which represents this
-		/// vector with modified values.
+		/// Creates new <see cref="Vector3" /> which represents this vector with modified values.
 		/// </summary>
 		/// <remarks>
-		/// This method allows to simplify code where this instance is
-		/// a property which you want to modify.
+		/// This method allows to simplify code where this instance is a property which you want to modify.
 		/// </remarks>
-		/// <param name="offset">
-		/// Index of first component to be modified.
-		/// </param>
-		/// <param name="newValues">
-		/// New values for components to modify.
-		/// </param>
+		/// <param name="offset">Index of first component to be modified.</param>
+		/// <param name="newValues">New values for components to modify.</param>
 		/// <returns>Modified vector.</returns>
 		public Vector3 ModifyVector(int offset, params float[] newValues)
 		{
@@ -696,18 +664,12 @@ namespace CryEngine
 		#endregion
 		#region Interpolations
 		/// <summary>
-		/// Sets this vector to be a linear interpolation defined by
-		/// two vectors and a value.
+		/// Sets this vector to be a linear interpolation defined by two vectors and a value.
 		/// </summary>
-		/// <param name="p">
-		/// First vector that defines interpolation.
-		/// </param>
-		/// <param name="q">
-		/// Second vector that defines interpolation.
-		/// </param>
+		/// <param name="p">First vector that defines interpolation.</param>
+		/// <param name="q">Second vector that defines interpolation.</param>
 		/// <param name="t">
-		/// A value between 0 and 1 that defines position of
-		/// interpolated vector.
+		/// A value between 0 and 1 that defines position of interpolated vector.
 		/// </param>
 		public void SetLinearInterpolation(Vector3 p, Vector3 q, float t)
 		{
@@ -715,27 +677,20 @@ namespace CryEngine
 			this = p + (diff * t);
 		}
 		/// <summary>
-		/// Sets this vector to be a spherical interpolation defined
-		/// by two vectors and a value.
+		/// Sets this vector to be a spherical interpolation defined by two vectors and a value.
 		/// </summary>
-		/// <param name="p">
-		/// First vector that defines interpolation.
-		/// </param>
-		/// <param name="q">
-		/// Second vector that defines interpolation.
-		/// </param>
+		/// <param name="p">First vector that defines interpolation.</param>
+		/// <param name="q">Second vector that defines interpolation.</param>
 		/// <param name="t">
-		/// A value between 0 and 1 that defines position of
-		/// interpolated vector.
+		/// A value between 0 and 1 that defines position of interpolated vector.
 		/// </param>
 		public void SetSphericalInterpolation(Vector3 p, Vector3 q, float t)
 		{
 			// calculate cosine using the "inner product" between two
 			// vectors: p*q=cos(radiant)
 			float cosine = MathHelpers.Clamp((p | q), -1f, 1f);
-			// Perform normalized linear interpolation if two vectors
-			// if they are very close to each other to avoid division
-			// by zero.
+			// Perform normalized linear interpolation if two vectors if they are very close to each
+			// other to avoid division by zero.
 			if (cosine >= 0.99f)
 			{
 				SetLinearInterpolation(p, q, t); //perform LERP:
@@ -753,15 +708,10 @@ namespace CryEngine
 		/// <summary>
 		/// Creates linear interpolation defined by two vectors and a value.
 		/// </summary>
-		/// <param name="p">
-		/// First vector that defines interpolation.
-		/// </param>
-		/// <param name="q">
-		/// Second vector that defines interpolation.
-		/// </param>
+		/// <param name="p">First vector that defines interpolation.</param>
+		/// <param name="q">Second vector that defines interpolation.</param>
 		/// <param name="t">
-		/// A value between 0 and 1 that defines position of
-		/// interpolated vector.
+		/// A value between 0 and 1 that defines position of interpolated vector.
 		/// </param>
 		public static Vector3 CreateLinearInterpolation(Vector3 p, Vector3 q, float t)
 		{
@@ -769,18 +719,12 @@ namespace CryEngine
 			return p + (diff * t);
 		}
 		/// <summary>
-		/// Creates spherical interpolation defined by two vectors and
-		/// a value.
+		/// Creates spherical interpolation defined by two vectors and a value.
 		/// </summary>
-		/// <param name="p">
-		/// First vector that defines interpolation.
-		/// </param>
-		/// <param name="q">
-		/// Second vector that defines interpolation.
-		/// </param>
+		/// <param name="p">First vector that defines interpolation.</param>
+		/// <param name="q">Second vector that defines interpolation.</param>
 		/// <param name="t">
-		/// A value between 0 and 1 that defines position of
-		/// interpolated vector.
+		/// A value between 0 and 1 that defines position of interpolated vector.
 		/// </param>
 		public static Vector3 CreateSphericalInterpolation(Vector3 p, Vector3 q, float t)
 		{
@@ -792,12 +736,10 @@ namespace CryEngine
 		#endregion
 		#region Clamping
 		/// <summary>
-		/// If length of this vector is greater then specified value,
-		/// then downscales this vector to make its length match given value.
+		/// If length of this vector is greater then specified value, then downscales this vector to
+		/// make its length match given value.
 		/// </summary>
-		/// <param name="maxLength">
-		/// Maximal length this vector should have.
-		/// </param>
+		/// <param name="maxLength">Maximal length this vector should have.</param>
 		public void ClampLength(float maxLength)
 		{
 			float sqrLength = LengthSquared;
@@ -828,9 +770,7 @@ namespace CryEngine
 		/// <param name="value">The vector to clamp.</param>
 		/// <param name="min">The minimum vertex of cuboid.</param>
 		/// <param name="max">The maximum vertex of cuboid.</param>
-		/// <param name="result">
-		/// When the method completes, contains the clamped vector.
-		/// </param>
+		/// <param name="result">When the method completes, contains the clamped vector.</param>
 		public static void Clamp(ref Vector3 value, ref Vector3 min, ref Vector3 max, out Vector3 result)
 		{
 			float x = value.X;
@@ -854,8 +794,7 @@ namespace CryEngine
 		/// </summary>
 		/// <param name="vec1">Another vector.</param>
 		/// <returns>
-		/// Length of the vector that goes from end of another vector
-		/// to the end of this one.
+		/// Length of the vector that goes from end of another vector to the end of this one.
 		/// </returns>
 		public float GetDistance(Vector3 vec1)
 		{
@@ -866,8 +805,7 @@ namespace CryEngine
 		/// </summary>
 		/// <param name="vec1">Another vector.</param>
 		/// <returns>
-		/// Squared length of the vector that goes from end of another
-		/// vector to the end of this one.
+		/// Squared length of the vector that goes from end of another vector to the end of this one.
 		/// </returns>
 		public float GetDistanceSquared(Vector3 vec1)
 		{
@@ -878,21 +816,20 @@ namespace CryEngine
 		/// </summary>
 		/// <param name="v">Another vector.</param>
 		/// <returns>
-		/// Length of the vector that goes from end of another vector
-		/// to the end of this one and projected onto XY plane.
+		/// Length of the vector that goes from end of another vector to the end of this one and
+		/// projected onto XY plane.
 		/// </returns>
 		public float GetDistance2D(Vector3 v)
 		{
 			return (float)Math.Sqrt((X - v.X) * (X - v.X) + (Y - v.Y) * (Y - v.Y));
 		}
 		/// <summary>
-		/// Gets squared projected distance between this vector and
-		/// another one.
+		/// Gets squared projected distance between this vector and another one.
 		/// </summary>
 		/// <param name="v">Another vector.</param>
 		/// <returns>
-		/// Squared length of the vector that goes from end of another
-		/// vector to the end of this one and projected onto XY plane.
+		/// Squared length of the vector that goes from end of another vector to the end of this one
+		/// and projected onto XY plane.
 		/// </returns>
 		public float GetDistance2DSquared(Vector3 v)
 		{
@@ -901,14 +838,13 @@ namespace CryEngine
 		#endregion
 		#region Maximums And Minimums
 		/// <summary>
-		/// Returns a vector containing the biggest components of the
-		/// specified vectors.
+		/// Returns a vector containing the biggest components of the specified vectors.
 		/// </summary>
 		/// <param name="left">The first source vector.</param>
 		/// <param name="right">The second source vector.</param>
 		/// <param name="result">
-		/// When the method completes, contains an new vector composed
-		/// of the largest components of the source vectors.
+		/// When the method completes, contains an new vector composed of the largest components of
+		/// the source vectors.
 		/// </param>
 		public static void Max(ref Vector3 left, ref Vector3 right, out Vector3 result)
 		{
@@ -917,14 +853,11 @@ namespace CryEngine
 			result.Z = (left.Z > right.Z) ? left.Z : right.Z;
 		}
 		/// <summary>
-		/// Returns a vector containing the largest components of the
-		/// specified vectors.
+		/// Returns a vector containing the largest components of the specified vectors.
 		/// </summary>
 		/// <param name="left">The first source vector.</param>
 		/// <param name="right">The second source vector.</param>
-		/// <returns>
-		/// A vector containing the largest components of the source vectors.
-		/// </returns>
+		/// <returns>A vector containing the largest components of the source vectors.</returns>
 		public static Vector3 Max(Vector3 left, Vector3 right)
 		{
 			Vector3 result;
@@ -932,14 +865,13 @@ namespace CryEngine
 			return result;
 		}
 		/// <summary>
-		/// Returns a vector containing the smallest components of the
-		/// specified vectors.
+		/// Returns a vector containing the smallest components of the specified vectors.
 		/// </summary>
 		/// <param name="left">The first source vector.</param>
 		/// <param name="right">The second source vector.</param>
 		/// <param name="result">
-		/// When the method completes, contains an new vector composed
-		/// of the smallest components of the source vectors.
+		/// When the method completes, contains an new vector composed of the smallest components of
+		/// the source vectors.
 		/// </param>
 		public static void Min(ref Vector3 left, ref Vector3 right, out Vector3 result)
 		{
@@ -948,14 +880,11 @@ namespace CryEngine
 			result.Z = (left.Z < right.Z) ? left.Z : right.Z;
 		}
 		/// <summary>
-		/// Returns a vector containing the smallest components of the
-		/// specified vectors.
+		/// Returns a vector containing the smallest components of the specified vectors.
 		/// </summary>
 		/// <param name="left">The first source vector.</param>
 		/// <param name="right">The second source vector.</param>
-		/// <returns>
-		/// A vector containing the smallest components of the source vectors.
-		/// </returns>
+		/// <returns>A vector containing the smallest components of the source vectors.</returns>
 		public static Vector3 Min(Vector3 left, Vector3 right)
 		{
 			Vector3 result;
@@ -965,13 +894,10 @@ namespace CryEngine
 		#endregion
 		#region Projections, Reflections, Rotations
 		/// <summary>
-		/// Projects this vector onto a plane specified by given
-		/// normal and one of the points on the plane and that goes
-		/// through the origin.
+		/// Projects this vector onto a plane specified by given normal and one of the points on the
+		/// plane and that goes through the origin.
 		/// </summary>
-		/// <param name="i">
-		/// A vector that represents a point on the plane.
-		/// </param>
+		/// <param name="i">A vector that represents a point on the plane.</param>
 		/// <param name="n">A normal of the plane.</param>
 		public void SetProjection(Vector3 i, Vector3 n)
 		{
@@ -979,12 +905,10 @@ namespace CryEngine
 			this = i - n * (n | i);
 		}
 		/// <summary>
-		/// Reflects this vector against the plane that goes through
-		/// origin and is defined by a point on it, and a normal to it.
+		/// Reflects this vector against the plane that goes through origin and is defined by a
+		/// point on it, and a normal to it.
 		/// </summary>
-		/// <param name="i">
-		/// A vector that represents a point on the plane.
-		/// </param>
+		/// <param name="i">A vector that represents a point on the plane.</param>
 		/// <param name="n">A normal of the plane.</param>
 		public void SetReflection(Vector3 i, Vector3 n)
 		{
@@ -994,9 +918,7 @@ namespace CryEngine
 		/// <summary>
 		/// Rotates this vector around given axis by specified angle.
 		/// </summary>
-		/// <param name="axis">
-		/// Vector that defines axis around which to rotate.
-		/// </param>
+		/// <param name="axis">Vector that defines axis around which to rotate.</param>
 		/// <param name="angle">Angle of rotation in radians.</param>
 		/// <returns>Rotated vector.</returns>
 		public Vector3 GetRotated(Vector3 axis, float angle)
@@ -1004,12 +926,9 @@ namespace CryEngine
 			return GetRotated(axis, (float)Math.Cos(angle), (float)Math.Sin(angle));
 		}
 		/// <summary>
-		/// Rotates this vector around given axis using sine and
-		/// cosine of the angle of rotation.
+		/// Rotates this vector around given axis using sine and cosine of the angle of rotation.
 		/// </summary>
-		/// <param name="axis">
-		/// Vector that defines axis around which to rotate.
-		/// </param>
+		/// <param name="axis">Vector that defines axis around which to rotate.</param>
 		/// <param name="cosa">Cosine of the angle of rotation.</param>
 		/// <param name="sina">Sine of the angle of rotation.</param>
 		/// <returns>Rotated vector.</returns>
@@ -1023,12 +942,8 @@ namespace CryEngine
 		/// <summary>
 		/// Rotates this vector around given axis by specified angle.
 		/// </summary>
-		/// <param name="center">
-		/// A vector that defines a point trough which the axis goes.
-		/// </param>
-		/// <param name="axis">
-		/// Vector that defines axis around which to rotate.
-		/// </param>
+		/// <param name="center">A vector that defines a point trough which the axis goes.</param>
+		/// <param name="axis">Vector that defines axis around which to rotate.</param>
 		/// <param name="angle">Angle of rotation in radians.</param>
 		/// <returns>Rotated vector.</returns>
 		public Vector3 GetRotated(Vector3 center, Vector3 axis, float angle)
@@ -1036,15 +951,10 @@ namespace CryEngine
 			return center + (this - center).GetRotated(axis, angle);
 		}
 		/// <summary>
-		/// Rotates this vector around given axis using sine and
-		/// cosine of the angle of rotation.
+		/// Rotates this vector around given axis using sine and cosine of the angle of rotation.
 		/// </summary>
-		/// <param name="center">
-		/// A vector that defines a point trough which the axis goes.
-		/// </param>
-		/// <param name="axis">
-		/// Vector that defines axis around which to rotate.
-		/// </param>
+		/// <param name="center">A vector that defines a point trough which the axis goes.</param>
+		/// <param name="axis">Vector that defines axis around which to rotate.</param>
 		/// <param name="cosa">Cosine of the angle of rotation.</param>
 		/// <param name="sina">Sine of the angle of rotation.</param>
 		/// <returns>Rotated vector.</returns>
@@ -1053,8 +963,8 @@ namespace CryEngine
 			return center + (this - center).GetRotated(axis, cosa, sina);
 		}
 		/// <summary>
-		/// Creates a vector which is projection of given vector onto
-		/// plane which is defined by given normal.
+		/// Creates a vector which is projection of given vector onto plane which is defined by
+		/// given normal.
 		/// </summary>
 		/// <param name="i">Vector to project.</param>
 		/// <param name="n">A normal of the plane.</param>
@@ -1064,8 +974,8 @@ namespace CryEngine
 			return i - n * (n | i);
 		}
 		/// <summary>
-		/// Creates a vector which is reflection of given vector
-		/// against plane which is defined by given normal.
+		/// Creates a vector which is reflection of given vector against plane which is defined by
+		/// given normal.
 		/// </summary>
 		/// <param name="i">Vector to project.</param>
 		/// <param name="n">A normal of the plane.</param>
@@ -1077,8 +987,7 @@ namespace CryEngine
 		#endregion
 		#region Products
 		/// <summary>
-		/// Performs component-wise multiplication of this vector and
-		/// another one.
+		/// Performs component-wise multiplication of this vector and another one.
 		/// </summary>
 		/// <param name="rhs">Another vector.</param>
 		/// <returns>Result of multiplication.</returns>
@@ -1114,6 +1023,20 @@ namespace CryEngine
 		{
 			return v0.Dot(v1);
 		}
+		/// <summary>
+		/// Calculates mixed product of three vectors.
+		/// </summary>
+		/// <remarks>
+		/// a.Dot(b.Cross(c))
+		/// </remarks>
+		/// <param name="v0">First vector.</param>
+		/// <param name="v1">Second vector.</param>
+		/// <param name="v2">Third vector.</param>
+		/// <returns>Dot product of first vector and cross product of second and third.</returns>
+		public static float Mixed(Vector3 v0, Vector3 v1, Vector3 v2)
+		{
+			return v0.Dot(v1.Cross(v2));
+		}
 		#endregion
 		#region Generic Operations
 		/// <summary>
@@ -1121,8 +1044,7 @@ namespace CryEngine
 		/// </summary>
 		/// <param name="epsilon">Precision of comparison.</param>
 		/// <returns>
-		/// True, if difference between this vector and zero vector is
-		/// within specified precision bounds.
+		/// True, if difference between this vector and zero vector is within specified precision bounds.
 		/// </returns>
 		public bool IsZero(float epsilon = 0f)
 		{
@@ -1131,13 +1053,10 @@ namespace CryEngine
 		/// <summary>
 		/// Indicates whether this vector is equal to other vector.
 		/// </summary>
-		/// <param name="v1">
-		/// Another vector to compare this one with.
-		/// </param>
+		/// <param name="v1">Another vector to compare this one with.</param>
 		/// <param name="epsilon">Precision of comparison.</param>
 		/// <returns>
-		/// True, if difference between this vector and another vector
-		/// is within specified precision bounds.
+		/// True, if difference between this vector and another vector is within specified precision bounds.
 		/// </returns>
 		public bool IsEquivalent(Vector3 v1, float epsilon = 0.05f)
 		{
@@ -1148,8 +1067,7 @@ namespace CryEngine
 		/// </summary>
 		/// <param name="epsilon">Precision of comparison.</param>
 		/// <returns>
-		/// True, if difference between this vector and unit vector is
-		/// within specified precision bounds.
+		/// True, if difference between this vector and unit vector is within specified precision bounds.
 		/// </returns>
 		public bool IsUnit(float epsilon = 0.05f)
 		{
@@ -1208,12 +1126,9 @@ namespace CryEngine
 		#endregion
 		#region Text Conversions
 		/// <summary>
-		/// Returns a <see cref="System.String" /> that represents
-		/// this instance.
+		/// Returns a <see cref="System.String" /> that represents this instance.
 		/// </summary>
-		/// <returns>
-		/// A <see cref="System.String" /> that represents this instance.
-		/// </returns>
+		/// <returns>A <see cref="System.String" /> that represents this instance.</returns>
 		public override string ToString()
 		{
 			return string.Format(CultureInfo.CurrentCulture, "{0},{1},{2}", X, Y, Z);
@@ -1221,12 +1136,8 @@ namespace CryEngine
 		/// <summary>
 		/// Creates vector represented by given text.
 		/// </summary>
-		/// <param name="value">
-		/// Text that is supposed to be equivalent of the vector.
-		/// </param>
-		/// <returns>
-		/// Vector which is an equivalent of the given text.
-		/// </returns>
+		/// <param name="value">Text that is supposed to be equivalent of the vector.</param>
+		/// <returns>Vector which is an equivalent of the given text.</returns>
 		public static Vector3 Parse(string value)
 		{
 			Contract.Requires(value != null && value == "");

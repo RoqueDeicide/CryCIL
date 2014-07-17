@@ -55,15 +55,10 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see
-		/// cref="CryEngine.BoundingBox" /> struct.
+		/// Initializes a new instance of the <see cref="CryEngine.BoundingBox" /> struct.
 		/// </summary>
-		/// <param name="minimum">
-		/// The minimum vertex of the bounding box.
-		/// </param>
-		/// <param name="maximum">
-		/// The maximum vertex of the bounding box.
-		/// </param>
+		/// <param name="minimum">The minimum vertex of the bounding box.</param>
+		/// <param name="maximum">The maximum vertex of the bounding box.</param>
 		public BoundingBox(Vector3 minimum, Vector3 maximum)
 		{
 			Minimum = minimum;
@@ -73,10 +68,7 @@ namespace CryEngine
 		/// <summary>
 		/// Retrieves the eight corners of the bounding box.
 		/// </summary>
-		/// <returns>
-		/// An array of points representing the eight corners of the
-		/// bounding box.
-		/// </returns>
+		/// <returns>An array of points representing the eight corners of the bounding box.</returns>
 		public Vector3[] GetCorners()
 		{
 			var results = new Vector3[8];
@@ -92,8 +84,8 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines if there is an intersection between the current
-		/// object and a <see cref="CryEngine.Ray" />.
+		/// Determines if there is an intersection between the current object and a <see
+		/// cref="CryEngine.Ray" />.
 		/// </summary>
 		/// <param name="ray">The ray to test.</param>
 		/// <returns>Whether the two objects intersected.</returns>
@@ -104,13 +96,13 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines if there is an intersection between the current
-		/// object and a <see cref="CryEngine.Ray" />.
+		/// Determines if there is an intersection between the current object and a <see
+		/// cref="CryEngine.Ray" />.
 		/// </summary>
 		/// <param name="ray">The ray to test.</param>
 		/// <param name="distance">
-		/// When the method completes, contains the distance of the
-		/// intersection, or 0 if there was no intersection.
+		/// When the method completes, contains the distance of the intersection, or 0 if there was
+		/// no intersection.
 		/// </param>
 		/// <returns>Whether the two objects intersected.</returns>
 		public bool Intersects(ref Ray ray, out float distance)
@@ -119,14 +111,13 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines if there is an intersection between the current
-		/// object and a <see cref="CryEngine.Ray" />.
+		/// Determines if there is an intersection between the current object and a <see
+		/// cref="CryEngine.Ray" />.
 		/// </summary>
 		/// <param name="ray">The ray to test.</param>
 		/// <param name="point">
-		/// When the method completes, contains the point of
-		/// intersection, or <see cref="CryEngine.Vector3" /> if there
-		/// was no intersection.
+		/// When the method completes, contains the point of intersection, or <see
+		/// cref="CryEngine.Vector3" /> if there was no intersection.
 		/// </param>
 		/// <returns>Whether the two objects intersected.</returns>
 		public bool Intersects(ref Ray ray, out Vector3 point)
@@ -135,8 +126,8 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines if there is an intersection between the current
-		/// object and a <see cref="CryEngine.Plane" />.
+		/// Determines if there is an intersection between the current object and a <see
+		/// cref="CryEngine.Plane" />.
 		/// </summary>
 		/// <param name="plane">The plane to test.</param>
 		/// <returns>Whether the two objects intersected.</returns>
@@ -147,18 +138,11 @@ namespace CryEngine
 
 		/* This implentation is wrong
 		/// <summary>
-		/// Determines if there is an intersection between the current
-		/// object and a triangle.
+		/// Determines if there is an intersection between the current object and a triangle.
 		/// </summary>
-		/// <param name="vertex1">
-		/// The first vertex of the triangle to test.
-		/// </param>
-		/// <param name="vertex2">
-		/// The second vertex of the triagnle to test.
-		/// </param>
-		/// <param name="vertex3">
-		/// The third vertex of the triangle to test.
-		/// </param>
+		/// <param name="vertex1">The first vertex of the triangle to test.</param>
+		/// <param name="vertex2">The second vertex of the triagnle to test.</param>
+		/// <param name="vertex3">The third vertex of the triangle to test.</param>
 		/// <returns>Whether the two objects intersected.</returns>
 		public bool Intersects(ref Vector3 vertex1, ref Vector3 vertex2, ref Vector3 vertex3)
 		{
@@ -167,8 +151,8 @@ namespace CryEngine
 		*/
 
 		/// <summary>
-		/// Determines if there is an intersection between the current
-		/// object and a <see cref="CryEngine.BoundingBox" />.
+		/// Determines if there is an intersection between the current object and a <see
+		/// cref="CryEngine.BoundingBox" />.
 		/// </summary>
 		/// <param name="box">The box to test.</param>
 		/// <returns>Whether the two objects intersected.</returns>
@@ -178,8 +162,8 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines if there is an intersection between the current
-		/// object and a <see cref="CryEngine.BoundingSphere" />.
+		/// Determines if there is an intersection between the current object and a <see
+		/// cref="CryEngine.BoundingSphere" />.
 		/// </summary>
 		/// <param name="sphere">The sphere to test.</param>
 		/// <returns>Whether the two objects intersected.</returns>
@@ -192,9 +176,7 @@ namespace CryEngine
 		/// Determines whether the current objects contains a point.
 		/// </summary>
 		/// <param name="point">The point to test.</param>
-		/// <returns>
-		/// The type of containment the two objects have.
-		/// </returns>
+		/// <returns>The type of containment the two objects have.</returns>
 		public bool Contains(ref Vector3 point)
 		{
 			return Collision.BoxContainsPoint(ref this, ref point);
@@ -204,18 +186,10 @@ namespace CryEngine
 		/// <summary>
 		/// Determines whether the current objects contains a triangle.
 		/// </summary>
-		/// <param name="vertex1">
-		/// The first vertex of the triangle to test.
-		/// </param>
-		/// <param name="vertex2">
-		/// The second vertex of the triagnle to test.
-		/// </param>
-		/// <param name="vertex3">
-		/// The third vertex of the triangle to test.
-		/// </param>
-		/// <returns>
-		/// The type of containment the two objects have.
-		/// </returns>
+		/// <param name="vertex1">The first vertex of the triangle to test.</param>
+		/// <param name="vertex2">The second vertex of the triagnle to test.</param>
+		/// <param name="vertex3">The third vertex of the triangle to test.</param>
+		/// <returns>The type of containment the two objects have.</returns>
 		public ContainmentType Contains(ref Vector3 vertex1, ref Vector3 vertex2, ref Vector3 vertex3)
 		{
 			return Collision.BoxContainsTriangle(ref this, ref vertex1, ref vertex2, ref vertex3);
@@ -223,41 +197,31 @@ namespace CryEngine
 		*/
 
 		/// <summary>
-		/// Determines whether the current objects contains a <see
-		/// cref="CryEngine.BoundingBox" />.
+		/// Determines whether the current objects contains a <see cref="CryEngine.BoundingBox" />.
 		/// </summary>
 		/// <param name="box">The box to test.</param>
-		/// <returns>
-		/// The type of containment the two objects have.
-		/// </returns>
+		/// <returns>The type of containment the two objects have.</returns>
 		public ContainmentType Contains(ref BoundingBox box)
 		{
 			return Collision.BoxContainsBox(ref this, ref box);
 		}
 
 		/// <summary>
-		/// Determines whether the current objects contains a <see
-		/// cref="CryEngine.BoundingSphere" />.
+		/// Determines whether the current objects contains a <see cref="CryEngine.BoundingSphere" />.
 		/// </summary>
 		/// <param name="sphere">The sphere to test.</param>
-		/// <returns>
-		/// The type of containment the two objects have.
-		/// </returns>
+		/// <returns>The type of containment the two objects have.</returns>
 		public ContainmentType Contains(ref BoundingSphere sphere)
 		{
 			return Collision.BoxContainsSphere(ref this, ref sphere);
 		}
 
 		/// <summary>
-		/// Constructs a <see cref="CryEngine.BoundingBox" /> that
-		/// fully contains the given points.
+		/// Constructs a <see cref="CryEngine.BoundingBox" /> that fully contains the given points.
 		/// </summary>
-		/// <param name="points">
-		/// The points that will be contained by the box.
-		/// </param>
+		/// <param name="points">The points that will be contained by the box.</param>
 		/// <param name="result">
-		/// When the method completes, contains the newly constructed
-		/// bounding box.
+		/// When the method completes, contains the newly constructed bounding box.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
 		/// Thrown when <paramref name="points" /> is <c>null</c>.
@@ -282,12 +246,9 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Constructs a <see cref="CryEngine.BoundingBox" /> that
-		/// fully contains the given points.
+		/// Constructs a <see cref="CryEngine.BoundingBox" /> that fully contains the given points.
 		/// </summary>
-		/// <param name="points">
-		/// The points that will be contained by the box.
-		/// </param>
+		/// <param name="points">The points that will be contained by the box.</param>
 		/// <returns>The newly constructed bounding box.</returns>
 		/// <exception cref="ArgumentNullException">
 		/// Thrown when <paramref name="points" /> is <c>null</c>.
@@ -312,15 +273,11 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Constructs a <see cref="CryEngine.BoundingBox" /> from a
-		/// given sphere.
+		/// Constructs a <see cref="CryEngine.BoundingBox" /> from a given sphere.
 		/// </summary>
-		/// <param name="sphere">
-		/// The sphere that will designate the extents of the box.
-		/// </param>
+		/// <param name="sphere">The sphere that will designate the extents of the box.</param>
 		/// <param name="result">
-		/// When the method completes, contains the newly constructed
-		/// bounding box.
+		/// When the method completes, contains the newly constructed bounding box.
 		/// </param>
 		public static void FromSphere(ref BoundingSphere sphere, out BoundingBox result)
 		{
@@ -329,12 +286,9 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Constructs a <see cref="CryEngine.BoundingBox" /> from a
-		/// given sphere.
+		/// Constructs a <see cref="CryEngine.BoundingBox" /> from a given sphere.
 		/// </summary>
-		/// <param name="sphere">
-		/// The sphere that will designate the extents of the box.
-		/// </param>
+		/// <param name="sphere">The sphere that will designate the extents of the box.</param>
 		/// <returns>The newly constructed bounding box.</returns>
 		public static BoundingBox FromSphere(BoundingSphere sphere)
 		{
@@ -345,14 +299,13 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Constructs a <see cref="CryEngine.BoundingBox" /> that is
-		/// as large as the total combined area of the two specified boxes.
+		/// Constructs a <see cref="CryEngine.BoundingBox" /> that is as large as the total combined
+		/// area of the two specified boxes.
 		/// </summary>
 		/// <param name="value1">The first box to merge.</param>
 		/// <param name="value2">The second box to merge.</param>
 		/// <param name="result">
-		/// When the method completes, contains the newly constructed
-		/// bounding box.
+		/// When the method completes, contains the newly constructed bounding box.
 		/// </param>
 		public static void Merge(ref BoundingBox value1, ref BoundingBox value2, out BoundingBox result)
 		{
@@ -361,8 +314,8 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Constructs a <see cref="CryEngine.BoundingBox" /> that is
-		/// as large as the total combined area of the two specified boxes.
+		/// Constructs a <see cref="CryEngine.BoundingBox" /> that is as large as the total combined
+		/// area of the two specified boxes.
 		/// </summary>
 		/// <param name="value1">The first box to merge.</param>
 		/// <param name="value2">The second box to merge.</param>
@@ -381,8 +334,8 @@ namespace CryEngine
 		/// <param name="left">The first value to compare.</param>
 		/// <param name="right">The second value to compare.</param>
 		/// <returns>
-		/// <c>true</c> if <paramref name="left" /> has the same value
-		/// as <paramref name="right" />; otherwise, <c>false</c>.
+		/// <c>true</c> if <paramref name="left" /> has the same value as <paramref name="right" />;
+		/// otherwise, <c>false</c>.
 		/// </returns>
 		public static bool operator ==(BoundingBox left, BoundingBox right)
 		{
@@ -395,8 +348,8 @@ namespace CryEngine
 		/// <param name="left">The first value to compare.</param>
 		/// <param name="right">The second value to compare.</param>
 		/// <returns>
-		/// <c>true</c> if <paramref name="left" /> has a different
-		/// value than <paramref name="right" />; otherwise, <c>false</c>.
+		/// <c>true</c> if <paramref name="left" /> has a different value than <paramref
+		/// name="right" />; otherwise, <c>false</c>.
 		/// </returns>
 		public static bool operator !=(BoundingBox left, BoundingBox right)
 		{
@@ -404,25 +357,19 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Returns a <see cref="System.String" /> that represents
-		/// this instance.
+		/// Returns a <see cref="System.String" /> that represents this instance.
 		/// </summary>
-		/// <returns>
-		/// A <see cref="System.String" /> that represents this instance.
-		/// </returns>
+		/// <returns>A <see cref="System.String" /> that represents this instance.</returns>
 		public override string ToString()
 		{
 			return string.Format(CultureInfo.CurrentCulture, "Minimum:{0} Maximum:{1}", Minimum.ToString(), Maximum.ToString());
 		}
 
 		/// <summary>
-		/// Returns a <see cref="System.String" /> that represents
-		/// this instance.
+		/// Returns a <see cref="System.String" /> that represents this instance.
 		/// </summary>
 		/// <param name="format">The format.</param>
-		/// <returns>
-		/// A <see cref="System.String" /> that represents this instance.
-		/// </returns>
+		/// <returns>A <see cref="System.String" /> that represents this instance.</returns>
 		public string ToString(string format)
 		{
 			if (format == null)
@@ -432,27 +379,21 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Returns a <see cref="System.String" /> that represents
-		/// this instance.
+		/// Returns a <see cref="System.String" /> that represents this instance.
 		/// </summary>
 		/// <param name="formatProvider">The format provider.</param>
-		/// <returns>
-		/// A <see cref="System.String" /> that represents this instance.
-		/// </returns>
+		/// <returns>A <see cref="System.String" /> that represents this instance.</returns>
 		public string ToString(IFormatProvider formatProvider)
 		{
 			return string.Format(formatProvider, "Minimum:{0} Maximum:{1}", Minimum.ToString(), Maximum.ToString());
 		}
 
 		/// <summary>
-		/// Returns a <see cref="System.String" /> that represents
-		/// this instance.
+		/// Returns a <see cref="System.String" /> that represents this instance.
 		/// </summary>
 		/// <param name="format">The format.</param>
 		/// <param name="formatProvider">The format provider.</param>
-		/// <returns>
-		/// A <see cref="System.String" /> that represents this instance.
-		/// </returns>
+		/// <returns>A <see cref="System.String" /> that represents this instance.</returns>
 		public string ToString(string format, IFormatProvider formatProvider)
 		{
 			if (format == null)
@@ -465,8 +406,8 @@ namespace CryEngine
 		/// Returns a hash code for this instance.
 		/// </summary>
 		/// <returns>
-		/// A hash code for this instance, suitable for use in hashing
-		/// algorithms and data structures like a hash table.
+		/// A hash code for this instance, suitable for use in hashing algorithms and data
+		/// structures like a hash table.
 		/// </returns>
 		public override int GetHashCode()
 		{
@@ -483,15 +424,14 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines whether the specified <see
-		/// cref="CryEngine.Vector4" /> is equal to this instance.
+		/// Determines whether the specified <see cref="CryEngine.Vector4" /> is equal to this instance.
 		/// </summary>
 		/// <param name="value">
 		/// The <see cref="CryEngine.Vector4" /> to compare with this instance.
 		/// </param>
 		/// <returns>
-		/// <c>true</c> if the specified <see cref="CryEngine.Vector4"
-		/// /> is equal to this instance; otherwise, <c>false</c>.
+		/// <c>true</c> if the specified <see cref="CryEngine.Vector4" /> is equal to this instance;
+		/// otherwise, <c>false</c>.
 		/// </returns>
 		public bool Equals(BoundingBox value)
 		{
@@ -499,15 +439,14 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines whether the specified <see cref="System.Object"
-		/// /> is equal to this instance.
+		/// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
 		/// </summary>
 		/// <param name="value">
 		/// The <see cref="System.Object" /> to compare with this instance.
 		/// </param>
 		/// <returns>
-		/// <c>true</c> if the specified <see cref="System.Object" />
-		/// is equal to this instance; otherwise, <c>false</c>.
+		/// <c>true</c> if the specified <see cref="System.Object" /> is equal to this instance;
+		/// otherwise, <c>false</c>.
 		/// </returns>
 		public override bool Equals(object value)
 		{

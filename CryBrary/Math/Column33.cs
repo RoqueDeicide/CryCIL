@@ -8,8 +8,7 @@ using System.Threading.Tasks;
 namespace CryEngine
 {
 	/// <summary>
-	/// Provides an incredibly quick access to columns in the object
-	/// of type <see cref="Matrix33" />.
+	/// Provides an incredibly quick access to columns in the object of type <see cref="Matrix33" />.
 	/// </summary>
 	[StructLayout(LayoutKind.Explicit, Size = 28)]
 	public struct Column33 : IConvertibleTo<Vector3>
@@ -32,9 +31,7 @@ namespace CryEngine
 		/// <summary>
 		/// Converts this vector to a compact vector.
 		/// </summary>
-		/// <param name="output">
-		/// Vector that contains all 3 elements of this column.
-		/// </param>
+		/// <param name="output">Vector that contains all 3 elements of this column.</param>
 		public void ConvertTo(out Vector3 output)
 		{
 			output = new Vector3(this.ElementAtRow0, this.ElementAtRow1, this.ElementAtRow2);

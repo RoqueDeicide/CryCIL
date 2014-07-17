@@ -31,12 +31,9 @@ namespace CryEngine
 		#endregion
 		#region Properties
 		/// <summary>
-		/// Provides access to component of the vector specified by
-		/// given index.
+		/// Provides access to component of the vector specified by given index.
 		/// </summary>
-		/// <param name="index">
-		/// Zero-based index of the component of the vector.
-		/// </param>
+		/// <param name="index">Zero-based index of the component of the vector.</param>
 		/// <returns></returns>
 		public ushort this[int index]
 		{
@@ -75,12 +72,9 @@ namespace CryEngine
 			}
 		}
 		/// <summary>
-		/// Provides access to component of the vector specified by
-		/// given index.
+		/// Provides access to component of the vector specified by given index.
 		/// </summary>
-		/// <param name="index">
-		/// Zero-based index of the component of the vector.
-		/// </param>
+		/// <param name="index">Zero-based index of the component of the vector.</param>
 		/// <returns></returns>
 		public ushort this[char index]
 		{
@@ -139,22 +133,16 @@ namespace CryEngine
 			this.Z = z;
 		}
 		/// <summary>
-		/// Initializes new instance of <see cref="UInt16Vector3" />
-		/// using values from given array.
+		/// Initializes new instance of <see cref="UInt16Vector3" /> using values from given array.
 		/// </summary>
 		/// <param name="array">
-		/// Array that contains values to use to initialize components
-		/// of this vector.
+		/// Array that contains values to use to initialize components of this vector.
 		/// </param>
 		/// <param name="startingIndex">
 		/// Index of the first element in the array to use for initialization.
 		/// </param>
-		/// <param name="startingComponent">
-		/// Index of the first component to initialize.
-		/// </param>
-		/// <param name="count">
-		/// Number of components to initialize.
-		/// </param>
+		/// <param name="startingComponent">Index of the first component to initialize.</param>
+		/// <param name="count">Number of components to initialize.</param>
 		public UInt16Vector3(ushort[] array, int startingIndex, int startingComponent, int count)
 		{
 			Contract.Requires(array != null && array.Length >= count, "Array must be initialized and have number of elements to be at least equal to number of initialized components.");
@@ -191,9 +179,7 @@ namespace CryEngine
 		/// Determines whether this vector is equal to another one.
 		/// </summary>
 		/// <param name="other">Another vector.</param>
-		/// <returns>
-		/// True, if this vector is equal to another one, otherwise false.
-		/// </returns>
+		/// <returns>True, if this vector is equal to another one, otherwise false.</returns>
 		public bool Equals(UInt16Vector3 other)
 		{
 			return this.X == other.X && this.Y == other.Y && this.Z == other.Z;
@@ -202,10 +188,7 @@ namespace CryEngine
 		/// Determines whether this vector is equal to another object.
 		/// </summary>
 		/// <param name="obj">Another object.</param>
-		/// <returns>
-		/// True, if given object is a vector equal to this one,
-		/// otherwise false.
-		/// </returns>
+		/// <returns>True, if given object is a vector equal to this one, otherwise false.</returns>
 		public override bool Equals(object obj)
 		{
 			if (obj is UInt16Vector3)
@@ -215,18 +198,16 @@ namespace CryEngine
 			return false;
 		}
 		/// <summary>
-		/// Determines relative position of given vector and this one
-		/// in a sequence sorted in ascending order.
+		/// Determines relative position of given vector and this one in a sequence sorted in
+		/// ascending order.
 		/// </summary>
 		/// <remarks>
-		/// Comparison is done by mapping each vector into 64-bit
-		/// integer and comparing them.
+		/// Comparison is done by mapping each vector into 64-bit integer and comparing them.
 		/// </remarks>
 		/// <param name="other">Another vector.</param>
 		/// <returns>
-		/// <para>-1 - other vector should precede this
-		/// one.</para><para>0 - other vector is equal to this
-		/// one.</para><para>1 - other vector should follow this one.</para>
+		/// <para>-1 - other vector should precede this one.</para><para>0 - other vector is equal
+		/// to this one.</para><para>1 - other vector should follow this one.</para>
 		/// </returns>
 		public int CompareTo(UInt16Vector3 other)
 		{
@@ -275,27 +256,21 @@ namespace CryEngine
 		#endregion
 		#region Operators
 		/// <summary>
-		/// Determines whether two instances of <see
-		/// cref="UInt16Vector3" /> struct are equal.
+		/// Determines whether two instances of <see cref="UInt16Vector3" /> struct are equal.
 		/// </summary>
 		/// <param name="l">Left operand.</param>
 		/// <param name="r">Right operand.</param>
-		/// <returns>
-		/// True, if objects are equal, otherwise false.
-		/// </returns>
+		/// <returns>True, if objects are equal, otherwise false.</returns>
 		public static bool operator ==(UInt16Vector3 l, UInt16Vector3 r)
 		{
 			return l.X == r.X && l.Y == r.Y && l.Z == r.Z;
 		}
 		/// <summary>
-		/// Determines whether two instances of <see
-		/// cref="UInt16Vector3" /> struct are not equal.
+		/// Determines whether two instances of <see cref="UInt16Vector3" /> struct are not equal.
 		/// </summary>
 		/// <param name="l">Left operand.</param>
 		/// <param name="r">Right operand.</param>
-		/// <returns>
-		/// True, if objects are not equal, otherwise false.
-		/// </returns>
+		/// <returns>True, if objects are not equal, otherwise false.</returns>
 		public static bool operator !=(UInt16Vector3 l, UInt16Vector3 r)
 		{
 			return l.X != r.X && l.Y != r.Y && l.Z != r.Z;

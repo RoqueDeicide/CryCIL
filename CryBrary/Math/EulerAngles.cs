@@ -73,9 +73,7 @@ namespace CryEngine
 		/// <summary>
 		/// Creates new instance of <see cref="EulerAngles" /> struct.
 		/// </summary>
-		/// <param name="matrix">
-		/// Matrix that defines new instance.
-		/// </param>
+		/// <param name="matrix">Matrix that defines new instance.</param>
 		public EulerAngles(Matrix33 matrix)
 		{
 			// Assert matrix being orthonormal.
@@ -95,27 +93,21 @@ namespace CryEngine
 		#region Operators
 		#region Comparison Operators
 		/// <summary>
-		/// Determines whether two instances of <see
-		/// cref="EulerAngles" /> struct are equal.
+		/// Determines whether two instances of <see cref="EulerAngles" /> struct are equal.
 		/// </summary>
 		/// <param name="l">Left operand.</param>
 		/// <param name="r">Right operand.</param>
-		/// <returns>
-		/// True, if objects are equal, otherwise false.
-		/// </returns>
+		/// <returns>True, if objects are equal, otherwise false.</returns>
 		public static bool operator ==(EulerAngles l, EulerAngles r)
 		{
 			return l.Pitch == r.Pitch && l.Roll == r.Roll && l.Yaw == r.Yaw;
 		}
 		/// <summary>
-		/// Determines whether two instances of <see
-		/// cref="EulerAngles" /> struct are not equal.
+		/// Determines whether two instances of <see cref="EulerAngles" /> struct are not equal.
 		/// </summary>
 		/// <param name="l">Left operand.</param>
 		/// <param name="r">Right operand.</param>
-		/// <returns>
-		/// True, if objects are not equal, otherwise false.
-		/// </returns>
+		/// <returns>True, if objects are not equal, otherwise false.</returns>
 		public static bool operator !=(EulerAngles l, EulerAngles r)
 		{
 			return l.Pitch != r.Pitch && l.Roll != r.Roll && l.Yaw != r.Yaw;
@@ -123,8 +115,7 @@ namespace CryEngine
 		#endregion
 		#region Arithmetic Operators
 		/// <summary>
-		/// Multiplies given instance of <see cref="EulerAngles" />
-		/// struct by given amount.
+		/// Multiplies given instance of <see cref="EulerAngles" /> struct by given amount.
 		/// </summary>
 		/// <param name="l">Left operand.</param>
 		/// <param name="r">Right operand.</param>
@@ -134,8 +125,7 @@ namespace CryEngine
 			return new EulerAngles(l.Pitch * r, l.Roll * r, l.Yaw * r);
 		}
 		/// <summary>
-		/// Multiplies given instance of <see cref="EulerAngles" />
-		/// struct by given amount.
+		/// Multiplies given instance of <see cref="EulerAngles" /> struct by given amount.
 		/// </summary>
 		/// <param name="l">Left operand.</param>
 		/// <param name="r">Right operand.</param>
@@ -145,8 +135,7 @@ namespace CryEngine
 			return new EulerAngles(r.Pitch * l, r.Roll * l, r.Yaw * l);
 		}
 		/// <summary>
-		/// Divides given instance of <see cref="EulerAngles" />
-		/// struct by given amount.
+		/// Divides given instance of <see cref="EulerAngles" /> struct by given amount.
 		/// </summary>
 		/// <param name="l">Left operand.</param>
 		/// <param name="r">Right operand.</param>
@@ -156,8 +145,7 @@ namespace CryEngine
 			return new EulerAngles(l.Pitch / r, l.Roll / r, l.Yaw / r);
 		}
 		/// <summary>
-		/// Divides given instance of <see cref="EulerAngles" />
-		/// struct by given amount.
+		/// Divides given instance of <see cref="EulerAngles" /> struct by given amount.
 		/// </summary>
 		/// <param name="l">Left operand.</param>
 		/// <param name="r">Right operand.</param>
@@ -223,8 +211,7 @@ namespace CryEngine
 		/// </summary>
 		/// <param name="obj">Given object.</param>
 		/// <returns>
-		/// True, if given object is <see cref="EulerAngles" /> equal
-		/// to this instance, otherwise false.
+		/// True, if given object is <see cref="EulerAngles" /> equal to this instance, otherwise false.
 		/// </returns>
 		public override bool Equals(object obj)
 		{
