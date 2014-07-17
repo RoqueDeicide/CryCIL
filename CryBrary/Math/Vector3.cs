@@ -12,7 +12,7 @@ namespace CryEngine
 	/// Represents a three dimensional mathematical vector.
 	/// </summary>
 	[Serializable]
-	[StructLayout(LayoutKind.Sequential, Pack = 4)]
+	[StructLayout(LayoutKind.Explicit)]
 	public struct Vector3 : IEquatable<Vector3>, IEnumerable<float>
 	{
 		#region Static Fields
@@ -49,15 +49,24 @@ namespace CryEngine
 		/// <summary>
 		/// The X component of the vector.
 		/// </summary>
+		[FieldOffset(0)]
 		public float X;
 		/// <summary>
 		/// The Y component of the vector.
 		/// </summary>
+		[FieldOffset(4)]
 		public float Y;
 		/// <summary>
 		/// The Z component of the vector.
 		/// </summary>
+		[FieldOffset(8)]
 		public float Z;
+		/// <summary>
+		/// Array of all components of this vector.
+		/// </summary>
+		[FieldOffset(0)]
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)]
+		public float[] Components;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -163,28 +172,8 @@ namespace CryEngine
 		/// <returns>The value of the component at the specified index.</returns>
 		public float this[int index]
 		{
-			get
-			{
-				Contract.Requires(index >= 0 && index < 3);
-				switch (index)
-				{
-					case 0: return X;
-					case 1: return Y;
-					case 2: return Z;
-				}
-				return 0;
-			}
-
-			set
-			{
-				Contract.Requires(index >= 0 && index < 3);
-				switch (index)
-				{
-					case 0: X = value; break;
-					case 1: Y = value; break;
-					case 2: Z = value; break;
-				}
-			}
+			get { return this.Components[index]; }
+			set { this.Components[index] = value; }
 		}
 		/// <summary>
 		/// Determines whether this vector is represented by valid numbers.
@@ -208,6 +197,7 @@ namespace CryEngine
 		/// <param name="vy">Y-component of new vector.</param>
 		/// <param name="vz">Z-component of new vector.</param>
 		public Vector3(float vx, float vy, float vz)
+			: this()
 		{
 			X = vx;
 			Y = vy;
@@ -220,6 +210,7 @@ namespace CryEngine
 		/// <see cref="Single" /> value to assign to all components of new vector.
 		/// </param>
 		public Vector3(float f)
+			: this()
 		{
 			X = Y = Z = f;
 		}
@@ -230,6 +221,7 @@ namespace CryEngine
 		/// <see cref="Vector2" /> that defines X and Y components of new vector.
 		/// </param>
 		public Vector3(Vector2 v2)
+			: this()
 		{
 			X = v2.X;
 			Y = v2.Y;
@@ -240,6 +232,7 @@ namespace CryEngine
 		/// </summary>
 		/// <param name="q">Quaternion that defines new vector.</param>
 		public Vector3(Quaternion q)
+			: this()
 		{
 			Y = (float)Math.Asin(Math.Max(-1.0f, Math.Min(1.0f, -(q.V.X * q.V.Z - q.W * q.V.Y) * 2)));
 			if (Math.Abs(Math.Abs(Y) - (Math.PI * 0.5f)) < 0.01f)
@@ -257,74 +250,19 @@ namespace CryEngine
 		/// Creates new <see cref="Vector3" />.
 		/// </summary>
 		/// <param name="values">
-		/// An array of floating point values which specify new vector using following rules:
-		/// <para>If array is null or empty zero vector is created.</para><para>If array contains 1
-		/// value it is assigned to all three components.</para><para>If array contains 2 values
-		/// they are assigned to first two components while Z is zeroed.</para><para>If array
-		/// contains 3 or more values first three values are assigned to vector components.</para>
-		/// </param>
-		public Vector3(float[] values)
-		{
-			if (values == null || values.Length == 0)
-			{
-				this.X = 0;
-				this.Y = 0;
-				this.Z = 0;
-			}
-			else if (values.Length == 1)
-			{
-				this.X = values[0];
-				this.Y = values[0];
-				this.Z = values[0];
-			}
-			else if (values.Length == 2)
-			{
-				this.X = values[0];
-				this.Y = values[1];
-				this.Z = 0;
-			}
-			else
-			{
-				this.X = values[0];
-				this.Y = values[1];
-				this.Z = values[2];
-			}
-		}
-		/// <summary>
-		/// Creates new <see cref="Vector3" />.
-		/// </summary>
-		/// <param name="values">
 		/// A list of floating point values which specify new vector using following rules: <para>If
 		/// list is null or empty zero vector is created.</para><para>If list contains 1 value it is
 		/// assigned to all three components.</para><para>If list contains 2 values they are
 		/// assigned to first two components while Z is zeroed.</para><para>If list contains 3 or
 		/// more values first three values are assigned to vector components.</para>
 		/// </param>
-		public Vector3(List<float> values)
+		public Vector3(IList<float> values)
+			: this()
 		{
-			if (values == null || values.Count == 0)
+			if (values == null) return;
+			for (int i = 0; i < this.Components.Length || i < values.Count; i++)
 			{
-				this.X = 0;
-				this.Y = 0;
-				this.Z = 0;
-			}
-			else if (values.Count == 1)
-			{
-				this.X = values[0];
-				this.Y = values[0];
-				this.Z = values[0];
-			}
-			else if (values.Count == 2)
-			{
-				this.X = values[0];
-				this.Y = values[1];
-				this.Z = 0;
-			}
-			else
-			{
-				this.X = values[0];
-				this.Y = values[1];
-				this.Z = values[2];
+				this.Components[i] = values[i];
 			}
 		}
 		/// <summary>
@@ -333,31 +271,21 @@ namespace CryEngine
 		/// <param name="values">
 		/// A <see cref="Dictionary{TKey,TValue}" /> which is used to initialize new vector.
 		/// </param>
-		public Vector3(Dictionary<string, float> values)
+		public Vector3(IDictionary<string, float> values)
+			: this()
 		{
-			if (values == null || values.Count == 0)
+			if (values == null || values.Count == 0) return;
+			if (values.ContainsKey("X"))
 			{
-				this.X = 0;
-				this.Y = 0;
-				this.Z = 0;
+				this.X = values["X"];
 			}
-			else
+			if (values.ContainsKey("Y"))
 			{
-				this.X = 0;
-				this.Y = 0;
-				this.Z = 0;
-				if (values.ContainsKey("X"))
-				{
-					this.X = values["X"];
-				}
-				if (values.ContainsKey("Y"))
-				{
-					this.X = values["Y"];
-				}
-				if (values.ContainsKey("Z"))
-				{
-					this.X = values["Z"];
-				}
+				this.X = values["Y"];
+			}
+			if (values.ContainsKey("Z"))
+			{
+				this.X = values["Z"];
 			}
 		}
 		#endregion
@@ -368,7 +296,7 @@ namespace CryEngine
 		/// <returns>An array of 3 elements which contain corresponding vector components.</returns>
 		public float[] ToArray()
 		{
-			return new float[] { this.X, this.Y, this.Z };
+			return new[] { this.X, this.Y, this.Z };
 		}
 		/// <summary>
 		/// Creates a list that contains components of this vector.
@@ -376,10 +304,12 @@ namespace CryEngine
 		/// <returns>A list of four elements which contain corresponding vector components.</returns>
 		public List<float> ToList()
 		{
-			List<float> result = new List<float>(3);
-			result.Add(this.X);
-			result.Add(this.Y);
-			result.Add(this.Z);
+			List<float> result = new List<float>(3)
+			{
+				this.X,
+				this.Y,
+				this.Z
+			};
 			return result;
 		}
 		/// <summary>
@@ -391,10 +321,12 @@ namespace CryEngine
 		/// </returns>
 		public Dictionary<string, float> ToDictionary()
 		{
-			Dictionary<string, float> result = new Dictionary<string, float>(3);
-			result.Add("X", this.X);
-			result.Add("Y", this.Y);
-			result.Add("Z", this.Z);
+			Dictionary<string, float> result = new Dictionary<string, float>(3)
+			{
+				{"X", this.X},
+				{"Y", this.Y},
+				{"Z", this.Z}
+			};
 			return result;
 		}
 		#endregion
@@ -564,7 +496,9 @@ namespace CryEngine
 		/// <returns>True, if two vectors are equal.</returns>
 		public static bool operator ==(Vector3 left, Vector3 right)
 		{
-			return ((left.X == right.X) && (left.Y == right.Y) && (left.Z == right.Z));
+			// ReSharper disable CompareOfFloatsByEqualityOperator
+			return left.X == right.X && left.Y == right.Y && left.Z == right.Z;
+			// ReSharper restore CompareOfFloatsByEqualityOperator
 		}
 		/// <summary>
 		/// Checks equality of two given vectors.
@@ -642,7 +576,10 @@ namespace CryEngine
 		/// <returns>Modified vector.</returns>
 		public Vector3 ModifyVector(int offset, params float[] newValues)
 		{
-			Contract.Requires(offset >= 0 && offset < 3);
+			if (offset < 0 || offset > 2)
+			{
+				throw new ArgumentOutOfRangeException("offset", "offset must be belong to interval [0; 2]");
+			}
 
 			Vector3 result = new Vector3(this.X, this.Y, this.Z);
 			for (int i = offset, j = 0; j < newValues.Length && i < 3; i++, j++)
@@ -848,9 +785,12 @@ namespace CryEngine
 		/// </param>
 		public static void Max(ref Vector3 left, ref Vector3 right, out Vector3 result)
 		{
-			result.X = (left.X > right.X) ? left.X : right.X;
-			result.Y = (left.Y > right.Y) ? left.Y : right.Y;
-			result.Z = (left.Z > right.Z) ? left.Z : right.Z;
+			result = new Vector3
+			{
+				X = (left.X > right.X) ? left.X : right.X,
+				Y = (left.Y > right.Y) ? left.Y : right.Y,
+				Z = (left.Z > right.Z) ? left.Z : right.Z
+			};
 		}
 		/// <summary>
 		/// Returns a vector containing the largest components of the specified vectors.
@@ -875,9 +815,12 @@ namespace CryEngine
 		/// </param>
 		public static void Min(ref Vector3 left, ref Vector3 right, out Vector3 result)
 		{
-			result.X = (left.X < right.X) ? left.X : right.X;
-			result.Y = (left.Y < right.Y) ? left.Y : right.Y;
-			result.Z = (left.Z < right.Z) ? left.Z : right.Z;
+			result = new Vector3
+			{
+				X = (left.X < right.X) ? left.X : right.X,
+				Y = (left.Y < right.Y) ? left.Y : right.Y,
+				Z = (left.Z < right.Z) ? left.Z : right.Z
+			};
 		}
 		/// <summary>
 		/// Returns a vector containing the smallest components of the specified vectors.
@@ -901,7 +844,10 @@ namespace CryEngine
 		/// <param name="n">A normal of the plane.</param>
 		public void SetProjection(Vector3 i, Vector3 n)
 		{
-			Contract.Assume(n.IsUnit());
+			if (!n.IsUnit())
+			{
+				throw new ArgumentException("Normal to a plane must be a unit vector.");
+			}
 			this = i - n * (n | i);
 		}
 		/// <summary>
@@ -912,7 +858,10 @@ namespace CryEngine
 		/// <param name="n">A normal of the plane.</param>
 		public void SetReflection(Vector3 i, Vector3 n)
 		{
-			Contract.Assume(n.IsUnit());
+			if (!n.IsUnit())
+			{
+				throw new ArgumentException("Normal to a plane must be a unit vector.");
+			}
 			this = (n * (i | n) * 2) - i;
 		}
 		/// <summary>
@@ -1092,9 +1041,11 @@ namespace CryEngine
 			{
 				int hash = 17;
 
+				// ReSharper disable NonReadonlyFieldInGetHashCode
 				hash = hash * 23 + X.GetHashCode();
 				hash = hash * 23 + Y.GetHashCode();
 				hash = hash * 23 + Z.GetHashCode();
+				// ReSharper restore NonReadonlyFieldInGetHashCode
 
 				return hash;
 			}
@@ -1140,7 +1091,10 @@ namespace CryEngine
 		/// <returns>Vector which is an equivalent of the given text.</returns>
 		public static Vector3 Parse(string value)
 		{
-			Contract.Requires(value != null && value == "");
+			if (String.IsNullOrEmpty(value))
+			{
+				throw new ArgumentNullException("value", "Attempt to parse null or empty string as a vector.");
+			}
 			try
 			{
 				string[] split = value.Split(',');

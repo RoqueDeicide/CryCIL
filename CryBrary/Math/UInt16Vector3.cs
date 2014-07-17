@@ -12,22 +12,31 @@ namespace CryEngine
 	/// Represents 3 16-bit unsigned integer numbers.
 	/// </summary>
 	[Serializable]
-	[StructLayout(LayoutKind.Sequential, Pack = 2)]
+	[StructLayout(LayoutKind.Explicit)]
 	public struct UInt16Vector3 : IEquatable<UInt16Vector3>, IComparable<UInt16Vector3>, IEnumerable<ushort>
 	{
 		#region Fields
 		/// <summary>
 		/// First number.
 		/// </summary>
+		[FieldOffset(0)]
 		public ushort X;
 		/// <summary>
 		/// Second number.
 		/// </summary>
+		[FieldOffset(2)]
 		public ushort Y;
 		/// <summary>
 		/// Third number.
 		/// </summary>
+		[FieldOffset(4)]
 		public ushort Z;
+		/// <summary>
+		/// Array that gives access to all 3 components of the vector.
+		/// </summary>
+		[FieldOffset(0)]
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)]
+		public ushort[] Components;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -37,50 +46,21 @@ namespace CryEngine
 		/// <returns></returns>
 		public ushort this[int index]
 		{
-			get
-			{
-				switch (index)
-				{
-					case 0:
-						return this.X;
-					case 1:
-						return this.Y;
-					case 2:
-						return this.Z;
-					default:
-						throw new ArgumentOutOfRangeException
-							("UInt16Vector3.Indexer: Invalid index - it should be within range 0..2");
-				}
-			}
-			set
-			{
-				switch (index)
-				{
-					case 0:
-						this.X = value;
-						break;
-					case 1:
-						this.Y = value;
-						break;
-					case 2:
-						this.Z = value;
-						break;
-					default:
-						throw new ArgumentOutOfRangeException
-							("UInt16Vector3.Indexer: Invalid index - it should be within range 0..2");
-				}
-			}
+			get { return this.Components[index]; }
+			set { this.Components[index] = value; }
 		}
 		/// <summary>
 		/// Provides access to component of the vector specified by given index.
 		/// </summary>
-		/// <param name="index">Zero-based index of the component of the vector.</param>
+		/// <param name="componentIdentifier">
+		/// Single character capitalized or not that identifies required component of the vector.
+		/// </param>
 		/// <returns></returns>
-		public ushort this[char index]
+		public ushort this[char componentIdentifier]
 		{
 			get
 			{
-				switch (index)
+				switch (componentIdentifier)
 				{
 					case 'X':
 					case 'x':
@@ -93,12 +73,16 @@ namespace CryEngine
 						return this.Z;
 					default:
 						throw new ArgumentOutOfRangeException
-							("UInt16Vector3.Indexer: Invalid index - use a letter that designates component to access it. (Case is ignored).");
+						(
+							"componentIdentifier",
+							"UInt16Vector3.Indexer: Invalid index - use a letter that" +
+							" designates component to access it. (Case is ignored)."
+						);
 				}
 			}
 			set
 			{
-				switch (index)
+				switch (componentIdentifier)
 				{
 					case 'X':
 					case 'x':
@@ -114,7 +98,11 @@ namespace CryEngine
 						break;
 					default:
 						throw new ArgumentOutOfRangeException
-							("UInt16Vector3.Indexer: Invalid index - use a letter that designates component to access it. (Case is ignored).");
+						(
+							"componentIdentifier",
+							"UInt16Vector3.Indexer: Invalid index - use a letter that" +
+							" designates component to access it. (Case is ignored)."
+						);
 				}
 			}
 		}
@@ -127,6 +115,7 @@ namespace CryEngine
 		/// <param name="y">Y-component.</param>
 		/// <param name="z">Z-component.</param>
 		public UInt16Vector3(ushort x, ushort y, ushort z)
+			: this()
 		{
 			this.X = x;
 			this.Y = y;
@@ -143,12 +132,35 @@ namespace CryEngine
 		/// </param>
 		/// <param name="startingComponent">Index of the first component to initialize.</param>
 		/// <param name="count">Number of components to initialize.</param>
-		public UInt16Vector3(ushort[] array, int startingIndex, int startingComponent, int count)
+		public UInt16Vector3(IList<ushort> array, int startingIndex, int startingComponent, int count)
+			: this()
 		{
-			Contract.Requires(array != null && array.Length >= count, "Array must be initialized and have number of elements to be at least equal to number of initialized components.");
-			Contract.Requires(count > 0 && count < 4, "Number of initialized components can only be 1, 2 or 3.");
-			Contract.Requires(startingIndex > -1 && startingIndex <= array.Length - count, "Index of first element of the array to copy must be more or equal to 0 and less then or equal to number of elements in the array minus number of components that will be initialized.");
-			Contract.Requires(startingComponent == 3 - count, "Index of first component must be equal to 3 - number of initialized components.");
+			if (array == null || array.Count == 0)
+			{
+				throw new ArgumentNullException("array", "Cannot initialize vector with null or empty array.");
+			}
+			if (array.Count < count)
+			{
+				throw new ArgumentException("Array is too small", "array");
+			}
+			if (count < 1 || count > 3)
+			{
+				throw new ArgumentOutOfRangeException
+					("count", "Number of initialized components can only be 1, 2 or 3.");
+			}
+			if (startingIndex < 0)
+			{
+				throw new ArgumentOutOfRangeException
+					("startingIndex", "Index of first element to copy must not be negative.");
+			}
+			if (startingIndex > array.Count - count)
+			{
+				throw new ArgumentOutOfRangeException
+				(
+					"startingIndex",
+					"Index of first element to copy must not cause interval of elements to go beyond of the array."
+				);
+			}
 
 			this.X = 0;
 			this.Y = 0;
@@ -167,8 +179,6 @@ namespace CryEngine
 					this.X = array[startingIndex];
 					this.Y = array[startingIndex + 1];
 					this.Z = array[startingIndex + 2];
-					break;
-				default:
 					break;
 			}
 		}
@@ -211,14 +221,18 @@ namespace CryEngine
 		/// </returns>
 		public int CompareTo(UInt16Vector3 other)
 		{
-			us3tol1 map1 = new us3tol1();
-			map1.x = this.X;
-			map1.y = this.Y;
-			map1.z = this.Z;
-			us3tol1 map2 = new us3tol1();
-			map2.x = other.X;
-			map2.y = other.Y;
-			map2.z = other.Z;
+			us3tol1 map1 = new us3tol1
+			{
+				x = this.X,
+				y = this.Y,
+				z = this.Z
+			};
+			us3tol1 map2 = new us3tol1
+			{
+				x = other.X,
+				y = other.Y,
+				z = other.Z
+			};
 			return map1.l.CompareTo(map2.l);
 		}
 		#region Struct Used in comparison
@@ -232,7 +246,9 @@ namespace CryEngine
 			[FieldOffset(6)]
 			public ushort z;
 			[FieldOffset(0)]
+			// ReSharper disable FieldCanBeMadeReadOnly.Local
 			public ulong l;
+			// ReSharper restore FieldCanBeMadeReadOnly.Local
 		}
 		#endregion
 		#endregion
@@ -283,7 +299,9 @@ namespace CryEngine
 		/// <returns></returns>
 		public override int GetHashCode()
 		{
+			// ReSharper disable NonReadonlyFieldInGetHashCode
 			return 17 * this.X + 83 * this.Y + 53 * this.Z;
+			// ReSharper restore NonReadonlyFieldInGetHashCode
 		}
 		/// <summary>
 		/// Converts this vector to string representation.

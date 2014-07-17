@@ -153,6 +153,20 @@ namespace CryEngine
 		[FieldOffset(12)]
 		public Column44 Column3;
 		#endregion
+		#region Components
+		/// <summary>
+		/// Array of all components of the matrix.
+		/// </summary>
+		[FieldOffset(0)]
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
+		public float[] Components;
+		/// <summary>
+		/// Array of all rows of the matrix.
+		/// </summary>
+		[FieldOffset(0)]
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
+		public Vector4[] Rows;
+		#endregion
 		#endregion
 		#region Properties
 		/// <summary>
@@ -249,11 +263,7 @@ namespace CryEngine
 		{
 			get
 			{
-				if (!MathHelpers.IsNumberValid(Row0.X)) return false; if (!MathHelpers.IsNumberValid(Row0.Y)) return false; if (!MathHelpers.IsNumberValid(Row0.Z)) return false; if (!MathHelpers.IsNumberValid(Row0.W)) return false;
-				if (!MathHelpers.IsNumberValid(Row1.X)) return false; if (!MathHelpers.IsNumberValid(Row1.Y)) return false; if (!MathHelpers.IsNumberValid(Row1.Z)) return false; if (!MathHelpers.IsNumberValid(Row1.W)) return false;
-				if (!MathHelpers.IsNumberValid(Row2.X)) return false; if (!MathHelpers.IsNumberValid(Row2.Y)) return false; if (!MathHelpers.IsNumberValid(Row2.Z)) return false; if (!MathHelpers.IsNumberValid(Row2.W)) return false;
-				if (!MathHelpers.IsNumberValid(Row3.X)) return false; if (!MathHelpers.IsNumberValid(Row3.Y)) return false; if (!MathHelpers.IsNumberValid(Row3.Z)) return false; if (!MathHelpers.IsNumberValid(Row3.W)) return false;
-				return true;
+				return this.Components.All(MathHelpers.IsNumberValid);
 			}
 		}
 		/// <summary>
@@ -262,100 +272,8 @@ namespace CryEngine
 		/// <param name="index">Zero-based index of the element to get.</param>
 		public float this[int index]
 		{
-			get
-			{
-				switch (index)
-				{
-					case 0:
-						return this.M00;
-					case 1:
-						return this.M01;
-					case 2:
-						return this.M02;
-					case 3:
-						return this.M03;
-					case 4:
-						return this.M10;
-					case 5:
-						return this.M11;
-					case 6:
-						return this.M12;
-					case 7:
-						return this.M13;
-					case 8:
-						return this.M20;
-					case 9:
-						return this.M21;
-					case 10:
-						return this.M22;
-					case 11:
-						return this.M23;
-					case 12:
-						return this.M30;
-					case 13:
-						return this.M31;
-					case 14:
-						return this.M32;
-					case 15:
-						return this.M33;
-					default:
-						throw new IndexOutOfRangeException("Matrix44.Indexer(int).Get: Index out of range.");
-				}
-			}
-			set
-			{
-				switch (index)
-				{
-					case 0:
-						this.M00 = value;
-						break;
-					case 1:
-						this.M01 = value;
-						break;
-					case 2:
-						this.M02 = value;
-						break;
-					case 3:
-						this.M03 = value;
-						break;
-					case 4:
-						this.M10 = value;
-						break;
-					case 5:
-						this.M11 = value;
-						break;
-					case 6:
-						this.M12 = value;
-						break;
-					case 7:
-						this.M13 = value;
-						break;
-					case 8:
-						this.M20 = value;
-						break;
-					case 9:
-						this.M21 = value;
-						break;
-					case 10:
-						this.M22 = value;
-						break;
-					case 11:
-						this.M23 = value;
-						break;
-					case 12:
-						this.M30 = value;
-						break;
-					case 13:
-						this.M31 = value;
-						break;
-					case 14:
-						this.M32 = value;
-						break;
-					case 15:
-						this.M33 = value;
-						break;
-				}
-			}
+			get { return this.Components[index]; }
+			set { this.Components[index] = value; }
 		}
 		/// <summary>
 		/// Gives access to specific element of this matrix.
@@ -364,40 +282,8 @@ namespace CryEngine
 		/// <param name="column">Zero-based index of the column.</param>
 		public float this[int row, int column]
 		{
-			get
-			{
-				switch (row)
-				{
-					case 0:
-						return this.Row0[column];
-					case 1:
-						return this.Row1[column];
-					case 2:
-						return this.Row2[column];
-					case 3:
-						return this.Row3[column];
-					default:
-						throw new IndexOutOfRangeException("Matrix44.Indexer(int,int).Get: Index out of range.");
-				}
-			}
-			set
-			{
-				switch (row)
-				{
-					case 0:
-						this.Row0[column] = value;
-						break;
-					case 1:
-						this.Row1[column] = value;
-						break;
-					case 2:
-						this.Row2[column] = value;
-						break;
-					case 3:
-						this.Row3[column] = value;
-						break;
-				}
-			}
+			get { return this.Rows[row][column]; }
+			set { this.Rows[row][column] = value; }
 		}
 		#endregion
 		#region Contruction
@@ -438,7 +324,10 @@ namespace CryEngine
 		public Matrix44(ref Matrix33 m)
 			: this()
 		{
-			Contract.Requires(m.IsValid);
+			if (!m.IsValid)
+			{
+				throw new ArgumentException("Parameter must be a valid matrix.");
+			}
 			this.Row0.X = m.Row1.X; this.Row0.Y = m.Row1.Y; this.Row0.Z = m.Row1.Z; this.Row0.W = 0;
 			this.Row1.X = m.Row2.X; this.Row1.Y = m.Row2.Y; this.Row1.Z = m.Row2.Z; this.Row1.W = 0;
 			this.Row2.X = m.Row2.X; this.Row2.Y = m.Row2.Y; this.Row2.Z = m.Row2.Z; this.Row2.W = 0;
@@ -451,7 +340,10 @@ namespace CryEngine
 		public Matrix44(ref Matrix34 m)
 			: this()
 		{
-			Contract.Requires(m.IsValid);
+			if (!m.IsValid)
+			{
+				throw new ArgumentException("Parameter must be a valid matrix.");
+			}
 			this.Row0.X = m.Row1.X; this.Row0.Y = m.Row1.Y; this.Row0.Z = m.Row1.Z; this.Row0.W = m.Row1.W;
 			this.Row1.X = m.Row2.X; this.Row1.Y = m.Row2.Y; this.Row1.Z = m.Row2.Z; this.Row1.W = m.Row2.W;
 			this.Row2.X = m.Row2.X; this.Row2.Y = m.Row2.Y; this.Row2.Z = m.Row2.Z; this.Row2.W = m.Row2.W;
@@ -464,11 +356,14 @@ namespace CryEngine
 		public Matrix44(ref Matrix44 m)
 			: this()
 		{
-			Contract.Requires(m.IsValid);
-			this.Row0.X = m.Row0.X; this.Row0.Y = m.Row0.Y; this.Row0.Z = m.Row0.Z; this.Row0.W = m.Row0.W;
-			this.Row1.X = m.Row1.X; this.Row1.Y = m.Row1.Y; this.Row1.Z = m.Row1.Z; this.Row1.W = m.Row1.W;
-			this.Row2.X = m.Row2.X; this.Row2.Y = m.Row2.Y; this.Row2.Z = m.Row2.Z; this.Row2.W = m.Row2.W;
-			this.Row3.X = m.Row3.X; this.Row3.Y = m.Row3.Y; this.Row3.Z = m.Row3.Z; this.Row3.W = m.Row3.W;
+			if (!m.IsValid)
+			{
+				throw new ArgumentException("Parameter must be a valid matrix.");
+			}
+			for (int i = 0; i < this.Components.Length; i++)
+			{
+				this.Components[i] = m.Components[i];
+			}
 		}
 		#endregion
 		#region Interface
@@ -601,7 +496,10 @@ namespace CryEngine
 		/// <returns>Result of operation.</returns>
 		public static Matrix44 operator *(Matrix44 m, float f)
 		{
-			Contract.Requires(m.IsValid);
+			if (!m.IsValid)
+			{
+				throw new ArgumentException("Parameter must be a valid matrix.");
+			}
 			Matrix44 r = new Matrix44
 			{
 				Row0 = { X = m.Row0.X * f, Y = m.Row0.Y * f, Z = m.Row0.Z * f, W = m.Row0.W * f },
@@ -619,8 +517,14 @@ namespace CryEngine
 		/// <returns>Result of operation.</returns>
 		public static Matrix44 operator +(Matrix44 mm0, Matrix44 mm1)
 		{
-			Contract.Requires(mm0.IsValid);
-			Contract.Requires(mm1.IsValid);
+			if (!mm0.IsValid)
+			{
+				throw new ArgumentException("Parameter must be a valid matrix.");
+			}
+			if (!mm1.IsValid)
+			{
+				throw new ArgumentException("Parameter must be a valid matrix.");
+			}
 			Matrix44 r = new Matrix44
 			{
 				Row0 =
@@ -665,8 +569,14 @@ namespace CryEngine
 		/// <returns>Result of multiplication.</returns>
 		public static Matrix44 operator *(Matrix44 l, Diagonal33 r)
 		{
-			Contract.Requires(l.IsValid);
-			Contract.Requires(r.IsValid);
+			if (!l.IsValid)
+			{
+				throw new ArgumentException("Parameter must be a valid matrix.");
+			}
+			if (!r.IsValid)
+			{
+				throw new ArgumentException("Parameter must be a valid diagonal.");
+			}
 			Matrix44 m = new Matrix44
 			{
 				Row0 = { X = l.Row0.X * r.x, Y = l.Row0.Y * r.y, Z = l.Row0.Z * r.z, W = l.Row0.W },
@@ -688,8 +598,14 @@ namespace CryEngine
 		/// <returns>Result of multiplication.</returns>
 		public static Matrix44 operator *(Matrix44 l, Matrix33 r)
 		{
-			Contract.Requires(l.IsValid);
-			Contract.Requires(r.IsValid);
+			if (!l.IsValid)
+			{
+				throw new ArgumentException("Parameter must be a valid matrix.");
+			}
+			if (!r.IsValid)
+			{
+				throw new ArgumentException("Parameter must be a valid matrix.");
+			}
 			Matrix44 m = new Matrix44
 			{
 				Row0 =
@@ -735,8 +651,14 @@ namespace CryEngine
 		/// <returns>Result of multiplication.</returns>
 		public static Matrix44 operator *(Matrix44 l, Matrix34 r)
 		{
-			Contract.Requires(l.IsValid);
-			Contract.Requires(r.IsValid);
+			if (!l.IsValid)
+			{
+				throw new ArgumentException("Parameter must be a valid matrix.");
+			}
+			if (!r.IsValid)
+			{
+				throw new ArgumentException("Parameter must be a valid matrix.");
+			}
 			// ReSharper disable UseObjectOrCollectionInitializer
 			Matrix44 m = new Matrix44();
 			// ReSharper restore UseObjectOrCollectionInitializer
@@ -770,8 +692,14 @@ namespace CryEngine
 		/// <returns>Result of multiplication.</returns>
 		public static Matrix44 operator *(Matrix44 l, Matrix44 r)
 		{
-			Contract.Requires(l.IsValid);
-			Contract.Requires(r.IsValid);
+			if (!l.IsValid)
+			{
+				throw new ArgumentException("Parameter must be a valid matrix.");
+			}
+			if (!r.IsValid)
+			{
+				throw new ArgumentException("Parameter must be a valid matrix.");
+			}
 			// ReSharper disable UseObjectOrCollectionInitializer
 			Matrix44 res = new Matrix44();
 			// ReSharper restore UseObjectOrCollectionInitializer
@@ -801,8 +729,14 @@ namespace CryEngine
 		/// <returns>Result of multiplication.</returns>
 		public static Vector4 operator *(Matrix44 m, Vector4 v)
 		{
-			Contract.Requires(m.IsValid);
-			Contract.Requires(v.IsValid);
+			if (!m.IsValid)
+			{
+				throw new ArgumentException("Parameter must be a valid matrix.");
+			}
+			if (!v.IsValid)
+			{
+				throw new ArgumentException("Parameter must be a valid vector.");
+			}
 			return new Vector4(v.X * m.Row0.X + v.Y * m.Row0.Y + v.Z * m.Row0.Z + v.W * m.Row0.W,
 							  v.X * m.Row1.X + v.Y * m.Row1.Y + v.Z * m.Row1.Z + v.W * m.Row1.W,
 							  v.X * m.Row2.X + v.Y * m.Row2.Y + v.Z * m.Row2.Z + v.W * m.Row2.W,
@@ -819,8 +753,14 @@ namespace CryEngine
 		/// <returns>Result of multiplication.</returns>
 		public static Vector4 operator *(Vector4 v, Matrix44 m)
 		{
-			Contract.Requires(m.IsValid);
-			Contract.Requires(v.IsValid);
+			if (!m.IsValid)
+			{
+				throw new ArgumentException("Parameter must be a valid matrix.");
+			}
+			if (!v.IsValid)
+			{
+				throw new ArgumentException("Parameter must be a valid vector.");
+			}
 			return new Vector4(v.X * m.Row0.X + v.Y * m.Row1.X + v.Z * m.Row2.X + v.W * m.Row3.X,
 							  v.X * m.Row0.Y + v.Y * m.Row1.Y + v.Z * m.Row2.Y + v.W * m.Row3.Y,
 							  v.X * m.Row0.Z + v.Y * m.Row1.Z + v.Z * m.Row2.Z + v.W * m.Row3.Z,
@@ -835,12 +775,16 @@ namespace CryEngine
 		/// <returns>Transformed vector.</returns>
 		public Vector3 TransformVector(Vector3 b)
 		{
-			Contract.Requires(b.IsValid);
-			Vector3 v;
-			v.X = Row0.X * b.X + Row0.Y * b.Y + Row0.Z * b.Z;
-			v.Y = Row1.X * b.X + Row1.Y * b.Y + Row1.Z * b.Z;
-			v.Z = Row2.X * b.X + Row2.Y * b.Y + Row2.Z * b.Z;
-			return v;
+			if (!b.IsValid)
+			{
+				throw new ArgumentException("Parameter must be a valid vector.");
+			}
+			return new Vector3
+			{
+				X = this.Row0.X * b.X + this.Row0.Y * b.Y + this.Row0.Z * b.Z,
+				Y = this.Row1.X * b.X + this.Row1.Y * b.Y + this.Row1.Z * b.Z,
+				Z = this.Row2.X * b.X + this.Row2.Y * b.Y + this.Row2.Z * b.Z
+			};
 		}
 		#endregion
 		#region Get/Set Rows
@@ -851,29 +795,9 @@ namespace CryEngine
 		/// <param name="v">Vector that supplies new values.</param>
 		public void SetRow(int i, Vector3 v)
 		{
-			Contract.Requires(i < 4 && i > -1);
-			switch (i)
+			for (int j = 0; j < v.Components.Length; j++)
 			{
-				case 0:
-					this.Row0.X = v.X;
-					this.Row0.Y = v.Y;
-					this.Row0.Z = v.Z;
-					break;
-				case 1:
-					this.Row1.X = v.X;
-					this.Row1.Y = v.Y;
-					this.Row1.Z = v.Z;
-					break;
-				case 2:
-					this.Row2.X = v.X;
-					this.Row2.Y = v.Y;
-					this.Row2.Z = v.Z;
-					break;
-				case 3:
-					this.Row3.X = v.X;
-					this.Row3.Y = v.Y;
-					this.Row3.Z = v.Z;
-					break;
+				this.Rows[i][j] = v.Components[j];
 			}
 		}
 		/// <summary>
@@ -883,33 +807,9 @@ namespace CryEngine
 		/// <param name="v">Vector that supplies new values.</param>
 		public void SetRow4(int i, Vector4 v)
 		{
-			Contract.Requires(i < 4 && i > -1);
-			switch (i)
+			for (int j = 0; j < v.Components.Length; j++)
 			{
-				case 0:
-					this.Row0.X = v.X;
-					this.Row0.Y = v.Y;
-					this.Row0.Z = v.Z;
-					this.Row0.W = v.W;
-					break;
-				case 1:
-					this.Row1.X = v.X;
-					this.Row1.Y = v.Y;
-					this.Row1.Z = v.Z;
-					this.Row1.W = v.W;
-					break;
-				case 2:
-					this.Row2.X = v.X;
-					this.Row2.Y = v.Y;
-					this.Row2.Z = v.Z;
-					this.Row2.W = v.W;
-					break;
-				case 3:
-					this.Row3.X = v.X;
-					this.Row3.Y = v.Y;
-					this.Row3.Z = v.Z;
-					this.Row3.W = v.W;
-					break;
+				this.Rows[i][j] = v.Components[j];
 			}
 		}
 		/// <summary>
@@ -919,20 +819,7 @@ namespace CryEngine
 		/// <returns><see cref="Vector3" /> object that contains the contents of the row.</returns>
 		public Vector3 GetRow(int i)
 		{
-			Contract.Requires(i < 4 && i > -1);
-			switch (i)
-			{
-				case 0:
-					return new Vector3(this.Row0.X, this.Row0.Y, this.Row0.Z);
-				case 1:
-					return new Vector3(this.Row1.X, this.Row1.Y, this.Row1.Z);
-				case 2:
-					return new Vector3(this.Row2.X, this.Row2.Y, this.Row2.Z);
-				case 3:
-					return new Vector3(this.Row3.X, this.Row3.Y, this.Row3.Z);
-				default:
-					return Vector3.Zero;
-			}
+			return (Vector3)this.Rows[i];
 		}
 		/// <summary>
 		/// Gets first the row of this matrix.
@@ -941,20 +828,7 @@ namespace CryEngine
 		/// <returns><see cref="Vector4" /> object that contains the contents of the row.</returns>
 		public Vector4 GetRow4(int i)
 		{
-			Contract.Requires(i < 4 && i > -1);
-			switch (i)
-			{
-				case 0:
-					return new Vector4(this.Row0.X, this.Row0.Y, this.Row0.Z, this.Row0.W);
-				case 1:
-					return new Vector4(this.Row1.X, this.Row1.Y, this.Row1.Z, this.Row1.W);
-				case 2:
-					return new Vector4(this.Row2.X, this.Row2.Y, this.Row2.Z, this.Row2.W);
-				case 3:
-					return new Vector4(this.Row3.X, this.Row3.Y, this.Row3.Z, this.Row3.W);
-				default:
-					return Vector4.Zero;
-			}
+			return this.Rows[i];
 		}
 		#endregion
 		#region Get/Set Columns
@@ -965,7 +839,11 @@ namespace CryEngine
 		/// <param name="v">Vector that supplies new values.</param>
 		public void SetColumn(int i, Vector3 v)
 		{
-			Contract.Requires(i < 4); switch (i)
+			if (i < 0 || i > 3)
+			{
+				throw new ArgumentOutOfRangeException("i", "Index of the column must be in [0; 3].");
+			}
+			switch (i)
 			{
 				case 0:
 					this.Row0.X = v.X;
@@ -996,7 +874,11 @@ namespace CryEngine
 		/// <param name="v">Vector that supplies new values.</param>
 		public void SetColumn(int i, Vector4 v)
 		{
-			Contract.Requires(i < 4); switch (i)
+			if (i < 0 || i > 3)
+			{
+				throw new ArgumentOutOfRangeException("i", "Index of the column must be in [0; 3].");
+			}
+			switch (i)
 			{
 				case 0:
 					this.Row0.X = v.X;
@@ -1031,7 +913,11 @@ namespace CryEngine
 		/// <returns>Vector that contains values.</returns>
 		public Vector3 GetColumn(int i)
 		{
-			Contract.Requires(i < 4); switch (i)
+			if (i < 0 || i > 3)
+			{
+				throw new ArgumentOutOfRangeException("i", "Index of the column must be in [0; 3].");
+			}
+			switch (i)
 			{
 				case 0:
 					return new Vector3(this.Row0.X, this.Row1.X, this.Row2.X);
@@ -1052,7 +938,10 @@ namespace CryEngine
 		/// <returns>Vector that contains values.</returns>
 		public Vector4 GetColumn4(int i)
 		{
-			Contract.Requires(i < 4);
+			if (i < 0 || i > 3)
+			{
+				throw new ArgumentOutOfRangeException("i", "Index of the column must be in [0; 3].");
+			}
 			switch (i)
 			{
 				case 0:

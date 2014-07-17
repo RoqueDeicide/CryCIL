@@ -12,7 +12,7 @@ namespace CryEngine
 	/// Represents a four dimensional mathematical vector.
 	/// </summary>
 	[Serializable]
-	[StructLayout(LayoutKind.Sequential, Pack = 4)]
+	[StructLayout(LayoutKind.Explicit)]
 	public struct Vector4 : IEquatable<Vector4>, IFormattable, IEnumerable<float>
 	{
 		/// <summary>
@@ -23,19 +23,29 @@ namespace CryEngine
 		/// <summary>
 		/// The X component of the vector.
 		/// </summary>
+		[FieldOffset(0)]
 		public float X;
 		/// <summary>
 		/// The Y component of the vector.
 		/// </summary>
+		[FieldOffset(4)]
 		public float Y;
 		/// <summary>
 		/// The Z component of the vector.
 		/// </summary>
+		[FieldOffset(8)]
 		public float Z;
 		/// <summary>
 		/// The W component of the vector.
 		/// </summary>
+		[FieldOffset(12)]
 		public float W;
+		/// <summary>
+		/// Array of all components of this vector.
+		/// </summary>
+		[FieldOffset(0)]
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
+		public float[] Components;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -59,30 +69,8 @@ namespace CryEngine
 		/// </exception>
 		public float this[int index]
 		{
-			get
-			{
-				Contract.Requires(index >= 0 && index < 4);
-				switch (index)
-				{
-					case 0: return X;
-					case 1: return Y;
-					case 2: return Z;
-					case 3: return W;
-				}
-				return 0;
-			}
-
-			set
-			{
-				Contract.Requires(index >= 0 && index < 4);
-				switch (index)
-				{
-					case 0: X = value; break;
-					case 1: Y = value; break;
-					case 2: Z = value; break;
-					case 3: W = value; break;
-				}
-			}
+			get { return this.Components[index]; }
+			set { this.Components[index] = value; }
 		}
 		/// <summary>
 		/// Calculates the length of the vector.
@@ -119,6 +107,7 @@ namespace CryEngine
 		/// </summary>
 		/// <param name="value">The value that will be assigned to all components.</param>
 		public Vector4(float value)
+			: this()
 		{
 			X = value;
 			Y = value;
@@ -133,6 +122,7 @@ namespace CryEngine
 		/// <param name="z">Initial value for the Z component of the vector.</param>
 		/// <param name="w">Initial value for the W component of the vector.</param>
 		public Vector4(float x, float y, float z, float w)
+			: this()
 		{
 			X = x;
 			Y = y;
@@ -147,6 +137,7 @@ namespace CryEngine
 		/// </param>
 		/// <param name="w">Initial value for the W component of the vector.</param>
 		public Vector4(Vector3 value, float w)
+			: this()
 		{
 			X = value.X;
 			Y = value.Y;
@@ -162,6 +153,7 @@ namespace CryEngine
 		/// <param name="z">Initial value for the Z component of the vector.</param>
 		/// <param name="w">Initial value for the W component of the vector.</param>
 		public Vector4(Vector2 value, float z, float w)
+			: this()
 		{
 			X = value.X;
 			Y = value.Y;
@@ -180,101 +172,26 @@ namespace CryEngine
 		/// zeroed.</para><para>If array contains 4 or more values first four values are assigned to
 		/// vector components.</para>
 		/// </param>
-		public Vector4(float[] values)
+		public Vector4(IList<float> values)
+			: this()
 		{
-			if (values == null || values.Length == 0)
+			if (values == null) return;
+			for (int i = 0; i < this.Components.Length || i < values.Count; i++)
 			{
-				this.X = 0;
-				this.Y = 0;
-				this.Z = 0;
-				this.W = 0;
-			}
-			else if (values.Length == 1)
-			{
-				this.X = values[0];
-				this.Y = values[0];
-				this.Z = values[0];
-				this.W = values[0];
-			}
-			else if (values.Length == 2)
-			{
-				this.X = values[0];
-				this.Y = values[1];
-				this.Z = 0;
-				this.W = 0;
-			}
-			else if (values.Length == 3)
-			{
-				this.X = values[0];
-				this.Y = values[1];
-				this.Z = values[2];
-				this.W = 0;
-			}
-			else
-			{
-				this.X = values[0];
-				this.Y = values[1];
-				this.Z = values[2];
-				this.W = values[3];
-			}
-		}
-		/// <summary>
-		/// Creates new <see cref="Vector4" />.
-		/// </summary>
-		/// <param name="values">
-		/// A list of floating point values which specify new vector using following rules: <para>If
-		/// list is null or empty zero vector is created.</para><para>If list contains 1 value it is
-		/// assigned to all three components.</para><para>If list contains 2 values they are
-		/// assigned to first two components while Z and W are zeroed.</para><para>If list contains
-		/// 3 values they are assigned to first three components while W is zeroed.</para><para>If
-		/// list contains 4 or more values first four values are assigned to vector components.</para>
-		/// </param>
-		public Vector4(List<float> values)
-		{
-			if (values == null || values.Count == 0)
-			{
-				this.X = 0;
-				this.Y = 0;
-				this.Z = 0;
-				this.W = 0;
-			}
-			else if (values.Count == 1)
-			{
-				this.X = values[0];
-				this.Y = values[0];
-				this.Z = values[0];
-				this.W = values[0];
-			}
-			else if (values.Count == 2)
-			{
-				this.X = values[0];
-				this.Y = values[1];
-				this.Z = 0;
-				this.W = 0;
-			}
-			else if (values.Count == 3)
-			{
-				this.X = values[0];
-				this.Y = values[1];
-				this.Z = values[2];
-				this.W = 0;
-			}
-			else
-			{
-				this.X = values[0];
-				this.Y = values[1];
-				this.Z = values[2];
-				this.W = values[3];
+				this.Components[i] = values[i];
 			}
 		}
 		/// <summary>
 		/// Creates new <see cref="Vector4" />.
 		/// </summary>
 		/// <param name="values">Dicionary which contents are used to initialize new vector.</param>
-		public Vector4(Dictionary<string, float> values)
+		public Vector4(IDictionary<string, float> values)
+			: this()
 		{
-			Contract.Requires(values != null);
-			this.X = this.Y = this.Z = this.W = 0;
+			if (values == null)
+			{
+				return;
+			}
 			if (values.ContainsKey("X"))
 			{
 				this.X = values["X"];
@@ -471,7 +388,10 @@ namespace CryEngine
 		/// <returns>Modified vector.</returns>
 		public Vector4 ModifyVector(int offset, params float[] newValues)
 		{
-			Contract.Requires(offset >= 0 && offset < 4);
+			if (offset < 0 || offset > 2)
+			{
+				throw new ArgumentOutOfRangeException("offset", "offset must be belong to interval [0; 3]");
+			}
 
 			Vector4 result = new Vector4(this.X, this.Y, this.Z, this.W);
 			for (int i = offset, j = 0; j < newValues.Length && i < 4; i++, j++)
@@ -721,11 +641,13 @@ namespace CryEngine
 		/// <returns>A vector containing the largest components of the source vectors.</returns>
 		public static Vector4 Max(Vector4 left, Vector4 right)
 		{
-			Vector4 result;
-			result.X = (left.X > right.X) ? left.X : right.X;
-			result.Y = (left.Y > right.Y) ? left.Y : right.Y;
-			result.Z = (left.Z > right.Z) ? left.Z : right.Z;
-			result.W = (left.W > right.W) ? left.W : right.W;
+			Vector4 result = new Vector4
+			{
+				X = (left.X > right.X) ? left.X : right.X,
+				Y = (left.Y > right.Y) ? left.Y : right.Y,
+				Z = (left.Z > right.Z) ? left.Z : right.Z,
+				W = (left.W > right.W) ? left.W : right.W
+			};
 			return result;
 		}
 		/// <summary>
@@ -736,11 +658,13 @@ namespace CryEngine
 		/// <returns>A vector containing the smallest components of the source vectors.</returns>
 		public static Vector4 Min(Vector4 left, Vector4 right)
 		{
-			Vector4 result;
-			result.X = (left.X < right.X) ? left.X : right.X;
-			result.Y = (left.Y < right.Y) ? left.Y : right.Y;
-			result.Z = (left.Z < right.Z) ? left.Z : right.Z;
-			result.W = (left.W < right.W) ? left.W : right.W;
+			Vector4 result = new Vector4
+			{
+				X = (left.X < right.X) ? left.X : right.X,
+				Y = (left.Y < right.Y) ? left.Y : right.Y,
+				Z = (left.Z < right.Z) ? left.Z : right.Z,
+				W = (left.W < right.W) ? left.W : right.W
+			};
 			return result;
 		}
 		#endregion
@@ -840,10 +764,13 @@ namespace CryEngine
 		/// </returns>
 		public bool Equals(Vector4 other, float epsilon)
 		{
-			return (Math.Abs(other.X - X) < epsilon &&
+			return
+			(
+				Math.Abs(other.X - X) < epsilon &&
 				Math.Abs(other.Y - Y) < epsilon &&
 				Math.Abs(other.Z - Z) < epsilon &&
-				Math.Abs(other.W - W) < epsilon);
+				Math.Abs(other.W - W) < epsilon
+			);
 		}
 		/// <summary>
 		/// Determines whether the specified <see cref="System.Object" /> is equal to this instance.

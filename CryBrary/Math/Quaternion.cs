@@ -61,7 +61,7 @@ namespace CryEngine
 		{
 			get
 			{
-				return (float)W * W + V.X * V.X + V.Y * V.Y + V.Z * V.Z;
+				return W * W + V.X * V.X + V.Y * V.Y + V.Z * V.Z;
 			}
 		}
 		/// <summary>
@@ -71,9 +71,23 @@ namespace CryEngine
 		{
 			get
 			{
-				var angles = new Vector3();
+				var angles = new Vector3
+				{
+					Y =
+					(float)Math.Asin
+					(
+						Math.Max
+						(
+							-1.0,
+							Math.Min
+							(
+								1.0,
+								-(this.V.X * this.V.Z - this.W * this.V.Y) * 2
+							)
+						)
+					)
+				};
 
-				angles.Y = (float)Math.Asin(Math.Max(-1.0, Math.Min(1.0, -(V.X * V.Z - W * V.Y) * 2)));
 				if (Math.Abs(Math.Abs(angles.Y) - (Math.PI * 0.5)) < 0.01)
 				{
 					angles.X = 0;
@@ -335,29 +349,44 @@ namespace CryEngine
 
 		public static Vector3 operator *(Quaternion left, Vector3 right)
 		{
-			var vOut = new Vector3();
-			var r2 = new Vector3();
+			var r2 = new Vector3
+			{
+				X = (left.V.Y * right.Z - left.V.Z * right.Y) + left.W * right.X,
+				Y = (left.V.Z * right.X - left.V.X * right.Z) + left.W * right.Y,
+				Z = (left.V.X * right.Y - left.V.Y * right.X) + left.W * right.Z
+			};
 
-			r2.X = (left.V.Y * right.Z - left.V.Z * right.Y) + left.W * right.X;
-			r2.Y = (left.V.Z * right.X - left.V.X * right.Z) + left.W * right.Y;
-			r2.Z = (left.V.X * right.Y - left.V.Y * right.X) + left.W * right.Z;
-			vOut.X = (r2.Z * left.V.Y - r2.Y * left.V.Z); vOut.X += vOut.X + right.X;
-			vOut.Y = (r2.X * left.V.Z - r2.Z * left.V.X); vOut.Y += vOut.Y + right.Y;
-			vOut.Z = (r2.Y * left.V.X - r2.X * left.V.Y); vOut.Z += vOut.Z + right.Z;
+			var vOut = new Vector3
+			{
+				X = (r2.Z * left.V.Y - r2.Y * left.V.Z),
+				Y = (r2.X * left.V.Z - r2.Z * left.V.X),
+				Z = (r2.Y * left.V.X - r2.X * left.V.Y)
+			};
+
+			vOut.X += vOut.X + right.X;
+			vOut.Y += vOut.Y + right.Y;
+			vOut.Z += vOut.Z + right.Z;
 			return vOut;
 		}
 
 		public static Vector3 operator *(Vector3 left, Quaternion right)
 		{
-			var vOut = new Vector3();
-			var r2 = new Vector3();
+			var r2 = new Vector3
+			{
+				X = (right.V.Z * left.Y - right.V.Y * left.Z) + right.W * left.X,
+				Y = (right.V.X * left.Z - right.V.Z * left.X) + right.W * left.Y,
+				Z = (right.V.Y * left.X - right.V.X * left.Y) + right.W * left.Z
+			};
 
-			r2.X = (right.V.Z * left.Y - right.V.Y * left.Z) + right.W * left.X;
-			r2.Y = (right.V.X * left.Z - right.V.Z * left.X) + right.W * left.Y;
-			r2.Z = (right.V.Y * left.X - right.V.X * left.Y) + right.W * left.Z;
-			vOut.X = (r2.Y * right.V.Z - r2.Z * right.V.Y); vOut.X += vOut.X + left.X;
-			vOut.Y = (r2.Z * right.V.X - r2.X * right.V.Z); vOut.Y += vOut.Y + left.Y;
-			vOut.Z = (r2.X * right.V.Y - r2.Y * right.V.X); vOut.Z += vOut.Z + left.Z;
+			var vOut = new Vector3
+			{
+				X = (r2.Y * right.V.Z - r2.Z * right.V.Y),
+				Y = (r2.Z * right.V.X - r2.X * right.V.Z),
+				Z = (r2.X * right.V.Y - r2.Y * right.V.X)
+			};
+			vOut.X += vOut.X + left.X;
+			vOut.Y += vOut.Y + left.Y;
+			vOut.Z += vOut.Z + left.Z;
 			return vOut;
 		}
 		/// <summary>
@@ -644,7 +673,9 @@ namespace CryEngine
 		/// Determines whether this quaternion is Identity quaternion.
 		/// </summary>
 		/// <seealso cref="Quaternion.Identity"/>
+		// ReSharper disable CompareOfFloatsByEqualityOperator
 		public bool IsIdentity { get { return W == 1 && V.X == 0 && V.Y == 0 && V.Z == 0; } }
+		// ReSharper restore CompareOfFloatsByEqualityOperator
 		/// <summary>
 		/// Determines whether modulus of this quaternion is equal 1.
 		/// </summary>
@@ -696,15 +727,15 @@ namespace CryEngine
 		{
 			float sx;
 			float cx;
-			MathHelpers.SinCos((float)(angle.X * (float)0.5), out sx, out cx);
+			MathHelpers.SinCos(angle.X * 0.5f, out sx, out cx);
 
 			float sy;
 			float cy;
-			MathHelpers.SinCos((float)(angle.Y * (float)0.5), out sy, out cy);
+			MathHelpers.SinCos(angle.Y * 0.5f, out sy, out cy);
 
 			float sz;
 			float cz;
-			MathHelpers.SinCos((float)(angle.Z * (float)0.5), out sz, out cz);
+			MathHelpers.SinCos(angle.Z * 0.5f, out sz, out cz);
 
 			W = cx * cy * cz + sx * sy * sz;
 			V.X = cz * cy * sx - sz * sy * cx;
@@ -718,7 +749,7 @@ namespace CryEngine
 		public void SetRotationAroundX(float r)
 		{
 			float s, c;
-			MathHelpers.SinCos((float)(r * (float)0.5), out s, out c);
+			MathHelpers.SinCos(r * 0.5f, out s, out c);
 			W = c;
 			V.X = s;
 			V.Y = 0;
@@ -731,7 +762,7 @@ namespace CryEngine
 		public void SetRotationAroundY(float r)
 		{
 			float s, c;
-			MathHelpers.SinCos((float)(r * (float)0.5), out s, out c);
+			MathHelpers.SinCos(r * 0.5f, out s, out c);
 			W = c;
 			V.X = 0;
 			V.Y = s;
@@ -744,7 +775,7 @@ namespace CryEngine
 		public void SetRotationAroundZ(float r)
 		{
 			float s, c;
-			MathHelpers.SinCos((float)(r * (float)0.5), out s, out c);
+			MathHelpers.SinCos(r * 0.5f, out s, out c);
 			W = c;
 			V.X = 0;
 			V.Y = 0;
@@ -785,7 +816,7 @@ namespace CryEngine
 				{
 					// Generate an axis
 					Vector3 axis = new Vector3(1, 0, 0).Cross(one);
-					if (axis.Length == 0) // pick another if colinear
+					if (Math.Abs(axis.Length) < MathHelpers.ZeroTolerance) // pick another if colinear
 						axis = new Vector3(0, 0, -1).Cross(one);
 					axis.Normalize();
 					this.SetRotationAngleAxis((float)Math.PI, axis);
@@ -818,7 +849,10 @@ namespace CryEngine
 		/// </param>
 		public void SetRotationToViewDirection(Vector3 vdir)
 		{
-			Contract.Requires(vdir.IsUnit(0.01f));
+			if (!vdir.IsUnit(0.01f))
+			{
+				throw new ArgumentException("To create look-at quaternion we need a vector of unit length.");
+			}
 			//set default initialization for up-vector.
 			this.W = 0.70710676908493042f;
 			this.V.X = vdir.Z * 0.70710676908493042f;
@@ -1022,8 +1056,10 @@ namespace CryEngine
 			{
 				int hash = 17;
 
+				// ReSharper disable NonReadonlyFieldInGetHashCode
 				hash = hash * 23 + W.GetHashCode();
 				hash = hash * 23 + V.GetHashCode();
+				// ReSharper restore NonReadonlyFieldInGetHashCode
 
 				return hash;
 			}
