@@ -23,7 +23,7 @@ namespace CryEngine.NativeMemory
 		[FieldOffset(0)]
 		public byte UnsignedByte;
 		/// <summary>
-		/// <see cref="Sbyte" /> value.
+		/// <see cref="SByte" /> value.
 		/// </summary>
 		[FieldOffset(0)]
 		public sbyte SignedByte;
@@ -39,9 +39,7 @@ namespace CryEngine.NativeMemory
 		/// <summary>
 		/// Gets or sets a byte.
 		/// </summary>
-		/// <param name="index">
-		/// Ignored as object of this type is just one byte.
-		/// </param>
+		/// <param name="index">Ignored as object of this type is just one byte.</param>
 		public byte this[ulong index]
 		{
 			get
@@ -58,9 +56,7 @@ namespace CryEngine.NativeMemory
 		/// <summary>
 		/// Initializes new instance of <see cref="Byte1" /> type.
 		/// </summary>
-		/// <param name="value">
-		/// Signed byte integer value to initialize this object with.
-		/// </param>
+		/// <param name="value">Signed byte integer value to initialize this object with.</param>
 		public Byte1(sbyte value)
 			: this()
 		{
@@ -69,9 +65,7 @@ namespace CryEngine.NativeMemory
 		/// <summary>
 		/// Initializes new instance of <see cref="Byte1" /> type.
 		/// </summary>
-		/// <param name="value">
-		/// Unsigned byte integer value to initialize this object with.
-		/// </param>
+		/// <param name="value">Unsigned byte integer value to initialize this object with.</param>
 		public Byte1(byte value)
 			: this()
 		{
@@ -80,12 +74,9 @@ namespace CryEngine.NativeMemory
 		/// <summary>
 		/// Initializes new instance of <see cref="Byte1" /> type.
 		/// </summary>
-		/// <param name="pointer">
-		/// Pointer to native memory cluster.
-		/// </param>
+		/// <param name="pointer">Pointer to native memory cluster.</param>
 		/// <param name="index">
-		/// Zero-based index of the byte within native memory cluster
-		/// to use as initial value.
+		/// Zero-based index of the byte within native memory cluster to use as initial value.
 		/// </param>
 		public Byte1(IntPtr pointer, ulong index)
 			: this()
@@ -101,16 +92,13 @@ namespace CryEngine.NativeMemory
 		/// <summary>
 		/// Gets one byte from native memory cluster.
 		/// </summary>
-		/// <param name="handle">
-		/// Pointer to the beginning of native memory cluster.
-		/// </param>
+		/// <param name="handle">Pointer to the beginning of native memory cluster.</param>
 		/// <param name="offset">
-		/// Zero-based index of the byte within native memory cluster
-		/// to get.
+		/// Zero-based index of the byte within native memory cluster to get.
 		/// </param>
 		public void Get(IntPtr handle, ulong offset)
 		{
-			if (handle == null)
+			if (handle == IntPtr.Zero)
 			{
 				return;
 			}
@@ -119,16 +107,13 @@ namespace CryEngine.NativeMemory
 		/// <summary>
 		/// Writes one byte to native memory cluster.
 		/// </summary>
-		/// <param name="handle">
-		/// Pointer to the beginning of native memory cluster.
-		/// </param>
+		/// <param name="handle">Pointer to the beginning of native memory cluster.</param>
 		/// <param name="offset">
-		/// Zero-based index of the byte within native memory cluster
-		/// to set.
+		/// Zero-based index of the byte within native memory cluster to set.
 		/// </param>
 		public void Set(IntPtr handle, ulong offset)
 		{
-			if (handle == null)
+			if (handle == IntPtr.Zero)
 			{
 				return;
 			}

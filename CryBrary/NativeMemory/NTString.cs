@@ -7,16 +7,15 @@ using System.Threading.Tasks;
 namespace CryEngine.NativeMemory
 {
 	/// <summary>
-	/// Represents a wrapper around a null terminated string stored in
-	/// native memory.
+	/// Represents a wrapper around a null terminated string stored in native memory.
 	/// </summary>
 	public class NTString : INativeMemoryWrapper
 	{
 		#region Fields
-		private IntPtr handle;
+		private readonly IntPtr handle;
 		private bool disposed;
-		private Allocators allocator;
-		private bool managing;
+		private readonly Allocators allocator;
+		private readonly bool managing;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -43,12 +42,9 @@ namespace CryEngine.NativeMemory
 		/// Creates a native null terminated string.
 		/// </summary>
 		/// <param name="pointer">Pointer to first byte.</param>
-		/// <param name="allocator">
-		/// Method that wasw used to allocate memory.
-		/// </param>
+		/// <param name="allocator">Method that wasw used to allocate memory.</param>
 		/// <param name="managing">
-		/// Indicates whether this object should release native memory
-		/// when disposed.
+		/// Indicates whether this object should release native memory when disposed.
 		/// </param>
 		public NTString(IntPtr pointer, Allocators allocator, bool managing = false)
 		{
@@ -78,8 +74,6 @@ namespace CryEngine.NativeMemory
 					break;
 				case Allocators.Mono:
 					MonoMemory.FreeMemory(this.handle);
-					break;
-				default:
 					break;
 			}
 			this.disposed = true;

@@ -38,21 +38,31 @@ namespace CryEngine.NativeMemory
 		[FieldOffset(0)]
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 8)]
 		public byte[] Bytes;
+		/// <summary>
+		/// Two separate 32-bit values.
+		/// </summary>
+		[FieldOffset(0)]
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+		public Bytes4[] Quads;
+		/// <summary>
+		/// Four separate 16-bit values.
+		/// </summary>
+		[FieldOffset(0)]
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
+		public Bytes2[] Doubles;
 		#endregion
 		#region Properties
 		/// <summary>
 		/// Returns 8.
 		/// </summary>
-		public uint Length
+		public ulong Length
 		{
 			get { return 8; }
 		}
 		/// <summary>
 		/// Gets or sets a byte.
 		/// </summary>
-		/// <param name="index">
-		/// Zero-based index of the byte to get or set.
-		/// </param>
+		/// <param name="index">Zero-based index of the byte to get or set.</param>
 		public byte this[ulong index]
 		{
 			get
@@ -69,9 +79,7 @@ namespace CryEngine.NativeMemory
 		/// <summary>
 		/// Initializes new instance of <see cref="Bytes8" /> type.
 		/// </summary>
-		/// <param name="value">
-		/// <see cref="Int64" /> value to initialize this object with.
-		/// </param>
+		/// <param name="value"><see cref="Int64" /> value to initialize this object with.</param>
 		public Bytes8(long value)
 			: this()
 		{
@@ -80,9 +88,7 @@ namespace CryEngine.NativeMemory
 		/// <summary>
 		/// Initializes new instance of <see cref="Bytes8" /> type.
 		/// </summary>
-		/// <param name="value">
-		/// <see cref="UInt64" /> value to initialize this object with.
-		/// </param>
+		/// <param name="value"><see cref="UInt64" /> value to initialize this object with.</param>
 		public Bytes8(ulong value)
 			: this()
 		{
@@ -91,9 +97,7 @@ namespace CryEngine.NativeMemory
 		/// <summary>
 		/// Initializes new instance of <see cref="Bytes8" /> type.
 		/// </summary>
-		/// <param name="value">
-		/// <see cref="Double" /> value to initialize this object with.
-		/// </param>
+		/// <param name="value"><see cref="Double" /> value to initialize this object with.</param>
 		public Bytes8(double value)
 			: this()
 		{
@@ -102,12 +106,8 @@ namespace CryEngine.NativeMemory
 		/// <summary>
 		/// Initializes new 8-byte buffer object.
 		/// </summary>
-		/// <param name="array">
-		/// Array that provides elements to fill new buffer with.
-		/// </param>
-		/// <param name="shift">
-		/// Zero-based index of first byte in given array.
-		/// </param>
+		/// <param name="array">Array that provides elements to fill new buffer with.</param>
+		/// <param name="shift">Zero-based index of first byte in given array.</param>
 		public Bytes8(byte[] array, ulong shift)
 			: this()
 		{
@@ -124,12 +124,9 @@ namespace CryEngine.NativeMemory
 		/// Initializes new 8-byte buffer object.
 		/// </summary>
 		/// <param name="bytes">
-		/// Fixed size buffer that provides elements to fill new
-		/// buffer with.
+		/// Fixed size buffer that provides elements to fill new buffer with.
 		/// </param>
-		/// <param name="shift">
-		/// Zero-based index of first byte in given buffer.
-		/// </param>
+		/// <param name="shift">Zero-based index of first byte in given buffer.</param>
 		public Bytes8(byte* bytes, ulong shift)
 			: this()
 		{
@@ -144,12 +141,9 @@ namespace CryEngine.NativeMemory
 		/// <summary>
 		/// Initializes new instance of <see cref="Bytes8" /> type.
 		/// </summary>
-		/// <param name="pointer">
-		/// Pointer to native memory cluster.
-		/// </param>
+		/// <param name="pointer">Pointer to native memory cluster.</param>
 		/// <param name="index">
-		/// Zero-based index of the first of 8 bytes within native
-		/// memory cluster.
+		/// Zero-based index of the first of 8 bytes within native memory cluster.
 		/// </param>
 		public Bytes8(IntPtr pointer, ulong index)
 			: this()
@@ -165,16 +159,13 @@ namespace CryEngine.NativeMemory
 		/// <summary>
 		/// Gets 8 bytes from native memory cluster.
 		/// </summary>
-		/// <param name="handle">
-		/// Pointer to the beginning of native memory cluster.
-		/// </param>
+		/// <param name="handle">Pointer to the beginning of native memory cluster.</param>
 		/// <param name="offset">
-		/// Zero-based index of first of 8 bytes within native memory
-		/// cluster to get.
+		/// Zero-based index of first of 8 bytes within native memory cluster to get.
 		/// </param>
 		public void Get(IntPtr handle, ulong offset)
 		{
-			if (handle == null)
+			if (handle == IntPtr.Zero)
 			{
 				return;
 			}
@@ -183,16 +174,13 @@ namespace CryEngine.NativeMemory
 		/// <summary>
 		/// Writes 8 bytes to native memory cluster.
 		/// </summary>
-		/// <param name="handle">
-		/// Pointer to the beginning of native memory cluster.
-		/// </param>
+		/// <param name="handle">Pointer to the beginning of native memory cluster.</param>
 		/// <param name="offset">
-		/// Zero-based index of first of 8 bytes within native memory
-		/// cluster to set.
+		/// Zero-based index of first of 8 bytes within native memory cluster to set.
 		/// </param>
 		public void Set(IntPtr handle, ulong offset)
 		{
-			if (handle == null)
+			if (handle == IntPtr.Zero)
 			{
 				return;
 			}

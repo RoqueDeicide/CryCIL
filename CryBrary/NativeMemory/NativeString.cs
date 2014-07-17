@@ -9,8 +9,7 @@ using System.Threading.Tasks;
 namespace CryEngine.NativeMemory
 {
 	/// <summary>
-	/// Represents a wrapper around a standard null-terminated string
-	/// in native memory.
+	/// Represents a wrapper around a standard null-terminated string in native memory.
 	/// </summary>
 	public class NativeString
 	{
@@ -26,17 +25,11 @@ namespace CryEngine.NativeMemory
 		[MethodImplAttribute(MethodImplOptions.InternalCall)]
 		extern internal static void FreeStringMemory(IntPtr pointer);
 		#endregion
-		#region Repository
-
-		#endregion
 		/// <summary>
-		/// Converts a C++ null terminated wchar_t string to its .NET
-		/// counter part.
+		/// Converts a C++ null terminated wchar_t string to its .NET counter part.
 		/// </summary>
 		/// <param name="pointer">Pointer to the first symbol.</param>
-		/// <param name="length">
-		/// Length of the string excluding terminal.
-		/// </param>
+		/// <param name="length">Length of the string excluding terminal.</param>
 		/// <param name="symbolSize">Size of one symbol in bytes.</param>
 		/// <returns>New string.</returns>
 		public static string FromWideString(IntPtr pointer, int length, int symbolSize)
@@ -69,8 +62,8 @@ namespace CryEngine.NativeMemory
 		public static NativeArray ToWideString(string text)
 		{
 			Contract.Requires(text != null);
-			// We use UTF-16, so length of byte array is number of
-			// symbols * 2 + 2 bytes for terminating symbol.
+			// We use UTF-16, so length of byte array is number of symbols * 2 + 2 bytes for
+			// terminating symbol.
 			byte[] bytes = new byte[text.Length * 2 + 2];
 			// Copy bytes of string into byte buffer.
 			Encoding.Unicode.GetBytes(text).CopyTo(bytes, 0);

@@ -390,7 +390,7 @@ namespace CryEngine
 		/// </returns>
 		public StaticObject GetStaticObject(int slot)
 		{
-			if (this.EntityHandle == null)
+			if (this.EntityHandle == IntPtr.Zero)
 			{
 				throw new ObjectDisposedException
 					("EntityHandle", "Attempt to get a static object from disposed or invalid entity.");
@@ -409,7 +409,7 @@ namespace CryEngine
 				throw new ObjectDisposedException
 					("staticObject", "Attempt to assign disposed or invalid static object to the entity.");
 			}
-			if (this.EntityHandle == null)
+			if (this.EntityHandle == IntPtr.Zero)
 			{
 				throw new ObjectDisposedException
 					("EntityHandle", "Attempt to assign a static object to disposed or invalid entity.");

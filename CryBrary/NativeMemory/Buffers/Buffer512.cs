@@ -24,7 +24,7 @@ namespace CryEngine.NativeMemory
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 512)]
 		public byte[] Bytes;
 		/// <summary>
-		/// 512 <see cref="Sbyte" /> objects.
+		/// 512 <see cref="SByte" /> objects.
 		/// </summary>
 		[FieldOffset(0)]
 		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 512)]
@@ -89,9 +89,7 @@ namespace CryEngine.NativeMemory
 		/// <summary>
 		/// Gets or sets a byte.
 		/// </summary>
-		/// <param name="index">
-		/// Zero-based index of the byte to get or set.
-		/// </param>
+		/// <param name="index">Zero-based index of the byte to get or set.</param>
 		public byte this[ulong index]
 		{
 			get
@@ -106,13 +104,11 @@ namespace CryEngine.NativeMemory
 		#endregion
 		#region Construction
 		/// <summary>
-		/// Initializes new instance of type <see cref="Buffer64" />
-		/// with a portion of the array.
+		/// Initializes new instance of type <see cref="Buffer64" /> with a portion of the array.
 		/// </summary>
 		/// <param name="array">Array that will provide data.</param>
 		/// <param name="shift">
-		/// Index of the first element of the array portion from which
-		/// to start copying bytes.
+		/// Index of the first element of the array portion from which to start copying bytes.
 		/// </param>
 		public Buffer512(byte[] array, ulong shift)
 			: this()
@@ -129,12 +125,9 @@ namespace CryEngine.NativeMemory
 		/// <summary>
 		/// Initializes new instance of <see cref="Buffer512" /> type.
 		/// </summary>
-		/// <param name="pointer">
-		/// Pointer to native memory cluster.
-		/// </param>
+		/// <param name="pointer">Pointer to native memory cluster.</param>
 		/// <param name="index">
-		/// Zero-based index of the first of 512 bytes within native
-		/// memory cluster.
+		/// Zero-based index of the first of 512 bytes within native memory cluster.
 		/// </param>
 		public Buffer512(IntPtr pointer, ulong index)
 			: this()
@@ -150,17 +143,14 @@ namespace CryEngine.NativeMemory
 		/// <summary>
 		/// Gets 512 bytes from native memory cluster.
 		/// </summary>
-		/// <param name="handle">
-		/// Pointer to the beginning of native memory cluster.
-		/// </param>
+		/// <param name="handle">Pointer to the beginning of native memory cluster.</param>
 		/// <param name="offset">
-		/// Zero-based index of first of 512 bytes within native
-		/// memory cluster to get.
+		/// Zero-based index of first of 512 bytes within native memory cluster to get.
 		/// </param>
 
 		public void Get(IntPtr handle, ulong offset)
 		{
-			if (handle == null)
+			if (handle == IntPtr.Zero)
 			{
 				return;
 			}
@@ -169,16 +159,13 @@ namespace CryEngine.NativeMemory
 		/// <summary>
 		/// Writes 512 bytes to native memory cluster.
 		/// </summary>
-		/// <param name="handle">
-		/// Pointer to the beginning of native memory cluster.
-		/// </param>
+		/// <param name="handle">Pointer to the beginning of native memory cluster.</param>
 		/// <param name="offset">
-		/// Zero-based index of first of 512 bytes within native
-		/// memory cluster to set.
+		/// Zero-based index of first of 512 bytes within native memory cluster to set.
 		/// </param>
 		public void Set(IntPtr handle, ulong offset)
 		{
-			if (handle == null)
+			if (handle == IntPtr.Zero)
 			{
 				return;
 			}

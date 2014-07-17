@@ -55,9 +55,7 @@ namespace CryEngine.NativeMemory
 		/// <summary>
 		/// Gets or sets a byte.
 		/// </summary>
-		/// <param name="index">
-		/// Zero-based index of the byte to get or set.
-		/// </param>
+		/// <param name="index">Zero-based index of the byte to get or set.</param>
 		public byte this[ulong index]
 		{
 			get
@@ -74,9 +72,7 @@ namespace CryEngine.NativeMemory
 		/// <summary>
 		/// Initializes new instance of <see cref="Bytes2" /> type.
 		/// </summary>
-		/// <param name="value">
-		/// <see cref="Int16" /> value to initialize this object with.
-		/// </param>
+		/// <param name="value"><see cref="Int16" /> value to initialize this object with.</param>
 		public Bytes2(short value)
 			: this()
 		{
@@ -85,9 +81,7 @@ namespace CryEngine.NativeMemory
 		/// <summary>
 		/// Initializes new instance of <see cref="Bytes2" /> type.
 		/// </summary>
-		/// <param name="value">
-		/// <see cref="UInt16" /> value to initialize this object with.
-		/// </param>
+		/// <param name="value"><see cref="UInt16" /> value to initialize this object with.</param>
 		public Bytes2(ushort value)
 			: this()
 		{
@@ -96,9 +90,7 @@ namespace CryEngine.NativeMemory
 		/// <summary>
 		/// Initializes new instance of <see cref="Bytes2" /> type.
 		/// </summary>
-		/// <param name="value">
-		/// <see cref="Half" /> value to initialize this object with.
-		/// </param>
+		/// <param name="value"><see cref="Half" /> value to initialize this object with.</param>
 		public Bytes2(Half value)
 			: this()
 		{
@@ -107,9 +99,7 @@ namespace CryEngine.NativeMemory
 		/// <summary>
 		/// Initializes new instance of <see cref="Bytes2" /> type.
 		/// </summary>
-		/// <param name="value">
-		/// <see cref="Char" /> value to initialize this object with.
-		/// </param>
+		/// <param name="value"><see cref="Char" /> value to initialize this object with.</param>
 		public Bytes2(char value)
 			: this()
 		{
@@ -118,12 +108,9 @@ namespace CryEngine.NativeMemory
 		/// <summary>
 		/// Initializes new instance of <see cref="Bytes2" /> type.
 		/// </summary>
-		/// <param name="pointer">
-		/// Pointer to native memory cluster.
-		/// </param>
+		/// <param name="pointer">Pointer to native memory cluster.</param>
 		/// <param name="index">
-		/// Zero-based index of the first of 2 bytes within native
-		/// memory cluster.
+		/// Zero-based index of the first of 2 bytes within native memory cluster.
 		/// </param>
 		public Bytes2(IntPtr pointer, ulong index)
 			: this()
@@ -139,16 +126,13 @@ namespace CryEngine.NativeMemory
 		/// <summary>
 		/// Gets 2 bytes from native memory cluster.
 		/// </summary>
-		/// <param name="handle">
-		/// Pointer to the beginning of native memory cluster.
-		/// </param>
+		/// <param name="handle">Pointer to the beginning of native memory cluster.</param>
 		/// <param name="offset">
-		/// Zero-based index of first of 2 bytes within native memory
-		/// cluster to get.
+		/// Zero-based index of first of 2 bytes within native memory cluster to get.
 		/// </param>
 		public void Get(IntPtr handle, ulong offset)
 		{
-			if (handle == null)
+			if (handle == IntPtr.Zero)
 			{
 				return;
 			}
@@ -157,16 +141,13 @@ namespace CryEngine.NativeMemory
 		/// <summary>
 		/// Writes 2 bytes to native memory cluster.
 		/// </summary>
-		/// <param name="handle">
-		/// Pointer to the beginning of native memory cluster.
-		/// </param>
+		/// <param name="handle">Pointer to the beginning of native memory cluster.</param>
 		/// <param name="offset">
-		/// Zero-based index of first of 2 bytes within native memory
-		/// cluster to set.
+		/// Zero-based index of first of 2 bytes within native memory cluster to set.
 		/// </param>
 		public void Set(IntPtr handle, ulong offset)
 		{
-			if (handle == null)
+			if (handle == IntPtr.Zero)
 			{
 				return;
 			}

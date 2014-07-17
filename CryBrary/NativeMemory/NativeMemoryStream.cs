@@ -7,13 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using JetBrains.Annotations;
-
 namespace CryEngine.NativeMemory
 {
 	/// <summary>
-	/// Represents object that provides stream-like access to native
-	/// memory cluster.
+	/// Represents object that provides stream-like access to native memory cluster.
 	/// </summary>
 	public class NativeMemoryStream : IDisposable
 	{
@@ -22,8 +19,8 @@ namespace CryEngine.NativeMemory
 		private ulong position;
 		private IBuffer streamBuffer;
 		/// <summary>
-		/// Zero-based index of the first byte in native memory
-		/// cluster that is associated with the first byte in stream buffer.
+		/// Zero-based index of the first byte in native memory cluster that is associated with the
+		/// first byte in stream buffer.
 		/// </summary>
 		private ulong bufferPosition;
 		private readonly StreamMode mode;
@@ -34,8 +31,8 @@ namespace CryEngine.NativeMemory
 		/// </summary>
 		private bool? wasReading;
 		/// <summary>
-		/// <para>True - we are busy reading.</para><para>False - we
-		/// are busy writing.</para><para>Null - we are not doing anything.</para>
+		/// <para>True - we are busy reading.</para><para>False - we are busy
+		/// writing.</para><para>Null - we are not doing anything.</para>
 		/// </summary>
 		private bool? currentOperationIsReading;
 		#endregion
@@ -100,8 +97,7 @@ namespace CryEngine.NativeMemory
 			}
 		}
 		/// <summary>
-		/// Indicates whether this stream should free native memory
-		/// when closed.
+		/// Indicates whether this stream should free native memory when closed.
 		/// </summary>
 		public bool Managing { get; private set; }
 		/// <summary>
@@ -125,12 +121,9 @@ namespace CryEngine.NativeMemory
 		#endregion
 		#region Construction
 		/// <summary>
-		/// Initializes new instance of type <see
-		/// cref="NativeMemoryStream" />.
+		/// Initializes new instance of type <see cref="NativeMemoryStream" />.
 		/// </summary>
-		/// <param name="array">
-		/// Native memory cluster to use for this stream.
-		/// </param>
+		/// <param name="array">Native memory cluster to use for this stream.</param>
 		public NativeMemoryStream(NativeArray array, StreamMode mode)
 		{
 			this.underlyingArray = array;
@@ -142,16 +135,13 @@ namespace CryEngine.NativeMemory
 			this.position = 0;
 		}
 		/// <summary>
-		/// Allocates a native memory cluster and initializes new
-		/// instance of type <see cref="NativeMemoryStream" /> to
-		/// access that cluster.
+		/// Allocates a native memory cluster and initializes new instance of type <see
+		/// cref="NativeMemoryStream" /> to access that cluster.
 		/// </summary>
 		/// <remarks>
 		/// Allocated data will be released when this stream is closed.
 		/// </remarks>
-		/// <param name="size">
-		/// Size of native memory cluster to allocate.
-		/// </param>
+		/// <param name="size">Size of native memory cluster to allocate.</param>
 		/// <param name="mode">Access mode for the stream.</param>
 		public NativeMemoryStream(ulong size, StreamMode mode)
 		{
@@ -172,20 +162,15 @@ namespace CryEngine.NativeMemory
 			this.position = 0;
 		}
 		/// <summary>
-		/// Allocates a native memory cluster and initializes new
-		/// instance of type <see cref="NativeMemoryStream" /> to
-		/// access that cluster.
+		/// Allocates a native memory cluster and initializes new instance of type <see
+		/// cref="NativeMemoryStream" /> to access that cluster.
 		/// </summary>
 		/// <remarks>
 		/// Allocated data is handled by <see cref="CryMarshal" />.
 		/// </remarks>
-		/// <param name="size">
-		/// Size of native memory cluster to allocate.
-		/// </param>
+		/// <param name="size">Size of native memory cluster to allocate.</param>
 		/// <param name="mode">Access mode for the stream.</param>
-		/// <param name="handle">
-		/// Pointer to allocated memory cluster.
-		/// </param>
+		/// <param name="handle">Pointer to allocated memory cluster.</param>
 		public NativeMemoryStream(ulong size, StreamMode mode, out IntPtr handle)
 		{
 			this.Managing = false;
@@ -210,9 +195,7 @@ namespace CryEngine.NativeMemory
 		/// <summary>
 		/// Flushes the internal buffer.
 		/// </summary>
-		/// <exception cref="ObjectDisposedException">
-		/// This stream is closed.
-		/// </exception>
+		/// <exception cref="ObjectDisposedException">This stream is closed.</exception>
 		public void Flush()
 		{
 			if (this.Disposed)
@@ -244,22 +227,14 @@ namespace CryEngine.NativeMemory
 		/// <summary>
 		/// Sets position of the stream.
 		/// </summary>
-		/// <param name="offset">
-		/// Offset to add to value defined by next parameter.
-		/// </param>
-		/// <param name="origin">
-		/// Value relative to which to set the position.
-		/// </param>
+		/// <param name="offset">Offset to add to value defined by next parameter.</param>
+		/// <param name="origin">Value relative to which to set the position.</param>
 		/// <returns>The new position within the stream.</returns>
-		/// <exception cref="ObjectDisposedException">
-		/// This stream is closed.
-		/// </exception>
+		/// <exception cref="ObjectDisposedException">This stream is closed.</exception>
 		/// <exception cref="ArgumentOutOfRangeException">
 		/// Attempt to set the position of the stream outside of bounds.
 		/// </exception>
-		/// <exception cref="ArgumentException">
-		/// Invalid origin of seeking.
-		/// </exception>
+		/// <exception cref="ArgumentException">Invalid origin of seeking.</exception>
 		public ulong Seek(long offset, SeekOrigin origin)
 		{
 			this.ValidateThisInstance();
@@ -307,23 +282,16 @@ namespace CryEngine.NativeMemory
 		/// </summary>
 		/// <param name="buffer">Given array.</param>
 		/// <param name="offset">
-		/// Zero-based index of the first byte in the array to which
-		/// to put read bytes.
+		/// Zero-based index of the first byte in the array to which to put read bytes.
 		/// </param>
 		/// <param name="count">Number of bytes to read.</param>
 		/// <returns></returns>
-		/// <exception cref="ObjectDisposedException">
-		/// This stream is closed.
-		/// </exception>
-		/// <exception cref="ArgumentNullException">
-		/// Given buffer is not initialized.
-		/// </exception>
+		/// <exception cref="ObjectDisposedException">This stream is closed.</exception>
+		/// <exception cref="ArgumentNullException">Given buffer is not initialized.</exception>
 		/// <exception cref="ArgumentOutOfRangeException">
 		/// offset + count is greater then length of given array.
 		/// </exception>
-		/// <exception cref="OverflowException">
-		/// Too many bytes are requested to be read.
-		/// </exception>
+		/// <exception cref="OverflowException">Too many bytes are requested to be read.</exception>
 		public long Read(byte[] buffer, long offset, long count)
 		{
 			// Check everything.
@@ -349,15 +317,9 @@ namespace CryEngine.NativeMemory
 		/// </summary>
 		/// <param name="buffer">Given array.</param>
 		/// <returns></returns>
-		/// <exception cref="ObjectDisposedException">
-		/// This stream is closed.
-		/// </exception>
-		/// <exception cref="ArgumentNullException">
-		/// Given buffer is not initialized.
-		/// </exception>
-		/// <exception cref="OverflowException">
-		/// Too many bytes are requested to be read.
-		/// </exception>
+		/// <exception cref="ObjectDisposedException">This stream is closed.</exception>
+		/// <exception cref="ArgumentNullException">Given buffer is not initialized.</exception>
+		/// <exception cref="OverflowException">Too many bytes are requested to be read.</exception>
 		public long Read(byte[] buffer)
 		{
 			return this.Read(buffer, 0, buffer.LongLength);
@@ -542,20 +504,13 @@ namespace CryEngine.NativeMemory
 		/// <summary>
 		/// Writes data from given array to native memory.
 		/// </summary>
-		/// <param name="buffer">
-		/// Array from which to write the bytes.
-		/// </param>
+		/// <param name="buffer">Array from which to write the bytes.</param>
 		/// <param name="offset">
-		/// Zero-based index of the first byte within <paramref
-		/// name="buffer" /> to write.
+		/// Zero-based index of the first byte within <paramref name="buffer" /> to write.
 		/// </param>
 		/// <param name="count">Number of bytes to write.</param>
-		/// <exception cref="ObjectDisposedException">
-		/// This stream is closed.
-		/// </exception>
-		/// <exception cref="ArgumentNullException">
-		/// Given buffer is empty.
-		/// </exception>
+		/// <exception cref="ObjectDisposedException">This stream is closed.</exception>
+		/// <exception cref="ArgumentNullException">Given buffer is empty.</exception>
 		/// <exception cref="ArgumentException">
 		/// offset + count is greater then length of given array.
 		/// </exception>
@@ -582,15 +537,9 @@ namespace CryEngine.NativeMemory
 		/// <summary>
 		/// Writes data from given array to native memory.
 		/// </summary>
-		/// <param name="buffer">
-		/// Array from which to write the bytes.
-		/// </param>
-		/// <exception cref="ObjectDisposedException">
-		/// This stream is closed.
-		/// </exception>
-		/// <exception cref="ArgumentNullException">
-		/// Given buffer is empty.
-		/// </exception>
+		/// <param name="buffer">Array from which to write the bytes.</param>
+		/// <exception cref="ObjectDisposedException">This stream is closed.</exception>
+		/// <exception cref="ArgumentNullException">Given buffer is empty.</exception>
 		/// <exception cref="OverflowException">
 		/// Too many bytes are requested to be written.
 		/// </exception>
@@ -602,9 +551,7 @@ namespace CryEngine.NativeMemory
 		/// Writes an 1-byte long integer to stream.
 		/// </summary>
 		/// <param name="value">Value to write.</param>
-		/// <exception cref="ObjectDisposedException">
-		/// This stream is closed.
-		/// </exception>
+		/// <exception cref="ObjectDisposedException">This stream is closed.</exception>
 		/// <exception cref="OverflowException">
 		/// Too many bytes are requested to be written.
 		/// </exception>
@@ -621,9 +568,7 @@ namespace CryEngine.NativeMemory
 		/// Writes an 2-byte long buffer to stream.
 		/// </summary>
 		/// <param name="value">Value to write.</param>
-		/// <exception cref="ObjectDisposedException">
-		/// This stream is closed.
-		/// </exception>
+		/// <exception cref="ObjectDisposedException">This stream is closed.</exception>
 		/// <exception cref="OverflowException">
 		/// Too many bytes are requested to be written.
 		/// </exception>
@@ -642,9 +587,7 @@ namespace CryEngine.NativeMemory
 		/// Writes an 4-byte long buffer to stream.
 		/// </summary>
 		/// <param name="value">Value to write.</param>
-		/// <exception cref="ObjectDisposedException">
-		/// This stream is closed.
-		/// </exception>
+		/// <exception cref="ObjectDisposedException">This stream is closed.</exception>
 		/// <exception cref="OverflowException">
 		/// Too many bytes are requested to be written.
 		/// </exception>
@@ -664,9 +607,7 @@ namespace CryEngine.NativeMemory
 		/// Writes an 8-byte long buffer to stream.
 		/// </summary>
 		/// <param name="value">Value to write.</param>
-		/// <exception cref="ObjectDisposedException">
-		/// This stream is closed.
-		/// </exception>
+		/// <exception cref="ObjectDisposedException">This stream is closed.</exception>
 		/// <exception cref="OverflowException">
 		/// Too many bytes are requested to be written.
 		/// </exception>
@@ -686,9 +627,7 @@ namespace CryEngine.NativeMemory
 		/// Writes an 32-byte long buffer to stream.
 		/// </summary>
 		/// <param name="value">Value to write.</param>
-		/// <exception cref="ObjectDisposedException">
-		/// This stream is closed.
-		/// </exception>
+		/// <exception cref="ObjectDisposedException">This stream is closed.</exception>
 		/// <exception cref="OverflowException">
 		/// Too many bytes are requested to be written.
 		/// </exception>
@@ -708,9 +647,7 @@ namespace CryEngine.NativeMemory
 		/// Writes an 64-byte long buffer to stream.
 		/// </summary>
 		/// <param name="value">Value to write.</param>
-		/// <exception cref="ObjectDisposedException">
-		/// This stream is closed.
-		/// </exception>
+		/// <exception cref="ObjectDisposedException">This stream is closed.</exception>
 		/// <exception cref="OverflowException">
 		/// Too many bytes are requested to be written.
 		/// </exception>
@@ -730,9 +667,7 @@ namespace CryEngine.NativeMemory
 		/// Writes an 128-byte long buffer to stream.
 		/// </summary>
 		/// <param name="value">Value to write.</param>
-		/// <exception cref="ObjectDisposedException">
-		/// This stream is closed.
-		/// </exception>
+		/// <exception cref="ObjectDisposedException">This stream is closed.</exception>
 		/// <exception cref="OverflowException">
 		/// Too many bytes are requested to be written.
 		/// </exception>
@@ -752,9 +687,7 @@ namespace CryEngine.NativeMemory
 		/// Writes an 256-byte long buffer to stream.
 		/// </summary>
 		/// <param name="value">Value to write.</param>
-		/// <exception cref="ObjectDisposedException">
-		/// This stream is closed.
-		/// </exception>
+		/// <exception cref="ObjectDisposedException">This stream is closed.</exception>
 		/// <exception cref="OverflowException">
 		/// Too many bytes are requested to be written.
 		/// </exception>
@@ -774,9 +707,7 @@ namespace CryEngine.NativeMemory
 		/// Writes an 512-byte long buffer to stream.
 		/// </summary>
 		/// <param name="value">Value to write.</param>
-		/// <exception cref="ObjectDisposedException">
-		/// This stream is closed.
-		/// </exception>
+		/// <exception cref="ObjectDisposedException">This stream is closed.</exception>
 		/// <exception cref="OverflowException">
 		/// Too many bytes are requested to be written.
 		/// </exception>
@@ -867,8 +798,7 @@ namespace CryEngine.NativeMemory
 			this.bufferPosition = this.position;
 		}
 		/// <summary>
-		/// Assign buffer long enough to fit into remaining portion of
-		/// native memory cluster to streamBuffer.
+		/// Assign buffer long enough to fit into remaining portion of native memory cluster to streamBuffer.
 		/// </summary>
 		private void PrepareBufferForWriting()
 		{
@@ -912,7 +842,9 @@ namespace CryEngine.NativeMemory
 			this.bufferPosition = this.position;
 		}
 
-		private static void CheckIfBufferHasEnoughData([UsedImplicitly] byte[] buffer, long offset, long count)
+		// ReSharper disable UnusedParameter.Local
+		private static void CheckIfBufferHasEnoughData(byte[] buffer, long offset, long count)
+		// ReSharper restore UnusedParameter.Local
 		{
 			if (offset + count > buffer.Length)
 			{
@@ -928,7 +860,9 @@ namespace CryEngine.NativeMemory
 			}
 		}
 
-		private void CheckIfDataCanFit([UsedImplicitly] long count)
+		// ReSharper disable UnusedParameter.Local
+		private void CheckIfDataCanFit(long count)
+		// ReSharper restore UnusedParameter.Local
 		{
 			if (this.position + (ulong)count > this.Length)
 			{

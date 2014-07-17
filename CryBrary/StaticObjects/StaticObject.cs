@@ -33,13 +33,13 @@ namespace CryEngine.StaticObjects
 		public StaticObject()
 		{
 			this.handle = NativeStaticObjectMethods.CreateStaticObject();
-			this.Disposed = this.handle == null;
+			this.Disposed = this.handle == IntPtr.Zero;
 		}
 		// Used by EntityBase.GetStaticObject(int).
 		internal StaticObject(IntPtr handle)
 		{
 			this.handle = handle;
-			this.Disposed = this.handle == null;
+			this.Disposed = this.handle == IntPtr.Zero;
 		}
 		~StaticObject()
 		{
