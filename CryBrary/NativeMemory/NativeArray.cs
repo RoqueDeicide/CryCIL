@@ -28,13 +28,12 @@ namespace CryEngine.NativeMemory
 		/// </summary>
 		public ulong Length { get; private set; }
 		/// <summary>
-		/// Indicates whether this object is going to free all native
-		/// memory when disposed.
+		/// Indicates whether this object is going to free all native memory when disposed.
 		/// </summary>
 		public bool Managing { get; private set; }
 		/// <summary>
-		/// Indicates whether native memory was allocated by calling
-		/// <see cref="CryMarshal.AllocateMemory" />.
+		/// Indicates whether native memory was allocated by calling <see
+		/// cref="CryMarshal.AllocateMemory" />.
 		/// </summary>
 		public bool AllocatedByCryMarshal { get; private set; }
 		#endregion
@@ -55,13 +54,22 @@ namespace CryEngine.NativeMemory
 		/// Creates new instance of <see cref="NativeArray" /> type.
 		/// </summary>
 		/// <param name="array">Bytes to write to native memory.</param>
-		public NativeArray(byte[] array)
+		public NativeArray(ICollection<byte> array)
 		{
-			this.Handle = CryMarshal.AllocateMemory((ulong)array.Length);
-			this.Length = (ulong)array.Length;
+			this.Handle = CryMarshal.AllocateMemory((ulong)array.Count);
+			this.Length = (ulong)array.Count;
 			this.Managing = true;
 			this.AllocatedByCryMarshal = true;
 			this.Disposed = false;
+			NativeMemoryStream stream = new NativeMemoryStream(this, StreamMode.Write);
+			if (array is byte[])
+			{
+				stream.Write(array as byte[]);
+			}
+			else
+			{
+				stream.Write(array.ToArray());
+			}
 		}
 		/// <summary>
 		/// Creates new instance of <see cref="NativeArray" /> type.
@@ -71,8 +79,7 @@ namespace CryEngine.NativeMemory
 		/// </param>
 		/// <param name="size">Size of allocated memory.</param>
 		/// <param name="manageMemory">
-		/// Indicates whether this <see cref="NativeArray" /> object
-		/// should free native memory when disposed.
+		/// Indicates whether this <see cref="NativeArray" /> object should free native memory when disposed.
 		/// </param>
 		public NativeArray(IntPtr handle, ulong size, bool manageMemory, bool allocatedByCryMarshal)
 		{
@@ -197,8 +204,7 @@ namespace CryEngine.NativeMemory
 			return NativeMemoryHandlingMethods.Get2Bytes(this.Handle, i).SignedShort;
 		}
 		/// <summary>
-		/// Gets one byte from the array as half-precision floating
-		/// point number.
+		/// Gets one byte from the array as half-precision floating point number.
 		/// </summary>
 		/// <param name="i">Zero-based index of the value to get.</param>
 		/// <returns></returns>
@@ -237,8 +243,7 @@ namespace CryEngine.NativeMemory
 			return NativeMemoryHandlingMethods.Get4Bytes(this.Handle, i).SignedInt;
 		}
 		/// <summary>
-		/// Gets one byte from the array as single-precision floating
-		/// point number.
+		/// Gets one byte from the array as single-precision floating point number.
 		/// </summary>
 		/// <param name="i">Zero-based index of the value to get.</param>
 		/// <returns></returns>
@@ -277,8 +282,7 @@ namespace CryEngine.NativeMemory
 			return NativeMemoryHandlingMethods.Get8Bytes(this.Handle, i).SignedLong;
 		}
 		/// <summary>
-		/// Gets one byte from the array as double-precision floating
-		/// point number.
+		/// Gets one byte from the array as double-precision floating point number.
 		/// </summary>
 		/// <param name="i">Zero-based index of the value to get.</param>
 		/// <returns></returns>
@@ -293,20 +297,15 @@ namespace CryEngine.NativeMemory
 		/// <summary>
 		/// Transfers all data from native memory to Mono memory.
 		/// </summary>
-		/// <returns>
-		/// An array of elements that were contained in native memory.
-		/// </returns>
-		/// <exception cref="ObjectDisposedException">
-		/// This array is already disposed.
-		/// </exception>
+		/// <returns>An array of elements that were contained in native memory.</returns>
+		/// <exception cref="ObjectDisposedException">This array is already disposed.</exception>
 		public ElementType[] ToArray<ElementType>(ITransferAgent<ElementType> agent)
 		{
 			if (this.Disposed)
 			{
 				throw new ObjectDisposedException("NativeArray.ToArray: This array is already disposed.");
 			}
-			// Initialize collection of objects that will hold objects
-			// transfered from native memory.
+			// Initialize collection of objects that will hold objects transfered from native memory.
 			List<ElementType> elements = new List<ElementType>((int)agent.GetObjectsNumber(this.Handle, 0, this.Length));
 			// Transfer data.
 			agent.Read(new NativeMemoryStream(this, StreamMode.Read), elements);
@@ -317,9 +316,7 @@ namespace CryEngine.NativeMemory
 		/// Transfers all data from native memory to Mono.
 		/// </summary>
 		/// <returns>Array of bytes, read from native memory.</returns>
-		/// <exception cref="ObjectDisposedException">
-		/// This array is already disposed.
-		/// </exception>
+		/// <exception cref="ObjectDisposedException">This array is already disposed.</exception>
 		public byte[] ToMonoArray()
 		{
 			if (this.Disposed)
@@ -330,6 +327,37 @@ namespace CryEngine.NativeMemory
 			NativeMemoryStream stream = new NativeMemoryStream(this, StreamMode.Read);
 			stream.Read(array);
 			return array;
+		}
+		/// <summary>
+		/// Writes given collection of objects to native memory using a transfer agent.
+		/// </summary>
+		/// <typeparam name="ElementType">Type of objects to write.</typeparam>
+		/// <param name="objects">Objects to write.</param>
+		/// <param name="agent">Agent that will help with transfer.</param>
+		/// <param name="offset">
+		/// Zero-based index of the first byte with native memory cluster from which to write objects.
+		/// </param>
+		/// <param name="firstObjectIndex">Zero-based index of the first object to write.</param>
+		/// <param name="count">Number of objects to write.</param>
+		public void Write<ElementType>(IList<ElementType> objects, ITransferAgent<ElementType> agent, ulong offset, ulong firstObjectIndex, ulong count)
+		{
+			if (count + firstObjectIndex > (ulong)objects.Count)
+			{
+				throw new ArgumentOutOfRangeException("count", "Not enough objects in the collection.");
+			}
+			if (offset > this.Length)
+			{
+				throw new ArgumentOutOfRangeException("offset", "Offset points at location beyond native memory cluster.");
+			}
+			if (this.Length < agent.GetBytesNumber(count - firstObjectIndex))
+			{
+				throw new ArgumentException("Native memory cluster cannot fit given collection of objects.");
+			}
+			NativeMemoryStream stream = new NativeMemoryStream(this, StreamMode.Write)
+			{
+				Position = offset
+			};
+			agent.Write(stream, objects.Skip((int)firstObjectIndex).ToList());
 		}
 		#endregion
 		#region Utilities
