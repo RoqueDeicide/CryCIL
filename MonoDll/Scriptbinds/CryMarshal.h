@@ -46,6 +46,15 @@ public:
 	static void Set128Bytes(void* pointer, unsigned __int64 shift, Buffer128 value);
 	static void Set256Bytes(void* pointer, unsigned __int64 shift, Buffer256 value);
 	static void Set512Bytes(void* pointer, unsigned __int64 shift, Buffer512 value);
+
+	static void Set4BytesPartial(void* pointer, unsigned __int64 shift, unsigned __int64 count, unsigned __int32 value);
+	static void Set8BytesPartial(void* pointer, unsigned __int64 shift, unsigned __int64 count, unsigned __int64 value);
+	static void Set32BytesPartial(void* pointer, unsigned __int64 shift, unsigned __int64 count, Buffer32 value);
+	static void Set64BytesPartial(void* pointer, unsigned __int64 shift, unsigned __int64 count, Buffer64 value);
+	static void Set128BytesPartial(void* pointer, unsigned __int64 shift, unsigned __int64 count, Buffer128 value);
+	static void Set256BytesPartial(void* pointer, unsigned __int64 shift, unsigned __int64 count, Buffer256 value);
+	static void Set512BytesPartial(void* pointer, unsigned __int64 shift, unsigned __int64 count, Buffer512 value);
+	static void SetBytesPartial(void* pointer, unsigned __int64 shift, unsigned __int64 count, void* data);
 };
 
 struct Buffer32

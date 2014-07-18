@@ -30,6 +30,14 @@ Scriptbind_CryMarshal::Scriptbind_CryMarshal()
 	REGISTER_METHOD(Set128Bytes);
 	REGISTER_METHOD(Set256Bytes);
 	REGISTER_METHOD(Set512Bytes);
+
+	REGISTER_METHOD(Set4BytesPartial);
+	REGISTER_METHOD(Set8BytesPartial);
+	REGISTER_METHOD(Set32BytesPartial);
+	REGISTER_METHOD(Set64BytesPartial);
+	REGISTER_METHOD(Set128BytesPartial);
+	REGISTER_METHOD(Set256BytesPartial);
+	REGISTER_METHOD(Set512BytesPartial);
 }
 
 Scriptbind_CryMarshal::~Scriptbind_CryMarshal()
@@ -143,4 +151,37 @@ void Scriptbind_CryMarshal::Set256Bytes(void* pointer, unsigned __int64 shift, B
 void Scriptbind_CryMarshal::Set512Bytes(void* pointer, unsigned __int64 shift, Buffer512 value)
 {
 	*((Buffer512 *)((unsigned __int8 *)pointer + shift)) = value;
+}
+
+void Scriptbind_CryMarshal::Set4BytesPartial(void* pointer, unsigned __int64 shift, unsigned __int64 count, unsigned __int32 value)
+{
+	SetBytesPartial(pointer, shift, count, &value);
+}
+void Scriptbind_CryMarshal::Set8BytesPartial(void* pointer, unsigned __int64 shift, unsigned __int64 count, unsigned __int64 value)
+{
+	SetBytesPartial(pointer, shift, count, &value);
+}
+void Scriptbind_CryMarshal::Set32BytesPartial(void* pointer, unsigned __int64 shift, unsigned __int64 count, Buffer32 value)
+{
+	SetBytesPartial(pointer, shift, count, &value);
+}
+void Scriptbind_CryMarshal::Set64BytesPartial(void* pointer, unsigned __int64 shift, unsigned __int64 count, Buffer64 value)
+{
+	SetBytesPartial(pointer, shift, count, &value);
+}
+void Scriptbind_CryMarshal::Set128BytesPartial(void* pointer, unsigned __int64 shift, unsigned __int64 count, Buffer128 value)
+{
+	SetBytesPartial(pointer, shift, count, &value);
+}
+void Scriptbind_CryMarshal::Set256BytesPartial(void* pointer, unsigned __int64 shift, unsigned __int64 count, Buffer256 value)
+{
+	SetBytesPartial(pointer, shift, count, &value);
+}
+void Scriptbind_CryMarshal::Set512BytesPartial(void* pointer, unsigned __int64 shift, unsigned __int64 count, Buffer512 value)
+{
+	SetBytesPartial(pointer, shift, count, &value);
+}
+void Scriptbind_CryMarshal::SetBytesPartial(void* pointer, unsigned __int64 shift, unsigned __int64 count, void* data)
+{
+	memcpy(((unsigned __int8 *)pointer + shift), static_cast<unsigned __int8 *>(data), count);
 }

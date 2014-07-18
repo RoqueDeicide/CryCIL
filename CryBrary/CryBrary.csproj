@@ -236,6 +236,9 @@
     <Compile Include="Math\Vector2.cs" />
     <Compile Include="Math\Vector3.cs" />
     <Compile Include="Math\Vector4.cs" />
+    <Compile Include="NativeMemory\CryMarshalPartialWriting.cs" />
+    <Compile Include="NativeMemory\CryMarshalReading.cs" />
+    <Compile Include="NativeMemory\CryMarshalWriting.cs" />
     <Compile Include="StaticObjects\Meshes\Face.cs" />
     <Compile Include="StaticObjects\Meshes\IMesh.cs" />
     <Compile Include="StaticObjects\Meshes\IQTangent.cs" />

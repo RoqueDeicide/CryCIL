@@ -59,5 +59,19 @@ namespace CryEngine.Native
 		internal static void Set256Bytes(IntPtr pointer, ulong shift, Buffer256 value);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		internal static void Set512Bytes(IntPtr pointer, ulong shift, Buffer512 value);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		internal static void Set4BytesPartial(IntPtr pointer, ulong shift, ulong count, Bytes4 value);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		internal static void Set8BytesPartial(IntPtr pointer, ulong shift, ulong count, Bytes8 value);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		internal static void Set32BytesPartial(IntPtr pointer, ulong shift, ulong count, Buffer32 value);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		internal static void Set64BytesPartial(IntPtr pointer, ulong shift, ulong count, Buffer64 value);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		internal static void Set128BytesPartial(IntPtr pointer, ulong shift, ulong count, Buffer128 value);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		internal static void Set256BytesPartial(IntPtr pointer, ulong shift, ulong count, Buffer256 value);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		internal static void Set512BytesPartial(IntPtr pointer, ulong shift, ulong count, Buffer512 value);
 	}
 }
