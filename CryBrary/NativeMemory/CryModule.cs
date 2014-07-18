@@ -31,9 +31,7 @@ namespace CryEngine.NativeMemory
 		/// <remarks>
 		/// No checks are done by this method.
 		/// </remarks>
-		/// <param name="handle">
-		/// Pointer to first byte of memory cluster to release.
-		/// </param>
+		/// <param name="handle">Pointer to first byte of memory cluster to release.</param>
 		public static void FreeMemory(IntPtr handle)
 		{
 			NativeMemoryHandlingMethods.FreeMemory(handle);
