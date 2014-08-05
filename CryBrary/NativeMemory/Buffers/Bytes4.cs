@@ -14,7 +14,7 @@ namespace CryEngine.NativeMemory
 	/// Encapsulates 4 bytes worth of data.
 	/// </summary>
 	[StructLayout(LayoutKind.Explicit, Size = 4)]
-	public unsafe struct Bytes4 : IBuffer
+	public struct Bytes4 : IBuffer
 	{
 		#region Fields
 		/// <summary>
@@ -32,18 +32,6 @@ namespace CryEngine.NativeMemory
 		/// </summary>
 		[FieldOffset(0)]
 		public float SingleFloat;
-		/// <summary>
-		/// Individual 4 bytes.
-		/// </summary>
-		[FieldOffset(0)]
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
-		public byte[] Bytes;
-		/// <summary>
-		/// 2 separate 16-bit values.
-		/// </summary>
-		[FieldOffset(0)]
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-		public Bytes2[] Doubles;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -53,19 +41,22 @@ namespace CryEngine.NativeMemory
 		{
 			get { return 4; }
 		}
-		/// <summary>
-		/// Gets or sets a byte.
-		/// </summary>
-		/// <param name="index">Zero-based index of the byte to get or set.</param>
+		/// <summary></summary>
+		/// <param name="index"></param>
+		/// <returns></returns>
 		public byte this[ulong index]
 		{
 			get
 			{
-				return this.Bytes[index];
+				int shift = (3 - (int)index) * 8;
+				return (byte)(255 << (shift & this.SignedInt) >> shift);
 			}
 			set
 			{
-				this.Bytes[index] = value;
+				int shift = (3 - (int)index) * 8;
+				int mask = ~(255 << shift);
+				this.SignedInt &= mask;					// Zero a byte.
+				this.SignedInt |= value << shift;		// Give byte a new value.
 			}
 		}
 		#endregion
@@ -122,28 +113,12 @@ namespace CryEngine.NativeMemory
 			{
 				throw new ArgumentException("This buffer is too small.");
 			}
+			byte[] bytes = new byte[4];
 			for (ulong i = 0, j = startIndex; i < count; i++, j++)
 			{
-				this.Bytes[i] = array[j];
+				bytes[i] = array[j];
 			}
-		}
-		/// <summary>
-		/// Initializes new instance of <see cref="Bytes4" /> type.
-		/// </summary>
-		/// <param name="bytes">Pointer to stack array or fixed-sized buffer.</param>
-		/// <param name="shift">
-		/// Zero-based index of the first of 4 bytes to use for initialization.
-		/// </param>
-		public Bytes4(byte* bytes, ulong shift)
-			: this()
-		{
-			fixed (byte* buffer = this.Bytes)
-			{
-				for (ulong i = 0; i < this.Length; i++)
-				{
-					buffer[i] = bytes[shift + i];
-				}
-			}
+			this.SignedInt = BitConverter.ToInt32(bytes, 0);
 		}
 		/// <summary>
 		/// Initializes new instance of <see cref="Bytes4" /> type.

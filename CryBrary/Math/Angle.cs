@@ -5,103 +5,6 @@ using System.Text;
 
 namespace CryEngine
 {
-	#region Commented
-	///// <summary>
-	///// Defines an angle in degrees.
-	///// </summary>
-	//public struct Degree
-	//{
-	//	private float v = 0;
-	//	/// <summary>
-	//	/// Initializes new angle value in degrees.
-	//	/// </summary>
-	//	/// <param name="degrees">Instance of <see cref="Single"/> that we will use as a starting value.</param>
-	//	/// <param name="normalize">Indicates whether we should normalize this angle.</param>
-	//	public Degree(float degrees, bool normalize = true)
-	//	{
-	//		this.v = degrees;
-	//		if (normalize)
-	//		{
-	//			this.Normalize360();
-	//		}
-	//	}
-	//	/// <summary>
-	//	/// Creates new instance of <see cref="Degree"/>.
-	//	/// </summary>
-	//	/// <param name="rads">Angle in radians.</param>
-	//	/// <param name="normalize">Indicates whether we should normalize this angle.</param>
-	//	/// <returns>
-	//	/// New instance of <see cref="Degree"/> with value equal
-	//	/// to <paramref name="rads"/> * (180 / <see cref="Math.PI"/>).
-	//	/// </returns>
-	//	public static Degree FromRadians(float rads, bool normalize = true)
-	//	{
-	//		return new Degree((float)(rads * (180 / Math.PI)), normalize);
-	//	}
-	//	/// <summary>
-	//	/// Normalizes this angle by putting into 0-360 range.
-	//	/// </summary>
-	//	public void Normalize360()
-	//	{
-	//		if (this.v > 360)
-	//		{
-	//			while (this.v > 360)
-	//			{
-	//				this.v -= 360;
-	//			}
-	//		}
-	//		else if (this.v < 0)
-	//		{
-	//			this.v += 360;
-	//		}
-	//	}
-	//	/// <summary>
-	//	/// Increments this angle by given value in degrees.
-	//	/// </summary>
-	//	/// <param name="inc">Angle in degrees to add to</param>
-	//	public void Increment(float inc)
-	//	{
-	//		this.v += inc;
-	//		this.Normalize360();
-	//	}
-
-	// public void Decrement(float dec) { Increment(-dec); }
-
-	// public override string ToString() { return v.ToString(); }
-
-	// public override int GetHashCode() { return v.GetHashCode(); }
-
-	// #region Operator overloads public static implicit operator float(Degree angleObj) { return
-	// angleObj.v; }
-
-	// public static implicit operator Degree(float _angle) { return new Degree(_angle); }
-
-	// public static Degree operator +(Degree lhs, Degree rhs) { Degree angle = new Degree(lhs.v);
-	// angle.Increment(rhs.v); return angle; }
-
-	// public static Degree operator -(Degree lhs, Degree rhs) { Degree angle = new Degree(lhs.v);
-	// angle.Decrement(rhs.v); return angle; }
-
-	// public static bool operator <(Degree lhs, Degree rhs) { if (lhs.v < rhs.v) return true;
-	// return false; }
-
-	// public static bool operator <=(Degree lhs, Degree rhs) { if (lhs.v <= rhs.v) return true;
-	// return false; }
-
-	// public static bool operator >(Degree lhs, Degree rhs) { if (lhs.v > rhs.v) return true;
-	// return false; }
-
-	// public static bool operator >=(Degree lhs, Degree rhs) { if (lhs.v >= rhs.v) return true;
-	// return false; } #endregion
-	//
-	//
-	//
-	//
-	//
-	//
-	//
-	//}
-	#endregion
 	/// <summary>
 	/// Defines few methods related to angles.
 	/// </summary>
@@ -137,8 +40,6 @@ namespace CryEngine
 					while (degrees <= 0) degrees += 360;
 					while (degrees > 360) degrees -= 360;
 					break;
-				default:
-					break;
 			}
 			return degrees;
 		}
@@ -171,8 +72,6 @@ namespace CryEngine
 				case NormalizeType.Normalize360:
 					while (degrees <= 0) degrees += 360;
 					while (degrees > 360) degrees -= 360;
-					break;
-				default:
 					break;
 			}
 			return degrees;
@@ -207,8 +106,6 @@ namespace CryEngine
 					while (radians <= 0) radians += MathHelpers.PI2;
 					while (radians > MathHelpers.PI2) radians -= MathHelpers.PI2;
 					break;
-				default:
-					break;
 			}
 			return radians;
 		}
@@ -241,8 +138,6 @@ namespace CryEngine
 				case NormalizeType.Normalize360:
 					while (radians <= 0) radians += MathHelpers.PI2;
 					while (radians > MathHelpers.PI2) radians -= MathHelpers.PI2;
-					break;
-				default:
 					break;
 			}
 			return (float)radians;

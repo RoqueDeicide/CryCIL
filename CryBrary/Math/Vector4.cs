@@ -12,40 +12,34 @@ namespace CryEngine
 	/// Represents a four dimensional mathematical vector.
 	/// </summary>
 	[Serializable]
-	[StructLayout(LayoutKind.Explicit)]
+	[StructLayout(LayoutKind.Sequential)]
 	public struct Vector4 : IEquatable<Vector4>, IFormattable, IEnumerable<float>
 	{
 		/// <summary>
 		/// Zero vector.
 		/// </summary>
 		public readonly static Vector4 Zero = new Vector4();
+		/// <summary>
+		/// Number of components of this vector.
+		/// </summary>
+		public const int ComponentCount = 3;
 		#region Fields
 		/// <summary>
 		/// The X component of the vector.
 		/// </summary>
-		[FieldOffset(0)]
 		public float X;
 		/// <summary>
 		/// The Y component of the vector.
 		/// </summary>
-		[FieldOffset(4)]
 		public float Y;
 		/// <summary>
 		/// The Z component of the vector.
 		/// </summary>
-		[FieldOffset(8)]
 		public float Z;
 		/// <summary>
 		/// The W component of the vector.
 		/// </summary>
-		[FieldOffset(12)]
 		public float W;
-		/// <summary>
-		/// Array of all components of this vector.
-		/// </summary>
-		[FieldOffset(0)]
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
-		public float[] Components;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -69,8 +63,44 @@ namespace CryEngine
 		/// </exception>
 		public float this[int index]
 		{
-			get { return this.Components[index]; }
-			set { this.Components[index] = value; }
+			get
+			{
+				switch (index)
+				{
+					case 0:
+						return this.X;
+					case 1:
+						return this.Y;
+					case 2:
+						return this.Z;
+					case 3:
+						return this.W;
+					default:
+						throw new ArgumentOutOfRangeException("index", "Attempt to access vector" +
+																	   " component other then X, Y, Z or W.");
+				}
+			}
+			set
+			{
+				switch (index)
+				{
+					case 0:
+						this.X = value;
+						break;
+					case 1:
+						this.Y = value;
+						break;
+					case 2:
+						this.Z = value;
+						break;
+					case 3:
+						this.W = value;
+						break;
+					default:
+						throw new ArgumentOutOfRangeException("index", "Attempt to access vector component" +
+																	   " other then X, Y, Z or W.");
+				}
+			}
 		}
 		/// <summary>
 		/// Calculates the length of the vector.
@@ -173,12 +203,52 @@ namespace CryEngine
 		/// vector components.</para>
 		/// </param>
 		public Vector4(IList<float> values)
+			: this(values, 0, 0, values.Count)
+		{
+		}
+		/// <summary>
+		/// Creates new <see cref="Vector4" />.
+		/// </summary>
+		/// <param name="values">
+		/// A list of floating point numbers which is assigned to components of the new vector.
+		/// </param>
+		/// <param name="startingIndex">Index of first element of list to copy.</param>
+		/// <param name="count">Number of components to assign.</param>
+		public Vector4(IList<float> values, int startingIndex, int count)
+			: this(values, startingIndex, 0, count)
+		{
+		}
+		/// <summary>
+		/// Creates new <see cref="Vector4" />.
+		/// </summary>
+		/// <param name="values">
+		/// A list of floating point numbers which is assigned to components of the new vector.
+		/// </param>
+		/// <param name="firstIndex">Index of first element of list to copy.</param>
+		/// <param name="firstComponent">Index of the first component to assign.</param>
+		/// <param name="count">Number of components to assign.</param>
+		public Vector4(IList<float> values, int firstIndex, int firstComponent, int count)
 			: this()
 		{
 			if (values == null) return;
-			for (int i = 0; i < this.Components.Length || i < values.Count; i++)
+			if (firstIndex < 0)
 			{
-				this.Components[i] = values[i];
+				throw new ArgumentOutOfRangeException
+					("firstIndex", "Index of the first element to copy cannot be negative.");
+			}
+			if (firstComponent < 0)
+			{
+				throw new ArgumentOutOfRangeException
+					("firstComponent", "Index of the first component to assign cannot be negative.");
+			}
+			if (count > Vector4.ComponentCount - firstComponent)
+			{
+				throw new ArgumentOutOfRangeException
+					("count", "Number of elements to copy is bigger then number of components to assign.");
+			}
+			for (int i = firstComponent; i < Vector4.ComponentCount || i < count; i++)
+			{
+				this[i] = values[i];
 			}
 		}
 		/// <summary>

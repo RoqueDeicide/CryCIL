@@ -21,6 +21,7 @@
 */
 using System;
 using System.Globalization;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace CryEngine
@@ -192,26 +193,16 @@ namespace CryEngine
 		public static void FromPoints(Vector3[] points, out BoundingSphere result)
 		{
 			// Find the center of all points.
-			Vector3 center = Vector3.Zero;
-			for (int i = 0; i < points.Length; ++i)
-			{
-				center += points[i];
-			}
+			Vector3 center = points.Aggregate(Vector3.Zero, (current, t) => current + t);
 
 			// This is the center of our sphere.
 			center /= (float)points.Length;
 
 			// Find the radius of the sphere
-			float radius = 0f;
-			for (int i = 0; i < points.Length; ++i)
-			{
-				// We are doing a relative distance comparasin to find the maximum distance from the
-				// center of our sphere.
-				float distance = center.GetDistanceSquared(points[i]);
 
-				if (distance > radius)
-					radius = distance;
-			}
+			// We are doing a relative distance comparison to find the maximum distance from the
+			// center of our sphere
+			float radius = points.Select(t => center.GetDistanceSquared(t)).Concat(new[] { 0f }).Max();
 
 			// Find the real distance from the DistanceSquared.
 			radius = (float)Math.Sqrt(radius);
@@ -406,8 +397,10 @@ namespace CryEngine
 			{
 				int hash = 17;
 
+				// ReSharper disable NonReadonlyFieldInGetHashCode
 				hash = hash * 29 + Center.GetHashCode();
 				hash = hash * 29 + Radius.GetHashCode();
+				// ReSharper restore NonReadonlyFieldInGetHashCode
 
 				return hash;
 			}
@@ -425,7 +418,9 @@ namespace CryEngine
 		/// </returns>
 		public bool Equals(BoundingSphere value)
 		{
+			// ReSharper disable CompareOfFloatsByEqualityOperator
 			return Center == value.Center && Radius == value.Radius;
+			// ReSharper restore CompareOfFloatsByEqualityOperator
 		}
 
 		/// <summary>

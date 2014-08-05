@@ -358,8 +358,10 @@ namespace CryEngine
 			{
 				int hash = 17;
 
+				// ReSharper disable NonReadonlyFieldInGetHashCode
 				hash = hash * 29 + Position.GetHashCode();
 				hash = hash * 29 + Direction.GetHashCode();
+				// ReSharper restore NonReadonlyFieldInGetHashCode
 
 				return hash;
 			}

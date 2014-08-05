@@ -153,20 +153,6 @@ namespace CryEngine
 		[FieldOffset(12)]
 		public Column44 Column3;
 		#endregion
-		#region Components
-		/// <summary>
-		/// Array of all components of the matrix.
-		/// </summary>
-		[FieldOffset(0)]
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
-		public float[] Components;
-		/// <summary>
-		/// Array of all rows of the matrix.
-		/// </summary>
-		[FieldOffset(0)]
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
-		public Vector4[] Rows;
-		#endregion
 		#endregion
 		#region Properties
 		/// <summary>
@@ -263,7 +249,7 @@ namespace CryEngine
 		{
 			get
 			{
-				return this.Components.All(MathHelpers.IsNumberValid);
+				return this.All(MathHelpers.IsNumberValid);
 			}
 		}
 		/// <summary>
@@ -272,8 +258,8 @@ namespace CryEngine
 		/// <param name="index">Zero-based index of the element to get.</param>
 		public float this[int index]
 		{
-			get { return this.Components[index]; }
-			set { this.Components[index] = value; }
+			get { return this[index / 4, index % 4]; }
+			set { this[index / 4, index % 4] = value; }
 		}
 		/// <summary>
 		/// Gives access to specific element of this matrix.
@@ -282,8 +268,42 @@ namespace CryEngine
 		/// <param name="column">Zero-based index of the column.</param>
 		public float this[int row, int column]
 		{
-			get { return this.Rows[row][column]; }
-			set { this.Rows[row][column] = value; }
+			get
+			{
+				switch (row)
+				{
+					case 0:
+						return this.Row0[column];
+					case 1:
+						return this.Row1[column];
+					case 2:
+						return this.Row2[column];
+					case 3:
+						return this.Row3[column];
+					default:
+						throw new ArgumentOutOfRangeException("row", "Attempt to access matrix row out of range [0, 3].");
+				}
+			}
+			set
+			{
+				switch (row)
+				{
+					case 0:
+						this.Row0[column] = value;
+						break;
+					case 1:
+						this.Row1[column] = value;
+						break;
+					case 2:
+						this.Row2[column] = value;
+						break;
+					case 3:
+						this.Row3[column] = value;
+						break;
+					default:
+						throw new ArgumentOutOfRangeException("row", "Attempt to access matrix row out of range [0, 3].");
+				}
+			}
 		}
 		#endregion
 		#region Contruction
@@ -360,10 +380,10 @@ namespace CryEngine
 			{
 				throw new ArgumentException("Parameter must be a valid matrix.");
 			}
-			for (int i = 0; i < this.Components.Length; i++)
-			{
-				this.Components[i] = m.Components[i];
-			}
+			this.Row0 = m.Row0;
+			this.Row1 = m.Row1;
+			this.Row2 = m.Row2;
+			this.Row3 = m.Row3;
 		}
 		#endregion
 		#region Interface
@@ -795,10 +815,9 @@ namespace CryEngine
 		/// <param name="v">Vector that supplies new values.</param>
 		public void SetRow(int i, Vector3 v)
 		{
-			for (int j = 0; j < v.Components.Length; j++)
-			{
-				this.Rows[i][j] = v.Components[j];
-			}
+			this[i, 0] = v.X;
+			this[i, 1] = v.Y;
+			this[i, 2] = v.Z;
 		}
 		/// <summary>
 		/// Sets row of this matrix.
@@ -807,10 +826,10 @@ namespace CryEngine
 		/// <param name="v">Vector that supplies new values.</param>
 		public void SetRow4(int i, Vector4 v)
 		{
-			for (int j = 0; j < v.Components.Length; j++)
-			{
-				this.Rows[i][j] = v.Components[j];
-			}
+			this[i, 0] = v.X;
+			this[i, 1] = v.Y;
+			this[i, 2] = v.Z;
+			this[i, 3] = v.W;
 		}
 		/// <summary>
 		/// Gets first 3 columns of the row of this matrix.
@@ -819,7 +838,7 @@ namespace CryEngine
 		/// <returns><see cref="Vector3" /> object that contains the contents of the row.</returns>
 		public Vector3 GetRow(int i)
 		{
-			return (Vector3)this.Rows[i];
+			return new Vector3(this[i, 0], this[i, 1], this[i, 2]);
 		}
 		/// <summary>
 		/// Gets first the row of this matrix.
@@ -828,7 +847,7 @@ namespace CryEngine
 		/// <returns><see cref="Vector4" /> object that contains the contents of the row.</returns>
 		public Vector4 GetRow4(int i)
 		{
-			return this.Rows[i];
+			return new Vector4(this[i, 0], this[i, 1], this[i, 2], this[i, 3]);
 		}
 		#endregion
 		#region Get/Set Columns

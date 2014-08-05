@@ -416,8 +416,10 @@ namespace CryEngine
 			{
 				int hash = 17;
 
+				// ReSharper disable NonReadonlyFieldInGetHashCode
 				hash = hash * 29 + Minimum.GetHashCode();
 				hash = hash * 29 + Maximum.GetHashCode();
+				// ReSharper restore NonReadonlyFieldInGetHashCode
 
 				return hash;
 			}

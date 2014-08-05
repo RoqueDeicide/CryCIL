@@ -12,31 +12,26 @@ namespace CryEngine
 	/// Represents 3 16-bit unsigned integer numbers.
 	/// </summary>
 	[Serializable]
-	[StructLayout(LayoutKind.Explicit)]
+	[StructLayout(LayoutKind.Sequential)]
 	public struct UInt16Vector3 : IEquatable<UInt16Vector3>, IComparable<UInt16Vector3>, IEnumerable<ushort>
 	{
+		/// <summary>
+		/// Number of components of this vector.
+		/// </summary>
+		public const int ComponentCount = 3;
 		#region Fields
 		/// <summary>
 		/// First number.
 		/// </summary>
-		[FieldOffset(0)]
 		public ushort X;
 		/// <summary>
 		/// Second number.
 		/// </summary>
-		[FieldOffset(2)]
 		public ushort Y;
 		/// <summary>
 		/// Third number.
 		/// </summary>
-		[FieldOffset(4)]
 		public ushort Z;
-		/// <summary>
-		/// Array that gives access to all 3 components of the vector.
-		/// </summary>
-		[FieldOffset(0)]
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 3)]
-		public ushort[] Components;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -46,8 +41,39 @@ namespace CryEngine
 		/// <returns></returns>
 		public ushort this[int index]
 		{
-			get { return this.Components[index]; }
-			set { this.Components[index] = value; }
+			get
+			{
+				switch (index)
+				{
+					case 0:
+						return this.X;
+					case 1:
+						return this.Y;
+					case 2:
+						return this.Z;
+					default:
+						throw new ArgumentOutOfRangeException("index", "Attempt to access vector" +
+																	   " component other then X, Y or Z.");
+				}
+			}
+			set
+			{
+				switch (index)
+				{
+					case 0:
+						this.X = value;
+						break;
+					case 1:
+						this.Y = value;
+						break;
+					case 2:
+						this.Z = value;
+						break;
+					default:
+						throw new ArgumentOutOfRangeException("index", "Attempt to access vector component" +
+																	   " other then X, Y or Z.");
+				}
+			}
 		}
 		/// <summary>
 		/// Provides access to component of the vector specified by given index.

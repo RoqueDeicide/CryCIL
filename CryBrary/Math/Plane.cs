@@ -696,8 +696,10 @@ namespace CryEngine
 			{
 				int hash = 17;
 
+				// ReSharper disable NonReadonlyFieldInGetHashCode
 				hash = hash * 29 + Normal.GetHashCode();
 				hash = hash * 29 + D.GetHashCode();
+				// ReSharper restore NonReadonlyFieldInGetHashCode
 
 				return hash;
 			}
@@ -715,7 +717,7 @@ namespace CryEngine
 		/// </returns>
 		public bool Equals(Plane value)
 		{
-			return Normal == value.Normal && D == value.D;
+			return Normal == value.Normal && Math.Abs(this.D - value.D) < MathHelpers.ZeroTolerance;
 		}
 
 		/// <summary>
@@ -730,13 +732,7 @@ namespace CryEngine
 		/// </returns>
 		public override bool Equals(object value)
 		{
-			if (value == null)
-				return false;
-
-			if (value.GetType() != GetType())
-				return false;
-
-			return Equals((Plane)value);
+			return value != null && value.GetType() == this.GetType() && this.Equals((Plane)value);
 		}
 
 #if SlimDX1xInterop

@@ -188,9 +188,11 @@ namespace CryEngine
 		{
 			get
 			{
-				var angles = new Vector3();
+				var angles = new Vector3
+				{
+					Y = (float)Math.Asin(Math.Max(-1.0, Math.Min(1.0, -this.M20)))
+				};
 
-				angles.Y = (float)Math.Asin(Math.Max(-1.0, Math.Min(1.0, -M20)));
 				if (Math.Abs(Math.Abs(angles.Y) - (Math.PI * 0.5)) < 0.01)
 				{
 					angles.X = 0;
@@ -226,11 +228,21 @@ namespace CryEngine
 		{
 			get
 			{
-				var dst = new Matrix34();
-				dst.M00 = M00; dst.M01 = M10; dst.M02 = M20; dst.M03 = -M03 * M00 - M13 * M10 - M23 * M20;
-				dst.M10 = M01; dst.M11 = M11; dst.M12 = M21; dst.M13 = -M03 * M01 - M13 * M11 - M23 * M21;
-				dst.M20 = M02; dst.M21 = M12; dst.M22 = M22; dst.M23 = -M03 * M02 - M13 * M12 - M23 * M22;
-				return dst;
+				return new Matrix34
+				{
+					M00 = this.M00,
+					M01 = this.M10,
+					M02 = this.M20,
+					M03 = -this.M03 * this.M00 - this.M13 * this.M10 - this.M23 * this.M20,
+					M10 = this.M01,
+					M11 = this.M11,
+					M12 = this.M21,
+					M13 = -this.M03 * this.M01 - this.M13 * this.M11 - this.M23 * this.M21,
+					M20 = this.M02,
+					M21 = this.M12,
+					M22 = this.M22,
+					M23 = -this.M03 * this.M02 - this.M13 * this.M12 - this.M23 * this.M22
+				};
 			}
 		}
 		/// <summary>
@@ -691,7 +703,7 @@ namespace CryEngine
 		/// </summary>
 		/// <param name="threshold"></param>
 		/// <returns></returns>
-		private int IsOrthonormal(float threshold = 0.001f)
+		public int IsOrthonormal(float threshold = 0.001f)
 		{
 			var d0 = Math.Abs(ColumnVector0 | ColumnVector1); if (d0 > threshold) return 0;
 			var d1 = Math.Abs(ColumnVector0 | ColumnVector2); if (d1 > threshold) return 0;
@@ -724,6 +736,7 @@ namespace CryEngine
 			{
 				int hash = 17;
 
+				// ReSharper disable NonReadonlyFieldInGetHashCode
 				hash = hash * 29 + M00.GetHashCode();
 				hash = hash * 29 + M01.GetHashCode();
 				hash = hash * 29 + M02.GetHashCode();
@@ -738,6 +751,7 @@ namespace CryEngine
 				hash = hash * 29 + M21.GetHashCode();
 				hash = hash * 29 + M22.GetHashCode();
 				hash = hash * 29 + M23.GetHashCode();
+				// ReSharper restore NonReadonlyFieldInGetHashCode
 
 				return hash;
 			}
@@ -756,19 +770,21 @@ namespace CryEngine
 
 		public static Matrix34 operator *(Matrix34 l, Matrix34 r)
 		{
-			var m = new Matrix34();
-			m.M00 = l.M00 * r.M00 + l.M01 * r.M10 + l.M02 * r.M20;
-			m.M10 = l.M10 * r.M00 + l.M11 * r.M10 + l.M12 * r.M20;
-			m.M20 = l.M20 * r.M00 + l.M21 * r.M10 + l.M22 * r.M20;
-			m.M01 = l.M00 * r.M01 + l.M01 * r.M11 + l.M02 * r.M21;
-			m.M11 = l.M10 * r.M01 + l.M11 * r.M11 + l.M12 * r.M21;
-			m.M21 = l.M20 * r.M01 + l.M21 * r.M11 + l.M22 * r.M21;
-			m.M02 = l.M00 * r.M02 + l.M01 * r.M12 + l.M02 * r.M22;
-			m.M12 = l.M10 * r.M02 + l.M11 * r.M12 + l.M12 * r.M22;
-			m.M22 = l.M20 * r.M02 + l.M21 * r.M12 + l.M22 * r.M22;
-			m.M03 = l.M00 * r.M03 + l.M01 * r.M13 + l.M02 * r.M23 + l.M03;
-			m.M13 = l.M10 * r.M03 + l.M11 * r.M13 + l.M12 * r.M23 + l.M13;
-			m.M23 = l.M20 * r.M03 + l.M21 * r.M13 + l.M22 * r.M23 + l.M23;
+			var m = new Matrix34
+			{
+				M00 = l.M00 * r.M00 + l.M01 * r.M10 + l.M02 * r.M20,
+				M10 = l.M10 * r.M00 + l.M11 * r.M10 + l.M12 * r.M20,
+				M20 = l.M20 * r.M00 + l.M21 * r.M10 + l.M22 * r.M20,
+				M01 = l.M00 * r.M01 + l.M01 * r.M11 + l.M02 * r.M21,
+				M11 = l.M10 * r.M01 + l.M11 * r.M11 + l.M12 * r.M21,
+				M21 = l.M20 * r.M01 + l.M21 * r.M11 + l.M22 * r.M21,
+				M02 = l.M00 * r.M02 + l.M01 * r.M12 + l.M02 * r.M22,
+				M12 = l.M10 * r.M02 + l.M11 * r.M12 + l.M12 * r.M22,
+				M22 = l.M20 * r.M02 + l.M21 * r.M12 + l.M22 * r.M22,
+				M03 = l.M00 * r.M03 + l.M01 * r.M13 + l.M02 * r.M23 + l.M03,
+				M13 = l.M10 * r.M03 + l.M11 * r.M13 + l.M12 * r.M23 + l.M13,
+				M23 = l.M20 * r.M03 + l.M21 * r.M13 + l.M22 * r.M23 + l.M23
+			};
 
 			return m;
 		}
@@ -781,7 +797,7 @@ namespace CryEngine
 			get
 			{
 #if DEBUG
-				return this.All(x => MathHelpers.IsNumberValid(x));
+				return this.All(MathHelpers.IsNumberValid);
 #endif
 #if RELEASE
 				return
@@ -822,7 +838,7 @@ namespace CryEngine
 
 		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
 		{
-			throw new NotImplementedException();
+			return this.GetEnumerator();
 		}
 	}
 }

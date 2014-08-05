@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 
 using CryEngine.NativeMemory;
@@ -11,23 +12,37 @@ namespace CryEngine
 	/// <summary>
 	/// Encapsulates 32-bit definition of color.
 	/// </summary>
+	[StructLayout(LayoutKind.Explicit)]
 	public struct Color32 : IEquatable<Color32>, IEnumerable<byte>
 	{
 		/// <summary>
+		/// Number of bytes each instance of this structure consists of.
+		/// </summary>
+		public static readonly ulong ByteCount = (ulong)Marshal.SizeOf(typeof(Color32));
+		/// <summary>
+		/// All 4 bytes of this structure.
+		/// </summary>
+		[FieldOffset(0)]
+		public Bytes4 Bytes;
+		/// <summary>
 		/// Red component of the color.
 		/// </summary>
+		[FieldOffset(0)]
 		public byte Red;
 		/// <summary>
 		/// Green component of the color.
 		/// </summary>
+		[FieldOffset(1)]
 		public byte Green;
 		/// <summary>
 		/// Blue component of the color.
 		/// </summary>
+		[FieldOffset(2)]
 		public byte Blue;
 		/// <summary>
 		/// Alpha component of the color.
 		/// </summary>
+		[FieldOffset(3)]
 		public byte Alpha;
 		/// <summary>
 		/// Determines whether this color is equal to another.
@@ -79,11 +94,7 @@ namespace CryEngine
 		/// <returns>True, if operands are equal.</returns>
 		public static bool operator ==(Color32 left, Color32 right)
 		{
-			return
-				left.Red == right.Red &&
-				left.Green == right.Green &&
-				left.Blue == right.Blue &&
-				left.Alpha == right.Alpha;
+			return left.Bytes.SignedInt == right.Bytes.SignedInt;
 		}
 		/// <summary>
 		/// Determines whether two instances of type <see cref="Color32" /> are not equal.
@@ -110,12 +121,7 @@ namespace CryEngine
 		/// </returns>
 		public static explicit operator Bytes4(Color32 color)
 		{
-			Bytes4 bytes = new Bytes4();
-			bytes.Bytes[0] = color.Red;
-			bytes.Bytes[1] = color.Green;
-			bytes.Bytes[2] = color.Blue;
-			bytes.Bytes[3] = color.Alpha;
-			return bytes;
+			return color.Bytes;
 		}
 		/// <summary>
 		/// Creates text representation of this color object.
@@ -201,6 +207,94 @@ namespace CryEngine
 			yield return this.Green;
 			yield return this.Blue;
 			yield return this.Alpha;
+		}
+		/// <summary>
+		/// Handles transfer of arrays of type <see cref="Color32" /> between managed and native memory.
+		/// </summary>
+		public class TransferAgent : ITransferAgent<Color32>
+		{
+			/// <summary>
+			/// Determines size of native memory cluster that can fit a collection of objects.
+			/// </summary>
+			/// <param name="objects">A list of objects of type <see cref="Color32" />.</param>
+			/// <returns>
+			/// Number of bytes that would be occupied by given collection of objects.
+			/// </returns>
+			public ulong GetBytesNumber(IList<Color32> objects)
+			{
+				return this.GetBytesNumber((ulong)objects.Count);
+			}
+			/// <summary>
+			/// Determines size of native memory cluster that can fit a number of objects.
+			/// </summary>
+			/// <param name="objectsCount">A number of objects.</param>
+			/// <returns>Number of bytes that would be occupied by given number of objects.</returns>
+			public ulong GetBytesNumber(ulong objectsCount)
+			{
+				return Color32.ByteCount * objectsCount;
+			}
+			/// <summary>
+			/// Gets number of objects stored in native memory cluster.
+			/// </summary>
+			/// <param name="handle">Address of first byte of native memory cluster.</param>
+			/// <param name="offset">
+			/// Zero-based index of first byte within native memory cluster from which to start
+			/// counting objects.
+			/// </param>
+			/// <param name="size">Size of native memory cluster in bytes from first byte.</param>
+			/// <returns>Number of objects in [handle + offset; handle + size].</returns>
+			public ulong GetObjectsNumber(IntPtr handle, ulong offset, ulong size)
+			{
+				return size / Color32.ByteCount;
+			}
+			/// <summary>
+			/// Writes a collection of objects to native memory.
+			/// </summary>
+			/// <param name="stream">Stream to which to write objects.</param>
+			/// <param name="objects">A list of objects to write.</param>
+			/// <returns>Number of bytes written.</returns>
+			public ulong Write(NativeMemoryStream stream, IList<Color32> objects)
+			{
+				ulong bytesWritten = 0;
+				foreach (Color32 @object in objects)
+				{
+					stream.Write(@object.Bytes);
+					bytesWritten += Color32.ByteCount;
+				}
+				return bytesWritten;
+			}
+			/// <summary>
+			/// Reads objects from native memory stream and stores it in a collection.
+			/// </summary>
+			/// <param name="stream">Stream from which to read the objects.</param>
+			/// <param name="objects">A collection of vectors where to put the objects.</param>
+			/// <param name="index">
+			/// Index of the first position inside a collection to which to put objects. -1 to write
+			/// to the end of the list.
+			/// </param>
+			/// <param name="count">Number of objects to read, 0 to read everything.</param>
+			/// <returns>Number of read objects.</returns>
+			public int Read(NativeMemoryStream stream, IList<Color32> objects, int index = -1, int count = 0)
+			{
+				int objectsToRead;
+				if (count == 0)
+				{
+					objectsToRead = (int)this.GetObjectsNumber(IntPtr.Zero, stream.Position, stream.Length);
+				}
+				else
+				{
+					objectsToRead = count;
+				}
+				int i;
+				for (i = index == -1 ? objects.Count : index; i < objectsToRead; i++)
+				{
+					objects.Insert(i, new Color32
+					{
+						Bytes = stream.Read4()
+					});
+				}
+				return i - index == -1 ? objects.Count : index;
+			}
 		}
 	}
 }

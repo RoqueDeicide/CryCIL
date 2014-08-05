@@ -99,10 +99,21 @@ namespace CryEngine
 
 		public void SetFromVectors(Vector3 vx, Vector3 vy, Vector3 vz, Vector3 pos)
 		{
-			var m34 = new Matrix34();
-			m34.M00 = vx.X; m34.M01 = vy.X; m34.M02 = vz.X; m34.M03 = pos.X;
-			m34.M10 = vx.Y; m34.M11 = vy.Y; m34.M12 = vz.Y; m34.M13 = pos.Y;
-			m34.M20 = vx.Z; m34.M21 = vy.Z; m34.M22 = vz.Z; m34.M23 = pos.Z;
+			var m34 = new Matrix34
+			{
+				M00 = vx.X,
+				M01 = vy.X,
+				M02 = vz.X,
+				M03 = pos.X,
+				M10 = vx.Y,
+				M11 = vy.Y,
+				M12 = vz.Y,
+				M13 = pos.Y,
+				M20 = vx.Z,
+				M21 = vy.Z,
+				M22 = vz.Z,
+				M23 = pos.Z
+			};
 			this = new QuaternionTranslation(m34);
 		}
 
@@ -145,8 +156,10 @@ namespace CryEngine
 			{
 				int hash = 17;
 
+				// ReSharper disable NonReadonlyFieldInGetHashCode
 				hash = hash * 29 + T.GetHashCode();
 				hash = hash * 29 + Q.GetHashCode();
+				// ReSharper restore NonReadonlyFieldInGetHashCode
 
 				return hash;
 			}

@@ -76,6 +76,7 @@ namespace CryEngine
 			float d1 = Vector3.Dot(ab, ap);
 			float d2 = Vector3.Dot(ac, ap);
 			if (d1 <= 0.0f && d2 <= 0.0f)
+				// ReSharper disable RedundantAssignment
 				result = vertex1; // Barycentric coordinates (1,0,0)
 
 			// Check if P in vertex region outside B
@@ -121,6 +122,7 @@ namespace CryEngine
 			float v2 = vb * denom;
 			float w2 = vc * denom;
 			result = vertex1 + ab * v2 + ac * w2; // = u*vertex1 + v*vertex2 + w*vertex3, u = va * denom = 1.0f - v - w
+			// ReSharper restore RedundantAssignment
 		}
 
 		/// <summary>

@@ -100,7 +100,9 @@ namespace CryEngine
 		/// <returns>True, if objects are equal, otherwise false.</returns>
 		public static bool operator ==(EulerAngles l, EulerAngles r)
 		{
+			// ReSharper disable CompareOfFloatsByEqualityOperator
 			return l.Pitch == r.Pitch && l.Roll == r.Roll && l.Yaw == r.Yaw;
+			// ReSharper restore CompareOfFloatsByEqualityOperator
 		}
 		/// <summary>
 		/// Determines whether two instances of <see cref="EulerAngles" /> struct are not equal.
@@ -110,7 +112,9 @@ namespace CryEngine
 		/// <returns>True, if objects are not equal, otherwise false.</returns>
 		public static bool operator !=(EulerAngles l, EulerAngles r)
 		{
+			// ReSharper disable CompareOfFloatsByEqualityOperator
 			return l.Pitch != r.Pitch && l.Roll != r.Roll && l.Yaw != r.Yaw;
+			// ReSharper restore CompareOfFloatsByEqualityOperator
 		}
 		#endregion
 		#region Arithmetic Operators
@@ -172,8 +176,12 @@ namespace CryEngine
 		/// <returns>Result of conversion.</returns>
 		public static explicit operator EulerAngles(Quaternion quaternion)
 		{
-			EulerAngles result = new EulerAngles();
-			result.Roll = System.Convert.ToSingle(Math.Asin(Math.Max(-1.0f, Math.Min(1.0f, -(quaternion.V.X * quaternion.V.Z - quaternion.W * quaternion.V.Y) * 2))));
+			EulerAngles result = new EulerAngles
+			{
+				Roll =
+					System.Convert.ToSingle(
+						Math.Asin(Math.Max(-1.0f, Math.Min(1.0f, -(quaternion.V.X * quaternion.V.Z - quaternion.W * quaternion.V.Y) * 2))))
+			};
 			if (Math.Abs(Math.Abs(result.Roll) - (float)(Math.PI * 0.5)) < 0.01f)
 			{
 				result.Pitch = 0;
@@ -204,7 +212,9 @@ namespace CryEngine
 		/// <returns>Hash code of this object.</returns>
 		public override int GetHashCode()
 		{
+			// ReSharper disable NonReadonlyFieldInGetHashCode
 			return this.Pitch.GetHashCode() * 11 + this.Roll.GetHashCode() * 37 + this.Yaw.GetHashCode() * 23;
+			// ReSharper restore NonReadonlyFieldInGetHashCode
 		}
 		/// <summary>
 		/// Checks equality of this object and given one.
