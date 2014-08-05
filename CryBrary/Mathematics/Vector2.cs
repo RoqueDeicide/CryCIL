@@ -5,7 +5,7 @@ using System.Globalization;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Runtime.InteropServices;
-using CryEngine.NativeMemory;
+using CryEngine.Mathematics.MemoryMapping;
 
 namespace CryEngine
 {

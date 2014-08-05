@@ -5,8 +5,6 @@ using System.Globalization;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-using CryEngine.NativeMemory;
-
 namespace CryEngine
 {
 	/// <summary>
