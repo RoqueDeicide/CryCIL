@@ -8,31 +8,16 @@ namespace System
 	/// Represents a half-precision floating point number.
 	/// </summary>
 	/// <remarks>
-	///
-	/// Note: Half is not fast enought and precision is also very bad, so is should not be used for
-	///       matemathical computation (use Single instead). The main advantage of Half type is
-	///       lower memory cost: two bytes per number. Half is typically used in graphical applications.
-	///
-	///
-	///
-	///
-	///
-	///
-	///
-	///
-	/// Note: All functions, where is used conversion half-&gt;float/float-&gt;half, are approx. ten
-	///       times slower than float-&gt;double/double-&gt;float, i.e. ~3ns on 2GHz CPU.
-	///
-	///
-	///
-	///
-	///
-	///
-	///
-	///
+	/// <para>Note: Half is not fast enough and precision is also very bad, so is should not be used
+	/// for mathematical computation (use Single instead). The main advantage of Half type is lower
+	/// memory cost: two bytes per number. Half is typically used in graphical
+	/// applications.</para><para>Note: All functions, where is used conversion
+	/// half-&gt;float/float-&gt;half, are approx. ten times slower than
+	/// float-&gt;double/double-&gt;float, i.e. ~3ns on 2GHz CPU.</para><list type="bullet">
 	/// References:
-	/// - Fast Half Float Conversions, Jeroen van der Zijp, link: http://www.fox-toolkit.org/ftp/fasthalffloatconversion.pdf
-	/// - IEEE 754 revision, link: http://grouper.ieee.org/groups/754/
+	/// <item>Fast Half Float Conversions, Jeroen van der Zijp, link:
+	/// http: //www.fox-toolkit.org/ftp/fasthalffloatconversion.pdf </item><item>IEEE 754 revision,
+	/// link: http://grouper.ieee.org/groups/754/</item></list>
 	/// </remarks>
 	[Serializable]
 	public struct Half : IComparable, IFormattable, IConvertible, IComparable<Half>, IEquatable<Half>
@@ -167,13 +152,13 @@ namespace System
 		/// </summary>
 		/// <param name="half">The System.Half operand.</param>
 		/// <returns>The value of half incremented by 1.</returns>
-		public static Half operator ++(Half half) { return (Half)(half + 1f); }
+		public static Half operator ++(Half half) { return (Half)((float)half + 1f); }
 		/// <summary>
 		/// Decrements the System.Half operand by one.
 		/// </summary>
 		/// <param name="half">The System.Half operand.</param>
 		/// <returns>The value of half decremented by 1.</returns>
-		public static Half operator --(Half half) { return (Half)(half - 1f); }
+		public static Half operator --(Half half) { return (Half)((float)half - 1f); }
 		/// <summary>
 		/// Adds two specified System.Half values.
 		/// </summary>
@@ -215,7 +200,7 @@ namespace System
 		/// <param name="half1">A System.Half.</param>
 		/// <param name="half2">A System.Half.</param>
 		/// <returns>true if half1 and half2 are not equal; otherwise, false.</returns>
-		public static bool operator !=(Half half1, Half half2) { return !(half1.value == half2.value); }
+		public static bool operator !=(Half half1, Half half2) { return half1.value != half2.value; }
 		/// <summary>
 		/// Returns a value indicating whether a specified System.Half is less than another
 		/// specified System.Half.
@@ -256,31 +241,31 @@ namespace System
 		/// </summary>
 		/// <param name="value">An 8-bit unsigned integer.</param>
 		/// <returns>A System.Half that represents the converted 8-bit unsigned integer.</returns>
-		public static implicit operator Half(byte value) { return new Half((float)value); }
+		public static explicit operator Half(byte value) { return new Half((float)value); }
 		/// <summary>
 		/// Converts a 16-bit signed integer to a System.Half.
 		/// </summary>
 		/// <param name="value">A 16-bit signed integer.</param>
 		/// <returns>A System.Half that represents the converted 16-bit signed integer.</returns>
-		public static implicit operator Half(short value) { return new Half((float)value); }
+		public static explicit operator Half(short value) { return new Half((float)value); }
 		/// <summary>
 		/// Converts a Unicode character to a System.Half.
 		/// </summary>
 		/// <param name="value">A Unicode character.</param>
 		/// <returns>A System.Half that represents the converted Unicode character.</returns>
-		public static implicit operator Half(char value) { return new Half((float)value); }
+		public static explicit operator Half(char value) { return new Half((float)value); }
 		/// <summary>
 		/// Converts a 32-bit signed integer to a System.Half.
 		/// </summary>
 		/// <param name="value">A 32-bit signed integer.</param>
 		/// <returns>A System.Half that represents the converted 32-bit signed integer.</returns>
-		public static implicit operator Half(int value) { return new Half((float)value); }
+		public static explicit operator Half(int value) { return new Half((float)value); }
 		/// <summary>
 		/// Converts a 64-bit signed integer to a System.Half.
 		/// </summary>
 		/// <param name="value">A 64-bit signed integer.</param>
 		/// <returns>A System.Half that represents the converted 64-bit signed integer.</returns>
-		public static implicit operator Half(long value) { return new Half((float)value); }
+		public static explicit operator Half(long value) { return new Half((float)value); }
 		/// <summary>
 		/// Converts a single-precision floating-point number to a System.Half.
 		/// </summary>
@@ -288,7 +273,7 @@ namespace System
 		/// <returns>
 		/// A System.Half that represents the converted single-precision floating point number.
 		/// </returns>
-		public static explicit operator Half(float value) { return new Half((float)value); }
+		public static explicit operator Half(float value) { return new Half(value); }
 		/// <summary>
 		/// Converts a double-precision floating-point number to a System.Half.
 		/// </summary>
@@ -340,7 +325,7 @@ namespace System
 		/// <returns>
 		/// A single-precision floating-point number that represents the converted System.Half.
 		/// </returns>
-		public static implicit operator float(Half value) { return (float)HalfHelper.HalfToSingle(value); }
+		public static explicit operator float(Half value) { return HalfHelper.HalfToSingle(value); }
 		/// <summary>
 		/// Converts a System.Half to a double-precision floating-point number.
 		/// </summary>
@@ -348,7 +333,7 @@ namespace System
 		/// <returns>
 		/// A double-precision floating-point number that represents the converted System.Half.
 		/// </returns>
-		public static implicit operator double(Half value) { return (double)(float)value; }
+		public static explicit operator double(Half value) { return (float)value; }
 		/// <summary>
 		/// Converts a System.Half to a decimal number.
 		/// </summary>
@@ -360,25 +345,25 @@ namespace System
 		/// </summary>
 		/// <param name="value">An 8-bit signed integer.</param>
 		/// <returns>A System.Half that represents the converted 8-bit signed integer.</returns>
-		public static implicit operator Half(sbyte value) { return new Half((float)value); }
+		public static explicit operator Half(sbyte value) { return new Half((float)value); }
 		/// <summary>
 		/// Converts a 16-bit unsigned integer to a System.Half.
 		/// </summary>
 		/// <param name="value">A 16-bit unsigned integer.</param>
 		/// <returns>A System.Half that represents the converted 16-bit unsigned integer.</returns>
-		public static implicit operator Half(ushort value) { return new Half((float)value); }
+		public static explicit operator Half(ushort value) { return new Half((float)value); }
 		/// <summary>
 		/// Converts a 32-bit unsigned integer to a System.Half.
 		/// </summary>
 		/// <param name="value">A 32-bit unsigned integer.</param>
 		/// <returns>A System.Half that represents the converted 32-bit unsigned integer.</returns>
-		public static implicit operator Half(uint value) { return new Half((float)value); }
+		public static explicit operator Half(uint value) { return new Half((float)value); }
 		/// <summary>
 		/// Converts a 64-bit unsigned integer to a System.Half.
 		/// </summary>
 		/// <param name="value">A 64-bit unsigned integer.</param>
 		/// <returns>A System.Half that represents the converted 64-bit unsigned integer.</returns>
-		public static implicit operator Half(ulong value) { return new Half((float)value); }
+		public static explicit operator Half(ulong value) { return new Half((float)value); }
 		/// <summary>
 		/// Converts a System.Half to an 8-bit signed integer.
 		/// </summary>
@@ -451,24 +436,11 @@ namespace System
 		/// <exception cref="System.ArgumentException">value is not a System.Half</exception>
 		public int CompareTo(object obj)
 		{
-			int result = 0;
-			if (obj == null)
+			if (obj is Half)
 			{
-				result = 1;
+				return this.CompareTo((Half)obj);
 			}
-			else
-			{
-				if (obj is Half)
-				{
-					result = CompareTo((Half)obj);
-				}
-				else
-				{
-					throw new ArgumentException("Object must be of type Half.");
-				}
-			}
-
-			return result;
+			throw new ArgumentException("Object must be of type Half.");
 		}
 		/// <summary>
 		/// Returns a value indicating whether this instance and a specified System.Half object
@@ -490,17 +462,7 @@ namespace System
 		/// </returns>
 		public override bool Equals(object obj)
 		{
-			bool result = false;
-			if (obj is Half)
-			{
-				Half half = (Half)obj;
-				if ((half == this) || (IsNaN(half) && IsNaN(this)))
-				{
-					result = true;
-				}
-			}
-
-			return result;
+			return obj is Half && this.Equals((Half)obj);
 		}
 		/// <summary>
 		/// Returns the hash code for this instance.
@@ -508,7 +470,9 @@ namespace System
 		/// <returns>A 32-bit signed integer hash code.</returns>
 		public override int GetHashCode()
 		{
+			// ReSharper disable NonReadonlyFieldInGetHashCode
 			return value.GetHashCode();
+			// ReSharper restore NonReadonlyFieldInGetHashCode
 		}
 		/// <summary>
 		/// Returns the System.TypeCode for value type System.Half.
@@ -587,20 +551,17 @@ namespace System
 		/// </exception>
 		public static int Sign(Half value)
 		{
-			if (value < 0)
+			if (value < (Half)0)
 			{
 				return -1;
 			}
-			else if (value > 0)
+			if (value > (Half)0)
 			{
 				return 1;
 			}
-			else
+			if (value != (Half)0)
 			{
-				if (value != 0)
-				{
-					throw new ArithmeticException("Function does not accept floating point Not-a-Number values.");
-				}
+				throw new ArithmeticException("Function does not accept floating point Not-a-Number values.");
 			}
 
 			return 0;
