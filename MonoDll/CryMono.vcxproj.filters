@@ -188,6 +188,9 @@
     <ClInclude Include="Scriptbinds\StaticObject.h">
       <Filter>ScriptBinds\StaticObjects</Filter>
     </ClInclude>
+    <ClInclude Include="Scriptbinds\Platform.h">
+      <Filter>ScriptBinds</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -323,6 +326,9 @@
     </ClCompile>
     <ClCompile Include="Scriptbinds\StaticObject.cpp">
       <Filter>ScriptBinds\StaticObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Scriptbinds\Platform.cpp">
+      <Filter>ScriptBinds</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -150,6 +150,7 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
     <ClInclude Include="Scriptbinds\Network.h" />
     <ClInclude Include="Scriptbinds\ParticleSystem.h" />
     <ClInclude Include="Scriptbinds\Physics.h" />
+    <ClInclude Include="Scriptbinds\Platform.h" />
     <ClInclude Include="Scriptbinds\Renderer.h" />
     <ClInclude Include="ScriptBinds\MaterialManager.h" />
     <ClInclude Include="Scriptbinds\GameObject.h" />
@@ -199,6 +200,7 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
     <ClCompile Include="Scriptbinds\Network.cpp" />
     <ClCompile Include="Scriptbinds\ParticleSystem.cpp" />
     <ClCompile Include="Scriptbinds\Physics.cpp" />
+    <ClCompile Include="Scriptbinds\Platform.cpp" />
     <ClCompile Include="Scriptbinds\Renderer.cpp" />
     <ClCompile Include="ScriptBinds\MaterialManager.cpp" />
     <ClCompile Include="Scriptbinds\GameObject.cpp" />

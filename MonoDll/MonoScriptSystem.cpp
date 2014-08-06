@@ -53,6 +53,7 @@
 #include "Scriptbinds\MonoMemory.h"
 #include "Scriptbinds\NativeString.h"
 #include "Scriptbinds\StaticObject.h"
+#include "Scriptbinds\Platform.h"
 
 #include "FlowManager.h"
 #include "MonoFlowNode.h"
@@ -354,6 +355,8 @@ void CScriptSystem::RegisterPriorityBindings()
 	RegisterBinding(Scriptbind_NativeString);
 
 	RegisterBinding(Scriptbind_StaticObject);
+
+	RegisterBinding(Scriptbind_Platform);
 
 	m_pFlowManager = new CFlowManager();
 	m_pFlowManager->AddRef();
