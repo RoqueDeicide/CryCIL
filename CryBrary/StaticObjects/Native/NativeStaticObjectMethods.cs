@@ -23,5 +23,12 @@ namespace CryEngine.StaticObjects.Native
 		/// <param name="handle">Pointer to static object in native environment.</param>
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		extern internal static void ReleaseStaticObject(IntPtr handle);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		extern internal static MeshHandles GetMeshHandles(IntPtr handle);
+	}
+	internal struct MeshHandles
+	{
+		internal IntPtr IndexedMeshHandle;
+		internal IntPtr MeshHandle;
 	}
 }

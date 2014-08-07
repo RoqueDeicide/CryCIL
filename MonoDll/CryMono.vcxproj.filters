@@ -179,6 +179,9 @@
     <ClInclude Include="Scriptbinds\StaticObject.h">
       <Filter>ScriptBinds\StaticObjects</Filter>
     </ClInclude>
+    <ClInclude Include="Scriptbinds\CMesh.h">
+      <Filter>ScriptBinds\StaticObjects</Filter>
+    </ClInclude>
     <ClInclude Include="Scriptbinds\Platform.h">
       <Filter>ScriptBinds</Filter>
     </ClInclude>
@@ -307,6 +310,9 @@
     </ClCompile>
     <ClCompile Include="AIActor.cpp" />
     <ClCompile Include="Scriptbinds\StaticObject.cpp">
+      <Filter>ScriptBinds\StaticObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Scriptbinds\CMesh.cpp">
       <Filter>ScriptBinds\StaticObjects</Filter>
     </ClCompile>
     <ClCompile Include="Scriptbinds\Platform.cpp">

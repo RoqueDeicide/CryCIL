@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using CryEngine.Native;
+using CryEngine.StaticObjects.Meshes;
 using CryEngine.StaticObjects.Native;
 
 namespace CryEngine.StaticObjects
@@ -19,6 +20,19 @@ namespace CryEngine.StaticObjects
 		/// </summary>
 		public bool Disposed { get; private set; }
 		/// <summary>
+		/// Gets object that provides access to mesh data in native memory.
+		/// </summary>
+		/// <exception cref="ObjectDisposedException">
+		/// Cannot acquire mesh data from static object that has been disposed of.
+		/// </exception>
+		/// <exception cref="Exception">
+		/// Unable to acquire mesh handles for the static object.
+		/// </exception>
+		public NativeMesh Mesh
+		{
+			get { return new NativeMesh(this); }
+		}
+		/// <summary>
 		/// Creates a new empty static object.
 		/// </summary>
 		/// <remarks>
@@ -32,21 +46,22 @@ namespace CryEngine.StaticObjects
 		/// </remarks>
 		public StaticObject()
 		{
-			this.handle = NativeStaticObjectMethods.CreateStaticObject();
-			this.Disposed = this.handle == IntPtr.Zero;
+			this.Handle = NativeStaticObjectMethods.CreateStaticObject();
+			this.Disposed = this.Handle == IntPtr.Zero;
 		}
 		// Used by EntityBase.GetStaticObject(int).
 		internal StaticObject(IntPtr handle)
 		{
-			this.handle = handle;
-			this.Disposed = this.handle == IntPtr.Zero;
+			this.Handle = handle;
+			this.Disposed = this.Handle == IntPtr.Zero;
 		}
 		~StaticObject()
 		{
 			this.Dispose(false);
 		}
 		/// <summary>
-		/// Signals CryEngine run-time that this static object is no longer needed in Mono environment.
+		/// Signals CryEngine run-time environment that this static object is no longer needed in
+		/// Mono environment.
 		/// </summary>
 		public void Dispose()
 		{
@@ -64,7 +79,7 @@ namespace CryEngine.StaticObjects
 			{
 				return;
 			}
-			NativeStaticObjectMethods.ReleaseStaticObject(this.handle);
+			NativeStaticObjectMethods.ReleaseStaticObject(this.Handle);
 			this.Disposed = true;
 		}
 	}

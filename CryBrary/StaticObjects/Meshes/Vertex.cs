@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace CryEngine.StaticObjects.Meshes
@@ -8,6 +9,7 @@ namespace CryEngine.StaticObjects.Meshes
 	/// <summary>
 	/// Encapsulates data about one vertex in the mesh.
 	/// </summary>
+	[StructLayout(LayoutKind.Sequential)]
 	public struct Vertex
 	{
 		private Vector3 position;

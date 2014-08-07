@@ -53,6 +53,7 @@
 //#include "Scriptbinds\MonoMemory.h"
 //#include "Scriptbinds\NativeString.h"
 #include "Scriptbinds\StaticObject.h"
+#include "Scriptbinds\CMesh.h"
 #include "Scriptbinds\Platform.h"
 
 #include "FlowManager.h"
@@ -355,6 +356,7 @@ void CScriptSystem::RegisterPriorityBindings()
 	RegisterBinding(Scriptbind_NativeString);*/
 
 	RegisterBinding(Scriptbind_StaticObject);
+	RegisterBinding(Scriptbind_CMesh);
 
 	RegisterBinding(Scriptbind_Platform);
 

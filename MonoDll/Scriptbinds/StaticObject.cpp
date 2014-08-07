@@ -1,11 +1,10 @@
-#include "3DEngine.h"
-
 #include "StaticObject.h"
 
 Scriptbind_StaticObject::Scriptbind_StaticObject()
 {
 	REGISTER_METHOD(CreateStaticObject);
 	REGISTER_METHOD(ReleaseStaticObject);
+	REGISTER_METHOD(GetMeshHandles);
 }
 
 Scriptbind_StaticObject::~Scriptbind_StaticObject()
@@ -27,4 +26,19 @@ void Scriptbind_StaticObject::ReleaseStaticObject(IStatObj *obj)
 		obj->Release();
 	}
 }
+MeshHandles Scriptbind_StaticObject::GetMeshHandles(IStatObj *obj)
+{
+	// Initialize result with with zeros.
+	MeshHandles handles = MeshHandles();
+
+	if (obj)
+	{
+		handles.indexedMesh = obj->GetIndexedMesh(true);
+		if (handles.indexedMesh)
+		{
+			handles.mesh = handles.indexedMesh->GetMesh();
+		}
+	}
+
+	return handles;
 }
