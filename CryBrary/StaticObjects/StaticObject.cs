@@ -13,7 +13,7 @@ namespace CryEngine.StaticObjects
 	/// </summary>
 	public class StaticObject : IDisposable
 	{
-		internal readonly IntPtr handle;
+		internal readonly IntPtr Handle;
 		/// <summary>
 		/// Indicates whether this static object is usable.
 		/// </summary>

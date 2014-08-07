@@ -414,7 +414,7 @@ namespace CryEngine
 				throw new ObjectDisposedException
 					("EntityHandle", "Attempt to assign a static object to disposed or invalid entity.");
 			}
-			NativeEntityMethods.AssignStaticObject(this.EntityHandle, staticObject.handle, slot);
+			NativeEntityMethods.AssignStaticObject(this.EntityHandle, staticObject.Handle, slot);
 		}
 		#endregion
 	}

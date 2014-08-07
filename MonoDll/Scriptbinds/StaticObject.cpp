@@ -21,5 +21,10 @@ IStatObj *Scriptbind_StaticObject::CreateStaticObject()
 }
 void Scriptbind_StaticObject::ReleaseStaticObject(IStatObj *obj)
 {
-	obj->Release();
+	if (obj)
+	{
+		// Tell memory manager, that given pointer is not going to be used anymore.
+		obj->Release();
+	}
+}
 }
