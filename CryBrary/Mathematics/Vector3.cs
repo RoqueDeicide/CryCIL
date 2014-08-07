@@ -46,7 +46,7 @@ namespace CryEngine
 		/// <summary>
 		/// Number of bytes each instance of this structure consists of.
 		/// </summary>
-		public static readonly ulong ByteCount = (ulong)Marshal.SizeOf(typeof(Vector3));
+		public static readonly int ByteCount = Marshal.SizeOf(typeof(Vector3));
 		/// <summary>
 		/// Number of components of this vector.
 		/// </summary>
@@ -232,26 +232,6 @@ namespace CryEngine
 				Buffer.BlockCopy(components, 0, bytes, 0, bytes.Length);
 				return bytes;
 			}
-		}
-		#endregion
-		#region Static Interface
-		/// <summary>
-		/// Acquires a vector located in native memory.
-		/// </summary>
-		/// <param name="location">
-		/// Pointer to native memory block that contains the vector we seek.
-		/// </param>
-		/// <param name="offset">
-		/// Byte offset that is added to <paramref name="location" /> to acquire exact location of
-		/// the vector.
-		/// </param>
-		/// <returns>
-		/// New instance of <see cref="Vector3" /> structure interpreted from 12 bytes inside native memory.
-		/// </returns>
-		public static Vector3 FromNativeMemory(IntPtr location, ulong offset)
-		{
-			Buffer32 buff = new Buffer32(location, offset);
-			return new Vector3(buff.Floats[0], buff.Floats[1], buff.Floats[2]);
 		}
 		#endregion
 		#region Interface
@@ -1140,19 +1120,6 @@ namespace CryEngine
 		{
 			return this.IsEquivalent(other, MathHelpers.ZeroTolerance);
 		}
-		/// <summary>
-		/// Writes coordinates of this vector to native memory.
-		/// </summary>
-		/// <param name="handle">
-		/// Pointer to native memory block that contains the vector we seek.
-		/// </param>
-		/// <param name="offset">
-		/// Byte offset that is added to <paramref name="handle" /> to acquire exact location of the vector.
-		/// </param>
-		public void WriteToNativeMemory(IntPtr handle, ulong offset)
-		{
-			CryMarshal.Set(handle, new Buffer32(this.X, this.Y, this.Z), offset, Vector3.ByteCount);
-		}
 		#endregion
 		#region Text Conversions
 		/// <summary>
@@ -1212,95 +1179,5 @@ namespace CryEngine
 		}
 		#endregion
 		#endregion
-		/// <summary>
-		/// Handles transfer of arrays of type <see cref="Vector3" /> between managed and native memory.
-		/// </summary>
-		public class TransferAgent : ITransferAgent<Vector3>
-		{
-			/// <summary>
-			/// Determines size of native memory cluster that can fit a collection of objects.
-			/// </summary>
-			/// <param name="objects">A list of objects of type <see cref="Vector3" />.</param>
-			/// <returns>
-			/// Number of bytes that would be occupied by given collection of objects.
-			/// </returns>
-			public ulong GetBytesNumber(IList<Vector3> objects)
-			{
-				return this.GetBytesNumber((ulong)objects.Count);
-			}
-			/// <summary>
-			/// Determines size of native memory cluster that can fit a number of objects.
-			/// </summary>
-			/// <param name="objectsCount">A number of objects.</param>
-			/// <returns>Number of bytes that would be occupied by given number of objects.</returns>
-			public ulong GetBytesNumber(ulong objectsCount)
-			{
-				return Vector3.ByteCount * objectsCount;
-			}
-			/// <summary>
-			/// Gets number of vectors stored in native memory cluster.
-			/// </summary>
-			/// <param name="handle">Address of first byte of native memory cluster.</param>
-			/// <param name="offset">
-			/// Zero-based index of first byte within native memory cluster from which to start
-			/// counting vectors.
-			/// </param>
-			/// <param name="size">Size of native memory cluster in bytes from first byte.</param>
-			/// <returns>Number of vectors in [handle + offset; handle + size].</returns>
-			public ulong GetObjectsNumber(IntPtr handle, ulong offset, ulong size)
-			{
-				return (size - offset) / Vector3.ByteCount;
-			}
-			/// <summary>
-			/// Writes a collection of vectors to native memory.
-			/// </summary>
-			/// <param name="stream">Stream to which to write vectors.</param>
-			/// <param name="objects">A list of vectors to write.</param>
-			/// <returns>Number of bytes written.</returns>
-			public ulong Write(NativeMemoryStream stream, IList<Vector3> objects)
-			{
-				ulong bytesWritten = 0;
-				foreach (Vector3 vector3 in objects)
-				{
-					stream.Write(vector3.Bytes);
-					bytesWritten += Vector3.ByteCount;
-				}
-				return bytesWritten;
-			}
-			/// <summary>
-			/// Reads vectors from native memory stream and stores it in a collection.
-			/// </summary>
-			/// <param name="stream">Stream from which to read the vectors.</param>
-			/// <param name="objects">A collection of vectors where to put the objects.</param>
-			/// <param name="index">
-			/// Index of the first position inside a collection to which to put vectors. -1 to write
-			/// to the end of the list.
-			/// </param>
-			/// <param name="count">Number of vectors to read, 0 to read everything.</param>
-			/// <returns>Number of read vectors.</returns>
-			public int Read(NativeMemoryStream stream, IList<Vector3> objects, int index = -1, int count = 0)
-			{
-				int objectsToRead;
-				if (count == 0)
-				{
-					objectsToRead = (int)this.GetObjectsNumber(IntPtr.Zero, stream.Position, stream.Length);
-				}
-				else
-				{
-					objectsToRead = count;
-				}
-				int i;
-				for (i = index == -1 ? objects.Count : index; i < objectsToRead; i++)
-				{
-					objects.Insert(i, new Vector3
-					{
-						X = stream.Read4().SingleFloat,
-						Y = stream.Read4().SingleFloat,
-						Z = stream.Read4().SingleFloat
-					});
-				}
-				return i - index == -1 ? objects.Count : index;
-			}
-		}
 	}
 }
