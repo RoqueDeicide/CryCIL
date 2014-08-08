@@ -5,11 +5,10 @@ using System.ComponentModel;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Runtime.CompilerServices;
-
+using CryEngine.Entities;
 using CryEngine.Extensions;
 using CryEngine.Initialization;
 using CryEngine.Native;
-
 using CryEngine.Flowgraph.Native;
 
 namespace CryEngine.Flowgraph
@@ -32,18 +31,17 @@ namespace CryEngine.Flowgraph
 				var outputMember = registrationParams.OutputMembers[i];
 
 				Type type = outputMember.MemberType ==
-					MemberTypes.Field
-					?
-					((FieldInfo)outputMember).FieldType
-					:
-					((PropertyInfo)outputMember).PropertyType;
+							MemberTypes.Field
+					? ((FieldInfo)outputMember).FieldType
+					: ((PropertyInfo)outputMember).PropertyType;
 
 				bool isGenericType = type.IsGenericType;
 				Type genericType = isGenericType ? type.GetGenericArguments()[0] : typeof(void);
 
-				object[] outputPortConstructorArgs = { Handle, i };
+				object[] outputPortConstructorArgs = {Handle, i};
 				Type genericOutputPort = typeof(OutputPort<>);
-				object outputPort = Activator.CreateInstance(isGenericType ? genericOutputPort.MakeGenericType(genericType) : type, outputPortConstructorArgs);
+				object outputPort = Activator.CreateInstance(isGenericType ? genericOutputPort.MakeGenericType(genericType) : type,
+															 outputPortConstructorArgs);
 
 				if (outputMember.MemberType == MemberTypes.Field)
 					(outputMember as FieldInfo).SetValue(this, outputPort);
@@ -58,7 +56,9 @@ namespace CryEngine.Flowgraph
 		{
 			var registrationParams = (FlowNodeRegistrationParams)Script.RegistrationParams;
 
-			return new NodeConfig(registrationParams.filter, registrationParams.description, (registrationParams.hasTargetEntity ? FlowNodeFlags.TargetEntity : 0), registrationParams.type, registrationParams.InputPorts, registrationParams.OutputPorts);
+			return new NodeConfig(registrationParams.filter, registrationParams.description,
+								  (registrationParams.hasTargetEntity ? FlowNodeFlags.TargetEntity : 0), registrationParams.type,
+								  registrationParams.InputPorts, registrationParams.OutputPorts);
 		}
 
 		private int GetInputPortId(MethodInfo method)
@@ -73,7 +73,6 @@ namespace CryEngine.Flowgraph
 
 			throw new ArgumentException("Invalid input method specified");
 		}
-
 		#region Callbacks
 		/// <summary>
 		/// Called if one or more input ports have been activated.
@@ -101,11 +100,11 @@ namespace CryEngine.Flowgraph
 					value = typeConverter.ConvertFrom(value);
 				}
 
-				var args = new[] { value };
+				var args = new[] {value};
 				method.Invoke(this, args);
 			}
 			else if (parameterCount == 1 && parameters.ElementAt(0).ParameterType == typeof(object))
-				method.Invoke(this, new object[] { null });
+				method.Invoke(this, new object[] {null});
 			else if (parameterCount == 0)
 				method.Invoke(this, null);
 		}
@@ -114,21 +113,26 @@ namespace CryEngine.Flowgraph
 		/// Called after level has been loaded, is not called on serialization. Note that this is
 		/// called prior to GameRules.OnClientConnect and OnClientEnteredGame!
 		/// </summary>
-		protected virtual void OnInit() { }
+		protected virtual void OnInit()
+		{
+		}
 
 		/// <summary>
 		/// Called each frame if node has been set to be regularly updated (See <see
 		/// cref="ReceiveNodeUpdates" />) Preferred over <see cref="CryScriptInstance.OnUpdate" />
 		/// due to supporting <see cref="GetPortValue{T}" /> within the update loop.
 		/// </summary>
-		protected virtual void OnNodeUpdate() { }
+		protected virtual void OnNodeUpdate()
+		{
+		}
 
 		/// <summary>
 		/// Called when the node is removed.
 		/// </summary>
-		protected virtual void OnRemove() { }
+		protected virtual void OnRemove()
+		{
+		}
 		#endregion
-
 		#region External methods
 		protected bool IsPortActive<T>(Action<T> port)
 		{
@@ -157,14 +161,12 @@ namespace CryEngine.Flowgraph
 			throw new ArgumentException("Invalid flownode port type specified!");
 		}
 		#endregion
-
 		internal void InternalSetTargetEntity(IntPtr handle, EntityId entId)
 		{
 			TargetEntity = Entity.CreateNativeEntity(entId, handle);
 		}
 
 		public EntityBase TargetEntity { get; private set; }
-
 		#region Overrides
 		// / <summary> /// Called each frame if script has been set to be regularly updated. (See
 		// <see /// cref="CryScriptInstance.ReceiveUpdates" />) /// Warning: FlowNode logic such as
@@ -186,7 +188,6 @@ namespace CryEngine.Flowgraph
 			}
 		}
 		#endregion
-
 		internal IntPtr Handle { get; set; }
 
 		[CLSCompliant(false)]
@@ -194,6 +195,9 @@ namespace CryEngine.Flowgraph
 		[CLSCompliant(false)]
 		public UInt32 GraphId { get; set; }
 
-		public bool ReceiveNodeUpdates { set { NativeFlowNodeMethods.SetRegularlyUpdated(Handle, value); } }
+		public bool ReceiveNodeUpdates
+		{
+			set { NativeFlowNodeMethods.SetRegularlyUpdated(Handle, value); }
+		}
 	}
 }

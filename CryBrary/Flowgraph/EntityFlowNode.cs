@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 using CryEngine;
+using CryEngine.Entities;
 using CryEngine.Initialization;
 using CryEngine.Flowgraph.Native;
 
@@ -15,7 +15,8 @@ namespace CryEngine.Flowgraph
 		{
 			var registrationParams = (EntityFlowNodeRegistrationParams)Script.RegistrationParams;
 
-			return new NodeConfig(FlowNodeFilter.Approved, "", FlowNodeFlags.HideUI | FlowNodeFlags.TargetEntity, FlowNodeType.Instanced, registrationParams.InputPorts, registrationParams.OutputPorts);
+			return new NodeConfig(FlowNodeFilter.Approved, "", FlowNodeFlags.HideUI | FlowNodeFlags.TargetEntity,
+								  FlowNodeType.Instanced, registrationParams.InputPorts, registrationParams.OutputPorts);
 		}
 	}
 }

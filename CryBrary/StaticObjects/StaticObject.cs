@@ -5,7 +5,6 @@ using System.Text;
 
 using CryEngine.Native;
 using CryEngine.StaticObjects.Meshes;
-using CryEngine.StaticObjects.Native;
 
 namespace CryEngine.StaticObjects
 {

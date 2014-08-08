@@ -1,4 +1,5 @@
 ﻿using System;
+using CryEngine.Entities;
 using CryEngine.Native;
 using CryEngine.Initialization;
 

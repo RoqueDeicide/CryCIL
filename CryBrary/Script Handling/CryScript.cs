@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using CryEngine.Entities;
 using CryEngine.Extensions;
-
 using CryEngine.Flowgraph;
 
 namespace CryEngine.Initialization
@@ -12,7 +11,9 @@ namespace CryEngine.Initialization
 	/// </summary>
 	public class CryScript
 	{
-		private CryScript() { }
+		private CryScript()
+		{
+		}
 
 		private CryScript(Type type, ScriptType scriptType)
 		{
@@ -96,7 +97,6 @@ namespace CryEngine.Initialization
 		/// True when the script has been registered in native code, e.g. entity system registration.
 		/// </summary>
 		public bool Registered { get; set; }
-
 		#region Operators
 		public static bool operator ==(CryScript script1, CryScript script2)
 		{
@@ -131,7 +131,6 @@ namespace CryEngine.Initialization
 				return hash;
 			}
 		}
-
 		#endregion
 	}
 

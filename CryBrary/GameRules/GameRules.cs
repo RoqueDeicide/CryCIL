@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-
+using CryEngine.Entities;
 using CryEngine.Initialization;
 using CryEngine.Extensions;
 using CryEngine.Native;

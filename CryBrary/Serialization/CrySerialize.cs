@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
+using CryEngine.Entities;
 
 namespace CryEngine.Serialization
 {
@@ -80,7 +81,7 @@ namespace CryEngine.Serialization
 
 		public void Value(string name, ref EntityId obj, string policy = null)
 		{
-			ValueEntityId(Handle, name, ref obj._value, policy);
+			ValueEntityId(Handle, name, ref obj.Value, policy);
 		}
 
 		public void Value(string name, ref float obj, string policy = null)
@@ -118,10 +119,19 @@ namespace CryEngine.Serialization
 			FlagPartialRead(Handle);
 		}
 
-		public bool IsReading { get { return _IsReading(Handle); } }
-		public bool IsWriting { get { return !IsReading; } }
+		public bool IsReading
+		{
+			get { return _IsReading(Handle); }
+		}
+		public bool IsWriting
+		{
+			get { return !IsReading; }
+		}
 
-		public SerializationTarget Target { get { return GetSerializationTarget(Handle); } }
+		public SerializationTarget Target
+		{
+			get { return GetSerializationTarget(Handle); }
+		}
 
 		internal IntPtr Handle { get; set; }
 	}

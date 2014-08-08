@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-
+using CryEngine.Entities;
 using CryEngine.Native;
 
 namespace CryEngine.Lua
@@ -52,7 +51,6 @@ namespace CryEngine.Lua
 
 		private static List<ScriptTable> ScriptTables { get; set; }
 		#endregion
-
 		internal ScriptTable(IntPtr scriptPtr)
 		{
 			Handle = scriptPtr;

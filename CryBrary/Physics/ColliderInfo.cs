@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using CryEngine.Entities;
 
 namespace CryEngine
 {
@@ -38,7 +39,7 @@ namespace CryEngine
 				if (foreignId != PhysicsForeignIdentifiers.Entity)
 					return null;
 
-				return CryEngine.Entity.Get(foreignData);
+				return Entities.Entity.Get(foreignData);
 			}
 		}
 

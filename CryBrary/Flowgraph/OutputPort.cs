@@ -1,5 +1,5 @@
 ﻿using System;
-
+using CryEngine.Entities;
 using CryEngine.Native;
 using CryEngine.Flowgraph.Native;
 
@@ -10,7 +10,9 @@ namespace CryEngine.Flowgraph
 	/// </summary>
 	public sealed class OutputPort
 	{
-		public OutputPort() { }
+		public OutputPort()
+		{
+		}
 
 		public OutputPort(IntPtr nodePtr, int portId)
 		{
@@ -60,7 +62,7 @@ namespace CryEngine.Flowgraph
 			else if (value is float || value is double)
 				NativeFlowNodeMethods.ActivateOutputFloat(ParentNodePointer, PortId, System.Convert.ToSingle(value));
 			else if (value is EntityId)
-				NativeFlowNodeMethods.ActivateOutputEntityId(ParentNodePointer, PortId, (uint)((EntityId)(object)value)._value);
+				NativeFlowNodeMethods.ActivateOutputEntityId(ParentNodePointer, PortId, (uint)((EntityId)(object)value).Value);
 			else if (value is string)
 				NativeFlowNodeMethods.ActivateOutputString(ParentNodePointer, PortId, System.Convert.ToString(value));
 			else if (value is bool)
@@ -87,7 +89,9 @@ namespace CryEngine.Flowgraph
 	/// <typeparam name="T">Int, Float, EntityId, String, Bool or Vec3.</typeparam>
 	public sealed class OutputPort<T>
 	{
-		public OutputPort() { }
+		public OutputPort()
+		{
+		}
 
 		public OutputPort(IntPtr nodePtr, int portId)
 		{
@@ -102,7 +106,7 @@ namespace CryEngine.Flowgraph
 			else if (value is float || value is double)
 				NativeFlowNodeMethods.ActivateOutputFloat(ParentNodePointer, PortId, System.Convert.ToSingle(value));
 			else if (value is EntityId)
-				NativeFlowNodeMethods.ActivateOutputEntityId(ParentNodePointer, PortId, (uint)((EntityId)(object)value)._value);
+				NativeFlowNodeMethods.ActivateOutputEntityId(ParentNodePointer, PortId, (uint)((EntityId)(object)value).Value);
 			else if (value is string)
 				NativeFlowNodeMethods.ActivateOutputString(ParentNodePointer, PortId, System.Convert.ToString(value));
 			else if (value is bool)

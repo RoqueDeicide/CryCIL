@@ -1,6 +1,6 @@
 ﻿using System;
+using CryEngine.Entities;
 using CryEngine.Native;
-
 using CryEngine.Physics;
 
 namespace CryEngine
@@ -14,23 +14,37 @@ namespace CryEngine
 		/// Gets a value indicating whether this actor is controlled by the local client. See <see
 		/// cref="Actor.LocalClient" />.
 		/// </summary>
-		public bool IsLocalClient { get { return Actor.LocalClient == this; } }
+		public bool IsLocalClient
+		{
+			get { return Actor.LocalClient == this; }
+		}
 
 		/// <summary>
 		/// Gets or sets the current health of this actor.
 		/// </summary>
-		public virtual float Health { get { return NativeActorMethods.GetPlayerHealth(this.GetIActor()); } set { NativeActorMethods.SetPlayerHealth(this.GetIActor(), value); } }
+		public virtual float Health
+		{
+			get { return NativeActorMethods.GetPlayerHealth(this.GetIActor()); }
+			set { NativeActorMethods.SetPlayerHealth(this.GetIActor(), value); }
+		}
 
 		/// <summary>
 		/// Gets or sets the max health value for this actor.
 		/// </summary>
-		public virtual float MaxHealth { get { return NativeActorMethods.GetPlayerMaxHealth(this.GetIActor()); } set { NativeActorMethods.SetPlayerMaxHealth(this.GetIActor(), value); } }
+		public virtual float MaxHealth
+		{
+			get { return NativeActorMethods.GetPlayerMaxHealth(this.GetIActor()); }
+			set { NativeActorMethods.SetPlayerMaxHealth(this.GetIActor(), value); }
+		}
 
 		/// <summary>
 		/// Gets a value indicating whether this actor has died. Returns true if <see cref="Health"
 		/// /> is equal to or below 0.
 		/// </summary>
-		public bool IsDead { get { return Health <= 0; } }
+		public bool IsDead
+		{
+			get { return Health <= 0; }
+		}
 
 		/// <summary>
 		/// Gets or sets the channel id, index to the net channel in use by this actor.
@@ -38,14 +52,14 @@ namespace CryEngine
 		public int ChannelId { get; set; }
 
 		internal IntPtr ActorHandle { get; set; }
-
 		#region Callbacks
 		/// <summary>
 		/// Called after successful actor creation via Actor.Create.
 		/// </summary>
-		public virtual void OnSpawn() { }
+		public virtual void OnSpawn()
+		{
+		}
 		#endregion
-
 		#region Overrides
 		/// <summary>
 		/// Removes this actor from the world.
@@ -76,7 +90,6 @@ namespace CryEngine
 			}
 		}
 		#endregion
-
 		internal override bool InternalInitialize(IScriptInitializationParams initParams)
 		{
 			var actorInitParams = (ActorInitializationParams)initParams;

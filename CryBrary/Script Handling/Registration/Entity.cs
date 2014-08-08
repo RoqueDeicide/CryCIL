@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using CryEngine.Entities;
 
 namespace CryEngine.Initialization
 {
