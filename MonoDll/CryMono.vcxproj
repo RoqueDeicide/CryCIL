@@ -107,14 +107,12 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
     <ClInclude Include="Headers\IMonoArray.h" />
     <ClInclude Include="Headers\IMonoAssembly.h" />
     <ClInclude Include="Headers\IMonoClass.h" />
-    <ClInclude Include="Headers\IMonoConverter.h" />
     <ClInclude Include="Headers\IMonoDomain.h" />
     <ClInclude Include="Headers\IMonoException.h" />
     <ClInclude Include="Headers\IMonoMethod.h" />
     <ClInclude Include="Headers\IMonoObject.h" />
     <ClInclude Include="Headers\MonoCommon.h" />
     <ClInclude Include="MonoArray.h" />
-    <ClInclude Include="MonoConverter.h" />
     <ClInclude Include="MonoCVars.h" />
     <ClInclude Include="MonoDomain.h" />
     <ClInclude Include="MonoEntity.h" />
@@ -167,7 +165,6 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
     <ClCompile Include="DynMonoArray.cpp" />
     <ClCompile Include="EntityEventHandling.cpp" />
     <ClCompile Include="FlowManager.cpp" />
-    <ClCompile Include="MonoConverter.cpp" />
     <ClCompile Include="MonoCVars.cpp" />
     <ClCompile Include="MonoDomain.cpp" />
     <ClCompile Include="MonoEntity.cpp" />

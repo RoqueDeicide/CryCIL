@@ -76,9 +76,13 @@ public:
 	virtual IMonoDomain *GetActiveDomain() override;
 	virtual IMonoDomain *GetScriptDomain() { return m_pScriptDomain; }
 
-	virtual IMonoConverter *GetConverter() override { return m_pConverter; }
-
 	virtual void RegisterFlownodes() override;
+
+	virtual const char *ToString(mono::string monoString) override { return mono_string_to_utf8((MonoString *)monoString); }
+	
+	virtual IMonoArray *ToArray(mono::object arr) override;
+
+	virtual IMonoObject *ToObject(mono::object obj, bool allowGC = true) override;
 	// ~IMonoScriptSystem
 
 	// IFileChangeMonitor
@@ -132,8 +136,6 @@ protected:
 	bool m_bQuitting;
 
 	CFlowManager *m_pFlowManager;
-
-	IMonoConverter *m_pConverter;
 
 	IMonoAssembly *m_pCryBraryAssembly;
 	IMonoAssembly *m_pPdb2MdbAssembly;

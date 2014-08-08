@@ -28,8 +28,6 @@
 #include <ICmdLine.h>
 #include <ISystem.h>
 
-#include "MonoConverter.h"
-
 // Bindings
 #include "Scriptbinds\Console.h"
 #include "Scriptbinds\GameRules.h"
@@ -86,7 +84,6 @@ CScriptSystem::CScriptSystem(IGameFramework *pGameFramework)
 	, m_bReloading(false)
 	, m_bDetectedChanges(false)
 	, m_bQuitting(false)
-	, m_pConverter(nullptr)
 	, m_bFirstReload(true)
 	, m_pGameFramework(pGameFramework)
 {
@@ -136,8 +133,6 @@ CScriptSystem::CScriptSystem(IGameFramework *pGameFramework)
 	// Required for mdb's to load for detailed stack traces etc.
 	mono_debug_init(MONO_DEBUG_FORMAT_MONO);
 #endif
-
-	m_pConverter = new CConverter();
 
 	if (!CompleteInit())
 	{
@@ -189,8 +184,6 @@ CScriptSystem::~CScriptSystem()
 		pFileChangeMonitor->UnregisterListener(this);
 
 	m_methodBindings.clear();
-
-	SAFE_DELETE(m_pConverter);
 
 	SAFE_DELETE(m_pCVars);
 
@@ -432,6 +425,20 @@ void CScriptSystem::RegisterFlownodes()
 {
 	if (m_pScriptManager && GetIGameFramework()->GetIFlowSystem())
 		m_pScriptManager->CallMethod("RegisterFlownodes");
+}
+
+IMonoArray *CScriptSystem::ToArray(mono::object arr)
+{
+	CRY_ASSERT(arr);
+
+	return new CScriptArray(arr);
+}
+
+IMonoObject *CScriptSystem::ToObject(mono::object obj, bool allowGC)
+{
+	CRY_ASSERT(obj);
+
+	return new CScriptObject((MonoObject *)obj, allowGC);
 }
 
 void CScriptSystem::RegisterMethodBinding(const void *method, const char *fullMethodName)
