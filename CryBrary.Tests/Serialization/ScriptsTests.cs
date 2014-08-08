@@ -3,11 +3,10 @@ using System.IO;
 using System.Linq;
 using System.Diagnostics;
 using System.Collections.Generic;
-
 using CryEngine;
+using CryEngine.Entities;
 using CryEngine.Serialization;
 using CryEngine.Initialization;
-
 using NUnit.Framework;
 
 namespace CryBrary.Tests.Serialization
@@ -112,12 +111,19 @@ namespace CryBrary.Tests.Serialization
 			}
 		}
 
-		public void DelayedMethod() { }
+		public void DelayedMethod()
+		{
+		}
 
 		private class TestEntity : Entity
 		{
-			public TestEntity() { delayedFunc = new DelayedFunc(MyDelayedFunc, 1337); }
-			private void MyDelayedFunc() { }
+			public TestEntity()
+			{
+				delayedFunc = new DelayedFunc(MyDelayedFunc, 1337);
+			}
+			private void MyDelayedFunc()
+			{
+			}
 
 			private DelayedFunc delayedFunc;
 		}

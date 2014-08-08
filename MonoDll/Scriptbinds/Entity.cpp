@@ -171,6 +171,9 @@ CScriptbind_Entity::CScriptbind_Entity()
 	REGISTER_METHOD(GetAreaMinMax);
 	REGISTER_METHOD(GetAreaPriority);
 
+	REGISTER_METHOD(GetStaticObjectHandle);
+	REGISTER_METHOD(AssignStaticObject);
+
 	//RegisterNativeEntityClass();
 
 	GetMonoScriptSystem()->AddListener(this);
@@ -1251,4 +1254,25 @@ void CScriptbind_Entity::GetAreaMinMax(IArea *pArea, Vec3 &min, Vec3 &max)
 int CScriptbind_Entity::GetAreaPriority(IArea *pArea)
 {
 	return pArea->GetPriority();
+}
+
+IStatObj *CScriptbind_Entity::GetStaticObjectHandle(IEntity *entityHandle, int slot)
+{
+	if (entityHandle)
+	{
+		IStatObj * obj = entityHandle->GetStatObj(slot);
+		if (obj)
+		{
+			obj->AddRef();
+			return obj;
+		}
+	}
+	return nullptr;
+}
+void CScriptbind_Entity::AssignStaticObject(IEntity *entityHandle, IStatObj *obj, int slot)
+{
+	if (entityHandle && obj)
+	{
+		entityHandle->SetStatObj(obj, slot, false);
+	}
 }

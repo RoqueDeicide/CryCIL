@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-
 using System.Runtime.InteropServices;
-
+using CryEngine.Entities;
 using CryEngine.Utilities;
-
 using CryEngine.Physics.Status;
-
 using CryEngine.Native;
 
 namespace CryEngine.Physics
@@ -58,8 +55,9 @@ namespace CryEngine.Physics
 
 		private static List<PhysicalEntity> PhysicalEntities = new List<PhysicalEntity>();
 		#endregion
-
-		protected PhysicalEntity() { }
+		protected PhysicalEntity()
+		{
+		}
 
 		protected PhysicalEntity(IntPtr physEntPtr)
 		{
@@ -104,7 +102,10 @@ namespace CryEngine.Physics
 			set { NativePhysicsMethods.Sleep(Handle, value); }
 		}
 
-		public virtual PhysicalizationType Type { get { return NativePhysicsMethods.GetPhysicalEntityType(Handle); } }
+		public virtual PhysicalizationType Type
+		{
+			get { return NativePhysicsMethods.GetPhysicalEntityType(Handle); }
+		}
 
 		public LivingPhysicsStatus LivingStatus
 		{

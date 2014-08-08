@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-
+using CryEngine.Entities;
 using CryEngine.Extensions;
 using CryEngine.Initialization;
 using CryEngine.Testing;
@@ -332,7 +332,7 @@ namespace CryEngine.Compilers.NET
 						case EditorPropertyType.Bool:
 							defaultValue = "false";
 							break;
-						case EditorPropertyType.Vec3:
+						case EditorPropertyType.Vector3:
 						case EditorPropertyType.Color:
 							defaultValue = "0,0,0";
 							break;

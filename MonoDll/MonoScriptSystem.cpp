@@ -47,9 +47,12 @@
 #include "Scriptbinds\CrySerialize.h"
 #include "Scriptbinds\GameObject.h"
 #include "Scriptbinds\CryPak.h"
-#include "Scriptbinds\CryMarshal.h"
-#include "Scriptbinds\MonoMemory.h"
-#include "Scriptbinds\NativeString.h"
+//#include "Scriptbinds\CryMarshal.h"
+//#include "Scriptbinds\MonoMemory.h"
+//#include "Scriptbinds\NativeString.h"
+#include "Scriptbinds\StaticObject.h"
+#include "Scriptbinds\CMesh.h"
+#include "Scriptbinds\Platform.h"
 
 #include "FlowManager.h"
 #include "MonoFlowNode.h"
@@ -341,9 +344,14 @@ void CScriptSystem::RegisterPriorityBindings()
 	RegisterBinding(CScriptbind_GameObject);
 	RegisterBinding(CScriptbind_CryPak);
 
-	RegisterBinding(Scriptbind_CryMarshal);
+	/*RegisterBinding(Scriptbind_CryMarshal);
 	RegisterBinding(Scriptbind_MonoMemory);
-	RegisterBinding(Scriptbind_NativeString);
+	RegisterBinding(Scriptbind_NativeString);*/
+
+	RegisterBinding(Scriptbind_StaticObject);
+	RegisterBinding(Scriptbind_CMesh);
+
+	RegisterBinding(Scriptbind_Platform);
 
 	m_pFlowManager = new CFlowManager();
 	m_pFlowManager->AddRef();

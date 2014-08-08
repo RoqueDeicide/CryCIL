@@ -134,7 +134,7 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
     <ClInclude Include="Headers\IMonoScriptBind.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Scriptbinds\ActorSystem.h" />
-    <ClInclude Include="Scriptbinds\CryMarshal.h" />
+    <ClInclude Include="Scriptbinds\CMesh.h" />
     <ClInclude Include="Scriptbinds\CryPak.h" />
     <ClInclude Include="Scriptbinds\CrySerialize.h" />
     <ClInclude Include="Scriptbinds\Entity.h" />
@@ -143,15 +143,15 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
     <ClInclude Include="Scriptbinds\Debug.h" />
     <ClInclude Include="Scriptbinds\GameRules.h" />
     <ClInclude Include="Scriptbinds\LevelSystem.h" />
-    <ClInclude Include="Scriptbinds\MonoMemory.h" />
-    <ClInclude Include="Scriptbinds\NativeString.h" />
     <ClInclude Include="Scriptbinds\Network.h" />
     <ClInclude Include="Scriptbinds\ParticleSystem.h" />
     <ClInclude Include="Scriptbinds\Physics.h" />
+    <ClInclude Include="Scriptbinds\Platform.h" />
     <ClInclude Include="Scriptbinds\Renderer.h" />
     <ClInclude Include="ScriptBinds\MaterialManager.h" />
     <ClInclude Include="Scriptbinds\GameObject.h" />
     <ClInclude Include="Scriptbinds\ScriptTable.h" />
+    <ClInclude Include="Scriptbinds\StaticObject.h" />
     <ClInclude Include="Scriptbinds\Time.h" />
     <ClInclude Include="Scriptbinds\ViewSystem.h" />
     <ClInclude Include="stdafx.h" />
@@ -181,7 +181,7 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
     <ClCompile Include="MonoEntityPropertyHandler.cpp" />
     <ClCompile Include="NativeEntity.cpp" />
     <ClCompile Include="Scriptbinds\ActorSystem.cpp" />
-    <ClCompile Include="Scriptbinds\CryMarshal.cpp" />
+    <ClCompile Include="Scriptbinds\CMesh.cpp" />
     <ClCompile Include="Scriptbinds\CryPak.cpp" />
     <ClCompile Include="Scriptbinds\CrySerialize.cpp" />
     <ClCompile Include="Scriptbinds\Entity.cpp" />
@@ -190,15 +190,15 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
     <ClCompile Include="Scriptbinds\Debug.cpp" />
     <ClCompile Include="Scriptbinds\GameRules.cpp" />
     <ClCompile Include="Scriptbinds\LevelSystem.cpp" />
-    <ClCompile Include="Scriptbinds\MonoMemory.cpp" />
-    <ClCompile Include="Scriptbinds\NativeString.cpp" />
     <ClCompile Include="Scriptbinds\Network.cpp" />
     <ClCompile Include="Scriptbinds\ParticleSystem.cpp" />
     <ClCompile Include="Scriptbinds\Physics.cpp" />
+    <ClCompile Include="Scriptbinds\Platform.cpp" />
     <ClCompile Include="Scriptbinds\Renderer.cpp" />
     <ClCompile Include="ScriptBinds\MaterialManager.cpp" />
     <ClCompile Include="Scriptbinds\GameObject.cpp" />
     <ClCompile Include="Scriptbinds\ScriptTable.cpp" />
+    <ClCompile Include="Scriptbinds\StaticObject.cpp" />
     <ClCompile Include="Scriptbinds\ViewSystem.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

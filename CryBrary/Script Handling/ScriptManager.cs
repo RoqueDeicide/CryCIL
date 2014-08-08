@@ -7,17 +7,15 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Runtime.Serialization;
 using System.Runtime.InteropServices;
-
 using CryEngine.Async;
+using CryEngine.Entities;
 using CryEngine.Extensions;
 using CryEngine.Native;
 using CryEngine.Sandbox;
 using CryEngine.Testing;
 using CryEngine.Testing.Internals;
-
 using CryEngine.Serialization;
 using CryEngine.Utilities;
-
 using CryEngine.Flowgraph;
 
 namespace CryEngine.Initialization
@@ -49,7 +47,9 @@ namespace CryEngine.Initialization
 							File.Delete(file);
 					}
 				}
-				catch (UnauthorizedAccessException) { }
+				catch (UnauthorizedAccessException)
+				{
+				}
 			}
 
 #if !UNIT_TESTING
@@ -114,16 +114,16 @@ namespace CryEngine.Initialization
 			data.ConsoleVariables = CVar.CVars;
 
 			data.ConsoleVariables.RemoveAll(cvar =>
+			{
+				if (cvar is ByRefCVar)
 				{
-					if (cvar is ByRefCVar)
-					{
-						NativeCVarMethods.UnregisterCVar(cvar.Name, true);
+					NativeCVarMethods.UnregisterCVar(cvar.Name, true);
 
-						return true;
-					}
+					return true;
+				}
 
-					return false;
-				});
+				return false;
+			});
 
 			AddScriptInstance(data, ScriptType.CryScriptInstance);
 
@@ -173,10 +173,7 @@ namespace CryEngine.Initialization
 			// These have to be registered later due to the flow system being initialized late.
 			// Note: Flow nodes have to be registered from IGame::RegisterGameFlownodes in order to
 			//       be usable from within UI graphs. (Use IMonoScriptSystem::RegisterFlownodes)
-			ForEachScript(ScriptType.FlowNode, x =>
-				{
-					FlowNode.Register(x.ScriptName);
-				});
+			ForEachScript(ScriptType.FlowNode, x => { FlowNode.Register(x.ScriptName); });
 		}
 
 		public void OnRevert()
@@ -198,10 +195,14 @@ namespace CryEngine.Initialization
 					var gacFolder = Path.Combine(ProjectSettings.MonoFolder, "lib", "mono", "gac");
 					foreach (var assemblyLocation in Directory.GetFiles(gacFolder, "*.dll", SearchOption.AllDirectories))
 					{
-						var separator = new[] { "__" };
-						var splitParentDir = Directory.GetParent(assemblyLocation).Name.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+						var separator = new[] {"__"};
+						var splitParentDir = Directory.GetParent(assemblyLocation)
+													  .Name.Split(separator, StringSplitOptions.RemoveEmptyEntries);
 
-						var assembly = Assembly.Load(Path.GetFileName(assemblyLocation) + string.Format(", Version={0}, Culture=neutral, PublicKeyToken={1}", splitParentDir.ElementAt(0), splitParentDir.ElementAt(1)));
+						var assembly =
+							Assembly.Load(Path.GetFileName(assemblyLocation) +
+										  string.Format(", Version={0}, Culture=neutral, PublicKeyToken={1}", splitParentDir.ElementAt(0),
+														splitParentDir.ElementAt(1)));
 
 						writer.WriteStartElement("Assembly");
 						writer.WriteAttributeString("name", assembly.FullName);
@@ -274,7 +275,8 @@ namespace CryEngine.Initialization
 							{
 								var registrationParams = (ActorRegistrationParams)script.RegistrationParams;
 
-								NativeActorMethods.RegisterActorClass(script.ScriptName, script.Type.Implements(typeof(NativeActor)), registrationParams.isAI);
+								NativeActorMethods.RegisterActorClass(script.ScriptName, script.Type.Implements(typeof(NativeActor)),
+																	  registrationParams.isAI);
 							}
 							else if (script.RegistrationParams is EntityRegistrationParams)
 							{
@@ -469,7 +471,7 @@ namespace CryEngine.Initialization
 				var driver = assembly.GetType("Driver");
 				var convertMethod = driver.GetMethod("Convert", BindingFlags.Static | BindingFlags.Public);
 
-				object[] args = { assemblyPath };
+				object[] args = {assemblyPath};
 				convertMethod.Invoke(null, args);
 			}
 		}
@@ -503,7 +505,8 @@ namespace CryEngine.Initialization
 		/// <param name="scriptType"></param>
 		/// <param name="constructorParams"></param>
 		/// <returns>New instance scriptId or -1 if instantiation failed.</returns>
-		public CryScriptInstance CreateScriptInstance(string scriptName, ScriptType scriptType, IntPtr cryScriptInstanceHandle, object[] constructorParams = null, bool throwOnFail = true)
+		public CryScriptInstance CreateScriptInstance(string scriptName, ScriptType scriptType, IntPtr cryScriptInstanceHandle,
+													  object[] constructorParams = null, bool throwOnFail = true)
 		{
 #if !(RELEASE && RELEASE_DISABLE_CHECKS)
 			if (scriptName == null)
@@ -518,7 +521,8 @@ namespace CryEngine.Initialization
 			if (script == null)
 			{
 				if (throwOnFail)
-					throw new ScriptNotFoundException(string.Format("Script {0} of ScriptType {1} could not be found.", scriptName, scriptType));
+					throw new ScriptNotFoundException(string.Format("Script {0} of ScriptType {1} could not be found.", scriptName,
+																	scriptType));
 				else
 					return null;
 			}
@@ -529,7 +533,8 @@ namespace CryEngine.Initialization
 			return instance;
 		}
 
-		public CryScriptInstance CreateScriptInstance(CryScript script, object[] constructorParams = null, bool throwOnFail = true)
+		public CryScriptInstance CreateScriptInstance(CryScript script, object[] constructorParams = null,
+													  bool throwOnFail = true)
 		{
 #if !(RELEASE && RELEASE_DISABLE_CHECKS)
 			if (script == null)
@@ -541,7 +546,8 @@ namespace CryEngine.Initialization
 			if (scriptInstance == null)
 			{
 				if (throwOnFail)
-					throw new ArgumentException("Failed to create instance, make sure type derives from CryScriptInstance", "scriptName");
+					throw new ArgumentException("Failed to create instance, make sure type derives from CryScriptInstance",
+												"scriptName");
 				else
 					return null;
 			}
@@ -658,7 +664,6 @@ namespace CryEngine.Initialization
 
 			return Find<CryScriptInstance>(scriptType, x => x.ScriptId == id);
 		}
-
 		#region Linq statements
 		public CryScript FindScript(ScriptType scriptType, Func<CryScript, bool> predicate)
 		{
@@ -723,7 +728,6 @@ namespace CryEngine.Initialization
 			return scriptInstance;
 		}
 		#endregion
-
 		/// <summary>
 		/// Last assigned ScriptId, next = + 1
 		/// </summary>
@@ -743,7 +747,10 @@ namespace CryEngine.Initialization
 		private AppDomain ScriptDomain { get; set; }
 		private IFormatter Formatter { get; set; }
 
-		private string SerializedScriptsFile { get { return Path.Combine(ProjectSettings.TempDirectory, "CompiledScripts.scriptdump"); } }
+		private string SerializedScriptsFile
+		{
+			get { return Path.Combine(ProjectSettings.TempDirectory, "CompiledScripts.scriptdump"); }
+		}
 
 		public static ScriptManager Instance;
 	}

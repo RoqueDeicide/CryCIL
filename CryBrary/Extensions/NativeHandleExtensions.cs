@@ -1,6 +1,7 @@
 ﻿using System;
-
 using CryEngine;
+using CryEngine.Entities;
+using CryEngine.Entities.Advanced;
 using CryEngine.Utilities;
 
 namespace CryEngine.Native
@@ -21,19 +22,17 @@ namespace CryEngine.Native
 			actor.ActorHandle = handle;
 		}
 		#endregion
-
 		#region Game Object
-		public static IntPtr GetIGameObject(this Advanced.GameObject gameObject)
+		public static IntPtr GetIGameObject(this GameObject gameObject)
 		{
 			return gameObject.Handle;
 		}
 
-		public static void SetIGameObject(this Advanced.GameObject gameObject, IntPtr handle)
+		public static void SetIGameObject(this GameObject gameObject, IntPtr handle)
 		{
 			gameObject.Handle = handle;
 		}
 		#endregion
-
 		#region Entity
 		public static IntPtr GetIEntity(this EntityBase entity)
 		{
@@ -63,7 +62,8 @@ namespace CryEngine.Native
 		public static IntPtr GetIAnimatedCharacter(this EntityBase entity)
 		{
 			if (entity.IsDestroyed)
-				throw new ScriptInstanceDestroyedException("Attempted to access native animated character handle on a destroyed entity");
+				throw new ScriptInstanceDestroyedException(
+					"Attempted to access native animated character handle on a destroyed entity");
 			if (entity.AnimatedCharacterHandle == IntPtr.Zero)
 			{
 				var animatedCharacterExtension = entity.GameObject.AcquireExtension("AnimatedCharacter");
@@ -79,7 +79,6 @@ namespace CryEngine.Native
 			entity.AnimatedCharacterHandle = handle;
 		}
 		#endregion
-
 		#region Material
 		public static IntPtr GetIMaterial(this Material mat)
 		{
@@ -91,7 +90,6 @@ namespace CryEngine.Native
 			mat.Handle = handle;
 		}
 		#endregion
-
 		#region Lua ScriptTable
 		public static IntPtr GetIScriptTable(this Lua.ScriptTable scriptTable)
 		{
@@ -103,7 +101,6 @@ namespace CryEngine.Native
 			scriptTable.Handle = handle;
 		}
 		#endregion
-
 		#region SurfaceType
 		public static IntPtr GetISurfaceType(this SurfaceType surfaceType)
 		{
@@ -115,7 +112,6 @@ namespace CryEngine.Native
 			surfaceType.Handle = handle;
 		}
 		#endregion
-
 		#region CrySerialize
 		public static IntPtr GetISerialize(this Serialization.CrySerialize serialize)
 		{
@@ -127,7 +123,6 @@ namespace CryEngine.Native
 			serialize.Handle = handle;
 		}
 		#endregion
-
 		#region FlowNode
 		public static IntPtr GetIFlowNode(this Flowgraph.FlowNode node)
 		{
@@ -139,7 +134,6 @@ namespace CryEngine.Native
 			node.Handle = handle;
 		}
 		#endregion
-
 		#region Physical Entity
 		public static IntPtr GetIPhysicalEntity(this Physics.PhysicalEntity physicalEntity)
 		{

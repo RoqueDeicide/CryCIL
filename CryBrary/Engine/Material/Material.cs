@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
-
+using CryEngine.Entities;
 using CryEngine.Native;
 
 namespace CryEngine
@@ -18,65 +18,100 @@ namespace CryEngine
 		{
 			Handle = ptr;
 		}
-
 		#region Properties
 		/// <summary>
 		/// Gets or sets the alphatest.
 		/// </summary>
-		public float AlphaTest { get { return GetParam("alpha"); } set { SetParam("alpha", value); } }
+		public float AlphaTest
+		{
+			get { return GetParam("alpha"); }
+			set { SetParam("alpha", value); }
+		}
 
 		/// <summary>
 		/// Gets or sets the opacity.
 		/// </summary>
-		public float Opacity { get { return GetParam("opacity"); } set { SetParam("opacity", value); } }
+		public float Opacity
+		{
+			get { return GetParam("opacity"); }
+			set { SetParam("opacity", value); }
+		}
 
 		/// <summary>
 		/// Gets or sets the glow.
 		/// </summary>
-		public float Glow { get { return GetParam("glow"); } set { SetParam("glow", value); } }
+		public float Glow
+		{
+			get { return GetParam("glow"); }
+			set { SetParam("glow", value); }
+		}
 
 		/// <summary>
 		/// Gets or sets the shininess.
 		/// </summary>
-		public float Shininess { get { return GetParam("shininess"); } set { SetParam("shininess", value); } }
+		public float Shininess
+		{
+			get { return GetParam("shininess"); }
+			set { SetParam("shininess", value); }
+		}
 
 		/// <summary>
 		/// Gets or sets the diffuse color.
 		/// </summary>
-		public Color DiffuseColor { get { return GetParamColor("diffuse"); } set { SetParam("diffuse", value); } }
+		public Color DiffuseColor
+		{
+			get { return GetParamColor("diffuse"); }
+			set { SetParam("diffuse", value); }
+		}
 
 		/// <summary>
 		/// Gets or sets the emissive color.
 		/// </summary>
-		public Color EmissiveColor { get { return GetParamColor("emissive"); } set { SetParam("emissive", value); } }
+		public Color EmissiveColor
+		{
+			get { return GetParamColor("emissive"); }
+			set { SetParam("emissive", value); }
+		}
 
 		/// <summary>
 		/// Gets or sets the specular color.
 		/// </summary>
-		public Color SpecularColor { get { return GetParamColor("specular"); } set { SetParam("specular", value); } }
+		public Color SpecularColor
+		{
+			get { return GetParamColor("specular"); }
+			set { SetParam("specular", value); }
+		}
 
 		/// <summary>
 		/// Gets the surface type assigned to this material.
 		/// </summary>
-		public SurfaceType SurfaceType { get { return SurfaceType.TryGet(NativeMaterialMethods.GetSurfaceType(Handle)); } }
+		public SurfaceType SurfaceType
+		{
+			get { return SurfaceType.TryGet(NativeMaterialMethods.GetSurfaceType(Handle)); }
+		}
 
 		/// <summary>
 		/// Gets the amount of shader parameters in this material. See <see
 		/// cref="GetShaderParamName(int)" />
 		/// </summary>
-		public int ShaderParamCount { get { return NativeMaterialMethods.GetShaderParamCount(Handle); } }
+		public int ShaderParamCount
+		{
+			get { return NativeMaterialMethods.GetShaderParamCount(Handle); }
+		}
 
 		/// <summary>
 		/// Gets the amount of submaterials tied to this material.
 		/// </summary>
-		public int SubmaterialCount { get { return NativeMaterialMethods.GetSubmaterialCount(Handle); } }
+		public int SubmaterialCount
+		{
+			get { return NativeMaterialMethods.GetSubmaterialCount(Handle); }
+		}
 
 		/// <summary>
 		/// Gets or sets the native IMaterial pointer.
 		/// </summary>
 		internal IntPtr Handle { get; set; }
 		#endregion
-
 		#region Statics
 		public static Material Find(string name)
 		{
@@ -137,7 +172,6 @@ namespace CryEngine
 			return mat;
 		}
 		#endregion
-
 		/// <summary>
 		/// Gets a submaterial by slot.
 		/// </summary>
@@ -241,7 +275,7 @@ namespace CryEngine
 			Vector3 vecVal = Vector3.Zero;
 			bool result = NativeMaterialMethods.SetGetMaterialParamVec3(Handle, paramName, ref vecVal, true);
 
-			value = new Color { R = vecVal.X, G = vecVal.Y, B = vecVal.Z, A = this.Opacity };
+			value = new Color {R = vecVal.X, G = vecVal.Y, B = vecVal.Z, A = this.Opacity};
 
 			return result;
 		}
@@ -305,7 +339,6 @@ namespace CryEngine
 		{
 			return NativeMaterialMethods.GetShaderParamName(Handle, index);
 		}
-
 		#region Overrides
 		public override bool Equals(object obj)
 		{

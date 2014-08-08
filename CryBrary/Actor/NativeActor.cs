@@ -1,5 +1,5 @@
 ﻿using System.Runtime.InteropServices;
-
+using CryEngine.Entities;
 using CryEngine.Native;
 
 namespace CryEngine
