@@ -1208,18 +1208,21 @@ mono::object CScriptbind_Entity::QueryAreas(EntityId id, Vec3 vPos, int maxResul
 {
 	SAreaManagerResult *pResults = new SAreaManagerResult[maxResults];
 
-	gEnv->pEntitySystem->GetAreaManager()->QueryAreas(id, vPos, pResults, maxResults);
+	int numResults = 0;
+	gEnv->pEntitySystem->GetAreaManager()->QueryAreas(id, vPos, pResults, maxResults, numResults);
 
 	IMonoArray *pArray = CreateDynamicMonoArray();
 	IMonoClass *pClass = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("AreaQueryResult");
 
-	for (int i = 0; i < maxResults; i++)
+	for(int i = 0; i < numResults; i++)
 	{
 		auto result = pResults[i];
 
 		if (result.pArea != nullptr)
 			pArray->InsertMonoObject(pClass->BoxObject(&result));
 	}
+
+	delete[] pResults;
 
 	mono::object managedArray = pArray->GetManagedObject();
 	pArray->Release(false);

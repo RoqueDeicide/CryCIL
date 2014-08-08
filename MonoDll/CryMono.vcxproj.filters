@@ -51,9 +51,6 @@
     <ClInclude Include="Headers\MonoCommon.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\IMonoConverter.h">
-      <Filter>Interfaces</Filter>
-    </ClInclude>
     <ClInclude Include="MonoEntity.h">
       <Filter>EntitySystem</Filter>
     </ClInclude>
@@ -121,9 +118,6 @@
       <Filter>EntitySystem\Native</Filter>
     </ClInclude>
     <ClInclude Include="CryScriptInstance.h">
-      <Filter>Mono</Filter>
-    </ClInclude>
-    <ClInclude Include="MonoConverter.h">
       <Filter>Mono</Filter>
     </ClInclude>
     <ClInclude Include="MonoCVars.h">
@@ -270,9 +264,6 @@
       <Filter>Mono</Filter>
     </ClCompile>
     <ClCompile Include="CryScriptInstance.cpp">
-      <Filter>Mono</Filter>
-    </ClCompile>
-    <ClCompile Include="MonoConverter.cpp">
       <Filter>Mono</Filter>
     </ClCompile>
     <ClCompile Include="MonoCVars.cpp">
