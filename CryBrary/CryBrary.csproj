@@ -239,6 +239,7 @@
     <Compile Include="Platform.cs" />
     <Compile Include="StaticObjects\Meshes\BaseMesh.cs" />
     <Compile Include="StaticObjects\Meshes\CommonTangentOperations.cs" />
+    <Compile Include="StaticObjects\Meshes\ConstructiveSolidGeometry\CSG.cs" />
     <Compile Include="StaticObjects\Meshes\MeshConsistencyException.cs" />
     <Compile Include="StaticObjects\Meshes\IndexedTriangleFace.cs" />
     <Compile Include="StaticObjects\Meshes\IMesh.cs" />
