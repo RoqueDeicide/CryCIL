@@ -2,16 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text;
 using CryEngine.Native;
 
-namespace CryEngine.StaticObjects.Meshes
+namespace CryEngine.Mathematics.Geometry.Meshes
 {
 	/// <summary>
 	/// Base class for native mesh detail collections.
 	/// </summary>
-	/// <typeparam name="ElementType">Type of elements in the collection.</typeparam>
+	/// <typeparam name="ElementType"> Type of elements in the collection. </typeparam>
 	public abstract class NativeMeshDetailsCollection<ElementType> : IMeshDetailsCollection<ElementType>
 	{
 		#region Fields
@@ -72,7 +70,7 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <summary>
 		/// Creates enumerator for this collection.
 		/// </summary>
-		/// <returns>Object that enumerates through elements of this collection.</returns>
+		/// <returns> Object that enumerates through elements of this collection. </returns>
 		public virtual IEnumerator<ElementType> GetEnumerator()
 		{
 			return new ListEnumerator<ElementType>(this);
@@ -89,10 +87,8 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <summary>
 		/// Linearly searches through elements of this collection.
 		/// </summary>
-		/// <param name="item">Element to look for.</param>
-		/// <returns>
-		/// True, if at least element equal to given is located within this collection.
-		/// </returns>
+		/// <param name="item"> Element to look for. </param>
+		/// <returns> True, if at least element equal to given is located within this collection. </returns>
 		public virtual bool Contains(ElementType item)
 		{
 			for (int i = 0; i < this.Count; i++)
@@ -107,7 +103,7 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <summary>
 		/// Linearly searches through elements of this collection.
 		/// </summary>
-		/// <param name="item">Element to look for.</param>
+		/// <param name="item"> Element to look for. </param>
 		/// <returns>
 		/// Zero-based index of the first element within this collection that equals given, -1 if no
 		/// such element was found.
@@ -126,7 +122,7 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <summary>
 		/// Copies all elements of this collection to given array.
 		/// </summary>
-		/// <param name="array">Array to copy elements to.</param>
+		/// <param name="array">      Array to copy elements to. </param>
 		/// <param name="arrayIndex">
 		/// Zero-based index of the first element in the array where to start copying.
 		/// </param>
@@ -186,17 +182,17 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <summary>
 		/// Copies data from given list to this collection.
 		/// </summary>
-		/// <param name="details">
+		/// <param name="details">       
 		/// Object that implements <see cref="IList{ElementType}" /> that provides the data.
 		/// </param>
-		/// <param name="sourceStart">
+		/// <param name="sourceStart">   
 		/// Zero-based index of the first element from <paramref name="details" /> to copy elements
 		/// from (inclusively).
 		/// </param>
-		/// <param name="destStart">
+		/// <param name="destStart">     
 		/// Zero-based index of the first element from this collection to copy elements to (inclusively).
 		/// </param>
-		/// <param name="count">Number of elements to copy.</param>
+		/// <param name="count">          Number of elements to copy. </param>
 		/// <param name="ignoreOverflow">
 		/// Indicates whether exception must thrown when this collection cannot fit elements. If
 		/// true, all extra data will be ignored, otherwise exception is thrown.
@@ -269,32 +265,36 @@ namespace CryEngine.StaticObjects.Meshes
 			return this.GetEnumerator();
 		}
 		#region Unsupported operations.
-		/// <summary></summary>
-		/// <param name="index"></param>
-		/// <param name="item"></param>
-		/// <exception cref="NotSupportedException"></exception>
+		/// <summary>
+		/// </summary>
+		/// <param name="index"> </param>
+		/// <param name="item">  </param>
+		/// <exception cref="NotSupportedException"> </exception>
 		public void Insert(int index, ElementType item)
 		{
 			throw new NotSupportedException();
 		}
-		/// <summary></summary>
-		/// <param name="index"></param>
-		/// <exception cref="NotSupportedException"></exception>
+		/// <summary>
+		/// </summary>
+		/// <param name="index"> </param>
+		/// <exception cref="NotSupportedException"> </exception>
 		public void RemoveAt(int index)
 		{
 			throw new NotSupportedException();
 		}
-		/// <summary></summary>
-		/// <param name="item"></param>
-		/// <exception cref="NotSupportedException"></exception>
+		/// <summary>
+		/// </summary>
+		/// <param name="item"> </param>
+		/// <exception cref="NotSupportedException"> </exception>
 		public void Add(ElementType item)
 		{
 			throw new NotSupportedException();
 		}
-		/// <summary></summary>
-		/// <param name="item"></param>
-		/// <returns></returns>
-		/// <exception cref="NotSupportedException"></exception>
+		/// <summary>
+		/// </summary>
+		/// <param name="item"> </param>
+		/// <returns> </returns>
+		/// <exception cref="NotSupportedException"> </exception>
 		public bool Remove(ElementType item)
 		{
 			throw new NotSupportedException();
@@ -302,9 +302,10 @@ namespace CryEngine.StaticObjects.Meshes
 		#endregion
 		#endregion
 		#region To be Implemented in Derived Classes
-		/// <summary></summary>
-		/// <param name="index"></param>
-		/// <returns></returns>
+		/// <summary>
+		/// </summary>
+		/// <param name="index"> </param>
+		/// <returns> </returns>
 		public abstract ElementType this[int index] { get; set; }
 		/// <summary>
 		/// When implemented in derived class, gets identifier of native memory region that contains

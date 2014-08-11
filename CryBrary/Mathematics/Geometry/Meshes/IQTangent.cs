@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace CryEngine.StaticObjects.Meshes
+namespace CryEngine.Mathematics.Geometry.Meshes
 {
 	/// <summary>
 	/// Defines common functionality of objects that represent tangent-space normals.

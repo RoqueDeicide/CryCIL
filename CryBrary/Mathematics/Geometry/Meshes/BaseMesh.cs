@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using CryEngine.Mathematics;
+using CryEngine.StaticObjects;
 
-namespace CryEngine.StaticObjects.Meshes
+namespace CryEngine.Mathematics.Geometry.Meshes
 {
 	/// <summary>
 	/// Base class for all meshes.
@@ -15,7 +14,7 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <summary>
 		/// Checks this mesh for problems.
 		/// </summary>
-		/// <param name="errors">
+		/// <param name="errors">  
 		/// List that will contain all problems that make exporting this mesh impossible.
 		/// </param>
 		/// <param name="warnings">
@@ -29,7 +28,7 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <summary>
 		/// Makes CryEngine recognize any changes made to this mesh.
 		/// </summary>
-		/// <param name="staticObject">Static object that will host the mesh.</param>
+		/// <param name="staticObject"> Static object that will host the mesh. </param>
 		public abstract void Export(StaticObject staticObject);
 		/// <summary>
 		/// Gets or sets (optionally) a list of locations of vertices that comprise this mesh.

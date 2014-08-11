@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 
-namespace CryEngine.StaticObjects.Meshes
+namespace CryEngine.Mathematics.Geometry.Meshes
 {
 	/// <summary>
 	/// Defines common methods used for tangent space normals.
@@ -30,7 +27,7 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <param name="pointer">
 		/// Pointer to the beginning of the memory block that contains the normal.
 		/// </param>
-		/// <param name="offset">Byte offset that is added to the <paramref name="pointer" />.</param>
+		/// <param name="offset">  Byte offset that is added to the <paramref name="pointer" />. </param>
 		/// <returns>
 		/// Instance of type that implements <see cref="ITangent" /> interface that either uses
 		/// objects of type <see cref="Single" /> or <see cref="Int16" /> for coordinates.
@@ -49,8 +46,8 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <param name="pointer">
 		/// Pointer to the beginning of the memory block that will contain the normal.
 		/// </param>
-		/// <param name="offset">Byte offset that is added to the <paramref name="pointer" />.</param>
-		/// <param name="tangent">Object to transfer.</param>
+		/// <param name="offset">  Byte offset that is added to the <paramref name="pointer" />. </param>
+		/// <param name="tangent"> Object to transfer. </param>
 		public static void ToNativeMemory(IntPtr pointer, int offset, ITangent tangent)
 		{
 			if (tangent is TangentInt16)
@@ -68,8 +65,8 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <param name="pointer">
 		/// Pointer to the beginning of the memory block that will contain the normal.
 		/// </param>
-		/// <param name="offset">Byte offset that is added to the <paramref name="pointer" />.</param>
-		/// <param name="tangent">Object to transfer.</param>
+		/// <param name="offset">  Byte offset that is added to the <paramref name="pointer" />. </param>
+		/// <param name="tangent"> Object to transfer. </param>
 		public static void ToNativeMemory<TangentType>(IntPtr pointer, int offset, TangentType tangent)
 			where TangentType : struct, ITangent
 		{
@@ -100,7 +97,7 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <param name="pointer">
 		/// Pointer to the beginning of the memory block that contains the normal.
 		/// </param>
-		/// <param name="offset">Byte offset that is added to the <paramref name="pointer" />.</param>
+		/// <param name="offset">  Byte offset that is added to the <paramref name="pointer" />. </param>
 		/// <returns>
 		/// Instance of type that implements <see cref="IQTangent" /> interface that either uses
 		/// objects of type <see cref="Single" /> or <see cref="Int16" /> for coordinates.
@@ -119,8 +116,8 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <param name="pointer">
 		/// Pointer to the beginning of the memory block that will contain the normal.
 		/// </param>
-		/// <param name="offset">Byte offset that is added to the <paramref name="pointer" />.</param>
-		/// <param name="tangent">Object to transfer.</param>
+		/// <param name="offset">  Byte offset that is added to the <paramref name="pointer" />. </param>
+		/// <param name="tangent"> Object to transfer. </param>
 		public static void ToNativeMemory(IntPtr pointer, int offset, IQTangent tangent)
 		{
 			if (tangent is QTangentInt16)
@@ -138,8 +135,8 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <param name="pointer">
 		/// Pointer to the beginning of the memory block that will contain the normal.
 		/// </param>
-		/// <param name="offset">Byte offset that is added to the <paramref name="pointer" />.</param>
-		/// <param name="tangent">Object to transfer.</param>
+		/// <param name="offset">  Byte offset that is added to the <paramref name="pointer" />. </param>
+		/// <param name="tangent"> Object to transfer. </param>
 		public static void ToNativeMemory<QTangentType>(IntPtr pointer, int offset, QTangentType tangent)
 			where QTangentType : struct, IQTangent
 		{

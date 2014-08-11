@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using CryEngine.Mathematics.Geometry.Meshes;
 using CryEngine.Native;
-using CryEngine.StaticObjects.Meshes;
 
 namespace CryEngine.StaticObjects
 {
@@ -24,9 +23,7 @@ namespace CryEngine.StaticObjects
 		/// <exception cref="ObjectDisposedException">
 		/// Cannot acquire mesh data from static object that has been disposed of.
 		/// </exception>
-		/// <exception cref="Exception">
-		/// Unable to acquire mesh handles for the static object.
-		/// </exception>
+		/// <exception cref="Exception"> Unable to acquire mesh handles for the static object. </exception>
 		public NativeMesh Mesh
 		{
 			get { return new NativeMesh(this); }

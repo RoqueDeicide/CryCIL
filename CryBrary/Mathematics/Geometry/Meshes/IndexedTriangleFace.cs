@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using CryEngine.Mathematics;
 
-namespace CryEngine.StaticObjects.Meshes
+namespace CryEngine.Mathematics.Geometry.Meshes
 {
 	/// <summary>
 	/// Encapsulates data that describe a mesh face.
@@ -39,8 +35,8 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <summary>
 		/// Transfers instance of <see cref="IndexedTriangleFace" /> from native memory.
 		/// </summary>
-		/// <param name="pointer">Pointer to native memory block.</param>
-		/// <param name="offset">Byte offset that is added to <paramref name="pointer" />.</param>
+		/// <param name="pointer"> Pointer to native memory block. </param>
+		/// <param name="offset">  Byte offset that is added to <paramref name="pointer" />. </param>
 		/// <returns>
 		/// New instance of structure <see cref="IndexedTriangleFace" /> that is interpreted from 13
 		/// bytes from native memory.
@@ -52,8 +48,8 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <summary>
 		/// Writes this instance to native memory.
 		/// </summary>
-		/// <param name="pointer">Pointer to native memory block.</param>
-		/// <param name="offset">Byte offset that is added to <paramref name="pointer" />.</param>
+		/// <param name="pointer"> Pointer to native memory block. </param>
+		/// <param name="offset">  Byte offset that is added to <paramref name="pointer" />. </param>
 		public void WriteToNativeMemory(IntPtr pointer, int offset)
 		{
 			Marshal.StructureToPtr(this, pointer + offset, false);
@@ -61,9 +57,9 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <summary>
 		/// Determines whether two instances of type <see cref="IndexedTriangleFace" /> are equal.
 		/// </summary>
-		/// <param name="left">Left operand.</param>
-		/// <param name="right">Right operand.</param>
-		/// <returns>True, if operands are equal.</returns>
+		/// <param name="left">  Left operand. </param>
+		/// <param name="right"> Right operand. </param>
+		/// <returns> True, if operands are equal. </returns>
 		public static bool operator ==(IndexedTriangleFace left, IndexedTriangleFace right)
 		{
 			return
@@ -75,9 +71,9 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <summary>
 		/// Determines whether two instances of type <see cref="IndexedTriangleFace" /> are not equal.
 		/// </summary>
-		/// <param name="left">Left operand.</param>
-		/// <param name="right">Right operand.</param>
-		/// <returns>True, if operands are not equal.</returns>
+		/// <param name="left">  Left operand. </param>
+		/// <param name="right"> Right operand. </param>
+		/// <returns> True, if operands are not equal. </returns>
 		public static bool operator !=(IndexedTriangleFace left, IndexedTriangleFace right)
 		{
 			return !(left == right);
@@ -85,7 +81,7 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <summary>
 		/// Determines whether this object is equal to another.
 		/// </summary>
-		/// <param name="other">Another object.</param>
+		/// <param name="other"> Another object. </param>
 		/// <returns>
 		/// True, if another object is of this type and can be considered equal to this one.
 		/// </returns>
@@ -96,18 +92,18 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <summary>
 		/// Determines whether this object is equal to another.
 		/// </summary>
-		/// <param name="obj">Another object.</param>
+		/// <param name="obj"> Another object. </param>
 		/// <returns>
 		/// True, if another object is of this type and can be considered equal to this one.
 		/// </returns>
 		public override bool Equals(object obj)
 		{
-			return !ReferenceEquals(null, obj) && obj is IndexedTriangleFace && Equals((IndexedTriangleFace)obj);
+			return !ReferenceEquals(null, obj) && obj is IndexedTriangleFace && this.Equals((IndexedTriangleFace)obj);
 		}
 		/// <summary>
 		/// Gets hash code of this object.
 		/// </summary>
-		/// <returns>Hash code of this object.</returns>
+		/// <returns> Hash code of this object. </returns>
 		public override int GetHashCode()
 		{
 			// ReSharper disable NonReadonlyFieldInGetHashCode

@@ -24,6 +24,7 @@ using System;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
+using CryEngine.Mathematics.Geometry;
 
 namespace CryEngine.Mathematics
 {

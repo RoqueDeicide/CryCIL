@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using CryEngine.Mathematics;
-using CryEngine.Native;
 
-namespace CryEngine.StaticObjects.Meshes
+namespace CryEngine.Mathematics.Geometry.Meshes
 {
 	/// <summary>
 	/// Represents a collection of fixed size.
@@ -34,7 +28,7 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <summary>
 		/// Gets or sets element at specified index.
 		/// </summary>
-		/// <param name="index">Zero-based index of the element to access.</param>
+		/// <param name="index"> Zero-based index of the element to access. </param>
 		/// <exception cref="IndexOutOfRangeException">
 		/// Attempt to access element of the collection throw index that is out of bounds.
 		/// </exception>
@@ -64,7 +58,7 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <summary>
 		/// Creates new instance of type <see cref="NativeVertexNormalCollection" />.
 		/// </summary>
-		/// <param name="mesh">Mesh that hosts this collection.</param>
+		/// <param name="mesh"> Mesh that hosts this collection. </param>
 		public NativeVertexNormalCollection(NativeMesh mesh)
 		{
 			this.mesh = mesh;

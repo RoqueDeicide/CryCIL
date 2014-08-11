@@ -10,9 +10,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using CryEngine.Mathematics;
 
-namespace CryEngine.StaticObjects.Meshes.ConstructiveSolidGeometry
+namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 {
 	/// <summary>
 	/// Defines boolean operations for CSG editing technique.

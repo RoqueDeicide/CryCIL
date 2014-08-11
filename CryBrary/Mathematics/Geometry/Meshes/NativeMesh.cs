@@ -2,13 +2,10 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using CryEngine.Mathematics;
 using CryEngine.Native;
-using CryEngine.StaticObjects.Native;
+using CryEngine.StaticObjects;
 
-namespace CryEngine.StaticObjects.Meshes
+namespace CryEngine.Mathematics.Geometry.Meshes
 {
 	/// <summary>
 	/// Represents a wrapper object that allows to edit CryEngine meshes located in native memory.
@@ -45,9 +42,7 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <summary>
 		/// Gets an object that provides access to positions of vertices in native memory.
 		/// </summary>
-		/// <remarks>
-		/// When setting data is copied from 'value' to this collection.
-		/// </remarks>
+		/// <remarks> When setting data is copied from 'value' to this collection. </remarks>
 		public override IMeshDetailsCollection<Vector3> Positions
 		{
 			get { return this.positions; }
@@ -56,9 +51,7 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <summary>
 		/// Gets an object that provides access to faces in native memory.
 		/// </summary>
-		/// <remarks>
-		/// When setting data is copied from 'value' to this collection.
-		/// </remarks>
+		/// <remarks> When setting data is copied from 'value' to this collection. </remarks>
 		public override IMeshDetailsCollection<IndexedTriangleFace> Faces
 		{
 			get { return this.faces; }
@@ -67,9 +60,7 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <summary>
 		/// Gets an object that provides access to indices in native memory.
 		/// </summary>
-		/// <remarks>
-		/// When setting data is copied from 'value' to this collection.
-		/// </remarks>
+		/// <remarks> When setting data is copied from 'value' to this collection. </remarks>
 		public override IMeshDetailsCollection<uint> Indices
 		{
 			get { return this.indices; }
@@ -78,9 +69,7 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <summary>
 		/// Gets an object that provides access to positions of vertices on UV map in native memory.
 		/// </summary>
-		/// <remarks>
-		/// When setting data is copied from 'value' to this collection.
-		/// </remarks>
+		/// <remarks> When setting data is copied from 'value' to this collection. </remarks>
 		public override IMeshDetailsCollection<Vector2> TextureCoordinates
 		{
 			get { return this.texCoords; }
@@ -89,9 +78,7 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <summary>
 		/// Gets an object that provides access to primary colors of vertices in native memory.
 		/// </summary>
-		/// <remarks>
-		/// When setting data is copied from 'value' to this collection.
-		/// </remarks>
+		/// <remarks> When setting data is copied from 'value' to this collection. </remarks>
 		public override IMeshDetailsCollection<Color32> PrimaryColors
 		{
 			get { return this.colors0; }
@@ -100,9 +87,7 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <summary>
 		/// Gets an object that provides access to secondary colors of vertices in native memory.
 		/// </summary>
-		/// <remarks>
-		/// When setting data is copied from 'value' to this collection.
-		/// </remarks>
+		/// <remarks> When setting data is copied from 'value' to this collection. </remarks>
 		public override IMeshDetailsCollection<Color32> SecondaryColors
 		{
 			get { return this.colors1; }
@@ -111,9 +96,7 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <summary>
 		/// Gets an object that provides access to normals of vertices in native memory.
 		/// </summary>
-		/// <remarks>
-		/// When setting data is copied from 'value' to this collection.
-		/// </remarks>
+		/// <remarks> When setting data is copied from 'value' to this collection. </remarks>
 		public override IMeshDetailsCollection<Vector3> Normals
 		{
 			get { return this.normals; }
@@ -122,9 +105,7 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <summary>
 		/// Gets an object that provides access to tangent space normals of vertices in native memory.
 		/// </summary>
-		/// <remarks>
-		/// When setting data is copied from 'value' to this collection.
-		/// </remarks>
+		/// <remarks> When setting data is copied from 'value' to this collection. </remarks>
 		public override IMeshDetailsCollection<ITangent> Tangents
 		{
 			get { return this.tangents; }
@@ -133,9 +114,7 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <summary>
 		/// Gets an object that provides access to tangent space normals of vertices in native memory.
 		/// </summary>
-		/// <remarks>
-		/// When setting data is copied from 'value' to this collection.
-		/// </remarks>
+		/// <remarks> When setting data is copied from 'value' to this collection. </remarks>
 		public override IMeshDetailsCollection<IQTangent> QTangents
 		{
 			get { return this.qTangents; }
@@ -152,7 +131,7 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <summary>
 		/// Initializes new wrapper object for native mesh.
 		/// </summary>
-		/// <param name="obj">Static object that hosts the mesh.</param>
+		/// <param name="obj"> Static object that hosts the mesh. </param>
 		public NativeMesh(StaticObject obj)
 		{
 			if (obj.Disposed)
@@ -187,7 +166,7 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <remarks>
 		/// See <see cref="Validate(bool, List{string}, List{string})" /> for the list of possible problems.
 		/// </remarks>
-		/// <param name="errors">
+		/// <param name="errors">  
 		/// A list that will contain a list of problems that will prevent calling <see cref="Export"
 		/// /> method from being successful.
 		/// </param>
@@ -195,7 +174,7 @@ namespace CryEngine.StaticObjects.Meshes
 		/// A list that will contain a list of problems that may cause problems but won't prevent
 		/// CryEngine from recognizing this mesh.
 		/// </param>
-		/// <returns>True if a list of errors has no entries, otherwise false.</returns>
+		/// <returns> True if a list of errors has no entries, otherwise false. </returns>
 		public override bool Validate(List<string> errors = null, List<string> warnings = null)
 		{
 			return this.Validate(true, errors, warnings);
@@ -294,7 +273,7 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <summary>
 		/// Signals underlying static object to create a new render mesh.
 		/// </summary>
-		/// <param name="staticObject">Ignored.</param>
+		/// <param name="staticObject"> Ignored. </param>
 		public override void Export(StaticObject staticObject)
 		{
 			NativeMeshMethods.Export(this.StaticObject.Handle);

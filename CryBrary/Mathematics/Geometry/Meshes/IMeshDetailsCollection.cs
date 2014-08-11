@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace CryEngine.StaticObjects.Meshes
+namespace CryEngine.Mathematics.Geometry.Meshes
 {
 	/// <summary>
 	/// Defines common functionality of collections of mesh details.
 	/// </summary>
-	/// <typeparam name="ElementType">Type of elements in the collection.</typeparam>
+	/// <typeparam name="ElementType"> Type of elements in the collection. </typeparam>
 	public interface IMeshDetailsCollection<ElementType> : IList<ElementType>
 	{
 		/// <summary>
@@ -18,7 +15,7 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <summary>
 		/// When implemented in derived class, copies all elements from the collection to the array.
 		/// </summary>
-		/// <returns>Array that contains copy of all data inside this collection.</returns>
+		/// <returns> Array that contains copy of all data inside this collection. </returns>
 		ElementType[] ToArray();
 	}
 }

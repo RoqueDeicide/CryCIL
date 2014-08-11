@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using CryEngine.Native;
 
-namespace CryEngine.StaticObjects.Meshes
+namespace CryEngine.Mathematics.Geometry.Meshes
 {
 	/// <summary>
-	/// Represents a collection of tangent space normals located in native memory.
+	/// Represents a collection of compressed tangent space normals.
 	/// </summary>
-	public sealed class NativeVertexTangentCollection : NativeMeshDetailsCollection<ITangent>
+	public sealed class NativeVertexQTangentCollection : NativeMeshDetailsCollection<IQTangent>
 	{
 		#region Fields
 		#endregion
@@ -17,8 +14,8 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <summary>
 		/// Gets or sets element at specified index.
 		/// </summary>
-		/// <param name="index">Zero-based index of the element to access.</param>
-		public override ITangent this[int index]
+		/// <param name="index"> Zero-based index of the element to access. </param>
+		public override IQTangent this[int index]
 		{
 			get
 			{
@@ -27,8 +24,8 @@ namespace CryEngine.StaticObjects.Meshes
 					throw new IndexOutOfRangeException("Attempt to access tangent space normal through" +
 													   " index that is out of bounds of the collection.");
 				}
-				return CommonTangentOperations.FromNativeMemory
-					(this.CollectionHandle, index * CommonTangentOperations.ByteCount);
+				return CommonQTangentOperations.FromNativeMemory
+					(this.CollectionHandle, index * CommonQTangentOperations.ByteCount);
 			}
 			set
 			{
@@ -37,8 +34,8 @@ namespace CryEngine.StaticObjects.Meshes
 					throw new IndexOutOfRangeException("Attempt to access tangent space normal through" +
 													   " index that is out of bounds of the collection.");
 				}
-				CommonTangentOperations.ToNativeMemory
-					(this.CollectionHandle, index * CommonTangentOperations.ByteCount, value);
+				CommonQTangentOperations.ToNativeMemory
+					(this.CollectionHandle, index * CommonQTangentOperations.ByteCount, value);
 			}
 		}
 		#endregion
@@ -46,11 +43,11 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <summary>
 		/// Creates new instance of type <see cref="NativeVertexQTangentCollection" />.
 		/// </summary>
-		/// <param name="mesh">Mesh that hosts this collection.</param>
-		public NativeVertexTangentCollection(NativeMesh mesh)
+		/// <param name="mesh"> Mesh that hosts this collection. </param>
+		public NativeVertexQTangentCollection(NativeMesh mesh)
 		{
 			this.MeshHandle = mesh.CMeshHandle;
-			mesh.VerticesReallocated += mesh_VerticesReallocated;
+			mesh.VerticesReallocated += this.mesh_VerticesReallocated;
 			this.UpdateCollection();
 		}
 		#endregion
@@ -65,11 +62,11 @@ namespace CryEngine.StaticObjects.Meshes
 		}
 		#endregion
 		/// <summary>
-		/// <see cref="NativeMeshMemoryRegion.Tangents" />
+		/// <see cref="NativeMeshMemoryRegion.Qtangents" />
 		/// </summary>
 		public override NativeMeshMemoryRegion MemoryRegionIdentifier
 		{
-			get { return NativeMeshMemoryRegion.Tangents; }
+			get { return NativeMeshMemoryRegion.Qtangents; }
 		}
 		/// <summary>
 		/// False.

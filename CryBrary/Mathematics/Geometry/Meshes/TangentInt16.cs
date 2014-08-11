@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 using CryEngine.Mathematics.MemoryMapping;
 
-namespace CryEngine.StaticObjects.Meshes
+namespace CryEngine.Mathematics.Geometry.Meshes
 {
 	/// <summary>
 	/// Encapsulates data stored for vertex that is used in tangent-space normal mapping.
@@ -50,7 +46,7 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <summary>
 		/// Indicates whether this tangent space normal is equal to another.
 		/// </summary>
-		/// <param name="other">Another tangent.</param>
+		/// <param name="other"> Another tangent. </param>
 		/// <returns>
 		/// True, if another normal uses <see cref="Int16" /> type for coordinates and is equal to
 		/// this one.
@@ -87,7 +83,7 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <summary>
 		/// Indicates whether this tangent space normal is equal to another.
 		/// </summary>
-		/// <param name="other">Another tangent.</param>
+		/// <param name="other"> Another tangent. </param>
 		/// <returns>
 		/// True, if another normal uses <see cref="Int16" /> type for coordinates and is equal to
 		/// this one.
@@ -107,9 +103,7 @@ namespace CryEngine.StaticObjects.Meshes
 	/// <summary>
 	/// Defines 4 dimensional vector with coordinates represented by 16-bit integer numbers.
 	/// </summary>
-	/// <remarks>
-	/// Used for mesh tangents only.
-	/// </remarks>
+	/// <remarks> Used for mesh tangents only. </remarks>
 	public struct Int16Vector4 : IEquatable<Int16Vector4>
 	{
 		public bool Equals(Int16Vector4 other)
@@ -156,7 +150,7 @@ namespace CryEngine.StaticObjects.Meshes
 		public override bool Equals(object obj)
 		{
 			if (ReferenceEquals(null, obj)) return false;
-			return obj is Int16Vector4 && Equals((Int16Vector4)obj);
+			return obj is Int16Vector4 && this.Equals((Int16Vector4)obj);
 		}
 	}
 }

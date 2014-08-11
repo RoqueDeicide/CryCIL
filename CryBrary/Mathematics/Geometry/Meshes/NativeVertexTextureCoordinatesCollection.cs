@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using CryEngine.Mathematics;
-using CryEngine.Mathematics.MemoryMapping;
 using CryEngine.Native;
 
-namespace CryEngine.StaticObjects.Meshes
+namespace CryEngine.Mathematics.Geometry.Meshes
 {
 	/// <summary>
 	/// Represents a collection of fixed size.
@@ -70,7 +64,7 @@ namespace CryEngine.StaticObjects.Meshes
 		public NativeVertexTextureCoordinatesCollection(NativeMesh mesh)
 		{
 			this.MeshHandle = mesh.CMeshHandle;
-			mesh.VerticesReallocated += mesh_VerticesReallocated;
+			mesh.VerticesReallocated += this.mesh_VerticesReallocated;
 			this.UpdateCollection();
 		}
 		#endregion

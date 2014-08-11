@@ -22,7 +22,7 @@
 
 using System;
 
-namespace CryEngine.Mathematics
+namespace CryEngine.Mathematics.Geometry
 {
 	/*
 	 * This class is organized so that the least complex objects come first so that the least
@@ -169,8 +169,7 @@ namespace CryEngine.Mathematics
 		/// <param name="point">  The point to test. </param>
 		/// <param name="result">
 		/// When the method completes, contains the closest point between the two objects; or, if
-		/// the point is directly in the center of the sphere, contains <see
-		/// cref="Vector3" />.
+		/// the point is directly in the center of the sphere, contains <see cref="Vector3" />.
 		/// </param>
 		public static void ClosestPointSpherePoint(ref BoundingSphere sphere, ref Vector3 point, out Vector3 result)
 		{
@@ -196,8 +195,7 @@ namespace CryEngine.Mathematics
 		/// <param name="sphere2"> The second sphere to test. </param>
 		/// <param name="result"> 
 		/// When the method completes, contains the closest point between the two objects; or, if
-		/// the point is directly in the center of the sphere, contains <see
-		/// cref="Vector3" />.
+		/// the point is directly in the center of the sphere, contains <see cref="Vector3" />.
 		/// </param>
 		/// <remarks>
 		/// If the two spheres are overlapping, but not directly ontop of each other, the closest
@@ -388,8 +386,8 @@ namespace CryEngine.Mathematics
 		/// <param name="ray1">  The first ray to test. </param>
 		/// <param name="ray2">  The second ray to test. </param>
 		/// <param name="point">
-		/// When the method completes, contains the point of intersection, or <see
-		/// cref="Vector3" /> if there was no intersection.
+		/// When the method completes, contains the point of intersection, or <see cref="Vector3" />
+		/// if there was no intersection.
 		/// </param>
 		/// <returns> Whether the two objects intersect. </returns>
 		/// <remarks>
@@ -528,8 +526,8 @@ namespace CryEngine.Mathematics
 		/// <param name="ray">   The ray to test. </param>
 		/// <param name="plane"> The plane to test </param>
 		/// <param name="point">
-		/// When the method completes, contains the point of intersection, or <see
-		/// cref="Vector3" /> if there was no intersection.
+		/// When the method completes, contains the point of intersection, or <see cref="Vector3" />
+		/// if there was no intersection.
 		/// </param>
 		/// <returns> Whether the two objects intersected. </returns>
 		public static bool RayIntersectsPlane(ref Ray ray, ref Plane plane, out Vector3 point)
@@ -659,8 +657,8 @@ namespace CryEngine.Mathematics
 		/// <param name="vertex2"> The second vertex of the triagnle to test. </param>
 		/// <param name="vertex3"> The third vertex of the triangle to test. </param>
 		/// <param name="point">  
-		/// When the method completes, contains the point of intersection, or <see
-		/// cref="Vector3" /> if there was no intersection.
+		/// When the method completes, contains the point of intersection, or <see cref="Vector3" />
+		/// if there was no intersection.
 		/// </param>
 		/// <returns> Whether the two objects intersected. </returns>
 		public static bool RayIntersectsTriangle(ref Ray ray, ref Vector3 vertex1, ref Vector3 vertex2, ref Vector3 vertex3, out Vector3 point)
@@ -798,8 +796,8 @@ namespace CryEngine.Mathematics
 		/// <param name="ray">   The ray to test. </param>
 		/// <param name="box">   The box to test. </param>
 		/// <param name="point">
-		/// When the method completes, contains the point of intersection, or <see
-		/// cref="Vector3" /> if there was no intersection.
+		/// When the method completes, contains the point of intersection, or <see cref="Vector3" />
+		/// if there was no intersection.
 		/// </param>
 		/// <returns> Whether the two objects intersected. </returns>
 		public static bool RayIntersectsBox(ref Ray ray, ref BoundingBox box, out Vector3 point)
@@ -865,8 +863,8 @@ namespace CryEngine.Mathematics
 		/// <param name="ray">    The ray to test. </param>
 		/// <param name="sphere"> The sphere to test. </param>
 		/// <param name="point"> 
-		/// When the method completes, contains the point of intersection, or <see
-		/// cref="Vector3" /> if there was no intersection.
+		/// When the method completes, contains the point of intersection, or <see cref="Vector3" />
+		/// if there was no intersection.
 		/// </param>
 		/// <returns> Whether the two objects intersected. </returns>
 		public static bool RayIntersectsSphere(ref Ray ray, ref BoundingSphere sphere, out Vector3 point)

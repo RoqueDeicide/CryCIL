@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using CryEngine.Mathematics;
 using CryEngine.Mathematics.MemoryMapping;
-using CryEngine.Native;
 
-namespace CryEngine.StaticObjects.Meshes
+namespace CryEngine.Mathematics.Geometry.Meshes
 {
 	/// <summary>
 	/// Base for collections of vertex colors located in native memory.
@@ -60,7 +54,7 @@ namespace CryEngine.StaticObjects.Meshes
 		{
 			this.Mesh = mesh;
 			this.MeshHandle = mesh.CMeshHandle;
-			this.Mesh.VerticesReallocated += mesh_VerticesReallocated;
+			this.Mesh.VerticesReallocated += this.mesh_VerticesReallocated;
 			// ReSharper disable DoNotCallOverridableMethodsInConstructor
 			this.UpdateCollection();
 			// ReSharper restore DoNotCallOverridableMethodsInConstructor

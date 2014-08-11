@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using CryEngine.Mathematics;
 using CryEngine.Native;
 
-namespace CryEngine.StaticObjects.Meshes
+namespace CryEngine.Mathematics.Geometry.Meshes
 {
 	/// <summary>
 	/// Represents a collection of mesh vertices located native memory.
@@ -16,7 +12,7 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <summary>
 		/// Creates new instance of class <see cref="NativeVertexPositionCollection" />.
 		/// </summary>
-		/// <param name="mesh"><see cref="NativeMesh" /> that hosts this collection.</param>
+		/// <param name="mesh"> <see cref="NativeMesh" /> that hosts this collection. </param>
 		public NativeVertexPositionCollection(NativeMesh mesh)
 		{
 			this.mesh = mesh;
@@ -26,9 +22,7 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <summary>
 		/// Gets or sets number of vertices that are defined for this mesh.
 		/// </summary>
-		/// <remarks>
-		/// Passing 0 will free the vertex data.
-		/// </remarks>
+		/// <remarks> Passing 0 will free the vertex data. </remarks>
 		public override int Capacity
 		{
 			get { return this.Count; }
@@ -44,7 +38,7 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <summary>
 		/// Gets or sets a position of the vertex at specified index.
 		/// </summary>
-		/// <param name="index">Index of the vertex to access.</param>
+		/// <param name="index"> Index of the vertex to access. </param>
 		/// <exception cref="IndexOutOfRangeException">
 		/// Attempt to access position of the vertex via vertex that is out of bounds of vertex
 		/// position collection.

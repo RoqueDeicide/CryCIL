@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using CryEngine.Native;
 
-namespace CryEngine.StaticObjects.Meshes
+namespace CryEngine.Mathematics.Geometry.Meshes
 {
 	/// <summary>
 	/// Represents a collection of faces in native memory attached to specific CMesh object.
@@ -30,7 +25,7 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <summary>
 		/// Gets or sets a face.
 		/// </summary>
-		/// <param name="index">Index of the face to access.</param>
+		/// <param name="index"> Index of the face to access. </param>
 		/// <exception cref="IndexOutOfRangeException">
 		/// Attempt to access face with index that is out of bounds.
 		/// </exception>
@@ -58,7 +53,7 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <summary>
 		/// Creates new instance of type <see cref="NativeFaceCollection" />.
 		/// </summary>
-		/// <param name="meshHandle">Pointer to CMesh object in native memory.</param>
+		/// <param name="meshHandle"> Pointer to CMesh object in native memory. </param>
 		public NativeFaceCollection(IntPtr meshHandle)
 		{
 			this.MeshHandle = meshHandle;
