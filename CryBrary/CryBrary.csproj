@@ -206,10 +206,6 @@
     <Compile Include="Mathematics\BoundingSphere.cs" />
     <Compile Include="Mathematics\Collision.cs" />
     <Compile Include="Mathematics\Color32.cs" />
-    <Compile Include="Mathematics\Column33.cs" />
-    <Compile Include="Mathematics\Column34.cs" />
-    <Compile Include="Mathematics\Column44.cs" />
-    <Compile Include="Mathematics\Diagonal33.cs" />
     <Compile Include="Mathematics\EulerAngles.cs" />
     <Compile Include="Mathematics\Half.cs" />
     <Compile Include="Mathematics\HalfHelpers.cs" />

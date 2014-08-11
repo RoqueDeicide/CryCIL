@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
-
+using CryEngine.Mathematics;
 using CryEngine.Native;
 
 namespace CryEngine.Entities
@@ -58,18 +58,19 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Gets wrapper for IArea object that is identified by given number.
 		/// </summary>
-		/// <param name="areaId"><see cref="Int32" /> number that identifies a requested area.</param>
-		/// <returns>Wrapper for IArea object that is identified by given number.</returns>
+		/// <param name="areaId"> <see cref="Int32" /> number that identifies a requested area. </param>
+		/// <returns> Wrapper for IArea object that is identified by given number. </returns>
 		public static Area GetArea(int areaId)
 		{
 			return TryGet(NativeEntityMethods.GetArea(areaId));
 		}
-		/// <summary></summary>
-		/// <param name="id"></param>
-		/// <param name="pos"></param>
-		/// <param name="maxResults"></param>
-		/// <param name="forceCalculation"></param>
-		/// <returns></returns>
+		/// <summary>
+		/// </summary>
+		/// <param name="id">               </param>
+		/// <param name="pos">              </param>
+		/// <param name="maxResults">       </param>
+		/// <param name="forceCalculation"> </param>
+		/// <returns> </returns>
 		public static IEnumerable<AreaQueryResult> QueryAreas(EntityId id, Vector3 pos, int maxResults, bool forceCalculation)
 		{
 			var objAreas = NativeEntityMethods.QueryAreas(id, pos, maxResults, forceCalculation);

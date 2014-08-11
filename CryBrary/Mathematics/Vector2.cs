@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Linq;
-using System.Text;
-using System.Globalization;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
+using System.Globalization;
 using System.Runtime.InteropServices;
-using CryEngine.Mathematics.MemoryMapping;
 
-namespace CryEngine
+namespace CryEngine.Mathematics
 {
 	/// <summary>
 	/// Represents a two dimensional mathematical vector.
@@ -42,16 +38,16 @@ namespace CryEngine
 		/// </summary>
 		public bool IsNormalized
 		{
-			get { return Math.Abs((X * X) + (Y * Y) - 1f) < MathHelpers.ZeroTolerance; }
+			get { return Math.Abs((this.X * this.X) + (this.Y * this.Y) - 1f) < MathHelpers.ZeroTolerance; }
 		}
 		/// <summary>
 		/// Gets or sets the component at the specified index.
 		/// </summary>
-		/// <value>The value of the X or Y component, depending on the index.</value>
+		/// <value> The value of the X or Y component, depending on the index. </value>
 		/// <param name="index">
 		/// The index of the component to access. Use 0 for the X component and 1 for the Y component.
 		/// </param>
-		/// <returns>The value of the component at the specified index.</returns>
+		/// <returns> The value of the component at the specified index. </returns>
 		public float this[int index]
 		{
 			get
@@ -62,8 +58,8 @@ namespace CryEngine
 				}
 				switch (index)
 				{
-					case 0: return X;
-					case 1: return Y;
+					case 0: return this.X;
+					case 1: return this.Y;
 				}
 				return 0;
 			}
@@ -75,34 +71,34 @@ namespace CryEngine
 				}
 				switch (index)
 				{
-					case 0: X = value; break;
-					case 1: Y = value; break;
+					case 0: this.X = value; break;
+					case 1: this.Y = value; break;
 				}
 			}
 		}
 		/// <summary>
 		/// Calculates the length of the vector.
 		/// </summary>
-		/// <returns>The length of the vector.</returns>
+		/// <returns> The length of the vector. </returns>
 		/// <remarks>
 		/// <see cref="Vector2.LengthSquared" /> may be preferred when only the relative length is
 		/// needed and speed is of the essence.
 		/// </remarks>
 		public float Length
 		{
-			get { return (float)Math.Sqrt((X * X) + (Y * Y)); }
+			get { return (float)Math.Sqrt((this.X * this.X) + (this.Y * this.Y)); }
 		}
 		/// <summary>
 		/// Calculates the squared length of the vector.
 		/// </summary>
-		/// <returns>The squared length of the vector.</returns>
+		/// <returns> The squared length of the vector. </returns>
 		/// <remarks>
 		/// This method may be preferred to <see cref="Vector2.Length" /> when only a relative
 		/// length is needed and speed is of the essence.
 		/// </remarks>
 		public float LengthSquared
 		{
-			get { return (X * X) + (Y * Y); }
+			get { return (this.X * this.X) + (this.Y * this.Y); }
 		}
 		/// <summary>
 		/// Determines whether this vector is represented by valid numbers.
@@ -121,21 +117,21 @@ namespace CryEngine
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Vector2" /> struct.
 		/// </summary>
-		/// <param name="value">The value that will be assigned to all components.</param>
+		/// <param name="value"> The value that will be assigned to all components. </param>
 		public Vector2(float value)
 		{
-			X = value;
-			Y = value;
+			this.X = value;
+			this.Y = value;
 		}
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Vector2" /> struct.
 		/// </summary>
-		/// <param name="x">Initial value for the X component of the vector.</param>
-		/// <param name="y">Initial value for the Y component of the vector.</param>
+		/// <param name="x"> Initial value for the X component of the vector. </param>
+		/// <param name="y"> Initial value for the Y component of the vector. </param>
 		public Vector2(float x, float y)
 		{
-			X = x;
-			Y = y;
+			this.X = x;
+			this.Y = y;
 		}
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Vector2" /> struct.
@@ -172,8 +168,8 @@ namespace CryEngine
 		/// <remarks>
 		/// This method allows to simplify code where this instance is a property which you want to modify.
 		/// </remarks>
-		/// <param name="value">New value for X component.</param>
-		/// <returns>Modified vector.</returns>
+		/// <param name="value"> New value for X component. </param>
+		/// <returns> Modified vector. </returns>
 		public Vector2 ModifyX(float value)
 		{
 			return new Vector2(value, this.Y);
@@ -185,8 +181,8 @@ namespace CryEngine
 		/// <remarks>
 		/// This method allows to simplify code where this instance is a property which you want to modify.
 		/// </remarks>
-		/// <param name="value">New value for Y component.</param>
-		/// <returns>Modified vector.</returns>
+		/// <param name="value"> New value for Y component. </param>
+		/// <returns> Modified vector. </returns>
 		public Vector2 ModifyY(float value)
 		{
 			return new Vector2(this.X, value);
@@ -197,9 +193,9 @@ namespace CryEngine
 		/// <remarks>
 		/// This method allows to simplify code where this instance is a property which you want to modify.
 		/// </remarks>
-		/// <param name="x">New value for X component.</param>
-		/// <param name="y">New value for Y component.</param>
-		/// <returns>Modified vector.</returns>
+		/// <param name="x"> New value for X component. </param>
+		/// <param name="y"> New value for Y component. </param>
+		/// <returns> Modified vector. </returns>
 		public Vector2 ModifyVector(float x, float y)
 		{
 			return new Vector2(x, y);
@@ -209,10 +205,10 @@ namespace CryEngine
 		/// <summary>
 		/// Creates an array containing the elements of the vector.
 		/// </summary>
-		/// <returns>A two-element array containing the components of the vector.</returns>
+		/// <returns> A two-element array containing the components of the vector. </returns>
 		public float[] ToArray()
 		{
-			return new[] { X, Y };
+			return new[] { this.X, this.Y };
 		}
 		/// <summary>
 		/// Creates a list that contains components of this vector.
@@ -243,10 +239,10 @@ namespace CryEngine
 		/// <summary>
 		/// Restricts a value to be within a specified range.
 		/// </summary>
-		/// <param name="value">The value to clamp.</param>
-		/// <param name="min">The minimum value.</param>
-		/// <param name="max">The maximum value.</param>
-		/// <param name="result">When the method completes, contains the clamped value.</param>
+		/// <param name="value">  The value to clamp. </param>
+		/// <param name="min">    The minimum value. </param>
+		/// <param name="max">    The maximum value. </param>
+		/// <param name="result"> When the method completes, contains the clamped value. </param>
 		public static void Clamp(ref Vector2 value, ref Vector2 min, ref Vector2 max, out Vector2 result)
 		{
 			float x = value.X;
@@ -262,10 +258,10 @@ namespace CryEngine
 		/// <summary>
 		/// Restricts a value to be within a specified range.
 		/// </summary>
-		/// <param name="value">The value to clamp.</param>
-		/// <param name="min">The minimum value.</param>
-		/// <param name="max">The maximum value.</param>
-		/// <returns>The clamped value.</returns>
+		/// <param name="value"> The value to clamp. </param>
+		/// <param name="min">   The minimum value. </param>
+		/// <param name="max">   The maximum value. </param>
+		/// <returns> The clamped value. </returns>
 		public static Vector2 Clamp(Vector2 value, Vector2 min, Vector2 max)
 		{
 			Vector2 result;
@@ -275,8 +271,8 @@ namespace CryEngine
 		/// <summary>
 		/// Calculates the distance between two vectors.
 		/// </summary>
-		/// <param name="value1">The first vector.</param>
-		/// <param name="value2">The second vector.</param>
+		/// <param name="value1"> The first vector. </param>
+		/// <param name="value2"> The second vector. </param>
 		/// <param name="result">
 		/// When the method completes, contains the distance between the two vectors.
 		/// </param>
@@ -294,9 +290,9 @@ namespace CryEngine
 		/// <summary>
 		/// Calculates the distance between two vectors.
 		/// </summary>
-		/// <param name="value1">The first vector.</param>
-		/// <param name="value2">The second vector.</param>
-		/// <returns>The distance between the two vectors.</returns>
+		/// <param name="value1"> The first vector. </param>
+		/// <param name="value2"> The second vector. </param>
+		/// <returns> The distance between the two vectors. </returns>
 		/// <remarks>
 		/// <see cref="Vector2.DistanceSquared(Vector2, Vector2)" /> may be preferred when only the
 		/// relative distance is needed and speed is of the essence.
@@ -311,8 +307,8 @@ namespace CryEngine
 		/// <summary>
 		/// Calculates the squared distance between two vectors.
 		/// </summary>
-		/// <param name="value1">The first vector.</param>
-		/// <param name="value2">The second vector</param>
+		/// <param name="value1"> The first vector. </param>
+		/// <param name="value2"> The second vector </param>
 		/// <param name="result">
 		/// When the method completes, contains the squared distance between the two vectors.
 		/// </param>
@@ -334,9 +330,9 @@ namespace CryEngine
 		/// <summary>
 		/// Calculates the squared distance between two vectors.
 		/// </summary>
-		/// <param name="value1">The first vector.</param>
-		/// <param name="value2">The second vector.</param>
-		/// <returns>The squared distance between the two vectors.</returns>
+		/// <param name="value1"> The first vector. </param>
+		/// <param name="value2"> The second vector. </param>
+		/// <returns> The squared distance between the two vectors. </returns>
 		/// <remarks>
 		/// Distance squared is the value before taking the square root. Distance squared can often
 		/// be used in place of distance if relative comparisons are being made. For example,
@@ -355,8 +351,8 @@ namespace CryEngine
 		/// <summary>
 		/// Calculates the dot product of two vectors.
 		/// </summary>
-		/// <param name="left">First source vector.</param>
-		/// <param name="right">Second source vector.</param>
+		/// <param name="left">   First source vector. </param>
+		/// <param name="right">  Second source vector. </param>
 		/// <param name="result">
 		/// When the method completes, contains the dot product of the two vectors.
 		/// </param>
@@ -367,9 +363,9 @@ namespace CryEngine
 		/// <summary>
 		/// Calculates the dot product of two vectors.
 		/// </summary>
-		/// <param name="left">First source vector.</param>
-		/// <param name="right">Second source vector.</param>
-		/// <returns>The dot product of the two vectors.</returns>
+		/// <param name="left">  First source vector. </param>
+		/// <param name="right"> Second source vector. </param>
+		/// <returns> The dot product of the two vectors. </returns>
 		public static float Dot(Vector2 left, Vector2 right)
 		{
 			return (left.X * right.X) + (left.Y * right.Y);
@@ -377,8 +373,8 @@ namespace CryEngine
 		/// <summary>
 		/// Returns a vector containing the smallest components of the specified vectors.
 		/// </summary>
-		/// <param name="left">The first source vector.</param>
-		/// <param name="right">The second source vector.</param>
+		/// <param name="left">   The first source vector. </param>
+		/// <param name="right">  The second source vector. </param>
 		/// <param name="result">
 		/// When the method completes, contains an new vector composed of the largest components of
 		/// the source vectors.
@@ -391,9 +387,9 @@ namespace CryEngine
 		/// <summary>
 		/// Returns a vector containing the largest components of the specified vectors.
 		/// </summary>
-		/// <param name="left">The first source vector.</param>
-		/// <param name="right">The second source vector.</param>
-		/// <returns>A vector containing the largest components of the source vectors.</returns>
+		/// <param name="left">  The first source vector. </param>
+		/// <param name="right"> The second source vector. </param>
+		/// <returns> A vector containing the largest components of the source vectors. </returns>
 		public static Vector2 Max(Vector2 left, Vector2 right)
 		{
 			Vector2 result;
@@ -403,8 +399,8 @@ namespace CryEngine
 		/// <summary>
 		/// Returns a vector containing the smallest components of the specified vectors.
 		/// </summary>
-		/// <param name="left">The first source vector.</param>
-		/// <param name="right">The second source vector.</param>
+		/// <param name="left">   The first source vector. </param>
+		/// <param name="right">  The second source vector. </param>
 		/// <param name="result">
 		/// When the method completes, contains an new vector composed of the smallest components of
 		/// the source vectors.
@@ -417,9 +413,9 @@ namespace CryEngine
 		/// <summary>
 		/// Returns a vector containing the smallest components of the specified vectors.
 		/// </summary>
-		/// <param name="left">The first source vector.</param>
-		/// <param name="right">The second source vector.</param>
-		/// <returns>A vector containing the smallest components of the source vectors.</returns>
+		/// <param name="left">  The first source vector. </param>
+		/// <param name="right"> The second source vector. </param>
+		/// <returns> A vector containing the smallest components of the source vectors. </returns>
 		public static Vector2 Min(Vector2 left, Vector2 right)
 		{
 			Vector2 result;
@@ -433,19 +429,19 @@ namespace CryEngine
 		/// </summary>
 		public void Normalize()
 		{
-			float length = Length;
+			float length = this.Length;
 			if (length > MathHelpers.ZeroTolerance)
 			{
 				float inv = 1.0f / length;
-				X *= inv;
-				Y *= inv;
+				this.X *= inv;
+				this.Y *= inv;
 			}
 		}
 		/// <summary>
 		/// Converts the vector into a unit vector.
 		/// </summary>
-		/// <param name="value">The vector to normalize.</param>
-		/// <param name="result">When the method completes, contains the normalized vector.</param>
+		/// <param name="value">  The vector to normalize. </param>
+		/// <param name="result"> When the method completes, contains the normalized vector. </param>
 		public static void Normalize(ref Vector2 value, out Vector2 result)
 		{
 			result = value;
@@ -454,8 +450,8 @@ namespace CryEngine
 		/// <summary>
 		/// Converts the vector into a unit vector.
 		/// </summary>
-		/// <param name="value">The vector to normalize.</param>
-		/// <returns>The normalized vector.</returns>
+		/// <param name="value"> The vector to normalize. </param>
+		/// <returns> The normalized vector. </returns>
 		public static Vector2 Normalize(Vector2 value)
 		{
 			value.Normalize();
@@ -466,9 +462,9 @@ namespace CryEngine
 		/// <summary>
 		/// Modulates a vector with another by performing component-wise multiplication.
 		/// </summary>
-		/// <param name="left">The first vector to modulate.</param>
-		/// <param name="right">The second vector to modulate.</param>
-		/// <param name="result">When the method completes, contains the modulated vector.</param>
+		/// <param name="left">   The first vector to modulate. </param>
+		/// <param name="right">  The second vector to modulate. </param>
+		/// <param name="result"> When the method completes, contains the modulated vector. </param>
 		public static void Modulate(ref Vector2 left, ref Vector2 right, out Vector2 result)
 		{
 			result = new Vector2(left.X * right.X, left.Y * right.Y);
@@ -476,9 +472,9 @@ namespace CryEngine
 		/// <summary>
 		/// Modulates a vector with another by performing component-wise multiplication.
 		/// </summary>
-		/// <param name="left">The first vector to modulate.</param>
-		/// <param name="right">The second vector to modulate.</param>
-		/// <returns>The modulated vector.</returns>
+		/// <param name="left">  The first vector to modulate. </param>
+		/// <param name="right"> The second vector to modulate. </param>
+		/// <returns> The modulated vector. </returns>
 		public static Vector2 Modulate(Vector2 left, Vector2 right)
 		{
 			return new Vector2(left.X * right.X, left.Y * right.Y);
@@ -488,8 +484,8 @@ namespace CryEngine
 		/// <summary>
 		/// Performs a linear interpolation between two vectors.
 		/// </summary>
-		/// <param name="start">Start vector.</param>
-		/// <param name="end">End vector.</param>
+		/// <param name="start">  Start vector. </param>
+		/// <param name="end">    End vector. </param>
 		/// <param name="amount">
 		/// Value between 0 and 1 indicating the weight of <paramref name="end" />.
 		/// </param>
@@ -510,12 +506,12 @@ namespace CryEngine
 		/// <summary>
 		/// Performs a linear interpolation between two vectors.
 		/// </summary>
-		/// <param name="start">Start vector.</param>
-		/// <param name="end">End vector.</param>
+		/// <param name="start">  Start vector. </param>
+		/// <param name="end">    End vector. </param>
 		/// <param name="amount">
 		/// Value between 0 and 1 indicating the weight of <paramref name="end" />.
 		/// </param>
-		/// <returns>The linear interpolation of the two vectors.</returns>
+		/// <returns> The linear interpolation of the two vectors. </returns>
 		/// <remarks>
 		/// This method performs the linear interpolation based on the following formula.
 		/// <code>start + (end - start) * amount</code> Passing <paramref name="amount" /> a value
@@ -531,8 +527,8 @@ namespace CryEngine
 		/// <summary>
 		/// Performs a cubic interpolation between two vectors.
 		/// </summary>
-		/// <param name="start">Start vector.</param>
-		/// <param name="end">End vector.</param>
+		/// <param name="start">  Start vector. </param>
+		/// <param name="end">    End vector. </param>
 		/// <param name="amount">
 		/// Value between 0 and 1 indicating the weight of <paramref name="end" />.
 		/// </param>
@@ -550,12 +546,12 @@ namespace CryEngine
 		/// <summary>
 		/// Performs a cubic interpolation between two vectors.
 		/// </summary>
-		/// <param name="start">Start vector.</param>
-		/// <param name="end">End vector.</param>
+		/// <param name="start">  Start vector. </param>
+		/// <param name="end">    End vector. </param>
 		/// <param name="amount">
 		/// Value between 0 and 1 indicating the weight of <paramref name="end" />.
 		/// </param>
-		/// <returns>The cubic interpolation of the two vectors.</returns>
+		/// <returns> The cubic interpolation of the two vectors. </returns>
 		public static Vector2 CreateCubicInterpolation(Vector2 start, Vector2 end, float amount)
 		{
 			Vector2 result;
@@ -565,12 +561,12 @@ namespace CryEngine
 		/// <summary>
 		/// Performs a Hermite spline interpolation.
 		/// </summary>
-		/// <param name="value1">First source position vector.</param>
-		/// <param name="tangent1">First source tangent vector.</param>
-		/// <param name="value2">Second source position vector.</param>
-		/// <param name="tangent2">Second source tangent vector.</param>
-		/// <param name="amount">Weighting factor.</param>
-		/// <param name="result">
+		/// <param name="value1">   First source position vector. </param>
+		/// <param name="tangent1"> First source tangent vector. </param>
+		/// <param name="value2">   Second source position vector. </param>
+		/// <param name="tangent2"> Second source tangent vector. </param>
+		/// <param name="amount">   Weighting factor. </param>
+		/// <param name="result">  
 		/// When the method completes, contains the result of the Hermite spline interpolation.
 		/// </param>
 		public static void CreateHermiteInterpolation(ref Vector2 value1, ref Vector2 tangent1, ref Vector2 value2, ref Vector2 tangent2, float amount, out Vector2 result)
@@ -588,12 +584,12 @@ namespace CryEngine
 		/// <summary>
 		/// Performs a Hermite spline interpolation.
 		/// </summary>
-		/// <param name="value1">First source position vector.</param>
-		/// <param name="tangent1">First source tangent vector.</param>
-		/// <param name="value2">Second source position vector.</param>
-		/// <param name="tangent2">Second source tangent vector.</param>
-		/// <param name="amount">Weighting factor.</param>
-		/// <returns>The result of the Hermite spline interpolation.</returns>
+		/// <param name="value1">   First source position vector. </param>
+		/// <param name="tangent1"> First source tangent vector. </param>
+		/// <param name="value2">   Second source position vector. </param>
+		/// <param name="tangent2"> Second source tangent vector. </param>
+		/// <param name="amount">   Weighting factor. </param>
+		/// <returns> The result of the Hermite spline interpolation. </returns>
 		public static Vector2 CreateHermiteInterpolation(Vector2 value1, Vector2 tangent1, Vector2 value2, Vector2 tangent2, float amount)
 		{
 			Vector2 result;
@@ -603,11 +599,11 @@ namespace CryEngine
 		/// <summary>
 		/// Performs a Catmull-Rom interpolation using the specified positions.
 		/// </summary>
-		/// <param name="value1">The first position in the interpolation.</param>
-		/// <param name="value2">The second position in the interpolation.</param>
-		/// <param name="value3">The third position in the interpolation.</param>
-		/// <param name="value4">The fourth position in the interpolation.</param>
-		/// <param name="amount">Weighting factor.</param>
+		/// <param name="value1"> The first position in the interpolation. </param>
+		/// <param name="value2"> The second position in the interpolation. </param>
+		/// <param name="value3"> The third position in the interpolation. </param>
+		/// <param name="value4"> The fourth position in the interpolation. </param>
+		/// <param name="amount"> Weighting factor. </param>
 		/// <param name="result">
 		/// When the method completes, contains the result of the Catmull-Rom interpolation.
 		/// </param>
@@ -627,12 +623,12 @@ namespace CryEngine
 		/// <summary>
 		/// Performs a Catmull-Rom interpolation using the specified positions.
 		/// </summary>
-		/// <param name="value1">The first position in the interpolation.</param>
-		/// <param name="value2">The second position in the interpolation.</param>
-		/// <param name="value3">The third position in the interpolation.</param>
-		/// <param name="value4">The fourth position in the interpolation.</param>
-		/// <param name="amount">Weighting factor.</param>
-		/// <returns>A vector that is the result of the Catmull-Rom interpolation.</returns>
+		/// <param name="value1"> The first position in the interpolation. </param>
+		/// <param name="value2"> The second position in the interpolation. </param>
+		/// <param name="value3"> The third position in the interpolation. </param>
+		/// <param name="value4"> The fourth position in the interpolation. </param>
+		/// <param name="amount"> Weighting factor. </param>
+		/// <returns> A vector that is the result of the Catmull-Rom interpolation. </returns>
 		public static Vector2 CreateCatmullRomInterpolation(Vector2 value1, Vector2 value2, Vector2 value3, Vector2 value4, float amount)
 		{
 			Vector2 result;
@@ -644,9 +640,9 @@ namespace CryEngine
 		/// <summary>
 		/// Returns the reflection of a vector off a surface that has the specified normal.
 		/// </summary>
-		/// <param name="vector">The source vector.</param>
-		/// <param name="normal">Normal of the surface.</param>
-		/// <param name="result">When the method completes, contains the reflected vector.</param>
+		/// <param name="vector"> The source vector. </param>
+		/// <param name="normal"> Normal of the surface. </param>
+		/// <param name="result"> When the method completes, contains the reflected vector. </param>
 		/// <remarks>
 		/// Reflect only gives the direction of a reflection off a surface, it does not determine
 		/// whether the original vector was close enough to the surface to hit it.
@@ -661,9 +657,9 @@ namespace CryEngine
 		/// <summary>
 		/// Returns the reflection of a vector off a surface that has the specified normal.
 		/// </summary>
-		/// <param name="vector">The source vector.</param>
-		/// <param name="normal">Normal of the surface.</param>
-		/// <returns>The reflected vector.</returns>
+		/// <param name="vector"> The source vector. </param>
+		/// <param name="normal"> Normal of the surface. </param>
+		/// <returns> The reflected vector. </returns>
 		/// <remarks>
 		/// Reflect only gives the direction of a reflection off a surface, it does not determine
 		/// whether the original vector was close enough to the surface to hit it.
@@ -680,9 +676,9 @@ namespace CryEngine
 		/// <summary>
 		/// Adds two vectors.
 		/// </summary>
-		/// <param name="left">The first vector to add.</param>
-		/// <param name="right">The second vector to add.</param>
-		/// <returns>The sum of the two vectors.</returns>
+		/// <param name="left">  The first vector to add. </param>
+		/// <param name="right"> The second vector to add. </param>
+		/// <returns> The sum of the two vectors. </returns>
 		public static Vector2 operator +(Vector2 left, Vector2 right)
 		{
 			return new Vector2(left.X + right.X, left.Y + right.Y);
@@ -690,8 +686,8 @@ namespace CryEngine
 		/// <summary>
 		/// Assert a vector (return it unchanged).
 		/// </summary>
-		/// <param name="value">The vector to assert (unchange).</param>
-		/// <returns>The asserted (unchanged) vector.</returns>
+		/// <param name="value"> The vector to assert (unchange). </param>
+		/// <returns> The asserted (unchanged) vector. </returns>
 		public static Vector2 operator +(Vector2 value)
 		{
 			return value;
@@ -699,9 +695,9 @@ namespace CryEngine
 		/// <summary>
 		/// Subtracts two vectors.
 		/// </summary>
-		/// <param name="left">The first vector to subtract.</param>
-		/// <param name="right">The second vector to subtract.</param>
-		/// <returns>The difference of the two vectors.</returns>
+		/// <param name="left">  The first vector to subtract. </param>
+		/// <param name="right"> The second vector to subtract. </param>
+		/// <returns> The difference of the two vectors. </returns>
 		public static Vector2 operator -(Vector2 left, Vector2 right)
 		{
 			return new Vector2(left.X - right.X, left.Y - right.Y);
@@ -709,8 +705,8 @@ namespace CryEngine
 		/// <summary>
 		/// Reverses the direction of a given vector.
 		/// </summary>
-		/// <param name="value">The vector to negate.</param>
-		/// <returns>A vector facing in the opposite direction.</returns>
+		/// <param name="value"> The vector to negate. </param>
+		/// <returns> A vector facing in the opposite direction. </returns>
 		public static Vector2 operator -(Vector2 value)
 		{
 			return new Vector2(-value.X, -value.Y);
@@ -718,9 +714,9 @@ namespace CryEngine
 		/// <summary>
 		/// Scales a vector by the given value.
 		/// </summary>
-		/// <param name="value">The vector to scale.</param>
-		/// <param name="scale">The amount by which to scale the vector.</param>
-		/// <returns>The scaled vector.</returns>
+		/// <param name="value"> The vector to scale. </param>
+		/// <param name="scale"> The amount by which to scale the vector. </param>
+		/// <returns> The scaled vector. </returns>
 		public static Vector2 operator *(float scale, Vector2 value)
 		{
 			return new Vector2(value.X * scale, value.Y * scale);
@@ -728,9 +724,9 @@ namespace CryEngine
 		/// <summary>
 		/// Scales a vector by the given value.
 		/// </summary>
-		/// <param name="value">The vector to scale.</param>
-		/// <param name="scale">The amount by which to scale the vector.</param>
-		/// <returns>The scaled vector.</returns>
+		/// <param name="value"> The vector to scale. </param>
+		/// <param name="scale"> The amount by which to scale the vector. </param>
+		/// <returns> The scaled vector. </returns>
 		public static Vector2 operator *(Vector2 value, float scale)
 		{
 			return new Vector2(value.X * scale, value.Y * scale);
@@ -738,9 +734,9 @@ namespace CryEngine
 		/// <summary>
 		/// Scales a vector by the given value.
 		/// </summary>
-		/// <param name="value">The vector to scale.</param>
-		/// <param name="scale">The amount by which to scale the vector.</param>
-		/// <returns>The scaled vector.</returns>
+		/// <param name="value"> The vector to scale. </param>
+		/// <param name="scale"> The amount by which to scale the vector. </param>
+		/// <returns> The scaled vector. </returns>
 		public static Vector2 operator /(Vector2 value, float scale)
 		{
 			return new Vector2(value.X / scale, value.Y / scale);
@@ -750,8 +746,8 @@ namespace CryEngine
 		/// <summary>
 		/// Tests for equality between two objects.
 		/// </summary>
-		/// <param name="left">The first value to compare.</param>
-		/// <param name="right">The second value to compare.</param>
+		/// <param name="left">  The first value to compare. </param>
+		/// <param name="right"> The second value to compare. </param>
 		/// <returns>
 		/// <c>true</c> if <paramref name="left" /> has the same value as <paramref name="right" />;
 		/// otherwise, <c>false</c>.
@@ -763,8 +759,8 @@ namespace CryEngine
 		/// <summary>
 		/// Tests for inequality between two objects.
 		/// </summary>
-		/// <param name="left">The first value to compare.</param>
-		/// <param name="right">The second value to compare.</param>
+		/// <param name="left">  The first value to compare. </param>
+		/// <param name="right"> The second value to compare. </param>
 		/// <returns>
 		/// <c>true</c> if <paramref name="left" /> has a different value than <paramref
 		/// name="right" />; otherwise, <c>false</c>.
@@ -776,11 +772,10 @@ namespace CryEngine
 		#endregion
 		#region Conversion Operators
 		/// <summary>
-		/// Performs an explicit conversion from <see cref="Vector2" /> to <see
-		/// cref="CryEngine.Vector3" />.
+		/// Performs an explicit conversion from <see cref="Vector2" /> to <see cref="Vector3" />.
 		/// </summary>
-		/// <param name="value">The value.</param>
-		/// <returns>The result of the conversion.</returns>
+		/// <param name="value"> The value. </param>
+		/// <returns> The result of the conversion. </returns>
 		public static explicit operator Vector3(Vector2 value)
 		{
 			return new Vector3(value);
@@ -788,8 +783,8 @@ namespace CryEngine
 		/// <summary>
 		/// Performs an explicit conversion from <see cref="Vector2" /> to <see cref="Vector4" />.
 		/// </summary>
-		/// <param name="value">The value.</param>
-		/// <returns>The result of the conversion.</returns>
+		/// <param name="value"> The value. </param>
+		/// <returns> The result of the conversion. </returns>
 		public static explicit operator Vector4(Vector2 value)
 		{
 			return new Vector4(value, 0.0f, 0.0f);
@@ -800,44 +795,44 @@ namespace CryEngine
 		/// <summary>
 		/// Returns a <see cref="System.String" /> that represents this instance.
 		/// </summary>
-		/// <returns>A <see cref="System.String" /> that represents this instance.</returns>
+		/// <returns> A <see cref="System.String" /> that represents this instance. </returns>
 		public override string ToString()
 		{
-			return string.Format(CultureInfo.CurrentCulture, "X:{0} Y:{1}", X, Y);
+			return string.Format(CultureInfo.CurrentCulture, "X:{0} Y:{1}", this.X, this.Y);
 		}
 		/// <summary>
 		/// Returns a <see cref="System.String" /> that represents this instance.
 		/// </summary>
-		/// <param name="format">The format.</param>
-		/// <returns>A <see cref="System.String" /> that represents this instance.</returns>
+		/// <param name="format"> The format. </param>
+		/// <returns> A <see cref="System.String" /> that represents this instance. </returns>
 		public string ToString(string format)
 		{
 			if (format == null)
-				return ToString();
+				return this.ToString();
 
-			return string.Format(CultureInfo.CurrentCulture, "X:{0} Y:{1}", X.ToString(format, CultureInfo.CurrentCulture), Y.ToString(format, CultureInfo.CurrentCulture));
+			return string.Format(CultureInfo.CurrentCulture, "X:{0} Y:{1}", this.X.ToString(format, CultureInfo.CurrentCulture), this.Y.ToString(format, CultureInfo.CurrentCulture));
 		}
 		/// <summary>
 		/// Returns a <see cref="System.String" /> that represents this instance.
 		/// </summary>
-		/// <param name="formatProvider">The format provider.</param>
-		/// <returns>A <see cref="System.String" /> that represents this instance.</returns>
+		/// <param name="formatProvider"> The format provider. </param>
+		/// <returns> A <see cref="System.String" /> that represents this instance. </returns>
 		public string ToString(IFormatProvider formatProvider)
 		{
-			return string.Format(formatProvider, "X:{0} Y:{1}", X, Y);
+			return string.Format(formatProvider, "X:{0} Y:{1}", this.X, this.Y);
 		}
 		/// <summary>
 		/// Returns a <see cref="System.String" /> that represents this instance.
 		/// </summary>
-		/// <param name="format">The format.</param>
-		/// <param name="formatProvider">The format provider.</param>
-		/// <returns>A <see cref="System.String" /> that represents this instance.</returns>
+		/// <param name="format">         The format. </param>
+		/// <param name="formatProvider"> The format provider. </param>
+		/// <returns> A <see cref="System.String" /> that represents this instance. </returns>
 		public string ToString(string format, IFormatProvider formatProvider)
 		{
 			if (format == null)
-				ToString(formatProvider);
+				this.ToString(formatProvider);
 
-			return string.Format(formatProvider, "X:{0} Y:{1}", X.ToString(format, formatProvider), Y.ToString(format, formatProvider));
+			return string.Format(formatProvider, "X:{0} Y:{1}", this.X.ToString(format, formatProvider), this.Y.ToString(format, formatProvider));
 		}
 		#endregion
 		#region Equality Checks
@@ -856,8 +851,8 @@ namespace CryEngine
 				int hash = 17;
 
 				// ReSharper disable NonReadonlyFieldInGetHashCode
-				hash = hash * 29 + X.GetHashCode();
-				hash = hash * 29 + Y.GetHashCode();
+				hash = hash * 29 + this.X.GetHashCode();
+				hash = hash * 29 + this.Y.GetHashCode();
 				// ReSharper restore NonReadonlyFieldInGetHashCode
 
 				return hash;
@@ -866,7 +861,7 @@ namespace CryEngine
 		/// <summary>
 		/// Determines whether the specified <see cref="Vector2" /> is equal to this instance.
 		/// </summary>
-		/// <param name="other">The <see cref="Vector2" /> to compare with this instance.</param>
+		/// <param name="other"> The <see cref="Vector2" /> to compare with this instance. </param>
 		/// <returns>
 		/// <c>true</c> if the specified <see cref="Vector2" /> is equal to this instance;
 		/// otherwise, <c>false</c>.
@@ -874,30 +869,28 @@ namespace CryEngine
 		public bool Equals(Vector2 other)
 		{
 			// ReSharper disable CompareOfFloatsByEqualityOperator
-			return this.X == other.X && (Y == other.Y);
+			return this.X == other.X && (this.Y == other.Y);
 			// ReSharper restore CompareOfFloatsByEqualityOperator
 		}
 		/// <summary>
 		/// Determines whether the specified <see cref="Vector2" /> is equal to this instance using
 		/// an epsilon value.
 		/// </summary>
-		/// <param name="other">The <see cref="Vector2" /> to compare with this instance.</param>
-		/// <param name="epsilon">The amount of error allowed.</param>
+		/// <param name="other">   The <see cref="Vector2" /> to compare with this instance. </param>
+		/// <param name="epsilon"> The amount of error allowed. </param>
 		/// <returns>
 		/// <c>true</c> if the specified <see cref="Vector2" /> is equal to this instance;
 		/// otherwise, <c>false</c>.
 		/// </returns>
 		public bool Equals(Vector2 other, float epsilon)
 		{
-			return (Math.Abs(other.X - X) < epsilon &&
-				Math.Abs(other.Y - Y) < epsilon);
+			return (Math.Abs(other.X - this.X) < epsilon &&
+				Math.Abs(other.Y - this.Y) < epsilon);
 		}
 		/// <summary>
 		/// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
 		/// </summary>
-		/// <param name="value">
-		/// The <see cref="System.Object" /> to compare with this instance.
-		/// </param>
+		/// <param name="value"> The <see cref="System.Object" /> to compare with this instance. </param>
 		/// <returns>
 		/// <c>true</c> if the specified <see cref="System.Object" /> is equal to this instance;
 		/// otherwise, <c>false</c>.
@@ -911,7 +904,7 @@ namespace CryEngine
 		/// <summary>
 		/// Enumerates this vector.
 		/// </summary>
-		/// <returns>Yields components of this vector.</returns>
+		/// <returns> Yields components of this vector. </returns>
 		public IEnumerator<float> GetEnumerator()
 		{
 			yield return this.X;
@@ -920,7 +913,7 @@ namespace CryEngine
 		/// <summary>
 		/// Enumerates this vector.
 		/// </summary>
-		/// <returns>Yields components of this vector.</returns>
+		/// <returns> Yields components of this vector. </returns>
 		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
 		{
 			yield return this.X;

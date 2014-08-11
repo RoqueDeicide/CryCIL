@@ -10,6 +10,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using CryEngine.Mathematics;
 
 namespace CryEngine.StaticObjects.Meshes.ConstructiveSolidGeometry
 {
@@ -22,21 +23,49 @@ namespace CryEngine.StaticObjects.Meshes.ConstructiveSolidGeometry
 	/// operations on meshes elegantly and concisely using BSP trees, and is meant to serve as an
 	/// easily understandable implementation of the algorithm. All edge cases involving overlapping
 	/// coplanar polygons in both solids are correctly handled.
-	/// </para><para></para><para>Implementation Details</para><para></para><para> All CSG
+	/// </para>
+	///
+	/// <para>Implementation Details</para><para></para>
+	///
+	/// <para> All CSG
 	/// operations are implemented in terms of two functions, `clipTo()` and `invert()`, which
 	/// remove parts of a BSP tree inside another BSP tree and swap solid and empty space,
 	/// respectively. To find the union of `a` and `b`, we want to remove everything in `a` inside
 	/// `b` and everything in `b` inside `a`, then combine polygons from `a` and `b` into one solid:
-	/// </para><para></para><para><code> a.clipTo(b); b.clipTo(a); a.build(b.allPolygons());
-	/// </code></para><para></para><para> The only tricky part is handling overlapping coplanar
+	/// </para><para></para>
+	///
+	/// <para><c> a.clipTo(b);</c></para>
+	///
+	/// <para><c> b.clipTo(a);</c></para>
+	///
+	/// <para><c> a.build(b.allPolygons());</c></para><para></para>
+	///
+	/// <para> The only tricky part is handling overlapping coplanar
 	/// polygons in both trees. The code above keeps both copies, but we need to keep them in one
 	/// tree and remove them in the other tree. To remove them from `b` we can clip the inverse of
 	/// `b` against `a`. The code for union now looks like this:
-	/// </para><para></para><para><c>a.clipTo(b); b.clipTo(a); b.invert(); b.clipTo(a); b.invert();
-	/// a.build(b.allPolygons());</c></para><para></para><para> Subtraction and intersection
+	/// </para><para></para>
+	///
+	/// <para><c>a.clipTo(b);</c></para>
+	///
+	/// <para><c>b.clipTo(a);</c></para>
+	///
+	/// <para><c>b.invert();</c></para>
+	///
+	/// <para><c>b.clipTo(a);</c></para>
+	///
+	/// <para><c>b.invert();</c></para>
+	///
+	/// <para><c>a.build(b.allPolygons());</c></para><para></para>
+	///
+	/// <para> Subtraction and intersection
 	/// naturally follow from set operations. If union is `A | B`, subtraction is `A - B = ~(~A |
 	/// B) ` and intersection is `A &amp; B = ~(~A | ~B)` where `~` is the complement operator.
-	/// </para><para></para><para>License</para><para></para><para>Copyright (c) 2011 Evan Wallace
+	/// </para>
+	///
+	/// <para>License</para><para></para>
+	///
+	/// <para>Copyright (c) 2011 Evan Wallace
 	/// (http://madebyevan.com/), under the MIT license.</para>
 	/// </remarks>
 	/// <example>

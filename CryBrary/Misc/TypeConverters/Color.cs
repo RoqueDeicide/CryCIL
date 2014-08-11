@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using System.ComponentModel;
+using CryEngine.Mathematics;
 
 namespace CryEngine.Misc.TypeConverters
 {

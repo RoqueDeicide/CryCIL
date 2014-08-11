@@ -8,6 +8,7 @@ using System.Threading;
 using System.Linq;
 
 using CryEngine.Extensions;
+using CryEngine.Mathematics;
 using CryEngine.Utilities;
 
 namespace CryEngine.Serialization

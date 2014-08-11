@@ -1,5 +1,6 @@
 ﻿using System;
 using CryEngine.Entities;
+using CryEngine.Mathematics;
 
 namespace CryEngine
 {

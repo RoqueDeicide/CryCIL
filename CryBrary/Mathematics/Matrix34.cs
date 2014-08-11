@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.InteropServices;
 
-namespace CryEngine
+namespace CryEngine.Mathematics
 {
 	/// <summary>
 	/// Represents 3x4 matrix.
@@ -108,69 +106,47 @@ namespace CryEngine
 		[FieldOffset(32)]
 		public Vector4 Row2;
 		#endregion
-		#region Columns
-		/// <summary>
-		/// First column.
-		/// </summary>
-		[FieldOffset(0)]
-		public Column34 Column0;
-		/// <summary>
-		/// Second column.
-		/// </summary>
-		[FieldOffset(4)]
-		public Column34 Column1;
-		/// <summary>
-		/// Third column.
-		/// </summary>
-		[FieldOffset(8)]
-		public Column34 Column2;
-		/// <summary>
-		/// Fourth column.
-		/// </summary>
-		[FieldOffset(12)]
-		public Column34 Column3;
-		#endregion
 		#endregion
 		#region Constructors
 		/// <summary>
 		/// Creates new instance of type <see cref="Matrix34" />.
 		/// </summary>
-		/// <param name="v00">First row, First column.</param>
-		/// <param name="v01">First row, Second column.</param>
-		/// <param name="v02">First row, Third column.</param>
-		/// <param name="v03">First row, Fourth column.</param>
-		/// <param name="v10">Second row, First column.</param>
-		/// <param name="v11">Second row, Second column.</param>
-		/// <param name="v12">Second row, Third column.</param>
-		/// <param name="v13">Second row, Fourth column.</param>
-		/// <param name="v20">Third row, First column.</param>
-		/// <param name="v21">Third row, Second column.</param>
-		/// <param name="v22">Third row, Third column.</param>
-		/// <param name="v23">Third row, Fourth column.</param>
+		/// <param name="v00"> First row, First column. </param>
+		/// <param name="v01"> First row, Second column. </param>
+		/// <param name="v02"> First row, Third column. </param>
+		/// <param name="v03"> First row, Fourth column. </param>
+		/// <param name="v10"> Second row, First column. </param>
+		/// <param name="v11"> Second row, Second column. </param>
+		/// <param name="v12"> Second row, Third column. </param>
+		/// <param name="v13"> Second row, Fourth column. </param>
+		/// <param name="v20"> Third row, First column. </param>
+		/// <param name="v21"> Third row, Second column. </param>
+		/// <param name="v22"> Third row, Third column. </param>
+		/// <param name="v23"> Third row, Fourth column. </param>
 		public Matrix34(float v00, float v01, float v02, float v03, float v10, float v11, float v12, float v13, float v20, float v21, float v22, float v23)
 			: this()
 		{
-			M00 = v00; M01 = v01; M02 = v02; M03 = v03;
-			M10 = v10; M11 = v11; M12 = v12; M13 = v13;
-			M20 = v20; M21 = v21; M22 = v22; M23 = v23;
+			this.M00 = v00; this.M01 = v01; this.M02 = v02; this.M03 = v03;
+			this.M10 = v10; this.M11 = v11; this.M12 = v12; this.M13 = v13;
+			this.M20 = v20; this.M21 = v21; this.M22 = v22; this.M23 = v23;
 		}
 		/// <summary>
 		/// Creates new instance of type <see cref="Matrix34" />.
 		/// </summary>
-		/// <param name="s"><see cref="Vector3" /> that contains scaling factors.</param>
+		/// <param name="s"> <see cref="Vector3" /> that contains scaling factors. </param>
 		/// <param name="q">
 		/// <see cref="Quaternion" /> that represents rotation that new matrix will represent.
 		/// </param>
-		/// <param name="t"><see cref="Vector3" /> that represents translation.</param>
+		/// <param name="t"> <see cref="Vector3" /> that represents translation. </param>
 		public Matrix34(Vector3 s, Quaternion q, Vector3 t = default(Vector3))
 			: this()
 		{
-			Set(s, q, t);
+			this.Set(s, q, t);
 		}
 		/// <summary>
 		/// Creates new instance of type <see cref="Matrix34" />.
 		/// </summary>
-		/// <param name="m33"><see cref="Matrix33" /> to use to fill first 3 columns.</param>
+		/// <param name="m33"> <see cref="Matrix33" /> to use to fill first 3 columns. </param>
 		public Matrix34(Matrix33 m33)
 			: this()
 		{
@@ -196,12 +172,12 @@ namespace CryEngine
 				if (Math.Abs(Math.Abs(angles.Y) - (Math.PI * 0.5)) < 0.01)
 				{
 					angles.X = 0;
-					angles.Z = (float)Math.Atan2(-M01, M11);
+					angles.Z = (float)Math.Atan2(-this.M01, this.M11);
 				}
 				else
 				{
-					angles.X = (float)Math.Atan2(M21, M22);
-					angles.Z = (float)Math.Atan2(M10, M00);
+					angles.X = (float)Math.Atan2(this.M21, this.M22);
+					angles.Z = (float)Math.Atan2(this.M10, this.M00);
 				}
 
 				return angles;
@@ -248,32 +224,32 @@ namespace CryEngine
 		/// <summary>
 		/// Gets first column in a for of a <see cref="Vector3" />.
 		/// </summary>
-		public Vector3 ColumnVector0 { get { return new Vector3(M00, M10, M20); } }
+		public Vector3 ColumnVector0 { get { return new Vector3(this.M00, this.M10, this.M20); } }
 		/// <summary>
 		/// Gets second column in a for of a <see cref="Vector3" />.
 		/// </summary>
-		public Vector3 ColumnVector1 { get { return new Vector3(M01, M11, M21); } }
+		public Vector3 ColumnVector1 { get { return new Vector3(this.M01, this.M11, this.M21); } }
 		/// <summary>
 		/// Gets third column in a for of a <see cref="Vector3" />.
 		/// </summary>
-		public Vector3 ColumnVector2 { get { return new Vector3(M02, M12, M22); } }
+		public Vector3 ColumnVector2 { get { return new Vector3(this.M02, this.M12, this.M22); } }
 		/// <summary>
 		/// Gets fourth column in a for of a <see cref="Vector3" />.
 		/// </summary>
-		public Vector3 ColumnVector3 { get { return new Vector3(M03, M13, M23); } }
+		public Vector3 ColumnVector3 { get { return new Vector3(this.M03, this.M13, this.M23); } }
 		/// <summary>
 		/// Gets translation vector from this matrix.
 		/// </summary>
-		public Vector3 Translation { get { return new Vector3(M03, M13, M23); } }
+		public Vector3 Translation { get { return new Vector3(this.M03, this.M13, this.M23); } }
 		#endregion
 		#region Interface
 		#region Basics
 
 		public void SetIdentity()
 		{
-			M00 = 1.0f; M01 = 0.0f; M02 = 0.0f; M03 = 0.0f;
-			M10 = 0.0f; M11 = 1.0f; M12 = 0.0f; M13 = 0.0f;
-			M20 = 0.0f; M21 = 0.0f; M22 = 1.0f; M23 = 0.0f;
+			this.M00 = 1.0f; this.M01 = 0.0f; this.M02 = 0.0f; this.M03 = 0.0f;
+			this.M10 = 0.0f; this.M11 = 1.0f; this.M12 = 0.0f; this.M13 = 0.0f;
+			this.M20 = 0.0f; this.M21 = 0.0f; this.M22 = 1.0f; this.M23 = 0.0f;
 		}
 		#endregion
 		#region Scaling
@@ -285,9 +261,9 @@ namespace CryEngine
 		/// </param>
 		public void ScaleColumns(Vector3 s)
 		{
-			M00 *= s.X; M01 *= s.Y; M02 *= s.Z;
-			M10 *= s.X; M11 *= s.Y; M12 *= s.Z;
-			M20 *= s.X; M21 *= s.Y; M22 *= s.Z;
+			this.M00 *= s.X; this.M01 *= s.Y; this.M02 *= s.Z;
+			this.M10 *= s.X; this.M11 *= s.Y; this.M12 *= s.Z;
+			this.M20 *= s.X; this.M21 *= s.Y; this.M22 *= s.Z;
 		}
 		/// <summary>
 		/// Apples scaling to the columns of the matrix.
@@ -298,9 +274,9 @@ namespace CryEngine
 		/// </param>
 		public void ScaleColumns(Vector4 s)
 		{
-			M00 *= s.X; M01 *= s.Y; M02 *= s.Z; M03 *= s.W;
-			M10 *= s.X; M11 *= s.Y; M12 *= s.Z; M13 *= s.W;
-			M20 *= s.X; M21 *= s.Y; M22 *= s.Z; M23 *= s.W;
+			this.M00 *= s.X; this.M01 *= s.Y; this.M02 *= s.Z; this.M03 *= s.W;
+			this.M10 *= s.X; this.M11 *= s.Y; this.M12 *= s.Z; this.M13 *= s.W;
+			this.M20 *= s.X; this.M21 *= s.Y; this.M22 *= s.Z; this.M23 *= s.W;
 		}
 		#endregion
 		#region Rotations
@@ -311,14 +287,14 @@ namespace CryEngine
 		/// <code>Matrix34 m34; Vector3 axis=GetNormalized( Vector3(-1.0f,-0.3f,0.0f) );
 		/// m34.SetRotationAA( 3.14314f, axis, Vector3(5,5,5) );</code>
 		/// </example>
-		/// <param name="rad">Angle of rotation in radians.</param>
-		/// <param name="axis">Normalized vector that represents axis of rotation.</param>
-		/// <param name="t">Optional translation vector.</param>
+		/// <param name="rad">  Angle of rotation in radians. </param>
+		/// <param name="axis"> Normalized vector that represents axis of rotation. </param>
+		/// <param name="t">    Optional translation vector. </param>
 		public void SetRotationAA(float rad, Vector3 axis, Vector3 t = default(Vector3))
 		{
 			this = new Matrix34(Matrix33.CreateRotationAA(rad, axis));
 
-			SetTranslation(t);
+			this.SetTranslation(t);
 		}
 
 		public static Matrix34 CreateRotationAA(float rad, Vector3 axis, Vector3 t = default(Vector3))
@@ -333,7 +309,7 @@ namespace CryEngine
 		{
 			this = new Matrix34(Matrix33.CreateRotationAA(rot));
 
-			SetTranslation(t);
+			this.SetTranslation(t);
 		}
 
 		public static Matrix34 CreateRotationAA(Vector3 rot, Vector3 t = default(Vector3))
@@ -357,7 +333,7 @@ namespace CryEngine
 		{
 			this = new Matrix34(Matrix33.CreateRotationX(rad));
 
-			SetTranslation(t);
+			this.SetTranslation(t);
 		}
 
 		public static Matrix34 CreateRotationX(float rad, Vector3 t = default(Vector3))
@@ -381,7 +357,7 @@ namespace CryEngine
 		{
 			this = new Matrix34(Matrix33.CreateRotationY(rad));
 
-			SetTranslation(t);
+			this.SetTranslation(t);
 		}
 
 		public static Matrix34 CreateRotationY(float rad, Vector3 t = default(Vector3))
@@ -405,7 +381,7 @@ namespace CryEngine
 		{
 			this = new Matrix34(Matrix33.CreateRotationZ(rad));
 
-			SetTranslation(t);
+			this.SetTranslation(t);
 		}
 
 		public static Matrix34 CreateRotationZ(float rad, Vector3 t = default(Vector3))
@@ -432,16 +408,14 @@ namespace CryEngine
 		/// <summary>
 		/// Convert three Euler angle to 3x3 matrix (rotation order:XYZ)
 		/// </summary>
-		/// <example>
-		/// <code>Matrix34 m34; m34.SetRotationXYZ(new Vector3(0.5f,0.2f,0.9f), translation);</code>
-		/// </example>
-		/// <param name="rad">Angles of rotation.</param>
-		/// <param name="t">Optional translation vector.</param>
+		/// <example> <code>Matrix34 m34; m34.SetRotationXYZ(new Vector3(0.5f,0.2f,0.9f), translation);</code> </example>
+		/// <param name="rad"> Angles of rotation. </param>
+		/// <param name="t">   Optional translation vector. </param>
 		public void SetRotationXYZ(Vector3 rad, Vector3 t = default(Vector3))
 		{
 			this = new Matrix34(Matrix33.CreateRotationXYZ(rad));
 
-			SetTranslation(t);
+			this.SetTranslation(t);
 		}
 
 		public static Matrix34 CreateRotationXYZ(Vector3 rad, Vector3 t = default(Vector3))
@@ -455,7 +429,7 @@ namespace CryEngine
 		public void SetRotationAA(float c, float s, Vector3 axis, Vector3 t = default(Vector3))
 		{
 			this = new Matrix34(Matrix33.CreateRotationAA(c, s, axis));
-			M03 = t.X; M13 = t.Y; M23 = t.Z;
+			this.M03 = t.X; this.M13 = t.Y; this.M23 = t.Z;
 		}
 
 		public static Matrix34 CreateRotationAA(float c, float s, Vector3 axis, Vector3 t = default(Vector3))
@@ -473,9 +447,9 @@ namespace CryEngine
 			float vxvx = q.V.X * q.V.X; float vzvz = q.V.Z * q.V.Z; float vyvy = q.V.Y * q.V.Y;
 			float vxvy = q.V.X * q.V.Y; float vxvz = q.V.X * q.V.Z; float vyvz = q.V.Y * q.V.Z;
 			float svx = q.W * q.V.X; float svy = q.W * q.V.Y; float svz = q.W * q.V.Z;
-			M00 = (1 - (vyvy + vzvz) * 2) * s.X; M01 = (vxvy - svz) * 2 * s.Y; M02 = (vxvz + svy) * 2 * s.Z; M03 = t.X;
-			M10 = (vxvy + svz) * 2 * s.X; M11 = (1 - (vxvx + vzvz) * 2) * s.Y; M12 = (vyvz - svx) * 2 * s.Z; M13 = t.Y;
-			M20 = (vxvz - svy) * 2 * s.X; M21 = (vyvz + svx) * 2 * s.Y; M22 = (1 - (vxvx + vyvy) * 2) * s.Z; M23 = t.Z;
+			this.M00 = (1 - (vyvy + vzvz) * 2) * s.X; this.M01 = (vxvy - svz) * 2 * s.Y; this.M02 = (vxvz + svy) * 2 * s.Z; this.M03 = t.X;
+			this.M10 = (vxvy + svz) * 2 * s.X; this.M11 = (1 - (vxvx + vzvz) * 2) * s.Y; this.M12 = (vyvz - svx) * 2 * s.Z; this.M13 = t.Y;
+			this.M20 = (vxvz - svy) * 2 * s.X; this.M21 = (vyvz + svx) * 2 * s.Y; this.M22 = (1 - (vxvx + vyvy) * 2) * s.Z; this.M23 = t.Z;
 		}
 
 		public static Matrix34 Create(Vector3 s, Quaternion q, Vector3 t = default(Vector3))
@@ -490,7 +464,7 @@ namespace CryEngine
 		{
 			this = new Matrix34(Matrix33.CreateScale(s));
 
-			SetTranslation(t);
+			this.SetTranslation(t);
 		}
 
 		public static Matrix34 CreateScale(Vector3 s, Vector3 t = default(Vector3))
@@ -503,9 +477,9 @@ namespace CryEngine
 
 		public void SetTranslationMat(Vector3 v)
 		{
-			M00 = 1.0f; M01 = 0.0f; M02 = 0.0f; M03 = v.X;
-			M10 = 0.0f; M11 = 1.0f; M12 = 0.0f; M13 = v.Y;
-			M20 = 0.0f; M21 = 0.0f; M22 = 1.0f; M23 = v.Z;
+			this.M00 = 1.0f; this.M01 = 0.0f; this.M02 = 0.0f; this.M03 = v.X;
+			this.M10 = 0.0f; this.M11 = 1.0f; this.M12 = 0.0f; this.M13 = v.Y;
+			this.M20 = 0.0f; this.M21 = 0.0f; this.M22 = 1.0f; this.M23 = v.Z;
 		}
 
 		public static Matrix34 CreateTranslationMat(Vector3 v)
@@ -518,9 +492,9 @@ namespace CryEngine
 
 		public void SetFromVectors(Vector3 vx, Vector3 vy, Vector3 vz, Vector3 pos)
 		{
-			M00 = vx.X; M01 = vy.X; M02 = vz.X; M03 = pos.X;
-			M10 = vx.Y; M11 = vy.Y; M12 = vz.Y; M13 = pos.Y;
-			M20 = vx.Z; M21 = vy.Z; M22 = vz.Z; M23 = pos.Z;
+			this.M00 = vx.X; this.M01 = vy.X; this.M02 = vz.X; this.M03 = pos.X;
+			this.M10 = vx.Y; this.M11 = vy.Y; this.M12 = vz.Y; this.M13 = pos.Y;
+			this.M20 = vx.Z; this.M21 = vy.Z; this.M22 = vz.Z; this.M23 = pos.Z;
 		}
 
 		public static Matrix34 CreateFromVectors(Vector3 vx, Vector3 vy, Vector3 vz, Vector3 pos)
@@ -533,10 +507,10 @@ namespace CryEngine
 
 		public void InvertFast()
 		{
-			var v = new Vector3(M03, M13, M23);
-			float t = M01; M01 = M10; M10 = t; M03 = -v.X * M00 - v.Y * M01 - v.Z * M20;
-			t = M02; M02 = M20; M20 = t; M13 = -v.X * M10 - v.Y * M11 - v.Z * M21;
-			t = M12; M12 = M21; M21 = t; M23 = -v.X * M20 - v.Y * M21 - v.Z * M22;
+			var v = new Vector3(this.M03, this.M13, this.M23);
+			float t = this.M01; this.M01 = this.M10; this.M10 = t; this.M03 = -v.X * this.M00 - v.Y * this.M01 - v.Z * this.M20;
+			t = this.M02; this.M02 = this.M20; this.M20 = t; this.M13 = -v.X * this.M10 - v.Y * this.M11 - v.Z * this.M21;
+			t = this.M12; this.M12 = this.M21; this.M21 = t; this.M23 = -v.X * this.M20 - v.Y * this.M21 - v.Z * this.M22;
 		}
 
 		public void Invert()
@@ -545,46 +519,46 @@ namespace CryEngine
 			var m = this;
 
 			// calculate 12 cofactors
-			M00 = m.M22 * m.M11 - m.M12 * m.M21;
-			M10 = m.M12 * m.M20 - m.M22 * m.M10;
-			M20 = m.M10 * m.M21 - m.M20 * m.M11;
-			M01 = m.M02 * m.M21 - m.M22 * m.M01;
-			M11 = m.M22 * m.M00 - m.M02 * m.M20;
-			M21 = m.M20 * m.M01 - m.M00 * m.M21;
-			M02 = m.M12 * m.M01 - m.M02 * m.M11;
-			M12 = m.M02 * m.M10 - m.M12 * m.M00;
-			M22 = m.M00 * m.M11 - m.M10 * m.M01;
-			M03 = (m.M22 * m.M13 * m.M01 + m.M02 * m.M23 * m.M11 + m.M12 * m.M03 * m.M21) - (m.M12 * m.M23 * m.M01 + m.M22 * m.M03 * m.M11 + m.M02 * m.M13 * m.M21);
-			M13 = (m.M12 * m.M23 * m.M00 + m.M22 * m.M03 * m.M10 + m.M02 * m.M13 * m.M20) - (m.M22 * m.M13 * m.M00 + m.M02 * m.M23 * m.M10 + m.M12 * m.M03 * m.M20);
-			M23 = (m.M20 * m.M11 * m.M03 + m.M00 * m.M21 * m.M13 + m.M10 * m.M01 * m.M23) - (m.M10 * m.M21 * m.M03 + m.M20 * m.M01 * m.M13 + m.M00 * m.M11 * m.M23);
+			this.M00 = m.M22 * m.M11 - m.M12 * m.M21;
+			this.M10 = m.M12 * m.M20 - m.M22 * m.M10;
+			this.M20 = m.M10 * m.M21 - m.M20 * m.M11;
+			this.M01 = m.M02 * m.M21 - m.M22 * m.M01;
+			this.M11 = m.M22 * m.M00 - m.M02 * m.M20;
+			this.M21 = m.M20 * m.M01 - m.M00 * m.M21;
+			this.M02 = m.M12 * m.M01 - m.M02 * m.M11;
+			this.M12 = m.M02 * m.M10 - m.M12 * m.M00;
+			this.M22 = m.M00 * m.M11 - m.M10 * m.M01;
+			this.M03 = (m.M22 * m.M13 * m.M01 + m.M02 * m.M23 * m.M11 + m.M12 * m.M03 * m.M21) - (m.M12 * m.M23 * m.M01 + m.M22 * m.M03 * m.M11 + m.M02 * m.M13 * m.M21);
+			this.M13 = (m.M12 * m.M23 * m.M00 + m.M22 * m.M03 * m.M10 + m.M02 * m.M13 * m.M20) - (m.M22 * m.M13 * m.M00 + m.M02 * m.M23 * m.M10 + m.M12 * m.M03 * m.M20);
+			this.M23 = (m.M20 * m.M11 * m.M03 + m.M00 * m.M21 * m.M13 + m.M10 * m.M01 * m.M23) - (m.M10 * m.M21 * m.M03 + m.M20 * m.M01 * m.M13 + m.M00 * m.M11 * m.M23);
 
 			// calculate determinant
-			float det = 1.0f / (m.M00 * M00 + m.M10 * M01 + m.M20 * M02);
+			float det = 1.0f / (m.M00 * this.M00 + m.M10 * this.M01 + m.M20 * this.M02);
 
 			// calculate matrix inverse/
-			M00 *= det; M01 *= det; M02 *= det; M03 *= det;
-			M10 *= det; M11 *= det; M12 *= det; M13 *= det;
-			M20 *= det; M21 *= det; M22 *= det; M23 *= det;
+			this.M00 *= det; this.M01 *= det; this.M02 *= det; this.M03 *= det;
+			this.M10 *= det; this.M11 *= det; this.M12 *= det; this.M13 *= det;
+			this.M20 *= det; this.M21 *= det; this.M22 *= det; this.M23 *= det;
 		}
 
 		/// <summary>
 		/// transforms a vector. the translation is not beeing considered
 		/// </summary>
-		/// <param name="p"></param>
-		/// <returns></returns>
+		/// <param name="p"> </param>
+		/// <returns> </returns>
 		public Vector3 TransformVector(Vector3 p)
 		{
-			return new Vector3(M00 * p.X + M01 * p.Y + M02 * p.Z + M03, M10 * p.X + M11 * p.Y + M12 * p.Z + M13, M20 * p.X + M21 * p.Y + M22 * p.Z + M23);
+			return new Vector3(this.M00 * p.X + this.M01 * p.Y + this.M02 * p.Z + this.M03, this.M10 * p.X + this.M11 * p.Y + this.M12 * p.Z + this.M13, this.M20 * p.X + this.M21 * p.Y + this.M22 * p.Z + this.M23);
 		}
 
 		/// <summary>
 		/// transforms a point and add translation vector
 		/// </summary>
-		/// <param name="p"></param>
-		/// <returns></returns>
+		/// <param name="p"> </param>
+		/// <returns> </returns>
 		public Vector3 TransformPoint(Vector3 p)
 		{
-			return new Vector3(M00 * p.X + M01 * p.Y + M02 * p.Z + M03, M10 * p.X + M11 * p.Y + M12 * p.Z + M13, M20 * p.X + M21 * p.Y + M22 * p.Z + M23);
+			return new Vector3(this.M00 * p.X + this.M01 * p.Y + this.M02 * p.Z + this.M03, this.M10 * p.X + this.M11 * p.Y + this.M12 * p.Z + this.M13, this.M20 * p.X + this.M21 * p.Y + this.M22 * p.Z + this.M23);
 		}
 
 		/// <summary>
@@ -592,23 +566,23 @@ namespace CryEngine
 		/// </summary>
 		public void OrthonormalizeFast()
 		{
-			var x = new Vector3(M00, M10, M20);
-			var y = new Vector3(M01, M11, M21);
+			var x = new Vector3(this.M00, this.M10, this.M20);
+			var y = new Vector3(this.M01, this.M11, this.M21);
 			x = x.Normalized;
 			var z = (x % y).Normalized;
 			y = (z % x).Normalized;
-			M00 = x.X; M10 = x.Y; M20 = x.Z;
-			M01 = y.X; M11 = y.Y; M21 = y.Z;
-			M02 = z.X; M12 = z.Y; M22 = z.Z;
+			this.M00 = x.X; this.M10 = x.Y; this.M20 = x.Z;
+			this.M01 = y.X; this.M11 = y.Y; this.M21 = y.Z;
+			this.M02 = z.X; this.M12 = z.Y; this.M22 = z.Z;
 		}
 
 		/// <summary>
 		/// determinant is ambiguous: only the upper-left-submatrix's determinant is calculated
 		/// </summary>
-		/// <returns></returns>
+		/// <returns> </returns>
 		public float Determinant()
 		{
-			return (M00 * M11 * M22) + (M01 * M12 * M20) + (M02 * M10 * M21) - (M02 * M11 * M20) - (M00 * M12 * M21) - (M01 * M10 * M22);
+			return (this.M00 * this.M11 * this.M22) + (this.M01 * this.M12 * this.M20) + (this.M02 * this.M10 * this.M21) - (this.M02 * this.M11 * this.M20) - (this.M00 * this.M12 * this.M21) - (this.M01 * this.M10 * this.M22);
 		}
 
 		public static Matrix34 CreateSlerp(Matrix34 m, Matrix34 n, float t)
@@ -637,12 +611,10 @@ namespace CryEngine
 		/// normalize a very small vector and this can cause numerical instability. The
 		/// quaternion-slerp has exactly the same problems. Ivo
 		/// </summary>
-		/// <param name="m"></param>
-		/// <param name="n"></param>
-		/// <param name="t"></param>
-		/// <example>
-		/// Matrix33 slerp=Matrix33::CreateSlerp( m,n,0.333f );
-		/// </example>
+		/// <param name="m"> </param>
+		/// <param name="n"> </param>
+		/// <param name="t"> </param>
+		/// <example> Matrix33 slerp=Matrix33::CreateSlerp( m,n,0.333f ); </example>
 		public void SetSlerp(Matrix34 m, Matrix34 n, float t)
 		{
 			// calculate delta-rotation between m and n (=39 flops)
@@ -659,74 +631,74 @@ namespace CryEngine
 			i.SetRotationAA((float)angle * t, axis); // angle interpolation and calculation of new delta-matrix (=26 flops)
 
 			// final concatenation (=39 flops)
-			M00 = m.M00 * i.M00 + m.M01 * i.M10 + m.M02 * i.M20; M01 = m.M00 * i.M01 + m.M01 * i.M11 + m.M02 * i.M21; M02 = m.M00 * i.M02 + m.M01 * i.M12 + m.M02 * i.M22;
-			M10 = m.M10 * i.M00 + m.M11 * i.M10 + m.M12 * i.M20; M11 = m.M10 * i.M01 + m.M11 * i.M11 + m.M12 * i.M21; M12 = m.M10 * i.M02 + m.M11 * i.M12 + m.M12 * i.M22;
-			M20 = M01 * M12 - M02 * M11; M21 = M02 * M10 - M00 * M12; M22 = M00 * M11 - M01 * M10;
+			this.M00 = m.M00 * i.M00 + m.M01 * i.M10 + m.M02 * i.M20; this.M01 = m.M00 * i.M01 + m.M01 * i.M11 + m.M02 * i.M21; this.M02 = m.M00 * i.M02 + m.M01 * i.M12 + m.M02 * i.M22;
+			this.M10 = m.M10 * i.M00 + m.M11 * i.M10 + m.M12 * i.M20; this.M11 = m.M10 * i.M01 + m.M11 * i.M11 + m.M12 * i.M21; this.M12 = m.M10 * i.M02 + m.M11 * i.M12 + m.M12 * i.M22;
+			this.M20 = this.M01 * this.M12 - this.M02 * this.M11; this.M21 = this.M02 * this.M10 - this.M00 * this.M12; this.M22 = this.M00 * this.M11 - this.M01 * this.M10;
 
-			M03 = m.M03 * (1 - t) + n.M03 * t;
-			M13 = m.M13 * (1 - t) + n.M13 * t;
-			M23 = m.M23 * (1 - t) + n.M23 * t;
+			this.M03 = m.M03 * (1 - t) + n.M03 * t;
+			this.M13 = m.M13 * (1 - t) + n.M13 * t;
+			this.M23 = m.M23 * (1 - t) + n.M23 * t;
 		}
 
 		public void SetTranslation(Vector3 t)
 		{
-			M03 = t.X;
-			M13 = t.Y;
-			M23 = t.Z;
+			this.M03 = t.X;
+			this.M13 = t.Y;
+			this.M23 = t.Z;
 		}
 
 		public void ScaleTranslation(float s)
 		{
-			M03 *= s;
-			M13 *= s;
-			M23 *= s;
+			this.M03 *= s;
+			this.M13 *= s;
+			this.M23 *= s;
 		}
 
 		public Matrix34 AddTranslation(Vector3 t)
 		{
-			M03 += t.X;
-			M13 += t.Y;
-			M23 += t.Z;
+			this.M03 += t.X;
+			this.M13 += t.Y;
+			this.M23 += t.Z;
 
 			return this;
 		}
 
 		public void SetRotation33(Matrix33 m33)
 		{
-			M00 = m33.M00; M01 = m33.M01; M02 = m33.M02;
-			M10 = m33.M10; M11 = m33.M11; M12 = m33.M12;
-			M20 = m33.M20; M21 = m33.M21; M22 = m33.M22;
+			this.M00 = m33.M00; this.M01 = m33.M01; this.M02 = m33.M02;
+			this.M10 = m33.M10; this.M11 = m33.M11; this.M12 = m33.M12;
+			this.M20 = m33.M20; this.M21 = m33.M21; this.M22 = m33.M22;
 		}
 
 		/// <summary>
 		/// check if we have an orthonormal-base (general case, works even with reflection matrices)
 		/// </summary>
-		/// <param name="threshold"></param>
-		/// <returns></returns>
+		/// <param name="threshold"> </param>
+		/// <returns> </returns>
 		public int IsOrthonormal(float threshold = 0.001f)
 		{
-			var d0 = Math.Abs(ColumnVector0 | ColumnVector1); if (d0 > threshold) return 0;
-			var d1 = Math.Abs(ColumnVector0 | ColumnVector2); if (d1 > threshold) return 0;
-			var d2 = Math.Abs(ColumnVector1 | ColumnVector2); if (d2 > threshold) return 0;
-			var a = (int)System.Convert.ChangeType((Math.Abs(1 - (ColumnVector0 | ColumnVector0))) < threshold, typeof(int));
-			var b = (int)System.Convert.ChangeType((Math.Abs(1 - (ColumnVector1 | ColumnVector1))) < threshold, typeof(int));
-			var c = (int)System.Convert.ChangeType((Math.Abs(1 - (ColumnVector2 | ColumnVector2))) < threshold, typeof(int));
+			var d0 = Math.Abs(this.ColumnVector0 | this.ColumnVector1); if (d0 > threshold) return 0;
+			var d1 = Math.Abs(this.ColumnVector0 | this.ColumnVector2); if (d1 > threshold) return 0;
+			var d2 = Math.Abs(this.ColumnVector1 | this.ColumnVector2); if (d2 > threshold) return 0;
+			var a = (int)System.Convert.ChangeType((Math.Abs(1 - (this.ColumnVector0 | this.ColumnVector0))) < threshold, typeof(int));
+			var b = (int)System.Convert.ChangeType((Math.Abs(1 - (this.ColumnVector1 | this.ColumnVector1))) < threshold, typeof(int));
+			var c = (int)System.Convert.ChangeType((Math.Abs(1 - (this.ColumnVector2 | this.ColumnVector2))) < threshold, typeof(int));
 			return a & b & c;
 		}
 
 		public int IsOrthonormalRH(float threshold = 0.001f)
 		{
-			var a = (int)System.Convert.ChangeType(ColumnVector0.IsEquivalent(ColumnVector1 % ColumnVector2, threshold), typeof(int));
-			var b = (int)System.Convert.ChangeType(ColumnVector1.IsEquivalent(ColumnVector2 % ColumnVector0, threshold), typeof(int));
-			var c = (int)System.Convert.ChangeType(ColumnVector2.IsEquivalent(ColumnVector0 % ColumnVector1, threshold), typeof(int));
+			var a = (int)System.Convert.ChangeType(this.ColumnVector0.IsEquivalent(this.ColumnVector1 % this.ColumnVector2, threshold), typeof(int));
+			var b = (int)System.Convert.ChangeType(this.ColumnVector1.IsEquivalent(this.ColumnVector2 % this.ColumnVector0, threshold), typeof(int));
+			var c = (int)System.Convert.ChangeType(this.ColumnVector2.IsEquivalent(this.ColumnVector0 % this.ColumnVector1, threshold), typeof(int));
 			return a & b & c;
 		}
 
 		public bool IsEquivalent(Matrix34 m, float e = 0.05f)
 		{
-			return ((Math.Abs(M00 - m.M00) <= e) && (Math.Abs(M01 - m.M01) <= e) && (Math.Abs(M02 - m.M02) <= e) && (Math.Abs(M03 - m.M03) <= e) &&
-			(Math.Abs(M10 - m.M10) <= e) && (Math.Abs(M11 - m.M11) <= e) && (Math.Abs(M12 - m.M12) <= e) && (Math.Abs(M13 - m.M13) <= e) &&
-			(Math.Abs(M20 - m.M20) <= e) && (Math.Abs(M21 - m.M21) <= e) && (Math.Abs(M22 - m.M22) <= e) && (Math.Abs(M23 - m.M23) <= e));
+			return ((Math.Abs(this.M00 - m.M00) <= e) && (Math.Abs(this.M01 - m.M01) <= e) && (Math.Abs(this.M02 - m.M02) <= e) && (Math.Abs(this.M03 - m.M03) <= e) &&
+			(Math.Abs(this.M10 - m.M10) <= e) && (Math.Abs(this.M11 - m.M11) <= e) && (Math.Abs(this.M12 - m.M12) <= e) && (Math.Abs(this.M13 - m.M13) <= e) &&
+			(Math.Abs(this.M20 - m.M20) <= e) && (Math.Abs(this.M21 - m.M21) <= e) && (Math.Abs(this.M22 - m.M22) <= e) && (Math.Abs(this.M23 - m.M23) <= e));
 		}
 
 		public override int GetHashCode()
@@ -737,20 +709,20 @@ namespace CryEngine
 				int hash = 17;
 
 				// ReSharper disable NonReadonlyFieldInGetHashCode
-				hash = hash * 29 + M00.GetHashCode();
-				hash = hash * 29 + M01.GetHashCode();
-				hash = hash * 29 + M02.GetHashCode();
-				hash = hash * 29 + M03.GetHashCode();
+				hash = hash * 29 + this.M00.GetHashCode();
+				hash = hash * 29 + this.M01.GetHashCode();
+				hash = hash * 29 + this.M02.GetHashCode();
+				hash = hash * 29 + this.M03.GetHashCode();
 
-				hash = hash * 29 + M10.GetHashCode();
-				hash = hash * 29 + M11.GetHashCode();
-				hash = hash * 29 + M12.GetHashCode();
-				hash = hash * 29 + M13.GetHashCode();
+				hash = hash * 29 + this.M10.GetHashCode();
+				hash = hash * 29 + this.M11.GetHashCode();
+				hash = hash * 29 + this.M12.GetHashCode();
+				hash = hash * 29 + this.M13.GetHashCode();
 
-				hash = hash * 29 + M20.GetHashCode();
-				hash = hash * 29 + M21.GetHashCode();
-				hash = hash * 29 + M22.GetHashCode();
-				hash = hash * 29 + M23.GetHashCode();
+				hash = hash * 29 + this.M20.GetHashCode();
+				hash = hash * 29 + this.M21.GetHashCode();
+				hash = hash * 29 + this.M22.GetHashCode();
+				hash = hash * 29 + this.M23.GetHashCode();
 				// ReSharper restore NonReadonlyFieldInGetHashCode
 
 				return hash;
@@ -761,8 +733,8 @@ namespace CryEngine
 		/// <summary>
 		/// Extracts <see cref="Matrix33" /> submatrix of <see cref="Matrix34" />.
 		/// </summary>
-		/// <param name="m"><see cref="Matrix34" /> to extract 3x3 matrix from.</param>
-		/// <returns>Extracted matrix.</returns>
+		/// <param name="m"> <see cref="Matrix34" /> to extract 3x3 matrix from. </param>
+		/// <returns> Extracted matrix. </returns>
 		public static explicit operator Matrix33(Matrix34 m)
 		{
 			return new Matrix33(m);
@@ -819,21 +791,21 @@ namespace CryEngine
 		/// <summary>
 		/// Enumerates this matrix.
 		/// </summary>
-		/// <returns></returns>
+		/// <returns> </returns>
 		public IEnumerator<float> GetEnumerator()
 		{
-			yield return M00;
-			yield return M01;
-			yield return M02;
-			yield return M03;
-			yield return M10;
-			yield return M11;
-			yield return M12;
-			yield return M13;
-			yield return M20;
-			yield return M21;
-			yield return M22;
-			yield return M23;
+			yield return this.M00;
+			yield return this.M01;
+			yield return this.M02;
+			yield return this.M03;
+			yield return this.M10;
+			yield return this.M11;
+			yield return this.M12;
+			yield return this.M13;
+			yield return this.M20;
+			yield return this.M21;
+			yield return this.M22;
+			yield return this.M23;
 		}
 
 		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()

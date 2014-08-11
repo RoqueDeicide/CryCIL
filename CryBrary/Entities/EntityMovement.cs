@@ -1,4 +1,6 @@
-﻿namespace CryEngine.Entities
+﻿using CryEngine.Mathematics;
+
+namespace CryEngine.Entities
 {
 	/// <summary>
 	/// Enumeration of entity movement flags.

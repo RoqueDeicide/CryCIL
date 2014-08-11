@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CryEngine.Mathematics;
 using CryEngine.Native;
 
 namespace CryEngine.Entities
@@ -37,8 +38,8 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Binds CGF file to this attachment.
 		/// </summary>
-		/// <param name="cgfModel">Path to file to bind to this attachment.</param>
-		/// <param name="material">Optional material to assign to the CGF.</param>
+		/// <param name="cgfModel"> Path to file to bind to this attachment. </param>
+		/// <param name="material"> Optional material to assign to the CGF. </param>
 		public void SwitchToStaticObject(string cgfModel, Material material = null)
 		{
 			IntPtr materialPtr = IntPtr.Zero;
@@ -50,7 +51,7 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Binds entity to this attachment.
 		/// </summary>
-		/// <param name="entityId">Identifier of the entity to bind this attachment to.</param>
+		/// <param name="entityId"> Identifier of the entity to bind this attachment to. </param>
 		public void SwitchToEntityObject(EntityId entityId)
 		{
 			NativeEntityMethods.BindAttachmentToEntity(this.Handle, entityId);
@@ -58,7 +59,7 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Binds a light source to this attachment.
 		/// </summary>
-		/// <param name="lightParams">A set of parameters that describe a light source.</param>
+		/// <param name="lightParams"> A set of parameters that describe a light source. </param>
 		public void SwitchToLightObject(ref LightParams lightParams)
 		{
 			NativeEntityMethods.BindAttachmentToLight(this.Handle, ref lightParams);
@@ -66,10 +67,10 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Binds a particle effect to this attachment.
 		/// </summary>
-		/// <param name="effect"><see cref="ParticleEffect" /> to bind to this attachment.</param>
-		/// <param name="offset">Position of the particle effect relative to the attachment.</param>
-		/// <param name="dir">Direction of the particle effect spray.</param>
-		/// <param name="scale">Scale to assign to the particle effect.</param>
+		/// <param name="effect"> <see cref="ParticleEffect" /> to bind to this attachment. </param>
+		/// <param name="offset"> Position of the particle effect relative to the attachment. </param>
+		/// <param name="dir">    Direction of the particle effect spray. </param>
+		/// <param name="scale">  Scale to assign to the particle effect. </param>
 		public void SwitchToParticleEffectObject(ParticleEffect effect, Vector3 offset, Vector3 dir, float scale)
 		{
 			NativeEntityMethods.BindAttachmentToParticleEffect(this.Handle, effect.Handle, offset, dir, scale);

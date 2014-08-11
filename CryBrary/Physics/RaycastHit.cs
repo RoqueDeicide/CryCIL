@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using CryEngine.Entities;
+using CryEngine.Mathematics;
 using CryEngine.Native;
 using CryEngine.Physics;
 

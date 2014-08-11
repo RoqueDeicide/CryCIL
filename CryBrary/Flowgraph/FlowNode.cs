@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using CryEngine.Entities;
 using CryEngine.Extensions;
 using CryEngine.Initialization;
+using CryEngine.Mathematics;
 using CryEngine.Native;
 using CryEngine.Flowgraph.Native;
 

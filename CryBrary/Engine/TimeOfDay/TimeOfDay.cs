@@ -1,4 +1,5 @@
-﻿using CryEngine.Native;
+﻿using CryEngine.Mathematics;
+using CryEngine.Native;
 
 namespace CryEngine
 {

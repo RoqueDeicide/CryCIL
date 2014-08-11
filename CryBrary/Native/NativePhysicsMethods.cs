@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
-
+using CryEngine.Mathematics;
 using CryEngine.Physics;
 using CryEngine.Physics.Status;
 

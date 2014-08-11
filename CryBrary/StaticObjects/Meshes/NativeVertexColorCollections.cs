@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using CryEngine.Mathematics;
 using CryEngine.Mathematics.MemoryMapping;
 using CryEngine.Native;
 
@@ -29,7 +30,7 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <summary>
 		/// Gets or sets color instance at specified index.
 		/// </summary>
-		/// <param name="index">Index of the color to access.</param>
+		/// <param name="index"> Index of the color to access. </param>
 		public override Color32 this[int index]
 		{
 			get
@@ -54,7 +55,7 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <summary>
 		/// Creates new instance of type <see cref="NativeVertexColor0Collection" />.
 		/// </summary>
-		/// <param name="mesh">Mesh that hosts this collection.</param>
+		/// <param name="mesh"> Mesh that hosts this collection. </param>
 		protected NativeVertexColorCollection(NativeMesh mesh)
 		{
 			this.Mesh = mesh;
@@ -85,7 +86,7 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <summary>
 		/// Creates new instance of class <see cref="NativeVertexColor0Collection" />.
 		/// </summary>
-		/// <param name="mesh"><see cref="NativeMesh" /> that hosts this collection.</param>
+		/// <param name="mesh"> <see cref="NativeMesh" /> that hosts this collection. </param>
 		public NativeVertexColor0Collection(NativeMesh mesh)
 			: base(mesh)
 		{
@@ -106,7 +107,7 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <summary>
 		/// Creates new instance of class <see cref="NativeVertexColor0Collection" />.
 		/// </summary>
-		/// <param name="mesh"><see cref="NativeMesh" /> that hosts this collection.</param>
+		/// <param name="mesh"> <see cref="NativeMesh" /> that hosts this collection. </param>
 		public NativeVertexColor1Collection(NativeMesh mesh)
 			: base(mesh)
 		{

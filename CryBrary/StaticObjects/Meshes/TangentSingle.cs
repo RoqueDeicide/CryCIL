@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using CryEngine.Mathematics;
 using CryEngine.Mathematics.MemoryMapping;
 
 namespace CryEngine.StaticObjects.Meshes
@@ -50,7 +51,7 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <summary>
 		/// Indicates whether this tangent space normal is equal to another.
 		/// </summary>
-		/// <param name="other">Another tangent.</param>
+		/// <param name="other"> Another tangent. </param>
 		/// <returns>
 		/// True, if another normal uses <see cref="Single" /> type for coordinates and is equal to
 		/// this one.
@@ -87,7 +88,7 @@ namespace CryEngine.StaticObjects.Meshes
 		/// <summary>
 		/// Indicates whether this tangent space normal is equal to another.
 		/// </summary>
-		/// <param name="other">Another tangent.</param>
+		/// <param name="other"> Another tangent. </param>
 		/// <returns>
 		/// True, if another normal uses <see cref="Single" /> type for coordinates and is equal to
 		/// this one.

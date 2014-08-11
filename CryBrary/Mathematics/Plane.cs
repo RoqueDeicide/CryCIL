@@ -19,11 +19,13 @@
 * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 * THE SOFTWARE.
 */
+
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.InteropServices;
 
-namespace CryEngine
+namespace CryEngine.Mathematics
 {
 	/// <summary>
 	/// Represents a plane in three dimensional space.
@@ -36,66 +38,65 @@ namespace CryEngine
 		/// The normal vector of the plane.
 		/// </summary>
 		public Vector3 Normal;
-
 		/// <summary>
 		/// The distance of the plane along its normal from the origin.
 		/// </summary>
 		public float D;
-
 		/// <summary>
-		/// Initializes a new instance of the <see cref="CryEngine.Plane" /> struct.
+		/// Initializes a new instance of the <see cref="Plane" /> struct.
 		/// </summary>
-		/// <param name="value">The value that will be assigned to all components.</param>
+		/// <param name="value"> The value that will be assigned to all components. </param>
 		public Plane(float value)
 		{
-			Normal.X = Normal.Y = Normal.Z = D = value;
+			this.Normal.X = this.Normal.Y = this.Normal.Z = this.D = value;
 		}
-
 		/// <summary>
-		/// Initializes a new instance of the <see cref="CryEngine.Plane" /> struct.
+		/// Initializes a new instance of the <see cref="Plane" /> struct.
 		/// </summary>
-		/// <param name="a">The X component of the normal.</param>
-		/// <param name="b">The Y component of the normal.</param>
-		/// <param name="c">The Z component of the normal.</param>
-		/// <param name="d">The distance of the plane along its normal from the origin.</param>
+		/// <param name="a"> The X component of the normal. </param>
+		/// <param name="b"> The Y component of the normal. </param>
+		/// <param name="c"> The Z component of the normal. </param>
+		/// <param name="d"> The distance of the plane along its normal from the origin. </param>
 		public Plane(float a, float b, float c, float d)
 		{
-			Normal.X = a;
-			Normal.Y = b;
-			Normal.Z = c;
-			D = d;
+			this.Normal.X = a;
+			this.Normal.Y = b;
+			this.Normal.Z = c;
+			this.D = d;
 		}
-
 		/// <summary>
-		/// Initializes a new instance of the <see cref="CryEngine.Plane" /> struct.
+		/// Initializes a new instance of the <see cref="Plane" /> struct.
 		/// </summary>
-		/// <param name="value">The normal of the plane.</param>
-		/// <param name="d">The distance of the plane along its normal from the origin</param>
+		/// <param name="value"> The normal of the plane. </param>
+		/// <param name="d">     The distance of the plane along its normal from the origin </param>
 		public Plane(Vector3 value, float d)
 		{
-			Normal = value;
-			D = d;
+			this.Normal = value;
+			this.D = d;
 		}
-
 		/// <summary>
-		/// Initializes a new instance of the <see cref="CryEngine.Plane" /> struct.
+		/// Initializes a new instance of the <see cref="Plane" /> struct.
 		/// </summary>
-		/// <param name="point">Any point that lies along the plane.</param>
-		/// <param name="normal">The normal of the plane.</param>
+		/// <param name="point">  Any point that lies along the plane. </param>
+		/// <param name="normal"> The normal of the plane. </param>
 		public Plane(Vector3 point, Vector3 normal)
 		{
-			Normal = normal;
-			D = -Vector3.Dot(normal, point);
+			this.Normal = normal;
+			this.D = -Vector3.Dot(normal, point);
 		}
-
 		/// <summary>
-		/// Initializes a new instance of the <see cref="CryEngine.Plane" /> struct.
+		/// Initializes a new instance of the <see cref="Plane" /> struct.
 		/// </summary>
-		/// <param name="point1">First point of a triangle defining the plane.</param>
-		/// <param name="point2">Second point of a triangle defining the plane.</param>
-		/// <param name="point3">Third point of a triangle defining the plane.</param>
+		/// <param name="point1"> First point of a triangle defining the plane. </param>
+		/// <param name="point2"> Second point of a triangle defining the plane. </param>
+		/// <param name="point3"> Third point of a triangle defining the plane. </param>
 		public Plane(Vector3 point1, Vector3 point2, Vector3 point3)
 		{
+#if DEBUG
+			this.Normal = ((point2 - point1) % (point3 - point1)).Normalized;
+			this.D = this.Normal * point1;
+#endif
+#if RELEASE
 			float x1 = point2.X - point1.X;
 			float y1 = point2.Y - point1.Y;
 			float z1 = point2.Z - point1.Z;
@@ -111,10 +112,10 @@ namespace CryEngine
 			Normal.Y = xz * invPyth;
 			Normal.Z = xy * invPyth;
 			D = -((Normal.X * point1.X) + (Normal.Y * point1.Y) + (Normal.Z * point1.Z));
+#endif
 		}
-
 		/// <summary>
-		/// Initializes a new instance of the <see cref="CryEngine.Plane" /> struct.
+		/// Initializes a new instance of the <see cref="Plane" /> struct.
 		/// </summary>
 		/// <param name="values">
 		/// The values to assign to the A, B, C, and D components of the plane. This must be an
@@ -126,30 +127,29 @@ namespace CryEngine
 		/// <exception cref="ArgumentOutOfRangeException">
 		/// Thrown when <paramref name="values" /> contains more or less than four elements.
 		/// </exception>
-		public Plane(float[] values)
+		public Plane(IList<float> values)
 		{
 #if !(RELEASE && RELEASE_DISABLE_CHECKS)
 			if (values == null)
 				throw new ArgumentNullException("values");
-			if (values.Length != 4)
+			if (values.Count != 4)
 				throw new ArgumentOutOfRangeException("values", "There must be four and only four input values for Plane.");
 #endif
 
-			Normal.X = values[0];
-			Normal.Y = values[1];
-			Normal.Z = values[2];
-			D = values[3];
+			this.Normal.X = values[0];
+			this.Normal.Y = values[1];
+			this.Normal.Z = values[2];
+			this.D = values[3];
 		}
-
 		/// <summary>
 		/// Gets or sets the component at the specified index.
 		/// </summary>
-		/// <value>The value of the A, B, C, or D component, depending on the index.</value>
+		/// <value> The value of the A, B, C, or D component, depending on the index. </value>
 		/// <param name="index">
 		/// The index of the component to access. Use 0 for the A component, 1 for the B component,
 		/// 2 for the C component, and 3 for the D component.
 		/// </param>
-		/// <returns>The value of the component at the specified index.</returns>
+		/// <returns> The value of the component at the specified index. </returns>
 		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// Thrown when the <paramref name="index" /> is out of the range [0, 3].
 		/// </exception>
@@ -159,10 +159,10 @@ namespace CryEngine
 			{
 				switch (index)
 				{
-					case 0: return Normal.X;
-					case 1: return Normal.Y;
-					case 2: return Normal.Z;
-					case 3: return D;
+					case 0: return this.Normal.X;
+					case 1: return this.Normal.Y;
+					case 2: return this.Normal.Z;
+					case 3: return this.D;
 				}
 
 				throw new ArgumentOutOfRangeException("index", "Indices for Plane run from 0 to 3, inclusive.");
@@ -172,26 +172,25 @@ namespace CryEngine
 			{
 				switch (index)
 				{
-					case 0: Normal.X = value;
+					case 0: this.Normal.X = value;
 						break;
-					case 1: Normal.Y = value;
+					case 1: this.Normal.Y = value;
 						break;
-					case 2: Normal.Z = value;
+					case 2: this.Normal.Z = value;
 						break;
-					case 3: D = value;
+					case 3: this.D = value;
 						break;
 					default:
 						throw new ArgumentOutOfRangeException("index", "Indices for Plane run from 0 to 3, inclusive.");
 				}
 			}
 		}
-
 		/// <summary>
 		/// Scales each component of the plane by the given scaling factor.
 		/// </summary>
-		/// <param name="value">The plane to scale.</param>
-		/// <param name="scale">The amount by which to scale the plane.</param>
-		/// <param name="result">When the method completes, contains the scaled plane.</param>
+		/// <param name="value">  The plane to scale. </param>
+		/// <param name="scale">  The amount by which to scale the plane. </param>
+		/// <param name="result"> When the method completes, contains the scaled plane. </param>
 		public static void Multiply(ref Plane value, float scale, out Plane result)
 		{
 			result.Normal.X = value.Normal.X * scale;
@@ -199,48 +198,44 @@ namespace CryEngine
 			result.Normal.Z = value.Normal.Z * scale;
 			result.D = value.D * scale;
 		}
-
 		/// <summary>
 		/// Scales each component of the plane by the given scaling factor.
 		/// </summary>
-		/// <param name="value">The plane to scale.</param>
-		/// <param name="scale">The amount by which to scale the plane.</param>
-		/// <returns>The scaled plane.</returns>
+		/// <param name="value"> The plane to scale. </param>
+		/// <param name="scale"> The amount by which to scale the plane. </param>
+		/// <returns> The scaled plane. </returns>
 		public static Plane Multiply(Plane value, float scale)
 		{
 			return new Plane(value.Normal.X * scale, value.Normal.Y * scale, value.Normal.Z * scale, value.D * scale);
 		}
-
 		/// <summary>
 		/// Scales the distance component of the plane by the given scaling factor.
 		/// </summary>
-		/// <param name="value">The plane to scale.</param>
-		/// <param name="scale">The amount by which to scale the plane.</param>
-		/// <param name="result">When the method completes, contains the scaled plane.</param>
+		/// <param name="value">  The plane to scale. </param>
+		/// <param name="scale">  The amount by which to scale the plane. </param>
+		/// <param name="result"> When the method completes, contains the scaled plane. </param>
 		public static void Scale(ref Plane value, float scale, out Plane result)
 		{
 			result.Normal = value.Normal;
 			result.D = value.D * scale;
 		}
-
 		/// <summary>
 		/// Scales the distance component of the plane by the given scaling factor.
 		/// </summary>
-		/// <param name="value">The plane to scale.</param>
-		/// <param name="scale">The amount by which to scale the plane.</param>
-		/// <returns>The scaled plane.</returns>
+		/// <param name="value"> The plane to scale. </param>
+		/// <param name="scale"> The amount by which to scale the plane. </param>
+		/// <returns> The scaled plane. </returns>
 		public static Plane Scale(Plane value, float scale)
 		{
 			Plane result;
 			Scale(ref value, scale, out result);
 			return result;
 		}
-
 		/// <summary>
 		/// Calculates the dot product of the specified vector and plane.
 		/// </summary>
-		/// <param name="left">The source plane.</param>
-		/// <param name="right">The source vector.</param>
+		/// <param name="left">   The source plane. </param>
+		/// <param name="right">  The source vector. </param>
 		/// <param name="result">
 		/// When the method completes, contains the dot product of the specified plane and vector.
 		/// </param>
@@ -248,24 +243,22 @@ namespace CryEngine
 		{
 			result = (left.Normal.X * right.X) + (left.Normal.Y * right.Y) + (left.Normal.Z * right.Z) + (left.D * right.W);
 		}
-
 		/// <summary>
 		/// Calculates the dot product of the specified vector and plane.
 		/// </summary>
-		/// <param name="left">The source plane.</param>
-		/// <param name="right">The source vector.</param>
-		/// <returns>The dot product of the specified plane and vector.</returns>
+		/// <param name="left">  The source plane. </param>
+		/// <param name="right"> The source vector. </param>
+		/// <returns> The dot product of the specified plane and vector. </returns>
 		public static float Dot(Plane left, Vector4 right)
 		{
 			return (left.Normal.X * right.X) + (left.Normal.Y * right.Y) + (left.Normal.Z * right.Z) + (left.D * right.W);
 		}
-
 		/// <summary>
 		/// Calculates the dot product of a specified vector and the normal of the plane plus the
 		/// distance value of the plane.
 		/// </summary>
-		/// <param name="left">The source plane.</param>
-		/// <param name="right">The source vector.</param>
+		/// <param name="left">   The source plane. </param>
+		/// <param name="right">  The source vector. </param>
 		/// <param name="result">
 		/// When the method completes, contains the dot product of a specified vector and the normal
 		/// of the Plane plus the distance value of the plane.
@@ -274,13 +267,12 @@ namespace CryEngine
 		{
 			result = (left.Normal.X * right.X) + (left.Normal.Y * right.Y) + (left.Normal.Z * right.Z) + left.D;
 		}
-
 		/// <summary>
 		/// Calculates the dot product of a specified vector and the normal of the plane plus the
 		/// distance value of the plane.
 		/// </summary>
-		/// <param name="left">The source plane.</param>
-		/// <param name="right">The source vector.</param>
+		/// <param name="left">  The source plane. </param>
+		/// <param name="right"> The source vector. </param>
 		/// <returns>
 		/// The dot product of a specified vector and the normal of the Plane plus the distance
 		/// value of the plane.
@@ -289,12 +281,11 @@ namespace CryEngine
 		{
 			return (left.Normal.X * right.X) + (left.Normal.Y * right.Y) + (left.Normal.Z * right.Z) + left.D;
 		}
-
 		/// <summary>
 		/// Calculates the dot product of the specified vector and the normal of the plane.
 		/// </summary>
-		/// <param name="left">The source plane.</param>
-		/// <param name="right">The source vector.</param>
+		/// <param name="left">   The source plane. </param>
+		/// <param name="right">  The source vector. </param>
 		/// <param name="result">
 		/// When the method completes, contains the dot product of the specified vector and the
 		/// normal of the plane.
@@ -303,23 +294,21 @@ namespace CryEngine
 		{
 			result = (left.Normal.X * right.X) + (left.Normal.Y * right.Y) + (left.Normal.Z * right.Z);
 		}
-
 		/// <summary>
 		/// Calculates the dot product of the specified vector and the normal of the plane.
 		/// </summary>
-		/// <param name="left">The source plane.</param>
-		/// <param name="right">The source vector.</param>
-		/// <returns>The dot product of the specified vector and the normal of the plane.</returns>
+		/// <param name="left">  The source plane. </param>
+		/// <param name="right"> The source vector. </param>
+		/// <returns> The dot product of the specified vector and the normal of the plane. </returns>
 		public static float DotNormal(Plane left, Vector3 right)
 		{
 			return (left.Normal.X * right.X) + (left.Normal.Y * right.Y) + (left.Normal.Z * right.Z);
 		}
-
 		/// <summary>
 		/// Changes the coefficients of the normal vector of the plane to make it of unit length.
 		/// </summary>
-		/// <param name="plane">The source plane.</param>
-		/// <param name="result">When the method completes, contains the normalized plane.</param>
+		/// <param name="plane">  The source plane. </param>
+		/// <param name="result"> When the method completes, contains the normalized plane. </param>
 		public static void Normalize(ref Plane plane, out Plane result)
 		{
 			float magnitude = 1.0f / (float)Math.Sqrt((plane.Normal.X * plane.Normal.X) + (plane.Normal.Y * plane.Normal.Y) + (plane.Normal.Z * plane.Normal.Z));
@@ -329,24 +318,22 @@ namespace CryEngine
 			result.Normal.Z = plane.Normal.Z * magnitude;
 			result.D = plane.D * magnitude;
 		}
-
 		/// <summary>
 		/// Changes the coefficients of the normal vector of the plane to make it of unit length.
 		/// </summary>
-		/// <param name="plane">The source plane.</param>
-		/// <returns>The normalized plane.</returns>
+		/// <param name="plane"> The source plane. </param>
+		/// <returns> The normalized plane. </returns>
 		public static Plane Normalize(Plane plane)
 		{
 			float magnitude = 1.0f / (float)Math.Sqrt((plane.Normal.X * plane.Normal.X) + (plane.Normal.Y * plane.Normal.Y) + (plane.Normal.Z * plane.Normal.Z));
 			return new Plane(plane.Normal.X * magnitude, plane.Normal.Y * magnitude, plane.Normal.Z * magnitude, plane.D * magnitude);
 		}
-
 		/// <summary>
 		/// Transforms a normalized plane by a quaternion rotation.
 		/// </summary>
-		/// <param name="plane">The normalized source plane.</param>
-		/// <param name="rotation">The quaternion rotation.</param>
-		/// <param name="result">When the method completes, contains the transformed plane.</param>
+		/// <param name="plane">    The normalized source plane. </param>
+		/// <param name="rotation"> The quaternion rotation. </param>
+		/// <param name="result">   When the method completes, contains the transformed plane. </param>
 		public static void Transform(ref Plane plane, ref Quaternion rotation, out Plane result)
 		{
 			float x2 = rotation.V.X + rotation.V.X;
@@ -375,13 +362,12 @@ namespace CryEngine
 			result.Normal.Z = ((x * (xz - wy)) + (y * (yz + wx))) + (z * ((1.0f - xx) - yy));
 			result.D = plane.D;
 		}
-
 		/// <summary>
 		/// Transforms a normalized plane by a quaternion rotation.
 		/// </summary>
-		/// <param name="plane">The normalized source plane.</param>
-		/// <param name="rotation">The quaternion rotation.</param>
-		/// <returns>The transformed plane.</returns>
+		/// <param name="plane">    The normalized source plane. </param>
+		/// <param name="rotation"> The quaternion rotation. </param>
+		/// <returns> The transformed plane. </returns>
 		public static Plane Transform(Plane plane, Quaternion rotation)
 		{
 			Plane result;
@@ -413,12 +399,11 @@ namespace CryEngine
 
 			return result;
 		}
-
 		/// <summary>
 		/// Transforms an array of normalized planes by a quaternion rotation.
 		/// </summary>
-		/// <param name="planes">The array of normalized planes to transform.</param>
-		/// <param name="rotation">The quaternion rotation.</param>
+		/// <param name="planes">   The array of normalized planes to transform. </param>
+		/// <param name="rotation"> The quaternion rotation. </param>
 		/// <exception cref="ArgumentNullException">
 		/// Thrown when <paramref name="planes" /> is <c>null</c>.
 		/// </exception>
@@ -457,34 +442,31 @@ namespace CryEngine
 				planes[i].Normal.Z = ((x * (xz - wy)) + (y * (yz + wx))) + (z * ((1.0f - xx) - yy));
 			}
 		}
-
 		/// <summary>
 		/// Scales each component of the plane by the given value.
 		/// </summary>
-		/// <param name="scale">The amount by which to scale the plane.</param>
-		/// <param name="plane">The plane to scale.</param>
-		/// <returns>The scaled plane.</returns>
+		/// <param name="scale"> The amount by which to scale the plane. </param>
+		/// <param name="plane"> The plane to scale. </param>
+		/// <returns> The scaled plane. </returns>
 		public static Plane operator *(float scale, Plane plane)
 		{
 			return new Plane(plane.Normal.X * scale, plane.Normal.Y * scale, plane.Normal.Z * scale, plane.D * scale);
 		}
-
 		/// <summary>
 		/// Scales each component of the plane by the given value.
 		/// </summary>
-		/// <param name="plane">The plane to scale.</param>
-		/// <param name="scale">The amount by which to scale the plane.</param>
-		/// <returns>The scaled plane.</returns>
+		/// <param name="plane"> The plane to scale. </param>
+		/// <param name="scale"> The amount by which to scale the plane. </param>
+		/// <returns> The scaled plane. </returns>
 		public static Plane operator *(Plane plane, float scale)
 		{
 			return new Plane(plane.Normal.X * scale, plane.Normal.Y * scale, plane.Normal.Z * scale, plane.D * scale);
 		}
-
 		/// <summary>
 		/// Tests for equality between two objects.
 		/// </summary>
-		/// <param name="left">The first value to compare.</param>
-		/// <param name="right">The second value to compare.</param>
+		/// <param name="left">  The first value to compare. </param>
+		/// <param name="right"> The second value to compare. </param>
 		/// <returns>
 		/// <c>true</c> if <paramref name="left" /> has the same value as <paramref name="right" />;
 		/// otherwise, <c>false</c>.
@@ -493,12 +475,11 @@ namespace CryEngine
 		{
 			return left.Equals(right);
 		}
-
 		/// <summary>
 		/// Tests for inequality between two objects.
 		/// </summary>
-		/// <param name="left">The first value to compare.</param>
-		/// <param name="right">The second value to compare.</param>
+		/// <param name="left">  The first value to compare. </param>
+		/// <param name="right"> The second value to compare. </param>
 		/// <returns>
 		/// <c>true</c> if <paramref name="left" /> has a different value than <paramref
 		/// name="right" />; otherwise, <c>false</c>.
@@ -507,181 +488,162 @@ namespace CryEngine
 		{
 			return !left.Equals(right);
 		}
-
 		/// <summary>
 		/// Changes the coefficients of the normal vector of the plane to make it of unit length.
 		/// </summary>
 		public void Normalize()
 		{
-			float magnitude = 1.0f / (float)Math.Sqrt((Normal.X * Normal.X) + (Normal.Y * Normal.Y) + (Normal.Z * Normal.Z));
+			float magnitude = 1.0f / (float)Math.Sqrt((this.Normal.X * this.Normal.X) + (this.Normal.Y * this.Normal.Y) + (this.Normal.Z * this.Normal.Z));
 
-			Normal.X *= magnitude;
-			Normal.Y *= magnitude;
-			Normal.Z *= magnitude;
-			D *= magnitude;
+			this.Normal.X *= magnitude;
+			this.Normal.Y *= magnitude;
+			this.Normal.Z *= magnitude;
+			this.D *= magnitude;
 		}
-
 		/// <summary>
 		/// Creates an array containing the elements of the plane.
 		/// </summary>
-		/// <returns>A four-element array containing the components of the plane.</returns>
+		/// <returns> A four-element array containing the components of the plane. </returns>
 		public float[] ToArray()
 		{
-			return new[] { Normal.X, Normal.Y, Normal.Z, D };
+			return new[] { this.Normal.X, this.Normal.Y, this.Normal.Z, this.D };
 		}
-
 		/// <summary>
 		/// Determines if there is an intersection between the current object and a point.
 		/// </summary>
-		/// <param name="point">The point to test.</param>
-		/// <returns>Whether the two objects intersected.</returns>
+		/// <param name="point"> The point to test. </param>
+		/// <returns> Whether the two objects intersected. </returns>
 		public PlaneIntersectionType Intersects(ref Vector3 point)
 		{
 			return Collision.PlaneIntersectsPoint(ref this, ref point);
 		}
-
 		/// <summary>
-		/// Determines if there is an intersection between the current object and a <see
-		/// cref="CryEngine.Ray" />.
+		/// Determines if there is an intersection between the current object and a <see cref="Ray" />.
 		/// </summary>
-		/// <param name="ray">The ray to test.</param>
-		/// <returns>Whether the two objects intersected.</returns>
+		/// <param name="ray"> The ray to test. </param>
+		/// <returns> Whether the two objects intersected. </returns>
 		public bool Intersects(ref Ray ray)
 		{
 			float distance;
 			return Collision.RayIntersectsPlane(ref ray, ref this, out distance);
 		}
-
 		/// <summary>
-		/// Determines if there is an intersection between the current object and a <see
-		/// cref="CryEngine.Ray" />.
+		/// Determines if there is an intersection between the current object and a <see cref="Ray" />.
 		/// </summary>
-		/// <param name="ray">The ray to test.</param>
+		/// <param name="ray">      The ray to test. </param>
 		/// <param name="distance">
 		/// When the method completes, contains the distance of the intersection, or 0 if there was
 		/// no intersection.
 		/// </param>
-		/// <returns>Whether the two objects intersected.</returns>
+		/// <returns> Whether the two objects intersected. </returns>
 		public bool Intersects(ref Ray ray, out float distance)
 		{
 			return Collision.RayIntersectsPlane(ref ray, ref this, out distance);
 		}
-
 		/// <summary>
-		/// Determines if there is an intersection between the current object and a <see
-		/// cref="CryEngine.Ray" />.
+		/// Determines if there is an intersection between the current object and a <see cref="Ray" />.
 		/// </summary>
-		/// <param name="ray">The ray to test.</param>
+		/// <param name="ray">   The ray to test. </param>
 		/// <param name="point">
-		/// When the method completes, contains the point of intersection, or <see
-		/// cref="CryEngine.Vector3" /> if there was no intersection.
+		/// When the method completes, contains the point of intersection, or <see cref="Vector3" />
+		/// if there was no intersection.
 		/// </param>
-		/// <returns>Whether the two objects intersected.</returns>
+		/// <returns> Whether the two objects intersected. </returns>
 		public bool Intersects(ref Ray ray, out Vector3 point)
 		{
 			return Collision.RayIntersectsPlane(ref ray, ref this, out point);
 		}
-
 		/// <summary>
 		/// Determines if there is an intersection between the current object and a <see
-		/// cref="CryEngine.Plane" />.
+		/// cref="Plane" />.
 		/// </summary>
-		/// <param name="plane">The plane to test.</param>
-		/// <returns>Whether the two objects intersected.</returns>
+		/// <param name="plane"> The plane to test. </param>
+		/// <returns> Whether the two objects intersected. </returns>
 		public bool Intersects(ref Plane plane)
 		{
 			return Collision.PlaneIntersectsPlane(ref this, ref plane);
 		}
-
 		/// <summary>
 		/// Determines if there is an intersection between the current object and a <see
-		/// cref="CryEngine.Plane" />.
+		/// cref="Plane" />.
 		/// </summary>
-		/// <param name="plane">The plane to test.</param>
-		/// <param name="line">
-		/// When the method completes, contains the line of intersection as a <see
-		/// cref="CryEngine.Ray" />, or a zero ray if there was no intersection.
+		/// <param name="plane"> The plane to test. </param>
+		/// <param name="line"> 
+		/// When the method completes, contains the line of intersection as a <see cref="Ray" />, or
+		/// a zero ray if there was no intersection.
 		/// </param>
-		/// <returns>Whether the two objects intersected.</returns>
+		/// <returns> Whether the two objects intersected. </returns>
 		public bool Intersects(ref Plane plane, out Ray line)
 		{
 			return Collision.PlaneIntersectsPlane(ref this, ref plane, out line);
 		}
-
 		/// <summary>
 		/// Determines if there is an intersection between the current object and a triangle.
 		/// </summary>
-		/// <param name="vertex1">The first vertex of the triangle to test.</param>
-		/// <param name="vertex2">The second vertex of the triagnle to test.</param>
-		/// <param name="vertex3">The third vertex of the triangle to test.</param>
-		/// <returns>Whether the two objects intersected.</returns>
+		/// <param name="vertex1"> The first vertex of the triangle to test. </param>
+		/// <param name="vertex2"> The second vertex of the triagnle to test. </param>
+		/// <param name="vertex3"> The third vertex of the triangle to test. </param>
+		/// <returns> Whether the two objects intersected. </returns>
 		public PlaneIntersectionType Intersects(ref Vector3 vertex1, ref Vector3 vertex2, ref Vector3 vertex3)
 		{
 			return Collision.PlaneIntersectsTriangle(ref this, ref vertex1, ref vertex2, ref vertex3);
 		}
-
 		/// <summary>
 		/// Determines if there is an intersection between the current object and a <see
-		/// cref="CryEngine.BoundingBox" />.
+		/// cref="BoundingBox" />.
 		/// </summary>
-		/// <param name="box">The box to test.</param>
-		/// <returns>Whether the two objects intersected.</returns>
+		/// <param name="box"> The box to test. </param>
+		/// <returns> Whether the two objects intersected. </returns>
 		public PlaneIntersectionType Intersects(ref BoundingBox box)
 		{
 			return Collision.PlaneIntersectsBox(ref this, ref box);
 		}
-
 		/// <summary>
 		/// Determines if there is an intersection between the current object and a <see
-		/// cref="CryEngine.BoundingSphere" />.
+		/// cref="BoundingSphere" />.
 		/// </summary>
-		/// <param name="sphere">The sphere to test.</param>
-		/// <returns>Whether the two objects intersected.</returns>
+		/// <param name="sphere"> The sphere to test. </param>
+		/// <returns> Whether the two objects intersected. </returns>
 		public PlaneIntersectionType Intersects(ref BoundingSphere sphere)
 		{
 			return Collision.PlaneIntersectsSphere(ref this, ref sphere);
 		}
-
 		/// <summary>
 		/// Returns a <see cref="System.String" /> that represents this instance.
 		/// </summary>
-		/// <returns>A <see cref="System.String" /> that represents this instance.</returns>
+		/// <returns> A <see cref="System.String" /> that represents this instance. </returns>
 		public override string ToString()
 		{
-			return string.Format(CultureInfo.CurrentCulture, "A:{0} B:{1} C:{2} D:{3}", Normal.X, Normal.Y, Normal.Z, D);
+			return string.Format(CultureInfo.CurrentCulture, "A:{0} B:{1} C:{2} D:{3}", this.Normal.X, this.Normal.Y, this.Normal.Z, this.D);
 		}
-
 		/// <summary>
 		/// Returns a <see cref="System.String" /> that represents this instance.
 		/// </summary>
-		/// <param name="format">The format.</param>
-		/// <returns>A <see cref="System.String" /> that represents this instance.</returns>
+		/// <param name="format"> The format. </param>
+		/// <returns> A <see cref="System.String" /> that represents this instance. </returns>
 		public string ToString(string format)
 		{
-			return string.Format(CultureInfo.CurrentCulture, "A:{0} B:{1} C:{2} D:{3}", Normal.X.ToString(format, CultureInfo.CurrentCulture), Normal.Y.ToString(format, CultureInfo.CurrentCulture), Normal.Z.ToString(format, CultureInfo.CurrentCulture), D.ToString(format, CultureInfo.CurrentCulture));
+			return string.Format(CultureInfo.CurrentCulture, "A:{0} B:{1} C:{2} D:{3}", this.Normal.X.ToString(format, CultureInfo.CurrentCulture), this.Normal.Y.ToString(format, CultureInfo.CurrentCulture), this.Normal.Z.ToString(format, CultureInfo.CurrentCulture), this.D.ToString(format, CultureInfo.CurrentCulture));
 		}
-
 		/// <summary>
 		/// Returns a <see cref="System.String" /> that represents this instance.
 		/// </summary>
-		/// <param name="formatProvider">The format provider.</param>
-		/// <returns>A <see cref="System.String" /> that represents this instance.</returns>
+		/// <param name="formatProvider"> The format provider. </param>
+		/// <returns> A <see cref="System.String" /> that represents this instance. </returns>
 		public string ToString(IFormatProvider formatProvider)
 		{
-			return string.Format(formatProvider, "A:{0} B:{1} C:{2} D:{3}", Normal.X, Normal.Y, Normal.Z, D);
+			return string.Format(formatProvider, "A:{0} B:{1} C:{2} D:{3}", this.Normal.X, this.Normal.Y, this.Normal.Z, this.D);
 		}
-
 		/// <summary>
 		/// Returns a <see cref="System.String" /> that represents this instance.
 		/// </summary>
-		/// <param name="format">The format.</param>
-		/// <param name="formatProvider">The format provider.</param>
-		/// <returns>A <see cref="System.String" /> that represents this instance.</returns>
+		/// <param name="format">         The format. </param>
+		/// <param name="formatProvider"> The format provider. </param>
+		/// <returns> A <see cref="System.String" /> that represents this instance. </returns>
 		public string ToString(string format, IFormatProvider formatProvider)
 		{
-			return string.Format(formatProvider, "A:{0} B:{1} C:{2} D:{3}", Normal.X.ToString(format, formatProvider), Normal.Y.ToString(format, formatProvider), Normal.Z.ToString(format, formatProvider), D.ToString(format, formatProvider));
+			return string.Format(formatProvider, "A:{0} B:{1} C:{2} D:{3}", this.Normal.X.ToString(format, formatProvider), this.Normal.Y.ToString(format, formatProvider), this.Normal.Z.ToString(format, formatProvider), this.D.ToString(format, formatProvider));
 		}
-
 		/// <summary>
 		/// Returns a hash code for this instance.
 		/// </summary>
@@ -697,35 +659,29 @@ namespace CryEngine
 				int hash = 17;
 
 				// ReSharper disable NonReadonlyFieldInGetHashCode
-				hash = hash * 29 + Normal.GetHashCode();
-				hash = hash * 29 + D.GetHashCode();
+				hash = hash * 29 + this.Normal.GetHashCode();
+				hash = hash * 29 + this.D.GetHashCode();
 				// ReSharper restore NonReadonlyFieldInGetHashCode
 
 				return hash;
 			}
 		}
-
 		/// <summary>
-		/// Determines whether the specified <see cref="CryEngine.Vector4" /> is equal to this instance.
+		/// Determines whether the specified <see cref="Vector4" /> is equal to this instance.
 		/// </summary>
-		/// <param name="value">
-		/// The <see cref="CryEngine.Vector4" /> to compare with this instance.
-		/// </param>
+		/// <param name="value"> The <see cref="Vector4" /> to compare with this instance. </param>
 		/// <returns>
-		/// <c>true</c> if the specified <see cref="CryEngine.Vector4" /> is equal to this instance;
+		/// <c>true</c> if the specified <see cref="Vector4" /> is equal to this instance;
 		/// otherwise, <c>false</c>.
 		/// </returns>
 		public bool Equals(Plane value)
 		{
-			return Normal == value.Normal && Math.Abs(this.D - value.D) < MathHelpers.ZeroTolerance;
+			return this.Normal == value.Normal && Math.Abs(this.D - value.D) < MathHelpers.ZeroTolerance;
 		}
-
 		/// <summary>
 		/// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
 		/// </summary>
-		/// <param name="value">
-		/// The <see cref="System.Object" /> to compare with this instance.
-		/// </param>
+		/// <param name="value"> The <see cref="System.Object" /> to compare with this instance. </param>
 		/// <returns>
 		/// <c>true</c> if the specified <see cref="System.Object" /> is equal to this instance;
 		/// otherwise, <c>false</c>.
@@ -734,53 +690,5 @@ namespace CryEngine
 		{
 			return value != null && value.GetType() == this.GetType() && this.Equals((Plane)value);
 		}
-
-#if SlimDX1xInterop
-        /// <summary>
-		/// Performs an implicit conversion from <see cref="CryEngine.Plane" /> to <see
-		/// cref="SlimDX.Plane" />.
-		/// </summary>
-		/// <param name="value">The value.</param>
-		/// <returns>The result of the conversion.</returns>
-        public static implicit operator SlimDX.Plane(Plane value)
-        {
-            return new SlimDX.Plane(value.Normal, value.D);
-        }
-
-        /// <summary>
-		/// Performs an implicit conversion from <see cref="SlimDX.Plane" /> to <see
-		/// cref="CryEngine.Plane" />.
-		/// </summary>
-		/// <param name="value">The value.</param>
-		/// <returns>The result of the conversion.</returns>
-        public static implicit operator Plane(SlimDX.Plane value)
-        {
-            return new Plane(value.Normal, value.D);
-        }
-#endif
-
-#if XnaInterop
-        /// <summary>
-		/// Performs an implicit conversion from <see cref="CryEngine.Plane" /> to <see
-		/// cref="Microsoft.Xna.Framework.Plane" />.
-		/// </summary>
-		/// <param name="value">The value.</param>
-		/// <returns>The result of the conversion.</returns>
-        public static implicit operator Microsoft.Xna.Framework.Plane(Plane value)
-        {
-            return new Microsoft.Xna.Framework.Plane(value.Normal, value.D);
-        }
-
-        /// <summary>
-		/// Performs an implicit conversion from <see cref="Microsoft.Xna.Framework.Plane" /> to
-		/// <see cref="CryEngine.Plane" />.
-		/// </summary>
-		/// <param name="value">The value.</param>
-		/// <returns>The result of the conversion.</returns>
-        public static implicit operator Plane(Microsoft.Xna.Framework.Plane value)
-        {
-            return new Plane(value.Normal, value.D);
-        }
-#endif
 	}
 }

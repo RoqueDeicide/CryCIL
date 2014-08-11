@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
-
+using CryEngine.Mathematics;
 using CryEngine.Native;
 using CryEngine.StaticObjects.Native;
 

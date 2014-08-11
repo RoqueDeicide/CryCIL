@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 
 using CryEngine;
+using CryEngine.Mathematics;
 using CryEngine.Utilities;
 using CryEngine.Serialization;
 using NUnit.Framework;

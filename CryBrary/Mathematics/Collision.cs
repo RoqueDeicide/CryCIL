@@ -22,7 +22,7 @@
 
 using System;
 
-namespace CryEngine
+namespace CryEngine.Mathematics
 {
 	/*
 	 * This class is organized so that the least complex objects come first so that the least
@@ -56,11 +56,11 @@ namespace CryEngine
 		/// <summary>
 		/// Determines the closest point between a point and a triangle.
 		/// </summary>
-		/// <param name="point">The point to test.</param>
-		/// <param name="vertex1">The first vertex to test.</param>
-		/// <param name="vertex2">The second vertex to test.</param>
-		/// <param name="vertex3">The third vertex to test.</param>
-		/// <param name="result">
+		/// <param name="point">   The point to test. </param>
+		/// <param name="vertex1"> The first vertex to test. </param>
+		/// <param name="vertex2"> The second vertex to test. </param>
+		/// <param name="vertex3"> The third vertex to test. </param>
+		/// <param name="result"> 
 		/// When the method completes, contains the closest point between the two objects.
 		/// </param>
 		public static void ClosestPointPointTriangle(ref Vector3 point, ref Vector3 vertex1, ref Vector3 vertex2, ref Vector3 vertex3, out Vector3 result)
@@ -126,10 +126,10 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines the closest point between a <see cref="CryEngine.Plane" /> and a point.
+		/// Determines the closest point between a <see cref="Plane" /> and a point.
 		/// </summary>
-		/// <param name="plane">The plane to test.</param>
-		/// <param name="point">The point to test.</param>
+		/// <param name="plane">  The plane to test. </param>
+		/// <param name="point">  The point to test. </param>
 		/// <param name="result">
 		/// When the method completes, contains the closest point between the two objects.
 		/// </param>
@@ -145,10 +145,10 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines the closest point between a <see cref="CryEngine.BoundingBox" /> and a point.
+		/// Determines the closest point between a <see cref="BoundingBox" /> and a point.
 		/// </summary>
-		/// <param name="box">The box to test.</param>
-		/// <param name="point">The point to test.</param>
+		/// <param name="box">    The box to test. </param>
+		/// <param name="point">  The point to test. </param>
 		/// <param name="result">
 		/// When the method completes, contains the closest point between the two objects.
 		/// </param>
@@ -163,14 +163,14 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines the closest point between a <see cref="CryEngine.BoundingSphere" /> and a point.
+		/// Determines the closest point between a <see cref="BoundingSphere" /> and a point.
 		/// </summary>
-		/// <param name="sphere"></param>
-		/// <param name="point">The point to test.</param>
+		/// <param name="sphere"> </param>
+		/// <param name="point">  The point to test. </param>
 		/// <param name="result">
 		/// When the method completes, contains the closest point between the two objects; or, if
 		/// the point is directly in the center of the sphere, contains <see
-		/// cref="CryEngine.Vector3" />.
+		/// cref="Vector3" />.
 		/// </param>
 		public static void ClosestPointSpherePoint(ref BoundingSphere sphere, ref Vector3 point, out Vector3 result)
 		{
@@ -189,15 +189,15 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines the closest point between a <see cref="CryEngine.BoundingSphere" /> and a
-		/// <see cref="CryEngine.BoundingSphere" />.
+		/// Determines the closest point between a <see cref="BoundingSphere" /> and a <see
+		/// cref="BoundingSphere" />.
 		/// </summary>
-		/// <param name="sphere1">The first sphere to test.</param>
-		/// <param name="sphere2">The second sphere to test.</param>
-		/// <param name="result">
+		/// <param name="sphere1"> The first sphere to test. </param>
+		/// <param name="sphere2"> The second sphere to test. </param>
+		/// <param name="result"> 
 		/// When the method completes, contains the closest point between the two objects; or, if
 		/// the point is directly in the center of the sphere, contains <see
-		/// cref="CryEngine.Vector3" />.
+		/// cref="Vector3" />.
 		/// </param>
 		/// <remarks>
 		/// If the two spheres are overlapping, but not directly ontop of each other, the closest
@@ -222,11 +222,11 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines the distance between a <see cref="CryEngine.Plane" /> and a point.
+		/// Determines the distance between a <see cref="Plane" /> and a point.
 		/// </summary>
-		/// <param name="plane">The plane to test.</param>
-		/// <param name="point">The point to test.</param>
-		/// <returns>The distance between the two objects.</returns>
+		/// <param name="plane"> The plane to test. </param>
+		/// <param name="point"> The point to test. </param>
+		/// <returns> The distance between the two objects. </returns>
 		public static float DistancePlanePoint(ref Plane plane, ref Vector3 point)
 		{
 			// Source: Real-Time Collision Detection by Christer Ericson
@@ -237,11 +237,11 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines the distance between a <see cref="CryEngine.BoundingBox" /> and a point.
+		/// Determines the distance between a <see cref="BoundingBox" /> and a point.
 		/// </summary>
-		/// <param name="box">The box to test.</param>
-		/// <param name="point">The point to test.</param>
-		/// <returns>The distance between the two objects.</returns>
+		/// <param name="box">   The box to test. </param>
+		/// <param name="point"> The point to test. </param>
+		/// <returns> The distance between the two objects. </returns>
 		public static float DistanceBoxPoint(ref BoundingBox box, ref Vector3 point)
 		{
 			// Source: Real-Time Collision Detection by Christer Ericson
@@ -268,12 +268,12 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines the distance between a <see cref="CryEngine.BoundingBox" /> and a <see
-		/// cref="CryEngine.BoundingBox" />.
+		/// Determines the distance between a <see cref="BoundingBox" /> and a <see
+		/// cref="BoundingBox" />.
 		/// </summary>
-		/// <param name="box1">The first box to test.</param>
-		/// <param name="box2">The second box to test.</param>
-		/// <returns>The distance between the two objects.</returns>
+		/// <param name="box1"> The first box to test. </param>
+		/// <param name="box2"> The second box to test. </param>
+		/// <returns> The distance between the two objects. </returns>
 		public static float DistanceBoxBox(ref BoundingBox box1, ref BoundingBox box2)
 		{
 			float distance = 0f;
@@ -318,11 +318,11 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines the distance between a <see cref="CryEngine.BoundingSphere" /> and a point.
+		/// Determines the distance between a <see cref="BoundingSphere" /> and a point.
 		/// </summary>
-		/// <param name="sphere">The sphere to test.</param>
-		/// <param name="point">The point to test.</param>
-		/// <returns>The distance between the two objects.</returns>
+		/// <param name="sphere"> The sphere to test. </param>
+		/// <param name="point">  The point to test. </param>
+		/// <returns> The distance between the two objects. </returns>
 		public static float DistanceSpherePoint(ref BoundingSphere sphere, ref Vector3 point)
 		{
 			// Source: Jorgy343
@@ -335,12 +335,12 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines the distance between a <see cref="CryEngine.BoundingSphere" /> and a <see
-		/// cref="CryEngine.BoundingSphere" />.
+		/// Determines the distance between a <see cref="BoundingSphere" /> and a <see
+		/// cref="BoundingSphere" />.
 		/// </summary>
-		/// <param name="sphere1">The first sphere to test.</param>
-		/// <param name="sphere2">The second sphere to test.</param>
-		/// <returns>The distance between the two objects.</returns>
+		/// <param name="sphere1"> The first sphere to test. </param>
+		/// <param name="sphere2"> The second sphere to test. </param>
+		/// <returns> The distance between the two objects. </returns>
 		public static float DistanceSphereSphere(ref BoundingSphere sphere1, ref BoundingSphere sphere2)
 		{
 			// Source: Jorgy343
@@ -353,11 +353,11 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines whether there is an intersection between a <see cref="CryEngine.Ray" /> and a point.
+		/// Determines whether there is an intersection between a <see cref="Ray" /> and a point.
 		/// </summary>
-		/// <param name="ray">The ray to test.</param>
-		/// <param name="point">The point to test.</param>
-		/// <returns>Whether the two objects intersect.</returns>
+		/// <param name="ray">   The ray to test. </param>
+		/// <param name="point"> The point to test. </param>
+		/// <returns> Whether the two objects intersect. </returns>
 		public static bool RayIntersectsPoint(ref Ray ray, ref Vector3 point)
 		{
 			// Source: RayIntersectsSphere
@@ -382,16 +382,16 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines whether there is an intersection between a <see cref="CryEngine.Ray" /> and a
-		/// <see cref="CryEngine.Ray" />.
+		/// Determines whether there is an intersection between a <see cref="Ray" /> and a <see
+		/// cref="Ray" />.
 		/// </summary>
-		/// <param name="ray1">The first ray to test.</param>
-		/// <param name="ray2">The second ray to test.</param>
+		/// <param name="ray1">  The first ray to test. </param>
+		/// <param name="ray2">  The second ray to test. </param>
 		/// <param name="point">
 		/// When the method completes, contains the point of intersection, or <see
-		/// cref="CryEngine.Vector3" /> if there was no intersection.
+		/// cref="Vector3" /> if there was no intersection.
 		/// </param>
-		/// <returns>Whether the two objects intersect.</returns>
+		/// <returns> Whether the two objects intersect. </returns>
 		/// <remarks>
 		/// This method performs a ray vs ray intersection test based on the following formula from
 		/// Goldman. <code>s = det([o_2
@@ -481,16 +481,16 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines whether there is an intersection between a <see cref="CryEngine.Ray" /> and a
-		/// <see cref="CryEngine.Plane" />.
+		/// Determines whether there is an intersection between a <see cref="Ray" /> and a <see
+		/// cref="Plane" />.
 		/// </summary>
-		/// <param name="ray">The ray to test.</param>
-		/// <param name="plane">The plane to test.</param>
+		/// <param name="ray">      The ray to test. </param>
+		/// <param name="plane">    The plane to test. </param>
 		/// <param name="distance">
 		/// When the method completes, contains the distance of the intersection, or 0 if there was
 		/// no intersection.
 		/// </param>
-		/// <returns>Whether the two objects intersect.</returns>
+		/// <returns> Whether the two objects intersect. </returns>
 		public static bool RayIntersectsPlane(ref Ray ray, ref Plane plane, out float distance)
 		{
 			// Source: Real-Time Collision Detection by Christer Ericson
@@ -522,16 +522,16 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines whether there is an intersection between a <see cref="CryEngine.Ray" /> and a
-		/// <see cref="CryEngine.Plane" />.
+		/// Determines whether there is an intersection between a <see cref="Ray" /> and a <see
+		/// cref="Plane" />.
 		/// </summary>
-		/// <param name="ray">The ray to test.</param>
-		/// <param name="plane">The plane to test</param>
+		/// <param name="ray">   The ray to test. </param>
+		/// <param name="plane"> The plane to test </param>
 		/// <param name="point">
 		/// When the method completes, contains the point of intersection, or <see
-		/// cref="CryEngine.Vector3" /> if there was no intersection.
+		/// cref="Vector3" /> if there was no intersection.
 		/// </param>
-		/// <returns>Whether the two objects intersected.</returns>
+		/// <returns> Whether the two objects intersected. </returns>
 		public static bool RayIntersectsPlane(ref Ray ray, ref Plane plane, out Vector3 point)
 		{
 			// Source: Real-Time Collision Detection by Christer Ericson
@@ -549,17 +549,17 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines whether there is an intersection between a <see cref="CryEngine.Ray" /> and a triangle.
+		/// Determines whether there is an intersection between a <see cref="Ray" /> and a triangle.
 		/// </summary>
-		/// <param name="ray">The ray to test.</param>
-		/// <param name="vertex1">The first vertex of the triangle to test.</param>
-		/// <param name="vertex2">The second vertex of the triagnle to test.</param>
-		/// <param name="vertex3">The third vertex of the triangle to test.</param>
+		/// <param name="ray">      The ray to test. </param>
+		/// <param name="vertex1">  The first vertex of the triangle to test. </param>
+		/// <param name="vertex2">  The second vertex of the triagnle to test. </param>
+		/// <param name="vertex3">  The third vertex of the triangle to test. </param>
 		/// <param name="distance">
 		/// When the method completes, contains the distance of the intersection, or 0 if there was
 		/// no intersection.
 		/// </param>
-		/// <returns>Whether the two objects intersected.</returns>
+		/// <returns> Whether the two objects intersected. </returns>
 		/// <remarks>
 		/// This method tests if the ray intersects either the front or back of the triangle. If the
 		/// ray is parallel to the triangle's plane, no intersection is assumed to have happened. If
@@ -652,17 +652,17 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines whether there is an intersection between a <see cref="CryEngine.Ray" /> and a triangle.
+		/// Determines whether there is an intersection between a <see cref="Ray" /> and a triangle.
 		/// </summary>
-		/// <param name="ray">The ray to test.</param>
-		/// <param name="vertex1">The first vertex of the triangle to test.</param>
-		/// <param name="vertex2">The second vertex of the triagnle to test.</param>
-		/// <param name="vertex3">The third vertex of the triangle to test.</param>
-		/// <param name="point">
+		/// <param name="ray">     The ray to test. </param>
+		/// <param name="vertex1"> The first vertex of the triangle to test. </param>
+		/// <param name="vertex2"> The second vertex of the triagnle to test. </param>
+		/// <param name="vertex3"> The third vertex of the triangle to test. </param>
+		/// <param name="point">  
 		/// When the method completes, contains the point of intersection, or <see
-		/// cref="CryEngine.Vector3" /> if there was no intersection.
+		/// cref="Vector3" /> if there was no intersection.
 		/// </param>
-		/// <returns>Whether the two objects intersected.</returns>
+		/// <returns> Whether the two objects intersected. </returns>
 		public static bool RayIntersectsTriangle(ref Ray ray, ref Vector3 vertex1, ref Vector3 vertex2, ref Vector3 vertex3, out Vector3 point)
 		{
 			float distance;
@@ -677,16 +677,16 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines whether there is an intersection between a <see cref="CryEngine.Ray" /> and a
-		/// <see cref="CryEngine.BoundingBox" />.
+		/// Determines whether there is an intersection between a <see cref="Ray" /> and a <see
+		/// cref="BoundingBox" />.
 		/// </summary>
-		/// <param name="ray">The ray to test.</param>
-		/// <param name="box">The box to test.</param>
+		/// <param name="ray">      The ray to test. </param>
+		/// <param name="box">      The box to test. </param>
 		/// <param name="distance">
 		/// When the method completes, contains the distance of the intersection, or 0 if there was
 		/// no intersection.
 		/// </param>
-		/// <returns>Whether the two objects intersected.</returns>
+		/// <returns> Whether the two objects intersected. </returns>
 		public static bool RayIntersectsBox(ref Ray ray, ref BoundingBox box, out float distance)
 		{
 			// Source: Real-Time Collision Detection by Christer Ericson
@@ -792,16 +792,16 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines whether there is an intersection between a <see cref="CryEngine.Ray" /> and a
-		/// <see cref="CryEngine.Plane" />.
+		/// Determines whether there is an intersection between a <see cref="Ray" /> and a <see
+		/// cref="Plane" />.
 		/// </summary>
-		/// <param name="ray">The ray to test.</param>
-		/// <param name="box">The box to test.</param>
+		/// <param name="ray">   The ray to test. </param>
+		/// <param name="box">   The box to test. </param>
 		/// <param name="point">
 		/// When the method completes, contains the point of intersection, or <see
-		/// cref="CryEngine.Vector3" /> if there was no intersection.
+		/// cref="Vector3" /> if there was no intersection.
 		/// </param>
-		/// <returns>Whether the two objects intersected.</returns>
+		/// <returns> Whether the two objects intersected. </returns>
 		public static bool RayIntersectsBox(ref Ray ray, ref BoundingBox box, out Vector3 point)
 		{
 			float distance;
@@ -816,16 +816,16 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines whether there is an intersection between a <see cref="CryEngine.Ray" /> and a
-		/// <see cref="CryEngine.BoundingSphere" />.
+		/// Determines whether there is an intersection between a <see cref="Ray" /> and a <see
+		/// cref="BoundingSphere" />.
 		/// </summary>
-		/// <param name="ray">The ray to test.</param>
-		/// <param name="sphere">The sphere to test.</param>
+		/// <param name="ray">      The ray to test. </param>
+		/// <param name="sphere">   The sphere to test. </param>
 		/// <param name="distance">
 		/// When the method completes, contains the distance of the intersection, or 0 if there was
 		/// no intersection.
 		/// </param>
-		/// <returns>Whether the two objects intersected.</returns>
+		/// <returns> Whether the two objects intersected. </returns>
 		public static bool RayIntersectsSphere(ref Ray ray, ref BoundingSphere sphere, out float distance)
 		{
 			// Source: Real-Time Collision Detection by Christer Ericson
@@ -859,16 +859,16 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines whether there is an intersection between a <see cref="CryEngine.Ray" /> and a
-		/// <see cref="CryEngine.BoundingSphere" />.
+		/// Determines whether there is an intersection between a <see cref="Ray" /> and a <see
+		/// cref="BoundingSphere" />.
 		/// </summary>
-		/// <param name="ray">The ray to test.</param>
-		/// <param name="sphere">The sphere to test.</param>
-		/// <param name="point">
+		/// <param name="ray">    The ray to test. </param>
+		/// <param name="sphere"> The sphere to test. </param>
+		/// <param name="point"> 
 		/// When the method completes, contains the point of intersection, or <see
-		/// cref="CryEngine.Vector3" /> if there was no intersection.
+		/// cref="Vector3" /> if there was no intersection.
 		/// </param>
-		/// <returns>Whether the two objects intersected.</returns>
+		/// <returns> Whether the two objects intersected. </returns>
 		public static bool RayIntersectsSphere(ref Ray ray, ref BoundingSphere sphere, out Vector3 point)
 		{
 			float distance;
@@ -883,12 +883,11 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines whether there is an intersection between a <see cref="CryEngine.Plane" /> and
-		/// a point.
+		/// Determines whether there is an intersection between a <see cref="Plane" /> and a point.
 		/// </summary>
-		/// <param name="plane">The plane to test.</param>
-		/// <param name="point">The point to test.</param>
-		/// <returns>Whether the two objects intersected.</returns>
+		/// <param name="plane"> The plane to test. </param>
+		/// <param name="point"> The point to test. </param>
+		/// <returns> Whether the two objects intersected. </returns>
 		public static PlaneIntersectionType PlaneIntersectsPoint(ref Plane plane, ref Vector3 point)
 		{
 			float distance = plane.Normal.Dot(point);
@@ -904,12 +903,12 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines whether there is an intersection between a <see cref="CryEngine.Plane" /> and
-		/// a <see cref="CryEngine.Plane" />.
+		/// Determines whether there is an intersection between a <see cref="Plane" /> and a <see
+		/// cref="Plane" />.
 		/// </summary>
-		/// <param name="plane1">The first plane to test.</param>
-		/// <param name="plane2">The second plane to test.</param>
-		/// <returns>Whether the two objects intersected.</returns>
+		/// <param name="plane1"> The first plane to test. </param>
+		/// <param name="plane2"> The second plane to test. </param>
+		/// <returns> Whether the two objects intersected. </returns>
 		public static bool PlaneIntersectsPlane(ref Plane plane1, ref Plane plane2)
 		{
 			Vector3 direction = plane1.Normal.Cross(plane2.Normal);
@@ -925,16 +924,16 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines whether there is an intersection between a <see cref="CryEngine.Plane" /> and
-		/// a <see cref="CryEngine.Plane" />.
+		/// Determines whether there is an intersection between a <see cref="Plane" /> and a <see
+		/// cref="Plane" />.
 		/// </summary>
-		/// <param name="plane1">The first plane to test.</param>
-		/// <param name="plane2">The second plane to test.</param>
-		/// <param name="line">
-		/// When the method completes, contains the line of intersection as a <see
-		/// cref="CryEngine.Ray" />, or a zero ray if there was no intersection.
+		/// <param name="plane1"> The first plane to test. </param>
+		/// <param name="plane2"> The second plane to test. </param>
+		/// <param name="line">  
+		/// When the method completes, contains the line of intersection as a <see cref="Ray" />, or
+		/// a zero ray if there was no intersection.
 		/// </param>
-		/// <returns>Whether the two objects intersected.</returns>
+		/// <returns> Whether the two objects intersected. </returns>
 		/// <remarks>
 		/// Although a ray is set to have an origin, the ray returned by this method is really a
 		/// line in three dimensions which has no real origin. The ray is considered valid when both
@@ -970,14 +969,13 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines whether there is an intersection between a <see cref="CryEngine.Plane" /> and
-		/// a triangle.
+		/// Determines whether there is an intersection between a <see cref="Plane" /> and a triangle.
 		/// </summary>
-		/// <param name="plane">The plane to test.</param>
-		/// <param name="vertex1">The first vertex of the triangle to test.</param>
-		/// <param name="vertex2">The second vertex of the triagnle to test.</param>
-		/// <param name="vertex3">The third vertex of the triangle to test.</param>
-		/// <returns>Whether the two objects intersected.</returns>
+		/// <param name="plane">   The plane to test. </param>
+		/// <param name="vertex1"> The first vertex of the triangle to test. </param>
+		/// <param name="vertex2"> The second vertex of the triagnle to test. </param>
+		/// <param name="vertex3"> The third vertex of the triangle to test. </param>
+		/// <returns> Whether the two objects intersected. </returns>
 		public static PlaneIntersectionType PlaneIntersectsTriangle(ref Plane plane, ref Vector3 vertex1, ref Vector3 vertex2, ref Vector3 vertex3)
 		{
 			// Source: Real-Time Collision Detection by Christer Ericson
@@ -997,12 +995,12 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines whether there is an intersection between a <see cref="CryEngine.Plane" /> and
-		/// a <see cref="CryEngine.BoundingBox" />.
+		/// Determines whether there is an intersection between a <see cref="Plane" /> and a <see
+		/// cref="BoundingBox" />.
 		/// </summary>
-		/// <param name="plane">The plane to test.</param>
-		/// <param name="box">The box to test.</param>
-		/// <returns>Whether the two objects intersected.</returns>
+		/// <param name="plane"> The plane to test. </param>
+		/// <param name="box">   The box to test. </param>
+		/// <returns> Whether the two objects intersected. </returns>
 		public static PlaneIntersectionType PlaneIntersectsBox(ref Plane plane, ref BoundingBox box)
 		{
 			// Source: Real-Time Collision Detection by Christer Ericson
@@ -1032,12 +1030,12 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines whether there is an intersection between a <see cref="CryEngine.Plane" /> and
-		/// a <see cref="CryEngine.BoundingSphere" />.
+		/// Determines whether there is an intersection between a <see cref="Plane" /> and a <see
+		/// cref="BoundingSphere" />.
 		/// </summary>
-		/// <param name="plane">The plane to test.</param>
-		/// <param name="sphere">The sphere to test.</param>
-		/// <returns>Whether the two objects intersected.</returns>
+		/// <param name="plane">  The plane to test. </param>
+		/// <param name="sphere"> The sphere to test. </param>
+		/// <returns> Whether the two objects intersected. </returns>
 		public static PlaneIntersectionType PlaneIntersectsSphere(ref Plane plane, ref BoundingSphere sphere)
 		{
 			// Source: Real-Time Collision Detection by Christer Ericson
@@ -1060,11 +1058,11 @@ namespace CryEngine
 		/// Determines whether there is an intersection between a <see cref="CryEngine.BoundingBox"
 		/// /> and a triangle.
 		/// </summary>
-		/// <param name="box">The box to test.</param>
-		/// <param name="vertex1">The first vertex of the triangle to test.</param>
-		/// <param name="vertex2">The second vertex of the triagnle to test.</param>
-		/// <param name="vertex3">The third vertex of the triangle to test.</param>
-		/// <returns>Whether the two objects intersected.</returns>
+		/// <param name="box">     The box to test. </param>
+		/// <param name="vertex1"> The first vertex of the triangle to test. </param>
+		/// <param name="vertex2"> The second vertex of the triagnle to test. </param>
+		/// <param name="vertex3"> The third vertex of the triangle to test. </param>
+		/// <returns> Whether the two objects intersected. </returns>
 		public static bool BoxIntersectsTriangle(ref BoundingBox box, ref Vector3 vertex1, ref Vector3 vertex2, ref Vector3 vertex3)
 		{
 			if (BoxContainsPoint(ref box, ref vertex1) == ContainmentType.Contains)
@@ -1081,12 +1079,12 @@ namespace CryEngine
 		*/
 
 		/// <summary>
-		/// Determines whether there is an intersection between a <see cref="CryEngine.BoundingBox"
-		/// /> and a <see cref="CryEngine.BoundingBox" />.
+		/// Determines whether there is an intersection between a <see cref="BoundingBox" /> and a
+		/// <see cref="BoundingBox" />.
 		/// </summary>
-		/// <param name="box1">The first box to test.</param>
-		/// <param name="box2">The second box to test.</param>
-		/// <returns>Whether the two objects intersected.</returns>
+		/// <param name="box1"> The first box to test. </param>
+		/// <param name="box2"> The second box to test. </param>
+		/// <returns> Whether the two objects intersected. </returns>
 		public static bool BoxIntersectsBox(ref BoundingBox box1, ref BoundingBox box2)
 		{
 			if (box1.Minimum.X > box2.Maximum.X || box2.Minimum.X > box1.Maximum.X)
@@ -1102,12 +1100,12 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines whether there is an intersection between a <see cref="CryEngine.BoundingBox"
-		/// /> and a <see cref="CryEngine.BoundingSphere" />.
+		/// Determines whether there is an intersection between a <see cref="BoundingBox" /> and a
+		/// <see cref="BoundingSphere" />.
 		/// </summary>
-		/// <param name="box">The box to test.</param>
-		/// <param name="sphere">The sphere to test.</param>
-		/// <returns>Whether the two objects intersected.</returns>
+		/// <param name="box">    The box to test. </param>
+		/// <param name="sphere"> The sphere to test. </param>
+		/// <returns> Whether the two objects intersected. </returns>
 		public static bool BoxIntersectsSphere(ref BoundingBox box, ref BoundingSphere sphere)
 		{
 			// Source: Real-Time Collision Detection by Christer Ericson
@@ -1121,14 +1119,14 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines whether there is an intersection between a <see
-		/// cref="CryEngine.BoundingSphere" /> and a triangle.
+		/// Determines whether there is an intersection between a <see cref="BoundingSphere" /> and
+		/// a triangle.
 		/// </summary>
-		/// <param name="sphere">The sphere to test.</param>
-		/// <param name="vertex1">The first vertex of the triangle to test.</param>
-		/// <param name="vertex2">The second vertex of the triagnle to test.</param>
-		/// <param name="vertex3">The third vertex of the triangle to test.</param>
-		/// <returns>Whether the two objects intersected.</returns>
+		/// <param name="sphere">  The sphere to test. </param>
+		/// <param name="vertex1"> The first vertex of the triangle to test. </param>
+		/// <param name="vertex2"> The second vertex of the triagnle to test. </param>
+		/// <param name="vertex3"> The third vertex of the triangle to test. </param>
+		/// <returns> Whether the two objects intersected. </returns>
 		public static bool SphereIntersectsTriangle(ref BoundingSphere sphere, ref Vector3 vertex1, ref Vector3 vertex2, ref Vector3 vertex3)
 		{
 			// Source: Real-Time Collision Detection by Christer Ericson
@@ -1144,12 +1142,12 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines whether there is an intersection between a <see
-		/// cref="CryEngine.BoundingSphere" /> and a <see cref="CryEngine.BoundingSphere" />.
+		/// Determines whether there is an intersection between a <see cref="BoundingSphere" /> and
+		/// a <see cref="BoundingSphere" />.
 		/// </summary>
-		/// <param name="sphere1">First sphere to test.</param>
-		/// <param name="sphere2">Second sphere to test.</param>
-		/// <returns>Whether the two objects intersected.</returns>
+		/// <param name="sphere1"> First sphere to test. </param>
+		/// <param name="sphere2"> Second sphere to test. </param>
+		/// <returns> Whether the two objects intersected. </returns>
 		public static bool SphereIntersectsSphere(ref BoundingSphere sphere1, ref BoundingSphere sphere2)
 		{
 			float radiisum = sphere1.Radius + sphere2.Radius;
@@ -1157,11 +1155,11 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines whether a <see cref="CryEngine.BoundingBox" /> contains a point.
+		/// Determines whether a <see cref="BoundingBox" /> contains a point.
 		/// </summary>
-		/// <param name="box">The box to test.</param>
-		/// <param name="point">The point to test.</param>
-		/// <returns>The type of containment the two objects have.</returns>
+		/// <param name="box">   The box to test. </param>
+		/// <param name="point"> The point to test. </param>
+		/// <returns> The type of containment the two objects have. </returns>
 		public static bool BoxContainsPoint(ref BoundingBox box, ref Vector3 point)
 		{
 			return (box.Minimum.X <= point.X && box.Maximum.X >= point.X &&
@@ -1173,11 +1171,11 @@ namespace CryEngine
 		/// <summary>
 		/// Determines whether a <see cref="CryEngine.BoundingBox" /> contains a triangle.
 		/// </summary>
-		/// <param name="box">The box to test.</param>
-		/// <param name="vertex1">The first vertex of the triangle to test.</param>
-		/// <param name="vertex2">The second vertex of the triagnle to test.</param>
-		/// <param name="vertex3">The third vertex of the triangle to test.</param>
-		/// <returns>The type of containment the two objects have.</returns>
+		/// <param name="box">     The box to test. </param>
+		/// <param name="vertex1"> The first vertex of the triangle to test. </param>
+		/// <param name="vertex2"> The second vertex of the triagnle to test. </param>
+		/// <param name="vertex3"> The third vertex of the triangle to test. </param>
+		/// <returns> The type of containment the two objects have. </returns>
 		public static ContainmentType BoxContainsTriangle(ref BoundingBox box, ref Vector3 vertex1, ref Vector3 vertex2, ref Vector3 vertex3)
 		{
 			ContainmentType test1 = BoxContainsPoint(ref box, ref vertex1);
@@ -1195,12 +1193,11 @@ namespace CryEngine
 		*/
 
 		/// <summary>
-		/// Determines whether a <see cref="CryEngine.BoundingBox" /> contains a <see
-		/// cref="CryEngine.BoundingBox" />.
+		/// Determines whether a <see cref="BoundingBox" /> contains a <see cref="BoundingBox" />.
 		/// </summary>
-		/// <param name="box1">The first box to test.</param>
-		/// <param name="box2">The second box to test.</param>
-		/// <returns>The type of containment the two objects have.</returns>
+		/// <param name="box1"> The first box to test. </param>
+		/// <param name="box2"> The second box to test. </param>
+		/// <returns> The type of containment the two objects have. </returns>
 		public static ContainmentType BoxContainsBox(ref BoundingBox box1, ref BoundingBox box2)
 		{
 			if (box1.Maximum.X < box2.Minimum.X || box1.Minimum.X > box2.Maximum.X)
@@ -1223,12 +1220,11 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines whether a <see cref="CryEngine.BoundingBox" /> contains a <see
-		/// cref="CryEngine.BoundingSphere" />.
+		/// Determines whether a <see cref="BoundingBox" /> contains a <see cref="BoundingSphere" />.
 		/// </summary>
-		/// <param name="box">The box to test.</param>
-		/// <param name="sphere">The sphere to test.</param>
-		/// <returns>The type of containment the two objects have.</returns>
+		/// <param name="box">    The box to test. </param>
+		/// <param name="sphere"> The sphere to test. </param>
+		/// <returns> The type of containment the two objects have. </returns>
 		public static ContainmentType BoxContainsSphere(ref BoundingBox box, ref BoundingSphere sphere)
 		{
 			Vector3 vector;
@@ -1249,24 +1245,24 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines whether a <see cref="CryEngine.BoundingSphere" /> contains a point.
+		/// Determines whether a <see cref="BoundingSphere" /> contains a point.
 		/// </summary>
-		/// <param name="sphere">The sphere to test.</param>
-		/// <param name="point">The point to test.</param>
-		/// <returns>The type of containment the two objects have.</returns>
+		/// <param name="sphere"> The sphere to test. </param>
+		/// <param name="point">  The point to test. </param>
+		/// <returns> The type of containment the two objects have. </returns>
 		public static bool SphereContainsPoint(ref BoundingSphere sphere, ref Vector3 point)
 		{
 			return (point.GetDistanceSquared(sphere.Center) <= sphere.Radius * sphere.Radius);
 		}
 
 		/// <summary>
-		/// Determines whether a <see cref="CryEngine.BoundingSphere" /> contains a triangle.
+		/// Determines whether a <see cref="BoundingSphere" /> contains a triangle.
 		/// </summary>
-		/// <param name="sphere">The sphere to test.</param>
-		/// <param name="vertex1">The first vertex of the triangle to test.</param>
-		/// <param name="vertex2">The second vertex of the triagnle to test.</param>
-		/// <param name="vertex3">The third vertex of the triangle to test.</param>
-		/// <returns>The type of containment the two objects have.</returns>
+		/// <param name="sphere">  The sphere to test. </param>
+		/// <param name="vertex1"> The first vertex of the triangle to test. </param>
+		/// <param name="vertex2"> The second vertex of the triagnle to test. </param>
+		/// <param name="vertex3"> The third vertex of the triangle to test. </param>
+		/// <returns> The type of containment the two objects have. </returns>
 		public static ContainmentType SphereContainsTriangle(ref BoundingSphere sphere, ref Vector3 vertex1, ref Vector3 vertex2, ref Vector3 vertex3)
 		{
 			// Source: Jorgy343
@@ -1282,12 +1278,11 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines whether a <see cref="CryEngine.BoundingSphere" /> contains a <see
-		/// cref="CryEngine.BoundingBox" />.
+		/// Determines whether a <see cref="BoundingSphere" /> contains a <see cref="BoundingBox" />.
 		/// </summary>
-		/// <param name="sphere">The sphere to test.</param>
-		/// <param name="box">The box to test.</param>
-		/// <returns>The type of containment the two objects have.</returns>
+		/// <param name="sphere"> The sphere to test. </param>
+		/// <param name="box">    The box to test. </param>
+		/// <returns> The type of containment the two objects have. </returns>
 		public static ContainmentType SphereContainsBox(ref BoundingSphere sphere, ref BoundingBox box)
 		{
 			Vector3 vector;
@@ -1356,12 +1351,11 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Determines whether a <see cref="CryEngine.BoundingSphere" /> contains a <see
-		/// cref="CryEngine.BoundingSphere" />.
+		/// Determines whether a <see cref="BoundingSphere" /> contains a <see cref="BoundingSphere" />.
 		/// </summary>
-		/// <param name="sphere1">The first sphere to test.</param>
-		/// <param name="sphere2">The second sphere to test.</param>
-		/// <returns>The type of containment the two objects have.</returns>
+		/// <param name="sphere1"> The first sphere to test. </param>
+		/// <param name="sphere2"> The second sphere to test. </param>
+		/// <returns> The type of containment the two objects have. </returns>
 		public static ContainmentType SphereContainsSphere(ref BoundingSphere sphere1, ref BoundingSphere sphere2)
 		{
 			float distance = sphere1.Center.GetDistance(sphere2.Center);

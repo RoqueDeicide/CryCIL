@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace CryEngine
+namespace CryEngine.Mathematics
 {
 	/// <summary>
 	/// Defines few methods related to angles.
@@ -13,8 +10,8 @@ namespace CryEngine
 		/// <summary>
 		/// Converts radians to degrees.
 		/// </summary>
-		/// <param name="radians">Angle in radians.</param>
-		/// <returns>Angle in degrees.</returns>
+		/// <param name="radians"> Angle in radians. </param>
+		/// <returns> Angle in degrees. </returns>
 		public static float Degree(float radians)
 		{
 			return (float)(radians * (180 / Math.PI));
@@ -22,11 +19,11 @@ namespace CryEngine
 		/// <summary>
 		/// Converts radians to degrees.
 		/// </summary>
-		/// <param name="radians">Angle in radians.</param>
-		/// <param name="norm">
+		/// <param name="radians"> Angle in radians. </param>
+		/// <param name="norm">   
 		/// Indicate whether we should normalize the angle, and if so then how.
 		/// </param>
-		/// <returns>Angle in degrees.</returns>
+		/// <returns> Angle in degrees. </returns>
 		public static float Degree(float radians, NormalizeType norm)
 		{
 			float degrees = (float)(radians * (180 / Math.PI));
@@ -46,8 +43,8 @@ namespace CryEngine
 		/// <summary>
 		/// Converts radians to degrees.
 		/// </summary>
-		/// <param name="radians">Angle in radians.</param>
-		/// <returns>Angle in degrees.</returns>
+		/// <param name="radians"> Angle in radians. </param>
+		/// <returns> Angle in degrees. </returns>
 		public static double Degree(double radians)
 		{
 			return radians * (180 / Math.PI);
@@ -55,11 +52,11 @@ namespace CryEngine
 		/// <summary>
 		/// Converts radians to degrees.
 		/// </summary>
-		/// <param name="radians">Angle in radians.</param>
-		/// <param name="norm">
+		/// <param name="radians"> Angle in radians. </param>
+		/// <param name="norm">   
 		/// Indicate whether we should normalize the angle, and if so then how.
 		/// </param>
-		/// <returns>Angle in degrees.</returns>
+		/// <returns> Angle in degrees. </returns>
 		public static double Degree(double radians, NormalizeType norm)
 		{
 			double degrees = radians * (180 / Math.PI);
@@ -79,8 +76,8 @@ namespace CryEngine
 		/// <summary>
 		/// Converts degrees to radians.
 		/// </summary>
-		/// <param name="degrees">Angle in degrees.</param>
-		/// <returns>Angle in radians.</returns>
+		/// <param name="degrees"> Angle in degrees. </param>
+		/// <returns> Angle in radians. </returns>
 		public static double Radian(double degrees)
 		{
 			return degrees * Math.PI / 180;
@@ -88,11 +85,11 @@ namespace CryEngine
 		/// <summary>
 		/// Converts degrees to radians.
 		/// </summary>
-		/// <param name="degrees">Angle in degrees.</param>
-		/// <param name="norm">
+		/// <param name="degrees"> Angle in degrees. </param>
+		/// <param name="norm">   
 		/// Indicate whether we should normalize the angle, and if so then how.
 		/// </param>
-		/// <returns>Angle in radians.</returns>
+		/// <returns> Angle in radians. </returns>
 		public static double Radian(double degrees, NormalizeType norm)
 		{
 			double radians = degrees * Math.PI / 180;
@@ -112,8 +109,8 @@ namespace CryEngine
 		/// <summary>
 		/// Converts degrees to radians.
 		/// </summary>
-		/// <param name="degrees">Angle in degrees.</param>
-		/// <returns>Angle in radians.</returns>
+		/// <param name="degrees"> Angle in degrees. </param>
+		/// <returns> Angle in radians. </returns>
 		public static float Radian(float degrees)
 		{
 			return (float)(degrees * Math.PI / 180);
@@ -121,11 +118,11 @@ namespace CryEngine
 		/// <summary>
 		/// Converts degrees to radians.
 		/// </summary>
-		/// <param name="degrees">Angle in degrees.</param>
-		/// <param name="norm">
+		/// <param name="degrees"> Angle in degrees. </param>
+		/// <param name="norm">   
 		/// Indicate whether we should normalize the angle, and if so then how.
 		/// </param>
-		/// <returns>Angle in radians.</returns>
+		/// <returns> Angle in radians. </returns>
 		public static float Radian(float degrees, NormalizeType norm)
 		{
 			double radians = degrees * Math.PI / 180;

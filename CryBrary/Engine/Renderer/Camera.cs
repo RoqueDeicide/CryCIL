@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using CryEngine.Mathematics;
 using CryEngine.Native;
 
 namespace CryEngine

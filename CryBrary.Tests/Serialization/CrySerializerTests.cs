@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using CryEngine.Mathematics;
 using CryEngine.Serialization;
 using NUnit.Framework;
 
@@ -305,10 +306,10 @@ namespace CryBrary.Tests.Serialization
 				IntegerProperty = 13;
 				StringProperty = "TestString";
 
-				this.Vector3Property = new CryEngine.Vector3(1, 2, 3);
+				this.Vector3Property = new Vector3(1, 2, 3);
 			}
 
-			public CryEngine.Vector3 Vector3Property { get; set; }
+			public Vector3 Vector3Property { get; set; }
 		}
 
 		[Test]
@@ -328,7 +329,7 @@ namespace CryBrary.Tests.Serialization
 				Assert.True(inheritClass.BooleanProperty);
 				Assert.AreEqual(13, inheritClass.IntegerProperty);
 				Assert.AreEqual("TestString", inheritClass.StringProperty);
-				Assert.AreEqual(new CryEngine.Vector3(1, 2, 3), inheritClass.Vector3Property);
+				Assert.AreEqual(new Vector3(1, 2, 3), inheritClass.Vector3Property);
 			}
 		}
 
