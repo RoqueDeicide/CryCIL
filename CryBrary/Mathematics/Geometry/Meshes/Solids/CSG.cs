@@ -96,12 +96,12 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 			Node aNode = new Node(a.Polygons);
 			Node bNode = new Node(b.Polygons);
 
-			aNode.ClipTo(bNode);
-			bNode.ClipTo(aNode);
-			bNode.Invert();
-			bNode.ClipTo(aNode);
-			bNode.Invert();
-			aNode.Build(bNode.AllPolygons);
+			aNode.ClipTo(bNode);				// Remove B geometry from A.
+			bNode.ClipTo(aNode);				// Remove A geometry from B.
+			bNode.Invert();						// Invert B, so we can deal with coplanar intersections.
+			bNode.ClipTo(aNode);				// Remove coplanars from B.
+			bNode.Invert();						// Invert B back into original form.
+			aNode.Build(bNode.AllPolygons);		// Rebuild A to incorporate geometry from B.
 			return new Solid(aNode.AllPolygons);
 		}
 		/// <summary>
@@ -127,13 +127,14 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 			Node aNode = new Node(a.Polygons);
 			Node bNode = new Node(b.Polygons);
 
-			aNode.Invert();
-			bNode.ClipTo(aNode);
-			bNode.Invert();
-			aNode.ClipTo(bNode);
-			bNode.ClipTo(aNode);
-			aNode.Build(bNode.AllPolygons);
-			return null;
+			aNode.Invert();						// Invert A.
+			bNode.ClipTo(aNode);				// Remove geometry that is not in A from B.
+			bNode.Invert();						// Invert B.
+			aNode.ClipTo(bNode);				// Remove geometry that is not in B from A.
+			bNode.ClipTo(aNode);				// Remove remains of A from B.
+			aNode.Build(bNode.AllPolygons);		// Rebuild A to incorporate B.
+			aNode.Invert();						// Invert A so it doesn't end up inside out.
+			return new Solid(aNode.AllPolygons);
 		}
 		/// <summary>
 		/// Subtracts right solid from left one.
@@ -158,15 +159,18 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 			Node aNode = new Node(a.Polygons);
 			Node bNode = new Node(b.Polygons);
 
-			aNode.Invert();
-			aNode.ClipTo(bNode);
-			bNode.ClipTo(aNode);
-			bNode.Invert();
-			bNode.ClipTo(aNode);
-			bNode.Invert();
-			aNode.Build(bNode.AllPolygons);
-			aNode.Invert();
-			return null;
+			aNode.Invert();					// Invert A.
+
+			aNode.ClipTo(bNode);			//
+			bNode.ClipTo(aNode);			//
+			bNode.Invert();					// Union of inverted A with B.
+			bNode.ClipTo(aNode);			//
+			bNode.Invert();					//
+			aNode.Build(bNode.AllPolygons);	//
+
+			aNode.Invert()					// Invert everything since what we've got
+			;								// above is what we need but it's inside out.
+			return new Solid(aNode.AllPolygons);
 		}
 		/// <summary>
 		/// Represents a solid that can participate in CSG operations.
@@ -852,11 +856,22 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 			{
 				get
 				{
-					return (this.Polygons == null) ? null : new List<Polygon>
+					if (this.Polygons == null)
+					{
+						return null;
+					}
+					List<Polygon> frontPolygons = (this.Front == null) ? null : this.Front.AllPolygons;
+					List<Polygon> backPolygons = (this.Back == null) ? null : this.Back.AllPolygons;
+					List<Polygon> allPolygons = new List<Polygon>
 					(
-						this.Polygons.Concat((this.Front == null) ? new List<Polygon>() : this.Front.AllPolygons)
-									 .Concat((this.Back == null) ? new List<Polygon>() : this.Back.AllPolygons)
+						this.Polygons.Count +
+						((frontPolygons == null) ? 0 : frontPolygons.Count) +
+						((backPolygons == null) ? 0 : backPolygons.Count)
 					);
+					allPolygons.AddRange(this.Polygons);
+					if (frontPolygons != null) allPolygons.AddRange(frontPolygons);
+					if (backPolygons != null) allPolygons.AddRange(backPolygons);
+					return allPolygons;
 				}
 			}
 			/// <summary>
@@ -981,7 +996,8 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 				}
 				// Remove all back polys if Back node is undefined.
 				back = this.Back != null ? this.Back.ClipPolygons(back) : new List<Polygon>();
-				return front.Concat(back).ToList();
+				front.AddRange(back);
+				return front;
 			}
 			/// <summary>
 			/// Removes all geometry in this BSP tree that is in another one.
