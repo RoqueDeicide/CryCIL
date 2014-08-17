@@ -524,25 +524,49 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 					throw new ArgumentException("Not enough vertices.");
 				}
 #if DEBUG
-				List<Vector3> edgeVectors = new List<Vector3>(vertices.Count);
-				for (int i = 1; i < vertices.Count; i++)
+				if (vertices.Count == 3)			// No need to check triangles.
 				{
-					edgeVectors.Insert(i - 1, vertices[i].Position - vertices[i - 1].Position);
-				}
-				// Insert last edge.
-				edgeVectors.Add(vertices[0].Position - vertices[vertices.Count - 1].Position);
-				// Check if all edges are coplanar.
-				for (int i = 2; i < edgeVectors.Count; i++)
-				{
-					if (Vector3.Mixed(edgeVectors[i], edgeVectors[i - 1], edgeVectors[i - 2]) > MathHelpers.ZeroTolerance)
+					// Check if all vertices are on the same plane.
+					List<Vector3> edgeVectors = new List<Vector3>(vertices.Count);
+					for (int i = 1; i < vertices.Count; i++)
 					{
-						throw new ArgumentException("Vertices are not coplanar.");
+						edgeVectors.Insert(i - 1, vertices[i].Position - vertices[i - 1].Position);
+					}
+					// Insert last edge.
+					edgeVectors.Add(vertices[0].Position - vertices[vertices.Count - 1].Position);
+					// Check if all edges are coplanar.
+					for (int i = 2; i < edgeVectors.Count; i++)
+					{
+						if (Vector3.Mixed(edgeVectors[i], edgeVectors[i - 1], edgeVectors[i - 2]) > MathHelpers.ZeroTolerance)
+						{
+							throw new ArgumentException("Vertices are not coplanar.");
+						}
+					}
+				}
+#endif
+				this.Plane = new Plane(vertices[0].Position, vertices[1].Position, vertices[2].Position);
+#if DEBUG
+				Plane.PlaneRelativePositionClass position = Plane.PlaneRelativePositionClass.Coplanar;
+				// Check if the polygon is convex.
+				for (int i = 0; i < vertices.Count; i++)
+				{
+					Vector3 previousVertex = vertices[(i == 0) ? vertices.Count - 1 : i - 1].Position;
+					Vector3 currentVertex = vertices[i].Position;
+					Vector3 nextVertex = vertices[(i + 1) % vertices.Count].Position;
+					// Plane formed by edge between previous vertex and current one and a vector
+					// that is parallel to polygon's normal and originates from current vertex.
+					CSG.Plane planeBefore =
+						new Plane(currentVertex, previousVertex, this.Plane.Normal + currentVertex);
+
+					position |= planeBefore.RelativePosition(nextVertex);
+					if (position == Plane.PlaneRelativePositionClass.Spanning)
+					{
+						throw new ArgumentException("Given list of vertices does not form a convex polygon.");
 					}
 				}
 #endif
 				this.Vertices = vertices.ToList();
 				this.Shared = shared;
-				this.Plane = new Plane(vertices[0].Position, vertices[1].Position, vertices[2].Position);
 			}
 			/// <summary>
 			/// Flips this polygon.
@@ -675,6 +699,27 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 				this.W = -this.W;
 			}
 			/// <summary>
+			/// Determines position of given point relative to this plane.
+			/// </summary>
+			/// <param name="point"><see cref="Vector3"/> that represents a point.</param>
+			/// <returns>
+			/// <para><see cref="PlaneRelativePositionClass.Back"/> if the point is behind this plane.</para>
+			///
+			/// <para><see cref="PlaneRelativePositionClass.Front"/> if the point is in front of this plane.</para>
+			///
+			/// <para><see cref="PlaneRelativePositionClass.Coplanar"/> if the point is on this plane.</para>
+			/// </returns>
+			public PlaneRelativePositionClass RelativePosition(Vector3 point)
+			{
+				float signedDistance = this.Normal * point - this.W;
+				return
+					signedDistance < -Plane.Epsilon
+						? PlaneRelativePositionClass.Back
+						: signedDistance > Plane.Epsilon
+							? PlaneRelativePositionClass.Front
+							: PlaneRelativePositionClass.Coplanar;
+			}
+			/// <summary>
 			/// Splits polygon using this plane.
 			/// </summary>
 			/// <param name="polygon">               Polygon to slice. </param>
@@ -711,13 +756,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 					new List<PlaneRelativePositionClass>(polygon.Vertices.Count);
 				for (int i = 0; i < polygon.Vertices.Count; i++)
 				{
-					float signedDistance = this.Normal * polygon.Vertices[i].Position - this.W;
-					PlaneRelativePositionClass type =
-						signedDistance < -Plane.Epsilon
-							? PlaneRelativePositionClass.Back
-							: signedDistance > Plane.Epsilon
-								? PlaneRelativePositionClass.Front
-								: PlaneRelativePositionClass.Coplanar;
+					PlaneRelativePositionClass type = this.RelativePosition(polygon.Vertices[i].Position);
 					polygonType |= type;
 					types.Add(type);
 				}
@@ -860,13 +899,37 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 					{
 						return null;
 					}
-					List<Polygon> frontPolygons = (this.Front == null) ? null : this.Front.AllPolygons;
-					List<Polygon> backPolygons = (this.Back == null) ? null : this.Back.AllPolygons;
+					List<Polygon> frontPolygons;
+					List<Polygon> backPolygons;
+
+					int frontPolycount;
+					int backPolycount;
+					// Initialize lists of polygons from branches, so we can minimize memory
+					// allocations, since we will have exact capacity immediately.
+					if (this.Front != null)
+					{
+						frontPolygons = this.Front.AllPolygons;
+						frontPolycount = frontPolygons.Count;
+					}
+					else
+					{
+						frontPolygons = null;
+						frontPolycount = 0;
+					}
+					if (this.Back != null)
+					{
+						backPolygons = this.Back.AllPolygons;
+						backPolycount = backPolygons.Count;
+					}
+					else
+					{
+						backPolygons = null;
+						backPolycount = 0;
+					}
+					// Make a list that fits all polygons from this tree.
 					List<Polygon> allPolygons = new List<Polygon>
 					(
-						this.Polygons.Count +
-						((frontPolygons == null) ? 0 : frontPolygons.Count) +
-						((backPolygons == null) ? 0 : backPolygons.Count)
+						this.Polygons.Count + frontPolycount + backPolycount
 					);
 					allPolygons.AddRange(this.Polygons);
 					if (frontPolygons != null) allPolygons.AddRange(frontPolygons);
@@ -931,8 +994,14 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 				// Split polygons with the plane.
 				for (int i = 0; i < polygons.Count; i++)
 				{
-					this.Plane.SplitPolygon(polygons[i], ref this.Polygons, ref this.Polygons,
-											ref frontPolygons, ref backPolygons);
+					this.Plane.SplitPolygon
+					(
+						polygons[i],
+						// Polys that are on the same plane as this node end up in the node.
+						ref this.Polygons, ref this.Polygons,
+						// These will form front and back branches resectively.
+						ref frontPolygons, ref backPolygons
+					);
 				}
 				// Build front branch from front polygons.
 				if (frontPolygons.Count > 0)
@@ -956,10 +1025,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 				}
 				if (this.Polygons != null && this.Polygons.Count != 0)
 				{
-					for (int i = 0; i < this.Polygons.Count; i++)
-					{
-						this.Polygons[i].Flip();
-					}
+					this.Polygons.ForEach(x => x.Flip());
 				}
 				if (this.Front != null)
 				{
@@ -994,9 +1060,12 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 				{
 					front = this.Front.ClipPolygons(front);
 				}
-				// Remove all back polys if Back node is undefined.
-				back = this.Back != null ? this.Back.ClipPolygons(back) : new List<Polygon>();
-				front.AddRange(back);
+				// If this node has nothing behind it in the tree, then whatever is behind it in the
+				// list should be discarded.
+				if (this.Back != null)
+				{
+					front.AddRange(this.Back.ClipPolygons(back));
+				}
 				return front;
 			}
 			/// <summary>
