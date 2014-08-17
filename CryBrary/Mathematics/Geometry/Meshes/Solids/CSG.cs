@@ -620,6 +620,41 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 				}
 				return new Solid(polygons);
 			}
+			/// <summary>
+			/// Combines two solids together. 
+			/// </summary>
+			/// <example>
+			/// <code>
+			/// Solid twoCubes = cube1 | cube2;
+			/// </code></example>
+			/// <param name="left">  Left operand. </param>
+			/// <param name="right"> Right operand. </param>
+			/// <returns> Result of <see cref="CSG.Union"/> . </returns>
+			public static Solid operator |(Solid left, Solid right)
+			{
+				return CSG.Union(left, right);
+			}
+			/// <summary> Combines two solids together. </summary> <example> <code> Solid
+			/// intersection = cube1 & cube2; </code> </example> <param name="left">Left
+			/// operand.</param> <param name="right">Right operand.</param> <returns>Result of <see cref="CSG.Intersection"/>.</returns>
+			public static Solid operator &(Solid left, Solid right)
+			{
+				return CSG.Intersection(left, right);
+			}
+			/// <summary>
+			/// Subtracts right solid from left one. 
+			/// </summary>
+			/// <example>
+			/// <code>
+			/// Solid rightWithoutLeft = cube1 - cube2;
+			/// </code></example>
+			/// <param name="left">  Left operand. </param>
+			/// <param name="right"> Right operand. </param>
+			/// <returns> Result of <see cref="CSG.Subtract"/> . </returns>
+			public static Solid operator -(Solid left, Solid right)
+			{
+				return CSG.Subtract(left, right);
+			}
 		}
 		/// <summary>
 		/// Represents a part of surface of the solid. 
