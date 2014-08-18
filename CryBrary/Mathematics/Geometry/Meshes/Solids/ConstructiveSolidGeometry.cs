@@ -94,14 +94,14 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 	/// Solid exampleSphere = Solid.Sphere(null, 2.6f);
 	/// // Construct a complicated object.
 	/// Solid complexGeomtery =
-	///     CSG.Subtract
+	///     ConstructiveSolidGeometry.Subtract
 	///     (
-	///         CSG.Intersection(exampleCube, exampleSphere),
-	///         CSG.Union(cylinderX, CSG.Union(cylinderY, cylinderZ))
+	///         ConstructiveSolidGeometry.Intersection(exampleCube, exampleSphere),
+	///         ConstructiveSolidGeometry.Union(cylinderX, CSG.Union(cylinderY, cylinderZ))
 	///     );
 	/// </code>
 	/// </example>
-	public static class CSG
+	public static class ConstructiveSolidGeometry
 	{
 		/// <summary>
 		/// Combines two solids together into one solid.
@@ -125,7 +125,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 		/// Solid block1 = Solid.Cuboid(new Vector3(), new Vector3(blockSideLength));
 		/// Solid block2 = Solid.Cuboid(new Vector3(blockSideLength / 2, 0, 0), new Vector3(blockSideLength));
 		///
-		/// Solid twoBlocksInARow = CSG.Union(block1, block2);
+		/// Solid twoBlocksInARow = ConstructiveSolidGeometry.Union(block1, block2);
 		///
 		/// // Create capsule from two spheres and a cylinder.
 		/// const float capsuleHeight = 4;
@@ -138,7 +138,8 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 		/// Solid bottomCap = Solid.Sphere(capsuleBodyBottom, capsuleRadius);
 		/// Solid capsuleBody = Solid.Cylinder(capsuleBodyBottom, capsuleBodyTop, capsuleRadius);
 		///
-		/// Solid capsule = CSG.Union(topCap, CSG.Union(capsuleBody, bottomCap));
+		/// Solid capsule =
+		///      ConstructiveSolidGeometry.Union(topCap, ConstructiveSolidGeometry.Union(capsuleBody, bottomCap));
 		/// </code>
 		/// </example>
 		/// <param name="a"> First solid. </param>
@@ -182,7 +183,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 		/// Solid cube = Solid.Cuboid(null, new Vector3(length));
 		/// Solid sphere = Solid.Sphere(new Vector3(length, 0, 0), radius);
 		///
-		/// Solid affectedPortion = CSG.Intersection(cube, sphere);
+		/// Solid affectedPortion = ConstructiveSolidGeometry.Intersection(cube, sphere);
 		///
 		/// // Clamp a cylinder into a sphere.
 		/// const float areaRadius = 2;
@@ -194,7 +195,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 		///                                     cylinderRadius);
 		/// Solid sphericalArea = Solid.Sphere(null, areaRadius);
 		///
-		/// Solid clampedCylinder = CSG.Intersection(longCylinder, sphericalArea);
+		/// Solid clampedCylinder = ConstructiveSolidGeometry.Intersection(longCylinder, sphericalArea);
 		/// </code>
 		/// </example>
 		/// <param name="a"> First solid. </param>
@@ -284,13 +285,13 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 		/// );
 		///
 		/// Solid cubeFrame =
-		///     CSG.Subtract
+		///     ConstructiveSolidGeometry.Subtract
 		///     (
 		///         outerCube,
-		///         CSG.Union
+		///         ConstructiveSolidGeometry.Union
 		///         (
 		///             firstInnerCuboid,
-		///             CSG.Union
+		///             ConstructiveSolidGeometry.Union
 		///             (
 		///                 secondInnerCuboid,
 		///                 thirdInnerCuboid
@@ -629,10 +630,10 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 			/// </code></example>
 			/// <param name="left"> Left operand.</param>
 			/// <param name="right">Right operand.</param>
-			/// <returns>Result of <see cref="CSG.Union"/> .</returns>
+			/// <returns>Result of <see cref="ConstructiveSolidGeometry.Union"/> .</returns>
 			public static Solid operator |(Solid left, Solid right)
 			{
-				return CSG.Union(left, right);
+				return ConstructiveSolidGeometry.Union(left, right);
 			}
 			/// <summary>
 			/// Combines two solids together.
@@ -643,10 +644,10 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 			/// </code></example>
 			/// <param name="left"> Left operand.</param>
 			/// <param name="right">Right operand.</param>
-			/// <returns>Result of <see cref="CSG.Intersection"/> .</returns>
+			/// <returns>Result of <see cref="ConstructiveSolidGeometry.Intersection"/> .</returns>
 			public static Solid operator &(Solid left, Solid right)
 			{
-				return CSG.Intersection(left, right);
+				return ConstructiveSolidGeometry.Intersection(left, right);
 			}
 			/// <summary>
 			/// Subtracts right solid from left one.
@@ -657,10 +658,10 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 			/// </code></example>
 			/// <param name="left"> Left operand.</param>
 			/// <param name="right">Right operand.</param>
-			/// <returns>Result of <see cref="CSG.Subtract"/> .</returns>
+			/// <returns>Result of <see cref="ConstructiveSolidGeometry.Subtract"/> .</returns>
 			public static Solid operator -(Solid left, Solid right)
 			{
-				return CSG.Subtract(left, right);
+				return ConstructiveSolidGeometry.Subtract(left, right);
 			}
 		}
 		/// <summary>
@@ -746,7 +747,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 					Vector3 nextVertex = vertices[(i + 1) % vertices.Count].Position;
 					// Plane formed by edge between previous vertex and current one and a vector
 					// that is parallel to polygon's normal and originates from current vertex.
-					CSG.Plane planeBefore =
+					ConstructiveSolidGeometry.Plane planeBefore =
 						new Plane(currentVertex, previousVertex, this.Plane.Normal + currentVertex);
 
 					position |= planeBefore.RelativePosition(nextVertex);
@@ -971,8 +972,8 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 						return;
 					case PlaneRelativePositionClass.Spanning:
 						// Here comes the hard part.
-						List<CSG.Vertex> f = new List<Vertex>();
-						List<CSG.Vertex> b = new List<Vertex>();
+						List<ConstructiveSolidGeometry.Vertex> f = new List<Vertex>();
+						List<ConstructiveSolidGeometry.Vertex> b = new List<Vertex>();
 						for (int i = 0; i < polygon.Vertices.Count; i++)
 						{
 							// Calculate index of the next vertex of the edge. Modulus operation

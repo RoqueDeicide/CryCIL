@@ -236,7 +236,7 @@
     <Compile Include="Platform.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\BaseMesh.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\CommonTangentOperations.cs" />
-    <Compile Include="Mathematics\Geometry\Meshes\Solids\CSG.cs" />
+    <Compile Include="Mathematics\Geometry\Meshes\Solids\ConstructiveSolidGeometry.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\MeshConsistencyException.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\IndexedTriangleFace.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\IMesh.cs" />
