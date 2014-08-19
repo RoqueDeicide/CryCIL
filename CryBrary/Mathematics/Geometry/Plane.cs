@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace CryEngine.Mathematics.Geometry
@@ -20,20 +21,20 @@ namespace CryEngine.Mathematics.Geometry
 		/// </summary>
 		public float D;
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Plane" /> struct.
+		/// Initializes a new instance of the <see cref="Plane"/> struct.
 		/// </summary>
-		/// <param name="value"> The value that will be assigned to all components. </param>
+		/// <param name="value">The value that will be assigned to all components.</param>
 		public Plane(float value)
 		{
 			this.Normal.X = this.Normal.Y = this.Normal.Z = this.D = value;
 		}
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Plane" /> struct.
+		/// Initializes a new instance of the <see cref="Plane"/> struct.
 		/// </summary>
-		/// <param name="a"> The X component of the normal. </param>
-		/// <param name="b"> The Y component of the normal. </param>
-		/// <param name="c"> The Z component of the normal. </param>
-		/// <param name="d"> The distance of the plane along its normal from the origin. </param>
+		/// <param name="a">The X component of the normal.</param>
+		/// <param name="b">The Y component of the normal.</param>
+		/// <param name="c">The Z component of the normal.</param>
+		/// <param name="d">The distance of the plane along its normal from the origin.</param>
 		public Plane(float a, float b, float c, float d)
 		{
 			this.Normal.X = a;
@@ -42,31 +43,31 @@ namespace CryEngine.Mathematics.Geometry
 			this.D = d;
 		}
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Plane" /> struct.
+		/// Initializes a new instance of the <see cref="Plane"/> struct.
 		/// </summary>
-		/// <param name="value"> The normal of the plane. </param>
-		/// <param name="d">     The distance of the plane along its normal from the origin </param>
+		/// <param name="value">The normal of the plane.</param>
+		/// <param name="d">    The distance of the plane along its normal from the origin</param>
 		public Plane(Vector3 value, float d)
 		{
 			this.Normal = value;
 			this.D = d;
 		}
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Plane" /> struct.
+		/// Initializes a new instance of the <see cref="Plane"/> struct.
 		/// </summary>
-		/// <param name="point">  Any point that lies along the plane. </param>
-		/// <param name="normal"> The normal of the plane. </param>
+		/// <param name="point"> Any point that lies along the plane.</param>
+		/// <param name="normal">The normal of the plane.</param>
 		public Plane(Vector3 point, Vector3 normal)
 		{
 			this.Normal = normal;
 			this.D = -Vector3.Dot(normal, point);
 		}
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Plane" /> struct.
+		/// Initializes a new instance of the <see cref="Plane"/> struct.
 		/// </summary>
-		/// <param name="point1"> First point of a triangle defining the plane. </param>
-		/// <param name="point2"> Second point of a triangle defining the plane. </param>
-		/// <param name="point3"> Third point of a triangle defining the plane. </param>
+		/// <param name="point1">First point of a triangle defining the plane.</param>
+		/// <param name="point2">Second point of a triangle defining the plane.</param>
+		/// <param name="point3">Third point of a triangle defining the plane.</param>
 		public Plane(Vector3 point1, Vector3 point2, Vector3 point3)
 		{
 #if DEBUG
@@ -92,17 +93,17 @@ namespace CryEngine.Mathematics.Geometry
 #endif
 		}
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Plane" /> struct.
+		/// Initializes a new instance of the <see cref="Plane"/> struct.
 		/// </summary>
 		/// <param name="values">
 		/// The values to assign to the A, B, C, and D components of the plane. This must be an
 		/// array with four elements.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
-		/// Thrown when <paramref name="values" /> is <c>null</c>.
+		/// Thrown when <paramref name="values"/> is <c>null</c> .
 		/// </exception>
 		/// <exception cref="ArgumentOutOfRangeException">
-		/// Thrown when <paramref name="values" /> contains more or less than four elements.
+		/// Thrown when <paramref name="values"/> contains more or less than four elements.
 		/// </exception>
 		public Plane(IList<float> values)
 		{
@@ -121,14 +122,14 @@ namespace CryEngine.Mathematics.Geometry
 		/// <summary>
 		/// Gets or sets the component at the specified index.
 		/// </summary>
-		/// <value> The value of the A, B, C, or D component, depending on the index. </value>
+		/// <value>The value of the A, B, C, or D component, depending on the index.</value>
 		/// <param name="index">
 		/// The index of the component to access. Use 0 for the A component, 1 for the B component,
 		/// 2 for the C component, and 3 for the D component.
 		/// </param>
-		/// <returns> The value of the component at the specified index. </returns>
+		/// <returns>The value of the component at the specified index.</returns>
 		/// <exception cref="System.ArgumentOutOfRangeException">
-		/// Thrown when the <paramref name="index" /> is out of the range [0, 3].
+		/// Thrown when the <paramref name="index"/> is out of the range [0, 3].
 		/// </exception>
 		public float this[int index]
 		{
@@ -165,8 +166,8 @@ namespace CryEngine.Mathematics.Geometry
 		/// <summary>
 		/// Changes the coefficients of the normal vector of the plane to make it of unit length.
 		/// </summary>
-		/// <param name="plane">  The source plane. </param>
-		/// <param name="result"> When the method completes, contains the normalized plane. </param>
+		/// <param name="plane"> The source plane.</param>
+		/// <param name="result">When the method completes, contains the normalized plane.</param>
 		public static void Normalize(ref Plane plane, out Plane result)
 		{
 			float magnitude = 1.0f / (float)Math.Sqrt((plane.Normal.X * plane.Normal.X) + (plane.Normal.Y * plane.Normal.Y) + (plane.Normal.Z * plane.Normal.Z));
@@ -179,8 +180,8 @@ namespace CryEngine.Mathematics.Geometry
 		/// <summary>
 		/// Changes the coefficients of the normal vector of the plane to make it of unit length.
 		/// </summary>
-		/// <param name="plane"> The source plane. </param>
-		/// <returns> The normalized plane. </returns>
+		/// <param name="plane">The source plane.</param>
+		/// <returns>The normalized plane.</returns>
 		public static Plane Normalize(Plane plane)
 		{
 			float magnitude = 1.0f / (float)Math.Sqrt((plane.Normal.X * plane.Normal.X) + (plane.Normal.Y * plane.Normal.Y) + (plane.Normal.Z * plane.Normal.Z));
@@ -189,9 +190,9 @@ namespace CryEngine.Mathematics.Geometry
 		/// <summary>
 		/// Transforms a normalized plane by a quaternion rotation.
 		/// </summary>
-		/// <param name="plane">    The normalized source plane. </param>
-		/// <param name="rotation"> The quaternion rotation. </param>
-		/// <param name="result">   When the method completes, contains the transformed plane. </param>
+		/// <param name="plane">   The normalized source plane.</param>
+		/// <param name="rotation">The quaternion rotation.</param>
+		/// <param name="result">  When the method completes, contains the transformed plane.</param>
 		public static void Transform(ref Plane plane, ref Quaternion rotation, out Plane result)
 		{
 			float x2 = rotation.V.X + rotation.V.X;
@@ -223,9 +224,9 @@ namespace CryEngine.Mathematics.Geometry
 		/// <summary>
 		/// Transforms a normalized plane by a quaternion rotation.
 		/// </summary>
-		/// <param name="plane">    The normalized source plane. </param>
-		/// <param name="rotation"> The quaternion rotation. </param>
-		/// <returns> The transformed plane. </returns>
+		/// <param name="plane">   The normalized source plane.</param>
+		/// <param name="rotation">The quaternion rotation.</param>
+		/// <returns>The transformed plane.</returns>
 		public static Plane Transform(Plane plane, Quaternion rotation)
 		{
 			Plane result;
@@ -260,10 +261,10 @@ namespace CryEngine.Mathematics.Geometry
 		/// <summary>
 		/// Transforms an array of normalized planes by a quaternion rotation.
 		/// </summary>
-		/// <param name="planes">   The array of normalized planes to transform. </param>
-		/// <param name="rotation"> The quaternion rotation. </param>
+		/// <param name="planes">  The array of normalized planes to transform.</param>
+		/// <param name="rotation">The quaternion rotation.</param>
 		/// <exception cref="ArgumentNullException">
-		/// Thrown when <paramref name="planes" /> is <c>null</c>.
+		/// Thrown when <paramref name="planes"/> is <c>null</c> .
 		/// </exception>
 		public static void Transform(Plane[] planes, ref Quaternion rotation)
 		{
@@ -312,5 +313,87 @@ namespace CryEngine.Mathematics.Geometry
 			this.Normal.Z *= magnitude;
 			this.D *= magnitude;
 		}
+		/// <summary>
+		/// Calculates signed distance between this plane and a point.
+		/// </summary>
+		/// <param name="point">
+		/// <see cref="Vector3"/> object that describes location of the point in 3D space.
+		/// </param>
+		/// <returns>
+		/// Number of type <see cref="Single"/> which absolute value is a shortest distance between
+		/// this plane and a given point, and which sign is negative if the point is on the backside
+		/// of this plane.
+		/// </returns>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public float SignedDistance(Vector3 point)
+		{
+			return point * this.Normal - this.D;
+		}
+		/// <summary>
+		/// Determines relative position of the point in respect to position of this plane.
+		/// </summary>
+		/// <param name="point">          
+		/// <see cref="Vector3"/> object that describes location of the point in 3D space.
+		/// </param>
+		/// <param name="pointPosition">  
+		/// When the call is concluded, this value will indicate relative position of the point.
+		/// </param>
+		/// <param name="polygonPosition">
+		/// During a call bitwise Or operator will be applied to this argument with second operand
+		/// being <paramref name="pointPosition"/> after it is calculated.
+		/// </param>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public void DetermineRelativePosition(Vector3 point, out PositionAgainstPlaneType pointPosition,
+											   ref PositionAgainstPlaneType polygonPosition)
+		{
+			pointPosition = this.DetermineRelativePosition(point);
+			polygonPosition |= pointPosition;
+		}
+		/// <summary>
+		/// Determines relative position of the point in respect to position of this plane.
+		/// </summary>
+		/// <param name="point">
+		/// <see cref="Vector3"/> object that describes location of the point in 3D space.
+		/// </param>
+		/// <returns>
+		/// <para><see cref="PositionAgainstPlaneType.Coplanar"/> if the point is on a plane.</para>
+		/// <para><see cref="PositionAgainstPlaneType.Front"/> if the point is in front of a plane.</para>
+		/// <para><see cref="PositionAgainstPlaneType.Back"/> if the point is behind a plane.</para>
+		/// </returns>
+		public PositionAgainstPlaneType DetermineRelativePosition(Vector3 point)
+		{
+			float signedDistance = this.SignedDistance(point);
+			if (signedDistance > MathHelpers.ZeroTolerance)
+			{
+				return PositionAgainstPlaneType.Front;
+			}
+			return signedDistance < -MathHelpers.ZeroTolerance
+				? PositionAgainstPlaneType.Back : PositionAgainstPlaneType.Coplanar;
+		}
+	}
+	/// <summary>
+	/// Enumeration of positions point or a geometric figure can be in relation to a plane.
+	/// </summary>
+	[Flags]
+	public enum PositionAgainstPlaneType
+	{
+		/// <summary>
+		/// Point or figure occupies the same plane.
+		/// </summary>
+		Coplanar = 0,
+		/// <summary>
+		/// Geometric figure is not intersecting the plane and is located inside the part of the 3D
+		/// space plane's normal points towards.
+		/// </summary>
+		Front = 1,
+		/// <summary>
+		/// Geometric figure is not intersecting the plane and is located inside the part of the 3D
+		/// space plane's normal points against.
+		/// </summary>
+		Back = 2,
+		/// <summary>
+		/// Geometric figure intersects the plane.
+		/// </summary>
+		Spanning = 3
 	}
 }
