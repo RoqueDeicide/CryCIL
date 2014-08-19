@@ -1,4 +1,4 @@
-﻿namespace CryEngine.Mathematics
+﻿namespace CryEngine.Mathematics.Geometry
 {
 	/// <summary>
 	/// Describes the result of an intersection with a plane in three dimensions.
