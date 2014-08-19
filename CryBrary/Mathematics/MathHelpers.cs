@@ -280,9 +280,13 @@ namespace CryEngine.Mathematics
 			return ((UInt32)value & mask) != mask;
 		}
 		/// <summary>
-		/// The value for which all absolute numbers smaller than are considered equal to zero.
+		/// All positive numbers that are smaller than this value are considered equal to zero.
 		/// </summary>
 		public const float ZeroTolerance = 1e-6f;
+		/// <summary>
+		/// All negative numbers that are greater than this value are considered equal to zero.
+		/// </summary>
+		public const float NZeroTolerance = -1e-6f;
 		/// <summary>
 		/// Doubled <see cref="Math.PI" />.
 		/// </summary>
