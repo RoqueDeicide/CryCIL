@@ -44,8 +44,8 @@ namespace CryEngine.Mathematics
 		/// <summary>
 		/// Determines whether this color is equal to another.
 		/// </summary>
-		/// <param name="other"> Another color. </param>
-		/// <returns> True, if they are equal. </returns>
+		/// <param name="other">Another color.</param>
+		/// <returns>True, if they are equal.</returns>
 		public bool Equals(Color32 other)
 		{
 			return
@@ -57,10 +57,8 @@ namespace CryEngine.Mathematics
 		/// <summary>
 		/// Determines whether this color is equal to another object.
 		/// </summary>
-		/// <param name="obj"> Another object. </param>
-		/// <returns>
-		/// True, if <paramref name="obj" /> is <see cref="Color32" /> and they are equal.
-		/// </returns>
+		/// <param name="obj">Another object.</param>
+		/// <returns>True, if <paramref name="obj"/> is <see cref="Color32"/> and they are equal.</returns>
 		public override bool Equals(object obj)
 		{
 			if (ReferenceEquals(null, obj)) return false;
@@ -69,7 +67,7 @@ namespace CryEngine.Mathematics
 		/// <summary>
 		/// Calculates hash code of this color object.
 		/// </summary>
-		/// <returns> Hash code of this color object. </returns>
+		/// <returns>Hash code of this color object.</returns>
 		public override int GetHashCode()
 		{
 			unchecked
@@ -84,21 +82,21 @@ namespace CryEngine.Mathematics
 			}
 		}
 		/// <summary>
-		/// Determines whether two instances of type <see cref="Color32" /> are equal.
+		/// Determines whether two instances of type <see cref="Color32"/> are equal.
 		/// </summary>
-		/// <param name="left">  Left operand. </param>
-		/// <param name="right"> Right operand. </param>
-		/// <returns> True, if operands are equal. </returns>
+		/// <param name="left"> Left operand.</param>
+		/// <param name="right">Right operand.</param>
+		/// <returns>True, if operands are equal.</returns>
 		public static bool operator ==(Color32 left, Color32 right)
 		{
 			return left.Bytes.SignedInt == right.Bytes.SignedInt;
 		}
 		/// <summary>
-		/// Determines whether two instances of type <see cref="Color32" /> are not equal.
+		/// Determines whether two instances of type <see cref="Color32"/> are not equal.
 		/// </summary>
-		/// <param name="left">  Left operand. </param>
-		/// <param name="right"> Right operand. </param>
-		/// <returns> True, if operands are not equal. </returns>
+		/// <param name="left"> Left operand.</param>
+		/// <param name="right">Right operand.</param>
+		/// <returns>True, if operands are not equal.</returns>
 		public static bool operator !=(Color32 left, Color32 right)
 		{
 			return
@@ -111,9 +109,9 @@ namespace CryEngine.Mathematics
 		/// Converts given color object to structure that allows easy byte manipulation and simple
 		/// type conversion.
 		/// </summary>
-		/// <param name="color"> Color to convert. </param>
+		/// <param name="color">Color to convert.</param>
 		/// <returns>
-		/// Instance of <see cref="Bytes4" /> type with each byte representing a color component in
+		/// Instance of <see cref="Bytes4"/> type with each byte representing a color component in
 		/// the order - RGBA.
 		/// </returns>
 		public static explicit operator Bytes4(Color32 color)
@@ -123,19 +121,20 @@ namespace CryEngine.Mathematics
 		/// <summary>
 		/// Creates text representation of this color object.
 		/// </summary>
-		/// <returns> Object of type <see cref="String" /> that represents this color. </returns>
+		/// <returns>Object of type <see cref="String"/> that represents this color.</returns>
 		public override string ToString()
 		{
 			return String.Format("[{0} {1} {2} {3}]", this.Red, this.Green, this.Blue, this.Alpha);
 		}
 		/// <summary>
-		/// Converts text representation of the color to type <see cref="Color32" />.
+		/// Converts text representation of the color to type <see cref="Color32"/> .
 		/// </summary>
 		/// <param name="text">
-		/// Object of type <see cref="String" /> that is supposed to represent a color.
+		/// Object of type <see cref="String"/> that is supposed to represent a color.
 		/// </param>
 		/// <returns>
-		/// Object of type <see cref="Color32" /> that is represented by given <paramref name="text" />.
+		/// Object of type <see cref="Color32"/> that is represented by given <paramref
+		/// name="text"/> .
 		/// </returns>
 		public static Color32 Parse(string text)
 		{
@@ -165,15 +164,15 @@ namespace CryEngine.Mathematics
 			}
 		}
 		/// <summary>
-		/// Attempts to parse given text as object of type <see cref="Color32" />.
+		/// Attempts to parse given text as object of type <see cref="Color32"/> .
 		/// </summary>
 		/// <param name="text"> 
-		/// Object of type <see cref="String" /> that might be a representation of type <see
-		/// cref="Color32" />.
+		/// Object of type <see cref="String"/> that might be a representation of type <see
+		/// cref="Color32"/> .
 		/// </param>
-		/// <param name="color"> If conversion is successful this object will contain the result. </param>
+		/// <param name="color">If conversion is successful this object will contain the result.</param>
 		/// <returns>
-		/// True, if given text is a recognizable representation of type <see cref="Color32" />.
+		/// True, if given text is a recognizable representation of type <see cref="Color32"/> .
 		/// </returns>
 		public static bool TryParse(string text, out Color32 color)
 		{
@@ -188,6 +187,26 @@ namespace CryEngine.Mathematics
 				return false;
 			}
 		}
+		/// <summary>
+		/// Creates linear interpolation between two colors.
+		/// </summary>
+		/// <param name="v1">   First color.</param>
+		/// <param name="v2">   Last color.</param>
+		/// <param name="value">
+		/// Interpolation parameter between 0 and 1 that describes the position of interpolated
+		/// color in percentage-like fashion.
+		/// </param>
+		/// <returns>Interpolated color.</returns>
+		public static Color32 CreateLinearInterpolation(Color32 v1, Color32 v2, float value)
+		{
+			return new Color32
+			{
+				Red = (byte)(v1.Red + (v2.Red - v1.Red) * value),
+				Green = (byte)(v1.Green + (v2.Green - v1.Green) * value),
+				Blue = (byte)(v1.Blue + (v2.Blue - v1.Blue) * value),
+				Alpha = (byte)(v1.Alpha + (v2.Alpha - v1.Alpha) * value)
+			};
+		}
 		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return this.GetEnumerator();
@@ -195,7 +214,7 @@ namespace CryEngine.Mathematics
 		/// <summary>
 		/// Enumerates four components of this color.
 		/// </summary>
-		/// <returns> Enumerator of color components. </returns>
+		/// <returns>Enumerator of color components.</returns>
 		public IEnumerator<byte> GetEnumerator()
 		{
 			yield return this.Red;
