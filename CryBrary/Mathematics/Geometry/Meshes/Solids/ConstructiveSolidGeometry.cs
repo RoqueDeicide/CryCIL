@@ -60,7 +60,8 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 	/// </para>
 	/// <para></para>
 	///
-	/// <para> Subtraction and intersection
+	/// <para>
+	///  Subtraction and intersection
 	/// naturally follow from set operations. If union is `A | B`, subtraction is `A - B = ~(~A |
 	/// B) ` and intersection is `A &amp; B = ~(~A | ~B)` where `~` is the complement operator.
 	/// </para>
@@ -230,6 +231,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 		///      |       |
 		///      +-------+
 		/// </code>
+		/// <para>Implementation of this operation comes from set theory: subtraction is negation of union of negated first object with second one.</para>
 		/// </remarks>
 		/// <example>
 		/// <code>
@@ -1198,12 +1200,25 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 				// Build front branch from front polygons.
 				if (frontPolygons.Count > 0)
 				{
-					this.Front = new Node(frontPolygons);
+					if (this.Front == null)
+					{
+						this.Front = new Node(frontPolygons);
+					}
+					else
+					{
+						this.Front.Build(frontPolygons);
+					}
 				}
 				// Build back branch from back polygons.
-				if (backPolygons.Count > 0)
+				if (backPolygons.Count <= 0) return;
+
+				if (this.Back == null)
 				{
 					this.Back = new Node(backPolygons);
+				}
+				else
+				{
+					this.Back.Build(backPolygons);
 				}
 			}
 			/// <summary>
