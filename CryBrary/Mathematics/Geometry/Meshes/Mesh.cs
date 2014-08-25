@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using CryEngine.StaticObjects;
 
 namespace CryEngine.Mathematics.Geometry.Meshes
@@ -8,7 +9,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 	/// <summary>
 	/// Base class for all meshes.
 	/// </summary>
-	public abstract class BaseMesh : IMesh
+	public abstract partial class Mesh : IMesh
 	{
 		#region Abstracts
 		/// <summary>

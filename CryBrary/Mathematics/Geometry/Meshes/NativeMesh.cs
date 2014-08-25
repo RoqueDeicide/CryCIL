@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using CryEngine.Mathematics.Geometry.Meshes.CSG;
 using CryEngine.Native;
 using CryEngine.StaticObjects;
 
@@ -13,7 +14,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 	/// <remarks>
 	/// This particular class uses instance of CMesh class in native memory for its operations.
 	/// </remarks>
-	public class NativeMesh : BaseMesh
+	public class NativeMesh : Mesh
 	{
 		#region Fields
 		private readonly NativeFaceCollection faces;
@@ -42,7 +43,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// <summary>
 		/// Gets an object that provides access to positions of vertices in native memory.
 		/// </summary>
-		/// <remarks> When setting data is copied from 'value' to this collection. </remarks>
+		/// <remarks>When setting data is copied from 'value' to this collection.</remarks>
 		public override IMeshDetailsCollection<Vector3> Positions
 		{
 			get { return this.positions; }
@@ -51,7 +52,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// <summary>
 		/// Gets an object that provides access to faces in native memory.
 		/// </summary>
-		/// <remarks> When setting data is copied from 'value' to this collection. </remarks>
+		/// <remarks>When setting data is copied from 'value' to this collection.</remarks>
 		public override IMeshDetailsCollection<IndexedTriangleFace> Faces
 		{
 			get { return this.faces; }
@@ -60,7 +61,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// <summary>
 		/// Gets an object that provides access to indices in native memory.
 		/// </summary>
-		/// <remarks> When setting data is copied from 'value' to this collection. </remarks>
+		/// <remarks>When setting data is copied from 'value' to this collection.</remarks>
 		public override IMeshDetailsCollection<uint> Indices
 		{
 			get { return this.indices; }
@@ -69,7 +70,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// <summary>
 		/// Gets an object that provides access to positions of vertices on UV map in native memory.
 		/// </summary>
-		/// <remarks> When setting data is copied from 'value' to this collection. </remarks>
+		/// <remarks>When setting data is copied from 'value' to this collection.</remarks>
 		public override IMeshDetailsCollection<Vector2> TextureCoordinates
 		{
 			get { return this.texCoords; }
@@ -78,7 +79,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// <summary>
 		/// Gets an object that provides access to primary colors of vertices in native memory.
 		/// </summary>
-		/// <remarks> When setting data is copied from 'value' to this collection. </remarks>
+		/// <remarks>When setting data is copied from 'value' to this collection.</remarks>
 		public override IMeshDetailsCollection<Color32> PrimaryColors
 		{
 			get { return this.colors0; }
@@ -87,7 +88,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// <summary>
 		/// Gets an object that provides access to secondary colors of vertices in native memory.
 		/// </summary>
-		/// <remarks> When setting data is copied from 'value' to this collection. </remarks>
+		/// <remarks>When setting data is copied from 'value' to this collection.</remarks>
 		public override IMeshDetailsCollection<Color32> SecondaryColors
 		{
 			get { return this.colors1; }
@@ -96,7 +97,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// <summary>
 		/// Gets an object that provides access to normals of vertices in native memory.
 		/// </summary>
-		/// <remarks> When setting data is copied from 'value' to this collection. </remarks>
+		/// <remarks>When setting data is copied from 'value' to this collection.</remarks>
 		public override IMeshDetailsCollection<Vector3> Normals
 		{
 			get { return this.normals; }
@@ -105,7 +106,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// <summary>
 		/// Gets an object that provides access to tangent space normals of vertices in native memory.
 		/// </summary>
-		/// <remarks> When setting data is copied from 'value' to this collection. </remarks>
+		/// <remarks>When setting data is copied from 'value' to this collection.</remarks>
 		public override IMeshDetailsCollection<ITangent> Tangents
 		{
 			get { return this.tangents; }
@@ -114,7 +115,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// <summary>
 		/// Gets an object that provides access to tangent space normals of vertices in native memory.
 		/// </summary>
-		/// <remarks> When setting data is copied from 'value' to this collection. </remarks>
+		/// <remarks>When setting data is copied from 'value' to this collection.</remarks>
 		public override IMeshDetailsCollection<IQTangent> QTangents
 		{
 			get { return this.qTangents; }
@@ -131,7 +132,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// <summary>
 		/// Initializes new wrapper object for native mesh.
 		/// </summary>
-		/// <param name="obj"> Static object that hosts the mesh. </param>
+		/// <param name="obj">Static object that hosts the mesh.</param>
 		public NativeMesh(StaticObject obj)
 		{
 			if (obj.Disposed)
@@ -164,17 +165,17 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// Validates this mesh.
 		/// </summary>
 		/// <remarks>
-		/// See <see cref="Validate(bool, List{string}, List{string})" /> for the list of possible problems.
+		/// See <see cref="Validate(bool, List{string}, List{string})"/> for the list of possible problems.
 		/// </remarks>
 		/// <param name="errors">  
-		/// A list that will contain a list of problems that will prevent calling <see cref="Export"
-		/// /> method from being successful.
+		/// A list that will contain a list of problems that will prevent calling
+		/// <see cref="Export"/> method from being successful.
 		/// </param>
 		/// <param name="warnings">
 		/// A list that will contain a list of problems that may cause problems but won't prevent
 		/// CryEngine from recognizing this mesh.
 		/// </param>
-		/// <returns> True if a list of errors has no entries, otherwise false. </returns>
+		/// <returns>True if a list of errors has no entries, otherwise false.</returns>
 		public override bool Validate(List<string> errors = null, List<string> warnings = null)
 		{
 			return this.Validate(true, errors, warnings);
@@ -273,10 +274,61 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// <summary>
 		/// Signals underlying static object to create a new render mesh.
 		/// </summary>
-		/// <param name="staticObject"> Ignored. </param>
+		/// <param name="staticObject">Ignored.</param>
 		public override void Export(StaticObject staticObject)
 		{
 			NativeMeshMethods.Export(this.StaticObject.Handle);
+		}
+		/// <summary>
+		/// Sets this mesh to value based on given BSP tree.
+		/// </summary>
+		/// <param name="tree">Root node of the BSP tree.</param>
+		public override void SetBsp(BspNode<SplittableTriangle> tree)
+		{
+			// Calculate capacities.
+
+			// Create vertex pool.
+			List<SplittableTriangle> triangles = tree.AllElements;
+			List<MeshVertex> vertexes = new List<MeshVertex>(triangles.Count * 3);
+			Action<MeshVertex> registerVertex = delegate(MeshVertex vertex)
+			{
+				int index = vertexes.BinarySearch(vertex);
+				if (index < 0)
+				{
+					vertexes.Insert(~index, vertex);
+				}
+			};
+			for (int i = 0; i < triangles.Count; i++)
+			{
+				registerVertex(triangles[i].First);
+				registerVertex(triangles[i].Second);
+				registerVertex(triangles[i].Third);
+			}
+			// Assign faces.
+			this.faces.Capacity = triangles.Count;
+			for (int i = 0; i < triangles.Count; i++)
+			{
+				this.faces[i] = new IndexedTriangleFace
+				{
+					Indices = new Int32Vector3
+					(
+						vertexes.BinarySearch(triangles[i].First),
+						vertexes.BinarySearch(triangles[i].Second),
+						vertexes.BinarySearch(triangles[i].Third)
+					)
+				};
+			}
+			// Assign vertex-related data.
+			this.positions.Capacity = vertexes.Count;
+			for (int i = 0; i < vertexes.Count; i++)
+			{
+				MeshVertex vertex = vertexes[i];
+				this.positions[i] = vertex.Position;
+				this.normals[i] = vertex.Normal;
+				this.texCoords[i] = vertex.UvMapPosition;
+				this.colors0[i] = vertex.PrimaryColor;
+				this.colors1[i] = vertex.SecondaryColor;
+			}
 		}
 		#endregion
 		#region Utilities
@@ -310,7 +362,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// </summary>
 		Positions,
 		/// <summary>
-		/// Array of locations of vertices in <see cref="Half" /> format.
+		/// Array of locations of vertices in <see cref="Half"/> format.
 		/// </summary>
 		Positionsf16,
 		/// <summary>
@@ -369,8 +421,8 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// Extra bone mapping data.
 		/// </summary>
 		/// <remarks>
-		/// Does not have a stream ID in the CGF. Its data is saved at the end of the <see
-		/// cref="Bonemapping" /> stream.
+		/// Does not have a stream ID in the CGF. Its data is saved at the end of the
+		/// <see cref="Bonemapping"/> stream.
 		/// </remarks>
 		Extrabonemapping,
 		/// <summary>

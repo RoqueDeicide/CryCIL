@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using CryEngine.Mathematics.Geometry.Meshes.CSG;
 using CryEngine.StaticObjects;
 
 namespace CryEngine.Mathematics.Geometry.Meshes
@@ -26,8 +27,18 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// <summary>
 		/// Makes CryEngine recognize any changes made to this mesh.
 		/// </summary>
-		/// <param name="staticObject"> Static object that will host the mesh. </param>
+		/// <param name="staticObject">Static object that will host the mesh.</param>
 		void Export(StaticObject staticObject);
+		/// <summary>
+		/// When implemented, converts this mesh to a BSP tree.
+		/// </summary>
+		/// <returns>BSP tree built from this mesh.</returns>
+		BspNode<SplittableTriangle> ToBspTree();
+		/// <summary>
+		/// When implemented, changes this mesh to be perfect representation of the given BSP tree.
+		/// </summary>
+		/// <param name="tree">BSP tree to convert to this mesh.</param>
+		void SetBsp(BspNode<SplittableTriangle> tree);
 		/// <summary>
 		/// Gets or sets (optionally) a list of locations of vertices that comprise this mesh.
 		/// </summary>

@@ -137,6 +137,7 @@
     <Compile Include="Actor\AIActor.cs" />
     <Compile Include="GeneralExtensions.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\CSG\SplittableTriangle.cs" />
+    <Compile Include="Mathematics\Geometry\Meshes\Mesh.CSG.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\CSG\BSP.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\IVertex.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\IVertex3D.cs" />
@@ -245,7 +246,7 @@
     <Compile Include="Native\NamespaceDoc.cs" />
     <Compile Include="Native\PlatformMethods.cs" />
     <Compile Include="Platform.cs" />
-    <Compile Include="Mathematics\Geometry\Meshes\BaseMesh.cs" />
+    <Compile Include="Mathematics\Geometry\Meshes\Mesh.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\CommonTangentOperations.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\Solids\ConstructiveSolidGeometry.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\MeshConsistencyException.cs" />
