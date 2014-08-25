@@ -14,40 +14,35 @@ using System.Linq;
 namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 {
 	/// <summary>
-	/// Defines boolean operations for CSG editing technique.
+	/// Defines example of implementation of boolean operations for CSG editing technique.
 	/// </summary>
 	/// <remarks>
-	/// <para> Constructive Solid Geometry (CSG) is a modeling technique that uses Boolean
-	/// operations like union and intersection to combine 3D solids. This library implements CSG
-	/// operations on meshes elegantly and concisely using BSP trees, and is meant to serve as an
-	/// easily understandable implementation of the algorithm. All edge cases involving overlapping
+	/// <para>
+	/// Constructive Solid Geometry (CSG) is a modeling technique that uses Boolean operations like
+	/// union and intersection to combine 3D solids. This library implements CSG operations on
+	/// meshes elegantly and concisely using BSP trees, and is meant to serve as an easily
+	/// understandable implementation of the algorithm. All edge cases involving overlapping
 	/// coplanar polygons in both solids are correctly handled.
 	/// </para>
-	///
-	/// <para>Implementation Details</para><para></para>
-	///
-	/// <para> All CSG
-	/// operations are implemented in terms of two functions, `clipTo()` and `invert()`, which
-	/// remove parts of a BSP tree inside another BSP tree and swap solid and empty space,
+	/// <para>Implementation Details</para>
+	/// <para>
+	/// All CSG operations are implemented in terms of two functions, `ClipTo()` and `Invert()`,
+	/// which remove parts of a BSP tree inside another BSP tree and swap solid and empty space,
 	/// respectively. To find the union of `a` and `b`, we want to remove everything in `a` inside
 	/// `b` and everything in `b` inside `a`, then combine polygons from `a` and `b` into one solid:
-	/// </para><para></para>
-	///
+	/// </para>
 	/// <para>
 	/// <code>
 	/// a.ClipTo(b);
 	/// b.ClipTo(a);
 	/// a.Build(b.AllPolygons);
-	/// </code>
+	/// </code></para>
+	/// <para>
+	/// The only tricky part is handling overlapping coplanar polygons in both trees. The code above
+	/// keeps both copies, but we need to keep them in one tree and remove them in the other tree.
+	/// To remove them from `b` we can clip the inverse of `b` against `a`. The code for union now
+	/// looks like this:
 	/// </para>
-	/// <para></para>
-	///
-	/// <para> The only tricky part is handling overlapping coplanar
-	/// polygons in both trees. The code above keeps both copies, but we need to keep them in one
-	/// tree and remove them in the other tree. To remove them from `b` we can clip the inverse of
-	/// `b` against `a`. The code for union now looks like this:
-	/// </para><para></para>
-	///
 	/// <para>
 	/// <code>
 	/// a.ClipTo(b);
@@ -56,20 +51,14 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 	/// b.ClipTo(a);
 	/// b.Invert();
 	/// a.Build(b.AllPolygons);
-	/// </code>
-	/// </para>
-	/// <para></para>
-	///
+	/// </code></para>
 	/// <para>
-	///  Subtraction and intersection
-	/// naturally follow from set operations. If union is `A | B`, subtraction is `A - B = ~(~A |
+	/// Subtraction and intersection naturally follow from set operations. If union is `A | B`,
+	/// subtraction is `A - B = ~(~A |
 	/// B) ` and intersection is `A &amp; B = ~(~A | ~B)` where `~` is the complement operator.
 	/// </para>
-	///
-	/// <para>License</para><para></para>
-	///
-	/// <para>Copyright (c) 2011 Evan Wallace
-	/// (http://madebyevan.com/), under the MIT license.</para>
+	/// <para>License</para>
+	/// <para>Copyright (c) 2011 Evan Wallace (http://madebyevan.com/), under the MIT license.</para>
 	/// </remarks>
 	/// <example>
 	/// <code>
@@ -143,9 +132,9 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 		///      ConstructiveSolidGeometry.Union(topCap, ConstructiveSolidGeometry.Union(capsuleBody, bottomCap));
 		/// </code>
 		/// </example>
-		/// <param name="a"> First solid. </param>
-		/// <param name="b"> Second solid. </param>
-		/// <returns> Result of union. </returns>
+		/// <param name="a">First solid.</param>
+		/// <param name="b">Second solid.</param>
+		/// <returns>Result of union.</returns>
 		public static Solid Union(Solid a, Solid b)
 		{
 			// Initialize BSP trees.
@@ -173,8 +162,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 		///      |   B   |
 		///      |       |
 		///      +-------+
-		/// </code>
-		/// </remarks>
+		/// </code></remarks>
 		/// <example>
 		/// <code>
 		/// // Get portion of a sphere that intersects a cube.
@@ -199,9 +187,9 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 		/// Solid clampedCylinder = ConstructiveSolidGeometry.Intersection(longCylinder, sphericalArea);
 		/// </code>
 		/// </example>
-		/// <param name="a"> First solid. </param>
-		/// <param name="b"> Second solid. </param>
-		/// <returns> Result of intersection. </returns>
+		/// <param name="a">First solid.</param>
+		/// <param name="b">Second solid.</param>
+		/// <returns>Result of intersection.</returns>
 		public static Solid Intersection(Solid a, Solid b)
 		{
 			// Initialize BSP trees.
@@ -221,6 +209,10 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 		/// Subtracts right solid from left one.
 		/// </summary>
 		/// <remarks>
+		/// <para>
+		/// Implementation of this operation comes from set theory: subtraction is negation of union
+		/// of negated first object with second one.
+		/// </para>
 		/// <code>
 		/// +-------+            +-------+
 		/// |       |            |       |
@@ -231,7 +223,6 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 		///      |       |
 		///      +-------+
 		/// </code>
-		/// <para>Implementation of this operation comes from set theory: subtraction is negation of union of negated first object with second one.</para>
 		/// </remarks>
 		/// <example>
 		/// <code>
@@ -300,11 +291,10 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 		///             )
 		///         )
 		///     );
-		/// </code>
-		/// </example>
-		/// <param name="a"> First solid. </param>
-		/// <param name="b"> Second solid. </param>
-		/// <returns> Result of subtraction. </returns>
+		/// </code></example>
+		/// <param name="a">First solid.</param>
+		/// <param name="b">Second solid.</param>
+		/// <returns>Result of subtraction.</returns>
 		public static Solid Subtract(Solid a, Solid b)
 		{
 			// Initialize BSP trees.
