@@ -79,14 +79,8 @@ namespace Microsoft.Cci.Pdb
 					case 0x19: //decimal
 						this.value = bits.ReadDecimal();
 						break;
-					default:
 						//TODO: error
-						break;
 				}
-			}
-			else
-			{
-				//TODO: error
 			}
 			bits.ReadCString(out name);
 		}

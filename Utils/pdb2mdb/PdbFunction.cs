@@ -40,21 +40,20 @@ namespace Microsoft.Cci.Pdb
 		internal string/*?*/ iteratorClass;
 		internal List<ILocalScope>/*?*/ iteratorScopes;
 
-		private static string StripNamespace(string module)
-		{
-			int li = module.LastIndexOf('.');
-			if (li > 0)
-			{
-				return module.Substring(li + 1);
-			}
-			return module;
-		}
+		//private static string StripNamespace(string module)
+		//{
+		//	int li = module.LastIndexOf('.');
+		//	if (li > 0)
+		//	{
+		//		return module.Substring(li + 1);
+		//	}
+		//	return module;
+		//}
 
 		internal static PdbFunction[] LoadManagedFunctions(string module,
 														   BitAccess bits, uint limit,
 														   bool readStrings)
 		{
-			string mod = StripNamespace(module);
 			int begin = bits.Position;
 			int count = 0;
 
@@ -106,7 +105,6 @@ namespace Microsoft.Cci.Pdb
 				ushort rec;
 
 				bits.ReadUInt16(out siz);
-				int star = bits.Position;
 				int stop = bits.Position + siz;
 				bits.ReadUInt16(out rec);
 
@@ -115,7 +113,6 @@ namespace Microsoft.Cci.Pdb
 					case SYM.S_GMANPROC:
 					case SYM.S_LMANPROC:
 						ManProcSym proc;
-						int offset = bits.Position;
 
 						bits.ReadUInt32(out proc.parent);
 						bits.ReadUInt32(out proc.end);
@@ -157,7 +154,6 @@ namespace Microsoft.Cci.Pdb
 												 out int constants, out int scopes, out int slots, out int usedNamespaces)
 		{
 			int pos = bits.Position;
-			BlockSym32 block;
 			constants = 0;
 			slots = 0;
 			scopes = 0;
@@ -178,6 +174,7 @@ namespace Microsoft.Cci.Pdb
 				{
 					case SYM.S_BLOCK32:
 						{
+							BlockSym32 block;
 							bits.ReadUInt32(out block.parent);
 							bits.ReadUInt32(out block.end);
 
@@ -245,7 +242,7 @@ namespace Microsoft.Cci.Pdb
 			int usedNamespacesCount;
 			CountScopesAndSlots(bits, proc.end, out constantCount, out scopeCount, out slotCount, out usedNamespacesCount);
 			scopes = new PdbScope[scopeCount];
-			int scope = 0;
+			const int scope = 0;
 
 			while (bits.Position < proc.end)
 			{
@@ -270,8 +267,8 @@ namespace Microsoft.Cci.Pdb
 
 							if (oem.idOem == msilMetaData)
 							{
-								string name = bits.ReadString();
-								if (name == "MD2")
+								string nameB = bits.ReadString();
+								if (nameB == "MD2")
 								{
 									byte version;
 									bits.ReadUInt8(out version);
@@ -287,12 +284,9 @@ namespace Microsoft.Cci.Pdb
 								bits.Position = stop;
 								break;
 							}
-							else
-							{
-								throw new PdbDebugException("OEM section: guid={0} ti={1}",
-															oem.idOem, oem.typind);
-								// bits.Position = stop;
-							}
+							throw new PdbDebugException("OEM section: guid={0} ti={1}",
+														oem.idOem, oem.typind);
+							// bits.Position = stop;
 						}
 
 					case SYM.S_BLOCK32:
@@ -391,11 +385,15 @@ namespace Microsoft.Cci.Pdb
 			}
 		}
 
+// ReSharper disable UnusedParameter.Local
 		private void ReadForwardedToModuleInfo(BitAccess bits)
+// ReSharper restore UnusedParameter.Local
 		{
 		}
 
+// ReSharper disable UnusedParameter.Local
 		private void ReadForwardInfo(BitAccess bits)
+// ReSharper restore UnusedParameter.Local
 		{
 		}
 
@@ -421,22 +419,15 @@ namespace Microsoft.Cci.Pdb
 				{
 					return -1;
 				}
-				else if (fx.segment > fy.segment)
+				if (fx.segment > fy.segment)
 				{
 					return 1;
 				}
-				else if (fx.address < fy.address)
+				if (fx.address < fy.address)
 				{
 					return -1;
 				}
-				else if (fx.address > fy.address)
-				{
-					return 1;
-				}
-				else
-				{
-					return 0;
-				}
+				return fx.address > fy.address ? 1 : 0;
 			}
 		}
 
@@ -451,14 +442,11 @@ namespace Microsoft.Cci.Pdb
 				{
 					return -1;
 				}
-				else if (fx.token > fy.token)
+				if (fx.token > fy.token)
 				{
 					return 1;
 				}
-				else
-				{
-					return 0;
-				}
+				return 0;
 			}
 		}
 	}

@@ -99,7 +99,7 @@ namespace Microsoft.Cci.Pdb
 
 		internal void ReadInt32(out int value)
 		{
-			value = (int)((buffer[offset + 0] & 0xFF) |
+			value = ((buffer[offset + 0] & 0xFF) |
 								(buffer[offset + 1] << 8) |
 								(buffer[offset + 2] << 16) |
 								(buffer[offset + 3] << 24));
@@ -108,7 +108,7 @@ namespace Microsoft.Cci.Pdb
 
 		internal void ReadInt64(out long value)
 		{
-			value = (long)((buffer[offset + 0] & 0xFF) |
+			value = ((buffer[offset + 0] & 0xFF) |
 								 (buffer[offset + 1] << 8) |
 								 (buffer[offset + 2] << 16) |
 								 (buffer[offset + 3] << 24) |

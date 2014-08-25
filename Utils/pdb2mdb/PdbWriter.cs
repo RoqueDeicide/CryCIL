@@ -11,6 +11,7 @@
 //-----------------------------------------------------------------------------
 using System;
 using System.IO;
+using System.Linq;
 
 namespace Microsoft.Cci.Pdb
 {
@@ -49,14 +50,7 @@ namespace Microsoft.Cci.Pdb
 		{
 			DataStream directory = new DataStream();
 
-			int pages = 0;
-			for (int s = 0; s < streams.Length; s++)
-			{
-				if (streams[s].Length > 0)
-				{
-					pages += streams[s].Pages;
-				}
-			}
+			int pages = streams.Where(t => t.Length > 0).Sum(t => t.Pages);
 
 			int use = 4 * (1 + streams.Length + pages);
 			bits.MinCapacity(use);
@@ -146,7 +140,7 @@ namespace Microsoft.Cci.Pdb
 		//////////////////////////////////////////////////////////////////////
 		//
 		internal readonly int pageSize;
-		private Stream writer;
+		private readonly Stream writer;
 		private int usedBytes;
 	}
 }

@@ -425,9 +425,6 @@
     <Compile Include="Misc\UnusedMarker.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Sandbox\FormLoader.resx">
       <DependentUpon>FormLoader.cs</DependentUpon>
     </EmbeddedResource>

@@ -29,7 +29,7 @@ using CryEngine;
 
 namespace CryEngine
 {
-	partial class Console
+	class Console
 	{
 		[DllImport("CryMono.dll")]
 		private static extern void LogAlways(string msg);
@@ -86,8 +86,8 @@ namespace Pdb2Mdb
 {
 	internal class Converter
 	{
-		private MonoSymbolWriter mdb;
-		private Dictionary<string, SourceFile> files = new Dictionary<string, SourceFile>();
+		private readonly MonoSymbolWriter mdb;
+		private readonly Dictionary<string, SourceFile> files = new Dictionary<string, SourceFile>();
 
 		public Converter(MonoSymbolWriter mdb)
 		{
@@ -103,7 +103,9 @@ namespace Pdb2Mdb
 
 			mdb.WriteSymbolFile(assembly.MainModule.Mvid);
 
+// ReSharper disable RedundantAssignment
 			converter = null;
+// ReSharper restore RedundantAssignment
 		}
 
 		private void ConvertFunction(PdbFunction function)
@@ -131,7 +133,7 @@ namespace Pdb2Mdb
 					(int)line.offset,
 					file.CompilationUnit.SourceFile,
 					(int)line.lineBegin,
-					(int)line.colBegin, line.lineBegin == 0xfeefee);
+					line.colBegin, line.lineBegin == 0xfeefee);
 		}
 
 		private void ConvertVariables(PdbFunction function)
@@ -154,7 +156,7 @@ namespace Pdb2Mdb
 				mdb.DefineLocalVariable((int)slot.slot, slot.name);
 		}
 
-		private SourceFile GetSourceFile(MonoSymbolWriter mdb, PdbFunction function)
+		private SourceFile GetSourceFile(MonoSymbolWriter mdbPar, PdbFunction function)
 		{
 			var name = (from l in function.lines where l.file != null select l.file.name).First();
 
@@ -162,8 +164,8 @@ namespace Pdb2Mdb
 			if (files.TryGetValue(name, out file))
 				return file;
 
-			var entry = mdb.DefineDocument(name);
-			var unit = mdb.DefineCompilationUnit(entry);
+			var entry = mdbPar.DefineDocument(name);
+			var unit = mdbPar.DefineCompilationUnit(entry);
 
 			file = new SourceFile(unit, entry);
 			files.Add(name, file);
@@ -172,8 +174,8 @@ namespace Pdb2Mdb
 
 		private class SourceFile : ISourceFile
 		{
-			private CompileUnitEntry comp_unit;
-			private SourceFileEntry entry;
+			private readonly CompileUnitEntry comp_unit;
+			private readonly SourceFileEntry entry;
 
 			public SourceFileEntry Entry
 			{
@@ -222,9 +224,13 @@ public static class Driver
 				Console.LogException(ex);
 			}
 
+// ReSharper disable RedundantAssignment
 			assemblyDefinition = null;
+// ReSharper restore RedundantAssignment
 		}
 
+// ReSharper disable RedundantAssignment
 		pdb = null;
+// ReSharper restore RedundantAssignment
 	}
 }

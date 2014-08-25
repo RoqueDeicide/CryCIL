@@ -49,7 +49,7 @@ namespace Microsoft.Cci.Pdb
 			words[word] &= ~GetBit(index);
 		}
 
-		private uint GetBit(int index)
+		private static uint GetBit(int index)
 		{
 			return ((uint)1 << (index % 32));
 		}
@@ -81,7 +81,7 @@ namespace Microsoft.Cci.Pdb
 			return false;
 		}
 
-		private int size;
-		private uint[] words;
+		private readonly int size;
+		private readonly uint[] words;
 	}
 }

@@ -17,7 +17,9 @@ using Microsoft.Cci.Pdb;
 using System.Text;
 using System.Diagnostics.SymbolStore;
 
+// ReSharper disable CheckNamespace
 namespace Microsoft.Cci
+// ReSharper restore CheckNamespace
 {
 	internal sealed class UsedNamespace : IUsedNamespace
 	{
@@ -58,20 +60,12 @@ namespace Microsoft.Cci
 	{
 		internal PdbIteratorScope(uint offset, uint length)
 		{
-			this.offset = offset;
-			this.length = length;
+			this.Offset = offset;
+			this.Length = length;
 		}
 
-		public uint Offset
-		{
-			get { return this.offset; }
-		}
-		private uint offset;
+		public uint Offset { get; private set; }
 
-		public uint Length
-		{
-			get { return this.length; }
-		}
-		private uint length;
+		public uint Length { get; private set; }
 	}
 }

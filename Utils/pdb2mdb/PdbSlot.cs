@@ -23,22 +23,22 @@ namespace Microsoft.Cci.Pdb
 
 		internal PdbSlot(BitAccess bits, out uint typind)
 		{
-			AttrSlotSym slot;
+			AttrSlotSym slotSym;
 
-			bits.ReadUInt32(out slot.index);
-			bits.ReadUInt32(out slot.typind);
-			bits.ReadUInt32(out slot.offCod);
-			bits.ReadUInt16(out slot.segCod);
-			bits.ReadUInt16(out slot.flags);
-			bits.ReadCString(out slot.name);
+			bits.ReadUInt32(out slotSym.index);
+			bits.ReadUInt32(out slotSym.typind);
+			bits.ReadUInt32(out slotSym.offCod);
+			bits.ReadUInt16(out slotSym.segCod);
+			bits.ReadUInt16(out slotSym.flags);
+			bits.ReadCString(out slotSym.name);
 
-			this.slot = slot.index;
-			this.name = slot.name;
-			this.flags = slot.flags;
-			this.segment = slot.segCod;
-			this.address = slot.offCod;
+			this.slot = slotSym.index;
+			this.name = slotSym.name;
+			this.flags = slotSym.flags;
+			this.segment = slotSym.segCod;
+			this.address = slotSym.offCod;
 
-			typind = slot.typind;
+			typind = slotSym.typind;
 		}
 	}
 }

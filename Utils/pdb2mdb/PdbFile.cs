@@ -128,7 +128,6 @@ namespace Microsoft.Cci.Pdb
 			for (int i = 0; i < siz; i++)
 			{
 				int ni;
-				string name;
 
 				bits.ReadInt32(out ni);
 
@@ -136,6 +135,7 @@ namespace Microsoft.Cci.Pdb
 				{
 					int saved = bits.Position;
 					bits.Position = beg + ni;
+					string name;
 					bits.ReadCString(out name);
 					bits.Position = saved;
 
@@ -147,7 +147,7 @@ namespace Microsoft.Cci.Pdb
 			return ht;
 		}
 
-		private static PdbFunction match = new PdbFunction();
+		private static readonly PdbFunction match = new PdbFunction();
 
 		private static PdbFunction FindFunction(PdbFunction[] funcs, ushort sec, uint off)
 		{
@@ -289,7 +289,7 @@ namespace Microsoft.Cci.Pdb
 
 									uint lineBegin = line.flags & (uint)CV_Line_Flags.linenumStart;
 									uint delta = (line.flags & (uint)CV_Line_Flags.deltaLineEnd) >> 24;
-									bool statement = ((line.flags & (uint)CV_Line_Flags.fStatement) == 0);
+									//bool statement = ((line.flags & (uint)CV_Line_Flags.fStatement) == 0);
 									if ((sec.flags & 1) != 0)
 									{
 										bits.Position = pcol + 4 * i;
@@ -320,8 +320,6 @@ namespace Microsoft.Cci.Pdb
 										   Dictionary<string, int> nameIndex,
 										   PdbReader reader)
 		{
-			PdbFunction[] funcs = null;
-
 			bits.Position = 0;
 			int sig;
 			bits.ReadInt32(out sig);
@@ -332,9 +330,9 @@ namespace Microsoft.Cci.Pdb
 
 			bits.Position = 4;
 			// Console.WriteLine("{0}:", info.moduleName);
-			funcs = PdbFunction.LoadManagedFunctions(info.moduleName,
-													 bits, (uint)info.cbSyms,
-													 readStrings);
+			PdbFunction[] funcs = PdbFunction.LoadManagedFunctions(info.moduleName,
+																   bits, (uint)info.cbSyms,
+																   readStrings);
 			if (funcs != null)
 			{
 				bits.Position = info.cbSyms + info.cbOldLines;
@@ -420,7 +418,7 @@ namespace Microsoft.Cci.Pdb
 			PdbFileHeader head = new PdbFileHeader(read, bits);
 			PdbReader reader = new PdbReader(read, head.pageSize);
 			MsfDirectory dir = new MsfDirectory(reader, head, bits);
-			DbiModuleInfo[] modules = null;
+			DbiModuleInfo[] modules;
 			DbiDbgHdr header;
 
 			dir.streams[1].Read(reader, bits);
