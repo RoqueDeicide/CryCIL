@@ -9,7 +9,7 @@ namespace CryEngine.CharacterCustomization
 	{
 		public static CustomizationInitializationParameters GetDefault()
 		{
-			var initParams = new CustomizationInitializationParameters();
+			CustomizationInitializationParameters initParams = new CustomizationInitializationParameters();
 
 			initParams.CharacterDefinitionLocation = "%USER%/Cosmetics/Definitions/MyCharacter.cdf";
 			initParams.BaseCharacterDefinition = "Scripts/Config/base.cdf";

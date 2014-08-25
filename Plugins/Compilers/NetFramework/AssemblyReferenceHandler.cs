@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Linq;
-
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-
-using System.Xml.Linq;
-
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
+using System.Xml.Linq;
+using CryEngine.Utilities;
 
-namespace CryEngine.Utilities
+namespace CryEngine.Compilers.NET
 {
 	/// <summary>
 	/// Handles retrieval of required assemblies for compiled scripts etc.
@@ -18,14 +15,14 @@ namespace CryEngine.Utilities
 	{
 		public AssemblyReferenceHandler()
 		{
-			var gacDirectory = Path.Combine(ProjectSettings.MonoFolder, "lib", "mono", "gac");
+			string gacDirectory = Path.Combine(ProjectSettings.MonoFolder, "lib", "mono", "gac");
 			if (!Directory.Exists(gacDirectory))
 			{
 				//Debug.LogAlways("AssemblyReferenceHandler failed to initialize, could not locate gac directory.");
 				return;
 			}
 
-			assemblies = Directory.GetFiles(gacDirectory, "*.dll", SearchOption.AllDirectories);
+			this.assemblies = Directory.GetFiles(gacDirectory, "*.dll", SearchOption.AllDirectories);
 		}
 
 		/// <summary>
@@ -39,20 +36,20 @@ namespace CryEngine.Utilities
 			if (scriptFilePaths == null)
 				return null;
 
-			var assemblyPaths = new List<string>();
+			List<string> assemblyPaths = new List<string>();
 
-			foreach (var scriptFilePath in scriptFilePaths)
+			foreach (string scriptFilePath in scriptFilePaths)
 			{
-				foreach (var foundNamespace in GetNamespacesFromScriptFile(scriptFilePath))
+				foreach (string foundNamespace in this.GetNamespacesFromScriptFile(scriptFilePath))
 				{
-					var assemblyPath = GetAssemblyPathFromNamespace(foundNamespace);
+					string assemblyPath = this.GetAssemblyPathFromNamespace(foundNamespace);
 
 					if (assemblyPath != null && !assemblyPaths.Contains(assemblyPath))
 						assemblyPaths.Add(assemblyPath);
 				}
 			}
 
-			foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies().Select(x => x.Location).ToArray())
+			foreach (string assembly in AppDomain.CurrentDomain.GetAssemblies().Select(x => x.Location).ToArray())
 			{
 				if (!assemblyPaths.Contains(assembly))
 					assemblyPaths.Add(assembly);
@@ -72,12 +69,12 @@ namespace CryEngine.Utilities
 			if (sources == null || sources.Length <= 0)
 				return null;
 
-			var namespaces = new List<string>();
+			List<string> namespaces = new List<string>();
 
-			foreach (var line in sources)
+			foreach (string line in sources)
 			{
 				//Filter for using statements
-				var matches = Regex.Matches(line, @"using ([^;]+);");
+				MatchCollection matches = Regex.Matches(line, @"using ([^;]+);");
 				foreach (Match match in matches)
 				{
 					string foundNamespace = match.Groups[1].Value;
@@ -102,24 +99,24 @@ namespace CryEngine.Utilities
 			if (string.IsNullOrEmpty(scriptFilePath))
 				return null;
 
-			using (var stream = new FileStream(scriptFilePath, FileMode.Open))
+			using (FileStream stream = new FileStream(scriptFilePath, FileMode.Open))
 			{
-				return GetNamespacesFromStream(stream);
+				return this.GetNamespacesFromStream(stream);
 			}
 		}
 
 		protected IEnumerable<string> GetNamespacesFromStream(Stream stream)
 		{
-			var namespaces = new List<string>();
+			List<string> namespaces = new List<string>();
 
-			using (var streamReader = new StreamReader(stream))
+			using (StreamReader streamReader = new StreamReader(stream))
 			{
 				string line;
 
 				while ((line = streamReader.ReadLine()) != null)
 				{
 					//Filter for using statements
-					var matches = Regex.Matches(line, @"using ([^;]+);");
+					MatchCollection matches = Regex.Matches(line, @"using ([^;]+);");
 					foreach (Match match in matches)
 					{
 						string foundNamespace = match.Groups[1].Value;
@@ -136,7 +133,7 @@ namespace CryEngine.Utilities
 
 		private string GetAssemblyPathFromNamespace(string name)
 		{
-			var assemblyLookup = Path.Combine(ProjectSettings.MonoFolder, "assemblylookup.xml");
+			string assemblyLookup = Path.Combine(ProjectSettings.MonoFolder, "assemblylookup.xml");
 			if (!File.Exists(assemblyLookup))
 			{
 				Debug.LogAlways("{0} did not exist!", assemblyLookup);
@@ -144,30 +141,21 @@ namespace CryEngine.Utilities
 			}
 
 			// Avoid reloading the xml file for every call
-			if (assemblyLookupDocument == null)
-				assemblyLookupDocument = XDocument.Load(assemblyLookup);
+			if (this.assemblyLookupDocument == null)
+				this.assemblyLookupDocument = XDocument.Load(assemblyLookup);
 
-			foreach (var node in assemblyLookupDocument.Descendants("Namespace"))
-			{
-				if (node.Attribute("name").Value.Equals(name))
-				{
-					string assemblyName = node.Parent.Attribute("name").Value;
-
-					foreach (var assembly in assemblies)
-					{
-						if (assembly.Contains(assemblyName))
-						{
-							assemblyName = assembly;
-							break;
-						}
-					}
-				}
-			}
-
-			return null;
+			return
+				this.assemblyLookupDocument
+				.Descendants("Namespace")
+				.Where(node => node.Attribute("name").Value.Equals(name))
+				.Where(node => node.Parent != null)
+				.Select(node => node.Parent.Attribute("name").Value)
+				.SelectMany(assemblyName => this.assemblies
+					.Where(assembly => assembly.Contains(assemblyName)))
+				.FirstOrDefault();
 		}
 
 		private XDocument assemblyLookupDocument;
-		private string[] assemblies;
+		private readonly string[] assemblies;
 	}
 }

@@ -6,6 +6,7 @@ using System.Xml;
 using System.Xml.Linq;
 
 using CryEngine;
+using CryEngine.Extensions;
 
 namespace CryEngine.CharacterCustomization
 {
@@ -18,58 +19,58 @@ namespace CryEngine.CharacterCustomization
 
 			Name = element.Attribute("name").Value;
 
-			var uiNameAttribute = element.Attribute("uiName");
+			XAttribute uiNameAttribute = element.Attribute("uiName");
 			if (uiNameAttribute != null)
 				UIName = uiNameAttribute.Value;
 
-			var categoryAttribute = element.Attribute("category");
+			XAttribute categoryAttribute = element.Attribute("category");
 			if (categoryAttribute != null)
 				Category = categoryAttribute.Value;
 
-			var allowNoneAttribute = element.Attribute("allowNone");
+			XAttribute allowNoneAttribute = element.Attribute("allowNone");
 			if (allowNoneAttribute != null)
 				CanBeEmpty = allowNoneAttribute.Value == "1";
 
 			if (CanBeEmpty)
 				EmptyAttachment = new CharacterAttachment(this, null);
 
-			var hiddenAttribute = element.Attribute("hidden");
+			XAttribute hiddenAttribute = element.Attribute("hidden");
 			if (hiddenAttribute != null)
 				Hidden = hiddenAttribute.Value == "1";
 
-			var subSlotElements = element.Elements("AttachmentSlot");
-			if (subSlotElements.Count() > 0)
+			List<XElement> subSlotElements = element.Elements("AttachmentSlot").ToList();
+			if (subSlotElements.Count != 0)
 			{
 				SubAttachmentSlots = new CharacterAttachmentSlot[subSlotElements.Count()];
 				for (int i = 0; i < subSlotElements.Count(); i++)
 				{
-					var subSlotElement = subSlotElements.ElementAt(i);
+					XElement subSlotElement = subSlotElements.ElementAt(i);
 
 					SubAttachmentSlots[i] = new CharacterAttachmentSlot(manager, subSlotElement);
 				}
 			}
 
-			var mirroredSlotElements = element.Elements("MirroredSlot");
-			if (mirroredSlotElements.Count() > 0)
+			List<XElement> mirroredSlotElements = element.Elements("MirroredSlot").ToList();
+			if (mirroredSlotElements.Count != 0)
 			{
 				MirroredSlots = new CharacterAttachmentSlot[mirroredSlotElements.Count()];
 				for (int i = 0; i < mirroredSlotElements.Count(); i++)
 				{
-					var mirroredSlotElement = mirroredSlotElements.ElementAt(i);
+					XElement mirroredSlotElement = mirroredSlotElements[i];
 
 					MirroredSlots[i] = new CharacterAttachmentSlot(manager, mirroredSlotElement);
 				}
 			}
 
 			// Set up brands
-			var slotBrandElements = element.Elements("Brand");
+			List<XElement> slotBrandElements = element.Elements("Brand").ToList();
 
-			int numBrands = slotBrandElements.Count();
+			int numBrands = slotBrandElements.Count;
 			Brands = new CharacterAttachmentBrand[numBrands];
 
 			for (int i = 0; i < numBrands; i++)
 			{
-				var brandElement = slotBrandElements.ElementAt(i);
+				XElement brandElement = slotBrandElements[i];
 
 				Brands[i] = new CharacterAttachmentBrand(this, brandElement);
 			}
@@ -87,36 +88,18 @@ namespace CryEngine.CharacterCustomization
 
 		public CharacterAttachmentBrand GetBrand(string name)
 		{
-			if (Brands != null)
-			{
-				foreach (var brand in Brands)
-				{
-					if (brand.Name == name)
-						return brand;
-				}
-			}
-
-			return null;
+			return this.Brands == null ? null : this.Brands.FirstOrDefault(brand => brand.Name == name);
 		}
 
 		public CharacterAttachment GetAttachment(string name)
 		{
-			if (Brands != null)
-			{
-				foreach (var brand in Brands)
-				{
-					foreach (var attachment in brand.Attachments)
-					{
-						if (attachment.Name == name)
-							return attachment;
-					}
-				}
-			}
 
 			if (name == "None")
 				return EmptyAttachment;
-
-			return null;
+			return
+				this.Brands != null
+				? this.Brands.Select(x=>x.Attachments.First(y => y.Name == name)).FirstOrDefault()
+				: null;
 		}
 
 		public XElement GetWriteableElement(string name = null)
@@ -126,7 +109,7 @@ namespace CryEngine.CharacterCustomization
 
 			return Manager.GetAttachmentElements(Manager.CharacterDefinition).FirstOrDefault(x =>
 				{
-					var aNameAttribute = x.Attribute("AName");
+					XAttribute aNameAttribute = x.Attribute("AName");
 					if (aNameAttribute == null)
 						return false;
 
@@ -152,12 +135,12 @@ namespace CryEngine.CharacterCustomization
 		{
 			get
 			{
-				var attachmentList = Manager.CharacterDefinition.Element("CharacterDefinition").Element("AttachmentList");
+				XElement attachmentList = Manager.CharacterDefinition.Element("CharacterDefinition").Element("AttachmentList");
 
-				var attachmentElements = attachmentList.Elements("Attachment");
-				var attachmentElement = attachmentElements.FirstOrDefault(x =>
+				IEnumerable<XElement> attachmentElements = attachmentList.Elements("Attachment");
+				XElement attachmentElement = attachmentElements.FirstOrDefault(x =>
 					{
-						var aNameAttribute = x.Attribute("AName");
+						XAttribute aNameAttribute = x.Attribute("AName");
 						if (aNameAttribute == null)
 							return false;
 
@@ -167,20 +150,15 @@ namespace CryEngine.CharacterCustomization
 				if (attachmentElement == null)
 					return null;
 
-				foreach (var brand in Brands)
-				{
-					foreach (var attachment in brand.Attachments)
-					{
-						var nameAttribute = attachmentElement.Attribute("Name");
-						if (nameAttribute == null)
-							continue;
-
-						if (attachment.Name == nameAttribute.Value)
-							return attachment;
-					}
-				}
-
-				return null;
+				return
+				(
+					from brand in this.Brands
+					from attachment in brand.Attachments
+						let nameAttribute = attachmentElement.Attribute("Name")
+					where nameAttribute != null
+					where attachment.Name == nameAttribute.Value
+					select attachment
+				).FirstOrDefault();
 			}
 		}
 
@@ -194,18 +172,18 @@ namespace CryEngine.CharacterCustomization
 		{
 			get
 			{
-				var selector = new Random();
+				Random selector = new Random();
 
-				var iRandom = selector.Next(Brands.Length);
+				int iRandom = selector.Next(Brands.Length);
 
-				var brand = Brands[iRandom];
+				CharacterAttachmentBrand brand = Brands[iRandom];
 
 				iRandom = selector.Next(CanBeEmpty ? -1 : 0, brand.Attachments.Length);
 
-				if (iRandom != -1)
-					return brand.Attachments.ElementAt(iRandom);
-				else
-					return EmptyAttachment;
+				return
+					iRandom != -1
+					? brand.Attachments.ElementAt(iRandom)
+					: this.EmptyAttachment;
 			}
 		}
 

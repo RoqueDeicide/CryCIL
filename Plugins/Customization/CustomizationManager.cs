@@ -16,16 +16,18 @@ namespace CryEngine.CharacterCustomization
 	{
 		public CustomizationManager(CustomizationInitializationParameters initParams)
 		{
-			var writeableCdfPath = CryPak.AdjustFileName(initParams.CharacterDefinitionLocation, PathResolutionRules.RealPath | PathResolutionRules.ForWriting);
+			string writeableCdfPath = CryPak.AdjustFileName(initParams.CharacterDefinitionLocation, PathResolutionRules.RealPath | PathResolutionRules.ForWriting);
 
-			var baseCdfPath = Path.Combine(CryPak.GameFolder, initParams.BaseCharacterDefinition);
+			string baseCdfPath = Path.Combine(CryPak.GameFolder, initParams.BaseCharacterDefinition);
 			BaseDefinition = XDocument.Load(baseCdfPath);
 
 			if (File.Exists(writeableCdfPath))
 				CharacterDefinition = XDocument.Load(writeableCdfPath);
 			else
 			{
-				var directory = new DirectoryInfo(Path.GetDirectoryName(writeableCdfPath));
+// ReSharper disable AssignNullToNotNullAttribute
+				DirectoryInfo directory = new DirectoryInfo(Path.GetDirectoryName(writeableCdfPath));
+// ReSharper restore AssignNullToNotNullAttribute
 				while (!directory.Exists)
 				{
 					Directory.CreateDirectory(directory.FullName);
@@ -45,32 +47,28 @@ namespace CryEngine.CharacterCustomization
 
 		private void Initialize()
 		{
-			var slots = new List<CharacterAttachmentSlot>();
+			List<CharacterAttachmentSlot> slots = new List<CharacterAttachmentSlot>();
 			Slots = slots;
 
-			foreach (var file in Directory.EnumerateFiles(Path.Combine(CryPak.GameFolder, InitParameters.AvailableAttachmentsDirectory), "*.xml"))
-			{
-				var xDocument = XDocument.Load(file);
-				if (xDocument == null)
-					continue;
-
-				var attachmentSlotElement = xDocument.Element("AttachmentSlot");
-				if (attachmentSlotElement == null)
-					continue;
-
-				slots.Add(new CharacterAttachmentSlot(this, attachmentSlotElement));
-			}
+			slots.AddRange
+			(
+				from file in Directory.EnumerateFiles
+				(
+					Path.Combine(CryPak.GameFolder, this.InitParameters.AvailableAttachmentsDirectory),
+					"*.xml"
+				)
+				select XDocument.Load(file) into xDocument
+				where xDocument != null
+				select xDocument.Element("AttachmentSlot") into attachmentSlotElement
+				where attachmentSlotElement != null
+				select new CharacterAttachmentSlot(this, attachmentSlotElement)
+			);
 		}
 
 		public CharacterAttachmentSlot GetSlot(string slotName)
 		{
-			foreach (var slot in Slots)
-			{
-				if (slot.Name.Equals(slotName, StringComparison.CurrentCultureIgnoreCase))
-					return slot;
-			}
-
-			return null;
+			return
+				this.Slots.FirstOrDefault(slot => slot.Name.Equals(slotName, StringComparison.CurrentCultureIgnoreCase));
 		}
 
 		public void Save()
@@ -85,7 +83,7 @@ namespace CryEngine.CharacterCustomization
 
 		internal IEnumerable<XElement> GetAttachmentElements(XDocument definitionDocument)
 		{
-			var attachmentList = definitionDocument.Element("CharacterDefinition").Element("AttachmentList");
+			XElement attachmentList = definitionDocument.Element("CharacterDefinition").Element("AttachmentList");
 			return attachmentList.Elements("Attachment");
 		}
 

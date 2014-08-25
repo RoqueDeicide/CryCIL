@@ -16,24 +16,24 @@ namespace CryEngine.CharacterCustomization
 			Slot = slot;
 
 			// Set up strings
-			var brandNameAttribute = element.Attribute("Name");
+			XAttribute brandNameAttribute = element.Attribute("Name");
 			if (brandNameAttribute != null)
 				Name = brandNameAttribute.Value;
 
-			var brandThumbnailAttribute = element.Attribute("Thumbnail");
+			XAttribute brandThumbnailAttribute = element.Attribute("Thumbnail");
 			if (brandThumbnailAttribute != null)
 				ThumbnailPath = brandThumbnailAttribute.Value;
 
 			// Get attachments
-			var slotAttachmentElements = element.Elements("Attachment");
+			List<XElement> slotAttachmentElements = element.Elements("Attachment").ToList();
 
 			int count = slotAttachmentElements.Count();
 
-			var slotAttachments = new CharacterAttachment[count];
+			CharacterAttachment[] slotAttachments = new CharacterAttachment[count];
 
 			for (int i = 0; i < slotAttachmentElements.Count(); i++)
 			{
-				var slotAttachmentElement = slotAttachmentElements.ElementAt(i);
+				XElement slotAttachmentElement = slotAttachmentElements.ElementAt(i);
 
 				slotAttachments[i] = new CharacterAttachment(Slot, slotAttachmentElement);
 			}
@@ -43,7 +43,7 @@ namespace CryEngine.CharacterCustomization
 
 		public CharacterAttachment GetAttachment(string name)
 		{
-			foreach (var attachment in Attachments)
+			foreach (CharacterAttachment attachment in Attachments)
 			{
 				if (attachment.Name == name)
 					return attachment;

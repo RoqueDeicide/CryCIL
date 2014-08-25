@@ -20,55 +20,53 @@ namespace CryEngine.CharacterCustomization
 			}
 			else
 			{
-				var slotAttachmentNameAttribute = element.Attribute("Name");
+				XAttribute slotAttachmentNameAttribute = element.Attribute("Name");
 				if (slotAttachmentNameAttribute != null)
 					Name = slotAttachmentNameAttribute.Value;
 
-				var slotAttachmentThumbnailAttribute = element.Attribute("Thumbnail");
+				XAttribute slotAttachmentThumbnailAttribute = element.Attribute("Thumbnail");
 				if (slotAttachmentThumbnailAttribute != null)
 					ThumbnailPath = slotAttachmentThumbnailAttribute.Value;
 
-				var slotAttachmentTypeAttribute = element.Attribute("Type");
+				XAttribute slotAttachmentTypeAttribute = element.Attribute("Type");
 				if (slotAttachmentTypeAttribute != null)
 					Type = slotAttachmentTypeAttribute.Value;
 
-				var slotAttachmentBoneNameAttribute = element.Attribute("BoneName");
+				XAttribute slotAttachmentBoneNameAttribute = element.Attribute("BoneName");
 				if (slotAttachmentBoneNameAttribute != null)
 					BoneName = slotAttachmentBoneNameAttribute.Value;
 
-				var slotAttachmentObjectAttribute = element.Attribute("Binding");
+				XAttribute slotAttachmentObjectAttribute = element.Attribute("Binding");
 				if (slotAttachmentObjectAttribute != null)
 					Object = slotAttachmentObjectAttribute.Value;
 
-				var slotAttachmentFlagsAttribute = element.Attribute("Flags");
+				XAttribute slotAttachmentFlagsAttribute = element.Attribute("Flags");
 				if (slotAttachmentFlagsAttribute != null)
 					Flags = slotAttachmentFlagsAttribute.Value;
 
-				var slotAttachmentPositionAttribute = element.Attribute("Position");
+				XAttribute slotAttachmentPositionAttribute = element.Attribute("Position");
 				if (slotAttachmentPositionAttribute != null)
 					Position = slotAttachmentPositionAttribute.Value;
 
-				var slotAttachmentRotationAttribute = element.Attribute("Rotation");
+				XAttribute slotAttachmentRotationAttribute = element.Attribute("Rotation");
 				if (slotAttachmentRotationAttribute != null)
 					Rotation = slotAttachmentRotationAttribute.Value;
 
-				var slotAttachmentMaterials = new List<CharacterAttachmentMaterial>();
-
-				foreach (var materialElement in element.Elements("Material"))
-					slotAttachmentMaterials.Add(new CharacterAttachmentMaterial(this, materialElement));
-
-				Materials = slotAttachmentMaterials.ToArray();
+				Materials =
+					element.Elements("Material")
+					.Select(materialElement => new CharacterAttachmentMaterial(this, materialElement))
+					.ToArray();
 				Material = Materials.FirstOrDefault();
 
 				if (!child)
 				{
-					var subCharacterAttachments = new List<CharacterAttachment>();
+					List<CharacterAttachment> subCharacterAttachments = new List<CharacterAttachment>();
 
-					foreach (var subAttachmentElement in element.Elements("SubAttachment"))
+					foreach (XElement subAttachmentElement in element.Elements("SubAttachment"))
 					{
-						var subAttachmentSlotName = subAttachmentElement.Attribute("Slot").Value;
+						string subAttachmentSlotName = subAttachmentElement.Attribute("Slot").Value;
 
-						var subAttachmentSlot = Slot.SubAttachmentSlots.FirstOrDefault(x => x.Name == subAttachmentSlotName);
+						CharacterAttachmentSlot subAttachmentSlot = Slot.SubAttachmentSlots.FirstOrDefault(x => x.Name == subAttachmentSlotName);
 						if (subAttachmentSlot == null)
 							throw new CustomizationConfigurationException(string.Format("Failed to find subattachment slot {0} for attachment {1} for primary slot {2}", subAttachmentSlotName, Name, Slot.Name));
 
@@ -84,8 +82,8 @@ namespace CryEngine.CharacterCustomization
 					MirroredChildren = new CharacterAttachment[slot.MirroredSlots.Length];
 					for (int i = 0; i < slot.MirroredSlots.Length; i++)
 					{
-						var mirroredSlot = slot.MirroredSlots.ElementAt(i);
-						var mirroredAttachmentElement = element.Element(mirroredSlot.Name);
+						CharacterAttachmentSlot mirroredSlot = slot.MirroredSlots.ElementAt(i);
+						XElement mirroredAttachmentElement = element.Element(mirroredSlot.Name);
 						if (mirroredAttachmentElement == null)
 							throw new CustomizationConfigurationException(string.Format("Failed to get mirrored element from slot {0} and name {1}", slot.Name, mirroredSlot.Name));
 
@@ -101,7 +99,7 @@ namespace CryEngine.CharacterCustomization
 				attachmentElement.SetAttributeValue(name, value);
 			else
 			{
-				var baseAttribute = baseAttachmentElement.Attribute(name);
+				XAttribute baseAttribute = baseAttachmentElement.Attribute(name);
 				if (baseAttribute != null)
 					value = baseAttribute.Value;
 
@@ -115,21 +113,21 @@ namespace CryEngine.CharacterCustomization
 			{
 				if (Slot.MirroredSlots != null && MirroredChildren != null)
 				{
-					foreach (var mirroredAttachment in MirroredChildren)
+					foreach (CharacterAttachment mirroredAttachment in MirroredChildren)
 					{
 						Write(Slot.GetWriteableElement(mirroredAttachment.Slot.Name));
-						mirroredAttachment.Write(null);
+						mirroredAttachment.Write();
 					}
 
 					return true;
 				}
 
-				var currentAttachment = Slot.Current;
+				CharacterAttachment currentAttachment = Slot.Current;
 				if (currentAttachment != null)
 				{
 					if (currentAttachment.SubAttachmentVariations != null)
 					{
-						foreach (var subAttachment in currentAttachment.SubAttachmentVariations)
+						foreach (CharacterAttachment subAttachment in currentAttachment.SubAttachmentVariations)
 							subAttachment.Slot.Clear();
 					}
 				}
@@ -139,7 +137,7 @@ namespace CryEngine.CharacterCustomization
 					throw new CustomizationConfigurationException(string.Format("Failed to locate attachments for slot {0}!", Slot.Name));
 			}
 
-			var slotName = attachmentElement.Attribute("AName").Value;
+			string slotName = attachmentElement.Attribute("AName").Value;
 
 			if (Slot.EmptyAttachment == this)
 			{
@@ -149,7 +147,7 @@ namespace CryEngine.CharacterCustomization
 			}
 			else
 			{
-				var baseAttachmentElement = Slot.Manager.GetAttachmentElements(Slot.Manager.BaseDefinition).FirstOrDefault(x => x.Attribute("AName").Value == slotName);
+				XElement baseAttachmentElement = Slot.Manager.GetAttachmentElements(Slot.Manager.BaseDefinition).FirstOrDefault(x => x.Attribute("AName").Value == slotName);
 
 				WriteAttribute(attachmentElement, baseAttachmentElement, "Name", Name);
 
@@ -161,7 +159,7 @@ namespace CryEngine.CharacterCustomization
 				if (Material != null)
 					Material.Save();
 
-				var materialPath = Material != null ? Material.FilePath : null;
+				string materialPath = Material != null ? Material.FilePath : null;
 				WriteAttribute(attachmentElement, baseAttachmentElement, "Material", materialPath);
 
 				WriteAttribute(attachmentElement, baseAttachmentElement, "Flags", Flags);
@@ -183,8 +181,8 @@ namespace CryEngine.CharacterCustomization
 				if (Materials == null || Materials.Length == 0)
 					return null;
 
-				var selector = new Random();
-				var iRandom = selector.Next(Materials.Length);
+				Random selector = new Random();
+				int iRandom = selector.Next(Materials.Length);
 
 				return Materials.ElementAt(iRandom);
 			}
@@ -197,22 +195,20 @@ namespace CryEngine.CharacterCustomization
 				if (Materials == null || Materials.Length == 0)
 					return null;
 
-				var currentMaterial = Material;
+				CharacterAttachmentMaterial currentMaterial = Material;
 				CharacterAttachmentMaterial nextMaterial = null;
 
-				for (var i = 0; i < Materials.Length; i++)
+				for (int i = 0; i < Materials.Length; i++)
 				{
-					var material = Materials.ElementAt(i);
+					CharacterAttachmentMaterial material = Materials.ElementAt(i);
 
-					if (material == currentMaterial)
-					{
-						if (i < Materials.Length - 1)
-							nextMaterial = Materials.ElementAt(i + 1);
-						else
-							nextMaterial = Materials.ElementAt(0);
+					if (material != currentMaterial) continue;
+					nextMaterial =
+						i < this.Materials.Length - 1
+							? this.Materials.ElementAt(i + 1)
+							: this.Materials.ElementAt(0);
 
-						break;
-					}
+					break;
 				}
 
 				return nextMaterial;
@@ -226,7 +222,7 @@ namespace CryEngine.CharacterCustomization
 				if (SubAttachmentVariations == null || SubAttachmentVariations.Length == 0)
 					return SubAttachment;
 
-				var selector = new Random();
+				Random selector = new Random();
 
 				return SubAttachmentVariations.ElementAt(selector.Next(SubAttachmentVariations.Length));
 			}

@@ -21,89 +21,89 @@ namespace CryEngine.CharacterCustomization
 
 			ParentMaterial = parentMaterial;
 
-			var subMaterialElements = element.Elements("Submaterial");
-			Submaterials = new CharacterAttachmentMaterial[subMaterialElements.Count()];
+			List<XElement> subMaterialElements = element.Elements("Submaterial").ToList();
+			Submaterials = new CharacterAttachmentMaterial[subMaterialElements.Count];
 
-			for (var i = 0; i < subMaterialElements.Count(); i++)
+			for (int i = 0; i < subMaterialElements.Count(); i++)
 			{
-				var subMaterialElement = subMaterialElements.ElementAt(i);
+				XElement subMaterialElement = subMaterialElements[i];
 
 				Submaterials[i] = new CharacterAttachmentMaterial(attachment, subMaterialElement, this);
 			}
 
 			if (parentMaterial == null)
 			{
-				var pathAttribute = element.Attribute("path");
+				XAttribute pathAttribute = element.Attribute("path");
 				if (pathAttribute != null)
 					BaseFilePath = pathAttribute.Value;
 			}
 			else
 			{
-				var nameAttribute = element.Attribute("name");
+				XAttribute nameAttribute = element.Attribute("name");
 				if (nameAttribute != null)
 					BaseFilePath = nameAttribute.Value;
 			}
 
-			var colorModifierElement = element.Element("ColorModifier");
+			XElement colorModifierElement = element.Element("ColorModifier");
 			if (colorModifierElement != null)
 			{
-				var redAttribute = colorModifierElement.Attribute("red");
+				XAttribute redAttribute = colorModifierElement.Attribute("red");
 				if (redAttribute != null)
 					ColorRed = ParseColor(redAttribute.Value);
 
-				var greenAttribute = colorModifierElement.Attribute("green");
+				XAttribute greenAttribute = colorModifierElement.Attribute("green");
 				if (greenAttribute != null)
 					ColorGreen = ParseColor(greenAttribute.Value);
 
-				var blueAttribute = colorModifierElement.Attribute("blue");
+				XAttribute blueAttribute = colorModifierElement.Attribute("blue");
 				if (blueAttribute != null)
 					ColorBlue = ParseColor(blueAttribute.Value);
 
-				var alphaAttribute = colorModifierElement.Attribute("alpha");
+				XAttribute alphaAttribute = colorModifierElement.Attribute("alpha");
 				if (alphaAttribute != null)
 					ColorAlpha = ParseColor(alphaAttribute.Value);
 			}
 
-			var diffuseElement = element.Element("Diffuse");
+			XElement diffuseElement = element.Element("Diffuse");
 			DiffuseColor = UnusedMarker.Vector3;
 
 			if (diffuseElement != null)
 			{
-				var texPathAttribute = diffuseElement.Attribute("path");
+				XAttribute texPathAttribute = diffuseElement.Attribute("path");
 				if (texPathAttribute != null)
 					DiffuseTexture = texPathAttribute.Value;
 
-				var colorAttribute = diffuseElement.Attribute("color");
+				XAttribute colorAttribute = diffuseElement.Attribute("color");
 				if (colorAttribute != null)
 					DiffuseColor = ParseColor(colorAttribute.Value);
 			}
 
-			var specularElement = element.Element("Specular");
+			XElement specularElement = element.Element("Specular");
 			SpecularColor = UnusedMarker.Vector3;
 
 			if (specularElement != null)
 			{
-				var texPathAttribute = specularElement.Attribute("path");
+				XAttribute texPathAttribute = specularElement.Attribute("path");
 				if (texPathAttribute != null)
 					SpecularTexture = texPathAttribute.Value;
 
-				var colorAttribute = specularElement.Attribute("color");
+				XAttribute colorAttribute = specularElement.Attribute("color");
 				if (colorAttribute != null)
 					SpecularColor = ParseColor(colorAttribute.Value);
 			}
 
-			var bumpmapElement = element.Element("Bumpmap");
+			XElement bumpmapElement = element.Element("Bumpmap");
 			if (bumpmapElement != null)
 			{
-				var texPathAttribute = bumpmapElement.Attribute("path");
+				XAttribute texPathAttribute = bumpmapElement.Attribute("path");
 				if (texPathAttribute != null)
 					BumpmapTexture = texPathAttribute.Value;
 			}
 
-			var customTexElement = element.Element("Custom");
+			XElement customTexElement = element.Element("Custom");
 			if (customTexElement != null)
 			{
-				var texPathAttribute = customTexElement.Attribute("path");
+				XAttribute texPathAttribute = customTexElement.Attribute("path");
 				if (texPathAttribute != null)
 					CustomTexture = texPathAttribute.Value;
 			}
@@ -119,13 +119,13 @@ namespace CryEngine.CharacterCustomization
 		private bool UpdateMaterialElement(XElement materialElement, CharacterAttachmentMaterial material)
 		{
 			Debug.LogAlways("Updating material element for attachment {0} in slot {1}", material.Attachment.Name, material.Attachment.Slot.Name);
-			var modifiedMaterial = false;
+			bool modifiedMaterial = false;
 
-			var genMaskAttribute = materialElement.Attribute("StringGenMask");
+			XAttribute genMaskAttribute = materialElement.Attribute("StringGenMask");
 			if (genMaskAttribute != null && genMaskAttribute.Value.Contains("%COLORMASKING"))
 			{
 				Debug.LogAlways("Writing color mask");
-				var publicParamsElement = materialElement.Element("PublicParams");
+				XElement publicParamsElement = materialElement.Element("PublicParams");
 
 				publicParamsElement.SetAttributeValue("ColorMaskR", material.ColorRed.ToString());
 				publicParamsElement.SetAttributeValue("ColorMaskG", material.ColorGreen.ToString());
@@ -135,7 +135,7 @@ namespace CryEngine.CharacterCustomization
 				modifiedMaterial = true;
 			}
 
-			var texturesElement = materialElement.Element("Textures");
+			XElement texturesElement = materialElement.Element("Textures");
 			if (texturesElement != null)
 			{
 				if (WriteTexture(texturesElement, "Diffuse", material.DiffuseTexture)
@@ -158,14 +158,17 @@ namespace CryEngine.CharacterCustomization
 
 		public void Save()
 		{
-			var basePath = Path.Combine(CryPak.GameFolder, BaseFilePath);
+			string basePath = Path.Combine(CryPak.GameFolder, BaseFilePath);
 			if (!File.Exists(basePath + ".mtl"))
 				throw new CustomizationConfigurationException(string.Format("Could not save modified material, base {0} did not exist.", basePath));
 
-			var materialDocument = XDocument.Load(basePath + ".mtl");
+			XDocument materialDocument = XDocument.Load(basePath + ".mtl");
 
-			var materialElement = materialDocument.Element("Material");
-
+			XElement materialElement = materialDocument.Element("Material");
+			if (materialElement == null)
+			{
+				throw new CustomizationConfigurationException("Could not save modified material, base file is not properly configured.");
+			}
 			// Store boolean to determine whether we need to save to an alternate location.
 			bool modifiedMaterial = false;
 
@@ -173,17 +176,20 @@ namespace CryEngine.CharacterCustomization
 				modifiedMaterial = UpdateMaterialElement(materialElement, this);
 			else
 			{
-				var subMaterialsElement = materialElement.Element("SubMaterials");
-
-				var subMaterialElements = subMaterialsElement.Elements("Material");
-
-				for (var i = 0; i < Submaterials.Length; i++)
+				XElement subMaterialsElement = materialElement.Element("SubMaterials");
+				if (subMaterialsElement == null)
 				{
-					var subMaterial = Submaterials.ElementAt(i);
+					throw new CustomizationConfigurationException("Could not save modified material, base file is not properly configured.");
+				}
+				List<XElement> subMaterialElements = subMaterialsElement.Elements("Material").ToList();
 
-					var modifiedSubMaterial = UpdateMaterialElement(subMaterialElements.FirstOrDefault(x =>
+				for (int i = 0; i < Submaterials.Length; i++)
+				{
+					CharacterAttachmentMaterial subMaterial = Submaterials.ElementAt(i);
+
+					bool modifiedSubMaterial = UpdateMaterialElement(subMaterialElements.Find(x =>
 						{
-							var nameAttribute = x.Attribute("Name");
+							XAttribute nameAttribute = x.Attribute("Name");
 
 							if (nameAttribute != null)
 								return nameAttribute.Value == subMaterial.BaseFilePath;
@@ -191,8 +197,7 @@ namespace CryEngine.CharacterCustomization
 							return false;
 						}), subMaterial);
 
-					if (modifiedSubMaterial)
-						modifiedMaterial = modifiedSubMaterial;
+					modifiedMaterial = modifiedSubMaterial;
 				}
 			}
 
@@ -200,22 +205,24 @@ namespace CryEngine.CharacterCustomization
 			{
 				if (string.IsNullOrEmpty(FilePath))
 				{
-					var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-					var stringChars = new char[16];
+					const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+					char[] stringChars = new char[16];
 
 					for (int i = 0; i < stringChars.Length; i++)
 						stringChars[i] = chars[CustomizationManager.Selector.Next(chars.Length)];
 
-					var fileName = new string(stringChars);
+					string fileName = new string(stringChars);
 
 					FilePath = Path.Combine(Attachment.Slot.Manager.InitParameters.TempDirectory, "Materials", Attachment.Slot.Name, Attachment.Name ?? "unknown", fileName);
 				}
 
-				var fullFilePath = CryPak.AdjustFileName(FilePath, PathResolutionRules.RealPath | PathResolutionRules.ForWriting) + ".mtl";
+				string fullFilePath = CryPak.AdjustFileName(FilePath, PathResolutionRules.RealPath | PathResolutionRules.ForWriting) + ".mtl";
 
 				if (!File.Exists(fullFilePath))
 				{
-					var directory = new DirectoryInfo(Path.GetDirectoryName(fullFilePath));
+// ReSharper disable AssignNullToNotNullAttribute
+					DirectoryInfo directory = new DirectoryInfo(Path.GetDirectoryName(fullFilePath));
+// ReSharper restore AssignNullToNotNullAttribute
 					while (!directory.Exists)
 					{
 						Directory.CreateDirectory(directory.FullName);
@@ -223,7 +230,7 @@ namespace CryEngine.CharacterCustomization
 						directory = Directory.GetParent(directory.FullName);
 					}
 
-					var file = File.Create(fullFilePath);
+					FileStream file = File.Create(fullFilePath);
 					file.Close();
 				}
 
@@ -233,12 +240,12 @@ namespace CryEngine.CharacterCustomization
 				FilePath = BaseFilePath;
 		}
 
-		private bool WriteTexture(XElement texturesElement, string textureType, string texturePath)
+		private static bool WriteTexture(XElement texturesElement, string textureType, string texturePath)
 		{
 			if (texturePath == null)
 				return false;
 
-			var element = texturesElement.Elements("Texture").FirstOrDefault(x => x.Attribute("Map").Value == textureType);
+			XElement element = texturesElement.Elements("Texture").FirstOrDefault(x => x.Attribute("Map").Value == textureType);
 			if (element == null)
 			{
 				element = new XElement("Texture");

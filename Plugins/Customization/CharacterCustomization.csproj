@@ -105,13 +105,13 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="API\CharacterAttachmentBrand.cs" />
-    <Compile Include="API\CharacterAttachment.cs" />
-    <Compile Include="API\CharacterAttachmentMaterial.cs" />
-    <Compile Include="API\CharacterAttachmentSlot.cs" />
+    <Compile Include="CharacterAttachmentBrand.cs" />
+    <Compile Include="CharacterAttachment.cs" />
+    <Compile Include="CharacterAttachmentMaterial.cs" />
+    <Compile Include="CharacterAttachmentSlot.cs" />
     <Compile Include="CustomizationInitializationParameters.cs" />
     <Compile Include="CustomizationManager.cs" />
-    <Compile Include="Exceptions\CustomizationConfigurationException.cs" />
+    <Compile Include="CustomizationConfigurationException.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\CryBrary\CryBrary.csproj">

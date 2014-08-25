@@ -20,24 +20,27 @@ namespace CryEngine.Compilers.NET
 		#region ICryMonoPlugin implementation
 		public IEnumerable<Type> GetTypes(IEnumerable<Assembly> assemblies)
 		{
-			var scripts = new List<Type>();
+			List<Type> scripts = new List<Type>();
 
-			foreach (var assembly in assemblies)
+			foreach
+			(
+				IEnumerable<Type> assemblyScripts
+				in assemblies
+				.Select(this.ProcessAssembly)
+				.Where(assemblyScripts => assemblyScripts.Any())
+			)
 			{
-				var assemblyScripts = ProcessAssembly(assembly);
-				if (assemblyScripts.Count() > 0)
-					scripts.AddRange(assemblyScripts);
+				scripts.AddRange(assemblyScripts);
 			}
 
-			var compileScriptsCVar = CVar.Get("mono_compileScripts");
+			CVar compileScriptsCVar = CVar.Get("mono_compileScripts");
 
-			if (compileScriptsCVar != null && compileScriptsCVar.IVal != 0)
+			if (compileScriptsCVar == null || compileScriptsCVar.IVal == 0) return scripts;
+			
+			if (!this.CompileAndProcess("CSharp", "*.cs", ref scripts)
+				&& !this.CompileAndProcess("VisualBasic", "*.vb", ref scripts))
 			{
-				if (!CompileAndProcess("CSharp", "*.cs", ref scripts)
-					&& !CompileAndProcess("VisualBasic", "*.vb", ref scripts))
-				{
-					Debug.DisplayException(new ScriptCompilationException("No scripts to compile were found in the Game/Scripts directory.\n This is not a fatal error, and can be ignored."));
-				}
+				Debug.DisplayException(new ScriptCompilationException("No scripts to compile were found in the Game/Scripts directory.\n This is not a fatal error, and can be ignored."));
 			}
 
 			return scripts;
@@ -48,7 +51,7 @@ namespace CryEngine.Compilers.NET
 			IScriptRegistrationParams registrationParams = null;
 
 			if ((scriptType & ScriptType.Actor) == ScriptType.Actor)
-				registrationParams = TryGetActorParams(type, scriptType);
+				registrationParams = TryGetActorParams(scriptType);
 			else if ((scriptType & ScriptType.GameRules) == ScriptType.GameRules)
 				registrationParams = TryGetGamemodeParams(type);
 			else if ((scriptType & ScriptType.Entity) == ScriptType.Entity)
@@ -60,7 +63,7 @@ namespace CryEngine.Compilers.NET
 
 			if ((scriptType & ScriptType.CryScriptInstance) == ScriptType.CryScriptInstance)
 			{
-				foreach (var member in type.GetMethods(BindingFlags.Static | BindingFlags.DeclaredOnly | BindingFlags.Public))
+				foreach (MethodInfo member in type.GetMethods(BindingFlags.Static | BindingFlags.DeclaredOnly | BindingFlags.Public))
 				{
 					ConsoleCommandAttribute attribute;
 					if (member.TryGetAttribute(out attribute))
@@ -74,15 +77,12 @@ namespace CryEngine.Compilers.NET
 
 		private bool CompileAndProcess(string provider, string searchPattern, ref List<Type> scripts)
 		{
-			var foundScripts = ProcessAssembly(CompileFromSource(CodeDomProvider.CreateProvider(provider), searchPattern));
-			if (foundScripts.Count() > 0)
-			{
-				scripts.AddRange(foundScripts);
+			List<Type> foundScripts = ProcessAssembly(CompileFromSource(CodeDomProvider.CreateProvider(provider), searchPattern)).ToList();
+			if (foundScripts.Count == 0) return false;
+			
+			scripts.AddRange(foundScripts);
 
-				return true;
-			}
-
-			return false;
+			return true;
 		}
 
 		/// <summary>
@@ -112,33 +112,33 @@ namespace CryEngine.Compilers.NET
 
 		private IEnumerable<Type> ProcessAssembly(Assembly assembly)
 		{
-			var types = new List<Type>();
+			List<Type> types = new List<Type>();
 
 			if (assembly == null)
 				return types;
 
-			foreach (var type in assembly.GetTypes())
+			foreach (Type type in assembly.GetTypes())
 			{
 				if (!type.ContainsAttribute<ExcludeFromCompilationAttribute>() && !type.IsAbstract && !type.IsEnum)
 					types.Add(type);
 
-				if (type.ContainsAttribute<TestCollectionAttribute>())
+				if (!type.ContainsAttribute<TestCollectionAttribute>()) continue;
+				
+				ConstructorInfo ctor = type.GetConstructor(Type.EmptyTypes);
+				if (ctor == null) continue;
+				
+				TestCollection collection = new TestCollection
 				{
-					var ctor = type.GetConstructor(Type.EmptyTypes);
-					if (ctor != null)
-					{
-						var collection = new TestCollection
-						{
-							Instance = ctor.Invoke(Type.EmptyTypes),
-							Tests = from method in type.GetMethods()
-									where method.ContainsAttribute<TestAttribute>()
-										&& method.GetParameters().Length == 0
-									select method
-						};
+// ReSharper disable CoVariantArrayConversion
+					Instance = ctor.Invoke(Type.EmptyTypes),
+// ReSharper restore CoVariantArrayConversion
+					Tests = from method in type.GetMethods()
+						where method.ContainsAttribute<TestAttribute>()
+							  && method.GetParameters().Length == 0
+						select method
+				};
 
-						TestManager.TestCollections.Add(collection);
-					}
-				}
+				TestManager.TestCollections.Add(collection);
 			}
 
 			return types;
@@ -146,7 +146,7 @@ namespace CryEngine.Compilers.NET
 
 		private Assembly CompileFromSource(CodeDomProvider provider, string searchPattern)
 		{
-			var compilerParameters = new CompilerParameters();
+			CompilerParameters compilerParameters = new CompilerParameters();
 
 			compilerParameters.GenerateExecutable = false;
 
@@ -164,7 +164,7 @@ namespace CryEngine.Compilers.NET
 
 			if (!compilerParameters.GenerateInMemory)
 			{
-				var assemblyPath = Path.Combine(ProjectSettings.TempDirectory, string.Format("CompiledScripts_{0}.dll", searchPattern.Replace("*.", "")));
+				string assemblyPath = Path.Combine(ProjectSettings.TempDirectory, string.Format("CompiledScripts_{0}.dll", searchPattern.Replace("*.", "")));
 
 				if (File.Exists(assemblyPath))
 				{
@@ -177,11 +177,11 @@ namespace CryEngine.Compilers.NET
 						if (ex is UnauthorizedAccessException || ex is IOException)
 						{
 							int num = 1;
-							var split = assemblyPath.Split(new string[] { ".dll" }, StringSplitOptions.None);
+							string[] split = assemblyPath.Split(new [] { ".dll" }, StringSplitOptions.None);
 
 							while (File.Exists(assemblyPath))
 							{
-								assemblyPath = split.First() + num.ToString() + ".dll";
+								assemblyPath = split.First() + num + ".dll";
 								num++;
 							}
 						}
@@ -193,21 +193,20 @@ namespace CryEngine.Compilers.NET
 				compilerParameters.OutputAssembly = assemblyPath;
 			}
 
-			var scripts = new List<string>();
-			var scriptsDirectory = CryPak.ScriptsFolder;
+			List<string> scripts = new List<string>();
+			string scriptsDirectory = CryPak.ScriptsFolder;
 
 			CVar cvar;
 			if (CVar.TryGet("mono_scriptDirectory", out cvar))
 			{
-				var alternateScriptsDir = cvar.String;
+				string alternateScriptsDir = cvar.String;
 				if (!string.IsNullOrEmpty(alternateScriptsDir))
 					scriptsDirectory = alternateScriptsDir;
 			}
 
 			if (Directory.Exists(scriptsDirectory))
 			{
-				foreach (var script in Directory.GetFiles(scriptsDirectory, searchPattern, SearchOption.AllDirectories))
-					scripts.Add(script);
+				scripts.AddRange(Directory.GetFiles(scriptsDirectory, searchPattern, SearchOption.AllDirectories));
 			}
 			else
 				Debug.LogAlways("Scripts directory could not be located");
@@ -218,7 +217,7 @@ namespace CryEngine.Compilers.NET
 			CompilerResults results;
 			using (provider)
 			{
-				var referenceHandler = new AssemblyReferenceHandler();
+				AssemblyReferenceHandler referenceHandler = new AssemblyReferenceHandler();
 				compilerParameters.ReferencedAssemblies.AddRange(referenceHandler.GetRequiredAssembliesFromFiles(scripts));
 
 				results = provider.CompileAssemblyFromFile(compilerParameters, scripts.ToArray());
@@ -228,33 +227,32 @@ namespace CryEngine.Compilers.NET
 		}
 
 		#region Actor
-		private ActorRegistrationParams TryGetActorParams(Type type, ScriptType scriptType)
+		private static ActorRegistrationParams TryGetActorParams(ScriptType scriptType)
 		{
-			var registrationParams = new ActorRegistrationParams();
-
-			registrationParams.isAI = (scriptType & ScriptType.AIActor) == ScriptType.AIActor;
-
-			return registrationParams;
+			return new ActorRegistrationParams
+			{
+				isAI = (scriptType & ScriptType.AIActor) == ScriptType.AIActor
+			};
 		}
 		#endregion
 
 		#region Entity
 		private IScriptRegistrationParams TryGetEntityParams(Type type)
 		{
-			var entityRegistrationParams = new EntityRegistrationParams();
+			EntityRegistrationParams entityRegistrationParams = new EntityRegistrationParams();
 
-			BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
-			var members = type.GetMembers(flags);
-			var entityProperties = new Dictionary<string, List<EditorProperty>>();
+			const BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
+			MemberInfo[] members = type.GetMembers(flags);
+			Dictionary<string, List<EditorProperty>> entityProperties = new Dictionary<string, List<EditorProperty>>();
 
 			members.ForEach(member => TryGetEntityProperty(member, ref entityProperties));
 
 			int numProperties = entityProperties.Count;
 			if (numProperties > 0)
 			{
-				var properties = new List<object>();
+				List<object> properties = new List<object>();
 
-				foreach (var folder in entityProperties)
+				foreach (KeyValuePair<string, List<EditorProperty>> folder in entityProperties)
 				{
 					if (folder.Key != "Default")
 					{
@@ -271,11 +269,11 @@ namespace CryEngine.Compilers.NET
 				entityRegistrationParams.properties = properties.ToArray();
 			}
 
-			var curType = type;
+			Type curType = type;
 
 			bool changedFlags = false;
 
-			var entType = typeof(Entity);
+			Type entType = typeof(Entity);
 			// This should not be specific to entities, all scripts should be able to utilize this
 			// parent class attribute functionality.
 			while (curType != entType)
@@ -321,11 +319,15 @@ namespace CryEngine.Compilers.NET
 						break;
 				}
 
-				var limits = new EditorPropertyLimits(propertyAttribute.Min, propertyAttribute.Max);
+				EditorPropertyLimits limits = new EditorPropertyLimits
+				{
+					Min = propertyAttribute.Min,
+					Max = propertyAttribute.Max
+				};
 
-				var editorType = Entity.GetEditorType(memberType, propertyAttribute.Type);
+				EditorPropertyType editorType = Entity.GetEditorType(memberType, propertyAttribute.Type);
 
-				var defaultValue = propertyAttribute.DefaultValue;
+				string defaultValue = propertyAttribute.DefaultValue;
 				if (defaultValue == null)
 				{
 					switch (editorType)
@@ -347,7 +349,7 @@ namespace CryEngine.Compilers.NET
 					}
 				}
 
-				var property = new EditorProperty(propertyAttribute.Name ?? memberInfo.Name, propertyAttribute.Description, defaultValue, editorType, limits, propertyAttribute.Flags);
+				EditorProperty property = new EditorProperty(propertyAttribute.Name ?? memberInfo.Name, propertyAttribute.Description, defaultValue, editorType, limits, propertyAttribute.Flags);
 
 				if (propertyAttribute.Folder == null)
 					propertyAttribute.Folder = "Default";
@@ -367,16 +369,16 @@ namespace CryEngine.Compilers.NET
 		#region FlowNode
 		private IScriptRegistrationParams TryGetFlowNodeParams(Type type)
 		{
-			var nodeRegistrationParams = new FlowNodeRegistrationParams();
+			FlowNodeRegistrationParams nodeRegistrationParams = new FlowNodeRegistrationParams();
 
-			var inputs = new Dictionary<InputPortConfig, MethodInfo>();
-			var outputs = new Dictionary<OutputPortConfig, MemberInfo>();
+			Dictionary<InputPortConfig, MethodInfo> inputs = new Dictionary<InputPortConfig, MethodInfo>();
+			Dictionary<OutputPortConfig, MemberInfo> outputs = new Dictionary<OutputPortConfig, MemberInfo>();
 
-			var setFilter = false;
-			var setTargetEntity = false;
-			var setType = false;
+			bool setFilter = false;
+			bool setTargetEntity = false;
+			bool setType = false;
 
-			var nodeType = type;
+			Type nodeType = type;
 			while (nodeType != typeof(FlowNode))
 			{
 				FlowNodeAttribute nodeAttribute;
@@ -425,12 +427,12 @@ namespace CryEngine.Compilers.NET
 
 		private IScriptRegistrationParams TryGetEntityFlowNodeParams(Type type)
 		{
-			var nodeRegistrationParams = new EntityFlowNodeRegistrationParams();
+			EntityFlowNodeRegistrationParams nodeRegistrationParams = new EntityFlowNodeRegistrationParams();
 
-			var curEntityType = type.GetGenericArguments(typeof(EntityFlowNode<>)).ElementAt(0);
+			Type curEntityType = type.GetGenericArguments(typeof(EntityFlowNode<>)).ElementAt(0);
 			nodeRegistrationParams.entityName = curEntityType.Name;
 
-			var entType = typeof(EntityBase);
+			Type entType = typeof(EntityBase);
 
 			// This should not be specific to entities, all scripts should be able to utilize this
 			// parent class attribute functionality.
@@ -440,17 +442,15 @@ namespace CryEngine.Compilers.NET
 				if (curEntityType.TryGetAttribute(out entAttribute))
 				{
 					// don't override if the type before this (or earlier) changed it.
-					if (nodeRegistrationParams.entityName == null)
-						nodeRegistrationParams.entityName = entAttribute.Name;
 				}
 
-				curEntityType = curEntityType.BaseType;
+				if (curEntityType != null) curEntityType = curEntityType.BaseType;
 			}
 
-			var inputs = new Dictionary<InputPortConfig, MethodInfo>();
-			var outputs = new Dictionary<OutputPortConfig, MemberInfo>();
+			Dictionary<InputPortConfig, MethodInfo> inputs = new Dictionary<InputPortConfig, MethodInfo>();
+			Dictionary<OutputPortConfig, MemberInfo> outputs = new Dictionary<OutputPortConfig, MemberInfo>();
 
-			var nodeType = type;
+			Type nodeType = type;
 			while (nodeType != typeof(FlowNode))
 			{
 				TryGetFlowNodePorts(nodeType, ref inputs, ref outputs);
@@ -472,7 +472,7 @@ namespace CryEngine.Compilers.NET
 
 		private void TryGetFlowNodePorts(Type type, ref Dictionary<InputPortConfig, MethodInfo> inputs, ref Dictionary<OutputPortConfig, MemberInfo> outputs)
 		{
-			foreach (var member in type.GetMembers(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly))
+			foreach (MemberInfo member in type.GetMembers(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly))
 			{
 				if (member.MemberType == MemberTypes.Field || member.MemberType == MemberTypes.Property)
 				{
@@ -493,7 +493,7 @@ namespace CryEngine.Compilers.NET
 					PortAttribute portAttribute;
 					if (member.TryGetAttribute(out portAttribute))
 					{
-						var method = member as MethodInfo;
+						MethodInfo method = member as MethodInfo;
 
 						InputPortConfig inputPortConfig;
 						if (TryGetFlowNodeInput(portAttribute, method, out inputPortConfig))
@@ -518,7 +518,7 @@ namespace CryEngine.Compilers.NET
 				{
 					inputPortConfig.type = NodePortType.Int;
 
-					var values = Enum.GetValues(parameter.ParameterType);
+					Array values = Enum.GetValues(parameter.ParameterType);
 					if (values.Length <= 0)
 						return false;
 
@@ -528,7 +528,7 @@ namespace CryEngine.Compilers.NET
 
 					for (int i = 0; i < values.Length; i++)
 					{
-						var value = values.GetValue(i);
+						object value = values.GetValue(i);
 
 						if (i > 0 && i != inputPortConfig.uiConfig.Length)
 							inputPortConfig.uiConfig += ",";
@@ -597,24 +597,19 @@ namespace CryEngine.Compilers.NET
 
 			outputPortConfig.humanName = outputPortConfig.name;
 
-			Type type;
-			if (memberInfo.MemberType == MemberTypes.Field)
-				type = (memberInfo as FieldInfo).FieldType;
-			else
-				type = (memberInfo as PropertyInfo).PropertyType;
+			Type type = memberInfo.MemberType == MemberTypes.Field
+				? ((FieldInfo)memberInfo).FieldType
+				: ((PropertyInfo)memberInfo).PropertyType;
 
-			if (type.Name.StartsWith("OutputPort"))
-			{
-				bool isGenericType = type.IsGenericType;
-				Type genericType = isGenericType ? type.GetGenericArguments()[0] : typeof(void);
+			if (!type.Name.StartsWith("OutputPort")) return false;
 
-				string prefix;
-				outputPortConfig.type = GetFlowNodePortType(genericType, out prefix, portAttribute);
+			bool isGenericType = type.IsGenericType;
+			Type genericType = isGenericType ? type.GetGenericArguments()[0] : typeof(void);
 
-				return true;
-			}
+			string prefix;
+			outputPortConfig.type = this.GetFlowNodePortType(genericType, out prefix, portAttribute);
 
-			return false;
+			return true;
 		}
 
 		private NodePortType GetFlowNodePortType(Type type, out string prefix, PortAttribute portAttribute)
@@ -719,7 +714,7 @@ namespace CryEngine.Compilers.NET
 		#region Gamemode
 		private IScriptRegistrationParams TryGetGamemodeParams(Type type)
 		{
-			var gamemodeRegistrationParams = new GameRulesRegistrationParams();
+			GameRulesRegistrationParams gamemodeRegistrationParams = new GameRulesRegistrationParams();
 
 			GameRulesAttribute gamemodeAttribute;
 			if (type.TryGetAttribute(out gamemodeAttribute))
