@@ -136,6 +136,7 @@
     <Compile Include="Actor\ActorBase.cs" />
     <Compile Include="Actor\AIActor.cs" />
     <Compile Include="GeneralExtensions.cs" />
+    <Compile Include="Mathematics\Geometry\Meshes\CSG\BSP.cs" />
     <Compile Include="Mathematics\Geometry\Plane.GenericOps.cs" />
     <Compile Include="Native\ActorInitializationParams.cs" />
     <Compile Include="Actor\ActorNetworking.cs" />
