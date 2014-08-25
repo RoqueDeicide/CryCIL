@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using CryEngine.Engine.Particles.Native;
+using CryEngine.Mathematics;
 
 namespace CryEngine
 {

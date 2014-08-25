@@ -1,4 +1,5 @@
 ﻿using System;
+using CryEngine.Mathematics;
 using CryEngine.Native;
 
 namespace CryEngine.Entities

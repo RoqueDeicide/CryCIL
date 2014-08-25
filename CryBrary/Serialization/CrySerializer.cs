@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using CryEngine.Entities;
 using CryEngine.Extensions;
+using CryEngine.Mathematics;
 using CryEngine.Utilities;
 
 namespace CryEngine.Serialization

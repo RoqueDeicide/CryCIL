@@ -7,6 +7,7 @@ using System.Xml;
 using System.Xml.Linq;
 
 using CryEngine;
+using CryEngine.Mathematics;
 using CryEngine.Utilities;
 
 namespace CryEngine.CharacterCustomization

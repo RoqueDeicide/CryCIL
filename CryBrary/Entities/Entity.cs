@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
+using CryEngine.Mathematics;
 using CryEngine.Native;
 
 namespace CryEngine.Entities
@@ -15,8 +16,8 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Initializes the entity, not recommended to set manually.
 		/// </summary>
-		/// <param name="initParams">Struct containing the IEntity pointer and EntityId.</param>
-		/// <returns>IsEntityFlowNode</returns>
+		/// <param name="initParams"> Struct containing the IEntity pointer and EntityId. </param>
+		/// <returns> IsEntityFlowNode </returns>
 		internal override bool InternalInitialize(IScriptInitializationParams initParams)
 		{
 			var entityInitParams = (EntityInitializationParams)initParams;
@@ -91,7 +92,7 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Called when resetting the state of the entity in Editor.
 		/// </summary>
-		/// <param name="enteringGame">true if currently entering gamemode, false if exiting.</param>
+		/// <param name="enteringGame"> true if currently entering gamemode, false if exiting. </param>
 		protected virtual void OnEditorReset(bool enteringGame)
 		{
 		}
@@ -121,7 +122,7 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Sent when entity enters to the area proximity.
 		/// </summary>
-		/// <param name="entityId"></param>
+		/// <param name="entityId"> </param>
 		protected virtual void OnEnterArea(EntityId entityId, int areaId, EntityId areaEntityId)
 		{
 		}
@@ -129,7 +130,7 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Sent when entity moves inside the area proximity.
 		/// </summary>
-		/// <param name="entityId"></param>
+		/// <param name="entityId"> </param>
 		protected virtual void OnMoveInsideArea(EntityId entityId, int areaId, EntityId areaEntityId)
 		{
 		}
@@ -137,7 +138,7 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Sent when entity leaves the area proximity.
 		/// </summary>
-		/// <param name="entityId"></param>
+		/// <param name="entityId"> </param>
 		protected virtual void OnLeaveArea(EntityId entityId, int areaId, EntityId areaEntityId)
 		{
 		}
@@ -163,21 +164,21 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Called whenever another entity has been linked to this entity.
 		/// </summary>
-		/// <param name="child"></param>
+		/// <param name="child"> </param>
 		protected virtual void OnAttach(EntityId child)
 		{
 		}
 		/// <summary>
 		/// Called whenever another entity has been unlinked from this entity.
 		/// </summary>
-		/// <param name="child"></param>
+		/// <param name="child"> </param>
 		protected virtual void OnDetach(EntityId child)
 		{
 		}
 		/// <summary>
 		/// Called whenever this entity is unliked from another entity.
 		/// </summary>
-		/// <param name="parent"></param>
+		/// <param name="parent"> </param>
 		protected virtual void OnDetachThis(EntityId parent)
 		{
 		}
@@ -189,7 +190,7 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Called when an animation event (placed on animations via the Character Editor) is encountered.
 		/// </summary>
-		/// <param name="animEvent"></param>
+		/// <param name="animEvent"> </param>
 		[CLSCompliant(false)]
 		protected virtual void OnAnimationEvent(AnimationEvent animEvent)
 		{
@@ -214,7 +215,7 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Called when the entity is being removed.
 		/// </summary>
-		/// <returns>True to allow removal, false to deny.</returns>
+		/// <returns> True to allow removal, false to deny. </returns>
 		protected virtual bool OnRemove()
 		{
 			return true;
@@ -223,9 +224,9 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Called when the user changes a property from within the Editor.
 		/// </summary>
-		/// <param name="memberInfo"></param>
-		/// <param name="propertyType"></param>
-		/// <param name="newValue"></param>
+		/// <param name="memberInfo">   </param>
+		/// <param name="propertyType"> </param>
+		/// <param name="newValue">     </param>
 		protected virtual void OnPropertyChanged(MemberInfo memberInfo, EditorPropertyType propertyType, object newValue)
 		{
 		}

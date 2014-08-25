@@ -7,6 +7,7 @@ using System.Reflection;
 using CryEngine.Entities;
 using CryEngine.Extensions;
 using CryEngine.Initialization;
+using CryEngine.Mathematics;
 using CryEngine.Testing;
 using CryEngine.Utilities;
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using System.Runtime.InteropServices;
+using CryEngine.Mathematics;
 
 namespace CryEngine.Utilities
 {

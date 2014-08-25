@@ -1,6 +1,7 @@
 ﻿using System;
 
 using CryEngine;
+using CryEngine.Mathematics;
 using CryEngine.Utilities;
 using NUnit.Framework;
 

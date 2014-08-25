@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CryEngine.Mathematics;
 using CryEngine.Native;
 
 namespace CryEngine.Entities
 {
 	/// <summary>
-	/// Represents a character attachment, obtained via <see cref="EntityBase.GetAttachment(int,
-	/// int)" /> and <see cref="EntityBase.GetAttachment(string, int)" />.
+	/// Represents a character attachment, obtained via
+	/// <see cref="EntityBase.GetAttachment(int, int)"/> and
+	/// <see cref="EntityBase.GetAttachment(string, int)"/> .
 	/// </summary>
 	public sealed class Attachment
 	{
@@ -66,10 +68,10 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Binds a particle effect to this attachment.
 		/// </summary>
-		/// <param name="effect"><see cref="ParticleEffect" /> to bind to this attachment.</param>
+		/// <param name="effect"><see cref="ParticleEffect"/> to bind to this attachment.</param>
 		/// <param name="offset">Position of the particle effect relative to the attachment.</param>
-		/// <param name="dir">Direction of the particle effect spray.</param>
-		/// <param name="scale">Scale to assign to the particle effect.</param>
+		/// <param name="dir">   Direction of the particle effect spray.</param>
+		/// <param name="scale"> Scale to assign to the particle effect.</param>
 		public void SwitchToParticleEffectObject(ParticleEffect effect, Vector3 offset, Vector3 dir, float scale)
 		{
 			NativeEntityMethods.BindAttachmentToParticleEffect(this.Handle, effect.Handle, offset, dir, scale);
@@ -131,14 +133,14 @@ namespace CryEngine.Entities
 			get { return NativeEntityMethods.GetAttachmentObjectType(this.Handle); }
 		}
 		/// <summary>
-		/// Gets bounding box of the object returned by <see cref="ObjectType" />.
+		/// Gets bounding box of the object returned by <see cref="ObjectType"/> .
 		/// </summary>
 		public BoundingBox BoundingBox
 		{
 			get { return NativeEntityMethods.GetAttachmentObjectBBox(this.Handle); }
 		}
 		/// <summary>
-		/// Gets material assigned to the object returned by <see cref="ObjectType" />.
+		/// Gets material assigned to the object returned by <see cref="ObjectType"/> .
 		/// </summary>
 		public Material Material
 		{
@@ -151,7 +153,7 @@ namespace CryEngine.Entities
 		internal IntPtr Handle { get; set; }
 	}
 	/// <summary>
-	/// Enumeration of types of objects that can be bound to the <see cref="Attachment" />.
+	/// Enumeration of types of objects that can be bound to the <see cref="Attachment"/> .
 	/// </summary>
 	public enum AttachmentObjectType
 	{
@@ -198,3 +200,4 @@ namespace CryEngine.Entities
 		/// </summary>
 		CharacterPart
 	}
+}

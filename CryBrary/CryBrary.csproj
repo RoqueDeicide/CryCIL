@@ -11,7 +11,7 @@
     <RootNamespace>CryEngine</RootNamespace>
     <AssemblyName>CryBrary</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile />
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
@@ -72,6 +72,7 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>..\Build\Bin32\Plugins\CryMono\</OutputPath>
@@ -86,6 +87,7 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Profile|x86'">
     <OutputPath>..\Build\Bin32\Plugins\CryMono\</OutputPath>
@@ -99,6 +101,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'UnitTests|x64'">
     <OutputPath>..\Build\Bin64\Plugins\CryMono\</OutputPath>
@@ -112,6 +115,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'UnitTests|x86'">
     <OutputPath>..\Build\Bin32\Plugins\CryMono\</OutputPath>
@@ -125,11 +129,20 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Actor\Actor.cs" />
     <Compile Include="Actor\ActorBase.cs" />
     <Compile Include="Actor\AIActor.cs" />
+    <Compile Include="GeneralExtensions.cs" />
+    <Compile Include="Mathematics\Geometry\Meshes\CSG\SplittableTriangle.cs" />
+    <Compile Include="Mathematics\Geometry\Meshes\Mesh.CSG.cs" />
+    <Compile Include="Mathematics\Geometry\Meshes\CSG\BSP.cs" />
+    <Compile Include="Mathematics\Geometry\Meshes\IVertex.cs" />
+    <Compile Include="Mathematics\Geometry\Meshes\IVertex3D.cs" />
+    <Compile Include="Mathematics\Geometry\Meshes\MeshVertex.cs" />
+    <Compile Include="Mathematics\Geometry\Plane.GenericOps.cs" />
     <Compile Include="Native\ActorInitializationParams.cs" />
     <Compile Include="Actor\ActorNetworking.cs" />
     <Compile Include="Actor\ActorStatics.cs" />
@@ -204,12 +217,8 @@
     <Compile Include="Mathematics\Angle.cs" />
     <Compile Include="Mathematics\BoundingBox.cs" />
     <Compile Include="Mathematics\BoundingSphere.cs" />
-    <Compile Include="Mathematics\Collision.cs" />
+    <Compile Include="Mathematics\Geometry\Collision.cs" />
     <Compile Include="Mathematics\Color32.cs" />
-    <Compile Include="Mathematics\Column33.cs" />
-    <Compile Include="Mathematics\Column34.cs" />
-    <Compile Include="Mathematics\Column44.cs" />
-    <Compile Include="Mathematics\Diagonal33.cs" />
     <Compile Include="Mathematics\EulerAngles.cs" />
     <Compile Include="Mathematics\Half.cs" />
     <Compile Include="Mathematics\HalfHelpers.cs" />
@@ -224,11 +233,11 @@
     <Compile Include="Mathematics\MemoryMapping\Bytes4.cs" />
     <Compile Include="Mathematics\MemoryMapping\Bytes8.cs" />
     <Compile Include="Mathematics\MemoryMapping\IBuffer.cs" />
-    <Compile Include="Mathematics\Plane.cs" />
-    <Compile Include="Mathematics\PlaneIntersectionType.cs" />
+    <Compile Include="Mathematics\Geometry\Plane.cs" />
+    <Compile Include="Mathematics\Geometry\PlaneIntersectionType.cs" />
     <Compile Include="Mathematics\Quaternion.cs" />
     <Compile Include="Mathematics\QuaternionTranslation.cs" />
-    <Compile Include="Mathematics\Ray.cs" />
+    <Compile Include="Mathematics\Geometry\Ray.cs" />
     <Compile Include="Mathematics\UInt16Vector3.cs" />
     <Compile Include="Mathematics\Vector2.cs" />
     <Compile Include="Mathematics\Vector3.cs" />
@@ -237,28 +246,29 @@
     <Compile Include="Native\NamespaceDoc.cs" />
     <Compile Include="Native\PlatformMethods.cs" />
     <Compile Include="Platform.cs" />
-    <Compile Include="StaticObjects\Meshes\BaseMesh.cs" />
-    <Compile Include="StaticObjects\Meshes\CommonTangentOperations.cs" />
-    <Compile Include="StaticObjects\Meshes\MeshConsistencyException.cs" />
-    <Compile Include="StaticObjects\Meshes\IndexedTriangleFace.cs" />
-    <Compile Include="StaticObjects\Meshes\IMesh.cs" />
-    <Compile Include="StaticObjects\Meshes\IMeshDetailsCollection.cs" />
-    <Compile Include="StaticObjects\Meshes\IQTangent.cs" />
-    <Compile Include="StaticObjects\Meshes\ITangent.cs" />
-    <Compile Include="StaticObjects\Meshes\MeshDetailCollectionInterfaces.cs" />
-    <Compile Include="StaticObjects\Meshes\NativeFaceCollection.cs" />
-    <Compile Include="StaticObjects\Meshes\NativeIndicesCollection.cs" />
-    <Compile Include="StaticObjects\Meshes\NativeMesh.cs" />
-    <Compile Include="StaticObjects\Meshes\NativeMeshDetailsCollection.cs" />
-    <Compile Include="StaticObjects\Meshes\NativeVertexColorCollections.cs" />
-    <Compile Include="StaticObjects\Meshes\NativeVertexNormalCollection.cs" />
-    <Compile Include="StaticObjects\Meshes\NativeVertexQTangentCollection.cs" />
-    <Compile Include="StaticObjects\Meshes\NativeVertexTangentCollection.cs" />
-    <Compile Include="StaticObjects\Meshes\NativeVertexPositionCollection.cs" />
-    <Compile Include="StaticObjects\Meshes\NativeVertexTextureCoordinatesCollection.cs" />
-    <Compile Include="StaticObjects\Meshes\TangentInt16.cs" />
-    <Compile Include="StaticObjects\Meshes\TangentSingle.cs" />
-    <Compile Include="StaticObjects\Meshes\Vertex.cs" />
+    <Compile Include="Mathematics\Geometry\Meshes\Mesh.cs" />
+    <Compile Include="Mathematics\Geometry\Meshes\CommonTangentOperations.cs" />
+    <Compile Include="Mathematics\Geometry\Meshes\Solids\ConstructiveSolidGeometry.cs" />
+    <Compile Include="Mathematics\Geometry\Meshes\MeshConsistencyException.cs" />
+    <Compile Include="Mathematics\Geometry\Meshes\IndexedTriangleFace.cs" />
+    <Compile Include="Mathematics\Geometry\Meshes\IMesh.cs" />
+    <Compile Include="Mathematics\Geometry\Meshes\IMeshDetailsCollection.cs" />
+    <Compile Include="Mathematics\Geometry\Meshes\IQTangent.cs" />
+    <Compile Include="Mathematics\Geometry\Meshes\ITangent.cs" />
+    <Compile Include="Mathematics\Geometry\Meshes\MeshDetailCollectionInterfaces.cs" />
+    <Compile Include="Mathematics\Geometry\Meshes\NativeFaceCollection.cs" />
+    <Compile Include="Mathematics\Geometry\Meshes\NativeIndicesCollection.cs" />
+    <Compile Include="Mathematics\Geometry\Meshes\NativeMesh.cs" />
+    <Compile Include="Mathematics\Geometry\Meshes\NativeMeshDetailsCollection.cs" />
+    <Compile Include="Mathematics\Geometry\Meshes\NativeVertexColorCollections.cs" />
+    <Compile Include="Mathematics\Geometry\Meshes\NativeVertexNormalCollection.cs" />
+    <Compile Include="Mathematics\Geometry\Meshes\NativeVertexQTangentCollection.cs" />
+    <Compile Include="Mathematics\Geometry\Meshes\NativeVertexTangentCollection.cs" />
+    <Compile Include="Mathematics\Geometry\Meshes\NativeVertexPositionCollection.cs" />
+    <Compile Include="Mathematics\Geometry\Meshes\NativeVertexTextureCoordinatesCollection.cs" />
+    <Compile Include="Mathematics\Geometry\Meshes\TangentInt16.cs" />
+    <Compile Include="Mathematics\Geometry\Meshes\TangentSingle.cs" />
+    <Compile Include="Mathematics\Geometry\Meshes\Vertex.cs" />
     <Compile Include="Native\NativeMeshMethods.cs" />
     <Compile Include="Native\NativeStaticObjectMethods.cs" />
     <Compile Include="StaticObjects\StaticObject.cs" />

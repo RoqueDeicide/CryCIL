@@ -1,4 +1,5 @@
 ﻿using System;
+using CryEngine.Mathematics;
 
 namespace CryEngine.Entities
 {
@@ -87,12 +88,12 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Initializes new instance of type <see cref="EditorProperty" />.
 		/// </summary>
-		/// <param name="name">Name of the property.</param>
-		/// <param name="description">Description of the property.</param>
-		/// <param name="defaultValue">Default value of the property.</param>
-		/// <param name="type">Type of the property.</param>
-		/// <param name="limits">Limitations applied to the property.</param>
-		/// <param name="flags">Flags assigned to the property.</param>
+		/// <param name="name">         Name of the property. </param>
+		/// <param name="description">  Description of the property. </param>
+		/// <param name="defaultValue"> Default value of the property. </param>
+		/// <param name="type">         Type of the property. </param>
+		/// <param name="limits">       Limitations applied to the property. </param>
+		/// <param name="flags">        Flags assigned to the property. </param>
 		public EditorProperty(string name, string description, string defaultValue, EditorPropertyType type,
 							  EditorPropertyLimits limits, int flags = 0)
 			: this(name, description, defaultValue, type)
@@ -113,10 +114,10 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Initializes new instance of type <see cref="EditorProperty" />.
 		/// </summary>
-		/// <param name="name">Name of the property.</param>
-		/// <param name="description">Description of the property.</param>
-		/// <param name="defaultValue">Default value of the property.</param>
-		/// <param name="type">Type of the property.</param>
+		/// <param name="name">         Name of the property. </param>
+		/// <param name="description">  Description of the property. </param>
+		/// <param name="defaultValue"> Default value of the property. </param>
+		/// <param name="type">         Type of the property. </param>
 		public EditorProperty(string name, string description, string defaultValue, EditorPropertyType type)
 			: this()
 		{
@@ -179,7 +180,8 @@ namespace CryEngine.Entities
 		/// Name of the folder.
 		/// </summary>
 		FolderEnd,
-		/// <summary></summary>
+		/// <summary>
+		/// </summary>
 		Object,
 		/// <summary>
 		/// Path to texture file.

@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace CryEngine
+namespace CryEngine.Mathematics
 {
 	/// <summary>
 	/// Represents a 4x4 matrix.
@@ -131,28 +128,6 @@ namespace CryEngine
 		[FieldOffset(48)]
 		public Vector4 Row3;
 		#endregion
-		#region Columns
-		/// <summary>
-		/// First column.
-		/// </summary>
-		[FieldOffset(0)]
-		public Column44 Column0;
-		/// <summary>
-		/// First column.
-		/// </summary>
-		[FieldOffset(4)]
-		public Column44 Column1;
-		/// <summary>
-		/// First column.
-		/// </summary>
-		[FieldOffset(8)]
-		public Column44 Column2;
-		/// <summary>
-		/// First column.
-		/// </summary>
-		[FieldOffset(12)]
-		public Column44 Column3;
-		#endregion
 		#endregion
 		#region Properties
 		/// <summary>
@@ -170,20 +145,18 @@ namespace CryEngine
 		/// <summary>
 		/// Gets determinant of this matrix.
 		/// </summary>
-		/// <remarks>
-		/// This will only get you determinant of upper 3x3 submatrix.
-		/// </remarks>
+		/// <remarks> This will only get you determinant of upper 3x3 submatrix. </remarks>
 		public float QuickDeterminant
 		{
 			get
 			{
 				return
-					(Row0.X * Row1.Y * Row2.Z) +
-					(Row0.Y * Row1.Z * Row2.X) +
-					(Row0.Z * Row1.X * Row2.Y) -
-					(Row0.Z * Row1.Y * Row2.X) -
-					(Row0.X * Row1.Z * Row2.Y) -
-					(Row0.Y * Row1.X * Row2.Z);
+					(this.Row0.X * this.Row1.Y * this.Row2.Z) +
+					(this.Row0.Y * this.Row1.Z * this.Row2.X) +
+					(this.Row0.Z * this.Row1.X * this.Row2.Y) -
+					(this.Row0.Z * this.Row1.Y * this.Row2.X) -
+					(this.Row0.X * this.Row1.Z * this.Row2.Y) -
+					(this.Row0.Y * this.Row1.X * this.Row2.Z);
 			}
 		}
 		/// <summary>
@@ -219,10 +192,10 @@ namespace CryEngine
 			{
 				return new Matrix44
 							(
-								Row0.X, Row1.X, Row2.X, Row3.X,
-								Row0.Y, Row1.Y, Row2.Y, Row3.Y,
-								Row0.Z, Row1.Z, Row2.Z, Row3.Z,
-								Row0.W, Row1.W, Row2.W, Row3.W
+								this.Row0.X, this.Row1.X, this.Row2.X, this.Row3.X,
+								this.Row0.Y, this.Row1.Y, this.Row2.Y, this.Row3.Y,
+								this.Row0.Z, this.Row1.Z, this.Row2.Z, this.Row3.Z,
+								this.Row0.W, this.Row1.W, this.Row2.W, this.Row3.W
 							);
 			}
 		}
@@ -233,13 +206,13 @@ namespace CryEngine
 		{
 			get
 			{
-				return new Vector3(Row0.W, Row1.W, Row2.W);
+				return new Vector3(this.Row0.W, this.Row1.W, this.Row2.W);
 			}
 			set
 			{
-				Row0.W = value.X;
-				Row1.W = value.Y;
-				Row2.W = value.Z;
+				this.Row0.W = value.X;
+				this.Row1.W = value.Y;
+				this.Row2.W = value.Z;
 			}
 		}
 		/// <summary>
@@ -255,7 +228,7 @@ namespace CryEngine
 		/// <summary>
 		/// Gives access to specific element of this matrix.
 		/// </summary>
-		/// <param name="index">Zero-based index of the element to get.</param>
+		/// <param name="index"> Zero-based index of the element to get. </param>
 		public float this[int index]
 		{
 			get { return this[index / 4, index % 4]; }
@@ -264,8 +237,8 @@ namespace CryEngine
 		/// <summary>
 		/// Gives access to specific element of this matrix.
 		/// </summary>
-		/// <param name="row">Zero-based index of the row.</param>
-		/// <param name="column">Zero-based index of the column.</param>
+		/// <param name="row">    Zero-based index of the row. </param>
+		/// <param name="column"> Zero-based index of the column. </param>
 		public float this[int row, int column]
 		{
 			get
@@ -310,22 +283,22 @@ namespace CryEngine
 		/// <summary>
 		/// Creates new instance of <see cref="Matrix44" /> class.
 		/// </summary>
-		/// <param name="v00">First row, first column.</param>
-		/// <param name="v01">First row, second column.</param>
-		/// <param name="v02">First row, third column.</param>
-		/// <param name="v03">First row, fourth column.</param>
-		/// <param name="v10">Second row, first column.</param>
-		/// <param name="v11">Second row, second column.</param>
-		/// <param name="v12">Second row, third column.</param>
-		/// <param name="v13">Second row, fourth column.</param>
-		/// <param name="v20">Third row, first column.</param>
-		/// <param name="v21">Third row, second column.</param>
-		/// <param name="v22">Third row, third column.</param>
-		/// <param name="v23">Third row, fourth column.</param>
-		/// <param name="v30">Fourth row, first column.</param>
-		/// <param name="v31">Fourth row, second column.</param>
-		/// <param name="v32">Fourth row, third column.</param>
-		/// <param name="v33">Fourth row, fourth column.</param>
+		/// <param name="v00"> First row, first column. </param>
+		/// <param name="v01"> First row, second column. </param>
+		/// <param name="v02"> First row, third column. </param>
+		/// <param name="v03"> First row, fourth column. </param>
+		/// <param name="v10"> Second row, first column. </param>
+		/// <param name="v11"> Second row, second column. </param>
+		/// <param name="v12"> Second row, third column. </param>
+		/// <param name="v13"> Second row, fourth column. </param>
+		/// <param name="v20"> Third row, first column. </param>
+		/// <param name="v21"> Third row, second column. </param>
+		/// <param name="v22"> Third row, third column. </param>
+		/// <param name="v23"> Third row, fourth column. </param>
+		/// <param name="v30"> Fourth row, first column. </param>
+		/// <param name="v31"> Fourth row, second column. </param>
+		/// <param name="v32"> Fourth row, third column. </param>
+		/// <param name="v33"> Fourth row, fourth column. </param>
 		public Matrix44(float v00, float v01, float v02, float v03,
 							float v10, float v11, float v12, float v13,
 							float v20, float v21, float v22, float v23,
@@ -340,7 +313,7 @@ namespace CryEngine
 		/// <summary>
 		/// Creates new instance of <see cref="Matrix44" /> class.
 		/// </summary>
-		/// <param name="m"><see cref="Matrix33" /> to fill new matrix with.</param>
+		/// <param name="m"> <see cref="Matrix33" /> to fill new matrix with. </param>
 		public Matrix44(ref Matrix33 m)
 			: this()
 		{
@@ -356,7 +329,7 @@ namespace CryEngine
 		/// <summary>
 		/// Creates new instance of <see cref="Matrix44" /> class.
 		/// </summary>
-		/// <param name="m"><see cref="Matrix34" /> to fill new matrix with.</param>
+		/// <param name="m"> <see cref="Matrix34" /> to fill new matrix with. </param>
 		public Matrix44(ref Matrix34 m)
 			: this()
 		{
@@ -372,7 +345,7 @@ namespace CryEngine
 		/// <summary>
 		/// Copies contents from <see cref="Matrix44" /> to new one.
 		/// </summary>
-		/// <param name="m"></param>
+		/// <param name="m"> </param>
 		public Matrix44(ref Matrix44 m)
 			: this()
 		{
@@ -393,10 +366,10 @@ namespace CryEngine
 		/// </summary>
 		public void SetIdentity()
 		{
-			Row0.X = 1; Row0.Y = 0; Row0.Z = 0; Row0.W = 0;
-			Row1.X = 0; Row1.Y = 1; Row1.Z = 0; Row1.W = 0;
-			Row2.X = 0; Row2.Y = 0; Row2.Z = 1; Row2.W = 0;
-			Row3.X = 0; Row3.Y = 0; Row3.Z = 0; Row3.W = 1;
+			this.Row0.X = 1; this.Row0.Y = 0; this.Row0.Z = 0; this.Row0.W = 0;
+			this.Row1.X = 0; this.Row1.Y = 1; this.Row1.Z = 0; this.Row1.W = 0;
+			this.Row2.X = 0; this.Row2.Y = 0; this.Row2.Z = 1; this.Row2.W = 0;
+			this.Row3.X = 0; this.Row3.Y = 0; this.Row3.Z = 0; this.Row3.W = 1;
 		}
 		/// <summary>
 		/// Swaps rows and columns of this matrix.
@@ -404,10 +377,10 @@ namespace CryEngine
 		public void Transpose()
 		{
 			Matrix44 tmp = this;
-			Row0.X = tmp.Row0.X; Row0.Y = tmp.Row1.X; Row0.Z = tmp.Row2.X; Row0.W = tmp.Row3.X;
-			Row1.X = tmp.Row0.Y; Row1.Y = tmp.Row1.Y; Row1.Z = tmp.Row2.Y; Row1.W = tmp.Row3.Y;
-			Row2.X = tmp.Row0.Z; Row2.Y = tmp.Row1.Z; Row2.Z = tmp.Row2.Z; Row2.W = tmp.Row3.Z;
-			Row3.X = tmp.Row0.W; Row3.Y = tmp.Row1.W; Row3.Z = tmp.Row2.W; Row3.W = tmp.Row3.W;
+			this.Row0.X = tmp.Row0.X; this.Row0.Y = tmp.Row1.X; this.Row0.Z = tmp.Row2.X; this.Row0.W = tmp.Row3.X;
+			this.Row1.X = tmp.Row0.Y; this.Row1.Y = tmp.Row1.Y; this.Row1.Z = tmp.Row2.Y; this.Row1.W = tmp.Row3.Y;
+			this.Row2.X = tmp.Row0.Z; this.Row2.Y = tmp.Row1.Z; this.Row2.Z = tmp.Row2.Z; this.Row2.W = tmp.Row3.Z;
+			this.Row3.X = tmp.Row0.W; this.Row3.Y = tmp.Row1.W; this.Row3.Z = tmp.Row2.W; this.Row3.W = tmp.Row3.W;
 		}
 		internal struct Array12Float
 		{
@@ -446,22 +419,22 @@ namespace CryEngine
 			tmp[11] = m.Row1.Z * m.Row0.W;
 
 			// Calculate first 8 elements (cofactors)
-			Row0.X = tmp[0] * m.Row1.Y + tmp[3] * m.Row2.Y + tmp[4] * m.Row3.Y;
-			Row0.X -= tmp[1] * m.Row1.Y + tmp[2] * m.Row2.Y + tmp[5] * m.Row3.Y;
-			Row0.Y = tmp[1] * m.Row0.Y + tmp[6] * m.Row2.Y + tmp[9] * m.Row3.Y;
-			Row0.Y -= tmp[0] * m.Row0.Y + tmp[7] * m.Row2.Y + tmp[8] * m.Row3.Y;
-			Row0.Z = tmp[2] * m.Row0.Y + tmp[7] * m.Row1.Y + tmp[10] * m.Row3.Y;
-			Row0.Z -= tmp[3] * m.Row0.Y + tmp[6] * m.Row1.Y + tmp[11] * m.Row3.Y;
-			Row0.W = tmp[5] * m.Row0.Y + tmp[8] * m.Row1.Y + tmp[11] * m.Row2.Y;
-			Row0.W -= tmp[4] * m.Row0.Y + tmp[9] * m.Row1.Y + tmp[10] * m.Row2.Y;
-			Row1.X = tmp[1] * m.Row1.X + tmp[2] * m.Row2.X + tmp[5] * m.Row3.X;
-			Row1.X -= tmp[0] * m.Row1.X + tmp[3] * m.Row2.X + tmp[4] * m.Row3.X;
-			Row1.Y = tmp[0] * m.Row0.X + tmp[7] * m.Row2.X + tmp[8] * m.Row3.X;
-			Row1.Y -= tmp[1] * m.Row0.X + tmp[6] * m.Row2.X + tmp[9] * m.Row3.X;
-			Row1.Z = tmp[3] * m.Row0.X + tmp[6] * m.Row1.X + tmp[11] * m.Row3.X;
-			Row1.Z -= tmp[2] * m.Row0.X + tmp[7] * m.Row1.X + tmp[10] * m.Row3.X;
-			Row1.W = tmp[4] * m.Row0.X + tmp[9] * m.Row1.X + tmp[10] * m.Row2.X;
-			Row1.W -= tmp[5] * m.Row0.X + tmp[8] * m.Row1.X + tmp[11] * m.Row2.X;
+			this.Row0.X = tmp[0] * m.Row1.Y + tmp[3] * m.Row2.Y + tmp[4] * m.Row3.Y;
+			this.Row0.X -= tmp[1] * m.Row1.Y + tmp[2] * m.Row2.Y + tmp[5] * m.Row3.Y;
+			this.Row0.Y = tmp[1] * m.Row0.Y + tmp[6] * m.Row2.Y + tmp[9] * m.Row3.Y;
+			this.Row0.Y -= tmp[0] * m.Row0.Y + tmp[7] * m.Row2.Y + tmp[8] * m.Row3.Y;
+			this.Row0.Z = tmp[2] * m.Row0.Y + tmp[7] * m.Row1.Y + tmp[10] * m.Row3.Y;
+			this.Row0.Z -= tmp[3] * m.Row0.Y + tmp[6] * m.Row1.Y + tmp[11] * m.Row3.Y;
+			this.Row0.W = tmp[5] * m.Row0.Y + tmp[8] * m.Row1.Y + tmp[11] * m.Row2.Y;
+			this.Row0.W -= tmp[4] * m.Row0.Y + tmp[9] * m.Row1.Y + tmp[10] * m.Row2.Y;
+			this.Row1.X = tmp[1] * m.Row1.X + tmp[2] * m.Row2.X + tmp[5] * m.Row3.X;
+			this.Row1.X -= tmp[0] * m.Row1.X + tmp[3] * m.Row2.X + tmp[4] * m.Row3.X;
+			this.Row1.Y = tmp[0] * m.Row0.X + tmp[7] * m.Row2.X + tmp[8] * m.Row3.X;
+			this.Row1.Y -= tmp[1] * m.Row0.X + tmp[6] * m.Row2.X + tmp[9] * m.Row3.X;
+			this.Row1.Z = tmp[3] * m.Row0.X + tmp[6] * m.Row1.X + tmp[11] * m.Row3.X;
+			this.Row1.Z -= tmp[2] * m.Row0.X + tmp[7] * m.Row1.X + tmp[10] * m.Row3.X;
+			this.Row1.W = tmp[4] * m.Row0.X + tmp[9] * m.Row1.X + tmp[10] * m.Row2.X;
+			this.Row1.W -= tmp[5] * m.Row0.X + tmp[8] * m.Row1.X + tmp[11] * m.Row2.X;
 
 			// Calculate pairs for second 8 elements (cofactors)
 			tmp[0] = m.Row2.X * m.Row3.Y;
@@ -478,42 +451,42 @@ namespace CryEngine
 			tmp[11] = m.Row1.X * m.Row0.Y;
 
 			// Calculate second 8 elements (cofactors)
-			Row2.X = tmp[0] * m.Row1.W + tmp[3] * m.Row2.W + tmp[4] * m.Row3.W;
-			Row2.X -= tmp[1] * m.Row1.W + tmp[2] * m.Row2.W + tmp[5] * m.Row3.W;
-			Row2.Y = tmp[1] * m.Row0.W + tmp[6] * m.Row2.W + tmp[9] * m.Row3.W;
-			Row2.Y -= tmp[0] * m.Row0.W + tmp[7] * m.Row2.W + tmp[8] * m.Row3.W;
-			Row2.Z = tmp[2] * m.Row0.W + tmp[7] * m.Row1.W + tmp[10] * m.Row3.W;
-			Row2.Z -= tmp[3] * m.Row0.W + tmp[6] * m.Row1.W + tmp[11] * m.Row3.W;
-			Row2.W = tmp[5] * m.Row0.W + tmp[8] * m.Row1.W + tmp[11] * m.Row2.W;
-			Row2.W -= tmp[4] * m.Row0.W + tmp[9] * m.Row1.W + tmp[10] * m.Row2.W;
-			Row3.X = tmp[2] * m.Row2.Z + tmp[5] * m.Row3.Z + tmp[1] * m.Row1.Z;
-			Row3.X -= tmp[4] * m.Row3.Z + tmp[0] * m.Row1.Z + tmp[3] * m.Row2.Z;
-			Row3.Y = tmp[8] * m.Row3.Z + tmp[0] * m.Row0.Z + tmp[7] * m.Row2.Z;
-			Row3.Y -= tmp[6] * m.Row2.Z + tmp[9] * m.Row3.Z + tmp[1] * m.Row0.Z;
-			Row3.Z = tmp[6] * m.Row1.Z + tmp[11] * m.Row3.Z + tmp[3] * m.Row0.Z;
-			Row3.Z -= tmp[10] * m.Row3.Z + tmp[2] * m.Row0.Z + tmp[7] * m.Row1.Z;
-			Row3.W = tmp[10] * m.Row2.Z + tmp[4] * m.Row0.Z + tmp[9] * m.Row1.Z;
-			Row3.W -= tmp[8] * m.Row1.Z + tmp[11] * m.Row2.Z + tmp[5] * m.Row0.Z;
+			this.Row2.X = tmp[0] * m.Row1.W + tmp[3] * m.Row2.W + tmp[4] * m.Row3.W;
+			this.Row2.X -= tmp[1] * m.Row1.W + tmp[2] * m.Row2.W + tmp[5] * m.Row3.W;
+			this.Row2.Y = tmp[1] * m.Row0.W + tmp[6] * m.Row2.W + tmp[9] * m.Row3.W;
+			this.Row2.Y -= tmp[0] * m.Row0.W + tmp[7] * m.Row2.W + tmp[8] * m.Row3.W;
+			this.Row2.Z = tmp[2] * m.Row0.W + tmp[7] * m.Row1.W + tmp[10] * m.Row3.W;
+			this.Row2.Z -= tmp[3] * m.Row0.W + tmp[6] * m.Row1.W + tmp[11] * m.Row3.W;
+			this.Row2.W = tmp[5] * m.Row0.W + tmp[8] * m.Row1.W + tmp[11] * m.Row2.W;
+			this.Row2.W -= tmp[4] * m.Row0.W + tmp[9] * m.Row1.W + tmp[10] * m.Row2.W;
+			this.Row3.X = tmp[2] * m.Row2.Z + tmp[5] * m.Row3.Z + tmp[1] * m.Row1.Z;
+			this.Row3.X -= tmp[4] * m.Row3.Z + tmp[0] * m.Row1.Z + tmp[3] * m.Row2.Z;
+			this.Row3.Y = tmp[8] * m.Row3.Z + tmp[0] * m.Row0.Z + tmp[7] * m.Row2.Z;
+			this.Row3.Y -= tmp[6] * m.Row2.Z + tmp[9] * m.Row3.Z + tmp[1] * m.Row0.Z;
+			this.Row3.Z = tmp[6] * m.Row1.Z + tmp[11] * m.Row3.Z + tmp[3] * m.Row0.Z;
+			this.Row3.Z -= tmp[10] * m.Row3.Z + tmp[2] * m.Row0.Z + tmp[7] * m.Row1.Z;
+			this.Row3.W = tmp[10] * m.Row2.Z + tmp[4] * m.Row0.Z + tmp[9] * m.Row1.Z;
+			this.Row3.W -= tmp[8] * m.Row1.Z + tmp[11] * m.Row2.Z + tmp[5] * m.Row0.Z;
 
 			// Calculate determinant
-			float det = (m.Row0.X * Row0.X + m.Row1.X * Row0.Y + m.Row2.X * Row0.Z + m.Row3.X * Row0.W);
+			float det = (m.Row0.X * this.Row0.X + m.Row1.X * this.Row0.Y + m.Row2.X * this.Row0.Z + m.Row3.X * this.Row0.W);
 			//if (fabs_tpl(det)<0.0001f) assert(0);
 
 			// Divide the cofactor-matrix by the determinant
 			float idet = 1.0f / det;
-			Row0.X *= idet; Row0.Y *= idet; Row0.Z *= idet; Row0.W *= idet;
-			Row1.X *= idet; Row1.Y *= idet; Row1.Z *= idet; Row1.W *= idet;
-			Row2.X *= idet; Row2.Y *= idet; Row2.Z *= idet; Row2.W *= idet;
-			Row3.X *= idet; Row3.Y *= idet; Row3.Z *= idet; Row3.W *= idet;
+			this.Row0.X *= idet; this.Row0.Y *= idet; this.Row0.Z *= idet; this.Row0.W *= idet;
+			this.Row1.X *= idet; this.Row1.Y *= idet; this.Row1.Z *= idet; this.Row1.W *= idet;
+			this.Row2.X *= idet; this.Row2.Y *= idet; this.Row2.Z *= idet; this.Row2.W *= idet;
+			this.Row3.X *= idet; this.Row3.Y *= idet; this.Row3.Z *= idet; this.Row3.W *= idet;
 		}
 		#endregion
 		#region Operators
 		/// <summary>
 		/// Calculates product of one matrix and a number.
 		/// </summary>
-		/// <param name="m">Left operand.</param>
-		/// <param name="f">Right operand.</param>
-		/// <returns>Result of operation.</returns>
+		/// <param name="m"> Left operand. </param>
+		/// <param name="f"> Right operand. </param>
+		/// <returns> Result of operation. </returns>
 		public static Matrix44 operator *(Matrix44 m, float f)
 		{
 			if (!m.IsValid)
@@ -532,9 +505,9 @@ namespace CryEngine
 		/// <summary>
 		/// Calculates sum of two matrices.
 		/// </summary>
-		/// <param name="mm0">Left operand.</param>
-		/// <param name="mm1">Right operand.</param>
-		/// <returns>Result of operation.</returns>
+		/// <param name="mm0"> Left operand. </param>
+		/// <param name="mm1"> Right operand. </param>
+		/// <returns> Result of operation. </returns>
 		public static Matrix44 operator +(Matrix44 mm0, Matrix44 mm1)
 		{
 			if (!mm0.IsValid)
@@ -579,43 +552,15 @@ namespace CryEngine
 			return r;
 		}
 		/// <summary>
-		/// Multiplies matrix by main diagonal of 3x3 matrix.
-		/// </summary>
-		/// <remarks>
-		/// This operation takes 12 mults.
-		/// </remarks>
-		/// <param name="l">Left operand.</param>
-		/// <param name="r">Right operand.</param>
-		/// <returns>Result of multiplication.</returns>
-		public static Matrix44 operator *(Matrix44 l, Diagonal33 r)
-		{
-			if (!l.IsValid)
-			{
-				throw new ArgumentException("Parameter must be a valid matrix.");
-			}
-			if (!r.IsValid)
-			{
-				throw new ArgumentException("Parameter must be a valid diagonal.");
-			}
-			Matrix44 m = new Matrix44
-			{
-				Row0 = { X = l.Row0.X * r.x, Y = l.Row0.Y * r.y, Z = l.Row0.Z * r.z, W = l.Row0.W },
-				Row1 = { X = l.Row1.X * r.x, Y = l.Row1.Y * r.y, Z = l.Row1.Z * r.z, W = l.Row1.W },
-				Row2 = { X = l.Row2.X * r.x, Y = l.Row2.Y * r.y, Z = l.Row2.Z * r.z, W = l.Row2.W },
-				Row3 = { X = l.Row3.X * r.x, Y = l.Row3.Y * r.y, Z = l.Row3.Z * r.z, W = l.Row3.W }
-			};
-			return m;
-		}
-		/// <summary>
 		/// Multiplies two matrices together.
 		/// </summary>
 		/// <remarks>
 		/// <para>This operation is used to combine transformations represented by these matrices
 		/// together into one matrix.</para><para>This operation takes 48 mults and 24 adds.</para>
 		/// </remarks>
-		/// <param name="l">Left operand.</param>
-		/// <param name="r">Right operand.</param>
-		/// <returns>Result of multiplication.</returns>
+		/// <param name="l"> Left operand. </param>
+		/// <param name="r"> Right operand. </param>
+		/// <returns> Result of multiplication. </returns>
 		public static Matrix44 operator *(Matrix44 l, Matrix33 r)
 		{
 			if (!l.IsValid)
@@ -666,9 +611,9 @@ namespace CryEngine
 		/// <para>This operation is used to combine transformations represented by these matrices
 		/// together into one matrix.</para><para>This operation takes 48 mults and 36 adds.</para>
 		/// </remarks>
-		/// <param name="l">Left operand.</param>
-		/// <param name="r">Right operand.</param>
-		/// <returns>Result of multiplication.</returns>
+		/// <param name="l"> Left operand. </param>
+		/// <param name="r"> Right operand. </param>
+		/// <returns> Result of multiplication. </returns>
 		public static Matrix44 operator *(Matrix44 l, Matrix34 r)
 		{
 			if (!l.IsValid)
@@ -707,9 +652,9 @@ namespace CryEngine
 		/// <para>This operation is used to combine transformations represented by these matrices
 		/// together into one matrix.</para><para>This operation takes 48 mults and 36 adds.</para>
 		/// </remarks>
-		/// <param name="l">Left operand.</param>
-		/// <param name="r">Right operand.</param>
-		/// <returns>Result of multiplication.</returns>
+		/// <param name="l"> Left operand. </param>
+		/// <param name="r"> Right operand. </param>
+		/// <returns> Result of multiplication. </returns>
 		public static Matrix44 operator *(Matrix44 l, Matrix44 r)
 		{
 			if (!l.IsValid)
@@ -744,9 +689,9 @@ namespace CryEngine
 		/// <summary>
 		/// Multiplies matrix by vector.
 		/// </summary>
-		/// <param name="m">Left operand.</param>
-		/// <param name="v">Right operand.</param>
-		/// <returns>Result of multiplication.</returns>
+		/// <param name="m"> Left operand. </param>
+		/// <param name="v"> Right operand. </param>
+		/// <returns> Result of multiplication. </returns>
 		public static Vector4 operator *(Matrix44 m, Vector4 v)
 		{
 			if (!m.IsValid)
@@ -765,12 +710,10 @@ namespace CryEngine
 		/// <summary>
 		/// Multiplies vector by matrix.
 		/// </summary>
-		/// <remarks>
-		/// This operation is done to transform the vector by the matrix.
-		/// </remarks>
-		/// <param name="v">Left operand.</param>
-		/// <param name="m">Right operand.</param>
-		/// <returns>Result of multiplication.</returns>
+		/// <remarks> This operation is done to transform the vector by the matrix. </remarks>
+		/// <param name="v"> Left operand. </param>
+		/// <param name="m"> Right operand. </param>
+		/// <returns> Result of multiplication. </returns>
 		public static Vector4 operator *(Vector4 v, Matrix44 m)
 		{
 			if (!m.IsValid)
@@ -791,8 +734,8 @@ namespace CryEngine
 		/// <summary>
 		/// Applies transformation that is represented by this matrix to the vector.
 		/// </summary>
-		/// <param name="b">Vector to transform.</param>
-		/// <returns>Transformed vector.</returns>
+		/// <param name="b"> Vector to transform. </param>
+		/// <returns> Transformed vector. </returns>
 		public Vector3 TransformVector(Vector3 b)
 		{
 			if (!b.IsValid)
@@ -811,8 +754,8 @@ namespace CryEngine
 		/// <summary>
 		/// Sets first 3 columns of the row of this matrix.
 		/// </summary>
-		/// <param name="i">Zero-based index of the row to set.</param>
-		/// <param name="v">Vector that supplies new values.</param>
+		/// <param name="i"> Zero-based index of the row to set. </param>
+		/// <param name="v"> Vector that supplies new values. </param>
 		public void SetRow(int i, Vector3 v)
 		{
 			this[i, 0] = v.X;
@@ -822,8 +765,8 @@ namespace CryEngine
 		/// <summary>
 		/// Sets row of this matrix.
 		/// </summary>
-		/// <param name="i">Zero-based index of the row to set.</param>
-		/// <param name="v">Vector that supplies new values.</param>
+		/// <param name="i"> Zero-based index of the row to set. </param>
+		/// <param name="v"> Vector that supplies new values. </param>
 		public void SetRow4(int i, Vector4 v)
 		{
 			this[i, 0] = v.X;
@@ -834,8 +777,8 @@ namespace CryEngine
 		/// <summary>
 		/// Gets first 3 columns of the row of this matrix.
 		/// </summary>
-		/// <param name="i">Zero-based index of the row to get.</param>
-		/// <returns><see cref="Vector3" /> object that contains the contents of the row.</returns>
+		/// <param name="i"> Zero-based index of the row to get. </param>
+		/// <returns> <see cref="Vector3" /> object that contains the contents of the row. </returns>
 		public Vector3 GetRow(int i)
 		{
 			return new Vector3(this[i, 0], this[i, 1], this[i, 2]);
@@ -843,8 +786,8 @@ namespace CryEngine
 		/// <summary>
 		/// Gets first the row of this matrix.
 		/// </summary>
-		/// <param name="i">Zero-based index of the row to get.</param>
-		/// <returns><see cref="Vector4" /> object that contains the contents of the row.</returns>
+		/// <param name="i"> Zero-based index of the row to get. </param>
+		/// <returns> <see cref="Vector4" /> object that contains the contents of the row. </returns>
 		public Vector4 GetRow4(int i)
 		{
 			return new Vector4(this[i, 0], this[i, 1], this[i, 2], this[i, 3]);
@@ -854,8 +797,8 @@ namespace CryEngine
 		/// <summary>
 		/// Sets first 3 rows of the column of this matrix.
 		/// </summary>
-		/// <param name="i">Zero-based index of the column to set.</param>
-		/// <param name="v">Vector that supplies new values.</param>
+		/// <param name="i"> Zero-based index of the column to set. </param>
+		/// <param name="v"> Vector that supplies new values. </param>
 		public void SetColumn(int i, Vector3 v)
 		{
 			if (i < 0 || i > 3)
@@ -889,8 +832,8 @@ namespace CryEngine
 		/// <summary>
 		/// Sets the column of this matrix.
 		/// </summary>
-		/// <param name="i">Zero-based index of the column to set.</param>
-		/// <param name="v">Vector that supplies new values.</param>
+		/// <param name="i"> Zero-based index of the column to set. </param>
+		/// <param name="v"> Vector that supplies new values. </param>
 		public void SetColumn(int i, Vector4 v)
 		{
 			if (i < 0 || i > 3)
@@ -928,8 +871,8 @@ namespace CryEngine
 		/// <summary>
 		/// Gets first 3 rows of the column of this matrix.
 		/// </summary>
-		/// <param name="i">Zero-based index of the column to get.</param>
-		/// <returns>Vector that contains values.</returns>
+		/// <param name="i"> Zero-based index of the column to get. </param>
+		/// <returns> Vector that contains values. </returns>
 		public Vector3 GetColumn(int i)
 		{
 			if (i < 0 || i > 3)
@@ -953,8 +896,8 @@ namespace CryEngine
 		/// <summary>
 		/// Gets the column of this matrix.
 		/// </summary>
-		/// <param name="i">Zero-based index of the column to get.</param>
-		/// <returns>Vector that contains values.</returns>
+		/// <param name="i"> Zero-based index of the column to get. </param>
+		/// <returns> Vector that contains values. </returns>
 		public Vector4 GetColumn4(int i)
 		{
 			if (i < 0 || i > 3)
@@ -980,10 +923,10 @@ namespace CryEngine
 		/// <summary>
 		/// Determines whether first matrix can be considered equivalent of second one.
 		/// </summary>
-		/// <param name="m0">First matrix.</param>
-		/// <param name="m1">Second matrix.</param>
-		/// <param name="e">Precision of comparison.</param>
-		/// <returns>True, if matrices can be considered equivalents.</returns>
+		/// <param name="m0"> First matrix. </param>
+		/// <param name="m1"> Second matrix. </param>
+		/// <param name="e">  Precision of comparison. </param>
+		/// <returns> True, if matrices can be considered equivalents. </returns>
 		public static bool IsEquivalent(ref  Matrix44 m0, ref Matrix44 m1, float e = MathHelpers.ZeroTolerance)
 		{
 			return (
@@ -996,16 +939,17 @@ namespace CryEngine
 		/// <summary>
 		/// Determines whether this matrix is equal to another.
 		/// </summary>
-		/// <param name="other">Another matrix.</param>
-		/// <returns>True, if matrices are equal.</returns>
+		/// <param name="other"> Another matrix. </param>
+		/// <returns> True, if matrices are equal. </returns>
 		public bool Equals(Matrix44 other)
 		{
 			return Matrix44.IsEquivalent(ref this, ref other);
 		}
 		#endregion
 		#region Enumeration
-		/// <summary></summary>
-		/// <returns></returns>
+		/// <summary>
+		/// </summary>
+		/// <returns> </returns>
 		public IEnumerator<float> GetEnumerator()
 		{
 			yield return this.M00;

@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using CryEngine.Entities;
 using CryEngine.Initialization;
 using CryEngine.Extensions;
+using CryEngine.Mathematics;
 using CryEngine.Native;
 
 namespace CryEngine

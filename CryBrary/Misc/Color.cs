@@ -1,6 +1,7 @@
 ﻿using System;
 
 using System.ComponentModel;
+using CryEngine.Mathematics;
 
 namespace CryEngine
 {

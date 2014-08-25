@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using CryEngine.Entities;
+using CryEngine.Mathematics;
 using CryEngine.Utilities;
 using CryEngine.Physics.Status;
 using CryEngine.Native;

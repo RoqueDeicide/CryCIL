@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace CryEngine
+namespace CryEngine.Mathematics
 {
 	/// <summary>
-	/// Quaternion with a translation vector
+	/// Quaternion with a translation vector.
 	/// </summary>
 	public struct QuaternionTranslation
 	{
@@ -18,83 +15,108 @@ namespace CryEngine
 		/// The translation vector and a scalar (for uniform scaling?)
 		/// </summary>
 		public Vector3 T;
-
+		/// <summary>
+		/// Creates new instance of type <see cref="QuaternionTranslation" />.
+		/// </summary>
+		/// <param name="t"> <see cref="Vector3" /> that represents translation. </param>
+		/// <param name="q"> <see cref="Quaternion" /> that represents orientation. </param>
 		public QuaternionTranslation(Vector3 t, Quaternion q)
 		{
-			Q = q;
-			T = t;
+			this.Q = q;
+			this.T = t;
 		}
-
+		/// <summary>
+		/// Creates new instance of type <see cref="QuaternionTranslation" />.
+		/// </summary>
+		/// <param name="m"> <see cref="Matrix34" /> that represents both translation and orientation. </param>
 		public QuaternionTranslation(Matrix34 m)
 		{
-			Q = new Quaternion(m);
-			T = m.Translation;
+			this.Q = new Quaternion(m);
+			this.T = m.Translation;
 		}
-
+		/// <summary>
+		/// Resets this instance into identity state.
+		/// </summary>
 		public void SetIdentity()
 		{
 			this = Identity;
 		}
-
+		/// <summary>
+		/// Sets this instance to be rotation around XYZ axes represented by a vector.
+		/// </summary>
+		/// <param name="rad">   Euler angles measured in radians. </param>
+		/// <param name="trans"> Optional translation vector. </param>
 		public void SetRotationXYZ(Vector3 rad, Vector3? trans = null)
 		{
-			Q.SetRotationAroundXYZAxes(rad);
+			this.Q.SetRotationAroundXYZAxes(rad);
 
-			T = trans.GetValueOrDefault();
+			this.T = trans.GetValueOrDefault();
 		}
-
+		/// <summary>
+		/// Sets this instance to be rotation around XYZ axes represented by a vector.
+		/// </summary>
+		/// <param name="cosha"> Cosine of angle of rotation around axis. </param>
+		/// <param name="sinha"> Sine of angle of rotation around axis. </param>
+		/// <param name="axis">  Axis of rotation. </param>
+		/// <param name="trans"> </param>
 		public void SetRotationAA(float cosha, float sinha, Vector3 axis, Vector3? trans = null)
 		{
-			Q.SetRotationAngleAxis(cosha, sinha, axis);
-			T = trans.GetValueOrDefault();
+			this.Q.SetRotationAngleAxis(cosha, sinha, axis);
+			this.T = trans.GetValueOrDefault();
 		}
-
+		/// <summary>
+		/// Inverts rotation and translation this object represents.
+		/// </summary>
 		public void Invert()
 		{
-			T = -T * Q;
-			Q = !Q;
+			this.T = -this.T * this.Q;
+			this.Q = !this.Q;
 		}
-
-		public void SetTranslation(Vector3 trans)
-		{
-			T = trans;
-		}
-
+		/// <summary>
+		/// Determines whether this instance can be considered equal to another.
+		/// </summary>
+		/// <param name="p">       Another object. </param>
+		/// <param name="epsilon"> Precision of comparison. </param>
+		/// <returns> True, if this instance can be considered equal to another. </returns>
 		public bool IsEquivalent(QuaternionTranslation p, float epsilon = 0.05f)
 		{
 			var q0 = p.Q;
 			var q1 = -p.Q;
-			bool t0 = (Math.Abs(Q.V.X - q0.V.X) <= epsilon) && (Math.Abs(Q.V.Y - q0.V.Y) <= epsilon) && (Math.Abs(Q.V.Z - q0.V.Z) <= epsilon) && (Math.Abs(Q.W - q0.W) <= epsilon);
-			bool t1 = (Math.Abs(Q.V.X - q1.V.X) <= epsilon) && (Math.Abs(Q.V.Y - q1.V.Y) <= epsilon) && (Math.Abs(Q.V.Z - q1.V.Z) <= epsilon) && (Math.Abs(Q.W - q1.W) <= epsilon);
-			return ((t0 | t1) && (Math.Abs(T.X - p.T.X) <= epsilon) && (Math.Abs(T.Y - p.T.Y) <= epsilon) && (Math.Abs(T.Z - p.T.Z) <= epsilon));
+			bool t0 = (Math.Abs(this.Q.V.X - q0.V.X) <= epsilon) && (Math.Abs(this.Q.V.Y - q0.V.Y) <= epsilon) && (Math.Abs(this.Q.V.Z - q0.V.Z) <= epsilon) && (Math.Abs(this.Q.W - q0.W) <= epsilon);
+			bool t1 = (Math.Abs(this.Q.V.X - q1.V.X) <= epsilon) && (Math.Abs(this.Q.V.Y - q1.V.Y) <= epsilon) && (Math.Abs(this.Q.V.Z - q1.V.Z) <= epsilon) && (Math.Abs(this.Q.W - q1.W) <= epsilon);
+			return ((t0 | t1) && (Math.Abs(this.T.X - p.T.X) <= epsilon) && (Math.Abs(this.T.Y - p.T.Y) <= epsilon) && (Math.Abs(this.T.Z - p.T.Z) <= epsilon));
 		}
-
 		/// <summary>
 		/// Checks whether the transformation is valid.
 		/// </summary>
-		/// <returns></returns>
+		/// <returns> </returns>
 		public bool IsValid
 		{
 			get
 			{
-				return T.IsValid && Q.IsValid;
+				return this.T.IsValid && this.Q.IsValid;
 			}
 		}
-
-		public void Nlerp(QuaternionTranslation start, QuaternionTranslation end, float amount)
+		/// <summary>
+		/// Calculates normalized linear interpolation.
+		/// </summary>
+		/// <param name="start">  Starting point. </param>
+		/// <param name="end">    Ending point. </param>
+		/// <param name="amount"> Amount of interpolation. </param>
+		public void NormalizedLinearInterpolation(QuaternionTranslation start, QuaternionTranslation end, float amount)
 		{
 			var d = end.Q;
 			if ((start.Q | d) < 0) { d = -d; }
 
 			var vDiff = d.V - start.Q.V;
 
-			Q.V = start.Q.V + (vDiff * amount);
-			Q.W = start.Q.W + ((d.W - start.Q.W) * amount);
+			this.Q.V = start.Q.V + (vDiff * amount);
+			this.Q.W = start.Q.W + ((d.W - start.Q.W) * amount);
 
-			Q.Normalize();
+			this.Q.Normalize();
 
 			vDiff = end.T - start.T;
-			T = start.T + (vDiff * amount);
+			this.T = start.T + (vDiff * amount);
 		}
 
 		public void SetFromVectors(Vector3 vx, Vector3 vy, Vector3 vz, Vector3 pos)
@@ -119,16 +141,16 @@ namespace CryEngine
 
 		public void ClampLengthAngle(float maxLength, float maxAngle)
 		{
-			T.ClampLength(maxLength);
-			Q.ClampAngle(maxAngle);
+			this.T.ClampLength(maxLength);
+			this.Q.ClampAngle(maxAngle);
 		}
 
 		public QuaternionTranslation GetScaled(float scale)
 		{
-			return new QuaternionTranslation(T * scale, Q.GetScaled(scale));
+			return new QuaternionTranslation(this.T * scale, this.Q.GetScaled(scale));
 		}
 
-		public bool IsIdentity { get { return Q.IsIdentity && T.IsZero(); } }
+		public bool IsIdentity { get { return this.Q.IsIdentity && this.T.IsZero(); } }
 
 		public QuaternionTranslation Inverted
 		{
@@ -140,14 +162,14 @@ namespace CryEngine
 			}
 		}
 
-		public Vector3 Column0 { get { return Q.Column0; } }
-		public Vector3 Column1 { get { return Q.Column1; } }
-		public Vector3 Column2 { get { return Q.Column2; } }
-		public Vector3 Column3 { get { return T; } }
+		public Vector3 Column0 { get { return this.Q.Column0; } }
+		public Vector3 Column1 { get { return this.Q.Column1; } }
+		public Vector3 Column2 { get { return this.Q.Column2; } }
+		public Vector3 Column3 { get { return this.T; } }
 
-		public Vector3 Row0 { get { return Q.Row0; } }
-		public Vector3 Row1 { get { return Q.Row1; } }
-		public Vector3 Row2 { get { return Q.Row2; } }
+		public Vector3 Row0 { get { return this.Q.Row0; } }
+		public Vector3 Row1 { get { return this.Q.Row1; } }
+		public Vector3 Row2 { get { return this.Q.Row2; } }
 
 		public override int GetHashCode()
 		{
@@ -157,8 +179,8 @@ namespace CryEngine
 				int hash = 17;
 
 				// ReSharper disable NonReadonlyFieldInGetHashCode
-				hash = hash * 29 + T.GetHashCode();
-				hash = hash * 29 + Q.GetHashCode();
+				hash = hash * 29 + this.T.GetHashCode();
+				hash = hash * 29 + this.Q.GetHashCode();
 				// ReSharper restore NonReadonlyFieldInGetHashCode
 
 				return hash;

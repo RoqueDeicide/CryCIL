@@ -1,4 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
+using CryEngine.Mathematics;
 using CryEngine.Native;
 
 namespace CryEngine

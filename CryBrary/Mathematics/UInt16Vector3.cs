@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Linq;
-using System.Text;
-using System.Globalization;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Runtime.InteropServices;
 
-namespace CryEngine
+namespace CryEngine.Mathematics
 {
 	/// <summary>
 	/// Represents 3 16-bit unsigned integer numbers.
@@ -37,8 +33,8 @@ namespace CryEngine
 		/// <summary>
 		/// Provides access to component of the vector specified by given index.
 		/// </summary>
-		/// <param name="index">Zero-based index of the component of the vector.</param>
-		/// <returns></returns>
+		/// <param name="index"> Zero-based index of the component of the vector. </param>
+		/// <returns> </returns>
 		public ushort this[int index]
 		{
 			get
@@ -81,7 +77,7 @@ namespace CryEngine
 		/// <param name="componentIdentifier">
 		/// Single character capitalized or not that identifies required component of the vector.
 		/// </param>
-		/// <returns></returns>
+		/// <returns> </returns>
 		public ushort this[char componentIdentifier]
 		{
 			get
@@ -137,9 +133,9 @@ namespace CryEngine
 		/// <summary>
 		/// Creates new instance of <see cref="UInt16Vector3" />.
 		/// </summary>
-		/// <param name="x">X-component.</param>
-		/// <param name="y">Y-component.</param>
-		/// <param name="z">Z-component.</param>
+		/// <param name="x"> X-component. </param>
+		/// <param name="y"> Y-component. </param>
+		/// <param name="z"> Z-component. </param>
 		public UInt16Vector3(ushort x, ushort y, ushort z)
 			: this()
 		{
@@ -150,14 +146,14 @@ namespace CryEngine
 		/// <summary>
 		/// Initializes new instance of <see cref="UInt16Vector3" /> using values from given array.
 		/// </summary>
-		/// <param name="array">
+		/// <param name="array">            
 		/// Array that contains values to use to initialize components of this vector.
 		/// </param>
-		/// <param name="startingIndex">
+		/// <param name="startingIndex">    
 		/// Index of the first element in the array to use for initialization.
 		/// </param>
-		/// <param name="startingComponent">Index of the first component to initialize.</param>
-		/// <param name="count">Number of components to initialize.</param>
+		/// <param name="startingComponent"> Index of the first component to initialize. </param>
+		/// <param name="count">             Number of components to initialize. </param>
 		public UInt16Vector3(IList<ushort> array, int startingIndex, int startingComponent, int count)
 			: this()
 		{
@@ -214,8 +210,8 @@ namespace CryEngine
 		/// <summary>
 		/// Determines whether this vector is equal to another one.
 		/// </summary>
-		/// <param name="other">Another vector.</param>
-		/// <returns>True, if this vector is equal to another one, otherwise false.</returns>
+		/// <param name="other"> Another vector. </param>
+		/// <returns> True, if this vector is equal to another one, otherwise false. </returns>
 		public bool Equals(UInt16Vector3 other)
 		{
 			return this.X == other.X && this.Y == other.Y && this.Z == other.Z;
@@ -223,8 +219,8 @@ namespace CryEngine
 		/// <summary>
 		/// Determines whether this vector is equal to another object.
 		/// </summary>
-		/// <param name="obj">Another object.</param>
-		/// <returns>True, if given object is a vector equal to this one, otherwise false.</returns>
+		/// <param name="obj"> Another object. </param>
+		/// <returns> True, if given object is a vector equal to this one, otherwise false. </returns>
 		public override bool Equals(object obj)
 		{
 			if (obj is UInt16Vector3)
@@ -240,7 +236,7 @@ namespace CryEngine
 		/// <remarks>
 		/// Comparison is done by mapping each vector into 64-bit integer and comparing them.
 		/// </remarks>
-		/// <param name="other">Another vector.</param>
+		/// <param name="other"> Another vector. </param>
 		/// <returns>
 		/// <para>-1 - other vector should precede this one.</para><para>0 - other vector is equal
 		/// to this one.</para><para>1 - other vector should follow this one.</para>
@@ -279,16 +275,18 @@ namespace CryEngine
 		#endregion
 		#endregion
 		#region Enumeration
-		/// <summary></summary>
-		/// <returns></returns>
+		/// <summary>
+		/// </summary>
+		/// <returns> </returns>
 		public IEnumerator<ushort> GetEnumerator()
 		{
 			yield return this.X;
 			yield return this.Y;
 			yield return this.Z;
 		}
-		/// <summary></summary>
-		/// <returns></returns>
+		/// <summary>
+		/// </summary>
+		/// <returns> </returns>
 		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
 		{
 			yield return this.X;
@@ -300,9 +298,9 @@ namespace CryEngine
 		/// <summary>
 		/// Determines whether two instances of <see cref="UInt16Vector3" /> struct are equal.
 		/// </summary>
-		/// <param name="l">Left operand.</param>
-		/// <param name="r">Right operand.</param>
-		/// <returns>True, if objects are equal, otherwise false.</returns>
+		/// <param name="l"> Left operand. </param>
+		/// <param name="r"> Right operand. </param>
+		/// <returns> True, if objects are equal, otherwise false. </returns>
 		public static bool operator ==(UInt16Vector3 l, UInt16Vector3 r)
 		{
 			return l.X == r.X && l.Y == r.Y && l.Z == r.Z;
@@ -310,9 +308,9 @@ namespace CryEngine
 		/// <summary>
 		/// Determines whether two instances of <see cref="UInt16Vector3" /> struct are not equal.
 		/// </summary>
-		/// <param name="l">Left operand.</param>
-		/// <param name="r">Right operand.</param>
-		/// <returns>True, if objects are not equal, otherwise false.</returns>
+		/// <param name="l"> Left operand. </param>
+		/// <param name="r"> Right operand. </param>
+		/// <returns> True, if objects are not equal, otherwise false. </returns>
 		public static bool operator !=(UInt16Vector3 l, UInt16Vector3 r)
 		{
 			return l.X != r.X && l.Y != r.Y && l.Z != r.Z;
@@ -322,7 +320,7 @@ namespace CryEngine
 		/// <summary>
 		/// Calculates hash code of this vector.
 		/// </summary>
-		/// <returns></returns>
+		/// <returns> </returns>
 		public override int GetHashCode()
 		{
 			// ReSharper disable NonReadonlyFieldInGetHashCode
@@ -332,7 +330,7 @@ namespace CryEngine
 		/// <summary>
 		/// Converts this vector to string representation.
 		/// </summary>
-		/// <returns></returns>
+		/// <returns> </returns>
 		public override string ToString()
 		{
 			return String.Format("({0};{1};{2})", this.X, this.Y, this.Z);

@@ -19,7 +19,7 @@ namespace CryEngine.Entities.Advanced
 		/// Gets game object associated with the entity.
 		/// </summary>
 		/// <param name="id">Identifier of the entity which game object is required.</param>
-		/// <returns><see cref="GameObject" /> for given entity.</returns>
+		/// <returns><see cref="GameObject"/> for given entity.</returns>
 		public static GameObject Get(EntityId id)
 		{
 			var handle = NativeGameObjectMethods.GetGameObject(id);
@@ -48,10 +48,10 @@ namespace CryEngine.Entities.Advanced
 		/// <summary>
 		/// Sets a new profile for an aspect.
 		/// </summary>
-		/// <param name="aspect">
-		/// <see cref="EntityAspects" /> object that designates aspect to set new profile for.
+		/// <param name="aspect">     
+		/// <see cref="EntityAspects"/> object that designates aspect to set new profile for.
 		/// </param>
-		/// <param name="profile">New profile data.</param>
+		/// <param name="profile">    New profile data.</param>
 		/// <param name="fromNetwork">Indicates whether</param>
 		/// <returns>True, if successful.</returns>
 		[CLSCompliant(false)]
@@ -62,15 +62,16 @@ namespace CryEngine.Entities.Advanced
 		/// <summary>
 		/// En/disables sending physics event to this game object.
 		/// </summary>
-		/// <param name="enable">Indicates whether event must enabled or disabled.</param>
+		/// <param name="enable">      Indicates whether event must enabled or disabled.</param>
 		/// <param name="physicsEvent">
-		/// <see cref="EntityPhysicsEvents" /> object that designates the event.
+		/// <see cref="EntityPhysicsEvents"/> object that designates the event.
 		/// </param>
 		public void EnablePhysicsEvent(bool enable, EntityPhysicsEvents physicsEvent)
 		{
 			NativeGameObjectMethods.EnablePhysicsEvent(this.Handle, enable, physicsEvent);
 		}
-		/// <summary></summary>
+		/// <summary>
+		/// </summary>
 		/// <param name="physicsEvent"></param>
 		/// <returns></returns>
 		public bool WantsPhysicsEvent(EntityPhysicsEvents physicsEvent)
@@ -91,9 +92,7 @@ namespace CryEngine.Entities.Advanced
 		/// <summary>
 		/// Forces return of a wrapper object for an extension.
 		/// </summary>
-		/// <remarks>
-		/// New extension is instantiated if needed.
-		/// </remarks>
+		/// <remarks>New extension is instantiated if needed.</remarks>
 		/// <param name="name">Name of the extension.</param>
 		/// <returns>The extension wrapper object.</returns>
 		public GameObjectExtension AcquireExtension(string name)
@@ -160,9 +159,7 @@ namespace CryEngine.Entities.Advanced
 		/// <summary>
 		/// Binds the game object to the network.
 		/// </summary>
-		/// <remarks>
-		/// Allows the entity to be synchronized over the network.
-		/// </remarks>
+		/// <remarks>Allows the entity to be synchronized over the network.</remarks>
 		/// <param name="mode">Binding mode.</param>
 		/// <returns>True, if successful.</returns>
 		public bool BindToNetwork(BindToNetworkMode mode = BindToNetworkMode.Normal)
@@ -186,6 +183,10 @@ namespace CryEngine.Entities.Advanced
 	/// <summary>
 	/// Enumeration of physics events that can happen to an entity.
 	/// </summary>
+	/// <remarks>
+	/// Logged events are posted into a special queue, immediate ones are processed at once, usually
+	/// within physics thread, which might cause parallelization issues.
+	/// </remarks>
 	public enum EntityPhysicsEvents
 	{
 		/// <summary>
