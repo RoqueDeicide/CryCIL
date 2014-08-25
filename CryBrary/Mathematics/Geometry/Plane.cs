@@ -335,19 +335,19 @@ namespace CryEngine.Mathematics.Geometry
 		/// <param name="point">          
 		/// <see cref="Vector3"/> object that describes location of the point in 3D space.
 		/// </param>
-		/// <param name="pointPosition">  
+		/// <param name="pointPlanePosition">  
 		/// When the call is concluded, this value will indicate relative position of the point.
 		/// </param>
-		/// <param name="polygonPosition">
+		/// <param name="polygonPlanePosition">
 		/// During a call bitwise Or operator will be applied to this argument with second operand
-		/// being <paramref name="pointPosition"/> after it is calculated.
+		/// being <paramref name="pointPlanePosition"/> after it is calculated.
 		/// </param>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public void DetermineRelativePosition(Vector3 point, out PositionAgainstPlaneType pointPosition,
-											   ref PositionAgainstPlaneType polygonPosition)
+		public void PointPosition(Vector3 point, out PlanePosition pointPlanePosition,
+											   ref PlanePosition polygonPlanePosition)
 		{
-			pointPosition = this.DetermineRelativePosition(point);
-			polygonPosition |= pointPosition;
+			pointPlanePosition = this.PointPosition(point);
+			polygonPlanePosition |= pointPlanePosition;
 		}
 		/// <summary>
 		/// Determines relative position of the point in respect to position of this plane.
@@ -356,26 +356,34 @@ namespace CryEngine.Mathematics.Geometry
 		/// <see cref="Vector3"/> object that describes location of the point in 3D space.
 		/// </param>
 		/// <returns>
-		/// <para><see cref="PositionAgainstPlaneType.Coplanar"/> if the point is on a plane.</para>
-		/// <para><see cref="PositionAgainstPlaneType.Front"/> if the point is in front of a plane.</para>
-		/// <para><see cref="PositionAgainstPlaneType.Back"/> if the point is behind a plane.</para>
+		/// <para><see cref="PlanePosition.Coplanar"/> if the point is on a plane.</para>
+		/// <para><see cref="PlanePosition.Front"/> if the point is in front of a plane.</para>
+		/// <para><see cref="PlanePosition.Back"/> if the point is behind a plane.</para>
 		/// </returns>
-		public PositionAgainstPlaneType DetermineRelativePosition(Vector3 point)
+		public PlanePosition PointPosition(Vector3 point)
 		{
 			float signedDistance = this.SignedDistance(point);
 			if (signedDistance > MathHelpers.ZeroTolerance)
 			{
-				return PositionAgainstPlaneType.Front;
+				return PlanePosition.Front;
 			}
 			return signedDistance < -MathHelpers.ZeroTolerance
-				? PositionAgainstPlaneType.Back : PositionAgainstPlaneType.Coplanar;
+				? PlanePosition.Back : PlanePosition.Coplanar;
+		}
+		/// <summary>
+		/// Flips the orientation of this plane.
+		/// </summary>
+		public void Flip()
+		{
+			this.Normal = -this.Normal;
+			this.D = -this.D;
 		}
 	}
 	/// <summary>
 	/// Enumeration of positions point or a geometric figure can be in relation to a plane.
 	/// </summary>
 	[Flags]
-	public enum PositionAgainstPlaneType
+	public enum PlanePosition
 	{
 		/// <summary>
 		/// Point or figure occupies the same plane.
