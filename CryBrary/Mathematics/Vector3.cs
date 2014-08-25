@@ -10,7 +10,7 @@ namespace CryEngine.Mathematics
 	/// </summary>
 	[Serializable]
 	[StructLayout(LayoutKind.Sequential)]
-	public struct Vector3 : IEquatable<Vector3>, IEnumerable<float>
+	public struct Vector3 : IEquatable<Vector3>, IEnumerable<float>, IComparable<Vector3>
 	{
 		#region Static Fields
 		/// <summary>
@@ -1103,6 +1103,18 @@ namespace CryEngine.Mathematics
 		public bool Equals(Vector3 other)
 		{
 			return this.IsEquivalent(other, MathHelpers.ZeroTolerance);
+		}
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="other"></param>
+		/// <returns></returns>
+		public int CompareTo(Vector3 other)
+		{
+			int pos = this.X.CompareTo(other.X);
+			if (pos != 0) return pos;
+			pos = this.Y.CompareTo(other.Y);
+			return pos == 0 ? this.Z.CompareTo(other.Z) : pos;
 		}
 		#endregion
 		#region Text Conversions

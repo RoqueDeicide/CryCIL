@@ -10,7 +10,7 @@ namespace CryEngine.Mathematics
 	/// </summary>
 	[Serializable]
 	[StructLayout(LayoutKind.Sequential, Pack = 4)]
-	public struct Vector2 : IEquatable<Vector2>, IFormattable, IEnumerable<float>
+	public struct Vector2 : IEquatable<Vector2>, IFormattable, IEnumerable<float>, IComparable<Vector2>
 	{
 		#region Static Fields
 		/// <summary>
@@ -927,6 +927,16 @@ namespace CryEngine.Mathematics
 		public override bool Equals(object value)
 		{
 			return value != null && value.GetType() == this.GetType() && this.Equals((Vector2)value);
+		}
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="other"></param>
+		/// <returns></returns>
+		public int CompareTo(Vector2 other)
+		{
+			int pos = this.X.CompareTo(other.X);
+			return pos != 0 ? pos : this.Y.CompareTo(other.Y);
 		}
 		#endregion
 		#region Enumerations
