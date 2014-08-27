@@ -15,14 +15,14 @@ namespace CryEngine
 			if (surfaceTypePtr == IntPtr.Zero)
 				return null;
 
-			foreach (var storedSurfaceType in m_surfaceTypes)
+			foreach (var storedSurfaceType in surfaceTypes)
 			{
 				if (storedSurfaceType.Handle == surfaceTypePtr)
 					return storedSurfaceType;
 			}
 
 			var surfaceType = new SurfaceType(surfaceTypePtr);
-			m_surfaceTypes.Add(surfaceType);
+			surfaceTypes.Add(surfaceType);
 
 			return surfaceType;
 		}
@@ -37,7 +37,7 @@ namespace CryEngine
 			return TryGet(NativeMaterialMethods.GetSurfaceTypeByName(name));
 		}
 
-		private static List<SurfaceType> m_surfaceTypes = new List<SurfaceType>();
+		private static readonly List<SurfaceType> surfaceTypes = new List<SurfaceType>();
 		#endregion
 
 		public SurfaceType(IntPtr materialPtr)

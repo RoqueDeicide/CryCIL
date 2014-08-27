@@ -1,10 +1,10 @@
 ﻿using System;
 using CryEngine.Entities;
+using CryEngine.Initialization;
 using CryEngine.Mathematics;
 using CryEngine.Native;
-using CryEngine.Initialization;
 
-namespace CryEngine
+namespace CryEngine.Actors
 {
 	public abstract partial class Actor
 	{

@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Linq;
+using CryEngine.Annotations;
+using CryEngine.Extensions;
 
 namespace CryEngine
 {
@@ -42,28 +45,37 @@ namespace CryEngine
 		#endregion
 
 		public static event KeyEventDelegate KeyEvents;
-		internal static Delegate[] KeyEventsInvocationList { get { return KeyEvents != null ? KeyEvents.GetInvocationList() : null; } }
+		internal static Delegate[] KeyEventsInvocationList
+		{
+			get
+			{
+				return KeyEvents != null ? KeyEvents.GetInvocationList() : null;
+			}
+		}
 
 		public static event MouseEventDelegate MouseEvents;
-		internal static Delegate[] MouseEventsInvocationList { get { return MouseEvents != null ? MouseEvents.GetInvocationList() : null; } }
+		internal static Delegate[] MouseEventsInvocationList
+		{
+			get
+			{
+				return MouseEvents != null ? MouseEvents.GetInvocationList() : null;
+			}
+		}
 
 		public static ActionmapHandler ActionmapEvents = new ActionmapHandler();
 
+		[UsedImplicitly]
 		private static void OnScriptInstanceDestroyed(CryScriptInstance instance)
 		{
-			foreach (KeyEventDelegate d in KeyEvents.GetInvocationList())
-			{
-				if (d.Target == instance)
-					KeyEvents -= d;
-			}
-
-			foreach (MouseEventDelegate d in MouseEvents.GetInvocationList())
-			{
-				if (d.Target == instance)
-					MouseEvents -= d;
-			}
+			// ReSharper disable PossibleUnintendedReferenceComparison
+			Delegate[] invocationList = Input.KeyEvents.GetInvocationList();
+			invocationList.Where(x=>x.Target == instance).ForEach(x=>KeyEvents -= (KeyEventDelegate)x);
+			
+			invocationList = Input.MouseEvents.GetInvocationList();
+			invocationList.Where(x => x.Target == instance).ForEach(x => MouseEvents -= (MouseEventDelegate)x);
 
 			ActionmapEvents.RemoveAll(instance);
+			// ReSharper restore PossibleUnintendedReferenceComparison
 		}
 	}
 }

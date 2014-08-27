@@ -61,13 +61,13 @@ namespace CryEngine
 		{
 			get
 			{
-				return Native3DEngineMethods.GetTimeOfDayAdvancedInfo().StartTime;
+				return Native3DEngineMethods.GetTimeOfDayAdvancedInfo().StartTimeInfo;
 			}
 
 			set
 			{
 				var info = Native3DEngineMethods.GetTimeOfDayAdvancedInfo();
-				info.StartTime = value;
+				info.StartTimeInfo = value;
 				Native3DEngineMethods.SetTimeOfDayAdvancedInfo(info);
 			}
 		}
@@ -79,13 +79,13 @@ namespace CryEngine
 		{
 			get
 			{
-				return Native3DEngineMethods.GetTimeOfDayAdvancedInfo().EndTime;
+				return Native3DEngineMethods.GetTimeOfDayAdvancedInfo().EndTimeInfo;
 			}
 
 			set
 			{
 				var info = Native3DEngineMethods.GetTimeOfDayAdvancedInfo();
-				info.EndTime = value;
+				info.EndTimeInfo = value;
 				Native3DEngineMethods.SetTimeOfDayAdvancedInfo(info);
 			}
 		}
@@ -250,9 +250,9 @@ namespace CryEngine
 
 		public struct AdvancedInfo
 		{
-			public float StartTime { get; set; }
+			public float StartTimeInfo { get; set; }
 
-			public float EndTime { get; set; }
+			public float EndTimeInfo { get; set; }
 
 			public float AnimSpeed { get; set; }
 		}

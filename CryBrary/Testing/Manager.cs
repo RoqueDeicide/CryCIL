@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using CryEngine.Annotations;
 using CryEngine.Sandbox;
 using CryEngine.Testing.Internals;
 
@@ -42,6 +43,6 @@ namespace CryEngine.Testing
 			FormHelper.RegisterInternal<ReportForm>();
 		}
 
-		private static ConsoleTestListener listener = new ConsoleTestListener();
+		[UsedImplicitly] private static ConsoleTestListener listener = new ConsoleTestListener();
 	}
 }

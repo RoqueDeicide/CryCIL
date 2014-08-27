@@ -76,12 +76,16 @@ namespace CryEngine
 		#region Operators
 		public static bool operator ==(Color col1, Color col2)
 		{
+// ReSharper disable CompareOfFloatsByEqualityOperator
 			return col1.R == col2.R && col1.G == col2.G && col1.B == col2.B && col1.A == col2.A;
+// ReSharper restore CompareOfFloatsByEqualityOperator
 		}
 
 		public static bool operator !=(Color col1, Color col2)
 		{
+// ReSharper disable CompareOfFloatsByEqualityOperator
 			return col1.R != col2.R || col1.G != col2.G || col1.B != col2.B || col1.A != col2.A;
+// ReSharper restore CompareOfFloatsByEqualityOperator
 		}
 
 		public static implicit operator Color(Vector3 vec)

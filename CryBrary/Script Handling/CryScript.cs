@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using CryEngine.Actors;
+using CryEngine.Annotations;
 using CryEngine.Entities;
 using CryEngine.Extensions;
 using CryEngine.Flowgraph;
@@ -11,6 +13,7 @@ namespace CryEngine.Initialization
 	/// </summary>
 	public class CryScript
 	{
+		[UsedImplicitly]
 		private CryScript()
 		{
 		}
@@ -40,16 +43,13 @@ namespace CryEngine.Initialization
 					if (type.Implements<ActorBase>())
 					{
 						scriptType |= ScriptType.Actor;
-
-						if (type.Implements<AIActor>())
-							scriptType |= ScriptType.AIActor;
 					}
 					else if (type.Implements<GameRules>())
 						scriptType |= ScriptType.GameRules;
 				}
 				else if (type.Implements<FlowNode>())
 				{
-					if (type.ImplementsGeneric(typeof(EntityFlowNode<>)))
+					if (type.ImplementsGeneric(typeof(EntityFlowNode)))
 						scriptType |= ScriptType.EntityFlowNode;
 
 					scriptType |= ScriptType.FlowNode;

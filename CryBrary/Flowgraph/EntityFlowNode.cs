@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using CryEngine;
-using CryEngine.Entities;
 using CryEngine.Initialization;
 using CryEngine.Flowgraph.Native;
 
 namespace CryEngine.Flowgraph
 {
-	public abstract class EntityFlowNode<T> : FlowNode where T : EntityBase
+	public abstract class EntityFlowNode : FlowNode
 	{
 		internal override NodeConfig GetNodeConfig()
 		{

@@ -10,7 +10,7 @@ namespace CryEngine.Sandbox
 		static FormHelper()
 		{
 			AvailableForms = new List<FormInfo>();
-			ConsoleCommand.Register("mono_extensions", (args) =>
+			ConsoleCommand.Register("mono_extensions", args =>
 			{
 				if (instance == null)
 					instance = new FormLoader();

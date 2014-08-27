@@ -1,9 +1,8 @@
 ﻿using System;
 using CryEngine.Entities;
 using CryEngine.Native;
-using CryEngine.Physics;
 
-namespace CryEngine
+namespace CryEngine.Actors
 {
 	/// <summary>
 	/// Base class which all actors must derive from. Includes basic callbacks.
@@ -16,7 +15,7 @@ namespace CryEngine
 		/// </summary>
 		public bool IsLocalClient
 		{
-			get { return Actor.LocalClient == this; }
+			get { return Equals(Actor.LocalClient, this); }
 		}
 
 		/// <summary>
@@ -43,7 +42,7 @@ namespace CryEngine
 		/// </summary>
 		public bool IsDead
 		{
-			get { return Health <= 0; }
+			get { return this.Health <= 0; }
 		}
 
 		/// <summary>
@@ -70,7 +69,7 @@ namespace CryEngine
 			if (forceRemoveNow)
 				throw new NotSupportedException("forceRemoveNow is not supported for actor types.");
 
-			Actor.Remove(Id);
+			Actor.Remove(this.Id);
 		}
 
 		public override int GetHashCode()
@@ -80,11 +79,11 @@ namespace CryEngine
 			{
 				int hash = 17;
 
-				hash = hash * 29 + ScriptId.GetHashCode();
-				hash = hash * 29 + Id.GetHashCode();
-				hash = hash * 29 + ChannelId.GetHashCode();
-				hash = hash * 29 + ActorHandle.GetHashCode();
-				hash = hash * 29 + EntityHandle.GetHashCode();
+				hash = hash * 29 + this.ScriptId.GetHashCode();
+				hash = hash * 29 + this.Id.GetHashCode();
+				hash = hash * 29 + this.ChannelId.GetHashCode();
+				hash = hash * 29 + this.ActorHandle.GetHashCode();
+				hash = hash * 29 + this.EntityHandle.GetHashCode();
 
 				return hash;
 			}
@@ -99,18 +98,18 @@ namespace CryEngine
 			{
 				throw new ArgumentException("Invalid channel identifier used for actor initialization.");
 			}
-			Id = new EntityId(actorInitParams.Id);
+			this.Id = new EntityId(actorInitParams.Id);
 			this.SetIActor(actorInitParams.ActorPtr);
 			this.SetIEntity(actorInitParams.EntityPtr);
 
-			ChannelId = actorInitParams.ChannelId;
+			this.ChannelId = actorInitParams.ChannelId;
 
 			// actor *has* to have physics.
-			Physicalize(new PhysicalizationParams(PhysicalizationType.Rigid));
+			this.Physicalize(new PhysicalizationParams(PhysicalizationType.Rigid));
 
 			var result = base.InternalInitialize(initParams);
 
-			OnSpawn();
+			this.OnSpawn();
 
 			return result;
 		}

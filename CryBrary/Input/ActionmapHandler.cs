@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-
+using System.Linq;
 using CryEngine.Native;
 
 namespace CryEngine
@@ -37,12 +37,7 @@ namespace CryEngine
 
 		public int RemoveAll(object target)
 		{
-			int numRemoved = 0;
-
-			foreach (var actionMap in actionmapDelegates)
-				numRemoved += actionMap.Value.RemoveAll(x => x.Target == target);
-
-			return numRemoved;
+			return this.actionmapDelegates.Sum(actionMap => actionMap.Value.RemoveAll(x => x.Target == target));
 		}
 
 		internal void Invoke(ActionMapEventArgs args)
@@ -52,6 +47,6 @@ namespace CryEngine
 				eventDelegates.ForEach(x => x(args));
 		}
 
-		private Dictionary<string, List<ActionMapEventDelegate>> actionmapDelegates;
+		private readonly Dictionary<string, List<ActionMapEventDelegate>> actionmapDelegates;
 	}
 }

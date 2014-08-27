@@ -11,30 +11,30 @@ namespace CryEngine
 	{
 		public static PlayerDynamicsParameters Create()
 		{
-			var dyn = new PlayerDynamicsParameters();
-
-			dyn.type = 4;
-
-			dyn.kInertia = UnusedMarker.Float;
-			dyn.kInertiaAccel = UnusedMarker.Float;
-			dyn.kAirControl = UnusedMarker.Float;
-			dyn.gravity = UnusedMarker.Vector3;
-			dyn.nodSpeed = UnusedMarker.Float;
-			dyn.mass = UnusedMarker.Float;
-			dyn.bSwimming = UnusedMarker.Integer;
-			dyn.surface_idx = UnusedMarker.Integer;
-			dyn.bActive = UnusedMarker.Integer;
-			dyn.collTypes = (EntityQueryFlags)UnusedMarker.Integer;
-			dyn.livingEntToIgnore = UnusedMarker.IntPtr;
-			dyn.minSlideAngle = UnusedMarker.Float;
-			dyn.maxClimbAngle = UnusedMarker.Float;
-			dyn.maxJumpAngle = UnusedMarker.Float;
-			dyn.minFallAngle = UnusedMarker.Float;
-			dyn.kAirResistance = UnusedMarker.Float;
-			dyn.bNetwork = UnusedMarker.Integer;
-			dyn.maxVelGround = UnusedMarker.Float;
-			dyn.timeImpulseRecover = UnusedMarker.Float;
-			dyn.iRequestedTime = UnusedMarker.Integer;
+			var dyn = new PlayerDynamicsParameters
+			{
+				type = 4,
+				kInertia = UnusedMarker.Float,
+				kInertiaAccel = UnusedMarker.Float,
+				kAirControl = UnusedMarker.Float,
+				gravity = UnusedMarker.Vector3,
+				nodSpeed = UnusedMarker.Float,
+				mass = UnusedMarker.Float,
+				bSwimming = UnusedMarker.Integer,
+				surface_idx = UnusedMarker.Integer,
+				bActive = UnusedMarker.Integer,
+				collTypes = (EntityQueryFlags)UnusedMarker.Integer,
+				livingEntToIgnore = UnusedMarker.IntPtr,
+				minSlideAngle = UnusedMarker.Float,
+				maxClimbAngle = UnusedMarker.Float,
+				maxJumpAngle = UnusedMarker.Float,
+				minFallAngle = UnusedMarker.Float,
+				kAirResistance = UnusedMarker.Float,
+				bNetwork = UnusedMarker.Integer,
+				maxVelGround = UnusedMarker.Float,
+				timeImpulseRecover = UnusedMarker.Float,
+				iRequestedTime = UnusedMarker.Integer
+			};
 
 			return dyn;
 		}
@@ -57,9 +57,9 @@ namespace CryEngine
 		public float maxVelGround; // player cannot stand of surfaces that are moving faster than this
 		public float timeImpulseRecover; // forcefully turns on inertia for that duration after receiving an impulse
 		public EntityQueryFlags collTypes; // entity types to check collisions against
-		private IntPtr livingEntToIgnore;
-		private int bNetwork; // uses extended history information (obsolete)
-		private int bActive; // 0 disables all simulation for the character, apart from moving along the requested velocity
-		private int iRequestedTime; // requests that the player rolls back to that time and re-exucutes pending actions during the next step
+		public IntPtr livingEntToIgnore;
+		public int bNetwork; // uses extended history information (obsolete)
+		public int bActive; // 0 disables all simulation for the character, apart from moving along the requested velocity
+		public int iRequestedTime; // requests that the player rolls back to that time and re-exucutes pending actions during the next step
 	}
 }

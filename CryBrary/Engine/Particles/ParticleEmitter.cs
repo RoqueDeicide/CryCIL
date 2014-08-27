@@ -16,17 +16,17 @@ namespace CryEngine
 				throw new NullPointerException();
 #endif
 
-			var particleEmitter = Emitters.FirstOrDefault(x => x.Handle == handle);
+			var particleEmitter = emitters.FirstOrDefault(x => x.Handle == handle);
 			if (particleEmitter == null)
 			{
 				particleEmitter = new ParticleEmitter(handle);
-				Emitters.Add(particleEmitter);
+				emitters.Add(particleEmitter);
 			}
 
 			return particleEmitter;
 		}
 
-		private static List<ParticleEmitter> Emitters = new List<ParticleEmitter>();
+		private static readonly List<ParticleEmitter> emitters = new List<ParticleEmitter>();
 		#endregion
 
 		private ParticleEmitter(IntPtr ptr)

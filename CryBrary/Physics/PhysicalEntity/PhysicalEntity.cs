@@ -23,7 +23,7 @@ namespace CryEngine.Physics
 				throw new NullPointerException();
 #endif
 
-			var physicalEntity = PhysicalEntities.FirstOrDefault(x => x.Handle == IPhysicalEntityHandle);
+			var physicalEntity = physicalEntities.FirstOrDefault(x => x.Handle == IPhysicalEntityHandle);
 			if (physicalEntity == null)
 			{
 				switch (NativePhysicsMethods.GetPhysicalEntityType(IPhysicalEntityHandle))
@@ -48,13 +48,13 @@ namespace CryEngine.Physics
 				}
 
 				if (physicalEntity != null)
-					PhysicalEntities.Add(physicalEntity);
+					physicalEntities.Add(physicalEntity);
 			}
 
 			return physicalEntity;
 		}
 
-		private static List<PhysicalEntity> PhysicalEntities = new List<PhysicalEntity>();
+		private static readonly List<PhysicalEntity> physicalEntities = new List<PhysicalEntity>();
 		#endregion
 		protected PhysicalEntity()
 		{

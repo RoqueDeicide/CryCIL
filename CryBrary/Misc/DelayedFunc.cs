@@ -35,10 +35,7 @@ namespace CryEngine
 		#region Overrides
 		public override bool Equals(object obj)
 		{
-			if (obj != null && obj is DelayedFuncBase)
-				return this == obj;
-
-			return false;
+			return obj is DelayedFuncBase && this == obj;
 		}
 
 		public override int GetHashCode()
@@ -79,7 +76,7 @@ namespace CryEngine
 			Init(action, delay);
 		}
 
-		private object[] _params;
+		private readonly object[] _params;
 		public override object[] Params { get { return _params; } }
 	}
 
@@ -95,7 +92,7 @@ namespace CryEngine
 			Init(action, delay);
 		}
 
-		private object[] _params;
+		private readonly object[] _params;
 		public override object[] Params { get { return _params; } }
 	}
 
@@ -111,7 +108,7 @@ namespace CryEngine
 			Init(action, delay);
 		}
 
-		private object[] _params;
+		private readonly object[] _params;
 		public override object[] Params { get { return _params; } }
 	}
 
@@ -127,7 +124,7 @@ namespace CryEngine
 			Init(action, delay);
 		}
 
-		private object[] _params;
+		private readonly object[] _params;
 		public override object[] Params { get { return _params; } }
 	}
 
@@ -143,7 +140,7 @@ namespace CryEngine
 			Init(action, delay);
 		}
 
-		private object[] _params;
+		private readonly object[] _params;
 		public override object[] Params { get { return _params; } }
 	}
 
@@ -159,7 +156,7 @@ namespace CryEngine
 			Init(action, delay);
 		}
 
-		private object[] _params;
+		private readonly object[] _params;
 		public override object[] Params { get { return _params; } }
 	}
 
@@ -175,7 +172,7 @@ namespace CryEngine
 			Init(action, delay);
 		}
 
-		private object[] _params;
+		private readonly object[] _params;
 		public override object[] Params { get { return _params; } }
 	}
 
@@ -191,7 +188,7 @@ namespace CryEngine
 			Init(action, delay);
 		}
 
-		private object[] _params;
+		private readonly object[] _params;
 		public override object[] Params { get { return _params; } }
 	}
 
@@ -207,7 +204,7 @@ namespace CryEngine
 			Init(action, delay);
 		}
 
-		private object[] _params;
+		private readonly object[] _params;
 		public override object[] Params { get { return _params; } }
 	}
 
@@ -223,7 +220,7 @@ namespace CryEngine
 			Init(action, delay);
 		}
 
-		private object[] _params;
+		private readonly object[] _params;
 		public override object[] Params { get { return _params; } }
 	}
 

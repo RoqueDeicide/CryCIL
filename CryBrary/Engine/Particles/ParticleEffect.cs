@@ -41,17 +41,17 @@ namespace CryEngine
 			if (handle == IntPtr.Zero)
 				throw new NullPointerException();
 #endif
-			var particleEffect = ParticleEffects.FirstOrDefault(x => x.Handle == handle);
+			var particleEffect = particleEffects.FirstOrDefault(x => x.Handle == handle);
 			if (particleEffect == null)
 			{
 				particleEffect = new ParticleEffect(handle);
-				ParticleEffects.Add(particleEffect);
+				particleEffects.Add(particleEffect);
 			}
 
 			return particleEffect;
 		}
 
-		private static List<ParticleEffect> ParticleEffects = new List<ParticleEffect>();
+		private static readonly List<ParticleEffect> particleEffects = new List<ParticleEffect>();
 		#endregion
 
 		/// <summary>
@@ -130,10 +130,7 @@ namespace CryEngine
 		#region Overrides
 		public override bool Equals(object obj)
 		{
-			if (obj != null && obj is ParticleEffect)
-				return this == obj;
-
-			return false;
+			return obj is ParticleEffect && this == obj;
 		}
 
 		public override int GetHashCode()

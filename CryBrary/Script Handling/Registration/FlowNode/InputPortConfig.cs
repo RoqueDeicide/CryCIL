@@ -9,22 +9,23 @@ namespace CryEngine.Initialization
 {
 	public struct InputPortConfig
 	{
-		public InputPortConfig(string _name, NodePortType _type, string desc = "", string _humanName = "", string UIConfig = "")
+		public InputPortConfig(string name, NodePortType type, string desc = "", string humanName = "", string UIConfig = "")
 			: this()
 		{
-			name = _name;
-			humanName = _humanName;
+			this.name = name;
+			this.humanName = humanName;
 
-			description = desc;
-			uiConfig = UIConfig;
+			this.description = desc;
+			this.type = type;
+			this.uiConfig = UIConfig;
 
-			defaultValue = null;
+			this.defaultValue = null;
 		}
 
-		public InputPortConfig(string _name, NodePortType _type, object defaultVal = null, string desc = "", string _humanName = "", string UIConfig = "")
-			: this(_name, _type, desc, _humanName, UIConfig)
+		public InputPortConfig(string name, NodePortType type, object defaultVal = null, string desc = "", string humanName = "", string UIConfig = "")
+			: this(name, type, desc, humanName, UIConfig)
 		{
-			defaultValue = defaultVal;
+			this.defaultValue = defaultVal;
 		}
 
 		public string name;

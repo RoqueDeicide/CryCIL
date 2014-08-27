@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using CryEngine.Annotations;
 using CryEngine.Extensions;
 using CryEngine.Native;
 
@@ -101,6 +102,7 @@ namespace CryEngine.Entities
 			NativeEntityMethods.RemoteInvocation(this.Id, target.Id, method.Name, args, netTarget, channelId);
 		}
 
+		[UsedImplicitly]
 		private static void OnRemoteInvocation(string methodName, object[] args, EntityId targetId)
 		{
 			var entity = Entity.Get(targetId);

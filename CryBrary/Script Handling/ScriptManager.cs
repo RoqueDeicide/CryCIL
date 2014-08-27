@@ -7,6 +7,8 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Runtime.Serialization;
 using System.Runtime.InteropServices;
+using CryEngine.Actors;
+using CryEngine.Annotations;
 using CryEngine.Async;
 using CryEngine.Entities;
 using CryEngine.Extensions;
@@ -85,7 +87,7 @@ namespace CryEngine.Initialization
 				Input = new SerializableInput();
 			}
 
-			public SerializableInput Input { get; set; }
+			public SerializableInput Input { get; private set; }
 
 			public Dictionary<string, ConsoleCommandDelegate> ConsoleCommands { get; set; }
 			public List<CVar> ConsoleVariables { get; set; }
@@ -95,6 +97,7 @@ namespace CryEngine.Initialization
 			public int LastScriptId { get; set; }
 		}
 
+		[UsedImplicitly]
 		private void Serialize()
 		{
 			var data = new ScriptManagerData();
@@ -131,6 +134,7 @@ namespace CryEngine.Initialization
 				Formatter.Serialize(stream, Scripts);
 		}
 
+		[UsedImplicitly]
 		private void Deserialize()
 		{
 			using (var stream = File.Open(SerializedScriptsFile, FileMode.Open))
@@ -138,7 +142,7 @@ namespace CryEngine.Initialization
 
 			File.Delete(SerializedScriptsFile);
 
-			var data = Find<ScriptManagerData>(ScriptType.CryScriptInstance, x => { return true; });
+			var data = Find<ScriptManagerData>(ScriptType.CryScriptInstance, x => true);
 
 			LastScriptId = data.LastScriptId;
 
@@ -173,7 +177,7 @@ namespace CryEngine.Initialization
 			// These have to be registered later due to the flow system being initialized late.
 			// Note: Flow nodes have to be registered from IGame::RegisterGameFlownodes in order to
 			//       be usable from within UI graphs. (Use IMonoScriptSystem::RegisterFlownodes)
-			ForEachScript(ScriptType.FlowNode, x => { FlowNode.Register(x.ScriptName); });
+			ForEachScript(ScriptType.FlowNode, x => FlowNode.Register(x.ScriptName));
 		}
 
 		public void OnRevert()
@@ -181,6 +185,7 @@ namespace CryEngine.Initialization
 			// Revert to previous state
 		}
 
+		[UsedImplicitly]
 		private void PopulateAssemblyLookup()
 		{
 #if !RELEASE
@@ -245,6 +250,7 @@ namespace CryEngine.Initialization
 			}
 		}
 
+		[UsedImplicitly]
 		private void ProcessWaitingScripts(bool initialLoad)
 		{
 			bool hasDefaultGameRules = false;
@@ -254,7 +260,8 @@ namespace CryEngine.Initialization
 
 				foreach (Type type in pluginPair.Value)
 				{
-					var script = FindScript(ScriptType.Any, x => x.Type == type);
+					Type type1 = type;
+					var script = FindScript(ScriptType.Any, x => x.Type == type1);
 					if (script == null)
 					{
 						if (!CryScript.TryCreate(type, out script))
@@ -263,84 +270,85 @@ namespace CryEngine.Initialization
 
 					script.RegistrationParams = plugin.GetRegistrationParams(script.ScriptType, type);
 
-					if (!script.Registered)
+					if (script.Registered) continue;
+
+					if (script.RegistrationParams == null)
+						continue;
+
+					// Contain types that can only be registered at startup here.
+					if (initialLoad)
 					{
-						if (script == null || script.RegistrationParams == null)
-							continue;
-
-						// Contain types that can only be registered at startup here.
-						if (initialLoad)
+						if (script.RegistrationParams is ActorRegistrationParams)
 						{
-							if (script.RegistrationParams is ActorRegistrationParams)
-							{
-								var registrationParams = (ActorRegistrationParams)script.RegistrationParams;
+							var registrationParams = (ActorRegistrationParams)script.RegistrationParams;
 
-								NativeActorMethods.RegisterActorClass(script.ScriptName, script.Type.Implements(typeof(NativeActor)),
-																	  registrationParams.isAI);
-							}
-							else if (script.RegistrationParams is EntityRegistrationParams)
-							{
-								var registrationParams = (EntityRegistrationParams)script.RegistrationParams;
-
-								if (registrationParams.name == null)
-									registrationParams.name = script.ScriptName;
-								if (registrationParams.category == null)
-									registrationParams.category = "Default";
-
-								NativeEntityMethods.RegisterEntityClass(registrationParams);
-
-								script.RegistrationParams = registrationParams;
-							}
+							NativeActorMethods.RegisterActorClass(script.ScriptName, script.Type.Implements(typeof(NativeActor)),
+																  registrationParams.isAI);
 						}
-
-						if (script.RegistrationParams is GameRulesRegistrationParams)
+						else if (script.RegistrationParams is EntityRegistrationParams)
 						{
-							var registrationParams = (GameRulesRegistrationParams)script.RegistrationParams;
-
-							if (registrationParams.name == null)
-								registrationParams.name = script.ScriptName;
-
-							NativeGameRulesMethods.RegisterGameMode(registrationParams.name);
-
-							if (registrationParams.defaultGamemode || !hasDefaultGameRules)
-							{
-								NativeGameRulesMethods.SetDefaultGameMode(registrationParams.name);
-
-								hasDefaultGameRules = true;
-							}
-
-							script.RegistrationParams = registrationParams;
-						}
-						else if (script.RegistrationParams is FlowNodeRegistrationParams)
-						{
-							var registrationParams = (FlowNodeRegistrationParams)script.RegistrationParams;
+							var registrationParams = (EntityRegistrationParams)script.RegistrationParams;
 
 							if (registrationParams.name == null)
 								registrationParams.name = script.ScriptName;
 							if (registrationParams.category == null)
-								registrationParams.category = script.Type.Namespace;
-							if (registrationParams.filter == 0)
-								registrationParams.filter = FlowNodeFilter.Approved;
+								registrationParams.category = "Default";
+
+							NativeEntityMethods.RegisterEntityClass(registrationParams);
 
 							script.RegistrationParams = registrationParams;
-
-							script.ScriptName = registrationParams.category + ":" + registrationParams.name;
 						}
-						else if (script.RegistrationParams is EntityFlowNodeRegistrationParams)
-						{
-							var registrationParams = (EntityFlowNodeRegistrationParams)script.RegistrationParams;
-
-							script.ScriptName = "entity" + ":" + registrationParams.entityName;
-						}
-
-						script.Registered = true;
-						Scripts.Add(script);
 					}
+
+					if (script.RegistrationParams is GameRulesRegistrationParams)
+					{
+						var registrationParams = (GameRulesRegistrationParams)script.RegistrationParams;
+
+						if (registrationParams.name == null)
+							registrationParams.name = script.ScriptName;
+
+						NativeGameRulesMethods.RegisterGameMode(registrationParams.name);
+
+						if (registrationParams.defaultGamemode || !hasDefaultGameRules)
+						{
+							NativeGameRulesMethods.SetDefaultGameMode(registrationParams.name);
+
+							hasDefaultGameRules = true;
+						}
+
+						script.RegistrationParams = registrationParams;
+					}
+					else if (script.RegistrationParams is FlowNodeRegistrationParams)
+					{
+						var registrationParams = (FlowNodeRegistrationParams)script.RegistrationParams;
+
+						if (registrationParams.name == null)
+							registrationParams.name = script.ScriptName;
+						if (registrationParams.category == null)
+							registrationParams.category = script.Type.Namespace;
+						if (registrationParams.filter == 0)
+							registrationParams.filter = FlowNodeFilter.Approved;
+
+						script.RegistrationParams = registrationParams;
+
+						script.ScriptName = registrationParams.category + ":" + registrationParams.name;
+					}
+					else if (script.RegistrationParams is EntityFlowNodeRegistrationParams)
+					{
+						var registrationParams = (EntityFlowNodeRegistrationParams)script.RegistrationParams;
+
+						script.ScriptName = "entity" + ":" + registrationParams.entityName;
+					}
+
+					script.Registered = true;
+					this.Scripts.Add(script);
 				}
 			}
 		}
 
+// ReSharper disable UnusedParameter.Local
 		private Exception LoadPlugins(bool initialLoad)
+// ReSharper restore UnusedParameter.Local
 		{
 			var pluginsDirectory = ProjectSettings.PluginsFolder;
 			if (!Directory.Exists(pluginsDirectory))
@@ -360,28 +368,25 @@ namespace CryEngine.Initialization
 
 					var compiler = Activator.CreateInstance(compilerType) as ICryMonoPlugin;
 
-					PluginTypes.Add(compiler, null);
-
-					var assemblyPaths = Directory.GetFiles(directory, "*.dll", SearchOption.AllDirectories);
-					var assemblies = new List<Assembly>();
-
-					foreach (var assemblyPath in assemblyPaths)
+					if (compiler != null)
 					{
-						if (assemblyPath != compilerDll)
+						this.PluginTypes.Add(compiler, null);
+
+						var assemblyPaths = Directory.GetFiles(directory, "*.dll", SearchOption.AllDirectories);
+						var assemblies =
+							assemblyPaths.Where(assemblyPath => assemblyPath != compilerDll)
+										 .Select(this.LoadAssembly)
+										 .Where(foundAssembly => foundAssembly != null)
+										 .ToList();
+
+						try
 						{
-							var foundAssembly = LoadAssembly(assemblyPath);
-							if (foundAssembly != null)
-								assemblies.Add(foundAssembly);
+							this.PluginTypes[compiler] = compiler.GetTypes(assemblies);
 						}
-					}
-
-					try
-					{
-						PluginTypes[compiler] = compiler.GetTypes(assemblies);
-					}
-					catch (Exception ex)
-					{
-						return ex;
+						catch (Exception ex)
+						{
+							return ex;
+						}
 					}
 				}
 			}
@@ -523,8 +528,7 @@ namespace CryEngine.Initialization
 				if (throwOnFail)
 					throw new ScriptNotFoundException(string.Format("Script {0} of ScriptType {1} could not be found.", scriptName,
 																	scriptType));
-				else
-					return null;
+				return null;
 			}
 
 			var instance = CreateScriptInstance(script, constructorParams, throwOnFail);
@@ -547,9 +551,8 @@ namespace CryEngine.Initialization
 			{
 				if (throwOnFail)
 					throw new ArgumentException("Failed to create instance, make sure type derives from CryScriptInstance",
-												"scriptName");
-				else
-					return null;
+												"script");
+				return null;
 			}
 #endif
 			AddScriptInstance(script, scriptInstance);
@@ -626,28 +629,19 @@ namespace CryEngine.Initialization
 				throw new ArgumentException(string.Format("scriptType: value {0} was not defined in the enum", scriptType));
 #endif
 
-			int numRemoved = 0;
-			foreach (var script in Scripts)
-			{
-				if ((script.ScriptType & scriptType) == scriptType)
+			return (from script in this.Scripts
+				where (script.ScriptType & scriptType) == scriptType
+				where script.ScriptInstances != null
+				select script.ScriptInstances.RemoveAll(x =>
 				{
-					if (script.ScriptInstances != null)
+					if (match(x as T))
 					{
-						numRemoved += script.ScriptInstances.RemoveAll(x =>
-						{
-							if (match(x as T))
-							{
-								x.OnDestroyedInternal();
-								return true;
-							}
-
-							return false;
-						});
+						x.OnDestroyedInternal();
+						return true;
 					}
-				}
-			}
 
-			return numRemoved;
+					return false;
+				})).Sum();
 		}
 
 		public int RemoveInstances(ScriptType scriptType, Predicate<CryScriptInstance> match)
@@ -720,7 +714,6 @@ namespace CryEngine.Initialization
 					if (instance != null)
 					{
 						scriptInstance = instance;
-						return;
 					}
 				}
 			});
@@ -744,6 +737,7 @@ namespace CryEngine.Initialization
 
 		private List<Assembly> ProcessedAssemblies { get; set; }
 
+		[UsedImplicitly]
 		private AppDomain ScriptDomain { get; set; }
 		private IFormatter Formatter { get; set; }
 
@@ -754,22 +748,53 @@ namespace CryEngine.Initialization
 
 		public static ScriptManager Instance;
 	}
-
 	/// <summary>
-	/// Thrown by <see cref="CryEngine.Initialization.ScriptManager" /> if a CryScript could not be located.
+	/// Represents an exception that is thrown to cancel a certain operation.
 	/// </summary>
-	[Serializable]
+	[SerializableAttribute]
 	public class ScriptNotFoundException : Exception
 	{
-		public ScriptNotFoundException(string error)
+		/// <summary>
+		/// Creates a default instance of <see cref="ScriptNotFoundException" /> class.
+		/// </summary>
+		public ScriptNotFoundException()
 		{
-			message = error;
 		}
-
-		private string message;
-		public override string Message
+		/// <summary>
+		/// Creates a new instance of <see cref="ScriptNotFoundException" /> class with specified message.
+		/// </summary>
+		/// <param name="message">
+		/// Message to supply with exception.
+		/// </param>
+		public ScriptNotFoundException(string message) : base(message)
 		{
-			get { return message; }
+		}
+		/// <summary>
+		/// Creates a new instance of <see cref="ScriptNotFoundException" /> class with specified
+		/// message and exception object that caused new one to be created.
+		/// </summary>
+		/// <param name="message">
+		/// Message to supply with exception.
+		/// </param>
+		/// <param name="inner">
+		/// Exception that caused a new one to be created.
+		/// </param>
+		public ScriptNotFoundException(string message, Exception inner) : base(message, inner)
+		{
+		}
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ScriptNotFoundException" /> class with serialized data.
+		/// </summary>
+		/// <param name="info">
+		/// The object that holds the serialized object data.
+		/// </param>
+		/// <param name="context">
+		/// The contextual information about the source or destination.
+		/// </param>
+		protected ScriptNotFoundException(
+			SerializationInfo info,
+			StreamingContext context) : base(info, context)
+		{
 		}
 	}
 }

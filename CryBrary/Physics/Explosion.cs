@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using CryEngine.Mathematics;
 using CryEngine.Native;
 using CryEngine.Physics;
@@ -19,7 +20,7 @@ namespace CryEngine
 
 		public void Explode()
 		{
-			if (explosion.rmax == 0)
+			if (Math.Abs(this.explosion.rmax) < 0.0001f)
 				explosion.rmax = 0.0001f;
 			explosion.nOccRes = explosion.rmax > 50 ? 0 : 16;
 
@@ -48,8 +49,7 @@ namespace CryEngine
 		{
 			get
 			{
-				foreach (IntPtr ptr in affectedEnts)
-					yield return PhysicalEntity.TryGet(ptr);
+				return from IntPtr ptr in this.affectedEnts select PhysicalEntity.TryGet(ptr);
 			}
 		}
 
@@ -73,8 +73,8 @@ namespace CryEngine
 		public int iholeType; // breakability index for the explosion (<0 disables)
 		public bool forceDeformEntities; // force deformation even if breakImpulseScale is zero
 		// filled as results
-		IntPtr pAffectedEnts { get; set; }
-		IntPtr pAffectedEntsExposure { get; set; }    // 0..1 exposure, computed from the occlusion map
+		public IntPtr pAffectedEnts;
+		public IntPtr pAffectedEntsExposure;    // 0..1 exposure, computed from the occlusion map
 		public int nAffectedEnts;
 	}
 }

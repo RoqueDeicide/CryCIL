@@ -132,9 +132,8 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Actor\Actor.cs" />
-    <Compile Include="Actor\ActorBase.cs" />
-    <Compile Include="Actor\AIActor.cs" />
+    <Compile Include="Actors\Actor.cs" />
+    <Compile Include="Actors\ActorBase.cs" />
     <Compile Include="GeneralExtensions.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\CSG\SplittableTriangle.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\Mesh.CSG.cs" />
@@ -144,10 +143,11 @@
     <Compile Include="Mathematics\Geometry\Meshes\MeshVertex.cs" />
     <Compile Include="Mathematics\Geometry\Plane.GenericOps.cs" />
     <Compile Include="Native\ActorInitializationParams.cs" />
-    <Compile Include="Actor\ActorNetworking.cs" />
-    <Compile Include="Actor\ActorStatics.cs" />
-    <Compile Include="Actor\ViewParams.cs" />
+    <Compile Include="Actors\ActorNetworking.cs" />
+    <Compile Include="Actors\ActorStatics.cs" />
+    <Compile Include="Actors\ViewParams.cs" />
     <Compile Include="Attributes.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Sandbox\Interface.cs" />
     <Compile Include="Sandbox\SandboxExtensionAttribute.cs" />
     <Compile Include="Console\ConsoleCommand\ConsoleCommandArgs.cs" />
@@ -255,7 +255,6 @@
     <Compile Include="Mathematics\Geometry\Meshes\IMeshDetailsCollection.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\IQTangent.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\ITangent.cs" />
-    <Compile Include="Mathematics\Geometry\Meshes\MeshDetailCollectionInterfaces.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\NativeFaceCollection.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\NativeIndicesCollection.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\NativeMesh.cs" />
@@ -268,7 +267,6 @@
     <Compile Include="Mathematics\Geometry\Meshes\NativeVertexTextureCoordinatesCollection.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\TangentInt16.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\TangentSingle.cs" />
-    <Compile Include="Mathematics\Geometry\Meshes\Vertex.cs" />
     <Compile Include="Native\NativeMeshMethods.cs" />
     <Compile Include="Native\NativeStaticObjectMethods.cs" />
     <Compile Include="StaticObjects\StaticObject.cs" />
@@ -320,7 +318,7 @@
     <Compile Include="ProjectSettings.cs" />
     <Compile Include="Entities\AnimationFlags.cs" />
     <Compile Include="Entities\EntityLight.cs" />
-    <Compile Include="Actor\NativeActor.cs" />
+    <Compile Include="Actors\NativeActor.cs" />
     <Compile Include="Native\Native3DEngineMethods.cs" />
     <Compile Include="Native\NativeActorMethods.cs" />
     <Compile Include="Async\Jobs\AsyncJob.cs" />

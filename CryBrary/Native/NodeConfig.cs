@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 using CryEngine.Initialization;
 
@@ -6,7 +7,9 @@ namespace CryEngine.Flowgraph.Native
 {
 	internal struct NodeConfig
 	{
-		public NodeConfig(FlowNodeFilter cat, string desc, FlowNodeFlags nodeFlags, FlowNodeType nodeType, InputPortConfig[] inputPorts, OutputPortConfig[] outputPorts)
+		public NodeConfig(FlowNodeFilter cat, string desc,
+			FlowNodeFlags nodeFlags, FlowNodeType nodeType,
+			IEnumerable<InputPortConfig> inputPorts, IEnumerable<OutputPortConfig> outputPorts)
 			: this()
 		{
 			flags = nodeFlags;
@@ -18,15 +21,15 @@ namespace CryEngine.Flowgraph.Native
 			outputs = outputPorts.Cast<object>().ToArray();
 		}
 
-		private FlowNodeFlags flags;
+		internal FlowNodeFlags flags;
 
-		private FlowNodeFilter filter;
+		internal FlowNodeFilter filter;
 
-		private FlowNodeType type;
+		internal FlowNodeType type;
 
-		private string description;
+		internal string description;
 
-		private object[] inputs;
-		private object[] outputs;
+		internal object[] inputs;
+		internal object[] outputs;
 	}
 }

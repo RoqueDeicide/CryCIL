@@ -6,22 +6,21 @@ using CryEngine.Mathematics;
 
 namespace CryEngine
 {
-	[CLSCompliant(false)]
 	public struct AnimationEvent
 	{
-		public float Time { get; set; }
-		UInt32 AnimNumberInQueue { get; set; }
-		float AnimPriority { get; set; }
-		string AnimPathName { get; set; }
-		int AnimID { get; set; }
-		UInt32 EventNameLowercaseCRC32 { get; set; }
-		string EventName { get; set; }
+		public float Time;
+		public UInt32 AnimNumberInQueue;
+		public float AnimPriority;
+		public string AnimPathName;
+		public int AnimationIdentifier;
+		public UInt32 EventNameLowercaseCrc32;
+		public string EventName;
 		/// <summary>
 		/// Meaning depends on event - sound: sound path, effect: effect name
 		/// </summary>
-		string CustomParameter { get; set; }
-		string BonePathName { get; set; }
-		Vector3 vOffset { get; set; }
-		Vector3 vDir { get; set; }
+		public string CustomParameter;
+		public string BonePathName;
+		public Vector3 ViewOffset;
+		public Vector3 ViewDirection;
 	}
 }

@@ -9,7 +9,9 @@ namespace CryEngine.Initialization
 {
 	public struct OutputPortConfig
 	{
-		public OutputPortConfig(string _name, string _humanName, string desc, NodePortType _type, InputPortConfig[] inputPorts, OutputPortConfig[] outputPorts)
+		public OutputPortConfig(string _name, string _humanName,
+			string desc, NodePortType _type, IEnumerable<InputPortConfig> inputPorts,
+			IEnumerable<OutputPortConfig> outputPorts)
 			: this()
 		{
 			name = _name;

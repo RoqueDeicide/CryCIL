@@ -1,8 +1,7 @@
-﻿using System.Runtime.InteropServices;
-using CryEngine.Entities;
+﻿using CryEngine.Entities;
 using CryEngine.Native;
 
-namespace CryEngine
+namespace CryEngine.Actors
 {
 	/// <summary>
 	/// Represents an actor with a custom IActor implementation outside of CryMono.dll.
@@ -14,14 +13,14 @@ namespace CryEngine
 
 		internal NativeActor(ActorInitializationParams actorInfo)
 		{
-			Id = new EntityId(actorInfo.Id);
+			this.Id = new EntityId(actorInfo.Id);
 			this.SetIEntity(actorInfo.EntityPtr);
 			this.SetIActor(actorInfo.ActorPtr);
 		}
 
 		internal NativeActor(EntityId id)
 		{
-			Id = id;
+			this.Id = id;
 		}
 	}
 }

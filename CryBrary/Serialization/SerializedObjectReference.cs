@@ -17,7 +17,7 @@ namespace CryEngine.Serialization
 	{
 		static ObjectReference()
 		{
-			m_forbiddenTypes = new Type[]
+			mForbiddenTypes = new[]
 			{
 				typeof(Stream),
 				typeof(StreamWriter),
@@ -28,76 +28,73 @@ namespace CryEngine.Serialization
 		/// <summary>
 		/// Types that we can't serialize
 		/// </summary>
-		private static Type[] m_forbiddenTypes;
+		private static readonly Type[] mForbiddenTypes;
 
 		public ObjectReference(string name, SerializationType type)
 		{
-			m_name = name;
-			m_serializationType = type;
+			this.Name = name;
+			this.SerializationType = type;
 		}
 
 		public ObjectReference(string name, object value)
 		{
-			m_name = name;
+			this.Name = name;
 			Value = value;
 
-			Type valueType = m_value != null ? m_value.GetType() : null;
+			Type valueType = this.Value != null ? this.Value.GetType() : null;
 			if (valueType == null)
-				m_serializationType = SerializationType.Null;
+				this.SerializationType = SerializationType.Null;
 			else if (valueType == typeof(IntPtr))
-				m_serializationType = SerializationType.IntPtr;
+				this.SerializationType = SerializationType.IntPtr;
 			else if (valueType.IsPrimitive)
 			{
-				if (m_value is int && UnusedMarker.IsUnused((int)m_value))
-					m_serializationType = SerializationType.UnusedMarker;
-				else if (m_value is uint && UnusedMarker.IsUnused((uint)m_value))
-					m_serializationType = SerializationType.UnusedMarker;
-				else if (m_value is float && UnusedMarker.IsUnused((float)m_value))
-					m_serializationType = SerializationType.UnusedMarker;
+				if (this.Value is int && UnusedMarker.IsUnused((int)this.Value))
+					this.SerializationType = SerializationType.UnusedMarker;
+				else if (this.Value is uint && UnusedMarker.IsUnused((uint)this.Value))
+					this.SerializationType = SerializationType.UnusedMarker;
+				else if (this.Value is float && UnusedMarker.IsUnused((float)this.Value))
+					this.SerializationType = SerializationType.UnusedMarker;
 				else
-					m_serializationType = SerializationType.Any;
+					this.SerializationType = SerializationType.Any;
 			}
 			else if (valueType == typeof(string))
-				m_serializationType = SerializationType.String;
+				this.SerializationType = SerializationType.String;
 			else if (valueType.IsArray)
-				m_serializationType = SerializationType.Array;
+				this.SerializationType = SerializationType.Array;
 			else if (valueType.IsEnum)
-				m_serializationType = SerializationType.Enum;
+				this.SerializationType = SerializationType.Enum;
 			else if (valueType.Implements<IList>() || valueType.Implements<IDictionary>())
 			{
-				if (valueType.IsGenericType)
-					m_serializationType = SerializationType.GenericEnumerable;
-				else
-					m_serializationType = SerializationType.Enumerable;
+				this.SerializationType =
+					valueType.IsGenericType
+					? SerializationType.GenericEnumerable
+					: SerializationType.Enumerable;
 			}
 			else
 			{
-				if (m_value is Type)
-					m_serializationType = SerializationType.Type;
+				if (this.Value is Type)
+					this.SerializationType = SerializationType.Type;
 				else if (valueType.Implements<Delegate>())
-					m_serializationType = SerializationType.Delegate;
+					this.SerializationType = SerializationType.Delegate;
 				else if (valueType.Implements<MemberInfo>())
-					m_serializationType = SerializationType.MemberInfo;
+					this.SerializationType = SerializationType.MemberInfo;
 				else
 				{
-					if (m_value is Vector3 && UnusedMarker.IsUnused((Vector3)m_value))
-						m_serializationType = SerializationType.UnusedMarker;
-					else if (m_forbiddenTypes.Contains(valueType))
-						m_serializationType = SerializationType.Null;
+					if (this.Value is Vector3 && UnusedMarker.IsUnused((Vector3)this.Value))
+						this.SerializationType = SerializationType.UnusedMarker;
+					else if (mForbiddenTypes.Contains(valueType))
+						this.SerializationType = SerializationType.Null;
 					else
-						m_serializationType = SerializationType.Object;
+						this.SerializationType = SerializationType.Object;
 				}
 			}
 		}
 
-		private string m_name;
-		public string Name { get { return m_name; } }
+		public string Name { get; private set; }
 
-		private object m_value;
-		public object Value { get { return m_value; } set { m_value = value; } }
+		public object Value { get; set; }
 
-		private SerializationType m_serializationType;
-		public SerializationType SerializationType { get { return m_serializationType; } set { m_serializationType = value; } }
+		public SerializationType SerializationType { get; set; }
 
 		public bool AllowNull { get; set; }
 	}

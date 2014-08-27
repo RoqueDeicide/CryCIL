@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
+using CryEngine.Annotations;
 using CryEngine.Mathematics;
 using CryEngine.Native;
 
@@ -32,7 +33,7 @@ namespace CryEngine.Entities
 
 			return result;
 		}
-
+		[UsedImplicitly]
 		private void InternalFullSerialize(Serialization.CrySerialize serialize)
 		{
 			//var serialize = new Serialization.CrySerialize();
@@ -41,6 +42,7 @@ namespace CryEngine.Entities
 			this.FullSerialize(serialize);
 		}
 
+		[UsedImplicitly]
 		private void InternalNetSerialize(Serialization.CrySerialize serialize, int aspect, byte profile, int flags)
 		{
 			//var serialize = new Serialization.CrySerialize();
@@ -76,7 +78,6 @@ namespace CryEngine.Entities
 		public void InvalidateTrigger()
 		{
 			NativeEntityMethods.InvalidateTrigger(this.GetIEntity());
-			;
 		}
 		#endregion
 		#region Callbacks

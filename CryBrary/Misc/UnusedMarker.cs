@@ -11,7 +11,7 @@ namespace CryEngine.Utilities
 	public static class UnusedMarker
 	{
 		[StructLayout(LayoutKind.Explicit)]
-		private struct f2i
+		public struct f2i
 		{
 			[FieldOffset(0)]
 			public float f;
@@ -21,7 +21,7 @@ namespace CryEngine.Utilities
 		}
 
 		[StructLayout(LayoutKind.Explicit)]
-		private struct d2i
+		public struct d2i
 		{
 			[FieldOffset(0)]
 			public double d;

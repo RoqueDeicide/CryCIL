@@ -12,11 +12,11 @@ namespace CryEngine.Native
 		/// Revert the last script reload attempt.
 		/// </summary>
 		[MethodImplAttribute(MethodImplOptions.InternalCall)]
-		extern private static void RevertAppDomain();
+		extern internal static void RevertAppDomain();
 		/// <summary>
 		/// Attempt to reload scripts again
 		/// </summary>
 		[MethodImplAttribute(MethodImplOptions.InternalCall)]
-		extern private static void ReloadAppDomain();
+		extern internal static void ReloadAppDomain();
 	}
 }

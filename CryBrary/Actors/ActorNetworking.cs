@@ -1,19 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Reflection;
 using CryEngine.Entities;
-using CryEngine.Native;
 using CryEngine.Extensions;
+using CryEngine.Native;
 
-namespace CryEngine
+namespace CryEngine.Actors
 {
 	public partial class Actor
 	{
 		public void RemoteInvocation(Action action, NetworkTarget netTarget, int channelId = -1)
 		{
-			RemoteInvocation(action.Target as EntityBase, action.Method, netTarget, channelId, null);
+			this.RemoteInvocation(action.Target as EntityBase, action.Method, netTarget, channelId, null);
 		}
 		#region RemoteInvocation arg generics
 		public void RemoteInvocation<T1>(Action<T1> action, NetworkTarget netTarget, T1 param1, int channelId = -1)
@@ -21,7 +18,7 @@ namespace CryEngine
 			object[] args = new object[1];
 			args[0] = param1;
 
-			RemoteInvocation(action.Target as EntityBase, action.Method, netTarget, channelId, args);
+			this.RemoteInvocation(action.Target as EntityBase, action.Method, netTarget, channelId, args);
 		}
 
 		public void RemoteInvocation<T1, T2>(Action<T1, T2> action, NetworkTarget netTarget, T1 param1, T2 param2,
@@ -31,7 +28,7 @@ namespace CryEngine
 			args[0] = param1;
 			args[1] = param2;
 
-			RemoteInvocation(action.Target as EntityBase, action.Method, netTarget, channelId, args);
+			this.RemoteInvocation(action.Target as EntityBase, action.Method, netTarget, channelId, args);
 		}
 
 		public void RemoteInvocation<T1, T2, T3>(Action<T1, T2, T3> action, NetworkTarget netTarget, T1 param1, T2 param2,
@@ -42,7 +39,7 @@ namespace CryEngine
 			args[1] = param2;
 			args[2] = param3;
 
-			RemoteInvocation(action.Target as EntityBase, action.Method, netTarget, channelId, args);
+			this.RemoteInvocation(action.Target as EntityBase, action.Method, netTarget, channelId, args);
 		}
 
 		public void RemoteInvocation<T1, T2, T3, T4>(Action<T1, T2, T3, T4> action, NetworkTarget netTarget, T1 param1,
@@ -54,7 +51,7 @@ namespace CryEngine
 			args[2] = param3;
 			args[3] = param4;
 
-			RemoteInvocation(action.Target as EntityBase, action.Method, netTarget, channelId, args);
+			this.RemoteInvocation(action.Target as EntityBase, action.Method, netTarget, channelId, args);
 		}
 
 		public void RemoteInvocation<T1, T2, T3, T4, T5>(Action<T1, T2, T3, T4, T5> action, NetworkTarget netTarget, T1 param1,
@@ -67,7 +64,7 @@ namespace CryEngine
 			args[3] = param4;
 			args[4] = param5;
 
-			RemoteInvocation(action.Target as EntityBase, action.Method, netTarget, channelId, args);
+			this.RemoteInvocation(action.Target as EntityBase, action.Method, netTarget, channelId, args);
 		}
 
 		public void RemoteInvocation<T1, T2, T3, T4, T5, T6>(Action<T1, T2, T3, T4, T5, T6> action, NetworkTarget netTarget,
@@ -81,7 +78,7 @@ namespace CryEngine
 			args[4] = param5;
 			args[5] = param6;
 
-			RemoteInvocation(action.Target as EntityBase, action.Method, netTarget, channelId, args);
+			this.RemoteInvocation(action.Target as EntityBase, action.Method, netTarget, channelId, args);
 		}
 		#endregion
 		private void RemoteInvocation(EntityBase target, MethodInfo method, NetworkTarget netTarget, int channelId = -1,
@@ -94,7 +91,7 @@ namespace CryEngine
 				throw new RemoteInvocationException("Non-static method owner does not derive from EntityBase.");
 #endif
 
-			NativeActorMethods.RemoteInvocation(Id, target.Id, method.Name, args, netTarget, channelId);
+			NativeActorMethods.RemoteInvocation(this.Id, target.Id, method.Name, args, netTarget, channelId);
 		}
 	}
 }

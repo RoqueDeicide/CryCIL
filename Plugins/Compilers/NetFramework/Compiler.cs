@@ -429,7 +429,7 @@ namespace CryEngine.Compilers.NET
 		{
 			EntityFlowNodeRegistrationParams nodeRegistrationParams = new EntityFlowNodeRegistrationParams();
 
-			Type curEntityType = type.GetGenericArguments(typeof(EntityFlowNode<>)).ElementAt(0);
+			Type curEntityType = type.GetGenericArguments(typeof(EntityFlowNode)).ElementAt(0);
 			nodeRegistrationParams.entityName = curEntityType.Name;
 
 			Type entType = typeof(EntityBase);

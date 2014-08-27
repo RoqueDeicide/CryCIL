@@ -16,7 +16,7 @@ namespace CryEngine.Testing
 		{
 			var type = Instance.GetType();
 			var name = type.GetAttribute<TestCollectionAttribute>().Name ?? type.Name;
-			return new TestCollectionResult { Name = name, Results = Tests.Select(test => RunTest(test)).ToList() };
+			return new TestCollectionResult { Name = name, Results = Tests.Select(this.RunTest).ToList() };
 		}
 
 		private TestResultInfo RunTest(MethodInfo test)

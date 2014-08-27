@@ -51,10 +51,9 @@ namespace CryEngine.Extensions
 			{
 				var interfaceTypes = type.GetInterfaces();
 
-				foreach (var it in interfaceTypes)
+				if (interfaceTypes.Any(it => it.IsGenericType && it.GetGenericTypeDefinition() == genericBaseType))
 				{
-					if (it.IsGenericType && it.GetGenericTypeDefinition() == genericBaseType)
-						return true;
+					return true;
 				}
 
 				if (type.IsGenericType && type.GetGenericTypeDefinition() == genericBaseType)
@@ -123,11 +122,8 @@ namespace CryEngine.Extensions
 		/// <returns>The first instance of attribute T, or null if none is found.</returns>
 		public static T GetAttribute<T>(this MemberInfo memberInfo) where T : Attribute
 		{
-			var attributes = memberInfo.GetAttributes<T>();
-			if (attributes.Any())
-				return attributes.FirstOrDefault();
-
-			return null;
+			var attributes = memberInfo.GetAttributes<T>().ToList();
+			return attributes.Count != 0 ? attributes[0] : null;
 		}
 
 		/// <summary>

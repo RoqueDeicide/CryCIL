@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CryEngine.Actors;
 using CryEngine.Initialization;
 using CryEngine.Mathematics;
 using CryEngine.Native;
@@ -86,7 +87,7 @@ namespace CryEngine.Entities
 
 				return ent;
 			}
-			else if (info.Id != 0)
+			if (info.Id != 0)
 				return CreateNativeEntity(info.Id, info.IEntityPtr) as Entity;
 
 			Debug.LogAlways("[Entity.Spawn] Failed to spawn entity of class {0} with name {1}", className, entityName);
@@ -191,7 +192,7 @@ namespace CryEngine.Entities
 		internal static EntityBase CreateNativeEntity(EntityId id, IntPtr entityPointer)
 		{
 			// check if actor
-			var actorInfo = NativeActorMethods.GetActorInfoById((uint)id.Value);
+			var actorInfo = NativeActorMethods.GetActorInfoById(id.Value);
 			if (actorInfo.Id != 0)
 				return Actor.CreateNativeActor(actorInfo);
 

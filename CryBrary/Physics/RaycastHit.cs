@@ -31,10 +31,12 @@ namespace CryEngine
 		{
 			int hash = 17;
 
+			// ReSharper disable NonReadonlyFieldInGetHashCode
 			hash = hash * 29 + Distance.GetHashCode();
 			hash = hash * 29 + physicalCollider.GetHashCode();
 			hash = hash * 29 + Point.GetHashCode();
 			hash = hash * 29 + Normal.GetHashCode();
+			// ReSharper restore NonReadonlyFieldInGetHashCode
 
 			return hash;
 		}
@@ -50,10 +52,9 @@ namespace CryEngine
 		{
 			get
 			{
-				if (physicalCollider == IntPtr.Zero)
-					return null;
-
-				return PhysicalEntity.TryGet(physicalCollider);
+				return this.physicalCollider == IntPtr.Zero
+					? null
+					: PhysicalEntity.TryGet(this.physicalCollider);
 			}
 		}
 
@@ -64,11 +65,8 @@ namespace CryEngine
 		{
 			get
 			{
-				var physicalCollider = PhysicalCollider;
-				if (physicalCollider == null)
-					return null;
-
-				return physicalCollider.Owner;
+				var collider = PhysicalCollider;
+				return collider == null ? null : collider.Owner;
 			}
 		}
 
@@ -149,7 +147,7 @@ namespace CryEngine
 			get { return iprim; }
 		}
 
-		private IntPtr nextHit { get; set; }
+		public IntPtr nextHit;
 	}
 
 	[Flags]

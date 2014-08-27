@@ -4,6 +4,7 @@ using System.Linq;
 using System.Diagnostics;
 using System.Collections.Generic;
 using CryEngine;
+using CryEngine.Actors;
 using CryEngine.Entities;
 using CryEngine.Serialization;
 using CryEngine.Initialization;

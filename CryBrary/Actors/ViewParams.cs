@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using CryEngine.Actors;
 using CryEngine.Entities;
 using CryEngine.Mathematics;
 
 namespace CryEngine
 {
 	/// <summary>
-	/// View parameters, commonly used by <see cref="CryEngine.Actor" /> to update the active view.
+	/// View parameters, commonly used by <see cref="Actor" /> to update the active view.
 	/// </summary>
 	public struct ViewParams
 	{
@@ -34,7 +35,7 @@ namespace CryEngine
 		/// </summary>
 		public float FieldOfView;
 
-		private ushort _viewID { get; set; }
+		public byte ViewId;
 
 		//view shake status
 		public bool GroundOnly;

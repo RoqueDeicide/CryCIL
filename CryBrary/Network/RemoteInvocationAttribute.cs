@@ -2,14 +2,13 @@
 
 namespace CryEngine
 {
+	/// <summary>
+	/// Marks methods that are invoked remotely.
+	/// </summary>
 	[AttributeUsage(AttributeTargets.Method)]
 	public sealed class RemoteInvocationAttribute : Attribute
 	{
-		public RemoteInvocationAttribute()
-		{
-		}
 	}
-
 	/// <summary>
 	/// Flags indicating what a remote invocation targets.
 	/// </summary>
@@ -32,12 +31,10 @@ namespace CryEngine
 		/// Target all clients.
 		/// </summary>
 		ToAllClients = 0x08,
-
 		/// <summary>
 		/// Target the server.
 		/// </summary>
 		ToServer = 0x100,
-
 		/// <summary>
 		/// No local calls.
 		/// </summary>
@@ -46,7 +43,6 @@ namespace CryEngine
 		/// No remote calls
 		/// </summary>
 		NoRemoteCalls = 0x20000,
-
 		/// <summary>
 		/// To all remote clients
 		/// </summary>

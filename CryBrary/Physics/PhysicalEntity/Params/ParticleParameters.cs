@@ -12,34 +12,33 @@ namespace CryEngine
 	{
 		public static ParticleParameters Create()
 		{
-			var pparams = new ParticleParameters();
-
-			pparams.type = 3;
-
-			pparams.mass = UnusedMarker.Float;
-			pparams.size = UnusedMarker.Float;
-			pparams.thickness = UnusedMarker.Float;
-			pparams.wspin = UnusedMarker.Vector3;
-			pparams.accThrust = UnusedMarker.Float;
-			pparams.kAirResistance = UnusedMarker.Float;
-			pparams.kWaterResistance = UnusedMarker.Float;
-			pparams.velocity = UnusedMarker.Float;
-			pparams.heading = UnusedMarker.Vector3;
-			pparams.accLift = UnusedMarker.Float;
-			pparams.gravity = UnusedMarker.Vector3;
-			pparams.waterGravity = UnusedMarker.Vector3;
-
-			pparams.surface_idx = UnusedMarker.Integer;
-			pparams.normal = UnusedMarker.Vector3;
-			pparams.q0 = UnusedMarker.Quaternion;
-			pparams.minBounceVel = UnusedMarker.Float;
-			pparams.rollAxis = UnusedMarker.Vector3;
-			pparams.flags = (PhysicalizationFlags)UnusedMarker.UnsignedInteger;
-			pparams.pColliderToIgnore = UnusedMarker.IntPtr;
-			pparams.iPierceability = UnusedMarker.Integer;
-			pparams.areaCheckPeriod = UnusedMarker.Integer;
-			pparams.minVel = UnusedMarker.Float;
-			pparams.collTypes = UnusedMarker.Integer;
+			var pparams = new ParticleParameters
+			{
+				type = 3,
+				mass = UnusedMarker.Float,
+				size = UnusedMarker.Float,
+				thickness = UnusedMarker.Float,
+				wspin = UnusedMarker.Vector3,
+				accThrust = UnusedMarker.Float,
+				kAirResistance = UnusedMarker.Float,
+				kWaterResistance = UnusedMarker.Float,
+				velocity = UnusedMarker.Float,
+				heading = UnusedMarker.Vector3,
+				accLift = UnusedMarker.Float,
+				gravity = UnusedMarker.Vector3,
+				waterGravity = UnusedMarker.Vector3,
+				surface_idx = UnusedMarker.Integer,
+				normal = UnusedMarker.Vector3,
+				q0 = UnusedMarker.Quaternion,
+				minBounceVel = UnusedMarker.Float,
+				rollAxis = UnusedMarker.Vector3,
+				flags = (PhysicalizationFlags)UnusedMarker.UnsignedInteger,
+				pColliderToIgnore = UnusedMarker.IntPtr,
+				iPierceability = UnusedMarker.Integer,
+				areaCheckPeriod = UnusedMarker.Integer,
+				minVel = UnusedMarker.Float,
+				collTypes = UnusedMarker.Integer
+			};
 
 			return pparams;
 		}
@@ -65,7 +64,7 @@ namespace CryEngine
 		public Quaternion q0;	// initial orientation (zero means x along direction of movement, z up)
 		public float minBounceVel;	// velocity threshold for bouncing->sliding switch
 		public float minVel;	// sleep speed threshold
-		private IntPtr pColliderToIgnore;	// physical entity to ignore during collisions
+		public IntPtr pColliderToIgnore;	// physical entity to ignore during collisions
 		public int iPierceability;	// pierceability for ray tests; pierceble hits slow the particle down, but don't stop it
 		public int collTypes; // 'objtype' passed to RayWorldntersection
 		public int areaCheckPeriod; // how often (in frames) world area checks are made

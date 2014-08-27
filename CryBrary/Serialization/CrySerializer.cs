@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -175,7 +176,9 @@ namespace CryEngine.Serialization
 			WriteLine(((IntPtr)objectReference.Value).ToInt64());
 		}
 
+// ReSharper disable UnusedParameter.Local
 		private void WriteReference(ObjectReference objReference, int line)
+// ReSharper restore UnusedParameter.Local
 		{
 			WriteLine(SerializationType.Reference);
 			WriteLine(line);
@@ -212,19 +215,19 @@ namespace CryEngine.Serialization
 
 		private void WriteEnumerable(ObjectReference objectReference)
 		{
-			var array = (objectReference.Value as IEnumerable).Cast<object>();
-			var numElements = array.Count();
+			var array = ((IEnumerable)objectReference.Value).Cast<object>().ToArray();
+			var numElements = array.Length;
 			WriteLine(numElements);
 
 			WriteType(GetIEnumerableElementType(objectReference.Value.GetType()));
 
 			for (int i = 0; i < numElements; i++)
-				StartWrite(new ObjectReference(i.ToString(), array.ElementAt(i)));
+				StartWrite(new ObjectReference(i.ToString(CultureInfo.InvariantCulture), array[i]));
 		}
 
 		private void WriteGenericEnumerable(ObjectReference objectReference)
 		{
-			var enumerable = (objectReference.Value as IEnumerable).Cast<object>();
+			var enumerable = ((IEnumerable)objectReference.Value).Cast<object>().ToArray();
 
 			WriteLine(enumerable.Count());
 
@@ -236,8 +239,8 @@ namespace CryEngine.Serialization
 				int i = 0;
 				foreach (var element in enumerable)
 				{
-					StartWrite(new ObjectReference("key_" + i.ToString(), element.GetType().GetProperty("Key").GetValue(element, null)));
-					StartWrite(new ObjectReference("value_" + i.ToString(), element.GetType().GetProperty("Value").GetValue(element, null)));
+					StartWrite(new ObjectReference("key_" + i, element.GetType().GetProperty("Key").GetValue(element, null)));
+					StartWrite(new ObjectReference("value_" + i, element.GetType().GetProperty("Value").GetValue(element, null)));
 					i++;
 				}
 			}
@@ -482,7 +485,9 @@ namespace CryEngine.Serialization
 					var eventName = ReadLine();
 
 					var eventInfo = type.GetEvent(eventName);
+// ReSharper disable UnusedVariable
 					var eventHandlerType = ReadType();
+// ReSharper restore UnusedVariable
 
 					var numDelegates = Int32.Parse(ReadLine());
 					for (int iDelegate = 0; iDelegate < numDelegates; iDelegate++)
@@ -546,11 +551,13 @@ namespace CryEngine.Serialization
 				var list = objReference.Value as IList;
 
 				for (int i = 0; i < elements; i++)
-					list.Add(StartRead().Value);
+					if (list != null) list.Add(this.StartRead().Value);
 			}
 			else if (type.ImplementsGeneric(typeof(ISet<>)) || type.ImplementsGeneric(typeof(ICollection<>)))
 			{
+// ReSharper disable UnusedVariable
 				var set = objReference.Value;
+// ReSharper restore UnusedVariable
 
 				MethodInfo addMethod = null;
 				var baseType = type;
@@ -566,7 +573,7 @@ namespace CryEngine.Serialization
 
 				for (int i = 0; i < elements; i++)
 				{
-					addMethod.Invoke(objReference.Value, new object[] { StartRead().Value });
+					addMethod.Invoke(objReference.Value, new [] { StartRead().Value });
 				}
 			}
 			else if (IsDebugModeEnabled)
@@ -578,10 +585,10 @@ namespace CryEngine.Serialization
 			var type = ReadType();
 			string valueString = ReadLine();
 
-			if (!string.IsNullOrEmpty(valueString))
-				objReference.Value = Converter.Convert(valueString, type);
-			else
-				objReference.Value = 0;
+			objReference.Value =
+				!string.IsNullOrEmpty(valueString)
+				? this.Converter.Convert(valueString, type)
+				: 0;
 		}
 
 		private void ReadString(ObjectReference objReference)
@@ -609,7 +616,7 @@ namespace CryEngine.Serialization
 			var reflectedType = ReadType();
 			var memberType = (MemberTypes)Enum.Parse(typeof(MemberTypes), ReadLine());
 
-			var bindingFlags = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance;
+			const BindingFlags bindingFlags = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance;
 			switch (memberType)
 			{
 				case MemberTypes.Method:
@@ -639,12 +646,11 @@ namespace CryEngine.Serialization
 		private Delegate ReadDelegate()
 		{
 			var delegateType = ReadType();
-			var methodInfo = ReadMemberInfo() as MethodInfo;
+			var methodInfo = (MethodInfo)ReadMemberInfo();
 
-			if (ReadLine() == "target")
-				return Delegate.CreateDelegate(delegateType, StartRead().Value, methodInfo);
-			else
-				return Delegate.CreateDelegate(delegateType, methodInfo);
+			return this.ReadLine() == "target"
+				? Delegate.CreateDelegate(delegateType, this.StartRead().Value, methodInfo)
+				: Delegate.CreateDelegate(delegateType, methodInfo);
 		}
 
 		private void ReadUnusedMarker(ObjectReference objReference)

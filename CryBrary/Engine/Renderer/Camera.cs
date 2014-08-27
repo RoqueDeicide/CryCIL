@@ -22,19 +22,19 @@ namespace CryEngine
 			if (handle == IntPtr.Zero)
 				return null;
 
-			var camera = Cameras.FirstOrDefault(x => x.Handle == handle);
+			var camera = cameras.FirstOrDefault(x => x.Handle == handle);
 			if (camera != null)
 				return camera;
 
 			camera = new Camera();
 			camera.Handle = handle;
 
-			Cameras.Add(camera);
+			cameras.Add(camera);
 
 			return camera;
 		}
 
-		private static List<Camera> Cameras = new List<Camera>();
+		private static readonly List<Camera> cameras = new List<Camera>();
 
 		public Matrix34 Matrix { get { return NativeRendererMethods.GetCameraMatrix(Handle); } set { NativeRendererMethods.SetCameraMatrix(Handle, value); } }
 		public Vector3 Position { get { return NativeRendererMethods.GetCameraPosition(Handle); } set { NativeRendererMethods.SetCameraPosition(Handle, value); } }

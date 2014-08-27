@@ -12,13 +12,13 @@ namespace CryEngine
 		private string stringValue;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="DynamicCVar" /> class. Used by
+		/// Initializes a new instance of the <see cref="DynamicCVar"/> class. Used by
 		/// CryConsole.RegisterCVar to construct the CVar.
 		/// </summary>
-		/// <param name="name"></param>
+		/// <param name="name"> </param>
 		/// <param name="value"></param>
 		/// <param name="flags"></param>
-		/// <param name="help"></param>
+		/// <param name="help"> </param>
 		internal DynamicCVar(string name, object value, CVarFlags flags, string help)
 		{
 			Flags = flags;
@@ -86,11 +86,13 @@ namespace CryEngine
 			{
 				int hash = 17;
 
+				// ReSharper disable NonReadonlyFieldInGetHashCode
 				hash = hash * 29 + floatValue.GetHashCode();
 				hash = hash * 29 + intValue.GetHashCode();
 				hash = hash * 29 + stringValue.GetHashCode();
 				hash = hash * 29 + Flags.GetHashCode();
 				hash = hash * 29 + Name.GetHashCode();
+				// ReSharper restore NonReadonlyFieldInGetHashCode
 
 				return hash;
 			}

@@ -63,13 +63,13 @@ namespace CryEngine.Flowgraph
 			else if (value is float || value is double)
 				NativeFlowNodeMethods.ActivateOutputFloat(ParentNodePointer, PortId, System.Convert.ToSingle(value));
 			else if (value is EntityId)
-				NativeFlowNodeMethods.ActivateOutputEntityId(ParentNodePointer, PortId, (uint)((EntityId)(object)value).Value);
+				NativeFlowNodeMethods.ActivateOutputEntityId(ParentNodePointer, PortId, ((EntityId)value).Value);
 			else if (value is string)
 				NativeFlowNodeMethods.ActivateOutputString(ParentNodePointer, PortId, System.Convert.ToString(value));
 			else if (value is bool)
 				NativeFlowNodeMethods.ActivateOutputBool(ParentNodePointer, PortId, System.Convert.ToBoolean(value));
 			else if (value is Vector3)
-				NativeFlowNodeMethods.ActivateOutputVec3(ParentNodePointer, PortId, (Vector3)(object)value);
+				NativeFlowNodeMethods.ActivateOutputVec3(ParentNodePointer, PortId, (Vector3)value);
 			else
 				throw new ArgumentException("Attempted to activate output with invalid value type!");
 		}
@@ -107,7 +107,7 @@ namespace CryEngine.Flowgraph
 			else if (value is float || value is double)
 				NativeFlowNodeMethods.ActivateOutputFloat(ParentNodePointer, PortId, System.Convert.ToSingle(value));
 			else if (value is EntityId)
-				NativeFlowNodeMethods.ActivateOutputEntityId(ParentNodePointer, PortId, (uint)((EntityId)(object)value).Value);
+				NativeFlowNodeMethods.ActivateOutputEntityId(ParentNodePointer, PortId, ((EntityId)(object)value).Value);
 			else if (value is string)
 				NativeFlowNodeMethods.ActivateOutputString(ParentNodePointer, PortId, System.Convert.ToString(value));
 			else if (value is bool)

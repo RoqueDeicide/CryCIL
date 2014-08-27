@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using CryEngine.Annotations;
 using CryEngine.Native;
 
 namespace CryEngine
@@ -10,22 +10,22 @@ namespace CryEngine
 	public class Sound
 	{
 		#region Statics
+		[UsedImplicitly]
 		private static Sound TryGet(IntPtr soundPtr)
 		{
 			if (soundPtr == IntPtr.Zero)
 				return null;
 
-			var sound = Sounds.FirstOrDefault(x => x.Handle == soundPtr);
-			if (sound == null)
-			{
-				sound = new Sound(soundPtr);
-				Sounds.Add(sound);
-			}
+			var sound = sounds.FirstOrDefault(x => x.Handle == soundPtr);
+			if (sound != null) return sound;
+
+			sound = new Sound(soundPtr);
+			sounds.Add(sound);
 
 			return sound;
 		}
 
-		private static List<Sound> Sounds = new List<Sound>();
+		private static readonly List<Sound> sounds = new List<Sound>();
 		#endregion
 
 		internal Sound(IntPtr ptr)

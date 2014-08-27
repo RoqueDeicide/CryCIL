@@ -34,7 +34,6 @@ namespace CryEngine.Initialization
 
 			exitButton.Click += (s, a) =>
 				{
-					;
 					Result = ScriptReloadResult.Abort;
 					Close();
 				};

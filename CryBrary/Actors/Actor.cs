@@ -1,38 +1,30 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
+using CryEngine.Annotations;
 using CryEngine.Entities;
-using CryEngine.Initialization;
-using CryEngine.Extensions;
 using CryEngine.Mathematics;
-using CryEngine.Native;
 
-namespace CryEngine
+namespace CryEngine.Actors
 {
 	public abstract partial class Actor
 		: ActorBase
 	{
+		[UsedImplicitly]
 		private void InternalFullSerialize(Serialization.CrySerialize serialize)
 		{
 			//var serialize = new Serialization.CrySerialize();
 			//serialize.Handle = handle;
 
-			FullSerialize(serialize);
+			this.FullSerialize(serialize);
 		}
 
+		[UsedImplicitly]
 		private void InternalNetSerialize(Serialization.CrySerialize serialize, int aspect, byte profile, int flags)
 		{
 			// var serialize = new Serialization.CrySerialize();
-			//
-			//
-			//
-			//
-			//
-			//
-			//
+
 			//serialize.Handle = handle;
 
-			NetSerialize(serialize, aspect, profile, flags);
+			this.NetSerialize(serialize, aspect, profile, flags);
 		}
 
 		/// <summary>
@@ -46,12 +38,12 @@ namespace CryEngine
 
 		public PrePhysicsUpdateMode PrePhysicsUpdateMode
 		{
-			set { GameObject.PrePhysicsUpdateMode = value; }
+			set { this.GameObject.PrePhysicsUpdateMode = value; }
 		}
 
 		public bool ReceivePostUpdates
 		{
-			set { GameObject.QueryExtension(ClassName).ReceivePostUpdates = value; }
+			set { this.GameObject.QueryExtension(this.ClassName).ReceivePostUpdates = value; }
 		}
 		#region Callbacks
 		#region Entity events

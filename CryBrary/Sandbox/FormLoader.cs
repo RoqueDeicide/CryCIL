@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
 using CryEngine.Extensions;
 
@@ -11,7 +12,7 @@ namespace CryEngine.Sandbox
 			InitializeComponent();
 
 			// This would ideally be databound but I'm getting unexplained nullrefs - Ruan
-			uxExtensionList.Items.AddRange(FormHelper.AvailableForms.ToArray());
+			uxExtensionList.Items.AddRange(FormHelper.AvailableForms.Cast<object>().ToArray());
 			uxExtensionList.DisplayMember = "Name";
 
 			uxExtensionLoad.Click += (sender, args) =>
