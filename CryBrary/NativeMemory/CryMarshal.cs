@@ -24,7 +24,7 @@ namespace CryEngine.NativeMemory
 		/// <param name="size">   Size of the block to allocate.</param>
 		/// <param name="dispose">Indicates whether this class should track this memory block.</param>
 		/// <returns>Pointer to allocated memory block.</returns>
-		public static IntPtr Allocate(ulong size, bool dispose)
+		public static IntPtr Allocate(ulong size, bool dispose = true)
 		{
 			IntPtr handle = Native.NativeMemoryHandlingMethods.AllocateMemory(size);
 			if (handle == IntPtr.Zero)
@@ -47,7 +47,7 @@ namespace CryEngine.NativeMemory
 		/// Indicates whether the memory block must be released even if it is not tracked by
 		/// <see cref="CryMarshal"/> .
 		/// </param>
-		public static void Free(IntPtr handle, bool force)
+		public static void Free(IntPtr handle, bool force = false)
 		{
 			if (CryMarshal.allocatedBlocks.ContainsKey(handle))
 			{
