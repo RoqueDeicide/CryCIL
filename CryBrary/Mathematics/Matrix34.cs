@@ -25,7 +25,7 @@ namespace CryEngine.Mathematics
 			0, 1, 0, 0,
 			0, 0, 1, 0
 		);
-		#endregion Static Fields
+		#endregion
 		#region Fields
 		#region Individual Elements
 		/// <summary>
@@ -88,7 +88,7 @@ namespace CryEngine.Mathematics
 		/// </summary>
 		[FieldOffset(44)]
 		public float M23;
-		#endregion Individual Elements
+		#endregion
 		#region Rows
 		/// <summary>
 		/// First row.
@@ -105,8 +105,8 @@ namespace CryEngine.Mathematics
 		/// </summary>
 		[FieldOffset(32)]
 		public Vector4 Row2;
-		#endregion Rows
-		#endregion Fields
+		#endregion
+		#endregion
 		#region Properties
 		/// <summary>
 		/// Gets angles of rotations around fixed axes that are represented by this matrix.
@@ -305,7 +305,7 @@ namespace CryEngine.Mathematics
 			this.Row1 = new Vector4(m33.Row1, 0);
 			this.Row2 = new Vector4(m33.Row2, 1);
 		}
-		#endregion Construction
+		#endregion
 		#region Interface
 		#region Basics
 		/// <summary>
@@ -549,7 +549,7 @@ namespace CryEngine.Mathematics
 			yield return this.M22;
 			yield return this.M23;
 		}
-		#endregion Basics
+		#endregion
 		#region Scaling
 		/// <summary>
 		/// Apples scaling to the columns of the matrix.
@@ -600,7 +600,7 @@ namespace CryEngine.Mathematics
 
 			return matrix;
 		}
-		#endregion Scaling
+		#endregion
 		#region Rotations
 		/// <summary>
 		/// Sets the values of this matrix to one that represents a rotation around an axis.
@@ -785,7 +785,7 @@ namespace CryEngine.Mathematics
 
 			return matrix;
 		}
-		#endregion Rotations
+		#endregion
 		#region Translations
 		/// <summary>
 		/// Sets the value of the matrix to one that represents a translation without any other transformations.
@@ -839,7 +839,7 @@ namespace CryEngine.Mathematics
 			this.M13 += t.Y;
 			this.M23 += t.Z;
 		}
-		#endregion Translations
+		#endregion
 		#region Transformations
 		/// <summary>
 		/// Applies transformation represented by this matrix (without translation) to given vector.
@@ -875,7 +875,7 @@ namespace CryEngine.Mathematics
 				this.M20 * p.X + this.M21 * p.Y + this.M22 * p.Z + this.M23
 			);
 		}
-		#endregion Transformations
+		#endregion
 		#region Interpolations
 		/// <summary>
 		/// Creates a matrix that represents a spherical linear interpolation from one matrix to another.
@@ -939,8 +939,7 @@ namespace CryEngine.Mathematics
 			this.M13 = m.M13 * (1 - t) + n.M13 * t;
 			this.M23 = m.M23 * (1 - t) + n.M23 * t;
 		}
-		#endregion Interpolations
-
+		#endregion
 		#region Operators
 		/// <summary>
 		/// Multiplies two matrices.
@@ -966,13 +965,13 @@ namespace CryEngine.Mathematics
 				M23 = l.M20 * r.M03 + l.M21 * r.M13 + l.M22 * r.M23 + l.M23
 			};
 		}
-		#endregion Operators
-		#endregion Interface
+		#endregion
+		#endregion
 		#region Utilities
 		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
 		{
 			return this.GetEnumerator();
 		}
-		#endregion Utilities
+		#endregion
 	}
 }
