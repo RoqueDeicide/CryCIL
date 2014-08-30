@@ -80,22 +80,23 @@ namespace CryEngine.Mathematics.Geometry
 			{
 				return null;
 			}
-			// Transfer handles of entities to skip to native memory.
-			NativeMemoryBlock skipEntitiesArray =
-				new NativeMemoryBlock(skipEntities == null ? 0 : skipEntities.Length, typeof(IntPtr));
-			if (!skipEntitiesArray.Disposed)
-			{
-				IntPtr* skipEntsPointer = (IntPtr*)skipEntitiesArray.Handle.ToPointer();
-				for (int i = 0; i < skipEntities.Length; i++)		// Ignore that ReSharper warning.
-				{
-					skipEntsPointer[i] = skipEntities[i];
-				}
-			}
-			// Allocate memory for ray-cast hits.
-			NativeMemoryBlock hitsArray = new NativeMemoryBlock(maxHits, typeof(RaycastHit));
 			List<RaycastHit> hits;
-			try
+			// Allocate memory for entities to skip.
+			using (NativeMemoryBlock skipEntitiesArray =
+				new NativeMemoryBlock(skipEntities == null ? 0 : skipEntities.Length, typeof(IntPtr)))
+			// Allocate memory for ray-cast hits.
+			using (NativeMemoryBlock hitsArray = new NativeMemoryBlock(maxHits, typeof(RaycastHit)))
 			{
+				// Transfer handles of entities to skip to native memory.
+				if (!skipEntitiesArray.Disposed)
+				{
+					IntPtr* skipEntsPointer = (IntPtr*)skipEntitiesArray.Handle.ToPointer();
+					for (int i = 0; i < skipEntities.Length; i++)		// Ignore that ReSharper warning.
+					{
+						skipEntsPointer[i] = skipEntities[i];
+					}
+				}
+				// Cast the ray.
 				int numberOfHits =
 					Native.NativePhysicsMethods.RayWorldIntersection
 					(
@@ -115,11 +116,6 @@ namespace CryEngine.Mathematics.Geometry
 				{
 					hits.Add(hitPointer[i]);
 				}
-			}
-			finally
-			{
-				skipEntitiesArray.Dispose();
-				hitsArray.Dispose();
 			}
 			return hits;
 		}
