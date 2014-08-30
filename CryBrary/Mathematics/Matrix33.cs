@@ -154,18 +154,18 @@ namespace CryEngine.Mathematics
 		#endregion
 		#region Construction
 		/// <summary>
-		/// Creates new instance of <see cref="Matrix33" /> struct.
+		/// Creates new instance of <see cref="Matrix33"/> struct.
 		/// </summary>
-		/// <param name="m00"> First row, First Column. </param>
-		/// <param name="m01"> First row, Second Column. </param>
-		/// <param name="m02"> First row, Third Column. </param>
-		/// <param name="m10"> Second row, First Column. </param>
-		/// <param name="m11"> Second row, Second Column. </param>
-		/// <param name="m12"> Second row, Third Column. </param>
-		/// <param name="m20"> Third row, First Column. </param>
-		/// <param name="m21"> Third row, Second Column. </param>
-		/// <param name="m22"> Third row, Third Column. </param>
-		/// <returns> New instance of <see cref="Matrix33" /> struct. </returns>
+		/// <param name="m00">First row, First Column.</param>
+		/// <param name="m01">First row, Second Column.</param>
+		/// <param name="m02">First row, Third Column.</param>
+		/// <param name="m10">Second row, First Column.</param>
+		/// <param name="m11">Second row, Second Column.</param>
+		/// <param name="m12">Second row, Third Column.</param>
+		/// <param name="m20">Third row, First Column.</param>
+		/// <param name="m21">Third row, Second Column.</param>
+		/// <param name="m22">Third row, Third Column.</param>
+		/// <returns>New instance of <see cref="Matrix33"/> struct.</returns>
 		public Matrix33
 		(
 			float m00, float m01, float m02,
@@ -185,12 +185,10 @@ namespace CryEngine.Mathematics
 			this.M22 = m22;
 		}
 		/// <summary>
-		/// Creates new instance of <see cref="Matrix33" /> struct.
+		/// Creates new instance of <see cref="Matrix33"/> struct.
 		/// </summary>
-		/// <param name="m">
-		/// <see cref="Matrix34" /> object from which first 3 columns will be copied.
-		/// </param>
-		/// <returns> New instance of <see cref="Matrix33" /> struct. </returns>
+		/// <param name="m"><see cref="Matrix34"/> object from which first 3 columns will be copied.</param>
+		/// <returns>New instance of <see cref="Matrix33"/> struct.</returns>
 		public Matrix33(Matrix34 m)
 			: this()
 		{
@@ -207,10 +205,10 @@ namespace CryEngine.Mathematics
 			this.M22 = m.M22;
 		}
 		/// <summary>
-		/// Creates new instance of <see cref="Matrix33" /> struct.
+		/// Creates new instance of <see cref="Matrix33"/> struct.
 		/// </summary>
-		/// <param name="q"> Quaternion that represents rotation that new instance whould represent. </param>
-		/// <returns> New instance of <see cref="Matrix33" /> struct. </returns>
+		/// <param name="q">Quaternion that represents rotation that new instance whould represent.</param>
+		/// <returns>New instance of <see cref="Matrix33"/> struct.</returns>
 		public Matrix33(Quaternion q)
 			: this()
 		{
@@ -262,9 +260,9 @@ namespace CryEngine.Mathematics
 		/// <summary>
 		/// Sets rows from given vectors.
 		/// </summary>
-		/// <param name="vx"> <see cref="Vector3" /> object that contains first row. </param>
-		/// <param name="vy"> <see cref="Vector3" /> object that contains second row. </param>
-		/// <param name="vz"> <see cref="Vector3" /> object that contains third row. </param>
+		/// <param name="vx"><see cref="Vector3"/> object that contains first row.</param>
+		/// <param name="vy"><see cref="Vector3"/> object that contains second row.</param>
+		/// <param name="vz"><see cref="Vector3"/> object that contains third row.</param>
 		public void SetFromVectors(Vector3 vx, Vector3 vy, Vector3 vz)
 		{
 			this.M00 = vx.X; this.M01 = vy.X; this.M02 = vz.X;
@@ -274,10 +272,10 @@ namespace CryEngine.Mathematics
 		/// <summary>
 		/// Creates new matrix from vectors that represent rows.
 		/// </summary>
-		/// <param name="vx"> <see cref="Vector3" /> object that contains first row. </param>
-		/// <param name="vy"> <see cref="Vector3" /> object that contains second row. </param>
-		/// <param name="vz"> <see cref="Vector3" /> object that contains third row. </param>
-		/// <returns> New matrix. </returns>
+		/// <param name="vx"><see cref="Vector3"/> object that contains first row.</param>
+		/// <param name="vy"><see cref="Vector3"/> object that contains second row.</param>
+		/// <param name="vz"><see cref="Vector3"/> object that contains third row.</param>
+		/// <returns>New matrix.</returns>
 		public static Matrix33 CreateFromVectors(Vector3 vx, Vector3 vy, Vector3 vz)
 		{
 			var matrix = new Matrix33();
@@ -288,7 +286,7 @@ namespace CryEngine.Mathematics
 		/// <summary>
 		/// Sets this matrix to represent a scaling operation.
 		/// </summary>
-		/// <param name="s"> Scale to set. </param>
+		/// <param name="s">Scale to set.</param>
 		public void SetScale(Vector3 s)
 		{
 			this.M00 = s.X; this.M01 = 0; this.M02 = 0;
@@ -298,8 +296,8 @@ namespace CryEngine.Mathematics
 		/// <summary>
 		/// Creates new matrix that is set to represent scaling operation.
 		/// </summary>
-		/// <param name="s"> Scale to set. </param>
-		/// <returns> New matrix. </returns>
+		/// <param name="s">Scale to set.</param>
+		/// <returns>New matrix.</returns>
 		public static Matrix33 CreateScale(Vector3 s)
 		{
 			var matrix = new Matrix33();
@@ -309,7 +307,7 @@ namespace CryEngine.Mathematics
 		}
 		/// <summary>
 		/// </summary>
-		/// <returns> </returns>
+		/// <returns></returns>
 		public override int GetHashCode()
 		{
 			// Overflow is fine, just wrap
@@ -339,9 +337,9 @@ namespace CryEngine.Mathematics
 		/// <summary>
 		/// Sets this matrix to represent rotation around given axis.
 		/// </summary>
-		/// <param name="angle"> Angle of rotation. </param>
-		/// <param name="axis">  Axis of rotation. </param>
-		public void SetRotationAA(float angle, Vector3 axis)
+		/// <param name="angle">Angle of rotation.</param>
+		/// <param name="axis"> Axis of rotation.</param>
+		public void SetRotationAroundAxis(float angle, Vector3 axis)
 		{
 			double s, c;
 			MathHelpers.SinCos(angle, out s, out c);
@@ -370,23 +368,23 @@ namespace CryEngine.Mathematics
 		/// <summary>
 		/// Creates new matrix that is set to represent rotation around given axis.
 		/// </summary>
-		/// <param name="rad">  Angle of rotation. </param>
-		/// <param name="axis"> Axis of rotation. </param>
-		/// <returns> New matrix. </returns>
-		public static Matrix33 CreateRotationAA(float rad, Vector3 axis)
+		/// <param name="rad"> Angle of rotation.</param>
+		/// <param name="axis">Axis of rotation.</param>
+		/// <returns>New matrix.</returns>
+		public static Matrix33 CreateRotationAroundAxis(float rad, Vector3 axis)
 		{
 			var matrix = new Matrix33();
-			matrix.SetRotationAA(rad, axis);
+			matrix.SetRotationAroundAxis(rad, axis);
 
 			return matrix;
 		}
 		/// <summary>
 		/// Sets this matrix to represent rotation around given axis.
 		/// </summary>
-		/// <param name="c">    Cosine of angle of rotation. </param>
-		/// <param name="s">    Sine of angle of rotation. </param>
-		/// <param name="axis"> Axis of rotation. </param>
-		public void SetRotationAA(float c, float s, Vector3 axis)
+		/// <param name="c">   Cosine of angle of rotation.</param>
+		/// <param name="s">   Sine of angle of rotation.</param>
+		/// <param name="axis">Axis of rotation.</param>
+		public void SetRotationAroundAxis(float c, float s, Vector3 axis)
 		{
 			float mc = 1 - c;
 			this.M00 = mc * axis.X * axis.X + c; this.M01 = mc * axis.X * axis.Y - axis.Z * s; this.M02 = mc * axis.X * axis.Z + axis.Y * s;
@@ -396,14 +394,14 @@ namespace CryEngine.Mathematics
 		/// <summary>
 		/// Creates new matrix that is set to represent rotation around given axis.
 		/// </summary>
-		/// <param name="c">    Cosine of angle of rotation. </param>
-		/// <param name="s">    Sine of angle of rotation. </param>
-		/// <param name="axis"> Axis of rotation. </param>
-		/// <returns> New matrix. </returns>
-		public static Matrix33 CreateRotationAA(float c, float s, Vector3 axis)
+		/// <param name="c">   Cosine of angle of rotation.</param>
+		/// <param name="s">   Sine of angle of rotation.</param>
+		/// <param name="axis">Axis of rotation.</param>
+		/// <returns>New matrix.</returns>
+		public static Matrix33 CreateRotationAroundAxis(float c, float s, Vector3 axis)
 		{
 			var matrix = new Matrix33();
-			matrix.SetRotationAA(c, s, axis);
+			matrix.SetRotationAroundAxis(c, s, axis);
 
 			return matrix;
 		}
@@ -411,37 +409,37 @@ namespace CryEngine.Mathematics
 		/// Sets this matrix to represent rotation around given axis.
 		/// </summary>
 		/// <param name="rot">
-		/// <see cref="Vector3" /> which length represents an angle of rotation, and that, once
+		/// <see cref="Vector3"/> which length represents an angle of rotation, and that, once
 		/// normalized, represents an axis of rotation.
 		/// </param>
-		public void SetRotationAA(Vector3 rot)
+		public void SetRotationAroundAxis(Vector3 rot)
 		{
 			float angle = rot.Length;
 			if (Math.Abs(angle) < MathHelpers.ZeroTolerance)
 				this.SetIdentity();
 			else
-				this.SetRotationAA(angle, rot / angle);
+				this.SetRotationAroundAxis(angle, rot / angle);
 		}
 		/// <summary>
 		/// Creates new matrix that is set to represent rotation around given axis.
 		/// </summary>
 		/// <param name="rot">
-		/// <see cref="Vector3" /> which length represents an angle of rotation, and that, once
+		/// <see cref="Vector3"/> which length represents an angle of rotation, and that, once
 		/// normalized, represents an axis of rotation.
 		/// </param>
-		/// <returns> New matrix. </returns>
-		public static Matrix33 CreateRotationAA(Vector3 rot)
+		/// <returns>New matrix.</returns>
+		public static Matrix33 CreateRotationAroundAxis(Vector3 rot)
 		{
 			var matrix = new Matrix33();
-			matrix.SetRotationAA(rot);
+			matrix.SetRotationAroundAxis(rot);
 
 			return matrix;
 		}
 		/// <summary>
 		/// Sets this matrix to represent rotation around X axis.
 		/// </summary>
-		/// <param name="rad"> Angle of rotation around X axis. </param>
-		public void SetRotationX(float rad)
+		/// <param name="rad">Angle of rotation around X axis.</param>
+		public void SetRotationAroundX(float rad)
 		{
 			double s, c; MathHelpers.SinCos(rad, out s, out c);
 			this.M00 = 1.0f; this.M01 = 0.0f; this.M02 = 0.0f;
@@ -451,20 +449,20 @@ namespace CryEngine.Mathematics
 		/// <summary>
 		/// Creates new matrix that is set to represent rotation around X axis.
 		/// </summary>
-		/// <param name="rad"> Angle of rotation around X axis. </param>
-		/// <returns> New matrix. </returns>
-		public static Matrix33 CreateRotationX(float rad)
+		/// <param name="rad">Angle of rotation around X axis.</param>
+		/// <returns>New matrix.</returns>
+		public static Matrix33 CreateRotationAroundX(float rad)
 		{
 			var matrix = new Matrix33();
-			matrix.SetRotationX(rad);
+			matrix.SetRotationAroundX(rad);
 
 			return matrix;
 		}
 		/// <summary>
 		/// Sets this matrix to represent rotation around Y axis.
 		/// </summary>
-		/// <param name="rad"> Angle of rotation around Y axis. </param>
-		public void SetRotationY(float rad)
+		/// <param name="rad">Angle of rotation around Y axis.</param>
+		public void SetRotationAroundY(float rad)
 		{
 			double s, c; MathHelpers.SinCos(rad, out s, out c);
 			this.M00 = (float)c; this.M01 = 0; this.M02 = (float)s;
@@ -474,20 +472,20 @@ namespace CryEngine.Mathematics
 		/// <summary>
 		/// Creates new matrix that is set to represent rotation around Y axis.
 		/// </summary>
-		/// <param name="rad"> Angle of rotation around Y axis. </param>
-		/// <returns> New matrix. </returns>
-		public static Matrix33 CreateRotationY(float rad)
+		/// <param name="rad">Angle of rotation around Y axis.</param>
+		/// <returns>New matrix.</returns>
+		public static Matrix33 CreateRotationAroundY(float rad)
 		{
 			var matrix = new Matrix33();
-			matrix.SetRotationY(rad);
+			matrix.SetRotationAroundY(rad);
 
 			return matrix;
 		}
 		/// <summary>
 		/// Sets this matrix to represent rotation around Z axis.
 		/// </summary>
-		/// <param name="rad"> Angle of rotation around Z axis. </param>
-		public void SetRotationZ(float rad)
+		/// <param name="rad">Angle of rotation around Z axis.</param>
+		public void SetRotationAroundZ(float rad)
 		{
 			double s, c; MathHelpers.SinCos(rad, out s, out c);
 			this.M00 = (float)c; this.M01 = (float)-s; this.M02 = 0.0f;
@@ -497,20 +495,20 @@ namespace CryEngine.Mathematics
 		/// <summary>
 		/// Creates new matrix that is set to represent rotation around Z axis.
 		/// </summary>
-		/// <param name="rad"> Angle of rotation around Z axis. </param>
-		/// <returns> New matrix. </returns>
-		public static Matrix33 CreateRotationZ(float rad)
+		/// <param name="rad">Angle of rotation around Z axis.</param>
+		/// <returns>New matrix.</returns>
+		public static Matrix33 CreateRotationAroundZ(float rad)
 		{
 			var matrix = new Matrix33();
-			matrix.SetRotationZ(rad);
+			matrix.SetRotationAroundZ(rad);
 
 			return matrix;
 		}
 		/// <summary>
 		/// Sets this matrix to represent rotation around fixed Axes.
 		/// </summary>
-		/// <param name="rad"> <see cref="Vector3" /> that defines rotations around XYZ. </param>
-		public void SetRotationXYZ(Vector3 rad)
+		/// <param name="rad"><see cref="Vector3"/> that defines rotations around XYZ.</param>
+		public void SetRotationFromAngles(Vector3 rad)
 		{
 			double sx, cx; MathHelpers.SinCos(rad.X, out sx, out cx);
 			double sy, cy; MathHelpers.SinCos(rad.Y, out sy, out cy);
@@ -523,12 +521,38 @@ namespace CryEngine.Mathematics
 		/// <summary>
 		/// Creates new matrix that is set to represent rotation around fixed Axes.
 		/// </summary>
-		/// <param name="rad"> Angles of rotation. </param>
-		/// <returns> New matrix. </returns>
-		public static Matrix33 CreateRotationXYZ(Vector3 rad)
+		/// <param name="rad">Angles of rotation.</param>
+		/// <returns>New matrix.</returns>
+		public static Matrix33 CreateRotationFromAngles(Vector3 rad)
 		{
 			var matrix = new Matrix33();
-			matrix.SetRotationXYZ(rad);
+			matrix.SetRotationFromAngles(rad);
+
+			return matrix;
+		}
+		/// <summary>
+		/// Sets this matrix to represent rotation around fixed Axes.
+		/// </summary>
+		/// <param name="rad"><see cref="EulerAngles"/> that defines rotations around XYZ.</param>
+		public void SetRotationFromAngles(EulerAngles rad)
+		{
+			double sx, cx; MathHelpers.SinCos(rad.Pitch, out sx, out cx);
+			double sy, cy; MathHelpers.SinCos(rad.Roll, out sy, out cy);
+			double sz, cz; MathHelpers.SinCos(rad.Yaw, out sz, out cz);
+			double sycz = (sy * cz), sysz = (sy * sz);
+			this.M00 = (float)(cy * cz); this.M01 = (float)(sycz * sx - cx * sz); this.M02 = (float)(sycz * cx + sx * sz);
+			this.M10 = (float)(cy * sz); this.M11 = (float)(sysz * sx + cx * cz); this.M12 = (float)(sysz * cx - sx * cz);
+			this.M20 = (float)(-sy); this.M21 = (float)(cy * sx); this.M22 = (float)(cy * cx);
+		}
+		/// <summary>
+		/// Creates new matrix that is set to represent rotation around fixed Axes.
+		/// </summary>
+		/// <param name="rad">Angles of rotation.</param>
+		/// <returns>New matrix.</returns>
+		public static Matrix33 CreateRotationFromAngles(EulerAngles rad)
+		{
+			var matrix = new Matrix33();
+			matrix.SetRotationFromAngles(rad);
 
 			return matrix;
 		}
@@ -537,7 +561,7 @@ namespace CryEngine.Mathematics
 		/// <summary>
 		/// Enumerates this matrix.
 		/// </summary>
-		/// <returns> </returns>
+		/// <returns></returns>
 		public IEnumerator<float> GetEnumerator()
 		{
 			yield return this.M00;
@@ -561,9 +585,9 @@ namespace CryEngine.Mathematics
 		/// <summary>
 		/// Multiplies the matrix by float number.
 		/// </summary>
-		/// <param name="left">  Left operand. </param>
-		/// <param name="right"> Right opearnd. </param>
-		/// <returns> Result of operation. </returns>
+		/// <param name="left"> Left operand.</param>
+		/// <param name="right">Right opearnd.</param>
+		/// <returns>Result of operation.</returns>
 		public static Matrix33 operator *(Matrix33 left, float right)
 		{
 			var m33 = left;
@@ -575,9 +599,9 @@ namespace CryEngine.Mathematics
 		/// <summary>
 		/// Divides the matrix by float number.
 		/// </summary>
-		/// <param name="left">  Left operand. </param>
-		/// <param name="right"> Right opearnd. </param>
-		/// <returns> Result of operation. </returns>
+		/// <param name="left"> Left operand.</param>
+		/// <param name="right">Right opearnd.</param>
+		/// <returns>Result of operation.</returns>
 		public static Matrix33 operator /(Matrix33 left, float right)
 		{
 			var m33 = left;
@@ -590,9 +614,9 @@ namespace CryEngine.Mathematics
 		/// <summary>
 		/// Multiplies the matrix by other matrix.
 		/// </summary>
-		/// <param name="left">  Left operand. </param>
-		/// <param name="right"> Right opearnd. </param>
-		/// <returns> Result of operation. </returns>
+		/// <param name="left"> Left operand.</param>
+		/// <param name="right">Right opearnd.</param>
+		/// <returns>Result of operation.</returns>
 		public static Matrix33 operator *(Matrix33 left, Matrix33 right)
 		{
 			var m = new Matrix33
@@ -612,9 +636,9 @@ namespace CryEngine.Mathematics
 		/// <summary>
 		/// Multiplies the matrix by vector.
 		/// </summary>
-		/// <param name="left">  Left operand. </param>
-		/// <param name="right"> Right opearnd. </param>
-		/// <returns> Result of operation. </returns>
+		/// <param name="left"> Left operand.</param>
+		/// <param name="right">Right opearnd.</param>
+		/// <returns>Result of operation.</returns>
 		public static Vector3 operator *(Matrix33 left, Vector3 right)
 		{
 			return new Vector3(right.X * left.M00 + right.Y * left.M01 + right.Z * left.M02,

@@ -610,7 +610,7 @@ namespace CryEngine.Mathematics
 		/// <param name="t">   Optional translation vector.</param>
 		public void SetRotationAroundAxis(float rad, Vector3 axis, Vector3 t = default(Vector3))
 		{
-			this = new Matrix34(Matrix33.CreateRotationAA(rad, axis));
+			this = new Matrix34(Matrix33.CreateRotationAroundAxis(rad, axis));
 
 			this.SetTranslation(t);
 		}
@@ -638,7 +638,7 @@ namespace CryEngine.Mathematics
 		/// <param name="t">  Optional translation vector.</param>
 		public void SetRotationAroundAxis(Vector3 rot, Vector3 t = default(Vector3))
 		{
-			this = new Matrix34(Matrix33.CreateRotationAA(rot));
+			this = new Matrix34(Matrix33.CreateRotationAroundAxis(rot));
 
 			this.SetTranslation(t);
 		}
@@ -667,7 +667,7 @@ namespace CryEngine.Mathematics
 		/// <param name="t">   Optional translation vector.</param>
 		public void SetRotationAroundAxis(float c, float s, Vector3 axis, Vector3 t = default(Vector3))
 		{
-			this = new Matrix34(Matrix33.CreateRotationAA(c, s, axis))
+			this = new Matrix34(Matrix33.CreateRotationAroundAxis(c, s, axis))
 			{
 				M03 = t.X,
 				M13 = t.Y,
@@ -696,7 +696,7 @@ namespace CryEngine.Mathematics
 		/// <param name="t">  Optional translation vector.</param>
 		public void SetRotationAroundX(float rad, Vector3 t = default(Vector3))
 		{
-			this = new Matrix34(Matrix33.CreateRotationX(rad));
+			this = new Matrix34(Matrix33.CreateRotationAroundX(rad));
 
 			this.SetTranslation(t);
 		}
@@ -720,7 +720,7 @@ namespace CryEngine.Mathematics
 		/// <param name="t">  Optional translation vector.</param>
 		public void SetRotationAroundY(float rad, Vector3 t = default(Vector3))
 		{
-			this = new Matrix34(Matrix33.CreateRotationY(rad));
+			this = new Matrix34(Matrix33.CreateRotationAroundY(rad));
 
 			this.SetTranslation(t);
 		}
@@ -744,7 +744,7 @@ namespace CryEngine.Mathematics
 		/// <param name="t">  Optional translation vector.</param>
 		public void SetRotationAroundZ(float rad, Vector3 t = default(Vector3))
 		{
-			this = new Matrix34(Matrix33.CreateRotationZ(rad));
+			this = new Matrix34(Matrix33.CreateRotationAroundZ(rad));
 
 			this.SetTranslation(t);
 		}
@@ -768,7 +768,7 @@ namespace CryEngine.Mathematics
 		/// <param name="t">  Optional translation vector.</param>
 		public void SetRotationWithEulerAngles(EulerAngles rad, Vector3 t = default(Vector3))
 		{
-			this = new Matrix34(Matrix33.CreateRotationXYZ((Vector3)rad));
+			this = new Matrix34(Matrix33.CreateRotationFromAngles(rad));
 
 			this.SetTranslation(t);
 		}
@@ -928,7 +928,7 @@ namespace CryEngine.Mathematics
 			double angle = Math.Atan2(Math.Sqrt(1.0 - cosine * cosine), cosine);
 			var axis = new Vector3(d.M21 - d.M12, d.M02 - d.M20, d.M10 - d.M01);
 			double l = Math.Sqrt(axis | axis); if (l > 0.00001) axis /= (float)l; else axis = new Vector3(1, 0, 0);
-			i.SetRotationAA((float)angle * t, axis); // angle interpolation and calculation of new delta-matrix (=26 flops)
+			i.SetRotationAroundAxis((float)angle * t, axis); // angle interpolation and calculation of new delta-matrix (=26 flops)
 
 			// final concatenation (=39 flops)
 			this.M00 = m.M00 * i.M00 + m.M01 * i.M10 + m.M02 * i.M20; this.M01 = m.M00 * i.M01 + m.M01 * i.M11 + m.M02 * i.M21; this.M02 = m.M00 * i.M02 + m.M01 * i.M12 + m.M02 * i.M22;
