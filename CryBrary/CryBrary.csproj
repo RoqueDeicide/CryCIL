@@ -142,11 +142,13 @@
     <Compile Include="Mathematics\Geometry\Meshes\IVertex3D.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\MeshVertex.cs" />
     <Compile Include="Mathematics\Geometry\Plane.GenericOps.cs" />
+    <Compile Include="NativeMemory\CryMarshal.cs" />
     <Compile Include="Native\ActorInitializationParams.cs" />
     <Compile Include="Actors\ActorNetworking.cs" />
     <Compile Include="Actors\ActorStatics.cs" />
     <Compile Include="Actors\ViewParams.cs" />
     <Compile Include="Attributes.cs" />
+    <Compile Include="Native\NativeMemoryHandlingMethods.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Sandbox\Interface.cs" />
     <Compile Include="Sandbox\SandboxExtensionAttribute.cs" />

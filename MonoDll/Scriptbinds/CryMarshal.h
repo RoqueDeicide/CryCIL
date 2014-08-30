@@ -15,5 +15,5 @@ public:
 	// that object has not disposed of the memory cluster.
 	static void *AllocateMemory(unsigned __int64 size);
 	// Frees memory that has been allocated.
-	static void *FreeMemory(void * pointer);
+	static void FreeMemory(void * pointer);
 };
