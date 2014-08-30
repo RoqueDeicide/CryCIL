@@ -8,6 +8,9 @@ using CryEngine.Flowgraph.Native;
 
 namespace CryEngine.Flowgraph
 {
+	/// <summary>
+	/// Base class for flow node associated with entities.
+	/// </summary>
 	public abstract class EntityFlowNode : FlowNode
 	{
 		internal override NodeConfig GetNodeConfig()

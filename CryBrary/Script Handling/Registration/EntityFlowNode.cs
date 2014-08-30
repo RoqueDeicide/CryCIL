@@ -9,7 +9,7 @@ using CryEngine.Flowgraph;
 
 namespace CryEngine.Initialization
 {
-	public struct EntityFlowNodeRegistrationParams : FlowNodeBaseRegistrationParams
+	public struct EntityFlowNodeRegistrationParams : IFlowNodeBaseRegistrationParams
 	{
 		public string entityName;
 

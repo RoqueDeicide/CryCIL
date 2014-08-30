@@ -18,13 +18,13 @@ namespace CryEngine.Sandbox
 			uxExtensionLoad.Click += (sender, args) =>
 			{
 				if (uxExtensionList.SelectedItem != null)
-					LoadExtension((uxExtensionList.SelectedItem as FormInfo).Type);
+					LoadExtension(((FormInfo)uxExtensionList.SelectedItem).Type);
 			};
 		}
 
 		private void OnExtensionSelect(object sender, EventArgs e)
 		{
-			var formInfo = uxExtensionList.SelectedItem as FormInfo;
+			var formInfo = (FormInfo)uxExtensionList.SelectedItem;
 			var data = formInfo.Data;
 
 			uxExtensionInfo.Clear();
@@ -44,9 +44,10 @@ namespace CryEngine.Sandbox
 				uxExtensionInfo.Append(data.Description);
 		}
 
-		private void LoadExtension(Type type)
+		private static void LoadExtension(Type type)
 		{
 			var form = Activator.CreateInstance(type, null) as Form;
+			System.Diagnostics.Debug.Assert(form != null, "Failed to create a form. Type does not implement Form.");
 			form.Show();
 		}
 	}

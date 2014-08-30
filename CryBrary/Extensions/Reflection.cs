@@ -21,7 +21,6 @@ namespace CryEngine.Extensions
 		{
 			return baseType.IsAssignableFrom(thisType) && thisType != baseType;
 		}
-
 		/// <summary>
 		/// Determines whether a given type is the child of another.
 		/// </summary>
@@ -32,17 +31,36 @@ namespace CryEngine.Extensions
 		{
 			return thisType.Implements(typeof(T));
 		}
-
+		/// <summary>
+		/// Determines whether objects of this type can be assigned to another.
+		/// </summary>
+		/// <param name="thisType">This type.</param>
+		/// <param name="baseType">Another type.</param>
+		/// <returns>
+		/// True, if <paramref name="thisType"/> is <paramref name="baseType"/> or is derived from it.
+		/// </returns>
 		public static bool ImplementsOrEquals(this Type thisType, Type baseType)
 		{
 			return thisType == baseType || baseType.IsAssignableFrom(thisType);
 		}
-
+		/// <summary>
+		/// Determines whether objects of this type can be assigned to another.
+		/// </summary>
+		/// <typeparam name="T">Another type.</typeparam>
+		/// <param name="thisType">This type.</param>
+		/// <returns>
+		/// True, if <paramref name="thisType"/> is <typeparamref name="T"/> or is derived from it.
+		/// </returns>
 		public static bool ImplementsOrEquals<T>(this Type thisType)
 		{
 			return thisType.ImplementsOrEquals(typeof(T));
 		}
-
+		/// <summary>
+		/// Determines whether this type implements given generic type.
+		/// </summary>
+		/// <param name="thisType">       This type.</param>
+		/// <param name="genericBaseType">Generic type.</param>
+		/// <returns>True, this type implements given generic type.</returns>
 		public static bool ImplementsGeneric(this Type thisType, Type genericBaseType)
 		{
 			var type = thisType;
@@ -64,7 +82,12 @@ namespace CryEngine.Extensions
 
 			return false;
 		}
-
+		/// <summary>
+		/// Gets a collection of generic type arguments.
+		/// </summary>
+		/// <param name="thisType">       This type.</param>
+		/// <param name="genericBaseType">Generic base type.</param>
+		/// <returns>Enumeration of types.</returns>
 		public static IEnumerable<Type> GetGenericArguments(this Type thisType, Type genericBaseType)
 		{
 			var type = thisType;
@@ -72,11 +95,10 @@ namespace CryEngine.Extensions
 			while (type != null)
 			{
 				var interfaceTypes = type.GetInterfaces();
-
-				foreach (var it in interfaceTypes)
+				Type args = interfaceTypes.FirstOrDefault(x => x.IsGenericType && x.GetGenericTypeDefinition() == genericBaseType);
+				if (args != null)
 				{
-					if (it.IsGenericType && it.GetGenericTypeDefinition() == genericBaseType)
-						return it.GetGenericArguments();
+					return args.GetGenericArguments();
 				}
 
 				if (type.IsGenericType && type.GetGenericTypeDefinition() == genericBaseType)
@@ -132,7 +154,7 @@ namespace CryEngine.Extensions
 		/// </summary>
 		/// <typeparam name="T">The attribute to search for.</typeparam>
 		/// <param name="memberInfo">The member on which the search is performed.</param>
-		/// <param name="attribute">The out parameter to which the attribute will be assigned.</param>
+		/// <param name="attribute"> The out parameter to which the attribute will be assigned.</param>
 		/// <returns>True if the attribute exists.</returns>
 		public static bool TryGetAttribute<T>(this MemberInfo memberInfo, out T attribute) where T : Attribute
 		{

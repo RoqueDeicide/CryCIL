@@ -19,12 +19,11 @@ namespace CryEngine
 
 			var gameRulesInitParams = (GameRulesInitializationParams)initParams;
 
-			Id = gameRulesInitParams.id;
-			this.SetIEntity(gameRulesInitParams.entityPtr);
+			Id = gameRulesInitParams.Id;
+			this.SetIEntity(gameRulesInitParams.EntityPointer);
 
 			return base.InternalInitialize(initParams);
 		}
-
 		/// <summary>
 		/// Gets the currently active game rules instance.
 		/// </summary>

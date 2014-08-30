@@ -26,12 +26,12 @@ namespace CryEngine.Flowgraph
 		/// </summary>
 		public FlowNodeType Type { get; set; }
 		/// <summary>
-		/// Gets or sets the node description
+		/// Gets or sets the node description.
 		/// </summary>
 		public string Description { get; set; }
 		/// <summary>
 		/// Gets or sets whether this node targets an entity. See <see
-		/// cref="CryEngine.Flowgraph.FlowNode.TargetEntity" />
+		/// cref="CryEngine.Flowgraph.FlowNode.TargetEntity" />.
 		/// </summary>
 		public bool TargetsEntity { get; set; }
 	}

@@ -101,7 +101,7 @@ namespace CryEngine.Entities
 			if (Math.Abs(limits.Max) < MathHelpers.ZeroTolerance &&
 				Math.Abs(limits.Min) < MathHelpers.ZeroTolerance)
 			{
-				this.Limits.Max = Sandbox.UIConstants.MAX_SLIDER_VALUE;
+				this.Limits.Max = Sandbox.UserInterfaceConstants.MaxSliderValue;
 			}
 			else
 			{

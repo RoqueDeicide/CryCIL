@@ -14,8 +14,69 @@ using CryEngine.Flowgraph.Native;
 
 namespace CryEngine.Flowgraph
 {
+	/// <summary>
+	/// Base class for all flow nodes.
+	/// </summary>
 	public abstract partial class FlowNode : CryScriptInstance
 	{
+		#region Fields
+		internal IntPtr Handle { get; set; }
+		#endregion
+		#region Properties
+		/// <summary>
+		/// Gets entity associated with this node.
+		/// </summary>
+		public EntityBase TargetEntity { get; private set; }
+		/// <summary>
+		/// Identifier of the node.
+		/// </summary>
+		[CLSCompliant(false)]
+		public UInt16 NodeId { get; set; }
+		/// <summary>
+		/// Identifier of the Flow Graph.
+		/// </summary>
+		[CLSCompliant(false)]
+		public UInt32 GraphId { get; set; }
+		/// <summary>
+		/// Sets the value that indicates whether this node should receive per-frame updates.
+		/// </summary>
+		public bool ReceiveNodeUpdates
+		{
+			set { NativeFlowNodeMethods.SetRegularlyUpdated(Handle, value); }
+		}
+		#endregion
+		#region Interface
+		// ReSharper disable RedundantOverridenMember
+
+		/// <summary>
+		/// Called each frame if script has been set to be regularly updated. (See
+		/// <see cref="CryScriptInstance.ReceiveUpdates"/> ) Warning: FlowNode logic such as
+		/// <see cref="GetPortValue{T}"/> is not supported within this update loop, see
+		/// <see cref="OnNodeUpdate"/> .
+		/// </summary>
+		public override void OnUpdate() { base.OnUpdate(); }
+		// ReSharper restore RedundantOverridenMember
+
+		/// <summary>
+		///
+		/// </summary>
+		/// <returns></returns>
+		public override int GetHashCode()
+		{
+			unchecked // Overflow is fine, just wrap
+			{
+				int hash = 17;
+
+				hash = hash * 29 + ScriptId.GetHashCode();
+				hash = hash * 29 + Handle.GetHashCode();
+				hash = hash * 29 + NodeId.GetHashCode();
+				hash = hash * 29 + GraphId.GetHashCode();
+
+				return hash;
+			}
+		}
+		#endregion
+		#region Utilities
 		internal override bool InternalInitialize(IScriptInitializationParams initParams)
 		{
 			var nodeInitParams = (NodeInitializationParams)initParams;
@@ -24,7 +85,7 @@ namespace CryEngine.Flowgraph
 			NodeId = nodeInitParams.nodeId;
 			GraphId = nodeInitParams.graphId;
 
-			var registrationParams = (FlowNodeBaseRegistrationParams)Script.RegistrationParams;
+			var registrationParams = (IFlowNodeBaseRegistrationParams)Script.RegistrationParams;
 
 			// create instances of OutputPort's.
 			for (int i = 0; i < registrationParams.OutputMembers.Length; i++)
@@ -39,15 +100,21 @@ namespace CryEngine.Flowgraph
 				bool isGenericType = type.IsGenericType;
 				Type genericType = isGenericType ? type.GetGenericArguments()[0] : typeof(void);
 
-				object[] outputPortConstructorArgs = {Handle, i};
+				object[] outputPortConstructorArgs = { Handle, i };
 				Type genericOutputPort = typeof(OutputPort<>);
-				object outputPort = Activator.CreateInstance(isGenericType ? genericOutputPort.MakeGenericType(genericType) : type,
-															 outputPortConstructorArgs);
+				object outputPort =
+					Activator.CreateInstance
+					(
+						isGenericType
+							? genericOutputPort.MakeGenericType(genericType)
+							: type,
+						outputPortConstructorArgs
+					);
 
 				if (outputMember.MemberType == MemberTypes.Field)
-					(outputMember as FieldInfo).SetValue(this, outputPort);
+					((FieldInfo)outputMember).SetValue(this, outputPort);
 				else
-					(outputMember as PropertyInfo).SetValue(this, outputPort, null);
+					((PropertyInfo)outputMember).SetValue(this, outputPort, null);
 			}
 
 			return base.InternalInitialize(initParams);
@@ -64,7 +131,7 @@ namespace CryEngine.Flowgraph
 
 		private int GetInputPortId(MethodInfo method)
 		{
-			var registrationParams = (FlowNodeBaseRegistrationParams)Script.RegistrationParams;
+			var registrationParams = (IFlowNodeBaseRegistrationParams)Script.RegistrationParams;
 
 			for (int i = 0; i < registrationParams.InputMethods.Length; i++)
 			{
@@ -80,7 +147,7 @@ namespace CryEngine.Flowgraph
 		/// </summary>
 		internal void OnPortActivated(int index, object value = null)
 		{
-			var registrationParams = (FlowNodeBaseRegistrationParams)Script.RegistrationParams;
+			var registrationParams = (IFlowNodeBaseRegistrationParams)Script.RegistrationParams;
 
 			var method = registrationParams.InputMethods[index];
 
@@ -101,11 +168,11 @@ namespace CryEngine.Flowgraph
 					value = typeConverter.ConvertFrom(value);
 				}
 
-				var args = new[] {value};
+				var args = new[] { value };
 				method.Invoke(this, args);
 			}
 			else if (parameterCount == 1 && parameters.ElementAt(0).ParameterType == typeof(object))
-				method.Invoke(this, new object[] {null});
+				method.Invoke(this, new object[] { null });
 			else if (parameterCount == 0)
 				method.Invoke(this, null);
 		}
@@ -119,9 +186,10 @@ namespace CryEngine.Flowgraph
 		}
 
 		/// <summary>
-		/// Called each frame if node has been set to be regularly updated (See <see
-		/// cref="ReceiveNodeUpdates" />) Preferred over <see cref="CryScriptInstance.OnUpdate" />
-		/// due to supporting <see cref="GetPortValue{T}" /> within the update loop.
+		/// Called each frame if node has been set to be regularly updated (See
+		/// <see cref="ReceiveNodeUpdates"/> ) Preferred over
+		/// <see cref="CryScriptInstance.OnUpdate"/> due to supporting <see cref="GetPortValue{T}"/>
+		/// within the update loop.
 		/// </summary>
 		protected virtual void OnNodeUpdate()
 		{
@@ -135,11 +203,22 @@ namespace CryEngine.Flowgraph
 		}
 		#endregion
 		#region External methods
+		/// <summary>
+		/// Indicates whether specified input port is active.
+		/// </summary>
+		/// <typeparam name="T">Type of the port.</typeparam>
+		/// <param name="port">Method that represents a port.</param>
+		/// <returns>True, if input port is active.</returns>
 		protected bool IsPortActive<T>(Action<T> port)
 		{
 			return NativeFlowNodeMethods.IsPortActive(Handle, GetInputPortId(port.Method));
 		}
-
+		/// <summary>
+		/// Gets value that has been passed to input port upon its activation.
+		/// </summary>
+		/// <typeparam name="T">Type of the port.</typeparam>
+		/// <param name="port">Method that represents a port.</param>
+		/// <returns>Value that has been passed to input port upon its activation.</returns>
 		protected T GetPortValue<T>(Action<T> port)
 		{
 			var type = typeof(T);
@@ -159,46 +238,13 @@ namespace CryEngine.Flowgraph
 			if (type.IsEnum)
 				return (T)Enum.ToObject(typeof(T), NativeFlowNodeMethods.GetPortValueInt(Handle, GetInputPortId(port.Method)));
 
-			throw new ArgumentException("Invalid flownode port type specified!");
+			throw new ArgumentException("Invalid flow node port type specified!");
 		}
 		#endregion
 		internal void InternalSetTargetEntity(IntPtr handle, EntityId entId)
 		{
 			TargetEntity = Entity.CreateNativeEntity(entId, handle);
 		}
-
-		public EntityBase TargetEntity { get; private set; }
-		#region Overrides
-		// / <summary> /// Called each frame if script has been set to be regularly updated. (See
-		// <see /// cref="CryScriptInstance.ReceiveUpdates" />) /// Warning: FlowNode logic such as
-		// <see cref="GetPortValue{T}" /> is not supported within /// this update loop, see <see
-		// cref="OnNodeUpdate" />. /// </summary> public override void OnUpdate() { base.OnUpdate(); }
-
-		public override int GetHashCode()
-		{
-			unchecked // Overflow is fine, just wrap
-			{
-				int hash = 17;
-
-				hash = hash * 29 + ScriptId.GetHashCode();
-				hash = hash * 29 + Handle.GetHashCode();
-				hash = hash * 29 + NodeId.GetHashCode();
-				hash = hash * 29 + GraphId.GetHashCode();
-
-				return hash;
-			}
-		}
 		#endregion
-		internal IntPtr Handle { get; set; }
-
-		[CLSCompliant(false)]
-		public UInt16 NodeId { get; set; }
-		[CLSCompliant(false)]
-		public UInt32 GraphId { get; set; }
-
-		public bool ReceiveNodeUpdates
-		{
-			set { NativeFlowNodeMethods.SetRegularlyUpdated(Handle, value); }
-		}
 	}
 }

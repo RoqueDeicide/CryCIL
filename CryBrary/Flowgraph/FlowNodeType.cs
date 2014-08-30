@@ -5,6 +5,9 @@ using System.Text;
 
 namespace CryEngine.Flowgraph
 {
+	/// <summary>
+	/// Enumeration of flow node types.
+	/// </summary>
 	public enum FlowNodeType
 	{
 		/// <summary>

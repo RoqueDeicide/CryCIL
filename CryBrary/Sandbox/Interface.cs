@@ -1,7 +1,13 @@
 ﻿namespace CryEngine.Sandbox
 {
-	public static class UIConstants
+	/// <summary>
+	/// Defines constants for user interface.
+	/// </summary>
+	public static class UserInterfaceConstants
 	{
-		public const int MAX_SLIDER_VALUE = 100;
+		/// <summary>
+		/// Maximal value for the slider.
+		/// </summary>
+		public const int MaxSliderValue = 100;
 	}
 }

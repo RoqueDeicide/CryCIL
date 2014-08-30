@@ -560,7 +560,7 @@ namespace CryEngine.Compilers.NET
 						case NodePortType.String:
 							defaultVal = "";
 							break;
-						case NodePortType.Vec3:
+						case NodePortType.Vector3:
 							defaultVal = Vector3.Zero;
 							break;
 					}
@@ -694,11 +694,11 @@ namespace CryEngine.Compilers.NET
 				return NodePortType.String;
 			}
 			if (type == typeof(Vector3))
-				return NodePortType.Vec3;
+				return NodePortType.Vector3;
 			if (type == typeof(Color))
 			{
 				prefix = "color_";
-				return NodePortType.Vec3; // implicit operator takes care of conversion
+				return NodePortType.Vector3; // implicit operator takes care of conversion
 			}
 			if (type == typeof(bool))
 				return NodePortType.Bool;

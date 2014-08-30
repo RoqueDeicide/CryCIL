@@ -9,7 +9,7 @@ using CryEngine.Flowgraph;
 
 namespace CryEngine.Initialization
 {
-	public interface FlowNodeBaseRegistrationParams : IScriptRegistrationParams
+	public interface IFlowNodeBaseRegistrationParams : IScriptRegistrationParams
 	{
 		InputPortConfig[] InputPorts { get; }
 		MethodInfo[] InputMethods { get; }
@@ -18,7 +18,7 @@ namespace CryEngine.Initialization
 		MemberInfo[] OutputMembers { get; }
 	}
 
-	public struct FlowNodeRegistrationParams : FlowNodeBaseRegistrationParams
+	public struct FlowNodeRegistrationParams : IFlowNodeBaseRegistrationParams
 	{
 		public string name;
 		public string category;

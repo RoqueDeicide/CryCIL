@@ -6,12 +6,19 @@ using CryEngine.Initialization;
 
 namespace CryEngine.Extensions
 {
+	/// <summary>
+	/// Defines extension methods for enumerations.
+	/// </summary>
 	public static class EnumExtensions
 	{
+		/// <summary>
+		/// Gets enumeration of members of the enumeration.
+		/// </summary>
+		/// <typeparam name="T">Type of enumeration.</typeparam>
+		/// <returns>A list of values of the enumeration.</returns>
 		public static IEnumerable<T> GetMembers<T>()
 		{
-			return from value in Enum.GetNames(typeof(T))
-				   select (T)Enum.Parse(typeof(T), value);
+			return Enum.GetValues(typeof(T)).Cast<T>();
 		}
 	}
 }

@@ -19,14 +19,20 @@ namespace CryEngine.Profiling
 			Handle = handle;
 			FrameProfiler = profiler;
 		}
-
+		/// <summary>
+		/// Ends this section.
+		/// </summary>
 		public void End()
 		{
 			FrameProfiler.DeleteSection(this);
 		}
-
+		/// <summary>
+		/// Frame profiler associated with this section.
+		/// </summary>
 		public FrameProfiler FrameProfiler { get; set; }
-
+		/// <summary>
+		/// Handle of this section.
+		/// </summary>
 		public IntPtr Handle { get; set; }
 	}
 }

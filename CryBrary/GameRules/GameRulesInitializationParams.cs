@@ -8,7 +8,7 @@ namespace CryEngine
 {
 	internal struct GameRulesInitializationParams : IScriptInitializationParams
 	{
-		public EntityId id;
-		public IntPtr entityPtr;
+		internal EntityId Id;
+		internal IntPtr EntityPointer;
 	}
 }
