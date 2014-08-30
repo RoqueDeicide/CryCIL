@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
+using CryEngine.NativeMemory;
 
 namespace CryEngine.Mathematics.Geometry
 {
@@ -43,14 +44,15 @@ namespace CryEngine.Mathematics.Geometry
 		/// <param name="maxHits">     Maximal number of hits to return.</param>
 		/// <param name="skipEntities">An array of IPhysicalEntity handles.</param>
 		/// <returns>Detected hits (solid and pierceable).</returns>
-		public IEnumerable<RaycastHit> Cast(EntityQueryFlags objectTypes = EntityQueryFlags.All, RayWorldIntersectionFlags flags = RayWorldIntersectionFlags.AnyHit, int maxHits = 1, IntPtr[] skipEntities = null)
+		public IEnumerable<RaycastHit> Cast
+		(
+			EntityQueryFlags objectTypes = EntityQueryFlags.All,
+			RayWorldIntersectionFlags flags = RayWorldIntersectionFlags.AnyHit,
+			int maxHits = 1,
+			IntPtr[] skipEntities = null
+		)
 		{
-			if (skipEntities != null && skipEntities.Length == 0)
-				skipEntities = null;
-
-			object[] hits;
-			var numHits = Native.NativePhysicsMethods.RayWorldIntersection(this.Position, this.Direction, objectTypes, flags, maxHits, skipEntities, out hits);
-			return numHits > 0 ? hits.Cast<RaycastHit>() : new List<RaycastHit>();
+			return Ray.Cast(this.Position, this.Direction, objectTypes, flags, maxHits, skipEntities);
 		}
 		/// <summary>
 		/// Casts a ray through the world and returns all intersections.
@@ -64,11 +66,62 @@ namespace CryEngine.Mathematics.Geometry
 		/// <param name="maxHits">     Maximal number of hits to return.</param>
 		/// <param name="skipEntities">An array of IPhysicalEntity handles.</param>
 		/// <returns>Detected hits (solid and pierceable).</returns>
-		public static IEnumerable<RaycastHit> Cast(Vector3 pos, Vector3 dir, EntityQueryFlags objectTypes = EntityQueryFlags.All, RayWorldIntersectionFlags flags = RayWorldIntersectionFlags.AnyHit, int maxHits = 1, IntPtr[] skipEntities = null)
+		public unsafe static List<RaycastHit> Cast
+		(
+			Vector3 pos,
+			Vector3 dir,
+			EntityQueryFlags objectTypes = EntityQueryFlags.All,
+			RayWorldIntersectionFlags flags = RayWorldIntersectionFlags.AnyHit,
+			int maxHits = 1,
+			IntPtr[] skipEntities = null
+		)
 		{
-			var ray = new Ray(pos, dir);
-
-			return ray.Cast(objectTypes, flags, maxHits, skipEntities);
+			if (maxHits < 1)
+			{
+				return null;
+			}
+			// Transfer handles of entities to skip to native memory.
+			NativeMemoryBlock skipEntitiesArray =
+				new NativeMemoryBlock(skipEntities == null ? 0 : skipEntities.Length, typeof(IntPtr));
+			if (!skipEntitiesArray.Disposed)
+			{
+				IntPtr* skipEntsPointer = (IntPtr*)skipEntitiesArray.Handle.ToPointer();
+				for (int i = 0; i < skipEntities.Length; i++)		// Ignore that ReSharper warning.
+				{
+					skipEntsPointer[i] = skipEntities[i];
+				}
+			}
+			// Allocate memory for ray-cast hits.
+			NativeMemoryBlock hitsArray = new NativeMemoryBlock(maxHits, typeof(RaycastHit));
+			List<RaycastHit> hits;
+			try
+			{
+				int numberOfHits =
+					Native.NativePhysicsMethods.RayWorldIntersection
+					(
+						pos,
+						dir,
+						objectTypes,
+						flags,
+						maxHits,
+						skipEntitiesArray.Handle,
+						skipEntities == null ? 0 : skipEntities.Length,
+						hitsArray.Handle
+					);
+				// Transfer ray-cast hits from native memory.
+				RaycastHit* hitPointer = (RaycastHit*)hitsArray.Handle.ToPointer();
+				hits = new List<RaycastHit>(numberOfHits);
+				for (int i = 0; i < numberOfHits; i++)
+				{
+					hits.Add(hitPointer[i]);
+				}
+			}
+			finally
+			{
+				skipEntitiesArray.Dispose();
+				hitsArray.Dispose();
+			}
+			return hits;
 		}
 		/// <summary>
 		/// Tests for equality between two objects.

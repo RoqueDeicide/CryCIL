@@ -61,7 +61,7 @@ public:
 	static Vec3 GetVelocity(IPhysicalEntity *pPhysEnt);
 	static void SetVelocity(IPhysicalEntity *pPhysEnt, Vec3 vel);
 
-	static int RayWorldIntersection(Vec3, Vec3, int, unsigned int, int, mono::object, mono::object &hits);
+	static int RayWorldIntersection(Vec3, Vec3, int, unsigned int, int, IPhysicalEntity **entitiesToSkip, int skipCount, ray_hit *hits);
 
 	static mono::object SimulateExplosion(pe_explosion explosion);
 

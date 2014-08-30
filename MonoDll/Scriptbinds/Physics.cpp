@@ -119,55 +119,20 @@ void CScriptbind_Physics::SetVelocity(IPhysicalEntity *pPhysEnt, Vec3 vel)
 
 	pPhysEnt->Action(&asv);
 }
-
-int CScriptbind_Physics::RayWorldIntersection(Vec3 origin, Vec3 dir, int objFlags, unsigned int flags, int maxHits, mono::object skipEntities, mono::object &hits)
+// Returns number of hits.
+int CScriptbind_Physics::RayWorldIntersection
+(
+	Vec3 origin,						// Origin of the ray cast.
+	Vec3 dir,							// Direction of ray cast.
+	int objFlags,						// Object query flags.
+	unsigned int flags,					// Intersection detection flags.
+	int maxHits,						// Maximal number of hits.
+	IPhysicalEntity **entitiesToSkip,	// Pointer to entities to skip.
+	int skipCount,						// Number of entities to skip.
+	ray_hit *hits						// Pointer to hits.
+)
 {
-	IPhysicalEntity **pSkipEnts = NULL;
-	int numSkipEnts = 0;
-
-	if (skipEntities)
-	{
-		IMonoArray *pSkipEntities = *skipEntities;
-		numSkipEnts = pSkipEntities->GetSize();
-
-		pSkipEnts = new IPhysicalEntity*[numSkipEnts];
-
-		for (int i = 0; i < numSkipEnts; i++)
-		{
-			IMonoObject *pItem = *pSkipEntities->GetItem(i);
-
-#ifndef RELEASE
-			if (!pItem)
-				GetMonoScriptSystem()->GetCryBraryAssembly()->GetException("CryEngine", "NullPointerException")->Throw();
-#endif
-
-			pSkipEnts[i] = pItem->Unbox<IPhysicalEntity *>();
-			SAFE_RELEASE(pItem);
-		}
-
-		pSkipEntities->Release();
-	}
-
-	ray_hit *pHits = new ray_hit[maxHits];
-	int numHits = gEnv->pPhysicalWorld->RayWorldIntersection(origin, dir, objFlags, flags, pHits, maxHits, pSkipEnts, numSkipEnts);
-
-	SAFE_DELETE_ARRAY(pSkipEnts);
-
-	if (numHits > 0)
-	{
-		IMonoClass *pRayHitClass = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("RaycastHit");
-
-		IMonoArray *pRayHits = CreateMonoArray(numHits);//, pRayHitClass);
-		for (int i = 0; i < numHits; i++)
-			pRayHits->InsertMonoObject(pRayHitClass->BoxObject(&pHits[i]));
-
-		hits = pRayHits->GetManagedObject();
-		pRayHits->Release();
-	}
-
-	delete[] pHits;
-
-	return numHits;
+	return gEnv->pPhysicalWorld->RayWorldIntersection(origin, dir, objFlags, flags, hits, maxHits, entitiesToSkip, skipCount);
 }
 
 mono::object CScriptbind_Physics::SimulateExplosion(pe_explosion explosion)
