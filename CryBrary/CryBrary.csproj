@@ -143,6 +143,7 @@
     <Compile Include="Mathematics\Geometry\Meshes\MeshVertex.cs" />
     <Compile Include="Mathematics\Geometry\Plane.GenericOps.cs" />
     <Compile Include="NativeMemory\CryMarshal.cs" />
+    <Compile Include="NativeMemory\NativeMemoryBlock.cs" />
     <Compile Include="Native\ActorInitializationParams.cs" />
     <Compile Include="Actors\ActorNetworking.cs" />
     <Compile Include="Actors\ActorStatics.cs" />
