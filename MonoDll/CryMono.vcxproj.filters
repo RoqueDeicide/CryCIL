@@ -179,6 +179,9 @@
     <ClInclude Include="Scriptbinds\Platform.h">
       <Filter>ScriptBinds</Filter>
     </ClInclude>
+    <ClInclude Include="Scriptbinds\CryMarshal.h">
+      <Filter>ScriptBinds\NativeMemory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -309,6 +312,9 @@
     <ClCompile Include="Scriptbinds\Platform.cpp">
       <Filter>ScriptBinds</Filter>
     </ClCompile>
+    <ClCompile Include="Scriptbinds\CryMarshal.cpp">
+      <Filter>ScriptBinds\NativeMemory</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ScriptBinds">
@@ -358,6 +364,9 @@
     </Filter>
     <Filter Include="ScriptBinds\StaticObjects">
       <UniqueIdentifier>{32b893d5-61d5-4bfc-9231-bf35d3233630}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ScriptBinds\NativeMemory">
+      <UniqueIdentifier>{b0f89071-783e-4988-adb0-9fb08b6decd1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

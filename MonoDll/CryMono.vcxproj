@@ -135,6 +135,7 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
     <ClInclude Include="resource.h" />
     <ClInclude Include="Scriptbinds\ActorSystem.h" />
     <ClInclude Include="Scriptbinds\CMesh.h" />
+    <ClInclude Include="Scriptbinds\CryMarshal.h" />
     <ClInclude Include="Scriptbinds\CryPak.h" />
     <ClInclude Include="Scriptbinds\CrySerialize.h" />
     <ClInclude Include="Scriptbinds\Entity.h" />
@@ -182,6 +183,7 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
     <ClCompile Include="NativeEntity.cpp" />
     <ClCompile Include="Scriptbinds\ActorSystem.cpp" />
     <ClCompile Include="Scriptbinds\CMesh.cpp" />
+    <ClCompile Include="Scriptbinds\CryMarshal.cpp" />
     <ClCompile Include="Scriptbinds\CryPak.cpp" />
     <ClCompile Include="Scriptbinds\CrySerialize.cpp" />
     <ClCompile Include="Scriptbinds\Entity.cpp" />
