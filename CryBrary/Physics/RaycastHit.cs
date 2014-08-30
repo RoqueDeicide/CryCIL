@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
+using CryEngine.Annotations;
 using CryEngine.Entities;
 using CryEngine.Mathematics;
 using CryEngine.Native;
@@ -7,57 +8,76 @@ using CryEngine.Physics;
 
 namespace CryEngine
 {
-	public struct RaycastHit
+	/// <summary>
+	/// Encapsulates information about hit of casted ray.
+	/// </summary>
+	public struct RaycastHit : IEquatable<RaycastHit>
 	{
-		public override bool Equals(object obj)
-		{
-			if (obj is RaycastHit)
-				return this == (RaycastHit)obj;
-
-			return false;
-		}
-
-		public static bool operator ==(RaycastHit a, RaycastHit b)
-		{
-			return a.Equals(b);
-		}
-
-		public static bool operator !=(RaycastHit a, RaycastHit b)
-		{
-			return !(a == b);
-		}
-
-		public override int GetHashCode()
-		{
-			int hash = 17;
-
-			// ReSharper disable NonReadonlyFieldInGetHashCode
-			hash = hash * 29 + Distance.GetHashCode();
-			hash = hash * 29 + physicalCollider.GetHashCode();
-			hash = hash * 29 + Point.GetHashCode();
-			hash = hash * 29 + Normal.GetHashCode();
-			// ReSharper restore NonReadonlyFieldInGetHashCode
-
-			return hash;
-		}
-
-		internal float dist;
-		public float Distance
-		{
-			get { return dist; }
-		}
-
-		internal IntPtr physicalCollider;
+		#region Fields
+		/// <summary>
+		/// Distance between origin of the ray and point of collision.
+		/// </summary>
+		public float Distance;
+		/// <summary>
+		/// Pointer to PhysicalEntity the ray has collided with.
+		/// </summary>
+		public IntPtr ColliderHandle;
+		/// <summary>
+		///
+		/// </summary>
+		public int Part;
+		/// <summary>
+		///
+		/// </summary>
+		public int PartIdentifier;
+		/// <summary>
+		/// Identifier of the surface type.
+		/// </summary>
+		public ushort SurfaceIdentifeir;
+		/// <summary>
+		/// Identifier of original material without mapping.
+		/// </summary>
+		public short OriginalMaterialIdentifeir;
+		/// <summary>
+		///
+		/// </summary>
+		public int ForeignDataIdentifiers;
+		/// <summary>
+		/// Bounding volume tree node.
+		/// </summary>
+		public int Node;
+		/// <summary>
+		/// Point of the hit.
+		/// </summary>
+		public Vector3 Point;
+		/// <summary>
+		/// Normal of the surface that has been hit.
+		/// </summary>
+		public Vector3 Normal;
+		/// <summary>
+		/// Indicator for terrain hit.
+		/// </summary>
+		public int TerrainIndication;
+		/// <summary>
+		///
+		/// </summary>
+		public int Primitive;
+		[UsedImplicitly]
+		private IntPtr nextHit;
+		#endregion
+		#region Properties
+		/// <summary>
+		/// Gets <see cref="PhysicalEntity"/> the ray collided with.
+		/// </summary>
 		public PhysicalEntity PhysicalCollider
 		{
 			get
 			{
-				return this.physicalCollider == IntPtr.Zero
+				return this.ColliderHandle == IntPtr.Zero
 					? null
-					: PhysicalEntity.TryGet(this.physicalCollider);
+					: PhysicalEntity.TryGet(this.ColliderHandle);
 			}
 		}
-
 		/// <summary>
 		/// Entity that the ray collided with.
 		/// </summary>
@@ -69,85 +89,93 @@ namespace CryEngine
 				return collider == null ? null : collider.Owner;
 			}
 		}
-
-		internal int ipart;
-		public int iPart
-		{
-			get { return ipart; }
-		}
-
-		internal int partid;
-		public int PartId
-		{
-			get { return partid; }
-		}
-
-		internal ushort surface_idx;
-		public int SurfaceId
-		{
-			get { return surface_idx; }
-		}
-
 		/// <summary>
 		/// The surface type that the ray collided with.
 		/// </summary>
 		public SurfaceType SurfaceType
 		{
-			get { return SurfaceType.Get(SurfaceId); }
+			get { return SurfaceType.Get(this.SurfaceIdentifeir); }
 		}
-
-		internal short idmatOrg;
 		/// <summary>
-		/// original material index, not mapped with material mapping
+		/// Indicates whether we have hit the terrain.
 		/// </summary>
-		public short OriginalMaterialIndex
-		{
-			get { return idmatOrg; }
-		}
-
-		internal int foreignIdx;
-		public int ForeignIDx
-		{
-			get { return foreignIdx; }
-		}
-
-		internal int inode;
-		/// <summary>
-		/// BV tree node that had the intersection; can be used for "warm start" next time
-		/// </summary>
-		public int iNode
-		{
-			get { return inode; }
-		}
-
-		internal Vector3 pt;
-		public Vector3 Point
-		{
-			get { return pt; }
-		}
-
-		internal Vector3 n; // surface normal
-		public Vector3 Normal
-		{
-			get { return n; }
-		}
-
-		internal int bTerrain; // global terrain hit
 		public bool HitTerrain
 		{
-			get { return bTerrain == 1; }
+			get { return this.TerrainIndication == 1; }
 		}
-
-		internal int iprim;
+		#endregion
+		#region Interface
 		/// <summary>
-		/// hit triangle index
+		/// Determines whether this object is equal to another.
 		/// </summary>
-		public int iPrim
+		/// <param name="other">Another object.</param>
+		/// <returns>True, if two object are equal.</returns>
+		public bool Equals(RaycastHit other)
 		{
-			get { return iprim; }
+			return
+				this.TerrainIndication == other.TerrainIndication &&
+				Math.Abs(this.Distance - other.Distance) < MathHelpers.ZeroTolerance &&
+				this.ForeignDataIdentifiers == other.ForeignDataIdentifiers &&
+				this.OriginalMaterialIdentifeir == other.OriginalMaterialIdentifeir &&
+				this.Node == other.Node &&
+				this.Part == other.Part &&
+				this.Primitive == other.Primitive &&
+				this.PartIdentifier == other.PartIdentifier &&
+				this.SurfaceIdentifeir == other.SurfaceIdentifeir &&
+				this.Normal == other.Normal &&
+				this.nextHit == other.nextHit &&
+				this.ColliderHandle == other.ColliderHandle &&
+				this.Point == other.Point;
 		}
+		/// <summary>
+		/// Determines whether this object is equal to another.
+		/// </summary>
+		/// <param name="obj">Another object.</param>
+		/// <returns>
+		/// True, if another object is of type <see cref="RaycastHit"/> which is equal to this one.
+		/// </returns>
+		public override bool Equals(object obj)
+		{
+			return (obj is RaycastHit) && this.Equals((RaycastHit)obj);
+		}
+		/// <summary>
+		/// Determines whether two instances of type <see cref="RaycastHit"/> are equal.
+		/// </summary>
+		/// <param name="left"> Left operand.</param>
+		/// <param name="right">Right operand.</param>
+		/// <returns>True, if operands are equal.</returns>
+		public static bool operator ==(RaycastHit left, RaycastHit right)
+		{
+			return left.Equals(right);
+		}
+		/// <summary>
+		/// Determines whether two instances of type <see cref="RaycastHit"/> are not equal.
+		/// </summary>
+		/// <param name="left"> Left operand.</param>
+		/// <param name="right">Right operand.</param>
+		/// <returns>True, if operands are not equal.</returns>
+		public static bool operator !=(RaycastHit left, RaycastHit right)
+		{
+			return !(left == right);
+		}
+		/// <summary>
+		///
+		/// </summary>
+		/// <returns></returns>
+		public override int GetHashCode()
+		{
+			int hash = 17;
 
-		public IntPtr nextHit;
+			// ReSharper disable NonReadonlyFieldInGetHashCode
+			hash = hash * 29 + Distance.GetHashCode();
+			hash = hash * 29 + this.ColliderHandle.GetHashCode();
+			hash = hash * 29 + Point.GetHashCode();
+			hash = hash * 29 + Normal.GetHashCode();
+			// ReSharper restore NonReadonlyFieldInGetHashCode
+
+			return hash;
+		}
+		#endregion
 	}
 
 	[Flags]
