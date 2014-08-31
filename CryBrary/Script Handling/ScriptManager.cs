@@ -44,7 +44,7 @@ namespace CryEngine.Initialization
 				try
 				{
 					Directory.GetFiles(tempDirectory)
-							 .Where(filePath=>Path.GetExtension(filePath) != ".scriptdump")
+							 .Where(filePath => Path.GetExtension(filePath) != ".scriptdump")
 							 .ForEach(File.Delete);
 				}
 				catch (UnauthorizedAccessException)
@@ -77,7 +77,7 @@ namespace CryEngine.Initialization
 
 			return result;
 		}
-
+		// Encapsulates extra data that is saved and loaded.
 		private class ScriptManagerData : CryScriptInstance
 		{
 			public ScriptManagerData()
@@ -138,15 +138,16 @@ namespace CryEngine.Initialization
 		[UsedImplicitly]
 		private void Deserialize()
 		{
+			// Load up the data.
 			using (var stream = File.Open(SerializedScriptsFile, FileMode.Open))
 				Scripts = Formatter.Deserialize(stream) as List<CryScript>;
-
+			// Delete the file, since data is loaded.
 			File.Delete(SerializedScriptsFile);
-
+			// Get the additional data.
 			var data = Find<ScriptManagerData>(ScriptType.CryScriptInstance, x => true);
 
 			LastScriptId = data.LastScriptId;
-
+			// Restore input.
 			Input.ActionmapEvents = data.Input.ActionmapEvents;
 
 			if (data.Input.KeyEvents != null)
@@ -160,18 +161,18 @@ namespace CryEngine.Initialization
 				foreach (var mouseDelegate in data.Input.MouseEvents)
 					Input.MouseEvents += mouseDelegate as MouseEventDelegate;
 			}
-
+			// Restore game rules.
 			if (data.GameRulesId != -1)
 				GameRules.Current = Entity.Get(data.GameRulesId) as GameRules;
-
+			// Restore console commands and variables.
 			ConsoleCommand.Commands = data.ConsoleCommands;
 			CVar.CVars = data.ConsoleVariables;
-
+			// Delete extra data object.
 			RemoveInstance(data.ScriptId, ScriptType.CryScriptInstance);
 		}
 
 		/// <summary>
-		/// Called from GameDll
+		/// Called from GameDll to register the flow nodes.
 		/// </summary>
 		public void RegisterFlownodes()
 		{
@@ -204,7 +205,7 @@ namespace CryEngine.Initialization
 					var gacFolder = Path.Combine(ProjectSettings.MonoFolder, "lib", "mono", "gac");
 					// For each assembly in GAC folder.
 					foreach (var assembly in from assemblyLocation in Directory.GetFiles(gacFolder, "*.dll", SearchOption.AllDirectories)
-											 let separator = new[] {"__"}
+											 let separator = new[] { "__" }
 											 let splitParentDir = Directory.GetParent(assemblyLocation)
 																		   .Name.Split(separator, StringSplitOptions.RemoveEmptyEntries)
 											 select Assembly.Load
@@ -359,9 +360,9 @@ namespace CryEngine.Initialization
 			}
 		}
 
-// ReSharper disable UnusedParameter.Local
+		// ReSharper disable UnusedParameter.Local
 		private Exception LoadPlugins(bool initialLoad)
-// ReSharper restore UnusedParameter.Local
+		// ReSharper restore UnusedParameter.Local
 		{
 			var pluginsDirectory = ProjectSettings.PluginsFolder;
 			if (!Directory.Exists(pluginsDirectory))
@@ -493,7 +494,7 @@ namespace CryEngine.Initialization
 				var driver = assembly.GetType("Driver");
 				var convertMethod = driver.GetMethod("Convert", BindingFlags.Static | BindingFlags.Public);
 
-				object[] args = {assemblyPath};
+				object[] args = { assemblyPath };
 				convertMethod.Invoke(null, args);
 			}
 		}
@@ -518,16 +519,22 @@ namespace CryEngine.Initialization
 											.ForEach(inst => inst.OnUpdate())
 			);
 		}
-
 		/// <summary>
 		/// Instantiates a script using its name and interface.
 		/// </summary>
-		/// <param name="scriptName"></param>
-		/// <param name="scriptType"></param>
-		/// <param name="constructorParams"></param>
+		/// <param name="scriptName">             Name of the script to create.</param>
+		/// <param name="scriptType">             Type of script to create.</param>
+		/// <param name="cryScriptInstanceHandle">Pointer to unmanaged object for this instance.</param>
+		/// <param name="constructorParams">      Parameters to pass to the constructor.</param>
+		/// <param name="throwOnFail">            
+		/// Indication whether exception must be thrown, if error occurs.
+		/// </param>
 		/// <returns>New instance scriptId or -1 if instantiation failed.</returns>
-		public CryScriptInstance CreateScriptInstance(string scriptName, ScriptType scriptType, IntPtr cryScriptInstanceHandle,
-													  object[] constructorParams = null, bool throwOnFail = true)
+		public CryScriptInstance CreateScriptInstance(string scriptName,
+													  ScriptType scriptType,
+													  IntPtr cryScriptInstanceHandle,
+													  object[] constructorParams = null,
+													  bool throwOnFail = true)
 		{
 #if !(RELEASE && RELEASE_DISABLE_CHECKS)
 			if (scriptName == null)
@@ -542,7 +549,8 @@ namespace CryEngine.Initialization
 			if (script == null)
 			{
 				if (throwOnFail)
-					throw new ScriptNotFoundException(string.Format("Script {0} of ScriptType {1} could not be found.", scriptName,
+					throw new ScriptNotFoundException(string.Format("Script {0} of ScriptType {1} could not be found.",
+																	scriptName,
 																	scriptType));
 				return null;
 			}
@@ -634,10 +642,13 @@ namespace CryEngine.Initialization
 		{
 			RemoveInstances<CryScriptInstance>(scriptType, x => x.ScriptId == instanceId);
 		}
-
 		/// <summary>
-		/// Locates and removes the script with the assigned scriptId.
+		/// Deletes script instances that have specified flags and satisfy a condition.
 		/// </summary>
+		/// <typeparam name="T">Type of scripts to remove.</typeparam>
+		/// <param name="scriptType">A set of flags that must be set on the insatance to make it valid for deletion.</param>
+		/// <param name="match">Predicate that represents a condition every deleted instance must satisfy.</param>
+		/// <returns>Number of deleted instances.</returns>
 		public int RemoveInstances<T>(ScriptType scriptType, Predicate<T> match) where T : CryScriptInstance
 		{
 #if !(RELEASE && RELEASE_DISABLE_CHECKS)
@@ -663,7 +674,12 @@ namespace CryEngine.Initialization
 					)
 			).Sum();
 		}
-
+		/// <summary>
+		/// Deletes script instances that have specified flags and satisfy a condition.
+		/// </summary>
+		/// <param name="scriptType">A set of flags that must be set on the insatance to make it valid for deletion.</param>
+		/// <param name="match">Predicate that represents a condition every deleted instance must satisfy.</param>
+		/// <returns>Number of deleted instances.</returns>
 		public int RemoveInstances(ScriptType scriptType, Predicate<CryScriptInstance> match)
 		{
 			return RemoveInstances<CryScriptInstance>(scriptType, match);
@@ -679,6 +695,12 @@ namespace CryEngine.Initialization
 			return Find<CryScriptInstance>(scriptType, x => x.ScriptId == id);
 		}
 		#region Linq statements
+		/// <summary>
+		/// Finds first <see cref="CryScript"/> object that has specified flags set and satisfies a condition.
+		/// </summary>
+		/// <param name="scriptType">A set of flags that must be set on the insatance to make it valid for search.</param>
+		/// <param name="predicate">Predicate that represents a condition seeked instance must satisfy.</param>
+		/// <returns>Last element of type <see cref="CryScript"/> that has <paramref name="scriptType"/> flags set, and satisfies condition defined by <paramref name="predicate"/>.</returns>
 		public CryScript FindScript(ScriptType scriptType, Func<CryScript, bool> predicate)
 		{
 #if !(RELEASE && RELEASE_DISABLE_CHECKS)
@@ -688,7 +710,11 @@ namespace CryEngine.Initialization
 
 			return Scripts.FirstOrDefault(x => x.ScriptType.HasFlag(scriptType) && predicate(x));
 		}
-
+		/// <summary>
+		/// Invokes a function on each script object that has specified flags set.
+		/// </summary>
+		/// <param name="scriptType">A set of flags that must be set on the insatance to make it valid for operation.</param>
+		/// <param name="action">Function that takes <see cref="CryScript"/> object as parameter that is invoked on every object that has <paramref name="scriptType"/> flags set.</param>
 		public void ForEachScript(ScriptType scriptType, Action<CryScript> action)
 		{
 #if !(RELEASE && RELEASE_DISABLE_CHECKS)
@@ -702,7 +728,11 @@ namespace CryEngine.Initialization
 					action(x);
 			});
 		}
-
+		/// <summary>
+		/// Invokes a function on each script object that has specified flags set.
+		/// </summary>
+		/// <param name="scriptType">A set of flags that must be set on the insatance to make it valid for operation.</param>
+		/// <param name="action">Function that takes <see cref="CryScriptInstance"/> object as parameter that is invoked on every object that has <paramref name="scriptType"/> flags set.</param>
 		public void ForEach(ScriptType scriptType, Action<CryScriptInstance> action)
 		{
 #if !(RELEASE && RELEASE_DISABLE_CHECKS)
@@ -716,7 +746,13 @@ namespace CryEngine.Initialization
 					script.ScriptInstances.ForEach(action);
 			});
 		}
-
+		/// <summary>
+		/// Finds last occurrence of the script instance that matches given flags and satisfies a condition.
+		/// </summary>
+		/// <typeparam name="T">Type of the script instance to find.</typeparam>
+		/// <param name="scriptType">A set of flags that must be set on the insatance to make it valid for search.</param>
+		/// <param name="predicate">Predicate that represents a condition seeked instance must satisfy.</param>
+		/// <returns>Last element of type <typeparamref name="T"/> that has <paramref name="scriptType"/> flags set, and satisfies condition defined by <paramref name="predicate"/>.</returns>
 		public T Find<T>(ScriptType scriptType, Func<T, bool> predicate) where T : CryScriptInstance
 		{
 #if !(RELEASE && RELEASE_DISABLE_CHECKS)
@@ -775,45 +811,39 @@ namespace CryEngine.Initialization
 	public class ScriptNotFoundException : Exception
 	{
 		/// <summary>
-		/// Creates a default instance of <see cref="ScriptNotFoundException" /> class.
+		/// Creates a default instance of <see cref="ScriptNotFoundException"/> class.
 		/// </summary>
 		public ScriptNotFoundException()
 		{
 		}
 		/// <summary>
-		/// Creates a new instance of <see cref="ScriptNotFoundException" /> class with specified message.
+		/// Creates a new instance of <see cref="ScriptNotFoundException"/> class with specified message.
 		/// </summary>
-		/// <param name="message">
-		/// Message to supply with exception.
-		/// </param>
-		public ScriptNotFoundException(string message) : base(message)
+		/// <param name="message">Message to supply with exception.</param>
+		public ScriptNotFoundException(string message)
+			: base(message)
 		{
 		}
 		/// <summary>
-		/// Creates a new instance of <see cref="ScriptNotFoundException" /> class with specified
+		/// Creates a new instance of <see cref="ScriptNotFoundException"/> class with specified
 		/// message and exception object that caused new one to be created.
 		/// </summary>
-		/// <param name="message">
-		/// Message to supply with exception.
-		/// </param>
-		/// <param name="inner">
-		/// Exception that caused a new one to be created.
-		/// </param>
-		public ScriptNotFoundException(string message, Exception inner) : base(message, inner)
+		/// <param name="message">Message to supply with exception.</param>
+		/// <param name="inner">  Exception that caused a new one to be created.</param>
+		public ScriptNotFoundException(string message, Exception inner)
+			: base(message, inner)
 		{
 		}
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ScriptNotFoundException" /> class with serialized data.
+		/// Initializes a new instance of the <see cref="ScriptNotFoundException"/> class with
+		/// serialized data.
 		/// </summary>
-		/// <param name="info">
-		/// The object that holds the serialized object data.
-		/// </param>
-		/// <param name="context">
-		/// The contextual information about the source or destination.
-		/// </param>
+		/// <param name="info">   The object that holds the serialized object data.</param>
+		/// <param name="context">The contextual information about the source or destination.</param>
 		protected ScriptNotFoundException(
 			SerializationInfo info,
-			StreamingContext context) : base(info, context)
+			StreamingContext context)
+			: base(info, context)
 		{
 		}
 	}
