@@ -44,7 +44,7 @@ namespace CryEngine.Initialization
 				try
 				{
 					Directory.GetFiles(tempDirectory)
-							 .Where(x=>Path.GetExtension(x) != ".scriptdump")
+							 .Where(filePath=>Path.GetExtension(filePath) != ".scriptdump")
 							 .ForEach(File.Delete);
 				}
 				catch (UnauthorizedAccessException)
@@ -98,13 +98,16 @@ namespace CryEngine.Initialization
 		[UsedImplicitly]
 		private void Serialize()
 		{
-			var data = new ScriptManagerData();
-			data.LastScriptId = LastScriptId;
-
-			data.Input.ActionmapEvents = Input.ActionmapEvents;
-
-			data.Input.KeyEvents = Input.KeyEventsInvocationList;
-			data.Input.MouseEvents = Input.MouseEventsInvocationList;
+			var data = new ScriptManagerData
+			{
+				LastScriptId = this.LastScriptId,
+				Input =
+				{
+					ActionmapEvents = Input.ActionmapEvents,
+					KeyEvents = Input.KeyEventsInvocationList,
+					MouseEvents = Input.MouseEventsInvocationList
+				}
+			};
 
 			if (GameRules.Current != null)
 				data.GameRulesId = GameRules.Current.Id;
@@ -182,7 +185,7 @@ namespace CryEngine.Initialization
 		{
 			// Revert to previous state
 		}
-
+		// Creates an xml file that contains a bunch of assembly references.
 		[UsedImplicitly]
 		private void PopulateAssemblyLookup()
 		{
@@ -190,23 +193,34 @@ namespace CryEngine.Initialization
 			// Doesn't exist when unit testing
 			if (Directory.Exists(ProjectSettings.MonoFolder))
 			{
-				using (XmlWriter writer = XmlWriter.Create(Path.Combine(ProjectSettings.MonoFolder, "assemblylookup.xml")))
+				using
+				(
+					XmlWriter writer = XmlWriter.Create(Path.Combine(ProjectSettings.MonoFolder, "assemblylookup.xml"))
+				)
 				{
 					writer.WriteStartDocument();
 					writer.WriteStartElement("AssemblyLookupTable");
 
 					var gacFolder = Path.Combine(ProjectSettings.MonoFolder, "lib", "mono", "gac");
-					foreach (var assemblyLocation in Directory.GetFiles(gacFolder, "*.dll", SearchOption.AllDirectories))
+					// For each assembly in GAC folder.
+					foreach (var assembly in from assemblyLocation in Directory.GetFiles(gacFolder, "*.dll", SearchOption.AllDirectories)
+											 let separator = new[] {"__"}
+											 let splitParentDir = Directory.GetParent(assemblyLocation)
+																		   .Name.Split(separator, StringSplitOptions.RemoveEmptyEntries)
+											 select Assembly.Load
+													(
+														Path.GetFileName(assemblyLocation)
+														+
+														string.Format
+														(
+															", Version={0}, Culture=neutral, PublicKeyToken={1}",
+															splitParentDir.ElementAt(0),
+															splitParentDir.ElementAt(1)
+														)
+													)
+							)
 					{
-						var separator = new[] {"__"};
-						var splitParentDir = Directory.GetParent(assemblyLocation)
-													  .Name.Split(separator, StringSplitOptions.RemoveEmptyEntries);
-
-						var assembly =
-							Assembly.Load(Path.GetFileName(assemblyLocation) +
-										  string.Format(", Version={0}, Culture=neutral, PublicKeyToken={1}", splitParentDir.ElementAt(0),
-														splitParentDir.ElementAt(1)));
-
+						// Write information.
 						writer.WriteStartElement("Assembly");
 						writer.WriteAttributeString("name", assembly.FullName);
 
@@ -235,10 +249,11 @@ namespace CryEngine.Initialization
 
 			if (CryScript.TryCreate(typeof(NativeEntity), out script))
 			{
-				var entityRegistrationParams = new EntityRegistrationParams();
-
-				entityRegistrationParams.name = script.ScriptName;
-				entityRegistrationParams.flags = EntityClassFlags.Default | EntityClassFlags.Invisible;
+				var entityRegistrationParams = new EntityRegistrationParams
+				{
+					name = script.ScriptName,
+					flags = EntityClassFlags.Default | EntityClassFlags.Invisible
+				};
 
 #if !UNIT_TESTING
 				NativeEntityMethods.RegisterEntityClass(entityRegistrationParams);
@@ -361,10 +376,14 @@ namespace CryEngine.Initialization
 					if (assembly == null)
 						continue;
 
+					ICryMonoPlugin compiler = null;
 					var compilerType = assembly.GetTypes().FirstOrDefault(x => x.Implements<ICryMonoPlugin>());
-					Debug.LogAlways("        Initializing CryMono plugin: {0}...", compilerType.Name);
+					if (compilerType != null)
+					{
+						Debug.LogAlways("        Initializing CryMono plugin: {0}...", compilerType.Name);
 
-					var compiler = Activator.CreateInstance(compilerType) as ICryMonoPlugin;
+						compiler = Activator.CreateInstance(compilerType) as ICryMonoPlugin;
+					}
 
 					if (compiler != null)
 					{
@@ -466,11 +485,11 @@ namespace CryEngine.Initialization
 
 			if (File.Exists(Path.ChangeExtension(assemblyPath, "pdb")))
 			{
-				var pdb2mdbDllPath = Path.Combine(ProjectSettings.MonoFolder, "bin", "pdb2mdb.dll");
-				if (!File.Exists(pdb2mdbDllPath))
+				var pdb2MdbDllPath = Path.Combine(ProjectSettings.MonoFolder, "bin", "pdb2mdb.dll");
+				if (!File.Exists(pdb2MdbDllPath))
 					return;
 
-				var assembly = Assembly.LoadFrom(pdb2mdbDllPath);
+				var assembly = Assembly.LoadFrom(pdb2MdbDllPath);
 				var driver = assembly.GetType("Driver");
 				var convertMethod = driver.GetMethod("Convert", BindingFlags.Static | BindingFlags.Public);
 
@@ -739,7 +758,7 @@ namespace CryEngine.Initialization
 		private AppDomain ScriptDomain { get; set; }
 		private IFormatter Formatter { get; set; }
 
-		private string SerializedScriptsFile
+		private static string SerializedScriptsFile
 		{
 			get { return Path.Combine(ProjectSettings.TempDirectory, "CompiledScripts.scriptdump"); }
 		}
