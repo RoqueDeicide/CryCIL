@@ -10,6 +10,7 @@ PluginManager::IPluginManager* gPluginManager = NULL; //!< pointer to plugin man
 
 extern "C"
 {
+	// For PluginSDK.
 	CRYMONO_API PluginManager::IPluginBase *GetPluginInterface(const char *sInterfaceVersion)
 	{
 		// This function should not create a new interface class each call.
@@ -23,15 +24,17 @@ extern "C"
 
 extern "C"
 {
+	// Must be called from GameStartup.cpp to initialize CryMono run-time.
 	CRYMONO_API IMonoScriptSystem *InitCryMono(ISystem *pSystem, IGameFramework *pGameFramework)
 	{
+		// Tell System, that we have another subsystem here.
 		ModuleInitISystem(pSystem, "CryMono");
-
+		// Initialize that subsystem.
 		return new CScriptSystem(pGameFramework);
 	}
 }
 #endif
-
+// DLL entry point, does not do anything, just says: "we are good to go".
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved)
 {
 	switch (ul_reason_for_call)

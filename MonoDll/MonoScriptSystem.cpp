@@ -93,6 +93,8 @@ CScriptSystem::CScriptSystem(IGameFramework *pGameFramework)
 	g_pMonoCVars = m_pCVars;
 
 	// We should look into storing mono binaries, configuration as well as scripts via CryPak.
+	
+	// Let Mono know, where libraries and config files are located.
 	mono_set_dirs(PathUtils::GetMonoLibPath(), PathUtils::GetMonoConfigPath());
 
 #ifndef _RELEASE
@@ -203,12 +205,13 @@ bool CScriptSystem::CompleteInit()
 	signal(SIGABRT, HandleSignalAbort);
 
 	// Create root domain and determine the runtime version we'll be using.
-	m_pRootDomain = new CScriptDomain(eRV_4_30319);
+	m_pRootDomain = new CScriptDomain(eRV_4_30319);							// 4.5
 	m_domains.push_back(m_pRootDomain);
 
 	CScriptArray::m_pDefaultElementClass = mono_get_object_class();
 
 #ifndef _RELEASE
+	// Try loading .pdb to .mdb file converter.
 	m_pPdb2MdbAssembly = m_pRootDomain->LoadAssembly(PathUtils::GetMonoPath() + "bin\\pdb2mdb.dll");
 #endif
 
@@ -231,22 +234,22 @@ bool CScriptSystem::Reload()
 
 		m_pScriptManager->CallMethod("Serialize");
 	}
-
+	// Initialize AppDomain.
 	IMonoDomain *pScriptDomain = CreateDomain("ScriptDomain", nullptr, true);
-
+	// Load CryBrary.
 	IMonoAssembly *pCryBraryAssembly = pScriptDomain->LoadAssembly(PathUtils::GetBinaryPath() + "CryBrary.dll");
-
+	// Prepare parts of script manager that will be passed to constructor.
 	IMonoArray *pCtorParams = CreateMonoArray(2);
 	pCtorParams->InsertAny(m_bFirstReload);
 	pCtorParams->InsertMonoString(ToMonoString(PathUtils::GetConfigPath()));
-
+	// Create new script manager.
 	IMonoObject *pScriptManager = *pCryBraryAssembly->GetClass("ScriptManager", "CryEngine.Initialization")->CreateInstance(pCtorParams);
 	SAFE_RELEASE(pCtorParams);
-
+	// Initialize script manager.
 	auto result = pScriptManager->CallMethod("Initialize", m_bFirstReload);
 	if (result == nullptr)
 		return false;
-
+	// Prepare to react to result of initialization.
 	IMonoObject *pResult = *result;
 	auto reloadResult = pResult->Unbox<EScriptReloadResult>();
 	SAFE_RELEASE(pResult);
