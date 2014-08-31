@@ -303,8 +303,8 @@
     <Compile Include="Script Handling\Registration\Actor.cs" />
     <Compile Include="Script Handling\Registration\Entity.cs" />
     <Compile Include="Script Handling\Registration\EntityFlowNode.cs" />
-    <Compile Include="Script Handling\Registration\FlowNode\InputPortConfig.cs" />
-    <Compile Include="Script Handling\Registration\FlowNode\OutputPortConfig.cs" />
+    <Compile Include="Flowgraph\InputPortConfig.cs" />
+    <Compile Include="Flowgraph\OutputPortConfig.cs" />
     <Compile Include="Script Handling\Registration\FlowNode.cs" />
     <Compile Include="Script Handling\Registration\GameRules.cs" />
     <Compile Include="Script Handling\Exceptions\ScriptInstanceDestroyedException.cs" />
@@ -455,7 +455,9 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Script Handling\Registration\FlowNode\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

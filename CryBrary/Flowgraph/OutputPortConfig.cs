@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
-using CryEngine.Flowgraph;
-
-namespace CryEngine.Initialization
+namespace CryEngine.Flowgraph
 {
 	public struct OutputPortConfig
 	{
@@ -14,13 +10,13 @@ namespace CryEngine.Initialization
 			IEnumerable<OutputPortConfig> outputPorts)
 			: this()
 		{
-			name = _name;
-			humanName = _humanName;
-			description = desc;
-			type = _type;
+			this.name = _name;
+			this.humanName = _humanName;
+			this.description = desc;
+			this.type = _type;
 
-			inputs = inputPorts.Cast<object>().ToArray();
-			outputs = outputPorts.Cast<object>().ToArray();
+			this.inputs = inputPorts.Cast<object>().ToArray();
+			this.outputs = outputPorts.Cast<object>().ToArray();
 		}
 
 		public string name;
