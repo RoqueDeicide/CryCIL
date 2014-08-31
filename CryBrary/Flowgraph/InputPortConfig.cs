@@ -1,36 +1,33 @@
 ﻿namespace CryEngine.Flowgraph
 {
+	/// <summary>
+	/// Encapsulates configuration of the input port.
+	/// </summary>
 	public struct InputPortConfig
 	{
-		public InputPortConfig(string name, NodePortType type, string desc = "", string humanName = "", string UIConfig = "")
-			: this()
-		{
-			this.name = name;
-			this.humanName = humanName;
-
-			this.description = desc;
-			this.type = type;
-			this.uiConfig = UIConfig;
-
-			this.defaultValue = null;
-		}
-
-		public InputPortConfig(string name, NodePortType type, object defaultVal = null, string desc = "", string humanName = "", string UIConfig = "")
-			: this(name, type, desc, humanName, UIConfig)
-		{
-			this.defaultValue = defaultVal;
-		}
-
-		public string name;
-
-		public string humanName;
-
-		public string description;
-
-		public NodePortType type;
-
-		public string uiConfig;
-
-		public object defaultValue;
+		/// <summary>
+		/// Name of the input port.
+		/// </summary>
+		public string Name;
+		/// <summary>
+		/// Readable name of the port.
+		/// </summary>
+		public string HumanName;
+		/// <summary>
+		/// Description of the port.
+		/// </summary>
+		public string Description;
+		/// <summary>
+		/// Type of the port.
+		/// </summary>
+		public NodePortType Type;
+		/// <summary>
+		/// Text that contains a mapping of integer values to names, allowing to use drop-down list to choose the value in Sandbox.
+		/// </summary>
+		public string UiConfig;
+		/// <summary>
+		/// Default value.
+		/// </summary>
+		public object DefaultValue;
 	}
 }

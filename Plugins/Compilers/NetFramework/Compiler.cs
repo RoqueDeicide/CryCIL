@@ -516,7 +516,7 @@ namespace CryEngine.Compilers.NET
 				ParameterInfo parameter = method.GetParameters()[0];
 				if (parameter.ParameterType.IsEnum)
 				{
-					inputPortConfig.type = NodePortType.Int;
+					inputPortConfig.Type = NodePortType.Int;
 
 					Array values = Enum.GetValues(parameter.ParameterType);
 					if (values.Length <= 0)
@@ -524,26 +524,26 @@ namespace CryEngine.Compilers.NET
 
 					defaultVal = values.GetValue(0);
 
-					inputPortConfig.uiConfig = "enum_int:";
+					inputPortConfig.UiConfig = "enum_int:";
 
 					for (int i = 0; i < values.Length; i++)
 					{
 						object value = values.GetValue(i);
 
-						if (i > 0 && i != inputPortConfig.uiConfig.Length)
-							inputPortConfig.uiConfig += ",";
+						if (i > 0 && i != inputPortConfig.UiConfig.Length)
+							inputPortConfig.UiConfig += ",";
 
-						inputPortConfig.uiConfig += Enum.GetName(parameter.ParameterType, value) + "=" + (int)value;
+						inputPortConfig.UiConfig += Enum.GetName(parameter.ParameterType, value) + "=" + (int)value;
 					}
 				}
 				else
-					inputPortConfig.type = GetFlowNodePortType(parameter.ParameterType, out portPrefix, portAttribute);
+					inputPortConfig.Type = GetFlowNodePortType(parameter.ParameterType, out portPrefix, portAttribute);
 
 				if (parameter.IsOptional && defaultVal == null)
 					defaultVal = parameter.DefaultValue;
 				else if (defaultVal == null)
 				{
-					switch (inputPortConfig.type)
+					switch (inputPortConfig.Type)
 					{
 						case NodePortType.Bool:
 							defaultVal = false;
@@ -567,18 +567,18 @@ namespace CryEngine.Compilers.NET
 				}
 			}
 			else
-				inputPortConfig.type = NodePortType.Void;
+				inputPortConfig.Type = NodePortType.Void;
 
 			string portName = (portAttribute.Name ?? method.Name);
 
 			if (portPrefix != null)
-				inputPortConfig.name = portPrefix + portName;
+				inputPortConfig.Name = portPrefix + portName;
 			else
-				inputPortConfig.name = portName;
+				inputPortConfig.Name = portName;
 
-			inputPortConfig.defaultValue = defaultVal;
-			inputPortConfig.description = portAttribute.Description;
-			inputPortConfig.humanName = portAttribute.Name ?? method.Name;
+			inputPortConfig.DefaultValue = defaultVal;
+			inputPortConfig.Description = portAttribute.Description;
+			inputPortConfig.HumanName = portAttribute.Name ?? method.Name;
 			return true;
 		}
 
@@ -588,14 +588,14 @@ namespace CryEngine.Compilers.NET
 
 			if (portAttribute != null)
 			{
-				outputPortConfig.name = portAttribute.Name ?? memberInfo.Name;
+				outputPortConfig.Name = portAttribute.Name ?? memberInfo.Name;
 
-				outputPortConfig.description = portAttribute.Description;
+				outputPortConfig.Description = portAttribute.Description;
 			}
 			else
-				outputPortConfig.name = memberInfo.Name;
+				outputPortConfig.Name = memberInfo.Name;
 
-			outputPortConfig.humanName = outputPortConfig.name;
+			outputPortConfig.HumanName = outputPortConfig.Name;
 
 			Type type = memberInfo.MemberType == MemberTypes.Field
 				? ((FieldInfo)memberInfo).FieldType
@@ -607,7 +607,7 @@ namespace CryEngine.Compilers.NET
 			Type genericType = isGenericType ? type.GetGenericArguments()[0] : typeof(void);
 
 			string prefix;
-			outputPortConfig.type = this.GetFlowNodePortType(genericType, out prefix, portAttribute);
+			outputPortConfig.Type = this.GetFlowNodePortType(genericType, out prefix, portAttribute);
 
 			return true;
 		}

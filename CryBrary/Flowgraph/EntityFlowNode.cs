@@ -17,8 +17,16 @@ namespace CryEngine.Flowgraph
 		{
 			var registrationParams = (EntityFlowNodeRegistrationParams)Script.RegistrationParams;
 
-			return new NodeConfig(FlowNodeFilter.Approved, "", FlowNodeFlags.HideUI | FlowNodeFlags.TargetEntity,
-								  FlowNodeType.Instanced, registrationParams.InputPorts, registrationParams.OutputPorts);
+			return
+				new NodeConfig
+				{
+					Filter = FlowNodeFilter.Approved,
+					Description = "",
+					Flags = FlowNodeFlags.HideUI | FlowNodeFlags.TargetEntity,
+					Type = FlowNodeType.Instanced,
+					Inputs = registrationParams.InputPorts.Cast<object>().ToArray(),
+					Outputs = registrationParams.OutputPorts.Cast<object>().ToArray()
+				};
 		}
 	}
 }

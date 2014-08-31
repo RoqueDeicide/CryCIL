@@ -3,24 +3,26 @@ using System.Linq;
 
 namespace CryEngine.Flowgraph
 {
+	/// <summary>
+	/// Encapsulates configuration of the output port.
+	/// </summary>
 	public struct OutputPortConfig
 	{
-		public OutputPortConfig(string _name, string _humanName,
-			string desc, NodePortType _type)
-			: this()
-		{
-			this.name = _name;
-			this.humanName = _humanName;
-			this.description = desc;
-			this.type = _type;
-		}
-
-		public string name;
-
-		public string humanName;
-
-		public string description;
-
-		public NodePortType type;
+		/// <summary>
+		/// Name of the output port.
+		/// </summary>
+		public string Name;
+		/// <summary>
+		/// Readable name of the port.
+		/// </summary>
+		public string HumanName;
+		/// <summary>
+		/// Description of the port.
+		/// </summary>
+		public string Description;
+		/// <summary>
+		/// Type of the port.
+		/// </summary>
+		public NodePortType Type;
 	}
 }

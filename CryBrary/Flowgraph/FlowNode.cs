@@ -124,9 +124,15 @@ namespace CryEngine.Flowgraph
 		{
 			var registrationParams = (FlowNodeRegistrationParams)Script.RegistrationParams;
 
-			return new NodeConfig(registrationParams.filter, registrationParams.description,
-								  (registrationParams.hasTargetEntity ? FlowNodeFlags.TargetEntity : 0), registrationParams.type,
-								  registrationParams.InputPorts, registrationParams.OutputPorts);
+			return new NodeConfig
+			{
+				Filter = registrationParams.filter,
+				Description = registrationParams.description,
+				Flags = (registrationParams.hasTargetEntity ? FlowNodeFlags.TargetEntity : 0),
+				Type = registrationParams.type,
+				Inputs = registrationParams.InputPorts.Cast<object>().ToArray(),
+				Outputs = registrationParams.OutputPorts.Cast<object>().ToArray()
+			};
 		}
 
 		private int GetInputPortId(MethodInfo method)
