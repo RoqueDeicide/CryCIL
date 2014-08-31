@@ -506,18 +506,17 @@ namespace CryEngine.Initialization
 			Time.Set(frameTime, frameStartTime, asyncTime, frameRate, timeScale);
 
 			Awaiter.Instance.OnUpdate(frameTime);
-
-			Scripts.ForEach(x =>
-			{
-				if ((x.ScriptType & ScriptType.CryScriptInstance) == ScriptType.CryScriptInstance && x.ScriptInstances != null)
-				{
-					x.ScriptInstances.ForEach(instance =>
-					{
-						if (instance.ReceiveUpdates)
-							instance.OnUpdate();
-					});
-				}
-			});
+			// Invoke OnUpdate on every script object that is a script instance and wants to receive updates.
+			(
+				from script in this.Scripts
+				where script.ScriptType.HasFlag(ScriptType.CryScriptInstance) && script.ScriptInstances != null
+				select script.ScriptInstances
+			)
+			.ForEach
+			(
+				instanceList => instanceList.Where(inst => inst.ReceiveUpdates)
+											.ForEach(inst => inst.OnUpdate())
+			);
 		}
 
 		/// <summary>
@@ -645,20 +644,24 @@ namespace CryEngine.Initialization
 			if (!Enum.IsDefined(typeof(ScriptType), scriptType))
 				throw new ArgumentException(string.Format("scriptType: value {0} was not defined in the enum", scriptType));
 #endif
+			return
+			(
+				from script in this.Scripts
+					where script.ScriptType.HasFlag(scriptType) && script.ScriptInstances != null
+					select script.ScriptInstances.RemoveAll
+					(
+						x =>
+						{
+							if (match(x as T))
+							{
+								x.OnDestroyedInternal();
+								return true;
+							}
 
-			return (from script in this.Scripts
-				where (script.ScriptType & scriptType) == scriptType
-				where script.ScriptInstances != null
-				select script.ScriptInstances.RemoveAll(x =>
-				{
-					if (match(x as T))
-					{
-						x.OnDestroyedInternal();
-						return true;
-					}
-
-					return false;
-				})).Sum();
+							return false;
+						}
+					)
+			).Sum();
 		}
 
 		public int RemoveInstances(ScriptType scriptType, Predicate<CryScriptInstance> match)
@@ -683,7 +686,7 @@ namespace CryEngine.Initialization
 				throw new ArgumentException(string.Format("scriptType: value {0} was not defined in the enum", scriptType));
 #endif
 
-			return Scripts.FirstOrDefault(x => (x.ScriptType & scriptType) == scriptType && predicate(x));
+			return Scripts.FirstOrDefault(x => x.ScriptType.HasFlag(scriptType) && predicate(x));
 		}
 
 		public void ForEachScript(ScriptType scriptType, Action<CryScript> action)
