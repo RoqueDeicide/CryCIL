@@ -71,7 +71,7 @@ namespace CryEngine.Entities
 			EntityInitializationParams info;
 
 			var ent =
-				NativeEntityMethods.SpawnEntity(
+				EntityInterop.SpawnEntity(
 					new EntitySpawnParams
 					{
 						Name = entityName,
@@ -106,7 +106,7 @@ namespace CryEngine.Entities
 				throw new ArgumentException("entityId cannot be 0!");
 #endif
 
-			NativeEntityMethods.RemoveEntity(id, forceRemoveNow);
+			EntityInterop.RemoveEntity(id, forceRemoveNow);
 		}
 
 		internal static bool InternalRemove(EntityId id)
@@ -172,7 +172,7 @@ namespace CryEngine.Entities
 				return ent;
 
 			// Couldn't find a CryMono entity, check if a non-managed one exists.
-			var entPointer = NativeEntityMethods.GetEntity(entityId);
+			var entPointer = EntityInterop.GetEntity(entityId);
 			if (entPointer != IntPtr.Zero)
 				return CreateNativeEntity(entityId, entPointer);
 
@@ -186,13 +186,13 @@ namespace CryEngine.Entities
 			if (entity != null)
 				return entity;
 
-			return CreateNativeEntity(NativeEntityMethods.GetEntityId(entityPointer), entityPointer);
+			return CreateNativeEntity(EntityInterop.GetEntityId(entityPointer), entityPointer);
 		}
 
 		internal static EntityBase CreateNativeEntity(EntityId id, IntPtr entityPointer)
 		{
 			// check if actor
-			var actorInfo = NativeActorMethods.GetActorInfoById(id.Value);
+			var actorInfo = Native.ActorInterop.GetActorInfoById(id.Value);
 			if (actorInfo.Id != 0)
 				return Actor.CreateNativeActor(actorInfo);
 
@@ -213,7 +213,7 @@ namespace CryEngine.Entities
 		/// </remarks>
 		public static EntityBase Find(string name)
 		{
-			var id = NativeEntityMethods.FindEntity(name);
+			var id = EntityInterop.FindEntity(name);
 			if (id == 0)
 				return null;
 
@@ -231,7 +231,7 @@ namespace CryEngine.Entities
 			if (String.IsNullOrEmpty(className))
 				throw new ArgumentException("className should not be null or empty", "className");
 #endif
-			return GetEntitiesCommon<Entity>(NativeEntityMethods.GetEntitiesByClass(className));
+			return GetEntitiesCommon<Entity>(EntityInterop.GetEntitiesByClass(className));
 		}
 
 		/// <summary>
@@ -241,12 +241,12 @@ namespace CryEngine.Entities
 		/// <returns> An array of entities of type T. </returns>
 		public static IEnumerable<T> GetByClass<T>() where T : EntityBase
 		{
-			return GetEntitiesCommon<T>(NativeEntityMethods.GetEntitiesByClass(typeof(T).Name));
+			return GetEntitiesCommon<T>(EntityInterop.GetEntitiesByClass(typeof(T).Name));
 		}
 
 		public static IEnumerable<EntityBase> GetByClasses(string[] classNames)
 		{
-			return GetEntitiesCommon<Entity>(NativeEntityMethods.GetEntitiesByClasses(classNames.Cast<object>().ToArray()));
+			return GetEntitiesCommon<Entity>(EntityInterop.GetEntitiesByClasses(classNames.Cast<object>().ToArray()));
 		}
 
 		/// <summary>
@@ -257,7 +257,7 @@ namespace CryEngine.Entities
 		/// <returns> </returns>
 		public static IEnumerable<EntityBase> GetInBox(BoundingBox bbox, EntityQueryFlags flags = EntityQueryFlags.All)
 		{
-			return GetEntitiesCommon<EntityBase>(NativeEntityMethods.GetEntitiesInBox(bbox, flags));
+			return GetEntitiesCommon<EntityBase>(EntityInterop.GetEntitiesInBox(bbox, flags));
 		}
 
 		/// <summary>
@@ -269,17 +269,17 @@ namespace CryEngine.Entities
 		public static IEnumerable<T> GetInBox<T>(BoundingBox bbox, EntityQueryFlags flags = EntityQueryFlags.All)
 			where T : EntityBase
 		{
-			return GetEntitiesCommon<T>(NativeEntityMethods.GetEntitiesInBox(bbox, flags));
+			return GetEntitiesCommon<T>(EntityInterop.GetEntitiesInBox(bbox, flags));
 		}
 
 		public static IEnumerable<EntityBase> QueryProximity(BoundingBox bbox, string className, EntityFlags flags = 0)
 		{
-			return GetEntitiesCommon<EntityBase>(NativeEntityMethods.QueryProximity(bbox, className, flags));
+			return GetEntitiesCommon<EntityBase>(EntityInterop.QueryProximity(bbox, className, flags));
 		}
 
 		public static IEnumerable<T> QueryProximity<T>(BoundingBox bbox, EntityFlags flags = 0) where T : EntityBase
 		{
-			return GetEntitiesCommon<T>(NativeEntityMethods.QueryProximity(bbox, typeof(T).Name, flags));
+			return GetEntitiesCommon<T>(EntityInterop.QueryProximity(bbox, typeof(T).Name, flags));
 		}
 
 		internal static IEnumerable<T> GetEntitiesCommon<T>(object[] ents) where T : EntityBase

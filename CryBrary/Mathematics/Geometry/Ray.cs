@@ -98,7 +98,7 @@ namespace CryEngine.Mathematics.Geometry
 				}
 				// Cast the ray.
 				int numberOfHits =
-					Native.NativePhysicsMethods.RayWorldIntersection
+					Native.PhysicsInterop.RayWorldIntersection
 					(
 						pos,
 						dir,

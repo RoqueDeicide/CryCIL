@@ -12,8 +12,8 @@ namespace CryEngine
 	{
 		static Platform()
 		{
-			MeshIndexIs16Bit = Native.PlatformMethods.AreMeshIndicesInt16();
-			MeshTangentsUseSingle = Native.PlatformMethods.AreMeshTangentsSingle();
+			MeshIndexIs16Bit = Native.PlatformInterop.AreMeshIndicesInt16();
+			MeshTangentsUseSingle = Native.PlatformInterop.AreMeshTangentsSingle();
 		}
 		#region Mesh Configuration
 		/// <summary>

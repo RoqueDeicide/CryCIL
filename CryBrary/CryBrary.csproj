@@ -149,7 +149,7 @@
     <Compile Include="Actors\ActorStatics.cs" />
     <Compile Include="Actors\ViewParams.cs" />
     <Compile Include="Attributes.cs" />
-    <Compile Include="Native\NativeMemoryHandlingMethods.cs" />
+    <Compile Include="Native\MemoryHandlingInterop.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="RunTime\Compilation\CodeSolution.cs" />
     <Compile Include="RunTime\Compilation\Exception.cs" />
@@ -200,7 +200,7 @@
     <Compile Include="Entities\Advanced\GameObjectExtension.cs" />
     <Compile Include="Native\EntityInitializationParams.cs" />
     <Compile Include="Entities\EntityNetworking.cs" />
-    <Compile Include="Native\NativeGameObjectMethods.cs" />
+    <Compile Include="Native\GameObjectInterop.cs" />
     <Compile Include="Flowgraph\EntityFlowNode.cs" />
     <Compile Include="Entities\EntityLink.cs" />
     <Compile Include="Entities\EntityUpdatePolicy.cs" />
@@ -253,7 +253,7 @@
     <Compile Include="Mathematics\Vector4.cs" />
     <Compile Include="Misc\ListEnumerator.cs" />
     <Compile Include="Native\NamespaceDoc.cs" />
-    <Compile Include="Native\PlatformMethods.cs" />
+    <Compile Include="Native\PlatformInterop.cs" />
     <Compile Include="Platform.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\Mesh.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\CommonTangentOperations.cs" />
@@ -276,8 +276,8 @@
     <Compile Include="Mathematics\Geometry\Meshes\NativeVertexTextureCoordinatesCollection.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\TangentInt16.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\TangentSingle.cs" />
-    <Compile Include="Native\NativeMeshMethods.cs" />
-    <Compile Include="Native\NativeStaticObjectMethods.cs" />
+    <Compile Include="Native\MeshInterop.cs" />
+    <Compile Include="Native\StaticObjectInterop.cs" />
     <Compile Include="StaticObjects\StaticObject.cs" />
     <Compile Include="Misc\AnimationEvent.cs" />
     <Compile Include="Misc\Exceptions\NullPointerException.cs" />
@@ -304,7 +304,7 @@
     <Compile Include="Profiling\FrameProfiler.cs" />
     <Compile Include="Profiling\FrameProfilerSection.cs" />
     <Compile Include="Script Handling\IScriptInitializationParams.cs" />
-    <Compile Include="Native\NativeScriptSystemMethods.cs" />
+    <Compile Include="Native\ScriptSystemInterop.cs" />
     <Compile Include="Physics\Explosion.cs" />
     <Compile Include="Script Handling\Registration\Actor.cs" />
     <Compile Include="Script Handling\Registration\Entity.cs" />
@@ -316,7 +316,7 @@
     <Compile Include="Script Handling\Exceptions\ScriptInstanceDestroyedException.cs" />
     <Compile Include="Misc\Exceptions\MissingAttributeException.cs" />
     <Compile Include="Extensions\NativeHandleExtensions.cs" />
-    <Compile Include="Native\NativeNetworkMethods.cs" />
+    <Compile Include="Native\NetworkInterop.cs" />
     <Compile Include="Network\RemoteInvocationException.cs" />
     <Compile Include="Script Handling\ScriptReloadResult.cs" />
     <Compile Include="Serialization\CrySerialize.cs" />
@@ -328,8 +328,8 @@
     <Compile Include="Entities\AnimationFlags.cs" />
     <Compile Include="Entities\EntityLight.cs" />
     <Compile Include="Actors\NativeActor.cs" />
-    <Compile Include="Native\Native3DEngineMethods.cs" />
-    <Compile Include="Native\NativeActorMethods.cs" />
+    <Compile Include="Native\Engine3DInterop.cs" />
+    <Compile Include="Native\ActorInterop.cs" />
     <Compile Include="Async\Jobs\AsyncJob.cs" />
     <Compile Include="Async\Awaiter.cs" />
     <Compile Include="Async\Delay.cs" />
@@ -346,16 +346,16 @@
     <Compile Include="Misc\DelayedFunc.cs" />
     <Compile Include="Extensions\Enum.cs" />
     <Compile Include="Extensions\WinForms.cs" />
-    <Compile Include="Native\NativeCVarMethods.cs" />
-    <Compile Include="Native\NativeDebugMethods.cs" />
-    <Compile Include="Native\NativeEntityMethods.cs" />
-    <Compile Include="Native\NativeFlowNodeMethods.cs" />
-    <Compile Include="Native\NativeGameRulesMethods.cs" />
-    <Compile Include="Native\NativeInputMethods.cs" />
+    <Compile Include="Native\ConsoleInterop.cs" />
+    <Compile Include="Native\DebugInterop.cs" />
+    <Compile Include="Native\EntityInterop.cs" />
+    <Compile Include="Native\FlowNodeInterop.cs" />
+    <Compile Include="Native\GameRulesInterop.cs" />
+    <Compile Include="Native\InputInterop.cs" />
     <Compile Include="Engine\Level\Native\NativeLevelMethods.cs" />
     <Compile Include="Engine\Material\Native\NativeMaterialMethods.cs" />
     <Compile Include="Engine\Particles\Native\NativeParticleEffectMethods.cs" />
-    <Compile Include="Native\NativePhysicsMethods.cs" />
+    <Compile Include="Native\PhysicsInterop.cs" />
     <Compile Include="Engine\Renderer\Native\NativeRendererMethods.cs" />
     <Compile Include="Engine\Lua\Native\NativeScriptTableMethods.cs" />
     <Compile Include="Misc\Time\NativeTimeMethods.cs" />
@@ -391,7 +391,7 @@
     <Compile Include="Serialization\CrySerializer.cs" />
     <Compile Include="Misc\Color.cs" />
     <Compile Include="Serialization\SerializedObjectReference.cs" />
-    <Compile Include="Native\NativeSoundMethods.cs" />
+    <Compile Include="Native\SoundInterop.cs" />
     <Compile Include="Sound\Sound.cs" />
     <Compile Include="Testing\Assertion.cs" />
     <Compile Include="Testing\Attributes.cs" />
@@ -461,9 +461,7 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Script Handling\Registration\FlowNode\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

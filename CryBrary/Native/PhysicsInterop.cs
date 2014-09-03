@@ -6,7 +6,7 @@ using CryEngine.Physics.Status;
 
 namespace CryEngine.Native
 {
-	public static class NativePhysicsMethods
+	public static class PhysicsInterop
 	{
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		extern public static IntPtr GetPhysicalEntity(IntPtr entityPointer);

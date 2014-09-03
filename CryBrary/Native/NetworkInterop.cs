@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace CryEngine.Native
 {
-	internal static class NativeNetworkMethods
+	internal static class NetworkInterop
 	{
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		extern internal static bool IsServer();

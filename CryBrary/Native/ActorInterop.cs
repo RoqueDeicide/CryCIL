@@ -4,7 +4,7 @@ using CryEngine.Mathematics;
 
 namespace CryEngine.Native
 {
-	internal static class NativeActorMethods
+	internal static class ActorInterop
 	{
 		[MethodImplAttribute(MethodImplOptions.InternalCall)]
 		extern internal static float GetPlayerHealth(IntPtr actorPtr);

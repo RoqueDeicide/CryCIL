@@ -6,7 +6,7 @@ using System.Text;
 
 namespace CryEngine.Native
 {
-	internal static class PlatformMethods
+	internal static class PlatformInterop
 	{
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		internal static extern bool AreMeshIndicesInt16();

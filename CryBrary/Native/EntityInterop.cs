@@ -38,7 +38,7 @@ namespace CryEngine.Native
 		public EntityFlags Flags;
 	}
 
-	public static class NativeEntityMethods
+	public static class EntityInterop
 	{
 		[MethodImplAttribute(MethodImplOptions.InternalCall)]
 		public static extern void PlayAnimation(IntPtr ptr, string animationName, int slot, int layer, float blend,

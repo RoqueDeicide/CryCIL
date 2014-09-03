@@ -4,7 +4,7 @@ using CryEngine.Mathematics;
 
 namespace CryEngine.Native
 {
-	internal static class NativeFlowNodeMethods
+	internal static class FlowNodeInterop
 	{
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		internal static extern void RegisterNode(string typeName);

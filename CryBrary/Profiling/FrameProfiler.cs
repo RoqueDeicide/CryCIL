@@ -24,7 +24,7 @@ namespace CryEngine.Profiling
 		/// <returns>A wrapper object for CFrameProfiler *.</returns>
 		public static FrameProfiler Create(string name)
 		{
-			return new FrameProfiler(NativeDebugMethods.CreateFrameProfiler(name));
+			return new FrameProfiler(DebugInterop.CreateFrameProfiler(name));
 		}
 		/// <summary>
 		/// Creates a new <see cref="FrameProfilerSection"/>.
@@ -32,7 +32,7 @@ namespace CryEngine.Profiling
 		/// <returns>A new frame profiler section.</returns>
 		public FrameProfilerSection CreateSection()
 		{
-			return new FrameProfilerSection(NativeDebugMethods.CreateFrameProfilerSection(Handle), this);
+			return new FrameProfilerSection(DebugInterop.CreateFrameProfilerSection(Handle), this);
 		}
 		/// <summary>
 		/// Deletes a frame profile section.
@@ -40,7 +40,7 @@ namespace CryEngine.Profiling
 		/// <param name="profilerSection"><see cref="FrameProfilerSection"/> to delete.</param>
 		public void DeleteSection(FrameProfilerSection profilerSection)
 		{
-			NativeDebugMethods.DeleteFrameProfilerSection(profilerSection.Handle);
+			DebugInterop.DeleteFrameProfilerSection(profilerSection.Handle);
 		}
 		/// <summary>
 		/// CFrameProfiler *

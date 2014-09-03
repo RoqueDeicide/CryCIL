@@ -121,7 +121,7 @@ namespace CryEngine.Initialization
 			{
 				if (cvar is ByRefCVar)
 				{
-					NativeCVarMethods.UnregisterCVar(cvar.Name, true);
+					Native.ConsoleInterop.UnregisterCVar(cvar.Name, true);
 
 					return true;
 				}
@@ -257,7 +257,7 @@ namespace CryEngine.Initialization
 				};
 
 #if !UNIT_TESTING
-				NativeEntityMethods.RegisterEntityClass(entityRegistrationParams);
+				EntityInterop.RegisterEntityClass(entityRegistrationParams);
 #endif
 
 				Scripts.Add(script);
@@ -296,7 +296,7 @@ namespace CryEngine.Initialization
 						{
 							var registrationParams = (ActorRegistrationParams)script.RegistrationParams;
 
-							NativeActorMethods.RegisterActorClass(script.ScriptName, script.Type.Implements(typeof(NativeActor)),
+							ActorInterop.RegisterActorClass(script.ScriptName, script.Type.Implements(typeof(NativeActor)),
 																  registrationParams.isAI);
 						}
 						else if (script.RegistrationParams is EntityRegistrationParams)
@@ -308,7 +308,7 @@ namespace CryEngine.Initialization
 							if (registrationParams.category == null)
 								registrationParams.category = "Default";
 
-							NativeEntityMethods.RegisterEntityClass(registrationParams);
+							EntityInterop.RegisterEntityClass(registrationParams);
 
 							script.RegistrationParams = registrationParams;
 						}
@@ -321,11 +321,11 @@ namespace CryEngine.Initialization
 						if (registrationParams.name == null)
 							registrationParams.name = script.ScriptName;
 
-						NativeGameRulesMethods.RegisterGameMode(registrationParams.name);
+						GameRulesInterop.RegisterGameMode(registrationParams.name);
 
 						if (registrationParams.defaultGamemode || !hasDefaultGameRules)
 						{
-							NativeGameRulesMethods.SetDefaultGameMode(registrationParams.name);
+							GameRulesInterop.SetDefaultGameMode(registrationParams.name);
 
 							hasDefaultGameRules = true;
 						}

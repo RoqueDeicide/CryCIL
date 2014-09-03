@@ -14,7 +14,7 @@ namespace CryEngine.Flowgraph
 	{
 		internal static void Register(string typeName)
 		{
-			NativeFlowNodeMethods.RegisterNode(typeName);
+			FlowNodeInterop.RegisterNode(typeName);
 		}
 
 		internal static void InternalRemove(int scriptId)

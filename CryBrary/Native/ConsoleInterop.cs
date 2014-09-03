@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 
 namespace CryEngine.Native
 {
-	internal static class NativeCVarMethods
+	internal static class ConsoleInterop
 	{
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		internal static extern void Execute(string command, bool silent);

@@ -19,7 +19,7 @@ namespace CryEngine.Actors
 			if (actor != null)
 				return actor;
 
-			var entityInfo = NativeActorMethods.GetActorInfoByChannelId((ushort)channelId);
+			var entityInfo = Native.ActorInterop.GetActorInfoByChannelId((ushort)channelId);
 			if (entityInfo.Id != 0)
 				return CreateNativeActor(entityInfo);
 
@@ -49,7 +49,7 @@ namespace CryEngine.Actors
 				return actor;
 
 			// Couldn't find a CryMono entity, check if a non-managed one exists.
-			var actorInfo = NativeActorMethods.GetActorInfoById(actorId);
+			var actorInfo = Native.ActorInterop.GetActorInfoById(actorId);
 			if (actorInfo.Id != 0)
 				return CreateNativeActor(actorInfo);
 
@@ -95,7 +95,7 @@ namespace CryEngine.Actors
 		{
 			get
 			{
-				var clientActorId = NativeActorMethods.GetClientActorId();
+				var clientActorId = Native.ActorInterop.GetClientActorId();
 				if (clientActorId == 0)
 					return null;
 
@@ -154,7 +154,7 @@ namespace CryEngine.Actors
 			if (actor != null)
 				return actor;
 
-			var info = NativeActorMethods.CreateActor(channelId, name, className, pos ?? new Vector3(0, 0, 0), rot ?? Quaternion.Identity, scale ?? new Vector3(1, 1, 1));
+			var info = Native.ActorInterop.CreateActor(channelId, name, className, pos ?? new Vector3(0, 0, 0), rot ?? Quaternion.Identity, scale ?? new Vector3(1, 1, 1));
 			if (info.Id == 0)
 				throw new Exception("Actor creation failed, make sure your IActor implementation is registered with the same name as your managed actor class.");
 
@@ -167,7 +167,7 @@ namespace CryEngine.Actors
 		/// <param name="id"></param>
 		public static void Remove(EntityId id)
 		{
-			NativeActorMethods.RemoveActor(id);
+			Native.ActorInterop.RemoveActor(id);
 		}
 
 		/// <summary>
@@ -176,9 +176,9 @@ namespace CryEngine.Actors
 		/// <param name="channelId"></param>
 		public static void Remove(int channelId)
 		{
-			var actorInfo = NativeActorMethods.GetActorInfoByChannelId((ushort)channelId);
+			var actorInfo = Native.ActorInterop.GetActorInfoByChannelId((ushort)channelId);
 			if (actorInfo.Id != 0)
-				NativeActorMethods.RemoveActor(actorInfo.Id);
+				Native.ActorInterop.RemoveActor(actorInfo.Id);
 		}
 	}
 }

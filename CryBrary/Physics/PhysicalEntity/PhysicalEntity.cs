@@ -26,7 +26,7 @@ namespace CryEngine.Physics
 			var physicalEntity = physicalEntities.FirstOrDefault(x => x.Handle == IPhysicalEntityHandle);
 			if (physicalEntity == null)
 			{
-				switch (NativePhysicsMethods.GetPhysicalEntityType(IPhysicalEntityHandle))
+				switch (PhysicsInterop.GetPhysicalEntityType(IPhysicalEntityHandle))
 				{
 					case PhysicalizationType.Static:
 					case PhysicalizationType.Rigid:
@@ -67,7 +67,7 @@ namespace CryEngine.Physics
 
 		public void Break(BreakageParameters breakageParams)
 		{
-			NativeEntityMethods.BreakIntoPieces(Owner.GetIEntity(), 0, 0, breakageParams);
+			EntityInterop.BreakIntoPieces(Owner.GetIEntity(), 0, 0, breakageParams);
 		}
 
 		public bool AddImpulse(Vector3 vImpulse, Vector3? angImpulse = null, Vector3? point = null)
@@ -81,7 +81,7 @@ namespace CryEngine.Physics
 			if (point != null)
 				impulse.point = point.Value;
 
-			return NativePhysicsMethods.ActionImpulse(Handle, ref impulse);
+			return PhysicsInterop.ActionImpulse(Handle, ref impulse);
 		}
 
 		/// <summary>
@@ -89,8 +89,8 @@ namespace CryEngine.Physics
 		/// </summary>
 		public Vector3 Velocity
 		{
-			get { return NativePhysicsMethods.GetVelocity(Handle); }
-			set { NativePhysicsMethods.SetVelocity(Handle, value); }
+			get { return PhysicsInterop.GetVelocity(Handle); }
+			set { PhysicsInterop.SetVelocity(Handle, value); }
 		}
 
 		/// <summary>
@@ -100,12 +100,12 @@ namespace CryEngine.Physics
 		public bool Resting
 		{
 			get { throw new NotImplementedException(); }
-			set { NativePhysicsMethods.Sleep(Handle, value); }
+			set { PhysicsInterop.Sleep(Handle, value); }
 		}
 
 		public virtual PhysicalizationType Type
 		{
-			get { return NativePhysicsMethods.GetPhysicalEntityType(Handle); }
+			get { return PhysicsInterop.GetPhysicalEntityType(Handle); }
 		}
 
 		public LivingPhysicsStatus LivingStatus
@@ -114,7 +114,7 @@ namespace CryEngine.Physics
 			{
 				var status = LivingPhysicsStatus.Create();
 
-				NativePhysicsMethods.GetLivingEntityStatus(Handle, ref status);
+				PhysicsInterop.GetLivingEntityStatus(Handle, ref status);
 
 				return status;
 			}
@@ -126,7 +126,7 @@ namespace CryEngine.Physics
 			{
 				var status = DynamicsPhysicsStatus.Create();
 
-				NativePhysicsMethods.GetDynamicsEntityStatus(Handle, ref status);
+				PhysicsInterop.GetDynamicsEntityStatus(Handle, ref status);
 
 				return status;
 			}
@@ -135,23 +135,23 @@ namespace CryEngine.Physics
 		[CLSCompliant(false)]
 		public bool GetFlags(ref PhysicalFlagsParameters flags)
 		{
-			return NativePhysicsMethods.GetFlagParams(Handle, ref flags);
+			return PhysicsInterop.GetFlagParams(Handle, ref flags);
 		}
 
 		[CLSCompliant(false)]
 		public bool SetFlags(ref PhysicalFlagsParameters flags)
 		{
-			return NativePhysicsMethods.SetFlagParams(Handle, ref flags);
+			return PhysicsInterop.SetFlagParams(Handle, ref flags);
 		}
 
 		public bool GetSimulationParameters(ref PhysicalSimulationParameters flags)
 		{
-			return NativePhysicsMethods.GetSimulationParams(Handle, ref flags);
+			return PhysicsInterop.GetSimulationParams(Handle, ref flags);
 		}
 
 		public bool SetSimulationParameters(ref PhysicalSimulationParameters flags)
 		{
-			return NativePhysicsMethods.SetSimulationParams(Handle, ref flags);
+			return PhysicsInterop.SetSimulationParams(Handle, ref flags);
 		}
 
 		/// <summary>
@@ -166,7 +166,7 @@ namespace CryEngine.Physics
 			{
 				if (owner == null)
 				{
-					var entityHandle = NativeEntityMethods.GetEntityFromPhysics(Handle);
+					var entityHandle = EntityInterop.GetEntityFromPhysics(Handle);
 					if (entityHandle == IntPtr.Zero)
 						return null;
 

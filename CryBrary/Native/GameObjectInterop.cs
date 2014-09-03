@@ -5,7 +5,7 @@ using CryEngine.Entities.Advanced;
 
 namespace CryEngine.Native
 {
-	public static class NativeGameObjectMethods
+	public static class GameObjectInterop
 	{
 		[MethodImplAttribute(MethodImplOptions.InternalCall)]
 		public static extern IntPtr GetGameObject(EntityId id);

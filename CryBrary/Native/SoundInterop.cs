@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 namespace CryEngine.Native
 {
-	internal static class NativeSoundMethods
+	internal static class SoundInterop
 	{
 	}
 }

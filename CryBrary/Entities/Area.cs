@@ -54,7 +54,7 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Gets number areas registered by the engine.
 		/// </summary>
-		public static int AreaCount { get { return NativeEntityMethods.GetNumAreas(); } }
+		public static int AreaCount { get { return EntityInterop.GetNumAreas(); } }
 		/// <summary>
 		/// Gets wrapper for IArea object that is identified by given number.
 		/// </summary>
@@ -62,7 +62,7 @@ namespace CryEngine.Entities
 		/// <returns> Wrapper for IArea object that is identified by given number. </returns>
 		public static Area GetArea(int areaId)
 		{
-			return TryGet(NativeEntityMethods.GetArea(areaId));
+			return TryGet(EntityInterop.GetArea(areaId));
 		}
 		/// <summary>
 		/// </summary>
@@ -73,7 +73,7 @@ namespace CryEngine.Entities
 		/// <returns> </returns>
 		public static IEnumerable<AreaQueryResult> QueryAreas(EntityId id, Vector3 pos, int maxResults, bool forceCalculation)
 		{
-			var objAreas = NativeEntityMethods.QueryAreas(id, pos, maxResults, forceCalculation);
+			var objAreas = EntityInterop.QueryAreas(id, pos, maxResults, forceCalculation);
 
 			return objAreas.Cast<AreaQueryResult>();
 		}
@@ -101,7 +101,7 @@ namespace CryEngine.Entities
 
 		public EntityId GetEntityIdByIndex(int index)
 		{
-			return NativeEntityMethods.GetAreaEntityByIdx(this.Handle, index);
+			return EntityInterop.GetAreaEntityByIdx(this.Handle, index);
 		}
 
 		public BoundingBox BoundingBox
@@ -110,15 +110,15 @@ namespace CryEngine.Entities
 			{
 				var bbox = new BoundingBox();
 
-				NativeEntityMethods.GetAreaMinMax(this.Handle, ref bbox.Minimum, ref bbox.Maximum);
+				EntityInterop.GetAreaMinMax(this.Handle, ref bbox.Minimum, ref bbox.Maximum);
 
 				return bbox;
 			}
 		}
 
-		public int EntityCount { get { return NativeEntityMethods.GetAreaEntityAmount(this.Handle); } }
+		public int EntityCount { get { return EntityInterop.GetAreaEntityAmount(this.Handle); } }
 
-		public int Priority { get { return NativeEntityMethods.GetAreaPriority(this.Handle); } }
+		public int Priority { get { return EntityInterop.GetAreaPriority(this.Handle); } }
 
 		/// <summary>
 		/// IArea pointer

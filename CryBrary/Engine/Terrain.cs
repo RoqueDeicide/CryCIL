@@ -5,32 +5,30 @@ namespace CryEngine
 	public static class Terrain
 	{
 		/// <summary>
-		/// Gets the size of the terrain in metres.
+		/// Gets the size of the terrain in meters.
 		/// </summary>
-		public static int Size { get { return Native3DEngineMethods.GetTerrainSize(); } }
-
+		public static int Size { get { return Native.Engine3DInterop.GetTerrainSize(); } }
 		/// <summary>
 		/// Gets the size of each terrain unit.
 		/// </summary>
-		public static int UnitsPerMetre { get { return Native3DEngineMethods.GetTerrainUnitSize(); } }
-
+		public static int UnitsPerMetre { get { return Native.Engine3DInterop.GetTerrainUnitSize(); } }
 		/// <summary>
 		/// Gets the size of the terrain in units.
 		/// </summary>
 		/// <remarks>
 		/// The terrain system calculates the overall size by multiplying this value by the units
-		/// per metre setting. A map set to 1024 units at 2 metres per unit will have a size of 2048 metres.
+		/// per meter setting. A map set to 1024 units at 2 meters per unit will have a size of 2048 meters.
 		/// </remarks>
 		public static int UnitSize { get { return Size / UnitsPerMetre; } }
 
 		public static float GetTerrainElevation(int x, int y)
 		{
-			return Native3DEngineMethods.GetTerrainZ(x, y);
+			return Native.Engine3DInterop.GetTerrainZ(x, y);
 		}
 
 		public static float GetTerrainElevation(float x, float y)
 		{
-			return Native3DEngineMethods.GetTerrainElevation(x, y);
+			return Native.Engine3DInterop.GetTerrainElevation(x, y);
 		}
 	}
 }

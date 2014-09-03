@@ -67,8 +67,8 @@ namespace CryEngine.Entities
 		/// </summary>
 		public BoundingBox TriggerBounds
 		{
-			get { return NativeEntityMethods.GetTriggerBBox(this.GetIEntity()); }
-			set { NativeEntityMethods.SetTriggerBBox(this.GetIEntity(), value); }
+			get { return EntityInterop.GetTriggerBBox(this.GetIEntity()); }
+			set { EntityInterop.SetTriggerBBox(this.GetIEntity(), value); }
 		}
 
 		/// <summary>
@@ -77,7 +77,7 @@ namespace CryEngine.Entities
 		/// </summary>
 		public void InvalidateTrigger()
 		{
-			NativeEntityMethods.InvalidateTrigger(this.GetIEntity());
+			EntityInterop.InvalidateTrigger(this.GetIEntity());
 		}
 		#endregion
 		#region Callbacks

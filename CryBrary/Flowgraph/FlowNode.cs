@@ -42,7 +42,7 @@ namespace CryEngine.Flowgraph
 		/// </summary>
 		public bool ReceiveNodeUpdates
 		{
-			set { NativeFlowNodeMethods.SetRegularlyUpdated(Handle, value); }
+			set { FlowNodeInterop.SetRegularlyUpdated(Handle, value); }
 		}
 		#endregion
 		#region Interface
@@ -217,7 +217,7 @@ namespace CryEngine.Flowgraph
 		/// <returns>True, if input port is active.</returns>
 		protected bool IsPortActive<T>(Action<T> port)
 		{
-			return NativeFlowNodeMethods.IsPortActive(Handle, GetInputPortId(port.Method));
+			return FlowNodeInterop.IsPortActive(Handle, GetInputPortId(port.Method));
 		}
 		/// <summary>
 		/// Gets value that has been passed to input port upon its activation.
@@ -230,19 +230,19 @@ namespace CryEngine.Flowgraph
 			var type = typeof(T);
 
 			if (type == typeof(int))
-				return (T)(object)NativeFlowNodeMethods.GetPortValueInt(Handle, GetInputPortId(port.Method));
+				return (T)(object)FlowNodeInterop.GetPortValueInt(Handle, GetInputPortId(port.Method));
 			if (type == typeof(float))
-				return (T)(object)NativeFlowNodeMethods.GetPortValueFloat(Handle, GetInputPortId(port.Method));
+				return (T)(object)FlowNodeInterop.GetPortValueFloat(Handle, GetInputPortId(port.Method));
 			if (type == typeof(Vector3) || type == typeof(Color))
-				return (T)(object)NativeFlowNodeMethods.GetPortValueVec3(Handle, GetInputPortId(port.Method));
+				return (T)(object)FlowNodeInterop.GetPortValueVec3(Handle, GetInputPortId(port.Method));
 			if (type == typeof(string))
-				return (T)(object)NativeFlowNodeMethods.GetPortValueString(Handle, GetInputPortId(port.Method));
+				return (T)(object)FlowNodeInterop.GetPortValueString(Handle, GetInputPortId(port.Method));
 			if (type == typeof(bool))
-				return (T)(object)NativeFlowNodeMethods.GetPortValueBool(Handle, GetInputPortId(port.Method));
+				return (T)(object)FlowNodeInterop.GetPortValueBool(Handle, GetInputPortId(port.Method));
 			if (type == typeof(EntityId))
-				return (T)(object)NativeFlowNodeMethods.GetPortValueEntityId(Handle, GetInputPortId(port.Method));
+				return (T)(object)FlowNodeInterop.GetPortValueEntityId(Handle, GetInputPortId(port.Method));
 			if (type.IsEnum)
-				return (T)Enum.ToObject(typeof(T), NativeFlowNodeMethods.GetPortValueInt(Handle, GetInputPortId(port.Method)));
+				return (T)Enum.ToObject(typeof(T), FlowNodeInterop.GetPortValueInt(Handle, GetInputPortId(port.Method)));
 
 			throw new ArgumentException("Invalid flow node port type specified!");
 		}

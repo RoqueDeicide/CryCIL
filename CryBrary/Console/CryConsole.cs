@@ -30,7 +30,7 @@ namespace CryEngine
 	{
 		public static string GetCommandLineArgument(string name, CommandArgumentType type)
 		{
-			return NativeCVarMethods.GetCmdArg(name, (int)type);
+			return Native.ConsoleInterop.GetCmdArg(name, (int)type);
 		}
 	}
 }

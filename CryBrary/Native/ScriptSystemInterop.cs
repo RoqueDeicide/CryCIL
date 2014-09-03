@@ -6,7 +6,7 @@ using System.Text;
 
 namespace CryEngine.Native
 {
-	internal static class NativeScriptSystemMethods
+	internal static class ScriptSystemInterop
 	{
 		/// <summary>
 		/// Revert the last script reload attempt.

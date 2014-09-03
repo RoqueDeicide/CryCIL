@@ -4,7 +4,7 @@ using CryEngine.Mathematics;
 
 namespace CryEngine.Native
 {
-	internal static class Native3DEngineMethods
+	internal static class Engine3DInterop
 	{
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		extern internal static float GetTerrainElevation(float positionX, float positionY);

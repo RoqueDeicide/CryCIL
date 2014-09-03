@@ -91,7 +91,7 @@ namespace CryEngine.Actors
 				throw new RemoteInvocationException("Non-static method owner does not derive from EntityBase.");
 #endif
 
-			NativeActorMethods.RemoteInvocation(this.Id, target.Id, method.Name, args, netTarget, channelId);
+			Native.ActorInterop.RemoteInvocation(this.Id, target.Id, method.Name, args, netTarget, channelId);
 		}
 	}
 }

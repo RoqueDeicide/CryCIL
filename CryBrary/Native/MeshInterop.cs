@@ -8,7 +8,7 @@ using CryEngine.Mathematics.Geometry.Meshes;
 
 namespace CryEngine.Native
 {
-	internal static class NativeMeshMethods
+	internal static class MeshInterop
 	{
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		extern internal static int GetFaceCount(IntPtr cMeshHandle);

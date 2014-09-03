@@ -74,7 +74,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 
 		private void mesh_VerticesReallocated(object sender, VertexCollectionEventArgs e)
 		{
-			NativeMeshMethods.ReallocateStream
+			MeshInterop.ReallocateStream
 				(this.MeshHandle, NativeMeshMemoryRegion.TextureCoordinates, e.NewCount);
 			this.UpdateCollection();
 		}

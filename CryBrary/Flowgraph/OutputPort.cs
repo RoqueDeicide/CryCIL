@@ -25,7 +25,7 @@ namespace CryEngine.Flowgraph
 		/// </summary>
 		public bool IsActive
 		{
-			get { return NativeFlowNodeMethods.IsOutputConnected(ParentNodePointer, PortId); }
+			get { return FlowNodeInterop.IsOutputConnected(ParentNodePointer, PortId); }
 		}
 		#endregion
 		#region Construction
@@ -52,7 +52,7 @@ namespace CryEngine.Flowgraph
 		/// </summary>
 		public void Activate()
 		{
-			NativeFlowNodeMethods.ActivateOutput(ParentNodePointer, PortId);
+			FlowNodeInterop.ActivateOutput(ParentNodePointer, PortId);
 		}
 		/// <summary>
 		/// Activates this port.
@@ -60,7 +60,7 @@ namespace CryEngine.Flowgraph
 		/// <param name="value"><see cref="Int32"/> number to output upon activation.</param>
 		public void Activate(int value)
 		{
-			NativeFlowNodeMethods.ActivateOutputInt(ParentNodePointer, PortId, value);
+			FlowNodeInterop.ActivateOutputInt(ParentNodePointer, PortId, value);
 		}
 		/// <summary>
 		/// Activates this port.
@@ -68,7 +68,7 @@ namespace CryEngine.Flowgraph
 		/// <param name="value"><see cref="Single"/> value to output upon activation.</param>
 		public void Activate(float value)
 		{
-			NativeFlowNodeMethods.ActivateOutputFloat(ParentNodePointer, PortId, value);
+			FlowNodeInterop.ActivateOutputFloat(ParentNodePointer, PortId, value);
 		}
 		/// <summary>
 		/// Activates this port.
@@ -76,7 +76,7 @@ namespace CryEngine.Flowgraph
 		/// <param name="value"><see cref="EntityId"/> value to output upon activation.</param>
 		public void Activate(EntityId value)
 		{
-			NativeFlowNodeMethods.ActivateOutputEntityId(ParentNodePointer, PortId, value);
+			FlowNodeInterop.ActivateOutputEntityId(ParentNodePointer, PortId, value);
 		}
 		/// <summary>
 		/// Activates this port.
@@ -84,7 +84,7 @@ namespace CryEngine.Flowgraph
 		/// <param name="value"><see cref="String"/> value to output upon activation.</param>
 		public void Activate(string value)
 		{
-			NativeFlowNodeMethods.ActivateOutputString(ParentNodePointer, PortId, value);
+			FlowNodeInterop.ActivateOutputString(ParentNodePointer, PortId, value);
 		}
 		/// <summary>
 		/// Activates this port.
@@ -92,7 +92,7 @@ namespace CryEngine.Flowgraph
 		/// <param name="value"><see cref="Boolean"/> value to output upon activation.</param>
 		public void Activate(bool value)
 		{
-			NativeFlowNodeMethods.ActivateOutputBool(ParentNodePointer, PortId, value);
+			FlowNodeInterop.ActivateOutputBool(ParentNodePointer, PortId, value);
 		}
 		/// <summary>
 		/// Activates this port.
@@ -100,7 +100,7 @@ namespace CryEngine.Flowgraph
 		/// <param name="value"><see cref="Vector3"/> value to output upon activation.</param>
 		public void Activate(Vector3 value)
 		{
-			NativeFlowNodeMethods.ActivateOutputVec3(ParentNodePointer, PortId, value);
+			FlowNodeInterop.ActivateOutputVec3(ParentNodePointer, PortId, value);
 		}
 		/// <summary>
 		/// Activates this port.
@@ -109,17 +109,17 @@ namespace CryEngine.Flowgraph
 		public void Activate(object value)
 		{
 			if (value is int)
-				NativeFlowNodeMethods.ActivateOutputInt(ParentNodePointer, PortId, System.Convert.ToInt32(value));
+				FlowNodeInterop.ActivateOutputInt(ParentNodePointer, PortId, System.Convert.ToInt32(value));
 			else if (value is float || value is double)
-				NativeFlowNodeMethods.ActivateOutputFloat(ParentNodePointer, PortId, System.Convert.ToSingle(value));
+				FlowNodeInterop.ActivateOutputFloat(ParentNodePointer, PortId, System.Convert.ToSingle(value));
 			else if (value is EntityId)
-				NativeFlowNodeMethods.ActivateOutputEntityId(ParentNodePointer, PortId, ((EntityId)value).Value);
+				FlowNodeInterop.ActivateOutputEntityId(ParentNodePointer, PortId, ((EntityId)value).Value);
 			else if (value is string)
-				NativeFlowNodeMethods.ActivateOutputString(ParentNodePointer, PortId, System.Convert.ToString(value));
+				FlowNodeInterop.ActivateOutputString(ParentNodePointer, PortId, System.Convert.ToString(value));
 			else if (value is bool)
-				NativeFlowNodeMethods.ActivateOutputBool(ParentNodePointer, PortId, System.Convert.ToBoolean(value));
+				FlowNodeInterop.ActivateOutputBool(ParentNodePointer, PortId, System.Convert.ToBoolean(value));
 			else if (value is Vector3)
-				NativeFlowNodeMethods.ActivateOutputVec3(ParentNodePointer, PortId, (Vector3)value);
+				FlowNodeInterop.ActivateOutputVec3(ParentNodePointer, PortId, (Vector3)value);
 			else
 				throw new ArgumentException("Attempted to activate output with invalid value type!");
 		}
@@ -148,7 +148,7 @@ namespace CryEngine.Flowgraph
 		/// </summary>
 		public bool IsActive
 		{
-			get { return NativeFlowNodeMethods.IsOutputConnected(ParentNodePointer, PortId); }
+			get { return FlowNodeInterop.IsOutputConnected(ParentNodePointer, PortId); }
 		}
 		#endregion
 		#region Construction
@@ -177,17 +177,17 @@ namespace CryEngine.Flowgraph
 		public void Activate(T value)
 		{
 			if (value is int)
-				NativeFlowNodeMethods.ActivateOutputInt(ParentNodePointer, PortId, Convert.ToInt32(value));
+				FlowNodeInterop.ActivateOutputInt(ParentNodePointer, PortId, Convert.ToInt32(value));
 			else if (value is float || value is double)
-				NativeFlowNodeMethods.ActivateOutputFloat(ParentNodePointer, PortId, Convert.ToSingle(value));
+				FlowNodeInterop.ActivateOutputFloat(ParentNodePointer, PortId, Convert.ToSingle(value));
 			else if (value is EntityId)
-				NativeFlowNodeMethods.ActivateOutputEntityId(ParentNodePointer, PortId, ((EntityId)(object)value).Value);
+				FlowNodeInterop.ActivateOutputEntityId(ParentNodePointer, PortId, ((EntityId)(object)value).Value);
 			else if (value is string)
-				NativeFlowNodeMethods.ActivateOutputString(ParentNodePointer, PortId, Convert.ToString(value));
+				FlowNodeInterop.ActivateOutputString(ParentNodePointer, PortId, Convert.ToString(value));
 			else if (value is bool)
-				NativeFlowNodeMethods.ActivateOutputBool(ParentNodePointer, PortId, Convert.ToBoolean(value));
+				FlowNodeInterop.ActivateOutputBool(ParentNodePointer, PortId, Convert.ToBoolean(value));
 			else if (value is Vector3)
-				NativeFlowNodeMethods.ActivateOutputVec3(ParentNodePointer, PortId, (Vector3)(object)value);
+				FlowNodeInterop.ActivateOutputVec3(ParentNodePointer, PortId, (Vector3)(object)value);
 			else
 				throw new ArgumentException("Attempted to activate output with invalid value type!");
 		}

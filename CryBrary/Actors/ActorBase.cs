@@ -23,8 +23,8 @@ namespace CryEngine.Actors
 		/// </summary>
 		public virtual float Health
 		{
-			get { return NativeActorMethods.GetPlayerHealth(this.GetIActor()); }
-			set { NativeActorMethods.SetPlayerHealth(this.GetIActor(), value); }
+			get { return Native.ActorInterop.GetPlayerHealth(this.GetIActor()); }
+			set { Native.ActorInterop.SetPlayerHealth(this.GetIActor(), value); }
 		}
 
 		/// <summary>
@@ -32,8 +32,8 @@ namespace CryEngine.Actors
 		/// </summary>
 		public virtual float MaxHealth
 		{
-			get { return NativeActorMethods.GetPlayerMaxHealth(this.GetIActor()); }
-			set { NativeActorMethods.SetPlayerMaxHealth(this.GetIActor(), value); }
+			get { return Native.ActorInterop.GetPlayerMaxHealth(this.GetIActor()); }
+			set { Native.ActorInterop.SetPlayerMaxHealth(this.GetIActor(), value); }
 		}
 
 		/// <summary>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CryEngine.Native
 {
-	internal static class NativeMemoryHandlingMethods
+	internal static class MemoryHandlingInterop
 	{
 		internal static extern IntPtr AllocateMemory(ulong size);
 		internal static extern void FreeMemory(IntPtr handle);

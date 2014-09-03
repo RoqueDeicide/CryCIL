@@ -9,7 +9,7 @@ namespace CryEngine.Native
 	/// <summary>
 	/// Defines native interop methods for working with static objects.
 	/// </summary>
-	internal static class NativeStaticObjectMethods
+	internal static class StaticObjectInterop
 	{
 		/// <summary>
 		/// Called to create a new empty static object.

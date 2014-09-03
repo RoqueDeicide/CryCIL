@@ -2,7 +2,7 @@
 
 namespace CryEngine.Native
 {
-	internal static class NativeGameRulesMethods
+	internal static class GameRulesInterop
 	{
 		[MethodImplAttribute(MethodImplOptions.InternalCall)]
 		extern internal static void RegisterGameMode(string gamemode);

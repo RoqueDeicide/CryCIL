@@ -46,7 +46,7 @@ namespace CryEngine
 
 			// destroy native handle
 			if (InstanceHandle != IntPtr.Zero)
-				NativeEntityMethods.OnScriptInstanceDestroyed(InstanceHandle);
+				EntityInterop.OnScriptInstanceDestroyed(InstanceHandle);
 
 			if (OnDestroyed != null)
 				OnDestroyed(this);

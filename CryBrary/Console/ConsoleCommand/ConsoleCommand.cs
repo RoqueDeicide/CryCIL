@@ -21,7 +21,7 @@ namespace CryEngine
 		/// </param>
 		public static void Execute(string command, bool silent = false)
 		{
-			NativeCVarMethods.Execute(command, silent);
+			Native.ConsoleInterop.Execute(command, silent);
 		}
 
 		/// <summary>
@@ -46,7 +46,7 @@ namespace CryEngine
 
 			if (!containsKey)
 			{
-				NativeCVarMethods.RegisterCommand(name, comment, flags);
+				Native.ConsoleInterop.RegisterCommand(name, comment, flags);
 
 				Commands.Add(name, func);
 			}
@@ -56,7 +56,7 @@ namespace CryEngine
 
 		public static void Unregister(string name)
 		{
-			NativeCVarMethods.UnregisterCCommand(name);
+			Native.ConsoleInterop.UnregisterCCommand(name);
 
 			if (Commands.ContainsKey(name))
 				Commands.Remove(name);

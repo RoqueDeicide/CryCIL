@@ -13,7 +13,7 @@ namespace CryEngine.Entities.Advanced
 		/// </summary>
 		public bool ReceivePostUpdates
 		{
-			set { NativeGameObjectMethods.EnablePostUpdates(this.Owner.Handle, this.Handle, value); }
+			set { GameObjectInterop.EnablePostUpdates(this.Owner.Handle, this.Handle, value); }
 		}
 		/// <summary>
 		/// <see cref="GameObject" /> that hosts this extension.

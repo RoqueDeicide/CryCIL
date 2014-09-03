@@ -25,7 +25,7 @@ namespace CryEngine
 		/// <summary>
 		/// Gets a boolean indicating whether we're currently running a Multiplayer game.
 		/// </summary>
-		public static bool IsMultiplayer { get { return NativeNetworkMethods.IsMultiplayer(); } }
+		public static bool IsMultiplayer { get { return NetworkInterop.IsMultiplayer(); } }
 		/// <summary>
 		/// Gets a boolean indicating whether we're currently running the server.
 		/// </summary>
@@ -33,7 +33,7 @@ namespace CryEngine
 		/// <see cref="IsClient" /> can be set at th same time as <see cref="IsServer" />, if
 		/// hosting via the Launcher or Editor.
 		/// </remarks>
-		public static bool IsServer { get { return NativeNetworkMethods.IsServer(); } }
+		public static bool IsServer { get { return NetworkInterop.IsServer(); } }
 		/// <summary>
 		/// Gets a boolean indicating whether we're currently running the server.
 		/// </summary>
@@ -41,11 +41,11 @@ namespace CryEngine
 		/// <see cref="IsServer" /> can be set at th same time as <see cref="IsClient" />, if
 		/// hosting via the Launcher or Editor.
 		/// </remarks>
-		public static bool IsClient { get { return NativeNetworkMethods.IsClient(); } }
+		public static bool IsClient { get { return NetworkInterop.IsClient(); } }
 		/// <summary>
 		/// Gets a boolean indicating whether we're a client on a remote server.
 		/// </summary>
-		public static bool IsPureClient { get { return NativeNetworkMethods.IsClient() && !NativeNetworkMethods.IsServer(); } }
+		public static bool IsPureClient { get { return NetworkInterop.IsClient() && !NetworkInterop.IsServer(); } }
 
 		/// <summary>
 		/// Gets a boolean indicating whether we're currently running via the Editor.

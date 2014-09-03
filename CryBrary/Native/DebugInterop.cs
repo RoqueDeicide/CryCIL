@@ -7,7 +7,7 @@ using CryEngine.Mathematics;
 
 namespace CryEngine.Native
 {
-	internal static class NativeDebugMethods
+	internal static class DebugInterop
 	{
 		#region Persistent Debug
 		[MethodImpl(MethodImplOptions.InternalCall)]

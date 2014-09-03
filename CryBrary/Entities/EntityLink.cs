@@ -36,7 +36,7 @@ namespace CryEngine.Entities
 		{
 			return
 				new EntityLink(
-					NativeEntityMethods.AddEntityLink(parent.GetIEntity(), linkName, child.Id, child.GUID,
+					EntityInterop.AddEntityLink(parent.GetIEntity(), linkName, child.Id, child.GUID,
 													  relativeRot ?? Quaternion.Identity, relativePos ?? Vector3.Zero), parent);
 		}
 		/// <summary>
@@ -45,7 +45,7 @@ namespace CryEngine.Entities
 		/// <param name="parent">Entity to unlink everything from.</param>
 		public static void RemoveAll(EntityBase parent)
 		{
-			NativeEntityMethods.RemoveAllEntityLinks(parent.GetIEntity());
+			EntityInterop.RemoveAllEntityLinks(parent.GetIEntity());
 		}
 		#endregion
 		#region Properties
@@ -67,33 +67,33 @@ namespace CryEngine.Entities
 		{
 			get
 			{
-				var slaveId = NativeEntityMethods.GetEntityLinkTarget(this.Handle);
+				var slaveId = EntityInterop.GetEntityLinkTarget(this.Handle);
 				return slaveId == 0 ? null : Entity.Get(slaveId);
 			}
-			set { NativeEntityMethods.SetEntityLinkTarget(this.Handle, value.Id); }
+			set { EntityInterop.SetEntityLinkTarget(this.Handle, value.Id); }
 		}
 		/// <summary>
 		/// Gets the name of the link.
 		/// </summary>
 		public string Name
 		{
-			get { return NativeEntityMethods.GetEntityLinkName(this.Handle); }
+			get { return EntityInterop.GetEntityLinkName(this.Handle); }
 		}
 		/// <summary>
 		/// Orientation of the child entity relative to parent entity.
 		/// </summary>
 		public Quaternion RelativeRotation
 		{
-			get { return NativeEntityMethods.GetEntityLinkRelativeRotation(this.Handle); }
-			set { NativeEntityMethods.SetEntityLinkRelativeRotation(this.Handle, value); }
+			get { return EntityInterop.GetEntityLinkRelativeRotation(this.Handle); }
+			set { EntityInterop.SetEntityLinkRelativeRotation(this.Handle, value); }
 		}
 		/// <summary>
 		/// Position of the child entity relative to parent entity.
 		/// </summary>
 		public Vector3 RelativePosition
 		{
-			get { return NativeEntityMethods.GetEntityLinkRelativePosition(this.Handle); }
-			set { NativeEntityMethods.SetEntityLinkRelativePosition(this.Handle, value); }
+			get { return EntityInterop.GetEntityLinkRelativePosition(this.Handle); }
+			set { EntityInterop.SetEntityLinkRelativePosition(this.Handle, value); }
 		}
 		#endregion
 		#region Construction
@@ -109,7 +109,7 @@ namespace CryEngine.Entities
 		/// </summary>
 		public void Remove()
 		{
-			NativeEntityMethods.RemoveEntityLink(this.Parent.GetIEntity(), this.Handle);
+			EntityInterop.RemoveEntityLink(this.Parent.GetIEntity(), this.Handle);
 		}
 		#endregion
 	}

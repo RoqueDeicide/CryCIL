@@ -140,7 +140,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 				throw new ObjectDisposedException("Cannot acquire mesh data from static" +
 												  " object that has been disposed of.");
 			}
-			MeshHandles handles = NativeStaticObjectMethods.GetMeshHandles(obj.Handle);
+			MeshHandles handles = StaticObjectInterop.GetMeshHandles(obj.Handle);
 			if (handles.IndexedMeshHandle == IntPtr.Zero || handles.MeshHandle == IntPtr.Zero)
 			{
 				throw new Exception("Unable to acquire mesh handles for the static object.");
@@ -277,7 +277,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// <param name="staticObject">Ignored.</param>
 		public override void Export(StaticObject staticObject)
 		{
-			NativeMeshMethods.Export(this.StaticObject.Handle);
+			MeshInterop.Export(this.StaticObject.Handle);
 		}
 		/// <summary>
 		/// Sets this mesh to value based on given BSP tree.
