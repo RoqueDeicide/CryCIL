@@ -88,6 +88,10 @@ namespace CryEngine.Utilities
 		/// The filepath to the Scripts folder as a string, ex: <example>"C:\CryENGINE3\Game\Scripts"</example>
 		/// </returns>
 		public static string ScriptsFolder { get { return Path.Combine(GameFolder, "Scripts"); } }
+		public static string CodeFolder
+		{
+			get { return Path.Combine(GameFolder, "Code"); }
+		}
 		#endregion
 	}
 }

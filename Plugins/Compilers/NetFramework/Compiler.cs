@@ -8,6 +8,7 @@ using CryEngine.Entities;
 using CryEngine.Extensions;
 using CryEngine.Initialization;
 using CryEngine.Mathematics;
+using CryEngine.RunTime.Compilation;
 using CryEngine.Testing;
 using CryEngine.Utilities;
 
@@ -40,7 +41,7 @@ namespace CryEngine.Compilers.NET
 			if (!this.CompileAndProcess("CSharp", "*.cs", ref scripts)
 				&& !this.CompileAndProcess("VisualBasic", "*.vb", ref scripts))
 			{
-				Debug.DisplayException(new ScriptCompilationException("No scripts to compile were found in the Game/Scripts directory.\n This is not a fatal error, and can be ignored."));
+				Debug.DisplayException(new CodeCompilationException("No scripts to compile were found in the Game/Scripts directory.\n This is not a fatal error, and can be ignored."));
 			}
 
 			return scripts;
@@ -107,7 +108,7 @@ namespace CryEngine.Compilers.NET
 					compilationError += "    " + error.ErrorText;
 			}
 
-			throw new ScriptCompilationException(compilationError);
+			throw new CodeCompilationException(compilationError);
 		}
 
 		private IEnumerable<Type> ProcessAssembly(Assembly assembly)

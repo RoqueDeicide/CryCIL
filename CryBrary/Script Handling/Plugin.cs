@@ -28,16 +28,4 @@ namespace CryEngine.Initialization
 		/// <returns>The script registration parameters for this type.</returns>
 		IScriptRegistrationParams GetRegistrationParams(ScriptType scriptType, Type type);
 	}
-
-	[Serializable]
-	public class ScriptCompilationException : Exception
-	{
-		public ScriptCompilationException() { }
-
-		public ScriptCompilationException(string errorMessage)
-			: base(errorMessage) { }
-
-		public ScriptCompilationException(string errorMessage, Exception innerEx)
-			: base(errorMessage, innerEx) { }
-	}
 }
