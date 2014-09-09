@@ -110,7 +110,6 @@ namespace CryEngine.Extensions
 			return null;
 		}
 		#endregion
-
 		#region Attributes
 		/// <summary>
 		/// Determines whether this member is decorated with at least one instance of a given attribute.
@@ -124,7 +123,6 @@ namespace CryEngine.Extensions
 		{
 			return info.GetCustomAttributes(typeof(T), true).Length > 0;
 		}
-
 		/// <summary>
 		/// Gets all instances of a given attribute on the selected member.
 		/// </summary>
@@ -135,7 +133,6 @@ namespace CryEngine.Extensions
 		{
 			return (T[])memberInfo.GetCustomAttributes(typeof(T), true);
 		}
-
 		/// <summary>
 		/// Gets the first instance of a given attribute on the selected member.
 		/// </summary>
@@ -147,7 +144,6 @@ namespace CryEngine.Extensions
 			var attributes = memberInfo.GetAttributes<T>().ToList();
 			return attributes.Count != 0 ? attributes[0] : null;
 		}
-
 		/// <summary>
 		/// Tests whether the method is decorated with a given attribute, and if so, assigns it via
 		/// the out variable.
@@ -168,6 +164,25 @@ namespace CryEngine.Extensions
 
 			attribute = null;
 			return false;
+		}
+		#endregion
+		#region Member Types
+		/// <summary>
+		/// Gets the type that is associated with a given member.
+		/// </summary>
+		/// <param name="info">Member.</param>
+		/// <returns>Type of the field or property, if member is one of those, otherwise null.</returns>
+		public static Type GetAssociatedType(this MemberInfo info)
+		{
+			switch (info.MemberType)
+			{
+				case MemberTypes.Field:
+					return ((FieldInfo)info).FieldType;
+				case MemberTypes.Property:
+					return ((PropertyInfo)info).PropertyType;
+				default:
+					return null;
+			}
 		}
 		#endregion
 	}
