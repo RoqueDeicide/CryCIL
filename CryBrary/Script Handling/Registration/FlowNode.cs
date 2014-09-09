@@ -27,7 +27,7 @@ namespace CryEngine.Initialization
 
 		public FlowNodeFilter filter;
 
-		public FlowNodeType type;
+		public FlowNodeCloneType type;
 
 		public bool hasTargetEntity;
 

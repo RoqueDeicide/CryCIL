@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using CryEngine.Flowgraph;
 
-using CryEngine.Initialization;
-
-namespace CryEngine.Flowgraph.Native
+namespace CryEngine.Native
 {
 	internal struct NodeConfig
 	{
@@ -12,7 +9,7 @@ namespace CryEngine.Flowgraph.Native
 
 		internal FlowNodeFilter Filter;
 
-		internal FlowNodeType Type;
+		internal FlowNodeCloneType Type;
 
 		internal string Description;
 

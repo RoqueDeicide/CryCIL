@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace CryEngine.Flowgraph.Native
+namespace CryEngine.Native
 {
 	internal struct NodeInitializationParams : IScriptInitializationParams
 	{

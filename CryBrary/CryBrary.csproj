@@ -135,6 +135,13 @@
   <ItemGroup>
     <Compile Include="Actors\Actor.cs" />
     <Compile Include="Actors\ActorBase.cs" />
+    <Compile Include="Flowgraph\Exception.cs" />
+    <Compile Include="Flowgraph\FlowGraphNode.Configuration.cs" />
+    <Compile Include="Flowgraph\FlowGraphNode.cs" />
+    <Compile Include="Flowgraph\FlowGraphNode.Events.cs" />
+    <Compile Include="Flowgraph\FlowNodePort.cs" />
+    <Compile Include="Flowgraph\InputPorts.cs" />
+    <Compile Include="Flowgraph\OutputPorts.cs" />
     <Compile Include="GeneralExtensions.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\CSG\SplittableTriangle.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\Mesh.CSG.cs" />
@@ -150,6 +157,7 @@
     <Compile Include="Actors\ActorStatics.cs" />
     <Compile Include="Actors\ViewParams.cs" />
     <Compile Include="Attributes.cs" />
+    <Compile Include="Native\FlowInputInterop.cs" />
     <Compile Include="Native\MemoryHandlingInterop.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="RunTime\Compilation\CodeSolution.cs" />
@@ -202,20 +210,16 @@
     <Compile Include="Native\EntityInitializationParams.cs" />
     <Compile Include="Entities\EntityNetworking.cs" />
     <Compile Include="Native\GameObjectInterop.cs" />
-    <Compile Include="Flowgraph\EntityFlowNode.cs" />
     <Compile Include="Entities\EntityLink.cs" />
     <Compile Include="Entities\EntityUpdatePolicy.cs" />
     <Compile Include="Entities\Attachment.cs" />
     <Compile Include="Entities\EntityRemovalException.cs" />
     <Compile Include="Flowgraph\FlowNodeFilter.cs" />
     <Compile Include="Flowgraph\FlowNodeFlags.cs" />
-    <Compile Include="Flowgraph\FlowNodeStatics.cs" />
-    <Compile Include="Flowgraph\FlowNodeType.cs" />
+    <Compile Include="Flowgraph\FlowNodeCloneType.cs" />
     <Compile Include="Native\NodeConfig.cs" />
     <Compile Include="Native\NodeInitializationParams.cs" />
-    <Compile Include="Flowgraph\OutputPort.cs" />
-    <Compile Include="Flowgraph\PortAttribute.cs" />
-    <Compile Include="Flowgraph\PortType.cs" />
+    <Compile Include="Flowgraph\PortTypes.cs" />
     <Compile Include="GameRules\GameRulesInitializationParams.cs" />
     <Compile Include="Input\ActionmapEventArgs.cs" />
     <Compile Include="Input\ActionmapHandler.cs" />
@@ -310,8 +314,6 @@
     <Compile Include="Script Handling\Registration\Actor.cs" />
     <Compile Include="Script Handling\Registration\Entity.cs" />
     <Compile Include="Script Handling\Registration\EntityFlowNode.cs" />
-    <Compile Include="Flowgraph\InputPortConfig.cs" />
-    <Compile Include="Flowgraph\OutputPortConfig.cs" />
     <Compile Include="Script Handling\Registration\FlowNode.cs" />
     <Compile Include="Script Handling\Registration\GameRules.cs" />
     <Compile Include="Script Handling\Exceptions\ScriptInstanceDestroyedException.cs" />
@@ -343,7 +345,6 @@
     <Compile Include="Extensions\IDictionary.cs" />
     <Compile Include="Extensions\IEnumerable.cs" />
     <Compile Include="Flowgraph\FlowNodeAttribute.cs" />
-    <Compile Include="Flowgraph\Ports.cs" />
     <Compile Include="Misc\DelayedFunc.cs" />
     <Compile Include="Extensions\Enum.cs" />
     <Compile Include="Extensions\WinForms.cs" />
@@ -422,7 +423,6 @@
     <Compile Include="Extensions\Reflection.cs" />
     <Compile Include="Entities\EntityStatics.cs" />
     <Compile Include="Entities\Entity.cs" />
-    <Compile Include="Flowgraph\FlowNode.cs" />
     <Compile Include="Debug\Logging.cs" />
     <Compile Include="GameRules\GameRules.cs" />
     <Compile Include="Misc\PointerWrapper.cs" />
@@ -431,6 +431,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Script Handling\ScriptManager.cs" />
     <Compile Include="Misc\UnusedMarker.cs" />
+    <Compile Include="VariousConstants.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Sandbox\FormLoader.resx">

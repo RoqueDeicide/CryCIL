@@ -8,7 +8,7 @@ namespace CryEngine.Flowgraph
 	/// <summary>
 	/// Enumeration of flow node types.
 	/// </summary>
-	public enum FlowNodeType
+	public enum FlowNodeCloneType
 	{
 		/// <summary>
 		/// Node has only one instance, never cloned.
