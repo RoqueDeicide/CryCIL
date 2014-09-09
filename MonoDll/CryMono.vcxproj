@@ -101,7 +101,6 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
     <ClInclude Include="DynMonoArray.h" />
     <ClInclude Include="EntityEventHandling.h" />
     <ClInclude Include="FlowManager.h" />
-    <ClInclude Include="FlowBaseNode.h" />
     <ClInclude Include="Headers\CryMonoInitializationHelpers.h" />
     <ClInclude Include="Headers\ICryScriptInstance.h" />
     <ClInclude Include="Headers\IMonoArray.h" />
@@ -112,12 +111,12 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
     <ClInclude Include="Headers\IMonoMethod.h" />
     <ClInclude Include="Headers\IMonoObject.h" />
     <ClInclude Include="Headers\MonoCommon.h" />
+    <ClInclude Include="Interops\FlowGraph\FlowGraphNode_Mono.h" />
     <ClInclude Include="MonoArray.h" />
     <ClInclude Include="MonoCVars.h" />
     <ClInclude Include="MonoDomain.h" />
     <ClInclude Include="MonoEntity.h" />
     <ClInclude Include="MonoException.h" />
-    <ClInclude Include="MonoFlowNode.h" />
     <ClInclude Include="MonoHelpers.h" />
     <ClInclude Include="MonoInput.h" />
     <ClInclude Include="MonoMethod.h" />
@@ -166,10 +165,10 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
     <ClCompile Include="DynMonoArray.cpp" />
     <ClCompile Include="EntityEventHandling.cpp" />
     <ClCompile Include="FlowManager.cpp" />
+    <ClCompile Include="Interops\FlowGraph\FlowGraphNode_Mono.cpp" />
     <ClCompile Include="MonoCVars.cpp" />
     <ClCompile Include="MonoDomain.cpp" />
     <ClCompile Include="MonoEntity.cpp" />
-    <ClCompile Include="MonoFlowNode.cpp" />
     <ClCompile Include="MonoInput.cpp" />
     <ClCompile Include="MonoMethod.cpp" />
     <ClCompile Include="MonoObject.cpp" />

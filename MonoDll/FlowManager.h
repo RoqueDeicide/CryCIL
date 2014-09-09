@@ -65,34 +65,22 @@ public:
 
 protected:
 	// IMonoScriptBind
-	virtual const char *GetClassName() { return "NativeFlowNodeMethods"; }
-	virtual const char *GetNamespace() { return "CryEngine.Flowgraph.Native"; }
+	virtual const char *GetClassName() { return "FlowNodeInterop"; }
 	// ~IMonoScriptBind
 
 	static void RegisterNode(mono::string typeName);
 
-	static bool IsPortActive(CMonoFlowNode *pNode, int);
+	static void ActivateOutput(CFlowNode_Mono *pNode, int);
+	static void ActivateOutputInt(CFlowNode_Mono *pNode, int, int);
+	static void ActivateOutputFloat(CFlowNode_Mono *pNode, int, float);
+	static void ActivateOutputEntityId(CFlowNode_Mono *pNode, int, EntityId);
+	static void ActivateOutputString(CFlowNode_Mono *pNode, int, mono::string);
+	static void ActivateOutputBool(CFlowNode_Mono *pNode, int, bool);
+	static void ActivateOutputVec3(CFlowNode_Mono *pNode, int, Vec3);
 
-	static int GetPortValueInt(CMonoFlowNode *pNode, int);
-	static float GetPortValueFloat(CMonoFlowNode *pNode, int);
-	static EntityId GetPortValueEntityId(CMonoFlowNode *pNode, int);
-	static mono::string GetPortValueString(CMonoFlowNode *pNode, int);
-	static bool GetPortValueBool(CMonoFlowNode *pNode, int);
-	static Vec3 GetPortValueVec3(CMonoFlowNode *pNode, int);
+	static IEntity *GetTargetEntity(CFlowNode_Mono *pNode, EntityId &id);
 
-	static void ActivateOutput(CMonoFlowNode *pNode, int);
-	static void ActivateOutputInt(CMonoFlowNode *pNode, int, int);
-	static void ActivateOutputFloat(CMonoFlowNode *pNode, int, float);
-	static void ActivateOutputEntityId(CMonoFlowNode *pNode, int, EntityId);
-	static void ActivateOutputString(CMonoFlowNode *pNode, int, mono::string);
-	static void ActivateOutputBool(CMonoFlowNode *pNode, int, bool);
-	static void ActivateOutputVec3(CMonoFlowNode *pNode, int, Vec3);
-
-	static bool IsOutputConnected(CMonoFlowNode *pNode, int);
-
-	static IEntity *GetTargetEntity(CMonoFlowNode *pNode, EntityId &id);
-
-	static void SetRegularlyUpdated(CMonoFlowNode *pNode, bool update);
+	static void SetRegularlyUpdated(CFlowNode_Mono *pNode, bool update);
 
 	int m_refs;
 };

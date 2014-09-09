@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "FlowManager.h"
 
-#include "MonoFlowNode.h"
+#include "Interops/FlowGraph/FlowGraphNode_Mono.h"
 
 #include "MonoCommon.h"
 #include <IMonoArray.h>
@@ -15,8 +15,6 @@ CFlowManager::CFlowManager()
 {
 	REGISTER_METHOD(RegisterNode);
 
-	REGISTER_METHOD(IsPortActive);
-
 	REGISTER_METHOD(ActivateOutput);
 	REGISTER_METHOD(ActivateOutputInt);
 	REGISTER_METHOD(ActivateOutputFloat);
@@ -24,15 +22,6 @@ CFlowManager::CFlowManager()
 	REGISTER_METHOD(ActivateOutputString);
 	REGISTER_METHOD(ActivateOutputBool);
 	REGISTER_METHOD(ActivateOutputVec3);
-
-	REGISTER_METHOD(GetPortValueInt);
-	REGISTER_METHOD(GetPortValueFloat);
-	REGISTER_METHOD(GetPortValueEntityId);
-	REGISTER_METHOD(GetPortValueString);
-	REGISTER_METHOD(GetPortValueBool);
-	REGISTER_METHOD(GetPortValueVec3);
-
-	REGISTER_METHOD(IsOutputConnected);
 
 	REGISTER_METHOD(GetTargetEntity);
 
@@ -64,58 +53,18 @@ void CFlowManager::RegisterNode(mono::string monoTypeName)
 
 IFlowNodePtr CFlowManager::Create(IFlowNode::SActivationInfo *pActInfo)
 {
-	return new CMonoFlowNode(pActInfo);
+	return new CFlowNode_Mono(pActInfo);
 }
 
-void CFlowManager::ActivateOutput(CMonoFlowNode *pNode, int index) { pNode->ActivateOutput(index, 0); }
-void CFlowManager::ActivateOutputInt(CMonoFlowNode *pNode, int index, int value) { pNode->ActivateOutput(index, value); }
-void CFlowManager::ActivateOutputFloat(CMonoFlowNode *pNode, int index, float value) { pNode->ActivateOutput(index, value); }
-void CFlowManager::ActivateOutputEntityId(CMonoFlowNode *pNode, int index, EntityId value) { pNode->ActivateOutput(index, value); }
-void CFlowManager::ActivateOutputString(CMonoFlowNode *pNode, int index, mono::string value) { pNode->ActivateOutput(index, string(ToCryString(value))); }
-void CFlowManager::ActivateOutputBool(CMonoFlowNode *pNode, int index, bool value) { pNode->ActivateOutput(index, value); }
-void CFlowManager::ActivateOutputVec3(CMonoFlowNode *pNode, int index, Vec3 value) { pNode->ActivateOutput(index, value); }
+void CFlowManager::ActivateOutput(CFlowNode_Mono *pNode, int index) { pNode->ActivateOutput(index, 0); }
+void CFlowManager::ActivateOutputInt(CFlowNode_Mono *pNode, int index, int value) { pNode->ActivateOutput(index, value); }
+void CFlowManager::ActivateOutputFloat(CFlowNode_Mono *pNode, int index, float value) { pNode->ActivateOutput(index, value); }
+void CFlowManager::ActivateOutputEntityId(CFlowNode_Mono *pNode, int index, EntityId value) { pNode->ActivateOutput(index, value); }
+void CFlowManager::ActivateOutputString(CFlowNode_Mono *pNode, int index, mono::string value) { pNode->ActivateOutput(index, string(ToCryString(value))); }
+void CFlowManager::ActivateOutputBool(CFlowNode_Mono *pNode, int index, bool value) { pNode->ActivateOutput(index, value); }
+void CFlowManager::ActivateOutputVec3(CFlowNode_Mono *pNode, int index, Vec3 value) { pNode->ActivateOutput(index, value); }
 
-bool CFlowManager::IsPortActive(CMonoFlowNode *pFlowNode, int port)
-{
-	return pFlowNode->IsPortActive(port);
-}
-
-int CFlowManager::GetPortValueInt(CMonoFlowNode *pFlowNode, int index)
-{
-	return pFlowNode->GetPortInt(index);
-}
-
-float CFlowManager::GetPortValueFloat(CMonoFlowNode *pFlowNode, int index)
-{
-	return pFlowNode->GetPortFloat(index);
-}
-
-EntityId CFlowManager::GetPortValueEntityId(CMonoFlowNode *pFlowNode, int index)
-{
-	return pFlowNode->GetPortEntityId(index);
-}
-
-mono::string CFlowManager::GetPortValueString(CMonoFlowNode *pFlowNode, int index)
-{
-	return (mono::string)ToMonoString(pFlowNode->GetPortString(index));
-}
-
-bool CFlowManager::GetPortValueBool(CMonoFlowNode *pFlowNode, int index)
-{
-	return pFlowNode->GetPortBool(index);
-}
-
-Vec3 CFlowManager::GetPortValueVec3(CMonoFlowNode *pFlowNode, int index)
-{
-	return pFlowNode->GetPortVec3(index);
-}
-
-bool CFlowManager::IsOutputConnected(CMonoFlowNode *pNode, int index)
-{
-	return pNode->IsOutputConnected(index);
-}
-
-IEntity *CFlowManager::GetTargetEntity(CMonoFlowNode *pNode, EntityId &id)
+IEntity *CFlowManager::GetTargetEntity(CFlowNode_Mono *pNode, EntityId &id)
 {
 	if (IEntity *pEntity = pNode->GetTargetEntity())
 	{
@@ -128,7 +77,7 @@ IEntity *CFlowManager::GetTargetEntity(CMonoFlowNode *pNode, EntityId &id)
 	return nullptr;
 }
 
-void CFlowManager::SetRegularlyUpdated(CMonoFlowNode *pNode, bool update)
+void CFlowManager::SetRegularlyUpdated(CFlowNode_Mono *pNode, bool update)
 {
 	pNode->SetRegularlyUpdated(update);
 }

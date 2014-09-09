@@ -45,9 +45,6 @@
     <ClInclude Include="FlowManager.h">
       <Filter>FlowSystem</Filter>
     </ClInclude>
-    <ClInclude Include="MonoFlowNode.h">
-      <Filter>FlowSystem</Filter>
-    </ClInclude>
     <ClInclude Include="Headers\MonoCommon.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
@@ -83,9 +80,6 @@
     </ClInclude>
     <ClInclude Include="Scriptbinds\ActorSystem.h">
       <Filter>ScriptBinds\Game Logic</Filter>
-    </ClInclude>
-    <ClInclude Include="FlowBaseNode.h">
-      <Filter>FlowSystem</Filter>
     </ClInclude>
     <ClInclude Include="Headers\IMonoDomain.h">
       <Filter>Interfaces</Filter>
@@ -182,6 +176,9 @@
     <ClInclude Include="Scriptbinds\CryMarshal.h">
       <Filter>ScriptBinds\NativeMemory</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\FlowGraph\FlowGraphNode_Mono.h">
+      <Filter>Interops\FlowGraph</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -201,9 +198,6 @@
       <Filter>Wrappers</Filter>
     </ClCompile>
     <ClCompile Include="FlowManager.cpp">
-      <Filter>FlowSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="MonoFlowNode.cpp">
       <Filter>FlowSystem</Filter>
     </ClCompile>
     <ClCompile Include="MonoObject.cpp">
@@ -315,6 +309,9 @@
     <ClCompile Include="Scriptbinds\CryMarshal.cpp">
       <Filter>ScriptBinds\NativeMemory</Filter>
     </ClCompile>
+    <ClCompile Include="Interops\FlowGraph\FlowGraphNode_Mono.cpp">
+      <Filter>Interops\FlowGraph</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ScriptBinds">
@@ -367,6 +364,12 @@
     </Filter>
     <Filter Include="ScriptBinds\NativeMemory">
       <UniqueIdentifier>{b0f89071-783e-4988-adb0-9fb08b6decd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interops">
+      <UniqueIdentifier>{53346888-7df8-470b-b631-f549bf104199}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interops\FlowGraph">
+      <UniqueIdentifier>{d77a7b9e-d8b5-4235-ba43-583cf331dfb6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
