@@ -7,15 +7,6 @@ namespace CryEngine.Native
 	internal static class ActorInterop
 	{
 		[MethodImplAttribute(MethodImplOptions.InternalCall)]
-		extern internal static float GetPlayerHealth(IntPtr actorPtr);
-		[MethodImplAttribute(MethodImplOptions.InternalCall)]
-		extern internal static void SetPlayerHealth(IntPtr actorPtr, float newHealth);
-		[MethodImplAttribute(MethodImplOptions.InternalCall)]
-		extern internal static float GetPlayerMaxHealth(IntPtr actorPtr);
-		[MethodImplAttribute(MethodImplOptions.InternalCall)]
-		extern internal static void SetPlayerMaxHealth(IntPtr actorPtr, float newMaxHealth);
-
-		[MethodImplAttribute(MethodImplOptions.InternalCall)]
 		extern internal static ActorInitializationParams GetActorInfoByChannelId(ushort channelId);
 		[MethodImplAttribute(MethodImplOptions.InternalCall)]
 		extern internal static ActorInitializationParams GetActorInfoById(uint entId);

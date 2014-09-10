@@ -14,11 +14,6 @@ CScriptbind_ActorSystem::TActorClasses CScriptbind_ActorSystem::m_monoActorClass
 
 CScriptbind_ActorSystem::CScriptbind_ActorSystem()
 {
-	REGISTER_METHOD(GetPlayerHealth);
-	REGISTER_METHOD(SetPlayerHealth);
-	REGISTER_METHOD(GetPlayerMaxHealth);
-	REGISTER_METHOD(SetPlayerMaxHealth);
-
 	REGISTER_METHOD(GetActorInfoByChannelId);
 	REGISTER_METHOD(GetActorInfoById);
 
@@ -138,26 +133,6 @@ void CScriptbind_ActorSystem::RemoveActor(EntityId id)
 EntityId CScriptbind_ActorSystem::GetClientActorId()
 {
 	return static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetClientActorId();
-}
-
-float CScriptbind_ActorSystem::GetPlayerHealth(IActor *pActor)
-{
-	return pActor->GetHealth();
-}
-
-void CScriptbind_ActorSystem::SetPlayerHealth(IActor *pActor, float newHealth)
-{
-	pActor->SetHealth(newHealth);
-}
-
-float CScriptbind_ActorSystem::GetPlayerMaxHealth(IActor *pActor)
-{
-	return pActor->GetMaxHealth();
-}
-
-void CScriptbind_ActorSystem::SetPlayerMaxHealth(IActor *pActor, float newMaxHealth)
-{
-	pActor->SetMaxHealth(newMaxHealth);
 }
 
 void CScriptbind_ActorSystem::RemoteInvocation(EntityId entityId, EntityId targetId, mono::string methodName, mono::object args, ERMInvocation target, int channelId)

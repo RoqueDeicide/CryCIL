@@ -69,11 +69,6 @@ protected:
 	static EMonoActorType GetMonoActorType(const char *actorClassName);
 
 	// externals
-	static float GetPlayerHealth(IActor *pActor);
-	static void SetPlayerHealth(IActor *pActor, float);
-	static float GetPlayerMaxHealth(IActor *pActor);
-	static void SetPlayerMaxHealth(IActor *pActor, float);
-
 	static SMonoActorInfo GetActorInfoByChannelId(uint16 channelId);
 	static SMonoActorInfo GetActorInfoById(EntityId id);
 

@@ -17,34 +17,6 @@ namespace CryEngine.Actors
 		{
 			get { return Equals(Actor.LocalClient, this); }
 		}
-
-		/// <summary>
-		/// Gets or sets the current health of this actor.
-		/// </summary>
-		public virtual float Health
-		{
-			get { return Native.ActorInterop.GetPlayerHealth(this.GetIActor()); }
-			set { Native.ActorInterop.SetPlayerHealth(this.GetIActor(), value); }
-		}
-
-		/// <summary>
-		/// Gets or sets the max health value for this actor.
-		/// </summary>
-		public virtual float MaxHealth
-		{
-			get { return Native.ActorInterop.GetPlayerMaxHealth(this.GetIActor()); }
-			set { Native.ActorInterop.SetPlayerMaxHealth(this.GetIActor(), value); }
-		}
-
-		/// <summary>
-		/// Gets a value indicating whether this actor has died. Returns true if <see cref="Health"
-		/// /> is equal to or below 0.
-		/// </summary>
-		public bool IsDead
-		{
-			get { return this.Health <= 0; }
-		}
-
 		/// <summary>
 		/// Gets or sets the channel id, index to the net channel in use by this actor.
 		/// </summary>
