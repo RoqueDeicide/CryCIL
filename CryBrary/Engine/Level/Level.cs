@@ -34,7 +34,7 @@ namespace CryEngine
 		/// <summary>
 		/// Gets the currently loaded level
 		/// </summary>
-		public static Level Current { get { return TryGet(NativeLevelMethods.GetCurrentLevel()); } }
+		public static Level Current { get { return TryGet(LevelInterop.GetCurrentLevel()); } }
 
 		/// <summary>
 		/// Loads a new level and returns its level info
@@ -43,7 +43,7 @@ namespace CryEngine
 		/// <returns>The loaded level</returns>
 		public static Level Load(string name)
 		{
-			return TryGet(NativeLevelMethods.LoadLevel(name));
+			return TryGet(LevelInterop.LoadLevel(name));
 		}
 
 		/// <summary>
@@ -51,13 +51,13 @@ namespace CryEngine
 		/// </summary>
 		public static void Unload()
 		{
-			NativeLevelMethods.UnloadLevel();
+			LevelInterop.UnloadLevel();
 		}
 
 		/// <summary>
 		/// Gets a value indicating whether a level is currently loaded.
 		/// </summary>
-		public static bool Loaded { get { return NativeLevelMethods.IsLevelLoaded(); } }
+		public static bool Loaded { get { return LevelInterop.IsLevelLoaded(); } }
 		#endregion
 
 		internal Level(IntPtr ptr)
@@ -68,37 +68,37 @@ namespace CryEngine
 		/// <summary>
 		/// Gets the level name.
 		/// </summary>
-		public string Name { get { return NativeLevelMethods.GetName(Handle); } }
+		public string Name { get { return LevelInterop.GetName(Handle); } }
 
 		/// <summary>
 		/// Gets the level display name.
 		/// </summary>
-		public string DisplayName { get { return NativeLevelMethods.GetDisplayName(Handle); } }
+		public string DisplayName { get { return LevelInterop.GetDisplayName(Handle); } }
 
 		/// <summary>
 		/// Gets the full path to the directory this level resides in.
 		/// </summary>
-		public string Path { get { return NativeLevelMethods.GetName(Handle); } }
+		public string Path { get { return LevelInterop.GetName(Handle); } }
 
 		/// <summary>
 		/// Gets the height map size for this level.
 		/// </summary>
-		public int HeightmapSize { get { return NativeLevelMethods.GetHeightmapSize(Handle); } }
+		public int HeightmapSize { get { return LevelInterop.GetHeightmapSize(Handle); } }
 
 		/// <summary>
 		/// Gets the number of supported game rules for this level.
 		/// </summary>
-		public int SupportedGamerules { get { return NativeLevelMethods.GetGameTypeCount(Handle); } }
+		public int SupportedGamerules { get { return LevelInterop.GetGameTypeCount(Handle); } }
 
 		/// <summary>
 		/// Gets the default game mode for this level.
 		/// </summary>
-		public string DefaultGameRules { get { return NativeLevelMethods.GetDefaultGameType(Handle); } }
+		public string DefaultGameRules { get { return LevelInterop.GetDefaultGameType(Handle); } }
 
 		/// <summary>
 		/// Gets a value indicating whether the level is configured to support any game rules.
 		/// </summary>
-		public bool HasGameRules { get { return NativeLevelMethods.HasGameRules(Handle); } }
+		public bool HasGameRules { get { return LevelInterop.HasGameRules(Handle); } }
 
 		internal IntPtr Handle { get; set; }
 
@@ -131,7 +131,7 @@ namespace CryEngine
 		/// <returns>Name of the supported gamemode</returns>
 		public string GetSupportedGameRules(int index)
 		{
-			return NativeLevelMethods.GetGameType(Handle, index);
+			return LevelInterop.GetGameType(Handle, index);
 		}
 
 		/// <summary>
@@ -141,7 +141,7 @@ namespace CryEngine
 		/// <returns>A boolean indicating whether the specified gamemode is supported.</returns>
 		public bool SupportsGameRules(string gamemodeName)
 		{
-			return NativeLevelMethods.SupportsGameType(Handle, gamemodeName);
+			return LevelInterop.SupportsGameType(Handle, gamemodeName);
 		}
 	}
 }

@@ -180,7 +180,7 @@
     <Compile Include="Console\CVar\StaticCVarField.cs" />
     <Compile Include="Console\CVar\StaticCVarProperty.cs" />
     <Compile Include="Debug\LogType.cs" />
-    <Compile Include="Engine\CryPak\Native\NativeCryPakMethods.cs" />
+    <Compile Include="Native\CryPakInterop.cs" />
     <Compile Include="Engine\CryPak\PathResolutionRules.cs" />
     <Compile Include="Engine\GeometryFormat.cs" />
     <Compile Include="Engine\GeometryType.cs" />
@@ -217,8 +217,6 @@
     <Compile Include="Flowgraph\FlowNodeFilter.cs" />
     <Compile Include="Flowgraph\FlowNodeFlags.cs" />
     <Compile Include="Flowgraph\FlowNodeCloneType.cs" />
-    <Compile Include="Native\NodeConfig.cs" />
-    <Compile Include="Native\NodeInitializationParams.cs" />
     <Compile Include="Flowgraph\PortTypes.cs" />
     <Compile Include="GameRules\GameRulesInitializationParams.cs" />
     <Compile Include="Input\ActionmapEventArgs.cs" />
@@ -354,13 +352,13 @@
     <Compile Include="Native\FlowNodeInterop.cs" />
     <Compile Include="Native\GameRulesInterop.cs" />
     <Compile Include="Native\InputInterop.cs" />
-    <Compile Include="Engine\Level\Native\NativeLevelMethods.cs" />
-    <Compile Include="Engine\Material\Native\NativeMaterialMethods.cs" />
-    <Compile Include="Engine\Particles\Native\NativeParticleEffectMethods.cs" />
+    <Compile Include="Native\LevelInterop.cs" />
+    <Compile Include="Native\MaterialInterop.cs" />
+    <Compile Include="Native\ParticleEffectInterop.cs" />
     <Compile Include="Native\PhysicsInterop.cs" />
-    <Compile Include="Engine\Renderer\Native\NativeRendererMethods.cs" />
-    <Compile Include="Engine\Lua\Native\NativeScriptTableMethods.cs" />
-    <Compile Include="Misc\Time\NativeTimeMethods.cs" />
+    <Compile Include="Native\RendererInterop.cs" />
+    <Compile Include="Native\ScriptTableInterop.cs" />
+    <Compile Include="Native\TimeInterop.cs" />
     <Compile Include="Network\RemoteInvocationAttribute.cs" />
     <Compile Include="Sandbox\FormLoader.cs">
       <SubType>Form</SubType>

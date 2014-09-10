@@ -88,7 +88,7 @@ namespace CryEngine
 		/// </summary>
 		public SurfaceType SurfaceType
 		{
-			get { return SurfaceType.TryGet(NativeMaterialMethods.GetSurfaceType(Handle)); }
+			get { return SurfaceType.TryGet(MaterialInterop.GetSurfaceType(Handle)); }
 		}
 
 		/// <summary>
@@ -97,7 +97,7 @@ namespace CryEngine
 		/// </summary>
 		public int ShaderParamCount
 		{
-			get { return NativeMaterialMethods.GetShaderParamCount(Handle); }
+			get { return MaterialInterop.GetShaderParamCount(Handle); }
 		}
 
 		/// <summary>
@@ -105,7 +105,7 @@ namespace CryEngine
 		/// </summary>
 		public int SubmaterialCount
 		{
-			get { return NativeMaterialMethods.GetSubmaterialCount(Handle); }
+			get { return MaterialInterop.GetSubmaterialCount(Handle); }
 		}
 
 		/// <summary>
@@ -116,21 +116,21 @@ namespace CryEngine
 		#region Statics
 		public static Material Find(string name)
 		{
-			var ptr = NativeMaterialMethods.FindMaterial(name);
+			var ptr = MaterialInterop.FindMaterial(name);
 
 			return TryGet(ptr);
 		}
 
 		public static Material Create(string name, bool makeIfNotFound = true, bool nonRemovable = false)
 		{
-			var ptr = NativeMaterialMethods.CreateMaterial(name);
+			var ptr = MaterialInterop.CreateMaterial(name);
 
 			return TryGet(ptr);
 		}
 
 		public static Material Load(string name, bool makeIfNotFound = true, bool nonRemovable = false)
 		{
-			var ptr = NativeMaterialMethods.LoadMaterial(name, makeIfNotFound, nonRemovable);
+			var ptr = MaterialInterop.LoadMaterial(name, makeIfNotFound, nonRemovable);
 
 			return TryGet(ptr);
 		}
@@ -142,7 +142,7 @@ namespace CryEngine
 				throw new ArgumentNullException("entity");
 #endif
 
-			var ptr = NativeMaterialMethods.GetMaterial(entity.GetIEntity(), slot);
+			var ptr = MaterialInterop.GetMaterial(entity.GetIEntity(), slot);
 			return TryGet(ptr);
 		}
 
@@ -155,7 +155,7 @@ namespace CryEngine
 				throw new ArgumentNullException("mat");
 #endif
 
-			NativeMaterialMethods.SetMaterial(entity.GetIEntity(), mat.Handle, slot);
+			MaterialInterop.SetMaterial(entity.GetIEntity(), mat.Handle, slot);
 		}
 
 		internal static Material TryGet(IntPtr ptr)
@@ -180,7 +180,7 @@ namespace CryEngine
 		/// <returns>The submaterial, or null if failed.</returns>
 		public Material GetSubmaterial(int slot)
 		{
-			var ptr = NativeMaterialMethods.GetSubMaterial(Handle, slot);
+			var ptr = MaterialInterop.GetSubMaterial(Handle, slot);
 
 			return TryGet(ptr);
 		}
@@ -194,7 +194,7 @@ namespace CryEngine
 		/// <returns>The new clone.</returns>
 		public Material Clone(int subMaterial = -1)
 		{
-			var ptr = NativeMaterialMethods.CloneMaterial(Handle, subMaterial);
+			var ptr = MaterialInterop.CloneMaterial(Handle, subMaterial);
 
 			return TryGet(ptr);
 		}
@@ -207,7 +207,7 @@ namespace CryEngine
 		/// <returns>true if successful, otherwise false.</returns>
 		public bool SetParam(string paramName, float value)
 		{
-			return NativeMaterialMethods.SetGetMaterialParamFloat(Handle, paramName, ref value, false);
+			return MaterialInterop.SetGetMaterialParamFloat(Handle, paramName, ref value, false);
 		}
 
 		/// <summary>
@@ -233,7 +233,7 @@ namespace CryEngine
 		{
 			value = 0;
 
-			return NativeMaterialMethods.SetGetMaterialParamFloat(Handle, paramName, ref value, true);
+			return MaterialInterop.SetGetMaterialParamFloat(Handle, paramName, ref value, true);
 		}
 
 		/// <summary>
@@ -245,7 +245,7 @@ namespace CryEngine
 		public bool SetParam(string paramName, Color value)
 		{
 			Vector3 vecValue = new Vector3(value.R, value.G, value.B);
-			var result = NativeMaterialMethods.SetGetMaterialParamVec3(Handle, paramName, ref vecValue, false);
+			var result = MaterialInterop.SetGetMaterialParamVec3(Handle, paramName, ref vecValue, false);
 
 			Opacity = value.A;
 
@@ -274,7 +274,7 @@ namespace CryEngine
 		public bool TryGetParam(string paramName, out Color value)
 		{
 			Vector3 vecVal = Vector3.Zero;
-			bool result = NativeMaterialMethods.SetGetMaterialParamVec3(Handle, paramName, ref vecVal, true);
+			bool result = MaterialInterop.SetGetMaterialParamVec3(Handle, paramName, ref vecVal, true);
 
 			value = new Color {R = vecVal.X, G = vecVal.Y, B = vecVal.Z, A = this.Opacity};
 
@@ -288,7 +288,7 @@ namespace CryEngine
 		/// <param name="newVal"></param>
 		public void SetShaderParam(string paramName, float newVal)
 		{
-			NativeMaterialMethods.SetShaderParam(Handle, paramName, newVal);
+			MaterialInterop.SetShaderParam(Handle, paramName, newVal);
 		}
 
 		/// <summary>
@@ -308,7 +308,7 @@ namespace CryEngine
 		/// <param name="newVal"></param>
 		public void SetShaderParam(string paramName, Color newVal)
 		{
-			NativeMaterialMethods.SetShaderParam(Handle, paramName, newVal);
+			MaterialInterop.SetShaderParam(Handle, paramName, newVal);
 		}
 
 		/// <summary>
@@ -338,7 +338,7 @@ namespace CryEngine
 		/// <returns>The shader parameter name.</returns>
 		public string GetShaderParamName(int index)
 		{
-			return NativeMaterialMethods.GetShaderParamName(Handle, index);
+			return MaterialInterop.GetShaderParamName(Handle, index);
 		}
 		#region Overrides
 		public override bool Equals(object obj)

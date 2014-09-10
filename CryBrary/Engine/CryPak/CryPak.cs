@@ -13,18 +13,18 @@ namespace CryEngine.Utilities
 	{
 		public static void SetAlias(string name, string alias, bool bAdd)
 		{
-			NativeCryPakMethods.SetAlias(name, alias, bAdd);
+			CryPakInterop.SetAlias(name, alias, bAdd);
 		}
 
 		public static string GetAlias(string name, bool returnSame = true)
 		{
-			return NativeCryPakMethods.GetAlias(name, returnSame);
+			return CryPakInterop.GetAlias(name, returnSame);
 		}
 
 		[CLSCompliant(false)]
 		public static string AdjustFileName(string source, PathResolutionRules rules)
 		{
-			return NativeCryPakMethods.AdjustFileName(source, rules);
+			return CryPakInterop.AdjustFileName(source, rules);
 		}
 
 		#region Properties
@@ -76,7 +76,7 @@ namespace CryEngine.Utilities
 		{
 			get
 			{
-				return NativeCryPakMethods.GetAlias("%USER%");
+				return CryPakInterop.GetAlias("%USER%");
 			}
 		}
 

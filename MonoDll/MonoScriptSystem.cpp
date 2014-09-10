@@ -74,7 +74,7 @@ IMonoScriptSystem *CScriptSystem::g_pThis = nullptr;
 #endif
 
 CScriptSystem::CScriptSystem(IGameFramework *pGameFramework)
-: m_pRootDomain(nullptr)
+	: m_pRootDomain(nullptr)
 	, m_pCryBraryAssembly(nullptr)
 	, m_pPdb2MdbAssembly(nullptr)
 	, m_pScriptManager(nullptr)
@@ -193,6 +193,7 @@ CScriptSystem::~CScriptSystem()
 }
 #include <cstdlib>
 #include <csignal>
+
 void HandleSignalAbort(int error)
 {
 	CryLogAlways("Aborted %i", error);
@@ -336,7 +337,6 @@ void CScriptSystem::RegisterPriorityBindings()
 	RegisterBinding(CScriptbind_Time);
 	RegisterBinding(CScriptbind_MaterialManager);
 	RegisterBinding(CScriptbind_ParticleSystem);
-	RegisterBinding(CScriptbind_ViewSystem);
 	RegisterBinding(CScriptbind_LevelSystem);
 	RegisterBinding(CScriptbind_Entity);
 	RegisterBinding(CScriptbind_Network);

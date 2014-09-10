@@ -19,7 +19,7 @@ namespace CryEngine.Lua
 			if (ScriptTables == null)
 				ScriptTables = new List<ScriptTable>();
 
-			var scriptPtr = NativeScriptTableMethods.GetScriptTable(entityPtr);
+			var scriptPtr = ScriptTableInterop.GetScriptTable(entityPtr);
 			if (scriptPtr != IntPtr.Zero)
 			{
 				var scriptTable = ScriptTables.FirstOrDefault(x => x.Handle == scriptPtr);
@@ -46,7 +46,7 @@ namespace CryEngine.Lua
 		/// <returns>False if execution fails, otherwise true.</returns>
 		public static bool Execute(string buffer)
 		{
-			return NativeScriptTableMethods.ExecuteBuffer(buffer);
+			return ScriptTableInterop.ExecuteBuffer(buffer);
 		}
 
 		private static List<ScriptTable> ScriptTables { get; set; }
@@ -64,7 +64,7 @@ namespace CryEngine.Lua
 		/// <returns>Result or null</returns>
 		public object CallMethod(string methodName, params object[] args)
 		{
-			return NativeScriptTableMethods.CallMethod(Handle, methodName, args);
+			return ScriptTableInterop.CallMethod(Handle, methodName, args);
 		}
 
 		/// <summary>
@@ -74,7 +74,7 @@ namespace CryEngine.Lua
 		/// <returns>The value or null</returns>
 		public object GetValue(string name)
 		{
-			return NativeScriptTableMethods.GetValue(Handle, name);
+			return ScriptTableInterop.GetValue(Handle, name);
 		}
 
 		/// <summary>
@@ -84,7 +84,7 @@ namespace CryEngine.Lua
 		/// <returns></returns>
 		public ScriptTable GetTable(string name)
 		{
-			var scriptPtr = NativeScriptTableMethods.GetSubScriptTable(Handle, name);
+			var scriptPtr = ScriptTableInterop.GetSubScriptTable(Handle, name);
 			if (scriptPtr != IntPtr.Zero)
 			{
 				var scriptTable = ScriptTables.FirstOrDefault(x => x.Handle == scriptPtr);
