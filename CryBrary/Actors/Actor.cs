@@ -27,15 +27,6 @@ namespace CryEngine.Actors
 			this.NetSerialize(serialize, aspect, profile, flags);
 		}
 
-		/// <summary>
-		/// Sets / gets the current health of this actor.
-		/// </summary>
-		public override float Health { get; set; }
-		/// <summary>
-		/// Sets / gets the max health value for this actor.
-		/// </summary>
-		public override float MaxHealth { get; set; }
-
 		public PrePhysicsUpdateMode PrePhysicsUpdateMode
 		{
 			set { this.GameObject.PrePhysicsUpdateMode = value; }

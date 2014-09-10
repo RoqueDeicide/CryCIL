@@ -1,5 +1,8 @@
 ﻿namespace CryEngine.Entities
 {
+	/// <summary>
+	/// Enumeration of entity's update policies.
+	/// </summary>
 	public enum EntityUpdatePolicy
 	{
 		/// <summary>

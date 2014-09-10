@@ -6,7 +6,6 @@ namespace CryEngine.Actors
 	/// <summary>
 	/// Represents an actor with a custom IActor implementation outside of CryMono.dll.
 	/// </summary>
-	[ExcludeFromCompilation]
 	public class NativeActor : ActorBase
 	{
 		public NativeActor() { }
