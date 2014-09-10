@@ -393,7 +393,6 @@
     <Compile Include="Serialization\CrySerializer.cs" />
     <Compile Include="Misc\Color.cs" />
     <Compile Include="Serialization\SerializedObjectReference.cs" />
-    <Compile Include="Native\SoundInterop.cs" />
     <Compile Include="Sound\Sound.cs" />
     <Compile Include="Testing\Assertion.cs" />
     <Compile Include="Testing\Attributes.cs" />
