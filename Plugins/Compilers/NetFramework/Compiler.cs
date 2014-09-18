@@ -307,63 +307,61 @@ namespace CryEngine.Compilers.NET
 		private bool TryGetEntityProperty(MemberInfo memberInfo, ref Dictionary<string, List<EditorProperty>> folders)
 		{
 			EditorPropertyAttribute propertyAttribute;
-			if (memberInfo.TryGetAttribute(out propertyAttribute))
+			if (!memberInfo.TryGetAttribute(out propertyAttribute)) return false;
+
+			Type memberType = null;
+			switch (memberInfo.MemberType)
 			{
-				Type memberType = null;
-				switch (memberInfo.MemberType)
-				{
-					case MemberTypes.Field:
-						memberType = (memberInfo as FieldInfo).FieldType;
-						break;
-					case MemberTypes.Property:
-						memberType = (memberInfo as PropertyInfo).PropertyType;
-						break;
-				}
-
-				EditorPropertyLimits limits = new EditorPropertyLimits
-				{
-					Min = propertyAttribute.Min,
-					Max = propertyAttribute.Max
-				};
-
-				EditorPropertyType editorType = Entity.GetEditorType(memberType, propertyAttribute.Type);
-
-				string defaultValue = propertyAttribute.DefaultValue;
-				if (defaultValue == null)
-				{
-					switch (editorType)
-					{
-						case EditorPropertyType.Bool:
-							defaultValue = "false";
-							break;
-						case EditorPropertyType.Vector3:
-						case EditorPropertyType.Color:
-							defaultValue = "0,0,0";
-							break;
-						case EditorPropertyType.Float:
-						case EditorPropertyType.Int:
-							defaultValue = "0";
-							break;
-						default:
-							defaultValue = "";
-							break;
-					}
-				}
-
-				EditorProperty property = new EditorProperty(propertyAttribute.Name ?? memberInfo.Name, propertyAttribute.Description, defaultValue, editorType, limits, propertyAttribute.Flags);
-
-				if (propertyAttribute.Folder == null)
-					propertyAttribute.Folder = "Default";
-
-				if (!folders.ContainsKey(propertyAttribute.Folder))
-					folders.Add(propertyAttribute.Folder, new List<EditorProperty>());
-
-				folders[propertyAttribute.Folder].Add(property);
-
-				return true;
+				case MemberTypes.Field:
+					memberType = ((FieldInfo)memberInfo).FieldType;
+					break;
+				case MemberTypes.Property:
+					memberType = ((PropertyInfo)memberInfo).PropertyType;
+					break;
 			}
 
-			return false;
+			EditorPropertyLimits limits = new EditorPropertyLimits
+			{
+				Min = propertyAttribute.Min,
+				Max = propertyAttribute.Max
+			};
+
+			EditorPropertyType editorType = Entity.GetEditorType(memberType, propertyAttribute.Type);
+
+			string defaultValue = propertyAttribute.DefaultValue;
+			if (defaultValue == null)
+			{
+				switch (editorType)
+				{
+					case EditorPropertyType.Bool:
+						defaultValue = "false";
+						break;
+					case EditorPropertyType.Vector3:
+					case EditorPropertyType.Color:
+						defaultValue = "0,0,0";
+						break;
+					case EditorPropertyType.Float:
+					case EditorPropertyType.Int:
+						defaultValue = "0";
+						break;
+					default:
+						defaultValue = "";
+						break;
+				}
+			}
+
+			EditorProperty property = new EditorProperty
+				(propertyAttribute.Name ?? memberInfo.Name, propertyAttribute.Description, defaultValue, editorType, limits, propertyAttribute.Flags);
+
+			if (propertyAttribute.Folder == null)
+				propertyAttribute.Folder = "Default";
+
+			if (!folders.ContainsKey(propertyAttribute.Folder))
+				folders.Add(propertyAttribute.Folder, new List<EditorProperty>());
+
+			folders[propertyAttribute.Folder].Add(property);
+
+			return true;
 		}
 		#endregion
 
@@ -475,36 +473,42 @@ namespace CryEngine.Compilers.NET
 		{
 			foreach (MemberInfo member in type.GetMembers(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly))
 			{
-				if (member.MemberType == MemberTypes.Field || member.MemberType == MemberTypes.Property)
+				switch (member.MemberType)
 				{
-					if (member.Name.EndsWith("k__BackingField"))
-						continue;
-
-					PortAttribute portAttribute;
-					member.TryGetAttribute(out portAttribute);
-
-					OutputPortConfig outputPortConfig;
-					if (TryGetFlowNodeOutput(portAttribute, member, out outputPortConfig))
-						outputs.Add(outputPortConfig, member);
-				}
-				else if (member.MemberType == MemberTypes.Method)
-				{
-					// Input ports *have* to specify the [Port] attribute. Outputs don't since they
-					// have to utilize OutputPort<T>
-					PortAttribute portAttribute;
-					if (member.TryGetAttribute(out portAttribute))
+					case MemberTypes.Property:
+					case MemberTypes.Field:
 					{
-						MethodInfo method = member as MethodInfo;
+						if (member.Name.EndsWith("k__BackingField"))
+							continue;
 
-						InputPortConfig inputPortConfig;
-						if (TryGetFlowNodeInput(portAttribute, method, out inputPortConfig))
-							inputs.Add(inputPortConfig, method);
+						InputAttribute inputAttribute;
+						member.TryGetAttribute(out inputAttribute);
+
+						OutputPortConfig outputPortConfig;
+						if (this.TryGetFlowNodeOutput(inputAttribute, member, out outputPortConfig))
+							outputs.Add(outputPortConfig, member);
 					}
+						break;
+					case MemberTypes.Method:
+					{
+						// Input ports *have* to specify the [Port] attribute. Outputs don't since they
+						// have to utilize OutputPort<T>
+						InputAttribute inputAttribute;
+						if (member.TryGetAttribute(out inputAttribute))
+						{
+							MethodInfo method = member as MethodInfo;
+
+							InputPortConfig inputPortConfig;
+							if (this.TryGetFlowNodeInput(inputAttribute, method, out inputPortConfig))
+								inputs.Add(inputPortConfig, method);
+						}
+					}
+						break;
 				}
 			}
 		}
 
-		private bool TryGetFlowNodeInput(PortAttribute portAttribute, MethodInfo method, out InputPortConfig inputPortConfig)
+		private bool TryGetFlowNodeInput(InputAttribute inputAttribute, MethodInfo method, out InputPortConfig inputPortConfig)
 		{
 			string portPrefix = null;
 
@@ -538,7 +542,7 @@ namespace CryEngine.Compilers.NET
 					}
 				}
 				else
-					inputPortConfig.Type = GetFlowNodePortType(parameter.ParameterType, out portPrefix, portAttribute);
+					inputPortConfig.Type = GetFlowNodePortType(parameter.ParameterType, out portPrefix, inputAttribute);
 
 				if (parameter.IsOptional && defaultVal == null)
 					defaultVal = parameter.DefaultValue;
@@ -570,7 +574,7 @@ namespace CryEngine.Compilers.NET
 			else
 				inputPortConfig.Type = NodePortType.Void;
 
-			string portName = (portAttribute.Name ?? method.Name);
+			string portName = (inputAttribute.Name ?? method.Name);
 
 			if (portPrefix != null)
 				inputPortConfig.Name = portPrefix + portName;
@@ -578,20 +582,20 @@ namespace CryEngine.Compilers.NET
 				inputPortConfig.Name = portName;
 
 			inputPortConfig.DefaultValue = defaultVal;
-			inputPortConfig.Description = portAttribute.Description;
-			inputPortConfig.HumanName = portAttribute.Name ?? method.Name;
+			inputPortConfig.Description = inputAttribute.Description;
+			inputPortConfig.HumanName = inputAttribute.Name ?? method.Name;
 			return true;
 		}
 
-		private bool TryGetFlowNodeOutput(PortAttribute portAttribute, MemberInfo memberInfo, out OutputPortConfig outputPortConfig)
+		private bool TryGetFlowNodeOutput(InputAttribute inputAttribute, MemberInfo memberInfo, out OutputPortConfig outputPortConfig)
 		{
 			outputPortConfig = new OutputPortConfig();
 
-			if (portAttribute != null)
+			if (inputAttribute != null)
 			{
-				outputPortConfig.Name = portAttribute.Name ?? memberInfo.Name;
+				outputPortConfig.Name = inputAttribute.Name ?? memberInfo.Name;
 
-				outputPortConfig.Description = portAttribute.Description;
+				outputPortConfig.Description = inputAttribute.Description;
 			}
 			else
 				outputPortConfig.Name = memberInfo.Name;
@@ -608,12 +612,12 @@ namespace CryEngine.Compilers.NET
 			Type genericType = isGenericType ? type.GetGenericArguments()[0] : typeof(void);
 
 			string prefix;
-			outputPortConfig.Type = this.GetFlowNodePortType(genericType, out prefix, portAttribute);
+			outputPortConfig.Type = this.GetFlowNodePortType(genericType, out prefix, inputAttribute);
 
 			return true;
 		}
 
-		private NodePortType GetFlowNodePortType(Type type, out string prefix, PortAttribute portAttribute)
+		private NodePortType GetFlowNodePortType(Type type, out string prefix, InputAttribute inputAttribute)
 		{
 			prefix = null;
 
@@ -625,9 +629,9 @@ namespace CryEngine.Compilers.NET
 				return NodePortType.Float;
 			if (type == typeof(string))
 			{
-				if (portAttribute != null)
+				if (inputAttribute != null)
 				{
-					switch (portAttribute.StringPortType)
+					switch (inputAttribute.StringPortType)
 					{
 						case StringPortType.Sound:
 							prefix = "sound_";

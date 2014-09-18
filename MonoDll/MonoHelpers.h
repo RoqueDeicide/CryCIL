@@ -2,8 +2,8 @@
 #define __MONO_HELPERS__
 
 #define mono_array_set_addr_with_size(array, index, size, value) \
-do
- {
+do \
+ { \
 	\
 	void **__p = (void **)mono_array_addr_with_size(array, size, index); \
 	*__p = (value); \
