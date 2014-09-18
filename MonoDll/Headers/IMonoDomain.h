@@ -112,7 +112,7 @@ static IMonoArray *CreateDynamicMonoArray(IMonoClass *pElementClass = nullptr, i
 }
 
 /// <summary>
-/// Converts a C# string to the C++ equivalent.
+/// Converts a C++ string to the C# equivalent.
 /// </summary>
 inline mono::string ToMonoString(const char *cryString)
 {
