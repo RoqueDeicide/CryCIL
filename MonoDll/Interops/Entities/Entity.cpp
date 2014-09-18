@@ -1,5 +1,5 @@
 #include "StdAfx.h"
-#include "Scriptbinds\Entity.h"
+#include "Entity.h"
 
 #include "MonoEntity.h"
 #include "NativeEntity.h"
