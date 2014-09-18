@@ -30,7 +30,9 @@ CFlowManager::CFlowManager()
 
 CFlowManager::~CFlowManager()
 {
-	static_cast<CScriptSystem *>(GetMonoScriptSystem())->EraseBinding(this);
+	// The following code is commented, because flow manager is not located in the list of interops.
+
+	//static_cast<CScriptSystem *>(GetMonoScriptSystem())->EraseBinding(this);
 }
 
 void CFlowManager::RegisterNode(mono::string monoTypeName)

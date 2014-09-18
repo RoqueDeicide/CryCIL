@@ -7,7 +7,7 @@
 
 #include <IMonoClass.h>
 
-CScriptbind_ScriptTable::CScriptbind_ScriptTable()
+ScriptTableInterop::ScriptTableInterop()
 {
 	REGISTER_METHOD(GetScriptTable);
 	REGISTER_METHOD(GetSubScriptTable);
@@ -18,7 +18,7 @@ CScriptbind_ScriptTable::CScriptbind_ScriptTable()
 	REGISTER_METHOD(ExecuteBuffer);
 }
 
-IScriptTable *CScriptbind_ScriptTable::GetScriptTable(IEntity *pEntity)
+IScriptTable *ScriptTableInterop::GetScriptTable(IEntity *pEntity)
 {
 	return pEntity->GetScriptTable();
 }
@@ -68,7 +68,7 @@ mono::object ToMonoObject(ScriptAnyValue anyValue)
 	return nullptr;
 }
 
-mono::object CScriptbind_ScriptTable::CallMethod(IScriptTable *pScriptTable, mono::string methodName, mono::object params)
+mono::object ScriptTableInterop::CallMethod(IScriptTable *pScriptTable, mono::string methodName, mono::object params)
 {
 	HSCRIPTFUNCTION scriptFunction = 0;
 	if (pScriptTable && pScriptTable->GetValue(ToCryString(methodName), scriptFunction))
@@ -103,7 +103,7 @@ mono::object CScriptbind_ScriptTable::CallMethod(IScriptTable *pScriptTable, mon
 	return nullptr;
 }
 
-mono::object CScriptbind_ScriptTable::GetValue(IScriptTable *pScriptTable, mono::string keyName)
+mono::object ScriptTableInterop::GetValue(IScriptTable *pScriptTable, mono::string keyName)
 {
 	ScriptAnyValue anyValue;
 	if (pScriptTable->GetValueAny(ToCryString(keyName), anyValue))
@@ -112,7 +112,7 @@ mono::object CScriptbind_ScriptTable::GetValue(IScriptTable *pScriptTable, mono:
 	return nullptr;
 }
 
-IScriptTable *CScriptbind_ScriptTable::GetSubScriptTable(IScriptTable *pScriptTable, mono::string subTableName)
+IScriptTable *ScriptTableInterop::GetSubScriptTable(IScriptTable *pScriptTable, mono::string subTableName)
 {
 	ScriptAnyValue anyValue;
 	if (pScriptTable->GetValueAny(ToCryString(subTableName), anyValue))
@@ -121,7 +121,7 @@ IScriptTable *CScriptbind_ScriptTable::GetSubScriptTable(IScriptTable *pScriptTa
 	return nullptr;
 }
 
-bool CScriptbind_ScriptTable::ExecuteBuffer(mono::string mBuffer)
+bool ScriptTableInterop::ExecuteBuffer(mono::string mBuffer)
 {
 	if (IScriptSystem *pScriptSystem = gEnv->pSystem->GetIScriptSystem())
 	{

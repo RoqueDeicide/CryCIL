@@ -10,15 +10,15 @@
 #define __SCRIPTBIND_VIEW_SYSTEM__
 
 #include <MonoCommon.h>
-#include <IMonoScriptBind.h>
+#include <IMonoInterop.h>
 
 struct SViewParams;
 
-class CScriptbind_ViewSystem : public IMonoScriptBind
+class ViewSystemInterop : public IMonoInterop
 {
 public:
-	CScriptbind_ViewSystem();
-	~CScriptbind_ViewSystem() {}
+	ViewSystemInterop();
+	~ViewSystemInterop() {}
 
 protected:
 	// IMonoScriptBind

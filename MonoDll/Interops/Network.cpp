@@ -5,27 +5,27 @@
 
 #include <INetwork.h>
 
-CScriptbind_Network::CScriptbind_Network()
+NetworkInterop::NetworkInterop()
 {
 	REGISTER_METHOD(IsMultiplayer);
 	REGISTER_METHOD(IsServer);
 	REGISTER_METHOD(IsClient);
 }
 
-CScriptbind_Network::~CScriptbind_Network()
+NetworkInterop::~NetworkInterop()
 {}
 
-bool CScriptbind_Network::IsMultiplayer()
+bool NetworkInterop::IsMultiplayer()
 {
 	return gEnv->bMultiplayer;
 }
 
-bool CScriptbind_Network::IsServer()
+bool NetworkInterop::IsServer()
 {
 	return gEnv->bServer;
 }
 
-bool CScriptbind_Network::IsClient()
+bool NetworkInterop::IsClient()
 {
 	return gEnv->IsClient();
 }

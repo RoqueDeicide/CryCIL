@@ -1,15 +1,15 @@
 #include "stdafx.h"
 #include "CryMarshal.h"
 
-Scriptbind_CryMarshal::Scriptbind_CryMarshal()
+CryMarshalInterop::CryMarshalInterop()
 {
 	REGISTER_METHOD(AllocateMemory);
 	REGISTER_METHOD(FreeMemory);
 }
-Scriptbind_CryMarshal::~Scriptbind_CryMarshal()
+CryMarshalInterop::~CryMarshalInterop()
 {}
 
-void * Scriptbind_CryMarshal::AllocateMemory(unsigned __int64 size)
+void * CryMarshalInterop::AllocateMemory(unsigned __int64 size)
 {
 #ifdef WIN64
 	return malloc(size);
@@ -18,7 +18,7 @@ void * Scriptbind_CryMarshal::AllocateMemory(unsigned __int64 size)
 #endif
 }
 
-void Scriptbind_CryMarshal::FreeMemory(void * pointer)
+void CryMarshalInterop::FreeMemory(void * pointer)
 {
 	free(pointer);
 }

@@ -1,16 +1,16 @@
 #include "StaticObject.h"
 
-Scriptbind_StaticObject::Scriptbind_StaticObject()
+StaticObjectInterop::StaticObjectInterop()
 {
 	REGISTER_METHOD(CreateStaticObject);
 	REGISTER_METHOD(ReleaseStaticObject);
 	REGISTER_METHOD(GetMeshHandles);
 }
 
-Scriptbind_StaticObject::~Scriptbind_StaticObject()
+StaticObjectInterop::~StaticObjectInterop()
 {}
 
-IStatObj *Scriptbind_StaticObject::CreateStaticObject()
+IStatObj *StaticObjectInterop::CreateStaticObject()
 {
 	// Create empty static object.
 	IStatObj * obj = gEnv->p3DEngine->CreateStatObj();
@@ -18,7 +18,7 @@ IStatObj *Scriptbind_StaticObject::CreateStaticObject()
 	obj->AddRef();
 	return obj;
 }
-void Scriptbind_StaticObject::ReleaseStaticObject(IStatObj *obj)
+void StaticObjectInterop::ReleaseStaticObject(IStatObj *obj)
 {
 	if (obj)
 	{
@@ -26,7 +26,7 @@ void Scriptbind_StaticObject::ReleaseStaticObject(IStatObj *obj)
 		obj->Release();
 	}
 }
-MeshHandles Scriptbind_StaticObject::GetMeshHandles(IStatObj *obj)
+MeshHandles StaticObjectInterop::GetMeshHandles(IStatObj *obj)
 {
 	// Initialize result with with zeros.
 	MeshHandles handles = MeshHandles();

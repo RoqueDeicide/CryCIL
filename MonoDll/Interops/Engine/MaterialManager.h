@@ -11,15 +11,15 @@
 #define __SCRIPTBIND_MATERIAL_MANAGER__
 
 #include <MonoCommon.h>
-#include <IMonoScriptBind.h>
+#include <IMonoInterop.h>
 
 struct IMaterialManager;
 
-class CScriptbind_MaterialManager : public IMonoScriptBind
+class MaterialManagerInterop : public IMonoInterop
 {
 public:
-	CScriptbind_MaterialManager();
-	~CScriptbind_MaterialManager() {}
+	MaterialManagerInterop();
+	~MaterialManagerInterop() {}
 
 protected:
 

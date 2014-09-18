@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "CMesh.h"
 
-Scriptbind_CMesh::Scriptbind_CMesh()
+CMeshInterop::CMeshInterop()
 {
 	REGISTER_METHOD(GetFaceCount);
 	REGISTER_METHOD(GetVertexCount);
@@ -20,10 +20,10 @@ Scriptbind_CMesh::Scriptbind_CMesh()
 	REGISTER_METHOD(GetNumberOfElements);
 }
 
-Scriptbind_CMesh::~Scriptbind_CMesh()
+CMeshInterop::~CMeshInterop()
 {}
 
-int Scriptbind_CMesh::GetFaceCount(CMesh *cMeshHandle)
+int CMeshInterop::GetFaceCount(CMesh *cMeshHandle)
 {
 	if (cMeshHandle)
 	{
@@ -31,7 +31,7 @@ int Scriptbind_CMesh::GetFaceCount(CMesh *cMeshHandle)
 	}
 	return -1;
 }
-int Scriptbind_CMesh::GetVertexCount(CMesh *cMeshHandle)
+int CMeshInterop::GetVertexCount(CMesh *cMeshHandle)
 {
 	if (cMeshHandle)
 	{
@@ -39,7 +39,7 @@ int Scriptbind_CMesh::GetVertexCount(CMesh *cMeshHandle)
 	}
 	return -1;
 }
-int Scriptbind_CMesh::GetTexCoordCount(CMesh *cMeshHandle)
+int CMeshInterop::GetTexCoordCount(CMesh *cMeshHandle)
 {
 	if (cMeshHandle)
 	{
@@ -47,7 +47,7 @@ int Scriptbind_CMesh::GetTexCoordCount(CMesh *cMeshHandle)
 	}
 	return -1;
 }
-int Scriptbind_CMesh::GetTangentCount(CMesh *cMeshHandle)
+int CMeshInterop::GetTangentCount(CMesh *cMeshHandle)
 {
 	if (cMeshHandle)
 	{
@@ -55,7 +55,7 @@ int Scriptbind_CMesh::GetTangentCount(CMesh *cMeshHandle)
 	}
 	return -1;
 }
-int Scriptbind_CMesh::GetSubSetCount(CMesh *cMeshHandle)
+int CMeshInterop::GetSubSetCount(CMesh *cMeshHandle)
 {
 	if (cMeshHandle)
 	{
@@ -63,7 +63,7 @@ int Scriptbind_CMesh::GetSubSetCount(CMesh *cMeshHandle)
 	}
 	return -1;
 }
-int Scriptbind_CMesh::GetIndexCount(CMesh *cMeshHandle)
+int CMeshInterop::GetIndexCount(CMesh *cMeshHandle)
 {
 	if (cMeshHandle)
 	{
@@ -71,42 +71,42 @@ int Scriptbind_CMesh::GetIndexCount(CMesh *cMeshHandle)
 	}
 	return -1;
 }
-void Scriptbind_CMesh::SetFaceCount(CMesh *cMeshHandle, int nNewCount)
+void CMeshInterop::SetFaceCount(CMesh *cMeshHandle, int nNewCount)
 {
 	if (cMeshHandle)
 	{
 		cMeshHandle->SetFaceCount(nNewCount);
 	}
 }
-void Scriptbind_CMesh::SetVertexCount(CMesh *cMeshHandle, int nNewCount)
+void CMeshInterop::SetVertexCount(CMesh *cMeshHandle, int nNewCount)
 {
 	if (cMeshHandle)
 	{
 		cMeshHandle->SetVertexCount(nNewCount);
 	}
 }
-void Scriptbind_CMesh::SetTexCoordsCount(CMesh *cMeshHandle, int nNewCount)
+void CMeshInterop::SetTexCoordsCount(CMesh *cMeshHandle, int nNewCount)
 {
 	if (cMeshHandle)
 	{
 		cMeshHandle->SetTexCoordsCount(nNewCount);
 	}
 }
-void Scriptbind_CMesh::SetTexCoordsAndTangentsCount(CMesh *cMeshHandle, int nNewCount)
+void CMeshInterop::SetTexCoordsAndTangentsCount(CMesh *cMeshHandle, int nNewCount)
 {
 	if (cMeshHandle)
 	{
 		cMeshHandle->SetTexCoordsAndTangentsCount(nNewCount);
 	}
 }
-void Scriptbind_CMesh::SetIndexCount(CMesh *cMeshHandle, int nNewCount)
+void CMeshInterop::SetIndexCount(CMesh *cMeshHandle, int nNewCount)
 {
 	if (cMeshHandle)
 	{
 		cMeshHandle->SetIndexCount(nNewCount);
 	}
 }
-void *Scriptbind_CMesh::GetStreamHandle(CMesh *cMeshHandle, int streamIdentifier)
+void *CMeshInterop::GetStreamHandle(CMesh *cMeshHandle, int streamIdentifier)
 {
 	if (cMeshHandle)
 	{
@@ -119,14 +119,14 @@ void *Scriptbind_CMesh::GetStreamHandle(CMesh *cMeshHandle, int streamIdentifier
 	}
 	return nullptr;
 }
-void Scriptbind_CMesh::ReallocateStream(CMesh *cMeshHandle, int streamIdentifier, int newCount)
+void CMeshInterop::ReallocateStream(CMesh *cMeshHandle, int streamIdentifier, int newCount)
 {
 	if (cMeshHandle)
 	{
 		cMeshHandle->ReallocStream(streamIdentifier, newCount);
 	}
 }
-void Scriptbind_CMesh::Export(IStatObj *obj)
+void CMeshInterop::Export(IStatObj *obj)
 {
 	// Check everything, and get all of the data.
 	if (!obj)
@@ -156,7 +156,7 @@ void Scriptbind_CMesh::Export(IStatObj *obj)
 	// Tell static object to create new render mesh before next rendering frame.
 	obj->Invalidate(false);
 }
-int Scriptbind_CMesh::GetNumberOfElements(CMesh *cMeshHandle, int streamIdentifier)
+int CMeshInterop::GetNumberOfElements(CMesh *cMeshHandle, int streamIdentifier)
 {
 	return
 		(cMeshHandle && streamIdentifier >= 0 && streamIdentifier < CMesh::LAST_STREAM)

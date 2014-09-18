@@ -1,17 +1,17 @@
 #ifndef __SCRIPTBIND_TIME_H__
 #define __SCRIPTBIND_TIME_H__
 
-#include <IMonoScriptBind.h>
+#include <IMonoInterop.h>
 
-class CScriptbind_Time : public IMonoScriptBind
+class TimeInterop : public IMonoInterop
 {
 public:
-	CScriptbind_Time()
+	TimeInterop()
 	{
 		REGISTER_METHOD(SetTimeScale);
 	}
 
-	~CScriptbind_Time() {}
+	~TimeInterop() {}
 
 protected:
 	// IMonoScriptBind

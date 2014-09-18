@@ -3,9 +3,9 @@
 
 #include <IGameFramework.h>
 
-IMaterialManager *CScriptbind_MaterialManager::m_pMaterialManager = nullptr;
+IMaterialManager *MaterialManagerInterop::m_pMaterialManager = nullptr;
 
-CScriptbind_MaterialManager::CScriptbind_MaterialManager()
+MaterialManagerInterop::MaterialManagerInterop()
 {
 	m_pMaterialManager = gEnv->p3DEngine->GetMaterialManager();
 
@@ -44,7 +44,7 @@ CScriptbind_MaterialManager::CScriptbind_MaterialManager()
 	REGISTER_METHOD(GetSurfaceTypeParams);
 }
 
-IMaterial *CScriptbind_MaterialManager::FindMaterial(mono::string name)
+IMaterial *MaterialManagerInterop::FindMaterial(mono::string name)
 {
 	if (IMaterial *pMaterial = m_pMaterialManager->FindMaterial(ToCryString(name)))
 		return pMaterial;
@@ -52,27 +52,27 @@ IMaterial *CScriptbind_MaterialManager::FindMaterial(mono::string name)
 	return m_pMaterialManager->LoadMaterial(ToCryString(name), false);
 }
 
-IMaterial *CScriptbind_MaterialManager::CreateMaterial(mono::string name)
+IMaterial *MaterialManagerInterop::CreateMaterial(mono::string name)
 {
 	return m_pMaterialManager->CreateMaterial(ToCryString(name));
 }
 
-IMaterial *CScriptbind_MaterialManager::LoadMaterial(mono::string name, bool makeIfNotFound, bool nonRemovable)
+IMaterial *MaterialManagerInterop::LoadMaterial(mono::string name, bool makeIfNotFound, bool nonRemovable)
 {
 	return m_pMaterialManager->LoadMaterial(ToCryString(name), makeIfNotFound, nonRemovable);
 }
 
-IMaterial *CScriptbind_MaterialManager::GetSubMaterial(IMaterial *pMaterial, int slot)
+IMaterial *MaterialManagerInterop::GetSubMaterial(IMaterial *pMaterial, int slot)
 {
 	return pMaterial->GetSubMtl(slot);
 }
 
-int CScriptbind_MaterialManager::GetSubmaterialCount(IMaterial *pMaterial)
+int MaterialManagerInterop::GetSubmaterialCount(IMaterial *pMaterial)
 {
 	return pMaterial->GetSubMtlCount();
 }
 
-IMaterial *CScriptbind_MaterialManager::GetMaterial(IEntity *pEntity, int slot)
+IMaterial *MaterialManagerInterop::GetMaterial(IEntity *pEntity, int slot)
 {
 	if (IEntityRenderProxy *pRenderProxy =  static_cast<IEntityRenderProxy *>(pEntity->GetProxy(ENTITY_PROXY_RENDER)))
 		return pRenderProxy->GetRenderMaterial(slot);
@@ -80,28 +80,28 @@ IMaterial *CScriptbind_MaterialManager::GetMaterial(IEntity *pEntity, int slot)
 	return nullptr;
 }
 
-void CScriptbind_MaterialManager::SetMaterial(IEntity *pEntity, IMaterial *pMaterial, int slot)
+void MaterialManagerInterop::SetMaterial(IEntity *pEntity, IMaterial *pMaterial, int slot)
 {
 	if (IEntityRenderProxy *pRenderProxy =  static_cast<IEntityRenderProxy *>(pEntity->GetProxy(ENTITY_PROXY_RENDER)))
 		pRenderProxy->SetSlotMaterial(slot, pMaterial);
 }
 
-IMaterial *CScriptbind_MaterialManager::CloneMaterial(IMaterial *pMaterial, int subMaterial)
+IMaterial *MaterialManagerInterop::CloneMaterial(IMaterial *pMaterial, int subMaterial)
 {
 	return pMaterial->GetMaterialManager()->CloneMaterial(pMaterial, subMaterial);
 }
 
-bool CScriptbind_MaterialManager::SetGetMaterialParamFloat(IMaterial *pMaterial, mono::string paramName, float &v, bool get)
+bool MaterialManagerInterop::SetGetMaterialParamFloat(IMaterial *pMaterial, mono::string paramName, float &v, bool get)
 {
 	return pMaterial->SetGetMaterialParamFloat(ToCryString(paramName), v, get);
 }
 
-bool CScriptbind_MaterialManager::SetGetMaterialParamVec3(IMaterial *pMaterial, mono::string paramName, Vec3 &v, bool get)
+bool MaterialManagerInterop::SetGetMaterialParamVec3(IMaterial *pMaterial, mono::string paramName, Vec3 &v, bool get)
 {
 	return pMaterial->SetGetMaterialParamVec3(ToCryString(paramName), v, get);
 }
 
-int CScriptbind_MaterialManager::GetShaderParamCount(IMaterial *pMaterial)
+int MaterialManagerInterop::GetShaderParamCount(IMaterial *pMaterial)
 {
 	const SShaderItem& shaderItem(pMaterial->GetShaderItem());
 	DynArray<SShaderParam> params;
@@ -109,7 +109,7 @@ int CScriptbind_MaterialManager::GetShaderParamCount(IMaterial *pMaterial)
 	return shaderItem.m_pShader->GetPublicParams().size();
 }
 
-mono::string CScriptbind_MaterialManager::GetShaderParamName(IMaterial *pMaterial, int index)
+mono::string MaterialManagerInterop::GetShaderParamName(IMaterial *pMaterial, int index)
 {
 	const SShaderItem& shaderItem(pMaterial->GetShaderItem());
 	DynArray<SShaderParam> params;
@@ -141,7 +141,7 @@ void SetShaderParamCommon(IMaterial *pMaterial, const char *paramName, UParamVal
 	}
 }
 
-void CScriptbind_MaterialManager::SetShaderParam(IMaterial *pMaterial, mono::string monoParamName, float newVal)
+void MaterialManagerInterop::SetShaderParam(IMaterial *pMaterial, mono::string monoParamName, float newVal)
 {
 	UParamVal par;
 	par.m_Float = newVal;
@@ -149,7 +149,7 @@ void CScriptbind_MaterialManager::SetShaderParam(IMaterial *pMaterial, mono::str
 	SetShaderParamCommon(pMaterial, ToCryString(monoParamName), par);
 }
 
-void CScriptbind_MaterialManager::SetShaderParamColorF(IMaterial *pMaterial, mono::string monoParamName, ColorF newVal)
+void MaterialManagerInterop::SetShaderParamColorF(IMaterial *pMaterial, mono::string monoParamName, ColorF newVal)
 {
 	UParamVal par;
 	par.m_Color[0] = newVal.r;
@@ -160,52 +160,52 @@ void CScriptbind_MaterialManager::SetShaderParamColorF(IMaterial *pMaterial, mon
 	SetShaderParamCommon(pMaterial, ToCryString(monoParamName), par);
 }
 
-EMaterialFlags CScriptbind_MaterialManager::GetFlags(IMaterial *pMaterial)
+EMaterialFlags MaterialManagerInterop::GetFlags(IMaterial *pMaterial)
 {
 	return (EMaterialFlags)pMaterial->GetFlags();
 }
 
-void CScriptbind_MaterialManager::SetFlags(IMaterial *pMaterial, EMaterialFlags flags)
+void MaterialManagerInterop::SetFlags(IMaterial *pMaterial, EMaterialFlags flags)
 {
 	pMaterial->SetFlags(flags);
 }
 
-ISurfaceType *CScriptbind_MaterialManager::GetSurfaceType(IMaterial *pMaterial)
+ISurfaceType *MaterialManagerInterop::GetSurfaceType(IMaterial *pMaterial)
 {
 	return pMaterial->GetSurfaceType();
 }
 
-ISurfaceType *CScriptbind_MaterialManager::GetSurfaceTypeById(int id)
+ISurfaceType *MaterialManagerInterop::GetSurfaceTypeById(int id)
 {
 	return gEnv->p3DEngine->GetMaterialManager()->GetSurfaceType(id);
 }
 
-ISurfaceType *CScriptbind_MaterialManager::GetSurfaceTypeByName(mono::string name)
+ISurfaceType *MaterialManagerInterop::GetSurfaceTypeByName(mono::string name)
 {
 	return gEnv->p3DEngine->GetMaterialManager()->GetSurfaceTypeByName(ToCryString(name));
 }
 
-uint16 CScriptbind_MaterialManager::GetSurfaceTypeId(ISurfaceType *pSurfaceType)
+uint16 MaterialManagerInterop::GetSurfaceTypeId(ISurfaceType *pSurfaceType)
 {
 	return pSurfaceType->GetId();
 }
 
-mono::string CScriptbind_MaterialManager::GetSurfaceTypeName(ISurfaceType *pSurfaceType)
+mono::string MaterialManagerInterop::GetSurfaceTypeName(ISurfaceType *pSurfaceType)
 {
 	return ToMonoString(pSurfaceType->GetName());
 }
 
-mono::string CScriptbind_MaterialManager::GetSurfaceTypeTypeName(ISurfaceType *pSurfaceType)
+mono::string MaterialManagerInterop::GetSurfaceTypeTypeName(ISurfaceType *pSurfaceType)
 {
 	return ToMonoString(pSurfaceType->GetType());
 }
 
-int CScriptbind_MaterialManager::GetSurfaceTypeFlags(ISurfaceType *pSurfaceType)
+int MaterialManagerInterop::GetSurfaceTypeFlags(ISurfaceType *pSurfaceType)
 {
 	return pSurfaceType->GetFlags();
 }
 
-ISurfaceType::SPhysicalParams CScriptbind_MaterialManager::GetSurfaceTypeParams(ISurfaceType *pSurfaceType)
+ISurfaceType::SPhysicalParams MaterialManagerInterop::GetSurfaceTypeParams(ISurfaceType *pSurfaceType)
 {
 	return pSurfaceType->GetPhyscalParams();
 }

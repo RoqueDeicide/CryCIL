@@ -6,7 +6,7 @@
 #include <ILevelSystem.h>
 #include <IGameFramework.h>
 
-CScriptbind_LevelSystem::CScriptbind_LevelSystem()
+LevelSystemInterop::LevelSystemInterop()
 {
 	REGISTER_METHOD(GetCurrentLevel);
 	REGISTER_METHOD(LoadLevel);
@@ -28,7 +28,7 @@ CScriptbind_LevelSystem::CScriptbind_LevelSystem()
 	REGISTER_METHOD(HasGameRules);
 }
 
-ILevelInfo *CScriptbind_LevelSystem::GetCurrentLevel()
+ILevelInfo *LevelSystemInterop::GetCurrentLevel()
 {
 	if (ILevel *pLevel = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetILevelSystem()->GetCurrentLevel())
 		return pLevel->GetLevelInfo();
@@ -36,7 +36,7 @@ ILevelInfo *CScriptbind_LevelSystem::GetCurrentLevel()
 	return nullptr;
 }
 
-ILevelInfo *CScriptbind_LevelSystem::LoadLevel(mono::string name)
+ILevelInfo *LevelSystemInterop::LoadLevel(mono::string name)
 {
 	if (ILevel *pLevel = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetILevelSystem()->LoadLevel(ToCryString(name)))
 		return pLevel->GetLevelInfo();
@@ -44,47 +44,47 @@ ILevelInfo *CScriptbind_LevelSystem::LoadLevel(mono::string name)
 	return nullptr;
 }
 
-bool CScriptbind_LevelSystem::IsLevelLoaded()
+bool LevelSystemInterop::IsLevelLoaded()
 {
 	return static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetILevelSystem()->IsLevelLoaded();
 }
 
-void CScriptbind_LevelSystem::UnloadLevel()
+void LevelSystemInterop::UnloadLevel()
 {
 	return static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetILevelSystem()->UnLoadLevel();
 }
 
-mono::string CScriptbind_LevelSystem::GetName(ILevelInfo *pLevelInfo)
+mono::string LevelSystemInterop::GetName(ILevelInfo *pLevelInfo)
 {
 	return ToMonoString(pLevelInfo->GetName());
 }
 
-mono::string CScriptbind_LevelSystem::GetPath(ILevelInfo *pLevelInfo)
+mono::string LevelSystemInterop::GetPath(ILevelInfo *pLevelInfo)
 {
 	return ToMonoString(pLevelInfo->GetPath());
 }
 
-mono::string CScriptbind_LevelSystem::GetPaks(ILevelInfo *pLevelInfo)
+mono::string LevelSystemInterop::GetPaks(ILevelInfo *pLevelInfo)
 {
 	return ToMonoString(pLevelInfo->GetPaks());
 }
 
-mono::string CScriptbind_LevelSystem::GetDisplayName(ILevelInfo *pLevelInfo)
+mono::string LevelSystemInterop::GetDisplayName(ILevelInfo *pLevelInfo)
 {
 	return ToMonoString(pLevelInfo->GetDisplayName());
 }
 
-int CScriptbind_LevelSystem::GetHeightmapSize(ILevelInfo *pLevelInfo)
+int LevelSystemInterop::GetHeightmapSize(ILevelInfo *pLevelInfo)
 {
 	return pLevelInfo->GetHeightmapSize();
 }
 
-int CScriptbind_LevelSystem::GetGameTypeCount(ILevelInfo *pLevelInfo)
+int LevelSystemInterop::GetGameTypeCount(ILevelInfo *pLevelInfo)
 {
 	return pLevelInfo->GetGameTypeCount();
 }
 
-mono::string CScriptbind_LevelSystem::GetGameType(ILevelInfo *pLevelInfo, int gameType)
+mono::string LevelSystemInterop::GetGameType(ILevelInfo *pLevelInfo, int gameType)
 {
 	if (auto pGameType = pLevelInfo->GetGameType(gameType))
 		return ToMonoString(pGameType->name);
@@ -92,12 +92,12 @@ mono::string CScriptbind_LevelSystem::GetGameType(ILevelInfo *pLevelInfo, int ga
 	return ToMonoString("");
 }
 
-bool CScriptbind_LevelSystem::SupportsGameType(ILevelInfo *pLevelInfo, mono::string gameTypeName)
+bool LevelSystemInterop::SupportsGameType(ILevelInfo *pLevelInfo, mono::string gameTypeName)
 {
 	return pLevelInfo->SupportsGameType(ToCryString(gameTypeName));
 }
 
-mono::string CScriptbind_LevelSystem::GetDefaultGameType(ILevelInfo *pLevelInfo)
+mono::string LevelSystemInterop::GetDefaultGameType(ILevelInfo *pLevelInfo)
 {
 	if (auto pGameType = pLevelInfo->GetDefaultGameType())
 		return ToMonoString(pGameType->name);
@@ -105,7 +105,7 @@ mono::string CScriptbind_LevelSystem::GetDefaultGameType(ILevelInfo *pLevelInfo)
 	return ToMonoString("");
 }
 
-bool CScriptbind_LevelSystem::HasGameRules(ILevelInfo *pLevelInfo)
+bool LevelSystemInterop::HasGameRules(ILevelInfo *pLevelInfo)
 {
 	return pLevelInfo->HasGameRules();
 }

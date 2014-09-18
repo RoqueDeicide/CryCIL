@@ -1,17 +1,17 @@
 #pragma once
-#include "Headers\IMonoScriptBind.h"
+#include "Headers\IMonoInterop.h"
 #include "IIndexedMesh.h"
 #include "IStatObj.h"
 
 /**
 * Scriptbind for CMesh structure. Allows to work with meshes without copying them to Mono memory.
 */
-class Scriptbind_CMesh :
-	public IMonoScriptBind
+class CMeshInterop :
+	public IMonoInterop
 {
 public:
-	Scriptbind_CMesh();
-	~Scriptbind_CMesh();
+	CMeshInterop();
+	~CMeshInterop();
 
 	virtual const char *GetClassName() { return "MeshInterop"; }
 

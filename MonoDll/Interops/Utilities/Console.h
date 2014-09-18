@@ -10,13 +10,13 @@
 #define __LOGGING_BINDING_H__
 
 #include <MonoCommon.h>
-#include <IMonoScriptBind.h>
+#include <IMonoInterop.h>
 
-class CScriptbind_Console : public IMonoScriptBind
+class ConsoleInterop : public IMonoInterop
 {
 public:
-	CScriptbind_Console();
-	virtual ~CScriptbind_Console() {}
+	ConsoleInterop();
+	virtual ~ConsoleInterop() {}
 
 protected:
 	// IMonoScriptBind

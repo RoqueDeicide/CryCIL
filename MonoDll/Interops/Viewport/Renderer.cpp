@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "Renderer.h"
 
-CScriptbind_Renderer::CScriptbind_Renderer()
+RendererInterop::RendererInterop()
 {
 	REGISTER_METHOD(GetWidth);
 	REGISTER_METHOD(GetHeight);
@@ -29,29 +29,29 @@ CScriptbind_Renderer::CScriptbind_Renderer()
 	REGISTER_METHOD(GetCameraFieldOfView);
 }
 
-void CScriptbind_Renderer::DrawTextToScreen(float xpos, float ypos, float fontSize, ColorF color, bool center, mono::string text)
+void RendererInterop::DrawTextToScreen(float xpos, float ypos, float fontSize, ColorF color, bool center, mono::string text)
 {
 	float actualColor[] ={ color.r, color.g, color.b, color.a };
 
 	gEnv->pRenderer->Draw2dLabel(xpos, ypos, fontSize, actualColor, center, ToCryString(text));
 }
 
-int CScriptbind_Renderer::GetWidth()
+int RendererInterop::GetWidth()
 {
 	return gEnv->pRenderer->GetWidth();
 }
 
-int CScriptbind_Renderer::GetHeight()
+int RendererInterop::GetHeight()
 {
 	return gEnv->pRenderer->GetHeight();
 }
 
-int CScriptbind_Renderer::UnProjectFromScreen(float sx, float sy, float sz, float &px, float &py, float &pz)
+int RendererInterop::UnProjectFromScreen(float sx, float sy, float sz, float &px, float &py, float &pz)
 {
 	return gEnv->pRenderer->UnProjectFromScreen(sx, sy, sz, &px, &py, &pz);
 }
 
-Vec3 CScriptbind_Renderer::ScreenToWorld(int x, int y)
+Vec3 RendererInterop::ScreenToWorld(int x, int y)
 {
 	if (gEnv->pPhysicalWorld)
 	{
@@ -71,7 +71,7 @@ Vec3 CScriptbind_Renderer::ScreenToWorld(int x, int y)
 	return Vec3(ZERO);
 }
 
-int CScriptbind_Renderer::LoadTexture(mono::string texturePath)
+int RendererInterop::LoadTexture(mono::string texturePath)
 {
 	if (ITexture *pTexture = gEnv->pRenderer->EF_LoadTexture(ToCryString(texturePath)))
 		return pTexture->GetTextureID();
@@ -79,53 +79,53 @@ int CScriptbind_Renderer::LoadTexture(mono::string texturePath)
 	return -1;
 }
 
-void CScriptbind_Renderer::DrawTextureToScreen(float xpos, float ypos, float width, float height, int textureId, float s0, float t0, float s1, float t1, float angle, float r, float g, float b, float a, float z)
+void RendererInterop::DrawTextureToScreen(float xpos, float ypos, float width, float height, int textureId, float s0, float t0, float s1, float t1, float angle, float r, float g, float b, float a, float z)
 {
 	// Could expose the optional args later.
 	gEnv->pRenderer->Draw2dImage(xpos, ypos, width, height, textureId, s0, t0, s1, t1, angle, r, g, b, a, z);
 }
 
-int CScriptbind_Renderer::CreateRenderTarget(int width, int height, ETEX_Format texFormat)
+int RendererInterop::CreateRenderTarget(int width, int height, ETEX_Format texFormat)
 {
 	return gEnv->pRenderer->CreateRenderTarget(width, height, texFormat);
 }
 
-void CScriptbind_Renderer::DestroyRenderTarget(int textureId)
+void RendererInterop::DestroyRenderTarget(int textureId)
 {
 	gEnv->pRenderer->DestroyRenderTarget(textureId);
 }
 
-void CScriptbind_Renderer::SetRenderTarget(int textureId)
+void RendererInterop::SetRenderTarget(int textureId)
 {
 	gEnv->pRenderer->SetRenderTarget(textureId);
 }
 
-const CCamera *CScriptbind_Renderer::GetViewCamera()
+const CCamera *RendererInterop::GetViewCamera()
 {
 	return &gEnv->pRenderer->GetCamera();
 }
 
-void CScriptbind_Renderer::SetCameraMatrix(CCamera *pCamera, Matrix34 matrix)
+void RendererInterop::SetCameraMatrix(CCamera *pCamera, Matrix34 matrix)
 {
 	pCamera->SetMatrix(matrix);
 }
 
-Matrix34 CScriptbind_Renderer::GetCameraMatrix(CCamera *pCamera)
+Matrix34 RendererInterop::GetCameraMatrix(CCamera *pCamera)
 {
 	return pCamera->GetMatrix();
 }
 
-void CScriptbind_Renderer::SetCameraPosition(CCamera *pCamera, Vec3 pos)
+void RendererInterop::SetCameraPosition(CCamera *pCamera, Vec3 pos)
 {
 	pCamera->SetPosition(pos);
 }
 
-Vec3 CScriptbind_Renderer::GetCameraPosition(CCamera *pCamera)
+Vec3 RendererInterop::GetCameraPosition(CCamera *pCamera)
 {
 	return pCamera->GetPosition();
 }
 
-float CScriptbind_Renderer::GetCameraFieldOfView(CCamera *pCamera)
+float RendererInterop::GetCameraFieldOfView(CCamera *pCamera)
 {
 	return pCamera->GetFov();
 }

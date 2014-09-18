@@ -10,12 +10,12 @@
 #define __SCRIPTBIND_RENDERER__
 
 #include <MonoCommon.h>
-#include <IMonoScriptBind.h>
+#include <IMonoInterop.h>
 
-class CScriptbind_Renderer : public IMonoScriptBind
+class RendererInterop : public IMonoInterop
 {
 public:
-	CScriptbind_Renderer();
+	RendererInterop();
 
 protected:
 	// IMonoScriptBind

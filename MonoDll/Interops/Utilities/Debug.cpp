@@ -5,9 +5,9 @@
 
 #include <IGameFramework.h>
 
-std::vector<CFrameProfiler *> CScriptbind_Debug::m_frameProfilers = std::vector<CFrameProfiler *>();
+std::vector<CFrameProfiler *> DebugInterop::m_frameProfilers = std::vector<CFrameProfiler *>();
 
-CScriptbind_Debug::CScriptbind_Debug()
+DebugInterop::DebugInterop()
 {
 	REGISTER_METHOD(AddPersistentSphere);
 	REGISTER_METHOD(AddDirection);
@@ -21,7 +21,7 @@ CScriptbind_Debug::CScriptbind_Debug()
 	REGISTER_METHOD(DeleteFrameProfilerSection);
 }
 
-CScriptbind_Debug::~CScriptbind_Debug()
+DebugInterop::~DebugInterop()
 {
 	for each(auto pFrameProfiler in m_frameProfilers)
 		delete pFrameProfiler;
@@ -29,43 +29,43 @@ CScriptbind_Debug::~CScriptbind_Debug()
 	m_frameProfilers.clear();
 }
 
-void CScriptbind_Debug::AddPersistentSphere(Vec3 pos, float radius, ColorF color, float timeout)
+void DebugInterop::AddPersistentSphere(Vec3 pos, float radius, ColorF color, float timeout)
 {
 	// TODO: Find a pretty way to do Begin in C#.
 	GetIPersistentDebug()->Begin("TestAddPersistentSphere", false);
 	GetIPersistentDebug()->AddSphere(pos, radius, color, timeout);
 }
 
-void CScriptbind_Debug::AddDirection(Vec3 pos, float radius, Vec3 dir, ColorF color, float timeout)
+void DebugInterop::AddDirection(Vec3 pos, float radius, Vec3 dir, ColorF color, float timeout)
 {
 	GetIPersistentDebug()->Begin("TestAddDirection", false);
 	GetIPersistentDebug()->AddDirection(pos, radius, dir, color, timeout);
 }
 
-void CScriptbind_Debug::AddPersistentText2D(mono::string text, float size, ColorF color, float timeout)
+void DebugInterop::AddPersistentText2D(mono::string text, float size, ColorF color, float timeout)
 {
 	GetIPersistentDebug()->Begin("TestAddPersistentText2D", false);
 	GetIPersistentDebug()->Add2DText(ToCryString(text), size, color, timeout);
 }
 
-void CScriptbind_Debug::AddPersistentLine(Vec3 pos, Vec3 end, ColorF clr, float timeout)
+void DebugInterop::AddPersistentLine(Vec3 pos, Vec3 end, ColorF clr, float timeout)
 {
 	GetIPersistentDebug()->Begin("TestAddPersistentLine", false);
 	GetIPersistentDebug()->AddLine(pos, end, clr, timeout);
 }
 
-void CScriptbind_Debug::AddAABB(Vec3 pos, AABB aabb, ColorF clr, float timeout)
+void DebugInterop::AddAABB(Vec3 pos, AABB aabb, ColorF clr, float timeout)
 {
 	GetIPersistentDebug()->Begin("TestAddAABB", false);
 	GetIPersistentDebug()->AddAABB(aabb.min + pos, aabb.max + pos, clr, timeout);
 }
 
-IPersistantDebug *CScriptbind_Debug::GetIPersistentDebug()
+IPersistantDebug *DebugInterop::GetIPersistentDebug()
 {
 	return static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIPersistantDebug();
 }
 
-CFrameProfiler *CScriptbind_Debug::CreateFrameProfiler(mono::string methodName)
+CFrameProfiler *DebugInterop::CreateFrameProfiler(mono::string methodName)
 {
 	CFrameProfiler *pFrameProfiler = new CFrameProfiler(GetISystem(), ToCryString(methodName), PROFILE_SCRIPT);
 
@@ -74,12 +74,12 @@ CFrameProfiler *CScriptbind_Debug::CreateFrameProfiler(mono::string methodName)
 	return pFrameProfiler;
 }
 
-CFrameProfilerSection *CScriptbind_Debug::CreateFrameProfilerSection(CFrameProfiler *pProfiler)
+CFrameProfilerSection *DebugInterop::CreateFrameProfilerSection(CFrameProfiler *pProfiler)
 {
 	return new CFrameProfilerSection(pProfiler);
 }
 
-void CScriptbind_Debug::DeleteFrameProfilerSection(CFrameProfilerSection *pSection)
+void DebugInterop::DeleteFrameProfilerSection(CFrameProfilerSection *pSection)
 {
 	delete pSection;
 }

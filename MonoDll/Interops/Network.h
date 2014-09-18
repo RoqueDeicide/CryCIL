@@ -10,16 +10,16 @@
 #define __SCRIPTBIND_NETWORK_H__
 
 #include <MonoCommon.h>
-#include <IMonoScriptbind.h>
+#include <IMonoInterop.h>
 
 #include <IGameObject.h>
 
-class CScriptbind_Network
-	: public IMonoScriptBind
+class NetworkInterop
+	: public IMonoInterop
 {
 public:
-	CScriptbind_Network();
-	~CScriptbind_Network();
+	NetworkInterop();
+	~NetworkInterop();
 
 	// IMonoScriptbind
 	virtual const char *GetClassName() { return "NetworkInterop"; }

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <IMonoScriptBind.h>
+#include <IMonoInterop.h>
 #include <IEntity.h>
 #include <IStatObj.h>
 #include "3DEngine.h"
@@ -12,11 +12,11 @@ struct MeshHandles
 	CMesh *mesh;
 };
 
-class Scriptbind_StaticObject : public IMonoScriptBind
+class StaticObjectInterop : public IMonoInterop
 {
 public:
-	Scriptbind_StaticObject();
-	~Scriptbind_StaticObject();
+	StaticObjectInterop();
+	~StaticObjectInterop();
 
 	virtual const char *GetClassName() { return "StaticObjectInterop"; }
 

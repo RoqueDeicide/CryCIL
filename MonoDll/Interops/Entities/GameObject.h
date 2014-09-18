@@ -9,7 +9,7 @@
 ////////////////////////////////////////////////////////////////////////*/
 
 #include <MonoCommon.h>
-#include <IMonoScriptBind.h>
+#include <IMonoInterop.h>
 
 #include <IGameObject.h>
 
@@ -19,12 +19,12 @@ struct IGameObjectExtension;
 enum EPrePhysicsUpdate;
 enum EEntityAspects;
 
-class CScriptbind_GameObject
-	: public IMonoScriptBind
+class GameObjectInterop
+	: public IMonoInterop
 {
 public:
-	CScriptbind_GameObject();
-	~CScriptbind_GameObject() {}
+	GameObjectInterop();
+	~GameObjectInterop() {}
 
 protected:
 	// IMonoScriptBind

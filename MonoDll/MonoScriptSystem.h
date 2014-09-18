@@ -11,7 +11,7 @@
 
 #include <IMonoScriptSystem.h>
 #include <IMonoDomain.h>
-#include <IMonoScriptbind.h>
+#include <IMonoInterop.h>
 
 #include <MonoCommon.h>
 
@@ -104,7 +104,7 @@ public:
 
 	CFlowManager *GetFlowManager() const { return m_pFlowManager; }
 
-	void EraseBinding(IMonoScriptBind *pScriptBind);
+	void EraseBinding(IMonoInterop *pScriptBind);
 
 	mono::object InitializeScriptInstance(ICryScriptInstance *pScriptInstance, IMonoArray *pParams);
 	void ReportScriptInstanceDestroyed(ICryScriptInstance *pScriptInstance, int scriptId);
@@ -147,7 +147,7 @@ protected:
 	// We temporarily store scriptbind methods here if developers attempt to register them prior to the script system has been initialized properly.
 	TMethodBindings m_methodBindings;
 
-	std::vector<IMonoScriptBind *> m_localScriptBinds;
+	std::vector<IMonoInterop *> m_localScriptBinds;
 
 	std::vector<IMonoScriptEventListener *> m_listeners;
 

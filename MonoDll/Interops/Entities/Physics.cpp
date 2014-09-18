@@ -10,7 +10,7 @@
 #include <IMonoArray.h>
 #include <IMonoObject.h>
 
-CScriptbind_Physics::CScriptbind_Physics()
+PhysicsInterop::PhysicsInterop()
 {
 	REGISTER_METHOD(GetPhysicalEntity);
 	REGISTER_METHOD(GetPhysicalEntityType);
@@ -40,17 +40,17 @@ CScriptbind_Physics::CScriptbind_Physics()
 	REGISTER_METHOD_NAME(GetPhysicalEntityParams, "GetSimulationParams");
 }
 
-IPhysicalEntity *CScriptbind_Physics::GetPhysicalEntity(IEntity *pEntity)
+IPhysicalEntity *PhysicsInterop::GetPhysicalEntity(IEntity *pEntity)
 {
 	return pEntity->GetPhysics();
 }
 
-pe_type CScriptbind_Physics::GetPhysicalEntityType(IPhysicalEntity *pPhysEnt)
+pe_type PhysicsInterop::GetPhysicalEntityType(IPhysicalEntity *pPhysEnt)
 {
 	return pPhysEnt->GetType();
 }
 
-void CScriptbind_Physics::Physicalize(IEntity *pEntity, SMonoPhysicalizeParams params)
+void PhysicsInterop::Physicalize(IEntity *pEntity, SMonoPhysicalizeParams params)
 {
 	// Unphysicalize
 	{
@@ -95,7 +95,7 @@ void CScriptbind_Physics::Physicalize(IEntity *pEntity, SMonoPhysicalizeParams p
 	pEntity->Physicalize(pp);
 }
 
-void CScriptbind_Physics::Sleep(IPhysicalEntity *pPhysEnt, bool sleep)
+void PhysicsInterop::Sleep(IPhysicalEntity *pPhysEnt, bool sleep)
 {
 	pe_action_awake awake;
 	awake.bAwake = !sleep;
@@ -103,7 +103,7 @@ void CScriptbind_Physics::Sleep(IPhysicalEntity *pPhysEnt, bool sleep)
 	pPhysEnt->Action(&awake);
 }
 
-Vec3 CScriptbind_Physics::GetVelocity(IPhysicalEntity *pPhysEnt)
+Vec3 PhysicsInterop::GetVelocity(IPhysicalEntity *pPhysEnt)
 {
 	pe_status_dynamics sd;
 	if (pPhysEnt->GetStatus(&sd) != 0)
@@ -112,7 +112,7 @@ Vec3 CScriptbind_Physics::GetVelocity(IPhysicalEntity *pPhysEnt)
 	return Vec3(0, 0, 0);
 }
 
-void CScriptbind_Physics::SetVelocity(IPhysicalEntity *pPhysEnt, Vec3 vel)
+void PhysicsInterop::SetVelocity(IPhysicalEntity *pPhysEnt, Vec3 vel)
 {
 	pe_action_set_velocity asv;
 	asv.v = vel;
@@ -120,7 +120,7 @@ void CScriptbind_Physics::SetVelocity(IPhysicalEntity *pPhysEnt, Vec3 vel)
 	pPhysEnt->Action(&asv);
 }
 // Returns number of hits.
-int CScriptbind_Physics::RayWorldIntersection
+int PhysicsInterop::RayWorldIntersection
 (
 	Vec3 origin,						// Origin of the ray cast.
 	Vec3 dir,							// Direction of ray cast.
@@ -135,7 +135,7 @@ int CScriptbind_Physics::RayWorldIntersection
 	return gEnv->pPhysicalWorld->RayWorldIntersection(origin, dir, objFlags, flags, hits, maxHits, entitiesToSkip, skipCount);
 }
 
-mono::object CScriptbind_Physics::SimulateExplosion(pe_explosion explosion)
+mono::object PhysicsInterop::SimulateExplosion(pe_explosion explosion)
 {
 	gEnv->pPhysicalWorld->SimulateExplosion(&explosion);
 
@@ -153,7 +153,7 @@ mono::object CScriptbind_Physics::SimulateExplosion(pe_explosion explosion)
 	return NULL;
 }
 
-bool CScriptbind_Physics::PhysicalEntityAction(IPhysicalEntity *pPhysEnt, pe_action &action)
+bool PhysicsInterop::PhysicalEntityAction(IPhysicalEntity *pPhysEnt, pe_action &action)
 {
 	return pPhysEnt->Action(&action) != 0;
 }
@@ -166,17 +166,17 @@ pe_status_dynamics GetDynamicsEntityStatus(IPhysicalEntity *pPhysEnt)
 	return status;
 }
 
-bool CScriptbind_Physics::GetPhysicalEntityStatus(IPhysicalEntity *pPhysEnt, pe_status &status)
+bool PhysicsInterop::GetPhysicalEntityStatus(IPhysicalEntity *pPhysEnt, pe_status &status)
 {
 	return pPhysEnt->GetStatus(&status) != 0;
 }
 
-bool CScriptbind_Physics::SetPhysicalEntityParams(IPhysicalEntity *pPhysEnt, pe_params &params)
+bool PhysicsInterop::SetPhysicalEntityParams(IPhysicalEntity *pPhysEnt, pe_params &params)
 {
 	return pPhysEnt->SetParams(&params) != 0;
 }
 
-bool CScriptbind_Physics::GetPhysicalEntityParams(IPhysicalEntity *pPhysEnt, pe_params &params)
+bool PhysicsInterop::GetPhysicalEntityParams(IPhysicalEntity *pPhysEnt, pe_params &params)
 {
 	return pPhysEnt->GetParams(&params) != 0;
 }

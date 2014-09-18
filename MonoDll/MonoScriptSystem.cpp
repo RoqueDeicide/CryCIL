@@ -28,34 +28,6 @@
 #include <ICmdLine.h>
 #include <ISystem.h>
 
-// Bindings
-#include "Scriptbinds\Console.h"
-#include "Scriptbinds\GameRules.h"
-#include "Scriptbinds\ActorSystem.h"
-#include "Scriptbinds\3DEngine.h"
-#include "Scriptbinds\Physics.h"
-#include "Scriptbinds\Renderer.h"
-#include "Scriptbinds\Debug.h"
-#include "Scriptbinds\MaterialManager.h"
-#include "Scriptbinds\ParticleSystem.h"
-#include "Scriptbinds\ViewSystem.h"
-#include "Scriptbinds\LevelSystem.h"
-#include "Scriptbinds\Entity.h"
-#include "Scriptbinds\Network.h"
-#include "Scriptbinds\Time.h"
-#include "Scriptbinds\ScriptTable.h"
-#include "Scriptbinds\CrySerialize.h"
-#include "Scriptbinds\GameObject.h"
-#include "Scriptbinds\CryPak.h"
-#include "Scriptbinds\CryMarshal.h"
-#include "Scriptbinds\StaticObject.h"
-#include "Scriptbinds\CMesh.h"
-#include "Scriptbinds\Platform.h"
-
-#include "FlowManager.h"
-#include "MonoFlowNode.h"
-#include "MonoInput.h"
-
 #include "Actor.h"
 
 #include "EntityEventHandling.h"
@@ -93,7 +65,7 @@ CScriptSystem::CScriptSystem(IGameFramework *pGameFramework)
 	g_pMonoCVars = m_pCVars;
 
 	// We should look into storing mono binaries, configuration as well as scripts via CryPak.
-	
+
 	// Let Mono know, where libraries and config files are located.
 	mono_set_dirs(PathUtils::GetMonoLibPath(), PathUtils::GetMonoConfigPath());
 
@@ -259,64 +231,64 @@ bool CScriptSystem::Reload()
 	{
 	case EScriptReloadResult_Success:
 	{
-										// revert previous domain
-										if (!m_bFirstReload)
-											m_pScriptDomain->Release();
+		// revert previous domain
+		if (!m_bFirstReload)
+			m_pScriptDomain->Release();
 
-										m_pScriptDomain = pScriptDomain;
-										m_pScriptManager = pScriptManager;
-										m_pCryBraryAssembly = pCryBraryAssembly;
+		m_pScriptDomain = pScriptDomain;
+		m_pScriptManager = pScriptManager;
+		m_pCryBraryAssembly = pCryBraryAssembly;
 
-										CacheManagedResources();
+		CacheManagedResources();
 
-										if (!m_bFirstReload)
-											m_pScriptManager->CallMethod("Deserialize");
+		if (!m_bFirstReload)
+			m_pScriptManager->CallMethod("Deserialize");
 
-										// Set Network.Editor etc.
-										IMonoClass *pClass = m_pCryBraryAssembly->GetClass("Game");
+		// Set Network.Editor etc.
+		IMonoClass *pClass = m_pCryBraryAssembly->GetClass("Game");
 
-										IMonoArray *pArgs = CreateMonoArray(2);
-										pArgs->Insert(gEnv->IsEditor());
-										pArgs->Insert(gEnv->IsDedicated());
-										pClass->GetMethod("InitializeGameStatics", 2)->InvokeArray(nullptr, pArgs);
-										SAFE_RELEASE(pArgs);
+		IMonoArray *pArgs = CreateMonoArray(2);
+		pArgs->Insert(gEnv->IsEditor());
+		pArgs->Insert(gEnv->IsDedicated());
+		pClass->GetMethod("InitializeGameStatics", 2)->InvokeArray(nullptr, pArgs);
+		SAFE_RELEASE(pArgs);
 
-										m_pScriptManager->CallMethod("ProcessWaitingScripts", m_bFirstReload);
+		m_pScriptManager->CallMethod("ProcessWaitingScripts", m_bFirstReload);
 
-										for each(auto listener in m_listeners)
-											listener->OnReloadComplete();
+		for each(auto listener in m_listeners)
+			listener->OnReloadComplete();
 
-										if (!m_bFirstReload && gEnv->IsEditor())
-											gEnv->pFlowSystem->ReloadAllNodeTypes();
+		if (!m_bFirstReload && gEnv->IsEditor())
+			gEnv->pFlowSystem->ReloadAllNodeTypes();
 
-										m_bReloading = false;
-										m_bDetectedChanges = false;
+		m_bReloading = false;
+		m_bDetectedChanges = false;
 
-										return true;
+		return true;
 	}
 		break;
 	case EScriptReloadResult_Retry:
 	{
-									  m_bReloading = false;
-									  return Reload();
+		m_bReloading = false;
+		return Reload();
 	}
 	case EScriptReloadResult_Revert:
 	{
-									   pScriptDomain->Release();
-									   m_pScriptDomain->SetActive();
+		pScriptDomain->Release();
+		m_pScriptDomain->SetActive();
 
-									   m_bReloading = false;
+		m_bReloading = false;
 
-									   m_bDetectedChanges = false;
+		m_bDetectedChanges = false;
 
-									   return false;
+		return false;
 	}
 		break;
 	case EScriptReloadResult_Abort:
 	{
-									  gEnv->pSystem->Quit();
+		gEnv->pSystem->Quit();
 
-									  m_bReloading = false;
+		m_bReloading = false;
 	}
 		break;
 	}
@@ -327,33 +299,6 @@ bool CScriptSystem::Reload()
 #define RegisterBinding(T) m_localScriptBinds.push_back(new T());
 void CScriptSystem::RegisterPriorityBindings()
 {
-	RegisterBinding(CScriptbind_ActorSystem);
-	RegisterBinding(CScriptbind_3DEngine);
-	RegisterBinding(CScriptbind_Physics);
-	RegisterBinding(CScriptbind_Renderer);
-	RegisterBinding(CScriptbind_Console);
-	RegisterBinding(CScriptbind_GameRules);
-	RegisterBinding(CScriptbind_Debug);
-	RegisterBinding(CScriptbind_Time);
-	RegisterBinding(CScriptbind_MaterialManager);
-	RegisterBinding(CScriptbind_ParticleSystem);
-	RegisterBinding(CScriptbind_LevelSystem);
-	RegisterBinding(CScriptbind_Entity);
-	RegisterBinding(CScriptbind_Network);
-	RegisterBinding(CScriptbind_ScriptTable);
-	RegisterBinding(CScriptbind_CrySerialize);
-	RegisterBinding(CScriptbind_GameObject);
-	RegisterBinding(CScriptbind_CryPak);
-
-	RegisterBinding(Scriptbind_CryMarshal);
-
-	RegisterBinding(Scriptbind_StaticObject);
-	RegisterBinding(Scriptbind_CMesh);
-
-	RegisterBinding(Scriptbind_Platform);
-
-	m_pFlowManager = new CFlowManager();
-	m_pFlowManager->AddRef();
 }
 
 void CScriptSystem::RegisterSecondaryBindings()
@@ -365,13 +310,13 @@ void CScriptSystem::RegisterSecondaryBindings()
 			RegisterMethodBinding((*it).first, (*it).second);
 	}
 
-	RegisterBinding(CScriptbind_Input);
+	RegisterBinding(InputInterop);
 
 	m_methodBindings.clear();
 }
 #undef RegisterBinding
 
-void CScriptSystem::EraseBinding(IMonoScriptBind *pScriptBind)
+void CScriptSystem::EraseBinding(IMonoInterop *pScriptBind)
 {
 	if (!m_bQuitting)
 		stl::find_and_erase(m_localScriptBinds, pScriptBind);

@@ -11,7 +11,7 @@
 #define __SCRIPTBIND_PHYSICALWORLD__
 
 #include <MonoCommon.h>
-#include <IMonoScriptBind.h>
+#include <IMonoInterop.h>
 
 struct SMonoPhysicalizeParams
 {
@@ -41,11 +41,11 @@ struct SMonoPhysicalizeParams
 	pe_params_particle particleParams;
 };
 
-class CScriptbind_Physics : public IMonoScriptBind
+class PhysicsInterop : public IMonoInterop
 {
 public:
-	CScriptbind_Physics();
-	~CScriptbind_Physics() {}
+	PhysicsInterop();
+	~PhysicsInterop() {}
 
 	// IMonoScriptBind
 	virtual const char *GetClassName() { return "PhysicsInterop"; }

@@ -11,15 +11,15 @@
 #define __SCRIPTBIND_DEBUG__
 
 #include <MonoCommon.h>
-#include <IMonoScriptBind.h>
+#include <IMonoInterop.h>
 
 struct IPersistantDebug;
 
-class CScriptbind_Debug : public IMonoScriptBind
+class DebugInterop : public IMonoInterop
 {
 public:
-	CScriptbind_Debug();
-	~CScriptbind_Debug();
+	DebugInterop();
+	~DebugInterop();
 
 protected:
 

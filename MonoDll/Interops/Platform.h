@@ -1,11 +1,11 @@
 #pragma once
-#include "IMonoScriptBind.h"
-class Scriptbind_Platform :
-	public IMonoScriptBind
+#include "IMonoInterop.h"
+class PlatformInterop :
+	public IMonoInterop
 {
 public:
-	Scriptbind_Platform();
-	~Scriptbind_Platform();
+	PlatformInterop();
+	~PlatformInterop();
 
 	virtual const char *GetClassName() { return "PlatformInterop"; }
 

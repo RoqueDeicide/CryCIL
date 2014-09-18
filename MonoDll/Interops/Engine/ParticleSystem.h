@@ -11,16 +11,16 @@
 #define __SCRIPTBIND_PARTICLE_SYSTEM__
 
 #include <MonoCommon.h>
-#include <IMonoScriptBind.h>
+#include <IMonoInterop.h>
 
 struct IParticleManager;
 struct IParticleEffect;
 
-class CScriptbind_ParticleSystem : public IMonoScriptBind
+class ParticleSystemInterop : public IMonoInterop
 {
 public:
-	CScriptbind_ParticleSystem();
-	~CScriptbind_ParticleSystem() {}
+	ParticleSystemInterop();
+	~ParticleSystemInterop() {}
 
 protected:
 	// IMonoScriptBind

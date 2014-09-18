@@ -7,7 +7,7 @@
 // 02/02/2012 : Created by Filip 'i59' Lundgren
 ////////////////////////////////////////////////////////////////////////*/
 
-#include <IMonoScriptBind.h>
+#include <IMonoInterop.h>
 
 #include <IActionMapManager.h>
 #include <IHardwareMouse.h>
@@ -16,15 +16,15 @@
 
 struct IMonoScript;
 
-class CScriptbind_Input
-	: public IMonoScriptBind
+class InputInterop
+	: public IMonoInterop
 	, public IActionListener
 	, public IHardwareMouseEventListener
 	, public IInputEventListener
 {
 public:
-	CScriptbind_Input();
-	~CScriptbind_Input();
+	InputInterop();
+	~InputInterop();
 
 	// IMonoScriptBind
 	virtual const char *GetClassName() { return "InputInterop"; }
@@ -49,5 +49,5 @@ private:
 
 	bool OnActionTriggered(EntityId entityId, const ActionId& actionId, int activationMode, float value);
 
-	static TActionHandler<CScriptbind_Input>	s_actionHandler;
+	static TActionHandler<InputInterop>	s_actionHandler;
 };

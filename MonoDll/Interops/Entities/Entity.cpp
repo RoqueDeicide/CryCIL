@@ -24,11 +24,11 @@
 
 #include <ICryAnimation.h>
 
-std::vector<string> CScriptbind_Entity::m_monoEntityClasses = std::vector<string>();
+std::vector<string> EntityInterop::m_monoEntityClasses = std::vector<string>();
 
-IMonoClass *CScriptbind_Entity::m_pEntityClass = nullptr;
+IMonoClass *EntityInterop::m_pEntityClass = nullptr;
 
-CScriptbind_Entity::CScriptbind_Entity()
+EntityInterop::EntityInterop()
 {
 	REGISTER_METHOD(SpawnEntity);
 	REGISTER_METHOD(RemoveEntity);
@@ -181,7 +181,7 @@ CScriptbind_Entity::CScriptbind_Entity()
 	gEnv->pEntitySystem->AddSink(this, IEntitySystem::OnSpawn | IEntitySystem::OnRemove, 0);
 }
 
-CScriptbind_Entity::~CScriptbind_Entity()
+EntityInterop::~EntityInterop()
 {
 	if (gEnv->pEntitySystem)
 		gEnv->pEntitySystem->RemoveSink(this);
@@ -191,12 +191,12 @@ CScriptbind_Entity::~CScriptbind_Entity()
 	m_monoEntityClasses.clear();
 }
 
-void CScriptbind_Entity::OnReloadComplete()
+void EntityInterop::OnReloadComplete()
 {
 	m_pEntityClass = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("Entity");
 }
 
-void CScriptbind_Entity::PlayAnimation(IEntity *pEntity, mono::string animationName, int slot, int layer, float blend, float speed, EAnimationFlags flags)
+void EntityInterop::PlayAnimation(IEntity *pEntity, mono::string animationName, int slot, int layer, float blend, float speed, EAnimationFlags flags)
 {
 	// Animation graph input
 	/*if(IGameObject *pGameObject = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetGameObject(pEntity->GetId()))
@@ -235,7 +235,7 @@ void CScriptbind_Entity::PlayAnimation(IEntity *pEntity, mono::string animationN
 	pSkeletonAnim->StartAnimation(ToCryString(animationName), params);
 }
 
-void CScriptbind_Entity::StopAnimationInLayer(IEntity *pEntity, int slot, int layer, float blendOutTime)
+void EntityInterop::StopAnimationInLayer(IEntity *pEntity, int slot, int layer, float blendOutTime)
 {
 	ICharacterInstance *pCharacter = pEntity->GetCharacter(slot);
 	if (!pCharacter)
@@ -248,7 +248,7 @@ void CScriptbind_Entity::StopAnimationInLayer(IEntity *pEntity, int slot, int la
 	pSkeletonAnim->StopAnimationInLayer(layer, blendOutTime);
 }
 
-void CScriptbind_Entity::StopAnimationsInAllLayers(IEntity *pEntity, int slot)
+void EntityInterop::StopAnimationsInAllLayers(IEntity *pEntity, int slot)
 {
 	ICharacterInstance *pCharacter = pEntity->GetCharacter(slot);
 	if (!pCharacter)
@@ -261,7 +261,7 @@ void CScriptbind_Entity::StopAnimationsInAllLayers(IEntity *pEntity, int slot)
 	pSkeletonAnim->StopAnimationsAllLayers();
 }
 
-bool CScriptbind_Entity::IsMonoEntity(const char *className)
+bool EntityInterop::IsMonoEntity(const char *className)
 {
 	for each(auto entityClass in m_monoEntityClasses)
 	{
@@ -272,7 +272,7 @@ bool CScriptbind_Entity::IsMonoEntity(const char *className)
 	return false;
 }
 
-void CScriptbind_Entity::OnSpawn(IEntity *pEntity, SEntitySpawnParams &params)
+void EntityInterop::OnSpawn(IEntity *pEntity, SEntitySpawnParams &params)
 {
 	const char *className = pEntity->GetClass()->GetName();
 
@@ -287,7 +287,7 @@ void CScriptbind_Entity::OnSpawn(IEntity *pEntity, SEntitySpawnParams &params)
 	}
 }
 
-bool CScriptbind_Entity::OnRemove(IEntity *pIEntity)
+bool EntityInterop::OnRemove(IEntity *pIEntity)
 {
 	if (m_pEntityClass == nullptr)
 		return true;
@@ -313,7 +313,7 @@ struct SMonoEntityCreator
 	virtual void GetGameObjectExtensionRMIData(void **ppRMI, size_t *nCount) { return CMonoEntityExtension::GetGameObjectExtensionRMIData(ppRMI, nCount); }
 };
 
-bool CScriptbind_Entity::RegisterEntityClass(SEntityRegistrationParams params)
+bool EntityInterop::RegisterEntityClass(SEntityRegistrationParams params)
 {
 	const char *className = ToCryString(params.Name);
 	if (gEnv->pEntitySystem->GetClassRegistry()->FindClass(className))
@@ -375,12 +375,12 @@ bool CScriptbind_Entity::RegisterEntityClass(SEntityRegistrationParams params)
 	return result;
 }
 
-mono::string CScriptbind_Entity::GetEntityClassName(IEntity *pEntity)
+mono::string EntityInterop::GetEntityClassName(IEntity *pEntity)
 {
 	return ToMonoString(pEntity->GetClass()->GetName());
 }
 
-mono::object CScriptbind_Entity::SpawnEntity(EntitySpawnParams monoParams, bool bAutoInit, SMonoEntityInfo &entityInfo)
+mono::object EntityInterop::SpawnEntity(EntitySpawnParams monoParams, bool bAutoInit, SMonoEntityInfo &entityInfo)
 {
 	const char *className = ToCryString(monoParams.sClass);
 
@@ -426,7 +426,7 @@ mono::object CScriptbind_Entity::SpawnEntity(EntitySpawnParams monoParams, bool 
 	return nullptr;
 }
 
-void CScriptbind_Entity::RemoveEntity(EntityId id, bool removeNow)
+void EntityInterop::RemoveEntity(EntityId id, bool removeNow)
 {
 	IEntity *pEntity = gEnv->pEntitySystem->GetEntity(id);
 	if (pEntity)
@@ -441,22 +441,22 @@ void CScriptbind_Entity::RemoveEntity(EntityId id, bool removeNow)
 	}
 }
 
-IEntity *CScriptbind_Entity::GetEntity(EntityId id)
+IEntity *EntityInterop::GetEntity(EntityId id)
 {
 	return gEnv->pEntitySystem->GetEntity(id);
 }
 
-EntityId CScriptbind_Entity::GetEntityId(IEntity *pEntity)
+EntityId EntityInterop::GetEntityId(IEntity *pEntity)
 {
 	return pEntity->GetId();
 }
 
-EntityGUID CScriptbind_Entity::GetEntityGUID(IEntity *pEntity)
+EntityGUID EntityInterop::GetEntityGUID(IEntity *pEntity)
 {
 	return pEntity->GetGuid();
 }
 
-EntityId CScriptbind_Entity::FindEntity(mono::string name)
+EntityId EntityInterop::FindEntity(mono::string name)
 {
 	if (IEntity *pEntity = gEnv->pEntitySystem->FindEntityByName(ToCryString(name)))
 		return pEntity->GetId();
@@ -464,7 +464,7 @@ EntityId CScriptbind_Entity::FindEntity(mono::string name)
 	return 0;
 }
 
-mono::object CScriptbind_Entity::GetEntitiesByClass(mono::string _class)
+mono::object EntityInterop::GetEntitiesByClass(mono::string _class)
 {
 	IEntityClass *pDesiredClass = gEnv->pEntitySystem->GetClassRegistry()->FindClass(ToCryString(_class));
 
@@ -489,7 +489,7 @@ mono::object CScriptbind_Entity::GetEntitiesByClass(mono::string _class)
 	return result;
 }
 
-mono::object CScriptbind_Entity::GetEntitiesByClasses(mono::object classes)
+mono::object EntityInterop::GetEntitiesByClasses(mono::object classes)
 {
 	IMonoArray *pClassArray = *classes;
 
@@ -526,7 +526,7 @@ mono::object CScriptbind_Entity::GetEntitiesByClasses(mono::object classes)
 	return result;
 }
 
-mono::object CScriptbind_Entity::GetEntitiesInBox(AABB bbox, int objTypes)
+mono::object EntityInterop::GetEntitiesInBox(AABB bbox, int objTypes)
 {
 	IPhysicalEntity **pEnts = nullptr;
 
@@ -545,7 +545,7 @@ mono::object CScriptbind_Entity::GetEntitiesInBox(AABB bbox, int objTypes)
 	return result;
 }
 
-mono::object CScriptbind_Entity::QueryProximity(AABB box, mono::string className, uint32 nEntityFlags)
+mono::object EntityInterop::QueryProximity(AABB box, mono::string className, uint32 nEntityFlags)
 {
 	SEntityProximityQuery query;
 
@@ -569,27 +569,27 @@ mono::object CScriptbind_Entity::QueryProximity(AABB box, mono::string className
 	return result;
 }
 
-void CScriptbind_Entity::SetWorldTM(IEntity *pEntity, Matrix34 tm)
+void EntityInterop::SetWorldTM(IEntity *pEntity, Matrix34 tm)
 {
 	pEntity->SetWorldTM(tm);
 }
 
-Matrix34 CScriptbind_Entity::GetWorldTM(IEntity *pEntity)
+Matrix34 EntityInterop::GetWorldTM(IEntity *pEntity)
 {
 	return pEntity->GetWorldTM();
 }
 
-void CScriptbind_Entity::SetLocalTM(IEntity *pEntity, Matrix34 tm)
+void EntityInterop::SetLocalTM(IEntity *pEntity, Matrix34 tm)
 {
 	pEntity->SetLocalTM(tm);
 }
 
-Matrix34 CScriptbind_Entity::GetLocalTM(IEntity *pEntity)
+Matrix34 EntityInterop::GetLocalTM(IEntity *pEntity)
 {
 	return pEntity->GetLocalTM();
 }
 
-AABB CScriptbind_Entity::GetWorldBoundingBox(IEntity *pEntity)
+AABB EntityInterop::GetWorldBoundingBox(IEntity *pEntity)
 {
 	AABB boundingBox;
 	pEntity->GetWorldBounds(boundingBox);
@@ -597,7 +597,7 @@ AABB CScriptbind_Entity::GetWorldBoundingBox(IEntity *pEntity)
 	return boundingBox;
 }
 
-AABB CScriptbind_Entity::GetBoundingBox(IEntity *pEntity)
+AABB EntityInterop::GetBoundingBox(IEntity *pEntity)
 {
 	AABB boundingBox;
 	pEntity->GetLocalBounds(boundingBox);
@@ -605,72 +605,72 @@ AABB CScriptbind_Entity::GetBoundingBox(IEntity *pEntity)
 	return boundingBox;
 }
 
-void CScriptbind_Entity::SetPos(IEntity *pEntity, Vec3 newPos)
+void EntityInterop::SetPos(IEntity *pEntity, Vec3 newPos)
 {
 	pEntity->SetPos(newPos);
 }
 
-Vec3 CScriptbind_Entity::GetPos(IEntity *pEntity)
+Vec3 EntityInterop::GetPos(IEntity *pEntity)
 {
 	return pEntity->GetPos();
 }
 
-void CScriptbind_Entity::SetWorldPos(IEntity *pEntity, Vec3 newPos)
+void EntityInterop::SetWorldPos(IEntity *pEntity, Vec3 newPos)
 {
 	pEntity->SetWorldTM(Matrix34::Create(pEntity->GetScale(), pEntity->GetWorldRotation(), newPos));
 }
 
-Vec3 CScriptbind_Entity::GetWorldPos(IEntity *pEntity)
+Vec3 EntityInterop::GetWorldPos(IEntity *pEntity)
 {
 	return pEntity->GetWorldPos();
 }
 
-void CScriptbind_Entity::SetRotation(IEntity *pEntity, Quat newAngles)
+void EntityInterop::SetRotation(IEntity *pEntity, Quat newAngles)
 {
 	pEntity->SetRotation(newAngles);
 }
 
-Quat CScriptbind_Entity::GetRotation(IEntity *pEntity)
+Quat EntityInterop::GetRotation(IEntity *pEntity)
 {
 	return pEntity->GetRotation();
 }
 
-void CScriptbind_Entity::SetWorldRotation(IEntity *pEntity, Quat newAngles)
+void EntityInterop::SetWorldRotation(IEntity *pEntity, Quat newAngles)
 {
 	pEntity->SetWorldTM(Matrix34::Create(pEntity->GetScale(), newAngles, pEntity->GetWorldPos()));
 }
 
-Quat CScriptbind_Entity::GetWorldRotation(IEntity *pEntity)
+Quat EntityInterop::GetWorldRotation(IEntity *pEntity)
 {
 	return pEntity->GetWorldRotation();
 }
 
-void CScriptbind_Entity::LoadObject(IEntity *pEntity, mono::string fileName, int slot)
+void EntityInterop::LoadObject(IEntity *pEntity, mono::string fileName, int slot)
 {
 	pEntity->LoadGeometry(slot, ToCryString(fileName));
 }
 
-void CScriptbind_Entity::LoadCharacter(IEntity *pEntity, mono::string fileName, int slot)
+void EntityInterop::LoadCharacter(IEntity *pEntity, mono::string fileName, int slot)
 {
 	pEntity->LoadCharacter(slot, ToCryString(fileName));
 }
 
-EEntitySlotFlags CScriptbind_Entity::GetSlotFlags(IEntity *pEntity, int slot)
+EEntitySlotFlags EntityInterop::GetSlotFlags(IEntity *pEntity, int slot)
 {
 	return (EEntitySlotFlags)pEntity->GetSlotFlags(slot);
 }
 
-void CScriptbind_Entity::SetSlotFlags(IEntity *pEntity, int slot, EEntitySlotFlags slotFlags)
+void EntityInterop::SetSlotFlags(IEntity *pEntity, int slot, EEntitySlotFlags slotFlags)
 {
 	pEntity->SetSlotFlags(slot, slotFlags);
 }
 
-void CScriptbind_Entity::BreakIntoPieces(IEntity *pEntity, int slot, int piecesSlot, IBreakableManager::BreakageParams breakageParams)
+void EntityInterop::BreakIntoPieces(IEntity *pEntity, int slot, int piecesSlot, IBreakableManager::BreakageParams breakageParams)
 {
 	gEnv->pEntitySystem->GetBreakableManager()->BreakIntoPieces(pEntity, slot, piecesSlot, breakageParams);
 }
 
-mono::string CScriptbind_Entity::GetStaticObjectFilePath(IEntity *pEntity, int slot)
+mono::string EntityInterop::GetStaticObjectFilePath(IEntity *pEntity, int slot)
 {
 	if (IStatObj *pStatObj = pEntity->GetStatObj(slot))
 		return ToMonoString(pStatObj->GetFilePath());
@@ -680,27 +680,27 @@ mono::string CScriptbind_Entity::GetStaticObjectFilePath(IEntity *pEntity, int s
 	return ToMonoString("");
 }
 
-mono::string CScriptbind_Entity::GetName(IEntity *pEntity)
+mono::string EntityInterop::GetName(IEntity *pEntity)
 {
 	return ToMonoString(pEntity->GetName());
 }
 
-void CScriptbind_Entity::SetName(IEntity *pEntity, mono::string name)
+void EntityInterop::SetName(IEntity *pEntity, mono::string name)
 {
 	pEntity->SetName(ToCryString(name));
 }
 
-EEntityFlags CScriptbind_Entity::GetFlags(IEntity *pEntity)
+EEntityFlags EntityInterop::GetFlags(IEntity *pEntity)
 {
 	return (EEntityFlags)pEntity->GetFlags();
 }
 
-void CScriptbind_Entity::SetFlags(IEntity *pEntity, EEntityFlags flags)
+void EntityInterop::SetFlags(IEntity *pEntity, EEntityFlags flags)
 {
 	pEntity->SetFlags(flags);
 }
 
-void CScriptbind_Entity::SetVisionParams(IEntity *pEntity, float r, float g, float b, float a)
+void EntityInterop::SetVisionParams(IEntity *pEntity, float r, float g, float b, float a)
 {
 	IEntityRenderProxy *pRenderProxy = static_cast<IEntityRenderProxy *>(pEntity->GetProxy(ENTITY_PROXY_RENDER));
 	if (!pRenderProxy)
@@ -709,7 +709,7 @@ void CScriptbind_Entity::SetVisionParams(IEntity *pEntity, float r, float g, flo
 	pRenderProxy->SetVisionParams(r, g, b, a);
 }
 
-void CScriptbind_Entity::SetHUDSilhouettesParams(IEntity *pEntity, float r, float g, float b, float a)
+void EntityInterop::SetHUDSilhouettesParams(IEntity *pEntity, float r, float g, float b, float a)
 {
 	IEntityRenderProxy *pRenderProxy = static_cast<IEntityRenderProxy *>(pEntity->GetProxy(ENTITY_PROXY_RENDER));
 	if (!pRenderProxy)
@@ -718,12 +718,12 @@ void CScriptbind_Entity::SetHUDSilhouettesParams(IEntity *pEntity, float r, floa
 	pRenderProxy->SetVisionParams(r, g, b, a);
 }
 
-IEntityLink *CScriptbind_Entity::AddEntityLink(IEntity *pEntity, mono::string linkName, EntityId otherId, EntityGUID entityGuid, Quat relativeRot, Vec3 relativePos)
+IEntityLink *EntityInterop::AddEntityLink(IEntity *pEntity, mono::string linkName, EntityId otherId, EntityGUID entityGuid, Quat relativeRot, Vec3 relativePos)
 {
 	return pEntity->AddEntityLink(ToCryString(linkName), otherId, entityGuid, relativeRot, relativePos);
 }
 
-mono::object CScriptbind_Entity::GetEntityLinks(IEntity *pEntity)
+mono::object EntityInterop::GetEntityLinks(IEntity *pEntity)
 {
 	// the first link
 	IEntityLink *pLink = pEntity->GetEntityLinks();
@@ -739,52 +739,52 @@ mono::object CScriptbind_Entity::GetEntityLinks(IEntity *pEntity)
 	return pDynArray->GetManagedObject();
 }
 
-void CScriptbind_Entity::RemoveAllEntityLinks(IEntity *pEntity)
+void EntityInterop::RemoveAllEntityLinks(IEntity *pEntity)
 {
 	pEntity->RemoveAllEntityLinks();
 }
 
-void CScriptbind_Entity::RemoveEntityLink(IEntity *pEntity, IEntityLink *pLink)
+void EntityInterop::RemoveEntityLink(IEntity *pEntity, IEntityLink *pLink)
 {
 	pEntity->RemoveEntityLink(pLink);
 }
 
-mono::string CScriptbind_Entity::GetEntityLinkName(IEntityLink *pLink)
+mono::string EntityInterop::GetEntityLinkName(IEntityLink *pLink)
 {
 	return ToMonoString(pLink->name);
 }
 
-EntityId CScriptbind_Entity::GetEntityLinkTarget(IEntityLink *pLink)
+EntityId EntityInterop::GetEntityLinkTarget(IEntityLink *pLink)
 {
 	return pLink->entityId;
 }
 
-Quat CScriptbind_Entity::GetEntityLinkRelativeRotation(IEntityLink *pLink)
+Quat EntityInterop::GetEntityLinkRelativeRotation(IEntityLink *pLink)
 {
 	return pLink->relRot;
 }
 
-Vec3 CScriptbind_Entity::GetEntityLinkRelativePosition(IEntityLink *pLink)
+Vec3 EntityInterop::GetEntityLinkRelativePosition(IEntityLink *pLink)
 {
 	return pLink->relPos;
 }
 
-void CScriptbind_Entity::SetEntityLinkTarget(IEntityLink *pLink, EntityId id)
+void EntityInterop::SetEntityLinkTarget(IEntityLink *pLink, EntityId id)
 {
 	pLink->entityId = id;
 }
 
-void CScriptbind_Entity::SetEntityLinkRelativeRotation(IEntityLink *pLink, Quat relRot)
+void EntityInterop::SetEntityLinkRelativeRotation(IEntityLink *pLink, Quat relRot)
 {
 	pLink->relRot = relRot;
 }
 
-void CScriptbind_Entity::SetEntityLinkRelativePosition(IEntityLink *pLink, Vec3 relPos)
+void EntityInterop::SetEntityLinkRelativePosition(IEntityLink *pLink, Vec3 relPos)
 {
 	pLink->relPos = relPos;
 }
 
-int CScriptbind_Entity::LoadLight(IEntity *pEntity, int slot, SMonoLightParams params)
+int EntityInterop::LoadLight(IEntity *pEntity, int slot, SMonoLightParams params)
 {
 	CDLight light;
 
@@ -826,12 +826,12 @@ int CScriptbind_Entity::LoadLight(IEntity *pEntity, int slot, SMonoLightParams p
 	return pEntity->LoadLight(slot, &light);
 }
 
-void CScriptbind_Entity::FreeSlot(IEntity *pEntity, int slot)
+void EntityInterop::FreeSlot(IEntity *pEntity, int slot)
 {
 	pEntity->FreeSlot(slot);
 }
 
-void CScriptbind_Entity::AddMovement(IAnimatedCharacter *pAnimatedCharacter, SCharacterMoveRequest &moveRequest)
+void EntityInterop::AddMovement(IAnimatedCharacter *pAnimatedCharacter, SCharacterMoveRequest &moveRequest)
 {
 	if (pAnimatedCharacter)
 		pAnimatedCharacter->AddMovement(moveRequest);
@@ -848,7 +848,7 @@ IAttachmentManager *GetAttachmentManager(IEntity *pEntity, int slot)
 	return nullptr;
 }
 
-int CScriptbind_Entity::GetAttachmentCount(IEntity *pEnt, int slot)
+int EntityInterop::GetAttachmentCount(IEntity *pEnt, int slot)
 {
 	if (auto pAttachmentManager = GetAttachmentManager(pEnt, slot))
 		return pAttachmentManager->GetAttachmentCount();
@@ -856,7 +856,7 @@ int CScriptbind_Entity::GetAttachmentCount(IEntity *pEnt, int slot)
 	return 0;
 }
 
-IAttachment *CScriptbind_Entity::GetAttachmentByIndex(IEntity *pEnt, int index, int slot)
+IAttachment *EntityInterop::GetAttachmentByIndex(IEntity *pEnt, int index, int slot)
 {
 	if (auto pAttachmentManager = GetAttachmentManager(pEnt, slot))
 		return pAttachmentManager->GetInterfaceByIndex(index);
@@ -864,7 +864,7 @@ IAttachment *CScriptbind_Entity::GetAttachmentByIndex(IEntity *pEnt, int index, 
 	return nullptr;
 }
 
-IAttachment *CScriptbind_Entity::GetAttachmentByName(IEntity *pEnt, mono::string name, int slot)
+IAttachment *EntityInterop::GetAttachmentByName(IEntity *pEnt, mono::string name, int slot)
 {
 	if (auto pAttachmentManager = GetAttachmentManager(pEnt, slot))
 		return pAttachmentManager->GetInterfaceByName(ToCryString(name));
@@ -872,7 +872,7 @@ IAttachment *CScriptbind_Entity::GetAttachmentByName(IEntity *pEnt, mono::string
 	return nullptr;
 }
 
-CCGFAttachment *CScriptbind_Entity::BindAttachmentToCGF(IAttachment *pAttachment, mono::string cgf, IMaterial *pMaterial)
+CCGFAttachment *EntityInterop::BindAttachmentToCGF(IAttachment *pAttachment, mono::string cgf, IMaterial *pMaterial)
 {
 	pAttachment->ClearBinding();
 
@@ -900,7 +900,7 @@ public:
 	}
 };
 
-CMonoEntityAttachment *CScriptbind_Entity::BindAttachmentToEntity(IAttachment *pAttachment, EntityId id)
+CMonoEntityAttachment *EntityInterop::BindAttachmentToEntity(IAttachment *pAttachment, EntityId id)
 {
 	pAttachment->ClearBinding();
 
@@ -912,7 +912,7 @@ CMonoEntityAttachment *CScriptbind_Entity::BindAttachmentToEntity(IAttachment *p
 	return pEntityAttachment;
 }
 
-CLightAttachment *CScriptbind_Entity::BindAttachmentToLight(IAttachment *pAttachment, CDLight &light)
+CLightAttachment *EntityInterop::BindAttachmentToLight(IAttachment *pAttachment, CDLight &light)
 {
 	pAttachment->ClearBinding();
 
@@ -924,7 +924,7 @@ CLightAttachment *CScriptbind_Entity::BindAttachmentToLight(IAttachment *pAttach
 	return pLightAttachment;
 }
 
-CEffectAttachment *CScriptbind_Entity::BindAttachmentToParticleEffect(IAttachment *pAttachment, IParticleEffect *pParticleEffect, Vec3 offset, Vec3 dir, float scale)
+CEffectAttachment *EntityInterop::BindAttachmentToParticleEffect(IAttachment *pAttachment, IParticleEffect *pParticleEffect, Vec3 offset, Vec3 dir, float scale)
 {
 	pAttachment->ClearBinding();
 
@@ -935,32 +935,32 @@ CEffectAttachment *CScriptbind_Entity::BindAttachmentToParticleEffect(IAttachmen
 	return pEffectAttachment;
 }
 
-void CScriptbind_Entity::ClearAttachmentBinding(IAttachment *pAttachment)
+void EntityInterop::ClearAttachmentBinding(IAttachment *pAttachment)
 {
 	pAttachment->ClearBinding();
 }
 
-QuatT CScriptbind_Entity::GetAttachmentAbsolute(IAttachment *pAttachment)
+QuatT EntityInterop::GetAttachmentAbsolute(IAttachment *pAttachment)
 {
 	return QuatT(pAttachment->GetAttWorldAbsolute());
 }
 
-QuatT CScriptbind_Entity::GetAttachmentRelative(IAttachment *pAttachment)
+QuatT EntityInterop::GetAttachmentRelative(IAttachment *pAttachment)
 {
 	return pAttachment->GetAttModelRelative();
 }
 
-QuatT CScriptbind_Entity::GetAttachmentDefaultAbsolute(IAttachment *pAttachment)
+QuatT EntityInterop::GetAttachmentDefaultAbsolute(IAttachment *pAttachment)
 {
 	return pAttachment->GetAttAbsoluteDefault();
 }
 
-QuatT CScriptbind_Entity::GetAttachmentDefaultRelative(IAttachment *pAttachment)
+QuatT EntityInterop::GetAttachmentDefaultRelative(IAttachment *pAttachment)
 {
 	return pAttachment->GetAttRelativeDefault();
 }
 
-IMaterial *CScriptbind_Entity::GetAttachmentMaterial(IAttachment *pAttachment)
+IMaterial *EntityInterop::GetAttachmentMaterial(IAttachment *pAttachment)
 {
 	if (IAttachmentObject *pObject = pAttachment->GetIAttachmentObject())
 		return pObject->GetBaseMaterial();
@@ -968,23 +968,23 @@ IMaterial *CScriptbind_Entity::GetAttachmentMaterial(IAttachment *pAttachment)
 	return nullptr;
 }
 
-void CScriptbind_Entity::SetAttachmentMaterial(IAttachment *pAttachment, IMaterial *pMaterial)
+void EntityInterop::SetAttachmentMaterial(IAttachment *pAttachment, IMaterial *pMaterial)
 {
 	if (IAttachmentObject *pObject = pAttachment->GetIAttachmentObject())
 		pObject->SetReplacementMaterial(pMaterial);
 }
 
-mono::string CScriptbind_Entity::GetAttachmentName(IAttachment *pAttachment)
+mono::string EntityInterop::GetAttachmentName(IAttachment *pAttachment)
 {
 	return ToMonoString(pAttachment->GetName());
 }
 
-AttachmentTypes CScriptbind_Entity::GetAttachmentType(IAttachment *pAttachment)
+AttachmentTypes EntityInterop::GetAttachmentType(IAttachment *pAttachment)
 {
 	return (AttachmentTypes)pAttachment->GetType();
 }
 
-IAttachmentObject::EType CScriptbind_Entity::GetAttachmentObjectType(IAttachment *pAttachment)
+IAttachmentObject::EType EntityInterop::GetAttachmentObjectType(IAttachment *pAttachment)
 {
 	if (IAttachmentObject *pAttachmentObject = pAttachment->GetIAttachmentObject())
 	{
@@ -994,7 +994,7 @@ IAttachmentObject::EType CScriptbind_Entity::GetAttachmentObjectType(IAttachment
 	return IAttachmentObject::eAttachment_Unknown;
 }
 
-AABB CScriptbind_Entity::GetAttachmentObjectBBox(IAttachment *pAttachment)
+AABB EntityInterop::GetAttachmentObjectBBox(IAttachment *pAttachment)
 {
 	if (IAttachmentObject *pAttachmentObject = pAttachment->GetIAttachmentObject())
 		return pAttachmentObject->GetAABB();
@@ -1002,7 +1002,7 @@ AABB CScriptbind_Entity::GetAttachmentObjectBBox(IAttachment *pAttachment)
 	return AABB(ZERO);
 }
 
-QuatT CScriptbind_Entity::GetJointAbsolute(IEntity *pEntity, mono::string jointName, int characterSlot)
+QuatT EntityInterop::GetJointAbsolute(IEntity *pEntity, mono::string jointName, int characterSlot)
 {
 	if (ICharacterInstance *pCharacter = pEntity->GetCharacter(characterSlot))
 	{
@@ -1020,7 +1020,7 @@ QuatT CScriptbind_Entity::GetJointAbsolute(IEntity *pEntity, mono::string jointN
 	return QuatT();
 }
 
-QuatT CScriptbind_Entity::GetJointRelative(IEntity *pEntity, mono::string jointName, int characterSlot)
+QuatT EntityInterop::GetJointRelative(IEntity *pEntity, mono::string jointName, int characterSlot)
 {
 	if (ICharacterInstance *pCharacter = pEntity->GetCharacter(characterSlot))
 	{
@@ -1038,7 +1038,7 @@ QuatT CScriptbind_Entity::GetJointRelative(IEntity *pEntity, mono::string jointN
 	return QuatT();
 }
 
-void CScriptbind_Entity::SetTriggerBBox(IEntity *pEntity, AABB bounds)
+void EntityInterop::SetTriggerBBox(IEntity *pEntity, AABB bounds)
 {
 	IEntityTriggerProxy *pTriggerProxy = static_cast<IEntityTriggerProxy *>(pEntity->GetProxy(ENTITY_PROXY_TRIGGER));
 	if (!pTriggerProxy)
@@ -1051,7 +1051,7 @@ void CScriptbind_Entity::SetTriggerBBox(IEntity *pEntity, AABB bounds)
 		pTriggerProxy->SetTriggerBounds(bounds);
 }
 
-AABB CScriptbind_Entity::GetTriggerBBox(IEntity *pEntity)
+AABB EntityInterop::GetTriggerBBox(IEntity *pEntity)
 {
 	AABB bbox;
 	if (IEntityTriggerProxy *pTriggerProxy = static_cast<IEntityTriggerProxy *>(pEntity->GetProxy(ENTITY_PROXY_TRIGGER)))
@@ -1060,45 +1060,45 @@ AABB CScriptbind_Entity::GetTriggerBBox(IEntity *pEntity)
 	return bbox;
 }
 
-void CScriptbind_Entity::InvalidateTrigger(IEntity *pEntity)
+void EntityInterop::InvalidateTrigger(IEntity *pEntity)
 {
 	if (IEntityTriggerProxy *pTriggerProxy = static_cast<IEntityTriggerProxy *>(pEntity->GetProxy(ENTITY_PROXY_TRIGGER)))
 		pTriggerProxy->InvalidateTrigger();
 }
 
-void CScriptbind_Entity::Hide(IEntity *pEntity, bool hide)
+void EntityInterop::Hide(IEntity *pEntity, bool hide)
 {
 	pEntity->Hide(hide);
 }
 
-bool CScriptbind_Entity::IsHidden(IEntity *pEntity)
+bool EntityInterop::IsHidden(IEntity *pEntity)
 {
 	return pEntity->IsHidden();
 }
 
-IEntity *CScriptbind_Entity::GetEntityFromPhysics(IPhysicalEntity *pPhysEnt)
+IEntity *EntityInterop::GetEntityFromPhysics(IPhysicalEntity *pPhysEnt)
 {
 	return gEnv->pEntitySystem->GetEntityFromPhysics(pPhysEnt);
 }
 
-void CScriptbind_Entity::SetUpdatePolicy(IEntity *pEntity, EEntityUpdatePolicy policy)
+void EntityInterop::SetUpdatePolicy(IEntity *pEntity, EEntityUpdatePolicy policy)
 {
 	pEntity->SetUpdatePolicy(policy);
 }
 
-EEntityUpdatePolicy CScriptbind_Entity::GetUpdatePolicy(IEntity *pEntity)
+EEntityUpdatePolicy EntityInterop::GetUpdatePolicy(IEntity *pEntity)
 {
 	return pEntity->GetUpdatePolicy();
 }
 
-IParticleEmitter *CScriptbind_Entity::LoadParticleEmitter(IEntity *pEntity, int slot, IParticleEffect *pEffect, SpawnParams &spawnParams)
+IParticleEmitter *EntityInterop::LoadParticleEmitter(IEntity *pEntity, int slot, IParticleEffect *pEffect, SpawnParams &spawnParams)
 {
 	int nSlot = pEntity->LoadParticleEmitter(slot, pEffect, &spawnParams);
 
 	return pEntity->GetParticleEmitter(nSlot);
 }
 
-void CScriptbind_Entity::RemoteInvocation(EntityId entityId, EntityId targetId, mono::string methodName, mono::object args, ERMInvocation target, int channelId)
+void EntityInterop::RemoteInvocation(EntityId entityId, EntityId targetId, mono::string methodName, mono::object args, ERMInvocation target, int channelId)
 {
 	if (!gEnv->bMultiplayer)
 		return;
@@ -1116,7 +1116,7 @@ void CScriptbind_Entity::RemoteInvocation(EntityId entityId, EntityId targetId, 
 		pGameObject->InvokeRMI(CMonoEntityExtension::ClScriptRMI(), params, target, channelId);
 }
 
-const CCamera *CScriptbind_Entity::GetCameraProxy(IEntity *pEntity)
+const CCamera *EntityInterop::GetCameraProxy(IEntity *pEntity)
 {
 	IEntityCameraProxy *pCamProxy = (IEntityCameraProxy *)pEntity->GetProxy(ENTITY_PROXY_CAMERA);
 	if (!pCamProxy)
@@ -1125,7 +1125,7 @@ const CCamera *CScriptbind_Entity::GetCameraProxy(IEntity *pEntity)
 	return &pCamProxy->GetCamera();
 }
 
-bool CScriptbind_Entity::SetViewDistRatio(IEntity *pEntity, int viewDist)
+bool EntityInterop::SetViewDistRatio(IEntity *pEntity, int viewDist)
 {
 	if (IEntityRenderProxy *pRenderProxy = static_cast<IEntityRenderProxy *>(pEntity->GetProxy(ENTITY_PROXY_RENDER)))
 	{
@@ -1140,7 +1140,7 @@ bool CScriptbind_Entity::SetViewDistRatio(IEntity *pEntity, int viewDist)
 	return false;
 }
 
-int CScriptbind_Entity::GetViewDistRatio(IEntity *pEntity)
+int EntityInterop::GetViewDistRatio(IEntity *pEntity)
 {
 	if (IEntityRenderProxy *pRenderProxy = static_cast<IEntityRenderProxy *>(pEntity->GetProxy(ENTITY_PROXY_RENDER)))
 	{
@@ -1151,7 +1151,7 @@ int CScriptbind_Entity::GetViewDistRatio(IEntity *pEntity)
 	return 0;
 }
 
-bool CScriptbind_Entity::SetViewDistUnlimited(IEntity *pEntity)
+bool EntityInterop::SetViewDistUnlimited(IEntity *pEntity)
 {
 	if (IEntityRenderProxy *pRenderProxy = static_cast<IEntityRenderProxy *>(pEntity->GetProxy(ENTITY_PROXY_RENDER)))
 	{
@@ -1166,7 +1166,7 @@ bool CScriptbind_Entity::SetViewDistUnlimited(IEntity *pEntity)
 	return false;
 }
 
-bool CScriptbind_Entity::SetLodRatio(IEntity *pEntity, int lodRatio)
+bool EntityInterop::SetLodRatio(IEntity *pEntity, int lodRatio)
 {
 	if (IEntityRenderProxy *pRenderProxy = static_cast<IEntityRenderProxy *>(pEntity->GetProxy(ENTITY_PROXY_RENDER)))
 	{
@@ -1181,7 +1181,7 @@ bool CScriptbind_Entity::SetLodRatio(IEntity *pEntity, int lodRatio)
 	return false;
 }
 
-int CScriptbind_Entity::GetLodRatio(IEntity *pEntity)
+int EntityInterop::GetLodRatio(IEntity *pEntity)
 {
 	if (IEntityRenderProxy *pRenderProxy = static_cast<IEntityRenderProxy *>(pEntity->GetProxy(ENTITY_PROXY_RENDER)))
 	{
@@ -1192,22 +1192,22 @@ int CScriptbind_Entity::GetLodRatio(IEntity *pEntity)
 	return 0;
 }
 
-void CScriptbind_Entity::OnScriptInstanceDestroyed(CCryScriptInstance *pScriptInstance)
+void EntityInterop::OnScriptInstanceDestroyed(CCryScriptInstance *pScriptInstance)
 {
 	pScriptInstance->Release();
 }
 
-int CScriptbind_Entity::GetNumAreas()
+int EntityInterop::GetNumAreas()
 {
 	return gEnv->pEntitySystem->GetAreaManager()->GetAreaAmount();
 }
 
-const IArea *CScriptbind_Entity::GetArea(int areaId)
+const IArea *EntityInterop::GetArea(int areaId)
 {
 	return gEnv->pEntitySystem->GetAreaManager()->GetArea(areaId);
 }
 
-mono::object CScriptbind_Entity::QueryAreas(EntityId id, Vec3 vPos, int maxResults, bool forceCalculation)
+mono::object EntityInterop::QueryAreas(EntityId id, Vec3 vPos, int maxResults, bool forceCalculation)
 {
 	SAreaManagerResult *pResults = new SAreaManagerResult[maxResults];
 
@@ -1233,17 +1233,17 @@ mono::object CScriptbind_Entity::QueryAreas(EntityId id, Vec3 vPos, int maxResul
 	return managedArray;
 }
 
-int CScriptbind_Entity::GetAreaEntityAmount(IArea *pArea)
+int EntityInterop::GetAreaEntityAmount(IArea *pArea)
 {
 	return pArea->GetEntityAmount();
 }
 
-const EntityId CScriptbind_Entity::GetAreaEntityByIdx(IArea *pArea, int index)
+const EntityId EntityInterop::GetAreaEntityByIdx(IArea *pArea, int index)
 {
 	return pArea->GetEntityByIdx(index);
 }
 
-void CScriptbind_Entity::GetAreaMinMax(IArea *pArea, Vec3 &min, Vec3 &max)
+void EntityInterop::GetAreaMinMax(IArea *pArea, Vec3 &min, Vec3 &max)
 {
 	Vec3 *pMin = &min;
 	Vec3 *pMax = &max;
@@ -1251,12 +1251,12 @@ void CScriptbind_Entity::GetAreaMinMax(IArea *pArea, Vec3 &min, Vec3 &max)
 	pArea->GetMinMax(&pMin, &pMax);
 }
 
-int CScriptbind_Entity::GetAreaPriority(IArea *pArea)
+int EntityInterop::GetAreaPriority(IArea *pArea)
 {
 	return pArea->GetPriority();
 }
 
-IStatObj *CScriptbind_Entity::GetStaticObjectHandle(IEntity *entityHandle, int slot)
+IStatObj *EntityInterop::GetStaticObjectHandle(IEntity *entityHandle, int slot)
 {
 	if (entityHandle)
 	{
@@ -1269,7 +1269,7 @@ IStatObj *CScriptbind_Entity::GetStaticObjectHandle(IEntity *entityHandle, int s
 	}
 	return nullptr;
 }
-void CScriptbind_Entity::AssignStaticObject(IEntity *entityHandle, IStatObj *obj, int slot)
+void EntityInterop::AssignStaticObject(IEntity *entityHandle, IStatObj *obj, int slot)
 {
 	if (entityHandle && obj)
 	{

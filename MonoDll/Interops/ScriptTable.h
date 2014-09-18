@@ -7,16 +7,16 @@
 // 02/09/2012 : Created by Filip 'i59' Lundgren
 ////////////////////////////////////////////////////////////////////////*/
 
-#include <IMonoScriptBind.h>
+#include <IMonoInterop.h>
 
 #include "MonoCommon.h"
 
-class CScriptbind_ScriptTable
-	: public IMonoScriptBind
+class ScriptTableInterop
+	: public IMonoInterop
 {
 public:
-	CScriptbind_ScriptTable();
-	~CScriptbind_ScriptTable() {}
+	ScriptTableInterop();
+	~ScriptTableInterop() {}
 
 	// IMonoScriptBind
 	virtual const char *GetClassName() { return "ScriptTableInterop"; }

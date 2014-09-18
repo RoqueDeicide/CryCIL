@@ -10,9 +10,9 @@
 
 #include <IGameFramework.h>
 
-CScriptbind_ActorSystem::TActorClasses CScriptbind_ActorSystem::m_monoActorClasses = TActorClasses();
+ActorSystemInterop::TActorClasses ActorSystemInterop::m_monoActorClasses = TActorClasses();
 
-CScriptbind_ActorSystem::CScriptbind_ActorSystem()
+ActorSystemInterop::ActorSystemInterop()
 {
 	REGISTER_METHOD(GetActorInfoByChannelId);
 	REGISTER_METHOD(GetActorInfoById);
@@ -28,7 +28,7 @@ CScriptbind_ActorSystem::CScriptbind_ActorSystem()
 	gEnv->pEntitySystem->AddSink(this, IEntitySystem::OnSpawn, 0);
 }
 
-CScriptbind_ActorSystem::~CScriptbind_ActorSystem()
+ActorSystemInterop::~ActorSystemInterop()
 {
 	if (gEnv->pEntitySystem)
 		gEnv->pEntitySystem->RemoveSink(this);
@@ -38,7 +38,7 @@ CScriptbind_ActorSystem::~CScriptbind_ActorSystem()
 	m_monoActorClasses.clear();
 }
 
-EMonoActorType CScriptbind_ActorSystem::GetMonoActorType(const char *actorClassName)
+EMonoActorType ActorSystemInterop::GetMonoActorType(const char *actorClassName)
 {
 	for each(auto classPair in m_monoActorClasses)
 	{
@@ -49,7 +49,7 @@ EMonoActorType CScriptbind_ActorSystem::GetMonoActorType(const char *actorClassN
 	return EMonoActorType_None;
 }
 
-void CScriptbind_ActorSystem::OnSpawn(IEntity *pEntity, SEntitySpawnParams &params)
+void ActorSystemInterop::OnSpawn(IEntity *pEntity, SEntitySpawnParams &params)
 {
 	EMonoActorType actorType = GetMonoActorType(pEntity->GetClass()->GetName());
 
@@ -72,7 +72,7 @@ void CScriptbind_ActorSystem::OnSpawn(IEntity *pEntity, SEntitySpawnParams &para
 	}
 }
 
-SMonoActorInfo CScriptbind_ActorSystem::GetActorInfoByChannelId(uint16 channelId)
+SMonoActorInfo ActorSystemInterop::GetActorInfoByChannelId(uint16 channelId)
 {
 	if (IActor *pActor = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIActorSystem()->GetActorByChannelId(channelId))
 		return SMonoActorInfo(pActor);
@@ -80,7 +80,7 @@ SMonoActorInfo CScriptbind_ActorSystem::GetActorInfoByChannelId(uint16 channelId
 	return SMonoActorInfo();
 }
 
-SMonoActorInfo CScriptbind_ActorSystem::GetActorInfoById(EntityId id)
+SMonoActorInfo ActorSystemInterop::GetActorInfoById(EntityId id)
 {
 	if (IActor *pActor = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIActorSystem()->GetActor(id))
 		return SMonoActorInfo(pActor);
@@ -88,7 +88,7 @@ SMonoActorInfo CScriptbind_ActorSystem::GetActorInfoById(EntityId id)
 	return SMonoActorInfo();
 }
 
-void CScriptbind_ActorSystem::RegisterActorClass(mono::string name, bool isNative, bool isAI)
+void ActorSystemInterop::RegisterActorClass(mono::string name, bool isNative, bool isAI)
 {
 	const char *className = ToCryString(name);
 
@@ -109,7 +109,7 @@ void CScriptbind_ActorSystem::RegisterActorClass(mono::string name, bool isNativ
 	m_monoActorClasses.insert(TActorClasses::value_type(className, isNative ? EMonoActorType_Native : EMonoActorType_Managed));
 }
 
-SMonoActorInfo CScriptbind_ActorSystem::CreateActor(int channelId, mono::string name, mono::string className, Vec3 pos, Quat rot, Vec3 scale)
+SMonoActorInfo ActorSystemInterop::CreateActor(int channelId, mono::string name, mono::string className, Vec3 pos, Quat rot, Vec3 scale)
 {
 	const char *sClassName = ToCryString(className);
 
@@ -125,17 +125,17 @@ SMonoActorInfo CScriptbind_ActorSystem::CreateActor(int channelId, mono::string 
 	return SMonoActorInfo();
 }
 
-void CScriptbind_ActorSystem::RemoveActor(EntityId id)
+void ActorSystemInterop::RemoveActor(EntityId id)
 {
 	static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIActorSystem()->RemoveActor(id);
 }
 
-EntityId CScriptbind_ActorSystem::GetClientActorId()
+EntityId ActorSystemInterop::GetClientActorId()
 {
 	return static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetClientActorId();
 }
 
-void CScriptbind_ActorSystem::RemoteInvocation(EntityId entityId, EntityId targetId, mono::string methodName, mono::object args, ERMInvocation target, int channelId)
+void ActorSystemInterop::RemoteInvocation(EntityId entityId, EntityId targetId, mono::string methodName, mono::object args, ERMInvocation target, int channelId)
 {
 	CRY_ASSERT(entityId != 0);
 

@@ -2,9 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="Headers\IMonoScriptBind.h">
-      <Filter>Interfaces</Filter>
-    </ClInclude>
     <ClInclude Include="MonoAssembly.h">
       <Filter>Wrappers</Filter>
     </ClInclude>
@@ -41,9 +38,6 @@
     </ClInclude>
     <ClInclude Include="Headers\IMonoAssembly.h">
       <Filter>Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="FlowManager.h">
-      <Filter>FlowSystem</Filter>
     </ClInclude>
     <ClInclude Include="Headers\MonoCommon.h">
       <Filter>Interfaces</Filter>
@@ -181,6 +175,12 @@
     <ClInclude Include="Interops\MonoInput.h">
       <Filter>Interops</Filter>
     </ClInclude>
+    <ClInclude Include="Headers\IMonoInterop.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\FlowGraph\FlowManager.h">
+      <Filter>Interops\FlowGraph</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -198,9 +198,6 @@
     </ClCompile>
     <ClCompile Include="MonoArray.cpp">
       <Filter>Wrappers</Filter>
-    </ClCompile>
-    <ClCompile Include="FlowManager.cpp">
-      <Filter>FlowSystem</Filter>
     </ClCompile>
     <ClCompile Include="MonoObject.cpp">
       <Filter>Wrappers</Filter>
@@ -315,6 +312,9 @@
     <ClCompile Include="Interops\MonoInput.cpp">
       <Filter>Interops</Filter>
     </ClCompile>
+    <ClCompile Include="Interops\FlowGraph\FlowManager.cpp">
+      <Filter>Interops\FlowGraph</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Wrappers">
@@ -322,9 +322,6 @@
     </Filter>
     <Filter Include="EntitySystem">
       <UniqueIdentifier>{f5c2f1b4-f7f2-4f27-be93-8c656a23cdb2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="FlowSystem">
-      <UniqueIdentifier>{e86e83fb-fa9c-4662-9e45-e9f845946fc0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Utils">
       <UniqueIdentifier>{aa1f26db-41b9-4103-b477-74ef21bd29e0}</UniqueIdentifier>

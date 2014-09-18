@@ -21,9 +21,9 @@
 
 /// <summary>
 /// </summary>
-struct IMonoScriptBind
+struct IMonoInterop
 {
-	virtual ~IMonoScriptBind() {}
+	virtual ~IMonoInterop() {}
 
 	/// <summary>
 	/// The namespace in which the Mono class this scriptbind is tied to resides in; returns "CryEngine.Native" by default if not overridden.

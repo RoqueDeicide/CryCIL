@@ -1,14 +1,14 @@
 #ifndef __SCRIPTBIND_CRYSERIALIZE_H__
 #define __SCRIPTBIND_CRYSERIALIZE_H__
 
-#include <IMonoScriptbind.h>
+#include <IMonoInterop.h>
 
-class CScriptbind_CrySerialize
-	: public IMonoScriptBind
+class CrySerializeInterop
+	: public IMonoInterop
 {
 public:
-	CScriptbind_CrySerialize();
-	~CScriptbind_CrySerialize();
+	CrySerializeInterop();
+	~CrySerializeInterop();
 
 protected:
 	// IMonoScriptBind

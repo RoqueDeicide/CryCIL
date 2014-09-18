@@ -1,11 +1,11 @@
 #pragma once
-#include <IMonoScriptBind.h>
+#include <IMonoInterop.h>
 
-class Scriptbind_CryMarshal : public IMonoScriptBind
+class CryMarshalInterop : public IMonoInterop
 {
 public:
-	Scriptbind_CryMarshal();
-	~Scriptbind_CryMarshal();
+	CryMarshalInterop();
+	~CryMarshalInterop();
 
 	virtual const char *GetClassName() { return "MemoryHandlingInterop"; };
 

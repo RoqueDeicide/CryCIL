@@ -11,13 +11,13 @@
 #define __SCRIPTBIND_GAMERULES_SYSTEM__
 
 #include <MonoCommon.h>
-#include <IMonoScriptBind.h>
+#include <IMonoInterop.h>
 
-class CScriptbind_GameRules : public IMonoScriptBind
+class GameRulesInterop : public IMonoInterop
 {
 public:
-	CScriptbind_GameRules();
-	~CScriptbind_GameRules() {}
+	GameRulesInterop();
+	~GameRulesInterop() {}
 
 	// IMonoScriptBind
 	virtual const char *GetClassName() { return "GameRulesInterop"; }

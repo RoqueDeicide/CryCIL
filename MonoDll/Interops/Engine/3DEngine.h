@@ -10,15 +10,15 @@
 #define __SCRIPTBIND_3DENGINE__
 
 #include <MonoCommon.h>
-#include <IMonoScriptBind.h>
+#include <IMonoInterop.h>
 
-#include "Renderer.h"
+#include "Interops/Viewport/Renderer.h"
 
-class CScriptbind_3DEngine : public IMonoScriptBind
+class Engine3DInterop : public IMonoInterop
 {
 public:
-	CScriptbind_3DEngine();
-	~CScriptbind_3DEngine() {}
+	Engine3DInterop();
+	~Engine3DInterop() {}
 
 	// IMonoScriptBind
 	virtual const char *GetClassName() { return "Engine3DInterop"; }

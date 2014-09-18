@@ -3,17 +3,17 @@
 #include "ProjectDefines.h"
 #include "VertexFormats.h"
 
-Scriptbind_Platform::Scriptbind_Platform()
+PlatformInterop::PlatformInterop()
 {}
 
-Scriptbind_Platform::~Scriptbind_Platform()
+PlatformInterop::~PlatformInterop()
 {}
 
-bool Scriptbind_Platform::AreMeshIndicesInt16()
+bool PlatformInterop::AreMeshIndicesInt16()
 {
 	return sizeof(vtx_idx) == 16;
 }
-bool Scriptbind_Platform::AreMeshTangentsSingle()
+bool PlatformInterop::AreMeshTangentsSingle()
 {
 #ifdef TANG_FLOATS
 	return true;

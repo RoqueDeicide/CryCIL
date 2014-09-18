@@ -13,7 +13,7 @@
 #include "MonoCommon.h"
 #include <IMonoArray.h>
 
-#include <IMonoScriptBind.h>
+#include <IMonoInterop.h>
 
 #include <mono\mini\jit.h>
 
@@ -146,14 +146,14 @@ struct SMonoLightParams
 
 class CMonoEntityAttachment;
 
-class CScriptbind_Entity
-	: public IMonoScriptBind
+class EntityInterop
+	: public IMonoInterop
 	, public IEntitySystemSink
 	, public IMonoScriptEventListener
 {
 public:
-	CScriptbind_Entity();
-	~CScriptbind_Entity();
+	EntityInterop();
+	~EntityInterop();
 
 	// IEntitySystemSink
 	virtual bool OnBeforeSpawn(SEntitySpawnParams &params) { return true; }

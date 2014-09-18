@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "3DEngine.h"
 
-CScriptbind_3DEngine::CScriptbind_3DEngine()
+Engine3DInterop::Engine3DInterop()
 {
 	REGISTER_METHOD(GetTerrainElevation);
 	REGISTER_METHOD(GetTerrainZ);
@@ -24,42 +24,42 @@ CScriptbind_3DEngine::CScriptbind_3DEngine()
 	REGISTER_METHOD(GetMaxViewDistance);
 }
 
-float CScriptbind_3DEngine::GetTerrainElevation(float x, float y)
+float Engine3DInterop::GetTerrainElevation(float x, float y)
 {
 	return gEnv->p3DEngine->GetTerrainElevation(x, y);
 }
 
-float CScriptbind_3DEngine::GetTerrainZ(int x, int y)
+float Engine3DInterop::GetTerrainZ(int x, int y)
 {
 	return gEnv->p3DEngine->GetTerrainZ(x, y);
 }
 
-int CScriptbind_3DEngine::GetTerrainUnitSize()
+int Engine3DInterop::GetTerrainUnitSize()
 {
 	return gEnv->p3DEngine->GetHeightMapUnitSize();
 }
 
-int CScriptbind_3DEngine::GetTerrainSize()
+int Engine3DInterop::GetTerrainSize()
 {
 	return gEnv->p3DEngine->GetTerrainSize();
 }
 
-int CScriptbind_3DEngine::GetTerrainSectorSize()
+int Engine3DInterop::GetTerrainSectorSize()
 {
 	return gEnv->p3DEngine->GetTerrainSectorSize();
 }
 
-void CScriptbind_3DEngine::SetTimeOfDay(float hour, bool forceUpdate)
+void Engine3DInterop::SetTimeOfDay(float hour, bool forceUpdate)
 {
 	gEnv->p3DEngine->GetTimeOfDay()->SetTime(hour, forceUpdate);
 }
 
-float CScriptbind_3DEngine::GetTimeOfDay()
+float Engine3DInterop::GetTimeOfDay()
 {
 	return gEnv->p3DEngine->GetTimeOfDay()->GetTime();
 }
 
-ITimeOfDay::SAdvancedInfo CScriptbind_3DEngine::GetTimeOfDayAdvancedInfo()
+ITimeOfDay::SAdvancedInfo Engine3DInterop::GetTimeOfDayAdvancedInfo()
 {
 	ITimeOfDay::SAdvancedInfo info;
 	gEnv->p3DEngine->GetTimeOfDay()->GetAdvancedInfo(info);
@@ -67,19 +67,19 @@ ITimeOfDay::SAdvancedInfo CScriptbind_3DEngine::GetTimeOfDayAdvancedInfo()
 	return info;
 }
 
-void CScriptbind_3DEngine::SetTimeOfDayAdvancedInfo(ITimeOfDay::SAdvancedInfo advancedInfo)
+void Engine3DInterop::SetTimeOfDayAdvancedInfo(ITimeOfDay::SAdvancedInfo advancedInfo)
 {
 	gEnv->p3DEngine->GetTimeOfDay()->SetAdvancedInfo(advancedInfo);
 }
 
-void CScriptbind_3DEngine::SetTimeOfDayVariableValue(ITimeOfDay::ETimeOfDayParamID id, float value)
+void Engine3DInterop::SetTimeOfDayVariableValue(ITimeOfDay::ETimeOfDayParamID id, float value)
 {
 	float valueArray[3];
 	valueArray[0] = value;
 	gEnv->p3DEngine->GetTimeOfDay()->SetVariableValue(id, valueArray);
 }
 
-void CScriptbind_3DEngine::SetTimeOfDayVariableValueColor(ITimeOfDay::ETimeOfDayParamID id, Vec3 value)
+void Engine3DInterop::SetTimeOfDayVariableValueColor(ITimeOfDay::ETimeOfDayParamID id, Vec3 value)
 {
 	float valueArray[3];
 	valueArray[0] = value.x;
@@ -89,12 +89,12 @@ void CScriptbind_3DEngine::SetTimeOfDayVariableValueColor(ITimeOfDay::ETimeOfDay
 	gEnv->p3DEngine->GetTimeOfDay()->SetVariableValue(id, valueArray);
 }
 
-void CScriptbind_3DEngine::ActivatePortal(Vec3 pos, bool activate, mono::string entityName)
+void Engine3DInterop::ActivatePortal(Vec3 pos, bool activate, mono::string entityName)
 {
 	gEnv->p3DEngine->ActivatePortal(pos, activate, ToCryString(entityName));
 }
 
-float CScriptbind_3DEngine::GetMaxViewDistance()
+float Engine3DInterop::GetMaxViewDistance()
 {
 	return gEnv->p3DEngine->GetMaxViewDistance();
 }

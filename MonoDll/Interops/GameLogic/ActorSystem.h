@@ -9,7 +9,7 @@
 #ifndef __SCRIPTBIND_ACTORSYSTEM_H__
 #define __SCRIPTBIND_ACTORSYSTEM_H__
 
-#include <IMonoScriptBind.h>
+#include <IMonoInterop.h>
 
 #include <MonoCommon.h>
 
@@ -45,13 +45,13 @@ enum EMonoActorType
 	EMonoActorType_None,
 };
 
-class CScriptbind_ActorSystem
-	: public IMonoScriptBind
+class ActorSystemInterop
+	: public IMonoInterop
 	, public IEntitySystemSink
 {
 public:
-	CScriptbind_ActorSystem();
-	~CScriptbind_ActorSystem();
+	ActorSystemInterop();
+	~ActorSystemInterop();
 
 	// IEntitySystemSink
 	virtual bool OnBeforeSpawn(SEntitySpawnParams &params) { return true; }

@@ -9,9 +9,9 @@
 #include <IMonoClass.h>
 #include <IMonoArray.h>
 
-TActionHandler<CScriptbind_Input>	CScriptbind_Input::s_actionHandler;
+TActionHandler<InputInterop>	InputInterop::s_actionHandler;
 
-CScriptbind_Input::CScriptbind_Input()
+InputInterop::InputInterop()
 {
 	REGISTER_METHOD(RegisterAction);
 
@@ -22,7 +22,7 @@ CScriptbind_Input::CScriptbind_Input()
 		gEnv->pInput->AddEventListener(this);
 }
 
-CScriptbind_Input::~CScriptbind_Input()
+InputInterop::~InputInterop()
 {
 	// The code below currently crashes the Launcher at shutdown
 	/*if(static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework())
@@ -38,12 +38,12 @@ CScriptbind_Input::~CScriptbind_Input()
 		gEnv->pInput->RemoveEventListener(this);
 }
 
-IMonoClass *CScriptbind_Input::GetClass()
+IMonoClass *InputInterop::GetClass()
 {
 	return GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("Input");
 }
 
-void CScriptbind_Input::OnHardwareMouseEvent(int iX, int iY, EHARDWAREMOUSEEVENT eHardwareMouseEvent, int wheelDelta)
+void InputInterop::OnHardwareMouseEvent(int iX, int iY, EHARDWAREMOUSEEVENT eHardwareMouseEvent, int wheelDelta)
 {
 	IMonoArray *pParams = CreateMonoArray(4);
 	pParams->Insert(iX);
@@ -56,7 +56,7 @@ void CScriptbind_Input::OnHardwareMouseEvent(int iX, int iY, EHARDWAREMOUSEEVENT
 	SAFE_RELEASE(pParams);
 }
 
-bool CScriptbind_Input::OnInputEvent(const SInputEvent &event)
+bool InputInterop::OnInputEvent(const SInputEvent &event)
 {
 	IMonoArray *pParams = CreateMonoArray(2);
 	pParams->Insert(event.keyName.c_str());
@@ -69,12 +69,12 @@ bool CScriptbind_Input::OnInputEvent(const SInputEvent &event)
 	return false;
 }
 
-void CScriptbind_Input::OnAction(const ActionId& actionId, int activationMode, float value)
+void InputInterop::OnAction(const ActionId& actionId, int activationMode, float value)
 {
 	s_actionHandler.Dispatch(this, 0, actionId, activationMode, value);
 }
 
-bool CScriptbind_Input::OnActionTriggered(EntityId entityId, const ActionId& actionId, int activationMode, float value)
+bool InputInterop::OnActionTriggered(EntityId entityId, const ActionId& actionId, int activationMode, float value)
 {
 	IMonoArray *pParams = CreateMonoArray(3);
 	pParams->Insert(actionId.c_str());
@@ -89,8 +89,8 @@ bool CScriptbind_Input::OnActionTriggered(EntityId entityId, const ActionId& act
 }
 
 // Scriptbinds
-void CScriptbind_Input::RegisterAction(mono::string actionName)
+void InputInterop::RegisterAction(mono::string actionName)
 {
 	if (!s_actionHandler.GetHandler(ActionId(ToCryString(actionName))))
-		s_actionHandler.AddHandler(ActionId(ToCryString(actionName)), &CScriptbind_Input::OnActionTriggered);
+		s_actionHandler.AddHandler(ActionId(ToCryString(actionName)), &InputInterop::OnActionTriggered);
 }

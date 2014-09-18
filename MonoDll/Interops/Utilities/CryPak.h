@@ -10,13 +10,13 @@
 #define __CRYPAK_BINDING_H__
 
 #include <MonoCommon.h>
-#include <IMonoScriptBind.h>
+#include <IMonoInterop.h>
 
-class CScriptbind_CryPak : public IMonoScriptBind
+class CryPakInterop : public IMonoInterop
 {
 public:
-	CScriptbind_CryPak();
-	virtual ~CScriptbind_CryPak() {}
+	CryPakInterop();
+	virtual ~CryPakInterop() {}
 
 protected:
 	// IMonoScriptBind

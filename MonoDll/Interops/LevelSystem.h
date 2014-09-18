@@ -7,7 +7,7 @@
 // 16/05/2012 : Created by Filip 'i59' Lundgren
 ////////////////////////////////////////////////////////////////////////*/
 
-#include <IMonoScriptBind.h>
+#include <IMonoInterop.h>
 
 #include "MonoCommon.h"
 
@@ -15,12 +15,12 @@ struct IMonoScript;
 
 struct ILevelInfo;
 
-class CScriptbind_LevelSystem
-	: public IMonoScriptBind
+class LevelSystemInterop
+	: public IMonoInterop
 {
 public:
-	CScriptbind_LevelSystem();
-	~CScriptbind_LevelSystem() {}
+	LevelSystemInterop();
+	~LevelSystemInterop() {}
 
 	// IMonoScriptBind
 	virtual const char *GetClassName() { return "LevelInterop"; }

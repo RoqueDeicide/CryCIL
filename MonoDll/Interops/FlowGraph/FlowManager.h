@@ -10,7 +10,7 @@
 #define __FLOW_MANAGER__
 
 #include "MonoCommon.h"
-#include <IMonoScriptBind.h>
+#include <IMonoInterop.h>
 
 #include <IFlowSystem.h>
 
@@ -34,7 +34,7 @@ struct SMonoNodeInfo
 };
 
 class CFlowManager
-	: public IMonoScriptBind
+	: public IMonoInterop
 	, public IFlowNodeFactory
 {
 public:
