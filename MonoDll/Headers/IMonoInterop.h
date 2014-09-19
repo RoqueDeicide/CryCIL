@@ -13,11 +13,11 @@
 #include <IMonoAssembly.h>
 
 /// <summary>
-/// Simple pre-processor method used to quickly register methods within scriptbinds.
+/// Simple pre-processor method used to quickly register methods within interops.
 /// </summary>
-#define REGISTER_METHOD(method) GetMonoScriptSystem()->RegisterMethodBinding(method, (GetNamespace() + (string)".").append(GetClassName()).append("::").append(#method))
+#define REGISTER_METHOD(method) GetMonoScriptSystem()->RegisterInteropMethod(method, (GetNamespace() + (string)".").append(GetClassName()).append("::").append(#method))
 
-#define REGISTER_METHOD_NAME(method, name) GetMonoScriptSystem()->RegisterMethodBinding(method, (GetNamespace() + (string)".").append(GetClassName()).append("::").append(name))
+#define REGISTER_METHOD_NAME(method, name) GetMonoScriptSystem()->RegisterInteropMethod(method, (GetNamespace() + (string)".").append(GetClassName()).append("::").append(name))
 
 /// <summary>
 /// </summary>

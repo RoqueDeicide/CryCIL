@@ -80,9 +80,9 @@ public:
 
 	virtual const char *ToString(mono::string monoString) override { return mono_string_to_utf8((MonoString *)monoString); }
 	
-	virtual IMonoArray *ToArray(mono::object arr) override;
+	virtual IMonoArray *ToArray(IMonoObject *arr) override;
 
-	virtual IMonoObject *ToObject(mono::object obj, bool allowGC = true) override;
+	virtual IMonoObject *ToObject(IMonoObject *obj, bool allowGC = true) override;
 	// ~IMonoScriptSystem
 
 	// IFileChangeMonitor
@@ -106,7 +106,7 @@ public:
 
 	void EraseBinding(IMonoInterop *pScriptBind);
 
-	mono::object InitializeScriptInstance(ICryScriptInstance *pScriptInstance, IMonoArray *pParams);
+	IMonoObject *InitializeScriptInstance(ICryScriptInstance *pScriptInstance, IMonoArray *pParams);
 	void ReportScriptInstanceDestroyed(ICryScriptInstance *pScriptInstance, int scriptId);
 
 	bool DetectedChanges() { return m_bDetectedChanges; }

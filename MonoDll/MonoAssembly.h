@@ -48,7 +48,7 @@ public:
 	virtual EMonoAnyType GetType() override { return eMonoAnyType_Unknown; }
 	virtual MonoAnyValue GetAnyValue() override { return MonoAnyValue(); }
 
-	virtual mono::object GetManagedObject() override;
+	virtual IMonoObject *GetManagedObject() override;
 
 	virtual IMonoClass *GetClass() override;
 

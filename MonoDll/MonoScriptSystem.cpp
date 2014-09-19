@@ -371,14 +371,14 @@ void CScriptSystem::RegisterFlownodes()
 		m_pScriptManager->CallMethod("RegisterFlownodes");
 }
 
-IMonoArray *CScriptSystem::ToArray(mono::object arr)
+IMonoArray *CScriptSystem::ToArray(IMonoObject *arr)
 {
 	CRY_ASSERT(arr);
 
 	return new CScriptArray(arr);
 }
 
-IMonoObject *CScriptSystem::ToObject(mono::object obj, bool allowGC)
+IMonoObject *CScriptSystem::ToObject(IMonoObject *obj, bool allowGC)
 {
 	CRY_ASSERT(obj);
 
@@ -441,13 +441,13 @@ void CScriptSystem::RemoveScriptInstance(int id, EMonoScriptFlags scriptType)
 	m_pScriptManager->CallMethod("RemoveInstance", id, scriptType);
 }
 
-mono::object CScriptSystem::InitializeScriptInstance(ICryScriptInstance *pScriptInstance, IMonoArray *pParams)
+IMonoObject *CScriptSystem::InitializeScriptInstance(ICryScriptInstance *pScriptInstance, IMonoArray *pParams)
 {
 	FUNCTION_PROFILER_FAST(GetISystem(), PROFILE_SCRIPT, gEnv->bProfilerEnabled);
 
 	CRY_ASSERT(pScriptInstance);
 
-	mono::object result = pScriptInstance->GetClass()->GetMethod("InternalInitialize", pParams->GetSize())->InvokeArray(pScriptInstance->GetManagedObject(), pParams);
+	IMonoObject *result = pScriptInstance->GetClass()->GetMethod("InternalInitialize", pParams->GetSize())->InvokeArray(pScriptInstance->GetManagedObject(), pParams);
 
 	for each(auto listener in m_listeners)
 		listener->OnScriptInstanceInitialized(pScriptInstance);

@@ -68,7 +68,7 @@ struct IMonoDomain
 	/// </summary>
 	virtual IMonoArray *CreateDynamicArray(IMonoClass *pElementClass = nullptr, int size = 0, bool allowGC = true) = 0;
 
-	virtual mono::object BoxAnyValue(MonoAnyValue &value) = 0;
+	virtual IMonoObject *BoxAnyValue(MonoAnyValue &value) = 0;
 
 	/// <summary>
 	/// Converts a C++ style character array to a managed string.
@@ -100,7 +100,7 @@ enum ERuntimeVersion
 /// </summary>
 static IMonoArray *CreateMonoArray(int numArgs, IMonoClass *pElementClass = nullptr)
 {
-	return GetMonoScriptSystem()->GetActiveDomain()->CreateArray(numArgs, pElementClass);
+	return GetMonoScriptSystem()->AppDomain->CreateArray(numArgs, pElementClass);
 }
 
 /// <summary>
@@ -108,7 +108,7 @@ static IMonoArray *CreateMonoArray(int numArgs, IMonoClass *pElementClass = null
 /// </summary>
 static IMonoArray *CreateDynamicMonoArray(IMonoClass *pElementClass = nullptr, int size = 0)
 {
-	return GetMonoScriptSystem()->GetActiveDomain()->CreateDynamicArray(pElementClass, size);
+	return GetMonoScriptSystem()->AppDomain->CreateDynamicArray(pElementClass, size);
 }
 
 /// <summary>
@@ -116,7 +116,7 @@ static IMonoArray *CreateDynamicMonoArray(IMonoClass *pElementClass = nullptr, i
 /// </summary>
 inline mono::string ToMonoString(const char *cryString)
 {
-	return GetMonoScriptSystem()->GetActiveDomain()->CreateMonoString(cryString);
+	return GetMonoScriptSystem()->AppDomain->CreateMonoString(cryString);
 }
 
 #endif //__I_MONO_DOMAIN_H__

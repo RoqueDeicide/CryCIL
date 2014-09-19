@@ -48,7 +48,7 @@ public:
 		Actor,
 	};
 
-	static void HandleEntityEvent(EEntityType type, SEntityEvent &event, IEntity *pEntity, mono::object managedObject);
+	static void HandleEntityEvent(EEntityType type, SEntityEvent &event, IEntity *pEntity, IMonoObject *managedObject);
 
 	static void CacheManagedResources();
 

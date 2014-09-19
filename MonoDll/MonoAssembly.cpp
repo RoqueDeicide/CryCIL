@@ -59,7 +59,7 @@ IMonoClass *CScriptAssembly::GetClass()
 {
 	if (m_pClass == NULL)
 	{
-		if (CScriptDomain *pDomain = static_cast<CScriptSystem *>(GetMonoScriptSystem())->TryGetDomain(mono_object_get_domain((MonoObject *)m_pImage)))
+		if (CScriptDomain *pDomain = GetMonoScriptSystem()->AppDomain)
 		{
 			MonoClass *pMonoClass = mono_object_get_class((MonoObject *)m_pImage);
 
@@ -112,9 +112,9 @@ IMonoException *CScriptAssembly::_GetException(const char *nameSpace, const char
 	return new CScriptException(pException);
 }
 
-mono::object CScriptAssembly::GetManagedObject()
+IMonoObject *CScriptAssembly::GetManagedObject()
 {
 	CScriptDomain *pDomain = static_cast<CScriptDomain *>(GetDomain());
 
-	return (mono::object)mono_assembly_get_object(pDomain->GetMonoDomain(), mono_image_get_assembly(m_pImage));
+	return (IMonoObject *)mono_assembly_get_object(pDomain->GetMonoDomain(), mono_image_get_assembly(m_pImage));
 }

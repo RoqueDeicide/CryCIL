@@ -12,7 +12,7 @@
 
 MonoClass *CScriptArray::m_pDefaultElementClass = NULL;
 
-CScriptArray::CScriptArray(mono::object managedArray, bool allowGC)
+CScriptArray::CScriptArray(IMonoObject *managedArray, bool allowGC)
 {
 	CRY_ASSERT(managedArray);
 
@@ -86,14 +86,14 @@ void CScriptArray::Remove(int index)
 		m_lastIndex--;
 }
 
-mono::object CScriptArray::GetItem(int index)
+IMonoObject *CScriptArray::GetItem(int index)
 {
 	CRY_ASSERT(index < GetSize());
 
-	return *(mono::object *)mono_array_addr_with_size((MonoArray *)m_pObject, m_elementSize, index);
+	return *(IMonoObject **)mono_array_addr_with_size((MonoArray *)m_pObject, m_elementSize, index);
 }
 
-void CScriptArray::InsertMonoObject(mono::object object, int index)
+void CScriptArray::InsertMonoObject(IMonoObject *object, int index)
 {
 	if (index == -1)
 	{
@@ -110,19 +110,12 @@ void CScriptArray::InsertNativePointer(void *ptr, int index)
 {
 	CScriptDomain *pDomain = static_cast<CScriptDomain *>(GetClass()->GetAssembly()->GetDomain());
 
-	InsertMonoObject((mono::object)mono_value_box(pDomain->GetMonoDomain(), mono_get_intptr_class(), (long *)&ptr), index);
-}
-
-void CScriptArray::InsertAny(MonoAnyValue value, int index)
-{
-	IMonoDomain *pDomain = GetClass()->GetAssembly()->GetDomain();
-
-	InsertMonoObject(pDomain->BoxAnyValue(value), index);
+	InsertMonoObject((IMonoObject *)mono_value_box(pDomain->GetMonoDomain(), mono_get_intptr_class(), (long *)&ptr), index);
 }
 
 IMonoClass *CScriptArray::GetClass(MonoClass *pClass)
 {
-	if (CScriptDomain *pDomain = static_cast<CScriptSystem *>(GetMonoScriptSystem())->TryGetDomain(mono_object_get_domain(m_pObject)))
+	if (CScriptDomain *pDomain = GetMonoRunTime()->AppDomain)
 	{
 		MonoClass *pMonoClass = GetMonoClass();
 

@@ -65,14 +65,14 @@ public:
 	/// <summary>
 	/// Retrieves an IMonoObject at the selected index of the array.
 	/// </summary>
-	virtual mono::object GetItem(int index) = 0;
+	virtual IMonoObject *GetItem(int index) = 0;
 	/// <summary>
 	/// Retrieves an unboxed IMonoObject at the selected index of the array.
 	/// </summary>
 	template <class T>
 	T GetItemUnboxed(int index)
 	{
-		mono::object result = GetItem(index);
+		IMonoObject *result = GetItem(index);
 		if (result)
 		{
 			IMonoObject *pResult = *result;
@@ -105,7 +105,7 @@ public:
 	/// <summary>
 	/// Inserts a managed object into the array at the specified index. (-1 = back)
 	/// </summary>
-	virtual void InsertMonoObject(mono::object object, int index = -1) = 0;
+	virtual void InsertMonoObject(IMonoObject *object, int index = -1) = 0;
 
 	/// <summary>
 	/// Inserts an mono string into the array at the specified index. (-1 = back)

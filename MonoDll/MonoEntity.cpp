@@ -2,8 +2,8 @@
 #include "MonoEntity.h"
 #include "MonoEntityPropertyHandler.h"
 
-#include "MonoScriptSystem.h"
-#include "Scriptbinds\Entity.h"
+#include "MonoRunTime.h"
+#include "Interops/Entities/Entity.h"
 
 #include "EntityEventHandling.h"
 
@@ -11,14 +11,13 @@
 
 #include <IEntityClass.h>
 
-#include <IMonoScriptSystem.h>
 #include <IMonoAssembly.h>
 #include <IMonoClass.h>
 
 #include <MonoCommon.h>
 
 CMonoEntityExtension::CMonoEntityExtension()
-: m_pScript(nullptr)
+	: m_pScript(nullptr)
 	, m_pManagedObject(nullptr)
 	, m_bInitialized(false)
 	, m_pAnimatedCharacter(nullptr)
@@ -46,17 +45,19 @@ bool CMonoEntityExtension::Init(IGameObject *pGameObject)
 	IEntity *pEntity = GetEntity();
 	IEntityClass *pEntityClass = pEntity->GetClass();
 
-	m_pScript = GetMonoScriptSystem()->InstantiateScript(pEntityClass->GetName(), eScriptFlag_Entity);
-	m_pManagedObject = m_pScript->GetManagedObject();
-
-	IMonoClass *pEntityInfoClass = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("EntityInitializationParams", "CryEngine.Native");
+	IMonoClass *pEntityInfoClass =
+		GetMonoRunTime()->CryBrary->GetClass("EntityInitializationParams", "CryEngine.Native");
 
 	SMonoEntityInfo entityInfo(pEntity);
 
-	IMonoArray *pArgs = CreateMonoArray(1);
+	IMonoArray *pArgs = CreateMonoArray(2);
+	pArgs->InsertMonoString(ToMonoString(pEntityClass->GetName()));
 	pArgs->InsertMonoObject(pEntityInfoClass->BoxObject(&entityInfo));
-
-	static_cast<CScriptSystem *>(GetMonoScriptSystem())->InitializeScriptInstance(m_pScript, pArgs);
+	// Create the wrapper and save it.
+	m_pManagedObject =
+		GetMonoRunTime()->CryBrary->
+		GetClass("Entity", "CryEngine.Entities")->
+		GetMethod("Create")->InvokeArray(nullptr, pArgs);
 	pArgs->Release();
 
 	int numProperties;
@@ -111,7 +112,7 @@ void CMonoEntityExtension::ProcessEvent(SEntityEvent &event)
 
 void CMonoEntityExtension::PostUpdate(float frameTime)
 {
-	m_pScript->CallMethod("OnPostUpdate");
+	this->m_pManagedObject->CallMethod("OnPostUpdate", frameTime);
 }
 
 void CMonoEntityExtension::FullSerialize(TSerialize ser)
@@ -148,7 +149,8 @@ void CMonoEntityExtension::FullSerialize(TSerialize ser)
 	IMonoArray *pArgs = CreateMonoArray(1);
 	pArgs->InsertNativePointer(&ser);
 
-	m_pScript->GetClass()->GetMethod("InternalFullSerialize", 1)->InvokeArray(m_pManagedObject, pArgs);
+	this->m_pManagedObject->GetClass()->
+		GetMethod("InternalFullSerialize", 1)->InvokeArray(m_pManagedObject, pArgs);
 	pArgs->Release();
 
 	ser.EndGroup();
@@ -164,7 +166,7 @@ bool CMonoEntityExtension::NetSerialize(TSerialize ser, EEntityAspects aspect, u
 	params[2] = &profile;
 	params[3] = &flags;
 
-	m_pScript->GetClass()->GetMethod("InternalNetSerialize", 4)->Invoke(m_pManagedObject, params);
+	this->m_pManagedObject->GetClass()->GetMethod("InternalNetSerialize", 4)->Invoke(m_pManagedObject, params);
 
 	ser.EndGroup();
 
@@ -173,20 +175,20 @@ bool CMonoEntityExtension::NetSerialize(TSerialize ser, EEntityAspects aspect, u
 
 void CMonoEntityExtension::PostSerialize()
 {
-	m_pScript->CallMethod("PostSerialize");
+	this->m_pManagedObject->CallMethod("PostSerialize");
 }
 
 void CMonoEntityExtension::SetPropertyValue(IEntityPropertyHandler::SPropertyInfo propertyInfo, const char *value)
 {
 	if (value != nullptr)
-		m_pScript->CallMethod("SetPropertyValue", propertyInfo.name, propertyInfo.type, value);
+		this->m_pManagedObject->CallMethod("SetPropertyValue", propertyInfo.name, propertyInfo.type, value);
 }
 
 ///////////////////////////////////////////////////
 // Entity RMI's
 ///////////////////////////////////////////////////
-CMonoEntityExtension::RMIParams::RMIParams(mono::object _args, const char *funcName, EntityId target)
-: methodName(funcName)
+CMonoEntityExtension::RMIParams::RMIParams(IMonoObject *_args, const char *funcName, EntityId target)
+	: methodName(funcName)
 	, targetId(target)
 	, args(_args)
 {}
@@ -196,9 +198,9 @@ void CMonoEntityExtension::RMIParams::SerializeWith(TSerialize ser)
 	IMonoArray *pArgs;
 	int length;
 
-	if (args != nullptr)
+	if (this->args != nullptr)
 	{
-		pArgs = *args;
+		pArgs = GetMonoRunTime()->ToArray(this->args);
 		length = pArgs->GetSize();
 	}
 	else
@@ -215,14 +217,14 @@ void CMonoEntityExtension::RMIParams::SerializeWith(TSerialize ser)
 		{
 			for (int i = 0; i < length; i++)
 			{
-				IMonoObject *pItem = *pArgs->GetItem(i);
+				IMonoObject *pItem = pArgs->GetItem(i);
 				pItem->GetAnyValue().SerializeWith(ser);
 				SAFE_RELEASE(pItem);
 			}
 		}
 		else
 		{
-			pArgs = GetMonoScriptSystem()->GetScriptDomain()->CreateArray(length);
+			pArgs = GetMonoScriptSystem()->AppDomain->CreateArray(length);
 
 			for (int i = 0; i < length; i++)
 			{
@@ -240,7 +242,7 @@ void CMonoEntityExtension::RMIParams::SerializeWith(TSerialize ser)
 
 IMPLEMENT_RMI(CMonoEntityExtension, SvScriptRMI)
 {
-	IMonoClass *pEntityClass = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("Entity");
+	IMonoClass *pEntityClass = GetMonoRunTime()->CryBrary->GetClass("Entity");
 
 	IMonoArray *pNetworkArgs = CreateMonoArray(3);
 	pNetworkArgs->Insert(ToMonoString(params.methodName.c_str()));
@@ -255,7 +257,7 @@ IMPLEMENT_RMI(CMonoEntityExtension, SvScriptRMI)
 
 IMPLEMENT_RMI(CMonoEntityExtension, ClScriptRMI)
 {
-	IMonoClass *pEntityClass = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("Entity");
+	IMonoClass *pEntityClass = GetMonoRunTime()->CryBrary->GetClass("Entity");
 
 	IMonoArray *pNetworkArgs = CreateMonoArray(3);
 	pNetworkArgs->Insert(ToMonoString(params.methodName.c_str()));

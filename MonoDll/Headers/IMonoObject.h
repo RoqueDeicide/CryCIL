@@ -24,30 +24,30 @@ namespace mono { class _object; typedef _object *object; }
 /// </summary>
 struct IMonoObject
 {
-	inline mono::object CallMethod(const char *funcName);
+	inline IMonoObject *CallMethod(const char *funcName);
 
 	template<typename P1>
-	inline mono::object CallMethod(const char *funcName, const P1 &p1);
+	inline IMonoObject *CallMethod(const char *funcName, const P1 &p1);
 
 	template<typename P1, typename P2>
-	inline mono::object CallMethod(const char *funcName, const P1 &p1, const P2 &p2);
+	inline IMonoObject *CallMethod(const char *funcName, const P1 &p1, const P2 &p2);
 
 	template<typename P1, typename P2, typename P3>
-	inline mono::object CallMethod(const char *funcName, const P1 &p1, const P2 &p2, const P3 &p3);
+	inline IMonoObject *CallMethod(const char *funcName, const P1 &p1, const P2 &p2, const P3 &p3);
 
 	template<typename P1, typename P2, typename P3, typename P4>
-	inline mono::object CallMethod(const char *funcName, const P1 &p1, const P2 &p2, const P3 &p3, const P4 &p4);
+	inline IMonoObject *CallMethod(const char *funcName, const P1 &p1, const P2 &p2, const P3 &p3, const P4 &p4);
 
 	template<typename P1, typename P2, typename P3, typename P4, typename P5>
-	inline mono::object CallMethod(const char *funcName, const P1 &p1, const P2 &p2, const P3 &p3, const P4 &p4, const P5 &p5);
+	inline IMonoObject *CallMethod(const char *funcName, const P1 &p1, const P2 &p2, const P3 &p3, const P4 &p4, const P5 &p5);
 
 	template<typename P1, typename P2, typename P3, typename P4, typename P5, typename P6>
-	inline mono::object CallMethod(const char *funcName, const P1 &p1, const P2 &p2, const P3 &p3, const P4 &p4, const P5 &p5, const P6 &p6);
+	inline IMonoObject *CallMethod(const char *funcName, const P1 &p1, const P2 &p2, const P3 &p3, const P4 &p4, const P5 &p5, const P6 &p6);
 
-	inline mono::object GetPropertyValue(const char *fieldName, bool throwOnFail = true);
-	inline void SetPropertyValue(const char *fieldName, mono::object newValue, bool throwOnFail = true);
-	inline mono::object GetFieldValue(const char *fieldName, bool throwOnFail = true);
-	inline void SetFieldValue(const char *fieldName, mono::object newValue, bool throwOnFail = true);
+	inline IMonoObject *GetPropertyValue(const char *fieldName, bool throwOnFail = true);
+	inline void SetPropertyValue(const char *fieldName, IMonoObject *newValue, bool throwOnFail = true);
+	inline IMonoObject *GetFieldValue(const char *fieldName, bool throwOnFail = true);
+	inline void SetFieldValue(const char *fieldName, IMonoObject *newValue, bool throwOnFail = true);
 
 	/// <summary>
 	/// Releases the object. Warning: also destructed in managed code!
@@ -72,7 +72,7 @@ struct IMonoObject
 	/// <summary>
 	/// Returns the object as it is seen in managed code, can be passed directly across languages.
 	/// </summary>
-	virtual mono::object GetManagedObject() = 0;
+	virtual IMonoObject *GetManagedObject() = 0;
 
 	virtual IMonoClass *GetClass() = 0;
 
@@ -129,7 +129,7 @@ struct MonoAnyValue : public ISerializable
 	MonoAnyValue(Vec3 value) : type(eMonoAnyType_Vec3) { vec4.x = value.x; vec4.y = value.y; vec4.z = value.z; }
 	MonoAnyValue(Ang3 value) : type(eMonoAnyType_Vec3) { vec4.x = value.x; vec4.y = value.y; vec4.z = value.z; }
 	MonoAnyValue(Quat value) : type(eMonoAnyType_Quat) { vec4.x = value.v.x; vec4.y = value.v.y; vec4.z = value.v.z; vec4.w = value.w; }
-	MonoAnyValue(mono::object value) : type(eMonoAnyType_Unknown), monoObject(value) {};
+	MonoAnyValue(IMonoObject *value) : type(eMonoAnyType_Unknown), monoObject(value) {};
 
 	virtual void SerializeWith(TSerialize ser) override
 	{
@@ -296,11 +296,11 @@ struct MonoAnyValue : public ISerializable
 		unsigned int	u;
 		const char*		str;
 		struct { float x, y, z, w; } vec4;
-		mono::object monoObject;
+		IMonoObject *monoObject;
 	};
 };
 
-inline mono::object IMonoObject::CallMethod(const char *funcName)
+inline IMonoObject *IMonoObject::CallMethod(const char *funcName)
 {
 	if (IMonoMethod *pMethod = GetClass()->GetMethod(funcName))
 		return pMethod->Invoke(this->GetManagedObject());
@@ -309,12 +309,12 @@ inline mono::object IMonoObject::CallMethod(const char *funcName)
 }
 
 template<typename P1>
-inline mono::object IMonoObject::CallMethod(const char *funcName, const P1 &p1)
+inline IMonoObject *IMonoObject::CallMethod(const char *funcName, const P1 &p1)
 {
 	IMonoArray *pArgs = CreateMonoArray(1);
 	pArgs->Insert(p1);
 
-	mono::object result = nullptr;
+	IMonoObject *result = nullptr;
 	if (IMonoMethod *pMethod = GetClass()->GetMethod(funcName, pArgs))
 		result = pMethod->InvokeArray(this->GetManagedObject(), pArgs);
 
@@ -323,13 +323,13 @@ inline mono::object IMonoObject::CallMethod(const char *funcName, const P1 &p1)
 };
 
 template<typename P1, typename P2>
-inline mono::object IMonoObject::CallMethod(const char *funcName, const P1 &p1, const P2 &p2)
+inline IMonoObject *IMonoObject::CallMethod(const char *funcName, const P1 &p1, const P2 &p2)
 {
 	IMonoArray *pArgs = CreateMonoArray(2);
 	pArgs->Insert(p1);
 	pArgs->Insert(p2);
 
-	mono::object result = nullptr;
+	IMonoObject *result = nullptr;
 	if (IMonoMethod *pMethod = GetClass()->GetMethod(funcName, pArgs))
 		result = pMethod->InvokeArray(this->GetManagedObject(), pArgs);
 
@@ -338,14 +338,14 @@ inline mono::object IMonoObject::CallMethod(const char *funcName, const P1 &p1, 
 };
 
 template<typename P1, typename P2, typename P3>
-inline mono::object IMonoObject::CallMethod(const char *funcName, const P1 &p1, const P2 &p2, const P3 &p3)
+inline IMonoObject *IMonoObject::CallMethod(const char *funcName, const P1 &p1, const P2 &p2, const P3 &p3)
 {
 	IMonoArray *pArgs = CreateMonoArray(3);
 	pArgs->Insert(p1);
 	pArgs->Insert(p2);
 	pArgs->Insert(p3);
 
-	mono::object result = nullptr;
+	IMonoObject *result = nullptr;
 	if (IMonoMethod *pMethod = GetClass()->GetMethod(funcName, pArgs))
 		result = pMethod->InvokeArray(this->GetManagedObject(), pArgs);
 
@@ -354,7 +354,7 @@ inline mono::object IMonoObject::CallMethod(const char *funcName, const P1 &p1, 
 };
 
 template<typename P1, typename P2, typename P3, typename P4>
-inline mono::object IMonoObject::CallMethod(const char *funcName, const P1 &p1, const P2 &p2, const P3 &p3, const P4 &p4)
+inline IMonoObject *IMonoObject::CallMethod(const char *funcName, const P1 &p1, const P2 &p2, const P3 &p3, const P4 &p4)
 {
 	IMonoArray *pArgs = CreateMonoArray(4);
 	pArgs->Insert(p1);
@@ -362,7 +362,7 @@ inline mono::object IMonoObject::CallMethod(const char *funcName, const P1 &p1, 
 	pArgs->Insert(p3);
 	pArgs->Insert(p4);
 
-	mono::object result = nullptr;
+	IMonoObject *result = nullptr;
 	if (IMonoMethod *pMethod = GetClass()->GetMethod(funcName, pArgs))
 		result = pMethod->InvokeArray(this->GetManagedObject(), pArgs);
 
@@ -371,7 +371,7 @@ inline mono::object IMonoObject::CallMethod(const char *funcName, const P1 &p1, 
 };
 
 template<typename P1, typename P2, typename P3, typename P4, typename P5>
-inline mono::object IMonoObject::CallMethod(const char *funcName, const P1 &p1, const P2 &p2, const P3 &p3, const P4 &p4, const P5 &p5)
+inline IMonoObject *IMonoObject::CallMethod(const char *funcName, const P1 &p1, const P2 &p2, const P3 &p3, const P4 &p4, const P5 &p5)
 {
 	IMonoArray *pArgs = CreateMonoArray(5);
 	pArgs->Insert(p1);
@@ -380,7 +380,7 @@ inline mono::object IMonoObject::CallMethod(const char *funcName, const P1 &p1, 
 	pArgs->Insert(p4);
 	pArgs->Insert(p5);
 
-	mono::object result = nullptr;
+	IMonoObject *result = nullptr;
 	if (IMonoMethod *pMethod = GetClass()->GetMethod(funcName, pArgs))
 		result = pMethod->InvokeArray(this->GetManagedObject(), pArgs);
 
@@ -389,7 +389,7 @@ inline mono::object IMonoObject::CallMethod(const char *funcName, const P1 &p1, 
 };
 
 template<typename P1, typename P2, typename P3, typename P4, typename P5, typename P6>
-inline mono::object IMonoObject::CallMethod(const char *funcName, const P1 &p1, const P2 &p2, const P3 &p3, const P4 &p4, const P5 &p5, const P6 &p6)
+inline IMonoObject *IMonoObject::CallMethod(const char *funcName, const P1 &p1, const P2 &p2, const P3 &p3, const P4 &p4, const P5 &p5, const P6 &p6)
 {
 	IMonoArray *pArgs = CreateMonoArray(6);
 	pArgs->Insert(p1);
@@ -399,7 +399,7 @@ inline mono::object IMonoObject::CallMethod(const char *funcName, const P1 &p1, 
 	pArgs->Insert(p5);
 	pArgs->Insert(p6);
 
-	mono::object result = nullptr;
+	IMonoObject *result = nullptr;
 	if (IMonoMethod *pMethod = GetClass()->GetMethod(funcName, pArgs))
 		result = pMethod->InvokeArray(this->GetManagedObject(), pArgs);
 
@@ -407,22 +407,22 @@ inline mono::object IMonoObject::CallMethod(const char *funcName, const P1 &p1, 
 	return result;
 };
 
-inline mono::object IMonoObject::GetPropertyValue(const char *propertyName, bool throwOnFail)
+inline IMonoObject *IMonoObject::GetPropertyValue(const char *propertyName, bool throwOnFail)
 {
 	return GetClass()->GetPropertyValue(this->GetManagedObject(), propertyName, throwOnFail);
 }
 
-inline void IMonoObject::SetPropertyValue(const char *propertyName, mono::object newValue, bool throwOnFail)
+inline void IMonoObject::SetPropertyValue(const char *propertyName, IMonoObject *newValue, bool throwOnFail)
 {
 	GetClass()->SetPropertyValue(this->GetManagedObject(), propertyName, newValue, throwOnFail);
 }
 
-inline mono::object IMonoObject::GetFieldValue(const char *fieldName, bool throwOnFail)
+inline IMonoObject *IMonoObject::GetFieldValue(const char *fieldName, bool throwOnFail)
 {
 	return GetClass()->GetFieldValue(this->GetManagedObject(), fieldName, throwOnFail);
 }
 
-inline void IMonoObject::SetFieldValue(const char *fieldName, mono::object newValue, bool throwOnFail)
+inline void IMonoObject::SetFieldValue(const char *fieldName, IMonoObject *newValue, bool throwOnFail)
 {
 	GetClass()->SetFieldValue(this->GetManagedObject(), fieldName, newValue, throwOnFail);
 }

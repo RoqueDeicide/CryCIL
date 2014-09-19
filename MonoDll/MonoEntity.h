@@ -58,7 +58,7 @@ struct SQueuedProperty
 };
 
 class CMonoEntityExtension
-	: public CGameObjectExtensionHelper<CMonoEntityExtension, IGameObjectExtension>
+	: public CGameObjectExtensionHelper < CMonoEntityExtension, IGameObjectExtension >
 {
 public:
 	CMonoEntityExtension();
@@ -91,19 +91,17 @@ public:
 	struct RMIParams
 	{
 		RMIParams() : args(NULL) {}
-		RMIParams(mono::object _args, const char *funcName, EntityId target);
+		RMIParams(IMonoObject *_args, const char *funcName, EntityId target);
 
 		void SerializeWith(TSerialize ser);
 
-		mono::object args;
+		IMonoObject *args;
 		string methodName;
 		EntityId targetId;
 	};
 
 	DECLARE_SERVER_RMI_NOATTACH(SvScriptRMI, RMIParams, eNRT_ReliableUnordered);
 	DECLARE_CLIENT_RMI_NOATTACH(ClScriptRMI, RMIParams, eNRT_ReliableUnordered);
-
-	IMonoObject *GetScript() { return m_pScript; }
 
 	void SetPropertyValue(IEntityPropertyHandler::SPropertyInfo propertyInfo, const char *value);
 
@@ -113,7 +111,7 @@ public:
 
 protected:
 	ICryScriptInstance *m_pScript;
-	mono::object m_pManagedObject;
+	IMonoObject *m_pManagedObject;
 
 	IAnimatedCharacter *m_pAnimatedCharacter;
 

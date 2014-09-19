@@ -22,7 +22,7 @@ class CScriptArray
 {
 public:
 	// Used on MonoArray's returned from C#.
-	CScriptArray(mono::object monoArray, bool allowGC = true);
+	CScriptArray(IMonoObject *monoArray, bool allowGC = true);
 	// Used to send arrays to C#.
 	CScriptArray(MonoDomain *pDomain, int size, IMonoClass *pContainingType = nullptr, bool allowGC = true);
 
@@ -38,17 +38,28 @@ public:
 	virtual void Resize(int size) override;
 	virtual int GetSize() const override { return (int)mono_array_length((MonoArray *)m_pObject); }
 
-	virtual IMonoArray *Clone() override { return new CScriptArray((mono::object)mono_array_clone((MonoArray *)m_pObject)); }
+	virtual IMonoArray *Clone() override
+	{
+		return new CScriptArray((IMonoObject *)mono_array_clone((MonoArray *)m_pObject));
+	}
 
 	virtual IMonoClass *GetElementClass() override { return GetClass(m_pElementClass); }
 	virtual IMonoClass *GetDefaultElementClass() { return GetClass(m_pDefaultElementClass); }
 
-	virtual mono::object GetItem(int index) override;
+	virtual IMonoObject *GetItem(int index) override;
 
 	virtual void InsertNativePointer(void *ptr, int index = -1) override;
-	virtual void InsertAny(MonoAnyValue value, int index = -1) override;
-	virtual void InsertMonoString(mono::string string, int index = -1) override { InsertMonoObject((mono::object)string, index); }
-	virtual void InsertMonoObject(mono::object object, int index = -1) override;
+	virtual void InsertAny(MonoAnyValue value, int index = -1) override
+	{
+		IMonoDomain *pDomain = GetClass()->GetAssembly()->GetDomain();
+
+		InsertMonoObject(pDomain->BoxAnyValue(value), index);
+	}
+	virtual void InsertMonoString(mono::string string, int index = -1) override
+	{
+		InsertMonoObject((IMonoObject *)string, index);
+	}
+	virtual void InsertMonoObject(IMonoObject *object, int index = -1) override;
 	// ~IMonoArray
 
 	// IMonoObject
@@ -63,7 +74,7 @@ public:
 	virtual EMonoAnyType GetType() override { return eMonoAnyType_Array; }
 	virtual MonoAnyValue GetAnyValue() override { return MonoAnyValue(); }
 
-	virtual mono::object GetManagedObject() override { return CScriptObject::GetManagedObject(); }
+	virtual IMonoObject *GetManagedObject() override { return CScriptObject::GetManagedObject(); }
 
 	virtual IMonoClass *GetClass() override { return CScriptObject::GetClass(); }
 

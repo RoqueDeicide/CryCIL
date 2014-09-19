@@ -38,7 +38,7 @@ IMonoClass *CScriptObject::GetClass()
 {
 	if (m_pClass == NULL)
 	{
-		if (CScriptDomain *pDomain = static_cast<CScriptSystem *>(GetMonoScriptSystem())->TryGetDomain(mono_object_get_domain(m_pObject)))
+		if (CScriptDomain *pDomain = GetMonoRunTime()->AppDomain)
 		{
 			MonoClass *pMonoClass = GetMonoClass();
 
@@ -123,13 +123,13 @@ MonoAnyValue CScriptObject::GetAnyValue()
 		return ToCryString((mono::string)GetManagedObject());
 	case eMonoAnyType_Array:
 	{
-							   MonoAnyValue any = MonoAnyValue((mono::object)m_pObject);
+							   MonoAnyValue any = MonoAnyValue((IMonoObject *)m_pObject);
 							   any.type = eMonoAnyType_Array;
 
 							   return any;
 	}
 	case eMonoAnyType_Unknown:
-		return MonoAnyValue((mono::object)m_pObject);
+		return MonoAnyValue((IMonoObject *)m_pObject);
 	}
 
 	return MonoAnyValue();
@@ -155,12 +155,12 @@ void CScriptObject::HandleException(MonoObject *pException)
 	// Fatal errors override disabling the message box option
 	bool isFatal = g_pMonoCVars->mono_exceptionsTriggerFatalErrors != 0;
 
-	IMonoAssembly *pCryBraryAssembly = GetMonoScriptSystem()->GetCryBraryAssembly();
+	IMonoAssembly *pCryBraryAssembly = GetMonoScriptSystem()->CryBrary;
 
 	if ((g_pMonoCVars->mono_exceptionsTriggerMessageBoxes || isFatal) && pCryBraryAssembly)
 	{
 		auto args = CreateMonoArray(2);
-		args->InsertMonoObject((mono::object)pException);
+		args->InsertMonoObject((IMonoObject *)pException);
 		args->Insert(isFatal);
 
 		IMonoClass *pDebugClass = pCryBraryAssembly->GetClass("Debug");
