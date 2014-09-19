@@ -12,7 +12,7 @@ namespace CryEngine.Native
 		extern internal static ActorInitializationParams GetActorInfoById(uint entId);
 
 		[MethodImplAttribute(MethodImplOptions.InternalCall)]
-		extern internal static void RegisterActorClass(string name, bool isNative, bool isAI);
+		extern internal static void RegisterActorClass(string name, bool isNative);
 		[MethodImplAttribute(MethodImplOptions.InternalCall)]
 		extern internal static ActorInitializationParams CreateActor(int channelId, string name, string className, Vector3 pos, Quaternion rot, Vector3 scale);
 		[MethodImplAttribute(MethodImplOptions.InternalCall)]

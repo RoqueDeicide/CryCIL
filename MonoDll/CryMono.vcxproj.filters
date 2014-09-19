@@ -97,7 +97,6 @@
     <ClInclude Include="MonoMethod.h">
       <Filter>Wrappers</Filter>
     </ClInclude>
-    <ClInclude Include="AIActor.h" />
     <ClInclude Include="Headers\CryMonoInitializationHelpers.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
@@ -241,7 +240,6 @@
     <ClCompile Include="EntityEventHandling.cpp">
       <Filter>EntitySystem</Filter>
     </ClCompile>
-    <ClCompile Include="AIActor.cpp" />
     </ClCompile>
     <ClCompile Include="Interops\FlowGraph\FlowGraphNode_Mono.cpp">
       <Filter>Interops\FlowGraph</Filter>

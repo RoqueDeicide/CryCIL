@@ -95,7 +95,6 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
-    <ClInclude Include="AIActor.h" />
     <ClInclude Include="CPluginCryMono.h" />
     <ClInclude Include="CryScriptInstance.h" />
     <ClInclude Include="DynMonoArray.h" />
@@ -159,7 +158,6 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
-    <ClCompile Include="AIActor.cpp" />
     <ClCompile Include="CPluginCryMono.cpp" />
     <ClCompile Include="CryScriptInstance.cpp" />
     <ClCompile Include="DynMonoArray.cpp" />

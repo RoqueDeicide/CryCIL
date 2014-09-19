@@ -99,11 +99,8 @@ void ActorSystemInterop::RegisterActorClass(mono::string name, bool isNative, bo
 			MonoWarning("Aborting registration of actor class %s, a class with the same name already exists", className);
 			return;
 		}
-
-		if (isAI)
-			static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->RegisterFactory(className, (CMonoAIActor *)0, true, (CMonoAIActor *)0);
-		else
-			static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->RegisterFactory(className, (CMonoActor *)0, false, (CMonoActor *)0);
+		// Register a factory.
+		GetMonoScriptSystem()->GameFramework->RegisterFactory(className, (CMonoActor *)0, false, (CMonoActor *)0);
 	}
 
 	m_monoActorClasses.insert(TActorClasses::value_type(className, isNative ? EMonoActorType_Native : EMonoActorType_Managed));
