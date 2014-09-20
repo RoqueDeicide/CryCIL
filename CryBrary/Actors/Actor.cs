@@ -169,7 +169,7 @@ namespace CryEngine.Actors
 		{
 		}
 
-		protected virtual void OnPostUpdate()
+		protected virtual void OnPostUpdate(float deltaTime)
 		{
 		}
 
