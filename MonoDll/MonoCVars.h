@@ -6,16 +6,7 @@ struct SCVars
 	int mono_exceptionsTriggerMessageBoxes;
 	int mono_exceptionsTriggerFatalErrors;
 
-	int mono_realtimeScripting;
-	int mono_realtimeScriptingDebug;
-	int mono_realtimeScriptingDetectChanges;
-
-	int mono_softBreakpoints;
-
 	int mono_generateMdbIfPdbIsPresent;
-
-	int mono_compileScripts;
-	const char *mono_scriptDirectory;
 
 	int mono_entityDeleteExtensionOnNetworkBindFailure;
 
