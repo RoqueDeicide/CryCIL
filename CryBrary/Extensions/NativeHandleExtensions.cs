@@ -3,6 +3,7 @@ using CryEngine;
 using CryEngine.Actors;
 using CryEngine.Entities;
 using CryEngine.Entities.Advanced;
+using CryEngine.Flowgraph;
 using CryEngine.Utilities;
 
 namespace CryEngine.Native
@@ -125,12 +126,12 @@ namespace CryEngine.Native
 		}
 		#endregion
 		#region FlowNode
-		public static IntPtr GetIFlowNode(this Flowgraph.FlowNode node)
+		public static IntPtr GetIFlowNode(this FlowGraphNode node)
 		{
 			return node.Handle;
 		}
 
-		public static void SetIFlowNode(this Flowgraph.FlowNode node, IntPtr handle)
+		public static void SetIFlowNode(this FlowGraphNode node, IntPtr handle)
 		{
 			node.Handle = handle;
 		}

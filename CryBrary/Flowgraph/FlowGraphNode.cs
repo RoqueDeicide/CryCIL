@@ -28,7 +28,7 @@ namespace CryEngine.Flowgraph
 		/// <summary>
 		/// Gets the native pointer to the flow node.
 		/// </summary>
-		public IntPtr Handle { get; private set; }
+		public IntPtr Handle { get; internal set; }
 		/// <summary>
 		/// Indicates the filtering category of this node.
 		/// </summary>
