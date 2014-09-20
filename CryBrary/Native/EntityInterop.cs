@@ -139,29 +139,19 @@ namespace CryEngine.Native
 		public static extern void LoadCharacter(IntPtr ptr, string fileName, int slot);
 
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		public static extern IntPtr AddEntityLink(IntPtr entPtr, string linkName, EntityId otherId, EntityGuid otherGuid,
-												  Quaternion relativeRot, Vector3 relativePos);
+		public static extern IntPtr AddEntityLink(IntPtr entPtr, string linkName, EntityId otherId, EntityGuid otherGuid);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern object[] GetEntityLinks(IntPtr entPtr);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern void RemoveAllEntityLinks(IntPtr entPtr);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern void RemoveEntityLink(IntPtr entPtr, IntPtr linkPtr);
-
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern string GetEntityLinkName(IntPtr linkPtr);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern EntityId GetEntityLinkTarget(IntPtr linkPtr);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		public static extern Quaternion GetEntityLinkRelativeRotation(IntPtr linkPtr);
-		[MethodImpl(MethodImplOptions.InternalCall)]
-		public static extern Vector3 GetEntityLinkRelativePosition(IntPtr linkPtr);
-		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern void SetEntityLinkTarget(IntPtr linkPtr, EntityId target);
-		[MethodImpl(MethodImplOptions.InternalCall)]
-		public static extern void SetEntityLinkRelativeRotation(IntPtr linkPtr, Quaternion relRot);
-		[MethodImpl(MethodImplOptions.InternalCall)]
-		public static extern void SetEntityLinkRelativePosition(IntPtr linkPtr, Vector3 relPos);
 
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern int LoadLight(IntPtr entPtr, int slot, LightParams lightParams);

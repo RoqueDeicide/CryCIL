@@ -95,11 +95,7 @@ EntityInterop::EntityInterop()
 
 	REGISTER_METHOD(GetEntityLinkName);
 	REGISTER_METHOD(GetEntityLinkTarget);
-	REGISTER_METHOD(GetEntityLinkRelativeRotation);
-	REGISTER_METHOD(GetEntityLinkRelativePosition);
 	REGISTER_METHOD(SetEntityLinkTarget);
-	REGISTER_METHOD(SetEntityLinkRelativeRotation);
-	REGISTER_METHOD(SetEntityLinkRelativePosition);
 	REGISTER_METHOD(LoadLight);
 
 	REGISTER_METHOD(FreeSlot);
@@ -759,30 +755,11 @@ EntityId EntityInterop::GetEntityLinkTarget(IEntityLink *pLink)
 	return pLink->entityId;
 }
 
-Quat EntityInterop::GetEntityLinkRelativeRotation(IEntityLink *pLink)
-{
-	return pLink->relRot;
-}
-
-Vec3 EntityInterop::GetEntityLinkRelativePosition(IEntityLink *pLink)
-{
-	return pLink->relPos;
-}
-
 void EntityInterop::SetEntityLinkTarget(IEntityLink *pLink, EntityId id)
 {
 	pLink->entityId = id;
 }
 
-void EntityInterop::SetEntityLinkRelativeRotation(IEntityLink *pLink, Quat relRot)
-{
-	pLink->relRot = relRot;
-}
-
-void EntityInterop::SetEntityLinkRelativePosition(IEntityLink *pLink, Vec3 relPos)
-{
-	pLink->relPos = relPos;
-}
 
 int EntityInterop::LoadLight(IEntity *pEntity, int slot, SMonoLightParams params)
 {

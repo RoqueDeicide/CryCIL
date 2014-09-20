@@ -248,11 +248,7 @@ protected:
 
 	static mono::string GetEntityLinkName(IEntityLink *pLink);
 	static EntityId GetEntityLinkTarget(IEntityLink *pLink);
-	static Quat GetEntityLinkRelativeRotation(IEntityLink *pLink);
-	static Vec3 GetEntityLinkRelativePosition(IEntityLink *pLink);
 	static void SetEntityLinkTarget(IEntityLink *pLink, EntityId);
-	static void SetEntityLinkRelativeRotation(IEntityLink *pLink, Quat);
-	static void SetEntityLinkRelativePosition(IEntityLink *pLink, Vec3);
 
 	static int LoadLight(IEntity *pEntity, int slot, SMonoLightParams light);
 	static void FreeSlot(IEntity *pEntity, int slot);

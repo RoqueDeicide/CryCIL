@@ -36,8 +36,7 @@ namespace CryEngine.Entities
 		{
 			return
 				new EntityLink(
-					EntityInterop.AddEntityLink(parent.GetIEntity(), linkName, child.Id, child.GUID,
-													  relativeRot ?? Quaternion.Identity, relativePos ?? Vector3.Zero), parent);
+					EntityInterop.AddEntityLink(parent.GetIEntity(), linkName, child.Id, child.GUID), parent);
 		}
 		/// <summary>
 		/// Unlinks everything from the entity.
@@ -78,22 +77,6 @@ namespace CryEngine.Entities
 		public string Name
 		{
 			get { return EntityInterop.GetEntityLinkName(this.Handle); }
-		}
-		/// <summary>
-		/// Orientation of the child entity relative to parent entity.
-		/// </summary>
-		public Quaternion RelativeRotation
-		{
-			get { return EntityInterop.GetEntityLinkRelativeRotation(this.Handle); }
-			set { EntityInterop.SetEntityLinkRelativeRotation(this.Handle, value); }
-		}
-		/// <summary>
-		/// Position of the child entity relative to parent entity.
-		/// </summary>
-		public Vector3 RelativePosition
-		{
-			get { return EntityInterop.GetEntityLinkRelativePosition(this.Handle); }
-			set { EntityInterop.SetEntityLinkRelativePosition(this.Handle, value); }
 		}
 		#endregion
 		#region Construction
