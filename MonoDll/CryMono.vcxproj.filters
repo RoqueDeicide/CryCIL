@@ -21,12 +21,6 @@
     <ClInclude Include="MonoEntityPropertyHandler.h">
       <Filter>EntitySystem</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\IMonoScriptSystem.h">
-      <Filter>Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="MonoScriptSystem.h">
-      <Filter>Mono</Filter>
-    </ClInclude>
     <ClInclude Include="Headers\IMonoArray.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
@@ -63,9 +57,6 @@
     <ClInclude Include="NativeEntity.h">
       <Filter>EntitySystem\Native</Filter>
     </ClInclude>
-    <ClInclude Include="CryScriptInstance.h">
-      <Filter>Mono</Filter>
-    </ClInclude>
     <ClInclude Include="MonoCVars.h">
       <Filter>Mono</Filter>
     </ClInclude>
@@ -100,7 +91,11 @@
     <ClInclude Include="Headers\CryMonoInitializationHelpers.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="MonoRunTime.h">
+      <Filter>Mono</Filter>
     </ClInclude>
+    <ClInclude Include="Headers\IMonoRunTime.h">
+      <Filter>Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="Interops\FlowGraph\FlowGraphNode_Mono.h">
       <Filter>Interops\FlowGraph</Filter>
@@ -177,8 +172,12 @@
     <ClInclude Include="Headers\IMonoInterop.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="AllInterops.h" />
     <ClInclude Include="Interops\FlowGraph\FlowManager.h">
       <Filter>Interops\FlowGraph</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\IMonoScriptSystem.h">
+      <Filter>Interfaces</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -216,12 +215,6 @@
     <ClCompile Include="NativeEntity.cpp">
       <Filter>EntitySystem\Native</Filter>
     </ClCompile>
-    <ClCompile Include="MonoScriptSystem.cpp">
-      <Filter>Mono</Filter>
-    </ClCompile>
-    <ClCompile Include="CryScriptInstance.cpp">
-      <Filter>Mono</Filter>
-    </ClCompile>
     <ClCompile Include="MonoCVars.cpp">
       <Filter>Mono</Filter>
     </ClCompile>
@@ -240,6 +233,8 @@
     <ClCompile Include="EntityEventHandling.cpp">
       <Filter>EntitySystem</Filter>
     </ClCompile>
+    <ClCompile Include="MonoRunTime.cpp">
+      <Filter>Mono</Filter>
     </ClCompile>
     <ClCompile Include="Interops\FlowGraph\FlowGraphNode_Mono.cpp">
       <Filter>Interops\FlowGraph</Filter>

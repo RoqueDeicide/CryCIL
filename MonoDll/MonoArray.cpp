@@ -4,7 +4,7 @@
 #include "MonoDomain.h"
 #include "MonoObject.h"
 
-#include "MonoScriptSystem.h"
+#include "MonoRunTime.h"
 
 #include "MonoHelpers.h"
 

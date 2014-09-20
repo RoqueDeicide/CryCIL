@@ -17,8 +17,7 @@
 #include <MonoCommon.h>
 
 CMonoEntityExtension::CMonoEntityExtension()
-	: m_pScript(nullptr)
-	, m_pManagedObject(nullptr)
+	: m_pManagedObject(nullptr)
 	, m_bInitialized(false)
 	, m_pAnimatedCharacter(nullptr)
 	, m_bDestroyed(false)
@@ -224,7 +223,7 @@ void CMonoEntityExtension::RMIParams::SerializeWith(TSerialize ser)
 		}
 		else
 		{
-			pArgs = GetMonoScriptSystem()->AppDomain->CreateArray(length);
+			pArgs = GetMonoRunTime()->AppDomain->CreateArray(length);
 
 			for (int i = 0; i < length; i++)
 			{

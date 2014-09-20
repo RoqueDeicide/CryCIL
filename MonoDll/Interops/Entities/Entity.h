@@ -52,7 +52,7 @@ struct SEntityRegistrationParams
 
 	EEntityClassFlags Flags;
 
-	mono::object Properties;
+	IMonoObject *Properties;
 };
 
 struct SMonoEntityProperty
@@ -149,7 +149,6 @@ class CMonoEntityAttachment;
 class EntityInterop
 	: public IMonoInterop
 	, public IEntitySystemSink
-	, public IMonoScriptEventListener
 {
 public:
 	EntityInterop();
@@ -163,17 +162,6 @@ public:
 	virtual void OnEvent(IEntity *pEntity, SEntityEvent &event) {}
 	// ~IEntitySystemSink
 
-	// IMonoScriptEventListener
-	virtual void OnReloadStart() {}
-	virtual void OnReloadComplete();
-
-	virtual void OnScriptInstanceCreated(const char *scriptName, EMonoScriptFlags scriptType, ICryScriptInstance *pScriptInstance) {}
-	virtual void OnScriptInstanceInitialized(ICryScriptInstance *pScriptInstance) {}
-	virtual void OnScriptInstanceReleased(ICryScriptInstance *pScriptInstance, int scriptId) {}
-
-	virtual void OnShutdown() {}
-	// ~IMonoScriptEventListener
-
 protected:
 	// IMonoScriptBind
 	virtual const char *GetClassName() { return "EntityInterop"; }
@@ -186,7 +174,7 @@ protected:
 	bool IsMonoEntity(const char *className);
 
 	// Scriptbinds
-	static mono::object SpawnEntity(EntitySpawnParams, bool, SMonoEntityInfo &entityInfo);
+	static IMonoObject *SpawnEntity(EntitySpawnParams, bool, SMonoEntityInfo &entityInfo);
 	static void RemoveEntity(EntityId, bool removeNow);
 
 	static IEntity *GetEntity(EntityId id);
@@ -198,11 +186,11 @@ protected:
 	static mono::string GetEntityClassName(IEntity *pEntity);
 
 	static EntityId FindEntity(mono::string);
-	static mono::object GetEntitiesByClass(mono::string);
-	static mono::object GetEntitiesByClasses(mono::object);
-	static mono::object GetEntitiesInBox(AABB bbox, int objTypes);
+	static IMonoObject *GetEntitiesByClass(mono::string);
+	static IMonoObject *GetEntitiesByClasses(IMonoObject *);
+	static IMonoObject *GetEntitiesInBox(AABB bbox, int objTypes);
 
-	static mono::object QueryProximity(AABB box, mono::string className, uint32 nEntityFlags);
+	static IMonoObject *QueryProximity(AABB box, mono::string className, uint32 nEntityFlags);
 
 	static void SetWorldPos(IEntity *pEnt, Vec3);
 	static Vec3 GetWorldPos(IEntity *pEnt);
@@ -241,8 +229,8 @@ protected:
 	static void SetVisionParams(IEntity *pEntity, float r, float g, float b, float a);
 	static void SetHUDSilhouettesParams(IEntity *pEntity, float r, float g, float b, float a);
 
-	static IEntityLink *AddEntityLink(IEntity *pEntity, mono::string linkName, EntityId otherId, EntityGUID entityGuid, Quat relativeRot, Vec3 relativePos);
-	static mono::object GetEntityLinks(IEntity *pEntity);
+	static IEntityLink *AddEntityLink(IEntity *pEntity, mono::string linkName, EntityId otherId, EntityGUID entityGuid);
+	static IMonoObject *GetEntityLinks(IEntity *pEntity);
 	static void RemoveAllEntityLinks(IEntity *pEntity);
 	static void RemoveEntityLink(IEntity *pEntity, IEntityLink *pLink);
 
@@ -297,7 +285,7 @@ protected:
 
 	static IParticleEmitter *LoadParticleEmitter(IEntity *pEntity, int slot, IParticleEffect *pEffect, SpawnParams &spawnParams);
 
-	static void RemoteInvocation(EntityId entityId, EntityId targetId, mono::string methodName, mono::object args, ERMInvocation target, int channelId);
+	static void RemoteInvocation(EntityId entityId, EntityId targetId, mono::string methodName, IMonoObject *args, ERMInvocation target, int channelId);
 
 	static const CCamera *GetCameraProxy(IEntity *pEntity);
 
@@ -314,7 +302,7 @@ protected:
 	static int GetNumAreas();
 	static const IArea *GetArea(int areaId);
 
-	static mono::object QueryAreas(EntityId id, Vec3 vPos, int maxResults, bool forceCalculation);
+	static IMonoObject *QueryAreas(EntityId id, Vec3 vPos, int maxResults, bool forceCalculation);
 
 	static int GetAreaEntityAmount(IArea *pArea);
 	static const EntityId GetAreaEntityByIdx(IArea *pArea, int index);

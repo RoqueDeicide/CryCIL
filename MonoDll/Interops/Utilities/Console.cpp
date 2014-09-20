@@ -6,7 +6,7 @@
 #include <MonoArray.h>
 #include <MonoCommon.h>
 
-#include "MonoScriptSystem.h"
+#include "MonoRunTime.h"
 
 ConsoleInterop::ConsoleInterop()
 {
@@ -38,7 +38,7 @@ ConsoleInterop::ConsoleInterop()
 	REGISTER_METHOD(GetCmdArg);
 }
 
-void ConsoleInterop::HandleException(mono::object exception)
+void ConsoleInterop::HandleException(IMonoObject *exception)
 {
 	CScriptObject::HandleException((MonoObject *)exception);
 }
@@ -54,7 +54,7 @@ void ConsoleInterop::OnMonoCmd(IConsoleCmdArgs *cmdArgs)
 	IMonoArray *pArgs = CreateMonoArray(1);
 	pArgs->Insert(cmdArgs->GetCommandLine());
 
-	GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("ConsoleCommand")->GetMethod("OnCommand", 1)->InvokeArray(NULL, pArgs);
+	GetMonoRunTime()->CryBrary->GetClass("ConsoleCommand")->GetMethod("OnCommand", 1)->InvokeArray(NULL, pArgs);
 	pArgs->Release();
 }
 

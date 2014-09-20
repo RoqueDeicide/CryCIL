@@ -1,6 +1,6 @@
 #ifndef ___CRYMONO_PLUGINSDK_INTEGRATION_H__
 #define ___CRYMONO_PLUGINSDK_INTEGRATION_H__
-#include "MonoScriptSystem.h"
+#include "MonoRunTime.h"
 
 #ifdef PLUGIN_SDK
 

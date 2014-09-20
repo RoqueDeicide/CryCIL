@@ -191,13 +191,13 @@ public:
 			args->Insert(this->nodeId);
 			args->Insert(this->graphId);
 			// Initialize managed object.
-			mono::object nodeObject =
+			IMonoObject *nodeObject =
 				GetMonoRunTime()->CryBrary->GetClass("FlowGraphNode")->GetMethod("Create")->InvokeArray(nullptr, args);
 			args->Release(false);
 			// Save reference for later, or tell FlowGraph about an error, if creation has failed for whatever reason.
 			if (nodeObject)
 			{
-				this->managedNode = *nodeObject;
+				this->managedNode = nodeObject;
 				return true;
 			}
 			return false;

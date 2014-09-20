@@ -3,7 +3,7 @@
 
 #include "MonoEntity.h"
 
-#include "MonoScriptSystem.h"
+#include "MonoRunTime.h"
 
 #include <MonoCommon.h>
 #include <IMonoScriptSystem.h>
@@ -79,7 +79,7 @@ void CEntityPropertyHandler::SetProperty(IEntity *pIEntity, int index, const cha
 	EntityId id = pIEntity->GetId();
 
 	CMonoEntityExtension *pEntity = nullptr;
-	if (IGameObject *pGameObject = GetMonoScriptSystem()->GameFramework->GetGameObject(id))
+	if (IGameObject *pGameObject = GetMonoRunTime()->GameFramework->GetGameObject(id))
 		pEntity = static_cast<CMonoEntityExtension *>(pGameObject->QueryExtension(pIEntity->GetClass()->GetName()));
 
 	// Only true after game has started, limiting this to changes made in Editor.
@@ -110,11 +110,11 @@ void CEntityPropertyHandler::SetProperty(IEntity *pIEntity, int index, const cha
 
 const char *CEntityPropertyHandler::GetProperty(IEntity *pIEntity, int index) const
 {
-	if (IGameObject *pGameObject = GetMonoScriptSystem()->GameFramework->GetGameObject(pIEntity->GetId()))
+	if (IGameObject *pGameObject = GetMonoRunTime()->GameFramework->GetGameObject(pIEntity->GetId()))
 	{
 		if (CMonoEntityExtension *pEntity = static_cast<CMonoEntityExtension *>(pGameObject->QueryExtension(pIEntity->GetClass()->GetName())))
 		{
-			if (IMonoObject *result = pEntity->GetScript()->CallMethod("GetPropertyValue", m_pProperties[index].info.name))
+			if (IMonoObject *result = pEntity->ManagedWrapper->CallMethod("GetPropertyValue", m_pProperties[index].info.name))
 				return ToCryString((mono::string)result);
 		}
 	}

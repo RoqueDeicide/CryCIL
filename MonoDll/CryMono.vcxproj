@@ -95,8 +95,8 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
+    <ClInclude Include="AllInterops.h" />
     <ClInclude Include="CPluginCryMono.h" />
-    <ClInclude Include="CryScriptInstance.h" />
     <ClInclude Include="DynMonoArray.h" />
     <ClInclude Include="EntityEventHandling.h" />
     <ClInclude Include="Headers\CryMonoInitializationHelpers.h" />
@@ -108,6 +108,8 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
     <ClInclude Include="Headers\IMonoException.h" />
     <ClInclude Include="Headers\IMonoMethod.h" />
     <ClInclude Include="Headers\IMonoObject.h" />
+    <ClInclude Include="Headers\IMonoRunTime.h" />
+    <ClInclude Include="Headers\IMonoScriptSystem.h" />
     <ClInclude Include="Headers\MonoCommon.h" />
     <ClInclude Include="Interops\CrySerialize.h" />
     <ClInclude Include="Interops\Engine\3DEngine.h" />
@@ -141,16 +143,15 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
     <ClInclude Include="MonoException.h" />
     <ClInclude Include="MonoHelpers.h" />
     <ClInclude Include="MonoMethod.h" />
+    <ClInclude Include="MonoRunTime.h" />
     <ClInclude Include="NativeEntity.h" />
     <ClInclude Include="PathUtils.h" />
-    <ClInclude Include="MonoScriptSystem.h" />
     <ClInclude Include="MonoAssembly.h" />
     <ClInclude Include="MonoClass.h" />
     <ClInclude Include="MonoEntityClass.h" />
     <ClInclude Include="MonoEntityEventHandler.h" />
     <ClInclude Include="MonoEntityPropertyHandler.h" />
     <ClInclude Include="MonoObject.h" />
-    <ClInclude Include="Headers\IMonoScriptSystem.h" />
     <ClInclude Include="Headers\IMonoInterop.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -159,7 +160,6 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="CPluginCryMono.cpp" />
-    <ClCompile Include="CryScriptInstance.cpp" />
     <ClCompile Include="DynMonoArray.cpp" />
     <ClCompile Include="EntityEventHandling.cpp" />
     <ClCompile Include="Interops\CrySerialize.cpp" />
@@ -191,7 +191,7 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
     <ClCompile Include="MonoEntity.cpp" />
     <ClCompile Include="MonoMethod.cpp" />
     <ClCompile Include="MonoObject.cpp" />
-    <ClCompile Include="MonoScriptSystem.cpp" />
+    <ClCompile Include="MonoRunTime.cpp" />
     <ClCompile Include="MonoArray.cpp" />
     <ClCompile Include="MonoAssembly.cpp" />
     <ClCompile Include="CryMonoDll.cpp" />

@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "Debug.h"
 
-#include "MonoScriptSystem.h"
+#include "MonoRunTime.h"
 
 #include <IGameFramework.h>
 
@@ -62,7 +62,7 @@ void DebugInterop::AddAABB(Vec3 pos, AABB aabb, ColorF clr, float timeout)
 
 IPersistantDebug *DebugInterop::GetIPersistentDebug()
 {
-	return static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIPersistantDebug();
+	return GetMonoRunTime()->GameFramework->GetIPersistantDebug();
 }
 
 CFrameProfiler *DebugInterop::CreateFrameProfiler(mono::string methodName)

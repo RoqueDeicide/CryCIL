@@ -15,9 +15,9 @@
 /// <summary>
 /// Simple pre-processor method used to quickly register methods within interops.
 /// </summary>
-#define REGISTER_METHOD(method) GetMonoScriptSystem()->RegisterInteropMethod(method, (GetNamespace() + (string)".").append(GetClassName()).append("::").append(#method))
+#define REGISTER_METHOD(method) GetMonoRunTime()->RegisterInteropMethod(method, (GetNamespace() + (string)".").append(GetClassName()).append("::").append(#method))
 
-#define REGISTER_METHOD_NAME(method, name) GetMonoScriptSystem()->RegisterInteropMethod(method, (GetNamespace() + (string)".").append(GetClassName()).append("::").append(name))
+#define REGISTER_METHOD_NAME(method, name) GetMonoRunTime()->RegisterInteropMethod(method, (GetNamespace() + (string)".").append(GetClassName()).append("::").append(name))
 
 /// <summary>
 /// </summary>
@@ -30,7 +30,7 @@ struct IMonoInterop
 	/// </summary>
 	virtual const char *GetNamespace() { return "CryEngine.Native"; }
 	/// <summary>
-	/// The Mono class which this scriptbind is tied to. Unlike GetNameSpace and GetNameSpaceExtension, this has no default value and MUST be set.
+	/// The Mono class which this interop is tied to. Unlike GetNameSpace and GetNameSpaceExtension, this has no default value and MUST be set.
 	/// </summary>
 	virtual const char *GetClassName() = 0;
 };

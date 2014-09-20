@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "MonoCVars.h"
 
-#include "MonoScriptSystem.h"
+#include "MonoRunTime.h"
 
 void SCVars::InitCVars(IConsole *pConsole)
 {

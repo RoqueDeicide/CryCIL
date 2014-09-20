@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "GameObject.h"
 
-#include "MonoScriptSystem.h"
+#include "MonoRunTime.h"
 
 GameObjectInterop::GameObjectInterop()
 {
@@ -30,7 +30,7 @@ GameObjectInterop::GameObjectInterop()
 
 IGameObject *GameObjectInterop::GetGameObject(EntityId id)
 {
-	return static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetGameObject(id);
+	return GetMonoRunTime()->GameFramework->GetGameObject(id);
 }
 
 void GameObjectInterop::EnablePostUpdates(IGameObject *pGameObject, IGameObjectExtension *pExtension, bool enable)

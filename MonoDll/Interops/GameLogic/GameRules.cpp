@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "GameRules.h"
 
-#include "MonoScriptSystem.h"
+#include "MonoRunTime.h"
 
 #include <IGameRulesSystem.h>
 #include <IActorSystem.h>
@@ -17,7 +17,7 @@ GameRulesInterop::GameRulesInterop()
 //-----------------------------------------------------------------------------
 void GameRulesInterop::RegisterGameMode(mono::string gamemode)
 {
-	if (IGameFramework *pGameFramework = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework())
+	if (IGameFramework *pGameFramework = GetMonoRunTime()->GameFramework)
 	{
 		if (IGameRulesSystem *pGameRulesSystem = pGameFramework->GetIGameRulesSystem())
 		{
@@ -32,13 +32,13 @@ void GameRulesInterop::RegisterGameMode(mono::string gamemode)
 //-----------------------------------------------------------------------------
 void GameRulesInterop::AddGameModeAlias(mono::string gamemode, mono::string alias)
 {
-	static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIGameRulesSystem()->AddGameRulesAlias(ToCryString(gamemode), ToCryString(alias));
+	GetMonoRunTime()->GameFramework->GetIGameRulesSystem()->AddGameRulesAlias(ToCryString(gamemode), ToCryString(alias));
 }
 
 //-----------------------------------------------------------------------------
 void GameRulesInterop::AddGameModeLevelLocation(mono::string gamemode, mono::string location)
 {
-	static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIGameRulesSystem()->AddGameRulesLevelLocation(ToCryString(gamemode), ToCryString(location));
+	GetMonoRunTime()->GameFramework->GetIGameRulesSystem()->AddGameRulesLevelLocation(ToCryString(gamemode), ToCryString(location));
 }
 
 //-----------------------------------------------------------------------------
@@ -50,5 +50,5 @@ void GameRulesInterop::SetDefaultGameMode(mono::string gamemode)
 //-----------------------------------------------------------------------------
 EntityId GameRulesInterop::GetPlayer()
 {
-	return static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetClientActorId();
+	return GetMonoRunTime()->GameFramework->GetClientActorId();
 }

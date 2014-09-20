@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "ScriptTable.h"
 
-#include "MonoScriptSystem.h"
+#include "MonoRunTime.h"
 
 #include <IEntitySystem.h>
 
@@ -42,25 +42,25 @@ ScriptAnyValue GetAnyValue(IMonoObject *pObject)
 	return ScriptAnyValue();
 }
 
-mono::object ToMonoObject(ScriptAnyValue anyValue)
+IMonoObject *ToMonoObject(ScriptAnyValue anyValue)
 {
 	switch (anyValue.type)
 	{
 	case ANY_TSTRING:
-		return (mono::object)ToMonoString(anyValue.str);
+		return (IMonoObject *)ToMonoString(anyValue.str);
 	case ANY_TNUMBER:
-		return (mono::object)mono_value_box(mono_domain_get(), mono_get_single_class(), &anyValue.number);
+		return (IMonoObject *)mono_value_box(mono_domain_get(), mono_get_single_class(), &anyValue.number);
 	case ANY_TBOOLEAN:
-		return (mono::object)mono_value_box(mono_domain_get(), mono_get_boolean_class(), &anyValue.b);
+		return (IMonoObject *)mono_value_box(mono_domain_get(), mono_get_boolean_class(), &anyValue.b);
 	case ANY_TVECTOR:
 	{
-						IMonoClass *pVec3Class = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("Vec3");
+		IMonoClass *pVec3Class = GetMonoRunTime()->CryBrary->GetClass("Vector3");
 
-						Vec3 vec(anyValue.vec3.x, anyValue.vec3.y, anyValue.vec3.z);
-						return pVec3Class->BoxObject(&vec);
+		Vec3 vec(anyValue.vec3.x, anyValue.vec3.y, anyValue.vec3.z);
+		return pVec3Class->BoxObject(&vec);
 	}
 	case ANY_TTABLE:
-		return (mono::object)anyValue.table;
+		return (IMonoObject *)anyValue.table;
 	default:
 		break;
 	}
@@ -68,7 +68,7 @@ mono::object ToMonoObject(ScriptAnyValue anyValue)
 	return nullptr;
 }
 
-mono::object ScriptTableInterop::CallMethod(IScriptTable *pScriptTable, mono::string methodName, mono::object params)
+IMonoObject *ScriptTableInterop::CallMethod(IScriptTable *pScriptTable, mono::string methodName, IMonoObject *params)
 {
 	HSCRIPTFUNCTION scriptFunction = 0;
 	if (pScriptTable && pScriptTable->GetValue(ToCryString(methodName), scriptFunction))
@@ -76,13 +76,13 @@ mono::object ScriptTableInterop::CallMethod(IScriptTable *pScriptTable, mono::st
 		if (!gEnv->pScriptSystem->BeginCall(scriptFunction))
 			return nullptr;
 
-		IMonoArray *pArgs = *params;
+		IMonoArray *pArgs = GetMonoRunTime()->ToArray(params);
 
 		gEnv->pScriptSystem->PushFuncParam(pScriptTable);
 
 		for (int i = 0; i < pArgs->GetSize(); i++)
 		{
-			IMonoObject *pItem = *pArgs->GetItem(i);
+			IMonoObject *pItem = pArgs->GetItem(i);
 
 			auto anyValue = GetAnyValue(pItem);
 			gEnv->pScriptSystem->PushFuncParamAny(anyValue);
@@ -103,7 +103,7 @@ mono::object ScriptTableInterop::CallMethod(IScriptTable *pScriptTable, mono::st
 	return nullptr;
 }
 
-mono::object ScriptTableInterop::GetValue(IScriptTable *pScriptTable, mono::string keyName)
+IMonoObject *ScriptTableInterop::GetValue(IScriptTable *pScriptTable, mono::string keyName)
 {
 	ScriptAnyValue anyValue;
 	if (pScriptTable->GetValueAny(ToCryString(keyName), anyValue))

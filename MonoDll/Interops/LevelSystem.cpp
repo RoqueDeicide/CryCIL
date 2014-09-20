@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "LevelSystem.h"
 
-#include "MonoScriptSystem.h"
+#include "MonoRunTime.h"
 
 #include <ILevelSystem.h>
 #include <IGameFramework.h>
@@ -30,7 +30,7 @@ LevelSystemInterop::LevelSystemInterop()
 
 ILevelInfo *LevelSystemInterop::GetCurrentLevel()
 {
-	if (ILevel *pLevel = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetILevelSystem()->GetCurrentLevel())
+	if (ILevel *pLevel = GetMonoRunTime()->GameFramework->GetILevelSystem()->GetCurrentLevel())
 		return pLevel->GetLevelInfo();
 
 	return nullptr;
@@ -38,7 +38,7 @@ ILevelInfo *LevelSystemInterop::GetCurrentLevel()
 
 ILevelInfo *LevelSystemInterop::LoadLevel(mono::string name)
 {
-	if (ILevel *pLevel = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetILevelSystem()->LoadLevel(ToCryString(name)))
+	if (ILevel *pLevel = GetMonoRunTime()->GameFramework->GetILevelSystem()->LoadLevel(ToCryString(name)))
 		return pLevel->GetLevelInfo();
 
 	return nullptr;
@@ -46,12 +46,12 @@ ILevelInfo *LevelSystemInterop::LoadLevel(mono::string name)
 
 bool LevelSystemInterop::IsLevelLoaded()
 {
-	return static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetILevelSystem()->IsLevelLoaded();
+	return GetMonoRunTime()->GameFramework->GetILevelSystem()->IsLevelLoaded();
 }
 
 void LevelSystemInterop::UnloadLevel()
 {
-	return static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetILevelSystem()->UnLoadLevel();
+	return GetMonoRunTime()->GameFramework->GetILevelSystem()->UnLoadLevel();
 }
 
 mono::string LevelSystemInterop::GetName(ILevelInfo *pLevelInfo)

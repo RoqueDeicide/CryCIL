@@ -202,7 +202,7 @@ struct MonoAnyValue : public ISerializable
 			break;
 		case eMonoAnyType_Array:
 		{
-			IMonoScriptSystem *pScriptSystem = GetMonoScriptSystem();
+			MonoRunTime *pScriptSystem = GetMonoRunTime();
 
 			IMonoArray *pArray = nullptr;
 			int arrayLength;
@@ -219,14 +219,14 @@ struct MonoAnyValue : public ISerializable
 			{
 				for (int i = 0; i < arrayLength; i++)
 				{
-					IMonoObject *pItem = *pArray->GetItem(i);
+					IMonoObject *pItem = pArray->GetItem(i);
 					pItem->GetAnyValue().SerializeWith(ser);
 					SAFE_RELEASE(pItem);
 				}
 			}
 			else
 			{
-				pArray = pScriptSystem->GetScriptDomain()->CreateArray(arrayLength);
+				pArray = pScriptSystem->AppDomain->CreateArray(arrayLength);
 
 				for (int i = 0; i < arrayLength; i++)
 				{
@@ -247,7 +247,7 @@ struct MonoAnyValue : public ISerializable
 			{
 				if (monoObject != nullptr)
 				{
-					IMonoObject *pObject = *monoObject;
+					IMonoObject *pObject = monoObject;
 					IMonoClass *pObjectClass = pObject->GetClass();
 
 					CryWarning(VALIDATOR_MODULE_GAME, VALIDATOR_WARNING, "Attempted to serialize unknown managed type %s.%s", pObjectClass->GetNamespace(), pObjectClass->GetName());

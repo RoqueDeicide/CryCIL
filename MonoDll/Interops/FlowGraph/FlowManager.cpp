@@ -7,7 +7,7 @@
 #include <IMonoArray.h>
 #include <IMonoAssembly.h>
 
-#include "MonoScriptSystem.h"
+#include "MonoRunTime.h"
 #include <IGameFramework.h>
 
 CFlowManager::CFlowManager()
@@ -32,7 +32,7 @@ CFlowManager::~CFlowManager()
 {
 	// The following code is commented, because flow manager is not located in the list of interops.
 
-	//static_cast<CScriptSystem *>(GetMonoScriptSystem())->EraseBinding(this);
+	//static_cast<CScriptSystem *>(GetMonoRunTime())->EraseBinding(this);
 }
 
 void CFlowManager::RegisterNode(mono::string monoTypeName)
@@ -43,7 +43,7 @@ void CFlowManager::RegisterNode(mono::string monoTypeName)
 
 	const char *typeName = ToCryString(monoTypeName);
 
-	CFlowManager *pFlowManager = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetFlowManager();
+	CFlowManager *pFlowManager = GetMonoRunTime()->FlowManager;
 	if (!pFlowManager)
 	{
 		MonoWarning("Aborting registration of node type %s, flow manager was null!", typeName);

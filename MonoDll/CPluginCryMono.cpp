@@ -66,7 +66,7 @@ namespace CryMonoPlugin
 			{
 				// Flownodes
 				//if(enFactoryType == FT_Flownode)
-				//GetMonoScriptSystem()->RegisterFlownodes();
+				//GetMonoRunTime()->RegisterFlownodes();
 			}
 		}
 

@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "MonoDomain.h"
 
-#include "MonoScriptSystem.h"
+#include "MonoRunTime.h"
 #include "MonoCVars.h"
 
 #include "MonoAssembly.h"
@@ -17,7 +17,7 @@
 #include <Windows.h>
 
 CScriptDomain::CScriptDomain(ERuntimeVersion runtimeVersion)
-: m_bRootDomain(true)
+	: m_bRootDomain(true)
 	, m_bDestroying(false)
 	, m_name("root")
 {
@@ -50,7 +50,7 @@ CScriptDomain::CScriptDomain(ERuntimeVersion runtimeVersion)
 }
 
 CScriptDomain::CScriptDomain(const char *name, const char *configurationFile, bool setActive)
-: m_bRootDomain(false)
+	: m_bRootDomain(false)
 	, m_bDestroying(false)
 	, m_name(name)
 {
@@ -141,7 +141,7 @@ IMonoAssembly *CScriptDomain::LoadAssembly(const char *file, bool shadowCopy, bo
 #ifndef _RELEASE
 	if (g_pMonoCVars->mono_generateMdbIfPdbIsPresent != 0 && convertPdbToMdb && sAssemblyPath.find("pdb2mdb") == -1)
 	{
-		if (IMonoAssembly *pDebugDatabaseCreator = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetDebugDatabaseCreator())
+		if (IMonoAssembly *pDebugDatabaseCreator = GetMonoRunTime()->Pdb2Mdb)
 		{
 			if (IMonoClass *pDriverClass = pDebugDatabaseCreator->GetClass("Driver", ""))
 			{
@@ -185,7 +185,8 @@ CScriptAssembly *CScriptDomain::TryGetAssembly(MonoImage *pImage)
 	}
 
 	// This assembly was loaded from managed code.
-	CScriptAssembly *pAssembly = new CScriptAssembly(this, pImage, mono_image_get_filename(pImage), false);
+	CScriptAssembly *pAssembly =
+		new CScriptAssembly(this, pImage, mono_image_get_filename(pImage), false);
 	m_assemblies.push_back(pAssembly);
 
 	return pAssembly;
@@ -221,22 +222,22 @@ IMonoObject *CScriptDomain::BoxAnyValue(MonoAnyValue &any)
 		return (IMonoObject *)CreateMonoString(any.str);
 	case eMonoAnyType_EntityId:
 	{
-								  IMonoClass *pEntityIdClass = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("EntityId");
-								  return pEntityIdClass->BoxObject(&mono::entityId(any.u), this);
+		IMonoClass *pEntityIdClass = GetMonoRunTime()->CryBrary->GetClass("EntityId");
+		return pEntityIdClass->BoxObject(&mono::entityId(any.u), this);
 	}
 	case eMonoAnyType_Vec3:
 	{
-							  IMonoClass *pVec3Class = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("Vec3");
+		IMonoClass *pVec3Class = GetMonoRunTime()->CryBrary->GetClass("Vector3");
 
-							  Vec3 vec3(any.vec4.x, any.vec4.y, any.vec4.z);
-							  return pVec3Class->BoxObject(&vec3, this);
+		Vec3 vec3(any.vec4.x, any.vec4.y, any.vec4.z);
+		return pVec3Class->BoxObject(&vec3, this);
 	}
 		break;
 	case eMonoAnyType_Quat:
 	{
-							  IMonoClass *pQuatClass = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("Quat");
+		IMonoClass *pQuatClass = GetMonoRunTime()->CryBrary->GetClass("Quaternion");
 
-							  return pQuatClass->BoxObject(&any.vec4, this);
+		return pQuatClass->BoxObject(&any.vec4, this);
 	}
 		break;
 	case eMonoAnyType_Array:

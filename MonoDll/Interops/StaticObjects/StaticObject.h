@@ -3,7 +3,7 @@
 #include <IMonoInterop.h>
 #include <IEntity.h>
 #include <IStatObj.h>
-#include "3DEngine.h"
+#include "I3DEngine.h"
 #include "IIndexedMesh.h"
 
 struct MeshHandles

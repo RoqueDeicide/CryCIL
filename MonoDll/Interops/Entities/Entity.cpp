@@ -6,8 +6,7 @@
 #include "MonoEntityClass.h"
 #include "MonoEntityPropertyHandler.h"
 
-#include "MonoScriptSystem.h"
-#include "CryScriptInstance.h"
+#include "MonoRunTime.h"
 
 #include "MonoObject.h"
 #include "MonoArray.h"
@@ -170,10 +169,6 @@ EntityInterop::EntityInterop()
 	REGISTER_METHOD(GetStaticObjectHandle);
 	REGISTER_METHOD(AssignStaticObject);
 
-	//RegisterNativeEntityClass();
-
-	GetMonoScriptSystem()->AddListener(this);
-
 	gEnv->pEntitySystem->AddSink(this, IEntitySystem::OnSpawn | IEntitySystem::OnRemove, 0);
 }
 
@@ -182,20 +177,15 @@ EntityInterop::~EntityInterop()
 	if (gEnv->pEntitySystem)
 		gEnv->pEntitySystem->RemoveSink(this);
 	else
-		MonoWarning("Failed to unregister CScriptbind_Entity entity sink!");
+		MonoWarning("Failed to unregister EntityInterop entity sink!");
 
 	m_monoEntityClasses.clear();
-}
-
-void EntityInterop::OnReloadComplete()
-{
-	m_pEntityClass = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("Entity");
 }
 
 void EntityInterop::PlayAnimation(IEntity *pEntity, mono::string animationName, int slot, int layer, float blend, float speed, EAnimationFlags flags)
 {
 	// Animation graph input
-	/*if(IGameObject *pGameObject = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetGameObject(pEntity->GetId()))
+	/*if(IGameObject *pGameObject = GetMonoRunTime()->GameFramework->GetGameObject(pEntity->GetId()))
 	{
 	if(IAnimatedCharacter *pAniamtedCharacter = static_cast<IAnimatedCharacter*>(pGameObject->AcquireExtension("AnimatedCharacter")))
 	{
@@ -275,7 +265,7 @@ void EntityInterop::OnSpawn(IEntity *pEntity, SEntitySpawnParams &params)
 	if (!IsMonoEntity(className))
 		return;
 
-	auto gameObject = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIGameObjectSystem()->CreateGameObjectForEntity(params.id);
+	auto gameObject = GetMonoRunTime()->GameFramework->GetIGameObjectSystem()->CreateGameObjectForEntity(params.id);
 
 	if (!gameObject->ActivateExtension(className))
 	{
@@ -291,7 +281,7 @@ bool EntityInterop::OnRemove(IEntity *pIEntity)
 	IMonoArray *pArgs = CreateMonoArray(1);
 	pArgs->Insert(pIEntity->GetId());
 
-	IMonoObject *pResult = *m_pEntityClass->GetMethod("InternalRemove", 1)->InvokeArray(NULL, pArgs);
+	IMonoObject *pResult = m_pEntityClass->GetMethod("InternalRemove", 1)->InvokeArray(NULL, pArgs);
 	auto result = pResult->Unbox<bool>();
 
 	SAFE_RELEASE(pArgs);
@@ -323,14 +313,14 @@ bool EntityInterop::RegisterEntityClass(SEntityRegistrationParams params)
 
 	if (params.Properties != nullptr)
 	{
-		IMonoArray *pPropertyArray = *params.Properties;
+		IMonoArray *pPropertyArray = GetMonoRunTime()->ToArray(params.Properties);
 
 		numProperties = pPropertyArray->GetSize();
 		pProperties = new SMonoEntityPropertyInfo[numProperties];
 
 		for (int iProperty = 0; iProperty < numProperties; iProperty++)
 		{
-			mono::object propertyObject = pPropertyArray->GetItem(iProperty);
+			IMonoObject *propertyObject = pPropertyArray->GetItem(iProperty);
 			if (propertyObject == nullptr)
 				continue;
 
@@ -366,7 +356,7 @@ bool EntityInterop::RegisterEntityClass(SEntityRegistrationParams params)
 	bool result = gEnv->pEntitySystem->GetClassRegistry()->RegisterClass(new CEntityClass(entityClassDesc, pProperties, numProperties));
 
 	static SMonoEntityCreator creator;
-	static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIGameObjectSystem()->RegisterExtension(className, &creator, nullptr);
+	GetMonoRunTime()->GameFramework->GetIGameObjectSystem()->RegisterExtension(className, &creator, nullptr);
 
 	return result;
 }
@@ -376,7 +366,7 @@ mono::string EntityInterop::GetEntityClassName(IEntity *pEntity)
 	return ToMonoString(pEntity->GetClass()->GetName());
 }
 
-mono::object EntityInterop::SpawnEntity(EntitySpawnParams monoParams, bool bAutoInit, SMonoEntityInfo &entityInfo)
+IMonoObject *EntityInterop::SpawnEntity(EntitySpawnParams monoParams, bool bAutoInit, SMonoEntityInfo &entityInfo)
 {
 	const char *className = ToCryString(monoParams.sClass);
 
@@ -396,15 +386,15 @@ mono::object EntityInterop::SpawnEntity(EntitySpawnParams monoParams, bool bAuto
 			entityInfo.pEntity = pEntity;
 			entityInfo.id = pEntity->GetId();
 
-			if (IGameObject *pGameObject = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetGameObject(spawnParams.id))
+			if (IGameObject *pGameObject = GetMonoRunTime()->GameFramework->GetGameObject(spawnParams.id))
 			{
 				if (CMonoEntityExtension *pEntityExtension = static_cast<CMonoEntityExtension *>(pGameObject->QueryExtension(className)))
-					return pEntityExtension->GetScript()->GetManagedObject();
+					return pEntityExtension->ManagedWrapper;
 				else
 				{
 					MonoWarning("[CryMono] Spawned entity of class %s with id %i, but game object extension query failed!", className, pEntity->GetId());
 
-					auto extensionId = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIGameObjectSystem()->GetID(className);
+					auto extensionId = GetMonoRunTime()->GameFramework->GetIGameObjectSystem()->GetID(className);
 					if (extensionId == IGameObjectSystem::InvalidExtensionID)
 						MonoWarning("[CryMono] IGameObjectSystem::GetId returned invalid id for extension %s", className);
 
@@ -429,7 +419,7 @@ void EntityInterop::RemoveEntity(EntityId id, bool removeNow)
 	{
 		if (!(pEntity->GetFlags() & ENTITY_FLAG_NO_SAVE))
 		{
-			GetMonoScriptSystem()->GetCryBraryAssembly()->GetException("CryEngine", "EntityRemovalException", "Attempted to remove an entity placed via Editor")->Throw();
+			GetMonoRunTime()->CryBrary->GetException("CryEngine", "EntityRemovalException", "Attempted to remove an entity placed via Editor")->Throw();
 			return;
 		}
 
@@ -460,13 +450,13 @@ EntityId EntityInterop::FindEntity(mono::string name)
 	return 0;
 }
 
-mono::object EntityInterop::GetEntitiesByClass(mono::string _class)
+IMonoObject *EntityInterop::GetEntitiesByClass(mono::string _class)
 {
 	IEntityClass *pDesiredClass = gEnv->pEntitySystem->GetClassRegistry()->FindClass(ToCryString(_class));
 
 	IEntityItPtr pIt = gEnv->pEntitySystem->GetEntityIterator();
 
-	IMonoClass *pEntityIdClass = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("EntityId");
+	IMonoClass *pEntityIdClass = GetMonoRunTime()->CryBrary->GetClass("EntityId");
 	IMonoArray *pEntities = CreateDynamicMonoArray();
 
 	pIt->MoveFirst();
@@ -485,9 +475,9 @@ mono::object EntityInterop::GetEntitiesByClass(mono::string _class)
 	return result;
 }
 
-mono::object EntityInterop::GetEntitiesByClasses(mono::object classes)
+IMonoObject *EntityInterop::GetEntitiesByClasses(IMonoObject *classes)
 {
-	IMonoArray *pClassArray = *classes;
+	IMonoArray *pClassArray = GetMonoRunTime()->ToArray(classes);
 
 	int numClasses = pClassArray->GetSize();
 	IEntityClass **pClasses = new IEntityClass *[numClasses];
@@ -496,7 +486,7 @@ mono::object EntityInterop::GetEntitiesByClasses(mono::object classes)
 
 	IEntityItPtr pIt = gEnv->pEntitySystem->GetEntityIterator();
 
-	IMonoClass *pEntityIdClass = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("EntityId");
+	IMonoClass *pEntityIdClass = GetMonoRunTime()->CryBrary->GetClass("EntityId");
 	IMonoArray *pEntities = CreateDynamicMonoArray();
 
 	pIt->MoveFirst();
@@ -522,11 +512,11 @@ mono::object EntityInterop::GetEntitiesByClasses(mono::object classes)
 	return result;
 }
 
-mono::object EntityInterop::GetEntitiesInBox(AABB bbox, int objTypes)
+IMonoObject *EntityInterop::GetEntitiesInBox(AABB bbox, int objTypes)
 {
 	IPhysicalEntity **pEnts = nullptr;
 
-	IMonoClass *pEntityIdClass = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("EntityId");
+	IMonoClass *pEntityIdClass = GetMonoRunTime()->CryBrary->GetClass("EntityId");
 
 	int numEnts = gEnv->pPhysicalWorld->GetEntitiesInBox(bbox.min, bbox.max, pEnts, objTypes);
 
@@ -541,7 +531,7 @@ mono::object EntityInterop::GetEntitiesInBox(AABB bbox, int objTypes)
 	return result;
 }
 
-mono::object EntityInterop::QueryProximity(AABB box, mono::string className, uint32 nEntityFlags)
+IMonoObject *EntityInterop::QueryProximity(AABB box, mono::string className, uint32 nEntityFlags)
 {
 	SEntityProximityQuery query;
 
@@ -553,7 +543,7 @@ mono::object EntityInterop::QueryProximity(AABB box, mono::string className, uin
 
 	gEnv->pEntitySystem->QueryProximity(query);
 
-	IMonoClass *pEntityIdClass = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("EntityId");
+	IMonoClass *pEntityIdClass = GetMonoRunTime()->CryBrary->GetClass("EntityId");
 	IMonoArray *pEntities = CreateDynamicMonoArray();
 
 	for (int i = 0; i < query.nCount; i++)
@@ -714,12 +704,12 @@ void EntityInterop::SetHUDSilhouettesParams(IEntity *pEntity, float r, float g, 
 	pRenderProxy->SetVisionParams(r, g, b, a);
 }
 
-IEntityLink *EntityInterop::AddEntityLink(IEntity *pEntity, mono::string linkName, EntityId otherId, EntityGUID entityGuid, Quat relativeRot, Vec3 relativePos)
+IEntityLink *EntityInterop::AddEntityLink(IEntity *pEntity, mono::string linkName, EntityId otherId, EntityGUID entityGuid)
 {
-	return pEntity->AddEntityLink(ToCryString(linkName), otherId, entityGuid, relativeRot, relativePos);
+	return pEntity->AddEntityLink(ToCryString(linkName), otherId, entityGuid);
 }
 
-mono::object EntityInterop::GetEntityLinks(IEntity *pEntity)
+IMonoObject *EntityInterop::GetEntityLinks(IEntity *pEntity)
 {
 	// the first link
 	IEntityLink *pLink = pEntity->GetEntityLinks();
@@ -759,7 +749,6 @@ void EntityInterop::SetEntityLinkTarget(IEntityLink *pLink, EntityId id)
 {
 	pLink->entityId = id;
 }
-
 
 int EntityInterop::LoadLight(IEntity *pEntity, int slot, SMonoLightParams params)
 {
@@ -1075,14 +1064,14 @@ IParticleEmitter *EntityInterop::LoadParticleEmitter(IEntity *pEntity, int slot,
 	return pEntity->GetParticleEmitter(nSlot);
 }
 
-void EntityInterop::RemoteInvocation(EntityId entityId, EntityId targetId, mono::string methodName, mono::object args, ERMInvocation target, int channelId)
+void EntityInterop::RemoteInvocation(EntityId entityId, EntityId targetId, mono::string methodName, IMonoObject *args, ERMInvocation target, int channelId)
 {
 	if (!gEnv->bMultiplayer)
 		return;
 
 	CRY_ASSERT(entityId != 0);
 
-	IGameObject *pGameObject = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetGameObject(entityId);
+	IGameObject *pGameObject = GetMonoRunTime()->GameFramework->GetGameObject(entityId);
 	CRY_ASSERT(pGameObject);
 
 	CMonoEntityExtension::RMIParams params(args, ToCryString(methodName), targetId);
@@ -1169,11 +1158,6 @@ int EntityInterop::GetLodRatio(IEntity *pEntity)
 	return 0;
 }
 
-void EntityInterop::OnScriptInstanceDestroyed(CCryScriptInstance *pScriptInstance)
-{
-	pScriptInstance->Release();
-}
-
 int EntityInterop::GetNumAreas()
 {
 	return gEnv->pEntitySystem->GetAreaManager()->GetAreaAmount();
@@ -1184,7 +1168,7 @@ const IArea *EntityInterop::GetArea(int areaId)
 	return gEnv->pEntitySystem->GetAreaManager()->GetArea(areaId);
 }
 
-mono::object EntityInterop::QueryAreas(EntityId id, Vec3 vPos, int maxResults, bool forceCalculation)
+IMonoObject *EntityInterop::QueryAreas(EntityId id, Vec3 vPos, int maxResults, bool forceCalculation)
 {
 	SAreaManagerResult *pResults = new SAreaManagerResult[maxResults];
 
@@ -1192,9 +1176,9 @@ mono::object EntityInterop::QueryAreas(EntityId id, Vec3 vPos, int maxResults, b
 	gEnv->pEntitySystem->GetAreaManager()->QueryAreas(id, vPos, pResults, maxResults, numResults);
 
 	IMonoArray *pArray = CreateDynamicMonoArray();
-	IMonoClass *pClass = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("AreaQueryResult");
+	IMonoClass *pClass = GetMonoRunTime()->CryBrary->GetClass("AreaQueryResult");
 
-	for(int i = 0; i < numResults; i++)
+	for (int i = 0; i < numResults; i++)
 	{
 		auto result = pResults[i];
 
@@ -1204,7 +1188,7 @@ mono::object EntityInterop::QueryAreas(EntityId id, Vec3 vPos, int maxResults, b
 
 	delete[] pResults;
 
-	mono::object managedArray = pArray->GetManagedObject();
+	IMonoObject *managedArray = pArray->GetManagedObject();
 	pArray->Release(false);
 
 	return managedArray;

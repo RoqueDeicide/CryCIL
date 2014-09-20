@@ -1,6 +1,7 @@
 #include "stdafx.h"
 
-#include "MonoScriptSystem.h"
+#include "MonoRunTime.h"
+#include "MonoRunTime.h"
 
 #ifdef PLUGIN_SDK
 #include <IPluginManager.h>
@@ -25,12 +26,12 @@ extern "C"
 extern "C"
 {
 	// Must be called from GameStartup.cpp to initialize CryMono run-time.
-	CRYMONO_API IMonoScriptSystem *InitCryMono(ISystem *pSystem, IGameFramework *pGameFramework)
+	CRYMONO_API IMonoRunTime *InitCryMono(ISystem *pSystem, IGameFramework *pGameFramework)
 	{
 		// Tell System, that we have another subsystem here.
 		ModuleInitISystem(pSystem, "CryMono");
 		// Initialize that subsystem.
-		return new CScriptSystem(pGameFramework);
+		return new MonoRunTime(pGameFramework);
 	}
 }
 #endif

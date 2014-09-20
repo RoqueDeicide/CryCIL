@@ -100,7 +100,7 @@ enum ERuntimeVersion
 /// </summary>
 static IMonoArray *CreateMonoArray(int numArgs, IMonoClass *pElementClass = nullptr)
 {
-	return GetMonoScriptSystem()->AppDomain->CreateArray(numArgs, pElementClass);
+	return GetMonoRunTime()->AppDomain->CreateArray(numArgs, pElementClass);
 }
 
 /// <summary>
@@ -108,7 +108,7 @@ static IMonoArray *CreateMonoArray(int numArgs, IMonoClass *pElementClass = null
 /// </summary>
 static IMonoArray *CreateDynamicMonoArray(IMonoClass *pElementClass = nullptr, int size = 0)
 {
-	return GetMonoScriptSystem()->AppDomain->CreateDynamicArray(pElementClass, size);
+	return GetMonoRunTime()->AppDomain->CreateDynamicArray(pElementClass, size);
 }
 
 /// <summary>
@@ -116,7 +116,7 @@ static IMonoArray *CreateDynamicMonoArray(IMonoClass *pElementClass = nullptr, i
 /// </summary>
 inline mono::string ToMonoString(const char *cryString)
 {
-	return GetMonoScriptSystem()->AppDomain->CreateMonoString(cryString);
+	return GetMonoRunTime()->AppDomain->CreateMonoString(cryString);
 }
 
 #endif //__I_MONO_DOMAIN_H__

@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "MonoInput.h"
 
-#include "MonoScriptSystem.h"
+#include "MonoRunTime.h"
 
 #include <IGameFramework.h>
 
@@ -15,7 +15,7 @@ InputInterop::InputInterop()
 {
 	REGISTER_METHOD(RegisterAction);
 
-	static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIActionMapManager()->AddExtraActionListener(this);
+	GetMonoRunTime()->GameFramework->GetIActionMapManager()->AddExtraActionListener(this);
 	gEnv->pHardwareMouse->AddListener(this);
 
 	if (gEnv->pInput)
@@ -25,9 +25,9 @@ InputInterop::InputInterop()
 InputInterop::~InputInterop()
 {
 	// The code below currently crashes the Launcher at shutdown
-	/*if(static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework())
+	/*if(GetMonoRunTime()->GameFramework)
 	{
-	if(IActionMapManager *pActionmapManager = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIActionMapManager())
+	if(IActionMapManager *pActionmapManager = GetMonoRunTime()->GameFramework->GetIActionMapManager())
 	pActionmapManager->RemoveExtraActionListener(this);
 	}*/
 
@@ -40,7 +40,7 @@ InputInterop::~InputInterop()
 
 IMonoClass *InputInterop::GetClass()
 {
-	return GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("Input");
+	return GetMonoRunTime()->CryBrary->GetClass("Input");
 }
 
 void InputInterop::OnHardwareMouseEvent(int iX, int iY, EHARDWAREMOUSEEVENT eHardwareMouseEvent, int wheelDelta)
@@ -51,7 +51,7 @@ void InputInterop::OnHardwareMouseEvent(int iX, int iY, EHARDWAREMOUSEEVENT eHar
 	pParams->Insert(eHardwareMouseEvent);
 	pParams->Insert(wheelDelta);
 
-	IMonoClass *pInputClass = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("Input", "CryEngine");
+	IMonoClass *pInputClass = GetMonoRunTime()->CryBrary->GetClass("Input", "CryEngine");
 	pInputClass->GetMethod("OnMouseEvent", 4)->InvokeArray(NULL, pParams);
 	SAFE_RELEASE(pParams);
 }
@@ -62,7 +62,7 @@ bool InputInterop::OnInputEvent(const SInputEvent &event)
 	pParams->Insert(event.keyName.c_str());
 	pParams->Insert(event.value);
 
-	IMonoClass *pInputClass = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("Input", "CryEngine");
+	IMonoClass *pInputClass = GetMonoRunTime()->CryBrary->GetClass("Input", "CryEngine");
 	pInputClass->GetMethod("OnKeyEvent", 2)->InvokeArray(NULL, pParams);
 	SAFE_RELEASE(pParams);
 
@@ -81,7 +81,7 @@ bool InputInterop::OnActionTriggered(EntityId entityId, const ActionId& actionId
 	pParams->Insert(activationMode);
 	pParams->Insert(value);
 
-	IMonoClass *pInputClass = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("Input", "CryEngine");
+	IMonoClass *pInputClass = GetMonoRunTime()->CryBrary->GetClass("Input", "CryEngine");
 	pInputClass->GetMethod("OnActionTriggered", 3)->InvokeArray(NULL, pParams);
 	SAFE_RELEASE(pParams);
 

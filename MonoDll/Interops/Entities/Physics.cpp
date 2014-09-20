@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "Physics.h"
 
-#include "MonoScriptSystem.h"
+#include "MonoRunTime.h"
 
 #include "MonoException.h"
 
@@ -135,7 +135,7 @@ int PhysicsInterop::RayWorldIntersection
 	return gEnv->pPhysicalWorld->RayWorldIntersection(origin, dir, objFlags, flags, hits, maxHits, entitiesToSkip, skipCount);
 }
 
-mono::object PhysicsInterop::SimulateExplosion(pe_explosion explosion)
+IMonoObject *PhysicsInterop::SimulateExplosion(pe_explosion explosion)
 {
 	gEnv->pPhysicalWorld->SimulateExplosion(&explosion);
 

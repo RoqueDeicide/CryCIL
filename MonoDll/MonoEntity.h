@@ -108,9 +108,10 @@ public:
 	bool IsInitialized() { return m_bInitialized; }
 
 	void Reset(bool enteringGamemode);
+	IMonoObject *GetMonoObject() { return this->m_pManagedObject; }
+	__declspec(property(get=GetMonoObject)) IMonoObject *ManagedWrapper;
 
 protected:
-	ICryScriptInstance *m_pScript;
 	IMonoObject *m_pManagedObject;
 
 	IAnimatedCharacter *m_pAnimatedCharacter;
