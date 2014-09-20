@@ -163,9 +163,15 @@
     <Compile Include="RunTime\Compilation\CodeSolution.cs" />
     <Compile Include="RunTime\Compilation\Exception.cs" />
     <Compile Include="RunTime\Compilation\IProject.cs" />
+    <Compile Include="RunTime\Compilation\NamespaceDoc.cs" />
     <Compile Include="RunTime\Compilation\Project.cs" />
     <Compile Include="RunTime\Compilation\CSharpProjectFile.cs" />
     <Compile Include="RunTime\Compilation\VisualStudioDotNetProject.cs" />
+    <Compile Include="RunTime\MonoInterface.cs" />
+    <Compile Include="RunTime\NamespaceDoc.cs" />
+    <Compile Include="RunTime\Registration\EntityRegister.cs" />
+    <Compile Include="RunTime\Registration\Exception.cs" />
+    <Compile Include="RunTime\Registration\FlowNodeRegister.cs" />
     <Compile Include="Sandbox\Interface.cs" />
     <Compile Include="Sandbox\SandboxExtensionAttribute.cs" />
     <Compile Include="Console\ConsoleCommand\ConsoleCommandArgs.cs" />
