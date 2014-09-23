@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Security;
 using CryEngine.Mathematics;
+using CryEngine.Mathematics.Graphics;
 
 namespace CryEngine.Native
 {
@@ -11,19 +12,19 @@ namespace CryEngine.Native
 	{
 		#region Persistent Debug
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		extern internal static void AddPersistentSphere(Vector3 pos, float radius, Color color, float timeout);
+		extern internal static void AddPersistentSphere(Vector3 pos, float radius, ColorSingle color, float timeout);
 
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		extern internal static void AddDirection(Vector3 pos, float radius, Vector3 dir, Color color, float timeout);
+		extern internal static void AddDirection(Vector3 pos, float radius, Vector3 dir, ColorSingle color, float timeout);
 
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		extern internal static void AddPersistentText2D(string text, float size, Color color, float timeout);
+		extern internal static void AddPersistentText2D(string text, float size, ColorSingle color, float timeout);
 
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		extern internal static void AddAABB(Vector3 pos, BoundingBox bbox, Color color, float timeout);
+		extern internal static void AddAABB(Vector3 pos, BoundingBox bbox, ColorSingle color, float timeout);
 
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		extern internal static void AddPersistentLine(Vector3 pos, Vector3 end, Color color, float timeout);
+		extern internal static void AddPersistentLine(Vector3 pos, Vector3 end, ColorSingle color, float timeout);
 		#endregion
 
 		#region Profiling

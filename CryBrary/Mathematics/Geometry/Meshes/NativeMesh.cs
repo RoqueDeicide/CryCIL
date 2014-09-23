@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using CryEngine.Mathematics.Geometry.Meshes.CSG;
+using CryEngine.Mathematics.Graphics;
 using CryEngine.Native;
 using CryEngine.StaticObjects;
 

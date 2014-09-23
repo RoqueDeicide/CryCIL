@@ -5,6 +5,7 @@ using System.Text;
 
 using System.ComponentModel;
 using CryEngine.Mathematics;
+using CryEngine.Mathematics.Graphics;
 
 namespace CryEngine.Misc.TypeConverters
 {
@@ -29,7 +30,7 @@ namespace CryEngine.Misc.TypeConverters
 		public override object ConvertFrom(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value)
 		{
 			if (value is Vector3)
-				return new Color((Vector3)value);
+				return new ColorSingle((Vector3)value);
 
 			return base.ConvertFrom(context, culture, value);
 		}
@@ -37,7 +38,7 @@ namespace CryEngine.Misc.TypeConverters
 		public override object ConvertTo(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, Type destinationType)
 		{
 			if (destinationType == typeof(Vector3))
-				return (Vector3)(Color)value;
+				return (Vector3)(ColorSingle)value;
 
 			return base.ConvertTo(context, culture, value, destinationType);
 		}

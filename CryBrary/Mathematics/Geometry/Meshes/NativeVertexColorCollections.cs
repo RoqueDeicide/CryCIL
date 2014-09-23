@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using CryEngine.Mathematics.Graphics;
 using CryEngine.Mathematics.MemoryMapping;
 
 namespace CryEngine.Mathematics.Geometry.Meshes

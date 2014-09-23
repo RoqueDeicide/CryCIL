@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using CryEngine.Entities;
 using CryEngine.Mathematics;
+using CryEngine.Mathematics.Graphics;
 using CryEngine.Native;
 
 namespace CryEngine
@@ -59,7 +60,7 @@ namespace CryEngine
 		/// <summary>
 		/// Gets or sets the diffuse color.
 		/// </summary>
-		public Color DiffuseColor
+		public ColorSingle DiffuseColor
 		{
 			get { return GetParamColor("diffuse"); }
 			set { SetParam("diffuse", value); }
@@ -68,7 +69,7 @@ namespace CryEngine
 		/// <summary>
 		/// Gets or sets the emissive color.
 		/// </summary>
-		public Color EmissiveColor
+		public ColorSingle EmissiveColor
 		{
 			get { return GetParamColor("emissive"); }
 			set { SetParam("emissive", value); }
@@ -77,7 +78,7 @@ namespace CryEngine
 		/// <summary>
 		/// Gets or sets the specular color.
 		/// </summary>
-		public Color SpecularColor
+		public ColorSingle SpecularColor
 		{
 			get { return GetParamColor("specular"); }
 			set { SetParam("specular", value); }
@@ -242,7 +243,7 @@ namespace CryEngine
 		/// <param name="paramName"></param>
 		/// <param name="value"></param>
 		/// <returns>true if successful, otherwise false.</returns>
-		public bool SetParam(string paramName, Color value)
+		public bool SetParam(string paramName, ColorSingle value)
 		{
 			Vector3 vecValue = new Vector3(value.R, value.G, value.B);
 			var result = MaterialInterop.SetGetMaterialParamVec3(Handle, paramName, ref vecValue, false);
@@ -257,9 +258,9 @@ namespace CryEngine
 		/// </summary>
 		/// <param name="paramName"></param>
 		/// <returns>The color value</returns>
-		public Color GetParamColor(string paramName)
+		public ColorSingle GetParamColor(string paramName)
 		{
-			Color value;
+			ColorSingle value;
 			TryGetParam(paramName, out value);
 
 			return value;
@@ -271,12 +272,12 @@ namespace CryEngine
 		/// <param name="paramName"></param>
 		/// <param name="value"></param>
 		/// <returns>true if successful, otherwise false.</returns>
-		public bool TryGetParam(string paramName, out Color value)
+		public bool TryGetParam(string paramName, out ColorSingle value)
 		{
 			Vector3 vecVal = Vector3.Zero;
 			bool result = MaterialInterop.SetGetMaterialParamVec3(Handle, paramName, ref vecVal, true);
 
-			value = new Color {R = vecVal.X, G = vecVal.Y, B = vecVal.Z, A = this.Opacity};
+			value = new ColorSingle {R = vecVal.X, G = vecVal.Y, B = vecVal.Z, A = this.Opacity};
 
 			return result;
 		}
@@ -306,7 +307,7 @@ namespace CryEngine
 		/// </summary>
 		/// <param name="paramName"></param>
 		/// <param name="newVal"></param>
-		public void SetShaderParam(string paramName, Color newVal)
+		public void SetShaderParam(string paramName, ColorSingle newVal)
 		{
 			MaterialInterop.SetShaderParam(Handle, paramName, newVal);
 		}
@@ -316,7 +317,7 @@ namespace CryEngine
 		/// </summary>
 		/// <param name="param"></param>
 		/// <param name="value"></param>
-		public void SetShaderParam(ShaderColorParameter param, Color value)
+		public void SetShaderParam(ShaderColorParameter param, ColorSingle value)
 		{
 			SetShaderParam(param.GetEngineName(), value);
 		}
@@ -328,7 +329,7 @@ namespace CryEngine
 		/// <param name="value"></param>
 		public void SetShaderParam(ShaderColorParameter param, Vector3 value)
 		{
-			SetShaderParam(param.GetEngineName(), new Color(value.X, value.Y, value.Z));
+			SetShaderParam(param.GetEngineName(), new ColorSingle(value.X, value.Y, value.Z));
 		}
 
 		/// <summary>

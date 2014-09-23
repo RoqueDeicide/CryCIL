@@ -1,5 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using CryEngine.Mathematics;
+using CryEngine.Mathematics.Graphics;
 using CryEngine.Native;
 
 namespace CryEngine
@@ -26,12 +27,12 @@ namespace CryEngine
 			return RendererInterop.UnProjectFromScreen(sx, sy, sz, out px, out py, out pz);
 		}
 
-		public static void DrawTextToScreen(float x, float y, float fontSize, Color color, string text, params object[] args)
+		public static void DrawTextToScreen(float x, float y, float fontSize, ColorSingle color, string text, params object[] args)
 		{
 			DrawTextToScreen(x, y, fontSize, color, false, text, args);
 		}
 
-		public static void DrawTextToScreen(float x, float y, float fontSize, Color color, bool centered, string text, params object[] args)
+		public static void DrawTextToScreen(float x, float y, float fontSize, ColorSingle color, bool centered, string text, params object[] args)
 		{
 			RendererInterop.DrawTextToScreen(x, y, fontSize, color, centered, string.Format(text, args));
 		}

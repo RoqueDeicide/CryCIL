@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using CryEngine.Mathematics.MemoryMapping;
 
-namespace CryEngine.Mathematics
+namespace CryEngine.Mathematics.Graphics
 {
 	/// <summary>
 	/// Encapsulates 32-bit definition of color.
@@ -133,8 +133,8 @@ namespace CryEngine.Mathematics
 		/// Object of type <see cref="String"/> that is supposed to represent a color.
 		/// </param>
 		/// <returns>
-		/// Object of type <see cref="Color32"/> that is represented by given <paramref
-		/// name="text"/> .
+		/// Object of type <see cref="Color32"/> that is represented by given
+		/// <paramref name="text"/> .
 		/// </returns>
 		public static Color32 Parse(string text)
 		{
@@ -167,8 +167,8 @@ namespace CryEngine.Mathematics
 		/// Attempts to parse given text as object of type <see cref="Color32"/> .
 		/// </summary>
 		/// <param name="text"> 
-		/// Object of type <see cref="String"/> that might be a representation of type <see
-		/// cref="Color32"/> .
+		/// Object of type <see cref="String"/> that might be a representation of type
+		/// <see cref="Color32"/> .
 		/// </param>
 		/// <param name="color">If conversion is successful this object will contain the result.</param>
 		/// <returns>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using CryEngine.Mathematics;
+using CryEngine.Mathematics.Graphics;
 
 namespace CryEngine.Native
 {
@@ -39,7 +40,7 @@ namespace CryEngine.Native
 		[MethodImplAttribute(MethodImplOptions.InternalCall)]
 		extern internal static void SetShaderParam(IntPtr ptr, string paramName, float newVal);
 		[MethodImplAttribute(MethodImplOptions.InternalCall)]
-		extern internal static void SetShaderParam(IntPtr ptr, string paramName, Color newVal);
+		extern internal static void SetShaderParam(IntPtr ptr, string paramName, ColorSingle newVal);
 
 		[MethodImplAttribute(MethodImplOptions.InternalCall)]
 		extern internal static MaterialFlags GetFlags(IntPtr ptr);

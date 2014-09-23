@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using CryEngine.Mathematics;
+using CryEngine.Mathematics.Graphics;
 
 namespace CryEngine.Native
 {
@@ -17,7 +18,7 @@ namespace CryEngine.Native
 		extern internal static int UnProjectFromScreen(float sx, float sy, float sz, out float px, out float py, out float pz);
 
 		[MethodImplAttribute(MethodImplOptions.InternalCall)]
-		extern internal static void DrawTextToScreen(float x, float y, float fontSize, Color color, bool center, string text);
+		extern internal static void DrawTextToScreen(float x, float y, float fontSize, ColorSingle color, bool center, string text);
 
 		[MethodImplAttribute(MethodImplOptions.InternalCall)]
 		extern internal static int LoadTexture(string path);

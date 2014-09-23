@@ -236,7 +236,7 @@
     <Compile Include="Mathematics\BoundingBox.cs" />
     <Compile Include="Mathematics\BoundingSphere.cs" />
     <Compile Include="Mathematics\Geometry\Collision.cs" />
-    <Compile Include="Mathematics\Color32.cs" />
+    <Compile Include="Mathematics\Graphics\Color32.cs" />
     <Compile Include="Mathematics\EulerAngles.cs" />
     <Compile Include="Mathematics\Half.cs" />
     <Compile Include="Mathematics\HalfHelpers.cs" />
@@ -395,7 +395,7 @@
       <DependentUpon>ScriptReloadMessage.cs</DependentUpon>
     </Compile>
     <Compile Include="Serialization\CrySerializer.cs" />
-    <Compile Include="Misc\Color.cs" />
+    <Compile Include="Mathematics\Graphics\ColorSingle.cs" />
     <Compile Include="Serialization\SerializedObjectReference.cs" />
     <Compile Include="Sound\Sound.cs" />
     <Compile Include="Testing\Assertion.cs" />
