@@ -312,20 +312,12 @@
     <Compile Include="Physics\Status\LivingStatus.cs" />
     <Compile Include="Profiling\FrameProfiler.cs" />
     <Compile Include="Profiling\FrameProfilerSection.cs" />
-    <Compile Include="Script Handling\IScriptInitializationParams.cs" />
     <Compile Include="Native\ScriptSystemInterop.cs" />
     <Compile Include="Physics\Explosion.cs" />
-    <Compile Include="Script Handling\Registration\Actor.cs" />
-    <Compile Include="Script Handling\Registration\Entity.cs" />
-    <Compile Include="Script Handling\Registration\EntityFlowNode.cs" />
-    <Compile Include="Script Handling\Registration\FlowNode.cs" />
-    <Compile Include="Script Handling\Registration\GameRules.cs" />
-    <Compile Include="Script Handling\Exceptions\ScriptInstanceDestroyedException.cs" />
     <Compile Include="Misc\Exceptions\MissingAttributeException.cs" />
     <Compile Include="Extensions\NativeHandleExtensions.cs" />
     <Compile Include="Native\NetworkInterop.cs" />
     <Compile Include="Network\RemoteInvocationException.cs" />
-    <Compile Include="Script Handling\ScriptReloadResult.cs" />
     <Compile Include="Serialization\CrySerialize.cs" />
     <Compile Include="Serialization\ICrySerializable.cs" />
     <Compile Include="Serialization\ISerialize.cs" />
@@ -373,27 +365,12 @@
       <DependentUpon>FormLoader.cs</DependentUpon>
     </Compile>
     <Compile Include="Sandbox\Helper.cs" />
-    <Compile Include="Script Handling\CryScript.cs" />
-    <Compile Include="Script Handling\ExceptionMessage.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Script Handling\ExceptionMessage.Designer.cs">
-      <DependentUpon>ExceptionMessage.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Script Handling\Registration\IScriptRegistrationParams.cs" />
-    <Compile Include="Script Handling\Plugin.cs" />
     <Compile Include="Engine\Material\Material.cs" />
     <Compile Include="Engine\Particles\ParticleEffect.cs" />
     <Compile Include="Engine\Terrain.cs" />
     <Compile Include="Entities\EntityId.cs" />
     <Compile Include="Entities\NativeEntity.cs" />
     <Compile Include="Engine\Lua\ScriptTable.cs" />
-    <Compile Include="Script Handling\ScriptReloadMessage.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Script Handling\ScriptReloadMessage.Designer.cs">
-      <DependentUpon>ScriptReloadMessage.cs</DependentUpon>
-    </Compile>
     <Compile Include="Serialization\CrySerializer.cs" />
     <Compile Include="Mathematics\Graphics\ColorSingle.cs" />
     <Compile Include="Serialization\SerializedObjectReference.cs" />
@@ -417,7 +394,6 @@
     <Compile Include="Entities\EntityMovement.cs" />
     <Compile Include="Misc\Game.cs" />
     <Compile Include="Input\Input.cs" />
-    <Compile Include="Script Handling\ScriptInstance.cs" />
     <Compile Include="Console\ConsoleCommand\ConsoleCommand.cs" />
     <Compile Include="Entities\EditorProperty.cs" />
     <Compile Include="Console\CVar\CVar.cs" />
@@ -439,12 +415,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Sandbox\FormLoader.resx">
       <DependentUpon>FormLoader.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Script Handling\ExceptionMessage.resx">
-      <DependentUpon>ExceptionMessage.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Script Handling\ScriptReloadMessage.resx">
-      <DependentUpon>ScriptReloadMessage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Testing\Reports\ReportForm.resx">
       <DependentUpon>ReportForm.cs</DependentUpon>
