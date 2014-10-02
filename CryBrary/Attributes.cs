@@ -122,13 +122,6 @@ namespace CryEngine
 		public CVarFlags Flags;
 	}
 	/// <summary>
-	/// If this attribute is attached to a class, it will be excluded from compilation.
-	/// </summary>
-	[AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface, Inherited = false)]
-	public sealed class ExcludeFromCompilationAttribute : Attribute
-	{
-	}
-	/// <summary>
 	/// Attribute used for specifying extra functionality for custom game rules classes.
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Class)]
@@ -149,22 +142,5 @@ namespace CryEngine
 	[AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
 	public sealed class ActorAttribute : Attribute
 	{
-		// See the attribute guidelines at 
-		//  http://go.microsoft.com/fwlink/?LinkId=85236
-		private readonly string positionalString;
-
-		// This is a positional argument
-		public ActorAttribute(string positionalString)
-		{
-			this.positionalString = positionalString;
-
-			// TODO: Implement code here
-			throw new NotImplementedException();
-		}
-
-		public string PositionalString { get; private set; }
-
-		// This is a named argument
-		public int NamedInt { get; set; }
 	}
 }
