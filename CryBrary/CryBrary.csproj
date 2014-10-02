@@ -172,8 +172,6 @@
     <Compile Include="RunTime\Registration\EntityRegister.cs" />
     <Compile Include="RunTime\Registration\Exception.cs" />
     <Compile Include="RunTime\Registration\FlowNodeRegister.cs" />
-    <Compile Include="Sandbox\Interface.cs" />
-    <Compile Include="Sandbox\SandboxExtensionAttribute.cs" />
     <Compile Include="Console\ConsoleCommand\ConsoleCommandArgs.cs" />
     <Compile Include="Console\ConsoleCommand\DuplicateConsoleCommandException.cs" />
     <Compile Include="Console\CryConsole.cs" />
@@ -358,13 +356,6 @@
     <Compile Include="Native\ScriptTableInterop.cs" />
     <Compile Include="Native\TimeInterop.cs" />
     <Compile Include="Network\RemoteInvocationAttribute.cs" />
-    <Compile Include="Sandbox\FormLoader.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Sandbox\FormLoader.Designer.cs">
-      <DependentUpon>FormLoader.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Sandbox\Helper.cs" />
     <Compile Include="Engine\Material\Material.cs" />
     <Compile Include="Engine\Particles\ParticleEffect.cs" />
     <Compile Include="Engine\Terrain.cs" />
@@ -413,9 +404,6 @@
     <Compile Include="VariousConstants.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Sandbox\FormLoader.resx">
-      <DependentUpon>FormLoader.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Testing\Reports\ReportForm.resx">
       <DependentUpon>ReportForm.cs</DependentUpon>
     </EmbeddedResource>
