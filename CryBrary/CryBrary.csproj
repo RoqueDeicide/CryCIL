@@ -160,6 +160,10 @@
     <Compile Include="Native\FlowInputInterop.cs" />
     <Compile Include="Native\MemoryHandlingInterop.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="RunTime\BlittableAttribute.cs" />
+    <Compile Include="RunTime\Compatibility\BlitChecker.cs" />
+    <Compile Include="RunTime\Compatibility\CppType.cs" />
+    <Compile Include="RunTime\Compatibility\NativeFieldName.cs" />
     <Compile Include="RunTime\Compilation\CodeSolution.cs" />
     <Compile Include="RunTime\Compilation\Exception.cs" />
     <Compile Include="RunTime\Compilation\IProject.cs" />

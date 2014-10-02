@@ -11,6 +11,7 @@ using CryEngine.Entities;
 using CryEngine.Extensions;
 using CryEngine.Flowgraph;
 using CryEngine.Initialization;
+using CryEngine.RunTime.Compatibility;
 using CryEngine.RunTime.Compilation;
 using CryEngine.RunTime.Registration;
 using CryEngine.Utilities;
@@ -22,26 +23,19 @@ namespace CryEngine.RunTime
 	/// </summary>
 	public class MonoInterface
 	{
-		#region Fields
-
-		#endregion
 		#region Properties
 		/// <summary>
 		/// Gets the array of assemblies that were compiled from Code folder.
 		/// </summary>
 		public Assembly[] CompiledAssemblies { get; private set; }
 		#endregion
-		#region Events
-
-		#endregion
 		#region Construction
-
-		#endregion
-		#region Interface
 		/// <summary>
 		/// Invoked from unmanaged code to initialize CryBrary subsystems.
 		/// </summary>
-		/// <param name="configurationPath">Path to configuration files and utilities.</param>
+		/// <param name="configurationPath">
+		/// Path to configuration files and utilities.
+		/// </param>
 		internal MonoInterface(string configurationPath)
 		{
 			ProjectSettings.ConfigFolder = configurationPath;
@@ -50,7 +44,20 @@ namespace CryEngine.RunTime
 			this.CompiledAssemblies = CodeSolution.Build();
 			// Find types that require registration for interoperability with CryEngine.
 			this.RegisterCryEngineTypes();
+#if DEBUG
+			// Check the types that are used in marshaling for blittability.
+			AppDomain.CurrentDomain.GetAssemblies()
+					 .SelectMany
+					 (
+						 assembly =>
+							 assembly.GetTypes()
+									 .Where(x => x.ContainsAttribute<BlittableAttribute>())
+					 )
+					 .ForEach(BlitChecker.Check);
+#endif
 		}
+		#endregion
+		#region Interface
 		internal void RegisterFlowNodeTypes()
 		{
 			FlowNodeRegister.RegisterTypes();
@@ -101,7 +108,8 @@ namespace CryEngine.RunTime
 		private void RegisterEntities(IEnumerable<Type> types)
 		{
 			// Register entities.
-			types.Where(type => type.ContainsAttribute<EntityAttribute>()).ForEach(EntityRegister.Register);
+			types.Where(type => type.ContainsAttribute<EntityAttribute>())
+				 .ForEach(EntityRegister.Register);
 		}
 		private void RegisterActors(IEnumerable<Type> types)
 		{
@@ -150,7 +158,8 @@ namespace CryEngine.RunTime
 		}
 		private void PrepareFlowNodesRegistration(IEnumerable<Type> types)
 		{
-			// Prepare the list of flow node types that will be registered when RegisterFlowNodes is called.
+			// Prepare the list of flow node types that will be registered when
+			// RegisterFlowNodes is called.
 			types.Where(type => type.ContainsAttribute<FlowNodeAttribute>()).ForEach(FlowNodeRegister.Prepare);
 		}
 		#endregion
