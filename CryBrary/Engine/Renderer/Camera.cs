@@ -26,8 +26,10 @@ namespace CryEngine
 			if (camera != null)
 				return camera;
 
-			camera = new Camera();
-			camera.Handle = handle;
+			camera = new Camera
+			{
+				Handle = handle
+			};
 
 			cameras.Add(camera);
 
