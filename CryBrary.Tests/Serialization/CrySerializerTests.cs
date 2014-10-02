@@ -2,7 +2,7 @@
 using System.IO;
 using System.Linq;
 using CryEngine.Mathematics;
-using CryEngine.Serialization;
+using CryEngine.RunTime.Serialization;
 using NUnit.Framework;
 
 namespace CryBrary.Tests.Serialization

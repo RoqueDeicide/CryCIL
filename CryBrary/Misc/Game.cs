@@ -1,8 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
-
-using CryEngine.Serialization;
 using CryEngine.Extensions;
 using CryEngine.Native;
 

@@ -1,17 +1,14 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
-using System.Linq;
-
 using CryEngine.Extensions;
 using CryEngine.Mathematics;
 using CryEngine.Utilities;
 
-namespace CryEngine.Serialization
+namespace CryEngine.RunTime.Serialization
 {
 	public class ObjectReference
 	{
@@ -39,7 +36,7 @@ namespace CryEngine.Serialization
 		public ObjectReference(string name, object value)
 		{
 			this.Name = name;
-			Value = value;
+			this.Value = value;
 
 			Type valueType = this.Value != null ? this.Value.GetType() : null;
 			if (valueType == null)

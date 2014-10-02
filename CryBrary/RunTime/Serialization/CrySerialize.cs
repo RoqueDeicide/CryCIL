@@ -3,44 +3,44 @@ using System.Runtime.CompilerServices;
 using CryEngine.Entities;
 using CryEngine.Mathematics;
 
-namespace CryEngine.Serialization
+namespace CryEngine.RunTime.Serialization
 {
 	public struct CrySerialize : ICrySerialize
 	{
-		[MethodImplAttribute(MethodImplOptions.InternalCall)]
+		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void BeginGroup(IntPtr handle, string name);
-		[MethodImplAttribute(MethodImplOptions.InternalCall)]
+		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void EndGroup(IntPtr handle);
 
-		[MethodImplAttribute(MethodImplOptions.InternalCall)]
+		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void ValueString(IntPtr handle, string name, ref string obj, string policy);
-		[MethodImplAttribute(MethodImplOptions.InternalCall)]
+		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void ValueInt(IntPtr handle, string name, ref int obj, string policy);
-		[MethodImplAttribute(MethodImplOptions.InternalCall)]
+		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void ValueUInt(IntPtr handle, string name, ref uint obj, string policy);
-		[MethodImplAttribute(MethodImplOptions.InternalCall)]
+		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void ValueBool(IntPtr handle, string name, ref bool obj, string policy);
-		[MethodImplAttribute(MethodImplOptions.InternalCall)]
+		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void ValueEntityId(IntPtr handle, string name, ref uint obj, string policy);
-		[MethodImplAttribute(MethodImplOptions.InternalCall)]
+		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void ValueFloat(IntPtr handle, string name, ref float obj, string policy);
-		[MethodImplAttribute(MethodImplOptions.InternalCall)]
+		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void ValueVec3(IntPtr handle, string name, ref Vector3 obj, string policy);
-		[MethodImplAttribute(MethodImplOptions.InternalCall)]
+		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void ValueQuat(IntPtr handle, string name, ref Quaternion obj, string policy);
 
-		[MethodImplAttribute(MethodImplOptions.InternalCall)]
+		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void EnumValue(IntPtr handle, string name, ref int obj, int first, int last);
-		[MethodImplAttribute(MethodImplOptions.InternalCall)]
+		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void UnsignedEnumValue(IntPtr handle, string name, ref uint obj, uint first, uint last);
 
-		[MethodImplAttribute(MethodImplOptions.InternalCall)]
+		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern bool _IsReading(IntPtr handle);
 
-		[MethodImplAttribute(MethodImplOptions.InternalCall)]
+		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void FlagPartialRead(IntPtr handle);
 
-		[MethodImplAttribute(MethodImplOptions.InternalCall)]
+		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern SerializationTarget GetSerializationTarget(IntPtr handle);
 
 		/// <summary>
@@ -51,64 +51,64 @@ namespace CryEngine.Serialization
 		/// </param>
 		public void BeginGroup(string name)
 		{
-			BeginGroup(Handle, name);
+			BeginGroup(this.Handle, name);
 		}
 
 		public void EndGroup()
 		{
-			EndGroup(Handle);
+			EndGroup(this.Handle);
 		}
 
 		public void Value(string name, ref string obj, string policy = null)
 		{
-			ValueString(Handle, name, ref obj, policy);
+			ValueString(this.Handle, name, ref obj, policy);
 		}
 
 		public void Value(string name, ref int obj, string policy = null)
 		{
-			ValueInt(Handle, name, ref obj, policy);
+			ValueInt(this.Handle, name, ref obj, policy);
 		}
 
 		[CLSCompliant(false)]
 		public void Value(string name, ref uint obj, string policy = null)
 		{
-			ValueUInt(Handle, name, ref obj, policy);
+			ValueUInt(this.Handle, name, ref obj, policy);
 		}
 
 		public void Value(string name, ref bool obj, string policy = null)
 		{
-			ValueBool(Handle, name, ref obj, policy);
+			ValueBool(this.Handle, name, ref obj, policy);
 		}
 
 		public void Value(string name, ref EntityId obj, string policy = null)
 		{
-			ValueEntityId(Handle, name, ref obj.Value, policy);
+			ValueEntityId(this.Handle, name, ref obj.Value, policy);
 		}
 
 		public void Value(string name, ref float obj, string policy = null)
 		{
-			ValueFloat(Handle, name, ref obj, policy);
+			ValueFloat(this.Handle, name, ref obj, policy);
 		}
 
 		public void Value(string name, ref Vector3 obj, string policy = null)
 		{
-			ValueVec3(Handle, name, ref obj, policy);
+			ValueVec3(this.Handle, name, ref obj, policy);
 		}
 
 		public void Value(string name, ref Quaternion obj, string policy = null)
 		{
-			ValueQuat(Handle, name, ref obj, policy);
+			ValueQuat(this.Handle, name, ref obj, policy);
 		}
 
 		public void EnumValue(string name, ref int obj, int first, int last)
 		{
-			EnumValue(Handle, name, ref obj, first, last);
+			EnumValue(this.Handle, name, ref obj, first, last);
 		}
 
 		[CLSCompliant(false)]
 		public void EnumValue(string name, ref uint obj, uint first, uint last)
 		{
-			UnsignedEnumValue(Handle, name, ref obj, first, last);
+			UnsignedEnumValue(this.Handle, name, ref obj, first, last);
 		}
 
 		/// <summary>
@@ -117,21 +117,21 @@ namespace CryEngine.Serialization
 		/// </summary>
 		public void FlagPartialRead()
 		{
-			FlagPartialRead(Handle);
+			FlagPartialRead(this.Handle);
 		}
 
 		public bool IsReading
 		{
-			get { return _IsReading(Handle); }
+			get { return _IsReading(this.Handle); }
 		}
 		public bool IsWriting
 		{
-			get { return !IsReading; }
+			get { return !this.IsReading; }
 		}
 
 		public SerializationTarget Target
 		{
-			get { return GetSerializationTarget(Handle); }
+			get { return GetSerializationTarget(this.Handle); }
 		}
 
 		internal IntPtr Handle { get; set; }

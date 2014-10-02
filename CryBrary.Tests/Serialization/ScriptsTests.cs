@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using CryEngine;
 using CryEngine.Actors;
 using CryEngine.Entities;
-using CryEngine.Serialization;
+using CryEngine.RunTime.Serialization;
 using CryEngine.Initialization;
 using NUnit.Framework;
 

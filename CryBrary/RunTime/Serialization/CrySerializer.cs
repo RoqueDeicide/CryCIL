@@ -11,7 +11,7 @@ using CryEngine.Extensions;
 using CryEngine.Mathematics;
 using CryEngine.Utilities;
 
-namespace CryEngine.Serialization
+namespace CryEngine.RunTime.Serialization
 {
 	[CLSCompliant(false)]
 	public class CrySerializer : IFormatter, ICrySerialize
@@ -56,13 +56,13 @@ namespace CryEngine.Serialization
 
 		public CrySerializer()
 		{
-			Converter = new FormatterConverter();
-			ObjectReferences = new Dictionary<int, ObjectReference>();
+			this.Converter = new FormatterConverter();
+			this.ObjectReferences = new Dictionary<int, ObjectReference>();
 
 #if !UNIT_TESTING
 			var debugCVar = CVar.Get("mono_realtimeScriptingDebug");
 			if (debugCVar != null)
-				IsDebugModeEnabled = (debugCVar.IVal != 0);
+				this.IsDebugModeEnabled = (debugCVar.IVal != 0);
 #endif
 		}
 
@@ -75,20 +75,20 @@ namespace CryEngine.Serialization
 				throw new ArgumentNullException("graph");
 #endif
 
-			Writer = new StreamWriter(stream) { AutoFlush = true };
-			Reader = null;
+			this.Writer = new StreamWriter(stream) { AutoFlush = true };
+			this.Reader = null;
 
-			ObjectReferences.Clear();
-			m_currentLine = 0;
+			this.ObjectReferences.Clear();
+			this.m_currentLine = 0;
 
-			StartWrite(new ObjectReference("root", graph));
+			this.StartWrite(new ObjectReference("root", graph));
 			stream.Seek(0, SeekOrigin.Begin);
 		}
 
 		private void WriteLine(object value)
 		{
-			m_currentLine++;
-			Writer.WriteLine(value);
+			this.m_currentLine++;
+			this.Writer.WriteLine(value);
 		}
 
 		/// <summary>
@@ -100,16 +100,16 @@ namespace CryEngine.Serialization
 		{
 			if (objectReference.SerializationType > SerializationType.ReferenceTypes)
 			{
-				foreach (var pair in ObjectReferences)
+				foreach (var pair in this.ObjectReferences)
 				{
 					if (pair.Value.Value.Equals(objectReference.Value))
 					{
-						WriteReference(objectReference, pair.Key);
+						this.WriteReference(objectReference, pair.Key);
 						return true;
 					}
 				}
 
-				ObjectReferences.Add(m_currentLine, objectReference);
+				this.ObjectReferences.Add(this.m_currentLine, objectReference);
 			}
 
 			return false;
@@ -121,140 +121,140 @@ namespace CryEngine.Serialization
 		/// <param name="objectReference"></param>
 		public void StartWrite(ObjectReference objectReference)
 		{
-			WriteLine(objectReference.Name);
+			this.WriteLine(objectReference.Name);
 
-			if (TryWriteReference(objectReference))
+			if (this.TryWriteReference(objectReference))
 				return;
 
-			WriteLine((int)objectReference.SerializationType);
+			this.WriteLine((int)objectReference.SerializationType);
 
 			switch (objectReference.SerializationType)
 			{
 				case SerializationType.Null:
 					break;
 				case SerializationType.IntPtr:
-					WriteIntPtr(objectReference);
+					this.WriteIntPtr(objectReference);
 					break;
 				case SerializationType.Any:
-					WriteAny(objectReference);
+					this.WriteAny(objectReference);
 					break;
 				case SerializationType.String:
-					WriteString(objectReference);
+					this.WriteString(objectReference);
 					break;
 				case SerializationType.Array:
-					WriteArray(objectReference);
+					this.WriteArray(objectReference);
 					break;
 				case SerializationType.Enumerable:
-					WriteEnumerable(objectReference);
+					this.WriteEnumerable(objectReference);
 					break;
 				case SerializationType.GenericEnumerable:
-					WriteGenericEnumerable(objectReference);
+					this.WriteGenericEnumerable(objectReference);
 					break;
 				case SerializationType.Enum:
-					WriteEnum(objectReference);
+					this.WriteEnum(objectReference);
 					break;
 				case SerializationType.Type:
-					WriteType(objectReference);
+					this.WriteType(objectReference);
 					break;
 				case SerializationType.Delegate:
-					WriteDelegate(objectReference);
+					this.WriteDelegate(objectReference);
 					break;
 				case SerializationType.MemberInfo:
-					WriteMemberInfo(objectReference);
+					this.WriteMemberInfo(objectReference);
 					break;
 				case SerializationType.Object:
-					WriteObject(objectReference);
+					this.WriteObject(objectReference);
 					break;
 				case SerializationType.UnusedMarker:
-					WriteUnusedMarker(objectReference);
+					this.WriteUnusedMarker(objectReference);
 					break;
 			}
 		}
 
 		private void WriteIntPtr(ObjectReference objectReference)
 		{
-			WriteLine(((IntPtr)objectReference.Value).ToInt64());
+			this.WriteLine(((IntPtr)objectReference.Value).ToInt64());
 		}
 
 // ReSharper disable UnusedParameter.Local
 		private void WriteReference(ObjectReference objReference, int line)
 // ReSharper restore UnusedParameter.Local
 		{
-			WriteLine(SerializationType.Reference);
-			WriteLine(line);
+			this.WriteLine(SerializationType.Reference);
+			this.WriteLine(line);
 		}
 
 		private void WriteAny(ObjectReference objectReference)
 		{
-			WriteType(objectReference.Value.GetType());
-			WriteLine(objectReference.Value);
+			this.WriteType(objectReference.Value.GetType());
+			this.WriteLine(objectReference.Value);
 		}
 
 		private void WriteString(ObjectReference objectReference)
 		{
-			WriteLine(objectReference.Value);
+			this.WriteLine(objectReference.Value);
 		}
 
 		private void WriteEnum(ObjectReference objectReference)
 		{
-			WriteType(objectReference.Value.GetType());
-			WriteLine(objectReference.Value);
+			this.WriteType(objectReference.Value.GetType());
+			this.WriteLine(objectReference.Value);
 		}
 
 		private void WriteArray(ObjectReference objectReference)
 		{
 			var array = objectReference.Value as Array;
 			var numElements = array.Length;
-			WriteLine(numElements);
+			this.WriteLine(numElements);
 
-			WriteType(array.GetType().GetElementType());
+			this.WriteType(array.GetType().GetElementType());
 
 			for (int i = 0; i < numElements; i++)
-				StartWrite(new ObjectReference(i.ToString(), array.GetValue(i)));
+				this.StartWrite(new ObjectReference(i.ToString(), array.GetValue(i)));
 		}
 
 		private void WriteEnumerable(ObjectReference objectReference)
 		{
 			var array = ((IEnumerable)objectReference.Value).Cast<object>().ToArray();
 			var numElements = array.Length;
-			WriteLine(numElements);
+			this.WriteLine(numElements);
 
-			WriteType(GetIEnumerableElementType(objectReference.Value.GetType()));
+			this.WriteType(GetIEnumerableElementType(objectReference.Value.GetType()));
 
 			for (int i = 0; i < numElements; i++)
-				StartWrite(new ObjectReference(i.ToString(CultureInfo.InvariantCulture), array[i]));
+				this.StartWrite(new ObjectReference(i.ToString(CultureInfo.InvariantCulture), array[i]));
 		}
 
 		private void WriteGenericEnumerable(ObjectReference objectReference)
 		{
 			var enumerable = ((IEnumerable)objectReference.Value).Cast<object>().ToArray();
 
-			WriteLine(enumerable.Count());
+			this.WriteLine(enumerable.Count());
 
 			var type = objectReference.Value.GetType();
-			WriteType(type);
+			this.WriteType(type);
 
 			if (type.Implements<IDictionary>())
 			{
 				int i = 0;
 				foreach (var element in enumerable)
 				{
-					StartWrite(new ObjectReference("key_" + i, element.GetType().GetProperty("Key").GetValue(element, null)));
-					StartWrite(new ObjectReference("value_" + i, element.GetType().GetProperty("Value").GetValue(element, null)));
+					this.StartWrite(new ObjectReference("key_" + i, element.GetType().GetProperty("Key").GetValue(element, null)));
+					this.StartWrite(new ObjectReference("value_" + i, element.GetType().GetProperty("Value").GetValue(element, null)));
 					i++;
 				}
 			}
 			else
 			{
 				for (int i = 0; i < enumerable.Count(); i++)
-					StartWrite(new ObjectReference(i.ToString(), enumerable.ElementAt(i)));
+					this.StartWrite(new ObjectReference(i.ToString(), enumerable.ElementAt(i)));
 			}
 		}
 
 		private void WriteObject(ObjectReference objectReference)
 		{
 			var type = objectReference.Value.GetType();
-			WriteType(type);
+			this.WriteType(type);
 
 			if (type.Implements<ICrySerializable>())
 			{
@@ -267,16 +267,16 @@ namespace CryEngine.Serialization
 			while (type != null)
 			{
 				var fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
-				WriteLine(fields.Length);
+				this.WriteLine(fields.Length);
 				foreach (var field in fields)
-					StartWrite(new ObjectReference(field.Name, field.GetValue(objectReference.Value)));
+					this.StartWrite(new ObjectReference(field.Name, field.GetValue(objectReference.Value)));
 
 				var events = type.GetEvents(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly);
-				WriteLine(events.Length);
+				this.WriteLine(events.Length);
 				foreach (var eventInfo in events)
 				{
-					WriteLine(eventInfo.Name);
-					WriteType(eventInfo.EventHandlerType);
+					this.WriteLine(eventInfo.Name);
+					this.WriteType(eventInfo.EventHandlerType);
 
 					var eventFieldInfo = type.GetField(eventInfo.Name, BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.GetField);
 					var eventFieldValue = (Delegate)eventFieldInfo.GetValue(objectReference.Value);
@@ -284,12 +284,12 @@ namespace CryEngine.Serialization
 					{
 						var delegates = eventFieldValue.GetInvocationList();
 
-						WriteLine(delegates.Length);
+						this.WriteLine(delegates.Length);
 						foreach (var eventDelegate in delegates)
-							WriteDelegate(eventDelegate);
+							this.WriteDelegate(eventDelegate);
 					}
 					else
-						WriteLine(0);
+						this.WriteLine(0);
 				}
 
 				type = type.BaseType;
@@ -299,69 +299,69 @@ namespace CryEngine.Serialization
 		private void WriteMemberInfo(ObjectReference objectReference)
 		{
 			var memberInfo = objectReference.Value as MemberInfo;
-			WriteMemberInfo(memberInfo);
+			this.WriteMemberInfo(memberInfo);
 		}
 
 		private void WriteMemberInfo(MemberInfo memberInfo)
 		{
-			WriteLine(memberInfo.Name);
-			WriteType(memberInfo.ReflectedType);
-			WriteLine(memberInfo.MemberType);
+			this.WriteLine(memberInfo.Name);
+			this.WriteType(memberInfo.ReflectedType);
+			this.WriteLine(memberInfo.MemberType);
 
 			if (memberInfo.MemberType == MemberTypes.Method)
 			{
 				var methodInfo = memberInfo as MethodInfo;
 
 				var parameters = methodInfo.GetParameters();
-				WriteLine(parameters.Length);
+				this.WriteLine(parameters.Length);
 				foreach (var parameter in parameters)
-					WriteType(parameter.ParameterType);
+					this.WriteType(parameter.ParameterType);
 			}
 		}
 
 		private void WriteDelegate(ObjectReference objectReference)
 		{
-			WriteDelegate(objectReference.Value as Delegate);
+			this.WriteDelegate(objectReference.Value as Delegate);
 		}
 
 		private void WriteDelegate(Delegate _delegate)
 		{
-			WriteType(_delegate.GetType());
-			WriteMemberInfo(_delegate.Method);
+			this.WriteType(_delegate.GetType());
+			this.WriteMemberInfo(_delegate.Method);
 			if (_delegate.Target != null)
 			{
-				WriteLine("target");
-				StartWrite(new ObjectReference("delegateTarget", _delegate.Target));
+				this.WriteLine("target");
+				this.StartWrite(new ObjectReference("delegateTarget", _delegate.Target));
 			}
 			else
-				WriteLine("null_target");
+				this.WriteLine("null_target");
 		}
 
 		private void WriteUnusedMarker(ObjectReference objectReference)
 		{
-			WriteType(objectReference.Value.GetType());
+			this.WriteType(objectReference.Value.GetType());
 		}
 
 		private void WriteType(ObjectReference objectReference)
 		{
-			WriteType(objectReference.Value as Type);
+			this.WriteType(objectReference.Value as Type);
 		}
 
 		private void WriteType(Type type)
 		{
-			WriteLine(type.IsGenericType);
+			this.WriteLine(type.IsGenericType);
 
 			if (type.IsGenericType)
 			{
-				WriteLine(type.GetGenericTypeDefinition().FullName);
+				this.WriteLine(type.GetGenericTypeDefinition().FullName);
 
 				var genericArgs = type.GetGenericArguments();
-				WriteLine(genericArgs.Length);
+				this.WriteLine(genericArgs.Length);
 				foreach (var genericArg in genericArgs)
-					WriteType(genericArg);
+					this.WriteType(genericArg);
 			}
 			else
-				WriteLine(type.FullName);
+				this.WriteLine(type.FullName);
 		}
 
 		public object Deserialize(Stream stream)
@@ -371,20 +371,20 @@ namespace CryEngine.Serialization
 				throw new ArgumentNullException("stream");
 #endif
 
-			Reader = new StreamReader(stream);
-			Writer = null;
+			this.Reader = new StreamReader(stream);
+			this.Writer = null;
 
-			ObjectReferences.Clear();
-			m_currentLine = 0;
+			this.ObjectReferences.Clear();
+			this.m_currentLine = 0;
 
-			return StartRead().Value;
+			return this.StartRead().Value;
 		}
 
 		private string ReadLine()
 		{
-			m_currentLine++;
+			this.m_currentLine++;
 
-			return Reader.ReadLine();
+			return this.Reader.ReadLine();
 		}
 
 		/// <summary>
@@ -393,32 +393,32 @@ namespace CryEngine.Serialization
 		/// <returns></returns>
 		public ObjectReference StartRead()
 		{
-			var name = ReadLine();
+			var name = this.ReadLine();
 
-			int line = m_currentLine;
+			int line = this.m_currentLine;
 
-			var serializationType = (SerializationType)Enum.Parse(typeof(SerializationType), ReadLine());
+			var serializationType = (SerializationType)Enum.Parse(typeof(SerializationType), this.ReadLine());
 			var objReference = new ObjectReference(name, serializationType);
 
 			if (serializationType > SerializationType.ReferenceTypes)
-				ObjectReferences.Add(line, objReference);
+				this.ObjectReferences.Add(line, objReference);
 
 			switch (serializationType)
 			{
 				case SerializationType.Null: break;
-				case SerializationType.Reference: ReadReference(objReference); break;
-				case SerializationType.Object: ReadObject(objReference); break;
-				case SerializationType.Array: ReadArray(objReference); break;
-				case SerializationType.GenericEnumerable: ReadGenericEnumerable(objReference); break;
-				case SerializationType.Enumerable: ReadEnumerable(objReference); break;
-				case SerializationType.Enum: ReadEnum(objReference); break;
-				case SerializationType.Any: ReadAny(objReference); break;
-				case SerializationType.String: ReadString(objReference); break;
-				case SerializationType.MemberInfo: ReadMemberInfo(objReference); break;
-				case SerializationType.Type: ReadType(objReference); break;
-				case SerializationType.Delegate: ReadDelegate(objReference); break;
-				case SerializationType.IntPtr: ReadIntPtr(objReference); break;
-				case SerializationType.UnusedMarker: ReadUnusedMarker(objReference); break;
+				case SerializationType.Reference: this.ReadReference(objReference); break;
+				case SerializationType.Object: this.ReadObject(objReference); break;
+				case SerializationType.Array: this.ReadArray(objReference); break;
+				case SerializationType.GenericEnumerable: this.ReadGenericEnumerable(objReference); break;
+				case SerializationType.Enumerable: this.ReadEnumerable(objReference); break;
+				case SerializationType.Enum: this.ReadEnum(objReference); break;
+				case SerializationType.Any: this.ReadAny(objReference); break;
+				case SerializationType.String: this.ReadString(objReference); break;
+				case SerializationType.MemberInfo: this.ReadMemberInfo(objReference); break;
+				case SerializationType.Type: this.ReadType(objReference); break;
+				case SerializationType.Delegate: this.ReadDelegate(objReference); break;
+				case SerializationType.IntPtr: this.ReadIntPtr(objReference); break;
+				case SerializationType.UnusedMarker: this.ReadUnusedMarker(objReference); break;
 			}
 
 #if !(RELEASE && RELEASE_DISABLE_CHECKS)
@@ -431,16 +431,16 @@ namespace CryEngine.Serialization
 
 		private void ReadIntPtr(ObjectReference objReference)
 		{
-			objReference.Value = new IntPtr(Int64.Parse(ReadLine()));
+			objReference.Value = new IntPtr(Int64.Parse(this.ReadLine()));
 		}
 
 		private void ReadReference(ObjectReference objReference)
 		{
-			int referenceLine = int.Parse(ReadLine());
+			int referenceLine = int.Parse(this.ReadLine());
 
 			ObjectReference originalReference;
-			if (!ObjectReferences.TryGetValue(referenceLine, out originalReference))
-				throw new SerializationException(string.Format("Failed to obtain reference {0} at line {1}! Last line was {2})", objReference.Name, referenceLine, m_currentLine));
+			if (!this.ObjectReferences.TryGetValue(referenceLine, out originalReference))
+				throw new SerializationException(string.Format("Failed to obtain reference {0} at line {1}! Last line was {2})", objReference.Name, referenceLine, this.m_currentLine));
 
 			objReference.Value = originalReference.Value;
 			objReference.AllowNull = originalReference.AllowNull;
@@ -448,7 +448,7 @@ namespace CryEngine.Serialization
 
 		private void ReadObject(ObjectReference objReference)
 		{
-			var type = ReadType();
+			var type = this.ReadType();
 
 			objReference.Value = FormatterServices.GetUninitializedObject(type);
 
@@ -462,10 +462,10 @@ namespace CryEngine.Serialization
 
 			while (type != null)
 			{
-				var numFields = int.Parse(ReadLine());
+				var numFields = int.Parse(this.ReadLine());
 				for (int i = 0; i < numFields; i++)
 				{
-					var fieldReference = StartRead();
+					var fieldReference = this.StartRead();
 
 					if (objReference.Value == null)
 						continue;
@@ -474,25 +474,25 @@ namespace CryEngine.Serialization
 
 					if (fieldInfo != null)
 						fieldInfo.SetValue(objReference.Value, fieldReference.Value);
-					else if (IsDebugModeEnabled)
+					else if (this.IsDebugModeEnabled)
 						throw new MissingFieldException(string.Format("Failed to find field {0} in type {1}", fieldReference.Name, type.Name));
 				}
 
-				var numEvents = int.Parse(ReadLine());
+				var numEvents = int.Parse(this.ReadLine());
 
 				for (int i = 0; i < numEvents; i++)
 				{
-					var eventName = ReadLine();
+					var eventName = this.ReadLine();
 
 					var eventInfo = type.GetEvent(eventName);
 // ReSharper disable UnusedVariable
-					var eventHandlerType = ReadType();
+					var eventHandlerType = this.ReadType();
 // ReSharper restore UnusedVariable
 
-					var numDelegates = Int32.Parse(ReadLine());
+					var numDelegates = Int32.Parse(this.ReadLine());
 					for (int iDelegate = 0; iDelegate < numDelegates; iDelegate++)
 					{
-						var foundDelegate = ReadDelegate();
+						var foundDelegate = this.ReadDelegate();
 
 						eventInfo.AddEventHandler(objReference.Value, foundDelegate);
 					}
@@ -504,33 +504,33 @@ namespace CryEngine.Serialization
 
 		private void ReadArray(ObjectReference objReference)
 		{
-			var numElements = int.Parse(ReadLine());
-			var type = ReadType();
+			var numElements = int.Parse(this.ReadLine());
+			var type = this.ReadType();
 
 			objReference.Value = Array.CreateInstance(type, numElements);
 			var array = objReference.Value as Array;
 
 			for (int i = 0; i != numElements; ++i)
-				array.SetValue(StartRead().Value, i);
+				array.SetValue(this.StartRead().Value, i);
 		}
 
 		private void ReadEnumerable(ObjectReference objReference)
 		{
-			var numElements = int.Parse(ReadLine());
-			var type = ReadType();
+			var numElements = int.Parse(this.ReadLine());
+			var type = this.ReadType();
 
 			objReference.Value = Array.CreateInstance(type, numElements);
 			var array = objReference.Value as Array;
 
 			for (int i = 0; i != numElements; ++i)
-				array.SetValue(StartRead().Value, i);
+				array.SetValue(this.StartRead().Value, i);
 		}
 
 		private void ReadGenericEnumerable(ObjectReference objReference)
 		{
-			int elements = int.Parse(ReadLine());
+			int elements = int.Parse(this.ReadLine());
 
-			var type = ReadType();
+			var type = this.ReadType();
 
 			objReference.Value = Activator.CreateInstance(type);
 
@@ -540,8 +540,8 @@ namespace CryEngine.Serialization
 
 				for (int i = 0; i < elements; i++)
 				{
-					var key = StartRead().Value;
-					var value = StartRead().Value;
+					var key = this.StartRead().Value;
+					var value = this.StartRead().Value;
 
 					dict.Add(key, value);
 				}
@@ -573,17 +573,17 @@ namespace CryEngine.Serialization
 
 				for (int i = 0; i < elements; i++)
 				{
-					addMethod.Invoke(objReference.Value, new [] { StartRead().Value });
+					addMethod.Invoke(objReference.Value, new [] { this.StartRead().Value });
 				}
 			}
-			else if (IsDebugModeEnabled)
+			else if (this.IsDebugModeEnabled)
 				throw new SerializationException(string.Format("Failed to serialize generic enumerable of type {0}, not supported by implementation", type.Name));
 		}
 
 		private void ReadAny(ObjectReference objReference)
 		{
-			var type = ReadType();
-			string valueString = ReadLine();
+			var type = this.ReadType();
+			string valueString = this.ReadLine();
 
 			objReference.Value =
 				!string.IsNullOrEmpty(valueString)
@@ -593,39 +593,39 @@ namespace CryEngine.Serialization
 
 		private void ReadString(ObjectReference objReference)
 		{
-			objReference.Value = ReadLine();
+			objReference.Value = this.ReadLine();
 		}
 
 		private void ReadEnum(ObjectReference objReference)
 		{
-			var type = ReadType();
-			string valueString = ReadLine();
+			var type = this.ReadType();
+			string valueString = this.ReadLine();
 
 			objReference.Value = Enum.Parse(type, valueString);
 		}
 
 		private void ReadMemberInfo(ObjectReference objReference)
 		{
-			objReference.Value = ReadMemberInfo();
+			objReference.Value = this.ReadMemberInfo();
 		}
 
 		private MemberInfo ReadMemberInfo()
 		{
-			var memberName = ReadLine();
+			var memberName = this.ReadLine();
 
-			var reflectedType = ReadType();
-			var memberType = (MemberTypes)Enum.Parse(typeof(MemberTypes), ReadLine());
+			var reflectedType = this.ReadType();
+			var memberType = (MemberTypes)Enum.Parse(typeof(MemberTypes), this.ReadLine());
 
 			const BindingFlags bindingFlags = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance;
 			switch (memberType)
 			{
 				case MemberTypes.Method:
 					{
-						var parameterCount = Int32.Parse(ReadLine());
+						var parameterCount = Int32.Parse(this.ReadLine());
 						var parameters = new Type[parameterCount];
 
 						for (int i = 0; i < parameterCount; i++)
-							parameters[i] = ReadType();
+							parameters[i] = this.ReadType();
 
 						return reflectedType.GetMethod(memberName, bindingFlags, null, parameters, null);
 					}
@@ -640,13 +640,13 @@ namespace CryEngine.Serialization
 
 		private void ReadDelegate(ObjectReference objReference)
 		{
-			objReference.Value = ReadDelegate();
+			objReference.Value = this.ReadDelegate();
 		}
 
 		private Delegate ReadDelegate()
 		{
-			var delegateType = ReadType();
-			var methodInfo = (MethodInfo)ReadMemberInfo();
+			var delegateType = this.ReadType();
+			var methodInfo = (MethodInfo)this.ReadMemberInfo();
 
 			return this.ReadLine() == "target"
 				? Delegate.CreateDelegate(delegateType, this.StartRead().Value, methodInfo)
@@ -655,7 +655,7 @@ namespace CryEngine.Serialization
 
 		private void ReadUnusedMarker(ObjectReference objReference)
 		{
-			var type = ReadType();
+			var type = this.ReadType();
 			if (type == typeof(int))
 				objReference.Value = UnusedMarker.Integer;
 			if (type == typeof(uint))
@@ -668,21 +668,21 @@ namespace CryEngine.Serialization
 
 		private void ReadType(ObjectReference objReference)
 		{
-			objReference.Value = ReadType();
+			objReference.Value = this.ReadType();
 		}
 
 		private Type ReadType()
 		{
-			bool isGeneric = bool.Parse(ReadLine());
+			bool isGeneric = bool.Parse(this.ReadLine());
 
-			var type = GetType(ReadLine());
+			var type = this.GetType(this.ReadLine());
 
 			if (isGeneric)
 			{
-				var numGenericArgs = int.Parse(ReadLine());
+				var numGenericArgs = int.Parse(this.ReadLine());
 				var genericArgs = new Type[numGenericArgs];
 				for (int i = 0; i < numGenericArgs; i++)
-					genericArgs[i] = ReadType();
+					genericArgs[i] = this.ReadType();
 
 				return type.MakeGenericType(genericArgs);
 			}
@@ -702,7 +702,7 @@ namespace CryEngine.Serialization
 			if (typeName.Contains('+'))
 			{
 				var splitString = typeName.Split('+');
-				var ownerType = GetType(splitString.FirstOrDefault());
+				var ownerType = this.GetType(splitString.FirstOrDefault());
 
 				return ownerType.Assembly.GetType(typeName);
 			}
@@ -748,88 +748,88 @@ namespace CryEngine.Serialization
 
 		public void Value(string name, ref string obj, string policy = null)
 		{
-			if (IsWriting)
-				StartWrite(new ObjectReference(name, obj));
+			if (this.IsWriting)
+				this.StartWrite(new ObjectReference(name, obj));
 			else
-				obj = (string)StartRead().Value;
+				obj = (string)this.StartRead().Value;
 		}
 
 		public void Value(string name, ref int obj, string policy = null)
 		{
-			if (IsWriting)
-				StartWrite(new ObjectReference(name, obj));
+			if (this.IsWriting)
+				this.StartWrite(new ObjectReference(name, obj));
 			else
-				obj = (int)StartRead().Value;
+				obj = (int)this.StartRead().Value;
 		}
 
 		public void Value(string name, ref uint obj, string policy = null)
 		{
-			if (IsWriting)
-				StartWrite(new ObjectReference(name, obj));
+			if (this.IsWriting)
+				this.StartWrite(new ObjectReference(name, obj));
 			else
-				obj = (uint)StartRead().Value;
+				obj = (uint)this.StartRead().Value;
 		}
 
 		public void Value(string name, ref bool obj, string policy = null)
 		{
-			if (IsWriting)
-				StartWrite(new ObjectReference(name, obj));
+			if (this.IsWriting)
+				this.StartWrite(new ObjectReference(name, obj));
 			else
-				obj = (bool)StartRead().Value;
+				obj = (bool)this.StartRead().Value;
 		}
 
 		public void Value(string name, ref EntityId obj, string policy = null)
 		{
-			if (IsWriting)
-				StartWrite(new ObjectReference(name, obj));
+			if (this.IsWriting)
+				this.StartWrite(new ObjectReference(name, obj));
 			else
-				obj = (EntityId)StartRead().Value;
+				obj = (EntityId)this.StartRead().Value;
 		}
 
 		public void Value(string name, ref float obj, string policy = null)
 		{
-			if (IsWriting)
-				StartWrite(new ObjectReference(name, obj));
+			if (this.IsWriting)
+				this.StartWrite(new ObjectReference(name, obj));
 			else
-				obj = (float)StartRead().Value;
+				obj = (float)this.StartRead().Value;
 		}
 
 		public void Value(string name, ref Vector3 obj, string policy = null)
 		{
-			if (IsWriting)
-				StartWrite(new ObjectReference(name, obj));
+			if (this.IsWriting)
+				this.StartWrite(new ObjectReference(name, obj));
 			else
-				obj = (Vector3)StartRead().Value;
+				obj = (Vector3)this.StartRead().Value;
 		}
 
 		public void Value(string name, ref Quaternion obj, string policy = null)
 		{
-			if (IsWriting)
-				StartWrite(new ObjectReference(name, obj));
+			if (this.IsWriting)
+				this.StartWrite(new ObjectReference(name, obj));
 			else
-				obj = (Quaternion)StartRead().Value;
+				obj = (Quaternion)this.StartRead().Value;
 		}
 
 		public void EnumValue(string name, ref int obj, int first, int last)
 		{
-			if (IsWriting)
-				StartWrite(new ObjectReference(name, obj));
+			if (this.IsWriting)
+				this.StartWrite(new ObjectReference(name, obj));
 			else
-				obj = (int)StartRead().Value;
+				obj = (int)this.StartRead().Value;
 		}
 
 		public void EnumValue(string name, ref uint obj, uint first, uint last)
 		{
-			if (IsWriting)
-				StartWrite(new ObjectReference(name, obj));
+			if (this.IsWriting)
+				this.StartWrite(new ObjectReference(name, obj));
 			else
-				obj = (uint)StartRead().Value;
+				obj = (uint)this.StartRead().Value;
 		}
 
 		public void FlagPartialRead() { throw new NotImplementedException(); }
 
-		public bool IsReading { get { return Reader != null; } }
-		public bool IsWriting { get { return Writer != null; } }
+		public bool IsReading { get { return this.Reader != null; } }
+		public bool IsWriting { get { return this.Writer != null; } }
 
 		public SerializationTarget Target { get { return SerializationTarget.RealtimeScripting; } }
 		#endregion

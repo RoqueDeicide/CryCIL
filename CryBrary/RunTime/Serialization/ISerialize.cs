@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using CryEngine.Entities;
 using CryEngine.Mathematics;
 
-namespace CryEngine.Serialization
+namespace CryEngine.RunTime.Serialization
 {
-	[CLSCompliant(false)]
 	public interface ICrySerialize
 	{
 		void BeginGroup(string name);

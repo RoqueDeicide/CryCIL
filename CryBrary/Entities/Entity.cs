@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using CryEngine.Annotations;
 using CryEngine.Mathematics;
 using CryEngine.Native;
+using CryEngine.RunTime.Serialization;
 
 namespace CryEngine.Entities
 {
@@ -34,7 +35,7 @@ namespace CryEngine.Entities
 			return result;
 		}
 		[UsedImplicitly]
-		private void InternalFullSerialize(Serialization.CrySerialize serialize)
+		private void InternalFullSerialize(CrySerialize serialize)
 		{
 			//var serialize = new Serialization.CrySerialize();
 			//serialize.Handle = handle;
@@ -43,7 +44,7 @@ namespace CryEngine.Entities
 		}
 
 		[UsedImplicitly]
-		private void InternalNetSerialize(Serialization.CrySerialize serialize, int aspect, byte profile, int flags)
+		private void InternalNetSerialize(CrySerialize serialize, int aspect, byte profile, int flags)
 		{
 			//var serialize = new Serialization.CrySerialize();
 			//serialize.Handle = handle;
@@ -237,12 +238,12 @@ namespace CryEngine.Entities
 		}
 
 		[CLSCompliant(false)]
-		protected virtual void FullSerialize(Serialization.ICrySerialize serialize)
+		protected virtual void FullSerialize(ICrySerialize serialize)
 		{
 		}
 
 		[CLSCompliant(false)]
-		protected virtual void NetSerialize(Serialization.ICrySerialize serialize, int aspect, byte profile, int flags)
+		protected virtual void NetSerialize(ICrySerialize serialize, int aspect, byte profile, int flags)
 		{
 		}
 

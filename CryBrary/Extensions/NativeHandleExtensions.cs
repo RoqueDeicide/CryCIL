@@ -4,6 +4,7 @@ using CryEngine.Actors;
 using CryEngine.Entities;
 using CryEngine.Entities.Advanced;
 using CryEngine.Flowgraph;
+using CryEngine.RunTime.Serialization;
 using CryEngine.Utilities;
 
 namespace CryEngine.Native
@@ -115,12 +116,12 @@ namespace CryEngine.Native
 		}
 		#endregion
 		#region CrySerialize
-		public static IntPtr GetISerialize(this Serialization.CrySerialize serialize)
+		public static IntPtr GetISerialize(this CrySerialize serialize)
 		{
 			return serialize.Handle;
 		}
 
-		public static void SetISerialize(this Serialization.CrySerialize serialize, IntPtr handle)
+		public static void SetISerialize(this CrySerialize serialize, IntPtr handle)
 		{
 			serialize.Handle = handle;
 		}

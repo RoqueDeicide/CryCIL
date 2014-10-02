@@ -12,7 +12,7 @@ public:
 
 protected:
 	// IMonoScriptBind
-	virtual const char *GetNamespace() override { return "CryEngine.Serialization"; }
+	virtual const char *GetNamespace() override { return "CryEngine.RunTime.Serialization"; }
 	virtual const char *GetClassName() override { return "CrySerialize"; }
 	// ~IMonoScriptBind
 
