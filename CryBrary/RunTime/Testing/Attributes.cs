@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CryEngine.Testing
+namespace CryEngine.RunTime.Testing
 {
 	/// <summary>
 	/// Indicates that a class should be loaded by the unit tester.
@@ -17,13 +17,13 @@ namespace CryEngine.Testing
 
 		public TestCollectionAttribute(string name)
 		{
-			Name = name;
+			this.Name = name;
 		}
 
 		public TestCollectionAttribute(string name, string description)
 		{
-			Name = name;
-			Description = description;
+			this.Name = name;
+			this.Description = description;
 		}
 	}
 
@@ -43,13 +43,13 @@ namespace CryEngine.Testing
 
 		public TestAttribute(string name)
 		{
-			Name = name;
+			this.Name = name;
 		}
 
 		public TestAttribute(string name, string description)
 		{
-			Name = name;
-			Description = description;
+			this.Name = name;
+			this.Description = description;
 		}
 	}
 

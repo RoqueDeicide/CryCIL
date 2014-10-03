@@ -1,4 +1,4 @@
-﻿using CryEngine.Testing;
+﻿using CryEngine.RunTime.Testing;
 
 namespace CryBrary.Tests.UnitTester
 {

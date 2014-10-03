@@ -1,30 +1,27 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Forms;
-using CryEngine.Extensions;
-using CryEngine.Sandbox;
 
-namespace CryEngine.Testing.Internals
+namespace CryEngine.RunTime.Testing.Reports
 {
-	[SandboxExtension("Unit Testing", "Provides automated testing for your .NET game project.", AuthorName = "Ink Studios Ltd.", AuthorContact = "http:// inkdev.net")]
 	internal partial class ReportForm : Form
 	{
 		public ReportForm()
 		{
-			InitializeComponent();
-			TestManager.Run += OnTestsRun;
-			uxRerunTests.Click += (sender, args) => TestManager.RunTests();
+			this.InitializeComponent();
+			TestManager.Run += this.OnTestsRun;
+			this.uxRerunTests.Click += (sender, args) => TestManager.RunTests();
 		}
 
 		public void OnTestsRun(TestReport report)
 		{
-			uxTestTree.Nodes.Clear();
-			var root = uxTestTree.Nodes.Add("Tests");
+			this.uxTestTree.Nodes.Clear();
+			var root = this.uxTestTree.Nodes.Add("Tests");
 
 			var overallSuccess = true;
 			var overallIgnored = false;
 
-			var testCounts = EnumExtensions.GetMembers<TestResult>().ToDictionary(key => key, key => 0);
+			var testCounts = EnumExtas.Values<TestResult>().ToDictionary(key => key, key => 0);
 
 			foreach (var collection in report.Collections)
 			{
@@ -51,28 +48,28 @@ namespace CryEngine.Testing.Internals
 						ignored = true;
 					}
 
-					var image = GetImageIndex(test.Result);
+					var image = this.GetImageIndex(test.Result);
 					var node = new TreeNode(test.Name, image, image) { Tag = test };
 
 					collectionNode.Nodes.Add(node);
 				}
 
-				var collectionImage = GetImageIndex(failed, ignored);
+				var collectionImage = this.GetImageIndex(failed, ignored);
 				collectionNode.ImageIndex = collectionImage;
 				collectionNode.SelectedImageIndex = collectionImage;
 			}
 
-			var rootImage = GetImageIndex(!overallSuccess, overallIgnored);
+			var rootImage = this.GetImageIndex(!overallSuccess, overallIgnored);
 			root.ImageIndex = rootImage;
 			root.SelectedImageIndex = rootImage;
 
 			var totalTestCount = testCounts.Sum(pair => pair.Value);
 
-			uxTimeMessage.Text = string.Format("Test run with {0} tests took {1}s to execute.", totalTestCount, report.TimeTaken.TotalSeconds);
+			this.uxTimeMessage.Text = string.Format("Test run with {0} tests took {1}s to execute.", totalTestCount, report.TimeTaken.TotalSeconds);
 
-			uxSuccessCount.Text = CreateCountMessage(testCounts[TestResult.Success], "passed");
-			uxFailureCount.Text = CreateCountMessage(testCounts[TestResult.Failure], "failed");
-			uxIgnoredCount.Text = CreateCountMessage(testCounts[TestResult.Ignored], "ignored", true);
+			this.uxSuccessCount.Text = this.CreateCountMessage(testCounts[TestResult.Success], "passed");
+			this.uxFailureCount.Text = this.CreateCountMessage(testCounts[TestResult.Failure], "failed");
+			this.uxIgnoredCount.Text = this.CreateCountMessage(testCounts[TestResult.Ignored], "ignored", true);
 		}
 
 		private string CreateCountMessage(int count, string message, bool passive = false)
@@ -84,9 +81,9 @@ namespace CryEngine.Testing.Internals
 
 		private int GetImageIndex(bool failed, bool ignored)
 		{
-			return failed ? GetImageIndex(TestResult.Failure) :
-				ignored ? GetImageIndex(TestResult.Ignored) :
-				GetImageIndex(TestResult.Success);
+			return failed ? this.GetImageIndex(TestResult.Failure) :
+				ignored ? this.GetImageIndex(TestResult.Ignored) :
+				this.GetImageIndex(TestResult.Success);
 		}
 
 		private int GetImageIndex(TestResult result)
@@ -106,32 +103,32 @@ namespace CryEngine.Testing.Internals
 
 		private void OnTreeSelect(object sender, TreeViewEventArgs e)
 		{
-			uxTestResult.Clear();
+			this.uxTestResult.Clear();
 
 			var test = e.Node.Tag as TestResultInfo;
 
 			if (test != null)
 			{
 				var n = Environment.NewLine;
-				uxTestResult.AppendText(test.Name + n);
-				uxTestResult.AppendText((test.Description ?? "No description supplied.") + n + n);
+				this.uxTestResult.AppendText(test.Name + n);
+				this.uxTestResult.AppendText((test.Description ?? "No description supplied.") + n + n);
 
-				uxTestResult.AppendText("Result: " + test.Result.ToString() + n + n);
+				this.uxTestResult.AppendText("Result: " + test.Result.ToString() + n + n);
 
 				if (test.Result == TestResult.Failure)
 				{
-					uxTestResult.AppendText(string.Format("{0} ({1} thrown at line {2} of {3})", test.Exception.Message,
+					this.uxTestResult.AppendText(string.Format("{0} ({1} thrown at line {2} of {3})", test.Exception.Message,
 								test.Exception.GetType().Name, test.FirstFrame.GetFileLineNumber(), test.FirstFrame.GetFileName()));
 
-					uxTestResult.AppendText(n + n + "Full stacktrace:" + n + n);
-					uxTestResult.AppendText(test.Stack.ToString());
+					this.uxTestResult.AppendText(n + n + "Full stacktrace:" + n + n);
+					this.uxTestResult.AppendText(test.Stack.ToString());
 				}
 			}
 		}
 
 		private void OnClose(object sender, FormClosingEventArgs e)
 		{
-			TestManager.Run -= OnTestsRun;
+			TestManager.Run -= this.OnTestsRun;
 		}
 	}
 }

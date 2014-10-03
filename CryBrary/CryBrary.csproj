@@ -364,19 +364,19 @@
     <Compile Include="RunTime\Serialization\CrySerializer.cs" />
     <Compile Include="Mathematics\Graphics\ColorSingle.cs" />
     <Compile Include="RunTime\Serialization\SerializedObjectReference.cs" />
-    <Compile Include="Testing\Assertion.cs" />
-    <Compile Include="Testing\Attributes.cs" />
-    <Compile Include="Testing\Exceptions.cs" />
-    <Compile Include="Testing\Reports\ConsoleListener.cs" />
-    <Compile Include="Testing\Reports\ReportForm.cs">
+    <Compile Include="RunTime\Testing\Assertion.cs" />
+    <Compile Include="RunTime\Testing\Attributes.cs" />
+    <Compile Include="RunTime\Testing\Exceptions.cs" />
+    <Compile Include="RunTime\Testing\Reports\ConsoleListener.cs" />
+    <Compile Include="RunTime\Testing\Reports\ReportForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Testing\Reports\ReportForm.Designer.cs">
+    <Compile Include="RunTime\Testing\Reports\ReportForm.Designer.cs">
       <DependentUpon>ReportForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Testing\Internal.cs" />
-    <Compile Include="Testing\Results.cs" />
-    <Compile Include="Testing\Manager.cs" />
+    <Compile Include="RunTime\Testing\Internal.cs" />
+    <Compile Include="RunTime\Testing\Results.cs" />
+    <Compile Include="RunTime\Testing\Manager.cs" />
     <Compile Include="Misc\ConvertExtension.cs" />
     <Compile Include="Physics\RaycastHit.cs" />
     <Compile Include="Engine\Renderer\Renderer.cs" />
@@ -401,18 +401,18 @@
     <Compile Include="VariousConstants.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Testing\Reports\ReportForm.resx">
+    <EmbeddedResource Include="RunTime\Testing\Reports\ReportForm.resx">
       <DependentUpon>ReportForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Testing\Reports\Resources\TestFailed.png" />
+    <None Include="RunTime\Testing\Reports\Resources\TestFailed.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Testing\Reports\Resources\TestIgnored.png" />
+    <None Include="RunTime\Testing\Reports\Resources\TestIgnored.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Testing\Reports\Resources\TestSuccess.png" />
+    <None Include="RunTime\Testing\Reports\Resources\TestSuccess.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

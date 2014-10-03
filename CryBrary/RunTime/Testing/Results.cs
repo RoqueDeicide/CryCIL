@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 
-namespace CryEngine.Testing
+namespace CryEngine.RunTime.Testing
 {
 	/// <summary>
 	/// Contains all the test data for a single run.
@@ -64,8 +64,8 @@ namespace CryEngine.Testing
 		{
 			get
 			{
-				var firstFrame = Stack.GetFrame(0);
-				return firstFrame.GetFileName().Contains(Path.Combine("CryMono", "CryBrary")) ? Stack.GetFrame(1) : firstFrame;
+				var firstFrame = this.Stack.GetFrame(0);
+				return firstFrame.GetFileName().Contains(Path.Combine("CryMono", "CryBrary")) ? this.Stack.GetFrame(1) : firstFrame;
 			}
 		}
 

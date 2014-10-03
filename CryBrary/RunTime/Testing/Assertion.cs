@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace CryEngine.Testing
+namespace CryEngine.RunTime.Testing
 {
 	/// <summary>
 	/// Contains methods used to make assertions for testing purposes.
@@ -12,7 +12,7 @@ namespace CryEngine.Testing
 		/// Asserts that a given statement is true.
 		/// </summary>
 		/// <param name="value">The value to be asserted as true.</param>
-		/// <exception cref="CryEngine.Testing.AssertionFailedException">
+		/// <exception cref="AssertionFailedException">
 		/// Thrown if the value is false.
 		/// </exception>
 		public static void IsTrue(bool value)
@@ -32,7 +32,7 @@ namespace CryEngine.Testing
 		/// Specifies whether subclassed exceptions should be counted as valid.
 		/// </param>
 		/// <returns>The exception that was thrown as expected.</returns>
-		/// <exception cref="CryEngine.Testing.AssertionFailedException">
+		/// <exception cref="AssertionFailedException">
 		/// Thrown if an exception of type T is not thrown.
 		/// </exception>
 		public static T Throws<T>(Action method, bool includeChildren = true) where T : Exception

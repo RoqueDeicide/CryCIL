@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Runtime.Serialization;
 
-namespace CryEngine.Testing
+namespace CryEngine.RunTime.Testing
 {
 	/// <summary>
 	/// The exception that is thrown when a false assertion is made.

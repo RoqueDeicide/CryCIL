@@ -16,9 +16,8 @@ using CryEngine.Logic.Flowgraph;
 using CryEngine.Native;
 using CryEngine.RunTime.Async;
 using CryEngine.RunTime.Serialization;
+using CryEngine.RunTime.Testing;
 using CryEngine.Sandbox;
-using CryEngine.Testing;
-using CryEngine.Testing.Internals;
 using CryEngine.Utilities;
 
 namespace CryEngine.Initialization
@@ -110,8 +109,8 @@ namespace CryEngine.Initialization
 				}
 			};
 
-			if (GameRules.Current != null)
-				data.GameRulesId = GameRules.Current.Id;
+			if (Logic.GameRules.GameRules.Current != null)
+				data.GameRulesId = Logic.GameRules.GameRules.Current.Id;
 			else
 				data.GameRulesId = -1;
 
@@ -164,7 +163,7 @@ namespace CryEngine.Initialization
 			}
 			// Restore game rules.
 			if (data.GameRulesId != -1)
-				GameRules.Current = Entity.Get(data.GameRulesId) as GameRules;
+				Logic.GameRules.GameRules.Current = Entity.Get(data.GameRulesId) as Logic.GameRules.GameRules;
 			// Restore console commands and variables.
 			ConsoleCommand.Commands = data.ConsoleCommands;
 			CVar.CVars = data.ConsoleVariables;

@@ -1,7 +1,6 @@
 ﻿using System.Linq;
-using CryEngine.Extensions;
 
-namespace CryEngine.Testing
+namespace CryEngine.RunTime.Testing.Reports
 {
 	/// <summary>
 	/// Example report listener, used to log the results of a test run to the console.
@@ -13,7 +12,7 @@ namespace CryEngine.Testing
 		/// </summary>
 		public ConsoleTestListener()
 		{
-			TestManager.Run += OnTestsRun;
+			TestManager.Run += this.OnTestsRun;
 		}
 
 		/// <summary>
@@ -24,7 +23,7 @@ namespace CryEngine.Testing
 		{
 			Debug.LogAlways("Console unit test log. Tests took {0}s overall to execute.", report.TimeTaken.TotalSeconds);
 
-			var testCounts = EnumExtensions.GetMembers<TestResult>().ToDictionary(key => key, key => 0);
+			var testCounts = EnumExtas.Values<TestResult>().ToDictionary(key => key, key => 0);
 
 			foreach (var collection in report.Collections)
 			{

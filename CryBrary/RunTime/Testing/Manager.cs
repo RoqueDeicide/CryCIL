@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using CryEngine.Annotations;
-using CryEngine.Sandbox;
-using CryEngine.Testing.Internals;
+using CryEngine.RunTime.Testing.Reports;
 
-namespace CryEngine.Testing
+namespace CryEngine.RunTime.Testing
 {
 	public static class TestManager
 	{

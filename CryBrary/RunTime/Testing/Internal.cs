@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using CryEngine.Extensions;
 
-namespace CryEngine.Testing
+namespace CryEngine.RunTime.Testing
 {
 	public sealed class TestCollection
 	{
@@ -14,9 +13,9 @@ namespace CryEngine.Testing
 
 		public TestCollectionResult Run()
 		{
-			var type = Instance.GetType();
+			var type = this.Instance.GetType();
 			var name = type.GetAttribute<TestCollectionAttribute>().Name ?? type.Name;
-			return new TestCollectionResult { Name = name, Results = Tests.Select(this.RunTest).ToList() };
+			return new TestCollectionResult { Name = name, Results = this.Tests.Select(this.RunTest).ToList() };
 		}
 
 		private TestResultInfo RunTest(MethodInfo test)
@@ -32,7 +31,7 @@ namespace CryEngine.Testing
 
 			try
 			{
-				test.Invoke(Instance, null);
+				test.Invoke(this.Instance, null);
 				testInfo.Result = TestResult.Success;
 				return testInfo;
 			}
