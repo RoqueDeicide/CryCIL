@@ -135,13 +135,13 @@
   <ItemGroup>
     <Compile Include="Actors\Actor.cs" />
     <Compile Include="Actors\ActorBase.cs" />
-    <Compile Include="Flowgraph\Exception.cs" />
-    <Compile Include="Flowgraph\FlowGraphNode.Configuration.cs" />
-    <Compile Include="Flowgraph\FlowGraphNode.cs" />
-    <Compile Include="Flowgraph\FlowGraphNode.Events.cs" />
-    <Compile Include="Flowgraph\FlowNodePort.cs" />
-    <Compile Include="Flowgraph\InputPorts.cs" />
-    <Compile Include="Flowgraph\OutputPorts.cs" />
+    <Compile Include="Logic\Flowgraph\Exception.cs" />
+    <Compile Include="Logic\Flowgraph\FlowGraphNode.Configuration.cs" />
+    <Compile Include="Logic\Flowgraph\FlowGraphNode.cs" />
+    <Compile Include="Logic\Flowgraph\FlowGraphNode.Events.cs" />
+    <Compile Include="Logic\Flowgraph\FlowNodePort.cs" />
+    <Compile Include="Logic\Flowgraph\InputPorts.cs" />
+    <Compile Include="Logic\Flowgraph\OutputPorts.cs" />
     <Compile Include="GeneralExtensions.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\CSG\SplittableTriangle.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\Mesh.CSG.cs" />
@@ -222,10 +222,10 @@
     <Compile Include="Entities\EntityUpdatePolicy.cs" />
     <Compile Include="Entities\Attachment.cs" />
     <Compile Include="Entities\EntityRemovalException.cs" />
-    <Compile Include="Flowgraph\FlowNodeFilter.cs" />
-    <Compile Include="Flowgraph\FlowNodeFlags.cs" />
-    <Compile Include="Flowgraph\FlowNodeCloneType.cs" />
-    <Compile Include="Flowgraph\PortTypes.cs" />
+    <Compile Include="Logic\Flowgraph\FlowNodeFilter.cs" />
+    <Compile Include="Logic\Flowgraph\FlowNodeFlags.cs" />
+    <Compile Include="Logic\Flowgraph\FlowNodeCloneType.cs" />
+    <Compile Include="Logic\Flowgraph\PortTypes.cs" />
     <Compile Include="GameRules\GameRulesInitializationParams.cs" />
     <Compile Include="Input\ActionmapEventArgs.cs" />
     <Compile Include="Input\ActionmapHandler.cs" />
@@ -342,7 +342,7 @@
     <Compile Include="Engine\TimeOfDay\TimeOfDay.cs" />
     <Compile Include="Extensions\IDictionary.cs" />
     <Compile Include="Extensions\IEnumerable.cs" />
-    <Compile Include="Flowgraph\FlowNodeAttribute.cs" />
+    <Compile Include="Logic\Flowgraph\FlowNodeAttribute.cs" />
     <Compile Include="Misc\DelayedFunc.cs" />
     <Compile Include="Extensions\Enum.cs" />
     <Compile Include="Extensions\WinForms.cs" />

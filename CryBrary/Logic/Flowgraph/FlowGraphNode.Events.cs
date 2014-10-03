@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CryEngine.Flowgraph
+namespace CryEngine.Logic.Flowgraph
 {
 	public partial class FlowGraphNode
 	{

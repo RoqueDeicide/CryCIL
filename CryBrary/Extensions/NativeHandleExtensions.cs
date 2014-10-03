@@ -3,7 +3,7 @@ using CryEngine;
 using CryEngine.Actors;
 using CryEngine.Entities;
 using CryEngine.Entities.Advanced;
-using CryEngine.Flowgraph;
+using CryEngine.Logic.Flowgraph;
 using CryEngine.RunTime.Serialization;
 using CryEngine.Utilities;
 

@@ -1,17 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using CryEngine.Entities;
-using CryEngine.Extensions;
 using CryEngine.Mathematics;
-using CryEngine.NativeMemory;
 using CryEngine.RunTime.Registration;
 
-namespace CryEngine.Flowgraph
+namespace CryEngine.Logic.Flowgraph
 {
 	/// <summary>
 	/// Base class for FlowGraph nodes.

@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using CryEngine.Entities;
-using CryEngine.Mathematics;
 
-namespace CryEngine.Flowgraph
+namespace CryEngine.Logic.Flowgraph
 {
 	/// <summary>
 	/// Base class for flow node ports.

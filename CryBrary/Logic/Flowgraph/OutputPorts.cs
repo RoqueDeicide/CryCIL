@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CryEngine.Annotations;
 using CryEngine.Entities;
 using CryEngine.Mathematics;
 
-namespace CryEngine.Flowgraph
+namespace CryEngine.Logic.Flowgraph
 {
 	internal static class PortActivators
 	{

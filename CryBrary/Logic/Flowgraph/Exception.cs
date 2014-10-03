@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace CryEngine.Flowgraph
+namespace CryEngine.Logic.Flowgraph
 {
 	/// <summary>
 	/// Represents an exception that is thrown during erroneous action in flow graph.

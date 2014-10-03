@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace CryEngine.Flowgraph
+﻿namespace CryEngine.Logic.Flowgraph
 {
 	/// <summary>
 	/// Enumeration of categories flow nodes can be assigned to to allow them to be filetered in

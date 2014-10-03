@@ -12,6 +12,7 @@ using CryEngine.Annotations;
 using CryEngine.Async;
 using CryEngine.Entities;
 using CryEngine.Extensions;
+using CryEngine.Logic.Flowgraph;
 using CryEngine.Native;
 using CryEngine.RunTime.Async;
 using CryEngine.RunTime.Serialization;
@@ -19,7 +20,6 @@ using CryEngine.Sandbox;
 using CryEngine.Testing;
 using CryEngine.Testing.Internals;
 using CryEngine.Utilities;
-using CryEngine.Flowgraph;
 
 namespace CryEngine.Initialization
 {

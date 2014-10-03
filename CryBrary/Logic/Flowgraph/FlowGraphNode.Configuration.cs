@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using CryEngine.NativeMemory;
 
-namespace CryEngine.Flowgraph
+namespace CryEngine.Logic.Flowgraph
 {
 	public partial class FlowGraphNode
 	{

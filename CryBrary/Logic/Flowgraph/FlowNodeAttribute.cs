@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CryEngine.Flowgraph
+namespace CryEngine.Logic.Flowgraph
 {
 	/// <summary>
 	/// Applied to classes to mark them as Flowgraph nodes.
