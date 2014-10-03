@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
 using CryEngine.Async;
-using CryEngine.Async.Jobs;
+using CryEngine.RunTime.Async.Jobs;
 
-// This class is in the CryEngine namespace, for easy access. If this namespace gets too crowded, it
-// might be appropriate to move it to CryEngine.Async
-namespace CryEngine
+namespace CryEngine.RunTime.Async
 {
 	/// <summary>
-	/// Utility class that provides async methods for common operations
+	/// Utility class that provides asynchronous methods for common operations
 	/// </summary>
 	public class Delay
 	{

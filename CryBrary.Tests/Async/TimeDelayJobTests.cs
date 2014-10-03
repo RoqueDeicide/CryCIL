@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CryEngine.Async;
-using CryEngine.Async.Jobs;
+using CryEngine.RunTime.Async.Jobs;
 using NUnit.Framework;
 
 namespace CryBrary.Tests.Async

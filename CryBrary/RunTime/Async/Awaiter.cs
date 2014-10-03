@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using CryEngine.Async.Jobs;
+using CryEngine.RunTime.Async.Jobs;
 
-namespace CryEngine.Async
+namespace CryEngine.RunTime.Async
 {
 	/// <summary>
 	/// Class that manages all jobs (updating, removing)
@@ -17,7 +17,7 @@ namespace CryEngine.Async
 
 		private Awaiter()
 		{
-			_jobs = new List<IAsyncJob>();
+			this._jobs = new List<IAsyncJob>();
 		}
 
 		/// <summary>
@@ -32,7 +32,7 @@ namespace CryEngine.Async
 		{
 			get
 			{
-				return _jobs;
+				return this._jobs;
 			}
 		}
 
@@ -42,15 +42,15 @@ namespace CryEngine.Async
 		/// <param name="frameTime"></param>
 		public void OnUpdate(float frameTime)
 		{
-			for (int i = 0; i < Jobs.Count; i++)
+			for (int i = 0; i < this.Jobs.Count; i++)
 			{
-				var job = Jobs[i];
+				var job = this.Jobs[i];
 
 				// Update the job If the job returns true, it means it has finished, and we can
 				// remove it from the updatelist
 				if (job.Update(frameTime))
 				{
-					Jobs.Remove(job);
+					this.Jobs.Remove(job);
 
 					// We need to decrease i since we have removed an element
 					i--;

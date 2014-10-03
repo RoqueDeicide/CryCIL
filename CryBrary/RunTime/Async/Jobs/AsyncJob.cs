@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace CryEngine.Async.Jobs
+namespace CryEngine.RunTime.Async.Jobs
 {
 	/// <summary>
 	/// Base class for any async job
@@ -16,7 +16,7 @@ namespace CryEngine.Async.Jobs
 		{
 			get
 			{
-				return source.Task;
+				return this.source.Task;
 			}
 		}
 

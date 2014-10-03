@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace CryEngine.Async.Jobs
+namespace CryEngine.RunTime.Async.Jobs
 {
 	/// <summary>
 	/// An asynchronous job

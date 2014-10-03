@@ -11,6 +11,7 @@ using CryEngine.Entities;
 using CryEngine.Extensions;
 using CryEngine.Flowgraph;
 using CryEngine.Initialization;
+using CryEngine.RunTime.Async;
 using CryEngine.RunTime.Compatibility;
 using CryEngine.RunTime.Compilation;
 using CryEngine.RunTime.Registration;

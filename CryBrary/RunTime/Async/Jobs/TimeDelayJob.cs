@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CryEngine.Async.Jobs
+namespace CryEngine.RunTime.Async.Jobs
 {
 	/// <summary>
 	/// Delays for a time period
@@ -15,13 +15,13 @@ namespace CryEngine.Async.Jobs
 		/// <param name="milliseconds"></param>
 		public TimeDelayJob(float milliseconds)
 		{
-			DelayInMilliseconds = milliseconds;
-			_timeElapsed = 0;
+			this.DelayInMilliseconds = milliseconds;
+			this._timeElapsed = 0;
 
 			if (milliseconds <= 0)
 			{
-				source.TrySetResult(false);
-				IsFinished = true;
+				this.source.TrySetResult(false);
+				this.IsFinished = true;
 			}
 		}
 
@@ -41,14 +41,14 @@ namespace CryEngine.Async.Jobs
 
 		public override bool Update(float frameTime)
 		{
-			_timeElapsed += frameTime;
-			if (!IsFinished && _timeElapsed >= DelayInMilliseconds)
+			this._timeElapsed += frameTime;
+			if (!this.IsFinished && this._timeElapsed >= this.DelayInMilliseconds)
 			{
-				source.TrySetResult(true);
-				IsFinished = true;
+				this.source.TrySetResult(true);
+				this.IsFinished = true;
 			}
 
-			return IsFinished;
+			return this.IsFinished;
 		}
 	}
 }

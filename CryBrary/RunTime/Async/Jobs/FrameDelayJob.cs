@@ -1,4 +1,4 @@
-﻿namespace CryEngine.Async.Jobs
+﻿namespace CryEngine.RunTime.Async.Jobs
 {
 	/// <summary>
 	/// Delays execution for a number of frames
@@ -13,13 +13,13 @@
 		/// <param name="numberOfFramesToWait"></param>
 		public FrameDelayJob(int numberOfFramesToWait)
 		{
-			_framesWaited = 0;
-			FramesToWait = numberOfFramesToWait;
+			this._framesWaited = 0;
+			this.FramesToWait = numberOfFramesToWait;
 
 			if (numberOfFramesToWait <= 0)
 			{
-				source.TrySetResult(false);
-				IsFinished = true;
+				this.source.TrySetResult(false);
+				this.IsFinished = true;
 			}
 		}
 
@@ -30,17 +30,17 @@
 
 		public override bool Update(float frameTime)
 		{
-			if (!IsFinished)
+			if (!this.IsFinished)
 			{
-				_framesWaited++;
-				if (_framesWaited >= FramesToWait)
+				this._framesWaited++;
+				if (this._framesWaited >= this.FramesToWait)
 				{
-					source.TrySetResult(true);
-					IsFinished = true;
+					this.source.TrySetResult(true);
+					this.IsFinished = true;
 				}
 			}
 
-			return IsFinished;
+			return this.IsFinished;
 		}
 	}
 }

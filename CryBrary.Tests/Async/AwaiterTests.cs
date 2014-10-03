@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using CryEngine;
 using CryEngine.Async;
-using CryEngine.Async.Jobs;
+using CryEngine.RunTime.Async;
+using CryEngine.RunTime.Async.Jobs;
 using Moq;
 using NUnit.Framework;
 

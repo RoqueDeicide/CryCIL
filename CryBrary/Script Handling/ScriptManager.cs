@@ -13,6 +13,7 @@ using CryEngine.Async;
 using CryEngine.Entities;
 using CryEngine.Extensions;
 using CryEngine.Native;
+using CryEngine.RunTime.Async;
 using CryEngine.RunTime.Serialization;
 using CryEngine.Sandbox;
 using CryEngine.Testing;
