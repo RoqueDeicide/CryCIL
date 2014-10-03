@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-using CryEngine.Native;
-
-namespace CryEngine.Profiling
+namespace CryEngine.RunTime.Profiling
 {
 	/// <summary>
 	/// Frame profiler sections are placed where the code needs to be profiled. Every time this
@@ -16,15 +11,15 @@ namespace CryEngine.Profiling
 	{
 		internal FrameProfilerSection(IntPtr handle, FrameProfiler profiler)
 		{
-			Handle = handle;
-			FrameProfiler = profiler;
+			this.Handle = handle;
+			this.FrameProfiler = profiler;
 		}
 		/// <summary>
 		/// Ends this section.
 		/// </summary>
 		public void End()
 		{
-			FrameProfiler.DeleteSection(this);
+			this.FrameProfiler.DeleteSection(this);
 		}
 		/// <summary>
 		/// Frame profiler associated with this section.

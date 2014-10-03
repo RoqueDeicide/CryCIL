@@ -312,8 +312,8 @@
     <Compile Include="Physics\PrePhysicsUpdateMode.cs" />
     <Compile Include="Physics\Status\DynamicsStatus.cs" />
     <Compile Include="Physics\Status\LivingStatus.cs" />
-    <Compile Include="Profiling\FrameProfiler.cs" />
-    <Compile Include="Profiling\FrameProfilerSection.cs" />
+    <Compile Include="RunTime\Profiling\FrameProfiler.cs" />
+    <Compile Include="RunTime\Profiling\FrameProfilerSection.cs" />
     <Compile Include="Native\ScriptSystemInterop.cs" />
     <Compile Include="Physics\Explosion.cs" />
     <Compile Include="Misc\Exceptions\MissingAttributeException.cs" />
