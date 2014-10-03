@@ -292,7 +292,6 @@
     <Compile Include="StaticObjects\StaticObject.cs" />
     <Compile Include="Misc\AnimationEvent.cs" />
     <Compile Include="Misc\Exceptions\NullPointerException.cs" />
-    <Compile Include="Misc\IConvertibleTo.cs" />
     <Compile Include="Misc\TypeConverters\Color.cs" />
     <Compile Include="Physics\Actions\Impulse.cs" />
     <Compile Include="Physics\BreakageParameters.cs" />
