@@ -226,7 +226,7 @@
     <Compile Include="Logic\Flowgraph\FlowNodeFlags.cs" />
     <Compile Include="Logic\Flowgraph\FlowNodeCloneType.cs" />
     <Compile Include="Logic\Flowgraph\PortTypes.cs" />
-    <Compile Include="GameRules\GameRulesInitializationParams.cs" />
+    <Compile Include="Logic\GameRules\GameRulesInitializationParams.cs" />
     <Compile Include="Input\ActionmapEventArgs.cs" />
     <Compile Include="Input\ActionmapHandler.cs" />
     <Compile Include="Input\KeyEvent.cs" />
@@ -397,7 +397,7 @@
     <Compile Include="Entities\EntityStatics.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Debug\Logging.cs" />
-    <Compile Include="GameRules\GameRules.cs" />
+    <Compile Include="Logic\GameRules\GameRules.cs" />
     <Compile Include="Misc\PointerWrapper.cs" />
     <Compile Include="Misc\Statistics.cs" />
     <Compile Include="Engine\CryPak\CryPak.cs" />
