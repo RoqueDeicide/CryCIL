@@ -22,7 +22,7 @@ namespace CryEngine.Entities
 		public NativeEntity(EntityId id, IntPtr ptr)
 		{
 			this.Id = id;
-			this.SetIEntity(ptr);
+			this.EntityHandle = ptr;
 		}
 	}
 }

@@ -143,7 +143,7 @@ namespace CryEngine
 				throw new ArgumentNullException("entity");
 #endif
 
-			var ptr = MaterialInterop.GetMaterial(entity.GetIEntity(), slot);
+			var ptr = MaterialInterop.GetMaterial(entity.Handle, slot);
 			return TryGet(ptr);
 		}
 
@@ -156,7 +156,7 @@ namespace CryEngine
 				throw new ArgumentNullException("mat");
 #endif
 
-			MaterialInterop.SetMaterial(entity.GetIEntity(), mat.Handle, slot);
+			MaterialInterop.SetMaterial(entity.EntityHandle, mat.Handle, slot);
 		}
 
 		internal static Material TryGet(IntPtr ptr)

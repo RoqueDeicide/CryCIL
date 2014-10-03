@@ -71,8 +71,8 @@ namespace CryEngine.Actors
 				throw new ArgumentException("Invalid channel identifier used for actor initialization.");
 			}
 			this.Id = new EntityId(actorInitParams.Id);
-			this.SetIActor(actorInitParams.ActorPtr);
-			this.SetIEntity(actorInitParams.EntityPtr);
+			this.ActorHandle = actorInitParams.ActorPtr;
+			this.ActorHandle = actorInitParams.EntityPtr;
 
 			this.ChannelId = actorInitParams.ChannelId;
 

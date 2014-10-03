@@ -317,7 +317,6 @@
     <Compile Include="Native\ScriptSystemInterop.cs" />
     <Compile Include="Physics\Explosion.cs" />
     <Compile Include="Misc\Exceptions\MissingAttributeException.cs" />
-    <Compile Include="Extensions\NativeHandleExtensions.cs" />
     <Compile Include="Native\NetworkInterop.cs" />
     <Compile Include="Network\RemoteInvocationException.cs" />
     <Compile Include="RunTime\Serialization\CrySerialize.cs" />
@@ -340,12 +339,8 @@
     <Compile Include="Engine\Level\Level.cs" />
     <Compile Include="Entities\EntityBase.cs" />
     <Compile Include="Engine\TimeOfDay\TimeOfDay.cs" />
-    <Compile Include="Extensions\IDictionary.cs" />
-    <Compile Include="Extensions\IEnumerable.cs" />
     <Compile Include="Logic\Flowgraph\FlowNodeAttribute.cs" />
     <Compile Include="Misc\DelayedFunc.cs" />
-    <Compile Include="Extensions\Enum.cs" />
-    <Compile Include="Extensions\WinForms.cs" />
     <Compile Include="Native\ConsoleInterop.cs" />
     <Compile Include="Native\DebugInterop.cs" />
     <Compile Include="Native\EntityInterop.cs" />
@@ -393,7 +388,6 @@
     <Compile Include="Console\CVar\CVar.cs" />
     <Compile Include="Misc\Time\Time.cs" />
     <Compile Include="Debug\Debug.cs" />
-    <Compile Include="Extensions\Reflection.cs" />
     <Compile Include="Entities\EntityStatics.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Debug\Logging.cs" />

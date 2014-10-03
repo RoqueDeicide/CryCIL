@@ -41,7 +41,7 @@ namespace CryEngine.Entities.Advanced
 		#endregion
 		private GameObject(IntPtr handle)
 		{
-			this.SetIGameObject(handle);
+			this.Handle = handle;
 
 			this.Extensions = new List<GameObjectExtension>();
 		}

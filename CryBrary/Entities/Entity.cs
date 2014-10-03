@@ -15,25 +15,6 @@ namespace CryEngine.Entities
 	public abstract partial class Entity
 		: EntityBase
 	{
-		/// <summary>
-		/// Initializes the entity, not recommended to set manually.
-		/// </summary>
-		/// <param name="initParams"> Struct containing the IEntity pointer and EntityId. </param>
-		/// <returns> IsEntityFlowNode </returns>
-		internal override bool InternalInitialize(IScriptInitializationParams initParams)
-		{
-			var entityInitParams = (EntityInitializationParams)initParams;
-
-			this.SetIEntity(entityInitParams.IEntityPtr);
-			this.SetIAnimatedCharacter(entityInitParams.IAnimatedCharacterPtr);
-			this.Id = entityInitParams.Id;
-
-			var result = base.InternalInitialize(initParams);
-
-			this.OnSpawn();
-
-			return result;
-		}
 		[UsedImplicitly]
 		private void InternalFullSerialize(CrySerialize serialize)
 		{
@@ -68,8 +49,8 @@ namespace CryEngine.Entities
 		/// </summary>
 		public BoundingBox TriggerBounds
 		{
-			get { return EntityInterop.GetTriggerBBox(this.GetIEntity()); }
-			set { EntityInterop.SetTriggerBBox(this.GetIEntity(), value); }
+			get { return EntityInterop.GetTriggerBBox(this.EntityHandle); }
+			set { EntityInterop.SetTriggerBBox(this.EntityHandle, value); }
 		}
 
 		/// <summary>
@@ -78,7 +59,7 @@ namespace CryEngine.Entities
 		/// </summary>
 		public void InvalidateTrigger()
 		{
-			EntityInterop.InvalidateTrigger(this.GetIEntity());
+			EntityInterop.InvalidateTrigger(this.EntityHandle);
 		}
 		#endregion
 		#region Callbacks
