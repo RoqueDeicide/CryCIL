@@ -2,9 +2,10 @@
 using CryEngine.Annotations;
 using CryEngine.Entities;
 using CryEngine.Mathematics;
+using CryEngine.Mathematics.Graphics;
 using CryEngine.RunTime.Serialization;
 
-namespace CryEngine.Actors
+namespace CryEngine.Logic.Actors
 {
 	public abstract partial class Actor
 		: ActorBase

@@ -1,7 +1,7 @@
 ﻿using CryEngine.Entities;
 using CryEngine.Native;
 
-namespace CryEngine.Actors
+namespace CryEngine.Logic.Actors
 {
 	/// <summary>
 	/// Represents an actor with a custom IActor implementation outside of CryMono.dll.

@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using CryEngine.Actors;
-using CryEngine.Entities;
-using CryEngine.Mathematics;
+﻿using CryEngine.Entities;
+using CryEngine.Logic.Actors;
 
-namespace CryEngine
+namespace CryEngine.Mathematics.Graphics
 {
 	/// <summary>
 	/// View parameters, commonly used by <see cref="Actor" /> to update the active view.
@@ -68,14 +63,14 @@ namespace CryEngine
 
 		public void SaveLast()
 		{
-			if (ViewIDLast != 0xff)
+			if (this.ViewIDLast != 0xff)
 			{
-				PositionLast = Position;
-				RotationLast = Rotation;
-				FOVLast = FieldOfView;
+				this.PositionLast = this.Position;
+				this.RotationLast = this.Rotation;
+				this.FOVLast = this.FieldOfView;
 			}
 			else
-				ViewIDLast = 0xfe;
+				this.ViewIDLast = 0xfe;
 		}
 	}
 }

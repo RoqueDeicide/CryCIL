@@ -2,7 +2,7 @@
 using CryEngine.Entities;
 using CryEngine.Native;
 
-namespace CryEngine.Actors
+namespace CryEngine.Logic.Actors
 {
 	/// <summary>
 	/// Base class which all actors must derive from. Includes basic callbacks.

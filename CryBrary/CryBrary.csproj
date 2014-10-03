@@ -133,8 +133,8 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Actors\Actor.cs" />
-    <Compile Include="Actors\ActorBase.cs" />
+    <Compile Include="Logic\Actors\Actor.cs" />
+    <Compile Include="Logic\Actors\ActorBase.cs" />
     <Compile Include="Logic\Flowgraph\Exception.cs" />
     <Compile Include="Logic\Flowgraph\FlowGraphNode.Configuration.cs" />
     <Compile Include="Logic\Flowgraph\FlowGraphNode.cs" />
@@ -153,9 +153,9 @@
     <Compile Include="NativeMemory\CryMarshal.cs" />
     <Compile Include="NativeMemory\NativeMemoryBlock.cs" />
     <Compile Include="Native\ActorInitializationParams.cs" />
-    <Compile Include="Actors\ActorNetworking.cs" />
-    <Compile Include="Actors\ActorStatics.cs" />
-    <Compile Include="Actors\ViewParams.cs" />
+    <Compile Include="Logic\Actors\ActorNetworking.cs" />
+    <Compile Include="Logic\Actors\ActorStatics.cs" />
+    <Compile Include="Mathematics\Graphics\ViewParams.cs" />
     <Compile Include="Attributes.cs" />
     <Compile Include="Native\FlowInputInterop.cs" />
     <Compile Include="Native\MemoryHandlingInterop.cs" />
@@ -327,7 +327,7 @@
     <Compile Include="ProjectSettings.cs" />
     <Compile Include="Entities\AnimationFlags.cs" />
     <Compile Include="Entities\EntityLight.cs" />
-    <Compile Include="Actors\NativeActor.cs" />
+    <Compile Include="Logic\Actors\NativeActor.cs" />
     <Compile Include="Native\Engine3DInterop.cs" />
     <Compile Include="Native\ActorInterop.cs" />
     <Compile Include="RunTime\Async\Jobs\AsyncJob.cs" />

@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Reflection;
 using CryEngine.Entities;
-using CryEngine.Extensions;
-using CryEngine.Native;
 
-namespace CryEngine.Actors
+namespace CryEngine.Logic.Actors
 {
 	public partial class Actor
 	{

@@ -82,7 +82,6 @@
     <Compile Include="Misc\UnusedMarkerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization\CrySerializerTests.cs" />
-    <Compile Include="Serialization\ScriptsTests.cs" />
     <Compile Include="Serialization\UnusedMarkerSerializationTests.cs" />
     <Compile Include="Testing\Assertion.cs" />
     <Compile Include="Testing\Exceptions.cs" />

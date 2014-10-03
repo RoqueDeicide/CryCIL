@@ -4,7 +4,7 @@ using CryEngine.Initialization;
 using CryEngine.Mathematics;
 using CryEngine.Native;
 
-namespace CryEngine.Actors
+namespace CryEngine.Logic.Actors
 {
 	public abstract partial class Actor
 	{
