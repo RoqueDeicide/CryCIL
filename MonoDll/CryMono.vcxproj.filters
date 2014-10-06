@@ -163,9 +163,6 @@
     <ClInclude Include="Interops\Platform.h">
       <Filter>Interops</Filter>
     </ClInclude>
-    <ClInclude Include="Interops\ScriptTable.h">
-      <Filter>Interops</Filter>
-    </ClInclude>
     <ClInclude Include="Interops\MonoInput.h">
       <Filter>Interops</Filter>
     </ClInclude>
@@ -297,9 +294,6 @@
       <Filter>Interops</Filter>
     </ClCompile>
     <ClCompile Include="Interops\Platform.cpp">
-      <Filter>Interops</Filter>
-    </ClCompile>
-    <ClCompile Include="Interops\ScriptTable.cpp">
       <Filter>Interops</Filter>
     </ClCompile>
     <ClCompile Include="Interops\MonoInput.cpp">

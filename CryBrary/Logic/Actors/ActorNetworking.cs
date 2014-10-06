@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using CryEngine.Entities;
+using CryEngine.RunTime.Networking;
 
 namespace CryEngine.Logic.Actors
 {
