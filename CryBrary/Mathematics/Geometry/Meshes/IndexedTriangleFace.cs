@@ -6,25 +6,17 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 	/// <summary>
 	/// Encapsulates data that describe a mesh face.
 	/// </summary>
-	[StructLayout(LayoutKind.Explicit)]
-	public unsafe struct IndexedTriangleFace : IEquatable<IndexedTriangleFace>
+	[StructLayout(LayoutKind.Sequential)]
+	public struct IndexedTriangleFace : IEquatable<IndexedTriangleFace>
 	{
 		/// <summary>
 		/// Array of indices of vertices that form this face.
 		/// </summary>
-		[FieldOffset(0)]
 		public Int32Vector3 Indices;
 		/// <summary>
 		/// Index of mesh subset this face is assigned to.
 		/// </summary>
-		[FieldOffset(12)]
 		public byte SubsetIndex;
-		/// <summary>
-		/// Array of bytes that grants access to each byte of this object.
-		/// </summary>
-		[FieldOffset(0)]
-		[MarshalAs(UnmanagedType.ByValArray, ArraySubType = UnmanagedType.U1, SizeConst = 13)]
-		public fixed byte Bytes[13];
 		/// <summary>
 		/// Number of bytes.
 		/// </summary>

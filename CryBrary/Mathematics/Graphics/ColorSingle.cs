@@ -6,7 +6,6 @@ namespace CryEngine.Mathematics.Graphics
 	/// <summary>
 	/// Defines a color in terms of its red, green, blue and alpha values.
 	/// </summary>
-	[TypeConverter(typeof(Misc.TypeConverters.ColorTypeConverter))]
 	public struct ColorSingle
 	{
 		#region Fields
