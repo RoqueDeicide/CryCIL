@@ -135,6 +135,7 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
     <ClInclude Include="Interops\Utilities\Time.h" />
     <ClInclude Include="Interops\Viewport\Renderer.h" />
     <ClInclude Include="Interops\Viewport\ViewSystem.h" />
+    <ClInclude Include="ManagedGameLogic\ManagedEntity.h" />
     <ClInclude Include="MonoArray.h" />
     <ClInclude Include="MonoCVars.h" />
     <ClInclude Include="MonoDomain.h" />
@@ -184,6 +185,7 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
     <ClCompile Include="Interops\Utilities\Debug.cpp" />
     <ClCompile Include="Interops\Viewport\Renderer.cpp" />
     <ClCompile Include="Interops\Viewport\ViewSystem.cpp" />
+    <ClCompile Include="ManagedGameLogic\ManagedEntity.cpp" />
     <ClCompile Include="MonoCVars.cpp" />
     <ClCompile Include="MonoDomain.cpp" />
     <ClCompile Include="MonoEntity.cpp" />

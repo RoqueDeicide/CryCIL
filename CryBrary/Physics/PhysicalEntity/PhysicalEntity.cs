@@ -67,7 +67,7 @@ namespace CryEngine.Physics
 
 		public void Break(BreakageParameters breakageParams)
 		{
-			EntityInterop.BreakIntoPieces(Owner.GetIEntity(), 0, 0, breakageParams);
+			EntityInterop.BreakIntoPieces(Owner.EntityHandle, 0, 0, breakageParams);
 		}
 
 		public bool AddImpulse(Vector3 vImpulse, Vector3? angImpulse = null, Vector3? point = null)

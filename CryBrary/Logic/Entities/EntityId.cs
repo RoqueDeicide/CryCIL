@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CryEngine.Entities
+namespace CryEngine.Logic.Entities
 {
 	/// <summary>
 	/// Entity ID's store references to game entities as unsigned integers. This class wraps that

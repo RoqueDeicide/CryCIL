@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CryEngine.Entities;
+using CryEngine.Logic.Entities;
 using CryEngine.Mathematics;
 using CryEngine.RunTime.Registration;
 

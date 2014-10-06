@@ -12,6 +12,7 @@ using CryEngine.Async;
 using CryEngine.Entities;
 using CryEngine.Extensions;
 using CryEngine.Logic.Actors;
+using CryEngine.Logic.Entities;
 using CryEngine.Logic.Flowgraph;
 using CryEngine.Native;
 using CryEngine.RunTime.Async;

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CryEngine.Entities;
+using CryEngine.Logic.Entities;
 using CryEngine.Mathematics;
 
 namespace CryEngine.Native

@@ -1,6 +1,7 @@
 ﻿using System;
 using CryEngine.Entities;
 using CryEngine.Initialization;
+using CryEngine.Logic.Entities;
 using CryEngine.Mathematics;
 using CryEngine.Native;
 

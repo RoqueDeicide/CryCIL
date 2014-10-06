@@ -176,6 +176,9 @@
     <ClInclude Include="Headers\IMonoScriptSystem.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="ManagedGameLogic\ManagedEntity.h">
+      <Filter>ManagedGameLogic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -302,6 +305,9 @@
     <ClCompile Include="Interops\FlowGraph\FlowManager.cpp">
       <Filter>Interops\FlowGraph</Filter>
     </ClCompile>
+    <ClCompile Include="ManagedGameLogic\ManagedEntity.cpp">
+      <Filter>ManagedGameLogic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Wrappers">
@@ -354,6 +360,9 @@
     </Filter>
     <Filter Include="Interops\Viewport">
       <UniqueIdentifier>{dfe4c9b2-942b-4107-a837-8df22e11c60f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ManagedGameLogic">
+      <UniqueIdentifier>{f7aae537-016d-424c-abe4-4948a9bb3443}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

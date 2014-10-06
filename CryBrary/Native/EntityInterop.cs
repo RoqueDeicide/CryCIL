@@ -2,8 +2,10 @@
 using System.Runtime.CompilerServices;
 using CryEngine.Entities;
 using CryEngine.Initialization;
+using CryEngine.Logic.Entities;
 using CryEngine.Mathematics;
 using CryEngine.Physics;
+using CryEngine.RunTime.Networking;
 
 namespace CryEngine.Native
 {
@@ -49,8 +51,8 @@ namespace CryEngine.Native
 		public static extern void StopAnimationsInAllLayers(IntPtr ptr, int slot);
 
 		[MethodImplAttribute(MethodImplOptions.InternalCall)]
-		public static extern EntityBase SpawnEntity(EntitySpawnParams spawnParams, bool autoInit,
-													out EntityInitializationParams entityInfo);
+		public static extern object SpawnEntity(EntitySpawnParams spawnParams, bool autoInit,
+													out IntPtr entityHandle, out EntityId id);
 		[MethodImplAttribute(MethodImplOptions.InternalCall)]
 		public static extern void RemoveEntity(EntityId entityId, bool forceRemoveNow = false);
 
@@ -62,6 +64,8 @@ namespace CryEngine.Native
 		public static extern EntityGuid GetEntityGUID(IntPtr entPtr);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern EntityId FindEntity(string name);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		internal static extern object GetManagedObject(IntPtr handle, EntityId id);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern object[] GetEntitiesByClass(string className);
 		[MethodImpl(MethodImplOptions.InternalCall)]

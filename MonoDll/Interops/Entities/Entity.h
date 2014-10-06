@@ -174,6 +174,16 @@ protected:
 	static mono::object SpawnEntity(EntitySpawnParams, bool, void *&entityHandle, EntityId &entityId);
 	static void RemoveEntity(EntityId, bool removeNow);
 
+	static mono::object GetManagedObject(IEntity *ent, EntityId id)
+	{
+		if (IGameObject *gameObj = GetMonoRunTime()->GameFramework->GetGameObject(id))
+		{
+			if (CMonoEntityExtension *pEntityExtension =
+				static_cast<CMonoEntityExtension *>(gameObj->QueryExtension(ent->GetClass()->GetName())))
+				return pEntityExtension->ManagedWrapper;
+		}
+		return nullptr;
+	}
 	static IEntity *GetEntity(EntityId id);
 	static EntityId GetEntityId(IEntity *pEntity);
 

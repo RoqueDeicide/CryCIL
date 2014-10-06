@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 using CryEngine.Annotations;
+using CryEngine.Logic.Entities;
 using CryEngine.Mathematics;
 using CryEngine.Native;
 using CryEngine.RunTime.Serialization;

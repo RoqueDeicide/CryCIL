@@ -136,6 +136,9 @@
     <Compile Include="Exceptions.cs" />
     <Compile Include="Logic\Actors\Actor.cs" />
     <Compile Include="Logic\Actors\ActorBase.cs" />
+    <Compile Include="Engine\Renderer\RenderParams.cs" />
+    <Compile Include="Logic\Entities\EntityFlags.cs" />
+    <Compile Include="Logic\Entities\EntityManager.cs" />
     <Compile Include="Logic\Flowgraph\Exception.cs" />
     <Compile Include="Logic\Flowgraph\FlowGraphNode.Configuration.cs" />
     <Compile Include="Logic\Flowgraph\FlowGraphNode.cs" />
@@ -144,6 +147,19 @@
     <Compile Include="Logic\Flowgraph\InputPorts.cs" />
     <Compile Include="Logic\Flowgraph\OutputPorts.cs" />
     <Compile Include="GeneralExtensions.cs" />
+    <Compile Include="GenericEventArgs.cs" />
+    <Compile Include="Logic\Entities\GameObjectExtension.cs" />
+    <Compile Include="Logic\Entities\GameObjectExtension.EventArgs.cs" />
+    <Compile Include="Logic\Entities\GameObjectExtension.Events.cs" />
+    <Compile Include="Logic\Entities\GameObjectExtension.Internal.cs" />
+    <Compile Include="Logic\Entities\EntityEvent.cs" />
+    <Compile Include="Logic\Entities\EntityEventValueType.cs" />
+    <Compile Include="Logic\Entities\EntityLink.cs" />
+    <Compile Include="Logic\Entities\EntityWrapper.cs" />
+    <Compile Include="Logic\Entities\EntityXFormFlags.cs" />
+    <Compile Include="Logic\Entities\Properties\Property.cs" />
+    <Compile Include="Logic\FrameTimeEventArgs.cs" />
+    <Compile Include="Logic\CryTimer.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\CSG\SplittableTriangle.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\Mesh.CSG.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\CSG\BSP.cs" />
@@ -160,6 +176,8 @@
     <Compile Include="Attributes.cs" />
     <Compile Include="Native\FlowInputInterop.cs" />
     <Compile Include="Native\MemoryHandlingInterop.cs" />
+    <Compile Include="Physics\ColliderMode.cs" />
+    <Compile Include="Physics\CryCollision.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="RunTime\BlittableAttribute.cs" />
     <Compile Include="RunTime\Compatibility\BlitChecker.cs" />
@@ -216,7 +234,6 @@
     <Compile Include="Entities\EntityAspects.cs" />
     <Compile Include="Entities\Advanced\GameObject.cs" />
     <Compile Include="Entities\Advanced\GameObjectExtension.cs" />
-    <Compile Include="Native\EntityInitializationParams.cs" />
     <Compile Include="Entities\EntityNetworking.cs" />
     <Compile Include="Native\GameObjectInterop.cs" />
     <Compile Include="Entities\EntityLink.cs" />
@@ -353,7 +370,7 @@
     <Compile Include="Engine\Material\Material.cs" />
     <Compile Include="Engine\Particles\ParticleEffect.cs" />
     <Compile Include="Engine\Terrain.cs" />
-    <Compile Include="Entities\EntityId.cs" />
+    <Compile Include="Logic\Entities\EntityId.cs" />
     <Compile Include="Entities\NativeEntity.cs" />
     <Compile Include="Engine\Lua\ScriptTable.cs" />
     <Compile Include="RunTime\Serialization\CrySerializer.cs" />

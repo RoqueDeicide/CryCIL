@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using CryEngine.Annotations;
 using CryEngine.Extensions;
+using CryEngine.Logic.Entities;
 using CryEngine.Native;
 using CryEngine.RunTime.Networking;
 

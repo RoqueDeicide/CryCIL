@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using CryEngine.Entities;
 using CryEngine.Entities.Advanced;
+using CryEngine.Logic.Entities;
 
 namespace CryEngine.Native
 {

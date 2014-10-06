@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using CryEngine.Entities;
+using CryEngine.Logic.Entities;
 using CryEngine.Mathematics;
 
 namespace CryEngine.RunTime.Serialization

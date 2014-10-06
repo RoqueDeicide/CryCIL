@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CryEngine.Logic.Entities;
 using CryEngine.Native;
 
 namespace CryEngine.Entities.Advanced

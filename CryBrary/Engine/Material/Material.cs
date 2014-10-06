@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using CryEngine.Entities;
+using CryEngine.Logic;
+using CryEngine.Logic.Entities;
 using CryEngine.Mathematics;
 using CryEngine.Mathematics.Graphics;
 using CryEngine.Native;
@@ -136,7 +138,7 @@ namespace CryEngine
 			return TryGet(ptr);
 		}
 
-		public static Material Get(EntityBase entity, int slot = 0)
+		public static Material Get(EntityWrapper entity, int slot = 0)
 		{
 #if !(RELEASE && RELEASE_DISABLE_CHECKS)
 			if (entity == null)
@@ -147,7 +149,7 @@ namespace CryEngine
 			return TryGet(ptr);
 		}
 
-		public static void Set(EntityBase entity, Material mat, int slot = 0)
+		public static void Set(EntityWrapper entity, Material mat, int slot = 0)
 		{
 #if !(RELEASE && RELEASE_DISABLE_CHECKS)
 			if (entity == null)

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using CryEngine.Actors;
 using CryEngine.Initialization;
+using CryEngine.Logic.Actors;
+using CryEngine.Logic.Entities;
 using CryEngine.Mathematics;
 using CryEngine.Native;
 
@@ -295,35 +296,6 @@ namespace CryEngine.Entities
 			}
 		}
 	}
-
-	/// <summary>
-	/// These flags control entity instance behaviour.
-	/// </summary>
-	[Flags]
-	public enum EntityFlags
-	{
-		CastShadow = (1 << 1),
-		Unremovable = (1 << 2),
-
-		ClientOnly = (1 << 8),
-		ServerOnly = (1 << 9),
-
-		/// <summary>
-		/// Entity will trigger areas when it enters them.
-		/// </summary>
-		TriggerAreas = (1 << 14),
-
-		/// <summary>
-		/// This entity will not be saved.
-		/// </summary>
-		NoSave = (1 << 15),
-
-		/// <summary>
-		/// Entity was spawned dynamically without a class.
-		/// </summary>
-		Spawned = (1 << 24),
-	}
-
 	/// <summary>
 	/// These flags define behaviour for entity classes.
 	/// </summary>

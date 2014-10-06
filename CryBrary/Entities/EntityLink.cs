@@ -7,7 +7,7 @@ namespace CryEngine.Entities
 	/// <summary>
 	/// Represents a link between two entities.
 	/// </summary>
-	public class EntityLink
+	//public class EntityLink
 	{
 		#region Statics
 		/// <summary>
@@ -22,21 +22,12 @@ namespace CryEngine.Entities
 		/// name="parent" />.
 		/// </param>
 		/// <param name="linkName">Name of the link.</param>
-		/// <param name="relativePos">
-		/// Relative position of <paramref name="child" /> entity relative to a <paramref
-		/// name="parent" />.
-		/// </param>
-		/// <param name="relativeRot">
-		/// Relative orientation of <paramref name="child" /> entity relative to a <paramref
-		/// name="parent" />.
-		/// </param>
 		/// <returns>Wrapper object for a link.</returns>
-		public static EntityLink Create(EntityBase parent, EntityBase child, string linkName, Vector3? relativePos = null,
-										Quaternion? relativeRot = null)
+		public static EntityLink Create(EntityBase parent, EntityBase child, string linkName)
 		{
 			return
 				new EntityLink(
-					EntityInterop.AddEntityLink(parent.GetIEntity(), linkName, child.Id, child.GUID), parent);
+					EntityInterop.AddEntityLink(parent.EntityHandle, linkName, child.Id, child.GUID), parent);
 		}
 		/// <summary>
 		/// Unlinks everything from the entity.
@@ -44,7 +35,7 @@ namespace CryEngine.Entities
 		/// <param name="parent">Entity to unlink everything from.</param>
 		public static void RemoveAll(EntityBase parent)
 		{
-			EntityInterop.RemoveAllEntityLinks(parent.GetIEntity());
+			EntityInterop.RemoveAllEntityLinks(parent.EntityHandle);
 		}
 		#endregion
 		#region Properties
@@ -92,7 +83,7 @@ namespace CryEngine.Entities
 		/// </summary>
 		public void Remove()
 		{
-			EntityInterop.RemoveEntityLink(this.Parent.GetIEntity(), this.Handle);
+			EntityInterop.RemoveEntityLink(this.Parent.EntityHandle, this.Handle);
 		}
 		#endregion
 	}

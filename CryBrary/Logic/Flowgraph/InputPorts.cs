@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text;
 using CryEngine.Entities;
+using CryEngine.Logic.Entities;
 using CryEngine.Mathematics;
 
 namespace CryEngine.Logic.Flowgraph

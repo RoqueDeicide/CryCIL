@@ -56,7 +56,7 @@ public:
 	/// </summary>
 	virtual IMonoDomain *GetDomain() = 0;
 
-	/// <summmary>
+	/// <summary>
 	/// Retrieves a throwable exception from the assembly.
 	/// </summary>
 	virtual IMonoException *GetException(const char *nameSpace, const char *exceptionClass, const char *message = nullptr, ...)

@@ -38,6 +38,7 @@ EntityInterop::EntityInterop()
 	REGISTER_METHOD(GetEntityId);
 	REGISTER_METHOD(GetEntityGUID);
 	REGISTER_METHOD(FindEntity);
+	REGISTER_METHOD(GetManagedObject);
 	REGISTER_METHOD(GetEntitiesByClass);
 	REGISTER_METHOD(GetEntitiesByClasses);
 	REGISTER_METHOD(GetEntitiesInBox);
@@ -153,8 +154,6 @@ EntityInterop::EntityInterop()
 	REGISTER_METHOD(SetViewDistUnlimited);
 	REGISTER_METHOD(SetLodRatio);
 	REGISTER_METHOD(GetLodRatio);
-
-	REGISTER_METHOD(OnScriptInstanceDestroyed);
 
 	REGISTER_METHOD(GetNumAreas);
 	REGISTER_METHOD(GetArea);
@@ -430,12 +429,11 @@ void EntityInterop::RemoveEntity(EntityId id, bool removeNow)
 	IEntity *pEntity = gEnv->pEntitySystem->GetEntity(id);
 	if (pEntity)
 	{
-		if (!(pEntity->GetFlags() & ENTITY_FLAG_NO_SAVE))
-		{
-			GetMonoRunTime()->CryBrary->GetException("CryEngine", "EntityRemovalException", "Attempted to remove an entity placed via Editor")->Throw();
-			return;
-		}
-
+// 		if (!(pEntity->GetFlags() & ENTITY_FLAG_NO_SAVE))
+// 		{
+// 			GetMonoRunTime()->CryBrary->GetException("CryEngine", "EntityRemovalException", "Attempted to remove an entity placed via Editor")->Throw();
+// 			return;
+// 		}
 		gEnv->pEntitySystem->RemoveEntity(id, removeNow);
 	}
 }

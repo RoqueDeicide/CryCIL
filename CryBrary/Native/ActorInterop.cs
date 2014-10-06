@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.CompilerServices;
 using CryEngine.Mathematics;
+using CryEngine.RunTime.Networking;
 
 namespace CryEngine.Native
 {

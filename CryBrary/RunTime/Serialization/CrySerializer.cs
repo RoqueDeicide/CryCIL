@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using CryEngine.Entities;
 using CryEngine.Extensions;
+using CryEngine.Logic.Entities;
 using CryEngine.Mathematics;
 using CryEngine.Utilities;
 

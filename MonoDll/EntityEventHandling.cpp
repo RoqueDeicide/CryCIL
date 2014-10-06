@@ -7,7 +7,7 @@
 
 IMonoClass *CEntityEventHandler::m_pClass[2];
 
-void CEntityEventHandler::HandleEntityEvent(EEntityType type, SEntityEvent &event, IEntity *pEntity, IMonoObject *managedObject)
+void CEntityEventHandler::HandleEntityEvent(EEntityType type, SEntityEvent &event, IEntity *pEntity, mono::object managedObject)
 {
 	switch (event.event)
 	{

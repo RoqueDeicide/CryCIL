@@ -1,5 +1,6 @@
 ﻿using System;
 using CryEngine.Entities;
+using CryEngine.Logic.Entities;
 using CryEngine.Native;
 
 namespace CryEngine.Logic.Actors

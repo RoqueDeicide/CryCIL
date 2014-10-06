@@ -1,5 +1,6 @@
 ﻿using CryEngine.Entities;
 using CryEngine.Logic.Actors;
+using CryEngine.Logic.Entities;
 
 namespace CryEngine.Mathematics.Graphics
 {
