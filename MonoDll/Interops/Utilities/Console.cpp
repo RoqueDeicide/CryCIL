@@ -38,7 +38,7 @@ ConsoleInterop::ConsoleInterop()
 	REGISTER_METHOD(GetCmdArg);
 }
 
-void ConsoleInterop::HandleException(IMonoObject *exception)
+void ConsoleInterop::HandleException(mono::object exception)
 {
 	CScriptObject::HandleException((MonoObject *)exception);
 }

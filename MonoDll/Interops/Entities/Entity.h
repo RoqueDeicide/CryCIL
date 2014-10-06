@@ -21,8 +21,6 @@
 #include <IBreakableManager.h>
 #include <IAnimatedCharacter.h>
 
-class CCryScriptInstance;
-
 struct MovementRequest
 {
 	ECharacterMoveType type;
@@ -52,7 +50,7 @@ struct SEntityRegistrationParams
 
 	EEntityClassFlags Flags;
 
-	IMonoObject *Properties;
+	mono::object Properties;
 };
 
 struct SMonoEntityProperty
@@ -173,8 +171,7 @@ protected:
 
 	bool IsMonoEntity(const char *className);
 
-	// Scriptbinds
-	static IMonoObject *SpawnEntity(EntitySpawnParams, bool, SMonoEntityInfo &entityInfo);
+	static mono::object SpawnEntity(EntitySpawnParams, bool, void *&entityHandle, EntityId &entityId);
 	static void RemoveEntity(EntityId, bool removeNow);
 
 	static IEntity *GetEntity(EntityId id);
@@ -186,11 +183,11 @@ protected:
 	static mono::string GetEntityClassName(IEntity *pEntity);
 
 	static EntityId FindEntity(mono::string);
-	static IMonoObject *GetEntitiesByClass(mono::string);
-	static IMonoObject *GetEntitiesByClasses(IMonoObject *);
-	static IMonoObject *GetEntitiesInBox(AABB bbox, int objTypes);
+	static mono::object GetEntitiesByClass(mono::string);
+	static mono::object GetEntitiesByClasses(mono::object);
+	static mono::object GetEntitiesInBox(AABB bbox, int objTypes);
 
-	static IMonoObject *QueryProximity(AABB box, mono::string className, uint32 nEntityFlags);
+	static mono::object QueryProximity(AABB box, mono::string className, uint32 nEntityFlags);
 
 	static void SetWorldPos(IEntity *pEnt, Vec3);
 	static Vec3 GetWorldPos(IEntity *pEnt);
@@ -230,7 +227,7 @@ protected:
 	static void SetHUDSilhouettesParams(IEntity *pEntity, float r, float g, float b, float a);
 
 	static IEntityLink *AddEntityLink(IEntity *pEntity, mono::string linkName, EntityId otherId, EntityGUID entityGuid);
-	static IMonoObject *GetEntityLinks(IEntity *pEntity);
+	static mono::object GetEntityLinks(IEntity *pEntity);
 	static void RemoveAllEntityLinks(IEntity *pEntity);
 	static void RemoveEntityLink(IEntity *pEntity, IEntityLink *pLink);
 
@@ -285,7 +282,7 @@ protected:
 
 	static IParticleEmitter *LoadParticleEmitter(IEntity *pEntity, int slot, IParticleEffect *pEffect, SpawnParams &spawnParams);
 
-	static void RemoteInvocation(EntityId entityId, EntityId targetId, mono::string methodName, IMonoObject *args, ERMInvocation target, int channelId);
+	static void RemoteInvocation(EntityId entityId, EntityId targetId, mono::string methodName, mono::object args, ERMInvocation target, int channelId);
 
 	static const CCamera *GetCameraProxy(IEntity *pEntity);
 
@@ -294,23 +291,17 @@ protected:
 	static bool SetViewDistUnlimited(IEntity *pEntity);
 	static bool SetLodRatio(IEntity *pEntity, int lodRatio);
 	static int GetLodRatio(IEntity *pEntity);
-
-	static void OnScriptInstanceDestroyed(CCryScriptInstance *pScriptInstance);
-	// ~Scriptbinds
-
-	// Area manager scriptbinds
+	
 	static int GetNumAreas();
 	static const IArea *GetArea(int areaId);
 
-	static IMonoObject *QueryAreas(EntityId id, Vec3 vPos, int maxResults, bool forceCalculation);
+	static mono::object QueryAreas(EntityId id, Vec3 vPos, int maxResults, bool forceCalculation);
 
 	static int GetAreaEntityAmount(IArea *pArea);
 	static const EntityId GetAreaEntityByIdx(IArea *pArea, int index);
 	static void GetAreaMinMax(IArea *pArea, Vec3 &min, Vec3 &max);
 	static int GetAreaPriority(IArea *pArea);
-	// ~Area manager scriptbinds
 
-	// Static object script binds.
 	static IStatObj *GetStaticObjectHandle(IEntity *entityHandle, int slot);
 	static void AssignStaticObject(IEntity *entityHandle, IStatObj *obj, int slot);
 

@@ -67,8 +67,10 @@ public:
 		IMonoArray *args = CreateMonoArray(1);
 		args->InsertNativePointer(&config);
 		bool isSingleton =
-			((IMonoObject *)this->managedNode->GetClass()->GetMethod("FillConfiguration", 1)->
-						InvokeArray(this->managedNode->GetManagedObject(), args))->Unbox<bool>();
+			this->managedNode->GetClass()
+				->GetMethod("FillConfiguration", 1)
+				->InvokeArray(this->managedNode->GetManagedObject(), args)
+				->ToWrapper()->Unbox<bool>();
 		args->Release(false);
 		// Save the flags that were set in Mono.
 		this->flags = config.nFlags;
@@ -191,13 +193,13 @@ public:
 			args->Insert(this->nodeId);
 			args->Insert(this->graphId);
 			// Initialize managed object.
-			IMonoObject *nodeObject =
+			mono::object nodeObject =
 				GetMonoRunTime()->CryBrary->GetClass("FlowGraphNode")->GetMethod("Create")->InvokeArray(nullptr, args);
 			args->Release(false);
 			// Save reference for later, or tell FlowGraph about an error, if creation has failed for whatever reason.
 			if (nodeObject)
 			{
-				this->managedNode = nodeObject;
+				this->managedNode = *nodeObject;
 				return true;
 			}
 			return false;

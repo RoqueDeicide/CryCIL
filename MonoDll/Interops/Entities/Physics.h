@@ -63,7 +63,7 @@ public:
 
 	static int RayWorldIntersection(Vec3, Vec3, int, unsigned int, int, IPhysicalEntity **entitiesToSkip, int skipCount, ray_hit *hits);
 
-	static IMonoObject *SimulateExplosion(pe_explosion explosion);
+	static mono::object SimulateExplosion(pe_explosion explosion);
 
 	static bool PhysicalEntityAction(IPhysicalEntity *pPhysEnt, pe_action &action);
 

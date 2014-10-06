@@ -175,7 +175,7 @@ public:
 
 protected:
 	ICryScriptInstance *m_pScript;
-	IMonoObject *m_pManagedObject;
+	mono::object m_pManagedObject;
 
 	IAnimatedCharacter *m_pAnimatedCharacter;
 

@@ -23,7 +23,7 @@ protected:
 	virtual const char *GetClassName() { return "ConsoleInterop"; }
 	// ~IMonoScriptBind
 
-	static void HandleException(IMonoObject *exception);
+	static void HandleException(mono::object exception);
 
 	static void Execute(mono::string string, bool silent);
 

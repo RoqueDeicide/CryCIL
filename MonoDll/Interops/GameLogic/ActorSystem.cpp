@@ -68,13 +68,13 @@ void ActorSystemInterop::OnSpawn(IEntity *pEntity, SEntitySpawnParams &params)
 			pArgs->InsertMonoString(ToMonoString(actorName));
 			pArgs->InsertMonoObject(pActorInfoClass->BoxObject(&actorInfo));
 			// Create the wrapper.
-			IMonoObject *wrapper = GetMonoRunTime()->CryBrary->
+			IMonoObject *wrapper = *GetMonoRunTime()->CryBrary->
 				GetClass("Actor", "CryEngine.Actors")->
 				GetMethod("Create")->InvokeArray(nullptr, pArgs);
 			if (actorType == EMonoActorType_Managed)
 			{
 				CMonoActor *monoActor = static_cast<CMonoActor *>(pActor);
-				monoActor->m_pManagedObject = wrapper;
+				monoActor->m_pManagedObject = wrapper->GetManagedObject();
 			}
 			SAFE_RELEASE(pArgs);
 		}
@@ -141,7 +141,7 @@ EntityId ActorSystemInterop::GetClientActorId()
 	return GetMonoRunTime()->GameFramework->GetClientActorId();
 }
 
-void ActorSystemInterop::RemoteInvocation(EntityId entityId, EntityId targetId, mono::string methodName, IMonoObject *args, ERMInvocation target, int channelId)
+void ActorSystemInterop::RemoteInvocation(EntityId entityId, EntityId targetId, mono::string methodName, mono::object args, ERMInvocation target, int channelId)
 {
 	CRY_ASSERT(entityId != 0);
 

@@ -12,6 +12,8 @@
 #include <MonoCommon.h>
 #include <IMonoInterop.h>
 
+#include <MonoRunTime.h>
+
 #include "Interops/Viewport/Renderer.h"
 
 class Engine3DInterop : public IMonoInterop

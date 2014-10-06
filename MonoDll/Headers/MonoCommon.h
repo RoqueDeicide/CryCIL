@@ -64,6 +64,10 @@ namespace mono
 		{
 			return GetMonoRunTime()->ToArray(const_cast<_object *>(this));
 		}
+		IMonoObject *ToWrapper() const
+		{
+			return GetMonoRunTime()->ToObject(const_cast<_object *>(this));
+		}
 	};
 
 	typedef _string* string;

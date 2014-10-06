@@ -108,8 +108,8 @@ public:
 	bool IsInitialized() { return m_bInitialized; }
 
 	void Reset(bool enteringGamemode);
-	IMonoObject *GetMonoObject() { return this->m_pManagedObject; }
-	__declspec(property(get=GetMonoObject)) IMonoObject *ManagedWrapper;
+	mono::object GetMonoObject() { return this->m_pManagedObject; }
+	__declspec(property(get=GetMonoObject)) mono::object ManagedWrapper;
 
 protected:
 	mono::object m_pManagedObject;

@@ -135,7 +135,7 @@ int PhysicsInterop::RayWorldIntersection
 	return gEnv->pPhysicalWorld->RayWorldIntersection(origin, dir, objFlags, flags, hits, maxHits, entitiesToSkip, skipCount);
 }
 
-IMonoObject *PhysicsInterop::SimulateExplosion(pe_explosion explosion)
+mono::object PhysicsInterop::SimulateExplosion(pe_explosion explosion)
 {
 	gEnv->pPhysicalWorld->SimulateExplosion(&explosion);
 

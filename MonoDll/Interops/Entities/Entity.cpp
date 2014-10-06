@@ -281,7 +281,7 @@ bool EntityInterop::OnRemove(IEntity *pIEntity)
 	IMonoArray *pArgs = CreateMonoArray(1);
 	pArgs->Insert(pIEntity->GetId());
 
-	IMonoObject *pResult = m_pEntityClass->GetMethod("InternalRemove", 1)->InvokeArray(NULL, pArgs);
+	IMonoObject *pResult = *m_pEntityClass->GetMethod("InternalRemove", 1)->InvokeArray(NULL, pArgs);
 	auto result = pResult->Unbox<bool>();
 
 	SAFE_RELEASE(pArgs);
@@ -320,7 +320,7 @@ bool EntityInterop::RegisterEntityClass(SEntityRegistrationParams params)
 
 		for (int iProperty = 0; iProperty < numProperties; iProperty++)
 		{
-			IMonoObject *propertyObject = pPropertyArray->GetItem(iProperty);
+			IMonoObject *propertyObject = *pPropertyArray->GetItem(iProperty);
 			if (propertyObject == nullptr)
 				continue;
 
@@ -365,8 +365,21 @@ mono::string EntityInterop::GetEntityClassName(IEntity *pEntity)
 {
 	return ToMonoString(pEntity->GetClass()->GetName());
 }
-
-IMonoObject *EntityInterop::SpawnEntity(EntitySpawnParams monoParams, bool bAutoInit, SMonoEntityInfo &entityInfo)
+//! Spawns an entity.
+//!
+//! @param monoParams    Parameters that describe the entity.
+//! @param bAutoInit     Indicates whether the entity must be initialized automatically.
+//! @param entityHandle  Entity handle.
+//! @param entityId      Entity identifier.
+//!
+//! @returns             Object of type GameObjectExtension, if spawned entity is defined in CryMono.
+mono::object EntityInterop::SpawnEntity
+(
+	EntitySpawnParams monoParams,
+	bool bAutoInit,
+	void *&entityHandle,
+	EntityId &entityId
+)
 {
 	const char *className = ToCryString(monoParams.sClass);
 
@@ -383,8 +396,8 @@ IMonoObject *EntityInterop::SpawnEntity(EntitySpawnParams monoParams, bool bAuto
 
 		if (IEntity *pEntity = gEnv->pEntitySystem->SpawnEntity(spawnParams, bAutoInit))
 		{
-			entityInfo.pEntity = pEntity;
-			entityInfo.id = pEntity->GetId();
+			entityHandle = pEntity;
+			entityId = pEntity->GetId();
 
 			if (IGameObject *pGameObject = GetMonoRunTime()->GameFramework->GetGameObject(spawnParams.id))
 			{
@@ -450,7 +463,7 @@ EntityId EntityInterop::FindEntity(mono::string name)
 	return 0;
 }
 
-IMonoObject *EntityInterop::GetEntitiesByClass(mono::string _class)
+mono::object EntityInterop::GetEntitiesByClass(mono::string _class)
 {
 	IEntityClass *pDesiredClass = gEnv->pEntitySystem->GetClassRegistry()->FindClass(ToCryString(_class));
 
@@ -475,7 +488,7 @@ IMonoObject *EntityInterop::GetEntitiesByClass(mono::string _class)
 	return result;
 }
 
-IMonoObject *EntityInterop::GetEntitiesByClasses(IMonoObject *classes)
+mono::object EntityInterop::GetEntitiesByClasses(mono::object classes)
 {
 	IMonoArray *pClassArray = GetMonoRunTime()->ToArray(classes);
 
@@ -512,7 +525,7 @@ IMonoObject *EntityInterop::GetEntitiesByClasses(IMonoObject *classes)
 	return result;
 }
 
-IMonoObject *EntityInterop::GetEntitiesInBox(AABB bbox, int objTypes)
+mono::object EntityInterop::GetEntitiesInBox(AABB bbox, int objTypes)
 {
 	IPhysicalEntity **pEnts = nullptr;
 
@@ -531,7 +544,7 @@ IMonoObject *EntityInterop::GetEntitiesInBox(AABB bbox, int objTypes)
 	return result;
 }
 
-IMonoObject *EntityInterop::QueryProximity(AABB box, mono::string className, uint32 nEntityFlags)
+mono::object EntityInterop::QueryProximity(AABB box, mono::string className, uint32 nEntityFlags)
 {
 	SEntityProximityQuery query;
 
@@ -709,7 +722,7 @@ IEntityLink *EntityInterop::AddEntityLink(IEntity *pEntity, mono::string linkNam
 	return pEntity->AddEntityLink(ToCryString(linkName), otherId, entityGuid);
 }
 
-IMonoObject *EntityInterop::GetEntityLinks(IEntity *pEntity)
+mono::object EntityInterop::GetEntityLinks(IEntity *pEntity)
 {
 	// the first link
 	IEntityLink *pLink = pEntity->GetEntityLinks();
@@ -1064,7 +1077,7 @@ IParticleEmitter *EntityInterop::LoadParticleEmitter(IEntity *pEntity, int slot,
 	return pEntity->GetParticleEmitter(nSlot);
 }
 
-void EntityInterop::RemoteInvocation(EntityId entityId, EntityId targetId, mono::string methodName, IMonoObject *args, ERMInvocation target, int channelId)
+void EntityInterop::RemoteInvocation(EntityId entityId, EntityId targetId, mono::string methodName, mono::object args, ERMInvocation target, int channelId)
 {
 	if (!gEnv->bMultiplayer)
 		return;
@@ -1168,7 +1181,7 @@ const IArea *EntityInterop::GetArea(int areaId)
 	return gEnv->pEntitySystem->GetAreaManager()->GetArea(areaId);
 }
 
-IMonoObject *EntityInterop::QueryAreas(EntityId id, Vec3 vPos, int maxResults, bool forceCalculation)
+mono::object EntityInterop::QueryAreas(EntityId id, Vec3 vPos, int maxResults, bool forceCalculation)
 {
 	SAreaManagerResult *pResults = new SAreaManagerResult[maxResults];
 
@@ -1188,7 +1201,7 @@ IMonoObject *EntityInterop::QueryAreas(EntityId id, Vec3 vPos, int maxResults, b
 
 	delete[] pResults;
 
-	IMonoObject *managedArray = pArray->GetManagedObject();
+	mono::object managedArray = pArray->GetManagedObject();
 	pArray->Release(false);
 
 	return managedArray;

@@ -42,7 +42,7 @@ private:
 	IMonoAssembly *cryBraryAssembly;		//!< Managed assembly that handles CryMono inner workings.
 	IMonoAssembly *pdb2MdbAssembly;			//!< Optional assembly that contains code that converts .pdb to .mdb files.
 	IGameFramework *gameFramework;			//!< Object that provides access to CryAction subsystems.
-	IMonoObject *monoInterface;				//!< Object that handles CryEngine-Mono interoperability.
+	mono::object monoInterface;				//!< Object that handles CryEngine-Mono interoperability.
 	InteropList interopsMethods;			//!< List of interop methods to register as internal calls.
 	std::vector<IMonoInterop *> interops;	//!< List of interop classes.
 	CFlowManager *flowGraphInterop;			//!< Object that handles interops with FlowGraph.
@@ -57,7 +57,7 @@ public:
 		// Notify everything about the update.
 		if (this->monoInterface)
 		{
-			this->monoInterface->CallMethod
+			this->monoInterface->ToWrapper()->CallMethod
 			(
 				"Think",
 				fDeltaTime,
@@ -150,18 +150,18 @@ public:
 	{
 		if (this->monoInterface && this->gameFramework->GetIFlowSystem())
 		{
-			this->monoInterface->CallMethod("RegisterFlowNodeTypes");
+			this->monoInterface->ToWrapper()->CallMethod("RegisterFlowNodeTypes");
 		}
 	}
 
-	IMonoArray *ToArray(IMonoObject *arr)
+	IMonoArray *ToArray(mono::object arr)
 	{
 		CRY_ASSERT(arr);
 
 		return new CScriptArray(arr);
 	}
 
-	IMonoObject *ToObject(IMonoObject *obj, bool allowGC)
+	IMonoObject *ToObject(mono::object obj, bool allowGC)
 	{
 		CRY_ASSERT(obj);
 

@@ -202,7 +202,7 @@ void CMonoActor::ProcessEvent(SEntityEvent& event)
 void CMonoActor::PostUpdate(float frameTime)
 {
 	if (this->m_pManagedObject)
-		this->m_pManagedObject->CallMethod("OnPostUpdate", frameTime);
+		this->m_pManagedObject->ToWrapper()->CallMethod("OnPostUpdate", frameTime);
 }
 
 void CMonoActor::UpdateView(SViewParams &viewParams)
@@ -210,7 +210,7 @@ void CMonoActor::UpdateView(SViewParams &viewParams)
 	void *args[1];
 	args[0] = &viewParams;
 
-	this->m_pManagedObject->GetClass()->GetMethod("UpdateView", 1)->Invoke(m_pManagedObject, args);
+	this->m_pManagedObject->ToWrapper()->GetClass()->GetMethod("UpdateView", 1)->Invoke(m_pManagedObject, args);
 }
 
 void CMonoActor::PostUpdateView(SViewParams &viewParams)
@@ -218,7 +218,7 @@ void CMonoActor::PostUpdateView(SViewParams &viewParams)
 	void *args[1];
 	args[0] = &viewParams;
 
-	this->m_pManagedObject->GetClass()->GetMethod("PostUpdateView", 1)->Invoke(m_pManagedObject, args);
+	this->m_pManagedObject->ToWrapper()->GetClass()->GetMethod("PostUpdateView", 1)->Invoke(m_pManagedObject, args);
 }
 
 bool CMonoActor::SetAspectProfile(EEntityAspects aspect, uint8 profile)
@@ -388,7 +388,7 @@ void CMonoActor::InitLocalPlayer()
 
 float CMonoActor::GetHealth() const
 {
-	IMonoObject *pResult = this->m_pManagedObject->GetPropertyValue("Health");
+	IMonoObject *pResult = *this->m_pManagedObject->ToWrapper()->GetPropertyValue("Health");
 	float health = pResult->Unbox<float>();
 	pResult->Release();
 
@@ -397,14 +397,14 @@ float CMonoActor::GetHealth() const
 
 void CMonoActor::SetHealth(float health)
 {
-	IMonoDomain *pDomain = this->m_pManagedObject->GetClass()->GetAssembly()->GetDomain();
+	IMonoDomain *pDomain = this->m_pManagedObject->ToWrapper()->GetClass()->GetAssembly()->GetDomain();
 
-	this->m_pManagedObject->SetPropertyValue("Health", pDomain->BoxAnyValue(MonoAnyValue(health)));
+	this->m_pManagedObject->ToWrapper()->SetPropertyValue("Health", pDomain->BoxAnyValue(MonoAnyValue(health)));
 }
 
 float CMonoActor::GetMaxHealth() const
 {
-	IMonoObject *pResult = this->m_pManagedObject->GetPropertyValue("MaxHealth");
+	IMonoObject *pResult = *this->m_pManagedObject->ToWrapper()->GetPropertyValue("MaxHealth");
 	float health = pResult->Unbox<float>();
 	pResult->Release();
 
@@ -413,9 +413,9 @@ float CMonoActor::GetMaxHealth() const
 
 void CMonoActor::SetMaxHealth(float health)
 {
-	IMonoDomain *pDomain = this->m_pManagedObject->GetClass()->GetAssembly()->GetDomain();
+	IMonoDomain *pDomain = this->m_pManagedObject->ToWrapper()->GetClass()->GetAssembly()->GetDomain();
 
-	this->m_pManagedObject->SetPropertyValue("MaxHealth", pDomain->BoxAnyValue(MonoAnyValue(health)));
+	this->m_pManagedObject->ToWrapper()->SetPropertyValue("MaxHealth", pDomain->BoxAnyValue(MonoAnyValue(health)));
 }
 
 bool CMonoActor::NetSerialize(TSerialize ser, EEntityAspects aspect, uint8 profile, int pflags)
@@ -496,7 +496,7 @@ bool CMonoActor::NetSerialize(TSerialize ser, EEntityAspects aspect, uint8 profi
 	params[2] = &profile;
 	params[3] = &pflags;
 
-	this->m_pManagedObject->GetClass()->GetMethod("InternalNetSerialize", 4)->Invoke(m_pManagedObject, params);
+	this->m_pManagedObject->ToWrapper()->GetClass()->GetMethod("InternalNetSerialize", 4)->Invoke(m_pManagedObject, params);
 
 	ser.EndGroup();
 
@@ -510,7 +510,7 @@ void CMonoActor::FullSerialize(TSerialize ser)
 	IMonoArray *pArgs = CreateMonoArray(1);
 	pArgs->InsertNativePointer(&ser);
 
-	this->m_pManagedObject->GetClass()->GetMethod("InternalFullSerialize", 1)->InvokeArray(m_pManagedObject, pArgs);
+	this->m_pManagedObject->ToWrapper()->GetClass()->GetMethod("InternalFullSerialize", 1)->InvokeArray(m_pManagedObject, pArgs);
 	pArgs->Release();
 
 	ser.EndGroup();
@@ -518,7 +518,7 @@ void CMonoActor::FullSerialize(TSerialize ser)
 
 void CMonoActor::PostSerialize()
 {
-	this->m_pManagedObject->GetClass()->GetMethod("PostSerialize")->Invoke(m_pManagedObject);
+	this->m_pManagedObject->ToWrapper()->GetClass()->GetMethod("PostSerialize")->Invoke(m_pManagedObject);
 }
 
 IMPLEMENT_RMI(CMonoActor, SvScriptRMI)
