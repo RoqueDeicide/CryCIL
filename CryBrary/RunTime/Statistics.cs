@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CryEngine.Utilities
+namespace CryEngine.RunTime
 {
 	/// <summary>
 	/// CryStats enables tracking of commonly used library statistics such as memory usage.
@@ -10,15 +10,15 @@ namespace CryEngine.Utilities
 		/// <summary>
 		/// The current approximate memory usage in megabytes.
 		/// </summary>
-		public static long MemoryUsageMB
+		public static long MegaBytes
 		{
-			get { return MemoryUsageKB / 1024; }
+			get { return KiloBytes / 1024; }
 		}
 
 		/// <summary>
 		/// The current approximate memory usage in kilobytes.
 		/// </summary>
-		public static long MemoryUsageKB
+		public static long KiloBytes
 		{
 			get { return MemoryUsage / 1024; }
 		}
