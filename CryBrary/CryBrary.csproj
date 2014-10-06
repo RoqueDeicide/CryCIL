@@ -396,7 +396,7 @@
     <Compile Include="Engine\CryPak\CryPak.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Script Handling\ScriptManager.cs" />
-    <Compile Include="Misc\UnusedMarker.cs" />
+    <Compile Include="RunTime\UnusedMarker.cs" />
     <Compile Include="VariousConstants.cs" />
   </ItemGroup>
   <ItemGroup>

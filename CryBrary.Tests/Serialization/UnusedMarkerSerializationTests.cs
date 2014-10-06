@@ -4,6 +4,7 @@ using System.Linq;
 
 using CryEngine;
 using CryEngine.Mathematics;
+using CryEngine.RunTime;
 using CryEngine.RunTime.Serialization;
 using CryEngine.Utilities;
 using NUnit.Framework;
