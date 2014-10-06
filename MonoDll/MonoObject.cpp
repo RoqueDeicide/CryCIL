@@ -123,13 +123,13 @@ MonoAnyValue CScriptObject::GetAnyValue()
 		return ToCryString((mono::string)GetManagedObject());
 	case eMonoAnyType_Array:
 	{
-		MonoAnyValue any = MonoAnyValue((IMonoObject *)m_pObject);
+		MonoAnyValue any = MonoAnyValue((mono::object)m_pObject);
 		any.type = eMonoAnyType_Array;
 
 		return any;
 	}
 	case eMonoAnyType_Unknown:
-		return MonoAnyValue((IMonoObject *)m_pObject);
+		return MonoAnyValue((mono::object)m_pObject);
 	}
 
 	return MonoAnyValue();
@@ -160,7 +160,7 @@ void CScriptObject::HandleException(MonoObject *pException)
 	if ((g_pMonoCVars->mono_exceptionsTriggerMessageBoxes || isFatal) && pCryBraryAssembly)
 	{
 		auto args = CreateMonoArray(2);
-		args->InsertMonoObject((IMonoObject *)pException);
+		args->InsertMonoObject((mono::object)pException);
 		args->Insert(isFatal);
 
 		IMonoClass *pDebugClass = pCryBraryAssembly->GetClass("Debug");

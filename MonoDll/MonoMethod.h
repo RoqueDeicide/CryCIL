@@ -12,8 +12,8 @@ public:
 	// IMonoMethod
 	virtual void *GetMethodThunk() override;
 
-	virtual IMonoObject *InvokeArray(IMonoObject *object, IMonoArray *pParams = nullptr) override;
-	virtual IMonoObject *Invoke(IMonoObject *object, void **pParams = nullptr, int numParams = 0) override;
+	virtual mono::object InvokeArray(mono::object object, IMonoArray *pParams = nullptr) override;
+	virtual mono::object Invoke(mono::object object, void **pParams = nullptr, int numParams = 0) override;
 
 	virtual const char *GetName() override { return mono_method_get_name(m_pMonoMethod); }
 

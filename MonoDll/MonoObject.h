@@ -42,7 +42,7 @@ public:
 	virtual EMonoAnyType GetType() override;
 	virtual MonoAnyValue GetAnyValue() override;
 
-	virtual IMonoObject *GetManagedObject() override { return (IMonoObject *)m_pObject; }
+	virtual mono::object GetManagedObject() override { return (mono::object)m_pObject; }
 
 	virtual const char *ToString() override;
 

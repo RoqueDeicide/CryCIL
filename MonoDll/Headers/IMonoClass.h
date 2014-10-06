@@ -47,12 +47,12 @@ public:
 	/// <summary>
 	/// Instantiates the class, if not already instantiated.
 	/// </summary>
-	virtual IMonoObject *CreateInstance(IMonoArray *pConstructorParams = nullptr) = 0;
+	virtual mono::object CreateInstance(IMonoArray *pConstructorParams = nullptr) = 0;
 
 	/// <summary>
 	/// Boxes a type to be received as a managed type.
 	/// </summary>
-	virtual IMonoObject *BoxObject(void *object, IMonoDomain *pDomain = nullptr) = 0;
+	virtual mono::object BoxObject(void *object, IMonoDomain *pDomain = nullptr) = 0;
 
 	/// <summary>
 	/// Gets a method based on a set of parameters
@@ -71,19 +71,19 @@ public:
 	/// <summary>
 	/// Gets the value of a property in the specified instance.
 	/// </summary>
-	virtual IMonoObject *GetPropertyValue(IMonoObject *object, const char *propertyName, bool throwOnFail = true) = 0;
+	virtual mono::object GetPropertyValue(mono::object object, const char *propertyName, bool throwOnFail = true) = 0;
 	/// <summary>
 	/// Sets the value of a property in the specified instance.
 	/// </summary>
-	virtual void SetPropertyValue(IMonoObject *object, const char *propertyName, IMonoObject *newValue, bool throwOnFail = true) = 0;
+	virtual void SetPropertyValue(mono::object object, const char *propertyName, mono::object newValue, bool throwOnFail = true) = 0;
 	/// <summary>
 	/// Gets the value of a field in the specified instance.
 	/// </summary>
-	virtual IMonoObject *GetFieldValue(IMonoObject *object, const char *fieldName, bool throwOnFail = true) = 0;
+	virtual mono::object GetFieldValue(mono::object object, const char *fieldName, bool throwOnFail = true) = 0;
 	/// <summary>
 	/// Sets the value of a field in the specified instance.
 	/// </summary>
-	virtual void SetFieldValue(IMonoObject *object, const char *fieldName, IMonoObject *newValue, bool throwOnFail = true) = 0;
+	virtual void SetFieldValue(mono::object object, const char *fieldName, mono::object newValue, bool throwOnFail = true) = 0;
 
 	/// <summary>
 	/// Checks whether this class implements another class by name.

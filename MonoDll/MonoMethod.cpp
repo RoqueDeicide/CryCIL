@@ -18,7 +18,7 @@ void *CScriptMethod::GetMethodThunk()
 	return mono_method_get_unmanaged_thunk(m_pMonoMethod);
 }
 
-IMonoObject *CScriptMethod::InvokeArray(IMonoObject *object, IMonoArray *pParams)
+mono::object CScriptMethod::InvokeArray(mono::object object, IMonoArray *pParams)
 {
 	MonoObject *pException = nullptr;
 	MonoObject *pResult = mono_runtime_invoke_array(m_pMonoMethod, object, pParams ? (MonoArray *)pParams->GetManagedObject() : nullptr, &pException);
@@ -26,12 +26,12 @@ IMonoObject *CScriptMethod::InvokeArray(IMonoObject *object, IMonoArray *pParams
 	if (pException)
 		CScriptObject::HandleException(pException);
 	else if (pResult)
-		return (IMonoObject *)pResult;
+		return (mono::object)pResult;
 
 	return nullptr;
 }
 
-IMonoObject *CScriptMethod::Invoke(IMonoObject *object, void **pParams, int numParams)
+mono::object CScriptMethod::Invoke(mono::object object, void **pParams, int numParams)
 {
 	MonoObject *pException = nullptr;
 	MonoObject *pResult = mono_runtime_invoke(m_pMonoMethod, object, pParams, &pException);
@@ -39,7 +39,7 @@ IMonoObject *CScriptMethod::Invoke(IMonoObject *object, void **pParams, int numP
 	if (pException)
 		CScriptObject::HandleException(pException);
 	else if (pResult)
-		return (IMonoObject *)pResult;
+		return (mono::object)pResult;
 
 	return nullptr;
 }

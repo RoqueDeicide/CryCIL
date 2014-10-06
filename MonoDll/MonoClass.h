@@ -32,9 +32,9 @@ public:
 
 	virtual IMonoAssembly *GetAssembly() { return m_pDeclaringAssembly; }
 
-	virtual IMonoObject *CreateInstance(IMonoArray *pConstructorParams = nullptr) override;
+	virtual mono::object CreateInstance(IMonoArray *pConstructorParams = nullptr) override;
 
-	IMonoObject *BoxObject(void *object, IMonoDomain *pDomain = nullptr) override;
+	mono::object BoxObject(void *object, IMonoDomain *pDomain = nullptr) override;
 
 	virtual void AddRef() override { ++m_refs; }
 
@@ -42,10 +42,10 @@ public:
 	virtual IMonoMethod *GetMethod(const char *name, int numParams, bool throwOnFail = true) override;
 	virtual int GetMethods(const char *name, int numParams, IMonoMethod ***pMethodsOut, int maxMethods, bool throwOnFail = true) override;
 
-	virtual IMonoObject *GetPropertyValue(IMonoObject *pObject, const char *propertyName, bool throwOnFail = true) override;
-	virtual void SetPropertyValue(IMonoObject *pObject, const char *propertyName, IMonoObject *newValue, bool throwOnFail = true) override;
-	virtual IMonoObject *GetFieldValue(IMonoObject *pObject, const char *fieldName, bool throwOnFail = true) override;
-	virtual void SetFieldValue(IMonoObject *pObject, const char *fieldName, IMonoObject *newValue, bool throwOnFail = true) override;
+	virtual mono::object GetPropertyValue(mono::object pObject, const char *propertyName, bool throwOnFail = true) override;
+	virtual void SetPropertyValue(mono::object pObject, const char *propertyName, mono::object newValue, bool throwOnFail = true) override;
+	virtual mono::object GetFieldValue(mono::object pObject, const char *fieldName, bool throwOnFail = true) override;
+	virtual void SetFieldValue(mono::object pObject, const char *fieldName, mono::object newValue, bool throwOnFail = true) override;
 
 	virtual bool ImplementsClass(const char *className, const char *nameSpace = nullptr) override;
 	virtual bool ImplementsInterface(const char *interfaceName, const char *nameSpace = nullptr, bool bSearchDerivedClasses = true) override;
@@ -59,7 +59,7 @@ public:
 	virtual EMonoAnyType GetType() override { return eMonoAnyType_Unknown; }
 	virtual MonoAnyValue GetAnyValue() override { return MonoAnyValue(); }
 
-	virtual IMonoObject *GetManagedObject() override { return CScriptObject::GetManagedObject(); }
+	virtual mono::object GetManagedObject() override { return CScriptObject::GetManagedObject(); }
 
 	virtual IMonoClass *GetClass() override { return this; }
 

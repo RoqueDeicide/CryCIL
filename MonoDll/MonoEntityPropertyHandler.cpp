@@ -12,7 +12,7 @@
 #include <IEntitySystem.h>
 
 CEntityPropertyHandler::CEntityPropertyHandler(SMonoEntityPropertyInfo *pProperties, int numProperties)
-	: m_pProperties(pProperties)
+: m_pProperties(pProperties)
 	, m_numProperties(numProperties)
 {}
 
@@ -114,7 +114,7 @@ const char *CEntityPropertyHandler::GetProperty(IEntity *pIEntity, int index) co
 	{
 		if (CMonoEntityExtension *pEntity = static_cast<CMonoEntityExtension *>(pGameObject->QueryExtension(pIEntity->GetClass()->GetName())))
 		{
-			if (IMonoObject *result = pEntity->ManagedWrapper->CallMethod("GetPropertyValue", m_pProperties[index].info.name))
+			if (mono::object result = pEntity->ManagedWrapper->CallMethod("GetPropertyValue", m_pProperties[index].info.name))
 				return ToCryString((mono::string)result);
 		}
 	}

@@ -49,7 +49,7 @@ void CScriptClass::Release(bool triggerGC)
 	}
 }
 
-IMonoObject *CScriptClass::CreateInstance(IMonoArray *pConstructorParams)
+mono::object CScriptClass::CreateInstance(IMonoArray *pConstructorParams)
 {
 	CScriptDomain *pDomain = static_cast<CScriptDomain *>(GetAssembly()->GetDomain());
 
@@ -58,12 +58,12 @@ IMonoObject *CScriptClass::CreateInstance(IMonoArray *pConstructorParams)
 	if (pConstructorParams)
 	{
 		if (IMonoMethod *pConstructor = GetMethod(".ctor", pConstructorParams))
-			pConstructor->InvokeArray((IMonoObject *)pInstance, pConstructorParams);
+			pConstructor->InvokeArray((mono::object)pInstance, pConstructorParams);
 	}
 	else
 		mono_runtime_object_init(m_pObject);
 
-	return (IMonoObject *)pInstance;
+	return (mono::object)pInstance;
 }
 
 IMonoMethod *CScriptClass::GetMethod(const char *name, IMonoArray *pArgs, bool throwOnFail)
@@ -109,7 +109,7 @@ IMonoMethod *CScriptClass::GetMethod(const char *name, IMonoArray *pArgs, bool t
 			{
 				pType = mono_signature_get_params(pSignature, &pIter);
 
-				if (IMonoObject *item = pArgs->GetItem(i))
+				if (mono::object item = pArgs->GetItem(i))
 				{
 					MonoClass *pItemClass = mono_object_get_class((MonoObject *)item);
 					MonoType *pItemType = mono_class_get_type(pItemClass);
@@ -245,7 +245,7 @@ int CScriptClass::GetMethods(const char *name, int numParams, IMonoMethod ***pMe
 	return i + 1;
 }
 
-IMonoObject *CScriptClass::GetPropertyValue(IMonoObject *object, const char *propertyName, bool throwOnFail)
+mono::object CScriptClass::GetPropertyValue(mono::object object, const char *propertyName, bool throwOnFail)
 {
 	MonoProperty *pProperty = GetMonoProperty(propertyName, false, true);
 	if (pProperty)
@@ -257,7 +257,7 @@ IMonoObject *CScriptClass::GetPropertyValue(IMonoObject *object, const char *pro
 		if (pException)
 			HandleException(pException);
 		else if (propertyValue)
-			return (IMonoObject *)propertyValue;
+			return (mono::object)propertyValue;
 	}
 	else if (throwOnFail)
 		GetMonoRunTime()->CoreLibrary->GetException("System", "MissingMemberException", "Failed to locate property %s in class %s", propertyName, GetName())->Throw();
@@ -265,7 +265,7 @@ IMonoObject *CScriptClass::GetPropertyValue(IMonoObject *object, const char *pro
 	return nullptr;
 }
 
-void CScriptClass::SetPropertyValue(IMonoObject *object, const char *propertyName, IMonoObject *newValue, bool throwOnFail)
+void CScriptClass::SetPropertyValue(mono::object object, const char *propertyName, mono::object newValue, bool throwOnFail)
 {
 	MonoProperty *pProperty = GetMonoProperty(propertyName, true);
 	if (pProperty)
@@ -279,7 +279,7 @@ void CScriptClass::SetPropertyValue(IMonoObject *object, const char *propertyNam
 		GetMonoRunTime()->CoreLibrary->GetException("System", "MissingMemberException", "Failed to locate property %s in class %s", propertyName, GetName())->Throw();
 }
 
-IMonoObject *CScriptClass::GetFieldValue(IMonoObject *object, const char *fieldName, bool throwOnFail)
+mono::object CScriptClass::GetFieldValue(mono::object object, const char *fieldName, bool throwOnFail)
 {
 	MonoClassField *pField = GetMonoField(fieldName);
 	if (pField)
@@ -289,7 +289,7 @@ IMonoObject *CScriptClass::GetFieldValue(IMonoObject *object, const char *fieldN
 		MonoObject *fieldValue = mono_field_get_value_object(pDomain->GetMonoDomain(), pField, (MonoObject *)object);
 
 		if (fieldValue)
-			return (IMonoObject *)fieldValue;
+			return (mono::object)fieldValue;
 	}
 	else if (throwOnFail)
 		GetMonoRunTime()->CoreLibrary->GetException("System", "MissingFieldException", "Failed to locate field %s in class %s", fieldName, GetName())->Throw();
@@ -297,7 +297,7 @@ IMonoObject *CScriptClass::GetFieldValue(IMonoObject *object, const char *fieldN
 	return nullptr;
 }
 
-void CScriptClass::SetFieldValue(IMonoObject *object, const char *fieldName, IMonoObject *newValue, bool throwOnFail)
+void CScriptClass::SetFieldValue(mono::object object, const char *fieldName, mono::object newValue, bool throwOnFail)
 {
 	MonoClassField *pField = GetMonoField(fieldName);
 	if (pField)
@@ -366,12 +366,12 @@ MonoClassField *CScriptClass::GetMonoField(const char *name)
 	return nullptr;
 }
 
-IMonoObject *CScriptClass::BoxObject(void *object, IMonoDomain *pDomain)
+mono::object CScriptClass::BoxObject(void *object, IMonoDomain *pDomain)
 {
 	if (pDomain == nullptr)
 		pDomain = GetMonoRunTime()->AppDomain;
 
-	return (IMonoObject *)mono_value_box(static_cast<CScriptDomain *>(pDomain)->GetMonoDomain(), (MonoClass *)m_pObject, object);
+	return (mono::object)mono_value_box(static_cast<CScriptDomain *>(pDomain)->GetMonoDomain(), (MonoClass *)m_pObject, object);
 }
 
 bool CScriptClass::ImplementsClass(const char *className, const char *nameSpace)

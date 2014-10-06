@@ -68,7 +68,7 @@ struct IMonoDomain
 	/// </summary>
 	virtual IMonoArray *CreateDynamicArray(IMonoClass *pElementClass = nullptr, int size = 0, bool allowGC = true) = 0;
 
-	virtual IMonoObject *BoxAnyValue(MonoAnyValue &value) = 0;
+	virtual mono::object BoxAnyValue(MonoAnyValue &value) = 0;
 
 	/// <summary>
 	/// Converts a C++ style character array to a managed string.

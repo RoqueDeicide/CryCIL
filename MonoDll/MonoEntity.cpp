@@ -186,8 +186,8 @@ void CMonoEntityExtension::SetPropertyValue(IEntityPropertyHandler::SPropertyInf
 ///////////////////////////////////////////////////
 // Entity RMI's
 ///////////////////////////////////////////////////
-CMonoEntityExtension::RMIParams::RMIParams(IMonoObject *_args, const char *funcName, EntityId target)
-	: methodName(funcName)
+CMonoEntityExtension::RMIParams::RMIParams(mono::object _args, const char *funcName, EntityId target)
+: methodName(funcName)
 	, targetId(target)
 	, args(_args)
 {}
@@ -199,7 +199,7 @@ void CMonoEntityExtension::RMIParams::SerializeWith(TSerialize ser)
 
 	if (this->args != nullptr)
 	{
-		pArgs = GetMonoRunTime()->ToArray(this->args);
+		pArgs = *args;
 		length = pArgs->GetSize();
 	}
 	else
@@ -216,7 +216,7 @@ void CMonoEntityExtension::RMIParams::SerializeWith(TSerialize ser)
 		{
 			for (int i = 0; i < length; i++)
 			{
-				IMonoObject *pItem = pArgs->GetItem(i);
+				IMonoObject *pItem = *pArgs->GetItem(i);
 				pItem->GetAnyValue().SerializeWith(ser);
 				SAFE_RELEASE(pItem);
 			}

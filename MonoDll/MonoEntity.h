@@ -58,7 +58,7 @@ struct SQueuedProperty
 };
 
 class CMonoEntityExtension
-	: public CGameObjectExtensionHelper < CMonoEntityExtension, IGameObjectExtension >
+	: public CGameObjectExtensionHelper<CMonoEntityExtension, IGameObjectExtension>
 {
 public:
 	CMonoEntityExtension();
@@ -91,11 +91,11 @@ public:
 	struct RMIParams
 	{
 		RMIParams() : args(NULL) {}
-		RMIParams(IMonoObject *_args, const char *funcName, EntityId target);
+		RMIParams(mono::object _args, const char *funcName, EntityId target);
 
 		void SerializeWith(TSerialize ser);
 
-		IMonoObject *args;
+		mono::object args;
 		string methodName;
 		EntityId targetId;
 	};
@@ -112,7 +112,7 @@ public:
 	__declspec(property(get=GetMonoObject)) IMonoObject *ManagedWrapper;
 
 protected:
-	IMonoObject *m_pManagedObject;
+	mono::object m_pManagedObject;
 
 	IAnimatedCharacter *m_pAnimatedCharacter;
 

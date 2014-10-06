@@ -202,24 +202,24 @@ IMonoArray *CScriptDomain::CreateDynamicArray(IMonoClass *pElementClass, int siz
 	return new CDynScriptArray(m_pDomain, pElementClass, size, allowGC);
 }
 
-IMonoObject *CScriptDomain::BoxAnyValue(MonoAnyValue &any)
+mono::object CScriptDomain::BoxAnyValue(MonoAnyValue &any)
 {
 	switch (any.type)
 	{
 	case eMonoAnyType_Boolean:
-		return (IMonoObject *)mono_value_box(m_pDomain, mono_get_boolean_class(), &any.b);
+		return (mono::object)mono_value_box(m_pDomain, mono_get_boolean_class(), &any.b);
 	case eMonoAnyType_Integer:
-		return (IMonoObject *)mono_value_box(m_pDomain, mono_get_int32_class(), &any.i);
+		return (mono::object)mono_value_box(m_pDomain, mono_get_int32_class(), &any.i);
 	case eMonoAnyType_UnsignedInteger:
-		return (IMonoObject *)mono_value_box(m_pDomain, mono_get_uint32_class(), &any.u);
+		return (mono::object)mono_value_box(m_pDomain, mono_get_uint32_class(), &any.u);
 	case eMonoAnyType_Short:
-		return (IMonoObject *)mono_value_box(m_pDomain, mono_get_int16_class(), &any.i);
+		return (mono::object)mono_value_box(m_pDomain, mono_get_int16_class(), &any.i);
 	case eMonoAnyType_UnsignedShort:
-		return (IMonoObject *)mono_value_box(m_pDomain, mono_get_uint16_class(), &any.u);
+		return (mono::object)mono_value_box(m_pDomain, mono_get_uint16_class(), &any.u);
 	case eMonoAnyType_Float:
-		return (IMonoObject *)mono_value_box(m_pDomain, mono_get_single_class(), &any.f);
+		return (mono::object)mono_value_box(m_pDomain, mono_get_single_class(), &any.f);
 	case eMonoAnyType_String:
-		return (IMonoObject *)CreateMonoString(any.str);
+		return (mono::object)CreateMonoString(any.str);
 	case eMonoAnyType_EntityId:
 	{
 		IMonoClass *pEntityIdClass = GetMonoRunTime()->CryBrary->GetClass("EntityId");
