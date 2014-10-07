@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
+using CryEngine.Animations;
 using CryEngine.Entities;
 using CryEngine.Initialization;
 using CryEngine.Logic.Entities;

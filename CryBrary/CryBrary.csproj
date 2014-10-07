@@ -308,7 +308,7 @@
     <Compile Include="Native\MeshInterop.cs" />
     <Compile Include="Native\StaticObjectInterop.cs" />
     <Compile Include="StaticObjects\StaticObject.cs" />
-    <Compile Include="Entities\AnimationEvent.cs" />
+    <Compile Include="Animations\AnimationEvent.cs" />
     <Compile Include="Physics\Actions\Impulse.cs" />
     <Compile Include="Physics\BreakageParameters.cs" />
     <Compile Include="Physics\ColliderInfo.cs" />
@@ -339,7 +339,7 @@
     <Compile Include="RunTime\Serialization\SerializationTarget.cs" />
     <Compile Include="RunTime\Serialization\SerializationType.cs" />
     <Compile Include="ProjectSettings.cs" />
-    <Compile Include="Entities\AnimationFlags.cs" />
+    <Compile Include="Animations\AnimationFlags.cs" />
     <Compile Include="Entities\EntityLight.cs" />
     <Compile Include="Logic\Actors\NativeActor.cs" />
     <Compile Include="Native\Engine3DInterop.cs" />

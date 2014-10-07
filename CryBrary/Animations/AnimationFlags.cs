@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CryEngine.Entities
+namespace CryEngine.Animations
 {
 	/// <summary>
 	/// Flags used when playing animations.

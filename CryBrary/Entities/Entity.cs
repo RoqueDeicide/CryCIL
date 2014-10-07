@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
+using CryEngine.Animations;
 using CryEngine.Annotations;
 using CryEngine.Logic.Entities;
 using CryEngine.Mathematics;

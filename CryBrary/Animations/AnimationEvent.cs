@@ -1,19 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using CryEngine.Mathematics;
 
-namespace CryEngine
+namespace CryEngine.Animations
 {
 	public struct AnimationEvent
 	{
 		public float Time;
-		public UInt32 AnimNumberInQueue;
+		public uint AnimNumberInQueue;
 		public float AnimPriority;
 		public string AnimPathName;
 		public int AnimationIdentifier;
-		public UInt32 EventNameLowercaseCrc32;
+		public uint EventNameLowercaseCrc32;
 		public string EventName;
 		/// <summary>
 		/// Meaning depends on event - sound: sound path, effect: effect name

@@ -1,4 +1,5 @@
 ﻿using System;
+using CryEngine.Animations;
 using CryEngine.Annotations;
 using CryEngine.Entities;
 using CryEngine.Logic.Entities;
