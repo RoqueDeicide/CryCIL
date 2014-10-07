@@ -71,10 +71,7 @@
 				return false;
 
 			var cvar = obj as CVar;
-			if (cvar == null)
-				return false;
-
-			return this.Name.Equals(cvar.Name);
+			return cvar != null && this.Name.Equals(cvar.Name);
 		}
 
 		public override int GetHashCode()
