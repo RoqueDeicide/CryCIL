@@ -9,6 +9,8 @@ using System.Runtime.Serialization;
 using System.Runtime.InteropServices;
 using CryEngine.Annotations;
 using CryEngine.Async;
+using CryEngine.Console.Commands;
+using CryEngine.Console.Variables;
 using CryEngine.Entities;
 using CryEngine.Extensions;
 using CryEngine.Logic.Actors;

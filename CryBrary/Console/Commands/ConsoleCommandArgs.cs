@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace CryEngine
+namespace CryEngine.Console.Commands
 {
 	public class ConsoleCommandArgs : EventArgs
 	{
 		public ConsoleCommandArgs(string name, string[] args, string fullCommandLine)
 		{
-			Name = name;
-			Args = args;
-			FullCommandLine = fullCommandLine;
+			this.Name = name;
+			this.Args = args;
+			this.FullCommandLine = fullCommandLine;
 		}
 
 		public string Name { get; private set; }

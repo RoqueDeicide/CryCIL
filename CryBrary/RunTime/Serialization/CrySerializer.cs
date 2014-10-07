@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
+using CryEngine.Console.Variables;
 using CryEngine.Entities;
 using CryEngine.Extensions;
 using CryEngine.Logic.Entities;

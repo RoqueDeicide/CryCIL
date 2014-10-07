@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using CryEngine.Annotations;
+using CryEngine.Console.Commands;
 using CryEngine.RunTime.Testing.Reports;
 
 namespace CryEngine.RunTime.Testing

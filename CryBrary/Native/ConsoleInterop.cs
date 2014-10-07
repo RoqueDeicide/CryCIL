@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using CryEngine.Console.Variables;
 
 namespace CryEngine.Native
 {

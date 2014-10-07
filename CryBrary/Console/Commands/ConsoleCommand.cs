@@ -1,10 +1,7 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using CryEngine.Console.Variables;
 
-using CryEngine.Native;
-
-namespace CryEngine
+namespace CryEngine.Console.Commands
 {
 	public delegate void ConsoleCommandDelegate(ConsoleCommandArgs e);
 

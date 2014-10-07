@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace CryEngine
+namespace CryEngine.Console.Variables
 {
 	[Flags]
 	public enum CVarFlags

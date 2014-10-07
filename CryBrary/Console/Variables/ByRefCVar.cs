@@ -1,6 +1,4 @@
-﻿using CryEngine.Native;
-
-namespace CryEngine
+﻿namespace CryEngine.Console.Variables
 {
 	/// <summary>
 	/// CVar pointing to a managed value by reference.
@@ -9,7 +7,7 @@ namespace CryEngine
 	{
 		internal ByRefCVar(string name)
 		{
-			Name = name;
+			this.Name = name;
 		}
 	}
 }

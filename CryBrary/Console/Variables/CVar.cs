@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using CryEngine.Native;
 
-namespace CryEngine
+namespace CryEngine.Console.Variables
 {
 	public abstract class CVar
 	{

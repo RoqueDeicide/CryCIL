@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-
+using CryEngine.Console.Variables;
 using CryEngine.Initialization;
 using CryEngine.Native;
 

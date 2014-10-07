@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace CryEngine
+namespace CryEngine.Console.Variables
 {
 	/// <summary>
 	/// CVar created using CVarAttribute, targeting a field.
@@ -11,31 +11,31 @@ namespace CryEngine
 
 		public StaticCVarField(CVarAttribute attribute, FieldInfo fieldInfo)
 		{
-			Name = attribute.Name;
-			Flags = attribute.Flags;
-			Help = attribute.Help;
+			this.Name = attribute.Name;
+			this.Flags = attribute.Flags;
+			this.Help = attribute.Help;
 
 			fieldInfo.SetValue(null, attribute.DefaultValue);
 
-			field = fieldInfo;
+			this.field = fieldInfo;
 		}
 
 		public override string String
 		{
-			get { return field.GetValue(null) as string; }
-			set { field.SetValue(null, value); }
+			get { return this.field.GetValue(null) as string; }
+			set { this.field.SetValue(null, value); }
 		}
 
 		public override float FVal
 		{
-			get { return (float)field.GetValue(null); }
-			set { field.SetValue(null, value); }
+			get { return (float)this.field.GetValue(null); }
+			set { this.field.SetValue(null, value); }
 		}
 
 		public override int IVal
 		{
-			get { return (int)field.GetValue(null); }
-			set { field.SetValue(null, value); }
+			get { return (int)this.field.GetValue(null); }
+			set { this.field.SetValue(null, value); }
 		}
 	}
 }
