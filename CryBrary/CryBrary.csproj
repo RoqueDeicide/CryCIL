@@ -372,7 +372,6 @@
     <Compile Include="Engine\Terrain.cs" />
     <Compile Include="Logic\Entities\EntityId.cs" />
     <Compile Include="Entities\NativeEntity.cs" />
-    <Compile Include="Engine\Lua\ScriptTable.cs" />
     <Compile Include="RunTime\Serialization\CrySerializer.cs" />
     <Compile Include="Mathematics\Graphics\ColorSingle.cs" />
     <Compile Include="RunTime\Serialization\SerializedObjectReference.cs" />

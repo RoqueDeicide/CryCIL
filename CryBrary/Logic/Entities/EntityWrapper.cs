@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using CryEngine.Entities;
-using CryEngine.Lua;
 using CryEngine.Mathematics;
 using CryEngine.Physics;
 using CryEngine.RunTime.Registration;
@@ -150,19 +149,6 @@ namespace CryEngine.Logic.Entities
 				this.AssertObjectValidity();
 
 				return Camera.TryGet(Native.EntityInterop.GetCameraProxy(this.Handle));
-			}
-		}
-		/// <summary>
-		/// Gets the object that provides access to the Lua script of this entity if it
-		/// exists.
-		/// </summary>
-		public ScriptTable LuaScript
-		{
-			get
-			{
-				this.AssertObjectValidity();
-
-				return ScriptTable.Get(this.Handle);
 			}
 		}
 		/// <summary>
