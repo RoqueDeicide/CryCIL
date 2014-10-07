@@ -1,12 +1,6 @@
 ﻿//-----------------------------------------------------------------------------
 //
-// Copyright (C) Microsoft Corporation. All Rights Reserved.
-//
-//
-//
-//
-//
-//
+// Copyright (C) Microsoft Corporation.  All Rights Reserved.
 //
 //-----------------------------------------------------------------------------
 using System;
@@ -17,9 +11,7 @@ using Microsoft.Cci.Pdb;
 using System.Text;
 using System.Diagnostics.SymbolStore;
 
-// ReSharper disable CheckNamespace
 namespace Microsoft.Cci
-// ReSharper restore CheckNamespace
 {
 	internal sealed class UsedNamespace : IUsedNamespace
 	{

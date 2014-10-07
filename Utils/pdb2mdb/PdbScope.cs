@@ -1,12 +1,6 @@
 //-----------------------------------------------------------------------------
 //
-// Copyright (C) Microsoft Corporation. All Rights Reserved.
-//
-//
-//
-//
-//
-//
+// Copyright (C) Microsoft Corporation.  All Rights Reserved.
 //
 //-----------------------------------------------------------------------------
 using System;
@@ -15,20 +9,20 @@ namespace Microsoft.Cci.Pdb
 {
 	internal class PdbScope
 	{
-		internal PdbConstant[] constants;
-		internal PdbSlot[] slots;
-		internal PdbScope[] scopes;
-		internal string[] usedNamespaces;
+		internal PdbConstant[] Constants;
+		internal PdbSlot[] Slots;
+		internal PdbScope[] Scopes;
+		internal string[] UsedNamespaces;
 
-		internal uint segment;
-		internal uint address;
-		internal uint length;
+		internal uint Segment;
+		internal uint Address;
+		internal uint Length;
 
 		internal PdbScope(BlockSym32 block, BitAccess bits, out uint typind)
 		{
-			this.segment = block.seg;
-			this.address = block.off;
-			this.length = block.len;
+			this.Segment = block.seg;
+			this.Address = block.off;
+			this.Length = block.len;
 			typind = 0;
 
 			int constantCount;
@@ -36,10 +30,10 @@ namespace Microsoft.Cci.Pdb
 			int slotCount;
 			int namespaceCount;
 			PdbFunction.CountScopesAndSlots(bits, block.end, out constantCount, out scopeCount, out slotCount, out namespaceCount);
-			constants = new PdbConstant[constantCount];
-			scopes = new PdbScope[scopeCount];
-			slots = new PdbSlot[slotCount];
-			usedNamespaces = new string[namespaceCount];
+			this.Constants = new PdbConstant[constantCount];
+			this.Scopes = new PdbScope[scopeCount];
+			this.Slots = new PdbSlot[slotCount];
+			this.UsedNamespaces = new string[namespaceCount];
 			int constant = 0;
 			int scope = 0;
 			int slot = 0;
@@ -70,17 +64,17 @@ namespace Microsoft.Cci.Pdb
 							bits.SkipCString(out sub.name);
 
 							bits.Position = stop;
-							scopes[scope++] = new PdbScope(sub, bits, out typind);
+							this.Scopes[scope++] = new PdbScope(sub, bits, out typind);
 							break;
 						}
 
 					case SYM.S_MANSLOT:
-						slots[slot++] = new PdbSlot(bits, out typind);
+						this.Slots[slot++] = new PdbSlot(bits, out typind);
 						bits.Position = stop;
 						break;
 
 					case SYM.S_UNAMESPACE:
-						bits.ReadCString(out usedNamespaces[usedNs++]);
+						bits.ReadCString(out this.UsedNamespaces[usedNs++]);
 						bits.Position = stop;
 						break;
 
@@ -89,7 +83,7 @@ namespace Microsoft.Cci.Pdb
 						break;
 
 					case SYM.S_MANCONSTANT:
-						constants[constant++] = new PdbConstant(bits);
+						this.Constants[constant++] = new PdbConstant(bits);
 						bits.Position = stop;
 						break;
 

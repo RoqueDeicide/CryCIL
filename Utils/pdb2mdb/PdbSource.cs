@@ -1,12 +1,6 @@
 //-----------------------------------------------------------------------------
 //
-// Copyright (C) Microsoft Corporation. All Rights Reserved.
-//
-//
-//
-//
-//
-//
+// Copyright (C) Microsoft Corporation.  All Rights Reserved.
 //
 //-----------------------------------------------------------------------------
 using System;
@@ -15,19 +9,19 @@ namespace Microsoft.Cci.Pdb
 {
 	internal class PdbSource
 	{
-		internal uint index;
-		internal string name;
-		internal Guid doctype;
-		internal Guid language;
-		internal Guid vendor;
+		internal uint Index;
+		internal string Name;
+		internal Guid Doctype;
+		internal Guid Language;
+		internal Guid Vendor;
 
 		internal PdbSource(uint index, string name, Guid doctype, Guid language, Guid vendor)
 		{
-			this.index = index;
-			this.name = name;
-			this.doctype = doctype;
-			this.language = language;
-			this.vendor = vendor;
+			this.Index = index;
+			this.Name = name;
+			this.Doctype = doctype;
+			this.Language = language;
+			this.Vendor = vendor;
 		}
 	}
 }

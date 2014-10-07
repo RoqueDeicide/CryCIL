@@ -1,12 +1,6 @@
 //-----------------------------------------------------------------------------
 //
-// Copyright (C) Microsoft Corporation. All Rights Reserved.
-//
-//
-//
-//
-//
-//
+// Copyright (C) Microsoft Corporation.  All Rights Reserved.
 //
 //-----------------------------------------------------------------------------
 using System;
@@ -99,23 +93,23 @@ namespace Microsoft.Cci.Pdb
 
 		internal void ReadInt32(out int value)
 		{
-			value = ((buffer[offset + 0] & 0xFF) |
-								(buffer[offset + 1] << 8) |
-								(buffer[offset + 2] << 16) |
-								(buffer[offset + 3] << 24));
+			value = (this.buffer[this.offset + 0] & 0xFF) |
+					(this.buffer[this.offset + 1] << 8) |
+					(this.buffer[this.offset + 2] << 16) |
+					(this.buffer[this.offset + 3] << 24);
 			offset += 4;
 		}
 
 		internal void ReadInt64(out long value)
 		{
-			value = ((buffer[offset + 0] & 0xFF) |
-								 (buffer[offset + 1] << 8) |
-								 (buffer[offset + 2] << 16) |
-								 (buffer[offset + 3] << 24) |
-								 (buffer[offset + 4] << 32) |
-								 (buffer[offset + 5] << 40) |
-								 (buffer[offset + 6] << 48) |
-								 (buffer[offset + 7] << 56));
+			value = (this.buffer[this.offset + 0] & 0xFF) |
+					(this.buffer[this.offset + 1] << 8) |
+					(this.buffer[this.offset + 2] << 16) |
+					(this.buffer[this.offset + 3] << 24) |
+					(this.buffer[this.offset + 4] << 32) |
+					(this.buffer[this.offset + 5] << 40) |
+					(this.buffer[this.offset + 6] << 48) |
+					(this.buffer[this.offset + 7] << 56);
 			offset += 8;
 		}
 

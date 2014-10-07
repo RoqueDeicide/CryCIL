@@ -1,16 +1,8 @@
-﻿//
-// Driver.cs
-//
-//
-//
-//
+﻿// Driver.cs
+// 
 // Author: Jb Evain (jbevain@novell.com)
-//
+// 
 // (C) 2009 Novell, Inc. (http://www.novell.com)
-//
-//
-//
-//
 
 using System.Collections.Generic;
 using System.Reflection;
@@ -42,7 +34,7 @@ namespace CryEngine
 		/// Logs a message to the console
 		/// </summary>
 		/// <param name="format"></param>
-		/// <param name="args"></param>
+		/// <param name="args">  </param>
 		public static void Log(string format, params object[] args)
 		{
 			Log(string.Format(format, args));
@@ -52,7 +44,7 @@ namespace CryEngine
 		/// Logs a message to the console, regardless of log_verbosity settings
 		/// </summary>
 		/// <param name="format"></param>
-		/// <param name="args"></param>
+		/// <param name="args">  </param>
 		public static void LogAlways(string format, params object[] args)
 		{
 			LogAlways(string.Format(format, args));
@@ -74,7 +66,7 @@ namespace CryEngine
 		/// Outputs a warning message
 		/// </summary>
 		/// <param name="format"></param>
-		/// <param name="args"></param>
+		/// <param name="args">  </param>
 		public static void Warning(string format, params object[] args)
 		{
 			Warning(string.Format(format, args));
@@ -102,18 +94,14 @@ namespace Pdb2Mdb
 				converter.ConvertFunction(function);
 
 			mdb.WriteSymbolFile(assembly.MainModule.Mvid);
-
-// ReSharper disable RedundantAssignment
-			converter = null;
-// ReSharper restore RedundantAssignment
 		}
 
 		private void ConvertFunction(PdbFunction function)
 		{
-			if (function.lines == null)
+			if (function.Lines == null)
 				return;
 
-			var method = new SourceMethod { Name = function.name, Token = (int)function.token };
+			var method = new SourceMethod { Name = function.Name, Token = (int)function.Token };
 
 			var file = GetSourceFile(mdb, function);
 
@@ -128,44 +116,44 @@ namespace Pdb2Mdb
 
 		private void ConvertSequencePoints(PdbFunction function, SourceFile file, SourceMethodBuilder builder)
 		{
-			foreach (var line in function.lines.SelectMany(lines => lines.lines))
+			foreach (var line in function.Lines.SelectMany(lines => lines.Lines))
 				builder.MarkSequencePoint(
-					(int)line.offset,
+					(int)line.Offset,
 					file.CompilationUnit.SourceFile,
-					(int)line.lineBegin,
-					line.colBegin, line.lineBegin == 0xfeefee);
+					(int)line.LineBegin,
+					line.ColBegin, line.LineBegin == 0xfeefee);
 		}
 
 		private void ConvertVariables(PdbFunction function)
 		{
-			foreach (var scope in function.scopes)
+			foreach (var scope in function.Scopes)
 				ConvertScope(scope);
 		}
 
 		private void ConvertScope(PdbScope scope)
 		{
-			ConvertSlots(scope.slots);
+			ConvertSlots(scope.Slots);
 
-			foreach (var s in scope.scopes)
+			foreach (var s in scope.Scopes)
 				ConvertScope(s);
 		}
 
 		private void ConvertSlots(IEnumerable<PdbSlot> slots)
 		{
 			foreach (var slot in slots)
-				mdb.DefineLocalVariable((int)slot.slot, slot.name);
+				mdb.DefineLocalVariable((int)slot.Slot, slot.Name);
 		}
 
-		private SourceFile GetSourceFile(MonoSymbolWriter mdbPar, PdbFunction function)
+		private SourceFile GetSourceFile(MonoSymbolWriter mdbArg, PdbFunction function)
 		{
-			var name = (from l in function.lines where l.file != null select l.file.name).First();
+			var name = (from l in function.Lines where l.File != null select l.File.Name).First();
 
 			SourceFile file;
 			if (files.TryGetValue(name, out file))
 				return file;
 
-			var entry = mdbPar.DefineDocument(name);
-			var unit = mdbPar.DefineCompilationUnit(entry);
+			var entry = mdbArg.DefineDocument(name);
+			var unit = mdbArg.DefineCompilationUnit(entry);
 
 			file = new SourceFile(unit, entry);
 			files.Add(name, file);
@@ -223,14 +211,6 @@ public static class Driver
 			{
 				Console.LogException(ex);
 			}
-
-// ReSharper disable RedundantAssignment
-			assemblyDefinition = null;
-// ReSharper restore RedundantAssignment
 		}
-
-// ReSharper disable RedundantAssignment
-		pdb = null;
-// ReSharper restore RedundantAssignment
 	}
 }

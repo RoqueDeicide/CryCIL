@@ -1,12 +1,6 @@
 //-----------------------------------------------------------------------------
 //
-// Copyright (C) Microsoft Corporation. All Rights Reserved.
-//
-//
-//
-//
-//
-//
+// Copyright (C) Microsoft Corporation.  All Rights Reserved.
 //
 //-----------------------------------------------------------------------------
 using System;
@@ -49,7 +43,7 @@ namespace Microsoft.Cci.Pdb
 			words[word] &= ~GetBit(index);
 		}
 
-		private static uint GetBit(int index)
+		private uint GetBit(int index)
 		{
 			return ((uint)1 << (index % 32));
 		}

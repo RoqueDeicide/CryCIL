@@ -1,12 +1,6 @@
 //-----------------------------------------------------------------------------
 //
-// Copyright (C) Microsoft Corporation. All Rights Reserved.
-//
-//
-//
-//
-//
-//
+// Copyright (C) Microsoft Corporation.  All Rights Reserved.
 //
 //-----------------------------------------------------------------------------
 using System;
@@ -17,15 +11,15 @@ namespace Microsoft.Cci.Pdb
 	{
 		internal MsfDirectory(PdbReader reader, PdbFileHeader head, BitAccess bits)
 		{
-			bits.MinCapacity(head.directorySize);
-			int pages = reader.PagesFromSize(head.directorySize);
+			bits.MinCapacity(head.DirectorySize);
+			int pages = reader.PagesFromSize(head.DirectorySize);
 
 			// 0. .n in page of directory pages.
-			reader.Seek(head.directoryRoot, 0);
-			bits.FillBuffer(reader.reader, pages * 4);
+			reader.Seek(head.DirectoryRoot, 0);
+			bits.FillBuffer(reader.Reader, pages * 4);
 
-			DataStream stream = new DataStream(head.directorySize, bits, pages);
-			bits.MinCapacity(head.directorySize);
+			DataStream stream = new DataStream(head.DirectorySize, bits, pages);
+			bits.MinCapacity(head.DirectorySize);
 			stream.Read(reader, bits);
 
 			// 0. .3 in directory pages

@@ -1,32 +1,26 @@
 //-----------------------------------------------------------------------------
 //
-// Copyright (C) Microsoft Corporation. All Rights Reserved.
-//
-//
-//
-//
-//
-//
+// Copyright (C) Microsoft Corporation.  All Rights Reserved.
 //
 //-----------------------------------------------------------------------------
 //
-// File: CvInfo.cs
+//  File:   CvInfo.cs
 //
-// Generic CodeView information definitions
+//  Generic CodeView information definitions
 //
-// Structures, constants, etc. for accessing and interpreting CodeView information.
+//  Structures, constants, etc. for accessing and interpreting
+//  CodeView information.
 //
-// The master copy of this file resides in the langapi project (in C++). All Microsoft projects are
-// required to use the master copy without modification. Modification of the master version or a
-// copy without consultation with all parties concerned is extremely risky.
+//  The master copy of this file resides in the langapi project (in C++).
+//  All Microsoft projects are required to use the master copy without
+//  modification.  Modification of the master version or a copy
+//  without consultation with all parties concerned is extremely
+//  risky.
 //
-// When this file is modified, the corresponding documentation file omfdeb.doc in the langapi
-// project must be updated.
+//  When this file is modified, the corresponding documentation file
+//  omfdeb.doc in the langapi project must be updated.
 //
-// This is a read-only copy of the C++ file converted to C#.
-//
-//
-//
+//  This is a read-only copy of the C++ file converted to C#.
 //
 using System;
 
@@ -55,29 +49,22 @@ namespace Microsoft.Cci.Pdb
 		RESERVERD = 5,    // All signatures from 5 to 64K are reserved
 	};
 
-	// CodeView Symbol and Type OMF type information is broken up into two ranges. Type indices less
-	// than 0x1000 describe type information that is frequently used. Type indices above 0x1000 are
-	// used to describe more complex features such as functions, arrays and structures.
-	//
-	//
-	//
-	//
+	// CodeView Symbol and Type OMF type information is broken up into two ranges. Type
+	// indices less than 0x1000 describe type information that is frequently used. Type
+	// indices above 0x1000 are used to describe more complex features such as functions,
+	// arrays and structures.
 
-	// Primitive types have predefined meaning that is encoded in the values of the various bit
-	// fields in the value.
-	//
+	// Primitive types have predefined meaning that is encoded in the values of the
+	// various bit fields in the value.
+	// 
 	// A CodeView primitive type is defined as:
-	//
+	// 
 	// 1 1 1 089 7654 3 210 r mode type r sub
-	//
-	// Where mode is the pointer mode type is a type indicator sub is a subtype enumeration r is a
-	// reserved field
-	//
+	// 
+	// Where mode is the pointer mode type is a type indicator sub is a subtype
+	// enumeration r is a reserved field
+	// 
 	// See Microsoft Symbol and Type OMF (Version 4.0) for more information.
-	//
-	//
-	//
-	//
 
 	// pointer mode enumeration values
 
@@ -252,8 +239,8 @@ namespace Microsoft.Cci.Pdb
 		}
 	}
 
-	// selected values for type_index - for a more complete definition, see Microsoft Symbol and
-	// Type OMF document
+	// selected values for type_index - for a more complete definition, see Microsoft
+	// Symbol and Type OMF document
 
 	// Special Types
 
@@ -456,23 +443,21 @@ namespace Microsoft.Cci.Pdb
 		T_64PBOOL64 = 0x0633,   // 64 bit pointer to 64 bit boolean
 	};
 
-	// No leaf index can have a value of 0x0000. The leaf indices are separated into ranges
-	// depending upon the use of the type record. The second range is for the type records that are
-	// directly referenced in symbols. The first range is for type records that are not referenced
-	// by symbols but instead are referenced by other type records. All type records must have a
-	// starting leaf index in these first two ranges. The third range of leaf indices are used to
-	// build up complex lists such as the field list of a class type record. No type record can
-	// begin with one of the leaf indices. The fourth ranges of type indices are used to represent
-	// numeric data in a symbol or type record. These leaf indices are greater than 0x8000. At the
-	// point that type or symbol processor is expecting a numeric field, the next two bytes in the
-	// type record are examined. If the value is less than 0x8000, then the two bytes contain the
-	// numeric value. If the value is greater than 0x8000, then the data follows the leaf index in a
-	// format specified by the leaf index. The final range of leaf indices are used to force
-	// alignment of subfields within a complex type record..
-	//
-	//
-	//
-	//
+	// No leaf index can have a value of 0x0000. The leaf indices are separated into
+	// ranges depending upon the use of the type record. The second range is for the type
+	// records that are directly referenced in symbols. The first range is for type
+	// records that are not referenced by symbols but instead are referenced by other type
+	// records. All type records must have a starting leaf index in these first two
+	// ranges. The third range of leaf indices are used to build up complex lists such as
+	// the field list of a class type record. No type record can begin with one of the
+	// leaf indices. The fourth ranges of type indices are used to represent numeric data
+	// in a symbol or type record. These leaf indices are greater than 0x8000. At the
+	// point that type or symbol processor is expecting a numeric field, the next two
+	// bytes in the type record are examined. If the value is less than 0x8000, then the
+	// two bytes contain the numeric value. If the value is greater than 0x8000, then the
+	// data follows the leaf index in a format specified by the leaf index. The final
+	// range of leaf indices are used to force alignment of subfields within a complex
+	// type record..
 
 	internal enum LEAF
 	{
@@ -494,10 +479,6 @@ namespace Microsoft.Cci.Pdb
 		LF_ENUMERATE_ST = 0x0403,
 
 		// 32-bit type index versions of leaves, all have the 0x1000 bit set
-		//
-		//
-		//
-		//
 		LF_TI16_MAX = 0x1000,
 
 		LF_MODIFIER = 0x1001,
@@ -748,11 +729,11 @@ namespace Microsoft.Cci.Pdb
 		// sizeof(ushort)); }
 	};          // general types record
 
-	// memory representation of pointer to member. These representations are indexed by the
-	// enumeration above in the LF_POINTER record
+	// memory representation of pointer to member. These representations are indexed by
+	// the enumeration above in the LF_POINTER record
 
-	// representation of a 32 bit pointer to data for a class with or without virtual functions and
-	// no virtual bases
+	// representation of a 32 bit pointer to data for a class with or without virtual
+	// functions and no virtual bases
 
 	internal struct CV_PDMR32_NVVFCN
 	{
@@ -769,16 +750,16 @@ namespace Microsoft.Cci.Pdb
 		// NULL = (,,0xffffffff)
 	};
 
-	// representation of a 32 bit pointer to member function for a class with no virtual bases and a
-	// single address point
+	// representation of a 32 bit pointer to member function for a class with no virtual
+	// bases and a single address point
 
 	internal struct CV_PMFR32_NVSA
 	{
 		internal uint off;        // near address of function (NULL = 0L)
 	};
 
-	// representation of a 32 bit pointer to member function for a class with no virtual bases and
-	// multiple address points
+	// representation of a 32 bit pointer to member function for a class with no virtual
+	// bases and multiple address points
 
 	internal struct CV_PMFR32_NVMA
 	{
@@ -786,7 +767,8 @@ namespace Microsoft.Cci.Pdb
 		internal int disp;
 	};
 
-	// representation of a 32 bit pointer to member function for a class with virtual bases
+	// representation of a 32 bit pointer to member function for a class with virtual
+	// bases
 
 	internal struct CV_PMFR32_VBASE
 	{
@@ -798,23 +780,18 @@ namespace Microsoft.Cci.Pdb
 
 	//////////////////////////////////////////////////////////////////////////////
 	//
-	// The following type records are basically variant records of the above structure. The "ushort
-	// leaf" of the above structure and the "ushort leaf" of the following type definitions are the
-	// same symbol.
-	//
-	//
-	//
+	//  The following type records are basically variant records of the
+	//  above structure.  The "ushort leaf" of the above structure and
+	//  the "ushort leaf" of the following type definitions are the same
+	//  symbol.
 	//
 
-	// Notes on alignment Alignment of the fields in most of the type records is done on the basis
-	// of the TYPTYPE record base. That is why in most of the lf* records that the type is located
-	// on what appears to be a offset mod 4 == 2 boundary. The exception to this rule are those
-	// records that are in a list (lfFieldList, lfMethodList), which are aligned to their own bases
-	// since they don't have the length field
-	//
-	//
-	//
-	//
+	// Notes on alignment Alignment of the fields in most of the type records is done on
+	// the basis of the TYPTYPE record base. That is why in most of the lf* records that
+	// the type is located on what appears to be a offset mod 4 == 2 boundary. The
+	// exception to this rule are those records that are in a list (lfFieldList,
+	// lfMethodList), which are aligned to their own bases since they don't have the
+	// length field
 
 	// Type record for LF_MODIFIER
 
@@ -1028,7 +1005,8 @@ namespace Microsoft.Cci.Pdb
 		internal string name;       // length prefixed name of included type file
 	};
 
-	// type record describing end of precompiled types that can be included by another file
+	// type record describing end of precompiled types that can be included by another
+	// file
 
 	internal struct LeafEndPreComp
 	{
@@ -1085,7 +1063,8 @@ namespace Microsoft.Cci.Pdb
 		internal string name;       // length prefixed name of PDB
 	};
 
-	// description of type records that can be referenced from type records referenced by symbols
+	// description of type records that can be referenced from type records referenced by
+	// symbols
 
 	// type record for skip record
 
@@ -1123,8 +1102,9 @@ namespace Microsoft.Cci.Pdb
 		internal byte[] expr;       // length prefixed expression string
 	};
 
-	// list leaf This list should no longer be used because the utilities cannot verify the contents
-	// of the list without knowing what type of list it is. New specific leaf indices should be used instead.
+	// list leaf This list should no longer be used because the utilities cannot verify
+	// the contents of the list without knowing what type of list it is. New specific leaf
+	// indices should be used instead.
 
 	internal struct LeafList
 	{
@@ -1132,7 +1112,8 @@ namespace Microsoft.Cci.Pdb
 		internal byte[] data;       // data format specified by indexing type
 	};
 
-	// field list leaf This is the header leaf for a complex list of class and structure subfields.
+	// field list leaf This is the header leaf for a complex list of class and structure
+	// subfields.
 
 	internal struct LeafFieldList
 	{
@@ -1185,9 +1166,9 @@ namespace Microsoft.Cci.Pdb
 		internal uint rank;       // number of dimensions
 		internal uint typ;        // (type index) type of index
 		internal uint[] dim;        // (type index) array of type indices for either
-		// variable upper bound or variable lower/upper bound. The count of type indices is rank or
-		// rank*2 depending on whether it is LFDIMVARU or LF_DIMVARLU. The referenced types must be
-		// LF_REFSYM or T_VOID
+		// variable upper bound or variable lower/upper bound. The count of type indices
+		// is rank or rank*2 depending on whether it is LFDIMVARU or LF_DIMVARLU. The
+		// referenced types must be LF_REFSYM or T_VOID
 	};
 
 	// type record for referenced symbol
@@ -1199,14 +1180,10 @@ namespace Microsoft.Cci.Pdb
 		// (including length)
 	};
 
-	// the following are numeric leaves. They are used to indicate the size of the following
-	// variable length data. When the numeric data is a single byte less than 0x8000, then the data
-	// is output directly. If the data is more the 0x8000 or is a negative value, then the data is
-	// preceeded by the proper index.
-	//
-	//
-	//
-	//
+	// the following are numeric leaves. They are used to indicate the size of the
+	// following variable length data. When the numeric data is a single byte less than
+	// 0x8000, then the data is output directly. If the data is more the 0x8000 or is a
+	// negative value, then the data is preceeded by the proper index.
 
 	// signed character leaf
 
@@ -1362,8 +1339,8 @@ namespace Microsoft.Cci.Pdb
 		internal byte[] value;      // value
 	};
 
-	// index leaf - contains type index of another leaf a major use of this leaf is to allow the
-	// compilers to emit a long complex list (LF_FIELD) in smaller pieces.
+	// index leaf - contains type index of another leaf a major use of this leaf is to
+	// allow the compilers to emit a long complex list (LF_FIELD) in smaller pieces.
 
 	internal struct LeafIndex
 	{
@@ -1494,8 +1471,8 @@ namespace Microsoft.Cci.Pdb
 		internal string name;       // length prefixed type name
 	};
 
-	// type record for nested (scoped) type definition, with attributes new records for vC v5.0, no
-	// need to have 16-bit ti versions.
+	// type record for nested (scoped) type definition, with attributes new records for vC
+	// v5.0, no need to have 16-bit ti versions.
 
 	internal struct LeafNestTypeEx
 	{
@@ -1553,7 +1530,8 @@ namespace Microsoft.Cci.Pdb
 		S_FRAMEPROC = 0x1012,  // extra frame and proc information
 		S_COMPILE2_ST = 0x1013,  // extended compile flags and info
 
-		// new symbols necessary for 16-bit enumerates of IA64 registers and IA64 specific symbols
+		// new symbols necessary for 16-bit enumerates of IA64 registers and IA64 specific
+		// symbols
 
 		S_MANYREG2_ST = 0x1014,  // multiple register variable
 		S_LPROCIA64_ST = 0x1015,  // Local procedure start (IA64)
@@ -1711,10 +1689,6 @@ namespace Microsoft.Cci.Pdb
 	};
 
 	// Extended proc flags
-	//
-	//
-	//
-	//
 	internal struct CV_EXPROCFLAGS
 	{
 		internal byte flags;      // (CV_PROCFLAGS)
@@ -1779,15 +1753,16 @@ namespace Microsoft.Cci.Pdb
 	{
 		internal ushort reclen;     // Record length
 		internal ushort rectyp;     // Record type
-		// byte data[CV_ZEROLEN]; SYMTYPE *NextSym (SYMTYPE * pSym) { return (SYMTYPE *) ((char
-		// * )pSym + pSym->reclen + sizeof(ushort)); }
+		// byte data[CV_ZEROLEN]; SYMTYPE *NextSym (SYMTYPE * pSym) { return (SYMTYPE *)
+		// ((char *)pSym + pSym->reclen + sizeof(ushort)); }
 	};
 
 	// non-model specific symbol types
 
 	internal struct RegSym
 	{
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_REGISTER
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_REGISTER
 		internal uint typind;     // (type index) Type index or Metadata token
 		internal ushort reg;        // register enumerate
 		internal string name;       // Length-prefixed name
@@ -1807,7 +1782,8 @@ namespace Microsoft.Cci.Pdb
 
 	internal struct ManyRegSym
 	{
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_MANYREG
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_MANYREG
 		internal uint typind;     // (type index) Type index or metadata token
 		internal byte count;      // count of number of registers
 		internal byte[] reg;        // count register enumerates, most-sig first
@@ -1816,7 +1792,8 @@ namespace Microsoft.Cci.Pdb
 
 	internal struct ManyRegSym2
 	{
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_MANYREG2
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_MANYREG2
 		internal uint typind;     // (type index) Type index or metadata token
 		internal ushort count;      // count of number of registers,
 		internal ushort[] reg;        // count register enumerates, most-sig first
@@ -1825,7 +1802,8 @@ namespace Microsoft.Cci.Pdb
 
 	internal struct AttrManyRegSym
 	{
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_MANMANYREG
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_MANMANYREG
 		internal uint typind;     // (type index) Type index or metadata token
 		internal uint offCod;     // first code address where var is live
 		internal ushort segCod;
@@ -1850,8 +1828,8 @@ namespace Microsoft.Cci.Pdb
 
 	internal struct ConstSym
 	{
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_CONSTANT
-		// or S_MANCONSTANT
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_CONSTANT or S_MANCONSTANT
 		internal uint typind;     // (type index) Type index (containing enum if enumerate) or metadata token
 		internal ushort value;      // numeric leaf containing value
 		internal string name;       // Length-prefixed name
@@ -1859,20 +1837,23 @@ namespace Microsoft.Cci.Pdb
 
 	internal struct UdtSym
 	{
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_UDT | S_COBOLUDT
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_UDT | S_COBOLUDT
 		internal uint typind;     // (type index) Type index
 		internal string name;       // Length-prefixed name
 	};
 
 	internal struct ManyTypRef
 	{
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_MANTYPREF
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_MANTYPREF
 		internal uint typind;     // (type index) Type index
 	};
 
 	internal struct SearchSym
 	{
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_SSEARCH
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_SSEARCH
 		internal uint startsym;   // offset of the procedure
 		internal ushort seg;        // segment of symbol
 	};
@@ -1890,7 +1871,8 @@ namespace Microsoft.Cci.Pdb
 
 	internal struct CFlagSym
 	{
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_COMPILE
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_COMPILE
 		internal byte machine;    // target processor
 		internal byte language;   // language index
 		internal ushort flags;      // (CFLAGSYM_FLAGS)
@@ -1914,7 +1896,8 @@ namespace Microsoft.Cci.Pdb
 
 	internal struct CompileSym
 	{
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_COMPILE2
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_COMPILE2
 		internal uint flags;      // (COMPILESYM_FLAGS)
 		internal ushort machine;    // target processor
 		internal ushort verFEMajor; // front end major version #
@@ -1929,19 +1912,22 @@ namespace Microsoft.Cci.Pdb
 
 	internal struct ObjNameSym
 	{
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_OBJNAME
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_OBJNAME
 		internal uint signature;  // signature
 		internal string name;       // Length-prefixed name
 	};
 
 	internal struct EndArgSym
 	{
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_ENDARG
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_ENDARG
 	};
 
 	internal struct ReturnSym
 	{
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_RETURN
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_RETURN
 		internal CV_GENERIC_FLAG flags; // flags
 		internal byte style;      // CV_GENERIC_STYLE return style
 		// followed by return method data
@@ -1949,13 +1935,15 @@ namespace Microsoft.Cci.Pdb
 
 	internal struct EntryThisSym
 	{
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_ENTRYTHIS
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_ENTRYTHIS
 		internal byte thissym;    // symbol describing this pointer on entry
 	};
 
 	internal struct BpRelSym32
 	{
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_BPREL32
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_BPREL32
 		internal int off;        // BP-relative offset
 		internal uint typind;     // (type index) Type index or Metadata token
 		internal string name;       // Length-prefixed name
@@ -1975,8 +1963,8 @@ namespace Microsoft.Cci.Pdb
 
 	internal struct SlotSym32
 	{
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_LOCALSLOT
-		// or S_PARAMSLOT
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_LOCALSLOT or S_PARAMSLOT
 		internal uint index;      // slot index
 		internal uint typind;     // (type index) Type index or Metadata token
 		internal string name;       // Length-prefixed name
@@ -1984,7 +1972,8 @@ namespace Microsoft.Cci.Pdb
 
 	internal struct AttrSlotSym
 	{
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_MANSLOT
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_MANSLOT
 		internal uint index;      // slot index
 		internal uint typind;     // (type index) Type index or Metadata token
 		internal uint offCod;     // first code address where var is live
@@ -1995,7 +1984,8 @@ namespace Microsoft.Cci.Pdb
 
 	internal struct AnnotationSym
 	{
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_ANNOTATION
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_ANNOTATION
 		internal uint off;
 		internal ushort seg;
 		internal ushort csz;        // Count of zero terminated annotation strings
@@ -2004,8 +1994,8 @@ namespace Microsoft.Cci.Pdb
 
 	internal struct DatasSym32
 	{
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_LDATA32,
-		// S_GDATA32 or S_PUB32, S_LMANDATA, S_GMANDATA
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_LDATA32, S_GDATA32 or S_PUB32, S_LMANDATA, S_GMANDATA
 		internal uint typind;     // (type index) Type index, or Metadata token if a managed symbol
 		internal uint off;
 		internal ushort seg;
@@ -2024,7 +2014,8 @@ namespace Microsoft.Cci.Pdb
 
 	internal struct PubSym32
 	{
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_PUB32
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_PUB32
 		internal uint flags;      // (CV_PUBSYMFLAGS)
 		internal uint off;
 		internal ushort seg;
@@ -2033,8 +2024,8 @@ namespace Microsoft.Cci.Pdb
 
 	internal struct ProcSym32
 	{
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_GPROC32
-		// or S_LPROC32
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_GPROC32 or S_LPROC32
 		internal uint parent;     // pointer to the parent
 		internal uint end;        // pointer to this blocks end
 		internal uint next;       // pointer to next symbol
@@ -2050,8 +2041,8 @@ namespace Microsoft.Cci.Pdb
 
 	internal struct ManProcSym
 	{
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_GMANPROC,
-		// S_LMANPROC, S_GMANPROCIA64 or S_LMANPROCIA64
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_GMANPROC, S_LMANPROC, S_GMANPROCIA64 or S_LMANPROCIA64
 		internal uint parent;     // pointer to the parent
 		internal uint end;        // pointer to this blocks end
 		internal uint next;       // pointer to next symbol
@@ -2090,7 +2081,8 @@ namespace Microsoft.Cci.Pdb
 
 	internal struct ThunkSym32
 	{
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_THUNK32
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_THUNK32
 		internal uint parent;     // pointer to the parent
 		internal uint end;        // pointer to this blocks end
 		internal uint next;       // pointer to next symbol
@@ -2110,7 +2102,8 @@ namespace Microsoft.Cci.Pdb
 
 	internal struct TrampolineSym
 	{   // Trampoline thunk symbol
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_TRAMPOLINE
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_TRAMPOLINE
 		internal ushort trampType;  // trampoline sym subtype
 		internal ushort cbThunk;    // size of the thunk
 		internal uint offThunk;   // offset of the thunk
@@ -2121,7 +2114,8 @@ namespace Microsoft.Cci.Pdb
 
 	internal struct LabelSym32
 	{
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_LABEL32
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_LABEL32
 		internal uint off;
 		internal ushort seg;
 		internal byte flags;      // (CV_PROCFLAGS) flags
@@ -2130,7 +2124,8 @@ namespace Microsoft.Cci.Pdb
 
 	internal struct BlockSym32
 	{
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_BLOCK32
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_BLOCK32
 		internal uint parent;     // pointer to the parent
 		internal uint end;        // pointer to this blocks end
 		internal uint len;        // Block length
@@ -2141,7 +2136,8 @@ namespace Microsoft.Cci.Pdb
 
 	internal struct WithSym32
 	{
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_WITH32
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_WITH32
 		internal uint parent;     // pointer to the parent
 		internal uint end;        // pointer to this blocks end
 		internal uint len;        // Block length
@@ -2161,7 +2157,8 @@ namespace Microsoft.Cci.Pdb
 
 	internal struct RegRel32
 	{
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_REGREL32
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_REGREL32
 		internal uint off;        // offset of symbol
 		internal uint typind;     // (type index) Type index or metadata token
 		internal ushort reg;        // register index for symbol
@@ -2170,8 +2167,8 @@ namespace Microsoft.Cci.Pdb
 
 	internal struct AttrRegRel
 	{
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_MANREGREL
-		// | S_ATTR_REGREL
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_MANREGREL | S_ATTR_REGREL
 		internal uint off;        // offset of symbol
 		internal uint typind;     // (type index) Type index or metadata token
 		internal ushort reg;        // register index for symbol
@@ -2183,7 +2180,8 @@ namespace Microsoft.Cci.Pdb
 
 	internal struct ThreadSym32
 	{
-		// internal ushort reclen; // record length internal ushort rectyp; // S_LTHREAD32 | S_GTHREAD32
+		// internal ushort reclen; // record length internal ushort rectyp; // S_LTHREAD32
+		// | S_GTHREAD32
 		internal uint typind;     // (type index) type index
 		internal uint off;        // offset into thread storage
 		internal ushort seg;        // segment of thread storage
@@ -2200,8 +2198,8 @@ namespace Microsoft.Cci.Pdb
 
 	internal struct ProcSymMips
 	{
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_GPROCMIPS
-		// or S_LPROCMIPS
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_GPROCMIPS or S_LPROCMIPS
 		internal uint parent;     // pointer to the parent
 		internal uint end;        // pointer to this blocks end
 		internal uint next;       // pointer to next symbol
@@ -2222,8 +2220,8 @@ namespace Microsoft.Cci.Pdb
 
 	internal struct ProcSymIa64
 	{
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_GPROCIA64
-		// or S_LPROCIA64
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_GPROCIA64 or S_LPROCIA64
 		internal uint parent;     // pointer to the parent
 		internal uint end;        // pointer to this blocks end
 		internal uint next;       // pointer to next symbol
@@ -2250,8 +2248,8 @@ namespace Microsoft.Cci.Pdb
 
 	internal struct RefSym2
 	{
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_PROCREF,
-		// S_DATAREF, or S_LPROCREF
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_PROCREF, S_DATAREF, or S_LPROCREF
 		internal uint sumName;    // SUC of the name
 		internal uint ibSym;      // Offset of actual symbol in $$Symbols
 		internal ushort imod;       // Module containing the actual symbol
@@ -2260,12 +2258,14 @@ namespace Microsoft.Cci.Pdb
 
 	internal struct AlignSym
 	{
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_ALIGN
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_ALIGN
 	};
 
 	internal struct OemSymbol
 	{
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_OEM
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_OEM
 		internal Guid idOem;      // an oem ID (GUID)
 		internal uint typind;     // (type index) Type index
 		internal byte[] rgl;        // user data, force 4-byte alignment
@@ -2290,7 +2290,8 @@ namespace Microsoft.Cci.Pdb
 
 	internal struct FrameProcSym
 	{
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_FRAMEPROC
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_FRAMEPROC
 		internal uint cbFrame;    // count of bytes of total frame of procedure
 		internal uint cbPad;      // count of bytes of padding in the frame
 		internal uint offPad;     // offset (rel to frame) to where padding starts
@@ -2302,13 +2303,15 @@ namespace Microsoft.Cci.Pdb
 
 	internal struct UnamespaceSym
 	{
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_UNAMESPACE
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_UNAMESPACE
 		internal string name;       // name
 	};
 
 	internal struct SepCodSym
 	{
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_SEPCODE
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_SEPCODE
 		internal uint parent;     // pointer to the parent
 		internal uint end;        // pointer to this block's end
 		internal uint length;     // count of bytes of this block
@@ -2321,7 +2324,8 @@ namespace Microsoft.Cci.Pdb
 
 	internal struct LocalSym
 	{
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_LOCAL
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_LOCAL
 		internal uint id;         // id of the local
 		internal uint typind;     // (type index) type index
 		internal ushort flags;      // (CV_LVARFLAGS) local var flags
@@ -2337,7 +2341,8 @@ namespace Microsoft.Cci.Pdb
 
 	internal struct DefRangeSym
 	{
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_DEFRANGE
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_DEFRANGE
 
 		internal uint id;         // ID of the local symbol for which this formula holds
 		internal uint program;    // program to evaluate the value of the symbol
@@ -2347,7 +2352,8 @@ namespace Microsoft.Cci.Pdb
 
 	internal struct DefRangeSym2
 	{
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_DEFRANGE2
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_DEFRANGE2
 
 		internal uint id;         // ID of the local symbol for which this formula holds
 		internal uint program;    // program to evaluate the value of the symbol
@@ -2371,7 +2377,8 @@ namespace Microsoft.Cci.Pdb
 
 	internal struct CoffGroupSym
 	{
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_COFFGROUP
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_COFFGROUP
 
 		internal uint cb;
 		internal uint characteristics;
@@ -2393,33 +2400,31 @@ namespace Microsoft.Cci.Pdb
 
 	internal struct ExportSym
 	{
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_EXPORT
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_EXPORT
 
 		internal ushort ordinal;
 		internal ushort flags;      // (EXPORTSYM_FLAGS)
 		internal string name;       // name of
 	};
 
-	//
-	// Symbol for describing indirect calls when they are using a function pointer cast on some
-	// other type or temporary. Typical content will be an LF_POINTER to an LF_PROCEDURE type record
-	// that should mimic an actual variable with the function pointer type in question.
-	//
-	// Since the compiler can sometimes tail-merge a function call through a function pointer, there
-	// may be more than one S_CALLSITEINFO record at an address. This is similar to what you could
-	// do in your own code by:
-	//
+	// Symbol for describing indirect calls when they are using a function pointer cast on
+	// some other type or temporary. Typical content will be an LF_POINTER to an
+	// LF_PROCEDURE type record that should mimic an actual variable with the function
+	// pointer type in question.
+	// 
+	// Since the compiler can sometimes tail-merge a function call through a function
+	// pointer, there may be more than one S_CALLSITEINFO record at an address. This is
+	// similar to what you could do in your own code by:
+	// 
 	// if (expr) pfn = &function1; else pfn = &function2;
-	//
+	// 
 	// (*pfn)(arg list);
-	//
-	//
-	//
-	//
 
 	internal struct CallsiteInfo
 	{
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_CALLSITEINFO
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_CALLSITEINFO
 		internal int off;        // offset of call site
 		internal ushort ect;        // section index of call site
 		internal ushort pad0;       // alignment padding field, must be zero
@@ -2436,11 +2441,13 @@ namespace Microsoft.Cci.Pdb
 		CV_COOKIETYPE_XOR_R13,
 	};
 
-	// Symbol for describing security cookie's position and type (raw, xor'd with esp, xor'd with ebp).
+	// Symbol for describing security cookie's position and type (raw, xor'd with esp,
+	// xor'd with ebp).
 
 	internal struct FrameCookie
 	{
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_FRAMECOOKIE
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_FRAMECOOKIE
 		internal int off;        // Frame relative offset
 		internal ushort reg;        // Register index
 		internal int cookietype; // (CV_cookietype) Type of the cookie
@@ -2456,19 +2463,15 @@ namespace Microsoft.Cci.Pdb
 
 	internal struct DiscardedSym
 	{
-		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; // S_DISCARDED
+		// internal ushort reclen; // Record length [SYMTYPE] internal ushort rectyp; //
+		// S_DISCARDED
 		internal CV_DISCARDED iscarded;
 		internal uint fileid;     // First FILEID if line number info present
 		internal uint linenum;    // First line number
 		internal byte[] data;       // Original record(s) with invalid indices
 	};
 
-	//
 	// V7 line number data types
-	//
-	//
-	//
-	//
 
 	internal enum DEBUG_S_SUBSECTION_TYPE : uint
 	{
@@ -2481,12 +2484,7 @@ namespace Microsoft.Cci.Pdb
 		DEBUG_S_FRAMEDATA = 0xf5,
 	};
 
-	//
 	// Line flags (data present)
-	//
-	//
-	//
-	//
 	internal enum CV_LINE_SUBSECTION_FLAGS : ushort
 	{
 		CV_LINES_HAVE_COLUMNS = 0x0001,

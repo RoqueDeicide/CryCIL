@@ -1,12 +1,6 @@
 //-----------------------------------------------------------------------------
 //
-// Copyright (C) Microsoft Corporation. All Rights Reserved.
-//
-//
-//
-//
-//
-//
+// Copyright (C) Microsoft Corporation.  All Rights Reserved.
 //
 //-----------------------------------------------------------------------------
 using System;
@@ -15,30 +9,30 @@ namespace Microsoft.Cci.Pdb
 {
 	internal class PdbSlot
 	{
-		internal uint slot;
-		internal string name;
-		internal ushort flags;
-		internal uint segment;
-		internal uint address;
+		internal uint Slot;
+		internal string Name;
+		internal ushort Flags;
+		internal uint Segment;
+		internal uint Address;
 
 		internal PdbSlot(BitAccess bits, out uint typind)
 		{
-			AttrSlotSym slotSym;
+			AttrSlotSym slot;
 
-			bits.ReadUInt32(out slotSym.index);
-			bits.ReadUInt32(out slotSym.typind);
-			bits.ReadUInt32(out slotSym.offCod);
-			bits.ReadUInt16(out slotSym.segCod);
-			bits.ReadUInt16(out slotSym.flags);
-			bits.ReadCString(out slotSym.name);
+			bits.ReadUInt32(out slot.index);
+			bits.ReadUInt32(out slot.typind);
+			bits.ReadUInt32(out slot.offCod);
+			bits.ReadUInt16(out slot.segCod);
+			bits.ReadUInt16(out slot.flags);
+			bits.ReadCString(out slot.name);
 
-			this.slot = slotSym.index;
-			this.name = slotSym.name;
-			this.flags = slotSym.flags;
-			this.segment = slotSym.segCod;
-			this.address = slotSym.offCod;
+			this.Slot = slot.index;
+			this.Name = slot.name;
+			this.Flags = slot.flags;
+			this.Segment = slot.segCod;
+			this.Address = slot.offCod;
 
-			typind = slotSym.typind;
+			typind = slot.typind;
 		}
 	}
 }
