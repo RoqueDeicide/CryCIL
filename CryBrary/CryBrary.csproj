@@ -199,7 +199,7 @@
     <Compile Include="Console\Commands\DuplicateConsoleCommandException.cs" />
     <Compile Include="Console\CryConsole.cs" />
     <Compile Include="Console\Variables\ByRefCVar.cs" />
-    <Compile Include="Console\Variables\CVarException.cs" />
+    <Compile Include="Console\Variables\ConsoleVariableException.cs" />
     <Compile Include="Console\Variables\CVarFlags.cs" />
     <Compile Include="Console\Variables\CVarType.cs" />
     <Compile Include="Console\Variables\DynamicCVar.cs" />

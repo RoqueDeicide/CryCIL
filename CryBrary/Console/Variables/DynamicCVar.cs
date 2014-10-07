@@ -43,7 +43,7 @@
 				Native.ConsoleInterop.RegisterCVarString(this.Name, this.stringValue, this.stringValue, this.Flags, this.Help);
 			}
 			else
-				throw new CVarException(string.Format("Invalid data type ({0}) used in CVar {1}.", value.GetType(), this.Name));
+				throw new ConsoleVariableException(string.Format("Invalid data type ({0}) used in CVar {1}.", value.GetType(), this.Name));
 		}
 
 		public override string String

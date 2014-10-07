@@ -8,35 +8,35 @@ namespace CryEngine.Console.Variables
 	/// variable-related operation.
 	/// </summary>
 	[Serializable]
-	public class CVarException : Exception
+	public class ConsoleVariableException : Exception
 	{
 		/// <summary>
-		/// Creates a default instance of <see cref="CVarException"/> class.
+		/// Creates a default instance of <see cref="ConsoleVariableException"/> class.
 		/// </summary>
-		public CVarException()
+		public ConsoleVariableException()
 		{
 		}
 		/// <summary>
-		/// Creates a new instance of <see cref="CVarException"/> class with specified
+		/// Creates a new instance of <see cref="ConsoleVariableException"/> class with specified
 		/// message.
 		/// </summary>
 		/// <param name="message">Message to supply with exception.</param>
-		public CVarException(string message)
+		public ConsoleVariableException(string message)
 			: base(message)
 		{
 		}
 		/// <summary>
-		/// Creates a new instance of <see cref="CVarException"/> class with specified
+		/// Creates a new instance of <see cref="ConsoleVariableException"/> class with specified
 		/// message and exception object that caused new one to be created.
 		/// </summary>
 		/// <param name="message">Message to supply with exception.</param>
 		/// <param name="inner">  Exception that caused a new one to be created.</param>
-		public CVarException(string message, Exception inner)
+		public ConsoleVariableException(string message, Exception inner)
 			: base(message, inner)
 		{
 		}
 		/// <summary>
-		/// Initializes a new instance of the <see cref="CVarException"/> class with
+		/// Initializes a new instance of the <see cref="ConsoleVariableException"/> class with
 		/// serialized data.
 		/// </summary>
 		/// <param name="info">   
@@ -45,7 +45,7 @@ namespace CryEngine.Console.Variables
 		/// <param name="context">
 		/// The contextual information about the source or destination.
 		/// </param>
-		protected CVarException(
+		protected ConsoleVariableException(
 			SerializationInfo info,
 			StreamingContext context)
 			: base(info, context)
