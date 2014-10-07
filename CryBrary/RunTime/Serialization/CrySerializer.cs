@@ -64,7 +64,7 @@ namespace CryEngine.RunTime.Serialization
 #if !UNIT_TESTING
 			var debugCVar = CVar.Get("mono_realtimeScriptingDebug");
 			if (debugCVar != null)
-				this.IsDebugModeEnabled = (debugCVar.IVal != 0);
+				this.IsDebugModeEnabled = (debugCVar.ValueInt32 != 0);
 #endif
 		}
 

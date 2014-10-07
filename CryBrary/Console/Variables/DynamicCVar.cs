@@ -46,19 +46,19 @@
 				throw new ConsoleVariableException(string.Format("Invalid data type ({0}) used in CVar {1}.", value.GetType(), this.Name));
 		}
 
-		public override string String
+		public override string ValueString
 		{
 			get { return this.stringValue; }
 			set { this.stringValue = value; }
 		}
 
-		public override float FVal
+		public override float ValueFloat
 		{
 			get { return this.floatValue; }
 			set { this.floatValue = value; }
 		}
 
-		public override int IVal
+		public override int ValueInt32
 		{
 			get { return this.intValue; }
 			set { this.intValue = value; }

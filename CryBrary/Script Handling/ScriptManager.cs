@@ -434,7 +434,7 @@ namespace CryEngine.Initialization
 			TryCopyFile(assemblyPath, ref newPath);
 
 #if !RELEASE
-			if (CVar.Get("mono_generateMdbIfPdbIsPresent").IVal != 0)
+			if (CVar.Get("mono_generateMdbIfPdbIsPresent").ValueInt32 != 0)
 			{
 				GenerateDebugDatabaseForAssembly(assemblyPath);
 

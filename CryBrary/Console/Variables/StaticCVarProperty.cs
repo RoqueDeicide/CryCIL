@@ -20,19 +20,19 @@ namespace CryEngine.Console.Variables
 			this.property = propertyInfo;
 		}
 
-		public override string String
+		public override string ValueString
 		{
 			get { return this.property.GetValue(null, null) as string; }
 			set { this.property.SetValue(null, value, null); }
 		}
 
-		public override float FVal
+		public override float ValueFloat
 		{
 			get { return (float)this.property.GetValue(null, null); }
 			set { this.property.SetValue(null, value, null); }
 		}
 
-		public override int IVal
+		public override int ValueInt32
 		{
 			get { return (int)this.property.GetValue(null, null); }
 			set { this.property.SetValue(null, value, null); }

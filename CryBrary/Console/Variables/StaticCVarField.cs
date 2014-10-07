@@ -20,19 +20,19 @@ namespace CryEngine.Console.Variables
 			this.field = fieldInfo;
 		}
 
-		public override string String
+		public override string ValueString
 		{
 			get { return this.field.GetValue(null) as string; }
 			set { this.field.SetValue(null, value); }
 		}
 
-		public override float FVal
+		public override float ValueFloat
 		{
 			get { return (float)this.field.GetValue(null); }
 			set { this.field.SetValue(null, value); }
 		}
 
-		public override int IVal
+		public override int ValueInt32
 		{
 			get { return (int)this.field.GetValue(null); }
 			set { this.field.SetValue(null, value); }

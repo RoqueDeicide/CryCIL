@@ -12,19 +12,19 @@
 			this.Name = name;
 		}
 
-		public override string String
+		public override string ValueString
 		{
 			get { return Native.ConsoleInterop.GetCVarString(this.Name); }
 			set { Native.ConsoleInterop.SetCVarString(this.Name, value); }
 		}
 
-		public override float FVal
+		public override float ValueFloat
 		{
 			get { return Native.ConsoleInterop.GetCVarFloat(this.Name); }
 			set { Native.ConsoleInterop.SetCVarFloat(this.Name, value); }
 		}
 
-		public override int IVal
+		public override int ValueInt32
 		{
 			get { return Native.ConsoleInterop.GetCVarInt(this.Name); }
 			set { Native.ConsoleInterop.SetCVarInt(this.Name, value); }

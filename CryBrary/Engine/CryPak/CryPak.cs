@@ -66,7 +66,7 @@ namespace CryEngine.Utilities
 			{
 				CVar cvar;
 				if (CVar.TryGet("sys_game_folder", out cvar))
-					return Path.Combine(RootFolder, cvar.String);
+					return Path.Combine(RootFolder, cvar.ValueString);
 
 				return Path.Combine(RootFolder, "Game");
 			}
