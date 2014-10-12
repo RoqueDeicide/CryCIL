@@ -8,5 +8,6 @@
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="CryEngineInterface.cpp" />
   </ItemGroup>
 </Project>
