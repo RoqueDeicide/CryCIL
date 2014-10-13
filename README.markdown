@@ -1,8 +1,8 @@
-CryCLR - CRYENGINE game development on the .NET/Mono platform
+CryCIL - CRYENGINE game development on the .NET/Mono platform
 	by RoqueDeicide (Based on 'CryMono' by Filip 'i59' Lundgren)
 
 # Description
-CryCLR is a middleware module that allows to use .Net-based languages to create games powered by CryEngine.
+CryCIL is a middleware module that allows to use .Net-based languages to create games powered by CryEngine.
 # History
 ## Origins
 Historically engines from CryEngine family allowed to create games using C++ for low-to-mid level logic with Lua used for high level logic. In the 25th of June 2011, Sam Neirinck aka Ins has decided to change this and initiated project "cemono" which goal was to allow high level logic to be done with .Net langeuages (e.g. C#) utilizing the power of Mono.
@@ -16,9 +16,9 @@ Although CryDev community had no care for CryMono, one person, RoqueDeicide (tha
 When EaaS was released, it became very clear, that is not the small changes that are needed. There are way too many problems, that are also rather problematic to fix. So in July 2014 I've forked CryMono repository, and started working at full swing.
 
 I have exposed some parts of CryEngine triangular mesh editing interface for starters, then I ported Evan Wallace's implementation of CSG operations from javascript to C#. Thinking, what to do next revealed to me, that old features had to go: too much bloat, too much garbage. At that point, branch "SubsystemOverhaul" was created, where I am being a busy bee to the day of writing this.
-## CryCLR
-The vision of cemono and CryMono was to create means of coding high level logic, low and mid levels were supposed to be handled by C++. That is a vision, different from mine: Mine is to create means of coding Any levels of logic using .Net languages. I have also cut out features like realtime-scripting, and moved the module towards Compile-Once-At-The-Start model. This made me feel that it was appropriate to disassociate my work from CryMono and rebrand it to CryCLR - a project with different goal.
+## CryCIL
+The vision of cemono and CryMono was to create means of coding high level logic, low and mid levels were supposed to be handled by C++. That is a vision, different from mine: Mine is to create means of coding Any levels of logic using .Net languages. I have also cut out features like realtime-scripting, and moved the module towards Compile-Once-At-The-Start model. This made me feel that it was appropriate to disassociate my work from CryMono and rebrand it to CryCIL - as a project with different goal.
 # Documentation & Info
-Most of the tutorial-style documentation articles will at the Wiki section of the <a href="https://github.com/RoqueDeicide/CryCLR/">GitHub</a> page.
+Most of the tutorial-style documentation articles will at the Wiki section of the <a href="https://github.com/RoqueDeicide/CryCIL/">GitHub</a> page.
 
 MSDN-style documentation of the API will most likily be hosted at the different location.
