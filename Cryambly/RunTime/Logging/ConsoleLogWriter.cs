@@ -8,8 +8,11 @@ using CryCil.Engine.DebugServices;
 
 namespace CryCil.RunTime.Logging
 {
-	// Used to redirect output of System.Console class to CryEngine log.
-	internal partial class ConsoleLogWriter : TextWriter
+	/// <summary>
+	/// Represents an object that can be used to redirect output of <see cref="Console"/>
+	/// class to CryEngine <see cref="Log"/>.
+	/// </summary>
+	public partial class ConsoleLogWriter : TextWriter
 	{
 		private StringBuilder buffer;
 		/// <summary>
