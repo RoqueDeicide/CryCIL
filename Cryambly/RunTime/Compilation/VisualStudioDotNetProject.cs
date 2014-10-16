@@ -21,22 +21,31 @@ namespace CryCil.RunTime.Compilation
 		#region Fields
 		private const string Config
 #if DEBUG
-			= "Debug";
+ = "Debug";
 #else
 			= "Release";
 #endif
 		private const string Platform
 #if WIN32
-			= "x86";
+ = "x86";
 #else
-			= "x64";
+ = "x64";
 #endif
 
 		private readonly string[] projectReferences;
-#endregion
+		#endregion
 		#region Properties
 		/// <summary>
-		/// When implemented in derived class, gets an object that will handle compilation of the code files within this project.
+		/// Gets an object that will handle compilation of the code files within this
+		/// project.
+		/// </summary>
+		/// <param name="options">
+		/// Options that specify the way the code compiler is created.
+		/// </param>
+		public abstract CodeDomProvider CreateCompiler(IDictionary<string, string> options);
+		/// <summary>
+		/// When implemented in derived class, gets an object that will handle compilation
+		/// of the code files within this project.
 		/// </summary>
 		public abstract CodeDomProvider Compiler { get; }
 		/// <summary>
@@ -46,18 +55,21 @@ namespace CryCil.RunTime.Compilation
 		{
 			get
 			{
+				List<IProject> projects = CodeSolution.Projects;
 				return
-					CodeSolution.Projects.Where(x=>this.projectReferences.Contains(x.Name))
+					projects.Where(x => this.projectReferences.Any(y => x.FileName == y))
 										 .ToArray();
 			}
 		}
 		/// <summary>
 		/// Gets the name of the project.
 		/// </summary>
+		[NotNull]
 		public string Name { get; private set; }
 		/// <summary>
 		/// Gets the path to the project.
 		/// </summary>
+		[NotNull]
 		public string FileName { get; private set; }
 		/// <summary>
 		/// Path to the directory that contains compiled assembly after building.
@@ -87,7 +99,8 @@ namespace CryCil.RunTime.Compilation
 		/// </summary>
 		public string DefinedConstants { get; private set; }
 		/// <summary>
-		/// Indicates whether compiler should consider compilation a failure, if there are any warnings.
+		/// Indicates whether compiler should consider compilation a failure, if there are
+		/// any warnings.
 		/// </summary>
 		public bool TreatWarningsAsErrors { get; private set; }
 		/// <summary>
@@ -107,8 +120,19 @@ namespace CryCil.RunTime.Compilation
 		/// Gets an array of paths to assemblies that this project references.
 		/// </summary>
 		public string[] References { get; private set; }
+		/// <summary>
+		/// Gets the name of target framework version.
+		/// </summary>
+		public string TargetFramework { get; private set; }
+		/// <summary>
+		/// Gets the path to the folder that contains this project.
+		/// </summary>
+		public string ProjectFolder
+		{
+			get { return Path.GetDirectoryName(this.FileName); }
+		}
 		#endregion
-#region Construction
+		#region Construction
 		/// <summary>
 		/// Initializes common properties of types that inherit this class.
 		/// </summary>
@@ -125,14 +149,17 @@ namespace CryCil.RunTime.Compilation
 			if (!File.Exists(this.FileName))
 			{
 				throw new ArgumentException
-					(String.Format("Could locate a project file: {0}", this.FileName));
+					(String.Format("Couldn't locate a project file: {0}", this.FileName));
 			}
 			const StringComparison icic =
 				StringComparison.InvariantCultureIgnoreCase;
 			XmlDocument document = new XmlDocument();
 			try
 			{
+// ReSharper disable AssignNullToNotNullAttribute
 				document.Load(this.FileName);
+// ReSharper restore AssignNullToNotNullAttribute
+				
 				// Declare properties to get from the file.
 				Settings sets = new Settings();
 				XmlElement[] propertyGroups =
@@ -153,42 +180,43 @@ namespace CryCil.RunTime.Compilation
 					}
 				}
 				// Save the properties.
-				this.OutputPath = sets.Output;
-				this.DocumentationFile = sets.Doc;
+				this.OutputPath =
+					PathUtilities.ToAbsolute(sets.Output ?? "", this.ProjectFolder ?? "");
+				if (sets.Doc != null)
+				{
+					this.DocumentationFile =
+						PathUtilities.ToAbsolute(sets.Doc, this.ProjectFolder ?? "");
+				}
 				this.DebugInformation =
+					sets.Debug == null ||
 					sets.Debug.Equals("None", icic)
 						? DebugInformationLevels.None
 						: sets.Debug.Equals("pdbonly", icic)
 							? DebugInformationLevels.PdbOnly
 							: DebugInformationLevels.Full;
 				this.TargetPlatform = sets.Target;
-				this.AllowUnsafeCode = sets.AllowUnsafe.Equals("true", icic);
+				this.AllowUnsafeCode = (sets.AllowUnsafe ?? "").Equals("true", icic);
 				this.DefinedConstants = sets.Consts;
-				this.TreatWarningsAsErrors = sets.WarningsAsErrors.Equals("true", icic);
-				this.OptimizeCode = sets.Optimize.Equals("true", icic);
+				this.TreatWarningsAsErrors = (sets.WarningsAsErrors ?? "").Equals("true", icic);
+				this.OptimizeCode = (sets.Optimize ?? "").Equals("true", icic);
+				this.TargetFramework = sets.Framework;
 				// Save project references.
 				this.projectReferences =
 				(
 					from XmlElement element in document.GetElementsByTagName("ProjectReference")
-					select element.GetAttribute("Include")
+					select PathUtilities.ToAbsolute(element.GetAttribute("Include"), this.ProjectFolder ?? "")
 				).ToArray();
 				// Save references.
 				this.References =
 				(
 					from XmlElement element in document.GetElementsByTagName("Reference")
-					let hintPath =
-						element.GetElementsByTagName("HintPath").OfType<XmlElement>().ToArray()
-					select
-						// Use a hint path if available.
-						hintPath.Length == 0
-						? element.GetAttribute("Include")
-						: hintPath[0].FirstChild.Value
+					select new AssemblyReference(element, this).Path
 				).ToArray();
 				// Save a list of files for compilation.
 				this.CodeFiles =
 				(
 					from XmlElement element in document.GetElementsByTagName("Compile")
-					select element.GetAttribute("Include")
+					select PathUtilities.ToAbsolute(element.GetAttribute("Include"), this.ProjectFolder ?? "")
 				).ToArray();
 			}
 			catch (Exception ex)
@@ -243,14 +271,12 @@ namespace CryCil.RunTime.Compilation
 		/// <returns>True, if compilation was a success, otherwise false.</returns>
 		public bool Build()
 		{
-// ReSharper disable RedundantEmptyObjectOrCollectionInitializer
+			// ReSharper disable RedundantEmptyObjectOrCollectionInitializer
 			CompilerParameters parameters = new CompilerParameters { };
-// ReSharper restore RedundantEmptyObjectOrCollectionInitializer
-			
-			//
+			// ReSharper restore RedundantEmptyObjectOrCollectionInitializer
+
 			// Output.
-			//
-			parameters.OutputAssembly = Path.Combine(this.OutputPath ?? "", this.Name, ".dll");
+			parameters.OutputAssembly = Path.Combine(this.OutputPath ?? "", this.Name + ".dll");
 			// Delete previous assembly.
 			if (File.Exists(parameters.OutputAssembly))
 			{
@@ -274,11 +300,9 @@ namespace CryCil.RunTime.Compilation
 					throw;
 				}
 			}
-			//
 			// Debug/Release specifics.
-			//
 			StringBuilder extraOptions = new StringBuilder();
-			extraOptions.Append("/checked- ");
+
 			switch (this.DebugInformation)
 			{
 				case DebugInformationLevels.None:
@@ -301,32 +325,52 @@ namespace CryCil.RunTime.Compilation
 			{
 				extraOptions.Append("/optimize ");
 			}
-			extraOptions.AppendFormat("/platform:{0} ", Platform);
+			extraOptions.AppendFormat("/platform:{0} ", this.TargetPlatform);
 			parameters.TreatWarningsAsErrors = this.TreatWarningsAsErrors;
 			if (this.AllowUnsafeCode)
 			{
 				extraOptions.Append("/unsafe ");
 			}
 			parameters.CompilerOptions = extraOptions.ToString();
-			//
 			// References.
-			//
 			parameters.ReferencedAssemblies.AddRange(this.References);
-			parameters.ReferencedAssemblies.AddRange
-				(this.Dependencies.Select(x=>x.CompiledAssembly.GetLocation()).ToArray());
-			//
+			// 			var compiledDependencies = this.Dependencies.Select(x => x.CompiledAssembly);
+			// 			var dependencyLocations = compiledDependencies.Select(x => x.GetLocation()).ToArray();
+			var deps = this.Dependencies;
+			Assembly[] compiledDeps = new Assembly[deps.Length];
+			for (int i = 0; i < compiledDeps.Length; i++)
+			{
+				compiledDeps[i] = deps[i].CompiledAssembly;
+			}
+			string[] dependencyLocations = new string[compiledDeps.Length];
+			for (int i = 0; i < compiledDeps.Length; i++)
+			{
+				dependencyLocations[i] = compiledDeps[i].GetLocation();
+			}
+			parameters.ReferencedAssemblies.AddRange(dependencyLocations);
 			// Build.
-			//
-			CompilerResults results =
-				this.Compiler.CompileAssemblyFromFile(parameters, this.CodeFiles);
-			
+			CompilerResults results;
+			if (String.IsNullOrWhiteSpace(this.TargetFramework))
+			{
+				results = this.Compiler.CompileAssemblyFromFile(parameters, this.CodeFiles);
+			}
+			else
+			{
+				results =
+					this.CreateCompiler(new Dictionary<string, string> { { "CompilerVersion", this.TargetFramework == "v4.5" ? "v4.0" : this.TargetFramework } })
+						.CompileAssemblyFromFile(parameters, this.CodeFiles);
+			}
+
 			results.TempFiles.KeepFiles = false;
 
-			if (results.Errors.HasErrors)
+			if (results.Errors.HasErrors || results.Errors.HasWarnings)
 			{
 				// Print the errors.
-				Console.WriteLine("Failed to compile {0}", this.Name);
-				Console.WriteLine("Errors:");
+				if (results.Errors.HasErrors)
+				{
+					Console.WriteLine("Failed to compile {0}", this.Name);
+				}
+				Console.WriteLine("Problems:");
 				for (int i = 0; i < results.Errors.Count; i++)
 				{
 					Console.WriteLine
@@ -344,10 +388,10 @@ namespace CryCil.RunTime.Compilation
 
 			return true;
 		}
-#endregion
-#region Utilities
+		#endregion
+		#region Utilities
 
-#endregion
+		#endregion
 		private struct Settings
 		{
 			public string Output;			// Output path.
@@ -358,6 +402,7 @@ namespace CryCil.RunTime.Compilation
 			public string Consts;			// Compilation symbols.
 			public string WarningsAsErrors;	// Treat warning as errors.
 			public string Optimize;			// Optimize code.
+			public string Framework;		// e.g. 4.5
 			public void FromXml([NotNull] XmlElement propertyGroup)
 			{
 				this.Output = GetVal(propertyGroup, "OutputPath") ?? this.Output;
@@ -368,6 +413,7 @@ namespace CryCil.RunTime.Compilation
 				this.Consts = GetVal(propertyGroup, "DefineConstants") ?? this.Consts;
 				this.WarningsAsErrors = GetVal(propertyGroup, "TreatWarningsAsErrors") ?? this.WarningsAsErrors;
 				this.Optimize = GetVal(propertyGroup, "Optimize") ?? this.Optimize;
+				this.Framework = GetVal(propertyGroup, "TargetFrameworkVersion") ?? this.Framework;
 			}
 			private static string GetVal([NotNull] XmlElement propertyGroup,
 										 [NotNull] string propName)

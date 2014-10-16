@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Xml;
 using CryCil.Annotations;
 
 namespace CryCil
@@ -190,6 +191,25 @@ namespace CryCil
 		{
 			foreach (T item in enumeration)
 				action(item);
+		}
+		/// <summary>
+		/// Tries to find one of the descendants with specified name.
+		/// </summary>
+		/// <param name="element">   This element.</param>
+		/// <param name="name">      Name of the descendant to find.</param>
+		/// <param name="foundChild">
+		/// If successful contains a reference to found element.
+		/// </param>
+		/// <returns>True, if search was a success, otherwise false.</returns>
+		public static bool TryGetElement([NotNull] this XmlElement element, string name, out XmlElement foundChild)
+		{
+			if (String.IsNullOrWhiteSpace(name))
+			{
+				foundChild = null;
+				return false;
+			}
+			foundChild = element.GetElementsByTagName(name).OfType<XmlElement>().FirstOrDefault();
+			return foundChild != null;
 		}
 	}
 	/// <summary>

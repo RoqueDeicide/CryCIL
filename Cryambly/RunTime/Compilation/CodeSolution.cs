@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CryCil.Annotations;
+using CryCil.RunTime.Compilation.Reporting;
 
 namespace CryCil.RunTime.Compilation
 {
@@ -21,9 +22,27 @@ namespace CryCil.RunTime.Compilation
 	{
 		#region Fields
 		internal static readonly List<IProject> Projects = new List<IProject>();
+		/// <summary>
+		/// Project tag within solution file.
+		/// </summary>
+		public static readonly string ProjectTag =
+			String.Format("{0}Project(", Environment.NewLine);
+		/// <summary>
+		/// EndProject tag within solution file.
+		/// </summary>
+		public static readonly string EndProjectTag =
+			String.Format("{0}EndProject{0}", Environment.NewLine);
+		/// <summary>
+		/// Global tag within solution file.
+		/// </summary>
+		public static readonly string GlobalTag =
+			String.Format("{0}Global{0}", Environment.NewLine);
 		#endregion
 		#region Properties
-
+		/// <summary>
+		/// Gets the folder where current solution is located.
+		/// </summary>
+		public static string SolutionFolder { get; private set; }
 		#endregion
 		#region Interface
 		/// <summary>
@@ -36,6 +55,7 @@ namespace CryCil.RunTime.Compilation
 		{
 			if (File.Exists(solutionFile))
 			{
+				CodeSolution.SolutionFolder = Path.GetDirectoryName(solutionFile);
 				CodeSolution.ParseFile(solutionFile);
 			}
 		}
@@ -72,28 +92,20 @@ namespace CryCil.RunTime.Compilation
 			while (buildList.Count != 0)
 			{
 				IProject currentProject = buildList[0];
+				buildList.RemoveAt(0);
 				if (currentProject.Build() && currentProject.CompiledAssembly != null)
 				{
 					compiledAssemblies.Add(currentProject.CompiledAssembly);
 				}
 				else
 				{
-					buildList.RemoveAt(0);
 					failures.Add(currentProject.Name,
 						"Failed to build, check the log for possible errors.");
 					// Consider builds of all projects that depend on this one a failure.
-					foreach
-					(
-						IProject dependant in
-							from project in buildList 
-							where project.Dependencies.Any
-								(
-									x => x.Name == currentProject.Name &&
-										x.FileName == currentProject.FileName
-								)
-							select project
-					)
+					IProject[] deps = buildList.Where(x => x.Dependencies.Any(y => y.FileName == currentProject.FileName)).ToArray();
+					for (int i = 0; i < deps.Length; i++)
 					{
+						var dependant = deps[0];
 						buildList.Remove(dependant);
 						failures.Add(dependant.Name,
 									 String.Format("Failed to compile this project, because it depends on failed project {0}", currentProject.Name));
@@ -102,27 +114,12 @@ namespace CryCil.RunTime.Compilation
 			}
 			if (failures.Count != 0)
 			{
-				// Get the length of the longest name for later formatting.
-				int maxNameLength = failures.Keys.Max(x => x.Length);
-				StringBuilder message = new StringBuilder();
-				message.Append("Project  ".PadLeft(maxNameLength + 4));
-				message.Append("Cause");
-				message.Append(Environment.NewLine);
-				foreach (KeyValuePair<string, string> failure in failures)
-				{
-					message.Append(failure.Key.PadLeft(maxNameLength + 2)); // Name of failed project.
-					message.Append("  ");									// Spacing between the name and the cause.
-					message.Append(failure.Value);							// Cause of failure.
-					message.Append(Environment.NewLine);
-				}
-				MessageBox.Show
-				(
-					message.ToString(),
-					"There are projects in the code that failed to build",
-					MessageBoxButtons.OK,
-					MessageBoxIcon.Warning
-				);
+				CompilationProblemsReportForm form = new CompilationProblemsReportForm(failures);
+				form.ShowDialog();
 			}
+			// Building is a process that creates a lot of garbage.
+			GC.Collect();
+
 			return compiledAssemblies.ToArray();
 		}
 		#endregion
@@ -143,17 +140,19 @@ namespace CryCil.RunTime.Compilation
 				solutionFileText = sr.ReadToEnd();
 			}
 			// Cut off unneeded start and end of the file.
-			int firstProjectWordIndex = solutionFileText.IndexOf("Project", StringComparison.InvariantCulture);
-			int firstGlobalWordIndex = solutionFileText.IndexOf("Global", StringComparison.InvariantCulture);
+			int firstProjectWordIndex =
+				solutionFileText.IndexOf(ProjectTag, StringComparison.InvariantCulture);
+			int firstGlobalWordIndex =
+				solutionFileText.IndexOf(GlobalTag, StringComparison.InvariantCulture);
 			solutionFileText =
 				solutionFileText.Substring
 				(
 					firstProjectWordIndex,
-					firstGlobalWordIndex - firstProjectWordIndex
+					firstGlobalWordIndex - firstProjectWordIndex + 2
 				);
 			// Find starts and ends of each Project section.
-			List<int> projectSectionStartIndices = solutionFileText.AllIndexesOf("Project");
-			List<int> projectSectionEndIndices = solutionFileText.AllIndexesOf("EndProject");
+			List<int> projectSectionStartIndices = solutionFileText.AllIndexesOf(ProjectTag);
+			List<int> projectSectionEndIndices = solutionFileText.AllIndexesOf(EndProjectTag);
 			if (projectSectionStartIndices.Count != projectSectionEndIndices.Count)
 			{
 				throw new Exception

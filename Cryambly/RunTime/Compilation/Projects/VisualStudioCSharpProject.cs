@@ -22,6 +22,11 @@ namespace CryCil.RunTime.Compilation.Projects
 		{
 			get { return new CSharpCodeProvider();}
 		}
+		/// <inheritdoc/>
+		public override CodeDomProvider CreateCompiler(IDictionary<string, string> options)
+		{
+			return new CSharpCodeProvider(options);
+		}
 		/// <summary>
 		/// Creates new instance of this type.
 		/// </summary>

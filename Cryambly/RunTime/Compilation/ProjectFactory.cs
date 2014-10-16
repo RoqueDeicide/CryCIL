@@ -58,21 +58,25 @@ namespace CryCil.RunTime.Compilation
 		public static IProject Create([NotNull] string projectFileDescription)
 		{
 			// Find name of the project and path to the file in the description.
-			string[] parts = projectFileDescription.Split(new[] { ',' });
-			// Name of the project is right before the first comma, path - second comma.
+			List<int> quoteIndices = projectFileDescription.AllIndexesOf("\"");
 			string projectName =
-				parts[0].Substring
+				projectFileDescription.Substring
 				(
-				// Name of the project is in quotation marks, last one right before comma.
-					parts[0].LastIndexOf("\"", 0, parts[0].Length - 1, StringComparison.InvariantCulture)
+				// Name of the project is between third and fourth quotation marks.
+					quoteIndices[2] + 1, quoteIndices[3] - quoteIndices[2] - 1
 				);
 			string projectPath =
-				parts[1].Substring
+				projectFileDescription.Substring
 				(
-				// Same deal with path as with name above.
-					parts[1].LastIndexOf("\"", 0, parts[1].Length - 1, StringComparison.InvariantCulture)
+				// Path is between fifth and sixth quotation marks.
+					quoteIndices[4] + 1, quoteIndices[5] - quoteIndices[4] - 1
 				);
-			return ProjectFactory.Create(projectName, projectPath);
+			return
+				ProjectFactory.Create
+				(
+					projectName,
+					Path.Combine(CodeSolution.SolutionFolder, projectPath)
+				);
 		}
 		/// <summary>
 		/// Creates new wrapper object for a project file.

@@ -24,5 +24,15 @@ namespace CryCil.RunTime
 				
 			}
 		}
+		/// <summary>
+		/// Gets the path to the folder with referable assemblies.
+		/// </summary>
+		public static string AssembliesFolder
+		{
+			get
+			{
+				
+			}
+		}
 	}
 }
