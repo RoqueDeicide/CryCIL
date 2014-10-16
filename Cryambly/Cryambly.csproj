@@ -83,7 +83,13 @@
     <Compile Include="RunTime\Compilation\Projects\VisualStudioCSharpProject.cs" />
     <Compile Include="RunTime\Compilation\Projects\VisualStudioVisualBasicProject.cs" />
     <Compile Include="RunTime\Compilation\VisualStudioDotNetProject.cs" />
+    <Compile Include="RunTime\Logging\ConsoleLogWriter.cs" />
+    <Compile Include="RunTime\Logging\ConsoleLogWriter.Write.cs" />
+    <Compile Include="RunTime\Logging\ConsoleLogWriter.WriteLine.cs" />
     <Compile Include="VariousConstants.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="RunTime\NativeCodeAccess\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
