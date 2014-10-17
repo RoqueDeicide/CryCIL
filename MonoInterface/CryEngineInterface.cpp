@@ -1,7 +1,6 @@
 // All functions that are exported to be used by CryEngine Game Dll.
 
 #include "stdafx.h"
-#include "CryEngineHeaders.h"
 
 extern "C"	// Mark exported functions as C code, so the compiler keeps function names as they are.
 {
