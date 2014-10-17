@@ -88,7 +88,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;MONOINTERFACE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>true</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>.\;%(AdditionalIncludeDirectories);..\..\CryEngine\CryAction;..\..\CryEngine\CryCommon;$(SDKFolder);$(SDKFolder)speex-1.0.5\include;$(SDKFolder)CrispRMF-C++-3.0.0\CryCrispWrapper;$(SolutionDir)..\mono;Headers;..\..\SDKs\boost\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\;%(AdditionalIncludeDirectories);..\..\CryEngine\CryAction;..\..\CryEngine\CryCommon;$(SDKFolder);$(SDKFolder)speex-1.0.5\include;$(SDKFolder)CrispRMF-C++-3.0.0\CryCrispWrapper;$(SolutionDir)..\mono;..\..\SDKs\boost\</AdditionalIncludeDirectories>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>false</ExceptionHandling>
@@ -123,7 +123,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;MONOINTERFACE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <TreatWarningAsError>true</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>.\;%(AdditionalIncludeDirectories);..\..\CryEngine\CryAction;$(SDKFolder);$(SDKFolder)speex-1.0.5\include;$(SDKFolder)CrispRMF-C++-3.0.0\CryCrispWrapper;$(SolutionDir)..\mono;Headers;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\;%(AdditionalIncludeDirectories);..\..\CryEngine\CryAction;$(SDKFolder);$(SDKFolder)speex-1.0.5\include;$(SDKFolder)CrispRMF-C++-3.0.0\CryCrispWrapper;$(SolutionDir)..\mono;</AdditionalIncludeDirectories>
       <StringPooling>true</StringPooling>
       <MinimalRebuild>false</MinimalRebuild>
       <ExceptionHandling>false</ExceptionHandling>
