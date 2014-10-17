@@ -100,7 +100,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SDKFolder);$(SDKFolder)GPA\lib32;$(SolutionDir)..\MonoDll\Libraries\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SDKFolder);$(SDKFolder)GPA\lib32;$(SolutionDir)..\Libraries\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <Xdcmake>
       <OutputFile />
@@ -135,6 +135,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SDKFolder);$(SDKFolder)GPA\lib64;$(SolutionDir)..\Libraries\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <Xdcmake>
       <OutputFile>
