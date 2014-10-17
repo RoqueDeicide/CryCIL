@@ -33,6 +33,7 @@
 #include <ILog.h>
 #include <IGameplayRecorder.h>
 #include <ISerialize.h>
+#include <IGameFramework.h>
 
 #include "targetver.h"
 
