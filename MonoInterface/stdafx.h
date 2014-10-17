@@ -35,6 +35,9 @@
 #include <ISerialize.h>
 #include <IGameFramework.h>
 
+// Include monosgen.lib from relevant folder. (Folder is defined in project properties.)
+#pragma comment(lib, "monosgen")
+
 #include "targetver.h"
 
 #define WIN32_LEAN_AND_MEAN             // Exclude rarely-used stuff from Windows headers
