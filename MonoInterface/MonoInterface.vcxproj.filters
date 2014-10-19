@@ -3,10 +3,18 @@
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="IMonoInterface.h" />
+    <ClInclude Include="DoxygenExampleFiles\ExampleDefines.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="CryEngineInterface.cpp" />
+    <ClCompile Include="DoxygenExampleFiles\UnmanagedThunkExample.cpp">
+      <Filter>DoxygenExampleFiles</Filter>
+    </ClCompile>
   </ItemGroup>
+    <Filter Include="DoxygenExampleFiles">
+      <UniqueIdentifier>{4557b354-379b-4996-9dba-b5f2d17b2361}</UniqueIdentifier>
+    </Filter>
 </Project>
