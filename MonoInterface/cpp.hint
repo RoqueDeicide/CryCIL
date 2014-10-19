@@ -1,0 +1,5 @@
+#define BOX_VALUE(type) virtual mono::object Box((type) value) = 0
+#define BOX_FUNCTION(type) mono::object Box((type) value)\
+{\
+	return MonoEnv->DefaultBoxer->Box(value);\
+}
