@@ -123,7 +123,7 @@ struct IMonoHandle : public IMonoFunctionalityWrapper
 	//! @param name  Name of the property which value to set.
 	//! @param value New value to assign to the property.
 	virtual void SetProperty(const char *name, mono::object value) = 0;
-	//! Unboxes value of this object.
+	//! Unboxes value of this object. Don't use with non-value types.
 	//!
 	//! @tparam T Type of the value to unbox. bool, for instance if
 	//!           managed object is of type System.Boolean.
@@ -144,7 +144,8 @@ struct IMonoAssembly : public IMonoFunctionalityWrapper
 {
 	//! Gets the class.
 	//!
-	//! @param className
+	//! @param className Name of the class to get.
+	//! @param nameSpace Name space where the class is defined.
 	virtual IMonoClass *GetClass(const char *className, const char *nameSpace = "CryCil") = 0;
 };
 //! Defines interface of objects that wrap functionality of MonoArray type.
@@ -176,16 +177,20 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	__declspec(property(get=GetAssembly)) IMonoAssembly *Assembly;
 	//! Gets assembly where this class is defined.
 	__declspec(property(get=GetBase)) IMonoClass *Base;
+	//! Creates an instance of this class.
+	//!
+	//! @param args Arguments to pass to the constructor, can be null if latter has no parameters.
+	virtual mono::object CreateInstance(IMonoArray *args = nullptr) = 0;
 	//! Gets method that can accept arguments of specified types.
 	//!
 	//! @param name  Name of the method to get.
 	//! @param types An array of arguments which types specify method signature to use.
-	virtual IMonoMethod *GetMethod(const char *name, IMonoArray *types = nullptr);
+	virtual IMonoMethod *GetMethod(const char *name, IMonoArray *types = nullptr) = 0;
 	//! Gets the first that matches given description.
 	//!
 	//! @param name       Name of the method to find.
 	//! @param paramCount Number of arguments the method should take.
-	virtual IMonoMethod *GetMethod(const char *name, int paramCount);
+	virtual IMonoMethod *GetMethod(const char *name, int paramCount) = 0;
 	//! Gets an array of methods that matches given description.
 	//!
 	//! @param name       Name of the methods to find.
@@ -194,7 +199,7 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!                   number of found methods.
 	//! @returns A pointer to the first found method. You should release
 	//!          resultant array once you don't need it anymore.
-	virtual IMonoMethod **GetMethods(const char *name, int paramCount, int &foundCount);
+	virtual IMonoMethod **GetMethods(const char *name, int paramCount, int &foundCount) = 0;
 	//! Gets an array of overload of the method.
 	//!
 	//! @param name       Name of the method which overloads to find.
@@ -202,7 +207,7 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!                   number of found methods.
 	//! @returns A pointer to the first found method. You should release
 	//!          resultant array once you don't need it anymore.
-	virtual IMonoMethod **GetMethods(const char *name, int &foundCount);
+	virtual IMonoMethod **GetMethods(const char *name, int &foundCount) = 0;
 	//! Gets the value of the object's field.
 	//!
 	//! @param obj   Object which field to get.
@@ -249,15 +254,76 @@ protected:
 //! Defines interface of objects that wrap functionality of MonoMethod type.
 struct IMonoMethod : public IMonoFunctionalityWrapper
 {
-	//! Gets the pointer to unmanaged thunk of the method.
+	//! Returns a pointer to a C-style function that can be invoked like a standard function pointer.
 	//!
-	//! Unmanaged thunk is a body of the method. Getting the thunk causes Mono to
-	//! compile the method's code if needed, and using it allows coder to bypass
-	//! quite a lot coding as well as boxing of arguments, therefore, if there is
-	//! a specific method, that you need to invoke a lot from unmanaged code, use
-	//! it's thunk, instead of normal invocation.
+	//! Signature of the function pointer is defined by the following rules:
+	//!    1) The end result is always boxed, therefore it should be mono::object at all times;
+	//!    2) Calling convention is a standard one for the platform. (__stdcall for Windows.)
+	//!    3) If the method is an instance method then the first parameter should be
+	//!       mono::object that represents an instance this method is called for;
+	//!    4) The list of methods parameters follows where every argument is represented by
+	//!       mono::object that points at the appropriate object, if that object is a value,
+	//!       then it must be boxed;
+	//!    5) The very last parameter is a pointer to mono::object (mono::object *), it must
+	//!       not be null at the point of invocation and it will be null after method returns
+	//!       normally, if there was an unhandled exception however, the last parameter will
+	//!       point at the exception object. You can handle it yourself, or pass it to
+	//!       IMonoInterface::HandleException.
 	//!
-	//! @example DoxygenExampleFiles/UnmanagedThunkExample.cpp
+	//! Simple rules to remember:
+	//!    1) Thunk returns mono::object and only takes mono::object parameters.
+	//!    2) Box every parameter that is a value-type before invocation, unbox result after.
+	//!    3) Result is undefined, if there was an exception that wasn't handled.
+	//!
+	//! Examples of usage:
+	//!
+	//! Static method:
+	//!
+	//! Signatures:
+	//! C#:  int CalculateSum(int a, int b);
+	//! C++: typedef mono::object (*CalculateSum)(mono::object a, mono::object b, mono::object *ex);
+	//!
+	//! Getting the thunk:
+	//!    IMonoMethod *calculateSumMethod = ... (Get the method pointer).
+	//!    CalculateSum sumFunc = (CalculateSum)calculateSumMethod->UnmanagedThunk;
+	//!
+	//! Invocation:
+	//!    int a,b = 0;
+	//!    mono::object exception;
+	//!    mono::object boxedSum = sumFunc(Box(a), Box(b), &exception);
+	//!    if (exception)
+	//!    {
+	//!        MonoEnv->HandleException(exception);		// Or you can handle it yourself.
+	//!    }
+	//!    else
+	//!    {
+	//!        // These code region is the only place where the result of invocation is defined.
+	//!        int sum = Unbox<int>(boxedSum);
+	//!    }
+	//!
+	//! Instance method:
+	//!
+	//! Signatures:
+	//! C#:  int GetHashCode();
+	//! C++: typedef mono::object (*GetHashCode)(mono::object *ex);
+	//!
+	//! Getting the thunk:
+	//!    IMonoMethod *getHashCodeMethod = ... (Get the method pointer).
+	//!    GetHashCode hashFunc = (GetHashCode)getHashCodeMethod->UnmanagedThunk;
+	//!
+	//! Invocation:
+	//!    mono::object instance = ...(Get the instance);
+	//!    mono::object exception;
+	//!    mono::object boxedHash = hashFunc(&exception);
+	//!    if (exception)
+	//!    {
+	//!        MonoEnv->HandleException(exception);		// Or you can handle it yourself.
+	//!    }
+	//!    else
+	//!    {
+	//!        // These code region is the only place where the result of invocation is defined.
+	//!        int hash = Unbox<int>(boxedHash);
+	//!    }
 	__declspec(property(get=GetThunk)) void *UnmanagedThunk;
 	//! Gets the name of the method.
 	__declspec(property(get=GetName)) const char *Name;
@@ -352,24 +418,45 @@ struct IMonoInterface
 	//!         time, however it makes GC sessions longer and decreases memory usage efficiency.
 	//!         Use this method to choose, what to do with results of invoking Mono methods.
 	//!
-	//! @param obj    An object to make persistent.
-	//! @param pinned Indicates whether the object's location
-	//!               in the managed heap must be kept constant.
-	virtual IMonoHandle *WrapObject(mono::object obj, bool pinned) = 0;
+	//! @param obj        An object to make persistent.
+	//! @param persistent Indicates whether handle should keep the object away from GC.
+	//! @param pinned     Indicates whether the object's location
+	//!                   in the managed heap must be kept constant.
+	virtual IMonoHandle *WrapObject(mono::object obj, bool persistent = false, bool pinned = false) = 0;
 	//! Creates object of type object[] with specified capacity.
 	//!
 	//! @param capacity   Number of elements that can be held by the array.
 	//! @param persistent Indicates whether the array must be safe to
 	//!                   keep a reference to for prolonged periods of time.
 	virtual IMonoArray *CreateArray(int capacity, bool persistent) = 0;
+	//! Wraps already existing Mono array.
+	//!
+	//! @remark Avoid wrapping arrays that are not of type object[].
+	//!
+	//! @param arrayHandle Pointer to the array that needs to be wrapped.
+	//! @param persistent  Indicates whether the array wrapping must be safe to
+	//!                    keep a reference to for prolonged periods of time.
+	virtual IMonoArray *WrapArray(mono::object arrayHandle, bool persistent) = 0;
 	//! Handles exception that occurred during managed method invocation.
+	//! @remark Only used internally.
 	virtual void HandleException(mono::object exception) = 0;
 	//! Registers a new internal call.
 	//!
 	//! @remarks Internal calls allow .Net/Mono code to invoke unmanaged code.
+	//!          Bear in mind that any structure object that is not built-in
+	//!          .Net/Mono type (built-in types have keywords attached to them)
+	//!          must be passed with either ref or out keyword.
 	//!
+	//! @param name            Full name of the method that can be used to access it
+	//!                        from managed code.
 	//! @param functionPointer Pointer to unmanaged thunk that needs to be exposed to Mono code.
-	virtual void AddInternalCall(void *functionPointer) = 0;
+	virtual void AddInternalCall(const char *name, void *functionPointer) = 0;
+	//! Loads a Mono assembly into memory.
+	//!
+	//! @param moduleFileName Name of the file inside Modules folder.
+	virtual IMonoAssembly *LoadAssembly(const char *moduleFileName) = 0;
+	//! Wraps assembly pointer.
+	virtual IMonoAssembly *WrapAssembly(void *assemblyHandle) = 0;
 	// Properties.
 
 	//! Gets the pointer to AppDomain.
@@ -404,6 +491,8 @@ IMonoInterface *MonoEnv = nullptr;
 //! Store IGameFramework pointer here for use inside MonoInterface.dll;
 IGameFramework *Framework = nullptr;
 #endif
+
+#pragma region Global Interface
 
 //! Creates managed string that contains given text.
 //!
@@ -469,3 +558,5 @@ mono::object Box(Ang3 value) { return MonoEnv->DefaultBoxer->Box(value); }
 mono::object Box(Quat value) { return MonoEnv->DefaultBoxer->Box(value); }
 
 #undef BOX_FUNCTION
+
+#pragma endregion
