@@ -23,18 +23,54 @@ namespace mono
 //! Interface for the object that does default boxing operations.
 struct IDefaultBoxinator
 {
-	BOX_VALUE(bool);
-	BOX_VALUE(signed char);
-	BOX_VALUE(unsigned char);
-	BOX_VALUE(short);
-	BOX_VALUE(unsigned short);
-	BOX_VALUE(int);
-	BOX_VALUE(unsigned int);
-	BOX_VALUE(float);
-	BOX_VALUE(double);
-	BOX_VALUE(Vec3);
-	BOX_VALUE(Ang3);
-	BOX_VALUE(Quat);
+	//! Boxes a boolean value.
+	//!
+	//! @param value Value to box.
+	virtual mono::object Box(bool value) = 0;
+	//! Boxes a signed byte value.
+	//!
+	//! @param value Value to box.
+	virtual mono::object Box(signed char value) = 0;
+	//! Boxes an unsigned byte value.
+	//!
+	//! @param value Value to box.
+	virtual mono::object Box(unsigned char value) = 0;
+	//! Boxes an Int16 value.
+	//!
+	//! @param value Value to box.
+	virtual mono::object Box(short value) = 0;
+	//! Boxes a UInt16 value.
+	//!
+	//! @param value Value to box.
+	virtual mono::object Box(unsigned short value) = 0;
+	//! Boxes an Int32 value.
+	//!
+	//! @param value Value to box.
+	virtual mono::object Box(int value) = 0;
+	//! Boxes a UInt32 value.
+	//!
+	//! @param value Value to box.
+	virtual mono::object Box(unsigned int value) = 0;
+	//! Boxes a float value.
+	//!
+	//! @param value Value to box.
+	virtual mono::object Box(float value) = 0;
+	//! Boxes a double value.
+	//!
+	//! @param value Value to box.
+	virtual mono::object Box(double value) = 0;
+	//! Boxes a vector value.
+	//!
+	//! @param value Value to box.
+	virtual mono::object Box(Vec3 value) = 0;
+	//! Boxes a EulerAngles value.
+	//!
+	//! @param value Value to box.
+	virtual mono::object Box(Ang3 value) = 0;
+	//! Boxes a Quaternion value.
+	//!
+	//! @param value Value to box.
+	virtual mono::object Box(Quat value) = 0;
 };
 #undef BOX_VALUE
 
@@ -119,11 +155,13 @@ struct IMonoArray : public IMonoFunctionalityWrapper
 	//! Gets item located at the specified position.
 	//!
 	//! @param index Zero-based index of the item to get.
-	virtual mono::object GetItem(int index);
+	virtual mono::object GetItem(int index) = 0;
 	//! Sets item located at the specified position.
 	//!
 	//! @param index Zero-based index of the item to set.
-	virtual void SetItem(int index, mono::object value);
+	virtual void SetItem(int index, mono::object value) = 0;
+	//! Tells the object that it's no longer needed.
+	virtual void Release() = 0;
 protected:
 	virtual int GetSize() const = 0;
 };
@@ -215,9 +253,9 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	//!
 	//! Unmanaged thunk is a body of the method. Getting the thunk causes Mono to
 	//! compile the method's code if needed, and using it allows coder to bypass
-	//! quite a lot coding, therefore, if there is a specific method, that you
-	//! need to invoke a lot from unmanaged code, use it's thunk, instead of normal
-	//! invocation.
+	//! quite a lot coding as well as boxing of arguments, therefore, if there is
+	//! a specific method, that you need to invoke a lot from unmanaged code, use
+	//! it's thunk, instead of normal invocation.
 	//!
 	//! @example DoxygenExampleFiles/UnmanagedThunkExample.cpp
 	__declspec(property(get=GetThunk)) void *UnmanagedThunk;
