@@ -83,66 +83,75 @@ namespace mono
 	typedef class _string *string;
 }
 
-#define BOX_VALUE(type) virtual mono::object Box(type value) = 0
+//! In various programming books about C++ authors usually tell us that virtual
+//! dispatch is used for polymorphism.
+//!
+//! While that is true, there is another, less famous, usage for it: creation of
+//! cross-Dll API.
+//!
+//! That is possible thanks to the fact that objects of types that have virtual
+//! methods always carry a pointer to a VTable with them, allowing access to
+//! their interface from anywhere within the process.
+#define VIRTUAL_API
+
 //! Interface for the object that does default boxing operations.
 struct IDefaultBoxinator
 {
 	//! Boxes a boolean value.
 	//!
 	//! @param value Value to box.
-	virtual mono::object Box(bool value) = 0;
+	VIRTUAL_API virtual mono::object Box(bool value) = 0;
 	//! Boxes a signed byte value.
 	//!
 	//! @param value Value to box.
-	virtual mono::object Box(signed char value) = 0;
+	VIRTUAL_API virtual mono::object Box(signed char value) = 0;
 	//! Boxes an unsigned byte value.
 	//!
 	//! @param value Value to box.
-	virtual mono::object Box(unsigned char value) = 0;
+	VIRTUAL_API virtual mono::object Box(unsigned char value) = 0;
 	//! Boxes an Int16 value.
 	//!
 	//! @param value Value to box.
-	virtual mono::object Box(short value) = 0;
+	VIRTUAL_API virtual mono::object Box(short value) = 0;
 	//! Boxes a UInt16 value.
 	//!
 	//! @param value Value to box.
-	virtual mono::object Box(unsigned short value) = 0;
+	VIRTUAL_API virtual mono::object Box(unsigned short value) = 0;
 	//! Boxes an Int32 value.
 	//!
 	//! @param value Value to box.
-	virtual mono::object Box(int value) = 0;
+	VIRTUAL_API virtual mono::object Box(int value) = 0;
 	//! Boxes a UInt32 value.
 	//!
 	//! @param value Value to box.
-	virtual mono::object Box(unsigned int value) = 0;
+	VIRTUAL_API virtual mono::object Box(unsigned int value) = 0;
 	//! Boxes a float value.
 	//!
 	//! @param value Value to box.
-	virtual mono::object Box(float value) = 0;
+	VIRTUAL_API virtual mono::object Box(float value) = 0;
 	//! Boxes a double value.
 	//!
 	//! @param value Value to box.
-	virtual mono::object Box(double value) = 0;
+	VIRTUAL_API virtual mono::object Box(double value) = 0;
 	//! Boxes a vector value.
 	//!
 	//! @param value Value to box.
-	virtual mono::object Box(Vec3 value) = 0;
+	VIRTUAL_API virtual mono::object Box(Vec3 value) = 0;
 	//! Boxes a EulerAngles value.
 	//!
 	//! @param value Value to box.
-	virtual mono::object Box(Ang3 value) = 0;
+	VIRTUAL_API virtual mono::object Box(Ang3 value) = 0;
 	//! Boxes a Quaternion value.
 	//!
 	//! @param value Value to box.
-	virtual mono::object Box(Quat value) = 0;
+	VIRTUAL_API virtual mono::object Box(Quat value) = 0;
 };
-#undef BOX_VALUE
 
 //! Base interface for objects that wrap Mono functionality.
 struct IMonoFunctionalityWrapper
 {
 	//! Returns pointer to Mono object this wrapper uses.
-	virtual void *GetWrappedPointer() const = 0;
+	VIRTUAL_API virtual void *GetWrappedPointer() const = 0;
 };
 
 //! Base type of objects that wrap MonoObject instances granting access to Mono API
@@ -152,37 +161,34 @@ struct IMonoHandle : public IMonoFunctionalityWrapper
 	//! Tells the object to hold given MonoObject and prevent its collection.
 	//!
 	//! @param object MonoObject that is in danger of GC if not held by this object.
-	virtual void Hold(mono::object object) = 0;
+	VIRTUAL_API virtual void Hold(mono::object object) = 0;
 	//! Tells this object to release MonoObject it held previously.
-	virtual void Release() = 0;
+	VIRTUAL_API virtual void Release() = 0;
 	//! Returns an instance of MonoObject this object is wrapped around.
-	virtual mono::object Get() = 0;
+	VIRTUAL_API virtual mono::object Get() = 0;
 	//! Calls a Mono method associated with this object.
-	//!
-	//! @remark Make sure that each overload of the method you are
-	//!         calling has unique number of parameters.
 	//!
 	//! @param name Name of the method to invoke.
 	//! @param args Array of arguments to pass, that also defines which method overload to use.
-	virtual mono::object CallMethod(const char *name, IMonoArray *args) = 0;
+	VIRTUAL_API virtual mono::object CallMethod(const char *name, IMonoArray *args) = 0;
 	//! Gets the value of the object's field.
 	//!
 	//! @param name Name of the field which value to get.
-	virtual mono::object GetField(const char *name) = 0;
+	VIRTUAL_API virtual mono::object GetField(const char *name) = 0;
 	//! Sets the value of the object's field.
 	//!
 	//! @param name  Name of the field which value to set.
 	//! @param value New value to assign to the field.
-	virtual void SetField(const char *name, mono::object value) = 0;
+	VIRTUAL_API virtual void SetField(const char *name, mono::object value) = 0;
 	//! Gets the value of the object's property.
 	//!
 	//! @param name Name of the property which value to get.
-	virtual mono::object GetProperty(const char *name) = 0;
+	VIRTUAL_API virtual mono::object GetProperty(const char *name) = 0;
 	//! Sets the value of the object's property.
 	//!
 	//! @param name  Name of the property which value to set.
 	//! @param value New value to assign to the property.
-	virtual void SetProperty(const char *name, mono::object value) = 0;
+	VIRTUAL_API virtual void SetProperty(const char *name, mono::object value) = 0;
 	//! Unboxes value of this object. Don't use with non-value types.
 	//!
 	//! @tparam T Type of the value to unbox. bool, for instance if
@@ -194,10 +200,10 @@ struct IMonoHandle : public IMonoFunctionalityWrapper
 		return *(T *)this->UnboxObject();
 	}
 	//! Gets managed type that represents wrapped object.
-	virtual struct IMonoClass *GetClass() = 0;
+	VIRTUAL_API virtual struct IMonoClass *GetClass() = 0;
 
 protected:
-	virtual void *UnboxObject() = 0;
+	VIRTUAL_API virtual void *UnboxObject() = 0;
 };
 //! Defines interface of objects that wrap functionality of MonoAssembly type.
 struct IMonoAssembly : public IMonoFunctionalityWrapper
@@ -206,7 +212,7 @@ struct IMonoAssembly : public IMonoFunctionalityWrapper
 	//!
 	//! @param className Name of the class to get.
 	//! @param nameSpace Name space where the class is defined.
-	virtual IMonoClass *GetClass(const char *className, const char *nameSpace = "CryCil") = 0;
+	VIRTUAL_API virtual IMonoClass *GetClass(const char *className, const char *nameSpace = "CryCil") = 0;
 };
 //! Defines interface of objects that wrap functionality of MonoArray type.
 struct IMonoArray : public IMonoFunctionalityWrapper
@@ -216,15 +222,15 @@ struct IMonoArray : public IMonoFunctionalityWrapper
 	//! Gets item located at the specified position.
 	//!
 	//! @param index Zero-based index of the item to get.
-	virtual mono::object GetItem(int index) = 0;
+	VIRTUAL_API virtual mono::object GetItem(int index) = 0;
 	//! Sets item located at the specified position.
 	//!
 	//! @param index Zero-based index of the item to set.
-	virtual void SetItem(int index, mono::object value) = 0;
+	VIRTUAL_API virtual void SetItem(int index, mono::object value) = 0;
 	//! Tells the object that it's no longer needed.
-	virtual void Release() = 0;
+	VIRTUAL_API virtual void Release() = 0;
 protected:
-	virtual int GetSize() const = 0;
+	VIRTUAL_API virtual int GetSize() const = 0;
 };
 //! Defines interface of objects that wrap functionality of MonoClass type.
 struct IMonoClass : public IMonoFunctionalityWrapper
@@ -240,17 +246,17 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//! Creates an instance of this class.
 	//!
 	//! @param args Arguments to pass to the constructor, can be null if latter has no parameters.
-	virtual mono::object CreateInstance(IMonoArray *args = nullptr) = 0;
+	VIRTUAL_API virtual mono::object CreateInstance(IMonoArray *args = nullptr) = 0;
 	//! Gets method that can accept arguments of specified types.
 	//!
 	//! @param name  Name of the method to get.
 	//! @param types An array of arguments which types specify method signature to use.
-	virtual IMonoMethod *GetMethod(const char *name, IMonoArray *types = nullptr) = 0;
+	VIRTUAL_API virtual IMonoMethod *GetMethod(const char *name, IMonoArray *types = nullptr) = 0;
 	//! Gets the first that matches given description.
 	//!
 	//! @param name       Name of the method to find.
 	//! @param paramCount Number of arguments the method should take.
-	virtual IMonoMethod *GetMethod(const char *name, int paramCount) = 0;
+	VIRTUAL_API virtual IMonoMethod *GetMethod(const char *name, int paramCount) = 0;
 	//! Gets an array of methods that matches given description.
 	//!
 	//! @param name       Name of the methods to find.
@@ -259,7 +265,7 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!                   number of found methods.
 	//! @returns A pointer to the first found method. You should release
 	//!          resultant array once you don't need it anymore.
-	virtual IMonoMethod **GetMethods(const char *name, int paramCount, int &foundCount) = 0;
+	VIRTUAL_API virtual IMonoMethod **GetMethods(const char *name, int paramCount, int &foundCount) = 0;
 	//! Gets an array of overload of the method.
 	//!
 	//! @param name       Name of the method which overloads to find.
@@ -267,35 +273,35 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!                   number of found methods.
 	//! @returns A pointer to the first found method. You should release
 	//!          resultant array once you don't need it anymore.
-	virtual IMonoMethod **GetMethods(const char *name, int &foundCount) = 0;
+	VIRTUAL_API virtual IMonoMethod **GetMethods(const char *name, int &foundCount) = 0;
 	//! Gets the value of the object's field.
 	//!
 	//! @param obj   Object which field to get.
 	//! @param name Name of the field which value to get.
-	virtual mono::object GetField(mono::object obj, const char *name) = 0;
+	VIRTUAL_API virtual mono::object GetField(mono::object obj, const char *name) = 0;
 	//! Sets the value of the object's field.
 	//!
 	//! @param obj   Object which field to set.
 	//! @param name  Name of the field which value to set.
 	//! @param value New value to assign to the field.
-	virtual void SetField(mono::object obj, const char *name, mono::object value) = 0;
+	VIRTUAL_API virtual void SetField(mono::object obj, const char *name, mono::object value) = 0;
 	//! Gets the value of the object's property.
 	//!
 	//! @param obj   Object which property to get.
 	//! @param name Name of the property which value to get.
-	virtual mono::object GetProperty(mono::object obj, const char *name) = 0;
+	VIRTUAL_API virtual mono::object GetProperty(mono::object obj, const char *name) = 0;
 	//! Sets the value of the object's property.
 	//!
 	//! @param obj   Object which property to set.
 	//! @param name  Name of the property which value to set.
 	//! @param value New value to assign to the property.
-	virtual void SetProperty(mono::object obj, const char *name, mono::object value) = 0;
+	VIRTUAL_API virtual void SetProperty(mono::object obj, const char *name, mono::object value) = 0;
 	//! Determines whether this class implements from specified class.
 	//!
 	//! @param nameSpace Full name of the name space where the class is located.
 	//! @param className Name of the class.
 	//! @returns True, if this class is a subclass of specified one.
-	virtual bool Inherits(const char *nameSpace, const char *className) = 0;
+	VIRTUAL_API virtual bool Inherits(const char *nameSpace, const char *className) = 0;
 	//! Determines whether this class implements a certain interface.
 	//!
 	//! @param nameSpace         Full name of the name space where the interface is located.
@@ -303,16 +309,16 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//! @param searchBaseClasses Indicates whether we should look if base classes implement
 	//!                          this interface.
 	//! @returns True, if this class does implement specified interface.
-	virtual bool Implements(const char *nameSpace, const char *interfaceName, bool searchBaseClasses = true) = 0;
+	VIRTUAL_API virtual bool Implements(const char *nameSpace, const char *interfaceName, bool searchBaseClasses = true) = 0;
 	//! Boxes given value.
 	//!
 	//! @returns Null if this class is not a value-type, or reference to the boxed object, if it is.
-	virtual mono::object Box(void *value) = 0;
+	VIRTUAL_API virtual mono::object Box(void *value) = 0;
 protected:
-	virtual const char *GetName() = 0;
-	virtual const char *GetNameSpace() = 0;
-	virtual IMonoAssembly *GetAssembly() = 0;
-	virtual IMonoClass *GetBase() = 0;
+	VIRTUAL_API virtual const char *GetName() = 0;
+	VIRTUAL_API virtual const char *GetNameSpace() = 0;
+	VIRTUAL_API virtual IMonoAssembly *GetAssembly() = 0;
+	VIRTUAL_API virtual IMonoClass *GetBase() = 0;
 };
 //! Defines interface of objects that wrap functionality of MonoMethod type.
 struct IMonoMethod : public IMonoFunctionalityWrapper
@@ -406,7 +412,7 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	//!                  Pass null, if method can accept no arguments.
 	//! @param polymorph Indicates whether we need to invoke a virtual method,
 	//!                  that is specific to the instance.
-	virtual mono::object Invoke(mono::object object, IMonoArray *params = nullptr, bool polymorph = false) = 0;
+	VIRTUAL_API virtual mono::object Invoke(mono::object object, IMonoArray *params = nullptr, bool polymorph = false) = 0;
 	//! Invokes this method.
 	//!
 	//! Since extension methods are static by their internal nature,
@@ -420,11 +426,11 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	//!                   Pass null, if method can accept no arguments.
 	//! @param polymorph  Indicates whether we need to invoke a virtual method,
 	//!                   that is specific to the instance.
-	virtual mono::object Invoke(mono::object object, void **params = nullptr, bool polymorph = false) = 0;
+	VIRTUAL_API virtual mono::object Invoke(mono::object object, void **params = nullptr, bool polymorph = false) = 0;
 protected:
-	virtual void *GetThunk() = 0;
-	virtual const char *GetName() = 0;
-	virtual int GetParameterCount() = 0;
+	VIRTUAL_API virtual void *GetThunk() = 0;
+	VIRTUAL_API virtual const char *GetName() = 0;
+	VIRTUAL_API virtual int GetParameterCount() = 0;
 };
 
 //! Base class for MonoRunTime. Provides access to Mono interface.
@@ -433,16 +439,16 @@ struct IMonoInterface
 	//! Triggers registration of FlowGraph nodes.
 	//!
 	//! @remark Call this method from Game::RegisterGameFlowNodes function.
-	virtual void RegisterFlowGraphNodes() = 0;
+	VIRTUAL_API virtual void RegisterFlowGraphNodes() = 0;
 	//! Shuts down Mono run-time environment.
 	//!
 	//! @remark Call this method from GameStartup destructor.
-	virtual void Shutdown() = 0;
+	VIRTUAL_API virtual void Shutdown() = 0;
 
 	//! Converts given null-terminated string to Mono managed object.
-	virtual mono::string ToManagedString(const char *text) = 0;
+	VIRTUAL_API virtual mono::string ToManagedString(const char *text) = 0;
 	//! Converts given managed string to null-terminated one.
-	virtual const char *ToNativeString(mono::string text) = 0;
+	VIRTUAL_API virtual const char *ToNativeString(mono::string text) = 0;
 	//! Creates a new wrapped MonoObject using constructor with specific parameters.
 	//!
 	//! Specifying the object to be persistent will wrap it into a handle that allows
@@ -459,7 +465,7 @@ struct IMonoInterface
 	//!                   in the managed heap must be kept constant.
 	//! @param params     An array of parameters to pass to the constructor.
 	//!                   If null, default constructor will be used.
-	virtual IMonoHandle *CreateObject
+	VIRTUAL_API virtual IMonoHandle *CreateObject
 	(
 		IMonoAssembly *assembly,
 		const char *name_space,
@@ -480,23 +486,30 @@ struct IMonoInterface
 	//! @param persistent Indicates whether handle should keep the object away from GC.
 	//! @param pinned     Indicates whether the object's location
 	//!                   in the managed heap must be kept constant.
-	virtual IMonoHandle *WrapObject(mono::object obj, bool persistent = false, bool pinned = false) = 0;
+	VIRTUAL_API virtual IMonoHandle *WrapObject(mono::object obj, bool persistent = false, bool pinned = false) = 0;
 	//! Creates object of type object[] with specified capacity.
 	//!
 	//! @param capacity   Number of elements that can be held by the array.
 	//! @param persistent Indicates whether the array must be safe to
 	//!                   keep a reference to for prolonged periods of time.
-	virtual IMonoArray *CreateArray(int capacity, bool persistent) = 0;
-	//! Wraps already existing Mono array.
+	VIRTUAL_API virtual IMonoArray *CreateArray(int capacity, bool persistent) = 0;
+	//! Creates object of specified type with specified capacity.
 	//!
-	//! @remark Avoid wrapping arrays that are not of type object[].
+	//! @param klass      Pointer to the class that will represent objects
+	//!                   within the array.
+	//! @param capacity   Number of elements that can be held by the array.
+	//! @param persistent Indicates whether the array must be safe to
+	//!                   keep a reference to for prolonged periods of time.
+	VIRTUAL_API virtual IMonoArray *CreateArray(IMonoClass *klass, int capacity, bool persistent) = 0;
+	//! Wraps already existing Mono array.
 	//!
 	//! @param arrayHandle Pointer to the array that needs to be wrapped.
 	//! @param persistent  Indicates whether the array wrapping must be safe to
 	//!                    keep a reference to for prolonged periods of time.
-	virtual IMonoArray *WrapArray(mono::object arrayHandle, bool persistent) = 0;
+	VIRTUAL_API virtual IMonoArray *WrapArray(mono::object arrayHandle, bool persistent) = 0;
+	VIRTUAL_API virtual void *Unbox(mono::object value) = 0;
 	//! Handles exception that occurred during managed method invocation.
-	virtual void HandleException(mono::object exception) = 0;
+	VIRTUAL_API virtual void HandleException(mono::object exception) = 0;
 	//! Registers a new internal call.
 	//!
 	//! Internal calls allow .Net/Mono code to invoke unmanaged code.
@@ -598,13 +611,13 @@ struct IMonoInterface
 	//! @param name            Full name of the method that can be used to access it
 	//!                        from managed code.
 	//! @param functionPointer Pointer to unmanaged thunk that needs to be exposed to Mono code.
-	virtual void AddInternalCall(const char *name, void *functionPointer) = 0;
+	VIRTUAL_API virtual void AddInternalCall(const char *name, void *functionPointer) = 0;
 	//! Loads a Mono assembly into memory.
 	//!
 	//! @param moduleFileName Name of the file inside Modules folder.
-	virtual IMonoAssembly *LoadAssembly(const char *moduleFileName) = 0;
+	VIRTUAL_API virtual IMonoAssembly *LoadAssembly(const char *moduleFileName) = 0;
 	//! Wraps assembly pointer.
-	virtual IMonoAssembly *WrapAssembly(void *assemblyHandle) = 0;
+	VIRTUAL_API virtual IMonoAssembly *WrapAssembly(void *assemblyHandle) = 0;
 	// Properties.
 
 	//! Gets the pointer to AppDomain.
@@ -621,12 +634,12 @@ struct IMonoInterface
 	__declspec(property(get=GetDefaultBoxer)) IDefaultBoxinator *DefaultBoxer;
 
 protected:
-	virtual void *GetAppDomain() = 0;
-	virtual IMonoAssembly *GetCryambly() = 0;
-	virtual IMonoAssembly *GetPdbMdbAssembly() = 0;
-	virtual IMonoAssembly *GetCoreLibrary() = 0;
-	virtual bool GetInitializedIndication() = 0;
-	virtual IDefaultBoxinator *GetDefaultBoxer() = 0;
+	VIRTUAL_API virtual void *GetAppDomain() = 0;
+	VIRTUAL_API virtual IMonoAssembly *GetCryambly() = 0;
+	VIRTUAL_API virtual IMonoAssembly *GetPdbMdbAssembly() = 0;
+	VIRTUAL_API virtual IMonoAssembly *GetCoreLibrary() = 0;
+	VIRTUAL_API virtual bool GetInitializedIndication() = 0;
+	VIRTUAL_API virtual IDefaultBoxinator *GetDefaultBoxer() = 0;
 };
 
 //! Signature of the only method that is exported by MonoInterface.dll
@@ -678,56 +691,128 @@ const char *ToNativeString(mono::string monoString)
 	return MonoEnv->ToNativeString(monoString);
 }
 
-#define BOX_FUNCTION(type) mono::object Box(type value) { return MonoEnv->DefaultBoxer->Box(value); }
-//! Boxes a value.
+//! Boxing and unboxing are names of ways to marshal data to and from managed memory.
 //!
-//! @param value Value to box.
-mono::object Box(bool value) { return MonoEnv->DefaultBoxer->Box(value); }
-//! Boxes a value.
+//! Boxing is quite tricky due to C++ lacking any built-in metadata tracking
+//! functionality. This means that are two ways of transferring the object to managed
+//! memory:
+//!     1) Official boxing: You have to get the class that will represent unmanaged
+//!                         object in managed memory, then calling its Box method.
+//!     2) Boxing pointer : You can use BoxPtr function to box a pointer to unmanaged
+//!                         object, pass it managed method and let it dereference
+//!                         that pointer.
+//!                         
+//!                         This method has some specifics though:
+//!                          1) Make sure that managed are unmanaged types are blittable:
+//!                           - Their objects take up the same amount of memory.
+//!                           - Object is treated in same way in both codes.
+//!                          2) If the object contains pointer type fields, you will have
+//!                             to dereference them as well before using them.
+//! Examples:
 //!
-//! @param value Value to box.
-mono::object Box(signed char value) { return MonoEnv->DefaultBoxer->Box(value); }
-//! Boxes a value.
+//! First method with built-in value-type:
+//! {
+//!     mono::object boxedBool = Box(true);
+//! }
 //!
-//! @param value Value to box.
-mono::object Box(unsigned char value) { return MonoEnv->DefaultBoxer->Box(value); }
-//! Boxes a value.
+//! First method with custom value-type:
+//! {
+//!     // Get the type that will represent our object.
+//!     IMonoClass *managedPlaneType =
+//!         MonoEnv->Cryambly->GetClass("Plane", "CryCil.Mathematics.Geometry");
+//!     // Box the object.
+//!     mono::object boxedPlane = managedPlaneType->Box(&plane);
+//! }
 //!
-//! @param value Value to box.
-mono::object Box(short value) { return MonoEnv->DefaultBoxer->Box(value); }
-//! Boxes a value.
+//! Second method with custom type:
 //!
-//! @param value Value to box.
-mono::object Box(unsigned short value) { return MonoEnv->DefaultBoxer->Box(value); }
-//! Boxes a value.
+//! C++:
+//! {
+//!     Quat quaternion(1, 1, 1, 1);
+//!     mono::object exception;
+//!     // Invoke unmanaged thunk that takes a pointer.
+//!     mono::object result =
+//!         ExampleQuatFunc
+//!         (
+//!             BoxPtr(&quaternion),                    // Box a pointer to our quaternion.
+//!             &exception
+//!         );
+//! }
 //!
-//! @param value Value to box.
-mono::object Box(int value) { return MonoEnv->DefaultBoxer->Box(value); }
-//! Boxes a value.
+//! C#:
+//! internal void ExampleQuatFunc(IntPtr quatHandle)
+//! {
+//!     // Convert a pointer to Quaternion * type and dereference it.
+//!     Quaternion quat = *((Quaternion *)quatHandle.ToPointer());
+//!     // Do something about this quaternion.
+//!     ...
+//! }
 //!
-//! @param value Value to box.
-mono::object Box(unsigned int value) { return MonoEnv->DefaultBoxer->Box(value); }
-//! Boxes a value.
+//! Unboxing on the other hand is relatively easy since .Net/Mono does have built-in
+//! metadata tracking. This is why their is only one global function for unboxing.
 //!
-//! @param value Value to box.
-mono::object Box(float value) { return MonoEnv->DefaultBoxer->Box(value); }
-//! Boxes a value.
+//! Example:
 //!
-//! @param value Value to box.
-mono::object Box(double value) { return MonoEnv->DefaultBoxer->Box(value); }
-//! Boxes a value.
-//!
-//! @param value Value to box.
-mono::object Box(Vec3 value) { return MonoEnv->DefaultBoxer->Box(value); }
-//! Boxes a value.
-//!
-//! @param value Value to box.
-mono::object Box(Ang3 value) { return MonoEnv->DefaultBoxer->Box(value); }
-//! Boxes a value.
-//!
-//! @param value Value to box.
-mono::object Box(Quat value) { return MonoEnv->DefaultBoxer->Box(value); }
+//! mono::object really = (...);
+//! bool oReally = Unbox<bool>(really);          // EASY
+#define BOX_UNBOX
 
-#undef BOX_FUNCTION
+//! Unboxes a value-type object into another unmanaged value.
+//! @tparam T type of unmanaged object to create.
+//! @param value Value-type object to unbox.
+//! @returns A verbatim copy of the memory that is occupied by managed object.
+template<typename T>
+BOX_UNBOX T Unbox(mono::object value)
+{
+	return *(T *)MonoEnv->Unbox(value);
+}
+//! Boxes a value.
+//!
+//! @param value Value to box.
+BOX_UNBOX mono::object Box(bool value) { return MonoEnv->DefaultBoxer->Box(value); }
+//! Boxes a value.
+//!
+//! @param value Value to box.
+BOX_UNBOX mono::object Box(signed char value) { return MonoEnv->DefaultBoxer->Box(value); }
+//! Boxes a value.
+//!
+//! @param value Value to box.
+BOX_UNBOX mono::object Box(unsigned char value) { return MonoEnv->DefaultBoxer->Box(value); }
+//! Boxes a value.
+//!
+//! @param value Value to box.
+BOX_UNBOX mono::object Box(short value) { return MonoEnv->DefaultBoxer->Box(value); }
+//! Boxes a value.
+//!
+//! @param value Value to box.
+BOX_UNBOX mono::object Box(unsigned short value) { return MonoEnv->DefaultBoxer->Box(value); }
+//! Boxes a value.
+//!
+//! @param value Value to box.
+BOX_UNBOX mono::object Box(int value) { return MonoEnv->DefaultBoxer->Box(value); }
+//! Boxes a value.
+//!
+//! @param value Value to box.
+BOX_UNBOX mono::object Box(unsigned int value) { return MonoEnv->DefaultBoxer->Box(value); }
+//! Boxes a value.
+//!
+//! @param value Value to box.
+BOX_UNBOX mono::object Box(float value) { return MonoEnv->DefaultBoxer->Box(value); }
+//! Boxes a value.
+//!
+//! @param value Value to box.
+BOX_UNBOX mono::object Box(double value) { return MonoEnv->DefaultBoxer->Box(value); }
+//! Boxes a value.
+//!
+//! @param value Value to box.
+BOX_UNBOX mono::object Box(Vec3 value) { return MonoEnv->DefaultBoxer->Box(value); }
+//! Boxes a value.
+//!
+//! @param value Value to box.
+BOX_UNBOX mono::object Box(Ang3 value) { return MonoEnv->DefaultBoxer->Box(value); }
+//! Boxes a value.
+//!
+//! @param value Value to box.
+BOX_UNBOX mono::object Box(Quat value) { return MonoEnv->DefaultBoxer->Box(value); }
 
 #pragma endregion
