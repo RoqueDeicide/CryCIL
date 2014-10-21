@@ -444,10 +444,101 @@ struct IMonoInterface
 	virtual void HandleException(mono::object exception) = 0;
 	//! Registers a new internal call.
 	//!
-	//! @remarks Internal calls allow .Net/Mono code to invoke unmanaged code.
-	//!          Bear in mind that any structure object that is not built-in
-	//!          .Net/Mono type (built-in types have keywords attached to them)
-	//!          must be passed with either ref or out keyword.
+	//! Internal calls allow .Net/Mono code to invoke unmanaged code.
+	//! Bear in mind that any structure object that is not built-in
+	//! .Net/Mono type (built-in types have keywords attached to them)
+	//! must be passed with either ref or out keyword. Such object
+	//! must then be unboxed before being access from C++ code.
+	//!
+	//! Examples:
+	//!
+	//! With built-in types only:
+	//!
+	//! Signatures:
+	//! C#:  [MethodImpl(MethodImplOptions.InternalCall)]
+	//!      extern internal static float GetTerrainElevation(float positionX, float positionY);
+	//! C++: float GetTerrainElevation(float x, float y);
+	//!
+	//! C++ implementation:
+	//! {
+	//!     return gEnv->p3DEngine->GetTerrainElevation(x, y);
+	//! }
+	//!
+	//! C# invocation:
+	//! {
+	//!     float elevationAt3And5 = (ClassName).GetTerrainElevation(3, 5);
+	//! }
+	//!
+	//! With custom structures:
+	//!
+	//! Signatures:
+	//! C#:  [MethodImpl(MethodImplOptions.InternalCall)]
+	//!      extern internal static float CalculateArea(ref Vector2 leftBottom, ref Vector2 rightTop);
+	//! C++: float CalculateArea(mono::object leftBottom, mono::object rightTop);
+	//!
+	//! C++ implementation:
+	//! {
+	//!     // Unbox vectors.
+	//!     Vec2 leftBottomPosition = Unbox<Vec2>(leftBottom);
+	//!     Vec2 rightTopPosition   = Unbox<Vec2>(rightTop);
+	//!     // Calculate area.
+	//!     return abs((leftBottomPosition.x - rightTop.x) * (leftBottomPosition.y - rightTop.y));
+	//! }
+	//!
+	//! C# invocation:
+	//! {
+	//!     // Declare variables.
+	//!     Vector2 leftBottom = new Vector2(2);
+	//!     Vector2 rightTop   = new Vector2(4, 5);
+	//!     // Pass those variables by reference.
+	//!     float area = (ClassName).CalculateArea(ref leftBottom, ref rightTop);
+	//! }
+	//!
+	//! With custom structures and managed objects:
+	//!
+	//! Signatures:
+	//! C#:  [MethodImpl(MethodImplOptions.InternalCall)]
+	//!      extern internal static Material LoadMaterial(string name, ref MaterialParameters params);
+	//! C++: mono::object LoadMaterial(mono::string name, mono::object params);
+	//!
+	//! C++ implementation:
+	//! {
+	//!     // Unbox parameters.
+	//!     MaterialParameters pars = Unbox<MaterialParameters>(params);
+	//!     // Get the handle to the loaded material.
+	//!     IMaterial *materialHandle = m_pMaterialManager->LoadMaterial
+	//!     (
+	//!         MonoEnv->ToNativeString(name),
+	//!         pars.makeIfNotFound,
+	//!         pars.nonRemovable
+	//!     );
+	//!     // Create an array for Material construction parameters.
+	//!     IMonoArray *ctorParams = MonoEnv->CreateArray(1, false);
+	//!     // Fill it.
+	//!     ctorParams->SetItem(0, BoxPtr(materialHandle));
+	//!     // Create the object.
+	//!     return MonoEnv->CreateObject
+	//!     (
+	//!         MonoEnv->Cryambly,          // Assembly where the type is defined.
+	//!         "CryCil.Engine.Materials",  // Name space where the type is defined.
+	//!         "Material",                 // Name of the type to instantiate.
+	//!         false,                      // Persistent?
+	//!         false,                      // Pinned?
+	//!         ctorParams                  // Arguments.
+	//!     )->Get();
+	//! }
+	//!
+	//! C# invocation:
+	//! {
+	//!     // Declare variable.
+	//!     MaterialParameters params = new MaterialParameters
+	//!     {
+	//!         MakeIfNotFound = true,
+	//!         NonRemovable = false
+	//!     };
+	//!     // Pass those variables by reference.
+	//!     Material deathMetal = (ClassName).LoadMaterial("DeathMetal", ref params);
+	//! }
 	//!
 	//! @param name            Full name of the method that can be used to access it
 	//!                        from managed code.
