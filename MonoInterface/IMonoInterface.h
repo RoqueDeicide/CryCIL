@@ -231,6 +231,8 @@ struct IMonoArray : public IMonoFunctionalityWrapper
 {
 	//! Gets the length of the array.
 	__declspec(property(get=GetSize)) int Length;
+	//! Gets the type of the elements of the array.
+	__declspec(property(get=GetElementClass)) IMonoClass *Length;
 	//! Gets item located at the specified position.
 	//!
 	//! @param index Zero-based index of the item to get.
@@ -243,6 +245,7 @@ struct IMonoArray : public IMonoFunctionalityWrapper
 	VIRTUAL_API virtual void Release() = 0;
 protected:
 	VIRTUAL_API virtual int GetSize() const = 0;
+	VIRTUAL_API virtual IMonoClass *GetElementClass() = 0;
 };
 //! Defines interface of objects that wrap functionality of MonoClass type.
 struct IMonoClass : public IMonoFunctionalityWrapper
