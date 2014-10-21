@@ -104,6 +104,10 @@ struct IDefaultBoxinator
 	//! Boxes a signed byte value.
 	//!
 	//! @param value Value to box.
+	VIRTUAL_API virtual mono::object Box(char value) = 0;
+	//! Boxes a signed byte value.
+	//!
+	//! @param value Value to box.
 	VIRTUAL_API virtual mono::object Box(signed char value) = 0;
 	//! Boxes an unsigned byte value.
 	//!
@@ -125,6 +129,14 @@ struct IDefaultBoxinator
 	//!
 	//! @param value Value to box.
 	VIRTUAL_API virtual mono::object Box(unsigned int value) = 0;
+	//! Boxes an Int64 value.
+	//!
+	//! @param value Value to box.
+	VIRTUAL_API virtual mono::object Box(__int64 value) = 0;
+	//! Boxes a UInt64 value.
+	//!
+	//! @param value Value to box.
+	VIRTUAL_API virtual mono::object Box(unsigned __int64 value) = 0;
 	//! Boxes a float value.
 	//!
 	//! @param value Value to box.
@@ -773,6 +785,10 @@ BOX_UNBOX mono::object Box(bool value) { return MonoEnv->DefaultBoxer->Box(value
 //! Boxes a value.
 //!
 //! @param value Value to box.
+BOX_UNBOX mono::object Box(char value) { return MonoEnv->DefaultBoxer->Box(value); }
+//! Boxes a value.
+//!
+//! @param value Value to box.
 BOX_UNBOX mono::object Box(signed char value) { return MonoEnv->DefaultBoxer->Box(value); }
 //! Boxes a value.
 //!
@@ -794,6 +810,14 @@ BOX_UNBOX mono::object Box(int value) { return MonoEnv->DefaultBoxer->Box(value)
 //!
 //! @param value Value to box.
 BOX_UNBOX mono::object Box(unsigned int value) { return MonoEnv->DefaultBoxer->Box(value); }
+//! Boxes a value.
+//!
+//! @param value Value to box.
+BOX_UNBOX mono::object Box(__int64 value) { return MonoEnv->DefaultBoxer->Box(value); }
+//! Boxes a value.
+//!
+//! @param value Value to box.
+BOX_UNBOX mono::object Box(unsigned __int64 value) { return MonoEnv->DefaultBoxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
