@@ -11,12 +11,76 @@
 
 namespace mono
 {
+	//! This typedef is here to represent a reference to an object located within managed heap.
+	//!
+	//! Details:
+	//!
+	//! Pointers of this type are returned from a bunch of API calls, they are
+	//! also used to pass arguments to managed methods.
+	//!
+	//! Always bear in mind that these are references to objects that are watched
+	//! over by a .Net/Mono garbage collector (GC). This means that if GC has no
+	//! information about references to a specific object, it will be removed during
+	//! the next session of garbage collection, and even if there are live references
+	//! to the object from managed code, it can be moved during heap compression.
+	//!
+	//! GC never tracks unmanaged references to objects (you can recognize these
+	//! references by them being of type mono::object). This makes usage of mono::object
+	//! references very dangerous, because the reference can become invalid without
+	//! your consent at any point in time.
+	//!
+	//! The only time when mono::object is completely safe to use, is when it represents
+	//! a reference to a variable allocated on the stack and passed to unmanaged code
+	//! with help of either ref or out keyword. Make sure, however, that it is not used
+	//! within unmanaged code after the method returns, as it will be removed from stack
+	//! once it leaves its scope within managed method where it was declared.
+	//!
+	//! Also, you have no direct access to Mono API that works with objects,
+	//! therefore there is only a handful of ways they can be used.
+	//!
+	//! Using mono::object instances:
+	//!
+	//! There is only a handful of API functions that accept mono::object instances, so the
+	//! main use of these [instances] is:
+	//!     1) Storage of references to the result of method invocation.
+	//!     2) Storage of references to the arguments that need to be passed to the
+	//!        method when it's invoked.
+	//!     3) Storage of references to unhandled exceptions that were thrown during
+	//!        invocation of the unmanaged thunk.
+	//!
+	//! In order to access Mono API for objects and/or make its usage more safe,
+	//! mono::object instances require to be wrapped around by an object of type
+	//! IMonoHandle.
+	//!
+	//! There are three types of objects that implement IMonoHandle:
+	//!     1) Free       : This is the most simple wrapper and the least safe one:
+	//!                     It only provides access to object's API and nothing more.
+	//!     2) Persistent : This is the best type of handle to use when there is a need
+	//!                     to keep a reference to the object for prolonged periods of
+	//!                     time. GC will not remove the object when there is at least
+	//!                     one persistent IMonoHandle active. You must, however, call
+	//!                     Release method when you don't need it, otherwise a memory
+	//!                     leak will be created.
+	//!     3) Pinned     : This type is similar to Persistent IMonoHandle in the sense
+	//!                     that the object won't be deleted by GC while there is an active
+	//!                     handle. The difference however is that pinned handle will also
+	//!                     instruct GC to not even Move the object during heap compression.
+	//!                     This makes accessing object wrapped by the handle faster, but it
+	//!                     creates performance issues with garbage collection.
+	//!                     Only use this type of handle if you have a reference to the object
+	//!                     that you keep for a somewhat long period of time and you need to
+	//!                     access it frequently. Just like with persistent handles, you need
+	//!                     to release them when you don't need them.
+	//!
+	//! You can use IMonoInterface::CreateObject() function to create object that
+	//! already has wrapping.
+	//!
+	//! You can use IMonoInterface::WrapObject() function to create a wrapper for
+	//! mono::object instance when you to work with it or keep it.
+	typedef class _object *object;
 	//! A simple typedef that relieves developers of games and modules
 	//! from having to include original mono header files.
-	typedef class _object *object;			// Just remember that mono::object is a pointer type.
-	//! A simple typedef that relieves developers of games and modules
-	//! from having to include original mono header files.
-	typedef class _string *string;			// Just remember that mono::string is a pointer type.
+	typedef class _string *string;
 }
 
 #define BOX_VALUE(type) virtual mono::object Box(type value) = 0
@@ -81,12 +145,8 @@ struct IMonoFunctionalityWrapper
 	virtual void *GetWrappedPointer() const = 0;
 };
 
-//! Base type of objects that wrap MonoObject instances with GC handles to allow
-//! unmanaged code access the MonoObject, even if it was moved by garbage collector.
-//!
-//! @remarks The main purpose of this interface is to allow developers who are busy
-//!          in other games and modules have access to Mono run-time environment
-//!          with help of virtual dispatch.
+//! Base type of objects that wrap MonoObject instances granting access to Mono API
+//! and optionally making usage of managed objects safer.
 struct IMonoHandle : public IMonoFunctionalityWrapper
 {
 	//! Tells the object to hold given MonoObject and prevent its collection.
@@ -335,10 +395,10 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 
 	//! Invokes this method.
 	//!
-	//! @remark Since extension methods are static by their internal nature,
-	//!         you can pass null as object parameter, and that can work,
-	//!         if extension method is not using the instance. It's up to
-	//!         you to find uses for that minor detail.
+	//! Since extension methods are static by their internal nature,
+	//! you can pass null as object parameter, and that can work,
+	//! if extension method is not using the instance. It's up to
+	//! you to find uses for that minor detail.
 	//!
 	//! @param object    Pointer to the instance to use, if this method is not
 	//!                  static, it can be null otherwise.
@@ -349,10 +409,10 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	virtual mono::object Invoke(mono::object object, IMonoArray *params = nullptr, bool polymorph = false) = 0;
 	//! Invokes this method.
 	//!
-	//! @remark Since extension methods are static by their internal nature,
-	//!         you can pass null as object parameter, and that can work,
-	//!         if extension method is not using the instance. It's up to
-	//!         you to find uses for that minor detail.
+	//! Since extension methods are static by their internal nature,
+	//! you can pass null as object parameter, and that can work,
+	//! if extension method is not using the instance. It's up to
+	//! you to find uses for that minor detail.
 	//!
 	//! @param object     Pointer to the instance to use, if this method is not
 	//!                   static, it can be null otherwise.
@@ -368,12 +428,6 @@ protected:
 };
 
 //! Base class for MonoRunTime. Provides access to Mono interface.
-//!
-//! @remarks In order to relieve us from having to export too many functions
-//!          we have to use virtual dispatch. In order to do it, we need the
-//!          objects that use virtual methods for any operations that happen
-//!          in a different DLL. IMonoRunTime is one of base classes for
-//!          such objects.
 struct IMonoInterface
 {
 	//! Triggers registration of FlowGraph nodes.
@@ -391,9 +445,11 @@ struct IMonoInterface
 	virtual const char *ToNativeString(mono::string text) = 0;
 	//! Creates a new wrapped MonoObject using constructor with specific parameters.
 	//!
-	//! @remark Object that is created by this method can made to be safely keepable by anything.
-	//!         Pinning the object in place allows its pointer to be safe to use at any
-	//!         time, however it makes GC sessions longer and decreases memory usage efficiency.
+	//! Specifying the object to be persistent will wrap it into a handle that allows
+	//! safe access to the object for prolonged periods of time.
+	//!
+	//! Pinning the object in place allows its pointer to be safe to use at any
+	//! time, however it makes GC sessions longer and decreases memory usage efficiency.
 	//!
 	//! @param assembly   Assembly where the type of the object is defined.
 	//! @param name_space Name space that contains the type of the object.
@@ -414,11 +470,11 @@ struct IMonoInterface
 	) = 0;
 	//! Creates a new Mono handle wrapper for given MonoObject.
 	//!
-	//! @remark Making the object persistent allows the object to be accessible from
-	//!         native code for prolonged periods of time.
-	//!         Pinning the object in place allows its pointer to be safe to use at any
-	//!         time, however it makes GC sessions longer and decreases memory usage efficiency.
-	//!         Use this method to choose, what to do with results of invoking Mono methods.
+	//! Making the object persistent allows the object to be accessible from
+	//! native code for prolonged periods of time.
+	//! Pinning the object in place allows its pointer to be safe to use at any
+	//! time, however it makes GC sessions longer and decreases memory usage efficiency.
+	//! Use this method to choose, what to do with results of invoking Mono methods.
 	//!
 	//! @param obj        An object to make persistent.
 	//! @param persistent Indicates whether handle should keep the object away from GC.
@@ -440,7 +496,6 @@ struct IMonoInterface
 	//!                    keep a reference to for prolonged periods of time.
 	virtual IMonoArray *WrapArray(mono::object arrayHandle, bool persistent) = 0;
 	//! Handles exception that occurred during managed method invocation.
-	//! @remark Only used internally.
 	virtual void HandleException(mono::object exception) = 0;
 	//! Registers a new internal call.
 	//!
@@ -574,9 +629,32 @@ protected:
 	virtual IDefaultBoxinator *GetDefaultBoxer() = 0;
 };
 
+//! Signature of the only method that is exported by MonoInterface.dll
+typedef IMonoInterface *(*InitializeMonoInterface)(IGameFramework *);
+
 //! A simple global variable, provides access to MonoRunTime from anywhere.
-//! @remark Within the game project, or any other module,
-//!         this variable will have to be assigned manually.
+//!
+//! Within the game project, or any other module,
+//! this variable will have to be assigned manually.
+//!
+//! A simplest way to do so is to include this header file into GameStartup.h
+//! and have MonoEnv assigned a value returned by InitializeModule function.
+//!
+//! Example:
+//!
+//! // Load library. Save handle in a field of type HMODULE.
+//! this->monoInterfaceDll = CryLoadLibrary("MonoInterface.dll");
+//! // Check if it was loaded properly.
+//! if (!this->monoInterfaceDll)
+//! {
+//!     CryFatalError("Could not locate MonoInterface.dll");
+//! }
+//! // Get InitializeModule function.
+//! InitializeMonoInterface cryCilInitializer =
+//!     CryGetProcAddress(this->monoInterfaceDll, "InitializeModule");
+//! // Invoke it, save the result in MonoEnv.
+//! MonoEnv = cryCilInitializer(gameFramework);
+//! // Now MonoEnv can be used to communicate with CryCIL API!
 IMonoInterface *MonoEnv = nullptr;
 #ifdef CRYCIL_MODULE
 // CRYCIL_MODULE is only supposed to be defined within MonoInterface project.
@@ -585,7 +663,7 @@ IMonoInterface *MonoEnv = nullptr;
 IGameFramework *Framework = nullptr;
 #endif
 
-#pragma region Global Interface
+#pragma region Conversions Interface
 
 //! Creates managed string that contains given text.
 //!
