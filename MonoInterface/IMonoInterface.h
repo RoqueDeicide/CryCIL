@@ -244,7 +244,10 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!                          this interface.
 	//! @returns True, if this class does implement specified interface.
 	virtual bool Implements(const char *nameSpace, const char *interfaceName, bool searchBaseClasses = true) = 0;
-
+	//! Boxes given value.
+	//!
+	//! @returns Null if this class is not a value-type, or reference to the boxed object, if it is.
+	virtual mono::object Box(void *value) = 0;
 protected:
 	virtual const char *GetName() = 0;
 	virtual const char *GetNameSpace() = 0;
@@ -355,10 +358,9 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	//!                   static, it can be null otherwise.
 	//! @param params     Pointer to the array of parameters to pass to the method.
 	//!                   Pass null, if method can accept no arguments.
-	//! @param paramCount Number of parameters that need to be passed to the method.
 	//! @param polymorph  Indicates whether we need to invoke a virtual method,
 	//!                   that is specific to the instance.
-	virtual mono::object Invoke(mono::object object, void **params = nullptr, int paramCount = 0, bool polymorph = false) = 0;
+	virtual mono::object Invoke(mono::object object, void **params = nullptr, bool polymorph = false) = 0;
 protected:
 	virtual void *GetThunk() = 0;
 	virtual const char *GetName() = 0;
