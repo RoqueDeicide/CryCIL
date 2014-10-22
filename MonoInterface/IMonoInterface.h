@@ -367,6 +367,10 @@ struct IMonoAssembly : public IMonoFunctionalityWrapper
 	//! @param className Name of the class to get.
 	//! @param nameSpace Name space where the class is defined.
 	VIRTUAL_API virtual IMonoClass *GetClass(const char *className, const char *nameSpace = "CryCil") = 0;
+	//! Gets the reference to the instance of type System.Reflection.Assembly.
+	__declspec(property(get=GetReflectionObject)) mono::assembly ReflectionObject;
+protected:
+	VIRTUAL_API virtual mono::assembly GetReflectionObject() = 0;
 };
 //! Defines interface of objects that wrap functionality of MonoArray type.
 struct IMonoArray : public IMonoFunctionalityWrapper
