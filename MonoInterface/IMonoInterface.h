@@ -198,6 +198,10 @@ struct IDefaultBoxinator
 	//! Boxes a boolean value.
 	//!
 	//! @param value Value to box.
+	VIRTUAL_API virtual mono::object BoxPtr(void *value) = 0;
+	//! Boxes a boolean value.
+	//!
+	//! @param value Value to box.
 	VIRTUAL_API virtual mono::object Box(bool value) = 0;
 	//! Boxes a signed byte value.
 	//!
@@ -962,6 +966,10 @@ BOX_UNBOX T Unbox(mono::object value)
 {
 	return *(T *)MonoEnv->Unbox(value);
 }
+//! Boxes a value.
+//!
+//! @param value Value to box.
+BOX_UNBOX mono::intptr BoxPtr(void *value) { return MonoEnv->DefaultBoxer->BoxPtr(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
