@@ -96,9 +96,9 @@ namespace mono
 	//! thunks of static String.IsNullOrWhitespace method, but the last one uses OBJECT_NAME
 	//! typedefs do describe the types of objects better.
 	//!
-	//! mono::object IsNullOrWhitespace(mono::object text, mono::object *exception);
+	//! mono::object  IsNullOrWhitespace(mono::object text, mono::object *exception);
 	//!
-	//! mono::bool   IsNullOrWhitespace(mono::string text, mono::exception *exception);
+	//! mono::boolean IsNullOrWhitespace(mono::string text, mono::exception *exception);
 	#define OBJECT_NAME
 
 	//! Represents a reference to a managed string.
