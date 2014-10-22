@@ -103,6 +103,8 @@ namespace mono
 
 	//! Represents a reference to a managed string.
 	OBJECT_NAME typedef object string;
+	//! Represents a reference to a boxed Boolean value.
+	OBJECT_NAME typedef object boolean;
 	//! Represents a reference to a boxed signed 1-byte long integer.
 	OBJECT_NAME typedef object sbyte;
 	//! Represents a reference to a boxed unsigned 1-byte long integer.
@@ -141,6 +143,10 @@ namespace mono
 	OBJECT_NAME typedef object exception;
 	//! Represents a reference to a managed System.Type object.
 	OBJECT_NAME typedef object type;
+	//! Represents a reference to a managed array object.
+	OBJECT_NAME typedef object array;
+	//! Represents a reference to a managed Assembly object.
+	OBJECT_NAME typedef object assembly;
 	//! Represents a reference to an object that is returned by the method that returns System.Void.
 	OBJECT_NAME typedef object nothing;
 	//! Represents a reference to a boxed vector with 2 components.
@@ -240,7 +246,15 @@ struct IDefaultBoxinator
 	//! Boxes a vector value.
 	//!
 	//! @param value Value to box.
+	VIRTUAL_API virtual mono::object Box(Vec2 value) = 0;
+	//! Boxes a vector value.
+	//!
+	//! @param value Value to box.
 	VIRTUAL_API virtual mono::object Box(Vec3 value) = 0;
+	//! Boxes a vector value.
+	//!
+	//! @param value Value to box.
+	VIRTUAL_API virtual mono::object Box(Vec4 value) = 0;
 	//! Boxes a EulerAngles value.
 	//!
 	//! @param value Value to box.
@@ -249,6 +263,42 @@ struct IDefaultBoxinator
 	//!
 	//! @param value Value to box.
 	VIRTUAL_API virtual mono::object Box(Quat value) = 0;
+	//! Boxes an QuaternionTranslation value.
+	//!
+	//! @param value Value to box.
+	VIRTUAL_API virtual mono::object Box(QuatT value) = 0;
+	//! Boxes a Matrix33 value.
+	//!
+	//! @param value Value to box.
+	VIRTUAL_API virtual mono::object Box(Matrix33 value) = 0;
+	//! Boxes an Matrix34 value.
+	//!
+	//! @param value Value to box.
+	VIRTUAL_API virtual mono::object Box(Matrix34 value) = 0;
+	//! Boxes a Matrix44 value.
+	//!
+	//! @param value Value to box.
+	VIRTUAL_API virtual mono::object Box(Matrix44 value) = 0;
+	//! Boxes a Plane value.
+	//!
+	//! @param value Value to box.
+	VIRTUAL_API virtual mono::object Box(Plane value) = 0;
+	//! Boxes a Ray value.
+	//!
+	//! @param value Value to box.
+	VIRTUAL_API virtual mono::object Box(Ray value) = 0;
+	//! Boxes a ColorB value.
+	//!
+	//! @param value Value to box.
+	VIRTUAL_API virtual mono::object Box(ColorB value) = 0;
+	//! Boxes a ColorF value.
+	//!
+	//! @param value Value to box.
+	VIRTUAL_API virtual mono::object Box(ColorF value) = 0;
+	//! Boxes a AABB value.
+	//!
+	//! @param value Value to box.
+	VIRTUAL_API virtual mono::object Box(AABB value) = 0;
 };
 
 //! Base interface for objects that wrap Mono functionality.
@@ -457,7 +507,7 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	//!
 	//! Signatures:
 	//! C#:  int CalculateSum(int a, int b);
-	//! C++: typedef mono::object (*CalculateSum)(mono::object a, mono::object b, mono::object *ex);
+	//! C++: typedef mono::int32 (*CalculateSum)(mono::int32 a, mono::int32 b, mono::exception *ex);
 	//!
 	//! Getting the thunk:
 	//!    IMonoMethod *calculateSumMethod = ... (Get the method pointer).
@@ -465,8 +515,8 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	//!
 	//! Invocation:
 	//!    int a,b = 0;
-	//!    mono::object exception;
-	//!    mono::object boxedSum = sumFunc(Box(a), Box(b), &exception);
+	//!    mono::exception exception;
+	//!    mono::int32 boxedSum = sumFunc(Box(a), Box(b), &exception);
 	//!    if (exception)
 	//!    {
 	//!        MonoEnv->HandleException(exception);		// Or you can handle it yourself.
@@ -481,7 +531,7 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	//!
 	//! Signatures:
 	//! C#:  int GetHashCode();
-	//! C++: typedef mono::object (*GetHashCode)(mono::object *ex);
+	//! C++: typedef mono::int32 (*GetHashCode)(mono::exception *ex);
 	//!
 	//! Getting the thunk:
 	//!    IMonoMethod *getHashCodeMethod = ... (Get the method pointer).
@@ -489,8 +539,8 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	//!
 	//! Invocation:
 	//!    mono::object instance = ...(Get the instance);
-	//!    mono::object exception;
-	//!    mono::object boxedHash = hashFunc(&exception);
+	//!    mono::exception exception;
+	//!    mono::int32 boxedHash = hashFunc(&exception);
 	//!    if (exception)
 	//!    {
 	//!        MonoEnv->HandleException(exception);		// Or you can handle it yourself.
@@ -613,11 +663,11 @@ struct IMonoInterface
 	//! @param arrayHandle Pointer to the array that needs to be wrapped.
 	//! @param persistent  Indicates whether the array wrapping must be safe to
 	//!                    keep a reference to for prolonged periods of time.
-	VIRTUAL_API virtual IMonoArray *WrapArray(mono::object arrayHandle, bool persistent) = 0;
+	VIRTUAL_API virtual IMonoArray *WrapArray(mono::array arrayHandle, bool persistent) = 0;
 	//! Unboxes managed value-type object.
 	VIRTUAL_API virtual void *Unbox(mono::object value) = 0;
 	//! Handles exception that occurred during managed method invocation.
-	VIRTUAL_API virtual void HandleException(mono::object exception) = 0;
+	VIRTUAL_API virtual void HandleException(mono::exception exception) = 0;
 	//! Registers a new internal call.
 	//!
 	//! Internal calls allow .Net/Mono code to invoke unmanaged code.
@@ -650,7 +700,7 @@ struct IMonoInterface
 	//! Signatures:
 	//! C#:  [MethodImpl(MethodImplOptions.InternalCall)]
 	//!      extern internal static float CalculateArea(ref Vector2 leftBottom, ref Vector2 rightTop);
-	//! C++: float CalculateArea(mono::object leftBottom, mono::object rightTop);
+	//! C++: float CalculateArea(mono::ref leftBottom, mono::ref rightTop);
 	//!
 	//! C++ implementation:
 	//! {
@@ -757,7 +807,7 @@ struct IMonoInterface
 	//! @param moduleFileName Name of the file inside Modules folder.
 	VIRTUAL_API virtual IMonoAssembly *LoadAssembly(const char *moduleFileName) = 0;
 	//! Wraps assembly pointer.
-	VIRTUAL_API virtual IMonoAssembly *WrapAssembly(void *assemblyHandle) = 0;
+	VIRTUAL_API virtual IMonoAssembly *WrapAssembly(mono::assembly assemblyHandle) = 0;
 	// Properties.
 
 	//! Gets the pointer to AppDomain.
@@ -838,23 +888,23 @@ const char *ToNativeString(mono::string monoString)
 //! Boxing is quite tricky due to C++ lacking any built-in metadata tracking
 //! functionality. This means that are two ways of transferring the object to managed
 //! memory:
-//!     1) Official boxing: You have to get the class that will represent unmanaged
-//!                         object in managed memory, then calling its Box method.
-//!     2) Boxing pointer : You can use BoxPtr function to box a pointer to unmanaged
-//!                         object, pass it managed method and let it dereference
-//!                         that pointer.
-//!                         
-//!                         This method has some specifics though:
-//!                          1) Make sure that managed are unmanaged types are blittable:
-//!                           - Their objects take up the same amount of memory.
-//!                           - Object is treated in same way in both codes.
-//!                          2) If the object contains pointer type fields, you will have
-//!                             to dereference them as well before using them.
+//!     1) Official boxing : You have to get the class that will represent unmanaged
+//!                          object in managed memory, then calling its Box method.
+//!     2) Boxing a pointer: You can use BoxPtr function to box a pointer to unmanaged
+//!                          object, pass it managed method and let it dereference
+//!                          that pointer.
+//!                          
+//!                          This method has some specifics though:
+//!                           1) Make sure that managed are unmanaged types are blittable:
+//!                            - Their objects take up the same amount of memory.
+//!                            - Object is treated in same way in both codes.
+//!                           2) If the object contains pointer type fields, you will have
+//!                              to dereference them as well before using them.
 //! Examples:
 //!
 //! First method with built-in value-type:
 //! {
-//!     mono::object boxedBool = Box(true);
+//!     mono::boolean boxedBool = Box(true);
 //! }
 //!
 //! First method with custom value-type:
@@ -863,7 +913,7 @@ const char *ToNativeString(mono::string monoString)
 //!     IMonoClass *managedPlaneType =
 //!         MonoEnv->Cryambly->GetClass("Plane", "CryCil.Mathematics.Geometry");
 //!     // Box the object.
-//!     mono::object boxedPlane = managedPlaneType->Box(&plane);
+//!     mono::plane boxedPlane = managedPlaneType->Box(&plane);
 //! }
 //!
 //! Second method with custom type:
@@ -871,9 +921,9 @@ const char *ToNativeString(mono::string monoString)
 //! C++:
 //! {
 //!     Quat quaternion(1, 1, 1, 1);
-//!     mono::object exception;
+//!     mono::exception exception;
 //!     // Invoke unmanaged thunk that takes a pointer.
-//!     mono::object result =
+//!     mono::nothing result =
 //!         ExampleQuatFunc
 //!         (
 //!             BoxPtr(&quaternion),                    // Box a pointer to our quaternion.
@@ -895,7 +945,7 @@ const char *ToNativeString(mono::string monoString)
 //!
 //! Example:
 //!
-//! mono::object really = (...);
+//! mono::boolean really = (...);
 //! bool oReally = Unbox<bool>(really);          // EASY
 #define BOX_UNBOX
 
@@ -911,62 +961,106 @@ BOX_UNBOX T Unbox(mono::object value)
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX mono::object Box(bool value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX mono::boolean Box(bool value) { return MonoEnv->DefaultBoxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX mono::object Box(char value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX mono::character Box(char value) { return MonoEnv->DefaultBoxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX mono::object Box(signed char value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX mono::sbyte Box(signed char value) { return MonoEnv->DefaultBoxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX mono::object Box(unsigned char value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX mono::byte Box(unsigned char value) { return MonoEnv->DefaultBoxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX mono::object Box(short value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX mono::int16 Box(short value) { return MonoEnv->DefaultBoxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX mono::object Box(unsigned short value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX mono::uint16 Box(unsigned short value) { return MonoEnv->DefaultBoxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX mono::object Box(int value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX mono::int32 Box(int value) { return MonoEnv->DefaultBoxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX mono::object Box(unsigned int value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX mono::uint32 Box(unsigned int value) { return MonoEnv->DefaultBoxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX mono::object Box(__int64 value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX mono::int64 Box(__int64 value) { return MonoEnv->DefaultBoxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX mono::object Box(unsigned __int64 value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX mono::uin64 Box(unsigned __int64 value) { return MonoEnv->DefaultBoxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX mono::object Box(float value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX mono::float32 Box(float value) { return MonoEnv->DefaultBoxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX mono::object Box(double value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX mono::float64 Box(double value) { return MonoEnv->DefaultBoxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX mono::object Box(Vec3 value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX mono::vector2 Box(Vec2 value) { return MonoEnv->DefaultBoxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX mono::object Box(Ang3 value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX mono::vector3 Box(Vec3 value) { return MonoEnv->DefaultBoxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX mono::object Box(Quat value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX mono::vector4 Box(Vec4 value) { return MonoEnv->DefaultBoxer->Box(value); }
+//! Boxes a value.
+//!
+//! @param value Value to box.
+BOX_UNBOX mono::angles3 Box(Ang3 value) { return MonoEnv->DefaultBoxer->Box(value); }
+//! Boxes a value.
+//!
+//! @param value Value to box.
+BOX_UNBOX mono::quaternion Box(Quat value) { return MonoEnv->DefaultBoxer->Box(value); }
+//! Boxes a value.
+//!
+//! @param value Value to box.
+BOX_UNBOX mono::quat_trans Box(QuatT value) { return MonoEnv->DefaultBoxer->Box(value); }
+//! Boxes a value.
+//!
+//! @param value Value to box.
+BOX_UNBOX mono::matrix33 Box(Matrix33 value) { return MonoEnv->DefaultBoxer->Box(value); }
+//! Boxes a value.
+//!
+//! @param value Value to box.
+BOX_UNBOX mono::matrix34 Box(Matrix34 value) { return MonoEnv->DefaultBoxer->Box(value); }
+//! Boxes a value.
+//!
+//! @param value Value to box.
+BOX_UNBOX mono::matrix44 Box(Matrix44 value) { return MonoEnv->DefaultBoxer->Box(value); }
+//! Boxes a value.
+//!
+//! @param value Value to box.
+BOX_UNBOX mono::plane Box(Matrix44 value) { return MonoEnv->DefaultBoxer->Box(value); }
+//! Boxes a value.
+//!
+//! @param value Value to box.
+BOX_UNBOX mono::ray Box(Matrix44 value) { return MonoEnv->DefaultBoxer->Box(value); }
+//! Boxes a value.
+//!
+//! @param value Value to box.
+BOX_UNBOX mono::aabb Box(Matrix44 value) { return MonoEnv->DefaultBoxer->Box(value); }
+//! Boxes a value.
+//!
+//! @param value Value to box.
+BOX_UNBOX mono::byte_color Box(ColorB value) { return MonoEnv->DefaultBoxer->Box(value); }
+//! Boxes a value.
+//!
+//! @param value Value to box.
+BOX_UNBOX mono::float32_color Box(ColorF value) { return MonoEnv->DefaultBoxer->Box(value); }
 
 #pragma endregion
