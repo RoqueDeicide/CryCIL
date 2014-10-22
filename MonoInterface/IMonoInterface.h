@@ -35,6 +35,10 @@ namespace mono
 	//! within unmanaged code after the method returns, as it will be removed from stack
 	//! once it leaves its scope within managed method where it was declared.
 	//!
+	//! Working with parameters passed by reference is slightly different from normal ones:
+	//! In order to modify them you should cast the parameter to appropriate pointer type
+	//! and use dereferencing to get their value or modify them.
+	//!
 	//! Also, you have no direct access to Mono API that works with objects,
 	//! therefore there is only a handful of ways they can be used.
 	//!
@@ -78,9 +82,97 @@ namespace mono
 	//! You can use IMonoInterface::WrapObject() function to create a wrapper for
 	//! mono::object instance when you to work with it or keep it.
 	typedef class _object *object;
-	//! A simple typedef that relieves developers of games and modules
-	//! from having to include original mono header files.
-	typedef class _string *string;
+	
+	//! Typedefs marked by this define represent a reference to an object that is located
+	//! within managed memory. Technically all of them are equivalents to mono::object
+	//! but they can be used to designate what the object is supposed to be.
+	//!
+	//! In C++ equivalent for mono::object is void *. Both can be casted to whatever type
+	//! like bool *. The same can be done to mono::object.
+	//!
+	//! Examples:
+	//!
+	//! // The following two methods are technically the same, they are both are unmanaged
+	//! thunks of static String.IsNullOrWhitespace method, but the last one uses OBJECT_NAME
+	//! typedefs do describe the types of objects better.
+	//!
+	//! mono::object IsNullOrWhitespace(mono::object text, mono::object *exception);
+	//!
+	//! mono::bool   IsNullOrWhitespace(mono::string text, mono::exception *exception);
+	#define OBJECT_NAME
+
+	//! Represents a reference to a managed string.
+	OBJECT_NAME typedef object string;
+	//! Represents a reference to a boxed signed 1-byte long integer.
+	OBJECT_NAME typedef object sbyte;
+	//! Represents a reference to a boxed unsigned 1-byte long integer.
+	OBJECT_NAME typedef object byte;
+	//! Represents a reference to a boxed System.Char instance.
+	OBJECT_NAME typedef object character;
+	//! Represents a reference to a boxed signed 2-byte long integer.
+	OBJECT_NAME typedef object int16;
+	//! Represents a reference to a boxed unsigned 2-byte long integer.
+	OBJECT_NAME typedef object uint16;
+	//! Represents a reference to a boxed signed 4-byte long integer.
+	OBJECT_NAME typedef object int32;
+	//! Represents a reference to a boxed unsigned 4-byte long integer.
+	OBJECT_NAME typedef object uint32;
+	//! Represents a reference to a boxed signed 8-byte long integer.
+	OBJECT_NAME typedef object int64;
+	//! Represents a reference to a boxed unsigned 8-byte long integer.
+	OBJECT_NAME typedef object uin64;
+	//! Represents a reference to a boxed signed pointer represented by System.IntPtr.
+	OBJECT_NAME typedef object intptr;
+	//! Represents a reference to a boxed unsigned pointer represented by System.IntPtr.
+	OBJECT_NAME typedef object uintptr;
+	//! Represents a reference to a boxed 4-byte floating-point number.
+	OBJECT_NAME typedef object float32;
+	//! Represents a reference to a boxed 8-byte floating-point number.
+	OBJECT_NAME typedef object float64;
+	//! Represents a reference to a boxed precise 16-byte floating-point number.
+	OBJECT_NAME typedef object decimal;
+	//! Represents a reference to a managed object passed to internal call via ref keyword.
+	OBJECT_NAME typedef object ref;
+	//! Represents a reference to a managed object passed to internal call via out keyword.
+	OBJECT_NAME typedef object out;
+	//! Represents a reference to a managed thread interface.
+	OBJECT_NAME typedef object thread;
+	//! Represents a reference to a managed exception object.
+	OBJECT_NAME typedef object exception;
+	//! Represents a reference to a managed System.Type object.
+	OBJECT_NAME typedef object type;
+	//! Represents a reference to an object that is returned by the method that returns System.Void.
+	OBJECT_NAME typedef object nothing;
+	//! Represents a reference to a boxed vector with 2 components.
+	OBJECT_NAME typedef object vector2;
+	//! Represents a reference to a boxed vector with 3 components.
+	OBJECT_NAME typedef object vector3;
+	//! Represents a reference to a boxed vector with 4 components.
+	OBJECT_NAME typedef object vector4;
+	//! Represents a reference to a boxed quaternion.
+	OBJECT_NAME typedef object quaternion;
+	//! Represents a reference to a boxed quaternion coupled with translation vector.
+	OBJECT_NAME typedef object quat_trans;
+	//! Represents a reference to a boxed 2-byte floating-point number.
+	OBJECT_NAME typedef object half;
+	//! Represents a reference to a boxed 3x3 matrix.
+	OBJECT_NAME typedef object matrix33;
+	//! Represents a reference to a boxed 3x4 matrix.
+	OBJECT_NAME typedef object matrix34;
+	//! Represents a reference to a boxed 4x4 matrix.
+	OBJECT_NAME typedef object matrix44;
+	//! Represents a reference to a boxed plane.
+	OBJECT_NAME typedef object plane;
+	//! Represents a reference to a boxed ray.
+	OBJECT_NAME typedef object ray;
+	//! Represents a reference to a boxed RGBA color with 8-bit integer components.
+	OBJECT_NAME typedef object byte_color;
+	//! Represents a reference to a boxed RGBA color with 32-bit floating-point components.
+	OBJECT_NAME typedef object float32_color;
+	//! Represents a reference to a boxed axis-aligned bounding box.
+	OBJECT_NAME typedef object aabb;
+	//! Represents a reference to a boxed set of Euler angles.
+	OBJECT_NAME typedef object angles3;
 }
 
 //! In various programming books about C++ authors usually tell us that virtual
@@ -163,7 +255,7 @@ struct IDefaultBoxinator
 struct IMonoFunctionalityWrapper
 {
 	//! Returns pointer to Mono object this wrapper uses.
-	VIRTUAL_API virtual void *GetWrappedPointer() const = 0;
+	VIRTUAL_API virtual void *GetWrappedPointer() = 0;
 };
 
 //! Base type of objects that wrap MonoObject instances granting access to Mono API
@@ -244,7 +336,7 @@ struct IMonoArray : public IMonoFunctionalityWrapper
 	//! Tells the object that it's no longer needed.
 	VIRTUAL_API virtual void Release() = 0;
 protected:
-	VIRTUAL_API virtual int GetSize() const = 0;
+	VIRTUAL_API virtual int GetSize() = 0;
 	VIRTUAL_API virtual IMonoClass *GetElementClass() = 0;
 };
 //! Defines interface of objects that wrap functionality of MonoClass type.
@@ -522,6 +614,7 @@ struct IMonoInterface
 	//! @param persistent  Indicates whether the array wrapping must be safe to
 	//!                    keep a reference to for prolonged periods of time.
 	VIRTUAL_API virtual IMonoArray *WrapArray(mono::object arrayHandle, bool persistent) = 0;
+	//! Unboxes managed value-type object.
 	VIRTUAL_API virtual void *Unbox(mono::object value) = 0;
 	//! Handles exception that occurred during managed method invocation.
 	VIRTUAL_API virtual void HandleException(mono::object exception) = 0;
@@ -582,7 +675,7 @@ struct IMonoInterface
 	//! Signatures:
 	//! C#:  [MethodImpl(MethodImplOptions.InternalCall)]
 	//!      extern internal static Material LoadMaterial(string name, ref MaterialParameters params);
-	//! C++: mono::object LoadMaterial(mono::string name, mono::object params);
+	//! C++: mono::object LoadMaterial(mono::string name, mono::ref params);
 	//!
 	//! C++ implementation:
 	//! {
@@ -621,6 +714,38 @@ struct IMonoInterface
 	//!     };
 	//!     // Pass those variables by reference.
 	//!     Material deathMetal = (ClassName).LoadMaterial("DeathMetal", ref params);
+	//! }
+	//!
+	//! With custom structures passed with out keyword reference:
+	//!
+	//! Type definitions:
+	//! C#:  [StructLayout(LayoutKind.Sequential)]
+	//!      struct Data
+	//!      {
+	//!          int number;
+	//!      }
+	//! C++: struct Data { int number; };
+	//!
+	//! Signatures:
+	//! C#:  [MethodImpl(MethodImplOptions.InternalCall)]
+	//!      extern internal static bool TryGet(string name, out Data data);
+	//! C++: bool TryGet(mono::string name, mono::out data);
+	//!
+	//! C++ implementation:
+	//! {
+	//!     // Cast the pointer.
+	//!     Data *dataPtr = (Data *)data;
+	//!     // Modify the object.
+	//!     dataPtr->number = 5;
+	//!     return true;
+	//! }
+	//!
+	//! C# invocation:
+	//! {
+	//!     // Declare variable.
+	//!     Data data;
+	//!     // Pass those variables by reference.
+	//!     bool success = (ClassName).TryGet("Not used", out data);
 	//! }
 	//!
 	//! @param name            Full name of the method that can be used to access it
@@ -695,12 +820,14 @@ IGameFramework *Framework = nullptr;
 
 //! Creates managed string that contains given text.
 //!
-//! @param NTString Null-terminated string which text to copy to managed string.
-mono::string ToMonoString(const char *NTString)
+//! @param ntString Null-terminated string which text to copy to managed string.
+mono::string ToMonoString(const char *ntString)
 {
-	return MonoEnv->ToManagedString(NTString);
+	return MonoEnv->ToManagedString(ntString);
 }
 //! Creates native null-terminated string from managed one.
+//!
+//! @param monoString Reference to a managed string to convert.
 const char *ToNativeString(mono::string monoString)
 {
 	return MonoEnv->ToNativeString(monoString);
