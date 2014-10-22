@@ -35,6 +35,11 @@
 #include <ISerialize.h>
 #include <IGameFramework.h>
 
+#include <mono/mini/jit.h>
+#include <mono/metadata/assembly.h>
+
+#include "IMonoInterface.h"
+
 // Include monosgen.lib from relevant folder. (Folder is defined in project properties.)
 #pragma comment(lib, "monosgen")
 

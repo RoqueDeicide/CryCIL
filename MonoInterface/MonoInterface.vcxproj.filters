@@ -3,8 +3,40 @@
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Wrappers\MonoHandleFree.h">
+      <Filter>API Implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="Wrappers\MonoHandlePersistent.h">
+      <Filter>API Implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="Wrappers\MonoHandlePinned.h">
+      <Filter>API Implementation</Filter>
+    </ClInclude>
     <ClInclude Include="IMonoInterface.h" />
+    <ClInclude Include="Wrappers\MonoObjectWrapper.h">
+      <Filter>API Implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="MonoHeaders.h" />
+    <ClInclude Include="Wrappers\MonoClassWrapper.h">
+      <Filter>API Implementation</Filter>
+    </ClInclude>
     <ClInclude Include="DoxygenExampleFiles\ExampleDefines.h" />
+    <ClInclude Include="Wrappers\MonoArrayWrapper.h">
+      <Filter>API Implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="Wrappers\MonoArrayFree.h">
+      <Filter>API Implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="Wrappers\MonoArrayPersistent.h">
+      <Filter>API Implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="Wrappers\MonoAssemblyWrapper.h">
+      <Filter>API Implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="ThunkTables.h" />
+    <ClInclude Include="Wrappers\MonoMethodWrapper.h">
+      <Filter>API Implementation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -14,7 +46,18 @@
       <Filter>DoxygenExampleFiles</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Filter Include="RunTime">
+      <UniqueIdentifier>{e2ee4c03-67d6-4f57-af76-8dade3308e6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine">
+      <UniqueIdentifier>{6d43e627-7057-4f40-96ab-7d1d74aeb89a}</UniqueIdentifier>
+    </Filter>
     <Filter Include="DoxygenExampleFiles">
       <UniqueIdentifier>{4557b354-379b-4996-9dba-b5f2d17b2361}</UniqueIdentifier>
     </Filter>
+    <Filter Include="API Implementation">
+      <UniqueIdentifier>{824c2f39-8cc3-49b9-bce6-ffeb58467c65}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
 </Project>
