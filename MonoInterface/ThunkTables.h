@@ -2,7 +2,7 @@
 
 #include "IMonoInterface.h"
 
-typedef mono::object(*CreateInstanceThunk)(mono::type, mono::array, mono::exception*);
+typedef mono::object(*CreateInstanceThunk)(mono::type, mono::Array, mono::exception*);
 
 typedef mono::boolean(*StaticEqualsThunk)(mono::object, mono::object, mono::exception*);
 

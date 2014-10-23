@@ -150,17 +150,17 @@ namespace mono
 	//! Represents a reference to a boxed precise 16-byte floating-point number.
 	OBJECT_NAME typedef object decimal;
 	//! Represents a reference to a managed object passed to internal call via ref keyword.
-	OBJECT_NAME typedef object ref;
+	OBJECT_NAME typedef object ref_param;
 	//! Represents a reference to a managed object passed to internal call via out keyword.
-	OBJECT_NAME typedef object out;
+	OBJECT_NAME typedef object out_param;
 	//! Represents a reference to a managed thread interface.
-	OBJECT_NAME typedef object thread;
+	OBJECT_NAME typedef object Thread;
 	//! Represents a reference to a managed exception object.
 	OBJECT_NAME typedef object exception;
 	//! Represents a reference to a managed System.Type object.
 	OBJECT_NAME typedef object type;
 	//! Represents a reference to a managed array object.
-	OBJECT_NAME typedef object array;
+	OBJECT_NAME typedef object Array;
 	//! Represents a reference to a managed System.Reflection.Assembly object.
 	OBJECT_NAME typedef object assembly;
 	//! Represents a reference to an object that is returned by the method that returns System.Void.
@@ -786,7 +786,7 @@ struct IMonoInterface
 	//! @param arrayHandle Pointer to the array that needs to be wrapped.
 	//! @param persistent  Indicates whether the array wrapping must be safe to
 	//!                    keep a reference to for prolonged periods of time.
-	VIRTUAL_API virtual IMonoArray *WrapArray(mono::array arrayHandle, bool persistent) = 0;
+	VIRTUAL_API virtual IMonoArray *WrapArray(mono::Array arrayHandle, bool persistent) = 0;
 	//! Unboxes managed value-type object.
 	VIRTUAL_API virtual void *Unbox(mono::object value) = 0;
 	//! Handles exception that occurred during managed method invocation.
@@ -827,7 +827,7 @@ struct IMonoInterface
 	//! Signatures:
 	//! C#:  [MethodImpl(MethodImplOptions.InternalCall)]
 	//!      extern internal static float CalculateArea(ref Vector2 leftBottom, ref Vector2 rightTop);
-	//! C++: float CalculateArea(mono::ref leftBottom, mono::ref rightTop);
+	//! C++: float CalculateArea(mono::ref_param leftBottom, mono::ref_param rightTop);
 	//!
 	//! C++ implementation:
 	//! @code{.cpp}
@@ -856,7 +856,7 @@ struct IMonoInterface
 	//! Signatures:
 	//! C#:  [MethodImpl(MethodImplOptions.InternalCall)]
 	//!      extern internal static Material LoadMaterial(string name, ref MaterialParameters params);
-	//! C++: mono::object LoadMaterial(mono::string name, mono::ref params);
+	//! C++: mono::object LoadMaterial(mono::string name, mono::ref_param params);
 	//!
 	//! C++ implementation:
 	//! @code{.cpp}
@@ -920,7 +920,7 @@ struct IMonoInterface
 	//! Signatures:
 	//! C#:  [MethodImpl(MethodImplOptions.InternalCall)]
 	//!      extern internal static bool TryGet(string name, out Data data);
-	//! C++: bool TryGet(mono::string name, mono::out data);
+	//! C++: bool TryGet(mono::string name, mono::out_param data);
 	//!
 	//! C++ implementation:
 	//! @code{.cpp}
