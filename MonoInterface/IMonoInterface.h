@@ -1,5 +1,17 @@
 #pragma once
 
+#include <CryThread.h>
+#include <Cry_Math.h>
+#include <ISystem.h>
+#include <I3DEngine.h>
+#include <IInput.h>
+#include <IConsole.h>
+#include <ITimer.h>
+#include <ILog.h>
+#include <IGameplayRecorder.h>
+#include <ISerialize.h>
+#include <IGameFramework.h>
+
 // Use MONOINTERFACE_LIBRARY constant to get OS-specific name of MonoInterface library.
 #if defined(LINUX)
 #define MONOINTERFACE_LIBRARY "MonoInterface.so"
