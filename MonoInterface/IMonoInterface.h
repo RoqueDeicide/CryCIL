@@ -570,6 +570,7 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	//!        // These code region is the only place where the result of invocation is defined.
 	//!        int hash = Unbox<int>(boxedHash);
 	//!    }
+	//! @example DoxygenExampleFiles\UnmanagedThunkExample.cpp
 	__declspec(property(get=GetThunk)) void *UnmanagedThunk;
 	//! Gets the name of the method.
 	__declspec(property(get=GetName)) const char *Name;
