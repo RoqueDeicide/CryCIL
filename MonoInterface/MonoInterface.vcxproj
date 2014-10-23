@@ -214,8 +214,6 @@
     <ClInclude Include="Wrappers\MonoAssemblyWrapper.h" />
     <ClInclude Include="Wrappers\MonoClassWrapper.h" />
     <ClInclude Include="Wrappers\MonoHandleFree.h" />
-    <ClInclude Include="Wrappers\MonoHandlePersistent.h" />
-    <ClInclude Include="Wrappers\MonoHandlePinned.h" />
     <ClInclude Include="Wrappers\MonoMethodWrapper.h" />
     <ClInclude Include="Wrappers\MonoObjectWrapper.h" />
   </ItemGroup>

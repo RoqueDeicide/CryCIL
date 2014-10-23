@@ -98,3 +98,48 @@ private:
 		return this->monoClass;
 	}
 };
+
+template<bool pinned>
+struct MonoObjectWrapperWithGCHandle : public MonoObjectWrapper
+{
+private:
+	mono::object obj;
+	unsigned int gc_handle;
+public:
+	MonoObjectWrapperWithGCHandle(mono::object obj)
+	{
+		this->obj = obj;
+		this->gc_handle = mono_gchandle_new((MonoObject *)obj, pinned);
+	}
+
+	virtual void Hold(mono::object object)
+	{
+		this->Release();
+		this->obj = obj;
+		this->gc_handle = mono_gchandle_new((MonoObject *)obj, pinned);
+	}
+
+	virtual void Release()
+	{
+		if (this->obj)
+		{
+			mono_gchandle_free(this->gc_handle);
+			this->obj = nullptr;
+		}
+	}
+
+	virtual mono::object Get()
+	{
+		return this->obj;
+	}
+};
+
+struct MonoHandlePersistent : public MonoObjectWrapperWithGCHandle < false >
+{
+	MonoHandlePersistent(mono::object obj) : MonoObjectWrapperWithGCHandle(obj) {}
+};
+
+struct MonoHandlePinned : public MonoObjectWrapperWithGCHandle < true >
+{
+	MonoHandlePinned(mono::object obj) : MonoObjectWrapperWithGCHandle(obj) {}
+};

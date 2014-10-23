@@ -28,7 +28,7 @@ public:
 		return MonoClassCache::Wrap(mono_class_from_name(this->image, nameSpace, className));
 	}
 	//! Returns a pointer to the MonoAssembly for Mono API calls.
-	virtual void * GetWrappedPointer() const
+	virtual void * GetWrappedPointer()
 	{
 		return this->assembly;
 	}

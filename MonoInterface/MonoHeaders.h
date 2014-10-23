@@ -1,6 +1,6 @@
 #pragma once
 
-
+#include <mono/metadata/appdomain.h>
 #include <mono/metadata/assembly.h>
 #include <mono/metadata/object.h>
 

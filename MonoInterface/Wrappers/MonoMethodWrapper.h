@@ -93,7 +93,7 @@ public:
 		return this->paramCount;
 	}
 
-	virtual void * GetWrappedPointer() const
+	virtual void * GetWrappedPointer()
 	{
 		return this->wrappedMethod;
 	}

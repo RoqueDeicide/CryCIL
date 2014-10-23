@@ -3,13 +3,9 @@
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    </ClInclude>
+    </ClInclude>
     <ClInclude Include="Wrappers\MonoHandleFree.h">
-      <Filter>API Implementation</Filter>
-    </ClInclude>
-    <ClInclude Include="Wrappers\MonoHandlePersistent.h">
-      <Filter>API Implementation</Filter>
-    </ClInclude>
-    <ClInclude Include="Wrappers\MonoHandlePinned.h">
       <Filter>API Implementation</Filter>
     </ClInclude>
     <ClInclude Include="IMonoInterface.h" />
