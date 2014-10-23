@@ -41,6 +41,9 @@
     <ClCompile Include="DoxygenExampleFiles\UnmanagedThunkExample.cpp">
       <Filter>DoxygenExampleFiles</Filter>
     </ClCompile>
+    <ClCompile Include="DoxygenExampleFiles\ListenerExample.cpp">
+      <Filter>DoxygenExampleFiles\CryCIL Listeners\Native Listener</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">
@@ -54,6 +57,12 @@
     </Filter>
     <Filter Include="API Implementation">
       <UniqueIdentifier>{824c2f39-8cc3-49b9-bce6-ffeb58467c65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DoxygenExampleFiles\CryCIL Listeners">
+      <UniqueIdentifier>{27cf2fe1-cbeb-45e3-b1b6-cbccf8fa70e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DoxygenExampleFiles\CryCIL Listeners\Native Listener">
+      <UniqueIdentifier>{070c92e2-ff70-4de7-86ca-40ae83b1822a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

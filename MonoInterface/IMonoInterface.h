@@ -624,6 +624,8 @@ protected:
 };
 
 //! Base interface for objects that subscribe to the events produced by IMonoInterface.
+//!
+//! @example DoxygenExampleFiles\ListenerExample.cpp
 struct IMonoSystemListener
 {
 	//! Allows IMonoInterface implementation let the listener access it before global
