@@ -679,6 +679,34 @@ struct IMonoSystemListener
 	virtual void Shutdown() = 0;
 };
 
+//! Interface of objects that specialize on setting up interops between C++ and Mono.
+struct IMonoInterop : public IMonoSystemListener
+{
+protected:
+	IMonoInterface *monoInterface;
+public:
+	virtual void SetInterface(IMonoInterface *handle)
+	{
+		this->monoInterface = handle;
+	}
+	virtual void RegisterInteropMethod(const char *methodName, void *functionPointer)
+	{
+		this->monoInterface->AddInternalCall((this->GetNameSpace() + (string)".").append(this->GetName()).append("::").append(methodName), functionPointer);
+	}
+	//! Returns the name of the class that will declare managed counter-parts
+	//! of the internal calls.
+	virtual const char *GetName() = 0;
+	//! Returns the name space where the class that will declare managed counter-parts
+	//! of the internal calls is declared.
+	virtual const char *GetNameSpace() = 0;
+};
+
+//! Interface of interops that use classes within CryCil.RunTime.NativeCodeAccess name space.
+struct IDefaultMonoInterop : public IMonoInterop
+{
+	virtual const char *GetNameSpace() { return "CryCil.RunTime.NativeCodeAccess"; }
+};
+
 //! Base class for MonoRunTime. Provides access to Mono interface.
 struct IMonoInterface
 {
@@ -968,7 +996,7 @@ typedef IMonoInterface *(*InitializeMonoInterface)(IGameFramework *, IMonoSystem
 //! InitializeMonoInterface cryCilInitializer =
 //!     CryGetProcAddress(this->monoInterfaceDll, "InitializeModule");
 //! // Invoke it, save the result in MonoEnv.
-//! MonoEnv = cryCilInitializer(gameFramework);
+//! MonoEnv = cryCilInitializer(gameFramework, (pointer to listeners), (number of listeners));
 //! // Now MonoEnv can be used to communicate with CryCIL API!
 //! @endcode
 IMonoInterface *MonoEnv = nullptr;
