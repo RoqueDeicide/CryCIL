@@ -145,7 +145,7 @@ namespace mono
 	OBJECT_NAME typedef object type;
 	//! Represents a reference to a managed array object.
 	OBJECT_NAME typedef object array;
-	//! Represents a reference to a managed Assembly object.
+	//! Represents a reference to a managed System.Reflection.Assembly object.
 	OBJECT_NAME typedef object assembly;
 	//! Represents a reference to an object that is returned by the method that returns System.Void.
 	OBJECT_NAME typedef object nothing;
@@ -815,7 +815,7 @@ struct IMonoInterface
 	//! @param moduleFileName Name of the file inside Modules folder.
 	VIRTUAL_API virtual IMonoAssembly *LoadAssembly(const char *moduleFileName) = 0;
 	//! Wraps assembly pointer.
-	VIRTUAL_API virtual IMonoAssembly *WrapAssembly(mono::assembly assemblyHandle) = 0;
+	VIRTUAL_API virtual IMonoAssembly *WrapAssembly(void *assemblyHandle) = 0;
 	// Properties.
 
 	//! Gets the pointer to AppDomain.

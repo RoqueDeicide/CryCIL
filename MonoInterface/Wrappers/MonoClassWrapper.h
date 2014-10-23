@@ -302,7 +302,7 @@ public:
 
 	virtual IMonoAssembly * GetAssembly()
 	{
-		return MonoEnv->WrapAssembly((mono::assembly_handle)mono_image_get_assembly(mono_class_get_image(this->GetWrappedClass())));
+		return MonoEnv->WrapAssembly(mono_image_get_assembly(mono_class_get_image(this->GetWrappedClass())));
 	}
 
 	virtual IMonoClass * GetBase()
