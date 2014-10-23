@@ -108,9 +108,11 @@ namespace mono
 	//! thunks of static String.IsNullOrWhitespace method, but the last one uses OBJECT_NAME
 	//! typedefs do describe the types of objects better.
 	//!
+	//! @code{.cpp}
 	//! mono::object  IsNullOrWhitespace(mono::object text, mono::object *exception);
 	//!
 	//! mono::boolean IsNullOrWhitespace(mono::string text, mono::exception *exception);
+	//! @endcode
 	#define OBJECT_NAME
 
 	//! Represents a reference to a managed string.
@@ -530,10 +532,13 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	//! C++: typedef mono::int32 (*CalculateSum)(mono::int32 a, mono::int32 b, mono::exception *ex);
 	//!
 	//! Getting the thunk:
+	//! @code{.cpp}
 	//!    IMonoMethod *calculateSumMethod = ... (Get the method pointer).
 	//!    CalculateSum sumFunc = (CalculateSum)calculateSumMethod->UnmanagedThunk;
+	//! @endcode
 	//!
 	//! Invocation:
+	//! @code{.cpp}
 	//!    int a,b = 0;
 	//!    mono::exception exception;
 	//!    mono::int32 boxedSum = sumFunc(Box(a), Box(b), &exception);
@@ -546,6 +551,7 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	//!        // These code region is the only place where the result of invocation is defined.
 	//!        int sum = Unbox<int>(boxedSum);
 	//!    }
+	//! @endcode
 	//!
 	//! Instance method:
 	//!
@@ -554,10 +560,13 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	//! C++: typedef mono::int32 (*GetHashCode)(mono::exception *ex);
 	//!
 	//! Getting the thunk:
+	//! @code{.cpp}
 	//!    IMonoMethod *getHashCodeMethod = ... (Get the method pointer).
 	//!    GetHashCode hashFunc = (GetHashCode)getHashCodeMethod->UnmanagedThunk;
+	//! @endcode
 	//!
 	//! Invocation:
+	//! @code{.cpp}
 	//!    mono::object instance = ...(Get the instance);
 	//!    mono::exception exception;
 	//!    mono::int32 boxedHash = hashFunc(&exception);
@@ -570,6 +579,7 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	//!        // These code region is the only place where the result of invocation is defined.
 	//!        int hash = Unbox<int>(boxedHash);
 	//!    }
+	//! @endcode
 	//! @example DoxygenExampleFiles\UnmanagedThunkExample.cpp
 	__declspec(property(get=GetThunk)) void *UnmanagedThunk;
 	//! Gets the name of the method.
@@ -636,6 +646,8 @@ struct IMonoSystemListener
 	virtual void OnCompilationComplete(bool success) = 0;
 	//! Invoked when this listener is registered to get indices of initialization stages
 	//! this listener would like to subscribe to.
+	//!
+	//! It's important to allow IMonoInterface implementation to delete the resultant array.
 	//!
 	//! @param stageCount Reference to the number that represents length of returned array.
 	//!
@@ -752,14 +764,18 @@ struct IMonoInterface
 	//! C++: float GetTerrainElevation(float x, float y);
 	//!
 	//! C++ implementation:
+	//! @code{.cpp}
 	//! {
 	//!     return gEnv->p3DEngine->GetTerrainElevation(x, y);
 	//! }
+	//! @endcode
 	//!
 	//! C# invocation:
+	//! @code{.cs}
 	//! {
 	//!     float elevationAt3And5 = (ClassName).GetTerrainElevation(3, 5);
 	//! }
+	//! @endcode
 	//!
 	//! With custom structures:
 	//!
@@ -769,6 +785,7 @@ struct IMonoInterface
 	//! C++: float CalculateArea(mono::ref leftBottom, mono::ref rightTop);
 	//!
 	//! C++ implementation:
+	//! @code{.cpp}
 	//! {
 	//!     // Unbox vectors.
 	//!     Vec2 leftBottomPosition = Unbox<Vec2>(leftBottom);
@@ -776,8 +793,10 @@ struct IMonoInterface
 	//!     // Calculate area.
 	//!     return abs((leftBottomPosition.x - rightTop.x) * (leftBottomPosition.y - rightTop.y));
 	//! }
+	//! @endcode
 	//!
 	//! C# invocation:
+	//! @code{.cs}
 	//! {
 	//!     // Declare variables.
 	//!     Vector2 leftBottom = new Vector2(2);
@@ -785,6 +804,7 @@ struct IMonoInterface
 	//!     // Pass those variables by reference.
 	//!     float area = (ClassName).CalculateArea(ref leftBottom, ref rightTop);
 	//! }
+	//! @endcode
 	//!
 	//! With custom structures and managed objects:
 	//!
@@ -794,6 +814,7 @@ struct IMonoInterface
 	//! C++: mono::object LoadMaterial(mono::string name, mono::ref params);
 	//!
 	//! C++ implementation:
+	//! @code{.cpp}
 	//! {
 	//!     // Unbox parameters.
 	//!     MaterialParameters pars = Unbox<MaterialParameters>(params);
@@ -819,8 +840,10 @@ struct IMonoInterface
 	//!         ctorParams                  // Arguments.
 	//!     )->Get();
 	//! }
+	//! @endcode
 	//!
 	//! C# invocation:
+	//! @code{.cs}
 	//! {
 	//!     // Declare variable.
 	//!     MaterialParameters params = new MaterialParameters
@@ -831,16 +854,23 @@ struct IMonoInterface
 	//!     // Pass those variables by reference.
 	//!     Material deathMetal = (ClassName).LoadMaterial("DeathMetal", ref params);
 	//! }
+	//! @endcode
 	//!
 	//! With custom structures passed with out keyword reference:
 	//!
 	//! Type definitions:
-	//! C#:  [StructLayout(LayoutKind.Sequential)]
+	//! C#:  
+	//! @code{.cs}
+	//!      [StructLayout(LayoutKind.Sequential)]
 	//!      struct Data
 	//!      {
 	//!          int number;
 	//!      }
-	//! C++: struct Data { int number; };
+	//! @endcode
+	//! C++:
+	//! @code{.cpp}
+	//! struct Data { int number; };
+	//! @endcode
 	//!
 	//! Signatures:
 	//! C#:  [MethodImpl(MethodImplOptions.InternalCall)]
@@ -848,6 +878,7 @@ struct IMonoInterface
 	//! C++: bool TryGet(mono::string name, mono::out data);
 	//!
 	//! C++ implementation:
+	//! @code{.cpp}
 	//! {
 	//!     // Cast the pointer.
 	//!     Data *dataPtr = (Data *)data;
@@ -855,14 +886,17 @@ struct IMonoInterface
 	//!     dataPtr->number = 5;
 	//!     return true;
 	//! }
+	//! @endcode
 	//!
 	//! C# invocation:
+	//! @code{.cs}
 	//! {
 	//!     // Declare variable.
 	//!     Data data;
 	//!     // Pass those variables by reference.
 	//!     bool success = (ClassName).TryGet("Not used", out data);
 	//! }
+	//! @endcode
 	//!
 	//! @param name            Full name of the method that can be used to access it
 	//!                        from managed code.
@@ -897,7 +931,7 @@ protected:
 	VIRTUAL_API virtual bool GetInitializedIndication() = 0;
 	VIRTUAL_API virtual IDefaultBoxinator *GetDefaultBoxer() = 0;
 };
-
+struct IGameFramework;
 //! Signature of the only method that is exported by MonoInterface.dll
 typedef IMonoInterface *(*InitializeMonoInterface)(IGameFramework *);
 
@@ -911,6 +945,7 @@ typedef IMonoInterface *(*InitializeMonoInterface)(IGameFramework *);
 //!
 //! Example:
 //!
+//! @code{.cpp}
 //! // Load library. Save handle in a field of type HMODULE.
 //! this->monoInterfaceDll = CryLoadLibrary("MonoInterface.dll");
 //! // Check if it was loaded properly.
@@ -924,6 +959,7 @@ typedef IMonoInterface *(*InitializeMonoInterface)(IGameFramework *);
 //! // Invoke it, save the result in MonoEnv.
 //! MonoEnv = cryCilInitializer(gameFramework);
 //! // Now MonoEnv can be used to communicate with CryCIL API!
+//! @endcode
 IMonoInterface *MonoEnv = nullptr;
 #ifdef CRYCIL_MODULE
 // CRYCIL_MODULE is only supposed to be defined within MonoInterface project.
@@ -969,11 +1005,14 @@ const char *ToNativeString(mono::string monoString)
 //! Examples:
 //!
 //! First method with built-in value-type:
+//! @code{.cpp}
 //! {
 //!     mono::boolean boxedBool = Box(true);
 //! }
+//! @endcode
 //!
 //! First method with custom value-type:
+//! @code{.cpp}
 //! {
 //!     // Get the type that will represent our object.
 //!     IMonoClass *managedPlaneType =
@@ -981,10 +1020,12 @@ const char *ToNativeString(mono::string monoString)
 //!     // Box the object.
 //!     mono::plane boxedPlane = managedPlaneType->Box(&plane);
 //! }
+//! @endcode
 //!
 //! Second method with custom type:
 //!
 //! C++:
+//! @code{.cpp}
 //! {
 //!     Quat quaternion(1, 1, 1, 1);
 //!     mono::exception exception;
@@ -996,8 +1037,10 @@ const char *ToNativeString(mono::string monoString)
 //!             &exception
 //!         );
 //! }
+//! @endcode
 //!
 //! C#:
+//! @code{.cs}
 //! internal void ExampleQuatFunc(IntPtr quatHandle)
 //! {
 //!     // Convert a pointer to Quaternion * type and dereference it.
@@ -1005,14 +1048,17 @@ const char *ToNativeString(mono::string monoString)
 //!     // Do something about this quaternion.
 //!     ...
 //! }
+//! @endcode
 //!
 //! Unboxing on the other hand is relatively easy since .Net/Mono does have built-in
 //! metadata tracking. This is why their is only one global function for unboxing.
 //!
 //! Example:
 //!
+//! @code{.cpp}
 //! mono::boolean really = (...);
 //! bool oReally = Unbox<bool>(really);          // EASY
+//! @endcode
 #define BOX_UNBOX
 
 //! Unboxes a value-type object into another unmanaged value.
