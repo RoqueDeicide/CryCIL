@@ -598,6 +598,51 @@ protected:
 	VIRTUAL_API virtual int GetParameterCount() = 0;
 };
 
+//! Base interface for objects that subscribe to the events produced by IMonoInterface.
+struct IMonoSystemListener
+{
+	//! Invoked before Mono interface is initialized.
+	//!
+	//! IMonoInterface object is not usable at this stage.
+	virtual void OnPreInitialization() = 0;
+	//! Invoked before Mono run-time initialization begins.
+	//!
+	//! CryCIL Mono run-time API is not usable at this stage.
+	virtual void OnRunTimeInitializing() = 0;
+	//! Invoked after Mono run-time is initialized.
+	//!
+	//! Cryambly is loaded at this point and Mono is running: CryCIL API can be used now.
+	virtual void OnRunTimeInitialized() = 0;
+	//! Invoked before MonoInterface object defined in Cryambly is initialized.
+	virtual void OnCryamblyInitilizing() = 0;
+	//! Invoked before Cryambly attempts to compile game code.
+	virtual void OnCompilationStarting() = 0;
+	//! Invoked after Cryambly finishes compilation of game code.
+	//!
+	//! @param success Indicates whether compilation was successful.
+	virtual void OnCompilationComplete(bool success) = 0;
+	//! Invoked when this listener is registered to get indices of initialization stages
+	//! this listener would like to subscribe to.
+	//!
+	//! @param stageCount Reference to the number that represents length of returned array.
+	//!
+	//! @returns A pointer to an array of integer numbers that represent indices of
+	//!          initialization stages this listener wants to subscribe to.
+	virtual int *GetSubscribedStages(int &stageCount) = 0;
+	//! Invoked when one of initialization stages this listener has subscribed to begins.
+	//!
+	//! @param stageIndex Zero-based index of the stage.
+	virtual void OnInitializationStageStarting(int stageIndex) = 0;
+	//! Invoked when one of initialization stages this listener has subscribed to ends.
+	//!
+	//! @param stageIndex Zero-based index of the stage.
+	virtual void OnInitializationStageComplete(int stageIndex) = 0;
+	//! Invoked after MonoInterface object defined in Cryambly is initialized.
+	virtual void OnCryamblyInitilized() = 0;
+	//! Invoked after all initialization of CryCIL is complete.
+	virtual void OnPostInitialization() = 0;
+};
+
 //! Base class for MonoRunTime. Provides access to Mono interface.
 struct IMonoInterface
 {
