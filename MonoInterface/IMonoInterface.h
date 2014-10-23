@@ -691,7 +691,13 @@ public:
 	}
 	virtual void RegisterInteropMethod(const char *methodName, void *functionPointer)
 	{
-		this->monoInterface->AddInternalCall((this->GetNameSpace() + (string)".").append(this->GetName()).append("::").append(methodName), functionPointer);
+		this->monoInterface->AddInternalCall
+		(
+			methodName,
+			this->GetName(),
+			this->GetNameSpace(),
+			functionPointer
+		);
 	}
 	//! Returns the name of the class that will declare managed counter-parts
 	//! of the internal calls.
@@ -937,10 +943,11 @@ struct IMonoInterface
 	//! }
 	//! @endcode
 	//!
-	//! @param name            Full name of the method that can be used to access it
-	//!                        from managed code.
+	//! @param name            Name of the managed method.
+	//! @param className       Name of the class where managed method is declared.
+	//! @param nameSpace       Name space where the class is located.
 	//! @param functionPointer Pointer to unmanaged thunk that needs to be exposed to Mono code.
-	VIRTUAL_API virtual void AddInternalCall(const char *name, void *functionPointer) = 0;
+	VIRTUAL_API virtual void AddInternalCall(const char *name, const char *className, const char *nameSpace, void *functionPointer) = 0;
 	//! Loads a Mono assembly into memory.
 	//!
 	//! @param moduleFileName Name of the file inside Modules folder.
