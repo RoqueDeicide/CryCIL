@@ -9,7 +9,7 @@ extern "C"	// Mark exported functions as C code, so the compiler keeps function 
 	//! @remarks This function must be called before anything can be done with this module.
 	//!
 	//! @param framework Pointer to IGameFramework object that will allow us to initialize everything.
-	MONOINTERFACE_API void InitializeModule(IGameFramework *framework)
+	MONOINTERFACE_API IMonoInterface *InitializeModule(IGameFramework *framework, IMonoSystemListener **, int listenerCount)
 	{
 		// Initializes gEnv variable, registers some objects.
 		// Fun fact: Module name is only used for Unit Tests.

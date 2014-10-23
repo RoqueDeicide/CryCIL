@@ -933,7 +933,7 @@ protected:
 };
 struct IGameFramework;
 //! Signature of the only method that is exported by MonoInterface.dll
-typedef IMonoInterface *(*InitializeMonoInterface)(IGameFramework *);
+typedef IMonoInterface *(*InitializeMonoInterface)(IGameFramework *, IMonoSystemListener **, int);
 
 //! A simple global variable, provides access to MonoRunTime from anywhere.
 //!
