@@ -211,7 +211,11 @@ namespace mono
 //! Interface for the object that does default boxing operations.
 struct IDefaultBoxinator
 {
-	//! Boxes a boolean value.
+	//! Boxes an unsigned pointer value.
+	//!
+	//! @param value Value to box.
+	VIRTUAL_API virtual mono::object BoxUPtr(void *value) = 0;
+	//! Boxes a pointer value.
 	//!
 	//! @param value Value to box.
 	VIRTUAL_API virtual mono::object BoxPtr(void *value) = 0;
@@ -1116,6 +1120,10 @@ BOX_UNBOX T Unbox(mono::object value)
 {
 	return *(T *)MonoEnv->Unbox(value);
 }
+//! Boxes a value.
+//!
+//! @param value Value to box.
+BOX_UNBOX mono::intptr BoxUPtr(void *value) { return MonoEnv->DefaultBoxer->BoxUPtr(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
