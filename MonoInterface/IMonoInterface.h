@@ -21,6 +21,8 @@
 #define MONOINTERFACE_LIBRARY "MonoInterface.dll"
 #endif
 
+#define MONO_INTERFACE_INIT "InitializeModule"
+
 namespace mono
 {
 	//! This typedef is here to represent a reference to an object located within managed heap.
@@ -624,6 +626,11 @@ protected:
 //! Base interface for objects that subscribe to the events produced by IMonoInterface.
 struct IMonoSystemListener
 {
+	//! Allows IMonoInterface implementation let the listener access it before global
+	//! variable MonoEnv is initialized.
+	//!
+	//! @param handle Pointer to IMonoInterface implementation that can be used.
+	virtual void SetInterface(IMonoInterface *handle) = 0;
 	//! Invoked before Mono interface is initialized.
 	//!
 	//! IMonoInterface object is not usable at this stage.
@@ -657,15 +664,17 @@ struct IMonoSystemListener
 	//! Invoked when one of initialization stages this listener has subscribed to begins.
 	//!
 	//! @param stageIndex Zero-based index of the stage.
-	virtual void OnInitializationStageStarting(int stageIndex) = 0;
-	//! Invoked when one of initialization stages this listener has subscribed to ends.
-	//!
-	//! @param stageIndex Zero-based index of the stage.
-	virtual void OnInitializationStageComplete(int stageIndex) = 0;
+	virtual void OnInitializationStage(int stageIndex) = 0;
 	//! Invoked after MonoInterface object defined in Cryambly is initialized.
 	virtual void OnCryamblyInitilized() = 0;
 	//! Invoked after all initialization of CryCIL is complete.
 	virtual void OnPostInitialization() = 0;
+	//! Invoked when logical frame of CryCIL subsystem starts.
+	virtual void Update() = 0;
+	//! Invoked when logical frame of CryCIL subsystem ends.
+	virtual void PostUpdate() = 0;
+	//! Invoked when CryCIL shuts down.
+	virtual void Shutdown() = 0;
 };
 
 //! Base class for MonoRunTime. Provides access to Mono interface.
