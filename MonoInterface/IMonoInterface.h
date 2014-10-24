@@ -843,6 +843,12 @@ struct IMonoInterface
 	VIRTUAL_API virtual void *Unbox(mono::object value) = 0;
 	//! Handles exception that occurred during managed method invocation.
 	VIRTUAL_API virtual void HandleException(mono::exception exception) = 0;
+	//! Registers new object that receives notifications about CryCIL events.
+	VIRTUAL_API virtual void AddListener(IMonoSystemListener *listener) = 0;
+	//! Unregisters an object that receives notifications about CryCIL events.
+	//!
+	//! Search is done using the pointer value.
+	VIRTUAL_API virtual void RemoveListener(IMonoSystemListener *listener) = 0;
 	//! Registers a new internal call.
 	//!
 	//! Internal calls allow .Net/Mono code to invoke unmanaged code.
