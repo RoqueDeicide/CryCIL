@@ -3,9 +3,7 @@
 #include "IMonoInterface.h"
 #include "Wrappers/MonoClassWrapper.h"
 
-#include <mono/metadata/assembly.h>
-#include <mono/metadata/appdomain.h>
-#include <mono/metadata/object.h>
+#include "MonoHeaders.h"
 
 struct MonoAssemblyWrapper : IMonoAssembly
 {
@@ -17,6 +15,16 @@ public:
 	MonoAssemblyWrapper(MonoAssembly *assembly)
 	{
 		this->assembly = assembly;
+		this->image = mono_assembly_get_image(assembly);
+	}
+	MonoAssemblyWrapper(const char *assemblyFile)
+	{
+		this->assembly = mono_domain_assembly_open((MonoDomain *)MonoEnv->AppDomain, assemblyFile);
+
+		if (!this->assembly)
+		{
+			CryFatalError("Unable to load assembly %s.", assemblyFile);
+		}
 		this->image = mono_assembly_get_image(assembly);
 	}
 	//! Gets the class.
