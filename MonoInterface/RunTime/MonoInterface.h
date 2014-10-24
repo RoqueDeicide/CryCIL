@@ -304,9 +304,9 @@ private:
 	void RegisterDefaultListeners()
 	{
 #ifdef _DEBUG
-		this->listeners.push_back(new DebugEventReporter());
+		this->broadcaster->listeners.push_back(new DebugEventReporter());
 #endif // _DEBUG
-
+		this->broadcaster->listeners.push_back(new InitializationInterop());
 	}
 	void InitializeThunks()
 	{

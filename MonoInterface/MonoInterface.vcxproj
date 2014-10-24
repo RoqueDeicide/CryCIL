@@ -206,8 +206,10 @@
     <ClInclude Include="Engine\DirectoryStructure.h" />
     <ClInclude Include="IMonoInterface.h" />
     <ClInclude Include="MonoHeaders.h" />
+    <ClInclude Include="RunTime\AllInterops.h" />
     <ClInclude Include="RunTime\DebugEventReporter.h" />
     <ClInclude Include="RunTime\EventBroadcaster.h" />
+    <ClInclude Include="RunTime\InitializationInterop.h" />
     <ClInclude Include="RunTime\MonoInterface.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />

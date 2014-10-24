@@ -46,6 +46,10 @@
     <ClInclude Include="RunTime\EventBroadcaster.h">
       <Filter>RunTime</Filter>
     </ClInclude>
+    <ClInclude Include="RunTime\InitializationInterop.h">
+      <Filter>RunTime</Filter>
+    </ClInclude>
+    <ClInclude Include="RunTime\AllInterops.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
