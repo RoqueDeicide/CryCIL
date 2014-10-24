@@ -101,7 +101,7 @@ namespace mono
 	//! within managed memory. Technically all of them are equivalents to mono::object
 	//! but they can be used to designate what the object is supposed to be.
 	//!
-	//! In C++ equivalent for mono::object is void *. Both can be casted to whatever type
+	//! In C++'s analog for mono::object is void *. Both can be casted to whatever type
 	//! like bool *. The same can be done to mono::object.
 	//!
 	//! Examples:

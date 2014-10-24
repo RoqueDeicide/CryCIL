@@ -34,7 +34,7 @@ public:
 		this->size = mono_array_length(this->wrappedArray);
 	}
 	//! Returns a pointer to the wrapped array.
-	virtual void * GetWrappedPointer() const
+	virtual void * GetWrappedPointer()
 	{
 		return this->wrappedArray;
 	}

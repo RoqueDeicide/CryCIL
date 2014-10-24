@@ -28,7 +28,7 @@ public:
 		this->wrappedArrayHandle = mono_gchandle_new((MonoObject *)handle, false);
 	}
 	//! Returns a pointer to the wrapped array.
-	virtual void * GetWrappedPointer() const
+	virtual void * GetWrappedPointer()
 	{
 		if (this->wrappedArrayHandle == -1)
 		{
