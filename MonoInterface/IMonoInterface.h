@@ -716,12 +716,53 @@ public:
 	//! Returns the name space where the class that will declare managed counter-parts
 	//! of the internal calls is declared.
 	virtual const char *GetNameSpace() = 0;
+	//! Unnecessary for most interops.
+	virtual void OnPreInitialization()
+	{}
+	//! Unnecessary for most interops.
+	virtual void OnRunTimeInitializing()
+	{}
+	//! Unnecessary for most interops.
+	virtual void OnCryamblyInitilizing()
+	{}
+	//! Unnecessary for most interops.
+	virtual void OnCompilationStarting()
+	{}
+	//! Unnecessary for most interops.
+	virtual void OnCompilationComplete(bool success)
+	{}
+	//! Unnecessary for most interops.
+	virtual int *GetSubscribedStages(int &stageCount)
+	{
+		stageCount = 0;
+		return nullptr;
+	}
+	//! Unnecessary for most interops.
+	virtual void OnInitializationStage(int stageIndex)
+	{}
+	//! Unnecessary for most interops.
+	virtual void OnCryamblyInitilized()
+	{}
+	//! Unnecessary for most interops.
+	virtual void OnPostInitialization()
+	{}
+	//! Unnecessary for most interops.
+	virtual void Update()
+	{}
+	//! Unnecessary for most interops.
+	virtual void PostUpdate()
+	{}
+	//! Unnecessary for most interops.
+	virtual void Shutdown()
+	{}
 };
+
+#define REGISTER_METHOD(method) this->RegisterInteropMethod(#method, (method))
 
 //! Interface of interops that use classes within CryCil.RunTime.NativeCodeAccess name space.
 struct IDefaultMonoInterop : public IMonoInterop
 {
-	virtual const char *GetNameSpace() { return "CryCil.RunTime.NativeCodeAccess"; }
+	virtual const char *GetNameSpace() { return "CryCil.RunTime.NativeCodeAccess.Interops"; }
 };
 
 //! Base class for MonoRunTime. Provides access to Mono interface.
