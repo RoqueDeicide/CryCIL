@@ -629,6 +629,9 @@ protected:
 
 //! Base interface for objects that subscribe to the events produced by IMonoInterface.
 //!
+//! Listeners receive events in the order of registration. Internal listeners are always
+//! registered first.
+//!
 //! @example DoxygenExampleFiles\ListenerExample.cpp
 struct IMonoSystemListener
 {
@@ -661,6 +664,7 @@ struct IMonoSystemListener
 	//! this listener would like to subscribe to.
 	//!
 	//! It's important to allow IMonoInterface implementation to delete the resultant array.
+	//! Unless it's a null pointer which will allow the system to ignore the listener.
 	//!
 	//! @param stageCount Reference to the number that represents length of returned array.
 	//!
@@ -684,6 +688,9 @@ struct IMonoSystemListener
 };
 
 //! Interface of objects that specialize on setting up interops between C++ and Mono.
+//!
+//! The earliest time for registration of internal calls is during invocation
+//! of OnRunTimeInitialized.
 struct IMonoInterop : public IMonoSystemListener
 {
 protected:
