@@ -3,6 +3,8 @@
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Engine\DirectoryStructure.h">
+      <Filter>Engine</Filter>
     </ClInclude>
     </ClInclude>
     <ClInclude Include="Wrappers\MonoHandleFree.h">
