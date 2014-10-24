@@ -6,6 +6,8 @@
     <ClInclude Include="Engine\DirectoryStructure.h">
       <Filter>Engine</Filter>
     </ClInclude>
+    <ClInclude Include="RunTime\MonoInterface.h">
+      <Filter>RunTime</Filter>
     </ClInclude>
     <ClInclude Include="Wrappers\MonoHandleFree.h">
       <Filter>API Implementation</Filter>
