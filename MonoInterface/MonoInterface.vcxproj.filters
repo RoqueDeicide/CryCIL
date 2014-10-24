@@ -38,6 +38,9 @@
     <ClInclude Include="Wrappers\DefaultBoxinator.h">
       <Filter>API Implementation</Filter>
     </ClInclude>
+    <ClInclude Include="RunTime\DebugEventReporter.h">
+      <Filter>RunTime</Filter>
+    </ClInclude>
     <ClInclude Include="RunTime\EventBroadcaster.h">
       <Filter>RunTime</Filter>
     </ClInclude>
