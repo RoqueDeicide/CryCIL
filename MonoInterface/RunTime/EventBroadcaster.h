@@ -58,6 +58,10 @@ struct EventBroadcaster
 			// Get stages.
 			int stagesCount;
 			int *stages = listener->GetSubscribedStages(stagesCount);
+			if (!stages)
+			{
+				continue;
+			}
 			// Put the listeners into the map.
 			for (int i = 0; i < stagesCount; i++)
 			{
