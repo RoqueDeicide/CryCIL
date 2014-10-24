@@ -627,6 +627,22 @@ protected:
 	VIRTUAL_API virtual int GetParameterCount() = 0;
 };
 
+//! CryCIL uses initialization stages to allow various systems perform various initialization
+//! tasks in a very specific order.
+//!
+//! This define marks indices used by CryCIL.
+#define DEFAULT_INITIALIZATION_STAGE
+
+//! Index of the initialization stage during which entities defined in CryCIL are registered.
+#define ENTITY_REGISTRATION_STAGE DEFAULT_INITIALIZATION_STAGE 1000000
+//! Index of the initialization stage during which actors defined in CryCIL are registered.
+#define ACTORS_REGISTRATION_STAGE DEFAULT_INITIALIZATION_STAGE 2000000
+//! Index of the initialization stage during which game modes defined in CryCIL are registered.
+#define GAME_MODE_REGISTRATION_STAGE DEFAULT_INITIALIZATION_STAGE 3000000
+//! Index of the initialization stage during which data required to register CryCIL flow nodes
+//! is gathered.
+#define FLOWNODE_RECOGNITION_STAGE DEFAULT_INITIALIZATION_STAGE 4000000
+
 //! Base interface for objects that subscribe to the events produced by IMonoInterface.
 //!
 //! Listeners receive events in the order of registration. Internal listeners are always

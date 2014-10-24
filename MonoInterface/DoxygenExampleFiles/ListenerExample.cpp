@@ -94,14 +94,14 @@ public:
 	{
 		stageCount = 8;
 		int *stages = new int[stageCount];
-		stages[0] = 999999;					// Before entities registration.
-		stages[1] = 1000001;				// After entities registration.
-		stages[2] = 1999999;				// Before actors registration.
-		stages[3] = 2000001;				// After actors registration.
-		stages[4] = 2999999;				// Before game modes registration.
-		stages[5] = 3000001;				// After game modes registration.
-		stages[6] = 3999999;				// Before flow graph nodes recognition.
-		stages[7] = 4000001;				// After flow graph nodes recognition.
+		stages[0] = ENTITY_REGISTRATION_STAGE - 1;			// Before entities registration.
+		stages[1] = ENTITY_REGISTRATION_STAGE + 1;			// After entities registration.
+		stages[2] = ACTORS_REGISTRATION_STAGE - 1;			// Before actors registration.
+		stages[3] = ACTORS_REGISTRATION_STAGE + 1;			// After actors registration.
+		stages[4] = GAME_MODE_REGISTRATION_STAGE - 1;		// Before game modes registration.
+		stages[5] = GAME_MODE_REGISTRATION_STAGE + 1;		// After game modes registration.
+		stages[6] = FLOWNODE_RECOGNITION_STAGE - 1;			// Before flow graph nodes recognition.
+		stages[7] = FLOWNODE_RECOGNITION_STAGE + 1;			// After flow graph nodes recognition.
 		return stages;
 	}
 
@@ -109,28 +109,28 @@ public:
 	{
 		switch (stageIndex)
 		{
-		case 999999:
+		case ENTITY_REGISTRATION_STAGE - 1:
 			CryLogAlways("Entities defined by CryCIL are about to be registered.");
 			break;
-		case 1000001:
+		case ENTITY_REGISTRATION_STAGE + 1:
 			CryLogAlways("Entities defined by CryCIL are registered.");
 			break;
-		case 1999999:
+		case ACTORS_REGISTRATION_STAGE - 1:
 			CryLogAlways("Actors defined by CryCIL are about to be registered.");
 			break;
-		case 2000001:
+		case ACTORS_REGISTRATION_STAGE + 1:
 			CryLogAlways("Actors defined by CryCIL are registered.");
 			break;
-		case 2999999:
+		case GAME_MODE_REGISTRATION_STAGE - 1:
 			CryLogAlways("Game modes defined by CryCIL are about to be registered.");
 			break;
-		case 3000001:
+		case GAME_MODE_REGISTRATION_STAGE + 1:
 			CryLogAlways("Game modes defined by CryCIL are registered.");
 			break;
-		case 3999999:
+		case FLOWNODE_RECOGNITION_STAGE - 1:
 			CryLogAlways("FlowGraph nodes defined by CryCIL are about to be recognized.");
 			break;
-		case 4000001:
+		case FLOWNODE_RECOGNITION_STAGE + 1:
 			CryLogAlways("FlowGraph nodes defined by CryCIL are recognized.");
 			break;
 		default:
