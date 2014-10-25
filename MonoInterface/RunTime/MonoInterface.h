@@ -316,6 +316,11 @@ public:
 		return &this->boxer;
 	}
 
+	virtual void *Unbox(mono::object value)
+	{
+		return mono_object_unbox((MonoObject *)value);
+	}
+
 	virtual void AddListener(IMonoSystemListener *listener)
 	{
 		this->broadcaster->listeners.push_back(listener);
