@@ -299,6 +299,16 @@ public:
 	virtual IDefaultBoxinator * GetDefaultBoxer()
 	{
 		throw std::logic_error("The method or operation is not implemented.");
+	virtual void AddListener(IMonoSystemListener *listener)
+	{
+		this->broadcaster->listeners.push_back(listener);
+	}
+
+	virtual void RemoveListener(IMonoSystemListener *listener)
+	{
+		this->broadcaster->RemoveListener(listener);
+	}
+
 	}
 private:
 	void RegisterDefaultListeners()

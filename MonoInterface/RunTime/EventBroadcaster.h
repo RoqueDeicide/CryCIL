@@ -8,6 +8,29 @@ struct EventBroadcaster
 	// Map is basically a SortedList.
 	std::map<int, std::vector<IMonoSystemListener *>> stageMap;
 
+	void RemoveListener(IMonoSystemListener *listener)
+	{
+		// Delete the listener from the main list.
+		for (auto i = this->listeners.begin(); i != this->listeners.end(); i++)
+		{
+			if (*i == listener)
+			{
+				this->listeners.erase(i);
+			}
+		}
+		// Remove listener from stage map.
+		for each (auto var in this->stageMap)
+		{
+			for (auto i = var.second.begin(); i != var.second.end(); i++)
+			{
+				if (*i == listener)
+				{
+					var.second.erase(i);
+				}
+			}
+		}
+	}
+
 	void OnPreInitialization()
 	{
 		for (int i = 0; i < this->listeners.size(); i++)
