@@ -226,6 +226,11 @@ public:
 		}
 		return new MonoArrayFree(capacity);
 	}
+
+	VIRTUAL_API virtual IMonoArray * CreateArray(IMonoClass *klass, int capacity, bool persistent)
+	{
+		throw std::logic_error("The method or operation is not implemented.");
+	}
 	//! Wraps already existing Mono array.
 	//!
 	//! @param arrayHandle Pointer to the array that needs to be wrapped.
@@ -240,10 +245,11 @@ public:
 		return new MonoArrayFree(arrayHandle);
 	}
 
-	virtual void HandleException(mono::object exception)
+	VIRTUAL_API virtual void HandleException(mono::exception exception)
 	{
 		throw std::logic_error("The method or operation is not implemented.");
 	}
+
 	//! Registers a method as internal call.
 	virtual void AddInternalCall(const char *name, void *functionPointer)
 	{
@@ -252,6 +258,12 @@ public:
 			mono_add_internal_call(name, functionPointer);
 		}
 	}
+
+	VIRTUAL_API virtual void AddInternalCall(const char *name, const char *className, const char *nameSpace, void *functionPointer)
+	{
+		throw std::logic_error("The method or operation is not implemented.");
+	}
+
 	virtual IMonoAssembly *LoadAssembly(const char *moduleFileName)
 	{
 		MonoAssembly *assembly = mono_domain_assembly_open(this->appDomain, moduleFileName);
