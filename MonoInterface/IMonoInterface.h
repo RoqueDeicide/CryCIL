@@ -391,6 +391,39 @@ struct IMonoAssembly : public IMonoFunctionalityWrapper
 	//! @param className Name of the class to get.
 	//! @param nameSpace Name space where the class is defined.
 	VIRTUAL_API virtual IMonoClass *GetClass(const char *className, const char *nameSpace = "CryCil") = 0;
+	//! Returns a method that satisfies given description.
+	//!
+	//! A list of parameters is a comma separated list of names of types each of which can be
+	//! a standard name with name space and full class name, like "System.Int32", or it can be
+	//! a short name, if the type is a built-in one, like "int".
+	//!
+	//! Examples:
+	//!
+	//! @code{.cpp}
+	//! IMonoAssembly *corlib = MonoEnv->CoreLibrary;
+	//!
+	//! IMonoMethod *binarySearch = corlib->MethodFromDescription
+	//!                             (
+	//!                                 "System",
+	//!                                 "Array",
+	//!                                 "BinarySearch",
+	//!                                 "System.Array,int,int,object,System.Collections.IComparer"
+	//!                             );
+	//! @endcode
+	//!
+	//! @param nameSpace  Name space where the class where the method is declared is located.
+	//! @param className  Name of the class where the method is declared.
+	//! @param methodName Name of the method to look for.
+	//! @param params     A comma-separated list of names of types of arguments. Can be null
+	//!                   if method accepts no arguments.
+	//!
+	//! @returns A pointer to object that implements IMonoMethod that grants access to
+	//!          requested method if found, otherwise returns null.
+	VIRTUAL_API virtual IMonoMethod *MethodFromDescription
+	(
+		const char *nameSpace, const char *className,
+		const char *methodName, const char *params
+	) = 0;
 	//! Gets the reference to the instance of type System.Reflection.Assembly.
 	__declspec(property(get=GetReflectionObject)) mono::assembly ReflectionObject;
 protected:
