@@ -11,3 +11,10 @@ struct MonoClassThunks
 	static CreateInstanceThunk CreateInstance;
 	static StaticEqualsThunk StaticEquals;
 };
+
+typedef mono::nothing(*DisplayExceptionThunk)(mono::object, mono::exception *);
+
+struct MonoInterfaceThunks
+{
+	static DisplayExceptionThunk DisplayException;
+};

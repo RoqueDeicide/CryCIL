@@ -247,7 +247,8 @@ public:
 
 	virtual void HandleException(mono::exception exception)
 	{
-		throw std::logic_error("The method or operation is not implemented.");
+		mono::exception ex;
+		MonoInterfaceThunks::DisplayException(exception, &ex);
 	}
 
 	//! Registers a method as internal call.
@@ -341,6 +342,7 @@ private:
 	void InitializeThunks()
 	{
 		this->InitializeClassThunks();
+		this->InitializeMonoInterfaceThunks();
 	}
 	void InitializeClassThunks()
 	{
@@ -350,6 +352,12 @@ private:
 		MonoClassThunks::StaticEquals =
 			this->GetMethodThunk<StaticEqualsThunk>
 			(this->corlib, "System", "Object", "Equals", "object,object");
+	}
+	void InitializeMonoInterfaceThunks()
+	{
+		MonoInterfaceThunks::DisplayException =
+			this->GetMethodThunk<DisplayExceptionThunk>
+			(this->cryambly, "CryCil.RunTime", "MonoInterface", "DisplayException", "object");
 	}
 	template<typename MethodSignature>
 	MethodSignature GetMethodThunk(IMonoAssembly *assembly, const char *nameSpace, const char *className, const char *methodName, const char *params)
