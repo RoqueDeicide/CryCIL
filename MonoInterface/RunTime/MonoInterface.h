@@ -17,6 +17,8 @@
 
 #include "Wrappers/MonoAssemblyWrapper.h"
 
+#include "Wrappers/DefaultBoxinator.h"
+
 #include "RunTime/DebugEventReporter.h"
 #include "RunTime/EventBroadcaster.h"
 #include "RunTime/AllInterops.h"
@@ -41,6 +43,7 @@ private:
 	MonoDomain *appDomain;
 	IMonoAssembly *cryambly;					//! Extra pointer for Cryambly.
 	IMonoAssembly *corlib;						//! Extra pointer for mscorlib.
+	DefaultBoxinator boxer;
 
 	IMonoHandle *managedInterface;
 public:
@@ -296,9 +299,11 @@ public:
 		return this->running;
 	}
 
-	virtual IDefaultBoxinator * GetDefaultBoxer()
+	virtual IDefaultBoxinator *GetDefaultBoxer()
 	{
-		throw std::logic_error("The method or operation is not implemented.");
+		return &this->boxer;
+	}
+
 	virtual void AddListener(IMonoSystemListener *listener)
 	{
 		this->broadcaster->listeners.push_back(listener);
