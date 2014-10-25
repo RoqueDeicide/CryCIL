@@ -286,24 +286,24 @@ public:
 		return wrapper;
 	}
 	//! Returns a pointer to app domain.
-	virtual void * GetAppDomain()
+	virtual void *GetAppDomain()
 	{
 		return this->appDomain;
 	}
 
-	virtual IMonoAssembly * GetCryambly()
+	virtual IMonoAssembly *GetCryambly()
+	{
+		return this->cryambly;
+	}
+
+	virtual IMonoAssembly *GetPdbMdbAssembly()
 	{
 		throw std::logic_error("The method or operation is not implemented.");
 	}
 
-	virtual IMonoAssembly * GetPdbMdbAssembly()
+	virtual IMonoAssembly *GetCoreLibrary()
 	{
-		throw std::logic_error("The method or operation is not implemented.");
-	}
-
-	virtual IMonoAssembly * GetCoreLibrary()
-	{
-
+		return this->corlib;
 	}
 
 	virtual bool GetInitializedIndication()
