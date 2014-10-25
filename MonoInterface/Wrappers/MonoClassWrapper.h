@@ -168,6 +168,35 @@ public:
 		}
 		return foundMethods;
 	}
+	//! Returns a method that satisfies given description.
+	//!
+	//! @param methodName Name of the method to look for.
+	//! @param params     A comma-separated list of names of types of arguments. Can be null
+	//!                   if method accepts no arguments.
+	//!
+	//! @returns A pointer to object that implements IMonoMethod that grants access to
+	//!          requested method if found, otherwise returns null.
+	virtual IMonoMethod *MethodFromDescription
+	(
+		const char *methodName, const char *params
+	)
+	{
+		std::stringstream descriptionText;
+
+		descriptionText << "*:" << methodName;
+		if (params)
+		{
+			descriptionText << "(" << params << ")";
+		}
+		return new MonoMethodWrapper
+		(
+			mono_method_desc_search_in_class
+			(
+				mono_method_desc_new(descriptionText.str().c_str(), false),
+				this->GetWrappedClass()
+			)
+		);
+	}
 	//! Gets the value of the object's field.
 	//!
 	//! @param obj   Object which field to get.

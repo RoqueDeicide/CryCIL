@@ -35,6 +35,38 @@ public:
 	{
 		return MonoClassCache::Wrap(mono_class_from_name(this->image, nameSpace, className));
 	}
+	//! Returns a method that satisfies given description.
+	//!
+	//! @param nameSpace  Name space where the class where the method is declared is located.
+	//! @param className  Name of the class where the method is declared.
+	//! @param methodName Name of the method to look for.
+	//! @param params     A comma-separated list of names of types of arguments. Can be null
+	//!                   if method accepts no arguments.
+	//!
+	//! @returns A pointer to object that implements IMonoMethod that grants access to
+	//!          requested method if found, otherwise returns null.
+	virtual IMonoMethod *MethodFromDescription
+	(
+		const char *nameSpace, const char *className,
+		const char *methodName, const char *params
+	)
+	{
+		std::stringstream descriptionText;
+
+		descriptionText << nameSpace << "." << className << ":" << methodName;
+		if (params)
+		{
+			descriptionText << "(" << params << ")";
+		}
+		return new MonoMethodWrapper
+		(
+			mono_method_desc_search_in_image
+			(
+				mono_method_desc_new(descriptionText.str().c_str(), true),
+				this->image
+			)
+		);
+	}
 	//! Returns a pointer to the MonoAssembly for Mono API calls.
 	virtual void * GetWrappedPointer()
 	{
