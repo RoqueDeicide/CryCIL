@@ -227,7 +227,7 @@ public:
 		return new MonoArrayFree(capacity);
 	}
 
-	VIRTUAL_API virtual IMonoArray * CreateArray(IMonoClass *klass, int capacity, bool persistent)
+	virtual IMonoArray * CreateArray(IMonoClass *klass, int capacity, bool persistent)
 	{
 		throw std::logic_error("The method or operation is not implemented.");
 	}
@@ -236,7 +236,7 @@ public:
 	//! @param arrayHandle Pointer to the array that needs to be wrapped.
 	//! @param persistent  Indicates whether the array wrapping must be safe to
 	//!                    keep a reference to for prolonged periods of time.
-	VIRTUAL_API virtual IMonoArray * WrapArray(mono::Array arrayHandle, bool persistent)
+	virtual IMonoArray * WrapArray(mono::Array arrayHandle, bool persistent)
 	{
 		if (persistent)
 		{
@@ -245,7 +245,7 @@ public:
 		return new MonoArrayFree(arrayHandle);
 	}
 
-	VIRTUAL_API virtual void HandleException(mono::exception exception)
+	virtual void HandleException(mono::exception exception)
 	{
 		throw std::logic_error("The method or operation is not implemented.");
 	}
@@ -259,7 +259,7 @@ public:
 		}
 	}
 
-	VIRTUAL_API virtual void AddInternalCall(const char *name, const char *className, const char *nameSpace, void *functionPointer)
+	virtual void AddInternalCall(const char *name, const char *className, const char *nameSpace, void *functionPointer)
 	{
 		throw std::logic_error("The method or operation is not implemented.");
 	}
@@ -281,7 +281,7 @@ public:
 				return wrapper;
 			}
 		}
-		MonoAssemblyWrapper *wrapper = new MonoAssemblyWrapper(assemblyHandle);
+		MonoAssemblyWrapper *wrapper = new MonoAssemblyWrapper((MonoAssembly *)assemblyHandle);
 		this->assemblies.push_back(wrapper);
 		return wrapper;
 	}
