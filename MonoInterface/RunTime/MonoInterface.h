@@ -325,8 +325,6 @@ public:
 	{
 		this->broadcaster->RemoveListener(listener);
 	}
-
-	}
 private:
 	void RegisterDefaultListeners()
 	{
