@@ -236,7 +236,7 @@ public:
 	//! @param arrayHandle Pointer to the array that needs to be wrapped.
 	//! @param persistent  Indicates whether the array wrapping must be safe to
 	//!                    keep a reference to for prolonged periods of time.
-	virtual IMonoArray *WrapArray(mono::object arrayHandle, bool persistent)
+	VIRTUAL_API virtual IMonoArray * WrapArray(mono::Array arrayHandle, bool persistent)
 	{
 		if (persistent)
 		{
