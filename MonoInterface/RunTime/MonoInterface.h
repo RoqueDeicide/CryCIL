@@ -344,21 +344,18 @@ private:
 	}
 	void InitializeClassThunks()
 	{
-		MonoImage *coreImage =
-			mono_assembly_get_image((MonoAssembly *)this->CoreLibrary->GetWrappedPointer());
-		// Register Activator.CreateInstance thunk.
-		MonoMethodDesc *createInstanceDesc =
-			mono_method_desc_new("System.Activator:CreateInstance(System.Type)", true);
-		MonoMethod *createInstanceMethod =
-			mono_method_desc_search_in_image(createInstanceDesc, coreImage);
 		MonoClassThunks::CreateInstance =
-			(CreateInstanceThunk)mono_method_get_unmanaged_thunk(createInstanceMethod);
-		// Register Object.Equals thunk.
-		MonoMethodDesc *staticEqualsDesc =
-			mono_method_desc_new("System.Object:Equals(System.Object,System.Object)", true);
-		MonoMethod *staticEqualsMethod =
-			mono_method_desc_search_in_image(staticEqualsDesc, coreImage);
+			this->GetMethodThunk<CreateInstanceThunk>
+			(this->corlib, "System", "Activator", "CreateInstance", "Type,object[]");
 		MonoClassThunks::StaticEquals =
-			(StaticEqualsThunk)mono_method_get_unmanaged_thunk(staticEqualsMethod);
+			this->GetMethodThunk<StaticEqualsThunk>
+			(this->corlib, "System", "Object", "Equals", "object,object");
 	}
+	template<typename MethodSignature>
+	MethodSignature GetMethodThunk(IMonoAssembly *assembly, const char *nameSpace, const char *className, const char *methodName, const char *params)
+	{
+		return (MethodSignature)assembly->MethodFromDescription
+			(nameSpace, className, methodName, params)->UnmanagedThunk;
+	}
+
 };
