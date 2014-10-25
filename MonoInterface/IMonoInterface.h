@@ -492,6 +492,40 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//! @returns A pointer to the first found method. You should release
 	//!          resultant array once you don't need it anymore.
 	VIRTUAL_API virtual IMonoMethod **GetMethods(const char *name, int &foundCount) = 0;
+	//! Returns a method that satisfies given description.
+	//!
+	//! A list of parameters is a comma separated list of names of types each of which can be
+	//! a standard name with name space and full class name, like "System.Int32", or it can be
+	//! a short name, if the type is a built-in one, like "int".
+	//!
+	//! Examples:
+	//!
+	//! @code{.cpp}
+	//! IMonoAssembly *corlib = MonoEnv->CoreLibrary;
+	//!
+	//! IMonoClass *arrayClass = corlib->GetClass
+	//!                          (
+	//!                              "System",
+	//!                              "Array"
+	//!                          );
+	//!
+	//! IMonoMethod *binarySearch = arrayClass->MethodFromDescription
+	//!                             (
+	//!                                 "BinarySearch",
+	//!                                 "System.Array,int,int,object,System.Collections.IComparer"
+	//!                             );
+	//! @endcode
+	//!
+	//! @param methodName Name of the method to look for.
+	//! @param params     A comma-separated list of names of types of arguments. Can be null
+	//!                   if method accepts no arguments.
+	//!
+	//! @returns A pointer to object that implements IMonoMethod that grants access to
+	//!          requested method if found, otherwise returns null.
+	VIRTUAL_API virtual IMonoMethod *MethodFromDescription
+	(
+		const char *methodName, const char *params
+	) = 0;
 	//! Gets the value of the object's field.
 	//!
 	//! @param obj   Object which field to get.
