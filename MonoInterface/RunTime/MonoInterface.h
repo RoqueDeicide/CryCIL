@@ -250,19 +250,11 @@ public:
 		mono::exception ex;
 		MonoInterfaceThunks::DisplayException(exception, &ex);
 	}
-
 	//! Registers a method as internal call.
-	virtual void AddInternalCall(const char *name, void *functionPointer)
-	{
-		if (this->running)
-		{
-			mono_add_internal_call(name, functionPointer);
-		}
-	}
-
 	virtual void AddInternalCall(const char *name, const char *className, const char *nameSpace, void *functionPointer)
 	{
-		throw std::logic_error("The method or operation is not implemented.");
+		mono_add_internal_call
+			(std::string(nameSpace).append(className).append(name).c_str(), functionPointer);
 	}
 
 	virtual IMonoAssembly *LoadAssembly(const char *moduleFileName)

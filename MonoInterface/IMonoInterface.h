@@ -787,9 +787,9 @@ public:
 	{
 		this->monoInterface->AddInternalCall
 		(
-			methodName,
-			this->GetName(),
 			this->GetNameSpace(),
+			this->GetName(),
+			methodName,
 			functionPointer
 		);
 	}
@@ -1084,11 +1084,11 @@ struct IMonoInterface
 	//! }
 	//! @endcode
 	//!
-	//! @param name            Name of the managed method.
-	//! @param className       Name of the class where managed method is declared.
 	//! @param nameSpace       Name space where the class is located.
+	//! @param className       Name of the class where managed method is declared.
+	//! @param name            Name of the managed method.
 	//! @param functionPointer Pointer to unmanaged thunk that needs to be exposed to Mono code.
-	VIRTUAL_API virtual void AddInternalCall(const char *name, const char *className, const char *nameSpace, void *functionPointer) = 0;
+	VIRTUAL_API virtual void AddInternalCall(const char *nameSpace, const char *className, const char *name, void *functionPointer) = 0;
 	//! Loads a Mono assembly into memory.
 	//!
 	//! @param moduleFileName Name of the file inside Modules folder.
