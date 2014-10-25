@@ -388,9 +388,9 @@ struct IMonoAssembly : public IMonoFunctionalityWrapper
 {
 	//! Gets the class.
 	//!
-	//! @param className Name of the class to get.
 	//! @param nameSpace Name space where the class is defined.
-	VIRTUAL_API virtual IMonoClass *GetClass(const char *className, const char *nameSpace = "CryCil") = 0;
+	//! @param className Name of the class to get.
+	VIRTUAL_API virtual IMonoClass *GetClass(const char *nameSpace, const char *className) = 0;
 	//! Returns a method that satisfies given description.
 	//!
 	//! A list of parameters is a comma separated list of names of types each of which can be

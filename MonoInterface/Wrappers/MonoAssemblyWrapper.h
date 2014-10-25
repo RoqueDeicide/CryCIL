@@ -29,9 +29,9 @@ public:
 	}
 	//! Gets the class.
 	//!
-	//! @param className Name of the class to get.
 	//! @param nameSpace Name space where the class is defined.
-	virtual IMonoClass *GetClass(const char *className, const char *nameSpace = "CryCil")
+	//! @param className Name of the class to get.
+	virtual IMonoClass *GetClass(const char *nameSpace, const char *className)
 	{
 		return MonoClassCache::Wrap(mono_class_from_name(this->image, nameSpace, className));
 	}
