@@ -229,7 +229,11 @@ public:
 
 	virtual IMonoArray * CreateArray(IMonoClass *klass, int capacity, bool persistent)
 	{
-		throw std::logic_error("The method or operation is not implemented.");
+		if (persistent)
+		{
+			return new MonoArrayPersistent(klass, capacity);
+		}
+		return new MonoArrayFree(klass, capacity);
 	}
 	//! Wraps already existing Mono array.
 	//!

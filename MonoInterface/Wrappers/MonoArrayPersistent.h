@@ -19,6 +19,16 @@ public:
 		// Hold it.
 		this->wrappedArrayHandle = mono_gchandle_new((MonoObject *)wrappedArray, false);
 	}
+	//! Creates a new array of elements of specific type.
+	MonoArrayPersistent(IMonoClass *elementClass, int size)
+	{
+		this->size = size;
+		// Create an array.
+		MonoArray *wrappedArray = mono_array_new((MonoDomain *)MonoEnv->AppDomain,
+			(MonoClass *)elementClass->GetWrappedPointer(), this->size);
+		// Hold it.
+		this->wrappedArrayHandle = mono_gchandle_new((MonoObject *)wrappedArray, false);
+	}
 	//! Wraps an existing Mono array.
 	MonoArrayPersistent(mono::object arrayHandle)
 	{
