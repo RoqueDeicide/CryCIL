@@ -52,6 +52,10 @@ namespace CryCil.RunTime
 		/// </summary>
 		public event EventHandler<EventArgs<int>> InitializationStageFinished;
 		/// <summary>
+		/// Occurs when CryCIL subsystem is updated.
+		/// </summary>
+		public event EventHandler Updated;
+		/// <summary>
 		/// Occurs when native Mono interface receive notification about system-wide shutdown.
 		/// </summary>
 		public event EventHandler ShuttingDown;
@@ -114,6 +118,11 @@ namespace CryCil.RunTime
 			ExceptionDisplayForm form = new ExceptionDisplayForm(ex as Exception);
 			form.ShowDialog();
 		}
+		[PublicAPI("Updates this subsystem.")]
+		private void Update()
+		{
+			this.OnUpdated();
+		}
 		[PublicAPI("Informs this object about system-wide shutdown.")]
 		private void Shutdown()
 		{
@@ -142,6 +151,10 @@ namespace CryCil.RunTime
 		{
 			if (this.InitializationStageFinished != null)
 				this.InitializationStageFinished(this, new EventArgs<int>(index));
+		}
+		private void OnUpdated()
+		{
+			if (this.Updated != null) this.Updated(this, EventArgs.Empty);
 		}
 		private void OnShuttingDown()
 		{

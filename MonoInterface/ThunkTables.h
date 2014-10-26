@@ -15,6 +15,7 @@ struct MonoClassThunks
 typedef mono::nothing(*DisplayExceptionThunk)(mono::object, mono::exception *);
 typedef mono::object(*InitializeThunk)(mono::exception *);
 typedef mono::nothing(*RegisterFlowNodesThunk)(mono::object monoInterface, mono::exception *);
+typedef mono::nothing(*UpdateThunk)(mono::object monoInterface, mono::exception *);
 typedef mono::nothing(*ShutDownThunk)(mono::object monoInterface, mono::exception *);
 
 struct MonoInterfaceThunks
@@ -23,6 +24,7 @@ struct MonoInterfaceThunks
 	static InitializeThunk Initialize;
 	static RegisterFlowNodesThunk TriggerFlowNodesRegistration;
 	static ShutDownThunk Shutdown;
+	static UpdateThunk Update;
 };
 
 typedef mono::nothing(*ConvertPdbThunk)(mono::string, mono::exception *);

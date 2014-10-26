@@ -147,17 +147,10 @@ public:
 	virtual void OnPostUpdate(float fDeltaTime)
 	{
 		// Notify everything about the update.
-		if (this->monoInterface)
+		if (this->managedInterface)
 		{
-			this->monoInterface->ToWrapper()->CallMethod
-			(
-				"Think",
-				fDeltaTime,
-				gEnv->pTimer->GetFrameStartTime().GetMilliSeconds(),
-				gEnv->pTimer->GetAsyncTime().GetMilliSeconds(),
-				gEnv->pTimer->GetFrameRate(),
-				gEnv->pTimer->GetTimeScale()
-			);
+			mono::exception ex;
+			MonoInterfaceThunks::Update(this->managedInterface->Get(), &ex);
 		}
 	}
 	//! Not used.
@@ -391,6 +384,9 @@ private:
 		MonoInterfaceThunks::Shutdown =
 			this->GetMethodThunk<ShutDownThunk>
 			(this->cryambly, "CryCil.RunTime", "MonoInterface", "Shutdown", nullptr);
+		MonoInterfaceThunks::Update =
+			this->GetMethodThunk<UpdateThunk>
+			(this->cryambly, "CryCil.RunTime", "MonoInterface", "Update", nullptr);
 	}
 	void InitializeDebugThunks()
 	{
