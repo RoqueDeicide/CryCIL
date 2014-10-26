@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace CryCil.RunTime.NativeCodeAccess.Interops
+namespace CryCil.RunTime.Interops
 {
 	internal class Initialization
 	{

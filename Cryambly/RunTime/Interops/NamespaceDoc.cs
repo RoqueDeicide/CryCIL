@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace CryCil.RunTime.NativeCodeAccess
+namespace CryCil.RunTime.Interops
 {
 	/// <summary>
 	/// Contains types that provide access to C++ methods that expose all CryEngine
