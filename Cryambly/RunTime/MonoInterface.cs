@@ -17,7 +17,7 @@ namespace CryCil.RunTime
 	/// <remarks>
 	/// An object of this type is always created on startup from C++ code.
 	/// </remarks>
-	public class MonoInterface
+	public sealed class MonoInterface
 	{
 		#region Fields
 		/// <summary>

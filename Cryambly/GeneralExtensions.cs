@@ -131,9 +131,13 @@ namespace CryCil
 		/// <summary>
 		/// Determines whether given text contains any of strings.
 		/// </summary>
-		/// <param name="text">Given text.</param>
+		/// <param name="text">   Given text.</param>
 		/// <param name="strings">A list of strings to check for.</param>
-		/// <returns>True, if <paramref name="text"/> is valid and <paramref name="strings"/> contains text snippets and at least one of those is in the <paramref name="text"/>, otherwise false.</returns>
+		/// <returns>
+		/// True, if <paramref name="text"/> is valid and <paramref name="strings"/>
+		/// contains text snippets and at least one of those is in the
+		/// <paramref name="text"/>, otherwise false.
+		/// </returns>
 		public static bool ContainsAny(this string text, string[] strings)
 		{
 			if (String.IsNullOrEmpty(text) || strings.IsNullOrEmpty())
