@@ -11,16 +11,17 @@
 #endif // _WINDOWS
 
 #ifdef WIN32
-#define BINARIES_FOLDER     "Bin32"
+#define BINARIES_FOLDER          "Bin32"
 #else
-#define BINARIES_FOLDER     "Bin64"
+#define BINARIES_FOLDER          "Bin64"
 #endif // WIN32
 
-#define MODULES_FOLDER     "Modules"
-#define CRYCIL_FOLDER      "CryCIL"
-#define MONO_FOLDER        "Mono"
-#define MONO_LIBS_FOLDER   "lib"
-#define MONO_CONFIG_FOLDER "etc"
+#define MODULES_FOLDER          "Modules"
+#define CRYCIL_FOLDER           "CryCIL"
+#define MONO_FOLDER             "Mono"
+#define MONO_LIBS_FOLDER        "lib"
+#define MONO_CONFIG_FOLDER      "etc"
+#define MONO_DEBUG_UTILITY_FILE "pdb2mdb.dll"
 
 //! Defines some simple utilities for working with paths.
 struct PathUtilities
@@ -76,7 +77,7 @@ struct DirectoryStructure
 		parts[2] = CRYCIL_FOLDER;
 		return PathUtilities::Combine(parts, 3);
 	}
-	//! Returns a path to the file that Cryambly.
+	//! Returns a path to the file that contains Cryambly.
 	static char *GetCryamblyFile()
 	{
 		char* parts[4];
@@ -84,6 +85,16 @@ struct DirectoryStructure
 		parts[1] = MODULES_FOLDER;
 		parts[2] = CRYCIL_FOLDER;
 		parts[3] = "Cryambly.dll";
+		return PathUtilities::Combine(parts, 4);
+	}
+	//! Returns a path to the file that contains Pdb to Mdb converter.
+	static char *GetPdb2MdbFile()
+	{
+		char* parts[4];
+		parts[0] = "Bin32";
+		parts[1] = MODULES_FOLDER;
+		parts[2] = CRYCIL_FOLDER;
+		parts[3] = MONO_DEBUG_UTILITY_FILE;
 		return PathUtilities::Combine(parts, 4);
 	}
 	//! Returns a path to the file that contains configuration data for 4.5 version AppDomains.

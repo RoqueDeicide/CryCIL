@@ -17,15 +17,16 @@ public:
 		this->assembly = assembly;
 		this->image = mono_assembly_get_image(assembly);
 	}
-	MonoAssemblyWrapper(const char *assemblyFile)
+	MonoAssemblyWrapper(const char *assemblyFile, bool &failed)
 	{
-		this->assembly = mono_domain_assembly_open((MonoDomain *)MonoEnv->AppDomain, assemblyFile);
-
-		if (!this->assembly)
+		if (Pdb2MdbThunks::Convert)
 		{
-			CryFatalError("Unable to load assembly %s.", assemblyFile);
+			mono::exception ex;
+			Pdb2MdbThunks::Convert(this->ToManagedString(assemblyFile), &ex);
 		}
-		this->image = mono_assembly_get_image(assembly);
+		this->assembly = mono_domain_assembly_open((MonoDomain *)MonoEnv->AppDomain, assemblyFile);
+		failed = !this->assembly;
+		this->image = (failed) ? nullptr : mono_assembly_get_image(assembly);
 	}
 	//! Gets the class.
 	//!

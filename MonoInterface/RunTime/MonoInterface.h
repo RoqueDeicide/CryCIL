@@ -43,6 +43,7 @@ private:
 	MonoDomain *appDomain;
 	IMonoAssembly *cryambly;					//! Extra pointer for Cryambly.
 	IMonoAssembly *corlib;						//! Extra pointer for mscorlib.
+	IMonoAssembly *pdb2mdb;
 	DefaultBoxinator boxer;
 
 	IMonoHandle *managedInterface;
@@ -100,6 +101,16 @@ public:
 			DirectoryStructure::GetMonoBinariesFolder(),
 			DirectoryStructure::GetMonoAppDomainConfigurationFile()
 		);
+#ifdef _DEBUG
+		// Load Pdb2Mdb.dll before everything else.
+		this->pdb2mdb = this->LoadAssembly(DirectoryStructure::GetPdb2MdbFile());
+		// Initialize conversion thunk immediately.
+		Pdb2MdbThunks::Convert = (this->pdb2mdb)
+			? this->GetMethodThunk<ConvertPdbThunk>
+			(this->pdb2mdb, "", "Driver", "Convert", "string")
+			: nullptr;
+#endif // _DEBUG
+
 		// Load Cryambly.
 		this->cryambly = this->LoadAssembly(DirectoryStructure::GetCryamblyFile());
 		this->corlib = this->WrapAssembly(mono_get_corlib());
@@ -263,8 +274,12 @@ public:
 
 	virtual IMonoAssembly *LoadAssembly(const char *moduleFileName)
 	{
-		MonoAssembly *assembly = mono_domain_assembly_open(this->appDomain, moduleFileName);
-		MonoAssemblyWrapper *wrapper = new MonoAssemblyWrapper(assembly);
+		bool failed;
+		MonoAssemblyWrapper *wrapper = new MonoAssemblyWrapper(moduleFileName, failed);
+		if (failed)
+		{
+			return nullptr;
+		}
 		this->assemblies.push_back(wrapper);
 		return wrapper;
 	}
@@ -295,7 +310,7 @@ public:
 
 	virtual IMonoAssembly *GetPdbMdbAssembly()
 	{
-		throw std::logic_error("The method or operation is not implemented.");
+		return this->pdb2mdb;
 	}
 
 	virtual IMonoAssembly *GetCoreLibrary()
@@ -339,6 +354,7 @@ private:
 	{
 		this->InitializeClassThunks();
 		this->InitializeMonoInterfaceThunks();
+		this->InitializeDebugThunks();
 	}
 	void InitializeClassThunks()
 	{
@@ -354,6 +370,9 @@ private:
 		MonoInterfaceThunks::DisplayException =
 			this->GetMethodThunk<DisplayExceptionThunk>
 			(this->cryambly, "CryCil.RunTime", "MonoInterface", "DisplayException", "object");
+	}
+	void InitializeDebugThunks()
+	{
 	}
 	template<typename MethodSignature>
 	MethodSignature GetMethodThunk(IMonoAssembly *assembly, const char *nameSpace, const char *className, const char *methodName, const char *params)

@@ -18,3 +18,10 @@ struct MonoInterfaceThunks
 {
 	static DisplayExceptionThunk DisplayException;
 };
+
+typedef mono::nothing(*ConvertPdbThunk)(mono::string, mono::exception *);
+
+struct Pdb2MdbThunks
+{
+	static ConvertPdbThunk Convert;
+};
