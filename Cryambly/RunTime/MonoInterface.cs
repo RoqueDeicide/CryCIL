@@ -35,7 +35,22 @@ namespace CryCil.RunTime
 		public List<Assembly> CryCilAssemblies { get; private set; }
 		#endregion
 		#region Events
-
+		/// <summary>
+		/// Occurs when compilation starts.
+		/// </summary>
+		public event EventHandler CompilationStarted;
+		/// <summary>
+		/// Occurs when compilation is over, successfully or not.
+		/// </summary>
+		public event EventHandler<EventArgs<bool>> CompilationComplete;
+		/// <summary>
+		/// Occurs when initialization stage of specific index starts.
+		/// </summary>
+		public event EventHandler<EventArgs<int>> InitializationStageStarted;
+		/// <summary>
+		/// Occurs when initialization stage of specific index ends.
+		/// </summary>
+		public event EventHandler<EventArgs<int>> InitializationStageFinished;
 		#endregion
 		#region Construction
 		/// <summary>
@@ -56,14 +71,24 @@ namespace CryCil.RunTime
 				select Assembly.Load(AssemblyName.GetAssemblyName(file))
 			);
 			// Load and compile the solution.
-			CodeSolution.Load
-			(
-				Path.Combine
-				(DirectoryStructure.ContentFolder, "Code", "Solutions", "CryCilCode.sln")
-			);
-			this.CryCilAssemblies.AddRange(CodeSolution.Build());
-			// Add Cryambly to the list.
-			this.CryCilAssemblies.Add(Assembly.GetAssembly(typeof(MonoInterface)));
+			this.OnCompilationStarted();
+			try
+			{
+				CodeSolution.Load
+				(
+					Path.Combine
+					(DirectoryStructure.ContentFolder, "Code", "Solutions", "CryCilCode.sln")
+				);
+				this.CryCilAssemblies.AddRange(CodeSolution.Build());
+				// Add Cryambly to the list.
+				this.CryCilAssemblies.Add(Assembly.GetAssembly(typeof(MonoInterface)));
+				this.OnCompilationComplete(true);
+			}
+			catch (Exception)
+			{
+				this.OnCompilationComplete(false);
+			}
+			this.ProceedWithInitializationStages();
 		}
 		#endregion
 		#region Interface
@@ -87,6 +112,107 @@ namespace CryCil.RunTime
 		}
 		#endregion
 		#region Utilities
+		#region Event Raisers
+		private void OnCompilationStarted()
+		{
+			Interops.Initialization.OnCompilationStarting();
+			if (this.CompilationStarted != null) this.CompilationStarted(this, EventArgs.Empty);
+		}
+		private void OnCompilationComplete(bool success)
+		{
+			Interops.Initialization.OnCompilationComplete(success);
+			if (this.CompilationComplete != null)
+				this.CompilationComplete(this, new EventArgs<bool>(success));
+		}
+		private void OnInitializationStageStarted(int index)
+		{
+			if (this.InitializationStageStarted != null)
+				this.InitializationStageStarted(this, new EventArgs<int>(index));
+		}
+		private void OnInitializationStageFinished(int index)
+		{
+			if (this.InitializationStageFinished != null)
+				this.InitializationStageFinished(this, new EventArgs<int>(index));
+		}
+		#endregion
+		private void ProceedWithInitializationStages()
+		{
+			// Gather some data about initialization stages.
+			SortedList<int, InitializationStageFunction> stages =
+				new SortedList<int, InitializationStageFunction>();
+
+			// Create a map of functions and their indices.
+			List<Tuple<InitializationStageFunction, int[]>> functionsMap =
+				new List<Tuple<InitializationStageFunction, int[]>>
+				(
+					this.CryCilAssemblies
+					// Get the types that are initialization classes.
+					.SelectMany(assembly => assembly.GetTypes())
+					.Where(type => type.ContainsAttribute<InitializationClassAttribute>())
+					// Get the methods that are initialization ones with appropriate signature.
+					.SelectMany(type=>type.GetMethods(BindingFlags.Static))
+					.Where
+					(
+						method =>
+						{
+							ParameterInfo[] pars = method.GetParameters();
+							return
+								method.ContainsAttribute<InitializationStageAttribute>() &&
+								method.IsStatic &&
+								pars.Length == 1 &&
+								pars[0].ParameterType == typeof(int);
+						}
+					)
+					// Parse the method info and gather usable data.
+					.Select
+					(
+						method =>
+							new Tuple<InitializationStageFunction, int[]>
+							(
+								method.CreateDelegate<InitializationStageFunction>(),
+								method.GetCustomAttributes<InitializationStageAttribute>()
+								.Select(attr => attr.StageIndex)
+								.ToArray()
+							)
+					)
+				)
+				{
+					// Add the native initialization function to the mix.
+					new Tuple<InitializationStageFunction, int[]>
+					(
+						Interops.Initialization.OnInitializationStage,
+						Interops.Initialization.GetSubscribedStages()
+					)
+				};
+			// Switch keys and values in the function map.
+			for (int i = 0; i < functionsMap.Count; i++)
+			{
+				for (int j = 0; j < functionsMap[i].Item2.Length; j++)
+				{
+					int stageIndex = functionsMap[i].Item2[j];
+					if (stages.ContainsKey(stageIndex))
+					{
+						stages[stageIndex] += functionsMap[i].Item1;
+					}
+					else
+					{
+						stages.Add(stageIndex, functionsMap[i].Item1);
+					}
+				}
+			}
+			// Now invoke everything.
+			foreach (int key in stages.Keys)
+			{
+				this.OnInitializationStageStarted(key);		//
+				stages[key](key);							// Yep, it's that simple.
+				this.OnInitializationStageFinished(key);	//
+			}
+		}
 		#endregion
 	}
+	/// <summary>
+	/// Delegate that represents functions that represent initialization stages.
+	/// </summary>
+	/// <param name="stageIndex">Index of the stage.</param>
+	public delegate void InitializationStageFunction(int stageIndex);
 }

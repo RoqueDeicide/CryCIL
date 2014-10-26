@@ -105,6 +105,7 @@
     <Compile Include="RunTime\ExceptionDisplayForm.Designer.cs">
       <DependentUpon>ExceptionDisplayForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="RunTime\InitializationAttributes.cs" />
     <Compile Include="RunTime\Logging\ConsoleLogWriter.cs" />
     <Compile Include="RunTime\Logging\ConsoleLogWriter.Write.cs" />
     <Compile Include="RunTime\Logging\ConsoleLogWriter.WriteLine.cs" />
