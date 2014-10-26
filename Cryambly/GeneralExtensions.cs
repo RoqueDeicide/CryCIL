@@ -435,5 +435,19 @@ namespace CryCil
 			}
 		}
 		#endregion
+		#region Methods
+		/// <summary>
+		/// Creates a delegate for given method.
+		/// </summary>
+		/// <typeparam name="T">Type of delegate to create.</typeparam>
+		/// <param name="info">Method.</param>
+		/// <returns>
+		/// Delegate that allows to invoke method represented by <paramref name="info"/>.
+		/// </returns>
+		public static T CreateDelegate<T>(this MethodInfo info)
+		{
+			return (T)(object)info.CreateDelegate(typeof(T));
+		}
+		#endregion
 	}
 }
