@@ -14,7 +14,7 @@ struct MonoClassThunks
 
 typedef mono::nothing(*DisplayExceptionThunk)(mono::object, mono::exception *);
 typedef mono::object(*InitializeThunk)(mono::exception *);
-typedef mono::nothing(*RegisterFlowNodesThunk)(mono::exception *);
+typedef mono::nothing(*RegisterFlowNodesThunk)(mono::object monoInterface, mono::exception *);
 
 struct MonoInterfaceThunks
 {

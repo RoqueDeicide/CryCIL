@@ -60,7 +60,7 @@ namespace CryCil.RunTime
 		{
 			// Register default handling of exceptions.
 			AppDomain.CurrentDomain.UnhandledException +=
-				(sender, args) => MonoInterface.Instance.DisplayException(args.ExceptionObject);
+				(sender, args) => MonoInterface.DisplayException(args.ExceptionObject);
 			// Redirect Console output.
 			Console.SetOut(new ConsoleLogWriter());
 			// Load all extra modules.
@@ -105,7 +105,7 @@ namespace CryCil.RunTime
 			
 		}
 		[PublicAPI("Displays exception that was not handled.")]
-		private void DisplayException(object ex)
+		private static void DisplayException(object ex)
 		{
 			ExceptionDisplayForm form = new ExceptionDisplayForm(ex as Exception);
 			form.ShowDialog();

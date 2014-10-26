@@ -172,7 +172,7 @@ public:
 	virtual void RegisterFlowGraphNodes()
 	{
 		mono::exception ex;
-		MonoInterfaceThunks::TriggerFlowNodesRegistration(&ex);
+		MonoInterfaceThunks::TriggerFlowNodesRegistration(this->managedInterface->Get(), &ex);
 	}
 
 	virtual void Shutdown()
