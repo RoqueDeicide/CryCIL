@@ -102,6 +102,7 @@ public:
 			DirectoryStructure::GetMonoBinariesFolder(),
 			DirectoryStructure::GetMonoAppDomainConfigurationFile()
 		);
+		this->running = true;
 #ifdef _DEBUG
 		// Load Pdb2Mdb.dll before everything else.
 		this->pdb2mdb = this->LoadAssembly(DirectoryStructure::GetPdb2MdbFile());
@@ -129,7 +130,6 @@ public:
 		}
 		Framework->RegisterListener(this, "CryCIL", FRAMEWORKLISTENERPRIORITY_GAME);
 		gEnv->pSystem->GetISystemEventDispatcher()->RegisterListener(this);
-		this->running = true;
 		this->broadcaster->OnPostInitialization();
 	}
 	~MonoInterface()
@@ -147,10 +147,12 @@ public:
 	virtual void OnPostUpdate(float fDeltaTime)
 	{
 		// Notify everything about the update.
-		if (this->managedInterface)
+		if (this->running)
 		{
+			this->broadcaster->Update();
 			mono::exception ex;
 			MonoInterfaceThunks::Update(this->managedInterface->Get(), &ex);
+			this->broadcaster->PostUpdate();
 		}
 	}
 	//! Not used.
@@ -164,12 +166,20 @@ public:
 
 	virtual void RegisterFlowGraphNodes()
 	{
+		if (!this->running)
+		{
+			return;
+		}
 		mono::exception ex;
 		MonoInterfaceThunks::TriggerFlowNodesRegistration(this->managedInterface->Get(), &ex);
 	}
 
 	virtual void Shutdown()
 	{
+		if (!this->running)
+		{
+			return;
+		}
 		this->broadcaster->Shutdown();
 		mono::exception ex;
 		MonoInterfaceThunks::Shutdown(this->managedInterface->Get(), &ex);
@@ -179,11 +189,19 @@ public:
 	//! Converts given null-terminated string to Mono managed object.
 	virtual mono::string ToManagedString(const char *text)
 	{
+		if (!this->running)
+		{
+			return nullptr;
+		}
 		return (mono::string)mono_string_new(this->appDomain, text);
 	}
 	//! Converts given managed string to null-terminated one.
 	virtual const char *ToNativeString(mono::string text)
 	{
+		if (!this->running)
+		{
+			return nullptr;
+		}
 		return mono_string_to_utf8((MonoString *)text);
 	}
 	//! Creates a new wrapped MonoObject using constructor with specific parameters.
@@ -202,6 +220,10 @@ public:
 	//!                   If null, default constructor will be used.
 	virtual IMonoHandle *CreateObject(IMonoAssembly *assembly, const char *name_space, const char *class_name, bool persistent = false, bool pinned = false, IMonoArray *params = nullptr)
 	{
+		if (!this->running)
+		{
+			return nullptr;
+		}
 		return this->WrapObject(assembly->GetClass(class_name, name_space)->CreateInstance(params), persistent, pinned);
 		
 	}
@@ -219,6 +241,10 @@ public:
 	//!                   in the managed heap must be kept constant.
 	virtual IMonoHandle * WrapObject(mono::object obj, bool persistent = false, bool pinned = false)
 	{
+		if (!this->running)
+		{
+			return nullptr;
+		}
 		if (pinned)
 		{
 			return new MonoHandlePinned(obj);
@@ -236,6 +262,10 @@ public:
 	//!                   keep a reference to for prolonged periods of time.
 	virtual IMonoArray * CreateArray(int capacity, bool persistent)
 	{
+		if (!this->running)
+		{
+			return nullptr;
+		}
 		if (persistent)
 		{
 			return new MonoArrayPersistent(capacity);
@@ -245,6 +275,10 @@ public:
 
 	virtual IMonoArray * CreateArray(IMonoClass *klass, int capacity, bool persistent)
 	{
+		if (!this->running)
+		{
+			return nullptr;
+		}
 		if (persistent)
 		{
 			return new MonoArrayPersistent(klass, capacity);
@@ -258,6 +292,10 @@ public:
 	//!                    keep a reference to for prolonged periods of time.
 	virtual IMonoArray * WrapArray(mono::Array arrayHandle, bool persistent)
 	{
+		if (!this->running)
+		{
+			return nullptr;
+		}
 		if (persistent)
 		{
 			return new MonoArrayPersistent(arrayHandle);
@@ -267,18 +305,30 @@ public:
 
 	virtual void HandleException(mono::exception exception)
 	{
+		if (!this->running)
+		{
+			return;
+		}
 		mono::exception ex;
 		MonoInterfaceThunks::DisplayException(exception, &ex);
 	}
 	//! Registers a method as internal call.
 	virtual void AddInternalCall(const char *name, const char *className, const char *nameSpace, void *functionPointer)
 	{
+		if (!this->running)
+		{
+			return;
+		}
 		mono_add_internal_call
 			(std::string(nameSpace).append(className).append(name).c_str(), functionPointer);
 	}
 
 	virtual IMonoAssembly *LoadAssembly(const char *moduleFileName)
 	{
+		if (!this->running)
+		{
+			return nullptr;
+		}
 		bool failed;
 		MonoAssemblyWrapper *wrapper = new MonoAssemblyWrapper(moduleFileName, failed);
 		if (failed)
@@ -291,6 +341,10 @@ public:
 	//! Wraps assembly pointer.
 	virtual IMonoAssembly *WrapAssembly(void *assemblyHandle)
 	{
+		if (!this->running)
+		{
+			return nullptr;
+		}
 		for each (MonoAssemblyWrapper *wrapper in this->assemblies)
 		{
 			if (wrapper->GetWrappedPointer() == assemblyHandle)
@@ -335,16 +389,28 @@ public:
 
 	virtual void *Unbox(mono::object value)
 	{
+		if (!this->running)
+		{
+			return nullptr;
+		}
 		return mono_object_unbox((MonoObject *)value);
 	}
 
 	virtual void AddListener(IMonoSystemListener *listener)
 	{
+		if (!this->running)
+		{
+			return;
+		}
 		this->broadcaster->listeners.push_back(listener);
 	}
 
 	virtual void RemoveListener(IMonoSystemListener *listener)
 	{
+		if (!this->running)
+		{
+			return;
+		}
 		this->broadcaster->RemoveListener(listener);
 	}
 private:
