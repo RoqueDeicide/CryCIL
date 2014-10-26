@@ -78,6 +78,7 @@
     <Compile Include="Engine\NamespaceDoc.cs" />
     <Compile Include="GeneralExtensions.cs" />
     <Compile Include="GenericEventArgs.cs" />
+    <Compile Include="Interops\LogPosting.cs" />
     <Compile Include="NamespaceDoc.cs" />
     <Compile Include="PathUtilities.cs" />
     <Compile Include="Properties\Annotations.cs" />

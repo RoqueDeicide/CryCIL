@@ -50,6 +50,9 @@
       <Filter>RunTime</Filter>
     </ClInclude>
     <ClInclude Include="RunTime\AllInterops.h" />
+    <ClInclude Include="Interops\LogPosting.h">
+      <Filter>Interops</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -80,6 +83,9 @@
     </Filter>
     <Filter Include="DoxygenExampleFiles\CryCIL Listeners\Native Listener">
       <UniqueIdentifier>{070c92e2-ff70-4de7-86ca-40ae83b1822a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interops">
+      <UniqueIdentifier>{1c90796d-b96b-4963-ab46-d46e1870d1ba}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

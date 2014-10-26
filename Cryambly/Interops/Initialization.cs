@@ -2,7 +2,7 @@
 
 namespace CryCil.Interops
 {
-	internal class Initialization
+	internal static class Initialization
 	{
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		internal static extern void OnCompilationStarting();

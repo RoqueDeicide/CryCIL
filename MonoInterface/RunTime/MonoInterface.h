@@ -474,6 +474,7 @@ private:
 		this->broadcaster->listeners.push_back(new DebugEventReporter());
 #endif // _DEBUG
 		this->broadcaster->listeners.push_back(new InitializationInterop());
+		this->broadcaster->listeners.push_back(new LogPostingInterop());
 	}
 #pragma endregion
 #pragma region Thunks Initialization
