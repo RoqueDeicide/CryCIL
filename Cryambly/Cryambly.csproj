@@ -112,8 +112,8 @@
     <Compile Include="RunTime\Logging\NamespaceDoc.cs" />
     <Compile Include="RunTime\MonoInterface.cs" />
     <Compile Include="RunTime\NamespaceDoc.cs" />
-    <Compile Include="RunTime\Interops\Initialization.cs" />
-    <Compile Include="RunTime\Interops\NamespaceDoc.cs" />
+    <Compile Include="Interops\Initialization.cs" />
+    <Compile Include="Interops\NamespaceDoc.cs" />
     <Compile Include="VariousConstants.cs" />
   </ItemGroup>
   <ItemGroup />

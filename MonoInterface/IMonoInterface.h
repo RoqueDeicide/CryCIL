@@ -845,7 +845,7 @@ public:
 //! Interface of interops that use classes within CryCil.RunTime.NativeCodeAccess name space.
 struct IDefaultMonoInterop : public IMonoInterop
 {
-	virtual const char *GetNameSpace() { return "CryCil.RunTime.Interops"; }
+	virtual const char *GetNameSpace() { return "CryCil.Interops"; }
 };
 
 //! Base class for MonoRunTime. Provides access to Mono interface.
