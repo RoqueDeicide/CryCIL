@@ -7,7 +7,7 @@ struct EventBroadcaster
 	std::vector<IMonoSystemListener *> listeners;
 	// Map is basically a SortedList.
 	std::map<int, std::vector<IMonoSystemListener *>> stageMap;
-
+	//! Removes a listener from broadcasting list and stages map.
 	void RemoveListener(IMonoSystemListener *listener)
 	{
 		// Delete the listener from the main list.
@@ -30,7 +30,7 @@ struct EventBroadcaster
 			}
 		}
 	}
-
+	//! Broadcasts PreInitialization event.
 	void OnPreInitialization()
 	{
 		for (int i = 0; i < this->listeners.size(); i++)
@@ -38,6 +38,7 @@ struct EventBroadcaster
 			this->listeners[i]->OnPreInitialization();
 		}
 	}
+	//! Broadcasts RunTimeInitializing event.
 	void OnRunTimeInitializing()
 	{
 		for (int i = 0; i < this->listeners.size(); i++)
@@ -45,6 +46,7 @@ struct EventBroadcaster
 			this->listeners[i]->OnRunTimeInitializing();
 		}
 	}
+	//! Broadcasts RunTimeInitialized event.
 	void OnRunTimeInitialized()
 	{
 		for (int i = 0; i < this->listeners.size(); i++)
@@ -52,6 +54,7 @@ struct EventBroadcaster
 			this->listeners[i]->OnRunTimeInitialized();
 		}
 	}
+	//! Broadcasts CryamblyInitilizing event.
 	void OnCryamblyInitilizing()
 	{
 		for (int i = 0; i < this->listeners.size(); i++)
@@ -59,6 +62,7 @@ struct EventBroadcaster
 			this->listeners[i]->OnCryamblyInitilizing();
 		}
 	}
+	//! Broadcasts CompilationStarting event.
 	void OnCompilationStarting()
 	{
 		for (int i = 0; i < this->listeners.size(); i++)
@@ -66,6 +70,7 @@ struct EventBroadcaster
 			this->listeners[i]->OnCompilationStarting();
 		}
 	}
+	//! Broadcasts CompilationComplete event.
 	void OnCompilationComplete(bool success)
 	{
 		for (int i = 0; i < this->listeners.size(); i++)
@@ -73,6 +78,7 @@ struct EventBroadcaster
 			this->listeners[i]->OnCompilationComplete(success);
 		}
 	}
+	//! Gathers initialization stages data for sending it to managed code.
 	int *GetSubscribedStagesInfo(int &stageCount)
 	{
 		// Gather information about all stages.
@@ -102,6 +108,9 @@ struct EventBroadcaster
 		}
 		return stageIndices;
 	}
+	//! Broadcasts InitializationStage event.
+	//!
+	//! @param stageIndex Index of initialization stage that is happening.
 	void OnInitializationStage(int stageIndex)
 	{
 		IMonoSystemListener **listeners = &this->stageMap[stageIndex][0];
@@ -112,6 +121,7 @@ struct EventBroadcaster
 			listeners[i]->OnInitializationStage(stageIndex);
 		}
 	}
+	//! Broadcasts CryamblyInitilized event.
 	void OnCryamblyInitilized()
 	{
 		for (int i = 0; i < this->listeners.size(); i++)
@@ -119,6 +129,7 @@ struct EventBroadcaster
 			this->listeners[i]->OnCryamblyInitilized();
 		}
 	}
+	//! Broadcasts PostInitialization event.
 	void OnPostInitialization()
 	{
 		for (int i = 0; i < this->listeners.size(); i++)
@@ -126,6 +137,7 @@ struct EventBroadcaster
 			this->listeners[i]->OnPostInitialization();
 		}
 	}
+	//! Broadcasts Update event.
 	void Update()
 	{
 		for (int i = 0; i < this->listeners.size(); i++)
@@ -133,6 +145,7 @@ struct EventBroadcaster
 			this->listeners[i]->Update();
 		}
 	}
+	//! Broadcasts PostUpdate event.
 	void PostUpdate()
 	{
 		for (int i = 0; i < this->listeners.size(); i++)
@@ -140,6 +153,7 @@ struct EventBroadcaster
 			this->listeners[i]->PostUpdate();
 		}
 	}
+	//! Broadcasts Shutdown event.
 	void Shutdown()
 	{
 		for (int i = 0; i < this->listeners.size(); i++)

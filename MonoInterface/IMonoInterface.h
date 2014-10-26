@@ -864,6 +864,7 @@ struct IMonoInterface
 	VIRTUAL_API virtual mono::string ToManagedString(const char *text) = 0;
 	//! Converts given managed string to null-terminated one.
 	VIRTUAL_API virtual const char *ToNativeString(mono::string text) = 0;
+	
 	//! Creates a new wrapped MonoObject using constructor with specific parameters.
 	//!
 	//! Specifying the object to be persistent will wrap it into a handle that allows
@@ -923,14 +924,22 @@ struct IMonoInterface
 	//!                    keep a reference to for prolonged periods of time.
 	VIRTUAL_API virtual IMonoArray *WrapArray(mono::Array arrayHandle, bool persistent) = 0;
 	//! Unboxes managed value-type object.
+	//!
+	//! @param value Value-type object to unbox.
 	VIRTUAL_API virtual void *Unbox(mono::object value) = 0;
 	//! Handles exception that occurred during managed method invocation.
+	//!
+	//! @param exception Exception object to handle.
 	VIRTUAL_API virtual void HandleException(mono::exception exception) = 0;
 	//! Registers new object that receives notifications about CryCIL events.
+	//!
+	//! @param listener Pointer to the object that implements IMonoSystemListener.
 	VIRTUAL_API virtual void AddListener(IMonoSystemListener *listener) = 0;
 	//! Unregisters an object that receives notifications about CryCIL events.
 	//!
 	//! Search is done using the pointer value.
+	//!
+	//! @param listener Pointer to the object that implements IMonoSystemListener.
 	VIRTUAL_API virtual void RemoveListener(IMonoSystemListener *listener) = 0;
 	//! Registers a new internal call.
 	//!
@@ -1094,6 +1103,10 @@ struct IMonoInterface
 	//! @param moduleFileName Name of the file inside Modules folder.
 	VIRTUAL_API virtual IMonoAssembly *LoadAssembly(const char *moduleFileName) = 0;
 	//! Wraps assembly pointer.
+	//!
+	//! Mostly for internal use.
+	//!
+	//! @param assemblyHandle Pointer to MonoAssembly to wrap.
 	VIRTUAL_API virtual IMonoAssembly *WrapAssembly(void *assemblyHandle) = 0;
 	// Properties.
 

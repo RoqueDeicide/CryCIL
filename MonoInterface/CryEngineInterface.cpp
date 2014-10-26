@@ -10,8 +10,16 @@ extern "C"	// Mark exported functions as C code, so the compiler keeps function 
 	//!
 	//! @remarks This function must be called before anything can be done with this module.
 	//!
-	//! @param framework Pointer to IGameFramework object that will allow us to initialize everything.
-	MONOINTERFACE_API IMonoInterface *InitializeModule(IGameFramework *framework, IMonoSystemListener **listeners, int listenerCount)
+	//! @param framework     Pointer to IGameFramework object that will allow us to initialize
+	//!                      everything.
+	//! @param listeners     Pointer to an array of listeners to register before initialization.
+	//! @param listenerCount Number of listeners in the above array.
+	MONOINTERFACE_API IMonoInterface *InitializeModule
+	(
+		IGameFramework *framework,
+		IMonoSystemListener **listeners,
+		int listenerCount
+	)
 	{
 		// Initializes gEnv variable, registers some objects.
 		// Fun fact: Module name is only used for Unit Tests.
@@ -20,7 +28,6 @@ extern "C"	// Mark exported functions as C code, so the compiler keeps function 
 		Framework = framework;
 		// I'm not sure, if I can use "new" operator to create a new instance of MonoRunTime.
 		static char buff[sizeof(MonoInterface)];
-		MonoEnv = new (buff)MonoInterface(framework, listeners, listenerCount);
-		return MonoEnv;
+		return new (buff)MonoInterface(framework, listeners, listenerCount);
 	}
 }
