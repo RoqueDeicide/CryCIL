@@ -388,6 +388,9 @@ private:
 		MonoInterfaceThunks::TriggerFlowNodesRegistration =
 			this->GetMethodThunk<RegisterFlowNodesThunk>
 			(this->cryambly, "CryCil.RunTime", "MonoInterface", "RegisterFlowGraphNodeTypes", nullptr);
+		MonoInterfaceThunks::Shutdown =
+			this->GetMethodThunk<ShutDownThunk>
+			(this->cryambly, "CryCil.RunTime", "MonoInterface", "Shutdown", nullptr);
 	}
 	void InitializeDebugThunks()
 	{
