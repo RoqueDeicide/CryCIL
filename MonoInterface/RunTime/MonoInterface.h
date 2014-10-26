@@ -32,6 +32,7 @@ void HandleSignalAbort(int error)
 class MonoInterface
 	: public IMonoInterface
 	, public IGameFrameworkListener
+	, public ISystemEventListener
 {
 	friend InitializationInterop;
 private:
@@ -126,6 +127,8 @@ public:
 			this->HandleException(ex);
 			CryFatalError("CryCil.RunTime.MonoInterface object was not initialized. Cannot continue.");
 		}
+		Framework->RegisterListener(this, "CryCIL", FRAMEWORKLISTENERPRIORITY_GAME);
+		gEnv->pSystem->GetISystemEventDispatcher()->RegisterListener(this);
 		this->running = true;
 		this->broadcaster->OnPostInitialization();
 	}
@@ -173,7 +176,8 @@ public:
 
 	virtual void Shutdown()
 	{
-		throw std::logic_error("The method or operation is not implemented.");
+		// Invoke destructor.
+		delete this;
 	}
 	//! Converts given null-terminated string to Mono managed object.
 	virtual mono::string ToManagedString(const char *text)
@@ -388,4 +392,15 @@ private:
 			(nameSpace, className, methodName, params)->UnmanagedThunk;
 	}
 
+	virtual void OnSystemEvent(ESystemEvent event, UINT_PTR wparam, UINT_PTR lparam)
+	{
+		switch (event)
+		{
+		case ESYSTEM_EVENT_SHUTDOWN:
+			this->Shutdown();
+			break;
+		default:
+			break;
+		}
+	}
 };
