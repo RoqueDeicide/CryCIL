@@ -171,7 +171,8 @@ public:
 
 	virtual void RegisterFlowGraphNodes()
 	{
-		throw std::logic_error("The method or operation is not implemented.");
+		mono::exception ex;
+		MonoInterfaceThunks::TriggerFlowNodesRegistration(&ex);
 	}
 
 	virtual void Shutdown()
@@ -381,6 +382,9 @@ private:
 		MonoInterfaceThunks::Initialize =
 			this->GetMethodThunk<InitializeThunk>
 			(this->cryambly, "CryCil.RunTime", "MonoInterface", "Initialize", nullptr);
+		MonoInterfaceThunks::TriggerFlowNodesRegistration =
+			this->GetMethodThunk<RegisterFlowNodesThunk>
+			(this->cryambly, "CryCil.RunTime", "MonoInterface", "RegisterFlowGraphNodeTypes", nullptr);
 	}
 	void InitializeDebugThunks()
 	{
