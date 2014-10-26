@@ -51,6 +51,10 @@ namespace CryCil.RunTime
 		/// Occurs when initialization stage of specific index ends.
 		/// </summary>
 		public event EventHandler<EventArgs<int>> InitializationStageFinished;
+		/// <summary>
+		/// Occurs when native Mono interface receive notification about system-wide shutdown.
+		/// </summary>
+		public event EventHandler ShuttingDown;
 		#endregion
 		#region Construction
 		/// <summary>
@@ -110,6 +114,11 @@ namespace CryCil.RunTime
 			ExceptionDisplayForm form = new ExceptionDisplayForm(ex as Exception);
 			form.ShowDialog();
 		}
+		[PublicAPI("Informs this object about system-wide shutdown.")]
+		private void Shutdown()
+		{
+			this.OnShuttingDown();
+		}
 		#endregion
 		#region Utilities
 		#region Event Raisers
@@ -133,6 +142,10 @@ namespace CryCil.RunTime
 		{
 			if (this.InitializationStageFinished != null)
 				this.InitializationStageFinished(this, new EventArgs<int>(index));
+		}
+		private void OnShuttingDown()
+		{
+			if (this.ShuttingDown != null) this.ShuttingDown(this, EventArgs.Empty);
 		}
 		#endregion
 		private void ProceedWithInitializationStages()

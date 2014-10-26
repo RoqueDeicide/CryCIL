@@ -177,6 +177,9 @@ public:
 
 	virtual void Shutdown()
 	{
+		this->broadcaster->Shutdown();
+		mono::exception ex;
+		MonoInterfaceThunks::Shutdown(this->managedInterface->Get(), &ex);
 		// Invoke destructor.
 		delete this;
 	}
