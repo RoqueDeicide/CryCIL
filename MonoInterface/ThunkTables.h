@@ -13,10 +13,12 @@ struct MonoClassThunks
 };
 
 typedef mono::nothing(*DisplayExceptionThunk)(mono::object, mono::exception *);
+typedef mono::object(*InitializeThunk)(mono::exception *);
 
 struct MonoInterfaceThunks
 {
 	static DisplayExceptionThunk DisplayException;
+	static InitializeThunk Initialize;
 };
 
 typedef mono::nothing(*ConvertPdbThunk)(mono::string, mono::exception *);

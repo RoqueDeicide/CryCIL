@@ -119,9 +119,13 @@ public:
 		
 		this->broadcaster->OnRunTimeInitialized();
 		// Initialize an instance of type MonoInterface.
-		this->managedInterface =
-			this->CreateObject(this->cryambly, "CryCil.RunTime", "MonoInterface", true, false);
-
+		mono::exception ex;
+		this->managedInterface = new MonoHandlePersistent(MonoInterfaceThunks::Initialize(&ex));
+		if (ex)
+		{
+			this->HandleException(ex);
+			CryFatalError("CryCil.RunTime.MonoInterface object was not initialized. Cannot continue.");
+		}
 		this->running = true;
 		this->broadcaster->OnPostInitialization();
 	}
@@ -370,6 +374,9 @@ private:
 		MonoInterfaceThunks::DisplayException =
 			this->GetMethodThunk<DisplayExceptionThunk>
 			(this->cryambly, "CryCil.RunTime", "MonoInterface", "DisplayException", "object");
+		MonoInterfaceThunks::Initialize =
+			this->GetMethodThunk<InitializeThunk>
+			(this->cryambly, "CryCil.RunTime", "MonoInterface", "Initialize", nullptr);
 	}
 	void InitializeDebugThunks()
 	{
