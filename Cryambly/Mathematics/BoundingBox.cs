@@ -47,7 +47,7 @@ namespace CryCil.Mathematics
 		/// <summary>
 		/// Checks whether the bounding box is valid.
 		/// </summary>
-		/// <returns> </returns>
+		/// <returns></returns>
 		public bool IsValid
 		{
 			get
@@ -57,10 +57,10 @@ namespace CryCil.Mathematics
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="BoundingBox" /> struct.
+		/// Initializes a new instance of the <see cref="BoundingBox"/> struct.
 		/// </summary>
-		/// <param name="minimum"> The minimum vertex of the bounding box. </param>
-		/// <param name="maximum"> The maximum vertex of the bounding box. </param>
+		/// <param name="minimum">The minimum vertex of the bounding box.</param>
+		/// <param name="maximum">The maximum vertex of the bounding box.</param>
 		public BoundingBox(Vector3 minimum, Vector3 maximum)
 		{
 			this.Minimum = minimum;
@@ -70,7 +70,9 @@ namespace CryCil.Mathematics
 		/// <summary>
 		/// Retrieves the eight corners of the bounding box.
 		/// </summary>
-		/// <returns> An array of points representing the eight corners of the bounding box. </returns>
+		/// <returns>
+		/// An array of points representing the eight corners of the bounding box.
+		/// </returns>
 		public Vector3[] GetCorners()
 		{
 			var results = new Vector3[8];
@@ -86,10 +88,11 @@ namespace CryCil.Mathematics
 		}
 
 		/// <summary>
-		/// Determines if there is an intersection between the current object and a <see cref="Ray" />.
+		/// Determines if there is an intersection between the current object and a
+		/// <see cref="Ray"/>.
 		/// </summary>
-		/// <param name="ray"> The ray to test. </param>
-		/// <returns> Whether the two objects intersected. </returns>
+		/// <param name="ray">The ray to test.</param>
+		/// <returns>Whether the two objects intersected.</returns>
 		public bool Intersects(ref Ray ray)
 		{
 			float distance;
@@ -97,39 +100,41 @@ namespace CryCil.Mathematics
 		}
 
 		/// <summary>
-		/// Determines if there is an intersection between the current object and a <see cref="Ray" />.
+		/// Determines if there is an intersection between the current object and a
+		/// <see cref="Ray"/>.
 		/// </summary>
-		/// <param name="ray">      The ray to test. </param>
+		/// <param name="ray">     The ray to test.</param>
 		/// <param name="distance">
-		/// When the method completes, contains the distance of the intersection, or 0 if there was
-		/// no intersection.
+		/// When the method completes, contains the distance of the intersection, or 0 if
+		/// there was no intersection.
 		/// </param>
-		/// <returns> Whether the two objects intersected. </returns>
+		/// <returns>Whether the two objects intersected.</returns>
 		public bool Intersects(ref Ray ray, out float distance)
 		{
 			return Collision.RayIntersectsBox(ref ray, ref this, out distance);
 		}
 
 		/// <summary>
-		/// Determines if there is an intersection between the current object and a <see cref="Ray" />.
+		/// Determines if there is an intersection between the current object and a
+		/// <see cref="Ray"/>.
 		/// </summary>
-		/// <param name="ray">   The ray to test. </param>
+		/// <param name="ray">  The ray to test.</param>
 		/// <param name="point">
-		/// When the method completes, contains the point of intersection, or <see cref="Vector3" />
-		/// if there was no intersection.
+		/// When the method completes, contains the point of intersection, or
+		/// <see cref="Vector3"/> if there was no intersection.
 		/// </param>
-		/// <returns> Whether the two objects intersected. </returns>
+		/// <returns>Whether the two objects intersected.</returns>
 		public bool Intersects(ref Ray ray, out Vector3 point)
 		{
 			return Collision.RayIntersectsBox(ref ray, ref this, out point);
 		}
 
 		/// <summary>
-		/// Determines if there is an intersection between the current object and a <see
-		/// cref="Plane" />.
+		/// Determines if there is an intersection between the current object and a
+		/// <see cref="Plane"/>.
 		/// </summary>
-		/// <param name="plane"> The plane to test. </param>
-		/// <returns> Whether the two objects intersected. </returns>
+		/// <param name="plane">The plane to test.</param>
+		/// <returns>Whether the two objects intersected.</returns>
 		public PlaneIntersectionType Intersects(ref Plane plane)
 		{
 			return Collision.PlaneIntersectsBox(ref plane, ref this);
@@ -137,12 +142,13 @@ namespace CryCil.Mathematics
 
 		/* This implentation is wrong
 		/// <summary>
-		/// Determines if there is an intersection between the current object and a triangle.
+		/// Determines if there is an intersection between the current object and a
+		/// triangle.
 		/// </summary>
-		/// <param name="vertex1"> The first vertex of the triangle to test. </param>
-		/// <param name="vertex2"> The second vertex of the triagnle to test. </param>
-		/// <param name="vertex3"> The third vertex of the triangle to test. </param>
-		/// <returns> Whether the two objects intersected. </returns>
+		/// <param name="vertex1">The first vertex of the triangle to test.</param>
+		/// <param name="vertex2">The second vertex of the triagnle to test.</param>
+		/// <param name="vertex3">The third vertex of the triangle to test.</param>
+		/// <returns>Whether the two objects intersected.</returns>
 		public bool Intersects(ref Vector3 vertex1, ref Vector3 vertex2, ref Vector3 vertex3)
 		{
 			return Collision.BoxIntersectsTriangle(ref this, ref vertex1, ref vertex2, ref vertex3);
@@ -150,22 +156,22 @@ namespace CryCil.Mathematics
 		*/
 
 		/// <summary>
-		/// Determines if there is an intersection between the current object and a <see
-		/// cref="BoundingBox" />.
+		/// Determines if there is an intersection between the current object and a
+		/// <see cref="BoundingBox"/>.
 		/// </summary>
-		/// <param name="box"> The box to test. </param>
-		/// <returns> Whether the two objects intersected. </returns>
+		/// <param name="box">The box to test.</param>
+		/// <returns>Whether the two objects intersected.</returns>
 		public bool Intersects(ref BoundingBox box)
 		{
 			return Collision.BoxIntersectsBox(ref this, ref box);
 		}
 
 		/// <summary>
-		/// Determines if there is an intersection between the current object and a <see
-		/// cref="BoundingSphere" />.
+		/// Determines if there is an intersection between the current object and a
+		/// <see cref="BoundingSphere"/>.
 		/// </summary>
-		/// <param name="sphere"> The sphere to test. </param>
-		/// <returns> Whether the two objects intersected. </returns>
+		/// <param name="sphere">The sphere to test.</param>
+		/// <returns>Whether the two objects intersected.</returns>
 		public bool Intersects(ref BoundingSphere sphere)
 		{
 			return Collision.BoxIntersectsSphere(ref this, ref sphere);
@@ -174,8 +180,8 @@ namespace CryCil.Mathematics
 		/// <summary>
 		/// Determines whether the current objects contains a point.
 		/// </summary>
-		/// <param name="point"> The point to test. </param>
-		/// <returns> The type of containment the two objects have. </returns>
+		/// <param name="point">The point to test.</param>
+		/// <returns>The type of containment the two objects have.</returns>
 		public bool Contains(ref Vector3 point)
 		{
 			return Collision.BoxContainsPoint(ref this, ref point);
@@ -185,10 +191,10 @@ namespace CryCil.Mathematics
 		/// <summary>
 		/// Determines whether the current objects contains a triangle.
 		/// </summary>
-		/// <param name="vertex1"> The first vertex of the triangle to test. </param>
-		/// <param name="vertex2"> The second vertex of the triagnle to test. </param>
-		/// <param name="vertex3"> The third vertex of the triangle to test. </param>
-		/// <returns> The type of containment the two objects have. </returns>
+		/// <param name="vertex1">The first vertex of the triangle to test.</param>
+		/// <param name="vertex2">The second vertex of the triagnle to test.</param>
+		/// <param name="vertex3">The third vertex of the triangle to test.</param>
+		/// <returns>The type of containment the two objects have.</returns>
 		public ContainmentType Contains(ref Vector3 vertex1, ref Vector3 vertex2, ref Vector3 vertex3)
 		{
 			return Collision.BoxContainsTriangle(ref this, ref vertex1, ref vertex2, ref vertex3);
@@ -196,34 +202,35 @@ namespace CryCil.Mathematics
 		*/
 
 		/// <summary>
-		/// Determines whether the current objects contains a <see cref="BoundingBox" />.
+		/// Determines whether the current objects contains a <see cref="BoundingBox"/>.
 		/// </summary>
-		/// <param name="box"> The box to test. </param>
-		/// <returns> The type of containment the two objects have. </returns>
+		/// <param name="box">The box to test.</param>
+		/// <returns>The type of containment the two objects have.</returns>
 		public ContainmentType Contains(ref BoundingBox box)
 		{
 			return Collision.BoxContainsBox(ref this, ref box);
 		}
 
 		/// <summary>
-		/// Determines whether the current objects contains a <see cref="BoundingSphere" />.
+		/// Determines whether the current objects contains a
+		/// <see cref="BoundingSphere"/>.
 		/// </summary>
-		/// <param name="sphere"> The sphere to test. </param>
-		/// <returns> The type of containment the two objects have. </returns>
+		/// <param name="sphere">The sphere to test.</param>
+		/// <returns>The type of containment the two objects have.</returns>
 		public ContainmentType Contains(ref BoundingSphere sphere)
 		{
 			return Collision.BoxContainsSphere(ref this, ref sphere);
 		}
 
 		/// <summary>
-		/// Constructs a <see cref="BoundingBox" /> that fully contains the given points.
+		/// Constructs a <see cref="BoundingBox"/> that fully contains the given points.
 		/// </summary>
-		/// <param name="points"> The points that will be contained by the box. </param>
+		/// <param name="points">The points that will be contained by the box.</param>
 		/// <param name="result">
 		/// When the method completes, contains the newly constructed bounding box.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
-		/// Thrown when <paramref name="points" /> is <c>null</c>.
+		/// Thrown when <paramref name="points"/> is <c>null</c>.
 		/// </exception>
 		public static void FromPoints(Vector3[] points, out BoundingBox result)
 		{
@@ -245,12 +252,12 @@ namespace CryCil.Mathematics
 		}
 
 		/// <summary>
-		/// Constructs a <see cref="BoundingBox" /> that fully contains the given points.
+		/// Constructs a <see cref="BoundingBox"/> that fully contains the given points.
 		/// </summary>
-		/// <param name="points"> The points that will be contained by the box. </param>
-		/// <returns> The newly constructed bounding box. </returns>
+		/// <param name="points">The points that will be contained by the box.</param>
+		/// <returns>The newly constructed bounding box.</returns>
 		/// <exception cref="ArgumentNullException">
-		/// Thrown when <paramref name="points" /> is <c>null</c>.
+		/// Thrown when <paramref name="points"/> is <c>null</c>.
 		/// </exception>
 		public static BoundingBox FromPoints(Vector3[] points)
 		{
@@ -272,9 +279,11 @@ namespace CryCil.Mathematics
 		}
 
 		/// <summary>
-		/// Constructs a <see cref="BoundingBox" /> from a given sphere.
+		/// Constructs a <see cref="BoundingBox"/> from a given sphere.
 		/// </summary>
-		/// <param name="sphere"> The sphere that will designate the extents of the box. </param>
+		/// <param name="sphere">
+		/// The sphere that will designate the extents of the box.
+		/// </param>
 		/// <param name="result">
 		/// When the method completes, contains the newly constructed bounding box.
 		/// </param>
@@ -285,10 +294,12 @@ namespace CryCil.Mathematics
 		}
 
 		/// <summary>
-		/// Constructs a <see cref="BoundingBox" /> from a given sphere.
+		/// Constructs a <see cref="BoundingBox"/> from a given sphere.
 		/// </summary>
-		/// <param name="sphere"> The sphere that will designate the extents of the box. </param>
-		/// <returns> The newly constructed bounding box. </returns>
+		/// <param name="sphere">
+		/// The sphere that will designate the extents of the box.
+		/// </param>
+		/// <returns>The newly constructed bounding box.</returns>
 		public static BoundingBox FromSphere(BoundingSphere sphere)
 		{
 			BoundingBox box;
@@ -298,11 +309,11 @@ namespace CryCil.Mathematics
 		}
 
 		/// <summary>
-		/// Constructs a <see cref="BoundingBox" /> that is as large as the total combined area of
-		/// the two specified boxes.
+		/// Constructs a <see cref="BoundingBox"/> that is as large as the total combined
+		/// area of the two specified boxes.
 		/// </summary>
-		/// <param name="value1"> The first box to merge. </param>
-		/// <param name="value2"> The second box to merge. </param>
+		/// <param name="value1">The first box to merge.</param>
+		/// <param name="value2">The second box to merge.</param>
 		/// <param name="result">
 		/// When the method completes, contains the newly constructed bounding box.
 		/// </param>
@@ -313,12 +324,12 @@ namespace CryCil.Mathematics
 		}
 
 		/// <summary>
-		/// Constructs a <see cref="BoundingBox" /> that is as large as the total combined area of
-		/// the two specified boxes.
+		/// Constructs a <see cref="BoundingBox"/> that is as large as the total combined
+		/// area of the two specified boxes.
 		/// </summary>
-		/// <param name="value1"> The first box to merge. </param>
-		/// <param name="value2"> The second box to merge. </param>
-		/// <returns> The newly constructed bounding box. </returns>
+		/// <param name="value1">The first box to merge.</param>
+		/// <param name="value2">The second box to merge.</param>
+		/// <returns>The newly constructed bounding box.</returns>
 		public static BoundingBox Merge(BoundingBox value1, BoundingBox value2)
 		{
 			BoundingBox box;
@@ -330,11 +341,11 @@ namespace CryCil.Mathematics
 		/// <summary>
 		/// Tests for equality between two objects.
 		/// </summary>
-		/// <param name="left">  The first value to compare. </param>
-		/// <param name="right"> The second value to compare. </param>
+		/// <param name="left"> The first value to compare.</param>
+		/// <param name="right">The second value to compare.</param>
 		/// <returns>
-		/// <c>true</c> if <paramref name="left" /> has the same value as <paramref name="right" />;
-		/// otherwise, <c>false</c>.
+		/// <c>true</c> if <paramref name="left"/> has the same value as
+		/// <paramref name="right"/>; otherwise, <c>false</c>.
 		/// </returns>
 		public static bool operator ==(BoundingBox left, BoundingBox right)
 		{
@@ -344,11 +355,11 @@ namespace CryCil.Mathematics
 		/// <summary>
 		/// Tests for inequality between two objects.
 		/// </summary>
-		/// <param name="left">  The first value to compare. </param>
-		/// <param name="right"> The second value to compare. </param>
+		/// <param name="left"> The first value to compare.</param>
+		/// <param name="right">The second value to compare.</param>
 		/// <returns>
-		/// <c>true</c> if <paramref name="left" /> has a different value than <paramref
-		/// name="right" />; otherwise, <c>false</c>.
+		/// <c>true</c> if <paramref name="left"/> has a different value than
+		/// <paramref name="right"/>; otherwise, <c>false</c>.
 		/// </returns>
 		public static bool operator !=(BoundingBox left, BoundingBox right)
 		{
@@ -356,19 +367,23 @@ namespace CryCil.Mathematics
 		}
 
 		/// <summary>
-		/// Returns a <see cref="System.String" /> that represents this instance.
+		/// Returns a <see cref="System.String"/> that represents this instance.
 		/// </summary>
-		/// <returns> A <see cref="System.String" /> that represents this instance. </returns>
+		/// <returns>
+		/// A <see cref="System.String"/> that represents this instance.
+		/// </returns>
 		public override string ToString()
 		{
 			return string.Format(CultureInfo.CurrentCulture, "Minimum:{0} Maximum:{1}", this.Minimum.ToString(), this.Maximum.ToString());
 		}
 
 		/// <summary>
-		/// Returns a <see cref="System.String" /> that represents this instance.
+		/// Returns a <see cref="System.String"/> that represents this instance.
 		/// </summary>
-		/// <param name="format"> The format. </param>
-		/// <returns> A <see cref="System.String" /> that represents this instance. </returns>
+		/// <param name="format">The format.</param>
+		/// <returns>
+		/// A <see cref="System.String"/> that represents this instance.
+		/// </returns>
 		public string ToString(string format)
 		{
 			if (format == null)
@@ -378,21 +393,25 @@ namespace CryCil.Mathematics
 		}
 
 		/// <summary>
-		/// Returns a <see cref="System.String" /> that represents this instance.
+		/// Returns a <see cref="System.String"/> that represents this instance.
 		/// </summary>
-		/// <param name="formatProvider"> The format provider. </param>
-		/// <returns> A <see cref="System.String" /> that represents this instance. </returns>
+		/// <param name="formatProvider">The format provider.</param>
+		/// <returns>
+		/// A <see cref="System.String"/> that represents this instance.
+		/// </returns>
 		public string ToString(IFormatProvider formatProvider)
 		{
 			return string.Format(formatProvider, "Minimum:{0} Maximum:{1}", this.Minimum.ToString(), this.Maximum.ToString());
 		}
 
 		/// <summary>
-		/// Returns a <see cref="System.String" /> that represents this instance.
+		/// Returns a <see cref="System.String"/> that represents this instance.
 		/// </summary>
-		/// <param name="format">         The format. </param>
-		/// <param name="formatProvider"> The format provider. </param>
-		/// <returns> A <see cref="System.String" /> that represents this instance. </returns>
+		/// <param name="format">        The format.</param>
+		/// <param name="formatProvider">The format provider.</param>
+		/// <returns>
+		/// A <see cref="System.String"/> that represents this instance.
+		/// </returns>
 		public string ToString(string format, IFormatProvider formatProvider)
 		{
 			if (format == null)
@@ -425,11 +444,14 @@ namespace CryCil.Mathematics
 		}
 
 		/// <summary>
-		/// Determines whether the specified <see cref="Vector4" /> is equal to this instance.
+		/// Determines whether the specified <see cref="Vector4"/> is equal to this
+		/// instance.
 		/// </summary>
-		/// <param name="value"> The <see cref="Vector4" /> to compare with this instance. </param>
+		/// <param name="value">
+		/// The <see cref="Vector4"/> to compare with this instance.
+		/// </param>
 		/// <returns>
-		/// <c>true</c> if the specified <see cref="Vector4" /> is equal to this instance;
+		/// <c>true</c> if the specified <see cref="Vector4"/> is equal to this instance;
 		/// otherwise, <c>false</c>.
 		/// </returns>
 		public bool Equals(BoundingBox value)
@@ -438,24 +460,24 @@ namespace CryCil.Mathematics
 		}
 
 		/// <summary>
-		/// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
+		/// Determines whether the specified <see cref="System.Object"/> is equal to this
+		/// instance.
 		/// </summary>
-		/// <param name="value"> The <see cref="System.Object" /> to compare with this instance. </param>
+		/// <param name="value">
+		/// The <see cref="System.Object"/> to compare with this instance.
+		/// </param>
 		/// <returns>
-		/// <c>true</c> if the specified <see cref="System.Object" /> is equal to this instance;
-		/// otherwise, <c>false</c>.
+		/// <c>true</c> if the specified <see cref="System.Object"/> is equal to this
+		/// instance; otherwise, <c>false</c>.
 		/// </returns>
 		public override bool Equals(object value)
 		{
-			if (value == null)
-				return false;
-
-			if (value.GetType() != this.GetType())
-				return false;
-
-			return this.Equals((BoundingBox)value);
+			return value != null
+				&& (value.GetType() == this.GetType()
+				&& this.Equals((BoundingBox)value));
 		}
-
+		/// <summary>
+		/// </summary>
 		#region Properties
 		public bool IsEmpty
 		{
@@ -464,7 +486,8 @@ namespace CryCil.Mathematics
 				return this.Minimum == this.Maximum;
 			}
 		}
-
+		/// <summary>
+		/// </summary>
 		public Vector3 Center
 		{
 			get
