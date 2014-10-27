@@ -103,7 +103,7 @@ public:
 	//!
 	//! @param name       Name of the method to find.
 	//! @param paramCount Number of arguments the method should take.
-	virtual IMonoMethod * GetMethod(const char *name, int paramCount)
+	virtual IMonoMethod *GetMethod(const char *name, int paramCount)
 	{
 		return
 			new MonoMethodWrapper
@@ -117,7 +117,7 @@ public:
 	//!                   number of found methods.
 	//! @returns A pointer to the first found method. You should release
 	//!          resultant array once you don't need it anymore.
-	virtual IMonoMethod ** GetMethods(const char *name, int paramCount, int &foundCount)
+	virtual IMonoMethod **GetMethods(const char *name, int paramCount, int &foundCount)
 	{
 		MonoClass *klass = this->GetWrappedClass();
 		std::vector<MonoMethod *> methods(mono_class_num_methods(klass));
@@ -147,7 +147,7 @@ public:
 	//!                   number of found methods.
 	//! @returns A pointer to the first found method. You should release
 	//!          resultant array once you don't need it anymore.
-	virtual IMonoMethod ** GetMethods(const char *name, int &foundCount)
+	virtual IMonoMethod **GetMethods(const char *name, int &foundCount)
 	{
 		MonoClass *klass = this->GetWrappedClass();
 		std::vector<MonoMethod *> methods(mono_class_num_methods(klass));
@@ -199,7 +199,7 @@ public:
 	}
 	//! Gets the value of the object's field.
 	//!
-	//! @param obj   Object which field to get.
+	//! @param obj  Object which field to get.
 	//! @param name Name of the field which value to get.
 	virtual mono::object GetField(mono::object obj, const char *name)
 	{
@@ -226,7 +226,7 @@ public:
 	}
 	//! Gets the value of the object's property.
 	//!
-	//! @param obj   Object which property to get.
+	//! @param obj  Object which property to get.
 	//! @param name Name of the property which value to get.
 	virtual mono::object GetProperty(mono::object obj, const char *name)
 	{
@@ -271,6 +271,7 @@ public:
 	//!
 	//! @param nameSpace Full name of the name space where the class is located.
 	//! @param className Name of the class.
+	//!
 	//! @returns True, if this class is a subclass of specified one.
 	virtual bool Inherits(const char *nameSpace, const char *className)
 	{
@@ -352,7 +353,8 @@ private:
 	{
 		if (!pars)
 		{
-			// This code will only execute if there are no parameters in the signature.
+			// This code will only execute if there are no parameters in the signature,
+			// therefore, signatures do match since there are no parameters to compare.
 			return true;
 		}
 		// Go through parameters.

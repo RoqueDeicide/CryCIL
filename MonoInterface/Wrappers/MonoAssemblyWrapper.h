@@ -4,7 +4,7 @@
 #include "Wrappers/MonoClassWrapper.h"
 
 #include "MonoHeaders.h"
-
+//! Implementation for IMonoAssembly.
 struct MonoAssemblyWrapper : IMonoAssembly
 {
 private:
@@ -22,7 +22,7 @@ public:
 		if (Pdb2MdbThunks::Convert)
 		{
 			mono::exception ex;
-			Pdb2MdbThunks::Convert(this->ToManagedString(assemblyFile), &ex);
+			Pdb2MdbThunks::Convert(MonoEnv->ToManagedString(assemblyFile), &ex);
 		}
 		this->assembly = mono_domain_assembly_open((MonoDomain *)MonoEnv->AppDomain, assemblyFile);
 		failed = !this->assembly;
@@ -74,7 +74,7 @@ public:
 		return this->assembly;
 	}
 
-	VIRTUAL_API virtual mono::assembly GetReflectionObject()
+	virtual mono::assembly GetReflectionObject()
 	{
 		return (mono::assembly)mono_assembly_get_object((MonoDomain *)MonoEnv->AppDomain, this->assembly);
 	}
