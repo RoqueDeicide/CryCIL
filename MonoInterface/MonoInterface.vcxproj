@@ -202,6 +202,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="API_ImplementationHeaders.h" />
     <ClInclude Include="DoxygenExampleFiles\ExampleDefines.h" />
     <ClInclude Include="Engine\DirectoryStructure.h" />
     <ClInclude Include="IMonoInterface.h" />
@@ -216,14 +217,11 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="ThunkTables.h" />
     <ClInclude Include="Wrappers\DefaultBoxinator.h" />
-    <ClInclude Include="Wrappers\MonoArrayFree.h" />
-    <ClInclude Include="Wrappers\MonoArrayPersistent.h" />
-    <ClInclude Include="Wrappers\MonoArrayWrapper.h" />
-    <ClInclude Include="Wrappers\MonoAssemblyWrapper.h" />
-    <ClInclude Include="Wrappers\MonoClassWrapper.h" />
-    <ClInclude Include="Wrappers\MonoHandleFree.h" />
-    <ClInclude Include="Wrappers\MonoMethodWrapper.h" />
-    <ClInclude Include="Wrappers\MonoObjectWrapper.h" />
+    <ClInclude Include="Wrappers\MonoArray.h" />
+    <ClInclude Include="Wrappers\MonoAssembly.h" />
+    <ClInclude Include="Wrappers\MonoClass.h" />
+    <ClInclude Include="Wrappers\MonoMethod.h" />
+    <ClInclude Include="Wrappers\MonoHandle.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CryEngineInterface.cpp" />
@@ -243,12 +241,19 @@
     </ClCompile>
     <ClCompile Include="DoxygenExampleFiles\ListenerExample.cpp" />
     <ClCompile Include="DoxygenExampleFiles\UnmanagedThunkExample.cpp" />
+    <ClCompile Include="Interops\LogPosting.cpp" />
+    <ClCompile Include="RunTime\DebugEventReporter.cpp" />
+    <ClCompile Include="RunTime\EventBroadcaster.cpp" />
+    <ClCompile Include="RunTime\InitializationInterop.cpp" />
+    <ClCompile Include="RunTime\MonoInterface.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="ThunkTables.cpp" />
+    <ClCompile Include="Wrappers\API.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

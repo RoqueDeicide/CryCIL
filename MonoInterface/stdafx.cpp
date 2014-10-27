@@ -7,3 +7,7 @@
 
 // TODO: reference any additional headers you need in STDAFX.H
 // and not in this file
+
+IMonoInterface *MonoEnv = nullptr;
+//! Provides access to IGameFramework implementation.
+IGameFramework *Framework = nullptr;

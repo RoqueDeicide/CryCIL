@@ -5,12 +5,12 @@ namespace CryCil.Interops
 	internal static class Initialization
 	{
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		internal static extern void OnCompilationStarting();
+		internal static extern void OnCompilationStartingBind();
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		internal static extern void OnCompilationComplete(bool success);
+		internal static extern void OnCompilationCompleteBind(bool success);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		internal static extern int[] GetSubscribedStages();
+		internal static extern int[] GetSubscribedStagesBind();
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		internal static extern void OnInitializationStage(int stageIndex);
+		internal static extern void OnInitializationStageBind(int stageIndex);
 	}
 }

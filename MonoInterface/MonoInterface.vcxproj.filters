@@ -9,34 +9,10 @@
     <ClInclude Include="RunTime\MonoInterface.h">
       <Filter>RunTime</Filter>
     </ClInclude>
-    <ClInclude Include="Wrappers\MonoHandleFree.h">
-      <Filter>API Implementation</Filter>
-    </ClInclude>
     <ClInclude Include="IMonoInterface.h" />
-    <ClInclude Include="Wrappers\MonoObjectWrapper.h">
-      <Filter>API Implementation</Filter>
-    </ClInclude>
     <ClInclude Include="MonoHeaders.h" />
-    <ClInclude Include="Wrappers\MonoClassWrapper.h">
-      <Filter>API Implementation</Filter>
-    </ClInclude>
     <ClInclude Include="DoxygenExampleFiles\ExampleDefines.h" />
-    <ClInclude Include="Wrappers\MonoArrayWrapper.h">
-      <Filter>API Implementation</Filter>
-    </ClInclude>
-    <ClInclude Include="Wrappers\MonoArrayFree.h">
-      <Filter>API Implementation</Filter>
-    </ClInclude>
-    <ClInclude Include="Wrappers\MonoArrayPersistent.h">
-      <Filter>API Implementation</Filter>
-    </ClInclude>
-    <ClInclude Include="Wrappers\MonoAssemblyWrapper.h">
-      <Filter>API Implementation</Filter>
-    </ClInclude>
     <ClInclude Include="ThunkTables.h" />
-    <ClInclude Include="Wrappers\MonoMethodWrapper.h">
-      <Filter>API Implementation</Filter>
-    </ClInclude>
     <ClInclude Include="Wrappers\DefaultBoxinator.h">
       <Filter>API Implementation</Filter>
     </ClInclude>
@@ -53,6 +29,22 @@
     <ClInclude Include="Interops\LogPosting.h">
       <Filter>Interops</Filter>
     </ClInclude>
+    <ClInclude Include="Wrappers\MonoArray.h">
+      <Filter>API Implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="API_ImplementationHeaders.h" />
+    <ClInclude Include="Wrappers\MonoAssembly.h">
+      <Filter>API Implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="Wrappers\MonoClass.h">
+      <Filter>API Implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="Wrappers\MonoHandle.h">
+      <Filter>API Implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="Wrappers\MonoMethod.h">
+      <Filter>API Implementation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -64,6 +56,25 @@
     <ClCompile Include="DoxygenExampleFiles\ListenerExample.cpp">
       <Filter>DoxygenExampleFiles\CryCIL Listeners\Native Listener</Filter>
     </ClCompile>
+    <ClCompile Include="Wrappers\API.cpp">
+      <Filter>API Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="RunTime\InitializationInterop.cpp">
+      <Filter>RunTime</Filter>
+    </ClCompile>
+    <ClCompile Include="RunTime\DebugEventReporter.cpp">
+      <Filter>RunTime</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\LogPosting.cpp">
+      <Filter>Interops</Filter>
+    </ClCompile>
+    <ClCompile Include="RunTime\EventBroadcaster.cpp">
+      <Filter>RunTime</Filter>
+    </ClCompile>
+    <ClCompile Include="RunTime\MonoInterface.cpp">
+      <Filter>RunTime</Filter>
+    </ClCompile>
+    <ClCompile Include="ThunkTables.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">

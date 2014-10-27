@@ -30,12 +30,6 @@ namespace CryCil.Mathematics.MemoryMapping
 		/// </summary>
 		[FieldOffset(0)]
 		public char Character;
-		/// <summary>
-		/// Individual 2 bytes.
-		/// </summary>
-		[FieldOffset(0)]
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
-		public fixed byte Bytes[2];
 		#endregion
 		#region Properties
 		/// <summary>
@@ -53,11 +47,16 @@ namespace CryCil.Mathematics.MemoryMapping
 		{
 			get
 			{
-				return this.Bytes[index];
+				ushort us = this.UnsignedShort;
+				byte* bytes = (byte *)&us;
+				return bytes[index];
 			}
 			set
 			{
-				this.Bytes[index] = value;
+				ushort us = this.UnsignedShort;
+				byte* bytes = (byte*)&us;
+				bytes[index] = value;
+				this.UnsignedShort = us;
 			}
 		}
 		#endregion

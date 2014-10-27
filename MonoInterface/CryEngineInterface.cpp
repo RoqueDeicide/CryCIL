@@ -14,7 +14,7 @@ extern "C"	// Mark exported functions as C code, so the compiler keeps function 
 	//!                      everything.
 	//! @param listeners     Pointer to an array of listeners to register before initialization.
 	//! @param listenerCount Number of listeners in the above array.
-	MONOINTERFACE_API IMonoInterface *InitializeModule
+	MONOINTERFACE_API IMonoInterface *InitializeCryCilSubsystem
 	(
 		IGameFramework *framework,
 		IMonoSystemListener **listeners,

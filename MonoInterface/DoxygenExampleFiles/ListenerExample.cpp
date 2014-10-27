@@ -1,7 +1,7 @@
+#include "stdafx.h"
 #include "ExampleDefines.h"
 
 #ifdef EXAMPLES
-
 #include "IMonoInterface.h"
 
 #ifndef PI
@@ -10,28 +10,12 @@
 
 #include <CryLibrary.h>
 
-void HowToRegisterListeners()
-{
-	// We have to pass listeners to InitializeModule if you them to react to initialization events.
-	int listenerCount = 1;
-	IMonoSystemListener **listeners = new IMonoSystemListener *[listenerCount];
-	listeners[0] = new SimpleListener();
-	// Now we can initialize CryCIL.
-	HMODULE monoInterfaceDll = CryLoadLibrary(MONOINTERFACE_LIBRARY);
-	if (monoInterfaceDll)
-	{
-		InitializeMonoInterface init =
-			(InitializeMonoInterface)CryGetProcAddress(monoInterfaceDll, MONO_INTERFACE_INIT);
-		// Replace nullptr with a pointer to IGameFramework.
-		init(nullptr, listeners, listenerCount);
-	}
-}
-
 struct SimpleListener : public IMonoSystemListener
 {
 private:
-	IMonoInterface *monoEnv = nullptr;
+	IMonoInterface *monoEnv;
 public:
+	SimpleListener() : monoEnv(nullptr){}
 
 	virtual void SetInterface(IMonoInterface *handle)
 	{
@@ -163,5 +147,22 @@ public:
 		CryLogAlways("Shutting down.");
 	}
 };
+
+void HowToRegisterListeners()
+{
+	// We have to pass listeners to InitializeModule if you them to react to initialization events.
+	int listenerCount = 1;
+	IMonoSystemListener **listeners = new IMonoSystemListener *[listenerCount];
+	listeners[0] = new SimpleListener();
+	// Now we can initialize CryCIL.
+	HMODULE monoInterfaceDll = CryLoadLibrary(MONOINTERFACE_LIBRARY);
+	if (monoInterfaceDll)
+	{
+		InitializeMonoInterface init =
+			(InitializeMonoInterface)CryGetProcAddress(monoInterfaceDll, MONO_INTERFACE_INIT);
+		// Replace nullptr with a pointer to IGameFramework.
+		init(nullptr, listeners, listenerCount);
+	}
+}
 
 #endif // EXAMPLES

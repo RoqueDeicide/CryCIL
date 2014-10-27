@@ -57,6 +57,11 @@ namespace CryCil.Mathematics.Graphics
 		#endregion
 
 		#region Overrides
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <returns></returns>
 		public override bool Equals(object obj)
 		{
 			if (obj is ColorSingle)
@@ -64,12 +69,18 @@ namespace CryCil.Mathematics.Graphics
 
 			return false;
 		}
-
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
 		public override string ToString()
 		{
 			return String.Format("R {0} G {1} B {2} A {3}", this.R, this.G, this.B, this.A);
 		}
-
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <returns></returns>
 		public override int GetHashCode()
 		{
 			// Overflow is fine, just wrap

@@ -21,7 +21,20 @@
 #define MONOINTERFACE_LIBRARY "MonoInterface.dll"
 #endif
 
-#define MONO_INTERFACE_INIT "InitializeModule"
+#define MONO_INTERFACE_INIT "InitializeCryCilSubsystem"
+
+// Forward declarations.
+struct IDefaultBoxinator;
+struct IMonoFunctionalityWrapper;
+struct IMonoHandle;
+struct IMonoAssembly;
+struct IMonoArray;
+struct IMonoClass;
+struct IMonoMethod;
+struct IMonoSystemListener;
+struct IMonoInterop;
+struct IDefaultMonoInterop;
+struct IMonoInterface;
 
 namespace mono
 {
@@ -426,7 +439,7 @@ struct IMonoAssembly : public IMonoFunctionalityWrapper
 	) = 0;
 	//! Gets the reference to the instance of type System.Reflection.Assembly.
 	__declspec(property(get=GetReflectionObject)) mono::assembly ReflectionObject;
-protected:
+
 	VIRTUAL_API virtual mono::assembly GetReflectionObject() = 0;
 };
 //! Defines interface of objects that wrap functionality of MonoArray type.
@@ -435,7 +448,7 @@ struct IMonoArray : public IMonoFunctionalityWrapper
 	//! Gets the length of the array.
 	__declspec(property(get=GetSize)) int Length;
 	//! Gets the type of the elements of the array.
-	__declspec(property(get=GetElementClass)) IMonoClass *Length;
+	__declspec(property(get=GetElementClass)) IMonoClass *ElementClass;
 	//! Gets item located at the specified position.
 	//!
 	//! @param index Zero-based index of the item to get.
@@ -446,7 +459,7 @@ struct IMonoArray : public IMonoFunctionalityWrapper
 	VIRTUAL_API virtual void SetItem(int index, mono::object value) = 0;
 	//! Tells the object that it's no longer needed.
 	VIRTUAL_API virtual void Release() = 0;
-protected:
+
 	VIRTUAL_API virtual int GetSize() = 0;
 	VIRTUAL_API virtual IMonoClass *GetElementClass() = 0;
 };
@@ -566,7 +579,7 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!
 	//! @returns Null if this class is not a value-type, or reference to the boxed object, if it is.
 	VIRTUAL_API virtual mono::object Box(void *value) = 0;
-protected:
+
 	VIRTUAL_API virtual const char *GetName() = 0;
 	VIRTUAL_API virtual const char *GetNameSpace() = 0;
 	VIRTUAL_API virtual IMonoAssembly *GetAssembly() = 0;
@@ -688,7 +701,7 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	//! @param polymorph  Indicates whether we need to invoke a virtual method,
 	//!                   that is specific to the instance.
 	VIRTUAL_API virtual mono::object Invoke(mono::object object, void **params = nullptr, bool polymorph = false) = 0;
-protected:
+
 	VIRTUAL_API virtual void *GetThunk() = 0;
 	VIRTUAL_API virtual const char *GetName() = 0;
 	VIRTUAL_API virtual int GetParameterCount() = 0;
@@ -769,85 +782,6 @@ struct IMonoSystemListener
 	//! Invoked when CryCIL shuts down.
 	virtual void Shutdown() = 0;
 };
-
-//! Interface of objects that specialize on setting up interops between C++ and Mono.
-//!
-//! The earliest time for registration of internal calls is during invocation
-//! of OnRunTimeInitialized.
-struct IMonoInterop : public IMonoSystemListener
-{
-protected:
-	IMonoInterface *monoInterface;
-public:
-	virtual void SetInterface(IMonoInterface *handle)
-	{
-		this->monoInterface = handle;
-	}
-	virtual void RegisterInteropMethod(const char *methodName, void *functionPointer)
-	{
-		this->monoInterface->AddInternalCall
-		(
-			this->GetNameSpace(),
-			this->GetName(),
-			methodName,
-			functionPointer
-		);
-	}
-	//! Returns the name of the class that will declare managed counter-parts
-	//! of the internal calls.
-	virtual const char *GetName() = 0;
-	//! Returns the name space where the class that will declare managed counter-parts
-	//! of the internal calls is declared.
-	virtual const char *GetNameSpace() = 0;
-	//! Unnecessary for most interops.
-	virtual void OnPreInitialization()
-	{}
-	//! Unnecessary for most interops.
-	virtual void OnRunTimeInitializing()
-	{}
-	//! Unnecessary for most interops.
-	virtual void OnCryamblyInitilizing()
-	{}
-	//! Unnecessary for most interops.
-	virtual void OnCompilationStarting()
-	{}
-	//! Unnecessary for most interops.
-	virtual void OnCompilationComplete(bool success)
-	{}
-	//! Unnecessary for most interops.
-	virtual int *GetSubscribedStages(int &stageCount)
-	{
-		stageCount = 0;
-		return nullptr;
-	}
-	//! Unnecessary for most interops.
-	virtual void OnInitializationStage(int stageIndex)
-	{}
-	//! Unnecessary for most interops.
-	virtual void OnCryamblyInitilized()
-	{}
-	//! Unnecessary for most interops.
-	virtual void OnPostInitialization()
-	{}
-	//! Unnecessary for most interops.
-	virtual void Update()
-	{}
-	//! Unnecessary for most interops.
-	virtual void PostUpdate()
-	{}
-	//! Unnecessary for most interops.
-	virtual void Shutdown()
-	{}
-};
-
-#define REGISTER_METHOD(method) this->RegisterInteropMethod(#method, (method))
-
-//! Interface of interops that use classes within CryCil.RunTime.NativeCodeAccess name space.
-struct IDefaultMonoInterop : public IMonoInterop
-{
-	virtual const char *GetNameSpace() { return "CryCil.Interops"; }
-};
-
 //! Base class for MonoRunTime. Provides access to Mono interface.
 struct IMonoInterface
 {
@@ -1123,7 +1057,6 @@ struct IMonoInterface
 	//! Returns the object that boxes some simple value types.
 	__declspec(property(get=GetDefaultBoxer)) IDefaultBoxinator *DefaultBoxer;
 
-protected:
 	VIRTUAL_API virtual void *GetAppDomain() = 0;
 	VIRTUAL_API virtual IMonoAssembly *GetCryambly() = 0;
 	VIRTUAL_API virtual IMonoAssembly *GetPdbMdbAssembly() = 0;
@@ -1131,17 +1064,94 @@ protected:
 	VIRTUAL_API virtual bool GetInitializedIndication() = 0;
 	VIRTUAL_API virtual IDefaultBoxinator *GetDefaultBoxer() = 0;
 };
-struct IGameFramework;
+//! Interface of objects that specialize on setting up interops between C++ and Mono.
+//!
+//! The earliest time for registration of internal calls is during invocation
+//! of OnRunTimeInitialized.
+struct IMonoInterop : public IMonoSystemListener
+{
+protected:
+	IMonoInterface *monoInterface;
+public:
+	virtual void SetInterface(IMonoInterface *handle)
+	{
+		this->monoInterface = handle;
+	}
+	virtual void RegisterInteropMethod(const char *methodName, void *functionPointer)
+	{
+		this->monoInterface->AddInternalCall
+			(
+			this->GetNameSpace(),
+			this->GetName(),
+			methodName,
+			functionPointer
+			);
+	}
+	//! Returns the name of the class that will declare managed counter-parts
+	//! of the internal calls.
+	virtual const char *GetName() = 0;
+	//! Returns the name space where the class that will declare managed counter-parts
+	//! of the internal calls is declared.
+	virtual const char *GetNameSpace() = 0;
+	//! Unnecessary for most interops.
+	virtual void OnPreInitialization()
+	{}
+	//! Unnecessary for most interops.
+	virtual void OnRunTimeInitializing()
+	{}
+	//! Unnecessary for most interops.
+	virtual void OnCryamblyInitilizing()
+	{}
+	//! Unnecessary for most interops.
+	virtual void OnCompilationStarting()
+	{}
+	//! Unnecessary for most interops.
+	virtual void OnCompilationComplete(bool success)
+	{}
+	//! Unnecessary for most interops.
+	virtual int *GetSubscribedStages(int &stageCount)
+	{
+		stageCount = 0;
+		return nullptr;
+	}
+	//! Unnecessary for most interops.
+	virtual void OnInitializationStage(int stageIndex)
+	{}
+	//! Unnecessary for most interops.
+	virtual void OnCryamblyInitilized()
+	{}
+	//! Unnecessary for most interops.
+	virtual void OnPostInitialization()
+	{}
+	//! Unnecessary for most interops.
+	virtual void Update()
+	{}
+	//! Unnecessary for most interops.
+	virtual void PostUpdate()
+	{}
+	//! Unnecessary for most interops.
+	virtual void Shutdown()
+	{}
+};
+
+#define REGISTER_METHOD(method) this->RegisterInteropMethod(#method, (method))
+
+//! Interface of interops that use classes within CryCil.RunTime.NativeCodeAccess name space.
+struct IDefaultMonoInterop : public IMonoInterop
+{
+	virtual const char *GetNameSpace() { return "CryCil.Interops"; }
+};
+
 //! Signature of the only method that is exported by MonoInterface.dll
 typedef IMonoInterface *(*InitializeMonoInterface)(IGameFramework *, IMonoSystemListener **, int);
 
-//! A simple global variable, provides access to MonoRunTime from anywhere.
+
+
+//! Pointer to IMonoInterface implementation for internal use.
 //!
-//! Within the game project, or any other module,
-//! this variable will have to be assigned manually.
-//!
-//! A simplest way to do so is to include this header file into GameStartup.h
-//! and have MonoEnv assigned a value returned by InitializeModule function.
+//! In order to have access to IMonoInterface implementation from other projects, similar
+//! variable can be declared. It must be initialized with value returned by
+//! InitializeCryCilSubsystem function exported by this Dll.
 //!
 //! Example:
 //!
@@ -1156,31 +1166,27 @@ typedef IMonoInterface *(*InitializeMonoInterface)(IGameFramework *, IMonoSystem
 //! // Get InitializeModule function.
 //! InitializeMonoInterface cryCilInitializer =
 //!     CryGetProcAddress(this->monoInterfaceDll, "InitializeModule");
-//! // Invoke it, save the result in MonoEnv.
+//! // Invoke it, save the result in MonoEnv that was declared as a global somewhere else.
 //! MonoEnv = cryCilInitializer(gameFramework, (pointer to listeners), (number of listeners));
 //! // Now MonoEnv can be used to communicate with CryCIL API!
 //! @endcode
-IMonoInterface *MonoEnv = nullptr;
-#ifdef CRYCIL_MODULE
-// CRYCIL_MODULE is only supposed to be defined within MonoInterface project.
-
-//! Store IGameFramework pointer here for use inside MonoInterface.dll;
-IGameFramework *Framework = nullptr;
-#endif
+extern IMonoInterface *MonoEnv;
+//! Provides access to IGameFramework implementation.
+extern IGameFramework *Framework;
 
 #pragma region Conversions Interface
 
 //! Creates managed string that contains given text.
 //!
 //! @param ntString Null-terminated string which text to copy to managed string.
-mono::string ToMonoString(const char *ntString)
+inline mono::string ToMonoString(const char *ntString)
 {
 	return MonoEnv->ToManagedString(ntString);
 }
 //! Creates native null-terminated string from managed one.
 //!
 //! @param monoString Reference to a managed string to convert.
-const char *ToNativeString(mono::string monoString)
+inline const char *ToNativeString(mono::string monoString)
 {
 	return MonoEnv->ToNativeString(monoString);
 }
@@ -1273,114 +1279,113 @@ BOX_UNBOX T Unbox(mono::object value)
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX mono::intptr BoxUPtr(void *value) { return MonoEnv->DefaultBoxer->BoxUPtr(value); }
+BOX_UNBOX inline mono::intptr BoxUPtr(void *value) { return MonoEnv->DefaultBoxer->BoxUPtr(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX mono::intptr BoxPtr(void *value) { return MonoEnv->DefaultBoxer->BoxPtr(value); }
+BOX_UNBOX inline mono::intptr BoxPtr(void *value) { return MonoEnv->DefaultBoxer->BoxPtr(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX mono::boolean Box(bool value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::boolean Box(bool value) { return MonoEnv->DefaultBoxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX mono::character Box(char value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::character Box(char value) { return MonoEnv->DefaultBoxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX mono::sbyte Box(signed char value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::sbyte Box(signed char value) { return MonoEnv->DefaultBoxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX mono::byte Box(unsigned char value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::byte Box(unsigned char value) { return MonoEnv->DefaultBoxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX mono::int16 Box(short value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::int16 Box(short value) { return MonoEnv->DefaultBoxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX mono::uint16 Box(unsigned short value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::uint16 Box(unsigned short value) { return MonoEnv->DefaultBoxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX mono::int32 Box(int value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::int32 Box(int value) { return MonoEnv->DefaultBoxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX mono::uint32 Box(unsigned int value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::uint32 Box(unsigned int value) { return MonoEnv->DefaultBoxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX mono::int64 Box(__int64 value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::int64 Box(__int64 value) { return MonoEnv->DefaultBoxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX mono::uin64 Box(unsigned __int64 value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::uin64 Box(unsigned __int64 value) { return MonoEnv->DefaultBoxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX mono::float32 Box(float value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::float32 Box(float value) { return MonoEnv->DefaultBoxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX mono::float64 Box(double value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::float64 Box(double value) { return MonoEnv->DefaultBoxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX mono::vector2 Box(Vec2 value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::vector2 Box(Vec2 value) { return MonoEnv->DefaultBoxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX mono::vector3 Box(Vec3 value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::vector3 Box(Vec3 value) { return MonoEnv->DefaultBoxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX mono::vector4 Box(Vec4 value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::vector4 Box(Vec4 value) { return MonoEnv->DefaultBoxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX mono::angles3 Box(Ang3 value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::angles3 Box(Ang3 value) { return MonoEnv->DefaultBoxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX mono::quaternion Box(Quat value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::quaternion Box(Quat value) { return MonoEnv->DefaultBoxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX mono::quat_trans Box(QuatT value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::quat_trans Box(QuatT value) { return MonoEnv->DefaultBoxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX mono::matrix33 Box(Matrix33 value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::matrix33 Box(Matrix33 value) { return MonoEnv->DefaultBoxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX mono::matrix34 Box(Matrix34 value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::matrix34 Box(Matrix34 value) { return MonoEnv->DefaultBoxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX mono::matrix44 Box(Matrix44 value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::matrix44 Box(Matrix44 value) { return MonoEnv->DefaultBoxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX mono::plane Box(Matrix44 value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::plane Box(Plane value) { return MonoEnv->DefaultBoxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX mono::ray Box(Matrix44 value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::ray Box(Ray value) { return MonoEnv->DefaultBoxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX mono::aabb Box(Matrix44 value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::byte_color Box(ColorB value) { return MonoEnv->DefaultBoxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX mono::byte_color Box(ColorB value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::float32_color Box(ColorF value) { return MonoEnv->DefaultBoxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX mono::float32_color Box(ColorF value) { return MonoEnv->DefaultBoxer->Box(value); }
-
+BOX_UNBOX inline mono::aabb Box(AABB value) { return MonoEnv->DefaultBoxer->Box(value); }
 #pragma endregion

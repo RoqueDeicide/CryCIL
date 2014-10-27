@@ -2,30 +2,13 @@
 
 #include "IMonoInterface.h"
 
-struct LogPostingInterop : IDefaultMonoInterop
+struct LogPostingInterop : public IDefaultMonoInterop
 {
 
-	virtual const char * GetName()
-	{
-		return "LogPosting";
-	}
+	virtual const char *GetName();
 
-	virtual void OnRunTimeInitialized()
-	{
-		REGISTER_METHOD(Post);
-		REGISTER_METHOD(GetVerboxity);
-		REGISTER_METHOD(SetVerbosity);
-	}
-	static void Post(int postType, mono::string text)
-	{
-		gEnv->pLog->LogV((IMiniLog::ELogType)postType, ToNativeString(text), 0);
-	}
-	static int GetVerboxity()
-	{
-		return gEnv->pLog->GetVerbosityLevel();
-	}
-	static void SetVerbosity(int level)
-	{
-		gEnv->pLog->SetVerbosity(level);
-	}
+	virtual void OnRunTimeInitialized();
+	static void Post(int postType, mono::string text);
+	static int GetVerboxity();
+	static void SetVerbosity(int level);
 };

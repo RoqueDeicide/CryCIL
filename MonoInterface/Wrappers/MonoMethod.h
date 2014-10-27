@@ -3,7 +3,7 @@
 #include "IMonoInterface.h"
 #include "MonoHeaders.h"
 
-struct MonoMethodWrapper : IMonoMethod
+struct MonoMethodWrapper : public IMonoMethod
 {
 private:
 	MonoMethod *wrappedMethod;
@@ -11,13 +11,7 @@ private:
 	int paramCount;
 	const char *name;
 public:
-	MonoMethodWrapper(MonoMethod *method)
-	{
-		this->wrappedMethod = method;
-		this->signature = mono_method_signature(this->wrappedMethod);
-		this->paramCount = mono_signature_get_param_count(this->signature);
-		this->name = mono_method_get_name(this->wrappedMethod);
-	}
+	MonoMethodWrapper(MonoMethod *method);
 	//! Invokes this method.
 	//!
 	//! @remark Since extension methods are static by their internal nature,
@@ -31,17 +25,7 @@ public:
 	//!                  Pass null, if method can accept no arguments.
 	//! @param polymorph Indicates whether we need to invoke a virtual method,
 	//!                  that is specific to the instance.
-	virtual mono::object Invoke(mono::object object, IMonoArray *params = nullptr, bool polymorph = false)
-	{
-		void **pars = new void*[params->Length];
-		for (int i = 0; i < params->Length; i++)
-		{
-			pars[i] = params->GetItem(i);
-		}
-		mono::object result = this->Invoke(object, pars, polymorph);
-		delete pars;
-		return result;
-	}
+	virtual mono::object Invoke(mono::object object, IMonoArray *params = nullptr, bool polymorph = false);
 	//! Invokes this method.
 	//!
 	//! @remark Since extension methods are static by their internal nature,
@@ -55,47 +39,13 @@ public:
 	//!                   Pass null, if method can accept no arguments.
 	//! @param polymorph  Indicates whether we need to invoke a virtual method,
 	//!                   that is specific to the instance.
-	virtual mono::object Invoke(mono::object object, void **params = nullptr, bool polymorph = false)
-	{
-		MonoMethod *methodToInvoke;
-		if (polymorph)
-		{
-			methodToInvoke =
-				mono_object_get_virtual_method((MonoObject *)object, this->wrappedMethod);
-		}
-		else
-		{
-			methodToInvoke = this->wrappedMethod;
-		}
-		mono::object exception;
-		mono::object result = (mono::object)
-			mono_runtime_invoke(methodToInvoke, object, params, (MonoObject **)&exception);
-		if (exception)
-		{
-			MonoEnv->HandleException(exception);
-			return nullptr;
-		}
-		return result;
-	}
+	virtual mono::object Invoke(mono::object object, void **params = nullptr, bool polymorph = false);
 
-	virtual void * GetThunk()
-	{
-		mono_method_get_unmanaged_thunk(this->wrappedMethod);
-	}
+	virtual void * GetThunk();
 
-	virtual const char * GetName()
-	{
-		return this->name;
-	}
+	virtual const char * GetName();
 
-	virtual int GetParameterCount()
-	{
-		return this->paramCount;
-	}
+	virtual int GetParameterCount();
 
-	virtual void * GetWrappedPointer()
-	{
-		return this->wrappedMethod;
-	}
-
+	virtual void * GetWrappedPointer();
 };

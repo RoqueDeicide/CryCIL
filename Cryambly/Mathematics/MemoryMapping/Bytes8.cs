@@ -7,7 +7,7 @@ namespace CryCil.Mathematics.MemoryMapping
 	/// Encapsulates 8 bytes worth of data.
 	/// </summary>
 	[StructLayout(LayoutKind.Explicit, Size = 8)]
-	public unsafe struct Bytes8 : IBuffer
+	public struct Bytes8 : IBuffer
 	{
 		#region Fields
 		/// <summary>
@@ -26,11 +26,15 @@ namespace CryCil.Mathematics.MemoryMapping
 		[FieldOffset(0)]
 		public double DoubleFloat;
 		/// <summary>
-		/// Individual 8 bytes.
+		/// First 4-byte number.
 		/// </summary>
 		[FieldOffset(0)]
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 8)]
-		public fixed byte Bytes[8];
+		public float FirstSingleFloat;
+		/// <summary>
+		/// Second 4-byte number.
+		/// </summary>
+		[FieldOffset(4)]
+		public float SecondSingleFloat;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -46,8 +50,14 @@ namespace CryCil.Mathematics.MemoryMapping
 		/// <param name="index">Zero-based index of the byte to get or set.</param>
 		public byte this[int index]
 		{
-			get { return this.Bytes[index]; }
-			set { this.Bytes[index] = value; }
+			get { return (byte)((255ul << (index * 8)) & this.UnsignedLong); }
+			set
+			{
+				// Clear the byte.
+				this.UnsignedLong &= ~(255ul << (index * 8));
+				// Set the byte.
+				this.UnsignedLong |= (ulong)value << (index * 8);
+			}
 		}
 		#endregion
 		#region Construction
@@ -114,7 +124,7 @@ namespace CryCil.Mathematics.MemoryMapping
 			}
 			for (int i = 0, j = startIndex; i < count; i++, j++)
 			{
-				this.Bytes[i] = array[j];
+				this[i] = array[j];
 			}
 		}
 		/// <summary>
@@ -140,13 +150,13 @@ namespace CryCil.Mathematics.MemoryMapping
 		public Bytes8(params float[] values)
 			: this()
 		{
-			for (int i = 0; i < this.Length / 2 && i < values.Length; i++)
+			if (values.Length > 0)
 			{
-				byte[] valueBytes = BitConverter.GetBytes(values[i]);
-				for (int j = 0; j < 4; j++)
-				{
-					this.Bytes[i * 4 + j] = valueBytes[j];
-				}
+				this.FirstSingleFloat = values[0];
+			}
+			if (values.Length > 1)
+			{
+				this.SecondSingleFloat = values[1];
 			}
 		}
 		#endregion

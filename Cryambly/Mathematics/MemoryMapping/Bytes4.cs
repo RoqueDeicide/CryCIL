@@ -7,7 +7,7 @@ namespace CryCil.Mathematics.MemoryMapping
 	/// Encapsulates 4 bytes worth of data.
 	/// </summary>
 	[StructLayout(LayoutKind.Explicit, Size = 4)]
-	public unsafe struct Bytes4 : IBuffer
+	public struct Bytes4 : IBuffer
 	{
 		#region Fields
 		/// <summary>
@@ -25,12 +25,6 @@ namespace CryCil.Mathematics.MemoryMapping
 		/// </summary>
 		[FieldOffset(0)]
 		public float SingleFloat;
-		/// <summary>
-		/// Individual 4 bytes.
-		/// </summary>
-		[FieldOffset(0)]
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
-		public fixed byte Bytes[4];
 		#endregion
 		#region Properties
 		/// <summary>
@@ -46,8 +40,14 @@ namespace CryCil.Mathematics.MemoryMapping
 		/// <param name="index">Index of the byte to access.</param>
 		public byte this[int index]
 		{
-			get { return this.Bytes[index]; }
-			set { this.Bytes[index] = value; }
+			get { return (byte)((255u << (index * 4)) & this.UnsignedInt); }
+			set
+			{
+				// Clear the byte.
+				this.UnsignedInt &= ~(255u << (index * 4));
+				// Set the byte.
+				this.UnsignedInt |= (uint)value << (index * 4);
+			}
 		}
 		#endregion
 		#region Construction
@@ -112,7 +112,7 @@ namespace CryCil.Mathematics.MemoryMapping
 			}
 			for (int i = 0, j = startIndex; i < count; i++, j++)
 			{
-				this.Bytes[i] = array[j];
+				this[i] = array[j];
 			}
 		}
 		/// <summary>

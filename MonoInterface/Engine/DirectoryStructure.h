@@ -55,7 +55,7 @@ struct DirectoryStructure
 		parts[2] = CRYCIL_FOLDER;
 		parts[3] = MONO_FOLDER;
 		parts[4] = MONO_CONFIG_FOLDER;
-		return PathUtilities::Combine(parts, 5);
+		return PathUtilities::Combine((const char **)&parts[0], 5);
 	}
 	//! Returns a path to the folder that contains Mono libraries.
 	static char *GetMonoLibraryFolder()
@@ -66,7 +66,7 @@ struct DirectoryStructure
 		parts[2] = CRYCIL_FOLDER;
 		parts[3] = MONO_FOLDER;
 		parts[4] = MONO_LIBS_FOLDER;
-		return PathUtilities::Combine(parts, 5);
+		return PathUtilities::Combine((const char **)&parts[0], 5);
 	}
 	//! Returns a path to the folder that contains CryCIL libraries.
 	static char *GetMonoBinariesFolder()
@@ -75,7 +75,7 @@ struct DirectoryStructure
 		parts[0] = BINARIES_FOLDER;
 		parts[1] = MODULES_FOLDER;
 		parts[2] = CRYCIL_FOLDER;
-		return PathUtilities::Combine(parts, 3);
+		return PathUtilities::Combine((const char **)&parts[0], 3);
 	}
 	//! Returns a path to the file that contains Cryambly.
 	static char *GetCryamblyFile()
@@ -85,7 +85,7 @@ struct DirectoryStructure
 		parts[1] = MODULES_FOLDER;
 		parts[2] = CRYCIL_FOLDER;
 		parts[3] = "Cryambly.dll";
-		return PathUtilities::Combine(parts, 4);
+		return PathUtilities::Combine((const char **)&parts[0], 4);
 	}
 	//! Returns a path to the file that contains Pdb to Mdb converter.
 	static char *GetPdb2MdbFile()
@@ -95,7 +95,7 @@ struct DirectoryStructure
 		parts[1] = MODULES_FOLDER;
 		parts[2] = CRYCIL_FOLDER;
 		parts[3] = MONO_DEBUG_UTILITY_FILE;
-		return PathUtilities::Combine(parts, 4);
+		return PathUtilities::Combine((const char **)&parts[0], 4);
 	}
 	//! Returns a path to the file that contains configuration data for 4.5 version AppDomains.
 	static char *GetMonoAppDomainConfigurationFile()
@@ -109,6 +109,6 @@ struct DirectoryStructure
 		parts[5] = "mono";
 		parts[6] = "4.5";
 		parts[7] = "machine.config";
-		return PathUtilities::Combine(parts, 8);
+		return PathUtilities::Combine((const char **)&parts[0], 8);
 	}
 };
