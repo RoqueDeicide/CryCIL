@@ -45,6 +45,7 @@
     <ClInclude Include="Wrappers\MonoMethod.h">
       <Filter>API Implementation</Filter>
     </ClInclude>
+    <ClInclude Include="CryCilHeader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />

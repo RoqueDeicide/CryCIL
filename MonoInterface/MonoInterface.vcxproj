@@ -203,6 +203,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="API_ImplementationHeaders.h" />
+    <ClInclude Include="CryCilHeader.h" />
     <ClInclude Include="DoxygenExampleFiles\ExampleDefines.h" />
     <ClInclude Include="Engine\DirectoryStructure.h" />
     <ClInclude Include="IMonoInterface.h" />
