@@ -241,6 +241,7 @@
     </ClCompile>
     <ClCompile Include="DoxygenExampleFiles\ListenerExample.cpp" />
     <ClCompile Include="DoxygenExampleFiles\UnmanagedThunkExample.cpp" />
+    <ClCompile Include="Engine\DirectoryStructure.cpp" />
     <ClCompile Include="Interops\LogPosting.cpp" />
     <ClCompile Include="RunTime\DebugEventReporter.cpp" />
     <ClCompile Include="RunTime\EventBroadcaster.cpp" />

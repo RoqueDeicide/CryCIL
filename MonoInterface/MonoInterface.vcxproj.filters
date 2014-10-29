@@ -75,6 +75,9 @@
       <Filter>RunTime</Filter>
     </ClCompile>
     <ClCompile Include="ThunkTables.cpp" />
+    <ClCompile Include="Engine\DirectoryStructure.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">
