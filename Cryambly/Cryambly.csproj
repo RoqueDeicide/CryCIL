@@ -83,12 +83,14 @@
     <Compile Include="Mathematics\BoundingSphere.cs" />
     <Compile Include="Mathematics\EulerAngles.cs" />
     <Compile Include="Mathematics\Geometry\Collision.cs" />
+    <Compile Include="Mathematics\Geometry\NamespaceDoc.cs" />
     <Compile Include="Mathematics\Geometry\Plane.cs" />
     <Compile Include="Mathematics\Geometry\Plane.GenericOps.cs" />
     <Compile Include="Mathematics\Geometry\PlaneIntersectionType.cs" />
     <Compile Include="Mathematics\Geometry\Ray.cs" />
     <Compile Include="Mathematics\Graphics\ColorByte.cs" />
     <Compile Include="Mathematics\Graphics\ColorSingle.cs" />
+    <Compile Include="Mathematics\Graphics\NamespaceDoc.cs" />
     <Compile Include="Mathematics\Graphics\ViewParams.cs" />
     <Compile Include="Mathematics\Half.cs" />
     <Compile Include="Mathematics\HalfHelpers.cs" />
@@ -102,6 +104,8 @@
     <Compile Include="Mathematics\MemoryMapping\Bytes4.cs" />
     <Compile Include="Mathematics\MemoryMapping\Bytes8.cs" />
     <Compile Include="Mathematics\MemoryMapping\IBuffer.cs" />
+    <Compile Include="Mathematics\MemoryMapping\NamespaceDoc.cs" />
+    <Compile Include="Mathematics\NamespaceDoc.cs" />
     <Compile Include="Mathematics\Quaternion.cs" />
     <Compile Include="Mathematics\QuaternionTranslation.cs" />
     <Compile Include="Mathematics\Vector2.cs" />
