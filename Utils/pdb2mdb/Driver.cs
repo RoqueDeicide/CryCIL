@@ -4,6 +4,7 @@
 // 
 // (C) 2009 Novell, Inc. (http://www.novell.com)
 
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.IO;
@@ -16,63 +17,6 @@ using Mono.Cecil;
 
 using Mono.CompilerServices.SymbolWriter;
 using System.Runtime.InteropServices;
-
-using CryEngine;
-
-namespace CryEngine
-{
-	class Console
-	{
-		[DllImport("CryMono.dll")]
-		private static extern void LogAlways(string msg);
-		[DllImport("CryMono.dll")]
-		private static extern void Log(string msg);
-		[DllImport("CryMono.dll")]
-		private static extern void Warning(string msg);
-
-		/// <summary>
-		/// Logs a message to the console
-		/// </summary>
-		/// <param name="format"></param>
-		/// <param name="args">  </param>
-		public static void Log(string format, params object[] args)
-		{
-			Log(string.Format(format, args));
-		}
-
-		/// <summary>
-		/// Logs a message to the console, regardless of log_verbosity settings
-		/// </summary>
-		/// <param name="format"></param>
-		/// <param name="args">  </param>
-		public static void LogAlways(string format, params object[] args)
-		{
-			LogAlways(string.Format(format, args));
-		}
-
-		/// <summary>
-		/// Logs an exception message to the console
-		/// </summary>
-		/// <remarks>
-		/// Useful when exceptions are caught and data is still needed from them
-		/// </remarks>
-		/// <param name="ex"></param>
-		public static void LogException(System.Exception ex)
-		{
-			Warning(ex.ToString());
-		}
-
-		/// <summary>
-		/// Outputs a warning message
-		/// </summary>
-		/// <param name="format"></param>
-		/// <param name="args">  </param>
-		public static void Warning(string format, params object[] args)
-		{
-			Warning(string.Format(format, args));
-		}
-	}
-}
 
 namespace Pdb2Mdb
 {
@@ -207,9 +151,13 @@ public static class Driver
 				using (var stream = File.OpenRead(pdb))
 					Pdb2Mdb.Converter.Convert(assemblyDefinition, PdbFile.LoadFunctions(stream, true), new MonoSymbolWriter(assembly));
 			}
-			catch (System.Exception ex)
+// ReSharper disable EmptyGeneralCatchClause
+			catch
+// ReSharper restore EmptyGeneralCatchClause
 			{
-				Console.LogException(ex);
+
+
+				//Console.LogException(ex);
 			}
 		}
 	}
