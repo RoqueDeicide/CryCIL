@@ -8,11 +8,13 @@ extern "C"	// Mark exported functions as C code, so the compiler keeps function 
 {
 	//! Invoked from Game dll to initialize this module.
 	//!
-	//! @remarks This function must be called before anything can be done with this module.
+	//! This function must be called before anything can be done with this module.
 	//!
 	//! @param framework     Pointer to IGameFramework object that will allow us to initialize
 	//!                      everything.
 	//! @param listeners     Pointer to an array of listeners to register before initialization.
+	//!                      Can be null if there are no listeners to register. All listeners
+	//!                      must be persistent.
 	//! @param listenerCount Number of listeners in the above array.
 	MONOINTERFACE_API IMonoInterface *InitializeCryCilSubsystem
 	(
