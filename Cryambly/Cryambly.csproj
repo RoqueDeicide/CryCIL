@@ -14,18 +14,18 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\Build\Bin32\</OutputPath>
+    <OutputPath>..\Build\Bin32\Modules\CryCIL\</OutputPath>
     <DefineConstants>TRACE;DEBUG;CONTRACTS_FULL,WIN32</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>..\Build\Bin32\Cryambly.xml</DocumentationFile>
+    <DocumentationFile>..\Build\Bin32\Modules\CryCIL\Cryambly.xml</DocumentationFile>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
-    <OutputPath>..\Build\Bin32\</OutputPath>
+    <OutputPath>..\Build\Bin32\Modules\CryCIL\</OutputPath>
     <DefineConstants>TRACE;CONTRACTS_FULL,WIN32</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
@@ -33,15 +33,15 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>..\Build\Bin32\Cryambly.xml</DocumentationFile>
+    <DocumentationFile>..\Build\Bin32\Modules\CryCIL\Cryambly.xml</DocumentationFile>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\Build\Bin64\</OutputPath>
+    <OutputPath>..\Build\Bin64\Modules\CryCIL\</OutputPath>
     <DefineConstants>TRACE;DEBUG;CONTRACTS_FULL,WIN64</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>..\Build\Bin64\Cryambly.xml</DocumentationFile>
+    <DocumentationFile>..\Build\Bin64\Modules\CryCIL\Cryambly.xml</DocumentationFile>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
@@ -49,7 +49,7 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>..\Build\Bin64\</OutputPath>
+    <OutputPath>..\Build\Bin64\Modules\CryCIL\</OutputPath>
     <DefineConstants>TRACE;CONTRACTS_FULL,WIN64</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
@@ -57,7 +57,7 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>..\Build\Bin64\Cryambly.xml</DocumentationFile>
+    <DocumentationFile>..\Build\Bin64\Modules\CryCIL\Cryambly.xml</DocumentationFile>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>

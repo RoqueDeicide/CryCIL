@@ -74,7 +74,7 @@ namespace CryCil.RunTime
 			// Load all extra modules.
 			this.CryCilAssemblies = new List<Assembly>
 			(
-				from file in Directory.GetFiles(Path.Combine(DirectoryStructure.ContentFolder, "Modules"))
+				from file in Directory.GetFiles(Path.Combine(DirectoryStructure.ContentFolder, "Modules", "CryCIL"))
 				where file.EndsWith("dll") && AssemblyExtras.IsAssembly(file)
 				select Assembly.Load(AssemblyName.GetAssemblyName(file))
 			);
@@ -133,12 +133,12 @@ namespace CryCil.RunTime
 		#region Event Raisers
 		private void OnCompilationStarted()
 		{
-			Interops.Initialization.OnCompilationStarting();
+			Interops.Initialization.OnCompilationStartingBind();
 			if (this.CompilationStarted != null) this.CompilationStarted(this, EventArgs.Empty);
 		}
 		private void OnCompilationComplete(bool success)
 		{
-			Interops.Initialization.OnCompilationComplete(success);
+			Interops.Initialization.OnCompilationCompleteBind(success);
 			if (this.CompilationComplete != null)
 				this.CompilationComplete(this, new EventArgs<bool>(success));
 		}
@@ -206,8 +206,8 @@ namespace CryCil.RunTime
 					// Add the native initialization function to the mix.
 					new Tuple<InitializationStageFunction, int[]>
 					(
-						Interops.Initialization.OnInitializationStage,
-						Interops.Initialization.GetSubscribedStages()
+						Interops.Initialization.OnInitializationStageBind,
+						Interops.Initialization.GetSubscribedStagesBind()
 					)
 				};
 			// Switch keys and values in the function map.
