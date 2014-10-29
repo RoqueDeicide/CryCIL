@@ -74,8 +74,23 @@ namespace CryCil.RunTime
 			// Load all extra modules.
 			this.CryCilAssemblies = new List<Assembly>
 			(
-				from file in Directory.GetFiles(Path.Combine(DirectoryStructure.ContentFolder, "Modules", "CryCIL"))
-				where file.EndsWith("dll") && AssemblyExtras.IsAssembly(file)
+				from file in
+					Directory.GetFiles
+					(
+						Path.Combine
+						(DirectoryStructure.ContentFolder, "Modules", "CryCIL"),
+						"*.dll"
+					)
+					.Concat
+					(
+						Directory.GetFiles
+						(
+							Path.Combine
+							(DirectoryStructure.CryEngineFolder, "Modules", "CryCIL"),
+							"*.dll"
+						)
+					)
+				where AssemblyExtras.IsAssembly(file)
 				select Assembly.Load(AssemblyName.GetAssemblyName(file))
 			);
 			// Load and compile the solution.
