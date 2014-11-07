@@ -1,9 +1,9 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace CryCil
+namespace CryCil.Mathematics
 {
 	/// <summary>
-	/// Contains types that are used by everything in CryCIL.
+	/// Contains basic mathematical types.
 	/// </summary>
 	[CompilerGenerated]
 	public class NamespaceDoc
