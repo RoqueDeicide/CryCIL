@@ -103,7 +103,7 @@ public:
 	//! Creates a new immutable string from given .Net/Mono string.
 	//!
 	//! @param managedString Instance of type System.String.
-	Text(MonoString *managedString)
+	TextBase(MonoString *managedString)
 	{
 		MonoError error;
 		char *ntText = mono_string_to_utf8_checked(managedString, &error);
