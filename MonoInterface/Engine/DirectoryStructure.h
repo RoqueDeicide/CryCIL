@@ -5,15 +5,18 @@
 #include <sstream>
 
 #if defined(PS3) || defined(LINUX) || defined(APPLE) || defined(ORBIS)
-#define PATH_SEPARATOR "/"
+#define PATH_SEPARATOR '/'
 #else
-#define PATH_SEPARATOR "\\"
-#endif // _WINDOWS
+#define PATH_SEPARATOR '\\'
+#endif
+
+#define BIN32_FOLDER            "Bin32"
+#define BIN64_FOLDER            "Bin64"
 
 #ifdef WIN32
-#define BINARIES_FOLDER         "Bin32"
+#define BINARIES_FOLDER         BIN32_FOLDER
 #else
-#define BINARIES_FOLDER         "Bin64"
+#define BINARIES_FOLDER         BIN64_FOLDER
 #endif // WIN32
 
 #define MODULES_FOLDER          "Modules"
@@ -22,6 +25,7 @@
 #define MONO_LIBS_FOLDER        "lib"
 #define MONO_CONFIG_FOLDER      "etc"
 #define MONO_DEBUG_UTILITY_FILE "pdb2mdb.dll"
+#define CRYAMBLY_FILE           "Cryambly.dll"
 
 //! Determines whether given text starts with given prefix.
 //!
@@ -47,14 +51,6 @@ inline bool EndsWith(const char *text, const char *postfix)
 		strncmp(text + textLength - postfixLength, postfix, postfixLength) == 0;
 }
 
-//! Defines some simple utilities for working with paths.
-struct PathUtilities
-{
-	//! Constructs a path from a collection of names.
-	//!
-	//! @param parts An array of names to combine.
-	static const char *Combine(std::vector<const char *> parts);
-};
 //! Defines functions that return paths to various folders within CryEngine installation.
 struct DirectoryStructure
 {

@@ -39,6 +39,7 @@
 #include <mono/metadata/assembly.h>
 
 #include "IMonoInterface.h"
+#include "Text.h"
 
 // Include monosgen.lib from relevant folder. (Folder is defined in project properties.)
 #pragma comment(lib, "monosgen")
