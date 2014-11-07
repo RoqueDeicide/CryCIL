@@ -46,6 +46,9 @@
       <Filter>API Implementation</Filter>
     </ClInclude>
     <ClInclude Include="CryCilHeader.h" />
+    <ClInclude Include="Text.h">
+      <Filter>Extras</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -101,6 +104,9 @@
     </Filter>
     <Filter Include="Interops">
       <UniqueIdentifier>{1c90796d-b96b-4963-ab46-d46e1870d1ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Extras">
+      <UniqueIdentifier>{f44796b6-9fe3-48e5-818f-da1710a517f8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
