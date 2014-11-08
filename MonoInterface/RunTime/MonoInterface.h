@@ -183,7 +183,6 @@ private:
 	void InitializeThunks();
 	void InitializeClassThunks();
 	void InitializeMonoInterfaceThunks();
-	void InitializeDebugThunks();
 	template<typename MethodSignature>
 	MethodSignature GetMethodThunk(IMonoAssembly *assembly, const char *nameSpace, const char *className, const char *methodName, const char *params);
 #pragma endregion

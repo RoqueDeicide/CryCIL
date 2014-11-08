@@ -467,8 +467,6 @@ void MonoInterface::RegisterDefaultListeners()
 			this->GetMethodThunk<UpdateThunk>
 			(this->cryambly, "CryCil.RunTime", "MonoInterface", "Update", nullptr);
 	}
-	void MonoInterface::InitializeDebugThunks()
-	{}
 	template<typename MethodSignature>
 	MethodSignature MonoInterface::GetMethodThunk(IMonoAssembly *assembly, const char *nameSpace, const char *className, const char *methodName, const char *params)
 	{
