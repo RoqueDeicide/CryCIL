@@ -256,7 +256,15 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="ThunkTables.cpp" />
-    <ClCompile Include="Wrappers\API.cpp" />
+    <ClCompile Include="Wrappers\DefaultBoxinator.cpp" />
+    <ClCompile Include="Wrappers\MonoArrayBase.cpp" />
+    <ClCompile Include="Wrappers\MonoArrayFree.cpp" />
+    <ClCompile Include="Wrappers\MonoArrayPersistent.cpp" />
+    <ClCompile Include="Wrappers\MonoAssemblyWrapper.cpp" />
+    <ClCompile Include="Wrappers\MonoClassCache.cpp" />
+    <ClCompile Include="Wrappers\MonoClassWrapper.cpp" />
+    <ClCompile Include="Wrappers\MonoHandleBase.cpp" />
+    <ClCompile Include="Wrappers\MonoMethodWrapper.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
