@@ -619,8 +619,6 @@ private:
 		// Check the capacity.
 		if (this->capacity < combinedLength)
 		{
-			// Save the pointer to old buffer to release it later.
-			void *oldBuffer = this->text;
 			// Allocate new memory.
 			this->text = (char *)realloc(this->text, combinedLength * sizeof(char));
 			this->capacity = combinedLength;
