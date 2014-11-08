@@ -32,6 +32,14 @@ public:
 	//! @param name       Name of the method to find.
 	//! @param paramCount Number of arguments the method should take.
 	virtual IMonoMethod *GetMethod(const char *name, int paramCount);
+	//! Gets the method that matches given description.
+	//!
+	//! @param name   Name of the method to find.
+	//! @param params Text that describes types arguments the method should take.
+	//!
+	//! @returns A pointer to the wrapper to the found method. Null is returned if
+	//!          no method matching the description was found.
+	virtual IMonoMethod *GetMethod(const char *name, const char *params);
 	//! Gets an array of methods that matches given description.
 	//!
 	//! @param name       Name of the methods to find.
@@ -49,18 +57,6 @@ public:
 	//! @returns A pointer to the first found method. You should release
 	//!          resultant array once you don't need it anymore.
 	virtual IMonoMethod **GetMethods(const char *name, int &foundCount);
-	//! Returns a method that satisfies given description.
-	//!
-	//! @param methodName Name of the method to look for.
-	//! @param params     A comma-separated list of names of types of arguments. Can be null
-	//!                   if method accepts no arguments.
-	//!
-	//! @returns A pointer to object that implements IMonoMethod that grants access to
-	//!          requested method if found, otherwise returns null.
-	virtual IMonoMethod *MethodFromDescription
-	(
-		const char *methodName, const char *params
-	);
 	//! Gets the value of the object's field.
 	//!
 	//! @param obj  Object which field to get.

@@ -187,12 +187,12 @@ IMonoClass *MonoArrayBase::GetElementClass()
 	if (this->klass == nullptr)
 	{
 		this->klass = MonoClassCache::Wrap
-			(
+		(
 			mono_class_get_element_class
 			(
-			mono_object_get_class((MonoObject *)this->GetWrappedPointer())
+				mono_object_get_class((MonoObject *)this->GetWrappedPointer())
 			)
-			);
+		);
 	}
 	return this->klass;
 }
@@ -319,25 +319,14 @@ IMonoClass *MonoAssemblyWrapper::GetClass(const char *nameSpace, const char *cla
 //!          requested method if found, otherwise returns null.
 IMonoMethod *MonoAssemblyWrapper::MethodFromDescription
 (
-const char *nameSpace, const char *className,
-const char *methodName, const char *params
+	const char *nameSpace, const char *className,
+	const char *methodName, const char *params
 )
 {
-	std::stringstream descriptionText;
-
-	descriptionText << nameSpace << "." << className << ":" << methodName;
-	if (params)
-	{
-		descriptionText << "(" << params << ")";
-	}
-	return new MonoMethodWrapper
-		(
-		mono_method_desc_search_in_image
-		(
-		mono_method_desc_new(descriptionText.str().c_str(), true),
-		this->image
-		)
-		);
+	// Get the class.
+	IMonoClass *klass = this->GetClass(nameSpace, className);
+	// Get the method.
+	return klass->GetMethod(methodName, params);
 }
 //! Returns a pointer to the MonoAssembly for Mono API calls.
 void *MonoAssemblyWrapper::GetWrappedPointer()
@@ -370,13 +359,13 @@ MonoClassWrapper::~MonoClassWrapper()
 //! @param args Arguments to pass to the constructor, can be null if latter has no parameters.
 mono::object MonoClassWrapper::CreateInstance(IMonoArray *args)
 {
-	mono::object exception;
+	mono::exception exception;
 	mono::object obj = MonoClassThunks::CreateInstance
-		(
+	(
 		(mono::object)mono_class_get_type(this->GetWrappedClass()),
 		(args == nullptr) ? nullptr : (mono::object)args->GetWrappedPointer(),
 		&exception
-		);
+	);
 	if (exception)
 	{
 		MonoEnv->HandleException(exception);
@@ -417,6 +406,74 @@ IMonoMethod *MonoClassWrapper::GetMethod(const char *name, int paramCount)
 	return
 		new MonoMethodWrapper
 		(mono_class_get_method_from_name(this->GetWrappedClass(), name, paramCount));
+}
+//! Gets the method that matches given description.
+//!
+//! @param name   Name of the method to find.
+//! @param params Text that describes types arguments the method should take.
+//!
+//! @returns A pointer to the wrapper to the found method. Null is returned if
+//!          no method matching the description was found.
+IMonoMethod *MonoClassWrapper::GetMethod(const char *name, const char *params)
+{
+	IMonoMethod *result = nullptr;
+	Text *parTypes = new Text(params);
+	// Split the params string into parts.
+	int parameterCount;
+	Text **parameterTypeNames = parTypes->Split(',', parameterCount, true);
+	delete parTypes;
+	// Iterate through methods that have given name.
+	void *methodIterator = 0;
+	while
+	(
+		MonoMethod *currentMethod =
+			mono_class_get_methods(this->GetWrappedClass(), &methodIterator)
+	)
+	{
+		// Check the name.
+		if (strcmp(mono_method_get_name(currentMethod), name) == 0)
+		{
+			// Check the parameters.
+			MonoMethodSignature *sig = mono_method_signature(currentMethod);
+			// Check the number of parameters.
+			if (mono_signature_get_param_count(sig) == parameterCount)
+			{
+				// Check the type names.
+				char **pars = new char *[parameterCount];
+				mono_method_get_param_names(currentMethod, (const char **)pars);
+
+				bool mismatchFound = false;
+				void *parameterIterator = 0;
+				int currentParameterNameIndex = 0;
+				while
+				(
+					MonoType *currentParameterType =
+						mono_signature_get_params(sig, &parameterIterator)
+				)
+				{
+					const char *currentParameterName =
+						parameterTypeNames[currentParameterNameIndex]->ToNTString();
+					if (strcmp(mono_type_get_name(currentParameterType), currentParameterName))
+					{
+						mismatchFound = true;
+					}
+					delete currentParameterName;
+					currentParameterNameIndex++;
+				}
+				if (!mismatchFound)
+				{
+					result = new MonoMethodWrapper(currentMethod);
+					break;
+				}
+			}
+		}
+	}
+	for (int i = 0; i < parameterCount; i++)
+	{
+		delete parameterTypeNames[i];
+	}
+	delete parameterTypeNames;
+	return result;
 }
 //! Gets an array of methods that matches given description.
 //!
@@ -477,35 +534,6 @@ IMonoMethod **MonoClassWrapper::GetMethods(const char *name, int &foundCount)
 	}
 	return foundMethods;
 }
-//! Returns a method that satisfies given description.
-//!
-//! @param methodName Name of the method to look for.
-//! @param params     A comma-separated list of names of types of arguments. Can be null
-//!                   if method accepts no arguments.
-//!
-//! @returns A pointer to object that implements IMonoMethod that grants access to
-//!          requested method if found, otherwise returns null.
-IMonoMethod *MonoClassWrapper::MethodFromDescription
-(
-const char *methodName, const char *params
-)
-{
-	std::stringstream descriptionText;
-
-	descriptionText << "*:" << methodName;
-	if (params)
-	{
-		descriptionText << "(" << params << ")";
-	}
-	return new MonoMethodWrapper
-		(
-		mono_method_desc_search_in_class
-		(
-		mono_method_desc_new(descriptionText.str().c_str(), false),
-		this->GetWrappedClass()
-		)
-		);
-}
 //! Gets the value of the object's field.
 //!
 //! @param obj  Object which field to get.
@@ -513,11 +541,11 @@ const char *methodName, const char *params
 mono::object MonoClassWrapper::GetField(mono::object obj, const char *name)
 {
 	return (mono::object)mono_field_get_value_object
-		(
+	(
 		(MonoDomain *)MonoEnv->AppDomain,
 		mono_class_get_field_from_name(this->GetWrappedClass(), name),
 		(MonoObject *)obj
-		);
+	);
 }
 //! Sets the value of the object's field.
 //!
@@ -527,11 +555,11 @@ mono::object MonoClassWrapper::GetField(mono::object obj, const char *name)
 void MonoClassWrapper::SetField(mono::object obj, const char *name, mono::object value)
 {
 	mono_field_set_value
-		(
+	(
 		(MonoObject *)obj,
 		mono_class_get_field_from_name(this->GetWrappedClass(), name),
 		value
-		);
+	);
 }
 //! Gets the value of the object's property.
 //!
@@ -541,12 +569,12 @@ mono::object MonoClassWrapper::GetProperty(mono::object obj, const char *name)
 {
 	MonoObject *exception;
 	mono::object result = (mono::object)mono_property_get_value
-		(
+	(
 		mono_class_get_property_from_name(this->GetWrappedClass(), name),
 		obj,
 		nullptr,
 		&exception
-		);
+	);
 	if (exception)
 	{
 		MonoEnv->HandleException((mono::object)exception);
@@ -565,12 +593,12 @@ void MonoClassWrapper::SetProperty(mono::object obj, const char *name, mono::obj
 	pars[0] = value;
 	MonoObject *exception;
 	mono_property_set_value
-		(
+	(
 		mono_class_get_property_from_name(this->GetWrappedClass(), name),
 		obj,
 		pars,
 		&exception
-		);
+	);
 	if (exception)
 	{
 		MonoEnv->HandleException((mono::object)exception);

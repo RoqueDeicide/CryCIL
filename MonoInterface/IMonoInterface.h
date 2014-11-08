@@ -483,11 +483,30 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//! @param name  Name of the method to get.
 	//! @param types An array of arguments which types specify method signature to use.
 	VIRTUAL_API virtual IMonoMethod *GetMethod(const char *name, IMonoArray *types = nullptr) = 0;
-	//! Gets the first that matches given description.
+	//! Gets the first method that matches given description.
 	//!
 	//! @param name       Name of the method to find.
 	//! @param paramCount Number of arguments the method should take.
 	VIRTUAL_API virtual IMonoMethod *GetMethod(const char *name, int paramCount) = 0;
+	//! Gets the method that matches given description.
+	//!
+	//! General rules for constructing the text of parameter types:
+	//!     1) Don't put any parenthesis into the string.
+	//!     2) Use full names for types.
+	//!     3) Don't use parameter names.
+	//!     4) Parameter declared with "params" keyword are simple arrays.
+	//!
+	//! Examples:
+	//!
+	//! C# method signature: CreateInstance(System.Type, params System.Object[]);
+	//! C++ search: GetMethod("CreateInstance", "System.Type,System.Object[]");
+	//!
+	//! @param name   Name of the method to find.
+	//! @param params Text that describes types arguments the method should take.
+	//!
+	//! @returns A pointer to the wrapper to the found method. Null is returned if
+	//!          no method matching the description was found.
+	VIRTUAL_API virtual IMonoMethod *GetMethod(const char *name, const char *params) = 0;
 	//! Gets an array of methods that matches given description.
 	//!
 	//! @param name       Name of the methods to find.
@@ -505,40 +524,6 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//! @returns A pointer to the first found method. You should release
 	//!          resultant array once you don't need it anymore.
 	VIRTUAL_API virtual IMonoMethod **GetMethods(const char *name, int &foundCount) = 0;
-	//! Returns a method that satisfies given description.
-	//!
-	//! A list of parameters is a comma separated list of names of types each of which can be
-	//! a standard name with name space and full class name, like "System.Int32", or it can be
-	//! a short name, if the type is a built-in one, like "int".
-	//!
-	//! Examples:
-	//!
-	//! @code{.cpp}
-	//! IMonoAssembly *corlib = MonoEnv->CoreLibrary;
-	//!
-	//! IMonoClass *arrayClass = corlib->GetClass
-	//!                          (
-	//!                              "System",
-	//!                              "Array"
-	//!                          );
-	//!
-	//! IMonoMethod *binarySearch = arrayClass->MethodFromDescription
-	//!                             (
-	//!                                 "BinarySearch",
-	//!                                 "System.Array,int,int,object,System.Collections.IComparer"
-	//!                             );
-	//! @endcode
-	//!
-	//! @param methodName Name of the method to look for.
-	//! @param params     A comma-separated list of names of types of arguments. Can be null
-	//!                   if method accepts no arguments.
-	//!
-	//! @returns A pointer to object that implements IMonoMethod that grants access to
-	//!          requested method if found, otherwise returns null.
-	VIRTUAL_API virtual IMonoMethod *MethodFromDescription
-	(
-		const char *methodName, const char *params
-	) = 0;
 	//! Gets the value of the object's field.
 	//!
 	//! @param obj   Object which field to get.
