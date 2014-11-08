@@ -11,7 +11,6 @@
     </ClInclude>
     <ClInclude Include="IMonoInterface.h" />
     <ClInclude Include="MonoHeaders.h" />
-    <ClInclude Include="DoxygenExampleFiles\ExampleDefines.h" />
     <ClInclude Include="ThunkTables.h" />
     <ClInclude Include="Wrappers\DefaultBoxinator.h">
       <Filter>API Implementation</Filter>
@@ -49,17 +48,17 @@
     <ClInclude Include="Text.h">
       <Filter>Extras</Filter>
     </ClInclude>
+    <ClInclude Include="DoxygenExampleFiles\UnmanagedThunkExample.h">
+      <Filter>DoxygenExampleFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="DoxygenExampleFiles\ListenerExample.h">
+      <Filter>DoxygenExampleFiles\CryCIL Listeners\Native Listener</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="CryEngineInterface.cpp" />
-    <ClCompile Include="DoxygenExampleFiles\UnmanagedThunkExample.cpp">
-      <Filter>DoxygenExampleFiles</Filter>
-    </ClCompile>
-    <ClCompile Include="DoxygenExampleFiles\ListenerExample.cpp">
-      <Filter>DoxygenExampleFiles\CryCIL Listeners\Native Listener</Filter>
-    </ClCompile>
     <ClCompile Include="RunTime\InitializationInterop.cpp">
       <Filter>RunTime</Filter>
     </ClCompile>

@@ -1,7 +1,4 @@
 #include "stdafx.h"
-#include "ExampleDefines.h"
-
-#ifdef EXAMPLES
 
 #include "IMonoInterface.h"
 // Lets pretend that this function will give some object, which hash code we need.
@@ -10,7 +7,7 @@ IMonoHandle *GetObj()
 	return nullptr;
 }
 // Define the signature.
-typedef mono::int32 (__stdcall *GetHashCode) (mono::object thisObj, mono::exception *exception);
+typedef mono::int32(__stdcall *GetHashCode) (mono::object thisObj, mono::exception *exception);
 
 void example()
 {
@@ -24,4 +21,3 @@ void example()
 	// Call it like a standard function pointer.
 	int hasCode = Unbox<int>(hasCodeFunc(obj->Get(), &exc));
 }
-#endif // EXAMPLES

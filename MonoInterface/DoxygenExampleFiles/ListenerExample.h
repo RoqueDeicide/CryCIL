@@ -1,7 +1,4 @@
 #include "stdafx.h"
-#include "ExampleDefines.h"
-
-#ifdef EXAMPLES
 #include "IMonoInterface.h"
 
 #ifndef PI
@@ -15,7 +12,7 @@ struct SimpleListener : public IMonoSystemListener
 private:
 	IMonoInterface *monoEnv;
 public:
-	SimpleListener() : monoEnv(nullptr){}
+	SimpleListener() : monoEnv(nullptr) {}
 
 	virtual void SetInterface(IMonoInterface *handle)
 	{
@@ -40,7 +37,7 @@ public:
 		// Now we can use Mono.
 		mono::nothing(*BeepFunc)(mono::exception *);
 		BeepFunc = (mono::nothing(*)(mono::exception *))this->monoEnv->CoreLibrary
-					->GetClass("Console", "System")->GetMethod("Beep")->UnmanagedThunk;
+			->GetClass("Console", "System")->GetMethod("Beep")->UnmanagedThunk;
 		// Beep!
 		mono::exception ex;
 		BeepFunc(&ex);
@@ -164,5 +161,3 @@ void HowToRegisterListeners()
 		init(nullptr, listeners, listenerCount);
 	}
 }
-
-#endif // EXAMPLES

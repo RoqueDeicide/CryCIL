@@ -204,7 +204,8 @@
   <ItemGroup>
     <ClInclude Include="API_ImplementationHeaders.h" />
     <ClInclude Include="CryCilHeader.h" />
-    <ClInclude Include="DoxygenExampleFiles\ExampleDefines.h" />
+    <ClInclude Include="DoxygenExampleFiles\ListenerExample.h" />
+    <ClInclude Include="DoxygenExampleFiles\UnmanagedThunkExample.h" />
     <ClInclude Include="Engine\DirectoryStructure.h" />
     <ClInclude Include="IMonoInterface.h" />
     <ClInclude Include="Interops\LogPosting.h" />
@@ -241,8 +242,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="DoxygenExampleFiles\ListenerExample.cpp" />
-    <ClCompile Include="DoxygenExampleFiles\UnmanagedThunkExample.cpp" />
     <ClCompile Include="Engine\DirectoryStructure.cpp" />
     <ClCompile Include="Interops\LogPosting.cpp" />
     <ClCompile Include="RunTime\DebugEventReporter.cpp" />
