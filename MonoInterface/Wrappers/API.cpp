@@ -416,6 +416,10 @@ IMonoMethod *MonoClassWrapper::GetMethod(const char *name, int paramCount)
 //!          no method matching the description was found.
 IMonoMethod *MonoClassWrapper::GetMethod(const char *name, const char *params)
 {
+	if (params == nullptr)
+	{
+		return this->GetMethod(name, (int)0);
+	}
 	IMonoMethod *result = nullptr;
 	Text *parTypes = new Text(params);
 	// Split the params string into parts.

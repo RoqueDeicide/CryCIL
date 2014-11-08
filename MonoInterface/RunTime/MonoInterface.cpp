@@ -438,22 +438,23 @@ void MonoInterface::RegisterDefaultListeners()
 	{
 		this->InitializeClassThunks();
 		this->InitializeMonoInterfaceThunks();
-		this->InitializeDebugThunks();
 	}
 	void MonoInterface::InitializeClassThunks()
 	{
+		CryLogAlways("Initializing class thunks.");
 		MonoClassThunks::CreateInstance =
 			this->GetMethodThunk<CreateInstanceThunk>
-			(this->corlib, "System", "Activator", "CreateInstance", "Type,object[]");
+			(this->corlib, "System", "Activator", "CreateInstance", "System.Type,System.Object[]");
 		MonoClassThunks::StaticEquals =
 			this->GetMethodThunk<StaticEqualsThunk>
-			(this->corlib, "System", "Object", "Equals", "object,object");
+			(this->corlib, "System", "Object", "Equals", "System.Object,System.Object");
 	}
 	void MonoInterface::InitializeMonoInterfaceThunks()
 	{
+		CryLogAlways("Initializing mono interface thunks.");
 		MonoInterfaceThunks::DisplayException =
 			this->GetMethodThunk<DisplayExceptionThunk>
-			(this->cryambly, "CryCil.RunTime", "MonoInterface", "DisplayException", "object");
+			(this->cryambly, "CryCil.RunTime", "MonoInterface", "DisplayException", "System.Object");
 		MonoInterfaceThunks::Initialize =
 			this->GetMethodThunk<InitializeThunk>
 			(this->cryambly, "CryCil.RunTime", "MonoInterface", "Initialize", nullptr);
