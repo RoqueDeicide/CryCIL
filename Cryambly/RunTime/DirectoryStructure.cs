@@ -81,7 +81,7 @@ namespace CryCil.RunTime
 			{
 				throw new Exception("Unable to find location of game folder.");
 			}
-			int gameFolderNameStart = gameFolderLine.LastIndexOf(' ') + 1;
+			int gameFolderNameStart = gameFolderLine.LastIndexOf('=') + 1;
 			DirectoryStructure.ContentFolder =
 				Path.Combine
 				(
