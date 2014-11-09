@@ -1,22 +1,24 @@
 #include "stdafx.h"
 #include "API_ImplementationHeaders.h"
+#include "List.h"
 
-std::vector<MonoClassWrapper *> MonoClassCache::cachedClasses(50);
+List<MonoClassWrapper *> MonoClassCache::cachedClasses(50);
+
 
 IMonoClass *MonoClassCache::Wrap(MonoClass *klass)
 {
-	int cachedClassesCount = MonoClassCache::cachedClasses.size();
-	// Do we have cached class handle?
-	for (int i = 0; i < cachedClassesCount; i++)
+	// Cool lambda expression.
+	auto condition = [&klass](MonoClassWrapper *w)
 	{
-		if (MonoClassCache::cachedClasses[i]->GetWrappedPointer() == klass)
-		{
-			// We do, so get it.
-			return MonoClassCache::cachedClasses[i];
-		}
+		return w->GetWrappedPointer() == klass;
+	};
+	if (MonoClassWrapper *wrapper = cachedClasses.Find(condition))
+	{
+		// Return registered wrapper.
+		return wrapper;
 	}
-	// We don't, so cache it.
+	// Register a new one.
 	MonoClassWrapper *wrapper = new MonoClassWrapper(klass);
-	MonoClassCache::cachedClasses.push_back(wrapper);
+	MonoClassCache::cachedClasses.Add(wrapper);
 	return wrapper;
 }

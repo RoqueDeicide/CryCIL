@@ -54,6 +54,9 @@
     <ClInclude Include="DoxygenExampleFiles\ListenerExample.h">
       <Filter>DoxygenExampleFiles\CryCIL Listeners\Native Listener</Filter>
     </ClInclude>
+    <ClInclude Include="List.h">
+      <Filter>Extras</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />

@@ -7,6 +7,7 @@
 
 #include <sstream>
 
+#include "List.h"
 
 //! Represents a wrapper around MonoClass object.
 struct MonoClassWrapper : public IMonoClass
@@ -120,7 +121,7 @@ private:
 struct MonoClassCache
 {
 private:
-	static std::vector<MonoClassWrapper *> cachedClasses;
+	static List<MonoClassWrapper *> cachedClasses;
 public:
 	//! Acquires a pointer to wrapper object for given Mono class.
 	//!

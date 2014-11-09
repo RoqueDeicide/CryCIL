@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "API_ImplementationHeaders.h"
+#include "List.h"
 
 MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 {
@@ -20,11 +21,11 @@ mono::object MonoClassWrapper::CreateInstance(IMonoArray *args)
 {
 	mono::exception exception;
 	mono::object obj = MonoClassThunks::CreateInstance
-		(
+	(
 		(mono::object)mono_class_get_type(this->GetWrappedClass()),
 		(args == nullptr) ? nullptr : (mono::object)args->GetWrappedPointer(),
 		&exception
-		);
+	);
 	if (exception)
 	{
 		MonoEnv->HandleException(exception);
@@ -88,10 +89,10 @@ IMonoMethod *MonoClassWrapper::GetMethod(const char *name, const char *params)
 	// Iterate through methods that have given name.
 	void *methodIterator = 0;
 	while
-		(
+	(
 		MonoMethod *currentMethod =
 		mono_class_get_methods(this->GetWrappedClass(), &methodIterator)
-		)
+	)
 	{
 		// Check the name.
 		if (strcmp(mono_method_get_name(currentMethod), name) == 0)
@@ -109,10 +110,10 @@ IMonoMethod *MonoClassWrapper::GetMethod(const char *name, const char *params)
 				void *parameterIterator = 0;
 				int currentParameterNameIndex = 0;
 				while
-					(
+				(
 					MonoType *currentParameterType =
 					mono_signature_get_params(sig, &parameterIterator)
-					)
+				)
 				{
 					const char *currentParameterName =
 						parameterTypeNames[currentParameterNameIndex]->ToNTString();
@@ -149,7 +150,7 @@ IMonoMethod *MonoClassWrapper::GetMethod(const char *name, const char *params)
 IMonoMethod **MonoClassWrapper::GetMethods(const char *name, int paramCount, int &foundCount)
 {
 	MonoClass *klass = this->GetWrappedClass();
-	std::vector<MonoMethod *> methods(mono_class_num_methods(klass));
+	List<MonoMethod *> methods(mono_class_num_methods(klass));
 	void *iter = 0;
 	while (MonoMethod *currentMethod = mono_class_get_methods(klass, &iter))
 	{
@@ -157,16 +158,15 @@ IMonoMethod **MonoClassWrapper::GetMethods(const char *name, int paramCount, int
 		if (mono_signature_get_param_count(sig) == paramCount &&
 			!strcmp(mono_method_get_name(currentMethod), name))
 		{
-			methods.push_back(currentMethod);
+			methods.Add(currentMethod);
 		}
 	}
-	foundCount = methods.size();
+	foundCount = methods.Length;
 	IMonoMethod **foundMethods = new IMonoMethod *[foundCount];
-	int methodIndex = 0;
-	for each (auto method in methods)
-	{
-		foundMethods[methodIndex++] = new MonoMethodWrapper(method);
-	}
+	methods.ThroughEach
+	(
+		[&foundMethods](MonoMethod *m, int i) { foundMethods[i] = new MonoMethodWrapper(m); }
+	);
 	return foundMethods;
 }
 //! Gets an array of overload of the method.
@@ -179,22 +179,21 @@ IMonoMethod **MonoClassWrapper::GetMethods(const char *name, int paramCount, int
 IMonoMethod **MonoClassWrapper::GetMethods(const char *name, int &foundCount)
 {
 	MonoClass *klass = this->GetWrappedClass();
-	std::vector<MonoMethod *> methods(mono_class_num_methods(klass));
+	List<MonoMethod *> methods(mono_class_num_methods(klass));
 	void *iter = 0;
 	while (MonoMethod *currentMethod = mono_class_get_methods(klass, &iter))
 	{
-		if (!strcmp(mono_method_get_name(currentMethod), name))
+		if (strcmp(mono_method_get_name(currentMethod), name) == 0)
 		{
-			methods.push_back(currentMethod);
+			methods.Add(currentMethod);
 		}
 	}
-	foundCount = methods.size();
+	foundCount = methods.Length;
 	IMonoMethod **foundMethods = new IMonoMethod *[foundCount];
-	int methodIndex = 0;
-	for each (auto method in methods)
-	{
-		foundMethods[methodIndex++] = new MonoMethodWrapper(method);
-	}
+	methods.ThroughEach
+	(
+		[&foundMethods](MonoMethod *m, int i) { foundMethods[i] = new MonoMethodWrapper(m); }
+	);
 	return foundMethods;
 }
 //! Gets the value of the object's field.
@@ -204,11 +203,11 @@ IMonoMethod **MonoClassWrapper::GetMethods(const char *name, int &foundCount)
 mono::object MonoClassWrapper::GetField(mono::object obj, const char *name)
 {
 	return (mono::object)mono_field_get_value_object
-		(
+	(
 		(MonoDomain *)MonoEnv->AppDomain,
 		mono_class_get_field_from_name(this->GetWrappedClass(), name),
 		(MonoObject *)obj
-		);
+	);
 }
 //! Sets the value of the object's field.
 //!
@@ -218,11 +217,11 @@ mono::object MonoClassWrapper::GetField(mono::object obj, const char *name)
 void MonoClassWrapper::SetField(mono::object obj, const char *name, mono::object value)
 {
 	mono_field_set_value
-		(
+	(
 		(MonoObject *)obj,
 		mono_class_get_field_from_name(this->GetWrappedClass(), name),
 		value
-		);
+	);
 }
 //! Gets the value of the object's property.
 //!
@@ -232,12 +231,12 @@ mono::object MonoClassWrapper::GetProperty(mono::object obj, const char *name)
 {
 	MonoObject *exception;
 	mono::object result = (mono::object)mono_property_get_value
-		(
+	(
 		mono_class_get_property_from_name(this->GetWrappedClass(), name),
 		obj,
 		nullptr,
 		&exception
-		);
+	);
 	if (exception)
 	{
 		MonoEnv->HandleException((mono::object)exception);
@@ -256,12 +255,12 @@ void MonoClassWrapper::SetProperty(mono::object obj, const char *name, mono::obj
 	pars[0] = value;
 	MonoObject *exception;
 	mono_property_set_value
-		(
+	(
 		mono_class_get_property_from_name(this->GetWrappedClass(), name),
 		obj,
 		pars,
 		&exception
-		);
+	);
 	if (exception)
 	{
 		MonoEnv->HandleException((mono::object)exception);

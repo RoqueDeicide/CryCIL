@@ -58,7 +58,7 @@ MonoInterface::MonoInterface(IGameFramework *framework, IMonoSystemListener **li
 	{
 		for (int i = 0; i < listenerCount; i++)
 		{
-			this->broadcaster->listeners.push_back(listeners[i]);
+			this->broadcaster->listeners.Add(listeners[i]);
 		}
 	}
 	// Set global variables.
@@ -322,7 +322,7 @@ IMonoAssembly *MonoInterface::LoadAssembly(const char *moduleFileName)
 	{
 		return nullptr;
 	}
-	this->assemblies.push_back(wrapper);
+	this->assemblies.Add(wrapper);
 	return wrapper;
 }
 //! Wraps assembly pointer.
@@ -334,15 +334,15 @@ IMonoAssembly *MonoInterface::WrapAssembly(void *assemblyHandle)
 	{
 		return nullptr;
 	}
-	for each (MonoAssemblyWrapper *wrapper in this->assemblies)
+	for (int i = 0; i < this->assemblies.Length; i++)
 	{
-		if (wrapper->GetWrappedPointer() == assemblyHandle)
+		if (this->assemblies[i]->GetWrappedPointer() == assemblyHandle)
 		{
-			return wrapper;
+			return this->assemblies[i];
 		}
 	}
 	MonoAssemblyWrapper *wrapper = new MonoAssemblyWrapper((MonoAssembly *)assemblyHandle);
-	this->assemblies.push_back(wrapper);
+	this->assemblies.Add(wrapper);
 	return wrapper;
 }
 #pragma endregion
@@ -369,7 +369,7 @@ void MonoInterface::AddListener(IMonoSystemListener *listener)
 	{
 		return;
 	}
-	this->broadcaster->listeners.push_back(listener);
+	this->broadcaster->listeners.Add(listener);
 }
 //! Unregisters an object that receives notifications about CryCIL events.
 //!
@@ -427,10 +427,10 @@ void MonoInterface::OnSystemEvent(ESystemEvent event, UINT_PTR wparam, UINT_PTR 
 void MonoInterface::RegisterDefaultListeners()
 {
 #ifdef _DEBUG
-	this->broadcaster->listeners.push_back(new DebugEventReporter());
+	this->broadcaster->listeners.Add(new DebugEventReporter());
 #endif // _DEBUG
-	this->broadcaster->listeners.push_back(new InitializationInterop());
-	this->broadcaster->listeners.push_back(new LogPostingInterop());
+	this->broadcaster->listeners.Add(new InitializationInterop());
+	this->broadcaster->listeners.Add(new LogPostingInterop());
 }
 #pragma endregion
 #pragma region Thunks Initialization

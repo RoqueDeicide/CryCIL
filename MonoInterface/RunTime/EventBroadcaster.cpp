@@ -4,21 +4,25 @@
 void EventBroadcaster::RemoveListener(IMonoSystemListener *listener)
 {
 	// Delete the listener from the main list.
-	for (auto i = this->listeners.begin(); i != this->listeners.end(); i++)
+	int index = -1;
+	this->listeners.ThroughEach
+	(
+		[&index, &listener](IMonoSystemListener *l, int i) { if (l == listener) index = i; }
+	);
+	if (index != -1)
 	{
-		if (*i == listener)
-		{
-			this->listeners.erase(i);
-		}
+		this->listeners.RemoveAt(index);
 	}
 	// Remove listener from stage map.
 	for each (auto var in this->stageMap)
 	{
-		for (auto i = var.second.begin(); i != var.second.end(); i++)
+		auto stageList = var.second;
+		for (int i = 0; i < stageList->Length; i++)
 		{
-			if (*i == listener)
+			if (stageList->At(i) == listener)
 			{
-				var.second.erase(i);
+				stageList->RemoveAt(i);
+				i--;
 			}
 		}
 	}
@@ -26,7 +30,7 @@ void EventBroadcaster::RemoveListener(IMonoSystemListener *listener)
 //! Broadcasts PreInitialization event.
 void EventBroadcaster::OnPreInitialization()
 {
-	for (int i = 0; i < this->listeners.size(); i++)
+	for (int i = 0; i < this->listeners.Length; i++)
 	{
 		this->listeners[i]->OnPreInitialization();
 	}
@@ -34,7 +38,7 @@ void EventBroadcaster::OnPreInitialization()
 //! Broadcasts RunTimeInitializing event.
 void EventBroadcaster::OnRunTimeInitializing()
 {
-	for (int i = 0; i < this->listeners.size(); i++)
+	for (int i = 0; i < this->listeners.Length; i++)
 	{
 		this->listeners[i]->OnRunTimeInitializing();
 	}
@@ -42,7 +46,7 @@ void EventBroadcaster::OnRunTimeInitializing()
 //! Broadcasts RunTimeInitialized event.
 void EventBroadcaster::OnRunTimeInitialized()
 {
-	for (int i = 0; i < this->listeners.size(); i++)
+	for (int i = 0; i < this->listeners.Length; i++)
 	{
 		this->listeners[i]->OnRunTimeInitialized();
 	}
@@ -50,7 +54,7 @@ void EventBroadcaster::OnRunTimeInitialized()
 //! Broadcasts CryamblyInitilizing event.
 void EventBroadcaster::OnCryamblyInitilizing()
 {
-	for (int i = 0; i < this->listeners.size(); i++)
+	for (int i = 0; i < this->listeners.Length; i++)
 	{
 		this->listeners[i]->OnCryamblyInitilizing();
 	}
@@ -58,7 +62,7 @@ void EventBroadcaster::OnCryamblyInitilizing()
 //! Broadcasts CompilationStarting event.
 void EventBroadcaster::OnCompilationStarting()
 {
-	for (int i = 0; i < this->listeners.size(); i++)
+	for (int i = 0; i < this->listeners.Length; i++)
 	{
 		this->listeners[i]->OnCompilationStarting();
 	}
@@ -66,7 +70,7 @@ void EventBroadcaster::OnCompilationStarting()
 //! Broadcasts CompilationComplete event.
 void EventBroadcaster::OnCompilationComplete(bool success)
 {
-	for (int i = 0; i < this->listeners.size(); i++)
+	for (int i = 0; i < this->listeners.Length; i++)
 	{
 		this->listeners[i]->OnCompilationComplete(success);
 	}
@@ -75,22 +79,22 @@ void EventBroadcaster::OnCompilationComplete(bool success)
 int *EventBroadcaster::GetSubscribedStagesInfo(int &stageCount)
 {
 	// Gather information about all stages.
-	for each (IMonoSystemListener *listener in this->listeners)
+	auto processor = [&stageCount, this](IMonoSystemListener *listener)
 	{
 		// Get stages.
 		int stagesCount;
 		int *stages = listener->GetSubscribedStages(stagesCount);
-		if (!stages)
+		if (stages)
 		{
-			continue;
+			// Put the listeners into the map.
+			for (int i = 0; i < stagesCount; i++)
+			{
+				this->stageMap[stages[i]]->Add(listener);
+			}
+			delete stages;
 		}
-		// Put the listeners into the map.
-		for (int i = 0; i < stagesCount; i++)
-		{
-			this->stageMap[stages[i]].push_back(listener);
-		}
-		delete stages;
-	}
+	};
+	this->listeners.ForEach(processor);
 	// Get the stage indices.
 	stageCount = this->stageMap.size();
 	int *stageIndices = new int[stageCount];
@@ -106,18 +110,17 @@ int *EventBroadcaster::GetSubscribedStagesInfo(int &stageCount)
 //! @param stageIndex Index of initialization stage that is happening.
 void EventBroadcaster::OnInitializationStage(int stageIndex)
 {
-	IMonoSystemListener **listeners = &this->stageMap[stageIndex][0];
-	int listenerCount = this->stageMap[stageIndex].size();
+	auto stageList = this->stageMap[stageIndex];
 
-	for (int i = 0; i < listenerCount; i++)
+	for (int i = 0; i < stageList->Length; i++)
 	{
-		listeners[i]->OnInitializationStage(stageIndex);
+		stageList->At(i)->OnInitializationStage(stageIndex);
 	}
 }
 //! Broadcasts CryamblyInitilized event.
 void EventBroadcaster::OnCryamblyInitilized()
 {
-	for (int i = 0; i < this->listeners.size(); i++)
+	for (int i = 0; i < this->listeners.Length; i++)
 	{
 		this->listeners[i]->OnCryamblyInitilized();
 	}
@@ -125,7 +128,7 @@ void EventBroadcaster::OnCryamblyInitilized()
 //! Broadcasts PostInitialization event.
 void EventBroadcaster::OnPostInitialization()
 {
-	for (int i = 0; i < this->listeners.size(); i++)
+	for (int i = 0; i < this->listeners.Length; i++)
 	{
 		this->listeners[i]->OnPostInitialization();
 	}
@@ -133,7 +136,7 @@ void EventBroadcaster::OnPostInitialization()
 //! Broadcasts Update event.
 void EventBroadcaster::Update()
 {
-	for (int i = 0; i < this->listeners.size(); i++)
+	for (int i = 0; i < this->listeners.Length; i++)
 	{
 		this->listeners[i]->Update();
 	}
@@ -141,7 +144,7 @@ void EventBroadcaster::Update()
 //! Broadcasts PostUpdate event.
 void EventBroadcaster::PostUpdate()
 {
-	for (int i = 0; i < this->listeners.size(); i++)
+	for (int i = 0; i < this->listeners.Length; i++)
 	{
 		this->listeners[i]->PostUpdate();
 	}
@@ -149,7 +152,7 @@ void EventBroadcaster::PostUpdate()
 //! Broadcasts Shutdown event.
 void EventBroadcaster::Shutdown()
 {
-	for (int i = 0; i < this->listeners.size(); i++)
+	for (int i = 0; i < this->listeners.Length; i++)
 	{
 		this->listeners[i]->Shutdown();
 	}

@@ -16,6 +16,8 @@
 #include "RunTime/EventBroadcaster.h"
 #include "RunTime/AllInterops.h"
 
+#include "List.h"
+
 //! Handles interface between CryEngine and Mono.
 class MonoInterface
 	: public IMonoInterface
@@ -25,7 +27,7 @@ class MonoInterface
 	friend InitializationInterop;
 private:
 #pragma region Fields
-	std::vector<MonoAssemblyWrapper *> assemblies;
+	List<MonoAssemblyWrapper *> assemblies;
 	EventBroadcaster *broadcaster;
 
 	bool running;
