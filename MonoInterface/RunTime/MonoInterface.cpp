@@ -105,9 +105,9 @@ MonoInterface::MonoInterface(IGameFramework *framework, IMonoSystemListener **li
 #endif // _DEBUG
 
 	// Load Cryambly.
-	this->cryambly = this->LoadAssembly(DirectoryStructure::GetCryamblyFile());
-	this->corlib = this->WrapAssembly(mono_get_corlib());
-
+	const char *cryamblyFile = DirectoryStructure::GetCryamblyFile();
+	this->cryambly = this->LoadAssembly(cryamblyFile);
+	this->corlib = this->WrapAssembly(mono_image_get_assembly(mono_get_corlib()));
 	this->InitializeThunks();
 
 	this->broadcaster->OnRunTimeInitialized();
