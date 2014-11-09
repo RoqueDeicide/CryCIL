@@ -309,14 +309,14 @@ void MonoInterface::HandleException(mono::exception exception)
 //! @param className       Name of the class where managed method is declared.
 //! @param name            Name of the managed method.
 //! @param functionPointer Pointer to unmanaged thunk that needs to be exposed to Mono code.
-void MonoInterface::AddInternalCall(const char *name, const char *className, const char *nameSpace, void *functionPointer)
+void MonoInterface::AddInternalCall(const char *nameSpace, const char *className, const char *name, void *functionPointer)
 {
 	if (!this->running)
 	{
 		return;
 	}
 	ConstructiveText fullName(30);
-	fullName << nameSpace << '.' << className << ':' << name;
+	fullName << nameSpace << '.' << className << "::" << name;
 	mono_add_internal_call(fullName.ToNTString(), functionPointer);
 }
 #pragma endregion
