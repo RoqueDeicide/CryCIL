@@ -72,24 +72,24 @@ namespace CryCil.RunTime
 			// Redirect Console output.
 			Console.SetOut(new ConsoleLogWriter());
 			// Load all extra modules.
+			string gameModulesFolder = Path.Combine
+				(DirectoryStructure.ContentFolder, "Modules", "CryCIL");
+			string cryEngineModulesFolder = Path.Combine
+				(DirectoryStructure.CryEngineFolder, "Modules", "CryCIL");
+			List<string> gameModules = new List<string>();
+			List<string> cryEngineModules = new List<string>();
+			if (Directory.Exists(gameModulesFolder))
+			{
+				gameModules.AddRange(Directory.GetFiles(gameModulesFolder, "*.dll"));
+			}
+			if (Directory.Exists(cryEngineModulesFolder))
+			{
+				cryEngineModules.AddRange(Directory.GetFiles(cryEngineModulesFolder, "*.dll"));
+			}
+
 			this.CryCilAssemblies = new List<Assembly>
 			(
-				from file in
-					Directory.GetFiles
-					(
-						Path.Combine
-						(DirectoryStructure.ContentFolder, "Modules", "CryCIL"),
-						"*.dll"
-					)
-					.Concat
-					(
-						Directory.GetFiles
-						(
-							Path.Combine
-							(DirectoryStructure.CryEngineFolder, "Modules", "CryCIL"),
-							"*.dll"
-						)
-					)
+				from file in gameModules.Concat(cryEngineModules)
 				where AssemblyExtras.IsAssembly(file)
 				select Assembly.Load(AssemblyName.GetAssemblyName(file))
 			);
