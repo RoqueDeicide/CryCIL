@@ -27,18 +27,8 @@ MonoAssemblyWrapper::MonoAssemblyWrapper(const char *assemblyFile, bool &failed)
 //! @param className Name of the class to get.
 IMonoClass *MonoAssemblyWrapper::GetClass(const char *nameSpace, const char *className)
 {
-	CryLogAlways("Searching for class.");
-	CryLogAlways("Image: %d", this->image);
-	CryLogAlways("Name space: %s.", nameSpace);
-	CryLogAlways("Class name: %s.", className);
-
-	if (this->image != mono_get_corlib())
-	{
-		CryLogAlways("This assembly is not corlib.");
-	}
-
 	MonoClass *klass = mono_class_from_name(this->image, nameSpace, className);
-	CryLogAlways("Wrapping the class.");
+
 	return MonoClassCache::Wrap(klass);
 }
 //! Returns a method that satisfies given description.
@@ -57,10 +47,8 @@ const char *nameSpace, const char *className,
 const char *methodName, const char *params
 )
 {
-	CryLogAlways("Getting class.");
 	// Get the class.
 	IMonoClass *klass = this->GetClass(nameSpace, className);
-	CryLogAlways("Getting method.");
 	// Get the method.
 	return klass->GetMethod(methodName, params);
 }

@@ -53,7 +53,7 @@ public:
 	//! Wraps an existing Mono array.
 	MonoArrayFree(mono::object arrayHandle);
 	//! Returns a pointer to the wrapped array.
-	virtual void * GetWrappedPointer();
+	virtual void *GetWrappedPointer();
 	//! Does nothing since there is nothing to release.
 	virtual void Release();
 };
@@ -72,7 +72,7 @@ public:
 	//! Wraps an existing Mono array.
 	MonoArrayPersistent(mono::object arrayHandle);
 	//! Returns a pointer to the wrapped array.
-	virtual void * GetWrappedPointer();
+	virtual void *GetWrappedPointer();
 	//! Removes GC tracking from this array, allowing it to be collected.
 	virtual void Release();
 };

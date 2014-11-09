@@ -38,12 +38,12 @@ IMonoClass *MonoArrayBase::GetElementClass()
 	if (this->klass == nullptr)
 	{
 		this->klass = MonoClassCache::Wrap
-			(
+		(
 			mono_class_get_element_class
 			(
-			mono_object_get_class((MonoObject *)this->GetWrappedPointer())
+				mono_object_get_class((MonoObject *)this->GetWrappedPointer())
 			)
-			);
+		);
 	}
 	return this->klass;
 }
