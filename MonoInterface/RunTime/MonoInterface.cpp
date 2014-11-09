@@ -68,9 +68,9 @@ MonoInterface::MonoInterface(IGameFramework *framework, IMonoSystemListener **li
 
 	this->broadcaster->OnRunTimeInitializing();
 	// Tell Mono, where to look for the libraries and configuration files.
-	mono_set_dirs
-		(DirectoryStructure::GetMonoLibraryFolder(),
-		DirectoryStructure::GetMonoConfigurationFolder());
+	const char *assembly_dir = DirectoryStructure::GetMonoLibraryFolder();
+	const char *config_dir = DirectoryStructure::GetMonoConfigurationFolder();
+	mono_set_dirs(assembly_dir, config_dir);
 #ifdef _DEBUG
 	// Tell Mono to crash the game if there is an exception that wasn't handled.
 	mono_set_signal_chaining(true);
