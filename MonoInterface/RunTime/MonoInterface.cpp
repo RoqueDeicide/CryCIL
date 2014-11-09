@@ -67,34 +67,42 @@ MonoInterface::MonoInterface(IGameFramework *framework, IMonoSystemListener **li
 	this->broadcaster->OnPreInitialization();
 
 	this->broadcaster->OnRunTimeInitializing();
+	
+	CryComment("Setting mono directories.");
 	// Tell Mono, where to look for the libraries and configuration files.
 	const char *assembly_dir = DirectoryStructure::GetMonoLibraryFolder();
 	const char *config_dir = DirectoryStructure::GetMonoConfigurationFolder();
 	mono_set_dirs(assembly_dir, config_dir);
 #ifdef _DEBUG
+	CryComment("Setting up signal chaining.");
 	// Tell Mono to crash the game if there is an exception that wasn't handled.
 	mono_set_signal_chaining(true);
+	CryComment("Initializing Mono debugging.");
 	// Load up mdb files.
 	mono_debug_init(MONO_DEBUG_FORMAT_MONO);
 #endif // _DEBUG
+	CryComment("Registering HandeSignalAbort.");
 	// Register HandleSignalAbort function as a handler for SIGABRT.
 	signal(SIGABRT, HandleSignalAbort);
+	CryComment("Initializing the domain.");
 	// Initialize the AppDomain.
 	this->appDomain = mono_jit_init_version("CryCIL", "v4.0.30319");
 	if (!this->appDomain)
 	{
 		CryFatalError("Unable to initialize Mono AppDomain.");
 	}
+	CryComment("Setting the config for domain.");
 	// Manually tell AppDomain where to find the configuration for itself.
 	// Not calling this function results in exception when trying to get CodeDomProvider for C#.
 	mono_domain_set_config
-		(
+	(
 		this->appDomain,
 		DirectoryStructure::GetMonoBinariesFolder(),
 		DirectoryStructure::GetMonoAppDomainConfigurationFile()
-		);
+	);
 	this->running = true;
 #ifdef _DEBUG
+	CryComment("Loading pdb2mdb.");
 	// Load Pdb2Mdb.dll before everything else.
 	this->pdb2mdb = this->LoadAssembly(DirectoryStructure::GetPdb2MdbFile());
 	// Initialize conversion thunk immediately.
@@ -104,12 +112,14 @@ MonoInterface::MonoInterface(IGameFramework *framework, IMonoSystemListener **li
 		: nullptr;
 #endif // _DEBUG
 
+	CryComment("Loading Cryambly.");
 	// Load Cryambly.
 	const char *cryamblyFile = DirectoryStructure::GetCryamblyFile();
 	this->cryambly = this->LoadAssembly(cryamblyFile);
 	this->corlib = this->WrapAssembly(mono_image_get_assembly(mono_get_corlib()));
+	CryComment("Initializing main thunks.");
 	this->InitializeThunks();
-
+	CryComment("Main thunks initialized.");
 	this->broadcaster->OnRunTimeInitialized();
 	// Initialize an instance of type MonoInterface.
 	mono::exception ex;
