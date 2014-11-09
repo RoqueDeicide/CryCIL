@@ -27,6 +27,15 @@ void EventBroadcaster::RemoveListener(IMonoSystemListener *listener)
 		}
 	}
 }
+
+void EventBroadcaster::SetInterface(IMonoInterface *inter)
+{
+	for (int i = 0; i < this->listeners.Length; i++)
+	{
+		this->listeners[i]->SetInterface(inter);
+	}
+}
+
 //! Broadcasts PreInitialization event.
 void EventBroadcaster::OnPreInitialization()
 {

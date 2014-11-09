@@ -716,11 +716,17 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 //! @example DoxygenExampleFiles\ListenerExample.cpp
 struct IMonoSystemListener
 {
+protected:
+	IMonoInterface *monoInterface;
+public:
 	//! Allows IMonoInterface implementation let the listener access it before global
 	//! variable MonoEnv is initialized.
 	//!
 	//! @param handle Pointer to IMonoInterface implementation that can be used.
-	virtual void SetInterface(IMonoInterface *handle) = 0;
+	virtual void SetInterface(IMonoInterface *handle)
+	{
+		this->monoInterface = handle;
+	}
 	//! Invoked before Mono interface is initialized.
 	//!
 	//! IMonoInterface object is not usable at this stage.
@@ -1055,22 +1061,15 @@ struct IMonoInterface
 //! of OnRunTimeInitialized.
 struct IMonoInterop : public IMonoSystemListener
 {
-protected:
-	IMonoInterface *monoInterface;
-public:
-	virtual void SetInterface(IMonoInterface *handle)
-	{
-		this->monoInterface = handle;
-	}
 	virtual void RegisterInteropMethod(const char *methodName, void *functionPointer)
 	{
 		this->monoInterface->AddInternalCall
-			(
+		(
 			this->GetNameSpace(),
 			this->GetName(),
 			methodName,
 			functionPointer
-			);
+		);
 	}
 	//! Returns the name of the class that will declare managed counter-parts
 	//! of the internal calls.
@@ -1119,7 +1118,7 @@ public:
 	{}
 };
 
-#define REGISTER_METHOD(method) this->RegisterInteropMethod(#method, (method))
+#define REGISTER_METHOD(method) this->RegisterInteropMethod(#method, method)
 
 //! Interface of interops that use classes within CryCil.RunTime.NativeCodeAccess name space.
 struct IDefaultMonoInterop : public IMonoInterop

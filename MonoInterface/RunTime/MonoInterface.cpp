@@ -64,6 +64,9 @@ MonoInterface::MonoInterface(IGameFramework *framework, IMonoSystemListener **li
 	// Set global variables.
 	MonoEnv = this;
 
+	// Let listeners know about this object.
+	this->broadcaster->SetInterface(this);
+
 	this->broadcaster->OnPreInitialization();
 
 	this->broadcaster->OnRunTimeInitializing();

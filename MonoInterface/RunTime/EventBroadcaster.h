@@ -10,6 +10,8 @@ struct EventBroadcaster
 	std::map<int, List<IMonoSystemListener *> *> stageMap;
 	//! Removes a listener from broadcasting list and stages map.
 	void RemoveListener(IMonoSystemListener *listener);
+	//! Gives listeners a pointer to IMonoInterface.
+	void SetInterface(IMonoInterface *inter);
 	//! Broadcasts PreInitialization event.
 	void OnPreInitialization();
 	//! Broadcasts RunTimeInitializing event.

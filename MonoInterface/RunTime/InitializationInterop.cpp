@@ -11,8 +11,6 @@ const char *InitializationInterop::GetName()
 
 void InitializationInterop::OnRunTimeInitialized()
 {
-	InitializationInterop::monoEnv = (MonoInterface *)MonoEnv;
-
 	REGISTER_METHOD(OnCompilationStartingBind);
 	REGISTER_METHOD(OnCompilationCompleteBind);
 	REGISTER_METHOD(GetSubscribedStagesBind);
@@ -42,4 +40,10 @@ mono::Array InitializationInterop::GetSubscribedStagesBind()
 void InitializationInterop::OnInitializationStageBind(int stageIndex)
 {
 	monoEnv->broadcaster->OnInitializationStage(stageIndex);
+}
+
+void InitializationInterop::SetInterface(IMonoInterface *handle)
+{
+	this->monoInterface = handle;
+	monoEnv = (MonoInterface *)this->monoInterface;
 }
