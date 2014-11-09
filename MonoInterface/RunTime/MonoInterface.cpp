@@ -312,8 +312,9 @@ void MonoInterface::AddInternalCall(const char *name, const char *className, con
 	{
 		return;
 	}
-	mono_add_internal_call
-		(std::string(nameSpace).append(className).append(name).c_str(), functionPointer);
+	ConstructiveText fullName(30);
+	fullName << nameSpace << '.' << className << ':' << name;
+	mono_add_internal_call(fullName.ToNTString(), functionPointer);
 }
 #pragma endregion
 #pragma region Assemblies
