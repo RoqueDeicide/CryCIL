@@ -97,11 +97,19 @@ namespace CryCil.RunTime
 			this.OnCompilationStarted();
 			try
 			{
-				CodeSolution.Load
-				(
-					Path.Combine
-					(DirectoryStructure.ContentFolder, "Code", "Solutions", "CryCilCode.sln")
-				);
+				bool loadingSuccessful =
+					CodeSolution.Load
+					(
+						Path.Combine
+						(
+							DirectoryStructure.ContentFolder,
+							"Code", "Solutions", "CryCilCode.sln"
+						)
+					);
+				if (!loadingSuccessful)
+				{
+					throw new Exception("Unable to load the solution.");
+				}
 				this.CryCilAssemblies.AddRange(CodeSolution.Build());
 				// Add Cryambly to the list.
 				this.CryCilAssemblies.Add(Assembly.GetAssembly(typeof(MonoInterface)));

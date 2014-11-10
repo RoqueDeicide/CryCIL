@@ -51,13 +51,15 @@ namespace CryCil.RunTime.Compilation
 		/// <param name="solutionFile">
 		/// Full name of .sln file that contains details about the solution.
 		/// </param>
-		public static void Load([PathReference] string solutionFile)
+		public static bool Load([PathReference] string solutionFile)
 		{
 			if (File.Exists(solutionFile))
 			{
 				CodeSolution.SolutionFolder = Path.GetDirectoryName(solutionFile);
 				CodeSolution.ParseFile(solutionFile);
+				return true;
 			}
+			return false;
 		}
 		/// <summary>
 		/// Builds the solution.
