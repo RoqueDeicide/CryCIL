@@ -38,14 +38,13 @@ void DebugEventReporter::OnCompilationComplete(bool success)
 	CryLogAlways("Compilation of the code was %ssuccessful.", success ? "" : "not ");
 }
 
-int *DebugEventReporter::GetSubscribedStages(int &stageCount)
+List<int> *DebugEventReporter::GetSubscribedStages()
 {
-	stageCount = 4;
-	int *stages = new int[stageCount];
-	stages[0] = ENTITY_REGISTRATION_STAGE;				// Entities registration.
-	stages[1] = ACTORS_REGISTRATION_STAGE;				// Actors registration.
-	stages[2] = GAME_MODE_REGISTRATION_STAGE;			// Game modes registration.
-	stages[3] = FLOWNODE_RECOGNITION_STAGE;				// Flow graph nodes recognition.
+	List<int> *stages = new List<int>(4);
+	stages->Add(ENTITY_REGISTRATION_STAGE);				// Entities registration.
+	stages->Add(ACTORS_REGISTRATION_STAGE);				// Actors registration.
+	stages->Add(GAME_MODE_REGISTRATION_STAGE);			// Game modes registration.
+	stages->Add(FLOWNODE_RECOGNITION_STAGE);			// Flow graph nodes recognition.
 	return stages;
 }
 

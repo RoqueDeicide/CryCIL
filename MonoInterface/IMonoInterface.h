@@ -12,6 +12,8 @@
 #include <ISerialize.h>
 #include <IGameFramework.h>
 
+#include "List.h"
+
 // Use MONOINTERFACE_LIBRARY constant to get OS-specific name of MonoInterface library.
 #if defined(LINUX)
 #define MONOINTERFACE_LIBRARY "MonoInterface.so"
@@ -757,7 +759,8 @@ public:
 	//!
 	//! @returns A pointer to an array of integer numbers that represent indices of
 	//!          initialization stages this listener wants to subscribe to.
-	virtual int *GetSubscribedStages(int &stageCount) = 0;
+	//!          Null can be return if the listener doesn't want to subscribe to anything.
+	virtual List<int> *GetSubscribedStages() = 0;
 	//! Invoked when one of initialization stages this listener has subscribed to begins.
 	//!
 	//! @param stageIndex Zero-based index of the stage.
@@ -1093,9 +1096,8 @@ struct IMonoInterop : public IMonoSystemListener
 	virtual void OnCompilationComplete(bool success)
 	{}
 	//! Unnecessary for most interops.
-	virtual int *GetSubscribedStages(int &stageCount)
+	virtual List<int> *GetSubscribedStages()
 	{
-		stageCount = 0;
 		return nullptr;
 	}
 	//! Unnecessary for most interops.

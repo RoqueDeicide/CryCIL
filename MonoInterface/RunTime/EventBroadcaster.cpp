@@ -14,18 +14,20 @@ void EventBroadcaster::RemoveListener(IMonoSystemListener *listener)
 		this->listeners.RemoveAt(index);
 	}
 	// Remove listener from stage map.
-	for each (auto var in this->stageMap)
-	{
-		auto stageList = var.second;
-		for (int i = 0; i < stageList->Length; i++)
+	this->stageMap.ForEach
+	(
+		[&listener](int stageIndex, List<IMonoSystemListener *> *subscribers)
 		{
-			if (stageList->At(i) == listener)
+			for (int i = 0; i < subscribers->Length; i++)
 			{
-				stageList->RemoveAt(i);
-				i--;
+				if (subscribers->At(i) == listener)
+				{
+					subscribers->RemoveAt(i);
+					break;		// No need to proceed as there can only be one unique listener per stage.
+				}
 			}
 		}
-	}
+	);
 }
 
 void EventBroadcaster::SetInterface(IMonoInterface *inter)
@@ -88,30 +90,33 @@ void EventBroadcaster::OnCompilationComplete(bool success)
 int *EventBroadcaster::GetSubscribedStagesInfo(int &stageCount)
 {
 	// Gather information about all stages.
-	auto processor = [&stageCount, this](IMonoSystemListener *listener)
+	for (int i = 0; i < this->listeners.Length; i++)
 	{
 		// Get stages.
-		int stagesCount;
-		int *stages = listener->GetSubscribedStages(stagesCount);
+		List<int> *stages = this->listeners[i]->GetSubscribedStages();
 		if (stages)
 		{
 			// Put the listeners into the map.
-			for (int i = 0; i < stagesCount; i++)
+			for (int j = 0; j < stages->Length; j++)
 			{
-				this->stageMap[stages[i]]->Add(listener);
+				int currentStageIndex = stages->At(j);
+				if (!this->stageMap.Contains(currentStageIndex))
+				{
+					this->stageMap.Add(currentStageIndex, new List<IMonoSystemListener *>(10));
+				}
+				this->stageMap.At(currentStageIndex)->Add(this->listeners[i]);
 			}
 			delete stages;
 		}
-	};
-	this->listeners.ForEach(processor);
+	}
 	// Get the stage indices.
-	stageCount = this->stageMap.size();
+	stageCount = this->stageMap.Length;
 	int *stageIndices = new int[stageCount];
 	int i = 0;
-	for (auto it = this->stageMap.begin(); it != this->stageMap.end(); it++, i++)
+	this->stageMap.ForEach([stageIndices, &i](int stageIndex, List<IMonoSystemListener *> *subscribers)
 	{
-		stageIndices[i] = it->first;
-	}
+		stageIndices[i++] = stageIndex;
+	});
 	return stageIndices;
 }
 //! Broadcasts InitializationStage event.
@@ -119,7 +124,11 @@ int *EventBroadcaster::GetSubscribedStagesInfo(int &stageCount)
 //! @param stageIndex Index of initialization stage that is happening.
 void EventBroadcaster::OnInitializationStage(int stageIndex)
 {
-	auto stageList = this->stageMap[stageIndex];
+	auto stageList = this->stageMap.At(stageIndex);
+	if (!stageList)
+	{
+		return;
+	}
 
 	for (int i = 0; i < stageList->Length; i++)
 	{

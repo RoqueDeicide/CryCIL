@@ -1,13 +1,13 @@
 #pragma once
 
 #include "IMonoInterface.h"
-#include "List.h"
+#include "SortedList.h"
 //! Broadcasts events to listeners.
 struct EventBroadcaster
 {
 	List<IMonoSystemListener *> listeners;
 	// Map is basically a SortedList.
-	std::map<int, List<IMonoSystemListener *> *> stageMap;
+	SortedList<int, List<IMonoSystemListener *> *> stageMap;
 	//! Removes a listener from broadcasting list and stages map.
 	void RemoveListener(IMonoSystemListener *listener);
 	//! Gives listeners a pointer to IMonoInterface.

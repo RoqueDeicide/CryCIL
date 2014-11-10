@@ -18,7 +18,7 @@ struct DebugEventReporter : public IMonoSystemListener
 
 	virtual void OnCompilationComplete(bool success);
 
-	virtual int * GetSubscribedStages(int &stageCount);
+	virtual List<int> *GetSubscribedStages();
 
 	virtual void OnInitializationStage(int stageIndex);
 
