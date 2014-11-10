@@ -27,6 +27,13 @@ namespace CryCil.RunTime.Logging
 			get { return Encoding.UTF8; }
 		}
 		/// <summary>
+		/// Creates a default instance of this class.
+		/// </summary>
+		public ConsoleLogWriter()
+		{
+			this.buffer = new StringBuilder(100);
+		}
+		/// <summary>
 		/// Outputs text from current buffer to CryEngine log.
 		/// </summary>
 		public override void Flush()
