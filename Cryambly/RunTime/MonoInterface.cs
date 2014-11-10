@@ -113,14 +113,14 @@ namespace CryCil.RunTime
 					throw new Exception("Unable to load the solution.");
 				}
 				this.CryCilAssemblies.AddRange(CodeSolution.Build());
-				// Add Cryambly to the list.
-				this.CryCilAssemblies.Add(Assembly.GetAssembly(typeof(MonoInterface)));
 				this.OnCompilationComplete(true);
 			}
 			catch (Exception)
 			{
 				this.OnCompilationComplete(false);
 			}
+			// Add Cryambly to the list.
+			this.CryCilAssemblies.Add(Assembly.GetAssembly(typeof(MonoInterface)));
 			this.ProceedWithInitializationStages();
 		}
 		#endregion
