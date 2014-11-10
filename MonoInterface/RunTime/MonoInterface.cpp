@@ -191,7 +191,10 @@ const char *MonoInterface::ToNativeString(mono::string text)
 	{
 		return nullptr;
 	}
-	return mono_string_to_utf8((MonoString *)text);
+	const char *monoNativeText = mono_string_to_utf8((MonoString *)text);
+	ConstructiveText nativeText(monoNativeText);
+	mono_free((void *)monoNativeText);
+	return nativeText.ToNTString();
 }
 #pragma endregion
 #pragma region Objects and Arrays
