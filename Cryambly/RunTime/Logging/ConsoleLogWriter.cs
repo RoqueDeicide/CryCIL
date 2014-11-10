@@ -14,6 +14,10 @@ namespace CryCil.RunTime.Logging
 	/// </summary>
 	public partial class ConsoleLogWriter : TextWriter
 	{
+		/// <summary>
+		/// Type of posts logged by an instance of type <see cref="ConsoleLogWriter"/>.
+		/// </summary>
+		public static LogPostType PostType = LogPostType.Message;
 		private StringBuilder buffer;
 		/// <summary>
 		/// Gets a simple encoding.
@@ -34,7 +38,7 @@ namespace CryCil.RunTime.Logging
 				// This code is executed when Flush is called from external class, which
 				// means we should post whatever we have in the buffer and empty it
 				// afterwards.
-				Log.Line(lines[0]);
+				Log.Post(ConsoleLogWriter.PostType, lines[0]);
 				buffer = new StringBuilder("", 70);
 			}
 			else
@@ -42,7 +46,7 @@ namespace CryCil.RunTime.Logging
 				// Print all of the lines except the last one.
 				for (int i = 0; i < lines.Length - 1; i++)
 				{
-					Log.Line(lines[i]);
+					Log.Post(ConsoleLogWriter.PostType, lines[i]);
 				}
 				// Reset the buffer to be the last line. It will be empty if <value> ended
 				// with new line symbol.
