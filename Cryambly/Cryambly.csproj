@@ -111,6 +111,7 @@
     <Compile Include="Mathematics\Vector2.cs" />
     <Compile Include="Mathematics\Vector3.cs" />
     <Compile Include="Mathematics\Vector4.cs" />
+    <Compile Include="Miscellaneous\ITemporaryOverrider.cs" />
     <Compile Include="NamespaceDoc.cs" />
     <Compile Include="PathUtilities.cs" />
     <Compile Include="Properties\Annotations.cs" />
