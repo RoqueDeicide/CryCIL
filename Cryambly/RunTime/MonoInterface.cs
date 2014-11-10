@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using CryCil.Annotations;
 using CryCil.RunTime.Compilation;
 using CryCil.RunTime.Logging;
@@ -66,6 +67,7 @@ namespace CryCil.RunTime
 		/// </summary>
 		private MonoInterface()
 		{
+			Application.EnableVisualStyles();
 			// Register default handling of exceptions.
 			AppDomain.CurrentDomain.UnhandledException +=
 				(sender, args) => MonoInterface.DisplayException(args.ExceptionObject);
