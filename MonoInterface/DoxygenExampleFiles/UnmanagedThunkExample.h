@@ -19,5 +19,13 @@ void example()
 	// Prepare to invoke it.
 	mono::exception exc;
 	// Call it like a standard function pointer.
-	int hasCode = Unbox<int>(hasCodeFunc(obj->Get(), &exc));
+	mono::int32 result = hasCodeFunc(obj->Get(), &exc);
+	if (exc)
+	{
+		MonoEnv->HandleException(exc);
+	}
+	else
+	{
+		int hashCode = Unbox<int>(result);
+	}
 }

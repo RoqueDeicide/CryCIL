@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "IMonoInterface.h"
+#include "List.h"
 
 #ifndef PI
 #define PI 3.14159265358979323f
@@ -71,18 +72,17 @@ public:
 		}
 	}
 
-	virtual int *GetSubscribedStages(int &stageCount)
+	virtual List<int> *GetSubscribedStages()
 	{
-		stageCount = 8;
-		int *stages = new int[stageCount];
-		stages[0] = ENTITY_REGISTRATION_STAGE - 1;			// Before entities registration.
-		stages[1] = ENTITY_REGISTRATION_STAGE + 1;			// After entities registration.
-		stages[2] = ACTORS_REGISTRATION_STAGE - 1;			// Before actors registration.
-		stages[3] = ACTORS_REGISTRATION_STAGE + 1;			// After actors registration.
-		stages[4] = GAME_MODE_REGISTRATION_STAGE - 1;		// Before game modes registration.
-		stages[5] = GAME_MODE_REGISTRATION_STAGE + 1;		// After game modes registration.
-		stages[6] = FLOWNODE_RECOGNITION_STAGE - 1;			// Before flow graph nodes recognition.
-		stages[7] = FLOWNODE_RECOGNITION_STAGE + 1;			// After flow graph nodes recognition.
+		List<int> *stages = new List<int>(8);
+		stages->Add(ENTITY_REGISTRATION_STAGE - 1);			// Before entities registration.
+		stages->Add(ENTITY_REGISTRATION_STAGE + 1);			// After entities registration.
+		stages->Add(ACTORS_REGISTRATION_STAGE - 1);			// Before actors registration.
+		stages->Add(ACTORS_REGISTRATION_STAGE + 1);			// After actors registration.
+		stages->Add(GAME_MODE_REGISTRATION_STAGE - 1);		// Before game modes registration.
+		stages->Add(GAME_MODE_REGISTRATION_STAGE + 1);		// After game modes registration.
+		stages->Add(FLOWNODE_RECOGNITION_STAGE - 1);		// Before flow graph nodes recognition.
+		stages->Add(FLOWNODE_RECOGNITION_STAGE + 1);		// After flow graph nodes recognition.
 		return stages;
 	}
 

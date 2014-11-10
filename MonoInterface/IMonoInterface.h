@@ -58,16 +58,6 @@ namespace mono
 	//! references very dangerous, because the reference can become invalid without
 	//! your consent at any point in time.
 	//!
-	//! The only time when mono::object is completely safe to use, is when it represents
-	//! a reference to a variable allocated on the stack and passed to unmanaged code
-	//! with help of either ref or out keyword. Make sure, however, that it is not used
-	//! within unmanaged code after the method returns, as it will be removed from stack
-	//! once it leaves its scope within managed method where it was declared.
-	//!
-	//! Working with parameters passed by reference is slightly different from normal ones:
-	//! In order to modify them you should cast the parameter to appropriate pointer type
-	//! and use dereferencing to get their value or modify them.
-	//!
 	//! Also, you have no direct access to Mono API that works with objects,
 	//! therefore there is only a handful of ways they can be used.
 	//!
@@ -110,7 +100,7 @@ namespace mono
 	//!
 	//! You can use IMonoInterface::WrapObject() function to create a wrapper for
 	//! mono::object instance when you to work with it or keep it.
-	typedef class _object *object;
+	typedef class MonoObject *object;
 	
 	//! Typedefs marked by this define represent a reference to an object that is located
 	//! within managed memory. Technically all of them are equivalents to mono::object
@@ -126,9 +116,9 @@ namespace mono
 	//! typedefs do describe the types of objects better.
 	//!
 	//! @code{.cpp}
-	//! mono::object  IsNullOrWhitespace(mono::object text, mono::object *exception);
+	//! mono::object  __stdcall IsNullOrWhitespace(mono::object text, mono::object *exception);
 	//!
-	//! mono::boolean IsNullOrWhitespace(mono::string text, mono::exception *exception);
+	//! mono::boolean __stdcall IsNullOrWhitespace(mono::string text, mono::exception *exception);
 	//! @endcode
 	#define OBJECT_NAME
 
@@ -153,7 +143,7 @@ namespace mono
 	//! Represents a reference to a boxed signed 8-byte long integer.
 	OBJECT_NAME typedef object int64;
 	//! Represents a reference to a boxed unsigned 8-byte long integer.
-	OBJECT_NAME typedef object uin64;
+	OBJECT_NAME typedef object uint64;
 	//! Represents a reference to a boxed signed pointer represented by System.IntPtr.
 	OBJECT_NAME typedef object intptr;
 	//! Represents a reference to a boxed unsigned pointer represented by System.IntPtr.
@@ -229,115 +219,115 @@ struct IDefaultBoxinator
 	//! Boxes an unsigned pointer value.
 	//!
 	//! @param value Value to box.
-	VIRTUAL_API virtual mono::object BoxUPtr(void *value) = 0;
+	VIRTUAL_API virtual mono::uintptr BoxUPtr(void *value) = 0;
 	//! Boxes a pointer value.
 	//!
 	//! @param value Value to box.
-	VIRTUAL_API virtual mono::object BoxPtr(void *value) = 0;
+	VIRTUAL_API virtual mono::intptr BoxPtr(void *value) = 0;
 	//! Boxes a boolean value.
 	//!
 	//! @param value Value to box.
-	VIRTUAL_API virtual mono::object Box(bool value) = 0;
+	VIRTUAL_API virtual mono::boolean Box(bool value) = 0;
 	//! Boxes a signed byte value.
 	//!
 	//! @param value Value to box.
-	VIRTUAL_API virtual mono::object Box(char value) = 0;
+	VIRTUAL_API virtual mono::character Box(char value) = 0;
 	//! Boxes a signed byte value.
 	//!
 	//! @param value Value to box.
-	VIRTUAL_API virtual mono::object Box(signed char value) = 0;
+	VIRTUAL_API virtual mono::sbyte Box(signed char value) = 0;
 	//! Boxes an unsigned byte value.
 	//!
 	//! @param value Value to box.
-	VIRTUAL_API virtual mono::object Box(unsigned char value) = 0;
+	VIRTUAL_API virtual mono::byte Box(unsigned char value) = 0;
 	//! Boxes an Int16 value.
 	//!
 	//! @param value Value to box.
-	VIRTUAL_API virtual mono::object Box(short value) = 0;
+	VIRTUAL_API virtual mono::int16 Box(short value) = 0;
 	//! Boxes a UInt16 value.
 	//!
 	//! @param value Value to box.
-	VIRTUAL_API virtual mono::object Box(unsigned short value) = 0;
+	VIRTUAL_API virtual mono::uint16 Box(unsigned short value) = 0;
 	//! Boxes an Int32 value.
 	//!
 	//! @param value Value to box.
-	VIRTUAL_API virtual mono::object Box(int value) = 0;
+	VIRTUAL_API virtual mono::int32 Box(int value) = 0;
 	//! Boxes a UInt32 value.
 	//!
 	//! @param value Value to box.
-	VIRTUAL_API virtual mono::object Box(unsigned int value) = 0;
+	VIRTUAL_API virtual mono::uint32 Box(unsigned int value) = 0;
 	//! Boxes an Int64 value.
 	//!
 	//! @param value Value to box.
-	VIRTUAL_API virtual mono::object Box(__int64 value) = 0;
+	VIRTUAL_API virtual mono::int64 Box(__int64 value) = 0;
 	//! Boxes a UInt64 value.
 	//!
 	//! @param value Value to box.
-	VIRTUAL_API virtual mono::object Box(unsigned __int64 value) = 0;
+	VIRTUAL_API virtual mono::uint64 Box(unsigned __int64 value) = 0;
 	//! Boxes a float value.
 	//!
 	//! @param value Value to box.
-	VIRTUAL_API virtual mono::object Box(float value) = 0;
+	VIRTUAL_API virtual mono::float32 Box(float value) = 0;
 	//! Boxes a double value.
 	//!
 	//! @param value Value to box.
-	VIRTUAL_API virtual mono::object Box(double value) = 0;
+	VIRTUAL_API virtual mono::float64 Box(double value) = 0;
 	//! Boxes a vector value.
 	//!
 	//! @param value Value to box.
-	VIRTUAL_API virtual mono::object Box(Vec2 value) = 0;
+	VIRTUAL_API virtual mono::vector2 Box(Vec2 value) = 0;
 	//! Boxes a vector value.
 	//!
 	//! @param value Value to box.
-	VIRTUAL_API virtual mono::object Box(Vec3 value) = 0;
+	VIRTUAL_API virtual mono::vector3 Box(Vec3 value) = 0;
 	//! Boxes a vector value.
 	//!
 	//! @param value Value to box.
-	VIRTUAL_API virtual mono::object Box(Vec4 value) = 0;
+	VIRTUAL_API virtual mono::vector4 Box(Vec4 value) = 0;
 	//! Boxes a EulerAngles value.
 	//!
 	//! @param value Value to box.
-	VIRTUAL_API virtual mono::object Box(Ang3 value) = 0;
+	VIRTUAL_API virtual mono::angles3 Box(Ang3 value) = 0;
 	//! Boxes a Quaternion value.
 	//!
 	//! @param value Value to box.
-	VIRTUAL_API virtual mono::object Box(Quat value) = 0;
+	VIRTUAL_API virtual mono::quaternion Box(Quat value) = 0;
 	//! Boxes an QuaternionTranslation value.
 	//!
 	//! @param value Value to box.
-	VIRTUAL_API virtual mono::object Box(QuatT value) = 0;
+	VIRTUAL_API virtual mono::quat_trans Box(QuatT value) = 0;
 	//! Boxes a Matrix33 value.
 	//!
 	//! @param value Value to box.
-	VIRTUAL_API virtual mono::object Box(Matrix33 value) = 0;
+	VIRTUAL_API virtual mono::matrix33 Box(Matrix33 value) = 0;
 	//! Boxes an Matrix34 value.
 	//!
 	//! @param value Value to box.
-	VIRTUAL_API virtual mono::object Box(Matrix34 value) = 0;
+	VIRTUAL_API virtual mono::matrix34 Box(Matrix34 value) = 0;
 	//! Boxes a Matrix44 value.
 	//!
 	//! @param value Value to box.
-	VIRTUAL_API virtual mono::object Box(Matrix44 value) = 0;
+	VIRTUAL_API virtual mono::matrix44 Box(Matrix44 value) = 0;
 	//! Boxes a Plane value.
 	//!
 	//! @param value Value to box.
-	VIRTUAL_API virtual mono::object Box(Plane value) = 0;
+	VIRTUAL_API virtual mono::plane Box(Plane value) = 0;
 	//! Boxes a Ray value.
 	//!
 	//! @param value Value to box.
-	VIRTUAL_API virtual mono::object Box(Ray value) = 0;
+	VIRTUAL_API virtual mono::ray Box(Ray value) = 0;
 	//! Boxes a ColorB value.
 	//!
 	//! @param value Value to box.
-	VIRTUAL_API virtual mono::object Box(ColorB value) = 0;
+	VIRTUAL_API virtual mono::byte_color Box(ColorB value) = 0;
 	//! Boxes a ColorF value.
 	//!
 	//! @param value Value to box.
-	VIRTUAL_API virtual mono::object Box(ColorF value) = 0;
+	VIRTUAL_API virtual mono::float32_color Box(ColorF value) = 0;
 	//! Boxes a AABB value.
 	//!
 	//! @param value Value to box.
-	VIRTUAL_API virtual mono::object Box(AABB value) = 0;
+	VIRTUAL_API virtual mono::aabb Box(AABB value) = 0;
 };
 
 //! Base interface for objects that wrap Mono functionality.
@@ -354,7 +344,7 @@ struct IMonoHandle : public IMonoFunctionalityWrapper
 	//! Tells the object to hold given MonoObject and prevent its collection.
 	//!
 	//! @param object MonoObject that is in danger of GC if not held by this object.
-	VIRTUAL_API virtual void Hold(mono::object object) = 0;
+	VIRTUAL_API virtual void Hold(mono::object obj) = 0;
 	//! Tells this object to release MonoObject it held previously.
 	VIRTUAL_API virtual void Release() = 0;
 	//! Returns an instance of MonoObject this object is wrapped around.
@@ -408,22 +398,22 @@ struct IMonoAssembly : public IMonoFunctionalityWrapper
 	VIRTUAL_API virtual IMonoClass *GetClass(const char *nameSpace, const char *className) = 0;
 	//! Returns a method that satisfies given description.
 	//!
-	//! A list of parameters is a comma separated list of names of types each of which can be
-	//! a standard name with name space and full class name, like "System.Int32", or it can be
-	//! a short name, if the type is a built-in one, like "int".
+	//! A list of parameters is a comma separated list of names of types each of which must be
+	//! a standard name with name space and full class name, like "System.Int32".
 	//!
 	//! Examples:
 	//!
 	//! @code{.cpp}
 	//! IMonoAssembly *corlib = MonoEnv->CoreLibrary;
 	//!
-	//! IMonoMethod *binarySearch = corlib->MethodFromDescription
-	//!                             (
-	//!                                 "System",
-	//!                                 "Array",
-	//!                                 "BinarySearch",
-	//!                                 "System.Array,int,int,object,System.Collections.IComparer"
-	//!                             );
+	//! IMonoMethod *binarySearch =
+	//!     corlib->MethodFromDescription
+	//!     (
+	//!         "System",
+	//!         "Array",
+	//!         "BinarySearch",
+	//!         "System.Array,System.Int32,System.Int32,System.Object,System.Collections.IComparer"
+	//!     );
 	//! @endcode
 	//!
 	//! @param nameSpace  Name space where the class where the method is declared is located.
@@ -593,7 +583,8 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	//!
 	//! Simple rules to remember:
 	//!    1) Thunk returns mono::object and only takes mono::object parameters.
-	//!    2) Box every parameter that is a value-type before invocation, unbox result after.
+	//!    2) Box every parameter that is a value-type before invocation, unbox result after
+	//!       if needed.
 	//!    3) Result is undefined, if there was an exception that wasn't handled.
 	//!
 	//! Examples of usage:
@@ -602,7 +593,7 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	//!
 	//! Signatures:
 	//! C#:  int CalculateSum(int a, int b);
-	//! C++: typedef mono::int32 (*CalculateSum)(mono::int32 a, mono::int32 b, mono::exception *ex);
+	//! C++: typedef mono::int32 (__stdcall *CalculateSum)(mono::int32 a, mono::int32 b, mono::exception *ex);
 	//!
 	//! Getting the thunk:
 	//! @code{.cpp}
@@ -630,7 +621,7 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	//!
 	//! Signatures:
 	//! C#:  int GetHashCode();
-	//! C++: typedef mono::int32 (*GetHashCode)(mono::exception *ex);
+	//! C++: typedef mono::int32 (__stdcall *GetHashCode)(mono::object instance, mono::exception *ex);
 	//!
 	//! Getting the thunk:
 	//! @code{.cpp}
@@ -642,14 +633,14 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	//! @code{.cpp}
 	//!    mono::object instance = ...(Get the instance);
 	//!    mono::exception exception;
-	//!    mono::int32 boxedHash = hashFunc(&exception);
+	//!    mono::int32 boxedHash = hashFunc(instance, &exception);
 	//!    if (exception)
 	//!    {
 	//!        MonoEnv->HandleException(exception);		// Or you can handle it yourself.
 	//!    }
 	//!    else
 	//!    {
-	//!        // These code region is the only place where the result of invocation is defined.
+	//!        // This code region is the only place where the result of invocation is defined.
 	//!        int hash = Unbox<int>(boxedHash);
 	//!    }
 	//! @endcode
@@ -662,10 +653,9 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 
 	//! Invokes this method.
 	//!
-	//! Since extension methods are static by their internal nature,
-	//! you can pass null as object parameter, and that can work,
-	//! if extension method is not using the instance. It's up to
-	//! you to find uses for that minor detail.
+	//! Since extension methods are static by their internal nature, you can pass null
+	//! as object parameter, and that can work, if extension method is not using the
+	//! instance. It's up to you to find uses for that minor detail.
 	//!
 	//! @param object    Pointer to the instance to use, if this method is not
 	//!                  static, it can be null otherwise.
@@ -676,10 +666,9 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	VIRTUAL_API virtual mono::object Invoke(mono::object object, IMonoArray *params = nullptr, bool polymorph = false) = 0;
 	//! Invokes this method.
 	//!
-	//! Since extension methods are static by their internal nature,
-	//! you can pass null as object parameter, and that can work,
-	//! if extension method is not using the instance. It's up to
-	//! you to find uses for that minor detail.
+	//! Since extension methods are static by their internal nature, you can pass null
+	//! as object parameter, and that can work, if extension method is not using the
+	//! instance. It's up to you to find uses for that minor detail.
 	//!
 	//! @param object     Pointer to the instance to use, if this method is not
 	//!                   static, it can be null otherwise.
@@ -710,7 +699,7 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 //! is gathered.
 #define FLOWNODE_RECOGNITION_STAGE DEFAULT_INITIALIZATION_STAGE 4000000
 
-//! Base interface for objects that subscribe to the events produced by IMonoInterface.
+//! Base interface for objects that subscribe to the events raised by IMonoInterface.
 //!
 //! Listeners receive events in the order of registration. Internal listeners are always
 //! registered first.
@@ -752,12 +741,10 @@ public:
 	//! Invoked when this listener is registered to get indices of initialization stages
 	//! this listener would like to subscribe to.
 	//!
-	//! It's important to allow IMonoInterface implementation to delete the resultant array.
-	//! Unless it's a null pointer which will allow the system to ignore the listener.
+	//! Resultant list will be deleted after use, so return a deep copy, if you want it
+	//! to be used somewhere else.
 	//!
-	//! @param stageCount Reference to the number that represents length of returned array.
-	//!
-	//! @returns A pointer to an array of integer numbers that represent indices of
+	//! @returns A pointer to a list of integer numbers that represent indices of
 	//!          initialization stages this listener wants to subscribe to.
 	//!          Null can be return if the listener doesn't want to subscribe to anything.
 	virtual List<int> *GetSubscribedStages() = 0;
@@ -781,11 +768,11 @@ struct IMonoInterface
 {
 	//! Triggers registration of FlowGraph nodes.
 	//!
-	//! @remark Call this method from Game::RegisterGameFlowNodes function.
+	//! Call this method from Game::RegisterGameFlowNodes function.
 	VIRTUAL_API virtual void RegisterFlowGraphNodes() = 0;
 	//! Shuts down Mono run-time environment.
 	//!
-	//! @remark Call this method from GameStartup destructor.
+	//! Call this method from GameStartup destructor.
 	VIRTUAL_API virtual void Shutdown() = 0;
 
 	//! Converts given null-terminated string to Mono managed object.
@@ -871,11 +858,27 @@ struct IMonoInterface
 	VIRTUAL_API virtual void RemoveListener(IMonoSystemListener *listener) = 0;
 	//! Registers a new internal call.
 	//!
-	//! Internal calls allow .Net/Mono code to invoke unmanaged code.
-	//! Bear in mind that any structure object that is not built-in
-	//! .Net/Mono type (built-in types have keywords attached to them)
-	//! must be passed with either ref or out keyword. Such object
-	//! must then be unboxed before being access from C++ code.
+	//! There are 2 ways of invoking unmanaged code from managed one:
+	//!     1) Platform Invoke: Allows invocation of functions exported by unmanaged DLLs
+	//!                         and provides easy marshaling for all data. Its main drawback
+	//!                         is a huge cost of invocation itself which is about 100 times
+	//!                         slower then invocation of normal method.
+	//!     2) Internal Call:   Does not allow invocation of exported functions, requires
+	//!                         internal unmanaged code to register the call, before it can be
+	//!                         done. Also all arguments are passed using BLT with no extra
+	//!                         data processing and conversion. However that is the cost of
+	//!                         much faster invocation (speed rivals invocation of normal
+	//!                         methods).
+	//!
+	//! Rules of definition:
+	//!     1) Both parameters and the result are passed using BLT, therefore you have to
+	//!        make sure the types of arguments and the result in C# and C++ are blittable.
+	//!     2) There are no requirements specified for the calling convention, however
+	//!        using __cdecl is recommended.
+	//!     3) Any pointers to managed objects should be either unboxed or wrapped into
+	//!        IMonoHandle *(when using a general objects) or IMonoArray * when using
+	//!        arrays.
+	//!     4) Passing an argument using ref or out keyword causes a pointer to be passed.
 	//!
 	//! Examples:
 	//!
@@ -904,28 +907,21 @@ struct IMonoInterface
 	//!
 	//! Signatures:
 	//! C#:  [MethodImpl(MethodImplOptions.InternalCall)]
-	//!      extern internal static float CalculateArea(ref Vector2 leftBottom, ref Vector2 rightTop);
-	//! C++: float CalculateArea(mono::ref_param leftBottom, mono::ref_param rightTop);
+	//!      extern internal static float CalculateArea(Vector2 leftBottom, Vector2 rightTop);
+	//! C++: float CalculateArea(Vec2 leftBottom, Vec2 rightTop);
 	//!
 	//! C++ implementation:
 	//! @code{.cpp}
 	//! {
-	//!     // Unbox vectors.
-	//!     Vec2 leftBottomPosition = Unbox<Vec2>(leftBottom);
-	//!     Vec2 rightTopPosition   = Unbox<Vec2>(rightTop);
 	//!     // Calculate area.
-	//!     return abs((leftBottomPosition.x - rightTop.x) * (leftBottomPosition.y - rightTop.y));
+	//!     return abs((leftBottom.x - rightTop.x) * (leftBottom.y - rightTop.y));
 	//! }
 	//! @endcode
 	//!
 	//! C# invocation:
 	//! @code{.cs}
 	//! {
-	//!     // Declare variables.
-	//!     Vector2 leftBottom = new Vector2(2);
-	//!     Vector2 rightTop   = new Vector2(4, 5);
-	//!     // Pass those variables by reference.
-	//!     float area = (ClassName).CalculateArea(ref leftBottom, ref rightTop);
+	//!     float area = (ClassName).CalculateArea(new Vector2(2), new Vector2(4, 5));
 	//! }
 	//! @endcode
 	//!
@@ -934,19 +930,17 @@ struct IMonoInterface
 	//! Signatures:
 	//! C#:  [MethodImpl(MethodImplOptions.InternalCall)]
 	//!      extern internal static Material LoadMaterial(string name, ref MaterialParameters params);
-	//! C++: mono::object LoadMaterial(mono::string name, mono::ref_param params);
+	//! C++: mono::object LoadMaterial(mono::string name, MaterialParameters *params);
 	//!
 	//! C++ implementation:
 	//! @code{.cpp}
 	//! {
-	//!     // Unbox parameters.
-	//!     MaterialParameters pars = Unbox<MaterialParameters>(params);
 	//!     // Get the handle to the loaded material.
 	//!     IMaterial *materialHandle = m_pMaterialManager->LoadMaterial
 	//!     (
 	//!         MonoEnv->ToNativeString(name),
-	//!         pars.makeIfNotFound,
-	//!         pars.nonRemovable
+	//!         params->makeIfNotFound,
+	//!         params->nonRemovable
 	//!     );
 	//!     // Create an array for Material construction parameters.
 	//!     IMonoArray *ctorParams = MonoEnv->CreateArray(1, false);
@@ -974,7 +968,7 @@ struct IMonoInterface
 	//!         MakeIfNotFound = true,
 	//!         NonRemovable = false
 	//!     };
-	//!     // Pass those variables by reference.
+	//!     // Pass the variable by reference.
 	//!     Material deathMetal = (ClassName).LoadMaterial("DeathMetal", ref params);
 	//! }
 	//! @endcode
@@ -998,15 +992,13 @@ struct IMonoInterface
 	//! Signatures:
 	//! C#:  [MethodImpl(MethodImplOptions.InternalCall)]
 	//!      extern internal static bool TryGet(string name, out Data data);
-	//! C++: bool TryGet(mono::string name, mono::out_param data);
+	//! C++: bool TryGet(mono::string name, Data *data);
 	//!
 	//! C++ implementation:
 	//! @code{.cpp}
 	//! {
-	//!     // Cast the pointer.
-	//!     Data *dataPtr = (Data *)data;
 	//!     // Modify the object.
-	//!     dataPtr->number = 5;
+	//!     data->number = 5;
 	//!     return true;
 	//! }
 	//! @endcode
@@ -1309,7 +1301,7 @@ BOX_UNBOX inline mono::int64 Box(__int64 value) { return MonoEnv->DefaultBoxer->
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX inline mono::uin64 Box(unsigned __int64 value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::uint64 Box(unsigned __int64 value) { return MonoEnv->DefaultBoxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
