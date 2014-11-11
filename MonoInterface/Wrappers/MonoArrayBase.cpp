@@ -1,16 +1,9 @@
 #include "stdafx.h"
 #include "API_ImplementationHeaders.h"
 
-mono::object MonoArrayBase::GetItem(int index)
+void *MonoArrayBase::Item(int index)
 {
-	return *(mono::object *)mono_array_addr_with_size
-		(GetWrappedArray, this->GetElementSize(), index);
-}
-//! Sets an element at specified position.
-void MonoArrayBase::SetItem(int index, mono::object value)
-{
-	*(mono::object *)mono_array_addr_with_size(GetWrappedArray, this->GetElementSize(), index) =
-		value;
+	return mono_array_addr_with_size(GetWrappedArray, this->GetElementSize(), index);
 }
 
 //! Returns number of elements in the array.

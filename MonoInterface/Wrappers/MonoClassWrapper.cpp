@@ -324,7 +324,7 @@ bool MonoClassWrapper::ParametersMatch(MonoMethodSignature *sig, IMonoArray *par
 	{
 		MonoType *paramType = mono_signature_get_params(sig, &paramIterator);
 		MonoType *arrayParamType =
-			mono_class_get_type(mono_object_get_class((MonoObject *)pars->GetItem(i)));
+			mono_class_get_type(mono_object_get_class(pars->At<MonoObject *>(i)));
 
 		mono::object exception;
 		mono::object comparisonResult =

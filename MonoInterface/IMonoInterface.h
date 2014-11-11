@@ -441,14 +441,21 @@ struct IMonoArray : public IMonoFunctionalityWrapper
 	__declspec(property(get=GetSize)) int Length;
 	//! Gets the type of the elements of the array.
 	__declspec(property(get=GetElementClass)) IMonoClass *ElementClass;
-	//! Gets item located at the specified position.
+	//! Provides access to the item.
 	//!
-	//! @param index Zero-based index of the item to get.
-	VIRTUAL_API virtual mono::object GetItem(int index) = 0;
-	//! Sets item located at the specified position.
+	//! Don't hesitate on dereferencing returned pointer: Mono arrays have tendency of
+	//! being moved around the memory.
 	//!
-	//! @param index Zero-based index of the item to set.
-	VIRTUAL_API virtual void SetItem(int index, mono::object value) = 0;
+	//! @param index Zero-based index of the item to access.
+	//!
+	//! @returns Pointer to the item. The pointer is either mono::object, if this is an
+	//!          array of reference types, or a pointer to a struct that can be easily
+	//!          dereferenced, if this is an array of value types.
+	VIRTUAL_API virtual void *Item(int index) = 0;
+	template<typename T> T& At(int index)
+	{
+		return *(T *)this->Item(index);
+	}
 	//! Tells the object that it's no longer needed.
 	VIRTUAL_API virtual void Release() = 0;
 

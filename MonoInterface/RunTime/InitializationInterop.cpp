@@ -33,8 +33,7 @@ mono::Array InitializationInterop::GetSubscribedStagesBind()
 	IMonoArray *result = MonoEnv->CreateArray(SystemInt32, stagesCount, false);
 	for (int i = 0; i < stagesCount; i++)
 	{
-		mono::int32 boxedIndex = Box(indices[i]);
-		result->SetItem(i, boxedIndex);
+		result->At<int>(i) = indices[i];
 	}
 	return (mono::Array)result->GetWrappedPointer();
 }

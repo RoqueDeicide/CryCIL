@@ -14,7 +14,7 @@ mono::object MonoMethodWrapper::Invoke(mono::object object, IMonoArray *params, 
 	void **pars = new void*[params->Length];
 	for (int i = 0; i < params->Length; i++)
 	{
-		pars[i] = params->GetItem(i);
+		pars[i] = params->Item(i);
 	}
 	mono::object result = this->Invoke(object, pars, polymorph);
 	delete pars;

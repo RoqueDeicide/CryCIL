@@ -23,10 +23,7 @@ public:
 
 	}
 
-	//! Returns an element at specified position.
-	virtual mono::object GetItem(int index);
-	//! Sets an element at specified position.
-	virtual void SetItem(int index, mono::object value);
+	virtual void *Item(int index);
 
 	//! Returns number of elements in the array.
 	virtual int GetSize();
