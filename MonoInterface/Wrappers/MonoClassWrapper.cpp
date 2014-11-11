@@ -308,7 +308,7 @@ IMonoAssembly *MonoClassWrapper::GetAssembly()
 
 void *MonoClassWrapper::GetWrappedPointer()
 {
-	return this->wrappedClass;
+	return this->wrappedClass->GetWrappedPointer();
 }
 bool MonoClassWrapper::ParametersMatch(MonoMethodSignature *sig, IMonoArray *pars)
 {
