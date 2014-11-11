@@ -58,7 +58,7 @@ MonoInterface::MonoInterface(IGameFramework *framework, IMonoSystemListener **li
 	{
 		for (int i = 0; i < listenerCount; i++)
 		{
-			this->broadcaster->listeners.Add(listeners[i]);
+			this->broadcaster->listeners->Add(listeners[i]);
 		}
 	}
 	// Set global variables.
@@ -142,6 +142,7 @@ MonoInterface::~MonoInterface()
 	{
 		mono_jit_cleanup(this->appDomain);
 		this->running = false;
+		delete this->broadcaster;
 	}
 }
 #pragma endregion
@@ -386,7 +387,7 @@ void MonoInterface::AddListener(IMonoSystemListener *listener)
 	{
 		return;
 	}
-	this->broadcaster->listeners.Add(listener);
+	this->broadcaster->listeners->Add(listener);
 }
 //! Unregisters an object that receives notifications about CryCIL events.
 //!
@@ -444,10 +445,10 @@ void MonoInterface::OnSystemEvent(ESystemEvent event, UINT_PTR wparam, UINT_PTR 
 void MonoInterface::RegisterDefaultListeners()
 {
 #ifdef _DEBUG
-	this->broadcaster->listeners.Add(new DebugEventReporter());
+	this->broadcaster->listeners->Add(new DebugEventReporter());
 #endif // _DEBUG
-	this->broadcaster->listeners.Add(new InitializationInterop());
-	this->broadcaster->listeners.Add(new LogPostingInterop());
+	this->broadcaster->listeners->Add(new InitializationInterop());
+	this->broadcaster->listeners->Add(new LogPostingInterop());
 }
 #pragma endregion
 #pragma region Thunks Initialization

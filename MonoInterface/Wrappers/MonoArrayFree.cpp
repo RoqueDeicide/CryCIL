@@ -13,7 +13,6 @@ MonoArrayFree::MonoArrayFree(int size)
 MonoArrayFree::MonoArrayFree(IMonoClass *elementClass, int size)
 {
 	this->size = size;
-
 	this->wrappedArray = mono_array_new((MonoDomain *)MonoEnv->AppDomain,
 		(MonoClass *)elementClass->GetWrappedPointer(), this->size);
 }

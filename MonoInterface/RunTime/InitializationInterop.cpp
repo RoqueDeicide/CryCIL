@@ -29,11 +29,12 @@ mono::Array InitializationInterop::GetSubscribedStagesBind()
 {
 	int stagesCount;
 	int *indices = monoEnv->broadcaster->GetSubscribedStagesInfo(stagesCount);
-	IMonoArray *result =
-		MonoEnv->CreateArray(MonoClassCache::Wrap(mono_get_int32_class()), stagesCount, false);
+	IMonoClass *SystemInt32 = MonoClassCache::Wrap(mono_get_int32_class());
+	IMonoArray *result = MonoEnv->CreateArray(SystemInt32, stagesCount, false);
 	for (int i = 0; i < stagesCount; i++)
 	{
-		result->SetItem(i, Box(indices[i]));
+		mono::int32 boxedIndex = Box(indices[i]);
+		result->SetItem(i, boxedIndex);
 	}
 	return (mono::Array)result->GetWrappedPointer();
 }
