@@ -4,8 +4,6 @@
 //! Reports events that occur within CryCIL.
 struct DebugEventReporter : public IMonoSystemListener
 {
-	virtual void SetInterface(IMonoInterface *handle);
-
 	virtual void OnPreInitialization();
 
 	virtual void OnRunTimeInitializing();

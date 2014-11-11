@@ -2,12 +2,6 @@
 
 #include "DebugEventReporter.h"
 
-void DebugEventReporter::SetInterface(IMonoInterface *handle)
-{
-	// No need to set anything. We have access to MonoEnv,
-	// since we are defined within MonoInterface.dll
-}
-
 void DebugEventReporter::OnPreInitialization()
 {
 	CryLogAlways("Ready to initialize CryCIL.");
@@ -62,7 +56,7 @@ void DebugEventReporter::OnInitializationStage(int stageIndex)
 		CryLogAlways("Registering game modes.");
 		break;
 	case FLOWNODE_RECOGNITION_STAGE:
-		CryLogAlways("Preparing registration data for FLowGraph nodes.");
+		CryLogAlways("Preparing registration data for FlowGraph nodes.");
 		break;
 	default:
 		break;
