@@ -119,6 +119,28 @@ public:
 		FatalError("Attempt to get a value that has no key associated with it in the collection.");
 		return this->values[0];
 	}
+	//! Attempts to get the value that is supposed to be associated with the key.
+	bool TryGet(KeyType key, ElementType &returnedValue)
+	{
+		int index = this->BinarySearch(key);
+		if (index >= 0)
+		{
+			returnedValue = this->values[index];
+			return true;
+		}
+		return false;
+	}
+	//! Attempts to set the value that is supposed to be associated with the key.
+	bool TrySet(KeyType key, ElementType &value)
+	{
+		int index = this->BinarySearch(key);
+		if (index >= 0)
+		{
+			this->values[index] = returnedValue;
+			return true;
+		}
+		return false;
+	}
 	//! Processes a collection.
 	void ForEach(std::function<void(KeyType, ElementType)> processor)
 	{

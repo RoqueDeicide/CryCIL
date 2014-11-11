@@ -143,15 +143,20 @@ int *EventBroadcaster::GetSubscribedStagesInfo(int &stageCount)
 //! @param stageIndex Index of initialization stage that is happening.
 void EventBroadcaster::OnInitializationStage(int stageIndex)
 {
-	auto stageList = this->stageMap->At(stageIndex);
-	if (!stageList)
-	{
-		return;
-	}
+	CryLogAlways("Commencing initialization stage #%d", stageIndex);
 
-	for (int i = 0; i < stageList->Length; i++)
+	List<IMonoSystemListener *> *stageList;
+	if (this->stageMap->TryGet(stageIndex, stageList))
 	{
-		stageList->At(i)->OnInitializationStage(stageIndex);
+		if (!stageList)
+		{
+			return;
+		}
+
+		for (int i = 0; i < stageList->Length; i++)
+		{
+			stageList->At(i)->OnInitializationStage(stageIndex);
+		}
 	}
 }
 //! Broadcasts CryamblyInitilized event.
