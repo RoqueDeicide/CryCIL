@@ -143,7 +143,7 @@
     <Compile Include="RunTime\Logging\ConsoleLogWriter.cs" />
     <Compile Include="RunTime\Logging\ConsoleLogWriter.Write.cs" />
     <Compile Include="RunTime\Logging\ConsoleLogWriter.WriteLine.cs" />
-    <Compile Include="RunTime\Logging\ConsoleOutputLevel.cs" />
+    <Compile Include="Miscellaneous\ConsoleOutputLevel.cs" />
     <Compile Include="RunTime\Logging\NamespaceDoc.cs" />
     <Compile Include="RunTime\MonoInterface.cs" />
     <Compile Include="RunTime\NamespaceDoc.cs" />

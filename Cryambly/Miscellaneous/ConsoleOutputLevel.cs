@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CryCil.Engine.DebugServices;
+﻿using CryCil.Engine.DebugServices;
+using CryCil.RunTime.Logging;
 
-namespace CryCil.RunTime.Logging
+namespace CryCil
 {
 	/// <summary>
 	/// Represents an object that can be used to override custom console output importance level.
