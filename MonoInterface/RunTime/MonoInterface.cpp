@@ -135,13 +135,21 @@ MonoInterface::MonoInterface(IGameFramework *framework, IMonoSystemListener **li
 	Framework->RegisterListener(this, "CryCIL", FRAMEWORKLISTENERPRIORITY_GAME);
 	gEnv->pSystem->GetISystemEventDispatcher()->RegisterListener(this);
 	this->broadcaster->OnPostInitialization();
+	// Uncomment next 2 lines, if there is a need to crash the game when debugging initialization.
+
+// 	int *crash = nullptr;
+// 	*crash = 101;
 }
 MonoInterface::~MonoInterface()
 {
 	if (running)
 	{
+		Framework->UnregisterListener(this);
+		CryLogAlways("Shutting down jit.");
 		mono_jit_cleanup(this->appDomain);
+		CryLogAlways("No more running.");
 		this->running = false;
+		CryLogAlways("Deleting broadcaster.");
 		delete this->broadcaster;
 	}
 }
@@ -149,7 +157,7 @@ MonoInterface::~MonoInterface()
 #pragma region External Triggers
 //! Triggers registration of FlowGraph nodes.
 //!
-//! @remark Call this method from Game::RegisterGameFlowNodes function.
+//! Call this method from Game::RegisterGameFlowNodes function.
 void MonoInterface::RegisterFlowGraphNodes()
 {
 	if (!this->running)
@@ -161,18 +169,21 @@ void MonoInterface::RegisterFlowGraphNodes()
 }
 //! Shuts down Mono run-time environment.
 //!
-//! @remark Call this method from GameStartup destructor.
+//! Call this method from GameStartup destructor.
 void MonoInterface::Shutdown()
 {
 	if (!this->running)
 	{
 		return;
 	}
+	CryLogAlways("About to broadcast shutdown event.");
 	this->broadcaster->Shutdown();
+	CryLogAlways("About to send shutdown event to Cryambly.");
 	mono::exception ex;
 	MonoInterfaceThunks::Shutdown(this->managedInterface->Get(), &ex);
+	CryLogAlways("Invoking MonoInterface destructor.");
 	// Invoke destructor.
-	delete this;
+	this->~MonoInterface();
 }
 #pragma endregion
 #pragma region String Conversions
