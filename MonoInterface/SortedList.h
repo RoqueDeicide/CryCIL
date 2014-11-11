@@ -16,6 +16,21 @@
 
 #include "List.h"
 
+//! Default comparison function that uses KeyType's comparison operators.
+template<typename KeyType>
+inline int DefaultComparison(KeyType k1, KeyType k2)
+{
+	if (k1 > k2)
+	{
+		return 1;
+	}
+	if (k2 > k1)
+	{
+		return -1;
+	}
+	return 0;
+}
+
 //! Represents a sorted collection of key-value pairs.
 //!
 //! @tparam KeyType     Type of keys. Needs to overload comparison operators.
@@ -27,11 +42,13 @@ class SortedList
 private:
 	List<KeyType> keys;
 	List<ElementType> values;
+	std::function<int(KeyType, KeyType)> comparer;
 public:
 	//! Creates a default list.
 	SortedList()
 		: keys(10)
 		, values(10)
+		, comparer(nullptr)
 	{
 		
 	}
@@ -39,8 +56,24 @@ public:
 	SortedList(int capacity)
 		: keys(capacity)
 		, values(capacity)
+		, comparer(nullptr)
 	{
 
+	}
+	//! Creates a list with specific capacity that uses special comparison algorithm.
+	SortedList(int capacity, std::function<int(KeyType, KeyType)> comparisonFunc)
+		: keys(capacity)
+		, values(capacity)
+		, comparer(comparisonFunc)
+	{
+
+	}
+	//! Creates a deep copy of the list.
+	SortedList(SortedList<KeyType, ElementType, Ascending> &listToCopy)
+		: comparer(listToCopy.comparer)
+	{
+		this->keys(listToCopy.keys);
+		this->values(listToCopy.values);
 	}
 	~SortedList()
 	{
@@ -50,25 +83,24 @@ public:
 	//! Determines whether there is a key in the collection.
 	bool Contains(KeyType key)
 	{
-		return this->BinarySearch(key) != -1;
+		return this->BinarySearch(key) >= 0;
 	}
 	//! Adds a key-value pair.
 	void Add(KeyType key, ElementType element)
 	{
-		std::cout << key << std::endl;
-		int index = this->BinarySearchIndex(key);
-		if (index == -1)
+		int index = this->BinarySearch(key);
+		if (index >= 0)
 		{
 			FatalError("Attempt to insert a key that is already in the collection.");
 		}
-		this->keys.Insert(key, index);
-		this->values.Insert(element, index);
+		this->keys.Insert(key, ~index);
+		this->values.Insert(element, ~index);
 	}
 	//! Removes a value mapped to a given key, and indicates removal.
 	bool Remove(KeyType key)
 	{
 		int index = this->BinarySearch(key);
-		if (index != -1)
+		if (index >= 0)
 		{
 			this->keys.RemoveAt(index);
 			this->values.RemoveAt(index);
@@ -80,11 +112,12 @@ public:
 	ElementType &At(KeyType key)
 	{
 		int index = this->BinarySearch(key);
-		if (index != -1)
+		if (index >= 0)
 		{
 			return this->values[index];
 		}
 		FatalError("Attempt to get a value that has no key associated with it in the collection.");
+		return this->values[0];
 	}
 	//! Processes a collection.
 	void ForEach(std::function<void(KeyType, ElementType)> processor)
@@ -110,67 +143,29 @@ public:
 		return this->keys.Length;
 	}
 private:
-	//! Looks for a position where a value associated with given key can be put.
-	int BinarySearchIndex(KeyType key)
-	{
-		if (this->keys.Length == 0)
-		{
-			return 0;
-		}
-		int left = 0;
-		int right = this->keys.Length - 1;
-		while (left != right)
-		{
-			int mid = left + (right - left) / 2;
-			if (this->keys[mid] < key)
-			{
-				left = mid + 1;
-			}
-			else if (this->keys[mid] > key)
-			{
-				right = mid;
-			}
-			else
-			{
-				return -1;
-			}
-		}
-		KeyType lastKey = this->keys[left];
-
-		if (lastKey == key)
-		{
-			return -1;
-		}
-		if (lastKey < key)
-		{
-			return Ascending ? left + 1 : left;
-		}
-		return Ascending ? left : left + 1;
-	}
 	int BinarySearch(KeyType key)
 	{
-		if (this->keys.Length == 0)
+		int lo = 0;
+		int hi = this->Length - 1;
+		while (lo <= hi)
 		{
-			return -1;
-		}
-		int left = 0;
-		int right = this->keys.Length - 1;
-		while (left != right)
-		{
-			int mid = left + (right - left) / 2;
-			if (this->keys[mid] < key)
+			int i = lo + ((hi - lo) >> 1);
+			int order =
+				(this->comparer)
+				? this->comparer(this->keys[i], key)
+				: DefaultComparison(this->keys[i], key);
+
+			if (order == 0) return i;
+			if (order < 0)
 			{
-				left = mid + 1;
-			}
-			else if (this->keys[mid] > key)
-			{
-				right = mid;
+				lo = i + 1;
 			}
 			else
 			{
-				return mid;
+				hi = i - 1;
 			}
 		}
-		return -1;
+
+		return ~lo;
 	}
 };
