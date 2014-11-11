@@ -94,7 +94,11 @@ public:
 
 	virtual mono::object Get()
 	{
-		return this->obj;
+		if (pinned)
+		{
+			return this->obj;
+		}
+		return (mono::object)mono_gchandle_get_target(this->gc_handle);
 	}
 };
 //! Represents persistent object wrapper.
