@@ -3,6 +3,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <iostream>
 // Stop compiler from complaining about strncpy.
 #pragma warning(disable:4996)
 
@@ -252,6 +253,16 @@ public:
 			}
 		}
 		return -1;
+	}
+	int CompareTo(TextBase *other)
+	{
+		int minLength = this->length > other->length ? other->length : this->length;
+		int comparison = strncmp(this->text, other->text, minLength);
+		if (comparison == 0 && this->length != other->length)
+		{
+			return this->length > other->length ? 1 : -1;
+		}
+		return comparison;
 	}
 	//! Gets the length of the string.
 	__declspec(property(get=GetLength)) int Length;
@@ -644,4 +655,20 @@ inline Text **TextBase::Split(char symbol, int &partCount, bool removeEmptyParts
 	}
 	partCount = partIndex;
 	return pars;
+}
+
+inline std::ostream &operator <<(std::ostream &out, Text &text)
+{
+	const char *nt = text.ToNTString();
+	out << nt;
+	delete nt;
+	return out;
+}
+
+inline std::ostream &operator <<(std::ostream &out, Text *text)
+{
+	const char *nt = text->ToNTString();
+	out << nt;
+	delete nt;
+	return out;
 }
