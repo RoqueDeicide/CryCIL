@@ -7,17 +7,21 @@ CryCIL is a middleware module that allows to use .Net-based languages to create 
 ## Origins
 Historically engines from CryEngine family allowed to create games using C++ for low-to-mid level logic with Lua used for high level logic. In the 25th of June 2011, Sam Neirinck aka Ins has decided to change this and initiated project "cemono" which goal was to allow high level logic to be done with .Net langeuages (e.g. C#) utilizing the power of Mono.
 ## CryMono
-The project didn't last for very long with Ins abandoning it after just &gt;100 commits. The work was then taken over by Filip Lundgren aka i59, who branch the project into CryMono. That one proved to have way more life in it, with i59 spending 2 years developing.
+The project didn't last for very long with Ins abandoning it after just &gt;100 commits. The work was then taken over by Filip Lundgren aka i59, who branched the project into CryMono. That one proved to have way more life in it, with i59 spending 2 years developing.
 ## Hiatus
-Good things are not created in a day, and Filip greatly slowed down the progress. It's hard to say, what happened. The most commonly known reason is Herr Lundgren moving to PoppermostProductions, beginning to work on SNOW the game. The author of these lines, however thinks, that the biggest reason was excessive ambitiosness of CryMono: it had way too many features, that were fancy, hard to implement, and some of them bloated the code without even working.
+CryMono updates, however, greatly slowed down during CryEngine 3.5 era with barely any features introduced, and compatibility issues fixed only after quite some time.
+
+Release of CryEngine 3.6 became a turning point in the history of CryMono: it broke compatibility while i59 has moved on to SNOW, leaving the project unusable and with nobody to fix it.
 ## New Caretaker
-Although CryDev community had no care for CryMono, one person, RoqueDeicide (that's me), coudn't accept death of idea. I'm C# developer with ~6 years of experience, and using C++ or Lua is not something I would desire. So at the beginning of 2014, which is the time when the hiatus began, I've started to slowly expand the functionality of CryMono.
+I'm C# developer with ~6 years of experience, and using C++ or Lua is not something I would desire. So at the beginning of 2014, which is the time when the hiatus began, I've started slowly expanding the functionality of CryMono.
 
-When EaaS was released, it became very clear, that is not the small changes that are needed. There are way too many problems, that are also rather problematic to fix. So in July 2014 I've forked CryMono repository, and started working at full swing.
+When EaaS was released, it became very clear, that the small changes wouldn't cut it. So in July 2014 I've forked CryMono repository, and started working at full swing.
 
-I have exposed some parts of CryEngine triangular mesh editing interface for starters, then I ported Evan Wallace's implementation of CSG operations from javascript to C#. Thinking, what to do next revealed to me, that old features had to go: too much bloat, too much garbage. At that point, branch "SubsystemOverhaul" was created, where I am being a busy bee to the day of writing this.
+I have exposed some parts of CryEngine triangular mesh editing interface for starters, then I ported Evan Wallace's implementation of CSG operations from javascript to C#.
+
+The next milestone would be to remove some of the old, too complicated features, that made the development process slow, and debugging very hard. Achieving that goal proved to be a little too much for me, as my inexperience with C++ and lack of understanding of CryMono's internal mechanisms (mostly thanks to poor docs) caused me to botch CryMono completely, leaving no choice other then restarting the project from scratch.
 ## CryCIL
-The vision of cemono and CryMono was to create means of coding high level logic, low and mid levels were supposed to be handled by C++. That is a vision, different from mine: Mine is to create means of coding Any levels of logic using .Net languages. I have also cut out features like realtime-scripting, and moved the module towards Compile-Once-At-The-Start model. This made me feel that it was appropriate to disassociate my work from CryMono and rebrand it to CryCIL - as a project with different goal.
+After restarting the project and naming it CryCIL I've set out to create "v1" version of it which would be the minimal implementation needed for working with Mono. v1 mostly focuses on just establishing virtual interface with Mono with minimal interaction with CryEngine, which means, that it has a potential to be compatible with almost any other version of CE.
 # Documentation & Info
 Most of the tutorial-style documentation articles will at the Wiki section of the <a href="https://github.com/RoqueDeicide/CryCIL/">GitHub</a> page.
 
