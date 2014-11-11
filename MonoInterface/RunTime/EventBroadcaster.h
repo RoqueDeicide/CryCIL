@@ -5,9 +5,11 @@
 //! Broadcasts events to listeners.
 struct EventBroadcaster
 {
-	List<IMonoSystemListener *> listeners;
-	// Map is basically a SortedList.
-	SortedList<int, List<IMonoSystemListener *> *> stageMap;
+	List<IMonoSystemListener *> *listeners;
+	SortedList<int, List<IMonoSystemListener *> *> *stageMap;
+	//! Initializes event broadcaster.
+	EventBroadcaster();
+	~EventBroadcaster();
 	//! Removes a listener from broadcasting list and stages map.
 	void RemoveListener(IMonoSystemListener *listener);
 	//! Gives listeners a pointer to IMonoInterface.
