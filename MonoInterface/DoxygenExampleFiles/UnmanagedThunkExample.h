@@ -1,31 +1,37 @@
 #include "stdafx.h"
 
 #include "IMonoInterface.h"
-// Lets pretend that this function will give some object, which hash code we need.
-IMonoHandle *GetObj()
-{
-	return nullptr;
-}
+
 // Define the signature.
-typedef mono::int32(__stdcall *GetHashCode) (mono::object thisObj, mono::exception *exception);
+typedef void (__stdcall *Clamp)(mono::vector2 value, mono::vector2 min, mono::vector2 max, mono::vector2 result, mono::exception *ex);
 
 void example()
 {
-	IMonoHandle *obj = GetObj();
 	// Get the method.
-	IMonoMethod *hashCodeMethod = obj->GetClass()->GetMethod("GetHashCode");
+	IMonoMethod *clampMethod = MonoEnv->Cryambly->GetClass("CryCil.Mathematics", "Vector2")->GetMethod("Clamp", 4);
 	// Get the pointer to the thunk.
-	GetHashCode hasCodeFunc = (GetHashCode)hashCodeMethod->UnmanagedThunk;
+	Clamp clamp = (Clamp)clampMethod->UnmanagedThunk;
 	// Prepare to invoke it.
+	mono::vector2 value =  Box(Vec2(10, 13));
+	mono::vector2 min =    Box(Vec2(13, 8));
+	mono::vector2 max =    Box(Vec2(30, 12));
+	mono::vector2 result = Box(Vec2(0, 0));         // Box default values when using "out" parameters.
+	                                                // Otherwise expect the program to crash.
 	mono::exception exc;
 	// Call it like a standard function pointer.
-	mono::int32 result = hasCodeFunc(obj->Get(), &exc);
+	clamp(value, min, max, result, &exc);
 	if (exc)
 	{
 		MonoEnv->HandleException(exc);
 	}
 	else
 	{
-		int hashCode = Unbox<int>(result);
+		// This code region is the only place where the result of invocation is defined.
+        
+		// Unbox the "out" parameter.
+		Vec2 vector = Unbox<Vec2>(result);
+		// Print the components.
+		CryLogAlways("X component of the vector = %d", vector.x);
+		CryLogAlways("Y component of the vector = %d", vector.y);
 	}
 }

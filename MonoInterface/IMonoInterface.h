@@ -575,24 +575,27 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	//! Returns a pointer to a C-style function that can be invoked like a standard function pointer.
 	//!
 	//! Signature of the function pointer is defined by the following rules:
-	//!    1) The end result is always boxed, therefore it should be mono::object at all times;
+	//!    1) Only built-in types can be used to pass values between managed and unmanaged code
+	//!       directly. Every value-type that is not a built-in type must (un)boxed.
 	//!    2) Calling convention is a standard one for the platform. (__stdcall for Windows.)
 	//!    3) If the method is an instance method then the first parameter should be
 	//!       mono::object that represents an instance this method is called for;
-	//!    4) The list of methods parameters follows where every argument is represented by
-	//!       mono::object that points at the appropriate object, if that object is a value,
-	//!       then it must be boxed;
-	//!    5) The very last parameter is a pointer to mono::object (mono::object *), it must
-	//!       not be null at the point of invocation and it will be null after method returns
-	//!       normally, if there was an unhandled exception however, the last parameter will
-	//!       point at the exception object. You can handle it yourself, or pass it to
+	//!       If the instance is a value-type object, then it must be boxed, even if it's a
+	//!       built-in type.
+	//!    4) The actual parameters that method takes are defined in the same order as in .Net
+	//!       method dignature.
+	//!    5) If the parameter is of built-in type and it is passed by reference, then the
+	//!       pointer to that type must be used in C++ signature.
+	//!    6) If the parameter is not of built-in type and it is passed by reference, then the
+	//!       parameter in C++ must be defined in usual manner.
+	//!    7) The very last parameter is a pointer to mono::object (mono::object *), it must
+	//!       not be null at the point of invocation and it will point at null after method
+	//!       returns normally, if there was an unhandled exception however, the last parameter
+	//!       will point at the exception object. You can handle it yourself, or pass it to
 	//!       IMonoInterface::HandleException.
 	//!
-	//! Simple rules to remember:
-	//!    1) Thunk returns mono::object and only takes mono::object parameters.
-	//!    2) Box every parameter that is a value-type before invocation, unbox result after
-	//!       if needed.
-	//!    3) Result is undefined, if there was an exception that wasn't handled.
+	//! Warning: Attempting to get unmanaged thunk of virtual method will result in
+	//!          InvalidProgramException being raised.
 	//!
 	//! Examples of usage:
 	//!
@@ -600,7 +603,7 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	//!
 	//! Signatures:
 	//! C#:  int CalculateSum(int a, int b);
-	//! C++: typedef mono::int32 (__stdcall *CalculateSum)(mono::int32 a, mono::int32 b, mono::exception *ex);
+	//! C++: typedef int (__stdcall *CalculateSum)(int a, int b, mono::exception *ex);
 	//!
 	//! Getting the thunk:
 	//! @code{.cpp}
@@ -610,9 +613,8 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	//!
 	//! Invocation:
 	//! @code{.cpp}
-	//!    int a,b = 0;
 	//!    mono::exception exception;
-	//!    mono::int32 boxedSum = sumFunc(Box(a), Box(b), &exception);
+	//!    int sum = sumFunc(10, 15, &exception);
 	//!    if (exception)
 	//!    {
 	//!        MonoEnv->HandleException(exception);		// Or you can handle it yourself.
@@ -620,27 +622,27 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	//!    else
 	//!    {
 	//!        // These code region is the only place where the result of invocation is defined.
-	//!        int sum = Unbox<int>(boxedSum);
+	//!        CryLogAlways("Sum of 10 and 15 is %d", sum);
 	//!    }
 	//! @endcode
 	//!
 	//! Instance method:
 	//!
 	//! Signatures:
-	//! C#:  int GetHashCode();
-	//! C++: typedef mono::int32 (__stdcall *GetHashCode)(mono::object instance, mono::exception *ex);
+	//! C#:  float[] ToArray();
+	//! C++: typedef mono::Array (__stdcall *Vector2_ToArray)(mono::vector2 instance, mono::exception *ex);
 	//!
 	//! Getting the thunk:
 	//! @code{.cpp}
-	//!    IMonoMethod *getHashCodeMethod = ... (Get the method pointer).
-	//!    GetHashCode hashFunc = (GetHashCode)getHashCodeMethod->UnmanagedThunk;
+	//!    IMonoMethod *toArrayMethod = ... (Get the method pointer).
+	//!    Vector2_ToArray toArray = (Vector2_ToArray)toArrayMethod->UnmanagedThunk;
 	//! @endcode
 	//!
 	//! Invocation:
 	//! @code{.cpp}
-	//!    mono::object instance = ...(Get the instance);
+	//!    mono::vector2 instance = Box(Vec2(10, 13));
 	//!    mono::exception exception;
-	//!    mono::int32 boxedHash = hashFunc(instance, &exception);
+	//!    mono::Array componentsArray = toArray(instance, &exception);
 	//!    if (exception)
 	//!    {
 	//!        MonoEnv->HandleException(exception);		// Or you can handle it yourself.
@@ -648,7 +650,86 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	//!    else
 	//!    {
 	//!        // This code region is the only place where the result of invocation is defined.
-	//!        int hash = Unbox<int>(boxedHash);
+	//!        
+	//!        // Wrap the array.
+	//!        IMonoArray *vectorComponents = MonoEnv->WrapArray(componentsArray, true);
+	//!        // Print the components.
+	//!        CryLogAlways("X component of the vector = %d", vectorComponents->At<float>(0));
+	//!        CryLogAlways("Y component of the vector = %d", vectorComponents->At<float>(1));
+	//!        // Release the array.
+	//!        vectorComponents->Release();
+	//!    }
+	//! @endcode
+	//!
+	//! Static method with ref and out parameters:
+	//!
+	//! Signatures:
+	//! C#:  void Clamp(ref Vector2 value, ref Vector2 min, ref Vector2 max, out Vector2 result);
+	//! C++: typedef void (__stdcall *Clamp)(mono::vector2 value, mono::vector2 min, mono::vector2 max, mono::vector2 result, mono::exception *ex);
+	//!
+	//! Getting the thunk:
+	//! @code{.cpp}
+	//!    IMonoMethod *ClampMethod = ... (Get the method pointer).
+	//!    Clamp clamp = (Clamp)ClampMethod->UnmanagedThunk;
+	//! @endcode
+	//!
+	//! Invocation:
+	//! @code{.cpp}
+	//!    mono::vector2 value = Box(Vec2(10, 13));
+	//!    mono::vector2 min = Box(Vec2(13, 8));
+	//!    mono::vector2 max = Box(Vec2(30, 12));
+	//!    mono::vector2 result = Box(Vec2(0, 0));	// Box default values when using "out" parameters.
+	//!                                           	// Otherwise expect the program to crash.
+	//!    mono::exception exception;
+	//!    clamp(value, min, max, result, &exception);
+	//!    if (exception)
+	//!    {
+	//!        MonoEnv->HandleException(exception);		// Or you can handle it yourself.
+	//!    }
+	//!    else
+	//!    {
+	//!        // This code region is the only place where the result of invocation is defined.
+	//!        
+	//!        // Unbox the "out" parameter.
+	//!        Vec2 vector = Unbox<Vec2>(result);
+	//!        // Print the components.
+	//!        CryLogAlways("X component of the vector = %d", vector.x);
+	//!        CryLogAlways("Y component of the vector = %d", vector.y);
+	//!    }
+	//! @endcode
+	//!
+	//! Instance method with custom value-type result:
+	//!
+	//! Signatures:
+	//! C#:  Vector3 GetRotated(Vector3 axis, float angle);
+	//! C++: typedef mono::vector3 (__stdcall *GetRotated)(mono::vector3 instance, mono::vector3 axis, float angle, mono::exception *ex);
+	//!
+	//! Getting the thunk:
+	//! @code{.cpp}
+	//!    IMonoMethod *GetRotatedMethod = ... (Get the method pointer).
+	//!    GetRotated getRotated = (GetRotated)GetRotatedMethod->UnmanagedThunk;
+	//! @endcode
+	//!
+	//! Invocation:
+	//! @code{.cpp}
+	//!    mono::vector3 instance = Box(Vec3(10, 13, 0));
+	//!    mono::vector3 axis = Box(Vec3(0, 0, 1));
+	//!    mono::exception exception;
+	//!    mono::vector3 result = getRotated(instance, axis, PI, &exception);
+	//!    if (exception)
+	//!    {
+	//!        MonoEnv->HandleException(exception);		// Or you can handle it yourself.
+	//!    }
+	//!    else
+	//!    {
+	//!        // This code region is the only place where the result of invocation is defined.
+	//!        
+	//!        // Unbox the result.
+	//!        Vec3 vector = Unbox<Vec3>(result);
+	//!        // Print the components.
+	//!        CryLogAlways("X component of the vector = %d", vector.x);
+	//!        CryLogAlways("Y component of the vector = %d", vector.y);
+	//!        CryLogAlways("Z component of the vector = %d", vector.z);
 	//!    }
 	//! @endcode
 	//! @example DoxygenExampleFiles\UnmanagedThunkExample.cpp
