@@ -202,25 +202,59 @@ IMonoMethod **MonoClassWrapper::GetMethods(const char *name, int &foundCount)
 //! @param name Name of the field which value to get.
 mono::object MonoClassWrapper::GetField(mono::object obj, const char *name)
 {
-	return (mono::object)mono_field_get_value_object
-	(
-		(MonoDomain *)MonoEnv->AppDomain,
-		mono_class_get_field_from_name(this->GetWrappedClass(), name),
-		(MonoObject *)obj
-	);
+	if (obj)
+	{
+		return (mono::object)mono_field_get_value_object
+		(
+			(MonoDomain *)MonoEnv->AppDomain,
+			mono_class_get_field_from_name(this->GetWrappedClass(), name),
+			(MonoObject *)obj
+		);
+	}
+	MonoVTable *table = mono_class_vtable(mono_domain_get(), this->GetWrappedClass());
+	if (!table)
+	{
+		CryFatalError("Unable to get a Mono VTable.");
+	}
+	MonoClassField *field = mono_class_get_field_from_name(this->GetWrappedClass(), name);
+	MonoClass *fieldClass = mono_type_get_class(mono_field_get_type(field));
+	if (mono_class_is_valuetype(fieldClass))
+	{
+		unsigned char *value = new unsigned char[mono_class_value_size(fieldClass, nullptr)];
+		mono_field_static_get_value(table, field, value);
+		// Box the value, so we can release the value now.
+		mono::object result = (mono::object)mono_value_box(mono_domain_get(), fieldClass, value);
+		delete value;
+		return result;
+	}
+	else
+	{
+		mono::object value;
+		mono_field_static_get_value(table, field, &value);
+		return value;
+	}
 }
 //! Sets the value of the object's field.
-void MonoClassWrapper::SetField(mono::object obj, const char *name, mono::object value)
+void MonoClassWrapper::SetField(mono::object obj, const char *name, void *value)
 {
-	mono_field_set_value
-	(
-		(MonoObject *)obj,
-		mono_class_get_field_from_name(this->GetWrappedClass(), name),
-		value
-	);
+	if (obj)
+	{
+		mono_field_set_value
+		(
+			(MonoObject *)obj,
+			mono_class_get_field_from_name(this->GetWrappedClass(), name),
+			value
+		);
+	}
+	else
+	{
+		MonoClassField *field = mono_class_get_field_from_name(this->GetWrappedClass(), name);
+		MonoVTable *vTable = mono_class_vtable(mono_domain_get(), this->GetWrappedClass());
+		mono_field_static_set_value(vTable, field, value);
+	}
 }
 //! Gets the value of the object's property.
-mono::object MonoClassWrapper::GetProperty(mono::object obj, const char *name)
+mono::object MonoClassWrapper::GetProperty(void *obj, const char *name)
 {
 	MonoObject *exception;
 	mono::object result = (mono::object)mono_property_get_value
@@ -242,7 +276,7 @@ mono::object MonoClassWrapper::GetProperty(mono::object obj, const char *name)
 //! @param obj   Object which property to set.
 //! @param name  Name of the property which value to set.
 //! @param value New value to assign to the property.
-void MonoClassWrapper::SetProperty(mono::object obj, const char *name, mono::object value)
+void MonoClassWrapper::SetProperty(void *obj, const char *name, void *value)
 {
 	void *pars[1];
 	pars[0] = value;
@@ -256,7 +290,7 @@ void MonoClassWrapper::SetProperty(mono::object obj, const char *name, mono::obj
 	);
 	if (exception)
 	{
-		MonoEnv->HandleException((mono::object)exception);
+		MonoEnv->HandleException((mono::exception)exception);
 	}
 }
 //! Determines whether this class implements from specified class.

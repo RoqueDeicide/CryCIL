@@ -9,7 +9,7 @@ MonoMethodWrapper::MonoMethodWrapper(MonoMethod *method)
 	this->name = mono_method_get_name(this->wrappedMethod);
 }
 
-mono::object MonoMethodWrapper::Invoke(mono::object object, IMonoArray *params, bool polymorph)
+mono::object MonoMethodWrapper::Invoke(void *object, IMonoArray *params, bool polymorph)
 {
 	void **pars = new void*[params->Length];
 	for (int i = 0; i < params->Length; i++)
@@ -21,7 +21,7 @@ mono::object MonoMethodWrapper::Invoke(mono::object object, IMonoArray *params, 
 	return result;
 }
 
-mono::object MonoMethodWrapper::Invoke(mono::object object, void **params, bool polymorph)
+mono::object MonoMethodWrapper::Invoke(void *object, void **params, bool polymorph)
 {
 	MonoMethod *methodToInvoke;
 	if (polymorph)

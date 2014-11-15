@@ -362,7 +362,7 @@ struct IMonoHandle : public IMonoFunctionalityWrapper
 	//!
 	//! @param name  Name of the field which value to set.
 	//! @param value New value to assign to the field.
-	VIRTUAL_API virtual void SetField(const char *name, mono::object value) = 0;
+	VIRTUAL_API virtual void SetField(const char *name, void *value) = 0;
 	//! Gets the value of the object's property.
 	//!
 	//! @param name Name of the property which value to get.
@@ -371,7 +371,7 @@ struct IMonoHandle : public IMonoFunctionalityWrapper
 	//!
 	//! @param name  Name of the property which value to set.
 	//! @param value New value to assign to the property.
-	VIRTUAL_API virtual void SetProperty(const char *name, mono::object value) = 0;
+	VIRTUAL_API virtual void SetProperty(const char *name, void *value) = 0;
 	//! Unboxes value of this object. Don't use with non-value types.
 	//!
 	//! @tparam T Type of the value to unbox. bool, for instance if
@@ -533,18 +533,18 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//! @param obj   Object which field to set.
 	//! @param name  Name of the field which value to set.
 	//! @param value New value to assign to the field.
-	VIRTUAL_API virtual void SetField(mono::object obj, const char *name, mono::object value) = 0;
+	VIRTUAL_API virtual void SetField(mono::object obj, const char *name, void *value) = 0;
 	//! Gets the value of the object's property.
 	//!
 	//! @param obj   Object which property to get.
 	//! @param name Name of the property which value to get.
-	VIRTUAL_API virtual mono::object GetProperty(mono::object obj, const char *name) = 0;
+	VIRTUAL_API virtual mono::object GetProperty(void *obj, const char *name) = 0;
 	//! Sets the value of the object's property.
 	//!
 	//! @param obj   Object which property to set.
 	//! @param name  Name of the property which value to set.
 	//! @param value New value to assign to the property.
-	VIRTUAL_API virtual void SetProperty(mono::object obj, const char *name, mono::object value) = 0;
+	VIRTUAL_API virtual void SetProperty(void *obj, const char *name, void *value) = 0;
 	//! Determines whether this class implements from specified class.
 	//!
 	//! @param nameSpace Full name of the name space where the class is located.
@@ -746,12 +746,15 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	//! instance. It's up to you to find uses for that minor detail.
 	//!
 	//! @param object    Pointer to the instance to use, if this method is not
-	//!                  static, it can be null otherwise.
+	//!                  static, it can be null otherwise. If you want to invoke
+	//!                  this method on an instance of value type, you should either
+	//!                  pass the pointer to it in unmanaged memory, or unbox it
+	//!                  and pass the returned pointer.
 	//! @param params    Pointer to the mono array of parameters to pass to the method.
 	//!                  Pass null, if method can accept no arguments.
 	//! @param polymorph Indicates whether we need to invoke a virtual method,
 	//!                  that is specific to the instance.
-	VIRTUAL_API virtual mono::object Invoke(mono::object object, IMonoArray *params = nullptr, bool polymorph = false) = 0;
+	VIRTUAL_API virtual mono::object Invoke(void *object, IMonoArray *params = nullptr, bool polymorph = false) = 0;
 	//! Invokes this method.
 	//!
 	//! Since extension methods are static by their internal nature, you can pass null
@@ -759,12 +762,15 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	//! instance. It's up to you to find uses for that minor detail.
 	//!
 	//! @param object     Pointer to the instance to use, if this method is not
-	//!                   static, it can be null otherwise.
+	//!                   static, it can be null otherwise. If you want to invoke
+	//!                   this method on an instance of value type, you should either
+	//!                   pass the pointer to it in unmanaged memory, or unbox it
+	//!                   and pass the returned pointer.
 	//! @param params     Pointer to the array of parameters to pass to the method.
 	//!                   Pass null, if method can accept no arguments.
 	//! @param polymorph  Indicates whether we need to invoke a virtual method,
 	//!                   that is specific to the instance.
-	VIRTUAL_API virtual mono::object Invoke(mono::object object, void **params = nullptr, bool polymorph = false) = 0;
+	VIRTUAL_API virtual mono::object Invoke(void *object, void **params = nullptr, bool polymorph = false) = 0;
 
 	VIRTUAL_API virtual void *GetThunk() = 0;
 	VIRTUAL_API virtual const char *GetName() = 0;

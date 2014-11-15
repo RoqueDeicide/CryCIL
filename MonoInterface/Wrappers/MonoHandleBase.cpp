@@ -30,7 +30,7 @@ mono::object MonoHandleBase::GetField(const char *name)
 //!
 //! @param name  Name of the field which value to set.
 //! @param value New value to assign to the field.
-void MonoHandleBase::SetField(const char *name, mono::object value)
+void MonoHandleBase::SetField(const char *name, void *value)
 {
 	this->GetClass()->SetField(this->Get(), name, value);
 }
@@ -45,7 +45,7 @@ mono::object MonoHandleBase::GetProperty(const char *name)
 //!
 //! @param name  Name of the property which value to set.
 //! @param value New value to assign to the property.
-void MonoHandleBase::SetProperty(const char *name, mono::object value)
+void MonoHandleBase::SetProperty(const char *name, void *value)
 {
 	this->GetClass()->SetProperty(this->Get(), name, value);
 }
