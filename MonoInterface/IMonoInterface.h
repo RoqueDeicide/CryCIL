@@ -1122,6 +1122,12 @@ struct IMonoInterface
 	//!
 	//! @param assemblyHandle Pointer to MonoAssembly to wrap.
 	VIRTUAL_API virtual IMonoAssembly *WrapAssembly(void *assemblyHandle) = 0;
+	//! Wraps an assembly.
+	//!
+	//! The assembly needs to be loaded in order to be wrapped.
+	//!
+	//! @param fullAssemblyName Fully qualified name of the assembly to wrap.
+	VIRTUAL_API virtual IMonoAssembly *WrapAssembly(const char *fullAssemblyName) = 0;
 	// Properties.
 
 	//! Gets the pointer to AppDomain.

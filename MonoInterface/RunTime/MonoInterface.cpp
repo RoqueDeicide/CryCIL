@@ -331,6 +331,15 @@ IMonoAssembly *MonoInterface::WrapAssembly(void *assemblyHandle)
 	this->assemblies.Add(wrapper);
 	return wrapper;
 }
+//! Wraps an assembly.
+IMonoAssembly *MonoInterface::WrapAssembly(const char *fullAssemblyName)
+{
+	if (!this->running)
+	{
+		return nullptr;
+	}
+	return this->WrapAssembly(mono_assembly_loaded(mono_assembly_name_new(fullAssemblyName)));
+}
 #pragma endregion
 #pragma region Unboxing
 //! Unboxes managed value-type object.

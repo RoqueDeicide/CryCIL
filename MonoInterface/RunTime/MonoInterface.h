@@ -97,6 +97,8 @@ public:
 	virtual IMonoAssembly *LoadAssembly(const char *moduleFileName);
 	//! Wraps assembly pointer.
 	virtual IMonoAssembly *WrapAssembly(void *assemblyHandle);
+	//! Wraps an assembly.
+	virtual IMonoAssembly *WrapAssembly(const char *fullAssemblyName);
 #pragma endregion
 #pragma region Unboxing
 	//! Unboxes managed value-type object.
