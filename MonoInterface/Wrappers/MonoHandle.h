@@ -21,30 +21,14 @@ public:
 
 	}
 	//! Calls a Mono method associated with this object.
-	//!
-	//! @remark Make sure that each overload of the method you are
-	//!         calling has unique number of parameters.
-	//!
-	//! @param name Name of the method to invoke.
-	//! @param args Array of arguments to pass, that also defines which method overload to use.
 	virtual mono::object CallMethod(const char *name, IMonoArray *args);
 	//! Gets the value of the object's field.
-	//!
-	//! @param name Name of the field which value to get.
 	virtual mono::object GetField(const char *name);
 	//! Sets the value of the object's field.
-	//!
-	//! @param name  Name of the field which value to set.
-	//! @param value New value to assign to the field.
 	virtual void SetField(const char *name, mono::object value);
 	//! Gets the value of the object's property.
-	//!
-	//! @param name Name of the property which value to get.
 	virtual mono::object GetProperty(const char *name);
 	//! Sets the value of the object's property.
-	//!
-	//! @param name  Name of the property which value to set.
-	//! @param value New value to assign to the property.
 	virtual void SetProperty(const char *name, mono::object value);
 	//! Gets the wrapper for the class of this object.
 	virtual struct IMonoClass * GetClass();

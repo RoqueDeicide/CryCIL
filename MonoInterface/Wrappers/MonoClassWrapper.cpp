@@ -210,10 +210,6 @@ mono::object MonoClassWrapper::GetField(mono::object obj, const char *name)
 	);
 }
 //! Sets the value of the object's field.
-//!
-//! @param obj   Object which field to set.
-//! @param name  Name of the field which value to set.
-//! @param value New value to assign to the field.
 void MonoClassWrapper::SetField(mono::object obj, const char *name, mono::object value)
 {
 	mono_field_set_value
@@ -224,9 +220,6 @@ void MonoClassWrapper::SetField(mono::object obj, const char *name, mono::object
 	);
 }
 //! Gets the value of the object's property.
-//!
-//! @param obj  Object which property to get.
-//! @param name Name of the property which value to get.
 mono::object MonoClassWrapper::GetProperty(mono::object obj, const char *name)
 {
 	MonoObject *exception;
