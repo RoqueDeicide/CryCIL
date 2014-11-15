@@ -583,13 +583,13 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	//!       If the instance is a value-type object, then it must be boxed, even if it's a
 	//!       built-in type.
 	//!    4) The actual parameters that method takes are defined in the same order as in .Net
-	//!       method dignature.
-	//!    5) If the parameter is of built-in type and it is passed by reference, then the
-	//!       pointer to that type must be used in C++ signature.
+	//!       method signature.
+	//!    5) If the parameter is of built-in type and it is passed by reference using re or out
+	//!       keywords, then the pointer to that type must be used in C++ signature.
 	//!    6) If the parameter is not of built-in type and it is passed by reference, then the
-	//!       parameter in C++ must be defined in usual manner.
-	//!    7) The very last parameter is a pointer to mono::object (mono::object *), it must
-	//!       not be null at the point of invocation and it will point at null after method
+	//!       parameter in C++ must be defined in a usual manner.
+	//!    7) The very last parameter is a pointer to mono::exception (mono::exception *), it
+	//!       must not be null at the point of invocation and it will point at null after method
 	//!       returns normally, if there was an unhandled exception however, the last parameter
 	//!       will point at the exception object. You can handle it yourself, or pass it to
 	//!       IMonoInterface::HandleException.
