@@ -136,7 +136,6 @@ private:
 #pragma endregion
 #pragma region Thunks Initialization
 	void InitializeThunks();
-	void InitializeClassThunks();
 	void InitializeMonoInterfaceThunks();
 	template<typename MethodSignature>
 	MethodSignature GetMethodThunk(IMonoAssembly *assembly, const char *nameSpace, const char *className, const char *methodName, const char *params);

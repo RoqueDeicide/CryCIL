@@ -15,23 +15,19 @@ MonoClassWrapper::~MonoClassWrapper()
 	delete this->nameSpace; this->nameSpace = nullptr;
 }
 //! Creates an instance of this class.
-//!
-//! @param args Arguments to pass to the constructor, can be null if latter has no parameters.
 mono::object MonoClassWrapper::CreateInstance(IMonoArray *args)
 {
-	mono::exception exception;
-	mono::object obj = MonoClassThunks::CreateInstance
-	(
-		(mono::object)mono_class_get_type(this->GetWrappedClass()),
-		(args == nullptr) ? nullptr : (mono::object)args->GetWrappedPointer(),
-		&exception
-	);
-	if (exception)
+	MonoObject *obj = mono_object_new(mono_domain_get(), this->GetWrappedClass());
+	if (!args || args->Length == 0)
 	{
-		MonoEnv->HandleException(exception);
-		return nullptr;
+		mono_runtime_object_init(obj);
 	}
-	return obj;
+	else
+	{
+		// Get the constructor.
+		this->GetMethod(".ctor", args)->Invoke(obj, args, false);
+	}
+	return (mono::object)obj;
 }
 //! Gets method that can accept arguments of specified types.
 //!
