@@ -11,14 +11,25 @@ MonoMethodWrapper::MonoMethodWrapper(MonoMethod *method)
 
 mono::object MonoMethodWrapper::Invoke(void *object, IMonoArray *params, bool polymorph)
 {
-	void **pars = new void*[params->Length];
-	for (int i = 0; i < params->Length; i++)
+	MonoMethod *methodToInvoke;
+	if (polymorph)
 	{
-		pars[i] = params->Item(i);
+		methodToInvoke =
+			mono_object_get_virtual_method((MonoObject *)object, this->wrappedMethod);
 	}
-	mono::object result = this->Invoke(object, pars, polymorph);
-	delete pars;
-	return result;
+	else
+	{
+		methodToInvoke = this->wrappedMethod;
+	}
+	MonoArray *paramsArray = (MonoArray *)params->GetWrappedPointer();
+	MonoObject *exception;
+	MonoObject *result = mono_runtime_invoke_array(methodToInvoke, object, paramsArray, &exception);
+	if (exception)
+	{
+		MonoEnv->HandleException((mono::exception)exception);
+		return nullptr;
+	}
+	return (mono::object)result;
 }
 
 mono::object MonoMethodWrapper::Invoke(void *object, void **params, bool polymorph)
@@ -33,15 +44,14 @@ mono::object MonoMethodWrapper::Invoke(void *object, void **params, bool polymor
 	{
 		methodToInvoke = this->wrappedMethod;
 	}
-	mono::object exception;
-	mono::object result = (mono::object)
-		mono_runtime_invoke(methodToInvoke, object, params, (MonoObject **)&exception);
+	MonoObject *exception;
+	MonoObject *result = mono_runtime_invoke(methodToInvoke, object, params, &exception);
 	if (exception)
 	{
-		MonoEnv->HandleException(exception);
+		MonoEnv->HandleException((mono::exception)exception);
 		return nullptr;
 	}
-	return result;
+	return (mono::object)result;
 }
 
 void *MonoMethodWrapper::GetThunk()
