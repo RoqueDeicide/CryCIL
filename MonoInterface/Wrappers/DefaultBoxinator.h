@@ -12,7 +12,7 @@ private:
 	}
 	__forceinline mono::object box(const char *className, const char *nameSpace, void *value)
 	{
-		return MonoEnv->Cryambly->GetClass(className, nameSpace)->Box(value);
+		return MonoEnv->Cryambly->GetClass(nameSpace, className)->Box(value);
 	}
 public:
 	virtual mono::object BoxUPtr(void *value);
