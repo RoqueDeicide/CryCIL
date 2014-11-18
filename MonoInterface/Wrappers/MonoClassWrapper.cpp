@@ -30,28 +30,64 @@ mono::object MonoClassWrapper::CreateInstance(IMonoArray *args)
 	return (mono::object)obj;
 }
 //! Gets method that can accept arguments of specified types.
-//!
-//! @param name  Name of the method to get.
-//! @param types An array of arguments which types specify method signature to use.
 IMonoMethod *MonoClassWrapper::GetMethod(const char *name, IMonoArray *types)
 {
-	MonoMethod *currentMethod;
-	void *iterator = 0;
-	bool foundMatch = false;
-	int typesCount = ((types == nullptr) ? 0 : types->Length);
-	// Iterate through methods.
-	while ((currentMethod = mono_class_get_methods(this->GetWrappedClass(), &iterator)) && !foundMatch)
+	if (types == nullptr)
 	{
-		MonoMethodSignature *sig = mono_method_signature(currentMethod);
-		// Check number of parameters.
-		if (!strcmp(name, mono_method_get_name(currentMethod)) &&
-			mono_signature_get_param_count(sig) == typesCount &&
-			this->ParametersMatch(sig, types))
+		return this->GetMethod(name, (int)0);
+	}
+	IMonoMethod *result = nullptr;
+	// Split the params string into parts.
+	int parameterCount = types->Length;
+	// Iterate through methods that have given name.
+	void *methodIterator = 0;
+	while
+	(
+		MonoMethod *currentMethod =
+		mono_class_get_methods(this->GetWrappedClass(), &methodIterator)
+	)
+	{
+		// Check the name.
+		if (strcmp(mono_method_get_name(currentMethod), name) == 0)
 		{
-			foundMatch = true;
+			// Check the parameters.
+			MonoMethodSignature *sig = mono_method_signature(currentMethod);
+			// Check the number of parameters.
+			if (mono_signature_get_param_count(sig) == parameterCount)
+			{
+				// Check the type names.
+				char **pars = new char *[parameterCount];
+				mono_method_get_param_names(currentMethod, (const char **)pars);
+
+				bool mismatchFound = false;
+				void *parameterIterator = 0;
+				int currentParameterNameIndex = 0;
+				while
+				(
+					MonoType *currentParameterType =
+					mono_signature_get_params(sig, &parameterIterator)
+				)
+				{
+					MonoObject *paramObject = types->At<MonoObject *>(currentParameterNameIndex);
+					MonoType *paramType = mono_class_get_type(mono_object_get_class(paramObject));
+					const char *currentParameterName = mono_type_get_name(paramType);
+
+					if (strcmp(mono_type_get_name(currentParameterType), currentParameterName))
+					{
+						mismatchFound = true;
+					}
+					delete currentParameterName;
+					currentParameterNameIndex++;
+				}
+				if (!mismatchFound)
+				{
+					result = new MonoMethodWrapper(currentMethod);
+					break;
+				}
+			}
 		}
 	}
-	return currentMethod == nullptr ? nullptr : new MonoMethodWrapper(currentMethod);
+	return result;
 }
 //! Gets the first that matches given description.
 //!
@@ -332,38 +368,6 @@ IMonoAssembly *MonoClassWrapper::GetAssembly()
 void *MonoClassWrapper::GetWrappedPointer()
 {
 	return this->wrappedClass->GetWrappedPointer();
-}
-bool MonoClassWrapper::ParametersMatch(MonoMethodSignature *sig, IMonoArray *pars)
-{
-	if (!pars)
-	{
-		// This code will only execute if there are no parameters in the signature,
-		// therefore, signatures do match since there are no parameters to compare.
-		return true;
-	}
-	// Go through parameters.
-	void *paramIterator = 0;
-	for (int i = 0; i < pars->Length; i++)
-	{
-		MonoType *paramType = mono_signature_get_params(sig, &paramIterator);
-		MonoType *arrayParamType =
-			mono_class_get_type(mono_object_get_class(pars->At<MonoObject *>(i)));
-
-		mono::object exception;
-		mono::object comparisonResult =
-			MonoClassThunks::StaticEquals
-			((mono::object)paramType, (mono::object)arrayParamType, &exception);
-		if (exception)
-		{
-			return false;
-		}
-		bool match = MonoEnv->WrapObject(comparisonResult)->Unbox<bool>();
-		if (!match)
-		{
-			return false;
-		}
-	}
-	return true;
 }
 
 bool MonoClassWrapper::Implements(const char *nameSpace, const char *interfaceName, bool searchBaseClasses)
