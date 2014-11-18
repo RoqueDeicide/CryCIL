@@ -90,9 +90,6 @@ IMonoMethod *MonoClassWrapper::GetMethod(const char *name, IMonoArray *types)
 	return result;
 }
 //! Gets the first that matches given description.
-//!
-//! @param name       Name of the method to find.
-//! @param paramCount Number of arguments the method should take.
 IMonoMethod *MonoClassWrapper::GetMethod(const char *name, int paramCount)
 {
 	return
@@ -100,12 +97,6 @@ IMonoMethod *MonoClassWrapper::GetMethod(const char *name, int paramCount)
 		(mono_class_get_method_from_name(this->GetWrappedClass(), name, paramCount));
 }
 //! Gets the method that matches given description.
-//!
-//! @param name   Name of the method to find.
-//! @param params Text that describes types arguments the method should take.
-//!
-//! @returns A pointer to the wrapper to the found method. Null is returned if
-//!          no method matching the description was found.
 IMonoMethod *MonoClassWrapper::GetMethod(const char *name, const char *params)
 {
 	if (params == nullptr)
@@ -172,13 +163,6 @@ IMonoMethod *MonoClassWrapper::GetMethod(const char *name, const char *params)
 	return result;
 }
 //! Gets an array of methods that matches given description.
-//!
-//! @param name       Name of the methods to find.
-//! @param paramCount Number of arguments the methods should take.
-//! @param foundCount Reference to the variable that will contain
-//!                   number of found methods.
-//! @returns A pointer to the first found method. You should release
-//!          resultant array once you don't need it anymore.
 IMonoMethod **MonoClassWrapper::GetMethods(const char *name, int paramCount, int &foundCount)
 {
 	MonoClass *klass = this->GetWrappedClass();
@@ -202,12 +186,6 @@ IMonoMethod **MonoClassWrapper::GetMethods(const char *name, int paramCount, int
 	return foundMethods;
 }
 //! Gets an array of overload of the method.
-//!
-//! @param name       Name of the method which overloads to find.
-//! @param foundCount Reference to the variable that will contain
-//!                   number of found methods.
-//! @returns A pointer to the first found method. You should release
-//!          resultant array once you don't need it anymore.
 IMonoMethod **MonoClassWrapper::GetMethods(const char *name, int &foundCount)
 {
 	MonoClass *klass = this->GetWrappedClass();
@@ -229,9 +207,6 @@ IMonoMethod **MonoClassWrapper::GetMethods(const char *name, int &foundCount)
 	return foundMethods;
 }
 //! Gets the value of the object's field.
-//!
-//! @param obj  Object which field to get.
-//! @param name Name of the field which value to get.
 mono::object MonoClassWrapper::GetField(mono::object obj, const char *name)
 {
 	if (obj)
@@ -249,7 +224,20 @@ mono::object MonoClassWrapper::GetField(mono::object obj, const char *name)
 		CryFatalError("Unable to get a Mono VTable.");
 	}
 	MonoClassField *field = mono_class_get_field_from_name(this->GetWrappedClass(), name);
-	MonoClass *fieldClass = mono_type_get_class(mono_field_get_type(field));
+	if (field == nullptr)
+	{
+		CryLogAlways("Field named %s is null.", name);
+	}
+	MonoType *fieldType = mono_field_get_type(field);
+	if (fieldType == nullptr)
+	{
+		CryLogAlways("Field type is null.");
+	}
+	MonoClass *fieldClass = mono_class_from_mono_type(fieldType);
+	if (fieldClass == nullptr)
+	{
+		CryLogAlways("Field class is null.");
+	}
 	if (mono_class_is_valuetype(fieldClass))
 	{
 		unsigned char *value = new unsigned char[mono_class_value_size(fieldClass, nullptr)];
@@ -304,10 +292,6 @@ mono::object MonoClassWrapper::GetProperty(void *obj, const char *name)
 	return result;
 }
 //! Sets the value of the object's property.
-//!
-//! @param obj   Object which property to set.
-//! @param name  Name of the property which value to set.
-//! @param value New value to assign to the property.
 void MonoClassWrapper::SetProperty(void *obj, const char *name, void *value)
 {
 	void *pars[1];
@@ -326,11 +310,6 @@ void MonoClassWrapper::SetProperty(void *obj, const char *name, void *value)
 	}
 }
 //! Determines whether this class implements from specified class.
-//!
-//! @param nameSpace Full name of the name space where the class is located.
-//! @param className Name of the class.
-//!
-//! @returns True, if this class is a subclass of specified one.
 bool MonoClassWrapper::Inherits(const char *nameSpace, const char *className)
 {
 	MonoClass *base = mono_class_get_parent(this->GetWrappedClass());
@@ -338,8 +317,6 @@ bool MonoClassWrapper::Inherits(const char *nameSpace, const char *className)
 		!strcmp(mono_class_get_namespace(base), nameSpace);
 }
 //! Boxes given value.
-//!
-//! @returns Null if this class is not a value-type, or reference to the boxed object, if it is.
 mono::object MonoClassWrapper::Box(void *value)
 {
 	MonoClass *klass = this->GetWrappedClass();
