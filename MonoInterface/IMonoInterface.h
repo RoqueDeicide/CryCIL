@@ -78,12 +78,17 @@ namespace mono
 	//! There are three types of objects that implement IMonoHandle:
 	//!     1) Free       : This is the most simple wrapper and the least safe one:
 	//!                     It only provides access to object's API and nothing more.
+	//!
 	//!     2) Persistent : This is the best type of handle to use when there is a need
 	//!                     to keep a reference to the object for prolonged periods of
 	//!                     time. GC will not remove the object when there is at least
 	//!                     one persistent IMonoHandle active. You must, however, call
 	//!                     Release method when you don't need it, otherwise a memory
-	//!                     leak will be created.
+	//!                     leak will be created. Accessing the object held by a persistent
+	//!                     wrapper requires some code to be executed, therefore it is
+	//!                     only recommended to use this type of wrapper when you only
+	//!                     access the object rarely.
+	//!
 	//!     3) Pinned     : This type is similar to Persistent IMonoHandle in the sense
 	//!                     that the object won't be deleted by GC while there is an active
 	//!                     handle. The difference however is that pinned handle will also
@@ -116,11 +121,11 @@ namespace mono
 	//! typedefs do describe the types of objects better.
 	//!
 	//! @code{.cpp}
-	//! mono::object  __stdcall IsNullOrWhitespace(mono::object text, mono::object *exception);
+	//! bool __stdcall IsNullOrWhitespace(mono::object text, mono::object    *exception);
 	//!
-	//! mono::boolean __stdcall IsNullOrWhitespace(mono::string text, mono::exception *exception);
+	//! bool __stdcall IsNullOrWhitespace(mono::string text, mono::exception *exception);
 	//! @endcode
-	#define OBJECT_NAME
+#define OBJECT_NAME
 
 	//! Represents a reference to a managed string.
 	OBJECT_NAME typedef object string;
@@ -512,6 +517,7 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//! @param paramCount Number of arguments the methods should take.
 	//! @param foundCount Reference to the variable that will contain
 	//!                   number of found methods.
+	//!
 	//! @returns A pointer to the first found method. You should release
 	//!          resultant array once you don't need it anymore.
 	VIRTUAL_API virtual IMonoMethod **GetMethods(const char *name, int paramCount, int &foundCount) = 0;
@@ -549,6 +555,7 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!
 	//! @param nameSpace Full name of the name space where the class is located.
 	//! @param className Name of the class.
+	//!
 	//! @returns True, if this class is a subclass of specified one.
 	VIRTUAL_API virtual bool Inherits(const char *nameSpace, const char *className) = 0;
 	//! Determines whether this class implements a certain interface.
@@ -557,7 +564,8 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//! @param interfaceName     Name of the interface.
 	//! @param searchBaseClasses Indicates whether we should look if base classes implement
 	//!                          this interface.
-	//! @returns True, if this class does implement specified interface.
+	//!
+	//! @returns True, if this class implements specified interface.
 	VIRTUAL_API virtual bool Implements(const char *nameSpace, const char *interfaceName, bool searchBaseClasses = true) = 0;
 	//! Boxes given value.
 	//!
@@ -577,17 +585,23 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	//! Signature of the function pointer is defined by the following rules:
 	//!    1) Only built-in types can be used to pass values between managed and unmanaged code
 	//!       directly. Every value-type that is not a built-in type must (un)boxed.
+	//!
 	//!    2) Calling convention is a standard one for the platform. (__stdcall for Windows.)
+	//!
 	//!    3) If the method is an instance method then the first parameter should be
 	//!       mono::object that represents an instance this method is called for;
 	//!       If the instance is a value-type object, then it must be boxed, even if it's a
 	//!       built-in type.
+	//!
 	//!    4) The actual parameters that method takes are defined in the same order as in .Net
 	//!       method signature.
+	//!
 	//!    5) If the parameter is of built-in type and it is passed by reference using re or out
 	//!       keywords, then the pointer to that type must be used in C++ signature.
+	//!
 	//!    6) If the parameter is not of built-in type and it is passed by reference, then the
 	//!       parameter in C++ must be defined in a usual manner.
+	//!
 	//!    7) The very last parameter is a pointer to mono::exception (mono::exception *), it
 	//!       must not be null at the point of invocation and it will point at null after method
 	//!       returns normally, if there was an unhandled exception however, the last parameter
@@ -961,8 +975,6 @@ struct IMonoInterface
 	//! Call this method from Game::RegisterGameFlowNodes function.
 	VIRTUAL_API virtual void RegisterFlowGraphNodes() = 0;
 	//! Shuts down Mono run-time environment.
-	//!
-	//! Call this method from GameStartup destructor.
 	VIRTUAL_API virtual void Shutdown() = 0;
 
 	//! Converts given null-terminated string to Mono managed object.
@@ -1053,6 +1065,7 @@ struct IMonoInterface
 	//!                         and provides easy marshaling for all data. Its main drawback
 	//!                         is a huge cost of invocation itself which is about 100 times
 	//!                         slower then invocation of normal method.
+	//!
 	//!     2) Internal Call:   Does not allow invocation of exported functions, requires
 	//!                         internal unmanaged code to register the call, before it can be
 	//!                         done. Also all arguments are passed using BLT with no extra
@@ -1063,11 +1076,14 @@ struct IMonoInterface
 	//! Rules of definition:
 	//!     1) Both parameters and the result are passed using BLT, therefore you have to
 	//!        make sure the types of arguments and the result in C# and C++ are blittable.
+	//!
 	//!     2) There are no requirements specified for the calling convention, however
 	//!        using __cdecl is recommended.
+	//!
 	//!     3) Any pointers to managed objects should be either unboxed or wrapped into
 	//!        IMonoHandle *(when using a general objects) or IMonoArray * when using
 	//!        arrays.
+	//!
 	//!     4) Passing an argument using ref or out keyword causes a pointer to be passed.
 	//!
 	//! Examples:
@@ -1372,6 +1388,7 @@ inline const char *ToNativeString(mono::string monoString)
 //! memory:
 //!     1) Official boxing : You have to get the class that will represent unmanaged
 //!                          object in managed memory, then calling its Box method.
+//!
 //!     2) Boxing a pointer: You can use BoxPtr function to box a pointer to unmanaged
 //!                          object, pass it managed method and let it dereference
 //!                          that pointer.
@@ -1380,6 +1397,7 @@ inline const char *ToNativeString(mono::string monoString)
 //!                           1) Make sure that managed are unmanaged types are blittable:
 //!                            - Their objects take up the same amount of memory.
 //!                            - Object is treated in same way in both codes.
+//!
 //!                           2) If the object contains pointer type fields, you will have
 //!                              to dereference them as well before using them.
 //! Examples:
