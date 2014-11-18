@@ -200,49 +200,50 @@ namespace CryCil.RunTime
 					new SortedList<int, InitializationStageFunction>();
 
 				Console.WriteLine("Collecting data about initialization stages.");
-				// Create a map of functions and their indices.
+				// Get the types that are initialization classes.
+				List<Type> initializationTypes =
+					this.CryCilAssemblies
+						.SelectMany(x => x.GetTypes())
+						.Where(x => x.ContainsAttribute<InitializationClassAttribute>())
+						.ToList();
 				List<Tuple<InitializationStageFunction, int[]>> functionsMap =
-					new List<Tuple<InitializationStageFunction, int[]>>
-					(
-						this.CryCilAssemblies
-							// Get the types that are initialization classes.
-							.SelectMany(assembly => assembly.GetTypes())
-							.Where(type => type.ContainsAttribute<InitializationClassAttribute>())
-							// Get the methods that are initialization ones with appropriate signature.
-							.SelectMany(type => type.GetMethods(BindingFlags.Static))
-							.Where
-							(
-								method =>
-								{
-									ParameterInfo[] pars = method.GetParameters();
-									return
-										method.ContainsAttribute<InitializationStageAttribute>() &&
-										method.IsStatic &&
-										pars.Length == 1 &&
-										pars[0].ParameterType == typeof(int);
-								}
-							)
-							// Parse the method info and gather usable data.
-							.Select
-							(
-								method =>
-									new Tuple<InitializationStageFunction, int[]>
-									(
-										method.CreateDelegate<InitializationStageFunction>(),
-										method.GetCustomAttributes<InitializationStageAttribute>()
-											  .Select(attr => attr.StageIndex)
-											  .ToArray()
-									)
-							)
-					)
-					{
-						// Add the native initialization function to the mix.
-						new Tuple<InitializationStageFunction, int[]>
+					initializationTypes
+						.SelectMany(x => x.GetMethods())
+						.Where
 						(
-							Interops.Initialization.OnInitializationStageBind,
-							Interops.Initialization.GetSubscribedStagesBind()
+							method =>
+							{
+								// Get the methods that are initialization ones with appropriate signature.
+								ParameterInfo[] pars = method.GetParameters();
+								return
+									method.ContainsAttribute<InitializationStageAttribute>() &&
+									method.IsStatic &&
+									pars.Length == 1 &&
+									pars[0].ParameterType == typeof(int);
+							}
 						)
-					};
+						// Parse the method info and gather usable data.
+						.Select
+						(
+							method =>
+								new Tuple<InitializationStageFunction, int[]>
+								(
+									method.CreateDelegate<InitializationStageFunction>(),
+									method.GetCustomAttributes<InitializationStageAttribute>()
+											.Select(attr => attr.StageIndex)
+											.ToArray()
+								)
+						).ToList();
+				// Create a map of functions and their indices.
+				functionsMap.Add
+				(
+					// Add the native initialization function to the mix.
+					new Tuple<InitializationStageFunction, int[]>
+					(
+						Interops.Initialization.OnInitializationStageBind,
+						Interops.Initialization.GetSubscribedStagesBind()
+					)
+				);
 				Console.WriteLine("Compiling data about initialization stages.");
 				// Switch keys and values in the function map.
 				for (int i = 0; i < functionsMap.Count; i++)
