@@ -425,7 +425,6 @@ void MonoInterface::RegisterDefaultListeners()
 #pragma region Thunks Initialization
 	void MonoInterface::InitializeThunks()
 	{
-		this->InitializeClassThunks();
 		this->InitializeMonoInterfaceThunks();
 	}
 	void MonoInterface::InitializeMonoInterfaceThunks()
