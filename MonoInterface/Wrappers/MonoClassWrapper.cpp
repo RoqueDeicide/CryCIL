@@ -4,20 +4,19 @@
 
 MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 {
-	this->wrappedClass = MonoEnv->WrapObject((mono::object)klass, true);
+	this->wrappedClass = klass;
 	this->name = mono_class_get_name(klass);
 	this->nameSpace = mono_class_get_namespace(klass);
 }
 MonoClassWrapper::~MonoClassWrapper()
 {
-	this->wrappedClass->Release();
 	delete this->name; this->name = nullptr;
 	delete this->nameSpace; this->nameSpace = nullptr;
 }
 //! Creates an instance of this class.
 mono::object MonoClassWrapper::CreateInstance(IMonoArray *args)
 {
-	MonoObject *obj = mono_object_new(mono_domain_get(), this->GetWrappedClass());
+	MonoObject *obj = mono_object_new(mono_domain_get(), this->wrappedClass);
 	if (!args || args->Length == 0)
 	{
 		mono_runtime_object_init(obj);
@@ -44,7 +43,7 @@ IMonoMethod *MonoClassWrapper::GetMethod(const char *name, IMonoArray *types)
 	while
 	(
 		MonoMethod *currentMethod =
-		mono_class_get_methods(this->GetWrappedClass(), &methodIterator)
+		mono_class_get_methods(this->wrappedClass, &methodIterator)
 	)
 	{
 		// Check the name.
@@ -94,7 +93,7 @@ IMonoMethod *MonoClassWrapper::GetMethod(const char *name, int paramCount)
 {
 	return
 		new MonoMethodWrapper
-		(mono_class_get_method_from_name(this->GetWrappedClass(), name, paramCount));
+		(mono_class_get_method_from_name(this->wrappedClass, name, paramCount));
 }
 //! Gets the method that matches given description.
 IMonoMethod *MonoClassWrapper::GetMethod(const char *name, const char *params)
@@ -114,7 +113,7 @@ IMonoMethod *MonoClassWrapper::GetMethod(const char *name, const char *params)
 	while
 	(
 		MonoMethod *currentMethod =
-		mono_class_get_methods(this->GetWrappedClass(), &methodIterator)
+		mono_class_get_methods(this->wrappedClass, &methodIterator)
 	)
 	{
 		// Check the name.
@@ -165,7 +164,7 @@ IMonoMethod *MonoClassWrapper::GetMethod(const char *name, const char *params)
 //! Gets an array of methods that matches given description.
 IMonoMethod **MonoClassWrapper::GetMethods(const char *name, int paramCount, int &foundCount)
 {
-	MonoClass *klass = this->GetWrappedClass();
+	MonoClass *klass = this->wrappedClass;
 	List<MonoMethod *> methods(mono_class_num_methods(klass));
 	void *iter = 0;
 	while (MonoMethod *currentMethod = mono_class_get_methods(klass, &iter))
@@ -188,7 +187,7 @@ IMonoMethod **MonoClassWrapper::GetMethods(const char *name, int paramCount, int
 //! Gets an array of overload of the method.
 IMonoMethod **MonoClassWrapper::GetMethods(const char *name, int &foundCount)
 {
-	MonoClass *klass = this->GetWrappedClass();
+	MonoClass *klass = this->wrappedClass;
 	List<MonoMethod *> methods(mono_class_num_methods(klass));
 	void *iter = 0;
 	while (MonoMethod *currentMethod = mono_class_get_methods(klass, &iter))
@@ -214,16 +213,16 @@ mono::object MonoClassWrapper::GetField(mono::object obj, const char *name)
 		return (mono::object)mono_field_get_value_object
 		(
 			(MonoDomain *)MonoEnv->AppDomain,
-			mono_class_get_field_from_name(this->GetWrappedClass(), name),
+			mono_class_get_field_from_name(this->wrappedClass, name),
 			(MonoObject *)obj
 		);
 	}
-	MonoVTable *table = mono_class_vtable(mono_domain_get(), this->GetWrappedClass());
+	MonoVTable *table = mono_class_vtable(mono_domain_get(), this->wrappedClass);
 	if (!table)
 	{
 		CryFatalError("Unable to get a Mono VTable.");
 	}
-	MonoClassField *field = mono_class_get_field_from_name(this->GetWrappedClass(), name);
+	MonoClassField *field = mono_class_get_field_from_name(this->wrappedClass, name);
 	if (field == nullptr)
 	{
 		CryLogAlways("Field named %s is null.", name);
@@ -262,14 +261,14 @@ void MonoClassWrapper::SetField(mono::object obj, const char *name, void *value)
 		mono_field_set_value
 		(
 			(MonoObject *)obj,
-			mono_class_get_field_from_name(this->GetWrappedClass(), name),
+			mono_class_get_field_from_name(this->wrappedClass, name),
 			value
 		);
 	}
 	else
 	{
-		MonoClassField *field = mono_class_get_field_from_name(this->GetWrappedClass(), name);
-		MonoVTable *vTable = mono_class_vtable(mono_domain_get(), this->GetWrappedClass());
+		MonoClassField *field = mono_class_get_field_from_name(this->wrappedClass, name);
+		MonoVTable *vTable = mono_class_vtable(mono_domain_get(), this->wrappedClass);
 		mono_field_static_set_value(vTable, field, value);
 	}
 }
@@ -279,7 +278,7 @@ mono::object MonoClassWrapper::GetProperty(void *obj, const char *name)
 	MonoObject *exception;
 	mono::object result = (mono::object)mono_property_get_value
 	(
-		mono_class_get_property_from_name(this->GetWrappedClass(), name),
+		mono_class_get_property_from_name(this->wrappedClass, name),
 		obj,
 		nullptr,
 		&exception
@@ -299,7 +298,7 @@ void MonoClassWrapper::SetProperty(void *obj, const char *name, void *value)
 	MonoObject *exception;
 	mono_property_set_value
 	(
-		mono_class_get_property_from_name(this->GetWrappedClass(), name),
+		mono_class_get_property_from_name(this->wrappedClass, name),
 		obj,
 		pars,
 		&exception
@@ -312,14 +311,14 @@ void MonoClassWrapper::SetProperty(void *obj, const char *name, void *value)
 //! Determines whether this class implements from specified class.
 bool MonoClassWrapper::Inherits(const char *nameSpace, const char *className)
 {
-	MonoClass *base = mono_class_get_parent(this->GetWrappedClass());
+	MonoClass *base = mono_class_get_parent(this->wrappedClass);
 	return !strcmp(mono_class_get_name(base), className) &&
 		!strcmp(mono_class_get_namespace(base), nameSpace);
 }
 //! Boxes given value.
 mono::object MonoClassWrapper::Box(void *value)
 {
-	MonoClass *klass = this->GetWrappedClass();
+	MonoClass *klass = this->wrappedClass;
 	if (mono_class_is_valuetype(klass))
 	{
 		return (mono::object)mono_value_box((MonoDomain *)MonoEnv->AppDomain, klass, value);
@@ -339,18 +338,18 @@ const char *MonoClassWrapper::GetNameSpace()
 
 IMonoAssembly *MonoClassWrapper::GetAssembly()
 {
-	return MonoEnv->WrapAssembly(mono_image_get_assembly(mono_class_get_image(this->GetWrappedClass())));
+	return MonoEnv->WrapAssembly(mono_image_get_assembly(mono_class_get_image(this->wrappedClass)));
 }
 
 void *MonoClassWrapper::GetWrappedPointer()
 {
-	return this->wrappedClass->GetWrappedPointer();
+	return this->wrappedClass;
 }
 
 bool MonoClassWrapper::Implements(const char *nameSpace, const char *interfaceName, bool searchBaseClasses)
 {
 	void *iterator = 0;
-	while (MonoClass *currentInterface = mono_class_get_interfaces(this->GetWrappedClass(), &iterator))
+	while (MonoClass *currentInterface = mono_class_get_interfaces(this->wrappedClass, &iterator))
 	{
 		if (!strcmp(mono_class_get_name(currentInterface), interfaceName) &&
 			!strcmp(mono_class_get_namespace(currentInterface), nameSpace))
@@ -360,7 +359,7 @@ bool MonoClassWrapper::Implements(const char *nameSpace, const char *interfaceNa
 	}
 	if (searchBaseClasses)
 	{
-		MonoClass *base = mono_class_get_parent(this->GetWrappedClass());
+		MonoClass *base = mono_class_get_parent(this->wrappedClass);
 		if (base != mono_get_object_class())
 		{
 			return MonoClassCache::Wrap(base)->Implements(nameSpace, interfaceName);
@@ -371,5 +370,5 @@ bool MonoClassWrapper::Implements(const char *nameSpace, const char *interfaceNa
 
 IMonoClass *MonoClassWrapper::GetBase()
 {
-	return MonoClassCache::Wrap(mono_class_get_parent(this->GetWrappedClass()));
+	return MonoClassCache::Wrap(mono_class_get_parent(this->wrappedClass));
 }

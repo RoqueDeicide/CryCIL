@@ -13,7 +13,7 @@
 struct MonoClassWrapper : public IMonoClass
 {
 private:
-	IMonoHandle *wrappedClass;
+	MonoClass *wrappedClass;
 	const char *name;
 	const char *nameSpace;
 public:
@@ -56,10 +56,6 @@ public:
 
 	virtual void *GetWrappedPointer();
 private:
-	__forceinline MonoClass *GetWrappedClass()
-	{
-		return (MonoClass *)this->wrappedClass->Get();
-	}
 	bool ParametersMatch(MonoMethodSignature *sig, IMonoArray *pars);
 };
 
