@@ -10,8 +10,6 @@ MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 }
 MonoClassWrapper::~MonoClassWrapper()
 {
-	delete this->name; this->name = nullptr;
-	delete this->nameSpace; this->nameSpace = nullptr;
 }
 //! Creates an instance of this class.
 mono::object MonoClassWrapper::CreateInstance(IMonoArray *args)
