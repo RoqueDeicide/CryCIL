@@ -23,6 +23,8 @@ namespace CryCil.RunTime
 		{
 			InitializeComponent();
 
+			this.Cursor = Cursors.Arrow;
+
 			if (ex == null)
 			{
 				this.ExceptionTypeBox.Text = "Unmanaged Exception";
