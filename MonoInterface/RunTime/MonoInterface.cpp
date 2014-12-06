@@ -48,6 +48,7 @@ MonoInterface::MonoInterface(IGameFramework *framework, IMonoSystemListener **li
 	, cryambly(nullptr)
 	, assemblies(10)
 	, broadcaster(nullptr)
+	, gc()
 {
 	broadcaster = new EventBroadcaster();
 	// Register all initial listeners.
@@ -124,7 +125,7 @@ MonoInterface::MonoInterface(IGameFramework *framework, IMonoSystemListener **li
 	this->broadcaster->OnRunTimeInitialized();
 	// Initialize an instance of type MonoInterface.
 	mono::exception ex;
-	this->managedInterface = new MonoHandlePersistent(MonoInterfaceThunks::Initialize(&ex));
+	this->managedInterface = this->gc->Keep(MonoInterfaceThunks::Initialize(&ex));
 	if (ex)
 	{
 		this->HandleException(ex);
@@ -162,7 +163,7 @@ void MonoInterface::RegisterFlowGraphNodes()
 		return;
 	}
 	mono::exception ex;
-	MonoInterfaceThunks::TriggerFlowNodesRegistration(this->managedInterface->Get(), &ex);
+	MonoInterfaceThunks::TriggerFlowNodesRegistration(this->managedInterface->ObjectPointer, &ex);
 }
 //! Shuts down Mono run-time environment.
 void MonoInterface::Shutdown()
@@ -176,7 +177,7 @@ void MonoInterface::Shutdown()
 	this->broadcaster->Shutdown();
 	CryLogAlways("About to send shutdown event to Cryambly.");
 	mono::exception ex;
-	MonoInterfaceThunks::Shutdown(this->managedInterface->Get(), &ex);
+	MonoInterfaceThunks::Shutdown(this->managedInterface->ObjectPointer, &ex);
 	CryLogAlways("Invoking MonoInterface destructor.");
 	// Invoke destructor.
 	//this->~MonoInterface();
@@ -208,70 +209,50 @@ const char *MonoInterface::ToNativeString(mono::string text)
 #pragma endregion
 #pragma region Objects and Arrays
 //! Creates a new wrapped MonoObject using constructor with specific parameters.
-IMonoHandle *MonoInterface::CreateObject(IMonoAssembly *assembly, const char *name_space, const char *class_name, bool persistent, bool pinned, IMonoArray *params)
+mono::object MonoInterface::CreateObject(IMonoAssembly *assembly, const char *name_space, const char *class_name, IMonoArray *params)
 {
 	if (!this->running)
 	{
 		return nullptr;
 	}
-	return this->WrapObject(assembly->GetClass(class_name, name_space)->CreateInstance(params), persistent, pinned);
+	return assembly->GetClass(class_name, name_space)->CreateInstance(params);
 
 }
 //! Creates a new Mono handle wrapper for given MonoObject.
-IMonoHandle *MonoInterface::WrapObject(mono::object obj, bool persistent, bool pinned)
+IMonoHandle *MonoInterface::WrapObject(mono::object obj)
 {
 	if (!this->running)
 	{
 		return nullptr;
 	}
-	if (pinned)
-	{
-		return new MonoHandlePinned(obj);
-	}
-	if (persistent)
-	{
-		return new MonoHandlePersistent(obj);
-	}
-	return new MonoHandleFree(obj);
+	return new MonoHandle(obj);
 }
 //! Creates object of type object[] with specified capacity.
-IMonoArray *MonoInterface::CreateArray(int capacity, bool persistent)
+IMonoArray *MonoInterface::CreateArray(int capacity)
 {
 	if (!this->running)
 	{
 		return nullptr;
 	}
-	if (persistent)
-	{
-		return new MonoArrayPersistent(capacity);
-	}
-	return new MonoArrayFree(capacity);
+	return new MonoArrayWrapper(capacity);
 }
 //! Creates object of specified type with specified capacity.
-IMonoArray *MonoInterface::CreateArray(IMonoClass *klass, int capacity, bool persistent)
+IMonoArray *MonoInterface::CreateArray(IMonoClass *klass, int capacity)
 {
 	if (!this->running)
 	{
 		return nullptr;
 	}
-	if (persistent)
-	{
-		return new MonoArrayPersistent(klass, capacity);
-	}
-	return new MonoArrayFree(klass, capacity);
+	return new MonoArrayWrapper(klass, capacity);
 }
 //! Wraps already existing Mono array.
-IMonoArray *MonoInterface::WrapArray(mono::Array arrayHandle, bool persistent)
+IMonoArray *MonoInterface::WrapArray(mono::Array arrayHandle)
 {
 	if (!this->running)
 	{
 		return nullptr;
 	}
-	if (persistent)
-	{
-		return new MonoArrayPersistent(arrayHandle);
-	}
-	return new MonoArrayFree(arrayHandle);
+	return new MonoArrayWrapper((MonoArray *)arrayHandle);
 }
 #pragma endregion
 #pragma region Interaction with Run-Time
@@ -384,7 +365,7 @@ void MonoInterface::OnPostUpdate(float fDeltaTime)
 	{
 		this->broadcaster->Update();
 		mono::exception ex;
-		MonoInterfaceThunks::Update(this->managedInterface->Get(), &ex);
+		MonoInterfaceThunks::Update(this->managedInterface->ObjectPointer, &ex);
 		this->broadcaster->PostUpdate();
 	}
 }

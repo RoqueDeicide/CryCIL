@@ -225,6 +225,8 @@
     <ClInclude Include="Wrappers\MonoArray.h" />
     <ClInclude Include="Wrappers\MonoAssembly.h" />
     <ClInclude Include="Wrappers\MonoClass.h" />
+    <ClInclude Include="Wrappers\MonoGC.h" />
+    <ClInclude Include="Wrappers\MonoGCHandle.h" />
     <ClInclude Include="Wrappers\MonoMethod.h" />
     <ClInclude Include="Wrappers\MonoHandle.h" />
   </ItemGroup>
@@ -258,13 +260,11 @@
     </ClCompile>
     <ClCompile Include="ThunkTables.cpp" />
     <ClCompile Include="Wrappers\DefaultBoxinator.cpp" />
-    <ClCompile Include="Wrappers\MonoArrayBase.cpp" />
-    <ClCompile Include="Wrappers\MonoArrayFree.cpp" />
-    <ClCompile Include="Wrappers\MonoArrayPersistent.cpp" />
+    <ClCompile Include="Wrappers\MonoArrayWrapper.cpp" />
     <ClCompile Include="Wrappers\MonoAssemblyWrapper.cpp" />
     <ClCompile Include="Wrappers\MonoClassCache.cpp" />
     <ClCompile Include="Wrappers\MonoClassWrapper.cpp" />
-    <ClCompile Include="Wrappers\MonoHandleBase.cpp" />
+    <ClCompile Include="Wrappers\MonoHandle.cpp" />
     <ClCompile Include="Wrappers\MonoMethodWrapper.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

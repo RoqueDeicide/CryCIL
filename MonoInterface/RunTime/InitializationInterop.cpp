@@ -30,7 +30,7 @@ mono::Array InitializationInterop::GetSubscribedStagesBind()
 	int stagesCount;
 	int *indices = monoEnv->broadcaster->GetSubscribedStagesInfo(stagesCount);
 	IMonoClass *SystemInt32 = MonoClassCache::Wrap(mono_get_int32_class());
-	IMonoArray *result = MonoEnv->CreateArray(SystemInt32, stagesCount, false);
+	IMonoArray *result = MonoEnv->CreateArray(SystemInt32, stagesCount);
 	for (int i = 0; i < stagesCount; i++)
 	{
 		result->At<int>(i) = indices[i];

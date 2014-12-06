@@ -60,6 +60,12 @@
     <ClInclude Include="SortedList.h">
       <Filter>Extras</Filter>
     </ClInclude>
+    <ClInclude Include="Wrappers\MonoGC.h">
+      <Filter>API Implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="Wrappers\MonoGCHandle.h">
+      <Filter>API Implementation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -87,15 +93,6 @@
     <ClCompile Include="Wrappers\DefaultBoxinator.cpp">
       <Filter>API Implementation</Filter>
     </ClCompile>
-    <ClCompile Include="Wrappers\MonoArrayBase.cpp">
-      <Filter>API Implementation</Filter>
-    </ClCompile>
-    <ClCompile Include="Wrappers\MonoArrayFree.cpp">
-      <Filter>API Implementation</Filter>
-    </ClCompile>
-    <ClCompile Include="Wrappers\MonoArrayPersistent.cpp">
-      <Filter>API Implementation</Filter>
-    </ClCompile>
     <ClCompile Include="Wrappers\MonoAssemblyWrapper.cpp">
       <Filter>API Implementation</Filter>
     </ClCompile>
@@ -108,7 +105,10 @@
     <ClCompile Include="Wrappers\MonoMethodWrapper.cpp">
       <Filter>API Implementation</Filter>
     </ClCompile>
-    <ClCompile Include="Wrappers\MonoHandleBase.cpp">
+    <ClCompile Include="Wrappers\MonoHandle.cpp">
+      <Filter>API Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="Wrappers\MonoArrayWrapper.cpp">
       <Filter>API Implementation</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,13 +1,13 @@
 #include "stdafx.h"
 #include "API_ImplementationHeaders.h"
 
-void *MonoArrayBase::Item(int index)
+void *MonoArrayWrapper::Item(int index)
 {
 	return mono_array_addr_with_size(GetWrappedArray, this->GetElementSize(), index);
 }
 
 //! Returns number of elements in the array.
-int MonoArrayBase::GetSize()
+int MonoArrayWrapper::GetSize()
 {
 	if (this->size == -1)
 	{
@@ -16,7 +16,7 @@ int MonoArrayBase::GetSize()
 	return this->size;
 }
 //! Returns the size of one element in the memory.
-int MonoArrayBase::GetElementSize()
+int MonoArrayWrapper::GetElementSize()
 {
 	if (this->elementSize == -1)
 	{
@@ -26,7 +26,7 @@ int MonoArrayBase::GetElementSize()
 	return this->elementSize;
 }
 //! Gets the wrapper for class that represents elements of the array.
-IMonoClass *MonoArrayBase::GetElementClass()
+IMonoClass *MonoArrayWrapper::GetElementClass()
 {
 	if (this->klass == nullptr)
 	{
@@ -39,4 +39,9 @@ IMonoClass *MonoArrayBase::GetElementClass()
 		);
 	}
 	return this->klass;
+}
+
+void *MonoArrayWrapper::GetWrappedPointer()
+{
+	return this->arrayPtr;
 }

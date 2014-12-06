@@ -132,3 +132,8 @@ IMonoClass *CScriptArray::GetClass(MonoClass *pClass)
 
 	return nullptr;
 }
+
+VIRTUAL_API void *MonoArrayWrapper::GetWrappedPointer()
+{
+	return this->arrayPtr;
+}

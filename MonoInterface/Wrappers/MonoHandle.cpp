@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "API_ImplementationHeaders.h"
 
-mono::object MonoHandleBase::CallMethod(const char *name, IMonoArray *args)
+mono::object MonoHandle::CallMethod(const char *name, IMonoArray *args)
 {
 	MonoObject *obj = (MonoObject *)this->Get();
 	MonoMethod *method =
@@ -20,37 +20,27 @@ mono::object MonoHandleBase::CallMethod(const char *name, IMonoArray *args)
 	return nullptr;
 }
 //! Gets the value of the object's field.
-//!
-//! @param name Name of the field which value to get.
-mono::object MonoHandleBase::GetField(const char *name)
+mono::object MonoHandle::GetField(const char *name)
 {
 	return this->GetClass()->GetField(this->Get(), name);
 }
 //! Sets the value of the object's field.
-//!
-//! @param name  Name of the field which value to set.
-//! @param value New value to assign to the field.
-void MonoHandleBase::SetField(const char *name, void *value)
+void MonoHandle::SetField(const char *name, void *value)
 {
 	this->GetClass()->SetField(this->Get(), name, value);
 }
 //! Gets the value of the object's property.
-//!
-//! @param name Name of the property which value to get.
-mono::object MonoHandleBase::GetProperty(const char *name)
+mono::object MonoHandle::GetProperty(const char *name)
 {
 	return this->GetClass()->GetProperty(this->Get(), name);
 }
 //! Sets the value of the object's property.
-//!
-//! @param name  Name of the property which value to set.
-//! @param value New value to assign to the property.
-void MonoHandleBase::SetProperty(const char *name, void *value)
+void MonoHandle::SetProperty(const char *name, void *value)
 {
 	this->GetClass()->SetProperty(this->Get(), name, value);
 }
 //! Gets the wrapper for the class of this object.
-IMonoClass *MonoHandleBase::GetClass()
+IMonoClass *MonoHandle::GetClass()
 {
 	if (!this->type)
 	{
@@ -60,12 +50,12 @@ IMonoClass *MonoHandleBase::GetClass()
 	return this->type;
 }
 
-void *MonoHandleBase::UnboxObject()
+void *MonoHandle::UnboxObject()
 {
 	return mono_object_unbox((MonoObject *)this->Get());
 }
 
-void *MonoHandleBase::GetWrappedPointer()
+void *MonoHandle::GetWrappedPointer()
 {
 	return this->Get();
 }

@@ -38,7 +38,8 @@ private:
 	IMonoAssembly *pdb2mdb;
 	DefaultBoxinator boxer;
 
-	IMonoHandle *managedInterface;
+	IMonoGCHandle *managedInterface;
+	IMonoGC *gc;
 #pragma endregion
 public:
 #pragma region Property Methods
@@ -54,6 +55,10 @@ public:
 	virtual bool GetInitializedIndication();
 
 	virtual IDefaultBoxinator *GetDefaultBoxer();
+	VIRTUAL_API virtual IMonoGC *GetGC()
+	{
+		return this->gc;
+	}
 #pragma endregion
 #pragma region Construction
 	//! Initializes Mono run-time environment.
@@ -76,15 +81,15 @@ public:
 #pragma endregion
 #pragma region Objects and Arrays
 	//! Creates a new wrapped MonoObject using constructor with specific parameters.
-	virtual IMonoHandle *CreateObject(IMonoAssembly *assembly, const char *name_space, const char *class_name, bool persistent = false, bool pinned = false, IMonoArray *params = nullptr);
+	virtual mono::object CreateObject(IMonoAssembly *assembly, const char *name_space, const char *class_name, IMonoArray *params = nullptr);
 	//! Creates a new Mono handle wrapper for given MonoObject.
-	virtual IMonoHandle *WrapObject(mono::object obj, bool persistent = false, bool pinned = false);
+	virtual IMonoHandle *WrapObject(mono::object obj);
 	//! Creates object of type object[] with specified capacity.
-	virtual IMonoArray *CreateArray(int capacity, bool persistent);
+	virtual IMonoArray *CreateArray(int capacity);
 	//! Creates object of specified type with specified capacity.
-	virtual IMonoArray *CreateArray(IMonoClass *klass, int capacity, bool persistent);
+	virtual IMonoArray *CreateArray(IMonoClass *klass, int capacity);
 	//! Wraps already existing Mono array.
-	virtual IMonoArray * WrapArray(mono::Array arrayHandle, bool persistent);
+	virtual IMonoArray *WrapArray(mono::Array arrayHandle);
 #pragma endregion
 #pragma region Interaction with Run-Time
 	//! Handles exception that occurred during managed method invocation.

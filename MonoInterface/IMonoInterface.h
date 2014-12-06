@@ -411,21 +411,21 @@ struct IMonoGC
 	//! You have to use @see IMonoGCHandle::Object property to get the pointer to the object.
 	//!
 	//! @param obj Pointer to managed object to hold.
-	VIRTUAL_API virtual IMonoGCHandle Hold(mono::object obj) = 0;
+	VIRTUAL_API virtual IMonoGCHandle *Hold(mono::object obj) = 0;
 	//! Keeps given managed object from being collected by GC.
 	//!
 	//! You will have to use @see IMonoGCHandle::Object property to get the valid pointer
 	//! to the given object before using it.
 	//!
 	//! @param obj Pointer to managed object to keep.
-	VIRTUAL_API virtual IMonoGCHandle Keep(mono::object obj) = 0;
+	VIRTUAL_API virtual IMonoGCHandle *Keep(mono::object obj) = 0;
 	//! Pins given managed object by prohibiting GC from collecting or moving it.
 	//!
 	//! As long as returned object is not released, it will be perfectly safe to access
 	//! given object through its current pointer, as it will never be deleted or moved.
 	//!
 	//! @param obj Pointer to managed object to pin.
-	VIRTUAL_API virtual IMonoGCHandle Pin(mono::object obj) = 0;
+	VIRTUAL_API virtual IMonoGCHandle *Pin(mono::object obj) = 0;
 
 	VIRTUAL_API virtual int GetMaxGeneration() = 0;
 	VIRTUAL_API virtual __int64 GetHeapSize() = 0;
@@ -520,8 +520,6 @@ struct IMonoArray : public IMonoFunctionalityWrapper
 	{
 		return *(T *)this->Item(index);
 	}
-	//! Tells the object that it's no longer needed.
-	VIRTUAL_API virtual void Release() = 0;
 
 	VIRTUAL_API virtual int GetSize() = 0;
 	VIRTUAL_API virtual IMonoClass *GetElementClass() = 0;
@@ -1057,28 +1055,28 @@ struct IMonoInterface
 	) = 0;
 	//! Creates a new wrapper for given MonoObject.
 	//!
-	//! @param obj        An object to wrap.
+	//! @param obj An object to wrap.
 	VIRTUAL_API virtual IMonoHandle *WrapObject(mono::object obj) = 0;
 	//! Creates object of type object[] with specified capacity.
 	//!
-	//! @param capacity   Number of elements that can be held by the array.
-	//! @param persistent Indicates whether the array must be safe to
-	//!                   keep a reference to for prolonged periods of time.
-	VIRTUAL_API virtual IMonoArray *CreateArray(int capacity, bool persistent) = 0;
+	//! Mono array objects are standard managed objects and are prone to GC.
+	//!
+	//! @param capacity Number of elements that can be held by the array.
+	VIRTUAL_API virtual IMonoArray *CreateArray(int capacity) = 0;
 	//! Creates object of specified type with specified capacity.
 	//!
-	//! @param klass      Pointer to the class that will represent objects
-	//!                   within the array.
-	//! @param capacity   Number of elements that can be held by the array.
-	//! @param persistent Indicates whether the array must be safe to
-	//!                   keep a reference to for prolonged periods of time.
-	VIRTUAL_API virtual IMonoArray *CreateArray(IMonoClass *klass, int capacity, bool persistent) = 0;
+	//! Mono array objects are standard managed objects and are prone to GC.
+	//!
+	//! @param klass    Pointer to the class that will represent objects
+	//!                 within the array.
+	//! @param capacity Number of elements that can be held by the array.
+	VIRTUAL_API virtual IMonoArray *CreateArray(IMonoClass *klass, int capacity) = 0;
 	//! Wraps already existing Mono array.
 	//!
+	//! Mono array objects are standard managed objects and are prone to GC.
+	//!
 	//! @param arrayHandle Pointer to the array that needs to be wrapped.
-	//! @param persistent  Indicates whether the array wrapping must be safe to
-	//!                    keep a reference to for prolonged periods of time.
-	VIRTUAL_API virtual IMonoArray *WrapArray(mono::Array arrayHandle, bool persistent) = 0;
+	VIRTUAL_API virtual IMonoArray *WrapArray(mono::Array arrayHandle) = 0;
 	//! Unboxes managed value-type object.
 	//!
 	//! @param value Value-type object to unbox.
