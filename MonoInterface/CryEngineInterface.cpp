@@ -28,8 +28,10 @@ extern "C"	// Mark exported functions as C code, so the compiler keeps function 
 		ModuleInitISystem(framework->GetISystem(), "MonoInterface");
 		// Save IGameFramework pointer now.
 		Framework = framework;
-		// I'm not sure, if I can use "new" operator to create a new instance of MonoRunTime.
-		static char buff[sizeof(MonoInterface)];
-		return new (buff)MonoInterface(framework, listeners, listenerCount);
+		// // I'm not sure, if I can use "new" operator to create a new instance of MonoRunTime.
+// 		static char buff[sizeof(MonoInterface)];
+// 		return new (buff)MonoInterface(framework, listeners, listenerCount);
+
+		return new MonoInterface(framework, listeners, listenerCount);
 	}
 }

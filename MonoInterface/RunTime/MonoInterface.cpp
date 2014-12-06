@@ -166,6 +166,7 @@ void MonoInterface::RegisterFlowGraphNodes()
 //! Shuts down Mono run-time environment.
 void MonoInterface::Shutdown()
 {
+	CryLogAlways("Checking activity before shutdown.");
 	if (!this->running)
 	{
 		return;
@@ -177,7 +178,8 @@ void MonoInterface::Shutdown()
 	MonoInterfaceThunks::Shutdown(this->managedInterface->Get(), &ex);
 	CryLogAlways("Invoking MonoInterface destructor.");
 	// Invoke destructor.
-	this->~MonoInterface();
+	//this->~MonoInterface();
+	delete this;
 }
 #pragma endregion
 #pragma region String Conversions
