@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using CryEngine.Engine.Particles.Native;
 using CryEngine.Mathematics;
+using CryEngine.Native;
 
 namespace CryEngine
 {
@@ -28,7 +28,7 @@ namespace CryEngine
 		/// <returns>The specified particle effect, or null if failed.</returns>
 		public static ParticleEffect Get(string effectName, bool loadResources = true)
 		{
-			var effectHandle = NativeParticleEffectMethods.FindEffect(effectName, loadResources);
+			var effectHandle = ParticleEffectInterop.FindEffect(effectName, loadResources);
 			if (effectHandle == IntPtr.Zero)
 				return null;
 
@@ -63,22 +63,22 @@ namespace CryEngine
 		/// <param name="scale">Scale of the emitter.</param>
 		public ParticleEmitter Spawn(Vector3 pos, Vector3? dir = null, float scale = 1f, bool independent = true)
 		{
-			return ParticleEmitter.TryGet(NativeParticleEffectMethods.Spawn(Handle, independent, pos, dir ?? Vector3.Up, scale));
+			return ParticleEmitter.TryGet(ParticleEffectInterop.Spawn(Handle, independent, pos, dir ?? Vector3.Up, scale));
 		}
 
 		public void Remove()
 		{
-			NativeParticleEffectMethods.Remove(Handle);
+			ParticleEffectInterop.Remove(Handle);
 		}
 
 		public void LoadResources()
 		{
-			NativeParticleEffectMethods.LoadResoruces(Handle);
+			ParticleEffectInterop.LoadResoruces(Handle);
 		}
 
 		public ParticleEffect GetChild(int index)
 		{
-			var childHandle = NativeParticleEffectMethods.GetChild(Handle, index);
+			var childHandle = ParticleEffectInterop.GetChild(Handle, index);
 
 			return TryGet(childHandle);
 		}
@@ -86,14 +86,14 @@ namespace CryEngine
 		/// <summary>
 		/// Gets the number of sub-particles assigned to this effect.
 		/// </summary>
-		public int ChildCount { get { return NativeParticleEffectMethods.GetChildCount(Handle); } }
+		public int ChildCount { get { return ParticleEffectInterop.GetChildCount(Handle); } }
 
-		public string Name { get { return NativeParticleEffectMethods.GetName(Handle); } }
-		public string FullName { get { return NativeParticleEffectMethods.GetFullName(Handle); } }
+		public string Name { get { return ParticleEffectInterop.GetName(Handle); } }
+		public string FullName { get { return ParticleEffectInterop.GetFullName(Handle); } }
 
-		public bool Enabled { get { return NativeParticleEffectMethods.IsEnabled(Handle); } set { NativeParticleEffectMethods.Enable(Handle, value); } }
+		public bool Enabled { get { return ParticleEffectInterop.IsEnabled(Handle); } set { ParticleEffectInterop.Enable(Handle, value); } }
 
-		public ParticleEffect Parent { get { return TryGet(NativeParticleEffectMethods.GetParent(Handle)); } }
+		public ParticleEffect Parent { get { return TryGet(ParticleEffectInterop.GetParent(Handle)); } }
 
 		#region Operator overloads
 		/// <summary>

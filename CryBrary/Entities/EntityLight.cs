@@ -1,5 +1,6 @@
 ﻿using System;
 using CryEngine.Mathematics;
+using CryEngine.Mathematics.Graphics;
 
 namespace CryEngine.Entities
 {
@@ -27,7 +28,7 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Color of the light.
 		/// </summary>
-		public Color Color;
+		public ColorSingle Color;
 		/// <summary>
 		/// Location of the light source.
 		/// </summary>

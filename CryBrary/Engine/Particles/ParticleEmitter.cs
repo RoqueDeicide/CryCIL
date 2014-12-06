@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Collections.Generic;
-
-using CryEngine.Engine.Particles.Native;
+using CryEngine.Native;
 
 namespace CryEngine
 {
@@ -36,8 +35,8 @@ namespace CryEngine
 
 		public ParticleSpawnParameters SpawnParameters
 		{
-			get { return NativeParticleEffectMethods.GetParticleEmitterSpawnParams(Handle); }
-			set { NativeParticleEffectMethods.SetParticleEmitterSpawnParams(Handle, ref value); }
+			get { return ParticleEffectInterop.GetParticleEmitterSpawnParams(Handle); }
+			set { ParticleEffectInterop.SetParticleEmitterSpawnParams(Handle, ref value); }
 		}
 
 		public GeometryType AttachType { get { return SpawnParameters.AttachType; } set { var spawnParams = SpawnParameters; spawnParams.AttachType = value; SpawnParameters = spawnParams; } }
@@ -53,9 +52,9 @@ namespace CryEngine
 		public float PulsePeriod { get { return SpawnParameters.PulsePeriod; } set { var spawnParams = SpawnParameters; spawnParams.PulsePeriod = value; SpawnParameters = spawnParams; } }
 		public float Strength { get { return SpawnParameters.Strength; } set { var spawnParams = SpawnParameters; spawnParams.Strength = value; SpawnParameters = spawnParams; } }
 
-		public bool Active { set { NativeParticleEffectMethods.ActivateEmitter(Handle, value); } }
+		public bool Active { set { ParticleEffectInterop.ActivateEmitter(Handle, value); } }
 
-		public ParticleEffect ParticleEffect { get { return ParticleEffect.TryGet(NativeParticleEffectMethods.GetParticleEmitterEffect(Handle)); } }
+		public ParticleEffect ParticleEffect { get { return ParticleEffect.TryGet(ParticleEffectInterop.GetParticleEmitterEffect(Handle)); } }
 
 		internal IntPtr Handle { get; set; }
 	}

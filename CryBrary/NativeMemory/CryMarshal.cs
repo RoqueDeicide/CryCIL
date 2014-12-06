@@ -26,7 +26,7 @@ namespace CryEngine.NativeMemory
 		/// <returns>Pointer to allocated memory block.</returns>
 		public static IntPtr Allocate(ulong size, bool dispose = true)
 		{
-			IntPtr handle = Native.NativeMemoryHandlingMethods.AllocateMemory(size);
+			IntPtr handle = Native.MemoryHandlingInterop.AllocateMemory(size);
 			if (handle == IntPtr.Zero)
 			{
 				throw new OutOfMemoryException("Unable to allocate native memory block.");
@@ -51,14 +51,14 @@ namespace CryEngine.NativeMemory
 		{
 			if (CryMarshal.allocatedBlocks.ContainsKey(handle))
 			{
-				Native.NativeMemoryHandlingMethods.FreeMemory(handle);
+				Native.MemoryHandlingInterop.FreeMemory(handle);
 				CryMarshal.AllocatedMemory -= CryMarshal.allocatedBlocks[handle];
 				GC.RemoveMemoryPressure((long)CryMarshal.allocatedBlocks[handle]);
 				CryMarshal.allocatedBlocks.Remove(handle);
 			}
 			else if (force)
 			{
-				Native.NativeMemoryHandlingMethods.FreeMemory(handle);
+				Native.MemoryHandlingInterop.FreeMemory(handle);
 			}
 		}
 	}

@@ -1,12 +1,6 @@
 //-----------------------------------------------------------------------------
 //
-// Copyright (C) Microsoft Corporation. All Rights Reserved.
-//
-//
-//
-//
-//
-//
+// Copyright (C) Microsoft Corporation.  All Rights Reserved.
 //
 //-----------------------------------------------------------------------------
 using System;
@@ -17,38 +11,28 @@ namespace Microsoft.Cci.Pdb
 {
 	internal class PdbFunction
 	{
-		static internal readonly Guid msilMetaData = new Guid(0xc6ea3fc9, 0x59b3, 0x49d6, 0xbc, 0x25,
+		static internal readonly Guid MsilMetaData = new Guid(0xc6ea3fc9, 0x59b3, 0x49d6, 0xbc, 0x25,
 															0x09, 0x02, 0xbb, 0xab, 0xb4, 0x60);
-		static internal readonly IComparer byAddress = new PdbFunctionsByAddress();
-		static internal readonly IComparer byToken = new PdbFunctionsByToken();
+		static internal readonly IComparer ByAddress = new PdbFunctionsByAddress();
+		static internal readonly IComparer ByToken = new PdbFunctionsByToken();
 
-		internal uint token;
-		internal uint slotToken;
-		internal string name;
-		internal string module;
-		internal ushort flags;
+		internal uint Token;
+		internal uint SlotToken;
+		internal string Name;
+		internal string Module;
+		internal ushort Flags;
 
-		internal uint segment;
-		internal uint address;
-		internal uint length;
+		internal uint Segment;
+		internal uint Address;
+		internal uint Length;
 
 		//internal byte[] metadata;
-		internal PdbScope[] scopes;
-		internal PdbLines[] lines;
-		internal ushort[]/*?*/ usingCounts;
-		internal IEnumerable<INamespaceScope>/*?*/ namespaceScopes;
-		internal string/*?*/ iteratorClass;
-		internal List<ILocalScope>/*?*/ iteratorScopes;
-
-		//private static string StripNamespace(string module)
-		//{
-		//	int li = module.LastIndexOf('.');
-		//	if (li > 0)
-		//	{
-		//		return module.Substring(li + 1);
-		//	}
-		//	return module;
-		//}
+		internal PdbScope[] Scopes;
+		internal PdbLines[] Lines;
+		internal ushort[]/*?*/ UsingCounts;
+		internal IEnumerable<INamespaceScope>/*?*/ NamespaceScopes;
+		internal string/*?*/ IteratorClass;
+		internal List<ILocalScope>/*?*/ IteratorScopes;
 
 		internal static PdbFunction[] LoadManagedFunctions(string module,
 														   BitAccess bits, uint limit,
@@ -212,14 +196,14 @@ namespace Microsoft.Cci.Pdb
 
 		internal PdbFunction(string module, ManProcSym proc, BitAccess bits)
 		{
-			this.token = proc.token;
-			this.module = module;
-			this.name = proc.name;
-			this.flags = proc.flags;
-			this.segment = proc.seg;
-			this.address = proc.off;
-			this.length = proc.len;
-			this.slotToken = 0;
+			this.Token = proc.token;
+			this.Module = module;
+			this.Name = proc.name;
+			this.Flags = proc.flags;
+			this.Segment = proc.seg;
+			this.Address = proc.off;
+			this.Length = proc.len;
+			this.SlotToken = 0;
 
 			if (proc.seg != 1)
 			{
@@ -241,7 +225,7 @@ namespace Microsoft.Cci.Pdb
 			int slotCount;
 			int usedNamespacesCount;
 			CountScopesAndSlots(bits, proc.end, out constantCount, out scopeCount, out slotCount, out usedNamespacesCount);
-			scopes = new PdbScope[scopeCount];
+			this.Scopes = new PdbScope[scopeCount];
 			const int scope = 0;
 
 			while (bits.Position < proc.end)
@@ -265,10 +249,10 @@ namespace Microsoft.Cci.Pdb
 							bits.ReadUInt32(out oem.typind);
 							// internal byte[] rgl; // user data, force 4-byte alignment
 
-							if (oem.idOem == msilMetaData)
+							if (oem.idOem == MsilMetaData)
 							{
-								string nameB = bits.ReadString();
-								if (nameB == "MD2")
+								string name = bits.ReadString();
+								if (name == "MD2")
 								{
 									byte version;
 									bits.ReadUInt8(out version);
@@ -296,12 +280,12 @@ namespace Microsoft.Cci.Pdb
 							bits.ReadUInt32(out block.parent);
 							bits.ReadUInt32(out block.end);
 							bits.ReadUInt32(out block.len);
-							bits.ReadUInt32(out this.address);
+							bits.ReadUInt32(out this.Address);
 							bits.ReadUInt16(out block.seg);
 							bits.SkipCString(out block.name);
 							bits.Position = stop;
 
-							scopes[scope] = new PdbScope(block, bits, out slotToken);
+							this.Scopes[scope] = new PdbScope(block, bits, out this.SlotToken);
 							bits.Position = (int)block.end;
 							break;
 						}
@@ -367,21 +351,21 @@ namespace Microsoft.Cci.Pdb
 
 		private void ReadForwardIterator(BitAccess bits)
 		{
-			this.iteratorClass = bits.ReadString();
+			this.IteratorClass = bits.ReadString();
 		}
 
 		private void ReadIteratorLocals(BitAccess bits)
 		{
 			uint numberOfLocals;
 			bits.ReadUInt32(out numberOfLocals);
-			this.iteratorScopes = new List<ILocalScope>((int)numberOfLocals);
+			this.IteratorScopes = new List<ILocalScope>((int)numberOfLocals);
 			while (numberOfLocals-- > 0)
 			{
 				uint ilStartOffset;
 				uint ilEndOffset;
 				bits.ReadUInt32(out ilStartOffset);
 				bits.ReadUInt32(out ilEndOffset);
-				this.iteratorScopes.Add(new PdbIteratorScope(ilStartOffset, ilEndOffset - ilStartOffset));
+				this.IteratorScopes.Add(new PdbIteratorScope(ilStartOffset, ilEndOffset - ilStartOffset));
 			}
 		}
 
@@ -401,10 +385,10 @@ namespace Microsoft.Cci.Pdb
 		{
 			ushort numberOfNamespaces;
 			bits.ReadUInt16(out numberOfNamespaces);
-			this.usingCounts = new ushort[numberOfNamespaces];
+			this.UsingCounts = new ushort[numberOfNamespaces];
 			for (ushort i = 0; i < numberOfNamespaces; i++)
 			{
-				bits.ReadUInt16(out this.usingCounts[i]);
+				bits.ReadUInt16(out this.UsingCounts[i]);
 			}
 		}
 
@@ -415,19 +399,9 @@ namespace Microsoft.Cci.Pdb
 				PdbFunction fx = (PdbFunction)x;
 				PdbFunction fy = (PdbFunction)y;
 
-				if (fx.segment < fy.segment)
-				{
-					return -1;
-				}
-				if (fx.segment > fy.segment)
-				{
-					return 1;
-				}
-				if (fx.address < fy.address)
-				{
-					return -1;
-				}
-				return fx.address > fy.address ? 1 : 0;
+				return fx.Segment < fy.Segment
+					? -1
+					: (fx.Segment > fy.Segment ? 1 : (fx.Address < fy.Address ? -1 : (fx.Address > fy.Address ? 1 : 0)));
 			}
 		}
 
@@ -438,15 +412,7 @@ namespace Microsoft.Cci.Pdb
 				PdbFunction fx = (PdbFunction)x;
 				PdbFunction fy = (PdbFunction)y;
 
-				if (fx.token < fy.token)
-				{
-					return -1;
-				}
-				if (fx.token > fy.token)
-				{
-					return 1;
-				}
-				return 0;
+				return fx.Token < fy.Token ? -1 : (fx.Token > fy.Token ? 1 : 0);
 			}
 		}
 	}

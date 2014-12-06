@@ -4,8 +4,9 @@ using System.Linq;
 
 using CryEngine;
 using CryEngine.Mathematics;
+using CryEngine.RunTime;
+using CryEngine.RunTime.Serialization;
 using CryEngine.Utilities;
-using CryEngine.Serialization;
 using NUnit.Framework;
 
 namespace CryBrary.Tests.Serialization

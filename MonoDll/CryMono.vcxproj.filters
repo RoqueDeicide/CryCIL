@@ -2,9 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="Headers\IMonoScriptBind.h">
-      <Filter>Interfaces</Filter>
-    </ClInclude>
     <ClInclude Include="MonoAssembly.h">
       <Filter>Wrappers</Filter>
     </ClInclude>
@@ -24,12 +21,6 @@
     <ClInclude Include="MonoEntityPropertyHandler.h">
       <Filter>EntitySystem</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\IMonoScriptSystem.h">
-      <Filter>Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="MonoScriptSystem.h">
-      <Filter>Mono</Filter>
-    </ClInclude>
     <ClInclude Include="Headers\IMonoArray.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
@@ -42,12 +33,6 @@
     <ClInclude Include="Headers\IMonoAssembly.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="FlowManager.h">
-      <Filter>FlowSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="MonoFlowNode.h">
-      <Filter>FlowSystem</Filter>
-    </ClInclude>
     <ClInclude Include="Headers\MonoCommon.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
@@ -57,41 +42,8 @@
     <ClInclude Include="PathUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Scriptbinds\Debug.h">
-      <Filter>ScriptBinds\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Scriptbinds\Console.h">
-      <Filter>ScriptBinds\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Scriptbinds\3DEngine.h">
-      <Filter>ScriptBinds\3DEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="Scriptbinds\ParticleSystem.h">
-      <Filter>ScriptBinds\3DEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="ScriptBinds\MaterialManager.h">
-      <Filter>ScriptBinds\3DEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="Scriptbinds\Renderer.h">
-      <Filter>ScriptBinds\Viewport</Filter>
-    </ClInclude>
-    <ClInclude Include="Scriptbinds\ViewSystem.h">
-      <Filter>ScriptBinds\Viewport</Filter>
-    </ClInclude>
-    <ClInclude Include="Scriptbinds\GameRules.h">
-      <Filter>ScriptBinds\Game Logic</Filter>
-    </ClInclude>
-    <ClInclude Include="Scriptbinds\ActorSystem.h">
-      <Filter>ScriptBinds\Game Logic</Filter>
-    </ClInclude>
-    <ClInclude Include="FlowBaseNode.h">
-      <Filter>FlowSystem</Filter>
-    </ClInclude>
     <ClInclude Include="Headers\IMonoDomain.h">
       <Filter>Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="MonoInput.h">
-      <Filter>ScriptBinds</Filter>
     </ClInclude>
     <ClInclude Include="MonoDomain.h">
       <Filter>Wrappers</Filter>
@@ -99,32 +51,14 @@
     <ClInclude Include="Actor.h">
       <Filter>ActorSystem</Filter>
     </ClInclude>
-    <ClInclude Include="Scriptbinds\LevelSystem.h">
-      <Filter>ScriptBinds</Filter>
-    </ClInclude>
     <ClInclude Include="Headers\IMonoClass.h">
       <Filter>Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="Scriptbinds\Time.h">
-      <Filter>ScriptBinds\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Scriptbinds\ScriptTable.h">
-      <Filter>ScriptBinds</Filter>
-    </ClInclude>
-    <ClInclude Include="Scriptbinds\Network.h">
-      <Filter>ScriptBinds</Filter>
     </ClInclude>
     <ClInclude Include="NativeEntity.h">
       <Filter>EntitySystem\Native</Filter>
     </ClInclude>
-    <ClInclude Include="CryScriptInstance.h">
-      <Filter>Mono</Filter>
-    </ClInclude>
     <ClInclude Include="MonoCVars.h">
       <Filter>Mono</Filter>
-    </ClInclude>
-    <ClInclude Include="Scriptbinds\CrySerialize.h">
-      <Filter>ScriptBinds</Filter>
     </ClInclude>
     <ClInclude Include="CPluginCryMono.h">
       <Filter>Startup</Filter>
@@ -138,15 +72,6 @@
     <ClInclude Include="MonoException.h">
       <Filter>Wrappers</Filter>
     </ClInclude>
-    <ClInclude Include="Scriptbinds\GameObject.h">
-      <Filter>ScriptBinds\Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="Scriptbinds\Physics.h">
-      <Filter>ScriptBinds\Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="Scriptbinds\Entity.h">
-      <Filter>ScriptBinds\Entities</Filter>
-    </ClInclude>
     <ClInclude Include="SystemEventListener_CryMono.h">
       <Filter>Mono</Filter>
     </ClInclude>
@@ -154,9 +79,6 @@
       <Filter>EntitySystem</Filter>
     </ClInclude>
     <ClInclude Include="MonoHelpers.h" />
-    <ClInclude Include="Scriptbinds\CryPak.h">
-      <Filter>ScriptBinds\Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Headers\ICryScriptInstance.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
@@ -166,21 +88,96 @@
     <ClInclude Include="MonoMethod.h">
       <Filter>Wrappers</Filter>
     </ClInclude>
-    <ClInclude Include="AIActor.h" />
     <ClInclude Include="Headers\CryMonoInitializationHelpers.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="Scriptbinds\StaticObject.h">
-      <Filter>ScriptBinds\StaticObjects</Filter>
+    <ClInclude Include="MonoRunTime.h">
+      <Filter>Mono</Filter>
     </ClInclude>
-    <ClInclude Include="Scriptbinds\CMesh.h">
-      <Filter>ScriptBinds\StaticObjects</Filter>
+    <ClInclude Include="Headers\IMonoRunTime.h">
+      <Filter>Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="Scriptbinds\Platform.h">
-      <Filter>ScriptBinds</Filter>
+    <ClInclude Include="Interops\FlowGraph\FlowGraphNode_Mono.h">
+      <Filter>Interops\FlowGraph</Filter>
     </ClInclude>
-    <ClInclude Include="Scriptbinds\CryMarshal.h">
-      <Filter>ScriptBinds\NativeMemory</Filter>
+    <ClInclude Include="Interops\Engine\3DEngine.h">
+      <Filter>Interops\3DEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\Engine\MaterialManager.h">
+      <Filter>Interops\3DEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\Engine\ParticleSystem.h">
+      <Filter>Interops\3DEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\Entities\Entity.h">
+      <Filter>Interops\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\Entities\GameObject.h">
+      <Filter>Interops\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\Entities\Physics.h">
+      <Filter>Interops\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\GameLogic\ActorSystem.h">
+      <Filter>Interops\Game Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\GameLogic\GameRules.h">
+      <Filter>Interops\Game Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\NativeMemory\CryMarshal.h">
+      <Filter>Interops\NativeMemory</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\StaticObjects\CMesh.h">
+      <Filter>Interops\StaticObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\StaticObjects\StaticObject.h">
+      <Filter>Interops\StaticObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\Utilities\Console.h">
+      <Filter>Interops\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\Utilities\CryPak.h">
+      <Filter>Interops\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\Utilities\Debug.h">
+      <Filter>Interops\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\Utilities\Time.h">
+      <Filter>Interops\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\Viewport\Renderer.h">
+      <Filter>Interops\Viewport</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\Viewport\ViewSystem.h">
+      <Filter>Interops\Viewport</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\CrySerialize.h">
+      <Filter>Interops</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\LevelSystem.h">
+      <Filter>Interops</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\Network.h">
+      <Filter>Interops</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\Platform.h">
+      <Filter>Interops</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\MonoInput.h">
+      <Filter>Interops</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\IMonoInterop.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="AllInterops.h" />
+    <ClInclude Include="Interops\FlowGraph\FlowManager.h">
+      <Filter>Interops\FlowGraph</Filter>
+    </ClInclude>
+    <ClInclude Include="Headers\IMonoScriptSystem.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="ManagedGameLogic\ManagedEntity.h">
+      <Filter>ManagedGameLogic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -200,47 +197,11 @@
     <ClCompile Include="MonoArray.cpp">
       <Filter>Wrappers</Filter>
     </ClCompile>
-    <ClCompile Include="FlowManager.cpp">
-      <Filter>FlowSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="MonoFlowNode.cpp">
-      <Filter>FlowSystem</Filter>
-    </ClCompile>
     <ClCompile Include="MonoObject.cpp">
       <Filter>Wrappers</Filter>
     </ClCompile>
     <ClCompile Include="MonoEntity.cpp">
       <Filter>EntitySystem</Filter>
-    </ClCompile>
-    <ClCompile Include="Scriptbinds\Console.cpp">
-      <Filter>ScriptBinds\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="Scriptbinds\Debug.cpp">
-      <Filter>ScriptBinds\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="Scriptbinds\3DEngine.cpp">
-      <Filter>ScriptBinds\3DEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="ScriptBinds\MaterialManager.cpp">
-      <Filter>ScriptBinds\3DEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="Scriptbinds\ParticleSystem.cpp">
-      <Filter>ScriptBinds\3DEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="Scriptbinds\Renderer.cpp">
-      <Filter>ScriptBinds\Viewport</Filter>
-    </ClCompile>
-    <ClCompile Include="Scriptbinds\ViewSystem.cpp">
-      <Filter>ScriptBinds\Viewport</Filter>
-    </ClCompile>
-    <ClCompile Include="Scriptbinds\GameRules.cpp">
-      <Filter>ScriptBinds\Game Logic</Filter>
-    </ClCompile>
-    <ClCompile Include="Scriptbinds\ActorSystem.cpp">
-      <Filter>ScriptBinds\Game Logic</Filter>
-    </ClCompile>
-    <ClCompile Include="MonoInput.cpp">
-      <Filter>ScriptBinds</Filter>
     </ClCompile>
     <ClCompile Include="MonoDomain.cpp">
       <Filter>Wrappers</Filter>
@@ -248,32 +209,14 @@
     <ClCompile Include="Actor.cpp">
       <Filter>ActorSystem</Filter>
     </ClCompile>
-    <ClCompile Include="Scriptbinds\LevelSystem.cpp">
-      <Filter>ScriptBinds</Filter>
-    </ClCompile>
-    <ClCompile Include="Scriptbinds\ScriptTable.cpp">
-      <Filter>ScriptBinds</Filter>
-    </ClCompile>
-    <ClCompile Include="Scriptbinds\Network.cpp">
-      <Filter>ScriptBinds</Filter>
-    </ClCompile>
     <ClCompile Include="CryMonoDll.cpp">
       <Filter>Startup</Filter>
     </ClCompile>
     <ClCompile Include="NativeEntity.cpp">
       <Filter>EntitySystem\Native</Filter>
     </ClCompile>
-    <ClCompile Include="MonoScriptSystem.cpp">
-      <Filter>Mono</Filter>
-    </ClCompile>
-    <ClCompile Include="CryScriptInstance.cpp">
-      <Filter>Mono</Filter>
-    </ClCompile>
     <ClCompile Include="MonoCVars.cpp">
       <Filter>Mono</Filter>
-    </ClCompile>
-    <ClCompile Include="Scriptbinds\CrySerialize.cpp">
-      <Filter>ScriptBinds</Filter>
     </ClCompile>
     <ClCompile Include="CPluginCryMono.cpp">
       <Filter>Startup</Filter>
@@ -281,20 +224,8 @@
     <ClCompile Include="DynMonoArray.cpp">
       <Filter>Wrappers</Filter>
     </ClCompile>
-    <ClCompile Include="Scriptbinds\GameObject.cpp">
-      <Filter>ScriptBinds\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="Scriptbinds\Physics.cpp">
-      <Filter>ScriptBinds\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="Scriptbinds\Entity.cpp">
-      <Filter>ScriptBinds\Entities</Filter>
-    </ClCompile>
     <ClCompile Include="SystemEventListener_CryMono.cpp">
       <Filter>Mono</Filter>
-    </ClCompile>
-    <ClCompile Include="Scriptbinds\CryPak.cpp">
-      <Filter>ScriptBinds\Utils</Filter>
     </ClCompile>
     <ClCompile Include="MonoMethod.cpp">
       <Filter>Wrappers</Filter>
@@ -302,50 +233,94 @@
     <ClCompile Include="EntityEventHandling.cpp">
       <Filter>EntitySystem</Filter>
     </ClCompile>
-    <ClCompile Include="AIActor.cpp" />
-    <ClCompile Include="Scriptbinds\StaticObject.cpp">
-      <Filter>ScriptBinds\StaticObjects</Filter>
+    <ClCompile Include="MonoRunTime.cpp">
+      <Filter>Mono</Filter>
     </ClCompile>
-    <ClCompile Include="Scriptbinds\CMesh.cpp">
-      <Filter>ScriptBinds\StaticObjects</Filter>
+    <ClCompile Include="Interops\FlowGraph\FlowGraphNode_Mono.cpp">
+      <Filter>Interops\FlowGraph</Filter>
     </ClCompile>
-    <ClCompile Include="Scriptbinds\Platform.cpp">
-      <Filter>ScriptBinds</Filter>
+    <ClCompile Include="Interops\Engine\3DEngine.cpp">
+      <Filter>Interops\3DEngine</Filter>
     </ClCompile>
-    <ClCompile Include="Scriptbinds\CryMarshal.cpp">
-      <Filter>ScriptBinds\NativeMemory</Filter>
+    <ClCompile Include="Interops\Engine\MaterialManager.cpp">
+      <Filter>Interops\3DEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\Engine\ParticleSystem.cpp">
+      <Filter>Interops\3DEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\Entities\Entity.cpp">
+      <Filter>Interops\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\Entities\GameObject.cpp">
+      <Filter>Interops\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\Entities\Physics.cpp">
+      <Filter>Interops\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\GameLogic\ActorSystem.cpp">
+      <Filter>Interops\Game Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\GameLogic\GameRules.cpp">
+      <Filter>Interops\Game Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\NativeMemory\CryMarshal.cpp">
+      <Filter>Interops\NativeMemory</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\StaticObjects\CMesh.cpp">
+      <Filter>Interops\StaticObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\StaticObjects\StaticObject.cpp">
+      <Filter>Interops\StaticObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\Utilities\Console.cpp">
+      <Filter>Interops\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\Utilities\CryPak.cpp">
+      <Filter>Interops\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\Utilities\Debug.cpp">
+      <Filter>Interops\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\Viewport\Renderer.cpp">
+      <Filter>Interops\Viewport</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\Viewport\ViewSystem.cpp">
+      <Filter>Interops\Viewport</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\CrySerialize.cpp">
+      <Filter>Interops</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\LevelSystem.cpp">
+      <Filter>Interops</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\Network.cpp">
+      <Filter>Interops</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\Platform.cpp">
+      <Filter>Interops</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\MonoInput.cpp">
+      <Filter>Interops</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\FlowGraph\FlowManager.cpp">
+      <Filter>Interops\FlowGraph</Filter>
+    </ClCompile>
+    <ClCompile Include="ManagedGameLogic\ManagedEntity.cpp">
+      <Filter>ManagedGameLogic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="ScriptBinds">
-      <UniqueIdentifier>{b74b7f2e-21ba-41b0-bfc0-0c6746e17f19}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Wrappers">
       <UniqueIdentifier>{399bdcdf-4fb8-4ed3-83c1-f29f83c7c09b}</UniqueIdentifier>
     </Filter>
     <Filter Include="EntitySystem">
       <UniqueIdentifier>{f5c2f1b4-f7f2-4f27-be93-8c656a23cdb2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="FlowSystem">
-      <UniqueIdentifier>{e86e83fb-fa9c-4662-9e45-e9f845946fc0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Utils">
       <UniqueIdentifier>{aa1f26db-41b9-4103-b477-74ef21bd29e0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Mono">
       <UniqueIdentifier>{2de1619b-2f0c-4705-a8e5-59c8778b080d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ScriptBinds\Utils">
-      <UniqueIdentifier>{76693c78-6092-4e31-8c05-8e5226c91219}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ScriptBinds\3DEngine">
-      <UniqueIdentifier>{207f7768-8653-4b64-9c28-89e7f0d7ee80}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ScriptBinds\Viewport">
-      <UniqueIdentifier>{dfe4c9b2-942b-4107-a837-8df22e11c60f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ScriptBinds\Game Logic">
-      <UniqueIdentifier>{55fd45df-3f95-4840-8eab-7d7170031ae0}</UniqueIdentifier>
     </Filter>
     <Filter Include="ActorSystem">
       <UniqueIdentifier>{7519e88b-de7a-4729-919b-85c4612989e9}</UniqueIdentifier>
@@ -359,14 +334,35 @@
     <Filter Include="Interfaces">
       <UniqueIdentifier>{2274758e-72ad-46e0-8409-df6cebf00772}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ScriptBinds\Entities">
+    <Filter Include="Interops">
+      <UniqueIdentifier>{53346888-7df8-470b-b631-f549bf104199}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interops\FlowGraph">
+      <UniqueIdentifier>{d77a7b9e-d8b5-4235-ba43-583cf331dfb6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interops\3DEngine">
+      <UniqueIdentifier>{207f7768-8653-4b64-9c28-89e7f0d7ee80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interops\Entities">
       <UniqueIdentifier>{b72986a0-1186-4c2d-9461-34d62b53b4fe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ScriptBinds\StaticObjects">
+    <Filter Include="Interops\Game Logic">
+      <UniqueIdentifier>{55fd45df-3f95-4840-8eab-7d7170031ae0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interops\NativeMemory">
+      <UniqueIdentifier>{b0f89071-783e-4988-adb0-9fb08b6decd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interops\StaticObjects">
       <UniqueIdentifier>{32b893d5-61d5-4bfc-9231-bf35d3233630}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ScriptBinds\NativeMemory">
-      <UniqueIdentifier>{b0f89071-783e-4988-adb0-9fb08b6decd1}</UniqueIdentifier>
+    <Filter Include="Interops\Utilities">
+      <UniqueIdentifier>{76693c78-6092-4e31-8c05-8e5226c91219}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interops\Viewport">
+      <UniqueIdentifier>{dfe4c9b2-942b-4107-a837-8df22e11c60f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ManagedGameLogic">
+      <UniqueIdentifier>{f7aae537-016d-424c-abe4-4948a9bb3443}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

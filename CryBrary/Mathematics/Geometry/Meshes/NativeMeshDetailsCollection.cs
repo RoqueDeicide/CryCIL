@@ -45,7 +45,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 			{
 				if (value >= 0 && value != this.Count && this.Reallocatable)
 				{
-					NativeMeshMethods.ReallocateStream(this.MeshHandle, this.MemoryRegionIdentifier, value);
+					MeshInterop.ReallocateStream(this.MeshHandle, this.MemoryRegionIdentifier, value);
 				}
 			}
 		}
@@ -63,9 +63,9 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		public virtual void UpdateCollection()
 		{
 			this.CollectionHandle =
-				NativeMeshMethods.GetStreamHandle(this.MeshHandle, this.MemoryRegionIdentifier);
+				MeshInterop.GetStreamHandle(this.MeshHandle, this.MemoryRegionIdentifier);
 			this.Count =
-				NativeMeshMethods.GetNumberOfElements(this.MeshHandle, this.MemoryRegionIdentifier);
+				MeshInterop.GetNumberOfElements(this.MeshHandle, this.MemoryRegionIdentifier);
 		}
 		/// <summary>
 		/// Creates enumerator for this collection.
@@ -80,8 +80,8 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// </summary>
 		public virtual void Clear()
 		{
-			NativeMeshMethods.ReallocateStream(this.MeshHandle, this.MemoryRegionIdentifier, 0);
-			NativeMeshMethods.ReallocateStream(this.MeshHandle, this.MemoryRegionIdentifier, this.Count);
+			MeshInterop.ReallocateStream(this.MeshHandle, this.MemoryRegionIdentifier, 0);
+			MeshInterop.ReallocateStream(this.MeshHandle, this.MemoryRegionIdentifier, this.Count);
 			this.UpdateCollection();
 		}
 		/// <summary>

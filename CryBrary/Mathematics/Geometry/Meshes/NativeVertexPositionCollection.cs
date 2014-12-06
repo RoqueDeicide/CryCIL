@@ -30,7 +30,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 			{
 				if (value < 0 || value == this.Count) return;
 
-				NativeMeshMethods.SetVertexCount(this.MeshHandle, value);
+				MeshInterop.SetVertexCount(this.MeshHandle, value);
 				this.mesh.OnVerticesReallocated(this.Count, value);
 				this.Count = value;
 			}

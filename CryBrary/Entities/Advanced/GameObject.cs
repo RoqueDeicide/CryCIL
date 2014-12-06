@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CryEngine.Logic.Entities;
 using CryEngine.Native;
 
 namespace CryEngine.Entities.Advanced
@@ -22,7 +23,7 @@ namespace CryEngine.Entities.Advanced
 		/// <returns><see cref="GameObject"/> for given entity.</returns>
 		public static GameObject Get(EntityId id)
 		{
-			var handle = NativeGameObjectMethods.GetGameObject(id);
+			var handle = GameObjectInterop.GetGameObject(id);
 			if (handle == IntPtr.Zero)
 				return null;
 
@@ -41,7 +42,7 @@ namespace CryEngine.Entities.Advanced
 		#endregion
 		private GameObject(IntPtr handle)
 		{
-			this.SetIGameObject(handle);
+			this.Handle = handle;
 
 			this.Extensions = new List<GameObjectExtension>();
 		}
@@ -57,7 +58,7 @@ namespace CryEngine.Entities.Advanced
 		[CLSCompliant(false)]
 		public bool SetAspectProfile(EntityAspects aspect, ushort profile, bool fromNetwork = false)
 		{
-			return NativeGameObjectMethods.SetAspectProfile(this.Handle, aspect, profile, fromNetwork);
+			return GameObjectInterop.SetAspectProfile(this.Handle, aspect, profile, fromNetwork);
 		}
 		/// <summary>
 		/// En/disables sending physics event to this game object.
@@ -68,7 +69,7 @@ namespace CryEngine.Entities.Advanced
 		/// </param>
 		public void EnablePhysicsEvent(bool enable, EntityPhysicsEvents physicsEvent)
 		{
-			NativeGameObjectMethods.EnablePhysicsEvent(this.Handle, enable, physicsEvent);
+			GameObjectInterop.EnablePhysicsEvent(this.Handle, enable, physicsEvent);
 		}
 		/// <summary>
 		/// </summary>
@@ -76,7 +77,7 @@ namespace CryEngine.Entities.Advanced
 		/// <returns></returns>
 		public bool WantsPhysicsEvent(EntityPhysicsEvents physicsEvent)
 		{
-			return NativeGameObjectMethods.WantsPhysicsEvent(this.Handle, physicsEvent);
+			return GameObjectInterop.WantsPhysicsEvent(this.Handle, physicsEvent);
 		}
 		/// <summary>
 		/// Tries to get the extension.
@@ -87,7 +88,7 @@ namespace CryEngine.Entities.Advanced
 		/// </returns>
 		public GameObjectExtension QueryExtension(string name)
 		{
-			return this.TryGetExtension(NativeGameObjectMethods.QueryExtension(this.Handle, name));
+			return this.TryGetExtension(GameObjectInterop.QueryExtension(this.Handle, name));
 		}
 		/// <summary>
 		/// Forces return of a wrapper object for an extension.
@@ -97,7 +98,7 @@ namespace CryEngine.Entities.Advanced
 		/// <returns>The extension wrapper object.</returns>
 		public GameObjectExtension AcquireExtension(string name)
 		{
-			return this.TryGetExtension(NativeGameObjectMethods.AcquireExtension(this.Handle, name));
+			return this.TryGetExtension(GameObjectInterop.AcquireExtension(this.Handle, name));
 		}
 		/// <summary>
 		/// Release a previously acquired extension
@@ -105,7 +106,7 @@ namespace CryEngine.Entities.Advanced
 		/// <param name="name">Name of the extension.</param>
 		public void ReleaseExtension(string name)
 		{
-			NativeGameObjectMethods.ReleaseExtension(this.Handle, name);
+			GameObjectInterop.ReleaseExtension(this.Handle, name);
 		}
 		/// <summary>
 		/// Activates the extension.
@@ -114,7 +115,7 @@ namespace CryEngine.Entities.Advanced
 		/// <returns>True, if successful.</returns>
 		public bool ActivateExtension(string name)
 		{
-			return NativeGameObjectMethods.ActivateExtension(this.Handle, name);
+			return GameObjectInterop.ActivateExtension(this.Handle, name);
 		}
 		/// <summary>
 		/// Deactivates the extension.
@@ -122,7 +123,7 @@ namespace CryEngine.Entities.Advanced
 		/// <param name="name">Name of the extension to deactivate.</param>
 		public void DeactivateExtension(string name)
 		{
-			NativeGameObjectMethods.DeactivateExtension(this.Handle, name);
+			GameObjectInterop.DeactivateExtension(this.Handle, name);
 		}
 
 		private GameObjectExtension TryGetExtension(IntPtr handle)
@@ -147,14 +148,14 @@ namespace CryEngine.Entities.Advanced
 
 		public void NotifyNetworkStateChange(int aspect)
 		{
-			NativeGameObjectMethods.ChangedNetworkState(this.Handle, aspect);
+			GameObjectInterop.ChangedNetworkState(this.Handle, aspect);
 		}
 		/// <summary>
 		/// Sets mode for pre-physics updates.
 		/// </summary>
 		public PrePhysicsUpdateMode PrePhysicsUpdateMode
 		{
-			set { NativeGameObjectMethods.EnablePrePhysicsUpdates(this.Handle, value); }
+			set { GameObjectInterop.EnablePrePhysicsUpdates(this.Handle, value); }
 		}
 		/// <summary>
 		/// Binds the game object to the network.
@@ -164,7 +165,7 @@ namespace CryEngine.Entities.Advanced
 		/// <returns>True, if successful.</returns>
 		public bool BindToNetwork(BindToNetworkMode mode = BindToNetworkMode.Normal)
 		{
-			return NativeGameObjectMethods.BindToNetwork(this.Handle, mode);
+			return GameObjectInterop.BindToNetwork(this.Handle, mode);
 		}
 
 		private List<GameObjectExtension> Extensions { get; set; }

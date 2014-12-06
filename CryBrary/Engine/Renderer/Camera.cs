@@ -13,7 +13,7 @@ namespace CryEngine
 		{
 			get
 			{
-				return TryGet(NativeRendererMethods.GetViewCamera());
+				return TryGet(RendererInterop.GetViewCamera());
 			}
 		}
 
@@ -26,8 +26,10 @@ namespace CryEngine
 			if (camera != null)
 				return camera;
 
-			camera = new Camera();
-			camera.Handle = handle;
+			camera = new Camera
+			{
+				Handle = handle
+			};
 
 			cameras.Add(camera);
 
@@ -36,10 +38,10 @@ namespace CryEngine
 
 		private static readonly List<Camera> cameras = new List<Camera>();
 
-		public Matrix34 Matrix { get { return NativeRendererMethods.GetCameraMatrix(Handle); } set { NativeRendererMethods.SetCameraMatrix(Handle, value); } }
-		public Vector3 Position { get { return NativeRendererMethods.GetCameraPosition(Handle); } set { NativeRendererMethods.SetCameraPosition(Handle, value); } }
+		public Matrix34 Matrix { get { return RendererInterop.GetCameraMatrix(Handle); } set { RendererInterop.SetCameraMatrix(Handle, value); } }
+		public Vector3 Position { get { return RendererInterop.GetCameraPosition(Handle); } set { RendererInterop.SetCameraPosition(Handle, value); } }
 
-		public float FieldOfView { get { return NativeRendererMethods.GetCameraFieldOfView(Handle); } }
+		public float FieldOfView { get { return RendererInterop.GetCameraFieldOfView(Handle); } }
 
 		private IntPtr Handle { get; set; }
 	}

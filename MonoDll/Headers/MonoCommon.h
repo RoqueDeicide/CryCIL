@@ -11,7 +11,7 @@
 #ifndef __MONO_COMMON_H__
 #define __MONO_COMMON_H__
 
-#include <IMonoScriptSystem.h>
+#include <IMonoRunTime.h>
 
 /// <summary>
 /// Converts a C++ string to the C# equivalent.
@@ -21,7 +21,7 @@ inline const char *ToCryString(mono::string monoString)
 	if(!monoString)
 		return "";
 
-	return GetMonoScriptSystem()->ToString(monoString);
+	return GetMonoRunTime()->ToString(monoString);
 }
 
 /// <summary>
@@ -57,12 +57,16 @@ namespace mono
 	public:
 		operator IMonoObject *() const
 		{
-			return GetMonoScriptSystem()->ToObject(const_cast<_object *>(this));
+			return GetMonoRunTime()->ToObject(const_cast<_object *>(this));
 		}
 
 		operator IMonoArray *() const
 		{
-			return GetMonoScriptSystem()->ToArray(const_cast<_object *>(this));
+			return GetMonoRunTime()->ToArray(const_cast<_object *>(this));
+		}
+		IMonoObject *ToWrapper() const
+		{
+			return GetMonoRunTime()->ToObject(const_cast<_object *>(this));
 		}
 	};
 

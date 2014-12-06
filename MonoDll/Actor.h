@@ -13,6 +13,8 @@
 #include <IActorSystem.h>
 #include <IAnimatedCharacter.h>
 
+#include "Interops/GameLogic/ActorSystem.h"
+
 #include "MonoEntity.h"
 
 struct IMonoObject;
@@ -21,9 +23,9 @@ class CMonoActor
 	: public CGameObjectExtensionHelper<CMonoActor, IActor, 2>
 	, public IGameObjectView
 	, public IGameObjectProfileManager
-	, public IMonoScriptEventListener
 {
 	friend class CSerializeWrapper<ISerialize>;
+	friend class ActorSystemInterop;
 
 public:
 	CMonoActor();
@@ -167,17 +169,6 @@ public:
 	virtual bool SetAspectProfile(EEntityAspects aspect, uint8 profile);
 	virtual uint8 GetDefaultProfile(EEntityAspects aspect) { return aspect == eEA_Physics ? eAP_NotPhysicalized : 0; }
 	// ~IGameObjectProfileManager
-
-	// IMonoScriptEventListener
-	virtual void OnReloadStart() {}
-	virtual void OnReloadComplete() {}
-
-	virtual void OnShutdown() {}
-
-	virtual void OnScriptInstanceCreated(const char *scriptName, EMonoScriptFlags scriptType, ICryScriptInstance *pScriptInstance) {}
-	virtual void OnScriptInstanceInitialized(ICryScriptInstance *pScriptInstance);
-	virtual void OnScriptInstanceReleased(ICryScriptInstance *pScriptInstance, int scriptId) { if (pScriptInstance == m_pScript) m_pScript = nullptr; }
-	// ~IMonoScriptEventListener
 
 	DECLARE_SERVER_RMI_NOATTACH(SvScriptRMI, CMonoEntityExtension::RMIParams, eNRT_ReliableUnordered);
 	DECLARE_CLIENT_RMI_NOATTACH(ClScriptRMI, CMonoEntityExtension::RMIParams, eNRT_ReliableUnordered);

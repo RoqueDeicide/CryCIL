@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "DynMonoArray.h"
 
-#include "MonoScriptSystem.h"
+#include "MonoRunTime.h"
 #include "MonoDomain.h"
 
 CDynScriptArray::CDynScriptArray(MonoDomain *pDomain, IMonoClass *pContainingType, int size, bool allowGC)

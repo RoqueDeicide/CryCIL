@@ -103,16 +103,15 @@ public:
 	DECLARE_SERVER_RMI_NOATTACH(SvScriptRMI, RMIParams, eNRT_ReliableUnordered);
 	DECLARE_CLIENT_RMI_NOATTACH(ClScriptRMI, RMIParams, eNRT_ReliableUnordered);
 
-	IMonoObject *GetScript() { return m_pScript; }
-
 	void SetPropertyValue(IEntityPropertyHandler::SPropertyInfo propertyInfo, const char *value);
 
 	bool IsInitialized() { return m_bInitialized; }
 
 	void Reset(bool enteringGamemode);
+	mono::object GetMonoObject() { return this->m_pManagedObject; }
+	__declspec(property(get=GetMonoObject)) mono::object ManagedWrapper;
 
 protected:
-	ICryScriptInstance *m_pScript;
 	mono::object m_pManagedObject;
 
 	IAnimatedCharacter *m_pAnimatedCharacter;

@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "Actor.h"
 
-#include "MonoScriptSystem.h"
+#include "MonoRunTime.h"
 
 #include "EntityEventHandling.h"
 
@@ -13,7 +13,7 @@
 #include <IMonoClass.h>
 
 CMonoActor::CMonoActor()
-: m_pAnimatedCharacter(NULL)
+	: m_pAnimatedCharacter(NULL)
 	, m_bClient(false)
 	, m_bMigrating(false)
 	, m_pScript(nullptr)
@@ -35,12 +35,10 @@ CMonoActor::~CMonoActor()
 	GetGameObject()->ReleaseView(this);
 	GetGameObject()->ReleaseProfileManager(this);
 
-	if (IMonoScriptSystem *pScriptSystem = GetMonoScriptSystem())
+	if (MonoRunTime *pScriptSystem = GetMonoRunTime())
 	{
-		if (IActorSystem *pActorSystem = static_cast<CScriptSystem *>(pScriptSystem)->GetIGameFramework()->GetIActorSystem())
+		if (IActorSystem *pActorSystem = pScriptSystem->GameFramework->GetIActorSystem())
 			pActorSystem->RemoveActor(GetEntityId());
-
-		pScriptSystem->RemoveListener(this);
 	}
 }
 
@@ -53,7 +51,7 @@ bool CMonoActor::Init(IGameObject *pGameObject)
 	if (!GetGameObject()->CaptureProfileManager(this))
 		return false;
 
-	static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIActorSystem()->AddActor(GetEntityId(), this);
+	GetMonoRunTime()->GameFramework->GetIActorSystem()->AddActor(GetEntityId(), this);
 
 	m_pAnimatedCharacter = static_cast<IAnimatedCharacter*>(GetGameObject()->AcquireExtension("AnimatedCharacter"));
 	if (m_pAnimatedCharacter)
@@ -71,8 +69,6 @@ bool CMonoActor::Init(IGameObject *pGameObject)
 		if (IRenderNode *pRenderNode = pProxy->GetRenderNode())
 			pRenderNode->SetRndFlags(ERF_REGISTER_BY_POSITION, true);
 	}
-
-	GetMonoScriptSystem()->AddListener(this);
 
 	return true;
 }
@@ -105,7 +101,7 @@ bool CMonoActor::ReloadExtension(IGameObject *pGameObject, const SEntitySpawnPar
 	if (!GetGameObject()->BindToNetwork())
 		return false;
 
-	IGameFramework *pGameFramework = static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework();
+	IGameFramework *pGameFramework = GetMonoRunTime()->GameFramework;
 
 	pGameFramework->GetIActorSystem()->RemoveActor(params.prevId);
 	pGameFramework->GetIActorSystem()->AddActor(GetEntityId(), this);
@@ -176,24 +172,24 @@ void CMonoActor::ProcessEvent(SEntityEvent& event)
 		break;
 	case ENTITY_EVENT_START_GAME:
 	{
-									GetGameObject()->RequestRemoteUpdate(eEA_Physics | eEA_GameClientDynamic | eEA_GameServerDynamic | eEA_GameClientStatic | eEA_GameServerStatic);
+		GetGameObject()->RequestRemoteUpdate(eEA_Physics | eEA_GameClientDynamic | eEA_GameServerDynamic | eEA_GameClientStatic | eEA_GameServerStatic);
 
-									if (m_pAnimatedCharacter)
-										m_pAnimatedCharacter->ResetState();
+		if (m_pAnimatedCharacter)
+			m_pAnimatedCharacter->ResetState();
 	}
 		break;
 	case ENTITY_EVENT_RESET:
 	{
-							   if (m_pAnimatedCharacter)
-								   m_pAnimatedCharacter->ResetState();
+		if (m_pAnimatedCharacter)
+			m_pAnimatedCharacter->ResetState();
 
-							   GetGameObject()->RequestRemoteUpdate(eEA_Physics | eEA_GameClientDynamic | eEA_GameServerDynamic | eEA_GameClientStatic | eEA_GameServerStatic);
+		GetGameObject()->RequestRemoteUpdate(eEA_Physics | eEA_GameClientDynamic | eEA_GameServerDynamic | eEA_GameClientStatic | eEA_GameServerStatic);
 	}
 		break;
 	case ENTITY_EVENT_INIT:
 	{
-							  if (m_pAnimatedCharacter)
-								  m_pAnimatedCharacter->ResetState();
+		if (m_pAnimatedCharacter)
+			m_pAnimatedCharacter->ResetState();
 	}
 		break;
 	case ENTITY_EVENT_XFORM:
@@ -205,25 +201,8 @@ void CMonoActor::ProcessEvent(SEntityEvent& event)
 
 void CMonoActor::PostUpdate(float frameTime)
 {
-	if (m_pScript)
-		m_pScript->CallMethod("OnPostUpdate");
-}
-
-void CMonoActor::OnScriptInstanceInitialized(ICryScriptInstance *pScriptInstance)
-{
-	mono::object pIdResult = pScriptInstance->GetPropertyValue("Id", false);
-	if (pIdResult)
-	{
-		IMonoObject *pObject = *pIdResult;
-		EntityId id = pObject->Unbox<EntityId>();
-		pObject->Release();
-
-		if (id == GetEntityId())
-		{
-			m_pScript = pScriptInstance;
-			m_pManagedObject = pScriptInstance->GetManagedObject();
-		}
-	}
+	if (this->m_pManagedObject)
+		this->m_pManagedObject->ToWrapper()->CallMethod("OnPostUpdate", frameTime);
 }
 
 void CMonoActor::UpdateView(SViewParams &viewParams)
@@ -231,7 +210,7 @@ void CMonoActor::UpdateView(SViewParams &viewParams)
 	void *args[1];
 	args[0] = &viewParams;
 
-	m_pScript->GetClass()->GetMethod("UpdateView", 1)->Invoke(m_pManagedObject, args);
+	this->m_pManagedObject->ToWrapper()->GetClass()->GetMethod("UpdateView", 1)->Invoke(m_pManagedObject, args);
 }
 
 void CMonoActor::PostUpdateView(SViewParams &viewParams)
@@ -239,7 +218,7 @@ void CMonoActor::PostUpdateView(SViewParams &viewParams)
 	void *args[1];
 	args[0] = &viewParams;
 
-	m_pScript->GetClass()->GetMethod("PostUpdateView", 1)->Invoke(m_pManagedObject, args);
+	this->m_pManagedObject->ToWrapper()->GetClass()->GetMethod("PostUpdateView", 1)->Invoke(m_pManagedObject, args);
 }
 
 bool CMonoActor::SetAspectProfile(EEntityAspects aspect, uint8 profile)
@@ -248,7 +227,7 @@ bool CMonoActor::SetAspectProfile(EEntityAspects aspect, uint8 profile)
 
 	if (aspect == eEA_Physics)
 	{
-		if (m_currentPhysProfile == profile && !gEnv->pSystem->IsSerializingFile()) //rephysicalize when loading savegame
+		if (m_currentPhysProfile == profile && !gEnv->pSystem->IsSerializingFile()) //rephysicalize when loading save-game
 			return true;
 
 		bool wasFrozen=(m_currentPhysProfile == eAP_Frozen);
@@ -257,77 +236,77 @@ bool CMonoActor::SetAspectProfile(EEntityAspects aspect, uint8 profile)
 		{
 		case eAP_NotPhysicalized:
 		{
-									SEntityPhysicalizeParams params;
-									params.type = PE_NONE;
-									GetEntity()->Physicalize(params);
+			SEntityPhysicalizeParams params;
+			params.type = PE_NONE;
+			GetEntity()->Physicalize(params);
 		}
 			res=true;
 			break;
 		case eAP_Spectator:
 		case eAP_Alive:
 		{
-						  // if we were asleep, we just want to wakeup
-						  if (profile == eAP_Alive && (m_currentPhysProfile == eAP_Sleep))
-						  {
-							  ICharacterInstance *pCharacter=GetEntity()->GetCharacter(0);
-							  if (pCharacter && pCharacter->GetISkeletonAnim())
-							  {
-								  IPhysicalEntity *pPhysicalEntity=0;
-								  Matrix34 delta(IDENTITY);
+			// if we were asleep, we just want to wakeup
+			if (profile == eAP_Alive && (m_currentPhysProfile == eAP_Sleep))
+			{
+				ICharacterInstance *pCharacter=GetEntity()->GetCharacter(0);
+				if (pCharacter && pCharacter->GetISkeletonAnim())
+				{
+					IPhysicalEntity *pPhysicalEntity=0;
+					Matrix34 delta(IDENTITY);
 
-								  if (pPhysicalEntity)
-								  {
-									  IEntityPhysicalProxy *pPhysicsProxy=static_cast<IEntityPhysicalProxy *>(GetEntity()->GetProxy(ENTITY_PROXY_PHYSICS));
-									  if (pPhysicsProxy)
-									  {
-										  GetEntity()->SetWorldTM(delta);
-										  pPhysicsProxy->AssignPhysicalEntity(pPhysicalEntity);
-									  }
-								  }
+					if (pPhysicalEntity)
+					{
+						IEntityPhysicalProxy *pPhysicsProxy=static_cast<IEntityPhysicalProxy *>(GetEntity()->GetProxy(ENTITY_PROXY_PHYSICS));
+						if (pPhysicsProxy)
+						{
+							GetEntity()->SetWorldTM(delta);
+							pPhysicsProxy->AssignPhysicalEntity(pPhysicalEntity);
+						}
+					}
 
-								  if (m_pAnimatedCharacter)
-									  m_pAnimatedCharacter->ForceRefreshPhysicalColliderMode();
-							  }
-						  }
-						  else
-						  {
-							  //	Physicalize(wasFrozen?STANCE_PRONE:STANCE_NULL);
+					if (m_pAnimatedCharacter)
+						m_pAnimatedCharacter->ForceRefreshPhysicalColliderMode();
+				}
+			}
+			else
+			{
+				//	Physicalize(wasFrozen?STANCE_PRONE:STANCE_NULL);
 
-							  if (profile == eAP_Spectator)
-							  {
-								  if (ICharacterInstance *pCharacter=GetEntity()->GetCharacter(0))
-									  pCharacter->GetISkeletonPose()->DestroyCharacterPhysics(1);
+				if (profile == eAP_Spectator)
+				{
+					if (ICharacterInstance *pCharacter=GetEntity()->GetCharacter(0))
+						pCharacter->GetISkeletonPose()->DestroyCharacterPhysics(1);
 
-								  if (m_pAnimatedCharacter)
-								  {
-									  m_pAnimatedCharacter->ForceRefreshPhysicalColliderMode();
-									  m_pAnimatedCharacter->RequestPhysicalColliderMode(eColliderMode_Spectator, eColliderModeLayer_Game, "Actor::SetAspectProfile");
-								  }
-							  }
-							  else if (profile == eAP_Alive)
-							  {
-								  if (m_currentPhysProfile == eAP_Spectator)
-								  {
-									  if (m_pAnimatedCharacter)
-										  m_pAnimatedCharacter->RequestPhysicalColliderMode(eColliderMode_Undefined, eColliderModeLayer_Game, "Actor::SetAspectProfile");
+					if (m_pAnimatedCharacter)
+					{
+						m_pAnimatedCharacter->ForceRefreshPhysicalColliderMode();
+						m_pAnimatedCharacter->RequestPhysicalColliderMode(eColliderMode_Spectator, eColliderModeLayer_Game, "Actor::SetAspectProfile");
+					}
+				}
+				else if (profile == eAP_Alive)
+				{
+					if (m_currentPhysProfile == eAP_Spectator)
+					{
+						if (m_pAnimatedCharacter)
+							m_pAnimatedCharacter->RequestPhysicalColliderMode(eColliderMode_Undefined, eColliderModeLayer_Game, "Actor::SetAspectProfile");
 
-									  if (IPhysicalEntity *pPhysics=GetEntity()->GetPhysics())
-									  {
-										  if (ICharacterInstance *pCharacter=GetEntity()->GetCharacter(0))
-										  {
-											  pCharacter->GetISkeletonPose()->DestroyCharacterPhysics(2);
+						if (IPhysicalEntity *pPhysics=GetEntity()->GetPhysics())
+						{
+							if (ICharacterInstance *pCharacter=GetEntity()->GetCharacter(0))
+							{
+								pCharacter->GetISkeletonPose()->DestroyCharacterPhysics(2);
 
-											  if (IPhysicalEntity *pCharPhysics=pCharacter->GetISkeletonPose()->GetCharacterPhysics())
-											  {
-												  pe_params_articulated_body body;
-												  body.pHost=pPhysics;
-												  pCharPhysics->SetParams(&body);
-											  }
-										  }
-									  }
-								  }
-							  }
-						  }
+								if (IPhysicalEntity *pCharPhysics=pCharacter->GetISkeletonPose()->GetCharacterPhysics())
+								{
+									pe_params_articulated_body body;
+									body.pHost=pPhysics;
+									pCharPhysics->SetParams(&body);
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 			res=true;
 			break;
@@ -404,12 +383,12 @@ bool CMonoActor::SetAspectProfile(EEntityAspects aspect, uint8 profile)
 void CMonoActor::InitLocalPlayer()
 {
 	GetGameObject()->SetUpdateSlotEnableCondition(this, 0, eUEC_WithoutAI);
-	//static_cast<CScriptSystem *>(GetMonoScriptSystem())->GetIGameFramework()->GetIActorSystem()->SetLocalPlayerId(GetEntityId());
+	//GetMonoRunTime()->GameFramework->GetIActorSystem()->SetLocalPlayerId(GetEntityId());
 }
 
 float CMonoActor::GetHealth() const
 {
-	IMonoObject *pResult = *m_pScript->GetPropertyValue("Health");
+	IMonoObject *pResult = *this->m_pManagedObject->ToWrapper()->GetPropertyValue("Health");
 	float health = pResult->Unbox<float>();
 	pResult->Release();
 
@@ -418,14 +397,14 @@ float CMonoActor::GetHealth() const
 
 void CMonoActor::SetHealth(float health)
 {
-	IMonoDomain *pDomain = m_pScript->GetClass()->GetAssembly()->GetDomain();
+	IMonoDomain *pDomain = this->m_pManagedObject->ToWrapper()->GetClass()->GetAssembly()->GetDomain();
 
-	m_pScript->SetPropertyValue("Health", pDomain->BoxAnyValue(MonoAnyValue(health)));
+	this->m_pManagedObject->ToWrapper()->SetPropertyValue("Health", pDomain->BoxAnyValue(MonoAnyValue(health)));
 }
 
 float CMonoActor::GetMaxHealth() const
 {
-	IMonoObject *pResult = *m_pScript->GetPropertyValue("MaxHealth");
+	IMonoObject *pResult = *this->m_pManagedObject->ToWrapper()->GetPropertyValue("MaxHealth");
 	float health = pResult->Unbox<float>();
 	pResult->Release();
 
@@ -434,9 +413,9 @@ float CMonoActor::GetMaxHealth() const
 
 void CMonoActor::SetMaxHealth(float health)
 {
-	IMonoDomain *pDomain = m_pScript->GetClass()->GetAssembly()->GetDomain();
+	IMonoDomain *pDomain = this->m_pManagedObject->ToWrapper()->GetClass()->GetAssembly()->GetDomain();
 
-	m_pScript->SetPropertyValue("MaxHealth", pDomain->BoxAnyValue(MonoAnyValue(health)));
+	this->m_pManagedObject->ToWrapper()->SetPropertyValue("MaxHealth", pDomain->BoxAnyValue(MonoAnyValue(health)));
 }
 
 bool CMonoActor::NetSerialize(TSerialize ser, EEntityAspects aspect, uint8 profile, int pflags)
@@ -517,7 +496,7 @@ bool CMonoActor::NetSerialize(TSerialize ser, EEntityAspects aspect, uint8 profi
 	params[2] = &profile;
 	params[3] = &pflags;
 
-	m_pScript->GetClass()->GetMethod("InternalNetSerialize", 4)->Invoke(m_pManagedObject, params);
+	this->m_pManagedObject->ToWrapper()->GetClass()->GetMethod("InternalNetSerialize", 4)->Invoke(m_pManagedObject, params);
 
 	ser.EndGroup();
 
@@ -531,7 +510,7 @@ void CMonoActor::FullSerialize(TSerialize ser)
 	IMonoArray *pArgs = CreateMonoArray(1);
 	pArgs->InsertNativePointer(&ser);
 
-	m_pScript->GetClass()->GetMethod("InternalFullSerialize", 1)->InvokeArray(m_pManagedObject, pArgs);
+	this->m_pManagedObject->ToWrapper()->GetClass()->GetMethod("InternalFullSerialize", 1)->InvokeArray(m_pManagedObject, pArgs);
 	pArgs->Release();
 
 	ser.EndGroup();
@@ -539,12 +518,12 @@ void CMonoActor::FullSerialize(TSerialize ser)
 
 void CMonoActor::PostSerialize()
 {
-	m_pScript->GetClass()->GetMethod("PostSerialize")->Invoke(m_pManagedObject);
+	this->m_pManagedObject->ToWrapper()->GetClass()->GetMethod("PostSerialize")->Invoke(m_pManagedObject);
 }
 
 IMPLEMENT_RMI(CMonoActor, SvScriptRMI)
 {
-	IMonoClass *pEntityClass = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("Entity");
+	IMonoClass *pEntityClass = GetMonoRunTime()->CryBrary->GetClass("Entity");
 
 	IMonoArray *pNetworkArgs = CreateMonoArray(3);
 	pNetworkArgs->Insert(ToMonoString(params.methodName.c_str()));
@@ -559,7 +538,7 @@ IMPLEMENT_RMI(CMonoActor, SvScriptRMI)
 
 IMPLEMENT_RMI(CMonoActor, ClScriptRMI)
 {
-	IMonoClass *pEntityClass = GetMonoScriptSystem()->GetCryBraryAssembly()->GetClass("Entity");
+	IMonoClass *pEntityClass = GetMonoRunTime()->CryBrary->GetClass("Entity");
 
 	IMonoArray *pNetworkArgs = CreateMonoArray(3);
 	pNetworkArgs->Insert(ToMonoString(params.methodName.c_str()));

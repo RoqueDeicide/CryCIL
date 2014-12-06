@@ -23,13 +23,13 @@ namespace CryEngine.Physics
 		[CLSCompliant(false)]
 		public bool SetParameters(ref ParticleParameters parameters)
 		{
-			return NativePhysicsMethods.SetParticleParams(Handle, ref parameters);
+			return PhysicsInterop.SetParticleParams(Handle, ref parameters);
 		}
 
 		[CLSCompliant(false)]
 		public bool GetParameters(ref ParticleParameters parameters)
 		{
-			return NativePhysicsMethods.GetParticleParams(Handle, ref parameters);
+			return PhysicsInterop.GetParticleParams(Handle, ref parameters);
 		}
 	}
 }

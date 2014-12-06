@@ -57,7 +57,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 
 		private void mesh_VerticesReallocated(object sender, VertexCollectionEventArgs e)
 		{
-			NativeMeshMethods.ReallocateStream(this.MeshHandle, NativeMeshMemoryRegion.Qtangents, e.NewCount);
+			MeshInterop.ReallocateStream(this.MeshHandle, NativeMeshMemoryRegion.Qtangents, e.NewCount);
 			this.UpdateCollection();
 		}
 		#endregion

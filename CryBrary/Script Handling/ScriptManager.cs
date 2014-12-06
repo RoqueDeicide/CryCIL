@@ -7,18 +7,21 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Runtime.Serialization;
 using System.Runtime.InteropServices;
-using CryEngine.Actors;
 using CryEngine.Annotations;
 using CryEngine.Async;
+using CryEngine.Console.Commands;
+using CryEngine.Console.Variables;
 using CryEngine.Entities;
 using CryEngine.Extensions;
+using CryEngine.Logic.Actors;
+using CryEngine.Logic.Entities;
+using CryEngine.Logic.Flowgraph;
 using CryEngine.Native;
+using CryEngine.RunTime.Async;
+using CryEngine.RunTime.Serialization;
+using CryEngine.RunTime.Testing;
 using CryEngine.Sandbox;
-using CryEngine.Testing;
-using CryEngine.Testing.Internals;
-using CryEngine.Serialization;
 using CryEngine.Utilities;
-using CryEngine.Flowgraph;
 
 namespace CryEngine.Initialization
 {
@@ -109,8 +112,8 @@ namespace CryEngine.Initialization
 				}
 			};
 
-			if (GameRules.Current != null)
-				data.GameRulesId = GameRules.Current.Id;
+			if (Logic.GameRules.GameRules.Current != null)
+				data.GameRulesId = Logic.GameRules.GameRules.Current.Id;
 			else
 				data.GameRulesId = -1;
 
@@ -121,7 +124,7 @@ namespace CryEngine.Initialization
 			{
 				if (cvar is ByRefCVar)
 				{
-					NativeCVarMethods.UnregisterCVar(cvar.Name, true);
+					Native.ConsoleInterop.UnregisterCVar(cvar.Name, true);
 
 					return true;
 				}
@@ -163,7 +166,7 @@ namespace CryEngine.Initialization
 			}
 			// Restore game rules.
 			if (data.GameRulesId != -1)
-				GameRules.Current = Entity.Get(data.GameRulesId) as GameRules;
+				Logic.GameRules.GameRules.Current = Entity.Get(data.GameRulesId) as Logic.GameRules.GameRules;
 			// Restore console commands and variables.
 			ConsoleCommand.Commands = data.ConsoleCommands;
 			CVar.CVars = data.ConsoleVariables;
@@ -257,7 +260,7 @@ namespace CryEngine.Initialization
 				};
 
 #if !UNIT_TESTING
-				NativeEntityMethods.RegisterEntityClass(entityRegistrationParams);
+				EntityInterop.RegisterEntityClass(entityRegistrationParams);
 #endif
 
 				Scripts.Add(script);
@@ -296,7 +299,7 @@ namespace CryEngine.Initialization
 						{
 							var registrationParams = (ActorRegistrationParams)script.RegistrationParams;
 
-							NativeActorMethods.RegisterActorClass(script.ScriptName, script.Type.Implements(typeof(NativeActor)),
+							ActorInterop.RegisterActorClass(script.ScriptName, script.Type.Implements(typeof(NativeActor)),
 																  registrationParams.isAI);
 						}
 						else if (script.RegistrationParams is EntityRegistrationParams)
@@ -308,7 +311,7 @@ namespace CryEngine.Initialization
 							if (registrationParams.category == null)
 								registrationParams.category = "Default";
 
-							NativeEntityMethods.RegisterEntityClass(registrationParams);
+							EntityInterop.RegisterEntityClass(registrationParams);
 
 							script.RegistrationParams = registrationParams;
 						}
@@ -321,11 +324,11 @@ namespace CryEngine.Initialization
 						if (registrationParams.name == null)
 							registrationParams.name = script.ScriptName;
 
-						NativeGameRulesMethods.RegisterGameMode(registrationParams.name);
+						GameRulesInterop.RegisterGameMode(registrationParams.name);
 
 						if (registrationParams.defaultGamemode || !hasDefaultGameRules)
 						{
-							NativeGameRulesMethods.SetDefaultGameMode(registrationParams.name);
+							GameRulesInterop.SetDefaultGameMode(registrationParams.name);
 
 							hasDefaultGameRules = true;
 						}
@@ -431,7 +434,7 @@ namespace CryEngine.Initialization
 			TryCopyFile(assemblyPath, ref newPath);
 
 #if !RELEASE
-			if (CVar.Get("mono_generateMdbIfPdbIsPresent").IVal != 0)
+			if (CVar.Get("mono_generateMdbIfPdbIsPresent").ValueInt32 != 0)
 			{
 				GenerateDebugDatabaseForAssembly(assemblyPath);
 

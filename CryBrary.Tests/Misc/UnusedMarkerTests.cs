@@ -2,6 +2,7 @@
 
 using CryEngine;
 using CryEngine.Mathematics;
+using CryEngine.RunTime;
 using CryEngine.Utilities;
 using NUnit.Framework;
 

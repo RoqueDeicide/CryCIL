@@ -7,7 +7,7 @@ namespace CryEngine.Entities
 	/// <summary>
 	/// Represents a link between two entities.
 	/// </summary>
-	public class EntityLink
+	//public class EntityLink
 	{
 		#region Statics
 		/// <summary>
@@ -22,22 +22,12 @@ namespace CryEngine.Entities
 		/// name="parent" />.
 		/// </param>
 		/// <param name="linkName">Name of the link.</param>
-		/// <param name="relativePos">
-		/// Relative position of <paramref name="child" /> entity relative to a <paramref
-		/// name="parent" />.
-		/// </param>
-		/// <param name="relativeRot">
-		/// Relative orientation of <paramref name="child" /> entity relative to a <paramref
-		/// name="parent" />.
-		/// </param>
 		/// <returns>Wrapper object for a link.</returns>
-		public static EntityLink Create(EntityBase parent, EntityBase child, string linkName, Vector3? relativePos = null,
-										Quaternion? relativeRot = null)
+		public static EntityLink Create(EntityBase parent, EntityBase child, string linkName)
 		{
 			return
 				new EntityLink(
-					NativeEntityMethods.AddEntityLink(parent.GetIEntity(), linkName, child.Id, child.GUID,
-													  relativeRot ?? Quaternion.Identity, relativePos ?? Vector3.Zero), parent);
+					EntityInterop.AddEntityLink(parent.EntityHandle, linkName, child.Id, child.GUID), parent);
 		}
 		/// <summary>
 		/// Unlinks everything from the entity.
@@ -45,7 +35,7 @@ namespace CryEngine.Entities
 		/// <param name="parent">Entity to unlink everything from.</param>
 		public static void RemoveAll(EntityBase parent)
 		{
-			NativeEntityMethods.RemoveAllEntityLinks(parent.GetIEntity());
+			EntityInterop.RemoveAllEntityLinks(parent.EntityHandle);
 		}
 		#endregion
 		#region Properties
@@ -67,33 +57,17 @@ namespace CryEngine.Entities
 		{
 			get
 			{
-				var slaveId = NativeEntityMethods.GetEntityLinkTarget(this.Handle);
+				var slaveId = EntityInterop.GetEntityLinkTarget(this.Handle);
 				return slaveId == 0 ? null : Entity.Get(slaveId);
 			}
-			set { NativeEntityMethods.SetEntityLinkTarget(this.Handle, value.Id); }
+			set { EntityInterop.SetEntityLinkTarget(this.Handle, value.Id); }
 		}
 		/// <summary>
 		/// Gets the name of the link.
 		/// </summary>
 		public string Name
 		{
-			get { return NativeEntityMethods.GetEntityLinkName(this.Handle); }
-		}
-		/// <summary>
-		/// Orientation of the child entity relative to parent entity.
-		/// </summary>
-		public Quaternion RelativeRotation
-		{
-			get { return NativeEntityMethods.GetEntityLinkRelativeRotation(this.Handle); }
-			set { NativeEntityMethods.SetEntityLinkRelativeRotation(this.Handle, value); }
-		}
-		/// <summary>
-		/// Position of the child entity relative to parent entity.
-		/// </summary>
-		public Vector3 RelativePosition
-		{
-			get { return NativeEntityMethods.GetEntityLinkRelativePosition(this.Handle); }
-			set { NativeEntityMethods.SetEntityLinkRelativePosition(this.Handle, value); }
+			get { return EntityInterop.GetEntityLinkName(this.Handle); }
 		}
 		#endregion
 		#region Construction
@@ -109,7 +83,7 @@ namespace CryEngine.Entities
 		/// </summary>
 		public void Remove()
 		{
-			NativeEntityMethods.RemoveEntityLink(this.Parent.GetIEntity(), this.Handle);
+			EntityInterop.RemoveEntityLink(this.Parent.EntityHandle, this.Handle);
 		}
 		#endregion
 	}

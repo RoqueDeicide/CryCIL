@@ -1,12 +1,6 @@
 //-----------------------------------------------------------------------------
 //
-// Copyright (C) Microsoft Corporation. All Rights Reserved.
-//
-//
-//
-//
-//
-//
+// Copyright (C) Microsoft Corporation.  All Rights Reserved.
 //
 //-----------------------------------------------------------------------------
 using System;

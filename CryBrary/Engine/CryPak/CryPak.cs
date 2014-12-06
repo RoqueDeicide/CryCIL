@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-
+using CryEngine.Console.Variables;
 using CryEngine.Initialization;
 using CryEngine.Native;
 
@@ -13,18 +13,18 @@ namespace CryEngine.Utilities
 	{
 		public static void SetAlias(string name, string alias, bool bAdd)
 		{
-			NativeCryPakMethods.SetAlias(name, alias, bAdd);
+			CryPakInterop.SetAlias(name, alias, bAdd);
 		}
 
 		public static string GetAlias(string name, bool returnSame = true)
 		{
-			return NativeCryPakMethods.GetAlias(name, returnSame);
+			return CryPakInterop.GetAlias(name, returnSame);
 		}
 
 		[CLSCompliant(false)]
 		public static string AdjustFileName(string source, PathResolutionRules rules)
 		{
-			return NativeCryPakMethods.AdjustFileName(source, rules);
+			return CryPakInterop.AdjustFileName(source, rules);
 		}
 
 		#region Properties
@@ -66,7 +66,7 @@ namespace CryEngine.Utilities
 			{
 				CVar cvar;
 				if (CVar.TryGet("sys_game_folder", out cvar))
-					return Path.Combine(RootFolder, cvar.String);
+					return Path.Combine(RootFolder, cvar.ValueString);
 
 				return Path.Combine(RootFolder, "Game");
 			}
@@ -76,7 +76,7 @@ namespace CryEngine.Utilities
 		{
 			get
 			{
-				return NativeCryPakMethods.GetAlias("%USER%");
+				return CryPakInterop.GetAlias("%USER%");
 			}
 		}
 
@@ -88,6 +88,10 @@ namespace CryEngine.Utilities
 		/// The filepath to the Scripts folder as a string, ex: <example>"C:\CryENGINE3\Game\Scripts"</example>
 		/// </returns>
 		public static string ScriptsFolder { get { return Path.Combine(GameFolder, "Scripts"); } }
+		public static string CodeFolder
+		{
+			get { return Path.Combine(GameFolder, "Code"); }
+		}
 		#endregion
 	}
 }

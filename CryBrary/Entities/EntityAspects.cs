@@ -8,7 +8,6 @@ namespace CryEngine
 	/// <summary>
 	/// Enumeration of entity aspects.
 	/// </summary>
-	[CLSCompliant(false)]
 	public enum EntityAspects : uint
 	{
 		// 0x01u // aspect 0

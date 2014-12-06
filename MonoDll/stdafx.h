@@ -33,6 +33,8 @@
 
 #include <mono/mini/jit.h>
 
+#include <MonoRunTime.h>
+
 #undef NULL
 #define NULL nullptr
 

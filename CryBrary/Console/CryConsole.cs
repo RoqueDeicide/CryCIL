@@ -1,36 +1,35 @@
-﻿using System.Runtime.CompilerServices;
-using CryEngine.Native;
-
-namespace CryEngine
+﻿namespace CryEngine.Console
 {
+	/// <summary>
+	/// Enumeration of types of command argument.
+	/// </summary>
 	public enum CommandArgumentType
 	{
 		/// <summary>
-		/// Argument was not preceeded by anything
+		/// Argument was not preceded by anything
 		/// </summary>
 		Normal = 0,
-
 		/// <summary>
-		/// Argument was preceeded by a minus sign
+		/// Argument was preceded by a minus sign
 		/// </summary>
 		Pre,
-
 		/// <summary>
-		/// Argument was preceeded by a plus sign
+		/// Argument was preceded by a plus sign
 		/// </summary>
 		Post,
-
 		/// <summary>
 		/// Argument is the executable filename
 		/// </summary>
-		Executable,
+		Executable
 	}
-
+	/// <summary>
+	/// Defines methods for working with console.
+	/// </summary>
 	public static class CryConsole
 	{
 		public static string GetCommandLineArgument(string name, CommandArgumentType type)
 		{
-			return NativeCVarMethods.GetCmdArg(name, (int)type);
+			return Native.ConsoleInterop.GetCmdArg(name, (int)type);
 		}
 	}
 }

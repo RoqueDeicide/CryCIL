@@ -1,5 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using CryEngine.Mathematics;
+using CryEngine.Mathematics.Graphics;
 using CryEngine.Native;
 
 namespace CryEngine
@@ -9,29 +10,29 @@ namespace CryEngine
 	/// </summary>
 	public static partial class Debug
 	{
-		public static void DrawSphere(Vector3 pos, float radius, Color color, float timeout)
+		public static void DrawSphere(Vector3 pos, float radius, ColorSingle color, float timeout)
 		{
-			NativeDebugMethods.AddPersistentSphere(pos, radius, color, timeout);
+			DebugInterop.AddPersistentSphere(pos, radius, color, timeout);
 		}
 
-		public static void DrawDirection(Vector3 pos, float radius, Vector3 dir, Color color, float timeout)
+		public static void DrawDirection(Vector3 pos, float radius, Vector3 dir, ColorSingle color, float timeout)
 		{
-			NativeDebugMethods.AddDirection(pos, radius, dir, color, timeout);
+			DebugInterop.AddDirection(pos, radius, dir, color, timeout);
 		}
 
-		public static void DrawText(string text, float size, Color color, float timeout)
+		public static void DrawText(string text, float size, ColorSingle color, float timeout)
 		{
-			NativeDebugMethods.AddPersistentText2D(text, size, color, timeout);
+			DebugInterop.AddPersistentText2D(text, size, color, timeout);
 		}
 
-		public static void DrawLine(Vector3 startPos, Vector3 endPos, Color color, float timeout)
+		public static void DrawLine(Vector3 startPos, Vector3 endPos, ColorSingle color, float timeout)
 		{
-			NativeDebugMethods.AddPersistentLine(startPos, endPos, color, timeout);
+			DebugInterop.AddPersistentLine(startPos, endPos, color, timeout);
 		}
 
-		public static void DrawBoundingBox(Vector3 pos, BoundingBox bbox, Color color, float timeout)
+		public static void DrawBoundingBox(Vector3 pos, BoundingBox bbox, ColorSingle color, float timeout)
 		{
-			NativeDebugMethods.AddAABB(pos, bbox, color, timeout);
+			DebugInterop.AddAABB(pos, bbox, color, timeout);
 		}
 	}
 }

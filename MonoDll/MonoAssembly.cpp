@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "MonoAssembly.h"
 
-#include "MonoScriptSystem.h"
+#include "MonoRunTime.h"
 #include "MonoDomain.h"
 #include "MonoException.h"
 
@@ -59,7 +59,7 @@ IMonoClass *CScriptAssembly::GetClass()
 {
 	if (m_pClass == NULL)
 	{
-		if (CScriptDomain *pDomain = static_cast<CScriptSystem *>(GetMonoScriptSystem())->TryGetDomain(mono_object_get_domain((MonoObject *)m_pImage)))
+		if (CScriptDomain *pDomain = GetMonoRunTime()->AppDomain)
 		{
 			MonoClass *pMonoClass = mono_object_get_class((MonoObject *)m_pImage);
 

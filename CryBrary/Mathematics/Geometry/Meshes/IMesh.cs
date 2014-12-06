@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using CryEngine.Mathematics.Geometry.Meshes.CSG;
+using CryEngine.Mathematics.Graphics;
 using CryEngine.StaticObjects;
 
 namespace CryEngine.Mathematics.Geometry.Meshes

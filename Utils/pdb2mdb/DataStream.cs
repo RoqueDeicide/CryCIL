@@ -1,12 +1,6 @@
 //-----------------------------------------------------------------------------
 //
-// Copyright (C) Microsoft Corporation. All Rights Reserved.
-//
-//
-//
-//
-//
-//
+// Copyright (C) Microsoft Corporation.  All Rights Reserved.
 //
 //-----------------------------------------------------------------------------
 using System;
@@ -53,13 +47,13 @@ namespace Microsoft.Cci.Pdb
 			}
 
 			int left = data;
-			int page = position / reader.pageSize;
-			int rema = position % reader.pageSize;
+			int page = position / reader.PageSize;
+			int rema = position % reader.PageSize;
 
 			// First get remained of first page.
 			if (rema != 0)
 			{
-				int todo = reader.pageSize - rema;
+				int todo = reader.PageSize - rema;
 				if (todo > left)
 				{
 					todo = left;
@@ -76,7 +70,7 @@ namespace Microsoft.Cci.Pdb
 			// Now get the remaining pages.
 			while (left > 0)
 			{
-				int todo = reader.pageSize;
+				int todo = reader.PageSize;
 				if (todo > left)
 				{
 					todo = left;
@@ -105,10 +99,10 @@ namespace Microsoft.Cci.Pdb
 
 			int left = data;
 			int used = 0;
-			int rema = contentSize % writer.pageSize;
+			int rema = contentSize % writer.PageSize;
 			if (rema != 0)
 			{
-				int todo = writer.pageSize - rema;
+				int todo = writer.PageSize - rema;
 				if (todo > left)
 				{
 					todo = left;
@@ -123,7 +117,7 @@ namespace Microsoft.Cci.Pdb
 
 			if (left > 0)
 			{
-				int count = (left + writer.pageSize - 1) / writer.pageSize;
+				int count = (left + writer.PageSize - 1) / writer.PageSize;
 				int page0 = writer.AllocatePages(count);
 
 				writer.Seek(page0, 0);

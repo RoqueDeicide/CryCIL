@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using CryEngine.Mathematics.Graphics;
 using CryEngine.Mathematics.MemoryMapping;
 
 namespace CryEngine.Mathematics.Geometry.Meshes
@@ -55,9 +56,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 			this.Mesh = mesh;
 			this.MeshHandle = mesh.CMeshHandle;
 			this.Mesh.VerticesReallocated += this.mesh_VerticesReallocated;
-			// ReSharper disable DoNotCallOverridableMethodsInConstructor
 			this.UpdateCollection();
-			// ReSharper restore DoNotCallOverridableMethodsInConstructor
 		}
 		#endregion
 		#region Interface

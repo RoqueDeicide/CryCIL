@@ -2,9 +2,12 @@
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
+using CryEngine.Animations;
 using CryEngine.Annotations;
+using CryEngine.Logic.Entities;
 using CryEngine.Mathematics;
 using CryEngine.Native;
+using CryEngine.RunTime.Serialization;
 
 namespace CryEngine.Entities
 {
@@ -14,27 +17,8 @@ namespace CryEngine.Entities
 	public abstract partial class Entity
 		: EntityBase
 	{
-		/// <summary>
-		/// Initializes the entity, not recommended to set manually.
-		/// </summary>
-		/// <param name="initParams"> Struct containing the IEntity pointer and EntityId. </param>
-		/// <returns> IsEntityFlowNode </returns>
-		internal override bool InternalInitialize(IScriptInitializationParams initParams)
-		{
-			var entityInitParams = (EntityInitializationParams)initParams;
-
-			this.SetIEntity(entityInitParams.IEntityPtr);
-			this.SetIAnimatedCharacter(entityInitParams.IAnimatedCharacterPtr);
-			this.Id = entityInitParams.Id;
-
-			var result = base.InternalInitialize(initParams);
-
-			this.OnSpawn();
-
-			return result;
-		}
 		[UsedImplicitly]
-		private void InternalFullSerialize(Serialization.CrySerialize serialize)
+		private void InternalFullSerialize(CrySerialize serialize)
 		{
 			//var serialize = new Serialization.CrySerialize();
 			//serialize.Handle = handle;
@@ -43,7 +27,7 @@ namespace CryEngine.Entities
 		}
 
 		[UsedImplicitly]
-		private void InternalNetSerialize(Serialization.CrySerialize serialize, int aspect, byte profile, int flags)
+		private void InternalNetSerialize(CrySerialize serialize, int aspect, byte profile, int flags)
 		{
 			//var serialize = new Serialization.CrySerialize();
 			//serialize.Handle = handle;
@@ -67,8 +51,8 @@ namespace CryEngine.Entities
 		/// </summary>
 		public BoundingBox TriggerBounds
 		{
-			get { return NativeEntityMethods.GetTriggerBBox(this.GetIEntity()); }
-			set { NativeEntityMethods.SetTriggerBBox(this.GetIEntity(), value); }
+			get { return EntityInterop.GetTriggerBBox(this.EntityHandle); }
+			set { EntityInterop.SetTriggerBBox(this.EntityHandle, value); }
 		}
 
 		/// <summary>
@@ -77,7 +61,7 @@ namespace CryEngine.Entities
 		/// </summary>
 		public void InvalidateTrigger()
 		{
-			NativeEntityMethods.InvalidateTrigger(this.GetIEntity());
+			EntityInterop.InvalidateTrigger(this.EntityHandle);
 		}
 		#endregion
 		#region Callbacks
@@ -237,12 +221,12 @@ namespace CryEngine.Entities
 		}
 
 		[CLSCompliant(false)]
-		protected virtual void FullSerialize(Serialization.ICrySerialize serialize)
+		protected virtual void FullSerialize(ICrySerialize serialize)
 		{
 		}
 
 		[CLSCompliant(false)]
-		protected virtual void NetSerialize(Serialization.ICrySerialize serialize, int aspect, byte profile, int flags)
+		protected virtual void NetSerialize(ICrySerialize serialize, int aspect, byte profile, int flags)
 		{
 		}
 

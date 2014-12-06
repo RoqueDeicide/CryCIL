@@ -43,6 +43,9 @@ struct IMonoObject
 
 	template<typename P1, typename P2, typename P3, typename P4, typename P5, typename P6>
 	inline mono::object CallMethod(const char *funcName, const P1 &p1, const P2 &p2, const P3 &p3, const P4 &p4, const P5 &p5, const P6 &p6);
+	
+	template<typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7>
+	inline mono::object CallMethod(const char *funcName, const P1 &p1, const P2 &p2, const P3 &p3, const P4 &p4, const P5 &p5, const P6 &p6, const P6 &p7);
 
 	inline mono::object GetPropertyValue(const char *fieldName, bool throwOnFail = true);
 	inline void SetPropertyValue(const char *fieldName, mono::object newValue, bool throwOnFail = true);
@@ -156,105 +159,105 @@ struct MonoAnyValue : public ISerializable
 			break;
 		case eMonoAnyType_Vec3:
 		{
-								  if (ser.IsWriting())
-									  ser.Value("vec", Vec3(vec4.x, vec4.y, vec4.z));
-								  else
-								  {
-									  Vec3 v;
-									  ser.Value("vec", v);
+			if (ser.IsWriting())
+				ser.Value("vec", Vec3(vec4.x, vec4.y, vec4.z));
+			else
+			{
+				Vec3 v;
+				ser.Value("vec", v);
 
-									  vec4.x = v.x;
-									  vec4.y = v.y;
-									  vec4.z = v.z;
-								  }
+				vec4.x = v.x;
+				vec4.y = v.y;
+				vec4.z = v.z;
+			}
 		}
 			break;
 		case eMonoAnyType_Quat:
 		{
-								  if (ser.IsWriting())
-									  ser.Value("quat", Quat(vec4.w, vec4.x, vec4.y, vec4.z));
-								  else
-								  {
-									  Quat q;
-									  ser.Value("quat", q);
+			if (ser.IsWriting())
+				ser.Value("quat", Quat(vec4.w, vec4.x, vec4.y, vec4.z));
+			else
+			{
+				Quat q;
+				ser.Value("quat", q);
 
-									  vec4.w = q.w;
-									  vec4.x = q.v.x;
-									  vec4.y = q.v.y;
-									  vec4.z = q.v.z;
-								  }
+				vec4.w = q.w;
+				vec4.x = q.v.x;
+				vec4.y = q.v.y;
+				vec4.z = q.v.z;
+			}
 		}
 			break;
 		case eMonoAnyType_String:
 		{
-									if (ser.IsWriting())
-									{
-										auto serializedString = string(str);
-										ser.Value("str", serializedString);
-									}
-									else
-									{
-										auto serializedString = string();
-										ser.Value("str", serializedString);
-										str = serializedString.c_str();
-									}
+			if (ser.IsWriting())
+			{
+				auto serializedString = string(str);
+				ser.Value("str", serializedString);
+			}
+			else
+			{
+				auto serializedString = string();
+				ser.Value("str", serializedString);
+				str = serializedString.c_str();
+			}
 		}
 			break;
 		case eMonoAnyType_Array:
 		{
-								   IMonoScriptSystem *pScriptSystem = GetMonoScriptSystem();
+			MonoRunTime *pScriptSystem = GetMonoRunTime();
 
-								   IMonoArray *pArray = nullptr;
-								   int arrayLength;
+			IMonoArray *pArray = nullptr;
+			int arrayLength;
 
-								   if (ser.IsWriting())
-								   {
-									pArray = pScriptSystem->ToArray(monoObject);
-									arrayLength = pArray->GetSize();
-								   }
+			if (ser.IsWriting())
+			{
+				pArray = pScriptSystem->ToArray(*monoObject);
+				arrayLength = pArray->GetSize();
+			}
 
-								   ser.Value("arrayLength", arrayLength);
+			ser.Value("arrayLength", arrayLength);
 
-								   if (ser.IsWriting())
-								   {
-									   for (int i = 0; i < arrayLength; i++)
-									   {
-										   IMonoObject *pItem = *pArray->GetItem(i);
-										   pItem->GetAnyValue().SerializeWith(ser);
-										   SAFE_RELEASE(pItem);
-									   }
-								   }
-								   else
-								   {
-									   pArray = pScriptSystem->GetScriptDomain()->CreateArray(arrayLength);
+			if (ser.IsWriting())
+			{
+				for (int i = 0; i < arrayLength; i++)
+				{
+					IMonoObject *pItem = *pArray->GetItem(i);
+					pItem->GetAnyValue().SerializeWith(ser);
+					SAFE_RELEASE(pItem);
+				}
+			}
+			else
+			{
+				pArray = pScriptSystem->AppDomain->CreateArray(arrayLength);
 
-									   for (int i = 0; i < arrayLength; i++)
-									   {
-										   MonoAnyValue value;
-										   value.SerializeWith(ser);
-										   pArray->InsertAny(value);
-									   }
+				for (int i = 0; i < arrayLength; i++)
+				{
+					MonoAnyValue value;
+					value.SerializeWith(ser);
+					pArray->InsertAny(value);
+				}
 
-									   monoObject = pArray->GetManagedObject();
-								   }
+				monoObject = pArray->GetManagedObject();
+			}
 
-								   SAFE_RELEASE(pArray);
+			SAFE_RELEASE(pArray);
 		}
 			break;
 		case eMonoAnyType_Unknown:
 		{
-									 if (ser.IsWriting())
-									 {
-										 if (monoObject != nullptr)
-										 {
-											 IMonoObject *pObject = *monoObject;
-											 IMonoClass *pObjectClass = pObject->GetClass();
+			if (ser.IsWriting())
+			{
+				if (monoObject != nullptr)
+				{
+					IMonoObject *pObject = *monoObject;
+					IMonoClass *pObjectClass = pObject->GetClass();
 
-											 CryWarning(VALIDATOR_MODULE_GAME, VALIDATOR_WARNING, "Attempted to serialize unknown managed type %s.%s", pObjectClass->GetNamespace(), pObjectClass->GetName());
-										 }
-										 else
-											 CRY_ASSERT_MESSAGE(false, "Attempted to serialize unknown managed type");
-									 }
+					CryWarning(VALIDATOR_MODULE_GAME, VALIDATOR_WARNING, "Attempted to serialize unknown managed type %s.%s", pObjectClass->GetNamespace(), pObjectClass->GetName());
+				}
+				else
+					CRY_ASSERT_MESSAGE(false, "Attempted to serialize unknown managed type");
+			}
 		}
 			break;
 		}
@@ -398,6 +401,26 @@ inline mono::object IMonoObject::CallMethod(const char *funcName, const P1 &p1, 
 	pArgs->Insert(p4);
 	pArgs->Insert(p5);
 	pArgs->Insert(p6);
+
+	IMonoObject *result = nullptr;
+	if (IMonoMethod *pMethod = GetClass()->GetMethod(funcName, pArgs))
+		result = pMethod->InvokeArray(this->GetManagedObject(), pArgs);
+
+	SAFE_RELEASE(pArgs);
+	return result;
+};
+
+template<typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7>
+inline IMonoObject *IMonoObject::CallMethod(const char *funcName, const P1 &p1, const P2 &p2, const P3 &p3, const P4 &p4, const P5 &p5, const P6 &p6, const P7 &p7)
+{
+	IMonoArray *pArgs = CreateMonoArray(7);
+	pArgs->Insert(p1);
+	pArgs->Insert(p2);
+	pArgs->Insert(p3);
+	pArgs->Insert(p4);
+	pArgs->Insert(p5);
+	pArgs->Insert(p6);
+	pArgs->Insert(p7);
 
 	mono::object result = nullptr;
 	if (IMonoMethod *pMethod = GetClass()->GetMethod(funcName, pArgs))

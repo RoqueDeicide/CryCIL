@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using CryEngine.Entities;
+using CryEngine.Logic.Entities;
 
 namespace CryEngine.Native
 {

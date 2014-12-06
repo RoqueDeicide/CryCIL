@@ -6,12 +6,12 @@
 #include "MonoClass.h"
 
 #include "MonoCVars.h"
-#include "MonoScriptSystem.h"
+#include "MonoRunTime.h"
 
 #include <mono/metadata/debug-helpers.h>
 
 CScriptObject::CScriptObject(MonoObject *pObject, bool allowGC)
-: m_pObject(NULL)
+	: m_pObject(NULL)
 {
 	SetManagedObject(pObject, allowGC);
 }
@@ -38,7 +38,7 @@ IMonoClass *CScriptObject::GetClass()
 {
 	if (m_pClass == NULL)
 	{
-		if (CScriptDomain *pDomain = static_cast<CScriptSystem *>(GetMonoScriptSystem())->TryGetDomain(mono_object_get_domain(m_pObject)))
+		if (CScriptDomain *pDomain = GetMonoRunTime()->AppDomain)
 		{
 			MonoClass *pMonoClass = GetMonoClass();
 
@@ -104,10 +104,10 @@ MonoAnyValue CScriptObject::GetAnyValue()
 		return Unbox<uint>();
 	case eMonoAnyType_EntityId:
 	{
-								  MonoAnyValue value = Unbox<EntityId>();
-								  value.type = eMonoAnyType_EntityId;
+		MonoAnyValue value = Unbox<EntityId>();
+		value.type = eMonoAnyType_EntityId;
 
-								  return value;
+		return value;
 	}
 	case eMonoAnyType_Short:
 		return Unbox<short>();
@@ -123,10 +123,10 @@ MonoAnyValue CScriptObject::GetAnyValue()
 		return ToCryString((mono::string)GetManagedObject());
 	case eMonoAnyType_Array:
 	{
-							   MonoAnyValue any = MonoAnyValue((mono::object)m_pObject);
-							   any.type = eMonoAnyType_Array;
+		MonoAnyValue any = MonoAnyValue((mono::object)m_pObject);
+		any.type = eMonoAnyType_Array;
 
-							   return any;
+		return any;
 	}
 	case eMonoAnyType_Unknown:
 		return MonoAnyValue((mono::object)m_pObject);
@@ -155,7 +155,7 @@ void CScriptObject::HandleException(MonoObject *pException)
 	// Fatal errors override disabling the message box option
 	bool isFatal = g_pMonoCVars->mono_exceptionsTriggerFatalErrors != 0;
 
-	IMonoAssembly *pCryBraryAssembly = GetMonoScriptSystem()->GetCryBraryAssembly();
+	IMonoAssembly *pCryBraryAssembly = GetMonoRunTime()->CryBrary;
 
 	if ((g_pMonoCVars->mono_exceptionsTriggerMessageBoxes || isFatal) && pCryBraryAssembly)
 	{

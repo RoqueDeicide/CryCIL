@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using CryEngine.Console.Variables;
 using CryEngine.Entities;
 
 namespace CryEngine
@@ -122,13 +123,6 @@ namespace CryEngine
 		public CVarFlags Flags;
 	}
 	/// <summary>
-	/// If this attribute is attached to a class, it will be excluded from compilation.
-	/// </summary>
-	[AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface, Inherited = false)]
-	public sealed class ExcludeFromCompilationAttribute : Attribute
-	{
-	}
-	/// <summary>
 	/// Attribute used for specifying extra functionality for custom game rules classes.
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Class)]
@@ -142,5 +136,12 @@ namespace CryEngine
 		/// If set to true, the game mode will be set as default.
 		/// </summary>
 		public bool Default { get; set; }
+	}
+	/// <summary>
+	/// Applied to classes to mark them as actors.
+	/// </summary>
+	[AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
+	public sealed class ActorAttribute : Attribute
+	{
 	}
 }

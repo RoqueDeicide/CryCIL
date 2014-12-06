@@ -4,7 +4,7 @@
 #include "MonoDomain.h"
 #include "MonoObject.h"
 
-#include "MonoScriptSystem.h"
+#include "MonoRunTime.h"
 
 #include "MonoHelpers.h"
 
@@ -122,7 +122,7 @@ void CScriptArray::InsertAny(MonoAnyValue value, int index)
 
 IMonoClass *CScriptArray::GetClass(MonoClass *pClass)
 {
-	if (CScriptDomain *pDomain = static_cast<CScriptSystem *>(GetMonoScriptSystem())->TryGetDomain(mono_object_get_domain(m_pObject)))
+	if (CScriptDomain *pDomain = GetMonoRunTime()->AppDomain)
 	{
 		MonoClass *pMonoClass = GetMonoClass();
 

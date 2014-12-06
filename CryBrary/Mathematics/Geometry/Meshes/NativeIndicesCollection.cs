@@ -109,7 +109,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 					throw new MeshConsistencyException
 						("Attempt to set the number of indices to one that is not divisible by 3.");
 				}
-				NativeMeshMethods.ReallocateStream(this.MeshHandle, NativeMeshMemoryRegion.Indices, value);
+				MeshInterop.ReallocateStream(this.MeshHandle, NativeMeshMemoryRegion.Indices, value);
 				this.UpdateCollection();
 			}
 		}

@@ -18,9 +18,9 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>..\Build\Bin64\Plugins\CryMono\</OutputPath>
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;CONTRACTS_FULL,WIN64</DefineConstants>
     <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>3</WarningLevel>
     <Optimize>false</Optimize>
@@ -28,6 +28,7 @@
     <Prefer32Bit>false</Prefer32Bit>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>..\Build\Bin64\Plugins\CryMono\</OutputPath>
@@ -62,13 +63,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>..\Build\Bin32\Plugins\CryMono\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;CONTRACTS_FULL</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;CONTRACTS_FULL,WIN32</DefineConstants>
     <DocumentationFile>CryBrary.xml</DocumentationFile>
     <WarningLevel>3</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <NoWarn>1591</NoWarn>
     <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -132,9 +133,33 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Actors\Actor.cs" />
-    <Compile Include="Actors\ActorBase.cs" />
+    <Compile Include="Exceptions.cs" />
+    <Compile Include="Logic\Actors\Actor.cs" />
+    <Compile Include="Logic\Actors\ActorBase.cs" />
+    <Compile Include="Engine\Renderer\RenderParams.cs" />
+    <Compile Include="Logic\Entities\EntityFlags.cs" />
+    <Compile Include="Logic\Entities\EntityManager.cs" />
+    <Compile Include="Logic\Flowgraph\Exception.cs" />
+    <Compile Include="Logic\Flowgraph\FlowGraphNode.Configuration.cs" />
+    <Compile Include="Logic\Flowgraph\FlowGraphNode.cs" />
+    <Compile Include="Logic\Flowgraph\FlowGraphNode.Events.cs" />
+    <Compile Include="Logic\Flowgraph\FlowNodePort.cs" />
+    <Compile Include="Logic\Flowgraph\InputPorts.cs" />
+    <Compile Include="Logic\Flowgraph\OutputPorts.cs" />
     <Compile Include="GeneralExtensions.cs" />
+    <Compile Include="GenericEventArgs.cs" />
+    <Compile Include="Logic\Entities\GameObjectExtension.cs" />
+    <Compile Include="Logic\Entities\GameObjectExtension.EventArgs.cs" />
+    <Compile Include="Logic\Entities\GameObjectExtension.Events.cs" />
+    <Compile Include="Logic\Entities\GameObjectExtension.Internal.cs" />
+    <Compile Include="Logic\Entities\EntityEvent.cs" />
+    <Compile Include="Logic\Entities\EntityEventValueType.cs" />
+    <Compile Include="Logic\Entities\EntityLink.cs" />
+    <Compile Include="Logic\Entities\EntityWrapper.cs" />
+    <Compile Include="Logic\Entities\EntityXFormFlags.cs" />
+    <Compile Include="Logic\Entities\Properties\Property.cs" />
+    <Compile Include="Logic\FrameTimeEventArgs.cs" />
+    <Compile Include="Logic\CryTimer.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\CSG\SplittableTriangle.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\Mesh.CSG.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\CSG\BSP.cs" />
@@ -145,27 +170,44 @@
     <Compile Include="NativeMemory\CryMarshal.cs" />
     <Compile Include="NativeMemory\NativeMemoryBlock.cs" />
     <Compile Include="Native\ActorInitializationParams.cs" />
-    <Compile Include="Actors\ActorNetworking.cs" />
-    <Compile Include="Actors\ActorStatics.cs" />
-    <Compile Include="Actors\ViewParams.cs" />
+    <Compile Include="Logic\Actors\ActorNetworking.cs" />
+    <Compile Include="Logic\Actors\ActorStatics.cs" />
+    <Compile Include="Mathematics\Graphics\ViewParams.cs" />
     <Compile Include="Attributes.cs" />
-    <Compile Include="Native\NativeMemoryHandlingMethods.cs" />
+    <Compile Include="Native\FlowInputInterop.cs" />
+    <Compile Include="Native\MemoryHandlingInterop.cs" />
+    <Compile Include="Physics\ColliderMode.cs" />
+    <Compile Include="Physics\CryCollision.cs" />
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="Sandbox\Interface.cs" />
-    <Compile Include="Sandbox\SandboxExtensionAttribute.cs" />
-    <Compile Include="Console\ConsoleCommand\ConsoleCommandArgs.cs" />
-    <Compile Include="Console\ConsoleCommand\DuplicateConsoleCommandException.cs" />
+    <Compile Include="RunTime\BlittableAttribute.cs" />
+    <Compile Include="RunTime\Compatibility\BlitChecker.cs" />
+    <Compile Include="RunTime\Compatibility\CppType.cs" />
+    <Compile Include="RunTime\Compatibility\NativeFieldName.cs" />
+    <Compile Include="RunTime\Compilation\CodeSolution.cs" />
+    <Compile Include="RunTime\Compilation\Exception.cs" />
+    <Compile Include="RunTime\Compilation\IProject.cs" />
+    <Compile Include="RunTime\Compilation\NamespaceDoc.cs" />
+    <Compile Include="RunTime\Compilation\Project.cs" />
+    <Compile Include="RunTime\Compilation\CSharpProjectFile.cs" />
+    <Compile Include="RunTime\Compilation\VisualStudioDotNetProject.cs" />
+    <Compile Include="RunTime\MonoInterface.cs" />
+    <Compile Include="RunTime\NamespaceDoc.cs" />
+    <Compile Include="RunTime\Registration\EntityRegister.cs" />
+    <Compile Include="RunTime\Registration\Exception.cs" />
+    <Compile Include="RunTime\Registration\FlowNodeRegister.cs" />
+    <Compile Include="Console\Commands\ConsoleCommandArgs.cs" />
+    <Compile Include="Console\Commands\DuplicateConsoleCommandException.cs" />
     <Compile Include="Console\CryConsole.cs" />
-    <Compile Include="Console\CVar\ByRefCVar.cs" />
-    <Compile Include="Console\CVar\CVarException.cs" />
-    <Compile Include="Console\CVar\CVarFlags.cs" />
-    <Compile Include="Console\CVar\CVarType.cs" />
-    <Compile Include="Console\CVar\DynamicCVar.cs" />
-    <Compile Include="Console\CVar\ExternalCVar.cs" />
-    <Compile Include="Console\CVar\StaticCVarField.cs" />
-    <Compile Include="Console\CVar\StaticCVarProperty.cs" />
+    <Compile Include="Console\Variables\ByRefCVar.cs" />
+    <Compile Include="Console\Variables\ConsoleVariableException.cs" />
+    <Compile Include="Console\Variables\CVarFlags.cs" />
+    <Compile Include="Console\Variables\CVarType.cs" />
+    <Compile Include="Console\Variables\DynamicCVar.cs" />
+    <Compile Include="Console\Variables\ExternalCVar.cs" />
+    <Compile Include="Console\Variables\StaticCVarField.cs" />
+    <Compile Include="Console\Variables\StaticCVarProperty.cs" />
     <Compile Include="Debug\LogType.cs" />
-    <Compile Include="Engine\CryPak\Native\NativeCryPakMethods.cs" />
+    <Compile Include="Native\CryPakInterop.cs" />
     <Compile Include="Engine\CryPak\PathResolutionRules.cs" />
     <Compile Include="Engine\GeometryFormat.cs" />
     <Compile Include="Engine\GeometryType.cs" />
@@ -192,24 +234,17 @@
     <Compile Include="Entities\EntityAspects.cs" />
     <Compile Include="Entities\Advanced\GameObject.cs" />
     <Compile Include="Entities\Advanced\GameObjectExtension.cs" />
-    <Compile Include="Native\EntityInitializationParams.cs" />
     <Compile Include="Entities\EntityNetworking.cs" />
-    <Compile Include="Native\NativeGameObjectMethods.cs" />
-    <Compile Include="Flowgraph\EntityFlowNode.cs" />
+    <Compile Include="Native\GameObjectInterop.cs" />
     <Compile Include="Entities\EntityLink.cs" />
     <Compile Include="Entities\EntityUpdatePolicy.cs" />
     <Compile Include="Entities\Attachment.cs" />
     <Compile Include="Entities\EntityRemovalException.cs" />
-    <Compile Include="Flowgraph\FlowNodeFilter.cs" />
-    <Compile Include="Flowgraph\FlowNodeFlags.cs" />
-    <Compile Include="Flowgraph\FlowNodeStatics.cs" />
-    <Compile Include="Flowgraph\FlowNodeType.cs" />
-    <Compile Include="Native\NodeConfig.cs" />
-    <Compile Include="Native\NodeInitializationParams.cs" />
-    <Compile Include="Flowgraph\OutputPort.cs" />
-    <Compile Include="Flowgraph\PortAttribute.cs" />
-    <Compile Include="Flowgraph\PortType.cs" />
-    <Compile Include="GameRules\GameRulesInitializationParams.cs" />
+    <Compile Include="Logic\Flowgraph\FlowNodeFilter.cs" />
+    <Compile Include="Logic\Flowgraph\FlowNodeFlags.cs" />
+    <Compile Include="Logic\Flowgraph\FlowNodeCloneType.cs" />
+    <Compile Include="Logic\Flowgraph\PortTypes.cs" />
+    <Compile Include="Logic\GameRules\GameRulesInitializationParams.cs" />
     <Compile Include="Input\ActionmapEventArgs.cs" />
     <Compile Include="Input\ActionmapHandler.cs" />
     <Compile Include="Input\KeyEvent.cs" />
@@ -221,7 +256,7 @@
     <Compile Include="Mathematics\BoundingBox.cs" />
     <Compile Include="Mathematics\BoundingSphere.cs" />
     <Compile Include="Mathematics\Geometry\Collision.cs" />
-    <Compile Include="Mathematics\Color32.cs" />
+    <Compile Include="Mathematics\Graphics\Color32.cs" />
     <Compile Include="Mathematics\EulerAngles.cs" />
     <Compile Include="Mathematics\Half.cs" />
     <Compile Include="Mathematics\HalfHelpers.cs" />
@@ -245,9 +280,9 @@
     <Compile Include="Mathematics\Vector2.cs" />
     <Compile Include="Mathematics\Vector3.cs" />
     <Compile Include="Mathematics\Vector4.cs" />
-    <Compile Include="Misc\ListEnumerator.cs" />
+    <Compile Include="ListEnumerator.cs" />
     <Compile Include="Native\NamespaceDoc.cs" />
-    <Compile Include="Native\PlatformMethods.cs" />
+    <Compile Include="Native\PlatformInterop.cs" />
     <Compile Include="Platform.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\Mesh.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\CommonTangentOperations.cs" />
@@ -270,13 +305,10 @@
     <Compile Include="Mathematics\Geometry\Meshes\NativeVertexTextureCoordinatesCollection.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\TangentInt16.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\TangentSingle.cs" />
-    <Compile Include="Native\NativeMeshMethods.cs" />
-    <Compile Include="Native\NativeStaticObjectMethods.cs" />
+    <Compile Include="Native\MeshInterop.cs" />
+    <Compile Include="Native\StaticObjectInterop.cs" />
     <Compile Include="StaticObjects\StaticObject.cs" />
-    <Compile Include="Misc\AnimationEvent.cs" />
-    <Compile Include="Misc\Exceptions\NullPointerException.cs" />
-    <Compile Include="Misc\IConvertibleTo.cs" />
-    <Compile Include="Misc\TypeConverters\Color.cs" />
+    <Compile Include="Animations\AnimationEvent.cs" />
     <Compile Include="Physics\Actions\Impulse.cs" />
     <Compile Include="Physics\BreakageParameters.cs" />
     <Compile Include="Physics\ColliderInfo.cs" />
@@ -295,158 +327,101 @@
     <Compile Include="Physics\PrePhysicsUpdateMode.cs" />
     <Compile Include="Physics\Status\DynamicsStatus.cs" />
     <Compile Include="Physics\Status\LivingStatus.cs" />
-    <Compile Include="Profiling\FrameProfiler.cs" />
-    <Compile Include="Profiling\FrameProfilerSection.cs" />
-    <Compile Include="Script Handling\IScriptInitializationParams.cs" />
-    <Compile Include="Native\NativeScriptSystemMethods.cs" />
+    <Compile Include="RunTime\Profiling\FrameProfiler.cs" />
+    <Compile Include="RunTime\Profiling\FrameProfilerSection.cs" />
+    <Compile Include="Native\ScriptSystemInterop.cs" />
     <Compile Include="Physics\Explosion.cs" />
-    <Compile Include="Script Handling\Registration\Actor.cs" />
-    <Compile Include="Script Handling\Registration\Entity.cs" />
-    <Compile Include="Script Handling\Registration\EntityFlowNode.cs" />
-    <Compile Include="Flowgraph\InputPortConfig.cs" />
-    <Compile Include="Flowgraph\OutputPortConfig.cs" />
-    <Compile Include="Script Handling\Registration\FlowNode.cs" />
-    <Compile Include="Script Handling\Registration\GameRules.cs" />
-    <Compile Include="Script Handling\Exceptions\ScriptInstanceDestroyedException.cs" />
-    <Compile Include="Misc\Exceptions\MissingAttributeException.cs" />
-    <Compile Include="Extensions\NativeHandleExtensions.cs" />
-    <Compile Include="Native\NativeNetworkMethods.cs" />
-    <Compile Include="Network\RemoteInvocationException.cs" />
-    <Compile Include="Script Handling\ScriptReloadResult.cs" />
-    <Compile Include="Serialization\CrySerialize.cs" />
-    <Compile Include="Serialization\ICrySerializable.cs" />
-    <Compile Include="Serialization\ISerialize.cs" />
-    <Compile Include="Serialization\SerializationTarget.cs" />
-    <Compile Include="Serialization\SerializationType.cs" />
+    <Compile Include="Native\NetworkInterop.cs" />
+    <Compile Include="RunTime\Networking\RemoteInvocationException.cs" />
+    <Compile Include="RunTime\Serialization\CrySerialize.cs" />
+    <Compile Include="RunTime\Serialization\ICrySerializable.cs" />
+    <Compile Include="RunTime\Serialization\ISerialize.cs" />
+    <Compile Include="RunTime\Serialization\SerializationTarget.cs" />
+    <Compile Include="RunTime\Serialization\SerializationType.cs" />
     <Compile Include="ProjectSettings.cs" />
-    <Compile Include="Entities\AnimationFlags.cs" />
+    <Compile Include="Animations\AnimationFlags.cs" />
     <Compile Include="Entities\EntityLight.cs" />
-    <Compile Include="Actors\NativeActor.cs" />
-    <Compile Include="Native\Native3DEngineMethods.cs" />
-    <Compile Include="Native\NativeActorMethods.cs" />
-    <Compile Include="Async\Jobs\AsyncJob.cs" />
-    <Compile Include="Async\Awaiter.cs" />
-    <Compile Include="Async\Delay.cs" />
-    <Compile Include="Async\Jobs\FrameDelayJob.cs" />
-    <Compile Include="Async\Jobs\IAsyncJob.cs" />
-    <Compile Include="Async\Jobs\TimeDelayJob.cs" />
+    <Compile Include="Logic\Actors\NativeActor.cs" />
+    <Compile Include="Native\Engine3DInterop.cs" />
+    <Compile Include="Native\ActorInterop.cs" />
+    <Compile Include="RunTime\Async\Jobs\AsyncJob.cs" />
+    <Compile Include="RunTime\Async\Awaiter.cs" />
+    <Compile Include="RunTime\Async\Delay.cs" />
+    <Compile Include="RunTime\Async\Jobs\FrameDelayJob.cs" />
+    <Compile Include="RunTime\Async\Jobs\IAsyncJob.cs" />
+    <Compile Include="RunTime\Async\Jobs\TimeDelayJob.cs" />
     <Compile Include="Engine\Level\Level.cs" />
     <Compile Include="Entities\EntityBase.cs" />
     <Compile Include="Engine\TimeOfDay\TimeOfDay.cs" />
-    <Compile Include="Extensions\IDictionary.cs" />
-    <Compile Include="Extensions\IEnumerable.cs" />
-    <Compile Include="Flowgraph\FlowNodeAttribute.cs" />
-    <Compile Include="Flowgraph\Ports.cs" />
-    <Compile Include="Misc\DelayedFunc.cs" />
-    <Compile Include="Extensions\Enum.cs" />
-    <Compile Include="Extensions\WinForms.cs" />
-    <Compile Include="Native\NativeCVarMethods.cs" />
-    <Compile Include="Native\NativeDebugMethods.cs" />
-    <Compile Include="Native\NativeEntityMethods.cs" />
-    <Compile Include="Native\NativeFlowNodeMethods.cs" />
-    <Compile Include="Native\NativeGameRulesMethods.cs" />
-    <Compile Include="Native\NativeInputMethods.cs" />
-    <Compile Include="Engine\Level\Native\NativeLevelMethods.cs" />
-    <Compile Include="Engine\Material\Native\NativeMaterialMethods.cs" />
-    <Compile Include="Engine\Particles\Native\NativeParticleEffectMethods.cs" />
-    <Compile Include="Native\NativePhysicsMethods.cs" />
-    <Compile Include="Engine\Renderer\Native\NativeRendererMethods.cs" />
-    <Compile Include="Engine\Lua\Native\NativeScriptTableMethods.cs" />
-    <Compile Include="Misc\Time\NativeTimeMethods.cs" />
-    <Compile Include="Network\RemoteInvocationAttribute.cs" />
-    <Compile Include="Sandbox\FormLoader.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Sandbox\FormLoader.Designer.cs">
-      <DependentUpon>FormLoader.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Sandbox\Helper.cs" />
-    <Compile Include="Script Handling\CryScript.cs" />
-    <Compile Include="Script Handling\ExceptionMessage.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Script Handling\ExceptionMessage.Designer.cs">
-      <DependentUpon>ExceptionMessage.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Script Handling\Registration\IScriptRegistrationParams.cs" />
-    <Compile Include="Script Handling\Plugin.cs" />
+    <Compile Include="Logic\Flowgraph\FlowNodeAttribute.cs" />
+    <Compile Include="Native\ConsoleInterop.cs" />
+    <Compile Include="Native\DebugInterop.cs" />
+    <Compile Include="Native\EntityInterop.cs" />
+    <Compile Include="Native\FlowNodeInterop.cs" />
+    <Compile Include="Native\GameRulesInterop.cs" />
+    <Compile Include="Native\InputInterop.cs" />
+    <Compile Include="Native\LevelInterop.cs" />
+    <Compile Include="Native\MaterialInterop.cs" />
+    <Compile Include="Native\ParticleEffectInterop.cs" />
+    <Compile Include="Native\PhysicsInterop.cs" />
+    <Compile Include="Native\RendererInterop.cs" />
+    <Compile Include="Native\TimeInterop.cs" />
+    <Compile Include="RunTime\Networking\RemoteInvocationAttribute.cs" />
     <Compile Include="Engine\Material\Material.cs" />
     <Compile Include="Engine\Particles\ParticleEffect.cs" />
     <Compile Include="Engine\Terrain.cs" />
-    <Compile Include="Entities\EntityId.cs" />
+    <Compile Include="Logic\Entities\EntityId.cs" />
     <Compile Include="Entities\NativeEntity.cs" />
-    <Compile Include="Engine\Lua\ScriptTable.cs" />
-    <Compile Include="Script Handling\ScriptReloadMessage.cs">
+    <Compile Include="RunTime\Serialization\CrySerializer.cs" />
+    <Compile Include="Mathematics\Graphics\ColorSingle.cs" />
+    <Compile Include="RunTime\Serialization\SerializedObjectReference.cs" />
+    <Compile Include="RunTime\Testing\Assertion.cs" />
+    <Compile Include="RunTime\Testing\Attributes.cs" />
+    <Compile Include="RunTime\Testing\Exceptions.cs" />
+    <Compile Include="RunTime\Testing\Reports\ConsoleListener.cs" />
+    <Compile Include="RunTime\Testing\Reports\ReportForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Script Handling\ScriptReloadMessage.Designer.cs">
-      <DependentUpon>ScriptReloadMessage.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Serialization\CrySerializer.cs" />
-    <Compile Include="Misc\Color.cs" />
-    <Compile Include="Serialization\SerializedObjectReference.cs" />
-    <Compile Include="Native\NativeSoundMethods.cs" />
-    <Compile Include="Sound\Sound.cs" />
-    <Compile Include="Testing\Assertion.cs" />
-    <Compile Include="Testing\Attributes.cs" />
-    <Compile Include="Testing\Exceptions.cs" />
-    <Compile Include="Testing\Reports\ConsoleListener.cs" />
-    <Compile Include="Testing\Reports\ReportForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Testing\Reports\ReportForm.Designer.cs">
+    <Compile Include="RunTime\Testing\Reports\ReportForm.Designer.cs">
       <DependentUpon>ReportForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Testing\Internal.cs" />
-    <Compile Include="Testing\Results.cs" />
-    <Compile Include="Testing\Manager.cs" />
-    <Compile Include="Misc\ConvertExtension.cs" />
+    <Compile Include="RunTime\Testing\Internal.cs" />
+    <Compile Include="RunTime\Testing\Results.cs" />
+    <Compile Include="RunTime\Testing\Manager.cs" />
     <Compile Include="Physics\RaycastHit.cs" />
     <Compile Include="Engine\Renderer\Renderer.cs" />
     <Compile Include="Entities\EntityMovement.cs" />
-    <Compile Include="Misc\Game.cs" />
+    <Compile Include="Game.cs" />
     <Compile Include="Input\Input.cs" />
-    <Compile Include="Script Handling\ScriptInstance.cs" />
-    <Compile Include="Console\ConsoleCommand\ConsoleCommand.cs" />
+    <Compile Include="Console\Commands\ConsoleCommand.cs" />
     <Compile Include="Entities\EditorProperty.cs" />
-    <Compile Include="Console\CVar\CVar.cs" />
-    <Compile Include="Misc\Time\Time.cs" />
+    <Compile Include="Console\Variables\CVar.cs" />
+    <Compile Include="Time.cs" />
     <Compile Include="Debug\Debug.cs" />
-    <Compile Include="Extensions\Reflection.cs" />
     <Compile Include="Entities\EntityStatics.cs" />
     <Compile Include="Entities\Entity.cs" />
-    <Compile Include="Flowgraph\FlowNode.cs" />
     <Compile Include="Debug\Logging.cs" />
-    <Compile Include="GameRules\GameRules.cs" />
-    <Compile Include="Misc\PointerWrapper.cs" />
-    <Compile Include="Misc\Statistics.cs" />
+    <Compile Include="Logic\GameRules\GameRules.cs" />
+    <Compile Include="RunTime\Statistics.cs" />
     <Compile Include="Engine\CryPak\CryPak.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Script Handling\ScriptManager.cs" />
-    <Compile Include="Misc\UnusedMarker.cs" />
+    <Compile Include="RunTime\UnusedMarker.cs" />
+    <Compile Include="VariousConstants.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Sandbox\FormLoader.resx">
-      <DependentUpon>FormLoader.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Script Handling\ExceptionMessage.resx">
-      <DependentUpon>ExceptionMessage.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Script Handling\ScriptReloadMessage.resx">
-      <DependentUpon>ScriptReloadMessage.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Testing\Reports\ReportForm.resx">
+    <EmbeddedResource Include="RunTime\Testing\Reports\ReportForm.resx">
       <DependentUpon>ReportForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Testing\Reports\Resources\TestFailed.png" />
+    <None Include="RunTime\Testing\Reports\Resources\TestFailed.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Testing\Reports\Resources\TestIgnored.png" />
+    <None Include="RunTime\Testing\Reports\Resources\TestIgnored.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Testing\Reports\Resources\TestSuccess.png" />
+    <None Include="RunTime\Testing\Reports\Resources\TestSuccess.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -455,9 +430,7 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Script Handling\Registration\FlowNode\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

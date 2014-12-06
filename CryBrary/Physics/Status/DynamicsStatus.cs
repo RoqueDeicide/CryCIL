@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using CryEngine.Mathematics;
+using CryEngine.RunTime;
 using CryEngine.Utilities;
 
 namespace CryEngine.Physics.Status

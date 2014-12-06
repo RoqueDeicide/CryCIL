@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="Engine\DirectoryStructure.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="RunTime\MonoInterface.h">
+      <Filter>RunTime</Filter>
+    </ClInclude>
+    <ClInclude Include="IMonoInterface.h" />
+    <ClInclude Include="MonoHeaders.h" />
+    <ClInclude Include="ThunkTables.h" />
+    <ClInclude Include="Wrappers\DefaultBoxinator.h">
+      <Filter>API Implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="RunTime\DebugEventReporter.h">
+      <Filter>RunTime</Filter>
+    </ClInclude>
+    <ClInclude Include="RunTime\EventBroadcaster.h">
+      <Filter>RunTime</Filter>
+    </ClInclude>
+    <ClInclude Include="RunTime\InitializationInterop.h">
+      <Filter>RunTime</Filter>
+    </ClInclude>
+    <ClInclude Include="RunTime\AllInterops.h" />
+    <ClInclude Include="Interops\LogPosting.h">
+      <Filter>Interops</Filter>
+    </ClInclude>
+    <ClInclude Include="Wrappers\MonoArray.h">
+      <Filter>API Implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="API_ImplementationHeaders.h" />
+    <ClInclude Include="Wrappers\MonoAssembly.h">
+      <Filter>API Implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="Wrappers\MonoClass.h">
+      <Filter>API Implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="Wrappers\MonoHandle.h">
+      <Filter>API Implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="Wrappers\MonoMethod.h">
+      <Filter>API Implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="CryCilHeader.h" />
+    <ClInclude Include="Text.h">
+      <Filter>Extras</Filter>
+    </ClInclude>
+    <ClInclude Include="DoxygenExampleFiles\UnmanagedThunkExample.h">
+      <Filter>DoxygenExampleFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="DoxygenExampleFiles\ListenerExample.h">
+      <Filter>DoxygenExampleFiles\CryCIL Listeners\Native Listener</Filter>
+    </ClInclude>
+    <ClInclude Include="List.h">
+      <Filter>Extras</Filter>
+    </ClInclude>
+    <ClInclude Include="SortedList.h">
+      <Filter>Extras</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="CryEngineInterface.cpp" />
+    <ClCompile Include="RunTime\InitializationInterop.cpp">
+      <Filter>RunTime</Filter>
+    </ClCompile>
+    <ClCompile Include="RunTime\DebugEventReporter.cpp">
+      <Filter>RunTime</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\LogPosting.cpp">
+      <Filter>Interops</Filter>
+    </ClCompile>
+    <ClCompile Include="RunTime\EventBroadcaster.cpp">
+      <Filter>RunTime</Filter>
+    </ClCompile>
+    <ClCompile Include="RunTime\MonoInterface.cpp">
+      <Filter>RunTime</Filter>
+    </ClCompile>
+    <ClCompile Include="ThunkTables.cpp" />
+    <ClCompile Include="Engine\DirectoryStructure.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Wrappers\DefaultBoxinator.cpp">
+      <Filter>API Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="Wrappers\MonoArrayBase.cpp">
+      <Filter>API Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="Wrappers\MonoArrayFree.cpp">
+      <Filter>API Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="Wrappers\MonoArrayPersistent.cpp">
+      <Filter>API Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="Wrappers\MonoAssemblyWrapper.cpp">
+      <Filter>API Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="Wrappers\MonoClassCache.cpp">
+      <Filter>API Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="Wrappers\MonoClassWrapper.cpp">
+      <Filter>API Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="Wrappers\MonoMethodWrapper.cpp">
+      <Filter>API Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="Wrappers\MonoHandleBase.cpp">
+      <Filter>API Implementation</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="RunTime">
+      <UniqueIdentifier>{e2ee4c03-67d6-4f57-af76-8dade3308e6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine">
+      <UniqueIdentifier>{6d43e627-7057-4f40-96ab-7d1d74aeb89a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DoxygenExampleFiles">
+      <UniqueIdentifier>{4557b354-379b-4996-9dba-b5f2d17b2361}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="API Implementation">
+      <UniqueIdentifier>{824c2f39-8cc3-49b9-bce6-ffeb58467c65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DoxygenExampleFiles\CryCIL Listeners">
+      <UniqueIdentifier>{27cf2fe1-cbeb-45e3-b1b6-cbccf8fa70e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DoxygenExampleFiles\CryCIL Listeners\Native Listener">
+      <UniqueIdentifier>{070c92e2-ff70-4de7-86ca-40ae83b1822a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interops">
+      <UniqueIdentifier>{1c90796d-b96b-4963-ab46-d46e1870d1ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Extras">
+      <UniqueIdentifier>{f44796b6-9fe3-48e5-818f-da1710a517f8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -32,7 +32,7 @@ public:
 	/// Note: This does not construct an new instance of the class, only returns an uninitialized IMonoScript. To instantiate a class, see IMonoAssembly::InstantiateClass
 	/// </summary>
 	/// <example>
-	/// IMonoScript *pClass = GetMonoScriptSystem()->GetCryBraryAssembly()->GetCustomClass("Vec3");
+	/// IMonoScript *pClass = GetMonoRunTime()->GetCryBraryAssembly()->GetCustomClass("Vec3");
 	/// </example>
 	virtual IMonoClass *GetClass(const char *className, const char *nameSpace = "CryEngine") = 0;
 
@@ -56,7 +56,7 @@ public:
 	/// </summary>
 	virtual IMonoDomain *GetDomain() = 0;
 
-	/// <summmary>
+	/// <summary>
 	/// Retrieves a throwable exception from the assembly.
 	/// </summary>
 	virtual IMonoException *GetException(const char *nameSpace, const char *exceptionClass, const char *message = nullptr, ...)

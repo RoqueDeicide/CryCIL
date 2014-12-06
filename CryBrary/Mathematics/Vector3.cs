@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.InteropServices;
+using CryEngine.Mathematics.Graphics;
 
 namespace CryEngine.Mathematics
 {
@@ -553,15 +554,15 @@ namespace CryEngine.Mathematics
 		#endregion
 		#region Conversion Operators
 		/// <summary>
-		/// Implicitly converts given vector to <see cref="Color" /> instance.
+		/// Implicitly converts given vector to <see cref="ColorSingle" /> instance.
 		/// </summary>
 		/// <param name="vec"> Vector to convert. </param>
 		/// <returns>
-		/// <see cref="Color" /> object where R is vector's X-component, G - Y, B - Z.
+		/// <see cref="ColorSingle" /> object where R is vector's X-component, G - Y, B - Z.
 		/// </returns>
-		public static implicit operator Color(Vector3 vec)
+		public static implicit operator ColorSingle(Vector3 vec)
 		{
-			return new Color(vec.X, vec.Y, vec.Z);
+			return new ColorSingle(vec.X, vec.Y, vec.Z);
 		}
 		#endregion
 		#endregion

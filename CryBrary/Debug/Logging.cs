@@ -35,7 +35,7 @@ namespace CryEngine
 #if UNIT_TESTING
             System.Console.WriteLine(format, args);
 #else
-			NativeDebugMethods.Log(String.Format(format, args), type);
+			DebugInterop.Log(String.Format(format, args), type);
 #endif
 		}
 
@@ -47,7 +47,7 @@ namespace CryEngine
 #if UNIT_TESTING
             System.Console.WriteLine(msg);
 #else
-			NativeDebugMethods.Log(msg, type);
+			DebugInterop.Log(msg, type);
 #endif
 		}
 
@@ -61,7 +61,7 @@ namespace CryEngine
 #if UNIT_TESTING
             System.Console.WriteLine(format, args);
 #else
-			NativeDebugMethods.Log(String.Format(format, args), LogType.Always);
+			DebugInterop.Log(String.Format(format, args), LogType.Always);
 #endif
 		}
 
@@ -73,7 +73,7 @@ namespace CryEngine
 #if UNIT_TESTING
             System.Console.WriteLine(msg);
 #else
-			NativeDebugMethods.Log(msg, LogType.Always);
+			DebugInterop.Log(msg, LogType.Always);
 #endif
 		}
 
@@ -87,7 +87,7 @@ namespace CryEngine
 #if UNIT_TESTING
             System.Console.WriteLine(format, args);
 #else
-			NativeDebugMethods.Log(String.Format(format, args), LogType.Error);
+			DebugInterop.Log(String.Format(format, args), LogType.Error);
 #endif
 		}
 
@@ -99,7 +99,7 @@ namespace CryEngine
 #if UNIT_TESTING
             System.Console.WriteLine(msg);
 #else
-			NativeDebugMethods.Log(msg, LogType.Error);
+			DebugInterop.Log(msg, LogType.Error);
 #endif
 		}
 
@@ -139,7 +139,7 @@ namespace CryEngine
 #if UNIT_TESTING
             System.Console.WriteLine(format, args);
 #else
-			NativeDebugMethods.Warning(String.Format(format, args));
+			DebugInterop.Warning(String.Format(format, args));
 #endif
 		}
 
@@ -151,7 +151,7 @@ namespace CryEngine
 #if UNIT_TESTING
             System.Console.WriteLine("[Warning]" + msg);
 #else
-			NativeDebugMethods.Warning(msg);
+			DebugInterop.Warning(msg);
 #endif
 		}
 

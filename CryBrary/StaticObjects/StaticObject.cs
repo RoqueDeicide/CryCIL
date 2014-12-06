@@ -42,7 +42,7 @@ namespace CryEngine.StaticObjects
 		/// </remarks>
 		public StaticObject()
 		{
-			this.Handle = NativeStaticObjectMethods.CreateStaticObject();
+			this.Handle = StaticObjectInterop.CreateStaticObject();
 			this.Disposed = this.Handle == IntPtr.Zero;
 		}
 		// Used by EntityBase.GetStaticObject(int).
@@ -75,7 +75,7 @@ namespace CryEngine.StaticObjects
 			{
 				return;
 			}
-			NativeStaticObjectMethods.ReleaseStaticObject(this.Handle);
+			StaticObjectInterop.ReleaseStaticObject(this.Handle);
 			this.Disposed = true;
 		}
 	}

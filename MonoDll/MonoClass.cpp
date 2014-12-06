@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "MonoClass.h"
 
-#include "MonoScriptSystem.h"
+#include "MonoRunTime.h"
 
 #include "MonoDomain.h"
 #include "MonoAssembly.h"
@@ -150,7 +150,7 @@ IMonoMethod *CScriptClass::GetMethod(const char *name, IMonoArray *pArgs, bool t
 
 	if (throwOnFail)
 	{
-		if (IMonoException *pException = GetMonoScriptSystem()->GetCorlibAssembly()->GetException("System", "MissingMethodException", "Failed to locate method %s in class %s", name, GetName()))
+		if (IMonoException *pException = GetMonoRunTime()->CoreLibrary->GetException("System", "MissingMethodException", "Failed to locate method %s in class %s", name, GetName()))
 			pException->Throw();
 	}
 
@@ -190,13 +190,13 @@ IMonoMethod *CScriptClass::GetMethod(const char *name, int numParams, bool throw
 
 	if (throwOnFail)
 	{
-		if (!GetMonoScriptSystem()->IsInitialized())
+		if (!GetMonoRunTime()->IsInitialized)
 		{
 			CryLogAlways("Failed to locate method %s in class %s", name, GetName());
 		}
-		else if (IMonoAssembly *pCorlibAssembly = GetMonoScriptSystem()->GetCorlibAssembly())
+		else if (IMonoAssembly *pCorlibAssembly = GetMonoRunTime()->CoreLibrary)
 		{
-			if (IMonoException *pException = GetMonoScriptSystem()->GetCorlibAssembly()->GetException("System", "MissingMethodException", "Failed to locate method %s in class %s", name, GetName()))
+			if (IMonoException *pException = GetMonoRunTime()->CoreLibrary->GetException("System", "MissingMethodException", "Failed to locate method %s in class %s", name, GetName()))
 				pException->Throw();
 		}
 	}
@@ -260,7 +260,7 @@ mono::object CScriptClass::GetPropertyValue(mono::object object, const char *pro
 			return (mono::object)propertyValue;
 	}
 	else if (throwOnFail)
-		GetMonoScriptSystem()->GetCorlibAssembly()->GetException("System", "MissingMemberException", "Failed to locate property %s in class %s", propertyName, GetName())->Throw();
+		GetMonoRunTime()->CoreLibrary->GetException("System", "MissingMemberException", "Failed to locate property %s in class %s", propertyName, GetName())->Throw();
 
 	return nullptr;
 }
@@ -276,7 +276,7 @@ void CScriptClass::SetPropertyValue(mono::object object, const char *propertyNam
 		mono_property_set_value(pProperty, object, args, nullptr);
 	}
 	else if (throwOnFail)
-		GetMonoScriptSystem()->GetCorlibAssembly()->GetException("System", "MissingMemberException", "Failed to locate property %s in class %s", propertyName, GetName())->Throw();
+		GetMonoRunTime()->CoreLibrary->GetException("System", "MissingMemberException", "Failed to locate property %s in class %s", propertyName, GetName())->Throw();
 }
 
 mono::object CScriptClass::GetFieldValue(mono::object object, const char *fieldName, bool throwOnFail)
@@ -292,7 +292,7 @@ mono::object CScriptClass::GetFieldValue(mono::object object, const char *fieldN
 			return (mono::object)fieldValue;
 	}
 	else if (throwOnFail)
-		GetMonoScriptSystem()->GetCorlibAssembly()->GetException("System", "MissingFieldException", "Failed to locate field %s in class %s", fieldName, GetName())->Throw();
+		GetMonoRunTime()->CoreLibrary->GetException("System", "MissingFieldException", "Failed to locate field %s in class %s", fieldName, GetName())->Throw();
 
 	return nullptr;
 }
@@ -303,7 +303,7 @@ void CScriptClass::SetFieldValue(mono::object object, const char *fieldName, mon
 	if (pField)
 		mono_field_set_value((MonoObject *)(object), pField, newValue);
 	else if (throwOnFail)
-		GetMonoScriptSystem()->GetCorlibAssembly()->GetException("System", "MissingFieldException", "Failed to locate field %s in class %s", fieldName, GetName())->Throw();
+		GetMonoRunTime()->CoreLibrary->GetException("System", "MissingFieldException", "Failed to locate field %s in class %s", fieldName, GetName())->Throw();
 }
 
 MonoProperty *CScriptClass::GetMonoProperty(const char *name, bool requireSetter, bool requireGetter)
@@ -369,7 +369,7 @@ MonoClassField *CScriptClass::GetMonoField(const char *name)
 mono::object CScriptClass::BoxObject(void *object, IMonoDomain *pDomain)
 {
 	if (pDomain == nullptr)
-		pDomain = GetMonoScriptSystem()->GetActiveDomain();
+		pDomain = GetMonoRunTime()->AppDomain;
 
 	return (mono::object)mono_value_box(static_cast<CScriptDomain *>(pDomain)->GetMonoDomain(), (MonoClass *)m_pObject, object);
 }

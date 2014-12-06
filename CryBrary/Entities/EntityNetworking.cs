@@ -3,7 +3,9 @@ using System.Linq;
 using System.Reflection;
 using CryEngine.Annotations;
 using CryEngine.Extensions;
+using CryEngine.Logic.Entities;
 using CryEngine.Native;
+using CryEngine.RunTime.Networking;
 
 namespace CryEngine.Entities
 {
@@ -99,7 +101,7 @@ namespace CryEngine.Entities
 				throw new RemoteInvocationException("Non-static method owner does not derive from EntityBase.");
 #endif
 
-			NativeEntityMethods.RemoteInvocation(this.Id, target.Id, method.Name, args, netTarget, channelId);
+			EntityInterop.RemoteInvocation(this.Id, target.Id, method.Name, args, netTarget, channelId);
 		}
 
 		[UsedImplicitly]
