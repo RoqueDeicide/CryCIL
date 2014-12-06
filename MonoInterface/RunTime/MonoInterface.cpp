@@ -143,6 +143,7 @@ MonoInterface::~MonoInterface()
 	if (running)
 	{
 		Framework->UnregisterListener(this);
+		gEnv->pSystem->GetISystemEventDispatcher()->RemoveListener(this);
 		CryLogAlways("Shutting down jit.");
 		mono_jit_cleanup(this->appDomain);
 		CryLogAlways("No more running.");
@@ -406,8 +407,13 @@ void MonoInterface::OnSystemEvent(ESystemEvent event, UINT_PTR wparam, UINT_PTR 
 {
 	switch (event)
 	{
+		case ESYSTEM_EVENT_CHANGE_FOCUS:
+		{
+			CryLogAlways("The window has lost/gained focus.");
+		}
+		break;
 	case ESYSTEM_EVENT_SHUTDOWN:
-		this->Shutdown();
+		//this->Shutdown();
 		break;
 	default:
 		break;
