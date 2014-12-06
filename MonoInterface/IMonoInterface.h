@@ -37,6 +37,8 @@ struct IMonoSystemListener;
 struct IMonoInterop;
 struct IDefaultMonoInterop;
 struct IMonoInterface;
+struct IMonoGCHandle;
+struct IMonoGC;
 
 namespace mono
 {
@@ -342,16 +344,9 @@ struct IMonoFunctionalityWrapper
 	VIRTUAL_API virtual void *GetWrappedPointer() = 0;
 };
 
-//! Base type of objects that wrap MonoObject instances granting access to Mono API
-//! and optionally making usage of managed objects safer.
+//! Base type of objects that wrap MonoObject instances granting access to Mono API.
 struct IMonoHandle : public IMonoFunctionalityWrapper
 {
-	//! Tells the object to hold given MonoObject and prevent its collection.
-	//!
-	//! @param object MonoObject that is in danger of GC if not held by this object.
-	VIRTUAL_API virtual void Hold(mono::object obj) = 0;
-	//! Tells this object to release MonoObject it held previously.
-	VIRTUAL_API virtual void Release() = 0;
 	//! Returns an instance of MonoObject this object is wrapped around.
 	VIRTUAL_API virtual mono::object Get() = 0;
 	//! Calls a Mono method associated with this object.
@@ -393,6 +388,70 @@ struct IMonoHandle : public IMonoFunctionalityWrapper
 protected:
 	VIRTUAL_API virtual void *UnboxObject() = 0;
 };
+
+//! Represents an interface with Mono Garbage Collector (GC).
+struct IMonoGC
+{
+	//! Gets index of the oldest generation that is used by GC.
+	__declspec(property(get=GetMaxGeneration)) int MaxGeneration;
+	//! Gets number of bytes that are currently allocated by this GC.
+	__declspec(property(get=GetHeapSize)) __int64 HeapSize;
+
+	//! Triggers garbage collection.
+	//!
+	//! @param generation Index of generation to clean up. Bigger number means older generation
+	//!                   to collect garbage in. Clean up of older generations is always preceded
+	//!                   by GCion of younger ones. Invocation with -1 or @see IMonoGC::MaxGeneration
+	//!                   will trigger full scale garbage collection.
+	VIRTUAL_API virtual void Collect(int generation = -1) = 0;
+	//! Holds given managed object allowing to get it wherever it can be after heap compression.
+	//! The object will still be eligible for collection if it becomes unreachable from the rest
+	//! of the managed code.
+	//!
+	//! You have to use @see IMonoGCHandle::Object property to get the pointer to the object.
+	//!
+	//! @param obj Pointer to managed object to hold.
+	VIRTUAL_API virtual IMonoGCHandle Hold(mono::object obj) = 0;
+	//! Keeps given managed object from being collected by GC.
+	//!
+	//! You will have to use @see IMonoGCHandle::Object property to get the valid pointer
+	//! to the given object before using it.
+	//!
+	//! @param obj Pointer to managed object to keep.
+	VIRTUAL_API virtual IMonoGCHandle Keep(mono::object obj) = 0;
+	//! Pins given managed object by prohibiting GC from collecting or moving it.
+	//!
+	//! As long as returned object is not released, it will be perfectly safe to access
+	//! given object through its current pointer, as it will never be deleted or moved.
+	//!
+	//! @param obj Pointer to managed object to pin.
+	VIRTUAL_API virtual IMonoGCHandle Pin(mono::object obj) = 0;
+
+	VIRTUAL_API virtual int GetMaxGeneration() = 0;
+	VIRTUAL_API virtual __int64 GetHeapSize() = 0;
+};
+
+//! Represents a GC handle.
+struct IMonoGCHandle
+{
+	//! Gets the wrapper for managed object that is being held by this GC handle.
+	//!
+	//! @returns A pointer that provides access to object's API, or null if this is a weak
+	//!          handle and held object has been collected.
+	__declspec(property(get=GetObjectHandle)) IMonoHandle *ObjectHandle;
+	//! Gets the pointer to managed object that is being held by this GC handle.
+	//!
+	//! @returns A pointer that can be passed directly to methods and thunks, or null if
+	//!          this is a weak handle and held object has been collected.
+	__declspec(property(get=GetObjectPointer)) mono::object ObjectPointer;
+
+	//! Releases this GC handle.
+	VIRTUAL_API virtual void Release() = 0;
+
+	VIRTUAL_API virtual IMonoHandle *GetObjectHandle() = 0;
+	VIRTUAL_API virtual mono::object GetObjectPointer() = 0;
+};
+
 //! Defines interface of objects that wrap functionality of MonoAssembly type.
 struct IMonoAssembly : public IMonoFunctionalityWrapper
 {
@@ -982,44 +1041,24 @@ struct IMonoInterface
 	//! Converts given managed string to null-terminated one.
 	VIRTUAL_API virtual const char *ToNativeString(mono::string text) = 0;
 	
-	//! Creates a new wrapped MonoObject using constructor with specific parameters.
-	//!
-	//! Specifying the object to be persistent will wrap it into a handle that allows
-	//! safe access to the object for prolonged periods of time.
-	//!
-	//! Pinning the object in place allows its pointer to be safe to use at any
-	//! time, however it makes GC sessions longer and decreases memory usage efficiency.
+	//! Creates a new MonoObject using constructor with specific parameters.
 	//!
 	//! @param assembly   Assembly where the type of the object is defined.
 	//! @param name_space Name space that contains the type of the object.
 	//! @param class_name Name of the type to use.
-	//! @param persistent Indicates whether handle should keep the object away from GC.
-	//! @param pinned     Indicates whether the object's location
-	//!                   in the managed heap must be kept constant.
 	//! @param params     An array of parameters to pass to the constructor.
 	//!                   If null, default constructor will be used.
-	VIRTUAL_API virtual IMonoHandle *CreateObject
+	VIRTUAL_API virtual mono::object CreateObject
 	(
 		IMonoAssembly *assembly,
 		const char *name_space,
 		const char *class_name,
-		bool persistent = false,
-		bool pinned = false,
 		IMonoArray *params = nullptr
 	) = 0;
-	//! Creates a new Mono handle wrapper for given MonoObject.
+	//! Creates a new wrapper for given MonoObject.
 	//!
-	//! Making the object persistent allows the object to be accessible from
-	//! native code for prolonged periods of time.
-	//! Pinning the object in place allows its pointer to be safe to use at any
-	//! time, however it makes GC sessions longer and decreases memory usage efficiency.
-	//! Use this method to choose, what to do with results of invoking Mono methods.
-	//!
-	//! @param obj        An object to make persistent.
-	//! @param persistent Indicates whether handle should keep the object away from GC.
-	//! @param pinned     Indicates whether the object's location
-	//!                   in the managed heap must be kept constant.
-	VIRTUAL_API virtual IMonoHandle *WrapObject(mono::object obj, bool persistent = false, bool pinned = false) = 0;
+	//! @param obj        An object to wrap.
+	VIRTUAL_API virtual IMonoHandle *WrapObject(mono::object obj) = 0;
 	//! Creates object of type object[] with specified capacity.
 	//!
 	//! @param capacity   Number of elements that can be held by the array.
@@ -1158,10 +1197,8 @@ struct IMonoInterface
 	//!         MonoEnv->Cryambly,          // Assembly where the type is defined.
 	//!         "CryCil.Engine.Materials",  // Name space where the type is defined.
 	//!         "Material",                 // Name of the type to instantiate.
-	//!         false,                      // Persistent?
-	//!         false,                      // Pinned?
 	//!         ctorParams                  // Arguments.
-	//!     )->Get();
+	//!     );
 	//! }
 	//! @endcode
 	//!
@@ -1254,6 +1291,8 @@ struct IMonoInterface
 	__declspec(property(get=GetInitializedIndication)) bool IsRunning;
 	//! Returns the object that boxes some simple value types.
 	__declspec(property(get=GetDefaultBoxer)) IDefaultBoxinator *DefaultBoxer;
+	//! Gets the interface with Mono GC.
+	__declspec(property(get=GetGC)) IMonoGC *GC;
 
 	VIRTUAL_API virtual void *GetAppDomain() = 0;
 	VIRTUAL_API virtual IMonoAssembly *GetCryambly() = 0;
@@ -1261,6 +1300,7 @@ struct IMonoInterface
 	VIRTUAL_API virtual IMonoAssembly *GetCoreLibrary() = 0;
 	VIRTUAL_API virtual bool GetInitializedIndication() = 0;
 	VIRTUAL_API virtual IDefaultBoxinator *GetDefaultBoxer() = 0;
+	VIRTUAL_API virtual IMonoGC *GetGC() = 0;
 };
 //! Interface of objects that specialize on setting up interops between C++ and Mono.
 //!
