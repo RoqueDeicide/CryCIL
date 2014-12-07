@@ -13,6 +13,7 @@
 #include <IGameFramework.h>
 
 #include "List.h"
+#include "Logs.h"
 
 // Use MONOINTERFACE_LIBRARY constant to get OS-specific name of MonoInterface library.
 #if defined(LINUX)
@@ -1326,7 +1327,7 @@ struct IMonoInterop : public IMonoSystemListener
 
 #define REGISTER_METHOD(method) this->RegisterInteropMethod(#method, method)
 
-//! Interface of interops that use classes within CryCil.RunTime.NativeCodeAccess name space.
+//! Interface of interops that use classes within CryCil.Interops name space.
 struct IDefaultMonoInterop : public IMonoInterop
 {
 	virtual const char *GetNameSpace() { return "CryCil.Interops"; }
