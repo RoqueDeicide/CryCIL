@@ -17,9 +17,7 @@
 //! Represents an expandable list of items.
 //!
 //! @tparam ElementType        Type that represents items this list contains.
-//! @tparam GeometricExpansion Indicates whether this list needs to expand by doubling
-//!                            its capacity rather then expanding to fit the number of items.
-template<typename ElementType, bool GeometricExpansion = true>
+template<typename ElementType>
 class List
 {
 public:
@@ -437,14 +435,7 @@ private:
 		if (this->capacity < size)
 		{
 			// Set new capacity.
-			if (GeometricExpansion)
-			{
-				this->capacity *= 2;
-			}
-			else
-			{
-				this->capacity = size;
-			}
+			this->capacity *= 2;
 			//std::cout << "Expanding to the capacity of " << this->capacity << std::endl;
 			// Reallocate the memory.
 			this->elements =
