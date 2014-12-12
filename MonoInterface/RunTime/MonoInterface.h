@@ -40,6 +40,7 @@ private:
 
 	IMonoGCHandle *managedInterface;
 	IMonoGC *gc;
+	IGameFramework *framework;
 #pragma endregion
 public:
 #pragma region Property Methods
@@ -55,6 +56,8 @@ public:
 	virtual bool GetInitializedIndication();
 
 	virtual IDefaultBoxinator *GetDefaultBoxer();
+
+	virtual IGameFramework *GetGameFramework();
 	VIRTUAL_API virtual IMonoGC *GetGC()
 	{
 		return this->gc;
@@ -64,8 +67,7 @@ public:
 	//! Initializes Mono run-time environment.
 	//!
 	//! @param framework Pointer to IGameFramework object that cannot be obtained in any other way.
-	MonoInterface(IGameFramework *framework, IMonoSystemListener **listeners, int listenerCount);
-	~MonoInterface();
+	MonoInterface(IGameFramework *framework, List<IMonoSystemListener *> *listeners);
 #pragma endregion
 #pragma region External Triggers
 	//! Triggers registration of FlowGraph nodes.

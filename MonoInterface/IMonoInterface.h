@@ -13,6 +13,7 @@
 #include <IGameFramework.h>
 
 #include "List.h"
+#include "Logs.h"
 
 // Use MONOINTERFACE_LIBRARY constant to get OS-specific name of MonoInterface library.
 #if defined(LINUX)
@@ -383,7 +384,7 @@ struct IMonoHandle : public IMonoFunctionalityWrapper
 		return *(T *)this->UnboxObject();
 	}
 	//! Gets managed type that represents wrapped object.
-	VIRTUAL_API virtual struct IMonoClass *GetClass() = 0;
+	VIRTUAL_API virtual IMonoClass *GetClass() = 0;
 
 protected:
 	VIRTUAL_API virtual void *UnboxObject() = 0;
@@ -1291,6 +1292,8 @@ struct IMonoInterface
 	__declspec(property(get=GetDefaultBoxer)) IDefaultBoxinator *DefaultBoxer;
 	//! Gets the interface with Mono GC.
 	__declspec(property(get=GetGC)) IMonoGC *GC;
+	//! Gets the pointer to IGameFramework implementation that is available to CryCIL.
+	__declspec(property(get=GetGameFramework)) IGameFramework *CryAction;
 
 	VIRTUAL_API virtual void *GetAppDomain() = 0;
 	VIRTUAL_API virtual IMonoAssembly *GetCryambly() = 0;
@@ -1299,6 +1302,7 @@ struct IMonoInterface
 	VIRTUAL_API virtual bool GetInitializedIndication() = 0;
 	VIRTUAL_API virtual IDefaultBoxinator *GetDefaultBoxer() = 0;
 	VIRTUAL_API virtual IMonoGC *GetGC() = 0;
+	VIRTUAL_API virtual IGameFramework *GetGameFramework() = 0;
 };
 //! Interface of objects that specialize on setting up interops between C++ and Mono.
 //!
@@ -1364,14 +1368,14 @@ struct IMonoInterop : public IMonoSystemListener
 
 #define REGISTER_METHOD(method) this->RegisterInteropMethod(#method, method)
 
-//! Interface of interops that use classes within CryCil.RunTime.NativeCodeAccess name space.
+//! Interface of interops that use classes within CryCil.Interops name space.
 struct IDefaultMonoInterop : public IMonoInterop
 {
 	virtual const char *GetNameSpace() { return "CryCil.Interops"; }
 };
 
 //! Signature of the only method that is exported by MonoInterface.dll
-typedef IMonoInterface *(*InitializeMonoInterface)(IGameFramework *, IMonoSystemListener **, int);
+typedef IMonoInterface *(*InitializeMonoInterface)(IGameFramework *, List<IMonoSystemListener *> *);
 
 
 
@@ -1384,8 +1388,8 @@ typedef IMonoInterface *(*InitializeMonoInterface)(IGameFramework *, IMonoSystem
 //! Example:
 //!
 //! @code{.cpp}
-//! // Load library. Save handle in a field of type HMODULE.
-//! this->monoInterfaceDll = CryLoadLibrary("MonoInterface.dll");
+//! // Load library. Save handle in a field or variable of type HMODULE.
+//! this->monoInterfaceDll = CryLoadLibrary(MONOINTERFACE_LIBRARY);
 //! // Check if it was loaded properly.
 //! if (!this->monoInterfaceDll)
 //! {
@@ -1393,14 +1397,12 @@ typedef IMonoInterface *(*InitializeMonoInterface)(IGameFramework *, IMonoSystem
 //! }
 //! // Get InitializeModule function.
 //! InitializeMonoInterface cryCilInitializer =
-//!     CryGetProcAddress(this->monoInterfaceDll, "InitializeModule");
+//!     CryGetProcAddress(this->monoInterfaceDll, MONO_INTERFACE_INIT);
 //! // Invoke it, save the result in MonoEnv that was declared as a global somewhere else.
-//! MonoEnv = cryCilInitializer(gameFramework, (pointer to listeners), (number of listeners));
+//! MonoEnv = cryCilInitializer(gameFramework, (pointer to listeners));
 //! // Now MonoEnv can be used to communicate with CryCIL API!
 //! @endcode
 extern IMonoInterface *MonoEnv;
-//! Provides access to IGameFramework implementation.
-extern IGameFramework *Framework;
 
 #pragma region Conversions Interface
 
