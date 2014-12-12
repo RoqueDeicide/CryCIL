@@ -1,9 +1,0 @@
-<NUnitProject>
-  <Settings activeconfig="Debug" />
-  <Config name="Debug" binpathtype="Auto">
-    <assembly path="bin\Debug\CryBrary.Tests.dll" />
-  </Config>
-  <Config name="Release" binpathtype="Auto">
-    <assembly path="bin\Release\CryBrary.Tests.dll" />
-  </Config>
-</NUnitProject>

@@ -96,21 +96,7 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
   <ItemGroup>
     <ClInclude Include="Actor.h" />
     <ClInclude Include="AllInterops.h" />
-    <ClInclude Include="CPluginCryMono.h" />
-    <ClInclude Include="DynMonoArray.h" />
     <ClInclude Include="EntityEventHandling.h" />
-    <ClInclude Include="Headers\CryMonoInitializationHelpers.h" />
-    <ClInclude Include="Headers\ICryScriptInstance.h" />
-    <ClInclude Include="Headers\IMonoArray.h" />
-    <ClInclude Include="Headers\IMonoAssembly.h" />
-    <ClInclude Include="Headers\IMonoClass.h" />
-    <ClInclude Include="Headers\IMonoDomain.h" />
-    <ClInclude Include="Headers\IMonoException.h" />
-    <ClInclude Include="Headers\IMonoMethod.h" />
-    <ClInclude Include="Headers\IMonoObject.h" />
-    <ClInclude Include="Headers\IMonoRunTime.h" />
-    <ClInclude Include="Headers\IMonoScriptSystem.h" />
-    <ClInclude Include="Headers\MonoCommon.h" />
     <ClInclude Include="Interops\CrySerialize.h" />
     <ClInclude Include="Interops\Engine\3DEngine.h" />
     <ClInclude Include="Interops\Engine\MaterialManager.h" />
@@ -136,31 +122,18 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
     <ClInclude Include="Interops\Viewport\Renderer.h" />
     <ClInclude Include="Interops\Viewport\ViewSystem.h" />
     <ClInclude Include="ManagedGameLogic\ManagedEntity.h" />
-    <ClInclude Include="MonoArray.h" />
     <ClInclude Include="MonoCVars.h" />
-    <ClInclude Include="MonoDomain.h" />
     <ClInclude Include="MonoEntity.h" />
-    <ClInclude Include="MonoException.h" />
-    <ClInclude Include="MonoHelpers.h" />
-    <ClInclude Include="MonoMethod.h" />
-    <ClInclude Include="MonoRunTime.h" />
     <ClInclude Include="NativeEntity.h" />
     <ClInclude Include="PathUtils.h" />
-    <ClInclude Include="MonoAssembly.h" />
-    <ClInclude Include="MonoClass.h" />
     <ClInclude Include="MonoEntityClass.h" />
     <ClInclude Include="MonoEntityEventHandler.h" />
     <ClInclude Include="MonoEntityPropertyHandler.h" />
-    <ClInclude Include="MonoObject.h" />
-    <ClInclude Include="Headers\IMonoInterop.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="SystemEventListener_CryMono.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
-    <ClCompile Include="CPluginCryMono.cpp" />
-    <ClCompile Include="DynMonoArray.cpp" />
     <ClCompile Include="EntityEventHandling.cpp" />
     <ClCompile Include="Interops\CrySerialize.cpp" />
     <ClCompile Include="Interops\Engine\3DEngine.cpp" />
@@ -187,15 +160,7 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
     <ClCompile Include="Interops\Viewport\ViewSystem.cpp" />
     <ClCompile Include="ManagedGameLogic\ManagedEntity.cpp" />
     <ClCompile Include="MonoCVars.cpp" />
-    <ClCompile Include="MonoDomain.cpp" />
     <ClCompile Include="MonoEntity.cpp" />
-    <ClCompile Include="MonoMethod.cpp" />
-    <ClCompile Include="MonoObject.cpp" />
-    <ClCompile Include="MonoRunTime.cpp" />
-    <ClCompile Include="MonoArray.cpp" />
-    <ClCompile Include="MonoAssembly.cpp" />
-    <ClCompile Include="CryMonoDll.cpp" />
-    <ClCompile Include="MonoClass.cpp" />
     <ClCompile Include="MonoEntityClass.cpp" />
     <ClCompile Include="MonoEntityPropertyHandler.cpp" />
     <ClCompile Include="NativeEntity.cpp" />
@@ -209,7 +174,6 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='UnitTests|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="SystemEventListener_CryMono.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

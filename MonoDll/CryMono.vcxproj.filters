@@ -2,12 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="MonoAssembly.h">
-      <Filter>Wrappers</Filter>
-    </ClInclude>
-    <ClInclude Include="MonoClass.h">
-      <Filter>Wrappers</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h" />
     <ClInclude Include="MonoEntityClass.h">
       <Filter>EntitySystem</Filter>
@@ -15,26 +9,8 @@
     <ClInclude Include="MonoEntityEventHandler.h">
       <Filter>EntitySystem</Filter>
     </ClInclude>
-    <ClInclude Include="MonoObject.h">
-      <Filter>Wrappers</Filter>
-    </ClInclude>
     <ClInclude Include="MonoEntityPropertyHandler.h">
       <Filter>EntitySystem</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\IMonoArray.h">
-      <Filter>Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\IMonoObject.h">
-      <Filter>Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="MonoArray.h">
-      <Filter>Wrappers</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\IMonoAssembly.h">
-      <Filter>Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\MonoCommon.h">
-      <Filter>Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="MonoEntity.h">
       <Filter>EntitySystem</Filter>
@@ -42,17 +18,8 @@
     <ClInclude Include="PathUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\IMonoDomain.h">
-      <Filter>Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="MonoDomain.h">
-      <Filter>Wrappers</Filter>
-    </ClInclude>
     <ClInclude Include="Actor.h">
       <Filter>ActorSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\IMonoClass.h">
-      <Filter>Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="NativeEntity.h">
       <Filter>EntitySystem\Native</Filter>
@@ -60,42 +27,8 @@
     <ClInclude Include="MonoCVars.h">
       <Filter>Mono</Filter>
     </ClInclude>
-    <ClInclude Include="CPluginCryMono.h">
-      <Filter>Startup</Filter>
-    </ClInclude>
-    <ClInclude Include="DynMonoArray.h">
-      <Filter>Wrappers</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\IMonoException.h">
-      <Filter>Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="MonoException.h">
-      <Filter>Wrappers</Filter>
-    </ClInclude>
-    <ClInclude Include="SystemEventListener_CryMono.h">
-      <Filter>Mono</Filter>
-    </ClInclude>
     <ClInclude Include="EntityEventHandling.h">
       <Filter>EntitySystem</Filter>
-    </ClInclude>
-    <ClInclude Include="MonoHelpers.h" />
-    <ClInclude Include="Headers\ICryScriptInstance.h">
-      <Filter>Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\IMonoMethod.h">
-      <Filter>Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="MonoMethod.h">
-      <Filter>Wrappers</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\CryMonoInitializationHelpers.h">
-      <Filter>Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="MonoRunTime.h">
-      <Filter>Mono</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\IMonoRunTime.h">
-      <Filter>Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="Interops\FlowGraph\FlowGraphNode_Mono.h">
       <Filter>Interops\FlowGraph</Filter>
@@ -166,15 +99,9 @@
     <ClInclude Include="Interops\MonoInput.h">
       <Filter>Interops</Filter>
     </ClInclude>
-    <ClInclude Include="Headers\IMonoInterop.h">
-      <Filter>Interfaces</Filter>
-    </ClInclude>
     <ClInclude Include="AllInterops.h" />
     <ClInclude Include="Interops\FlowGraph\FlowManager.h">
       <Filter>Interops\FlowGraph</Filter>
-    </ClInclude>
-    <ClInclude Include="Headers\IMonoScriptSystem.h">
-      <Filter>Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="ManagedGameLogic\ManagedEntity.h">
       <Filter>ManagedGameLogic</Filter>
@@ -182,35 +109,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="MonoAssembly.cpp">
-      <Filter>Wrappers</Filter>
-    </ClCompile>
-    <ClCompile Include="MonoClass.cpp">
-      <Filter>Wrappers</Filter>
-    </ClCompile>
     <ClCompile Include="MonoEntityClass.cpp">
       <Filter>EntitySystem</Filter>
     </ClCompile>
     <ClCompile Include="MonoEntityPropertyHandler.cpp">
       <Filter>EntitySystem</Filter>
     </ClCompile>
-    <ClCompile Include="MonoArray.cpp">
-      <Filter>Wrappers</Filter>
-    </ClCompile>
-    <ClCompile Include="MonoObject.cpp">
-      <Filter>Wrappers</Filter>
-    </ClCompile>
     <ClCompile Include="MonoEntity.cpp">
       <Filter>EntitySystem</Filter>
     </ClCompile>
-    <ClCompile Include="MonoDomain.cpp">
-      <Filter>Wrappers</Filter>
-    </ClCompile>
     <ClCompile Include="Actor.cpp">
       <Filter>ActorSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="CryMonoDll.cpp">
-      <Filter>Startup</Filter>
     </ClCompile>
     <ClCompile Include="NativeEntity.cpp">
       <Filter>EntitySystem\Native</Filter>
@@ -218,23 +127,8 @@
     <ClCompile Include="MonoCVars.cpp">
       <Filter>Mono</Filter>
     </ClCompile>
-    <ClCompile Include="CPluginCryMono.cpp">
-      <Filter>Startup</Filter>
-    </ClCompile>
-    <ClCompile Include="DynMonoArray.cpp">
-      <Filter>Wrappers</Filter>
-    </ClCompile>
-    <ClCompile Include="SystemEventListener_CryMono.cpp">
-      <Filter>Mono</Filter>
-    </ClCompile>
-    <ClCompile Include="MonoMethod.cpp">
-      <Filter>Wrappers</Filter>
-    </ClCompile>
     <ClCompile Include="EntityEventHandling.cpp">
       <Filter>EntitySystem</Filter>
-    </ClCompile>
-    <ClCompile Include="MonoRunTime.cpp">
-      <Filter>Mono</Filter>
     </ClCompile>
     <ClCompile Include="Interops\FlowGraph\FlowGraphNode_Mono.cpp">
       <Filter>Interops\FlowGraph</Filter>
@@ -310,9 +204,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Wrappers">
-      <UniqueIdentifier>{399bdcdf-4fb8-4ed3-83c1-f29f83c7c09b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="EntitySystem">
       <UniqueIdentifier>{f5c2f1b4-f7f2-4f27-be93-8c656a23cdb2}</UniqueIdentifier>
     </Filter>
@@ -325,14 +216,8 @@
     <Filter Include="ActorSystem">
       <UniqueIdentifier>{7519e88b-de7a-4729-919b-85c4612989e9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Startup">
-      <UniqueIdentifier>{4e363826-3e0d-4ab5-a8ca-b9ff90942058}</UniqueIdentifier>
-    </Filter>
     <Filter Include="EntitySystem\Native">
       <UniqueIdentifier>{688b9b2f-020f-49e4-ad34-bd78bb1927e2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Interfaces">
-      <UniqueIdentifier>{2274758e-72ad-46e0-8409-df6cebf00772}</UniqueIdentifier>
     </Filter>
     <Filter Include="Interops">
       <UniqueIdentifier>{53346888-7df8-470b-b631-f549bf104199}</UniqueIdentifier>
