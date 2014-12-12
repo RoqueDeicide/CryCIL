@@ -122,6 +122,17 @@ public:
 			this->elements[this->length++] = items[i];
 		}
 	}
+	//! Adds a range of items to the end of the list.
+	//!
+	//! @param items A collection of items to add.
+	void AddRange(List<ElementType> *items)
+	{
+		this->Expand(this->length + items->length);
+		for (int i = 0; i < items->length; i++)
+		{
+			this->elements[this->length++] = items->At(i);
+		}
+	}
 	//! Inserts an item into specific position within the list.
 	//!
 	//! @param item     Item to insert.
