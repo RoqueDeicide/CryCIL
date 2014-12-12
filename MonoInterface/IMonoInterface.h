@@ -1334,7 +1334,7 @@ struct IDefaultMonoInterop : public IMonoInterop
 };
 
 //! Signature of the only method that is exported by MonoInterface.dll
-typedef IMonoInterface *(*InitializeMonoInterface)(IGameFramework *, IMonoSystemListener **, int);
+typedef IMonoInterface *(*InitializeMonoInterface)(IGameFramework *, List<IMonoSystemListener *> *);
 
 
 

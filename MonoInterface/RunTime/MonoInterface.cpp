@@ -42,7 +42,7 @@ IDefaultBoxinator *MonoInterface::GetDefaultBoxer()
 #pragma endregion
 #pragma region Construction
 //! Initializes Mono run-time environment.
-MonoInterface::MonoInterface(IGameFramework *framework, IMonoSystemListener **listeners, int listenerCount)
+MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener *> *listeners)
 	: running(false)
 	, appDomain(nullptr)
 	, cryambly(nullptr)
@@ -54,10 +54,7 @@ MonoInterface::MonoInterface(IGameFramework *framework, IMonoSystemListener **li
 	this->RegisterDefaultListeners();
 	if (listeners)
 	{
-		for (int i = 0; i < listenerCount; i++)
-		{
-			this->broadcaster->listeners->Add(listeners[i]);
-		}
+		this->broadcaster->listeners->AddRange(listeners);
 	}
 	// Set global variables.
 	MonoEnv = this;

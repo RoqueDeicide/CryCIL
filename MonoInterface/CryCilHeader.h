@@ -21,24 +21,21 @@ IMonoInterface *MonoEnv = nullptr;
 //! @param listenerCount Number of listeners in the array.
 //!
 //! @return A Dll handle that will allow you to release CryCil library.
-HMODULE InitializeCryCIL
-(
-	IGameFramework *framework,
-	IMonoSystemListener **listeners,
-	int listenerCount
-)
+HMODULE InitializeCryCIL(IGameFramework *framework, List<IMonoSystemListener *> *listeners)
 {
 	HMODULE monoInterfaceDll = CryLoadLibrary(MONOINTERFACE_LIBRARY);
 	if (!monoInterfaceDll)
 	{
 		CryFatalError("Could not locate %s.", MONOINTERFACE_LIBRARY);
 	}
+	CryLogAlways("Loaded CryCIL interface library.");
 	InitializeMonoInterface initFunc =
 		(InitializeMonoInterface)CryGetProcAddress(monoInterfaceDll, MONO_INTERFACE_INIT);
 	if (!initFunc)
 	{
 		CryFatalError("Could not locate %s function within %s.", MONO_INTERFACE_INIT, MONOINTERFACE_LIBRARY);
 	}
-	MonoEnv = initFunc(framework, listeners, listenerCount);
+	CryLogAlways("Acquired a pointer to initializer function.");
+	MonoEnv = initFunc(framework, listeners);
 	return monoInterfaceDll;
 }
