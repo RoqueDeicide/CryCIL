@@ -210,6 +210,7 @@
     <ClInclude Include="IMonoInterface.h" />
     <ClInclude Include="Interops\LogPosting.h" />
     <ClInclude Include="List.h" />
+    <ClInclude Include="Logs.h" />
     <ClInclude Include="MonoHeaders.h" />
     <ClInclude Include="RunTime\AllInterops.h" />
     <ClInclude Include="RunTime\DebugEventReporter.h" />

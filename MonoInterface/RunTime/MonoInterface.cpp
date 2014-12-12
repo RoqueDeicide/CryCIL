@@ -39,25 +39,28 @@ IDefaultBoxinator *MonoInterface::GetDefaultBoxer()
 {
 	return &this->boxer;
 }
+
+IGameFramework *MonoInterface::GetGameFramework()
+{
+	return this->framework;
+}
 #pragma endregion
 #pragma region Construction
 //! Initializes Mono run-time environment.
-MonoInterface::MonoInterface(IGameFramework *framework, IMonoSystemListener **listeners, int listenerCount)
+MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener *> *listeners)
 	: running(false)
 	, appDomain(nullptr)
 	, cryambly(nullptr)
 	, assemblies(10)
 	, broadcaster(nullptr)
+	, framework(framework)
 {
 	broadcaster = new EventBroadcaster();
 	// Register all initial listeners.
 	this->RegisterDefaultListeners();
 	if (listeners)
 	{
-		for (int i = 0; i < listenerCount; i++)
-		{
-			this->broadcaster->listeners->Add(listeners[i]);
-		}
+		this->broadcaster->listeners->AddRange(listeners);
 	}
 	// Set global variables.
 	MonoEnv = this;
@@ -69,30 +72,30 @@ MonoInterface::MonoInterface(IGameFramework *framework, IMonoSystemListener **li
 
 	this->broadcaster->OnRunTimeInitializing();
 	
-	CryComment("Setting mono directories.");
+	ReportComment("Setting mono directories.");
 	// Tell Mono, where to look for the libraries and configuration files.
 	const char *assembly_dir = DirectoryStructure::GetMonoLibraryFolder();
 	const char *config_dir = DirectoryStructure::GetMonoConfigurationFolder();
 	mono_set_dirs(assembly_dir, config_dir);
 #ifdef _DEBUG
-	CryComment("Setting up signal chaining.");
+	ReportComment("Setting up signal chaining.");
 	// Tell Mono to crash the game if there is an exception that wasn't handled.
 	mono_set_signal_chaining(true);
-	CryComment("Initializing Mono debugging.");
+	ReportComment("Initializing Mono debugging.");
 	// Load up mdb files.
 	mono_debug_init(MONO_DEBUG_FORMAT_MONO);
 #endif // _DEBUG
-	CryComment("Registering HandeSignalAbort.");
+	ReportComment("Registering HandeSignalAbort.");
 	// Register HandleSignalAbort function as a handler for SIGABRT.
 	signal(SIGABRT, HandleSignalAbort);
-	CryComment("Initializing the domain.");
+	ReportComment("Initializing the domain.");
 	// Initialize the AppDomain.
 	this->appDomain = mono_jit_init_version("CryCIL", "v4.0.30319");
 	if (!this->appDomain)
 	{
 		CryFatalError("Unable to initialize Mono AppDomain.");
 	}
-	CryComment("Setting the config for domain.");
+	ReportComment("Setting the config for domain.");
 	// Manually tell AppDomain where to find the configuration for itself.
 	// Not calling this function results in exception when trying to get CodeDomProvider for C#.
 	mono_domain_set_config
@@ -103,7 +106,7 @@ MonoInterface::MonoInterface(IGameFramework *framework, IMonoSystemListener **li
 	);
 	this->running = true;
 #ifdef _DEBUG
-	CryComment("Loading pdb2mdb.");
+	ReportComment("Loading pdb2mdb.");
 	// Load Pdb2Mdb.dll before everything else.
 	this->pdb2mdb = this->LoadAssembly(DirectoryStructure::GetPdb2MdbFile());
 	// Initialize conversion thunk immediately.
@@ -113,14 +116,14 @@ MonoInterface::MonoInterface(IGameFramework *framework, IMonoSystemListener **li
 		: nullptr;
 #endif // _DEBUG
 
-	CryComment("Loading Cryambly.");
+	ReportComment("Loading Cryambly.");
 	// Load Cryambly.
 	const char *cryamblyFile = DirectoryStructure::GetCryamblyFile();
 	this->cryambly = this->LoadAssembly(cryamblyFile);
 	this->corlib = this->WrapAssembly(mono_image_get_assembly(mono_get_corlib()));
-	CryComment("Initializing main thunks.");
+	ReportComment("Initializing main thunks.");
 	this->InitializeThunks();
-	CryComment("Main thunks initialized.");
+	ReportComment("Main thunks initialized.");
 	this->broadcaster->OnRunTimeInitialized();
 	// Initialize an instance of type MonoInterface.
 	mono::exception ex;
@@ -130,27 +133,13 @@ MonoInterface::MonoInterface(IGameFramework *framework, IMonoSystemListener **li
 		this->HandleException(ex);
 		CryFatalError("CryCil.RunTime.MonoInterface object was not initialized. Cannot continue.");
 	}
-	Framework->RegisterListener(this, "CryCIL", FRAMEWORKLISTENERPRIORITY_GAME);
+	this->framework->RegisterListener(this, "CryCIL", FRAMEWORKLISTENERPRIORITY_GAME);
 	gEnv->pSystem->GetISystemEventDispatcher()->RegisterListener(this);
 	this->broadcaster->OnPostInitialization();
 	// Uncomment next 2 lines, if there is a need to crash the game when debugging initialization.
 
 // 	int *crash = nullptr;
 // 	*crash = 101;
-}
-MonoInterface::~MonoInterface()
-{
-	if (running)
-	{
-		Framework->UnregisterListener(this);
-		gEnv->pSystem->GetISystemEventDispatcher()->RemoveListener(this);
-		CryLogAlways("Shutting down jit.");
-		mono_jit_cleanup(this->appDomain);
-		CryLogAlways("No more running.");
-		this->running = false;
-		CryLogAlways("Deleting broadcaster.");
-		delete this->broadcaster;
-	}
 }
 #pragma endregion
 #pragma region External Triggers
@@ -177,10 +166,14 @@ void MonoInterface::Shutdown()
 	CryLogAlways("About to send shutdown event to Cryambly.");
 	mono::exception ex;
 	MonoInterfaceThunks::Shutdown(this->managedInterface->Get(), &ex);
-	CryLogAlways("Invoking MonoInterface destructor.");
-	// Invoke destructor.
-	//this->~MonoInterface();
-	delete this;
+	this->framework->UnregisterListener(this);
+	gEnv->pSystem->GetISystemEventDispatcher()->RemoveListener(this);
+	CryLogAlways("Shutting down jit.");
+	mono_jit_cleanup(this->appDomain);
+	CryLogAlways("No more running.");
+	this->running = false;
+	CryLogAlways("Deleting broadcaster.");
+	delete this->broadcaster;
 }
 #pragma endregion
 #pragma region String Conversions
@@ -405,19 +398,16 @@ void MonoInterface::OnActionEvent(const SActionEvent& event) {}
 //! @param lparam Second parameter that can supply extra information about the event.
 void MonoInterface::OnSystemEvent(ESystemEvent event, UINT_PTR wparam, UINT_PTR lparam)
 {
-	switch (event)
-	{
-		case ESYSTEM_EVENT_CHANGE_FOCUS:
-		{
-			CryLogAlways("The window has lost/gained focus.");
-		}
-		break;
-	case ESYSTEM_EVENT_SHUTDOWN:
-		//this->Shutdown();
-		break;
-	default:
-		break;
-	}
+// 	switch (event)
+// 	{
+// 		case ESYSTEM_EVENT_CHANGE_FOCUS:
+// 		{
+// 			CryLogAlways("The window has lost/gained focus.");
+// 		}
+// 		break;
+// 	default:
+// 		break;
+// 	}
 }
 #pragma endregion
 #pragma region Default Listeners

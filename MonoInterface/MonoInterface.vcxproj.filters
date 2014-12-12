@@ -60,6 +60,7 @@
     <ClInclude Include="SortedList.h">
       <Filter>Extras</Filter>
     </ClInclude>
+    <ClInclude Include="Logs.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />

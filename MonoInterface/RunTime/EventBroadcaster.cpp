@@ -9,8 +9,10 @@ EventBroadcaster::EventBroadcaster()
 
 EventBroadcaster::~EventBroadcaster()
 {
-	if (this->listeners) { delete this->listeners; this->listeners = nullptr; }
+	ReportComment("Deleting stage map.");
 	if (this->stageMap) { delete this->stageMap; this->stageMap = nullptr; }
+	ReportComment("Deleting listeners.");
+	if (this->listeners) { delete this->listeners; this->listeners = nullptr; }
 }
 
 
@@ -102,11 +104,11 @@ void EventBroadcaster::OnCompilationComplete(bool success)
 //! Gathers initialization stages data for sending it to managed code.
 int *EventBroadcaster::GetSubscribedStagesInfo(int &stageCount)
 {
-	CryComment("Going through listeners.");
+	ReportComment("Going through listeners.");
 	// Gather information about all stages.
 	for (int i = 0; i < this->listeners->Length; i++)
 	{
-		CryComment("Getting stage indices for the listener #%d.", i + 1);
+		ReportComment("Getting stage indices for the listener #%d.", i + 1);
 		// Get stages.
 		List<int> *stages = this->listeners->At(i)->GetSubscribedStages();
 		if (stages)
@@ -125,7 +127,7 @@ int *EventBroadcaster::GetSubscribedStagesInfo(int &stageCount)
 		}
 		else
 		{
-			CryComment("Listener #%d is not subscribed to any stages.", i + 1);
+			ReportComment("Listener #%d is not subscribed to any stages.", i + 1);
 		}
 	}
 	// Get the stage indices.

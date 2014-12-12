@@ -31,11 +31,11 @@ public:
 	//! Sets the value of the object's property.
 	virtual void SetProperty(const char *name, void *value);
 	//! Gets the wrapper for the class of this object.
-	virtual struct IMonoClass * GetClass();
+	virtual struct IMonoClass *GetClass();
 
-	virtual void * UnboxObject();
+	virtual void *UnboxObject();
 
-	virtual void * GetWrappedPointer();
+	virtual void *GetWrappedPointer();
 private:
 	MonoClass *getMonoClass()
 	{

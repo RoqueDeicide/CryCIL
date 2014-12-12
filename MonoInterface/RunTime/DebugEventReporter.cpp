@@ -75,12 +75,12 @@ void DebugEventReporter::OnPostInitialization()
 
 void DebugEventReporter::Update()
 {
-	CryComment("CryCIL logical frame started.");
+	FlickerComment("CryCIL logical frame started.");
 }
 
 void DebugEventReporter::PostUpdate()
 {
-	CryComment("CryCIL logical frame ended.");
+	FlickerComment("CryCIL logical frame ended.");
 }
 
 void DebugEventReporter::Shutdown()

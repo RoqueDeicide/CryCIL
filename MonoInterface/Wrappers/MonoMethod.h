@@ -17,11 +17,11 @@ public:
 	//! Invokes this method.
 	virtual mono::object Invoke(void *object, void **params = nullptr, bool polymorph = false);
 
-	virtual void * GetThunk();
+	virtual void *GetThunk();
 
-	virtual const char * GetName();
+	virtual const char *GetName();
 
 	virtual int GetParameterCount();
 
-	virtual void * GetWrappedPointer();
+	virtual void *GetWrappedPointer();
 };
