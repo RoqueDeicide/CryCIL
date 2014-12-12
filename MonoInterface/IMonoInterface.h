@@ -1350,8 +1350,8 @@ typedef IMonoInterface *(*InitializeMonoInterface)(IGameFramework *, List<IMonoS
 //! Example:
 //!
 //! @code{.cpp}
-//! // Load library. Save handle in a field of type HMODULE.
-//! this->monoInterfaceDll = CryLoadLibrary("MonoInterface.dll");
+//! // Load library. Save handle in a field or variable of type HMODULE.
+//! this->monoInterfaceDll = CryLoadLibrary(MONOINTERFACE_LIBRARY);
 //! // Check if it was loaded properly.
 //! if (!this->monoInterfaceDll)
 //! {
@@ -1359,9 +1359,9 @@ typedef IMonoInterface *(*InitializeMonoInterface)(IGameFramework *, List<IMonoS
 //! }
 //! // Get InitializeModule function.
 //! InitializeMonoInterface cryCilInitializer =
-//!     CryGetProcAddress(this->monoInterfaceDll, "InitializeModule");
+//!     CryGetProcAddress(this->monoInterfaceDll, MONO_INTERFACE_INIT);
 //! // Invoke it, save the result in MonoEnv that was declared as a global somewhere else.
-//! MonoEnv = cryCilInitializer(gameFramework, (pointer to listeners), (number of listeners));
+//! MonoEnv = cryCilInitializer(gameFramework, (pointer to listeners));
 //! // Now MonoEnv can be used to communicate with CryCIL API!
 //! @endcode
 extern IMonoInterface *MonoEnv;
