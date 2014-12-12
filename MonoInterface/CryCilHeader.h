@@ -13,14 +13,15 @@ IMonoInterface *MonoEnv = nullptr;
 //! and its subsystem is initialized.
 //!
 //! Preferable place of invocation is CGameStartup::Init function.
-//! It is best to release MonoEnv and returned handle from ~CGameStartup.
+//! It is best to invoke MonoEnv->Shutdown() from ~CGameStartup.
 //!
-//! @param framework     Pointer to implementation of IGameFramework.
-//! @param listeners     Pointer to the array of persistent listeners to use.
-//!                      Can be null, if you don't want to register any.
-//! @param listenerCount Number of listeners in the array.
+//! Attempting to free library represented by the returned handle is likely to cause BEX.
 //!
-//! @return A Dll handle that will allow you to release CryCil library.
+//! @param framework Pointer to implementation of IGameFramework.
+//! @param listeners Pointer to the array of persistent listeners to use.
+//!                  Can be null, if you don't want to register any.
+//!
+//! @return A Dll handle that represents CryCil library.
 HMODULE InitializeCryCIL(IGameFramework *framework, List<IMonoSystemListener *> *listeners)
 {
 	HMODULE monoInterfaceDll = CryLoadLibrary(MONOINTERFACE_LIBRARY);
