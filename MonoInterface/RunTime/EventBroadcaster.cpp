@@ -9,8 +9,10 @@ EventBroadcaster::EventBroadcaster()
 
 EventBroadcaster::~EventBroadcaster()
 {
-	if (this->listeners) { delete this->listeners; this->listeners = nullptr; }
+	ReportComment("Deleting stage map.");
 	if (this->stageMap) { delete this->stageMap; this->stageMap = nullptr; }
+	ReportComment("Deleting listeners.");
+	if (this->listeners) { delete this->listeners; this->listeners = nullptr; }
 }
 
 
