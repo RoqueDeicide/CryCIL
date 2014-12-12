@@ -63,7 +63,6 @@ public:
 	//! Initializes Mono run-time environment.
 	//!
 	//! @param framework Pointer to IGameFramework object that cannot be obtained in any other way.
-	~MonoInterface();
 	MonoInterface(IGameFramework *framework, List<IMonoSystemListener *> *listeners);
 #pragma endregion
 #pragma region External Triggers

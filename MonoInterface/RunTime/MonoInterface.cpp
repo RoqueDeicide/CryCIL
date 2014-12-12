@@ -141,20 +141,6 @@ MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener
 // 	int *crash = nullptr;
 // 	*crash = 101;
 }
-MonoInterface::~MonoInterface()
-{
-	if (running)
-	{
-		Framework->UnregisterListener(this);
-		gEnv->pSystem->GetISystemEventDispatcher()->RemoveListener(this);
-		CryLogAlways("Shutting down jit.");
-		mono_jit_cleanup(this->appDomain);
-		CryLogAlways("No more running.");
-		this->running = false;
-		CryLogAlways("Deleting broadcaster.");
-		delete this->broadcaster;
-	}
-}
 #pragma endregion
 #pragma region External Triggers
 //! Triggers registration of FlowGraph nodes.
@@ -180,10 +166,14 @@ void MonoInterface::Shutdown()
 	CryLogAlways("About to send shutdown event to Cryambly.");
 	mono::exception ex;
 	MonoInterfaceThunks::Shutdown(this->managedInterface->Get(), &ex);
-	CryLogAlways("Invoking MonoInterface destructor.");
-	// Invoke destructor.
-	//this->~MonoInterface();
-	delete this;
+	this->framework->UnregisterListener(this);
+	gEnv->pSystem->GetISystemEventDispatcher()->RemoveListener(this);
+	CryLogAlways("Shutting down jit.");
+	mono_jit_cleanup(this->appDomain);
+	CryLogAlways("No more running.");
+	this->running = false;
+	CryLogAlways("Deleting broadcaster.");
+	delete this->broadcaster;
 }
 #pragma endregion
 #pragma region String Conversions
