@@ -398,19 +398,16 @@ void MonoInterface::OnActionEvent(const SActionEvent& event) {}
 //! @param lparam Second parameter that can supply extra information about the event.
 void MonoInterface::OnSystemEvent(ESystemEvent event, UINT_PTR wparam, UINT_PTR lparam)
 {
-	switch (event)
-	{
-		case ESYSTEM_EVENT_CHANGE_FOCUS:
-		{
-			CryLogAlways("The window has lost/gained focus.");
-		}
-		break;
-	case ESYSTEM_EVENT_SHUTDOWN:
-		//this->Shutdown();
-		break;
-	default:
-		break;
-	}
+// 	switch (event)
+// 	{
+// 		case ESYSTEM_EVENT_CHANGE_FOCUS:
+// 		{
+// 			CryLogAlways("The window has lost/gained focus.");
+// 		}
+// 		break;
+// 	default:
+// 		break;
+// 	}
 }
 #pragma endregion
 #pragma region Default Listeners
