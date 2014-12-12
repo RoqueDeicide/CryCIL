@@ -389,7 +389,7 @@ struct IMonoHandle : public IMonoFunctionalityWrapper
 		return *(T *)this->UnboxObject();
 	}
 	//! Gets managed type that represents wrapped object.
-	VIRTUAL_API virtual struct IMonoClass *GetClass() = 0;
+	VIRTUAL_API virtual IMonoClass *GetClass() = 0;
 
 protected:
 	VIRTUAL_API virtual void *UnboxObject() = 0;
@@ -1255,6 +1255,8 @@ struct IMonoInterface
 	__declspec(property(get=GetInitializedIndication)) bool IsRunning;
 	//! Returns the object that boxes some simple value types.
 	__declspec(property(get=GetDefaultBoxer)) IDefaultBoxinator *DefaultBoxer;
+	//! Gets the pointer to IGameFramework implementation that is available to CryCIL.
+	__declspec(property(get=GetGameFramework)) IGameFramework *CryAction;
 
 	VIRTUAL_API virtual void *GetAppDomain() = 0;
 	VIRTUAL_API virtual IMonoAssembly *GetCryambly() = 0;
@@ -1262,6 +1264,7 @@ struct IMonoInterface
 	VIRTUAL_API virtual IMonoAssembly *GetCoreLibrary() = 0;
 	VIRTUAL_API virtual bool GetInitializedIndication() = 0;
 	VIRTUAL_API virtual IDefaultBoxinator *GetDefaultBoxer() = 0;
+	VIRTUAL_API virtual IGameFramework *GetGameFramework() = 0;
 };
 //! Interface of objects that specialize on setting up interops between C++ and Mono.
 //!
@@ -1362,8 +1365,6 @@ typedef IMonoInterface *(*InitializeMonoInterface)(IGameFramework *, List<IMonoS
 //! // Now MonoEnv can be used to communicate with CryCIL API!
 //! @endcode
 extern IMonoInterface *MonoEnv;
-//! Provides access to IGameFramework implementation.
-extern IGameFramework *Framework;
 
 #pragma region Conversions Interface
 

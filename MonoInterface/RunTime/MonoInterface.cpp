@@ -39,6 +39,11 @@ IDefaultBoxinator *MonoInterface::GetDefaultBoxer()
 {
 	return &this->boxer;
 }
+
+IGameFramework *MonoInterface::GetGameFramework()
+{
+	return this->framework;
+}
 #pragma endregion
 #pragma region Construction
 //! Initializes Mono run-time environment.
@@ -48,6 +53,7 @@ MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener
 	, cryambly(nullptr)
 	, assemblies(10)
 	, broadcaster(nullptr)
+	, framework(framework)
 {
 	broadcaster = new EventBroadcaster();
 	// Register all initial listeners.
@@ -127,7 +133,7 @@ MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener
 		this->HandleException(ex);
 		CryFatalError("CryCil.RunTime.MonoInterface object was not initialized. Cannot continue.");
 	}
-	Framework->RegisterListener(this, "CryCIL", FRAMEWORKLISTENERPRIORITY_GAME);
+	this->framework->RegisterListener(this, "CryCIL", FRAMEWORKLISTENERPRIORITY_GAME);
 	gEnv->pSystem->GetISystemEventDispatcher()->RegisterListener(this);
 	this->broadcaster->OnPostInitialization();
 	// Uncomment next 2 lines, if there is a need to crash the game when debugging initialization.
