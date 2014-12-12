@@ -15,9 +15,6 @@
     <ClInclude Include="MonoEntity.h">
       <Filter>EntitySystem</Filter>
     </ClInclude>
-    <ClInclude Include="PathUtils.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Actor.h">
       <Filter>ActorSystem</Filter>
     </ClInclude>
@@ -206,9 +203,6 @@
   <ItemGroup>
     <Filter Include="EntitySystem">
       <UniqueIdentifier>{f5c2f1b4-f7f2-4f27-be93-8c656a23cdb2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Utils">
-      <UniqueIdentifier>{aa1f26db-41b9-4103-b477-74ef21bd29e0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Mono">
       <UniqueIdentifier>{2de1619b-2f0c-4705-a8e5-59c8778b080d}</UniqueIdentifier>

@@ -125,7 +125,6 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
     <ClInclude Include="MonoCVars.h" />
     <ClInclude Include="MonoEntity.h" />
     <ClInclude Include="NativeEntity.h" />
-    <ClInclude Include="PathUtils.h" />
     <ClInclude Include="MonoEntityClass.h" />
     <ClInclude Include="MonoEntityEventHandler.h" />
     <ClInclude Include="MonoEntityPropertyHandler.h" />
