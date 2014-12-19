@@ -58,7 +58,10 @@ struct EarlyInitializer : IMonoSystemListener
 //! @param listeners        Pointer to the array of persistent listeners to use.
 //!                         Can be null, if you don't want to register any.
 //! @param earlyMonoEnvInit Indicates whether MonoEnv should be set to the appropriate value
-//!                         before initialization is complete.
+//!                         before initialization is complete. Setting this to false
+//!                         necessitates setting up some extra way of accessing uninitialized
+//!                         IMonoInterface implementation for interops that register internal
+//!                         calls that require MonoEnv and can be invoked before it's done.
 //!
 //! @return A Dll handle that represents CryCil library.
 HMODULE InitializeCryCIL
