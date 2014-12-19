@@ -2,9 +2,8 @@
 
 #include "IMonoInterface.h"
 
-struct LogPostingInterop : public IDefaultMonoInterop
+struct LogPostingInterop : public IDefaultSingleShotInterop
 {
-
 	virtual const char *GetName();
 
 	virtual void OnRunTimeInitialized();

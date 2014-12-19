@@ -1382,6 +1382,18 @@ struct IDefaultMonoInterop : public IMonoInterop
 	virtual void SetInterface(IMonoInterface *handle) {}
 	virtual const char *GetNameSpace() { return "CryCil.Interops"; }
 };
+//! For internal use. Behaves like a single shot interop.
+struct IDefaultSingleShotInterop : public ISingleShotInterop
+{
+	virtual void SetInterface(IMonoInterface *handle) {}
+	virtual const char *GetNameSpace() { return "CryCil.Interops"; }
+	//! Unregisters itself and commits suicide.
+	virtual void OnCryamblyInitilizing()
+	{
+		MonoEnv->RemoveListener(this);
+		delete this;
+	}
+};
 
 //! Signature of the only method that is exported by MonoInterface.dll
 typedef IMonoInterface *(*InitializeMonoInterface)(IGameFramework *, List<IMonoSystemListener *> *);
