@@ -4,7 +4,6 @@
 //! Broadcasts CryCIL events to listeners from managed code.
 struct InitializationInterop : public IDefaultMonoInterop
 {
-	static class MonoInterface *monoEnv;	//!< For static functions.
 	virtual const char *GetName();
 
 	virtual void OnRunTimeInitialized();

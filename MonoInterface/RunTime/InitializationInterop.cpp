@@ -2,8 +2,6 @@
 #include "InitializationInterop.h"
 #include "RunTime/MonoInterface.h"
 
-MonoInterface *InitializationInterop::monoEnv = nullptr;
-
 const char *InitializationInterop::GetName()
 {
 	return "Initialization";
@@ -19,16 +17,17 @@ void InitializationInterop::OnRunTimeInitialized()
 
 void InitializationInterop::OnCompilationStartingBind()
 {
-	monoEnv->broadcaster->OnCompilationStarting();
+	static_cast<MonoInterface *>(MonoEnv)->broadcaster->OnCompilationStarting();
 }
 void InitializationInterop::OnCompilationCompleteBind(bool success)
 {
-	monoEnv->broadcaster->OnCompilationComplete(success);
+	static_cast<MonoInterface *>(MonoEnv)->broadcaster->OnCompilationComplete(success);
 }
 mono::Array InitializationInterop::GetSubscribedStagesBind()
 {
 	int stagesCount;
-	int *indices = monoEnv->broadcaster->GetSubscribedStagesInfo(stagesCount);
+	int *indices =
+		static_cast<MonoInterface *>(MonoEnv)->broadcaster->GetSubscribedStagesInfo(stagesCount);
 	IMonoClass *SystemInt32 = MonoClassCache::Wrap(mono_get_int32_class());
 	IMonoArray *result = MonoEnv->CreateArray(SystemInt32, stagesCount);
 	for (int i = 0; i < stagesCount; i++)
@@ -39,11 +38,5 @@ mono::Array InitializationInterop::GetSubscribedStagesBind()
 }
 void InitializationInterop::OnInitializationStageBind(int stageIndex)
 {
-	monoEnv->broadcaster->OnInitializationStage(stageIndex);
-}
-
-void InitializationInterop::SetInterface(IMonoInterface *handle)
-{
-	this->monoInterface = handle;
-	monoEnv = (MonoInterface *)this->monoInterface;
+	static_cast<MonoInterface *>(MonoEnv)->broadcaster->OnInitializationStage(stageIndex);
 }
