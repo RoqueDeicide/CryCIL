@@ -1330,11 +1330,9 @@ struct IMonoInterop : public IMonoSystemListener
 	virtual void OnPreInitialization()
 	{}
 	//! Unnecessary for most interops.
-	virtual void OnRunTimeInitializing()
-	{}
+	virtual void OnRunTimeInitializing() {}
 	//! Unnecessary for most interops.
-	virtual void OnCryamblyInitilizing()
-	{}
+	virtual void OnCryamblyInitilizing() {}
 	//! Unnecessary for most interops.
 	virtual void OnCompilationStarting()
 	{}
@@ -1364,6 +1362,16 @@ struct IMonoInterop : public IMonoSystemListener
 	//! Unnecessary for most interops.
 	virtual void Shutdown()
 	{}
+};
+//! Represents an interop that unregisters and deletes itself after internal calls are added.
+struct ISingleShotInterop : IMonoInterop
+{
+	//! Unregisters itself and commits suicide.
+	virtual void OnCryamblyInitilizing()
+	{
+		this->monoInterface->RemoveListener(this);
+		delete this;
+	}
 };
 
 #define REGISTER_METHOD(method) this->RegisterInteropMethod(#method, method)
