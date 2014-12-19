@@ -1379,6 +1379,7 @@ struct ISingleShotInterop : IMonoInterop
 //! Interface of interops that use classes within CryCil.Interops name space.
 struct IDefaultMonoInterop : public IMonoInterop
 {
+	virtual void SetInterface(IMonoInterface *handle) {}
 	virtual const char *GetNameSpace() { return "CryCil.Interops"; }
 };
 
