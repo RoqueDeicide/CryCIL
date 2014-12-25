@@ -81,6 +81,7 @@
     <Compile Include="Interops\LogPosting.cs" />
     <Compile Include="Mathematics\Geometry\BoundingBox.cs" />
     <Compile Include="Mathematics\Geometry\BoundingSphere.cs" />
+    <Compile Include="Mathematics\Geometry\Csg\Base\ConstructiveSolidGeometry.cs" />
     <Compile Include="Mathematics\Geometry\EulerAngles.cs" />
     <Compile Include="Mathematics\Geometry\Collision.cs" />
     <Compile Include="Mathematics\Geometry\NamespaceDoc.cs" />
