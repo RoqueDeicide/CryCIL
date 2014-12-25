@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using CryCil.Geometry;
+using CryCil.Mathematics;
 
-namespace CryCil.Mathematics
+namespace CryCil
 {
 	/// <summary>
 	/// Represents 3x4 matrix that can be used to store information about rotation and
@@ -302,7 +304,7 @@ namespace CryCil.Mathematics
 		/// Creates new instance of type <see cref="Matrix34"/> .
 		/// </summary>
 		/// <param name="m33">
-		/// <see cref="CryCil.Mathematics.Matrix33"/> to use to fill first 3 columns.
+		/// <see cref="CryCil.Matrix33"/> to use to fill first 3 columns.
 		/// </param>
 		public Matrix34(Matrix33 m33)
 			: this()

@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace CryCil.Mathematics.MemoryMapping
+namespace CryCil.MemoryMapping
 {
 	/// <summary>
 	/// Contains types that are used for memory reinterpretation.

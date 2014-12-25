@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace CryCil.Mathematics.MemoryMapping
+namespace CryCil.MemoryMapping
 {
 	/// <summary>
 	/// 1-byte structure that can be interpreted as number of types.

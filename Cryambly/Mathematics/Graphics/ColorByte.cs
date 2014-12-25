@@ -2,9 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using CryCil.Mathematics.MemoryMapping;
+using CryCil.MemoryMapping;
 
-namespace CryCil.Mathematics.Graphics
+namespace CryCil.Graphics
 {
 	/// <summary>
 	/// Encapsulates 32-bit definition of color.

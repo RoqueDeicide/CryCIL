@@ -1,6 +1,7 @@
 ﻿using System;
+using CryCil.Geometry;
 
-namespace CryCil.Mathematics.Graphics
+namespace CryCil.Graphics
 {
 	/// <summary>
 	/// Defines a color in terms of its red, green, blue and alpha values.

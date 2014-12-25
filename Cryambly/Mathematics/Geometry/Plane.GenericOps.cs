@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Globalization;
+using CryCil.Mathematics;
 
-namespace CryCil.Mathematics.Geometry
+namespace CryCil.Geometry
 {
 	public partial struct Plane
 	{

@@ -1,4 +1,6 @@
-﻿namespace CryCil.Mathematics.Graphics
+﻿using CryCil.Geometry;
+
+namespace CryCil.Graphics
 {
 	/// <summary>
 	/// View parameters, commonly used by actors to update the active view.

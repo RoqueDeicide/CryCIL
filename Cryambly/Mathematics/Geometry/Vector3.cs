@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.InteropServices;
-using CryCil.Mathematics.Graphics;
+using CryCil.Graphics;
 
-namespace CryCil.Mathematics
+namespace CryCil.Geometry
 {
 	/// <summary>
 	/// Represents a three dimensional mathematical vector.

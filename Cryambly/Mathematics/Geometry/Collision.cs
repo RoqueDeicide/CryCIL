@@ -21,8 +21,9 @@
 */
 
 using System;
+using CryCil.Mathematics;
 
-namespace CryCil.Mathematics.Geometry
+namespace CryCil.Geometry
 {
 	/*
 	 * This class is organized so that the least complex objects come first so that the least

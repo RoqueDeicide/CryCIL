@@ -1,6 +1,7 @@
 ﻿using System;
+using CryCil.Mathematics;
 
-namespace CryCil.Mathematics
+namespace CryCil.Geometry
 {
 	/// <summary>
 	/// Represents Euler angles.

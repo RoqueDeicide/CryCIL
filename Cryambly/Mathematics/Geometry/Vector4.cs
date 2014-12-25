@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.InteropServices;
 
-namespace CryCil.Mathematics
+namespace CryCil.Geometry
 {
 	/// <summary>
 	/// Represents a four dimensional mathematical vector.

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
 
-namespace CryCil.Mathematics.MemoryMapping
+namespace CryCil.MemoryMapping
 {
 	/// <summary>
 	/// Defines common properties of buffer structures.

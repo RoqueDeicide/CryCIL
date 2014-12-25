@@ -1,6 +1,8 @@
 ﻿using System;
+using CryCil.Geometry;
+using CryCil.Mathematics;
 
-namespace CryCil.Mathematics
+namespace CryCil
 {
 	/// <summary>
 	/// Defines some useful and not so much mathematical functions.

@@ -1,4 +1,4 @@
-﻿namespace CryCil.Mathematics.MemoryMapping
+﻿namespace CryCil.MemoryMapping
 {
 	/// <summary>
 	/// Defines methods that convert fixed size buffers to arrays.

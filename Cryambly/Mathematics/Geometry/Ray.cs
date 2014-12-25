@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Globalization;
 using System.Runtime.InteropServices;
+using CryCil.Mathematics;
 
-namespace CryCil.Mathematics.Geometry
+namespace CryCil.Geometry
 {
 	/// <summary>
 	/// Represents a three dimensional line based on a point in space and a direction.

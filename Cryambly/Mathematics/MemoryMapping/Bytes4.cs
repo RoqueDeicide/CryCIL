@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace CryCil.Mathematics.MemoryMapping
+namespace CryCil.MemoryMapping
 {
 	/// <summary>
 	/// Encapsulates 4 bytes worth of data.

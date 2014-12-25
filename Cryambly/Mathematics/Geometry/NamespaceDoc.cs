@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace CryCil.Mathematics.Geometry
+namespace CryCil.Geometry
 {
 	/// <summary>
 	/// Contains types for specific geometric calculations.

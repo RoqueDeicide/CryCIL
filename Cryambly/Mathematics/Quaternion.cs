@@ -1,6 +1,8 @@
 ﻿using System;
+using CryCil.Geometry;
+using CryCil.Mathematics;
 
-namespace CryCil.Mathematics
+namespace CryCil
 {
 	/// <summary>
 	/// Represents a quaternion - object that describes rotation by specific angle around

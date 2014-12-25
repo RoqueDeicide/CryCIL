@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CryCil.Mathematics.Geometry
+namespace CryCil.Geometry
 {
 	/// <summary>
 	/// Describes the result of an intersection with a plane in three dimensions.

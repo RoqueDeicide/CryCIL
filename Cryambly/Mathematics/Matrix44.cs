@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using CryCil.Geometry;
+using CryCil.Mathematics;
 
-namespace CryCil.Mathematics
+namespace CryCil
 {
 	/// <summary>
 	/// Represents a 4x4 matrix.

@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using CryCil.Mathematics;
 
-namespace CryCil.Mathematics.Geometry
+namespace CryCil.Geometry
 {
 	/// <summary>
 	/// Represents a plane in three dimensional space.

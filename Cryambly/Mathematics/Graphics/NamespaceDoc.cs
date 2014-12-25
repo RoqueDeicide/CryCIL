@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace CryCil.Mathematics.Graphics
+namespace CryCil.Graphics
 {
 	/// <summary>
 	/// Contains types for graphics-related calculations.
