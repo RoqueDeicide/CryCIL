@@ -9,7 +9,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using CryCil.Annotations;
-using CryEngine.RunTime.Compilation;
 
 namespace CryCil.RunTime.Compilation
 {

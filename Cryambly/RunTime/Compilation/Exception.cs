@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace CryEngine.RunTime.Compilation
+namespace CryCil.RunTime.Compilation
 {
 	/// <summary>
 	/// Represents an exception that is thrown compilation of the code fails in some way.
