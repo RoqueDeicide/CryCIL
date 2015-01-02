@@ -7,7 +7,7 @@ CryCIL is a middleware module that allows to use .Net-based languages to create 
 ## Origins
 Historically engines from CryEngine family allowed to create games using C++ for low-to-mid level logic with Lua used for high level logic. In the 25th of June 2011, Sam Neirinck aka Ins has decided to change this and initiated project "cemono" which goal was to allow high level logic to be done with .Net langeuages (e.g. C#) utilizing the power of Mono.
 ## CryMono
-The project didn't last for very long with Ins abandoning it after just &gt;100 commits. The work was then taken over by Filip Lundgren aka i59, who branched the project into CryMono. That one proved to have way more life in it, with i59 spending 2 years developing.
+The project was going quick for a while until Ins started slowing down after just about 100 commits. The work was then taken over by Filip Lundgren aka i59, who branched the project into CryMono. That one proved to have way more life in it, with i59 spending 2 years developing.
 ## Hiatus
 CryMono updates, however, greatly slowed down during CryEngine 3.5 era with barely any features introduced, and compatibility issues fixed only after quite some time.
 
