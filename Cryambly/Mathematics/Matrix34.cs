@@ -810,49 +810,6 @@ namespace CryCil
 		#endregion
 		#region Translations
 		/// <summary>
-		/// Sets the value of the matrix to one that represents a translation without any
-		/// other transformations.
-		/// </summary>
-		/// <param name="v">
-		/// <see cref="Vector3"/> object that represents translation.
-		/// </param>
-		public void SetPureTranslation(Vector3 v)
-		{
-			this.M00 = 1.0f; this.M01 = 0.0f; this.M02 = 0.0f; this.M03 = v.X;
-			this.M10 = 0.0f; this.M11 = 1.0f; this.M12 = 0.0f; this.M13 = v.Y;
-			this.M20 = 0.0f; this.M21 = 0.0f; this.M22 = 1.0f; this.M23 = v.Z;
-		}
-		/// <summary>
-		/// Creates a matrix that represents a translation without any other
-		/// transformations.
-		/// </summary>
-		/// <param name="v">
-		/// <see cref="Vector3"/> object that represents translation.
-		/// </param>
-		/// <returns>
-		/// Matrix that represents a translation without any other transformations.
-		/// </returns>
-		public static Matrix34 CreatePureTranslation(Vector3 v)
-		{
-			var matrix = new Matrix34();
-			matrix.SetPureTranslation(v);
-
-			return matrix;
-		}
-		/// <summary>
-		/// Sets translation that is represented by this matrix to one that is represented
-		/// by given vector.
-		/// </summary>
-		/// <param name="t">
-		/// <see cref="Vector3"/> object that represents translation.
-		/// </param>
-		public void SetTranslation(Vector3 t)
-		{
-			this.M03 = t.X;
-			this.M13 = t.Y;
-			this.M23 = t.Z;
-		}
-		/// <summary>
 		/// Multiplies last column of this matrix that represents translation by a given
 		/// number.
 		/// </summary>
@@ -862,18 +819,6 @@ namespace CryCil
 			this.M03 *= s;
 			this.M13 *= s;
 			this.M23 *= s;
-		}
-		/// <summary>
-		/// Adds values supplied by given vector to the last column of this matrix.
-		/// </summary>
-		/// <param name="t">
-		/// <see cref="Vector3"/> object that represents translation.
-		/// </param>
-		public void AddTranslation(Vector3 t)
-		{
-			this.M03 += t.X;
-			this.M13 += t.Y;
-			this.M23 += t.Z;
 		}
 		#endregion
 		#region Transformations
