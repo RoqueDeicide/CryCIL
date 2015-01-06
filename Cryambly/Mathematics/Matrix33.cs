@@ -293,28 +293,6 @@ namespace CryCil
 			return matrix;
 		}
 		/// <summary>
-		/// Sets this matrix to represent a scaling operation.
-		/// </summary>
-		/// <param name="s">Scale to set.</param>
-		public void SetScale(Vector3 s)
-		{
-			this.M00 = s.X; this.M01 = 0; this.M02 = 0;
-			this.M10 = 0; this.M11 = s.Y; this.M12 = 0;
-			this.M20 = 0; this.M21 = 0; this.M22 = s.Z;
-		}
-		/// <summary>
-		/// Creates new matrix that is set to represent scaling operation.
-		/// </summary>
-		/// <param name="s">Scale to set.</param>
-		/// <returns>New matrix.</returns>
-		public static Matrix33 CreateScale(Vector3 s)
-		{
-			var matrix = new Matrix33();
-			matrix.SetScale(s);
-
-			return matrix;
-		}
-		/// <summary>
 		/// </summary>
 		/// <returns></returns>
 		public override int GetHashCode()

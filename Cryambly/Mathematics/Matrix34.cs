@@ -610,34 +610,6 @@ namespace CryCil
 			this.M10 *= s.X; this.M11 *= s.Y; this.M12 *= s.Z; this.M13 *= s.W;
 			this.M20 *= s.X; this.M21 *= s.Y; this.M22 *= s.Z; this.M23 *= s.W;
 		}
-		/// <summary>
-		/// Sets the value of the matrix to one that represents scaling.
-		/// </summary>
-		/// <param name="s"><see cref="Vector3"/> object that represents scale.</param>
-		/// <param name="t">
-		/// Optional <see cref="Vector3"/> object that represents translation.
-		/// </param>
-		public void SetScale(Vector3 s, Vector3 t = default(Vector3))
-		{
-			this = new Matrix34(Matrix33.CreateScale(s));
-
-			this.SetTranslation(t);
-		}
-		/// <summary>
-		/// Creates a matrix that represents scaling.
-		/// </summary>
-		/// <param name="s"><see cref="Vector3"/> object that represents scale.</param>
-		/// <param name="t">
-		/// Optional <see cref="Vector3"/> object that represents translation.
-		/// </param>
-		/// <returns>Matrix that represents scaling.</returns>
-		public static Matrix34 CreateScale(Vector3 s, Vector3 t = default(Vector3))
-		{
-			var matrix = new Matrix34();
-			matrix.SetScale(s, t);
-
-			return matrix;
-		}
 		#endregion
 		#region Rotations
 		/// <summary>
