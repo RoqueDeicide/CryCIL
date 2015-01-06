@@ -1016,15 +1016,6 @@ namespace CryCil.Geometry
 		#endregion
 		#region Products
 		/// <summary>
-		/// Performs component-wise multiplication of this vector and another one.
-		/// </summary>
-		/// <param name="rhs">Another vector.</param>
-		/// <returns>Result of multiplication.</returns>
-		public Vector3 ComponentMul(Vector3 rhs)
-		{
-			return new Vector3(this.X * rhs.X, this.Y * rhs.Y, this.Z * rhs.Z);
-		}
-		/// <summary>
 		/// Calculates dot product of this vector and another one.
 		/// </summary>
 		/// <param name="v">Another vector.</param>
