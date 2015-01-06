@@ -21,7 +21,6 @@
 */
 
 using System;
-using CryCil.Mathematics;
 
 namespace CryCil.Geometry
 {

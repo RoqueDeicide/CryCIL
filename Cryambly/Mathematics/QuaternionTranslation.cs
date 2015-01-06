@@ -1,6 +1,5 @@
 ﻿using System;
 using CryCil.Geometry;
-using CryCil.Mathematics;
 
 namespace CryCil
 {

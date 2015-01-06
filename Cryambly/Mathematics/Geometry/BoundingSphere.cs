@@ -24,7 +24,6 @@ using System;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
-using CryCil.Mathematics;
 
 namespace CryCil.Geometry
 {
