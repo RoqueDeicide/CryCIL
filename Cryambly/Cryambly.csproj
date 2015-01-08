@@ -79,6 +79,7 @@
     <Compile Include="GeneralExtensions.cs" />
     <Compile Include="GenericEventArgs.cs" />
     <Compile Include="Interops\LogPosting.cs" />
+    <Compile Include="Mathematics\Geometry\AngleAxis.cs" />
     <Compile Include="Mathematics\Geometry\BoundingBox.cs" />
     <Compile Include="Mathematics\Geometry\BoundingSphere.cs" />
     <Compile Include="Mathematics\Geometry\Csg\Base\ConstructiveSolidGeometry.cs" />
@@ -88,6 +89,8 @@
     <Compile Include="Mathematics\Geometry\Plane.cs" />
     <Compile Include="Mathematics\Geometry\Plane.GenericOps.cs" />
     <Compile Include="Mathematics\Geometry\PlaneIntersectionType.cs" />
+    <Compile Include="Mathematics\Geometry\Quaternion.cs" />
+    <Compile Include="Mathematics\Geometry\Quatvec.cs" />
     <Compile Include="Mathematics\Geometry\Ray.cs" />
     <Compile Include="Mathematics\Geometry\Scale.cs" />
     <Compile Include="Mathematics\Geometry\Translation.cs" />
@@ -108,8 +111,6 @@
     <Compile Include="Mathematics\MemoryMapping\Bytes8.cs" />
     <Compile Include="Mathematics\MemoryMapping\IBuffer.cs" />
     <Compile Include="Mathematics\MemoryMapping\NamespaceDoc.cs" />
-    <Compile Include="Mathematics\Quaternion.cs" />
-    <Compile Include="Mathematics\QuaternionTranslation.cs" />
     <Compile Include="Mathematics\Geometry\Vector2.cs" />
     <Compile Include="Mathematics\Geometry\Vector3.cs" />
     <Compile Include="Mathematics\Geometry\Vector4.cs" />
