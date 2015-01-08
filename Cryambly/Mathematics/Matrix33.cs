@@ -90,10 +90,6 @@ namespace CryCil
 		#endregion
 		#endregion
 		#region Properties
-		public Vector3 this[int index]
-		{
-			get {  /* return the specified index here */ }
-		}
 		/// <summary>
 		/// Gets or sets first column of this matrix.
 		/// </summary>
@@ -325,17 +321,17 @@ namespace CryCil
 		public Matrix33(Quaternion q)
 			: this()
 		{
-			var v2 = q.V + q.V;
-			var xx = 1 - v2.X * q.V.X;
-			var yy = v2.Y * q.V.Y;
+			var v2 = q.Vector + q.Vector;
+			var xx = 1 - v2.X * q.X;
+			var yy = v2.Y * q.Y;
 			var xw = v2.X * q.W;
 
-			var xy = v2.Y * q.V.X;
-			var yz = v2.Z * q.V.Y;
+			var xy = v2.Y * q.X;
+			var yz = v2.Z * q.Y;
 			var yw = v2.Y * q.W;
 
-			var xz = v2.Z * q.V.X;
-			var zz = v2.Z * q.V.Z;
+			var xz = v2.Z * q.X;
+			var zz = v2.Z * q.Z;
 			var zw = v2.Z * q.W;
 
 			this.M00 = 1 - yy - zz;
@@ -426,165 +422,6 @@ namespace CryCil
 
 				return hash;
 			}
-		}
-		#endregion
-		#region Setting Rotations
-		/// <summary>
-		/// Sets this matrix to represent rotation around given axis.
-		/// </summary>
-		/// <param name="angle">Angle of rotation.</param>
-		/// <param name="axis"> Axis of rotation.</param>
-		public void SetRotationAroundAxis(float angle, Vector3 axis)
-		{
-			double s, c;
-			MathHelpers.SinCos(angle, out s, out c);
-			float mc = 1.0f - (float)c;
-
-			float mcx = mc * axis.X;
-			float mcy = mc * axis.Y;
-			float mcz = mc * axis.Z;
-
-			float tcx = axis.X * (float)s;
-			float tcy = axis.Y * (float)s;
-			float tcz = axis.Z * (float)s;
-
-			this.M00 = mcx * axis.X + (float)c;
-			this.M01 = mcx * axis.Y - tcz;
-			this.M02 = mcx * axis.Z + tcy;
-
-			this.M10 = mcy * axis.X + tcz;
-			this.M11 = mcy * axis.Y + (float)c;
-			this.M12 = mcy * axis.Z - tcx;
-
-			this.M20 = mcz * axis.X - tcy;
-			this.M21 = mcz * axis.Y + tcx;
-			this.M22 = mcz * axis.Z + (float)c;
-		}
-		/// <summary>
-		/// Creates new matrix that is set to represent rotation around given axis.
-		/// </summary>
-		/// <param name="rad"> Angle of rotation.</param>
-		/// <param name="axis">Axis of rotation.</param>
-		/// <returns>New matrix.</returns>
-		public static Matrix33 CreateRotationAroundAxis(float rad, Vector3 axis)
-		{
-			var matrix = new Matrix33();
-			matrix.SetRotationAroundAxis(rad, axis);
-
-			return matrix;
-		}
-		/// <summary>
-		/// Sets this matrix to represent rotation around given axis.
-		/// </summary>
-		/// <param name="c">   Cosine of angle of rotation.</param>
-		/// <param name="s">   Sine of angle of rotation.</param>
-		/// <param name="axis">Axis of rotation.</param>
-		public void SetRotationAroundAxis(float c, float s, Vector3 axis)
-		{
-			float mc = 1 - c;
-			this.M00 = mc * axis.X * axis.X + c; this.M01 = mc * axis.X * axis.Y - axis.Z * s; this.M02 = mc * axis.X * axis.Z + axis.Y * s;
-			this.M10 = mc * axis.Y * axis.X + axis.Z * s; this.M11 = mc * axis.Y * axis.Y + c; this.M12 = mc * axis.Y * axis.Z - axis.X * s;
-			this.M20 = mc * axis.Z * axis.X - axis.Y * s; this.M21 = mc * axis.Z * axis.Y + axis.X * s; this.M22 = mc * axis.Z * axis.Z + c;
-		}
-		/// <summary>
-		/// Creates new matrix that is set to represent rotation around given axis.
-		/// </summary>
-		/// <param name="c">   Cosine of angle of rotation.</param>
-		/// <param name="s">   Sine of angle of rotation.</param>
-		/// <param name="axis">Axis of rotation.</param>
-		/// <returns>New matrix.</returns>
-		public static Matrix33 CreateRotationAroundAxis(float c, float s, Vector3 axis)
-		{
-			var matrix = new Matrix33();
-			matrix.SetRotationAroundAxis(c, s, axis);
-
-			return matrix;
-		}
-		/// <summary>
-		/// Sets this matrix to represent rotation around given axis.
-		/// </summary>
-		/// <param name="rot">
-		/// <see cref="Vector3"/> which length represents an angle of rotation, and that,
-		/// once normalized, represents an axis of rotation.
-		/// </param>
-		public void SetRotationAroundAxis(Vector3 rot)
-		{
-			float angle = rot.Length;
-			if (Math.Abs(angle) < MathHelpers.ZeroTolerance)
-				this.SetIdentity();
-			else
-				this.SetRotationAroundAxis(angle, rot / angle);
-		}
-		/// <summary>
-		/// Creates new matrix that is set to represent rotation around given axis.
-		/// </summary>
-		/// <param name="rot">
-		/// <see cref="Vector3"/> which length represents an angle of rotation, and that,
-		/// once normalized, represents an axis of rotation.
-		/// </param>
-		/// <returns>New matrix.</returns>
-		public static Matrix33 CreateRotationAroundAxis(Vector3 rot)
-		{
-			var matrix = new Matrix33();
-			matrix.SetRotationAroundAxis(rot);
-
-			return matrix;
-		}
-		/// <summary>
-		/// Sets this matrix to represent rotation around fixed Axes.
-		/// </summary>
-		/// <param name="rad">
-		/// <see cref="Vector3"/> that defines rotations around XYZ.
-		/// </param>
-		public void SetRotationFromAngles(Vector3 rad)
-		{
-			double sx, cx; MathHelpers.SinCos(rad.X, out sx, out cx);
-			double sy, cy; MathHelpers.SinCos(rad.Y, out sy, out cy);
-			double sz, cz; MathHelpers.SinCos(rad.Z, out sz, out cz);
-			double sycz = (sy * cz), sysz = (sy * sz);
-			this.M00 = (float)(cy * cz); this.M01 = (float)(sycz * sx - cx * sz); this.M02 = (float)(sycz * cx + sx * sz);
-			this.M10 = (float)(cy * sz); this.M11 = (float)(sysz * sx + cx * cz); this.M12 = (float)(sysz * cx - sx * cz);
-			this.M20 = (float)(-sy); this.M21 = (float)(cy * sx); this.M22 = (float)(cy * cx);
-		}
-		/// <summary>
-		/// Creates new matrix that is set to represent rotation around fixed Axes.
-		/// </summary>
-		/// <param name="rad">Angles of rotation.</param>
-		/// <returns>New matrix.</returns>
-		public static Matrix33 CreateRotationFromAngles(Vector3 rad)
-		{
-			var matrix = new Matrix33();
-			matrix.SetRotationFromAngles(rad);
-
-			return matrix;
-		}
-		/// <summary>
-		/// Sets this matrix to represent rotation around fixed Axes.
-		/// </summary>
-		/// <param name="rad">
-		/// <see cref="EulerAngles"/> that defines rotations around XYZ.
-		/// </param>
-		public void SetRotationFromAngles(EulerAngles rad)
-		{
-			double sx, cx; MathHelpers.SinCos(rad.Pitch, out sx, out cx);
-			double sy, cy; MathHelpers.SinCos(rad.Roll, out sy, out cy);
-			double sz, cz; MathHelpers.SinCos(rad.Yaw, out sz, out cz);
-			double sycz = (sy * cz), sysz = (sy * sz);
-			this.M00 = (float)(cy * cz); this.M01 = (float)(sycz * sx - cx * sz); this.M02 = (float)(sycz * cx + sx * sz);
-			this.M10 = (float)(cy * sz); this.M11 = (float)(sysz * sx + cx * cz); this.M12 = (float)(sysz * cx - sx * cz);
-			this.M20 = (float)(-sy); this.M21 = (float)(cy * sx); this.M22 = (float)(cy * cx);
-		}
-		/// <summary>
-		/// Creates new matrix that is set to represent rotation around fixed Axes.
-		/// </summary>
-		/// <param name="rad">Angles of rotation.</param>
-		/// <returns>New matrix.</returns>
-		public static Matrix33 CreateRotationFromAngles(EulerAngles rad)
-		{
-			var matrix = new Matrix33();
-			matrix.SetRotationFromAngles(rad);
-
-			return matrix;
 		}
 		#endregion
 		#region Enumeration

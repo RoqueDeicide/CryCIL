@@ -337,9 +337,9 @@ namespace CryCil
 		/// </param>
 		public void Set(Vector3 s, Quaternion q, Vector3 t = default(Vector3))
 		{
-			float vxvx = q.V.X * q.V.X; float vzvz = q.V.Z * q.V.Z; float vyvy = q.V.Y * q.V.Y;
-			float vxvy = q.V.X * q.V.Y; float vxvz = q.V.X * q.V.Z; float vyvz = q.V.Y * q.V.Z;
-			float svx = q.W * q.V.X; float svy = q.W * q.V.Y; float svz = q.W * q.V.Z;
+			float vxvx = q.X * q.X; float vzvz = q.Z * q.Z; float vyvy = q.Y * q.Y;
+			float vxvy = q.X * q.Y; float vxvz = q.X * q.Z; float vyvz = q.Y * q.Z;
+			float svx = q.W * q.X; float svy = q.W * q.Y; float svz = q.W * q.Z;
 			this.M00 = (1 - (vyvy + vzvz) * 2) * s.X; this.M01 = (vxvy - svz) * 2 * s.Y; this.M02 = (vxvz + svy) * 2 * s.Z; this.M03 = t.X;
 			this.M10 = (vxvy + svz) * 2 * s.X; this.M11 = (1 - (vxvx + vzvz) * 2) * s.Y; this.M12 = (vyvz - svx) * 2 * s.Z; this.M13 = t.Y;
 			this.M20 = (vxvz - svy) * 2 * s.X; this.M21 = (vyvz + svx) * 2 * s.Y; this.M22 = (1 - (vxvx + vyvy) * 2) * s.Z; this.M23 = t.Z;
@@ -612,256 +612,6 @@ namespace CryCil
 		}
 		#endregion
 		#region Rotations
-		/// <summary>
-		/// Sets the values of this matrix to one that represents a rotation around an
-		/// axis.
-		/// </summary>
-		/// <param name="rad"> Angle of rotation in radians.</param>
-		/// <param name="axis">Normalized vector that represents axis of rotation.</param>
-		/// <param name="t">   Optional translation vector.</param>
-		public void SetRotationAroundAxis(float rad, Vector3 axis, Vector3 t = default(Vector3))
-		{
-			this = new Matrix34(Matrix33.CreateRotationAroundAxis(rad, axis));
-
-			this.SetTranslation(t);
-		}
-		/// <summary>
-		/// Creates a rotation matrix around an arbitrary axis (Eulers Theorem).
-		/// </summary>
-		/// <param name="rad"> Angle of rotation in radians.</param>
-		/// <param name="axis">Normalized vector that represents axis of rotation.</param>
-		/// <param name="t">   Optional translation vector.</param>
-		/// <returns>A new rotation matrix.</returns>
-		public static Matrix34 CreateRotationAroundAxis(float rad, Vector3 axis, Vector3 t = default(Vector3))
-		{
-			var matrix = new Matrix34();
-			matrix.SetRotationAroundAxis(rad, axis, t);
-
-			return matrix;
-		}
-		/// <summary>
-		/// Sets the values of this matrix to one that represents a rotation around an
-		/// axis.
-		/// </summary>
-		/// <param name="rot">
-		/// <see cref="Vector3"/> object which length represents an angle of rotation and
-		/// which direction represents an axis of rotation.
-		/// </param>
-		/// <param name="t">  Optional translation vector.</param>
-		public void SetRotationAroundAxis(Vector3 rot, Vector3 t = default(Vector3))
-		{
-			this = new Matrix34(Matrix33.CreateRotationAroundAxis(rot));
-
-			this.SetTranslation(t);
-		}
-		/// <summary>
-		/// Creates a rotation matrix around an arbitrary axis (Eulers Theorem).
-		/// </summary>
-		/// <param name="rot">
-		/// <see cref="Vector3"/> object which length represents an angle of rotation and
-		/// which direction represents an axis of rotation.
-		/// </param>
-		/// <param name="t">  Optional translation vector.</param>
-		/// <returns>A new rotation matrix.</returns>
-		public static Matrix34 CreateRotationAroundAxis(Vector3 rot, Vector3 t = default(Vector3))
-		{
-			var matrix = new Matrix34();
-			matrix.SetRotationAroundAxis(rot, t);
-
-			return matrix;
-		}
-		/// <summary>
-		/// Sets the values of this matrix to one that represents a rotation around an
-		/// axis.
-		/// </summary>
-		/// <param name="c">   Cosine of the angle of the rotation.</param>
-		/// <param name="s">   Sine of the angle of the rotation.</param>
-		/// <param name="axis">
-		/// <see cref="Vector3"/> object that represents axis of rotation.
-		/// </param>
-		/// <param name="t">   Optional translation vector.</param>
-		public void SetRotationAroundAxis(float c, float s, Vector3 axis, Vector3 t = default(Vector3))
-		{
-			this = new Matrix34(Matrix33.CreateRotationAroundAxis(c, s, axis))
-			{
-				M03 = t.X,
-				M13 = t.Y,
-				M23 = t.Z
-			};
-		}
-		/// <summary>
-		/// Creates a rotation matrix around an arbitrary axis (Eulers Theorem).
-		/// </summary>
-		/// <param name="c">   Cosine of the angle of the rotation.</param>
-		/// <param name="s">   Sine of the angle of the rotation.</param>
-		/// <param name="axis">
-		/// <see cref="Vector3"/> object that represents axis of rotation.
-		/// </param>
-		/// <param name="t">   Optional translation vector.</param>
-		/// <returns>A new rotation matrix around an arbitrary axis.</returns>
-		public static Matrix34 CreateRotationAroundAxis(float c, float s, Vector3 axis, Vector3 t = default(Vector3))
-		{
-			var matrix = new Matrix34();
-			matrix.SetRotationAroundAxis(c, s, axis, t);
-
-			return matrix;
-		}
-		/// <summary>
-		/// Sets the values of this matrix to one that represents a rotation around X
-		/// axis.
-		/// </summary>
-		/// <param name="rad">Angle of rotation in radians.</param>
-		/// <param name="t">  Optional translation vector.</param>
-		public void SetRotationAroundX(float rad, Vector3 t = default(Vector3))
-		{
-			this = new Matrix34(Matrix33.CreateRotationAroundX(rad));
-
-			this.SetTranslation(t);
-		}
-		/// <summary>
-		/// Creates a matrix that represents a rotation around X axis.
-		/// </summary>
-		/// <param name="rad">Angle of rotation in radians.</param>
-		/// <param name="t">  Optional translation vector.</param>
-		/// <returns>A new matrix that represents a rotation around X axis.</returns>
-		public static Matrix34 CreateRotationAroundX(float rad, Vector3 t = default(Vector3))
-		{
-			var matrix = new Matrix34();
-			matrix.SetRotationAroundX(rad, t);
-
-			return matrix;
-		}
-		/// <summary>
-		/// Sets the values of this matrix to one that represents a rotation around Y
-		/// axis.
-		/// </summary>
-		/// <param name="rad">Angle of rotation in radians.</param>
-		/// <param name="t">  Optional translation vector.</param>
-		public void SetRotationAroundY(float rad, Vector3 t = default(Vector3))
-		{
-			this = new Matrix34(Matrix33.CreateRotationAroundY(rad));
-
-			this.SetTranslation(t);
-		}
-		/// <summary>
-		/// Creates a matrix that represents a rotation around Y axis.
-		/// </summary>
-		/// <param name="rad">Angle of rotation in radians.</param>
-		/// <param name="t">  Optional translation vector.</param>
-		/// <returns>A new matrix that represents a rotation around Y axis.</returns>
-		public static Matrix34 CreateRotationAroundY(float rad, Vector3 t = default(Vector3))
-		{
-			var matrix = new Matrix34();
-			matrix.SetRotationAroundY(rad, t);
-
-			return matrix;
-		}
-		/// <summary>
-		/// Sets the values of this matrix to one that represents a rotation around Z
-		/// axis.
-		/// </summary>
-		/// <param name="rad">Angle of rotation in radians.</param>
-		/// <param name="t">  Optional translation vector.</param>
-		public void SetRotationAroundZ(float rad, Vector3 t = default(Vector3))
-		{
-			this = new Matrix34(Matrix33.CreateRotationAroundZ(rad));
-
-			this.SetTranslation(t);
-		}
-		/// <summary>
-		/// Creates a matrix that represents a rotation around Z axis.
-		/// </summary>
-		/// <param name="rad">Angle of rotation in radians.</param>
-		/// <param name="t">  Optional translation vector.</param>
-		/// <returns>A new matrix that represents a rotation around Z axis.</returns>
-		public static Matrix34 CreateRotationAroundZ(float rad, Vector3 t = default(Vector3))
-		{
-			var matrix = new Matrix34();
-			matrix.SetRotationAroundZ(rad, t);
-
-			return matrix;
-		}
-		/// <summary>
-		/// Convert three Euler angles to 3x3 matrix (rotation order:XYZ)
-		/// </summary>
-		/// <param name="rad">Angles of rotation.</param>
-		/// <param name="t">  Optional translation vector.</param>
-		public void SetRotationWithEulerAngles(EulerAngles rad, Vector3 t = default(Vector3))
-		{
-			this = new Matrix34(Matrix33.CreateRotationFromAngles(rad));
-
-			this.SetTranslation(t);
-		}
-		/// <summary>
-		/// Creates a matrix that represents rotation represented by given Euler angles.
-		/// </summary>
-		/// <param name="rad">Angles of rotation.</param>
-		/// <param name="t">  Optional translation vector.</param>
-		/// <returns>
-		/// A new matrix that represents rotation represented by given Euler angles.
-		/// </returns>
-		public static Matrix34 CreateRotationWithEulerAngles(EulerAngles rad, Vector3 t = default(Vector3))
-		{
-			var matrix = new Matrix34();
-			matrix.SetRotationWithEulerAngles(rad, t);
-
-			return matrix;
-		}
-		#endregion
-		#region Translations
-		/// <summary>
-		/// Multiplies last column of this matrix that represents translation by a given
-		/// number.
-		/// </summary>
-		/// <param name="s">Factor of scaling of translation.</param>
-		public void ScaleTranslation(float s)
-		{
-			this.M03 *= s;
-			this.M13 *= s;
-			this.M23 *= s;
-		}
-		#endregion
-		#region Transformations
-		/// <summary>
-		/// Applies transformation represented by this matrix (without translation) to
-		/// given vector.
-		/// </summary>
-		/// <param name="p">
-		/// <see cref="Vector3"/> object to apply transformation to.
-		/// </param>
-		/// <returns>
-		/// A new <see cref="Vector3"/> object that represents given vector with
-		/// transformations applied to it.
-		/// </returns>
-		public Vector3 TransformVectorNoTranslation(Vector3 p)
-		{
-			return new Vector3
-			(
-				this.M00 * p.X + this.M01 * p.Y + this.M02 * p.Z,
-				this.M10 * p.X + this.M11 * p.Y + this.M12 * p.Z,
-				this.M20 * p.X + this.M21 * p.Y + this.M22 * p.Z
-			);
-		}
-		/// <summary>
-		/// Applies transformation represented by this matrix to given vector.
-		/// </summary>
-		/// <param name="p">
-		/// <see cref="Vector3"/> object to apply transformation to.
-		/// </param>
-		/// <returns>
-		/// A new <see cref="Vector3"/> object that represents given vector with
-		/// transformations applied to it.
-		/// </returns>
-		public Vector3 TransformVector(Vector3 p)
-		{
-			return new Vector3
-			(
-				this.M00 * p.X + this.M01 * p.Y + this.M02 * p.Z + this.M03,
-				this.M10 * p.X + this.M11 * p.Y + this.M12 * p.Z + this.M13,
-				this.M20 * p.X + this.M21 * p.Y + this.M22 * p.Z + this.M23
-			);
-		}
-		#endregion
 		#region Interpolations
 		/// <summary>
 		/// Creates a matrix that represents a spherical linear interpolation from one
@@ -919,7 +669,7 @@ namespace CryCil
 			double angle = Math.Atan2(Math.Sqrt(1.0 - cosine * cosine), cosine);
 			var axis = new Vector3(d.M21 - d.M12, d.M02 - d.M20, d.M10 - d.M01);
 			double l = Math.Sqrt(axis | axis); if (l > 0.00001) axis /= (float)l; else axis = new Vector3(1, 0, 0);
-			i.SetRotationAroundAxis((float)angle * t, axis); // angle interpolation and calculation of new delta-matrix (=26 flops)
+			Rotation.AroundAxis.Set(ref i, ref  axis, (float)angle * t); // angle interpolation and calculation of new delta-matrix (=26 flops)
 
 			// final concatenation (=39 flops)
 			this.M00 = m.M00 * i.M00 + m.M01 * i.M10 + m.M02 * i.M20; this.M01 = m.M00 * i.M01 + m.M01 * i.M11 + m.M02 * i.M21; this.M02 = m.M00 * i.M02 + m.M01 * i.M12 + m.M02 * i.M22;
@@ -956,6 +706,7 @@ namespace CryCil
 				M23 = l.M20 * r.M03 + l.M21 * r.M13 + l.M22 * r.M23 + l.M23
 			};
 		}
+		#endregion
 		#endregion
 		#endregion
 		#region Utilities
