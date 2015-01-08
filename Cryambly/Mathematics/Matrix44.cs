@@ -279,6 +279,28 @@ namespace CryCil
 				}
 			}
 		}
+		/// <summary>
+		/// Gets or sets first 3 columns of this matrix.
+		/// </summary>
+		public Matrix33 Matrix33
+		{
+			get
+			{
+				return
+					new Matrix33
+					(
+						this.M00, this.M01, this.M02,
+						this.M10, this.M11, this.M12,
+						this.M20, this.M21, this.M22
+					);
+			}
+			set
+			{
+				this.M00 = value.M00; this.M01 = value.M01; this.M02 = value.M02;
+				this.M10 = value.M10; this.M11 = value.M11; this.M12 = value.M12;
+				this.M20 = value.M20; this.M21 = value.M21; this.M22 = value.M22;
+			}
+		}
 		#endregion
 		#region Contruction
 		/// <summary>

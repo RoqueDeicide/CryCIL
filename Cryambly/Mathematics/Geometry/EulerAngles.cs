@@ -258,6 +258,18 @@ namespace CryCil.Geometry
 				Math.Abs(this.Roll - other.Roll) < precision &&
 				Math.Abs(this.Yaw - other.Yaw) < precision;
 		}
+		/// <summary>
+		/// Indicates whether this set of Euler angles is represented by a unit vector.
+		/// </summary>
+		/// <param name="epsilon">Precision of comparison.</param>
+		/// <returns>
+		/// True, if difference between this vector and unit vector is within specified
+		/// precision bounds.
+		/// </returns>
+		public bool IsUnit(float epsilon = 0.05f)
+		{
+			return (Math.Abs(1 - this.LengthSquared) <= epsilon);
+		}
 		#endregion
 		#endregion
 	}

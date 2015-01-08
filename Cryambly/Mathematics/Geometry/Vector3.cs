@@ -159,6 +159,55 @@ namespace CryCil.Geometry
 			}
 		}
 		/// <summary>
+		/// Gets simplest vector that is perpendicular to this one.
+		/// </summary>
+		/// <exception cref="InvalidOperationException">Cannot get vector that is orthogonal to zero.</exception>
+		public Vector3 OrthogonalSafe
+		{
+			get
+			{
+// ReSharper disable CompareOfFloatsByEqualityOperator
+				if (this.X == 0 && this.Y == 0 && this.Z == 0)
+// ReSharper restore CompareOfFloatsByEqualityOperator
+				{
+					throw new InvalidOperationException("Cannot get vector that is orthogonal to zero.");
+				}
+				return new Vector3(-this.Y, this.X, 0);
+			}
+		}
+		/// <summary>
+		/// Gets simplest vector that is perpendicular to this one.
+		/// </summary>
+		public Vector3 Orthogonal
+		{
+			get
+			{
+				// ReSharper disable CompareOfFloatsByEqualityOperator
+				if (this.X == 0 && this.Y == 0 && this.Z == 0)
+				// ReSharper restore CompareOfFloatsByEqualityOperator
+				{
+					return Vector3.Up;
+				}
+				return new Vector3(-this.Y, this.X, 0);
+			}
+		}
+		/// <summary>
+		/// Gets simplest vector that is perpendicular to this one if this one is not zero.
+		/// </summary>
+		public Vector3? SelectiveOrthogonal
+		{
+			get
+			{
+				// ReSharper disable CompareOfFloatsByEqualityOperator
+				if (this.X == 0 && this.Y == 0 && this.Z == 0)
+				// ReSharper restore CompareOfFloatsByEqualityOperator
+				{
+					return null;
+				}
+				return new Vector3(-this.Y, this.X, 0);
+			}
+		}
+		/// <summary>
 		/// Gets or sets the component at the specified index.
 		/// </summary>
 		/// <value>The value of the X, Y or Z component, depending on the index.</value>
@@ -280,16 +329,16 @@ namespace CryCil.Geometry
 		public Vector3(Quaternion q)
 			: this()
 		{
-			this.Y = (float)Math.Asin(Math.Max(-1.0f, Math.Min(1.0f, -(q.V.X * q.V.Z - q.W * q.V.Y) * 2)));
+			this.Y = (float)Math.Asin(Math.Max(-1.0f, Math.Min(1.0f, -(q.X * q.Z - q.W * q.Y) * 2)));
 			if (Math.Abs(Math.Abs(this.Y) - (Math.PI * 0.5f)) < 0.01f)
 			{
 				this.X = 0;
-				this.Z = (float)Math.Atan2(-2 * (q.V.X * q.V.Y - q.W * q.V.Z), 1 - (q.V.X * q.V.X + q.V.Z * q.V.Z) * 2);
+				this.Z = (float)Math.Atan2(-2 * (q.X * q.Y - q.W * q.Z), 1 - (q.X * q.X + q.Z * q.Z) * 2);
 			}
 			else
 			{
-				this.X = (float)Math.Atan2((q.V.Y * q.V.Z + q.W * q.V.X) * 2, 1 - (q.V.X * q.V.X + q.V.Y * q.V.Y) * 2);
-				this.Z = (float)Math.Atan2((q.V.X * q.V.Y + q.W * q.V.Z) * 2, 1 - (q.V.Z * q.V.Z + q.V.Y * q.V.Y) * 2);
+				this.X = (float)Math.Atan2((q.Y * q.Z + q.W * q.X) * 2, 1 - (q.X * q.X + q.Y * q.Y) * 2);
+				this.Z = (float)Math.Atan2((q.X * q.Y + q.W * q.Z) * 2, 1 - (q.Z * q.Z + q.Y * q.Y) * 2);
 			}
 		}
 		/// <summary>
@@ -937,59 +986,6 @@ namespace CryCil.Geometry
 				throw new ArgumentException("Normal to a plane must be a unit vector.");
 			}
 			this = (n * (i | n) * 2) - i;
-		}
-		/// <summary>
-		/// Rotates this vector around given axis by specified angle.
-		/// </summary>
-		/// <param name="axis"> Vector that defines axis around which to rotate.</param>
-		/// <param name="angle">Angle of rotation in radians.</param>
-		/// <returns>Rotated vector.</returns>
-		public Vector3 GetRotated(Vector3 axis, float angle)
-		{
-			return this.GetRotated(axis, (float)Math.Cos(angle), (float)Math.Sin(angle));
-		}
-		/// <summary>
-		/// Rotates this vector around given axis using sine and cosine of the angle of
-		/// rotation.
-		/// </summary>
-		/// <param name="axis">Vector that defines axis around which to rotate.</param>
-		/// <param name="cosa">Cosine of the angle of rotation.</param>
-		/// <param name="sina">Sine of the angle of rotation.</param>
-		/// <returns>Rotated vector.</returns>
-		public Vector3 GetRotated(Vector3 axis, float cosa, float sina)
-		{
-			Vector3 zax = axis * (this | axis);
-			Vector3 xax = this - zax;
-			Vector3 yax = axis % xax;
-			return xax * cosa + yax * sina + zax;
-		}
-		/// <summary>
-		/// Rotates this vector around given axis by specified angle.
-		/// </summary>
-		/// <param name="center">
-		/// A vector that defines a point trough which the axis goes.
-		/// </param>
-		/// <param name="axis">  Vector that defines axis around which to rotate.</param>
-		/// <param name="angle"> Angle of rotation in radians.</param>
-		/// <returns>Rotated vector.</returns>
-		public Vector3 GetRotated(Vector3 center, Vector3 axis, float angle)
-		{
-			return center + (this - center).GetRotated(axis, angle);
-		}
-		/// <summary>
-		/// Rotates this vector around given axis using sine and cosine of the angle of
-		/// rotation.
-		/// </summary>
-		/// <param name="center">
-		/// A vector that defines a point trough which the axis goes.
-		/// </param>
-		/// <param name="axis">  Vector that defines axis around which to rotate.</param>
-		/// <param name="cosa">  Cosine of the angle of rotation.</param>
-		/// <param name="sina">  Sine of the angle of rotation.</param>
-		/// <returns>Rotated vector.</returns>
-		public Vector3 GetRotated(Vector3 center, Vector3 axis, float cosa, float sina)
-		{
-			return center + (this - center).GetRotated(axis, cosa, sina);
 		}
 		/// <summary>
 		/// Creates a vector which is projection of given vector onto plane which is

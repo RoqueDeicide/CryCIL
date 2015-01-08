@@ -90,6 +90,58 @@ namespace CryCil
 		#endregion
 		#endregion
 		#region Properties
+		public Vector3 this[int index]
+		{
+			get {  /* return the specified index here */ }
+		}
+		/// <summary>
+		/// Gets or sets first column of this matrix.
+		/// </summary>
+		public Vector3 Column0
+		{
+			get
+			{
+				return new Vector3(this.M00, this.M10, this.M20);
+			}
+			set
+			{
+				this.M00 = value.X;
+				this.M10 = value.Y;
+				this.M20 = value.Z;
+			}
+		}
+		/// <summary>
+		/// Gets or sets first column of this matrix.
+		/// </summary>
+		public Vector3 Column1
+		{
+			get
+			{
+				return new Vector3(this.M01, this.M11, this.M21);
+			}
+			set
+			{
+				this.M01 = value.X;
+				this.M11 = value.Y;
+				this.M21 = value.Z;
+			}
+		}
+		/// <summary>
+		/// Gets or sets first column of this matrix.
+		/// </summary>
+		public Vector3 Column2
+		{
+			get
+			{
+				return new Vector3(this.M02, this.M12, this.M22);
+			}
+			set
+			{
+				this.M02 = value.X;
+				this.M12 = value.Y;
+				this.M22 = value.Z;
+			}
+		}
 		/// <summary>
 		/// Gets angles that represent rotation this matrix represents.
 		/// </summary>
@@ -152,6 +204,43 @@ namespace CryCil
 				return this.All(MathHelpers.IsNumberValid);
 			}
 		}
+		/// <summary>
+		/// Determines whether this matrix is orthonormal.
+		/// </summary>
+		public bool IsOrthonormal
+		{
+			get
+			{
+				Vector3 x = this.Column0;
+				Vector3 y = this.Column1;
+				Vector3 z = this.Column2;
+
+				return
+					Math.Abs(x | y) <= MathHelpers.ZeroTolerance &&
+					Math.Abs(x | z) <= MathHelpers.ZeroTolerance &&
+					Math.Abs(y | z) <= MathHelpers.ZeroTolerance &&
+					Math.Abs(1 - (x | x)) < MathHelpers.ZeroTolerance &&
+					Math.Abs(1 - (y | y)) < MathHelpers.ZeroTolerance &&
+					Math.Abs(1 - (z | z)) < MathHelpers.ZeroTolerance;
+			}
+		}
+		/// <summary>
+		/// Determines whether this matrix is orthonormal in right-handed coordinate system.
+		/// </summary>
+		public bool IsOrthonormalRightHanded
+		{
+			get
+			{
+				Vector3 x = this.Column0;
+				Vector3 y = this.Column1;
+				Vector3 z = this.Column2;
+
+				return
+					x.IsEquivalent(y % z) && x.IsUnit(MathHelpers.ZeroTolerance) &&
+					y.IsEquivalent(z % x) && y.IsUnit(MathHelpers.ZeroTolerance) &&
+					z.IsEquivalent(x % y) && z.IsUnit(MathHelpers.ZeroTolerance);
+			}
+		}
 		#endregion
 		#region Construction
 		/// <summary>
@@ -166,7 +255,6 @@ namespace CryCil
 		/// <param name="m20">Third row, First Column.</param>
 		/// <param name="m21">Third row, Second Column.</param>
 		/// <param name="m22">Third row, Third Column.</param>
-		/// <returns>New instance of <see cref="Matrix33"/> struct.</returns>
 		public Matrix33
 		(
 			float m00, float m01, float m02,
@@ -191,7 +279,6 @@ namespace CryCil
 		/// <param name="m">
 		/// <see cref="Matrix34"/> object from which first 3 columns will be copied.
 		/// </param>
-		/// <returns>New instance of <see cref="Matrix33"/> struct.</returns>
 		public Matrix33(Matrix34 m)
 			: this()
 		{
@@ -210,8 +297,29 @@ namespace CryCil
 		/// <summary>
 		/// Creates new instance of <see cref="Matrix33"/> struct.
 		/// </summary>
+		/// <param name="m">
+		/// <see cref="Matrix44"/> object from which first 3 columns will be copied.
+		/// </param>
+		public Matrix33(Matrix44 m)
+			: this()
+		{
+			this.M00 = m.M00;
+			this.M01 = m.M01;
+			this.M02 = m.M02;
+
+			this.M10 = m.M10;
+			this.M11 = m.M11;
+			this.M12 = m.M12;
+
+			this.M20 = m.M20;
+			this.M21 = m.M21;
+			this.M22 = m.M22;
+		}
+		/// <summary>
+		/// Creates new instance of <see cref="Matrix33"/> struct.
+		/// </summary>
 		/// <param name="q">
-		/// Quaternion that represents rotation that new instance whould represent.
+		/// Quaternion that represents rotation that new instance should represent.
 		/// </param>
 		/// <returns>New instance of <see cref="Matrix33"/> struct.</returns>
 		public Matrix33(Quaternion q)
@@ -419,75 +527,6 @@ namespace CryCil
 		{
 			var matrix = new Matrix33();
 			matrix.SetRotationAroundAxis(rot);
-
-			return matrix;
-		}
-		/// <summary>
-		/// Sets this matrix to represent rotation around X axis.
-		/// </summary>
-		/// <param name="rad">Angle of rotation around X axis.</param>
-		public void SetRotationAroundX(float rad)
-		{
-			double s, c; MathHelpers.SinCos(rad, out s, out c);
-			this.M00 = 1.0f; this.M01 = 0.0f; this.M02 = 0.0f;
-			this.M10 = 0.0f; this.M11 = (float)c; this.M12 = (float)-s;
-			this.M20 = 0.0f; this.M21 = (float)s; this.M22 = (float)c;
-		}
-		/// <summary>
-		/// Creates new matrix that is set to represent rotation around X axis.
-		/// </summary>
-		/// <param name="rad">Angle of rotation around X axis.</param>
-		/// <returns>New matrix.</returns>
-		public static Matrix33 CreateRotationAroundX(float rad)
-		{
-			var matrix = new Matrix33();
-			matrix.SetRotationAroundX(rad);
-
-			return matrix;
-		}
-		/// <summary>
-		/// Sets this matrix to represent rotation around Y axis.
-		/// </summary>
-		/// <param name="rad">Angle of rotation around Y axis.</param>
-		public void SetRotationAroundY(float rad)
-		{
-			double s, c; MathHelpers.SinCos(rad, out s, out c);
-			this.M00 = (float)c; this.M01 = 0; this.M02 = (float)s;
-			this.M10 = 0; this.M11 = 1; this.M12 = 0;
-			this.M20 = (float)-s; this.M21 = 0; this.M22 = (float)c;
-		}
-		/// <summary>
-		/// Creates new matrix that is set to represent rotation around Y axis.
-		/// </summary>
-		/// <param name="rad">Angle of rotation around Y axis.</param>
-		/// <returns>New matrix.</returns>
-		public static Matrix33 CreateRotationAroundY(float rad)
-		{
-			var matrix = new Matrix33();
-			matrix.SetRotationAroundY(rad);
-
-			return matrix;
-		}
-		/// <summary>
-		/// Sets this matrix to represent rotation around Z axis.
-		/// </summary>
-		/// <param name="rad">Angle of rotation around Z axis.</param>
-		public void SetRotationAroundZ(float rad)
-		{
-			double s, c; MathHelpers.SinCos(rad, out s, out c);
-			this.M00 = (float)c; this.M01 = (float)-s; this.M02 = 0.0f;
-			this.M10 = (float)s; this.M11 = (float)c; this.M12 = 0.0f;
-			this.M20 = 0.0f; this.M21 = 0.0f; this.M22 = 1.0f;
-		}
-		/// <summary>
-		/// Creates new matrix that is set to represent rotation around Z axis.
-		/// </summary>
-		/// <param name="rad">Angle of rotation around Z axis.</param>
-		/// <returns>New matrix.</returns>
-		public static Matrix33 CreateRotationAroundZ(float rad)
-		{
-			var matrix = new Matrix33();
-			matrix.SetRotationAroundZ(rad);
 
 			return matrix;
 		}

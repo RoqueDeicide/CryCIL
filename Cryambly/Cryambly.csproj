@@ -92,6 +92,12 @@
     <Compile Include="Mathematics\Geometry\Quaternion.cs" />
     <Compile Include="Mathematics\Geometry\Quatvec.cs" />
     <Compile Include="Mathematics\Geometry\Ray.cs" />
+    <Compile Include="Mathematics\Geometry\Rotation.AroundAxes.cs" />
+    <Compile Include="Mathematics\Geometry\Rotation.AroundY.cs" />
+    <Compile Include="Mathematics\Geometry\Rotation.AroundAxis.cs" />
+    <Compile Include="Mathematics\Geometry\Rotation.AroundZ.cs" />
+    <Compile Include="Mathematics\Geometry\Rotation.AroundX.cs" />
+    <Compile Include="Mathematics\Geometry\Rotation.cs" />
     <Compile Include="Mathematics\Geometry\Scale.cs" />
     <Compile Include="Mathematics\Geometry\Translation.cs" />
     <Compile Include="Mathematics\Graphics\ColorByte.cs" />
