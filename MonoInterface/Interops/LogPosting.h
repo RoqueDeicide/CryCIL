@@ -2,7 +2,7 @@
 
 #include "IMonoInterface.h"
 
-struct LogPostingInterop : public IDefaultSingleShotInterop
+struct LogPostingInterop : public IDefaultMonoInterop<true>
 {
 	virtual const char *GetName();
 

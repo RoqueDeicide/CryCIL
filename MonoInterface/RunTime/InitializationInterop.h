@@ -2,13 +2,12 @@
 
 #include "IMonoInterface.h"
 //! Broadcasts CryCIL events to listeners from managed code.
-struct InitializationInterop : public IDefaultMonoInterop
+struct InitializationInterop : public IDefaultMonoInterop<false>
 {
 	virtual const char *GetName();
 
 	virtual void OnRunTimeInitialized();
 
-	virtual void SetInterface(IMonoInterface *handle);
 	virtual void OnPostInitialization()
 	{
 		MonoEnv->RemoveListener(this);

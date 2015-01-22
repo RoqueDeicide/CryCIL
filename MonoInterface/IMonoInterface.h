@@ -35,8 +35,6 @@ struct IMonoArray;
 struct IMonoClass;
 struct IMonoMethod;
 struct IMonoSystemListener;
-struct IMonoInterop;
-struct IDefaultMonoInterop;
 struct IMonoInterface;
 struct IMonoGCHandle;
 struct IMonoGC;
@@ -1383,7 +1381,7 @@ template<> struct IMonoInterop<true, false> : IMonoInteropBase
 	//! Unregisters itself and commits suicide.
 	virtual void OnCryamblyInitilizing()
 	{
-		MonoEnv->RemoveListener(this);
+		this->monoInterface->RemoveListener(this);
 		delete this;
 	}
 };
@@ -1393,20 +1391,6 @@ template<> struct IMonoInterop < false, true > : IMonoInteropBase
 {
 	//! No saving.
 	virtual void SetInterface(IMonoInterface *handle) {}
-};
-//! Specialization of IMonoInterop<,> template that relies on using MonoEnv variable
-//! instead of internal field and unregisters and destroys itself after registration
-//! of internal calls.
-template<> struct IMonoInterop < true, true > : IMonoInteropBase
-{
-	//! No saving.
-	virtual void SetInterface(IMonoInterface *handle) {}
-	//! Unregisters itself and commits suicide.
-	virtual void OnCryamblyInitilizing()
-	{
-		this->monoInterface->RemoveListener(this);
-		delete this;
-	}
 };
 
 #define REGISTER_METHOD(method) this->RegisterInteropMethod(#method, method)
@@ -1445,6 +1429,21 @@ typedef IMonoInterface *(*InitializeMonoInterface)(IGameFramework *, List<IMonoS
 //! // Now MonoEnv can be used to communicate with CryCIL API!
 //! @endcode
 extern IMonoInterface *MonoEnv;
+
+//! Specialization of IMonoInterop<,> template that relies on using MonoEnv variable
+//! instead of internal field and unregisters and destroys itself after registration
+//! of internal calls.
+template<> struct IMonoInterop < true, true > : IMonoInteropBase
+{
+	//! No saving.
+	virtual void SetInterface(IMonoInterface *handle) {}
+	//! Unregisters itself and commits suicide.
+	virtual void OnCryamblyInitilizing()
+	{
+		MonoEnv->RemoveListener(this);
+		delete this;
+	}
+};
 
 #pragma region Conversions Interface
 
