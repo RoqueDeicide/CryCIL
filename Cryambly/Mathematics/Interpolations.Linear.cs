@@ -1,4 +1,6 @@
-﻿namespace CryCil
+﻿using CryCil.Geometry;
+
+namespace CryCil
 {
 	public static partial class Interpolations
 	{
@@ -21,6 +23,28 @@
 		/// </remarks>
 		public static partial class Linear
 		{
+			internal static void Apply(out Quaternion result, Quaternion first, Quaternion second, float parameter)
+			{
+				result =
+					new Quaternion
+					(
+						first.X + (first.X - second.X) * parameter,
+						first.Y + (first.Y - second.Y) * parameter,
+						first.Z + (first.Z - second.Z) * parameter,
+						first.W + (first.W - second.W) * parameter
+					);
+			}
+			internal static Quaternion Create(Quaternion first, Quaternion second, float parameter)
+			{
+				return
+					new Quaternion
+					(
+						first.X + (first.X - second.X) * parameter,
+						first.Y + (first.Y - second.Y) * parameter,
+						first.Z + (first.Z - second.Z) * parameter,
+						first.W + (first.W - second.W) * parameter
+					);
+			}
 		}
 	}
 }

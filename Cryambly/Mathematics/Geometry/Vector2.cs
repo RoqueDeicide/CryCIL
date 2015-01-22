@@ -502,37 +502,6 @@ namespace CryCil.Geometry
 		#endregion
 		#region Interpolations
 		/// <summary>
-		/// Creates spherical interpolation defined by two vectors and a value.
-		/// </summary>
-		/// <param name="p">First vector that defines interpolation.</param>
-		/// <param name="q">Second vector that defines interpolation.</param>
-		/// <param name="t">
-		/// A value between 0 and 1 that defines position of interpolated vector.
-		/// </param>
-		public static Vector2 CreateSphericalInterpolation(Vector2 p, Vector2 q, float t)
-		{
-			Vector2 result;
-			// calculate cosine using the "inner product" between two
-			// vectors: p*q=cos(radiant)
-			float cosine = MathHelpers.Clamp(Vector2.Dot(p, q), -1f, 1f);
-			// Perform normalized linear interpolation if two vectors if they are very
-			// close to each other to avoid division by zero.
-			if (cosine >= 0.99f)
-			{
-				result = Interpolations.Linear.Create(p, q, t); //perform LERP:
-				result.Normalize();
-			}
-			else
-			{
-				float rad = (float)Math.Acos(cosine);
-				float scale0 = (float)Math.Sin((1 - t) * rad);
-				float scale1 = (float)Math.Sin(t * rad);
-				result = (p * scale0 + q * scale1) / (float)Math.Sin(rad);
-				result.Normalize();
-			}
-			return result;
-		}
-		/// <summary>
 		/// Performs a cubic interpolation between two vectors.
 		/// </summary>
 		/// <param name="start"> Start vector.</param>

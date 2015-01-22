@@ -611,76 +611,6 @@ namespace CryCil
 			this.M20 *= s.X; this.M21 *= s.Y; this.M22 *= s.Z; this.M23 *= s.W;
 		}
 		#endregion
-		#region Rotations
-		#region Interpolations
-		/// <summary>
-		/// Creates a matrix that represents a spherical linear interpolation from one
-		/// matrix to another.
-		/// </summary>
-		/// <param name="m">First matrix.</param>
-		/// <param name="n">Second matrix.</param>
-		/// <param name="t">Interpolation parameter.</param>
-		/// <returns>
-		/// Matrix which transformations are interpolated between given matrices.
-		/// </returns>
-		public static Matrix34 CreateSlerp(Matrix34 m, Matrix34 n, float t)
-		{
-			var matrix = new Matrix34();
-			matrix.SetSlerp(m, n, t);
-
-			return matrix;
-		}
-		/// <summary>
-		/// Creates a matrix that represents a spherical linear interpolation from one
-		/// matrix to another.
-		/// </summary>
-		/// <remarks>
-		/// <para>This is an implementation of interpolation without quaternions.</para>
-		/// <para>
-		/// Given two orthonormal 3x3 matrices this function calculates the shortest
-		/// possible interpolation-path between the two rotations. The interpolation curve
-		/// forms the shortest great arc on the rotation sphere (geodesic).
-		/// </para>
-		/// <para>Angular velocity of the interpolation is constant.</para>
-		/// <para>Possible stability problems:</para>
-		/// <para>
-		/// There are two singularities at angle = 0 and angle = <see cref="Math.PI"/> .
-		/// At 0 the interpolation-axis is arbitrary, which means any axis will produce
-		/// the same result because we have no rotation. (1,0,0) axis is used in this
-		/// case. At <see cref="Math.PI"/> the rotations point away from each other and
-		/// the interpolation-axis is unpredictable. In this case axis (1,0,0) is used as
-		/// well. If the angle is ~0 or ~PI, then a very small vector has to be normalized
-		/// and this can cause numerical instability.
-		/// </para>
-		/// </remarks>
-		/// <param name="m">First matrix.</param>
-		/// <param name="n">Second matrix.</param>
-		/// <param name="t">Interpolation parameter.</param>
-		public void SetSlerp(Matrix34 m, Matrix34 n, float t)
-		{
-			// calculate delta-rotation between m and n (=39 flops)
-			Matrix33 d = new Matrix33(), i = new Matrix33();
-			d.M00 = m.M00 * n.M00 + m.M10 * n.M10 + m.M20 * n.M20; d.M01 = m.M00 * n.M01 + m.M10 * n.M11 + m.M20 * n.M21; d.M02 = m.M00 * n.M02 + m.M10 * n.M12 + m.M20 * n.M22;
-			d.M10 = m.M01 * n.M00 + m.M11 * n.M10 + m.M21 * n.M20; d.M11 = m.M01 * n.M01 + m.M11 * n.M11 + m.M21 * n.M21; d.M12 = m.M01 * n.M02 + m.M11 * n.M12 + m.M21 * n.M22;
-			d.M20 = d.M01 * d.M12 - d.M02 * d.M11; d.M21 = d.M02 * d.M10 - d.M00 * d.M12; d.M22 = d.M00 * d.M11 - d.M01 * d.M10;
-
-			// extract angle and axis
-			double cosine = MathHelpers.Clamp((d.M00 + d.M11 + d.M22 - 1.0) * 0.5, -1.0, +1.0);
-			double angle = Math.Atan2(Math.Sqrt(1.0 - cosine * cosine), cosine);
-			var axis = new Vector3(d.M21 - d.M12, d.M02 - d.M20, d.M10 - d.M01);
-			double l = Math.Sqrt(axis | axis); if (l > 0.00001) axis /= (float)l; else axis = new Vector3(1, 0, 0);
-			Rotation.AroundAxis.Set(ref i, ref  axis, (float)angle * t); // angle interpolation and calculation of new delta-matrix (=26 flops)
-
-			// final concatenation (=39 flops)
-			this.M00 = m.M00 * i.M00 + m.M01 * i.M10 + m.M02 * i.M20; this.M01 = m.M00 * i.M01 + m.M01 * i.M11 + m.M02 * i.M21; this.M02 = m.M00 * i.M02 + m.M01 * i.M12 + m.M02 * i.M22;
-			this.M10 = m.M10 * i.M00 + m.M11 * i.M10 + m.M12 * i.M20; this.M11 = m.M10 * i.M01 + m.M11 * i.M11 + m.M12 * i.M21; this.M12 = m.M10 * i.M02 + m.M11 * i.M12 + m.M12 * i.M22;
-			this.M20 = this.M01 * this.M12 - this.M02 * this.M11; this.M21 = this.M02 * this.M10 - this.M00 * this.M12; this.M22 = this.M00 * this.M11 - this.M01 * this.M10;
-
-			this.M03 = m.M03 * (1 - t) + n.M03 * t;
-			this.M13 = m.M13 * (1 - t) + n.M13 * t;
-			this.M23 = m.M23 * (1 - t) + n.M23 * t;
-		}
-		#endregion
 		#region Operators
 		/// <summary>
 		/// Multiplies two matrices.
@@ -706,7 +636,6 @@ namespace CryCil
 				M23 = l.M20 * r.M03 + l.M21 * r.M13 + l.M22 * r.M23 + l.M23
 			};
 		}
-		#endregion
 		#endregion
 		#endregion
 		#region Utilities

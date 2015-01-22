@@ -712,53 +712,6 @@ namespace CryCil.Geometry
 			this.X *= fInvLen; this.Y *= fInvLen; this.Z *= fInvLen;
 		}
 		#endregion
-		#region Interpolations
-		/// <summary>
-		/// Sets this vector to be a spherical interpolation defined by two vectors and a
-		/// value.
-		/// </summary>
-		/// <param name="p">First vector that defines interpolation.</param>
-		/// <param name="q">Second vector that defines interpolation.</param>
-		/// <param name="t">
-		/// A value between 0 and 1 that defines position of interpolated vector.
-		/// </param>
-		public void SetSphericalInterpolation(Vector3 p, Vector3 q, float t)
-		{
-			// calculate cosine using the "inner product" between two
-			// vectors: p*q=cos(radiant)
-			float cosine = MathHelpers.Clamp((p | q), -1f, 1f);
-			// Perform normalized linear interpolation if two vectors if they are very
-			// close to each other to avoid division by zero.
-			if (cosine >= 0.99f)
-			{
-				Interpolations.Linear.Apply(out this, p, q, t); //perform LERP:
-				this.Normalize();
-			}
-			else
-			{
-				float rad = (float)Math.Acos(cosine);
-				float scale_0 = (float)Math.Sin((1 - t) * rad);
-				float scale_1 = (float)Math.Sin(t * rad);
-				this = (p * scale_0 + q * scale_1) / (float)Math.Sin(rad);
-				this.Normalize();
-			}
-		}
-		/// <summary>
-		/// Creates spherical interpolation defined by two vectors and a value.
-		/// </summary>
-		/// <param name="p">First vector that defines interpolation.</param>
-		/// <param name="q">Second vector that defines interpolation.</param>
-		/// <param name="t">
-		/// A value between 0 and 1 that defines position of interpolated vector.
-		/// </param>
-		public static Vector3 CreateSphericalInterpolation(Vector3 p, Vector3 q, float t)
-		{
-			var v = new Vector3();
-			v.SetSphericalInterpolation(p, q, t);
-
-			return v;
-		}
-		#endregion
 		#region Clamping
 		/// <summary>
 		/// If length of this vector is greater then specified value, then downscales this

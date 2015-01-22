@@ -407,6 +407,26 @@ namespace CryCil.Geometry
 		{
 			return new Vector3(value.X, value.Y, value.Z);
 		}
+		/// <summary>
+		/// Performs an explicit conversion from <see cref="Vector4"/> to
+		/// <see cref="Quaternion"/>.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <returns>The result of the conversion.</returns>
+		public static explicit operator Quaternion(Vector4 value)
+		{
+			return new Quaternion(value.X, value.Y, value.Z, value.W);
+		}
+		/// <summary>
+		/// Performs an explicit conversion from <see cref="Vector4"/> to
+		/// <see cref="Quaternion"/>.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <returns>The result of the conversion.</returns>
+		public static explicit operator Vector4(Quaternion value)
+		{
+			return new Vector4(value.X, value.Y, value.Z, value.W);
+		}
 		#endregion
 		#endregion
 		#region Modification

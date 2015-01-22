@@ -407,10 +407,7 @@ namespace CryCil.Geometry
 			// Set it to identity quaternion if it's norm is close to zero.
 			if (norm < MathHelpers.ZeroTolerance)
 			{
-				this.X = 0;
-				this.Y = 0;
-				this.Z = 0;
-				this.W = 1;
+				this = Quaternion.Identity;
 			}
 			else
 			{
@@ -421,86 +418,6 @@ namespace CryCil.Geometry
 			}
 		}
 		#region Interpolations
-		/// <summary>
-		/// Sets this quaternion to result of normalized linear interpolation.
-		/// </summary>
-		/// <param name="start"> Starting quaternion in interpolation.</param>
-		/// <param name="end">   Ending quaternion in interpolation.</param>
-		/// <param name="amount">
-		/// Number between 0 and 1 that sets position of resulting quaternion between
-		/// <paramref name="start"/> and <paramref name="end"/>.
-		/// </param>
-		public void NormalizedLinearInterpolation(Quaternion start, Quaternion end, float amount)
-		{
-			var q = end;
-			if ((start | q) < 0) { q = q.Flipped; }
-
-			var vDiff = q.Vector - start.Vector;
-
-			this.Vector = start.Vector + (vDiff * amount);
-			this.W = start.W + ((q.W - start.W) * amount);
-
-			this.Normalize();
-		}
-		/// <summary>
-		/// Sets this quaternion to result of normalized linear interpolation using a
-		/// different algorithm.
-		/// </summary>
-		/// <param name="start"> Starting quaternion in interpolation.</param>
-		/// <param name="end">   Ending quaternion in interpolation.</param>
-		/// <param name="amount">
-		/// Number between 0 and 1 that sets position of resulting quaternion between
-		/// <paramref name="start"/> and <paramref name="end"/>.
-		/// </param>
-		public void NormalizedLinearInterpolation2(Quaternion start, Quaternion end, float amount)
-		{
-			var q = end;
-			var cosine = (start | q);
-			if (cosine < 0) q = q.Flipped;
-			var k = (1 - Math.Abs(cosine)) * 0.4669269f;
-			var s = 2 * k * amount * amount * amount - 3 * k * amount * amount + (1 + k) * amount;
-			this.X = start.X * (1.0f - s) + q.X * s;
-			this.Y = start.Y * (1.0f - s) + q.Y * s;
-			this.Z = start.Z * (1.0f - s) + q.Z * s;
-			this.W = start.W * (1.0f - s) + q.W * s;
-			this.Normalize();
-		}
-		/// <summary>
-		/// Sets this quaternion to result of spherical linear interpolation.
-		/// </summary>
-		/// <param name="start"> Starting quaternion in interpolation.</param>
-		/// <param name="end">   Ending quaternion in interpolation.</param>
-		/// <param name="amount">
-		/// Number between 0 and 1 that sets position of resulting quaternion between
-		/// <paramref name="start"/> and <paramref name="end"/>.
-		/// </param>
-		public void SphericalLinearInterpolation(Quaternion start, Quaternion end, float amount)
-		{
-			var p = start;
-			var q = end;
-			var q2 = new Quaternion();
-
-			var cosine = (p | q);
-			if (cosine < 0.0f) { cosine = -cosine; q = q.Flipped; } // take shortest arc
-			if (cosine > 0.9999f)
-			{
-				this.NormalizedLinearInterpolation(p, q, amount);
-				return;
-			}
-			// from now on, a division by 0 is not possible any more
-			q2.W = q.W - p.W * cosine;
-			q2.X = q.X - p.X * cosine;
-			q2.Y = q.Y - p.Y * cosine;
-			q2.Z = q.Z - p.Z * cosine;
-			var sine = Math.Sqrt(q2 | q2);
-			double s, c;
-
-			MathHelpers.SinCos(Math.Atan2(sine, cosine) * amount, out s, out c);
-			this.W = (float)(p.W * c + q2.W * s / sine);
-			this.X = (float)(p.X * c + q2.X * s / sine);
-			this.Y = (float)(p.Y * c + q2.Y * s / sine);
-			this.Z = (float)(p.Z * c + q2.Z * s / sine);
-		}
 		/// <summary>
 		/// </summary>
 		/// <param name="start"> </param>
