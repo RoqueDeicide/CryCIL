@@ -1304,12 +1304,16 @@ struct IMonoInterface
 	VIRTUAL_API virtual IMonoGC *GetGC() = 0;
 	VIRTUAL_API virtual IGameFramework *GetGameFramework() = 0;
 };
-//! Interface of objects that specialize on setting up interops between C++ and Mono.
+//! Base class for a template class that defines interface for Mono interops.
 //!
-//! The earliest time for registration of internal calls is during invocation
-//! of OnRunTimeInitialized.
-struct IMonoInterop : public IMonoSystemListener
+//! This class is here to reduce amount of code that has to be duplicated when
+//! specializing aforementioned template.
+struct IMonoInteropBase : public IMonoSystemListener
 {
+	//! Registers an interop method.
+	//!
+	//! @param methodName      Name of the method to register.
+	//! @param functionPointer Pointer to the method that will be called internally.
 	virtual void RegisterInteropMethod(const char *methodName, void *functionPointer)
 	{
 		this->monoInterface->AddInternalCall
@@ -1363,9 +1367,49 @@ struct IMonoInterop : public IMonoSystemListener
 	virtual void Shutdown()
 	{}
 };
-//! Represents an interop that unregisters and deletes itself after internal calls are added.
-struct ISingleShotInterop : IMonoInterop
+
+//! Interface of objects that specialize on setting up interops between C++ and Mono.
+//!
+//! The earliest time for registration of internal calls is during invocation
+//! of OnRunTimeInitialized, which is why it is kept abstract.
+//!
+//! @typeparam callRegistrationOnly Indicates whether this interop object will unregister
+//!                                 and destroy itself after adding internal calls to Mono.
+//! @typeparam useMonoEnv Indicates whether this interop object will override SetInterface
+//!                       to not save IMonoInterface implementation to the internal field.
+template<bool callRegistrationOnly, bool useMonoEnv = false>
+struct IMonoInterop : IMonoInteropBase
 {
+};
+//! Specialization of IMonoInterop<,> template that behaves in a default manner.
+template<> struct IMonoInterop<false, false> : IMonoInteropBase
+{
+};
+//! Specialization of IMonoInterop<,> template that unregisters and destroys itself
+//! after registration of internal calls.
+template<> struct IMonoInterop<true, false> : IMonoInteropBase
+{
+	//! Unregisters itself and commits suicide.
+	virtual void OnCryamblyInitilizing()
+	{
+		MonoEnv->RemoveListener(this);
+		delete this;
+	}
+};
+//! Specialization of IMonoInterop<,> template that relies on using MonoEnv variable
+//! instead of internal field.
+template<> struct IMonoInterop < false, true > : IMonoInteropBase
+{
+	//! No saving.
+	virtual void SetInterface(IMonoInterface *handle) {}
+};
+//! Specialization of IMonoInterop<,> template that relies on using MonoEnv variable
+//! instead of internal field and unregisters and destroys itself after registration
+//! of internal calls.
+template<> struct IMonoInterop < true, true > : IMonoInteropBase
+{
+	//! No saving.
+	virtual void SetInterface(IMonoInterface *handle) {}
 	//! Unregisters itself and commits suicide.
 	virtual void OnCryamblyInitilizing()
 	{
@@ -1377,22 +1421,10 @@ struct ISingleShotInterop : IMonoInterop
 #define REGISTER_METHOD(method) this->RegisterInteropMethod(#method, method)
 
 //! Interface of interops that use classes within CryCil.Interops name space.
-struct IDefaultMonoInterop : public IMonoInterop
+template<bool callRegistrationOnly>
+struct IDefaultMonoInterop : public IMonoInterop<callRegistrationOnly, false>
 {
-	virtual void SetInterface(IMonoInterface *handle) {}
 	virtual const char *GetNameSpace() { return "CryCil.Interops"; }
-};
-//! For internal use. Behaves like a single shot interop.
-struct IDefaultSingleShotInterop : public ISingleShotInterop
-{
-	virtual void SetInterface(IMonoInterface *handle) {}
-	virtual const char *GetNameSpace() { return "CryCil.Interops"; }
-	//! Unregisters itself and commits suicide.
-	virtual void OnCryamblyInitilizing()
-	{
-		MonoEnv->RemoveListener(this);
-		delete this;
-	}
 };
 
 //! Signature of the only method that is exported by MonoInterface.dll
