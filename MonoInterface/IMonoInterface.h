@@ -109,7 +109,7 @@ namespace mono
 	//! You can use IMonoInterface::WrapObject() function to create a wrapper for
 	//! mono::object instance when you to work with it or keep it.
 	typedef class MonoObject *object;
-	
+
 	//! Typedefs marked by this define represent a reference to an object that is located
 	//! within managed memory. Technically all of them are equivalents to mono::object
 	//! but they can be used to designate what the object is supposed to be.
@@ -394,9 +394,9 @@ protected:
 struct IMonoGC
 {
 	//! Gets index of the oldest generation that is used by GC.
-	__declspec(property(get=GetMaxGeneration)) int MaxGeneration;
+	__declspec(property(get = GetMaxGeneration)) int MaxGeneration;
 	//! Gets number of bytes that are currently allocated by this GC.
-	__declspec(property(get=GetHeapSize)) __int64 HeapSize;
+	__declspec(property(get = GetHeapSize)) __int64 HeapSize;
 
 	//! Triggers garbage collection.
 	//!
@@ -439,12 +439,12 @@ struct IMonoGCHandle
 	//!
 	//! @returns A pointer that provides access to object's API, or null if this is a weak
 	//!          handle and held object has been collected.
-	__declspec(property(get=GetObjectHandle)) IMonoHandle *ObjectHandle;
+	__declspec(property(get = GetObjectHandle)) IMonoHandle *ObjectHandle;
 	//! Gets the pointer to managed object that is being held by this GC handle.
 	//!
 	//! @returns A pointer that can be passed directly to methods and thunks, or null if
 	//!          this is a weak handle and held object has been collected.
-	__declspec(property(get=GetObjectPointer)) mono::object ObjectPointer;
+	__declspec(property(get = GetObjectPointer)) mono::object ObjectPointer;
 
 	//! Releases this GC handle.
 	VIRTUAL_API virtual void Release() = 0;
@@ -495,7 +495,7 @@ struct IMonoAssembly : public IMonoFunctionalityWrapper
 		const char *methodName, const char *params
 	) = 0;
 	//! Gets the reference to the instance of type System.Reflection.Assembly.
-	__declspec(property(get=GetReflectionObject)) mono::assembly ReflectionObject;
+	__declspec(property(get = GetReflectionObject)) mono::assembly ReflectionObject;
 
 	VIRTUAL_API virtual mono::assembly GetReflectionObject() = 0;
 };
@@ -503,9 +503,9 @@ struct IMonoAssembly : public IMonoFunctionalityWrapper
 struct IMonoArray : public IMonoFunctionalityWrapper
 {
 	//! Gets the length of the array.
-	__declspec(property(get=GetSize)) int Length;
+	__declspec(property(get = GetSize)) int Length;
 	//! Gets the type of the elements of the array.
-	__declspec(property(get=GetElementClass)) IMonoClass *ElementClass;
+	__declspec(property(get = GetElementClass)) IMonoClass *ElementClass;
 	//! Provides access to the item.
 	//!
 	//! Don't hesitate on dereferencing returned pointer: Mono arrays have tendency of
@@ -529,13 +529,13 @@ struct IMonoArray : public IMonoFunctionalityWrapper
 struct IMonoClass : public IMonoFunctionalityWrapper
 {
 	//! Gets the name of this class.
-	__declspec(property(get=GetName)) const char *Name;
+	__declspec(property(get = GetName)) const char *Name;
 	//! Gets the name space where this class is defined.
-	__declspec(property(get=GetNameSpace)) const char *NameSpace;
+	__declspec(property(get = GetNameSpace)) const char *NameSpace;
 	//! Gets assembly where this class is defined.
-	__declspec(property(get=GetAssembly)) IMonoAssembly *Assembly;
+	__declspec(property(get = GetAssembly)) IMonoAssembly *Assembly;
 	//! Gets assembly where this class is defined.
-	__declspec(property(get=GetBase)) IMonoClass *Base;
+	__declspec(property(get = GetBase)) IMonoClass *Base;
 	//! Creates an instance of this class.
 	//!
 	//! @param args Arguments to pass to the constructor, can be null if latter has no parameters.
@@ -722,7 +722,7 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	//!    else
 	//!    {
 	//!        // This code region is the only place where the result of invocation is defined.
-	//!        
+	//!
 	//!        // Wrap the array.
 	//!        IMonoArray *vectorComponents = MonoEnv->WrapArray(componentsArray, true);
 	//!        // Print the components.
@@ -761,7 +761,7 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	//!    else
 	//!    {
 	//!        // This code region is the only place where the result of invocation is defined.
-	//!        
+	//!
 	//!        // Unbox the "out" parameter.
 	//!        Vec2 vector = Unbox<Vec2>(result);
 	//!        // Print the components.
@@ -795,7 +795,7 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	//!    else
 	//!    {
 	//!        // This code region is the only place where the result of invocation is defined.
-	//!        
+	//!
 	//!        // Unbox the result.
 	//!        Vec3 vector = Unbox<Vec3>(result);
 	//!        // Print the components.
@@ -805,11 +805,11 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	//!    }
 	//! @endcode
 	//! @example DoxygenExampleFiles\UnmanagedThunkExample.cpp
-	__declspec(property(get=GetThunk)) void *UnmanagedThunk;
+	__declspec(property(get = GetThunk)) void *UnmanagedThunk;
 	//! Gets the name of the method.
-	__declspec(property(get=GetName)) const char *Name;
+	__declspec(property(get = GetName)) const char *Name;
 	//! Gets number of arguments this method accepts.
-	__declspec(property(get=GetParameterCount)) int ParameterCount;
+	__declspec(property(get = GetParameterCount)) int ParameterCount;
 
 	//! Invokes this method.
 	//!
@@ -820,7 +820,7 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	//! Examples:
 	//!
 	//! @code{.cpp}
-	//! // Get System.Int32 class. 
+	//! // Get System.Int32 class.
 	//! IMonoClass *int32Class = MonoEnv->CoreLibrary->GetClass("System", "Int32");
 	//! // Get static method "Parse".
 	//! IMonoMethod *parseMethod = int32Class->GetMethod("Parse", "System.String");
@@ -884,7 +884,7 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	//! Examples:
 	//!
 	//! @code{.cpp}
-	//! // Get System.Int32 class. 
+	//! // Get System.Int32 class.
 	//! IMonoClass *int32Class = MonoEnv->CoreLibrary->GetClass("System", "Int32");
 	//! // Get static method "Parse".
 	//! IMonoMethod *parseMethod = int32Class->GetMethod("Parse", "System.String");
@@ -1039,7 +1039,7 @@ struct IMonoInterface
 	VIRTUAL_API virtual mono::string ToManagedString(const char *text) = 0;
 	//! Converts given managed string to null-terminated one.
 	VIRTUAL_API virtual const char *ToNativeString(mono::string text) = 0;
-	
+
 	//! Creates a new MonoObject using constructor with specific parameters.
 	//!
 	//! @param assembly   Assembly where the type of the object is defined.
@@ -1048,12 +1048,9 @@ struct IMonoInterface
 	//! @param params     An array of parameters to pass to the constructor.
 	//!                   If null, default constructor will be used.
 	VIRTUAL_API virtual mono::object CreateObject
-	(
-		IMonoAssembly *assembly,
-		const char *name_space,
-		const char *class_name,
-		IMonoArray *params = nullptr
-	) = 0;
+		(IMonoAssembly *assembly,
+		const char *name_space, const char *class_name,
+		IMonoArray *params = nullptr) = 0;
 	//! Creates a new wrapper for given MonoObject.
 	//!
 	//! @param obj An object to wrap.
@@ -1218,7 +1215,7 @@ struct IMonoInterface
 	//! With custom structures passed with out keyword reference:
 	//!
 	//! Type definitions:
-	//! C#:  
+	//! C#:
 	//! @code{.cs}
 	//!      [StructLayout(LayoutKind.Sequential)]
 	//!      struct Data
@@ -1279,21 +1276,21 @@ struct IMonoInterface
 	// Properties.
 
 	//! Gets the pointer to AppDomain.
-	__declspec(property(get=GetAppDomain)) void *AppDomain;
+	__declspec(property(get = GetAppDomain)) void *AppDomain;
 	//! Gets the pointer to IMonoAssembly that represents Cryambly.
-	__declspec(property(get=GetCryambly)) IMonoAssembly *Cryambly;
+	__declspec(property(get = GetCryambly)) IMonoAssembly *Cryambly;
 	//! Gets the pointer to IMonoAssembly that represents Pdb2mdb.
-	__declspec(property(get=GetPdbMdbAssembly)) IMonoAssembly *Pdb2Mdb;
+	__declspec(property(get = GetPdbMdbAssembly)) IMonoAssembly *Pdb2Mdb;
 	//! Gets the pointer to IMonoAssembly that represents equivalent of mscorlib.
-	__declspec(property(get=GetCoreLibrary)) IMonoAssembly *CoreLibrary;
+	__declspec(property(get = GetCoreLibrary)) IMonoAssembly *CoreLibrary;
 	//! Indicates whether Mono run-time environment is running.
-	__declspec(property(get=GetInitializedIndication)) bool IsRunning;
+	__declspec(property(get = GetInitializedIndication)) bool IsRunning;
 	//! Returns the object that boxes some simple value types.
-	__declspec(property(get=GetDefaultBoxer)) IDefaultBoxinator *DefaultBoxer;
+	__declspec(property(get = GetDefaultBoxer)) IDefaultBoxinator *DefaultBoxer;
 	//! Gets the interface with Mono GC.
-	__declspec(property(get=GetGC)) IMonoGC *GC;
+	__declspec(property(get = GetGC)) IMonoGC *GC;
 	//! Gets the pointer to IGameFramework implementation that is available to CryCIL.
-	__declspec(property(get=GetGameFramework)) IGameFramework *CryAction;
+	__declspec(property(get = GetGameFramework)) IGameFramework *CryAction;
 
 	VIRTUAL_API virtual void *GetAppDomain() = 0;
 	VIRTUAL_API virtual IMonoAssembly *GetCryambly() = 0;
@@ -1317,12 +1314,7 @@ struct IMonoInteropBase : public IMonoSystemListener
 	virtual void RegisterInteropMethod(const char *methodName, void *functionPointer)
 	{
 		this->monoInterface->AddInternalCall
-		(
-			this->GetNameSpace(),
-			this->GetName(),
-			methodName,
-			functionPointer
-		);
+			(this->GetNameSpace(), this->GetName(), methodName, functionPointer);
 	}
 	//! Returns the name of the class that will declare managed counter-parts
 	//! of the internal calls.
@@ -1379,8 +1371,7 @@ struct IMonoInteropBase : public IMonoSystemListener
 //!                       to not save IMonoInterface implementation to the internal field.
 template<bool callRegistrationOnly, bool useMonoEnv = false>
 struct IMonoInterop : IMonoInteropBase
-{
-};
+{};
 //! Specialization of IMonoInterop<,> template that behaves in a default manner.
 template<> struct IMonoInterop<false, false> : IMonoInteropBase
 {
@@ -1422,15 +1413,13 @@ template<> struct IMonoInterop < true, true > : IMonoInteropBase
 
 //! Interface of interops that use classes within CryCil.Interops name space.
 template<bool callRegistrationOnly>
-struct IDefaultMonoInterop : public IMonoInterop<callRegistrationOnly, false>
+struct IDefaultMonoInterop : public IMonoInterop < callRegistrationOnly, false >
 {
 	virtual const char *GetNameSpace() { return "CryCil.Interops"; }
 };
 
 //! Signature of the only method that is exported by MonoInterface.dll
 typedef IMonoInterface *(*InitializeMonoInterface)(IGameFramework *, List<IMonoSystemListener *> *);
-
-
 
 //! Pointer to IMonoInterface implementation for internal use.
 //!
@@ -1485,7 +1474,7 @@ inline const char *ToNativeString(mono::string monoString)
 //!     2) Boxing a pointer: You can use BoxPtr function to box a pointer to unmanaged
 //!                          object, pass it managed method and let it dereference
 //!                          that pointer.
-//!                          
+//!
 //!                          This method has some specifics though:
 //!                           1) Make sure that managed are unmanaged types are blittable:
 //!                            - Their objects take up the same amount of memory.
