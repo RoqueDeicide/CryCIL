@@ -9,7 +9,13 @@ MonoMethodWrapper::MonoMethodWrapper(MonoMethod *method)
 	this->name = mono_method_get_name(this->wrappedMethod);
 }
 
-mono::object MonoMethodWrapper::Invoke(void *object, IMonoArray *params, bool polymorph)
+mono::object MonoMethodWrapper::Invoke
+(
+	void *object,
+	IMonoArray *params,
+	mono::exception *exc,
+	bool polymorph
+)
 {
 	MonoMethod *methodToInvoke;
 	if (polymorph)
@@ -26,13 +32,26 @@ mono::object MonoMethodWrapper::Invoke(void *object, IMonoArray *params, bool po
 	MonoObject *result = mono_runtime_invoke_array(methodToInvoke, object, paramsArray, &exception);
 	if (exception)
 	{
-		MonoEnv->HandleException((mono::exception)exception);
+		if (exc)
+		{
+			*exc = (mono::exception)exception;
+		}
+		else
+		{
+			MonoEnv->HandleException((mono::exception)exception);
+		}
 		return nullptr;
 	}
 	return (mono::object)result;
 }
 
-mono::object MonoMethodWrapper::Invoke(void *object, void **params, bool polymorph)
+mono::object MonoMethodWrapper::Invoke
+(
+	void *object,
+	void **params,
+	mono::exception *exc,
+	bool polymorph
+)
 {
 	MonoMethod *methodToInvoke;
 	if (polymorph)
@@ -48,7 +67,14 @@ mono::object MonoMethodWrapper::Invoke(void *object, void **params, bool polymor
 	MonoObject *result = mono_runtime_invoke(methodToInvoke, object, params, &exception);
 	if (exception)
 	{
-		MonoEnv->HandleException((mono::exception)exception);
+		if (exc)
+		{
+			*exc = (mono::exception)exception;
+		}
+		else
+		{
+			MonoEnv->HandleException((mono::exception)exception);
+		}
 		return nullptr;
 	}
 	return (mono::object)result;

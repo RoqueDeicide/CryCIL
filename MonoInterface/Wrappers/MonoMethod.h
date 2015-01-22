@@ -13,9 +13,21 @@ private:
 public:
 	MonoMethodWrapper(MonoMethod *method);
 	//! Invokes this method.
-	virtual mono::object Invoke(void *object, IMonoArray *params = nullptr, bool polymorph = false);
+	virtual mono::object Invoke
+	(
+		void *object,
+		IMonoArray *params = nullptr,
+		mono::exception *exc = nullptr,
+		bool polymorph = false
+	);
 	//! Invokes this method.
-	virtual mono::object Invoke(void *object, void **params = nullptr, bool polymorph = false);
+	virtual mono::object Invoke
+	(
+		void *object,
+		void **params = nullptr,
+		mono::exception *exc = nullptr,
+		bool polymorph = false
+	);
 
 	virtual void *GetThunk();
 

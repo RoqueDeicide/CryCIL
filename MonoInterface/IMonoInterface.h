@@ -872,7 +872,13 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	//!                  Pass null, if method can accept no arguments.
 	//! @param polymorph Indicates whether we need to invoke a virtual method,
 	//!                  that is specific to the instance.
-	VIRTUAL_API virtual mono::object Invoke(void *object, IMonoArray *params = nullptr, bool polymorph = false) = 0;
+	VIRTUAL_API virtual mono::object Invoke
+	(
+		void *object,
+		IMonoArray *params = nullptr,
+		mono::exception *exc = nullptr,
+		bool polymorph = false
+	) = 0;
 	//! Invokes this method.
 	//!
 	//! Since extension methods are static by their internal nature, you can pass null
@@ -936,7 +942,13 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	//!                   Pass null, if method can accept no arguments.
 	//! @param polymorph  Indicates whether we need to invoke a virtual method,
 	//!                   that is specific to the instance.
-	VIRTUAL_API virtual mono::object Invoke(void *object, void **params = nullptr, bool polymorph = false) = 0;
+	VIRTUAL_API virtual mono::object Invoke
+	(
+		void *object,
+		void **params = nullptr,
+		mono::exception *exc = nullptr,
+		bool polymorph = false
+	) = 0;
 
 	VIRTUAL_API virtual void *GetThunk() = 0;
 	VIRTUAL_API virtual const char *GetName() = 0;
