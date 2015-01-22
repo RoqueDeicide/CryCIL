@@ -9,10 +9,13 @@ namespace CryCil
 			/// <summary>
 			/// Applies linear interpolation to the color.
 			/// </summary>
-			/// <param name="result">Result of interpolation.</param>
-			/// <param name="first">First color.</param>
-			/// <param name="second">Second color.</param>
-			/// <param name="parameter">Scalar that describes difference between resultant color value and first color relative to second color.</param>
+			/// <param name="result">   Result of interpolation.</param>
+			/// <param name="first">    First color.</param>
+			/// <param name="second">   Second color.</param>
+			/// <param name="parameter">
+			/// Scalar that describes difference between resultant color value and first
+			/// color relative to second color.
+			/// </param>
 			public static void Apply(out ColorByte result, ColorByte first, ColorByte second, float parameter)
 			{
 				result = new ColorByte
@@ -26,9 +29,12 @@ namespace CryCil
 			/// <summary>
 			/// Creates a new color that is a result of interpolation.
 			/// </summary>
-			/// <param name="first">First color.</param>
-			/// <param name="second">Second color.</param>
-			/// <param name="parameter">Scalar that describes difference between resultant color value and first color relative to second color.</param>
+			/// <param name="first">    First color.</param>
+			/// <param name="second">   Second color.</param>
+			/// <param name="parameter">
+			/// Scalar that describes difference between resultant color value and first
+			/// color relative to second color.
+			/// </param>
 			/// <returns>Result of interpolation.</returns>
 			public static ColorByte Create(ColorByte first, ColorByte second, float parameter)
 			{
@@ -43,10 +49,13 @@ namespace CryCil
 			/// <summary>
 			/// Applies linear interpolation to the color.
 			/// </summary>
-			/// <param name="result">Result of interpolation.</param>
-			/// <param name="first">First color.</param>
-			/// <param name="second">Second color.</param>
-			/// <param name="parameter">Scalar that describes difference between resultant color value and first color relative to second color.</param>
+			/// <param name="result">   Result of interpolation.</param>
+			/// <param name="first">    First color.</param>
+			/// <param name="second">   Second color.</param>
+			/// <param name="parameter">
+			/// Scalar that describes difference between resultant color value and first
+			/// color relative to second color.
+			/// </param>
 			public static void Apply(out ColorSingle result, ColorSingle first, ColorSingle second, float parameter)
 			{
 				result = new ColorSingle
@@ -60,9 +69,12 @@ namespace CryCil
 			/// <summary>
 			/// Creates a new color that is a result of interpolation.
 			/// </summary>
-			/// <param name="first">First color.</param>
-			/// <param name="second">Second color.</param>
-			/// <param name="parameter">Scalar that describes difference between resultant color value and first color relative to second color.</param>
+			/// <param name="first">    First color.</param>
+			/// <param name="second">   Second color.</param>
+			/// <param name="parameter">
+			/// Scalar that describes difference between resultant color value and first
+			/// color relative to second color.
+			/// </param>
 			/// <returns>Result of interpolation.</returns>
 			public static ColorSingle Create(ColorSingle first, ColorSingle second, float parameter)
 			{

@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace CryEngine.Mathematics.Geometry.Meshes.CSG
+namespace CryCil.Geometry.Csg
 {
 	/// <summary>
 	/// Represents a node in a Binary Spatial Partitioning tree.
@@ -18,8 +15,8 @@ namespace CryEngine.Mathematics.Geometry.Meshes.CSG
 		/// Gets the plane that divides the 3D space at this node.
 		/// </summary>
 		/// <remarks>
-		/// When this property is not initialized, its <see
-		/// cref="CryEngine.Mathematics.Geometry.Plane.D"/> is equal to <see cref="Single.NaN"/> .
+		/// When this property is not initialized, its
+		/// <see cref="CryCil.Geometry.Plane.D"/> is equal to <see cref="Single.NaN"/> .
 		/// </remarks>
 		public Plane Plane { get; private set; }
 		/// <summary>
@@ -81,7 +78,8 @@ namespace CryEngine.Mathematics.Geometry.Meshes.CSG
 			{
 				return;
 			}
-			// Initialize a plane by picking first element's plane without too much heuristics.
+			// Initialize a plane by picking first element's plane without too much
+			// heuristics.
 			if (this.IsNotInitialized())
 			{
 				this.Plane = elements[0].Plane;
@@ -101,8 +99,12 @@ namespace CryEngine.Mathematics.Geometry.Meshes.CSG
 				);
 			}
 			// Assign front and back branches.
-			AssignBranch(this.Front, frontalElements);
-			AssignBranch(this.Back, backElements);
+			BspNode<T> t = this.Front;
+			AssignBranch(ref t, frontalElements);
+			this.Front = t;
+			t = this.Back;
+			AssignBranch(ref t, backElements);
+			this.Back = t;
 		}
 		/// <summary>
 		/// Inverts this BSP tree.
@@ -132,7 +134,9 @@ namespace CryEngine.Mathematics.Geometry.Meshes.CSG
 		/// <summary>
 		/// Determines where given point is located relatively to this BSP tree.
 		/// </summary>
-		/// <param name="point"><see cref="Vector3"/> that represents a given point.</param>
+		/// <param name="point">
+		/// <see cref="Vector3"/> that represents a given point.
+		/// </param>
 		/// <returns>A position of the point.</returns>
 		public BspPointPosition PointPosition(Vector3 point)
 		{
@@ -154,7 +158,8 @@ namespace CryEngine.Mathematics.Geometry.Meshes.CSG
 			// If this node has anything in front or behind it.
 			if (this.Front != null || this.Back != null)
 			{
-				// If given point is outside of branching BSP trees, then it is outside of this one.
+				// If given point is outside of branching BSP trees, then it is outside of
+				// this one.
 				if (this.Front != null && this.Front.PointPosition(point) != BspPointPosition.Outside ||
 					this.Back != null && this.Back.PointPosition(point) != BspPointPosition.Outside)
 				{
@@ -170,12 +175,16 @@ namespace CryEngine.Mathematics.Geometry.Meshes.CSG
 		/// Cuts given elements and removes parts that end up inside this tree.
 		/// </summary>
 		/// <remarks>
-		/// Parts are "inside" this BSP tree when they are behind a node that doesn't have a back branch.
+		/// Parts are "inside" this BSP tree when they are behind a node that doesn't have
+		/// a back branch.
 		/// </remarks>
 		/// <param name="elements">
-		/// A list of elements to cut. This object is not modified in any way during execution.
+		/// A list of elements to cut. This object is not modified in any way during
+		/// execution.
 		/// </param>
-		/// <returns>A list that contains elements that are outside of this tree.</returns>
+		/// <returns>
+		/// A list that contains elements that are outside of this tree.
+		/// </returns>
 		public List<T> FilterList(IList<T> elements)
 		{
 			if (this.IsNotInitialized())
@@ -195,8 +204,8 @@ namespace CryEngine.Mathematics.Geometry.Meshes.CSG
 			{
 				fronts = this.Front.FilterList(fronts);
 			}
-			// If this node has nothing behind it in the tree, then whatever is behind it in the
-			// list should be discarded.
+			// If this node has nothing behind it in the tree, then whatever is behind it
+			// in the list should be discarded.
 			if (this.Back != null)
 			{
 				fronts.AddRange(this.Back.FilterList(backs));
@@ -204,7 +213,8 @@ namespace CryEngine.Mathematics.Geometry.Meshes.CSG
 			return fronts;
 		}
 		/// <summary>
-		/// Cuts elements inside this tree and removes ones that end up inside another one.
+		/// Cuts elements inside this tree and removes ones that end up inside another
+		/// one.
 		/// </summary>
 		/// <param name="bsp">A root of another BSP tree.</param>
 		public void CutTreeOut(BspNode<T> bsp)
@@ -231,15 +241,13 @@ namespace CryEngine.Mathematics.Geometry.Meshes.CSG
 		}
 		#endregion
 		#region Utilities
-		private static void AssignBranch(BspNode<T> branch, IList<T> elements)
+		private static void AssignBranch(ref BspNode<T> branch, IList<T> elements)
 		{
 			if (branch == null)
 			{
-				// ReSharper disable RedundantAssignment
-
-				// This is not a redundant assignment, since we are dealing with a reference type.
+				// This is not a redundant assignment, since we are dealing with a
+				// reference type.
 				branch = new BspNode<T>(elements);
-				// ReSharper restore RedundantAssignment
 			}
 			else
 			{
@@ -254,7 +262,8 @@ namespace CryEngine.Mathematics.Geometry.Meshes.CSG
 		#endregion
 	}
 	/// <summary>
-	/// Defines common functionality of objects that are located in 3D space and can be split up.
+	/// Defines common functionality of objects that are located in 3D space and can be
+	/// split up.
 	/// </summary>
 	/// <typeparam name="T">Type of elements this object can split into.</typeparam>
 	public interface ISpatiallySplittable<T>
@@ -274,18 +283,20 @@ namespace CryEngine.Mathematics.Geometry.Meshes.CSG
 		/// <see cref="Plane"/> that splits the space that contains this object.
 		/// </param>
 		/// <param name="frontCoplanarElements">
-		/// An optional collection for parts of this object that are located on this plane and face
-		/// the same way.
+		/// An optional collection for parts of this object that are located on this plane
+		/// and face the same way.
 		/// </param>
 		/// <param name="backCoplanarElements"> 
-		/// An optional collection for parts of this object that are located on this plane and face
-		/// the opposite way.
+		/// An optional collection for parts of this object that are located on this plane
+		/// and face the opposite way.
 		/// </param>
 		/// <param name="frontElements">        
-		/// An optional collection for parts of this object that are located in front of this plane.
+		/// An optional collection for parts of this object that are located in front of
+		/// this plane.
 		/// </param>
 		/// <param name="backElements">         
-		/// An optional collection for parts of this object that are located behind this plane.
+		/// An optional collection for parts of this object that are located behind this
+		/// plane.
 		/// </param>
 		/// <param name="customData">           
 		/// Optional object that provides data elements can be bound to.

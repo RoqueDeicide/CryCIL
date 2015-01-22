@@ -83,8 +83,12 @@
     <Compile Include="Mathematics\Geometry\BoundingBox.cs" />
     <Compile Include="Mathematics\Geometry\BoundingSphere.cs" />
     <Compile Include="Mathematics\Geometry\Csg\Base\ConstructiveSolidGeometry.cs" />
+    <Compile Include="Mathematics\Geometry\Csg\BSP.cs" />
     <Compile Include="Mathematics\Geometry\EulerAngles.cs" />
     <Compile Include="Mathematics\Geometry\Collision.cs" />
+    <Compile Include="Mathematics\Geometry\Meshes\FaceMesh.cs" />
+    <Compile Include="Mathematics\Geometry\Meshes\FullFace.cs" />
+    <Compile Include="Mathematics\Geometry\Meshes\FullVertex.cs" />
     <Compile Include="Mathematics\Geometry\NamespaceDoc.cs" />
     <Compile Include="Mathematics\Geometry\Plane.cs" />
     <Compile Include="Mathematics\Geometry\Plane.GenericOps.cs" />
@@ -112,6 +116,7 @@
     <Compile Include="Mathematics\Interpolations.Linear.cs" />
     <Compile Include="Mathematics\Interpolations.Linear.Scalars.cs" />
     <Compile Include="Mathematics\Interpolations.Linear.Vectors.cs" />
+    <Compile Include="Mathematics\Interpolations.Linear.Vertexes.cs" />
     <Compile Include="Mathematics\Interpolations.SphericalLinear.cs" />
     <Compile Include="Mathematics\MathHelpers.cs" />
     <Compile Include="Mathematics\Matrix33.cs" />

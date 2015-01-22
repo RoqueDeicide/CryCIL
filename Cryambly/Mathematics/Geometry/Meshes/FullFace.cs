@@ -1,41 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+using CryCil.Geometry.Csg;
 
-namespace CryEngine.Mathematics.Geometry.Meshes.CSG
+namespace CryCil.Geometry
 {
 	/// <summary>
-	/// Represents a triangle.
+	/// Represents a face in the mesh.
 	/// </summary>
-	public struct SplittableTriangle : ISpatiallySplittable<SplittableTriangle>
+	public struct FullFace : ISpatiallySplittable<FullFace>
 	{
-		#region Fields
 		/// <summary>
-		/// First vertex of the triangle.
+		/// First vertex of this face.
 		/// </summary>
-		public MeshVertex First;
+		public FullVertex First;
 		/// <summary>
-		/// Second vertex of the triangle.
+		/// Second vertex of this face.
 		/// </summary>
-		public MeshVertex Second;
+		public FullVertex Second;
 		/// <summary>
-		/// Third vertex of the triangle.
+		/// Third vertex of this face.
 		/// </summary>
-		public MeshVertex Third;
-		#endregion
-		#region Properties
+		public FullVertex Third;
 		/// <summary>
-		/// Gets a plane this triangle is located on.
+		/// Gets a plane this face is located on.
 		/// </summary>
 		public Plane Plane
 		{
 			get { return new Plane(this.First.Position, this.Second.Position, this.Third.Position); }
 		}
 		/// <summary>
-		/// Gets a normal of this triangle.
+		/// Gets a normal to the plane this face is located on.
 		/// </summary>
 		public Vector3 Normal
 		{
@@ -45,26 +40,31 @@ namespace CryEngine.Mathematics.Geometry.Meshes.CSG
 				  .Cross(this.Third.Position - this.First.Position).Normalized;
 			}
 		}
-		#endregion
-		#region Construction
 		/// <summary>
-		/// Creates new instance of type <see cref="SplittableTriangle"/> .
+		/// Gets a list of vertices.
+		/// </summary>
+		public FullVertex[] Vertices
+		{
+			get { return new[] { this.First, this.Second, this.Third }; }
+		}
+		/// <summary>
+		/// Creates new instance of type <see cref="FullFace"/> .
 		/// </summary>
 		/// <param name="vertices">
 		/// A collection of vertices first 3 elements of which will define a triangle.
 		/// </param>
-		public SplittableTriangle(IEnumerable<MeshVertex> vertices)
+		public FullFace(IEnumerable<FullVertex> vertices)
 			: this()
 		{
 			this.Init(vertices);
 		}
 		/// <summary>
-		/// Creates new instance of type <see cref="SplittableTriangle"/> .
+		/// Creates new instance of type <see cref="FullFace"/> .
 		/// </summary>
 		/// <param name="vertices">
 		/// A collection of vertices first 3 elements of which will define a triangle.
 		/// </param>
-		public SplittableTriangle(ICollection<MeshVertex> vertices)
+		public FullFace(ICollection<FullVertex> vertices)
 			: this()
 		{
 			if (vertices.Count < 3)
@@ -74,12 +74,12 @@ namespace CryEngine.Mathematics.Geometry.Meshes.CSG
 			this.Init(vertices);
 		}
 		/// <summary>
-		/// Creates new instance of type <see cref="SplittableTriangle"/> .
+		/// Creates new instance of type <see cref="FullFace"/> .
 		/// </summary>
 		/// <param name="vertices">
 		/// A collection of vertices first 3 elements of which will define a triangle.
 		/// </param>
-		public SplittableTriangle(IList<MeshVertex> vertices)
+		public FullFace(IList<FullVertex> vertices)
 			: this()
 		{
 			if (vertices.Count < 3)
@@ -90,33 +90,31 @@ namespace CryEngine.Mathematics.Geometry.Meshes.CSG
 			this.Second = vertices[1];
 			this.Third = vertices[2];
 		}
-		#endregion
-		#region Interface
 		/// <summary>
-		/// Splits this triangle with given plane.
+		/// Splits this face with a plane.
 		/// </summary>
-		/// <param name="splitter">             <see cref="Plane"/> that is used for splitting.</param>
-		/// <param name="frontCoplanarElements">
-		/// An optional collection for this triangle if it's located on this plane and faces the
-		/// same way.
+		/// <param name="splitter">          
+		/// Plane that splits this face into parts.
 		/// </param>
-		/// <param name="backCoplanarElements"> 
-		/// An optional collection for this triangle if it's located on this plane and faces the
-		/// opposite way.
+		/// <param name="frontCoplanarFaces">
+		/// A collection to add this face to, if it's located on the splitter and is
+		/// facing the same way.
 		/// </param>
-		/// <param name="frontElements">        
-		/// An optional collection for parts of this triangle that are located in front of this plane.
+		/// <param name="backCoplanarFaces"> 
+		/// A collection to add this face to, if it's located on the splitter and is
+		/// facing the opposite way.
 		/// </param>
-		/// <param name="backElements">         
-		/// An optional collection for parts of this triangle that are located behind this plane.
+		/// <param name="frontFaces">        
+		/// A collection to add parts of this face that are located in front of the
+		/// splitter.
 		/// </param>
-		/// <param name="customData">           Not used.</param>
+		/// <param name="backFaces">         
+		/// A collection to add parts of this face that are located behind the splitter.
+		/// </param>
+		/// <param name="customData">        Not used.</param>
 		public void Split(Plane splitter,
-						  ICollection<SplittableTriangle> frontCoplanarElements,
-						  ICollection<SplittableTriangle> backCoplanarElements,
-						  ICollection<SplittableTriangle> frontElements,
-						  ICollection<SplittableTriangle> backElements,
-						  object customData = null)
+			ICollection<FullFace> frontCoplanarFaces, ICollection<FullFace> backCoplanarFaces,
+			ICollection<FullFace> frontFaces, ICollection<FullFace> backFaces, object customData = null)
 		{
 			PlanePosition triangleType = 0;
 			PlanePosition[] positions = new PlanePosition[3];
@@ -131,40 +129,39 @@ namespace CryEngine.Mathematics.Geometry.Meshes.CSG
 					// See where this triangle is looking and it to corresponding list.
 					if (this.Normal * splitter.Normal > 0)
 					{
-						if (frontCoplanarElements != null) frontCoplanarElements.Add(this);
+						if (frontCoplanarFaces != null) frontCoplanarFaces.Add(this);
 					}
 					else
 					{
-						if (backCoplanarElements != null) backCoplanarElements.Add(this);
+						if (backCoplanarFaces != null) backCoplanarFaces.Add(this);
 					}
 					break;
 				case PlanePosition.Front:
-					if (frontElements != null) frontElements.Add(this);
+					if (frontFaces != null) frontFaces.Add(this);
 					break;
 				case PlanePosition.Back:
-					if (backElements != null) backElements.Add(this);
+					if (backFaces != null) backFaces.Add(this);
 					break;
 				case PlanePosition.Spanning:
-					if (frontElements == null && backElements == null)
+					if (frontFaces == null && backFaces == null)
 					{
 						return;				// Any calculations won't be saved anywhere.
 					}
-					//
 					// Prepare to create a split of this triangle.
-					//
+					// 
 					// Cash vertices into an array, so we can loop through it.
-					MeshVertex[] vertices = this.Vertices;
+					FullVertex[] vertices = this.Vertices;
 					// Create lists for vertices on the front and back.
-					List<MeshVertex> fvs = new List<MeshVertex>(4);
-					List<MeshVertex> bvs = new List<MeshVertex>(4);
-					//
+					List<FullVertex> fvs = new List<FullVertex>(4);
+					List<FullVertex> bvs = new List<FullVertex>(4);
 					// Process edges.
-					//
-					// We go through the polygon edge by edge with i being index of the start of the
-					// edge, and j - end.
+					// 
+					// We go through the polygon edge by edge with i being index of the
+					// start of the edge, and j - end.
 					for (int i = 0, j = 1; i < 3; i++, j = (j + 1) % 3)
 					{
-						// If edge doesn't begin behind the plane, add starting vertex to front vertices.
+						// If edge doesn't begin behind the plane, add starting vertex to
+						// front vertices.
 						if (positions[i] != PlanePosition.Back)
 						{
 							fvs.Add(vertices[i]);
@@ -177,22 +174,23 @@ namespace CryEngine.Mathematics.Geometry.Meshes.CSG
 						// If this edge intersects the plane, split it.
 						if ((positions[i] | positions[j]) == PlanePosition.Spanning)
 						{
-							// Calculate fraction that describes position of splitting vertex along
-							// the line between start and end of the edge.
+							// Calculate fraction that describes position of splitting
+							// vertex along the line between start and end of the edge.
 							float positionParameter =
 								(splitter.D - splitter.Normal * vertices[i].Position)
 								/
 								(splitter.Normal * (vertices[j].Position - vertices[i].Position));
 							// Linearly interpolate the vertex that splits the edge.
-							MeshVertex splittingVertex =
-								(MeshVertex)vertices[i].CreateLinearInterpolation(vertices[j], positionParameter);
+							FullVertex splittingVertex =
+								Interpolations.Linear.Create(vertices[i], vertices[j], positionParameter);
 							// Add splitting vertex to both lists.
 							fvs.Add(splittingVertex);
 							bvs.Add(splittingVertex);
 						}
-						// Create front and back triangle(s) from vertices from corresponding lists.
-						if (frontElements != null) SplittableTriangle.TriangulateLinearly(fvs, false, frontElements);
-						if (backElements != null) SplittableTriangle.TriangulateLinearly(bvs, false, backElements);
+						// Create front and back triangle(s) from vertices from
+						// corresponding lists.
+						if (frontFaces != null) FullFace.TriangulateLinearly(fvs, false, frontFaces);
+						if (backFaces != null) FullFace.TriangulateLinearly(bvs, false, backFaces);
 					}
 					break;
 				default:
@@ -200,27 +198,28 @@ namespace CryEngine.Mathematics.Geometry.Meshes.CSG
 			}
 		}
 		/// <summary>
-		/// Flips this triangle.
+		/// Flips this face.
 		/// </summary>
 		public void Invert()
 		{
 			// Reverse order of vertices.
-			MeshVertex temp = this.Third;
+			FullVertex temp = this.Third;
 			this.Third = this.First;
 			this.First = temp;
 		}
 		/// <summary>
-		/// Creates an array of triangular faces that form a polygon from a given list of vertices.
+		/// Creates an array of triangular faces that form a polygon from a given list of
+		/// vertices.
 		/// </summary>
 		/// <param name="vertices">           
 		/// A list of vertices that describes a border of the polygon.
 		/// </param>
 		/// <param name="checkForCoplanarity">
-		/// Indicates whether coplanarity of given polygon must be ensured. Pass false only if know,
-		/// that your polygon is on one plane.
+		/// Indicates whether coplanarity of given polygon must be ensured. Pass false
+		/// only if know, that your polygon is on one plane.
 		/// </param>
 		/// <returns>An array of triangles.</returns>
-		public static SplittableTriangle[] TriangulateLinearly(IList<MeshVertex> vertices, bool checkForCoplanarity)
+		public static FullFace[] TriangulateLinearly(IList<FullVertex> vertices, bool checkForCoplanarity)
 		{
 			if (vertices.IsNullOrEmpty())
 			{
@@ -229,20 +228,21 @@ namespace CryEngine.Mathematics.Geometry.Meshes.CSG
 			// If we are given a triangle, there is no need to bother about anything.
 			if (vertices.Count == 3)
 			{
-				return new[] { new SplittableTriangle(vertices) };
+				return new[] { new FullFace(vertices) };
 			}
 			if (checkForCoplanarity)
 			{
 				Plane plane = new Plane(vertices[0].Position, vertices[1].Position, vertices[2].Position);
 				if (vertices.Any(x => plane.PointPosition(x.Position) != PlanePosition.Coplanar))
 				{
-					throw new ArgumentException("Vertices that describe a border of a polygon for triangulation are not located on the same plane.");
+					throw new ArgumentException("Vertices that describe a border of a polygon for" +
+												" triangulation are not located on the same plane.");
 				}
 			}
-			SplittableTriangle[] result = new SplittableTriangle[vertices.Count - 2];
+			FullFace[] result = new FullFace[vertices.Count - 2];
 			for (int i = 0; i < result.Length; i++)
 			{
-				result[0] = new SplittableTriangle
+				result[0] = new FullFace
 				{
 					First = vertices[0],
 					Second = vertices[i + 1],
@@ -252,18 +252,22 @@ namespace CryEngine.Mathematics.Geometry.Meshes.CSG
 			return result;
 		}
 		/// <summary>
-		/// Triangulates given polygon and adds resultant triangles to the list of polygons.
+		/// Triangulates given polygon and adds resultant triangles to the list of
+		/// polygons.
 		/// </summary>
 		/// <param name="vertices">           
-		/// A list of vertices that represents a border of the polygon that is going to be triangulated.
+		/// A list of vertices that represents a border of the polygon that is going to be
+		/// triangulated.
 		/// </param>
 		/// <param name="checkForCoplanarity">
-		/// Indicates whether coplanarity of given polygon must be ensured. Pass false only if know,
-		/// that your polygon is on one plane.
+		/// Indicates whether coplanarity of given polygon must be ensured. Pass false
+		/// only if know, that your polygon is on one plane.
 		/// </param>
-		/// <param name="polygons">           The list of polygon to which to add the triangles.</param>
-		public static void TriangulateLinearly(IList<MeshVertex> vertices, bool checkForCoplanarity,
-											   ICollection<SplittableTriangle> polygons)
+		/// <param name="polygons">           
+		/// The list of polygon to which to add the triangles.
+		/// </param>
+		public static void TriangulateLinearly(IList<FullVertex> vertices, bool checkForCoplanarity,
+											   ICollection<FullFace> polygons)
 		{
 			if (vertices.IsNullOrEmpty())
 			{
@@ -272,20 +276,21 @@ namespace CryEngine.Mathematics.Geometry.Meshes.CSG
 			// If we are given a triangle, there is no need to bother about anything.
 			if (vertices.Count == 3)
 			{
-				polygons.Add(new SplittableTriangle(vertices));
+				polygons.Add(new FullFace(vertices));
 			}
 			if (checkForCoplanarity)
 			{
 				Plane plane = new Plane(vertices[0].Position, vertices[1].Position, vertices[2].Position);
 				if (vertices.Any(x => plane.PointPosition(x.Position) != PlanePosition.Coplanar))
 				{
-					throw new ArgumentException("Vertices that describe a border of a polygon for triangulation are not located on the same plane.");
+					throw new ArgumentException("Vertices that describe a border of a polygon for" +
+												" triangulation are not located on the same plane.");
 				}
 			}
 			int triangleCount = vertices.Count - 2;
 			for (int i = 0; i < triangleCount; i++)
 			{
-				polygons.Add(new SplittableTriangle
+				polygons.Add(new FullFace
 				{
 					First = vertices[0],
 					Second = vertices[i + 1],
@@ -293,11 +298,9 @@ namespace CryEngine.Mathematics.Geometry.Meshes.CSG
 				});
 			}
 		}
-		#endregion
-		#region Utilities
-		private void Init(IEnumerable<MeshVertex> vertices)
+		private void Init(IEnumerable<FullVertex> vertices)
 		{
-			IEnumerator<MeshVertex> enumerator = vertices.GetEnumerator();
+			IEnumerator<FullVertex> enumerator = vertices.GetEnumerator();
 			enumerator.Reset();
 			if (enumerator.MoveNext())
 			{
@@ -313,6 +316,5 @@ namespace CryEngine.Mathematics.Geometry.Meshes.CSG
 			}
 			this.Third = enumerator.Current;
 		}
-		#endregion
 	}
 }

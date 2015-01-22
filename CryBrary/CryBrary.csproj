@@ -162,7 +162,6 @@
     <Compile Include="Logic\CryTimer.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\CSG\SplittableTriangle.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\Mesh.CSG.cs" />
-    <Compile Include="Mathematics\Geometry\Meshes\CSG\BSP.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\IVertex.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\IVertex3D.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\MeshVertex.cs" />

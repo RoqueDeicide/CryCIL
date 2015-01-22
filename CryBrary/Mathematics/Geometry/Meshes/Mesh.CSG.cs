@@ -52,7 +52,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 			a.Invert();
 			a.Unite(b);
 			a.Invert();
-			this.SetBsp(a);
+			this.Set(a);
 		}
 		/// <summary>
 		/// Creates BSP tree from this mesh.
