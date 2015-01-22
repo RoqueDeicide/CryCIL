@@ -494,36 +494,6 @@ namespace CryCil.Geometry
 		#endregion
 		#region Interpolations
 		/// <summary>
-		/// Performs a linear interpolation between two vectors.
-		/// </summary>
-		/// <param name="start"> Start vector.</param>
-		/// <param name="end">   End vector.</param>
-		/// <param name="amount">
-		/// Value between 0 and 1 indicating the weight of <paramref name="end"/>.
-		/// </param>
-		public void SetLinearInterpolation(Vector4 start, Vector4 end, float amount)
-		{
-			this.X = start.X + ((end.X - start.X) * amount);
-			this.Y = start.Y + ((end.Y - start.Y) * amount);
-			this.Z = start.Z + ((end.Z - start.Z) * amount);
-			this.W = start.W + ((end.W - start.W) * amount);
-		}
-		/// <summary>
-		/// Performs a linear interpolation between two vectors.
-		/// </summary>
-		/// <param name="start"> Start vector.</param>
-		/// <param name="end">   End vector.</param>
-		/// <param name="amount">
-		/// Value between 0 and 1 indicating the weight of <paramref name="end"/>.
-		/// </param>
-		/// <returns>The linear interpolation of the two vectors.</returns>
-		public static Vector4 CreateLinearInterpolation(Vector4 start, Vector4 end, float amount)
-		{
-			Vector4 result = new Vector4();
-			result.SetLinearInterpolation(start, end, amount);
-			return result;
-		}
-		/// <summary>
 		/// Performs a cubic interpolation between two vectors.
 		/// </summary>
 		/// <param name="start"> Start vector.</param>

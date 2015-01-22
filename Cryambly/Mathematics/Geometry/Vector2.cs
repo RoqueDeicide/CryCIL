@@ -502,52 +502,6 @@ namespace CryCil.Geometry
 		#endregion
 		#region Interpolations
 		/// <summary>
-		/// Performs a linear interpolation between two vectors.
-		/// </summary>
-		/// <param name="start"> Start vector.</param>
-		/// <param name="end">   End vector.</param>
-		/// <param name="amount">
-		/// Value between 0 and 1 indicating the weight of <paramref name="end"/> .
-		/// </param>
-		/// <param name="result">
-		/// When the method completes, contains the linear interpolation of the two
-		/// vectors.
-		/// </param>
-		/// <remarks>
-		/// This method performs the linear interpolation based on the following formula.
-		/// <c>start + (end - start) * amount</c> Passing <paramref name="amount"/> a
-		/// value of 0 will cause <paramref name="start"/> to be returned; a value of 1
-		/// will cause <paramref name="end"/> to be returned.
-		/// </remarks>
-		public static void CreateLinearInterpolation(ref Vector2 start, ref Vector2 end, float amount, out Vector2 result)
-		{
-			result.X = start.X + ((end.X - start.X) * amount);
-			result.Y = start.Y + ((end.Y - start.Y) * amount);
-		}
-		/// <summary>
-		/// Performs a linear interpolation between two vectors.
-		/// </summary>
-		/// <param name="start"> Start vector.</param>
-		/// <param name="end">   End vector.</param>
-		/// <param name="amount">
-		/// Value between 0 and 1 indicating the weight of <paramref name="end"/> .
-		/// </param>
-		/// <returns>The linear interpolation of the two vectors.</returns>
-		/// <remarks>
-		/// This method performs the linear interpolation based on the following formula.
-		/// <c>start + (end - start) * amount</c> Passing <paramref name="amount"/> a
-		/// value of 0 will cause <paramref name="start"/> to be returned; a value of 1
-		/// will cause <paramref name="end"/> to be returned.
-		/// </remarks>
-		public static Vector2 CreateLinearInterpolation(Vector2 start, Vector2 end, float amount)
-		{
-			return new Vector2
-			(
-				start.X + ((end.X - start.X) * amount),
-				start.Y + ((end.Y - start.Y) * amount)
-			);
-		}
-		/// <summary>
 		/// Creates spherical interpolation defined by two vectors and a value.
 		/// </summary>
 		/// <param name="p">First vector that defines interpolation.</param>
@@ -565,7 +519,7 @@ namespace CryCil.Geometry
 			// close to each other to avoid division by zero.
 			if (cosine >= 0.99f)
 			{
-				result = Vector2.CreateLinearInterpolation(p, q, t); //perform LERP:
+				result = Interpolations.Linear.Create(p, q, t); //perform LERP:
 				result.Normalize();
 			}
 			else

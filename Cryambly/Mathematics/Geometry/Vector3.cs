@@ -714,20 +714,6 @@ namespace CryCil.Geometry
 		#endregion
 		#region Interpolations
 		/// <summary>
-		/// Sets this vector to be a linear interpolation defined by two vectors and a
-		/// value.
-		/// </summary>
-		/// <param name="p">First vector that defines interpolation.</param>
-		/// <param name="q">Second vector that defines interpolation.</param>
-		/// <param name="t">
-		/// A value between 0 and 1 that defines position of interpolated vector.
-		/// </param>
-		public void SetLinearInterpolation(Vector3 p, Vector3 q, float t)
-		{
-			Vector3 diff = q - p;
-			this = p + (diff * t);
-		}
-		/// <summary>
 		/// Sets this vector to be a spherical interpolation defined by two vectors and a
 		/// value.
 		/// </summary>
@@ -745,7 +731,7 @@ namespace CryCil.Geometry
 			// close to each other to avoid division by zero.
 			if (cosine >= 0.99f)
 			{
-				this.SetLinearInterpolation(p, q, t); //perform LERP:
+				Interpolations.Linear.Apply(out this, p, q, t); //perform LERP:
 				this.Normalize();
 			}
 			else
@@ -756,19 +742,6 @@ namespace CryCil.Geometry
 				this = (p * scale_0 + q * scale_1) / (float)Math.Sin(rad);
 				this.Normalize();
 			}
-		}
-		/// <summary>
-		/// Creates linear interpolation defined by two vectors and a value.
-		/// </summary>
-		/// <param name="p">First vector that defines interpolation.</param>
-		/// <param name="q">Second vector that defines interpolation.</param>
-		/// <param name="t">
-		/// A value between 0 and 1 that defines position of interpolated vector.
-		/// </param>
-		public static Vector3 CreateLinearInterpolation(Vector3 p, Vector3 q, float t)
-		{
-			Vector3 diff = q - p;
-			return p + (diff * t);
 		}
 		/// <summary>
 		/// Creates spherical interpolation defined by two vectors and a value.

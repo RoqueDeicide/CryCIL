@@ -107,6 +107,10 @@
     <Compile Include="Mathematics\Graphics\ViewParams.cs" />
     <Compile Include="Mathematics\Half.cs" />
     <Compile Include="Mathematics\HalfHelpers.cs" />
+    <Compile Include="Mathematics\Interpolations.cs" />
+    <Compile Include="Mathematics\Interpolations.Linear.cs" />
+    <Compile Include="Mathematics\Interpolations.Linear.Scalars.cs" />
+    <Compile Include="Mathematics\Interpolations.Linear.Vectors.cs" />
     <Compile Include="Mathematics\MathHelpers.cs" />
     <Compile Include="Mathematics\Matrix33.cs" />
     <Compile Include="Mathematics\Matrix34.cs" />
