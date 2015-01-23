@@ -211,7 +211,7 @@ namespace CryCil.Geometry
 								(splitter.Normal * (vertices[j].Position - vertices[i].Position));
 							// Linearly interpolate the vertex that splits the edge.
 							FullVertex splittingVertex =
-								Interpolations.Linear.Create(vertices[i], vertices[j], positionParameter);
+								Interpolation.Linear.Create(vertices[i], vertices[j], positionParameter);
 							// Add splitting vertex to both lists.
 							fvs.Add(splittingVertex);
 							bvs.Add(splittingVertex);

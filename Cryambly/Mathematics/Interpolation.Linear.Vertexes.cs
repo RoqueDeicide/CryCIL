@@ -2,7 +2,7 @@
 
 namespace CryCil
 {
-	public static partial class Interpolations
+	public static partial class Interpolation
 	{
 		public static partial class Linear
 		{
@@ -20,11 +20,11 @@ namespace CryCil
 			{
 				result = new FullVertex
 				{
-					Position = Interpolations.Linear.Create(first.Position, second.Position, parameter),
-					Normal = Interpolations.Linear.Create(first.Normal, second.Normal, parameter),
-					UvPosition = Interpolations.Linear.Create(first.UvPosition, second.UvPosition, parameter),
-					PrimaryColor = Interpolations.Linear.Create(first.PrimaryColor, second.PrimaryColor, parameter),
-					SecondaryColor = Interpolations.Linear.Create(first.SecondaryColor, second.SecondaryColor, parameter)
+					Position = Interpolation.Linear.Create(first.Position, second.Position, parameter),
+					Normal = Interpolation.Linear.Create(first.Normal, second.Normal, parameter),
+					UvPosition = Interpolation.Linear.Create(first.UvPosition, second.UvPosition, parameter),
+					PrimaryColor = Interpolation.Linear.Create(first.PrimaryColor, second.PrimaryColor, parameter),
+					SecondaryColor = Interpolation.Linear.Create(first.SecondaryColor, second.SecondaryColor, parameter)
 				};
 			}
 			/// <summary>
@@ -41,11 +41,11 @@ namespace CryCil
 			{
 				return new FullVertex
 				{
-					Position = Interpolations.Linear.Create(first.Position, second.Position, parameter),
-					Normal = Interpolations.Linear.Create(first.Normal, second.Normal, parameter),
-					UvPosition = Interpolations.Linear.Create(first.UvPosition, second.UvPosition, parameter),
-					PrimaryColor = Interpolations.Linear.Create(first.PrimaryColor, second.PrimaryColor, parameter),
-					SecondaryColor = Interpolations.Linear.Create(first.SecondaryColor, second.SecondaryColor, parameter)
+					Position = Interpolation.Linear.Create(first.Position, second.Position, parameter),
+					Normal = Interpolation.Linear.Create(first.Normal, second.Normal, parameter),
+					UvPosition = Interpolation.Linear.Create(first.UvPosition, second.UvPosition, parameter),
+					PrimaryColor = Interpolation.Linear.Create(first.PrimaryColor, second.PrimaryColor, parameter),
+					SecondaryColor = Interpolation.Linear.Create(first.SecondaryColor, second.SecondaryColor, parameter)
 				};
 			}
 		}

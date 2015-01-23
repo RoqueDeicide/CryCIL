@@ -1,6 +1,6 @@
 ﻿namespace CryCil
 {
-	public static partial class Interpolations
+	public static partial class Interpolation
 	{
 		public static partial class Linear
 		{

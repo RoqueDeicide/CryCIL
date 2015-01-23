@@ -3,7 +3,7 @@ using CryCil.Geometry;
 
 namespace CryCil
 {
-	public static partial class Interpolations
+	public static partial class Interpolation
 	{
 		/// <summary>
 		/// Defines functions for working with spherical interpolations.
@@ -35,7 +35,7 @@ namespace CryCil
 				// close to each other to avoid division by zero.
 				if (cosine >= 0.99f)
 				{
-					result = Interpolations.Linear.Create(first, second, parameter); //perform LERP:
+					result = Interpolation.Linear.Create(first, second, parameter); //perform LERP:
 					result.Normalize();
 				}
 				else
@@ -66,7 +66,7 @@ namespace CryCil
 				// close to each other to avoid division by zero.
 				if (cosine >= 0.99f)
 				{
-					result = Interpolations.Linear.Create(first, second, parameter); //perform LERP:
+					result = Interpolation.Linear.Create(first, second, parameter); //perform LERP:
 					result.Normalize();
 				}
 				else
@@ -98,7 +98,7 @@ namespace CryCil
 				// close to each other to avoid division by zero.
 				if (cosine >= 0.99f)
 				{
-					result = Interpolations.Linear.Create(first, second, parameter); //perform LERP:
+					result = Interpolation.Linear.Create(first, second, parameter); //perform LERP:
 					result.Normalize();
 				}
 				else
@@ -129,7 +129,7 @@ namespace CryCil
 				// close to each other to avoid division by zero.
 				if (cosine >= 0.99f)
 				{
-					result = Interpolations.Linear.Create(first, second, parameter); //perform LERP:
+					result = Interpolation.Linear.Create(first, second, parameter); //perform LERP:
 					result.Normalize();
 				}
 				else
@@ -164,7 +164,7 @@ namespace CryCil
 				}
 				if (cosine > 0.9999f)
 				{
-					result = Interpolations.Linear.Create(first, second, parameter);
+					result = Interpolation.Linear.Create(first, second, parameter);
 					result.Normalize();
 					return;
 				}
@@ -207,7 +207,7 @@ namespace CryCil
 				}
 				if (cosine > 0.9999f)
 				{
-					result = Interpolations.Linear.Create(first, second, parameter);
+					result = Interpolation.Linear.Create(first, second, parameter);
 					result.Normalize();
 				}
 				else
@@ -297,7 +297,7 @@ namespace CryCil
 			public static Matrix34 Create(Matrix34 first, Matrix34 second, float t)
 			{
 				var matrix = new Matrix34();
-				Interpolations.SphericalLinear.Apply(ref matrix, first, second, t);
+				Interpolation.SphericalLinear.Apply(ref matrix, first, second, t);
 
 				return matrix;
 			}
