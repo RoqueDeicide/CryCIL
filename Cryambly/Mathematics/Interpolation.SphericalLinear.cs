@@ -288,6 +288,27 @@ namespace CryCil
 			/// Creates a matrix that represents a spherical linear interpolation from one
 			/// matrix to another.
 			/// </summary>
+			/// <remarks>
+			/// <para>
+			/// This is an implementation of interpolation without quaternions.
+			/// </para>
+			/// <para>
+			/// Given two orthonormal 3x3 matrices this function calculates the shortest
+			/// possible interpolation-path between the two rotations. The interpolation
+			/// curve forms the shortest great arc on the rotation sphere (geodesic).
+			/// </para>
+			/// <para>Angular velocity of the interpolation is constant.</para>
+			/// <para>Possible stability problems:</para>
+			/// <para>
+			/// There are two singularities at angle = 0 and angle = <see cref="Math.PI"/>
+			/// . At 0 the interpolation-axis is arbitrary, which means any axis will
+			/// produce the same result because we have no rotation. (1,0,0) axis is used
+			/// in this case. At <see cref="Math.PI"/> the rotations point away from each
+			/// other and the interpolation-axis is unpredictable. In this case axis
+			/// (1,0,0) is used as well. If the angle is ~0 or ~PI, then a very small
+			/// vector has to be normalized and this can cause numerical instability.
+			/// </para>
+			/// </remarks>
 			/// <param name="first"> First matrix.</param>
 			/// <param name="second">Second matrix.</param>
 			/// <param name="t">     Interpolation parameter.</param>
@@ -297,6 +318,93 @@ namespace CryCil
 			public static Matrix34 Create(Matrix34 first, Matrix34 second, float t)
 			{
 				var matrix = new Matrix34();
+				Interpolation.SphericalLinear.Apply(ref matrix, first, second, t);
+
+				return matrix;
+			}
+			/// <summary>
+			/// Creates a matrix that represents a spherical linear interpolation from one
+			/// matrix to another.
+			/// </summary>
+			/// <remarks>
+			/// <para>
+			/// This is an implementation of interpolation without quaternions.
+			/// </para>
+			/// <para>
+			/// Given two orthonormal 3x3 matrices this function calculates the shortest
+			/// possible interpolation-path between the two rotations. The interpolation
+			/// curve forms the shortest great arc on the rotation sphere (geodesic).
+			/// </para>
+			/// <para>Angular velocity of the interpolation is constant.</para>
+			/// <para>Possible stability problems:</para>
+			/// <para>
+			/// There are two singularities at angle = 0 and angle = <see cref="Math.PI"/>
+			/// . At 0 the interpolation-axis is arbitrary, which means any axis will
+			/// produce the same result because we have no rotation. (1,0,0) axis is used
+			/// in this case. At <see cref="Math.PI"/> the rotations point away from each
+			/// other and the interpolation-axis is unpredictable. In this case axis
+			/// (1,0,0) is used as well. If the angle is ~0 or ~PI, then a very small
+			/// vector has to be normalized and this can cause numerical instability.
+			/// </para>
+			/// </remarks>
+			/// <param name="matrix">Result of interpolation.</param>
+			/// <param name="first"> First matrix.</param>
+			/// <param name="second">Second matrix.</param>
+			/// <param name="t">     Interpolation parameter.</param>
+			public static void Apply(ref Matrix33 matrix, Matrix33 first, Matrix33 second, float t)
+			{
+				// calculate delta-rotation between m and n (=39 flops)
+				Matrix33 d = new Matrix33(), i = new Matrix33();
+				d.M00 = first.M00 * second.M00 + first.M10 * second.M10 + first.M20 * second.M20; d.M01 = first.M00 * second.M01 + first.M10 * second.M11 + first.M20 * second.M21; d.M02 = first.M00 * second.M02 + first.M10 * second.M12 + first.M20 * second.M22;
+				d.M10 = first.M01 * second.M00 + first.M11 * second.M10 + first.M21 * second.M20; d.M11 = first.M01 * second.M01 + first.M11 * second.M11 + first.M21 * second.M21; d.M12 = first.M01 * second.M02 + first.M11 * second.M12 + first.M21 * second.M22;
+				d.M20 = d.M01 * d.M12 - d.M02 * d.M11; d.M21 = d.M02 * d.M10 - d.M00 * d.M12; d.M22 = d.M00 * d.M11 - d.M01 * d.M10;
+
+				// extract angle and axis
+				double cosine = MathHelpers.Clamp((d.M00 + d.M11 + d.M22 - 1.0) * 0.5, -1.0, +1.0);
+				double angle = Math.Atan2(Math.Sqrt(1.0 - cosine * cosine), cosine);
+				var axis = new Vector3(d.M21 - d.M12, d.M02 - d.M20, d.M10 - d.M01);
+				double l = Math.Sqrt(axis | axis); if (l > 0.00001) axis /= (float)l; else axis = new Vector3(1, 0, 0);
+				Rotation.AroundAxis.Set(ref i, ref  axis, (float)angle * t); // angle interpolation and calculation of new delta-matrix (=26 flops)
+
+				// final concatenation (=39 flops)
+				matrix.M00 = first.M00 * i.M00 + first.M01 * i.M10 + first.M02 * i.M20; matrix.M01 = first.M00 * i.M01 + first.M01 * i.M11 + first.M02 * i.M21; matrix.M02 = first.M00 * i.M02 + first.M01 * i.M12 + first.M02 * i.M22;
+				matrix.M10 = first.M10 * i.M00 + first.M11 * i.M10 + first.M12 * i.M20; matrix.M11 = first.M10 * i.M01 + first.M11 * i.M11 + first.M12 * i.M21; matrix.M12 = first.M10 * i.M02 + first.M11 * i.M12 + first.M12 * i.M22;
+				matrix.M20 = matrix.M01 * matrix.M12 - matrix.M02 * matrix.M11; matrix.M21 = matrix.M02 * matrix.M10 - matrix.M00 * matrix.M12; matrix.M22 = matrix.M00 * matrix.M11 - matrix.M01 * matrix.M10;
+			}
+			/// <summary>
+			/// Creates a matrix that represents a spherical linear interpolation from one
+			/// matrix to another.
+			/// </summary>
+			/// <remarks>
+			/// <para>
+			/// This is an implementation of interpolation without quaternions.
+			/// </para>
+			/// <para>
+			/// Given two orthonormal 3x3 matrices this function calculates the shortest
+			/// possible interpolation-path between the two rotations. The interpolation
+			/// curve forms the shortest great arc on the rotation sphere (geodesic).
+			/// </para>
+			/// <para>Angular velocity of the interpolation is constant.</para>
+			/// <para>Possible stability problems:</para>
+			/// <para>
+			/// There are two singularities at angle = 0 and angle = <see cref="Math.PI"/>
+			/// . At 0 the interpolation-axis is arbitrary, which means any axis will
+			/// produce the same result because we have no rotation. (1,0,0) axis is used
+			/// in this case. At <see cref="Math.PI"/> the rotations point away from each
+			/// other and the interpolation-axis is unpredictable. In this case axis
+			/// (1,0,0) is used as well. If the angle is ~0 or ~PI, then a very small
+			/// vector has to be normalized and this can cause numerical instability.
+			/// </para>
+			/// </remarks>
+			/// <param name="first"> First matrix.</param>
+			/// <param name="second">Second matrix.</param>
+			/// <param name="t">     Interpolation parameter.</param>
+			/// <returns>
+			/// Matrix which transformations are interpolated between given matrices.
+			/// </returns>
+			public static Matrix33 Create(Matrix33 first, Matrix33 second, float t)
+			{
+				var matrix = new Matrix33();
 				Interpolation.SphericalLinear.Apply(ref matrix, first, second, t);
 
 				return matrix;

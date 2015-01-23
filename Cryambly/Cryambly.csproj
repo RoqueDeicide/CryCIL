@@ -111,7 +111,9 @@
     <Compile Include="Mathematics\Graphics\ViewParams.cs" />
     <Compile Include="Mathematics\Half.cs" />
     <Compile Include="Mathematics\HalfHelpers.cs" />
+    <Compile Include="Mathematics\Interpolation.CatmullRom.cs" />
     <Compile Include="Mathematics\Interpolation.cs" />
+    <Compile Include="Mathematics\Interpolation.Hermite.cs" />
     <Compile Include="Mathematics\Interpolation.Linear.Colors.cs" />
     <Compile Include="Mathematics\Interpolation.Linear.cs" />
     <Compile Include="Mathematics\Interpolation.Linear.Scalars.cs" />
