@@ -22,7 +22,7 @@ namespace CryCil.Geometry
 		{
 			get
 			{
-				return new BspNode<FullFace>(this.Faces);
+				return new BspNode<FullFace>(this.Faces, null);
 			}
 		}
 		/// <summary>

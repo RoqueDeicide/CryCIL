@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using CryCil.Annotations;
 
 namespace CryCil.Geometry.Csg
 {
@@ -58,21 +59,27 @@ namespace CryCil.Geometry.Csg
 		/// <summary>
 		/// Creates new BSP tree with this node as its root.
 		/// </summary>
-		/// <param name="elements">A list of elements to add to the tree.</param>
-		public BspNode(IList<T> elements)
+		/// <param name="elements">  A list of elements to add to the tree.</param>
+		/// <param name="customData">
+		/// An optional reference to data that can be used by a splitting algorithm.
+		/// </param>
+		public BspNode(IList<T> elements, [CanBeNull]  object customData)
 		{
 			this.Plane = new Plane(0, 0, 0, float.NaN);
 			this.Elements = new List<T>();
 
-			this.AddElements(elements);
+			this.AddElements(elements, customData);
 		}
 		#endregion
 		#region Interface
 		/// <summary>
 		/// Adds a list of elements to this tree.
 		/// </summary>
-		/// <param name="elements">A list of elements to add.</param>
-		public void AddElements(IList<T> elements)
+		/// <param name="elements">  A list of elements to add.</param>
+		/// <param name="customData">
+		/// An optional reference to data that can be used by a splitting algorithm.
+		/// </param>
+		public void AddElements(IList<T> elements, [CanBeNull] object customData)
 		{
 			if (elements.IsNullOrEmpty())
 			{
@@ -82,7 +89,7 @@ namespace CryCil.Geometry.Csg
 			// heuristics.
 			if (this.IsNotInitialized())
 			{
-				this.Plane = elements[0].Plane;
+				this.Plane = elements[0].GetPlane(customData);
 			}
 			// Split elements into appropriate groups.
 			List<T> frontalElements = new List<T>();
@@ -95,15 +102,16 @@ namespace CryCil.Geometry.Csg
 					this.Elements,			// Coplanars are assigned to this node.
 					this.Elements,			//
 					frontalElements,		// This will go into front branch.
-					backElements			// This will go into back branch.
+					backElements,			// This will go into back branch.
+					customData				// This might be a reference to the mesh object.
 				);
 			}
 			// Assign front and back branches.
 			BspNode<T> t = this.Front;
-			AssignBranch(ref t, frontalElements);
+			AssignBranch(ref t, frontalElements, customData);
 			this.Front = t;
 			t = this.Back;
-			AssignBranch(ref t, backElements);
+			AssignBranch(ref t, backElements, customData);
 			this.Back = t;
 		}
 		/// <summary>
@@ -178,14 +186,17 @@ namespace CryCil.Geometry.Csg
 		/// Parts are "inside" this BSP tree when they are behind a node that doesn't have
 		/// a back branch.
 		/// </remarks>
-		/// <param name="elements">
+		/// <param name="elements">  
 		/// A list of elements to cut. This object is not modified in any way during
 		/// execution.
+		/// </param>
+		/// <param name="customData">
+		/// An optional reference to data that can be used by a splitting algorithm.
 		/// </param>
 		/// <returns>
 		/// A list that contains elements that are outside of this tree.
 		/// </returns>
-		public List<T> FilterList(IList<T> elements)
+		public List<T> FilterList(IList<T> elements, [CanBeNull] object customData)
 		{
 			if (this.IsNotInitialized())
 			{
@@ -197,18 +208,18 @@ namespace CryCil.Geometry.Csg
 			// Cut elements and separate them into 2 lists.
 			for (int i = 0; i < elements.Count; i++)
 			{
-				elements[i].Split(this.Plane, fronts, backs, fronts, backs);
+				elements[i].Split(this.Plane, fronts, backs, fronts, backs, customData);
 			}
 
 			if (this.Front != null)
 			{
-				fronts = this.Front.FilterList(fronts);
+				fronts = this.Front.FilterList(fronts, customData);
 			}
 			// If this node has nothing behind it in the tree, then whatever is behind it
 			// in the list should be discarded.
 			if (this.Back != null)
 			{
-				fronts.AddRange(this.Back.FilterList(backs));
+				fronts.AddRange(this.Back.FilterList(backs, customData));
 			}
 			return fronts;
 		}
@@ -216,42 +227,48 @@ namespace CryCil.Geometry.Csg
 		/// Cuts elements inside this tree and removes ones that end up inside another
 		/// one.
 		/// </summary>
-		/// <param name="bsp">A root of another BSP tree.</param>
-		public void CutTreeOut(BspNode<T> bsp)
+		/// <param name="bsp">       A root of another BSP tree.</param>
+		/// <param name="customData">
+		/// An optional reference to data that can be used by a splitting algorithm.
+		/// </param>
+		public void CutTreeOut(BspNode<T> bsp, [CanBeNull]  object customData)
 		{
-			this.Elements = bsp.FilterList(this.Elements);
-			if (this.Front != null) this.Front.CutTreeOut(bsp);
-			if (this.Back != null) this.Back.CutTreeOut(bsp);
+			this.Elements = bsp.FilterList(this.Elements, customData);
+			if (this.Front != null) this.Front.CutTreeOut(bsp, customData);
+			if (this.Back != null) this.Back.CutTreeOut(bsp, customData);
 		}
 		/// <summary>
 		/// Adds given BSP tree to this one.
 		/// </summary>
-		/// <param name="another">BSP tree to add.</param>
-		public void Unite(BspNode<T> another)
+		/// <param name="another">   BSP tree to add.</param>
+		/// <param name="customData">
+		/// An optional reference to data that can be used by a splitting algorithm.
+		/// </param>
+		public void Unite(BspNode<T> another, [CanBeNull] object customData)
 		{
 			// Cut overlapping geometry.
-			this.CutTreeOut(another);
-			another.CutTreeOut(this);
+			this.CutTreeOut(another, customData);
+			another.CutTreeOut(this, customData);
 			// Remove overlapping coplanar faces.
 			another.Invert();
-			another.CutTreeOut(this);
+			another.CutTreeOut(this, customData);
 			another.Invert();
 			// Combine geometry.
-			this.AddElements(another.AllElements);
+			this.AddElements(another.AllElements, customData);
 		}
 		#endregion
 		#region Utilities
-		private static void AssignBranch(ref BspNode<T> branch, IList<T> elements)
+		private static void AssignBranch(ref BspNode<T> branch, IList<T> elements, [CanBeNull]  object customData)
 		{
 			if (branch == null)
 			{
 				// This is not a redundant assignment, since we are dealing with a
 				// reference type.
-				branch = new BspNode<T>(elements);
+				branch = new BspNode<T>(elements, customData);
 			}
 			else
 			{
-				branch.AddElements(elements);
+				branch.AddElements(elements, customData);
 			}
 		}
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -271,11 +288,21 @@ namespace CryCil.Geometry.Csg
 		/// <summary>
 		/// Gets a plane this object can be considered to be located on.
 		/// </summary>
-		Plane Plane { get; }
+		/// <param name="customData">
+		/// Optional data that can be used in calculations.
+		/// </param>
+		/// <returns>
+		/// <see cref="Plane"/> object that describes the plane this object is located on.
+		/// </returns>
+		Plane GetPlane([CanBeNull] object customData = null);
 		/// <summary>
 		/// Gets a normal to a plane this object can be considered to be located on.
 		/// </summary>
-		Vector3 Normal { get; }
+		/// <param name="customData">
+		/// Optional data that can be used in calculations.
+		/// </param>
+		/// <returns>Normalized <see cref="Vector3"/> that represents a normal.</returns>
+		Vector3 GetNormal([CanBeNull] object customData = null);
 		/// <summary>
 		/// When implemented in derived type, splits this object into parts.
 		/// </summary>
@@ -306,7 +333,7 @@ namespace CryCil.Geometry.Csg
 				   ICollection<T> backCoplanarElements,
 				   ICollection<T> frontElements,
 				   ICollection<T> backElements,
-				   object customData = null);
+				   [CanBeNull] object customData = null);
 		/// <summary>
 		/// When implemented, inverts orientation of this object.
 		/// </summary>

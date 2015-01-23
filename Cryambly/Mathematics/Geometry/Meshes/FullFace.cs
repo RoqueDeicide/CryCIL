@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using CryCil.Annotations;
 using CryCil.Geometry.Csg;
 
 namespace CryCil.Geometry
@@ -27,7 +28,10 @@ namespace CryCil.Geometry
 		/// </summary>
 		public Plane Plane
 		{
-			get { return new Plane(this.First.Position, this.Second.Position, this.Third.Position); }
+			get
+			{
+				return new Plane(this.First.Position, this.Second.Position, this.Third.Position);
+			}
 		}
 		/// <summary>
 		/// Gets a normal to the plane this face is located on.
@@ -37,8 +41,33 @@ namespace CryCil.Geometry
 			get
 			{
 				return (this.Second.Position - this.First.Position)
-				  .Cross(this.Third.Position - this.First.Position).Normalized;
+					   .Cross(this.Third.Position - this.First.Position).Normalized;
 			}
+		}
+		/// <summary>
+		/// Gets a plane this face is located on.
+		/// </summary>
+		/// <param name="customData">
+		/// Optional data that can be used in calculations.
+		/// </param>
+		/// <returns>
+		/// <see cref="Plane"/> object that describes the plane this object is located on.
+		/// </returns>
+		public Plane GetPlane(object customData = null)
+		{
+			return new Plane(this.First.Position, this.Second.Position, this.Third.Position);
+		}
+		/// <summary>
+		/// Gets a normal to the plane this face is located on.
+		/// </summary>
+		/// <param name="customData">
+		/// Optional data that can be used in calculations.
+		/// </param>
+		/// <returns>Normalized <see cref="Vector3"/> that represents a normal.</returns>
+		public Vector3 GetNormal(object customData = null)
+		{
+			return (this.Second.Position - this.First.Position)
+				   .Cross(this.Third.Position - this.First.Position).Normalized;
 		}
 		/// <summary>
 		/// Gets a list of vertices.
