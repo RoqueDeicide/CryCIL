@@ -233,10 +233,10 @@ namespace CryCil.Geometry
 				float sz, cz; MathHelpers.SinCos(angles.Yaw * 0.5f, out sz, out cz);
 				return new Quaternion
 				(
-				cz * cy * sx - sz * sy * cx,
-				cz * sy * cx + sz * cy * sx,
-				sz * cy * cx - cz * sy * sx,
-				cx * cy * cz + sx * sy * sz
+					cz * cy * sx - sz * sy * cx,
+					cz * sy * cx + sz * cy * sx,
+					sz * cy * cx - cz * sy * sx,
+					cx * cy * cz + sx * sy * sz
 				);
 			}
 		}
