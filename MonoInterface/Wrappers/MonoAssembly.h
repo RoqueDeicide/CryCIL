@@ -21,6 +21,14 @@ public:
 	MonoAssemblyWrapper(MonoAssembly *assembly);
 	//! Attempts to load assembly located in the file.
 	MonoAssemblyWrapper(const char *assemblyFile, bool &failed);
+	~MonoAssemblyWrapper()
+	{
+		this->assembly = nullptr;
+		this->image = nullptr;
+
+		SAFE_DELETE(this->shortName);
+		SAFE_DELETE(this->fullName);
+	}
 	//! Gets the class.
 	virtual IMonoClass *GetClass(const char *nameSpace, const char *className);
 
