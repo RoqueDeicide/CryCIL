@@ -27,12 +27,12 @@ class MonoInterface
 	friend InitializationInterop;
 private:
 #pragma region Fields
-	List<MonoAssemblyWrapper *> assemblies;
 	EventBroadcaster *broadcaster;
 
 	bool running;
 
 	MonoDomain *appDomain;
+	IMonoAssemblyCollection *assemblies;
 	IMonoAssembly *cryambly;					//! Extra pointer for Cryambly.
 	IMonoAssembly *corlib;						//! Extra pointer for mscorlib.
 	IMonoAssembly *pdb2mdb;
@@ -46,6 +46,8 @@ public:
 #pragma region Property Methods
 	//! Returns a pointer to app domain.
 	virtual void *GetAppDomain();
+
+	virtual IMonoAssemblyCollection *GetAssemblyCollection();
 
 	virtual IMonoAssembly *GetCryambly();
 
@@ -98,14 +100,6 @@ public:
 	virtual void HandleException(mono::exception exception);
 	//! Registers a new internal call.
 	virtual void AddInternalCall(const char *name, const char *className, const char *nameSpace, void *functionPointer);
-#pragma endregion
-#pragma region Assemblies
-	//! Loads a Mono assembly into memory.
-	virtual IMonoAssembly *LoadAssembly(const char *moduleFileName);
-	//! Wraps assembly pointer.
-	virtual IMonoAssembly *WrapAssembly(void *assemblyHandle);
-	//! Wraps an assembly.
-	virtual IMonoAssembly *WrapAssembly(const char *fullAssemblyName);
 #pragma endregion
 #pragma region Unboxing
 	//! Unboxes managed value-type object.

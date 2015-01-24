@@ -15,6 +15,11 @@ void *MonoInterface::GetAppDomain()
 	return this->appDomain;
 }
 
+IMonoAssemblyCollection *MonoInterface::GetAssemblyCollection()
+{
+	return this->assemblies;
+}
+
 IMonoAssembly *MonoInterface::GetCryambly()
 {
 	return this->cryambly;
@@ -51,7 +56,7 @@ MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener
 	: running(false)
 	, appDomain(nullptr)
 	, cryambly(nullptr)
-	, assemblies(10)
+	, assemblies()
 	, broadcaster(nullptr)
 	, gc()
 	, framework(framework)
@@ -109,7 +114,7 @@ MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener
 #ifdef _DEBUG
 	ReportComment("Loading pdb2mdb.");
 	// Load Pdb2Mdb.dll before everything else.
-	this->pdb2mdb = this->LoadAssembly(DirectoryStructure::GetPdb2MdbFile());
+	this->pdb2mdb = this->assemblies->Load(DirectoryStructure::GetPdb2MdbFile());
 	// Initialize conversion thunk immediately.
 	Pdb2MdbThunks::Convert = (this->pdb2mdb)
 		? this->GetMethodThunk<ConvertPdbThunk>
@@ -120,8 +125,8 @@ MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener
 	ReportComment("Loading Cryambly.");
 	// Load Cryambly.
 	const char *cryamblyFile = DirectoryStructure::GetCryamblyFile();
-	this->cryambly = this->LoadAssembly(cryamblyFile);
-	this->corlib = this->WrapAssembly(mono_image_get_assembly(mono_get_corlib()));
+	this->cryambly = this->assemblies->Load(cryamblyFile);
+	this->corlib = this->assemblies->Wrap(mono_image_get_assembly(mono_get_corlib()));
 	ReportComment("Initializing main thunks.");
 	this->InitializeThunks();
 	ReportComment("Main thunks initialized.");
@@ -269,53 +274,6 @@ void MonoInterface::AddInternalCall(const char *nameSpace, const char *className
 	ConstructiveText fullName(30);
 	fullName << nameSpace << '.' << className << "::" << name;
 	mono_add_internal_call(fullName.ToNTString(), functionPointer);
-}
-#pragma endregion
-#pragma region Assemblies
-//! Loads a Mono assembly into memory.
-//!
-//! @param moduleFileName Name of the file inside Modules folder.
-IMonoAssembly *MonoInterface::LoadAssembly(const char *moduleFileName)
-{
-	if (!this->running)
-	{
-		return nullptr;
-	}
-	bool failed;
-	MonoAssemblyWrapper *wrapper = new MonoAssemblyWrapper(moduleFileName, failed);
-	if (failed)
-	{
-		return nullptr;
-	}
-	this->assemblies.Add(wrapper);
-	return wrapper;
-}
-//! Wraps assembly pointer.
-IMonoAssembly *MonoInterface::WrapAssembly(void *assemblyHandle)
-{
-	if (!this->running)
-	{
-		return nullptr;
-	}
-	for (int i = 0; i < this->assemblies.Length; i++)
-	{
-		if (this->assemblies[i]->GetWrappedPointer() == assemblyHandle)
-		{
-			return this->assemblies[i];
-		}
-	}
-	MonoAssemblyWrapper *wrapper = new MonoAssemblyWrapper((MonoAssembly *)assemblyHandle);
-	this->assemblies.Add(wrapper);
-	return wrapper;
-}
-//! Wraps an assembly.
-IMonoAssembly *MonoInterface::WrapAssembly(const char *fullAssemblyName)
-{
-	if (!this->running)
-	{
-		return nullptr;
-	}
-	return this->WrapAssembly(mono_assembly_loaded(mono_assembly_name_new(fullAssemblyName)));
 }
 #pragma endregion
 #pragma region Unboxing

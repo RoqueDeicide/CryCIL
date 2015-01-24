@@ -336,7 +336,7 @@ const char *MonoClassWrapper::GetNameSpace()
 
 IMonoAssembly *MonoClassWrapper::GetAssembly()
 {
-	return MonoEnv->WrapAssembly(mono_image_get_assembly(mono_class_get_image(this->wrappedClass)));
+	return MonoEnv->Assemblies->Wrap(mono_image_get_assembly(mono_class_get_image(this->wrappedClass)));
 }
 
 void *MonoClassWrapper::GetWrappedPointer()

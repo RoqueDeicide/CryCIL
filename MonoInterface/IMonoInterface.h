@@ -485,8 +485,12 @@ struct IMonoAssemblyCollection
 {
 	//! Loads a Mono assembly into memory.
 	//!
+	//! If the assembly was already loaded from the same file, original wrapper will be created.
+	//!
 	//! @param path Path to the assembly file. Relative paths go from CryEngine installation
 	//!             directory.
+	//!
+	//! @returns A wrapper for the loaded assembly.
 	VIRTUAL_API virtual IMonoAssembly *Load(const char *path) = 0;
 	//! Wraps an assembly pointer.
 	//!
@@ -1284,6 +1288,8 @@ struct IMonoInterface
 
 	//! Gets the pointer to AppDomain.
 	__declspec(property(get = GetAppDomain)) void *AppDomain;
+	//! Gets the pointer to the assembly wrapper registry.
+	__declspec(property(get = GetAssemblyCollection)) IMonoAssemblyCollection *Assemblies;
 	//! Gets the pointer to IMonoAssembly that represents Cryambly.
 	__declspec(property(get = GetCryambly)) IMonoAssembly *Cryambly;
 	//! Gets the pointer to IMonoAssembly that represents Pdb2mdb.
@@ -1300,6 +1306,7 @@ struct IMonoInterface
 	__declspec(property(get = GetGameFramework)) IGameFramework *CryAction;
 
 	VIRTUAL_API virtual void *GetAppDomain() = 0;
+	VIRTUAL_API virtual IMonoAssemblyCollection *GetAssemblyCollection() = 0;
 	VIRTUAL_API virtual IMonoAssembly *GetCryambly() = 0;
 	VIRTUAL_API virtual IMonoAssembly *GetPdbMdbAssembly() = 0;
 	VIRTUAL_API virtual IMonoAssembly *GetCoreLibrary() = 0;

@@ -225,6 +225,7 @@
     <ClInclude Include="Wrappers\DefaultBoxinator.h" />
     <ClInclude Include="Wrappers\MonoArray.h" />
     <ClInclude Include="Wrappers\MonoAssembly.h" />
+    <ClInclude Include="Wrappers\MonoAssemblyCollection.h" />
     <ClInclude Include="Wrappers\MonoClass.h" />
     <ClInclude Include="Wrappers\MonoGC.h" />
     <ClInclude Include="Wrappers\MonoGCHandle.h" />
@@ -262,6 +263,7 @@
     <ClCompile Include="ThunkTables.cpp" />
     <ClCompile Include="Wrappers\DefaultBoxinator.cpp" />
     <ClCompile Include="Wrappers\MonoArrayWrapper.cpp" />
+    <ClCompile Include="Wrappers\MonoAssemblyCollection.cpp" />
     <ClCompile Include="Wrappers\MonoAssemblyWrapper.cpp" />
     <ClCompile Include="Wrappers\MonoClassCache.cpp" />
     <ClCompile Include="Wrappers\MonoClassWrapper.cpp" />

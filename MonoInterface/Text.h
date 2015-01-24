@@ -254,6 +254,11 @@ public:
 		}
 		return -1;
 	}
+	//! Determines whether this text is equal to one in the null-terminated string.
+	bool Equals(const char *ntString)
+	{
+		return strlen(ntString) == this->length && strncmp(this->text, ntString, this->length) == 0;
+	}
 	int CompareTo(TextBase *other)
 	{
 		int minLength = this->length > other->length ? other->length : this->length;

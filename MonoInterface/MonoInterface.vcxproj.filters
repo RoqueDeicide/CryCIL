@@ -67,6 +67,9 @@
     <ClInclude Include="Wrappers\MonoGCHandle.h">
       <Filter>API Implementation</Filter>
     </ClInclude>
+    <ClInclude Include="Wrappers\MonoAssemblyCollection.h">
+      <Filter>API Implementation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -110,6 +113,9 @@
       <Filter>API Implementation</Filter>
     </ClCompile>
     <ClCompile Include="Wrappers\MonoArrayWrapper.cpp">
+      <Filter>API Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="Wrappers\MonoAssemblyCollection.cpp">
       <Filter>API Implementation</Filter>
     </ClCompile>
   </ItemGroup>
