@@ -11,7 +11,7 @@
 	public struct Quatvec
 	{
 		/// <summary>
-		/// Combination of <see cref="Quaternion.Identity"/> and zeroed vector.
+		/// Combination of <see cref="CryCil.Geometry.Quaternion.Identity"/> and zeroed vector.
 		/// </summary>
 		public static readonly Quatvec Identity = new Quatvec(new Vector3(), Quaternion.Identity);
 		#region Fields

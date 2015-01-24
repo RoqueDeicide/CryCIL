@@ -187,17 +187,17 @@ namespace CryCil.Geometry
 			{
 				Roll =
 					System.Convert.ToSingle(
-						Math.Asin(Math.Max(-1.0f, Math.Min(1.0f, -(quaternion.V.X * quaternion.V.Z - quaternion.W * quaternion.V.Y) * 2))))
+						Math.Asin(Math.Max(-1.0f, Math.Min(1.0f, -(quaternion.X * quaternion.Z - quaternion.W * quaternion.Y) * 2))))
 			};
 			if (Math.Abs(Math.Abs(result.Roll) - (float)(Math.PI * 0.5)) < 0.01f)
 			{
 				result.Pitch = 0;
-				result.Yaw = (float)(Math.Atan2(-2 * (quaternion.V.X * quaternion.V.Y - quaternion.W * quaternion.V.Z), 1 - (quaternion.V.X * quaternion.V.X + quaternion.V.Z * quaternion.V.Z) * 2));
+				result.Yaw = (float)(Math.Atan2(-2 * (quaternion.X * quaternion.Y - quaternion.W * quaternion.Z), 1 - (quaternion.X * quaternion.X + quaternion.Z * quaternion.Z) * 2));
 			}
 			else
 			{
-				result.Pitch = (float)(Math.Atan2(-2 * (quaternion.V.Y * quaternion.V.Z - quaternion.W * quaternion.V.X), 1 - (quaternion.V.X * quaternion.V.X + quaternion.V.Y * quaternion.V.Y) * 2));
-				result.Yaw = (float)(Math.Atan2(-2 * (quaternion.V.X * quaternion.V.Y - quaternion.W * quaternion.V.Z), 1 - (quaternion.V.Z * quaternion.V.Z + quaternion.V.Y * quaternion.V.Y) * 2));
+				result.Pitch = (float)(Math.Atan2(-2 * (quaternion.Y * quaternion.Z - quaternion.W * quaternion.X), 1 - (quaternion.X * quaternion.X + quaternion.Y * quaternion.Y) * 2));
+				result.Yaw = (float)(Math.Atan2(-2 * (quaternion.X * quaternion.Y - quaternion.W * quaternion.Z), 1 - (quaternion.Z * quaternion.Z + quaternion.Y * quaternion.Y) * 2));
 			}
 			return result;
 		}
@@ -268,7 +268,7 @@ namespace CryCil.Geometry
 		/// </returns>
 		public bool IsUnit(float epsilon = 0.05f)
 		{
-			return (Math.Abs(1 - this.LengthSquared) <= epsilon);
+			return (Math.Abs(1 - (this.Roll * this.Roll + this.Pitch * this.Pitch + this.Yaw * this.Yaw)) <= epsilon);
 		}
 		#endregion
 		#endregion

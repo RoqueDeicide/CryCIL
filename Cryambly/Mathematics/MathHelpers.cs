@@ -60,7 +60,7 @@ namespace CryCil
 		/// </returns>
 		public static Vector3 Log(Quaternion quaternion)
 		{
-			var lensqr = quaternion.V.LengthSquared;
+			var lensqr = quaternion.Vector.LengthSquared;
 			if (!(lensqr > 0.0f))
 			{
 				// logarithm of a quaternion, imaginary part (the real part of the
@@ -69,7 +69,7 @@ namespace CryCil
 			}
 			var len = Math.Sqrt(lensqr);
 			var angle = Math.Atan2(len, quaternion.W) / len;
-			return quaternion.V * (float)angle;
+			return quaternion.Vector * (float)angle;
 		}
 		/// <summary>
 		/// Calculates a unit quaternion from a vector.

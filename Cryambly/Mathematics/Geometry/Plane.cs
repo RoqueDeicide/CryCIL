@@ -208,18 +208,18 @@ namespace CryCil.Geometry
 		/// </param>
 		public static void Transform(ref Plane plane, ref Quaternion rotation, out Plane result)
 		{
-			float x2 = rotation.V.X + rotation.V.X;
-			float y2 = rotation.V.Y + rotation.V.Y;
-			float z2 = rotation.V.Z + rotation.V.Z;
+			float x2 = rotation.X + rotation.X;
+			float y2 = rotation.Y + rotation.Y;
+			float z2 = rotation.Z + rotation.Z;
 			float wx = rotation.W * x2;
 			float wy = rotation.W * y2;
 			float wz = rotation.W * z2;
-			float xx = rotation.V.X * x2;
-			float xy = rotation.V.X * y2;
-			float xz = rotation.V.X * z2;
-			float yy = rotation.V.Y * y2;
-			float yz = rotation.V.Y * z2;
-			float zz = rotation.V.Z * z2;
+			float xx = rotation.X * x2;
+			float xy = rotation.X * y2;
+			float xz = rotation.X * z2;
+			float yy = rotation.Y * y2;
+			float yz = rotation.Y * z2;
+			float zz = rotation.Z * z2;
 
 			float x = plane.Normal.X;
 			float y = plane.Normal.Y;
@@ -243,18 +243,18 @@ namespace CryCil.Geometry
 		public static Plane Transform(Plane plane, Quaternion rotation)
 		{
 			Plane result;
-			float x2 = rotation.V.X + rotation.V.X;
-			float y2 = rotation.V.Y + rotation.V.Y;
-			float z2 = rotation.V.Z + rotation.V.Z;
+			float x2 = rotation.X + rotation.X;
+			float y2 = rotation.Y + rotation.Y;
+			float z2 = rotation.Z + rotation.Z;
 			float wx = rotation.W * x2;
 			float wy = rotation.W * y2;
 			float wz = rotation.W * z2;
-			float xx = rotation.V.X * x2;
-			float xy = rotation.V.X * y2;
-			float xz = rotation.V.X * z2;
-			float yy = rotation.V.Y * y2;
-			float yz = rotation.V.Y * z2;
-			float zz = rotation.V.Z * z2;
+			float xx = rotation.X * x2;
+			float xy = rotation.X * y2;
+			float xz = rotation.X * z2;
+			float yy = rotation.Y * y2;
+			float yz = rotation.Y * z2;
+			float zz = rotation.Z * z2;
 
 			float x = plane.Normal.X;
 			float y = plane.Normal.Y;
@@ -286,18 +286,18 @@ namespace CryCil.Geometry
 				throw new ArgumentNullException("planes");
 #endif
 
-			float x2 = rotation.V.X + rotation.V.X;
-			float y2 = rotation.V.Y + rotation.V.Y;
-			float z2 = rotation.V.Z + rotation.V.Z;
+			float x2 = rotation.X + rotation.X;
+			float y2 = rotation.Y + rotation.Y;
+			float z2 = rotation.Z + rotation.Z;
 			float wx = rotation.W * x2;
 			float wy = rotation.W * y2;
 			float wz = rotation.W * z2;
-			float xx = rotation.V.X * x2;
-			float xy = rotation.V.X * y2;
-			float xz = rotation.V.X * z2;
-			float yy = rotation.V.Y * y2;
-			float yz = rotation.V.Y * z2;
-			float zz = rotation.V.Z * z2;
+			float xx = rotation.X * x2;
+			float xy = rotation.X * y2;
+			float xz = rotation.X * z2;
+			float yy = rotation.Y * y2;
+			float yz = rotation.Y * z2;
+			float zz = rotation.Z * z2;
 
 			for (int i = 0; i < planes.Length; ++i)
 			{

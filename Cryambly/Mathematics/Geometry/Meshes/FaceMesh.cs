@@ -49,7 +49,7 @@ namespace CryCil.Geometry
 		{
 			BspNode<FullFace> a = this.BspTree;
 			BspNode<FullFace> b = anotherMesh.BspTree;
-			a.Unite(b);
+			a.Unite(b, null);
 			this.Set(a);
 		}
 		/// <summary>
@@ -61,14 +61,14 @@ namespace CryCil.Geometry
 		{
 			BspNode<FullFace> a = this.BspTree;
 			BspNode<FullFace> b = anotherMesh.BspTree;
-			a.Invert();				// Cut geometry that is not common for the meshes.
-			b.CutTreeOut(a);		//
-			b.Invert();				//
-			a.CutTreeOut(b);		//
+			a.Invert();					// Cut geometry that is not common for the meshes.
+			b.CutTreeOut(a, null);		//
+			b.Invert();					//
+			a.CutTreeOut(b, null);		//
 			// Clean up remains.
-			b.CutTreeOut(a);
+			b.CutTreeOut(a, null);
 			// Combine geometry.
-			a.AddElements(b.AllElements);
+			a.AddElements(b.AllElements, null);
 			// Invert everything.
 			a.Invert();
 			this.Set(a);
@@ -83,7 +83,7 @@ namespace CryCil.Geometry
 			BspNode<FullFace> a = this.BspTree;
 			BspNode<FullFace> b = anotherMesh.BspTree;
 			a.Invert();
-			a.Unite(b);
+			a.Unite(b, null);
 			a.Invert();
 			this.Set(a);
 		}

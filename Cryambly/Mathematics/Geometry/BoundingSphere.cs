@@ -226,7 +226,7 @@ namespace CryCil.Geometry
 		/// </param>
 		public static void FromBox(ref BoundingBox box, out BoundingSphere result)
 		{
-			result.Center = Vector3.CreateLinearInterpolation(box.Minimum, box.Maximum, 0.5f);
+			result.Center = Interpolation.Linear.Create(box.Minimum, box.Maximum, 0.5f);
 
 			float x = box.Minimum.X - box.Maximum.X;
 			float y = box.Minimum.Y - box.Maximum.Y;
