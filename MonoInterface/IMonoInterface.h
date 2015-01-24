@@ -461,40 +461,15 @@ struct IMonoAssembly : public IMonoFunctionalityWrapper
 	//!
 	//! @param nameSpace Name space where the class is defined.
 	//! @param className Name of the class to get.
+	__declspec(property(get = GetClass)) IMonoClass *Classes[][];
+	//! Gets the short name of the assembly.
+	__declspec(property(get = GetName)) Text *Name;
+	//! Gets the full name of the assembly.
+	__declspec(property(get = GetFullName)) Text *FullName;
+
 	VIRTUAL_API virtual IMonoClass *GetClass(const char *nameSpace, const char *className) = 0;
-	//! Returns a method that satisfies given description.
-	//!
-	//! A list of parameters is a comma separated list of names of types each of which must be
-	//! a standard name with name space and full class name, like "System.Int32".
-	//!
-	//! Examples:
-	//!
-	//! @code{.cpp}
-	//! IMonoAssembly *corlib = MonoEnv->CoreLibrary;
-	//!
-	//! IMonoMethod *binarySearch =
-	//!     corlib->MethodFromDescription
-	//!     (
-	//!         "System",
-	//!         "Array",
-	//!         "BinarySearch",
-	//!         "System.Array,System.Int32,System.Int32,System.Object,System.Collections.IComparer"
-	//!     );
-	//! @endcode
-	//!
-	//! @param nameSpace  Name space where the class where the method is declared is located.
-	//! @param className  Name of the class where the method is declared.
-	//! @param methodName Name of the method to look for.
-	//! @param params     A comma-separated list of names of types of arguments. Can be null
-	//!                   if method accepts no arguments.
-	//!
-	//! @returns A pointer to object that implements IMonoMethod that grants access to
-	//!          requested method if found, otherwise returns null.
-	VIRTUAL_API virtual IMonoMethod *MethodFromDescription
-	(
-		const char *nameSpace, const char *className,
-		const char *methodName, const char *params
-	) = 0;
+	VIRTUAL_API virtual Text *GetName() = 0;
+	VIRTUAL_API virtual Text *GetFullName() = 0;
 	//! Gets the reference to the instance of type System.Reflection.Assembly.
 	__declspec(property(get = GetReflectionObject)) mono::assembly ReflectionObject;
 

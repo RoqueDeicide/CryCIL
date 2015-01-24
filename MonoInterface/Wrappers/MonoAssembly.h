@@ -13,6 +13,9 @@ private:
 	MonoAssembly *assembly;			//!< Pointer to the assembly object.
 	MonoImage *image;				//!< Pointer to the assembly image: region of the
 									//!  assembly that contains all of the code and metadata.
+
+	Text *shortName;				//!< Short name of the assembly.
+	Text *fullName;					//!< Full name of the assembly.
 public:
 	//! Wraps given assembly.
 	MonoAssemblyWrapper(MonoAssembly *assembly);
@@ -20,13 +23,18 @@ public:
 	MonoAssemblyWrapper(const char *assemblyFile, bool &failed);
 	//! Gets the class.
 	virtual IMonoClass *GetClass(const char *nameSpace, const char *className);
-	//! Returns a method that satisfies given description.
-	virtual IMonoMethod *MethodFromDescription
-	(
-		const char *nameSpace, const char *className,
-		const char *methodName, const char *params
-	);
+
+	VIRTUAL_API virtual Text * GetName()
+	{
+		throw std::logic_error("The method or operation is not implemented.");
+	}
+
+	VIRTUAL_API virtual Text * GetFullName()
+	{
+		throw std::logic_error("The method or operation is not implemented.");
+	}
 	//! Returns a pointer to the MonoAssembly for Mono API calls.
 	virtual void * GetWrappedPointer();
 	virtual mono::assembly GetReflectionObject();
+
 };

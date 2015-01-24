@@ -428,8 +428,9 @@ void MonoInterface::RegisterDefaultListeners()
 	template<typename MethodSignature>
 	MethodSignature MonoInterface::GetMethodThunk(IMonoAssembly *assembly, const char *nameSpace, const char *className, const char *methodName, const char *params)
 	{
-		return (MethodSignature)assembly->MethodFromDescription
-			(nameSpace, className, methodName, params)->UnmanagedThunk;
+		return (MethodSignature)assembly->Classes[nameSpace][className]
+										->GetMethod(methodName, params)
+										->UnmanagedThunk;
 	}
 #pragma endregion
 
