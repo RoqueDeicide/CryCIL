@@ -13,6 +13,9 @@
 #include <IGameFramework.h>
 
 #include "List.h"
+#include "SortedList.h"
+#include "Text.h"
+
 #include "Logs.h"
 
 // Use MONOINTERFACE_LIBRARY constant to get OS-specific name of MonoInterface library.
@@ -497,6 +500,38 @@ struct IMonoAssembly : public IMonoFunctionalityWrapper
 
 	VIRTUAL_API virtual mono::assembly GetReflectionObject() = 0;
 };
+
+//! Represents an object that simplifies the process of getting an assembly that is not accessible
+//! through MonoEnv variable.
+struct IMonoAssemblyCollection
+{
+	//! Loads a Mono assembly into memory.
+	//!
+	//! @param path Path to the assembly file. Relative paths go from CryEngine installation
+	//!             directory.
+	VIRTUAL_API virtual IMonoAssembly *Load(const char *path) = 0;
+	//! Wraps an assembly pointer.
+	//!
+	//! Mostly for internal use since acquiring MonoAssembly pointer requires direct work with Mono.
+	//!
+	//! @param assemblyHandle Pointer to MonoAssembly to wrap.
+	VIRTUAL_API virtual IMonoAssembly *Wrap(void *assemblyHandle) = 0;
+	//! Gets the pointer to the assembly wrapper object.
+	//!
+	//! If there are multiple assemblies loaded with the same file name, it's not guaranteed
+	//! that you will get the one you want.
+	//!
+	//! @param name Name of the assembly (equivalent of the file name but without the extension).
+	VIRTUAL_API virtual IMonoAssembly *GetAssembly(const char *name) = 0;
+	//! Gets the pointer to the assembly wrapper object.
+	//!
+	//! Requires fully-qualified name of the assembly. Getting such name is harder, but it's more
+	//! reliable when there are multiple assemblies loaded with the same file name.
+	//!
+	//! @param name Full name of the assembly.
+	VIRTUAL_API virtual IMonoAssembly *GetAssemblyFullName(const char *name) = 0;
+};
+
 //! Defines interface of objects that wrap functionality of MonoArray type.
 struct IMonoArray : public IMonoFunctionalityWrapper
 {
@@ -1267,22 +1302,6 @@ struct IMonoInterface
 	//! @param name            Name of the managed method.
 	//! @param functionPointer Pointer to unmanaged thunk that needs to be exposed to Mono code.
 	VIRTUAL_API virtual void AddInternalCall(const char *nameSpace, const char *className, const char *name, void *functionPointer) = 0;
-	//! Loads a Mono assembly into memory.
-	//!
-	//! @param moduleFileName Name of the file inside Modules folder.
-	VIRTUAL_API virtual IMonoAssembly *LoadAssembly(const char *moduleFileName) = 0;
-	//! Wraps assembly pointer.
-	//!
-	//! Mostly for internal use.
-	//!
-	//! @param assemblyHandle Pointer to MonoAssembly to wrap.
-	VIRTUAL_API virtual IMonoAssembly *WrapAssembly(void *assemblyHandle) = 0;
-	//! Wraps an assembly.
-	//!
-	//! The assembly needs to be loaded in order to be wrapped.
-	//!
-	//! @param fullAssemblyName Fully qualified name of the assembly to wrap.
-	VIRTUAL_API virtual IMonoAssembly *WrapAssembly(const char *fullAssemblyName) = 0;
 	// Properties.
 
 	//! Gets the pointer to AppDomain.
