@@ -16,6 +16,7 @@ private:
 
 	Text *shortName;				//!< Short name of the assembly.
 	Text *fullName;					//!< Full name of the assembly.
+	Text *fileName;					//!< Name of the file this assembly was loaded from.
 public:
 	//! Wraps given assembly.
 	MonoAssemblyWrapper(MonoAssembly *assembly);
@@ -28,19 +29,16 @@ public:
 
 		SAFE_DELETE(this->shortName);
 		SAFE_DELETE(this->fullName);
+		SAFE_DELETE(this->fileName);
 	}
 	//! Gets the class.
 	virtual IMonoClass *GetClass(const char *nameSpace, const char *className);
 
-	VIRTUAL_API virtual Text * GetName()
-	{
-		throw std::logic_error("The method or operation is not implemented.");
-	}
+	virtual Text *GetName();
 
-	VIRTUAL_API virtual Text * GetFullName()
-	{
-		throw std::logic_error("The method or operation is not implemented.");
-	}
+	virtual Text *GetFullName();
+
+	virtual Text *GetFileName();
 	//! Returns a pointer to the MonoAssembly for Mono API calls.
 	virtual void * GetWrappedPointer();
 	virtual mono::assembly GetReflectionObject();
