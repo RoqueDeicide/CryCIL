@@ -17,8 +17,9 @@ MonoAssemblyWrapper::MonoAssemblyWrapper(const char *assemblyFile, bool &failed)
 		mono::exception ex;
 		Pdb2MdbThunks::Convert(MonoEnv->ToManagedString(assemblyFile), &ex);
 	}
-	this->assembly = mono_domain_assembly_open((MonoDomain *)MonoEnv->AppDomain, assemblyFile);
-	failed = !this->assembly;
+	MonoImageOpenStatus status;
+	this->assembly = mono_assembly_open(assemblyFile, &status);
+	failed = status != MONO_IMAGE_OK;
 	this->image = (failed) ? nullptr : mono_assembly_get_image(assembly);
 }
 //! Gets the class.
