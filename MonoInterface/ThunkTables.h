@@ -29,3 +29,11 @@ struct Pdb2MdbThunks
 {
 	static ConvertPdbThunk Convert;
 };
+
+//! Signature of the method Driver.Convert(string);
+typedef mono::string(__stdcall *LookUpAssemblyThunk)(mono::string, mono::exception *);
+
+struct AssemblyCollectionThunks
+{
+	static LookUpAssemblyThunk LookUpAssembly;
+};

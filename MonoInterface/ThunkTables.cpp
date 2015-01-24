@@ -8,3 +8,5 @@ ShutDownThunk MonoInterfaceThunks::Shutdown = nullptr;
 UpdateThunk MonoInterfaceThunks::Update = nullptr;
 
 ConvertPdbThunk Pdb2MdbThunks::Convert = nullptr;
+
+LookUpAssemblyThunk AssemblyCollectionThunks::LookUpAssembly = nullptr;

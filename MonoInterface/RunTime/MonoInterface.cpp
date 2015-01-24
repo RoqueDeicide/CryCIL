@@ -363,6 +363,7 @@ void MonoInterface::RegisterDefaultListeners()
 	void MonoInterface::InitializeThunks()
 	{
 		this->InitializeMonoInterfaceThunks();
+		this->InitializeAssemblyCollectionThunks();
 	}
 	void MonoInterface::InitializeMonoInterfaceThunks()
 	{
@@ -382,6 +383,12 @@ void MonoInterface::RegisterDefaultListeners()
 		MonoInterfaceThunks::Update =
 			this->GetMethodThunk<UpdateThunk>
 			(this->cryambly, "CryCil.RunTime", "MonoInterface", "Update", nullptr);
+	}
+	void MonoInterface::InitializeAssemblyCollectionThunks()
+	{
+		AssemblyCollectionThunks::LookUpAssembly =
+			this->GetMethodThunk<LookUpAssemblyThunk>
+			(this->cryambly, "CryCil.RunTime", "AssemblyLookUp", "LookUpAssembly", "System.String");
 	}
 	template<typename MethodSignature>
 	MethodSignature MonoInterface::GetMethodThunk(IMonoAssembly *assembly, const char *nameSpace, const char *className, const char *methodName, const char *params)

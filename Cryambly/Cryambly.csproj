@@ -139,6 +139,7 @@
     <Compile Include="PathUtilities.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RunTime\AssemblyLookUp.cs" />
     <Compile Include="RunTime\Compilation\AssemblyReference.cs" />
     <Compile Include="RunTime\Compilation\NamespaceDoc.cs" />
     <Compile Include="RunTime\Compilation\Projects\NamespaceDoc.cs" />

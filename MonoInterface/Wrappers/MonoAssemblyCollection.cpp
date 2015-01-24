@@ -2,6 +2,7 @@
 
 #include "MonoAssemblyCollection.h"
 #include "MonoAssembly.h"
+#include "ThunkTables.h"
 
 void DisposeAssemblyWrappers(Text *assemblyShortName, List<IMonoAssembly *> *assemblySet)
 {
@@ -13,6 +14,10 @@ void DisposeAssemblyWrappers(Text *assemblyShortName, List<IMonoAssembly *> *ass
 
 VIRTUAL_API IMonoAssembly *MonoAssemblyCollection::Load(const char *path)
 {
+	if (!path)
+	{
+		return nullptr;
+	}
 	bool failed;
 	IMonoAssembly *wrapper = new MonoAssemblyWrapper(path, failed);
 	if (Pdb2MdbThunks::Convert)
@@ -48,6 +53,10 @@ VIRTUAL_API IMonoAssembly *MonoAssemblyCollection::Load(const char *path)
 
 VIRTUAL_API IMonoAssembly *MonoAssemblyCollection::Wrap(void *assemblyHandle)
 {
+	if (!assemblyHandle)
+	{
+		return nullptr;
+	}
 	IMonoAssembly *wrapper = nullptr;
 	this->assemblyRegistry->ForEach
 	(
@@ -82,6 +91,10 @@ VIRTUAL_API IMonoAssembly *MonoAssemblyCollection::Wrap(void *assemblyHandle)
 
 VIRTUAL_API IMonoAssembly *MonoAssemblyCollection::GetAssembly(const char *name)
 {
+	if (!name)
+	{
+		return nullptr;
+	}
 	IMonoAssembly *wrapper = nullptr;
 	this->assemblyRegistry->ForEach
 	(
@@ -96,11 +109,26 @@ VIRTUAL_API IMonoAssembly *MonoAssemblyCollection::GetAssembly(const char *name)
 			}
 		}
 	);
+	if (!wrapper)
+	{
+		mono::exception ex;
+		mono::string fullName = AssemblyCollectionThunks::LookUpAssembly(ToMonoString(name), &ex);
+		if (fullName && !ex)
+		{
+			char *fullNameNative = mono_string_to_utf8((MonoString *)fullName);
+			wrapper = this->GetAssemblyFullName(fullNameNative);
+			mono_free(fullNameNative);
+		}
+	}
 	return wrapper;
 }
 
 VIRTUAL_API IMonoAssembly *MonoAssemblyCollection::GetAssemblyFullName(const char *name)
 {
+	if (!name)
+	{
+		return nullptr;
+	}
 	IMonoAssembly *wrapper = nullptr;
 	this->assemblyRegistry->ForEach
 	(
@@ -115,5 +143,11 @@ VIRTUAL_API IMonoAssembly *MonoAssemblyCollection::GetAssemblyFullName(const cha
 			}
 		}
 	);
+	if (!wrapper)
+	{
+		MonoAssemblyName *aname = mono_assembly_name_new(name);
+		wrapper = this->Wrap(mono_assembly_loaded(aname));
+		mono_assembly_name_free(aname);
+	}
 	return wrapper;
 }
