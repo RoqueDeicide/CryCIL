@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "MonoInterface.h"
+#include "Wrappers/MonoAssemblyCollection.h"
 
 
 void HandleSignalAbort(int error)
@@ -56,11 +57,12 @@ MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener
 	: running(false)
 	, appDomain(nullptr)
 	, cryambly(nullptr)
-	, assemblies()
+	, assemblies(nullptr)
 	, broadcaster(nullptr)
 	, gc()
 	, framework(framework)
 {
+	this->assemblies = new MonoAssemblyCollection();
 	broadcaster = new EventBroadcaster();
 	// Register all initial listeners.
 	this->RegisterDefaultListeners();
@@ -174,6 +176,7 @@ void MonoInterface::Shutdown()
 	MonoInterfaceThunks::Shutdown(this->managedInterface->ObjectPointer, &ex);
 	this->framework->UnregisterListener(this);
 	gEnv->pSystem->GetISystemEventDispatcher()->RemoveListener(this);
+	delete this->assemblies;
 	CryLogAlways("Shutting down jit.");
 	mono_jit_cleanup(this->appDomain);
 	CryLogAlways("No more running.");
