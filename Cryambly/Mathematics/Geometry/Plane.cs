@@ -76,7 +76,7 @@ namespace CryCil.Geometry
 		{
 #if DEBUG
 			this.Normal = ((point2 - point1) % (point3 - point1)).Normalized;
-			this.D = this.Normal * point1;
+			this.D = -(this.Normal * point1);
 #endif
 #if RELEASE
 			float x1 = point2.X - point1.X;
