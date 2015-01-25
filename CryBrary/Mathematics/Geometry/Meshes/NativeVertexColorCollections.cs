@@ -15,8 +15,8 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		#endregion
 		#region Properties
 		/// <summary>
-		/// Indicates that this collection cannot be reallocated on its own as it depends on
-		/// collection of vertices.
+		/// Indicates that this collection cannot be reallocated on its own as it depends
+		/// on collection of vertices.
 		/// </summary>
 		public override bool Reallocatable
 		{
@@ -25,7 +25,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// <summary>
 		/// Gets or sets color instance at specified index.
 		/// </summary>
-		/// <param name="index"> Index of the color to access. </param>
+		/// <param name="index">Index of the color to access.</param>
 		public override Color32 this[int index]
 		{
 			get
@@ -48,9 +48,9 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		#endregion
 		#region Construction
 		/// <summary>
-		/// Creates new instance of type <see cref="NativeVertexColor0Collection" />.
+		/// Creates new instance of type <see cref="NativeVertexColor0Collection"/>.
 		/// </summary>
-		/// <param name="mesh"> Mesh that hosts this collection. </param>
+		/// <param name="mesh">Mesh that hosts this collection.</param>
 		protected NativeVertexColorCollection(NativeMesh mesh)
 		{
 			this.Mesh = mesh;
@@ -77,9 +77,11 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 	public class NativeVertexColor0Collection : NativeVertexColorCollection
 	{
 		/// <summary>
-		/// Creates new instance of class <see cref="NativeVertexColor0Collection" />.
+		/// Creates new instance of class <see cref="NativeVertexColor0Collection"/>.
 		/// </summary>
-		/// <param name="mesh"> <see cref="NativeMesh" /> that hosts this collection. </param>
+		/// <param name="mesh">
+		/// <see cref="NativeMesh"/> that hosts this collection.
+		/// </param>
 		public NativeVertexColor0Collection(NativeMesh mesh)
 			: base(mesh)
 		{
@@ -98,9 +100,11 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 	public class NativeVertexColor1Collection : NativeVertexColorCollection
 	{
 		/// <summary>
-		/// Creates new instance of class <see cref="NativeVertexColor0Collection" />.
+		/// Creates new instance of class <see cref="NativeVertexColor0Collection"/>.
 		/// </summary>
-		/// <param name="mesh"> <see cref="NativeMesh" /> that hosts this collection. </param>
+		/// <param name="mesh">
+		/// <see cref="NativeMesh"/> that hosts this collection.
+		/// </param>
 		public NativeVertexColor1Collection(NativeMesh mesh)
 			: base(mesh)
 		{

@@ -95,8 +95,8 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Gets the amount of shader parameters in this material. See <see
-		/// cref="GetShaderParamName(int)" />
+		/// Gets the amount of shader parameters in this material. See
+		/// <see cref="GetShaderParamName(int)"/>
 		/// </summary>
 		public int ShaderParamCount
 		{
@@ -192,7 +192,8 @@ namespace CryEngine
 		/// Clones a material
 		/// </summary>
 		/// <param name="subMaterial">
-		/// If negative, all sub materials are cloned, otherwise only the specified slot is
+		/// If negative, all sub materials are cloned, otherwise only the specified slot
+		/// is
 		/// </param>
 		/// <returns>The new clone.</returns>
 		public Material Clone(int subMaterial = -1)
@@ -206,7 +207,7 @@ namespace CryEngine
 		/// Sets a material parameter value by name.
 		/// </summary>
 		/// <param name="paramName"></param>
-		/// <param name="value"></param>
+		/// <param name="value">    </param>
 		/// <returns>true if successful, otherwise false.</returns>
 		public bool SetParam(string paramName, float value)
 		{
@@ -230,7 +231,7 @@ namespace CryEngine
 		/// Attempts to get parameter value by name.
 		/// </summary>
 		/// <param name="paramName"></param>
-		/// <param name="value"></param>
+		/// <param name="value">    </param>
 		/// <returns>true if successful, otherwise false.</returns>
 		public bool TryGetParam(string paramName, out float value)
 		{
@@ -243,7 +244,7 @@ namespace CryEngine
 		/// Sets a material parameter value by name.
 		/// </summary>
 		/// <param name="paramName"></param>
-		/// <param name="value"></param>
+		/// <param name="value">    </param>
 		/// <returns>true if successful, otherwise false.</returns>
 		public bool SetParam(string paramName, ColorSingle value)
 		{
@@ -272,14 +273,14 @@ namespace CryEngine
 		/// Attempts to get parameter value by name.
 		/// </summary>
 		/// <param name="paramName"></param>
-		/// <param name="value"></param>
+		/// <param name="value">    </param>
 		/// <returns>true if successful, otherwise false.</returns>
 		public bool TryGetParam(string paramName, out ColorSingle value)
 		{
 			Vector3 vecVal = Vector3.Zero;
 			bool result = MaterialInterop.SetGetMaterialParamVec3(Handle, paramName, ref vecVal, true);
 
-			value = new ColorSingle {R = vecVal.X, G = vecVal.Y, B = vecVal.Z, A = this.Opacity};
+			value = new ColorSingle { R = vecVal.X, G = vecVal.Y, B = vecVal.Z, A = this.Opacity };
 
 			return result;
 		}
@@ -288,7 +289,7 @@ namespace CryEngine
 		/// Sets a shader parameter value by name.
 		/// </summary>
 		/// <param name="paramName"></param>
-		/// <param name="newVal"></param>
+		/// <param name="newVal">   </param>
 		public void SetShaderParam(string paramName, float newVal)
 		{
 			MaterialInterop.SetShaderParam(Handle, paramName, newVal);
@@ -308,7 +309,7 @@ namespace CryEngine
 		/// Sets a shader parameter value by name.
 		/// </summary>
 		/// <param name="paramName"></param>
-		/// <param name="newVal"></param>
+		/// <param name="newVal">   </param>
 		public void SetShaderParam(string paramName, ColorSingle newVal)
 		{
 			MaterialInterop.SetShaderParam(Handle, paramName, newVal);
@@ -335,7 +336,7 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Gets a shader parameter name by index. See <see cref="ShaderParamCount" />
+		/// Gets a shader parameter name by index. See <see cref="ShaderParamCount"/>
 		/// </summary>
 		/// <param name="index"></param>
 		/// <returns>The shader parameter name.</returns>

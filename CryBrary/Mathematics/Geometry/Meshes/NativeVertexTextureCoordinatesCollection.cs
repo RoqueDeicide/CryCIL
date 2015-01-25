@@ -13,7 +13,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		#endregion
 		#region Properties
 		/// <summary>
-		/// <see cref="NativeMeshMemoryRegion.TextureCoordinates" />
+		/// <see cref="NativeMeshMemoryRegion.TextureCoordinates"/>
 		/// </summary>
 		public override NativeMeshMemoryRegion MemoryRegionIdentifier
 		{
@@ -29,7 +29,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// <summary>
 		/// Gets or sets element at specified index.
 		/// </summary>
-		/// <param name="index"> Zero-based index of the element to access. </param>
+		/// <param name="index">Zero-based index of the element to access.</param>
 		/// <exception cref="IndexOutOfRangeException">
 		/// Attempt to access element of the collection throw index that is out of bounds.
 		/// </exception>
@@ -58,9 +58,10 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		#endregion
 		#region Construction
 		/// <summary>
-		/// Creates new instance of type <see cref="NativeVertexTextureCoordinatesCollection" />.
+		/// Creates new instance of type
+		/// <see cref="NativeVertexTextureCoordinatesCollection"/>.
 		/// </summary>
-		/// <param name="mesh"> Mesh that hosts this collection. </param>
+		/// <param name="mesh">Mesh that hosts this collection.</param>
 		public NativeVertexTextureCoordinatesCollection(NativeMesh mesh)
 		{
 			this.MeshHandle = mesh.CMeshHandle;

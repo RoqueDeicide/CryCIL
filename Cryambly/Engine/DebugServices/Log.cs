@@ -17,7 +17,7 @@ namespace CryCil.Engine.DebugServices
 		public static VerbosityLevels VerbosityLevel
 		{
 			get { return (VerbosityLevels)Interops.LogPosting.GetVerboxity(); }
-			set { Interops.LogPosting.SetVerbosity((int)value);}
+			set { Interops.LogPosting.SetVerbosity((int)value); }
 		}
 		/// <summary>
 		/// Writes a line into the log.
@@ -38,8 +38,10 @@ namespace CryCil.Engine.DebugServices
 		/// <summary>
 		/// Writes a warning into the log. Displayed with yellow font.
 		/// </summary>
-		/// <param name="value">Text to post.</param>
-		/// <param name="important">Indicates whether the message is very important to post.</param>
+		/// <param name="value">    Text to post.</param>
+		/// <param name="important">
+		/// Indicates whether the message is very important to post.
+		/// </param>
 		public static void Warning(string value, bool important)
 		{
 			Log.Post(important ? LogPostType.WarningAlways : LogPostType.Warning, value);
@@ -47,8 +49,10 @@ namespace CryCil.Engine.DebugServices
 		/// <summary>
 		/// Writes an error message into the log. Displayed with red font.
 		/// </summary>
-		/// <param name="value">Text to post.</param>
-		/// <param name="important">Indicates whether the message is very important to post.</param>
+		/// <param name="value">    Text to post.</param>
+		/// <param name="important">
+		/// Indicates whether the message is very important to post.
+		/// </param>
 		public static void Error(string value, bool important)
 		{
 			Log.Post(important ? LogPostType.ErrorAlways : LogPostType.Error, value);
@@ -65,7 +69,7 @@ namespace CryCil.Engine.DebugServices
 		/// Posts a line of text to the log.
 		/// </summary>
 		/// <param name="postType">Type of post to send.</param>
-		/// <param name="text">Text to post.</param>
+		/// <param name="text">    Text to post.</param>
 		public static void Post(LogPostType postType, string text)
 		{
 			Interops.LogPosting.Post((int)postType, text);
@@ -77,15 +81,18 @@ namespace CryCil.Engine.DebugServices
 	public enum LogPostType
 	{
 		/// <summary>
-		/// A simple message. Minimal log verbosity required for display is <see cref="VerbosityLevels.High"/>.
+		/// A simple message. Minimal log verbosity required for display is
+		/// <see cref="VerbosityLevels.High"/>.
 		/// </summary>
 		Message,
 		/// <summary>
-		/// A warning message. Minimal log verbosity required for display is <see cref="VerbosityLevels.High"/>.
+		/// A warning message. Minimal log verbosity required for display is
+		/// <see cref="VerbosityLevels.High"/>.
 		/// </summary>
 		Warning,
 		/// <summary>
-		/// An error message. Minimal log verbosity required for display is <see cref="VerbosityLevels.High"/>.
+		/// An error message. Minimal log verbosity required for display is
+		/// <see cref="VerbosityLevels.High"/>.
 		/// </summary>
 		Error,
 		/// <summary>
@@ -109,7 +116,8 @@ namespace CryCil.Engine.DebugServices
 		/// </summary>
 		InputResponse,
 		/// <summary>
-		/// A simple message. Minimal log verbosity required for display is <see cref="VerbosityLevels.Full"/>.
+		/// A simple message. Minimal log verbosity required for display is
+		/// <see cref="VerbosityLevels.Full"/>.
 		/// </summary>
 		Comment
 	}

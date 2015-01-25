@@ -582,9 +582,9 @@ namespace CryCil.Geometry
 		/// </remarks>
 		public static bool RayIntersectsTriangle(ref Ray ray, ref Vector3 vertex1, ref Vector3 vertex2, ref Vector3 vertex3, out float distance)
 		{
-			// Source: Fast Minimum Storage Ray / Triangle Intersection
-			// Reference:
-			//            http://www.cs.virginia.edu/~gfx/Courses/2003/ImageSynthesis/papers/Acceleration/Fast%20MinimumStorage%20RayTriangle%20Intersection.pdf
+			// Source: Fast Minimum Storage Ray / Triangle Intersection Reference:
+			// http:
+			//       //www.cs.virginia.edu/~gfx/Courses/2003/ImageSynthesis/papers/Acceleration/Fast%20MinimumStorage%20RayTriangle%20Intersection.pdf
 
 			// Compute vectors along two edges of the triangle.
 			Vector3 edge1, edge2;

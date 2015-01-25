@@ -19,9 +19,9 @@ namespace CryEngine
 		Particle_NoImpulse = 0x200, // particle will not add hit impulse (expecting that some other system will)
 
 		// PE_LIVING-specific flags
-		/// <summary>
-		/// Push objects during contacts
-		/// </summary>
+		// <summary>
+		// Push objects during contacts
+		// </summary>
 		Living_PushObjects = 0x01,
 		/// <summary>
 		/// Push players during contacts
@@ -47,7 +47,8 @@ namespace CryEngine
 		Soft_SkipLongestEdges = 0x01,	// the longest edge in each triangle with not participate in the solver
 		Soft_RigidCore = 0x02, // soft body will have an additional rigid body core
 
-		// PE_RIGID-specific flags (note that PE_ARTICULATED and PE_WHEELEDVEHICLE are derived from it)
+		// PE_RIGID-specific flags (note that PE_ARTICULATED and PE_WHEELEDVEHICLE are
+		// derived from it)
 		Rigid_NoSplashes = 0x04, // will not generate EventPhysCollisions when contacting water
 		Rigid_SmallAndFast = 0x100, // entity will trace rays against alive characters; set internally unless overriden
 

@@ -480,8 +480,8 @@ namespace Microsoft.Cci.Pdb
 
 				// The current bucket is full, and we have therefore collided. We need to
 				// set the collision bit UNLESS we have remembered an available slot
-				// previously.
-				// We don't need to set the collision bit here since we already have an empty slot
+				// previously. We don't need to set the collision bit here since we
+				// already have an empty slot
 				if (this.buckets[bucketNumber].hash_coll >= 0)
 				{
 					this.buckets[bucketNumber].hash_coll |= unchecked((int)0x80000000);
@@ -539,9 +539,9 @@ namespace Microsoft.Cci.Pdb
 		private class IntHashTableEnumerator : IEnumerator
 		{
 			private readonly IntHashTable hashtable;
-// ReSharper disable MemberHidesStaticFromOuterClass
+			// ReSharper disable MemberHidesStaticFromOuterClass
 			private int bucket;
-// ReSharper restore MemberHidesStaticFromOuterClass
+			// ReSharper restore MemberHidesStaticFromOuterClass
 			private readonly int version;
 			private bool current;
 			private Object currentValue;
@@ -573,17 +573,17 @@ namespace Microsoft.Cci.Pdb
 				return false;
 			}
 
-/*
-			internal int Key
-			{
-				get
-				{
-					if (current == false)
-						throw new InvalidOperationException("InvalidOperation_EnumOpCantHappen");
-					return currentKey;
-				}
-			}
-*/
+			/*
+						internal int Key
+						{
+							get
+							{
+								if (current == false)
+									throw new InvalidOperationException("InvalidOperation_EnumOpCantHappen");
+								return currentKey;
+							}
+						}
+			*/
 
 			public Object Current
 			{
@@ -595,19 +595,19 @@ namespace Microsoft.Cci.Pdb
 				}
 			}
 
-/*
-			public Object Value
-			{
-				get
-				{
-					if (version != hashtable.version)
-						throw new InvalidOperationException("InvalidOperation_EnumFailedVersion");
-					if (current == false)
-						throw new InvalidOperationException("InvalidOperation_EnumOpCantHappen");
-					return currentValue;
-				}
-			}
-*/
+			/*
+						public Object Value
+						{
+							get
+							{
+								if (version != hashtable.version)
+									throw new InvalidOperationException("InvalidOperation_EnumFailedVersion");
+								if (current == false)
+									throw new InvalidOperationException("InvalidOperation_EnumOpCantHappen");
+								return currentValue;
+							}
+						}
+			*/
 
 			public void Reset()
 			{

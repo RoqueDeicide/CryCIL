@@ -18,7 +18,8 @@ namespace CryEngine.Native
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		extern internal static IntPtr CreateStaticObject();
 		/// <summary>
-		/// Called to decrement reference counter on a static object, when it is disposed of in Mono environment.
+		/// Called to decrement reference counter on a static object, when it is disposed
+		/// of in Mono environment.
 		/// </summary>
 		/// <param name="handle">Pointer to static object in native environment.</param>
 		[MethodImpl(MethodImplOptions.InternalCall)]

@@ -221,7 +221,8 @@ namespace CryCil
 			}
 		}
 		/// <summary>
-		/// Determines whether this matrix is orthonormal in right-handed coordinate system.
+		/// Determines whether this matrix is orthonormal in right-handed coordinate
+		/// system.
 		/// </summary>
 		public bool IsOrthonormalRightHanded
 		{

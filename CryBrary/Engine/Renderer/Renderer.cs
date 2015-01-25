@@ -50,10 +50,14 @@ namespace CryEngine
 		/// <summary>
 		/// Draws a texture to the screen for one frame.
 		/// </summary>
-		/// <param name="x">The x position on the screen, relative to the top-left corner.</param>
-		/// <param name="y">The y position on the screen, relative to the top-left corner.</param>
-		/// <param name="width">The width to render the texture at.</param>
-		/// <param name="height">The height to render the texture at.</param>
+		/// <param name="x">        
+		/// The x position on the screen, relative to the top-left corner.
+		/// </param>
+		/// <param name="y">        
+		/// The y position on the screen, relative to the top-left corner.
+		/// </param>
+		/// <param name="width">    The width to render the texture at.</param>
+		/// <param name="height">   The height to render the texture at.</param>
 		/// <param name="textureId">
 		/// The ID of the texture (obtained using Renderer.LoadTexture(path)).
 		/// </param>

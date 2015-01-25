@@ -431,7 +431,7 @@
 		/// Any transformation previously stored in the matrix are discarded.
 		/// </remarks>
 		/// <param name="matrixToSet">Matrix to set.</param>
-		/// <param name="scale">Vector that provides scaling factors.</param>
+		/// <param name="scale">      Vector that provides scaling factors.</param>
 		public static void Set(ref Matrix33 matrixToSet, ref Vector3 scale)
 		{
 			matrixToSet = Matrix33.Identity;
@@ -447,7 +447,7 @@
 		/// Any transformation previously stored in the matrix are discarded.
 		/// </remarks>
 		/// <param name="matrixToSet">Matrix to set.</param>
-		/// <param name="scale">Vector that provides scaling factors.</param>
+		/// <param name="scale">      Vector that provides scaling factors.</param>
 		public static void Set(ref Matrix44 matrixToSet, ref Vector4 scale)
 		{
 			matrixToSet = Matrix44.Identity;
@@ -459,6 +459,5 @@
 		}
 
 		// ReSharper restore RedundantAssignment
-
 	}
 }

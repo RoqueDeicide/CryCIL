@@ -45,14 +45,14 @@ namespace CryEngine.RunTime.Serialization
 		private FormatterConverter Converter { get; set; }
 
 		/// <summary>
-		/// We store a dictionary of all serialized objects in order to not create new instances of
-		/// types with identical hash codes. (same objects)
+		/// We store a dictionary of all serialized objects in order to not create new
+		/// instances of types with identical hash codes. (same objects)
 		/// </summary>
 		private Dictionary<int, ObjectReference> ObjectReferences { get; set; }
 
 		/// <summary>
-		/// Toggle debug mode, logs information on possible serialization issues. Automatically
-		/// turned on if mono_realtimeScriptingDebug is set to 1.
+		/// Toggle debug mode, logs information on possible serialization issues.
+		/// Automatically turned on if mono_realtimeScriptingDebug is set to 1.
 		/// </summary>
 		public bool IsDebugModeEnabled { get; set; }
 
@@ -178,9 +178,9 @@ namespace CryEngine.RunTime.Serialization
 			this.WriteLine(((IntPtr)objectReference.Value).ToInt64());
 		}
 
-// ReSharper disable UnusedParameter.Local
+		// ReSharper disable UnusedParameter.Local
 		private void WriteReference(ObjectReference objReference, int line)
-// ReSharper restore UnusedParameter.Local
+		// ReSharper restore UnusedParameter.Local
 		{
 			this.WriteLine(SerializationType.Reference);
 			this.WriteLine(line);
@@ -390,7 +390,7 @@ namespace CryEngine.RunTime.Serialization
 		}
 
 		/// <summary>
-		/// Starts reading an reference that was written with <see cref="StartWrite" />.
+		/// Starts reading an reference that was written with <see cref="StartWrite"/>.
 		/// </summary>
 		/// <returns></returns>
 		public ObjectReference StartRead()
@@ -487,9 +487,9 @@ namespace CryEngine.RunTime.Serialization
 					var eventName = this.ReadLine();
 
 					var eventInfo = type.GetEvent(eventName);
-// ReSharper disable UnusedVariable
+					// ReSharper disable UnusedVariable
 					var eventHandlerType = this.ReadType();
-// ReSharper restore UnusedVariable
+					// ReSharper restore UnusedVariable
 
 					var numDelegates = Int32.Parse(this.ReadLine());
 					for (int iDelegate = 0; iDelegate < numDelegates; iDelegate++)
@@ -557,9 +557,9 @@ namespace CryEngine.RunTime.Serialization
 			}
 			else if (type.ImplementsGeneric(typeof(ISet<>)) || type.ImplementsGeneric(typeof(ICollection<>)))
 			{
-// ReSharper disable UnusedVariable
+				// ReSharper disable UnusedVariable
 				var set = objReference.Value;
-// ReSharper restore UnusedVariable
+				// ReSharper restore UnusedVariable
 
 				MethodInfo addMethod = null;
 				var baseType = type;
@@ -575,7 +575,7 @@ namespace CryEngine.RunTime.Serialization
 
 				for (int i = 0; i < elements; i++)
 				{
-					addMethod.Invoke(objReference.Value, new [] { this.StartRead().Value });
+					addMethod.Invoke(objReference.Value, new[] { this.StartRead().Value });
 				}
 			}
 			else if (this.IsDebugModeEnabled)
@@ -729,8 +729,8 @@ namespace CryEngine.RunTime.Serialization
 			if (type != null)
 				return type;
 
-			// Not an array type, we've got to use an alternate method to get the type of elements
-			// contained within.
+			// Not an array type, we've got to use an alternate method to get the type of
+			// elements contained within.
 			if (enumerableType.IsGenericType && enumerableType.GetGenericTypeDefinition() == typeof(IEnumerable<>))
 				type = enumerableType.GetGenericArguments()[0];
 			else

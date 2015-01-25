@@ -9,7 +9,8 @@ using CryEngine.Native;
 namespace CryEngine.Entities
 {
 	/// <summary>
-	/// Encapsulates result of area query which is used to see which areas are near the entity.
+	/// Encapsulates result of area query which is used to see which areas are near the
+	/// entity.
 	/// </summary>
 	[StructLayout(LayoutKind.Sequential)]
 	public struct AreaQueryResult
@@ -35,7 +36,7 @@ namespace CryEngine.Entities
 		/// </summary>
 		public bool Near;
 		/// <summary>
-		/// Gets <see cref="Area" /> wrapper object.
+		/// Gets <see cref="Area"/> wrapper object.
 		/// </summary>
 		public Area Area
 		{
@@ -59,19 +60,23 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Gets wrapper for IArea object that is identified by given number.
 		/// </summary>
-		/// <param name="areaId"> <see cref="Int32" /> number that identifies a requested area. </param>
-		/// <returns> Wrapper for IArea object that is identified by given number. </returns>
+		/// <param name="areaId">
+		/// <see cref="Int32"/> number that identifies a requested area.
+		/// </param>
+		/// <returns>
+		/// Wrapper for IArea object that is identified by given number.
+		/// </returns>
 		public static Area GetArea(int areaId)
 		{
 			return TryGet(EntityInterop.GetArea(areaId));
 		}
 		/// <summary>
 		/// </summary>
-		/// <param name="id">               </param>
-		/// <param name="pos">              </param>
-		/// <param name="maxResults">       </param>
-		/// <param name="forceCalculation"> </param>
-		/// <returns> </returns>
+		/// <param name="id">              </param>
+		/// <param name="pos">             </param>
+		/// <param name="maxResults">      </param>
+		/// <param name="forceCalculation"></param>
+		/// <returns></returns>
 		public static IEnumerable<AreaQueryResult> QueryAreas(EntityId id, Vector3 pos, int maxResults, bool forceCalculation)
 		{
 			var objAreas = EntityInterop.QueryAreas(id, pos, maxResults, forceCalculation);

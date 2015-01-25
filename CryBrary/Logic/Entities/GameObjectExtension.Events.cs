@@ -12,7 +12,9 @@ namespace CryEngine.Logic.Entities
 		/// Occurs when first stage of entity initialization is complete.
 		/// </summary>
 		/// <remarks>
-		/// At this point, CryEngine side of the entity is not full initialized, which means that, in the handler, interaction with the CryEngine should be kept at minimum.
+		/// At this point, CryEngine side of the entity is not full initialized, which
+		/// means that, in the handler, interaction with the CryEngine should be kept at
+		/// minimum.
 		/// </remarks>
 		public event EventHandler Initializing;
 		/// <summary>
@@ -23,7 +25,9 @@ namespace CryEngine.Logic.Entities
 		/// Occurs when entity needs to initialize client side specific properties.
 		/// </summary>
 		/// <remarks>
-		/// At this point, CryEngine side of the entity is not full initialized, which means that, in the handler, interaction with the CryEngine should be kept at minimum.
+		/// At this point, CryEngine side of the entity is not full initialized, which
+		/// means that, in the handler, interaction with the CryEngine should be kept at
+		/// minimum.
 		/// </remarks>
 		public event EventHandler<EntityClientInitializationEventArgs> InitializingClient;
 		/// <summary>
@@ -53,14 +57,16 @@ namespace CryEngine.Logic.Entities
 		/// </remarks>
 		public event EventHandler<EntityThinkingEventArgs> Decided;
 		/// <summary>
-		/// Occurs when this entity is "thinking" on how to update it's logical state after all other entities have made their first one.
+		/// Occurs when this entity is "thinking" on how to update it's logical state
+		/// after all other entities have made their first one.
 		/// </summary>
 		/// <remarks>
 		/// This event occurs before <see cref="AfterThought"/> method is invoked.
 		/// </remarks>
 		public event EventHandler<FrameTimeEventArgs> SecondThought;
 		/// <summary>
-		/// Occurs after this entity has "decided" on its logical state for this frame after all other entities have made their first one.
+		/// Occurs after this entity has "decided" on its logical state for this frame
+		/// after all other entities have made their first one.
 		/// </summary>
 		/// <remarks>
 		/// This event occurs after <see cref="AfterThought"/> method is invoked.
@@ -87,23 +93,28 @@ namespace CryEngine.Logic.Entities
 		/// </summary>
 		public event EventHandler<EventArgs<bool>> VisibilityStateChanged;
 		/// <summary>
-		/// Occurs when editor resets this entity, with extra parameter indicating whether reset was done by entering game mode.
+		/// Occurs when editor resets this entity, with extra parameter indicating whether
+		/// reset was done by entering game mode.
 		/// </summary>
 		public event EventHandler<EventArgs<bool>> ResetByEditor;
 		/// <summary>
-		/// Occurs when another entity was attached to this one. Parameter is identifier of another entity.
+		/// Occurs when another entity was attached to this one. Parameter is identifier
+		/// of another entity.
 		/// </summary>
 		public event EventHandler<EventArgs<EntityId>> Attached;
 		/// <summary>
-		/// Occurs when this entity was attached to another one. Parameter is identifier of another entity.
+		/// Occurs when this entity was attached to another one. Parameter is identifier
+		/// of another entity.
 		/// </summary>
 		public event EventHandler<EventArgs<EntityId>> AttachedTo;
 		/// <summary>
-		/// Occurs when another entity was detached from this one. Parameter is identifier of another entity.
+		/// Occurs when another entity was detached from this one. Parameter is identifier
+		/// of another entity.
 		/// </summary>
 		public event EventHandler<EventArgs<EntityId>> Detached;
 		/// <summary>
-		/// Occurs when this entity was detached from another one. Parameter is identifier of another entity.
+		/// Occurs when this entity was detached from another one. Parameter is identifier
+		/// of another entity.
 		/// </summary>
 		public event EventHandler<EventArgs<EntityId>> DetachedFrom;
 		/// <summary>
@@ -115,7 +126,8 @@ namespace CryEngine.Logic.Entities
 		/// </summary>
 		public event EventHandler<EventArgs<EntityLink>> Unlinked;
 		/// <summary>
-		/// Occurs when this entity is hidden/revealed with parameter being true, if this entity hides.
+		/// Occurs when this entity is hidden/revealed with parameter being true, if this
+		/// entity hides.
 		/// </summary>
 		public event EventHandler<EventArgs<bool>> Hidden;
 		/// <summary>
@@ -131,11 +143,13 @@ namespace CryEngine.Logic.Entities
 		/// </summary>
 		public event EventHandler<EntityAreaPositionEventArgs> LeftArea;
 		/// <summary>
-		/// Occurs after some entity enters the proximity of the area that is linked to this one.
+		/// Occurs after some entity enters the proximity of the area that is linked to
+		/// this one.
 		/// </summary>
 		public event EventHandler<EntityAreaPositionEventArgs> EnteredProximityArea;
 		/// <summary>
-		/// Occurs after some entity leaves the proximity of the area that is linked to this one.
+		/// Occurs after some entity leaves the proximity of the area that is linked to
+		/// this one.
 		/// </summary>
 		public event EventHandler<EntityAreaPositionEventArgs> LeftProximityArea;
 		/// <summary>
@@ -162,14 +176,17 @@ namespace CryEngine.Logic.Entities
 		/// Occurs when this entity receives notification about its rendering.
 		/// </summary>
 		/// <remarks>
-		/// <see cref="RenderParams"/> reference supplied by this event contains parameters that were used to render the entity on the screen. It is modifiable (don't make use of this unless you REALLY know, what you are doing).
+		/// <see cref="RenderParams"/> reference supplied by this event contains
+		/// parameters that were used to render the entity on the screen. It is modifiable
+		/// (don't make use of this unless you REALLY know, what you are doing).
 		/// </remarks>
 		public event EventHandler<EventArgs<RenderParams?>> Rendered;
 		/// <summary>
 		/// Occurs prior to update of entity's state in physics engine.
 		/// </summary>
 		/// <remarks>
-		/// Handling this event is perfect for submitting action requests to physics engine.
+		/// Handling this event is perfect for submitting action requests to physics
+		/// engine.
 		/// </remarks>
 		public event EventHandler<EventArgs<float>> BeforePhysicsUpdate;
 		/// <summary>
@@ -183,9 +200,7 @@ namespace CryEngine.Logic.Entities
 		/// <summary>
 		/// Occurs when the game starts.
 		/// </summary>
-		/// <remarks>
-		/// May happen multiple times on the same level.
-		/// </remarks>
+		/// <remarks>May happen multiple times on the same level.</remarks>
 		public event EventHandler GameStarted;
 		/// <summary>
 		/// Occurs when this entity is activated.
@@ -204,7 +219,8 @@ namespace CryEngine.Logic.Entities
 		/// </summary>
 		public event EventHandler<EventArgs<Material>> MaterialChanged;
 		/// <summary>
-		/// Occurs when this entity is spawned on this game instance from a remote machine.
+		/// Occurs when this entity is spawned on this game instance from a remote
+		/// machine.
 		/// </summary>
 		public event EventHandler SpawnedRemotely;
 		#endregion
@@ -265,7 +281,9 @@ namespace CryEngine.Logic.Entities
 		/// <summary>
 		/// Raises event <see cref="Reloaded"/>.
 		/// </summary>
-		/// <param name="parameters">A set of paramters that describe entity after it was reloaded.</param>
+		/// <param name="parameters">
+		/// A set of paramters that describe entity after it was reloaded.
+		/// </param>
 		protected virtual void OnReloaded(EntitySpawnParameters parameters)
 		{
 			if (this.Reloaded != null)
@@ -322,7 +340,7 @@ namespace CryEngine.Logic.Entities
 		/// Raises event <see cref="TimedOut"/>.
 		/// </summary>
 		/// <param name="handle">Data specific for this event.</param>
-		/// <param name="time">Data specific for this event.</param>
+		/// <param name="time">  Data specific for this event.</param>
 		protected virtual void OnTimedOut(IntPtr handle, int time)
 		{
 			if (this.TimedOut != null)
@@ -388,16 +406,20 @@ namespace CryEngine.Logic.Entities
 		/// <summary>
 		/// Raises event <see cref="Linked"/>.
 		/// </summary>
-		/// <param name="handle">Pointer to <see cref="EntityLink"/> object in native memory.</param>
+		/// <param name="handle">
+		/// Pointer to <see cref="EntityLink"/> object in native memory.
+		/// </param>
 		protected virtual unsafe void OnLinked(IntPtr handle)
 		{
 			if (this.Linked != null)
-				this.Linked(this, new EventArgs<EntityLink>(*((EntityLink *)handle.ToPointer())));
+				this.Linked(this, new EventArgs<EntityLink>(*((EntityLink*)handle.ToPointer())));
 		}
 		/// <summary>
 		/// Raises event <see cref="Unlinked"/>.
 		/// </summary>
-		/// <param name="handle">Pointer to <see cref="EntityLink"/> object in native memory.</param>
+		/// <param name="handle">
+		/// Pointer to <see cref="EntityLink"/> object in native memory.
+		/// </param>
 		protected virtual unsafe void OnUnlinked(IntPtr handle)
 		{
 			if (this.Unlinked != null)
@@ -546,7 +568,9 @@ namespace CryEngine.Logic.Entities
 		/// <summary>
 		/// Raises event <see cref="VisibilityStateChanged"/>.
 		/// </summary>
-		/// <param name="visible">Indicates whether this entity has become visible.</param>
+		/// <param name="visible">
+		/// Indicates whether this entity has become visible.
+		/// </param>
 		protected virtual void OnVisibilityStateChanged(bool visible)
 		{
 			if (this.VisibilityStateChanged != null)

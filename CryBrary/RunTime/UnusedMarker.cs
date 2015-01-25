@@ -5,29 +5,35 @@ using CryEngine.Mathematics.MemoryMapping;
 namespace CryEngine.RunTime
 {
 	/// <summary>
-	/// Defines special values that are recognized as unused by CryEngine, and ways to check usability of objects.
+	/// Defines special values that are recognized as unused by CryEngine, and ways to
+	/// check usability of objects.
 	/// </summary>
 	public static class UnusedMarker
 	{
 		#region Fields
 		/// <summary>
-		/// If a single-precision floating point data field is equal to this value than CryEngine will ignore it.
+		/// If a single-precision floating point data field is equal to this value than
+		/// CryEngine will ignore it.
 		/// </summary>
 		public static readonly float Float;
 		/// <summary>
-		/// If a signed integer data field is equal to this value than CryEngine will ignore it.
+		/// If a signed integer data field is equal to this value than CryEngine will
+		/// ignore it.
 		/// </summary>
 		public static readonly int Integer;
 		/// <summary>
-		/// If a unsigned integer data field is equal to this value than CryEngine will ignore it.
+		/// If a unsigned integer data field is equal to this value than CryEngine will
+		/// ignore it.
 		/// </summary>
 		public static readonly uint UnsignedInteger;
 		/// <summary>
-		/// If a 3D vector data field is equal to this value than CryEngine will ignore it.
+		/// If a 3D vector data field is equal to this value than CryEngine will ignore
+		/// it.
 		/// </summary>
 		public static readonly Vector3 Vector3;
 		/// <summary>
-		/// If a quaternion data field is equal to this value than CryEngine will ignore it.
+		/// If a quaternion data field is equal to this value than CryEngine will ignore
+		/// it.
 		/// </summary>
 		public static readonly Quaternion Quaternion;
 		/// <summary>

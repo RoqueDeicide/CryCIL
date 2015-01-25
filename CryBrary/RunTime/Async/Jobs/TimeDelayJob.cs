@@ -10,7 +10,7 @@ namespace CryEngine.RunTime.Async.Jobs
 		private float _timeElapsed;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="TimeDelayJob" /> class.
+		/// Initializes a new instance of the <see cref="TimeDelayJob"/> class.
 		/// </summary>
 		/// <param name="milliseconds"></param>
 		public TimeDelayJob(float milliseconds)
@@ -26,7 +26,7 @@ namespace CryEngine.RunTime.Async.Jobs
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="TimeDelayJob" /> class.
+		/// Initializes a new instance of the <see cref="TimeDelayJob"/> class.
 		/// </summary>
 		/// <param name="delay"></param>
 		public TimeDelayJob(TimeSpan delay)

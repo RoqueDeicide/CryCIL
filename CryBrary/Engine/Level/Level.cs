@@ -96,7 +96,8 @@ namespace CryEngine
 		public string DefaultGameRules { get { return LevelInterop.GetDefaultGameType(Handle); } }
 
 		/// <summary>
-		/// Gets a value indicating whether the level is configured to support any game rules.
+		/// Gets a value indicating whether the level is configured to support any game
+		/// rules.
 		/// </summary>
 		public bool HasGameRules { get { return LevelInterop.HasGameRules(Handle); } }
 
@@ -138,7 +139,9 @@ namespace CryEngine
 		/// Returns true if this level supports the specific game rules.
 		/// </summary>
 		/// <param name="gamemodeName"></param>
-		/// <returns>A boolean indicating whether the specified gamemode is supported.</returns>
+		/// <returns>
+		/// A boolean indicating whether the specified gamemode is supported.
+		/// </returns>
 		public bool SupportsGameRules(string gamemodeName)
 		{
 			return LevelInterop.SupportsGameType(Handle, gamemodeName);

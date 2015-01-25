@@ -27,7 +27,8 @@ namespace CryEngine.Logic.Entities
 		/// </summary>
 		public PhysicalEntity Physics { get; private set; }
 		/// <summary>
-		/// Indicates whether this entity has to validate its identifier, in case the game removes the entity without invalidating the <see cref="Handle"/>.
+		/// Indicates whether this entity has to validate its identifier, in case the game
+		/// removes the entity without invalidating the <see cref="Handle"/>.
 		/// </summary>
 		public bool ExtraSafe { get; set; }
 		private int managed;
@@ -88,7 +89,7 @@ namespace CryEngine.Logic.Entities
 				return
 					this.ExtraSafe
 					? this.Handle == IntPtr.Zero
-						// Check if identifier is still valid.
+					// Check if identifier is still valid.
 						|| this.Handle != Native.EntityInterop.GetEntity(this.Identifier)
 					: this.Handle == IntPtr.Zero;
 			}
@@ -445,8 +446,10 @@ namespace CryEngine.Logic.Entities
 		/// <summary>
 		/// Creates a wrapper object for an entity.
 		/// </summary>
-		/// <param name="handle">Pointer to the entity object.</param>
-		/// <param name="identifier">Identifier of the entity to create the wrapper for.</param>
+		/// <param name="handle">    Pointer to the entity object.</param>
+		/// <param name="identifier">
+		/// Identifier of the entity to create the wrapper for.
+		/// </param>
 		public EntityWrapper(IntPtr handle, EntityId identifier)
 		{
 			this.Handle = handle;

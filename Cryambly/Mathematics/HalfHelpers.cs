@@ -9,7 +9,7 @@ namespace System
 	/// <remarks>
 	/// References:
 	/// - Fast Half Float Conversions, Jeroen van der Zijp, link:
-	///   http://www.fox-toolkit.org/ftp/fasthalffloatconversion.pdf
+	/// http: //www.fox-toolkit.org/ftp/fasthalffloatconversion.pdf
 	/// </remarks>
 	[ComVisible(false)]
 	internal static class HalfHelper

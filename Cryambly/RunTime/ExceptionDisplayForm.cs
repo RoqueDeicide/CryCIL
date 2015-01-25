@@ -12,7 +12,8 @@ using System.Windows.Forms;
 namespace CryCil.RunTime
 {
 	/// <summary>
-	/// Represents a window that opens up when an exception is thrown and not handled anywhere.
+	/// Represents a window that opens up when an exception is thrown and not handled
+	/// anywhere.
 	/// </summary>
 	public partial class ExceptionDisplayForm : Form
 	{
@@ -60,11 +61,12 @@ namespace CryCil.RunTime
 				traceBuilder.Append(currentException.Message);
 				traceBuilder.Append('"');
 				traceBuilder.AppendLine(" at:");
-				// Print out the stack trace. Split default string into lines for indentation.
+				// Print out the stack trace. Split default string into lines for
+				// indentation.
 				string[] stackTraceLines =
 					currentException.StackTrace.Split
 					(
-						new [] { Environment.NewLine }, StringSplitOptions.None
+						new[] { Environment.NewLine }, StringSplitOptions.None
 					);
 				foreach (string stackTraceLine in stackTraceLines)
 				{

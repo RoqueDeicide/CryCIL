@@ -48,7 +48,7 @@ namespace CryCil.MemoryMapping
 			get
 			{
 				ushort us = this.UnsignedShort;
-				byte* bytes = (byte *)&us;
+				byte* bytes = (byte*)&us;
 				return bytes[index];
 			}
 			set

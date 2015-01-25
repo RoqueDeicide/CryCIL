@@ -11,7 +11,7 @@ namespace CryEngine
 		/// <summary>
 		/// Initializes static variables which never change, i.e. IsEditor.
 		/// </summary>
-		/// <param name="isEditor"></param>
+		/// <param name="isEditor">   </param>
 		/// <param name="isDedicated"></param>
 		internal static void InitializeGameStatics(bool isEditor, bool isDedicated)
 		{
@@ -28,16 +28,16 @@ namespace CryEngine
 		/// Gets a boolean indicating whether we're currently running the server.
 		/// </summary>
 		/// <remarks>
-		/// <see cref="IsClient" /> can be set at th same time as <see cref="IsServer" />, if
-		/// hosting via the Launcher or Editor.
+		/// <see cref="IsClient"/> can be set at th same time as <see cref="IsServer"/>,
+		/// if hosting via the Launcher or Editor.
 		/// </remarks>
 		public static bool IsServer { get { return NetworkInterop.IsServer(); } }
 		/// <summary>
 		/// Gets a boolean indicating whether we're currently running the server.
 		/// </summary>
 		/// <remarks>
-		/// <see cref="IsServer" /> can be set at th same time as <see cref="IsClient" />, if
-		/// hosting via the Launcher or Editor.
+		/// <see cref="IsServer"/> can be set at th same time as <see cref="IsClient"/>,
+		/// if hosting via the Launcher or Editor.
 		/// </remarks>
 		public static bool IsClient { get { return NetworkInterop.IsClient(); } }
 		/// <summary>
@@ -50,7 +50,8 @@ namespace CryEngine
 		/// </summary>
 		public static bool IsEditor { private set; get; }
 		/// <summary>
-		/// Gets a boolean indicating whether we're currently running via the Dedicated Server.
+		/// Gets a boolean indicating whether we're currently running via the Dedicated
+		/// Server.
 		/// </summary>
 		public static bool IsDedicated { private set; get; }
 		#endregion

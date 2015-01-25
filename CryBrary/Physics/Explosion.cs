@@ -61,8 +61,8 @@ namespace CryEngine
 		public Vector3 epicenter;    // epicenter for the occlusion computation
 		public Vector3 epicenterImp; // epicenter for impulse computation
 		// the impulse a surface fragment with area dS and normal n gets is:
-		// dS*k*n*max(0,n*dir_to_epicenter)/max(rmin, dist_to_epicenter)^2 k is selected in such way
-		// that at impulsivePressureAtR = k/r^2
+		// dS*k*n*max(0,n*dir_to_epicenter)/max(rmin, dist_to_epicenter)^2 k is selected
+		// in such way that at impulsivePressureAtR = k/r^2
 		public float rmin, rmax, r;
 		public float impulsivePressureAtR;
 		public int nOccRes; // resolution of the occlusion map (0 disables)

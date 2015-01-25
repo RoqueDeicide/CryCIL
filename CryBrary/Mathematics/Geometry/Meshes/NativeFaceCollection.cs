@@ -3,7 +3,8 @@
 namespace CryEngine.Mathematics.Geometry.Meshes
 {
 	/// <summary>
-	/// Represents a collection of faces in native memory attached to specific CMesh object.
+	/// Represents a collection of faces in native memory attached to specific CMesh
+	/// object.
 	/// </summary>
 	public sealed class NativeFaceCollection : NativeMeshDetailsCollection<IndexedTriangleFace>
 	{
@@ -25,7 +26,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// <summary>
 		/// Gets or sets a face.
 		/// </summary>
-		/// <param name="index"> Index of the face to access. </param>
+		/// <param name="index">Index of the face to access.</param>
 		/// <exception cref="IndexOutOfRangeException">
 		/// Attempt to access face with index that is out of bounds.
 		/// </exception>
@@ -51,9 +52,9 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		#endregion
 		#region Construction
 		/// <summary>
-		/// Creates new instance of type <see cref="NativeFaceCollection" />.
+		/// Creates new instance of type <see cref="NativeFaceCollection"/>.
 		/// </summary>
-		/// <param name="meshHandle"> Pointer to CMesh object in native memory. </param>
+		/// <param name="meshHandle">Pointer to CMesh object in native memory.</param>
 		public NativeFaceCollection(IntPtr meshHandle)
 		{
 			this.MeshHandle = meshHandle;

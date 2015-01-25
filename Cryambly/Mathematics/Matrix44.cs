@@ -146,7 +146,7 @@ namespace CryCil
 		/// <summary>
 		/// Gets determinant of this matrix.
 		/// </summary>
-		/// <remarks> This will only get you determinant of upper 3x3 submatrix. </remarks>
+		/// <remarks>This will only get you determinant of upper 3x3 submatrix.</remarks>
 		public float QuickDeterminant
 		{
 			get
@@ -185,7 +185,8 @@ namespace CryCil
 			}
 		}
 		/// <summary>
-		/// Gets new matrix that represents this matrix where rows and columns are swapped.
+		/// Gets new matrix that represents this matrix where rows and columns are
+		/// swapped.
 		/// </summary>
 		public Matrix44 Transposed
 		{
@@ -229,7 +230,7 @@ namespace CryCil
 		/// <summary>
 		/// Gives access to specific element of this matrix.
 		/// </summary>
-		/// <param name="index"> Zero-based index of the element to get. </param>
+		/// <param name="index">Zero-based index of the element to get.</param>
 		public float this[int index]
 		{
 			get { return this[index / 4, index % 4]; }
@@ -238,8 +239,8 @@ namespace CryCil
 		/// <summary>
 		/// Gives access to specific element of this matrix.
 		/// </summary>
-		/// <param name="row">    Zero-based index of the row. </param>
-		/// <param name="column"> Zero-based index of the column. </param>
+		/// <param name="row">   Zero-based index of the row.</param>
+		/// <param name="column">Zero-based index of the column.</param>
 		public float this[int row, int column]
 		{
 			get
@@ -304,24 +305,24 @@ namespace CryCil
 		#endregion
 		#region Contruction
 		/// <summary>
-		/// Creates new instance of <see cref="Matrix44" /> class.
+		/// Creates new instance of <see cref="Matrix44"/> class.
 		/// </summary>
-		/// <param name="v00"> First row, first column. </param>
-		/// <param name="v01"> First row, second column. </param>
-		/// <param name="v02"> First row, third column. </param>
-		/// <param name="v03"> First row, fourth column. </param>
-		/// <param name="v10"> Second row, first column. </param>
-		/// <param name="v11"> Second row, second column. </param>
-		/// <param name="v12"> Second row, third column. </param>
-		/// <param name="v13"> Second row, fourth column. </param>
-		/// <param name="v20"> Third row, first column. </param>
-		/// <param name="v21"> Third row, second column. </param>
-		/// <param name="v22"> Third row, third column. </param>
-		/// <param name="v23"> Third row, fourth column. </param>
-		/// <param name="v30"> Fourth row, first column. </param>
-		/// <param name="v31"> Fourth row, second column. </param>
-		/// <param name="v32"> Fourth row, third column. </param>
-		/// <param name="v33"> Fourth row, fourth column. </param>
+		/// <param name="v00">First row, first column.</param>
+		/// <param name="v01">First row, second column.</param>
+		/// <param name="v02">First row, third column.</param>
+		/// <param name="v03">First row, fourth column.</param>
+		/// <param name="v10">Second row, first column.</param>
+		/// <param name="v11">Second row, second column.</param>
+		/// <param name="v12">Second row, third column.</param>
+		/// <param name="v13">Second row, fourth column.</param>
+		/// <param name="v20">Third row, first column.</param>
+		/// <param name="v21">Third row, second column.</param>
+		/// <param name="v22">Third row, third column.</param>
+		/// <param name="v23">Third row, fourth column.</param>
+		/// <param name="v30">Fourth row, first column.</param>
+		/// <param name="v31">Fourth row, second column.</param>
+		/// <param name="v32">Fourth row, third column.</param>
+		/// <param name="v33">Fourth row, fourth column.</param>
 		public Matrix44(float v00, float v01, float v02, float v03,
 							float v10, float v11, float v12, float v13,
 							float v20, float v21, float v22, float v23,
@@ -334,9 +335,9 @@ namespace CryCil
 			this.Row3.X = v30; this.Row3.Y = v31; this.Row3.Z = v32; this.Row3.W = v33;
 		}
 		/// <summary>
-		/// Creates new instance of <see cref="Matrix44" /> class.
+		/// Creates new instance of <see cref="Matrix44"/> class.
 		/// </summary>
-		/// <param name="m"> <see cref="Matrix33" /> to fill new matrix with. </param>
+		/// <param name="m"><see cref="Matrix33"/> to fill new matrix with.</param>
 		public Matrix44(ref Matrix33 m)
 			: this()
 		{
@@ -350,9 +351,9 @@ namespace CryCil
 			this.Row3.X = 0; this.Row3.Y = 0; this.Row3.Z = 0; this.Row3.W = 1;
 		}
 		/// <summary>
-		/// Creates new instance of <see cref="Matrix44" /> class.
+		/// Creates new instance of <see cref="Matrix44"/> class.
 		/// </summary>
-		/// <param name="m"> <see cref="Matrix34" /> to fill new matrix with. </param>
+		/// <param name="m"><see cref="Matrix34"/> to fill new matrix with.</param>
 		public Matrix44(ref Matrix34 m)
 			: this()
 		{
@@ -366,9 +367,9 @@ namespace CryCil
 			this.Row3.X = 0; this.Row3.Y = 0; this.Row3.Z = 0; this.Row3.W = 1;
 		}
 		/// <summary>
-		/// Copies contents from <see cref="Matrix44" /> to new one.
+		/// Copies contents from <see cref="Matrix44"/> to new one.
 		/// </summary>
-		/// <param name="m"> </param>
+		/// <param name="m"></param>
 		public Matrix44(ref Matrix44 m)
 			: this()
 		{
@@ -409,8 +410,8 @@ namespace CryCil
 		/// Calculate a real inversion of a Matrix44.
 		/// </summary>
 		/// <remarks>
-		/// Uses Cramer's Rule which is faster (branchless) but numerically more unstable than other
-		/// methods like Gaussian Elimination.
+		/// Uses Cramer's Rule which is faster (branchless) but numerically more unstable
+		/// than other methods like Gaussian Elimination.
 		/// </remarks>
 		public void Invert()
 		{
@@ -497,9 +498,9 @@ namespace CryCil
 		/// <summary>
 		/// Calculates product of one matrix and a number.
 		/// </summary>
-		/// <param name="m"> Left operand. </param>
-		/// <param name="f"> Right operand. </param>
-		/// <returns> Result of operation. </returns>
+		/// <param name="m">Left operand.</param>
+		/// <param name="f">Right operand.</param>
+		/// <returns>Result of operation.</returns>
 		public static Matrix44 operator *(Matrix44 m, float f)
 		{
 			if (!m.IsValid)
@@ -518,9 +519,9 @@ namespace CryCil
 		/// <summary>
 		/// Calculates sum of two matrices.
 		/// </summary>
-		/// <param name="mm0"> Left operand. </param>
-		/// <param name="mm1"> Right operand. </param>
-		/// <returns> Result of operation. </returns>
+		/// <param name="mm0">Left operand.</param>
+		/// <param name="mm1">Right operand.</param>
+		/// <returns>Result of operation.</returns>
 		public static Matrix44 operator +(Matrix44 mm0, Matrix44 mm1)
 		{
 			if (!mm0.IsValid)
@@ -568,12 +569,15 @@ namespace CryCil
 		/// Multiplies two matrices together.
 		/// </summary>
 		/// <remarks>
-		/// <para>This operation is used to combine transformations represented by these matrices
-		/// together into one matrix.</para><para>This operation takes 48 mults and 24 adds.</para>
+		/// <para>
+		/// This operation is used to combine transformations represented by these
+		/// matrices together into one matrix.
+		/// </para>
+		/// <para>This operation takes 48 mults and 24 adds.</para>
 		/// </remarks>
-		/// <param name="l"> Left operand. </param>
-		/// <param name="r"> Right operand. </param>
-		/// <returns> Result of multiplication. </returns>
+		/// <param name="l">Left operand.</param>
+		/// <param name="r">Right operand.</param>
+		/// <returns>Result of multiplication.</returns>
 		public static Matrix44 operator *(Matrix44 l, Matrix33 r)
 		{
 			if (!l.IsValid)
@@ -621,12 +625,15 @@ namespace CryCil
 		/// Multiplies two matrices together.
 		/// </summary>
 		/// <remarks>
-		/// <para>This operation is used to combine transformations represented by these matrices
-		/// together into one matrix.</para><para>This operation takes 48 mults and 36 adds.</para>
+		/// <para>
+		/// This operation is used to combine transformations represented by these
+		/// matrices together into one matrix.
+		/// </para>
+		/// <para>This operation takes 48 mults and 36 adds.</para>
 		/// </remarks>
-		/// <param name="l"> Left operand. </param>
-		/// <param name="r"> Right operand. </param>
-		/// <returns> Result of multiplication. </returns>
+		/// <param name="l">Left operand.</param>
+		/// <param name="r">Right operand.</param>
+		/// <returns>Result of multiplication.</returns>
 		public static Matrix44 operator *(Matrix44 l, Matrix34 r)
 		{
 			if (!l.IsValid)
@@ -662,12 +669,15 @@ namespace CryCil
 		/// Multiplies two matrices together.
 		/// </summary>
 		/// <remarks>
-		/// <para>This operation is used to combine transformations represented by these matrices
-		/// together into one matrix.</para><para>This operation takes 48 mults and 36 adds.</para>
+		/// <para>
+		/// This operation is used to combine transformations represented by these
+		/// matrices together into one matrix.
+		/// </para>
+		/// <para>This operation takes 48 mults and 36 adds.</para>
 		/// </remarks>
-		/// <param name="l"> Left operand. </param>
-		/// <param name="r"> Right operand. </param>
-		/// <returns> Result of multiplication. </returns>
+		/// <param name="l">Left operand.</param>
+		/// <param name="r">Right operand.</param>
+		/// <returns>Result of multiplication.</returns>
 		public static Matrix44 operator *(Matrix44 l, Matrix44 r)
 		{
 			if (!l.IsValid)
@@ -702,9 +712,9 @@ namespace CryCil
 		/// <summary>
 		/// Multiplies matrix by vector.
 		/// </summary>
-		/// <param name="m"> Left operand. </param>
-		/// <param name="v"> Right operand. </param>
-		/// <returns> Result of multiplication. </returns>
+		/// <param name="m">Left operand.</param>
+		/// <param name="v">Right operand.</param>
+		/// <returns>Result of multiplication.</returns>
 		public static Vector4 operator *(Matrix44 m, Vector4 v)
 		{
 			if (!m.IsValid)
@@ -723,10 +733,12 @@ namespace CryCil
 		/// <summary>
 		/// Multiplies vector by matrix.
 		/// </summary>
-		/// <remarks> This operation is done to transform the vector by the matrix. </remarks>
-		/// <param name="v"> Left operand. </param>
-		/// <param name="m"> Right operand. </param>
-		/// <returns> Result of multiplication. </returns>
+		/// <remarks>
+		/// This operation is done to transform the vector by the matrix.
+		/// </remarks>
+		/// <param name="v">Left operand.</param>
+		/// <param name="m">Right operand.</param>
+		/// <returns>Result of multiplication.</returns>
 		public static Vector4 operator *(Vector4 v, Matrix44 m)
 		{
 			if (!m.IsValid)
@@ -747,8 +759,8 @@ namespace CryCil
 		/// <summary>
 		/// Applies transformation that is represented by this matrix to the vector.
 		/// </summary>
-		/// <param name="b"> Vector to transform. </param>
-		/// <returns> Transformed vector. </returns>
+		/// <param name="b">Vector to transform.</param>
+		/// <returns>Transformed vector.</returns>
 		public Vector3 TransformVector(Vector3 b)
 		{
 			if (!b.IsValid)
@@ -767,8 +779,8 @@ namespace CryCil
 		/// <summary>
 		/// Sets first 3 columns of the row of this matrix.
 		/// </summary>
-		/// <param name="i"> Zero-based index of the row to set. </param>
-		/// <param name="v"> Vector that supplies new values. </param>
+		/// <param name="i">Zero-based index of the row to set.</param>
+		/// <param name="v">Vector that supplies new values.</param>
 		public void SetRow(int i, Vector3 v)
 		{
 			this[i, 0] = v.X;
@@ -778,8 +790,8 @@ namespace CryCil
 		/// <summary>
 		/// Sets row of this matrix.
 		/// </summary>
-		/// <param name="i"> Zero-based index of the row to set. </param>
-		/// <param name="v"> Vector that supplies new values. </param>
+		/// <param name="i">Zero-based index of the row to set.</param>
+		/// <param name="v">Vector that supplies new values.</param>
 		public void SetRow4(int i, Vector4 v)
 		{
 			this[i, 0] = v.X;
@@ -790,8 +802,10 @@ namespace CryCil
 		/// <summary>
 		/// Gets first 3 columns of the row of this matrix.
 		/// </summary>
-		/// <param name="i"> Zero-based index of the row to get. </param>
-		/// <returns> <see cref="Vector3" /> object that contains the contents of the row. </returns>
+		/// <param name="i">Zero-based index of the row to get.</param>
+		/// <returns>
+		/// <see cref="Vector3"/> object that contains the contents of the row.
+		/// </returns>
 		public Vector3 GetRow(int i)
 		{
 			return new Vector3(this[i, 0], this[i, 1], this[i, 2]);
@@ -799,8 +813,10 @@ namespace CryCil
 		/// <summary>
 		/// Gets first the row of this matrix.
 		/// </summary>
-		/// <param name="i"> Zero-based index of the row to get. </param>
-		/// <returns> <see cref="Vector4" /> object that contains the contents of the row. </returns>
+		/// <param name="i">Zero-based index of the row to get.</param>
+		/// <returns>
+		/// <see cref="Vector4"/> object that contains the contents of the row.
+		/// </returns>
 		public Vector4 GetRow4(int i)
 		{
 			return new Vector4(this[i, 0], this[i, 1], this[i, 2], this[i, 3]);
@@ -810,8 +826,8 @@ namespace CryCil
 		/// <summary>
 		/// Sets first 3 rows of the column of this matrix.
 		/// </summary>
-		/// <param name="i"> Zero-based index of the column to set. </param>
-		/// <param name="v"> Vector that supplies new values. </param>
+		/// <param name="i">Zero-based index of the column to set.</param>
+		/// <param name="v">Vector that supplies new values.</param>
 		public void SetColumn(int i, Vector3 v)
 		{
 			if (i < 0 || i > 3)
@@ -845,8 +861,8 @@ namespace CryCil
 		/// <summary>
 		/// Sets the column of this matrix.
 		/// </summary>
-		/// <param name="i"> Zero-based index of the column to set. </param>
-		/// <param name="v"> Vector that supplies new values. </param>
+		/// <param name="i">Zero-based index of the column to set.</param>
+		/// <param name="v">Vector that supplies new values.</param>
 		public void SetColumn(int i, Vector4 v)
 		{
 			if (i < 0 || i > 3)
@@ -884,8 +900,8 @@ namespace CryCil
 		/// <summary>
 		/// Gets first 3 rows of the column of this matrix.
 		/// </summary>
-		/// <param name="i"> Zero-based index of the column to get. </param>
-		/// <returns> Vector that contains values. </returns>
+		/// <param name="i">Zero-based index of the column to get.</param>
+		/// <returns>Vector that contains values.</returns>
 		public Vector3 GetColumn(int i)
 		{
 			if (i < 0 || i > 3)
@@ -909,8 +925,8 @@ namespace CryCil
 		/// <summary>
 		/// Gets the column of this matrix.
 		/// </summary>
-		/// <param name="i"> Zero-based index of the column to get. </param>
-		/// <returns> Vector that contains values. </returns>
+		/// <param name="i">Zero-based index of the column to get.</param>
+		/// <returns>Vector that contains values.</returns>
 		public Vector4 GetColumn4(int i)
 		{
 			if (i < 0 || i > 3)
@@ -936,10 +952,10 @@ namespace CryCil
 		/// <summary>
 		/// Determines whether first matrix can be considered equivalent of second one.
 		/// </summary>
-		/// <param name="m0"> First matrix. </param>
-		/// <param name="m1"> Second matrix. </param>
-		/// <param name="e">  Precision of comparison. </param>
-		/// <returns> True, if matrices can be considered equivalents. </returns>
+		/// <param name="m0">First matrix.</param>
+		/// <param name="m1">Second matrix.</param>
+		/// <param name="e"> Precision of comparison.</param>
+		/// <returns>True, if matrices can be considered equivalents.</returns>
 		public static bool IsEquivalent(ref  Matrix44 m0, ref Matrix44 m1, float e = MathHelpers.ZeroTolerance)
 		{
 			return (
@@ -952,8 +968,8 @@ namespace CryCil
 		/// <summary>
 		/// Determines whether this matrix is equal to another.
 		/// </summary>
-		/// <param name="other"> Another matrix. </param>
-		/// <returns> True, if matrices are equal. </returns>
+		/// <param name="other">Another matrix.</param>
+		/// <returns>True, if matrices are equal.</returns>
 		public bool Equals(Matrix44 other)
 		{
 			return Matrix44.IsEquivalent(ref this, ref other);
@@ -962,7 +978,7 @@ namespace CryCil
 		#region Enumeration
 		/// <summary>
 		/// </summary>
-		/// <returns> </returns>
+		/// <returns></returns>
 		public IEnumerator<float> GetEnumerator()
 		{
 			yield return this.M00;

@@ -8,7 +8,8 @@ namespace CryEngine.RunTime.Testing.Reports
 	internal class ConsoleTestListener
 	{
 		/// <summary>
-		/// Constructs a new ConsoleTestListener and subscribes to the TestManager.Run event.
+		/// Constructs a new ConsoleTestListener and subscribes to the TestManager.Run
+		/// event.
 		/// </summary>
 		public ConsoleTestListener()
 		{

@@ -15,7 +15,8 @@ namespace CryEngine.Entities
 			this._value = id;
 		}
 		#region Overrides
-		/// <summary></summary>
+		/// <summary>
+		/// </summary>
 		/// <param name="obj"></param>
 		/// <returns></returns>
 		public override bool Equals(object obj)
@@ -29,7 +30,8 @@ namespace CryEngine.Entities
 
 			return false;
 		}
-		/// <summary></summary>
+		/// <summary>
+		/// </summary>
 		/// <returns></returns>
 		public override int GetHashCode()
 		{
@@ -37,7 +39,8 @@ namespace CryEngine.Entities
 			return this._value.GetHashCode();
 			// ReSharper restore NonReadonlyFieldInGetHashCode
 		}
-		/// <summary></summary>
+		/// <summary>
+		/// </summary>
 		/// <returns></returns>
 		public override string ToString()
 		{
@@ -45,7 +48,8 @@ namespace CryEngine.Entities
 		}
 		#endregion
 		#region Operators
-		/// <summary></summary>
+		/// <summary>
+		/// </summary>
 		/// <param name="entId1"></param>
 		/// <param name="entId2"></param>
 		/// <returns></returns>
@@ -53,7 +57,8 @@ namespace CryEngine.Entities
 		{
 			return entId1._value == entId2._value;
 		}
-		/// <summary></summary>
+		/// <summary>
+		/// </summary>
 		/// <param name="entId1"></param>
 		/// <param name="entId2"></param>
 		/// <returns></returns>
@@ -61,7 +66,8 @@ namespace CryEngine.Entities
 		{
 			return entId1._value != entId2._value;
 		}
-		/// <summary></summary>
+		/// <summary>
+		/// </summary>
 		/// <param name="value"></param>
 		/// <returns></returns>
 		[System.CLSCompliant(false)]
@@ -69,21 +75,24 @@ namespace CryEngine.Entities
 		{
 			return new EntityGuid(value);
 		}
-		/// <summary></summary>
+		/// <summary>
+		/// </summary>
 		/// <param name="value"></param>
 		/// <returns></returns>
 		public static implicit operator EntityGuid(Int64 value)
 		{
 			return new EntityGuid((UInt64)value);
 		}
-		/// <summary></summary>
+		/// <summary>
+		/// </summary>
 		/// <param name="value"></param>
 		/// <returns></returns>
 		public static implicit operator Int64(EntityGuid value)
 		{
 			return System.Convert.ToInt64(value._value);
 		}
-		/// <summary></summary>
+		/// <summary>
+		/// </summary>
 		/// <param name="value"></param>
 		/// <returns></returns>
 		[System.CLSCompliant(false)]

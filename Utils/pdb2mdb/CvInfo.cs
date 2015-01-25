@@ -790,7 +790,7 @@ namespace Microsoft.Cci.Pdb
 	// the basis of the TYPTYPE record base. That is why in most of the lf* records that
 	// the type is located on what appears to be a offset mod 4 == 2 boundary. The
 	// exception to this rule are those records that are in a list (lfFieldList,
-	// lfMethodList), which are aligned to their own bases since they don't have the
+	// lfMethodList) , which are aligned to their own bases since they don't have the
 	// length field
 
 	// Type record for LF_MODIFIER

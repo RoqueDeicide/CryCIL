@@ -43,8 +43,8 @@ namespace CryEngine.Logic.Actors
 		#region Callbacks
 		#region Entity events
 		/// <summary>
-		/// Called after level has been loaded, is not called on serialization. Note that this is
-		/// called prior to GameRules.OnClientConnect and OnClientEnteredGame!
+		/// Called after level has been loaded, is not called on serialization. Note that
+		/// this is called prior to GameRules.OnClientConnect and OnClientEnteredGame!
 		/// </summary>
 		protected virtual void OnLevelLoaded()
 		{
@@ -53,7 +53,9 @@ namespace CryEngine.Logic.Actors
 		/// <summary>
 		/// Called when resetting the state of the entity in Editor.
 		/// </summary>
-		/// <param name="enteringGame">true if currently entering gamemode, false if exiting.</param>
+		/// <param name="enteringGame">
+		/// true if currently entering gamemode, false if exiting.
+		/// </param>
 		protected virtual void OnEditorReset(bool enteringGame)
 		{
 		}
@@ -115,8 +117,8 @@ namespace CryEngine.Logic.Actors
 		}
 
 		/// <summary>
-		/// Called when the entities local or world transformation matrix changes. (Position /
-		/// Rotation / Scale)
+		/// Called when the entities local or world transformation matrix changes.
+		/// (Position / Rotation / Scale)
 		/// </summary>
 		protected virtual void OnMove(EntityMoveFlags moveFlags)
 		{
@@ -149,7 +151,8 @@ namespace CryEngine.Logic.Actors
 		}
 
 		/// <summary>
-		/// Called when an animation event (placed on animations via the Character Editor) is encountered.
+		/// Called when an animation event (placed on animations via the Character Editor)
+		/// is encountered.
 		/// </summary>
 		/// <param name="animEvent"></param>
 		[CLSCompliant(false)]

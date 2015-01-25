@@ -369,15 +369,15 @@ namespace Microsoft.Cci.Pdb
 			}
 		}
 
-// ReSharper disable UnusedParameter.Local
+		// ReSharper disable UnusedParameter.Local
 		private void ReadForwardedToModuleInfo(BitAccess bits)
-// ReSharper restore UnusedParameter.Local
+		// ReSharper restore UnusedParameter.Local
 		{
 		}
 
-// ReSharper disable UnusedParameter.Local
+		// ReSharper disable UnusedParameter.Local
 		private void ReadForwardInfo(BitAccess bits)
-// ReSharper restore UnusedParameter.Local
+		// ReSharper restore UnusedParameter.Local
 		{
 		}
 

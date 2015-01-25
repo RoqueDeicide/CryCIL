@@ -31,16 +31,17 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// <summary>
 		/// Gets or sets element at specified index.
 		/// </summary>
-		/// <param name="index"> Zero-based index of the element to access. </param>
+		/// <param name="index">Zero-based index of the element to access.</param>
 		/// <exception cref="IndexOutOfRangeException">
 		/// Attempt to access element of the collection throw index that is out of bounds.
 		/// </exception>
 		/// <exception cref="MeshConsistencyException">
-		/// Attempt to set face vertex index to value that is out of bounds of the collection of vertices.
+		/// Attempt to set face vertex index to value that is out of bounds of the
+		/// collection of vertices.
 		/// </exception>
 		/// <exception cref="MeshConsistencyException">
-		/// Attempt to set face vertex index to number bigger then biggest value that can be stored
-		/// by integer type that is used to store indices.
+		/// Attempt to set face vertex index to number bigger then biggest value that can
+		/// be stored by integer type that is used to store indices.
 		/// </exception>
 		public override uint this[int index]
 		{
@@ -116,9 +117,9 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		#endregion
 		#region Construction
 		/// <summary>
-		/// Creates new instance of type <see cref="NativeIndicesCollection" />.
+		/// Creates new instance of type <see cref="NativeIndicesCollection"/>.
 		/// </summary>
-		/// <param name="mesh"> Mesh that hosts this collection. </param>
+		/// <param name="mesh">Mesh that hosts this collection.</param>
 		public NativeIndicesCollection(NativeMesh mesh)
 		{
 			this.mesh = mesh;

@@ -18,7 +18,7 @@ namespace CryEngine.Logic.Entities
 		/// </summary>
 		[UsedImplicitly]
 		[FieldOffset(0)]
-		byte name;
+		private byte name;
 		/// <summary>
 		/// Fast identifier of the target.
 		/// </summary>
@@ -44,7 +44,7 @@ namespace CryEngine.Logic.Entities
 				byte[] bytes = new byte[32];
 				fixed (EntityLink* ptr = &this)
 				{
-					byte* bytePtr = (byte *)ptr;
+					byte* bytePtr = (byte*)ptr;
 					for (int i = 0; i < 32; i++)
 					{
 						bytes[i] = bytePtr[i];

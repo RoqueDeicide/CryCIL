@@ -13,13 +13,13 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Creates a link between two entities.
 		/// </summary>
-		/// <param name="parent">
-		/// Parent entity. Changes to parent entity's rotation and position affect <paramref
-		/// name="child" />.
+		/// <param name="parent">  
+		/// Parent entity. Changes to parent entity's rotation and position affect
+		/// <paramref name="child"/>.
 		/// </param>
-		/// <param name="child">
-		/// Slave entity. Changes to slave entity's rotation and position do not affect <paramref
-		/// name="parent" />.
+		/// <param name="child">   
+		/// Slave entity. Changes to slave entity's rotation and position do not affect
+		/// <paramref name="parent"/>.
 		/// </param>
 		/// <param name="linkName">Name of the link.</param>
 		/// <returns>Wrapper object for a link.</returns>
@@ -51,7 +51,7 @@ namespace CryEngine.Entities
 		/// </remarks>
 		public EntityBase Parent { get; private set; }
 		/// <summary>
-		/// Gets or sets a child entity <see cref="Parent" /> is attached to.
+		/// Gets or sets a child entity <see cref="Parent"/> is attached to.
 		/// </summary>
 		public EntityBase Child
 		{

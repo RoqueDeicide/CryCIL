@@ -21,12 +21,14 @@ namespace CryEngine.Logic.Entities
 		/// When set to true, signals CryEngine to remove the entity during the reload.
 		/// </summary>
 		/// <remarks>
-		/// <see cref="GameObjectExtension.Reloaded"/> won't occur if this property is set to true.
+		/// <see cref="GameObjectExtension.Reloaded"/> won't occur if this property is set
+		/// to true.
 		/// </remarks>
 		public bool DeleteOnReload { get; set; }
 	}
 	/// <summary>
-	/// Provides data to be used during the post-reload of the entity or when it is spawned.
+	/// Provides data to be used during the post-reload of the entity or when it is
+	/// spawned.
 	/// </summary>
 	public class EntitySpawnEventArgs : EventArgs
 	{
@@ -61,7 +63,9 @@ namespace CryEngine.Logic.Entities
 		/// <summary>
 		/// Creates a new instance of this type.
 		/// </summary>
-		/// <param name="context">The object that describes the context of entity's thinking.</param>
+		/// <param name="context">   
+		/// The object that describes the context of entity's thinking.
+		/// </param>
 		/// <param name="updateSlot">The identifier of the slot that is updated.</param>
 		public EntityThinkingEventArgs(EntityUpdateContext context, int updateSlot)
 		{
@@ -81,7 +85,9 @@ namespace CryEngine.Logic.Entities
 		/// <summary>
 		/// Creates new instance of this type.
 		/// </summary>
-		/// <param name="xFormChanges">Flags that describe changes to the transformation of this entity.</param>
+		/// <param name="xFormChanges">
+		/// Flags that describe changes to the transformation of this entity.
+		/// </param>
 		public EntityMovementEventArgs(EntityXFormFlags xFormChanges)
 		{
 			this.XFormChanges = xFormChanges;
@@ -104,7 +110,7 @@ namespace CryEngine.Logic.Entities
 		/// Creates new instance of this type.
 		/// </summary>
 		/// <param name="timer">Timer object that handled the timing.</param>
-		/// <param name="time">Time in milliseconds.</param>
+		/// <param name="time"> Time in milliseconds.</param>
 		public EntityTimerEventArgs(CryTimer timer, int time)
 		{
 			this.Timer = timer;
@@ -123,13 +129,15 @@ namespace CryEngine.Logic.Entities
 		/// <summary>
 		/// Value attached to the event.
 		/// </summary>
-		public object Value { get;private set;}
+		public object Value { get; private set; }
 		/// <summary>
 		/// Creates a new instance of this type.
 		/// </summary>
-		/// <param name="namePtr">Pointer to ASCIIZ string that is a name of the event.</param>
+		/// <param name="namePtr">  
+		/// Pointer to ASCIIZ string that is a name of the event.
+		/// </param>
 		/// <param name="eventType">Type of the event.</param>
-		/// <param name="valuePtr">Pointer to the value of the event.</param>
+		/// <param name="valuePtr"> Pointer to the value of the event.</param>
 		public EntityScriptEventEventArgs
 			(IntPtr namePtr, EntityEventValueType eventType, IntPtr valuePtr)
 		{
@@ -162,7 +170,7 @@ namespace CryEngine.Logic.Entities
 		/// Creates a new instance of this type.
 		/// </summary>
 		/// <param name="eventName">Name of the event.</param>
-		/// <param name="value">Value attached to the event.</param>
+		/// <param name="value">    Value attached to the event.</param>
 		public EntityScriptEventEventArgs(string eventName, object value)
 		{
 			this.EventName = eventName;
@@ -183,19 +191,27 @@ namespace CryEngine.Logic.Entities
 		/// </summary>
 		public int AreaId { get; private set; }
 		/// <summary>
-		/// Gets the identifier of the entity associated with the area that has been triggered.
+		/// Gets the identifier of the entity associated with the area that has been
+		/// triggered.
 		/// </summary>
 		public int AreaEntityId { get; private set; }
 		/// <summary>
-		/// If the event is <see cref="EntityEvent.MoveNearArea"/> determines how close the entity is to the area.
+		/// If the event is <see cref="EntityEvent.MoveNearArea"/> determines how close
+		/// the entity is to the area.
 		/// </summary>
 		public float FadeRatio { get; private set; }
 		/// <summary>
 		/// Creates new instance of this type.
 		/// </summary>
-		/// <param name="triggeringEntityId">The identifier of the entity that has triggered the event.</param>
-		/// <param name="areaId">The identifier of the area that has been triggered.</param>
-		/// <param name="areaEntityId">The identifier of the entity associated with the area that has been triggered.</param>
+		/// <param name="triggeringEntityId">
+		/// The identifier of the entity that has triggered the event.
+		/// </param>
+		/// <param name="areaId">            
+		/// The identifier of the area that has been triggered.
+		/// </param>
+		/// <param name="areaEntityId">      
+		/// The identifier of the entity associated with the area that has been triggered.
+		/// </param>
 		public EntityAreaPositionEventArgs(EntityId triggeringEntityId, int areaId, int areaEntityId)
 		{
 			this.TriggeringEntityId = triggeringEntityId;
@@ -205,10 +221,19 @@ namespace CryEngine.Logic.Entities
 		/// <summary>
 		/// Creates new instance of this type.
 		/// </summary>
-		/// <param name="triggeringEntityId">The identifier of the entity that has triggered the event.</param>
-		/// <param name="areaId">The identifier of the area that has been triggered.</param>
-		/// <param name="areaEntityId">The identifier of the entity associated with the area that has been triggered.</param>
-		/// <param name="fade">If the event is <see cref="EntityEvent.MoveNearArea"/> determines how close the entity is to the area.</param>
+		/// <param name="triggeringEntityId">
+		/// The identifier of the entity that has triggered the event.
+		/// </param>
+		/// <param name="areaId">            
+		/// The identifier of the area that has been triggered.
+		/// </param>
+		/// <param name="areaEntityId">      
+		/// The identifier of the entity associated with the area that has been triggered.
+		/// </param>
+		/// <param name="fade">              
+		/// If the event is <see cref="EntityEvent.MoveNearArea"/> determines how close
+		/// the entity is to the area.
+		/// </param>
 		public EntityAreaPositionEventArgs
 			(EntityId triggeringEntityId, int areaId, int areaEntityId, float fade)
 		{
@@ -220,42 +245,32 @@ namespace CryEngine.Logic.Entities
 	}
 	public class EntityMovementEventArgs : EventArgs
 	{
-
 	}
 	public class EntityMovementEventArgs : EventArgs
 	{
-
 	}
 	public class EntityMovementEventArgs : EventArgs
 	{
-
 	}
 	public class EntityMovementEventArgs : EventArgs
 	{
-
 	}
 	public class EntityMovementEventArgs : EventArgs
 	{
-
 	}
 	public class EntityMovementEventArgs : EventArgs
 	{
-
 	}
 	public class EntityMovementEventArgs : EventArgs
 	{
-
 	}
 	public class EntityMovementEventArgs : EventArgs
 	{
-
 	}
 	public class EntityMovementEventArgs : EventArgs
 	{
-
 	}
 	public class EntityMovementEventArgs : EventArgs
 	{
-
 	}
 }

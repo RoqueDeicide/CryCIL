@@ -22,8 +22,9 @@ namespace CryEngine
 		internal IntPtr Handle { get; set; }
 
 		#region Statics
-		/// <summary></summary>
-		/// <param name="effectName"></param>
+		/// <summary>
+		/// </summary>
+		/// <param name="effectName">   </param>
 		/// <param name="loadResources">Load all required resources?</param>
 		/// <returns>The specified particle effect, or null if failed.</returns>
 		public static ParticleEffect Get(string effectName, bool loadResources = true)
@@ -58,9 +59,11 @@ namespace CryEngine
 		/// Spawns this effect
 		/// </summary>
 		/// <param name="independent"></param>
-		/// <param name="pos">World location to place emitter at.</param>
-		/// <param name="dir">World rotation of emitter, set to Vec3.Up if null.</param>
-		/// <param name="scale">Scale of the emitter.</param>
+		/// <param name="pos">        World location to place emitter at.</param>
+		/// <param name="dir">        
+		/// World rotation of emitter, set to Vec3.Up if null.
+		/// </param>
+		/// <param name="scale">      Scale of the emitter.</param>
 		public ParticleEmitter Spawn(Vector3 pos, Vector3? dir = null, float scale = 1f, bool independent = true)
 		{
 			return ParticleEmitter.TryGet(ParticleEffectInterop.Spawn(Handle, independent, pos, dir ?? Vector3.Up, scale));

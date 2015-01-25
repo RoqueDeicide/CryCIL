@@ -155,10 +155,10 @@ namespace CryCil.RunTime.Compilation
 			XmlDocument document = new XmlDocument();
 			try
 			{
-// ReSharper disable AssignNullToNotNullAttribute
+				// ReSharper disable AssignNullToNotNullAttribute
 				document.Load(this.FileName);
-// ReSharper restore AssignNullToNotNullAttribute
-				
+				// ReSharper restore AssignNullToNotNullAttribute
+
 				// Declare properties to get from the file.
 				Settings sets = new Settings();
 				XmlElement[] propertyGroups =
@@ -333,8 +333,9 @@ namespace CryCil.RunTime.Compilation
 			parameters.CompilerOptions = extraOptions.ToString();
 			// References.
 			parameters.ReferencedAssemblies.AddRange(this.References);
-			// 			var compiledDependencies = this.Dependencies.Select(x => x.CompiledAssembly);
-			// 			var dependencyLocations = compiledDependencies.Select(x => x.GetLocation()).ToArray();
+			// var compiledDependencies = this.Dependencies.Select(x =>
+			// x.CompiledAssembly); var dependencyLocations =
+			// compiledDependencies.Select(x => x.GetLocation()).ToArray();
 			var deps = this.Dependencies;
 			Assembly[] compiledDeps = new Assembly[deps.Length];
 			for (int i = 0; i < compiledDeps.Length; i++)

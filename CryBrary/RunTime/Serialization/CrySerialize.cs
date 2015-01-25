@@ -45,10 +45,12 @@ namespace CryEngine.RunTime.Serialization
 		private static extern SerializationTarget GetSerializationTarget(IntPtr handle);
 
 		/// <summary>
-		/// Begins a serialization group - must be matched by an <see cref="EndGroup()" /> call.
+		/// Begins a serialization group - must be matched by an <see cref="EndGroup()"/>
+		/// call.
 		/// </summary>
 		/// <param name="name">
-		/// Preferably as short as possible for performance reasons, cannot contain spaces.
+		/// Preferably as short as possible for performance reasons, cannot contain
+		/// spaces.
 		/// </param>
 		public void BeginGroup(string name)
 		{
@@ -113,8 +115,8 @@ namespace CryEngine.RunTime.Serialization
 		}
 
 		/// <summary>
-		/// For network updates: Notify the network engine that this value was only partially read
-		/// and we should re-request an update from the server soon.
+		/// For network updates: Notify the network engine that this value was only
+		/// partially read and we should re-request an update from the server soon.
 		/// </summary>
 		public void FlagPartialRead()
 		{

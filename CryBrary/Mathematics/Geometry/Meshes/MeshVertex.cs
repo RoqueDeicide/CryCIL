@@ -13,17 +13,18 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 	{
 		#region Fields
 		/// <summary>
-		/// <see cref="Vector3"/> object that describes Cartesian coordinates of this vertex in 3D space.
+		/// <see cref="Vector3"/> object that describes Cartesian coordinates of this
+		/// vertex in 3D space.
 		/// </summary>
 		public Vector3 Position;
 		/// <summary>
-		/// <see cref="Vector3"/> object that describes direction of the normal to hypothetical
-		/// surface this vertex is part of.
+		/// <see cref="Vector3"/> object that describes direction of the normal to
+		/// hypothetical surface this vertex is part of.
 		/// </summary>
 		public Vector3 Normal;
 		/// <summary>
-		/// <see cref="Vector2"/> object that describes Cartesian coordinates of this vertex in 2D
-		/// UV map.
+		/// <see cref="Vector2"/> object that describes Cartesian coordinates of this
+		/// vertex in 2D UV map.
 		/// </summary>
 		public Vector2 UvMapPosition;
 		/// <summary>
@@ -58,8 +59,8 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// <param name="anotherVertex">Another vertex used in interpolation.</param>
 		/// <param name="position">     Interpolation parameter.</param>
 		/// <returns>
-		/// A new vertex located on the line between this vertex and another one, with relative
-		/// position described by an interpolation parameter.
+		/// A new vertex located on the line between this vertex and another one, with
+		/// relative position described by an interpolation parameter.
 		/// </returns>
 		public IVertex CreateLinearInterpolation(IVertex anotherVertex, float position)
 		{
@@ -82,8 +83,8 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// <param name="anotherVertex">Another vertex used in interpolation.</param>
 		/// <param name="position">     Interpolation parameter.</param>
 		/// <returns>
-		/// A new vertex located on the line between this vertex and another one, with relative
-		/// position described by an interpolation parameter.
+		/// A new vertex located on the line between this vertex and another one, with
+		/// relative position described by an interpolation parameter.
 		/// </returns>
 		public IVertex CreateLinearInterpolation(MeshVertex anotherVertex, float position)
 		{
@@ -123,19 +124,25 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// </summary>
 		/// <remarks>
 		/// <para>Terminology</para>
-		/// <para>1) Ray1 - a ray from origin of coordinates that contains this vertex.</para>
-		/// <para>2) Ray2 - a ray from origin of coordinates that contains another vertex.</para>
-		/// <para>3) Ray3 - a ray from origin of coordinates that contains interpolated vertex.</para>
-		/// <para></para>
 		/// <para>
-		/// The angle between Ray1 and Ray3 is a fraction of the angle between Ray1 and Ray2 that is
-		/// equal to a <paramref name="position"/> parameter.
+		/// 1) Ray1 - a ray from origin of coordinates that contains this vertex.
+		/// </para>
+		/// <para>
+		/// 2) Ray2 - a ray from origin of coordinates that contains another vertex.
+		/// </para>
+		/// <para>
+		/// 3) Ray3 - a ray from origin of coordinates that contains interpolated vertex.
 		/// </para>
 		/// <para></para>
 		/// <para>
-		/// Interpolation is only applied to <see cref="MeshVertex.Position"/> , <see
-		/// cref="MeshVertex.Normal"/> and <see cref="MeshVertex.UvMapPosition"/> , the rest are
-		/// linearly interpolated.
+		/// The angle between Ray1 and Ray3 is a fraction of the angle between Ray1 and
+		/// Ray2 that is equal to a <paramref name="position"/> parameter.
+		/// </para>
+		/// <para></para>
+		/// <para>
+		/// Interpolation is only applied to <see cref="MeshVertex.Position"/> ,
+		/// <see cref="MeshVertex.Normal"/> and <see cref="MeshVertex.UvMapPosition"/> ,
+		/// the rest are linearly interpolated.
 		/// </para>
 		/// </remarks>
 		/// <param name="anotherVertex">Another vertex.</param>

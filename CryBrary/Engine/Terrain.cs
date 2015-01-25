@@ -16,8 +16,9 @@ namespace CryEngine
 		/// Gets the size of the terrain in units.
 		/// </summary>
 		/// <remarks>
-		/// The terrain system calculates the overall size by multiplying this value by the units
-		/// per meter setting. A map set to 1024 units at 2 meters per unit will have a size of 2048 meters.
+		/// The terrain system calculates the overall size by multiplying this value by
+		/// the units per meter setting. A map set to 1024 units at 2 meters per unit will
+		/// have a size of 2048 meters.
 		/// </remarks>
 		public static int UnitSize { get { return Size / UnitsPerMetre; } }
 

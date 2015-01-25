@@ -14,8 +14,14 @@ namespace CryEngine.Logic.Entities
 		/// (position/rotation/scale).
 		/// </summary>
 		/// <remarks>
-		/// <para>Integer 1) <see cref="EntityXFormFlags"/> value that describes why the change has happened.</para>
-		/// <para>Integer 2) If this version supports segmented worlds, indicates whether physical bounds of the entity need to be recalculated.</para>
+		/// <para>
+		/// Integer 1) <see cref="EntityXFormFlags"/> value that describes why the change
+		/// has happened.
+		/// </para>
+		/// <para>
+		/// Integer 2) If this version supports segmented worlds, indicates whether
+		/// physical bounds of the entity need to be recalculated.
+		/// </para>
 		/// </remarks>
 		XForm = 0,
 		/// <summary>
@@ -216,14 +222,13 @@ namespace CryEngine.Logic.Entities
 		/// </summary>
 		/// <remarks>
 		/// <para>
-		/// Integer 1) An identifier of the entity that represents a
-		/// triggering entity.
+		/// Integer 1) An identifier of the entity that represents a triggering entity.
 		/// </para>
 		/// <para>Integer 2) An identifier of the area.</para>
 		/// <para>Integer 3) An identifier of the area entity.</para>
 		/// <para>
-		/// <see cref="Single"/> 1) An indicator of how close the entity is to the
-		/// area. (1.0 - on the border, 0.0 on the border of detection).
+		/// <see cref="Single"/> 1) An indicator of how close the entity is to the area.
+		/// (1.0 - on the border, 0.0 on the border of detection).
 		/// </para>
 		/// </remarks>
 		MoveNearArea,
@@ -232,7 +237,8 @@ namespace CryEngine.Logic.Entities
 		/// </summary>
 		/// <remarks>
 		/// <para>Integer 1) Identifier of the triggering entity.</para>
-		/// <para>This event is sent to all entities targeted by the area.</para></remarks>
+		/// <para>This event is sent to all entities targeted by the area.</para>
+		/// </remarks>
 		CrossArea,
 		/// <summary>
 		/// This event occurs when pef_monitor_poststep receives a post-step notification.
@@ -349,9 +355,7 @@ namespace CryEngine.Logic.Entities
 		/// <summary>
 		/// This event occurs when this entity is hit by a weapon.
 		/// </summary>
-		/// <remarks>
-		/// This event never actually occurs.
-		/// </remarks>
+		/// <remarks>This event never actually occurs.</remarks>
 		OnHit,
 		/// <summary>
 		/// This event occurs when an animation event (placed on animations in editor) is

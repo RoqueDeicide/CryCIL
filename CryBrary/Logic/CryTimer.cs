@@ -17,7 +17,6 @@ namespace CryEngine.Logic
 		/// <param name="handle">Pointer to CryEngine timer object.</param>
 		public CryTimer(IntPtr handle)
 		{
-			
 		}
 	}
 }

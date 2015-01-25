@@ -38,7 +38,7 @@ namespace CryCil.Geometry
 			/// Rotates given vector using a set of Euler angles around a specified pivot.
 			/// </summary>
 			/// <param name="vector">Vector to rotate.</param>
-			/// <param name="pivot">Point to rotate the vector around.</param>
+			/// <param name="pivot"> Point to rotate the vector around.</param>
 			/// <param name="angles">A set of Euler angles to use.</param>
 			public static void Apply(ref Vector3 vector, ref Vector3 pivot, ref EulerAngles angles)
 			{
@@ -51,7 +51,8 @@ namespace CryCil.Geometry
 				Translation.Apply(ref vector, ref pivot);
 			}
 			/// <summary>
-			/// Overrides given matrix with one that represents rotation using Euler angles.
+			/// Overrides given matrix with one that represents rotation using Euler
+			/// angles.
 			/// </summary>
 			/// <param name="matrix">Matrix to override.</param>
 			/// <param name="angles">A set of Euler angles.</param>
@@ -60,7 +61,8 @@ namespace CryCil.Geometry
 				matrix = Create33(ref angles);
 			}
 			/// <summary>
-			/// Overrides given matrix with one that represents rotation using Euler angles.
+			/// Overrides given matrix with one that represents rotation using Euler
+			/// angles.
 			/// </summary>
 			/// <param name="matrix">Matrix to override.</param>
 			/// <param name="angles">A set of Euler angles.</param>
@@ -69,7 +71,8 @@ namespace CryCil.Geometry
 				matrix = Create34(ref angles);
 			}
 			/// <summary>
-			/// Overrides given matrix with one that represents rotation using Euler angles.
+			/// Overrides given matrix with one that represents rotation using Euler
+			/// angles.
 			/// </summary>
 			/// <param name="matrix">Matrix to override.</param>
 			/// <param name="angles">A set of Euler angles.</param>
@@ -78,10 +81,11 @@ namespace CryCil.Geometry
 				matrix = Create44(ref angles);
 			}
 			/// <summary>
-			/// Overrides given quaternion with one that represents rotation using Euler angles.
+			/// Overrides given quaternion with one that represents rotation using Euler
+			/// angles.
 			/// </summary>
 			/// <param name="quaternion">Quaternion to override.</param>
-			/// <param name="angles">A set of Euler angles.</param>
+			/// <param name="angles">    A set of Euler angles.</param>
 			public static void Override(out Quaternion quaternion, ref EulerAngles angles)
 			{
 				quaternion = CreateQuaternion(ref angles);
@@ -90,7 +94,8 @@ namespace CryCil.Geometry
 			// ReSharper disable RedundantAssignment
 
 			/// <summary>
-			/// Overrides given matrix with one that represents rotation using Euler angles.
+			/// Overrides given matrix with one that represents rotation using Euler
+			/// angles.
 			/// </summary>
 			/// <param name="matrix">Matrix to override.</param>
 			/// <param name="angles">A set of Euler angles.</param>
@@ -102,7 +107,8 @@ namespace CryCil.Geometry
 			// ReSharper restore RedundantAssignment
 
 			/// <summary>
-			/// Sets top-left 3x3 portion of the given matrix to one that represents rotation using Euler angles.
+			/// Sets top-left 3x3 portion of the given matrix to one that represents
+			/// rotation using Euler angles.
 			/// </summary>
 			/// <param name="matrix">Matrix to modify.</param>
 			/// <param name="angles">A set of Euler angles.</param>
@@ -111,7 +117,8 @@ namespace CryCil.Geometry
 				matrix.Matrix33 = Create33(ref angles);
 			}
 			/// <summary>
-			/// Sets top-left 3x3 portion of the given matrix to one that represents rotation using Euler angles.
+			/// Sets top-left 3x3 portion of the given matrix to one that represents
+			/// rotation using Euler angles.
 			/// </summary>
 			/// <param name="matrix">Matrix to modify.</param>
 			/// <param name="angles">A set of Euler angles.</param>
@@ -123,10 +130,11 @@ namespace CryCil.Geometry
 			// ReSharper disable RedundantAssignment
 
 			/// <summary>
-			/// Overrides given quaternion with one that represents rotation using Euler angles.
+			/// Overrides given quaternion with one that represents rotation using Euler
+			/// angles.
 			/// </summary>
 			/// <param name="quaternion">Quaternion to override.</param>
-			/// <param name="angles">A set of Euler angles.</param>
+			/// <param name="angles">    A set of Euler angles.</param>
 			public static void Set(ref Quaternion quaternion, ref EulerAngles angles)
 			{
 				quaternion = CreateQuaternion(ref angles);
@@ -165,7 +173,7 @@ namespace CryCil.Geometry
 			/// Stacks rotation with Euler angles into given quaternion.
 			/// </summary>
 			/// <param name="quaternion">Quaternion to modify.</param>
-			/// <param name="angles">A set of Euler angles.</param>
+			/// <param name="angles">    A set of Euler angles.</param>
 			public static void StackUp(ref Quaternion quaternion, ref EulerAngles angles)
 			{
 				quaternion = CreateQuaternion(ref angles) * quaternion;
@@ -222,10 +230,13 @@ namespace CryCil.Geometry
 				return mat;
 			}
 			/// <summary>
-			/// Creates quaternion that represents rotation defined by a set of Euler angles.
+			/// Creates quaternion that represents rotation defined by a set of Euler
+			/// angles.
 			/// </summary>
 			/// <param name="angles">A set of Euler angles.</param>
-			/// <returns>Quaternion that represents rotation defined by a set of Euler angles.</returns>
+			/// <returns>
+			/// Quaternion that represents rotation defined by a set of Euler angles.
+			/// </returns>
 			public static Quaternion CreateQuaternion(ref EulerAngles angles)
 			{
 				float sx, cx; MathHelpers.SinCos(angles.Pitch * 0.5f, out sx, out cx);

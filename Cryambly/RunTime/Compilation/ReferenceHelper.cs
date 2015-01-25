@@ -18,7 +18,8 @@ namespace CryCil.RunTime.Compilation
 		/// </summary>
 		public static string[] VersionsShort = { "1.1", "2.0", "3.0", "3.5", "4.0", "4.5" };
 		/// <summary>
-		/// Maps names of .Net framework versions to constants defined in <see cref="TargetDotNetFrameworkVersion"/> enumeration.
+		/// Maps names of .Net framework versions to constants defined in
+		/// <see cref="TargetDotNetFrameworkVersion"/> enumeration.
 		/// </summary>
 		public static Dictionary<string, TargetDotNetFrameworkVersion> TargetFrameworkVersionMap =
 			new Dictionary<string, TargetDotNetFrameworkVersion>
@@ -34,7 +35,7 @@ namespace CryCil.RunTime.Compilation
 		/// Finds location of given version of given assembly.
 		/// </summary>
 		/// <param name="assemblyName">Name of the assembly to find.</param>
-		/// <param name="version">Version of framework to use.</param>
+		/// <param name="version">     Version of framework to use.</param>
 		/// <returns>Absolute path to referenced assembly.</returns>
 		public static string GetLocation(string assemblyName, string version)
 		{

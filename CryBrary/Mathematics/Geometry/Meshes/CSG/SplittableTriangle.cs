@@ -95,20 +95,24 @@ namespace CryEngine.Mathematics.Geometry.Meshes.CSG
 		/// <summary>
 		/// Splits this triangle with given plane.
 		/// </summary>
-		/// <param name="splitter">             <see cref="Plane"/> that is used for splitting.</param>
+		/// <param name="splitter">             
+		/// <see cref="Plane"/> that is used for splitting.
+		/// </param>
 		/// <param name="frontCoplanarElements">
-		/// An optional collection for this triangle if it's located on this plane and faces the
-		/// same way.
+		/// An optional collection for this triangle if it's located on this plane and
+		/// faces the same way.
 		/// </param>
 		/// <param name="backCoplanarElements"> 
-		/// An optional collection for this triangle if it's located on this plane and faces the
-		/// opposite way.
+		/// An optional collection for this triangle if it's located on this plane and
+		/// faces the opposite way.
 		/// </param>
 		/// <param name="frontElements">        
-		/// An optional collection for parts of this triangle that are located in front of this plane.
+		/// An optional collection for parts of this triangle that are located in front of
+		/// this plane.
 		/// </param>
 		/// <param name="backElements">         
-		/// An optional collection for parts of this triangle that are located behind this plane.
+		/// An optional collection for parts of this triangle that are located behind this
+		/// plane.
 		/// </param>
 		/// <param name="customData">           Not used.</param>
 		public void Split(Plane splitter,
@@ -149,22 +153,21 @@ namespace CryEngine.Mathematics.Geometry.Meshes.CSG
 					{
 						return;				// Any calculations won't be saved anywhere.
 					}
-					//
 					// Prepare to create a split of this triangle.
-					//
+					// 
 					// Cash vertices into an array, so we can loop through it.
 					MeshVertex[] vertices = this.Vertices;
 					// Create lists for vertices on the front and back.
 					List<MeshVertex> fvs = new List<MeshVertex>(4);
 					List<MeshVertex> bvs = new List<MeshVertex>(4);
-					//
 					// Process edges.
-					//
-					// We go through the polygon edge by edge with i being index of the start of the
-					// edge, and j - end.
+					// 
+					// We go through the polygon edge by edge with i being index of the
+					// start of the edge, and j - end.
 					for (int i = 0, j = 1; i < 3; i++, j = (j + 1) % 3)
 					{
-						// If edge doesn't begin behind the plane, add starting vertex to front vertices.
+						// If edge doesn't begin behind the plane, add starting vertex to
+						// front vertices.
 						if (positions[i] != PlanePosition.Back)
 						{
 							fvs.Add(vertices[i]);
@@ -177,8 +180,8 @@ namespace CryEngine.Mathematics.Geometry.Meshes.CSG
 						// If this edge intersects the plane, split it.
 						if ((positions[i] | positions[j]) == PlanePosition.Spanning)
 						{
-							// Calculate fraction that describes position of splitting vertex along
-							// the line between start and end of the edge.
+							// Calculate fraction that describes position of splitting
+							// vertex along the line between start and end of the edge.
 							float positionParameter =
 								(splitter.D - splitter.Normal * vertices[i].Position)
 								/
@@ -190,7 +193,8 @@ namespace CryEngine.Mathematics.Geometry.Meshes.CSG
 							fvs.Add(splittingVertex);
 							bvs.Add(splittingVertex);
 						}
-						// Create front and back triangle(s) from vertices from corresponding lists.
+						// Create front and back triangle(s) from vertices from
+						// corresponding lists.
 						if (frontElements != null) SplittableTriangle.TriangulateLinearly(fvs, false, frontElements);
 						if (backElements != null) SplittableTriangle.TriangulateLinearly(bvs, false, backElements);
 					}
@@ -210,14 +214,15 @@ namespace CryEngine.Mathematics.Geometry.Meshes.CSG
 			this.First = temp;
 		}
 		/// <summary>
-		/// Creates an array of triangular faces that form a polygon from a given list of vertices.
+		/// Creates an array of triangular faces that form a polygon from a given list of
+		/// vertices.
 		/// </summary>
 		/// <param name="vertices">           
 		/// A list of vertices that describes a border of the polygon.
 		/// </param>
 		/// <param name="checkForCoplanarity">
-		/// Indicates whether coplanarity of given polygon must be ensured. Pass false only if know,
-		/// that your polygon is on one plane.
+		/// Indicates whether coplanarity of given polygon must be ensured. Pass false
+		/// only if know, that your polygon is on one plane.
 		/// </param>
 		/// <returns>An array of triangles.</returns>
 		public static SplittableTriangle[] TriangulateLinearly(IList<MeshVertex> vertices, bool checkForCoplanarity)
@@ -252,16 +257,20 @@ namespace CryEngine.Mathematics.Geometry.Meshes.CSG
 			return result;
 		}
 		/// <summary>
-		/// Triangulates given polygon and adds resultant triangles to the list of polygons.
+		/// Triangulates given polygon and adds resultant triangles to the list of
+		/// polygons.
 		/// </summary>
 		/// <param name="vertices">           
-		/// A list of vertices that represents a border of the polygon that is going to be triangulated.
+		/// A list of vertices that represents a border of the polygon that is going to be
+		/// triangulated.
 		/// </param>
 		/// <param name="checkForCoplanarity">
-		/// Indicates whether coplanarity of given polygon must be ensured. Pass false only if know,
-		/// that your polygon is on one plane.
+		/// Indicates whether coplanarity of given polygon must be ensured. Pass false
+		/// only if know, that your polygon is on one plane.
 		/// </param>
-		/// <param name="polygons">           The list of polygon to which to add the triangles.</param>
+		/// <param name="polygons">           
+		/// The list of polygon to which to add the triangles.
+		/// </param>
 		public static void TriangulateLinearly(IList<MeshVertex> vertices, bool checkForCoplanarity,
 											   ICollection<SplittableTriangle> polygons)
 		{

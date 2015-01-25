@@ -27,7 +27,8 @@ namespace CryEngine
 		NonRemovable = 0x10000,  // Material with this flag once created are never removed from material manager (Used for decal materials, this flag should not be saved).
 		HideOnBreak = 0x20000,   // Non-physicalized subsets with such materials will be removed after the object breaks
 		UIMaterial = 0x40000,   // Used for UI in Editor. Don't need show it DB.
-		// Not CLS compliant (underscore): _64BitShadergenMask = 0x80000, // ShaderGen mask is remapped
+		// Not CLS compliant (underscore): _64BitShadergenMask = 0x80000, // ShaderGen
+		// mask is remapped
 		RayCastProxy = 0x100000,
 		RequireNearestCubemap = 0x200000,   // materials with alpha blending requires special processing for shadows
 	}

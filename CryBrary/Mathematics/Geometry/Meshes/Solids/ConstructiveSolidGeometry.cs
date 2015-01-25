@@ -18,30 +18,33 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 	/// </summary>
 	/// <remarks>
 	/// <para>
-	/// Constructive Solid Geometry (CSG) is a modeling technique that uses Boolean operations like
-	/// union and intersection to combine 3D solids. This library implements CSG operations on
-	/// meshes elegantly and concisely using BSP trees, and is meant to serve as an easily
-	/// understandable implementation of the algorithm. All edge cases involving overlapping
-	/// coplanar polygons in both solids are correctly handled.
+	/// Constructive Solid Geometry (CSG) is a modeling technique that uses Boolean
+	/// operations like union and intersection to combine 3D solids. This library
+	/// implements CSG operations on meshes elegantly and concisely using BSP trees, and
+	/// is meant to serve as an easily understandable implementation of the algorithm. All
+	/// edge cases involving overlapping coplanar polygons in both solids are correctly
+	/// handled.
 	/// </para>
 	/// <para>Implementation Details</para>
 	/// <para>
-	/// All CSG operations are implemented in terms of two functions, `ClipTo()` and `Invert()`,
-	/// which remove parts of a BSP tree inside another BSP tree and swap solid and empty space,
-	/// respectively. To find the union of `a` and `b`, we want to remove everything in `a` inside
-	/// `b` and everything in `b` inside `a`, then combine polygons from `a` and `b` into one solid:
+	/// All CSG operations are implemented in terms of two functions, `ClipTo()` and
+	/// `Invert()`, which remove parts of a BSP tree inside another BSP tree and swap
+	/// solid and empty space, respectively. To find the union of `a` and `b`, we want to
+	/// remove everything in `a` inside `b` and everything in `b` inside `a`, then combine
+	/// polygons from `a` and `b` into one solid:
 	/// </para>
 	/// <para>
 	/// <code>
 	/// a.ClipTo(b);
 	/// b.ClipTo(a);
 	/// a.Build(b.AllPolygons);
-	/// </code></para>
+	/// </code>
+	/// </para>
 	/// <para>
-	/// The only tricky part is handling overlapping coplanar polygons in both trees. The code above
-	/// keeps both copies, but we need to keep them in one tree and remove them in the other tree.
-	/// To remove them from `b` we can clip the inverse of `b` against `a`. The code for union now
-	/// looks like this:
+	/// The only tricky part is handling overlapping coplanar polygons in both trees. The
+	/// code above keeps both copies, but we need to keep them in one tree and remove them
+	/// in the other tree. To remove them from `b` we can clip the inverse of `b` against
+	/// `a`. The code for union now looks like this:
 	/// </para>
 	/// <para>
 	/// <code>
@@ -51,30 +54,34 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 	/// b.ClipTo(a);
 	/// b.Invert();
 	/// a.Build(b.AllPolygons);
-	/// </code></para>
+	/// </code>
+	/// </para>
 	/// <para>
-	/// Subtraction and intersection naturally follow from set operations. If union is `A | B`,
-	/// subtraction is `A - B = ~(~A |
-	/// B) ` and intersection is `A &amp; B = ~(~A | ~B)` where `~` is the complement operator.
+	/// Subtraction and intersection naturally follow from set operations. If union is `A
+	/// | B`, subtraction is `A - B = ~(~A |
+	/// B) ` and intersection is `A &amp; B = ~(~A | ~B)` where `~` is the complement
+	///    operator.
 	/// </para>
 	/// <para>License</para>
-	/// <para>Copyright (c) 2011 Evan Wallace (http://madebyevan.com/), under the MIT license.</para>
+	/// <para>
+	/// Copyright (c) 2011 Evan Wallace (http://madebyevan.com/), under the MIT license.
+	/// </para>
 	/// </remarks>
 	/// <example>
 	/// <code>
 	/// Example illustrated in Wikipedia: http://en.wikipedia.org/wiki/File:Csg_tree.png
-	///
+	/// 
 	/// // Prepare cylinders.
 	/// const float exampleCylinderLength = 10;
 	/// const float exampleCylinderRadius = 2;
-	///
+	/// 
 	/// Vector3 cylinderRight = new Vector3(exampleCylinderLength, 0, 0);
 	/// Vector3 cylinderFront = new Vector3(0, exampleCylinderLength, 0);
 	/// Vector3 cylinderTop = new Vector3(0, 0, exampleCylinderLength);
 	/// Vector3 cylinderLeft = new Vector3(-exampleCylinderLength, 0, 0);
 	/// Vector3 cylinderBack = new Vector3(0, -exampleCylinderLength, 0);
 	/// Vector3 cylinderBottom = new Vector3(0, 0, -exampleCylinderLength);
-	///
+	/// 
 	/// Solid cylinderX = Solid.Cylinder(cylinderLeft, cylinderRight, exampleCylinderRadius);
 	/// Solid cylinderY = Solid.Cylinder(cylinderBack, cylinderFront, exampleCylinderRadius);
 	/// Solid cylinderZ = Solid.Cylinder(cylinderBottom, cylinderTop, exampleCylinderRadius);
@@ -106,28 +113,29 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 		///      |   B   |            |       |
 		///      |       |            |       |
 		///      +-------+            +-------+
-		/// </code></remarks>
+		/// </code>
+		/// </remarks>
 		/// <example>
 		/// <code>
 		/// // Create 2x1x1 cuboid from two 1x1x1 cubes placed in a row.
 		/// const float blockSideLength = 1;
-		///
+		/// 
 		/// Solid block1 = Solid.Cuboid(new Vector3(), new Vector3(blockSideLength));
 		/// Solid block2 = Solid.Cuboid(new Vector3(blockSideLength / 2, 0, 0), new Vector3(blockSideLength));
-		///
+		/// 
 		/// Solid twoBlocksInARow = ConstructiveSolidGeometry.Union(block1, block2);
-		///
+		/// 
 		/// // Create capsule from two spheres and a cylinder.
 		/// const float capsuleHeight = 4;
 		/// const float capsuleRadius = 0.5f;
-		///
+		/// 
 		/// Vector3 capsuleBodyTop = new Vector3(0, 0, capsuleHeight / 2 - capsuleRadius);
 		/// Vector3 capsuleBodyBottom = new Vector3(0, 0, -(capsuleHeight / 2 - capsuleRadius));
-		///
+		/// 
 		/// Solid topCap = Solid.Sphere(capsuleBodyTop, capsuleRadius);
 		/// Solid bottomCap = Solid.Sphere(capsuleBodyBottom, capsuleRadius);
 		/// Solid capsuleBody = Solid.Cylinder(capsuleBodyBottom, capsuleBodyTop, capsuleRadius);
-		///
+		/// 
 		/// Solid capsule =
 		///      ConstructiveSolidGeometry.Union(topCap, ConstructiveSolidGeometry.Union(capsuleBody, bottomCap));
 		/// </code>
@@ -150,7 +158,8 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 			return new Solid(aNode.AllPolygons);
 		}
 		/// <summary>
-		/// Creates a solid which contains every point that is within both of given solids.
+		/// Creates a solid which contains every point that is within both of given
+		/// solids.
 		/// </summary>
 		/// <remarks>
 		/// <code>
@@ -162,28 +171,29 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 		///      |   B   |
 		///      |       |
 		///      +-------+
-		/// </code></remarks>
+		/// </code>
+		/// </remarks>
 		/// <example>
 		/// <code>
 		/// // Get portion of a sphere that intersects a cube.
 		/// const float radius = 0.5f;
 		/// const float length = 2;
-		///
+		/// 
 		/// Solid cube = Solid.Cuboid(null, new Vector3(length));
 		/// Solid sphere = Solid.Sphere(new Vector3(length, 0, 0), radius);
-		///
+		/// 
 		/// Solid affectedPortion = ConstructiveSolidGeometry.Intersection(cube, sphere);
-		///
+		/// 
 		/// // Clamp a cylinder into a sphere.
 		/// const float areaRadius = 2;
 		/// const float cylinderHeight = 4;
 		/// const float cylinderRadius = 0.5f;
-		///
+		/// 
 		/// Solid longCylinder = Solid.Cylinder(new Vector3(0, 0, -cylinderHeight / 2),
 		///                                     new Vector3(0, 0, cylinderHeight / 2),
 		///                                     cylinderRadius);
 		/// Solid sphericalArea = Solid.Sphere(null, areaRadius);
-		///
+		/// 
 		/// Solid clampedCylinder = ConstructiveSolidGeometry.Intersection(longCylinder, sphericalArea);
 		/// </code>
 		/// </example>
@@ -210,8 +220,8 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 		/// </summary>
 		/// <remarks>
 		/// <para>
-		/// Implementation of this operation comes from set theory: subtraction is negation of union
-		/// of negated first object with second one.
+		/// Implementation of this operation comes from set theory: subtraction is
+		/// negation of union of negated first object with second one.
 		/// </para>
 		/// <code>
 		/// +-------+            +-------+
@@ -230,21 +240,21 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 		/// const float tubeOuterRadius = 2;
 		/// const float tubeShellThickness = 0.1f;
 		/// const float tubeLength = 100;
-		///
+		/// 
 		/// Vector3 leftCapPoint = new Vector3();
 		/// Vector3 rightCapPoint = new Vector3(tubeLength, 0, 0);
-		///
+		/// 
 		/// Solid outerCylinder = Solid.Cylinder(leftCapPoint, rightCapPoint, tubeOuterRadius);
 		/// Solid innerCylinder = Solid.Cylinder(leftCapPoint, rightCapPoint,
 		///                                      tubeOuterRadius - tubeShellThickness);
-		///
+		/// 
 		/// Solid tube = CSG.Subtract(outerCylinder, innerCylinder);
 		/// // Create a frame.
 		/// const float frameSize = 10;
 		/// const float frameThickness = 0.5f;
-		///
+		/// 
 		/// const float innerCuboidThickness = frameSize - frameThickness * 2;
-		///
+		/// 
 		/// Solid outerCube = Solid.Cuboid(null, new Vector3(frameSize));
 		/// Solid firstInnerCuboid = Solid.Cuboid
 		/// (
@@ -276,7 +286,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 		///         frameSize + 2
 		///     )
 		/// );
-		///
+		/// 
 		/// Solid cubeFrame =
 		///     ConstructiveSolidGeometry.Subtract
 		///     (
@@ -291,7 +301,8 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 		///             )
 		///         )
 		///     );
-		/// </code></example>
+		/// </code>
+		/// </example>
 		/// <param name="a">First solid.</param>
 		/// <param name="b">Second solid.</param>
 		/// <returns>Result of subtraction.</returns>
@@ -345,11 +356,12 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 			/// Creates an axis-aligned cuboid.
 			/// </summary>
 			/// <param name="centerVector">
-			/// Optional vector that defines center of the cuboid. If null center will be an origin
-			/// of coordinates.
+			/// Optional vector that defines center of the cuboid. If null center will be
+			/// an origin of coordinates.
 			/// </param>
 			/// <param name="lengthsSet">  
-			/// Optional vector that defines lengths of the cuboid along the corresponding axes.
+			/// Optional vector that defines lengths of the cuboid along the corresponding
+			/// axes.
 			/// </param>
 			/// <returns>A new cuboid that can participate in CSG operations.</returns>
 			public static Solid Cuboid(Vector3? centerVector = null,
@@ -471,8 +483,8 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 			/// Creates a sphere.
 			/// </summary>
 			/// <param name="centerVector">
-			/// Optional vector that defines center of the sphere. If null center will be an origin
-			/// of coordinates.
+			/// Optional vector that defines center of the sphere. If null center will be
+			/// an origin of coordinates.
 			/// </param>
 			/// <param name="radius">      Radius of the sphere.</param>
 			/// <param name="slices">      Tesseltation along the longitude.</param>
@@ -484,7 +496,8 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 				Vector3 center = centerVector ?? new Vector3();
 
 				List<Polygon> polygons = new List<Polygon>();
-				// Adds a vertex calculated from given polar coordinates to the list above.
+				// Adds a vertex calculated from given polar coordinates to the list
+				// above.
 				Func<float, float, Vertex> createVertex = delegate(float theta, float phi)
 				{
 					theta *= (float)(Math.PI * 2);
@@ -529,10 +542,12 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 			/// Creates a cylinder.
 			/// </summary>
 			/// <param name="startVector">
-			/// Optional vector that defines position of one and of the ends of the cylinder.
+			/// Optional vector that defines position of one and of the ends of the
+			/// cylinder.
 			/// </param>
 			/// <param name="endVector">  
-			/// Optional vector that defines position of one and of the ends of the cylinder.
+			/// Optional vector that defines position of one and of the ends of the
+			/// cylinder.
 			/// </param>
 			/// <param name="radius">     Radius of the cylinder.</param>
 			/// <param name="slices">     Tesselation parameter.</param>
@@ -619,10 +634,13 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 			/// <example>
 			/// <code>
 			/// Solid twoCubes = cube1 | cube2;
-			/// </code></example>
+			/// </code>
+			/// </example>
 			/// <param name="left"> Left operand.</param>
 			/// <param name="right">Right operand.</param>
-			/// <returns>Result of <see cref="ConstructiveSolidGeometry.Union"/> .</returns>
+			/// <returns>
+			/// Result of <see cref="ConstructiveSolidGeometry.Union"/> .
+			/// </returns>
 			public static Solid operator |(Solid left, Solid right)
 			{
 				return ConstructiveSolidGeometry.Union(left, right);
@@ -633,10 +651,13 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 			/// <example>
 			/// <code>
 			/// Solid intersection = cube1 &amp; cube2;
-			/// </code></example>
+			/// </code>
+			/// </example>
 			/// <param name="left"> Left operand.</param>
 			/// <param name="right">Right operand.</param>
-			/// <returns>Result of <see cref="ConstructiveSolidGeometry.Intersection"/> .</returns>
+			/// <returns>
+			/// Result of <see cref="ConstructiveSolidGeometry.Intersection"/> .
+			/// </returns>
 			public static Solid operator &(Solid left, Solid right)
 			{
 				return ConstructiveSolidGeometry.Intersection(left, right);
@@ -647,10 +668,13 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 			/// <example>
 			/// <code>
 			/// Solid rightWithoutLeft = cube1 - cube2;
-			/// </code></example>
+			/// </code>
+			/// </example>
 			/// <param name="left"> Left operand.</param>
 			/// <param name="right">Right operand.</param>
-			/// <returns>Result of <see cref="ConstructiveSolidGeometry.Subtract"/> .</returns>
+			/// <returns>
+			/// Result of <see cref="ConstructiveSolidGeometry.Subtract"/> .
+			/// </returns>
 			public static Solid operator -(Solid left, Solid right)
 			{
 				return ConstructiveSolidGeometry.Subtract(left, right);
@@ -666,8 +690,8 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 			/// </summary>
 			public List<Vertex> Vertices;
 			/// <summary>
-			/// An identifier that can be shared between multiple polygons and associated with some
-			/// property (like surface color, or subset index).
+			/// An identifier that can be shared between multiple polygons and associated
+			/// with some property (like surface color, or subset index).
 			/// </summary>
 			public int Shared;
 			/// <summary>
@@ -699,7 +723,9 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 			/// Constructs a new polygon.
 			/// </summary>
 			/// <remarks>A plane is created using first three vertices.</remarks>
-			/// <param name="vertices">A list of vertices that define the outline of the polygon.</param>
+			/// <param name="vertices">
+			/// A list of vertices that define the outline of the polygon.
+			/// </param>
 			/// <param name="shared">  An identifier of shared properties.</param>
 			public Polygon(IList<Vertex> vertices, int shared)
 			{
@@ -737,8 +763,9 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 					Vector3 previousVertex = vertices[(i == 0) ? vertices.Count - 1 : i - 1].Position;
 					Vector3 currentVertex = vertices[i].Position;
 					Vector3 nextVertex = vertices[(i + 1) % vertices.Count].Position;
-					// Plane formed by edge between previous vertex and current one and a vector
-					// that is parallel to polygon's normal and originates from current vertex.
+					// Plane formed by edge between previous vertex and current one and a
+					// vector that is parallel to polygon's normal and originates from
+					// current vertex.
 					ConstructiveSolidGeometry.Plane planeBefore =
 						new Plane(currentVertex, previousVertex, this.Plane.Normal + currentVertex);
 
@@ -792,7 +819,8 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 				this.Normal = this.Normal.Flipped;
 			}
 			/// <summary>
-			/// Creates a vertex that is a linear interpolation between this and another vertex.
+			/// Creates a vertex that is a linear interpolation between this and another
+			/// vertex.
 			/// </summary>
 			/// <param name="other">Another vertex.</param>
 			/// <param name="t">    Interpolation value.</param>
@@ -855,7 +883,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 			/// </summary>
 			/// <remarks>
 			/// Normal is initialized to <see cref="Vector3.Forward"/>.
-			///
+			/// 
 			/// W is initialized to 0.
 			/// </remarks>
 			public Plane()
@@ -887,11 +915,18 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 			/// </summary>
 			/// <param name="point"><see cref="Vector3"/> that represents a point.</param>
 			/// <returns>
-			/// <para><see cref="PlaneRelativePositionClass.Back"/> if the point is behind this plane.</para>
-			///
-			/// <para><see cref="PlaneRelativePositionClass.Front"/> if the point is in front of this plane.</para>
-			///
-			/// <para><see cref="PlaneRelativePositionClass.Coplanar"/> if the point is on this plane.</para>
+			/// <para>
+			/// <see cref="PlaneRelativePositionClass.Back"/> if the point is behind this
+			/// plane.
+			/// </para>
+			/// <para>
+			/// <see cref="PlaneRelativePositionClass.Front"/> if the point is in front of
+			/// this plane.
+			/// </para>
+			/// <para>
+			/// <see cref="PlaneRelativePositionClass.Coplanar"/> if the point is on this
+			/// plane.
+			/// </para>
 			/// </returns>
 			public PlaneRelativePositionClass RelativePosition(Vector3 point)
 			{
@@ -908,20 +943,20 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 			/// </summary>
 			/// <param name="polygon">              Polygon to slice.</param>
 			/// <param name="frontCoplanarPolygons">
-			/// The list that is used for storing the <paramref name="polygon"/> it is located on a
-			/// plane and its normal points to front side of the plane.
+			/// The list that is used for storing the <paramref name="polygon"/> it is
+			/// located on a plane and its normal points to front side of the plane.
 			/// </param>
 			/// <param name="backCoplanarPolygons"> 
-			/// The list that is used for storing the <paramref name="polygon"/> it is located on a
-			/// plane and its normal points to front side of the plane.
+			/// The list that is used for storing the <paramref name="polygon"/> it is
+			/// located on a plane and its normal points to front side of the plane.
 			/// </param>
 			/// <param name="frontPolygons">        
-			/// The list that is used for storing the polygons that don't intersect this plane but
-			/// located in front of it.
+			/// The list that is used for storing the polygons that don't intersect this
+			/// plane but located in front of it.
 			/// </param>
 			/// <param name="backPolygons">         
-			/// The list that is used for storing the polygons that don't intersect this plane but
-			/// located behind it.
+			/// The list that is used for storing the polygons that don't intersect this
+			/// plane but located behind it.
 			/// </param>
 			public void SplitPolygon(Polygon polygon,
 									 ref List<Polygon> frontCoplanarPolygons,
@@ -934,7 +969,8 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 				backCoplanarPolygons = backCoplanarPolygons ?? new List<Polygon>();
 				frontPolygons = frontPolygons ?? new List<Polygon>();
 				backPolygons = backPolygons ?? new List<Polygon>();
-				// Classify each point of the polygon and itself as well into one of the above classes.
+				// Classify each point of the polygon and itself as well into one of the
+				// above classes.
 				PlaneRelativePositionClass polygonType = 0;
 				List<PlaneRelativePositionClass> types =
 					new List<PlaneRelativePositionClass>(polygon.Vertices.Count);
@@ -968,11 +1004,12 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 						List<ConstructiveSolidGeometry.Vertex> b = new List<Vertex>();
 						for (int i = 0; i < polygon.Vertices.Count; i++)
 						{
-							// Calculate index of the next vertex of the edge. Modulus operation
-							// wraps the index to the beginning of the list, when i - is the index
-							// of the last vertex.
+							// Calculate index of the next vertex of the edge. Modulus
+							// operation wraps the index to the beginning of the list,
+							// when i - is the index of the last vertex.
 							int j = (i + 1) % polygon.Vertices.Count;
-							// Get the values that indicate position of the edge relative to this plane.
+							// Get the values that indicate position of the edge relative
+							// to this plane.
 							PlaneRelativePositionClass edgeStartType = types[i];
 							PlaneRelativePositionClass edgeEndType = types[j];
 							// Get the vertices that form the edge.
@@ -981,13 +1018,14 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 							// Process the edge.
 							if (edgeStartType != PlaneRelativePositionClass.Back)
 							{
-								// Put the start of the edge into the list of front vertices.
+								// Put the start of the edge into the list of front
+								// vertices.
 								f.Add(edgeStartVertex);
 							}
 							if (edgeStartType != PlaneRelativePositionClass.Front)
 							{
-								// Put the start of the edge into the list of back vertices. Clone
-								// it if it is on this plane.
+								// Put the start of the edge into the list of back
+								// vertices. Clone it if it is on this plane.
 								b.Add
 								(
 									(edgeStartType != PlaneRelativePositionClass.Back)
@@ -1002,14 +1040,17 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 									(this.W - this.Normal * edgeStartVertex.Position)
 									/
 									(this.Normal * (edgeEndVertex.Position - edgeStartVertex.Position));
-								// Calculate position of the splitting vertex using the parameter.
+								// Calculate position of the splitting vertex using the
+								// parameter.
 								Vertex splittingVertex =
 									edgeStartVertex.Interpolate(edgeEndVertex, positionParameter);
-								// Put it into front vertices and its clone into back vertices.
+								// Put it into front vertices and its clone into back
+								// vertices.
 								f.Add(splittingVertex);
 								b.Add(splittingVertex.Clone);
 							}
-							// Create new polygons from front and back vertices if they have enough.
+							// Create new polygons from front and back vertices if they
+							// have enough.
 							if (f.Count >= 3)
 							{
 								frontPolygons.Add(new Polygon(f.ToArray(), polygon.Shared));
@@ -1025,8 +1066,8 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 				}
 			}
 			/// <summary>
-			/// Enumeration of classes points and polygons can be classified into when determining
-			/// their position relative to the plane.
+			/// Enumeration of classes points and polygons can be classified into when
+			/// determining their position relative to the plane.
 			/// </summary>
 			[Flags]
 			public enum PlaneRelativePositionClass
@@ -1036,13 +1077,15 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 				/// </summary>
 				Coplanar = 0,
 				/// <summary>
-				/// Object does not intersect the plane and vector that describes the shortest
-				/// distance between the object and a plane is opposite to plane's normal.
+				/// Object does not intersect the plane and vector that describes the
+				/// shortest distance between the object and a plane is opposite to
+				/// plane's normal.
 				/// </summary>
 				Front = 1,
 				/// <summary>
-				/// Object does not intersect the plane and vector that describes the shortest
-				/// distance between the object and a plane is co-directional to plane's normal.
+				/// Object does not intersect the plane and vector that describes the
+				/// shortest distance between the object and a plane is co-directional to
+				/// plane's normal.
 				/// </summary>
 				Back = 2,
 				/// <summary>
@@ -1088,8 +1131,8 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 
 					int frontPolycount;
 					int backPolycount;
-					// Initialize lists of polygons from branches, so we can minimize memory
-					// allocations, since we will have exact capacity immediately.
+					// Initialize lists of polygons from branches, so we can minimize
+					// memory allocations, since we will have exact capacity immediately.
 					if (this.Front != null)
 					{
 						frontPolygons = this.Front.AllPolygons;
@@ -1141,7 +1184,9 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 			/// <summary>
 			/// Builds this <see cref="Node"/> from the list of polygons.
 			/// </summary>
-			/// <param name="polygons">A list of polygons to build the new node from.</param>
+			/// <param name="polygons">
+			/// A list of polygons to build the new node from.
+			/// </param>
 			public Node(List<Polygon> polygons)
 			{
 				this.Plane = null;
@@ -1154,14 +1199,18 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 				}
 			}
 			/// <summary>
-			/// Builds a part of BSP tree that has this node at root from the list of polygons.
+			/// Builds a part of BSP tree that has this node at root from the list of
+			/// polygons.
 			/// </summary>
 			/// <remarks>
-			/// When called on an existing tree, the new polygons are filtered down to the bottom of
-			/// the tree and become new nodes there. Each set of polygons is partitioned using the
-			/// first polygon (no heuristic is used to pick a good split).
+			/// When called on an existing tree, the new polygons are filtered down to the
+			/// bottom of the tree and become new nodes there. Each set of polygons is
+			/// partitioned using the first polygon (no heuristic is used to pick a good
+			/// split).
 			/// </remarks>
-			/// <param name="polygons">A list of polygons to build the BSP tree from.</param>
+			/// <param name="polygons">
+			/// A list of polygons to build the BSP tree from.
+			/// </param>
 			public void Build(List<Polygon> polygons)
 			{
 				if (polygons == null || polygons.Count == 0)
@@ -1181,7 +1230,8 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 					this.Plane.SplitPolygon
 					(
 						polygons[i],
-						// Polys that are on the same plane as this node end up in the node.
+						// Polys that are on the same plane as this node end up in the
+						// node.
 						ref this.Polygons, ref this.Polygons,
 						// These will form front and back branches resectively.
 						ref frontPolygons, ref backPolygons
@@ -1257,8 +1307,8 @@ namespace CryEngine.Mathematics.Geometry.Meshes.Solids
 				{
 					front = this.Front.ClipPolygons(front);
 				}
-				// If this node has nothing behind it in the tree, then whatever is behind it in the
-				// list should be discarded.
+				// If this node has nothing behind it in the tree, then whatever is behind
+				// it in the list should be discarded.
 				if (this.Back != null)
 				{
 					front.AddRange(this.Back.ClipPolygons(back));

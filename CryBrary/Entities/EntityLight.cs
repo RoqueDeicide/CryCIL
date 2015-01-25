@@ -66,11 +66,13 @@ namespace CryEngine.Entities
 		/// </summary>
 		public float CoronaIntensity;
 		/// <summary>
-		/// Value that defines how size of the light corona changes with distance from viewer.
+		/// Value that defines how size of the light corona changes with distance from
+		/// viewer.
 		/// </summary>
 		public float CoronaDistanceSizeFactor;
 		/// <summary>
-		/// Value that defines how intensity of the light corona changes with distance from viewer.
+		/// Value that defines how intensity of the light corona changes with distance
+		/// from viewer.
 		/// </summary>
 		public float CoronaDistanceIntensityFactor;
 		/// <summary>

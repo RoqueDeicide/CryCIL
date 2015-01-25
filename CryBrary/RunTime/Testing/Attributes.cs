@@ -28,8 +28,8 @@ namespace CryEngine.RunTime.Testing
 	}
 
 	/// <summary>
-	/// Indicates that a method should be run as a test. Requires that the method belong to a class
-	/// decorated with a TestCollectionAttribute.
+	/// Indicates that a method should be run as a test. Requires that the method belong
+	/// to a class decorated with a TestCollectionAttribute.
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Method)]
 	public sealed class TestAttribute : Attribute
@@ -54,8 +54,8 @@ namespace CryEngine.RunTime.Testing
 	}
 
 	/// <summary>
-	/// Indicates that a test should be ignored. Ignored tests will not be reported as a success;
-	/// they will be reported as ignored.
+	/// Indicates that a test should be ignored. Ignored tests will not be reported as a
+	/// success; they will be reported as ignored.
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Method)]
 	public sealed class IgnoreTestAttribute : Attribute { }

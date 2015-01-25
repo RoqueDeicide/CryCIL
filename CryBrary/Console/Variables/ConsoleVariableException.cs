@@ -17,8 +17,8 @@ namespace CryEngine.Console.Variables
 		{
 		}
 		/// <summary>
-		/// Creates a new instance of <see cref="ConsoleVariableException"/> class with specified
-		/// message.
+		/// Creates a new instance of <see cref="ConsoleVariableException"/> class with
+		/// specified message.
 		/// </summary>
 		/// <param name="message">Message to supply with exception.</param>
 		public ConsoleVariableException(string message)
@@ -26,8 +26,8 @@ namespace CryEngine.Console.Variables
 		{
 		}
 		/// <summary>
-		/// Creates a new instance of <see cref="ConsoleVariableException"/> class with specified
-		/// message and exception object that caused new one to be created.
+		/// Creates a new instance of <see cref="ConsoleVariableException"/> class with
+		/// specified message and exception object that caused new one to be created.
 		/// </summary>
 		/// <param name="message">Message to supply with exception.</param>
 		/// <param name="inner">  Exception that caused a new one to be created.</param>
@@ -36,8 +36,8 @@ namespace CryEngine.Console.Variables
 		{
 		}
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ConsoleVariableException"/> class with
-		/// serialized data.
+		/// Initializes a new instance of the <see cref="ConsoleVariableException"/> class
+		/// with serialized data.
 		/// </summary>
 		/// <param name="info">   
 		/// The object that holds the serialized object data.

@@ -43,6 +43,7 @@ namespace CryEngine.RunTime.Testing
 			FormHelper.RegisterInternal<ReportForm>();
 		}
 
-		[UsedImplicitly] private static ConsoleTestListener listener = new ConsoleTestListener();
+		[UsedImplicitly]
+		private static ConsoleTestListener listener = new ConsoleTestListener();
 	}
 }

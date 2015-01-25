@@ -18,7 +18,7 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Creates a wrapper for an entity.
 		/// </summary>
-		/// <param name="id">Identifier of the entity.</param>
+		/// <param name="id"> Identifier of the entity.</param>
 		/// <param name="ptr">Entity's handle.</param>
 		public NativeEntity(EntityId id, IntPtr ptr)
 		{

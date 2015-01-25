@@ -7,7 +7,7 @@ namespace CryCil.Geometry
 {
 	/// <summary>
 	/// Quaternion is a combination of 4 numbers (sometimes referred to as Euler
-	/// parameters), that can be used to represent rotation and orientation.
+	/// parameters) , that can be used to represent rotation and orientation.
 	/// </summary>
 	/// <remarks>
 	/// Quaternions are, basically, 3x3 matrices in a more compact form.
@@ -261,11 +261,13 @@ namespace CryCil.Geometry
 		/// <summary>
 		/// Creates new instance of type <see cref="Quaternion"/>.
 		/// </summary>
-		/// <param name="originalDirection"> Normalized
-		/// <see cref="Vector3"/> that represents direction to start rotation from.
+		/// <param name="originalDirection">
+		/// Normalized <see cref="Vector3"/> that represents direction to start rotation
+		/// from.
 		/// </param>
-		/// <param name="desiredDirection">  Normalized
-		/// <see cref="Vector3"/> that represents direction to finish rotation at.
+		/// <param name="desiredDirection"> 
+		/// Normalized <see cref="Vector3"/> that represents direction to finish rotation
+		/// at.
 		/// </param>
 		public Quaternion
 		(
@@ -361,13 +363,17 @@ namespace CryCil.Geometry
 		/// <summary>
 		/// Creates new instance of type <see cref="Quaternion"/>.
 		/// </summary>
-		/// <param name="matrix">Matrix that represents rotation that needs to be packed into the quaternion.</param>
+		/// <param name="matrix">
+		/// Matrix that represents rotation that needs to be packed into the quaternion.
+		/// </param>
 		public Quaternion(Matrix34 matrix)
 			: this(new Matrix33(matrix)) { }
 		/// <summary>
 		/// Creates new instance of type <see cref="Quaternion"/>.
 		/// </summary>
-		/// <param name="matrix">Matrix that represents rotation that needs to be packed into the quaternion.</param>
+		/// <param name="matrix">
+		/// Matrix that represents rotation that needs to be packed into the quaternion.
+		/// </param>
 		public Quaternion(Matrix44 matrix)
 			: this(new Matrix33(matrix)) { }
 		#endregion

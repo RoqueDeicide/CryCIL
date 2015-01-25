@@ -46,8 +46,8 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Gets the unique identifier of this surface type. Maximum of 65535 simultaneous surface
-		/// types can exist.
+		/// Gets the unique identifier of this surface type. Maximum of 65535 simultaneous
+		/// surface types can exist.
 		/// </summary>
 		public Int32 Id { get { return System.Convert.ToInt32(MaterialInterop.GetSurfaceTypeId(Handle)); } }
 

@@ -20,7 +20,7 @@ namespace CryCil.RunTime.Compilation.Projects
 		/// </summary>
 		public override CodeDomProvider Compiler
 		{
-			get { return new CSharpCodeProvider();}
+			get { return new CSharpCodeProvider(); }
 		}
 		/// <inheritdoc/>
 		public override CodeDomProvider CreateCompiler(IDictionary<string, string> options)
@@ -37,6 +37,6 @@ namespace CryCil.RunTime.Compilation.Projects
 			string projectName,
 			[PathReference] string projectFile
 		)
-		: base(projectName, projectFile) { }
+			: base(projectName, projectFile) { }
 	}
 }

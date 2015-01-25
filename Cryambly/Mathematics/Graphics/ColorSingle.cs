@@ -28,7 +28,8 @@ namespace CryCil.Graphics
 		#endregion
 		#region Construction
 		/// <summary>
-		/// Constructs a new color object specifying the red, green, blue and alpha values.
+		/// Constructs a new color object specifying the red, green, blue and alpha
+		/// values.
 		/// </summary>
 		/// <param name="red">  </param>
 		/// <param name="green"></param>
@@ -43,7 +44,8 @@ namespace CryCil.Graphics
 			this.A = alpha;
 		}
 		/// <summary>
-		/// Constructs a new color object specifying the red, green, blue and alpha values.
+		/// Constructs a new color object specifying the red, green, blue and alpha
+		/// values.
 		/// </summary>
 		/// <param name="rgb"></param>
 		/// <param name="a">  </param>
@@ -59,7 +61,6 @@ namespace CryCil.Graphics
 
 		#region Overrides
 		/// <summary>
-		/// 
 		/// </summary>
 		/// <param name="obj"></param>
 		/// <returns></returns>
@@ -71,7 +72,6 @@ namespace CryCil.Graphics
 			return false;
 		}
 		/// <summary>
-		/// 
 		/// </summary>
 		/// <returns></returns>
 		public override string ToString()
@@ -79,7 +79,6 @@ namespace CryCil.Graphics
 			return String.Format("R {0} G {1} B {2} A {3}", this.R, this.G, this.B, this.A);
 		}
 		/// <summary>
-		/// 
 		/// </summary>
 		/// <returns></returns>
 		public override int GetHashCode()

@@ -94,7 +94,8 @@ namespace CryEngine.Logic.Flowgraph
 		public NodePortType Type { get; set; }
 		/// <summary>
 		/// Value that went through the port, null, if port is typeless (
-		/// <see cref="FlowNodePortActivationEventArgs.Type"/> equals <see cref="NodePortType.Void"/>).
+		/// <see cref="FlowNodePortActivationEventArgs.Type"/> equals
+		/// <see cref="NodePortType.Void"/>).
 		/// </summary>
 		public object Value { get; set; }
 	}

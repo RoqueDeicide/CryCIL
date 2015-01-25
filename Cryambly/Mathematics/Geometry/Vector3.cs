@@ -161,14 +161,16 @@ namespace CryCil.Geometry
 		/// <summary>
 		/// Gets simplest vector that is perpendicular to this one.
 		/// </summary>
-		/// <exception cref="InvalidOperationException">Cannot get vector that is orthogonal to zero.</exception>
+		/// <exception cref="InvalidOperationException">
+		/// Cannot get vector that is orthogonal to zero.
+		/// </exception>
 		public Vector3 OrthogonalSafe
 		{
 			get
 			{
-// ReSharper disable CompareOfFloatsByEqualityOperator
+				// ReSharper disable CompareOfFloatsByEqualityOperator
 				if (this.X == 0 && this.Y == 0 && this.Z == 0)
-// ReSharper restore CompareOfFloatsByEqualityOperator
+				// ReSharper restore CompareOfFloatsByEqualityOperator
 				{
 					throw new InvalidOperationException("Cannot get vector that is orthogonal to zero.");
 				}
@@ -192,7 +194,8 @@ namespace CryCil.Geometry
 			}
 		}
 		/// <summary>
-		/// Gets simplest vector that is perpendicular to this one if this one is not zero.
+		/// Gets simplest vector that is perpendicular to this one if this one is not
+		/// zero.
 		/// </summary>
 		public Vector3? SelectiveOrthogonal
 		{

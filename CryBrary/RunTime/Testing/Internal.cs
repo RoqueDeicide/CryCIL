@@ -37,8 +37,8 @@ namespace CryEngine.RunTime.Testing
 			}
 			catch (Exception ex)
 			{
-				// The main exception will always be a TargetInvocationException because we invoke
-				// via reflection
+				// The main exception will always be a TargetInvocationException because
+				// we invoke via reflection
 				var inner = ex.InnerException;
 				var trace = new StackTrace(inner, true);
 

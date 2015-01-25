@@ -3,13 +3,14 @@
 namespace CryEngine.Logic.Entities
 {
 	/// <summary>
-	/// Entity ID's store references to game entities as unsigned integers. This class wraps that
-	/// functionality for CLS compliance.
+	/// Entity ID's store references to game entities as unsigned integers. This class
+	/// wraps that functionality for CLS compliance.
 	/// </summary>
 	public struct EntityId
 	{
 		internal uint Value;
-		/// <summary></summary>
+		/// <summary>
+		/// </summary>
 		/// <param name="id"></param>
 		[CLSCompliant(false)]
 		public EntityId(uint id)
@@ -17,7 +18,8 @@ namespace CryEngine.Logic.Entities
 			this.Value = id;
 		}
 		#region Overrides
-		/// <summary></summary>
+		/// <summary>
+		/// </summary>
 		/// <param name="obj"></param>
 		/// <returns></returns>
 		public override bool Equals(object obj)
@@ -31,7 +33,8 @@ namespace CryEngine.Logic.Entities
 
 			return false;
 		}
-		/// <summary></summary>
+		/// <summary>
+		/// </summary>
 		/// <returns></returns>
 		public override int GetHashCode()
 		{
@@ -39,7 +42,8 @@ namespace CryEngine.Logic.Entities
 			return this.Value.GetHashCode();
 			// ReSharper restore NonReadonlyFieldInGetHashCode
 		}
-		/// <summary></summary>
+		/// <summary>
+		/// </summary>
 		/// <returns></returns>
 		public override string ToString()
 		{
@@ -47,7 +51,8 @@ namespace CryEngine.Logic.Entities
 		}
 		#endregion
 		#region Operators
-		/// <summary></summary>
+		/// <summary>
+		/// </summary>
 		/// <param name="entId1"></param>
 		/// <param name="entId2"></param>
 		/// <returns></returns>
@@ -55,7 +60,8 @@ namespace CryEngine.Logic.Entities
 		{
 			return entId1.Value == entId2.Value;
 		}
-		/// <summary></summary>
+		/// <summary>
+		/// </summary>
 		/// <param name="entId1"></param>
 		/// <param name="entId2"></param>
 		/// <returns></returns>
@@ -63,7 +69,8 @@ namespace CryEngine.Logic.Entities
 		{
 			return entId1.Value != entId2.Value;
 		}
-		/// <summary></summary>
+		/// <summary>
+		/// </summary>
 		/// <param name="value"></param>
 		/// <returns></returns>
 		[CLSCompliant(false)]
@@ -71,21 +78,24 @@ namespace CryEngine.Logic.Entities
 		{
 			return new EntityId(value);
 		}
-		/// <summary></summary>
+		/// <summary>
+		/// </summary>
 		/// <param name="value"></param>
 		/// <returns></returns>
 		public static implicit operator EntityId(int value)
 		{
 			return new EntityId((uint)value);
 		}
-		/// <summary></summary>
+		/// <summary>
+		/// </summary>
 		/// <param name="value"></param>
 		/// <returns></returns>
 		public static implicit operator int(EntityId value)
 		{
 			return System.Convert.ToInt32(value.Value);
 		}
-		/// <summary></summary>
+		/// <summary>
+		/// </summary>
 		/// <param name="value"></param>
 		/// <returns></returns>
 		[CLSCompliant(false)]

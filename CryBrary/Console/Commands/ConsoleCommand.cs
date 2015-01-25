@@ -12,8 +12,10 @@ namespace CryEngine.Console.Commands
 		/// <summary>
 		/// Executes a string in the console
 		/// </summary>
-		/// <param name="command">console command e.g. "map testy" - no leading slash</param>
-		/// <param name="silent">
+		/// <param name="command">
+		/// console command e.g. "map testy" - no leading slash
+		/// </param>
+		/// <param name="silent"> 
 		/// suppresses log in error case and logging the command to the console
 		/// </param>
 		public static void Execute(string command, bool silent = false)
@@ -24,14 +26,14 @@ namespace CryEngine.Console.Commands
 		/// <summary>
 		/// Register a new console command.
 		/// </summary>
-		/// <param name="name">Command name.</param>
-		/// <param name="func">
+		/// <param name="name">   Command name.</param>
+		/// <param name="func">   
 		/// Delegate to the console command function to be called when command is invoked.
 		/// </param>
 		/// <param name="comment">
 		/// Help string, will be displayed when typing in console "command ?".
 		/// </param>
-		/// <param name="flags">Bitfield consist of VF_ flags (e.g. VF_CHEAT)</param>
+		/// <param name="flags">  Bitfield consist of VF_ flags (e.g. VF_CHEAT)</param>
 		public static void Register(string name, ConsoleCommandDelegate func, string comment = "", CVarFlags flags = CVarFlags.None, bool overwrite = false)
 		{
 			bool containsKey = Commands.ContainsKey(name);

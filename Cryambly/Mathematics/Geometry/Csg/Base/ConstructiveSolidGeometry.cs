@@ -1470,7 +1470,7 @@ namespace CryCil.Geometry.Csg.Base
 			/// When called on an existing tree, the new polygons are filtered down to the
 			/// bottom of the tree and become new nodes there. Each set of polygons is
 			/// partitioned using the first polygon (no heuristic is used to pick a good
-			/// split).
+			/// split) .
 			/// </remarks>
 			/// <param name="polygons">
 			/// A list of polygons to build the BSP tree from.

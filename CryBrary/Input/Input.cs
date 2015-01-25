@@ -69,8 +69,8 @@ namespace CryEngine
 		{
 			// ReSharper disable PossibleUnintendedReferenceComparison
 			Delegate[] invocationList = Input.KeyEvents.GetInvocationList();
-			invocationList.Where(x=>x.Target == instance).ForEach(x=>KeyEvents -= (KeyEventDelegate)x);
-			
+			invocationList.Where(x => x.Target == instance).ForEach(x => KeyEvents -= (KeyEventDelegate)x);
+
 			invocationList = Input.MouseEvents.GetInvocationList();
 			invocationList.Where(x => x.Target == instance).ForEach(x => MouseEvents -= (MouseEventDelegate)x);
 

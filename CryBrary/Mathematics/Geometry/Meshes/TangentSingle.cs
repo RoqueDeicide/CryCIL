@@ -8,10 +8,10 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 	/// Encapsulates data stored for vertex that is used in tangent-space normal mapping.
 	/// </summary>
 	/// <remarks>
-	/// Tangent-space normal mapping is alternative to object-, world-space mapping, that is
-	/// independent from underlying geometry.
-	///
-	/// This type of tangent uses <see cref="Single" /> objects to store coordinates.
+	/// Tangent-space normal mapping is alternative to object-, world-space mapping, that
+	/// is independent from underlying geometry.
+	/// 
+	/// This type of tangent uses <see cref="Single"/> objects to store coordinates.
 	/// </remarks>
 	[StructLayout(LayoutKind.Explicit)]
 	public unsafe struct TangentSingle : ITangent
@@ -33,7 +33,8 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		[FieldOffset(16)]
 		public Vector4 Binormal;
 		/// <summary>
-		/// Number of bytes that are occupied by a single instance of type <see cref="TangentSingle" />.
+		/// Number of bytes that are occupied by a single instance of type
+		/// <see cref="TangentSingle"/>.
 		/// </summary>
 		public static readonly int ByteCount = Marshal.SizeOf(typeof(TangentSingle));
 		/// <summary>
@@ -46,10 +47,10 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// <summary>
 		/// Indicates whether this tangent space normal is equal to another.
 		/// </summary>
-		/// <param name="other"> Another tangent. </param>
+		/// <param name="other">Another tangent.</param>
 		/// <returns>
-		/// True, if another normal uses <see cref="Single" /> type for coordinates and is equal to
-		/// this one.
+		/// True, if another normal uses <see cref="Single"/> type for coordinates and is
+		/// equal to this one.
 		/// </returns>
 		public bool Equals(ITangent other)
 		{
@@ -59,8 +60,8 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		}
 	}
 	/// <summary>
-	/// Represents a tangent space normal with tangent and binormal represented by a single 4
-	/// dimensional vector.
+	/// Represents a tangent space normal with tangent and binormal represented by a
+	/// single 4 dimensional vector.
 	/// </summary>
 	[StructLayout(LayoutKind.Explicit)]
 	public unsafe struct QTangentSingle : IQTangent
@@ -83,10 +84,10 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// <summary>
 		/// Indicates whether this tangent space normal is equal to another.
 		/// </summary>
-		/// <param name="other"> Another tangent. </param>
+		/// <param name="other">Another tangent.</param>
 		/// <returns>
-		/// True, if another normal uses <see cref="Single" /> type for coordinates and is equal to
-		/// this one.
+		/// True, if another normal uses <see cref="Single"/> type for coordinates and is
+		/// equal to this one.
 		/// </returns>
 		public bool Equals(IQTangent other)
 		{

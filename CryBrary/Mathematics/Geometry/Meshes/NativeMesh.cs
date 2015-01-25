@@ -10,10 +10,12 @@ using CryEngine.StaticObjects;
 namespace CryEngine.Mathematics.Geometry.Meshes
 {
 	/// <summary>
-	/// Represents a wrapper object that allows to edit CryEngine meshes located in native memory.
+	/// Represents a wrapper object that allows to edit CryEngine meshes located in native
+	/// memory.
 	/// </summary>
 	/// <remarks>
-	/// This particular class uses instance of CMesh class in native memory for its operations.
+	/// This particular class uses instance of CMesh class in native memory for its
+	/// operations.
 	/// </remarks>
 	public class NativeMesh : Mesh
 	{
@@ -44,7 +46,9 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// <summary>
 		/// Gets an object that provides access to positions of vertices in native memory.
 		/// </summary>
-		/// <remarks>When setting data is copied from 'value' to this collection.</remarks>
+		/// <remarks>
+		/// When setting data is copied from 'value' to this collection.
+		/// </remarks>
 		public override IMeshDetailsCollection<Vector3> Positions
 		{
 			get { return this.positions; }
@@ -53,7 +57,9 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// <summary>
 		/// Gets an object that provides access to faces in native memory.
 		/// </summary>
-		/// <remarks>When setting data is copied from 'value' to this collection.</remarks>
+		/// <remarks>
+		/// When setting data is copied from 'value' to this collection.
+		/// </remarks>
 		public override IMeshDetailsCollection<IndexedTriangleFace> Faces
 		{
 			get { return this.faces; }
@@ -62,34 +68,45 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// <summary>
 		/// Gets an object that provides access to indices in native memory.
 		/// </summary>
-		/// <remarks>When setting data is copied from 'value' to this collection.</remarks>
+		/// <remarks>
+		/// When setting data is copied from 'value' to this collection.
+		/// </remarks>
 		public override IMeshDetailsCollection<uint> Indices
 		{
 			get { return this.indices; }
 			set { this.indices.CopyFrom(value); }
 		}
 		/// <summary>
-		/// Gets an object that provides access to positions of vertices on UV map in native memory.
+		/// Gets an object that provides access to positions of vertices on UV map in
+		/// native memory.
 		/// </summary>
-		/// <remarks>When setting data is copied from 'value' to this collection.</remarks>
+		/// <remarks>
+		/// When setting data is copied from 'value' to this collection.
+		/// </remarks>
 		public override IMeshDetailsCollection<Vector2> TextureCoordinates
 		{
 			get { return this.texCoords; }
 			set { this.texCoords.CopyFrom(value); }
 		}
 		/// <summary>
-		/// Gets an object that provides access to primary colors of vertices in native memory.
+		/// Gets an object that provides access to primary colors of vertices in native
+		/// memory.
 		/// </summary>
-		/// <remarks>When setting data is copied from 'value' to this collection.</remarks>
+		/// <remarks>
+		/// When setting data is copied from 'value' to this collection.
+		/// </remarks>
 		public override IMeshDetailsCollection<Color32> PrimaryColors
 		{
 			get { return this.colors0; }
 			set { this.colors0.CopyFrom(value); }
 		}
 		/// <summary>
-		/// Gets an object that provides access to secondary colors of vertices in native memory.
+		/// Gets an object that provides access to secondary colors of vertices in native
+		/// memory.
 		/// </summary>
-		/// <remarks>When setting data is copied from 'value' to this collection.</remarks>
+		/// <remarks>
+		/// When setting data is copied from 'value' to this collection.
+		/// </remarks>
 		public override IMeshDetailsCollection<Color32> SecondaryColors
 		{
 			get { return this.colors1; }
@@ -98,25 +115,33 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// <summary>
 		/// Gets an object that provides access to normals of vertices in native memory.
 		/// </summary>
-		/// <remarks>When setting data is copied from 'value' to this collection.</remarks>
+		/// <remarks>
+		/// When setting data is copied from 'value' to this collection.
+		/// </remarks>
 		public override IMeshDetailsCollection<Vector3> Normals
 		{
 			get { return this.normals; }
 			set { this.normals.CopyFrom(value); }
 		}
 		/// <summary>
-		/// Gets an object that provides access to tangent space normals of vertices in native memory.
+		/// Gets an object that provides access to tangent space normals of vertices in
+		/// native memory.
 		/// </summary>
-		/// <remarks>When setting data is copied from 'value' to this collection.</remarks>
+		/// <remarks>
+		/// When setting data is copied from 'value' to this collection.
+		/// </remarks>
 		public override IMeshDetailsCollection<ITangent> Tangents
 		{
 			get { return this.tangents; }
 			set { this.tangents.CopyFrom(value); }
 		}
 		/// <summary>
-		/// Gets an object that provides access to tangent space normals of vertices in native memory.
+		/// Gets an object that provides access to tangent space normals of vertices in
+		/// native memory.
 		/// </summary>
-		/// <remarks>When setting data is copied from 'value' to this collection.</remarks>
+		/// <remarks>
+		/// When setting data is copied from 'value' to this collection.
+		/// </remarks>
 		public override IMeshDetailsCollection<IQTangent> QTangents
 		{
 			get { return this.qTangents; }
@@ -166,15 +191,16 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// Validates this mesh.
 		/// </summary>
 		/// <remarks>
-		/// See <see cref="Validate(bool, List{string}, List{string})"/> for the list of possible problems.
+		/// See <see cref="Validate(bool, List{string}, List{string})"/> for the list of
+		/// possible problems.
 		/// </remarks>
 		/// <param name="errors">  
 		/// A list that will contain a list of problems that will prevent calling
 		/// <see cref="Export"/> method from being successful.
 		/// </param>
 		/// <param name="warnings">
-		/// A list that will contain a list of problems that may cause problems but won't prevent
-		/// CryEngine from recognizing this mesh.
+		/// A list that will contain a list of problems that may cause problems but won't
+		/// prevent CryEngine from recognizing this mesh.
 		/// </param>
 		/// <returns>True if a list of errors has no entries, otherwise false.</returns>
 		public override bool Validate(List<string> errors = null, List<string> warnings = null)
@@ -186,24 +212,25 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// </summary>
 		/// <remarks>
 		/// Possible errors:
-		///
+		/// 
 		/// Error 1)
-		///
+		/// 
 		/// Possible warnings:
-		///
+		/// 
 		/// Warning 1)
 		/// </remarks>
-		/// <param name="cache">
-		/// Indicates whether all collections must be transferred to Mono memory before validation.
-		/// If true, can increase performance but along with memory consumption.
+		/// <param name="cache">   
+		/// Indicates whether all collections must be transferred to Mono memory before
+		/// validation. If true, can increase performance but along with memory
+		/// consumption.
 		/// </param>
-		/// <param name="errors">
-		/// A list that will contain a list of problems that will prevent calling <see cref="Export"
-		/// /> method from being successful.
+		/// <param name="errors">  
+		/// A list that will contain a list of problems that will prevent calling
+		/// <see cref="Export"/> method from being successful.
 		/// </param>
 		/// <param name="warnings">
-		/// A list that will contain a list of problems that may cause problems but won't prevent
-		/// CryEngine from recognizing this mesh.
+		/// A list that will contain a list of problems that may cause problems but won't
+		/// prevent CryEngine from recognizing this mesh.
 		/// </param>
 		/// <returns>True if a list of errors has no entries, otherwise false.</returns>
 		public bool Validate(bool cache = false, List<string> errors = null, List<string> warnings = null)
@@ -227,11 +254,11 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 			{
 				errors.Add("No valid faces, despite existence of vertices.");
 			}
-			// Currently all meshes use UInt16 for indices, and it is not possible to change it
-			// without access to engine source. CryMono uses UInt32 for indices, so, if there are
-			// too many vertices, all extras will be discarded along with faces during export. When
-			// that happens, a lot of data movements will have to happen, so it's best to avoid
-			// breaching a limit before exporting.
+			// Currently all meshes use UInt16 for indices, and it is not possible to
+			// change it without access to engine source. CryMono uses UInt32 for indices,
+			// so, if there are too many vertices, all extras will be discarded along with
+			// faces during export. When that happens, a lot of data movements will have
+			// to happen, so it's best to avoid breaching a limit before exporting.
 			if (Platform.MeshIndexIs16Bit && this.Positions.Count > UInt16.MaxValue)
 			{
 				warnings.Add("Too many vertices. Maximal number of vertices is " +

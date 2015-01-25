@@ -8,7 +8,7 @@
 		private int _framesWaited;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="FrameDelayJob" /> class.
+		/// Initializes a new instance of the <see cref="FrameDelayJob"/> class.
 		/// </summary>
 		/// <param name="numberOfFramesToWait"></param>
 		public FrameDelayJob(int numberOfFramesToWait)

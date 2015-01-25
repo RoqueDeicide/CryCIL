@@ -28,8 +28,8 @@ namespace CryEngine.Logic.Flowgraph
 			}
 			NativeFlowNodeConfiguration* config =
 				(NativeFlowNodeConfiguration*)configPointer.ToPointer();
-			// I'm not too sure on how the memory is supposed to be freed, I guess CryEngine can
-			// handle that.
+			// I'm not too sure on how the memory is supposed to be freed, I guess
+			// CryEngine can handle that.
 			config->Description = Marshal.StringToHGlobalUni(this.Description);
 			// Write the flags.
 			config->Flags |= (uint)this.Flags;
@@ -107,7 +107,8 @@ namespace CryEngine.Logic.Flowgraph
 		/// </summary>
 		public IntPtr Description;
 		/// <summary>
-		/// Null-terminated string that represents a list of enumeration values of the port.
+		/// Null-terminated string that represents a list of enumeration values of the
+		/// port.
 		/// </summary>
 		public IntPtr EnumConfig;
 		/// <summary>
@@ -117,10 +118,10 @@ namespace CryEngine.Logic.Flowgraph
 		/// <summary>
 		/// Creates new instance of this type.
 		/// </summary>
-		/// <param name="name">Name of the port.</param>
-		/// <param name="displayName">Display name of this port.</param>
-		/// <param name="description">Description of this port.</param>
-		/// <param name="enumConfig">Enumeration config.</param>
+		/// <param name="name">        Name of the port.</param>
+		/// <param name="displayName"> Display name of this port.</param>
+		/// <param name="description"> Description of this port.</param>
+		/// <param name="enumConfig">  Enumeration config.</param>
 		/// <param name="defaultValue">Default value to use.</param>
 		public NativeInputPortConfiguration
 			(string name, string displayName, string description, string enumConfig, Native.FlowInputData defaultValue)
@@ -156,10 +157,10 @@ namespace CryEngine.Logic.Flowgraph
 		/// <summary>
 		/// Creates new instance of this type.
 		/// </summary>
-		/// <param name="name">Name of the port.</param>
+		/// <param name="name">       Name of the port.</param>
 		/// <param name="displayName">Display name of this port.</param>
 		/// <param name="description">Description of this port.</param>
-		/// <param name="typeIndex">Index of the type of this port.</param>
+		/// <param name="typeIndex">  Index of the type of this port.</param>
 		public NativeOutputPortConfiguration(string name, string displayName, string description, int typeIndex)
 		{
 			this.Name = Marshal.StringToHGlobalUni(name);

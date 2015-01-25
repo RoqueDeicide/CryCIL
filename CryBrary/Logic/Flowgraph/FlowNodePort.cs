@@ -35,7 +35,8 @@ namespace CryEngine.Logic.Flowgraph
 		/// </summary>
 		public string Description { get; set; }
 		/// <summary>
-		/// Gets or sets type of the value that is inputed into or outputted from the port.
+		/// Gets or sets type of the value that is inputed into or outputted from the
+		/// port.
 		/// </summary>
 		public abstract NodePortType Type { get; }
 		/// <summary>
@@ -60,10 +61,12 @@ namespace CryEngine.Logic.Flowgraph
 		#endregion
 		#region Interface
 		/// <summary>
-		/// When implemented in derived class, writes the configuration of the port to the relevant
-		/// array pointer to which is provided by a struct pointer.
+		/// When implemented in derived class, writes the configuration of the port to the
+		/// relevant array pointer to which is provided by a struct pointer.
 		/// </summary>
-		/// <param name="configPointer">Pointer to array of configuration structures.</param>
+		/// <param name="configPointer">
+		/// Pointer to array of configuration structures.
+		/// </param>
 		/// <param name="index">        Index of this port in the array.</param>
 		public abstract void WriteConfiguration(IntPtr configPointer, int index);
 		#endregion

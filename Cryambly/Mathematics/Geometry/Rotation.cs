@@ -71,9 +71,9 @@ namespace CryCil.Geometry
 		/// If given two vectors are collinear and opposite, the simplest vector that is
 		/// perpendicular to first vector will be chosen.
 		/// </remarks>
-		/// <param name="v1">First vector.</param>
-		/// <param name="v2">Second vector.</param>
-		/// <param name="axis">Resultant axis of rotation.</param>
+		/// <param name="v1">    First vector.</param>
+		/// <param name="v2">    Second vector.</param>
+		/// <param name="axis">  Resultant axis of rotation.</param>
 		/// <param name="cosine">Cosine of angle between two vectors.</param>
 		public static void ArcBetween2NormalizedVectors(Vector3 v1, Vector3 v2, out Vector3 axis, out float cosine)
 		{
@@ -101,8 +101,8 @@ namespace CryCil.Geometry
 		/// </remarks>
 		/// <param name="vector1">First vector.</param>
 		/// <param name="vector2">Second vector.</param>
-		/// <param name="axis">Resultant axis of rotation.</param>
-		/// <param name="cosine">Cosine of angle between two vectors.</param>
+		/// <param name="axis">   Resultant axis of rotation.</param>
+		/// <param name="cosine"> Cosine of angle between two vectors.</param>
 		public static void ArcBetween2Vectors(Vector3 vector1, Vector3 vector2, out Vector3 axis, out float cosine)
 		{
 			Vector3 v1 = vector1.Normalized;

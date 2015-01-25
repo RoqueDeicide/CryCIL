@@ -23,7 +23,9 @@ namespace CryEngine.Logic.Flowgraph
 		/// <summary>
 		/// Writes configuration of this port to native memory.
 		/// </summary>
-		/// <param name="configPointer">Pointer to array that will contain the configuration.</param>
+		/// <param name="configPointer">
+		/// Pointer to array that will contain the configuration.
+		/// </param>
 		/// <param name="index">        Index of this port.</param>
 		public override unsafe void WriteConfiguration(IntPtr configPointer, int index)
 		{
@@ -233,7 +235,9 @@ namespace CryEngine.Logic.Flowgraph
 		/// <summary>
 		/// Creates new instance of this part.
 		/// </summary>
-		/// <param name="handler">     Method that handles activation of this port.</param>
+		/// <param name="handler">     
+		/// Method that handles activation of this port.
+		/// </param>
 		/// <param name="defaultValue">
 		/// Default value to pass to this port if no other port is connected to it.
 		/// </param>

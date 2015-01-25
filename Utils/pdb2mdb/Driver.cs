@@ -151,12 +151,10 @@ public static class Driver
 				using (var stream = File.OpenRead(pdb))
 					Pdb2Mdb.Converter.Convert(assemblyDefinition, PdbFile.LoadFunctions(stream, true), new MonoSymbolWriter(assembly));
 			}
-// ReSharper disable EmptyGeneralCatchClause
+			// ReSharper disable EmptyGeneralCatchClause
 			catch
-// ReSharper restore EmptyGeneralCatchClause
+			// ReSharper restore EmptyGeneralCatchClause
 			{
-
-
 				//Console.LogException(ex);
 			}
 		}

@@ -10,37 +10,35 @@ namespace CryEngine.Logic.Flowgraph
 	public class FlowGraphException : Exception
 	{
 		/// <summary>
-		/// Creates a default instance of <see cref="FlowGraphException" /> class.
+		/// Creates a default instance of <see cref="FlowGraphException"/> class.
 		/// </summary>
 		public FlowGraphException()
 		{
 		}
 		/// <summary>
-		/// Creates a new instance of <see cref="FlowGraphException" /> class with specified message.
+		/// Creates a new instance of <see cref="FlowGraphException"/> class with
+		/// specified message.
 		/// </summary>
-		/// <param name="message">
-		/// Message to supply with exception.
-		/// </param>
-		public FlowGraphException(string message) : base(message)
+		/// <param name="message">Message to supply with exception.</param>
+		public FlowGraphException(string message)
+			: base(message)
 		{
 		}
 		/// <summary>
-		/// Creates a new instance of <see cref="FlowGraphException" /> class with specified
-		/// message and exception object that caused new one to be created.
+		/// Creates a new instance of <see cref="FlowGraphException"/> class with
+		/// specified message and exception object that caused new one to be created.
 		/// </summary>
-		/// <param name="message">
-		/// Message to supply with exception.
-		/// </param>
-		/// <param name="inner">
-		/// Exception that caused a new one to be created.
-		/// </param>
-		public FlowGraphException(string message, Exception inner) : base(message, inner)
+		/// <param name="message">Message to supply with exception.</param>
+		/// <param name="inner">  Exception that caused a new one to be created.</param>
+		public FlowGraphException(string message, Exception inner)
+			: base(message, inner)
 		{
 		}
 		/// <summary>
-		/// Initializes a new instance of the <see cref="FlowGraphException" /> class with serialized data.
+		/// Initializes a new instance of the <see cref="FlowGraphException"/> class with
+		/// serialized data.
 		/// </summary>
-		/// <param name="info">
+		/// <param name="info">   
 		/// The object that holds the serialized object data.
 		/// </param>
 		/// <param name="context">
@@ -48,7 +46,8 @@ namespace CryEngine.Logic.Flowgraph
 		/// </param>
 		protected FlowGraphException(
 			SerializationInfo info,
-			StreamingContext context) : base(info, context)
+			StreamingContext context)
+			: base(info, context)
 		{
 		}
 	}

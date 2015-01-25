@@ -88,7 +88,8 @@ namespace CryCil.RunTime.Compilation
 					}
 				}
 			}
-			// Creates a dictionary where keys are names of projects that were a failure to compile, and values a reasons, why compilation was a failure.
+			// Creates a dictionary where keys are names of projects that were a failure
+			// to compile, and values a reasons, why compilation was a failure.
 			Dictionary<string, string> failures = new Dictionary<string, string>(buildList.Count);
 			List<Assembly> compiledAssemblies = new List<Assembly>(buildList.Count);
 			while (buildList.Count != 0)

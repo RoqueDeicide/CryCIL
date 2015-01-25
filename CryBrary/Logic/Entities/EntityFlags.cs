@@ -19,12 +19,11 @@ namespace CryEngine.Logic.Entities
 		/// <summary>
 		/// If set, indicates that this entity casts a shadow.
 		/// </summary>
-		/// <remarks>
-		/// This flag is persistent and can be set from the Editor.
-		/// </remarks>
+		/// <remarks>This flag is persistent and can be set from the Editor.</remarks>
 		CastShadow = 1 << 1,
 		/// <summary>
-		/// If set, indicates that this entity cannot be removed until this flags is cleared.
+		/// If set, indicates that this entity cannot be removed until this flags is
+		/// cleared.
 		/// </summary>
 		/// <remarks>
 		/// <para>Unremovable entities are immediately respawned when reloading.</para>
@@ -34,16 +33,12 @@ namespace CryEngine.Logic.Entities
 		/// <summary>
 		/// Unknown.
 		/// </summary>
-		/// <remarks>
-		/// This flag is persistent and can be set from the Editor.
-		/// </remarks>
+		/// <remarks>This flag is persistent and can be set from the Editor.</remarks>
 		GoodOccluder = 1 << 3,
 		/// <summary>
 		/// Unknown.
 		/// </summary>
-		/// <remarks>
-		/// This flag is persistent and can be set from the Editor.
-		/// </remarks>
+		/// <remarks>This flag is persistent and can be set from the Editor.</remarks>
 		NoDecalnodeDecals = 1 << 4,
 		WriteOnly = 1 << 5,
 		NotRegisterInSectors = 1 << 6,
@@ -61,7 +56,7 @@ namespace CryEngine.Logic.Entities
 		SendRenderEvent = 1 << 18,   // When set entity will send ENTITY_EVENT_RENDER every time its rendered.
 		NoProximity = 1 << 19,   // Entity will not be registered in the partition grid and can not be found by proximity queries.
 		OnRadar = 1 << 20,   // Entity will be relevant for radar.
-		UpdateHidden = 1 << 21,   // Entity will be update even when hidden.  
+		UpdateHidden = 1 << 21,   // Entity will be update even when hidden.
 		NeverNetworkStatic = 1 << 22,		// Entity should never be considered a static entity by the network system.
 		IgnorePhysicsUpdate = 1 << 23,		// Used by Editor only, (don't set.
 		Spawned = 1 << 24,		// Entity was spawned dynamically without a class.

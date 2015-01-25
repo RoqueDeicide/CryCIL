@@ -46,8 +46,8 @@ namespace CryEngine.Entities
 		}
 
 		/// <summary>
-		/// Set to detect movement within an area. See OnEnterArea, OnMoveInsideArea, OnLeaveArea,
-		/// OnEnterNearArea, OnLeaveNearArea and OnMoveNearArea
+		/// Set to detect movement within an area. See OnEnterArea, OnMoveInsideArea,
+		/// OnLeaveArea, OnEnterNearArea, OnLeaveNearArea and OnMoveNearArea
 		/// </summary>
 		public BoundingBox TriggerBounds
 		{
@@ -56,8 +56,8 @@ namespace CryEngine.Entities
 		}
 
 		/// <summary>
-		/// Invalidate the TriggerBounds, so it gets recalculated and catches things which are
-		/// already inside when it gets enabled.
+		/// Invalidate the TriggerBounds, so it gets recalculated and catches things which
+		/// are already inside when it gets enabled.
 		/// </summary>
 		public void InvalidateTrigger()
 		{
@@ -67,8 +67,8 @@ namespace CryEngine.Entities
 		#region Callbacks
 		#region Entity events
 		/// <summary>
-		/// Called after level has been loaded, is not called on serialization. Note that this is
-		/// called prior to GameRules.OnClientConnect and OnClientEnteredGame!
+		/// Called after level has been loaded, is not called on serialization. Note that
+		/// this is called prior to GameRules.OnClientConnect and OnClientEnteredGame!
 		/// </summary>
 		protected virtual void OnLevelLoaded()
 		{
@@ -77,7 +77,9 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Called when resetting the state of the entity in Editor.
 		/// </summary>
-		/// <param name="enteringGame"> true if currently entering gamemode, false if exiting. </param>
+		/// <param name="enteringGame">
+		/// true if currently entering gamemode, false if exiting.
+		/// </param>
 		protected virtual void OnEditorReset(bool enteringGame)
 		{
 		}
@@ -107,7 +109,7 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Sent when entity enters to the area proximity.
 		/// </summary>
-		/// <param name="entityId"> </param>
+		/// <param name="entityId"></param>
 		protected virtual void OnEnterArea(EntityId entityId, int areaId, EntityId areaEntityId)
 		{
 		}
@@ -115,7 +117,7 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Sent when entity moves inside the area proximity.
 		/// </summary>
-		/// <param name="entityId"> </param>
+		/// <param name="entityId"></param>
 		protected virtual void OnMoveInsideArea(EntityId entityId, int areaId, EntityId areaEntityId)
 		{
 		}
@@ -123,7 +125,7 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Sent when entity leaves the area proximity.
 		/// </summary>
-		/// <param name="entityId"> </param>
+		/// <param name="entityId"></param>
 		protected virtual void OnLeaveArea(EntityId entityId, int areaId, EntityId areaEntityId)
 		{
 		}
@@ -139,8 +141,8 @@ namespace CryEngine.Entities
 		}
 
 		/// <summary>
-		/// Called when the entities local or world transformation matrix changes. (Position /
-		/// Rotation / Scale)
+		/// Called when the entities local or world transformation matrix changes.
+		/// (Position / Rotation / Scale)
 		/// </summary>
 		protected virtual void OnMove(EntityMoveFlags moveFlags)
 		{
@@ -149,21 +151,21 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Called whenever another entity has been linked to this entity.
 		/// </summary>
-		/// <param name="child"> </param>
+		/// <param name="child"></param>
 		protected virtual void OnAttach(EntityId child)
 		{
 		}
 		/// <summary>
 		/// Called whenever another entity has been unlinked from this entity.
 		/// </summary>
-		/// <param name="child"> </param>
+		/// <param name="child"></param>
 		protected virtual void OnDetach(EntityId child)
 		{
 		}
 		/// <summary>
 		/// Called whenever this entity is unliked from another entity.
 		/// </summary>
-		/// <param name="parent"> </param>
+		/// <param name="parent"></param>
 		protected virtual void OnDetachThis(EntityId parent)
 		{
 		}
@@ -173,18 +175,20 @@ namespace CryEngine.Entities
 		}
 
 		/// <summary>
-		/// Called when an animation event (placed on animations via the Character Editor) is encountered.
+		/// Called when an animation event (placed on animations via the Character Editor)
+		/// is encountered.
 		/// </summary>
-		/// <param name="animEvent"> </param>
+		/// <param name="animEvent"></param>
 		[CLSCompliant(false)]
 		protected virtual void OnAnimationEvent(AnimationEvent animEvent)
 		{
 		}
 		#endregion
 		/// <summary>
-		/// This callback is called when this entity has spawned. The entity has been created and
-		/// added to the list of entities. Some functionality is not yet available at the point this
-		/// method is called. For all game object interactions, use <see cref="OnPostSpawn" />.
+		/// This callback is called when this entity has spawned. The entity has been
+		/// created and added to the list of entities. Some functionality is not yet
+		/// available at the point this method is called. For all game object
+		/// interactions, use <see cref="OnPostSpawn"/>.
 		/// </summary>
 		public virtual void OnSpawn()
 		{
@@ -200,7 +204,7 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Called when the entity is being removed.
 		/// </summary>
-		/// <returns> True to allow removal, false to deny. </returns>
+		/// <returns>True to allow removal, false to deny.</returns>
 		protected virtual bool OnRemove()
 		{
 			return true;
@@ -209,9 +213,9 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Called when the user changes a property from within the Editor.
 		/// </summary>
-		/// <param name="memberInfo">   </param>
-		/// <param name="propertyType"> </param>
-		/// <param name="newValue">     </param>
+		/// <param name="memberInfo">  </param>
+		/// <param name="propertyType"></param>
+		/// <param name="newValue">    </param>
 		protected virtual void OnPropertyChanged(MemberInfo memberInfo, EditorPropertyType propertyType, object newValue)
 		{
 		}
@@ -377,7 +381,8 @@ namespace CryEngine.Entities
 		Render = 0x0001, // Draw this slot.
 		RenderNearest = 0x0002, // Draw this slot as nearest.
 		RenderWithCustomCamera = 0x0004,
-		// Draw this slot using custom camera passed as a Public ShaderParameter to the entity.
+		// Draw this slot using custom camera passed as a Public ShaderParameter to the
+		// entity.
 		IgnorePhysics = 0x0010, // This slot will ignore physics events sent to it.
 		BreakAsEntity = 0x020,
 		RenderInCameraSpace = 0x0040, // This slot position is in camera space

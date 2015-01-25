@@ -14,14 +14,14 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Spawns a new entity
 		/// </summary>
-		/// <param name="entityName"> </param>
-		/// <param name="type">       </param>
-		/// <param name="pos">        </param>
-		/// <param name="rot">        </param>
-		/// <param name="scale">      </param>
-		/// <param name="autoInit">   </param>
-		/// <param name="flags">      </param>
-		/// <returns> </returns>
+		/// <param name="entityName"></param>
+		/// <param name="type">      </param>
+		/// <param name="pos">       </param>
+		/// <param name="rot">       </param>
+		/// <param name="scale">     </param>
+		/// <param name="autoInit">  </param>
+		/// <param name="flags">     </param>
+		/// <returns></returns>
 		public static EntityBase Spawn(string entityName, Type type, Vector3? pos = null, Quaternion? rot = null,
 									   Vector3? scale = null, bool autoInit = true, EntityFlags flags = EntityFlags.CastShadow,
 									   params object[] args)
@@ -32,14 +32,14 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Spawns a new entity
 		/// </summary>
-		/// <typeparam name="T"> </typeparam>
-		/// <param name="entityName"> </param>
-		/// <param name="pos">        </param>
-		/// <param name="rot">        </param>
-		/// <param name="scale">      </param>
-		/// <param name="autoInit">   </param>
-		/// <param name="flags">      </param>
-		/// <returns> </returns>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="entityName"></param>
+		/// <param name="pos">       </param>
+		/// <param name="rot">       </param>
+		/// <param name="scale">     </param>
+		/// <param name="autoInit">  </param>
+		/// <param name="flags">     </param>
+		/// <returns></returns>
 		public static T Spawn<T>(string entityName, Vector3? pos = null, Quaternion? rot = null, Vector3? scale = null,
 								 bool autoInit = true, EntityFlags flags = EntityFlags.CastShadow, params object[] args) where T : Entity, new()
 		{
@@ -57,14 +57,14 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Spawns a new entity
 		/// </summary>
-		/// <param name="entityName"> </param>
-		/// <param name="className">  </param>
-		/// <param name="pos">        </param>
-		/// <param name="rot">        </param>
-		/// <param name="scale">      </param>
-		/// <param name="autoInit">   </param>
-		/// <param name="flags">      </param>
-		/// <returns> </returns>
+		/// <param name="entityName"></param>
+		/// <param name="className"> </param>
+		/// <param name="pos">       </param>
+		/// <param name="rot">       </param>
+		/// <param name="scale">     </param>
+		/// <param name="autoInit">  </param>
+		/// <param name="flags">     </param>
+		/// <returns></returns>
 		public static EntityBase Spawn(string entityName, string className = "Default", Vector3? pos = null,
 									   Quaternion? rot = null, Vector3? scale = null, bool autoInit = true,
 									   EntityFlags flags = EntityFlags.CastShadow, params object[] args)
@@ -98,8 +98,8 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Removes the entity with the specified id.
 		/// </summary>
-		/// <param name="id">             </param>
-		/// <param name="forceRemoveNow"> </param>
+		/// <param name="id">            </param>
+		/// <param name="forceRemoveNow"></param>
 		public static void Remove(EntityId id, bool forceRemoveNow = false)
 		{
 #if !(RELEASE && RELEASE_DISABLE_CHECKS)
@@ -112,8 +112,8 @@ namespace CryEngine.Entities
 
 		internal static bool InternalRemove(EntityId id)
 		{
-			// The result from OnRemove returns whether the entity should be allowed to be removed.
-			// If we return false, the entity won't be removed.
+			// The result from OnRemove returns whether the entity should be allowed to be
+			// removed. If we return false, the entity won't be removed.
 			var result = true;
 
 			ScriptManager.Instance.RemoveInstances(ScriptType.Entity, instance =>
@@ -136,11 +136,11 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Get an entity by its unique ID.
 		/// </summary>
-		/// <param name="entityId"> The ID as an unsigned integer. </param>
-		/// <returns> A reference to the entity. </returns>
+		/// <param name="entityId">The ID as an unsigned integer.</param>
+		/// <returns>A reference to the entity.</returns>
 		/// <remarks>
-		/// If the entity does not exist in the managed space, this function will attempt to find a
-		/// C++ entity with the specified ID
+		/// If the entity does not exist in the managed space, this function will attempt
+		/// to find a C++ entity with the specified ID
 		/// </remarks>
 		public static T Get<T>(EntityId entityId) where T : EntityBase
 		{
@@ -155,11 +155,11 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Get an entity by its unique ID.
 		/// </summary>
-		/// <param name="entityId"> The ID as an unsigned integer. </param>
-		/// <returns> A reference to the entity. </returns>
+		/// <param name="entityId">The ID as an unsigned integer.</param>
+		/// <returns>A reference to the entity.</returns>
 		/// <remarks>
-		/// If the entity does not exist in the managed space, this function will attempt to find a
-		/// C++ entity with the specified ID&gt;
+		/// If the entity does not exist in the managed space, this function will attempt
+		/// to find a C++ entity with the specified ID&gt;
 		/// </remarks>
 		public static EntityBase Get(EntityId entityId)
 		{
@@ -206,11 +206,11 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Get an entity by name.
 		/// </summary>
-		/// <param name="name"> The name of the entity. </param>
-		/// <returns> A reference to the entity. </returns>
+		/// <param name="name">The name of the entity.</param>
+		/// <returns>A reference to the entity.</returns>
 		/// <remarks>
-		/// If multiple entities have the same name, it will return the first found. Consider using
-		/// IDs where necessary.
+		/// If multiple entities have the same name, it will return the first found.
+		/// Consider using IDs where necessary.
 		/// </remarks>
 		public static EntityBase Find(string name)
 		{
@@ -224,8 +224,8 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Gets an array of entities that are of a given class.
 		/// </summary>
-		/// <param name="className"> The entity class to search for. </param>
-		/// <returns> An array of entities. </returns>
+		/// <param name="className">The entity class to search for.</param>
+		/// <returns>An array of entities.</returns>
 		public static IEnumerable<EntityBase> GetByClass(string className)
 		{
 #if !(RELEASE && RELEASE_DISABLE_CHECKS)
@@ -238,8 +238,8 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Gets an array of entities that are of a given class.
 		/// </summary>
-		/// <typeparam name="T"> The entity class to search for. </typeparam>
-		/// <returns> An array of entities of type T. </returns>
+		/// <typeparam name="T">The entity class to search for.</typeparam>
+		/// <returns>An array of entities of type T.</returns>
 		public static IEnumerable<T> GetByClass<T>() where T : EntityBase
 		{
 			return GetEntitiesCommon<T>(EntityInterop.GetEntitiesByClass(typeof(T).Name));
@@ -253,9 +253,9 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Gets a list of entities within the specified area.
 		/// </summary>
-		/// <param name="bbox">  </param>
-		/// <param name="flags"> </param>
-		/// <returns> </returns>
+		/// <param name="bbox"> </param>
+		/// <param name="flags"></param>
+		/// <returns></returns>
 		public static IEnumerable<EntityBase> GetInBox(BoundingBox bbox, EntityQueryFlags flags = EntityQueryFlags.All)
 		{
 			return GetEntitiesCommon<EntityBase>(EntityInterop.GetEntitiesInBox(bbox, flags));
@@ -264,9 +264,9 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Gets a list of entities within the specified area.
 		/// </summary>
-		/// <param name="bbox">  </param>
-		/// <param name="flags"> </param>
-		/// <returns> </returns>
+		/// <param name="bbox"> </param>
+		/// <param name="flags"></param>
+		/// <returns></returns>
 		public static IEnumerable<T> GetInBox<T>(BoundingBox bbox, EntityQueryFlags flags = EntityQueryFlags.All)
 			where T : EntityBase
 		{
@@ -303,8 +303,8 @@ namespace CryEngine.Entities
 	public enum EntityClassFlags
 	{
 		/// <summary>
-		/// If set this class will not be visible in editor,and entity of this class cannot be
-		/// placed manually in editor.
+		/// If set this class will not be visible in editor,and entity of this class
+		/// cannot be placed manually in editor.
 		/// </summary>
 		Invisible = 0x0001,
 		/// <summary>

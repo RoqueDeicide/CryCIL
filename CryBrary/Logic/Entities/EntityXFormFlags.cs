@@ -1,5 +1,4 @@
-﻿
-namespace CryEngine.Logic.Entities
+﻿namespace CryEngine.Logic.Entities
 {
 	/// <summary>
 	/// Enumeration of flags that describe <see cref="EntityEvent.XForm"/> event.
@@ -35,7 +34,8 @@ namespace CryEngine.Logic.Entities
 		/// </summary>
 		Editor = 64,
 		/// <summary>
-		/// If set, indicates that transformation of the entity was changed in the TrackView.
+		/// If set, indicates that transformation of the entity was changed in the
+		/// TrackView.
 		/// </summary>
 		TrackView = 128,
 		/// <summary>

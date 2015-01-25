@@ -109,10 +109,10 @@ namespace CryEngine.Logic.Actors
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="channelId"></param>
-		/// <param name="name"></param>
-		/// <param name="pos"></param>
-		/// <param name="rot"></param>
-		/// <param name="scale"></param>
+		/// <param name="name">     </param>
+		/// <param name="pos">      </param>
+		/// <param name="rot">      </param>
+		/// <param name="scale">    </param>
 		/// <returns></returns>
 		public static T Create<T>(int channelId, string name = "Dude", Vector3? pos = null, Quaternion? rot = null, Vector3? scale = null) where T : ActorBase, new()
 		{
@@ -124,10 +124,10 @@ namespace CryEngine.Logic.Actors
 		/// </summary>
 		/// <param name="actorType"></param>
 		/// <param name="channelId"></param>
-		/// <param name="name"></param>
-		/// <param name="pos"></param>
-		/// <param name="rot"></param>
-		/// <param name="scale"></param>
+		/// <param name="name">     </param>
+		/// <param name="pos">      </param>
+		/// <param name="rot">      </param>
+		/// <param name="scale">    </param>
 		/// <returns></returns>
 		public static ActorBase Create(Type actorType, int channelId, string name = "Dude", Vector3? pos = null, Quaternion? rot = null, Vector3? scale = null)
 		{
@@ -139,10 +139,10 @@ namespace CryEngine.Logic.Actors
 		/// </summary>
 		/// <param name="className"></param>
 		/// <param name="channelId"></param>
-		/// <param name="name"></param>
-		/// <param name="pos"></param>
-		/// <param name="rot"></param>
-		/// <param name="scale"></param>
+		/// <param name="name">     </param>
+		/// <param name="pos">      </param>
+		/// <param name="rot">      </param>
+		/// <param name="scale">    </param>
 		/// <returns></returns>
 		public static ActorBase Create(string className, int channelId, string name = "Dude", Vector3? pos = null, Quaternion? rot = null, Vector3? scale = null)
 		{

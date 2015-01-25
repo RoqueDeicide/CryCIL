@@ -86,7 +86,8 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 			return new BspNode<SplittableTriangle>(faces);
 		}
 		/// <summary>
-		/// When implemented, changes this mesh to be perfect representation of the given BSP tree.
+		/// When implemented, changes this mesh to be perfect representation of the given
+		/// BSP tree.
 		/// </summary>
 		/// <param name="tree">BSP tree to convert to this mesh.</param>
 		public abstract void SetBsp(BspNode<SplittableTriangle> tree);

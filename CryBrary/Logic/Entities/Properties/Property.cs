@@ -9,7 +9,7 @@ namespace CryEngine.Logic.Entities.Properties
 	/// <summary>
 	/// Base class for entity properties that can be changed through Editor.
 	/// </summary>
-	public  abstract class Property
+	public abstract class Property
 	{
 		/// <summary>
 		/// Name of the property.

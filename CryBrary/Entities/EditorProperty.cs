@@ -4,7 +4,8 @@ using CryEngine.Mathematics;
 namespace CryEngine.Entities
 {
 	/// <summary>
-	/// Encapsulates details about the property of the entity that can be edited from Sandbox editor.
+	/// Encapsulates details about the property of the entity that can be edited from
+	/// Sandbox editor.
 	/// </summary>
 	public struct EditorProperty
 	{
@@ -73,7 +74,8 @@ namespace CryEngine.Entities
 				this.EditorTypePrefix = typePrefixes[valueId];
 				if (valueId > 3 && value == EditorPropertyType.Color)
 				{
-					// Everything that is a some form of text is assigned String as a type.
+					// Everything that is a some form of text is assigned String as a
+					// type.
 					this.type = EditorPropertyType.String;
 				}
 				else if (value == EditorPropertyType.Color)
@@ -86,14 +88,14 @@ namespace CryEngine.Entities
 		#endregion
 		#region Construction
 		/// <summary>
-		/// Initializes new instance of type <see cref="EditorProperty" />.
+		/// Initializes new instance of type <see cref="EditorProperty"/>.
 		/// </summary>
-		/// <param name="name">         Name of the property. </param>
-		/// <param name="description">  Description of the property. </param>
-		/// <param name="defaultValue"> Default value of the property. </param>
-		/// <param name="type">         Type of the property. </param>
-		/// <param name="limits">       Limitations applied to the property. </param>
-		/// <param name="flags">        Flags assigned to the property. </param>
+		/// <param name="name">        Name of the property.</param>
+		/// <param name="description"> Description of the property.</param>
+		/// <param name="defaultValue">Default value of the property.</param>
+		/// <param name="type">        Type of the property.</param>
+		/// <param name="limits">      Limitations applied to the property.</param>
+		/// <param name="flags">       Flags assigned to the property.</param>
 		public EditorProperty(string name, string description, string defaultValue, EditorPropertyType type,
 							  EditorPropertyLimits limits, int flags = 0)
 			: this(name, description, defaultValue, type)
@@ -112,12 +114,12 @@ namespace CryEngine.Entities
 			this.Flags = flags;
 		}
 		/// <summary>
-		/// Initializes new instance of type <see cref="EditorProperty" />.
+		/// Initializes new instance of type <see cref="EditorProperty"/>.
 		/// </summary>
-		/// <param name="name">         Name of the property. </param>
-		/// <param name="description">  Description of the property. </param>
-		/// <param name="defaultValue"> Default value of the property. </param>
-		/// <param name="type">         Type of the property. </param>
+		/// <param name="name">        Name of the property.</param>
+		/// <param name="description"> Description of the property.</param>
+		/// <param name="defaultValue">Default value of the property.</param>
+		/// <param name="type">        Type of the property.</param>
 		public EditorProperty(string name, string description, string defaultValue, EditorPropertyType type)
 			: this()
 		{

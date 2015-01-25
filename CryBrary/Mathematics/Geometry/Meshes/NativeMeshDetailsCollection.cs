@@ -9,7 +9,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 	/// <summary>
 	/// Base class for native mesh detail collections.
 	/// </summary>
-	/// <typeparam name="ElementType"> Type of elements in the collection. </typeparam>
+	/// <typeparam name="ElementType">Type of elements in the collection.</typeparam>
 	public abstract class NativeMeshDetailsCollection<ElementType> : IMeshDetailsCollection<ElementType>
 	{
 		#region Fields
@@ -36,7 +36,8 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// </summary>
 		public int Count { get; protected set; }
 		/// <summary>
-		/// Gets number of objects in the collection or reallocates it to fit new number of objects.
+		/// Gets number of objects in the collection or reallocates it to fit new number
+		/// of objects.
 		/// </summary>
 		public virtual int Capacity
 		{
@@ -70,7 +71,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// <summary>
 		/// Creates enumerator for this collection.
 		/// </summary>
-		/// <returns> Object that enumerates through elements of this collection. </returns>
+		/// <returns>Object that enumerates through elements of this collection.</returns>
 		public virtual IEnumerator<ElementType> GetEnumerator()
 		{
 			return new ListEnumerator<ElementType>(this);
@@ -87,8 +88,10 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// <summary>
 		/// Linearly searches through elements of this collection.
 		/// </summary>
-		/// <param name="item"> Element to look for. </param>
-		/// <returns> True, if at least element equal to given is located within this collection. </returns>
+		/// <param name="item">Element to look for.</param>
+		/// <returns>
+		/// True, if at least element equal to given is located within this collection.
+		/// </returns>
 		public virtual bool Contains(ElementType item)
 		{
 			for (int i = 0; i < this.Count; i++)
@@ -103,10 +106,10 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// <summary>
 		/// Linearly searches through elements of this collection.
 		/// </summary>
-		/// <param name="item"> Element to look for. </param>
+		/// <param name="item">Element to look for.</param>
 		/// <returns>
-		/// Zero-based index of the first element within this collection that equals given, -1 if no
-		/// such element was found.
+		/// Zero-based index of the first element within this collection that equals
+		/// given, -1 if no such element was found.
 		/// </returns>
 		public virtual int IndexOf(ElementType item)
 		{
@@ -122,7 +125,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// <summary>
 		/// Copies all elements of this collection to given array.
 		/// </summary>
-		/// <param name="array">      Array to copy elements to. </param>
+		/// <param name="array">     Array to copy elements to.</param>
 		/// <param name="arrayIndex">
 		/// Zero-based index of the first element in the array where to start copying.
 		/// </param>
@@ -149,8 +152,8 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// Copies all elements of this collection to an array.
 		/// </summary>
 		/// <returns>
-		/// Array that contains a copy of all elements of this collection. Null is returned if
-		/// collection is empty.
+		/// Array that contains a copy of all elements of this collection. Null is
+		/// returned if collection is empty.
 		/// </returns>
 		public virtual ElementType[] ToArray()
 		{
@@ -169,7 +172,8 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// Copies data from given list to this collection.
 		/// </summary>
 		/// <param name="details">
-		/// Object that implements <see cref="IList{ElementType}" /> that provides the data.
+		/// Object that implements <see cref="IList{ElementType}"/> that provides the
+		/// data.
 		/// </param>
 		public virtual void CopyFrom(IList<ElementType> details)
 		{
@@ -183,19 +187,22 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// Copies data from given list to this collection.
 		/// </summary>
 		/// <param name="details">       
-		/// Object that implements <see cref="IList{ElementType}" /> that provides the data.
+		/// Object that implements <see cref="IList{ElementType}"/> that provides the
+		/// data.
 		/// </param>
 		/// <param name="sourceStart">   
-		/// Zero-based index of the first element from <paramref name="details" /> to copy elements
-		/// from (inclusively).
+		/// Zero-based index of the first element from <paramref name="details"/> to copy
+		/// elements from (inclusively).
 		/// </param>
 		/// <param name="destStart">     
-		/// Zero-based index of the first element from this collection to copy elements to (inclusively).
+		/// Zero-based index of the first element from this collection to copy elements to
+		/// (inclusively).
 		/// </param>
-		/// <param name="count">          Number of elements to copy. </param>
+		/// <param name="count">         Number of elements to copy.</param>
 		/// <param name="ignoreOverflow">
-		/// Indicates whether exception must thrown when this collection cannot fit elements. If
-		/// true, all extra data will be ignored, otherwise exception is thrown.
+		/// Indicates whether exception must thrown when this collection cannot fit
+		/// elements. If true, all extra data will be ignored, otherwise exception is
+		/// thrown.
 		/// </param>
 		/// <exception cref="ArgumentOutOfRangeException">
 		/// Index of the first source element is out of bounds.
@@ -204,12 +211,12 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// Index of the first destination element is out of bounds.
 		/// </exception>
 		/// <exception cref="ArgumentException">
-		/// Given list does not have enough data. This exception can be thrown only if <paramref
-		/// name="ignoreOverflow" /> is set to false.
+		/// Given list does not have enough data. This exception can be thrown only if
+		/// <paramref name="ignoreOverflow"/> is set to false.
 		/// </exception>
 		/// <exception cref="ArgumentException">
-		/// This collection cannot fit given data. This exception can be thrown only if <paramref
-		/// name="ignoreOverflow" /> is set to false.
+		/// This collection cannot fit given data. This exception can be thrown only if
+		/// <paramref name="ignoreOverflow"/> is set to false.
 		/// </exception>
 		public virtual void CopyFrom(IList<ElementType> details, int sourceStart, int destStart, int count,
 									 bool ignoreOverflow)
@@ -267,34 +274,34 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		#region Unsupported operations.
 		/// <summary>
 		/// </summary>
-		/// <param name="index"> </param>
-		/// <param name="item">  </param>
-		/// <exception cref="NotSupportedException"> </exception>
+		/// <param name="index"></param>
+		/// <param name="item"> </param>
+		/// <exception cref="NotSupportedException"></exception>
 		public void Insert(int index, ElementType item)
 		{
 			throw new NotSupportedException();
 		}
 		/// <summary>
 		/// </summary>
-		/// <param name="index"> </param>
-		/// <exception cref="NotSupportedException"> </exception>
+		/// <param name="index"></param>
+		/// <exception cref="NotSupportedException"></exception>
 		public void RemoveAt(int index)
 		{
 			throw new NotSupportedException();
 		}
 		/// <summary>
 		/// </summary>
-		/// <param name="item"> </param>
-		/// <exception cref="NotSupportedException"> </exception>
+		/// <param name="item"></param>
+		/// <exception cref="NotSupportedException"></exception>
 		public void Add(ElementType item)
 		{
 			throw new NotSupportedException();
 		}
 		/// <summary>
 		/// </summary>
-		/// <param name="item"> </param>
-		/// <returns> </returns>
-		/// <exception cref="NotSupportedException"> </exception>
+		/// <param name="item"></param>
+		/// <returns></returns>
+		/// <exception cref="NotSupportedException"></exception>
 		public bool Remove(ElementType item)
 		{
 			throw new NotSupportedException();
@@ -304,17 +311,17 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		#region To be Implemented in Derived Classes
 		/// <summary>
 		/// </summary>
-		/// <param name="index"> </param>
-		/// <returns> </returns>
+		/// <param name="index"></param>
+		/// <returns></returns>
 		public abstract ElementType this[int index] { get; set; }
 		/// <summary>
-		/// When implemented in derived class, gets identifier of native memory region that contains
-		/// this collection.
+		/// When implemented in derived class, gets identifier of native memory region
+		/// that contains this collection.
 		/// </summary>
 		public abstract NativeMeshMemoryRegion MemoryRegionIdentifier { get; }
 		/// <summary>
-		/// When implemented in derived class, indicates whether collection is allowed to be
-		/// reallocated on its own.
+		/// When implemented in derived class, indicates whether collection is allowed to
+		/// be reallocated on its own.
 		/// </summary>
 		public abstract bool Reallocatable { get; }
 		#endregion
