@@ -81,29 +81,40 @@ MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener
 	this->broadcaster->OnRunTimeInitializing();
 	
 	ReportComment("Setting mono directories.");
+	
 	// Tell Mono, where to look for the libraries and configuration files.
 	const char *assembly_dir = DirectoryStructure::GetMonoLibraryFolder();
 	const char *config_dir = DirectoryStructure::GetMonoConfigurationFolder();
 	mono_set_dirs(assembly_dir, config_dir);
+
 #ifdef _DEBUG
 	ReportComment("Setting up signal chaining.");
+	
 	// Tell Mono to crash the game if there is an exception that wasn't handled.
 	mono_set_signal_chaining(true);
+	
 	ReportComment("Initializing Mono debugging.");
+	
 	// Load up mdb files.
 	mono_debug_init(MONO_DEBUG_FORMAT_MONO);
 #endif // _DEBUG
+	
 	ReportComment("Registering HandeSignalAbort.");
+	
 	// Register HandleSignalAbort function as a handler for SIGABRT.
 	signal(SIGABRT, HandleSignalAbort);
+	
 	ReportComment("Initializing the domain.");
+	
 	// Initialize the AppDomain.
 	this->appDomain = mono_jit_init_version("CryCIL", "v4.0.30319");
 	if (!this->appDomain)
 	{
 		CryFatalError("Unable to initialize Mono AppDomain.");
 	}
+	
 	ReportComment("Setting the config for domain.");
+	
 	// Manually tell AppDomain where to find the configuration for itself.
 	// Not calling this function results in exception when trying to get CodeDomProvider for C#.
 	mono_domain_set_config
@@ -112,11 +123,16 @@ MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener
 		DirectoryStructure::GetMonoBinariesFolder(),
 		DirectoryStructure::GetMonoAppDomainConfigurationFile()
 	);
+	
 	this->running = true;
+
 #ifdef _DEBUG
+	
 	ReportComment("Loading pdb2mdb.");
+	
 	// Load Pdb2Mdb.dll before everything else.
 	this->pdb2mdb = this->assemblies->Load(DirectoryStructure::GetPdb2MdbFile());
+	
 	// Initialize conversion thunk immediately.
 	Pdb2MdbThunks::Convert = (this->pdb2mdb)
 		? this->GetMethodThunk<ConvertPdbThunk>
@@ -125,14 +141,20 @@ MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener
 #endif // _DEBUG
 
 	ReportComment("Loading Cryambly.");
+	
 	// Load Cryambly.
 	const char *cryamblyFile = DirectoryStructure::GetCryamblyFile();
 	this->cryambly = this->assemblies->Load(cryamblyFile);
 	this->corlib = this->assemblies->Wrap(mono_image_get_assembly(mono_get_corlib()));
+	
 	ReportComment("Initializing main thunks.");
+	
 	this->InitializeThunks();
+	
 	ReportComment("Main thunks initialized.");
+	
 	this->broadcaster->OnRunTimeInitialized();
+	
 	// Initialize an instance of type MonoInterface.
 	mono::exception ex;
 	this->managedInterface = this->gc->Keep(MonoInterfaceThunks::Initialize(&ex));
@@ -141,9 +163,12 @@ MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener
 		this->HandleException(ex);
 		CryFatalError("CryCil.RunTime.MonoInterface object was not initialized. Cannot continue.");
 	}
+	
 	this->framework->RegisterListener(this, "CryCIL", FRAMEWORKLISTENERPRIORITY_GAME);
 	gEnv->pSystem->GetISystemEventDispatcher()->RegisterListener(this);
+	
 	this->broadcaster->OnPostInitialization();
+	
 	// Uncomment next 2 lines, if there is a need to crash the game when debugging initialization.
 
 // 	int *crash = nullptr;
@@ -165,23 +190,36 @@ void MonoInterface::RegisterFlowGraphNodes()
 void MonoInterface::Shutdown()
 {
 	CryLogAlways("Checking activity before shutdown.");
+	
 	if (!this->running)
 	{
 		return;
 	}
+	
 	CryLogAlways("About to broadcast shutdown event.");
+	
 	this->broadcaster->Shutdown();
+	
 	CryLogAlways("About to send shutdown event to Cryambly.");
+	
 	mono::exception ex;
 	MonoInterfaceThunks::Shutdown(this->managedInterface->ObjectPointer, &ex);
+	
 	this->framework->UnregisterListener(this);
 	gEnv->pSystem->GetISystemEventDispatcher()->RemoveListener(this);
+	
 	delete this->assemblies;
+	
 	CryLogAlways("Shutting down jit.");
+	
 	mono_jit_cleanup(this->appDomain);
+	
 	CryLogAlways("No more running.");
+	
 	this->running = false;
+	
 	CryLogAlways("Deleting broadcaster.");
+	
 	delete this->broadcaster;
 }
 #pragma endregion
@@ -202,9 +240,13 @@ const char *MonoInterface::ToNativeString(mono::string text)
 	{
 		return nullptr;
 	}
+	
 	const char *monoNativeText = mono_string_to_utf8((MonoString *)text);
+	
 	ConstructiveText nativeText(monoNativeText);
+	
 	mono_free((void *)monoNativeText);
+	
 	return nativeText.ToNTString();
 }
 #pragma endregion
@@ -217,7 +259,6 @@ mono::object MonoInterface::CreateObject(IMonoAssembly *assembly, const char *na
 		return nullptr;
 	}
 	return assembly->GetClass(class_name, name_space)->CreateInstance(params);
-
 }
 //! Creates a new Mono handle wrapper for given MonoObject.
 IMonoHandle *MonoInterface::WrapObject(mono::object obj)
@@ -274,8 +315,11 @@ void MonoInterface::AddInternalCall(const char *nameSpace, const char *className
 	{
 		return;
 	}
+	
 	ConstructiveText fullName(30);
+	
 	fullName << nameSpace << '.' << className << "::" << name;
+	
 	mono_add_internal_call(fullName.ToNTString(), functionPointer);
 }
 #pragma endregion
@@ -318,8 +362,10 @@ void MonoInterface::OnPostUpdate(float fDeltaTime)
 	if (this->running)
 	{
 		this->broadcaster->Update();
+		
 		mono::exception ex;
 		MonoInterfaceThunks::Update(this->managedInterface->ObjectPointer, &ex);
+		
 		this->broadcaster->PostUpdate();
 	}
 }

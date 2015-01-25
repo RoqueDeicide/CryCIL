@@ -406,9 +406,9 @@ struct IMonoGC
 	//!                   by GCion of younger ones. Invocation with -1 or @see IMonoGC::MaxGeneration
 	//!                   will trigger full scale garbage collection.
 	VIRTUAL_API virtual void Collect(int generation = -1) = 0;
-	//! Holds given managed object allowing to get it wherever it can be after heap compression.
-	//! The object will still be eligible for collection if it becomes unreachable from the rest
-	//! of the managed code.
+	//! Holds given managed object allowing to get the reference to it wherever it can be after heap
+	//! compression. The object will still be eligible for collection if it becomes unreachable from
+	//! the rest of the managed code.
 	//!
 	//! You have to use @see IMonoGCHandle::Object property to get the pointer to the object.
 	//!
