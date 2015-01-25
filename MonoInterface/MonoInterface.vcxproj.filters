@@ -70,6 +70,12 @@
     <ClInclude Include="Wrappers\MonoAssemblyCollection.h">
       <Filter>API Implementation</Filter>
     </ClInclude>
+    <ClInclude Include="Geometry\FaceMesh.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Geometry\BspNode.h">
+      <Filter>Geometry\CSG</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -118,6 +124,12 @@
     <ClCompile Include="Wrappers\MonoAssemblyCollection.cpp">
       <Filter>API Implementation</Filter>
     </ClCompile>
+    <ClCompile Include="Geometry\FaceMesh.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Geometry\BspNode.cpp">
+      <Filter>Geometry\CSG</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">
@@ -143,6 +155,12 @@
     </Filter>
     <Filter Include="Extras">
       <UniqueIdentifier>{f44796b6-9fe3-48e5-818f-da1710a517f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Geometry">
+      <UniqueIdentifier>{d237f4d3-e125-4af6-882e-651c4ff56d1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Geometry\CSG">
+      <UniqueIdentifier>{67eb667a-ed91-4f9f-ae3b-c058368e6f28}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
