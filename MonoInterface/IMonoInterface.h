@@ -1387,12 +1387,12 @@ template<bool callRegistrationOnly, bool useMonoEnv = false>
 struct IMonoInterop : IMonoInteropBase
 {};
 //! Specialization of IMonoInterop<,> template that behaves in a default manner.
-template<> struct IMonoInterop<false, false> : IMonoInteropBase
+template<> struct IMonoInterop<false, false> : public IMonoInteropBase
 {
 };
 //! Specialization of IMonoInterop<,> template that unregisters and destroys itself
 //! after registration of internal calls.
-template<> struct IMonoInterop<true, false> : IMonoInteropBase
+template<> struct IMonoInterop<true, false> : public IMonoInteropBase
 {
 	//! Unregisters itself and commits suicide.
 	virtual void OnCryamblyInitilizing()
@@ -1403,7 +1403,7 @@ template<> struct IMonoInterop<true, false> : IMonoInteropBase
 };
 //! Specialization of IMonoInterop<,> template that relies on using MonoEnv variable
 //! instead of internal field.
-template<> struct IMonoInterop < false, true > : IMonoInteropBase
+template<> struct IMonoInterop < false, true > : public IMonoInteropBase
 {
 	//! No saving.
 	virtual void SetInterface(IMonoInterface *handle) {}
@@ -1449,7 +1449,7 @@ extern IMonoInterface *MonoEnv;
 //! Specialization of IMonoInterop<,> template that relies on using MonoEnv variable
 //! instead of internal field and unregisters and destroys itself after registration
 //! of internal calls.
-template<> struct IMonoInterop < true, true > : IMonoInteropBase
+template<> struct IMonoInterop < true, true > : public IMonoInteropBase
 {
 	//! No saving.
 	virtual void SetInterface(IMonoInterface *handle) {}
