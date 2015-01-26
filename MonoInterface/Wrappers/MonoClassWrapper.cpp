@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "API_ImplementationHeaders.h"
 #include "List.h"
+#include "MonoProperty.h"
 
 MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 {
@@ -233,41 +234,10 @@ void MonoClassWrapper::SetField(mono::object obj, const char *name, void *value)
 		mono_field_static_set_value(vTable, field, value);
 	}
 }
-//! Gets the value of the object's property.
-mono::object MonoClassWrapper::GetProperty(void *obj, const char *name)
+
+IMonoProperty *MonoClassWrapper::GetProperty(const char *name)
 {
-	MonoObject *exception;
-	mono::object result = (mono::object)mono_property_get_value
-	(
-		mono_class_get_property_from_name(this->wrappedClass, name),
-		obj,
-		nullptr,
-		&exception
-	);
-	if (exception)
-	{
-		MonoEnv->HandleException((mono::object)exception);
-		return nullptr;
-	}
-	return result;
-}
-//! Sets the value of the object's property.
-void MonoClassWrapper::SetProperty(void *obj, const char *name, void *value)
-{
-	void *pars[1];
-	pars[0] = value;
-	MonoObject *exception;
-	mono_property_set_value
-	(
-		mono_class_get_property_from_name(this->wrappedClass, name),
-		obj,
-		pars,
-		&exception
-	);
-	if (exception)
-	{
-		MonoEnv->HandleException((mono::exception)exception);
-	}
+	return new MonoPropertyWrapper(mono_class_get_property_from_name(this->wrappedClass, name));
 }
 //! Determines whether this class implements from specified class.
 bool MonoClassWrapper::Inherits(const char *nameSpace, const char *className)

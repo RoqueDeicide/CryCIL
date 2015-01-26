@@ -346,6 +346,18 @@ struct IMonoFunctionalityWrapper
 	VIRTUAL_API virtual void *GetWrappedPointer() = 0;
 };
 
+//! Represents a wrapper for a Mono property.
+struct IMonoProperty : public IMonoFunctionalityWrapper
+{
+	//! Gets IMonoMethod that allows you to invoke a getter of the property.
+	__declspec(property(get = GetGetter)) IMonoMethod *Getter;
+	//! Gets IMonoMethod that allows you to invoke a setter of the property.
+	__declspec(property(get = GetSetter)) IMonoMethod *Setter;
+
+	VIRTUAL_API virtual IMonoMethod *GetGetter() = 0;
+	VIRTUAL_API virtual IMonoMethod *GetSetter() = 0;
+};
+
 //! Base type of objects that wrap MonoObject instances granting access to Mono API.
 struct IMonoHandle : public IMonoFunctionalityWrapper
 {
@@ -407,15 +419,12 @@ struct IMonoHandle : public IMonoFunctionalityWrapper
 	//! @param name  Name of the field.
 	//! @param value Pointer to the memory that stores the value that should be assigned to the field.
 	VIRTUAL_API virtual void SetField(const char *name, void *value) = 0;
-	//! Gets the value of the object's property.
+	//! Gets one of the properties of this object.
 	//!
-	//! @param name Name of the property which value to get.
-	VIRTUAL_API virtual mono::object GetProperty(const char *name) = 0;
-	//! Sets the value of the object's property.
+	//! Delete returned object once you don't need it anymore.
 	//!
-	//! @param name  Name of the property which value to set.
-	//! @param value New value to assign to the property.
-	VIRTUAL_API virtual void SetProperty(const char *name, void *value) = 0;
+	//! @param name Name of the property to get.
+	VIRTUAL_API virtual IMonoProperty *GetProperty(const char *name) = 0;
 	//! Unboxes value of this object. Don't use with non-value types.
 	//!
 	//! @tparam T Type of the value to unbox. bool, for instance if
@@ -659,17 +668,12 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!
 	//! @seealso IMonoHandle::SetField
 	VIRTUAL_API virtual void SetField(mono::object obj, const char *name, void *value) = 0;
-	//! Gets the value of the object's property.
+	//! Gets one of the properties defined in this class.
 	//!
-	//! @param obj   Object which property to get.
-	//! @param name Name of the property which value to get.
-	VIRTUAL_API virtual mono::object GetProperty(void *obj, const char *name) = 0;
-	//! Sets the value of the object's property.
+	//! Delete returned object once you don't need it anymore.
 	//!
-	//! @param obj   Object which property to set.
-	//! @param name  Name of the property which value to set.
-	//! @param value New value to assign to the property.
-	VIRTUAL_API virtual void SetProperty(void *obj, const char *name, void *value) = 0;
+	//! @param name Name of the property to get.
+	VIRTUAL_API virtual IMonoProperty *GetProperty(const char *name) = 0;
 	//! Determines whether this class implements from specified class.
 	//!
 	//! @param nameSpace Full name of the name space where the class is located.

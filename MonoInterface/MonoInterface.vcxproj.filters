@@ -82,6 +82,9 @@
     <ClInclude Include="Interops\CryMarshal.h">
       <Filter>Interops</Filter>
     </ClInclude>
+    <ClInclude Include="Wrappers\MonoProperty.h">
+      <Filter>API Implementation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -141,6 +144,9 @@
     </ClCompile>
     <ClCompile Include="Interops\CryMarshal.cpp">
       <Filter>Interops</Filter>
+    </ClCompile>
+    <ClCompile Include="Wrappers\MonoProperty.cpp">
+      <Filter>API Implementation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -235,6 +235,7 @@
     <ClInclude Include="Wrappers\MonoGCHandle.h" />
     <ClInclude Include="Wrappers\MonoMethod.h" />
     <ClInclude Include="Wrappers\MonoHandle.h" />
+    <ClInclude Include="Wrappers\MonoProperty.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CryEngineInterface.cpp" />
@@ -277,6 +278,7 @@
     <ClCompile Include="Wrappers\MonoClassWrapper.cpp" />
     <ClCompile Include="Wrappers\MonoHandle.cpp" />
     <ClCompile Include="Wrappers\MonoMethodWrapper.cpp" />
+    <ClCompile Include="Wrappers\MonoProperty.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

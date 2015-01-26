@@ -35,10 +35,8 @@ public:
 	virtual void GetField(mono::object obj, const char *name, void *value);
 	//! Sets the value of the object's field.
 	virtual void SetField(mono::object obj, const char *name, void *value);
-	//! Gets the value of the object's property.
-	virtual mono::object GetProperty(void *obj, const char *name);
-	//! Sets the value of the object's property.
-	virtual void SetProperty(void *obj, const char *name, void *value);
+
+	virtual IMonoProperty *GetProperty(const char *name);
 	//! Determines whether this class implements from specified class.
 	virtual bool Inherits(const char *nameSpace, const char *className);
 	//! Determines whether this class implements a certain interface.

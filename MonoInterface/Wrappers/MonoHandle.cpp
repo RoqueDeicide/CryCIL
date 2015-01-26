@@ -29,15 +29,10 @@ void MonoHandle::SetField(const char *name, void *value)
 {
 	this->GetClass()->SetField(this->Get(), name, value);
 }
-//! Gets the value of the object's property.
-mono::object MonoHandle::GetProperty(const char *name)
+
+IMonoProperty *MonoHandle::GetProperty(const char *name)
 {
-	return this->GetClass()->GetProperty(this->Get(), name);
-}
-//! Sets the value of the object's property.
-void MonoHandle::SetProperty(const char *name, void *value)
-{
-	this->GetClass()->SetProperty(this->Get(), name, value);
+	return this->GetClass()->GetProperty(name);
 }
 //! Gets the wrapper for the class of this object.
 IMonoClass *MonoHandle::GetClass()

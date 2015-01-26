@@ -34,10 +34,8 @@ public:
 	virtual void GetField(const char *name, void *value);
 	//! Sets the value of the object's field.
 	virtual void SetField(const char *name, void *value);
-	//! Gets the value of the object's property.
-	virtual mono::object GetProperty(const char *name);
-	//! Sets the value of the object's property.
-	virtual void SetProperty(const char *name, void *value);
+
+	virtual IMonoProperty *GetProperty(const char *name);
 	//! Gets the wrapper for the class of this object.
 	virtual struct IMonoClass *GetClass();
 
