@@ -110,7 +110,6 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
     <ClInclude Include="Interops\GameLogic\GameRules.h" />
     <ClInclude Include="Interops\LevelSystem.h" />
     <ClInclude Include="Interops\MonoInput.h" />
-    <ClInclude Include="Interops\NativeMemory\CryMarshal.h" />
     <ClInclude Include="Interops\Network.h" />
     <ClInclude Include="Interops\Platform.h" />
     <ClInclude Include="Interops\StaticObjects\CMesh.h" />
@@ -147,7 +146,6 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
     <ClCompile Include="Interops\GameLogic\GameRules.cpp" />
     <ClCompile Include="Interops\LevelSystem.cpp" />
     <ClCompile Include="Interops\MonoInput.cpp" />
-    <ClCompile Include="Interops\NativeMemory\CryMarshal.cpp" />
     <ClCompile Include="Interops\Network.cpp" />
     <ClCompile Include="Interops\Platform.cpp" />
     <ClCompile Include="Interops\StaticObjects\CMesh.cpp" />

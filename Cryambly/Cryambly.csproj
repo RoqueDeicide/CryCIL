@@ -79,6 +79,7 @@
     <Compile Include="GeneralExtensions.cs" />
     <Compile Include="GenericEventArgs.cs" />
     <Compile Include="Interops\LogPosting.cs" />
+    <Compile Include="Interops\CryMarshal.cs" />
     <Compile Include="Mathematics\Geometry\AngleAxis.cs" />
     <Compile Include="Mathematics\Geometry\BoundingBox.cs" />
     <Compile Include="Mathematics\Geometry\BoundingSphere.cs" />

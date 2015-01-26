@@ -172,7 +172,6 @@
     <Compile Include="Logic\Actors\ActorStatics.cs" />
     <Compile Include="Attributes.cs" />
     <Compile Include="Native\FlowInputInterop.cs" />
-    <Compile Include="Native\MemoryHandlingInterop.cs" />
     <Compile Include="Physics\ColliderMode.cs" />
     <Compile Include="Physics\CryCollision.cs" />
     <Compile Include="Properties\Annotations.cs" />

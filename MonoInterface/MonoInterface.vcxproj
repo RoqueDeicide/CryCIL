@@ -210,6 +210,7 @@
     <ClInclude Include="Geometry\BspNode.h" />
     <ClInclude Include="Geometry\FaceMesh.h" />
     <ClInclude Include="IMonoInterface.h" />
+    <ClInclude Include="Interops\CryMarshal.h" />
     <ClInclude Include="Interops\LogPosting.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="Logs.h" />
@@ -253,6 +254,7 @@
     <ClCompile Include="Engine\DirectoryStructure.cpp" />
     <ClCompile Include="Geometry\BspNode.cpp" />
     <ClCompile Include="Geometry\FaceMesh.cpp" />
+    <ClCompile Include="Interops\CryMarshal.cpp" />
     <ClCompile Include="Interops\LogPosting.cpp" />
     <ClCompile Include="RunTime\DebugEventReporter.cpp" />
     <ClCompile Include="RunTime\EventBroadcaster.cpp" />

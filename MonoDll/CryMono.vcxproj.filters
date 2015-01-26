@@ -54,9 +54,6 @@
     <ClInclude Include="Interops\GameLogic\GameRules.h">
       <Filter>Interops\Game Logic</Filter>
     </ClInclude>
-    <ClInclude Include="Interops\NativeMemory\CryMarshal.h">
-      <Filter>Interops\NativeMemory</Filter>
-    </ClInclude>
     <ClInclude Include="Interops\StaticObjects\CMesh.h">
       <Filter>Interops\StaticObjects</Filter>
     </ClInclude>
@@ -154,9 +151,6 @@
     <ClCompile Include="Interops\GameLogic\GameRules.cpp">
       <Filter>Interops\Game Logic</Filter>
     </ClCompile>
-    <ClCompile Include="Interops\NativeMemory\CryMarshal.cpp">
-      <Filter>Interops\NativeMemory</Filter>
-    </ClCompile>
     <ClCompile Include="Interops\StaticObjects\CMesh.cpp">
       <Filter>Interops\StaticObjects</Filter>
     </ClCompile>
@@ -227,9 +221,6 @@
     </Filter>
     <Filter Include="Interops\Game Logic">
       <UniqueIdentifier>{55fd45df-3f95-4840-8eab-7d7170031ae0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Interops\NativeMemory">
-      <UniqueIdentifier>{b0f89071-783e-4988-adb0-9fb08b6decd1}</UniqueIdentifier>
     </Filter>
     <Filter Include="Interops\StaticObjects">
       <UniqueIdentifier>{32b893d5-61d5-4bfc-9231-bf35d3233630}</UniqueIdentifier>
