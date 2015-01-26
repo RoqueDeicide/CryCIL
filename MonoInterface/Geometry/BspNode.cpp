@@ -303,3 +303,13 @@ void BspNode::AssignBranch(BspNode *&branch, List<Face> *faces)
 	}
 	branch->AddFaces(faces);
 }
+
+BspNode::BspNode(List<Face> *faces)
+	: Plane(Vec3Constants<float>::fVec3_Zero, F32NAN_SAFE)
+{
+	this->Faces = new List<Face>();
+	if (faces)
+	{
+		this->AddFaces(faces);
+	}
+}

@@ -90,6 +90,16 @@ struct BspNode
 	List<Face> *Faces;			//!< A list of faces located on a plane of this node.
 	BspNode *Front;				//!< BSP node located in front of this node.
 	BspNode *Back;				//!< BSP node located behind this node.
+
+	BspNode(List<Face> *faces);
+	~BspNode()
+	{
+		this->Plane.d = F32NAN_SAFE;
+		if (this->Faces) delete this->Faces; this->Faces = nullptr;
+		if (this->Front) delete this->Front; this->Front = nullptr;
+		if (this->Back) delete this->Back; this->Back = nullptr;
+	}
+
 	//! Gets the list of all faces in this BSP tree.
 	List<Face> *AllFaces();
 	//! Adds a bunch of faces to this BSP tree.

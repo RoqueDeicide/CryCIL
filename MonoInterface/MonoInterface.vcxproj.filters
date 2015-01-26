@@ -76,6 +76,9 @@
     <ClInclude Include="Geometry\BspNode.h">
       <Filter>Geometry\CSG</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\MeshOps.h">
+      <Filter>Interops</Filter>
+    </ClInclude>
     <ClInclude Include="Interops\CryMarshal.h">
       <Filter>Interops</Filter>
     </ClInclude>
@@ -132,6 +135,9 @@
     </ClCompile>
     <ClCompile Include="Geometry\BspNode.cpp">
       <Filter>Geometry\CSG</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\MeshOps.cpp">
+      <Filter>Interops</Filter>
     </ClCompile>
     <ClCompile Include="Interops\CryMarshal.cpp">
       <Filter>Interops</Filter>

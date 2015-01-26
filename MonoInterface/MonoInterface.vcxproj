@@ -212,6 +212,7 @@
     <ClInclude Include="IMonoInterface.h" />
     <ClInclude Include="Interops\CryMarshal.h" />
     <ClInclude Include="Interops\LogPosting.h" />
+    <ClInclude Include="Interops\MeshOps.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="Logs.h" />
     <ClInclude Include="MonoHeaders.h" />
@@ -256,6 +257,7 @@
     <ClCompile Include="Geometry\FaceMesh.cpp" />
     <ClCompile Include="Interops\CryMarshal.cpp" />
     <ClCompile Include="Interops\LogPosting.cpp" />
+    <ClCompile Include="Interops\MeshOps.cpp" />
     <ClCompile Include="RunTime\DebugEventReporter.cpp" />
     <ClCompile Include="RunTime\EventBroadcaster.cpp" />
     <ClCompile Include="RunTime\InitializationInterop.cpp" />

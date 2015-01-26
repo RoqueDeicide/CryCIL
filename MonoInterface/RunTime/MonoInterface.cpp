@@ -407,6 +407,7 @@ void MonoInterface::RegisterDefaultListeners()
 	this->broadcaster->listeners->Add(new InitializationInterop());
 	this->broadcaster->listeners->Add(new LogPostingInterop());
 	this->broadcaster->listeners->Add(new CryMarshalInterop());
+	this->broadcaster->listeners->Add(new MeshOpsInterop());
 }
 #pragma endregion
 #pragma region Thunks Initialization

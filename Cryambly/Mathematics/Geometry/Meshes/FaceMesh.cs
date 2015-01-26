@@ -2,6 +2,7 @@
 using CryCil.Geometry.Csg;
 using CryCil.Geometry.Csg.Base;
 using CryCil.Graphics;
+using CryCil.Interops;
 
 namespace CryCil.Geometry
 {
@@ -11,6 +12,10 @@ namespace CryCil.Geometry
 	/// </summary>
 	public class FaceMesh
 	{
+		/// <summary>
+		/// Indicates whether CSG operations must be done natively.
+		/// </summary>
+		public static readonly bool NativeCsg = true;
 		/// <summary>
 		/// Gets the list of faces that comprise this mesh.
 		/// </summary>
@@ -47,10 +52,25 @@ namespace CryCil.Geometry
 		/// <seealso cref="ConstructiveSolidGeometry.Union"/>
 		public virtual void Combine(FaceMesh anotherMesh)
 		{
-			BspNode<FullFace> a = this.BspTree;
-			BspNode<FullFace> b = anotherMesh.BspTree;
-			a.Unite(b, null);
-			this.Set(a);
+			if (NativeCsg)
+			{
+				this.Faces =
+					MeshOps.FromNativeFaceList
+					(
+						MeshOps.Combine
+						(
+							MeshOps.ToNativeFaceList(this.Faces),
+							MeshOps.ToNativeFaceList(anotherMesh.Faces)
+						)
+					);
+			}
+			else
+			{
+				BspNode<FullFace> a = this.BspTree;
+				BspNode<FullFace> b = anotherMesh.BspTree;
+				a.Unite(b, null);
+				this.Set(a);
+			}
 		}
 		/// <summary>
 		/// Intersects this mesh with another.
@@ -59,19 +79,34 @@ namespace CryCil.Geometry
 		/// <seealso cref="ConstructiveSolidGeometry.Intersection"/>
 		public virtual void Intersect(FaceMesh anotherMesh)
 		{
-			BspNode<FullFace> a = this.BspTree;
-			BspNode<FullFace> b = anotherMesh.BspTree;
-			a.Invert();					// Cut geometry that is not common for the meshes.
-			b.CutTreeOut(a, null);		//
-			b.Invert();					//
-			a.CutTreeOut(b, null);		//
-			// Clean up remains.
-			b.CutTreeOut(a, null);
-			// Combine geometry.
-			a.AddElements(b.AllElements, null);
-			// Invert everything.
-			a.Invert();
-			this.Set(a);
+			if (NativeCsg)
+			{
+				this.Faces =
+					MeshOps.FromNativeFaceList
+					(
+						MeshOps.Intersect
+						(
+							MeshOps.ToNativeFaceList(this.Faces),
+							MeshOps.ToNativeFaceList(anotherMesh.Faces)
+						)
+					);
+			}
+			else
+			{
+				BspNode<FullFace> a = this.BspTree;
+				BspNode<FullFace> b = anotherMesh.BspTree;
+				a.Invert();					// Cut geometry that is not common for the meshes.
+				b.CutTreeOut(a, null);		//
+				b.Invert();					//
+				a.CutTreeOut(b, null);		//
+				// Clean up remains.
+				b.CutTreeOut(a, null);
+				// Combine geometry.
+				a.AddElements(b.AllElements, null);
+				// Invert everything.
+				a.Invert();
+				this.Set(a);
+			}
 		}
 		/// <summary>
 		/// Subtracts another mesh from this one.
@@ -80,12 +115,27 @@ namespace CryCil.Geometry
 		/// <seealso cref="ConstructiveSolidGeometry.Subtract"/>
 		public virtual void Subtract(FaceMesh anotherMesh)
 		{
-			BspNode<FullFace> a = this.BspTree;
-			BspNode<FullFace> b = anotherMesh.BspTree;
-			a.Invert();
-			a.Unite(b, null);
-			a.Invert();
-			this.Set(a);
+			if (NativeCsg)
+			{
+				this.Faces =
+					MeshOps.FromNativeFaceList
+					(
+						MeshOps.Subtract
+						(
+							MeshOps.ToNativeFaceList(this.Faces),
+							MeshOps.ToNativeFaceList(anotherMesh.Faces)
+						)
+					);
+			}
+			else
+			{
+				BspNode<FullFace> a = this.BspTree;
+				BspNode<FullFace> b = anotherMesh.BspTree;
+				a.Invert();
+				a.Unite(b, null);
+				a.Invert();
+				this.Set(a);
+			}
 		}
 		/// <summary>
 		/// Sets this mesh to one represented by a BSP tree.
