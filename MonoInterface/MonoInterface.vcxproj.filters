@@ -85,6 +85,9 @@
     <ClInclude Include="Wrappers\MonoProperty.h">
       <Filter>API Implementation</Filter>
     </ClInclude>
+    <ClInclude Include="Wrappers\MonoEvent.h">
+      <Filter>API Implementation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -146,6 +149,9 @@
       <Filter>Interops</Filter>
     </ClCompile>
     <ClCompile Include="Wrappers\MonoProperty.cpp">
+      <Filter>API Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="Wrappers\MonoEvent.cpp">
       <Filter>API Implementation</Filter>
     </ClCompile>
   </ItemGroup>

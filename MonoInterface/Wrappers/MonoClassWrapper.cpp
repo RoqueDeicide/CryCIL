@@ -2,6 +2,7 @@
 #include "API_ImplementationHeaders.h"
 #include "List.h"
 #include "MonoProperty.h"
+#include "MonoEvent.h"
 
 MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 {
@@ -238,6 +239,24 @@ void MonoClassWrapper::SetField(mono::object obj, const char *name, void *value)
 IMonoProperty *MonoClassWrapper::GetProperty(const char *name)
 {
 	return new MonoPropertyWrapper(mono_class_get_property_from_name(this->wrappedClass, name));
+}
+
+IMonoEvent *MonoClassWrapper::GetEvent(const char *name)
+{
+	void *iter;
+	MonoEvent *_ev = nullptr;
+	while (_ev = mono_class_get_events(this->wrappedClass, &iter))
+	{
+		if (strcmp(name, mono_event_get_name(_ev)) == 0)
+		{
+			break;
+		}
+	}
+	if (!_ev)
+	{
+		return nullptr;
+	}
+	return new MonoEventWrapper(_ev);
 }
 //! Determines whether this class implements from specified class.
 bool MonoClassWrapper::Inherits(const char *nameSpace, const char *className)

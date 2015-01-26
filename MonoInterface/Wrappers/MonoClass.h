@@ -37,6 +37,7 @@ public:
 	virtual void SetField(mono::object obj, const char *name, void *value);
 
 	virtual IMonoProperty *GetProperty(const char *name);
+	virtual IMonoEvent *GetEvent(const char *name);
 	//! Determines whether this class implements from specified class.
 	virtual bool Inherits(const char *nameSpace, const char *className);
 	//! Determines whether this class implements a certain interface.

@@ -36,6 +36,7 @@ public:
 	virtual void SetField(const char *name, void *value);
 
 	virtual IMonoProperty *GetProperty(const char *name);
+	virtual IMonoEvent *GetEvent(const char *name);
 	//! Gets the wrapper for the class of this object.
 	virtual struct IMonoClass *GetClass();
 

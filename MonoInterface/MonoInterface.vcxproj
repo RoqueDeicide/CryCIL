@@ -231,6 +231,7 @@
     <ClInclude Include="Wrappers\MonoAssembly.h" />
     <ClInclude Include="Wrappers\MonoAssemblyCollection.h" />
     <ClInclude Include="Wrappers\MonoClass.h" />
+    <ClInclude Include="Wrappers\MonoEvent.h" />
     <ClInclude Include="Wrappers\MonoGC.h" />
     <ClInclude Include="Wrappers\MonoGCHandle.h" />
     <ClInclude Include="Wrappers\MonoMethod.h" />
@@ -276,6 +277,7 @@
     <ClCompile Include="Wrappers\MonoAssemblyWrapper.cpp" />
     <ClCompile Include="Wrappers\MonoClassCache.cpp" />
     <ClCompile Include="Wrappers\MonoClassWrapper.cpp" />
+    <ClCompile Include="Wrappers\MonoEvent.cpp" />
     <ClCompile Include="Wrappers\MonoHandle.cpp" />
     <ClCompile Include="Wrappers\MonoMethodWrapper.cpp" />
     <ClCompile Include="Wrappers\MonoProperty.cpp" />

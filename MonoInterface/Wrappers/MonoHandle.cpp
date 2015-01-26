@@ -34,6 +34,11 @@ IMonoProperty *MonoHandle::GetProperty(const char *name)
 {
 	return this->GetClass()->GetProperty(name);
 }
+
+IMonoEvent *MonoHandle::GetEvent(const char *name)
+{
+	return this->GetClass()->GetEvent(name);
+}
 //! Gets the wrapper for the class of this object.
 IMonoClass *MonoHandle::GetClass()
 {
