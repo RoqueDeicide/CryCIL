@@ -204,51 +204,18 @@ IMonoMethod **MonoClassWrapper::GetMethods(const char *name, int &foundCount)
 	return foundMethods;
 }
 //! Gets the value of the object's field.
-mono::object MonoClassWrapper::GetField(mono::object obj, const char *name)
+void MonoClassWrapper::GetField(mono::object obj, const char *name, void *value)
 {
 	if (obj)
 	{
-		return (mono::object)mono_field_get_value_object
-		(
-			(MonoDomain *)MonoEnv->AppDomain,
-			mono_class_get_field_from_name(this->wrappedClass, name),
-			(MonoObject *)obj
-		);
-	}
-	MonoVTable *table = mono_class_vtable(mono_domain_get(), this->wrappedClass);
-	if (!table)
-	{
-		CryFatalError("Unable to get a Mono VTable.");
-	}
-	MonoClassField *field = mono_class_get_field_from_name(this->wrappedClass, name);
-	if (field == nullptr)
-	{
-		CryLogAlways("Field named %s is null.", name);
-	}
-	MonoType *fieldType = mono_field_get_type(field);
-	if (fieldType == nullptr)
-	{
-		CryLogAlways("Field type is null.");
-	}
-	MonoClass *fieldClass = mono_class_from_mono_type(fieldType);
-	if (fieldClass == nullptr)
-	{
-		CryLogAlways("Field class is null.");
-	}
-	if (mono_class_is_valuetype(fieldClass))
-	{
-		unsigned char *value = new unsigned char[mono_class_value_size(fieldClass, nullptr)];
-		mono_field_static_get_value(table, field, value);
-		// Box the value, so we can release the value now.
-		mono::object result = (mono::object)mono_value_box(mono_domain_get(), fieldClass, value);
-		delete value;
-		return result;
+		mono_field_get_value
+			((MonoObject *)obj, mono_class_get_field_from_name(this->wrappedClass, name), value);
 	}
 	else
 	{
-		mono::object value;
-		mono_field_static_get_value(table, field, &value);
-		return value;
+		MonoClassField *field = mono_class_get_field_from_name(this->wrappedClass, name);
+		MonoVTable *vTable = mono_class_vtable(mono_domain_get(), this->wrappedClass);
+		mono_field_static_get_value(vTable, field, value);
 	}
 }
 //! Sets the value of the object's field.
@@ -257,11 +224,7 @@ void MonoClassWrapper::SetField(mono::object obj, const char *name, void *value)
 	if (obj)
 	{
 		mono_field_set_value
-		(
-			(MonoObject *)obj,
-			mono_class_get_field_from_name(this->wrappedClass, name),
-			value
-		);
+		((MonoObject *)obj, mono_class_get_field_from_name(this->wrappedClass, name), value);
 	}
 	else
 	{

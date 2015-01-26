@@ -32,7 +32,7 @@ public:
 	//! Gets an array of overload of the method.
 	virtual IMonoMethod **GetMethods(const char *name, int &foundCount);
 	//! Gets the value of the object's field.
-	virtual mono::object GetField(mono::object obj, const char *name);
+	virtual void GetField(mono::object obj, const char *name, void *value);
 	//! Sets the value of the object's field.
 	virtual void SetField(mono::object obj, const char *name, void *value);
 	//! Gets the value of the object's property.

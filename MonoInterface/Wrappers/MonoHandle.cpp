@@ -20,9 +20,9 @@ mono::object MonoHandle::CallMethod(const char *name, IMonoArray *args)
 	return nullptr;
 }
 //! Gets the value of the object's field.
-mono::object MonoHandle::GetField(const char *name)
+void MonoHandle::GetField(const char *name, void *value)
 {
-	return this->GetClass()->GetField(this->Get(), name);
+	return this->GetClass()->GetField(this->Get(), name, value);
 }
 //! Sets the value of the object's field.
 void MonoHandle::SetField(const char *name, void *value)

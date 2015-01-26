@@ -356,14 +356,56 @@ struct IMonoHandle : public IMonoFunctionalityWrapper
 	//! @param name Name of the method to invoke.
 	//! @param args Array of arguments to pass, that also defines which method overload to use.
 	VIRTUAL_API virtual mono::object CallMethod(const char *name, IMonoArray *args) = 0;
-	//! Gets the value of the object's field.
+	//! Gets the value of the field. Only use it with objects of managed types.
 	//!
-	//! @param name Name of the field which value to get.
-	VIRTUAL_API virtual mono::object GetField(const char *name) = 0;
-	//! Sets the value of the object's field.
+	//! Example:
 	//!
-	//! @param name  Name of the field which value to set.
-	//! @param value New value to assign to the field.
+	//! @code{.cpp}
+	//! // Let's get the value of integer field. obj is our IMonoHandle instance.
+	//!
+	//! // We need to declare a variable that will store the value of the field.
+	//! int fieldValue;		// No need to assign it.
+	//!
+	//! // Now we can get the value, just provide the address of the variable.
+	//! obj->GetField("IntegerField", &fieldValue);
+	//!
+	//! // Now fieldValue variable contains the value of that field.
+	//! //--------------------------------------------------------------------------
+	//! // Let's do the same with a field of managed type.
+	//!
+	//! // Same deal, but we always use one of the mono::object aliases.
+	//! mono::string text;
+	//! obj->GetField("TextField", &text);
+	//! @endcode
+	//!
+	//! @param name  Name of the field.
+	//! @param value Pointer to the memory that will store the value of the field after this
+	//!              function completes execution.
+	VIRTUAL_API virtual void GetField(const char *name, void *value) = 0;
+	//! Sets the value of the field. Only use it with objects of managed types.
+	//!
+	//! Example:
+	//!
+	//! @code{.cpp}
+	//! // Let's set the value of integer field. obj is our IMonoHandle instance.
+	//!
+	//! // We need to declare a variable that stores the new value for the field.
+	//! int fieldValue = 10;
+	//!
+	//! // Now we can set the value, just provide the address of the variable.
+	//! obj->SetField("IntegerField", &fieldValue);
+	//!
+	//! // Now IntegerField has a value of 10.
+	//! //--------------------------------------------------------------------------
+	//! // Let's do the same with a field of managed type.
+	//!
+	//! // Same deal, but we always use one of the mono::object aliases.
+	//! mono::string text = ToMonoString("Some new text");
+	//! obj->SetField("TextField", &text);
+	//! @endcode
+	//!
+	//! @param name  Name of the field.
+	//! @param value Pointer to the memory that stores the value that should be assigned to the field.
 	VIRTUAL_API virtual void SetField(const char *name, void *value) = 0;
 	//! Gets the value of the object's property.
 	//!
@@ -606,7 +648,7 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!
 	//! @param obj   Object which field to get.
 	//! @param name Name of the field which value to get.
-	VIRTUAL_API virtual mono::object GetField(mono::object obj, const char *name) = 0;
+	VIRTUAL_API virtual void GetField(mono::object obj, const char *name, void *value) = 0;
 	//! Sets the value of the object's field.
 	//!
 	//! @param obj   Object which field to set.

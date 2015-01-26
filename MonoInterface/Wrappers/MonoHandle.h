@@ -31,7 +31,7 @@ public:
 	//! Calls a Mono method associated with this object.
 	virtual mono::object CallMethod(const char *name, IMonoArray *args);
 	//! Gets the value of the object's field.
-	virtual mono::object GetField(const char *name);
+	virtual void GetField(const char *name, void *value);
 	//! Sets the value of the object's field.
 	virtual void SetField(const char *name, void *value);
 	//! Gets the value of the object's property.
