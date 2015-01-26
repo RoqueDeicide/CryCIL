@@ -646,14 +646,18 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	VIRTUAL_API virtual IMonoMethod **GetMethods(const char *name, int &foundCount) = 0;
 	//! Gets the value of the object's field.
 	//!
-	//! @param obj   Object which field to get.
+	//! @param obj   Object which field to get. Use nullptr when working with a static field.
 	//! @param name Name of the field which value to get.
+	//!
+	//! @seealso IMonoHandle::SetField
 	VIRTUAL_API virtual void GetField(mono::object obj, const char *name, void *value) = 0;
 	//! Sets the value of the object's field.
 	//!
-	//! @param obj   Object which field to set.
+	//! @param obj   Object which field to set. Use nullptr when working with a static field.
 	//! @param name  Name of the field which value to set.
 	//! @param value New value to assign to the field.
+	//!
+	//! @seealso IMonoHandle::SetField
 	VIRTUAL_API virtual void SetField(mono::object obj, const char *name, void *value) = 0;
 	//! Gets the value of the object's property.
 	//!
