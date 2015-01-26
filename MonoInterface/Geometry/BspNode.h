@@ -91,6 +91,11 @@ struct BspNode
 	BspNode *Front;				//!< BSP node located in front of this node.
 	BspNode *Back;				//!< BSP node located behind this node.
 
+	BspNode()
+		: Plane(Vec3Constants<float>::fVec3_Zero, F32NAN_SAFE)
+	{
+		this->Faces = new List<Face>();
+	}
 	BspNode(List<Face> *faces);
 	~BspNode()
 	{

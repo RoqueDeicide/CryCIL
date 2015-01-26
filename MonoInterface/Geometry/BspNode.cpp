@@ -5,7 +5,6 @@
 void PointPosition(Plane plane, Vec3 point, PlanePosition &pointPlanePosition, PlanePosition &polygonPlanePosition)
 {
 	float signedDistance = point * plane.n - plane.d;
-	int position;
 	if (signedDistance > 0.00000001)
 	{
 		pointPlanePosition = PlanePosition::Front;
