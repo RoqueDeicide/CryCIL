@@ -1384,7 +1384,7 @@ struct IMonoInteropBase : public IMonoSystemListener
 //! @typeparam useMonoEnv Indicates whether this interop object will override SetInterface
 //!                       to not save IMonoInterface implementation to the internal field.
 template<bool callRegistrationOnly, bool useMonoEnv = false>
-struct IMonoInterop : IMonoInteropBase
+struct IMonoInterop : public IMonoInteropBase
 {};
 //! Specialization of IMonoInterop<,> template that behaves in a default manner.
 template<> struct IMonoInterop<false, false> : public IMonoInteropBase
@@ -1413,7 +1413,7 @@ template<> struct IMonoInterop < false, true > : public IMonoInteropBase
 
 //! Interface of interops that use classes within CryCil.Interops name space.
 template<bool callRegistrationOnly>
-struct IDefaultMonoInterop : public IMonoInterop < callRegistrationOnly, false >
+struct IDefaultMonoInterop : public IMonoInterop < callRegistrationOnly, true >
 {
 	virtual const char *GetNameSpace() { return "CryCil.Interops"; }
 };
