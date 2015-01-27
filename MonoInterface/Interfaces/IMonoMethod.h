@@ -170,7 +170,7 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	//!        CryLogAlways("Z component of the vector = %d", vector.z);
 	//!    }
 	//! @endcode
-	//! @example DoxygenExampleFiles\UnmanagedThunkExample.cpp
+	//! @example DoxygenExampleFiles\UnmanagedThunkExample.h
 	__declspec(property(get = GetThunk)) void *UnmanagedThunk;
 	//! Gets the name of the method.
 	__declspec(property(get = GetName)) const char *Name;

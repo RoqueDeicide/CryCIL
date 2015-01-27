@@ -23,7 +23,7 @@
 //! Listeners receive events in the order of registration. Internal listeners are always
 //! registered first.
 //!
-//! @example DoxygenExampleFiles\ListenerExample.cpp
+//! @example DoxygenExampleFiles\ListenerExample.h
 struct IMonoSystemListener
 {
 protected:
