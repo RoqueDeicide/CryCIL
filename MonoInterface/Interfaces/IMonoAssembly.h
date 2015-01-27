@@ -5,11 +5,6 @@
 //! Defines interface of objects that wrap functionality of MonoAssembly type.
 struct IMonoAssembly : public IMonoFunctionalityWrapper
 {
-	//! Gets the class.
-	//!
-	//! @param nameSpace Name space where the class is defined.
-	//! @param className Name of the class to get.
-	__declspec(property(get = GetClass)) IMonoClass *Classes[][];
 	//! Gets the short name of the assembly.
 	__declspec(property(get = GetName)) Text *Name;
 	//! Gets the full name of the assembly.
@@ -17,6 +12,10 @@ struct IMonoAssembly : public IMonoFunctionalityWrapper
 	//! Gets the full name of the assembly.
 	__declspec(property(get = GetFileName)) Text *FileName;
 
+	//! Gets the class.
+	//!
+	//! @param nameSpace Name space where the class is defined.
+	//! @param className Name of the class to get.
 	VIRTUAL_API virtual IMonoClass *GetClass(const char *nameSpace, const char *className) = 0;
 	VIRTUAL_API virtual Text *GetName() = 0;
 	VIRTUAL_API virtual Text *GetFullName() = 0;
