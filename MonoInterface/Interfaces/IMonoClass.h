@@ -10,7 +10,7 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	__declspec(property(get = GetNameSpace)) const char *NameSpace;
 	//! Gets assembly where this class is defined.
 	__declspec(property(get = GetAssembly)) IMonoAssembly *Assembly;
-	//! Gets assembly where this class is defined.
+	//! Gets the class where this class is defined.
 	__declspec(property(get = GetBase)) IMonoClass *Base;
 	//! Creates an instance of this class.
 	//!
@@ -90,6 +90,10 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!
 	//! @param name Name of the event to get.
 	VIRTUAL_API virtual IMonoEvent *GetEvent(const char *name) = 0;
+	//! Gets the class or struct that is defined in this one.
+	//!
+	//! @param name Name of the class to get.
+	VIRTUAL_API virtual IMonoClass *GetNestedType(const char *name) = 0;
 	//! Determines whether this class implements from specified class.
 	//!
 	//! @param nameSpace Full name of the name space where the class is located.

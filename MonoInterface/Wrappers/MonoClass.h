@@ -38,6 +38,20 @@ public:
 
 	virtual IMonoProperty *GetProperty(const char *name);
 	virtual IMonoEvent *GetEvent(const char *name);
+
+	virtual IMonoClass *GetNestedType(const char *name)
+	{
+		void *iter;
+		MonoClass *nestedType;
+		while (nestedType = mono_class_get_nested_types(this->wrappedClass, &iter))
+		{
+			if (strcmp(mono_class_get_name(nestedType), name) == 0)
+			{
+				return MonoClassCache::Wrap(nestedType);
+			}
+		}
+		return nullptr;
+	}
 	//! Determines whether this class implements from specified class.
 	virtual bool Inherits(const char *nameSpace, const char *className);
 	//! Determines whether this class implements a certain interface.
