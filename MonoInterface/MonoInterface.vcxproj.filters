@@ -166,12 +166,6 @@
     <ClCompile Include="Wrappers\DefaultBoxinator.cpp">
       <Filter>API Implementation</Filter>
     </ClCompile>
-    <ClCompile Include="Wrappers\MonoAssemblyWrapper.cpp">
-      <Filter>API Implementation</Filter>
-    </ClCompile>
-    <ClCompile Include="Wrappers\MonoClassCache.cpp">
-      <Filter>API Implementation</Filter>
-    </ClCompile>
     <ClCompile Include="Wrappers\MonoHandle.cpp">
       <Filter>API Implementation</Filter>
     </ClCompile>
@@ -196,16 +190,19 @@
     <ClCompile Include="Wrappers\MonoEvent.cpp">
       <Filter>API Implementation</Filter>
     </ClCompile>
-    <ClCompile Include="Wrappers\MonoMethodWrapper.cpp">
-      <Filter>API Implementation</Filter>
-    </ClCompile>
-    <ClCompile Include="Wrappers\MonoArrayWrapper.cpp">
-      <Filter>API Implementation</Filter>
-    </ClCompile>
-    <ClCompile Include="Wrappers\MonoClassWrapper.cpp">
-      <Filter>API Implementation</Filter>
-    </ClCompile>
     <ClCompile Include="Wrappers\MonoException.cpp">
+      <Filter>API Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="Wrappers\MonoArray.cpp">
+      <Filter>API Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="Wrappers\MonoAssembly.cpp">
+      <Filter>API Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="Wrappers\MonoClass.cpp">
+      <Filter>API Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="Wrappers\MonoMethod.cpp">
       <Filter>API Implementation</Filter>
     </ClCompile>
   </ItemGroup>

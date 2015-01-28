@@ -289,15 +289,14 @@
     </ClCompile>
     <ClCompile Include="ThunkTables.cpp" />
     <ClCompile Include="Wrappers\DefaultBoxinator.cpp" />
-    <ClCompile Include="Wrappers\MonoArrayWrapper.cpp" />
+    <ClCompile Include="Wrappers\MonoArray.cpp" />
     <ClCompile Include="Wrappers\MonoAssemblyCollection.cpp" />
-    <ClCompile Include="Wrappers\MonoAssemblyWrapper.cpp" />
-    <ClCompile Include="Wrappers\MonoClassCache.cpp" />
-    <ClCompile Include="Wrappers\MonoClassWrapper.cpp" />
+    <ClCompile Include="Wrappers\MonoAssembly.cpp" />
+    <ClCompile Include="Wrappers\MonoClass.cpp" />
     <ClCompile Include="Wrappers\MonoEvent.cpp" />
     <ClCompile Include="Wrappers\MonoException.cpp" />
     <ClCompile Include="Wrappers\MonoHandle.cpp" />
-    <ClCompile Include="Wrappers\MonoMethodWrapper.cpp" />
+    <ClCompile Include="Wrappers\MonoMethod.cpp" />
     <ClCompile Include="Wrappers\MonoProperty.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
