@@ -22,7 +22,7 @@ public:
 	//! Creates an instance of this class.
 	virtual mono::object CreateInstance(IMonoArray *args = nullptr);
 	//! Gets method that can accept arguments of specified types.
-	virtual IMonoMethod *GetMethod(const char *name, IMonoArray *types = nullptr);
+	virtual IMonoMethod *GetMethod(const char *name, List<TypeSpec> *types = nullptr);
 	//! Gets the first that matches given description.
 	virtual IMonoMethod *GetMethod(const char *name, int paramCount);
 	//! Gets the method that matches given description.
@@ -39,19 +39,7 @@ public:
 	virtual IMonoProperty *GetProperty(const char *name);
 	virtual IMonoEvent *GetEvent(const char *name);
 
-	virtual IMonoClass *GetNestedType(const char *name)
-	{
-		void *iter;
-		MonoClass *nestedType;
-		while (nestedType = mono_class_get_nested_types(this->wrappedClass, &iter))
-		{
-			if (strcmp(mono_class_get_name(nestedType), name) == 0)
-			{
-				return MonoClassCache::Wrap(nestedType);
-			}
-		}
-		return nullptr;
-	}
+	virtual IMonoClass *GetNestedType(const char *name);
 	//! Determines whether this class implements from specified class.
 	virtual bool Inherits(const char *nameSpace, const char *className);
 	//! Determines whether this class implements a certain interface.
@@ -63,13 +51,13 @@ public:
 
 	virtual const char *GetNameSpace();
 
+	VIRTUAL_API virtual const char *GetFullName();
+
 	virtual IMonoAssembly *GetAssembly();
 
 	virtual IMonoClass *GetBase();
 
 	virtual void *GetWrappedPointer();
-private:
-	bool ParametersMatch(MonoMethodSignature *sig, IMonoArray *pars);
 };
 
 //! Caches MonoClassWrapper objects.

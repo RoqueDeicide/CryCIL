@@ -1,11 +1,28 @@
 #pragma once
 
 #include "IMonoAliases.h"
+
+//! Allows to look for specific
+struct TypeSpec
+{
+	IMonoClass *Class;			//!< The class that is being specified.
+	bool IsByRef;				//!< Indicates whether this is a type that is passed by reference (with "ref" and "out" keywords in C#).
+	bool IsPointer;				//!< Indicates whether this is a pointer type.
+	TypeSpec(IMonoClass *klass, bool isByRef = false, bool isPointer = false)
+	{
+		this->Class = klass;
+		this->IsByRef = isByRef;
+		this->IsPointer = isPointer;
+	}
+};
+
 //! Defines interface of objects that wrap functionality of MonoClass type.
 struct IMonoClass : public IMonoFunctionalityWrapper
 {
 	//! Gets the name of this class.
 	__declspec(property(get = GetName)) const char *Name;
+	//! Gets full name of this class.
+	__declspec(property(get = GetName)) const char *FullName;
 	//! Gets the name space where this class is defined.
 	__declspec(property(get = GetNameSpace)) const char *NameSpace;
 	//! Gets assembly where this class is defined.
@@ -19,8 +36,8 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//! Gets method that can accept arguments of specified types.
 	//!
 	//! @param name  Name of the method to get.
-	//! @param types An array of arguments which types specify method signature to use.
-	VIRTUAL_API virtual IMonoMethod *GetMethod(const char *name, IMonoArray *types = nullptr) = 0;
+	//! @param types An array of types that specify method signature to use.
+	VIRTUAL_API virtual IMonoMethod *GetMethod(const char *name, List<TypeSpec> *types = nullptr) = 0;
 	//! Gets the first method that matches given description.
 	//!
 	//! @param name       Name of the method to find.
@@ -117,6 +134,7 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 
 	VIRTUAL_API virtual const char *GetName() = 0;
 	VIRTUAL_API virtual const char *GetNameSpace() = 0;
+	VIRTUAL_API virtual const char *GetFullName() = 0;
 	VIRTUAL_API virtual IMonoAssembly *GetAssembly() = 0;
 	VIRTUAL_API virtual IMonoClass *GetBase() = 0;
 };
