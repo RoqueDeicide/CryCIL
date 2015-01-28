@@ -16,6 +16,13 @@ public:
 	virtual mono::object Invoke
 	(
 		void *object,
+		mono::exception *exc = nullptr,
+		bool polymorph = false
+	);
+	//! Invokes this method.
+	virtual mono::object Invoke
+	(
+		void *object,
 		IMonoArray *params = nullptr,
 		mono::exception *exc = nullptr,
 		bool polymorph = false
@@ -36,4 +43,5 @@ public:
 	virtual int GetParameterCount();
 
 	virtual void *GetWrappedPointer();
+
 };

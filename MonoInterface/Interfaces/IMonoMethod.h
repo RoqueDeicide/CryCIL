@@ -177,59 +177,33 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	//! Gets number of arguments this method accepts.
 	__declspec(property(get = GetParameterCount)) int ParameterCount;
 
-	//! Invokes this method.
+	//! Invokes this method without any parameters.
 	//!
 	//! Since extension methods are static by their internal nature, you can pass null
 	//! as object parameter, and that can work, if extension method is not using the
 	//! instance. It's up to you to find uses for that minor detail.
 	//!
-	//! Examples:
+	//! @param object    Pointer to the instance to use, if this method is not
+	//!                  static, it can be null otherwise. If you want to invoke
+	//!                  this method on an instance of value type, you should either
+	//!                  pass the pointer to it in unmanaged memory, or unbox it
+	//!                  and pass the returned pointer.
+	//! @param exc       An optional pointer to the exception object that can hold a reference
+	//!                  the unhandled exception that could have been raised during method's
+	//!                  execution.
+	//! @param polymorph Indicates whether we need to invoke a virtual method,
+	//!                  that is specific to the instance.
 	//!
-	//! @code{.cpp}
-	//! // Get System.Int32 class.
-	//! IMonoClass *int32Class = MonoEnv->CoreLibrary->GetClass("System", "Int32");
-	//! // Get static method "Parse".
-	//! IMonoMethod *parseMethod = int32Class->GetMethod("Parse", "System.String");
-	//! // Invoke it using local array of parameters.
-	//! void *stackedParams[1];
-	//! stackedParams[0] = MonoEnv->ToManagedString("123");
-	//! mono::int32 parsedBoxedNumber = parseMethod->Invoke(nullptr, stackedParams);
+	//! @returns A reference to the result of execution, if no unhandled exception was thrown.
+	//!          If result is of value-type, it's boxed.
+	//! @example DoxygenExampleFiles\MonoMethodInvocations.h
+	VIRTUAL_API virtual mono::object Invoke
+		(void *object, mono::exception *exc = nullptr, bool polymorph = false) = 0;
+	//! Invokes this method.
 	//!
-	//! // Get "ToString" method, note that, that is a virtual method.
-	//! IMonoMethod *toStringMethod = int32Class->GetMethod("ToString", 0);
-	//! // Unbox the result of previous invocation.
-	//! int parsedNumber = Unbox<int>(parsedBoxedNumber);
-	//! // Invoke it without polymorphing it. Note passing a pointer to a local variable as an instance.
-	//! mono::string resultNoPolymorphism = toStringMethod->Invoke(&parsedNumber, nullptr, false);
-	//! // Invoke it with polymorphing.
-	//! mono::string resultPolymorphism = toStringMethod->Invoke(&parsedNumber, nullptr, true);
-	//! // Convert results to Null-terminated strings.
-	//! const char *resultNoPolymorphismNT = MonoEnv->ToNativeString(resultNoPolymorphism);
-	//! const char *resultPolymorphismNT =   MonoEnv->ToNativeString(resultPolymorphism);
-	//! // This will print "System.String".
-	//! CryLogAlways(resultNoPolymorphismNT);
-	//! // This will print "123".
-	//! CryLogAlways(resultPolymorphismNT);
-	//! // Delete string that are no use anymore.
-	//! delete resultNoPolymorphismNT;
-	//! delete resultPolymorphismNT;
-	//!
-	//! // Create an array that will be used to get the method and invoke it.
-	//! void *setRotationParams[2];
-	//! float angle = 1.0f;							// Angle of rotation.
-	//! Vec3 axis(0, 0, 1);							// Axis of rotation.
-	//! setRotationParams[0] = &angle;
-	//! setRotationParams[1] = &axis;
-	//! // Get Matrix33 class.
-	//! IMonoClass *matrix33Class = MonoEnv->Cryambly->GetClass("CryCil.Mathematics", "Matrix33");
-	//! // Get "SetRotationAroundAxis" method.
-	//! IMonoMethod *setRotationMethod = matrix33Class->GetMethod("SetRotationAroundAxis", "System.Single,CryCil.Mathematics.Vector3");
-	//! // Create a matrix to invoke this method on.
-	//! Matrix33 mat;
-	//! mat.SetZero();
-	//! // Invoke it using the same array.
-	//! setRotationMethod->Invoke(&mat, setRotationParams);
-	//! @endcode
+	//! Since extension methods are static by their internal nature, you can pass null
+	//! as object parameter, and that can work, if extension method is not using the
+	//! instance. It's up to you to find uses for that minor detail.
 	//!
 	//! @param object    Pointer to the instance to use, if this method is not
 	//!                  static, it can be null otherwise. If you want to invoke
@@ -238,85 +212,41 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	//!                  and pass the returned pointer.
 	//! @param params    Pointer to the mono array of parameters to pass to the method.
 	//!                  Pass null, if method can accept no arguments.
+	//! @param exc       An optional pointer to the exception object that can hold a reference
+	//!                  the unhandled exception that could have been raised during method's
+	//!                  execution.
 	//! @param polymorph Indicates whether we need to invoke a virtual method,
 	//!                  that is specific to the instance.
+	//!
+	//! @returns A reference to the result of execution, if no unhandled exception was thrown.
+	//!          If result is of value-type, it's boxed.
+	//! @example DoxygenExampleFiles\MonoMethodInvocations.h
 	VIRTUAL_API virtual mono::object Invoke
-		(
-		void *object,
-		IMonoArray *params = nullptr,
-		mono::exception *exc = nullptr,
-		bool polymorph = false
-		) = 0;
+		(void *object, IMonoArray *params, mono::exception *exc = nullptr, bool polymorph = false) = 0;
 	//! Invokes this method.
 	//!
 	//! Since extension methods are static by their internal nature, you can pass null
 	//! as object parameter, and that can work, if extension method is not using the
 	//! instance. It's up to you to find uses for that minor detail.
 	//!
-	//! Examples:
+	//! @param object    Pointer to the instance to use, if this method is not
+	//!                  static, it can be null otherwise. If you want to invoke
+	//!                  this method on an instance of value type, you should either
+	//!                  pass the pointer to it in unmanaged memory, or unbox it
+	//!                  and pass the returned pointer.
+	//! @param params    Pointer to the array of parameters to pass to the method.
+	//!                  Pass null, if method can accept no arguments.
+	//! @param exc       An optional pointer to the exception object that can hold a reference
+	//!                  the unhandled exception that could have been raised during method's
+	//!                  execution.
+	//! @param polymorph Indicates whether we need to invoke a virtual method,
+	//!                  that is specific to the instance.
 	//!
-	//! @code{.cpp}
-	//! // Get System.Int32 class.
-	//! IMonoClass *int32Class = MonoEnv->CoreLibrary->GetClass("System", "Int32");
-	//! // Get static method "Parse".
-	//! IMonoMethod *parseMethod = int32Class->GetMethod("Parse", "System.String");
-	//! // Invoke it using object[] array of parameters.
-	//! IMonoArray *parseParams[1];
-	//! parseParams->At<mono::string>(0) = MonoEnv->ToManagedString("123");
-	//! mono::int32 parsedBoxedNumber = parseMethod->Invoke(nullptr, parseParams);
-	//!
-	//! // Get "ToString" method, note that, that is a virtual method.
-	//! IMonoMethod *toStringMethod = int32Class->GetMethod("ToString", 0);
-	//! // Unbox the result of previous invocation.
-	//! int parsedNumber = Unbox<int>(parsedBoxedNumber);
-	//! // Invoke it without polymorphing it. Note passing a pointer to a local variable as an instance.
-	//! mono::string resultNoPolymorphism = toStringMethod->Invoke(&parsedNumber, nullptr, false);
-	//! // Invoke it with polymorphing.
-	//! mono::string resultPolymorphism = toStringMethod->Invoke(&parsedNumber, nullptr, true);
-	//! // Convert results to Null-terminated strings.
-	//! const char *resultNoPolymorphismNT = MonoEnv->ToNativeString(resultNoPolymorphism);
-	//! const char *resultPolymorphismNT =   MonoEnv->ToNativeString(resultPolymorphism);
-	//! // This will print "System.String".
-	//! CryLogAlways(resultNoPolymorphismNT);
-	//! // This will print "123".
-	//! CryLogAlways(resultPolymorphismNT);
-	//! // Delete string that are no use anymore.
-	//! delete resultNoPolymorphismNT;
-	//! delete resultPolymorphismNT;
-	//!
-	//! // Create an array that will be used to get the method and invoke it.
-	//! IMonoArray *setRotationParams = MonoEnv->CreateArray(2, true);
-	//! setRotationParams->At<mono::float32>(0) = Box(1.0f);			// Angle of rotation.
-	//! setRotationParams->At<mono::vector3>(1) = Box(Vec3(0, 0, 1));	// Axis of rotation.
-	//! // Get Matrix33 class.
-	//! IMonoClass *matrix33Class = MonoEnv->Cryambly->GetClass("CryCil.Mathematics", "Matrix33");
-	//! // Get "SetRotationAroundAxis" method.
-	//! IMonoMethod *setRotationMethod = matrix33Class->GetMethod("SetRotationAroundAxis", setRotationParams);
-	//! // Create a matrix to invoke this method on.
-	//! Matrix33 mat;
-	//! mat.SetZero();
-	//! // Invoke it using the same array.
-	//! setRotationMethod->Invoke(&mat, setRotationParams);
-	//! // Release parameters array so GC can collect it.
-	//! setRotationParams->Release();
-	//! @endcode
-	//!
-	//! @param object     Pointer to the instance to use, if this method is not
-	//!                   static, it can be null otherwise. If you want to invoke
-	//!                   this method on an instance of value type, you should either
-	//!                   pass the pointer to it in unmanaged memory, or unbox it
-	//!                   and pass the returned pointer.
-	//! @param params     Pointer to the array of parameters to pass to the method.
-	//!                   Pass null, if method can accept no arguments.
-	//! @param polymorph  Indicates whether we need to invoke a virtual method,
-	//!                   that is specific to the instance.
+	//! @returns A reference to the result of execution, if no unhandled exception was thrown.
+	//!          If result is of value-type, it's boxed.
+	//! @example DoxygenExampleFiles\MonoMethodInvocations.h
 	VIRTUAL_API virtual mono::object Invoke
-		(
-		void *object,
-		void **params = nullptr,
-		mono::exception *exc = nullptr,
-		bool polymorph = false
-		) = 0;
+		(void *object, void **params, mono::exception *exc = nullptr, bool polymorph = false) = 0;
 
 	VIRTUAL_API virtual void *GetThunk() = 0;
 	VIRTUAL_API virtual const char *GetName() = 0;

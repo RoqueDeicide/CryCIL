@@ -205,6 +205,7 @@
     <ClInclude Include="API_ImplementationHeaders.h" />
     <ClInclude Include="CryCilHeader.h" />
     <ClInclude Include="DoxygenExampleFiles\ListenerExample.h" />
+    <ClInclude Include="DoxygenExampleFiles\MonoMethodInvocations.h" />
     <ClInclude Include="DoxygenExampleFiles\UnmanagedThunkExample.h" />
     <ClInclude Include="Engine\DirectoryStructure.h" />
     <ClInclude Include="Geometry\BspNode.h" />

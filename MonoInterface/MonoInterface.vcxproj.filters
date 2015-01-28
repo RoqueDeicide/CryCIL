@@ -130,6 +130,9 @@
     <ClInclude Include="Interfaces\IMonoMethod.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="DoxygenExampleFiles\MonoMethodInvocations.h">
+      <Filter>DoxygenExampleFiles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -163,16 +166,7 @@
     <ClCompile Include="Wrappers\MonoClassCache.cpp">
       <Filter>API Implementation</Filter>
     </ClCompile>
-    <ClCompile Include="Wrappers\MonoClassWrapper.cpp">
-      <Filter>API Implementation</Filter>
-    </ClCompile>
-    <ClCompile Include="Wrappers\MonoMethodWrapper.cpp">
-      <Filter>API Implementation</Filter>
-    </ClCompile>
     <ClCompile Include="Wrappers\MonoHandle.cpp">
-      <Filter>API Implementation</Filter>
-    </ClCompile>
-    <ClCompile Include="Wrappers\MonoArrayWrapper.cpp">
       <Filter>API Implementation</Filter>
     </ClCompile>
     <ClCompile Include="Wrappers\MonoAssemblyCollection.cpp">
@@ -194,6 +188,15 @@
       <Filter>API Implementation</Filter>
     </ClCompile>
     <ClCompile Include="Wrappers\MonoEvent.cpp">
+      <Filter>API Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="Wrappers\MonoMethodWrapper.cpp">
+      <Filter>API Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="Wrappers\MonoArrayWrapper.cpp">
+      <Filter>API Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="Wrappers\MonoClassWrapper.cpp">
       <Filter>API Implementation</Filter>
     </ClCompile>
   </ItemGroup>

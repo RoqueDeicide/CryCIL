@@ -80,6 +80,35 @@ mono::object MonoMethodWrapper::Invoke
 	return (mono::object)result;
 }
 
+mono::object MonoMethodWrapper::Invoke(void *object, mono::exception *exc /*= nullptr*/, bool polymorph /*= false */)
+{
+	MonoMethod *methodToInvoke;
+	if (polymorph)
+	{
+		methodToInvoke =
+			mono_object_get_virtual_method((MonoObject *)object, this->wrappedMethod);
+	}
+	else
+	{
+		methodToInvoke = this->wrappedMethod;
+	}
+	MonoObject *exception;
+	MonoObject *result = mono_runtime_invoke(methodToInvoke, object, nullptr, &exception);
+	if (exception)
+	{
+		if (exc)
+		{
+			*exc = (mono::exception)exception;
+		}
+		else
+		{
+			MonoEnv->HandleException((mono::exception)exception);
+		}
+		return nullptr;
+	}
+	return (mono::object)result;
+}
+
 void *MonoMethodWrapper::GetThunk()
 {
 	return mono_method_get_unmanaged_thunk(this->wrappedMethod);
