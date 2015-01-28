@@ -37,14 +37,25 @@ public:
 		this->arrayPtr =
 			mono_array_new(mono_domain_get(), (MonoClass *)elementClass->GetWrappedPointer(), this->size);
 	}
-	MonoArrayWrapper(int size)
+	MonoArrayWrapper(int dimCount, unsigned int *lengths, IMonoClass *klass = nullptr, int *lowerBounds = nullptr)
 	{
-		this->size = size;
-
-		this->arrayPtr = mono_array_new(mono_domain_get(), mono_get_object_class(), this->size);
+		bool lowerBoundsAllocated = false;
+		if (!lowerBounds)
+		{
+			lowerBounds = new int[dimCount];
+			memset(lowerBounds, 0, dimCount * sizeof(int));
+			lowerBoundsAllocated = true;
+		}
+		MonoClass *arrayClass = mono_array_class_get((klass) ? (MonoClass *)klass->GetWrappedPointer() : mono_get_object_class(), dimCount);
+		this->arrayPtr =
+			mono_array_new_full(mono_domain_get(), arrayClass, lengths, lowerBounds);
 	}
 
 	virtual void *Item(int index);
+
+	virtual int GetLength(int dimensionIndex);
+
+	virtual int GetLowerBound(int dimensionIndex);
 
 	//! Returns number of elements in the array.
 	virtual int GetSize();
@@ -53,4 +64,7 @@ public:
 	//! Returns the size of one element in the memory.
 	int GetElementSize();
 	virtual void *GetWrappedPointer();
+
+	VIRTUAL_API virtual int GetRank();
+
 };

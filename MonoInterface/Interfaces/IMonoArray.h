@@ -77,6 +77,8 @@ struct IMonoArray : public IMonoFunctionalityWrapper
 {
 	//! Gets the length of the array.
 	__declspec(property(get = GetSize)) int Length;
+	//! Gets number of dimensions this array has.
+	__declspec(property(get = GetRank)) int Rank;
 	//! Gets the type of the elements of the array.
 	__declspec(property(get = GetElementClass)) IMonoClass *ElementClass;
 	//! Provides access to the item.
@@ -90,11 +92,22 @@ struct IMonoArray : public IMonoFunctionalityWrapper
 	//!          array of reference types, or a pointer to a struct that can be easily
 	//!          dereferenced, if this is an array of value types.
 	VIRTUAL_API virtual void *Item(int index) = 0;
+	//! Gets the length of the dimension of the array.
+	//!
+	//! @param dimensionIndex Zero-based index of the dimension which length to get.
+	VIRTUAL_API virtual int GetLength(int dimensionIndex) = 0;
+	//! Gets the lower bound of the dimension of the array.
+	//!
+	//! @param dimensionIndex Zero-based index of the dimension which lower bound to get.
+	VIRTUAL_API virtual int GetLowerBound(int dimensionIndex) = 0;
+	
+	
 	template<typename T> T& At(int index)
 	{
 		return *(T *)this->Item(index);
 	}
 
 	VIRTUAL_API virtual int GetSize() = 0;
+	VIRTUAL_API virtual int GetRank() = 0;
 	VIRTUAL_API virtual IMonoClass *GetElementClass() = 0;
 };

@@ -270,16 +270,16 @@ IMonoHandle *MonoInterface::WrapObject(mono::object obj)
 	return new MonoHandle(obj);
 }
 //! Creates object of type object[] with specified capacity.
-IMonoArray *MonoInterface::CreateArray(int capacity)
+IMonoArray *MonoInterface::CreateArray(int dimCount, unsigned int *lengths, IMonoClass *klass, int *lowerBounds)
 {
 	if (!this->running)
 	{
 		return nullptr;
 	}
-	return new MonoArrayWrapper(capacity);
+	return new MonoArrayWrapper(dimCount, lengths, klass, lowerBounds);
 }
 //! Creates object of specified type with specified capacity.
-IMonoArray *MonoInterface::CreateArray(IMonoClass *klass, int capacity)
+IMonoArray *MonoInterface::CreateArray(int capacity, IMonoClass *klass)
 {
 	if (!this->running)
 	{
@@ -444,7 +444,7 @@ void MonoInterface::RegisterDefaultListeners()
 	template<typename MethodSignature>
 	MethodSignature MonoInterface::GetMethodThunk(IMonoAssembly *assembly, const char *nameSpace, const char *className, const char *methodName, const char *params)
 	{
-		return (MethodSignature)assembly->Classes[nameSpace][className]
+		return (MethodSignature)assembly->GetClass(nameSpace, className)
 										->GetMethod(methodName, params)
 										->UnmanagedThunk;
 	}
