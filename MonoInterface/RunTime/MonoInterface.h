@@ -41,6 +41,7 @@ private:
 	IMonoGCHandle *managedInterface;
 	IMonoGC *gc;
 	IGameFramework *framework;
+	IMonoExceptions *exs;
 #pragma endregion
 public:
 #pragma region Property Methods
@@ -64,6 +65,8 @@ public:
 	{
 		return this->gc;
 	}
+
+	virtual IMonoExceptions *GetExceptionSystem();
 #pragma endregion
 #pragma region Construction
 	//! Initializes Mono run-time environment.

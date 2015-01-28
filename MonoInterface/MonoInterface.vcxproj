@@ -217,6 +217,7 @@
     <ClInclude Include="Interfaces\IMonoBox.h" />
     <ClInclude Include="Interfaces\IMonoClass.h" />
     <ClInclude Include="Interfaces\IMonoEvent.h" />
+    <ClInclude Include="Interfaces\IMonoException.h" />
     <ClInclude Include="Interfaces\IMonoFunctionalityWrapper.h" />
     <ClInclude Include="Interfaces\IMonoGC.h" />
     <ClInclude Include="Interfaces\IMonoGCHandle.h" />
@@ -247,6 +248,7 @@
     <ClInclude Include="Wrappers\MonoAssemblyCollection.h" />
     <ClInclude Include="Wrappers\MonoClass.h" />
     <ClInclude Include="Wrappers\MonoEvent.h" />
+    <ClInclude Include="Wrappers\MonoException.h" />
     <ClInclude Include="Wrappers\MonoGC.h" />
     <ClInclude Include="Wrappers\MonoGCHandle.h" />
     <ClInclude Include="Wrappers\MonoMethod.h" />
@@ -293,6 +295,7 @@
     <ClCompile Include="Wrappers\MonoClassCache.cpp" />
     <ClCompile Include="Wrappers\MonoClassWrapper.cpp" />
     <ClCompile Include="Wrappers\MonoEvent.cpp" />
+    <ClCompile Include="Wrappers\MonoException.cpp" />
     <ClCompile Include="Wrappers\MonoHandle.cpp" />
     <ClCompile Include="Wrappers\MonoMethodWrapper.cpp" />
     <ClCompile Include="Wrappers\MonoProperty.cpp" />

@@ -50,6 +50,11 @@ IGameFramework *MonoInterface::GetGameFramework()
 {
 	return this->framework;
 }
+
+IMonoExceptions *MonoInterface::GetExceptionSystem()
+{
+	return this->exs;
+}
 #pragma endregion
 #pragma region Construction
 //! Initializes Mono run-time environment.
@@ -60,9 +65,12 @@ MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener
 	, assemblies(nullptr)
 	, broadcaster(nullptr)
 	, gc(nullptr)
+	, exs(nullptr)
 	, framework(framework)
 {
 	this->gc = new MonoGC();
+	this->exs = new MonoExceptions();
+
 	this->assemblies = new MonoAssemblyCollection();
 	broadcaster = new EventBroadcaster();
 	// Register all initial listeners.

@@ -133,6 +133,12 @@
     <ClInclude Include="DoxygenExampleFiles\MonoMethodInvocations.h">
       <Filter>DoxygenExampleFiles</Filter>
     </ClInclude>
+    <ClInclude Include="Interfaces\IMonoException.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Wrappers\MonoException.h">
+      <Filter>API Implementation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -197,6 +203,9 @@
       <Filter>API Implementation</Filter>
     </ClCompile>
     <ClCompile Include="Wrappers\MonoClassWrapper.cpp">
+      <Filter>API Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="Wrappers\MonoException.cpp">
       <Filter>API Implementation</Filter>
     </ClCompile>
   </ItemGroup>

@@ -7,3 +7,4 @@
 #include "Wrappers/MonoHandle.h"
 #include "Wrappers/MonoMethod.h"
 #include "Wrappers/MonoGC.h"
+#include "Wrappers/MonoException.h"

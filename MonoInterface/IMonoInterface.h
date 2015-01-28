@@ -11,6 +11,7 @@
 #include "Interfaces/IMonoAssembly.h"
 #include "Interfaces/IMonoArray.h"
 #include "Interfaces/IMonoClass.h"
+#include "Interfaces/IMonoException.h"
 #include "Interfaces/IMonoMethod.h"
 #include "Interfaces/IMonoSystemListener.h"
 
@@ -281,6 +282,8 @@ struct IMonoInterface
 	__declspec(property(get = GetGC)) IMonoGC *GC;
 	//! Gets the pointer to IGameFramework implementation that is available to CryCIL.
 	__declspec(property(get = GetGameFramework)) IGameFramework *CryAction;
+	//! Gets the interface that provides access to all exceptions.
+	__declspec(property(get = GetExceptionSystem)) IMonoExceptions *Exceptions;
 
 	VIRTUAL_API virtual void *GetAppDomain() = 0;
 	VIRTUAL_API virtual IMonoAssemblyCollection *GetAssemblyCollection() = 0;
@@ -291,6 +294,7 @@ struct IMonoInterface
 	VIRTUAL_API virtual IDefaultBoxinator *GetDefaultBoxer() = 0;
 	VIRTUAL_API virtual IMonoGC *GetGC() = 0;
 	VIRTUAL_API virtual IGameFramework *GetGameFramework() = 0;
+	VIRTUAL_API virtual IMonoExceptions *GetExceptionSystem() = 0;
 };
 //! Signature of the only method that is exported by MonoInterface.dll
 typedef IMonoInterface *(*InitializeMonoInterface)(IGameFramework *, List<IMonoSystemListener *> *);
