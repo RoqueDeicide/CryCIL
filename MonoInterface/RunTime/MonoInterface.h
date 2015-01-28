@@ -89,9 +89,9 @@ public:
 	//! Creates a new Mono handle wrapper for given MonoObject.
 	virtual IMonoHandle *WrapObject(mono::object obj);
 	//! Creates object of type object[] with specified capacity.
-	virtual IMonoArray *CreateArray(int capacity);
+	virtual IMonoArray *CreateArray(int dimCount, unsigned int *lengths, IMonoClass *klass = nullptr, int *lowerBounds = nullptr);
 	//! Creates object of specified type with specified capacity.
-	virtual IMonoArray *CreateArray(IMonoClass *klass, int capacity);
+	virtual IMonoArray *CreateArray(int capacity, IMonoClass *klass = nullptr);
 	//! Wraps already existing Mono array.
 	virtual IMonoArray *WrapArray(mono::Array arrayHandle);
 #pragma endregion
