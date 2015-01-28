@@ -73,7 +73,7 @@
 //! method->Invoke(nullptr, pars);
 //!
 //! @endcode
-struct IMonoArray : public IMonoFunctionalityWrapper
+struct IMonoArray : public IMonoHandle
 {
 	//! Gets the length of the array.
 	__declspec(property(get = GetSize)) int Length;

@@ -65,6 +65,22 @@ public:
 	int GetElementSize();
 	virtual void *GetWrappedPointer();
 
-	VIRTUAL_API virtual int GetRank();
+	virtual int GetRank();
+
+	virtual mono::object Get();
+
+	virtual mono::object CallMethod(const char *name, IMonoArray *args);
+
+	virtual void GetField(const char *name, void *value);
+
+	virtual void SetField(const char *name, void *value);
+
+	virtual IMonoProperty *GetProperty(const char *name);
+
+	virtual IMonoEvent *GetEvent(const char *name);
+
+	virtual IMonoClass *GetClass();
+
+	virtual void *UnboxObject();
 
 };

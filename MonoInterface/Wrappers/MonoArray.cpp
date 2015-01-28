@@ -82,3 +82,58 @@ void *MonoArrayWrapper::GetWrappedPointer()
 {
 	return this->arrayPtr;
 }
+
+mono::object MonoArrayWrapper::Get()
+{
+	return (mono::object)this->arrayPtr;
+}
+
+mono::object MonoArrayWrapper::CallMethod(const char *name, IMonoArray *args)
+{
+	MonoObject *obj = (MonoObject *)this->Get();
+	MonoMethod *method =
+		mono_class_get_method_from_name(mono_object_get_class((MonoObject *)this->arrayPtr), name, args->Length);
+	MonoObject *exception = nullptr;
+	MonoObject *result = mono_runtime_invoke_array
+		(method, obj, (MonoArray *)args->GetWrappedPointer(), &exception);
+	if (exception)
+	{
+		MonoEnv->HandleException((mono::object)exception);
+	}
+	else
+	{
+		return (mono::object)result;
+	}
+	return nullptr;
+}
+
+void MonoArrayWrapper::GetField(const char *name, void *value)
+{
+	return this->GetClass()->GetField(this->Get(), name, value);
+}
+
+void MonoArrayWrapper::SetField(const char *name, void *value)
+{
+	this->GetClass()->SetField(this->Get(), name, value);
+}
+
+IMonoProperty *MonoArrayWrapper::GetProperty(const char *name)
+{
+	return this->GetClass()->GetProperty(name);
+}
+
+IMonoEvent *MonoArrayWrapper::GetEvent(const char *name)
+{
+	return this->GetClass()->GetEvent(name);
+}
+
+IMonoClass *MonoArrayWrapper::GetClass()
+{
+	return MonoClassCache::Wrap(mono_object_get_class((MonoObject *)this->arrayPtr));
+}
+
+void *MonoArrayWrapper::UnboxObject()
+{
+	gEnv->pLog->LogError("Attempt to unbox an array object was made.");
+	return nullptr;
+}
