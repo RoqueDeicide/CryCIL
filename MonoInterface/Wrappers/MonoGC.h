@@ -9,41 +9,44 @@
 struct MonoGC : public IMonoGC
 {
 	MonoGC() {}
-	VIRTUAL_API virtual void Collect(int generation = -1)
+	virtual void Collect(int generation = -1)
 	{
 		mono_gc_collect(generation);
 	}
 
-	VIRTUAL_API virtual IMonoGCHandle *Hold(mono::object obj)
+	virtual IMonoGCHandle *Hold(mono::object obj)
 	{
 		if (obj)
 		{
 			return new MonoGCHandleWeak(obj);
 		}
+		return nullptr;
 	}
 
-	VIRTUAL_API virtual IMonoGCHandle *Keep(mono::object obj)
+	virtual IMonoGCHandle *Keep(mono::object obj)
 	{
 		if (obj)
 		{
 			return new MonoGCHandleKeeper(obj);
 		}
+		return nullptr;
 	}
 
-	VIRTUAL_API virtual IMonoGCHandle *Pin(mono::object obj)
+	virtual IMonoGCHandle *Pin(mono::object obj)
 	{
 		if (obj)
 		{
 			return new MonoGCHandlePin(obj);
 		}
+		return nullptr;
 	}
 
-	VIRTUAL_API virtual int GetMaxGeneration()
+	virtual int GetMaxGeneration()
 	{
 		return mono_gc_max_generation();
 	}
 
-	VIRTUAL_API virtual __int64 GetHeapSize()
+	virtual __int64 GetHeapSize()
 	{
 		return mono_gc_get_heap_size();
 	}

@@ -59,9 +59,10 @@ MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener
 	, cryambly(nullptr)
 	, assemblies(nullptr)
 	, broadcaster(nullptr)
-	, gc()
+	, gc(nullptr)
 	, framework(framework)
 {
+	this->gc = new MonoGC();
 	this->assemblies = new MonoAssemblyCollection();
 	broadcaster = new EventBroadcaster();
 	// Register all initial listeners.

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "stdafx.h"
+#include "IMonoInterface.h"
 
 #include "Engine/DirectoryStructure.h"
 #include "MonoHeaders.h"
@@ -60,7 +60,7 @@ public:
 	virtual IDefaultBoxinator *GetDefaultBoxer();
 
 	virtual IGameFramework *GetGameFramework();
-	VIRTUAL_API virtual IMonoGC *GetGC()
+	virtual IMonoGC *GetGC()
 	{
 		return this->gc;
 	}

@@ -26,7 +26,7 @@ public:
 		{
 			return nullptr;
 		}
-		return new MonoHandle(mono_gchandle_get_target(this->handle));
+		return new MonoHandle((mono::object)mono_gchandle_get_target(this->handle));
 	}
 
 	VIRTUAL_API virtual mono::object GetObjectPointer()

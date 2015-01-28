@@ -6,3 +6,4 @@
 #include "Wrappers/MonoClass.h"
 #include "Wrappers/MonoHandle.h"
 #include "Wrappers/MonoMethod.h"
+#include "Wrappers/MonoGC.h"

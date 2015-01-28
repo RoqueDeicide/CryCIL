@@ -35,8 +35,7 @@
 #include <ISerialize.h>
 #include <IGameFramework.h>
 
-#include <mono/mini/jit.h>
-#include <mono/metadata/assembly.h>
+#include "MonoHeaders.h"
 
 #include "IMonoInterface.h"
 #include "Text.h"
