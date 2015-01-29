@@ -90,7 +90,7 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	//!        // This code region is the only place where the result of invocation is defined.
 	//!
 	//!        // Wrap the array.
-	//!        IMonoArray *vectorComponents = MonoEnv->WrapArray(componentsArray, true);
+	//!        IMonoArray *vectorComponents = MonoEnv->Objects->Arrays->Wrap(componentsArray, true);
 	//!        // Print the components.
 	//!        CryLogAlways("X component of the vector = %d", vectorComponents->At<float>(0));
 	//!        CryLogAlways("Y component of the vector = %d", vectorComponents->At<float>(1));
@@ -113,9 +113,9 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	//!
 	//! Invocation:
 	//! @code{.cpp}
-	//!    mono::vector2 value = Box(Vec2(10, 13));
-	//!    mono::vector2 min = Box(Vec2(13, 8));
-	//!    mono::vector2 max = Box(Vec2(30, 12));
+	//!    mono::vector2 value =  Box(Vec2(10, 13));
+	//!    mono::vector2 min =    Box(Vec2(13, 8));
+	//!    mono::vector2 max =    Box(Vec2(30, 12));
 	//!    mono::vector2 result = Box(Vec2(0, 0));	// Box default values when using "out" parameters.
 	//!                                           	// Otherwise expect the program to crash.
 	//!    mono::exception exception;
@@ -151,7 +151,7 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	//! Invocation:
 	//! @code{.cpp}
 	//!    mono::vector3 instance = Box(Vec3(10, 13, 0));
-	//!    mono::vector3 axis = Box(Vec3(0, 0, 1));
+	//!    mono::vector3 axis =     Box(Vec3(0, 0, 1));
 	//!    mono::exception exception;
 	//!    mono::vector3 result = getRotated(instance, axis, PI, &exception);
 	//!    if (exception)

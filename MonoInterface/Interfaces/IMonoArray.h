@@ -15,7 +15,10 @@
 //! @code{.cpp}
 //!
 //! // Create the array. Specify the class and length
-//! IMonoArray *array = MonoEnv->CreateArray(MonoEnv->CoreLibrary->GetClass("System", "Int32"), 10);
+//! IMonoArray *array = MonoEnv->Objects->Arrays->Create
+//!                     (
+//!                         MonoEnv->CoreLibrary->GetClass("System", "Int32"), 10
+//!                     );
 //!
 //! // Fill it.
 //! for (int i = 0; i < array->Length; i++)
@@ -30,7 +33,7 @@
 //! @code{.cpp}
 //!
 //! // Get the array and immediately wrap it.
-//! IMonoArray *array = MonoEnv->WrapArray(GetArray());
+//! IMonoArray *array = MonoEnv->Objects->Arrays->Wrap(GetArray());
 //!
 //! // Let's say, we've got the array of text information. Specifically, with 3 objects in it.
 //! CryLogAlways(array->ElementClass->Name);		// Prints "String".
@@ -51,14 +54,14 @@
 //! @code{.cpp}
 //!
 //! // When creating object[] array, we don't need to specify the class.
-//! IMonoArray *pars = MonoEnv->CreateArray(4);
+//! IMonoArray *pars = MonoEnv->Objects->Arrays->Create(4);
 //!
 //! // We can put anything into those things, however any value-type objects must be boxed
 //! // manually prior to insertion.
-//! pars->At<mono::string>(0) = ToMonoString("Some text");
+//! pars->At<mono::string>(0) =  ToMonoString("Some text");
 //! pars->At<mono::vector2>(1) = Box(Vec2(10, 20));
 //! pars->At<mono::vector2>(2) = Box(Vec2(20, 10));
-//! pars->At<mono::object>(3) = MonoEnv->CreateObject(SomeAssembly, "Boo", "Foo");
+//! pars->At<mono::object>(3) =  MonoEnv->Objects->Create(SomeAssembly, "Boo", "Foo");
 //!
 //! // Invoke the method using this array.
 //! // Method's parameters: System.String, CryCil.Geometry.Vector2, CryCil.Geometry.Vector2, Boo.Foo.
