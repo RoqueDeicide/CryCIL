@@ -51,9 +51,9 @@ IGameFramework *MonoInterface::GetGameFramework()
 	return this->framework;
 }
 
-IMonoExceptions *MonoInterface::GetExceptionSystem()
+IMonoObjects *MonoInterface::GetObjects()
 {
-	return this->exs;
+	return this->objs;
 }
 #pragma endregion
 #pragma region Construction
@@ -64,12 +64,10 @@ MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener
 	, cryambly(nullptr)
 	, assemblies(nullptr)
 	, broadcaster(nullptr)
-	, gc(nullptr)
-	, exs(nullptr)
 	, framework(framework)
 {
 	this->gc = new MonoGC();
-	this->exs = new MonoExceptions();
+	this->objs = new MonoObjects();
 
 	this->assemblies = new MonoAssemblyCollection();
 	broadcaster = new EventBroadcaster();
@@ -219,7 +217,7 @@ void MonoInterface::Shutdown()
 	
 	delete this->assemblies;
 	delete this->gc;
-	delete this->exs;
+	delete this->objs;
 	
 	CryLogAlways("Shutting down jit.");
 	
@@ -232,80 +230,6 @@ void MonoInterface::Shutdown()
 	CryLogAlways("Deleting broadcaster.");
 	
 	delete this->broadcaster;
-}
-#pragma endregion
-#pragma region String Conversions
-//! Converts given null-terminated string to Mono managed object.
-mono::string MonoInterface::ToManagedString(const char *text)
-{
-	if (!this->running)
-	{
-		return nullptr;
-	}
-	return (mono::string)mono_string_new(this->appDomain, text);
-}
-//! Converts given managed string to null-terminated one.
-const char *MonoInterface::ToNativeString(mono::string text)
-{
-	if (!this->running)
-	{
-		return nullptr;
-	}
-	
-	const char *monoNativeText = mono_string_to_utf8((MonoString *)text);
-	
-	ConstructiveText nativeText(monoNativeText);
-	
-	mono_free((void *)monoNativeText);
-	
-	return nativeText.ToNTString();
-}
-#pragma endregion
-#pragma region Objects and Arrays
-//! Creates a new wrapped MonoObject using constructor with specific parameters.
-mono::object MonoInterface::CreateObject(IMonoAssembly *assembly, const char *name_space, const char *class_name, IMonoArray *params)
-{
-	if (!this->running)
-	{
-		return nullptr;
-	}
-	return assembly->GetClass(class_name, name_space)->CreateInstance(params);
-}
-//! Creates a new Mono handle wrapper for given MonoObject.
-IMonoHandle *MonoInterface::WrapObject(mono::object obj)
-{
-	if (!this->running)
-	{
-		return nullptr;
-	}
-	return new MonoHandle(obj);
-}
-//! Creates object of type object[] with specified capacity.
-IMonoArray *MonoInterface::CreateArray(int dimCount, unsigned int *lengths, IMonoClass *klass, int *lowerBounds)
-{
-	if (!this->running)
-	{
-		return nullptr;
-	}
-	return new MonoArrayWrapper(dimCount, lengths, klass, lowerBounds);
-}
-//! Creates object of specified type with specified capacity.
-IMonoArray *MonoInterface::CreateArray(int capacity, IMonoClass *klass)
-{
-	if (!this->running)
-	{
-		return nullptr;
-	}
-	return new MonoArrayWrapper(klass, capacity);
-}
-//! Wraps already existing Mono array.
-IMonoArray *MonoInterface::WrapArray(mono::Array arrayHandle)
-{
-	if (!this->running)
-	{
-		return nullptr;
-	}
-	return new MonoArrayWrapper((MonoArray *)arrayHandle);
 }
 #pragma endregion
 #pragma region Interaction with Run-Time
@@ -332,17 +256,6 @@ void MonoInterface::AddInternalCall(const char *nameSpace, const char *className
 	fullName << nameSpace << '.' << className << "::" << name;
 	
 	mono_add_internal_call(fullName.ToNTString(), functionPointer);
-}
-#pragma endregion
-#pragma region Unboxing
-//! Unboxes managed value-type object.
-void *MonoInterface::Unbox(mono::object value)
-{
-	if (!this->running)
-	{
-		return nullptr;
-	}
-	return mono_object_unbox((MonoObject *)value);
 }
 #pragma endregion
 #pragma region Listeners

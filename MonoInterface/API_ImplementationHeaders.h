@@ -8,3 +8,4 @@
 #include "Wrappers/MonoMethod.h"
 #include "Wrappers/MonoGC.h"
 #include "Wrappers/MonoException.h"
+#include "Wrappers/MonoObjects.h"

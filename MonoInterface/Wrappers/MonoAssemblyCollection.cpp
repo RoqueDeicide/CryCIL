@@ -23,7 +23,7 @@ VIRTUAL_API IMonoAssembly *MonoAssemblyCollection::Load(const char *path)
 	if (Pdb2MdbThunks::Convert)
 	{
 		mono::exception ex;
-		Pdb2MdbThunks::Convert(MonoEnv->ToManagedString(path), &ex);
+		Pdb2MdbThunks::Convert(ToMonoString(path), &ex);
 	}
 	MonoImageOpenStatus status;
 	MonoAssembly *assembly = mono_assembly_open(path, &status);

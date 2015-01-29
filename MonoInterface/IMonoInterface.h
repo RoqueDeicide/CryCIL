@@ -12,6 +12,7 @@
 #include "Interfaces/IMonoArray.h"
 #include "Interfaces/IMonoClass.h"
 #include "Interfaces/IMonoException.h"
+#include "Interfaces/IMonoObjects.h"
 #include "Interfaces/IMonoMethod.h"
 #include "Interfaces/IMonoSystemListener.h"
 
@@ -34,56 +35,6 @@ struct IMonoInterface
 	VIRTUAL_API virtual void RegisterFlowGraphNodes() = 0;
 	//! Shuts down Mono run-time environment.
 	VIRTUAL_API virtual void Shutdown() = 0;
-
-	//! Converts given null-terminated string to Mono managed object.
-	VIRTUAL_API virtual mono::string ToManagedString(const char *text) = 0;
-	//! Converts given managed string to null-terminated one.
-	VIRTUAL_API virtual const char *ToNativeString(mono::string text) = 0;
-
-	//! Creates a new MonoObject using constructor with specific parameters.
-	//!
-	//! @param assembly   Assembly where the type of the object is defined.
-	//! @param name_space Name space that contains the type of the object.
-	//! @param class_name Name of the type to use.
-	//! @param params     An array of parameters to pass to the constructor.
-	//!                   If null, default constructor will be used.
-	VIRTUAL_API virtual mono::object CreateObject
-		(IMonoAssembly *assembly,
-		const char *name_space, const char *class_name,
-		IMonoArray *params = nullptr) = 0;
-	//! Creates a new wrapper for given MonoObject.
-	//!
-	//! @param obj An object to wrap.
-	VIRTUAL_API virtual IMonoHandle *WrapObject(mono::object obj) = 0;
-	//! Creates object of specified type with specified capacity.
-	//!
-	//! Mono array objects are standard managed objects and are prone to GC.
-	//!
-	//! @param capacity Number of elements that can be held by the array.
-	//! @param klass    Pointer to the class that will represent objects within the array.
-	//!                 If null, System.Object will be used.
-	VIRTUAL_API virtual IMonoArray *CreateArray(int capacity, IMonoClass *klass = nullptr) = 0;
-	//! Creates a multi-dimensional array.
-	//!
-	//! Mono array objects are standard managed objects and are prone to GC.
-	//!
-	//! @param dimCount    Number of dimensions of the array.
-	//! @param lengths     An array of lengths of dimensions.
-	//! @param klass       Type of elements of the array. If null, System.Object will be used.
-	//! @param lowerBounds An optional array of lower bounds of dimensions. If null, zeros will
-	//!                    be used.
-	VIRTUAL_API virtual IMonoArray *CreateArray
-		(int dimCount, unsigned int *lengths, IMonoClass *klass = nullptr, int *lowerBounds = nullptr) = 0;
-	//! Wraps already existing Mono array.
-	//!
-	//! Mono array objects are standard managed objects and are prone to GC.
-	//!
-	//! @param arrayHandle Pointer to the array that needs to be wrapped.
-	VIRTUAL_API virtual IMonoArray *WrapArray(mono::Array arrayHandle) = 0;
-	//! Unboxes managed value-type object.
-	//!
-	//! @param value Value-type object to unbox.
-	VIRTUAL_API virtual void *Unbox(mono::object value) = 0;
 	//! Handles exception that occurred during managed method invocation.
 	//!
 	//! @param exception Exception object to handle.
@@ -282,8 +233,8 @@ struct IMonoInterface
 	__declspec(property(get = GetGC)) IMonoGC *GC;
 	//! Gets the pointer to IGameFramework implementation that is available to CryCIL.
 	__declspec(property(get = GetGameFramework)) IGameFramework *CryAction;
-	//! Gets the interface that provides access to all exceptions.
-	__declspec(property(get = GetExceptionSystem)) IMonoExceptions *Exceptions;
+	//! Gets the interface that provides access to Mono object-related functionality.
+	__declspec(property(get = GetObjects)) IMonoObjects *Objects;
 
 	VIRTUAL_API virtual void *GetAppDomain() = 0;
 	VIRTUAL_API virtual IMonoAssemblyCollection *GetAssemblyCollection() = 0;
@@ -294,7 +245,7 @@ struct IMonoInterface
 	VIRTUAL_API virtual IDefaultBoxinator *GetDefaultBoxer() = 0;
 	VIRTUAL_API virtual IMonoGC *GetGC() = 0;
 	VIRTUAL_API virtual IGameFramework *GetGameFramework() = 0;
-	VIRTUAL_API virtual IMonoExceptions *GetExceptionSystem() = 0;
+	VIRTUAL_API virtual IMonoObjects *GetObjects() = 0;
 };
 //! Signature of the only method that is exported by MonoInterface.dll
 typedef IMonoInterface *(*InitializeMonoInterface)(IGameFramework *, List<IMonoSystemListener *> *);
@@ -334,14 +285,14 @@ extern IMonoInterface *MonoEnv;
 //! @param ntString Null-terminated string which text to copy to managed string.
 inline mono::string ToMonoString(const char *ntString)
 {
-	return MonoEnv->ToManagedString(ntString);
+	return MonoEnv->Objects->Texts->ToManaged(ntString);
 }
 //! Creates native null-terminated string from managed one.
 //!
 //! @param monoString Reference to a managed string to convert.
 inline const char *ToNativeString(mono::string monoString)
 {
-	return MonoEnv->ToNativeString(monoString);
+	return MonoEnv->Objects->Texts->ToNative(monoString);
 }
 
 //! Boxing and unboxing are names of ways to marshal data to and from managed memory.

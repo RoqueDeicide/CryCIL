@@ -139,6 +139,30 @@
     <ClInclude Include="Wrappers\MonoException.h">
       <Filter>API Implementation</Filter>
     </ClInclude>
+    <ClInclude Include="Interfaces\IMonoTexts.h">
+      <Filter>Interfaces\ObjectSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\IMonoObjects.h">
+      <Filter>Interfaces\ObjectSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\IMonoArrays.h">
+      <Filter>Interfaces\ObjectSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\IMonoExceptions.h">
+      <Filter>Interfaces\ObjectSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Wrappers\MonoArrays.h">
+      <Filter>API Implementation\ObjectSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Wrappers\MonoExceptions.h">
+      <Filter>API Implementation\ObjectSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Wrappers\MonoObjects.h">
+      <Filter>API Implementation\ObjectSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Wrappers\MonoTexts.h">
+      <Filter>API Implementation\ObjectSystem</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -205,6 +229,18 @@
     <ClCompile Include="Wrappers\MonoMethod.cpp">
       <Filter>API Implementation</Filter>
     </ClCompile>
+    <ClCompile Include="Wrappers\MonoArrays.cpp">
+      <Filter>API Implementation\ObjectSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Wrappers\MonoExceptions.cpp">
+      <Filter>API Implementation\ObjectSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Wrappers\MonoObjects.cpp">
+      <Filter>API Implementation\ObjectSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Wrappers\MonoTexts.cpp">
+      <Filter>API Implementation\ObjectSystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">
@@ -239,6 +275,12 @@
     </Filter>
     <Filter Include="Interfaces">
       <UniqueIdentifier>{cc0739a3-eb94-42bc-a29f-b38e51c80ef0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interfaces\ObjectSystem">
+      <UniqueIdentifier>{dda76e2c-1c61-4148-8894-9a2d086dd170}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="API Implementation\ObjectSystem">
+      <UniqueIdentifier>{9e12d853-cbb0-41e7-b814-b2838d42f009}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

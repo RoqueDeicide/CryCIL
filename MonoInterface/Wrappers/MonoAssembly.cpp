@@ -52,7 +52,7 @@ MonoAssemblyWrapper::MonoAssemblyWrapper(const char *assemblyFile, bool &failed)
 	if (Pdb2MdbThunks::Convert)
 	{
 		mono::exception ex;
-		Pdb2MdbThunks::Convert(MonoEnv->ToManagedString(assemblyFile), &ex);
+		Pdb2MdbThunks::Convert(ToMonoString(assemblyFile), &ex);
 	}
 	MonoImageOpenStatus status;
 	this->assembly = mono_assembly_open(assemblyFile, &status);

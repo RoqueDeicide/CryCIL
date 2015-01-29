@@ -41,7 +41,7 @@ private:
 	IMonoGCHandle *managedInterface;
 	IMonoGC *gc;
 	IGameFramework *framework;
-	IMonoExceptions *exs;
+	IMonoObjects *objs;
 #pragma endregion
 public:
 #pragma region Property Methods
@@ -61,12 +61,13 @@ public:
 	virtual IDefaultBoxinator *GetDefaultBoxer();
 
 	virtual IGameFramework *GetGameFramework();
+
+	virtual IMonoObjects *GetObjects();
+
 	virtual IMonoGC *GetGC()
 	{
 		return this->gc;
 	}
-
-	virtual IMonoExceptions *GetExceptionSystem();
 #pragma endregion
 #pragma region Construction
 	//! Initializes Mono run-time environment.
@@ -80,33 +81,11 @@ public:
 	//! Shuts down Mono run-time environment.
 	virtual void Shutdown();
 #pragma endregion
-#pragma region String Conversions
-	//! Converts given null-terminated string to Mono managed object.
-	virtual mono::string ToManagedString(const char *text);
-	//! Converts given managed string to null-terminated one.
-	virtual const char *ToNativeString(mono::string text);
-#pragma endregion
-#pragma region Objects and Arrays
-	//! Creates a new wrapped MonoObject using constructor with specific parameters.
-	virtual mono::object CreateObject(IMonoAssembly *assembly, const char *name_space, const char *class_name, IMonoArray *params = nullptr);
-	//! Creates a new Mono handle wrapper for given MonoObject.
-	virtual IMonoHandle *WrapObject(mono::object obj);
-	//! Creates object of type object[] with specified capacity.
-	virtual IMonoArray *CreateArray(int dimCount, unsigned int *lengths, IMonoClass *klass = nullptr, int *lowerBounds = nullptr);
-	//! Creates object of specified type with specified capacity.
-	virtual IMonoArray *CreateArray(int capacity, IMonoClass *klass = nullptr);
-	//! Wraps already existing Mono array.
-	virtual IMonoArray *WrapArray(mono::Array arrayHandle);
-#pragma endregion
 #pragma region Interaction with Run-Time
 	//! Handles exception that occurred during managed method invocation.
 	virtual void HandleException(mono::exception exception);
 	//! Registers a new internal call.
 	virtual void AddInternalCall(const char *name, const char *className, const char *nameSpace, void *functionPointer);
-#pragma endregion
-#pragma region Unboxing
-	//! Unboxes managed value-type object.
-	virtual void *Unbox(mono::object value);
 #pragma endregion
 #pragma region Listeners
 	//! Registers new object that receives notifications about CryCIL events.
