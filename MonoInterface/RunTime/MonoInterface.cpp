@@ -218,6 +218,8 @@ void MonoInterface::Shutdown()
 	gEnv->pSystem->GetISystemEventDispatcher()->RemoveListener(this);
 	
 	delete this->assemblies;
+	delete this->gc;
+	delete this->exs;
 	
 	CryLogAlways("Shutting down jit.");
 	
