@@ -6,6 +6,7 @@
 #include "Interfaces/IMonoProperty.h"
 #include "Interfaces/IMonoEvent.h"
 #include "Interfaces/IMonoHandle.h"
+#include "Interfaces/IMonoText.h"
 #include "Interfaces/IMonoGC.h"
 #include "Interfaces/IMonoGCHandle.h"
 #include "Interfaces/IMonoAssembly.h"

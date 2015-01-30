@@ -163,6 +163,12 @@
     <ClInclude Include="Wrappers\MonoGC.h">
       <Filter>API Implementation\GC</Filter>
     </ClInclude>
+    <ClInclude Include="Interfaces\IMonoText.h">
+      <Filter>Interfaces\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Wrappers\MonoText.h">
+      <Filter>API Implementation\Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -240,6 +246,9 @@
     </ClCompile>
     <ClCompile Include="Wrappers\MonoProperty.cpp">
       <Filter>API Implementation\Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Wrappers\MonoText.cpp">
+      <Filter>API Implementation\Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

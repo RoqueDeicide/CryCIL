@@ -229,6 +229,7 @@
     <ClInclude Include="Interfaces\IMonoObjects.h" />
     <ClInclude Include="Interfaces\IMonoProperty.h" />
     <ClInclude Include="Interfaces\IMonoSystemListener.h" />
+    <ClInclude Include="Interfaces\IMonoText.h" />
     <ClInclude Include="Interfaces\IMonoTexts.h" />
     <ClInclude Include="Interops\CryMarshal.h" />
     <ClInclude Include="Interops\LogPosting.h" />
@@ -261,6 +262,7 @@
     <ClInclude Include="Wrappers\MonoHandle.h" />
     <ClInclude Include="Wrappers\MonoObjects.h" />
     <ClInclude Include="Wrappers\MonoProperty.h" />
+    <ClInclude Include="Wrappers\MonoText.h" />
     <ClInclude Include="Wrappers\MonoTexts.h" />
   </ItemGroup>
   <ItemGroup>
@@ -309,6 +311,7 @@
     <ClCompile Include="Wrappers\MonoMethod.cpp" />
     <ClCompile Include="Wrappers\MonoObjects.cpp" />
     <ClCompile Include="Wrappers\MonoProperty.cpp" />
+    <ClCompile Include="Wrappers\MonoText.cpp" />
     <ClCompile Include="Wrappers\MonoTexts.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
