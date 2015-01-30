@@ -5,6 +5,7 @@
 #include "IMonoArrays.h"
 #include "IMonoTexts.h"
 #include "IMonoExceptions.h"
+#include "IMonoDelegates.h"
 
 //! Provides access to functions that create and wrap various Mono objects.
 struct IMonoObjects
@@ -13,8 +14,10 @@ struct IMonoObjects
 	__declspec(property(get = GetArrays)) IMonoArrays *Arrays;
 	//! Gets the object that allows creation of general Mono strings.
 	__declspec(property(get = GetTexts)) IMonoTexts *Texts;
-	//! Gets the object that allows creation and wrapping of Mono arrays.
+	//! Gets the object that allows creation and wrapping of Mono exceptions.
 	__declspec(property(get = GetExceptions)) IMonoExceptions *Exceptions;
+	//! Gets the object that allows creation and wrapping of Mono arrays.
+	__declspec(property(get = GetDelegates)) IMonoDelegates *Delegates;
 
 	//! Creates a new MonoObject using constructor with specific parameters.
 	//!
@@ -39,4 +42,5 @@ struct IMonoObjects
 	VIRTUAL_API virtual IMonoArrays *GetArrays() = 0;
 	VIRTUAL_API virtual IMonoTexts *GetTexts() = 0;
 	VIRTUAL_API virtual IMonoExceptions *GetExceptions() = 0;
+	VIRTUAL_API virtual IMonoDelegates *GetDelegates() = 0;
 };

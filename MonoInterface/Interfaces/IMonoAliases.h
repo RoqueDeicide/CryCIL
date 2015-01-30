@@ -152,16 +152,16 @@ namespace mono
 	OBJECT_NAME typedef object float64;
 	//! Represents a reference to a boxed precise 16-byte floating-point number.
 	OBJECT_NAME typedef object decimal;
-	//! Represents a reference to a managed object passed to internal call via ref keyword.
-	OBJECT_NAME typedef object ref_param;
-	//! Represents a reference to a managed object passed to internal call via out keyword.
-	OBJECT_NAME typedef object out_param;
+	//! Represents a reference a delegate.
+	OBJECT_NAME typedef object delegat;
 	//! Represents a reference to a managed thread interface.
 	OBJECT_NAME typedef object Thread;
 	//! Represents a reference to a managed exception object.
 	OBJECT_NAME typedef object exception;
 	//! Represents a reference to a managed System.Type object.
 	OBJECT_NAME typedef object type;
+	//! Represents a reference an object of type System.Reflection.MethodInfo.
+	OBJECT_NAME typedef object method;
 	//! Represents a reference to a managed array object.
 	OBJECT_NAME typedef object Array;
 	//! Represents a reference to a managed System.Reflection.Assembly object.

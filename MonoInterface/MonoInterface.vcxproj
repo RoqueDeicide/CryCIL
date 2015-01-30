@@ -217,6 +217,7 @@
     <ClInclude Include="Interfaces\IMonoAssembly.h" />
     <ClInclude Include="Interfaces\IMonoBox.h" />
     <ClInclude Include="Interfaces\IMonoClass.h" />
+    <ClInclude Include="Interfaces\IMonoDelegate.h" />
     <ClInclude Include="Interfaces\IMonoEvent.h" />
     <ClInclude Include="Interfaces\IMonoException.h" />
     <ClInclude Include="Interfaces\IMonoExceptions.h" />
@@ -231,6 +232,7 @@
     <ClInclude Include="Interfaces\IMonoSystemListener.h" />
     <ClInclude Include="Interfaces\IMonoText.h" />
     <ClInclude Include="Interfaces\IMonoTexts.h" />
+    <ClInclude Include="Interfaces\IMonoDelegates.h" />
     <ClInclude Include="Interops\CryMarshal.h" />
     <ClInclude Include="Interops\LogPosting.h" />
     <ClInclude Include="Interops\MeshOps.h" />
@@ -253,6 +255,8 @@
     <ClInclude Include="Wrappers\MonoAssembly.h" />
     <ClInclude Include="Wrappers\MonoAssemblyCollection.h" />
     <ClInclude Include="Wrappers\MonoClass.h" />
+    <ClInclude Include="Wrappers\MonoDelegate.h" />
+    <ClInclude Include="Wrappers\MonoDelegates.h" />
     <ClInclude Include="Wrappers\MonoEvent.h" />
     <ClInclude Include="Wrappers\MonoException.h" />
     <ClInclude Include="Wrappers\MonoExceptions.h" />
@@ -304,6 +308,8 @@
     <ClCompile Include="Wrappers\MonoAssemblyCollection.cpp" />
     <ClCompile Include="Wrappers\MonoAssembly.cpp" />
     <ClCompile Include="Wrappers\MonoClass.cpp" />
+    <ClCompile Include="Wrappers\MonoDelegate.cpp" />
+    <ClCompile Include="Wrappers\MonoDelegates.cpp" />
     <ClCompile Include="Wrappers\MonoEvent.cpp" />
     <ClCompile Include="Wrappers\MonoException.cpp" />
     <ClCompile Include="Wrappers\MonoExceptions.cpp" />

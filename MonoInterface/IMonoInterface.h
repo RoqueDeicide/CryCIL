@@ -13,8 +13,9 @@
 #include "Interfaces/IMonoArray.h"
 #include "Interfaces/IMonoClass.h"
 #include "Interfaces/IMonoException.h"
-#include "Interfaces/IMonoObjects.h"
 #include "Interfaces/IMonoMethod.h"
+#include "Interfaces/IMonoDelegate.h"
+#include "Interfaces/IMonoObjects.h"
 #include "Interfaces/IMonoSystemListener.h"
 
 // Use MONOINTERFACE_LIBRARY constant to get OS-specific name of MonoInterface library.
@@ -381,7 +382,7 @@ inline const char *ToNativeString(mono::string monoString)
 template<typename T>
 BOX_UNBOX T Unbox(mono::object value)
 {
-	return *(T *)MonoEnv->Unbox(value);
+	return *(T *)MonoEnv->Objects->Unbox(value);
 }
 //! Boxes a value.
 //!

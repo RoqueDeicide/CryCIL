@@ -4,6 +4,7 @@
 #include "MonoArrays.h"
 #include "MonoTexts.h"
 #include "MonoExceptions.h"
+#include "MonoDelegates.h"
 
 struct MonoObjects : public IMonoObjects
 {
@@ -11,18 +12,21 @@ private:
 	MonoArrays *arrays;
 	MonoTexts *texts;
 	MonoExceptions *exceptions;
+	MonoDelegates *delegates;
 public:
 	MonoObjects()
 	{
 		this->arrays = new MonoArrays();
 		this->texts = new MonoTexts();
 		this->exceptions = new MonoExceptions();
+		this->delegates = new MonoDelegates();
 	}
 	~MonoObjects()
 	{
 		delete this->arrays;
 		delete this->texts;
 		delete this->exceptions;
+		delete this->delegates;
 	}
 
 	virtual mono::object Create(IMonoAssembly *assembly, const char *name_space, const char *class_name, IMonoArray *params = nullptr);
@@ -36,5 +40,7 @@ public:
 	virtual IMonoTexts *GetTexts();
 
 	virtual IMonoExceptions *GetExceptions();
+
+	virtual IMonoDelegates *GetDelegates();
 
 };

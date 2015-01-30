@@ -61,9 +61,6 @@
     <ClInclude Include="Interops\CryMarshal.h">
       <Filter>Interops</Filter>
     </ClInclude>
-    <ClInclude Include="Interfaces\IMonoAliases.h">
-      <Filter>Interfaces</Filter>
-    </ClInclude>
     <ClInclude Include="Interfaces\IMonoSystemListener.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
@@ -169,6 +166,21 @@
     <ClInclude Include="Wrappers\MonoText.h">
       <Filter>API Implementation\Objects</Filter>
     </ClInclude>
+    <ClInclude Include="Interfaces\IMonoDelegate.h">
+      <Filter>Interfaces\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Wrappers\MonoDelegate.h">
+      <Filter>API Implementation\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Wrappers\MonoDelegates.h">
+      <Filter>API Implementation\ObjectSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\IMonoDelegates.h">
+      <Filter>Interfaces\ObjectSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\IMonoAliases.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -249,6 +261,12 @@
     </ClCompile>
     <ClCompile Include="Wrappers\MonoText.cpp">
       <Filter>API Implementation\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Wrappers\MonoDelegate.cpp">
+      <Filter>API Implementation\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Wrappers\MonoDelegates.cpp">
+      <Filter>API Implementation\ObjectSystems</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -32,3 +32,8 @@ IMonoExceptions *MonoObjects::GetExceptions()
 {
 	return this->exceptions;
 }
+
+IMonoDelegates *MonoObjects::GetDelegates()
+{
+	return this->delegates;
+}
