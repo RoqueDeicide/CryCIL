@@ -13,7 +13,11 @@ struct MonoHandle : public IMonoHandle
 private:
 	MonoClass *monoClass;
 	IMonoClass *type;
-	mono::object obj;
+	union
+	{
+		mono::object mObj;
+		MonoObject *obj;
+	};
 public:
 	MonoHandle()
 		: type(nullptr)
@@ -26,7 +30,7 @@ public:
 		: type(nullptr)
 		, monoClass(nullptr)
 	{
-		this->obj = obj;
+		this->mObj = obj;
 	}
 	//! Calls a Mono method associated with this object.
 	virtual mono::object CallMethod(const char *name, IMonoArray *args);
@@ -48,10 +52,10 @@ private:
 	{
 		if (!this->monoClass)
 		{
-			this->monoClass = mono_object_get_class((MonoObject *)this->Get());
+			this->monoClass = mono_object_get_class(this->obj);
 		}
 		return this->monoClass;
 	}
 
-	VIRTUAL_API virtual mono::object Get() { return this->obj; }
+	virtual mono::object Get() { return this->mObj; }
 };

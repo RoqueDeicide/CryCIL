@@ -3,12 +3,11 @@
 
 mono::object MonoHandle::CallMethod(const char *name, IMonoArray *args)
 {
-	MonoObject *obj = (MonoObject *)this->Get();
 	MonoMethod *method =
 		mono_class_get_method_from_name(this->getMonoClass(), name, args->Length);
 	MonoObject *exception = nullptr;
 	MonoObject *result = mono_runtime_invoke_array
-		(method, obj, (MonoArray *)args->GetWrappedPointer(), &exception);
+		(method, this->obj, (MonoArray *)args->GetWrappedPointer(), &exception);
 	if (exception)
 	{
 		MonoEnv->HandleException((mono::object)exception);
@@ -52,7 +51,7 @@ IMonoClass *MonoHandle::GetClass()
 
 void *MonoHandle::UnboxObject()
 {
-	return mono_object_unbox((MonoObject *)this->Get());
+	return mono_object_unbox(this->obj);
 }
 
 void *MonoHandle::GetWrappedPointer()
