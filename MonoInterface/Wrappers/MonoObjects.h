@@ -5,6 +5,7 @@
 #include "MonoTexts.h"
 #include "MonoExceptions.h"
 #include "MonoDelegates.h"
+#include "DefaultBoxinator.h"
 
 struct MonoObjects : public IMonoObjects
 {
@@ -13,6 +14,7 @@ private:
 	MonoTexts *texts;
 	MonoExceptions *exceptions;
 	MonoDelegates *delegates;
+	DefaultBoxinator *boxinator;
 public:
 	MonoObjects()
 	{
@@ -20,6 +22,7 @@ public:
 		this->texts = new MonoTexts();
 		this->exceptions = new MonoExceptions();
 		this->delegates = new MonoDelegates();
+		this->boxinator = new DefaultBoxinator();
 	}
 	~MonoObjects()
 	{
@@ -27,6 +30,7 @@ public:
 		delete this->texts;
 		delete this->exceptions;
 		delete this->delegates;
+		delete this->boxinator;
 	}
 
 	virtual mono::object Create(IMonoAssembly *assembly, const char *name_space, const char *class_name, IMonoArray *params = nullptr);
@@ -42,5 +46,7 @@ public:
 	virtual IMonoExceptions *GetExceptions();
 
 	virtual IMonoDelegates *GetDelegates();
+
+	virtual IDefaultBoxinator *GetBoxinator();
 
 };

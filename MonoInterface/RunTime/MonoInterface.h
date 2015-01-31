@@ -36,7 +36,6 @@ private:
 	IMonoAssembly *cryambly;					//! Extra pointer for Cryambly.
 	IMonoAssembly *corlib;						//! Extra pointer for mscorlib.
 	IMonoAssembly *pdb2mdb;
-	DefaultBoxinator boxer;
 
 	IMonoGCHandle *managedInterface;
 	IMonoGC *gc;
@@ -57,8 +56,6 @@ public:
 	virtual IMonoAssembly *GetCoreLibrary();
 
 	virtual bool GetInitializedIndication();
-
-	virtual IDefaultBoxinator *GetDefaultBoxer();
 
 	virtual IGameFramework *GetGameFramework();
 

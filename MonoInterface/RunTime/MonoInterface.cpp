@@ -41,11 +41,6 @@ bool MonoInterface::GetInitializedIndication()
 	return this->running;
 }
 
-IDefaultBoxinator *MonoInterface::GetDefaultBoxer()
-{
-	return &this->boxer;
-}
-
 IGameFramework *MonoInterface::GetGameFramework()
 {
 	return this->framework;

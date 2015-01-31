@@ -37,3 +37,8 @@ IMonoDelegates *MonoObjects::GetDelegates()
 {
 	return this->delegates;
 }
+
+IDefaultBoxinator *MonoObjects::GetBoxinator()
+{
+	return this->boxinator;
+}

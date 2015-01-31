@@ -229,8 +229,6 @@ struct IMonoInterface
 	__declspec(property(get = GetCoreLibrary)) IMonoAssembly *CoreLibrary;
 	//! Indicates whether Mono run-time environment is running.
 	__declspec(property(get = GetInitializedIndication)) bool IsRunning;
-	//! Returns the object that boxes some simple value types.
-	__declspec(property(get = GetDefaultBoxer)) IDefaultBoxinator *DefaultBoxer;
 	//! Gets the interface with Mono GC.
 	__declspec(property(get = GetGC)) IMonoGC *GC;
 	//! Gets the pointer to IGameFramework implementation that is available to CryCIL.
@@ -244,7 +242,6 @@ struct IMonoInterface
 	VIRTUAL_API virtual IMonoAssembly *GetPdbMdbAssembly() = 0;
 	VIRTUAL_API virtual IMonoAssembly *GetCoreLibrary() = 0;
 	VIRTUAL_API virtual bool GetInitializedIndication() = 0;
-	VIRTUAL_API virtual IDefaultBoxinator *GetDefaultBoxer() = 0;
 	VIRTUAL_API virtual IMonoGC *GetGC() = 0;
 	VIRTUAL_API virtual IGameFramework *GetGameFramework() = 0;
 	VIRTUAL_API virtual IMonoObjects *GetObjects() = 0;
@@ -387,113 +384,113 @@ BOX_UNBOX T Unbox(mono::object value)
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX inline mono::intptr BoxUPtr(void *value) { return MonoEnv->DefaultBoxer->BoxUPtr(value); }
+BOX_UNBOX inline mono::intptr BoxUPtr(void *value) { return MonoEnv->Objects->Boxer->BoxUPtr(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX inline mono::intptr BoxPtr(void *value) { return MonoEnv->DefaultBoxer->BoxPtr(value); }
+BOX_UNBOX inline mono::intptr BoxPtr(void *value) { return MonoEnv->Objects->Boxer->BoxPtr(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX inline mono::boolean Box(bool value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::boolean Box(bool value) { return MonoEnv->Objects->Boxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX inline mono::character Box(char value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::character Box(char value) { return MonoEnv->Objects->Boxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX inline mono::sbyte Box(signed char value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::sbyte Box(signed char value) { return MonoEnv->Objects->Boxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX inline mono::byte Box(unsigned char value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::byte Box(unsigned char value) { return MonoEnv->Objects->Boxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX inline mono::int16 Box(short value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::int16 Box(short value) { return MonoEnv->Objects->Boxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX inline mono::uint16 Box(unsigned short value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::uint16 Box(unsigned short value) { return MonoEnv->Objects->Boxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX inline mono::int32 Box(int value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::int32 Box(int value) { return MonoEnv->Objects->Boxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX inline mono::uint32 Box(unsigned int value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::uint32 Box(unsigned int value) { return MonoEnv->Objects->Boxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX inline mono::int64 Box(__int64 value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::int64 Box(__int64 value) { return MonoEnv->Objects->Boxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX inline mono::uint64 Box(unsigned __int64 value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::uint64 Box(unsigned __int64 value) { return MonoEnv->Objects->Boxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX inline mono::float32 Box(float value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::float32 Box(float value) { return MonoEnv->Objects->Boxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX inline mono::float64 Box(double value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::float64 Box(double value) { return MonoEnv->Objects->Boxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX inline mono::vector2 Box(Vec2 value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::vector2 Box(Vec2 value) { return MonoEnv->Objects->Boxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX inline mono::vector3 Box(Vec3 value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::vector3 Box(Vec3 value) { return MonoEnv->Objects->Boxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX inline mono::vector4 Box(Vec4 value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::vector4 Box(Vec4 value) { return MonoEnv->Objects->Boxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX inline mono::angles3 Box(Ang3 value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::angles3 Box(Ang3 value) { return MonoEnv->Objects->Boxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX inline mono::quaternion Box(Quat value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::quaternion Box(Quat value) { return MonoEnv->Objects->Boxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX inline mono::quat_trans Box(QuatT value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::quat_trans Box(QuatT value) { return MonoEnv->Objects->Boxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX inline mono::matrix33 Box(Matrix33 value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::matrix33 Box(Matrix33 value) { return MonoEnv->Objects->Boxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX inline mono::matrix34 Box(Matrix34 value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::matrix34 Box(Matrix34 value) { return MonoEnv->Objects->Boxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX inline mono::matrix44 Box(Matrix44 value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::matrix44 Box(Matrix44 value) { return MonoEnv->Objects->Boxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX inline mono::plane Box(Plane value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::plane Box(Plane value) { return MonoEnv->Objects->Boxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX inline mono::ray Box(Ray value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::ray Box(Ray value) { return MonoEnv->Objects->Boxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX inline mono::byte_color Box(ColorB value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::byte_color Box(ColorB value) { return MonoEnv->Objects->Boxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX inline mono::float32_color Box(ColorF value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::float32_color Box(ColorF value) { return MonoEnv->Objects->Boxer->Box(value); }
 //! Boxes a value.
 //!
 //! @param value Value to box.
-BOX_UNBOX inline mono::aabb Box(AABB value) { return MonoEnv->DefaultBoxer->Box(value); }
+BOX_UNBOX inline mono::aabb Box(AABB value) { return MonoEnv->Objects->Boxer->Box(value); }
 #pragma endregion

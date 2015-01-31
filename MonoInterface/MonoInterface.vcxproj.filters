@@ -109,9 +109,6 @@
     <ClInclude Include="Interfaces\IMonoArray.h">
       <Filter>Interfaces\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="Interfaces\IMonoBox.h">
-      <Filter>Interfaces\Objects</Filter>
-    </ClInclude>
     <ClInclude Include="Interfaces\IMonoException.h">
       <Filter>Interfaces\Objects</Filter>
     </ClInclude>
@@ -129,9 +126,6 @@
     </ClInclude>
     <ClInclude Include="Interfaces\IMonoMethod.h">
       <Filter>Interfaces\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Wrappers\DefaultBoxinator.h">
-      <Filter>API Implementation\Objects</Filter>
     </ClInclude>
     <ClInclude Include="Wrappers\MonoArray.h">
       <Filter>API Implementation\Objects</Filter>
@@ -180,6 +174,12 @@
     </ClInclude>
     <ClInclude Include="Interfaces\IMonoAliases.h">
       <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Wrappers\DefaultBoxinator.h">
+      <Filter>API Implementation\ObjectSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\IMonoBox.h">
+      <Filter>Interfaces\ObjectSystems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -235,9 +235,6 @@
     <ClCompile Include="Wrappers\MonoTexts.cpp">
       <Filter>API Implementation\ObjectSystems</Filter>
     </ClCompile>
-    <ClCompile Include="Wrappers\DefaultBoxinator.cpp">
-      <Filter>API Implementation\Objects</Filter>
-    </ClCompile>
     <ClCompile Include="Wrappers\MonoArray.cpp">
       <Filter>API Implementation\Objects</Filter>
     </ClCompile>
@@ -266,6 +263,9 @@
       <Filter>API Implementation\Objects</Filter>
     </ClCompile>
     <ClCompile Include="Wrappers\MonoDelegates.cpp">
+      <Filter>API Implementation\ObjectSystems</Filter>
+    </ClCompile>
+    <ClCompile Include="Wrappers\DefaultBoxinator.cpp">
       <Filter>API Implementation\ObjectSystems</Filter>
     </ClCompile>
   </ItemGroup>
