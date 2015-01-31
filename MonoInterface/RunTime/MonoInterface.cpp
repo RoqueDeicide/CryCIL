@@ -61,8 +61,6 @@ MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener
 	, broadcaster(nullptr)
 	, framework(framework)
 {
-	this->gc = new MonoGC();
-	this->objs = new MonoObjects();
 
 	this->assemblies = new MonoAssemblyCollection();
 	broadcaster = new EventBroadcaster();
@@ -127,6 +125,9 @@ MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener
 	);
 	
 	this->running = true;
+
+	this->gc = new MonoGC();
+	this->objs = new MonoObjects();
 
 #ifdef _DEBUG
 	
