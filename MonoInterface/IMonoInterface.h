@@ -15,6 +15,7 @@
 #include "Interfaces/IMonoException.h"
 #include "Interfaces/IMonoMethod.h"
 #include "Interfaces/IMonoDelegate.h"
+#include "Interfaces/IMonoThread.h"
 #include "Interfaces/IMonoObjects.h"
 #include "Interfaces/IMonoSystemListener.h"
 

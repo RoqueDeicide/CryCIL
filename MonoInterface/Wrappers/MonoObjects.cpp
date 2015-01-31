@@ -42,3 +42,8 @@ IDefaultBoxinator *MonoObjects::GetBoxinator()
 {
 	return this->boxinator;
 }
+
+IMonoThreads *MonoObjects::GetThreads()
+{
+	return this->threads;
+}

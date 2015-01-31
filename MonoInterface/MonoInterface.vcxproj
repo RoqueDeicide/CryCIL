@@ -233,6 +233,8 @@
     <ClInclude Include="Interfaces\IMonoText.h" />
     <ClInclude Include="Interfaces\IMonoTexts.h" />
     <ClInclude Include="Interfaces\IMonoDelegates.h" />
+    <ClInclude Include="Interfaces\IMonoThread.h" />
+    <ClInclude Include="Interfaces\IMonoThreads.h" />
     <ClInclude Include="Interops\CryMarshal.h" />
     <ClInclude Include="Interops\LogPosting.h" />
     <ClInclude Include="Interops\MeshOps.h" />
@@ -268,6 +270,8 @@
     <ClInclude Include="Wrappers\MonoProperty.h" />
     <ClInclude Include="Wrappers\MonoText.h" />
     <ClInclude Include="Wrappers\MonoTexts.h" />
+    <ClInclude Include="Wrappers\MonoThread.h" />
+    <ClInclude Include="Wrappers\MonoThreads.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CryEngineInterface.cpp" />
@@ -319,6 +323,8 @@
     <ClCompile Include="Wrappers\MonoProperty.cpp" />
     <ClCompile Include="Wrappers\MonoText.cpp" />
     <ClCompile Include="Wrappers\MonoTexts.cpp" />
+    <ClCompile Include="Wrappers\MonoThread.cpp" />
+    <ClCompile Include="Wrappers\MonoThreads.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

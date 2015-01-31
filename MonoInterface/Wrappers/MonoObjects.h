@@ -6,6 +6,7 @@
 #include "MonoExceptions.h"
 #include "MonoDelegates.h"
 #include "DefaultBoxinator.h"
+#include "MonoThreads.h"
 
 struct MonoObjects : public IMonoObjects
 {
@@ -15,6 +16,7 @@ private:
 	MonoExceptions *exceptions;
 	MonoDelegates *delegates;
 	DefaultBoxinator *boxinator;
+	MonoThreads *threads;
 public:
 	MonoObjects()
 	{
@@ -23,6 +25,7 @@ public:
 		this->exceptions = new MonoExceptions();
 		this->delegates = new MonoDelegates();
 		this->boxinator = new DefaultBoxinator();
+		this->threads = new MonoThreads();
 	}
 	~MonoObjects()
 	{
@@ -31,6 +34,7 @@ public:
 		delete this->exceptions;
 		delete this->delegates;
 		delete this->boxinator;
+		delete this->threads;
 	}
 
 	virtual mono::object Create(IMonoAssembly *assembly, const char *name_space, const char *class_name, IMonoArray *params = nullptr);
@@ -48,5 +52,7 @@ public:
 	virtual IMonoDelegates *GetDelegates();
 
 	virtual IDefaultBoxinator *GetBoxinator();
+
+	virtual IMonoThreads *GetThreads();
 
 };

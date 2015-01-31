@@ -181,6 +181,18 @@
     <ClInclude Include="Interfaces\IMonoBox.h">
       <Filter>Interfaces\ObjectSystems</Filter>
     </ClInclude>
+    <ClInclude Include="Wrappers\MonoThread.h">
+      <Filter>API Implementation\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\IMonoThread.h">
+      <Filter>Interfaces\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\IMonoThreads.h">
+      <Filter>Interfaces\ObjectSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="Wrappers\MonoThreads.h">
+      <Filter>API Implementation\ObjectSystems</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -266,6 +278,12 @@
       <Filter>API Implementation\ObjectSystems</Filter>
     </ClCompile>
     <ClCompile Include="Wrappers\DefaultBoxinator.cpp">
+      <Filter>API Implementation\ObjectSystems</Filter>
+    </ClCompile>
+    <ClCompile Include="Wrappers\MonoThread.cpp">
+      <Filter>API Implementation\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Wrappers\MonoThreads.cpp">
       <Filter>API Implementation\ObjectSystems</Filter>
     </ClCompile>
   </ItemGroup>
