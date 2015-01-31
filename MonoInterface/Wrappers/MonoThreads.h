@@ -3,9 +3,9 @@
 #include "IMonoInterface.h"
 #include "MonoThread.h"
 
-typedef void(*ThreadCtorThunk)(MonoObject *, mono::delegat, mono::exception *);
-typedef void(*ThreadCtorParamThunk)(MonoObject *, mono::delegat, mono::exception *);
-typedef void(*SleepThunk)(int, mono::exception *);
+typedef void(__stdcall *ThreadCtorThunk)(MonoObject *, mono::delegat, mono::exception *);
+typedef void(__stdcall *ThreadCtorParamThunk)(MonoObject *, mono::delegat, mono::exception *);
+typedef void(__stdcall *SleepThunk)(int, mono::exception *);
 
 struct MonoThreads : public IMonoThreads
 {

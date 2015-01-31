@@ -2,21 +2,21 @@
 
 #include "IMonoInterface.h"
 
-typedef void(*DetachThunk)(mono::object, mono::exception *);
-typedef void(*StartThunk)(mono::object, mono::exception *);
-typedef void(*StartObjThunk)(mono::object, mono::object, mono::exception *);
-typedef void(*AbortThunk)(mono::object, mono::exception *);
-typedef void(*JoinThunk)(mono::object, mono::exception *);
-typedef bool(*JoinIntThunk)(mono::object, int, mono::exception *);
+typedef void(__stdcall *DetachThunk)(mono::object, mono::exception *);
+typedef void(__stdcall *StartThunk)(mono::object, mono::exception *);
+typedef void(__stdcall *StartObjThunk)(mono::object, mono::object, mono::exception *);
+typedef void(__stdcall *AbortThunk)(mono::object, mono::exception *);
+typedef void(__stdcall *JoinThunk)(mono::object, mono::exception *);
+typedef bool(__stdcall *JoinIntThunk)(mono::object, int, mono::exception *);
 
-typedef mono::string(*GetNameThunk)(mono::object, mono::exception *);
-typedef void(*SetNameThunk)(mono::object, mono::string, mono::exception *);
-typedef int(*GetStateThunk)(mono::object, mono::exception *);
-typedef bool(*GetIsAliveThunk)(mono::object, mono::exception *);
-typedef bool(*GetBackgroundThunk)(mono::object, mono::exception *);
-typedef void(*SetBackgroundThunk)(mono::object, bool, mono::exception *);
-typedef int(*GetPriorityThunk)(mono::object, mono::exception *);
-typedef void(*SetPriorityThunk)(mono::object, int, mono::exception *);
+typedef mono::string(__stdcall *GetNameThunk)(mono::object, mono::exception *);
+typedef void(__stdcall *SetNameThunk)(mono::object, mono::string, mono::exception *);
+typedef int(__stdcall *GetStateThunk)(mono::object, mono::exception *);
+typedef bool(__stdcall *GetIsAliveThunk)(mono::object, mono::exception *);
+typedef bool(__stdcall *GetBackgroundThunk)(mono::object, mono::exception *);
+typedef void(__stdcall *SetBackgroundThunk)(mono::object, bool, mono::exception *);
+typedef int(__stdcall *GetPriorityThunk)(mono::object, mono::exception *);
+typedef void(__stdcall *SetPriorityThunk)(mono::object, int, mono::exception *);
 
 struct MonoThreadWrapper : public IMonoThread
 {

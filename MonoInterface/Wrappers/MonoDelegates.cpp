@@ -2,8 +2,8 @@
 
 #include "MonoDelegates.h"
 
-typedef mono::delegat(*CreateStaticDelegate)(MonoReflectionType *, MonoReflectionMethod *, mono::exception *);
-typedef mono::delegat(*CreateInstanceDelegate)(MonoReflectionType *, mono::object, MonoReflectionMethod *, mono::exception *);
+typedef mono::delegat(__stdcall *CreateStaticDelegate)(MonoReflectionType *, MonoReflectionMethod *, mono::exception *);
+typedef mono::delegat(__stdcall *CreateInstanceDelegate)(MonoReflectionType *, mono::object, MonoReflectionMethod *, mono::exception *);
 
 IMonoDelegate *MonoDelegates::Wrap(mono::delegat delegat)
 {
