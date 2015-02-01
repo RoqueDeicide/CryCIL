@@ -18,4 +18,7 @@ public:
 	virtual IMonoMethod *GetSetter();
 
 	virtual void *GetWrappedPointer();
+
+	virtual const char * GetName();
+
 };

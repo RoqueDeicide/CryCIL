@@ -17,3 +17,8 @@ void *MonoPropertyWrapper::GetWrappedPointer()
 	return this->prop;
 }
 
+const char *MonoPropertyWrapper::GetName()
+{
+	return mono_property_get_name(this->prop);
+}
+
