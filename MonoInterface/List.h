@@ -77,14 +77,7 @@ public:
 	}
 	~List()
 	{
-		if (this->elements)
-		{
-			//std::cout << "Trying to free elements:" << std::endl;
-			free(this->elements);
-			this->elements = nullptr;
-			this->length = 0;
-			this->capacity = 0;
-		}
+		this->Dispose();
 	}
 	//! Places an item at the end of this list.
 	//!
@@ -439,6 +432,18 @@ public:
 			index = this->length - 1;
 		}
 		return this->elements[index];
+	}
+	//! Releases memory held by this list.
+	void Dispose()
+	{
+		if (this->elements)
+		{
+			//std::cout << "Trying to free elements:" << std::endl;
+			free(this->elements);
+			this->elements = nullptr;
+			this->length = 0;
+			this->capacity = 0;
+		}
 	}
 private:
 	void Expand(int size)
