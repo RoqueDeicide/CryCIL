@@ -1,7 +1,7 @@
 #pragma once
 
 #include "IMonoInterface.h"
-#include "Wrappers/MonoGCHandle.h"
+#include "Implementation/MonoGCHandle.h"
 
 #include <mono/metadata/object.h>
 #include <mono/metadata/mono-gc.h>

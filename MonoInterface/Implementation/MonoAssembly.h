@@ -1,7 +1,7 @@
 #pragma once
 
 #include "IMonoInterface.h"
-#include "Wrappers/MonoClass.h"
+#include "Implementation/MonoClass.h"
 
 #include "MonoHeaders.h"
 

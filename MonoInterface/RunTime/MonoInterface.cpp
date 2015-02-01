@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "MonoInterface.h"
-#include "Wrappers/MonoAssemblyCollection.h"
+#include "Implementation/MonoAssemblyCollection.h"
 
 
 void HandleSignalAbort(int error)

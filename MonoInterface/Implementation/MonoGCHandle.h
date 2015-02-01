@@ -4,7 +4,7 @@
 
 #include "IMonoInterface.h"
 
-#include "Wrappers/MonoHandle.h"
+#include "Implementation/MonoHandle.h"
 struct MonoGCHandle : public IMonoGCHandle
 {
 protected:

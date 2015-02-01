@@ -3,7 +3,7 @@
 #include "IMonoInterface.h"
 #include "MonoHeaders.h"
 
-#include "Wrappers/MonoClass.h"
+#include "Implementation/MonoClass.h"
 
 #include <ISystem.h>
 
