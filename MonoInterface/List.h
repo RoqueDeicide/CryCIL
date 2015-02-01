@@ -445,6 +445,30 @@ public:
 			this->capacity = 0;
 		}
 	}
+	//! Detaches underlying array of elements allowing this list object to be released without
+	//! releasing memory.
+	//!
+	//! It is highly recommended to trim this list before detaching its data.
+	//!
+	//! @param capacity Number of elements that returned array can hold.
+	//!
+	//! @returns A pointer to the array of elements that used to be bound to this list.
+	ElementType *Detach(int &capacity)
+	{
+		capacity = this->capacity;
+		ElementType *elems = this->elements;
+
+		this->elements = nullptr;
+		this->length = 0;
+		this->capacity = 0;
+		
+		return elems;
+	}
+	//! Sets capacity of this list to number of valid elements it currently holds.
+	void Trim()
+	{
+		this->Capacity = this->length;
+	}
 private:
 	void Expand(int size)
 	{
