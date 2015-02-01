@@ -7,11 +7,74 @@
 MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 {
 	this->wrappedClass = klass;
-	this->name = mono_class_get_name(klass);
+
+	this->name      = mono_class_get_name(klass);
 	this->nameSpace = mono_class_get_namespace(klass);
+
+	int inheritanceDepth = 0;
+
+	int propCount = 0;
+	int methodCount = 0;
+	int eventCount = 0;
+
+	for (int i = 0; i < inheritanceDepth; i++)
+	{
+
+	}
+
+	this->methods    = List<IMonoMethod *>  (mono_class_num_methods(klass));
+	this->properties = List<IMonoProperty *>(mono_class_num_properties(klass));
+	this->events     = List<IMonoEvent *>   (mono_class_num_events(klass));
+
+	MonoClass *base = klass;
+	while (base)
+	{
+		// Cache methods.
+		void *iter = 0;
+		while (MonoMethod   *met  = mono_class_get_methods(base, &iter))
+		{
+			this->methods.Add(new MonoMethodWrapper(met));
+		}
+		// Cache properties.
+		iter = 0;
+		while (MonoProperty *prop = mono_class_get_properties(base, &iter))
+		{
+			this->properties.Add(new MonoPropertyWrapper(prop));
+		}
+		// Cache events.
+		iter = 0;
+		while (MonoEvent    *ev   = mono_class_get_events(base, &iter))
+		{
+			this->events.Add(new MonoEventWrapper(ev));
+		}
+
+		base = mono_class_get_parent(base);
+	}
+
+	this->methods.Trim();
+	this->properties.Trim();
+	this->events.Trim();
 }
 MonoClassWrapper::~MonoClassWrapper()
 {
+
+	for (int i = 0; i < this->properties.Length; i++)
+	{
+		delete this->properties[i];
+	}
+	this->properties.Dispose();
+
+	for (int i = 0; i < this->events.Length; i++)
+	{
+		delete this->events[i];
+	}
+	this->events.Dispose();
+
+	for (int i = 0; i < this->methods.Length; i++)
+	{
+		delete this->methods[i];
+	}
+	this->methods.Dispose();
 }
 //! Creates an instance of this class.
 mono::object MonoClassWrapper::CreateInstance(IMonoArray *args)
@@ -103,9 +166,15 @@ IMonoMethod *MonoClassWrapper::GetMethod(const char *name, List<TypeSpec> *types
 //! Gets the first that matches given description.
 IMonoMethod *MonoClassWrapper::GetMethod(const char *name, int paramCount)
 {
-	return
-		new MonoMethodWrapper
-		(mono_class_get_method_from_name(this->wrappedClass, name, paramCount));
+	for (int i = 0; i < this->methods.Length; i++)
+	{
+		if (this->methods[i]->ParameterCount == paramCount &&
+			strcmp(this->methods[i]->Name, name) == 0)
+		{
+			return this->methods[i];
+		}
+	}
+	return nullptr;
 }
 //! Gets the method that matches given description.
 IMonoMethod *MonoClassWrapper::GetMethod(const char *name, const char *params)
@@ -121,15 +190,11 @@ IMonoMethod *MonoClassWrapper::GetMethod(const char *name, const char *params)
 	Text **parameterTypeNames = parTypes->Split(',', parameterCount, true);
 	delete parTypes;
 	// Iterate through methods that have given name.
-	void *methodIterator = 0;
-	while
-	(
-		MonoMethod *currentMethod =
-		mono_class_get_methods(this->wrappedClass, &methodIterator)
-	)
+	for (int i = 0; i < this->methods.Length; i++)
 	{
+		MonoMethod *currentMethod = (MonoMethod *)this->methods[i]->GetWrappedPointer();
 		// Check the name.
-		if (strcmp(mono_method_get_name(currentMethod), name) == 0)
+		if (strcmp(this->methods[i]->Name, name) == 0)
 		{
 			// Check the parameters.
 			MonoMethodSignature *sig = mono_method_signature(currentMethod);
@@ -176,46 +241,37 @@ IMonoMethod *MonoClassWrapper::GetMethod(const char *name, const char *params)
 //! Gets an array of methods that matches given description.
 IMonoMethod **MonoClassWrapper::GetMethods(const char *name, int paramCount, int &foundCount)
 {
-	MonoClass *klass = this->wrappedClass;
-	List<MonoMethod *> methods(mono_class_num_methods(klass));
-	void *iter = 0;
-	while (MonoMethod *currentMethod = mono_class_get_methods(klass, &iter))
+	List<IMonoMethod *> foundMethods = List<IMonoMethod *>(this->methods.Length);
+
+	for (int i = 0; i < this->methods.Length; i++)
 	{
-		MonoMethodSignature *sig = mono_method_signature(currentMethod);
-		if (mono_signature_get_param_count(sig) == paramCount &&
-			!strcmp(mono_method_get_name(currentMethod), name))
+		if (this->methods[i]->ParameterCount == paramCount &&
+			strcmp(this->methods[i]->Name, name) == 0)
 		{
-			methods.Add(currentMethod);
+			foundMethods.Add(this->methods[i]);
 		}
 	}
-	foundCount = methods.Length;
-	IMonoMethod **foundMethods = new IMonoMethod *[foundCount];
-	methods.ThroughEach
-	(
-		[&foundMethods](MonoMethod *m, int i) { foundMethods[i] = new MonoMethodWrapper(m); }
-	);
-	return foundMethods;
+
+	foundMethods.Trim();
+
+	return foundMethods.Detach(foundCount);
 }
 //! Gets an array of overload of the method.
 IMonoMethod **MonoClassWrapper::GetMethods(const char *name, int &foundCount)
 {
-	MonoClass *klass = this->wrappedClass;
-	List<MonoMethod *> methods(mono_class_num_methods(klass));
-	void *iter = 0;
-	while (MonoMethod *currentMethod = mono_class_get_methods(klass, &iter))
+	List<IMonoMethod *> foundMethods = List<IMonoMethod *>(this->methods.Length);
+
+	for (int i = 0; i < this->methods.Length; i++)
 	{
-		if (strcmp(mono_method_get_name(currentMethod), name) == 0)
+		if (strcmp(this->methods[i]->Name, name) == 0)
 		{
-			methods.Add(currentMethod);
+			foundMethods.Add(this->methods[i]);
 		}
 	}
-	foundCount = methods.Length;
-	IMonoMethod **foundMethods = new IMonoMethod *[foundCount];
-	methods.ThroughEach
-	(
-		[&foundMethods](MonoMethod *m, int i) { foundMethods[i] = new MonoMethodWrapper(m); }
-	);
-	return foundMethods;
+
+	foundMethods.Trim();
+
+	return foundMethods.Detach(foundCount);
 }
 //! Gets the value of the object's field.
 void MonoClassWrapper::GetField(mono::object obj, const char *name, void *value)
@@ -250,32 +306,43 @@ void MonoClassWrapper::SetField(mono::object obj, const char *name, void *value)
 
 IMonoProperty *MonoClassWrapper::GetProperty(const char *name)
 {
-	return new MonoPropertyWrapper(mono_class_get_property_from_name(this->wrappedClass, name));
+	for (int i = 0; i < this->properties.Length; i++)
+	{
+		if (strcmp(this->properties[i]->Name, name) == 0)
+		{
+			return this->properties[i];
+		}
+	}
+	return nullptr;
 }
 
 IMonoEvent *MonoClassWrapper::GetEvent(const char *name)
 {
-	void *iter = 0;
-	MonoEvent *_ev = nullptr;
-	while (_ev = mono_class_get_events(this->wrappedClass, &iter))
+	for (int i = 0; i < this->events.Length; i++)
 	{
-		if (strcmp(name, mono_event_get_name(_ev)) == 0)
+		if (strcmp(this->events[i]->Name, name) == 0)
 		{
-			break;
+			return this->events[i];
 		}
 	}
-	if (!_ev)
-	{
-		return nullptr;
-	}
-	return new MonoEventWrapper(_ev);
+	return nullptr;
 }
 //! Determines whether this class implements from specified class.
 bool MonoClassWrapper::Inherits(const char *nameSpace, const char *className)
 {
 	MonoClass *base = mono_class_get_parent(this->wrappedClass);
-	return !strcmp(mono_class_get_name(base), className) &&
-		!strcmp(mono_class_get_namespace(base), nameSpace);
+
+	while (base)
+	{
+		if (strcmp(mono_class_get_name(base), className) == 0 &&
+			strcmp(mono_class_get_namespace(base), nameSpace) == 0)
+		{
+			return true;
+		}
+		base = mono_class_get_parent(base);
+	}
+
+	return false;
 }
 //! Boxes given value.
 mono::object MonoClassWrapper::Box(void *value)

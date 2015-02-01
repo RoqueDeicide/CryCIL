@@ -16,6 +16,9 @@ private:
 	MonoClass *wrappedClass;
 	const char *name;
 	const char *nameSpace;
+	List<IMonoProperty *> properties;
+	List<IMonoEvent *> events;
+	List<IMonoMethod *> methods;
 public:
 	MonoClassWrapper(MonoClass *klass);
 	~MonoClassWrapper();
