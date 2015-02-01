@@ -32,7 +32,7 @@ struct IMonoAssemblyCollection
 {
 	//! Loads a Mono assembly into memory.
 	//!
-	//! If the assembly was already loaded from the same file, original wrapper will be created.
+	//! If the assembly was already loaded from the same file, original wrapper will be returned.
 	//!
 	//! @param path Path to the assembly file. Relative paths go from CryEngine installation
 	//!             directory.

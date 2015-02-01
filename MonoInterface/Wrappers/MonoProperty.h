@@ -13,9 +13,9 @@ public:
 		this->prop = prop;
 	}
 
-	VIRTUAL_API virtual IMonoMethod *GetGetter();
+	virtual IMonoMethod *GetGetter();
 
-	VIRTUAL_API virtual IMonoMethod *GetSetter();
+	virtual IMonoMethod *GetSetter();
 
-	VIRTUAL_API virtual void *GetWrappedPointer();
+	virtual void *GetWrappedPointer();
 };

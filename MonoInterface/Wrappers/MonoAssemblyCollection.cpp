@@ -12,7 +12,7 @@ void DisposeAssemblyWrappers(Text *assemblyShortName, List<IMonoAssembly *> *ass
 	}
 }
 
-VIRTUAL_API IMonoAssembly *MonoAssemblyCollection::Load(const char *path)
+IMonoAssembly *MonoAssemblyCollection::Load(const char *path)
 {
 	if (!path)
 	{
@@ -51,7 +51,7 @@ VIRTUAL_API IMonoAssembly *MonoAssemblyCollection::Load(const char *path)
 	return this->Wrap(assembly);
 }
 
-VIRTUAL_API IMonoAssembly *MonoAssemblyCollection::Wrap(void *assemblyHandle)
+IMonoAssembly *MonoAssemblyCollection::Wrap(void *assemblyHandle)
 {
 	if (!assemblyHandle)
 	{
@@ -89,7 +89,7 @@ VIRTUAL_API IMonoAssembly *MonoAssemblyCollection::Wrap(void *assemblyHandle)
 	return wrapper;
 }
 
-VIRTUAL_API IMonoAssembly *MonoAssemblyCollection::GetAssembly(const char *name)
+IMonoAssembly *MonoAssemblyCollection::GetAssembly(const char *name)
 {
 	if (!name)
 	{
@@ -123,7 +123,7 @@ VIRTUAL_API IMonoAssembly *MonoAssemblyCollection::GetAssembly(const char *name)
 	return wrapper;
 }
 
-VIRTUAL_API IMonoAssembly *MonoAssemblyCollection::GetAssemblyFullName(const char *name)
+IMonoAssembly *MonoAssemblyCollection::GetAssemblyFullName(const char *name)
 {
 	if (!name)
 	{

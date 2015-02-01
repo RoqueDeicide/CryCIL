@@ -12,14 +12,14 @@ public:
 		this->_event = _event;
 	}
 
-	VIRTUAL_API virtual IMonoMethod *GetAdd();
+	virtual IMonoMethod *GetAdd();
 
-	VIRTUAL_API virtual IMonoMethod *GetRemove();
+	virtual IMonoMethod *GetRemove();
 
-	VIRTUAL_API virtual IMonoMethod *GetRaise();
+	virtual IMonoMethod *GetRaise();
 
-	VIRTUAL_API virtual const char *GetName();
+	virtual const char *GetName();
 
-	VIRTUAL_API virtual void *GetWrappedPointer();
+	virtual void *GetWrappedPointer();
 
 };

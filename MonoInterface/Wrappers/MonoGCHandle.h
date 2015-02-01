@@ -10,7 +10,7 @@ struct MonoGCHandle : public IMonoGCHandle
 protected:
 	unsigned int handle;
 public:
-	VIRTUAL_API virtual void Release()
+	virtual void Release()
 	{
 		if (this->handle == -1)
 		{
@@ -20,7 +20,7 @@ public:
 		this->handle = -1;
 	}
 
-	VIRTUAL_API virtual IMonoHandle *GetObjectHandle()
+	virtual IMonoHandle *GetObjectHandle()
 	{
 		if (this->handle == -1)
 		{
@@ -29,7 +29,7 @@ public:
 		return new MonoHandle((mono::object)mono_gchandle_get_target(this->handle));
 	}
 
-	VIRTUAL_API virtual mono::object GetObjectPointer()
+	virtual mono::object GetObjectPointer()
 	{
 		if (this->handle == -1)
 		{

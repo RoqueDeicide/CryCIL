@@ -51,7 +51,7 @@ public:
 
 	virtual const char *GetNameSpace();
 
-	VIRTUAL_API virtual const char *GetFullName();
+	virtual const char *GetFullName();
 
 	virtual IMonoAssembly *GetAssembly();
 
