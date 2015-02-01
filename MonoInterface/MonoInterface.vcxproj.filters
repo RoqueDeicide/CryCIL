@@ -193,6 +193,12 @@
     <ClInclude Include="Wrappers\MonoThreads.h">
       <Filter>API Implementation\ObjectSystems</Filter>
     </ClInclude>
+    <ClInclude Include="Testing\TestStart.h">
+      <Filter>Testing</Filter>
+    </ClInclude>
+    <ClInclude Include="Testing\TestAssemblies.h">
+      <Filter>Testing</Filter>
+    </ClInclude>
     <ClInclude Include="MonoDefinitionFiles\MonoArray.h">
       <Filter>MonoDefinitionFiles</Filter>
     </ClInclude>
@@ -295,6 +301,9 @@
     <ClCompile Include="Wrappers\MonoThreads.cpp">
       <Filter>API Implementation\ObjectSystems</Filter>
     </ClCompile>
+    <ClCompile Include="Testing\TestStart.cpp">
+      <Filter>Testing</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">
@@ -353,6 +362,9 @@
     </Filter>
     <Filter Include="API Implementation\Classes">
       <UniqueIdentifier>{b8aa9f55-c289-42f6-b2c7-1c035c3fddbb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Testing">
+      <UniqueIdentifier>{1cc2efef-80dd-4230-9c0d-19ce5ae0fe74}</UniqueIdentifier>
     </Filter>
     <Filter Include="MonoDefinitionFiles">
       <UniqueIdentifier>{18769465-294b-4e7a-a900-4c87e99bd0e2}</UniqueIdentifier>

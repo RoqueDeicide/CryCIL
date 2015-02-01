@@ -252,6 +252,8 @@
     <ClInclude Include="SortedList.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Testing\TestAssemblies.h" />
+    <ClInclude Include="Testing\TestStart.h" />
     <ClInclude Include="Text.h" />
     <ClInclude Include="ThunkTables.h" />
     <ClInclude Include="Wrappers\DefaultBoxinator.h" />
@@ -308,6 +310,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Testing\TestStart.cpp" />
     <ClCompile Include="ThunkTables.cpp" />
     <ClCompile Include="Wrappers\DefaultBoxinator.cpp" />
     <ClCompile Include="Wrappers\MonoArray.cpp" />
