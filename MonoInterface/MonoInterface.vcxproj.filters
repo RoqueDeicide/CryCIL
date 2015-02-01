@@ -26,9 +26,6 @@
       <Filter>Interops</Filter>
     </ClInclude>
     <ClInclude Include="API_ImplementationHeaders.h" />
-    <ClInclude Include="Wrappers\MonoAssembly.h">
-      <Filter>API Implementation</Filter>
-    </ClInclude>
     <ClInclude Include="CryCilHeader.h" />
     <ClInclude Include="Text.h">
       <Filter>Extras</Filter>
@@ -46,9 +43,6 @@
       <Filter>Extras</Filter>
     </ClInclude>
     <ClInclude Include="Logs.h" />
-    <ClInclude Include="Wrappers\MonoAssemblyCollection.h">
-      <Filter>API Implementation</Filter>
-    </ClInclude>
     <ClInclude Include="Geometry\FaceMesh.h">
       <Filter>Geometry</Filter>
     </ClInclude>
@@ -88,18 +82,6 @@
     <ClInclude Include="Interfaces\IMonoExceptions.h">
       <Filter>Interfaces\ObjectSystems</Filter>
     </ClInclude>
-    <ClInclude Include="Wrappers\MonoArrays.h">
-      <Filter>API Implementation\ObjectSystems</Filter>
-    </ClInclude>
-    <ClInclude Include="Wrappers\MonoExceptions.h">
-      <Filter>API Implementation\ObjectSystems</Filter>
-    </ClInclude>
-    <ClInclude Include="Wrappers\MonoObjects.h">
-      <Filter>API Implementation\ObjectSystems</Filter>
-    </ClInclude>
-    <ClInclude Include="Wrappers\MonoTexts.h">
-      <Filter>API Implementation\ObjectSystems</Filter>
-    </ClInclude>
     <ClInclude Include="Interfaces\IMonoGC.h">
       <Filter>Interfaces\GC</Filter>
     </ClInclude>
@@ -127,47 +109,11 @@
     <ClInclude Include="Interfaces\IMonoMethod.h">
       <Filter>Interfaces\Classes</Filter>
     </ClInclude>
-    <ClInclude Include="Wrappers\MonoArray.h">
-      <Filter>API Implementation\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Wrappers\MonoHandle.h">
-      <Filter>API Implementation\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Wrappers\MonoException.h">
-      <Filter>API Implementation\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Wrappers\MonoClass.h">
-      <Filter>API Implementation\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Wrappers\MonoEvent.h">
-      <Filter>API Implementation\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Wrappers\MonoMethod.h">
-      <Filter>API Implementation\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Wrappers\MonoProperty.h">
-      <Filter>API Implementation\Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Wrappers\MonoGCHandle.h">
-      <Filter>API Implementation\GC</Filter>
-    </ClInclude>
-    <ClInclude Include="Wrappers\MonoGC.h">
-      <Filter>API Implementation\GC</Filter>
-    </ClInclude>
     <ClInclude Include="Interfaces\IMonoText.h">
       <Filter>Interfaces\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="Wrappers\MonoText.h">
-      <Filter>API Implementation\Objects</Filter>
-    </ClInclude>
     <ClInclude Include="Interfaces\IMonoDelegate.h">
       <Filter>Interfaces\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Wrappers\MonoDelegate.h">
-      <Filter>API Implementation\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Wrappers\MonoDelegates.h">
-      <Filter>API Implementation\ObjectSystems</Filter>
     </ClInclude>
     <ClInclude Include="Interfaces\IMonoDelegates.h">
       <Filter>Interfaces\ObjectSystems</Filter>
@@ -175,23 +121,14 @@
     <ClInclude Include="Interfaces\IMonoAliases.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="Wrappers\DefaultBoxinator.h">
-      <Filter>API Implementation\ObjectSystems</Filter>
-    </ClInclude>
     <ClInclude Include="Interfaces\IMonoBox.h">
       <Filter>Interfaces\ObjectSystems</Filter>
-    </ClInclude>
-    <ClInclude Include="Wrappers\MonoThread.h">
-      <Filter>API Implementation\Objects</Filter>
     </ClInclude>
     <ClInclude Include="Interfaces\IMonoThread.h">
       <Filter>Interfaces\Objects</Filter>
     </ClInclude>
     <ClInclude Include="Interfaces\IMonoThreads.h">
       <Filter>Interfaces\ObjectSystems</Filter>
-    </ClInclude>
-    <ClInclude Include="Wrappers\MonoThreads.h">
-      <Filter>API Implementation\ObjectSystems</Filter>
     </ClInclude>
     <ClInclude Include="Testing\TestStart.h">
       <Filter>Testing</Filter>
@@ -207,6 +144,69 @@
     </ClInclude>
     <ClInclude Include="MonoDefinitionFiles\MonoAssemblyName.h">
       <Filter>MonoDefinitionFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Implementation\MonoAssembly.h">
+      <Filter>API Implementation\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Implementation\MonoAssemblyCollection.h">
+      <Filter>API Implementation\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Implementation\MonoClass.h">
+      <Filter>API Implementation\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Implementation\MonoEvent.h">
+      <Filter>API Implementation\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Implementation\MonoMethod.h">
+      <Filter>API Implementation\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Implementation\MonoProperty.h">
+      <Filter>API Implementation\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Implementation\MonoGC.h">
+      <Filter>API Implementation\GC</Filter>
+    </ClInclude>
+    <ClInclude Include="Implementation\MonoGCHandle.h">
+      <Filter>API Implementation\GC</Filter>
+    </ClInclude>
+    <ClInclude Include="Implementation\MonoArray.h">
+      <Filter>API Implementation\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Implementation\MonoDelegate.h">
+      <Filter>API Implementation\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Implementation\MonoException.h">
+      <Filter>API Implementation\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Implementation\MonoHandle.h">
+      <Filter>API Implementation\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Implementation\MonoText.h">
+      <Filter>API Implementation\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Implementation\MonoThread.h">
+      <Filter>API Implementation\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Implementation\DefaultBoxinator.h">
+      <Filter>API Implementation\ObjectSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="Implementation\MonoArrays.h">
+      <Filter>API Implementation\ObjectSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="Implementation\MonoDelegates.h">
+      <Filter>API Implementation\ObjectSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="Implementation\MonoExceptions.h">
+      <Filter>API Implementation\ObjectSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="Implementation\MonoObjects.h">
+      <Filter>API Implementation\ObjectSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="Implementation\MonoTexts.h">
+      <Filter>API Implementation\ObjectSystems</Filter>
+    </ClInclude>
+    <ClInclude Include="Implementation\MonoThreads.h">
+      <Filter>API Implementation\ObjectSystems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -232,9 +232,6 @@
     <ClCompile Include="Engine\DirectoryStructure.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Wrappers\MonoAssemblyCollection.cpp">
-      <Filter>API Implementation</Filter>
-    </ClCompile>
     <ClCompile Include="Geometry\FaceMesh.cpp">
       <Filter>Geometry</Filter>
     </ClCompile>
@@ -247,62 +244,65 @@
     <ClCompile Include="Interops\CryMarshal.cpp">
       <Filter>Interops</Filter>
     </ClCompile>
-    <ClCompile Include="Wrappers\MonoAssembly.cpp">
-      <Filter>API Implementation</Filter>
-    </ClCompile>
-    <ClCompile Include="Wrappers\MonoArrays.cpp">
-      <Filter>API Implementation\ObjectSystems</Filter>
-    </ClCompile>
-    <ClCompile Include="Wrappers\MonoExceptions.cpp">
-      <Filter>API Implementation\ObjectSystems</Filter>
-    </ClCompile>
-    <ClCompile Include="Wrappers\MonoObjects.cpp">
-      <Filter>API Implementation\ObjectSystems</Filter>
-    </ClCompile>
-    <ClCompile Include="Wrappers\MonoTexts.cpp">
-      <Filter>API Implementation\ObjectSystems</Filter>
-    </ClCompile>
-    <ClCompile Include="Wrappers\MonoArray.cpp">
-      <Filter>API Implementation\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Wrappers\MonoHandle.cpp">
-      <Filter>API Implementation\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Wrappers\MonoException.cpp">
-      <Filter>API Implementation\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Wrappers\MonoClass.cpp">
-      <Filter>API Implementation\Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Wrappers\MonoEvent.cpp">
-      <Filter>API Implementation\Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Wrappers\MonoMethod.cpp">
-      <Filter>API Implementation\Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Wrappers\MonoProperty.cpp">
-      <Filter>API Implementation\Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Wrappers\MonoText.cpp">
-      <Filter>API Implementation\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Wrappers\MonoDelegate.cpp">
-      <Filter>API Implementation\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Wrappers\MonoDelegates.cpp">
-      <Filter>API Implementation\ObjectSystems</Filter>
-    </ClCompile>
-    <ClCompile Include="Wrappers\DefaultBoxinator.cpp">
-      <Filter>API Implementation\ObjectSystems</Filter>
-    </ClCompile>
-    <ClCompile Include="Wrappers\MonoThread.cpp">
-      <Filter>API Implementation\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Wrappers\MonoThreads.cpp">
-      <Filter>API Implementation\ObjectSystems</Filter>
-    </ClCompile>
     <ClCompile Include="Testing\TestStart.cpp">
       <Filter>Testing</Filter>
+    </ClCompile>
+    <ClCompile Include="Implementation\MonoAssembly.cpp">
+      <Filter>API Implementation\Metadata</Filter>
+    </ClCompile>
+    <ClCompile Include="Implementation\MonoAssemblyCollection.cpp">
+      <Filter>API Implementation\Metadata</Filter>
+    </ClCompile>
+    <ClCompile Include="Implementation\MonoClass.cpp">
+      <Filter>API Implementation\Metadata</Filter>
+    </ClCompile>
+    <ClCompile Include="Implementation\MonoEvent.cpp">
+      <Filter>API Implementation\Metadata</Filter>
+    </ClCompile>
+    <ClCompile Include="Implementation\MonoMethod.cpp">
+      <Filter>API Implementation\Metadata</Filter>
+    </ClCompile>
+    <ClCompile Include="Implementation\MonoProperty.cpp">
+      <Filter>API Implementation\Metadata</Filter>
+    </ClCompile>
+    <ClCompile Include="Implementation\MonoArray.cpp">
+      <Filter>API Implementation\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Implementation\MonoDelegate.cpp">
+      <Filter>API Implementation\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Implementation\MonoException.cpp">
+      <Filter>API Implementation\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Implementation\MonoHandle.cpp">
+      <Filter>API Implementation\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Implementation\MonoText.cpp">
+      <Filter>API Implementation\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Implementation\MonoThread.cpp">
+      <Filter>API Implementation\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Implementation\DefaultBoxinator.cpp">
+      <Filter>API Implementation\ObjectSystems</Filter>
+    </ClCompile>
+    <ClCompile Include="Implementation\MonoArrays.cpp">
+      <Filter>API Implementation\ObjectSystems</Filter>
+    </ClCompile>
+    <ClCompile Include="Implementation\MonoDelegates.cpp">
+      <Filter>API Implementation\ObjectSystems</Filter>
+    </ClCompile>
+    <ClCompile Include="Implementation\MonoExceptions.cpp">
+      <Filter>API Implementation\ObjectSystems</Filter>
+    </ClCompile>
+    <ClCompile Include="Implementation\MonoObjects.cpp">
+      <Filter>API Implementation\ObjectSystems</Filter>
+    </ClCompile>
+    <ClCompile Include="Implementation\MonoTexts.cpp">
+      <Filter>API Implementation\ObjectSystems</Filter>
+    </ClCompile>
+    <ClCompile Include="Implementation\MonoThreads.cpp">
+      <Filter>API Implementation\ObjectSystems</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -360,14 +360,14 @@
     <Filter Include="API Implementation\Objects">
       <UniqueIdentifier>{f5575622-14d4-4bac-b26f-37f0846c1790}</UniqueIdentifier>
     </Filter>
-    <Filter Include="API Implementation\Classes">
-      <UniqueIdentifier>{b8aa9f55-c289-42f6-b2c7-1c035c3fddbb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Testing">
       <UniqueIdentifier>{1cc2efef-80dd-4230-9c0d-19ce5ae0fe74}</UniqueIdentifier>
     </Filter>
     <Filter Include="MonoDefinitionFiles">
       <UniqueIdentifier>{18769465-294b-4e7a-a900-4c87e99bd0e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="API Implementation\Metadata">
+      <UniqueIdentifier>{b8aa9f55-c289-42f6-b2c7-1c035c3fddbb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
