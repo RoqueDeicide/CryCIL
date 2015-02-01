@@ -193,6 +193,15 @@
     <ClInclude Include="Wrappers\MonoThreads.h">
       <Filter>API Implementation\ObjectSystems</Filter>
     </ClInclude>
+    <ClInclude Include="MonoDefinitionFiles\MonoArray.h">
+      <Filter>MonoDefinitionFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="MonoDefinitionFiles\MonoDelegate.h">
+      <Filter>MonoDefinitionFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="MonoDefinitionFiles\MonoAssemblyName.h">
+      <Filter>MonoDefinitionFiles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -344,6 +353,9 @@
     </Filter>
     <Filter Include="API Implementation\Classes">
       <UniqueIdentifier>{b8aa9f55-c289-42f6-b2c7-1c035c3fddbb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MonoDefinitionFiles">
+      <UniqueIdentifier>{18769465-294b-4e7a-a900-4c87e99bd0e2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

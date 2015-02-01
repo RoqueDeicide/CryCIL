@@ -3,6 +3,8 @@
 #include "MonoDelegate.h"
 #include "MonoMethod.h"
 
+#include "MonoDefinitionFiles/MonoDelegate.h"
+
 IMonoMethod *MonoDelegateWrapper::GetMethod()
 {
 	return new MonoMethodWrapper(this->delegat->method);

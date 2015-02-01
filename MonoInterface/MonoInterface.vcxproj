@@ -240,6 +240,9 @@
     <ClInclude Include="Interops\MeshOps.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="Logs.h" />
+    <ClInclude Include="MonoDefinitionFiles\MonoArray.h" />
+    <ClInclude Include="MonoDefinitionFiles\MonoAssemblyName.h" />
+    <ClInclude Include="MonoDefinitionFiles\MonoDelegate.h" />
     <ClInclude Include="MonoHeaders.h" />
     <ClInclude Include="RunTime\AllInterops.h" />
     <ClInclude Include="RunTime\DebugEventReporter.h" />

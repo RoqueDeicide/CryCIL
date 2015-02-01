@@ -6,7 +6,6 @@
 #include <mono/metadata/object.h>
 #include <mono/metadata/appdomain.h>
 
-#define GetWrappedArray (MonoArray *)this->GetWrappedPointer()
 //! Implements most of the functionality of IMonoArray.
 struct MonoArrayWrapper : public IMonoArray
 {
