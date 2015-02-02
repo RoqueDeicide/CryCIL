@@ -217,6 +217,7 @@
     <ClInclude Include="Implementation\MonoAssembly.h" />
     <ClInclude Include="Implementation\MonoAssemblyCollection.h" />
     <ClInclude Include="Implementation\MonoClass.h" />
+    <ClInclude Include="Implementation\MonoConstructor.h" />
     <ClInclude Include="Implementation\MonoDelegate.h" />
     <ClInclude Include="Implementation\MonoDelegates.h" />
     <ClInclude Include="Implementation\MonoEvent.h" />
@@ -232,6 +233,7 @@
     <ClInclude Include="Implementation\MonoTexts.h" />
     <ClInclude Include="Implementation\MonoThread.h" />
     <ClInclude Include="Implementation\MonoThreads.h" />
+    <ClInclude Include="Interfaces\IMonoConstructor.h" />
     <ClInclude Include="Interfaces\IMonoAliases.h" />
     <ClInclude Include="Interfaces\IMonoArray.h" />
     <ClInclude Include="Interfaces\IMonoArrays.h" />
@@ -277,6 +279,7 @@
     <ClInclude Include="Testing\TestStart.h" />
     <ClInclude Include="Text.h" />
     <ClInclude Include="ThunkTables.h" />
+    <ClInclude Include="Tuples.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CryEngineInterface.cpp" />
@@ -303,6 +306,7 @@
     <ClCompile Include="Implementation\MonoAssembly.cpp" />
     <ClCompile Include="Implementation\MonoAssemblyCollection.cpp" />
     <ClCompile Include="Implementation\MonoClass.cpp" />
+    <ClCompile Include="Implementation\MonoConstructor.cpp" />
     <ClCompile Include="Implementation\MonoDelegate.cpp" />
     <ClCompile Include="Implementation\MonoDelegates.cpp" />
     <ClCompile Include="Implementation\MonoEvent.cpp" />

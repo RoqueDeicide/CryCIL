@@ -11,20 +11,9 @@ MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 	this->name      = mono_class_get_name(klass);
 	this->nameSpace = mono_class_get_namespace(klass);
 
-	int inheritanceDepth = 0;
-
-	int propCount = 0;
-	int methodCount = 0;
-	int eventCount = 0;
-
-	for (int i = 0; i < inheritanceDepth; i++)
-	{
-
-	}
-
-	this->methods    = List<IMonoMethod *>  (mono_class_num_methods(klass));
-	this->properties = List<IMonoProperty *>(mono_class_num_properties(klass));
-	this->events     = List<IMonoEvent *>   (mono_class_num_events(klass));
+	this->methods    = List<IMonoMethod *>  (30);
+	this->properties = List<IMonoProperty *>(30);
+	this->events     = List<IMonoEvent *>   (30);
 
 	MonoClass *base = klass;
 	while (base)
@@ -76,92 +65,40 @@ MonoClassWrapper::~MonoClassWrapper()
 	}
 	this->methods.Dispose();
 }
-//! Creates an instance of this class.
-mono::object MonoClassWrapper::CreateInstance(IMonoArray *args)
+
+mono::object MonoClassWrapper::CreateInstance()
 {
-	MonoObject *obj = mono_object_new(mono_domain_get(), this->wrappedClass);
-	if (!args || args->Length == 0)
-	{
-		mono_runtime_object_init(obj);
-	}
-	else
-	{
-		// Create a type spec for the constructor look-up.
-		List<TypeSpec> *typeSpecs = new List<TypeSpec>(args->Length);
-		for (int i = 0; i < args->Length; i++)
-		{
-			typeSpecs->Add(TypeSpec(MonoClassCache::Wrap(mono_object_get_class((MonoObject *)args->At<mono::object>(i)))));
-		}
-		// Get the constructor.
-		this->GetMethod(".ctor", typeSpecs)->Invoke(obj, args, false);
-	}
-	return (mono::object)obj;
+	return (mono::object)mono_object_new(mono_domain_get(), this->wrappedClass);
 }
-//! Gets method that can accept arguments of specified types.
-IMonoMethod *MonoClassWrapper::GetMethod(const char *name, List<TypeSpec> *types)
+
+IMonoConstructor *MonoClassWrapper::GetConstructor(IMonoArray *types /*= nullptr*/)
 {
-	if (types == nullptr)
-	{
-		return this->GetMethod(name, (int)0);
-	}
-	IMonoMethod *result = nullptr;
-	// Split the params string into parts.
-	int parameterCount = types->Length;
-	// Iterate through methods that have given name.
-	void *methodIterator = 0;
-	while
-	(
-		MonoMethod *currentMethod =
-		mono_class_get_methods(this->wrappedClass, &methodIterator)
-	)
-	{
-		// Check the name.
-		if (strcmp(mono_method_get_name(currentMethod), name) == 0)
-		{
-			// Check the parameters.
-			MonoMethodSignature *sig = mono_method_signature(currentMethod);
-			// Check the number of parameters.
-			if (mono_signature_get_param_count(sig) == parameterCount)
-			{
-				// Check the type names and their specifications.
-				List<MonoType *> *parTypes = new List<MonoType *>(parameterCount);
-				// Get the list of parameter types from the signature.
-				void *parIter = 0;
-				while (MonoType *currentParameterType = mono_signature_get_params(sig, &parIter))
-				{
-					parTypes->Add(currentParameterType);
-				}
-				// Compare types and given specifications.
-				int i;
-				for (i = 0; i < parameterCount; i++)
-				{
-					IMonoClass *parClass = MonoClassCache::Wrap(mono_class_from_mono_type(parTypes->At(i)));
-					// Check the name.
-					if (strcmp(parClass->FullName, types->At(i).Class->FullName) == 0)
-					{
-						// Check the specification.
-						bool parIsByRef = mono_type_is_byref(parTypes->At(i)) != 0;
-						bool parIsPointer = mono_type_get_type(parTypes->At(i)) == MONO_TYPE_PTR;
-						if (parIsByRef == types->At(i).IsByRef
-							&& parIsPointer == types->At(i).IsPointer)
-						{
-							continue;
-						}
-						else
-						{
-							break;
-						}
-					}
-				}
-				if (i == parameterCount)
-				{
-					result = new MonoMethodWrapper(currentMethod);
-					break;
-				}
-			}
-		}
-	}
-	return result;
+	return static_cast<IMonoConstructor *>(this->GetMethod(".ctor", types));
+}
+
+IMonoConstructor *MonoClassWrapper::GetConstructor(List<IMonoClass *> &classes)
+{
+	return static_cast<IMonoConstructor *>(this->GetMethod(".ctor", classes));
+}
+
+IMonoConstructor *MonoClassWrapper::GetConstructor(List<Pair<IMonoClass *, const char *>> &specifiedClasses)
+{
+	return static_cast<IMonoConstructor *>(this->GetMethod(".ctor", specifiedClasses));
+}
+
+IMonoConstructor *MonoClassWrapper::GetConstructor(const char *params)
+{
+	return static_cast<IMonoConstructor *>(this->GetMethod(".ctor", params));
+}
+
+IMonoConstructor *MonoClassWrapper::GetConstructor(List<const char *> &paramTypeNames)
+{
+	return static_cast<IMonoConstructor *>(this->GetMethod(".ctor", paramTypeNames));
+}
+
+IMonoConstructor *MonoClassWrapper::GetConstructor(const char *name, int paramCount)
+{
+	return static_cast<IMonoConstructor *>(this->GetMethod(".ctor", paramCount));
 }
 //! Gets the first that matches given description.
 IMonoMethod *MonoClassWrapper::GetMethod(const char *name, int paramCount)
@@ -183,61 +120,125 @@ IMonoMethod *MonoClassWrapper::GetMethod(const char *name, const char *params)
 	{
 		return this->GetMethod(name, (int)0);
 	}
-	IMonoMethod *result = nullptr;
-	Text *parTypes = new Text(params);
-	// Split the params string into parts.
-	int parameterCount;
-	Text **parameterTypeNames = parTypes->Split(',', parameterCount, true);
-	delete parTypes;
-	// Iterate through methods that have given name.
 	for (int i = 0; i < this->methods.Length; i++)
 	{
-		MonoMethod *currentMethod = (MonoMethod *)this->methods[i]->GetWrappedPointer();
-		// Check the name.
-		if (strcmp(this->methods[i]->Name, name) == 0)
+		if (strcmp(this->methods[i]->Name, name) == 0 &&
+			strcmp(this->methods[i]->Parameters, params) == 0)
 		{
-			// Check the parameters.
-			MonoMethodSignature *sig = mono_method_signature(currentMethod);
-			// Check the number of parameters.
-			if (mono_signature_get_param_count(sig) == parameterCount)
-			{
-				// Check the type names.
-				char **pars = new char *[parameterCount];
-				mono_method_get_param_names(currentMethod, (const char **)pars);
-
-				bool mismatchFound = false;
-				void *parameterIterator = 0;
-				int currentParameterNameIndex = 0;
-				while
-				(
-					MonoType *currentParameterType =
-					mono_signature_get_params(sig, &parameterIterator)
-				)
-				{
-					const char *currentParameterName =
-						parameterTypeNames[currentParameterNameIndex]->ToNTString();
-					if (strcmp(mono_type_get_name(currentParameterType), currentParameterName))
-					{
-						mismatchFound = true;
-					}
-					delete currentParameterName;
-					currentParameterNameIndex++;
-				}
-				if (!mismatchFound)
-				{
-					result = new MonoMethodWrapper(currentMethod);
-					break;
-				}
-			}
+			return this->methods[i];
 		}
 	}
-	for (int i = 0; i < parameterCount; i++)
-	{
-		delete parameterTypeNames[i];
-	}
-	delete parameterTypeNames;
-	return result;
+	return nullptr;
 }
+
+IMonoMethod *MonoClassWrapper::GetMethod(const char *name, IMonoArray *types /*= nullptr*/)
+{
+	for (int i = 0; i < this->methods.Length; i++)
+	{
+		if (this->methods[i]->ParameterCount != types->Length ||
+			strcmp(this->methods[i]->Name, name) != 0)
+		{
+			continue;
+		}
+
+		auto typeNames = this->methods[i]->ParameterTypeNames;
+
+		bool match = true;
+		for (int j = 0; j < typeNames->Length; j++)
+		{
+			// Look at definition of _MonoReflectionType in mono sources to see what is going on here.
+			MonoType *type = (MonoType *)((unsigned char *)types->Item(j) + sizeof(MonoObject));
+			if (strcmp(typeNames->At(j), mono_type_get_name(type)) != 0)
+			{
+				match = false;
+				break;
+			}
+		}
+		if (match)
+		{
+			return this->methods[i];
+		}
+	}
+	return nullptr;
+}
+
+IMonoMethod *MonoClassWrapper::GetMethod(const char *name, List<IMonoClass *> &classes)
+{
+	for (int i = 0; i < this->methods.Length; i++)
+	{
+		if (this->methods[i]->ParameterCount != classes.Length ||
+			strcmp(this->methods[i]->Name, name) != 0)
+		{
+			continue;
+		}
+		auto currentClasses = this->methods[i]->ParameterClasses;
+		bool match = true;
+		for (int j = 0; j < classes.Length; j++)
+		{
+			if (currentClasses->At(j) != classes[j])
+			{
+				match = false;
+				break;
+			}
+		}
+		if (match)
+		{
+			return this->methods[i];
+		}
+	}
+	return nullptr;
+}
+
+IMonoMethod *MonoClassWrapper::GetMethod(const char *name, List<Pair<IMonoClass *, const char *>> &specifiedClasses)
+{
+	auto paramTypeNames = List<const char *>(specifiedClasses.Length);
+
+	for (int i = 0; i < specifiedClasses.Length; i++)
+	{
+		ConstructiveText typeName = ConstructiveText(10);
+		typeName << specifiedClasses[i].Value1->FullNameIL << specifiedClasses[i].Value2;
+
+		const char *typeNameNt = typeName.ToNTString();
+		paramTypeNames.Add(typeNameNt);
+	}
+
+	IMonoMethod *foundMethod = this->GetMethod(name, paramTypeNames);
+
+	for (int i = 0; i < paramTypeNames.Length; i++)
+	{
+		delete paramTypeNames[i];
+	}
+
+	return foundMethod;
+}
+
+IMonoMethod *MonoClassWrapper::GetMethod(const char *name, List<const char *> &paramTypeNames)
+{
+	for (int i = 0; i < this->methods.Length; i++)
+	{
+		if (this->methods[i]->ParameterCount != paramTypeNames.Length ||
+			strcmp(this->methods[i]->Name, name) != 0)
+		{
+			continue;
+		}
+		auto typeNames = this->methods[i]->ParameterTypeNames;
+		bool match = true;
+		for (int j = 0; j < typeNames->Length; j++)
+		{
+			if (strcmp(typeNames->At(j), paramTypeNames[j]) != 0)
+			{
+				match = false;
+				break;
+			}
+		}
+		if (match)
+		{
+			return this->methods[i];
+		}
+	}
+	return nullptr;
+}
+
 //! Gets an array of methods that matches given description.
 IMonoMethod **MonoClassWrapper::GetMethods(const char *name, int paramCount, int &foundCount)
 {
@@ -388,6 +389,29 @@ const char *MonoClassWrapper::GetFullName()
 	return fullName.ToNTString();
 }
 
+const char *MonoClassWrapper::GetFullNameIL()
+{
+	ConstructiveText fullName;
+	if (MonoClass *nestingClass = mono_class_get_nesting_type(this->wrappedClass))
+	{
+		const char *nestingName = MonoClassCache::Wrap(nestingClass)->FullName;
+
+		fullName = ConstructiveText(strlen(this->name) + strlen(nestingName) + 1);
+
+		fullName << nestingName << "+" << this->name;
+
+		delete nestingName;
+	}
+	else
+	{
+		ConstructiveText fullName =
+			ConstructiveText(strlen(this->name) + strlen(this->nameSpace) + 1);
+
+		fullName << this->nameSpace << "." << this->name;
+	}
+	return fullName.ToNTString();
+}
+
 IMonoAssembly *MonoClassWrapper::GetAssembly()
 {
 	return MonoEnv->Assemblies->Wrap(mono_image_get_assembly(mono_class_get_image(this->wrappedClass)));
@@ -425,7 +449,7 @@ IMonoClass *MonoClassWrapper::GetBase()
 	return MonoClassCache::Wrap(mono_class_get_parent(this->wrappedClass));
 }
 
-IMonoClass * MonoClassWrapper::GetNestedType(const char *name)
+IMonoClass *MonoClassWrapper::GetNestedType(const char *name)
 {
 	void *iter;
 	MonoClass *nestedType;
@@ -437,6 +461,40 @@ IMonoClass * MonoClassWrapper::GetNestedType(const char *name)
 		}
 	}
 	return nullptr;
+}
+
+mono::type MonoClassWrapper::GetType()
+{
+	return (mono::type)mono_type_get_object(mono_domain_get(), mono_class_get_type(this->wrappedClass));
+}
+
+mono::type MonoClassWrapper::MakeArrayType()
+{
+	return MonoEnv->CoreLibrary->GetClass("System", "Type")
+							   ->GetMethod("MakeArrayType", 0)
+							   ->Invoke(this->GetType());
+}
+
+mono::type MonoClassWrapper::MakeArrayType(int rank)
+{
+	void *par = &rank;
+	return MonoEnv->CoreLibrary->GetClass("System", "Type")
+							   ->GetMethod("MakeArrayType", 1)
+							   ->Invoke(this->GetType(), &par);
+}
+
+mono::type MonoClassWrapper::MakeByRefType()
+{
+	return MonoEnv->CoreLibrary->GetClass("System", "Type")
+							   ->GetMethod("MakeByRefType", 0)
+							   ->Invoke(this->GetType());
+}
+
+mono::type MonoClassWrapper::MakePointerType()
+{
+	return MonoEnv->CoreLibrary->GetClass("System", "Type")
+							   ->GetMethod("MakePointerType", 0)
+							   ->Invoke(this->GetType());
 }
 
 List<MonoClassWrapper *> MonoClassCache::cachedClasses(50);

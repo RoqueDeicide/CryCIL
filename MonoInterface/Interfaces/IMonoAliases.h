@@ -15,6 +15,7 @@
 #include "List.h"
 #include "SortedList.h"
 #include "Text.h"
+#include "Tuples.h"
 
 #include "Logs.h"
 
@@ -26,6 +27,7 @@ struct IMonoAssembly;
 struct IMonoArray;
 struct IMonoClass;
 struct IMonoMethod;
+struct IMonoConstructor;
 struct IMonoSystemListener;
 struct IMonoInterface;
 struct IMonoGCHandle;

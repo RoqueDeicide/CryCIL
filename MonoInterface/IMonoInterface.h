@@ -14,6 +14,7 @@
 #include "Interfaces/IMonoClass.h"
 #include "Interfaces/IMonoException.h"
 #include "Interfaces/IMonoMethod.h"
+#include "Interfaces/IMonoConstructor.h"
 #include "Interfaces/IMonoDelegate.h"
 #include "Interfaces/IMonoThread.h"
 #include "Interfaces/IMonoObjects.h"

@@ -22,45 +22,57 @@ private:
 public:
 	MonoClassWrapper(MonoClass *klass);
 	~MonoClassWrapper();
-	//! Creates an instance of this class.
-	virtual mono::object CreateInstance(IMonoArray *args = nullptr);
-	//! Gets method that can accept arguments of specified types.
-	virtual IMonoMethod *GetMethod(const char *name, List<TypeSpec> *types = nullptr);
-	//! Gets the first that matches given description.
-	virtual IMonoMethod *GetMethod(const char *name, int paramCount);
-	//! Gets the method that matches given description.
-	virtual IMonoMethod *GetMethod(const char *name, const char *params);
-	//! Gets an array of methods that matches given description.
-	virtual IMonoMethod **GetMethods(const char *name, int paramCount, int &foundCount);
-	//! Gets an array of overload of the method.
-	virtual IMonoMethod **GetMethods(const char *name, int &foundCount);
-	//! Gets the value of the object's field.
-	virtual void GetField(mono::object obj, const char *name, void *value);
-	//! Sets the value of the object's field.
-	virtual void SetField(mono::object obj, const char *name, void *value);
 
-	virtual IMonoProperty *GetProperty(const char *name);
-	virtual IMonoEvent *GetEvent(const char *name);
+	virtual mono::object CreateInstance();
 
-	virtual IMonoClass *GetNestedType(const char *name);
-	//! Determines whether this class implements from specified class.
-	virtual bool Inherits(const char *nameSpace, const char *className);
-	//! Determines whether this class implements a certain interface.
-	virtual bool Implements(const char *nameSpace, const char *interfaceName, bool searchBaseClasses = true);
-	//! Boxes given value.
-	virtual mono::object Box(void *value);
+	virtual IMonoConstructor *GetConstructor(IMonoArray *types = nullptr);
 
-	virtual const char *GetName();
+	virtual IMonoConstructor *GetConstructor(List<IMonoClass *> &classes);
 
-	virtual const char *GetNameSpace();
+	virtual IMonoConstructor *GetConstructor(List<Pair<IMonoClass *, const char *>> &specifiedClasses);
 
-	virtual const char *GetFullName();
+	virtual IMonoConstructor *GetConstructor(const char *params);
 
-	virtual IMonoAssembly *GetAssembly();
+	virtual IMonoConstructor *GetConstructor(List<const char *> &paramTypeNames);
 
-	virtual IMonoClass *GetBase();
+	virtual IMonoConstructor *GetConstructor(const char *name, int paramCount);
 
-	virtual void *GetWrappedPointer();
+	virtual IMonoMethod *GetMethod(const char *name, IMonoArray *types = nullptr);
+
+	virtual IMonoMethod *GetMethod(const char *name, List<IMonoClass *> &classes);
+
+	virtual IMonoMethod *GetMethod(const char *name, List<Pair<IMonoClass *, const char *>> &specifiedClasses);
+
+	virtual IMonoMethod *GetMethod(const char *name, List<const char *> &paramTypeNames);
+	IMonoMethod *GetMethod(const char *name, const char *params);
+	IMonoMethod *GetMethod(const char *name, int paramCount);
+	virtual mono::type GetType();
+
+	virtual mono::type MakeArrayType();
+
+	virtual mono::type MakeArrayType(int rank);
+
+	virtual mono::type MakeByRefType();
+
+	virtual mono::type MakePointerType();
+	IMonoMethod **GetMethods(const char *name, int paramCount, int &foundCount);
+	IMonoMethod **GetMethods(const char *name, int &foundCount);
+	void GetField(mono::object obj, const char *name, void *value);
+	void SetField(mono::object obj, const char *name, void *value);
+	IMonoProperty *GetProperty(const char *name);
+	IMonoEvent *GetEvent(const char *name);
+	bool Inherits(const char *nameSpace, const char *className);
+	mono::object Box(void *value);
+	const char *GetName();
+	const char *GetNameSpace();
+	const char *GetFullName();
+	IMonoAssembly *GetAssembly();
+	void *GetWrappedPointer();
+	bool Implements(const char *nameSpace, const char *interfaceName, bool searchBaseClasses);
+	IMonoClass *GetBase();
+	IMonoClass *GetNestedType(const char *name);
+
+	virtual const char *GetFullNameIL();
 };
 
 //! Caches MonoClassWrapper objects.

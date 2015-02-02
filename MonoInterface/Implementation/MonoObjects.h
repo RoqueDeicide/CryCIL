@@ -37,8 +37,6 @@ public:
 		delete this->threads;
 	}
 
-	virtual mono::object Create(IMonoAssembly *assembly, const char *name_space, const char *class_name, IMonoArray *params = nullptr);
-
 	virtual IMonoHandle *Wrap(mono::object obj);
 
 	virtual void *Unbox(mono::object value);

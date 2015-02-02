@@ -98,16 +98,16 @@
       <Filter>Interfaces\Objects</Filter>
     </ClInclude>
     <ClInclude Include="Interfaces\IMonoClass.h">
-      <Filter>Interfaces\Classes</Filter>
+      <Filter>Interfaces\Metadata</Filter>
     </ClInclude>
     <ClInclude Include="Interfaces\IMonoEvent.h">
-      <Filter>Interfaces\Classes</Filter>
+      <Filter>Interfaces\Metadata</Filter>
     </ClInclude>
     <ClInclude Include="Interfaces\IMonoProperty.h">
-      <Filter>Interfaces\Classes</Filter>
+      <Filter>Interfaces\Metadata</Filter>
     </ClInclude>
     <ClInclude Include="Interfaces\IMonoMethod.h">
-      <Filter>Interfaces\Classes</Filter>
+      <Filter>Interfaces\Metadata</Filter>
     </ClInclude>
     <ClInclude Include="Interfaces\IMonoText.h">
       <Filter>Interfaces\Objects</Filter>
@@ -208,6 +208,15 @@
     <ClInclude Include="Implementation\MonoThreads.h">
       <Filter>API Implementation\ObjectSystems</Filter>
     </ClInclude>
+    <ClInclude Include="Tuples.h">
+      <Filter>Extras</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\IMonoConstructor.h">
+      <Filter>Interfaces\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Implementation\MonoConstructor.h">
+      <Filter>API Implementation\Metadata</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -304,6 +313,9 @@
     <ClCompile Include="Implementation\MonoThreads.cpp">
       <Filter>API Implementation\ObjectSystems</Filter>
     </ClCompile>
+    <ClCompile Include="Implementation\MonoConstructor.cpp">
+      <Filter>API Implementation\Metadata</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">
@@ -351,9 +363,6 @@
     <Filter Include="Interfaces\Objects">
       <UniqueIdentifier>{e5fdb665-c153-480e-9664-79bd3bc98f23}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Interfaces\Classes">
-      <UniqueIdentifier>{122a0562-3097-41c5-a5a1-9a40b464e38e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="API Implementation\GC">
       <UniqueIdentifier>{862fc339-126f-4c3f-b822-69b6b10a086f}</UniqueIdentifier>
     </Filter>
@@ -368,6 +377,9 @@
     </Filter>
     <Filter Include="API Implementation\Metadata">
       <UniqueIdentifier>{b8aa9f55-c289-42f6-b2c7-1c035c3fddbb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interfaces\Metadata">
+      <UniqueIdentifier>{122a0562-3097-41c5-a5a1-9a40b464e38e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -407,7 +407,7 @@ public:
 	void SetCapacity(int value)
 	{
 		this->capacity = value;
-		this->elements = realloc(this->elements, this->capacity * sizeof(ElementType));
+		this->elements = (ElementType *)realloc(this->elements, this->capacity * sizeof(ElementType));
 	}
 	//! Gets or sets number of elements within this list.
 	__declspec(property(get=GetLength)) int Length;

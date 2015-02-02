@@ -2,59 +2,143 @@
 
 #include "IMonoAliases.h"
 
-//! Allows to look for specific
-struct TypeSpec
-{
-	IMonoClass *Class;			//!< The class that is being specified.
-	bool IsByRef;				//!< Indicates whether this is a type that is passed by reference (with "ref" and "out" keywords in C#).
-	bool IsPointer;				//!< Indicates whether this is a pointer type.
-	TypeSpec(IMonoClass *klass, bool isByRef = false, bool isPointer = false)
-	{
-		this->Class = klass;
-		this->IsByRef = isByRef;
-		this->IsPointer = isPointer;
-	}
-};
-
 //! Defines interface of objects that wrap functionality of MonoClass type.
 struct IMonoClass : public IMonoFunctionalityWrapper
 {
 	//! Gets the name of this class.
 	__declspec(property(get = GetName)) const char *Name;
 	//! Gets full name of this class.
-	__declspec(property(get = GetName)) const char *FullName;
+	__declspec(property(get = GetFullName)) const char *FullName;
+	//! Gets full name of this class.
+	//!
+	//! If this class is nested its name will be separated from declaring type with "+" instead of ".".
+	__declspec(property(get = GetFullNameIL)) const char *FullNameIL;
 	//! Gets the name space where this class is defined.
 	__declspec(property(get = GetNameSpace)) const char *NameSpace;
 	//! Gets assembly where this class is defined.
 	__declspec(property(get = GetAssembly)) IMonoAssembly *Assembly;
 	//! Gets the class where this class is defined.
 	__declspec(property(get = GetBase)) IMonoClass *Base;
-	//! Creates an instance of this class.
+	
+	//! Creates an uninitialized instance of this class.
+	VIRTUAL_API virtual mono::object CreateInstance() = 0;
+	//! Gets constructor that can accept arguments of specified types.
 	//!
-	//! @param args Arguments to pass to the constructor, can be null if latter has no parameters.
-	VIRTUAL_API virtual mono::object CreateInstance(IMonoArray *args = nullptr) = 0;
+	//! @param types An array of System.Type objects that specify constructor signature to use.
+	VIRTUAL_API virtual IMonoConstructor *GetConstructor(IMonoArray *types = nullptr) = 0;
+	//! Gets constructor that can accept arguments of specified types.
+	//!
+	//! Refer to documentation of corresponding GetMethod() overload for details.
+	//!
+	//! @param classes A list IMonoClass wrappers that specify constructor signature to use.
+	VIRTUAL_API virtual IMonoConstructor *GetConstructor(List<IMonoClass *> &classes) = 0;
+	//! Gets constructor that can accept arguments of specified types.
+	//!
+	//! Refer to documentation of corresponding GetMethod() overload for details.
+	//!
+	//! @param specifiedClasses A list of classes and postfixes that specify constructor signature
+	//!                         to use.
+	VIRTUAL_API virtual IMonoConstructor *GetConstructor
+		(List<Pair<IMonoClass *, const char *>> &specifiedClasses) = 0;
+	//! Gets the constructor that matches given description.
+	//!
+	//! Refer to documentation of corresponding GetMethod() overload for details.
+	//!
+	//! @param params Text that describes types arguments the method should take.
+	//!
+	//! @returns A pointer to the wrapper to the found constructor. Null is returned if
+	//!          no constructor matching the description was found.
+	VIRTUAL_API virtual IMonoConstructor *GetConstructor(const char *params) = 0;
+	//! Gets a constructor defined in this class.
+	//!
+	//! Refer to documentation of corresponding GetMethod() overload for details.
+	//!
+	//! @param paramTypeNames A list of full type names that specify the parameters the constructor
+	//!                       accepts.
+	VIRTUAL_API virtual IMonoConstructor *GetConstructor(List<const char *> &paramTypeNames) = 0;
+	//! Gets the first constructor that matches given description.
+	//!
+	//! @param paramCount Number of arguments the constructor should take.
+	VIRTUAL_API virtual IMonoConstructor *GetConstructor(const char *name, int paramCount) = 0;
 	//! Gets method that can accept arguments of specified types.
 	//!
 	//! @param name  Name of the method to get.
-	//! @param types An array of types that specify method signature to use.
-	VIRTUAL_API virtual IMonoMethod *GetMethod(const char *name, List<TypeSpec> *types = nullptr) = 0;
-	//! Gets the first method that matches given description.
+	//! @param types An array of System.Type objects that specify method signature to use.
+	VIRTUAL_API virtual IMonoMethod *GetMethod(const char *name, IMonoArray *types = nullptr) = 0;
+	//! Gets method that can accept arguments of specified types.
 	//!
-	//! @param name       Name of the method to find.
-	//! @param paramCount Number of arguments the method should take.
-	VIRTUAL_API virtual IMonoMethod *GetMethod(const char *name, int paramCount) = 0;
+	//! This method does not bother with checking how arguments are passed to the method.
+	//!
+	//! Use it when you have a lot overloads that just accept simple values.
+	//!
+	//! Some types are remapped for this method: any arrays are mapped to System.Array and
+	//! pointers are mapped to IntPtr.
+	//!
+	//! For instance:
+	//! @code{.cs}
+	//! void Add(sbyte);
+	//! void Add(short);
+	//! void Add(int);
+	//! void Add(long);
+	//! void Add(int[]);
+	//! @endcode
+	//!
+	//! To get the last one in the above list, use the following code:
+	//!
+	//! @code{.cpp}
+	//! List<IMonoClass *> type = List<IMonoClass *>(1);
+	//! type.Add(MonoEnv->CoreLibrary->GetClass("System", "Array"));
+	//! klass->GetMethod("Add", type);
+	//! @endcode
+	//!
+	//! @param name    Name of the method to get.
+	//! @param classes A list IMonoClass wrappers that specify method signature to use.
+	VIRTUAL_API virtual IMonoMethod *GetMethod(const char *name, List<IMonoClass *> &classes) = 0;
+	//! Gets method that can accept arguments of specified types.
+	//!
+	//! Postfixes allow you to specify what kind of parameter to use.
+	//!
+	//! Available postfixes:
+	//!     1) &  - specifies that parameter is passed by reference using either "ref" or "out"
+	//!             keyword. When combining this postfix with others put it at the end, i.e
+	//!             "[,]&" specifies an array with two dimensions that is passed by reference.
+	//!     2) *  - specifies that parameter is a pointer. Bare in mind that some pointer types
+	//!             may not be allowed.
+	//!     1) [] - Specifies an array type. When working with multi-dimensional arrays, put
+	//!             N - 1 number of commas between the brackets where N = number of dimensions.
+	//!
+	//! @param name             Name of the method to get.
+	//! @param specifiedClasses A list of classes and postfixes that specify method signature to use.
+	VIRTUAL_API virtual IMonoMethod *GetMethod
+		(const char *name, List<Pair<IMonoClass *, const char *>> &specifiedClasses) = 0;
 	//! Gets the method that matches given description.
 	//!
-	//! General rules for constructing the text of parameter types:
-	//!     1) Don't put any parenthesis into the string.
-	//!     2) Use full names for types.
-	//!     3) Don't use parameter names.
-	//!     4) Parameter declared with "params" keyword are simple arrays.
+	//! The easiest way to learn the signature of the method is to use the following code:
+	//!
+	//! @code{.cs}
+	//!
+	//! MethodInfo method = typeof(Foo).GetMethod("Boo");
+	//!
+	//! StringBuilder builder = new StringBuilder(20);
+	//!
+	//! Type[] types = method.GetParameters().Select(x = > x.ParameterType).ToArray();
+	//!
+	//! builder.Append(types[0].FullName);
+	//!
+	//! for(int i = 1; i < types.Length; i++)
+	//! {
+	//!     builder.Append(',');
+	//!     builder.Append(types[i].FullName);
+	//! }
+	//!
+	//! string ourParameterList = builder.ToString();
+	//!
+	//! @endcode
 	//!
 	//! Examples:
 	//!
-	//! C# method signature: CreateInstance(System.Type, params System.Object[]);
-	//! C++ search: GetMethod("CreateInstance", "System.Type,System.Object[]");
+	//! C# method signature: SetupNumber(out int result, ref double value, ref void *ptr, ref object[,] pars, Foo.Boo objectOfNestedType);
+	//! C++ search: GetMethod("SetupNumber", "System.Int32&,System.Double&,System.Void*&,System.Object[,]&,Foo+Boo");
 	//!
 	//! @param name   Name of the method to find.
 	//! @param params Text that describes types arguments the method should take.
@@ -62,6 +146,33 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//! @returns A pointer to the wrapper to the found method. Null is returned if
 	//!          no method matching the description was found.
 	VIRTUAL_API virtual IMonoMethod *GetMethod(const char *name, const char *params) = 0;
+	//! Gets a method defined in this class.
+	//!
+	//! Examples:
+	//!
+	//! C# method signature: SetupNumber(out int result, ref double value, ref void *ptr, ref object[,] pars);
+	//!
+	//! @code{.cpp}
+	//!
+	//! List<const char *> typeNames = List(4);
+	//!
+	//! typeNames.Add("System.Int32&");
+	//! typeNames.Add("System.Double&");
+	//! typeNames.Add("System.Void*&");
+	//! typeNames.Add("System.Object[,]&");
+	//!
+	//! IMonoMethod *method = ourClass->GetMethod("SetupNumber", typeNames);
+	//!
+	//! @endcode
+	//!
+	//! @param name           Name of the method to find.
+	//! @param paramTypeNames A list of full type names that specify the parameters the method accepts.
+	VIRTUAL_API virtual IMonoMethod *GetMethod(const char *name, List<const char *> &paramTypeNames) = 0;
+	//! Gets the first method that matches given description.
+	//!
+	//! @param name       Name of the method to find.
+	//! @param paramCount Number of arguments the method should take.
+	VIRTUAL_API virtual IMonoMethod *GetMethod(const char *name, int paramCount) = 0;
 	//! Gets an array of methods that matches given description.
 	//!
 	//! @param name       Name of the methods to find.
@@ -130,6 +241,13 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	VIRTUAL_API virtual const char *GetName() = 0;
 	VIRTUAL_API virtual const char *GetNameSpace() = 0;
 	VIRTUAL_API virtual const char *GetFullName() = 0;
+	VIRTUAL_API virtual const char *GetFullNameIL() = 0;
 	VIRTUAL_API virtual IMonoAssembly *GetAssembly() = 0;
 	VIRTUAL_API virtual IMonoClass *GetBase() = 0;
+
+	VIRTUAL_API virtual mono::type GetType() = 0;
+	VIRTUAL_API virtual mono::type MakeArrayType() = 0;
+	VIRTUAL_API virtual mono::type MakeArrayType(int rank) = 0;
+	VIRTUAL_API virtual mono::type MakeByRefType() = 0;
+	VIRTUAL_API virtual mono::type MakePointerType() = 0;
 };

@@ -3,11 +3,6 @@
 #include "MonoObjects.h"
 #include "MonoHandle.h"
 
-mono::object MonoObjects::Create(IMonoAssembly *assembly, const char *name_space, const char *class_name, IMonoArray *params /*= nullptr*/)
-{
-	return assembly->GetClass(class_name, name_space)->CreateInstance(params);
-}
-
 IMonoHandle *MonoObjects::Wrap(mono::object obj)
 {
 	return new MonoHandle(obj);

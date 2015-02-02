@@ -24,17 +24,6 @@ struct IMonoObjects
 	//! Gets the object that provides access to Mono threads interface.
 	__declspec(property(get = GetThreads)) IMonoThreads *Threads;
 
-	//! Creates a new MonoObject using constructor with specific parameters.
-	//!
-	//! @param assembly   Assembly where the type of the object is defined.
-	//! @param name_space Name space that contains the type of the object.
-	//! @param class_name Name of the type to use.
-	//! @param params     An array of parameters to pass to the constructor.
-	//!                   If null, default constructor will be used.
-	VIRTUAL_API virtual mono::object Create
-		(IMonoAssembly *assembly,
-		const char *name_space, const char *class_name,
-		IMonoArray *params = nullptr) = 0;
 	//! Creates a new wrapper for given MonoObject.
 	//!
 	//! @param obj An object to wrap.

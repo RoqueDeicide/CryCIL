@@ -1,9 +1,8 @@
 #pragma once
 
 #include "IMonoInterface.h"
-#include "MonoHeaders.h"
 
-struct MonoMethodWrapper : public IMonoMethod
+struct MonoConstructor : public IMonoConstructor
 {
 private:
 	MonoMethod *wrappedMethod;
@@ -15,43 +14,25 @@ private:
 	List<IMonoClass *> paramClasses;
 	List<const char *> paramTypeNames;
 public:
-
-	MonoMethodWrapper(MonoMethod *method);
-	~MonoMethodWrapper()
+	MonoConstructor(MonoMethod *method);
+	~MonoConstructor()
 	{
 		SAFE_DELETE(this->paramList);
 
 		this->paramClasses.Dispose();
-		
+
 		for (int i = 0; i < this->paramTypeNames.Length; i++)
 		{
 			delete this->paramTypeNames[i];
 		}
 		this->paramTypeNames.Dispose();
 	}
-	//! Invokes this method.
-	virtual mono::object Invoke
-	(
-		void *object,
-		mono::exception *exc = nullptr,
-		bool polymorph = false
-	);
-	//! Invokes this method.
-	virtual mono::object Invoke
-	(
-		void *object,
-		IMonoArray *params = nullptr,
-		mono::exception *exc = nullptr,
-		bool polymorph = false
-	);
-	//! Invokes this method.
-	virtual mono::object Invoke
-	(
-		void *object,
-		void **params = nullptr,
-		mono::exception *exc = nullptr,
-		bool polymorph = false
-	);
+
+	virtual mono::object Invoke(void *object, mono::exception *exc = nullptr, bool polymorph = false);
+
+	virtual mono::object Invoke(void *object, IMonoArray *params, mono::exception *exc = nullptr, bool polymorph = false);
+
+	virtual mono::object Invoke(void *object, void **params, mono::exception *exc = nullptr, bool polymorph = false);
 
 	virtual void *GetThunk();
 
@@ -59,12 +40,11 @@ public:
 
 	virtual int GetParameterCount();
 
-	virtual void *GetWrappedPointer();
-
 	virtual List<const char *> *GetParameterTypeNames();
 
 	virtual List<IMonoClass *> *GetParameterClasses();
 
 	virtual const char *GetParametersList();
 
+	virtual void *GetWrappedPointer();
 };

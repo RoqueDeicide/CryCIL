@@ -5,7 +5,7 @@
 
 void *MonoArrayWrapper::Item(int index)
 {
-	return mono_array_addr_with_size(GetWrappedArray, this->GetElementSize(), index);
+	return mono_array_addr_with_size(this->arrayPtr, this->GetElementSize(), index);
 }
 
 int MonoArrayWrapper::GetLength(int dimensionIndex)
