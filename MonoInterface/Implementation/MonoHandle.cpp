@@ -1,23 +1,6 @@
 #include "stdafx.h"
 #include "API_ImplementationHeaders.h"
 
-mono::object MonoHandle::CallMethod(const char *name, IMonoArray *args)
-{
-	MonoMethod *method =
-		mono_class_get_method_from_name(this->getMonoClass(), name, args->Length);
-	MonoObject *exception = nullptr;
-	MonoObject *result = mono_runtime_invoke_array
-		(method, this->obj, (MonoArray *)args->GetWrappedPointer(), &exception);
-	if (exception)
-	{
-		MonoEnv->HandleException((mono::object)exception);
-	}
-	else
-	{
-		return (mono::object)result;
-	}
-	return nullptr;
-}
 //! Gets the value of the object's field.
 void MonoHandle::GetField(const char *name, void *value)
 {

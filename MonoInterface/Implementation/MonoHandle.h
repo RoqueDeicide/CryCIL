@@ -32,8 +32,6 @@ public:
 	{
 		this->mObj = obj;
 	}
-	//! Calls a Mono method associated with this object.
-	virtual mono::object CallMethod(const char *name, IMonoArray *args);
 	//! Gets the value of the object's field.
 	virtual void GetField(const char *name, void *value);
 	//! Sets the value of the object's field.

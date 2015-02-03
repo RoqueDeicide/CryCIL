@@ -7,11 +7,6 @@ struct IMonoHandle : public IMonoFunctionalityWrapper
 {
 	//! Returns an instance of MonoObject this object is wrapped around.
 	VIRTUAL_API virtual mono::object Get() = 0;
-	//! Calls a Mono method associated with this object.
-	//!
-	//! @param name Name of the method to invoke.
-	//! @param args Array of arguments to pass, that also defines which method overload to use.
-	VIRTUAL_API virtual mono::object CallMethod(const char *name, IMonoArray *args) = 0;
 	//! Gets the value of the field. Only use it with objects of managed types.
 	//!
 	//! Example:
