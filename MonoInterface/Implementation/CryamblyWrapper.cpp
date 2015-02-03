@@ -44,6 +44,13 @@ CryamblyWrapper::CryamblyWrapper(const char *fileName)
 	this->colorSingle = this->GetClass("CryCil.Graphics", "ColorSingle");
 }
 
+CryamblyWrapper::~CryamblyWrapper()
+{
+	SAFE_DELETE(this->name);
+	SAFE_DELETE(this->fullName);
+	SAFE_DELETE(this->fileName);
+}
+
 
 IMonoClass *CryamblyWrapper::GetMatrix33()
 {

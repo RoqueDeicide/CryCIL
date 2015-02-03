@@ -29,6 +29,7 @@ private:
 	IMonoClass *colorSingle;
 public:
 	CryamblyWrapper(const char *fileName);
+	~CryamblyWrapper();
 
 	virtual IMonoClass *GetMatrix33();
 	virtual IMonoClass *GetMatrix34();
