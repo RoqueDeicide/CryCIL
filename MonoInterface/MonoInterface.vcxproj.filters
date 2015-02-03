@@ -64,9 +64,6 @@
     <ClInclude Include="Interfaces\IMonoFunctionalityWrapper.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="Interfaces\IMonoAssembly.h">
-      <Filter>Interfaces</Filter>
-    </ClInclude>
     <ClInclude Include="DoxygenExampleFiles\MonoMethodInvocations.h">
       <Filter>DoxygenExampleFiles</Filter>
     </ClInclude>
@@ -216,6 +213,9 @@
     </ClInclude>
     <ClInclude Include="Implementation\MonoConstructor.h">
       <Filter>API Implementation\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\IMonoAssembly.h">
+      <Filter>Interfaces\Metadata</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
