@@ -10,6 +10,7 @@
 #include "Interfaces/IMonoGC.h"
 #include "Interfaces/IMonoGCHandle.h"
 #include "Interfaces/IMonoAssembly.h"
+#include "Interfaces/ICryambly.h"
 #include "Interfaces/IMonoArray.h"
 #include "Interfaces/IMonoClass.h"
 #include "Interfaces/IMonoException.h"
@@ -224,7 +225,7 @@ struct IMonoInterface
 	//! Gets the pointer to the assembly wrapper registry.
 	__declspec(property(get = GetAssemblyCollection)) IMonoAssemblyCollection *Assemblies;
 	//! Gets the pointer to IMonoAssembly that represents Cryambly.
-	__declspec(property(get = GetCryambly)) IMonoAssembly *Cryambly;
+	__declspec(property(get = GetCryambly)) ICryambly *Cryambly;
 	//! Gets the pointer to IMonoAssembly that represents Pdb2mdb.
 	__declspec(property(get = GetPdbMdbAssembly)) IMonoAssembly *Pdb2Mdb;
 	//! Gets the pointer to IMonoAssembly that represents equivalent of mscorlib.
@@ -240,7 +241,7 @@ struct IMonoInterface
 
 	VIRTUAL_API virtual void *GetAppDomain() = 0;
 	VIRTUAL_API virtual IMonoAssemblyCollection *GetAssemblyCollection() = 0;
-	VIRTUAL_API virtual IMonoAssembly *GetCryambly() = 0;
+	VIRTUAL_API virtual ICryambly *GetCryambly() = 0;
 	VIRTUAL_API virtual IMonoAssembly *GetPdbMdbAssembly() = 0;
 	VIRTUAL_API virtual IMonoAssembly *GetCoreLibrary() = 0;
 	VIRTUAL_API virtual bool GetInitializedIndication() = 0;

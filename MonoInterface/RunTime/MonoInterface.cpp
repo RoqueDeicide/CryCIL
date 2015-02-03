@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "MonoInterface.h"
+#include "Implementation/CryamblyWrapper.h"
 #include "Implementation/MonoAssemblyCollection.h"
 
 
@@ -21,7 +22,7 @@ IMonoAssemblyCollection *MonoInterface::GetAssemblyCollection()
 	return this->assemblies;
 }
 
-IMonoAssembly *MonoInterface::GetCryambly()
+ICryambly *MonoInterface::GetCryambly()
 {
 	return this->cryambly;
 }
@@ -147,7 +148,7 @@ MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener
 	
 	// Load Cryambly.
 	const char *cryamblyFile = DirectoryStructure::GetCryamblyFile();
-	this->cryambly = this->assemblies->Load(cryamblyFile);
+	this->cryambly = new CryamblyWrapper(cryamblyFile);
 	this->corlib = this->assemblies->Wrap(mono_image_get_assembly(mono_get_corlib()));
 	
 	ReportComment("Initializing main thunks.");

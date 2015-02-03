@@ -10,10 +10,6 @@ private:
 	{
 		return (mono::object)mono_value_box((MonoDomain *)MonoEnv->AppDomain, klass, value);
 	}
-	__forceinline mono::object box(const char *className, const char *nameSpace, void *value)
-	{
-		return MonoEnv->Cryambly->GetClass(nameSpace, className)->Box(value);
-	}
 public:
 	virtual mono::object BoxUPtr(void *value);
 

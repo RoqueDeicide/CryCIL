@@ -75,70 +75,70 @@ mono::object DefaultBoxinator::Box(double value)
 
 mono::object DefaultBoxinator::Box(Vec2 value)
 {
-	return this->box("Vector2", "CryCil.Mathematics", &value);
+	return MonoEnv->Cryambly->Vector2->Box(&value);
 }
 
 mono::object DefaultBoxinator::Box(Vec3 value)
 {
-	return this->box("Vector3", "CryCil.Mathematics", &value);
+	return MonoEnv->Cryambly->Vector3->Box(&value);
 }
 
 mono::object DefaultBoxinator::Box(Vec4 value)
 {
-	return this->box("Vector4", "CryCil.Mathematics", &value);
+	return MonoEnv->Cryambly->Vector4->Box(&value);
 }
 
 mono::object DefaultBoxinator::Box(Ang3 value)
 {
-	return this->box("EulerAngles", "CryCil.Mathematics", &value);
+	return MonoEnv->Cryambly->EulerAngles->Box(&value);
 }
 
 mono::object DefaultBoxinator::Box(Quat value)
 {
-	return this->box("Quaternion", "CryCil.Mathematics", &value);
+	return MonoEnv->Cryambly->Quaternion->Box(&value);
 }
 
 mono::object DefaultBoxinator::Box(QuatT value)
 {
-	return this->box("QuaternionTranslation", "CryCil.Mathematics", &value);
+	return MonoEnv->Cryambly->Quatvec->Box(&value);
 }
 
 mono::object DefaultBoxinator::Box(Matrix33 value)
 {
-	return this->box("Matrix33", "CryCil.Mathematics", &value);
+	return MonoEnv->Cryambly->Matrix33->Box(&value);
 }
 
 mono::object DefaultBoxinator::Box(Matrix34 value)
 {
-	return this->box("Matrix34", "CryCil.Mathematics", &value);
+	return MonoEnv->Cryambly->Matrix34->Box(&value);
 }
 
 mono::object DefaultBoxinator::Box(Matrix44 value)
 {
-	return this->box("Matrix44", "CryCil.Mathematics", &value);
+	return MonoEnv->Cryambly->Matrix44->Box(&value);
 }
 
 mono::object DefaultBoxinator::Box(Plane value)
 {
-	return this->box("Plane", "CryCil.Mathematics.Geometry", &value);
+	return MonoEnv->Cryambly->Plane->Box(&value);
 }
 
 mono::object DefaultBoxinator::Box(Ray value)
 {
-	return this->box("Ray", "CryCil.Mathematics.Geometry", &value);
+	return MonoEnv->Cryambly->Ray->Box(&value);
 }
 
 mono::object DefaultBoxinator::Box(ColorB value)
 {
-	return this->box("ColorByte", "CryCil.Graphics", &value);
+	return MonoEnv->Cryambly->ColorByte->Box(&value);
 }
 
 mono::object DefaultBoxinator::Box(ColorF value)
 {
-	return this->box("ColorSingle", "CryCil.Graphics", &value);
+	return MonoEnv->Cryambly->ColorSingle->Box(&value);
 }
 
 mono::object DefaultBoxinator::Box(AABB value)
 {
-	return this->box("BoundingBox", "CryCil.Mathematics", &value);
+	return MonoEnv->Cryambly->BoundingBox->Box(&value);
 }

@@ -217,6 +217,15 @@
     <ClInclude Include="Interfaces\IMonoAssembly.h">
       <Filter>Interfaces\Metadata</Filter>
     </ClInclude>
+    <ClInclude Include="Interfaces\ICryambly.h">
+      <Filter>Interfaces\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Implementation\AssemblyUtilities.h">
+      <Filter>API Implementation\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Implementation\CryamblyWrapper.h">
+      <Filter>API Implementation\Metadata</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -314,6 +323,12 @@
       <Filter>API Implementation\ObjectSystems</Filter>
     </ClCompile>
     <ClCompile Include="Implementation\MonoConstructor.cpp">
+      <Filter>API Implementation\Metadata</Filter>
+    </ClCompile>
+    <ClCompile Include="Implementation\AssemblyUtilities.cpp">
+      <Filter>API Implementation\Metadata</Filter>
+    </ClCompile>
+    <ClCompile Include="Implementation\CryamblyWrapper.cpp">
       <Filter>API Implementation\Metadata</Filter>
     </ClCompile>
   </ItemGroup>

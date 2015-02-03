@@ -33,8 +33,8 @@ private:
 
 	MonoDomain *appDomain;
 	IMonoAssemblyCollection *assemblies;
-	IMonoAssembly *cryambly;					//! Extra pointer for Cryambly.
 	IMonoAssembly *corlib;						//! Extra pointer for mscorlib.
+	ICryambly *cryambly;					//! Extra pointer for Cryambly.
 	IMonoAssembly *pdb2mdb;
 
 	IMonoGCHandle *managedInterface;
@@ -49,7 +49,7 @@ public:
 
 	virtual IMonoAssemblyCollection *GetAssemblyCollection();
 
-	virtual IMonoAssembly *GetCryambly();
+	virtual ICryambly *GetCryambly();
 
 	virtual IMonoAssembly *GetPdbMdbAssembly();
 
