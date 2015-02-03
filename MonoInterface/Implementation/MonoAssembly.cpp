@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "API_ImplementationHeaders.h"
 
-#include "MonoDefinitionFiles/MonoAssemblyName.h"
+#include "AssemblyUtilities.h"
 
 MonoAssemblyWrapper::MonoAssemblyWrapper(MonoAssembly *assembly)
 {
@@ -15,17 +15,11 @@ MonoAssemblyWrapper::MonoAssemblyWrapper(MonoAssembly *assembly)
 	}
 	this->assembly = assembly;
 	this->image = mono_assembly_get_image(assembly);
-	// Get the full assembly name.
-	MonoAssemblyName aname;
-	mono_assembly_fill_assembly_name(this->image, &aname);
-	const char *temp = mono_stringify_assembly_name(&aname);
-	this->fullName = new Text(temp);
-	mono_free((void *)temp);
-	// Get the short name.
-	temp = mono_assembly_name_get_name(&aname);
-	this->shortName = new Text(temp);
 
-	mono_assembly_name_free(&aname);
+	auto names = GetAssemblyNames(this->image);
+
+	this->fullName = names.Value1;
+	this->shortName = names.Value2;
 
 	this->fileName = new Text("Unknown file name.");
 }
@@ -47,17 +41,11 @@ MonoAssemblyWrapper::MonoAssemblyWrapper(const char *assemblyFile, bool &failed)
 	if (status == MONO_IMAGE_OK)
 	{
 		this->image = mono_assembly_get_image(assembly);
-		// Get the full assembly name.
-		MonoAssemblyName aname;
-		mono_assembly_fill_assembly_name(this->image, &aname);
-		const char *temp = mono_stringify_assembly_name(&aname);
-		this->fullName = new Text(temp);
-		mono_free((void *)temp);
-		// Get the short name.
-		temp = mono_assembly_name_get_name(&aname);
-		this->shortName = new Text(temp);
+		
+		auto names = GetAssemblyNames(this->image);
 
-		mono_assembly_name_free(&aname);
+		this->fullName = names.Value1;
+		this->shortName = names.Value2;
 
 		this->fileName = new Text(assemblyFile);
 	}

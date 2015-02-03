@@ -46,11 +46,6 @@ mono::object MonoExceptionWrapper::Get()
 	return this->ex;
 }
 
-mono::object MonoExceptionWrapper::CallMethod(const char *name, IMonoArray *args)
-{
-	return this->handle->CallMethod(name, args);
-}
-
 void MonoExceptionWrapper::GetField(const char *name, void *value)
 {
 	this->handle->GetField(name, value);

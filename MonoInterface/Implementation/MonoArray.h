@@ -68,8 +68,6 @@ public:
 
 	virtual mono::object Get();
 
-	virtual mono::object CallMethod(const char *name, IMonoArray *args);
-
 	virtual void GetField(const char *name, void *value);
 
 	virtual void SetField(const char *name, void *value);

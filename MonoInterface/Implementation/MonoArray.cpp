@@ -73,25 +73,6 @@ mono::object MonoArrayWrapper::Get()
 	return (mono::object)this->arrayPtr;
 }
 
-mono::object MonoArrayWrapper::CallMethod(const char *name, IMonoArray *args)
-{
-	MonoObject *obj = (MonoObject *)this->Get();
-	MonoMethod *method =
-		mono_class_get_method_from_name(mono_object_get_class((MonoObject *)this->arrayPtr), name, args->Length);
-	MonoObject *exception = nullptr;
-	MonoObject *result = mono_runtime_invoke_array
-		(method, obj, (MonoArray *)args->GetWrappedPointer(), &exception);
-	if (exception)
-	{
-		MonoEnv->HandleException((mono::object)exception);
-	}
-	else
-	{
-		return (mono::object)result;
-	}
-	return nullptr;
-}
-
 void MonoArrayWrapper::GetField(const char *name, void *value)
 {
 	return this->GetClass()->GetField(this->Get(), name, value);

@@ -40,24 +40,6 @@ mono::object MonoText::Get()
 	return this->mStr;
 }
 
-mono::object MonoText::CallMethod(const char *name, IMonoArray *args)
-{
-	MonoMethod *method =
-		mono_class_get_method_from_name(mono_object_get_class(this->obj), name, args->Length);
-	MonoObject *exception = nullptr;
-	MonoObject *result = mono_runtime_invoke_array
-		(method, this->obj, (MonoArray *)args->GetWrappedPointer(), &exception);
-	if (exception)
-	{
-		MonoEnv->HandleException((mono::object)exception);
-	}
-	else
-	{
-		return (mono::object)result;
-	}
-	return nullptr;
-}
-
 void MonoText::GetField(const char *name, void *value)
 {
 	return this->GetClass()->GetField(this->mStr, name, value);

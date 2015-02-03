@@ -168,11 +168,6 @@ mono::object MonoThreadWrapper::Get()
 	return this->mThread;
 }
 
-mono::object MonoThreadWrapper::CallMethod(const char *name, IMonoArray *args)
-{
-	return SystemThreadingThread->GetMethod(name, args->Length)->Invoke(this->mThread, args);
-}
-
 void MonoThreadWrapper::GetField(const char *name, void *value)
 {
 	SystemThreadingThread->GetField(this->mThread, name, value);
