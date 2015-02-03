@@ -33,8 +33,8 @@ private:
 
 	MonoDomain *appDomain;
 	IMonoAssemblyCollection *assemblies;
-	IMonoAssembly *corlib;						//! Extra pointer for mscorlib.
 	ICryambly *cryambly;					//! Extra pointer for Cryambly.
+	IMonoCoreLibrary *corlib;				//! Extra pointer for mscorlib.
 	IMonoAssembly *pdb2mdb;
 
 	IMonoGCHandle *managedInterface;
@@ -53,7 +53,7 @@ public:
 
 	virtual IMonoAssembly *GetPdbMdbAssembly();
 
-	virtual IMonoAssembly *GetCoreLibrary();
+	virtual IMonoCoreLibrary *GetCoreLibrary();
 
 	virtual bool GetInitializedIndication();
 

@@ -11,6 +11,7 @@
 #include "Interfaces/IMonoGCHandle.h"
 #include "Interfaces/IMonoAssembly.h"
 #include "Interfaces/ICryambly.h"
+#include "Interfaces/IMonoCoreLibrary.h"
 #include "Interfaces/IMonoArray.h"
 #include "Interfaces/IMonoClass.h"
 #include "Interfaces/IMonoException.h"
@@ -229,7 +230,7 @@ struct IMonoInterface
 	//! Gets the pointer to IMonoAssembly that represents Pdb2mdb.
 	__declspec(property(get = GetPdbMdbAssembly)) IMonoAssembly *Pdb2Mdb;
 	//! Gets the pointer to IMonoAssembly that represents equivalent of mscorlib.
-	__declspec(property(get = GetCoreLibrary)) IMonoAssembly *CoreLibrary;
+	__declspec(property(get = GetCoreLibrary)) IMonoCoreLibrary *CoreLibrary;
 	//! Indicates whether Mono run-time environment is running.
 	__declspec(property(get = GetInitializedIndication)) bool IsRunning;
 	//! Gets the interface with Mono GC.
@@ -243,7 +244,7 @@ struct IMonoInterface
 	VIRTUAL_API virtual IMonoAssemblyCollection *GetAssemblyCollection() = 0;
 	VIRTUAL_API virtual ICryambly *GetCryambly() = 0;
 	VIRTUAL_API virtual IMonoAssembly *GetPdbMdbAssembly() = 0;
-	VIRTUAL_API virtual IMonoAssembly *GetCoreLibrary() = 0;
+	VIRTUAL_API virtual IMonoCoreLibrary *GetCoreLibrary() = 0;
 	VIRTUAL_API virtual bool GetInitializedIndication() = 0;
 	VIRTUAL_API virtual IMonoGC *GetGC() = 0;
 	VIRTUAL_API virtual IGameFramework *GetGameFramework() = 0;
