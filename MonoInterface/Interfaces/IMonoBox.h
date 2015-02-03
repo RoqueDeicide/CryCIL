@@ -5,6 +5,8 @@
 //! Interface for the object that does default boxing operations.
 struct IDefaultBoxinator
 {
+	virtual ~IDefaultBoxinator() {}
+
 	//! Boxes an unsigned pointer value.
 	//!
 	//! @param value Value to box.

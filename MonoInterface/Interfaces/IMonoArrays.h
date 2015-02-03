@@ -2,6 +2,8 @@
 
 struct IMonoArrays
 {
+	virtual ~IMonoArrays() {}
+
 	//! Creates object of specified type with specified capacity.
 	//!
 	//! Mono array objects are standard managed objects and are prone to GC.

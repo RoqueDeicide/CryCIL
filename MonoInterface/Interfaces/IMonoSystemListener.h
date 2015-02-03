@@ -29,6 +29,8 @@ struct IMonoSystemListener
 protected:
 	IMonoInterface *monoInterface;
 public:
+	virtual ~IMonoSystemListener() {}
+
 	//! Allows IMonoInterface implementation let the listener access it before global
 	//! variable MonoEnv is initialized.
 	//!

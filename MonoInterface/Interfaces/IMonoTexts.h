@@ -3,6 +3,8 @@
 //! Provides functionality for converting to and from Mono strings.
 struct IMonoTexts
 {
+	virtual ~IMonoTexts() {}
+
 	//! Wraps given Mono string, allowing access to its API.
 	//!
 	//! The result must be deleted when not needed anymore.

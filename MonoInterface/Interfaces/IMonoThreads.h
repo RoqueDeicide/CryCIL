@@ -5,6 +5,8 @@
 //! Provides functionality for interaction with Mono threads.
 struct IMonoThreads
 {
+	virtual ~IMonoThreads() {}
+
 	//! Creates a wrapper for a MonoThread.
 	VIRTUAL_API virtual IMonoThread *Wrap(mono::Thread _thread) = 0;
 

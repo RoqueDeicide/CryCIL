@@ -5,6 +5,8 @@
 //! Represents an interface with Mono Garbage Collector (GC).
 struct IMonoGC
 {
+	virtual ~IMonoGC() {}
+
 	//! Gets index of the oldest generation that is used by GC.
 	__declspec(property(get = GetMaxGeneration)) int MaxGeneration;
 	//! Gets number of bytes that are currently allocated by this GC.

@@ -10,6 +10,10 @@ struct MonoGCHandle : public IMonoGCHandle
 protected:
 	unsigned int handle;
 public:
+	virtual ~MonoGCHandle()
+	{
+		this->Release();
+	}
 	virtual void Release()
 	{
 		if (this->handle == -1)

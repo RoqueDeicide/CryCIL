@@ -5,6 +5,8 @@
 //! Provides access to functions that create and wrap Mono delegates.
 struct IMonoDelegates
 {
+	virtual ~IMonoDelegates() {}
+
 	//! Wraps a pointer to the delegate.
 	//!
 	//! Wrapper needs to be deleted when not used anymore.

@@ -5,6 +5,8 @@
 //! Represents a GC handle.
 struct IMonoGCHandle
 {
+	virtual ~IMonoGCHandle() {}
+
 	//! Gets the wrapper for managed object that is being held by this GC handle.
 	//!
 	//! @returns A pointer that provides access to object's API, or null if this is a weak

@@ -11,6 +11,8 @@
 //! Provides access to functions that create and wrap various Mono objects.
 struct IMonoObjects
 {
+	virtual ~IMonoObjects() {}
+
 	//! Gets the object that allows creation and wrapping of Mono arrays.
 	__declspec(property(get = GetArrays)) IMonoArrays *Arrays;
 	//! Gets the object that allows creation of general Mono strings.

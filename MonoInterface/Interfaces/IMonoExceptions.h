@@ -5,6 +5,8 @@
 //! It is highly recommended to pin mono::exception objects using Mono GC handles.
 struct IMonoExceptions
 {
+	virtual ~IMonoExceptions() {}
+
 	//! Creates a new Mono exception object.
 	//!
 	//! Returned object should be deleted we no longer in use.
