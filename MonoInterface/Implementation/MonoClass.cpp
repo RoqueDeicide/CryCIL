@@ -66,11 +66,6 @@ MonoClassWrapper::~MonoClassWrapper()
 	this->methods.Dispose();
 }
 
-mono::object MonoClassWrapper::CreateInstance()
-{
-	return (mono::object)mono_object_new(mono_domain_get(), this->wrappedClass);
-}
-
 IMonoConstructor *MonoClassWrapper::GetConstructor(IMonoArray *types /*= nullptr*/)
 {
 	return static_cast<IMonoConstructor *>(this->GetMethod(".ctor", types));

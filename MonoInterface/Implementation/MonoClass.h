@@ -23,8 +23,6 @@ public:
 	MonoClassWrapper(MonoClass *klass);
 	~MonoClassWrapper();
 
-	virtual mono::object CreateInstance();
-
 	virtual IMonoConstructor *GetConstructor(IMonoArray *types = nullptr);
 
 	virtual IMonoConstructor *GetConstructor(List<IMonoClass *> &classes);

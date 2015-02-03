@@ -20,8 +20,6 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//! Gets the class where this class is defined.
 	__declspec(property(get = GetBase)) IMonoClass *Base;
 	
-	//! Creates an uninitialized instance of this class.
-	VIRTUAL_API virtual mono::object CreateInstance() = 0;
 	//! Gets constructor that can accept arguments of specified types.
 	//!
 	//! @param types An array of System.Type objects that specify constructor signature to use.
