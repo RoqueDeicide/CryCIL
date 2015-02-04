@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "MonoInterface.h"
-#include "Implementation/CryamblyWrapper.h"
+#include "Implementation/Cryambly.h"
 #include "Implementation/MonoCoreLibrary.h"
 #include "Implementation/MonoAssemblies.h"
 
