@@ -1,6 +1,7 @@
 #pragma once
 
 #include "IMonoInterface.h"
+#include "MonoClass.h"
 
 struct MonoText : public IMonoText
 {
@@ -11,17 +12,19 @@ private:
 		MonoString *str;
 		mono::string mStr;
 	};
-	IMonoClass *type;
+	IMonoClass *klass;
 public:
 
 	MonoText(MonoString *text)
 	{
 		this->str = text;
+		this->klass = MonoClassCache::Wrap(mono_object_get_class(this->obj));
 	}
 
 	MonoText(mono::string text)
 	{
 		this->mStr = text;
+		this->klass = MonoClassCache::Wrap(mono_object_get_class(this->obj));
 	}
 
 	virtual bool Equals(IMonoText *other);

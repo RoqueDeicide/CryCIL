@@ -11,26 +11,17 @@
 struct MonoHandle : public IMonoHandle
 {
 private:
-	MonoClass *monoClass;
-	IMonoClass *type;
+	IMonoClass *klass;
 	union
 	{
 		mono::object mObj;
 		MonoObject *obj;
 	};
 public:
-	MonoHandle()
-		: type(nullptr)
-		, monoClass(nullptr)
-		, obj(nullptr)
-	{
-
-	}
 	MonoHandle(mono::object obj)
-		: type(nullptr)
-		, monoClass(nullptr)
 	{
 		this->mObj = obj;
+		this->klass = MonoClassCache::Wrap(mono_object_get_class(this->obj));
 	}
 	//! Gets the value of the object's field.
 	virtual void GetField(const char *name, void *value);
@@ -43,15 +34,6 @@ public:
 	virtual struct IMonoClass *GetClass();
 
 	virtual void *GetWrappedPointer();
-private:
-	MonoClass *getMonoClass()
-	{
-		if (!this->monoClass)
-		{
-			this->monoClass = mono_object_get_class(this->obj);
-		}
-		return this->monoClass;
-	}
 
 	virtual mono::object Get() { return this->mObj; }
 };

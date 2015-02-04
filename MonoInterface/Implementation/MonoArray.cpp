@@ -28,7 +28,7 @@ int MonoArrayWrapper::GetLowerBound(int dimensionIndex)
 
 int MonoArrayWrapper::GetRank()
 {
-	return mono_class_get_rank(mono_object_get_class((MonoObject *)this->arrayPtr));
+	return mono_class_get_rank(mono_object_get_class(this->obj));
 }
 
 
@@ -43,7 +43,7 @@ int MonoArrayWrapper::GetElementSize()
 	if (this->elementSize == -1)
 	{
 		this->elementSize =
-			mono_array_element_size(mono_object_get_class((MonoObject *)this->GetWrappedPointer()));
+			mono_array_element_size(mono_object_get_class(this->obj));
 	}
 	return this->elementSize;
 }
@@ -56,7 +56,7 @@ IMonoClass *MonoArrayWrapper::GetElementClass()
 		(
 			mono_class_get_element_class
 			(
-				mono_object_get_class((MonoObject *)this->GetWrappedPointer())
+				mono_object_get_class(this->obj)
 			)
 		);
 	}
@@ -70,17 +70,17 @@ void *MonoArrayWrapper::GetWrappedPointer()
 
 mono::object MonoArrayWrapper::Get()
 {
-	return (mono::object)this->arrayPtr;
+	return this->mArray;
 }
 
 void MonoArrayWrapper::GetField(const char *name, void *value)
 {
-	return this->GetClass()->GetField(this->Get(), name, value);
+	return this->GetClass()->GetField(this->mArray, name, value);
 }
 
 void MonoArrayWrapper::SetField(const char *name, void *value)
 {
-	this->GetClass()->SetField(this->Get(), name, value);
+	this->GetClass()->SetField(this->mArray, name, value);
 }
 
 IMonoProperty *MonoArrayWrapper::GetProperty(const char *name)
@@ -95,5 +95,6 @@ IMonoEvent *MonoArrayWrapper::GetEvent(const char *name)
 
 IMonoClass *MonoArrayWrapper::GetClass()
 {
-	return MonoClassCache::Wrap(mono_object_get_class((MonoObject *)this->arrayPtr));
+	return MonoClassCache::Wrap(mono_object_get_class(this->obj));
 }
+

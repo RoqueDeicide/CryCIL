@@ -13,7 +13,12 @@ private:
 	int elementSize;
 	int size;
 	IMonoClass *klass;
-	MonoArray *arrayPtr;
+	union
+	{
+		MonoObject *obj;
+		MonoArray *arrayPtr;
+		mono::Array mArray;
+	};
 public:
 	MonoArrayWrapper()
 		: elementSize(-1)

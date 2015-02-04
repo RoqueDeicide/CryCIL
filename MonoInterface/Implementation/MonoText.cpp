@@ -42,32 +42,27 @@ mono::object MonoText::Get()
 
 void MonoText::GetField(const char *name, void *value)
 {
-	return this->GetClass()->GetField(this->mStr, name, value);
+	return this->klass->GetField(this->mStr, name, value);
 }
 
 void MonoText::SetField(const char *name, void *value)
 {
-	return this->GetClass()->SetField(this->mStr, name, value);
+	return this->klass->SetField(this->mStr, name, value);
 }
 
 IMonoProperty *MonoText::GetProperty(const char *name)
 {
-	return this->GetClass()->GetProperty(name);
+	return this->klass->GetProperty(name);
 }
 
 IMonoEvent *MonoText::GetEvent(const char *name)
 {
-	return this->GetClass()->GetEvent(name);
+	return this->klass->GetEvent(name);
 }
 
 IMonoClass *MonoText::GetClass()
 {
-	if (!this->type)
-	{
-		// Cache the type of this object, so we don't have to get it over and over again.
-		this->type = MonoClassCache::Wrap(mono_object_get_class(this->obj));
-	}
-	return this->type;
+	return this->klass;
 }
 
 void *MonoText::GetWrappedPointer()

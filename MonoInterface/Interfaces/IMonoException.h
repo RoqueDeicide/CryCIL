@@ -19,8 +19,6 @@ struct IMonoException : public IMonoHandle
 	//!
 	//! Result needs to be deleted after use.
 	__declspec(property(get = GetInnerException)) IMonoException *InnerException;
-	//! Gets the wrapped exception object.
-	__declspec(property(get = GetExceptionObject)) mono::exception WrappedException;
 
 	//! Raises this exception in the Mono run-time.
 	VIRTUAL_API virtual void Throw() = 0;
@@ -28,5 +26,4 @@ struct IMonoException : public IMonoHandle
 	VIRTUAL_API virtual const char *GetErrorMessage() = 0;
 	VIRTUAL_API virtual const char *GetStackTrace() = 0;
 	VIRTUAL_API virtual IMonoException *GetInnerException() = 0;
-	VIRTUAL_API virtual mono::exception GetExceptionObject() = 0;
 };
