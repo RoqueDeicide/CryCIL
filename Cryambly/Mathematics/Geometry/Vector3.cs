@@ -887,33 +887,6 @@ namespace CryCil.Geometry
 			return result;
 		}
 		#endregion
-		#region Projections, Reflections, Rotations
-		/// <summary>
-		/// Projects this vector onto a plane specified by given normal and one of the
-		/// points on the plane and that goes through the origin.
-		/// </summary>
-		/// <param name="i">A vector that represents a point on the plane.</param>
-		/// <param name="n">A normal of the plane.</param>
-		public void SetProjection(Vector3 i, Vector3 n)
-		{
-			if (!n.IsUnit())
-			{
-				throw new ArgumentException("Normal to a plane must be a unit vector.");
-			}
-			this = i - n * (n | i);
-		}
-		/// <summary>
-		/// Creates a vector which is projection of given vector onto plane which is
-		/// defined by given normal.
-		/// </summary>
-		/// <param name="i">Vector to project.</param>
-		/// <param name="n">A normal of the plane.</param>
-		/// <returns>Projection.</returns>
-		public static Vector3 CreateProjection(Vector3 i, Vector3 n)
-		{
-			return i - n * (n | i);
-		}
-		#endregion
 		#region Products
 		/// <summary>
 		/// Calculates dot product of this vector and another one.

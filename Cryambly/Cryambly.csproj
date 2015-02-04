@@ -95,6 +95,7 @@
     <Compile Include="Mathematics\Geometry\Plane.cs" />
     <Compile Include="Mathematics\Geometry\Plane.GenericOps.cs" />
     <Compile Include="Mathematics\Geometry\PlaneIntersectionType.cs" />
+    <Compile Include="Mathematics\Geometry\Projection.cs" />
     <Compile Include="Mathematics\Geometry\Quaternion.cs" />
     <Compile Include="Mathematics\Geometry\Quatvec.cs" />
     <Compile Include="Mathematics\Geometry\Ray.cs" />
