@@ -34,7 +34,7 @@ IMonoAssembly *MonoAssemblies::Load(const char *path)
 		// Try looking for the existing wrapper, since attempt to load the assembly may fail,
 		// if it was already loaded.
 		wrapper = nullptr;
-		this->assemblyRegistry->ForEach
+		this->AssemblyRegistry->ForEach
 		(
 			[&wrapper, path](Text *assemblyShortName, List<IMonoAssembly *> *assemblySet)
 			{
@@ -58,7 +58,7 @@ IMonoAssembly *MonoAssemblies::Wrap(void *assemblyHandle)
 		return nullptr;
 	}
 	IMonoAssembly *wrapper = nullptr;
-	this->assemblyRegistry->ForEach
+	this->AssemblyRegistry->ForEach
 	(
 		[&wrapper, assemblyHandle](Text *assemblyShortName, List<IMonoAssembly *> *assemblySet)
 		{
@@ -75,15 +75,15 @@ IMonoAssembly *MonoAssemblies::Wrap(void *assemblyHandle)
 	{
 		// Register this wrapper.
 		wrapper = new MonoAssemblyWrapper((MonoAssembly *)assemblyHandle);
-		if (this->assemblyRegistry->Contains(wrapper->Name))
+		if (this->AssemblyRegistry->Contains(wrapper->Name))
 		{
-			this->assemblyRegistry->At(wrapper->Name)->Add(wrapper);
+			this->AssemblyRegistry->At(wrapper->Name)->Add(wrapper);
 		}
 		else
 		{
 			List<IMonoAssembly *> *list = new List<IMonoAssembly *>(1);
 			list->Add(wrapper);
-			this->assemblyRegistry->Add(wrapper->Name, list);
+			this->AssemblyRegistry->Add(wrapper->Name, list);
 		}
 	}
 	return wrapper;
@@ -96,7 +96,7 @@ IMonoAssembly *MonoAssemblies::GetAssembly(const char *name)
 		return nullptr;
 	}
 	IMonoAssembly *wrapper = nullptr;
-	this->assemblyRegistry->ForEach
+	this->AssemblyRegistry->ForEach
 	(
 		[&wrapper, name](Text *assemblyShortName, List<IMonoAssembly *> *assemblySet)
 		{
@@ -130,7 +130,7 @@ IMonoAssembly *MonoAssemblies::GetAssemblyFullName(const char *name)
 		return nullptr;
 	}
 	IMonoAssembly *wrapper = nullptr;
-	this->assemblyRegistry->ForEach
+	this->AssemblyRegistry->ForEach
 	(
 		[&wrapper, name](Text *assemblyShortName, List<IMonoAssembly *> *assemblySet)
 		{

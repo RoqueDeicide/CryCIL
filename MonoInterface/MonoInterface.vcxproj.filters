@@ -139,9 +139,6 @@
     <ClInclude Include="MonoDefinitionFiles\MonoDelegate.h">
       <Filter>MonoDefinitionFiles</Filter>
     </ClInclude>
-    <ClInclude Include="MonoDefinitionFiles\MonoAssemblyName.h">
-      <Filter>MonoDefinitionFiles</Filter>
-    </ClInclude>
     <ClInclude Include="Implementation\MonoAssembly.h">
       <Filter>API Implementation\Metadata</Filter>
     </ClInclude>
@@ -223,13 +220,13 @@
     <ClInclude Include="Implementation\AssemblyUtilities.h">
       <Filter>API Implementation\Metadata</Filter>
     </ClInclude>
-    <ClInclude Include="Implementation\CryamblyWrapper.h">
-      <Filter>API Implementation\Metadata</Filter>
-    </ClInclude>
     <ClInclude Include="Implementation\MonoCoreLibrary.h">
       <Filter>API Implementation\Metadata</Filter>
     </ClInclude>
     <ClInclude Include="Implementation\MonoAssemblies.h">
+      <Filter>API Implementation\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Implementation\Cryambly.h">
       <Filter>API Implementation\Metadata</Filter>
     </ClInclude>
   </ItemGroup>
@@ -331,13 +328,13 @@
     <ClCompile Include="Implementation\AssemblyUtilities.cpp">
       <Filter>API Implementation\Metadata</Filter>
     </ClCompile>
-    <ClCompile Include="Implementation\CryamblyWrapper.cpp">
-      <Filter>API Implementation\Metadata</Filter>
-    </ClCompile>
     <ClCompile Include="Implementation\MonoCoreLibrary.cpp">
       <Filter>API Implementation\Metadata</Filter>
     </ClCompile>
     <ClCompile Include="Implementation\MonoAssemblies.cpp">
+      <Filter>API Implementation\Metadata</Filter>
+    </ClCompile>
+    <ClCompile Include="Implementation\Cryambly.cpp">
       <Filter>API Implementation\Metadata</Filter>
     </ClCompile>
   </ItemGroup>

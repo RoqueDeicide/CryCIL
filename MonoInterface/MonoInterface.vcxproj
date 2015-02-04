@@ -212,7 +212,7 @@
     <ClInclude Include="Geometry\FaceMesh.h" />
     <ClInclude Include="IMonoInterface.h" />
     <ClInclude Include="Implementation\AssemblyUtilities.h" />
-    <ClInclude Include="Implementation\CryamblyWrapper.h" />
+    <ClInclude Include="Implementation\Cryambly.h" />
     <ClInclude Include="Implementation\DefaultBoxinator.h" />
     <ClInclude Include="Implementation\MonoArray.h" />
     <ClInclude Include="Implementation\MonoArrays.h" />
@@ -269,7 +269,6 @@
     <ClInclude Include="List.h" />
     <ClInclude Include="Logs.h" />
     <ClInclude Include="MonoDefinitionFiles\MonoArray.h" />
-    <ClInclude Include="MonoDefinitionFiles\MonoAssemblyName.h" />
     <ClInclude Include="MonoDefinitionFiles\MonoDelegate.h" />
     <ClInclude Include="MonoHeaders.h" />
     <ClInclude Include="RunTime\AllInterops.h" />
@@ -306,7 +305,7 @@
     <ClCompile Include="Geometry\BspNode.cpp" />
     <ClCompile Include="Geometry\FaceMesh.cpp" />
     <ClCompile Include="Implementation\AssemblyUtilities.cpp" />
-    <ClCompile Include="Implementation\CryamblyWrapper.cpp" />
+    <ClCompile Include="Implementation\Cryambly.cpp" />
     <ClCompile Include="Implementation\DefaultBoxinator.cpp" />
     <ClCompile Include="Implementation\MonoArray.cpp" />
     <ClCompile Include="Implementation\MonoArrays.cpp" />

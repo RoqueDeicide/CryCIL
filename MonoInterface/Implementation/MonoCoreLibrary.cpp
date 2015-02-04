@@ -3,6 +3,7 @@
 #include "MonoCoreLibrary.h"
 #include "AssemblyUtilities.h"
 #include "MonoClass.h"
+#include "MonoAssemblies.h"
 
 MonoCoreLibrary::MonoCoreLibrary()
 {
@@ -16,25 +17,29 @@ MonoCoreLibrary::MonoCoreLibrary()
 
 	this->fileName = new Text("");
 
-	this->intPtr = MonoClassCache::Wrap(mono_get_intptr_class());
-	this->uintPtr = MonoClassCache::Wrap(mono_get_uintptr_class());
-	this->boolean = MonoClassCache::Wrap(mono_get_boolean_class());
-	this->char16 = MonoClassCache::Wrap(mono_get_char_class());
-	this->int8 = MonoClassCache::Wrap(mono_get_sbyte_class());
-	this->uint8 = MonoClassCache::Wrap(mono_get_byte_class());
-	this->int16 = MonoClassCache::Wrap(mono_get_int16_class());
-	this->uint16 = MonoClassCache::Wrap(mono_get_uint16_class());
-	this->int32 = MonoClassCache::Wrap(mono_get_int32_class());
-	this->uint32 = MonoClassCache::Wrap(mono_get_uint32_class());
-	this->int64 = MonoClassCache::Wrap(mono_get_int64_class());
-	this->uint64 = MonoClassCache::Wrap(mono_get_uint64_class());
-	this->float32 = MonoClassCache::Wrap(mono_get_single_class());
-	this->float64 = MonoClassCache::Wrap(mono_get_double_class());
-	this->text = MonoClassCache::Wrap(mono_get_string_class());
-	this->fixedArray = MonoClassCache::Wrap(mono_get_array_class());
-	this->typeInfo = this->GetClass("System", "Type");
+	this->intPtr      = MonoClassCache::Wrap(mono_get_intptr_class());
+	this->uintPtr     = MonoClassCache::Wrap(mono_get_uintptr_class());
+	this->boolean     = MonoClassCache::Wrap(mono_get_boolean_class());
+	this->char16      = MonoClassCache::Wrap(mono_get_char_class());
+	this->int8        = MonoClassCache::Wrap(mono_get_sbyte_class());
+	this->uint8       = MonoClassCache::Wrap(mono_get_byte_class());
+	this->int16       = MonoClassCache::Wrap(mono_get_int16_class());
+	this->uint16      = MonoClassCache::Wrap(mono_get_uint16_class());
+	this->int32       = MonoClassCache::Wrap(mono_get_int32_class());
+	this->uint32      = MonoClassCache::Wrap(mono_get_uint32_class());
+	this->int64       = MonoClassCache::Wrap(mono_get_int64_class());
+	this->uint64      = MonoClassCache::Wrap(mono_get_uint64_class());
+	this->float32     = MonoClassCache::Wrap(mono_get_single_class());
+	this->float64     = MonoClassCache::Wrap(mono_get_double_class());
+	this->text        = MonoClassCache::Wrap(mono_get_string_class());
+	this->fixedArray  = MonoClassCache::Wrap(mono_get_array_class());
+	this->typeInfo    = this->GetClass("System", "Type");
 	this->enumeration = MonoClassCache::Wrap(mono_get_enum_class());
-	this->exception = MonoClassCache::Wrap(mono_get_exception_class());
+	this->exception   = MonoClassCache::Wrap(mono_get_exception_class());
+
+	List<IMonoAssembly *> *corlibList = new List<IMonoAssembly *>(1);
+	corlibList->Add(this);
+	static_cast<MonoAssemblies *>(MonoEnv->Assemblies)->AssemblyRegistry->Add(this->name, corlibList);
 }
 
 MonoCoreLibrary::~MonoCoreLibrary()

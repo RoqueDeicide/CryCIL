@@ -6,17 +6,16 @@ void DisposeAssemblyWrappers(Text *assemblyShortName, List<IMonoAssembly *> *ass
 
 struct MonoAssemblies : public IMonoAssemblies
 {
-private:
-	SortedList<Text *, List<IMonoAssembly *> *> *assemblyRegistry;
-public:
+	SortedList<Text *, List<IMonoAssembly *> *> *AssemblyRegistry;
+
 	MonoAssemblies()
 	{
-		this->assemblyRegistry = new SortedList<Text *, List<IMonoAssembly *> *>(100);
+		this->AssemblyRegistry = new SortedList<Text *, List<IMonoAssembly *> *>(100);
 	}
 	~MonoAssemblies()
 	{
-		this->assemblyRegistry->ForEach(DisposeAssemblyWrappers);
-		delete this->assemblyRegistry;
+		this->AssemblyRegistry->ForEach(DisposeAssemblyWrappers);
+		delete this->AssemblyRegistry;
 	}
 	//! Loads a Mono assembly into memory.
 	virtual IMonoAssembly *Load(const char *path);

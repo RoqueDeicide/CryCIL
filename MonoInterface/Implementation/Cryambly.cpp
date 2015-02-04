@@ -1,8 +1,9 @@
 #include "stdafx.h"
-#include "CryamblyWrapper.h"
+#include "Cryambly.h"
 #include "MonoClass.h"
 
 #include "AssemblyUtilities.h"
+#include "MonoAssemblies.h"
 
 CryamblyWrapper::CryamblyWrapper(const char *fileName)
 {
@@ -42,6 +43,10 @@ CryamblyWrapper::CryamblyWrapper(const char *fileName)
 	this->ray         = this->GetClass("CryCil.Geometry", "Ray");
 	this->colorByte   = this->GetClass("CryCil.Graphics", "ColorByte");
 	this->colorSingle = this->GetClass("CryCil.Graphics", "ColorSingle");
+
+	List<IMonoAssembly *> *cryamblyList = new List<IMonoAssembly *>(1);
+	cryamblyList->Add(this);
+	static_cast<MonoAssemblies *>(MonoEnv->Assemblies)->AssemblyRegistry->Add(this->name, cryamblyList);
 }
 
 CryamblyWrapper::~CryamblyWrapper()
