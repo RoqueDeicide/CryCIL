@@ -903,20 +903,6 @@ namespace CryCil.Geometry
 			this = i - n * (n | i);
 		}
 		/// <summary>
-		/// Reflects this vector against the plane that goes through origin and is defined
-		/// by a point on it, and a normal to it.
-		/// </summary>
-		/// <param name="i">A vector that represents a point on the plane.</param>
-		/// <param name="n">A normal of the plane.</param>
-		public void SetReflection(Vector3 i, Vector3 n)
-		{
-			if (!n.IsUnit())
-			{
-				throw new ArgumentException("Normal to a plane must be a unit vector.");
-			}
-			this = (n * (i | n) * 2) - i;
-		}
-		/// <summary>
 		/// Creates a vector which is projection of given vector onto plane which is
 		/// defined by given normal.
 		/// </summary>
@@ -926,17 +912,6 @@ namespace CryCil.Geometry
 		public static Vector3 CreateProjection(Vector3 i, Vector3 n)
 		{
 			return i - n * (n | i);
-		}
-		/// <summary>
-		/// Creates a vector which is reflection of given vector against plane which is
-		/// defined by given normal.
-		/// </summary>
-		/// <param name="i">Vector to project.</param>
-		/// <param name="n">A normal of the plane.</param>
-		/// <returns>Reflection.</returns>
-		public static Vector3 CreateReflection(Vector3 i, Vector3 n)
-		{
-			return (n * (i | n) * 2) - i;
 		}
 		#endregion
 		#region Products

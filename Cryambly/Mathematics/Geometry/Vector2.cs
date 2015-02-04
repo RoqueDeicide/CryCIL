@@ -500,47 +500,6 @@ namespace CryCil.Geometry
 			return new Vector2(left.X * right.X, left.Y * right.Y);
 		}
 		#endregion
-		#region Reflections
-		/// <summary>
-		/// Returns the reflection of a vector off a surface that has the specified
-		/// normal.
-		/// </summary>
-		/// <param name="vector">The source vector.</param>
-		/// <param name="normal">Normal of the surface.</param>
-		/// <param name="result">
-		/// When the method completes, contains the reflected vector.
-		/// </param>
-		/// <remarks>
-		/// Reflect only gives the direction of a reflection off a surface, it does not
-		/// determine whether the original vector was close enough to the surface to hit
-		/// it.
-		/// </remarks>
-		public static void Reflect(ref Vector2 vector, ref Vector2 normal, out Vector2 result)
-		{
-			float dot = (vector.X * normal.X) + (vector.Y * normal.Y);
-
-			result.X = vector.X - ((2.0f * dot) * normal.X);
-			result.Y = vector.Y - ((2.0f * dot) * normal.Y);
-		}
-		/// <summary>
-		/// Returns the reflection of a vector off a surface that has the specified
-		/// normal.
-		/// </summary>
-		/// <param name="vector">The source vector.</param>
-		/// <param name="normal">Normal of the surface.</param>
-		/// <returns>The reflected vector.</returns>
-		/// <remarks>
-		/// Reflect only gives the direction of a reflection off a surface, it does not
-		/// determine whether the original vector was close enough to the surface to hit
-		/// it.
-		/// </remarks>
-		public static Vector2 Reflect(Vector2 vector, Vector2 normal)
-		{
-			Vector2 result;
-			Reflect(ref vector, ref normal, out result);
-			return result;
-		}
-		#endregion
 		#region Operators
 		#region Arithmetic Operators
 		/// <summary>
