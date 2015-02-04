@@ -224,7 +224,7 @@ struct IMonoInterface
 	//! Gets the pointer to AppDomain.
 	__declspec(property(get = GetAppDomain)) void *AppDomain;
 	//! Gets the pointer to the assembly wrapper registry.
-	__declspec(property(get = GetAssemblyCollection)) IMonoAssemblyCollection *Assemblies;
+	__declspec(property(get = GetAssemblies)) IMonoAssemblies *Assemblies;
 	//! Gets the pointer to IMonoAssembly that represents Cryambly.
 	__declspec(property(get = GetCryambly)) ICryambly *Cryambly;
 	//! Gets the pointer to IMonoAssembly that represents Pdb2mdb.
@@ -241,7 +241,7 @@ struct IMonoInterface
 	__declspec(property(get = GetObjects)) IMonoObjects *Objects;
 
 	VIRTUAL_API virtual void *GetAppDomain() = 0;
-	VIRTUAL_API virtual IMonoAssemblyCollection *GetAssemblyCollection() = 0;
+	VIRTUAL_API virtual IMonoAssemblies *GetAssemblies() = 0;
 	VIRTUAL_API virtual ICryambly *GetCryambly() = 0;
 	VIRTUAL_API virtual IMonoAssembly *GetPdbMdbAssembly() = 0;
 	VIRTUAL_API virtual IMonoCoreLibrary *GetCoreLibrary() = 0;

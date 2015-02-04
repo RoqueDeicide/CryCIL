@@ -4,16 +4,16 @@
 
 void DisposeAssemblyWrappers(Text *assemblyShortName, List<IMonoAssembly *> *assemblySet);
 
-struct MonoAssemblyCollection : public IMonoAssemblyCollection
+struct MonoAssemblies : public IMonoAssemblies
 {
 private:
 	SortedList<Text *, List<IMonoAssembly *> *> *assemblyRegistry;
 public:
-	MonoAssemblyCollection()
+	MonoAssemblies()
 	{
 		this->assemblyRegistry = new SortedList<Text *, List<IMonoAssembly *> *>(100);
 	}
-	~MonoAssemblyCollection()
+	~MonoAssemblies()
 	{
 		this->assemblyRegistry->ForEach(DisposeAssemblyWrappers);
 		delete this->assemblyRegistry;

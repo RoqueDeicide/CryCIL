@@ -145,9 +145,6 @@
     <ClInclude Include="Implementation\MonoAssembly.h">
       <Filter>API Implementation\Metadata</Filter>
     </ClInclude>
-    <ClInclude Include="Implementation\MonoAssemblyCollection.h">
-      <Filter>API Implementation\Metadata</Filter>
-    </ClInclude>
     <ClInclude Include="Implementation\MonoClass.h">
       <Filter>API Implementation\Metadata</Filter>
     </ClInclude>
@@ -232,6 +229,9 @@
     <ClInclude Include="Implementation\MonoCoreLibrary.h">
       <Filter>API Implementation\Metadata</Filter>
     </ClInclude>
+    <ClInclude Include="Implementation\MonoAssemblies.h">
+      <Filter>API Implementation\Metadata</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -272,9 +272,6 @@
       <Filter>Testing</Filter>
     </ClCompile>
     <ClCompile Include="Implementation\MonoAssembly.cpp">
-      <Filter>API Implementation\Metadata</Filter>
-    </ClCompile>
-    <ClCompile Include="Implementation\MonoAssemblyCollection.cpp">
       <Filter>API Implementation\Metadata</Filter>
     </ClCompile>
     <ClCompile Include="Implementation\MonoClass.cpp">
@@ -338,6 +335,9 @@
       <Filter>API Implementation\Metadata</Filter>
     </ClCompile>
     <ClCompile Include="Implementation\MonoCoreLibrary.cpp">
+      <Filter>API Implementation\Metadata</Filter>
+    </ClCompile>
+    <ClCompile Include="Implementation\MonoAssemblies.cpp">
       <Filter>API Implementation\Metadata</Filter>
     </ClCompile>
   </ItemGroup>

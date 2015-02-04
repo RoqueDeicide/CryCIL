@@ -2,7 +2,7 @@
 #include "MonoInterface.h"
 #include "Implementation/CryamblyWrapper.h"
 #include "Implementation/MonoCoreLibrary.h"
-#include "Implementation/MonoAssemblyCollection.h"
+#include "Implementation/MonoAssemblies.h"
 
 
 void HandleSignalAbort(int error)
@@ -18,7 +18,7 @@ void *MonoInterface::GetAppDomain()
 	return this->appDomain;
 }
 
-IMonoAssemblyCollection *MonoInterface::GetAssemblyCollection()
+IMonoAssemblies *MonoInterface::GetAssemblies()
 {
 	return this->assemblies;
 }
@@ -64,7 +64,7 @@ MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener
 	, framework(framework)
 {
 
-	this->assemblies = new MonoAssemblyCollection();
+	this->assemblies = new MonoAssemblies();
 	broadcaster = new EventBroadcaster();
 	// Register all initial listeners.
 	this->RegisterDefaultListeners();

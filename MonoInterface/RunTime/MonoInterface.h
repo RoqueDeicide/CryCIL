@@ -32,7 +32,7 @@ private:
 	bool running;
 
 	MonoDomain *appDomain;
-	IMonoAssemblyCollection *assemblies;
+	IMonoAssemblies *assemblies;
 	ICryambly *cryambly;					//! Extra pointer for Cryambly.
 	IMonoCoreLibrary *corlib;				//! Extra pointer for mscorlib.
 	IMonoAssembly *pdb2mdb;
@@ -47,7 +47,7 @@ public:
 	//! Returns a pointer to app domain.
 	virtual void *GetAppDomain();
 
-	virtual IMonoAssemblyCollection *GetAssemblyCollection();
+	virtual IMonoAssemblies *GetAssemblies();
 
 	virtual ICryambly *GetCryambly();
 

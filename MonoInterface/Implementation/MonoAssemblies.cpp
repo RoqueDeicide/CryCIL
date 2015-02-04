@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-#include "MonoAssemblyCollection.h"
+#include "MonoAssemblies.h"
 #include "MonoAssembly.h"
 #include "ThunkTables.h"
 
@@ -12,7 +12,7 @@ void DisposeAssemblyWrappers(Text *assemblyShortName, List<IMonoAssembly *> *ass
 	}
 }
 
-IMonoAssembly *MonoAssemblyCollection::Load(const char *path)
+IMonoAssembly *MonoAssemblies::Load(const char *path)
 {
 	if (!path)
 	{
@@ -51,7 +51,7 @@ IMonoAssembly *MonoAssemblyCollection::Load(const char *path)
 	return this->Wrap(assembly);
 }
 
-IMonoAssembly *MonoAssemblyCollection::Wrap(void *assemblyHandle)
+IMonoAssembly *MonoAssemblies::Wrap(void *assemblyHandle)
 {
 	if (!assemblyHandle)
 	{
@@ -89,7 +89,7 @@ IMonoAssembly *MonoAssemblyCollection::Wrap(void *assemblyHandle)
 	return wrapper;
 }
 
-IMonoAssembly *MonoAssemblyCollection::GetAssembly(const char *name)
+IMonoAssembly *MonoAssemblies::GetAssembly(const char *name)
 {
 	if (!name)
 	{
@@ -123,7 +123,7 @@ IMonoAssembly *MonoAssemblyCollection::GetAssembly(const char *name)
 	return wrapper;
 }
 
-IMonoAssembly *MonoAssemblyCollection::GetAssemblyFullName(const char *name)
+IMonoAssembly *MonoAssemblies::GetAssemblyFullName(const char *name)
 {
 	if (!name)
 	{

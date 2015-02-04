@@ -28,7 +28,7 @@ struct IMonoAssembly : public IMonoFunctionalityWrapper
 
 //! Represents an object that simplifies the process of getting an assembly that is not accessible
 //! through MonoEnv variable.
-struct IMonoAssemblyCollection
+struct IMonoAssemblies
 {
 	//! Loads a Mono assembly into memory.
 	//!
