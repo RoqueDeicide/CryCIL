@@ -47,7 +47,7 @@
 			/// <returns>A new reflected vector.</returns>
 			public static Vector3 Create(Vector3 vector, Vector3 normal)
 			{
-				float dot = vector.X * normal.X + vector.Y * normal.Y;
+				float dot = vector.X * normal.X + vector.Y * normal.Y + vector.Z * normal.Z;
 				return
 					new Vector3
 					(
@@ -63,7 +63,7 @@
 			/// <param name="normal">Normal vector to the surface.</param>
 			public static void Apply(ref Vector3 vector, Vector3 normal)
 			{
-				float dot = vector.X * normal.X + vector.Y * normal.Y;
+				float dot = vector.X * normal.X + vector.Y * normal.Y + vector.Z * normal.Z;
 				vector.X = 2.0f * dot * normal.X - vector.X;
 				vector.Y = 2.0f * dot * normal.Y - vector.Y;
 				vector.Z = 2.0f * dot * normal.Z - vector.Z;
@@ -125,7 +125,7 @@
 			/// <param name="normal">Normal vector to the surface.</param>
 			public static void Apply(ref Vector3 vector, Vector3 normal)
 			{
-				float dot = vector.X * normal.X + vector.Y * normal.Y;
+				float dot = vector.X * normal.X + vector.Y * normal.Y + vector.Z * normal.Z;
 				vector.X = vector.X - 2.0f * dot * normal.X;
 				vector.Y = vector.Y - 2.0f * dot * normal.Y;
 				vector.Z = vector.Z - 2.0f * dot * normal.Z;
