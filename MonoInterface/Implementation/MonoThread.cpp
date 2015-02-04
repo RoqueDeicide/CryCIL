@@ -193,12 +193,6 @@ IMonoClass *MonoThreadWrapper::GetClass()
 	return SystemThreadingThread;
 }
 
-void *MonoThreadWrapper::UnboxObject()
-{
-	gEnv->pLog->LogError("Attempt to unbox a thread object was made.");
-	return nullptr;
-}
-
 void *MonoThreadWrapper::GetWrappedPointer()
 {
 	return this->obj;

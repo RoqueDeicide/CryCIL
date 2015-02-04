@@ -71,12 +71,6 @@ IMonoClass *MonoExceptionWrapper::GetClass()
 	return this->handle->GetClass();
 }
 
-void *MonoExceptionWrapper::UnboxObject()
-{
-	gEnv->pLog->LogError("Attempt to unbox an exception object was made.");
-	return nullptr;
-}
-
 void *MonoExceptionWrapper::GetWrappedPointer()
 {
 	return this->ex;

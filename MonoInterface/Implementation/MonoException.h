@@ -38,8 +38,6 @@ public:
 
 	virtual IMonoClass *GetClass();
 
-	virtual void *UnboxObject();
-
 	virtual void *GetWrappedPointer();
 
 };

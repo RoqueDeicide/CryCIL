@@ -32,11 +32,6 @@ IMonoClass *MonoHandle::GetClass()
 	return this->type;
 }
 
-void *MonoHandle::UnboxObject()
-{
-	return mono_object_unbox(this->obj);
-}
-
 void *MonoHandle::GetWrappedPointer()
 {
 	return this->Get();

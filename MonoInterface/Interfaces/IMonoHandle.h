@@ -70,19 +70,6 @@ struct IMonoHandle : public IMonoFunctionalityWrapper
 	//!
 	//! @param name Name of the event to get.
 	VIRTUAL_API virtual IMonoEvent *GetEvent(const char *name) = 0;
-	//! Unboxes value of this object. Don't use with non-value types.
-	//!
-	//! @tparam T Type of the value to unbox. bool, for instance if
-	//!           managed object is of type System.Boolean.
-	//!
-	//! @returns Verbatim copy of managed memory block held by the object.
-	template<class T> T Unbox()
-	{
-		return *(T *)this->UnboxObject();
-	}
 	//! Gets managed type that represents wrapped object.
 	VIRTUAL_API virtual IMonoClass *GetClass() = 0;
-
-protected:
-	VIRTUAL_API virtual void *UnboxObject() = 0;
 };

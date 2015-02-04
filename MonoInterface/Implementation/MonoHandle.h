@@ -42,8 +42,6 @@ public:
 	//! Gets the wrapper for the class of this object.
 	virtual struct IMonoClass *GetClass();
 
-	virtual void *UnboxObject();
-
 	virtual void *GetWrappedPointer();
 private:
 	MonoClass *getMonoClass()

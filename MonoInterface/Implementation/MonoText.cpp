@@ -70,12 +70,6 @@ IMonoClass *MonoText::GetClass()
 	return this->type;
 }
 
-void *MonoText::UnboxObject()
-{
-	gEnv->pLog->LogError("Attempt to unbox a string object was made.");
-	return nullptr;
-}
-
 void *MonoText::GetWrappedPointer()
 {
 	return this->obj;

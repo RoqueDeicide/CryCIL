@@ -97,9 +97,3 @@ IMonoClass *MonoArrayWrapper::GetClass()
 {
 	return MonoClassCache::Wrap(mono_object_get_class((MonoObject *)this->arrayPtr));
 }
-
-void *MonoArrayWrapper::UnboxObject()
-{
-	gEnv->pLog->LogError("Attempt to unbox an array object was made.");
-	return nullptr;
-}
