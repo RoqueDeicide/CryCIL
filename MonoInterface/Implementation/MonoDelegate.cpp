@@ -35,3 +35,33 @@ void *MonoDelegateWrapper::GetWrappedPointer()
 {
 	return this->delegat;
 }
+
+mono::object MonoDelegateWrapper::Get()
+{
+	return this->mDelegate;
+}
+
+void MonoDelegateWrapper::GetField(const char *name, void *value)
+{
+	this->klass->GetField(this->mDelegate, name, value);
+}
+
+void MonoDelegateWrapper::SetField(const char *name, void *value)
+{
+	this->klass->SetField(this->mDelegate, name, value);
+}
+
+IMonoProperty *MonoDelegateWrapper::GetProperty(const char *name)
+{
+	return this->klass->GetProperty(name);
+}
+
+IMonoEvent *MonoDelegateWrapper::GetEvent(const char *name)
+{
+	return this->klass->GetEvent(name);
+}
+
+IMonoClass *MonoDelegateWrapper::GetClass()
+{
+	return this->klass;
+}
