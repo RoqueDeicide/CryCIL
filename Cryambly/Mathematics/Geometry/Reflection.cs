@@ -22,7 +22,7 @@
 			/// <param name="vector">Vector that needs to be reflected.</param>
 			/// <param name="normal">Normal vector to the surface.</param>
 			/// <returns>A new reflected vector.</returns>
-			public static Vector2 Apply(Vector2 vector, Vector2 normal)
+			public static Vector2 Create(Vector2 vector, Vector2 normal)
 			{
 				float dot = vector.X * normal.X + vector.Y * normal.Y;
 				return new Vector2(2.0f * dot * normal.X - vector.X, 2.0f * dot * normal.Y - vector.Y);
@@ -45,7 +45,7 @@
 			/// <param name="vector">Vector that needs to be reflected.</param>
 			/// <param name="normal">Normal vector to the surface.</param>
 			/// <returns>A new reflected vector.</returns>
-			public static Vector3 Apply(Vector3 vector, Vector3 normal)
+			public static Vector3 Create(Vector3 vector, Vector3 normal)
 			{
 				float dot = vector.X * normal.X + vector.Y * normal.Y;
 				return
