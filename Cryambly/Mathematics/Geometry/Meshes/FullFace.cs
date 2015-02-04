@@ -40,8 +40,7 @@ namespace CryCil.Geometry
 		{
 			get
 			{
-				return (this.Second.Position - this.First.Position)
-					   .Cross(this.Third.Position - this.First.Position).Normalized;
+				return (this.Second.Position - this.First.Position) % (this.Third.Position - this.First.Position).Normalized;
 			}
 		}
 		/// <summary>
@@ -66,8 +65,7 @@ namespace CryCil.Geometry
 		/// <returns>Normalized <see cref="Vector3"/> that represents a normal.</returns>
 		public Vector3 GetNormal(object customData = null)
 		{
-			return (this.Second.Position - this.First.Position)
-				   .Cross(this.Third.Position - this.First.Position).Normalized;
+			return (this.Second.Position - this.First.Position) % (this.Third.Position - this.First.Position).Normalized;
 		}
 		/// <summary>
 		/// Gets a list of vertices.
@@ -156,7 +154,7 @@ namespace CryCil.Geometry
 			{
 				case PlanePosition.Coplanar:
 					// See where this triangle is looking and it to corresponding list.
-					if (this.Normal * splitter.Normal > 0)
+					if ((this.Normal | splitter.Normal) > 0)
 					{
 						if (frontCoplanarFaces != null) frontCoplanarFaces.Add(this);
 					}
@@ -206,9 +204,9 @@ namespace CryCil.Geometry
 							// Calculate fraction that describes position of splitting
 							// vertex along the line between start and end of the edge.
 							float positionParameter =
-								(splitter.D - splitter.Normal * vertices[i].Position)
+								(splitter.D - (splitter.Normal | vertices[i].Position))
 								/
-								(splitter.Normal * (vertices[j].Position - vertices[i].Position));
+								(splitter.Normal | (vertices[j].Position - vertices[i].Position));
 							// Linearly interpolate the vertex that splits the edge.
 							FullVertex splittingVertex =
 								Interpolation.Linear.Create(vertices[i], vertices[j], positionParameter);

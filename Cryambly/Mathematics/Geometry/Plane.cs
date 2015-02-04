@@ -76,7 +76,7 @@ namespace CryCil.Geometry
 		{
 #if DEBUG
 			this.Normal = ((point2 - point1) % (point3 - point1)).Normalized;
-			this.D = -(this.Normal * point1);
+			this.D = -Vector3.Dot(this.Normal, point1);
 #endif
 #if RELEASE
 			float x1 = point2.X - point1.X;
@@ -341,7 +341,7 @@ namespace CryCil.Geometry
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public float SignedDistance(Vector3 point)
 		{
-			return point * this.Normal - this.D;
+			return (point | this.Normal) - this.D;
 		}
 		/// <summary>
 		/// Determines relative position of the point in respect to position of this

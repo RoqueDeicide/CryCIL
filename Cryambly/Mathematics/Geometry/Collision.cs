@@ -138,7 +138,7 @@ namespace CryCil.Geometry
 			// Source: Real-Time Collision Detection by Christer Ericson
 			// Reference: Page 126
 
-			float dot = plane.Normal.Dot(point);
+			float dot = Vector3.Dot(plane.Normal, point);
 			float t = dot - plane.D;
 
 			result = point - (t * plane.Normal);
@@ -202,7 +202,7 @@ namespace CryCil.Geometry
 		/// <see cref="Vector3"/>.
 		/// </param>
 		/// <remarks>
-		/// If the two spheres are overlapping, but not directly ontop of each other, the
+		/// If the two spheres are overlapping, but not directly on top of each other, the
 		/// closest point is the 'closest' point of intersection. This can also be
 		/// considered is the deepest point of intersection.
 		/// </remarks>
@@ -236,7 +236,7 @@ namespace CryCil.Geometry
 			// Source: Real-Time Collision Detection by Christer Ericson
 			// Reference: Page 127
 
-			float dot = plane.Normal.Dot(point);
+			float dot = Vector3.Dot(plane.Normal, point);
 			return dot - plane.D;
 		}
 
@@ -419,7 +419,7 @@ namespace CryCil.Geometry
 			// Source: Real-Time Rendering, Third Edition
 			// Reference: Page 780
 
-			Vector3 cross = ray1.Direction.Cross(ray2.Direction);
+			Vector3 cross = ray1.Direction % ray2.Direction;
 			float denominator = cross.Length;
 
 			// Lines are parallel.
@@ -479,7 +479,7 @@ namespace CryCil.Geometry
 			Vector3 point1 = ray1.Position + (s * ray1.Direction);
 			Vector3 point2 = ray2.Position + (t * ray2.Direction);
 
-			// If the points are not equal, no intersection has occured.
+			// If the points are not equal, no intersection has occurred.
 			if (Math.Abs(point2.X - point1.X) > MathHelpers.ZeroTolerance ||
 				Math.Abs(point2.Y - point1.Y) > MathHelpers.ZeroTolerance ||
 				Math.Abs(point2.Z - point1.Z) > MathHelpers.ZeroTolerance)
@@ -508,7 +508,7 @@ namespace CryCil.Geometry
 			// Source: Real-Time Collision Detection by Christer Ericson
 			// Reference: Page 175
 
-			float direction = plane.Normal.Dot(ray.Direction);
+			float direction = Vector3.Dot(plane.Normal, ray.Direction);
 
 			if (Math.Abs(direction) < MathHelpers.ZeroTolerance)
 			{
@@ -516,7 +516,7 @@ namespace CryCil.Geometry
 				return false;
 			}
 
-			float position = plane.Normal.Dot(ray.Position);
+			float position = Vector3.Dot(plane.Normal, ray.Position);
 			distance = (plane.D - position) / direction;
 
 			if (distance < 0f)
@@ -582,9 +582,8 @@ namespace CryCil.Geometry
 		/// </remarks>
 		public static bool RayIntersectsTriangle(ref Ray ray, ref Vector3 vertex1, ref Vector3 vertex2, ref Vector3 vertex3, out float distance)
 		{
-			// Source: Fast Minimum Storage Ray / Triangle Intersection Reference:
-			// http:
-			//       //www.cs.virginia.edu/~gfx/Courses/2003/ImageSynthesis/papers/Acceleration/Fast%20MinimumStorage%20RayTriangle%20Intersection.pdf
+			// Source: Fast Minimum Storage Ray / Triangle Intersection Reference: http:
+			// //www.cs.virginia.edu/~gfx/Courses/2003/ImageSynthesis/papers/Acceleration/Fast%20MinimumStorage%20RayTriangle%20Intersection.pdf
 
 			// Compute vectors along two edges of the triangle.
 			Vector3 edge1, edge2;
@@ -908,7 +907,7 @@ namespace CryCil.Geometry
 		/// <returns>Whether the two objects intersected.</returns>
 		public static PlaneIntersectionType PlaneIntersectsPoint(ref Plane plane, ref Vector3 point)
 		{
-			float distance = plane.Normal.Dot(point);
+			float distance = plane.Normal | point;
 			distance += plane.D;
 
 			if (distance > 0f)
@@ -929,16 +928,13 @@ namespace CryCil.Geometry
 		/// <returns>Whether the two objects intersected.</returns>
 		public static bool PlaneIntersectsPlane(ref Plane plane1, ref Plane plane2)
 		{
-			Vector3 direction = plane1.Normal.Cross(plane2.Normal);
+			Vector3 direction = Vector3.Cross(plane1.Normal, plane2.Normal);
 
 			// If direction is the zero vector, the planes are parallel and possibly
 			// coincident. It is not an intersection. The dot product will tell us.
-			float denominator = direction.Dot(direction);
+			float denominator = direction.LengthSquared;
 
-			if (Math.Abs(denominator) < MathHelpers.ZeroTolerance)
-				return false;
-
-			return true;
+			return !(Math.Abs(denominator) < MathHelpers.ZeroTolerance);
 		}
 
 		/// <summary>
@@ -963,14 +959,14 @@ namespace CryCil.Geometry
 			// Source: Real-Time Collision Detection by Christer Ericson
 			// Reference: Page 207
 
-			Vector3 direction = plane1.Normal.Cross(plane2.Normal);
+			Vector3 direction = Vector3.Cross(plane1.Normal, plane2.Normal);
 
 			// If direction is the zero vector, the planes are parallel and possibly
 			// coincident. It is not an intersection. The dot product will tell us.
-			float denominator = direction.Dot(direction);
+			float denominator = direction.LengthSquared;
 
 			// We assume the planes are normalized, therefore the denominator only serves
-			// as a parallel and coincident check. Otherwise we need to deivide the point
+			// as a parallel and coincident check. Otherwise we need to divide the point
 			// by the denominator.
 			if (Math.Abs(denominator) < MathHelpers.ZeroTolerance)
 			{
@@ -979,7 +975,7 @@ namespace CryCil.Geometry
 			}
 
 			Vector3 temp = plane1.D * plane2.Normal - plane2.D * plane1.Normal;
-			Vector3 point = temp.Cross(direction);
+			Vector3 point = Vector3.Cross(temp, direction);
 
 			line.Position = point;
 			line.Direction = direction;
@@ -1037,7 +1033,7 @@ namespace CryCil.Geometry
 			min.Y = (plane.Normal.Y >= 0.0f) ? box.Maximum.Y : box.Minimum.Y;
 			min.Z = (plane.Normal.Z >= 0.0f) ? box.Maximum.Z : box.Minimum.Z;
 
-			float distance = plane.Normal.Dot(max);
+			float distance = Vector3.Dot(plane.Normal, max);
 
 			if (distance + plane.D > 0.0f)
 				return PlaneIntersectionType.Front;
@@ -1062,7 +1058,7 @@ namespace CryCil.Geometry
 			// Source: Real-Time Collision Detection by Christer Ericson
 			// Reference: Page 160
 
-			float distance = plane.Normal.Dot(sphere.Center);
+			float distance = plane.Normal | sphere.Center;
 			distance += plane.D;
 
 			if (distance > sphere.Radius)
@@ -1074,7 +1070,7 @@ namespace CryCil.Geometry
 			return PlaneIntersectionType.Intersecting;
 		}
 
-		/* This implentation is wrong
+		/* This implementation is wrong
 		/// <summary>
 		/// Determines whether there is an intersection between a
 		/// <see cref="CryEngine.BoundingBox"/> and a triangle.
@@ -1157,7 +1153,7 @@ namespace CryCil.Geometry
 			ClosestPointPointTriangle(ref sphere.Center, ref vertex1, ref vertex2, ref vertex3, out point);
 			Vector3 v = point - sphere.Center;
 
-			float dot = v.Dot(v);
+			float dot = v.LengthSquared;
 
 			return dot <= sphere.Radius * sphere.Radius;
 		}
@@ -1188,7 +1184,7 @@ namespace CryCil.Geometry
 				box.Minimum.Z <= point.Z && box.Maximum.Z >= point.Z);
 		}
 
-		/* This implentation is wrong
+		/* This implementation is wrong
 		/// <summary>
 		/// Determines whether a <see cref="CryEngine.BoundingBox"/> contains a triangle.
 		/// </summary>
@@ -1291,13 +1287,13 @@ namespace CryCil.Geometry
 			// Source: Jorgy343
 			// Reference: None
 
-			if (SphereContainsPoint(ref sphere, ref vertex1) && SphereContainsPoint(ref sphere, ref vertex2) && SphereContainsPoint(ref sphere, ref vertex3))
-				return ContainmentType.Contains;
-
-			if (SphereIntersectsTriangle(ref sphere, ref vertex1, ref vertex2, ref vertex3))
-				return ContainmentType.Intersects;
-
-			return ContainmentType.Disjoint;
+			return SphereContainsPoint(ref sphere, ref vertex1)
+				&& SphereContainsPoint(ref sphere, ref vertex2)
+				&& SphereContainsPoint(ref sphere, ref vertex3)
+				? ContainmentType.Contains
+				: (SphereIntersectsTriangle(ref sphere, ref vertex1, ref vertex2, ref vertex3)
+					? ContainmentType.Intersects
+					: ContainmentType.Disjoint);
 		}
 
 		/// <summary>
@@ -1368,10 +1364,9 @@ namespace CryCil.Geometry
 			vector.Y = sphere.Center.Y - box.Minimum.Y;
 			vector.Z = sphere.Center.Z - box.Minimum.Z;
 
-			if (vector.LengthSquared > radiussquared)
-				return ContainmentType.Intersects;
-
-			return ContainmentType.Contains;
+			return vector.LengthSquared > radiussquared
+				? ContainmentType.Intersects
+				: ContainmentType.Contains;
 		}
 
 		/// <summary>
@@ -1385,13 +1380,11 @@ namespace CryCil.Geometry
 		{
 			float distance = sphere1.Center.GetDistance(sphere2.Center);
 
-			if (sphere1.Radius + sphere2.Radius < distance)
-				return ContainmentType.Disjoint;
-
-			if (sphere1.Radius - sphere2.Radius < distance)
-				return ContainmentType.Intersects;
-
-			return ContainmentType.Contains;
+			return sphere1.Radius + sphere2.Radius < distance
+				? ContainmentType.Disjoint
+				: (sphere1.Radius - sphere2.Radius < distance
+					? ContainmentType.Intersects
+					: ContainmentType.Contains);
 		}
 	}
 }

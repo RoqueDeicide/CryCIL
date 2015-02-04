@@ -65,7 +65,7 @@ namespace CryCil.Geometry
 		/// </returns>
 		public override string ToString()
 		{
-			return string.Format(CultureInfo.CurrentCulture, "Position:{0} Direction:{1}", this.Position.ToString(), this.Direction.ToString());
+			return string.Format(CultureInfo.CurrentCulture, "Position:{0} Direction:{1}", this.Position, this.Direction);
 		}
 		/// <summary>
 		/// Returns a <see cref="System.String"/> that represents this instance.
@@ -76,7 +76,7 @@ namespace CryCil.Geometry
 		/// </returns>
 		public string ToString(string format)
 		{
-			return string.Format(CultureInfo.CurrentCulture, "Position:{0} Direction:{1}", this.Position.ToString(), this.Direction.ToString());
+			return string.Format(CultureInfo.CurrentCulture, "Position:{0} Direction:{1}", this.Position, this.Direction);
 		}
 		/// <summary>
 		/// Returns a <see cref="System.String"/> that represents this instance.
@@ -87,7 +87,7 @@ namespace CryCil.Geometry
 		/// </returns>
 		public string ToString(IFormatProvider formatProvider)
 		{
-			return string.Format(formatProvider, "Position:{0} Direction:{1}", this.Position.ToString(), this.Direction.ToString());
+			return string.Format(formatProvider, "Position:{0} Direction:{1}", this.Position, this.Direction);
 		}
 		/// <summary>
 		/// Returns a <see cref="System.String"/> that represents this instance.
@@ -99,7 +99,7 @@ namespace CryCil.Geometry
 		/// </returns>
 		public string ToString(string format, IFormatProvider formatProvider)
 		{
-			return string.Format(formatProvider, "Position:{0} Direction:{1}", this.Position.ToString(), this.Direction.ToString());
+			return string.Format(formatProvider, "Position:{0} Direction:{1}", this.Position, this.Direction);
 		}
 		/// <summary>
 		/// Returns a hash code for this instance.

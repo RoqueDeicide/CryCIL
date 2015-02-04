@@ -542,29 +542,9 @@ namespace CryCil.Geometry
 		/// <param name="left"> Left operand.</param>
 		/// <param name="right">Right operand.</param>
 		/// <returns>Dot product.</returns>
-		public static float operator *(Vector3 left, Vector3 right)
-		{
-			return left.Dot(right);
-		}
-		/// <summary>
-		/// Calculates dot product of two vectors.
-		/// </summary>
-		/// <param name="left"> Left operand.</param>
-		/// <param name="right">Right operand.</param>
-		/// <returns>Dot product.</returns>
 		public static float operator |(Vector3 left, Vector3 right)
 		{
-			return left.Dot(right);
-		}
-		/// <summary>
-		/// Calculates cross product of two vectors.
-		/// </summary>
-		/// <param name="left"> Left operand.</param>
-		/// <param name="right">Right operand.</param>
-		/// <returns>Cross product.</returns>
-		public static Vector3 operator ^(Vector3 left, Vector3 right)
-		{
-			return left.Cross(right);
+			return left.X * right.X + left.Y * right.Y + left.Z * right.Z;
 		}
 		/// <summary>
 		/// Calculates cross product of two vectors.
@@ -574,7 +554,13 @@ namespace CryCil.Geometry
 		/// <returns>Cross product.</returns>
 		public static Vector3 operator %(Vector3 left, Vector3 right)
 		{
-			return left.Cross(right);
+			return
+				new Vector3
+				(
+					left.Y * right.Z - left.Z * right.Y,
+					left.Z * right.X - left.X * right.Z,
+					left.X * right.Y - left.Y * right.X
+				);
 		}
 		#endregion
 		#region Unary Operators
@@ -889,22 +875,20 @@ namespace CryCil.Geometry
 		#endregion
 		#region Products
 		/// <summary>
-		/// Calculates dot product of this vector and another one.
+		/// Calculates cross product of two vectors.
 		/// </summary>
-		/// <param name="v">Another vector.</param>
-		/// <returns>Dot product.</returns>
-		public float Dot(Vector3 v)
-		{
-			return this.X * v.X + this.Y * v.Y + this.Z * v.Z;
-		}
-		/// <summary>
-		/// Calculates cross product of this vector and another one.
-		/// </summary>
-		/// <param name="v">Another vector.</param>
+		/// <param name="first">First vector.</param>
+		/// <param name="v">    Second vector.</param>
 		/// <returns>Cross product.</returns>
-		public Vector3 Cross(Vector3 v)
+		public static Vector3 Cross(Vector3 first, Vector3 v)
 		{
-			return new Vector3(this.Y * v.Z - this.Z * v.Y, this.Z * v.X - this.X * v.Z, this.X * v.Y - this.Y * v.X);
+			return
+				new Vector3
+				(
+					first.Y * v.Z - first.Z * v.Y,
+					first.Z * v.X - first.X * v.Z,
+					first.X * v.Y - first.Y * v.X
+				);
 		}
 		/// <summary>
 		/// Calculates dot product of two vectors.
@@ -914,7 +898,7 @@ namespace CryCil.Geometry
 		/// <returns>Dot product.</returns>
 		public static float Dot(Vector3 v0, Vector3 v1)
 		{
-			return v0.Dot(v1);
+			return v0.X * v1.X + v0.Y * v1.Y + v0.Z * v1.Z;
 		}
 		/// <summary>
 		/// Calculates mixed product of three vectors.
@@ -928,7 +912,13 @@ namespace CryCil.Geometry
 		/// </returns>
 		public static float Mixed(Vector3 v0, Vector3 v1, Vector3 v2)
 		{
-			return v0.Dot(v1.Cross(v2));
+			Vector3 cross = new Vector3
+							(
+								v1.Y * v2.Z - v1.Z * v2.Y,
+								v1.Z * v2.X - v1.X * v2.Z,
+								v1.X * v2.Y - v1.Y * v2.X
+							);
+			return v0.X * cross.X + v0.Y * cross.Y + v0.Z * cross.Z;
 		}
 		#endregion
 		#region Generic Operations
