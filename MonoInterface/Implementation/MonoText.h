@@ -57,4 +57,6 @@ public:
 
 	virtual const wchar_t *ToNativeUTF16();
 
+	virtual void Update(mono::object newLocation);
+
 };

@@ -36,4 +36,7 @@ public:
 	virtual void *GetWrappedPointer();
 
 	virtual mono::object Get() { return this->mObj; }
+
+	virtual void Update(mono::object newLocation);
+
 };

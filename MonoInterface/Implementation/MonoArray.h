@@ -83,4 +83,6 @@ public:
 
 	virtual IMonoClass *GetClass();
 
+	virtual void Update(mono::object newLocation);
+
 };

@@ -7,10 +7,11 @@ struct MonoExceptionWrapper : IMonoException
 private:
 	union
 	{
+		MonoObject *obj;
 		MonoException *monoEx;
 		mono::exception ex;
 	};
-	IMonoHandle *handle;
+	IMonoClass *klass;
 public:
 
 	MonoExceptionWrapper(MonoException *monoEx);
@@ -23,8 +24,6 @@ public:
 	virtual const char *GetStackTrace();
 
 	virtual IMonoException *GetInnerException();
-
-	virtual mono::exception GetExceptionObject();
 
 	virtual mono::object Get();
 
@@ -39,5 +38,7 @@ public:
 	virtual IMonoClass *GetClass();
 
 	virtual void *GetWrappedPointer();
+
+	virtual void Update(mono::object newLocation);
 
 };

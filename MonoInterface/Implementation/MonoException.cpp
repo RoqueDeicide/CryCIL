@@ -69,3 +69,9 @@ IMonoClass *MonoExceptionWrapper::GetClass()
 void *MonoExceptionWrapper::GetWrappedPointer()
 {
 	return this->ex;
+}
+
+void MonoExceptionWrapper::Update(mono::object newLocation)
+{
+	this->ex = newLocation;
+}

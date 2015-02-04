@@ -98,3 +98,7 @@ IMonoClass *MonoArrayWrapper::GetClass()
 	return MonoClassCache::Wrap(mono_object_get_class(this->obj));
 }
 
+void MonoArrayWrapper::Update(mono::object newLocation)
+{
+	this->mArray = newLocation;
+}

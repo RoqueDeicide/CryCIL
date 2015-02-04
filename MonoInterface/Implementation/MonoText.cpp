@@ -104,3 +104,8 @@ const wchar_t *MonoText::ToNativeUTF16()
 
 	return t;
 }
+
+void MonoText::Update(mono::object newLocation)
+{
+	this->mStr = newLocation;
+}

@@ -65,3 +65,8 @@ IMonoClass *MonoDelegateWrapper::GetClass()
 {
 	return this->klass;
 }
+
+void MonoDelegateWrapper::Update(mono::object newLocation)
+{
+	this->mDelegate = newLocation;
+}

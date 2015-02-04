@@ -72,4 +72,9 @@ struct IMonoHandle : public IMonoFunctionalityWrapper
 	VIRTUAL_API virtual IMonoEvent *GetEvent(const char *name) = 0;
 	//! Gets managed type that represents wrapped object.
 	VIRTUAL_API virtual IMonoClass *GetClass() = 0;
+	//! Updates the reference to the object.
+	//!
+	//! @param newLocation A reference to the valid object that is the same object that could have
+	//!                    been moved during garbage collection.
+	VIRTUAL_API virtual void Update(mono::object newLocation) = 0;
 };

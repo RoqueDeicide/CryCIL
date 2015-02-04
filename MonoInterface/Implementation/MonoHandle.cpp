@@ -32,4 +32,7 @@ void *MonoHandle::GetWrappedPointer()
 	return this->obj;
 }
 
+void MonoHandle::Update(mono::object newLocation)
+{
+	this->mObj = newLocation;
 }

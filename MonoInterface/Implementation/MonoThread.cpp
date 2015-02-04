@@ -198,6 +198,11 @@ void *MonoThreadWrapper::GetWrappedPointer()
 	return this->obj;
 }
 
+void MonoThreadWrapper::Update(mono::object newLocation)
+{
+	this->mThread = newLocation;
+}
+
 void MonoThreadWrapper::InitializeStatics()
 {
 	SystemThreadingThread = MonoEnv->CoreLibrary->GetClass("System.Threading", "Thread");

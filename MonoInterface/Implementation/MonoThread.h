@@ -104,4 +104,6 @@ public:
 
 	virtual void *GetWrappedPointer();
 
+	virtual void Update(mono::object newLocation);
+
 };
