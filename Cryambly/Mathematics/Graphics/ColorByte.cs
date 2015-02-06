@@ -74,12 +74,11 @@ namespace CryCil.Graphics
 		{
 			unchecked
 			{
-				// ReSharper disable NonReadonlyFieldInGetHashCode
 				int hashCode = this.Red.GetHashCode();
 				hashCode = (hashCode * 397) ^ this.Green.GetHashCode();
 				hashCode = (hashCode * 397) ^ this.Blue.GetHashCode();
 				hashCode = (hashCode * 397) ^ this.Alpha.GetHashCode();
-				// ReSharper restore NonReadonlyFieldInGetHashCode
+
 				return hashCode;
 			}
 		}

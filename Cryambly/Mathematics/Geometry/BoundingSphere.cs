@@ -334,7 +334,7 @@ namespace CryCil.Geometry
 		/// </returns>
 		public override string ToString()
 		{
-			return string.Format(CultureInfo.CurrentCulture, "Center:{0} Radius:{1}", this.Center.ToString(), this.Radius.ToString());
+			return string.Format(CultureInfo.CurrentCulture, "Center:{0} Radius:{1}", this.Center, this.Radius);
 		}
 		/// <summary>
 		/// Returns a <see cref="System.String"/> that represents this instance.
@@ -348,7 +348,7 @@ namespace CryCil.Geometry
 			if (format == null)
 				return this.ToString();
 
-			return string.Format(CultureInfo.CurrentCulture, "Center:{0} Radius:{1}", this.Center.ToString(), this.Radius.ToString());
+			return string.Format(CultureInfo.CurrentCulture, "Center:{0} Radius:{1}", this.Center, this.Radius);
 		}
 		/// <summary>
 		/// Returns a <see cref="System.String"/> that represents this instance.
@@ -359,7 +359,7 @@ namespace CryCil.Geometry
 		/// </returns>
 		public string ToString(IFormatProvider formatProvider)
 		{
-			return string.Format(formatProvider, "Center:{0} Radius:{1}", this.Center.ToString(), this.Radius.ToString());
+			return string.Format(formatProvider, "Center:{0} Radius:{1}", this.Center, this.Radius);
 		}
 		/// <summary>
 		/// Returns a <see cref="System.String"/> that represents this instance.
@@ -390,10 +390,8 @@ namespace CryCil.Geometry
 			{
 				int hash = 17;
 
-				// ReSharper disable NonReadonlyFieldInGetHashCode
 				hash = hash * 29 + this.Center.GetHashCode();
 				hash = hash * 29 + this.Radius.GetHashCode();
-				// ReSharper restore NonReadonlyFieldInGetHashCode
 
 				return hash;
 			}

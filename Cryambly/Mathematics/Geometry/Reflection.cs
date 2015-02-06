@@ -106,7 +106,8 @@ namespace CryCil.Geometry
 		public static class Bounce
 		{
 			/// <summary>
-			/// Creates a vector that is a bouncing reflection of another vector against a surface.
+			/// Creates a vector that is a bouncing reflection of another vector against a
+			/// surface.
 			/// </summary>
 			/// <param name="vector">Vector that needs to be reflected.</param>
 			/// <param name="normal">Normal vector to the surface.</param>
@@ -140,7 +141,8 @@ namespace CryCil.Geometry
 				vector.Y = vector.Y - 2.0f * dot * normal.Y;
 			}
 			/// <summary>
-			/// Creates a vector that is a bouncing reflection of another vector against a surface.
+			/// Creates a vector that is a bouncing reflection of another vector against a
+			/// surface.
 			/// </summary>
 			/// <param name="vector">Vector that needs to be reflected.</param>
 			/// <param name="normal">Normal vector to the surface.</param>

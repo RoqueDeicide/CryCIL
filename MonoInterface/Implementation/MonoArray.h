@@ -50,7 +50,10 @@ public:
 			memset(lowerBounds, 0, dimCount * sizeof(int));
 			lowerBoundsAllocated = true;
 		}
-		MonoClass *arrayClass = mono_array_class_get((klass) ? (MonoClass *)klass->GetWrappedPointer() : mono_get_object_class(), dimCount);
+		MonoClass *arrayClass =
+			mono_array_class_get((klass)
+			? (MonoClass *)klass->GetWrappedPointer()
+			: mono_get_object_class(), dimCount);
 		this->arrayPtr =
 			mono_array_new_full(mono_domain_get(), arrayClass, lengths, lowerBounds);
 	}

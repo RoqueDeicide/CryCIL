@@ -689,10 +689,8 @@ namespace CryCil.Geometry
 			{
 				int hash = 17;
 
-				// ReSharper disable NonReadonlyFieldInGetHashCode
 				hash = hash * 29 + this.X.GetHashCode();
 				hash = hash * 29 + this.Y.GetHashCode();
-				// ReSharper restore NonReadonlyFieldInGetHashCode
 
 				return hash;
 			}

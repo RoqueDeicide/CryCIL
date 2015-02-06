@@ -118,7 +118,7 @@ namespace CryEngine.Annotations
 	/// </code>
 	/// Examples of generated notifications:
 	/// <list><item><c>NotifyChanged("Property")</c></item><item><c>NotifyChanged(() =&gt;
-	/// Property)</c></item><item><c>NotifyChanged((VM x) =&gt;
+	/// Property) </c></item><item><c>NotifyChanged((VM x) =&gt;
 	/// x.Property)</c></item><item><c>SetProperty(ref myField, value,
 	/// "Property")</c></item></list>
 	/// </example>
@@ -146,9 +146,9 @@ namespace CryEngine.Annotations
 	/// | canbenull</item></list> If method has single input parameter, it's name could be
 	/// omitted. <br/> Using <c>halt</c> (or <c>void</c>/ <c>nothing</c>, which is the
 	/// same) for method output means that the methos doesn't return normally.
-	/// <br/><c>canbenull</c> annotation is only applicable for output parameters. <br/>
-	/// You can use multiple <c>[ContractAnnotation]</c> for each FDT row, or use single
-	/// attribute with rows separated by semicolon. <br/>
+	///       <br/><c>canbenull</c> annotation is only applicable for output parameters.
+	///       <br/> You can use multiple <c>[ContractAnnotation]</c> for each FDT row, or
+	/// use single attribute with rows separated by semicolon. <br/>
 	/// </syntax>
 	/// <examples>
 	/// <list><item>
@@ -501,7 +501,7 @@ namespace CryEngine.Annotations
 	/// an MVC controller. If applied to a method, the MVC controller name is calculated
 	/// implicitly from the context. Use this attribute for custom wrappers similar to
 	/// <c>System.Web.Mvc.Html.ChildActionExtensions.RenderAction(HtmlHelper, String,
-	/// String)</c>
+	/// String) </c>
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Method)]
 	public sealed class AspMvcControllerAttribute : Attribute
@@ -519,7 +519,7 @@ namespace CryEngine.Annotations
 	/// <summary>
 	/// ASP.NET MVC attribute. Indicates that a parameter is an MVC Master. Use this
 	/// attribute for custom wrappers similar to <c>System.Web.Mvc.Controller.View(String,
-	/// String)</c>
+	/// String) </c>
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Parameter)]
 	public sealed class AspMvcMasterAttribute : Attribute { }
@@ -527,7 +527,7 @@ namespace CryEngine.Annotations
 	/// <summary>
 	/// ASP.NET MVC attribute. Indicates that a parameter is an MVC model type. Use this
 	/// attribute for custom wrappers similar to <c>System.Web.Mvc.Controller.View(String,
-	/// Object)</c>
+	/// Object) </c>
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Parameter)]
 	public sealed class AspMvcModelTypeAttribute : Attribute { }
@@ -538,7 +538,7 @@ namespace CryEngine.Annotations
 	/// calculated implicitly from the context. Use this attribute for custom wrappers
 	/// similar to
 	/// <c>System.Web.Mvc.Html.RenderPartialExtensions.RenderPartial(HtmlHelper,
-	/// String)</c>
+	/// String) </c>
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Method)]
 	public sealed class AspMvcPartialViewAttribute : PathReferenceAttribute { }

@@ -121,7 +121,7 @@ namespace CryCil.Geometry.Csg
 		{
 			if (!this.IsNotInitialized())
 			{
-				this.Plane.Flip();
+				this.Plane.Negate();
 			}
 			if (!this.Elements.IsNullOrEmpty())
 			{

@@ -110,6 +110,7 @@
     <Compile Include="Mathematics\Geometry\Transformation.cs" />
     <Compile Include="Mathematics\Geometry\Translation.cs" />
     <Compile Include="Mathematics\Graphics\ColorByte.cs" />
+    <Compile Include="Mathematics\Graphics\ColorConversion.cs" />
     <Compile Include="Mathematics\Graphics\ColorSingle.cs" />
     <Compile Include="Mathematics\Graphics\NamespaceDoc.cs" />
     <Compile Include="Mathematics\Graphics\ViewParams.cs" />

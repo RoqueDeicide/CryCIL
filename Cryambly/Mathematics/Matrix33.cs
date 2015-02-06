@@ -407,7 +407,6 @@ namespace CryCil
 			{
 				int hash = 17;
 
-				// ReSharper disable NonReadonlyFieldInGetHashCode
 				hash = hash * 29 + this.M00.GetHashCode();
 				hash = hash * 29 + this.M01.GetHashCode();
 				hash = hash * 29 + this.M02.GetHashCode();
@@ -419,7 +418,6 @@ namespace CryCil
 				hash = hash * 29 + this.M20.GetHashCode();
 				hash = hash * 29 + this.M21.GetHashCode();
 				hash = hash * 29 + this.M22.GetHashCode();
-				// ReSharper restore NonReadonlyFieldInGetHashCode
 
 				return hash;
 			}

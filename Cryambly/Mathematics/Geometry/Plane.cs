@@ -8,40 +8,66 @@ namespace CryCil.Geometry
 	/// <summary>
 	/// Represents a plane in three dimensional space.
 	/// </summary>
+	/// <remarks>
+	/// <para>This implementation uses equation:</para>
+	/// <para>n.x*x + n.y*y + n.z*z + d = 0</para>
+	/// <para>where n is a normal to the plane and formula:</para>
+	/// <para>n.x*x + n.y*y + n.z*z + d &gt; 0</para>
+	/// <para>describes coordinates of vectors in front of the plane.</para>
+	/// </remarks>
 	[Serializable]
-	[StructLayout(LayoutKind.Sequential, Pack = 4)]
+	[StructLayout(LayoutKind.Explicit, Pack = 4)]
 	public partial struct Plane : IEquatable<Plane>, IFormattable
 	{
 		/// <summary>
+		/// X-component of the normal to this plane.
+		/// </summary>
+		[FieldOffset(0)]
+		public float X;
+		/// <summary>
+		/// Y-component of the normal to this plane.
+		/// </summary>
+		[FieldOffset(4)]
+		public float Y;
+		/// <summary>
+		/// Z-component of the normal to this plane.
+		/// </summary>
+		[FieldOffset(8)]
+		public float Z;
+		/// <summary>
 		/// The normal vector of the plane.
 		/// </summary>
+		[FieldOffset(0)]
 		public Vector3 Normal;
 		/// <summary>
 		/// The distance of the plane along its normal from the origin.
 		/// </summary>
+		[FieldOffset(12)]
 		public float D;
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Plane"/> struct.
 		/// </summary>
 		/// <param name="value">The value that will be assigned to all components.</param>
 		public Plane(float value)
+			: this()
 		{
-			this.Normal.X = this.Normal.Y = this.Normal.Z = this.D = value;
+			this.X = this.Y = this.Z = this.D = value;
 		}
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Plane"/> struct.
 		/// </summary>
-		/// <param name="a">The X component of the normal.</param>
-		/// <param name="b">The Y component of the normal.</param>
-		/// <param name="c">The Z component of the normal.</param>
+		/// <param name="a">The X component of the</param>
+		/// <param name="b">The Y component of the</param>
+		/// <param name="c">The Z component of the</param>
 		/// <param name="d">
 		/// The distance of the plane along its normal from the origin.
 		/// </param>
 		public Plane(float a, float b, float c, float d)
+			: this()
 		{
-			this.Normal.X = a;
-			this.Normal.Y = b;
-			this.Normal.Z = c;
+			this.X = a;
+			this.Y = b;
+			this.Z = c;
 			this.D = d;
 		}
 		/// <summary>
@@ -52,6 +78,7 @@ namespace CryCil.Geometry
 		/// The distance of the plane along its normal from the origin
 		/// </param>
 		public Plane(Vector3 value, float d)
+			: this()
 		{
 			this.Normal = value;
 			this.D = d;
@@ -62,17 +89,21 @@ namespace CryCil.Geometry
 		/// <param name="point"> Any point that lies along the plane.</param>
 		/// <param name="normal">The normal of the plane.</param>
 		public Plane(Vector3 point, Vector3 normal)
+			: this()
 		{
 			this.Normal = normal;
 			this.D = -Vector3.Dot(normal, point);
 		}
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Plane"/> struct.
+		/// Initializes a new instance of the <see cref="Plane"/> struct using three
+		/// points represented by instances of type <see cref="Vector3"/> and using
+		/// anti-clockwise winding order.
 		/// </summary>
 		/// <param name="point1">First point of a triangle defining the plane.</param>
 		/// <param name="point2">Second point of a triangle defining the plane.</param>
 		/// <param name="point3">Third point of a triangle defining the plane.</param>
 		public Plane(Vector3 point1, Vector3 point2, Vector3 point3)
+			: this()
 		{
 #if DEBUG
 			this.Normal = ((point2 - point1) % (point3 - point1)).Normalized;
@@ -90,10 +121,10 @@ namespace CryCil.Geometry
 			float xy = (x1 * y2) - (y1 * x2);
 			float invPyth = 1.0f / (float)Math.Sqrt((yz * yz) + (xz * xz) + (xy * xy));
 
-			Normal.X = yz * invPyth;
-			Normal.Y = xz * invPyth;
-			Normal.Z = xy * invPyth;
-			D = -((Normal.X * point1.X) + (Normal.Y * point1.Y) + (Normal.Z * point1.Z));
+			X = yz * invPyth;
+			Y = xz * invPyth;
+			Z = xy * invPyth;
+			D = -((X * point1.X) + (Y * point1.Y) + (Z * point1.Z));
 #endif
 		}
 		/// <summary>
@@ -111,6 +142,7 @@ namespace CryCil.Geometry
 		/// elements.
 		/// </exception>
 		public Plane(IList<float> values)
+			: this()
 		{
 #if !(RELEASE && RELEASE_DISABLE_CHECKS)
 			if (values == null)
@@ -119,9 +151,9 @@ namespace CryCil.Geometry
 				throw new ArgumentOutOfRangeException("values", "There must be four and only four input values for Plane.");
 #endif
 
-			this.Normal.X = values[0];
-			this.Normal.Y = values[1];
-			this.Normal.Z = values[2];
+			this.X = values[0];
+			this.Y = values[1];
+			this.Z = values[2];
 			this.D = values[3];
 		}
 		/// <summary>
@@ -144,9 +176,9 @@ namespace CryCil.Geometry
 			{
 				switch (index)
 				{
-					case 0: return this.Normal.X;
-					case 1: return this.Normal.Y;
-					case 2: return this.Normal.Z;
+					case 0: return this.X;
+					case 1: return this.Y;
+					case 2: return this.Z;
 					case 3: return this.D;
 				}
 
@@ -157,11 +189,11 @@ namespace CryCil.Geometry
 			{
 				switch (index)
 				{
-					case 0: this.Normal.X = value;
+					case 0: this.X = value;
 						break;
-					case 1: this.Normal.Y = value;
+					case 1: this.Y = value;
 						break;
-					case 2: this.Normal.Z = value;
+					case 2: this.Z = value;
 						break;
 					case 3: this.D = value;
 						break;
@@ -180,12 +212,16 @@ namespace CryCil.Geometry
 		/// </param>
 		public static void Normalize(ref Plane plane, out Plane result)
 		{
-			float magnitude = 1.0f / (float)Math.Sqrt((plane.Normal.X * plane.Normal.X) + (plane.Normal.Y * plane.Normal.Y) + (plane.Normal.Z * plane.Normal.Z));
+			float magnitudeInverse =
+				1.0f / (float)Math.Sqrt(plane.X * plane.X + plane.Y * plane.Y + plane.Z * plane.Z);
 
-			result.Normal.X = plane.Normal.X * magnitude;
-			result.Normal.Y = plane.Normal.Y * magnitude;
-			result.Normal.Z = plane.Normal.Z * magnitude;
-			result.D = plane.D * magnitude;
+			result = new Plane
+			{
+				X = plane.X * magnitudeInverse,
+				Y = plane.Y * magnitudeInverse,
+				Z = plane.Z * magnitudeInverse,
+				D = plane.D * magnitudeInverse
+			};
 		}
 		/// <summary>
 		/// Changes the coefficients of the normal vector of the plane to make it of unit
@@ -195,8 +231,8 @@ namespace CryCil.Geometry
 		/// <returns>The normalized plane.</returns>
 		public static Plane Normalize(Plane plane)
 		{
-			float magnitude = 1.0f / (float)Math.Sqrt((plane.Normal.X * plane.Normal.X) + (plane.Normal.Y * plane.Normal.Y) + (plane.Normal.Z * plane.Normal.Z));
-			return new Plane(plane.Normal.X * magnitude, plane.Normal.Y * magnitude, plane.Normal.Z * magnitude, plane.D * magnitude);
+			float magnitude = 1.0f / (float)Math.Sqrt(plane.X * plane.X + plane.Y * plane.Y + plane.Z * plane.Z);
+			return new Plane(plane.X * magnitude, plane.Y * magnitude, plane.Z * magnitude, plane.D * magnitude);
 		}
 		/// <summary>
 		/// Transforms a normalized plane by a quaternion rotation.
@@ -221,18 +257,21 @@ namespace CryCil.Geometry
 			float yz = rotation.Y * z2;
 			float zz = rotation.Z * z2;
 
-			float x = plane.Normal.X;
-			float y = plane.Normal.Y;
-			float z = plane.Normal.Z;
+			float x = plane.X;
+			float y = plane.Y;
+			float z = plane.Z;
 
 			/*
 			 * Note:
 			 * Factor common arithmetic out of loop.
 			*/
-			result.Normal.X = ((x * ((1.0f - yy) - zz)) + (y * (xy - wz))) + (z * (xz + wy));
-			result.Normal.Y = ((x * (xy + wz)) + (y * ((1.0f - xx) - zz))) + (z * (yz - wx));
-			result.Normal.Z = ((x * (xz - wy)) + (y * (yz + wx))) + (z * ((1.0f - xx) - yy));
-			result.D = plane.D;
+			result = new Plane
+			{
+				X = ((x * ((1.0f - yy) - zz)) + (y * (xy - wz))) + (z * (xz + wy)),
+				Y = ((x * (xy + wz)) + (y * ((1.0f - xx) - zz))) + (z * (yz - wx)),
+				Z = ((x * (xz - wy)) + (y * (yz + wx))) + (z * ((1.0f - xx) - yy)),
+				D = plane.D
+			};
 		}
 		/// <summary>
 		/// Transforms a normalized plane by a quaternion rotation.
@@ -242,7 +281,6 @@ namespace CryCil.Geometry
 		/// <returns>The transformed plane.</returns>
 		public static Plane Transform(Plane plane, Quaternion rotation)
 		{
-			Plane result;
 			float x2 = rotation.X + rotation.X;
 			float y2 = rotation.Y + rotation.Y;
 			float z2 = rotation.Z + rotation.Z;
@@ -256,20 +294,21 @@ namespace CryCil.Geometry
 			float yz = rotation.Y * z2;
 			float zz = rotation.Z * z2;
 
-			float x = plane.Normal.X;
-			float y = plane.Normal.Y;
-			float z = plane.Normal.Z;
+			float x = plane.X;
+			float y = plane.Y;
+			float z = plane.Z;
 
 			/*
 			 * Note:
 			 * Factor common arithmetic out of loop.
 			*/
-			result.Normal.X = ((x * ((1.0f - yy) - zz)) + (y * (xy - wz))) + (z * (xz + wy));
-			result.Normal.Y = ((x * (xy + wz)) + (y * ((1.0f - xx) - zz))) + (z * (yz - wx));
-			result.Normal.Z = ((x * (xz - wy)) + (y * (yz + wx))) + (z * ((1.0f - xx) - yy));
-			result.D = plane.D;
-
-			return result;
+			return new Plane
+			(
+				((x * ((1.0f - yy) - zz)) + (y * (xy - wz))) + (z * (xz + wy)),
+				((x * (xy + wz)) + (y * ((1.0f - xx) - zz))) + (z * (yz - wx)),
+				((x * (xz - wy)) + (y * (yz + wx))) + (z * ((1.0f - xx) - yy)),
+				plane.D
+			);
 		}
 		/// <summary>
 		/// Transforms an array of normalized planes by a quaternion rotation.
@@ -301,17 +340,17 @@ namespace CryCil.Geometry
 
 			for (int i = 0; i < planes.Length; ++i)
 			{
-				float x = planes[i].Normal.X;
-				float y = planes[i].Normal.Y;
-				float z = planes[i].Normal.Z;
+				float x = planes[i].X;
+				float y = planes[i].Y;
+				float z = planes[i].Z;
 
 				/*
 				 * Note:
 				 * Factor common arithmetic out of loop.
 				*/
-				planes[i].Normal.X = ((x * ((1.0f - yy) - zz)) + (y * (xy - wz))) + (z * (xz + wy));
-				planes[i].Normal.Y = ((x * (xy + wz)) + (y * ((1.0f - xx) - zz))) + (z * (yz - wx));
-				planes[i].Normal.Z = ((x * (xz - wy)) + (y * (yz + wx))) + (z * ((1.0f - xx) - yy));
+				planes[i].X = ((x * ((1.0f - yy) - zz)) + (y * (xy - wz))) + (z * (xz + wy));
+				planes[i].Y = ((x * (xy + wz)) + (y * ((1.0f - xx) - zz))) + (z * (yz - wx));
+				planes[i].Z = ((x * (xz - wy)) + (y * (yz + wx))) + (z * ((1.0f - xx) - yy));
 			}
 		}
 		/// <summary>
@@ -320,12 +359,13 @@ namespace CryCil.Geometry
 		/// </summary>
 		public void Normalize()
 		{
-			float magnitude = 1.0f / (float)Math.Sqrt((this.Normal.X * this.Normal.X) + (this.Normal.Y * this.Normal.Y) + (this.Normal.Z * this.Normal.Z));
+			float magnitudeInverse =
+				1.0f / (float)Math.Sqrt(this.X * this.X + this.Y * this.Y + this.Z * this.Z);
 
-			this.Normal.X *= magnitude;
-			this.Normal.Y *= magnitude;
-			this.Normal.Z *= magnitude;
-			this.D *= magnitude;
+			this.X *= magnitudeInverse;
+			this.Y *= magnitudeInverse;
+			this.Z *= magnitudeInverse;
+			this.D *= magnitudeInverse;
 		}
 		/// <summary>
 		/// Calculates signed distance between this plane and a point.
@@ -341,12 +381,17 @@ namespace CryCil.Geometry
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public float SignedDistance(Vector3 point)
 		{
-			return (point | this.Normal) - this.D;
+			return point.X * this.X + point.Y * this.Y + point.Z * this.Z - this.D;
 		}
 		/// <summary>
 		/// Determines relative position of the point in respect to position of this
 		/// plane.
 		/// </summary>
+		/// <remarks>
+		/// This method allows to determine the relative position of the polygon by
+		/// continuously invoking it for all of the vertexes and using a dedicated flags
+		/// object represented by <see cref="PlanePosition"/> enumeration.
+		/// </remarks>
 		/// <param name="point">               
 		/// <see cref="Vector3"/> object that describes location of the point in 3D space.
 		/// </param>
@@ -392,7 +437,7 @@ namespace CryCil.Geometry
 		/// <summary>
 		/// Flips the orientation of this plane.
 		/// </summary>
-		public void Flip()
+		public void Negate()
 		{
 			this.Normal = -this.Normal;
 			this.D = -this.D;

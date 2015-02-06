@@ -219,9 +219,7 @@ namespace CryCil.Geometry
 		/// <returns>Hash code of this object.</returns>
 		public override int GetHashCode()
 		{
-			// ReSharper disable NonReadonlyFieldInGetHashCode
 			return this.Pitch.GetHashCode() * 11 + this.Roll.GetHashCode() * 37 + this.Yaw.GetHashCode() * 23;
-			// ReSharper restore NonReadonlyFieldInGetHashCode
 		}
 		/// <summary>
 		/// Checks equality of this object and given one.

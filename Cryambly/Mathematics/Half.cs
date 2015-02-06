@@ -537,9 +537,7 @@ namespace System
 		/// <returns>A 32-bit signed integer hash code.</returns>
 		public override int GetHashCode()
 		{
-			// ReSharper disable NonReadonlyFieldInGetHashCode
 			return value.GetHashCode();
-			// ReSharper restore NonReadonlyFieldInGetHashCode
 		}
 		/// <summary>
 		/// Returns the System.TypeCode for value type System.Half.

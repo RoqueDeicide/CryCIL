@@ -33,20 +33,20 @@ namespace CryCil.Geometry
 	[StructLayout(LayoutKind.Sequential, Pack = 4)]
 	public struct BoundingBox : IEquatable<BoundingBox>, IFormattable
 	{
+		#region Fields
 		/// <summary>
 		/// The minimum point of the box.
 		/// </summary>
 		public Vector3 Minimum;
-
 		/// <summary>
 		/// The maximum point of the box.
 		/// </summary>
 		public Vector3 Maximum;
-
+		#endregion
+		#region Properties
 		/// <summary>
 		/// Checks whether the bounding box is valid.
 		/// </summary>
-		/// <returns></returns>
 		public bool IsValid
 		{
 			get
@@ -54,7 +54,30 @@ namespace CryCil.Geometry
 				return this.Minimum.IsValid && this.Maximum.IsValid;
 			}
 		}
+		/// <summary>
+		/// Gets an array of eight corners of the bounding box.
+		/// </summary>
+		public Vector3[] Corners
+		{
+			get
+			{
+				var results = new Vector3[8];
+				results[0] = new Vector3(this.Minimum.X, this.Maximum.Y, this.Maximum.Z);
+				results[1] = new Vector3(this.Maximum.X, this.Maximum.Y, this.Maximum.Z);
+				results[2] = new Vector3(this.Maximum.X, this.Minimum.Y, this.Maximum.Z);
+				results[3] = new Vector3(this.Minimum.X, this.Minimum.Y, this.Maximum.Z);
+				results[4] = new Vector3(this.Minimum.X, this.Maximum.Y, this.Minimum.Z);
+				results[5] = new Vector3(this.Maximum.X, this.Maximum.Y, this.Minimum.Z);
+				results[6] = new Vector3(this.Maximum.X, this.Minimum.Y, this.Minimum.Z);
+				results[7] = new Vector3(this.Minimum.X, this.Minimum.Y, this.Minimum.Z);
+				return results;
+			}
+		}
+		#endregion
+		#region Events
 
+		#endregion
+		#region Construction
 		/// <summary>
 		/// Initializes a new instance of the <see cref="BoundingBox"/> struct.
 		/// </summary>
@@ -65,27 +88,51 @@ namespace CryCil.Geometry
 			this.Minimum = minimum;
 			this.Maximum = maximum;
 		}
-
 		/// <summary>
-		/// Retrieves the eight corners of the bounding box.
+		/// Creates a new <see cref="BoundingBox"/> that is just big enough to contain all
+		/// of given points.
 		/// </summary>
-		/// <returns>
-		/// An array of points representing the eight corners of the bounding box.
-		/// </returns>
-		public Vector3[] GetCorners()
+		/// <param name="points">
+		/// An array of <see cref="Vector3"/> objects that represent the points.
+		/// </param>
+		public BoundingBox(Vector3[] points)
 		{
-			var results = new Vector3[8];
-			results[0] = new Vector3(this.Minimum.X, this.Maximum.Y, this.Maximum.Z);
-			results[1] = new Vector3(this.Maximum.X, this.Maximum.Y, this.Maximum.Z);
-			results[2] = new Vector3(this.Maximum.X, this.Minimum.Y, this.Maximum.Z);
-			results[3] = new Vector3(this.Minimum.X, this.Minimum.Y, this.Maximum.Z);
-			results[4] = new Vector3(this.Minimum.X, this.Maximum.Y, this.Minimum.Z);
-			results[5] = new Vector3(this.Maximum.X, this.Maximum.Y, this.Minimum.Z);
-			results[6] = new Vector3(this.Maximum.X, this.Minimum.Y, this.Minimum.Z);
-			results[7] = new Vector3(this.Minimum.X, this.Minimum.Y, this.Minimum.Z);
-			return results;
-		}
+#if !(RELEASE && RELEASE_DISABLE_CHECKS)
+			if (points == null)
+				throw new ArgumentNullException("points");
+#endif
 
+			var min = new Vector3(float.MaxValue);
+			var max = new Vector3(float.MinValue);
+
+			for (int i = 0; i < points.Length; ++i)
+			{
+				Vector3.Min(ref min, ref points[i], out min);
+				Vector3.Max(ref max, ref points[i], out max);
+			}
+			this.Minimum = min;
+			this.Maximum = max;
+		}
+		/// <summary>
+		/// Creates a new <see cref="BoundingBox"/> that encompasses a sphere.
+		/// </summary>
+		/// <param name="sphere">A sphere that needs to be encompassed.</param>
+		public BoundingBox(ref BoundingSphere sphere)
+		{
+			this.Minimum = new Vector3(sphere.Center.X - sphere.Radius, sphere.Center.Y - sphere.Radius, sphere.Center.Z - sphere.Radius);
+			this.Maximum = new Vector3(sphere.Center.X + sphere.Radius, sphere.Center.Y + sphere.Radius, sphere.Center.Z + sphere.Radius);
+		}
+		/// <summary>
+		/// Creates a new <see cref="BoundingBox"/> that encompasses a sphere.
+		/// </summary>
+		/// <param name="sphere">A sphere that needs to be encompassed.</param>
+		public BoundingBox(BoundingSphere sphere)
+		{
+			this.Minimum = new Vector3(sphere.Center.X - sphere.Radius, sphere.Center.Y - sphere.Radius, sphere.Center.Z - sphere.Radius);
+			this.Maximum = new Vector3(sphere.Center.X + sphere.Radius, sphere.Center.Y + sphere.Radius, sphere.Center.Z + sphere.Radius);
+		}
+		#endregion
+		#region Interface
 		/// <summary>
 		/// Determines if there is an intersection between the current object and a
 		/// <see cref="Ray"/>.
@@ -97,7 +144,6 @@ namespace CryCil.Geometry
 			float distance;
 			return Collision.RayIntersectsBox(ref ray, ref this, out distance);
 		}
-
 		/// <summary>
 		/// Determines if there is an intersection between the current object and a
 		/// <see cref="Ray"/>.
@@ -112,7 +158,6 @@ namespace CryCil.Geometry
 		{
 			return Collision.RayIntersectsBox(ref ray, ref this, out distance);
 		}
-
 		/// <summary>
 		/// Determines if there is an intersection between the current object and a
 		/// <see cref="Ray"/>.
@@ -127,7 +172,6 @@ namespace CryCil.Geometry
 		{
 			return Collision.RayIntersectsBox(ref ray, ref this, out point);
 		}
-
 		/// <summary>
 		/// Determines if there is an intersection between the current object and a
 		/// <see cref="Plane"/>.
@@ -138,8 +182,7 @@ namespace CryCil.Geometry
 		{
 			return Collision.PlaneIntersectsBox(ref plane, ref this);
 		}
-
-		/* This implentation is wrong
+		/* This implementation is wrong
 		/// <summary>
 		/// Determines if there is an intersection between the current object and a
 		/// triangle.
@@ -164,7 +207,6 @@ namespace CryCil.Geometry
 		{
 			return Collision.BoxIntersectsBox(ref this, ref box);
 		}
-
 		/// <summary>
 		/// Determines if there is an intersection between the current object and a
 		/// <see cref="BoundingSphere"/>.
@@ -175,7 +217,6 @@ namespace CryCil.Geometry
 		{
 			return Collision.BoxIntersectsSphere(ref this, ref sphere);
 		}
-
 		/// <summary>
 		/// Determines whether the current objects contains a point.
 		/// </summary>
@@ -185,8 +226,7 @@ namespace CryCil.Geometry
 		{
 			return Collision.BoxContainsPoint(ref this, ref point);
 		}
-
-		/* This implentation is wrong
+		/* This implementation is wrong
 		/// <summary>
 		/// Determines whether the current objects contains a triangle.
 		/// </summary>
@@ -209,7 +249,6 @@ namespace CryCil.Geometry
 		{
 			return Collision.BoxContainsBox(ref this, ref box);
 		}
-
 		/// <summary>
 		/// Determines whether the current objects contains a
 		/// <see cref="BoundingSphere"/>.
@@ -220,92 +259,10 @@ namespace CryCil.Geometry
 		{
 			return Collision.BoxContainsSphere(ref this, ref sphere);
 		}
+		#endregion
+		#region Utilities
 
-		/// <summary>
-		/// Constructs a <see cref="BoundingBox"/> that fully contains the given points.
-		/// </summary>
-		/// <param name="points">The points that will be contained by the box.</param>
-		/// <param name="result">
-		/// When the method completes, contains the newly constructed bounding box.
-		/// </param>
-		/// <exception cref="ArgumentNullException">
-		/// Thrown when <paramref name="points"/> is <c>null</c>.
-		/// </exception>
-		public static void FromPoints(Vector3[] points, out BoundingBox result)
-		{
-#if !(RELEASE && RELEASE_DISABLE_CHECKS)
-			if (points == null)
-				throw new ArgumentNullException("points");
-#endif
-
-			var min = new Vector3(float.MaxValue);
-			var max = new Vector3(float.MinValue);
-
-			for (int i = 0; i < points.Length; ++i)
-			{
-				Vector3.Min(ref min, ref points[i], out min);
-				Vector3.Max(ref max, ref points[i], out max);
-			}
-
-			result = new BoundingBox(min, max);
-		}
-
-		/// <summary>
-		/// Constructs a <see cref="BoundingBox"/> that fully contains the given points.
-		/// </summary>
-		/// <param name="points">The points that will be contained by the box.</param>
-		/// <returns>The newly constructed bounding box.</returns>
-		/// <exception cref="ArgumentNullException">
-		/// Thrown when <paramref name="points"/> is <c>null</c>.
-		/// </exception>
-		public static BoundingBox FromPoints(Vector3[] points)
-		{
-#if !(RELEASE && RELEASE_DISABLE_CHECKS)
-			if (points == null)
-				throw new ArgumentNullException("points");
-#endif
-
-			var min = new Vector3(float.MaxValue);
-			var max = new Vector3(float.MinValue);
-
-			for (int i = 0; i < points.Length; ++i)
-			{
-				Vector3.Min(ref min, ref points[i], out min);
-				Vector3.Max(ref max, ref points[i], out max);
-			}
-
-			return new BoundingBox(min, max);
-		}
-
-		/// <summary>
-		/// Constructs a <see cref="BoundingBox"/> from a given sphere.
-		/// </summary>
-		/// <param name="sphere">
-		/// The sphere that will designate the extents of the box.
-		/// </param>
-		/// <param name="result">
-		/// When the method completes, contains the newly constructed bounding box.
-		/// </param>
-		public static void FromSphere(ref BoundingSphere sphere, out BoundingBox result)
-		{
-			result.Minimum = new Vector3(sphere.Center.X - sphere.Radius, sphere.Center.Y - sphere.Radius, sphere.Center.Z - sphere.Radius);
-			result.Maximum = new Vector3(sphere.Center.X + sphere.Radius, sphere.Center.Y + sphere.Radius, sphere.Center.Z + sphere.Radius);
-		}
-
-		/// <summary>
-		/// Constructs a <see cref="BoundingBox"/> from a given sphere.
-		/// </summary>
-		/// <param name="sphere">
-		/// The sphere that will designate the extents of the box.
-		/// </param>
-		/// <returns>The newly constructed bounding box.</returns>
-		public static BoundingBox FromSphere(BoundingSphere sphere)
-		{
-			BoundingBox box;
-			box.Minimum = new Vector3(sphere.Center.X - sphere.Radius, sphere.Center.Y - sphere.Radius, sphere.Center.Z - sphere.Radius);
-			box.Maximum = new Vector3(sphere.Center.X + sphere.Radius, sphere.Center.Y + sphere.Radius, sphere.Center.Z + sphere.Radius);
-			return box;
-		}
+		#endregion
 
 		/// <summary>
 		/// Constructs a <see cref="BoundingBox"/> that is as large as the total combined
@@ -321,7 +278,6 @@ namespace CryCil.Geometry
 			Vector3.Min(ref value1.Minimum, ref value2.Minimum, out result.Minimum);
 			Vector3.Max(ref value1.Maximum, ref value2.Maximum, out result.Maximum);
 		}
-
 		/// <summary>
 		/// Constructs a <see cref="BoundingBox"/> that is as large as the total combined
 		/// area of the two specified boxes.
@@ -336,7 +292,6 @@ namespace CryCil.Geometry
 			Vector3.Max(ref value1.Maximum, ref value2.Maximum, out box.Maximum);
 			return box;
 		}
-
 		/// <summary>
 		/// Tests for equality between two objects.
 		/// </summary>
@@ -350,7 +305,6 @@ namespace CryCil.Geometry
 		{
 			return left.Equals(right);
 		}
-
 		/// <summary>
 		/// Tests for inequality between two objects.
 		/// </summary>
@@ -364,7 +318,6 @@ namespace CryCil.Geometry
 		{
 			return !left.Equals(right);
 		}
-
 		/// <summary>
 		/// Returns a <see cref="System.String"/> that represents this instance.
 		/// </summary>
@@ -373,9 +326,13 @@ namespace CryCil.Geometry
 		/// </returns>
 		public override string ToString()
 		{
-			return string.Format(CultureInfo.CurrentCulture, "Minimum:{0} Maximum:{1}", this.Minimum.ToString(), this.Maximum.ToString());
+			return string.Format
+			(
+				CultureInfo.CurrentCulture,
+				"Minimum:{0} Maximum:{1}",
+				this.Minimum, this.Maximum
+			);
 		}
-
 		/// <summary>
 		/// Returns a <see cref="System.String"/> that represents this instance.
 		/// </summary>
@@ -385,12 +342,15 @@ namespace CryCil.Geometry
 		/// </returns>
 		public string ToString(string format)
 		{
-			if (format == null)
-				return this.ToString();
-
-			return string.Format(CultureInfo.CurrentCulture, "Minimum:{0} Maximum:{1}", this.Minimum.ToString(), this.Maximum.ToString());
+			return format == null
+				? this.ToString()
+				: string.Format
+				(
+					CultureInfo.CurrentCulture,
+					"Minimum:{0} Maximum:{1}",
+					this.Minimum, this.Maximum
+				);
 		}
-
 		/// <summary>
 		/// Returns a <see cref="System.String"/> that represents this instance.
 		/// </summary>
@@ -400,9 +360,8 @@ namespace CryCil.Geometry
 		/// </returns>
 		public string ToString(IFormatProvider formatProvider)
 		{
-			return string.Format(formatProvider, "Minimum:{0} Maximum:{1}", this.Minimum.ToString(), this.Maximum.ToString());
+			return string.Format(formatProvider, "Minimum:{0} Maximum:{1}", this.Minimum, this.Maximum);
 		}
-
 		/// <summary>
 		/// Returns a <see cref="System.String"/> that represents this instance.
 		/// </summary>
@@ -413,12 +372,10 @@ namespace CryCil.Geometry
 		/// </returns>
 		public string ToString(string format, IFormatProvider formatProvider)
 		{
-			if (format == null)
-				return this.ToString(formatProvider);
-
-			return string.Format(formatProvider, "Minimum:{0} Maximum:{1}", this.Minimum.ToString(), this.Maximum.ToString());
+			return format == null
+				? this.ToString(formatProvider)
+				: string.Format(formatProvider, "Minimum:{0} Maximum:{1}", this.Minimum, this.Maximum);
 		}
-
 		/// <summary>
 		/// Returns a hash code for this instance.
 		/// </summary>
@@ -433,15 +390,12 @@ namespace CryCil.Geometry
 			{
 				int hash = 17;
 
-				// ReSharper disable NonReadonlyFieldInGetHashCode
 				hash = hash * 29 + this.Minimum.GetHashCode();
 				hash = hash * 29 + this.Maximum.GetHashCode();
-				// ReSharper restore NonReadonlyFieldInGetHashCode
 
 				return hash;
 			}
 		}
-
 		/// <summary>
 		/// Determines whether the specified <see cref="Vector4"/> is equal to this
 		/// instance.
@@ -457,7 +411,6 @@ namespace CryCil.Geometry
 		{
 			return this.Minimum == value.Minimum && this.Maximum == value.Maximum;
 		}
-
 		/// <summary>
 		/// Determines whether the specified <see cref="System.Object"/> is equal to this
 		/// instance.
@@ -476,6 +429,7 @@ namespace CryCil.Geometry
 				&& this.Equals((BoundingBox)value));
 		}
 		/// <summary>
+		/// Determines whether this bounding box is a point.
 		/// </summary>
 		#region Properties
 		public bool IsEmpty
@@ -486,6 +440,8 @@ namespace CryCil.Geometry
 			}
 		}
 		/// <summary>
+		/// Gets the <see cref="Vector3"/> object that encapsulates coordinates of the
+		/// center of this bounding box.
 		/// </summary>
 		public Vector3 Center
 		{
@@ -506,12 +462,10 @@ namespace CryCil.Geometry
 		/// The two bounding volumes don't intersect at all.
 		/// </summary>
 		Disjoint,
-
 		/// <summary>
 		/// One bounding volume completely contains another.
 		/// </summary>
 		Contains,
-
 		/// <summary>
 		/// The two bounding volumes overlap.
 		/// </summary>
