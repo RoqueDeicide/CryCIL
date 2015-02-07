@@ -73,6 +73,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Defaults.cs" />
     <Compile Include="Engine\DebugServices\Log.cs" />
     <Compile Include="Engine\DebugServices\NamespaceDoc.cs" />
     <Compile Include="Engine\NamespaceDoc.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="Mathematics\Graphics\ViewParams.cs" />
     <Compile Include="Mathematics\Half.cs" />
     <Compile Include="Mathematics\HalfHelpers.cs" />
+    <Compile Include="Mathematics\IMatrix.cs" />
     <Compile Include="Mathematics\Interpolation.CatmullRom.cs" />
     <Compile Include="Mathematics\Interpolation.cs" />
     <Compile Include="Mathematics\Interpolation.Hermite.cs" />
@@ -129,6 +131,8 @@
     <Compile Include="Mathematics\Matrix33.cs" />
     <Compile Include="Mathematics\Matrix34.cs" />
     <Compile Include="Mathematics\Matrix44.cs" />
+    <Compile Include="Mathematics\MatrixTextConverter.cs" />
+    <Compile Include="Mathematics\MatrixTextFormat.cs" />
     <Compile Include="Mathematics\MemoryMapping\BufferToArray.cs" />
     <Compile Include="Mathematics\MemoryMapping\Byte1.cs" />
     <Compile Include="Mathematics\MemoryMapping\Bytes2.cs" />

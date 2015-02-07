@@ -10,7 +10,7 @@ namespace CryCil
 	/// Represents a 3x3 matrix.
 	/// </summary>
 	[StructLayout(LayoutKind.Explicit)]
-	public struct Matrix33 : IEnumerable<float>
+	public struct Matrix33 : IMatrix<Matrix33>, IFormattable
 	{
 		#region Static Fields
 		/// <summary>
@@ -238,6 +238,76 @@ namespace CryCil
 					z.IsEquivalent(x % y) && z.IsUnit(MathHelpers.ZeroTolerance);
 			}
 		}
+		/// <summary>
+		/// Calculates determinant of this matrix.
+		/// </summary>
+		public float Determinant
+		{
+			get
+			{
+				return
+					   (this.M00 * this.M11 * this.M22) +
+					   (this.M01 * this.M12 * this.M20) +
+					   (this.M02 * this.M10 * this.M21) -
+					   (this.M02 * this.M11 * this.M20) -
+					   (this.M00 * this.M12 * this.M21) -
+					   (this.M01 * this.M10 * this.M22);
+			}
+		}
+		/// <summary>
+		/// Gets a 2D array of elements of this matrix.
+		/// </summary>
+		public float[,] Array2D
+		{
+			get
+			{
+				return new[,]
+				{
+					{this.M00, this.M01, this.M02},
+					{this.M10, this.M11, this.M12},
+					{this.M20, this.M21, this.M22}
+				};
+			}
+		}
+		/// <summary>
+		/// Gives access to specific element of this matrix.
+		/// </summary>
+		/// <param name="row">   Zero-based index of the row.</param>
+		/// <param name="column">Zero-based index of the column.</param>
+		public float this[int row, int column]
+		{
+			get
+			{
+				switch (row)
+				{
+					case 0:
+						return this.Row0[column];
+					case 1:
+						return this.Row1[column];
+					case 2:
+						return this.Row2[column];
+					default:
+						throw new ArgumentOutOfRangeException("row", "Attempt to access matrix row out of range [0, 2].");
+				}
+			}
+			set
+			{
+				switch (row)
+				{
+					case 0:
+						this.Row0[column] = value;
+						break;
+					case 1:
+						this.Row1[column] = value;
+						break;
+					case 2:
+						this.Row2[column] = value;
+						break;
+					default:
+						throw new ArgumentOutOfRangeException("row", "Attempt to access matrix row out of range [0, 2].");
+				}
+			}
+		}
 		#endregion
 		#region Construction
 		/// <summary>
@@ -421,6 +491,158 @@ namespace CryCil
 
 				return hash;
 			}
+		}
+		/// <summary>
+		/// Determines whether this matrix can be considered equal to another one within
+		/// bounds of given precision.
+		/// </summary>
+		/// <param name="m">Another matrix.</param>
+		/// <param name="e">
+		/// <see cref="Single"/> object that represents maximal difference between two
+		/// values that allows to consider them equal.
+		/// </param>
+		/// <returns>
+		/// True, if difference between values of each corresponding pair is less then
+		/// <paramref name="e"/> .
+		/// </returns>
+		public bool IsEquivalent(Matrix33 m, float e = 0.05f)
+		{
+			return
+			(
+				(Math.Abs(this.M00 - m.M00) <= e) &&
+				(Math.Abs(this.M01 - m.M01) <= e) &&
+				(Math.Abs(this.M02 - m.M02) <= e) &&
+				(Math.Abs(this.M10 - m.M10) <= e) &&
+				(Math.Abs(this.M11 - m.M11) <= e) &&
+				(Math.Abs(this.M12 - m.M12) <= e) &&
+				(Math.Abs(this.M20 - m.M20) <= e) &&
+				(Math.Abs(this.M21 - m.M21) <= e) &&
+				(Math.Abs(this.M22 - m.M22) <= e)
+			);
+		}
+		/// <summary>
+		/// Swaps columns and rows of this matrix.
+		/// </summary>
+		public void Transpose()
+		{
+			this =
+				new Matrix33
+				(
+					this.M00, this.M10, this.M20,
+					this.M01, this.M11, this.M21,
+					this.M02, this.M12, this.M22
+				);
+		}
+		/// <summary>
+		/// Inverts this matrix.
+		/// </summary>
+		public void Invert()
+		{
+			float det = this.Determinant;
+			if (det < MathHelpers.ZeroTolerance)
+			{
+				throw new DivideByZeroException("Cannot invert the matrix which determinant is equal to 0.");
+			}
+			// Co-factors.
+			float m00 = (this.M11 * this.M22 - this.M21 * this.M12) / det;
+			float m01 = (this.M12 * this.M20 - this.M22 * this.M10) / det;
+			float m02 = (this.M10 * this.M21 - this.M20 * this.M11) / det;
+			float m10 = (this.M02 * this.M21 - this.M22 * this.M01) / det;
+			float m11 = (this.M22 * this.M00 - this.M02 * this.M20) / det;
+			float m12 = (this.M20 * this.M01 - this.M00 * this.M21) / det;
+			float m20 = (this.M12 * this.M01 - this.M02 * this.M11) / det;
+			float m21 = (this.M02 * this.M10 - this.M12 * this.M00) / det;
+			float m22 = (this.M00 * this.M11 - this.M10 * this.M01) / det;
+			// Construct the matrix (transposed).
+			this =
+				new Matrix33
+				(
+					m00, m10, m20,
+					m01, m11, m21,
+					m02, m12, m22
+				);
+		}
+		/// <summary>
+		/// Determines whether this matrix is equal to another.
+		/// </summary>
+		/// <param name="other">Another matrix.</param>
+		/// <returns>True, if matrices are equal.</returns>
+		public bool Equals(Matrix33 other)
+		{
+			return this.IsEquivalent(other, MathHelpers.ZeroTolerance);
+		}
+		#endregion
+		#region Text Conversions
+		/// <summary>
+		/// Creates text representation of this matrix.
+		/// </summary>
+		/// <returns>
+		/// Text representation of this matrix where all elements are listed in a line
+		/// using default format for <see cref="Single"/> numbers and culture object
+		/// specified by <see cref="Defaults.CultureToStringOnly"/>.
+		/// </returns>
+		public override string ToString()
+		{
+			return MatrixTextConverter.ToString(this, Defaults.CultureToStringOnly);
+		}
+		/// <summary>
+		/// Creates text representation of this matrix.
+		/// </summary>
+		/// <param name="format">
+		/// A string that describes a format of this matrix. See Remarks section in
+		/// <see cref="Matrix44.ToString(string,IFormatProvider)"/> for details.
+		/// </param>
+		/// <returns>
+		/// Text representation of this matrix formatted as specified by
+		/// <paramref name="format"/> argument using culture object specified by
+		/// <see cref="Defaults.CultureToStringOnly"/>.
+		/// </returns>
+		public string ToString(string format)
+		{
+			return MatrixTextConverter.ToString(this, format, Defaults.CultureToStringOnly);
+		}
+		/// <summary>
+		/// Creates text representation of this matrix.
+		/// </summary>
+		/// <param name="formatProvider">
+		/// Object that provides culture-specific information to use in formatting.
+		/// </param>
+		/// <returns>
+		/// Text representation of this matrix where all elements are listed in a line
+		/// using default format for <see cref="Single"/> numbers and culture-specific
+		/// information supplied by <paramref name="formatProvider"/>.
+		/// </returns>
+		public string ToString(IFormatProvider formatProvider)
+		{
+			return MatrixTextConverter.ToString(this, formatProvider);
+		}
+		/// <summary>
+		/// Creates text representation of this matrix. <see cref="MatrixTextConverter"/>
+		/// documentation for details.
+		/// </summary>
+		/// <param name="format">        
+		/// A string that describes a format of this matrix. See Remarks section for
+		/// details.
+		/// </param>
+		/// <param name="formatProvider">
+		/// Object that provides culture-specific information on how to create text
+		/// representations of numbers.
+		/// </param>
+		/// <returns>Text representation specified by given arguments.</returns>
+		public string ToString(string format, IFormatProvider formatProvider)
+		{
+			return MatrixTextConverter.ToString(this, format, formatProvider);
+		}
+		/// <summary>
+		/// Creates text representation of this matrix.
+		/// </summary>
+		/// <param name="format">
+		/// Object that provides details on how to format the text.
+		/// </param>
+		/// <returns>Formatted text representation of the matrix.</returns>
+		public string ToString(MatrixTextFormat format)
+		{
+			return MatrixTextConverter.ToString(this, format);
 		}
 		#endregion
 		#region Enumeration

@@ -11,7 +11,7 @@ namespace CryCil
 	/// translation.
 	/// </summary>
 	[StructLayout(LayoutKind.Explicit, Pack = 4, Size = 48)]
-	public struct Matrix34 : IEnumerable<float>
+	public struct Matrix34 : IMatrix<Matrix34>, IFormattable
 	{
 		#region Static Fields
 		/// <summary>
@@ -259,6 +259,60 @@ namespace CryCil
 					MathHelpers.IsNumberValid(this.M22) &&
 					MathHelpers.IsNumberValid(this.M23);
 #endif
+			}
+		}
+		/// <summary>
+		/// Gets a 2D array of elements of this matrix.
+		/// </summary>
+		public float[,] Array2D
+		{
+			get
+			{
+				return new[,]
+				{
+					{this.M00, this.M01, this.M02, this.M03},
+					{this.M10, this.M11, this.M12, this.M13},
+					{this.M20, this.M21, this.M22, this.M23}
+				};
+			}
+		}
+		/// <summary>
+		/// Gives access to specific element of this matrix.
+		/// </summary>
+		/// <param name="row">   Zero-based index of the row.</param>
+		/// <param name="column">Zero-based index of the column.</param>
+		public float this[int row, int column]
+		{
+			get
+			{
+				switch (row)
+				{
+					case 0:
+						return this.Row0[column];
+					case 1:
+						return this.Row1[column];
+					case 2:
+						return this.Row2[column];
+					default:
+						throw new ArgumentOutOfRangeException("row", "Attempt to access matrix row out of range [0, 2].");
+				}
+			}
+			set
+			{
+				switch (row)
+				{
+					case 0:
+						this.Row0[column] = value;
+						break;
+					case 1:
+						this.Row1[column] = value;
+						break;
+					case 2:
+						this.Row2[column] = value;
+						break;
+					default:
+						throw new ArgumentOutOfRangeException("row", "Attempt to access matrix row out of range [0, 2].");
+				}
 			}
 		}
 		#endregion Properties
@@ -579,6 +633,101 @@ namespace CryCil
 			yield return this.M21;
 			yield return this.M22;
 			yield return this.M23;
+		}
+		/// <summary>
+		/// Transposes 3x3 submatrix.
+		/// </summary>
+		public void Transpose()
+		{
+			this =
+				new Matrix34
+				(
+					this.M00, this.M10, this.M20, this.M03,
+					this.M01, this.M11, this.M21, this.M03,
+					this.M02, this.M12, this.M22, this.M03
+				);
+		}
+		/// <summary>
+		/// Determines whether this matrix is equal to another.
+		/// </summary>
+		/// <param name="other">Another matrix.</param>
+		/// <returns>True, if matrices are equal.</returns>
+		public bool Equals(Matrix34 other)
+		{
+			return this.IsEquivalent(other, MathHelpers.ZeroTolerance);
+		}
+		#endregion
+		#region Text Conversions
+		/// <summary>
+		/// Creates text representation of this matrix.
+		/// </summary>
+		/// <returns>
+		/// Text representation of this matrix where all elements are listed in a line
+		/// using default format for <see cref="Single"/> numbers and culture object
+		/// specified by <see cref="Defaults.CultureToStringOnly"/>.
+		/// </returns>
+		public override string ToString()
+		{
+			return MatrixTextConverter.ToString(this, Defaults.CultureToStringOnly);
+		}
+		/// <summary>
+		/// Creates text representation of this matrix.
+		/// </summary>
+		/// <param name="format">
+		/// A string that describes a format of this matrix. See Remarks section in
+		/// <see cref="Matrix44.ToString(string,IFormatProvider)"/> for details.
+		/// </param>
+		/// <returns>
+		/// Text representation of this matrix formatted as specified by
+		/// <paramref name="format"/> argument using culture object specified by
+		/// <see cref="Defaults.CultureToStringOnly"/>.
+		/// </returns>
+		public string ToString(string format)
+		{
+			return MatrixTextConverter.ToString(this, format, Defaults.CultureToStringOnly);
+		}
+		/// <summary>
+		/// Creates text representation of this matrix.
+		/// </summary>
+		/// <param name="formatProvider">
+		/// Object that provides culture-specific information to use in formatting.
+		/// </param>
+		/// <returns>
+		/// Text representation of this matrix where all elements are listed in a line
+		/// using default format for <see cref="Single"/> numbers and culture-specific
+		/// information supplied by <paramref name="formatProvider"/>.
+		/// </returns>
+		public string ToString(IFormatProvider formatProvider)
+		{
+			return MatrixTextConverter.ToString(this, formatProvider);
+		}
+		/// <summary>
+		/// Creates text representation of this matrix. <see cref="MatrixTextConverter"/>
+		/// documentation for details.
+		/// </summary>
+		/// <param name="format">        
+		/// A string that describes a format of this matrix. See Remarks section for
+		/// details.
+		/// </param>
+		/// <param name="formatProvider">
+		/// Object that provides culture-specific information on how to create text
+		/// representations of numbers.
+		/// </param>
+		/// <returns>Text representation specified by given arguments.</returns>
+		public string ToString(string format, IFormatProvider formatProvider)
+		{
+			return MatrixTextConverter.ToString(this, format, formatProvider);
+		}
+		/// <summary>
+		/// Creates text representation of this matrix.
+		/// </summary>
+		/// <param name="format">
+		/// Object that provides details on how to format the text.
+		/// </param>
+		/// <returns>Formatted text representation of the matrix.</returns>
+		public string ToString(MatrixTextFormat format)
+		{
+			return MatrixTextConverter.ToString(this, format);
 		}
 		#endregion
 		#region Scaling

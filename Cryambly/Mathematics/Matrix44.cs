@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
 using CryCil.Geometry;
 
 namespace CryCil
@@ -10,7 +12,7 @@ namespace CryCil
 	/// Represents a 4x4 matrix.
 	/// </summary>
 	[StructLayout(LayoutKind.Explicit, Size = 64)]
-	public struct Matrix44 : IEnumerable<float>, IEquatable<Matrix44>
+	public struct Matrix44 : IFormattable, IMatrix<Matrix44>
 	{
 		#region Statics
 		/// <summary>
@@ -300,6 +302,22 @@ namespace CryCil
 				this.M00 = value.M00; this.M01 = value.M01; this.M02 = value.M02;
 				this.M10 = value.M10; this.M11 = value.M11; this.M12 = value.M12;
 				this.M20 = value.M20; this.M21 = value.M21; this.M22 = value.M22;
+			}
+		}
+		/// <summary>
+		/// Gets a 2D array of elements of this matrix.
+		/// </summary>
+		public float[,] Array2D
+		{
+			get
+			{
+				return new [,]
+				{
+					{this.M00, this.M01, this.M02, this.M03},
+					{this.M10, this.M11, this.M12, this.M13},
+					{this.M20, this.M21, this.M22, this.M23},
+					{this.M30, this.M31, this.M32, this.M33}
+				};
 			}
 		}
 		#endregion
@@ -958,12 +976,76 @@ namespace CryCil
 		/// <returns>True, if matrices can be considered equivalents.</returns>
 		public static bool IsEquivalent(ref  Matrix44 m0, ref Matrix44 m1, float e = MathHelpers.ZeroTolerance)
 		{
-			return (
+			return
+			(
 				(Math.Abs(m0.Row0.X - m1.Row0.X) <= e) && (Math.Abs(m0.Row0.Y - m1.Row0.Y) <= e) && (Math.Abs(m0.Row0.Z - m1.Row0.Z) <= e) && (Math.Abs(m0.Row0.W - m1.Row0.W) <= e) &&
 				(Math.Abs(m0.Row1.X - m1.Row1.X) <= e) && (Math.Abs(m0.Row1.Y - m1.Row1.Y) <= e) && (Math.Abs(m0.Row1.Z - m1.Row1.Z) <= e) && (Math.Abs(m0.Row1.W - m1.Row1.W) <= e) &&
 				(Math.Abs(m0.Row2.X - m1.Row2.X) <= e) && (Math.Abs(m0.Row2.Y - m1.Row2.Y) <= e) && (Math.Abs(m0.Row2.Z - m1.Row2.Z) <= e) && (Math.Abs(m0.Row2.W - m1.Row2.W) <= e) &&
 				(Math.Abs(m0.Row3.X - m1.Row3.X) <= e) && (Math.Abs(m0.Row3.Y - m1.Row3.Y) <= e) && (Math.Abs(m0.Row3.Z - m1.Row3.Z) <= e) && (Math.Abs(m0.Row3.W - m1.Row3.W) <= e)
-				);
+			);
+		}
+		/// <summary>
+		/// Determines whether this matrix is equal to another object.
+		/// </summary>
+		/// <param name="obj">Another object.</param>
+		/// <returns>
+		/// True, if another object is a non-null boxed object of type
+		/// <see cref="Matrix44"/> that is equal to this one.
+		/// </returns>
+		public override bool Equals(object obj)
+		{
+			if (ReferenceEquals(null, obj)) return false;
+			return obj is Matrix44 && Equals((Matrix44)obj);
+		}
+		/// <summary>
+		/// Calculates hash code of this matrix.
+		/// </summary>
+		/// <returns>
+		/// Hash code calculated using aggregation of elements of the matrix by
+		/// consecutive multiplication and XOR operations.
+		/// </returns>
+		public override int GetHashCode()
+		{
+			unchecked
+			{
+				int hashCode = this.M00.GetHashCode();
+				hashCode = (hashCode * 397) ^ this.M01.GetHashCode();
+				hashCode = (hashCode * 397) ^ this.M02.GetHashCode();
+				hashCode = (hashCode * 397) ^ this.M03.GetHashCode();
+				hashCode = (hashCode * 397) ^ this.M10.GetHashCode();
+				hashCode = (hashCode * 397) ^ this.M11.GetHashCode();
+				hashCode = (hashCode * 397) ^ this.M12.GetHashCode();
+				hashCode = (hashCode * 397) ^ this.M13.GetHashCode();
+				hashCode = (hashCode * 397) ^ this.M20.GetHashCode();
+				hashCode = (hashCode * 397) ^ this.M21.GetHashCode();
+				hashCode = (hashCode * 397) ^ this.M22.GetHashCode();
+				hashCode = (hashCode * 397) ^ this.M23.GetHashCode();
+				hashCode = (hashCode * 397) ^ this.M30.GetHashCode();
+				hashCode = (hashCode * 397) ^ this.M31.GetHashCode();
+				hashCode = (hashCode * 397) ^ this.M32.GetHashCode();
+				hashCode = (hashCode * 397) ^ this.M33.GetHashCode();
+				return hashCode;
+			}
+		}
+		/// <summary>
+		/// Determines whether two matrices are equal.
+		/// </summary>
+		/// <param name="left"> Left operand.</param>
+		/// <param name="right">Right operand.</param>
+		/// <returns>True, if matrices are equal, otherwise false.</returns>
+		public static bool operator ==(Matrix44 left, Matrix44 right)
+		{
+			return left.Equals(right);
+		}
+		/// <summary>
+		/// Determines whether two matrices are not equal.
+		/// </summary>
+		/// <param name="left"> Left operand.</param>
+		/// <param name="right">Right operand.</param>
+		/// <returns>True, if matrices are not equal, otherwise false.</returns>
+		public static bool operator !=(Matrix44 left, Matrix44 right)
+		{
+			return !left.Equals(right);
 		}
 		/// <summary>
 		/// Determines whether this matrix is equal to another.
@@ -1005,6 +1087,79 @@ namespace CryCil
 		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
 		{
 			return this.GetEnumerator();
+		}
+		#endregion
+		#region Text Conversions
+		/// <summary>
+		/// Creates text representation of this matrix.
+		/// </summary>
+		/// <returns>
+		/// Text representation of this matrix where all elements are listed in a line
+		/// using default format for <see cref="Single"/> numbers and culture object
+		/// specified by <see cref="Defaults.CultureToStringOnly"/>.
+		/// </returns>
+		public override string ToString()
+		{
+			return MatrixTextConverter.ToString(this, Defaults.CultureToStringOnly);
+		}
+		/// <summary>
+		/// Creates text representation of this matrix.
+		/// </summary>
+		/// <param name="format">
+		/// A string that describes a format of this matrix. See Remarks section in
+		/// <see cref="Matrix44.ToString(string,IFormatProvider)"/> for details.
+		/// </param>
+		/// <returns>
+		/// Text representation of this matrix formatted as specified by
+		/// <paramref name="format"/> argument using culture object specified by
+		/// <see cref="Defaults.CultureToStringOnly"/>.
+		/// </returns>
+		public string ToString(string format)
+		{
+			return MatrixTextConverter.ToString(this, format, Defaults.CultureToStringOnly);
+		}
+		/// <summary>
+		/// Creates text representation of this matrix.
+		/// </summary>
+		/// <param name="formatProvider">
+		/// Object that provides culture-specific information to use in formatting.
+		/// </param>
+		/// <returns>
+		/// Text representation of this matrix where all elements are listed in a line
+		/// using default format for <see cref="Single"/> numbers and culture-specific
+		/// information supplied by <paramref name="formatProvider"/>.
+		/// </returns>
+		public string ToString(IFormatProvider formatProvider)
+		{
+			return MatrixTextConverter.ToString(this, formatProvider);
+		}
+		/// <summary>
+		/// Creates text representation of this matrix. <see cref="MatrixTextConverter"/>
+		/// documentation for details.
+		/// </summary>
+		/// <param name="format">        
+		/// A string that describes a format of this matrix. See Remarks section for
+		/// details.
+		/// </param>
+		/// <param name="formatProvider">
+		/// Object that provides culture-specific information on how to create text
+		/// representations of numbers.
+		/// </param>
+		/// <returns>Text representation specified by given arguments.</returns>
+		public string ToString(string format, IFormatProvider formatProvider)
+		{
+			return MatrixTextConverter.ToString(this, format, formatProvider);
+		}
+		/// <summary>
+		/// Creates text representation of this matrix.
+		/// </summary>
+		/// <param name="format">
+		/// Object that provides details on how to format the text.
+		/// </param>
+		/// <returns>Formatted text representation of the matrix.</returns>
+		public string ToString(MatrixTextFormat format)
+		{
+			return MatrixTextConverter.ToString(this, format);
 		}
 		#endregion
 		#endregion
