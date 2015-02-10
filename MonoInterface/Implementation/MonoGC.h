@@ -18,7 +18,16 @@ struct MonoGC : public IMonoGC
 	{
 		if (obj)
 		{
-			return new MonoGCHandleWeak(obj);
+			return new MonoGCHandleWeak(obj, false);
+		}
+		return nullptr;
+	}
+
+	virtual IMonoGCHandle *HoldWithHope(mono::object obj)
+	{
+		if (obj)
+		{
+			return new MonoGCHandleWeak(obj, true);
 		}
 		return nullptr;
 	}
@@ -27,7 +36,7 @@ struct MonoGC : public IMonoGC
 	{
 		if (obj)
 		{
-			return new MonoGCHandleKeeper(obj);
+			return new MonoGCHandleStrong(obj, false);
 		}
 		return nullptr;
 	}
@@ -36,7 +45,7 @@ struct MonoGC : public IMonoGC
 	{
 		if (obj)
 		{
-			return new MonoGCHandlePin(obj);
+			return new MonoGCHandleStrong(obj, true);
 		}
 		return nullptr;
 	}

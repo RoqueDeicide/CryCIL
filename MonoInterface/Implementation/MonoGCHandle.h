@@ -24,15 +24,6 @@ public:
 		this->handle = -1;
 	}
 
-	virtual IMonoHandle *GetObjectHandle()
-	{
-		if (this->handle == -1)
-		{
-			return nullptr;
-		}
-		return new MonoHandle((mono::object)mono_gchandle_get_target(this->handle));
-	}
-
 	virtual mono::object GetObjectPointer()
 	{
 		if (this->handle == -1)
@@ -43,15 +34,15 @@ public:
 	}
 };
 
-struct MonoGCHandleKeeper : public MonoGCHandle
+struct MonoGCHandleStrong : public MonoGCHandle
 {
-	MonoGCHandleKeeper()
+	MonoGCHandleStrong()
 	{
 		this->handle = -1;
 	}
-	MonoGCHandleKeeper(mono::object obj)
+	MonoGCHandleStrong(mono::object obj, bool pin)
 	{
-		mono_gchandle_new((MonoObject *)obj, false);
+		this->handle = mono_gchandle_new((MonoObject *)obj, pin);
 	}
 };
 struct MonoGCHandleWeak : public MonoGCHandle
@@ -60,19 +51,8 @@ struct MonoGCHandleWeak : public MonoGCHandle
 	{
 		this->handle = -1;
 	}
-	MonoGCHandleWeak(mono::object obj)
+	MonoGCHandleWeak(mono::object obj, bool trackResurrection)
 	{
-		mono_gchandle_new_weakref((MonoObject *)obj, false);
-	}
-};
-struct MonoGCHandlePin : public MonoGCHandle
-{
-	MonoGCHandlePin()
-	{
-		this->handle = -1;
-	}
-	MonoGCHandlePin(mono::object obj)
-	{
-		mono_gchandle_new((MonoObject *)obj, true);
+		this->handle = mono_gchandle_new_weakref((MonoObject *)obj, trackResurrection);
 	}
 };
