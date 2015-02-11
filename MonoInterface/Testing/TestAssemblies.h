@@ -117,4 +117,82 @@ void TestAssemblies()
 	const char *fullAssemblyName = ToNativeString(refAssemblyWrapper->GetProperty("FullName")->Getter->Invoke(refAssembly));
 	CryLogAlways("TEST: %s", fullAssemblyName);
 	delete fullAssemblyName;
+
+	delete refAssemblyWrapper;
+
+	CryLogAlways("TEST: Getting a wrapper for mscorlib.");
+
+	IMonoCoreLibrary *corlib = MonoEnv->CoreLibrary;
+
+	if (!corlib)
+	{
+		CryLogAlways("TEST FAILURE: Getting a wrapper for mscorlib was not successful.");
+	}
+	else
+	{
+		CryLogAlways("TEST SUCCESS: Getting a wrapper for mscorlib was successful.");
+	}
+
+	TestClassFromAssembly(corlib->Array,     "System.Array");
+	TestClassFromAssembly(corlib->Boolean,   "System.Boolean");
+	TestClassFromAssembly(corlib->Byte,      "System.Byte");
+	TestClassFromAssembly(corlib->Char,      "System.Char");
+	TestClassFromAssembly(corlib->Single,    "System.Single");
+	TestClassFromAssembly(corlib->Double,    "System.Double");
+	TestClassFromAssembly(corlib->Enum,      "System.Enum");
+	TestClassFromAssembly(corlib->Exception, "System.Exception");
+	TestClassFromAssembly(corlib->Int16,     "System.Int16");
+	TestClassFromAssembly(corlib->Int32,     "System.Int32");
+	TestClassFromAssembly(corlib->Int64,     "System.Int64");
+	TestClassFromAssembly(corlib->UInt16,    "System.UInt16");
+	TestClassFromAssembly(corlib->UInt32,    "System.UInt32");
+	TestClassFromAssembly(corlib->UInt64,    "System.UInt64");
+	TestClassFromAssembly(corlib->IntPtr,    "System.IntPtr");
+	TestClassFromAssembly(corlib->UIntPtr,   "System.UIntPtr");
+	TestClassFromAssembly(corlib->Sbyte,     "System.Sbyte");
+	TestClassFromAssembly(corlib->String,    "System.String");
+	TestClassFromAssembly(corlib->Type,      "System.Type");
+
+	CryLogAlways("TEST: Getting a wrapper for Cryambly.");
+
+	ICryambly *cryambly = MonoEnv->Cryambly;
+
+	if (!cryambly)
+	{
+		CryLogAlways("TEST FAILURE: Getting a wrapper for Cryambly was not successful.");
+	}
+	else
+	{
+		CryLogAlways("TEST SUCCESS: Getting a wrapper for Cryambly was successful.");
+	}
+
+	TestClassFromAssembly(cryambly->Matrix33,    "CryCil.Matrix33");
+	TestClassFromAssembly(cryambly->Matrix34,    "CryCil.Matrix34");
+	TestClassFromAssembly(cryambly->Matrix44,    "CryCil.Matrix44");
+	TestClassFromAssembly(cryambly->AngleAxis,   "CryCil.Geometry.AngleAxis");
+	TestClassFromAssembly(cryambly->BoundingBox, "CryCil.Geometry.BoundingBox");
+	TestClassFromAssembly(cryambly->ColorByte,   "CryCil.Graphics.ColorByte");
+	TestClassFromAssembly(cryambly->ColorSingle, "CryCil.Graphics.ColorSingle");
+	TestClassFromAssembly(cryambly->EulerAngles, "CryCil.Geometry.EulerAngles");
+	TestClassFromAssembly(cryambly->Plane,       "CryCil.Geometry.Plane");
+	TestClassFromAssembly(cryambly->Quaternion,  "CryCil.Geometry.Quaternion");
+	TestClassFromAssembly(cryambly->Quatvec,     "CryCil.Geometry.Quatvec");
+	TestClassFromAssembly(cryambly->Ray,         "CryCil.Geometry.Ray");
+	TestClassFromAssembly(cryambly->Vector2,     "CryCil.Geometry.Vector2");
+	TestClassFromAssembly(cryambly->Vector3,     "CryCil.Geometry.Vector3");
+	TestClassFromAssembly(cryambly->Vector4,     "CryCil.Geometry.Vector4");
+}
+
+void TestClassFromAssembly(IMonoClass *klass, const char *name)
+{
+	CryLogAlways("TEST: Getting a wrapper for a klass.");
+
+	if (!klass)
+	{
+		CryLogAlways("TEST FAILURE: Getting a wrapper for a klass %s was not successful.", name);
+	}
+	else
+	{
+		CryLogAlways("TEST SUCCESS: Getting a wrapper for a klass %s was successful.", name);
+	}
 }
