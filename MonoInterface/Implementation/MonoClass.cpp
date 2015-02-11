@@ -515,15 +515,13 @@ List<MonoClassWrapper *> MonoClassCache::cachedClasses(50);
 
 IMonoClass *MonoClassCache::Wrap(MonoClass *klass)
 {
-	// Cool lambda expression.
-	auto condition = [&klass](MonoClassWrapper *w)
+	for (int i = 0; i < cachedClasses.Length; i++)
 	{
-		return w->GetWrappedPointer() == klass;
-	};
-	if (MonoClassWrapper *wrapper = cachedClasses.Find(condition))
-	{
-		// Return registered wrapper.
-		return wrapper;
+		IMonoClass *wrapper = cachedClasses[i];
+		if (wrapper->GetWrappedPointer() == klass)
+		{
+			return wrapper;
+		}
 	}
 	// Register a new one.
 	MonoClassWrapper *wrapper = new MonoClassWrapper(klass);
