@@ -296,6 +296,7 @@ IMonoMethod **MonoClassWrapper::GetMethods(const char *name, int &foundCount)
 
 	return foundMethods.Detach(foundCount);
 }
+
 //! Gets the value of the object's field.
 void MonoClassWrapper::GetField(mono::object obj, const char *name, void *value)
 {
@@ -545,6 +546,21 @@ mono::type MonoClassWrapper::MakePointerType()
 ReadOnlyList<IMonoField *> *MonoClassWrapper::GetFields()
 {
 	return (ReadOnlyList<IMonoField *> *)&this->fields;
+}
+
+ReadOnlyList<IMonoMethod *> *MonoClassWrapper::GetMethods()
+{
+	return (ReadOnlyList<IMonoMethod *> *)&this->methods;
+}
+
+ReadOnlyList<IMonoProperty *> *MonoClassWrapper::GetProperties()
+{
+	return (ReadOnlyList<IMonoProperty *> *)&this->properties;
+}
+
+ReadOnlyList<IMonoEvent *> *MonoClassWrapper::GetEvents()
+{
+	return (ReadOnlyList<IMonoEvent *> *)&this->events;
 }
 
 List<MonoClassWrapper *> MonoClassCache::cachedClasses(50);

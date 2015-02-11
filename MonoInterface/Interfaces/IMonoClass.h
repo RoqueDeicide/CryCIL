@@ -21,6 +21,12 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	__declspec(property(get = GetBase)) IMonoClass *Base;
 	//! Gets the list of fields available through this class.
 	__declspec(property(get = GetFields)) ReadOnlyList<IMonoField *> *Fields;
+	//! Gets the list of fields available through this class.
+	__declspec(property(get = GetProperties)) ReadOnlyList<IMonoProperty *> *Properties;
+	//! Gets the list of fields available through this class.
+	__declspec(property(get = GetEvents)) ReadOnlyList<IMonoEvent *> *Events;
+	//! Gets the list of fields available through this class.
+	__declspec(property(get = GetMethods)) ReadOnlyList<IMonoMethod *> *Methods;
 	
 	//! Gets constructor that can accept arguments of specified types.
 	//!
@@ -262,6 +268,9 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	VIRTUAL_API virtual IMonoAssembly *GetAssembly() = 0;
 	VIRTUAL_API virtual IMonoClass *GetBase() = 0;
 	VIRTUAL_API virtual ReadOnlyList<IMonoField *> *GetFields() = 0;
+	VIRTUAL_API virtual ReadOnlyList<IMonoProperty *> *GetProperties() = 0;
+	VIRTUAL_API virtual ReadOnlyList<IMonoEvent *> *GetEvents() = 0;
+	VIRTUAL_API virtual ReadOnlyList<IMonoMethod *> *GetMethods() = 0;
 
 	VIRTUAL_API virtual mono::type GetType() = 0;
 	VIRTUAL_API virtual mono::type MakeArrayType() = 0;

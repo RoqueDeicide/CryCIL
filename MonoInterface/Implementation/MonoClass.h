@@ -59,6 +59,7 @@ public:
 	virtual mono::type MakePointerType();
 	virtual IMonoMethod **GetMethods(const char *name, int paramCount, int &foundCount);
 	virtual IMonoMethod **GetMethods(const char *name, int &foundCount);
+
 	virtual void GetField(mono::object obj, const char *name, void *value);
 	virtual void SetField(mono::object obj, const char *name, void *value);
 	virtual void GetField(mono::object obj, IMonoField *field, void *value);
@@ -76,8 +77,10 @@ public:
 	virtual IMonoClass *GetBase();
 	virtual IMonoClass *GetNestedType(const char *name);
 	virtual const char *GetFullNameIL();
-	virtual ReadOnlyList<IMonoField *> *GetFields();
-
+	virtual ReadOnlyList<IMonoField *>    *GetFields();
+	virtual ReadOnlyList<IMonoProperty *> *GetProperties();
+	virtual ReadOnlyList<IMonoEvent *>    *GetEvents();
+	virtual ReadOnlyList<IMonoMethod *>   *GetMethods();
 private:
 	void GetFieldValue(mono::object obj, MonoClassField *field, void *value);
 	void SetFieldValue(mono::object obj, MonoClassField *field, void *value);
