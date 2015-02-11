@@ -3,6 +3,7 @@
 #include "List.h"
 #include "MonoProperty.h"
 #include "MonoEvent.h"
+#include "MonoField.h"
 
 MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 	: fullName(nullptr)
@@ -16,27 +17,34 @@ MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 	this->methods    = List<IMonoMethod *>  (30);
 	this->properties = List<IMonoProperty *>(30);
 	this->events     = List<IMonoEvent *>   (30);
+	this->fields     = List<IMonoField *>   (30);
 
 	MonoClass *base = klass;
 	while (base)
 	{
 		// Cache methods.
 		void *iter = 0;
-		while (MonoMethod   *met  = mono_class_get_methods(base, &iter))
+		while (MonoMethod     *met  = mono_class_get_methods(base, &iter))
 		{
 			this->methods.Add(new MonoMethodWrapper(met));
 		}
 		// Cache properties.
 		iter = 0;
-		while (MonoProperty *prop = mono_class_get_properties(base, &iter))
+		while (MonoProperty   *prop = mono_class_get_properties(base, &iter))
 		{
 			this->properties.Add(new MonoPropertyWrapper(prop));
 		}
 		// Cache events.
 		iter = 0;
-		while (MonoEvent    *ev   = mono_class_get_events(base, &iter))
+		while (MonoEvent      *ev   = mono_class_get_events(base, &iter))
 		{
 			this->events.Add(new MonoEventWrapper(ev));
+		}
+		// Cache fields.
+		iter = 0;
+		while (MonoClassField *f = mono_class_get_fields(base, &iter))
+		{
+			this->fields.Add(new MonoField(f, this));
 		}
 
 		base = mono_class_get_parent(base);
@@ -45,6 +53,9 @@ MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 	this->methods.Trim();
 	this->properties.Trim();
 	this->events.Trim();
+	this->fields.Trim();
+
+	this->vtable = mono_class_vtable(mono_domain_get(), klass);
 }
 MonoClassWrapper::~MonoClassWrapper()
 {
@@ -74,6 +85,12 @@ MonoClassWrapper::~MonoClassWrapper()
 		delete this->methods[i];
 	}
 	this->methods.Dispose();
+
+	for (int i = 0; i < this->fields.Length; i++)
+	{
+		delete this->fields[i];
+	}
+	this->fields.Dispose();
 }
 
 IMonoConstructor *MonoClassWrapper::GetConstructor(IMonoArray *types /*= nullptr*/)
@@ -282,33 +299,48 @@ IMonoMethod **MonoClassWrapper::GetMethods(const char *name, int &foundCount)
 //! Gets the value of the object's field.
 void MonoClassWrapper::GetField(mono::object obj, const char *name, void *value)
 {
-	if (obj)
-	{
-		mono_field_get_value
-			((MonoObject *)obj, mono_class_get_field_from_name(this->wrappedClass, name), value);
-	}
-	else
-	{
-		MonoClassField *field = mono_class_get_field_from_name(this->wrappedClass, name);
-		MonoVTable *vTable = mono_class_vtable(mono_domain_get(), this->wrappedClass);
-		mono_field_static_get_value(vTable, field, value);
-	}
+	this->GetFieldValue(obj, mono_class_get_field_from_name(this->wrappedClass, name), value);
 }
 //! Sets the value of the object's field.
 void MonoClassWrapper::SetField(mono::object obj, const char *name, void *value)
 {
+	this->SetFieldValue(obj, mono_class_get_field_from_name(this->wrappedClass, name), value);
+}
+//! Gets the value of the object's field.
+void MonoClassWrapper::GetField(mono::object obj, IMonoField *field, void *value)
+{
+	this->GetFieldValue(obj, field->GetHandle<MonoClassField>(), value);
+}
+//! Sets the value of the object's field.
+void MonoClassWrapper::SetField(mono::object obj, IMonoField *field, void *value)
+{
+	this->SetFieldValue(obj, field->GetHandle<MonoClassField>(), value);
+}
+
+void MonoClassWrapper::GetFieldValue(mono::object obj, MonoClassField *field, void *value)
+{
 	if (obj)
 	{
-		mono_field_set_value
-		((MonoObject *)obj, mono_class_get_field_from_name(this->wrappedClass, name), value);
+		mono_field_get_value((MonoObject *)obj, field, value);
 	}
 	else
 	{
-		MonoClassField *field = mono_class_get_field_from_name(this->wrappedClass, name);
-		MonoVTable *vTable = mono_class_vtable(mono_domain_get(), this->wrappedClass);
-		mono_field_static_set_value(vTable, field, value);
+		mono_field_static_get_value(this->vtable, field, value);
 	}
 }
+
+void MonoClassWrapper::SetFieldValue(mono::object obj, MonoClassField *field, void *value)
+{
+	if (obj)
+	{
+		mono_field_set_value((MonoObject *)obj, field, value);
+	}
+	else
+	{
+		mono_field_static_set_value(this->vtable, field, value);
+	}
+}
+
 
 IMonoProperty *MonoClassWrapper::GetProperty(const char *name)
 {
@@ -508,6 +540,11 @@ mono::type MonoClassWrapper::MakePointerType()
 	return MonoEnv->CoreLibrary->GetClass("System", "Type")
 							   ->GetMethod("MakePointerType", 0)
 							   ->Invoke(this->GetType());
+}
+
+ReadOnlyList<IMonoField *> *MonoClassWrapper::GetFields()
+{
+	return (ReadOnlyList<IMonoField *> *)&this->fields;
 }
 
 List<MonoClassWrapper *> MonoClassCache::cachedClasses(50);

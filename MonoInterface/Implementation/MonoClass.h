@@ -21,6 +21,8 @@ private:
 	List<IMonoProperty *> properties;
 	List<IMonoEvent *> events;
 	List<IMonoMethod *> methods;
+	List<IMonoField *> fields;
+	MonoVTable *vtable;
 public:
 	MonoClassWrapper(MonoClass *klass);
 	~MonoClassWrapper();
@@ -55,24 +57,31 @@ public:
 	virtual mono::type MakeByRefType();
 
 	virtual mono::type MakePointerType();
-	IMonoMethod **GetMethods(const char *name, int paramCount, int &foundCount);
-	IMonoMethod **GetMethods(const char *name, int &foundCount);
-	void GetField(mono::object obj, const char *name, void *value);
-	void SetField(mono::object obj, const char *name, void *value);
-	IMonoProperty *GetProperty(const char *name);
-	IMonoEvent *GetEvent(const char *name);
-	bool Inherits(const char *nameSpace, const char *className);
-	mono::object Box(void *value);
-	const char *GetName();
-	const char *GetNameSpace();
-	const char *GetFullName();
-	IMonoAssembly *GetAssembly();
-	void *GetWrappedPointer();
-	bool Implements(const char *nameSpace, const char *interfaceName, bool searchBaseClasses);
-	IMonoClass *GetBase();
-	IMonoClass *GetNestedType(const char *name);
-
+	virtual IMonoMethod **GetMethods(const char *name, int paramCount, int &foundCount);
+	virtual IMonoMethod **GetMethods(const char *name, int &foundCount);
+	virtual void GetField(mono::object obj, const char *name, void *value);
+	virtual void SetField(mono::object obj, const char *name, void *value);
+	virtual void GetField(mono::object obj, IMonoField *field, void *value);
+	virtual void SetField(mono::object obj, IMonoField *field, void *value);
+	virtual IMonoProperty *GetProperty(const char *name);
+	virtual IMonoEvent *GetEvent(const char *name);
+	virtual bool Inherits(const char *nameSpace, const char *className);
+	virtual mono::object Box(void *value);
+	virtual const char *GetName();
+	virtual const char *GetNameSpace();
+	virtual const char *GetFullName();
+	virtual IMonoAssembly *GetAssembly();
+	virtual void *GetWrappedPointer();
+	virtual bool Implements(const char *nameSpace, const char *interfaceName, bool searchBaseClasses);
+	virtual IMonoClass *GetBase();
+	virtual IMonoClass *GetNestedType(const char *name);
 	virtual const char *GetFullNameIL();
+	virtual ReadOnlyList<IMonoField *> *GetFields();
+
+private:
+	void GetFieldValue(mono::object obj, MonoClassField *field, void *value);
+	void SetFieldValue(mono::object obj, MonoClassField *field, void *value);
+
 };
 
 //! Caches MonoClassWrapper objects.

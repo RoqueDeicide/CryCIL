@@ -19,6 +19,8 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	__declspec(property(get = GetAssembly)) IMonoAssembly *Assembly;
 	//! Gets the class where this class is defined.
 	__declspec(property(get = GetBase)) IMonoClass *Base;
+	//! Gets the list of fields available through this class.
+	__declspec(property(get = GetFields)) ReadOnlyList<IMonoField *> *Fields;
 	
 	//! Gets constructor that can accept arguments of specified types.
 	//!
@@ -190,8 +192,9 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	VIRTUAL_API virtual IMonoMethod **GetMethods(const char *name, int &foundCount) = 0;
 	//! Gets the value of the object's field.
 	//!
-	//! @param obj  Object which field to get. Use nullptr when working with a static field.
-	//! @param name Name of the field which value to get.
+	//! @param obj   Object which field to get. Use nullptr when working with a static field.
+	//! @param name  Name of the field which value to get.
+	//! @param value Pointer to the object that will contain the value of the field.
 	//!
 	//! @seealso IMonoHandle::SetField
 	VIRTUAL_API virtual void GetField(mono::object obj, const char *name, void *value) = 0;
@@ -203,6 +206,22 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!
 	//! @seealso IMonoHandle::SetField
 	VIRTUAL_API virtual void SetField(mono::object obj, const char *name, void *value) = 0;
+	//! Gets the value of the object's field.
+	//!
+	//! @param obj   Object which field to get. Use nullptr when working with a static field.
+	//! @param field Wrapper that identifies the field which value to get.
+	//! @param value Pointer to the object that will contain the value of the field.
+	//!
+	//! @seealso IMonoHandle::SetField
+	VIRTUAL_API virtual void GetField(mono::object obj, IMonoField *field, void *value) = 0;
+	//! Sets the value of the object's field.
+	//!
+	//! @param obj   Object which field to set. Use nullptr when working with a static field.
+	//! @param field Wrapper that identifies the field which value to set.
+	//! @param value New value to assign to the field.
+	//!
+	//! @seealso IMonoHandle::SetField
+	VIRTUAL_API virtual void SetField(mono::object obj, IMonoField *field, void *value) = 0;
 	//! Gets one of the properties defined in this class.
 	//!
 	//! @param name Name of the property to get.
@@ -242,6 +261,7 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	VIRTUAL_API virtual const char *GetFullNameIL() = 0;
 	VIRTUAL_API virtual IMonoAssembly *GetAssembly() = 0;
 	VIRTUAL_API virtual IMonoClass *GetBase() = 0;
+	VIRTUAL_API virtual ReadOnlyList<IMonoField *> *GetFields() = 0;
 
 	VIRTUAL_API virtual mono::type GetType() = 0;
 	VIRTUAL_API virtual mono::type MakeArrayType() = 0;

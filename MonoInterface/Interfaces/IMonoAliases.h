@@ -13,6 +13,7 @@
 #include <IGameFramework.h>
 
 #include "List.h"
+#include "ReadOnlyList.h"
 #include "SortedList.h"
 #include "Text.h"
 #include "Tuples.h"
@@ -27,6 +28,9 @@ struct IMonoAssembly;
 struct IMonoArray;
 struct IMonoClass;
 struct IMonoMethod;
+struct IMonoProperty;
+struct IMonoEvent;
+struct IMonoField;
 struct IMonoConstructor;
 struct IMonoSystemListener;
 struct IMonoInterface;

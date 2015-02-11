@@ -229,6 +229,12 @@
     <ClInclude Include="Implementation\Cryambly.h">
       <Filter>API Implementation\Metadata</Filter>
     </ClInclude>
+    <ClInclude Include="Interfaces\IMonoField.h">
+      <Filter>Interfaces\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Implementation\MonoField.h">
+      <Filter>API Implementation\Metadata</Filter>
+    </ClInclude>
     <ClInclude Include="ReadOnlyList.h">
       <Filter>Extras</Filter>
     </ClInclude>
@@ -338,6 +344,9 @@
       <Filter>API Implementation\Metadata</Filter>
     </ClCompile>
     <ClCompile Include="Implementation\Cryambly.cpp">
+      <Filter>API Implementation\Metadata</Filter>
+    </ClCompile>
+    <ClCompile Include="Implementation\MonoField.cpp">
       <Filter>API Implementation\Metadata</Filter>
     </ClCompile>
   </ItemGroup>
