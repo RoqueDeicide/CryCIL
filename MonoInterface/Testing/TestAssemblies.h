@@ -2,6 +2,8 @@
 
 #include "IMonoInterface.h"
 
+void TestClassFromAssembly(IMonoClass *, const char *);
+
 void TestAssemblies()
 {
 	CryLogAlways("Testing IMonoAssemblyCollection and IMonoAssembly implementations.");
