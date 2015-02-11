@@ -229,6 +229,9 @@
     <ClInclude Include="Implementation\Cryambly.h">
       <Filter>API Implementation\Metadata</Filter>
     </ClInclude>
+    <ClInclude Include="Testing\TestClasses.h">
+      <Filter>Testing</Filter>
+    </ClInclude>
     <ClInclude Include="Interfaces\IMonoField.h">
       <Filter>Interfaces\Metadata</Filter>
     </ClInclude>
