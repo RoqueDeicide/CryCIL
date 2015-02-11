@@ -16,6 +16,8 @@ private:
 	MonoClass *wrappedClass;
 	const char *name;
 	const char *nameSpace;
+	const char *fullName;
+	const char *fullNameIL;
 	List<IMonoProperty *> properties;
 	List<IMonoEvent *> events;
 	List<IMonoMethod *> methods;

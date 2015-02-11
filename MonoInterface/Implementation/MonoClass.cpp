@@ -5,6 +5,8 @@
 #include "MonoEvent.h"
 
 MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
+	: fullName(nullptr)
+	, fullNameIL(nullptr)
 {
 	this->wrappedClass = klass;
 
@@ -46,6 +48,14 @@ MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 }
 MonoClassWrapper::~MonoClassWrapper()
 {
+	if (this->fullName)
+	{
+		delete this->fullName;
+	}
+	if (this->fullNameIL)
+	{
+		delete this->fullNameIL;
+	}
 
 	for (int i = 0; i < this->properties.Length; i++)
 	{
@@ -363,48 +373,56 @@ const char *MonoClassWrapper::GetNameSpace()
 
 const char *MonoClassWrapper::GetFullName()
 {
-	ConstructiveText fullName;
-	if (MonoClass *nestingClass = mono_class_get_nesting_type(this->wrappedClass))
+	if (!this->fullName)
 	{
-		const char *nestingName = MonoClassCache::Wrap(nestingClass)->FullName;
+		ConstructiveText fullName;
+		if (MonoClass *nestingClass = mono_class_get_nesting_type(this->wrappedClass))
+		{
+			const char *nestingName = MonoClassCache::Wrap(nestingClass)->FullName;
 
-		fullName = ConstructiveText(strlen(this->name) + strlen(nestingName) + 1);
+			fullName = ConstructiveText(strlen(this->name) + strlen(nestingName) + 1);
 
-		fullName << nestingName << "." << this->name;
+			fullName << nestingName << "." << this->name;
 
-		delete nestingName;
+			delete nestingName;
+		}
+		else
+		{
+			ConstructiveText fullName =
+				ConstructiveText(strlen(this->name) + strlen(this->nameSpace) + 1);
+
+			fullName << this->nameSpace << "." << this->name;
+		}
+		this->fullName = fullName.ToNTString();
 	}
-	else
-	{
-		ConstructiveText fullName =
-			ConstructiveText(strlen(this->name) + strlen(this->nameSpace) + 1);
-
-		fullName << this->nameSpace << "." << this->name;
-	}
-	return fullName.ToNTString();
+	return this->fullName;
 }
 
 const char *MonoClassWrapper::GetFullNameIL()
 {
-	ConstructiveText fullName;
-	if (MonoClass *nestingClass = mono_class_get_nesting_type(this->wrappedClass))
+	if (!this->fullNameIL)
 	{
-		const char *nestingName = MonoClassCache::Wrap(nestingClass)->FullName;
+		ConstructiveText fullName;
+		if (MonoClass *nestingClass = mono_class_get_nesting_type(this->wrappedClass))
+		{
+			const char *nestingName = MonoClassCache::Wrap(nestingClass)->FullName;
 
-		fullName = ConstructiveText(strlen(this->name) + strlen(nestingName) + 1);
+			fullName = ConstructiveText(strlen(this->name) + strlen(nestingName) + 1);
 
-		fullName << nestingName << "+" << this->name;
+			fullName << nestingName << "+" << this->name;
 
-		delete nestingName;
+			delete nestingName;
+		}
+		else
+		{
+			ConstructiveText fullName =
+				ConstructiveText(strlen(this->name) + strlen(this->nameSpace) + 1);
+
+			fullName << this->nameSpace << "." << this->name;
+		}
+		this->fullNameIL = fullName.ToNTString();
 	}
-	else
-	{
-		ConstructiveText fullName =
-			ConstructiveText(strlen(this->name) + strlen(this->nameSpace) + 1);
-
-		fullName << this->nameSpace << "." << this->name;
-	}
-	return fullName.ToNTString();
+	return this->fullNameIL;
 }
 
 IMonoAssembly *MonoClassWrapper::GetAssembly()
