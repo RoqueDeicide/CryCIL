@@ -167,13 +167,13 @@ public:
 	}
 
 	//! Gets read/only access to the collection of keys.
-	__declspec(property(get = GetKeys)) int Keys;
+	__declspec(property(get = GetKeys)) ReadOnlyList<KeyType> *Keys;
 	ReadOnlyList<KeyType> *GetKeys()
 	{
 		return (ReadOnlyList<KeyType> *)&this->keys;
 	}
 	//! Gets read/only access to the collection of elements.
-	__declspec(property(get = GetElements)) int Elements;
+	__declspec(property(get = GetElements)) ReadOnlyList<ElementType> *Elements;
 	ReadOnlyList<ElementType> *GetElements()
 	{
 		return (ReadOnlyList<ElementType> *)&this->values;
