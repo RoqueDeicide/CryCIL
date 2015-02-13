@@ -24,3 +24,6 @@
 #else
 #define ReportMessage CryLog
 #endif // HIGH_LOG_VERBOSITY
+
+// Errors.
+#define ReportError gEnv->pLog->LogError
