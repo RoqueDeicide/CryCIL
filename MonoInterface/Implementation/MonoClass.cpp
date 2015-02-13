@@ -14,7 +14,7 @@ MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 	this->name      = mono_class_get_name(klass);
 	this->nameSpace = mono_class_get_namespace(klass);
 
-	this->methods    = List<IMonoMethod *>  (30);
+	this->methods    = SortedList<const char *, List<IMonoMethod *> *>(30, strcmp);
 	this->properties = List<IMonoProperty *>(30);
 	this->events     = List<IMonoEvent *>   (30);
 	this->fields     = List<IMonoField *>   (30);
@@ -24,19 +24,28 @@ MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 	{
 		// Cache methods.
 		void *iter = 0;
-		while (MonoMethod     *met  = mono_class_get_methods(base, &iter))
+		while (MonoMethod *met  = mono_class_get_methods(base, &iter))
 		{
-			this->methods.Add(new MonoMethodWrapper(met));
+			const char *methodName = mono_method_get_name(met);
+
+			if (!this->methods.Contains(methodName))
+			{
+				this->methods.At(methodName) = new List<IMonoMethod *>(5);
+			}
+
+			IMonoMethod *methodWrapper = new MonoMethodWrapper(met);
+
+			this->methods.At(methodName)->Add(methodWrapper);
 		}
 		// Cache properties.
 		iter = 0;
-		while (MonoProperty   *prop = mono_class_get_properties(base, &iter))
+		while (MonoProperty *prop = mono_class_get_properties(base, &iter))
 		{
 			this->properties.Add(new MonoPropertyWrapper(prop));
 		}
 		// Cache events.
 		iter = 0;
-		while (MonoEvent      *ev   = mono_class_get_events(base, &iter))
+		while (MonoEvent *ev   = mono_class_get_events(base, &iter))
 		{
 			this->events.Add(new MonoEventWrapper(ev));
 		}
@@ -80,9 +89,15 @@ MonoClassWrapper::~MonoClassWrapper()
 	}
 	this->events.Dispose();
 
-	for (int i = 0; i < this->methods.Length; i++)
+	ReadOnlyList<List<IMonoMethod *> *> *methodOverloadList = this->methods.Elements;
+	for (int i = 0; i < methodOverloadList->Length; i++)
 	{
-		delete this->methods[i];
+		List<IMonoMethod *> *overloads = const_cast<List<IMonoMethod *> *>(methodOverloadList->At(i));
+		for (int j = 0; j < overloads->Length; j++)
+		{
+			delete const_cast<List<IMonoMethod *> *>(overloads)->At(j);
+		}
+		delete overloads;
 	}
 	this->methods.Dispose();
 
@@ -125,12 +140,16 @@ IMonoConstructor *MonoClassWrapper::GetConstructor(const char *name, int paramCo
 //! Gets the first that matches given description.
 IMonoMethod *MonoClassWrapper::GetMethod(const char *name, int paramCount)
 {
-	for (int i = 0; i < this->methods.Length; i++)
+	List<IMonoMethod *> *overloads;
+	if (this->methods.TryGet(name, overloads))
 	{
-		if (this->methods[i]->ParameterCount == paramCount &&
-			strcmp(this->methods[i]->Name, name) == 0)
+		for (int i = 0; i < overloads->Length; i++)
 		{
-			return this->methods[i];
+			IMonoMethod *m = overloads->At(i);
+			if (m->ParameterCount == paramCount)
+			{
+				return m;
+			}
 		}
 	}
 	return nullptr;
@@ -142,12 +161,16 @@ IMonoMethod *MonoClassWrapper::GetMethod(const char *name, const char *params)
 	{
 		return this->GetMethod(name, (int)0);
 	}
-	for (int i = 0; i < this->methods.Length; i++)
+	List<IMonoMethod *> *overloads;
+	if (this->methods.TryGet(name, overloads))
 	{
-		if (strcmp(this->methods[i]->Name, name) == 0 &&
-			strcmp(this->methods[i]->Parameters, params) == 0)
+		for (int i = 0; i < overloads->Length; i++)
 		{
-			return this->methods[i];
+			IMonoMethod *m = overloads->At(i);
+			if (strcmp(m->Parameters, params) == 0)
+			{
+				return m;
+			}
 		}
 	}
 	return nullptr;
@@ -155,30 +178,35 @@ IMonoMethod *MonoClassWrapper::GetMethod(const char *name, const char *params)
 
 IMonoMethod *MonoClassWrapper::GetMethod(const char *name, IMonoArray *types /*= nullptr*/)
 {
-	for (int i = 0; i < this->methods.Length; i++)
+	List<IMonoMethod *> *overloads;
+	if (this->methods.TryGet(name, overloads))
 	{
-		if (this->methods[i]->ParameterCount != types->Length ||
-			strcmp(this->methods[i]->Name, name) != 0)
+		for (int i = 0; i < overloads->Length; i++)
 		{
-			continue;
-		}
-
-		auto typeNames = this->methods[i]->ParameterTypeNames;
-
-		bool match = true;
-		for (int j = 0; j < typeNames->Length; j++)
-		{
-			// Look at definition of _MonoReflectionType in mono sources to see what is going on here.
-			MonoType *type = (MonoType *)((unsigned char *)types->Item(j) + sizeof(MonoObject));
-			if (strcmp(typeNames->At(j), mono_type_get_name(type)) != 0)
+			IMonoMethod *m = overloads->At(i);
+			
+			if (m->ParameterCount != types->Length)
 			{
-				match = false;
-				break;
+				continue;
 			}
-		}
-		if (match)
-		{
-			return this->methods[i];
+
+			auto typeNames = m->ParameterTypeNames;
+
+			bool match = true;
+			for (int j = 0; j < typeNames->Length; j++)
+			{
+				// Look at definition of _MonoReflectionType in mono sources to see what is going on here.
+				MonoType *type = (MonoType *)((unsigned char *)types->Item(j) + sizeof(MonoObject));
+				if (strcmp(typeNames->At(j), mono_type_get_name(type)) != 0)
+				{
+					match = false;
+					break;
+				}
+			}
+			if (match)
+			{
+				return m;
+			}
 		}
 	}
 	return nullptr;
@@ -186,26 +214,33 @@ IMonoMethod *MonoClassWrapper::GetMethod(const char *name, IMonoArray *types /*=
 
 IMonoMethod *MonoClassWrapper::GetMethod(const char *name, List<IMonoClass *> &classes)
 {
-	for (int i = 0; i < this->methods.Length; i++)
+	List<IMonoMethod *> *overloads;
+	if (this->methods.TryGet(name, overloads))
 	{
-		if (this->methods[i]->ParameterCount != classes.Length ||
-			strcmp(this->methods[i]->Name, name) != 0)
+		for (int i = 0; i < overloads->Length; i++)
 		{
-			continue;
-		}
-		auto currentClasses = this->methods[i]->ParameterClasses;
-		bool match = true;
-		for (int j = 0; j < classes.Length; j++)
-		{
-			if (currentClasses->At(j) != classes[j])
+			IMonoMethod *m = overloads->At(i);
+
+			if (m->ParameterCount != classes.Length)
 			{
-				match = false;
-				break;
+				continue;
 			}
-		}
-		if (match)
-		{
-			return this->methods[i];
+
+			auto currentClasses = m->ParameterClasses;
+			bool match = true;
+			
+			for (int j = 0; j < classes.Length; j++)
+			{
+				if (currentClasses->At(j) != classes[j])
+				{
+					match = false;
+					break;
+				}
+			}
+			if (match)
+			{
+				return m;
+			}
 		}
 	}
 	return nullptr;
@@ -236,26 +271,33 @@ IMonoMethod *MonoClassWrapper::GetMethod(const char *name, List<Pair<IMonoClass 
 
 IMonoMethod *MonoClassWrapper::GetMethod(const char *name, List<const char *> &paramTypeNames)
 {
-	for (int i = 0; i < this->methods.Length; i++)
+	List<IMonoMethod *> *overloads;
+	if (this->methods.TryGet(name, overloads))
 	{
-		if (this->methods[i]->ParameterCount != paramTypeNames.Length ||
-			strcmp(this->methods[i]->Name, name) != 0)
+		for (int i = 0; i < overloads->Length; i++)
 		{
-			continue;
-		}
-		auto typeNames = this->methods[i]->ParameterTypeNames;
-		bool match = true;
-		for (int j = 0; j < typeNames->Length; j++)
-		{
-			if (strcmp(typeNames->At(j), paramTypeNames[j]) != 0)
+			IMonoMethod *m = overloads->At(i);
+
+			if (m->ParameterCount != paramTypeNames.Length)
 			{
-				match = false;
-				break;
+				continue;
 			}
-		}
-		if (match)
-		{
-			return this->methods[i];
+
+			auto typeNames = m->ParameterTypeNames;
+			bool match = true;
+			
+			for (int j = 0; j < typeNames->Length; j++)
+			{
+				if (strcmp(typeNames->At(j), paramTypeNames[j]) != 0)
+				{
+					match = false;
+					break;
+				}
+			}
+			if (match)
+			{
+				return m;
+			}
 		}
 	}
 	return nullptr;
@@ -266,12 +308,17 @@ IMonoMethod **MonoClassWrapper::GetMethods(const char *name, int paramCount, int
 {
 	List<IMonoMethod *> foundMethods = List<IMonoMethod *>(this->methods.Length);
 
-	for (int i = 0; i < this->methods.Length; i++)
+	List<IMonoMethod *> *overloads;
+	if (this->methods.TryGet(name, overloads))
 	{
-		if (this->methods[i]->ParameterCount == paramCount &&
-			strcmp(this->methods[i]->Name, name) == 0)
+		for (int i = 0; i < overloads->Length; i++)
 		{
-			foundMethods.Add(this->methods[i]);
+			IMonoMethod *m = overloads->At(i);
+			
+			if (m->ParameterCount == paramCount)
+			{
+				foundMethods.Add(m);
+			}
 		}
 	}
 
@@ -284,11 +331,12 @@ IMonoMethod **MonoClassWrapper::GetMethods(const char *name, int &foundCount)
 {
 	List<IMonoMethod *> foundMethods = List<IMonoMethod *>(this->methods.Length);
 
-	for (int i = 0; i < this->methods.Length; i++)
+	List<IMonoMethod *> *overloads;
+	if (this->methods.TryGet(name, overloads))
 	{
-		if (strcmp(this->methods[i]->Name, name) == 0)
+		for (int i = 0; i < overloads->Length; i++)
 		{
-			foundMethods.Add(this->methods[i]);
+			foundMethods.Add(overloads->At(i));
 		}
 	}
 

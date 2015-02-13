@@ -20,7 +20,7 @@ private:
 	const char *fullNameIL;
 	List<IMonoProperty *> properties;
 	List<IMonoEvent *> events;
-	List<IMonoMethod *> methods;
+	SortedList<const char *, List<IMonoMethod *> *> methods;
 	List<IMonoField *> fields;
 	MonoVTable *vtable;
 public:
