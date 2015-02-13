@@ -77,8 +77,14 @@ public:
 	}
 	~SortedList()
 	{
-		this->keys.~List();
-		this->values.~List();
+		this->keys.Dispose();
+		this->values.Dispose();
+	}
+	//! Disposes of this list.
+	void Dispose()
+	{
+		this->keys.Dispose();
+		this->values.Dispose();
 	}
 	//! Determines whether there is a key in the collection.
 	bool Contains(KeyType key)
@@ -158,6 +164,12 @@ public:
 				processor(this->keys[i], this->values[i]);
 			}
 		}
+	}
+	//! Sets capacity of this list to number of valid elements it currently holds.
+	void Trim()
+	{
+		this->keys.Trim();
+		this->values.Trim();
 	}
 	//! Gets number of elements in the collection.
 	__declspec(property(get=GetLength)) int Length;
