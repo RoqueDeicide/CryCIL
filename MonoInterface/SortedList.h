@@ -40,7 +40,7 @@ template<typename KeyType,typename ElementType, bool Ascending = true>
 class SortedList
 {
 private:
-	List<KeyType> keys;
+	List<KeyType>     keys;
 	List<ElementType> values;
 	std::function<int(KeyType, KeyType)> comparer;
 public:
@@ -159,10 +159,24 @@ public:
 			}
 		}
 	}
+	//! Gets number of elements in the collection.
 	__declspec(property(get=GetLength)) int Length;
 	int GetLength()
 	{
 		return this->keys.Length;
+	}
+
+	//! Gets read/only access to the collection of keys.
+	__declspec(property(get = GetKeys)) int Keys;
+	ReadOnlyList<KeyType> *GetKeys()
+	{
+		return (ReadOnlyList<KeyType> *)&this->keys;
+	}
+	//! Gets read/only access to the collection of elements.
+	__declspec(property(get = GetElements)) int Elements;
+	ReadOnlyList<ElementType> *GetElements()
+	{
+		return (ReadOnlyList<ElementType> *)&this->values;
 	}
 private:
 	int BinarySearch(KeyType key)
