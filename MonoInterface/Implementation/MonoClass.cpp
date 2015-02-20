@@ -536,22 +536,24 @@ void *MonoClassWrapper::GetWrappedPointer()
 bool MonoClassWrapper::Implements(const char *nameSpace, const char *interfaceName, bool searchBaseClasses)
 {
 	void *iterator = 0;
-	while (MonoClass *currentInterface = mono_class_get_interfaces(this->wrappedClass, &iterator))
+	MonoClass *currentClass = this->wrappedClass;
+	do
 	{
-		if (!strcmp(mono_class_get_name(currentInterface), interfaceName) &&
-			!strcmp(mono_class_get_namespace(currentInterface), nameSpace))
+		while (MonoClass *currentInterface = mono_class_get_interfaces(currentClass, &iterator))
 		{
-			return true;
+			if (!strcmp(mono_class_get_name(currentInterface), interfaceName) &&
+				!strcmp(mono_class_get_namespace(currentInterface), nameSpace))
+			{
+				return true;
+			}
 		}
-	}
-	if (searchBaseClasses)
-	{
-		MonoClass *base = mono_class_get_parent(this->wrappedClass);
-		if (base != mono_get_object_class())
-		{
-			return MonoClassCache::Wrap(base)->Implements(nameSpace, interfaceName);
-		}
-	}
+		// Move to the base class, if needed.
+		currentClass =
+			searchBaseClasses
+			? mono_class_get_parent(currentClass)
+			: nullptr;
+	} while (currentClass && currentClass != MonoEnv->CoreLibrary->Object->GetWrappedPointer());
+
 	return false;
 }
 
