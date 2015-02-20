@@ -7,7 +7,7 @@ struct IMonoFunctionalityWrapper
 {
 	virtual ~IMonoFunctionalityWrapper() {}
 
-	//! Returns pointer to Mono object this wrapper uses.
+	//! Returns pointer to Mono object that is wrapped by this object.
 	VIRTUAL_API virtual void *GetWrappedPointer() = 0;
 
 	template<typename T> T *GetHandle()
