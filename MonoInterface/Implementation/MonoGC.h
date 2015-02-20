@@ -20,6 +20,7 @@ struct MonoGC : public IMonoGC
 		{
 			return new MonoGCHandleWeak(obj, false);
 		}
+		ReportError("Attempted to create weak GC handle for null pointer.");
 		return nullptr;
 	}
 
@@ -29,6 +30,7 @@ struct MonoGC : public IMonoGC
 		{
 			return new MonoGCHandleWeak(obj, true);
 		}
+		ReportError("Attempted to create weak GC handle for null pointer.");
 		return nullptr;
 	}
 
@@ -38,6 +40,7 @@ struct MonoGC : public IMonoGC
 		{
 			return new MonoGCHandleStrong(obj, false);
 		}
+		ReportError("Attempted to create strong GC handle for null pointer.");
 		return nullptr;
 	}
 
@@ -47,6 +50,7 @@ struct MonoGC : public IMonoGC
 		{
 			return new MonoGCHandleStrong(obj, true);
 		}
+		ReportError("Attempted to create a pinning GC handle for null pointer.");
 		return nullptr;
 	}
 
