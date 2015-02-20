@@ -62,7 +62,9 @@ public:
 	virtual bool Inherits(IMonoClass *klass);
 
 	virtual bool Implements(const char *nameSpace, const char *interfaceName, bool searchBaseClasses);
-	
+	virtual bool Implements(IMonoClass *interfacePtr, bool searchBaseClasses = true);
+
+
 	virtual mono::object Box(void *value);
 	
 	virtual const char *GetName();

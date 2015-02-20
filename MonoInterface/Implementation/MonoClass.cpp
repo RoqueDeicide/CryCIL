@@ -557,6 +557,29 @@ bool MonoClassWrapper::Implements(const char *nameSpace, const char *interfaceNa
 	return false;
 }
 
+bool MonoClassWrapper::Implements(IMonoClass *interfacePtr, bool searchBaseClasses /*= true*/)
+{
+	void *iterator = 0;
+	MonoClass *currentClass = this->wrappedClass;
+	do
+	{
+		while (MonoClass *currentInterface = mono_class_get_interfaces(currentClass, &iterator))
+		{
+			if (currentInterface == interfacePtr->GetWrappedPointer())
+			{
+				return true;
+			}
+		}
+		// Move to the base class, if needed.
+		currentClass =
+			searchBaseClasses
+			? mono_class_get_parent(currentClass)
+			: nullptr;
+	} while (currentClass && currentClass != MonoEnv->CoreLibrary->Object->GetWrappedPointer());
+
+	return false;
+}
+
 IMonoClass *MonoClassWrapper::GetBase()
 {
 	return MonoClassCache::Wrap(mono_class_get_parent(this->wrappedClass));

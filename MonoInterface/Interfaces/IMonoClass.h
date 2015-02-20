@@ -263,6 +263,15 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!
 	//! @returns True, if this class implements specified interface.
 	VIRTUAL_API virtual bool Implements(const char *nameSpace, const char *interfaceName, bool searchBaseClasses = true) = 0;
+	//! Determines whether this class implements a certain interface.
+	//!
+	//! @param interfacePtr      Pointer to the wrapper that represents the interface the fact of
+	//!                          implementation of which must be determined.
+	//! @param searchBaseClasses Indicates whether we should look if base classes implement
+	//!                          this interface.
+	//!
+	//! @returns True, if this class implements specified interface.
+	VIRTUAL_API virtual bool Implements(IMonoClass *interfacePtr, bool searchBaseClasses = true) = 0;
 	//! Boxes given value.
 	//!
 	//! @returns Null if this class is not a value-type, or reference to the boxed object, if it is.
