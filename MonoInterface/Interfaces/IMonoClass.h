@@ -240,20 +240,42 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!
 	//! @param name Name of the class to get.
 	VIRTUAL_API virtual IMonoClass *GetNestedType(const char *name) = 0;
-	//! Determines whether this class implements from specified class.
+	//! Determines whether this class inherits from specified class.
+	//!
+	//! Entire inheritance path will be searched for the specified class.
 	//!
 	//! @param nameSpace Full name of the name space where the class is located.
 	//! @param className Name of the class.
 	//!
 	//! @returns True, if this class is a subclass of specified one.
 	VIRTUAL_API virtual bool Inherits(const char *nameSpace, const char *className) = 0;
-	//! Determines whether this class implements from specified class.
+	//! Determines whether this class inherits from specified class.
+	//!
+	//! Entire inheritance path will be searched for the specified class.
 	//!
 	//! @param klass Pointer to the wrapper that represents the class the fact of inheritance from which
 	//!              must be determined.
 	//!
 	//! @returns True, if this class is a subclass of specified one.
 	VIRTUAL_API virtual bool Inherits(IMonoClass *klass) = 0;
+	//! Determines whether this class inherits from specified class.
+	//!
+	//! @param nameSpace Full name of the name space where the class is located.
+	//! @param className Name of the class.
+	//! @param direct    Indicates whether only direct base class should be checked. If false, the entire
+	//!                  inheritance path will be searched for specified class.
+	//!
+	//! @returns True, if this class is a subclass of specified one.
+	VIRTUAL_API virtual bool Inherits(const char *nameSpace, const char *className, bool direct) = 0;
+	//! Determines whether this class inherits from specified class.
+	//!
+	//! @param klass  Pointer to the wrapper that represents the class the fact of inheritance from which
+	//!               must be determined.
+	//! @param direct Indicates whether only direct base class should be checked. If false, the entire
+	//!               inheritance path will be searched for specified class.
+	//!
+	//! @returns True, if this class is a subclass of specified one.
+	VIRTUAL_API virtual bool Inherits(IMonoClass *klass, bool direct) = 0;
 	//! Determines whether this class implements a certain interface.
 	//!
 	//! @param nameSpace         Full name of the name space where the interface is located.

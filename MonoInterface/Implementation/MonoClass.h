@@ -57,9 +57,11 @@ public:
 	
 	virtual IMonoProperty *GetProperty(const char *name);
 	virtual IMonoEvent *GetEvent(const char *name);
-	
+
 	virtual bool Inherits(const char *nameSpace, const char *className);
 	virtual bool Inherits(IMonoClass *klass);
+	virtual bool Inherits(const char *nameSpace, const char *className, bool direct);
+	virtual bool Inherits(IMonoClass *klass, bool direct);
 
 	virtual bool Implements(const char *nameSpace, const char *interfaceName, bool searchBaseClasses);
 	virtual bool Implements(IMonoClass *interfacePtr, bool searchBaseClasses = true);

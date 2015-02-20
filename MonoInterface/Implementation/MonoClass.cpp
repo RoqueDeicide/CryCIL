@@ -447,6 +447,50 @@ bool MonoClassWrapper::Inherits(IMonoClass *klass)
 
 	return false;
 }
+//! Determines whether this class implements from specified class.
+bool MonoClassWrapper::Inherits(const char *nameSpace, const char *className, bool direct)
+{
+	MonoClass *base = mono_class_get_parent(this->wrappedClass);
+
+	if (direct)
+	{
+		return  strcmp(mono_class_get_name(base), className) == 0 &&
+				strcmp(mono_class_get_namespace(base), nameSpace) == 0;
+	}
+
+	while (base)
+	{
+		if (strcmp(mono_class_get_name(base), className) == 0 &&
+			strcmp(mono_class_get_namespace(base), nameSpace) == 0)
+		{
+			return true;
+		}
+		base = mono_class_get_parent(base);
+	}
+
+	return false;
+}
+
+bool MonoClassWrapper::Inherits(IMonoClass *klass, bool direct)
+{
+	MonoClass *base = mono_class_get_parent(this->wrappedClass);
+
+	if (direct)
+	{
+		return this->wrappedClass == klass->GetWrappedPointer();
+	}
+
+	while (base)
+	{
+		if (this->wrappedClass == klass->GetWrappedPointer())
+		{
+			return true;
+		}
+		base = mono_class_get_parent(base);
+	}
+
+	return false;
+}
 
 //! Boxes given value.
 mono::object MonoClassWrapper::Box(void *value)
