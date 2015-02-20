@@ -36,6 +36,8 @@ MonoCoreLibrary::MonoCoreLibrary()
 	this->typeInfo    = this->GetClass("System", "Type");
 	this->enumeration = MonoClassCache::Wrap(mono_get_enum_class());
 	this->exception   = MonoClassCache::Wrap(mono_get_exception_class());
+	this->objClass    = MonoClassCache::Wrap(mono_get_object_class());
+	this->valueType   = this->GetClass("System", "ValueType");
 
 	List<IMonoAssembly *> *corlibList = new List<IMonoAssembly *>(1);
 	corlibList->Add(this);
@@ -142,6 +144,16 @@ IMonoClass *MonoCoreLibrary::GetEnum()
 IMonoClass *MonoCoreLibrary::GetException()
 {
 	return this->exception;
+}
+
+IMonoClass *MonoCoreLibrary::GetObjectClass()
+{
+	return this->objClass;
+}
+
+IMonoClass *MonoCoreLibrary::GetValueType()
+{
+	return this->valueType;
 }
 
 IMonoClass *MonoCoreLibrary::GetClass(const char *nameSpace, const char *className)

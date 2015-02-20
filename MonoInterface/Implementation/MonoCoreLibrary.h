@@ -31,6 +31,8 @@ private:
 	IMonoClass *typeInfo;
 	IMonoClass *enumeration;
 	IMonoClass *exception;
+	IMonoClass *objClass;
+	IMonoClass *valueType;
 public:
 	MonoCoreLibrary();
 	~MonoCoreLibrary();
@@ -54,6 +56,8 @@ public:
 	virtual IMonoClass *GetType();
 	virtual IMonoClass *GetEnum();
 	virtual IMonoClass *GetException();
+	virtual IMonoClass *GetObjectClass();
+	virtual IMonoClass *GetValueType();
 
 	virtual IMonoClass *GetClass(const char *nameSpace, const char *className);
 
@@ -63,5 +67,4 @@ public:
 
 	virtual mono::assembly GetReflectionObject();
 	virtual void *GetWrappedPointer();
-
 };
