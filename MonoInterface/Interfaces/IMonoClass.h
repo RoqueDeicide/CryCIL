@@ -247,6 +247,13 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!
 	//! @returns True, if this class is a subclass of specified one.
 	VIRTUAL_API virtual bool Inherits(const char *nameSpace, const char *className) = 0;
+	//! Determines whether this class implements from specified class.
+	//!
+	//! @param klass Pointer to the wrapper that represents the class the fact of inheritance from which
+	//!              must be determined.
+	//!
+	//! @returns True, if this class is a subclass of specified one.
+	VIRTUAL_API virtual bool Inherits(IMonoClass *klass) = 0;
 	//! Determines whether this class implements a certain interface.
 	//!
 	//! @param nameSpace         Full name of the name space where the interface is located.

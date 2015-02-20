@@ -431,6 +431,23 @@ bool MonoClassWrapper::Inherits(const char *nameSpace, const char *className)
 
 	return false;
 }
+
+bool MonoClassWrapper::Inherits(IMonoClass *klass)
+{
+	MonoClass *base = mono_class_get_parent(this->wrappedClass);
+
+	while (base)
+	{
+		if (this->wrappedClass == klass->GetWrappedPointer())
+		{
+			return true;
+		}
+		base = mono_class_get_parent(base);
+	}
+
+	return false;
+}
+
 //! Boxes given value.
 mono::object MonoClassWrapper::Box(void *value)
 {
