@@ -49,6 +49,11 @@
 // Windows Header Files:
 #include <windows.h>
 
+//! Gets the pointer to the data represented by MonoObject instance.
+//!
+//! @param type Type the pointer to which to cast the result to. (Type of data represented by MonoObject).
+//! @param obj  Pointer to object.
+#define GET_BOXED_OBJECT_DATA(type, obj) (type *)(((unsigned char *)(obj)) + sizeof(MonoObject))
 
 // The following ifdef block is the standard way of creating macros which make exporting 
 // from a DLL simpler. All files within this DLL are compiled with the MONOINTERFACE_EXPORTS
