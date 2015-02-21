@@ -298,6 +298,18 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!
 	//! @returns Null if this class is not a value-type, or reference to the boxed object, if it is.
 	VIRTUAL_API virtual mono::object Box(void *value) = 0;
+	//! Gets an instance of type System.Type that represents this class.
+	VIRTUAL_API virtual mono::type GetType() = 0;
+	//! Gets an instance of type System.Type that represents an array of instances of this class.
+	VIRTUAL_API virtual mono::type MakeArrayType() = 0;
+	//! Gets an instance of type System.Type that represents an array of instances of this class.
+	//!
+	//! @param rank Number of dimensions in the array.
+	VIRTUAL_API virtual mono::type MakeArrayType(int rank) = 0;
+	//! Gets an instance of type System.Type that represents a reference to objects of this class.
+	VIRTUAL_API virtual mono::type MakeByRefType() = 0;
+	//! Gets an instance of type System.Type that represents a pointer to objects of this class.
+	VIRTUAL_API virtual mono::type MakePointerType() = 0;
 
 	VIRTUAL_API virtual const char *GetName() = 0;
 	VIRTUAL_API virtual const char *GetNameSpace() = 0;
@@ -309,10 +321,4 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	VIRTUAL_API virtual ReadOnlyList<IMonoProperty *> *GetProperties() = 0;
 	VIRTUAL_API virtual ReadOnlyList<IMonoEvent *> *GetEvents() = 0;
 	VIRTUAL_API virtual ReadOnlyList<IMonoMethod *> *GetMethods() = 0;
-
-	VIRTUAL_API virtual mono::type GetType() = 0;
-	VIRTUAL_API virtual mono::type MakeArrayType() = 0;
-	VIRTUAL_API virtual mono::type MakeArrayType(int rank) = 0;
-	VIRTUAL_API virtual mono::type MakeByRefType() = 0;
-	VIRTUAL_API virtual mono::type MakePointerType() = 0;
 };
