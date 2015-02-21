@@ -311,53 +311,50 @@ namespace CryCil.Geometry
 		/// <param name="matrix">
 		/// Matrix that represents rotation that needs to be packed into the quaternion.
 		/// </param>
-		public unsafe Quaternion(Matrix33 matrix)
+		public Quaternion(Matrix33 matrix)
 			: this(0, 0, 0, 1)
 		{
 			Contract.Assert(matrix.IsOrthonormalRightHanded);
 
-			float trace = matrix.M00 + matrix.M11 + matrix.M22;
 			float s;
-			float t;
+			float p;
+			float tr = matrix.M00 + matrix.M11 + matrix.M22;
 
-			int* next = stackalloc int[3];
-			next[0] = 1;
-			next[1] = 2;
-			next[2] = 0;
-
-			float* mat = (float*)&matrix;
-
-			if (trace > 0.0f)
+			if (tr > 0)
 			{
-				t = trace + 1.0f;
-				s = MathHelpers.ReciprocalSquareRoot(t) * 0.5f;
-
-				this.W = s * t;
-				this.X = (matrix.M21 - matrix.M12) * s;
-				this.Y = (matrix.M02 - matrix.M20) * s;
-				this.Z = (matrix.M10 - matrix.M01) * s;
+				s = (float)Math.Sqrt(tr + 1.0f);
+				p = 0.5f / s;
+				this.W = s * 0.5f;
+				this.X = (matrix.M21 - matrix.M12) * p;
+				this.Y = (matrix.M02 - matrix.M20) * p;
+				this.Z = (matrix.M10 - matrix.M01) * p;
 			}
-			else
+			else if ((matrix.M00 >= matrix.M11) && (matrix.M00 >= matrix.M22))
 			{
-				int i = 0;
-				if (matrix.M11 > matrix.M00)
-				{
-					i = 1;
-				}
-				if (matrix.M22 > mat[i * 3 + i])
-				{
-					i = 2;
-				}
-				int j = next[i];
-				int k = next[j];
-
-				t = (mat[i * 3 + i] - (mat[j * 3 + j] + mat[k * 3 + k])) + 1.0f;
-				s = MathHelpers.ReciprocalSquareRoot(t) * 0.5f;
-
-				this[i] = s * t;
-				this.W = (mat[k * 3 + j] - mat[j * 3 + k]) * s;
-				this[j] = (mat[j * 3 + i] + mat[i * 3 + j]) * s;
-				this[k] = (mat[k * 3 + i] + mat[i * 3 + k]) * s;
+				s = (float)Math.Sqrt(matrix.M00 - matrix.M11 - matrix.M22 + 1.0f);
+				p = 0.5f / s;
+				this.W = (matrix.M21 - matrix.M12) * p;
+				this.X = s * 0.5f;
+				this.Y = (matrix.M10 + matrix.M01) * p;
+				this.Z = (matrix.M20 + matrix.M02) * p;
+			}
+			else if ((matrix.M11 >= matrix.M00) && (matrix.M11 >= matrix.M22))
+			{
+				s = (float)Math.Sqrt(matrix.M11 - matrix.M22 - matrix.M00 + 1.0f);
+				p = 0.5f / s;
+				this.W = (matrix.M02 - matrix.M20) * p;
+				this.X = (matrix.M01 + matrix.M10) * p;
+				this.Y = s * 0.5f;
+				this.Z = (matrix.M21 + matrix.M12) * p;
+			}
+			else if ((matrix.M22 >= matrix.M00) && (matrix.M22 >= matrix.M11))
+			{
+				s = (float)Math.Sqrt(matrix.M22 - matrix.M00 - matrix.M11 + 1.0f);
+				p = 0.5f / s;
+				this.W = (matrix.M10 - matrix.M01) * p;
+				this.X = (matrix.M02 + matrix.M20) * p;
+				this.Y = (matrix.M12 + matrix.M21) * p;
+				this.Z = s * 0.5f;
 			}
 		}
 		/// <summary>
@@ -378,6 +375,7 @@ namespace CryCil.Geometry
 			: this(new Matrix33(matrix)) { }
 		#endregion
 		#region Interface
+		#region Self-Modification
 		/// <summary>
 		/// Inverts or conjugates this quaternion by flipping its vector part.
 		/// </summary>
@@ -422,18 +420,6 @@ namespace CryCil.Geometry
 				this.Z /= norm;
 				this.W /= norm;
 			}
-		}
-		#region Interpolations
-		/// <summary>
-		/// </summary>
-		/// <param name="start"> </param>
-		/// <param name="end">   </param>
-		/// <param name="amount"></param>
-		public void ExpSlerp(Quaternion start, Quaternion end, float amount)
-		{
-			var q = end;
-			if ((start | q) < 0) { q = q.Flipped; }
-			this = start * MathHelpers.Exp(MathHelpers.Log(start.Inverted * q) * amount);
 		}
 		#endregion
 		#region Predicates
