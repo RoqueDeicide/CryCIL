@@ -310,6 +310,16 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	VIRTUAL_API virtual mono::type MakeByRefType() = 0;
 	//! Gets an instance of type System.Type that represents a pointer to objects of this class.
 	VIRTUAL_API virtual mono::type MakePointerType() = 0;
+	//! Creates a generic type instantiation where type arguments are substituted with given types.
+	//!
+	//! Cache the resultant type, since inflation is quite costly.
+	//!
+	//! @param types A list of types to use when inflating this class.
+	//!
+	//! @returns A pointer to the cached wrapper that represents inflated generic type, if this type is
+	//!          generic and no exceptions were raised during the execution, otherwise this pointer will
+	//!          be returned.
+	VIRTUAL_API virtual IMonoClass *Inflate(List<IMonoClass *> &types) = 0;
 
 	VIRTUAL_API virtual const char *GetName() = 0;
 	VIRTUAL_API virtual const char *GetNameSpace() = 0;

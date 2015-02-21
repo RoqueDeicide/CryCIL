@@ -18,7 +18,7 @@ MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 	this->properties = List<IMonoProperty *>(30);
 	this->events     = List<IMonoEvent *>   (30);
 	this->fields     = List<IMonoField *>   (30);
-
+	
 	MonoClass *base = klass;
 	while (base)
 	{
@@ -675,6 +675,47 @@ mono::type MonoClassWrapper::MakePointerType()
 	return MonoEnv->CoreLibrary->GetClass("System", "Type")
 							   ->GetMethod("MakePointerType", 0)
 							   ->Invoke(this->GetType());
+}
+
+IMonoClass *MonoClassWrapper::Inflate(List<IMonoClass *> &types)
+{
+	MonoType *thisType = mono_class_get_type(this->wrappedClass);
+	MonoReflectionType *thisTypeObj = mono_type_get_object(mono_domain_get(), thisType);
+	unsigned int thisTypeGcHandle = mono_gchandle_new((MonoObject *)thisTypeObj, true);
+
+	MonoClassWrapper *typeClass = static_cast<MonoClassWrapper *>(MonoEnv->CoreLibrary->Type);
+	MonoArray *typesArray = mono_array_new(mono_domain_get(), typeClass->wrappedClass, types.Length);
+	// Pin the array of types.
+	unsigned int typesGcHandle = mono_gchandle_new((MonoObject *)typesArray, true);
+	// For pinning types within the array, just for extra safety.
+	List<unsigned int> typeGcHandles(types.Length);
+	// Fill the Mono array with types.
+	for (int i = 0; i < types.Length; i++)
+	{
+		MonoType *currentType = mono_class_get_type(((MonoClassWrapper *)types[i])->wrappedClass);
+		MonoReflectionType *currentTypeObj = mono_type_get_object(mono_domain_get(), currentType);
+		// Pin the type.
+		typeGcHandles.Add(mono_gchandle_new((MonoObject *)currentTypeObj, true));
+		// Put the type in the array.
+		*mono_array_addr(typesArray, MonoReflectionType *, i) = currentTypeObj;
+	}
+	// Now invoke a method that will inflate the generic type for us.
+	void *params[1];
+	params[0] = typesArray;
+	mono::type inflatedType = typeClass->GetMethod("MakeGenericType", 1)->Invoke(thisTypeObj, params);
+	if (!inflatedType)
+	{
+		return this;
+	}
+	IMonoClass *result = MonoClassCache::Wrap(mono_class_from_mono_type(GET_BOXED_OBJECT_DATA(MonoType, inflatedType)));
+	// Unpin everything.
+	mono_gchandle_free(thisTypeGcHandle);
+	mono_gchandle_free(typesGcHandle);
+	for (int i = 0; i < typeGcHandles.Length; i++)
+	{
+		mono_gchandle_free(typeGcHandles[i]);
+	}
+	return result;
 }
 
 ReadOnlyList<IMonoField *> *MonoClassWrapper::GetFields()

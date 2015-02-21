@@ -49,6 +49,8 @@ public:
 	virtual mono::type MakeArrayType(int rank);
 	virtual mono::type MakeByRefType();
 	virtual mono::type MakePointerType();
+
+	virtual IMonoClass *Inflate(List<IMonoClass *> &types);
 	
 	virtual void GetField(mono::object obj, const char *name, void *value);
 	virtual void SetField(mono::object obj, const char *name, void *value);
@@ -87,6 +89,7 @@ public:
 private:
 	void GetFieldValue(mono::object obj, MonoClassField *field, void *value);
 	void SetFieldValue(mono::object obj, MonoClassField *field, void *value);
+
 };
 
 //! Caches MonoClassWrapper objects.
