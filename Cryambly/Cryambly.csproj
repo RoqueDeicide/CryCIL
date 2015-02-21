@@ -120,6 +120,7 @@
     <Compile Include="Mathematics\IMatrix.cs" />
     <Compile Include="Mathematics\Interpolation.CatmullRom.cs" />
     <Compile Include="Mathematics\Interpolation.cs" />
+    <Compile Include="Mathematics\Interpolation.Cubic.cs" />
     <Compile Include="Mathematics\Interpolation.Hermite.cs" />
     <Compile Include="Mathematics\Interpolation.Linear.Colors.cs" />
     <Compile Include="Mathematics\Interpolation.Linear.cs" />
