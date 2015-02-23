@@ -6,6 +6,7 @@ void TestMemberLists(IMonoClass *);
 void TestInheritance(IMonoClass *);
 void TestInterfaceImplementation();
 void TestTypeSpecification();
+void TestAssemblyLookBack();
 
 void TestClasses()
 {
@@ -24,6 +25,10 @@ void TestClasses()
 	TestInheritance(vector3Class);
 
 	TestInterfaceImplementation();
+	
+	CryLogAlways("TEST: Checking whether IMonoClass::Assembly property returns pointer to correct assembly wrapper.");
+
+	TestAssemblyLookBack();
 }
 
 void TestTypeSpecification()
@@ -202,5 +207,30 @@ void TestInterfaceImplementation()
 	else
 	{
 		ReportError("TEST FAILURE: ConsoleLogWriter is supposed to implement IDisposable.");
+	}
+}
+
+void TestAssemblyLookBack()
+{
+	IMonoClass *quatvecClass = MonoEnv->Cryambly->Quatvec;
+
+	if (quatvecClass->Assembly == MonoEnv->Cryambly)
+	{
+		CryLogAlways("TEST SUCCESS: Quatvec struct was identified as one defined in Cryambly.");
+	}
+	else
+	{
+		ReportError("TEST FAILURE: Quatvec struct was not identified as one defined in Cryambly.");
+	}
+
+	IMonoClass *int32Class = MonoEnv->CoreLibrary->Int32;
+
+	if (int32Class->Assembly == MonoEnv->CoreLibrary)
+	{
+		CryLogAlways("TEST SUCCESS: Int32 struct was identified as one defined in mscorlib.");
+	}
+	else
+	{
+		ReportError("TEST FAILURE: Int32 struct was not identified as one defined in mscorlib.");
 	}
 }
