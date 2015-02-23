@@ -328,10 +328,13 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	VIRTUAL_API virtual const char *GetNameSpace() = 0;
 	VIRTUAL_API virtual const char *GetFullName() = 0;
 	VIRTUAL_API virtual const char *GetFullNameIL() = 0;
+
 	VIRTUAL_API virtual IMonoAssembly *GetAssembly() = 0;
+
 	VIRTUAL_API virtual IMonoClass *GetBase() = 0;
-	VIRTUAL_API virtual ReadOnlyList<IMonoField *> *GetFields() = 0;
+
+	VIRTUAL_API virtual ReadOnlyList<IMonoField *>    *GetFields() = 0;
 	VIRTUAL_API virtual ReadOnlyList<IMonoProperty *> *GetProperties() = 0;
-	VIRTUAL_API virtual ReadOnlyList<IMonoEvent *> *GetEvents() = 0;
-	VIRTUAL_API virtual ReadOnlyList<IMonoMethod *> *GetMethods() = 0;
+	VIRTUAL_API virtual ReadOnlyList<IMonoEvent *>    *GetEvents() = 0;
+	VIRTUAL_API virtual ReadOnlyList<IMonoMethod *>   *GetMethods() = 0;
 };
