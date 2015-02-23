@@ -23,6 +23,7 @@ private:
 	SortedList<const char *, List<IMonoMethod *> *> methods;
 	List<IMonoField *> fields;
 	MonoVTable *vtable;
+	List<IMonoMethod *> flatMethodList;
 public:
 	MonoClassWrapper(MonoClass *klass);
 	~MonoClassWrapper();

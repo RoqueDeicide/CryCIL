@@ -63,6 +63,20 @@ MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 	this->properties.Trim();
 	this->events.Trim();
 	this->fields.Trim();
+	// Create a simple list of methods for occasions when a simple list needs to be iterated through.
+	this->flatMethodList = List<IMonoMethod *>(this->methods.Length * 2);
+	this->methods.ForEach
+	(
+		[this](const char *name, List<IMonoMethod *> *overloads)
+		{
+			for (int i = 0; i < overloads->Length; i++)
+			{
+				this->flatMethodList.Add(overloads->At(i));
+			}
+		}
+	);
+
+	this->flatMethodList.Trim();
 
 	this->vtable = mono_class_vtable(mono_domain_get(), klass);
 }
@@ -725,7 +739,7 @@ ReadOnlyList<IMonoField *> *MonoClassWrapper::GetFields()
 
 ReadOnlyList<IMonoMethod *> *MonoClassWrapper::GetMethods()
 {
-	return (ReadOnlyList<IMonoMethod *> *)&this->methods;
+	return (ReadOnlyList<IMonoMethod *> *)&this->flatMethodList;
 }
 
 ReadOnlyList<IMonoProperty *> *MonoClassWrapper::GetProperties()
