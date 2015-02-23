@@ -4,6 +4,7 @@
 
 void TestMemberLists(IMonoClass *);
 void TestInheritance(IMonoClass *);
+void TestInterfaceImplementation();
 
 void TestClasses()
 {
@@ -16,6 +17,8 @@ void TestClasses()
 	CryLogAlways("TEST: Finding out about base class of Vector3 class.");
 
 	TestInheritance(vector3Class);
+
+	TestInterfaceImplementation();
 }
 
 void TestMemberLists(IMonoClass *klass)
@@ -115,5 +118,42 @@ void TestInheritance(IMonoClass *klass)
 	else
 	{
 		CryLogAlways("TEST SUCCESS: %s doesn't inherit from System.Object directly.", klass->Name);
+	}
+}
+
+void TestInterfaceImplementation()
+{
+	CryLogAlways("TEST: Checking direct interface implementation detection.");
+
+	IMonoClass *vsProjectClass =
+		MonoEnv->Cryambly->GetClass("CryCil.RunTime.Compilation", "VisualStudioDotNetProject");
+
+	IMonoClass *iProjectInterface =
+		MonoEnv->Cryambly->GetClass("CryCil.RunTime.Compilation", "IProject");
+
+	if (vsProjectClass->Implements(iProjectInterface))
+	{
+		CryLogAlways("TEST SUCCESS: VisualStudioDotNetProject implements IProject.");
+	}
+	else
+	{
+		ReportError("TEST FAILURE: VisualStudioDotNetProject is supposed to implement IProject.");
+	}
+
+	CryLogAlways("TEST: Checking indirect interface implementation detection.");
+
+	IMonoClass *logWriterClass =
+		MonoEnv->Cryambly->GetClass("CryCil.RunTime.Logging", "ConsoleLogWriter");
+
+	IMonoClass *iDisposableInterface =
+		MonoEnv->CoreLibrary->GetClass("System", "IDisposable");
+
+	if (logWriterClass->Implements(iDisposableInterface))
+	{
+		CryLogAlways("TEST SUCCESS: ConsoleLogWriter implements IDisposable.");
+	}
+	else
+	{
+		ReportError("TEST FAILURE: ConsoleLogWriter is supposed to implement IDisposable.");
 	}
 }
