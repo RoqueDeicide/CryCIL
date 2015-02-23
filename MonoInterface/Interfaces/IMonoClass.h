@@ -22,6 +22,12 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	__declspec(property(get = GetAssembly)) IMonoAssembly *Assembly;
 	//! Gets the class where this class is defined.
 	__declspec(property(get = GetBase)) IMonoClass *Base;
+	//! Indicates whether this class is a value-type.
+	__declspec(property(get = GetIsValueType)) bool IsValueType;
+	//! Indicates whether this class is an enumeration.
+	__declspec(property(get = GetIsEnum)) bool IsEnum;
+	//! Indicates whether this class is a delegate.
+	__declspec(property(get = GetIsDelegate)) bool IsDelegate;
 	//! Gets the list of fields available through this class.
 	__declspec(property(get = GetFields)) ReadOnlyList<IMonoField *> *Fields;
 	//! Gets the list of fields available through this class.
@@ -328,6 +334,10 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	VIRTUAL_API virtual const char *GetNameSpace() = 0;
 	VIRTUAL_API virtual const char *GetFullName() = 0;
 	VIRTUAL_API virtual const char *GetFullNameIL() = 0;
+
+	VIRTUAL_API virtual bool GetIsValueType() = 0;
+	VIRTUAL_API virtual bool GetIsEnum() = 0;
+	VIRTUAL_API virtual bool GetIsDelegate() = 0;
 
 	VIRTUAL_API virtual IMonoAssembly *GetAssembly() = 0;
 

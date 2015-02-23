@@ -752,6 +752,21 @@ ReadOnlyList<IMonoEvent *> *MonoClassWrapper::GetEvents()
 	return (ReadOnlyList<IMonoEvent *> *)&this->events;
 }
 
+bool MonoClassWrapper::GetIsValueType()
+{
+	return mono_class_is_valuetype(this->wrappedClass) != 0;
+}
+
+bool MonoClassWrapper::GetIsEnum()
+{
+	return mono_class_is_enum(this->wrappedClass) != 0;
+}
+
+bool MonoClassWrapper::GetIsDelegate()
+{
+	return mono_class_is_delegate(this->wrappedClass) != 0;
+}
+
 List<MonoClassWrapper *> MonoClassCache::cachedClasses(50);
 
 

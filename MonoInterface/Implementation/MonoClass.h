@@ -81,6 +81,11 @@ public:
 
 	virtual IMonoAssembly *GetAssembly();
 	virtual IMonoClass    *GetBase();
+
+	virtual bool GetIsValueType();
+	virtual bool GetIsEnum();
+	virtual bool GetIsDelegate();
+
 	virtual IMonoClass    *GetNestedType(const char *name);
 	
 	virtual ReadOnlyList<IMonoField *>    *GetFields();
@@ -90,7 +95,6 @@ public:
 private:
 	void GetFieldValue(mono::object obj, MonoClassField *field, void *value);
 	void SetFieldValue(mono::object obj, MonoClassField *field, void *value);
-
 };
 
 //! Caches MonoClassWrapper objects.
