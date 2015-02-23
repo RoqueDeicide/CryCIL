@@ -3,6 +3,9 @@
 #include "IMonoAliases.h"
 
 //! Defines interface of objects that wrap functionality of MonoClass type.
+//!
+//! General advice: Avoid dealing with generics when using this API: the embedded Mono API is way too
+//! limited for this.
 struct IMonoClass : public IMonoFunctionalityWrapper
 {
 	//! Gets the name of this class.
