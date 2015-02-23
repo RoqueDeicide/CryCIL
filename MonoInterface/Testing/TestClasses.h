@@ -5,9 +5,14 @@
 void TestMemberLists(IMonoClass *);
 void TestInheritance(IMonoClass *);
 void TestInterfaceImplementation();
+void TestTypeSpecification();
 
 void TestClasses()
 {
+	CryLogAlways("TEST: Checking whether types that are value-types or enumerations or delegates can be identified as such.");
+
+	TestTypeSpecification();
+
 	IMonoClass *vector3Class = MonoEnv->Cryambly->Vector3;
 
 	CryLogAlways("TEST: Checking %s.", vector3Class->FullName);
@@ -19,6 +24,48 @@ void TestClasses()
 	TestInheritance(vector3Class);
 
 	TestInterfaceImplementation();
+}
+
+void TestTypeSpecification()
+{
+	CryLogAlways("TEST: Checking whether a value-type can be identified as such.");
+
+	IMonoClass *quatClass = MonoEnv->Cryambly->Quaternion;
+
+	if (quatClass->IsValueType)
+	{
+		CryLogAlways("TEST SUCCESS: Quaternion is identified as a value-type.");
+	}
+	else
+	{
+		ReportError("TEST FAILURE: Quaternion is not identified as a value-type.");
+	}
+
+	CryLogAlways("TEST: Checking whether an enumeration can be identified as such.");
+
+	IMonoClass *enumClass = MonoEnv->CoreLibrary->GetClass("System", "DayOfWeek");
+
+	if (enumClass->IsEnum)
+	{
+		CryLogAlways("TEST SUCCESS: System.DayOfWeek is identified as an enumeration.");
+	}
+	else
+	{
+		ReportError("TEST FAILURE: System.DayOfWeek is not identified as an enumeration.");
+	}
+
+	CryLogAlways("TEST: Checking whether a delegate can be identified as such.");
+
+	IMonoClass *delegateClass = MonoEnv->CoreLibrary->GetClass("System", "Action");
+
+	if (delegateClass->IsDelegate)
+	{
+		CryLogAlways("TEST SUCCESS: System.Action is identified as a delegate.");
+	}
+	else
+	{
+		ReportError("TEST FAILURE: System.Action is not identified as a delegate.");
+	}
 }
 
 void TestMemberLists(IMonoClass *klass)
