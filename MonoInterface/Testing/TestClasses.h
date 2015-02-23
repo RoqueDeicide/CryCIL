@@ -3,6 +3,7 @@
 #include "IMonoInterface.h"
 
 void TestMemberLists(IMonoClass *);
+void TestInheritance(IMonoClass *);
 
 void TestClasses()
 {
@@ -12,7 +13,10 @@ void TestClasses()
 
 	TestMemberLists(vector3Class);
 
+	CryLogAlways("TEST: Finding out about base class of Vector3 class.");
 
+	TestInheritance(vector3Class);
+}
 
 void TestMemberLists(IMonoClass *klass)
 {
@@ -45,7 +49,71 @@ void TestMemberLists(IMonoClass *klass)
 	}
 }
 
+void TestInheritance(IMonoClass *klass)
+{
+	IMonoClass *baseClass = klass->Base;
+
+	if (!baseClass)
 	{
-		CryLogAlways("TEST: Field #%d: %s", i, vector3Fields->At(i)->Name);
+		ReportError("TEST FAILURE: Unable to get base class of %s.", klass->Name);
+	}
+	else
+	{
+		CryLogAlways("TEST SUCCESS: Name of the base class of %s is %s.", klass->Name, baseClass->Name);
+	}
+
+	CryLogAlways("TEST: Testing inheritance detection on %s.", klass->Name);
+
+	IMonoClass *valueTypeClass = MonoEnv->CoreLibrary->ValueType;
+
+	if (!valueTypeClass)
+	{
+		ReportError("TEST FAILURE: Unable to get the wrapper for System.ValueType class.");
+	}
+	else
+	{
+		if (klass->Inherits(valueTypeClass))
+		{
+			CryLogAlways("TEST %s: %s inherits from System.ValueType.",
+						 klass->IsValueType ? "SUCCESS" : "FAILURE",
+						 klass->Name);
+		}
+		else
+		{
+			ReportError("TEST %s: %s doesn't inherit from System.ValueType.",
+						klass->IsValueType ? "SUCCESS" : "FAILURE",
+						klass->Name);
+		}
+
+		if (klass->Inherits(valueTypeClass, true))
+		{
+			CryLogAlways("TEST %s: %s directly inherits from System.ValueType.",
+						 klass->IsValueType ? "SUCCESS" : "FAILURE",
+						 klass->Name);
+		}
+		else
+		{
+			ReportError("TEST %s: %s doesn't directly inherit from System.ValueType.",
+						klass->IsValueType ? "SUCCESS" : "FAILURE",
+						klass->Name);
+		}
+	}
+
+	if (klass->Inherits("System", "Object"))
+	{
+		CryLogAlways("TEST SUCCESS: %s inherits from System.Object.", klass->Name);
+	}
+	else
+	{
+		ReportError("TEST FAILURE: For some reason %s doesn't inherit from System.Object.", klass->Name);
+	}
+
+	if (klass->Inherits("System", "Object", true))
+	{
+		ReportError("TEST FAILURE: %s directly inherits from System.Object.", klass->Name);
+	}
+	else
+	{
+		CryLogAlways("TEST SUCCESS: %s doesn't inherit from System.Object directly.", klass->Name);
 	}
 }
