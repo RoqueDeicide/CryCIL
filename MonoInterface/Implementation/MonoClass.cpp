@@ -155,6 +155,10 @@ IMonoConstructor *MonoClassWrapper::GetConstructor(int paramCount)
 //! Gets the first that matches given description.
 IMonoMethod *MonoClassWrapper::GetMethod(const char *name, int paramCount)
 {
+	if (!name)
+	{
+		return nullptr;
+	}
 	List<IMonoMethod *> *overloads;
 	if (this->methods.TryGet(name, overloads))
 	{
@@ -193,6 +197,11 @@ IMonoMethod *MonoClassWrapper::GetMethod(const char *name, const char *params)
 
 IMonoMethod *MonoClassWrapper::GetMethod(const char *name, IMonoArray *types /*= nullptr*/)
 {
+	if (!types)
+	{
+		return this->GetMethod(name, (int)0);
+	}
+
 	List<IMonoMethod *> *overloads;
 	if (this->methods.TryGet(name, overloads))
 	{
