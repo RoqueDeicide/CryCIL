@@ -147,10 +147,11 @@ IMonoConstructor *MonoClassWrapper::GetConstructor(List<const char *> &paramType
 	return static_cast<IMonoConstructor *>(this->GetMethod(".ctor", paramTypeNames));
 }
 
-IMonoConstructor *MonoClassWrapper::GetConstructor(const char *name, int paramCount)
+IMonoConstructor *MonoClassWrapper::GetConstructor(int paramCount)
 {
 	return static_cast<IMonoConstructor *>(this->GetMethod(".ctor", paramCount));
 }
+
 //! Gets the first that matches given description.
 IMonoMethod *MonoClassWrapper::GetMethod(const char *name, int paramCount)
 {

@@ -37,6 +37,11 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//! Gets the list of fields available through this class.
 	__declspec(property(get = GetMethods)) ReadOnlyList<IMonoMethod *> *Methods;
 	
+	//! Gets one of the constructors that can accept specified number of arguments.
+	//!
+	//! It's not easy to predict which one of the constructors will be acquired when there are several
+	//! of them that accept the same number of arguments.
+	VIRTUAL_API virtual IMonoConstructor *GetConstructor(int paramCount) = 0;
 	//! Gets constructor that can accept arguments of specified types.
 	//!
 	//! @param types An array of System.Type objects that specify constructor signature to use.
@@ -71,10 +76,6 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//! @param paramTypeNames A list of full type names that specify the parameters the constructor
 	//!                       accepts.
 	VIRTUAL_API virtual IMonoConstructor *GetConstructor(List<const char *> &paramTypeNames) = 0;
-	//! Gets the first constructor that matches given description.
-	//!
-	//! @param paramCount Number of arguments the constructor should take.
-	VIRTUAL_API virtual IMonoConstructor *GetConstructor(const char *name, int paramCount) = 0;
 	//! Gets method that can accept arguments of specified types.
 	//!
 	//! @param name  Name of the method to get.
