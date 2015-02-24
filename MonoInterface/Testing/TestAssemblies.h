@@ -10,7 +10,7 @@ void TestAssemblies()
 
 	CryLogAlways("TEST: Loading an assembly that wasn't loaded previously.");
 
-	IMonoAssembly *mainTestingAssembly =
+	mainTestingAssembly =
 		MonoEnv->Assemblies->Load("Testing\\MainTestingAssembly.dll");
 
 	if (!mainTestingAssembly)
