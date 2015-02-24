@@ -4,6 +4,7 @@ IMonoAssembly *mainTestingAssembly;
 
 #include "TestStart.h"
 #include "TestAssemblies.h"
+#include "TestClasses.h"
 
 void BeginTheTest()
 {

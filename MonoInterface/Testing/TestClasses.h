@@ -7,6 +7,7 @@ void TestInheritance(IMonoClass *);
 void TestInterfaceImplementation();
 void TestTypeSpecification();
 void TestAssemblyLookBack();
+void TestConstructors();
 
 void TestClasses()
 {
@@ -29,6 +30,8 @@ void TestClasses()
 	CryLogAlways("TEST: Checking whether IMonoClass::Assembly property returns pointer to correct assembly wrapper.");
 
 	TestAssemblyLookBack();
+
+	TestConstructors();
 }
 
 void TestTypeSpecification()
@@ -233,4 +236,216 @@ void TestAssemblyLookBack()
 	{
 		ReportError("TEST FAILURE: Int32 struct was not identified as one defined in mscorlib.");
 	}
+}
+
+void TestConstructors()
+{
+	CryLogAlways("TEST: Checking the constructors.");
+
+	IMonoClass *stringClass = MonoEnv->CoreLibrary->String;
+
+	CryLogAlways("TEST: Getting constructor using a Mono array of System.Type objects.");
+
+	CryLogAlways("TEST: Creating an array.");
+
+	IMonoArray *typesArray = MonoEnv->Objects->Arrays->Create(3, MonoEnv->CoreLibrary->Type);
+
+	CryLogAlways("TEST: Filling the array.");
+
+	typesArray->At<mono::type>(0) = MonoEnv->CoreLibrary->Sbyte->MakePointerType();
+
+	CryLogAlways("TEST: Added a pointer type of Sbyte to the array.");
+
+	mono::type int32Type = MonoEnv->CoreLibrary->Int32->GetType();
+	typesArray->At<mono::type>(0) = int32Type;
+	typesArray->At<mono::type>(0) = int32Type;
+
+	CryLogAlways("TEST: Added Int32 types to the array.");
+
+	CryLogAlways("TEST: Getting a String constructor that accepts [sbyte *], [int] and [int].");
+
+	IMonoConstructor *ctorTypes = stringClass->GetConstructor(typesArray);
+
+	if (ctorTypes)
+	{
+		CryLogAlways("TEST SUCCESS: Constructor successfully acquired.");
+	}
+	else
+	{
+		ReportError("TEST FAILURE: Constructor wasn't acquired.");
+	}
+
+	CryLogAlways("TEST: Getting constructor using a simple list of IMonoClass wrappers.");
+
+	List<IMonoClass *> klassList = List<IMonoClass *>(2);
+
+	klassList.Add(MonoEnv->CoreLibrary->Char);
+	klassList.Add(MonoEnv->CoreLibrary->Int32);
+
+	IMonoConstructor *ctorSimpleList = stringClass->GetConstructor(klassList);
+
+	if (ctorSimpleList)
+	{
+		CryLogAlways("TEST SUCCESS: Constructor successfully acquired.");
+	}
+	else
+	{
+		ReportError("TEST FAILURE: Constructor wasn't acquired.");
+	}
+
+	CryLogAlways("TEST: Getting constructor using a list of IMonoClass wrappers with postfix strings.");
+
+	auto klassPostList = List<Pair<IMonoClass *, const char *>>(1);
+
+	klassPostList.Add(Pair<IMonoClass *, const char *>(MonoEnv->CoreLibrary->Char, "[]"));
+
+	IMonoConstructor *ctorSpecifiedClassList = stringClass->GetConstructor(klassPostList);
+
+	if (ctorSpecifiedClassList)
+	{
+		CryLogAlways("TEST SUCCESS: Constructor successfully acquired.");
+	}
+	else
+	{
+		ReportError("TEST FAILURE: Constructor wasn't acquired.");
+	}
+
+	CryLogAlways("TEST: Getting constructor using a list of full type names.");
+
+	auto typeNameList = List<const char *>(3);
+
+	typeNameList.Add("System.Char[]");
+	typeNameList.Add("System.Int32");
+	typeNameList.Add("System.Int32");
+
+	IMonoConstructor *ctorTypeNameList = stringClass->GetConstructor(typeNameList);
+
+	if (ctorTypeNameList)
+	{
+		CryLogAlways("TEST SUCCESS: Constructor successfully acquired.");
+	}
+	else
+	{
+		ReportError("TEST FAILURE: Constructor wasn't acquired.");
+	}
+
+	CryLogAlways("TEST: Getting constructor using a text representation of the signature.");
+
+	IMonoConstructor *ctorTextParams =
+		stringClass->GetConstructor("System.Char[],System.Int32");
+
+	if (ctorTextParams)
+	{
+		CryLogAlways("TEST SUCCESS: Constructor successfully acquired.");
+	}
+	else
+	{
+		ReportError("TEST FAILURE: Constructor wasn't acquired.");
+	}
+
+	CryLogAlways("TEST: Getting the only String constructor that accepts 4 arguments.");
+
+	IMonoConstructor *ctor4Params = stringClass->GetConstructor(4);
+
+	if (ctor4Params)
+	{
+		CryLogAlways("TEST SUCCESS: Constructor successfully acquired.");
+	}
+	else
+	{
+		ReportError("TEST FAILURE: Constructor wasn't acquired.");
+	}
+
+	CryLogAlways("TEST: Creation of objects using the constructors.");
+
+	IMonoClass *ctorTestClass =
+		mainTestingAssembly->GetClass("MainTestingAssembly", "ConstructionTestClass");
+
+	CryLogAlways("TEST: Getting a default constructor.");
+
+	IMonoConstructor *defaultCtor = ctorTestClass->GetConstructor();
+
+	CryLogAlways("TEST: Invoking a default constructor.");
+
+	defaultCtor->Invoke(nullptr);
+
+	CryLogAlways("TEST: Getting a constructor that accepts 2 simple integers.");
+
+	IMonoConstructor *ctor2Integers = ctorTestClass->GetConstructor("System.Int32,System.Int32");
+
+	CryLogAlways("TEST: Invoking a constructor.");
+
+	int par1 = 1000;
+	int par2 = 20;
+	void *params[2];
+	params[0] = &par1;
+	params[1] = &par2;
+	ctor2Integers->Invoke(nullptr, params);
+
+	CryLogAlways("TEST: Getting a constructor that accepts a Double and a reference to String.");
+
+	auto typesDoubleStringRef = List<Pair<IMonoClass *, const char *>>(2);
+	typesDoubleStringRef.Add(Pair<IMonoClass *, const char *>(MonoEnv->CoreLibrary->Double, ""));
+	typesDoubleStringRef.Add(Pair<IMonoClass *, const char *>(MonoEnv->CoreLibrary->String, "&"));
+	IMonoConstructor *ctorDoubleStringRef = ctorTestClass->GetConstructor(typesDoubleStringRef);
+
+	CryLogAlways("TEST: Invoking a constructor.");
+
+	double doublePar = 14.567;
+	mono::string textPar;
+	void *doubleStringRefParams[2];
+	doubleStringRefParams[0] = &doublePar;
+	doubleStringRefParams[1] = &textPar;
+	ctorDoubleStringRef->Invoke(nullptr, doubleStringRefParams);
+
+	CryLogAlways("TEST: Checking creation of compound objects.");
+
+	const int seed = 100000;
+
+	IMonoClass *randomClass = MonoEnv->CoreLibrary->GetClass("System", "Random");
+
+	CryLogAlways("TEST: Creating a Random with seed %d.", seed);
+
+	void *param;
+	param = (int *)(&seed);
+
+	mono::object randomObject = randomClass->GetConstructor(1)->Invoke(nullptr, &param);
+
+	CryLogAlways("TEST: Creating a first component.");
+
+	params[0] = ToMonoString("Some text");
+	params[1] = randomObject;
+	mono::object firstComponent =
+		mainTestingAssembly->GetClass("MainTestingAssembly", "CtorTestComponent1")
+						   ->GetConstructor(2)
+						   ->Invoke(nullptr, params);
+
+	CryLogAlways("TEST: Creating a second component.");
+
+	unsigned char bytePar = 1;
+	unsigned int lengths[3];
+	lengths[0] = 3;
+	lengths[1] = 10;
+	lengths[2] = 2;
+	IMonoArray *arrayCube = MonoEnv->Objects->Arrays->Create(3, lengths, MonoEnv->CoreLibrary->Int32);
+
+	params[0] = ToMonoString("Some text");
+	params[1] = arrayCube->GetHandle<mono::Array>();
+	mono::object secondComponent =
+		mainTestingAssembly->GetClass("MainTestingAssembly", "CtorTestComponent2")
+						   ->GetConstructor(2)
+						   ->Invoke(nullptr, params);
+
+	CryLogAlways("TEST: Creating a compound object.");
+
+	IMonoClass *compoundClass = mainTestingAssembly->GetClass("MainTestingAssembly", "CtorTestCompound");
+
+	params[0] = firstComponent;
+	params[1] = secondComponent;
+
+	mono::object compound = compoundClass->GetConstructor(2)->Invoke(nullptr, params);
+
+	CryLogAlways("TEST: Print contents of the compound object.");
+
+	compoundClass->GetMethod("PrintStuff")->Invoke(compound);
 }
