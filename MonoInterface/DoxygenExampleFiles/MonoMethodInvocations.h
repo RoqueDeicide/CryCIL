@@ -16,8 +16,8 @@ void NoParameters_ValueTypeInstance_Virtual_DefaultExceptionHandling()
 	mono::string lateBoundInvocationResult = toStringMethod->Invoke(&number, nullptr, true);
 
 	// Convert results to Null-terminated strings.
-	const char *resultNoPolymorphismNT = MonoEnv->ToNativeString(earlyBoundInvocationResult);
-	const char *resultPolymorphismNT = MonoEnv->ToNativeString(lateBoundInvocationResult);
+	const char *resultNoPolymorphismNT = ToNativeString(earlyBoundInvocationResult);
+	const char *resultPolymorphismNT = ToNativeString(lateBoundInvocationResult);
 
 	// This will print "System.String".
 	CryLogAlways(resultNoPolymorphismNT);
@@ -54,11 +54,11 @@ void StackParameters_Static()
 											  ->GetNestedType("AroundAxis");
 
 	// Get Override method for Matrix33.
-	List<TypeSpec> typeSpecs = List<TypeSpec>(3);
-	typeSpecs.Add(TypeSpec(MonoEnv->Cryambly->GetClass("CryCil", "Matrix33"), true));
-	typeSpecs.Add(TypeSpec(MonoEnv->Cryambly->GetClass("CryCil.Geometry", "Vector3"), true));
-	typeSpecs.Add(TypeSpec(MonoEnv->CoreLibrary->GetClass("System", "Single")));
-	IMonoMethod *overrideMethod = aroundAxis->GetMethod("Override", &typeSpecs);
+	auto typeSpecs = List<Pair<IMonoClass *, const char *>>(3);
+	typeSpecs.Add(Pair<IMonoClass *, const char *>(MonoEnv->Cryambly->Matrix33,  "&"));
+	typeSpecs.Add(Pair<IMonoClass *, const char *>(MonoEnv->Cryambly->Vector3,   "&"));
+	typeSpecs.Add(Pair<IMonoClass *, const char *>(MonoEnv->CoreLibrary->Single, ""));
+	IMonoMethod *overrideMethod = aroundAxis->GetMethod("Override", typeSpecs);
 
 	// Create an array of arguments.
 	Matrix33 matrix = Matrix33::CreateIdentity();
@@ -84,7 +84,7 @@ void ArrayParameters_Static()
 	IMonoMethod *parseMethod = int32Class->GetMethod("Parse", "System.String");
 
 	// Create an array of parameters.
-	IMonoArray *pars = MonoEnv->CreateArray(1);
+	IMonoArray *pars = MonoEnv->Objects->Arrays->Create(1);
 	pars->At<mono::string>(0) = ToMonoString("123");
 
 	// Invoke the method.

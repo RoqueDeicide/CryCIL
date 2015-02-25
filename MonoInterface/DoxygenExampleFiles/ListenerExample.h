@@ -148,9 +148,8 @@ public:
 void HowToRegisterListeners()
 {
 	// We have to pass listeners to InitializeModule if you them to react to initialization events.
-	int listenerCount = 1;
-	IMonoSystemListener **listeners = new IMonoSystemListener *[listenerCount];
-	listeners[0] = new SimpleListener();
+	auto listeners = List<IMonoSystemListener *>(1);
+	listeners.Add(new SimpleListener());
 	// Now we can initialize CryCIL.
 	HMODULE monoInterfaceDll = CryLoadLibrary(MONOINTERFACE_LIBRARY);
 	if (monoInterfaceDll)
@@ -158,6 +157,6 @@ void HowToRegisterListeners()
 		InitializeMonoInterface init =
 			(InitializeMonoInterface)CryGetProcAddress(monoInterfaceDll, MONO_INTERFACE_INIT);
 		// Replace nullptr with a pointer to IGameFramework.
-		init(nullptr, listeners, listenerCount);
+		init(nullptr, &listeners);
 	}
 }
