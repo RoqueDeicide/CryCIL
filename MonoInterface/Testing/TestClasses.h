@@ -238,9 +238,22 @@ void TestAssemblyLookBack()
 	}
 }
 
+void TestGettingTheConstructors();
+void TestObjectCreation();
+
 void TestConstructors()
 {
 	CryLogAlways("TEST: Checking the constructors.");
+
+	TestGettingTheConstructors();
+
+	CryLogAlways("TEST: Creation of objects using the constructors.");
+
+	TestObjectCreation();
+}
+
+void TestGettingTheConstructors()
+{
 
 	IMonoClass *stringClass = MonoEnv->CoreLibrary->String;
 
@@ -355,8 +368,11 @@ void TestConstructors()
 	{
 		ReportError("TEST FAILURE: Constructor wasn't acquired.");
 	}
+}
 
-	CryLogAlways("TEST: Creation of objects using the constructors.");
+void TestObjectCreation()
+{
+	void *params[2];
 
 	IMonoClass *ctorTestClass =
 		mainTestingAssembly->GetClass("MainTestingAssembly", "ConstructionTestClass");
@@ -377,7 +393,6 @@ void TestConstructors()
 
 	int par1 = 1000;
 	int par2 = 20;
-	void *params[2];
 	params[0] = &par1;
 	params[1] = &par2;
 	ctor2Integers->Invoke(nullptr, params);
@@ -393,10 +408,9 @@ void TestConstructors()
 
 	double doublePar = 14.567;
 	mono::string textPar;
-	void *doubleStringRefParams[2];
-	doubleStringRefParams[0] = &doublePar;
-	doubleStringRefParams[1] = &textPar;
-	ctorDoubleStringRef->Invoke(nullptr, doubleStringRefParams);
+	params[0] = &doublePar;
+	params[1] = &textPar;
+	ctorDoubleStringRef->Invoke(nullptr, params);
 
 	CryLogAlways("TEST: Checking creation of compound objects.");
 
@@ -417,8 +431,8 @@ void TestConstructors()
 	params[1] = randomObject;
 	mono::object firstComponent =
 		mainTestingAssembly->GetClass("MainTestingAssembly", "CtorTestComponent1")
-						   ->GetConstructor(2)
-						   ->Invoke(nullptr, params);
+		->GetConstructor(2)
+		->Invoke(nullptr, params);
 
 	CryLogAlways("TEST: Creating a second component.");
 
@@ -433,8 +447,8 @@ void TestConstructors()
 	params[1] = arrayCube->GetHandle<mono::Array>();
 	mono::object secondComponent =
 		mainTestingAssembly->GetClass("MainTestingAssembly", "CtorTestComponent2")
-						   ->GetConstructor(2)
-						   ->Invoke(nullptr, params);
+		->GetConstructor(2)
+		->Invoke(nullptr, params);
 
 	CryLogAlways("TEST: Creating a compound object.");
 
