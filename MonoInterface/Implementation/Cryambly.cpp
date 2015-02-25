@@ -31,9 +31,9 @@ CryamblyWrapper::CryamblyWrapper(const char *fileName)
 	this->matrix33    = this->GetClass("CryCil", "Matrix33");
 	this->matrix34    = this->GetClass("CryCil", "Matrix34");
 	this->matrix44    = this->GetClass("CryCil", "Matrix44");
-	this->vector2     = this->GetClass("CryCil.Geometry", "Vector2");
-	this->vector3     = this->GetClass("CryCil.Geometry", "Vector3");
-	this->vector4     = this->GetClass("CryCil.Geometry", "Vector4");
+	this->vector2     = this->GetClass("CryCil", "Vector2");
+	this->vector3     = this->GetClass("CryCil", "Vector3");
+	this->vector4     = this->GetClass("CryCil", "Vector4");
 	this->angleAxis   = this->GetClass("CryCil.Geometry", "AngleAxis");
 	this->boundingBox = this->GetClass("CryCil.Geometry", "BoundingBox");
 	this->eulerAngles = this->GetClass("CryCil.Geometry", "EulerAngles");

@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.InteropServices;
+using CryCil.Geometry;
 
-namespace CryCil.Geometry
+namespace CryCil
 {
 	/// <summary>
 	/// Represents a two dimensional mathematical vector.

@@ -180,9 +180,9 @@ void TestAssemblies()
 	TestClassFromAssembly(cryambly->Quaternion,  "CryCil.Geometry.Quaternion");
 	TestClassFromAssembly(cryambly->Quatvec,     "CryCil.Geometry.Quatvec");
 	TestClassFromAssembly(cryambly->Ray,         "CryCil.Geometry.Ray");
-	TestClassFromAssembly(cryambly->Vector2,     "CryCil.Geometry.Vector2");
-	TestClassFromAssembly(cryambly->Vector3,     "CryCil.Geometry.Vector3");
-	TestClassFromAssembly(cryambly->Vector4,     "CryCil.Geometry.Vector4");
+	TestClassFromAssembly(cryambly->Vector2,     "CryCil.Vector2");
+	TestClassFromAssembly(cryambly->Vector3,     "CryCil.Vector3");
+	TestClassFromAssembly(cryambly->Vector4,     "CryCil.Vector4");
 }
 
 void TestClassFromAssembly(IMonoClass *klass, const char *name)

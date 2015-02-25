@@ -64,13 +64,13 @@
 //! pars->At<mono::object>(3) =  MonoEnv->Objects->Create(SomeAssembly, "Boo", "Foo");
 //!
 //! // Invoke the method using this array.
-//! // Method's parameters: System.String, CryCil.Geometry.Vector2, CryCil.Geometry.Vector2, Boo.Foo.
+//! // Method's parameters: System.String, CryCil.Vector2, CryCil.Vector2, Boo.Foo.
 //! IMonoMethod *method =
 //!     SomeAssembly->GetClass("BumBum", "Blabla")
 //!                 ->GetMethod
 //!                 (
 //!                     "Meth",
-//!                      "System.String, CryCil.Geometry.Vector2, CryCil.Geometry.Vector2, Boo.Foo"
+//!                      "System.String, CryCil.Vector2, CryCil.Vector2, Boo.Foo"
 //!                 );
 //!
 //! method->Invoke(nullptr, pars);

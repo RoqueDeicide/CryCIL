@@ -141,9 +141,9 @@
     <Compile Include="Mathematics\MemoryMapping\Bytes8.cs" />
     <Compile Include="Mathematics\MemoryMapping\IBuffer.cs" />
     <Compile Include="Mathematics\MemoryMapping\NamespaceDoc.cs" />
-    <Compile Include="Mathematics\Geometry\Vector2.cs" />
-    <Compile Include="Mathematics\Geometry\Vector3.cs" />
-    <Compile Include="Mathematics\Geometry\Vector4.cs" />
+    <Compile Include="Mathematics\Vector2.cs" />
+    <Compile Include="Mathematics\Vector3.cs" />
+    <Compile Include="Mathematics\Vector4.cs" />
     <Compile Include="Miscellaneous\ITemporaryOverrider.cs" />
     <Compile Include="NamespaceDoc.cs" />
     <Compile Include="PathUtilities.cs" />
