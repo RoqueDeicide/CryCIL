@@ -52,7 +52,8 @@ public:
 	virtual mono::type MakePointerType();
 
 	//virtual IMonoClass *Inflate(List<IMonoClass *> &types);
-	
+
+	virtual IMonoField *GetField(const char *name);
 	virtual void GetField(mono::object obj, const char *name, void *value);
 	virtual void SetField(mono::object obj, const char *name, void *value);
 	virtual void GetField(mono::object obj, IMonoField *field, void *value);

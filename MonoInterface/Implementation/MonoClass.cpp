@@ -369,6 +369,18 @@ IMonoMethod **MonoClassWrapper::GetMethods(const char *name, int &foundCount)
 	return foundMethods.Detach(foundCount);
 }
 
+IMonoField *MonoClassWrapper::GetField(const char *name)
+{
+	for (int i = 0; i < this->fields.Length; i++)
+	{
+		if (strcmp(this->fields[i]->Name, name) == 0)
+		{
+			return this->fields[i];
+		}
+	}
+	return nullptr;
+}
+
 //! Gets the value of the object's field.
 void MonoClassWrapper::GetField(mono::object obj, const char *name, void *value)
 {
@@ -384,6 +396,7 @@ void MonoClassWrapper::GetField(mono::object obj, IMonoField *field, void *value
 {
 	this->GetFieldValue(obj, field->GetHandle<MonoClassField>(), value);
 }
+
 //! Sets the value of the object's field.
 void MonoClassWrapper::SetField(mono::object obj, IMonoField *field, void *value)
 {

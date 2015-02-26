@@ -206,6 +206,13 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//! @returns A pointer to the first found method. You should release resultant array once
 	//!          you don't need it anymore.
 	VIRTUAL_API virtual IMonoMethod **GetMethods(const char *name, int &foundCount) = 0;
+	//! Gets a metadata wrapper for the field of this class.
+	//!
+	//! @param name Name of the field to get.
+	//!
+	//! @returns A pointer to the object that implements IMonoField that represents the field of interest,
+	//!          if found, otherwise null.
+	VIRTUAL_API virtual IMonoField *GetField(const char *name) = 0;
 	//! Gets the value of the object's field.
 	//!
 	//! @param obj   Object which field to get. Use nullptr when working with a static field.
