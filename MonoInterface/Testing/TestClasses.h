@@ -39,6 +39,7 @@ void TestClasses()
 	TestMethods();
 }
 
+#pragma region General Tests
 void TestTypeSpecification()
 {
 	CryLogAlways("TEST: Checking whether a value-type can be identified as such.");
@@ -242,7 +243,9 @@ void TestAssemblyLookBack()
 		ReportError("TEST FAILURE: Int32 struct was not identified as one defined in mscorlib.");
 	}
 }
+#pragma endregion
 
+#pragma region Constructor Tests
 void TestGettingTheConstructors();
 void TestObjectCreation();
 
@@ -468,7 +471,9 @@ void TestObjectCreation()
 
 	compoundClass->GetMethod("PrintStuff")->Invoke(compound);
 }
+#pragma endregion
 
+#pragma region Method Tests
 void TestGettingMethods();
 void TestInvokingMethods();
 
@@ -880,3 +885,4 @@ void TestInstanceThunkInvocation()
 		delete text;
 	}
 }
+#pragma endregion
