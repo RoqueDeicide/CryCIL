@@ -2,12 +2,15 @@
 
 #include "IMonoInterface.h"
 
+extern IMonoAssembly *mainTestingAssembly;
+
 void TestMemberLists(IMonoClass *);
 void TestInheritance(IMonoClass *);
 void TestInterfaceImplementation();
 void TestTypeSpecification();
 void TestAssemblyLookBack();
 void TestConstructors();
+void TestMethods();
 
 void TestClasses()
 {
@@ -32,6 +35,8 @@ void TestClasses()
 	TestAssemblyLookBack();
 
 	TestConstructors();
+
+	TestMethods();
 }
 
 void TestTypeSpecification()
@@ -462,4 +467,416 @@ void TestObjectCreation()
 	CryLogAlways("TEST: Print contents of the compound object.");
 
 	compoundClass->GetMethod("PrintStuff")->Invoke(compound);
+}
+
+void TestGettingMethods();
+void TestInvokingMethods();
+
+void TestMethods()
+{
+	CryLogAlways("TEST: Checking the methods.");
+
+	TestGettingMethods();
+
+	TestInvokingMethods();
+}
+
+void TestGettingMethods()
+{
+	CryLogAlways("TEST: Getting the methods.");
+
+	IMonoClass *mathClass   = MonoEnv->CoreLibrary->GetClass("System", "Math");
+	IMonoClass *typeClass   = MonoEnv->CoreLibrary->Type;
+	IMonoClass *stringClass = MonoEnv->CoreLibrary->String;
+	IMonoClass *arrayClass  = MonoEnv->CoreLibrary->Array;
+
+	CryLogAlways("TEST: Getting the method using an array of System.Type objects.");
+
+	IMonoArray *typesArray = MonoEnv->Objects->Arrays->Create(1, typeClass);
+
+	typesArray->At<mono::type>(0) = typeClass->MakeArrayType();
+
+	IMonoMethod *method = typeClass->GetMethod("GetConstructor", typesArray);
+
+	if (method)
+	{
+		CryLogAlways("TEST SUCCESS: Method has been successfully acquired.");
+	}
+	else
+	{
+		ReportError("TEST FAILURE: Method wasn't acquired.");
+	}
+
+	CryLogAlways("TEST: Getting the method using a list of IMonoClass objects.");
+
+	auto classes = List<IMonoClass *>(2);
+
+	classes.Add(stringClass);
+	classes.Add(arrayClass);
+
+	method = typeClass->GetMethod("GetMethod", classes);
+
+	if (method)
+	{
+		CryLogAlways("TEST SUCCESS: Method has been successfully acquired.");
+	}
+	else
+	{
+		ReportError("TEST FAILURE: Method wasn't acquired.");
+	}
+
+	CryLogAlways("TEST: Getting the method using a list of IMonoClass objects with post-fixes.");
+
+	auto specifiedClasses = List<Pair<IMonoClass *, const char *>>(3);
+
+	specifiedClasses.Add(Pair<IMonoClass *, const char *>(stringClass, ""));
+	specifiedClasses.Add(Pair<IMonoClass *, const char *>(typeClass,   ""));
+	specifiedClasses.Add(Pair<IMonoClass *, const char *>(typeClass, "[]"));
+
+	method = typeClass->GetMethod("GetProperty", specifiedClasses);
+
+	if (method)
+	{
+		CryLogAlways("TEST SUCCESS: Method has been successfully acquired.");
+	}
+	else
+	{
+		ReportError("TEST FAILURE: Method wasn't acquired.");
+	}
+
+	CryLogAlways("TEST: Getting the method using a list of type names.");
+
+	auto typeNames = List<const char *>(2);
+
+	typeNames.Add("System.Double");
+	typeNames.Add("System.Double");
+
+	method = mathClass->GetMethod("Pow", typeNames);
+
+	if (method)
+	{
+		CryLogAlways("TEST SUCCESS: Method has been successfully acquired.");
+	}
+	else
+	{
+		ReportError("TEST FAILURE: Method wasn't acquired.");
+	}
+
+	CryLogAlways("TEST: Getting the method using a text representation of the signature.");
+
+	method = mathClass->GetMethod("Min", "System.UInt32,System.UInt32");
+
+	if (method)
+	{
+		CryLogAlways("TEST SUCCESS: Method has been successfully acquired.");
+	}
+	else
+	{
+		ReportError("TEST FAILURE: Method wasn't acquired.");
+	}
+
+	CryLogAlways("TEST: Getting the method using a number of parameters.");
+
+	method = MonoEnv->CoreLibrary->GetClass("System", "GC")->GetMethod("Collect", 1);
+
+	if (method)
+	{
+		CryLogAlways("TEST SUCCESS: Method has been successfully acquired.");
+	}
+	else
+	{
+		ReportError("TEST FAILURE: Method wasn't acquired.");
+	}
+
+	CryLogAlways("TEST: Getting a list of methods using just a name.");
+
+	int count;
+	auto methods = mathClass->GetMethods("Min", count);
+
+	if (methods)
+	{
+		CryLogAlways("TEST SUCCESS: Got a list of Min method overloads.");
+
+		CryLogAlways("TEST: A list of methods:");
+
+		for (int i = 0; i < count; i++)
+		{
+			CryLogAlways("%d) %s::%s(%s);", i + 1, mathClass->FullName, methods[i]->Name, methods[i]->Parameters);
+		}
+		
+		delete methods;
+	}
+	else
+	{
+		ReportError("TEST FAILURE: Couldn't get a list of Min method overloads.");
+	}
+
+	CryLogAlways("TEST: Getting a list of methods using a name and a number of parameters.");
+
+	methods = mathClass->GetMethods("Round", 2, count);
+
+	if (methods)
+	{
+		CryLogAlways("TEST SUCCESS: Got a list of Round method overloads.");
+
+		CryLogAlways("TEST: A list of methods:");
+
+		for (int i = 0; i < count; i++)
+		{
+			CryLogAlways("%d) %s::%s(%s);", i + 1, mathClass->FullName, methods[i]->Name, methods[i]->Parameters);
+		}
+
+		delete methods;
+	}
+	else
+	{
+		ReportError("TEST FAILURE: Couldn't get a list of Round method overloads.");
+	}
+}
+
+void TestStaticMethodInvocation();
+void TestInstanceMethodInvocation();
+void TestVirtualMethodInvocation();
+void TestStaticThunkInvocation();
+void TestInstanceThunkInvocation();
+
+void PrintDigitsArray(mono::Array digits)
+{
+	IMonoArray *digitsArray = MonoEnv->Objects->Arrays->Wrap(digits);
+
+	ConstructiveText digitsText(30);
+	char symbol[2];
+
+	digitsText << itoa(digitsArray->At<int>(0), &symbol[0], 10);
+	for (int i = 1; i < digitsArray->Length; i++)
+	{
+		digitsText << " ";
+		digitsText << itoa(digitsArray->At<int>(i), &symbol[0], 10);
+	}
+
+	const char *ntText = digitsText.ToNTString();
+	CryLogAlways("TEST: Digits are: %s", ntText);
+	delete ntText;
+}
+
+void TestInvokingMethods()
+{
+	CryLogAlways("TEST: Invoking the methods.");
+
+	TestStaticMethodInvocation();
+	
+	TestInstanceMethodInvocation();
+	
+	TestVirtualMethodInvocation();
+	
+	TestStaticThunkInvocation();
+
+	TestInstanceThunkInvocation();
+}
+
+void TestStaticMethodInvocation()
+{
+	CryLogAlways("TEST: Invoking static methods through IMonoMethod.");
+
+	IMonoClass *lerpClass    = MonoEnv->Cryambly->GetClass("CryCil", "Interpolation")
+												->GetNestedType("Linear");
+	IMonoClass *vector3Class = MonoEnv->Cryambly->Vector3;
+	IMonoClass *singleClass  = MonoEnv->CoreLibrary->Single;
+	IMonoClass *int32Class   = MonoEnv->CoreLibrary->Int32;
+
+	CryLogAlways("TEST: Getting a method that accepts a reference to value-type object.");
+
+	auto specClasses = List<Pair<IMonoClass *, const char *>>(4);
+	specClasses.Add(Pair<IMonoClass *, const char *>(vector3Class, "&"));
+	specClasses.Add(Pair<IMonoClass *, const char *>(vector3Class, ""));
+	specClasses.Add(Pair<IMonoClass *, const char *>(vector3Class, ""));
+	specClasses.Add(Pair<IMonoClass *, const char *>(singleClass,  ""));
+
+	IMonoMethod *staticMethod = lerpClass->GetMethod("Apply", specClasses);
+
+	CryLogAlways("TEST: Invoking a method.");
+
+	Vec3 res;
+	Vec3 start(0, 0, 0);
+	Vec3 end(100, 100, 100);
+	float parameter = 0.5;
+
+	void *params4[4];
+	params4[0] = &res;
+	params4[1] = &start;
+	params4[2] = &end;
+	params4[3] = &parameter;
+
+	staticMethod->Invoke(nullptr, params4);
+
+	CryLogAlways("Result of interpolation: (%*.2f, %*.2f, %*.2f)", res.x, res.y, res.z);
+
+	CryLogAlways("TEST: Getting a method that accepts a reference to an array.");
+
+	staticMethod = mainTestingAssembly->GetClass("MainTestingAssembly", "MethodTestClass")
+									  ->GetMethod("NumberToDigits", 2);
+
+	CryLogAlways("TEST: Invoking a method.");
+
+	mono::Array digits;
+	int number = 123456;
+
+	void *params2[2];
+	params2[0] = &number;
+	params2[1] = &digits;
+
+	if (Unbox<bool>(staticMethod->Invoke(nullptr, params2)))
+	{
+		PrintDigitsArray(digits);
+	}
+}
+
+void TestInstanceMethodInvocation()
+{
+	CryLogAlways("TEST: Invoking instance methods through IMonoMethod.");
+
+	IMonoClass *stringClass = MonoEnv->CoreLibrary->String;
+
+	mono::string text = ToMonoString("Some text for testing.");
+
+	IMonoGCHandle *handle = MonoEnv->GC->Pin(text);
+
+	CryLogAlways("TEST: Invocation of the method that accepts 4 arguments and returns an signed integer.");
+
+	IMonoMethod *indexOfMethod = stringClass->GetMethod("IndexOf", 4);
+
+	wchar_t symbol = L't';
+	int searchStart = 5;
+	int searchSize = 7;
+	int stringComparison = 2;			// Invariant culture.
+
+	void *params[4];
+	params[0] = &symbol;
+	params[1] = &searchStart;
+	params[2] = &searchSize;
+	params[3] = &stringComparison;
+
+	int index = Unbox<int>(indexOfMethod->Invoke(text, params));
+
+	CryLogAlways("TEST: Index of the first 't' symbol in the test string within range [5; 12] = %d", index);
+
+	handle->Release();
+}
+
+void TestVirtualMethodInvocation()
+{
+	float number = 1023.56f;
+
+	CryLogAlways("TEST: Invoking virtual methods through IMonoMethod.");
+
+	IMonoClass *singleClass = MonoEnv->CoreLibrary->Single;
+
+	CryLogAlways("TEST: Getting the method wrapper.");
+
+	IMonoMethod *toStringFormatMethod = singleClass->GetMethod("ToString", 2);
+
+	CryLogAlways("TEST: Invoking a virtual method using early binding.");
+
+	void *null = 0;
+
+	void *params[2];
+	params[0] = &null;
+	params[1] = &null;
+
+	const char *result = ToNativeString(toStringFormatMethod->Invoke(&number, params));
+
+	CryLogAlways("TEST: Result of early-bound invocation: %s.", result);
+
+	delete result;
+
+	CryLogAlways("TEST: Invoking a virtual method using late binding.");
+
+	result = ToNativeString(toStringFormatMethod->Invoke(&number, params, nullptr, true));
+
+	CryLogAlways("TEST: Result of late-bound invocation: %s.", result);
+
+	delete result;
+}
+
+struct TestObject
+{
+	int Number;
+	mono::string Text;
+};
+
+void TestStaticThunkInvocation()
+{
+	CryLogAlways("TEST: Invoking static methods through unmanaged thunk.");
+
+	IMonoClass *methodTestClass = mainTestingAssembly->GetClass("MainTestingAssembly", "MethodTestClass");
+
+	CryLogAlways("TEST: Getting the method wrapper of NumberToDigits.");
+
+	IMonoMethod *method = methodTestClass->GetMethod("NumberToDigits", 2);
+
+	CryLogAlways("TEST: Getting the unmanaged thunk.");
+
+	bool(__stdcall *numberToDigitsThunk)(int *, mono::Array *, mono::exception *) =
+		(bool(__stdcall *)(int *, mono::Array *, mono::exception *))method->UnmanagedThunk;
+
+	CryLogAlways("TEST: Invoking the unmanaged thunk.");
+
+	int number = 123456;
+	mono::Array digits;
+	mono::exception ex;
+
+	bool success = numberToDigitsThunk(&number, &digits, &ex);
+
+	if (!ex && success)
+	{
+		PrintDigitsArray(digits);
+	}
+
+	CryLogAlways("TEST: Getting the method wrapper of CreateValueTypeObject.");
+
+	method = methodTestClass->GetMethod("CreateValueTypeObject", 2);
+
+	CryLogAlways("TEST: Getting the unmanaged thunk.");
+
+	void(__stdcall *createValueThunk)(int, mono::object, mono::exception *) =
+		(void(__stdcall *)(int, mono::object, mono::exception *))method->UnmanagedThunk;
+
+	CryLogAlways("TEST: Invoking the unmanaged thunk.");
+
+	TestObject tObj;
+	mono::object testObj = mainTestingAssembly->GetClass("MainTestingAssembly", "CustomValueType")->Box(&tObj);
+
+	createValueThunk(number, testObj, &ex);
+
+	auto unboxedObj = Unbox<TestObject>(testObj);
+	const char *text = ToNativeString(unboxedObj.Text);
+	CryLogAlways("TEST: Result of invocation = %s", text);
+	delete text;
+}
+
+void TestInstanceThunkInvocation()
+{
+	CryLogAlways("TEST: Invoking instance methods through unmanaged thunk.");
+
+	CryLogAlways("TEST: Getting the method wrapper of Byte::ToString(string).");
+
+	IMonoMethod *method = MonoEnv->CoreLibrary->Byte->GetMethod("ToString", "System.String");
+
+	CryLogAlways("TEST: Getting the unmanaged thunk.");
+
+	mono::string(__stdcall *thunk)(mono::object, mono::string, mono::exception *) =
+		(mono::string(__stdcall *)(mono::object, mono::string, mono::exception *))method->UnmanagedThunk;
+
+	CryLogAlways("TEST: Invoking the unmanaged thunk.");
+
+	mono::exception ex;
+
+	mono::string textObj = thunk(Box((unsigned char)100), nullptr, &ex);
+
+	if (!ex)
+	{
+		const char *text = ToNativeString(textObj);
+		CryLogAlways("TEST: Result of invocation = %s", text);
+		delete text;
+	}
 }
