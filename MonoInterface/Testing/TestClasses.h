@@ -11,6 +11,7 @@ void TestTypeSpecification();
 void TestAssemblyLookBack();
 void TestConstructors();
 void TestMethods();
+void TestFields();
 
 void TestClasses()
 {
@@ -37,6 +38,8 @@ void TestClasses()
 	TestConstructors();
 
 	TestMethods();
+
+	TestFields();
 }
 
 #pragma region General Tests
@@ -885,4 +888,131 @@ void TestInstanceThunkInvocation()
 		delete text;
 	}
 }
+#pragma endregion
+
+#pragma region Field Tests
+void TestInstanceFields();
+void TestStaticFields();
+
+void TestFields()
+{
+	TestInstanceFields();
+
+	TestStaticFields();
+}
+
+void TestInstanceFields()
+{
+	CryLogAlways("TEST: Testing instance fields.");
+
+	IMonoClass *fieldTestClass = mainTestingAssembly->GetClass("MainTestingAssembly", "FieldTestClass");
+
+	CryLogAlways("TEST: Creating the object.");
+
+	int number = 12000;
+	mono::string text = ToMonoString("Something texty.");
+
+	void *params[2];
+	params[0] = &number;
+	params[1] = text;
+
+	mono::object obj = fieldTestClass->GetConstructor(2)->Invoke(nullptr, params);
+
+	IMonoGCHandle *handle = MonoEnv->GC->Pin(obj);
+
+	CryLogAlways("TEST: Getting the values of fields.");
+
+	CryLogAlways("TEST: Getting the wrappers for both fields.");
+
+	IMonoField *numberField = fieldTestClass->GetField("Number");
+	IMonoField *textField   = fieldTestClass->GetField("Text");
+
+	CryLogAlways("TEST: Getting the number field value through the wrapper.");
+
+	int numberValue;
+	numberField->Get(obj, &numberValue);
+
+	CryLogAlways("TEST: Acquired value = %d", numberValue);
+
+	CryLogAlways("TEST: Getting the text value through the name.");
+
+	mono::string textValue;
+	fieldTestClass->GetField(obj, "Text", &textValue);
+
+	const char *ntText = ToNativeString(textValue);
+	CryLogAlways("TEST: Acquired text value = %s", ntText);
+	delete ntText;
+
+	CryLogAlways("TEST: Setting the values of fields.");
+
+	CryLogAlways("TEST: Setting the text field value using the wrapper.");
+
+	textValue = ToMonoString("Some different text.");
+	fieldTestClass->SetField(obj, textField, &textValue);
+
+	CryLogAlways("TEST: Setting the number field value through the name.");
+
+	numberValue = 9999;
+	fieldTestClass->SetField(obj, "Number", &numberValue);
+
+	CryLogAlways("TEST: Getting the values of fields.");
+
+	CryLogAlways("TEST: Getting the number field value using the wrapper.");
+
+	fieldTestClass->GetField(obj, numberField, &numberValue);
+
+	CryLogAlways("TEST: Acquired value = %d", numberValue);
+
+	CryLogAlways("TEST: Getting the text value through the wrapper.");
+
+	textField->Get(obj, &textValue);
+
+	ntText = ToNativeString(textValue);
+	CryLogAlways("TEST: Acquired text value = %s", ntText);
+	delete ntText;
+
+	handle->Release();
+}
+
+void TestStaticFields()
+{
+	CryLogAlways("TEST: Testing static fields.");
+
+	IMonoClass *fieldTestClass = mainTestingAssembly->GetClass("MainTestingAssembly", "FieldTestClass");
+
+	int number = 12000;
+	mono::string text = ToMonoString("Something texty.");
+
+	void *params[2];
+	params[0] = &number;
+	params[1] = text;
+
+	mono::object obj = fieldTestClass->GetConstructor(2)->Invoke(nullptr, params);
+
+	IMonoGCHandle *handle = MonoEnv->GC->Pin(obj);
+
+	CryLogAlways("TEST: Setting a static field.");
+
+	IMonoField *field = fieldTestClass->GetField("ObjectField");
+
+	fieldTestClass->SetField(nullptr, field, &obj);
+
+	handle->Release();
+
+	CryLogAlways("TEST: Getting a static field.");
+
+	fieldTestClass->GetField(nullptr, field, &obj);
+
+	IMonoField *numberField = fieldTestClass->GetField("Number");
+	IMonoField *textField   = fieldTestClass->GetField("Text");
+
+	numberField->Get(obj, &number);
+	textField->Get(obj, &text);
+
+	CryLogAlways("TEST: Numeric value = %d", number);
+	const char *ntText = ToNativeString(text);
+	CryLogAlways("TEST: Text value = %s", ntText);
+	delete ntText;
+}
+
 #pragma endregion
