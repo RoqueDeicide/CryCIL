@@ -132,7 +132,7 @@ IMonoConstructor *MonoClassWrapper::GetConstructor(List<IMonoClass *> &classes)
 	return static_cast<IMonoConstructor *>(this->GetMethod(".ctor", classes));
 }
 
-IMonoConstructor *MonoClassWrapper::GetConstructor(List<Pair<IMonoClass *, const char *>> &specifiedClasses)
+IMonoConstructor *MonoClassWrapper::GetConstructor(List<ClassSpec> &specifiedClasses)
 {
 	return static_cast<IMonoConstructor *>(this->GetMethod(".ctor", specifiedClasses));
 }
@@ -270,7 +270,7 @@ IMonoMethod *MonoClassWrapper::GetMethod(const char *name, List<IMonoClass *> &c
 	return nullptr;
 }
 
-IMonoMethod *MonoClassWrapper::GetMethod(const char *name, List<Pair<IMonoClass *, const char *>> &specifiedClasses)
+IMonoMethod *MonoClassWrapper::GetMethod(const char *name, List<ClassSpec> &specifiedClasses)
 {
 	auto paramTypeNames = List<const char *>(specifiedClasses.Length);
 

@@ -319,9 +319,9 @@ void TestGettingTheConstructors()
 
 	CryLogAlways("TEST: Getting constructor using a list of IMonoClass wrappers with postfix strings.");
 
-	auto klassPostList = List<Pair<IMonoClass *, const char *>>(1);
+	auto klassPostList = List<ClassSpec>(1);
 
-	klassPostList.Add(Pair<IMonoClass *, const char *>(MonoEnv->CoreLibrary->Char, "[]"));
+	klassPostList.Add(ClassSpec(MonoEnv->CoreLibrary->Char, "[]"));
 
 	IMonoConstructor *ctorSpecifiedClassList = stringClass->GetConstructor(klassPostList);
 
@@ -410,9 +410,9 @@ void TestObjectCreation()
 
 	CryLogAlways("TEST: Getting a constructor that accepts a Double and a reference to String.");
 
-	auto typesDoubleStringRef = List<Pair<IMonoClass *, const char *>>(2);
-	typesDoubleStringRef.Add(Pair<IMonoClass *, const char *>(MonoEnv->CoreLibrary->Double, ""));
-	typesDoubleStringRef.Add(Pair<IMonoClass *, const char *>(MonoEnv->CoreLibrary->String, "&"));
+	auto typesDoubleStringRef = List<ClassSpec>(2);
+	typesDoubleStringRef.Add(ClassSpec(MonoEnv->CoreLibrary->Double, ""));
+	typesDoubleStringRef.Add(ClassSpec(MonoEnv->CoreLibrary->String, "&"));
 	IMonoConstructor *ctorDoubleStringRef = ctorTestClass->GetConstructor(typesDoubleStringRef);
 
 	CryLogAlways("TEST: Invoking a constructor.");
@@ -535,11 +535,11 @@ void TestGettingMethods()
 
 	CryLogAlways("TEST: Getting the method using a list of IMonoClass objects with post-fixes.");
 
-	auto specifiedClasses = List<Pair<IMonoClass *, const char *>>(3);
+	auto specifiedClasses = List<ClassSpec>(3);
 
-	specifiedClasses.Add(Pair<IMonoClass *, const char *>(stringClass, ""));
-	specifiedClasses.Add(Pair<IMonoClass *, const char *>(typeClass,   ""));
-	specifiedClasses.Add(Pair<IMonoClass *, const char *>(typeClass, "[]"));
+	specifiedClasses.Add(ClassSpec(stringClass, ""));
+	specifiedClasses.Add(ClassSpec(typeClass,   ""));
+	specifiedClasses.Add(ClassSpec(typeClass, "[]"));
 
 	method = typeClass->GetMethod("GetProperty", specifiedClasses);
 
@@ -694,11 +694,11 @@ void TestStaticMethodInvocation()
 
 	CryLogAlways("TEST: Getting a method that accepts a reference to value-type object.");
 
-	auto specClasses = List<Pair<IMonoClass *, const char *>>(4);
-	specClasses.Add(Pair<IMonoClass *, const char *>(vector3Class, "&"));
-	specClasses.Add(Pair<IMonoClass *, const char *>(vector3Class, ""));
-	specClasses.Add(Pair<IMonoClass *, const char *>(vector3Class, ""));
-	specClasses.Add(Pair<IMonoClass *, const char *>(singleClass,  ""));
+	auto specClasses = List<ClassSpec>(4);
+	specClasses.Add(ClassSpec(vector3Class, "&"));
+	specClasses.Add(ClassSpec(vector3Class, ""));
+	specClasses.Add(ClassSpec(vector3Class, ""));
+	specClasses.Add(ClassSpec(singleClass,  ""));
 
 	IMonoMethod *staticMethod = lerpClass->GetMethod("Apply", specClasses);
 

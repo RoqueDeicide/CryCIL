@@ -2,6 +2,14 @@
 
 #include "IMonoAliases.h"
 
+//! Represents a method parameter specification.
+//!
+//! Represents a pair where first value is a pointer to the class wrapper that represents a type of the
+//! parameter, and second value is postfix that specifies the kind of parameter's type.
+//!
+//! Check IMonoClass::GetMethod() overloads for more information.
+typedef Pair<IMonoClass *, const char *> ClassSpec;
+
 //! Defines interface of objects that wrap functionality of MonoClass type.
 //!
 //! General advice: Avoid dealing with generics when using this API: the embedded Mono API is way too
@@ -58,8 +66,7 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!
 	//! @param specifiedClasses A list of classes and postfixes that specify constructor signature
 	//!                         to use.
-	VIRTUAL_API virtual IMonoConstructor *GetConstructor
-		(List<Pair<IMonoClass *, const char *>> &specifiedClasses) = 0;
+	VIRTUAL_API virtual IMonoConstructor *GetConstructor(List<ClassSpec> &specifiedClasses) = 0;
 	//! Gets the constructor that matches given description.
 	//!
 	//! Refer to documentation of corresponding GetMethod() overload for details.
@@ -125,8 +132,7 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!
 	//! @param name             Name of the method to get.
 	//! @param specifiedClasses A list of classes and postfixes that specify method signature to use.
-	VIRTUAL_API virtual IMonoMethod *GetMethod
-		(const char *name, List<Pair<IMonoClass *, const char *>> &specifiedClasses) = 0;
+	VIRTUAL_API virtual IMonoMethod *GetMethod(const char *name, List<ClassSpec> &specifiedClasses) = 0;
 	//! Gets the method that matches given description.
 	//!
 	//! The easiest way to learn the signature of the method is to use the following code:

@@ -54,10 +54,10 @@ void StackParameters_Static()
 											  ->GetNestedType("AroundAxis");
 
 	// Get Override method for Matrix33.
-	auto typeSpecs = List<Pair<IMonoClass *, const char *>>(3);
-	typeSpecs.Add(Pair<IMonoClass *, const char *>(MonoEnv->Cryambly->Matrix33,  "&"));
-	typeSpecs.Add(Pair<IMonoClass *, const char *>(MonoEnv->Cryambly->Vector3,   "&"));
-	typeSpecs.Add(Pair<IMonoClass *, const char *>(MonoEnv->CoreLibrary->Single, ""));
+	auto typeSpecs = List<ClassSpec>(3);
+	typeSpecs.Add(ClassSpec(MonoEnv->Cryambly->Matrix33,  "&"));
+	typeSpecs.Add(ClassSpec(MonoEnv->Cryambly->Vector3,   "&"));
+	typeSpecs.Add(ClassSpec(MonoEnv->CoreLibrary->Single, ""));
 	IMonoMethod *overrideMethod = aroundAxis->GetMethod("Override", typeSpecs);
 
 	// Create an array of arguments.
