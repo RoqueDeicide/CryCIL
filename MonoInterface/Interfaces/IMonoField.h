@@ -48,4 +48,28 @@ struct IMonoField : public IMonoFunctionalityWrapper
 	VIRTUAL_API virtual IMonoClass *GetDeclaringType() = 0;
 	VIRTUAL_API virtual unsigned int GetOffset() = 0;
 	VIRTUAL_API virtual MonoFieldAttributes GetAttributes() = 0;
+
+	//! Gets the value of the field.
+	//!
+	//! @param obj Object of which field to get.
+	//!
+	//! @tparam Type of the field.
+	template<typename FieldType> FieldType Get(mono::object obj)
+	{
+		FieldType valueContainer;
+
+		this->Get(obj, &valueContainer);
+
+		return valueContainer;
+	}
+	//! Gets the value of the field.
+	//!
+	//! @param obj   Object of which field to get.
+	//! @param value A value to set.
+	//!
+	//! @tparam Type of the field.
+	template <typename FieldType> void Assign(mono::object obj, FieldType value)
+	{
+		this->Set(obj, &value);
+	}
 };

@@ -361,4 +361,55 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	VIRTUAL_API virtual ReadOnlyList<IMonoProperty *> *GetProperties() = 0;
 	VIRTUAL_API virtual ReadOnlyList<IMonoEvent *>    *GetEvents() = 0;
 	VIRTUAL_API virtual ReadOnlyList<IMonoMethod *>   *GetMethods() = 0;
+
+	//! Gets the value of the object's field.
+	//!
+	//! @param obj   Object which field to get. Use nullptr when working with a static field.
+	//! @param name  Name of the field which value to get.
+	//!
+	//! @seealso IMonoHandle::SetField
+	template <typename FieldType> FieldType GetField(mono::object obj, const char *name)
+	{
+		FieldType valueContainer;
+
+		this->GetField(obj, name, &valueContainer);
+
+		return valueContainer;
+	}
+	//! Sets the value of the object's field.
+	//!
+	//! @param obj   Object which field to set. Use nullptr when working with a static field.
+	//! @param name  Name of the field which value to set.
+	//! @param value New value to assign to the field.
+	//!
+	//! @seealso IMonoHandle::SetField
+	template <typename FieldType> void AssignField(mono::object obj, const char *name, FieldType value)
+	{
+		this->SetField(obj, name, &value);
+	}
+	//! Gets the value of the object's field.
+	//!
+	//! @param obj   Object which field to get. Use nullptr when working with a static field.
+	//! @param field Wrapper that identifies the field which value to get.
+	//!
+	//! @seealso IMonoHandle::SetField
+	template <typename FieldType> FieldType GetField(mono::object obj, IMonoField *field)
+	{
+		FieldType valueContainer;
+
+		this->GetField(obj, field, &valueContainer);
+
+		return valueContainer;
+	}
+	//! Sets the value of the object's field.
+	//!
+	//! @param obj   Object which field to set. Use nullptr when working with a static field.
+	//! @param field Wrapper that identifies the field which value to set.
+	//! @param value New value to assign to the field.
+	//!
+	//! @seealso IMonoHandle::SetField
+	template <typename FieldType> void AssignField(mono::object obj, IMonoField *field, FieldType value)
+	{
+		this->SetField(obj, field, &value);
+	}
 };
