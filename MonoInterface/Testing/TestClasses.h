@@ -1003,11 +1003,8 @@ void TestStaticFields()
 
 	fieldTestClass->GetField(nullptr, field, &obj);
 
-	IMonoField *numberField = fieldTestClass->GetField("Number");
-	IMonoField *textField   = fieldTestClass->GetField("Text");
-
-	numberField->Get(obj, &number);
-	textField->Get(obj, &text);
+	number = fieldTestClass->GetField<int>         (obj, "Number");
+	text   = fieldTestClass->GetField<mono::string>(obj, "Text");
 
 	CryLogAlways("TEST: Numeric value = %d", number);
 	const char *ntText = ToNativeString(text);
