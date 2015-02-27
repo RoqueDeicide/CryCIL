@@ -30,10 +30,24 @@ void *MonoField::GetWrappedPointer()
 
 void MonoField::Get(mono::object obj, void *value)
 {
-	this->klass->GetField(obj, this, value);
+	if (obj)
+	{
+		mono_field_get_value((MonoObject *)obj, this->field, value);
+	}
+	else
+	{
+		this->klass->GetField(obj, this, value);
+	}
 }
 
 void MonoField::Set(mono::object obj, void *value)
 {
-	this->klass->SetField(obj, this, value);
+	if (obj)
+	{
+		mono_field_set_value((MonoObject *)obj, this->field, value);
+	}
+	else
+	{
+		this->klass->SetField(obj, this, value);
+	}
 }
