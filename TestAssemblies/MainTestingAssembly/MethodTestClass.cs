@@ -22,7 +22,8 @@ namespace MainTestingAssembly
 		public string Text;
 	}
 	/// <summary>
-	/// Used from embedded Mono framework to test functionality of IMonoMethod implementation.
+	/// Used from embedded Mono framework to test functionality of IMonoMethod
+	/// implementation.
 	/// </summary>
 	public class MethodTestClass
 	{
@@ -30,9 +31,9 @@ namespace MainTestingAssembly
 		/// Creates an array of digits from a number.
 		/// </summary>
 		/// <param name="numberPtr">A pointer to the number.</param>
-		/// <param name="digits">A resultant array of digits.</param>
+		/// <param name="digits">   A resultant array of digits.</param>
 		/// <returns>True, if given pointer is valid, otherwise false.</returns>
-		public static unsafe bool NumberToDigits(int *numberPtr, out int[] digits)
+		public static unsafe bool NumberToDigits(int* numberPtr, out int[] digits)
 		{
 			digits = null;
 			try
@@ -46,7 +47,7 @@ namespace MainTestingAssembly
 
 				int number = *numberPtr;
 
-				for (; number != 0;)
+				for (; number != 0; )
 				{
 					currentDigits.Add(number % 10);
 					number /= 10;
