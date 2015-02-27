@@ -2,6 +2,7 @@
 #include "API_ImplementationHeaders.h"
 
 MonoMethodWrapper::MonoMethodWrapper(MonoMethod *method)
+	: rawThunk(nullptr)
 {
 	this->wrappedMethod = method;
 	this->signature = mono_method_signature(this->wrappedMethod);
@@ -197,3 +198,32 @@ const char *MonoMethodWrapper::GetParametersList()
 {
 	return this->paramList;
 }
+
+void *MonoMethodWrapper::GetFunctionPointer()
+{
+	if (!CompileMethod)
+	{
+		CompileMethod = (CompileMethodThunk)MonoEnv->CoreLibrary
+												   ->GetClass("System", "RuntimeMethodHandle")
+												   ->GetMethod("GetFunctionPointer", 1)
+												   ->UnmanagedThunk;
+	}
+
+	if (!this->rawThunk)
+	{
+		mono::exception ex;
+		mono::intptr result = CompileMethod(BoxPtr(this->wrappedMethod), &ex);
+		if (!ex)
+		{
+			this->rawThunk = Unbox<void *>(result);
+		}
+		else
+		{
+			ReportError("Unable to compile the method into a raw thunk.");
+		}
+	}
+
+	return this->rawThunk;
+}
+
+CompileMethodThunk MonoMethodWrapper::CompileMethod = nullptr;

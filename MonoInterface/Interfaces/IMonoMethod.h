@@ -173,6 +173,10 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	//! @endcode
 	//! @example DoxygenExampleFiles\UnmanagedThunkExample.h
 	__declspec(property(get = GetThunk)) void *UnmanagedThunk;
+	//! Gets a raw thunk of this method.
+	//!
+	//! Raw thunks are a little bit of a mystery.
+	__declspec(property(get = GetFunctionPointer)) void *RawThunk;
 	//! Gets the name of the method.
 	__declspec(property(get = GetName)) const char *Name;
 	//! Gets number of arguments this method accepts.
@@ -256,6 +260,7 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 		(void *object, void **params, mono::exception *exc = nullptr, bool polymorph = false) = 0;
 
 	VIRTUAL_API virtual void *GetThunk() = 0;
+	VIRTUAL_API virtual void *GetFunctionPointer() = 0;
 	VIRTUAL_API virtual const char *GetName() = 0;
 	VIRTUAL_API virtual int GetParameterCount() = 0;
 	VIRTUAL_API virtual List<const char *> *GetParameterTypeNames() = 0;

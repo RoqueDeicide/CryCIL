@@ -3,6 +3,8 @@
 #include "IMonoInterface.h"
 #include "MonoHeaders.h"
 
+typedef mono::intptr(__stdcall *CompileMethodThunk)(mono::intptr, mono::exception *);
+
 struct MonoMethodWrapper : public IMonoMethod
 {
 private:
@@ -14,6 +16,9 @@ private:
 	const char *paramList;
 	List<IMonoClass *> paramClasses;
 	List<const char *> paramTypeNames;
+	void *rawThunk;
+
+	static CompileMethodThunk CompileMethod;
 public:
 
 	MonoMethodWrapper(MonoMethod *method);
@@ -67,4 +72,5 @@ public:
 
 	virtual const char *GetParametersList();
 
+	virtual void *GetFunctionPointer();
 };
