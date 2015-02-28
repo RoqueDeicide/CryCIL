@@ -8,7 +8,7 @@ const char *MonoField::GetName()
 	return this->name;
 }
 
-IMonoClass *MonoField::GetDeclaringType()
+IMonoClass *MonoField::GetDeclaringClass()
 {
 	return this->klass;
 }

@@ -3,7 +3,7 @@
 #include "IMonoAliases.h"
 
 //! Defines interface of objects that wrap functionality of MonoMethod type.
-struct IMonoMethod : public IMonoFunctionalityWrapper
+struct IMonoMethod : public IMonoMember
 {
 	//! Returns a pointer to a C-style function that can be invoked like a standard function pointer.
 	//!
@@ -177,8 +177,6 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	//!
 	//! Raw thunks are a little bit of a mystery.
 	__declspec(property(get = GetFunctionPointer)) void *RawThunk;
-	//! Gets the name of the method.
-	__declspec(property(get = GetName)) const char *Name;
 	//! Gets number of arguments this method accepts.
 	__declspec(property(get = GetParameterCount)) int ParameterCount;
 	//! Gets a list of parameters this method accepts.
@@ -187,8 +185,6 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	__declspec(property(get = GetParameterClasses)) List<IMonoClass *> *ParameterClasses;
 	//! Gets a list of parameters this method accepts.
 	__declspec(property(get = GetParametersList)) const char *Parameters;
-	//! Gets a pointer to the class where this method is declared.
-	__declspec(property(get = GetDeclaringClass)) IMonoClass *DeclaringClass;
 
 	//! Invokes this method without any parameters.
 	//!
@@ -263,10 +259,8 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 
 	VIRTUAL_API virtual void *GetThunk() = 0;
 	VIRTUAL_API virtual void *GetFunctionPointer() = 0;
-	VIRTUAL_API virtual const char *GetName() = 0;
 	VIRTUAL_API virtual int GetParameterCount() = 0;
 	VIRTUAL_API virtual List<const char *> *GetParameterTypeNames() = 0;
 	VIRTUAL_API virtual List<IMonoClass *> *GetParameterClasses() = 0;
 	VIRTUAL_API virtual const char *GetParametersList() = 0;
-	VIRTUAL_API virtual IMonoClass *GetDeclaringClass() = 0;
 };

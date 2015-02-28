@@ -22,12 +22,8 @@ enum MonoFieldAttributes : unsigned int
 };
 
 //! Defines a wrapper for a Mono field metadata object.
-struct IMonoField : public IMonoFunctionalityWrapper
+struct IMonoField : public IMonoMember
 {
-	//! Gets name of the field.
-	__declspec(property(get = GetName)) const char *Name;
-	//! Gets the class where this field is declared.
-	__declspec(property(get = GetDeclaringType)) IMonoClass *DeclaringType;
 	//! Gets offset of the field.
 	__declspec(property(get = GetOffset)) unsigned int Offset;
 	//! Gets attributes of the field.
@@ -44,8 +40,6 @@ struct IMonoField : public IMonoFunctionalityWrapper
 	//! @param value Pointer to the object that contains the new value for the field.
 	VIRTUAL_API virtual void Set(mono::object obj, void *value) = 0;
 
-	VIRTUAL_API virtual const char *GetName() = 0;
-	VIRTUAL_API virtual IMonoClass *GetDeclaringType() = 0;
 	VIRTUAL_API virtual unsigned int GetOffset() = 0;
 	VIRTUAL_API virtual MonoFieldAttributes GetAttributes() = 0;
 

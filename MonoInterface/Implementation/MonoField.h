@@ -23,7 +23,7 @@ public:
 
 	virtual const char *GetName();
 
-	virtual IMonoClass *GetDeclaringType();
+	virtual IMonoClass *GetDeclaringClass();
 
 	virtual unsigned int GetOffset();
 

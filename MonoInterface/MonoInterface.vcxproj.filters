@@ -241,6 +241,9 @@
     <ClInclude Include="ReadOnlyList.h">
       <Filter>Extras</Filter>
     </ClInclude>
+    <ClInclude Include="Interfaces\IMonoMember.h">
+      <Filter>Interfaces\Metadata</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />

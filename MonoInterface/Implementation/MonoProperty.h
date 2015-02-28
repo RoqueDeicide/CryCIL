@@ -7,10 +7,12 @@ struct MonoPropertyWrapper : public IMonoProperty
 {
 private:
 	MonoProperty *prop;
+	IMonoClass *klass;
 public:
-	MonoPropertyWrapper(MonoProperty *prop)
+	MonoPropertyWrapper(MonoProperty *prop, IMonoClass *klass = nullptr)
 	{
 		this->prop = prop;
+		this->klass = klass;
 	}
 
 	virtual IMonoMethod *GetGetter();
@@ -19,6 +21,8 @@ public:
 
 	virtual void *GetWrappedPointer();
 
-	virtual const char * GetName();
+	virtual const char *GetName();
+
+	virtual IMonoClass *GetDeclaringClass();
 
 };

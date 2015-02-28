@@ -3,7 +3,7 @@
 #include "IMonoAliases.h"
 
 //! Represents a wrapper for a Mono event.
-struct IMonoEvent : public IMonoFunctionalityWrapper
+struct IMonoEvent : public IMonoMember
 {
 	//! Gets IMonoMethod that allows you to subscribe to the event.
 	__declspec(property(get = GetAdd)) IMonoMethod *Add;
@@ -16,11 +16,8 @@ struct IMonoEvent : public IMonoFunctionalityWrapper
 	//! On<Name of the event>. For instance if the event is called Closed, then raise method would be
 	//! OnClosed.
 	__declspec(property(get = GetRaise)) IMonoMethod *Raise;
-	//! Gets name of the event.
-	__declspec(property(get = GetName)) const char *Name;
 
 	VIRTUAL_API virtual IMonoMethod *GetAdd() = 0;
 	VIRTUAL_API virtual IMonoMethod *GetRemove() = 0;
 	VIRTUAL_API virtual IMonoMethod *GetRaise() = 0;
-	VIRTUAL_API virtual const char *GetName() = 0;
 };

@@ -22,3 +22,8 @@ const char *MonoPropertyWrapper::GetName()
 	return mono_property_get_name(this->prop);
 }
 
+IMonoClass *MonoPropertyWrapper::GetDeclaringClass()
+{
+	return this->klass;
+}
+

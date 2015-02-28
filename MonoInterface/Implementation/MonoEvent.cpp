@@ -48,3 +48,8 @@ void *MonoEventWrapper::GetWrappedPointer()
 	return this->_event;
 }
 
+IMonoClass *MonoEventWrapper::GetDeclaringClass()
+{
+	return this->klass;
+}
+

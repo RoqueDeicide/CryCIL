@@ -256,6 +256,7 @@
     <ClInclude Include="Interfaces\IMonoGCHandle.h" />
     <ClInclude Include="Interfaces\IMonoHandle.h" />
     <ClInclude Include="Interfaces\IMonoInterop.h" />
+    <ClInclude Include="Interfaces\IMonoMember.h" />
     <ClInclude Include="Interfaces\IMonoMethod.h" />
     <ClInclude Include="Interfaces\IMonoObjects.h" />
     <ClInclude Include="Interfaces\IMonoProperty.h" />
