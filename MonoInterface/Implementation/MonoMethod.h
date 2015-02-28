@@ -23,7 +23,7 @@ private:
 	static CompileMethodThunk CompileMethod;
 public:
 
-	MonoMethodWrapper(MonoMethod *method, IMonoClass *klass);
+	MonoMethodWrapper(MonoMethod *method, IMonoClass *klass = nullptr);
 	~MonoMethodWrapper()
 	{
 		SAFE_DELETE(this->paramList);

@@ -4,7 +4,22 @@
 MonoMethodWrapper::MonoMethodWrapper(MonoMethod *method, IMonoClass *klass)
 	: rawThunk(nullptr)
 {
-	this->klass = klass;
+	if (klass)
+	{
+		this->klass = klass;
+	}
+	else
+	{
+		MonoClass *methodClass = mono_method_get_class(method);
+		if (methodClass)
+		{
+			this->klass = MonoClassCache::Wrap(methodClass);
+		}
+		else
+		{
+			this->klass = nullptr;
+		}
+	}
 
 	this->wrappedMethod = method;
 	this->signature = mono_method_signature(this->wrappedMethod);
@@ -216,7 +231,9 @@ void *MonoMethodWrapper::GetFunctionPointer()
 	if (!this->rawThunk)
 	{
 		ReportMessage("Compiling the raw thunk for the method %s::%s(%s)",
-					  this->klass->FullNameIL, this->name, this->paramList);
+					  this->klass ? (this->klass->FullNameIL) : "",
+					  this->name,
+					  this->paramList);
 		mono::exception ex;
 		mono::intptr result = CompileMethod(BoxPtr(this->wrappedMethod), &ex);
 		if (!ex)
