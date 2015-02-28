@@ -203,19 +203,23 @@ void *MonoMethodWrapper::GetFunctionPointer()
 {
 	if (!CompileMethod)
 	{
+		CryLogAlways("Getting the compile method's thunk.");
 		CompileMethod = (CompileMethodThunk)MonoEnv->CoreLibrary
 												   ->GetClass("System", "RuntimeMethodHandle")
 												   ->GetMethod("GetFunctionPointer", 1)
 												   ->UnmanagedThunk;
+		CryLogAlways("Got the compile method's thunk.");
 	}
 
 	if (!this->rawThunk)
 	{
+		ReportMessage("Compiling the raw thunk for the method %s::%s(%s)", mono_class_get_name(mono_method_get_class(this->wrappedMethod)), this->name, this->paramList);
 		mono::exception ex;
 		mono::intptr result = CompileMethod(BoxPtr(this->wrappedMethod), &ex);
 		if (!ex)
 		{
 			this->rawThunk = Unbox<void *>(result);
+			ReportMessage("Compilation successful.");
 		}
 		else
 		{
