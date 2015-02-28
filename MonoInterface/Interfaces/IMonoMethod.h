@@ -187,6 +187,8 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	__declspec(property(get = GetParameterClasses)) List<IMonoClass *> *ParameterClasses;
 	//! Gets a list of parameters this method accepts.
 	__declspec(property(get = GetParametersList)) const char *Parameters;
+	//! Gets a pointer to the class where this method is declared.
+	__declspec(property(get = GetDeclaringClass)) IMonoClass *DeclaringClass;
 
 	//! Invokes this method without any parameters.
 	//!
@@ -266,4 +268,5 @@ struct IMonoMethod : public IMonoFunctionalityWrapper
 	VIRTUAL_API virtual List<const char *> *GetParameterTypeNames() = 0;
 	VIRTUAL_API virtual List<IMonoClass *> *GetParameterClasses() = 0;
 	VIRTUAL_API virtual const char *GetParametersList() = 0;
+	VIRTUAL_API virtual IMonoClass *GetDeclaringClass() = 0;
 };

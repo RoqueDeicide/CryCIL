@@ -33,7 +33,7 @@ MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 				this->methods.At(methodName) = new List<IMonoMethod *>(5);
 			}
 
-			IMonoMethod *methodWrapper = new MonoMethodWrapper(met);
+			IMonoMethod *methodWrapper = new MonoMethodWrapper(met, this);
 
 			this->methods.At(methodName)->Add(methodWrapper);
 		}

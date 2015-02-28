@@ -1,9 +1,11 @@
 #include "stdafx.h"
 #include "API_ImplementationHeaders.h"
 
-MonoMethodWrapper::MonoMethodWrapper(MonoMethod *method)
+MonoMethodWrapper::MonoMethodWrapper(MonoMethod *method, IMonoClass *klass)
 	: rawThunk(nullptr)
 {
+	this->klass = klass;
+
 	this->wrappedMethod = method;
 	this->signature = mono_method_signature(this->wrappedMethod);
 	this->paramCount = mono_signature_get_param_count(this->signature);
@@ -213,7 +215,8 @@ void *MonoMethodWrapper::GetFunctionPointer()
 
 	if (!this->rawThunk)
 	{
-		ReportMessage("Compiling the raw thunk for the method %s::%s(%s)", mono_class_get_name(mono_method_get_class(this->wrappedMethod)), this->name, this->paramList);
+		ReportMessage("Compiling the raw thunk for the method %s::%s(%s)",
+					  this->klass->FullNameIL, this->name, this->paramList);
 		mono::exception ex;
 		mono::intptr result = CompileMethod(BoxPtr(this->wrappedMethod), &ex);
 		if (!ex)
@@ -228,6 +231,11 @@ void *MonoMethodWrapper::GetFunctionPointer()
 	}
 
 	return this->rawThunk;
+}
+
+IMonoClass *MonoMethodWrapper::GetDeclaringClass()
+{
+	return this->klass;
 }
 
 CompileMethodThunk MonoMethodWrapper::CompileMethod = nullptr;
