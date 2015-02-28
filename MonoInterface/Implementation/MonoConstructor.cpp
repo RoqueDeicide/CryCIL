@@ -3,8 +3,25 @@
 #include "MonoConstructor.h"
 #include "MonoClass.h"
 
-MonoConstructor::MonoConstructor(MonoMethod *method)
+MonoConstructor::MonoConstructor(MonoMethod *method, IMonoClass *klass)
 {
+	if (klass)
+	{
+		this->klass = klass;
+	}
+	else
+	{
+		MonoClass *methodClass = mono_method_get_class(method);
+		if (methodClass)
+		{
+			this->klass = MonoClassCache::Wrap(methodClass);
+		}
+		else
+		{
+			this->klass = nullptr;
+		}
+	}
+
 	this->wrappedMethod = method;
 	this->signature = mono_method_signature(this->wrappedMethod);
 	this->paramCount = mono_signature_get_param_count(this->signature);
@@ -169,3 +186,44 @@ void *MonoConstructor::GetWrappedPointer()
 {
 	return this->wrappedMethod;
 }
+
+void *MonoConstructor::GetFunctionPointer()
+{
+	if (!CompileMethod)
+	{
+		CryLogAlways("Getting the compile method's thunk.");
+		CompileMethod = (CompileMethodThunk)MonoEnv->CoreLibrary
+												   ->GetClass("System", "RuntimeMethodHandle")
+												   ->GetMethod("GetFunctionPointer", 1)
+												   ->UnmanagedThunk;
+		CryLogAlways("Got the compile method's thunk.");
+	}
+
+	if (!this->rawThunk)
+	{
+		ReportMessage("Compiling the raw thunk for the method %s::%s(%s)",
+					  this->klass ? (this->klass->FullNameIL) : "",
+					  this->name,
+					  this->paramList);
+		mono::exception ex;
+		mono::intptr result = CompileMethod(BoxPtr(this->wrappedMethod), &ex);
+		if (!ex)
+		{
+			this->rawThunk = Unbox<void *>(result);
+			ReportMessage("Compilation successful.");
+		}
+		else
+		{
+			ReportError("Unable to compile the method into a raw thunk.");
+		}
+	}
+
+	return this->rawThunk;
+}
+
+IMonoClass *MonoConstructor::GetDeclaringClass()
+{
+	return this->klass;
+}
+
+CompileMethodThunk MonoConstructor::CompileMethod = nullptr;

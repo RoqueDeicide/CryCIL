@@ -13,8 +13,13 @@ private:
 	const char *paramList;
 	List<IMonoClass *> paramClasses;
 	List<const char *> paramTypeNames;
+	void *rawThunk;
+
+	IMonoClass *klass;
+
+	static CompileMethodThunk CompileMethod;
 public:
-	MonoConstructor(MonoMethod *method);
+	MonoConstructor(MonoMethod *method, IMonoClass *klass = nullptr);
 	~MonoConstructor()
 	{
 		SAFE_DELETE(this->paramList);
@@ -47,4 +52,9 @@ public:
 	virtual const char *GetParametersList();
 
 	virtual void *GetWrappedPointer();
+
+	virtual void *GetFunctionPointer();
+
+	virtual IMonoClass *GetDeclaringClass();
+
 };
