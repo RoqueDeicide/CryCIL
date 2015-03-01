@@ -37,13 +37,13 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//! Indicates whether this class is a delegate.
 	__declspec(property(get = GetIsDelegate)) bool IsDelegate;
 	//! Gets the list of fields available through this class.
-	__declspec(property(get = GetFields)) ReadOnlyList<IMonoField *> *Fields;
-	//! Gets the list of fields available through this class.
+	__declspec(property(get = GetFields))     ReadOnlyList<IMonoField *>    *Fields;
+	//! Gets the list of properties available through this class.
 	__declspec(property(get = GetProperties)) ReadOnlyList<IMonoProperty *> *Properties;
-	//! Gets the list of fields available through this class.
-	__declspec(property(get = GetEvents)) ReadOnlyList<IMonoEvent *> *Events;
-	//! Gets the list of fields available through this class.
-	__declspec(property(get = GetMethods)) ReadOnlyList<IMonoMethod *> *Methods;
+	//! Gets the list of events available through this class.
+	__declspec(property(get = GetEvents))     ReadOnlyList<IMonoEvent *>    *Events;
+	//! Gets the list of functions available through this class.
+	__declspec(property(get = GetFunctions))  ReadOnlyList<IMonoFunction *> *Functions;
 	
 	//! Gets one of the constructors that can accept specified number of arguments.
 	//!
@@ -87,7 +87,7 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!
 	//! @param name  Name of the method to get.
 	//! @param types An array of System.Type objects that specify method signature to use.
-	VIRTUAL_API virtual IMonoMethod *GetMethod(const char *name, IMonoArray *types = nullptr) = 0;
+	VIRTUAL_API virtual IMonoFunction *GetFunction(const char *name, IMonoArray *types = nullptr) = 0;
 	//! Gets method that can accept arguments of specified types.
 	//!
 	//! This method does not bother with checking how arguments are passed to the method.
@@ -116,7 +116,7 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!
 	//! @param name    Name of the method to get.
 	//! @param classes A list IMonoClass wrappers that specify method signature to use.
-	VIRTUAL_API virtual IMonoMethod *GetMethod(const char *name, List<IMonoClass *> &classes) = 0;
+	VIRTUAL_API virtual IMonoFunction *GetFunction(const char *name, List<IMonoClass *> &classes) = 0;
 	//! Gets method that can accept arguments of specified types.
 	//!
 	//! Postfixes allow you to specify what kind of parameter to use.
@@ -132,7 +132,7 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!
 	//! @param name             Name of the method to get.
 	//! @param specifiedClasses A list of classes and postfixes that specify method signature to use.
-	VIRTUAL_API virtual IMonoMethod *GetMethod(const char *name, List<ClassSpec> &specifiedClasses) = 0;
+	VIRTUAL_API virtual IMonoFunction *GetFunction(const char *name, List<ClassSpec> &specifiedClasses) = 0;
 	//! Gets the method that matches given description.
 	//!
 	//! The easiest way to learn the signature of the method is to use the following code:
@@ -167,7 +167,7 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!
 	//! @returns A pointer to the wrapper to the found method. Null is returned if
 	//!          no method matching the description was found.
-	VIRTUAL_API virtual IMonoMethod *GetMethod(const char *name, const char *params) = 0;
+	VIRTUAL_API virtual IMonoFunction *GetFunction(const char *name, const char *params) = 0;
 	//! Gets a method defined in this class.
 	//!
 	//! Examples:
@@ -189,29 +189,27 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!
 	//! @param name           Name of the method to find.
 	//! @param paramTypeNames A list of full type names that specify the parameters the method accepts.
-	VIRTUAL_API virtual IMonoMethod *GetMethod(const char *name, List<const char *> &paramTypeNames) = 0;
+	VIRTUAL_API virtual IMonoFunction *GetFunction(const char *name, List<const char *> &paramTypeNames) = 0;
 	//! Gets the first method that matches given description.
 	//!
 	//! @param name       Name of the method to find.
 	//! @param paramCount Number of arguments the method should take.
-	VIRTUAL_API virtual IMonoMethod *GetMethod(const char *name, int paramCount) = 0;
-	//! Gets an array of methods that matches given description.
+	VIRTUAL_API virtual IMonoFunction *GetFunction(const char *name, int paramCount) = 0;
+	//! Gets an array of functions that matches given description.
 	//!
-	//! @param name       Name of the methods to find.
-	//! @param paramCount Number of arguments the methods should take.
-	//! @param foundCount Reference to the variable that will contain number of found methods.
+	//! @param name       Name of the functions to find.
+	//! @param paramCount Number of arguments the functions should take.
 	//!
 	//! @returns A pointer to the first found method. You should release resultant array once
 	//!          you don't need it anymore.
-	VIRTUAL_API virtual IMonoMethod **GetMethods(const char *name, int paramCount, int &foundCount) = 0;
+	VIRTUAL_API virtual List<IMonoFunction *> *GetFunctions(const char *name, int paramCount) = 0;
 	//! Gets an array of overload of the method.
 	//!
 	//! @param name       Name of the method which overloads to find.
-	//! @param foundCount Reference to the variable that will contain number of found methods.
 	//!
 	//! @returns A pointer to the first found method. You should release resultant array once
 	//!          you don't need it anymore.
-	VIRTUAL_API virtual IMonoMethod **GetMethods(const char *name, int &foundCount) = 0;
+	VIRTUAL_API virtual List<IMonoFunction *> *GetFunctions(const char *name) = 0;
 	//! Gets a metadata wrapper for the field of this class.
 	//!
 	//! @param name Name of the field to get.
@@ -360,7 +358,7 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	VIRTUAL_API virtual ReadOnlyList<IMonoField *>    *GetFields() = 0;
 	VIRTUAL_API virtual ReadOnlyList<IMonoProperty *> *GetProperties() = 0;
 	VIRTUAL_API virtual ReadOnlyList<IMonoEvent *>    *GetEvents() = 0;
-	VIRTUAL_API virtual ReadOnlyList<IMonoMethod *>   *GetMethods() = 0;
+	VIRTUAL_API virtual ReadOnlyList<IMonoFunction *> *GetFunctions() = 0;
 
 	//! Gets the value of the object's field.
 	//!

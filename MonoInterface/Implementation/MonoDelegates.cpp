@@ -35,7 +35,7 @@ IMonoDelegate *MonoDelegates::Create(IMonoClass *delegateType, IMonoMethod *meth
 		thunk = (CreateStaticDelegate)
 			MonoEnv->CoreLibrary
 				   ->GetClass("System", "Delegate")
-				   ->GetMethod("CreateDelegate", "System.Type,System.Reflection.MethodInfo")
+				   ->GetFunction("CreateDelegate", "System.Type,System.Reflection.MethodInfo")
 				   ->UnmanagedThunk;
 	}
 
@@ -85,7 +85,7 @@ IMonoDelegate *MonoDelegates::Create(IMonoClass *delegateType, IMonoMethod *meth
 	{
 		thunk = (CreateInstanceDelegate)
 			MonoEnv->CoreLibrary->GetClass("System", "Delegate")
-			->GetMethod("CreateDelegate", "System.Type,System.Object,System.Reflection.MethodInfo")
+			->GetFunction("CreateDelegate", "System.Type,System.Object,System.Reflection.MethodInfo")
 			->UnmanagedThunk;
 	}
 

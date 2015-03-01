@@ -9,3 +9,6 @@
 #include "Implementation/MonoGC.h"
 #include "Implementation/MonoException.h"
 #include "Implementation/MonoObjects.h"
+#include "Implementation/MonoFunction.h"
+#include "Implementation/MonoConstructor.h"
+#include "Implementation/MonoStaticMethod.h"

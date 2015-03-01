@@ -17,18 +17,17 @@ mono::object MonoDelegateWrapper::GetTarget()
 
 void *MonoDelegateWrapper::GetFunctionPointer()
 {
-	static IMonoMethod *Marshal_getFuntionPointer = nullptr;
-
 	if (!Marshal_getFuntionPointer)
 	{
 		Marshal_getFuntionPointer =
 			MonoEnv->CoreLibrary->GetClass("System.Runtime.InteropServices", "Marshal")
-								->GetMethod("GetFunctionPointerForDelegateInternal", 1);
+								->GetFunction("GetFunctionPointerForDelegateInternal", 1)
+								->ToStatic();
 	}
 
 	void *param = this->delegat;
 	
-	return Unbox<void *>(Marshal_getFuntionPointer->Invoke(nullptr, &param));
+	return Unbox<void *>(Marshal_getFuntionPointer->Invoke(&param));
 }
 
 void *MonoDelegateWrapper::GetWrappedPointer()
@@ -70,3 +69,5 @@ void MonoDelegateWrapper::Update(mono::object newLocation)
 {
 	this->mDelegate = newLocation;
 }
+
+IMonoStaticMethod * MonoDelegateWrapper::Marshal_getFuntionPointer = nullptr;

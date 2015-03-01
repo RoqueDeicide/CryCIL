@@ -14,6 +14,7 @@ private:
 		mono::delegat mDelegate;
 	};
 	IMonoClass *klass;
+	static IMonoStaticMethod *Marshal_getFuntionPointer;
 public:
 	MonoDelegateWrapper(mono::delegat delegat)
 	{

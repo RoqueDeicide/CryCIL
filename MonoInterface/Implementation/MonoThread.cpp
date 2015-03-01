@@ -207,12 +207,12 @@ void MonoThreadWrapper::InitializeStatics()
 {
 	SystemThreadingThread = MonoEnv->CoreLibrary->GetClass("System.Threading", "Thread");
 
-	join =     (JoinThunk)    SystemThreadingThread->GetMethod("Join",   0)->UnmanagedThunk;
-	joinInt =  (JoinIntThunk) SystemThreadingThread->GetMethod("Join",   1)->UnmanagedThunk;
-	abort =    (JoinThunk)    SystemThreadingThread->GetMethod("Abort",  0)->UnmanagedThunk;
-	start =    (StartThunk)   SystemThreadingThread->GetMethod("Start",  0)->UnmanagedThunk;
-	startObj = (StartObjThunk)SystemThreadingThread->GetMethod("Start",  1)->UnmanagedThunk;
-	detach =   (DetachThunk)  SystemThreadingThread->GetMethod("Detach", 0)->UnmanagedThunk;
+	join =     (JoinThunk)    SystemThreadingThread->GetFunction("Join",   0)->UnmanagedThunk;
+	joinInt =  (JoinIntThunk) SystemThreadingThread->GetFunction("Join",   1)->UnmanagedThunk;
+	abort =    (JoinThunk)    SystemThreadingThread->GetFunction("Abort",  0)->UnmanagedThunk;
+	start =    (StartThunk)   SystemThreadingThread->GetFunction("Start",  0)->UnmanagedThunk;
+	startObj = (StartObjThunk)SystemThreadingThread->GetFunction("Start",  1)->UnmanagedThunk;
+	detach =   (DetachThunk)  SystemThreadingThread->GetFunction("Detach", 0)->UnmanagedThunk;
 
 	IMonoProperty *nameProp = SystemThreadingThread->GetProperty("Name");
 	getName = (GetNameThunk)nameProp->GetGetter()->UnmanagedThunk;

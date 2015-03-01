@@ -2,40 +2,15 @@
 
 #include "IMonoInterface.h"
 #include "MonoHeaders.h"
+#include "MonoFunction.h"
 
-typedef mono::intptr(__stdcall *CompileMethodThunk)(mono::intptr, mono::exception *);
+#pragma warning(push)
+#pragma warning(disable : 4250)
 
-struct MonoMethodWrapper : public IMonoMethod
+struct MonoMethodWrapper : public IMonoMethod, public MonoFunction
 {
-private:
-	MonoMethod *wrappedMethod;
-	MonoMethodSignature *signature;
-	int paramCount;
-	const char *name;
-
-	const char *paramList;
-	List<IMonoClass *> paramClasses;
-	List<const char *> paramTypeNames;
-	void *rawThunk;
-
-	IMonoClass *klass;
-
-	static CompileMethodThunk CompileMethod;
-public:
-
-	MonoMethodWrapper(MonoMethod *method, IMonoClass *klass = nullptr);
-	~MonoMethodWrapper()
-	{
-		SAFE_DELETE(this->paramList);
-
-		this->paramClasses.Dispose();
-		
-		for (int i = 0; i < this->paramTypeNames.Length; i++)
-		{
-			delete this->paramTypeNames[i];
-		}
-		this->paramTypeNames.Dispose();
-	}
+	MonoMethodWrapper(MonoMethod *method, IMonoClass *klass = nullptr)
+		: MonoFunction(method, klass) {}
 	//! Invokes this method.
 	virtual mono::object Invoke
 	(
@@ -60,22 +35,6 @@ public:
 		bool polymorph = false
 	);
 
-	virtual void *GetThunk();
-
-	virtual const char *GetName();
-
-	virtual int GetParameterCount();
-
-	virtual void *GetWrappedPointer();
-
-	virtual List<const char *> *GetParameterTypeNames();
-
-	virtual List<IMonoClass *> *GetParameterClasses();
-
-	virtual const char *GetParametersList();
-
-	virtual void *GetFunctionPointer();
-
-	virtual IMonoClass *GetDeclaringClass();
-
 };
+
+#pragma warning(pop)

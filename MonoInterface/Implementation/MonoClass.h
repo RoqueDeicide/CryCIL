@@ -20,10 +20,10 @@ private:
 	const char *fullNameIL;
 	List<IMonoProperty *> properties;
 	List<IMonoEvent *> events;
-	SortedList<const char *, List<IMonoMethod *> *> methods;
+	SortedList<const char *, List<IMonoFunction *> *> methods;
 	List<IMonoField *> fields;
 	MonoVTable *vtable;
-	List<IMonoMethod *> flatMethodList;
+	List<IMonoFunction *> flatMethodList;
 public:
 	MonoClassWrapper(MonoClass *klass);
 	~MonoClassWrapper();
@@ -35,15 +35,15 @@ public:
 	virtual IMonoConstructor *GetConstructor(const char *params);
 	virtual IMonoConstructor *GetConstructor(List<const char *> &paramTypeNames);
 	
-	virtual IMonoMethod *GetMethod(const char *name, IMonoArray *types = nullptr);
-	virtual IMonoMethod *GetMethod(const char *name, List<IMonoClass *> &classes);
-	virtual IMonoMethod *GetMethod(const char *name, List<ClassSpec> &specifiedClasses);
-	virtual IMonoMethod *GetMethod(const char *name, List<const char *> &paramTypeNames);
-	virtual IMonoMethod *GetMethod(const char *name, const char *params);
-	virtual IMonoMethod *GetMethod(const char *name, int paramCount);
+	virtual IMonoFunction *GetFunction(const char *name, IMonoArray *types = nullptr);
+	virtual IMonoFunction *GetFunction(const char *name, List<IMonoClass *> &classes);
+	virtual IMonoFunction *GetFunction(const char *name, List<ClassSpec> &specifiedClasses);
+	virtual IMonoFunction *GetFunction(const char *name, List<const char *> &paramTypeNames);
+	virtual IMonoFunction *GetFunction(const char *name, const char *params);
+	virtual IMonoFunction *GetFunction(const char *name, int paramCount);
 
-	virtual IMonoMethod **GetMethods(const char *name, int paramCount, int &foundCount);
-	virtual IMonoMethod **GetMethods(const char *name, int &foundCount);
+	virtual List<IMonoFunction *> *GetFunctions(const char *name, int paramCount);
+	virtual List<IMonoFunction *> *GetFunctions(const char *name);
 	
 	virtual mono::type GetType();
 	virtual mono::type MakeArrayType();
@@ -92,7 +92,7 @@ public:
 	virtual ReadOnlyList<IMonoField *>    *GetFields();
 	virtual ReadOnlyList<IMonoProperty *> *GetProperties();
 	virtual ReadOnlyList<IMonoEvent *>    *GetEvents();
-	virtual ReadOnlyList<IMonoMethod *>   *GetMethods();
+	virtual ReadOnlyList<IMonoFunction *> *GetFunctions();
 private:
 	void GetFieldValue(mono::object obj, MonoClassField *field, void *value);
 	void SetFieldValue(mono::object obj, MonoClassField *field, void *value);

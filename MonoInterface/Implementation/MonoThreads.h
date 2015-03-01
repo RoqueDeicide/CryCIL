@@ -25,14 +25,14 @@ struct MonoThreads : public IMonoThreads
 			threadCtor =
 				(ThreadCtorThunk)
 					MonoThreadWrapper::SystemThreadingThread
-						->GetMethod(".ctor", "System.Threading.ThreadStart")
+						->GetFunction(".ctor", "System.Threading.ThreadStart")
 						->UnmanagedThunk;
 			threadCtorParam =
 				(ThreadCtorParamThunk)
 					MonoThreadWrapper::SystemThreadingThread
-						->GetMethod(".ctor", "System.Threading.ParameterizedThreadStart")
+						->GetFunction(".ctor", "System.Threading.ParameterizedThreadStart")
 						->UnmanagedThunk;
-			sleep = (SleepThunk)MonoThreadWrapper::SystemThreadingThread->GetMethod("Abort", 0)
+			sleep = (SleepThunk)MonoThreadWrapper::SystemThreadingThread->GetFunction("Abort", 0)
 																		->UnmanagedThunk;
 		
 			staticsInitialized = true;

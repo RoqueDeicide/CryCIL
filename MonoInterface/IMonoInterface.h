@@ -4,6 +4,8 @@
 #include "Interfaces/IMonoBox.h"
 #include "Interfaces/IMonoFunctionalityWrapper.h"
 #include "Interfaces/IMonoMember.h"
+#include "Interfaces/IMonoFunction.h"
+#include "Interfaces/IMonoStaticMethod.h"
 #include "Interfaces/IMonoProperty.h"
 #include "Interfaces/IMonoEvent.h"
 #include "Interfaces/IMonoField.h"

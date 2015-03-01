@@ -367,7 +367,7 @@ void MonoInterface::RegisterDefaultListeners()
 	MethodSignature MonoInterface::GetMethodThunk(IMonoAssembly *assembly, const char *nameSpace, const char *className, const char *methodName, const char *params)
 	{
 		return (MethodSignature)assembly->GetClass(nameSpace, className)
-										->GetMethod(methodName, params)
+										->GetFunction(methodName, params)
 										->UnmanagedThunk;
 	}
 #pragma endregion

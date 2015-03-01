@@ -1,60 +1,23 @@
 #pragma once
 
 #include "IMonoInterface.h"
+#include "MonoFunction.h"
 
-struct MonoConstructor : public IMonoConstructor
+#pragma warning(push)
+#pragma warning(disable : 4250)
+
+struct MonoConstructor : public IMonoConstructor, public MonoFunction
 {
-private:
-	MonoMethod *wrappedMethod;
-	MonoMethodSignature *signature;
-	int paramCount;
-	const char *name;
+	MonoConstructor(MonoMethod *method, IMonoClass *klass = nullptr)
+		: MonoFunction(method, klass) {}
 
-	const char *paramList;
-	List<IMonoClass *> paramClasses;
-	List<const char *> paramTypeNames;
-	void *rawThunk;
+	virtual mono::object Create(mono::exception *ex = nullptr);
+	virtual mono::object Create(IMonoArray *args, mono::exception *ex = nullptr);
+	virtual mono::object Create(void **args, mono::exception *ex = nullptr);
 
-	IMonoClass *klass;
-
-	static CompileMethodThunk CompileMethod;
-public:
-	MonoConstructor(MonoMethod *method, IMonoClass *klass = nullptr);
-	~MonoConstructor()
-	{
-		SAFE_DELETE(this->paramList);
-
-		this->paramClasses.Dispose();
-
-		for (int i = 0; i < this->paramTypeNames.Length; i++)
-		{
-			delete this->paramTypeNames[i];
-		}
-		this->paramTypeNames.Dispose();
-	}
-
-	virtual mono::object Invoke(void *object, mono::exception *exc = nullptr, bool polymorph = false);
-
-	virtual mono::object Invoke(void *object, IMonoArray *params, mono::exception *exc = nullptr, bool polymorph = false);
-
-	virtual mono::object Invoke(void *object, void **params, mono::exception *exc = nullptr, bool polymorph = false);
-
-	virtual void *GetThunk();
-
-	virtual const char *GetName();
-
-	virtual int GetParameterCount();
-
-	virtual List<const char *> *GetParameterTypeNames();
-
-	virtual List<IMonoClass *> *GetParameterClasses();
-
-	virtual const char *GetParametersList();
-
-	virtual void *GetWrappedPointer();
-
-	virtual void *GetFunctionPointer();
-
-	virtual IMonoClass *GetDeclaringClass();
-
+	virtual void Initialize(void *obj, mono::exception *ex = nullptr);
+	virtual void Initialize(void *obj, IMonoArray *args, mono::exception *ex = nullptr);
+	virtual void Initialize(void *obj, void **args, mono::exception *ex = nullptr);
 };
+
+#pragma warning(pop)

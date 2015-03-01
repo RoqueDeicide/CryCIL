@@ -33,23 +33,13 @@ IMonoException *MonoExceptions::AppDomainUnloaded(const char *message /*= nullpt
 
 IMonoException *MonoExceptions::Argument(const char *argumentName, const char *message /*= nullptr*/, mono::exception inner /*= nullptr*/)
 {
-	MonoClass *klass = mono_class_from_name(mono_get_corlib(), "System", "ArgumentException");
-
-	MonoException *ex = (MonoException *)mono_object_new(mono_domain_get(), klass);
-
-	mono::string argName = ToMonoString((argumentName) ? argumentName : "");
-	mono::string m = ToMonoString((message) ? message : "");
-
-	IMonoMethod *constructor = MonoClassCache::Wrap(klass)->GetMethod(".ctor", 3);
-
 	void *params[3];
-	params[0] = m;
-	params[1] = argName;
+	params[0] = ToMonoString((message) ? message : "");
+	params[1] = ToMonoString((argumentName) ? argumentName : "");
 	params[2] = inner;
 
-	constructor->Invoke(ex, params);
-
-	return new MonoExceptionWrapper(ex);
+	return new MonoExceptionWrapper(MonoEnv->CoreLibrary->GetClass("System", "ArgumentException")
+														->GetConstructor(3)->Create(params));
 }
 
 IMonoException *MonoExceptions::ArgumentNull(const char *message /*= nullptr*/, mono::exception inner /*= nullptr*/)
@@ -94,23 +84,13 @@ IMonoException *MonoExceptions::ExecutionEngine(const char *message /*= nullptr*
 
 IMonoException *MonoExceptions::FileNotFound(const char *fileName, const char *message /*= nullptr*/, mono::exception inner /*= nullptr*/)
 {
-	MonoClass *klass = mono_class_from_name(mono_get_corlib(), "System.IO", "FileNotFoundException");
-
-	MonoException *ex = (MonoException *)mono_object_new(mono_domain_get(), klass);
-
-	mono::string file = ToMonoString((fileName) ? fileName : "");
-	mono::string m = ToMonoString((message) ? message : "");
-
-	IMonoMethod *constructor = MonoClassCache::Wrap(klass)->GetMethod(".ctor", 3);
-
 	void *params[3];
-	params[0] = m;
-	params[1] = file;
+	params[0] = ToMonoString((message) ? message : "");
+	params[1] = ToMonoString((fileName) ? fileName : "");
 	params[2] = inner;
 
-	constructor->Invoke(ex, params);
-
-	return new MonoExceptionWrapper(ex);
+	return new MonoExceptionWrapper(MonoEnv->CoreLibrary->GetClass("System.IO", "FileNotFoundException")
+														->GetConstructor(3)->Create(params));
 }
 
 IMonoException *MonoExceptions::IndexOutOfRange(const char *message /*= nullptr*/, mono::exception inner /*= nullptr*/)
@@ -218,31 +198,28 @@ IMonoException *MonoExceptions::NotSupported(const char *message /*= nullptr*/, 
 IMonoException *MonoExceptions::CreateExceptionObject
 (const char *name_space, const char *name, const char *message /*= nullptr*/, mono::exception inner /*= nullptr*/)
 {
-	MonoClass *klass = mono_class_from_name(mono_get_corlib(), name_space, name);
-
-	MonoException *ex = (MonoException *)mono_object_new(mono_domain_get(), klass);
-
+	mono::exception ex;
 	if (message || inner)
 	{
-		IMonoClass *exClass = MonoClassCache::Wrap(klass);
+		IMonoClass *exClass = MonoEnv->CoreLibrary->GetClass(name_space, name);
 		if (message && !inner)
 		{
-			IMonoMethod *constructor = exClass->GetMethod(".ctor", "System.String");
+			IMonoConstructor *constructor = exClass->GetConstructor("System.String");
 
 			void *pars[1];
 			pars[0] = ToMonoString(message);
 
-			constructor->Invoke(ex, pars);
+			ex = constructor->Create(pars);
 		}
 		else
 		{
-			IMonoMethod *constructor = exClass->GetMethod(".ctor", "System.String,System.Exception");
+			IMonoConstructor *constructor = exClass->GetConstructor("System.String,System.Exception");
 
 			void *pars[2];
 			pars[0] = ToMonoString(message);
 			pars[1] = inner;
 
-			constructor->Invoke(ex, pars);
+			ex = constructor->Create(pars);
 		}
 	}
 

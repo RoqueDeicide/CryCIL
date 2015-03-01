@@ -8,7 +8,7 @@ void NoParameters_ValueTypeInstance_Virtual_DefaultExceptionHandling()
 	IMonoClass *int32Class = MonoEnv->CoreLibrary->GetClass("System", "Int32");
 
 	// Get "ToString" method, note that, that is a virtual method.
-	IMonoMethod *toStringMethod = int32Class->GetMethod("ToString", 0);
+	IMonoMethod *toStringMethod = int32Class->GetFunction("ToString", 0);
 
 	// Invoke it on a simple integer. First use non-virtual invocation, then virtual one.
 	int number = 300;
@@ -34,7 +34,7 @@ void NoParameters_ReferenceTypeInstance_Virtual_NoExceptionHandling()
 	IMonoClass *stringClass = MonoEnv->CoreLibrary->GetClass("System", "String");
 
 	// Get "ToString" method, note that, that is a virtual method.
-	IMonoMethod *hashCode = stringClass->GetMethod("GetHashCode", 0);
+	IMonoMethod *hashCode = stringClass->GetFunction("GetHashCode", 0);
 
 	// Create a sample string.
 	mono::string sampleText = ToMonoString("Sample Text");
@@ -58,7 +58,7 @@ void StackParameters_Static()
 	typeSpecs.Add(ClassSpec(MonoEnv->Cryambly->Matrix33,  "&"));
 	typeSpecs.Add(ClassSpec(MonoEnv->Cryambly->Vector3,   "&"));
 	typeSpecs.Add(ClassSpec(MonoEnv->CoreLibrary->Single, ""));
-	IMonoMethod *overrideMethod = aroundAxis->GetMethod("Override", typeSpecs);
+	IMonoMethod *overrideMethod = aroundAxis->GetFunction("Override", typeSpecs);
 
 	// Create an array of arguments.
 	Matrix33 matrix = Matrix33::CreateIdentity();
@@ -81,7 +81,7 @@ void ArrayParameters_Static()
 	IMonoClass *int32Class = MonoEnv->CoreLibrary->GetClass("System", "Int32");
 
 	// Get static method "Parse".
-	IMonoMethod *parseMethod = int32Class->GetMethod("Parse", "System.String");
+	IMonoMethod *parseMethod = int32Class->GetFunction("Parse", "System.String");
 
 	// Create an array of parameters.
 	IMonoArray *pars = MonoEnv->Objects->Arrays->Create(1);

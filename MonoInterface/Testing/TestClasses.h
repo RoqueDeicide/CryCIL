@@ -108,7 +108,7 @@ void TestMemberLists(IMonoClass *klass)
 
 	CryLogAlways("TEST: Printing a list of methods of type %s.", klass->Name);
 
-	auto methods = klass->Methods;
+	auto methods = klass->Functions;
 
 	for (int i = 0; i < methods->Length; i++)
 	{
@@ -394,7 +394,7 @@ void TestObjectCreation()
 
 	CryLogAlways("TEST: Invoking a default constructor.");
 
-	defaultCtor->Invoke(nullptr);
+	defaultCtor->Create();
 
 	CryLogAlways("TEST: Getting a constructor that accepts 2 simple integers.");
 
@@ -406,7 +406,7 @@ void TestObjectCreation()
 	int par2 = 20;
 	params[0] = &par1;
 	params[1] = &par2;
-	ctor2Integers->Invoke(nullptr, params);
+	ctor2Integers->Create(params);
 
 	CryLogAlways("TEST: Getting a constructor that accepts a Double and a reference to String.");
 
@@ -421,7 +421,7 @@ void TestObjectCreation()
 	mono::string textPar;
 	params[0] = &doublePar;
 	params[1] = &textPar;
-	ctorDoubleStringRef->Invoke(nullptr, params);
+	ctorDoubleStringRef->Create(params);
 
 	CryLogAlways("TEST: Checking creation of compound objects.");
 
@@ -434,7 +434,7 @@ void TestObjectCreation()
 	void *param;
 	param = (int *)(&seed);
 
-	mono::object randomObject = randomClass->GetConstructor(1)->Invoke(nullptr, &param);
+	mono::object randomObject = randomClass->GetConstructor(1)->Create(&param);
 
 	CryLogAlways("TEST: Creating a first component.");
 
@@ -443,7 +443,7 @@ void TestObjectCreation()
 	mono::object firstComponent =
 		mainTestingAssembly->GetClass("MainTestingAssembly", "CtorTestComponent1")
 		->GetConstructor(2)
-		->Invoke(nullptr, params);
+		->Create(params);
 
 	CryLogAlways("TEST: Creating a second component.");
 
@@ -459,7 +459,7 @@ void TestObjectCreation()
 	mono::object secondComponent =
 		mainTestingAssembly->GetClass("MainTestingAssembly", "CtorTestComponent2")
 		->GetConstructor(2)
-		->Invoke(nullptr, params);
+		->Create(params);
 
 	CryLogAlways("TEST: Creating a compound object.");
 
@@ -468,11 +468,11 @@ void TestObjectCreation()
 	params[0] = firstComponent;
 	params[1] = secondComponent;
 
-	mono::object compound = compoundClass->GetConstructor(2)->Invoke(nullptr, params);
+	mono::object compound = compoundClass->GetConstructor(2)->Create(params);
 
 	CryLogAlways("TEST: Print contents of the compound object.");
 
-	compoundClass->GetMethod("PrintStuff")->Invoke(compound);
+	compoundClass->GetFunction("PrintStuff")->ToInstance()->Invoke(compound);
 }
 #pragma endregion
 
@@ -504,7 +504,7 @@ void TestGettingMethods()
 
 	typesArray->At<mono::type>(0) = typeClass->MakeArrayType();
 
-	IMonoMethod *method = typeClass->GetMethod("GetConstructor", typesArray);
+	IMonoMethod *method = typeClass->GetFunction("GetConstructor", typesArray)->ToInstance();
 
 	if (method)
 	{
@@ -522,7 +522,7 @@ void TestGettingMethods()
 	classes.Add(stringClass);
 	classes.Add(arrayClass);
 
-	method = typeClass->GetMethod("GetMethod", classes);
+	method = typeClass->GetFunction("GetMethod", classes)->ToInstance();
 
 	if (method)
 	{
@@ -541,7 +541,7 @@ void TestGettingMethods()
 	specifiedClasses.Add(ClassSpec(typeClass,   ""));
 	specifiedClasses.Add(ClassSpec(typeClass, "[]"));
 
-	method = typeClass->GetMethod("GetProperty", specifiedClasses);
+	method = typeClass->GetFunction("GetProperty", specifiedClasses)->ToInstance();
 
 	if (method)
 	{
@@ -559,7 +559,7 @@ void TestGettingMethods()
 	typeNames.Add("System.Double");
 	typeNames.Add("System.Double");
 
-	method = mathClass->GetMethod("Pow", typeNames);
+	auto staticFunc = mathClass->GetFunction("Pow", typeNames)->ToStatic();
 
 	if (method)
 	{
@@ -572,7 +572,7 @@ void TestGettingMethods()
 
 	CryLogAlways("TEST: Getting the method using a text representation of the signature.");
 
-	method = mathClass->GetMethod("Min", "System.UInt32,System.UInt32");
+	staticFunc = mathClass->GetFunction("Min", "System.UInt32,System.UInt32")->ToStatic();
 
 	if (method)
 	{
@@ -585,7 +585,7 @@ void TestGettingMethods()
 
 	CryLogAlways("TEST: Getting the method using a number of parameters.");
 
-	method = MonoEnv->CoreLibrary->GetClass("System", "GC")->GetMethod("Collect", 1);
+	staticFunc = MonoEnv->CoreLibrary->GetClass("System", "GC")->GetFunction("Collect", 1)->ToStatic();
 
 	if (method)
 	{
@@ -598,21 +598,21 @@ void TestGettingMethods()
 
 	CryLogAlways("TEST: Getting a list of methods using just a name.");
 
-	int count;
-	auto methods = mathClass->GetMethods("Min", count);
+	auto funcs = mathClass->GetFunctions("Min");
 
-	if (methods)
+	if (funcs)
 	{
 		CryLogAlways("TEST SUCCESS: Got a list of Min method overloads.");
 
 		CryLogAlways("TEST: A list of methods:");
 
-		for (int i = 0; i < count; i++)
+		for (int i = 0; i < funcs->Length; i++)
 		{
-			CryLogAlways("%d) %s::%s(%s);", i + 1, mathClass->FullName, methods[i]->Name, methods[i]->Parameters);
+			CryLogAlways("%d) %s::%s(%s);",
+						 i + 1, mathClass->FullName, funcs->At(i)->Name, funcs->At(i)->Parameters);
 		}
 		
-		delete methods;
+		delete funcs;
 	}
 	else
 	{
@@ -621,20 +621,21 @@ void TestGettingMethods()
 
 	CryLogAlways("TEST: Getting a list of methods using a name and a number of parameters.");
 
-	methods = mathClass->GetMethods("Round", 2, count);
+	funcs = mathClass->GetFunctions("Round", 2);
 
-	if (methods)
+	if (funcs)
 	{
 		CryLogAlways("TEST SUCCESS: Got a list of Round method overloads.");
 
 		CryLogAlways("TEST: A list of methods:");
 
-		for (int i = 0; i < count; i++)
+		for (int i = 0; i < funcs->Length; i++)
 		{
-			CryLogAlways("%d) %s::%s(%s);", i + 1, mathClass->FullName, methods[i]->Name, methods[i]->Parameters);
+			CryLogAlways("%d) %s::%s(%s);",
+						 i + 1, mathClass->FullName, funcs->At(i)->Name, funcs->At(i)->Parameters);
 		}
 
-		delete methods;
+		delete funcs;
 	}
 	else
 	{
@@ -700,7 +701,7 @@ void TestStaticMethodInvocation()
 	specClasses.Add(ClassSpec(vector3Class, ""));
 	specClasses.Add(ClassSpec(singleClass,  ""));
 
-	IMonoMethod *staticMethod = lerpClass->GetMethod("Apply", specClasses);
+	IMonoStaticMethod *staticMethod = lerpClass->GetFunction("Apply", specClasses)->ToStatic();
 
 	CryLogAlways("TEST: Invoking a method.");
 
@@ -715,14 +716,14 @@ void TestStaticMethodInvocation()
 	params4[2] = &end;
 	params4[3] = &parameter;
 
-	staticMethod->Invoke(nullptr, params4);
+	staticMethod->Invoke(params4);
 
 	CryLogAlways("Result of interpolation: (%*.2f, %*.2f, %*.2f)", res.x, res.y, res.z);
 
 	CryLogAlways("TEST: Getting a method that accepts a reference to an array.");
 
 	staticMethod = mainTestingAssembly->GetClass("MainTestingAssembly", "MethodTestClass")
-									  ->GetMethod("NumberToDigits", 2);
+									  ->GetFunction("NumberToDigits", 2)->ToStatic();
 
 	CryLogAlways("TEST: Invoking a method.");
 
@@ -733,7 +734,7 @@ void TestStaticMethodInvocation()
 	params2[0] = &number;
 	params2[1] = &digits;
 
-	if (Unbox<bool>(staticMethod->Invoke(nullptr, params2)))
+	if (Unbox<bool>(staticMethod->Invoke(params2)))
 	{
 		PrintDigitsArray(digits);
 	}
@@ -751,7 +752,7 @@ void TestInstanceMethodInvocation()
 
 	CryLogAlways("TEST: Invocation of the method that accepts 4 arguments and returns an signed integer.");
 
-	IMonoMethod *indexOfMethod = stringClass->GetMethod("IndexOf", 4);
+	IMonoMethod *indexOfMethod = stringClass->GetFunction("IndexOf", 4)->ToInstance();
 
 	wchar_t symbol = L't';
 	int searchStart = 5;
@@ -781,7 +782,7 @@ void TestVirtualMethodInvocation()
 
 	CryLogAlways("TEST: Getting the method wrapper.");
 
-	IMonoMethod *toStringFormatMethod = singleClass->GetMethod("ToString", 2);
+	IMonoMethod *toStringFormatMethod = singleClass->GetFunction("ToString", 2)->ToInstance();
 
 	CryLogAlways("TEST: Invoking a virtual method using early binding.");
 
@@ -820,7 +821,7 @@ void TestStaticThunkInvocation()
 
 	CryLogAlways("TEST: Getting the method wrapper of NumberToDigits.");
 
-	IMonoMethod *method = methodTestClass->GetMethod("NumberToDigits", 2);
+	IMonoFunction *method = methodTestClass->GetFunction("NumberToDigits", 2);
 
 	CryLogAlways("TEST: Getting the unmanaged thunk.");
 
@@ -842,7 +843,7 @@ void TestStaticThunkInvocation()
 
 	CryLogAlways("TEST: Getting the method wrapper of CreateValueTypeObject.");
 
-	method = methodTestClass->GetMethod("CreateValueTypeObject", 2);
+	method = methodTestClass->GetFunction("CreateValueTypeObject", 2);
 
 	CryLogAlways("TEST: Getting the unmanaged thunk.");
 
@@ -868,7 +869,7 @@ void TestInstanceThunkInvocation()
 
 	CryLogAlways("TEST: Getting the method wrapper of Byte::ToString(string).");
 
-	IMonoMethod *method = MonoEnv->CoreLibrary->Byte->GetMethod("ToString", "System.String");
+	IMonoFunction *method = MonoEnv->CoreLibrary->Byte->GetFunction("ToString", "System.String");
 
 	CryLogAlways("TEST: Getting the unmanaged thunk.");
 
@@ -916,7 +917,7 @@ void TestInstanceFields()
 	params[0] = &number;
 	params[1] = text;
 
-	mono::object obj = fieldTestClass->GetConstructor(2)->Invoke(nullptr, params);
+	mono::object obj = fieldTestClass->GetConstructor(2)->Create(params);
 
 	IMonoGCHandle *handle = MonoEnv->GC->Pin(obj);
 
@@ -987,7 +988,7 @@ void TestStaticFields()
 	params[0] = &number;
 	params[1] = text;
 
-	mono::object obj = fieldTestClass->GetConstructor(2)->Invoke(nullptr, params);
+	mono::object obj = fieldTestClass->GetConstructor(2)->Create(params);
 
 	IMonoGCHandle *handle = MonoEnv->GC->Pin(obj);
 

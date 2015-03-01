@@ -3,227 +3,32 @@
 #include "MonoConstructor.h"
 #include "MonoClass.h"
 
-MonoConstructor::MonoConstructor(MonoMethod *method, IMonoClass *klass)
+mono::object MonoConstructor::Create(mono::exception *ex /*= nullptr*/)
 {
-	if (klass)
-	{
-		this->klass = klass;
-	}
-	else
-	{
-		MonoClass *methodClass = mono_method_get_class(method);
-		if (methodClass)
-		{
-			this->klass = MonoClassCache::Wrap(methodClass);
-		}
-		else
-		{
-			this->klass = nullptr;
-		}
-	}
-
-	this->wrappedMethod = method;
-	this->signature = mono_method_signature(this->wrappedMethod);
-	this->paramCount = mono_signature_get_param_count(this->signature);
-
-	ConstructiveText params = ConstructiveText(100);
-
-	this->paramClasses = List<IMonoClass *>(5);
-	this->paramTypeNames = List<const char *>(5);
-
-	void *iter = nullptr;
-	while (MonoType *paramType = mono_signature_get_params(this->signature, &iter))
-	{
-		if (this->paramTypeNames.Length != 0)
-		{
-			params << ",";
-		}
-		Text t = Text(mono_type_get_name(paramType));
-		const char *typeName = t.ToNTString();
-		params << typeName;
-		paramTypeNames.Add(typeName);
-	}
+	return this->InternalInvoke(mono_object_new(mono_domain_get(), mono_method_get_class(this->wrappedMethod)), nullptr, ex, false);
 }
 
-
-mono::object MonoConstructor::Invoke(void *object, mono::exception *exc /*= nullptr*/, bool polymorph /*= false*/)
+mono::object MonoConstructor::Create(IMonoArray *args, mono::exception *ex /*= nullptr*/)
 {
-	if (!object)
-	{
-		object = mono_object_new(mono_domain_get(), mono_method_get_class(this->wrappedMethod));
-	}
-	MonoObject *exception;
-	MonoObject *result = mono_runtime_invoke(this->wrappedMethod, object, nullptr, &exception);
-	if (exception)
-	{
-		if (exc)
-		{
-			*exc = (mono::exception)exception;
-		}
-		else
-		{
-			MonoEnv->HandleException((mono::exception)exception);
-		}
-		return nullptr;
-	}
-	return (mono::object)result;
+	return this->InternalInvokeArray(mono_object_new(mono_domain_get(), mono_method_get_class(this->wrappedMethod)), args, ex, false);
 }
 
-mono::object MonoConstructor::Invoke(void *object, IMonoArray *params, mono::exception *exc /*= nullptr*/, bool polymorph /*= false*/)
+mono::object MonoConstructor::Create(void **args, mono::exception *ex /*= nullptr*/)
 {
-	if (!object)
-	{
-		object = mono_object_new(mono_domain_get(), mono_method_get_class(this->wrappedMethod));
-	}
-	MonoArray *paramsArray = (MonoArray *)params->GetWrappedPointer();
-	MonoObject *exception;
-	MonoObject *result = mono_runtime_invoke_array(this->wrappedMethod, object, paramsArray, &exception);
-	if (exception)
-	{
-		if (exc)
-		{
-			*exc = (mono::exception)exception;
-		}
-		else
-		{
-			MonoEnv->HandleException((mono::exception)exception);
-		}
-		return nullptr;
-	}
-	return (mono::object)result;
+	return this->InternalInvoke(mono_object_new(mono_domain_get(), mono_method_get_class(this->wrappedMethod)), args, ex, false);
 }
 
-mono::object MonoConstructor::Invoke(void *object, void **params, mono::exception *exc /*= nullptr*/, bool polymorph /*= false*/)
+void MonoConstructor::Initialize(void *obj, mono::exception *ex /*= nullptr*/)
 {
-	if (!object)
-	{
-		object = mono_object_new(mono_domain_get(), mono_method_get_class(this->wrappedMethod));
-	}
-	MonoObject *exception;
-	MonoObject *result = mono_runtime_invoke(this->wrappedMethod, object, params, &exception);
-	if (exception)
-	{
-		if (exc)
-		{
-			*exc = (mono::exception)exception;
-		}
-		else
-		{
-			MonoEnv->HandleException((mono::exception)exception);
-		}
-		return nullptr;
-	}
-	return (mono::object)result;
+	this->InternalInvoke(obj, nullptr, ex, false);
 }
 
-void *MonoConstructor::GetThunk()
+void MonoConstructor::Initialize(void *obj, IMonoArray *args, mono::exception *ex /*= nullptr*/)
 {
-	return mono_method_get_unmanaged_thunk(this->wrappedMethod);
+	this->InternalInvokeArray(obj, args, ex, false);
 }
 
-const char *MonoConstructor::GetName()
+void MonoConstructor::Initialize(void *obj, void **args, mono::exception *ex /*= nullptr*/)
 {
-	return ".ctor";
+	this->InternalInvoke(obj, args, ex, false);
 }
-
-int MonoConstructor::GetParameterCount()
-{
-	return this->paramCount;
-}
-
-List<const char *> *MonoConstructor::GetParameterTypeNames()
-{
-	return &this->paramTypeNames;
-}
-
-List<IMonoClass *> *MonoConstructor::GetParameterClasses()
-{
-	if (this->paramClasses.Length == this->paramCount)
-	{
-		return &this->paramClasses;
-	}
-
-	static IMonoClass *arrayClass;
-	static IMonoClass *intPtrClass;
-
-	if (!arrayClass)
-	{
-		arrayClass = MonoEnv->CoreLibrary->GetClass("System", "Array");
-	}
-	if (!intPtrClass)
-	{
-		intPtrClass = MonoEnv->CoreLibrary->GetClass("System", "IntPtr");
-	}
-
-	void *iter = nullptr;
-	while (MonoType *paramType = mono_signature_get_params(this->signature, &iter))
-	{
-		MonoTypeEnum typeId = (MonoTypeEnum)mono_type_get_type(paramType);
-		if (typeId == MonoTypeEnum::MONO_TYPE_ARRAY ||
-			typeId == MonoTypeEnum::MONO_TYPE_SZARRAY)
-		{
-			this->paramClasses.Add(arrayClass);
-		}
-		else if (typeId == MonoTypeEnum::MONO_TYPE_PTR)
-		{
-			this->paramClasses.Add(intPtrClass);
-		}
-		else
-		{
-			this->paramClasses.Add(MonoClassCache::Wrap(mono_class_from_mono_type(paramType)));
-		}
-	}
-
-	return &this->paramClasses;
-}
-
-const char *MonoConstructor::GetParametersList()
-{
-	return this->paramList;
-}
-
-void *MonoConstructor::GetWrappedPointer()
-{
-	return this->wrappedMethod;
-}
-
-void *MonoConstructor::GetFunctionPointer()
-{
-	if (!CompileMethod)
-	{
-		CryLogAlways("Getting the compile method's thunk.");
-		CompileMethod = (CompileMethodThunk)MonoEnv->CoreLibrary
-												   ->GetClass("System", "RuntimeMethodHandle")
-												   ->GetMethod("GetFunctionPointer", 1)
-												   ->UnmanagedThunk;
-		CryLogAlways("Got the compile method's thunk.");
-	}
-
-	if (!this->rawThunk)
-	{
-		ReportMessage("Compiling the raw thunk for the method %s::%s(%s)",
-					  this->klass ? (this->klass->FullNameIL) : "",
-					  this->name,
-					  this->paramList);
-		mono::exception ex;
-		mono::intptr result = CompileMethod(BoxPtr(this->wrappedMethod), &ex);
-		if (!ex)
-		{
-			this->rawThunk = Unbox<void *>(result);
-			ReportMessage("Compilation successful.");
-		}
-		else
-		{
-			ReportError("Unable to compile the method into a raw thunk.");
-		}
-	}
-
-	return this->rawThunk;
-}
-
-IMonoClass *MonoConstructor::GetDeclaringClass()
-{
-	return this->klass;
-}
-
-CompileMethodThunk MonoConstructor::CompileMethod = nullptr;

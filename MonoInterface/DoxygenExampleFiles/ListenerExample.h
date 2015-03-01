@@ -38,7 +38,7 @@ public:
 		// Now we can use Mono.
 		mono::nothing(*BeepFunc)(mono::exception *);
 		BeepFunc = (mono::nothing(*)(mono::exception *))this->monoEnv->CoreLibrary
-			->GetClass("Console", "System")->GetMethod("Beep")->UnmanagedThunk;
+			->GetClass("Console", "System")->GetFunction("Beep")->UnmanagedThunk;
 		// Beep!
 		mono::exception ex;
 		BeepFunc(&ex);
@@ -51,7 +51,7 @@ public:
 		float rads = 60 * PI / 180;
 
 		mono::exception ex;
-		Quat rotation = Unbox<Quat>(((mono::quaternion(*)(mono::float32, mono::vector3, mono::exception *))this->monoEnv->Cryambly->GetClass("Quaternion", "CryCil.Mathematics")->GetMethod("CreateRotationAngleAxis", 2)->UnmanagedThunk)(Box(rads), Box(up), &ex));
+		Quat rotation = Unbox<Quat>(((mono::quaternion(*)(mono::float32, mono::vector3, mono::exception *))this->monoEnv->Cryambly->GetClass("Quaternion", "CryCil.Mathematics")->GetFunction("CreateRotationAngleAxis", 2)->UnmanagedThunk)(Box(rads), Box(up), &ex));
 		CryLogAlways("Quat = %s, %s, %s, %s", rotation.v.x, rotation.v.y, rotation.v.z, rotation.w);
 	}
 

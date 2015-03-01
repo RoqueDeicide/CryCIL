@@ -8,7 +8,7 @@ typedef void (__stdcall *Clamp)(mono::vector2 value, mono::vector2 min, mono::ve
 void example()
 {
 	// Get the method.
-	IMonoMethod *clampMethod = MonoEnv->Cryambly->GetClass("CryCil.Mathematics", "Vector2")->GetMethod("Clamp", 4);
+	IMonoMethod *clampMethod = MonoEnv->Cryambly->GetClass("CryCil.Mathematics", "Vector2")->GetFunction("Clamp", 4);
 	// Get the pointer to the thunk.
 	Clamp clamp = (Clamp)clampMethod->UnmanagedThunk;
 	// Prepare to invoke it.
