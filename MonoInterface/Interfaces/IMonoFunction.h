@@ -178,7 +178,45 @@ struct IMonoFunction : public IMonoMember
 	__declspec(property(get = GetThunk)) void *UnmanagedThunk;
 	//! Gets a raw thunk of this function.
 	//!
-	//! Raw thunks are a little bit of a mystery.
+	//! Raw thunks are probably one of the fastest ways of invoking a method, however they have quite a few
+	//! problems.
+	//!
+	//! 1) If the method through an exception and it's not handled, then there is no way to catch it.
+	//! 2) The method has to return mono::object unless it returns a built-in primitive type.
+	//! 3) It is not known if raw thunks can be used to invoke instance or virtual methods.
+	//!
+	//! On brighter side, you don't need to box value-type objects that you pass as arguments, allowing you
+	//! to completely avoid boxing values, which is very important for interop-calls with application loops
+	//! (e.g the main game loop) because it helps avoiding creation of temporary managed objects that create
+	//! garbage piles.
+	//!
+	//! You also don't need to specify __stdcall since __cdecl works as well.
+	//!
+	//! Other then all of the above, raw thunks are the same as unmanaged thunks.
+	//!
+	//! Perfect example of a function that can be invoked through a raw thunk:
+	//!
+	//! @code{.cs}
+	//!
+	//! public static void Interpolate(Vector3 start, Vector3 finish, float parameter, out Vector3 result)
+	//! {
+	//!     try
+	//!     {
+	//!         result = start + (finish - start) * parameter;
+	//!     }
+	//!     catch {}        // Use empty catch block to filter out unhandled exceptions, without it any one
+	//!                     // of those will crash the program!
+	//! }
+	//!
+	//! @endcode
+	//!
+	//! Here is the signature of the thunk in C++:
+	//!
+	//! @code{.cpp}
+	//!
+	//! typedef void(*InterpolateRawThunk)(Vec3, Vec3, float, Vec3 *);
+	//!
+	//! @endcode
 	__declspec(property(get = GetFunctionPointer)) void *RawThunk;
 	//! Gets number of arguments this function accepts.
 	__declspec(property(get = GetParameterCount)) int ParameterCount;
