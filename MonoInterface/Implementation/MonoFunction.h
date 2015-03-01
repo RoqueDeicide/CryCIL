@@ -2,8 +2,6 @@
 
 #include "IMonoInterface.h"
 
-typedef mono::intptr(__stdcall *CompileMethodThunk)(mono::intptr, mono::exception *);
-
 struct MonoFunction : public virtual IMonoFunction
 {
 protected:
@@ -18,8 +16,6 @@ protected:
 	void *rawThunk;
 
 	IMonoClass *klass;
-
-	static CompileMethodThunk CompileMethod;
 
 	mono::object InternalInvoke(void *object, void **args, mono::exception *ex, bool polymorph);
 	mono::object InternalInvokeArray(void *object, IMonoArray *args, mono::exception *ex, bool polymorph);
