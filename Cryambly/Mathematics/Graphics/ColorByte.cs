@@ -93,8 +93,7 @@ namespace CryCil.Graphics
 			return left.Bytes.SignedInt == right.Bytes.SignedInt;
 		}
 		/// <summary>
-		/// Determines whether two instances of type <see cref="ColorByte"/> are not
-		/// equal.
+		/// Determines whether two instances of type <see cref="ColorByte"/> are not equal.
 		/// </summary>
 		/// <param name="left"> Left operand.</param>
 		/// <param name="right">Right operand.</param>
@@ -108,13 +107,13 @@ namespace CryCil.Graphics
 				left.Alpha != right.Alpha;
 		}
 		/// <summary>
-		/// Converts given color object to structure that allows easy byte manipulation
-		/// and simple type conversion.
+		/// Converts given color object to structure that allows easy byte manipulation and simple type
+		/// conversion.
 		/// </summary>
 		/// <param name="color">Color to convert.</param>
 		/// <returns>
-		/// Instance of <see cref="Bytes4"/> type with each byte representing a color
-		/// component in the order - RGBA.
+		/// Instance of <see cref="Bytes4"/> type with each byte representing a color component in the
+		/// order - RGBA.
 		/// </returns>
 		public static explicit operator Bytes4(ColorByte color)
 		{
@@ -123,9 +122,7 @@ namespace CryCil.Graphics
 		/// <summary>
 		/// Creates text representation of this color object.
 		/// </summary>
-		/// <returns>
-		/// Object of type <see cref="String"/> that represents this color.
-		/// </returns>
+		/// <returns>Object of type <see cref="String"/> that represents this color.</returns>
 		public override string ToString()
 		{
 			return String.Format("[{0} {1} {2} {3}]", this.Red, this.Green, this.Blue, this.Alpha);
@@ -137,8 +134,7 @@ namespace CryCil.Graphics
 		/// Object of type <see cref="String"/> that is supposed to represent a color.
 		/// </param>
 		/// <returns>
-		/// Object of type <see cref="ColorByte"/> that is represented by given
-		/// <paramref name="text"/> .
+		/// Object of type <see cref="ColorByte"/> that is represented by given <paramref name="text"/> .
 		/// </returns>
 		public static ColorByte Parse(string text)
 		{
@@ -174,12 +170,9 @@ namespace CryCil.Graphics
 		/// Object of type <see cref="String"/> that might be a representation of type
 		/// <see cref="ColorByte"/> .
 		/// </param>
-		/// <param name="color">
-		/// If conversion is successful this object will contain the result.
-		/// </param>
+		/// <param name="color">If conversion is successful this object will contain the result.</param>
 		/// <returns>
-		/// True, if given text is a recognizable representation of type
-		/// <see cref="ColorByte"/> .
+		/// True, if given text is a recognizable representation of type <see cref="ColorByte"/> .
 		/// </returns>
 		public static bool TryParse(string text, out ColorByte color)
 		{
@@ -200,8 +193,8 @@ namespace CryCil.Graphics
 		/// <param name="v1">   First color.</param>
 		/// <param name="v2">   Last color.</param>
 		/// <param name="value">
-		/// Interpolation parameter between 0 and 1 that describes the position of
-		/// interpolated color in percentage-like fashion.
+		/// Interpolation parameter between 0 and 1 that describes the position of interpolated color in
+		/// percentage-like fashion.
 		/// </param>
 		/// <returns>Interpolated color.</returns>
 		public static ColorByte CreateLinearInterpolation(ColorByte v1, ColorByte v2, float value)

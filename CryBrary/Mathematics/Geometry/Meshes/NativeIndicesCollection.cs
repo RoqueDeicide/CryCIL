@@ -36,12 +36,11 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// Attempt to access element of the collection throw index that is out of bounds.
 		/// </exception>
 		/// <exception cref="MeshConsistencyException">
-		/// Attempt to set face vertex index to value that is out of bounds of the
-		/// collection of vertices.
+		/// Attempt to set face vertex index to value that is out of bounds of the collection of vertices.
 		/// </exception>
 		/// <exception cref="MeshConsistencyException">
-		/// Attempt to set face vertex index to number bigger then biggest value that can
-		/// be stored by integer type that is used to store indices.
+		/// Attempt to set face vertex index to number bigger then biggest value that can be stored by
+		/// integer type that is used to store indices.
 		/// </exception>
 		public override uint this[int index]
 		{

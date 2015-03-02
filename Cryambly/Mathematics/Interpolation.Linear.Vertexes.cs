@@ -13,8 +13,8 @@ namespace CryCil
 			/// <param name="first">    First vertex.</param>
 			/// <param name="second">   Second vertex.</param>
 			/// <param name="parameter">
-			/// Parameter that determines position of resultant vertex on the line that
-			/// goes through the first and second vertex relative to the first one.
+			/// Parameter that determines position of resultant vertex on the line that goes through the
+			/// first and second vertex relative to the first one.
 			/// </param>
 			public static void Apply(out FullVertex result, FullVertex first, FullVertex second, float parameter)
 			{
@@ -33,8 +33,8 @@ namespace CryCil
 			/// <param name="first">    First vertex.</param>
 			/// <param name="second">   Second vertex.</param>
 			/// <param name="parameter">
-			/// Parameter that determines position of resultant vertex on the line that
-			/// goes through the first and second vertex relative to the first one.
+			/// Parameter that determines position of resultant vertex on the line that goes through the
+			/// first and second vertex relative to the first one.
 			/// </param>
 			/// <returns>Result of interpolation.</returns>
 			public static FullVertex Create(FullVertex first, FullVertex second, float parameter)

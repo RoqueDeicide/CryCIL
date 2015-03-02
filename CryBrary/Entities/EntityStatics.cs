@@ -112,8 +112,8 @@ namespace CryEngine.Entities
 
 		internal static bool InternalRemove(EntityId id)
 		{
-			// The result from OnRemove returns whether the entity should be allowed to be
-			// removed. If we return false, the entity won't be removed.
+			// The result from OnRemove returns whether the entity should be allowed to be removed. If we
+			// return false, the entity won't be removed.
 			var result = true;
 
 			ScriptManager.Instance.RemoveInstances(ScriptType.Entity, instance =>
@@ -139,8 +139,8 @@ namespace CryEngine.Entities
 		/// <param name="entityId">The ID as an unsigned integer.</param>
 		/// <returns>A reference to the entity.</returns>
 		/// <remarks>
-		/// If the entity does not exist in the managed space, this function will attempt
-		/// to find a C++ entity with the specified ID
+		/// If the entity does not exist in the managed space, this function will attempt to find a C++
+		/// entity with the specified ID
 		/// </remarks>
 		public static T Get<T>(EntityId entityId) where T : EntityBase
 		{
@@ -158,8 +158,8 @@ namespace CryEngine.Entities
 		/// <param name="entityId">The ID as an unsigned integer.</param>
 		/// <returns>A reference to the entity.</returns>
 		/// <remarks>
-		/// If the entity does not exist in the managed space, this function will attempt
-		/// to find a C++ entity with the specified ID&gt;
+		/// If the entity does not exist in the managed space, this function will attempt to find a C++
+		/// entity with the specified ID&gt;
 		/// </remarks>
 		public static EntityBase Get(EntityId entityId)
 		{
@@ -209,8 +209,8 @@ namespace CryEngine.Entities
 		/// <param name="name">The name of the entity.</param>
 		/// <returns>A reference to the entity.</returns>
 		/// <remarks>
-		/// If multiple entities have the same name, it will return the first found.
-		/// Consider using IDs where necessary.
+		/// If multiple entities have the same name, it will return the first found. Consider using IDs
+		/// where necessary.
 		/// </remarks>
 		public static EntityBase Find(string name)
 		{
@@ -303,8 +303,8 @@ namespace CryEngine.Entities
 	public enum EntityClassFlags
 	{
 		/// <summary>
-		/// If set this class will not be visible in editor,and entity of this class
-		/// cannot be placed manually in editor.
+		/// If set this class will not be visible in editor,and entity of this class cannot be placed
+		/// manually in editor.
 		/// </summary>
 		Invisible = 0x0001,
 		/// <summary>

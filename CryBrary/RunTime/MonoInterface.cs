@@ -34,9 +34,7 @@ namespace CryEngine.RunTime
 		/// <summary>
 		/// Invoked from unmanaged code to initialize CryBrary subsystems.
 		/// </summary>
-		/// <param name="configurationPath">
-		/// Path to configuration files and utilities.
-		/// </param>
+		/// <param name="configurationPath">Path to configuration files and utilities.</param>
 		internal MonoInterface(string configurationPath)
 		{
 			ProjectSettings.ConfigFolder = configurationPath;
@@ -159,8 +157,8 @@ namespace CryEngine.RunTime
 		}
 		private void PrepareFlowNodesRegistration(IEnumerable<Type> types)
 		{
-			// Prepare the list of flow node types that will be registered when
-			// RegisterFlowNodes is called.
+			// Prepare the list of flow node types that will be registered when RegisterFlowNodes is
+			// called.
 			types.Where(type => type.ContainsAttribute<FlowNodeAttribute>()).ForEach(FlowNodeRegister.Prepare);
 		}
 		#endregion

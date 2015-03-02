@@ -10,9 +10,7 @@ namespace CryEngine.Logic.Flowgraph
 	/// <summary>
 	/// Base class for FlowGraph nodes.
 	/// </summary>
-	/// <remarks>
-	/// When you derive from this class, you need to define default constructor.
-	/// </remarks>
+	/// <remarks>When you derive from this class, you need to define default constructor.</remarks>
 	public abstract partial class FlowGraphNode
 	{
 		#region Fields
@@ -47,8 +45,8 @@ namespace CryEngine.Logic.Flowgraph
 		/// Indicates whether this node is alive.
 		/// </summary>
 		/// <remarks>
-		/// I think, therefore I am. Or this node will receive regular updates from
-		/// FlowGraph, if it's alive.
+		/// I think, therefore I am. Or this node will receive regular updates from FlowGraph, if it's
+		/// alive.
 		/// </remarks>
 		public bool Alive
 		{
@@ -98,13 +96,9 @@ namespace CryEngine.Logic.Flowgraph
 		/// Invoked from native code to create managed wrapper for a FlowGraph node.
 		/// </summary>
 		/// <param name="typeName">Name of the type that will represent a wrapper.</param>
-		/// <param name="handle">  
-		/// Pointer to FlowGraph node object in native memory.
-		/// </param>
+		/// <param name="handle">  Pointer to FlowGraph node object in native memory.</param>
 		/// <param name="nodeId">  Identifier of the node within containing graph.</param>
-		/// <param name="graphId"> 
-		/// Identifier of the FlowGraph that contains the node.
-		/// </param>
+		/// <param name="graphId"> Identifier of the FlowGraph that contains the node.</param>
 		/// <returns>Managed wrapper for a native object.</returns>
 		/// <exception cref="ArgumentException">
 		/// Attempt to create managed wrapper for flow node using unknown type name.
@@ -130,25 +124,25 @@ namespace CryEngine.Logic.Flowgraph
 		/// Overridden in derived class to perform extra initialization for the node.
 		/// </summary>
 		/// <remarks>
-		/// When overriding this method, either put <see cref="OnInitialized"/> call into
-		/// it or call base version of this method.
+		/// When overriding this method, either put <see cref="OnInitialized"/> call into it or call base
+		/// version of this method.
 		/// </remarks>
 		protected virtual void Initialize()
 		{
 			this.OnInitialized();
 		}
 		/// <summary>
-		/// Overridden in derived class to perform to let the node react to changes that
-		/// happen on timely manner.
+		/// Overridden in derived class to perform to let the node react to changes that happen on timely
+		/// manner.
 		/// </summary>
 		/// <remarks>
-		/// This method will only be invoked, if this node is <see cref="Alive"/>. Do call
-		/// this version of the method, when you override it.
+		/// This method will only be invoked, if this node is <see cref="Alive"/>. Do call this version of
+		/// the method, when you override it.
 		/// </remarks>
 		protected virtual void Think()
 		{
-			// If we were somehow invoked without Alive being set, then we should update
-			// the property to a proper value.
+			// If we were somehow invoked without Alive being set, then we should update the property to a
+			// proper value.
 			if (this.alive.HasValue)
 			{
 				return;

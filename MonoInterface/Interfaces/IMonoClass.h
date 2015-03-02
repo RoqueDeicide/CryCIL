@@ -17,33 +17,33 @@ typedef Pair<IMonoClass *, const char *> ClassSpec;
 struct IMonoClass : public IMonoFunctionalityWrapper
 {
 	//! Gets the name of this class.
-	__declspec(property(get = GetName)) const char *Name;
+	__declspec(property(get = GetName))        const char                    *Name;
 	//! Gets full name of this class.
-	__declspec(property(get = GetFullName)) const char *FullName;
+	__declspec(property(get = GetFullName))    const char                    *FullName;
 	//! Gets full name of this class.
 	//!
 	//! If this class is nested its name will be separated from declaring type with "+" instead of ".".
-	__declspec(property(get = GetFullNameIL)) const char *FullNameIL;
+	__declspec(property(get = GetFullNameIL))  const char                    *FullNameIL;
 	//! Gets the name space where this class is defined.
-	__declspec(property(get = GetNameSpace)) const char *NameSpace;
+	__declspec(property(get = GetNameSpace))   const char                    *NameSpace;
 	//! Gets assembly where this class is defined.
-	__declspec(property(get = GetAssembly)) IMonoAssembly *Assembly;
+	__declspec(property(get = GetAssembly))    IMonoAssembly                 *Assembly;
 	//! Gets the class where this class is defined.
-	__declspec(property(get = GetBase)) IMonoClass *Base;
+	__declspec(property(get = GetBase))        IMonoClass                    *Base;
 	//! Indicates whether this class is a value-type.
-	__declspec(property(get = GetIsValueType)) bool IsValueType;
+	__declspec(property(get = GetIsValueType)) bool                           IsValueType;
 	//! Indicates whether this class is an enumeration.
-	__declspec(property(get = GetIsEnum)) bool IsEnum;
+	__declspec(property(get = GetIsEnum))      bool                           IsEnum;
 	//! Indicates whether this class is a delegate.
-	__declspec(property(get = GetIsDelegate)) bool IsDelegate;
+	__declspec(property(get = GetIsDelegate))  bool                           IsDelegate;
 	//! Gets the list of fields available through this class.
-	__declspec(property(get = GetFields))     ReadOnlyList<IMonoField *>    *Fields;
+	__declspec(property(get = GetFields))      ReadOnlyList<IMonoField *>    *Fields;
 	//! Gets the list of properties available through this class.
-	__declspec(property(get = GetProperties)) ReadOnlyList<IMonoProperty *> *Properties;
+	__declspec(property(get = GetProperties))  ReadOnlyList<IMonoProperty *> *Properties;
 	//! Gets the list of events available through this class.
-	__declspec(property(get = GetEvents))     ReadOnlyList<IMonoEvent *>    *Events;
+	__declspec(property(get = GetEvents))      ReadOnlyList<IMonoEvent *>    *Events;
 	//! Gets the list of functions available through this class.
-	__declspec(property(get = GetFunctions))  ReadOnlyList<IMonoFunction *> *Functions;
+	__declspec(property(get = GetFunctions))   ReadOnlyList<IMonoFunction *> *Functions;
 	
 	//! Gets one of the constructors that can accept specified number of arguments.
 	//!

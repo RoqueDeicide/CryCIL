@@ -3,8 +3,8 @@
 namespace System
 {
 	/// <summary>
-	/// Helper class for Half conversions and some low level operations. This class is
-	/// internally used in the Half class.
+	/// Helper class for Half conversions and some low level operations. This class is internally used in
+	/// the Half class.
 	/// </summary>
 	/// <remarks>
 	/// References:

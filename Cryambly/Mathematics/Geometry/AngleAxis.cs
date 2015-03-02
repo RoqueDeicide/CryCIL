@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 namespace CryCil.Geometry
 {
 	/// <summary>
-	/// Represents a vector which length is an angle of rotation and its normalized
-	/// version is an axis of rotation.
+	/// Represents a vector which length is an angle of rotation and its normalized version is an axis of
+	/// rotation.
 	/// </summary>
 	public struct AngleAxis
 	{
 		#region Fields
 		/// <summary>
-		/// <see cref="Vector3"/> which normalized version can be used as axis of rotation
-		/// and which length represents angle of rotation. Use this field if other two
-		/// properties are too costly performance-wise.
+		/// <see cref="Vector3"/> which normalized version can be used as axis of rotation and which length
+		/// represents angle of rotation. Use this field if other two properties are too costly
+		/// performance-wise.
 		/// </summary>
 		public Vector3 Vector;
 		#endregion
@@ -56,8 +56,7 @@ namespace CryCil.Geometry
 		/// Creates new instance of type <see cref="AngleAxis"/>.
 		/// </summary>
 		/// <param name="angles">
-		/// A set of Euler angles that represents rotation that new instance needs to
-		/// represent.
+		/// A set of Euler angles that represents rotation that new instance needs to represent.
 		/// </param>
 		public AngleAxis(EulerAngles angles)
 		{
@@ -82,8 +81,7 @@ namespace CryCil.Geometry
 		/// Creates new instance of type <see cref="AngleAxis"/>.
 		/// </summary>
 		/// <param name="quaternion">
-		/// <see cref="Quaternion"/> that represents rotation that new instance needs to
-		/// represent.
+		/// <see cref="Quaternion"/> that represents rotation that new instance needs to represent.
 		/// </param>
 		public AngleAxis(Quaternion quaternion)
 		{

@@ -30,12 +30,10 @@ namespace CryEngine
 		public static float AsyncTime { get; private set; }
 
 		/// <summary>
-		/// The time used to render the current frame. Useful for creating framerate
-		/// independent operations.
+		/// The time used to render the current frame. Useful for creating framerate independent
+		/// operations.
 		/// </summary>
-		/// <example>
-		/// public override void OnUpdate() { this.Position.X += 10 * Time.DeltaTime; }
-		/// </example>
+		/// <example>public override void OnUpdate() { this.Position.X += 10 * Time.DeltaTime; }</example>
 		public static float DeltaTime { get; private set; }
 
 		private static float _timeScale;

@@ -8,8 +8,8 @@ namespace CryCil.Geometry
 	public static class Projection
 	{
 		/// <summary>
-		/// Creates a vector which is projection of given vector onto plane which is
-		/// defined by given normal.
+		/// Creates a vector which is projection of given vector onto plane which is defined by given
+		/// normal.
 		/// </summary>
 		/// <param name="vector">Vector to project.</param>
 		/// <param name="normal">A normal of the plane.</param>
@@ -31,8 +31,8 @@ namespace CryCil.Geometry
 			);
 		}
 		/// <summary>
-		/// Projects this vector onto a plane specified by given normal and one of the
-		/// points on the plane and that goes through the origin.
+		/// Projects this vector onto a plane specified by given normal and one of the points on the plane
+		/// and that goes through the origin.
 		/// </summary>
 		/// <param name="vector">A vector that represents a point on the plane.</param>
 		/// <param name="normal">A normal of the plane.</param>

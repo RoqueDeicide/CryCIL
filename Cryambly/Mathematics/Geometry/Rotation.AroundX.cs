@@ -68,8 +68,7 @@ namespace CryCil.Geometry
 				matrix.M21 = sine; matrix.M22 = cosine;
 			}
 			/// <summary>
-			/// Overrides given quaternion with one that represents rotation around
-			/// X-axis.
+			/// Overrides given quaternion with one that represents rotation around X-axis.
 			/// </summary>
 			/// <param name="matrix">Matrix to override.</param>
 			/// <param name="angle"> Angle of rotation in radians.</param>
@@ -81,8 +80,7 @@ namespace CryCil.Geometry
 				matrix.M21 = sine; matrix.M22 = cosine;
 			}
 			/// <summary>
-			/// Overrides given quaternion with one that represents rotation around
-			/// X-axis.
+			/// Overrides given quaternion with one that represents rotation around X-axis.
 			/// </summary>
 			/// <param name="quaternion">Matrix to override.</param>
 			/// <param name="angle">     Angle of rotation in radians.</param>
@@ -107,8 +105,7 @@ namespace CryCil.Geometry
 				matrix.M20 = 0.0f; matrix.M21 = s; matrix.M22 = c;
 			}
 			/// <summary>
-			/// Changes first 3 columns of given matrix so they represent a rotation
-			/// around X-axis.
+			/// Changes first 3 columns of given matrix so they represent a rotation around X-axis.
 			/// </summary>
 			/// <param name="matrix">Matrix to change.</param>
 			/// <param name="angle"> Angle of rotation in radians.</param>
@@ -120,8 +117,7 @@ namespace CryCil.Geometry
 				matrix.M20 = 0.0f; matrix.M21 = s; matrix.M22 = c;
 			}
 			/// <summary>
-			/// Changes top-left 3x3 submatrix of given matrix so it represent a rotation
-			/// around X-axis.
+			/// Changes top-left 3x3 submatrix of given matrix so it represent a rotation around X-axis.
 			/// </summary>
 			/// <param name="matrix">Matrix to change.</param>
 			/// <param name="angle"> Angle of rotation in radians.</param>
@@ -133,8 +129,7 @@ namespace CryCil.Geometry
 				matrix.M20 = 0.0f; matrix.M21 = s; matrix.M22 = c;
 			}
 			/// <summary>
-			/// Overrides given quaternion with one that represents rotation around
-			/// X-axis.
+			/// Overrides given quaternion with one that represents rotation around X-axis.
 			/// </summary>
 			/// <param name="quaternion">Matrix to override.</param>
 			/// <param name="angle">     Angle of rotation in radians.</param>
@@ -148,8 +143,8 @@ namespace CryCil.Geometry
 				quaternion.Z = 0;
 			}
 			/// <summary>
-			/// Changes given matrix so it represents transformation represented by its
-			/// original value followed up by rotation around X-axis.
+			/// Changes given matrix so it represents transformation represented by its original value
+			/// followed up by rotation around X-axis.
 			/// </summary>
 			/// <param name="matrix">Matrix to add the rotation to.</param>
 			/// <param name="angle"> Angle of rotation in radians.</param>
@@ -164,8 +159,8 @@ namespace CryCil.Geometry
 				matrix = rm * matrix;
 			}
 			/// <summary>
-			/// Changes given matrix so it represents transformation represented by its
-			/// original value followed up by rotation around X-axis.
+			/// Changes given matrix so it represents transformation represented by its original value
+			/// followed up by rotation around X-axis.
 			/// </summary>
 			/// <param name="matrix">Matrix to add the rotation to.</param>
 			/// <param name="angle"> Angle of rotation in radians.</param>
@@ -180,8 +175,8 @@ namespace CryCil.Geometry
 				matrix = rm * matrix;
 			}
 			/// <summary>
-			/// Changes given matrix so it represents transformation represented by its
-			/// original value followed up by rotation around X-axis.
+			/// Changes given matrix so it represents transformation represented by its original value
+			/// followed up by rotation around X-axis.
 			/// </summary>
 			/// <param name="matrix">Matrix to add the rotation to.</param>
 			/// <param name="angle"> Angle of rotation in radians.</param>
@@ -199,9 +194,9 @@ namespace CryCil.Geometry
 			/// Stacks rotation around X-axis into given quaternion.
 			/// </summary>
 			/// <remarks>
-			/// This function modifies given quaternion in such a way that transforming a
-			/// vector by resultant quaternion is equavalent of applying original
-			/// transformation and follow it up with rotation around X-axis.
+			/// This function modifies given quaternion in such a way that transforming a vector by
+			/// resultant quaternion is equavalent of applying original transformation and follow it up
+			/// with rotation around X-axis.
 			/// </remarks>
 			/// <param name="quaternion">Quaternion to add rotation to.</param>
 			/// <param name="angle">     Angle of rotation in radians.</param>
@@ -259,9 +254,7 @@ namespace CryCil.Geometry
 			/// Creates a quaternion that represents rotation around X-axis.
 			/// </summary>
 			/// <param name="angle">Angle of rotation in radians.</param>
-			/// <returns>
-			/// <see cref="Quaternion"/> that represents rotation around X-axis.
-			/// </returns>
+			/// <returns><see cref="Quaternion"/> that represents rotation around X-axis.</returns>
 			public static Quaternion CreateQuaternion(float angle)
 			{
 				Quaternion quaternion = Quaternion.Identity;

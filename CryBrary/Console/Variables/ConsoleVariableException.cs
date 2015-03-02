@@ -4,8 +4,8 @@ using System.Runtime.Serialization;
 namespace CryEngine.Console.Variables
 {
 	/// <summary>
-	/// Represents an exception that is thrown when an error occurs during console
-	/// variable-related operation.
+	/// Represents an exception that is thrown when an error occurs during console variable-related
+	/// operation.
 	/// </summary>
 	[Serializable]
 	public class ConsoleVariableException : Exception
@@ -17,8 +17,7 @@ namespace CryEngine.Console.Variables
 		{
 		}
 		/// <summary>
-		/// Creates a new instance of <see cref="ConsoleVariableException"/> class with
-		/// specified message.
+		/// Creates a new instance of <see cref="ConsoleVariableException"/> class with specified message.
 		/// </summary>
 		/// <param name="message">Message to supply with exception.</param>
 		public ConsoleVariableException(string message)
@@ -26,8 +25,8 @@ namespace CryEngine.Console.Variables
 		{
 		}
 		/// <summary>
-		/// Creates a new instance of <see cref="ConsoleVariableException"/> class with
-		/// specified message and exception object that caused new one to be created.
+		/// Creates a new instance of <see cref="ConsoleVariableException"/> class with specified message
+		/// and exception object that caused new one to be created.
 		/// </summary>
 		/// <param name="message">Message to supply with exception.</param>
 		/// <param name="inner">  Exception that caused a new one to be created.</param>
@@ -36,15 +35,11 @@ namespace CryEngine.Console.Variables
 		{
 		}
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ConsoleVariableException"/> class
-		/// with serialized data.
+		/// Initializes a new instance of the <see cref="ConsoleVariableException"/> class with serialized
+		/// data.
 		/// </summary>
-		/// <param name="info">   
-		/// The object that holds the serialized object data.
-		/// </param>
-		/// <param name="context">
-		/// The contextual information about the source or destination.
-		/// </param>
+		/// <param name="info">   The object that holds the serialized object data.</param>
+		/// <param name="context">The contextual information about the source or destination.</param>
 		protected ConsoleVariableException(
 			SerializationInfo info,
 			StreamingContext context)

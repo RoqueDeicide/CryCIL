@@ -44,15 +44,14 @@ namespace CryCil.RunTime.Compilation
 			).ToList();
 		}
 		/// <summary>
-		/// Creates a project file wrapper object of type that corresponds given
-		/// description.
+		/// Creates a project file wrapper object of type that corresponds given description.
 		/// </summary>
 		/// <param name="projectFileDescription">
 		/// Text that contains description of the project in the solution file.
 		/// </param>
 		/// <returns>
-		/// Object of type that is derived from <see cref="IProject"/> that fits the
-		/// description, or null, if corresponding type could not be found.
+		/// Object of type that is derived from <see cref="IProject"/> that fits the description, or null,
+		/// if corresponding type could not be found.
 		/// </returns>
 		[CanBeNull]
 		public static IProject Create([NotNull] string projectFileDescription)
@@ -84,8 +83,7 @@ namespace CryCil.RunTime.Compilation
 		/// <param name="projectName">Name of the project.</param>
 		/// <param name="projectFile">Path to project file.</param>
 		/// <returns>
-		/// An instance of type that implements <see cref="IProject"/> that can parse
-		/// given file format.
+		/// An instance of type that implements <see cref="IProject"/> that can parse given file format.
 		/// </returns>
 		[CanBeNull]
 		public static IProject Create([NotNull] string projectName, [NotNull] string projectFile)
@@ -106,13 +104,11 @@ namespace CryCil.RunTime.Compilation
 		}
 	}
 	/// <summary>
-	/// Marks classes that implement <see cref="IProject"/> that should be recognized by
-	/// the factory.
+	/// Marks classes that implement <see cref="IProject"/> that should be recognized by the factory.
 	/// </summary>
 	/// <remarks>
-	/// It is necessary for the project class to have constructor that takes two arguments
-	/// of type <see cref="String"/>, first one being a name, and last one being the path
-	/// to the file.
+	/// It is necessary for the project class to have constructor that takes two arguments of type
+	/// <see cref="String"/>, first one being a name, and last one being the path to the file.
 	/// </remarks>
 	[BaseTypeRequired(typeof(IProject))]
 	[AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]

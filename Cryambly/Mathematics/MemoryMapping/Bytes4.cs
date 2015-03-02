@@ -54,9 +54,7 @@ namespace CryCil.MemoryMapping
 		/// <summary>
 		/// Initializes new instance of <see cref="Bytes4"/> type.
 		/// </summary>
-		/// <param name="value">
-		/// <see cref="Int32"/> value to initialize this object with.
-		/// </param>
+		/// <param name="value"><see cref="Int32"/> value to initialize this object with.</param>
 		public Bytes4(int value)
 			: this()
 		{
@@ -65,9 +63,7 @@ namespace CryCil.MemoryMapping
 		/// <summary>
 		/// Initializes new instance of <see cref="Bytes4"/> type.
 		/// </summary>
-		/// <param name="value">
-		/// <see cref="UInt32"/> value to initialize this object with.
-		/// </param>
+		/// <param name="value"><see cref="UInt32"/> value to initialize this object with.</param>
 		public Bytes4(uint value)
 			: this()
 		{
@@ -76,9 +72,7 @@ namespace CryCil.MemoryMapping
 		/// <summary>
 		/// Initializes new instance of <see cref="Bytes4"/> type.
 		/// </summary>
-		/// <param name="value">
-		/// <see cref="Single"/> value to initialize this object with.
-		/// </param>
+		/// <param name="value"><see cref="Single"/> value to initialize this object with.</param>
 		public Bytes4(float value)
 			: this()
 		{
@@ -89,8 +83,7 @@ namespace CryCil.MemoryMapping
 		/// </summary>
 		/// <param name="array">     Array to use to initialize new object.</param>
 		/// <param name="startIndex">
-		/// Index of the first element of the array portion from which to start copying
-		/// bytes.
+		/// Index of the first element of the array portion from which to start copying bytes.
 		/// </param>
 		/// <param name="count">     Number of elements to copy from array.</param>
 		public Bytes4(byte[] array, int startIndex, int count)
@@ -136,9 +129,7 @@ namespace CryCil.MemoryMapping
 		/// <summary>
 		/// Gets 4 bytes from native memory cluster.
 		/// </summary>
-		/// <param name="handle">
-		/// Pointer to the beginning of native memory cluster.
-		/// </param>
+		/// <param name="handle">Pointer to the beginning of native memory cluster.</param>
 		/// <param name="offset">
 		/// Zero-based index of first of 4 bytes within native memory cluster to get.
 		/// </param>
@@ -150,9 +141,7 @@ namespace CryCil.MemoryMapping
 		/// <summary>
 		/// Writes 4 bytes to native memory cluster.
 		/// </summary>
-		/// <param name="handle">
-		/// Pointer to the beginning of native memory cluster.
-		/// </param>
+		/// <param name="handle">Pointer to the beginning of native memory cluster.</param>
 		/// <param name="offset">
 		/// Zero-based index of first of 4 bytes within native memory cluster to set.
 		/// </param>

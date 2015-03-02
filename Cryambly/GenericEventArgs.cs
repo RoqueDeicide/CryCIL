@@ -5,8 +5,8 @@ using System.Diagnostics.Contracts;
 namespace CryCil
 {
 	/// <summary>
-	/// Represents an object that contains a parameter of type
-	/// <typeparamref name="ExtraDataType"/> that describes an event.
+	/// Represents an object that contains a parameter of type <typeparamref name="ExtraDataType"/> that
+	/// describes an event.
 	/// </summary>
 	/// <typeparam name="ExtraDataType">Type of the parameter.</typeparam>
 	public class EventArgs<ExtraDataType> : EventArgs, IEquatable<EventArgs<ExtraDataType>>
@@ -47,8 +47,8 @@ namespace CryCil
 		/// <param name="obj">Another object.</param>
 		/// <returns>
 		/// True, if this object references the same address as the other one or their
-		/// <see cref="Parameter"/> properties are equal in case of <paramref name="obj"/>
-		/// being of type <see cref="EventArgs{ExtraDataType}"/>.
+		/// <see cref="Parameter"/> properties are equal in case of <paramref name="obj"/> being of type
+		/// <see cref="EventArgs{ExtraDataType}"/>.
 		/// </returns>
 		public override bool Equals(object obj)
 		{
@@ -68,14 +68,13 @@ namespace CryCil
 			return this.Parameter.GetHashCode();
 		}
 		/// <summary>
-		/// Establishes fact of equality of two objects of type
-		/// <see cref="EventArgs{ExtraDataType}"/>.
+		/// Establishes fact of equality of two objects of type <see cref="EventArgs{ExtraDataType}"/>.
 		/// </summary>
 		/// <param name="left"> Left operand.</param>
 		/// <param name="right">Right operand.</param>
 		/// <returns>
-		/// True, if both object reference the same address or their parameters are equal
-		/// in case both of them are not null, otherwise false.
+		/// True, if both object reference the same address or their parameters are equal in case both of
+		/// them are not null, otherwise false.
 		/// </returns>
 		public static bool operator ==(EventArgs<ExtraDataType> left, EventArgs<ExtraDataType> right)
 		{
@@ -85,14 +84,13 @@ namespace CryCil
 				left.Parameter.Equals(right.Parameter);
 		}
 		/// <summary>
-		/// Establishes fact of inequality of two objects of type
-		/// <see cref="EventArgs{ExtraDataType}"/>.
+		/// Establishes fact of inequality of two objects of type <see cref="EventArgs{ExtraDataType}"/>.
 		/// </summary>
 		/// <param name="left"> Left operand.</param>
 		/// <param name="right">Right operand.</param>
 		/// <returns>
-		/// True, if both object do not reference the same address and one of the is null
-		/// or their parameters differ, otherwise false.
+		/// True, if both object do not reference the same address and one of the is null or their
+		/// parameters differ, otherwise false.
 		/// </returns>
 		public static bool operator !=(EventArgs<ExtraDataType> left, EventArgs<ExtraDataType> right)
 		{

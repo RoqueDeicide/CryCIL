@@ -13,8 +13,12 @@ struct IMonoText : public IMonoHandle
 	//! Gets hash code of this string.
 	__declspec(property(get = GetHashCode)) int HashCode;
 	//! Creates null-terminated version of this Mono string using UTF-8 encoding.
+	//!
+	//! Returned buffer needs to be deleted after use.
 	__declspec(property(get = ToNativeUTF8)) const char *NativeUTF8;
 	//! Creates null-terminated version of this Mono string using UTF-16 encoding.
+	//!
+	//! Returned buffer needs to be deleted after use.
 	__declspec(property(get = ToNativeUTF16)) const wchar_t *NativeUTF16;
 
 	//! Determines whether this string is equal to another.

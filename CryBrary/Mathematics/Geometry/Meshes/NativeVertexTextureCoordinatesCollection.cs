@@ -58,8 +58,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		#endregion
 		#region Construction
 		/// <summary>
-		/// Creates new instance of type
-		/// <see cref="NativeVertexTextureCoordinatesCollection"/>.
+		/// Creates new instance of type <see cref="NativeVertexTextureCoordinatesCollection"/>.
 		/// </summary>
 		/// <param name="mesh">Mesh that hosts this collection.</param>
 		public NativeVertexTextureCoordinatesCollection(NativeMesh mesh)

@@ -94,8 +94,8 @@ namespace CryEngine.Physics
 		}
 
 		/// <summary>
-		/// Determines if this physical entity is in a sleeping state or not. (Will not be
-		/// affected by gravity) Autoamtically wakes upon collision.
+		/// Determines if this physical entity is in a sleeping state or not. (Will not be affected by
+		/// gravity) Autoamtically wakes upon collision.
 		/// </summary>
 		public bool Resting
 		{

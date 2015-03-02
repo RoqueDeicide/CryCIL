@@ -8,9 +8,7 @@ namespace CryEngine
 	/// <summary>
 	/// Represents an object that enumerates collections that implement IList interface.
 	/// </summary>
-	/// <typeparam name="ElementType">
-	/// Type of elements in enumerated collection.
-	/// </typeparam>
+	/// <typeparam name="ElementType">Type of elements in enumerated collection.</typeparam>
 	public class ListEnumerator<ElementType> : IEnumerator<ElementType>
 	{
 		#region Fields
@@ -52,9 +50,7 @@ namespace CryEngine
 		/// <summary>
 		/// Moves the enumerator to the next element.
 		/// </summary>
-		/// <returns>
-		/// False, if the end of the collection has been reached, otherwise true.
-		/// </returns>
+		/// <returns>False, if the end of the collection has been reached, otherwise true.</returns>
 		public bool MoveNext()
 		{
 			return ++this.currentPosition == this.list.Count;

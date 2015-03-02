@@ -37,9 +37,7 @@ namespace CryCil.RunTime.Logging
 		/// Writes a part of the array of symbols to CryEngine log.
 		/// </summary>
 		/// <param name="symbols">Symbols to write.</param>
-		/// <param name="index">  
-		/// Zero-based index of the first symbol from the array to write.
-		/// </param>
+		/// <param name="index">  Zero-based index of the first symbol from the array to write.</param>
 		/// <param name="count">  Number of symbols to write.</param>
 		public override void Write(char[] symbols, int index, int count)
 		{
@@ -112,9 +110,7 @@ namespace CryCil.RunTime.Logging
 		/// <summary>
 		/// Writes formatted string to CryEngine log.
 		/// </summary>
-		/// <param name="format">
-		/// String that defines format and position of arguments.
-		/// </param>
+		/// <param name="format">String that defines format and position of arguments.</param>
 		/// <param name="arg0">  Value to format and insert into final output.</param>
 		[StringFormatMethod("format")]
 		public override void Write(string format, object arg0)
@@ -128,9 +124,7 @@ namespace CryCil.RunTime.Logging
 		/// <summary>
 		/// Writes formatted string to CryEngine log.
 		/// </summary>
-		/// <param name="format">
-		/// String that defines format and position of arguments.
-		/// </param>
+		/// <param name="format">String that defines format and position of arguments.</param>
 		/// <param name="arg0">  Value to format and insert into final output.</param>
 		/// <param name="arg1">  Value to format and insert into final output.</param>
 		[StringFormatMethod("format")]
@@ -145,9 +139,7 @@ namespace CryCil.RunTime.Logging
 		/// <summary>
 		/// Writes formatted string to CryEngine log.
 		/// </summary>
-		/// <param name="format">
-		/// String that defines format and position of arguments.
-		/// </param>
+		/// <param name="format">String that defines format and position of arguments.</param>
 		/// <param name="arg0">  Value to format and insert into final output.</param>
 		/// <param name="arg1">  Value to format and insert into final output.</param>
 		/// <param name="arg2">  Value to format and insert into final output.</param>
@@ -163,9 +155,7 @@ namespace CryCil.RunTime.Logging
 		/// <summary>
 		/// Writes formatted string to CryEngine log.
 		/// </summary>
-		/// <param name="format">
-		/// String that defines format and position of arguments.
-		/// </param>
+		/// <param name="format">String that defines format and position of arguments.</param>
 		/// <param name="arg">   Values to format and insert into final output.</param>
 		[StringFormatMethod("format")]
 		public override void Write(string format, params object[] arg)

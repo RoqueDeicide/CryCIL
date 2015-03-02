@@ -12,9 +12,7 @@ namespace CryEngine.RunTime.Testing
 		/// Asserts that a given statement is true.
 		/// </summary>
 		/// <param name="value">The value to be asserted as true.</param>
-		/// <exception cref="AssertionFailedException">
-		/// Thrown if the value is false.
-		/// </exception>
+		/// <exception cref="AssertionFailedException">Thrown if the value is false.</exception>
 		public static void IsTrue(bool value)
 		{
 			if (!value)
@@ -27,9 +25,7 @@ namespace CryEngine.RunTime.Testing
 		/// <typeparam name="T">
 		/// The expression that should be thrown within the supplied method.
 		/// </typeparam>
-		/// <param name="method">         
-		/// The method in which the expression should be thrown.
-		/// </param>
+		/// <param name="method">         The method in which the expression should be thrown.</param>
 		/// <param name="includeChildren">
 		/// Specifies whether subclassed exceptions should be counted as valid.
 		/// </param>

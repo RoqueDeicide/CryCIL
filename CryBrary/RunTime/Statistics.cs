@@ -3,8 +3,7 @@
 namespace CryEngine.RunTime
 {
 	/// <summary>
-	/// CryStats enables tracking of commonly used library statistics such as memory
-	/// usage.
+	/// CryStats enables tracking of commonly used library statistics such as memory usage.
 	/// </summary>
 	public static class CryStats
 	{

@@ -22,9 +22,8 @@ namespace CryCil.Geometry
 			/// </param>
 			public static void Apply(ref Vector3 vector, ref AngleAxis angleAxis)
 			{
-				float angle = angleAxis.Angle;
-				double sine = Math.Sin(angle);
-				double cosine = Math.Cos(angle);
+				double sine; double cosine;
+				MathHelpers.SinCos(angleAxis.Angle, out sine, out cosine);
 				Vector3 axis = angleAxis.Axis;
 				Apply(ref vector, ref axis, (float)sine, (float)cosine);
 			}
@@ -32,14 +31,12 @@ namespace CryCil.Geometry
 			/// Rotates given vector around specified axis.
 			/// </summary>
 			/// <param name="vector">Vector to rotate.</param>
-			/// <param name="axis">  
-			/// Normalized vector that represents axis of rotation.
-			/// </param>
+			/// <param name="axis">  Normalized vector that represents axis of rotation.</param>
 			/// <param name="angle"> Angle of rotation.</param>
 			public static void Apply(ref Vector3 vector, ref Vector3 axis, float angle)
 			{
-				double sine = Math.Sin(angle);
-				double cosine = Math.Cos(angle);
+				double sine; double cosine;
+				MathHelpers.SinCos(angle, out sine, out cosine);
 
 				Apply(ref vector, ref axis, (float)sine, (float)cosine);
 			}
@@ -47,9 +44,7 @@ namespace CryCil.Geometry
 			/// Rotates given vector around specified axis.
 			/// </summary>
 			/// <param name="vector">Vector to rotate.</param>
-			/// <param name="axis">  
-			/// Normalized vector that represents axis of rotation.
-			/// </param>
+			/// <param name="axis">  Normalized vector that represents axis of rotation.</param>
 			/// <param name="sine">  Sine of angle of rotation.</param>
 			/// <param name="cosine">Cosine of angle of rotation.</param>
 			public static void Apply(ref Vector3 vector, ref Vector3 axis, float sine, float cosine)
@@ -135,8 +130,7 @@ namespace CryCil.Geometry
 				Translation.Apply(ref vector, ref pivot);
 			}
 			/// <summary>
-			/// Overrides given matrix with one that represents rotation around specified
-			/// axis.
+			/// Overrides given matrix with one that represents rotation around specified axis.
 			/// </summary>
 			/// <param name="matrix">   Matrix to modify.</param>
 			/// <param name="angleAxis">
@@ -144,36 +138,29 @@ namespace CryCil.Geometry
 			/// </param>
 			public static void Override(out Matrix33 matrix, ref AngleAxis angleAxis)
 			{
-				float angle = angleAxis.Angle;
-				double sine = Math.Sin(angle);
-				double cosine = Math.Cos(angle);
+				double sine; double cosine;
+				MathHelpers.SinCos(angleAxis.Angle, out sine, out cosine);
 				Vector3 axis = angleAxis.Axis;
 				Override(out matrix, ref axis, (float)sine, (float)cosine);
 			}
 			/// <summary>
-			/// Overrides given matrix with one that represents rotation around specified
-			/// axis.
+			/// Overrides given matrix with one that represents rotation around specified axis.
 			/// </summary>
 			/// <param name="matrix">Matrix to modify.</param>
-			/// <param name="axis">  
-			/// Normalized vector that represents axis of rotation.
-			/// </param>
+			/// <param name="axis">  Normalized vector that represents axis of rotation.</param>
 			/// <param name="angle"> Angle of rotation in radians.</param>
 			public static void Override(out Matrix33 matrix, ref Vector3 axis, float angle)
 			{
-				double sine = Math.Sin(angle);
-				double cosine = Math.Cos(angle);
+				double sine; double cosine;
+				MathHelpers.SinCos(angle, out sine, out cosine);
 
 				Override(out matrix, ref axis, (float)sine, (float)cosine);
 			}
 			/// <summary>
-			/// Overrides given matrix with one that represents rotation around specified
-			/// axis.
+			/// Overrides given matrix with one that represents rotation around specified axis.
 			/// </summary>
 			/// <param name="matrix">Matrix to modify.</param>
-			/// <param name="axis">  
-			/// Normalized vector that represents axis of rotation.
-			/// </param>
+			/// <param name="axis">  Normalized vector that represents axis of rotation.</param>
 			/// <param name="sine">  Sine of angle of rotation.</param>
 			/// <param name="cosine">Cosine of angle of rotation.</param>
 			public static void Override(out Matrix33 matrix, ref Vector3 axis, float sine, float cosine)
@@ -181,8 +168,7 @@ namespace CryCil.Geometry
 				matrix = Create33(ref axis, sine, cosine);
 			}
 			/// <summary>
-			/// Overrides given matrix with one that represents rotation around specified
-			/// axis.
+			/// Overrides given matrix with one that represents rotation around specified axis.
 			/// </summary>
 			/// <param name="matrix">   Matrix to modify.</param>
 			/// <param name="angleAxis">
@@ -190,36 +176,29 @@ namespace CryCil.Geometry
 			/// </param>
 			public static void Override(out Matrix34 matrix, ref AngleAxis angleAxis)
 			{
-				float angle = angleAxis.Angle;
-				double sine = Math.Sin(angle);
-				double cosine = Math.Cos(angle);
+				double sine; double cosine;
+				MathHelpers.SinCos(angleAxis.Angle, out sine, out cosine);
 				Vector3 axis = angleAxis.Axis;
 				Override(out matrix, ref axis, (float)sine, (float)cosine);
 			}
 			/// <summary>
-			/// Overrides given matrix with one that represents rotation around specified
-			/// axis.
+			/// Overrides given matrix with one that represents rotation around specified axis.
 			/// </summary>
 			/// <param name="matrix">Matrix to modify.</param>
-			/// <param name="axis">  
-			/// Normalized vector that represents axis of rotation.
-			/// </param>
+			/// <param name="axis">  Normalized vector that represents axis of rotation.</param>
 			/// <param name="angle"> Angle of rotation in radians.</param>
 			public static void Override(out Matrix34 matrix, ref Vector3 axis, float angle)
 			{
-				double sine = Math.Sin(angle);
-				double cosine = Math.Cos(angle);
+				double sine; double cosine;
+				MathHelpers.SinCos(angle, out sine, out cosine);
 
 				Override(out matrix, ref axis, (float)sine, (float)cosine);
 			}
 			/// <summary>
-			/// Overrides given matrix with one that represents rotation around specified
-			/// axis.
+			/// Overrides given matrix with one that represents rotation around specified axis.
 			/// </summary>
 			/// <param name="matrix">Matrix to modify.</param>
-			/// <param name="axis">  
-			/// Normalized vector that represents axis of rotation.
-			/// </param>
+			/// <param name="axis">  Normalized vector that represents axis of rotation.</param>
 			/// <param name="sine">  Sine of angle of rotation.</param>
 			/// <param name="cosine">Cosine of angle of rotation.</param>
 			public static void Override(out Matrix34 matrix, ref Vector3 axis, float sine, float cosine)
@@ -227,8 +206,7 @@ namespace CryCil.Geometry
 				matrix = Create34(ref axis, sine, cosine);
 			}
 			/// <summary>
-			/// Overrides given matrix with one that represents rotation around specified
-			/// axis.
+			/// Overrides given matrix with one that represents rotation around specified axis.
 			/// </summary>
 			/// <param name="matrix">   Matrix to modify.</param>
 			/// <param name="angleAxis">
@@ -236,36 +214,29 @@ namespace CryCil.Geometry
 			/// </param>
 			public static void Override(out Matrix44 matrix, ref AngleAxis angleAxis)
 			{
-				float angle = angleAxis.Angle;
-				double sine = Math.Sin(angle);
-				double cosine = Math.Cos(angle);
+				double sine; double cosine;
+				MathHelpers.SinCos(angleAxis.Angle, out sine, out cosine);
 				Vector3 axis = angleAxis.Axis;
 				Override(out matrix, ref axis, (float)sine, (float)cosine);
 			}
 			/// <summary>
-			/// Overrides given matrix with one that represents rotation around specified
-			/// axis.
+			/// Overrides given matrix with one that represents rotation around specified axis.
 			/// </summary>
 			/// <param name="matrix">Matrix to modify.</param>
-			/// <param name="axis">  
-			/// Normalized vector that represents axis of rotation.
-			/// </param>
+			/// <param name="axis">  Normalized vector that represents axis of rotation.</param>
 			/// <param name="angle"> Angle of rotation in radians.</param>
 			public static void Override(out Matrix44 matrix, ref Vector3 axis, float angle)
 			{
-				double sine = Math.Sin(angle);
-				double cosine = Math.Cos(angle);
+				double sine; double cosine;
+				MathHelpers.SinCos(angle, out sine, out cosine);
 
 				Override(out matrix, ref axis, (float)sine, (float)cosine);
 			}
 			/// <summary>
-			/// Overrides given matrix with one that represents rotation around specified
-			/// axis.
+			/// Overrides given matrix with one that represents rotation around specified axis.
 			/// </summary>
 			/// <param name="matrix">Matrix to modify.</param>
-			/// <param name="axis">  
-			/// Normalized vector that represents axis of rotation.
-			/// </param>
+			/// <param name="axis">  Normalized vector that represents axis of rotation.</param>
 			/// <param name="sine">  Sine of angle of rotation.</param>
 			/// <param name="cosine">Cosine of angle of rotation.</param>
 			public static void Override(out Matrix44 matrix, ref Vector3 axis, float sine, float cosine)
@@ -273,8 +244,7 @@ namespace CryCil.Geometry
 				matrix = Create44(ref axis, sine, cosine);
 			}
 			/// <summary>
-			/// Overrides given quaternion with one that represents rotation around
-			/// specified axis.
+			/// Overrides given quaternion with one that represents rotation around specified axis.
 			/// </summary>
 			/// <param name="quaternion">Quaternion to modify.</param>
 			/// <param name="angleAxis"> 
@@ -282,36 +252,29 @@ namespace CryCil.Geometry
 			/// </param>
 			public static void Override(out Quaternion quaternion, ref AngleAxis angleAxis)
 			{
-				float angle = angleAxis.Angle / 2;
-				double sine = Math.Sin(angle);
-				double cosine = Math.Cos(angle);
+				double sine; double cosine;
+				MathHelpers.SinCos(angleAxis.Angle / 2, out sine, out cosine);
 				Vector3 axis = angleAxis.Axis;
 				Override(out quaternion, ref axis, (float)sine, (float)cosine);
 			}
 			/// <summary>
-			/// Overrides given quaternion with one that represents rotation around
-			/// specified axis.
+			/// Overrides given quaternion with one that represents rotation around specified axis.
 			/// </summary>
 			/// <param name="quaternion">Quaternion to modify.</param>
-			/// <param name="axis">      
-			/// Normalized vector that represents axis of rotation.
-			/// </param>
+			/// <param name="axis">      Normalized vector that represents axis of rotation.</param>
 			/// <param name="angle">     Angle of rotation in radians.</param>
 			public static void Override(out Quaternion quaternion, ref Vector3 axis, float angle)
 			{
-				double sine = Math.Sin(angle / 2);
-				double cosine = Math.Cos(angle / 2);
+				double sine; double cosine;
+				MathHelpers.SinCos(angle / 2, out sine, out cosine);
 
 				Override(out quaternion, ref axis, (float)sine, (float)cosine);
 			}
 			/// <summary>
-			/// Overrides given quaternion with one that represents rotation around
-			/// specified axis.
+			/// Overrides given quaternion with one that represents rotation around specified axis.
 			/// </summary>
 			/// <param name="quaternion">Quaternion to modify.</param>
-			/// <param name="axis">      
-			/// Normalized vector that represents axis of rotation.
-			/// </param>
+			/// <param name="axis">      Normalized vector that represents axis of rotation.</param>
 			/// <param name="sine">      Sine of half-angle of rotation.</param>
 			/// <param name="cosine">    Cosine of half-angle of rotation.</param>
 			public static void Override(out Quaternion quaternion, ref Vector3 axis, float sine, float cosine)
@@ -327,24 +290,9 @@ namespace CryCil.Geometry
 			/// </param>
 			public static void Set(ref Matrix33 matrix, ref AngleAxis angleAxis)
 			{
-				float angle = angleAxis.Angle;
-				double sine = Math.Sin(angle);
-				double cosine = Math.Cos(angle);
+				double sine; double cosine;
+				MathHelpers.SinCos(angleAxis.Angle, out sine, out cosine);
 				Vector3 axis = angleAxis.Axis;
-				Set(ref matrix, ref axis, (float)sine, (float)cosine);
-			}
-			/// <summary>
-			/// Modifies given matrix so it represents rotation around specified axis.
-			/// </summary>
-			/// <param name="matrix">Matrix to modify.</param>
-			/// <param name="axis">  
-			/// Normalized vector that represents axis of rotation.
-			/// </param>
-			/// <param name="angle"> Angle of rotation in radians.</param>
-			public static void Set(ref Matrix33 matrix, ref Vector3 axis, float angle)
-			{
-				double sine = Math.Sin(angle);
-				double cosine = Math.Cos(angle);
 
 				Set(ref matrix, ref axis, (float)sine, (float)cosine);
 			}
@@ -352,9 +300,20 @@ namespace CryCil.Geometry
 			/// Modifies given matrix so it represents rotation around specified axis.
 			/// </summary>
 			/// <param name="matrix">Matrix to modify.</param>
-			/// <param name="axis">  
-			/// Normalized vector that represents axis of rotation.
-			/// </param>
+			/// <param name="axis">  Normalized vector that represents axis of rotation.</param>
+			/// <param name="angle"> Angle of rotation in radians.</param>
+			public static void Set(ref Matrix33 matrix, ref Vector3 axis, float angle)
+			{
+				double sine; double cosine;
+				MathHelpers.SinCos(angle, out sine, out cosine);
+
+				Set(ref matrix, ref axis, (float)sine, (float)cosine);
+			}
+			/// <summary>
+			/// Modifies given matrix so it represents rotation around specified axis.
+			/// </summary>
+			/// <param name="matrix">Matrix to modify.</param>
+			/// <param name="axis">  Normalized vector that represents axis of rotation.</param>
 			/// <param name="sine">  Sine of angle of rotation.</param>
 			/// <param name="cosine">Cosine of angle of rotation.</param>
 			public static void Set(ref Matrix33 matrix, ref Vector3 axis, float sine, float cosine)
@@ -375,9 +334,8 @@ namespace CryCil.Geometry
 			/// </param>
 			public static void Set(ref Matrix34 matrix, ref AngleAxis angleAxis)
 			{
-				float angle = angleAxis.Angle;
-				double sine = Math.Sin(angle);
-				double cosine = Math.Cos(angle);
+				double sine; double cosine;
+				MathHelpers.SinCos(angleAxis.Angle, out sine, out cosine);
 				Vector3 axis = angleAxis.Axis;
 				Set(ref matrix, ref axis, (float)sine, (float)cosine);
 			}
@@ -385,14 +343,12 @@ namespace CryCil.Geometry
 			/// Modifies given matrix so it represents rotation around specified axis.
 			/// </summary>
 			/// <param name="matrix">Matrix to modify.</param>
-			/// <param name="axis">  
-			/// Normalized vector that represents axis of rotation.
-			/// </param>
+			/// <param name="axis">  Normalized vector that represents axis of rotation.</param>
 			/// <param name="angle"> Angle of rotation in radians.</param>
 			public static void Set(ref Matrix34 matrix, ref Vector3 axis, float angle)
 			{
-				double sine = Math.Sin(angle);
-				double cosine = Math.Cos(angle);
+				double sine; double cosine;
+				MathHelpers.SinCos(angle, out sine, out cosine);
 
 				Set(ref matrix, ref axis, (float)sine, (float)cosine);
 			}
@@ -400,9 +356,7 @@ namespace CryCil.Geometry
 			/// Modifies given matrix so it represents rotation around specified axis.
 			/// </summary>
 			/// <param name="matrix">Matrix to modify.</param>
-			/// <param name="axis">  
-			/// Normalized vector that represents axis of rotation.
-			/// </param>
+			/// <param name="axis">  Normalized vector that represents axis of rotation.</param>
 			/// <param name="sine">  Sine of angle of rotation.</param>
 			/// <param name="cosine">Cosine of angle of rotation.</param>
 			public static void Set(ref Matrix34 matrix, ref Vector3 axis, float sine, float cosine)
@@ -423,9 +377,8 @@ namespace CryCil.Geometry
 			/// </param>
 			public static void Set(ref Matrix44 matrix, ref AngleAxis angleAxis)
 			{
-				float angle = angleAxis.Angle;
-				double sine = Math.Sin(angle);
-				double cosine = Math.Cos(angle);
+				double sine; double cosine;
+				MathHelpers.SinCos(angleAxis.Angle, out sine, out cosine);
 				Vector3 axis = angleAxis.Axis;
 				Set(ref matrix, ref axis, (float)sine, (float)cosine);
 			}
@@ -433,14 +386,12 @@ namespace CryCil.Geometry
 			/// Modifies given matrix so it represents rotation around specified axis.
 			/// </summary>
 			/// <param name="matrix">Matrix to modify.</param>
-			/// <param name="axis">  
-			/// Normalized vector that represents axis of rotation.
-			/// </param>
+			/// <param name="axis">  Normalized vector that represents axis of rotation.</param>
 			/// <param name="angle"> Angle of rotation in radians.</param>
 			public static void Set(ref Matrix44 matrix, ref Vector3 axis, float angle)
 			{
-				double sine = Math.Sin(angle);
-				double cosine = Math.Cos(angle);
+				double sine; double cosine;
+				MathHelpers.SinCos(angle, out sine, out cosine);
 
 				Set(ref matrix, ref axis, (float)sine, (float)cosine);
 			}
@@ -448,9 +399,7 @@ namespace CryCil.Geometry
 			/// Modifies given matrix so it represents rotation around specified axis.
 			/// </summary>
 			/// <param name="matrix">Matrix to modify.</param>
-			/// <param name="axis">  
-			/// Normalized vector that represents axis of rotation.
-			/// </param>
+			/// <param name="axis">  Normalized vector that represents axis of rotation.</param>
 			/// <param name="sine">  Sine of angle of rotation.</param>
 			/// <param name="cosine">Cosine of angle of rotation.</param>
 			public static void Set(ref Matrix44 matrix, ref Vector3 axis, float sine, float cosine)
@@ -471,9 +420,8 @@ namespace CryCil.Geometry
 			/// </param>
 			public static void Set(ref Quaternion quaternion, ref AngleAxis angleAxis)
 			{
-				float angle = angleAxis.Angle / 2;
-				double sine = Math.Sin(angle);
-				double cosine = Math.Cos(angle);
+				double sine; double cosine;
+				MathHelpers.SinCos(angleAxis.Angle / 2, out sine, out cosine);
 				Vector3 axis = angleAxis.Axis;
 				Set(ref quaternion, ref axis, (float)sine, (float)cosine);
 			}
@@ -481,14 +429,12 @@ namespace CryCil.Geometry
 			/// Modifies given quaternion so it represents rotation around specified axis.
 			/// </summary>
 			/// <param name="quaternion">Quaternion to modify.</param>
-			/// <param name="axis">      
-			/// Normalized vector that represents axis of rotation.
-			/// </param>
+			/// <param name="axis">      Normalized vector that represents axis of rotation.</param>
 			/// <param name="angle">     Angle of rotation in radians.</param>
 			public static void Set(ref Quaternion quaternion, ref Vector3 axis, float angle)
 			{
-				double sine = Math.Sin(angle / 2);
-				double cosine = Math.Cos(angle / 2);
+				double sine; double cosine;
+				MathHelpers.SinCos(angle / 2, out sine, out cosine);
 
 				Set(ref quaternion, ref axis, (float)sine, (float)cosine);
 			}
@@ -496,9 +442,7 @@ namespace CryCil.Geometry
 			/// Modifies given quaternion so it represents rotation around specified axis.
 			/// </summary>
 			/// <param name="quaternion">Quaternion to modify.</param>
-			/// <param name="axis">      
-			/// Normalized vector that represents axis of rotation.
-			/// </param>
+			/// <param name="axis">      Normalized vector that represents axis of rotation.</param>
 			/// <param name="sine">      Sine of half-angle of rotation.</param>
 			/// <param name="cosine">    Cosine of half-angle of rotation.</param>
 			public static void Set(ref Quaternion quaternion, ref Vector3 axis, float sine, float cosine)
@@ -515,24 +459,9 @@ namespace CryCil.Geometry
 			/// </param>
 			public static void StackUp(ref Matrix33 matrix, ref AngleAxis angleAxis)
 			{
-				float angle = angleAxis.Angle;
-				double sine = Math.Sin(angle);
-				double cosine = Math.Cos(angle);
+				double sine; double cosine;
+				MathHelpers.SinCos(angleAxis.Angle, out sine, out cosine);
 				Vector3 axis = angleAxis.Axis;
-				StackUp(ref matrix, ref axis, (float)sine, (float)cosine);
-			}
-			/// <summary>
-			/// Stacks a rotation around specified axis onto given matrix.
-			/// </summary>
-			/// <param name="matrix">Matrix to modify.</param>
-			/// <param name="axis">  
-			/// Normalized vector that represents axis of rotation.
-			/// </param>
-			/// <param name="angle"> Angle of rotation in radians.</param>
-			public static void StackUp(ref Matrix33 matrix, ref Vector3 axis, float angle)
-			{
-				double sine = Math.Sin(angle);
-				double cosine = Math.Cos(angle);
 
 				StackUp(ref matrix, ref axis, (float)sine, (float)cosine);
 			}
@@ -540,9 +469,20 @@ namespace CryCil.Geometry
 			/// Stacks a rotation around specified axis onto given matrix.
 			/// </summary>
 			/// <param name="matrix">Matrix to modify.</param>
-			/// <param name="axis">  
-			/// Normalized vector that represents axis of rotation.
-			/// </param>
+			/// <param name="axis">  Normalized vector that represents axis of rotation.</param>
+			/// <param name="angle"> Angle of rotation in radians.</param>
+			public static void StackUp(ref Matrix33 matrix, ref Vector3 axis, float angle)
+			{
+				double sine; double cosine;
+				MathHelpers.SinCos(angle, out sine, out cosine);
+
+				StackUp(ref matrix, ref axis, (float)sine, (float)cosine);
+			}
+			/// <summary>
+			/// Stacks a rotation around specified axis onto given matrix.
+			/// </summary>
+			/// <param name="matrix">Matrix to modify.</param>
+			/// <param name="axis">  Normalized vector that represents axis of rotation.</param>
 			/// <param name="sine">  Sine of angle of rotation.</param>
 			/// <param name="cosine">Cosine of angle of rotation.</param>
 			public static void StackUp(ref Matrix33 matrix, ref Vector3 axis, float sine, float cosine)
@@ -567,24 +507,9 @@ namespace CryCil.Geometry
 			/// </param>
 			public static void StackUp(ref Matrix34 matrix, ref AngleAxis angleAxis)
 			{
-				float angle = angleAxis.Angle;
-				double sine = Math.Sin(angle);
-				double cosine = Math.Cos(angle);
+				double sine; double cosine;
+				MathHelpers.SinCos(angleAxis.Angle, out sine, out cosine);
 				Vector3 axis = angleAxis.Axis;
-				StackUp(ref matrix, ref axis, (float)sine, (float)cosine);
-			}
-			/// <summary>
-			/// Stacks a rotation around specified axis onto given matrix.
-			/// </summary>
-			/// <param name="matrix">Matrix to modify.</param>
-			/// <param name="axis">  
-			/// Normalized vector that represents axis of rotation.
-			/// </param>
-			/// <param name="angle"> Angle of rotation in radians.</param>
-			public static void StackUp(ref Matrix34 matrix, ref Vector3 axis, float angle)
-			{
-				double sine = Math.Sin(angle);
-				double cosine = Math.Cos(angle);
 
 				StackUp(ref matrix, ref axis, (float)sine, (float)cosine);
 			}
@@ -592,9 +517,20 @@ namespace CryCil.Geometry
 			/// Stacks a rotation around specified axis onto given matrix.
 			/// </summary>
 			/// <param name="matrix">Matrix to modify.</param>
-			/// <param name="axis">  
-			/// Normalized vector that represents axis of rotation.
-			/// </param>
+			/// <param name="axis">  Normalized vector that represents axis of rotation.</param>
+			/// <param name="angle"> Angle of rotation in radians.</param>
+			public static void StackUp(ref Matrix34 matrix, ref Vector3 axis, float angle)
+			{
+				double sine; double cosine;
+				MathHelpers.SinCos(angle, out sine, out cosine);
+
+				StackUp(ref matrix, ref axis, (float)sine, (float)cosine);
+			}
+			/// <summary>
+			/// Stacks a rotation around specified axis onto given matrix.
+			/// </summary>
+			/// <param name="matrix">Matrix to modify.</param>
+			/// <param name="axis">  Normalized vector that represents axis of rotation.</param>
 			/// <param name="sine">  Sine of angle of rotation.</param>
 			/// <param name="cosine">Cosine of angle of rotation.</param>
 			public static void StackUp(ref Matrix34 matrix, ref Vector3 axis, float sine, float cosine)
@@ -619,24 +555,9 @@ namespace CryCil.Geometry
 			/// </param>
 			public static void StackUp(ref Matrix44 matrix, ref AngleAxis angleAxis)
 			{
-				float angle = angleAxis.Angle;
-				double sine = Math.Sin(angle);
-				double cosine = Math.Cos(angle);
+				double sine; double cosine;
+				MathHelpers.SinCos(angleAxis.Angle, out sine, out cosine);
 				Vector3 axis = angleAxis.Axis;
-				StackUp(ref matrix, ref axis, (float)sine, (float)cosine);
-			}
-			/// <summary>
-			/// Stacks a rotation around specified axis onto given matrix.
-			/// </summary>
-			/// <param name="matrix">Matrix to modify.</param>
-			/// <param name="axis">  
-			/// Normalized vector that represents axis of rotation.
-			/// </param>
-			/// <param name="angle"> Angle of rotation in radians.</param>
-			public static void StackUp(ref Matrix44 matrix, ref Vector3 axis, float angle)
-			{
-				double sine = Math.Sin(angle);
-				double cosine = Math.Cos(angle);
 
 				StackUp(ref matrix, ref axis, (float)sine, (float)cosine);
 			}
@@ -644,9 +565,20 @@ namespace CryCil.Geometry
 			/// Stacks a rotation around specified axis onto given matrix.
 			/// </summary>
 			/// <param name="matrix">Matrix to modify.</param>
-			/// <param name="axis">  
-			/// Normalized vector that represents axis of rotation.
-			/// </param>
+			/// <param name="axis">  Normalized vector that represents axis of rotation.</param>
+			/// <param name="angle"> Angle of rotation in radians.</param>
+			public static void StackUp(ref Matrix44 matrix, ref Vector3 axis, float angle)
+			{
+				double sine; double cosine;
+				MathHelpers.SinCos(angle, out sine, out cosine);
+
+				StackUp(ref matrix, ref axis, (float)sine, (float)cosine);
+			}
+			/// <summary>
+			/// Stacks a rotation around specified axis onto given matrix.
+			/// </summary>
+			/// <param name="matrix">Matrix to modify.</param>
+			/// <param name="axis">  Normalized vector that represents axis of rotation.</param>
 			/// <param name="sine">  Sine of angle of rotation.</param>
 			/// <param name="cosine">Cosine of angle of rotation.</param>
 			public static void StackUp(ref Matrix44 matrix, ref Vector3 axis, float sine, float cosine)
@@ -671,24 +603,9 @@ namespace CryCil.Geometry
 			/// </param>
 			public static void StackUp(ref Quaternion quaternion, ref AngleAxis angleAxis)
 			{
-				float angle = angleAxis.Angle / 2;
-				double sine = Math.Sin(angle);
-				double cosine = Math.Cos(angle);
+				double sine; double cosine;
+				MathHelpers.SinCos(angleAxis.Angle / 2, out sine, out cosine);
 				Vector3 axis = angleAxis.Axis;
-				StackUp(ref quaternion, ref axis, (float)sine, (float)cosine);
-			}
-			/// <summary>
-			/// Stacks a rotation around specified axis onto given quaternion.
-			/// </summary>
-			/// <param name="quaternion">Quaternion to modify.</param>
-			/// <param name="axis">      
-			/// Normalized vector that represents axis of rotation.
-			/// </param>
-			/// <param name="angle">     Angle of rotation in radians.</param>
-			public static void StackUp(ref Quaternion quaternion, ref Vector3 axis, float angle)
-			{
-				double sine = Math.Sin(angle / 2);
-				double cosine = Math.Cos(angle / 2);
 
 				StackUp(ref quaternion, ref axis, (float)sine, (float)cosine);
 			}
@@ -696,9 +613,20 @@ namespace CryCil.Geometry
 			/// Stacks a rotation around specified axis onto given quaternion.
 			/// </summary>
 			/// <param name="quaternion">Quaternion to modify.</param>
-			/// <param name="axis">      
-			/// Normalized vector that represents axis of rotation.
-			/// </param>
+			/// <param name="axis">      Normalized vector that represents axis of rotation.</param>
+			/// <param name="angle">     Angle of rotation in radians.</param>
+			public static void StackUp(ref Quaternion quaternion, ref Vector3 axis, float angle)
+			{
+				double sine; double cosine;
+				MathHelpers.SinCos(angle / 2, out sine, out cosine);
+
+				StackUp(ref quaternion, ref axis, (float)sine, (float)cosine);
+			}
+			/// <summary>
+			/// Stacks a rotation around specified axis onto given quaternion.
+			/// </summary>
+			/// <param name="quaternion">Quaternion to modify.</param>
+			/// <param name="axis">      Normalized vector that represents axis of rotation.</param>
 			/// <param name="sine">      Sine of half-angle of rotation.</param>
 			/// <param name="cosine">    Cosine of half-angle of rotation.</param>
 			public static void StackUp(ref Quaternion quaternion, ref Vector3 axis, float sine, float cosine)
@@ -714,33 +642,29 @@ namespace CryCil.Geometry
 			/// <returns>Matrix that represents rotation around specified axis.</returns>
 			public static Matrix33 Create33(ref AngleAxis angleAxis)
 			{
-				float angle = angleAxis.Angle;
-				double sine = Math.Sin(angle);
-				double cosine = Math.Cos(angle);
+				double sine; double cosine;
+				MathHelpers.SinCos(angleAxis.Angle, out sine, out cosine);
 				Vector3 axis = angleAxis.Axis;
-				return Create33(ref axis, (float)sine, (float)cosine);
-			}
-			/// <summary>
-			/// Creates a matrix that represents rotation around specified axis.
-			/// </summary>
-			/// <param name="axis"> 
-			/// Normalized vector that represents axis of rotation.
-			/// </param>
-			/// <param name="angle">Angle of rotation in radians.</param>
-			/// <returns>Matrix that represents rotation around specified axis.</returns>
-			public static Matrix33 Create33(ref Vector3 axis, float angle)
-			{
-				double sine = Math.Sin(angle);
-				double cosine = Math.Cos(angle);
 
 				return Create33(ref axis, (float)sine, (float)cosine);
 			}
 			/// <summary>
 			/// Creates a matrix that represents rotation around specified axis.
 			/// </summary>
-			/// <param name="axis">  
-			/// Normalized vector that represents axis of rotation.
-			/// </param>
+			/// <param name="axis"> Normalized vector that represents axis of rotation.</param>
+			/// <param name="angle">Angle of rotation in radians.</param>
+			/// <returns>Matrix that represents rotation around specified axis.</returns>
+			public static Matrix33 Create33(ref Vector3 axis, float angle)
+			{
+				double sine; double cosine;
+				MathHelpers.SinCos(angle, out sine, out cosine);
+
+				return Create33(ref axis, (float)sine, (float)cosine);
+			}
+			/// <summary>
+			/// Creates a matrix that represents rotation around specified axis.
+			/// </summary>
+			/// <param name="axis">  Normalized vector that represents axis of rotation.</param>
 			/// <param name="sine">  Sine of angle of rotation.</param>
 			/// <param name="cosine">Cosine of angle of rotation.</param>
 			/// <returns>Matrix that represents rotation around specified axis.</returns>
@@ -766,33 +690,28 @@ namespace CryCil.Geometry
 			/// <returns>Matrix that represents rotation around specified axis.</returns>
 			public static Matrix34 Create34(ref AngleAxis angleAxis)
 			{
-				float angle = angleAxis.Angle;
-				double sine = Math.Sin(angle);
-				double cosine = Math.Cos(angle);
+				double sine; double cosine;
+				MathHelpers.SinCos(angleAxis.Angle, out sine, out cosine);
 				Vector3 axis = angleAxis.Axis;
 				return Create34(ref axis, (float)sine, (float)cosine);
 			}
 			/// <summary>
 			/// Creates a matrix that represents rotation around specified axis.
 			/// </summary>
-			/// <param name="axis"> 
-			/// Normalized vector that represents axis of rotation.
-			/// </param>
+			/// <param name="axis"> Normalized vector that represents axis of rotation.</param>
 			/// <param name="angle">Angle of rotation in radians.</param>
 			/// <returns>Matrix that represents rotation around specified axis.</returns>
 			public static Matrix34 Create34(ref Vector3 axis, float angle)
 			{
-				double sine = Math.Sin(angle);
-				double cosine = Math.Cos(angle);
+				double sine; double cosine;
+				MathHelpers.SinCos(angle, out sine, out cosine);
 
 				return Create34(ref axis, (float)sine, (float)cosine);
 			}
 			/// <summary>
 			/// Creates a matrix that represents rotation around specified axis.
 			/// </summary>
-			/// <param name="axis">  
-			/// Normalized vector that represents axis of rotation.
-			/// </param>
+			/// <param name="axis">  Normalized vector that represents axis of rotation.</param>
 			/// <param name="sine">  Sine of angle of rotation.</param>
 			/// <param name="cosine">Cosine of angle of rotation.</param>
 			/// <returns>Matrix that represents rotation around specified axis.</returns>
@@ -818,33 +737,28 @@ namespace CryCil.Geometry
 			/// <returns>Matrix that represents rotation around specified axis.</returns>
 			public static Matrix44 Create44(ref AngleAxis angleAxis)
 			{
-				float angle = angleAxis.Angle;
-				double sine = Math.Sin(angle);
-				double cosine = Math.Cos(angle);
+				double sine; double cosine;
+				MathHelpers.SinCos(angleAxis.Angle, out sine, out cosine);
 				Vector3 axis = angleAxis.Axis;
 				return Create44(ref axis, (float)sine, (float)cosine);
 			}
 			/// <summary>
 			/// Creates a matrix that represents rotation around specified axis.
 			/// </summary>
-			/// <param name="axis"> 
-			/// Normalized vector that represents axis of rotation.
-			/// </param>
+			/// <param name="axis"> Normalized vector that represents axis of rotation.</param>
 			/// <param name="angle">Angle of rotation in radians.</param>
 			/// <returns>Matrix that represents rotation around specified axis.</returns>
 			public static Matrix44 Create44(ref Vector3 axis, float angle)
 			{
-				double sine = Math.Sin(angle);
-				double cosine = Math.Cos(angle);
+				double sine; double cosine;
+				MathHelpers.SinCos(angle, out sine, out cosine);
 
 				return Create44(ref axis, (float)sine, (float)cosine);
 			}
 			/// <summary>
 			/// Creates a matrix that represents rotation around specified axis.
 			/// </summary>
-			/// <param name="axis">  
-			/// Normalized vector that represents axis of rotation.
-			/// </param>
+			/// <param name="axis">  Normalized vector that represents axis of rotation.</param>
 			/// <param name="sine">  Sine of angle of rotation.</param>
 			/// <param name="cosine">Cosine of angle of rotation.</param>
 			/// <returns>Matrix that represents rotation around specified axis.</returns>
@@ -867,46 +781,36 @@ namespace CryCil.Geometry
 			/// <param name="angleAxis">
 			/// <see cref="AngleAxis"/> that represents axis and angle of rotation.
 			/// </param>
-			/// <returns>
-			/// Quaternion that represents rotation around specified axis.
-			/// </returns>
+			/// <returns>Quaternion that represents rotation around specified axis.</returns>
 			public static Quaternion CreateQuaternion(ref AngleAxis angleAxis)
 			{
-				float angle = angleAxis.Angle / 2;
-				double sine = Math.Sin(angle);
-				double cosine = Math.Cos(angle);
+				double sine; double cosine;
+				MathHelpers.SinCos(angleAxis.Angle / 2, out sine, out cosine);
 				Vector3 axis = angleAxis.Axis;
+
 				return CreateQuaternion(ref axis, (float)sine, (float)cosine);
 			}
 			/// <summary>
 			/// Creates a quaternion that represents rotation around specified axis.
 			/// </summary>
-			/// <param name="axis"> 
-			/// Normalized vector that represents axis of rotation.
-			/// </param>
+			/// <param name="axis"> Normalized vector that represents axis of rotation.</param>
 			/// <param name="angle">Angle of rotation in radians.</param>
-			/// <returns>
-			/// Quaternion that represents rotation around specified axis.
-			/// </returns>
+			/// <returns>Quaternion that represents rotation around specified axis.</returns>
 
 			public static Quaternion CreateQuaternion(ref Vector3 axis, float angle)
 			{
-				double sine = Math.Sin(angle / 2);
-				double cosine = Math.Cos(angle / 2);
+				double sine; double cosine;
+				MathHelpers.SinCos(angle / 2, out sine, out cosine);
 
 				return CreateQuaternion(ref axis, (float)sine, (float)cosine);
 			}
 			/// <summary>
 			/// Creates a quaternion that represents rotation around specified axis.
 			/// </summary>
-			/// <param name="axis">  
-			/// Normalized vector that represents axis of rotation.
-			/// </param>
+			/// <param name="axis">  Normalized vector that represents axis of rotation.</param>
 			/// <param name="sine">  Sine of half-angle of rotation.</param>
 			/// <param name="cosine">Cosine of half-angle of rotation.</param>
-			/// <returns>
-			/// Quaternion that represents rotation around specified axis.
-			/// </returns>
+			/// <returns>Quaternion that represents rotation around specified axis.</returns>
 			public static Quaternion CreateQuaternion(ref Vector3 axis, float sine, float cosine)
 			{
 				return new Quaternion

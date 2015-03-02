@@ -36,8 +36,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// </summary>
 		public int Count { get; protected set; }
 		/// <summary>
-		/// Gets number of objects in the collection or reallocates it to fit new number
-		/// of objects.
+		/// Gets number of objects in the collection or reallocates it to fit new number of objects.
 		/// </summary>
 		public virtual int Capacity
 		{
@@ -89,9 +88,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// Linearly searches through elements of this collection.
 		/// </summary>
 		/// <param name="item">Element to look for.</param>
-		/// <returns>
-		/// True, if at least element equal to given is located within this collection.
-		/// </returns>
+		/// <returns>True, if at least element equal to given is located within this collection.</returns>
 		public virtual bool Contains(ElementType item)
 		{
 			for (int i = 0; i < this.Count; i++)
@@ -108,8 +105,8 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// </summary>
 		/// <param name="item">Element to look for.</param>
 		/// <returns>
-		/// Zero-based index of the first element within this collection that equals
-		/// given, -1 if no such element was found.
+		/// Zero-based index of the first element within this collection that equals given, -1 if no such
+		/// element was found.
 		/// </returns>
 		public virtual int IndexOf(ElementType item)
 		{
@@ -152,8 +149,8 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// Copies all elements of this collection to an array.
 		/// </summary>
 		/// <returns>
-		/// Array that contains a copy of all elements of this collection. Null is
-		/// returned if collection is empty.
+		/// Array that contains a copy of all elements of this collection. Null is returned if collection
+		/// is empty.
 		/// </returns>
 		public virtual ElementType[] ToArray()
 		{
@@ -172,8 +169,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// Copies data from given list to this collection.
 		/// </summary>
 		/// <param name="details">
-		/// Object that implements <see cref="IList{ElementType}"/> that provides the
-		/// data.
+		/// Object that implements <see cref="IList{ElementType}"/> that provides the data.
 		/// </param>
 		public virtual void CopyFrom(IList<ElementType> details)
 		{
@@ -187,22 +183,19 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// Copies data from given list to this collection.
 		/// </summary>
 		/// <param name="details">       
-		/// Object that implements <see cref="IList{ElementType}"/> that provides the
-		/// data.
+		/// Object that implements <see cref="IList{ElementType}"/> that provides the data.
 		/// </param>
 		/// <param name="sourceStart">   
-		/// Zero-based index of the first element from <paramref name="details"/> to copy
-		/// elements from (inclusively).
+		/// Zero-based index of the first element from <paramref name="details"/> to copy elements from
+		/// (inclusively).
 		/// </param>
 		/// <param name="destStart">     
-		/// Zero-based index of the first element from this collection to copy elements to
-		/// (inclusively).
+		/// Zero-based index of the first element from this collection to copy elements to (inclusively).
 		/// </param>
 		/// <param name="count">         Number of elements to copy.</param>
 		/// <param name="ignoreOverflow">
-		/// Indicates whether exception must thrown when this collection cannot fit
-		/// elements. If true, all extra data will be ignored, otherwise exception is
-		/// thrown.
+		/// Indicates whether exception must thrown when this collection cannot fit elements. If true, all
+		/// extra data will be ignored, otherwise exception is thrown.
 		/// </param>
 		/// <exception cref="ArgumentOutOfRangeException">
 		/// Index of the first source element is out of bounds.
@@ -315,13 +308,13 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// <returns></returns>
 		public abstract ElementType this[int index] { get; set; }
 		/// <summary>
-		/// When implemented in derived class, gets identifier of native memory region
-		/// that contains this collection.
+		/// When implemented in derived class, gets identifier of native memory region that contains this
+		/// collection.
 		/// </summary>
 		public abstract NativeMeshMemoryRegion MemoryRegionIdentifier { get; }
 		/// <summary>
-		/// When implemented in derived class, indicates whether collection is allowed to
-		/// be reallocated on its own.
+		/// When implemented in derived class, indicates whether collection is allowed to be reallocated on
+		/// its own.
 		/// </summary>
 		public abstract bool Reallocatable { get; }
 		#endregion

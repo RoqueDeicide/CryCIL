@@ -3,8 +3,7 @@
 namespace CryEngine.RunTime.Serialization
 {
 	/// <summary>
-	/// Defines common properties of objects that can be serialized using CryEngine
-	/// serializer.
+	/// Defines common properties of objects that can be serialized using CryEngine serializer.
 	/// </summary>
 	public interface ICrySerializable
 	{

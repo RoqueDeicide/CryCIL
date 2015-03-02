@@ -221,8 +221,7 @@ namespace CryCil
 			}
 		}
 		/// <summary>
-		/// Determines whether this matrix is orthonormal in right-handed coordinate
-		/// system.
+		/// Determines whether this matrix is orthonormal in right-handed coordinate system.
 		/// </summary>
 		public bool IsOrthonormalRightHanded
 		{
@@ -385,9 +384,7 @@ namespace CryCil
 		/// <summary>
 		/// Creates new instance of <see cref="Matrix33"/> struct.
 		/// </summary>
-		/// <param name="q">
-		/// Quaternion that represents rotation that new instance should represent.
-		/// </param>
+		/// <param name="q">Quaternion that represents rotation that new instance should represent.</param>
 		/// <returns>New instance of <see cref="Matrix33"/> struct.</returns>
 		public Matrix33(Quaternion q)
 			: this()
@@ -441,9 +438,7 @@ namespace CryCil
 		/// Sets rows from given vectors.
 		/// </summary>
 		/// <param name="vx"><see cref="Vector3"/> object that contains first row.</param>
-		/// <param name="vy">
-		/// <see cref="Vector3"/> object that contains second row.
-		/// </param>
+		/// <param name="vy"><see cref="Vector3"/> object that contains second row.</param>
 		/// <param name="vz"><see cref="Vector3"/> object that contains third row.</param>
 		public void SetFromVectors(Vector3 vx, Vector3 vy, Vector3 vz)
 		{
@@ -455,9 +450,7 @@ namespace CryCil
 		/// Creates new matrix from vectors that represent rows.
 		/// </summary>
 		/// <param name="vx"><see cref="Vector3"/> object that contains first row.</param>
-		/// <param name="vy">
-		/// <see cref="Vector3"/> object that contains second row.
-		/// </param>
+		/// <param name="vy"><see cref="Vector3"/> object that contains second row.</param>
 		/// <param name="vz"><see cref="Vector3"/> object that contains third row.</param>
 		/// <returns>New matrix.</returns>
 		public static Matrix33 CreateFromVectors(Vector3 vx, Vector3 vy, Vector3 vz)
@@ -493,17 +486,17 @@ namespace CryCil
 			}
 		}
 		/// <summary>
-		/// Determines whether this matrix can be considered equal to another one within
-		/// bounds of given precision.
+		/// Determines whether this matrix can be considered equal to another one within bounds of given
+		/// precision.
 		/// </summary>
 		/// <param name="m">Another matrix.</param>
 		/// <param name="e">
-		/// <see cref="Single"/> object that represents maximal difference between two
-		/// values that allows to consider them equal.
+		/// <see cref="Single"/> object that represents maximal difference between two values that allows
+		/// to consider them equal.
 		/// </param>
 		/// <returns>
-		/// True, if difference between values of each corresponding pair is less then
-		/// <paramref name="e"/> .
+		/// True, if difference between values of each corresponding pair is less then <paramref name="e"/>
+		/// .
 		/// </returns>
 		public bool IsEquivalent(Matrix33 m, float e = 0.05f)
 		{
@@ -577,9 +570,9 @@ namespace CryCil
 		/// Creates text representation of this matrix.
 		/// </summary>
 		/// <returns>
-		/// Text representation of this matrix where all elements are listed in a line
-		/// using default format for <see cref="Single"/> numbers and culture object
-		/// specified by <see cref="Defaults.CultureToStringOnly"/>.
+		/// Text representation of this matrix where all elements are listed in a line using default format
+		/// for <see cref="Single"/> numbers and culture object specified by
+		/// <see cref="Defaults.CultureToStringOnly"/>.
 		/// </returns>
 		public override string ToString()
 		{
@@ -593,9 +586,8 @@ namespace CryCil
 		/// <see cref="Matrix44.ToString(string,IFormatProvider)"/> for details.
 		/// </param>
 		/// <returns>
-		/// Text representation of this matrix formatted as specified by
-		/// <paramref name="format"/> argument using culture object specified by
-		/// <see cref="Defaults.CultureToStringOnly"/>.
+		/// Text representation of this matrix formatted as specified by <paramref name="format"/> argument
+		/// using culture object specified by <see cref="Defaults.CultureToStringOnly"/>.
 		/// </returns>
 		public string ToString(string format)
 		{
@@ -608,25 +600,24 @@ namespace CryCil
 		/// Object that provides culture-specific information to use in formatting.
 		/// </param>
 		/// <returns>
-		/// Text representation of this matrix where all elements are listed in a line
-		/// using default format for <see cref="Single"/> numbers and culture-specific
-		/// information supplied by <paramref name="formatProvider"/>.
+		/// Text representation of this matrix where all elements are listed in a line using default format
+		/// for <see cref="Single"/> numbers and culture-specific information supplied by
+		/// <paramref name="formatProvider"/>.
 		/// </returns>
 		public string ToString(IFormatProvider formatProvider)
 		{
 			return MatrixTextConverter.ToString(this, formatProvider);
 		}
 		/// <summary>
-		/// Creates text representation of this matrix. <see cref="MatrixTextConverter"/>
-		/// documentation for details.
+		/// Creates text representation of this matrix. <see cref="MatrixTextConverter"/> documentation for
+		/// details.
 		/// </summary>
 		/// <param name="format">        
-		/// A string that describes a format of this matrix. See Remarks section for
-		/// details.
+		/// A string that describes a format of this matrix. See Remarks section for details.
 		/// </param>
 		/// <param name="formatProvider">
-		/// Object that provides culture-specific information on how to create text
-		/// representations of numbers.
+		/// Object that provides culture-specific information on how to create text representations of
+		/// numbers.
 		/// </param>
 		/// <returns>Text representation specified by given arguments.</returns>
 		public string ToString(string format, IFormatProvider formatProvider)
@@ -636,9 +627,7 @@ namespace CryCil
 		/// <summary>
 		/// Creates text representation of this matrix.
 		/// </summary>
-		/// <param name="format">
-		/// Object that provides details on how to format the text.
-		/// </param>
+		/// <param name="format">Object that provides details on how to format the text.</param>
 		/// <returns>Formatted text representation of the matrix.</returns>
 		public string ToString(MatrixTextFormat format)
 		{

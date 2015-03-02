@@ -24,9 +24,7 @@ namespace CryCil
 		/// </summary>
 		/// <param name="path1">First path.</param>
 		/// <param name="path2">Second path.</param>
-		/// <returns>
-		/// True, if paths point at the same file or directory, otherwise false.
-		/// </returns>
+		/// <returns>True, if paths point at the same file or directory, otherwise false.</returns>
 		public static bool Equal(string path1, string path2)
 		{
 			return Path.GetFullPath(path1) == Path.GetFullPath(path2);

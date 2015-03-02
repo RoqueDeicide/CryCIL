@@ -50,8 +50,15 @@ public:
 		Vec3 up(0, 0, 1);
 		float rads = 60 * PI / 180;
 
+		auto thunk =
+			(mono::quaternion(*)(mono::vector3, float, mono::exception *))
+			this->monoEnv->Cryambly->GetClass("Rotation", "CryCil.Geometry")
+								   ->GetNestedType("AroundAxis")
+								   ->GetFunction("CreateQuaternion", 2)
+								   ->UnmanagedThunk;
+
 		mono::exception ex;
-		Quat rotation = Unbox<Quat>(((mono::quaternion(*)(mono::float32, mono::vector3, mono::exception *))this->monoEnv->Cryambly->GetClass("Quaternion", "CryCil.Mathematics")->GetFunction("CreateRotationAngleAxis", 2)->UnmanagedThunk)(Box(rads), Box(up), &ex));
+		Quat rotation = Unbox<Quat>((thunk)(Box(up), rads, &ex));
 		CryLogAlways("Quat = %s, %s, %s, %s", rotation.v.x, rotation.v.y, rotation.v.z, rotation.w);
 	}
 

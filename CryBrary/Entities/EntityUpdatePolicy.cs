@@ -26,8 +26,7 @@
 		/// </summary>
 		Physics,
 		/// <summary>
-		/// Only update entity if it is need to be updated due to physics or if it is
-		/// visible.
+		/// Only update entity if it is need to be updated due to physics or if it is visible.
 		/// </summary>
 		PhysicsVisible,
 		/// <summary>

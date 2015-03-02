@@ -9,10 +9,10 @@ namespace CryCil
 		/// Defines functions for working with spherical interpolations.
 		/// </summary>
 		/// <remarks>
-		/// Spherical interpolations are primarily used when smooth rotation is required.
-		/// It is costly, but its only less resource-hungry alternative called normalized
-		/// linear interpolation (consists of linear interpolation followed up by
-		/// normalization of the result) does not maintain constant speed when rotating.
+		/// Spherical interpolations are primarily used when smooth rotation is required. It is costly, but
+		/// its only less resource-hungry alternative called normalized linear interpolation (consists of
+		/// linear interpolation followed up by normalization of the result) does not maintain constant
+		/// speed when rotating.
 		/// </remarks>
 		public static class SphericalLinear
 		{
@@ -23,16 +23,16 @@ namespace CryCil
 			/// <param name="first">    First vector.</param>
 			/// <param name="second">   Second vector.</param>
 			/// <param name="parameter">
-			/// Scalar that defines orientation of resultant vector relative to
-			/// orientation of the first vector relative to the second one.
+			/// Scalar that defines orientation of resultant vector relative to orientation of the first
+			/// vector relative to the second one.
 			/// </param>
 			public static void Apply(out Vector2 result, Vector2 first, Vector2 second, float parameter)
 			{
 				// calculate cosine using the "inner product" between two
 				// vectors: p*q=cos(radiant)
 				float cosine = MathHelpers.Clamp(Vector2.Dot(first, second), -1f, 1f);
-				// Perform normalized linear interpolation if two vectors if they are very
-				// close to each other to avoid division by zero.
+				// Perform normalized linear interpolation if two vectors if they are very close to each
+				// other to avoid division by zero.
 				if (cosine >= 0.99f)
 				{
 					result = Interpolation.Linear.Create(first, second, parameter); //perform LERP:
@@ -53,8 +53,8 @@ namespace CryCil
 			/// <param name="first">    First vector.</param>
 			/// <param name="second">   Second vector.</param>
 			/// <param name="parameter">
-			/// Scalar that defines orientation of resultant vector relative to
-			/// orientation of the first vector relative to the second one.
+			/// Scalar that defines orientation of resultant vector relative to orientation of the first
+			/// vector relative to the second one.
 			/// </param>
 			public static Vector2 Create(Vector2 first, Vector2 second, float parameter)
 			{
@@ -62,8 +62,8 @@ namespace CryCil
 				// calculate cosine using the "inner product" between two
 				// vectors: p*q=cos(radiant)
 				float cosine = MathHelpers.Clamp(Vector2.Dot(first, second), -1f, 1f);
-				// Perform normalized linear interpolation if two vectors if they are very
-				// close to each other to avoid division by zero.
+				// Perform normalized linear interpolation if two vectors if they are very close to each
+				// other to avoid division by zero.
 				if (cosine >= 0.99f)
 				{
 					result = Interpolation.Linear.Create(first, second, parameter); //perform LERP:
@@ -86,16 +86,16 @@ namespace CryCil
 			/// <param name="first">    First vector.</param>
 			/// <param name="second">   Second vector.</param>
 			/// <param name="parameter">
-			/// Scalar that defines orientation of resultant vector relative to
-			/// orientation of the first vector relative to the second one.
+			/// Scalar that defines orientation of resultant vector relative to orientation of the first
+			/// vector relative to the second one.
 			/// </param>
 			public static void Apply(out Vector3 result, Vector3 first, Vector3 second, float parameter)
 			{
 				// calculate cosine using the "inner product" between two
 				// vectors: p*q=cos(radiant)
 				float cosine = MathHelpers.Clamp(Vector3.Dot(first, second), -1f, 1f);
-				// Perform normalized linear interpolation if two vectors if they are very
-				// close to each other to avoid division by zero.
+				// Perform normalized linear interpolation if two vectors if they are very close to each
+				// other to avoid division by zero.
 				if (cosine >= 0.99f)
 				{
 					result = Interpolation.Linear.Create(first, second, parameter); //perform LERP:
@@ -116,8 +116,8 @@ namespace CryCil
 			/// <param name="first">    First vector.</param>
 			/// <param name="second">   Second vector.</param>
 			/// <param name="parameter">
-			/// Scalar that defines orientation of resultant vector relative to
-			/// orientation of the first vector relative to the second one.
+			/// Scalar that defines orientation of resultant vector relative to orientation of the first
+			/// vector relative to the second one.
 			/// </param>
 			public static Vector3 Create(Vector3 first, Vector3 second, float parameter)
 			{
@@ -125,8 +125,8 @@ namespace CryCil
 				// calculate cosine using the "inner product" between two
 				// vectors: p*q=cos(radiant)
 				float cosine = MathHelpers.Clamp(Vector3.Dot(first, second), -1f, 1f);
-				// Perform normalized linear interpolation if two vectors if they are very
-				// close to each other to avoid division by zero.
+				// Perform normalized linear interpolation if two vectors if they are very close to each
+				// other to avoid division by zero.
 				if (cosine >= 0.99f)
 				{
 					result = Interpolation.Linear.Create(first, second, parameter); //perform LERP:
@@ -149,8 +149,8 @@ namespace CryCil
 			/// <param name="first">    First quaternion.</param>
 			/// <param name="second">   Second quaternion.</param>
 			/// <param name="parameter">
-			/// Scalar that defines orientation of resultant vector relative to
-			/// orientation of the first vector relative to the second one.
+			/// Scalar that defines orientation of resultant vector relative to orientation of the first
+			/// vector relative to the second one.
 			/// </param>
 			public static void Apply(out Quaternion result, Quaternion first, Quaternion second, float parameter)
 			{
@@ -191,8 +191,8 @@ namespace CryCil
 			/// <param name="first">    First vector.</param>
 			/// <param name="second">   Second vector.</param>
 			/// <param name="parameter">
-			/// Scalar that defines orientation of resultant vector relative to
-			/// orientation of the first vector relative to the second one.
+			/// Scalar that defines orientation of resultant vector relative to orientation of the first
+			/// vector relative to the second one.
 			/// </param>
 			public static Quaternion Create(Quaternion first, Quaternion second, float parameter)
 			{
@@ -232,28 +232,25 @@ namespace CryCil
 				return result;
 			}
 			/// <summary>
-			/// Creates a matrix that represents a spherical linear interpolation from one
-			/// matrix to another.
+			/// Creates a matrix that represents a spherical linear interpolation from one matrix to
+			/// another.
 			/// </summary>
 			/// <remarks>
+			/// <para>This is an implementation of interpolation without quaternions.</para>
 			/// <para>
-			/// This is an implementation of interpolation without quaternions.
-			/// </para>
-			/// <para>
-			/// Given two orthonormal 3x3 matrices this function calculates the shortest
-			/// possible interpolation-path between the two rotations. The interpolation
-			/// curve forms the shortest great arc on the rotation sphere (geodesic).
+			/// Given two orthonormal 3x3 matrices this function calculates the shortest possible
+			/// interpolation-path between the two rotations. The interpolation curve forms the shortest
+			/// great arc on the rotation sphere (geodesic).
 			/// </para>
 			/// <para>Angular velocity of the interpolation is constant.</para>
 			/// <para>Possible stability problems:</para>
 			/// <para>
-			/// There are two singularities at angle = 0 and angle = <see cref="Math.PI"/>
-			/// . At 0 the interpolation-axis is arbitrary, which means any axis will
-			/// produce the same result because we have no rotation. (1,0,0) axis is used
-			/// in this case. At <see cref="Math.PI"/> the rotations point away from each
-			/// other and the interpolation-axis is unpredictable. In this case axis
-			/// (1,0,0) is used as well. If the angle is ~0 or ~PI, then a very small
-			/// vector has to be normalized and this can cause numerical instability.
+			/// There are two singularities at angle = 0 and angle = <see cref="Math.PI"/> . At 0 the
+			/// interpolation-axis is arbitrary, which means any axis will produce the same result because
+			/// we have no rotation. (1,0,0) axis is used in this case. At <see cref="Math.PI"/> the
+			/// rotations point away from each other and the interpolation-axis is unpredictable. In this
+			/// case axis (1,0,0) is used as well. If the angle is ~0 or ~PI, then a very small vector has
+			/// to be normalized and this can cause numerical instability.
 			/// </para>
 			/// </remarks>
 			/// <param name="matrix">Result of interpolation.</param>
@@ -285,36 +282,31 @@ namespace CryCil
 				matrix.M23 = first.M23 * (1 - t) + second.M23 * t;
 			}
 			/// <summary>
-			/// Creates a matrix that represents a spherical linear interpolation from one
-			/// matrix to another.
+			/// Creates a matrix that represents a spherical linear interpolation from one matrix to
+			/// another.
 			/// </summary>
 			/// <remarks>
+			/// <para>This is an implementation of interpolation without quaternions.</para>
 			/// <para>
-			/// This is an implementation of interpolation without quaternions.
-			/// </para>
-			/// <para>
-			/// Given two orthonormal 3x3 matrices this function calculates the shortest
-			/// possible interpolation-path between the two rotations. The interpolation
-			/// curve forms the shortest great arc on the rotation sphere (geodesic).
+			/// Given two orthonormal 3x3 matrices this function calculates the shortest possible
+			/// interpolation-path between the two rotations. The interpolation curve forms the shortest
+			/// great arc on the rotation sphere (geodesic).
 			/// </para>
 			/// <para>Angular velocity of the interpolation is constant.</para>
 			/// <para>Possible stability problems:</para>
 			/// <para>
-			/// There are two singularities at angle = 0 and angle = <see cref="Math.PI"/>
-			/// . At 0 the interpolation-axis is arbitrary, which means any axis will
-			/// produce the same result because we have no rotation. (1,0,0) axis is used
-			/// in this case. At <see cref="Math.PI"/> the rotations point away from each
-			/// other and the interpolation-axis is unpredictable. In this case axis
-			/// (1,0,0) is used as well. If the angle is ~0 or ~PI, then a very small
-			/// vector has to be normalized and this can cause numerical instability.
+			/// There are two singularities at angle = 0 and angle = <see cref="Math.PI"/> . At 0 the
+			/// interpolation-axis is arbitrary, which means any axis will produce the same result because
+			/// we have no rotation. (1,0,0) axis is used in this case. At <see cref="Math.PI"/> the
+			/// rotations point away from each other and the interpolation-axis is unpredictable. In this
+			/// case axis (1,0,0) is used as well. If the angle is ~0 or ~PI, then a very small vector has
+			/// to be normalized and this can cause numerical instability.
 			/// </para>
 			/// </remarks>
 			/// <param name="first"> First matrix.</param>
 			/// <param name="second">Second matrix.</param>
 			/// <param name="t">     Interpolation parameter.</param>
-			/// <returns>
-			/// Matrix which transformations are interpolated between given matrices.
-			/// </returns>
+			/// <returns>Matrix which transformations are interpolated between given matrices.</returns>
 			public static Matrix34 Create(Matrix34 first, Matrix34 second, float t)
 			{
 				var matrix = new Matrix34();
@@ -323,28 +315,25 @@ namespace CryCil
 				return matrix;
 			}
 			/// <summary>
-			/// Creates a matrix that represents a spherical linear interpolation from one
-			/// matrix to another.
+			/// Creates a matrix that represents a spherical linear interpolation from one matrix to
+			/// another.
 			/// </summary>
 			/// <remarks>
+			/// <para>This is an implementation of interpolation without quaternions.</para>
 			/// <para>
-			/// This is an implementation of interpolation without quaternions.
-			/// </para>
-			/// <para>
-			/// Given two orthonormal 3x3 matrices this function calculates the shortest
-			/// possible interpolation-path between the two rotations. The interpolation
-			/// curve forms the shortest great arc on the rotation sphere (geodesic).
+			/// Given two orthonormal 3x3 matrices this function calculates the shortest possible
+			/// interpolation-path between the two rotations. The interpolation curve forms the shortest
+			/// great arc on the rotation sphere (geodesic).
 			/// </para>
 			/// <para>Angular velocity of the interpolation is constant.</para>
 			/// <para>Possible stability problems:</para>
 			/// <para>
-			/// There are two singularities at angle = 0 and angle = <see cref="Math.PI"/>
-			/// . At 0 the interpolation-axis is arbitrary, which means any axis will
-			/// produce the same result because we have no rotation. (1,0,0) axis is used
-			/// in this case. At <see cref="Math.PI"/> the rotations point away from each
-			/// other and the interpolation-axis is unpredictable. In this case axis
-			/// (1,0,0) is used as well. If the angle is ~0 or ~PI, then a very small
-			/// vector has to be normalized and this can cause numerical instability.
+			/// There are two singularities at angle = 0 and angle = <see cref="Math.PI"/> . At 0 the
+			/// interpolation-axis is arbitrary, which means any axis will produce the same result because
+			/// we have no rotation. (1,0,0) axis is used in this case. At <see cref="Math.PI"/> the
+			/// rotations point away from each other and the interpolation-axis is unpredictable. In this
+			/// case axis (1,0,0) is used as well. If the angle is ~0 or ~PI, then a very small vector has
+			/// to be normalized and this can cause numerical instability.
 			/// </para>
 			/// </remarks>
 			/// <param name="matrix">Result of interpolation.</param>
@@ -372,36 +361,31 @@ namespace CryCil
 				matrix.M20 = matrix.M01 * matrix.M12 - matrix.M02 * matrix.M11; matrix.M21 = matrix.M02 * matrix.M10 - matrix.M00 * matrix.M12; matrix.M22 = matrix.M00 * matrix.M11 - matrix.M01 * matrix.M10;
 			}
 			/// <summary>
-			/// Creates a matrix that represents a spherical linear interpolation from one
-			/// matrix to another.
+			/// Creates a matrix that represents a spherical linear interpolation from one matrix to
+			/// another.
 			/// </summary>
 			/// <remarks>
+			/// <para>This is an implementation of interpolation without quaternions.</para>
 			/// <para>
-			/// This is an implementation of interpolation without quaternions.
-			/// </para>
-			/// <para>
-			/// Given two orthonormal 3x3 matrices this function calculates the shortest
-			/// possible interpolation-path between the two rotations. The interpolation
-			/// curve forms the shortest great arc on the rotation sphere (geodesic).
+			/// Given two orthonormal 3x3 matrices this function calculates the shortest possible
+			/// interpolation-path between the two rotations. The interpolation curve forms the shortest
+			/// great arc on the rotation sphere (geodesic).
 			/// </para>
 			/// <para>Angular velocity of the interpolation is constant.</para>
 			/// <para>Possible stability problems:</para>
 			/// <para>
-			/// There are two singularities at angle = 0 and angle = <see cref="Math.PI"/>
-			/// . At 0 the interpolation-axis is arbitrary, which means any axis will
-			/// produce the same result because we have no rotation. (1,0,0) axis is used
-			/// in this case. At <see cref="Math.PI"/> the rotations point away from each
-			/// other and the interpolation-axis is unpredictable. In this case axis
-			/// (1,0,0) is used as well. If the angle is ~0 or ~PI, then a very small
-			/// vector has to be normalized and this can cause numerical instability.
+			/// There are two singularities at angle = 0 and angle = <see cref="Math.PI"/> . At 0 the
+			/// interpolation-axis is arbitrary, which means any axis will produce the same result because
+			/// we have no rotation. (1,0,0) axis is used in this case. At <see cref="Math.PI"/> the
+			/// rotations point away from each other and the interpolation-axis is unpredictable. In this
+			/// case axis (1,0,0) is used as well. If the angle is ~0 or ~PI, then a very small vector has
+			/// to be normalized and this can cause numerical instability.
 			/// </para>
 			/// </remarks>
 			/// <param name="first"> First matrix.</param>
 			/// <param name="second">Second matrix.</param>
 			/// <param name="t">     Interpolation parameter.</param>
-			/// <returns>
-			/// Matrix which transformations are interpolated between given matrices.
-			/// </returns>
+			/// <returns>Matrix which transformations are interpolated between given matrices.</returns>
 			public static Matrix33 Create(Matrix33 first, Matrix33 second, float t)
 			{
 				var matrix = new Matrix33();

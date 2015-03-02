@@ -28,8 +28,8 @@ namespace CryEngine.Logic.Flowgraph
 			}
 			NativeFlowNodeConfiguration* config =
 				(NativeFlowNodeConfiguration*)configPointer.ToPointer();
-			// I'm not too sure on how the memory is supposed to be freed, I guess
-			// CryEngine can handle that.
+			// I'm not too sure on how the memory is supposed to be freed, I guess CryEngine can handle
+			// that.
 			config->Description = Marshal.StringToHGlobalUni(this.Description);
 			// Write the flags.
 			config->Flags |= (uint)this.Flags;
@@ -107,8 +107,7 @@ namespace CryEngine.Logic.Flowgraph
 		/// </summary>
 		public IntPtr Description;
 		/// <summary>
-		/// Null-terminated string that represents a list of enumeration values of the
-		/// port.
+		/// Null-terminated string that represents a list of enumeration values of the port.
 		/// </summary>
 		public IntPtr EnumConfig;
 		/// <summary>

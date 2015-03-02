@@ -12,9 +12,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// <summary>
 		/// Creates new instance of class <see cref="NativeVertexPositionCollection"/>.
 		/// </summary>
-		/// <param name="mesh">
-		/// <see cref="NativeMesh"/> that hosts this collection.
-		/// </param>
+		/// <param name="mesh"><see cref="NativeMesh"/> that hosts this collection.</param>
 		public NativeVertexPositionCollection(NativeMesh mesh)
 		{
 			this.mesh = mesh;
@@ -42,8 +40,8 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// </summary>
 		/// <param name="index">Index of the vertex to access.</param>
 		/// <exception cref="IndexOutOfRangeException">
-		/// Attempt to access position of the vertex via vertex that is out of bounds of
-		/// vertex position collection.
+		/// Attempt to access position of the vertex via vertex that is out of bounds of vertex position
+		/// collection.
 		/// </exception>
 		public override Vector3 this[int index]
 		{

@@ -9,18 +9,18 @@ namespace CryEngine.Logic.Flowgraph
 	public enum FlowNodeFlags : uint
 	{
 		/// <summary>
-		/// Core flag that if set indicates that this node targets an entity, therefore
-		/// the target Id must be provided.
+		/// Core flag that if set indicates that this node targets an entity, therefore the target Id must
+		/// be provided.
 		/// </summary>
 		TargetEntity = 0x0001,
 		/// <summary>
-		/// Core flag that if set indicates that this node cannot be selected by user for
-		/// placement in flow graph UI.
+		/// Core flag that if set indicates that this node cannot be selected by user for placement in flow
+		/// graph UI.
 		/// </summary>
 		HideUi = 0x0002,
 		/// <summary>
-		/// Core flag that if set indicates that this node is setup for dynamic output
-		/// port growth in runtime.
+		/// Core flag that if set indicates that this node is setup for dynamic output port growth in
+		/// runtime.
 		/// </summary>
 		DynamicOutput = 0x0004,
 		/// <summary>
@@ -36,8 +36,7 @@ namespace CryEngine.Logic.Flowgraph
 		/// </summary>
 		Approved = 0x0010,
 		/// <summary>
-		/// Category flag that if set indicates that this node is slightly advanced and
-		/// approved.
+		/// Category flag that if set indicates that this node is slightly advanced and approved.
 		/// </summary>
 		Advanced = 0x0020,
 		/// <summary>
@@ -45,8 +44,8 @@ namespace CryEngine.Logic.Flowgraph
 		/// </summary>
 		Debug = 0x0040,
 		/// <summary>
-		/// Category flag that if set indicates that this node is obsolete and is not
-		/// available in the editor.
+		/// Category flag that if set indicates that this node is obsolete and is not available in the
+		/// editor.
 		/// </summary>
 		Obsolete = 0x0200,
 		/// <summary>

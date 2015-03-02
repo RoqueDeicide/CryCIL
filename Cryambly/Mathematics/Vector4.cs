@@ -50,12 +50,10 @@ namespace CryCil
 		/// <summary>
 		/// Gets or sets the component at the specified index.
 		/// </summary>
-		/// <value>
-		/// The value of the X, Y, Z, or W component, depending on the index.
-		/// </value>
+		/// <value>The value of the X, Y, Z, or W component, depending on the index.</value>
 		/// <param name="index">
-		/// The index of the component to access. Use 0 for the X component, 1 for the Y
-		/// component, 2 for the Z component, and 3 for the W component.
+		/// The index of the component to access. Use 0 for the X component, 1 for the Y component, 2 for
+		/// the Z component, and 3 for the W component.
 		/// </param>
 		/// <returns>The value of the component at the specified index.</returns>
 		/// <exception cref="System.ArgumentOutOfRangeException">
@@ -163,8 +161,7 @@ namespace CryCil
 		/// Initializes a new instance of the <see cref="Vector4"/> struct.
 		/// </summary>
 		/// <param name="value">
-		/// A vector containing the values with which to initialize the X, Y, and Z
-		/// components.
+		/// A vector containing the values with which to initialize the X, Y, and Z components.
 		/// </param>
 		/// <param name="w">    Initial value for the W component of the vector.</param>
 		public Vector4(Vector3 value, float w)
@@ -179,8 +176,7 @@ namespace CryCil
 		/// Initializes a new instance of the <see cref="Vector4"/> struct.
 		/// </summary>
 		/// <param name="value">
-		/// A vector containing the values with which to initialize the X and Y
-		/// components.
+		/// A vector containing the values with which to initialize the X and Y components.
 		/// </param>
 		/// <param name="z">    Initial value for the Z component of the vector.</param>
 		/// <param name="w">    Initial value for the W component of the vector.</param>
@@ -196,21 +192,17 @@ namespace CryCil
 		/// Creates new <see cref="Vector4"/>.
 		/// </summary>
 		/// <param name="values">
-		/// An array of floating point values which specify new vector using following
-		/// rules:
+		/// An array of floating point values which specify new vector using following rules:
 		/// <para>If array is null or empty zero vector is created.</para>
 		/// <para>If array contains 1 value it is assigned to all three components.</para>
 		/// <para>
-		/// If array contains 2 values they are assigned to first two components while Z
-		/// and W are zeroed.
+		/// If array contains 2 values they are assigned to first two components while Z and W are zeroed.
 		/// </para>
 		/// <para>
-		/// If array contains 3 values they are assigned to first three components while W
-		/// is zeroed.
+		/// If array contains 3 values they are assigned to first three components while W is zeroed.
 		/// </para>
 		/// <para>
-		/// If array contains 4 or more values first four values are assigned to vector
-		/// components.
+		/// If array contains 4 or more values first four values are assigned to vector components.
 		/// </para>
 		/// </param>
 		public Vector4(IList<float> values)
@@ -221,8 +213,7 @@ namespace CryCil
 		/// Creates new <see cref="Vector4"/>.
 		/// </summary>
 		/// <param name="values">       
-		/// A list of floating point numbers which is assigned to components of the new
-		/// vector.
+		/// A list of floating point numbers which is assigned to components of the new vector.
 		/// </param>
 		/// <param name="startingIndex">Index of first element of list to copy.</param>
 		/// <param name="count">        Number of components to assign.</param>
@@ -234,8 +225,7 @@ namespace CryCil
 		/// Creates new <see cref="Vector4"/>.
 		/// </summary>
 		/// <param name="values">        
-		/// A list of floating point numbers which is assigned to components of the new
-		/// vector.
+		/// A list of floating point numbers which is assigned to components of the new vector.
 		/// </param>
 		/// <param name="firstIndex">    Index of first element of list to copy.</param>
 		/// <param name="firstComponent">Index of the first component to assign.</param>
@@ -267,9 +257,7 @@ namespace CryCil
 		/// <summary>
 		/// Creates new <see cref="Vector4"/>.
 		/// </summary>
-		/// <param name="values">
-		/// Dicionary which contents are used to initialize new vector.
-		/// </param>
+		/// <param name="values">Dicionary which contents are used to initialize new vector.</param>
 		public Vector4(IDictionary<string, float> values)
 			: this()
 		{
@@ -355,8 +343,8 @@ namespace CryCil
 		/// <param name="left"> The first value to compare.</param>
 		/// <param name="right">The second value to compare.</param>
 		/// <returns>
-		/// <c>true</c> if <paramref name="left"/> has the same value as
-		/// <paramref name="right"/>; otherwise, <c>false</c>.
+		/// <c>true</c> if <paramref name="left"/> has the same value as <paramref name="right"/>;
+		/// otherwise, <c>false</c>.
 		/// </returns>
 		public static bool operator ==(Vector4 left, Vector4 right)
 		{
@@ -368,8 +356,8 @@ namespace CryCil
 		/// <param name="left"> The first value to compare.</param>
 		/// <param name="right">The second value to compare.</param>
 		/// <returns>
-		/// <c>true</c> if <paramref name="left"/> has a different value than
-		/// <paramref name="right"/>; otherwise, <c>false</c>.
+		/// <c>true</c> if <paramref name="left"/> has a different value than <paramref name="right"/>;
+		/// otherwise, <c>false</c>.
 		/// </returns>
 		public static bool operator !=(Vector4 left, Vector4 right)
 		{
@@ -389,8 +377,7 @@ namespace CryCil
 		#endregion
 		#region Conversion Operators
 		/// <summary>
-		/// Performs an explicit conversion from <see cref="Vector4"/> to
-		/// <see cref="Vector2"/>.
+		/// Performs an explicit conversion from <see cref="Vector4"/> to <see cref="Vector2"/>.
 		/// </summary>
 		/// <param name="value">The value.</param>
 		/// <returns>The result of the conversion.</returns>
@@ -399,8 +386,7 @@ namespace CryCil
 			return new Vector2(value.X, value.Y);
 		}
 		/// <summary>
-		/// Performs an explicit conversion from <see cref="Vector4"/> to
-		/// <see cref="Vector3"/>.
+		/// Performs an explicit conversion from <see cref="Vector4"/> to <see cref="Vector3"/>.
 		/// </summary>
 		/// <param name="value">The value.</param>
 		/// <returns>The result of the conversion.</returns>
@@ -409,8 +395,7 @@ namespace CryCil
 			return new Vector3(value.X, value.Y, value.Z);
 		}
 		/// <summary>
-		/// Performs an explicit conversion from <see cref="Vector4"/> to
-		/// <see cref="Quaternion"/>.
+		/// Performs an explicit conversion from <see cref="Vector4"/> to <see cref="Quaternion"/>.
 		/// </summary>
 		/// <param name="value">The value.</param>
 		/// <returns>The result of the conversion.</returns>
@@ -419,8 +404,7 @@ namespace CryCil
 			return new Quaternion(value.X, value.Y, value.Z, value.W);
 		}
 		/// <summary>
-		/// Performs an explicit conversion from <see cref="Vector4"/> to
-		/// <see cref="Quaternion"/>.
+		/// Performs an explicit conversion from <see cref="Vector4"/> to <see cref="Quaternion"/>.
 		/// </summary>
 		/// <param name="value">The value.</param>
 		/// <returns>The result of the conversion.</returns>
@@ -432,12 +416,11 @@ namespace CryCil
 		#endregion
 		#region Modification
 		/// <summary>
-		/// Creates new instance of <see cref="Vector4"/> where Y, Z and W components are
-		/// of this instance and X component is specified by given value.
+		/// Creates new instance of <see cref="Vector4"/> where Y, Z and W components are of this instance
+		/// and X component is specified by given value.
 		/// </summary>
 		/// <remarks>
-		/// This method allows to simplify code where this instance is a property which
-		/// you want to modify.
+		/// This method allows to simplify code where this instance is a property which you want to modify.
 		/// </remarks>
 		/// <param name="value">New value for X component.</param>
 		/// <returns>Modified vector.</returns>
@@ -446,12 +429,11 @@ namespace CryCil
 			return new Vector4(value, this.Y, this.Z, this.W);
 		}
 		/// <summary>
-		/// Creates new instance of <see cref="Vector4"/> where X, Z and W components are
-		/// of this instance and Y component is specified by given value.
+		/// Creates new instance of <see cref="Vector4"/> where X, Z and W components are of this instance
+		/// and Y component is specified by given value.
 		/// </summary>
 		/// <remarks>
-		/// This method allows to simplify code where this instance is a property which
-		/// you want to modify.
+		/// This method allows to simplify code where this instance is a property which you want to modify.
 		/// </remarks>
 		/// <param name="value">New value for Y component.</param>
 		/// <returns>Modified vector.</returns>
@@ -460,12 +442,11 @@ namespace CryCil
 			return new Vector4(this.X, value, this.Z, this.W);
 		}
 		/// <summary>
-		/// Creates new instance of <see cref="Vector4"/> where X, Y and W components are
-		/// of this instance and Z component is specified by given value.
+		/// Creates new instance of <see cref="Vector4"/> where X, Y and W components are of this instance
+		/// and Z component is specified by given value.
 		/// </summary>
 		/// <remarks>
-		/// This method allows to simplify code where this instance is a property which
-		/// you want to modify.
+		/// This method allows to simplify code where this instance is a property which you want to modify.
 		/// </remarks>
 		/// <param name="value">New value for Z component.</param>
 		/// <returns>Modified vector.</returns>
@@ -474,12 +455,11 @@ namespace CryCil
 			return new Vector4(this.X, this.Y, value, this.W);
 		}
 		/// <summary>
-		/// Creates new instance of <see cref="Vector4"/> where X, Y and Z components are
-		/// of this instance and W component is specified by given value.
+		/// Creates new instance of <see cref="Vector4"/> where X, Y and Z components are of this instance
+		/// and W component is specified by given value.
 		/// </summary>
 		/// <remarks>
-		/// This method allows to simplify code where this instance is a property which
-		/// you want to modify.
+		/// This method allows to simplify code where this instance is a property which you want to modify.
 		/// </remarks>
 		/// <param name="value">New value for W component.</param>
 		/// <returns>Modified vector.</returns>
@@ -488,12 +468,10 @@ namespace CryCil
 			return new Vector4(this.X, this.Y, this.Z, value);
 		}
 		/// <summary>
-		/// Creates new <see cref="Vector4"/> which represents this vector with modified
-		/// values.
+		/// Creates new <see cref="Vector4"/> which represents this vector with modified values.
 		/// </summary>
 		/// <remarks>
-		/// This method allows to simplify code where this instance is a property which
-		/// you want to modify.
+		/// This method allows to simplify code where this instance is a property which you want to modify.
 		/// </remarks>
 		/// <param name="offset">   Index of first component to be modified.</param>
 		/// <param name="newValues">New values for components to modify.</param>
@@ -611,9 +589,7 @@ namespace CryCil
 		/// </summary>
 		/// <param name="left"> The first source vector.</param>
 		/// <param name="right">The second source vector.</param>
-		/// <returns>
-		/// A vector containing the largest components of the source vectors.
-		/// </returns>
+		/// <returns>A vector containing the largest components of the source vectors.</returns>
 		public static Vector4 Max(Vector4 left, Vector4 right)
 		{
 			Vector4 result = new Vector4
@@ -630,9 +606,7 @@ namespace CryCil
 		/// </summary>
 		/// <param name="left"> The first source vector.</param>
 		/// <param name="right">The second source vector.</param>
-		/// <returns>
-		/// A vector containing the smallest components of the source vectors.
-		/// </returns>
+		/// <returns>A vector containing the smallest components of the source vectors.</returns>
 		public static Vector4 Min(Vector4 left, Vector4 right)
 		{
 			Vector4 result = new Vector4
@@ -649,9 +623,7 @@ namespace CryCil
 		/// <summary>
 		/// Returns a <see cref="System.String"/> that represents this instance.
 		/// </summary>
-		/// <returns>
-		/// A <see cref="System.String"/> that represents this instance.
-		/// </returns>
+		/// <returns>A <see cref="System.String"/> that represents this instance.</returns>
 		public override string ToString()
 		{
 			return string.Format(CultureInfo.CurrentCulture, "X:{0} Y:{1} Z:{2} W:{3}", this.X, this.Y, this.Z, this.W);
@@ -660,9 +632,7 @@ namespace CryCil
 		/// Returns a <see cref="System.String"/> that represents this instance.
 		/// </summary>
 		/// <param name="format">The format.</param>
-		/// <returns>
-		/// A <see cref="System.String"/> that represents this instance.
-		/// </returns>
+		/// <returns>A <see cref="System.String"/> that represents this instance.</returns>
 		public string ToString(string format)
 		{
 			if (format == null)
@@ -675,9 +645,7 @@ namespace CryCil
 		/// Returns a <see cref="System.String"/> that represents this instance.
 		/// </summary>
 		/// <param name="formatProvider">The format provider.</param>
-		/// <returns>
-		/// A <see cref="System.String"/> that represents this instance.
-		/// </returns>
+		/// <returns>A <see cref="System.String"/> that represents this instance.</returns>
 		public string ToString(IFormatProvider formatProvider)
 		{
 			return string.Format(formatProvider, "X:{0} Y:{1} Z:{2} W:{3}", this.X, this.Y, this.Z, this.W);
@@ -687,9 +655,7 @@ namespace CryCil
 		/// </summary>
 		/// <param name="format">        The format.</param>
 		/// <param name="formatProvider">The format provider.</param>
-		/// <returns>
-		/// A <see cref="System.String"/> that represents this instance.
-		/// </returns>
+		/// <returns>A <see cref="System.String"/> that represents this instance.</returns>
 		public string ToString(string format, IFormatProvider formatProvider)
 		{
 			if (format == null)
@@ -704,8 +670,8 @@ namespace CryCil
 		/// Returns a hash code for this instance.
 		/// </summary>
 		/// <returns>
-		/// A hash code for this instance, suitable for use in hashing algorithms and data
-		/// structures like a hash table.
+		/// A hash code for this instance, suitable for use in hashing algorithms and data structures like
+		/// a hash table.
 		/// </returns>
 		public override int GetHashCode()
 		{
@@ -723,15 +689,12 @@ namespace CryCil
 			}
 		}
 		/// <summary>
-		/// Determines whether the specified <see cref="Vector4"/> is equal to this
-		/// instance.
+		/// Determines whether the specified <see cref="Vector4"/> is equal to this instance.
 		/// </summary>
-		/// <param name="other">
-		/// The <see cref="Vector4"/> to compare with this instance.
-		/// </param>
+		/// <param name="other">The <see cref="Vector4"/> to compare with this instance.</param>
 		/// <returns>
-		/// <c>true</c> if the specified <see cref="Vector4"/> is equal to this instance;
-		/// otherwise, <c>false</c>.
+		/// <c>true</c> if the specified <see cref="Vector4"/> is equal to this instance; otherwise,
+		/// <c>false</c>.
 		/// </returns>
 		public bool Equals(Vector4 other)
 		{
@@ -740,16 +703,13 @@ namespace CryCil
 			// ReSharper restore CompareOfFloatsByEqualityOperator
 		}
 		/// <summary>
-		/// Determines whether the specified <see cref="Vector4"/> is equal to this
-		/// instance.
+		/// Determines whether the specified <see cref="Vector4"/> is equal to this instance.
 		/// </summary>
-		/// <param name="other">  
-		/// The <see cref="Vector4"/> to compare with this instance.
-		/// </param>
+		/// <param name="other">  The <see cref="Vector4"/> to compare with this instance.</param>
 		/// <param name="epsilon">The amount of error allowed.</param>
 		/// <returns>
-		/// <c>true</c> if the specified <see cref="Vector4"/> is equal to this instance;
-		/// otherwise, <c>false</c>.
+		/// <c>true</c> if the specified <see cref="Vector4"/> is equal to this instance; otherwise,
+		/// <c>false</c>.
 		/// </returns>
 		public bool Equals(Vector4 other, float epsilon)
 		{
@@ -762,15 +722,12 @@ namespace CryCil
 			);
 		}
 		/// <summary>
-		/// Determines whether the specified <see cref="System.Object"/> is equal to this
-		/// instance.
+		/// Determines whether the specified <see cref="System.Object"/> is equal to this instance.
 		/// </summary>
-		/// <param name="obj">
-		/// The <see cref="System.Object"/> to compare with this instance.
-		/// </param>
+		/// <param name="obj">The <see cref="System.Object"/> to compare with this instance.</param>
 		/// <returns>
-		/// <c>true</c> if the specified <see cref="System.Object"/> is equal to this
-		/// instance; otherwise, <c>false</c>.
+		/// <c>true</c> if the specified <see cref="System.Object"/> is equal to this instance; otherwise,
+		/// <c>false</c>.
 		/// </returns>
 		public override bool Equals(object obj)
 		{
@@ -787,9 +744,7 @@ namespace CryCil
 		/// <summary>
 		/// Creates an array that contains components of this vector.
 		/// </summary>
-		/// <returns>
-		/// An array of four elements which contain corresponding vector components.
-		/// </returns>
+		/// <returns>An array of four elements which contain corresponding vector components.</returns>
 		public float[] ToArray()
 		{
 			return new[] { this.X, this.Y, this.Z, this.W };
@@ -797,9 +752,7 @@ namespace CryCil
 		/// <summary>
 		/// Creates a list that contains components of this vector.
 		/// </summary>
-		/// <returns>
-		/// A list of four elements which contain corresponding vector components.
-		/// </returns>
+		/// <returns>A list of four elements which contain corresponding vector components.</returns>
 		public List<float> ToList()
 		{
 			List<float> result = new List<float>(4) { this.X, this.Y, this.Z, this.W };
@@ -809,8 +762,8 @@ namespace CryCil
 		/// Creates a dictionary that contains components of this vector.
 		/// </summary>
 		/// <returns>
-		/// A dictionary which capacity is set to 4 where components of the vector can be
-		/// accessed with keys of same names.
+		/// A dictionary which capacity is set to 4 where components of the vector can be accessed with
+		/// keys of same names.
 		/// </returns>
 		public Dictionary<string, float> ToDictionary()
 		{

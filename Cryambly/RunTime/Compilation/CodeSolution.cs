@@ -15,9 +15,7 @@ namespace CryCil.RunTime.Compilation
 	/// <summary>
 	/// Handles compilation of .NET/Mono code associated with CryCIL.
 	/// </summary>
-	/// <remarks>
-	/// Solution file is a standard .sln file created by Visual Studio or SharpDevelop.
-	/// </remarks>
+	/// <remarks>Solution file is a standard .sln file created by Visual Studio or SharpDevelop.</remarks>
 	public static class CodeSolution
 	{
 		#region Fields
@@ -69,17 +67,15 @@ namespace CryCil.RunTime.Compilation
 		{
 			// This is the list of projects to compile.
 			List<IProject> buildList = new List<IProject>(CodeSolution.Projects.Count);
-			// We gonna organize the list so, projects that depend on other projects are
-			// built after them.
+			// We gonna organize the list so, projects that depend on other projects are built after them.
 			List<IProject> projects = new List<IProject>(CodeSolution.Projects);
 			while (projects.Count != 0)
 			{
-				// Go through the list and put into the build list those who already have
-				// their dependencies in the build list.
+				// Go through the list and put into the build list those who already have their
+				// dependencies in the build list.
 				for (int i = 0; i < projects.Count; i++)
 				{
-					// If project has no extra dependencies, then just put it into the
-					// list.
+					// If project has no extra dependencies, then just put it into the list.
 					if (projects[i].Dependencies.Length == 0 ||
 						projects[i].Dependencies.All(buildList.Contains))
 					{
@@ -88,8 +84,8 @@ namespace CryCil.RunTime.Compilation
 					}
 				}
 			}
-			// Creates a dictionary where keys are names of projects that were a failure
-			// to compile, and values a reasons, why compilation was a failure.
+			// Creates a dictionary where keys are names of projects that were a failure to compile, and
+			// values a reasons, why compilation was a failure.
 			Dictionary<string, string> failures = new Dictionary<string, string>(buildList.Count);
 			List<Assembly> compiledAssemblies = new List<Assembly>(buildList.Count);
 			while (buildList.Count != 0)

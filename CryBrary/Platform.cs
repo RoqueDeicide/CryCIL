@@ -19,13 +19,13 @@ namespace CryEngine
 		}
 		#region Mesh Configuration
 		/// <summary>
-		/// Indicates whether mesh indices are configured to use <see cref="UInt16"/>
-		/// instead of <see cref="UInt32"/>.
+		/// Indicates whether mesh indices are configured to use <see cref="UInt16"/> instead of
+		/// <see cref="UInt32"/>.
 		/// </summary>
 		public static readonly bool MeshIndexIs16Bit;
 		/// <summary>
-		/// Indicates whether tangents are configured to be represented by single
-		/// precision floating point numbers instead of 16-bit unsigned integers.
+		/// Indicates whether tangents are configured to be represented by single precision floating point
+		/// numbers instead of 16-bit unsigned integers.
 		/// </summary>
 		public static readonly bool MeshTangentsUseSingle;
 		#endregion

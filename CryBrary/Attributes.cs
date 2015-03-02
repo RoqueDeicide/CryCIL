@@ -25,8 +25,7 @@ namespace CryEngine
 		/// </summary>
 		public string Name { get; set; }
 		/// <summary>
-		/// Gets or sets the path to file that contains helper mesh displayed inside
-		/// Sandbox.
+		/// Gets or sets the path to file that contains helper mesh displayed inside Sandbox.
 		/// </summary>
 		public string EditorHelper { get; set; }
 		/// <summary>
@@ -38,8 +37,7 @@ namespace CryEngine
 		/// </summary>
 		public string Category { get; set; }
 		/// <summary>
-		/// Gets or sets the path to file that contains helper graphic displayed inside
-		/// Sandbox.
+		/// Gets or sets the path to file that contains helper graphic displayed inside Sandbox.
 		/// </summary>
 		public string Icon { get; set; }
 	}
@@ -58,8 +56,7 @@ namespace CryEngine
 		/// </summary>
 		public float Max { get; set; }
 		/// <summary>
-		/// Gets or sets the property type. Should be used for special types such as
-		/// files.
+		/// Gets or sets the property type. Should be used for special types such as files.
 		/// </summary>
 		public EditorPropertyType Type { get; set; }
 		/// <summary>
@@ -67,18 +64,15 @@ namespace CryEngine
 		/// </summary>
 		public int Flags { get; set; }
 		/// <summary>
-		/// Gets or sets the name of the property, if not set the entity class name will
-		/// be used.
+		/// Gets or sets the name of the property, if not set the entity class name will be used.
 		/// </summary>
 		public string Name { get; set; }
 		/// <summary>
-		/// Gets or sets the description to display when the user hovers over this
-		/// property inside Sandbox.
+		/// Gets or sets the description to display when the user hovers over this property inside Sandbox.
 		/// </summary>
 		public string Description { get; set; }
 		/// <summary>
-		/// Folder in which the entity property resides. If null, not contained in a
-		/// folder.
+		/// Folder in which the entity property resides. If null, not contained in a folder.
 		/// </summary>
 		public string Folder { get; set; }
 		/// <summary>

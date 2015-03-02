@@ -17,9 +17,9 @@ namespace CryCil
 		/// Object that provides culture-specific information to use in formatting.
 		/// </param>
 		/// <returns>
-		/// Text representation of the matrix where all elements are listed in a line
-		/// using default format for <see cref="Single"/> numbers and culture-specific
-		/// information supplied by <paramref name="formatProvider"/>.
+		/// Text representation of the matrix where all elements are listed in a line using default format
+		/// for <see cref="Single"/> numbers and culture-specific information supplied by
+		/// <paramref name="formatProvider"/>.
 		/// </returns>
 		public static string ToString<MatrixType>(IMatrix<MatrixType> matrix, IFormatProvider formatProvider)
 		{
@@ -30,48 +30,39 @@ namespace CryCil
 		/// </summary>
 		/// <remarks>
 		/// <para><paramref name="format"/> can consist of two parts:</para>
+		/// <para>1) Matrix format specification: this affects how the matrix is formatted.</para>
 		/// <para>
-		/// 1) Matrix format specification: this affects how the matrix is formatted.
+		/// 2) Number format specification, this affects how numbers in this matrix are formatted.
 		/// </para>
 		/// <para>
-		/// 2) Number format specification, this affects how numbers in this matrix are
-		///    formatted.
-		/// </para>
-		/// <para>
-		/// Both of these parts are optional, and when both of them are present, they
-		/// should separated by '|' (vertical slash) symbol.
+		/// Both of these parts are optional, and when both of them are present, they should separated by
+		/// '|' (vertical slash) symbol.
 		/// </para>
 		/// <para></para>
 		/// <para>
-		/// Matrix format specification is a string consisting of letters only the
-		/// following of which can be recognized:
+		/// Matrix format specification is a string consisting of letters only the following of which can
+		/// be recognized:
 		/// </para>
+		/// <para>1) 'r' - specifies that each row of the matrix must be on a separate line.</para>
 		/// <para>
-		/// 1) 'r' - specifies that each row of the matrix must be on a separate line.
-		/// </para>
-		/// <para>
-		/// 2) 'o' - when followed up by one the following symbols: '(', ')', '[', ']',
-		///    '{', '}', specifies which of those symbols to use to enclose the entire
-		/// matrix representation.
+		/// 2) 'o' - when followed up by one the following symbols: '(', ')', '[', ']', '{', '}', specifies
+		///    which of those symbols to use to enclose the entire matrix representation.
 		/// </para>
 		/// <para>3) 'i' - same as 'o' but for enclosing rows.</para>
 		/// <para>
-		/// 4) 'c' - specifies that all elements should have commas between them in
-		///    addition to spaces.
+		/// 4) 'c' - specifies that all elements should have commas between them in addition to spaces.
 		/// </para>
+		/// <para>5) 's' - specifies that all rows should have semicolons between them.</para>
+		/// <para></para>
 		/// <para>
-		/// 5) 's' - specifies that all rows should have semicolons between them.
+		/// Refer to https://msdn.microsoft.com/en-us/library/dwhawy9k(v=vs.110).aspx for documentation on
+		/// formatting single-precision numbers.
 		/// </para>
 		/// <para></para>
 		/// <para>
-		/// Refer to https://msdn.microsoft.com/en-us/library/dwhawy9k(v=vs.110).aspx for
-		/// documentation on formatting single-precision numbers.
-		/// </para>
-		/// <para></para>
-		/// <para>
-		/// When only one part is provided, put '|' either at the left side of it or right
-		/// one to specify whether that part specifies a number or matrix format
-		/// respectively. If '|' is not in the string, default format will be used.
+		/// When only one part is provided, put '|' either at the left side of it or right one to specify
+		/// whether that part specifies a number or matrix format respectively. If '|' is not in the
+		/// string, default format will be used.
 		/// </para>
 		/// </remarks>
 		/// <example>
@@ -93,12 +84,11 @@ namespace CryCil
 		/// <typeparam name="MatrixType">Type of the marix.</typeparam>
 		/// <param name="matrix">        Matrix to convert into text.</param>
 		/// <param name="format">        
-		/// A string that describes a format of the matrix. See Remarks section for
-		/// details.
+		/// A string that describes a format of the matrix. See Remarks section for details.
 		/// </param>
 		/// <param name="formatProvider">
-		/// Object that provides culture-specific information on how to create text
-		/// representations of numbers.
+		/// Object that provides culture-specific information on how to create text representations of
+		/// numbers.
 		/// </param>
 		/// <returns>Text representation specified by given arguments.</returns>
 		public static string ToString<MatrixType>(IMatrix<MatrixType> matrix, string format, IFormatProvider formatProvider)
@@ -149,9 +139,7 @@ namespace CryCil
 		/// </summary>
 		/// <typeparam name="MatrixType">Type of the marix.</typeparam>
 		/// <param name="matrix">Matrix to convert into text.</param>
-		/// <param name="format">
-		/// Object that provides information of how to format the text.
-		/// </param>
+		/// <param name="format">Object that provides information of how to format the text.</param>
 		/// <returns>A formatted text.</returns>
 		public static string ToString<MatrixType>(IMatrix<MatrixType> matrix, MatrixTextFormat format)
 		{

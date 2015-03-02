@@ -39,9 +39,7 @@ namespace CryCil.Engine.DebugServices
 		/// Writes a warning into the log. Displayed with yellow font.
 		/// </summary>
 		/// <param name="value">    Text to post.</param>
-		/// <param name="important">
-		/// Indicates whether the message is very important to post.
-		/// </param>
+		/// <param name="important">Indicates whether the message is very important to post.</param>
 		public static void Warning(string value, bool important)
 		{
 			Log.Post(important ? LogPostType.WarningAlways : LogPostType.Warning, value);
@@ -50,9 +48,7 @@ namespace CryCil.Engine.DebugServices
 		/// Writes an error message into the log. Displayed with red font.
 		/// </summary>
 		/// <param name="value">    Text to post.</param>
-		/// <param name="important">
-		/// Indicates whether the message is very important to post.
-		/// </param>
+		/// <param name="important">Indicates whether the message is very important to post.</param>
 		public static void Error(string value, bool important)
 		{
 			Log.Post(important ? LogPostType.ErrorAlways : LogPostType.Error, value);

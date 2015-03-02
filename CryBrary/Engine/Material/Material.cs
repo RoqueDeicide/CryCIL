@@ -192,8 +192,7 @@ namespace CryEngine
 		/// Clones a material
 		/// </summary>
 		/// <param name="subMaterial">
-		/// If negative, all sub materials are cloned, otherwise only the specified slot
-		/// is
+		/// If negative, all sub materials are cloned, otherwise only the specified slot is
 		/// </param>
 		/// <returns>The new clone.</returns>
 		public Material Clone(int subMaterial = -1)

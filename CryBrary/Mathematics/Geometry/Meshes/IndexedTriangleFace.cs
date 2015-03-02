@@ -28,12 +28,10 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// Transfers instance of <see cref="IndexedTriangleFace"/> from native memory.
 		/// </summary>
 		/// <param name="pointer">Pointer to native memory block.</param>
-		/// <param name="offset"> 
-		/// Byte offset that is added to <paramref name="pointer"/>.
-		/// </param>
+		/// <param name="offset"> Byte offset that is added to <paramref name="pointer"/>.</param>
 		/// <returns>
-		/// New instance of structure <see cref="IndexedTriangleFace"/> that is
-		/// interpreted from 13 bytes from native memory.
+		/// New instance of structure <see cref="IndexedTriangleFace"/> that is interpreted from 13 bytes
+		/// from native memory.
 		/// </returns>
 		public static IndexedTriangleFace FromNativeMemory(IntPtr pointer, int offset)
 		{
@@ -43,16 +41,13 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// Writes this instance to native memory.
 		/// </summary>
 		/// <param name="pointer">Pointer to native memory block.</param>
-		/// <param name="offset"> 
-		/// Byte offset that is added to <paramref name="pointer"/>.
-		/// </param>
+		/// <param name="offset"> Byte offset that is added to <paramref name="pointer"/>.</param>
 		public void WriteToNativeMemory(IntPtr pointer, int offset)
 		{
 			Marshal.StructureToPtr(this, pointer + offset, false);
 		}
 		/// <summary>
-		/// Determines whether two instances of type <see cref="IndexedTriangleFace"/> are
-		/// equal.
+		/// Determines whether two instances of type <see cref="IndexedTriangleFace"/> are equal.
 		/// </summary>
 		/// <param name="left"> Left operand.</param>
 		/// <param name="right">Right operand.</param>
@@ -66,8 +61,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 				left.SubsetIndex == right.SubsetIndex;
 		}
 		/// <summary>
-		/// Determines whether two instances of type <see cref="IndexedTriangleFace"/> are
-		/// not equal.
+		/// Determines whether two instances of type <see cref="IndexedTriangleFace"/> are not equal.
 		/// </summary>
 		/// <param name="left"> Left operand.</param>
 		/// <param name="right">Right operand.</param>
@@ -81,8 +75,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// </summary>
 		/// <param name="other">Another object.</param>
 		/// <returns>
-		/// True, if another object is of this type and can be considered equal to this
-		/// one.
+		/// True, if another object is of this type and can be considered equal to this one.
 		/// </returns>
 		public bool Equals(IndexedTriangleFace other)
 		{
@@ -93,8 +86,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// </summary>
 		/// <param name="obj">Another object.</param>
 		/// <returns>
-		/// True, if another object is of this type and can be considered equal to this
-		/// one.
+		/// True, if another object is of this type and can be considered equal to this one.
 		/// </returns>
 		public override bool Equals(object obj)
 		{

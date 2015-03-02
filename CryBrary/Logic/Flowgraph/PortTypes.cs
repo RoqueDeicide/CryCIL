@@ -15,8 +15,7 @@ namespace CryEngine.Logic.Flowgraph
 		/// The port doesn't work with values.
 		/// </summary>
 		/// <remarks>
-		/// Used for ports, used exclusively for activation of other nodes, without
-		/// passing data.
+		/// Used for ports, used exclusively for activation of other nodes, without passing data.
 		/// </remarks>
 		Void,
 		/// <summary>

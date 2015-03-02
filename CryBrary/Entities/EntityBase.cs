@@ -15,17 +15,17 @@ namespace CryEngine.Entities
 	{
 		internal PhysicalEntity _physics;
 		/// <summary>
-		/// Gets the globally unique identifier of this entity, assigned to it by the
-		/// Entity System. EntityGUID's are guaranteed to be the same when saving /
-		/// loading, and are the same in both editor and pure game mode.
+		/// Gets the globally unique identifier of this entity, assigned to it by the Entity System.
+		/// EntityGUID's are guaranteed to be the same when saving / loading, and are the same in both
+		/// editor and pure game mode.
 		/// </summary>
 		public EntityGuid GUID
 		{
 			get { return EntityInterop.GetEntityGUID(this.EntityHandle); }
 		}
 		/// <summary>
-		/// Gets the physical entity, contains essential functions for modifying the
-		/// entitys existing physical state.
+		/// Gets the physical entity, contains essential functions for modifying the entitys existing
+		/// physical state.
 		/// </summary>
 		public PhysicalEntity Physics
 		{
@@ -34,9 +34,7 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Removes the entity from the CryEngine world.
 		/// </summary>
-		/// <param name="forceRemoveNow">
-		/// If true, the entity will be removed immediately.
-		/// </param>
+		/// <param name="forceRemoveNow">If true, the entity will be removed immediately.</param>
 		public virtual void Remove(bool forceRemoveNow = false)
 		{
 			Entity.Remove(this.Id, forceRemoveNow);
@@ -44,22 +42,17 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Loads a light source to the specified slot, or to the next available slot.
 		/// </summary>
-		/// <param name="parameters">
-		/// New params of the light source we wish to load
-		/// </param>
+		/// <param name="parameters">New params of the light source we wish to load</param>
 		/// <param name="slot">      
 		/// Slot we want to load the light into, if -1 chooses the next available slot.
 		/// </param>
-		/// <returns>
-		/// The slot where the light source was loaded, or -1 if loading failed.
-		/// </returns>
+		/// <returns>The slot where the light source was loaded, or -1 if loading failed.</returns>
 		public int LoadLight(LightParams parameters, int slot = 1)
 		{
 			return EntityInterop.LoadLight(this.EntityHandle, slot, parameters);
 		}
 		/// <summary>
-		/// Loads a mesh for this entity. Can optionally load multiple meshes using entity
-		/// slots.
+		/// Loads a mesh for this entity. Can optionally load multiple meshes using entity slots.
 		/// </summary>
 		/// <param name="name">Path to the object (Relative to the game directory)</param>
 		/// <param name="slot"></param>
@@ -81,9 +74,7 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Gets the path to the currently loaded object.
 		/// </summary>
-		/// <param name="slot">
-		/// Slot containing the object we want to know the path of.
-		/// </param>
+		/// <param name="slot">Slot containing the object we want to know the path of.</param>
 		/// <returns>Path to the currently loaded object at the specified slot.</returns>
 		public string GetObjectFilePath(int slot = 0)
 		{
@@ -98,8 +89,7 @@ namespace CryEngine.Entities
 			EntityInterop.FreeSlot(this.EntityHandle, slot);
 		}
 		/// <summary>
-		/// Requests movement at the specified slot, providing an animated character is
-		/// currently loaded.
+		/// Requests movement at the specified slot, providing an animated character is currently loaded.
 		/// </summary>
 		/// <param name="request">Object that describes the movement.</param>
 		public void AddMovement(ref EntityMovementRequest request)
@@ -109,9 +99,7 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Loads an emitter for a particle effect.
 		/// </summary>
-		/// <param name="particleEffect">
-		/// <see cref="ParticleEffect"/> to load emitter for.
-		/// </param>
+		/// <param name="particleEffect"><see cref="ParticleEffect"/> to load emitter for.</param>
 		/// <param name="spawnParams">   A set of parameters to use for spawning.</param>
 		/// <param name="slot">          Slot to assign the emitter to.</param>
 		/// <returns>A new particle emitter.</returns>

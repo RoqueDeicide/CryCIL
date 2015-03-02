@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 namespace CryEngine.RunTime
 {
 	/// <summary>
-	/// Contains types that interact with CryEngine run-time environment and handle
-	/// functionality of CryMono subsystems.
+	/// Contains types that interact with CryEngine run-time environment and handle functionality of
+	/// CryMono subsystems.
 	/// </summary>
 	[CompilerGenerated]
 	public class NamespaceDoc

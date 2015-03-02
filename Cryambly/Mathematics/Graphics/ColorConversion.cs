@@ -49,9 +49,7 @@ namespace CryCil.Graphics
 			/// Converts the color from RGB format to mCIE.
 			/// </summary>
 			/// <param name="color">Color to convert.</param>
-			/// <returns>
-			/// A new color that is better suited for display on a monitor.
-			/// </returns>
+			/// <returns>A new color that is better suited for display on a monitor.</returns>
 			public static unsafe ColorSingle sRGB(ColorSingle color)
 			{
 				ColorSingle res = new ColorSingle();

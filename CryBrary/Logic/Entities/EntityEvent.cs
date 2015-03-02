@@ -15,12 +15,11 @@ namespace CryEngine.Logic.Entities
 		/// </summary>
 		/// <remarks>
 		/// <para>
-		/// Integer 1) <see cref="EntityXFormFlags"/> value that describes why the change
-		/// has happened.
+		/// Integer 1) <see cref="EntityXFormFlags"/> value that describes why the change has happened.
 		/// </para>
 		/// <para>
-		/// Integer 2) If this version supports segmented worlds, indicates whether
-		/// physical bounds of the entity need to be recalculated.
+		/// Integer 2) If this version supports segmented worlds, indicates whether physical bounds of the
+		/// entity need to be recalculated.
 		/// </para>
 		/// </remarks>
 		XForm = 0,
@@ -55,13 +54,9 @@ namespace CryEngine.Logic.Entities
 		/// </summary>
 		/// <remarks>
 		/// <para>
-		/// First integer parameter = 0 if entity has disappeared from the view, = 1
-		/// otherwise.
+		/// First integer parameter = 0 if entity has disappeared from the view, = 1 otherwise.
 		/// </para>
-		/// <para>
-		/// This event never occurs, since there is no code in CryEntitySystem that does
-		/// that.
-		/// </para>
+		/// <para>This event never occurs, since there is no code in CryEntitySystem that does that.</para>
 		/// </remarks>
 		Visiblity,
 		/// <summary>
@@ -70,52 +65,40 @@ namespace CryEngine.Logic.Entities
 		/// <remarks>
 		/// <para>Used with the Editor.</para>
 		/// <para>
-		/// First integer parameter indicates whether this entity was reset when the
-		/// Editor user has switched to game mode.
+		/// First integer parameter indicates whether this entity was reset when the Editor user has
+		/// switched to game mode.
 		/// </para>
 		/// </remarks>
 		Reset,
 		/// <summary>
 		/// This event occurs when another entity is attached to this one.
 		/// </summary>
-		/// <remarks>
-		/// First integer parameter is an identifier of the child entity.
-		/// </remarks>
+		/// <remarks>First integer parameter is an identifier of the child entity.</remarks>
 		Attach,
 		/// <summary>
 		/// This event occurs when this entity is attached to another one.
 		/// </summary>
-		/// <remarks>
-		/// First integer parameter is an identifier of the parent entity.
-		/// </remarks>
+		/// <remarks>First integer parameter is an identifier of the parent entity.</remarks>
 		AttachThis,
 		/// <summary>
 		/// This event occurs when another entity is detached from this one.
 		/// </summary>
-		/// <remarks>
-		/// First integer parameter is an identifier of the child entity.
-		/// </remarks>
+		/// <remarks>First integer parameter is an identifier of the child entity.</remarks>
 		Detach,
 		/// <summary>
 		/// This event occurs when this entity is detached from another one.
 		/// </summary>
-		/// <remarks>
-		/// First integer parameter is an identifier of the parent entity.
-		/// </remarks>
+		/// <remarks>First integer parameter is an identifier of the parent entity.</remarks>
 		DetachThis,
 		/// <summary>
 		/// This event occurs when another entity is linked to this one.
 		/// </summary>
-		/// <remarks>
-		/// First integer parameter is a handle of IEntityLink structure.
-		/// </remarks>
+		/// <remarks>First integer parameter is a handle of IEntityLink structure.</remarks>
 		Link,
 		/// <summary>
 		/// This event occurs when another entity is unlinked from this one.
 		/// </summary>
-		/// <remarks>
-		/// First integer parameter is a handle of IEntityLink structure.
-		/// </remarks>
+		/// <remarks>First integer parameter is a handle of IEntityLink structure.</remarks>
 		Delink,
 		/// <summary>
 		/// This event occurs when this entity must be hidden.
@@ -135,22 +118,16 @@ namespace CryEngine.Logic.Entities
 		/// <summary>
 		/// This event occurs when physics of this entity falls asleep/ awakens.
 		/// </summary>
-		/// <remarks>
-		/// First integer parameter indicates whether physics awakes or falls asleep.
-		/// </remarks>
+		/// <remarks>First integer parameter indicates whether physics awakes or falls asleep.</remarks>
 		PhysicsChangeState,
 		/// <summary>
-		/// This event occurs when Lua script associated with this entity broadcasts its
-		/// events.
+		/// This event occurs when Lua script associated with this entity broadcasts its events.
 		/// </summary>
 		/// <remarks>
 		/// <para>
-		/// First integer parameter is a pointer to ASCIIZ string with the name of the
-		/// script event.
+		/// First integer parameter is a pointer to ASCIIZ string with the name of the script event.
 		/// </para>
-		/// <para>
-		/// Second integer parameter is a <see cref="EntityEventValueType"/> value.
-		/// </para>
+		/// <para>Second integer parameter is a <see cref="EntityEventValueType"/> value.</para>
 		/// <para>Third integer parameter is a pointer to the value.</para>
 		/// </remarks>
 		ScriptEvent,
@@ -159,8 +136,7 @@ namespace CryEngine.Logic.Entities
 		/// </summary>
 		/// <remarks>
 		/// <para>
-		/// First integer parameter is an identifier of the entity that represents a
-		/// triggering entity.
+		/// First integer parameter is an identifier of the entity that represents a triggering entity.
 		/// </para>
 		/// <para>Second integer parameter is an identifier of the area.</para>
 		/// <para>Third integer parameter is an identifier of the area entity.</para>
@@ -172,8 +148,7 @@ namespace CryEngine.Logic.Entities
 		/// </summary>
 		/// <remarks>
 		/// <para>
-		/// First integer parameter is an identifier of the entity that represents a
-		/// triggering entity.
+		/// First integer parameter is an identifier of the entity that represents a triggering entity.
 		/// </para>
 		/// <para>Second integer parameter is an identifier of the area.</para>
 		/// <para>Third integer parameter is an identifier of the area entity.</para>
@@ -185,8 +160,7 @@ namespace CryEngine.Logic.Entities
 		/// </summary>
 		/// <remarks>
 		/// <para>
-		/// First integer parameter is an identifier of the entity that represents a
-		/// triggering entity.
+		/// First integer parameter is an identifier of the entity that represents a triggering entity.
 		/// </para>
 		/// <para>Second integer parameter is an identifier of the area.</para>
 		/// <para>Third integer parameter is an identifier of the area entity.</para>
@@ -198,8 +172,7 @@ namespace CryEngine.Logic.Entities
 		/// </summary>
 		/// <remarks>
 		/// <para>
-		/// First integer parameter is an identifier of the entity that represents a
-		/// triggering entity.
+		/// First integer parameter is an identifier of the entity that represents a triggering entity.
 		/// </para>
 		/// <para>Second integer parameter is an identifier of the area.</para>
 		/// <para>Third integer parameter is an identifier of the area entity.</para>
@@ -210,8 +183,7 @@ namespace CryEngine.Logic.Entities
 		/// </summary>
 		/// <remarks>
 		/// <para>
-		/// First integer parameter is an identifier of the entity that represents a
-		/// triggering entity.
+		/// First integer parameter is an identifier of the entity that represents a triggering entity.
 		/// </para>
 		/// <para>Second integer parameter is an identifier of the area.</para>
 		/// <para>Third integer parameter is an identifier of the area entity.</para>
@@ -221,14 +193,12 @@ namespace CryEngine.Logic.Entities
 		/// This event occurs when triggering entity moves near the area.
 		/// </summary>
 		/// <remarks>
-		/// <para>
-		/// Integer 1) An identifier of the entity that represents a triggering entity.
-		/// </para>
+		/// <para>Integer 1) An identifier of the entity that represents a triggering entity.</para>
 		/// <para>Integer 2) An identifier of the area.</para>
 		/// <para>Integer 3) An identifier of the area entity.</para>
 		/// <para>
-		/// <see cref="Single"/> 1) An indicator of how close the entity is to the area.
-		/// (1.0 - on the border, 0.0 on the border of detection).
+		/// <see cref="Single"/> 1) An indicator of how close the entity is to the area. (1.0 - on the
+		/// border, 0.0 on the border of detection).
 		/// </para>
 		/// </remarks>
 		MoveNearArea,
@@ -245,8 +215,7 @@ namespace CryEngine.Logic.Entities
 		/// </summary>
 		/// <remarks>
 		/// <para>
-		/// This event occurs within a different thread, don't handle, if you don't know
-		/// what you're doing.
+		/// This event occurs within a different thread, don't handle, if you don't know what you're doing.
 		/// </para>
 		/// <para>First floating point parameter is time interval.</para>
 		/// </remarks>
@@ -256,13 +225,12 @@ namespace CryEngine.Logic.Entities
 		/// </summary>
 		PhysicsBreak,
 		/// <summary>
-		/// This event occurs when AI object attached to this entity has finished
-		/// executing current order/action.
+		/// This event occurs when AI object attached to this entity has finished executing current
+		/// order/action.
 		/// </summary>
 		AiDone,
 		/// <summary>
-		/// This event occurs when a sound attached to this entity finished or was stopped
-		/// playing.
+		/// This event occurs when a sound attached to this entity finished or was stopped playing.
 		/// </summary>
 		SoundDone,
 		/// <summary>
@@ -270,17 +238,15 @@ namespace CryEngine.Logic.Entities
 		/// </summary>
 		/// <remarks>
 		/// <para>Timeout is specified by a console variable "es_not_seen_timeout".</para>
-		/// <para>
-		/// This event only occurs if this entity is subscribed to such an event.
-		/// </para>
+		/// <para>This event only occurs if this entity is subscribed to such an event.</para>
 		/// </remarks>
 		NotSeenTimeout,
 		/// <summary>
 		/// This event occurs when this entity collides with something.
 		/// </summary>
 		/// <remarks>
-		/// First integer parameter is a pointer <see cref="CryCollision"/> object that
-		/// describes the collision.
+		/// First integer parameter is a pointer <see cref="CryCollision"/> object that describes the
+		/// collision.
 		/// </remarks>
 		Collision,
 		/// <summary>
@@ -288,12 +254,10 @@ namespace CryEngine.Logic.Entities
 		/// </summary>
 		/// <remarks>
 		/// <para>
-		/// First integer parameter is a pointer to the current rendering
-		/// <see cref="RenderParams"/> structure.
+		/// First integer parameter is a pointer to the current rendering <see cref="RenderParams"/>
+		/// structure.
 		/// </para>
-		/// <para>
-		/// This event only occurs if this entity is subscribed to such an event.
-		/// </para>
+		/// <para>This event only occurs if this entity is subscribed to such an event.</para>
 		/// </remarks>
 		Render,
 		/// <summary>
@@ -340,9 +304,7 @@ namespace CryEngine.Logic.Entities
 		/// <summary>
 		/// This event occurs when the entity switches to the different material.
 		/// </summary>
-		/// <remarks>
-		/// First integer parameter is a pointer the new material in CryEngine memory.
-		/// </remarks>
+		/// <remarks>First integer parameter is a pointer the new material in CryEngine memory.</remarks>
 		Material,
 		/// <summary>
 		/// This event occurs when the entity's material layer mask changes.
@@ -358,39 +320,29 @@ namespace CryEngine.Logic.Entities
 		/// <remarks>This event never actually occurs.</remarks>
 		OnHit,
 		/// <summary>
-		/// This event occurs when an animation event (placed on animations in editor) is
-		/// encountered.
+		/// This event occurs when an animation event (placed on animations in editor) is encountered.
 		/// </summary>
-		/// <remarks>
-		/// First integer parameter is a pointer the AnimEventInstance* object.
-		/// </remarks>
+		/// <remarks>First integer parameter is a pointer the AnimEventInstance* object.</remarks>
 		AnimationEvent,
 		/// <summary>
-		/// This event occurs when Lua script attached to the entity requests to change
-		/// collider mode.
+		/// This event occurs when Lua script attached to the entity requests to change collider mode.
 		/// </summary>
-		/// <remarks>
-		/// First integer parameter is a new <see cref="ColliderMode"/> value.
-		/// </remarks>
+		/// <remarks>First integer parameter is a new <see cref="ColliderMode"/> value.</remarks>
 		ScriptRequestColliderMode,
 		/// <summary>
-		/// This event occurs when output port of the flow node that is connected to the
-		/// entity activates.
+		/// This event occurs when output port of the flow node that is connected to the entity activates.
 		/// </summary>
 		/// <remarks>
 		/// <para>
-		/// First integer parameter is a pointer to null-terminated string that is a name
-		/// of the output port.
+		/// First integer parameter is a pointer to null-terminated string that is a name of the output
+		/// port.
 		/// </para>
-		/// <para>
-		/// Second integer parameter is <see cref="EntityEventValueType"/> value.
-		/// </para>
+		/// <para>Second integer parameter is <see cref="EntityEventValueType"/> value.</para>
 		/// <para>Third integer parameter is a pointer to the value.</para>
 		/// </remarks>
 		ActiveFlowNodeOutput,
 		/// <summary>
-		/// This event occurs when one of the entity's editor properties is changed on the
-		/// selected entity.
+		/// This event occurs when one of the entity's editor properties is changed on the selected entity.
 		/// </summary>
 		EditorPropertyChanged,
 		/// <summary>
@@ -406,8 +358,7 @@ namespace CryEngine.Logic.Entities
 		/// </summary>
 		Deactivated,
 		/// <summary>
-		/// Last entry. Not used, other then for going through this enumeration with the
-		/// loop.
+		/// Last entry. Not used, other then for going through this enumeration with the loop.
 		/// </summary>
 		Last
 	}

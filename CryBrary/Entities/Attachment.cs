@@ -8,9 +8,8 @@ using CryEngine.Native;
 namespace CryEngine.Entities
 {
 	/// <summary>
-	/// Represents a character attachment, obtained via
-	/// <see cref="EntityBase.GetAttachment(int, int)"/> and
-	/// <see cref="EntityBase.GetAttachment(string, int)"/> .
+	/// Represents a character attachment, obtained via <see cref="EntityBase.GetAttachment(int, int)"/>
+	/// and <see cref="EntityBase.GetAttachment(string, int)"/> .
 	/// </summary>
 	public sealed class Attachment
 	{
@@ -53,9 +52,7 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Binds entity to this attachment.
 		/// </summary>
-		/// <param name="entityId">
-		/// Identifier of the entity to bind this attachment to.
-		/// </param>
+		/// <param name="entityId">Identifier of the entity to bind this attachment to.</param>
 		public void SwitchToEntityObject(EntityId entityId)
 		{
 			EntityInterop.BindAttachmentToEntity(this.Handle, entityId);
@@ -63,9 +60,7 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Binds a light source to this attachment.
 		/// </summary>
-		/// <param name="lightParams">
-		/// A set of parameters that describe a light source.
-		/// </param>
+		/// <param name="lightParams">A set of parameters that describe a light source.</param>
 		public void SwitchToLightObject(ref LightParams lightParams)
 		{
 			EntityInterop.BindAttachmentToLight(this.Handle, ref lightParams);
@@ -73,12 +68,8 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Binds a particle effect to this attachment.
 		/// </summary>
-		/// <param name="effect">
-		/// <see cref="ParticleEffect"/> to bind to this attachment.
-		/// </param>
-		/// <param name="offset">
-		/// Position of the particle effect relative to the attachment.
-		/// </param>
+		/// <param name="effect"><see cref="ParticleEffect"/> to bind to this attachment.</param>
+		/// <param name="offset">Position of the particle effect relative to the attachment.</param>
 		/// <param name="dir">   Direction of the particle effect spray.</param>
 		/// <param name="scale"> Scale to assign to the particle effect.</param>
 		public void SwitchToParticleEffectObject(ParticleEffect effect, Vector3 offset, Vector3 dir, float scale)
@@ -162,8 +153,7 @@ namespace CryEngine.Entities
 		internal IntPtr Handle { get; set; }
 	}
 	/// <summary>
-	/// Enumeration of types of objects that can be bound to the <see cref="Attachment"/>
-	/// .
+	/// Enumeration of types of objects that can be bound to the <see cref="Attachment"/> .
 	/// </summary>
 	public enum AttachmentObjectType
 	{

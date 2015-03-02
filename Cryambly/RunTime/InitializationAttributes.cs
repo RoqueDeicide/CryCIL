@@ -19,8 +19,8 @@ namespace CryCil.RunTime
 	/// Marks method that represents one of the initialization stages.
 	/// </summary>
 	/// <remarks>
-	/// It is necessary for the method marked by this attribute to only accept one
-	/// argument of type <see cref="Int32"/>.
+	/// It is necessary for the method marked by this attribute to only accept one argument of type
+	/// <see cref="Int32"/>.
 	/// </remarks>
 	[AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = true)]
 	[MeansImplicitUse]

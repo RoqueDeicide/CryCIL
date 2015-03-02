@@ -128,8 +128,7 @@ namespace CryEngine
 		/// </summary>
 		/// <param name="obj">Another object.</param>
 		/// <returns>
-		/// True, if another object is of type <see cref="RaycastHit"/> which is equal to
-		/// this one.
+		/// True, if another object is of type <see cref="RaycastHit"/> which is equal to this one.
 		/// </returns>
 		public override bool Equals(object obj)
 		{
@@ -146,8 +145,7 @@ namespace CryEngine
 			return left.Equals(right);
 		}
 		/// <summary>
-		/// Determines whether two instances of type <see cref="RaycastHit"/> are not
-		/// equal.
+		/// Determines whether two instances of type <see cref="RaycastHit"/> are not equal.
 		/// </summary>
 		/// <param name="left"> Left operand.</param>
 		/// <param name="right">Right operand.</param>
@@ -200,13 +198,12 @@ namespace CryEngine
 		/// </summary>
 		SeperateImportantHits = SurfaceFlags.Important,
 		/// <summary>
-		/// used to manually specify collision geometry types (default is
-		/// geom_colltype_ray)
+		/// used to manually specify collision geometry types (default is geom_colltype_ray)
 		/// </summary>
 		CollissionTypeBit = 16,
 		/// <summary>
-		/// if several colltype flag are specified, switches between requiring all or any
-		/// of them in a geometry
+		/// if several colltype flag are specified, switches between requiring all or any of them in a
+		/// geometry
 		/// </summary>
 		CollissionTypeAny = 0x400,
 		/// <summary>
@@ -214,18 +211,16 @@ namespace CryEngine
 		/// </summary>
 		Queue = 0x800,
 		/// <summary>
-		/// non-colliding geometries will be treated as pierceable regardless of the
-		/// actual material
+		/// non-colliding geometries will be treated as pierceable regardless of the actual material
 		/// </summary>
 		ForcePiercableNonCollidable = 0x1000,
 		/// <summary>
-		/// marks the rwi to be a debug rwi (used for spu debugging, only valid in
-		/// non-release builds)
+		/// marks the rwi to be a debug rwi (used for spu debugging, only valid in non-release builds)
 		/// </summary>
 		DebugTrace = 0x2000,
 		/// <summary>
-		/// update phitLast with the current hit results (should be set if the last hit
-		/// should be reused for a "warm" start)
+		/// update phitLast with the current hit results (should be set if the last hit should be reused
+		/// for a "warm" start)
 		/// </summary>
 		UpdateLastHit = 0x4000,
 		/// <summary>
@@ -262,8 +257,7 @@ namespace CryEngine
 		/// </summary>
 		AllocateList = 0x40000,
 		/// <summary>
-		/// will call AddRef on each entity in the list (expecting the caller call
-		/// Release)
+		/// will call AddRef on each entity in the list (expecting the caller call Release)
 		/// </summary>
 		AddRefResults = 0x100000,
 		/// <summary>

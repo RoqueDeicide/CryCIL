@@ -46,8 +46,7 @@ namespace CryCil
 		/// </summary>
 		/// <value>The value of the X or Y component, depending on the index.</value>
 		/// <param name="index">
-		/// The index of the component to access. Use 0 for the X component and 1 for the
-		/// Y component.
+		/// The index of the component to access. Use 0 for the X component and 1 for the Y component.
 		/// </param>
 		/// <returns>The value of the component at the specified index.</returns>
 		public float this[int index]
@@ -83,8 +82,8 @@ namespace CryCil
 		/// </summary>
 		/// <returns>The length of the vector.</returns>
 		/// <remarks>
-		/// <see cref="Vector2.LengthSquared"/> may be preferred when only the relative
-		/// length is needed and speed is of the essence.
+		/// <see cref="Vector2.LengthSquared"/> may be preferred when only the relative length is needed
+		/// and speed is of the essence.
 		/// </remarks>
 		public float Length
 		{
@@ -95,8 +94,8 @@ namespace CryCil
 		/// </summary>
 		/// <returns>The squared length of the vector.</returns>
 		/// <remarks>
-		/// This method may be preferred to <see cref="Vector2.Length"/> when only a
-		/// relative length is needed and speed is of the essence.
+		/// This method may be preferred to <see cref="Vector2.Length"/> when only a relative length is
+		/// needed and speed is of the essence.
 		/// </remarks>
 		public float LengthSquared
 		{
@@ -139,10 +138,9 @@ namespace CryCil
 		/// Initializes a new instance of the <see cref="Vector2"/> struct.
 		/// </summary>
 		/// <param name="values">
-		/// An array which contents are used to create new vector. Only first two values
-		/// can be used. If array only contains one value, it will be assigned to both
-		/// components of the vector. If array doesn't contain any values, vector will be
-		/// initialized with zeros.
+		/// An array which contents are used to create new vector. Only first two values can be used. If
+		/// array only contains one value, it will be assigned to both components of the vector. If array
+		/// doesn't contain any values, vector will be initialized with zeros.
 		/// </param>
 		public Vector2(float[] values)
 		{
@@ -165,12 +163,11 @@ namespace CryCil
 		#endregion
 		#region Modification
 		/// <summary>
-		/// Creates new instance of <see cref="Vector2"/> where Y, Z and W components are
-		/// of this instance and X component is specified by given value.
+		/// Creates new instance of <see cref="Vector2"/> where Y, Z and W components are of this instance
+		/// and X component is specified by given value.
 		/// </summary>
 		/// <remarks>
-		/// This method allows to simplify code where this instance is a property which
-		/// you want to modify.
+		/// This method allows to simplify code where this instance is a property which you want to modify.
 		/// </remarks>
 		/// <param name="value">New value for X component.</param>
 		/// <returns>Modified vector.</returns>
@@ -179,12 +176,11 @@ namespace CryCil
 			return new Vector2(value, this.Y);
 		}
 		/// <summary>
-		/// Creates new instance of <see cref="Vector2"/> where X, Z and W components are
-		/// of this instance and Y component is specified by given value.
+		/// Creates new instance of <see cref="Vector2"/> where X, Z and W components are of this instance
+		/// and Y component is specified by given value.
 		/// </summary>
 		/// <remarks>
-		/// This method allows to simplify code where this instance is a property which
-		/// you want to modify.
+		/// This method allows to simplify code where this instance is a property which you want to modify.
 		/// </remarks>
 		/// <param name="value">New value for Y component.</param>
 		/// <returns>Modified vector.</returns>
@@ -193,12 +189,10 @@ namespace CryCil
 			return new Vector2(this.X, value);
 		}
 		/// <summary>
-		/// Creates new <see cref="Vector2"/> which represents this vector with modified
-		/// values.
+		/// Creates new <see cref="Vector2"/> which represents this vector with modified values.
 		/// </summary>
 		/// <remarks>
-		/// This method allows to simplify code where this instance is a property which
-		/// you want to modify.
+		/// This method allows to simplify code where this instance is a property which you want to modify.
 		/// </remarks>
 		/// <param name="x">New value for X component.</param>
 		/// <param name="y">New value for Y component.</param>
@@ -212,9 +206,7 @@ namespace CryCil
 		/// <summary>
 		/// Creates an array containing the elements of the vector.
 		/// </summary>
-		/// <returns>
-		/// A two-element array containing the components of the vector.
-		/// </returns>
+		/// <returns>A two-element array containing the components of the vector.</returns>
 		public float[] ToArray()
 		{
 			return new[] { this.X, this.Y };
@@ -223,8 +215,8 @@ namespace CryCil
 		/// Creates a list that contains components of this vector.
 		/// </summary>
 		/// <returns>
-		/// A list which capacity is set to 2 with first element being an X-component of
-		/// this vector, and second element being an Y-component of this vector.
+		/// A list which capacity is set to 2 with first element being an X-component of this vector, and
+		/// second element being an Y-component of this vector.
 		/// </returns>
 		public List<float> ToList()
 		{
@@ -235,8 +227,8 @@ namespace CryCil
 		/// Creates a dictionary that contains components of this vector.
 		/// </summary>
 		/// <returns>
-		/// A dictionary which capacity is set to 2 where components of the vector can be
-		/// accessed with keys of same names.
+		/// A dictionary which capacity is set to 2 where components of the vector can be accessed with
+		/// keys of same names.
 		/// </returns>
 		public Dictionary<string, float> ToDictionary()
 		{
@@ -251,9 +243,7 @@ namespace CryCil
 		/// <param name="value"> The value to clamp.</param>
 		/// <param name="min">   The minimum value.</param>
 		/// <param name="max">   The maximum value.</param>
-		/// <param name="result">
-		/// When the method completes, contains the clamped value.
-		/// </param>
+		/// <param name="result">When the method completes, contains the clamped value.</param>
 		public static void Clamp(ref Vector2 value, ref Vector2 min, ref Vector2 max, out Vector2 result)
 		{
 			float x = value.X;
@@ -288,9 +278,8 @@ namespace CryCil
 		/// When the method completes, contains the distance between the two vectors.
 		/// </param>
 		/// <remarks>
-		/// <see cref="Vector2.DistanceSquared(ref Vector2, ref Vector2, out float)"/> may
-		/// be preferred when only the relative distance is needed and speed is of the
-		/// essence.
+		/// <see cref="Vector2.DistanceSquared(ref Vector2, ref Vector2, out float)"/> may be preferred
+		/// when only the relative distance is needed and speed is of the essence.
 		/// </remarks>
 		public static void Distance(ref Vector2 value1, ref Vector2 value2, out float result)
 		{
@@ -306,8 +295,8 @@ namespace CryCil
 		/// <param name="value2">The second vector.</param>
 		/// <returns>The distance between the two vectors.</returns>
 		/// <remarks>
-		/// <see cref="Vector2.DistanceSquared(Vector2, Vector2)"/> may be preferred when
-		/// only the relative distance is needed and speed is of the essence.
+		/// <see cref="Vector2.DistanceSquared(Vector2, Vector2)"/> may be preferred when only the relative
+		/// distance is needed and speed is of the essence.
 		/// </remarks>
 		public static float Distance(Vector2 value1, Vector2 value2)
 		{
@@ -322,16 +311,14 @@ namespace CryCil
 		/// <param name="value1">The first vector.</param>
 		/// <param name="value2">The second vector</param>
 		/// <param name="result">
-		/// When the method completes, contains the squared distance between the two
-		/// vectors.
+		/// When the method completes, contains the squared distance between the two vectors.
 		/// </param>
 		/// <remarks>
-		/// Distance squared is the value before taking the square root. Distance squared
-		/// can often be used in place of distance if relative comparisons are being made.
-		/// For example, consider three points A, B, and C. To determine whether B or C is
-		/// further from A, compare the distance between A and B to the distance between A
-		/// and C. Calculating the two distances involves two square roots, which are
-		/// computationally expensive. However, using distance squared provides the same
+		/// Distance squared is the value before taking the square root. Distance squared can often be used
+		/// in place of distance if relative comparisons are being made. For example, consider three points
+		/// A, B, and C. To determine whether B or C is further from A, compare the distance between A and
+		/// B to the distance between A and C. Calculating the two distances involves two square roots,
+		/// which are computationally expensive. However, using distance squared provides the same
 		/// information and avoids calculating two square roots.
 		/// </remarks>
 		public static void DistanceSquared(ref Vector2 value1, ref Vector2 value2, out float result)
@@ -348,12 +335,11 @@ namespace CryCil
 		/// <param name="value2">The second vector.</param>
 		/// <returns>The squared distance between the two vectors.</returns>
 		/// <remarks>
-		/// Distance squared is the value before taking the square root. Distance squared
-		/// can often be used in place of distance if relative comparisons are being made.
-		/// For example, consider three points A, B, and C. To determine whether B or C is
-		/// further from A, compare the distance between A and B to the distance between A
-		/// and C. Calculating the two distances involves two square roots, which are
-		/// computationally expensive. However, using distance squared provides the same
+		/// Distance squared is the value before taking the square root. Distance squared can often be used
+		/// in place of distance if relative comparisons are being made. For example, consider three points
+		/// A, B, and C. To determine whether B or C is further from A, compare the distance between A and
+		/// B to the distance between A and C. Calculating the two distances involves two square roots,
+		/// which are computationally expensive. However, using distance squared provides the same
 		/// information and avoids calculating two square roots.
 		/// </remarks>
 		public static float DistanceSquared(Vector2 value1, Vector2 value2)
@@ -391,8 +377,8 @@ namespace CryCil
 		/// <param name="left">  The first source vector.</param>
 		/// <param name="right"> The second source vector.</param>
 		/// <param name="result">
-		/// When the method completes, contains an new vector composed of the largest
-		/// components of the source vectors.
+		/// When the method completes, contains an new vector composed of the largest components of the
+		/// source vectors.
 		/// </param>
 		public static void Max(ref Vector2 left, ref Vector2 right, out Vector2 result)
 		{
@@ -404,9 +390,7 @@ namespace CryCil
 		/// </summary>
 		/// <param name="left"> The first source vector.</param>
 		/// <param name="right">The second source vector.</param>
-		/// <returns>
-		/// A vector containing the largest components of the source vectors.
-		/// </returns>
+		/// <returns>A vector containing the largest components of the source vectors.</returns>
 		public static Vector2 Max(Vector2 left, Vector2 right)
 		{
 			Vector2 result;
@@ -419,8 +403,8 @@ namespace CryCil
 		/// <param name="left">  The first source vector.</param>
 		/// <param name="right"> The second source vector.</param>
 		/// <param name="result">
-		/// When the method completes, contains an new vector composed of the smallest
-		/// components of the source vectors.
+		/// When the method completes, contains an new vector composed of the smallest components of the
+		/// source vectors.
 		/// </param>
 		public static void Min(ref Vector2 left, ref Vector2 right, out Vector2 result)
 		{
@@ -432,9 +416,7 @@ namespace CryCil
 		/// </summary>
 		/// <param name="left"> The first source vector.</param>
 		/// <param name="right">The second source vector.</param>
-		/// <returns>
-		/// A vector containing the smallest components of the source vectors.
-		/// </returns>
+		/// <returns>A vector containing the smallest components of the source vectors.</returns>
 		public static Vector2 Min(Vector2 left, Vector2 right)
 		{
 			Vector2 result;
@@ -458,9 +440,7 @@ namespace CryCil
 		/// Converts the vector into a unit vector.
 		/// </summary>
 		/// <param name="value"> The vector to normalize.</param>
-		/// <param name="result">
-		/// When the method completes, contains the normalized vector.
-		/// </param>
+		/// <param name="result">When the method completes, contains the normalized vector.</param>
 		public static void Normalize(ref Vector2 value, out Vector2 result)
 		{
 			result = value;
@@ -483,9 +463,7 @@ namespace CryCil
 		/// </summary>
 		/// <param name="left">  The first vector to modulate.</param>
 		/// <param name="right"> The second vector to modulate.</param>
-		/// <param name="result">
-		/// When the method completes, contains the modulated vector.
-		/// </param>
+		/// <param name="result">When the method completes, contains the modulated vector.</param>
 		public static void Modulate(ref Vector2 left, ref Vector2 right, out Vector2 result)
 		{
 			result = new Vector2(left.X * right.X, left.Y * right.Y);
@@ -579,8 +557,8 @@ namespace CryCil
 		/// <param name="left"> The first value to compare.</param>
 		/// <param name="right">The second value to compare.</param>
 		/// <returns>
-		/// <c>true</c> if <paramref name="left"/> has the same value as
-		/// <paramref name="right"/> ; otherwise, <c>false</c> .
+		/// <c>true</c> if <paramref name="left"/> has the same value as <paramref name="right"/> ;
+		/// otherwise, <c>false</c> .
 		/// </returns>
 		public static bool operator ==(Vector2 left, Vector2 right)
 		{
@@ -592,8 +570,8 @@ namespace CryCil
 		/// <param name="left"> The first value to compare.</param>
 		/// <param name="right">The second value to compare.</param>
 		/// <returns>
-		/// <c>true</c> if <paramref name="left"/> has a different value than
-		/// <paramref name="right"/> ; otherwise, <c>false</c> .
+		/// <c>true</c> if <paramref name="left"/> has a different value than <paramref name="right"/> ;
+		/// otherwise, <c>false</c> .
 		/// </returns>
 		public static bool operator !=(Vector2 left, Vector2 right)
 		{
@@ -602,8 +580,7 @@ namespace CryCil
 		#endregion
 		#region Conversion Operators
 		/// <summary>
-		/// Performs an explicit conversion from <see cref="Vector2"/> to
-		/// <see cref="Vector3"/> .
+		/// Performs an explicit conversion from <see cref="Vector2"/> to <see cref="Vector3"/> .
 		/// </summary>
 		/// <param name="value">The value.</param>
 		/// <returns>The result of the conversion.</returns>
@@ -612,8 +589,7 @@ namespace CryCil
 			return new Vector3(value);
 		}
 		/// <summary>
-		/// Performs an explicit conversion from <see cref="Vector2"/> to
-		/// <see cref="Vector4"/> .
+		/// Performs an explicit conversion from <see cref="Vector2"/> to <see cref="Vector4"/> .
 		/// </summary>
 		/// <param name="value">The value.</param>
 		/// <returns>The result of the conversion.</returns>
@@ -627,9 +603,7 @@ namespace CryCil
 		/// <summary>
 		/// Returns a <see cref="System.String"/> that represents this instance.
 		/// </summary>
-		/// <returns>
-		/// A <see cref="System.String"/> that represents this instance.
-		/// </returns>
+		/// <returns>A <see cref="System.String"/> that represents this instance.</returns>
 		public override string ToString()
 		{
 			return string.Format(CultureInfo.CurrentCulture, "X:{0} Y:{1}", this.X, this.Y);
@@ -638,9 +612,7 @@ namespace CryCil
 		/// Returns a <see cref="System.String"/> that represents this instance.
 		/// </summary>
 		/// <param name="format">The format.</param>
-		/// <returns>
-		/// A <see cref="System.String"/> that represents this instance.
-		/// </returns>
+		/// <returns>A <see cref="System.String"/> that represents this instance.</returns>
 		public string ToString(string format)
 		{
 			if (format == null)
@@ -652,9 +624,7 @@ namespace CryCil
 		/// Returns a <see cref="System.String"/> that represents this instance.
 		/// </summary>
 		/// <param name="formatProvider">The format provider.</param>
-		/// <returns>
-		/// A <see cref="System.String"/> that represents this instance.
-		/// </returns>
+		/// <returns>A <see cref="System.String"/> that represents this instance.</returns>
 		public string ToString(IFormatProvider formatProvider)
 		{
 			return string.Format(formatProvider, "X:{0} Y:{1}", this.X, this.Y);
@@ -664,9 +634,7 @@ namespace CryCil
 		/// </summary>
 		/// <param name="format">        The format.</param>
 		/// <param name="formatProvider">The format provider.</param>
-		/// <returns>
-		/// A <see cref="System.String"/> that represents this instance.
-		/// </returns>
+		/// <returns>A <see cref="System.String"/> that represents this instance.</returns>
 		public string ToString(string format, IFormatProvider formatProvider)
 		{
 			if (format == null)
@@ -680,8 +648,8 @@ namespace CryCil
 		/// Returns a hash code for this instance.
 		/// </summary>
 		/// <returns>
-		/// A hash code for this instance, suitable for use in hashing algorithms and data
-		/// structures like a hash table.
+		/// A hash code for this instance, suitable for use in hashing algorithms and data structures like
+		/// a hash table.
 		/// </returns>
 		public override int GetHashCode()
 		{
@@ -697,15 +665,12 @@ namespace CryCil
 			}
 		}
 		/// <summary>
-		/// Determines whether the specified <see cref="Vector2"/> is equal to this
-		/// instance.
+		/// Determines whether the specified <see cref="Vector2"/> is equal to this instance.
 		/// </summary>
-		/// <param name="other">
-		/// The <see cref="Vector2"/> to compare with this instance.
-		/// </param>
+		/// <param name="other">The <see cref="Vector2"/> to compare with this instance.</param>
 		/// <returns>
-		/// <c>true</c> if the specified <see cref="Vector2"/> is equal to this instance;
-		/// otherwise, <c>false</c> .
+		/// <c>true</c> if the specified <see cref="Vector2"/> is equal to this instance; otherwise,
+		/// <c>false</c> .
 		/// </returns>
 		public bool Equals(Vector2 other)
 		{
@@ -714,16 +679,14 @@ namespace CryCil
 			// ReSharper restore CompareOfFloatsByEqualityOperator
 		}
 		/// <summary>
-		/// Determines whether the specified <see cref="Vector2"/> is equal to this
-		/// instance using an epsilon value.
+		/// Determines whether the specified <see cref="Vector2"/> is equal to this instance using an
+		/// epsilon value.
 		/// </summary>
-		/// <param name="other">  
-		/// The <see cref="Vector2"/> to compare with this instance.
-		/// </param>
+		/// <param name="other">  The <see cref="Vector2"/> to compare with this instance.</param>
 		/// <param name="epsilon">The amount of error allowed.</param>
 		/// <returns>
-		/// <c>true</c> if the specified <see cref="Vector2"/> is equal to this instance;
-		/// otherwise, <c>false</c> .
+		/// <c>true</c> if the specified <see cref="Vector2"/> is equal to this instance; otherwise,
+		/// <c>false</c> .
 		/// </returns>
 		public bool Equals(Vector2 other, float epsilon)
 		{
@@ -731,15 +694,12 @@ namespace CryCil
 				Math.Abs(other.Y - this.Y) < epsilon);
 		}
 		/// <summary>
-		/// Determines whether the specified <see cref="System.Object"/> is equal to this
-		/// instance.
+		/// Determines whether the specified <see cref="System.Object"/> is equal to this instance.
 		/// </summary>
-		/// <param name="value">
-		/// The <see cref="System.Object"/> to compare with this instance.
-		/// </param>
+		/// <param name="value">The <see cref="System.Object"/> to compare with this instance.</param>
 		/// <returns>
-		/// <c>true</c> if the specified <see cref="System.Object"/> is equal to this
-		/// instance; otherwise, <c>false</c> .
+		/// <c>true</c> if the specified <see cref="System.Object"/> is equal to this instance; otherwise,
+		/// <c>false</c> .
 		/// </returns>
 		public override bool Equals(object value)
 		{

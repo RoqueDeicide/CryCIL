@@ -12,12 +12,10 @@ namespace CryCil.RunTime.Compilation
 		/// </summary>
 		public string Path { get; private set; }
 		/// <summary>
-		/// Creates a path to the assembly from information stored in given
-		/// <see cref="XmlElement"/>.
+		/// Creates a path to the assembly from information stored in given <see cref="XmlElement"/>.
 		/// </summary>
 		/// <param name="referenceElement">
-		/// <see cref="XmlElement"/> that contains all information needed foe creating a
-		/// path.
+		/// <see cref="XmlElement"/> that contains all information needed foe creating a path.
 		/// </param>
 		/// <param name="project">         
 		/// Reference to the project for which the assembly reference is defined.

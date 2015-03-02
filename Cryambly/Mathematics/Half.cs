@@ -9,20 +9,16 @@ namespace System
 	/// </summary>
 	/// <remarks>
 	/// <para>
-	/// Half is not fast enough and precision is also very bad, so is should not be used
-	/// for mathematical computation (use Single instead). The main advantage of Half type
-	/// is lower memory cost: two bytes per number. Half is typically used in graphical
-	/// applications.
+	/// Half is not fast enough and precision is also very bad, so is should not be used for mathematical
+	/// computation (use Single instead). The main advantage of Half type is lower memory cost: two bytes
+	/// per number. Half is typically used in graphical applications.
 	/// </para>
 	/// <para>
-	/// Note: All functions, where is used conversion half-&gt;float/float-&gt;half, are
-	/// approx. ten times slower than float-&gt;double/double-&gt;float, i.e. ~3ns on 2GHz
-	/// CPU.
+	/// Note: All functions, where is used conversion half-&gt;float/float-&gt;half, are approx. ten times
+	/// slower than float-&gt;double/double-&gt;float, i.e. ~3ns on 2GHz CPU.
 	/// </para>
-	/// <list type="bullet">References: <item>Fast Half Float Conversions, Jeroen van der
-	/// Zijp, link:
-	/// http: //www.fox-toolkit.org/ftp/fasthalffloatconversion.pdf</item><item>IEEE 754
-	///       revision,
+	/// <list type="bullet">References: <item>Fast Half Float Conversions, Jeroen van der Zijp, link:
+	/// http: //www.fox-toolkit.org/ftp/fasthalffloatconversion.pdf</item><item>IEEE 754 revision,
 	/// link: http://grouper.ieee.org/groups/754/</item></list>
 	/// </remarks>
 	[Serializable]
@@ -36,8 +32,7 @@ namespace System
 
 		#region Constants
 		/// <summary>
-		/// Represents the smallest positive System.Half value greater than zero. This
-		/// field is constant.
+		/// Represents the smallest positive System.Half value greater than zero. This field is constant.
 		/// </summary>
 		public static readonly Half Epsilon = Half.ToHalf(0x0001);
 		/// <summary>
@@ -64,44 +59,41 @@ namespace System
 
 		#region Constructors
 		/// <summary>
-		/// Initializes a new instance of System.Half to the value of the specified
-		/// single-precision floating-point number.
+		/// Initializes a new instance of System.Half to the value of the specified single-precision
+		/// floating-point number.
 		/// </summary>
 		/// <param name="value">The value to represent as a System.Half.</param>
 		public Half(float value) { this = HalfHelper.SingleToHalf(value); }
 		/// <summary>
-		/// Initializes a new instance of System.Half to the value of the specified 32-bit
-		/// signed integer.
+		/// Initializes a new instance of System.Half to the value of the specified 32-bit signed integer.
 		/// </summary>
 		/// <param name="value">The value to represent as a System.Half.</param>
 		public Half(int value) : this((float)value) { }
 		/// <summary>
-		/// Initializes a new instance of System.Half to the value of the specified 64-bit
-		/// signed integer.
+		/// Initializes a new instance of System.Half to the value of the specified 64-bit signed integer.
 		/// </summary>
 		/// <param name="value">The value to represent as a System.Half.</param>
 		public Half(long value) : this((float)value) { }
 		/// <summary>
-		/// Initializes a new instance of System.Half to the value of the specified
-		/// double-precision floating-point number.
+		/// Initializes a new instance of System.Half to the value of the specified double-precision
+		/// floating-point number.
 		/// </summary>
 		/// <param name="value">The value to represent as a System.Half.</param>
 		public Half(double value) : this((float)value) { }
 		/// <summary>
-		/// Initializes a new instance of System.Half to the value of the specified
-		/// decimal number.
+		/// Initializes a new instance of System.Half to the value of the specified decimal number.
 		/// </summary>
 		/// <param name="value">The value to represent as a System.Half.</param>
 		public Half(decimal value) : this((float)value) { }
 		/// <summary>
-		/// Initializes a new instance of System.Half to the value of the specified 32-bit
-		/// unsigned integer.
+		/// Initializes a new instance of System.Half to the value of the specified 32-bit unsigned
+		/// integer.
 		/// </summary>
 		/// <param name="value">The value to represent as a System.Half.</param>
 		public Half(uint value) : this((float)value) { }
 		/// <summary>
-		/// Initializes a new instance of System.Half to the value of the specified 64-bit
-		/// unsigned integer.
+		/// Initializes a new instance of System.Half to the value of the specified 64-bit unsigned
+		/// integer.
 		/// </summary>
 		/// <param name="value">The value to represent as a System.Half.</param>
 		public Half(ulong value) : this((float)value) { }
@@ -110,13 +102,11 @@ namespace System
 		#region Numeric operators
 
 		/// <summary>
-		/// Returns the result of multiplying the specified System.Half value by negative
-		/// one.
+		/// Returns the result of multiplying the specified System.Half value by negative one.
 		/// </summary>
 		/// <param name="half">A System.Half.</param>
 		/// <returns>
-		/// A System.Half with the value of half, but the opposite sign. -or- Zero, if
-		/// half is zero.
+		/// A System.Half with the value of half, but the opposite sign. -or- Zero, if half is zero.
 		/// </returns>
 		public static Half Negate(Half half) { return -half; }
 		/// <summary>
@@ -138,18 +128,14 @@ namespace System
 		/// </summary>
 		/// <param name="half1">A System.Half (the multiplicand).</param>
 		/// <param name="half2">A System.Half (the multiplier).</param>
-		/// <returns>
-		/// A System.Half that is the result of multiplying half1 and half2.
-		/// </returns>
+		/// <returns>A System.Half that is the result of multiplying half1 and half2.</returns>
 		public static Half Multiply(Half half1, Half half2) { return half1 * half2; }
 		/// <summary>
 		/// Divides two specified System.Half values.
 		/// </summary>
 		/// <param name="half1">A System.Half (the dividend).</param>
 		/// <param name="half2">A System.Half (the divisor).</param>
-		/// <returns>
-		/// The System.Half that is the result of dividing half1 by half2.
-		/// </returns>
+		/// <returns>The System.Half that is the result of dividing half1 by half2.</returns>
 		/// <exception cref="System.DivideByZeroException">half2 is zero.</exception>
 		public static Half Divide(Half half1, Half half2) { return half1 / half2; }
 
@@ -221,40 +207,36 @@ namespace System
 		/// <returns>true if half1 and half2 are not equal; otherwise, false.</returns>
 		public static bool operator !=(Half half1, Half half2) { return half1.value != half2.value; }
 		/// <summary>
-		/// Returns a value indicating whether a specified System.Half is less than
-		/// another specified System.Half.
+		/// Returns a value indicating whether a specified System.Half is less than another specified
+		/// System.Half.
 		/// </summary>
 		/// <param name="half1">A System.Half.</param>
 		/// <param name="half2">A System.Half.</param>
 		/// <returns>true if half1 is less than half1; otherwise, false.</returns>
 		public static bool operator <(Half half1, Half half2) { return (float)half1 < (float)half2; }
 		/// <summary>
-		/// Returns a value indicating whether a specified System.Half is greater than
-		/// another specified System.Half.
+		/// Returns a value indicating whether a specified System.Half is greater than another specified
+		/// System.Half.
 		/// </summary>
 		/// <param name="half1">A System.Half.</param>
 		/// <param name="half2">A System.Half.</param>
 		/// <returns>true if half1 is greater than half2; otherwise, false.</returns>
 		public static bool operator >(Half half1, Half half2) { return (float)half1 > (float)half2; }
 		/// <summary>
-		/// Returns a value indicating whether a specified System.Half is less than or
-		/// equal to another specified System.Half.
+		/// Returns a value indicating whether a specified System.Half is less than or equal to another
+		/// specified System.Half.
 		/// </summary>
 		/// <param name="half1">A System.Half.</param>
 		/// <param name="half2">A System.Half.</param>
-		/// <returns>
-		/// true if half1 is less than or equal to half2; otherwise, false.
-		/// </returns>
+		/// <returns>true if half1 is less than or equal to half2; otherwise, false.</returns>
 		public static bool operator <=(Half half1, Half half2) { return (half1 == half2) || (half1 < half2); }
 		/// <summary>
-		/// Returns a value indicating whether a specified System.Half is greater than or
-		/// equal to another specified System.Half.
+		/// Returns a value indicating whether a specified System.Half is greater than or equal to another
+		/// specified System.Half.
 		/// </summary>
 		/// <param name="half1">A System.Half.</param>
 		/// <param name="half2">A System.Half.</param>
-		/// <returns>
-		/// true if half1 is greater than or equal to half2; otherwise, false.
-		/// </returns>
+		/// <returns>true if half1 is greater than or equal to half2; otherwise, false.</returns>
 		public static bool operator >=(Half half1, Half half2) { return (half1 == half2) || (half1 > half2); }
 		#endregion
 
@@ -263,49 +245,38 @@ namespace System
 		/// Converts an 8-bit unsigned integer to a System.Half.
 		/// </summary>
 		/// <param name="value">An 8-bit unsigned integer.</param>
-		/// <returns>
-		/// A System.Half that represents the converted 8-bit unsigned integer.
-		/// </returns>
+		/// <returns>A System.Half that represents the converted 8-bit unsigned integer.</returns>
 		public static explicit operator Half(byte value) { return new Half((float)value); }
 		/// <summary>
 		/// Converts a 16-bit signed integer to a System.Half.
 		/// </summary>
 		/// <param name="value">A 16-bit signed integer.</param>
-		/// <returns>
-		/// A System.Half that represents the converted 16-bit signed integer.
-		/// </returns>
+		/// <returns>A System.Half that represents the converted 16-bit signed integer.</returns>
 		public static explicit operator Half(short value) { return new Half((float)value); }
 		/// <summary>
 		/// Converts a Unicode character to a System.Half.
 		/// </summary>
 		/// <param name="value">A Unicode character.</param>
-		/// <returns>
-		/// A System.Half that represents the converted Unicode character.
-		/// </returns>
+		/// <returns>A System.Half that represents the converted Unicode character.</returns>
 		public static explicit operator Half(char value) { return new Half((float)value); }
 		/// <summary>
 		/// Converts a 32-bit signed integer to a System.Half.
 		/// </summary>
 		/// <param name="value">A 32-bit signed integer.</param>
-		/// <returns>
-		/// A System.Half that represents the converted 32-bit signed integer.
-		/// </returns>
+		/// <returns>A System.Half that represents the converted 32-bit signed integer.</returns>
 		public static explicit operator Half(int value) { return new Half((float)value); }
 		/// <summary>
 		/// Converts a 64-bit signed integer to a System.Half.
 		/// </summary>
 		/// <param name="value">A 64-bit signed integer.</param>
-		/// <returns>
-		/// A System.Half that represents the converted 64-bit signed integer.
-		/// </returns>
+		/// <returns>A System.Half that represents the converted 64-bit signed integer.</returns>
 		public static explicit operator Half(long value) { return new Half((float)value); }
 		/// <summary>
 		/// Converts a single-precision floating-point number to a System.Half.
 		/// </summary>
 		/// <param name="value">A single-precision floating-point number.</param>
 		/// <returns>
-		/// A System.Half that represents the converted single-precision floating point
-		/// number.
+		/// A System.Half that represents the converted single-precision floating point number.
 		/// </returns>
 		public static explicit operator Half(float value) { return new Half(value); }
 		/// <summary>
@@ -313,8 +284,7 @@ namespace System
 		/// </summary>
 		/// <param name="value">A double-precision floating-point number.</param>
 		/// <returns>
-		/// A System.Half that represents the converted double-precision floating point
-		/// number.
+		/// A System.Half that represents the converted double-precision floating point number.
 		/// </returns>
 		public static explicit operator Half(double value) { return new Half((float)value); }
 		/// <summary>
@@ -327,49 +297,38 @@ namespace System
 		/// Converts a System.Half to an 8-bit unsigned integer.
 		/// </summary>
 		/// <param name="value">A System.Half to convert.</param>
-		/// <returns>
-		/// An 8-bit unsigned integer that represents the converted System.Half.
-		/// </returns>
+		/// <returns>An 8-bit unsigned integer that represents the converted System.Half.</returns>
 		public static explicit operator byte(Half value) { return (byte)(float)value; }
 		/// <summary>
 		/// Converts a System.Half to a Unicode character.
 		/// </summary>
 		/// <param name="value">A System.Half to convert.</param>
-		/// <returns>
-		/// A Unicode character that represents the converted System.Half.
-		/// </returns>
+		/// <returns>A Unicode character that represents the converted System.Half.</returns>
 		public static explicit operator char(Half value) { return (char)(float)value; }
 		/// <summary>
 		/// Converts a System.Half to a 16-bit signed integer.
 		/// </summary>
 		/// <param name="value">A System.Half to convert.</param>
-		/// <returns>
-		/// A 16-bit signed integer that represents the converted System.Half.
-		/// </returns>
+		/// <returns>A 16-bit signed integer that represents the converted System.Half.</returns>
 		public static explicit operator short(Half value) { return (short)(float)value; }
 		/// <summary>
 		/// Converts a System.Half to a 32-bit signed integer.
 		/// </summary>
 		/// <param name="value">A System.Half to convert.</param>
-		/// <returns>
-		/// A 32-bit signed integer that represents the converted System.Half.
-		/// </returns>
+		/// <returns>A 32-bit signed integer that represents the converted System.Half.</returns>
 		public static explicit operator int(Half value) { return (int)(float)value; }
 		/// <summary>
 		/// Converts a System.Half to a 64-bit signed integer.
 		/// </summary>
 		/// <param name="value">A System.Half to convert.</param>
-		/// <returns>
-		/// A 64-bit signed integer that represents the converted System.Half.
-		/// </returns>
+		/// <returns>A 64-bit signed integer that represents the converted System.Half.</returns>
 		public static explicit operator long(Half value) { return (long)(float)value; }
 		/// <summary>
 		/// Converts a System.Half to a single-precision floating-point number.
 		/// </summary>
 		/// <param name="value">A System.Half to convert.</param>
 		/// <returns>
-		/// A single-precision floating-point number that represents the converted
-		/// System.Half.
+		/// A single-precision floating-point number that represents the converted System.Half.
 		/// </returns>
 		public static explicit operator float(Half value) { return HalfHelper.HalfToSingle(value); }
 		/// <summary>
@@ -377,8 +336,7 @@ namespace System
 		/// </summary>
 		/// <param name="value">A System.Half to convert.</param>
 		/// <returns>
-		/// A double-precision floating-point number that represents the converted
-		/// System.Half.
+		/// A double-precision floating-point number that represents the converted System.Half.
 		/// </returns>
 		public static explicit operator double(Half value) { return (float)value; }
 		/// <summary>
@@ -391,65 +349,49 @@ namespace System
 		/// Converts an 8-bit signed integer to a System.Half.
 		/// </summary>
 		/// <param name="value">An 8-bit signed integer.</param>
-		/// <returns>
-		/// A System.Half that represents the converted 8-bit signed integer.
-		/// </returns>
+		/// <returns>A System.Half that represents the converted 8-bit signed integer.</returns>
 		public static explicit operator Half(sbyte value) { return new Half((float)value); }
 		/// <summary>
 		/// Converts a 16-bit unsigned integer to a System.Half.
 		/// </summary>
 		/// <param name="value">A 16-bit unsigned integer.</param>
-		/// <returns>
-		/// A System.Half that represents the converted 16-bit unsigned integer.
-		/// </returns>
+		/// <returns>A System.Half that represents the converted 16-bit unsigned integer.</returns>
 		public static explicit operator Half(ushort value) { return new Half((float)value); }
 		/// <summary>
 		/// Converts a 32-bit unsigned integer to a System.Half.
 		/// </summary>
 		/// <param name="value">A 32-bit unsigned integer.</param>
-		/// <returns>
-		/// A System.Half that represents the converted 32-bit unsigned integer.
-		/// </returns>
+		/// <returns>A System.Half that represents the converted 32-bit unsigned integer.</returns>
 		public static explicit operator Half(uint value) { return new Half((float)value); }
 		/// <summary>
 		/// Converts a 64-bit unsigned integer to a System.Half.
 		/// </summary>
 		/// <param name="value">A 64-bit unsigned integer.</param>
-		/// <returns>
-		/// A System.Half that represents the converted 64-bit unsigned integer.
-		/// </returns>
+		/// <returns>A System.Half that represents the converted 64-bit unsigned integer.</returns>
 		public static explicit operator Half(ulong value) { return new Half((float)value); }
 		/// <summary>
 		/// Converts a System.Half to an 8-bit signed integer.
 		/// </summary>
 		/// <param name="value">A System.Half to convert.</param>
-		/// <returns>
-		/// An 8-bit signed integer that represents the converted System.Half.
-		/// </returns>
+		/// <returns>An 8-bit signed integer that represents the converted System.Half.</returns>
 		public static explicit operator sbyte(Half value) { return (sbyte)(float)value; }
 		/// <summary>
 		/// Converts a System.Half to a 16-bit unsigned integer.
 		/// </summary>
 		/// <param name="value">A System.Half to convert.</param>
-		/// <returns>
-		/// A 16-bit unsigned integer that represents the converted System.Half.
-		/// </returns>
+		/// <returns>A 16-bit unsigned integer that represents the converted System.Half.</returns>
 		public static explicit operator ushort(Half value) { return (ushort)(float)value; }
 		/// <summary>
 		/// Converts a System.Half to a 32-bit unsigned integer.
 		/// </summary>
 		/// <param name="value">A System.Half to convert.</param>
-		/// <returns>
-		/// A 32-bit unsigned integer that represents the converted System.Half.
-		/// </returns>
+		/// <returns>A 32-bit unsigned integer that represents the converted System.Half.</returns>
 		public static explicit operator uint(Half value) { return (uint)(float)value; }
 		/// <summary>
 		/// Converts a System.Half to a 64-bit unsigned integer.
 		/// </summary>
 		/// <param name="value">A System.Half to convert.</param>
-		/// <returns>
-		/// A 64-bit unsigned integer that represents the converted System.Half.
-		/// </returns>
+		/// <returns>A 64-bit unsigned integer that represents the converted System.Half.</returns>
 		public static explicit operator ulong(Half value) { return (ulong)(float)value; }
 		#endregion
 
@@ -458,10 +400,9 @@ namespace System
 		/// </summary>
 		/// <param name="other">A System.Half object.</param>
 		/// <returns>
-		/// A signed number indicating the relative values of this instance and value.
-		/// Return Value Meaning Less than zero This instance is less than value. Zero
-		/// This instance is equal to value. Greater than zero This instance is greater
-		/// than value.
+		/// A signed number indicating the relative values of this instance and value. Return Value Meaning
+		/// Less than zero This instance is less than value. Zero This instance is equal to value. Greater
+		/// than zero This instance is greater than value.
 		/// </returns>
 		public int CompareTo(Half other)
 		{
@@ -493,14 +434,11 @@ namespace System
 		/// </summary>
 		/// <param name="obj">An System.Object or null.</param>
 		/// <returns>
-		/// A signed number indicating the relative values of this instance and value.
-		/// Return Value Meaning Less than zero This instance is less than value. Zero
-		/// This instance is equal to value. Greater than zero This instance is greater
-		/// than value. -or- value is null.
+		/// A signed number indicating the relative values of this instance and value. Return Value Meaning
+		/// Less than zero This instance is less than value. Zero This instance is equal to value. Greater
+		/// than zero This instance is greater than value. -or- value is null.
 		/// </returns>
-		/// <exception cref="System.ArgumentException">
-		/// value is not a System.Half
-		/// </exception>
+		/// <exception cref="System.ArgumentException">value is not a System.Half</exception>
 		public int CompareTo(object obj)
 		{
 			if (obj is Half)
@@ -510,8 +448,8 @@ namespace System
 			throw new ArgumentException("Object must be of type Half.");
 		}
 		/// <summary>
-		/// Returns a value indicating whether this instance and a specified System.Half
-		/// object represent the same value.
+		/// Returns a value indicating whether this instance and a specified System.Half object represent
+		/// the same value.
 		/// </summary>
 		/// <param name="other">A System.Half object to compare to this instance.</param>
 		/// <returns>true if value is equal to this instance; otherwise, false.</returns>
@@ -520,13 +458,11 @@ namespace System
 			return ((other == this) || (IsNaN(other) && IsNaN(this)));
 		}
 		/// <summary>
-		/// Returns a value indicating whether this instance and a specified System.Object
-		/// represent the same type and value.
+		/// Returns a value indicating whether this instance and a specified System.Object represent the
+		/// same type and value.
 		/// </summary>
 		/// <param name="obj">An System.Object.</param>
-		/// <returns>
-		/// true if value is a System.Half and equal to this instance; otherwise, false.
-		/// </returns>
+		/// <returns>true if value is a System.Half and equal to this instance; otherwise, false.</returns>
 		public override bool Equals(object obj)
 		{
 			return obj is Half && this.Equals((Half)obj);
@@ -550,8 +486,7 @@ namespace System
 
 		#region BitConverter & Math methods for Half
 		/// <summary>
-		/// Returns the specified half-precision floating point value as an array of
-		/// bytes.
+		/// Returns the specified half-precision floating point value as an array of bytes.
 		/// </summary>
 		/// <param name="value">The number to convert.</param>
 		/// <returns>An array of bytes with length 2.</returns>
@@ -560,30 +495,27 @@ namespace System
 			return BitConverter.GetBytes(value.value);
 		}
 		/// <summary>
-		/// Converts the value of a specified instance of System.Half to its equivalent
-		/// binary representation.
+		/// Converts the value of a specified instance of System.Half to its equivalent binary
+		/// representation.
 		/// </summary>
 		/// <param name="value">A System.Half value.</param>
-		/// <returns>
-		/// A 16-bit unsigned integer that contain the binary representation of value.
-		/// </returns>
+		/// <returns>A 16-bit unsigned integer that contain the binary representation of value.</returns>
 		public static ushort GetBits(Half value)
 		{
 			return value.value;
 		}
 		/// <summary>
-		/// Returns a half-precision floating point number converted from two bytes at a
-		/// specified position in a byte array.
+		/// Returns a half-precision floating point number converted from two bytes at a specified position
+		/// in a byte array.
 		/// </summary>
 		/// <param name="value">     An array of bytes.</param>
 		/// <param name="startIndex">The starting position within value.</param>
 		/// <returns>
-		/// A half-precision floating point number formed by two bytes beginning at
-		/// startIndex.
+		/// A half-precision floating point number formed by two bytes beginning at startIndex.
 		/// </returns>
 		/// <exception cref="System.ArgumentException">
-		/// startIndex is greater than or equal to the length of value minus 1, and is
-		/// less than or equal to the length of value minus 1.
+		/// startIndex is greater than or equal to the length of value minus 1, and is less than or equal
+		/// to the length of value minus 1.
 		/// </exception>
 		/// <exception cref="System.ArgumentNullException">value is null.</exception>
 		/// <exception cref="System.ArgumentOutOfRangeException">
@@ -594,13 +526,10 @@ namespace System
 			return Half.ToHalf((ushort)BitConverter.ToInt16(value, startIndex));
 		}
 		/// <summary>
-		/// Returns a half-precision floating point number converted from its binary
-		/// representation.
+		/// Returns a half-precision floating point number converted from its binary representation.
 		/// </summary>
 		/// <param name="bits">Binary representation of System.Half value</param>
-		/// <returns>
-		/// A half-precision floating point number formed by its binary representation.
-		/// </returns>
+		/// <returns>A half-precision floating point number formed by its binary representation.</returns>
 		public static Half ToHalf(ushort bits)
 		{
 			return new Half { value = bits };
@@ -612,12 +541,9 @@ namespace System
 		/// <param name="value">A signed number.</param>
 		/// <returns>
 		/// A number indicating the sign of value. Number Description
-		/// - 1 value is less than zero. 0 value is equal to zero. 1 value is greater than
-		/// zero.
+		/// - 1 value is less than zero. 0 value is equal to zero. 1 value is greater than zero.
 		/// </returns>
-		/// <exception cref="System.ArithmeticException">
-		/// value is equal to System.Half.NaN.
-		/// </exception>
+		/// <exception cref="System.ArithmeticException">value is equal to System.Half.NaN.</exception>
 		public static int Sign(Half value)
 		{
 			if (value < (Half)0)
@@ -642,8 +568,7 @@ namespace System
 		/// A number in the range System.Half.MinValue ≤ value ≤ System.Half.MaxValue.
 		/// </param>
 		/// <returns>
-		/// A half-precision floating-point number, x, such that 0 ≤ x
-		/// ≤System.Half.MaxValue.
+		/// A half-precision floating-point number, x, such that 0 ≤ x ≤System.Half.MaxValue.
 		/// </returns>
 		public static Half Abs(Half value)
 		{
@@ -652,15 +577,13 @@ namespace System
 		/// <summary>
 		/// Returns the larger of two half-precision floating-point numbers.
 		/// </summary>
-		/// <param name="value1">
-		/// The first of two half-precision floating-point numbers to compare.
-		/// </param>
+		/// <param name="value1">The first of two half-precision floating-point numbers to compare.</param>
 		/// <param name="value2">
 		/// The second of two half-precision floating-point numbers to compare.
 		/// </param>
 		/// <returns>
-		/// Parameter value1 or value2, whichever is larger. If value1, or value2, or both
-		/// val1 and value2 are equal to System.Half.NaN, System.Half.NaN is returned.
+		/// Parameter value1 or value2, whichever is larger. If value1, or value2, or both val1 and value2
+		/// are equal to System.Half.NaN, System.Half.NaN is returned.
 		/// </returns>
 		public static Half Max(Half value1, Half value2)
 		{
@@ -669,16 +592,13 @@ namespace System
 		/// <summary>
 		/// Returns the smaller of two half-precision floating-point numbers.
 		/// </summary>
-		/// <param name="value1">
-		/// The first of two half-precision floating-point numbers to compare.
-		/// </param>
+		/// <param name="value1">The first of two half-precision floating-point numbers to compare.</param>
 		/// <param name="value2">
 		/// The second of two half-precision floating-point numbers to compare.
 		/// </param>
 		/// <returns>
-		/// Parameter value1 or value2, whichever is smaller. If value1, or value2, or
-		/// both val1 and value2 are equal to System.Half.NaN, System.Half.NaN is
-		/// returned.
+		/// Parameter value1 or value2, whichever is smaller. If value1, or value2, or both val1 and value2
+		/// are equal to System.Half.NaN, System.Half.NaN is returned.
 		/// </returns>
 		public static Half Min(Half value1, Half value2)
 		{
@@ -687,50 +607,42 @@ namespace System
 		#endregion
 
 		/// <summary>
-		/// Returns a value indicating whether the specified number evaluates to not a
-		/// number (System.Half.NaN).
+		/// Returns a value indicating whether the specified number evaluates to not a number
+		/// (System.Half.NaN).
 		/// </summary>
 		/// <param name="half">A half-precision floating-point number.</param>
-		/// <returns>
-		/// true if value evaluates to not a number (System.Half.NaN); otherwise, false.
-		/// </returns>
+		/// <returns>true if value evaluates to not a number (System.Half.NaN); otherwise, false.</returns>
 		public static bool IsNaN(Half half)
 		{
 			return HalfHelper.IsNaN(half);
 		}
 		/// <summary>
-		/// Returns a value indicating whether the specified number evaluates to negative
-		/// or positive infinity.
+		/// Returns a value indicating whether the specified number evaluates to negative or positive
+		/// infinity.
 		/// </summary>
 		/// <param name="half">A half-precision floating-point number.</param>
 		/// <returns>
-		/// true if half evaluates to System.Half.PositiveInfinity or
-		/// System.Half.NegativeInfinity; otherwise, false.
+		/// true if half evaluates to System.Half.PositiveInfinity or System.Half.NegativeInfinity;
+		/// otherwise, false.
 		/// </returns>
 		public static bool IsInfinity(Half half)
 		{
 			return HalfHelper.IsInfinity(half);
 		}
 		/// <summary>
-		/// Returns a value indicating whether the specified number evaluates to negative
-		/// infinity.
+		/// Returns a value indicating whether the specified number evaluates to negative infinity.
 		/// </summary>
 		/// <param name="half">A half-precision floating-point number.</param>
-		/// <returns>
-		/// true if half evaluates to System.Half.NegativeInfinity; otherwise, false.
-		/// </returns>
+		/// <returns>true if half evaluates to System.Half.NegativeInfinity; otherwise, false.</returns>
 		public static bool IsNegativeInfinity(Half half)
 		{
 			return HalfHelper.IsNegativeInfinity(half);
 		}
 		/// <summary>
-		/// Returns a value indicating whether the specified number evaluates to positive
-		/// infinity.
+		/// Returns a value indicating whether the specified number evaluates to positive infinity.
 		/// </summary>
 		/// <param name="half">A half-precision floating-point number.</param>
-		/// <returns>
-		/// true if half evaluates to System.Half.PositiveInfinity; otherwise, false.
-		/// </returns>
+		/// <returns>true if half evaluates to System.Half.PositiveInfinity; otherwise, false.</returns>
 		public static bool IsPositiveInfinity(Half half)
 		{
 			return HalfHelper.IsPositiveInfinity(half);
@@ -740,132 +652,104 @@ namespace System
 		/// <summary>
 		/// Converts the string representation of a number to its System.Half equivalent.
 		/// </summary>
-		/// <param name="value">
-		/// The string representation of the number to convert.
-		/// </param>
-		/// <returns>
-		/// The System.Half number equivalent to the number contained in value.
-		/// </returns>
+		/// <param name="value">The string representation of the number to convert.</param>
+		/// <returns>The System.Half number equivalent to the number contained in value.</returns>
 		/// <exception cref="System.ArgumentNullException">value is null.</exception>
-		/// <exception cref="System.FormatException">
-		/// value is not in the correct format.
-		/// </exception>
+		/// <exception cref="System.FormatException">value is not in the correct format.</exception>
 		/// <exception cref="System.OverflowException">
-		/// value represents a number less than System.Half.MinValue or greater than
-		/// System.Half.MaxValue.
+		/// value represents a number less than System.Half.MinValue or greater than System.Half.MaxValue.
 		/// </exception>
 		public static Half Parse(string value)
 		{
 			return (Half)float.Parse(value, CultureInfo.InvariantCulture);
 		}
 		/// <summary>
-		/// Converts the string representation of a number to its System.Half equivalent
-		/// using the specified culture-specific format information.
+		/// Converts the string representation of a number to its System.Half equivalent using the
+		/// specified culture-specific format information.
 		/// </summary>
-		/// <param name="value">   
-		/// The string representation of the number to convert.
-		/// </param>
+		/// <param name="value">   The string representation of the number to convert.</param>
 		/// <param name="provider">
-		/// An System.IFormatProvider that supplies culture-specific parsing information
-		/// about value.
+		/// An System.IFormatProvider that supplies culture-specific parsing information about value.
 		/// </param>
 		/// <returns>
-		/// The System.Half number equivalent to the number contained in s as specified by
-		/// provider.
+		/// The System.Half number equivalent to the number contained in s as specified by provider.
 		/// </returns>
 		/// <exception cref="System.ArgumentNullException">value is null.</exception>
-		/// <exception cref="System.FormatException">
-		/// value is not in the correct format.
-		/// </exception>
+		/// <exception cref="System.FormatException">value is not in the correct format.</exception>
 		/// <exception cref="System.OverflowException">
-		/// value represents a number less than System.Half.MinValue or greater than
-		/// System.Half.MaxValue.
+		/// value represents a number less than System.Half.MinValue or greater than System.Half.MaxValue.
 		/// </exception>
 		public static Half Parse(string value, IFormatProvider provider)
 		{
 			return (Half)float.Parse(value, provider);
 		}
 		/// <summary>
-		/// Converts the string representation of a number in a specified style to its
-		/// System.Half equivalent.
+		/// Converts the string representation of a number in a specified style to its System.Half
+		/// equivalent.
 		/// </summary>
-		/// <param name="value">
-		/// The string representation of the number to convert.
-		/// </param>
+		/// <param name="value">The string representation of the number to convert.</param>
 		/// <param name="style">
-		/// A bitwise combination of System.Globalization.NumberStyles values that
-		/// indicates the style elements that can be present in value. A typical value to
-		/// specify is System.Globalization.NumberStyles.Number.
+		/// A bitwise combination of System.Globalization.NumberStyles values that indicates the style
+		/// elements that can be present in value. A typical value to specify is
+		/// System.Globalization.NumberStyles.Number.
 		/// </param>
 		/// <returns>
-		/// The System.Half number equivalent to the number contained in s as specified by
-		/// style.
+		/// The System.Half number equivalent to the number contained in s as specified by style.
 		/// </returns>
 		/// <exception cref="System.ArgumentNullException">value is null.</exception>
 		/// <exception cref="System.ArgumentException">
 		/// style is not a System.Globalization.NumberStyles value.
 		/// - or- style is the System.Globalization.NumberStyles.AllowHexSpecifier value.
 		/// </exception>
-		/// <exception cref="System.FormatException">
-		/// value is not in the correct format.
-		/// </exception>
+		/// <exception cref="System.FormatException">value is not in the correct format.</exception>
 		/// <exception cref="System.OverflowException">
-		/// value represents a number less than System.Half.MinValue or greater than
-		/// System.Half.MaxValue.
+		/// value represents a number less than System.Half.MinValue or greater than System.Half.MaxValue.
 		/// </exception>
 		public static Half Parse(string value, NumberStyles style)
 		{
 			return (Half)float.Parse(value, style, CultureInfo.InvariantCulture);
 		}
 		/// <summary>
-		/// Converts the string representation of a number to its System.Half equivalent
-		/// using the specified style and culture-specific format.
+		/// Converts the string representation of a number to its System.Half equivalent using the
+		/// specified style and culture-specific format.
 		/// </summary>
-		/// <param name="value">   
-		/// The string representation of the number to convert.
-		/// </param>
+		/// <param name="value">   The string representation of the number to convert.</param>
 		/// <param name="style">   
-		/// A bitwise combination of System.Globalization.NumberStyles values that
-		/// indicates the style elements that can be present in value. A typical value to
-		/// specify is System.Globalization.NumberStyles.Number.
+		/// A bitwise combination of System.Globalization.NumberStyles values that indicates the style
+		/// elements that can be present in value. A typical value to specify is
+		/// System.Globalization.NumberStyles.Number.
 		/// </param>
 		/// <param name="provider">
-		/// An System.IFormatProvider object that supplies culture-specific information
-		/// about the format of value.
+		/// An System.IFormatProvider object that supplies culture-specific information about the format of
+		/// value.
 		/// </param>
 		/// <returns>
-		/// The System.Half number equivalent to the number contained in s as specified by
-		/// style and provider.
+		/// The System.Half number equivalent to the number contained in s as specified by style and
+		/// provider.
 		/// </returns>
 		/// <exception cref="System.ArgumentNullException">value is null.</exception>
 		/// <exception cref="System.ArgumentException">
 		/// style is not a System.Globalization.NumberStyles value.
 		/// - or- style is the System.Globalization.NumberStyles.AllowHexSpecifier value.
 		/// </exception>
-		/// <exception cref="System.FormatException">
-		/// value is not in the correct format.
-		/// </exception>
+		/// <exception cref="System.FormatException">value is not in the correct format.</exception>
 		/// <exception cref="System.OverflowException">
-		/// value represents a number less than System.Half.MinValue or greater than
-		/// System.Half.MaxValue.
+		/// value represents a number less than System.Half.MinValue or greater than System.Half.MaxValue.
 		/// </exception>
 		public static Half Parse(string value, NumberStyles style, IFormatProvider provider)
 		{
 			return (Half)float.Parse(value, style, provider);
 		}
 		/// <summary>
-		/// Converts the string representation of a number to its System.Half equivalent.
-		/// A return value indicates whether the conversion succeeded or failed.
+		/// Converts the string representation of a number to its System.Half equivalent. A return value
+		/// indicates whether the conversion succeeded or failed.
 		/// </summary>
-		/// <param name="value"> 
-		/// The string representation of the number to convert.
-		/// </param>
+		/// <param name="value"> The string representation of the number to convert.</param>
 		/// <param name="result">
-		/// When this method returns, contains the System.Half number that is equivalent
-		/// to the numeric value contained in value, if the conversion succeeded, or is
-		/// zero if the conversion failed. The conversion fails if the s parameter is
-		/// null, is not a number in a valid format, or represents a number less than
-		/// System.Half.MinValue or greater than System.Half.MaxValue. This parameter is
+		/// When this method returns, contains the System.Half number that is equivalent to the numeric
+		/// value contained in value, if the conversion succeeded, or is zero if the conversion failed. The
+		/// conversion fails if the s parameter is null, is not a number in a valid format, or represents a
+		/// number less than System.Half.MinValue or greater than System.Half.MaxValue. This parameter is
 		/// passed uninitialized.
 		/// </param>
 		/// <returns>true if s was converted successfully; otherwise, false.</returns>
@@ -882,29 +766,25 @@ namespace System
 			return false;
 		}
 		/// <summary>
-		/// Converts the string representation of a number to its System.Half equivalent
-		/// using the specified style and culture-specific format. A return value
-		/// indicates whether the conversion succeeded or failed.
+		/// Converts the string representation of a number to its System.Half equivalent using the
+		/// specified style and culture-specific format. A return value indicates whether the conversion
+		/// succeeded or failed.
 		/// </summary>
-		/// <param name="value">   
-		/// The string representation of the number to convert.
-		/// </param>
+		/// <param name="value">   The string representation of the number to convert.</param>
 		/// <param name="style">   
-		/// A bitwise combination of System.Globalization.NumberStyles values that
-		/// indicates the permitted format of value. A typical value to specify is
-		/// System.Globalization.NumberStyles.Number.
+		/// A bitwise combination of System.Globalization.NumberStyles values that indicates the permitted
+		/// format of value. A typical value to specify is System.Globalization.NumberStyles.Number.
 		/// </param>
 		/// <param name="provider">
-		/// An System.IFormatProvider object that supplies culture-specific parsing
-		/// information about value.
+		/// An System.IFormatProvider object that supplies culture-specific parsing information about
+		/// value.
 		/// </param>
 		/// <param name="result">  
-		/// When this method returns, contains the System.Half number that is equivalent
-		/// to the numeric value contained in value, if the conversion succeeded, or is
-		/// zero if the conversion failed. The conversion fails if the s parameter is
-		/// null, is not in a format compliant with style, or represents a number less
-		/// than System.Half.MinValue or greater than System.Half.MaxValue. This parameter
-		/// is passed uninitialized.
+		/// When this method returns, contains the System.Half number that is equivalent to the numeric
+		/// value contained in value, if the conversion succeeded, or is zero if the conversion failed. The
+		/// conversion fails if the s parameter is null, is not in a format compliant with style, or
+		/// represents a number less than System.Half.MinValue or greater than System.Half.MaxValue. This
+		/// parameter is passed uninitialized.
 		/// </param>
 		/// <returns>true if s was converted successfully; otherwise, false.</returns>
 		/// <exception cref="System.ArgumentException">
@@ -928,8 +808,7 @@ namespace System
 			return parseResult;
 		}
 		/// <summary>
-		/// Converts the numeric value of this instance to its equivalent string
-		/// representation.
+		/// Converts the numeric value of this instance to its equivalent string representation.
 		/// </summary>
 		/// <returns>A string that represents the value of this instance.</returns>
 		public override string ToString()
@@ -937,47 +816,41 @@ namespace System
 			return ((float)this).ToString(CultureInfo.InvariantCulture);
 		}
 		/// <summary>
-		/// Converts the numeric value of this instance to its equivalent string
-		/// representation using the specified culture-specific format information.
+		/// Converts the numeric value of this instance to its equivalent string representation using the
+		/// specified culture-specific format information.
 		/// </summary>
 		/// <param name="formatProvider">
-		/// An System.IFormatProvider that supplies culture-specific formatting
-		/// information.
+		/// An System.IFormatProvider that supplies culture-specific formatting information.
 		/// </param>
 		/// <returns>
-		/// The string representation of the value of this instance as specified by
-		/// provider.
+		/// The string representation of the value of this instance as specified by provider.
 		/// </returns>
 		public string ToString(IFormatProvider formatProvider)
 		{
 			return ((float)this).ToString(formatProvider);
 		}
 		/// <summary>
-		/// Converts the numeric value of this instance to its equivalent string
-		/// representation, using the specified format.
+		/// Converts the numeric value of this instance to its equivalent string representation, using the
+		/// specified format.
 		/// </summary>
 		/// <param name="format">A numeric format string.</param>
 		/// <returns>
-		/// The string representation of the value of this instance as specified by
-		/// format.
+		/// The string representation of the value of this instance as specified by format.
 		/// </returns>
 		public string ToString(string format)
 		{
 			return ((float)this).ToString(format, CultureInfo.InvariantCulture);
 		}
 		/// <summary>
-		/// Converts the numeric value of this instance to its equivalent string
-		/// representation using the specified format and culture-specific format
-		/// information.
+		/// Converts the numeric value of this instance to its equivalent string representation using the
+		/// specified format and culture-specific format information.
 		/// </summary>
 		/// <param name="format">        A numeric format string.</param>
 		/// <param name="formatProvider">
-		/// An System.IFormatProvider that supplies culture-specific formatting
-		/// information.
+		/// An System.IFormatProvider that supplies culture-specific formatting information.
 		/// </param>
 		/// <returns>
-		/// The string representation of the value of this instance as specified by format
-		/// and provider.
+		/// The string representation of the value of this instance as specified by format and provider.
 		/// </returns>
 		/// <exception cref="System.FormatException">format is invalid.</exception>
 		public string ToString(string format, IFormatProvider formatProvider)

@@ -60,9 +60,7 @@ namespace CryEngine
 		/// </summary>
 		/// <param name="independent"></param>
 		/// <param name="pos">        World location to place emitter at.</param>
-		/// <param name="dir">        
-		/// World rotation of emitter, set to Vec3.Up if null.
-		/// </param>
+		/// <param name="dir">        World rotation of emitter, set to Vec3.Up if null.</param>
 		/// <param name="scale">      Scale of the emitter.</param>
 		public ParticleEmitter Spawn(Vector3 pos, Vector3? dir = null, float scale = 1f, bool independent = true)
 		{

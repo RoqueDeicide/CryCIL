@@ -20,8 +20,7 @@ namespace CryCil
 		/// <typeparam name="T">Type of elements in the collection.</typeparam>
 		/// <param name="collection">Collection itself.</param>
 		/// <returns>
-		/// True, if <paramref name="collection"/> is null or number its elements is equal
-		/// to zero.
+		/// True, if <paramref name="collection"/> is null or number its elements is equal to zero.
 		/// </returns>
 		public static bool IsNullOrEmpty<T>(this ICollection<T> collection)
 		{
@@ -36,16 +35,16 @@ namespace CryCil
 		/// Minimal number of elements that must be inside the collection.
 		/// </param>
 		/// <returns>
-		/// True, if <paramref name="collection"/> is null, or it contains smaller number
-		/// elements then one defined by <paramref name="minimalCount"/> .
+		/// True, if <paramref name="collection"/> is null, or it contains smaller number elements then one
+		/// defined by <paramref name="minimalCount"/> .
 		/// </returns>
 		public static bool IsNullOrTooSmall<T>(this ICollection<T> collection, int minimalCount)
 		{
 			return collection == null || collection.Count < minimalCount;
 		}
 		/// <summary>
-		/// Creates a string that is a list of text representation of all elements of the
-		/// collection separated by a comma.
+		/// Creates a string that is a list of text representation of all elements of the collection
+		/// separated by a comma.
 		/// </summary>
 		/// <typeparam name="T">Type of elements in the collection.</typeparam>
 		/// <param name="collection">Collection.</param>
@@ -55,8 +54,8 @@ namespace CryCil
 			return ContentsToString(collection, ",");
 		}
 		/// <summary>
-		/// Creates a string that is a list of text representation of all elements of the
-		/// collection separated by a comma.
+		/// Creates a string that is a list of text representation of all elements of the collection
+		/// separated by a comma.
 		/// </summary>
 		/// <typeparam name="T">Type of elements in the collection.</typeparam>
 		/// <param name="collection">Collection.</param>
@@ -81,8 +80,8 @@ namespace CryCil
 			return builder.ToString();
 		}
 		/// <summary>
-		/// Creates a string that is a list of text representation of all elements of the
-		/// collection separated by a comma.
+		/// Creates a string that is a list of text representation of all elements of the collection
+		/// separated by a comma.
 		/// </summary>
 		/// <typeparam name="T">Type of elements in the collection.</typeparam>
 		/// <param name="collection">Collection.</param>
@@ -118,8 +117,8 @@ namespace CryCil
 			return indexes;
 		}
 		/// <summary>
-		/// Finds zero-based indexes of all occurrences of given substring in the text
-		/// using the invariant culture.
+		/// Finds zero-based indexes of all occurrences of given substring in the text using the invariant
+		/// culture.
 		/// </summary>
 		/// <param name="text">     Text to look for substrings in.</param>
 		/// <param name="substring">Piece of text to look for.</param>
@@ -134,9 +133,8 @@ namespace CryCil
 		/// <param name="text">   Given text.</param>
 		/// <param name="strings">A list of strings to check for.</param>
 		/// <returns>
-		/// True, if <paramref name="text"/> is valid and <paramref name="strings"/>
-		/// contains text snippets and at least one of those is in the
-		/// <paramref name="text"/>, otherwise false.
+		/// True, if <paramref name="text"/> is valid and <paramref name="strings"/> contains text snippets
+		/// and at least one of those is in the <paramref name="text"/>, otherwise false.
 		/// </returns>
 		public static bool ContainsAny(this string text, string[] strings)
 		{
@@ -150,9 +148,7 @@ namespace CryCil
 		/// Determines whether this string can be used as a name for flow node or a port.
 		/// </summary>
 		/// <param name="text">String.</param>
-		/// <returns>
-		/// True, if this string can be used as a name for flow node or a port.
-		/// </returns>
+		/// <returns>True, if this string can be used as a name for flow node or a port.</returns>
 		public static bool IsValidFlowGraphName(this string text)
 		{
 			return
@@ -185,8 +181,7 @@ namespace CryCil
 			return key.Equals(default(TKey));
 		}
 		/// <summary>
-		/// Invokes <paramref name="action"/> function with each element in the
-		/// enumerable.
+		/// Invokes <paramref name="action"/> function with each element in the enumerable.
 		/// </summary>
 		/// <typeparam name="T">Type of elements in the collection.</typeparam>
 		/// <param name="enumeration">Enumeration.</param>
@@ -201,9 +196,7 @@ namespace CryCil
 		/// </summary>
 		/// <param name="element">   This element.</param>
 		/// <param name="name">      Name of the descendant to find.</param>
-		/// <param name="foundChild">
-		/// If successful contains a reference to found element.
-		/// </param>
+		/// <param name="foundChild">If successful contains a reference to found element.</param>
 		/// <returns>True, if search was a success, otherwise false.</returns>
 		public static bool TryGetElement([NotNull] this XmlElement element, string name, out XmlElement foundChild)
 		{
@@ -273,8 +266,7 @@ namespace CryCil
 		/// <param name="thisType">This type.</param>
 		/// <param name="baseType">Another type.</param>
 		/// <returns>
-		/// True, if <paramref name="thisType"/> is <paramref name="baseType"/> or is
-		/// derived from it.
+		/// True, if <paramref name="thisType"/> is <paramref name="baseType"/> or is derived from it.
 		/// </returns>
 		public static bool ImplementsOrEquals([NotNull] this Type thisType, [NotNull] Type baseType)
 		{
@@ -286,8 +278,7 @@ namespace CryCil
 		/// <typeparam name="T">Another type.</typeparam>
 		/// <param name="thisType">This type.</param>
 		/// <returns>
-		/// True, if <paramref name="thisType"/> is <typeparamref name="T"/> or is derived
-		/// from it.
+		/// True, if <paramref name="thisType"/> is <typeparamref name="T"/> or is derived from it.
 		/// </returns>
 		public static bool ImplementsOrEquals<T>([NotNull] this Type thisType)
 		{
@@ -350,14 +341,11 @@ namespace CryCil
 		#endregion
 		#region Attributes
 		/// <summary>
-		/// Determines whether this member is decorated with at least one instance of a
-		/// given attribute.
+		/// Determines whether this member is decorated with at least one instance of a given attribute.
 		/// </summary>
 		/// <typeparam name="T">The attribute to search for.</typeparam>
 		/// <param name="info">The member on which the search is performed.</param>
-		/// <returns>
-		/// True if the member is decorated with at least one instance of attribute T.
-		/// </returns>
+		/// <returns>True if the member is decorated with at least one instance of attribute T.</returns>
 		public static bool ContainsAttribute<T>([NotNull] this MemberInfo info)
 			where T : Attribute
 		{
@@ -368,9 +356,7 @@ namespace CryCil
 		/// </summary>
 		/// <typeparam name="T">The attribute to search for.</typeparam>
 		/// <param name="memberInfo">The member on which the search is performed.</param>
-		/// <returns>
-		/// The first instance of attribute T, or null if none is found.
-		/// </returns>
+		/// <returns>The first instance of attribute T, or null if none is found.</returns>
 		public static IEnumerable<T> GetAttributes<T>([NotNull] this MemberInfo memberInfo)
 			where T : Attribute
 		{
@@ -381,9 +367,7 @@ namespace CryCil
 		/// </summary>
 		/// <typeparam name="T">The attribute to search for.</typeparam>
 		/// <param name="memberInfo">The member on which the search is performed.</param>
-		/// <returns>
-		/// The first instance of attribute T, or null if none is found.
-		/// </returns>
+		/// <returns>The first instance of attribute T, or null if none is found.</returns>
 		public static T GetAttribute<T>([NotNull] this MemberInfo memberInfo)
 			where T : Attribute
 		{
@@ -391,14 +375,12 @@ namespace CryCil
 			return attributes.Count != 0 ? attributes[0] : null;
 		}
 		/// <summary>
-		/// Tests whether the method is decorated with a given attribute, and if so,
-		/// assigns it via the out variable.
+		/// Tests whether the method is decorated with a given attribute, and if so, assigns it via the out
+		/// variable.
 		/// </summary>
 		/// <typeparam name="T">The attribute to search for.</typeparam>
 		/// <param name="memberInfo">The member on which the search is performed.</param>
-		/// <param name="attribute"> 
-		/// The out parameter to which the attribute will be assigned.
-		/// </param>
+		/// <param name="attribute"> The out parameter to which the attribute will be assigned.</param>
 		/// <returns>True if the attribute exists.</returns>
 		public static bool TryGetAttribute<T>([NotNull] this MemberInfo memberInfo, out T attribute) where T : Attribute
 		{
@@ -419,9 +401,7 @@ namespace CryCil
 		/// Gets the type that is associated with a given member.
 		/// </summary>
 		/// <param name="info">Member.</param>
-		/// <returns>
-		/// Type of the field or property, if member is one of those, otherwise null.
-		/// </returns>
+		/// <returns>Type of the field or property, if member is one of those, otherwise null.</returns>
 		public static Type GetAssociatedType([NotNull] this MemberInfo info)
 		{
 			switch (info.MemberType)

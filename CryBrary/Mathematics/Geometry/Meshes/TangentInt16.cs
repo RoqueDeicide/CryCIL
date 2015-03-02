@@ -8,8 +8,8 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 	/// Encapsulates data stored for vertex that is used in tangent-space normal mapping.
 	/// </summary>
 	/// <remarks>
-	/// Tangent-space normal mapping is alternative to object-, world-space mapping, that
-	/// is independent from underlying geometry.
+	/// Tangent-space normal mapping is alternative to object-, world-space mapping, that is independent
+	/// from underlying geometry.
 	/// 
 	/// This type of tangent uses <see cref="Int16"/> objects to store coordinates.
 	/// </remarks>
@@ -33,8 +33,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		[FieldOffset(8)]
 		public Int16Vector4 Binormal;
 		/// <summary>
-		/// Number of bytes that are occupied by a single instance of type
-		/// <see cref="TangentInt16"/>.
+		/// Number of bytes that are occupied by a single instance of type <see cref="TangentInt16"/>.
 		/// </summary>
 		public static readonly int ByteCount = Marshal.SizeOf(typeof(TangentInt16));
 		/// <summary>
@@ -49,8 +48,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// </summary>
 		/// <param name="other">Another tangent.</param>
 		/// <returns>
-		/// True, if another normal uses <see cref="Int16"/> type for coordinates and is
-		/// equal to this one.
+		/// True, if another normal uses <see cref="Int16"/> type for coordinates and is equal to this one.
 		/// </returns>
 		public bool Equals(ITangent other)
 		{
@@ -60,8 +58,8 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		}
 	}
 	/// <summary>
-	/// Represents a tangent space normal with tangent and binormal represented by a
-	/// single 4 dimensional vector.
+	/// Represents a tangent space normal with tangent and binormal represented by a single 4 dimensional
+	/// vector.
 	/// </summary>
 	[StructLayout(LayoutKind.Explicit)]
 	public unsafe struct QTangentInt16 : IQTangent
@@ -86,8 +84,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// </summary>
 		/// <param name="other">Another tangent.</param>
 		/// <returns>
-		/// True, if another normal uses <see cref="Int16"/> type for coordinates and is
-		/// equal to this one.
+		/// True, if another normal uses <see cref="Int16"/> type for coordinates and is equal to this one.
 		/// </returns>
 		public bool Equals(IQTangent other)
 		{
@@ -102,8 +99,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		}
 	}
 	/// <summary>
-	/// Defines 4 dimensional vector with coordinates represented by 16-bit integer
-	/// numbers.
+	/// Defines 4 dimensional vector with coordinates represented by 16-bit integer numbers.
 	/// </summary>
 	/// <remarks>Used for mesh tangents only.</remarks>
 	public struct Int16Vector4 : IEquatable<Int16Vector4>

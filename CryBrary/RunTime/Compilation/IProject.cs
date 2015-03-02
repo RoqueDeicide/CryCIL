@@ -13,8 +13,7 @@ namespace CryEngine.RunTime.Compilation
 	public interface IProject
 	{
 		/// <summary>
-		/// Gets the list of project files that are required to be built to allow building
-		/// of this one.
+		/// Gets the list of project files that are required to be built to allow building of this one.
 		/// </summary>
 		IProject[] Dependencies { get; }
 		/// <summary>

@@ -11,8 +11,7 @@ namespace CryEngine.Logic.Flowgraph
 		static PortActivators()
 		{
 			Activators = new Delegate[7];
-			// Indices of delegates here are mapped to indices of port types in
-			// NodePortType enumeration.
+			// Indices of delegates here are mapped to indices of port types in NodePortType enumeration.
 			Activators[0] = new Action<FlowGraphNode, int>(FlowGraphNode.ActivateOutput);
 			Activators[1] = new Action<FlowGraphNode, int, int>(FlowGraphNode.ActivateOutput);
 			Activators[1] = new Action<FlowGraphNode, int, float>(FlowGraphNode.ActivateOutput);
@@ -30,9 +29,7 @@ namespace CryEngine.Logic.Flowgraph
 		/// <summary>
 		/// Writes configuration of this port to native memory.
 		/// </summary>
-		/// <param name="configPointer">
-		/// Pointer to array that will contain the configuration.
-		/// </param>
+		/// <param name="configPointer">Pointer to array that will contain the configuration.</param>
 		/// <param name="index">        Index of this port.</param>
 		public override unsafe void WriteConfiguration(IntPtr configPointer, int index)
 		{

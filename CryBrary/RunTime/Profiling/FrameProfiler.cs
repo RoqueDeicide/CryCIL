@@ -3,9 +3,8 @@
 namespace CryEngine.RunTime.Profiling
 {
 	/// <summary>
-	/// A profiler counter with a unique name and data. Multiple
-	/// <see cref="FrameProfilerSection"/> s can be executed for this profiler, and will
-	/// be merged into their parent profiler.
+	/// A profiler counter with a unique name and data. Multiple <see cref="FrameProfilerSection"/> s can
+	/// be executed for this profiler, and will be merged into their parent profiler.
 	/// </summary>
 	public class FrameProfiler
 	{
@@ -33,9 +32,7 @@ namespace CryEngine.RunTime.Profiling
 		/// <summary>
 		/// Deletes a frame profile section.
 		/// </summary>
-		/// <param name="profilerSection">
-		/// <see cref="FrameProfilerSection"/> to delete.
-		/// </param>
+		/// <param name="profilerSection"><see cref="FrameProfilerSection"/> to delete.</param>
 		public void DeleteSection(FrameProfilerSection profilerSection)
 		{
 			Native.DebugInterop.DeleteFrameProfilerSection(profilerSection.Handle);

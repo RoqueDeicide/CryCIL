@@ -1,8 +1,7 @@
 ﻿namespace CryCil.Geometry
 {
 	/// <summary>
-	/// Defines functions that are used when there is a need to perform scale affine
-	/// transformation.
+	/// Defines functions that are used when there is a need to perform scale affine transformation.
 	/// </summary>
 	public static class Scale
 	{
@@ -10,8 +9,8 @@
 		/// Applies scaling transformation to the vector.
 		/// </summary>
 		/// <remarks>
-		/// Applying scaling transformation is as simple as multiplying respective
-		/// components of given two vectors.
+		/// Applying scaling transformation is as simple as multiplying respective components of given two
+		/// vectors.
 		/// </remarks>
 		/// <param name="vectorToChange">Vector that needs to be scaled.</param>
 		/// <param name="scale">         
@@ -26,8 +25,8 @@
 		/// Applies scaling transformation to the vector.
 		/// </summary>
 		/// <remarks>
-		/// Applying scaling transformation is as simple as multiplying respective
-		/// components of given two vectors.
+		/// Applying scaling transformation is as simple as multiplying respective components of given two
+		/// vectors.
 		/// </remarks>
 		/// <param name="vectorToChange">Vector that needs to be scaled.</param>
 		/// <param name="scale">         
@@ -42,8 +41,8 @@
 		/// Applies scaling transformation to the vector.
 		/// </summary>
 		/// <remarks>
-		/// Applying scaling transformation is as simple as multiplying respective
-		/// components of given two vectors.
+		/// Applying scaling transformation is as simple as multiplying respective components of given two
+		/// vectors.
 		/// </remarks>
 		/// <param name="vectorToChange">Vector that needs to be scaled.</param>
 		/// <param name="scale">         
@@ -59,8 +58,8 @@
 		/// Applies scaling transformation to the vector.
 		/// </summary>
 		/// <remarks>
-		/// Applying scaling transformation is as simple as multiplying respective
-		/// components of given two vectors.
+		/// Applying scaling transformation is as simple as multiplying respective components of given two
+		/// vectors.
 		/// </remarks>
 		/// <param name="vectorToChange">Vector that needs to be scaled.</param>
 		/// <param name="scale">         
@@ -76,8 +75,8 @@
 		/// Applies scaling transformation to the vector.
 		/// </summary>
 		/// <remarks>
-		/// Applying scaling transformation is as simple as multiplying respective
-		/// components of given two vectors.
+		/// Applying scaling transformation is as simple as multiplying respective components of given two
+		/// vectors.
 		/// </remarks>
 		/// <param name="vectorToChange">Vector that needs to be scaled.</param>
 		/// <param name="scale">         
@@ -123,13 +122,11 @@
 			vectorToChange.W *= commonScaleFactor;
 		}
 		/// <summary>
-		/// Scales given vector by a factor that is selected in such a way that resulting
-		/// X-component will be equal to given number.
+		/// Scales given vector by a factor that is selected in such a way that resulting X-component will
+		/// be equal to given number.
 		/// </summary>
 		/// <param name="vectorToChange">Vector that needs to be scaled.</param>
-		/// <param name="sizeAlongX">    
-		/// Desired length of X-component of given vector.
-		/// </param>
+		/// <param name="sizeAlongX">    Desired length of X-component of given vector.</param>
 		public static void ToX(ref Vector2 vectorToChange, float sizeAlongX)
 		{
 			// Calculate desired factor.
@@ -139,13 +136,11 @@
 			vectorToChange.Y *= factor;
 		}
 		/// <summary>
-		/// Scales given vector by a factor that is selected in such a way that resulting
-		/// X-component will be equal to given number.
+		/// Scales given vector by a factor that is selected in such a way that resulting X-component will
+		/// be equal to given number.
 		/// </summary>
 		/// <param name="vectorToChange">Vector that needs to be scaled.</param>
-		/// <param name="sizeAlongX">    
-		/// Desired length of X-component of given vector.
-		/// </param>
+		/// <param name="sizeAlongX">    Desired length of X-component of given vector.</param>
 		public static void ToX(ref Vector3 vectorToChange, float sizeAlongX)
 		{
 			// Calculate desired factor.
@@ -156,13 +151,11 @@
 			vectorToChange.Z *= factor;
 		}
 		/// <summary>
-		/// Scales given vector by a factor that is selected in such a way that resulting
-		/// X-component will be equal to given number.
+		/// Scales given vector by a factor that is selected in such a way that resulting X-component will
+		/// be equal to given number.
 		/// </summary>
 		/// <param name="vectorToChange">Vector that needs to be scaled.</param>
-		/// <param name="sizeAlongX">    
-		/// Desired length of X-component of given vector.
-		/// </param>
+		/// <param name="sizeAlongX">    Desired length of X-component of given vector.</param>
 		public static void ToX(ref Vector4 vectorToChange, float sizeAlongX)
 		{
 			// Calculate desired factor.
@@ -174,13 +167,11 @@
 			vectorToChange.W *= factor;
 		}
 		/// <summary>
-		/// Scales given vector by a factor that is selected in such a way that resulting
-		/// Y-component will be equal to given number.
+		/// Scales given vector by a factor that is selected in such a way that resulting Y-component will
+		/// be equal to given number.
 		/// </summary>
 		/// <param name="vectorToChange">Vector that needs to be scaled.</param>
-		/// <param name="sizeAlongY">    
-		/// Desired length of Y-component of given vector.
-		/// </param>
+		/// <param name="sizeAlongY">    Desired length of Y-component of given vector.</param>
 		public static void ToY(ref Vector2 vectorToChange, float sizeAlongY)
 		{
 			// Calculate desired factor.
@@ -190,13 +181,11 @@
 			vectorToChange.Y *= factor;
 		}
 		/// <summary>
-		/// Scales given vector by a factor that is selected in such a way that resulting
-		/// Y-component will be equal to given number.
+		/// Scales given vector by a factor that is selected in such a way that resulting Y-component will
+		/// be equal to given number.
 		/// </summary>
 		/// <param name="vectorToChange">Vector that needs to be scaled.</param>
-		/// <param name="sizeAlongY">    
-		/// Desired length of Y-component of given vector.
-		/// </param>
+		/// <param name="sizeAlongY">    Desired length of Y-component of given vector.</param>
 		public static void ToY(ref Vector3 vectorToChange, float sizeAlongY)
 		{
 			// Calculate desired factor.
@@ -207,13 +196,11 @@
 			vectorToChange.Z *= factor;
 		}
 		/// <summary>
-		/// Scales given vector by a factor that is selected in such a way that resulting
-		/// Y-component will be equal to given number.
+		/// Scales given vector by a factor that is selected in such a way that resulting Y-component will
+		/// be equal to given number.
 		/// </summary>
 		/// <param name="vectorToChange">Vector that needs to be scaled.</param>
-		/// <param name="sizeAlongY">    
-		/// Desired length of Y-component of given vector.
-		/// </param>
+		/// <param name="sizeAlongY">    Desired length of Y-component of given vector.</param>
 		public static void ToY(ref Vector4 vectorToChange, float sizeAlongY)
 		{
 			// Calculate desired factor.
@@ -225,13 +212,11 @@
 			vectorToChange.W *= factor;
 		}
 		/// <summary>
-		/// Scales given vector by a factor that is selected in such a way that resulting
-		/// Z-component will be equal to given number.
+		/// Scales given vector by a factor that is selected in such a way that resulting Z-component will
+		/// be equal to given number.
 		/// </summary>
 		/// <param name="vectorToChange">Vector that needs to be scaled.</param>
-		/// <param name="sizeAlongZ">    
-		/// Desired length of Z-component of given vector.
-		/// </param>
+		/// <param name="sizeAlongZ">    Desired length of Z-component of given vector.</param>
 		public static void ToZ(ref Vector3 vectorToChange, float sizeAlongZ)
 		{
 			// Calculate desired factor.
@@ -242,13 +227,11 @@
 			vectorToChange.Z *= factor;
 		}
 		/// <summary>
-		/// Scales given vector by a factor that is selected in such a way that resulting
-		/// Z-component will be equal to given number.
+		/// Scales given vector by a factor that is selected in such a way that resulting Z-component will
+		/// be equal to given number.
 		/// </summary>
 		/// <param name="vectorToChange">Vector that needs to be scaled.</param>
-		/// <param name="sizeAlongZ">    
-		/// Desired length of Z-component of given vector.
-		/// </param>
+		/// <param name="sizeAlongZ">    Desired length of Z-component of given vector.</param>
 		public static void ToZ(ref Vector4 vectorToChange, float sizeAlongZ)
 		{
 			// Calculate desired factor.
@@ -260,13 +243,11 @@
 			vectorToChange.W *= factor;
 		}
 		/// <summary>
-		/// Scales given vector by a factor that is selected in such a way that resulting
-		/// W-component will be equal to given number.
+		/// Scales given vector by a factor that is selected in such a way that resulting W-component will
+		/// be equal to given number.
 		/// </summary>
 		/// <param name="vectorToChange">Vector that needs to be scaled.</param>
-		/// <param name="sizeAlongW">    
-		/// Desired length of W-component of given vector.
-		/// </param>
+		/// <param name="sizeAlongW">    Desired length of W-component of given vector.</param>
 		public static void ToW(ref Vector4 vectorToChange, float sizeAlongW)
 		{
 			// Calculate desired factor.
@@ -281,8 +262,8 @@
 		/// Adds scaling transformation to given matrix.
 		/// </summary>
 		/// <remarks>
-		/// Adding scaling transformation is done by multiplying components at main
-		/// diagonal of the matrix by respective components of given vector.
+		/// Adding scaling transformation is done by multiplying components at main diagonal of the matrix
+		/// by respective components of given vector.
 		/// </remarks>
 		/// <param name="matrixToAddTo">Matrix to add transformation to.</param>
 		/// <param name="scale">        Vector that provides scaling factors.</param>
@@ -297,8 +278,8 @@
 		/// Adds scaling transformation to given matrix.
 		/// </summary>
 		/// <remarks>
-		/// Adding scaling transformation is done by multiplying components at main
-		/// diagonal of the matrix by respective components of given vector.
+		/// Adding scaling transformation is done by multiplying components at main diagonal of the matrix
+		/// by respective components of given vector.
 		/// </remarks>
 		/// <param name="matrixToAddTo">Matrix to add transformation to.</param>
 		/// <param name="scale">        Vector that provides scaling factors.</param>
@@ -312,8 +293,8 @@
 		/// Adds scaling transformation to given matrix.
 		/// </summary>
 		/// <remarks>
-		/// Adding scaling transformation is done by multiplying components at main
-		/// diagonal of the matrix by respective components of given vector.
+		/// Adding scaling transformation is done by multiplying components at main diagonal of the matrix
+		/// by respective components of given vector.
 		/// </remarks>
 		/// <param name="matrixToAddTo">Matrix to add transformation to.</param>
 		/// <param name="scale">        Vector that provides scaling factors.</param>
@@ -327,8 +308,8 @@
 		/// Adds scaling transformation to given matrix.
 		/// </summary>
 		/// <remarks>
-		/// Adding scaling transformation is done by multiplying components at main
-		/// diagonal of the matrix by respective components of given vector.
+		/// Adding scaling transformation is done by multiplying components at main diagonal of the matrix
+		/// by respective components of given vector.
 		/// </remarks>
 		/// <param name="matrixToAddTo">Matrix to add transformation to.</param>
 		/// <param name="scale">        Vector that provides scaling factors.</param>
@@ -342,8 +323,8 @@
 		/// Adds scaling transformation to given matrix.
 		/// </summary>
 		/// <remarks>
-		/// Adding scaling transformation is done by multiplying components at main
-		/// diagonal of the matrix by given factor.
+		/// Adding scaling transformation is done by multiplying components at main diagonal of the matrix
+		/// by given factor.
 		/// </remarks>
 		/// <param name="matrixToAddTo">Matrix to add transformation to.</param>
 		/// <param name="scale">        Scaling factor.</param>
@@ -358,8 +339,8 @@
 		/// Adds scaling transformation to given matrix.
 		/// </summary>
 		/// <remarks>
-		/// Adding scaling transformation is done by multiplying components at main
-		/// diagonal of the matrix by given factor.
+		/// Adding scaling transformation is done by multiplying components at main diagonal of the matrix
+		/// by given factor.
 		/// </remarks>
 		/// <param name="matrixToAddTo">Matrix to add transformation to.</param>
 		/// <param name="scale">        Scaling factor.</param>
@@ -373,8 +354,8 @@
 		/// Adds scaling transformation to given matrix.
 		/// </summary>
 		/// <remarks>
-		/// Adding scaling transformation is done by multiplying components at main
-		/// diagonal of the matrix by given factor.
+		/// Adding scaling transformation is done by multiplying components at main diagonal of the matrix
+		/// by given factor.
 		/// </remarks>
 		/// <param name="matrixToAddTo">Matrix to add transformation to.</param>
 		/// <param name="scale">        Scaling factor.</param>
@@ -389,8 +370,7 @@
 		/// </summary>
 		/// <param name="scale">Vector that provides scaling factors.</param>
 		/// <returns>
-		/// Matrix that is a result of multiplication of <see cref="Matrix33.Identity"/>
-		/// by given vector.
+		/// Matrix that is a result of multiplication of <see cref="Matrix33.Identity"/> by given vector.
 		/// </returns>
 		public static Matrix33 Create33(ref Vector3 scale)
 		{
@@ -407,8 +387,7 @@
 		/// </summary>
 		/// <param name="scale">Vector that provides scaling factors.</param>
 		/// <returns>
-		/// Matrix that is a result of multiplication of <see cref="Matrix44.Identity"/>
-		/// by given vector.
+		/// Matrix that is a result of multiplication of <see cref="Matrix44.Identity"/> by given vector.
 		/// </returns>
 		public static Matrix44 Create44(ref Vector4 scale)
 		{
@@ -421,18 +400,13 @@
 
 			return result;
 		}
-
-		// ReSharper disable RedundantAssignment
-
 		/// <summary>
 		/// Changes given matrix so it represents a single scaling transformation.
 		/// </summary>
-		/// <remarks>
-		/// Any transformation previously stored in the matrix are discarded.
-		/// </remarks>
+		/// <remarks>Any transformation previously stored in the matrix are discarded.</remarks>
 		/// <param name="matrixToSet">Matrix to set.</param>
 		/// <param name="scale">      Vector that provides scaling factors.</param>
-		public static void Set(ref Matrix33 matrixToSet, ref Vector3 scale)
+		public static void Set(out Matrix33 matrixToSet, ref Vector3 scale)
 		{
 			matrixToSet = Matrix33.Identity;
 
@@ -443,12 +417,10 @@
 		/// <summary>
 		/// Changes given matrix so it represents a single scaling transformation.
 		/// </summary>
-		/// <remarks>
-		/// Any transformation previously stored in the matrix are discarded.
-		/// </remarks>
+		/// <remarks>Any transformation previously stored in the matrix are discarded.</remarks>
 		/// <param name="matrixToSet">Matrix to set.</param>
 		/// <param name="scale">      Vector that provides scaling factors.</param>
-		public static void Set(ref Matrix44 matrixToSet, ref Vector4 scale)
+		public static void Set(out Matrix44 matrixToSet, ref Vector4 scale)
 		{
 			matrixToSet = Matrix44.Identity;
 
@@ -457,7 +429,5 @@
 			matrixToSet.M22 = scale.Z;
 			matrixToSet.M33 = scale.W;
 		}
-
-		// ReSharper restore RedundantAssignment
 	}
 }

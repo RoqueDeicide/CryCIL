@@ -1,8 +1,7 @@
 ﻿namespace CryCil.Geometry
 {
 	/// <summary>
-	/// Defines functions that are used when there is a need to perform translation affine
-	/// transformation.
+	/// Defines functions that are used when there is a need to perform translation affine transformation.
 	/// </summary>
 	public static class Translation
 	{
@@ -62,8 +61,7 @@
 			matrix.M23 += matrix.M20 * delta.X + matrix.M21 * delta.Y + matrix.M22 * delta.Z;
 		}
 		/// <summary>
-		/// Changes given matrix to one that represents a very specific translation
-		/// transformation.
+		/// Changes given matrix to one that represents a very specific translation transformation.
 		/// </summary>
 		/// <param name="matrix">Matrix that needs to be changed.</param>
 		/// <param name="delta"> Vector that describes the translation.</param>
@@ -74,8 +72,7 @@
 			matrix.M23 = delta.Z;
 		}
 		/// <summary>
-		/// Changes given matrix to one that represents a very specific translation
-		/// transformation.
+		/// Changes given matrix to one that represents a very specific translation transformation.
 		/// </summary>
 		/// <param name="matrix">Matrix that needs to be changed.</param>
 		/// <param name="delta"> Vector that describes the translation.</param>
@@ -121,9 +118,7 @@
 		/// Creates a matrix that represents given translation transformation.
 		/// </summary>
 		/// <param name="delta">Amounts of movement along respective axes.</param>
-		/// <returns>
-		/// Matrix that represents specified translation transformation.
-		/// </returns>
+		/// <returns>Matrix that represents specified translation transformation.</returns>
 		public static Matrix34 Create34(ref Vector3 delta)
 		{
 			Matrix34 result = Matrix34.Identity;
@@ -138,9 +133,7 @@
 		/// Creates a matrix that represents given translation transformation.
 		/// </summary>
 		/// <param name="delta">Amounts of movement along respective axes.</param>
-		/// <returns>
-		/// Matrix that represents specified translation transformation.
-		/// </returns>
+		/// <returns>Matrix that represents specified translation transformation.</returns>
 		public static Matrix44 Create44(ref Vector3 delta)
 		{
 			Matrix44 result = Matrix44.Identity;

@@ -46,8 +46,8 @@ namespace CryEngine.RunTime.Async
 			{
 				var job = this.Jobs[i];
 
-				// Update the job If the job returns true, it means it has finished, and
-				// we can remove it from the updatelist
+				// Update the job If the job returns true, it means it has finished, and we can remove it
+				// from the updatelist
 				if (job.Update(frameTime))
 				{
 					this.Jobs.Remove(job);

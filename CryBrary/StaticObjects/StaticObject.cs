@@ -23,9 +23,7 @@ namespace CryEngine.StaticObjects
 		/// <exception cref="ObjectDisposedException">
 		/// Cannot acquire mesh data from static object that has been disposed of.
 		/// </exception>
-		/// <exception cref="Exception">
-		/// Unable to acquire mesh handles for the static object.
-		/// </exception>
+		/// <exception cref="Exception">Unable to acquire mesh handles for the static object.</exception>
 		public NativeMesh Mesh
 		{
 			get { return new NativeMesh(this); }
@@ -34,11 +32,11 @@ namespace CryEngine.StaticObjects
 		/// Creates a new empty static object.
 		/// </summary>
 		/// <remarks>
-		/// This constructor invokes I3DEngine-&gt;CreateStatObj() method that initializes
-		/// empty instance of IStatObj, that does not contain any mesh data.
+		/// This constructor invokes I3DEngine-&gt;CreateStatObj() method that initializes empty instance
+		/// of IStatObj, that does not contain any mesh data.
 		/// 
-		/// This means that you should use this constructor when you need to create a mesh
-		/// object from scratch.
+		/// This means that you should use this constructor when you need to create a mesh object from
+		/// scratch.
 		/// 
 		/// Failure to create new object will mark this wrapper as disposed.
 		/// </remarks>
@@ -58,8 +56,8 @@ namespace CryEngine.StaticObjects
 			this.Dispose(false);
 		}
 		/// <summary>
-		/// Signals CryEngine run-time environment that this static object is no longer
-		/// needed in Mono environment.
+		/// Signals CryEngine run-time environment that this static object is no longer needed in Mono
+		/// environment.
 		/// </summary>
 		public void Dispose()
 		{
@@ -69,8 +67,7 @@ namespace CryEngine.StaticObjects
 		/// Performs disposal of this instance.
 		/// </summary>
 		/// <param name="disposeManagedResources">
-		/// Indicates whether all resources allocated in managed environment must be
-		/// freed.
+		/// Indicates whether all resources allocated in managed environment must be freed.
 		/// </param>
 		protected void Dispose(bool disposeManagedResources)
 		{

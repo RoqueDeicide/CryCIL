@@ -8,8 +8,8 @@ namespace CryCil
 		/// Defines functions that perform cubic interpolation of values.
 		/// </summary>
 		/// <remarks>
-		/// Cubic interpolation is similar to linear in principle but it uses cubic
-		/// polynomial function instead of linear one.
+		/// Cubic interpolation is similar to linear in principle but it uses cubic polynomial function
+		/// instead of linear one.
 		/// </remarks>
 		public static class Hermite
 		{
@@ -22,8 +22,8 @@ namespace CryCil
 			/// <param name="t1">       First control vector.</param>
 			/// <param name="t2">       Second control vector.</param>
 			/// <param name="parameter">
-			/// Parameter that determines position of resultant vector on the line that
-			/// goes through the first and second vector relative to the first one.
+			/// Parameter that determines position of resultant vector on the line that goes through the
+			/// first and second vector relative to the first one.
 			/// </param>
 			public static void Apply(out Vector2 result,
 										 Vector2 v1, Vector2 v2,
@@ -47,8 +47,8 @@ namespace CryCil
 			/// <param name="t1">       First control vector.</param>
 			/// <param name="t2">       Second control vector.</param>
 			/// <param name="parameter">
-			/// Parameter that determines position of resultant vector on the line that
-			/// goes through the first and second vector relative to the first one.
+			/// Parameter that determines position of resultant vector on the line that goes through the
+			/// first and second vector relative to the first one.
 			/// </param>
 			/// <returns>Result of interpolation.</returns>
 			public static Vector2 Create(Vector2 v1, Vector2 v2,
@@ -73,8 +73,8 @@ namespace CryCil
 			/// <param name="t1">       First control vector.</param>
 			/// <param name="t2">       Second control vector.</param>
 			/// <param name="parameter">
-			/// Parameter that determines position of resultant vector on the line that
-			/// goes through the first and second vector relative to the first one.
+			/// Parameter that determines position of resultant vector on the line that goes through the
+			/// first and second vector relative to the first one.
 			/// </param>
 			public static void Apply(out Vector3 result,
 										 Vector3 v1, Vector3 v2,
@@ -99,8 +99,8 @@ namespace CryCil
 			/// <param name="t1">       First control vector.</param>
 			/// <param name="t2">       Second control vector.</param>
 			/// <param name="parameter">
-			/// Parameter that determines position of resultant vector on the line that
-			/// goes through the first and second vector relative to the first one.
+			/// Parameter that determines position of resultant vector on the line that goes through the
+			/// first and second vector relative to the first one.
 			/// </param>
 			/// <returns>Result of interpolation.</returns>
 			public static Vector3 Create(Vector3 v1, Vector3 v2,
@@ -126,8 +126,8 @@ namespace CryCil
 			/// <param name="t1">       First control vector.</param>
 			/// <param name="t2">       Second control vector.</param>
 			/// <param name="parameter">
-			/// Parameter that determines position of resultant vector on the line that
-			/// goes through the first and second vector relative to the first one.
+			/// Parameter that determines position of resultant vector on the line that goes through the
+			/// first and second vector relative to the first one.
 			/// </param>
 			public static void Apply(out Vector4 result,
 										 Vector4 v1, Vector4 v2,
@@ -153,8 +153,8 @@ namespace CryCil
 			/// <param name="t1">       First control vector.</param>
 			/// <param name="t2">       Second control vector.</param>
 			/// <param name="parameter">
-			/// Parameter that determines position of resultant vector on the line that
-			/// goes through the first and second vector relative to the first one.
+			/// Parameter that determines position of resultant vector on the line that goes through the
+			/// first and second vector relative to the first one.
 			/// </param>
 			/// <returns>Result of interpolation.</returns>
 			public static Vector4 Create(Vector4 v1, Vector4 v2,

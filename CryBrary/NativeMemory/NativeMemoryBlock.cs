@@ -32,8 +32,7 @@ namespace CryEngine.NativeMemory
 		#endregion
 		#region Construction
 		/// <summary>
-		/// Creates new instance of type <see cref="NativeMemoryBlock"/> while allocating
-		/// memory for it.
+		/// Creates new instance of type <see cref="NativeMemoryBlock"/> while allocating memory for it.
 		/// </summary>
 		/// <param name="size">Size of the memory block in bytes to allocate.</param>
 		public NativeMemoryBlock(ulong size)
@@ -58,13 +57,10 @@ namespace CryEngine.NativeMemory
 			}
 		}
 		/// <summary>
-		/// Creates new instance of type <see cref="NativeMemoryBlock"/> while allocating
-		/// memory for it.
+		/// Creates new instance of type <see cref="NativeMemoryBlock"/> while allocating memory for it.
 		/// </summary>
 		/// <param name="objCount">Number of object this memory block will store.</param>
-		/// <param name="type">    
-		/// Type of object that will be stored in this memory block.
-		/// </param>
+		/// <param name="type">    Type of object that will be stored in this memory block.</param>
 		public NativeMemoryBlock(int objCount, Type type)
 			: this((ulong)(Marshal.SizeOf(type) * objCount))
 		{

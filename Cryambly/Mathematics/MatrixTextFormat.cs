@@ -8,8 +8,7 @@ namespace CryCil
 	public class MatrixTextFormat
 	{
 		/// <summary>
-		/// <see cref="String"/> that describes format that is used to format matrix
-		/// elements.
+		/// <see cref="String"/> that describes format that is used to format matrix elements.
 		/// </summary>
 		public string NumberFormat;
 		/// <summary>
@@ -17,13 +16,11 @@ namespace CryCil
 		/// </summary>
 		public IFormatProvider FormatProvider;
 		/// <summary>
-		/// Optional combination of characters that enclose the entire matrix text
-		/// representation.
+		/// Optional combination of characters that enclose the entire matrix text representation.
 		/// </summary>
 		public Tuple<char, char> OuterEnclosers;
 		/// <summary>
-		/// Optional combination of characters that enclose the text representations of
-		/// matrix rows.
+		/// Optional combination of characters that enclose the text representations of matrix rows.
 		/// </summary>
 		public Tuple<char, char> RowEnclosers;
 		/// <summary>
@@ -35,8 +32,7 @@ namespace CryCil
 		/// </summary>
 		public bool SemicolonRowDelimitation;
 		/// <summary>
-		/// Indicates whether matrix rows must located at different rows in a resultant
-		/// text.
+		/// Indicates whether matrix rows must located at different rows in a resultant text.
 		/// </summary>
 		public bool SeparateIntoRows;
 		/// <summary>

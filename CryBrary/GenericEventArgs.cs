@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 namespace CryEngine
 {
 	/// <summary>
-	/// Represents an object that contains a parameter of type <see cref="ExtraDataType"/>
-	/// that describes an event.
+	/// Represents an object that contains a parameter of type <see cref="ExtraDataType"/> that describes
+	/// an event.
 	/// </summary>
 	/// <typeparam name="ExtraDataType">Type of the parameter.</typeparam>
 	public class EventArgs<ExtraDataType> : EventArgs

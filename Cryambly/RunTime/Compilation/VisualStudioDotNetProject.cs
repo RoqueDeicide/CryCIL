@@ -35,16 +35,13 @@ namespace CryCil.RunTime.Compilation
 		#endregion
 		#region Properties
 		/// <summary>
-		/// Gets an object that will handle compilation of the code files within this
-		/// project.
+		/// Gets an object that will handle compilation of the code files within this project.
 		/// </summary>
-		/// <param name="options">
-		/// Options that specify the way the code compiler is created.
-		/// </param>
+		/// <param name="options">Options that specify the way the code compiler is created.</param>
 		public abstract CodeDomProvider CreateCompiler(IDictionary<string, string> options);
 		/// <summary>
-		/// When implemented in derived class, gets an object that will handle compilation
-		/// of the code files within this project.
+		/// When implemented in derived class, gets an object that will handle compilation of the code
+		/// files within this project.
 		/// </summary>
 		public abstract CodeDomProvider Compiler { get; }
 		/// <summary>
@@ -98,8 +95,7 @@ namespace CryCil.RunTime.Compilation
 		/// </summary>
 		public string DefinedConstants { get; private set; }
 		/// <summary>
-		/// Indicates whether compiler should consider compilation a failure, if there are
-		/// any warnings.
+		/// Indicates whether compiler should consider compilation a failure, if there are any warnings.
 		/// </summary>
 		public bool TreatWarningsAsErrors { get; private set; }
 		/// <summary>
@@ -333,9 +329,8 @@ namespace CryCil.RunTime.Compilation
 			parameters.CompilerOptions = extraOptions.ToString();
 			// References.
 			parameters.ReferencedAssemblies.AddRange(this.References);
-			// var compiledDependencies = this.Dependencies.Select(x =>
-			// x.CompiledAssembly); var dependencyLocations =
-			// compiledDependencies.Select(x => x.GetLocation()).ToArray();
+			// var compiledDependencies = this.Dependencies.Select(x => x.CompiledAssembly); var
+			// dependencyLocations = compiledDependencies.Select(x => x.GetLocation()).ToArray();
 			var deps = this.Dependencies;
 			Assembly[] compiledDeps = new Assembly[deps.Length];
 			for (int i = 0; i < compiledDeps.Length; i++)

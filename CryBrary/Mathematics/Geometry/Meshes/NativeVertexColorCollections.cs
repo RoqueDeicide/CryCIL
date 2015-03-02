@@ -15,8 +15,8 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		#endregion
 		#region Properties
 		/// <summary>
-		/// Indicates that this collection cannot be reallocated on its own as it depends
-		/// on collection of vertices.
+		/// Indicates that this collection cannot be reallocated on its own as it depends on collection of
+		/// vertices.
 		/// </summary>
 		public override bool Reallocatable
 		{
@@ -79,9 +79,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// <summary>
 		/// Creates new instance of class <see cref="NativeVertexColor0Collection"/>.
 		/// </summary>
-		/// <param name="mesh">
-		/// <see cref="NativeMesh"/> that hosts this collection.
-		/// </param>
+		/// <param name="mesh"><see cref="NativeMesh"/> that hosts this collection.</param>
 		public NativeVertexColor0Collection(NativeMesh mesh)
 			: base(mesh)
 		{
@@ -102,9 +100,7 @@ namespace CryEngine.Mathematics.Geometry.Meshes
 		/// <summary>
 		/// Creates new instance of class <see cref="NativeVertexColor0Collection"/>.
 		/// </summary>
-		/// <param name="mesh">
-		/// <see cref="NativeMesh"/> that hosts this collection.
-		/// </param>
+		/// <param name="mesh"><see cref="NativeMesh"/> that hosts this collection.</param>
 		public NativeVertexColor1Collection(NativeMesh mesh)
 			: base(mesh)
 		{

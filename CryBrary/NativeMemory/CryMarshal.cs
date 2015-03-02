@@ -9,9 +9,7 @@ namespace CryEngine.NativeMemory
 	/// <summary>
 	/// Defines methods that allow to allocate and free native memory from Mono.
 	/// </summary>
-	/// <remarks>
-	/// This class uses CryEngine-specific functions for memory allocation and release.
-	/// </remarks>
+	/// <remarks>This class uses CryEngine-specific functions for memory allocation and release.</remarks>
 	public static class CryMarshal
 	{
 		private static readonly SortedList<IntPtr, ulong> allocatedBlocks;
@@ -24,9 +22,7 @@ namespace CryEngine.NativeMemory
 		/// Allocates a native memory block.
 		/// </summary>
 		/// <param name="size">   Size of the block to allocate.</param>
-		/// <param name="dispose">
-		/// Indicates whether this class should track this memory block.
-		/// </param>
+		/// <param name="dispose">Indicates whether this class should track this memory block.</param>
 		/// <returns>Pointer to allocated memory block.</returns>
 		public static IntPtr Allocate(ulong size, bool dispose = true)
 		{
@@ -48,8 +44,8 @@ namespace CryEngine.NativeMemory
 		/// </summary>
 		/// <param name="handle">Pointer to the memory block.</param>
 		/// <param name="force"> 
-		/// Indicates whether the memory block must be released even if it is not tracked
-		/// by <see cref="CryMarshal"/> .
+		/// Indicates whether the memory block must be released even if it is not tracked by
+		/// <see cref="CryMarshal"/> .
 		/// </param>
 		public static void Free(IntPtr handle, bool force = false)
 		{

@@ -16,8 +16,8 @@ namespace CryCil.Geometry.Csg
 		/// Gets the plane that divides the 3D space at this node.
 		/// </summary>
 		/// <remarks>
-		/// When this property is not initialized, its
-		/// <see cref="CryCil.Geometry.Plane.D"/> is equal to <see cref="Single.NaN"/> .
+		/// When this property is not initialized, its <see cref="CryCil.Geometry.Plane.D"/> is equal to
+		/// <see cref="Single.NaN"/> .
 		/// </remarks>
 		public Plane Plane { get; private set; }
 		/// <summary>
@@ -85,8 +85,7 @@ namespace CryCil.Geometry.Csg
 			{
 				return;
 			}
-			// Initialize a plane by picking first element's plane without too much
-			// heuristics.
+			// Initialize a plane by picking first element's plane without too much heuristics.
 			if (this.IsNotInitialized())
 			{
 				this.Plane = elements[0].GetPlane(customData);
@@ -142,9 +141,7 @@ namespace CryCil.Geometry.Csg
 		/// <summary>
 		/// Determines where given point is located relatively to this BSP tree.
 		/// </summary>
-		/// <param name="point">
-		/// <see cref="Vector3"/> that represents a given point.
-		/// </param>
+		/// <param name="point"><see cref="Vector3"/> that represents a given point.</param>
 		/// <returns>A position of the point.</returns>
 		public BspPointPosition PointPosition(Vector3 point)
 		{
@@ -166,8 +163,7 @@ namespace CryCil.Geometry.Csg
 			// If this node has anything in front or behind it.
 			if (this.Front != null || this.Back != null)
 			{
-				// If given point is outside of branching BSP trees, then it is outside of
-				// this one.
+				// If given point is outside of branching BSP trees, then it is outside of this one.
 				if (this.Front != null && this.Front.PointPosition(point) != BspPointPosition.Outside ||
 					this.Back != null && this.Back.PointPosition(point) != BspPointPosition.Outside)
 				{
@@ -183,19 +179,15 @@ namespace CryCil.Geometry.Csg
 		/// Cuts given elements and removes parts that end up inside this tree.
 		/// </summary>
 		/// <remarks>
-		/// Parts are "inside" this BSP tree when they are behind a node that doesn't have
-		/// a back branch.
+		/// Parts are "inside" this BSP tree when they are behind a node that doesn't have a back branch.
 		/// </remarks>
 		/// <param name="elements">  
-		/// A list of elements to cut. This object is not modified in any way during
-		/// execution.
+		/// A list of elements to cut. This object is not modified in any way during execution.
 		/// </param>
 		/// <param name="customData">
 		/// An optional reference to data that can be used by a splitting algorithm.
 		/// </param>
-		/// <returns>
-		/// A list that contains elements that are outside of this tree.
-		/// </returns>
+		/// <returns>A list that contains elements that are outside of this tree.</returns>
 		public List<T> FilterList(IList<T> elements, [CanBeNull] object customData)
 		{
 			if (this.IsNotInitialized())
@@ -215,8 +207,8 @@ namespace CryCil.Geometry.Csg
 			{
 				fronts = this.Front.FilterList(fronts, customData);
 			}
-			// If this node has nothing behind it in the tree, then whatever is behind it
-			// in the list should be discarded.
+			// If this node has nothing behind it in the tree, then whatever is behind it in the list
+			// should be discarded.
 			if (this.Back != null)
 			{
 				fronts.AddRange(this.Back.FilterList(backs, customData));
@@ -224,8 +216,7 @@ namespace CryCil.Geometry.Csg
 			return fronts;
 		}
 		/// <summary>
-		/// Cuts elements inside this tree and removes ones that end up inside another
-		/// one.
+		/// Cuts elements inside this tree and removes ones that end up inside another one.
 		/// </summary>
 		/// <param name="bsp">       A root of another BSP tree.</param>
 		/// <param name="customData">
@@ -262,8 +253,7 @@ namespace CryCil.Geometry.Csg
 		{
 			if (branch == null)
 			{
-				// This is not a redundant assignment, since we are dealing with a
-				// reference type.
+				// This is not a redundant assignment, since we are dealing with a reference type.
 				branch = new BspNode<T>(elements, customData);
 			}
 			else
@@ -279,8 +269,7 @@ namespace CryCil.Geometry.Csg
 		#endregion
 	}
 	/// <summary>
-	/// Defines common functionality of objects that are located in 3D space and can be
-	/// split up.
+	/// Defines common functionality of objects that are located in 3D space and can be split up.
 	/// </summary>
 	/// <typeparam name="T">Type of elements this object can split into.</typeparam>
 	public interface ISpatiallySplittable<T>
@@ -288,9 +277,7 @@ namespace CryCil.Geometry.Csg
 		/// <summary>
 		/// Gets a plane this object can be considered to be located on.
 		/// </summary>
-		/// <param name="customData">
-		/// Optional data that can be used in calculations.
-		/// </param>
+		/// <param name="customData">Optional data that can be used in calculations.</param>
 		/// <returns>
 		/// <see cref="Plane"/> object that describes the plane this object is located on.
 		/// </returns>
@@ -298,9 +285,7 @@ namespace CryCil.Geometry.Csg
 		/// <summary>
 		/// Gets a normal to a plane this object can be considered to be located on.
 		/// </summary>
-		/// <param name="customData">
-		/// Optional data that can be used in calculations.
-		/// </param>
+		/// <param name="customData">Optional data that can be used in calculations.</param>
 		/// <returns>Normalized <see cref="Vector3"/> that represents a normal.</returns>
 		Vector3 GetNormal([CanBeNull] object customData = null);
 		/// <summary>
@@ -310,20 +295,18 @@ namespace CryCil.Geometry.Csg
 		/// <see cref="Plane"/> that splits the space that contains this object.
 		/// </param>
 		/// <param name="frontCoplanarElements">
-		/// An optional collection for parts of this object that are located on this plane
-		/// and face the same way.
+		/// An optional collection for parts of this object that are located on this plane and face the
+		/// same way.
 		/// </param>
 		/// <param name="backCoplanarElements"> 
-		/// An optional collection for parts of this object that are located on this plane
-		/// and face the opposite way.
+		/// An optional collection for parts of this object that are located on this plane and face the
+		/// opposite way.
 		/// </param>
 		/// <param name="frontElements">        
-		/// An optional collection for parts of this object that are located in front of
-		/// this plane.
+		/// An optional collection for parts of this object that are located in front of this plane.
 		/// </param>
 		/// <param name="backElements">         
-		/// An optional collection for parts of this object that are located behind this
-		/// plane.
+		/// An optional collection for parts of this object that are located behind this plane.
 		/// </param>
 		/// <param name="customData">           
 		/// Optional object that provides data elements can be bound to.

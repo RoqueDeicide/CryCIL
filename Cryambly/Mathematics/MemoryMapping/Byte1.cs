@@ -49,9 +49,7 @@ namespace CryCil.MemoryMapping
 		/// <summary>
 		/// Initializes new instance of <see cref="Byte1"/> type.
 		/// </summary>
-		/// <param name="value">
-		/// Signed byte integer value to initialize this object with.
-		/// </param>
+		/// <param name="value">Signed byte integer value to initialize this object with.</param>
 		public Byte1(sbyte value)
 			: this()
 		{
@@ -60,9 +58,7 @@ namespace CryCil.MemoryMapping
 		/// <summary>
 		/// Initializes new instance of <see cref="Byte1"/> type.
 		/// </summary>
-		/// <param name="value">
-		/// Unsigned byte integer value to initialize this object with.
-		/// </param>
+		/// <param name="value">Unsigned byte integer value to initialize this object with.</param>
 		public Byte1(byte value)
 			: this()
 		{
@@ -73,8 +69,7 @@ namespace CryCil.MemoryMapping
 		/// </summary>
 		/// <param name="pointer">Pointer to native memory cluster.</param>
 		/// <param name="index">  
-		/// Zero-based index of the byte within native memory cluster to use as initial
-		/// value.
+		/// Zero-based index of the byte within native memory cluster to use as initial value.
 		/// </param>
 		public Byte1(IntPtr pointer, int index)
 			: this()
@@ -90,12 +85,8 @@ namespace CryCil.MemoryMapping
 		/// <summary>
 		/// Gets one byte from native memory cluster.
 		/// </summary>
-		/// <param name="handle">
-		/// Pointer to the beginning of native memory cluster.
-		/// </param>
-		/// <param name="offset">
-		/// Zero-based index of the byte within native memory cluster to get.
-		/// </param>
+		/// <param name="handle">Pointer to the beginning of native memory cluster.</param>
+		/// <param name="offset">Zero-based index of the byte within native memory cluster to get.</param>
 		public void Get(IntPtr handle, int offset)
 		{
 			if (handle == IntPtr.Zero)
@@ -107,12 +98,8 @@ namespace CryCil.MemoryMapping
 		/// <summary>
 		/// Writes one byte to native memory cluster.
 		/// </summary>
-		/// <param name="handle">
-		/// Pointer to the beginning of native memory cluster.
-		/// </param>
-		/// <param name="offset">
-		/// Zero-based index of the byte within native memory cluster to set.
-		/// </param>
+		/// <param name="handle">Pointer to the beginning of native memory cluster.</param>
+		/// <param name="offset">Zero-based index of the byte within native memory cluster to set.</param>
 		public void Set(IntPtr handle, int offset)
 		{
 			if (handle == IntPtr.Zero)

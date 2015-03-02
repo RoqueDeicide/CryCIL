@@ -44,9 +44,7 @@ namespace CryEngine.Console.Variables
 		/// Help text that is shown when you use <paramref name="name"/>? in the console.
 		/// </param>
 		/// <param name="flags">A set of flags to assign to the variable.</param>
-		/// <returns>
-		/// Null if failed, new <see cref="CVar"/> instance if successful.
-		/// </returns>
+		/// <returns>Null if failed, new <see cref="CVar"/> instance if successful.</returns>
 		public static CVar Register(string name, int value, string help = "", CVarFlags flags = CVarFlags.None)
 		{
 			return RegisterInternal(name, value, help, flags);
@@ -60,9 +58,7 @@ namespace CryEngine.Console.Variables
 		/// Help text that is shown when you use <paramref name="name"/>? in the console.
 		/// </param>
 		/// <param name="flags">A set of flags to assign to the variable.</param>
-		/// <returns>
-		/// Null if failed, new <see cref="CVar"/> instance if successful.
-		/// </returns>
+		/// <returns>Null if failed, new <see cref="CVar"/> instance if successful.</returns>
 		public static CVar Register(string name, float value, string help = "", CVarFlags flags = CVarFlags.None)
 		{
 			return RegisterInternal(name, value, help, flags);
@@ -76,9 +72,7 @@ namespace CryEngine.Console.Variables
 		/// Help text that is shown when you use <paramref name="name"/>? in the console.
 		/// </param>
 		/// <param name="flags">A set of flags to assign to the variable.</param>
-		/// <returns>
-		/// Null if failed, new <see cref="CVar"/> instance if successful.
-		/// </returns>
+		/// <returns>Null if failed, new <see cref="CVar"/> instance if successful.</returns>
 		public static CVar Register(string name, string value, string help = "", CVarFlags flags = CVarFlags.None)
 		{
 			return RegisterInternal(name, value, help, flags);
@@ -92,9 +86,7 @@ namespace CryEngine.Console.Variables
 		/// Help text that is shown when you use <paramref name="name"/>? in the console.
 		/// </param>
 		/// <param name="flags">A set of flags to assign to the variable.</param>
-		/// <returns>
-		/// Null if failed, new <see cref="CVar"/> instance if successful.
-		/// </returns>
+		/// <returns>Null if failed, new <see cref="CVar"/> instance if successful.</returns>
 		public static CVar RegisterInt(string name, ref int value, string help = "", CVarFlags flags = CVarFlags.None)
 		{
 			Native.ConsoleInterop.RegisterCVarInt(name, ref value, value, flags, help);
@@ -112,9 +104,7 @@ namespace CryEngine.Console.Variables
 		/// Help text that is shown when you use <paramref name="name"/>? in the console.
 		/// </param>
 		/// <param name="flags">A set of flags to assign to the variable.</param>
-		/// <returns>
-		/// Null if failed, new <see cref="CVar"/> instance if successful.
-		/// </returns>
+		/// <returns>Null if failed, new <see cref="CVar"/> instance if successful.</returns>
 		public static CVar RegisterFloat(string name, ref float value, string help = "", CVarFlags flags = CVarFlags.None)
 		{
 			Native.ConsoleInterop.RegisterCVarFloat(name, ref value, value, flags, help);
@@ -127,9 +117,7 @@ namespace CryEngine.Console.Variables
 		/// Unregisters an existing console variable.
 		/// </summary>
 		/// <param name="name">  Name of the variable to unregister.</param>
-		/// <param name="delete">
-		/// Indicates whether traces of the variable must be deleted.
-		/// </param>
+		/// <param name="delete">Indicates whether traces of the variable must be deleted.</param>
 		public static void Unregister(string name, bool delete = false)
 		{
 			Native.ConsoleInterop.UnregisterCVar(name, delete);
@@ -159,8 +147,7 @@ namespace CryEngine.Console.Variables
 			return null;
 		}
 		/// <summary>
-		/// Firstly checks whether a specified CVar is valid, then if so, modifies the
-		/// cvar reference
+		/// Firstly checks whether a specified CVar is valid, then if so, modifies the cvar reference
 		/// </summary>
 		/// <param name="name">The name of the CVar to retrieve</param>
 		/// <param name="cvar">The CVar object to modify (usually blank)</param>

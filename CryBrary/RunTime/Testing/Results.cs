@@ -57,8 +57,8 @@ namespace CryEngine.RunTime.Testing
 		public StackTrace Stack { get; internal set; }
 
 		/// <summary>
-		/// For convenience, the first desired frame from the stack. If the frame is
-		/// inside CryBrary due to an assertion, we drop down one frame.
+		/// For convenience, the first desired frame from the stack. If the frame is inside CryBrary due to
+		/// an assertion, we drop down one frame.
 		/// </summary>
 		public StackFrame FirstFrame
 		{

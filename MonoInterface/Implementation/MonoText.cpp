@@ -76,7 +76,7 @@ const char *MonoText::ToNativeUTF8()
 	char *t = mono_string_to_utf8_checked(this->str, &er);
 	if (mono_error_ok(&er))
 	{
-		gEnv->pLog->LogError("%s", mono_error_get_message(&er));
+		ReportError("%s", mono_error_get_message(&er));
 		return nullptr;
 	}
 	Text *text = new Text(t);

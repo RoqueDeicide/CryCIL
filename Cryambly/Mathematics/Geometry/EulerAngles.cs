@@ -98,8 +98,7 @@ namespace CryCil.Geometry
 		#region Operators
 		#region Comparison Operators
 		/// <summary>
-		/// Determines whether two instances of <see cref="EulerAngles"/> struct are
-		/// equal.
+		/// Determines whether two instances of <see cref="EulerAngles"/> struct are equal.
 		/// </summary>
 		/// <param name="l">Left operand.</param>
 		/// <param name="r">Right operand.</param>
@@ -111,8 +110,7 @@ namespace CryCil.Geometry
 			// ReSharper restore CompareOfFloatsByEqualityOperator
 		}
 		/// <summary>
-		/// Determines whether two instances of <see cref="EulerAngles"/> struct are not
-		/// equal.
+		/// Determines whether two instances of <see cref="EulerAngles"/> struct are not equal.
 		/// </summary>
 		/// <param name="l">Left operand.</param>
 		/// <param name="r">Right operand.</param>
@@ -226,8 +224,7 @@ namespace CryCil.Geometry
 		/// </summary>
 		/// <param name="obj">Given object.</param>
 		/// <returns>
-		/// True, if given object is <see cref="EulerAngles"/> equal to this instance,
-		/// otherwise false.
+		/// True, if given object is <see cref="EulerAngles"/> equal to this instance, otherwise false.
 		/// </returns>
 		public override bool Equals(object obj)
 		{
@@ -240,14 +237,13 @@ namespace CryCil.Geometry
 		#endregion
 		#region Comparison
 		/// <summary>
-		/// Determines whether this instance of type <see cref="EulerAngles"/> can be
-		/// considered equal to another.
+		/// Determines whether this instance of type <see cref="EulerAngles"/> can be considered equal to
+		/// another.
 		/// </summary>
 		/// <param name="other">    Another set of angles.</param>
 		/// <param name="precision">Precision of comparison.</param>
 		/// <returns>
-		/// True, if difference between components of the angles is less then
-		/// <paramref name="precision"/>.
+		/// True, if difference between components of the angles is less then <paramref name="precision"/>.
 		/// </returns>
 		public bool IsEquivalent(EulerAngles other, float precision = MathHelpers.ZeroTolerance)
 		{
@@ -261,8 +257,7 @@ namespace CryCil.Geometry
 		/// </summary>
 		/// <param name="epsilon">Precision of comparison.</param>
 		/// <returns>
-		/// True, if difference between this vector and unit vector is within specified
-		/// precision bounds.
+		/// True, if difference between this vector and unit vector is within specified precision bounds.
 		/// </returns>
 		public bool IsUnit(float epsilon = 0.05f)
 		{

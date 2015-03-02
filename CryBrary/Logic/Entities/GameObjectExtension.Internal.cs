@@ -254,8 +254,8 @@ namespace CryEngine.Logic.Entities
 					this.OnCollided(*((CryCollision*)parameter0.ToPointer()));
 					break;
 				case EntityEvent.Render:
-					// Get rendering parameters and create a reference object that will
-					// allow handlers modify the structure.
+					// Get rendering parameters and create a reference object that will allow handlers
+					// modify the structure.
 					RenderParams* renderingParameters = (RenderParams*)parameter0.ToPointer();
 					RenderParams? renderParamsReference = *renderingParameters;
 					this.OnRendered
@@ -342,8 +342,8 @@ namespace CryEngine.Logic.Entities
 		[UsedImplicitly]
 		private void DisposeInternal()
 		{
-			// This method is invoked from unmanaged code, so we should not bother telling
-			// CryEngine to remove this entity.
+			// This method is invoked from unmanaged code, so we should not bother telling CryEngine to
+			// remove this entity.
 			this.Dispose(true);
 		}
 		[UsedImplicitly]

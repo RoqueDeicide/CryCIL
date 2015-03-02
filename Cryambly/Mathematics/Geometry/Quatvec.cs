@@ -4,15 +4,14 @@
 	/// Represents a combination of quaternion and a vector.
 	/// </summary>
 	/// <remarks>
-	/// Such combination allows one to represent two transformations: rotation and
-	/// translation by using only 7 numbers instead of 12 (when using
-	/// <see cref="Matrix34"/>) or 16 (when using <see cref="Matrix44"/>).
+	/// Such combination allows one to represent two transformations: rotation and translation by using
+	/// only 7 numbers instead of 12 (when using <see cref="Matrix34"/>) or 16 (when using
+	/// <see cref="Matrix44"/>).
 	/// </remarks>
 	public struct Quatvec
 	{
 		/// <summary>
-		/// Combination of <see cref="CryCil.Geometry.Quaternion.Identity"/> and zeroed
-		/// vector.
+		/// Combination of <see cref="CryCil.Geometry.Quaternion.Identity"/> and zeroed vector.
 		/// </summary>
 		public static readonly Quatvec Identity = new Quatvec(new Vector3(), Quaternion.Identity);
 		#region Fields

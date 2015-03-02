@@ -12,13 +12,12 @@ namespace CryEngine.RunTime.Compatibility
 	public class CppType
 	{
 		/// <summary>
-		/// Gets or sets the number of bytes object of this C++ type occupies in the
-		/// stack.
+		/// Gets or sets the number of bytes object of this C++ type occupies in the stack.
 		/// </summary>
 		public int Size { get; set; }
 		/// <summary>
-		/// Gets or sets the list of field names and corresponding managed types that can
-		/// be used to represent type of that field.
+		/// Gets or sets the list of field names and corresponding managed types that can be used to
+		/// represent type of that field.
 		/// </summary>
 		public List<Tuple<string, Type>> Fields { get; set; }
 	}

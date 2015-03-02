@@ -46,9 +46,7 @@ namespace CryCil.Geometry
 		/// <summary>
 		/// Gets a plane this face is located on.
 		/// </summary>
-		/// <param name="customData">
-		/// Optional data that can be used in calculations.
-		/// </param>
+		/// <param name="customData">Optional data that can be used in calculations.</param>
 		/// <returns>
 		/// <see cref="Plane"/> object that describes the plane this object is located on.
 		/// </returns>
@@ -59,9 +57,7 @@ namespace CryCil.Geometry
 		/// <summary>
 		/// Gets a normal to the plane this face is located on.
 		/// </summary>
-		/// <param name="customData">
-		/// Optional data that can be used in calculations.
-		/// </param>
+		/// <param name="customData">Optional data that can be used in calculations.</param>
 		/// <returns>Normalized <see cref="Vector3"/> that represents a normal.</returns>
 		public Vector3 GetNormal(object customData = null)
 		{
@@ -120,20 +116,16 @@ namespace CryCil.Geometry
 		/// <summary>
 		/// Splits this face with a plane.
 		/// </summary>
-		/// <param name="splitter">          
-		/// Plane that splits this face into parts.
-		/// </param>
+		/// <param name="splitter">          Plane that splits this face into parts.</param>
 		/// <param name="frontCoplanarFaces">
-		/// A collection to add this face to, if it's located on the splitter and is
-		/// facing the same way.
+		/// A collection to add this face to, if it's located on the splitter and is facing the same way.
 		/// </param>
 		/// <param name="backCoplanarFaces"> 
-		/// A collection to add this face to, if it's located on the splitter and is
-		/// facing the opposite way.
+		/// A collection to add this face to, if it's located on the splitter and is facing the opposite
+		/// way.
 		/// </param>
 		/// <param name="frontFaces">        
-		/// A collection to add parts of this face that are located in front of the
-		/// splitter.
+		/// A collection to add parts of this face that are located in front of the splitter.
 		/// </param>
 		/// <param name="backFaces">         
 		/// A collection to add parts of this face that are located behind the splitter.
@@ -183,12 +175,11 @@ namespace CryCil.Geometry
 					List<FullVertex> bvs = new List<FullVertex>(4);
 					// Process edges.
 					// 
-					// We go through the polygon edge by edge with i being index of the
-					// start of the edge, and j - end.
+					// We go through the polygon edge by edge with i being index of the start of the edge,
+					// and j - end.
 					for (int i = 0, j = 1; i < 3; i++, j = (j + 1) % 3)
 					{
-						// If edge doesn't begin behind the plane, add starting vertex to
-						// front vertices.
+						// If edge doesn't begin behind the plane, add starting vertex to front vertices.
 						if (positions[i] != PlanePosition.Back)
 						{
 							fvs.Add(vertices[i]);
@@ -201,8 +192,8 @@ namespace CryCil.Geometry
 						// If this edge intersects the plane, split it.
 						if ((positions[i] | positions[j]) == PlanePosition.Spanning)
 						{
-							// Calculate fraction that describes position of splitting
-							// vertex along the line between start and end of the edge.
+							// Calculate fraction that describes position of splitting vertex along the
+							// line between start and end of the edge.
 							float positionParameter =
 								(splitter.D - (splitter.Normal | vertices[i].Position))
 								/
@@ -214,8 +205,7 @@ namespace CryCil.Geometry
 							fvs.Add(splittingVertex);
 							bvs.Add(splittingVertex);
 						}
-						// Create front and back triangle(s) from vertices from
-						// corresponding lists.
+						// Create front and back triangle(s) from vertices from corresponding lists.
 						if (frontFaces != null) FullFace.TriangulateLinearly(fvs, false, frontFaces);
 						if (backFaces != null) FullFace.TriangulateLinearly(bvs, false, backFaces);
 					}
@@ -235,15 +225,14 @@ namespace CryCil.Geometry
 			this.First = temp;
 		}
 		/// <summary>
-		/// Creates an array of triangular faces that form a polygon from a given list of
-		/// vertices.
+		/// Creates an array of triangular faces that form a polygon from a given list of vertices.
 		/// </summary>
 		/// <param name="vertices">           
 		/// A list of vertices that describes a border of the polygon.
 		/// </param>
 		/// <param name="checkForCoplanarity">
-		/// Indicates whether coplanarity of given polygon must be ensured. Pass false
-		/// only if know, that your polygon is on one plane.
+		/// Indicates whether coplanarity of given polygon must be ensured. Pass false only if know, that
+		/// your polygon is on one plane.
 		/// </param>
 		/// <returns>An array of triangles.</returns>
 		public static FullFace[] TriangulateLinearly(IList<FullVertex> vertices, bool checkForCoplanarity)
@@ -279,20 +268,16 @@ namespace CryCil.Geometry
 			return result;
 		}
 		/// <summary>
-		/// Triangulates given polygon and adds resultant triangles to the list of
-		/// polygons.
+		/// Triangulates given polygon and adds resultant triangles to the list of polygons.
 		/// </summary>
 		/// <param name="vertices">           
-		/// A list of vertices that represents a border of the polygon that is going to be
-		/// triangulated.
+		/// A list of vertices that represents a border of the polygon that is going to be triangulated.
 		/// </param>
 		/// <param name="checkForCoplanarity">
-		/// Indicates whether coplanarity of given polygon must be ensured. Pass false
-		/// only if know, that your polygon is on one plane.
+		/// Indicates whether coplanarity of given polygon must be ensured. Pass false only if know, that
+		/// your polygon is on one plane.
 		/// </param>
-		/// <param name="polygons">           
-		/// The list of polygon to which to add the triangles.
-		/// </param>
+		/// <param name="polygons">           The list of polygon to which to add the triangles.</param>
 		public static void TriangulateLinearly(IList<FullVertex> vertices, bool checkForCoplanarity,
 											   ICollection<FullFace> polygons)
 		{

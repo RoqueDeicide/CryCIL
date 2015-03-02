@@ -16,16 +16,16 @@ namespace CryCil.RunTime
 		/// Gets the path to the CryEngine folder.
 		/// </summary>
 		/// <remarks>
-		/// The CryEngine folder is the one that contains system.cfg that contains
-		/// "sys_game_folder=" line within.
+		/// The CryEngine folder is the one that contains system.cfg that contains "sys_game_folder=" line
+		/// within.
 		/// </remarks>
 		public static string CryEngineFolder;
 		/// <summary>
 		/// Gets the path to the directory that contains game content.
 		/// </summary>
 		/// <remarks>
-		/// The path to the game content in clean Eaas SDK installation is &lt;CryEngine
-		/// Installation Path&gt;\GameSDK.
+		/// The path to the game content in clean Eaas SDK installation is &lt;CryEngine Installation
+		/// Path&gt;\GameSDK.
 		/// </remarks>
 		public static string ContentFolder;
 		/// <summary>

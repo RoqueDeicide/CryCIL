@@ -7,8 +7,7 @@ using CryCil.Geometry;
 namespace CryCil
 {
 	/// <summary>
-	/// Represents 3x4 matrix that can be used to store information about rotation and
-	/// translation.
+	/// Represents 3x4 matrix that can be used to store information about rotation and translation.
 	/// </summary>
 	[StructLayout(LayoutKind.Explicit, Pack = 4, Size = 48)]
 	public struct Matrix34 : IMatrix<Matrix34>, IFormattable
@@ -18,8 +17,8 @@ namespace CryCil
 		/// Identity matrix.
 		/// </summary>
 		/// <remarks>
-		/// Identity matrix is a matrix where all elements on main diagonal are equal to
-		/// 1, and all others are zeroed.
+		/// Identity matrix is a matrix where all elements on main diagonal are equal to 1, and all others
+		/// are zeroed.
 		/// </remarks>
 		public static readonly Matrix34 Identity = new Matrix34
 		(
@@ -111,8 +110,7 @@ namespace CryCil
 		#endregion
 		#region Properties
 		/// <summary>
-		/// Gets angles of rotations around fixed axes that are represented by this
-		/// matrix.
+		/// Gets angles of rotations around fixed axes that are represented by this matrix.
 		/// </summary>
 		public Vector3 Angles
 		{
@@ -196,8 +194,7 @@ namespace CryCil
 		/// </summary>
 		public Vector3 Translation { get { return new Vector3(this.M03, this.M13, this.M23); } }
 		/// <summary>
-		/// Calculates determinant of the matrix composed from first 3 columns of this
-		/// matrix.
+		/// Calculates determinant of the matrix composed from first 3 columns of this matrix.
 		/// </summary>
 		public float Determinant
 		{
@@ -344,8 +341,7 @@ namespace CryCil
 		/// </summary>
 		/// <param name="s"><see cref="Vector3"/> that contains scaling factors.</param>
 		/// <param name="q">
-		/// <see cref="Quaternion"/> that represents rotation that new matrix will
-		/// represent.
+		/// <see cref="Quaternion"/> that represents rotation that new matrix will represent.
 		/// </param>
 		/// <param name="t"><see cref="Vector3"/> that represents translation.</param>
 		public Matrix34(Vector3 s, Quaternion q, Vector3 t = default(Vector3))
@@ -356,9 +352,7 @@ namespace CryCil
 		/// <summary>
 		/// Creates new instance of type <see cref="Matrix34"/> .
 		/// </summary>
-		/// <param name="m33">
-		/// <see cref="CryCil.Matrix33"/> to use to fill first 3 columns.
-		/// </param>
+		/// <param name="m33"><see cref="CryCil.Matrix33"/> to use to fill first 3 columns.</param>
 		public Matrix34(Matrix33 m33)
 			: this()
 		{
@@ -379,16 +373,12 @@ namespace CryCil
 			this.M20 = 0.0f; this.M21 = 0.0f; this.M22 = 1.0f; this.M23 = 0.0f;
 		}
 		/// <summary>
-		/// Sets the value of the matrix to one that represents transformations
-		/// represented by given arguments.
+		/// Sets the value of the matrix to one that represents transformations represented by given
+		/// arguments.
 		/// </summary>
 		/// <param name="s"><see cref="Vector3"/> object that represents scale.</param>
-		/// <param name="q">
-		/// <see cref="Quaternion"/> object that represents rotation.
-		/// </param>
-		/// <param name="t">
-		/// Optional <see cref="Vector3"/> object that represents translation.
-		/// </param>
+		/// <param name="q"><see cref="Quaternion"/> object that represents rotation.</param>
+		/// <param name="t">Optional <see cref="Vector3"/> object that represents translation.</param>
 		public void Set(Vector3 s, Quaternion q, Vector3 t = default(Vector3))
 		{
 			float vxvx = q.X * q.X; float vzvz = q.Z * q.Z; float vyvy = q.Y * q.Y;
@@ -399,19 +389,12 @@ namespace CryCil
 			this.M20 = (vxvz - svy) * 2 * s.X; this.M21 = (vyvz + svx) * 2 * s.Y; this.M22 = (1 - (vxvx + vyvy) * 2) * s.Z; this.M23 = t.Z;
 		}
 		/// <summary>
-		/// Creates a matrix that represents transformations represented by given
-		/// arguments.
+		/// Creates a matrix that represents transformations represented by given arguments.
 		/// </summary>
 		/// <param name="s"><see cref="Vector3"/> object that represents scale.</param>
-		/// <param name="q">
-		/// <see cref="Quaternion"/> object that represents rotation.
-		/// </param>
-		/// <param name="t">
-		/// Optional <see cref="Vector3"/> object that represents translation.
-		/// </param>
-		/// <returns>
-		/// Matrix that represents transformations represented by given arguments.
-		/// </returns>
+		/// <param name="q"><see cref="Quaternion"/> object that represents rotation.</param>
+		/// <param name="t">Optional <see cref="Vector3"/> object that represents translation.</param>
+		/// <returns>Matrix that represents transformations represented by given arguments.</returns>
 		public static Matrix34 Create(Vector3 s, Quaternion q, Vector3 t = default(Vector3))
 		{
 			var matrix = new Matrix34();
@@ -441,8 +424,7 @@ namespace CryCil
 			this.M20 = vx.Z; this.M21 = vy.Z; this.M22 = vz.Z; this.M23 = vw.Z;
 		}
 		/// <summary>
-		/// Creates a new matrix which columns are initialized with values supplied by
-		/// given vectors.
+		/// Creates a new matrix which columns are initialized with values supplied by given vectors.
 		/// </summary>
 		/// <param name="vx">
 		/// <see cref="Vector3"/> object that provides values for the first column.
@@ -457,8 +439,7 @@ namespace CryCil
 		/// <see cref="Vector3"/> object that provides values for the fourth column.
 		/// </param>
 		/// <returns>
-		/// New matrix which columns are initialized with values supplied by given
-		/// vectors.
+		/// New matrix which columns are initialized with values supplied by given vectors.
 		/// </returns>
 		public static Matrix34 CreateFromColumns(Vector3 vx, Vector3 vy, Vector3 vz, Vector3 vw)
 		{
@@ -468,8 +449,7 @@ namespace CryCil
 			return matrix;
 		}
 		/// <summary>
-		/// Sets value of this matrix to one that undoes all transformations this matrix
-		/// represents.
+		/// Sets value of this matrix to one that undoes all transformations this matrix represents.
 		/// </summary>
 		public void InvertFast()
 		{
@@ -479,8 +459,7 @@ namespace CryCil
 			t = this.M12; this.M12 = this.M21; this.M21 = t; this.M23 = -v.X * this.M20 - v.Y * this.M21 - v.Z * this.M22;
 		}
 		/// <summary>
-		/// Sets value of this matrix to one that undoes all transformations this matrix
-		/// represents.
+		/// Sets value of this matrix to one that undoes all transformations this matrix represents.
 		/// </summary>
 		public void Invert()
 		{
@@ -541,13 +520,11 @@ namespace CryCil
 				Math.Abs(1 - (this.ColumnVector2 | this.ColumnVector2)) < threshold;
 		}
 		/// <summary>
-		/// Determines whether this matrix has an orthonormal base in right-handed
-		/// coordinate system.
+		/// Determines whether this matrix has an orthonormal base in right-handed coordinate system.
 		/// </summary>
 		/// <param name="threshold">Precision of the check.</param>
 		/// <returns>
-		/// True, if first 3 columns are orthonormal vectors in right-handed coordinate
-		/// system.
+		/// True, if first 3 columns are orthonormal vectors in right-handed coordinate system.
 		/// </returns>
 		public bool IsOrthonormalRightHanded(float threshold = 0.001f)
 		{
@@ -557,17 +534,17 @@ namespace CryCil
 				this.ColumnVector2.IsEquivalent(this.ColumnVector0 % this.ColumnVector1, threshold);
 		}
 		/// <summary>
-		/// Determines whether this matrix can be considered equal to another one within
-		/// bounds of given precision.
+		/// Determines whether this matrix can be considered equal to another one within bounds of given
+		/// precision.
 		/// </summary>
 		/// <param name="m">Another matrix.</param>
 		/// <param name="e">
-		/// <see cref="Single"/> object that represents maximal difference between two
-		/// values that allows to consider them equal.
+		/// <see cref="Single"/> object that represents maximal difference between two values that allows
+		/// to consider them equal.
 		/// </param>
 		/// <returns>
-		/// True, if difference between values of each corresponding pair is less then
-		/// <paramref name="e"/> .
+		/// True, if difference between values of each corresponding pair is less then <paramref name="e"/>
+		/// .
 		/// </returns>
 		public bool IsEquivalent(Matrix34 m, float e = 0.05f)
 		{
@@ -662,9 +639,9 @@ namespace CryCil
 		/// Creates text representation of this matrix.
 		/// </summary>
 		/// <returns>
-		/// Text representation of this matrix where all elements are listed in a line
-		/// using default format for <see cref="Single"/> numbers and culture object
-		/// specified by <see cref="Defaults.CultureToStringOnly"/>.
+		/// Text representation of this matrix where all elements are listed in a line using default format
+		/// for <see cref="Single"/> numbers and culture object specified by
+		/// <see cref="Defaults.CultureToStringOnly"/>.
 		/// </returns>
 		public override string ToString()
 		{
@@ -678,9 +655,8 @@ namespace CryCil
 		/// <see cref="Matrix44.ToString(string,IFormatProvider)"/> for details.
 		/// </param>
 		/// <returns>
-		/// Text representation of this matrix formatted as specified by
-		/// <paramref name="format"/> argument using culture object specified by
-		/// <see cref="Defaults.CultureToStringOnly"/>.
+		/// Text representation of this matrix formatted as specified by <paramref name="format"/> argument
+		/// using culture object specified by <see cref="Defaults.CultureToStringOnly"/>.
 		/// </returns>
 		public string ToString(string format)
 		{
@@ -693,25 +669,24 @@ namespace CryCil
 		/// Object that provides culture-specific information to use in formatting.
 		/// </param>
 		/// <returns>
-		/// Text representation of this matrix where all elements are listed in a line
-		/// using default format for <see cref="Single"/> numbers and culture-specific
-		/// information supplied by <paramref name="formatProvider"/>.
+		/// Text representation of this matrix where all elements are listed in a line using default format
+		/// for <see cref="Single"/> numbers and culture-specific information supplied by
+		/// <paramref name="formatProvider"/>.
 		/// </returns>
 		public string ToString(IFormatProvider formatProvider)
 		{
 			return MatrixTextConverter.ToString(this, formatProvider);
 		}
 		/// <summary>
-		/// Creates text representation of this matrix. <see cref="MatrixTextConverter"/>
-		/// documentation for details.
+		/// Creates text representation of this matrix. <see cref="MatrixTextConverter"/> documentation for
+		/// details.
 		/// </summary>
 		/// <param name="format">        
-		/// A string that describes a format of this matrix. See Remarks section for
-		/// details.
+		/// A string that describes a format of this matrix. See Remarks section for details.
 		/// </param>
 		/// <param name="formatProvider">
-		/// Object that provides culture-specific information on how to create text
-		/// representations of numbers.
+		/// Object that provides culture-specific information on how to create text representations of
+		/// numbers.
 		/// </param>
 		/// <returns>Text representation specified by given arguments.</returns>
 		public string ToString(string format, IFormatProvider formatProvider)
@@ -721,9 +696,7 @@ namespace CryCil
 		/// <summary>
 		/// Creates text representation of this matrix.
 		/// </summary>
-		/// <param name="format">
-		/// Object that provides details on how to format the text.
-		/// </param>
+		/// <param name="format">Object that provides details on how to format the text.</param>
 		/// <returns>Formatted text representation of the matrix.</returns>
 		public string ToString(MatrixTextFormat format)
 		{
@@ -735,8 +708,7 @@ namespace CryCil
 		/// Apples scaling to the columns of the matrix.
 		/// </summary>
 		/// <param name="s">
-		/// <see cref="Vector3"/> object which X component will scale first column, Y -
-		/// second, Z - third.
+		/// <see cref="Vector3"/> object which X component will scale first column, Y - second, Z - third.
 		/// </param>
 		public void ScaleColumns(Vector3 s)
 		{
@@ -748,8 +720,8 @@ namespace CryCil
 		/// Apples scaling to the columns of the matrix.
 		/// </summary>
 		/// <param name="s">
-		/// <see cref="Vector4"/> object which X component will scale first column, Y -
-		/// second, Z - third, W - fourth.
+		/// <see cref="Vector4"/> object which X component will scale first column, Y - second, Z - third,
+		/// W - fourth.
 		/// </param>
 		public void ScaleColumns(Vector4 s)
 		{

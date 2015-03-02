@@ -11,8 +11,8 @@ namespace CryEngine.Logic.Actors
 	public abstract class ActorBase : EntityBase
 	{
 		/// <summary>
-		/// Gets a value indicating whether this actor is controlled by the local client.
-		/// See <see cref="Actor.LocalClient"/>.
+		/// Gets a value indicating whether this actor is controlled by the local client. See
+		/// <see cref="Actor.LocalClient"/>.
 		/// </summary>
 		public bool IsLocalClient
 		{

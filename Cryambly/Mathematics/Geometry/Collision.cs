@@ -163,15 +163,13 @@ namespace CryCil.Geometry
 		}
 
 		/// <summary>
-		/// Determines the closest point between a <see cref="BoundingSphere"/> and a
-		/// point.
+		/// Determines the closest point between a <see cref="BoundingSphere"/> and a point.
 		/// </summary>
 		/// <param name="sphere"></param>
 		/// <param name="point"> The point to test.</param>
 		/// <param name="result">
-		/// When the method completes, contains the closest point between the two objects;
-		/// or, if the point is directly in the center of the sphere, contains
-		/// <see cref="Vector3"/>.
+		/// When the method completes, contains the closest point between the two objects; or, if the point
+		/// is directly in the center of the sphere, contains <see cref="Vector3"/>.
 		/// </param>
 		public static void ClosestPointSpherePoint(ref BoundingSphere sphere, ref Vector3 point, out Vector3 result)
 		{
@@ -182,8 +180,7 @@ namespace CryCil.Geometry
 			result = point - sphere.Center;
 			result.Normalize();
 
-			// Multiply the unit direction by the sphere's radius to get a vector the
-			// length of the sphere.
+			// Multiply the unit direction by the sphere's radius to get a vector the length of the sphere.
 			result *= sphere.Radius;
 
 			// Add the sphere's center to the direction to get a point on the sphere.
@@ -197,31 +194,28 @@ namespace CryCil.Geometry
 		/// <param name="sphere1">The first sphere to test.</param>
 		/// <param name="sphere2">The second sphere to test.</param>
 		/// <param name="result"> 
-		/// When the method completes, contains the closest point between the two objects;
-		/// or, if the point is directly in the center of the sphere, contains
-		/// <see cref="Vector3"/>.
+		/// When the method completes, contains the closest point between the two objects; or, if the point
+		/// is directly in the center of the sphere, contains <see cref="Vector3"/>.
 		/// </param>
 		/// <remarks>
-		/// If the two spheres are overlapping, but not directly on top of each other, the
-		/// closest point is the 'closest' point of intersection. This can also be
-		/// considered is the deepest point of intersection.
+		/// If the two spheres are overlapping, but not directly on top of each other, the closest point is
+		/// the 'closest' point of intersection. This can also be considered is the deepest point of
+		/// intersection.
 		/// </remarks>
 		public static void ClosestPointSphereSphere(ref BoundingSphere sphere1, ref BoundingSphere sphere2, out Vector3 result)
 		{
 			// Source: Jorgy343
 			// Reference: None
 
-			// Get the unit direction from the first sphere's center to the second
-			// sphere's center.
+			// Get the unit direction from the first sphere's center to the second sphere's center.
 			result = sphere2.Center - sphere1.Center;
 			result.Normalize();
 
-			// Multiply the unit direction by the first sphere's radius to get a vector
-			// the length of the first sphere.
+			// Multiply the unit direction by the first sphere's radius to get a vector the length of the
+			// first sphere.
 			result *= sphere1.Radius;
 
-			// Add the first sphere's center to the direction to get a point on the first
-			// sphere.
+			// Add the first sphere's center to the direction to get a point on the first sphere.
 			result += sphere1.Center;
 		}
 
@@ -272,8 +266,7 @@ namespace CryCil.Geometry
 		}
 
 		/// <summary>
-		/// Determines the distance between a <see cref="BoundingBox"/> and a
-		/// <see cref="BoundingBox"/>.
+		/// Determines the distance between a <see cref="BoundingBox"/> and a <see cref="BoundingBox"/>.
 		/// </summary>
 		/// <param name="box1">The first box to test.</param>
 		/// <param name="box2">The second box to test.</param>
@@ -357,8 +350,7 @@ namespace CryCil.Geometry
 		}
 
 		/// <summary>
-		/// Determines whether there is an intersection between a <see cref="Ray"/> and a
-		/// point.
+		/// Determines whether there is an intersection between a <see cref="Ray"/> and a point.
 		/// </summary>
 		/// <param name="ray">  The ray to test.</param>
 		/// <param name="point">The point to test.</param>
@@ -370,8 +362,8 @@ namespace CryCil.Geometry
 
 			Vector3 m = ray.Position - point;
 
-			// Same thing as RayIntersectsSphere except that the radius of the sphere
-			// (point) is the epsilon for zero.
+			// Same thing as RayIntersectsSphere except that the radius of the sphere (point) is the
+			// epsilon for zero.
 			float b = Vector3.Dot(m, ray.Direction);
 			float c = Vector3.Dot(m, m) - MathHelpers.ZeroTolerance;
 
@@ -393,13 +385,13 @@ namespace CryCil.Geometry
 		/// <param name="ray1"> The first ray to test.</param>
 		/// <param name="ray2"> The second ray to test.</param>
 		/// <param name="point">
-		/// When the method completes, contains the point of intersection, or
-		/// <see cref="Vector3"/> if there was no intersection.
+		/// When the method completes, contains the point of intersection, or <see cref="Vector3"/> if
+		/// there was no intersection.
 		/// </param>
 		/// <returns>Whether the two objects intersect.</returns>
 		/// <remarks>
-		/// This method performs a ray vs ray intersection test based on the following
-		/// formula from Goldman.
+		/// This method performs a ray vs ray intersection test based on the following formula from
+		/// Goldman.
 		/// <code>
 		/// s = det([o_2
 		/// - o_1, d_2, d_1 x d_2]) / ||d_1 x d_2||^2
@@ -408,11 +400,10 @@ namespace CryCil.Geometry
 		/// t =
 		/// det([o_2 - o_1, d_1, d_1 x d_2]) / ||d_1 x d_2||^2
 		/// </code>
-		/// Where o_1 is the position of the first ray, o_2 is the position of the second
-		/// ray, d_1 is the normalized direction of the first ray, d_2 is the normalized
-		/// direction of the second ray, det denotes the determinant of a matrix, x
-		/// denotes the cross product, [ ] denotes a matrix, and || || denotes the length
-		/// or magnitude of a vector.
+		/// Where o_1 is the position of the first ray, o_2 is the position of the second ray, d_1 is the
+		/// normalized direction of the first ray, d_2 is the normalized direction of the second ray, det
+		/// denotes the determinant of a matrix, x denotes the cross product, [ ] denotes a matrix, and ||
+		/// || denotes the length or magnitude of a vector.
 		/// </remarks>
 		public static bool RayIntersectsRay(ref Ray ray1, ref Ray ray2, out Vector3 point)
 		{
@@ -499,8 +490,8 @@ namespace CryCil.Geometry
 		/// <param name="ray">     The ray to test.</param>
 		/// <param name="plane">   The plane to test.</param>
 		/// <param name="distance">
-		/// When the method completes, contains the distance of the intersection, or 0 if
-		/// there was no intersection.
+		/// When the method completes, contains the distance of the intersection, or 0 if there was no
+		/// intersection.
 		/// </param>
 		/// <returns>Whether the two objects intersect.</returns>
 		public static bool RayIntersectsPlane(ref Ray ray, ref Plane plane, out float distance)
@@ -540,8 +531,8 @@ namespace CryCil.Geometry
 		/// <param name="ray">  The ray to test.</param>
 		/// <param name="plane">The plane to test</param>
 		/// <param name="point">
-		/// When the method completes, contains the point of intersection, or
-		/// <see cref="Vector3"/> if there was no intersection.
+		/// When the method completes, contains the point of intersection, or <see cref="Vector3"/> if
+		/// there was no intersection.
 		/// </param>
 		/// <returns>Whether the two objects intersected.</returns>
 		public static bool RayIntersectsPlane(ref Ray ray, ref Plane plane, out Vector3 point)
@@ -561,24 +552,22 @@ namespace CryCil.Geometry
 		}
 
 		/// <summary>
-		/// Determines whether there is an intersection between a <see cref="Ray"/> and a
-		/// triangle.
+		/// Determines whether there is an intersection between a <see cref="Ray"/> and a triangle.
 		/// </summary>
 		/// <param name="ray">     The ray to test.</param>
 		/// <param name="vertex1"> The first vertex of the triangle to test.</param>
 		/// <param name="vertex2"> The second vertex of the triagnle to test.</param>
 		/// <param name="vertex3"> The third vertex of the triangle to test.</param>
 		/// <param name="distance">
-		/// When the method completes, contains the distance of the intersection, or 0 if
-		/// there was no intersection.
+		/// When the method completes, contains the distance of the intersection, or 0 if there was no
+		/// intersection.
 		/// </param>
 		/// <returns>Whether the two objects intersected.</returns>
 		/// <remarks>
-		/// This method tests if the ray intersects either the front or back of the
-		/// triangle. If the ray is parallel to the triangle's plane, no intersection is
-		/// assumed to have happened. If the intersection of the ray and the triangle is
-		/// behind the origin of the ray, no intersection is assumed to have happened. In
-		/// both cases of assumptions, this method returns false.
+		/// This method tests if the ray intersects either the front or back of the triangle. If the ray is
+		/// parallel to the triangle's plane, no intersection is assumed to have happened. If the
+		/// intersection of the ray and the triangle is behind the origin of the ray, no intersection is
+		/// assumed to have happened. In both cases of assumptions, this method returns false.
 		/// </remarks>
 		public static bool RayIntersectsTriangle(ref Ray ray, ref Vector3 vertex1, ref Vector3 vertex2, ref Vector3 vertex3, out float distance)
 		{
@@ -604,13 +593,11 @@ namespace CryCil.Geometry
 			directioncrossedge2.Y = (ray.Direction.Z * edge2.X) - (ray.Direction.X * edge2.Z);
 			directioncrossedge2.Z = (ray.Direction.X * edge2.Y) - (ray.Direction.Y * edge2.X);
 
-			// Compute the determinant. Dot product of edge1 and the first part of
-			// determinant.
+			// Compute the determinant. Dot product of edge1 and the first part of determinant.
 			float determinant = (edge1.X * directioncrossedge2.X) + (edge1.Y * directioncrossedge2.Y) + (edge1.Z * directioncrossedge2.Z);
 
-			// If the ray is parallel to the triangle plane, there is no collision. This
-			// also means that we are not culling, the ray may hit both the back and the
-			// front of the triangle.
+			// If the ray is parallel to the triangle plane, there is no collision. This also means that we
+			// are not culling, the ray may hit both the back and the front of the triangle.
 			if (determinant > -MathHelpers.ZeroTolerance && determinant < MathHelpers.ZeroTolerance)
 			{
 				distance = 0f;
@@ -667,16 +654,15 @@ namespace CryCil.Geometry
 		}
 
 		/// <summary>
-		/// Determines whether there is an intersection between a <see cref="Ray"/> and a
-		/// triangle.
+		/// Determines whether there is an intersection between a <see cref="Ray"/> and a triangle.
 		/// </summary>
 		/// <param name="ray">    The ray to test.</param>
 		/// <param name="vertex1">The first vertex of the triangle to test.</param>
 		/// <param name="vertex2">The second vertex of the triagnle to test.</param>
 		/// <param name="vertex3">The third vertex of the triangle to test.</param>
 		/// <param name="point">  
-		/// When the method completes, contains the point of intersection, or
-		/// <see cref="Vector3"/> if there was no intersection.
+		/// When the method completes, contains the point of intersection, or <see cref="Vector3"/> if
+		/// there was no intersection.
 		/// </param>
 		/// <returns>Whether the two objects intersected.</returns>
 		public static bool RayIntersectsTriangle(ref Ray ray, ref Vector3 vertex1, ref Vector3 vertex2, ref Vector3 vertex3, out Vector3 point)
@@ -699,8 +685,8 @@ namespace CryCil.Geometry
 		/// <param name="ray">     The ray to test.</param>
 		/// <param name="box">     The box to test.</param>
 		/// <param name="distance">
-		/// When the method completes, contains the distance of the intersection, or 0 if
-		/// there was no intersection.
+		/// When the method completes, contains the distance of the intersection, or 0 if there was no
+		/// intersection.
 		/// </param>
 		/// <returns>Whether the two objects intersected.</returns>
 		public static bool RayIntersectsBox(ref Ray ray, ref BoundingBox box, out float distance)
@@ -814,8 +800,8 @@ namespace CryCil.Geometry
 		/// <param name="ray">  The ray to test.</param>
 		/// <param name="box">  The box to test.</param>
 		/// <param name="point">
-		/// When the method completes, contains the point of intersection, or
-		/// <see cref="Vector3"/> if there was no intersection.
+		/// When the method completes, contains the point of intersection, or <see cref="Vector3"/> if
+		/// there was no intersection.
 		/// </param>
 		/// <returns>Whether the two objects intersected.</returns>
 		public static bool RayIntersectsBox(ref Ray ray, ref BoundingBox box, out Vector3 point)
@@ -838,8 +824,8 @@ namespace CryCil.Geometry
 		/// <param name="ray">     The ray to test.</param>
 		/// <param name="sphere">  The sphere to test.</param>
 		/// <param name="distance">
-		/// When the method completes, contains the distance of the intersection, or 0 if
-		/// there was no intersection.
+		/// When the method completes, contains the distance of the intersection, or 0 if there was no
+		/// intersection.
 		/// </param>
 		/// <returns>Whether the two objects intersected.</returns>
 		public static bool RayIntersectsSphere(ref Ray ray, ref BoundingSphere sphere, out float distance)
@@ -881,8 +867,8 @@ namespace CryCil.Geometry
 		/// <param name="ray">   The ray to test.</param>
 		/// <param name="sphere">The sphere to test.</param>
 		/// <param name="point"> 
-		/// When the method completes, contains the point of intersection, or
-		/// <see cref="Vector3"/> if there was no intersection.
+		/// When the method completes, contains the point of intersection, or <see cref="Vector3"/> if
+		/// there was no intersection.
 		/// </param>
 		/// <returns>Whether the two objects intersected.</returns>
 		public static bool RayIntersectsSphere(ref Ray ray, ref BoundingSphere sphere, out Vector3 point)
@@ -899,8 +885,7 @@ namespace CryCil.Geometry
 		}
 
 		/// <summary>
-		/// Determines whether there is an intersection between a <see cref="Plane"/> and
-		/// a point.
+		/// Determines whether there is an intersection between a <see cref="Plane"/> and a point.
 		/// </summary>
 		/// <param name="plane">The plane to test.</param>
 		/// <param name="point">The point to test.</param>
@@ -920,8 +905,8 @@ namespace CryCil.Geometry
 		}
 
 		/// <summary>
-		/// Determines whether there is an intersection between a <see cref="Plane"/> and
-		/// a <see cref="Plane"/>.
+		/// Determines whether there is an intersection between a <see cref="Plane"/> and a
+		/// <see cref="Plane"/>.
 		/// </summary>
 		/// <param name="plane1">The first plane to test.</param>
 		/// <param name="plane2">The second plane to test.</param>
@@ -930,29 +915,28 @@ namespace CryCil.Geometry
 		{
 			Vector3 direction = Vector3.Cross(plane1.Normal, plane2.Normal);
 
-			// If direction is the zero vector, the planes are parallel and possibly
-			// coincident. It is not an intersection. The dot product will tell us.
+			// If direction is the zero vector, the planes are parallel and possibly coincident. It is not
+			// an intersection. The dot product will tell us.
 			float denominator = direction.LengthSquared;
 
 			return !(Math.Abs(denominator) < MathHelpers.ZeroTolerance);
 		}
 
 		/// <summary>
-		/// Determines whether there is an intersection between a <see cref="Plane"/> and
-		/// a <see cref="Plane"/>.
+		/// Determines whether there is an intersection between a <see cref="Plane"/> and a
+		/// <see cref="Plane"/>.
 		/// </summary>
 		/// <param name="plane1">The first plane to test.</param>
 		/// <param name="plane2">The second plane to test.</param>
 		/// <param name="line">  
-		/// When the method completes, contains the line of intersection as a
-		/// <see cref="Ray"/>, or a zero ray if there was no intersection.
+		/// When the method completes, contains the line of intersection as a <see cref="Ray"/>, or a zero
+		/// ray if there was no intersection.
 		/// </param>
 		/// <returns>Whether the two objects intersected.</returns>
 		/// <remarks>
-		/// Although a ray is set to have an origin, the ray returned by this method is
-		/// really a line in three dimensions which has no real origin. The ray is
-		/// considered valid when both the positive direction is used and when the
-		/// negative direction is used.
+		/// Although a ray is set to have an origin, the ray returned by this method is really a line in
+		/// three dimensions which has no real origin. The ray is considered valid when both the positive
+		/// direction is used and when the negative direction is used.
 		/// </remarks>
 		public static bool PlaneIntersectsPlane(ref Plane plane1, ref Plane plane2, out Ray line)
 		{
@@ -961,13 +945,12 @@ namespace CryCil.Geometry
 
 			Vector3 direction = Vector3.Cross(plane1.Normal, plane2.Normal);
 
-			// If direction is the zero vector, the planes are parallel and possibly
-			// coincident. It is not an intersection. The dot product will tell us.
+			// If direction is the zero vector, the planes are parallel and possibly coincident. It is not
+			// an intersection. The dot product will tell us.
 			float denominator = direction.LengthSquared;
 
-			// We assume the planes are normalized, therefore the denominator only serves
-			// as a parallel and coincident check. Otherwise we need to divide the point
-			// by the denominator.
+			// We assume the planes are normalized, therefore the denominator only serves as a parallel and
+			// coincident check. Otherwise we need to divide the point by the denominator.
 			if (Math.Abs(denominator) < MathHelpers.ZeroTolerance)
 			{
 				line = new Ray();
@@ -985,8 +968,7 @@ namespace CryCil.Geometry
 		}
 
 		/// <summary>
-		/// Determines whether there is an intersection between a <see cref="Plane"/> and
-		/// a triangle.
+		/// Determines whether there is an intersection between a <see cref="Plane"/> and a triangle.
 		/// </summary>
 		/// <param name="plane">  The plane to test.</param>
 		/// <param name="vertex1">The first vertex of the triangle to test.</param>
@@ -1012,8 +994,8 @@ namespace CryCil.Geometry
 		}
 
 		/// <summary>
-		/// Determines whether there is an intersection between a <see cref="Plane"/> and
-		/// a <see cref="BoundingBox"/>.
+		/// Determines whether there is an intersection between a <see cref="Plane"/> and a
+		/// <see cref="BoundingBox"/>.
 		/// </summary>
 		/// <param name="plane">The plane to test.</param>
 		/// <param name="box">  The box to test.</param>
@@ -1047,8 +1029,8 @@ namespace CryCil.Geometry
 		}
 
 		/// <summary>
-		/// Determines whether there is an intersection between a <see cref="Plane"/> and
-		/// a <see cref="BoundingSphere"/>.
+		/// Determines whether there is an intersection between a <see cref="Plane"/> and a
+		/// <see cref="BoundingSphere"/>.
 		/// </summary>
 		/// <param name="plane"> The plane to test.</param>
 		/// <param name="sphere">The sphere to test.</param>
@@ -1072,8 +1054,8 @@ namespace CryCil.Geometry
 
 		/* This implementation is wrong
 		/// <summary>
-		/// Determines whether there is an intersection between a
-		/// <see cref="CryEngine.BoundingBox"/> and a triangle.
+		/// Determines whether there is an intersection between a <see cref="CryEngine.BoundingBox"/> and a
+		/// triangle.
 		/// </summary>
 		/// <param name="box">    The box to test.</param>
 		/// <param name="vertex1">The first vertex of the triangle to test.</param>
@@ -1096,8 +1078,8 @@ namespace CryCil.Geometry
 		*/
 
 		/// <summary>
-		/// Determines whether there is an intersection between a
-		/// <see cref="BoundingBox"/> and a <see cref="BoundingBox"/>.
+		/// Determines whether there is an intersection between a <see cref="BoundingBox"/> and a
+		/// <see cref="BoundingBox"/>.
 		/// </summary>
 		/// <param name="box1">The first box to test.</param>
 		/// <param name="box2">The second box to test.</param>
@@ -1117,8 +1099,8 @@ namespace CryCil.Geometry
 		}
 
 		/// <summary>
-		/// Determines whether there is an intersection between a
-		/// <see cref="BoundingBox"/> and a <see cref="BoundingSphere"/>.
+		/// Determines whether there is an intersection between a <see cref="BoundingBox"/> and a
+		/// <see cref="BoundingSphere"/>.
 		/// </summary>
 		/// <param name="box">   The box to test.</param>
 		/// <param name="sphere">The sphere to test.</param>
@@ -1136,8 +1118,8 @@ namespace CryCil.Geometry
 		}
 
 		/// <summary>
-		/// Determines whether there is an intersection between a
-		/// <see cref="BoundingSphere"/> and a triangle.
+		/// Determines whether there is an intersection between a <see cref="BoundingSphere"/> and a
+		/// triangle.
 		/// </summary>
 		/// <param name="sphere"> The sphere to test.</param>
 		/// <param name="vertex1">The first vertex of the triangle to test.</param>
@@ -1159,8 +1141,8 @@ namespace CryCil.Geometry
 		}
 
 		/// <summary>
-		/// Determines whether there is an intersection between a
-		/// <see cref="BoundingSphere"/> and a <see cref="BoundingSphere"/>.
+		/// Determines whether there is an intersection between a <see cref="BoundingSphere"/> and a
+		/// <see cref="BoundingSphere"/>.
 		/// </summary>
 		/// <param name="sphere1">First sphere to test.</param>
 		/// <param name="sphere2">Second sphere to test.</param>
@@ -1210,8 +1192,7 @@ namespace CryCil.Geometry
 		*/
 
 		/// <summary>
-		/// Determines whether a <see cref="BoundingBox"/> contains a
-		/// <see cref="BoundingBox"/>.
+		/// Determines whether a <see cref="BoundingBox"/> contains a <see cref="BoundingBox"/>.
 		/// </summary>
 		/// <param name="box1">The first box to test.</param>
 		/// <param name="box2">The second box to test.</param>
@@ -1238,8 +1219,7 @@ namespace CryCil.Geometry
 		}
 
 		/// <summary>
-		/// Determines whether a <see cref="BoundingBox"/> contains a
-		/// <see cref="BoundingSphere"/>.
+		/// Determines whether a <see cref="BoundingBox"/> contains a <see cref="BoundingSphere"/>.
 		/// </summary>
 		/// <param name="box">   The box to test.</param>
 		/// <param name="sphere">The sphere to test.</param>
@@ -1297,8 +1277,7 @@ namespace CryCil.Geometry
 		}
 
 		/// <summary>
-		/// Determines whether a <see cref="BoundingSphere"/> contains a
-		/// <see cref="BoundingBox"/>.
+		/// Determines whether a <see cref="BoundingSphere"/> contains a <see cref="BoundingBox"/>.
 		/// </summary>
 		/// <param name="sphere">The sphere to test.</param>
 		/// <param name="box">   The box to test.</param>
@@ -1370,8 +1349,7 @@ namespace CryCil.Geometry
 		}
 
 		/// <summary>
-		/// Determines whether a <see cref="BoundingSphere"/> contains a
-		/// <see cref="BoundingSphere"/>.
+		/// Determines whether a <see cref="BoundingSphere"/> contains a <see cref="BoundingSphere"/>.
 		/// </summary>
 		/// <param name="sphere1">The first sphere to test.</param>
 		/// <param name="sphere2">The second sphere to test.</param>

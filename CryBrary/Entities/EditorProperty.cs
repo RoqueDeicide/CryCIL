@@ -4,8 +4,7 @@ using CryEngine.Mathematics;
 namespace CryEngine.Entities
 {
 	/// <summary>
-	/// Encapsulates details about the property of the entity that can be edited from
-	/// Sandbox editor.
+	/// Encapsulates details about the property of the entity that can be edited from Sandbox editor.
 	/// </summary>
 	public struct EditorProperty
 	{
@@ -74,8 +73,7 @@ namespace CryEngine.Entities
 				this.EditorTypePrefix = typePrefixes[valueId];
 				if (valueId > 3 && value == EditorPropertyType.Color)
 				{
-					// Everything that is a some form of text is assigned String as a
-					// type.
+					// Everything that is a some form of text is assigned String as a type.
 					this.type = EditorPropertyType.String;
 				}
 				else if (value == EditorPropertyType.Color)

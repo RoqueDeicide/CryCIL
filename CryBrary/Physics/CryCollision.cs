@@ -73,23 +73,22 @@ namespace CryEngine.Physics
 		/// </summary>
 		public Vector3 Velocity1;
 		/// <summary>
-		/// Two instances of <see cref="Single"/> in one object that represent masses of
-		/// two objects.
+		/// Two instances of <see cref="Single"/> in one object that represent masses of two objects.
 		/// </summary>
 		public Bytes8 Masses;
 		/// <summary>
-		/// Two instances of <see cref="Int32"/> in one object that represent identifiers
-		/// of touching parts of two entities.
+		/// Two instances of <see cref="Int32"/> in one object that represent identifiers of touching parts
+		/// of two entities.
 		/// </summary>
 		public Bytes8 PartIds;
 		/// <summary>
-		/// Two instances of <see cref="Int16"/> in one object that represent identifiers
-		/// of materials of touching parts of two entities.
+		/// Two instances of <see cref="Int16"/> in one object that represent identifiers of materials of
+		/// touching parts of two entities.
 		/// </summary>
 		public Bytes4 MaterialIds;
 		/// <summary>
-		/// Two instances of <see cref="Int16"/> in one object that represent identifiers
-		/// of primitives that can represent the entities.
+		/// Two instances of <see cref="Int16"/> in one object that represent identifiers of primitives
+		/// that can represent the entities.
 		/// </summary>
 		public Bytes4 PrimitiveIds;
 		/// <summary>
@@ -97,8 +96,8 @@ namespace CryEngine.Physics
 		/// </summary>
 		public float PenetrationDepth;
 		/// <summary>
-		/// Magnitude of the impulse that is applied to entities by the solver in attempt
-		/// resolving the collision.
+		/// Magnitude of the impulse that is applied to entities by the solver in attempt resolving the
+		/// collision.
 		/// </summary>
 		public float NormalImpulse;
 		/// <summary>

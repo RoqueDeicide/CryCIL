@@ -12,9 +12,7 @@ namespace CryEngine.Console.Commands
 		/// <summary>
 		/// Executes a string in the console
 		/// </summary>
-		/// <param name="command">
-		/// console command e.g. "map testy" - no leading slash
-		/// </param>
+		/// <param name="command">console command e.g. "map testy" - no leading slash</param>
 		/// <param name="silent"> 
 		/// suppresses log in error case and logging the command to the console
 		/// </param>

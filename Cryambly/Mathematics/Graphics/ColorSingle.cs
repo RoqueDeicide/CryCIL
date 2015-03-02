@@ -83,8 +83,7 @@ namespace CryCil.Graphics
 		#endregion
 		#region Construction
 		/// <summary>
-		/// Constructs a new color object specifying the red, green, blue and alpha
-		/// values.
+		/// Constructs a new color object specifying the red, green, blue and alpha values.
 		/// </summary>
 		/// <param name="red">  Red component of the color.</param>
 		/// <param name="green">Green component of the color.</param>
@@ -99,8 +98,7 @@ namespace CryCil.Graphics
 			this.A = alpha;
 		}
 		/// <summary>
-		/// Constructs a new color object specifying the red, green, blue and alpha
-		/// values.
+		/// Constructs a new color object specifying the red, green, blue and alpha values.
 		/// </summary>
 		/// <param name="rgb"><see cref="Vector3"/> that specifies RGB values.</param>
 		/// <param name="a">  Alpha component of the color.</param>
@@ -130,9 +128,7 @@ namespace CryCil.Graphics
 		/// Determines whether this object is equal to another.
 		/// </summary>
 		/// <param name="obj">Another object.</param>
-		/// <returns>
-		/// True, if objects are of the same type and are equal, otherwise false.
-		/// </returns>
+		/// <returns>True, if objects are of the same type and are equal, otherwise false.</returns>
 		public override bool Equals(object obj)
 		{
 			if (obj is ColorSingle)
@@ -144,9 +140,8 @@ namespace CryCil.Graphics
 		/// Creates text representation of this color.
 		/// </summary>
 		/// <returns>
-		/// Text representation of this color using R r G g B b A a format with
-		/// capitalized letters being present in the output and lower-case letters being
-		/// replaced by corresponding color values.
+		/// Text representation of this color using R r G g B b A a format with capitalized letters being
+		/// present in the output and lower-case letters being replaced by corresponding color values.
 		/// </returns>
 		public override string ToString()
 		{
@@ -218,8 +213,7 @@ namespace CryCil.Graphics
 		/// </summary>
 		/// <param name="color">Color to invert.</param>
 		/// <returns>
-		/// Color where each component is a negated corresponding component of the given
-		/// color object.
+		/// Color where each component is a negated corresponding component of the given color object.
 		/// </returns>
 		public static ColorSingle operator -(ColorSingle color)
 		{

@@ -1,16 +1,16 @@
 ﻿using System;
 
 #pragma warning disable 1591
-// ReSharper disable UnusedMember.Global ReSharper disable UnusedParameter.Local ReSharper
-// disable MemberCanBePrivate.Global ReSharper disable UnusedAutoPropertyAccessor.Global
-// ReSharper disable IntroduceOptionalParameters.Global ReSharper disable
-// MemberCanBeProtected.Global ReSharper disable InconsistentNaming
+// ReSharper disable UnusedMember.Global ReSharper disable UnusedParameter.Local ReSharper disable
+// MemberCanBePrivate.Global ReSharper disable UnusedAutoPropertyAccessor.Global ReSharper disable
+// IntroduceOptionalParameters.Global ReSharper disable MemberCanBeProtected.Global ReSharper disable
+// InconsistentNaming
 
 namespace CryEngine.Annotations
 {
 	/// <summary>
-	/// Indicates that the value of the marked element could be <c>null</c> sometimes, so
-	/// the check for <c>null</c> is necessary before its usage
+	/// Indicates that the value of the marked element could be <c>null</c> sometimes, so the check for
+	/// <c>null</c> is necessary before its usage
 	/// </summary>
 	/// <example>
 	/// <code>
@@ -44,10 +44,9 @@ namespace CryEngine.Annotations
 	public sealed class NotNullAttribute : Attribute { }
 
 	/// <summary>
-	/// Indicates that the marked method builds string by format pattern and (optional)
-	/// arguments. Parameter, which contains format string, should be given in
-	/// constructor. The format string should be in
-	/// <see cref="string.Format(IFormatProvider,string,object[])"/>-like form
+	/// Indicates that the marked method builds string by format pattern and (optional) arguments.
+	/// Parameter, which contains format string, should be given in constructor. The format string should
+	/// be in <see cref="string.Format(IFormatProvider,string,object[])"/>-like form
 	/// </summary>
 	/// <example>
 	/// <code>
@@ -64,8 +63,7 @@ namespace CryEngine.Annotations
 	public sealed class StringFormatMethodAttribute : Attribute
 	{
 		/// <param name="formatParameterName">
-		/// Specifies which parameter of an annotated method should be treated as
-		/// format-string
+		/// Specifies which parameter of an annotated method should be treated as format-string
 		/// </param>
 		public StringFormatMethodAttribute(string formatParameterName)
 		{
@@ -76,9 +74,9 @@ namespace CryEngine.Annotations
 	}
 
 	/// <summary>
-	/// Indicates that the function argument should be string literal and match one of the
-	/// parameters of the caller function. For example, ReSharper annotates the parameter
-	/// of <see cref="System.ArgumentNullException"/>
+	/// Indicates that the function argument should be string literal and match one of the parameters of
+	/// the caller function. For example, ReSharper annotates the parameter of
+	/// <see cref="System.ArgumentNullException"/>
 	/// </summary>
 	/// <example>
 	/// <code>
@@ -93,8 +91,8 @@ namespace CryEngine.Annotations
 
 	/// <summary>
 	/// Indicates that the method is contained in a type that implements
-	/// <see cref="System.ComponentModel.INotifyPropertyChanged"/> interface and this
-	/// method is used to notify that some property value changed
+	/// <see cref="System.ComponentModel.INotifyPropertyChanged"/> interface and this method is used to
+	/// notify that some property value changed
 	/// </summary>
 	/// <remarks>
 	/// The method should be non-static and conform to one of the supported signatures:
@@ -119,8 +117,7 @@ namespace CryEngine.Annotations
 	/// Examples of generated notifications:
 	/// <list><item><c>NotifyChanged("Property")</c></item><item><c>NotifyChanged(() =&gt;
 	/// Property) </c></item><item><c>NotifyChanged((VM x) =&gt;
-	/// x.Property)</c></item><item><c>SetProperty(ref myField, value,
-	/// "Property")</c></item></list>
+	/// x.Property)</c></item><item><c>SetProperty(ref myField, value, "Property")</c></item></list>
 	/// </example>
 	[AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
 	public sealed class NotifyPropertyChangedInvocatorAttribute : Attribute
@@ -139,16 +136,15 @@ namespace CryEngine.Annotations
 	/// </summary>
 	/// <syntax>
 	/// <p>Function Definition Table syntax:</p>
-	/// <list><item>FDT ::= FDTRow [;FDTRow]*</item><item>FDTRow ::= Input =&gt; Output |
-	/// Output &lt;= Input</item><item>Input ::= ParameterName: Value [,
-	/// Input]*</item><item>Output ::= [ParameterName: Value]*
-	/// {halt|stop|void|nothing|Value}</item><item>Value ::= true | false | null | notnull
-	/// | canbenull</item></list> If method has single input parameter, it's name could be
-	/// omitted. <br/> Using <c>halt</c> (or <c>void</c>/ <c>nothing</c>, which is the
-	/// same) for method output means that the methos doesn't return normally.
-	///       <br/><c>canbenull</c> annotation is only applicable for output parameters.
-	///       <br/> You can use multiple <c>[ContractAnnotation]</c> for each FDT row, or
-	/// use single attribute with rows separated by semicolon. <br/>
+	/// <list><item>FDT ::= FDTRow [;FDTRow]*</item><item>FDTRow ::= Input =&gt; Output | Output &lt;=
+	/// Input</item><item>Input ::= ParameterName: Value [, Input]*</item><item>Output ::= [ParameterName:
+	/// Value]* {halt|stop|void|nothing|Value}</item><item>Value ::= true | false | null | notnull |
+	/// canbenull</item></list> If method has single input parameter, it's name could be omitted. <br/>
+	/// Using <c>halt</c> (or <c>void</c>/ <c>nothing</c>, which is the
+	/// same) for method output means that the methos doesn't return normally. <br/><c>canbenull</c>
+	///       annotation is only applicable for output parameters. <br/> You can use multiple
+	///       <c>[ContractAnnotation]</c> for each FDT row, or use single attribute with rows separated by
+	/// semicolon. <br/>
 	/// </syntax>
 	/// <examples>
 	/// <list><item>
@@ -214,9 +210,9 @@ namespace CryEngine.Annotations
 	}
 
 	/// <summary>
-	/// Indicates that the value of the marked type (or its derivatives) cannot be
-	/// compared using '==' or '!=' operators and <c>Equals()</c> should be used instead.
-	/// However, using '==' or '!=' for comparison with <c>null</c> is always permitted.
+	/// Indicates that the value of the marked type (or its derivatives) cannot be compared using '==' or
+	/// '!=' operators and <c>Equals()</c> should be used instead. However, using '==' or '!=' for
+	/// comparison with <c>null</c> is always permitted.
 	/// </summary>
 	/// <example>
 	/// <code>
@@ -239,8 +235,8 @@ namespace CryEngine.Annotations
 	public sealed class CannotApplyEqualityOperatorAttribute : Attribute { }
 
 	/// <summary>
-	/// When applied to a target attribute, specifies a requirement for any type marked
-	/// with the target attribute to implement or inherit specific type or types.
+	/// When applied to a target attribute, specifies a requirement for any type marked with the target
+	/// attribute to implement or inherit specific type or types.
 	/// </summary>
 	/// <example>
 	/// <code>
@@ -264,9 +260,8 @@ namespace CryEngine.Annotations
 	}
 
 	/// <summary>
-	/// Indicates that the marked symbol is used implicitly (e.g. via reflection, in
-	/// external library), so this symbol will not be marked as unused (as well as by
-	/// other usage inspections)
+	/// Indicates that the marked symbol is used implicitly (e.g. via reflection, in external library), so
+	/// this symbol will not be marked as unused (as well as by other usage inspections)
 	/// </summary>
 	[AttributeUsage(AttributeTargets.All, AllowMultiple = false, Inherited = true)]
 	public sealed class UsedImplicitlyAttribute : Attribute
@@ -292,8 +287,8 @@ namespace CryEngine.Annotations
 	}
 
 	/// <summary>
-	/// Should be used on attributes and causes ReSharper to not mark symbols marked with
-	/// such attributes as unused (as well as by other usage inspections)
+	/// Should be used on attributes and causes ReSharper to not mark symbols marked with such attributes
+	/// as unused (as well as by other usage inspections)
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
 	public sealed class MeansImplicitUseAttribute : Attribute
@@ -333,8 +328,8 @@ namespace CryEngine.Annotations
 		/// </summary>
 		Assign = 2,
 		/// <summary>
-		/// Indicates implicit instantiation of a type with fixed constructor signature.
-		/// That means any unused constructor parameters won't be reported as such.
+		/// Indicates implicit instantiation of a type with fixed constructor signature. That means any
+		/// unused constructor parameters won't be reported as such.
 		/// </summary>
 		InstantiatedWithFixedConstructorSignature = 4,
 		/// <summary>
@@ -344,8 +339,8 @@ namespace CryEngine.Annotations
 	}
 
 	/// <summary>
-	/// Specify what is considered used implicitly when marked with
-	/// <see cref="MeansImplicitUseAttribute"/> or <see cref="UsedImplicitlyAttribute"/>
+	/// Specify what is considered used implicitly when marked with <see cref="MeansImplicitUseAttribute"/>
+	/// or <see cref="UsedImplicitlyAttribute"/>
 	/// </summary>
 	[Flags]
 	public enum ImplicitUseTargetFlags
@@ -363,8 +358,8 @@ namespace CryEngine.Annotations
 	}
 
 	/// <summary>
-	/// This attribute is intended to mark publicly available API which should not be
-	/// removed and so is treated as used
+	/// This attribute is intended to mark publicly available API which should not be removed and so is
+	/// treated as used
 	/// </summary>
 	[MeansImplicitUse]
 	public sealed class PublicAPIAttribute : Attribute
@@ -380,10 +375,10 @@ namespace CryEngine.Annotations
 	}
 
 	/// <summary>
-	/// Tells code analysis engine if the parameter is completely handled when the invoked
-	/// method is on stack. If the parameter is a delegate, indicates that delegate is
-	/// executed while the method is executed. If the parameter is an enumerable,
-	/// indicates that it is enumerated while the method is executed
+	/// Tells code analysis engine if the parameter is completely handled when the invoked method is on
+	/// stack. If the parameter is a delegate, indicates that delegate is executed while the method is
+	/// executed. If the parameter is an enumerable, indicates that it is enumerated while the method is
+	/// executed
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Parameter, Inherited = true)]
 	public sealed class InstantHandleAttribute : Attribute { }
@@ -405,8 +400,8 @@ namespace CryEngine.Annotations
 	public sealed class PureAttribute : Attribute { }
 
 	/// <summary>
-	/// Indicates that a parameter is a path to a file or a folder within a web project.
-	/// Path can be relative or absolute, starting from web root (~)
+	/// Indicates that a parameter is a path to a file or a folder within a web project. Path can be
+	/// relative or absolute, starting from web root (~)
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Parameter)]
 	public class PathReferenceAttribute : Attribute
@@ -460,9 +455,9 @@ namespace CryEngine.Annotations
 	}
 
 	/// <summary>
-	/// ASP.NET MVC attribute. If applied to a parameter, indicates that the parameter is
-	/// an MVC action. If applied to a method, the MVC action name is calculated
-	/// implicitly from the context. Use this attribute for custom wrappers similar to
+	/// ASP.NET MVC attribute. If applied to a parameter, indicates that the parameter is an MVC action. If
+	/// applied to a method, the MVC action name is calculated implicitly from the context. Use this
+	/// attribute for custom wrappers similar to
 	/// <c>System.Web.Mvc.Html.ChildActionExtensions.RenderAction(HtmlHelper, String)</c>
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Method)]
@@ -479,9 +474,9 @@ namespace CryEngine.Annotations
 	}
 
 	/// <summary>
-	/// ASP.NET MVC attribute. Indicates that a parameter is an MVC area. Use this
-	/// attribute for custom wrappers similar to
-	/// <c>System.Web.Mvc.Html.ChildActionExtensions.RenderAction(HtmlHelper, String)</c>
+	/// ASP.NET MVC attribute. Indicates that a parameter is an MVC area. Use this attribute for custom
+	/// wrappers similar to <c>System.Web.Mvc.Html.ChildActionExtensions.RenderAction(HtmlHelper,
+	/// String)</c>
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Parameter)]
 	public sealed class AspMvcAreaAttribute : PathReferenceAttribute
@@ -497,9 +492,9 @@ namespace CryEngine.Annotations
 	}
 
 	/// <summary>
-	/// ASP.NET MVC attribute. If applied to a parameter, indicates that the parameter is
-	/// an MVC controller. If applied to a method, the MVC controller name is calculated
-	/// implicitly from the context. Use this attribute for custom wrappers similar to
+	/// ASP.NET MVC attribute. If applied to a parameter, indicates that the parameter is an MVC
+	/// controller. If applied to a method, the MVC controller name is calculated implicitly from the
+	/// context. Use this attribute for custom wrappers similar to
 	/// <c>System.Web.Mvc.Html.ChildActionExtensions.RenderAction(HtmlHelper, String,
 	/// String) </c>
 	/// </summary>
@@ -517,26 +512,25 @@ namespace CryEngine.Annotations
 	}
 
 	/// <summary>
-	/// ASP.NET MVC attribute. Indicates that a parameter is an MVC Master. Use this
-	/// attribute for custom wrappers similar to <c>System.Web.Mvc.Controller.View(String,
+	/// ASP.NET MVC attribute. Indicates that a parameter is an MVC Master. Use this attribute for custom
+	/// wrappers similar to <c>System.Web.Mvc.Controller.View(String,
 	/// String) </c>
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Parameter)]
 	public sealed class AspMvcMasterAttribute : Attribute { }
 
 	/// <summary>
-	/// ASP.NET MVC attribute. Indicates that a parameter is an MVC model type. Use this
-	/// attribute for custom wrappers similar to <c>System.Web.Mvc.Controller.View(String,
+	/// ASP.NET MVC attribute. Indicates that a parameter is an MVC model type. Use this attribute for
+	/// custom wrappers similar to <c>System.Web.Mvc.Controller.View(String,
 	/// Object) </c>
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Parameter)]
 	public sealed class AspMvcModelTypeAttribute : Attribute { }
 
 	/// <summary>
-	/// ASP.NET MVC attribute. If applied to a parameter, indicates that the parameter is
-	/// an MVC partial view. If applied to a method, the MVC partial view name is
-	/// calculated implicitly from the context. Use this attribute for custom wrappers
-	/// similar to
+	/// ASP.NET MVC attribute. If applied to a parameter, indicates that the parameter is an MVC partial
+	/// view. If applied to a method, the MVC partial view name is calculated implicitly from the context.
+	/// Use this attribute for custom wrappers similar to
 	/// <c>System.Web.Mvc.Html.RenderPartialExtensions.RenderPartial(HtmlHelper,
 	/// String) </c>
 	/// </summary>
@@ -544,48 +538,45 @@ namespace CryEngine.Annotations
 	public sealed class AspMvcPartialViewAttribute : PathReferenceAttribute { }
 
 	/// <summary>
-	/// ASP.NET MVC attribute. Allows disabling all inspections for MVC views within a
-	/// class or a method.
+	/// ASP.NET MVC attribute. Allows disabling all inspections for MVC views within a class or a method.
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
 	public sealed class AspMvcSupressViewErrorAttribute : Attribute { }
 
 	/// <summary>
-	/// ASP.NET MVC attribute. Indicates that a parameter is an MVC display template. Use
-	/// this attribute for custom wrappers similar to
-	/// <c>System.Web.Mvc.Html.DisplayExtensions.DisplayForModel(HtmlHelper, String)</c>
+	/// ASP.NET MVC attribute. Indicates that a parameter is an MVC display template. Use this attribute
+	/// for custom wrappers similar to <c>System.Web.Mvc.Html.DisplayExtensions.DisplayForModel(HtmlHelper,
+	/// String)</c>
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Parameter)]
 	public sealed class AspMvcDisplayTemplateAttribute : Attribute { }
 
 	/// <summary>
-	/// ASP.NET MVC attribute. Indicates that a parameter is an MVC editor template. Use
-	/// this attribute for custom wrappers similar to
-	/// <c>System.Web.Mvc.Html.EditorExtensions.EditorForModel(HtmlHelper, String)</c>
+	/// ASP.NET MVC attribute. Indicates that a parameter is an MVC editor template. Use this attribute for
+	/// custom wrappers similar to <c>System.Web.Mvc.Html.EditorExtensions.EditorForModel(HtmlHelper,
+	/// String)</c>
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Parameter)]
 	public sealed class AspMvcEditorTemplateAttribute : Attribute { }
 
 	/// <summary>
-	/// ASP.NET MVC attribute. Indicates that a parameter is an MVC template. Use this
-	/// attribute for custom wrappers similar to
-	/// <c>System.ComponentModel.DataAnnotations.UIHintAttribute(System.String)</c>
+	/// ASP.NET MVC attribute. Indicates that a parameter is an MVC template. Use this attribute for custom
+	/// wrappers similar to <c>System.ComponentModel.DataAnnotations.UIHintAttribute(System.String)</c>
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Parameter)]
 	public sealed class AspMvcTemplateAttribute : Attribute { }
 
 	/// <summary>
-	/// ASP.NET MVC attribute. If applied to a parameter, indicates that the parameter is
-	/// an MVC view. If applied to a method, the MVC view name is calculated implicitly
-	/// from the context. Use this attribute for custom wrappers similar to
-	/// <c>System.Web.Mvc.Controller.View(Object)</c>
+	/// ASP.NET MVC attribute. If applied to a parameter, indicates that the parameter is an MVC view. If
+	/// applied to a method, the MVC view name is calculated implicitly from the context. Use this
+	/// attribute for custom wrappers similar to <c>System.Web.Mvc.Controller.View(Object)</c>
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Method)]
 	public sealed class AspMvcViewAttribute : PathReferenceAttribute { }
 
 	/// <summary>
-	/// ASP.NET MVC attribute. When applied to a parameter of an attribute, indicates that
-	/// this parameter is an MVC action name
+	/// ASP.NET MVC attribute. When applied to a parameter of an attribute, indicates that this parameter
+	/// is an MVC action name
 	/// </summary>
 	/// <example>
 	/// <code>
@@ -631,9 +622,8 @@ namespace CryEngine.Annotations
 	// Razor attributes
 
 	/// <summary>
-	/// Razor attribute. Indicates that a parameter or a method is a Razor section. Use
-	/// this attribute for custom wrappers similar to
-	/// <c>System.Web.WebPages.WebPageBase.RenderSection(String)</c>
+	/// Razor attribute. Indicates that a parameter or a method is a Razor section. Use this attribute for
+	/// custom wrappers similar to <c>System.Web.WebPages.WebPageBase.RenderSection(String)</c>
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Method, Inherited = true)]
 	public sealed class RazorSectionAttribute : Attribute { }

@@ -7,8 +7,7 @@ using CryCil.Interops;
 namespace CryCil.Geometry
 {
 	/// <summary>
-	/// Represents a triangular mesh where each face is a triangle with it's own set of
-	/// vertices.
+	/// Represents a triangular mesh where each face is a triangle with it's own set of vertices.
 	/// </summary>
 	public class FaceMesh
 	{

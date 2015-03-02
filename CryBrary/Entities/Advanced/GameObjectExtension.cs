@@ -9,8 +9,7 @@ namespace CryEngine.Entities.Advanced
 	public class GameObjectExtension
 	{
 		/// <summary>
-		/// Sets a value that indicates whether this extension needs to receive
-		/// post-updates.
+		/// Sets a value that indicates whether this extension needs to receive post-updates.
 		/// </summary>
 		public bool ReceivePostUpdates
 		{

@@ -187,8 +187,7 @@ namespace CryCil
 			}
 		}
 		/// <summary>
-		/// Gets new matrix that represents this matrix where rows and columns are
-		/// swapped.
+		/// Gets new matrix that represents this matrix where rows and columns are swapped.
 		/// </summary>
 		public Matrix44 Transposed
 		{
@@ -311,7 +310,7 @@ namespace CryCil
 		{
 			get
 			{
-				return new [,]
+				return new[,]
 				{
 					{this.M00, this.M01, this.M02, this.M03},
 					{this.M10, this.M11, this.M12, this.M13},
@@ -428,8 +427,8 @@ namespace CryCil
 		/// Calculate a real inversion of a Matrix44.
 		/// </summary>
 		/// <remarks>
-		/// Uses Cramer's Rule which is faster (branchless) but numerically more unstable
-		/// than other methods like Gaussian Elimination.
+		/// Uses Cramer's Rule which is faster (branchless) but numerically more unstable than other
+		/// methods like Gaussian Elimination.
 		/// </remarks>
 		public void Invert()
 		{
@@ -588,8 +587,8 @@ namespace CryCil
 		/// </summary>
 		/// <remarks>
 		/// <para>
-		/// This operation is used to combine transformations represented by these
-		/// matrices together into one matrix.
+		/// This operation is used to combine transformations represented by these matrices together into
+		/// one matrix.
 		/// </para>
 		/// <para>This operation takes 48 mults and 24 adds.</para>
 		/// </remarks>
@@ -644,8 +643,8 @@ namespace CryCil
 		/// </summary>
 		/// <remarks>
 		/// <para>
-		/// This operation is used to combine transformations represented by these
-		/// matrices together into one matrix.
+		/// This operation is used to combine transformations represented by these matrices together into
+		/// one matrix.
 		/// </para>
 		/// <para>This operation takes 48 mults and 36 adds.</para>
 		/// </remarks>
@@ -688,8 +687,8 @@ namespace CryCil
 		/// </summary>
 		/// <remarks>
 		/// <para>
-		/// This operation is used to combine transformations represented by these
-		/// matrices together into one matrix.
+		/// This operation is used to combine transformations represented by these matrices together into
+		/// one matrix.
 		/// </para>
 		/// <para>This operation takes 48 mults and 36 adds.</para>
 		/// </remarks>
@@ -751,9 +750,7 @@ namespace CryCil
 		/// <summary>
 		/// Multiplies vector by matrix.
 		/// </summary>
-		/// <remarks>
-		/// This operation is done to transform the vector by the matrix.
-		/// </remarks>
+		/// <remarks>This operation is done to transform the vector by the matrix.</remarks>
 		/// <param name="v">Left operand.</param>
 		/// <param name="m">Right operand.</param>
 		/// <returns>Result of multiplication.</returns>
@@ -821,9 +818,7 @@ namespace CryCil
 		/// Gets first 3 columns of the row of this matrix.
 		/// </summary>
 		/// <param name="i">Zero-based index of the row to get.</param>
-		/// <returns>
-		/// <see cref="Vector3"/> object that contains the contents of the row.
-		/// </returns>
+		/// <returns><see cref="Vector3"/> object that contains the contents of the row.</returns>
 		public Vector3 GetRow(int i)
 		{
 			return new Vector3(this[i, 0], this[i, 1], this[i, 2]);
@@ -832,9 +827,7 @@ namespace CryCil
 		/// Gets first the row of this matrix.
 		/// </summary>
 		/// <param name="i">Zero-based index of the row to get.</param>
-		/// <returns>
-		/// <see cref="Vector4"/> object that contains the contents of the row.
-		/// </returns>
+		/// <returns><see cref="Vector4"/> object that contains the contents of the row.</returns>
 		public Vector4 GetRow4(int i)
 		{
 			return new Vector4(this[i, 0], this[i, 1], this[i, 2], this[i, 3]);
@@ -989,8 +982,8 @@ namespace CryCil
 		/// </summary>
 		/// <param name="obj">Another object.</param>
 		/// <returns>
-		/// True, if another object is a non-null boxed object of type
-		/// <see cref="Matrix44"/> that is equal to this one.
+		/// True, if another object is a non-null boxed object of type <see cref="Matrix44"/> that is equal
+		/// to this one.
 		/// </returns>
 		public override bool Equals(object obj)
 		{
@@ -1001,8 +994,8 @@ namespace CryCil
 		/// Calculates hash code of this matrix.
 		/// </summary>
 		/// <returns>
-		/// Hash code calculated using aggregation of elements of the matrix by
-		/// consecutive multiplication and XOR operations.
+		/// Hash code calculated using aggregation of elements of the matrix by consecutive multiplication
+		/// and XOR operations.
 		/// </returns>
 		public override int GetHashCode()
 		{
@@ -1094,9 +1087,9 @@ namespace CryCil
 		/// Creates text representation of this matrix.
 		/// </summary>
 		/// <returns>
-		/// Text representation of this matrix where all elements are listed in a line
-		/// using default format for <see cref="Single"/> numbers and culture object
-		/// specified by <see cref="Defaults.CultureToStringOnly"/>.
+		/// Text representation of this matrix where all elements are listed in a line using default format
+		/// for <see cref="Single"/> numbers and culture object specified by
+		/// <see cref="Defaults.CultureToStringOnly"/>.
 		/// </returns>
 		public override string ToString()
 		{
@@ -1110,9 +1103,8 @@ namespace CryCil
 		/// <see cref="Matrix44.ToString(string,IFormatProvider)"/> for details.
 		/// </param>
 		/// <returns>
-		/// Text representation of this matrix formatted as specified by
-		/// <paramref name="format"/> argument using culture object specified by
-		/// <see cref="Defaults.CultureToStringOnly"/>.
+		/// Text representation of this matrix formatted as specified by <paramref name="format"/> argument
+		/// using culture object specified by <see cref="Defaults.CultureToStringOnly"/>.
 		/// </returns>
 		public string ToString(string format)
 		{
@@ -1125,25 +1117,24 @@ namespace CryCil
 		/// Object that provides culture-specific information to use in formatting.
 		/// </param>
 		/// <returns>
-		/// Text representation of this matrix where all elements are listed in a line
-		/// using default format for <see cref="Single"/> numbers and culture-specific
-		/// information supplied by <paramref name="formatProvider"/>.
+		/// Text representation of this matrix where all elements are listed in a line using default format
+		/// for <see cref="Single"/> numbers and culture-specific information supplied by
+		/// <paramref name="formatProvider"/>.
 		/// </returns>
 		public string ToString(IFormatProvider formatProvider)
 		{
 			return MatrixTextConverter.ToString(this, formatProvider);
 		}
 		/// <summary>
-		/// Creates text representation of this matrix. <see cref="MatrixTextConverter"/>
-		/// documentation for details.
+		/// Creates text representation of this matrix. <see cref="MatrixTextConverter"/> documentation for
+		/// details.
 		/// </summary>
 		/// <param name="format">        
-		/// A string that describes a format of this matrix. See Remarks section for
-		/// details.
+		/// A string that describes a format of this matrix. See Remarks section for details.
 		/// </param>
 		/// <param name="formatProvider">
-		/// Object that provides culture-specific information on how to create text
-		/// representations of numbers.
+		/// Object that provides culture-specific information on how to create text representations of
+		/// numbers.
 		/// </param>
 		/// <returns>Text representation specified by given arguments.</returns>
 		public string ToString(string format, IFormatProvider formatProvider)
@@ -1153,9 +1144,7 @@ namespace CryCil
 		/// <summary>
 		/// Creates text representation of this matrix.
 		/// </summary>
-		/// <param name="format">
-		/// Object that provides details on how to format the text.
-		/// </param>
+		/// <param name="format">Object that provides details on how to format the text.</param>
 		/// <returns>Formatted text representation of the matrix.</returns>
 		public string ToString(MatrixTextFormat format)
 		{

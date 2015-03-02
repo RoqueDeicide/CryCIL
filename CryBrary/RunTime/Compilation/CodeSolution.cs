@@ -12,9 +12,7 @@ namespace CryEngine.RunTime.Compilation
 	/// <summary>
 	/// Represents a Visual Studio solution.
 	/// </summary>
-	/// <remarks>
-	/// Solution file is a standard .sln file created by Visual Studio or SharpDevelop.
-	/// </remarks>
+	/// <remarks>Solution file is a standard .sln file created by Visual Studio or SharpDevelop.</remarks>
 	public static class CodeSolution
 	{
 		/// <summary>
@@ -42,17 +40,15 @@ namespace CryEngine.RunTime.Compilation
 		{
 			// This is the list of projects to compile.
 			List<IProject> buildList = new List<IProject>(CodeSolution.Projects.Count);
-			// We gonna organize the list so, projects that depend on other projects are
-			// built after them.
+			// We gonna organize the list so, projects that depend on other projects are built after them.
 			List<IProject> projects = new List<IProject>(CodeSolution.Projects);
 			while (projects.Count != 0)
 			{
-				// Go through the list and put into the build list those who already have
-				// their dependencies in the build list.
+				// Go through the list and put into the build list those who already have their
+				// dependencies in the build list.
 				for (int i = 0; i < projects.Count; i++)
 				{
-					// If project has no extra dependencies, then just put it into the
-					// list.
+					// If project has no extra dependencies, then just put it into the list.
 					if (projects[i].Dependencies.Length == 0 || projects[i].Dependencies.All(buildList.Contains))
 					{
 						buildList.Add(projects[i]);

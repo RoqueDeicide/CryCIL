@@ -6,14 +6,13 @@ namespace CryEngine
 	public static class TimeOfDay
 	{
 		/// <summary>
-		/// Gets or sets a value indicating whether Time of Day updates take effect
-		/// immediately.
+		/// Gets or sets a value indicating whether Time of Day updates take effect immediately.
 		/// </summary>
 		public static bool ForceUpdates { get; set; }
 
 		/// <summary>
-		/// Gets or sets the hour value for the Time of Day system. The value is wrapped,
-		/// so setting the value to 24 will reset the hour to zero.
+		/// Gets or sets the hour value for the Time of Day system. The value is wrapped, so setting the
+		/// value to 24 will reset the hour to zero.
 		/// </summary>
 		public static int Hour
 		{
@@ -39,9 +38,8 @@ namespace CryEngine
 		}
 
 		/// <summary>
-		/// Gets or sets the minute value for the Time of Day system. The value is
-		/// wrapped, so setting the value to 60 will increment the hour and reset the
-		/// minutes to zero.
+		/// Gets or sets the minute value for the Time of Day system. The value is wrapped, so setting the
+		/// value to 60 will increment the hour and reset the minutes to zero.
 		/// </summary>
 		public static int Minute
 		{
@@ -126,8 +124,7 @@ namespace CryEngine
 			}
 		}
 
-		// TODO: Make sure people can't send color values to float parameters and vice
-		//       versa.
+		// TODO: Make sure people can't send color values to float parameters and vice versa.
 		#region SetVariableValue methods
 		public static void SetVariableValue(SkyParams param, float value)
 		{

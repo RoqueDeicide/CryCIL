@@ -11,8 +11,8 @@
 		UnusedMarker,
 
 		/// <summary>
-		/// Not actually used, but signifies that any SerializationType higher than this
-		/// value is a reference type.
+		/// Not actually used, but signifies that any SerializationType higher than this value is a
+		/// reference type.
 		/// </summary>
 		ReferenceTypes,
 

@@ -110,16 +110,14 @@ namespace Microsoft.Cci.Pdb
 		  -- Brian Grunkemeyer, 10/28/1999
 		*/
 
-		// A typical resize algorithm would pick the smallest prime number in this array
-		// that is larger than twice the previous capacity. Suppose our Hashtable
-		// currently has capacity x and enough elements are added such that a resize needs
-		// to occur. Resizing first computes 2x then finds the first prime in the table
-		// greater than 2x, i.e. if primes are ordered p_1, p_2, …, p_i,…, it finds p_n
-		// such that p_n-1 < 2x < p_n. Doubling is important for preserving the asymptotic
-		// complexity of the hashtable operations such as add. Having a prime guarantees
-		// that double hashing does not lead to infinite loops. IE, your hash function
-		// will be h1(key) + i*h2(key), 0 <= i < size. h2 and the size must be relatively
-		// prime.
+		// A typical resize algorithm would pick the smallest prime number in this array that is larger
+		// than twice the previous capacity. Suppose our Hashtable currently has capacity x and enough
+		// elements are added such that a resize needs to occur. Resizing first computes 2x then finds the
+		// first prime in the table greater than 2x, i.e. if primes are ordered p_1, p_2, …, p_i,…, it
+		// finds p_n such that p_n-1 < 2x < p_n. Doubling is important for preserving the asymptotic
+		// complexity of the hashtable operations such as add. Having a prime guarantees that double
+		// hashing does not lead to infinite loops. IE, your hash function will be h1(key) + i*h2(key), 0
+		// <= i < size. h2 and the size must be relatively prime.
 		private static readonly int[] primes = {
             3, 7, 11, 17, 23, 29, 37, 47, 59, 71, 89, 107, 131, 163, 197, 239, 293, 353, 431, 521, 631, 761, 919,
             1103, 1327, 1597, 1931, 2333, 2801, 3371, 4049, 4861, 5839, 7013, 8419, 10103, 12143, 14591,
@@ -218,20 +216,19 @@ namespace Microsoft.Cci.Pdb
 				loadsize = hashsize - 1;
 		}
 
-		// Computes the hash function: H(key, i) = h1(key) + i*h2(key, hashSize). The out
-		// parameter seed is h1(key), while the out parameter incr is h2(key, hashSize).
-		// Callers of this function should add incr each time through a loop.
+		// Computes the hash function: H(key, i) = h1(key) + i*h2(key, hashSize). The out parameter seed is
+		// h1(key), while the out parameter incr is h2(key, hashSize). Callers of this function should add
+		// incr each time through a loop.
 		private uint InitHash(int key, int hashsize, out uint seed, out uint incr)
 		{
-			// Hashcode must be positive. Also, we must not use the sign bit, since that
-			// is used for the collision bit.
+			// Hashcode must be positive. Also, we must not use the sign bit, since that is used for the
+			// collision bit.
 			uint hashcode = (uint)key & 0x7FFFFFFF;
 			seed = hashcode;
-			// Restriction: incr MUST be between 1 and hashsize - 1, inclusive for the
-			// modular arithmetic to work correctly. This guarantees you'll visit every
-			// bucket in the table exactly once within hashsize iterations. Violate this
-			// and it'll cause obscure bugs forever. If you change this calculation for
-			// h2(key), update putEntry too!
+			// Restriction: incr MUST be between 1 and hashsize - 1, inclusive for the modular arithmetic
+			// to work correctly. This guarantees you'll visit every bucket in the table exactly once
+			// within hashsize iterations. Violate this and it'll cause obscure bugs forever. If you change
+			// this calculation for h2(key), update putEntry too!
 			incr = 1 + (((seed >> 5) + 1) % ((uint)hashsize - 1));
 			return hashcode;
 		}
@@ -342,11 +339,10 @@ namespace Microsoft.Cci.Pdb
 			}
 		}
 
-		// Increases the bucket count of this hashtable. This method is called from the
-		// Insert method when the actual load factor of the hashtable reaches the upper
-		// limit specified when the hashtable was constructed. The number of buckets in
-		// the hashtable is increased to the smallest prime number that is larger than
-		// twice the current number of buckets, and the entries in the hashtable are
+		// Increases the bucket count of this hashtable. This method is called from the Insert method when
+		// the actual load factor of the hashtable reaches the upper limit specified when the hashtable was
+		// constructed. The number of buckets in the hashtable is increased to the smallest prime number
+		// that is larger than twice the current number of buckets, and the entries in the hashtable are
 		// redistributed into the new buckets using the cached hashcodes.
 		private void expand()
 		{
@@ -364,11 +360,10 @@ namespace Microsoft.Cci.Pdb
 			// reset occupancy
 			occupancy = 0;
 
-			// Don't replace any internal state until we've finished adding to the new
-			// bucket[]. This serves two purposes:
+			// Don't replace any internal state until we've finished adding to the new bucket[]. This
+			// serves two purposes:
 			// 1) Allow concurrent readers to see valid hashtable contents at all times
-			// 2) Protect against an OutOfMemoryException while allocating this new
-			//    bucket[].
+			// 2) Protect against an OutOfMemoryException while allocating this new bucket[].
 			bucket[] newBuckets = new bucket[newsize];
 
 			// rehash table into new buckets
@@ -406,9 +401,8 @@ namespace Microsoft.Cci.Pdb
 
 		// Internal method to compare two keys.
 		// 
-		// Inserts an entry into this hashtable. This method is called from the Set and
-		// Add methods. If the add parameter is true and the given key already exists in
-		// the hashtable, an exception is thrown.
+		// Inserts an entry into this hashtable. This method is called from the Set and Add methods. If the
+		// add parameter is true and the given key already exists in the hashtable, an exception is thrown.
 		private void Insert(int key, Object nvalue, bool add)
 		{
 			if (key < 0)
@@ -430,8 +424,8 @@ namespace Microsoft.Cci.Pdb
 
 			uint seed;
 			uint incr;
-			// Assume we only have one thread writing concurrently. Modify buckets to
-			// contain new data, as long as we insert in the right order.
+			// Assume we only have one thread writing concurrently. Modify buckets to contain new data, as
+			// long as we insert in the right order.
 			uint hashcode = InitHash(key, buckets.Length, out seed, out incr);
 			int ntry = 0;
 			// create by remove that have the collision bit set over using up new slots.
@@ -440,22 +434,22 @@ namespace Microsoft.Cci.Pdb
 			{
 				int bucketNumber = (int)(seed % (uint)buckets.Length);
 
-				// Set emptySlot number to current bucket if it is the first available
-				// bucket that we have seen that once contained an entry and also has had
-				// a collision. We need to search this entire collision chain because we
-				// have to ensure that there are no duplicate entries in the table.
+				// Set emptySlot number to current bucket if it is the first available bucket that we have
+				// seen that once contained an entry and also has had a collision. We need to search this
+				// entire collision chain because we have to ensure that there are no duplicate entries in
+				// the table.
 
-				// Insert the key/value pair into this bucket if this bucket is empty and
-				// has never contained an entry OR This bucket once contained an entry but
-				// there has never been a collision
+				// Insert the key/value pair into this bucket if this bucket is empty and has never
+				// contained an entry OR This bucket once contained an entry but there has never been a
+				// collision
 				if (buckets[bucketNumber].val == null)
 				{
-					// If we have found an available bucket that has never had a
-					// collision, but we've seen an available bucket in the past that has
-					// the collision bit set, use the previous bucket instead
+					// If we have found an available bucket that has never had a collision, but we've seen
+					// an available bucket in the past that has the collision bit set, use the previous
+					// bucket instead
 
-					// We pretty much have to insert in this order. Don't set hash code
-					// until the value & key are set appropriately.
+					// We pretty much have to insert in this order. Don't set hash code until the value &
+					// key are set appropriately.
 					buckets[bucketNumber].val = nvalue;
 					buckets[bucketNumber].key = key;
 					buckets[bucketNumber].hash_coll |= (int)hashcode;
@@ -464,8 +458,8 @@ namespace Microsoft.Cci.Pdb
 					return;
 				}
 
-				// The current bucket is in use OR it is available, but has had the
-				// collision bit set and we have already found an available bucket
+				// The current bucket is in use OR it is available, but has had the collision bit set and
+				// we have already found an available bucket
 				if (((buckets[bucketNumber].hash_coll & 0x7FFFFFFF) == hashcode) &&
 							key == buckets[bucketNumber].key)
 				{
@@ -478,10 +472,9 @@ namespace Microsoft.Cci.Pdb
 					return;
 				}
 
-				// The current bucket is full, and we have therefore collided. We need to
-				// set the collision bit UNLESS we have remembered an available slot
-				// previously. We don't need to set the collision bit here since we
-				// already have an empty slot
+				// The current bucket is full, and we have therefore collided. We need to set the collision
+				// bit UNLESS we have remembered an available slot previously. We don't need to set the
+				// collision bit here since we already have an empty slot
 				if (this.buckets[bucketNumber].hash_coll >= 0)
 				{
 					this.buckets[bucketNumber].hash_coll |= unchecked((int)0x80000000);
@@ -490,12 +483,12 @@ namespace Microsoft.Cci.Pdb
 				seed += incr;
 			} while (++ntry < buckets.Length);
 
-			// This code is here if and only if there were no buckets without a collision
-			// bit set in the entire table
+			// This code is here if and only if there were no buckets without a collision bit set in the
+			// entire table
 
-			// If you see this assert, make sure load factor & count are reasonable. Then
-			// verify that our double hash function (h2, described at top of file) meets
-			// the requirements described above. You should never see this assert.
+			// If you see this assert, make sure load factor & count are reasonable. Then verify that our
+			// double hash function (h2, described at top of file) meets the requirements described above.
+			// You should never see this assert.
 			throw new InvalidOperationException("InvalidOperation_HashInsertFailed");
 		}
 
@@ -533,9 +526,9 @@ namespace Microsoft.Cci.Pdb
 			get { return count; }
 		}
 
-		// Implements an enumerator for a hashtable. The enumerator uses the internal
-		// version number of the hashtabke to ensure that no modifications are made to the
-		// hashtable while an enumeration is in progress.
+		// Implements an enumerator for a hashtable. The enumerator uses the internal version number of the
+		// hashtabke to ensure that no modifications are made to the hashtable while an enumeration is in
+		// progress.
 		private class IntHashTableEnumerator : IEnumerator
 		{
 			private readonly IntHashTable hashtable;

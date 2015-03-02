@@ -17,8 +17,8 @@ namespace CryEngine.RunTime.Registration
 	public class EntityRegister
 	{
 		/// <summary>
-		/// A list of registered entity types, allows to determine whether a particular
-		/// entity is managed by CryMono.
+		/// A list of registered entity types, allows to determine whether a particular entity is managed
+		/// by CryMono.
 		/// </summary>
 		public static SortedList<string, Type> Types = new SortedList<string, Type>();
 		/// <summary>
@@ -29,12 +29,10 @@ namespace CryEngine.RunTime.Registration
 		/// Unable to register type that is not marked with Entity attribute.
 		/// </exception>
 		/// <exception cref="EntityException">
-		/// One of the properties had its type specified as a file, but it was not a
-		/// string.
+		/// One of the properties had its type specified as a file, but it was not a string.
 		/// </exception>
 		/// <exception cref="EntityException">
-		/// One of the properties had its type specified as a vector, but it was not a
-		/// vector type.
+		/// One of the properties had its type specified as a vector, but it was not a vector type.
 		/// </exception>
 		/// <exception cref="EntityException">
 		/// One of the properties was registered with invalid type.
@@ -68,8 +66,7 @@ namespace CryEngine.RunTime.Registration
 		private static object[] GetProperties(IReflect type)
 		{
 			SortedList<string, List<EditorProperty>> folders = new SortedList<string, List<EditorProperty>>();
-			// Get all public and not so public fields and properties with EditorProperty
-			// attribute.
+			// Get all public and not so public fields and properties with EditorProperty attribute.
 			var members =
 				type.GetMembers(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
 					.Where(member => member.ContainsAttribute<EditorPropertyAttribute>());

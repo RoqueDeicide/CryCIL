@@ -27,9 +27,8 @@ namespace CryEngine.RunTime.Compilation
 		#endregion
 		#region Properties
 		/// <summary>
-		/// When implemented in derived class, specifies which
-		/// <see cref="CodeDomProvider"/> will be used to compile the code from the
-		/// project.
+		/// When implemented in derived class, specifies which <see cref="CodeDomProvider"/> will be used
+		/// to compile the code from the project.
 		/// </summary>
 		public abstract CodeDomProvider Provider { get; }
 		/// <summary>
@@ -172,8 +171,8 @@ namespace CryEngine.RunTime.Compilation
 		{
 			get
 			{
-				// Get all elements named "Reference", and group them by them having and
-				// not having a child node called "HintPath".
+				// Get all elements named "Reference", and group them by them having and not having a child
+				// node called "HintPath".
 				var references =
 				(
 					from XmlElement element in this.projectDocument.GetElementsByTagName("Reference")
@@ -183,8 +182,7 @@ namespace CryEngine.RunTime.Compilation
 				).ToList();
 
 				List<string> refs = new List<string>();
-				// Add GAC references. These are represented by elements without child
-				// nodes.
+				// Add GAC references. These are represented by elements without child nodes.
 				refs.AddRange
 				(
 					references
@@ -234,8 +232,8 @@ namespace CryEngine.RunTime.Compilation
 			// No errors? Fine, just get the assembly.
 			if (!results.Errors.HasErrors && results.CompiledAssembly != null)
 				return results.CompiledAssembly;
-			// Otherwise, create cool looking message that has a list of all compilation
-			// errors and throw the exception.
+			// Otherwise, create cool looking message that has a list of all compilation errors and throw
+			// the exception.
 			string compilationError = string.Format("Compilation failed; {0} errors: ", results.Errors.Count);
 
 			foreach (CompilerError error in results.Errors)

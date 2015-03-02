@@ -12,8 +12,7 @@ using CryEngine.Extensions;
 namespace CryEngine.RunTime.Compatibility
 {
 	/// <summary>
-	/// Represents an object that checks blittability of managed types and their unmanaged
-	/// counter-parts.
+	/// Represents an object that checks blittability of managed types and their unmanaged counter-parts.
 	/// </summary>
 	public class BlitChecker
 	{

@@ -46,9 +46,7 @@ namespace CryEngine.Entities
 		/// <summary>
 		/// Parent entity.
 		/// </summary>
-		/// <remarks>
-		/// Parent entity's movement can affect child entities but not vise versa.
-		/// </remarks>
+		/// <remarks>Parent entity's movement can affect child entities but not vise versa.</remarks>
 		public EntityBase Parent { get; private set; }
 		/// <summary>
 		/// Gets or sets a child entity <see cref="Parent"/> is attached to.

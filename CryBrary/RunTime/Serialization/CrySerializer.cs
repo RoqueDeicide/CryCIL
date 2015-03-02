@@ -45,14 +45,14 @@ namespace CryEngine.RunTime.Serialization
 		private FormatterConverter Converter { get; set; }
 
 		/// <summary>
-		/// We store a dictionary of all serialized objects in order to not create new
-		/// instances of types with identical hash codes. (same objects)
+		/// We store a dictionary of all serialized objects in order to not create new instances of types
+		/// with identical hash codes. (same objects)
 		/// </summary>
 		private Dictionary<int, ObjectReference> ObjectReferences { get; set; }
 
 		/// <summary>
-		/// Toggle debug mode, logs information on possible serialization issues.
-		/// Automatically turned on if mono_realtimeScriptingDebug is set to 1.
+		/// Toggle debug mode, logs information on possible serialization issues. Automatically turned on
+		/// if mono_realtimeScriptingDebug is set to 1.
 		/// </summary>
 		public bool IsDebugModeEnabled { get; set; }
 
@@ -729,8 +729,8 @@ namespace CryEngine.RunTime.Serialization
 			if (type != null)
 				return type;
 
-			// Not an array type, we've got to use an alternate method to get the type of
-			// elements contained within.
+			// Not an array type, we've got to use an alternate method to get the type of elements
+			// contained within.
 			if (enumerableType.IsGenericType && enumerableType.GetGenericTypeDefinition() == typeof(IEnumerable<>))
 				type = enumerableType.GetGenericArguments()[0];
 			else

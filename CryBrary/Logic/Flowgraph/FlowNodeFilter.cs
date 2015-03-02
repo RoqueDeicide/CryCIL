@@ -1,8 +1,8 @@
 ﻿namespace CryEngine.Logic.Flowgraph
 {
 	/// <summary>
-	/// Enumeration of categories flow nodes can be assigned to to allow them to be
-	/// filetered in Sandbox editor.
+	/// Enumeration of categories flow nodes can be assigned to to allow them to be filetered in Sandbox
+	/// editor.
 	/// </summary>
 	public enum FlowNodeFilter
 	{

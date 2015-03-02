@@ -13,8 +13,8 @@ namespace CryCil
 			/// <param name="first">    First color.</param>
 			/// <param name="second">   Second color.</param>
 			/// <param name="parameter">
-			/// Scalar that describes difference between resultant color value and first
-			/// color relative to second color.
+			/// Scalar that describes difference between resultant color value and first color relative to
+			/// second color.
 			/// </param>
 			public static void Apply(out ColorByte result, ColorByte first, ColorByte second, float parameter)
 			{
@@ -32,8 +32,8 @@ namespace CryCil
 			/// <param name="first">    First color.</param>
 			/// <param name="second">   Second color.</param>
 			/// <param name="parameter">
-			/// Scalar that describes difference between resultant color value and first
-			/// color relative to second color.
+			/// Scalar that describes difference between resultant color value and first color relative to
+			/// second color.
 			/// </param>
 			/// <returns>Result of interpolation.</returns>
 			public static ColorByte Create(ColorByte first, ColorByte second, float parameter)
@@ -53,8 +53,8 @@ namespace CryCil
 			/// <param name="first">    First color.</param>
 			/// <param name="second">   Second color.</param>
 			/// <param name="parameter">
-			/// Scalar that describes difference between resultant color value and first
-			/// color relative to second color.
+			/// Scalar that describes difference between resultant color value and first color relative to
+			/// second color.
 			/// </param>
 			public static void Apply(out ColorSingle result, ColorSingle first, ColorSingle second, float parameter)
 			{
@@ -72,8 +72,8 @@ namespace CryCil
 			/// <param name="first">    First color.</param>
 			/// <param name="second">   Second color.</param>
 			/// <param name="parameter">
-			/// Scalar that describes difference between resultant color value and first
-			/// color relative to second color.
+			/// Scalar that describes difference between resultant color value and first color relative to
+			/// second color.
 			/// </param>
 			/// <returns>Result of interpolation.</returns>
 			public static ColorSingle Create(ColorSingle first, ColorSingle second, float parameter)

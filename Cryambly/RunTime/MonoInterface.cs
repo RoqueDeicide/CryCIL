@@ -16,15 +16,12 @@ namespace CryCil.RunTime
 	/// <summary>
 	/// Represents an object that is an interface of CryCIL on managed side.
 	/// </summary>
-	/// <remarks>
-	/// An object of this type is always created on startup from C++ code.
-	/// </remarks>
+	/// <remarks>An object of this type is always created on startup from C++ code.</remarks>
 	public sealed class MonoInterface
 	{
 		#region Fields
 		/// <summary>
-		/// An object of this type that is created from C++ code when CryCIL is
-		/// initialized.
+		/// An object of this type that is created from C++ code when CryCIL is initialized.
 		/// </summary>
 		public static MonoInterface Instance { get; private set; }
 		#endregion
@@ -33,9 +30,8 @@ namespace CryCil.RunTime
 		/// Gets the list of assemblies that are loaded and recognized as part of CryCIL.
 		/// </summary>
 		/// <remarks>
-		/// All CryEngine related code, like entity and FlowGraph node definitions, is
-		/// located in these assemblies, so you don't have to loop through all base
-		/// libraries to find those definitions.
+		/// All CryEngine related code, like entity and FlowGraph node definitions, is located in these
+		/// assemblies, so you don't have to loop through all base libraries to find those definitions.
 		/// </remarks>
 		public List<Assembly> CryCilAssemblies { get; private set; }
 		#endregion
@@ -61,8 +57,7 @@ namespace CryCil.RunTime
 		/// </summary>
 		public event EventHandler Updated;
 		/// <summary>
-		/// Occurs when native Mono interface receive notification about system-wide
-		/// shutdown.
+		/// Occurs when native Mono interface receive notification about system-wide shutdown.
 		/// </summary>
 		public event EventHandler ShuttingDown;
 		#endregion
@@ -216,8 +211,7 @@ namespace CryCil.RunTime
 						(
 							method =>
 							{
-								// Get the methods that are initialization ones with
-								// appropriate signature.
+								// Get the methods that are initialization ones with appropriate signature.
 								ParameterInfo[] pars = method.GetParameters();
 								return
 									method.ContainsAttribute<InitializationStageAttribute>() &&

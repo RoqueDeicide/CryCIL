@@ -59,9 +59,7 @@ namespace CryCil.Geometry
 		/// <param name="a">The X component of the</param>
 		/// <param name="b">The Y component of the</param>
 		/// <param name="c">The Z component of the</param>
-		/// <param name="d">
-		/// The distance of the plane along its normal from the origin.
-		/// </param>
+		/// <param name="d">The distance of the plane along its normal from the origin.</param>
 		public Plane(float a, float b, float c, float d)
 			: this()
 		{
@@ -74,9 +72,7 @@ namespace CryCil.Geometry
 		/// Initializes a new instance of the <see cref="Plane"/> struct.
 		/// </summary>
 		/// <param name="value">The normal of the plane.</param>
-		/// <param name="d">    
-		/// The distance of the plane along its normal from the origin
-		/// </param>
+		/// <param name="d">    The distance of the plane along its normal from the origin</param>
 		public Plane(Vector3 value, float d)
 			: this()
 		{
@@ -95,9 +91,8 @@ namespace CryCil.Geometry
 			this.D = -Vector3.Dot(normal, point);
 		}
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Plane"/> struct using three
-		/// points represented by instances of type <see cref="Vector3"/> and using
-		/// anti-clockwise winding order.
+		/// Initializes a new instance of the <see cref="Plane"/> struct using three points represented by
+		/// instances of type <see cref="Vector3"/> and using anti-clockwise winding order.
 		/// </summary>
 		/// <param name="point1">First point of a triangle defining the plane.</param>
 		/// <param name="point2">Second point of a triangle defining the plane.</param>
@@ -131,15 +126,14 @@ namespace CryCil.Geometry
 		/// Initializes a new instance of the <see cref="Plane"/> struct.
 		/// </summary>
 		/// <param name="values">
-		/// The values to assign to the A, B, C, and D components of the plane. This must
-		/// be an array with four elements.
+		/// The values to assign to the A, B, C, and D components of the plane. This must be an array with
+		/// four elements.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
 		/// Thrown when <paramref name="values"/> is <c>null</c> .
 		/// </exception>
 		/// <exception cref="ArgumentOutOfRangeException">
-		/// Thrown when <paramref name="values"/> contains more or less than four
-		/// elements.
+		/// Thrown when <paramref name="values"/> contains more or less than four elements.
 		/// </exception>
 		public Plane(IList<float> values)
 			: this()
@@ -159,12 +153,10 @@ namespace CryCil.Geometry
 		/// <summary>
 		/// Gets or sets the component at the specified index.
 		/// </summary>
-		/// <value>
-		/// The value of the A, B, C, or D component, depending on the index.
-		/// </value>
+		/// <value>The value of the A, B, C, or D component, depending on the index.</value>
 		/// <param name="index">
-		/// The index of the component to access. Use 0 for the A component, 1 for the B
-		/// component, 2 for the C component, and 3 for the D component.
+		/// The index of the component to access. Use 0 for the A component, 1 for the B component, 2 for
+		/// the C component, and 3 for the D component.
 		/// </param>
 		/// <returns>The value of the component at the specified index.</returns>
 		/// <exception cref="System.ArgumentOutOfRangeException">
@@ -203,13 +195,10 @@ namespace CryCil.Geometry
 			}
 		}
 		/// <summary>
-		/// Changes the coefficients of the normal vector of the plane to make it of unit
-		/// length.
+		/// Changes the coefficients of the normal vector of the plane to make it of unit length.
 		/// </summary>
 		/// <param name="plane"> The source plane.</param>
-		/// <param name="result">
-		/// When the method completes, contains the normalized plane.
-		/// </param>
+		/// <param name="result">When the method completes, contains the normalized plane.</param>
 		public static void Normalize(ref Plane plane, out Plane result)
 		{
 			float magnitudeInverse =
@@ -224,8 +213,7 @@ namespace CryCil.Geometry
 			};
 		}
 		/// <summary>
-		/// Changes the coefficients of the normal vector of the plane to make it of unit
-		/// length.
+		/// Changes the coefficients of the normal vector of the plane to make it of unit length.
 		/// </summary>
 		/// <param name="plane">The source plane.</param>
 		/// <returns>The normalized plane.</returns>
@@ -239,9 +227,7 @@ namespace CryCil.Geometry
 		/// </summary>
 		/// <param name="plane">   The normalized source plane.</param>
 		/// <param name="rotation">The quaternion rotation.</param>
-		/// <param name="result">  
-		/// When the method completes, contains the transformed plane.
-		/// </param>
+		/// <param name="result">  When the method completes, contains the transformed plane.</param>
 		public static void Transform(ref Plane plane, ref Quaternion rotation, out Plane result)
 		{
 			float x2 = rotation.X + rotation.X;
@@ -354,8 +340,7 @@ namespace CryCil.Geometry
 			}
 		}
 		/// <summary>
-		/// Changes the coefficients of the normal vector of the plane to make it of unit
-		/// length.
+		/// Changes the coefficients of the normal vector of the plane to make it of unit length.
 		/// </summary>
 		public void Normalize()
 		{
@@ -374,9 +359,9 @@ namespace CryCil.Geometry
 		/// <see cref="Vector3"/> object that describes location of the point in 3D space.
 		/// </param>
 		/// <returns>
-		/// Number of type <see cref="Single"/> which absolute value is a shortest
-		/// distance between this plane and a given point, and which sign is negative if
-		/// the point is on the backside of this plane.
+		/// Number of type <see cref="Single"/> which absolute value is a shortest distance between this
+		/// plane and a given point, and which sign is negative if the point is on the backside of this
+		/// plane.
 		/// </returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public float SignedDistance(Vector3 point)
@@ -384,24 +369,22 @@ namespace CryCil.Geometry
 			return point.X * this.X + point.Y * this.Y + point.Z * this.Z - this.D;
 		}
 		/// <summary>
-		/// Determines relative position of the point in respect to position of this
-		/// plane.
+		/// Determines relative position of the point in respect to position of this plane.
 		/// </summary>
 		/// <remarks>
-		/// This method allows to determine the relative position of the polygon by
-		/// continuously invoking it for all of the vertexes and using a dedicated flags
-		/// object represented by <see cref="PlanePosition"/> enumeration.
+		/// This method allows to determine the relative position of the polygon by continuously invoking
+		/// it for all of the vertexes and using a dedicated flags object represented by
+		/// <see cref="PlanePosition"/> enumeration.
 		/// </remarks>
 		/// <param name="point">               
 		/// <see cref="Vector3"/> object that describes location of the point in 3D space.
 		/// </param>
 		/// <param name="pointPlanePosition">  
-		/// When the call is concluded, this value will indicate relative position of the
-		/// point.
+		/// When the call is concluded, this value will indicate relative position of the point.
 		/// </param>
 		/// <param name="polygonPlanePosition">
-		/// During a call bitwise Or operator will be applied to this argument with second
-		/// operand being <paramref name="pointPlanePosition"/> after it is calculated.
+		/// During a call bitwise Or operator will be applied to this argument with second operand being
+		/// <paramref name="pointPlanePosition"/> after it is calculated.
 		/// </param>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public void PointPosition(Vector3 point, out PlanePosition pointPlanePosition,
@@ -411,17 +394,14 @@ namespace CryCil.Geometry
 			polygonPlanePosition |= pointPlanePosition;
 		}
 		/// <summary>
-		/// Determines relative position of the point in respect to position of this
-		/// plane.
+		/// Determines relative position of the point in respect to position of this plane.
 		/// </summary>
 		/// <param name="point">
 		/// <see cref="Vector3"/> object that describes location of the point in 3D space.
 		/// </param>
 		/// <returns>
 		/// <para><see cref="PlanePosition.Coplanar"/> if the point is on a plane.</para>
-		/// <para>
-		/// <see cref="PlanePosition.Front"/> if the point is in front of a plane.
-		/// </para>
+		/// <para><see cref="PlanePosition.Front"/> if the point is in front of a plane.</para>
 		/// <para><see cref="PlanePosition.Back"/> if the point is behind a plane.</para>
 		/// </returns>
 		public PlanePosition PointPosition(Vector3 point)
@@ -444,8 +424,7 @@ namespace CryCil.Geometry
 		}
 	}
 	/// <summary>
-	/// Enumeration of positions point or a geometric figure can be in relation to a
-	/// plane.
+	/// Enumeration of positions point or a geometric figure can be in relation to a plane.
 	/// </summary>
 	[Flags]
 	public enum PlanePosition
@@ -455,13 +434,13 @@ namespace CryCil.Geometry
 		/// </summary>
 		Coplanar = 0,
 		/// <summary>
-		/// Geometric figure is not intersecting the plane and is located inside the part
-		/// of the 3D space plane's normal points towards.
+		/// Geometric figure is not intersecting the plane and is located inside the part of the 3D space
+		/// plane's normal points towards.
 		/// </summary>
 		Front = 1,
 		/// <summary>
-		/// Geometric figure is not intersecting the plane and is located inside the part
-		/// of the 3D space plane's normal points against.
+		/// Geometric figure is not intersecting the plane and is located inside the part of the 3D space
+		/// plane's normal points against.
 		/// </summary>
 		Back = 2,
 		/// <summary>

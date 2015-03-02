@@ -14,8 +14,7 @@ namespace CryEngine.Engine.Renderer
 	public unsafe struct RenderParams
 	{
 		/// <summary>
-		/// Matrix that represents all transformations applied to this object during this
-		/// frame.
+		/// Matrix that represents all transformations applied to this object during this frame.
 		/// </summary>
 		public Matrix34* CurrentTransformation;
 		/// <summary>
@@ -24,8 +23,7 @@ namespace CryEngine.Engine.Renderer
 		/// <remarks>Used internally by the renderer.</remarks>
 		public IntPtr InstancingInformation;			// SInstancingInfo *
 		/// <summary>
-		/// Matrix that represents all transformations that were applied to this object
-		/// during last frame.
+		/// Matrix that represents all transformations that were applied to this object during last frame.
 		/// </summary>
 		/// <remarks>Used for motion blur.</remarks>
 		public Matrix34* PreviousTransformation;
@@ -47,23 +45,18 @@ namespace CryEngine.Engine.Renderer
 		/// </summary>
 		public IntPtr Foliage;							// IFoliage *
 		/// <summary>
-		/// Pointer to render mesh that contains a stream of weight values used for
-		/// deformation morphs.
+		/// Pointer to render mesh that contains a stream of weight values used for deformation morphs.
 		/// </summary>
 		public IntPtr Weights;							// IRenderMesh *
 		/// <summary>
 		/// Pointer to Render Node object.
 		/// </summary>
-		/// <remarks>
-		/// Original comment: Object Id for objects identification in renderer.
-		/// </remarks>
+		/// <remarks>Original comment: Object Id for objects identification in renderer.</remarks>
 		public IntPtr RenderNode;						// IRenderNode *
 		/// <summary>
 		/// Unique identifier of the rendered object in the renderer.
 		/// </summary>
-		/// <remarks>
-		/// Original comment: Unique object Id for objects identification in renderer.
-		/// </remarks>
+		/// <remarks>Original comment: Unique object Id for objects identification in renderer.</remarks>
 		public void* Instance;
 		/// <summary>
 		/// Pointer to object that provides data for rendering grass.
@@ -101,8 +94,7 @@ namespace CryEngine.Engine.Renderer
 		/// Light mask to specify which light to use on the object.
 		/// </summary>
 		public uint DynamicLightMask;
-		// Summary: Approximate information about the lights not included into
-		//          nDLightMask.
+		// Summary: Approximate information about the lights not included into nDLightMask.
 
 		// SRestLightingInfo restLightInfo;
 
@@ -175,8 +167,7 @@ namespace CryEngine.Engine.Renderer
 		/// </summary>
 		public byte RenderList;
 		/// <summary>
-		/// Special sorter to ensure correct ordering even if parts of the 3DEngine are
-		/// run in parallel.
+		/// Special sorter to ensure correct ordering even if parts of the 3DEngine are run in parallel.
 		/// </summary>
 		public uint RenderItemSorter;
 	}

@@ -9,18 +9,14 @@ namespace CryCil.Geometry
 	/// Quaternion is a combination of 4 numbers (sometimes referred to as Euler
 	/// parameters) , that can be used to represent rotation and orientation.
 	/// </summary>
-	/// <remarks>
-	/// Quaternions are, basically, 3x3 matrices in a more compact form.
-	/// </remarks>
+	/// <remarks>Quaternions are, basically, 3x3 matrices in a more compact form.</remarks>
 	[StructLayout(LayoutKind.Explicit)]
 	public struct Quaternion : IEquatable<Quaternion>
 	{
 		/// <summary>
 		/// The identity <see cref="Quaternion"/> (0, 0, 0, 1).
 		/// </summary>
-		/// <remarks>
-		/// Identity quaternion has W equal to 1, and vector is equal to 0.
-		/// </remarks>
+		/// <remarks>Identity quaternion has W equal to 1, and vector is equal to 0.</remarks>
 		public static readonly Quaternion Identity = new Quaternion(0.0f, 0.0f, 0.0f, 1.0f);
 		#region Fields
 		/// <summary>
@@ -53,12 +49,10 @@ namespace CryCil.Geometry
 		/// <summary>
 		/// Gets or sets the component at the specified index.
 		/// </summary>
-		/// <value>
-		/// The value of the X, Y, Z, or W component, depending on the index.
-		/// </value>
+		/// <value>The value of the X, Y, Z, or W component, depending on the index.</value>
 		/// <param name="index">
-		/// The index of the component to access. Use 0 for the X component, 1 for the Y
-		/// component, 2 for the Z component, and 3 for the W component.
+		/// The index of the component to access. Use 0 for the X component, 1 for the Y component, 2 for
+		/// the Z component, and 3 for the W component.
 		/// </param>
 		/// <returns>The value of the component at the specified index.</returns>
 		/// <exception cref="System.ArgumentOutOfRangeException">
@@ -119,9 +113,7 @@ namespace CryCil.Geometry
 		/// <summary>
 		/// Gets inverted quaternion.
 		/// </summary>
-		/// <remarks>
-		/// Inverted quaternion is the quaternion where vector part is negated.
-		/// </remarks>
+		/// <remarks>Inverted quaternion is the quaternion where vector part is negated.</remarks>
 		public Quaternion Inverted
 		{
 			get
@@ -132,9 +124,7 @@ namespace CryCil.Geometry
 		/// <summary>
 		/// Gets flipped quaternion.
 		/// </summary>
-		/// <remarks>
-		/// Flipped quaternion is the quaternion where all 4 components are negated.
-		/// </remarks>
+		/// <remarks>Flipped quaternion is the quaternion where all 4 components are negated.</remarks>
 		public Quaternion Flipped
 		{
 			get
@@ -143,55 +133,43 @@ namespace CryCil.Geometry
 			}
 		}
 		/// <summary>
-		/// Treating this quaternion as a compressed rotation matrix, gets first column of
-		/// that matrix.
+		/// Treating this quaternion as a compressed rotation matrix, gets first column of that matrix.
 		/// </summary>
 		/// <remarks>
-		/// First column of rotation matrix represents a vector that points to the right
-		/// from the point that is oriented using this quaternion.
+		/// First column of rotation matrix represents a vector that points to the right from the point
+		/// that is oriented using this quaternion.
 		/// </remarks>
 		public Vector3 Column0 { get { return new Vector3(2 * (this.X * this.X + this.W * this.W) - 1, 2 * (this.Y * this.X + this.Z * this.W), 2 * (this.Z * this.X - this.Y * this.W)); } }
 		/// <summary>
-		/// Treating this quaternion as a compressed rotation matrix, gets second column
-		/// of that matrix.
+		/// Treating this quaternion as a compressed rotation matrix, gets second column of that matrix.
 		/// </summary>
 		/// <remarks>
-		/// Second column of rotation matrix represents a vector that points forward from
-		/// the point that is oriented using this quaternion.
+		/// Second column of rotation matrix represents a vector that points forward from the point that is
+		/// oriented using this quaternion.
 		/// </remarks>
 		public Vector3 Column1 { get { return new Vector3(2 * (this.X * this.Y - this.Z * this.W), 2 * (this.Y * this.Y + this.W * this.W) - 1, 2 * (this.Z * this.Y + this.X * this.W)); } }
 		/// <summary>
-		/// Treating this quaternion as a compressed rotation matrix, gets third column of
-		/// that matrix.
+		/// Treating this quaternion as a compressed rotation matrix, gets third column of that matrix.
 		/// </summary>
 		/// <remarks>
-		/// Third column of rotation matrix represents a vector that points up from the
-		/// point that is oriented using this quaternion.
+		/// Third column of rotation matrix represents a vector that points up from the point that is
+		/// oriented using this quaternion.
 		/// </remarks>
 		public Vector3 Column2 { get { return new Vector3(2 * (this.X * this.Z + this.Y * this.W), 2 * (this.Y * this.Z - this.X * this.W), 2 * (this.Z * this.Z + this.W * this.W) - 1); } }
 		/// <summary>
-		/// Treating this quaternion as a compressed rotation matrix, gets first row of
-		/// that matrix.
+		/// Treating this quaternion as a compressed rotation matrix, gets first row of that matrix.
 		/// </summary>
-		/// <remarks>
-		/// First row of rotation matrix contains X-coordinates of rotation axes.
-		/// </remarks>
+		/// <remarks>First row of rotation matrix contains X-coordinates of rotation axes.</remarks>
 		public Vector3 Row0 { get { return new Vector3(2 * (this.X * this.X + this.W * this.W) - 1, 2 * (this.X * this.Y - this.Z * this.W), 2 * (this.X * this.Z + this.Y * this.W)); } }
 		/// <summary>
-		/// Treating this quaternion as a compressed rotation matrix, gets second row of
-		/// that matrix.
+		/// Treating this quaternion as a compressed rotation matrix, gets second row of that matrix.
 		/// </summary>
-		/// <remarks>
-		/// Second row of rotation matrix contains Y-coordinates of rotation axes.
-		/// </remarks>
+		/// <remarks>Second row of rotation matrix contains Y-coordinates of rotation axes.</remarks>
 		public Vector3 Row1 { get { return new Vector3(2 * (this.Y * this.X + this.Z * this.W), 2 * (this.Y * this.Y + this.W * this.W) - 1, 2 * (this.Y * this.Z - this.X * this.W)); } }
 		/// <summary>
-		/// Treating this quaternion as a compressed rotation matrix, gets third row of
-		/// that matrix.
+		/// Treating this quaternion as a compressed rotation matrix, gets third row of that matrix.
 		/// </summary>
-		/// <remarks>
-		/// Third row of rotation matrix contains Z-coordinates of rotation axes.
-		/// </remarks>
+		/// <remarks>Third row of rotation matrix contains Z-coordinates of rotation axes.</remarks>
 		public Vector3 Row2 { get { return new Vector3(2 * (this.Z * this.X - this.Y * this.W), 2 * (this.Z * this.Y + this.X * this.W), 2 * (this.Z * this.Z + this.W * this.W) - 1); } }
 		#endregion
 		#region Construction
@@ -214,8 +192,7 @@ namespace CryCil.Geometry
 		/// Creates new instance of type <see cref="Quaternion"/>.
 		/// </summary>
 		/// <param name="angles">
-		/// A set of Euler angles that represent rotation that new quaternion should
-		/// represent.
+		/// A set of Euler angles that represent rotation that new quaternion should represent.
 		/// </param>
 		public Quaternion(EulerAngles angles)
 			: this()
@@ -262,12 +239,10 @@ namespace CryCil.Geometry
 		/// Creates new instance of type <see cref="Quaternion"/>.
 		/// </summary>
 		/// <param name="originalDirection">
-		/// Normalized <see cref="Vector3"/> that represents direction to start rotation
-		/// from.
+		/// Normalized <see cref="Vector3"/> that represents direction to start rotation from.
 		/// </param>
 		/// <param name="desiredDirection"> 
-		/// Normalized <see cref="Vector3"/> that represents direction to finish rotation
-		/// at.
+		/// Normalized <see cref="Vector3"/> that represents direction to finish rotation at.
 		/// </param>
 		public Quaternion
 		(
@@ -283,8 +258,8 @@ namespace CryCil.Geometry
 			// Axis of rotation, and a sine.
 			Vector3 axis;
 			float sine;
-			// We need different behavior depending on cosine. If the angle is close to
-			// 180 degrees, then we need to select fallback axis.
+			// We need different behavior depending on cosine. If the angle is close to 180 degrees, then
+			// we need to select fallback axis.
 			if (cosine < -0.9999f)
 			{
 				axis =
@@ -379,9 +354,7 @@ namespace CryCil.Geometry
 		/// <summary>
 		/// Inverts or conjugates this quaternion by flipping its vector part.
 		/// </summary>
-		/// <remarks>
-		/// Inverted quaternion represents rotation in reverse direction.
-		/// </remarks>
+		/// <remarks>Inverted quaternion represents rotation in reverse direction.</remarks>
 		public void Invert()
 		{
 			this.Vector = -this.Vector;
@@ -401,9 +374,9 @@ namespace CryCil.Geometry
 		/// Converts this quaternion into unit quaternion.
 		/// </summary>
 		/// <remarks>
-		/// Since this implementation is about rotations, non-unit quaternions are not
-		/// really encountered here, use this function only after a multitude of
-		/// operations to clean all accumulated rounding errors.
+		/// Since this implementation is about rotations, non-unit quaternions are not really encountered
+		/// here, use this function only after a multitude of operations to clean all accumulated rounding
+		/// errors.
 		/// </remarks>
 		public void Normalize()
 		{
@@ -429,8 +402,8 @@ namespace CryCil.Geometry
 		/// <param name="q">      Another quaternion.</param>
 		/// <param name="epsilon">Precision of comparison.</param>
 		/// <returns>
-		/// True, if this quaternion represents rotation equivalent to one represented by
-		/// another quaternion.
+		/// True, if this quaternion represents rotation equivalent to one represented by another
+		/// quaternion.
 		/// </returns>
 		public bool IsEquivalent(Quaternion q, float epsilon = 0.05f)
 		{
@@ -453,9 +426,7 @@ namespace CryCil.Geometry
 		/// Determines whether modulus of this quaternion is equal 1.
 		/// </summary>
 		/// <param name="epsilon">Precision of comparison.</param>
-		/// <returns>
-		/// True, if modulus of this quaternion is approximately equal to 1.
-		/// </returns>
+		/// <returns>True, if modulus of this quaternion is approximately equal to 1.</returns>
 		public bool IsUnit(float epsilon = 0.05f)
 		{
 			return Math.Abs(1 - ((this | this))) < epsilon;
@@ -532,8 +503,8 @@ namespace CryCil.Geometry
 		/// <param name="left"> Left operand.</param>
 		/// <param name="right">Right operand.</param>
 		/// <returns>
-		/// Quaternion that represents rotation equivalent to rotation by left quaternion
-		/// followed up by rotation by right quaternion.
+		/// Quaternion that represents rotation equivalent to rotation by left quaternion followed up by
+		/// rotation by right quaternion.
 		/// </returns>
 		public static Quaternion operator *(Quaternion left, Quaternion right)
 		{

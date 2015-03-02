@@ -15,9 +15,7 @@ namespace CryCil.Geometry
 		/// Applies transformation that is represented by given quaternion to the vector.
 		/// </summary>
 		/// <param name="vector">    Vector to transform.</param>
-		/// <param name="quaternion">
-		/// Quaternion that represents the transformation.
-		/// </param>
+		/// <param name="quaternion">Quaternion that represents the transformation.</param>
 		public static void Apply(ref Vector3 vector, ref Quaternion quaternion)
 		{
 			vector.X = quaternion.W * quaternion.W * vector.X + 2 * quaternion.Y * quaternion.W * vector.Z - 2 * quaternion.Z * quaternion.W * vector.Y + quaternion.X * quaternion.X * vector.X + 2 * quaternion.Y * quaternion.X * vector.Y + 2 * quaternion.Z * quaternion.X * vector.Z - quaternion.Z * quaternion.Z * vector.X - quaternion.Y * quaternion.Y * vector.X;
@@ -60,15 +58,11 @@ namespace CryCil.Geometry
 		/// <summary>
 		/// Combines two transformations together.
 		/// </summary>
-		/// <param name="first"> 
-		/// <see cref="Quaternion"/> that represents first transformation.
-		/// </param>
-		/// <param name="second">
-		/// <see cref="Quaternion"/> that represents second transformation.
-		/// </param>
+		/// <param name="first"> <see cref="Quaternion"/> that represents first transformation.</param>
+		/// <param name="second"><see cref="Quaternion"/> that represents second transformation.</param>
 		/// <returns>
-		/// <see cref="Quaternion"/> that represents transformation that is equivalent of
-		/// two given transformations applied in order first-second.
+		/// <see cref="Quaternion"/> that represents transformation that is equivalent of two given
+		/// transformations applied in order first-second.
 		/// </returns>
 		public static Quaternion Combine(ref Quaternion first, ref Quaternion second)
 		{
@@ -77,15 +71,11 @@ namespace CryCil.Geometry
 		/// <summary>
 		/// Combines two transformations together.
 		/// </summary>
-		/// <param name="first"> 
-		/// <see cref="Matrix33"/> that represents first transformation.
-		/// </param>
-		/// <param name="second">
-		/// <see cref="Matrix33"/> that represents second transformation.
-		/// </param>
+		/// <param name="first"> <see cref="Matrix33"/> that represents first transformation.</param>
+		/// <param name="second"><see cref="Matrix33"/> that represents second transformation.</param>
 		/// <returns>
-		/// <see cref="Matrix33"/> that represents transformation that is equivalent of
-		/// two given transformations applied in order first-second.
+		/// <see cref="Matrix33"/> that represents transformation that is equivalent of two given
+		/// transformations applied in order first-second.
 		/// </returns>
 		public static Matrix33 Combine(ref Matrix33 first, ref Matrix33 second)
 		{
@@ -94,15 +84,11 @@ namespace CryCil.Geometry
 		/// <summary>
 		/// Combines two transformations together.
 		/// </summary>
-		/// <param name="first"> 
-		/// <see cref="Matrix34"/> that represents first transformation.
-		/// </param>
-		/// <param name="second">
-		/// <see cref="Matrix34"/> that represents second transformation.
-		/// </param>
+		/// <param name="first"> <see cref="Matrix34"/> that represents first transformation.</param>
+		/// <param name="second"><see cref="Matrix34"/> that represents second transformation.</param>
 		/// <returns>
-		/// <see cref="Matrix34"/> that represents transformation that is equivalent of
-		/// two given transformations applied in order first-second.
+		/// <see cref="Matrix34"/> that represents transformation that is equivalent of two given
+		/// transformations applied in order first-second.
 		/// </returns>
 		public static Matrix34 Combine(ref Matrix34 first, ref Matrix34 second)
 		{
@@ -111,15 +97,11 @@ namespace CryCil.Geometry
 		/// <summary>
 		/// Combines two transformations together.
 		/// </summary>
-		/// <param name="first"> 
-		/// <see cref="Matrix44"/> that represents first transformation.
-		/// </param>
-		/// <param name="second">
-		/// <see cref="Matrix44"/> that represents second transformation.
-		/// </param>
+		/// <param name="first"> <see cref="Matrix44"/> that represents first transformation.</param>
+		/// <param name="second"><see cref="Matrix44"/> that represents second transformation.</param>
 		/// <returns>
-		/// <see cref="Matrix44"/> that represents transformation that is equivalent of
-		/// two given transformations applied in order first-second.
+		/// <see cref="Matrix44"/> that represents transformation that is equivalent of two given
+		/// transformations applied in order first-second.
 		/// </returns>
 		public static Matrix44 Combine(ref Matrix44 first, ref Matrix44 second)
 		{

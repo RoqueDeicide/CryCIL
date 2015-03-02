@@ -52,8 +52,8 @@ namespace CryEngine
 		public float mass;
 
 		/// <summary>
-		/// When physicalizing geometry can specify to use physics from different LOD.
-		/// Used for characters that have ragdoll physics in Lod1
+		/// When physicalizing geometry can specify to use physics from different LOD. Used for characters
+		/// that have ragdoll physics in Lod1
 		/// </summary>
 		public int lod;
 
@@ -69,7 +69,7 @@ namespace CryEngine
 
 		/// <summary>
 		/// Used for character physicalization (Scale of force in character joint's
-		/// springs).
+		/// springs) .
 		/// </summary>
 		public float stiffnessScale;
 
@@ -84,8 +84,7 @@ namespace CryEngine
 		/// </summary>
 		public PlayerDimensionsParameters livingDimensions;
 		/// <summary>
-		/// Player dynamics, only applicable when type is set to
-		/// <see cref="PhysicalizationType.Living"/>.
+		/// Player dynamics, only applicable when type is set to <see cref="PhysicalizationType.Living"/>.
 		/// </summary>
 		public PlayerDynamicsParameters livingDynamics;
 

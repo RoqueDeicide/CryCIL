@@ -19,9 +19,7 @@ namespace CryEngine.Entities.Advanced
 		/// <summary>
 		/// Gets game object associated with the entity.
 		/// </summary>
-		/// <param name="id">
-		/// Identifier of the entity which game object is required.
-		/// </param>
+		/// <param name="id">Identifier of the entity which game object is required.</param>
 		/// <returns><see cref="GameObject"/> for given entity.</returns>
 		public static GameObject Get(EntityId id)
 		{
@@ -52,8 +50,7 @@ namespace CryEngine.Entities.Advanced
 		/// Sets a new profile for an aspect.
 		/// </summary>
 		/// <param name="aspect">     
-		/// <see cref="EntityAspects"/> object that designates aspect to set new profile
-		/// for.
+		/// <see cref="EntityAspects"/> object that designates aspect to set new profile for.
 		/// </param>
 		/// <param name="profile">    New profile data.</param>
 		/// <param name="fromNetwork">Indicates whether</param>
@@ -66,9 +63,7 @@ namespace CryEngine.Entities.Advanced
 		/// <summary>
 		/// En/disables sending physics event to this game object.
 		/// </summary>
-		/// <param name="enable">      
-		/// Indicates whether event must enabled or disabled.
-		/// </param>
+		/// <param name="enable">      Indicates whether event must enabled or disabled.</param>
 		/// <param name="physicsEvent">
 		/// <see cref="EntityPhysicsEvents"/> object that designates the event.
 		/// </param>
@@ -190,8 +185,8 @@ namespace CryEngine.Entities.Advanced
 	/// Enumeration of physics events that can happen to an entity.
 	/// </summary>
 	/// <remarks>
-	/// Logged events are posted into a special queue, immediate ones are processed at
-	/// once, usually within physics thread, which might cause parallelization issues.
+	/// Logged events are posted into a special queue, immediate ones are processed at once, usually within
+	/// physics thread, which might cause parallelization issues.
 	/// </remarks>
 	public enum EntityPhysicsEvents
 	{

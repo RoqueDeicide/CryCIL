@@ -27,8 +27,8 @@ namespace CryEngine.Logic.Entities
 		/// </summary>
 		public PhysicalEntity Physics { get; private set; }
 		/// <summary>
-		/// Indicates whether this entity has to validate its identifier, in case the game
-		/// removes the entity without invalidating the <see cref="Handle"/>.
+		/// Indicates whether this entity has to validate its identifier, in case the game removes the
+		/// entity without invalidating the <see cref="Handle"/>.
 		/// </summary>
 		public bool ExtraSafe { get; set; }
 		private int managed;
@@ -43,10 +43,9 @@ namespace CryEngine.Logic.Entities
 			{
 				if (this.managed == -1)
 				{
-					// If this object was create as instance of type that derives from
-					// Entity, then it is definitely managed, otherwise, try finding out
-					// the name of the entity class, and see if it is registered as one of
-					// the CryMono ones.
+					// If this object was create as instance of type that derives from Entity, then it is
+					// definitely managed, otherwise, try finding out the name of the entity class, and see
+					// if it is registered as one of the CryMono ones.
 					if (this is GameObjectExtension)
 					{
 						this.managed = 1;
@@ -98,9 +97,8 @@ namespace CryEngine.Logic.Entities
 		/// Gets or sets view distance ratio for this entity.
 		/// </summary>
 		/// <remarks>
-		/// This property allows to determine how small this entity's image on the screen
-		/// must be for it to be considered invisible. Entities that are considered
-		/// invisible are not rendered.
+		/// This property allows to determine how small this entity's image on the screen must be for it to
+		/// be considered invisible. Entities that are considered invisible are not rendered.
 		/// </remarks>
 		public int ViewDistanceRatio
 		{
@@ -121,8 +119,8 @@ namespace CryEngine.Logic.Entities
 		/// Gets or sets level of detail switch ratio.
 		/// </summary>
 		/// <remarks>
-		/// This property allows to determine how small this entity's image on the screen
-		/// must be to make render node switch to lower level of detail model.
+		/// This property allows to determine how small this entity's image on the screen must be to make
+		/// render node switch to lower level of detail model.
 		/// </remarks>
 		public int LevelOfDetailRatio
 		{
@@ -208,13 +206,11 @@ namespace CryEngine.Logic.Entities
 			}
 		}
 		/// <summary>
-		/// Gets or sets quaternion that describes orientation of this entity in world
-		/// space.
+		/// Gets or sets quaternion that describes orientation of this entity in world space.
 		/// </summary>
 		/// <remarks>
-		/// Quaternion describes rotation from vector that points
-		/// <see cref="Vector3.Forward"/>(?) to vector that points in the same direction
-		/// this entity is facing.
+		/// Quaternion describes rotation from vector that points <see cref="Vector3.Forward"/>(?) to
+		/// vector that points in the same direction this entity is facing.
 		/// </remarks>
 		public Quaternion WorldOrientation
 		{
@@ -232,13 +228,11 @@ namespace CryEngine.Logic.Entities
 			}
 		}
 		/// <summary>
-		/// Gets or sets quaternion that describes orientation of this entity in local
-		/// space.
+		/// Gets or sets quaternion that describes orientation of this entity in local space.
 		/// </summary>
 		/// <remarks>
-		/// Quaternion describes rotation from vector that points
-		/// <see cref="Vector3.Forward"/>(?) to vector that points in the same direction
-		/// this entity is facing.
+		/// Quaternion describes rotation from vector that points <see cref="Vector3.Forward"/>(?) to
+		/// vector that points in the same direction this entity is facing.
 		/// </remarks>
 		public Quaternion LocalOrientation
 		{
@@ -268,9 +262,8 @@ namespace CryEngine.Logic.Entities
 			}
 		}
 		/// <summary>
-		/// Gets or sets the matrix that represents translation (position), rotation
-		/// (orientation) and scale transformations applied to this entity in relation to
-		/// the origin of coordinates.
+		/// Gets or sets the matrix that represents translation (position), rotation (orientation) and
+		/// scale transformations applied to this entity in relation to the origin of coordinates.
 		/// </summary>
 		public Matrix34 WorldTransformation
 		{
@@ -288,9 +281,8 @@ namespace CryEngine.Logic.Entities
 			}
 		}
 		/// <summary>
-		/// Gets or sets the matrix that represents translation (position), rotation
-		/// (orientation) and scale transformations applied to this entity in relation to
-		/// the parent entity.
+		/// Gets or sets the matrix that represents translation (position), rotation (orientation) and
+		/// scale transformations applied to this entity in relation to the parent entity.
 		/// </summary>
 		public Matrix34 LocalTransformation
 		{
@@ -398,8 +390,7 @@ namespace CryEngine.Logic.Entities
 			}
 		}
 		/// <summary>
-		/// Gets or sets value that indicates when this entity should receive updates from
-		/// the system.
+		/// Gets or sets value that indicates when this entity should receive updates from the system.
 		/// </summary>
 		public EntityUpdatePolicy UpdatePolicy
 		{
@@ -434,9 +425,7 @@ namespace CryEngine.Logic.Entities
 		/// <summary>
 		/// Creates a wrapper object for an entity.
 		/// </summary>
-		/// <param name="identifier">
-		/// Identifier of the entity to create the wrapper for.
-		/// </param>
+		/// <param name="identifier">Identifier of the entity to create the wrapper for.</param>
 		public EntityWrapper(EntityId identifier)
 		{
 			this.Handle = Native.EntityInterop.GetEntity(identifier);
@@ -447,9 +436,7 @@ namespace CryEngine.Logic.Entities
 		/// Creates a wrapper object for an entity.
 		/// </summary>
 		/// <param name="handle">    Pointer to the entity object.</param>
-		/// <param name="identifier">
-		/// Identifier of the entity to create the wrapper for.
-		/// </param>
+		/// <param name="identifier">Identifier of the entity to create the wrapper for.</param>
 		public EntityWrapper(IntPtr handle, EntityId identifier)
 		{
 			this.Handle = handle;
@@ -504,9 +491,7 @@ namespace CryEngine.Logic.Entities
 		/// Sets the flags assigned to the specified slot.
 		/// </summary>
 		/// <param name="flags">Flags to set.</param>
-		/// <param name="slot"> 
-		/// Index of the slot, if -1 apply to all existing slots.
-		/// </param>
+		/// <param name="slot"> Index of the slot, if -1 apply to all existing slots.</param>
 		public void SetSlotFlags(EntitySlotFlags flags, int slot = 0)
 		{
 			this.AssertObjectValidity();
@@ -526,9 +511,7 @@ namespace CryEngine.Logic.Entities
 		/// <summary>
 		/// Gets a wrapper around static object located in specified slot.
 		/// </summary>
-		/// <param name="slot">
-		/// Index of the slot where static object we need is located.
-		/// </param>
+		/// <param name="slot">Index of the slot where static object we need is located.</param>
 		/// <returns>
 		/// A wrapper around static object located in specified slot or a disposed
 		/// <see cref="StaticObject"/> instance if slot was empty.
@@ -543,9 +526,7 @@ namespace CryEngine.Logic.Entities
 		/// Assigns a static object to a specified slot.
 		/// </summary>
 		/// <param name="staticObject">Static object to assign to the entity.</param>
-		/// <param name="slot">        
-		/// Index of the slot where to put the static object.
-		/// </param>
+		/// <param name="slot">        Index of the slot where to put the static object.</param>
 		public void AssignStaticObject(StaticObject staticObject, int slot)
 		{
 			if (staticObject.Disposed)

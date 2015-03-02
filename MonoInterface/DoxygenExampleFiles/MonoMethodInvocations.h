@@ -8,16 +8,16 @@ void NoParameters_ValueTypeInstance_Virtual_DefaultExceptionHandling()
 	IMonoClass *int32Class = MonoEnv->CoreLibrary->GetClass("System", "Int32");
 
 	// Get "ToString" method, note that, that is a virtual method.
-	IMonoMethod *toStringMethod = int32Class->GetFunction("ToString", 0);
+	IMonoMethod *toStringMethod = int32Class->GetFunction("ToString", 0)->ToInstance();
 
 	// Invoke it on a simple integer. First use non-virtual invocation, then virtual one.
 	int number = 300;
 	mono::string earlyBoundInvocationResult = toStringMethod->Invoke(&number, nullptr, false);
-	mono::string lateBoundInvocationResult = toStringMethod->Invoke(&number, nullptr, true);
+	mono::string lateBoundInvocationResult  = toStringMethod->Invoke(&number, nullptr, true);
 
 	// Convert results to Null-terminated strings.
 	const char *resultNoPolymorphismNT = ToNativeString(earlyBoundInvocationResult);
-	const char *resultPolymorphismNT = ToNativeString(lateBoundInvocationResult);
+	const char *resultPolymorphismNT   = ToNativeString(lateBoundInvocationResult);
 
 	// This will print "System.String".
 	CryLogAlways(resultNoPolymorphismNT);
@@ -34,7 +34,7 @@ void NoParameters_ReferenceTypeInstance_Virtual_NoExceptionHandling()
 	IMonoClass *stringClass = MonoEnv->CoreLibrary->GetClass("System", "String");
 
 	// Get "ToString" method, note that, that is a virtual method.
-	IMonoMethod *hashCode = stringClass->GetFunction("GetHashCode", 0);
+	IMonoMethod *hashCode = stringClass->GetFunction("GetHashCode", 0)->ToInstance();
 
 	// Create a sample string.
 	mono::string sampleText = ToMonoString("Sample Text");
@@ -58,7 +58,7 @@ void StackParameters_Static()
 	typeSpecs.Add(ClassSpec(MonoEnv->Cryambly->Matrix33,  "&"));
 	typeSpecs.Add(ClassSpec(MonoEnv->Cryambly->Vector3,   "&"));
 	typeSpecs.Add(ClassSpec(MonoEnv->CoreLibrary->Single, ""));
-	IMonoMethod *overrideMethod = aroundAxis->GetFunction("Override", typeSpecs);
+	auto overrideFunc = aroundAxis->GetFunction("Override", typeSpecs)->ToStatic();
 
 	// Create an array of arguments.
 	Matrix33 matrix = Matrix33::CreateIdentity();
@@ -70,7 +70,7 @@ void StackParameters_Static()
 	params[2] = &angle;
 
 	// Invoke the method.
-	overrideMethod->Invoke(nullptr, params);
+	overrideFunc->Invoke(params);
 
 	// Now "matrix" should be quite different.
 }
@@ -81,14 +81,14 @@ void ArrayParameters_Static()
 	IMonoClass *int32Class = MonoEnv->CoreLibrary->GetClass("System", "Int32");
 
 	// Get static method "Parse".
-	IMonoMethod *parseMethod = int32Class->GetFunction("Parse", "System.String");
+	auto parseFunc = int32Class->GetFunction("Parse", "System.String")->ToStatic();
 
 	// Create an array of parameters.
 	IMonoArray *pars = MonoEnv->Objects->Arrays->Create(1);
 	pars->At<mono::string>(0) = ToMonoString("123");
 
 	// Invoke the method.
-	mono::int32 parsedBoxedNumber = parseMethod->Invoke(nullptr, pars);
+	mono::int32 parsedBoxedNumber = parseFunc->Invoke(pars);
 
 	// Print the result.
 	CryLogAlways("%d", Unbox<int>(parsedBoxedNumber));

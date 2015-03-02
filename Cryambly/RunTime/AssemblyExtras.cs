@@ -16,9 +16,7 @@ namespace CryCil.RunTime
 		/// Determines whether given file contains valid .NET/Mono assembly.
 		/// </summary>
 		/// <param name="file">Path to the file.</param>
-		/// <returns>
-		/// True, if the file specified by the path contains valid managed assembly.
-		/// </returns>
+		/// <returns>True, if the file specified by the path contains valid managed assembly.</returns>
 		public static bool IsAssembly(string file)
 		{
 			try

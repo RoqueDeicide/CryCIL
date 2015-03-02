@@ -34,8 +34,7 @@
 		/// </summary>
 		Editor = 64,
 		/// <summary>
-		/// If set, indicates that transformation of the entity was changed in the
-		/// TrackView.
+		/// If set, indicates that transformation of the entity was changed in the TrackView.
 		/// </summary>
 		TrackView = 128,
 		/// <summary>

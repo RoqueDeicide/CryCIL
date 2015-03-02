@@ -22,8 +22,7 @@ namespace CryEngine.Logic.Entities
 		/// <remarks>This flag is persistent and can be set from the Editor.</remarks>
 		CastShadow = 1 << 1,
 		/// <summary>
-		/// If set, indicates that this entity cannot be removed until this flags is
-		/// cleared.
+		/// If set, indicates that this entity cannot be removed until this flags is cleared.
 		/// </summary>
 		/// <remarks>
 		/// <para>Unremovable entities are immediately respawned when reloading.</para>

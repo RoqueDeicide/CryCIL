@@ -20,20 +20,18 @@ namespace CryCil.Geometry.Csg.Base
 	/// </summary>
 	/// <remarks>
 	/// <para>
-	/// Constructive Solid Geometry (CSG) is a modeling technique that uses Boolean
-	/// operations like union and intersection to combine 3D solids. This library
-	/// implements CSG operations on meshes elegantly and concisely using BSP trees, and
-	/// is meant to serve as an easily understandable implementation of the algorithm. All
-	/// edge cases involving overlapping coplanar polygons in both solids are correctly
+	/// Constructive Solid Geometry (CSG) is a modeling technique that uses Boolean operations like union
+	/// and intersection to combine 3D solids. This library implements CSG operations on meshes elegantly
+	/// and concisely using BSP trees, and is meant to serve as an easily understandable implementation of
+	/// the algorithm. All edge cases involving overlapping coplanar polygons in both solids are correctly
 	/// handled.
 	/// </para>
 	/// <para>Implementation Details</para>
 	/// <para>
-	/// All CSG operations are implemented in terms of two functions, `ClipTo()` and
-	/// `Invert()`, which remove parts of a BSP tree inside another BSP tree and swap
-	/// solid and empty space, respectively. To find the union of `a` and `b`, we want to
-	/// remove everything in `a` inside `b` and everything in `b` inside `a`, then combine
-	/// polygons from `a` and `b` into one solid:
+	/// All CSG operations are implemented in terms of two functions, `ClipTo()` and `Invert()`, which
+	/// remove parts of a BSP tree inside another BSP tree and swap solid and empty space, respectively. To
+	/// find the union of `a` and `b`, we want to remove everything in `a` inside `b` and everything in `b`
+	/// inside `a`, then combine polygons from `a` and `b` into one solid:
 	/// </para>
 	/// <para>
 	/// <code>
@@ -43,10 +41,9 @@ namespace CryCil.Geometry.Csg.Base
 	/// </code>
 	/// </para>
 	/// <para>
-	/// The only tricky part is handling overlapping coplanar polygons in both trees. The
-	/// code above keeps both copies, but we need to keep them in one tree and remove them
-	/// in the other tree. To remove them from `b` we can clip the inverse of `b` against
-	/// `a`. The code for union now looks like this:
+	/// The only tricky part is handling overlapping coplanar polygons in both trees. The code above keeps
+	/// both copies, but we need to keep them in one tree and remove them in the other tree. To remove them
+	/// from `b` we can clip the inverse of `b` against `a`. The code for union now looks like this:
 	/// </para>
 	/// <para>
 	/// <code>
@@ -59,15 +56,12 @@ namespace CryCil.Geometry.Csg.Base
 	/// </code>
 	/// </para>
 	/// <para>
-	/// Subtraction and intersection naturally follow from set operations. If union is `A
-	/// | B`, subtraction is `A - B = ~(~A |
-	/// B) ` and intersection is `A &amp; B = ~(~A | ~B)` where `~` is the complement
-	///    operator.
+	/// Subtraction and intersection naturally follow from set operations. If union is `A | B`, subtraction
+	/// is `A - B = ~(~A |
+	/// B) ` and intersection is `A &amp; B = ~(~A | ~B)` where `~` is the complement operator.
 	/// </para>
 	/// <para>License</para>
-	/// <para>
-	/// Copyright (c) 2011 Evan Wallace (http://madebyevan.com/), under the MIT license.
-	/// </para>
+	/// <para>Copyright (c) 2011 Evan Wallace (http://madebyevan.com/), under the MIT license.</para>
 	/// </remarks>
 	/// <example>
 	/// <code>
@@ -160,8 +154,7 @@ namespace CryCil.Geometry.Csg.Base
 			return new Solid(aNode.AllPolygons);
 		}
 		/// <summary>
-		/// Creates a solid which contains every point that is within both of given
-		/// solids.
+		/// Creates a solid which contains every point that is within both of given solids.
 		/// </summary>
 		/// <remarks>
 		/// <code>
@@ -222,8 +215,8 @@ namespace CryCil.Geometry.Csg.Base
 		/// </summary>
 		/// <remarks>
 		/// <para>
-		/// Implementation of this operation comes from set theory: subtraction is
-		/// negation of union of negated first object with second one.
+		/// Implementation of this operation comes from set theory: subtraction is negation of union of
+		/// negated first object with second one.
 		/// </para>
 		/// <code>
 		/// +-------+            +-------+
@@ -358,12 +351,11 @@ namespace CryCil.Geometry.Csg.Base
 			/// Creates an axis-aligned cuboid.
 			/// </summary>
 			/// <param name="centerVector">
-			/// Optional vector that defines center of the cuboid. If null center will be
-			/// an origin of coordinates.
+			/// Optional vector that defines center of the cuboid. If null center will be an origin of
+			/// coordinates.
 			/// </param>
 			/// <param name="lengthsSet">  
-			/// Optional vector that defines lengths of the cuboid along the corresponding
-			/// axes.
+			/// Optional vector that defines lengths of the cuboid along the corresponding axes.
 			/// </param>
 			/// <returns>A new cuboid that can participate in CSG operations.</returns>
 			public static Solid Cuboid(Vector3? centerVector = null,
@@ -485,8 +477,8 @@ namespace CryCil.Geometry.Csg.Base
 			/// Creates a sphere.
 			/// </summary>
 			/// <param name="centerVector">
-			/// Optional vector that defines center of the sphere. If null center will be
-			/// an origin of coordinates.
+			/// Optional vector that defines center of the sphere. If null center will be an origin of
+			/// coordinates.
 			/// </param>
 			/// <param name="radius">      Radius of the sphere.</param>
 			/// <param name="slices">      Tesseltation along the longitude.</param>
@@ -498,8 +490,7 @@ namespace CryCil.Geometry.Csg.Base
 				Vector3 center = centerVector ?? new Vector3();
 
 				List<Polygon> polygons = new List<Polygon>();
-				// Adds a vertex calculated from given polar coordinates to the list
-				// above.
+				// Adds a vertex calculated from given polar coordinates to the list above.
 				Func<float, float, Vertex> createVertex = delegate(float theta, float phi)
 				{
 					theta *= (float)(Math.PI * 2);
@@ -544,12 +535,10 @@ namespace CryCil.Geometry.Csg.Base
 			/// Creates a cylinder.
 			/// </summary>
 			/// <param name="startVector">
-			/// Optional vector that defines position of one and of the ends of the
-			/// cylinder.
+			/// Optional vector that defines position of one and of the ends of the cylinder.
 			/// </param>
 			/// <param name="endVector">  
-			/// Optional vector that defines position of one and of the ends of the
-			/// cylinder.
+			/// Optional vector that defines position of one and of the ends of the cylinder.
 			/// </param>
 			/// <param name="radius">     Radius of the cylinder.</param>
 			/// <param name="slices">     Tesselation parameter.</param>
@@ -646,9 +635,7 @@ namespace CryCil.Geometry.Csg.Base
 			/// </example>
 			/// <param name="left"> Left operand.</param>
 			/// <param name="right">Right operand.</param>
-			/// <returns>
-			/// Result of <see cref="ConstructiveSolidGeometry.Union"/> .
-			/// </returns>
+			/// <returns>Result of <see cref="ConstructiveSolidGeometry.Union"/> .</returns>
 			public static Solid operator |(Solid left, Solid right)
 			{
 				return ConstructiveSolidGeometry.Union(left, right);
@@ -663,9 +650,7 @@ namespace CryCil.Geometry.Csg.Base
 			/// </example>
 			/// <param name="left"> Left operand.</param>
 			/// <param name="right">Right operand.</param>
-			/// <returns>
-			/// Result of <see cref="ConstructiveSolidGeometry.Intersection"/> .
-			/// </returns>
+			/// <returns>Result of <see cref="ConstructiveSolidGeometry.Intersection"/> .</returns>
 			public static Solid operator &(Solid left, Solid right)
 			{
 				return ConstructiveSolidGeometry.Intersection(left, right);
@@ -680,9 +665,7 @@ namespace CryCil.Geometry.Csg.Base
 			/// </example>
 			/// <param name="left"> Left operand.</param>
 			/// <param name="right">Right operand.</param>
-			/// <returns>
-			/// Result of <see cref="ConstructiveSolidGeometry.Subtract"/> .
-			/// </returns>
+			/// <returns>Result of <see cref="ConstructiveSolidGeometry.Subtract"/> .</returns>
 			public static Solid operator -(Solid left, Solid right)
 			{
 				return ConstructiveSolidGeometry.Subtract(left, right);
@@ -700,8 +683,8 @@ namespace CryCil.Geometry.Csg.Base
 			/// </summary>
 			public List<Vertex> Vertices;
 			/// <summary>
-			/// An identifier that can be shared between multiple polygons and associated
-			/// with some property (like surface color, or subset index).
+			/// An identifier that can be shared between multiple polygons and associated with some
+			/// property (like surface color, or subset index).
 			/// </summary>
 			public int Shared;
 			/// <summary>
@@ -733,9 +716,7 @@ namespace CryCil.Geometry.Csg.Base
 			/// Constructs a new polygon.
 			/// </summary>
 			/// <remarks>A plane is created using first three vertices.</remarks>
-			/// <param name="vertices">
-			/// A list of vertices that define the outline of the polygon.
-			/// </param>
+			/// <param name="vertices">A list of vertices that define the outline of the polygon.</param>
 			/// <param name="shared">  An identifier of shared properties.</param>
 			public Polygon(IList<Vertex> vertices, int shared)
 			{
@@ -773,9 +754,8 @@ namespace CryCil.Geometry.Csg.Base
 					Vector3 previousVertex = vertices[(i == 0) ? vertices.Count - 1 : i - 1].Position;
 					Vector3 currentVertex = vertices[i].Position;
 					Vector3 nextVertex = vertices[(i + 1) % vertices.Count].Position;
-					// Plane formed by edge between previous vertex and current one and a
-					// vector that is parallel to polygon's normal and originates from
-					// current vertex.
+					// Plane formed by edge between previous vertex and current one and a vector that is
+					// parallel to polygon's normal and originates from current vertex.
 					ConstructiveSolidGeometry.Plane planeBefore =
 						new Plane(currentVertex, previousVertex, this.Plane.Normal + currentVertex);
 
@@ -809,8 +789,7 @@ namespace CryCil.Geometry.Csg.Base
 			/// </summary>
 			public Vector3 Position;
 			/// <summary>
-			/// Vector perpendicular to the surface this vertex is supposed to be located
-			/// on.
+			/// Vector perpendicular to the surface this vertex is supposed to be located on.
 			/// </summary>
 			public Vector3 Normal;
 			/// <summary>
@@ -836,8 +815,7 @@ namespace CryCil.Geometry.Csg.Base
 				this.Normal = this.Normal.Flipped;
 			}
 			/// <summary>
-			/// Creates a vertex that is a linear interpolation between this and another
-			/// vertex.
+			/// Creates a vertex that is a linear interpolation between this and another vertex.
 			/// </summary>
 			/// <param name="other">Another vertex.</param>
 			/// <param name="t">    Interpolation value.</param>
@@ -933,16 +911,13 @@ namespace CryCil.Geometry.Csg.Base
 			/// <param name="point"><see cref="Vector3"/> that represents a point.</param>
 			/// <returns>
 			/// <para>
-			/// <see cref="PlaneRelativePositionClass.Back"/> if the point is behind this
-			/// plane.
+			/// <see cref="PlaneRelativePositionClass.Back"/> if the point is behind this plane.
 			/// </para>
 			/// <para>
-			/// <see cref="PlaneRelativePositionClass.Front"/> if the point is in front of
-			/// this plane.
+			/// <see cref="PlaneRelativePositionClass.Front"/> if the point is in front of this plane.
 			/// </para>
 			/// <para>
-			/// <see cref="PlaneRelativePositionClass.Coplanar"/> if the point is on this
-			/// plane.
+			/// <see cref="PlaneRelativePositionClass.Coplanar"/> if the point is on this plane.
 			/// </para>
 			/// </returns>
 			public PlaneRelativePositionClass RelativePosition(Vector3 point)
@@ -960,20 +935,20 @@ namespace CryCil.Geometry.Csg.Base
 			/// </summary>
 			/// <param name="polygon">              Polygon to slice.</param>
 			/// <param name="frontCoplanarPolygons">
-			/// The list that is used for storing the <paramref name="polygon"/> it is
-			/// located on a plane and its normal points to front side of the plane.
+			/// The list that is used for storing the <paramref name="polygon"/> it is located on a plane
+			/// and its normal points to front side of the plane.
 			/// </param>
 			/// <param name="backCoplanarPolygons"> 
-			/// The list that is used for storing the <paramref name="polygon"/> it is
-			/// located on a plane and its normal points to front side of the plane.
+			/// The list that is used for storing the <paramref name="polygon"/> it is located on a plane
+			/// and its normal points to front side of the plane.
 			/// </param>
 			/// <param name="frontPolygons">        
-			/// The list that is used for storing the polygons that don't intersect this
-			/// plane but located in front of it.
+			/// The list that is used for storing the polygons that don't intersect this plane but located
+			/// in front of it.
 			/// </param>
 			/// <param name="backPolygons">         
-			/// The list that is used for storing the polygons that don't intersect this
-			/// plane but located behind it.
+			/// The list that is used for storing the polygons that don't intersect this plane but located
+			/// behind it.
 			/// </param>
 			public void SplitPolygon(Polygon polygon,
 									 ref List<Polygon> frontCoplanarPolygons,
@@ -986,8 +961,7 @@ namespace CryCil.Geometry.Csg.Base
 				backCoplanarPolygons = backCoplanarPolygons ?? new List<Polygon>();
 				frontPolygons = frontPolygons ?? new List<Polygon>();
 				backPolygons = backPolygons ?? new List<Polygon>();
-				// Classify each point of the polygon and itself as well into one of the
-				// above classes.
+				// Classify each point of the polygon and itself as well into one of the above classes.
 				PlaneRelativePositionClass polygonType = 0;
 				List<PlaneRelativePositionClass> types =
 					new List<PlaneRelativePositionClass>(polygon.Vertices.Count);
@@ -1021,12 +995,11 @@ namespace CryCil.Geometry.Csg.Base
 						List<ConstructiveSolidGeometry.Vertex> b = new List<Vertex>();
 						for (int i = 0; i < polygon.Vertices.Count; i++)
 						{
-							// Calculate index of the next vertex of the edge. Modulus
-							// operation wraps the index to the beginning of the list,
-							// when i - is the index of the last vertex.
+							// Calculate index of the next vertex of the edge. Modulus operation wraps the
+							// index to the beginning of the list, when i - is the index of the last
+							// vertex.
 							int j = (i + 1) % polygon.Vertices.Count;
-							// Get the values that indicate position of the edge relative
-							// to this plane.
+							// Get the values that indicate position of the edge relative to this plane.
 							PlaneRelativePositionClass edgeStartType = types[i];
 							PlaneRelativePositionClass edgeEndType = types[j];
 							// Get the vertices that form the edge.
@@ -1035,14 +1008,13 @@ namespace CryCil.Geometry.Csg.Base
 							// Process the edge.
 							if (edgeStartType != PlaneRelativePositionClass.Back)
 							{
-								// Put the start of the edge into the list of front
-								// vertices.
+								// Put the start of the edge into the list of front vertices.
 								f.Add(edgeStartVertex);
 							}
 							if (edgeStartType != PlaneRelativePositionClass.Front)
 							{
-								// Put the start of the edge into the list of back
-								// vertices. Clone it if it is on this plane.
+								// Put the start of the edge into the list of back vertices. Clone it if it
+								// is on this plane.
 								b.Add
 								(
 									(edgeStartType != PlaneRelativePositionClass.Back)
@@ -1057,17 +1029,14 @@ namespace CryCil.Geometry.Csg.Base
 									(this.W - this.Normal.Dot(edgeStartVertex.Position))
 									/
 									(this.Normal.Dot(edgeEndVertex.Position - edgeStartVertex.Position));
-								// Calculate position of the splitting vertex using the
-								// parameter.
+								// Calculate position of the splitting vertex using the parameter.
 								Vertex splittingVertex =
 									edgeStartVertex.Interpolate(edgeEndVertex, positionParameter);
-								// Put it into front vertices and its clone into back
-								// vertices.
+								// Put it into front vertices and its clone into back vertices.
 								f.Add(splittingVertex);
 								b.Add(splittingVertex.Clone);
 							}
-							// Create new polygons from front and back vertices if they
-							// have enough.
+							// Create new polygons from front and back vertices if they have enough.
 							if (f.Count >= 3)
 							{
 								frontPolygons.Add(new Polygon(f.ToArray(), polygon.Shared));
@@ -1083,8 +1052,8 @@ namespace CryCil.Geometry.Csg.Base
 				}
 			}
 			/// <summary>
-			/// Enumeration of classes points and polygons can be classified into when
-			/// determining their position relative to the plane.
+			/// Enumeration of classes points and polygons can be classified into when determining their
+			/// position relative to the plane.
 			/// </summary>
 			[Flags]
 			public enum PlaneRelativePositionClass
@@ -1094,15 +1063,13 @@ namespace CryCil.Geometry.Csg.Base
 				/// </summary>
 				Coplanar = 0,
 				/// <summary>
-				/// Object does not intersect the plane and vector that describes the
-				/// shortest distance between the object and a plane is opposite to
-				/// plane's normal.
+				/// Object does not intersect the plane and vector that describes the shortest distance
+				/// between the object and a plane is opposite to plane's normal.
 				/// </summary>
 				Front = 1,
 				/// <summary>
-				/// Object does not intersect the plane and vector that describes the
-				/// shortest distance between the object and a plane is co-directional to
-				/// plane's normal.
+				/// Object does not intersect the plane and vector that describes the shortest distance
+				/// between the object and a plane is co-directional to plane's normal.
 				/// </summary>
 				Back = 2,
 				/// <summary>
@@ -1203,9 +1170,7 @@ namespace CryCil.Geometry.Csg.Base
 			/// <summary>
 			/// Creates new <see cref="Vector3"/> with specified components.
 			/// </summary>
-			/// <param name="value">
-			/// Value to assign to all components of the new vector.
-			/// </param>
+			/// <param name="value">Value to assign to all components of the new vector.</param>
 			public Vector3(float value)
 				: this()
 			{
@@ -1273,9 +1238,7 @@ namespace CryCil.Geometry.Csg.Base
 			/// <param name="v0">First vector.</param>
 			/// <param name="v1">Second vector.</param>
 			/// <param name="v2">Third vector.</param>
-			/// <returns>
-			/// Dot product of first vector and cross product of second and third.
-			/// </returns>
+			/// <returns>Dot product of first vector and cross product of second and third.</returns>
 			public static float Mixed(Vector3 v0, Vector3 v1, Vector3 v2)
 			{
 				return v0.Dot(v1.Cross(v2));
@@ -1395,8 +1358,8 @@ namespace CryCil.Geometry.Csg.Base
 
 					int frontPolycount;
 					int backPolycount;
-					// Initialize lists of polygons from branches, so we can minimize
-					// memory allocations, since we will have exact capacity immediately.
+					// Initialize lists of polygons from branches, so we can minimize memory allocations,
+					// since we will have exact capacity immediately.
 					if (this.Front != null)
 					{
 						frontPolygons = this.Front.AllPolygons;
@@ -1448,9 +1411,7 @@ namespace CryCil.Geometry.Csg.Base
 			/// <summary>
 			/// Builds this <see cref="Node"/> from the list of polygons.
 			/// </summary>
-			/// <param name="polygons">
-			/// A list of polygons to build the new node from.
-			/// </param>
+			/// <param name="polygons">A list of polygons to build the new node from.</param>
 			public Node(List<Polygon> polygons)
 			{
 				this.Plane = null;
@@ -1463,18 +1424,15 @@ namespace CryCil.Geometry.Csg.Base
 				}
 			}
 			/// <summary>
-			/// Builds a part of BSP tree that has this node at root from the list of
-			/// polygons.
+			/// Builds a part of BSP tree that has this node at root from the list of polygons.
 			/// </summary>
 			/// <remarks>
-			/// When called on an existing tree, the new polygons are filtered down to the
-			/// bottom of the tree and become new nodes there. Each set of polygons is
-			/// partitioned using the first polygon (no heuristic is used to pick a good
+			/// When called on an existing tree, the new polygons are filtered down to the bottom of the
+			/// tree and become new nodes there. Each set of polygons is partitioned using the first
+			/// polygon (no heuristic is used to pick a good
 			/// split) .
 			/// </remarks>
-			/// <param name="polygons">
-			/// A list of polygons to build the BSP tree from.
-			/// </param>
+			/// <param name="polygons">A list of polygons to build the BSP tree from.</param>
 			public void Build(List<Polygon> polygons)
 			{
 				if (polygons == null || polygons.Count == 0)
@@ -1494,8 +1452,7 @@ namespace CryCil.Geometry.Csg.Base
 					this.Plane.SplitPolygon
 					(
 						polygons[i],
-						// Polys that are on the same plane as this node end up in the
-						// node.
+						// Polys that are on the same plane as this node end up in the node.
 						ref this.Polygons, ref this.Polygons,
 						// These will form front and back branches resectively.
 						ref frontPolygons, ref backPolygons
@@ -1571,8 +1528,8 @@ namespace CryCil.Geometry.Csg.Base
 				{
 					front = this.Front.ClipPolygons(front);
 				}
-				// If this node has nothing behind it in the tree, then whatever is behind
-				// it in the list should be discarded.
+				// If this node has nothing behind it in the tree, then whatever is behind it in the list
+				// should be discarded.
 				if (this.Back != null)
 				{
 					front.AddRange(this.Back.ClipPolygons(back));

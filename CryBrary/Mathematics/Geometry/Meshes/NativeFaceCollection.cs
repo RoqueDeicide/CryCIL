@@ -3,8 +3,7 @@
 namespace CryEngine.Mathematics.Geometry.Meshes
 {
 	/// <summary>
-	/// Represents a collection of faces in native memory attached to specific CMesh
-	/// object.
+	/// Represents a collection of faces in native memory attached to specific CMesh object.
 	/// </summary>
 	public sealed class NativeFaceCollection : NativeMeshDetailsCollection<IndexedTriangleFace>
 	{

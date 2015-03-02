@@ -20,27 +20,23 @@ namespace CryEngine.Logic.Entities
 		/// <param name="name">       Name to assign to the new entity.</param>
 		/// <param name="type">       Name of the type of the entity to spawn.</param>
 		/// <param name="position">   
-		/// If not null, determines initial position of the entity, otherwise entity is
-		/// spawned at the origin of coordinates.
+		/// If not null, determines initial position of the entity, otherwise entity is spawned at the
+		/// origin of coordinates.
 		/// </param>
 		/// <param name="orientation">
-		/// If not null, determines initial rotation of the entity from default
-		/// orientation, otherwise no rotation is applied.
+		/// If not null, determines initial rotation of the entity from default orientation, otherwise no
+		/// rotation is applied.
 		/// </param>
 		/// <param name="scale">      
-		/// If not null, determines initial scale of the entity, otherwise entity's size
-		/// is kept at default.
+		/// If not null, determines initial scale of the entity, otherwise entity's size is kept at
+		/// default.
 		/// </param>
-		/// <param name="initialize"> 
-		/// If true, the entity will be initialized immediately.
-		/// </param>
-		/// <param name="flags">      
-		/// A set of initial flags to assign to the new entity.
-		/// </param>
+		/// <param name="initialize"> If true, the entity will be initialized immediately.</param>
+		/// <param name="flags">      A set of initial flags to assign to the new entity.</param>
 		/// <param name="userData">   
 		/// Optional array of objects that will be passed to
-		/// <see cref="GameObjectExtension.CompleteSpawning"/> method, if spawned entity
-		/// is derived from <see cref="GameObjectExtension"/>.
+		/// <see cref="GameObjectExtension.CompleteSpawning"/> method, if spawned entity is derived from
+		/// <see cref="GameObjectExtension"/>.
 		/// </param>
 		/// <returns>A wrapper for the entity.</returns>
 		public static EntityWrapper Spawn
@@ -111,8 +107,7 @@ namespace CryEngine.Logic.Entities
 		/// <typeparam name="T">Type of the wrapper to get.</typeparam>
 		/// <param name="id">Identifier of the entity.</param>
 		/// <returns>
-		/// Object of type <typeparamref name="T"/> if this entity is managed by that
-		/// type, otherwise null.
+		/// Object of type <typeparamref name="T"/> if this entity is managed by that type, otherwise null.
 		/// </returns>
 		public static T Get<T>(EntityId id) where T : EntityWrapper
 		{

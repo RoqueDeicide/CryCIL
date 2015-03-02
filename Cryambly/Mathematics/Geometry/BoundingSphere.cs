@@ -45,9 +45,7 @@ namespace CryCil.Geometry
 		/// <summary>
 		/// Initializes a new instance of the <see cref="BoundingBox"/> struct.
 		/// </summary>
-		/// <param name="center">
-		/// The center of the sphere in three dimensional space.
-		/// </param>
+		/// <param name="center">The center of the sphere in three dimensional space.</param>
 		/// <param name="radius">The radius of the sphere.</param>
 		public BoundingSphere(Vector3 center, float radius)
 		{
@@ -55,8 +53,7 @@ namespace CryCil.Geometry
 			this.Radius = radius;
 		}
 		/// <summary>
-		/// Determines if there is an intersection between the current object and a
-		/// <see cref="Ray"/>.
+		/// Determines if there is an intersection between the current object and a <see cref="Ray"/>.
 		/// </summary>
 		/// <param name="ray">The ray to test.</param>
 		/// <returns>Whether the two objects intersected.</returns>
@@ -66,13 +63,12 @@ namespace CryCil.Geometry
 			return Collision.RayIntersectsSphere(ref ray, ref this, out distance);
 		}
 		/// <summary>
-		/// Determines if there is an intersection between the current object and a
-		/// <see cref="Ray"/>.
+		/// Determines if there is an intersection between the current object and a <see cref="Ray"/>.
 		/// </summary>
 		/// <param name="ray">     The ray to test.</param>
 		/// <param name="distance">
-		/// When the method completes, contains the distance of the intersection, or 0 if
-		/// there was no intersection.
+		/// When the method completes, contains the distance of the intersection, or 0 if there was no
+		/// intersection.
 		/// </param>
 		/// <returns>Whether the two objects intersected.</returns>
 		public bool Intersects(ref Ray ray, out float distance)
@@ -80,13 +76,12 @@ namespace CryCil.Geometry
 			return Collision.RayIntersectsSphere(ref ray, ref this, out distance);
 		}
 		/// <summary>
-		/// Determines if there is an intersection between the current object and a
-		/// <see cref="Ray"/>.
+		/// Determines if there is an intersection between the current object and a <see cref="Ray"/>.
 		/// </summary>
 		/// <param name="ray">  The ray to test.</param>
 		/// <param name="point">
-		/// When the method completes, contains the point of intersection, or
-		/// <see cref="Vector3"/> if there was no intersection.
+		/// When the method completes, contains the point of intersection, or <see cref="Vector3"/> if
+		/// there was no intersection.
 		/// </param>
 		/// <returns>Whether the two objects intersected.</returns>
 		public bool Intersects(ref Ray ray, out Vector3 point)
@@ -94,8 +89,7 @@ namespace CryCil.Geometry
 			return Collision.RayIntersectsSphere(ref ray, ref this, out point);
 		}
 		/// <summary>
-		/// Determines if there is an intersection between the current object and a
-		/// <see cref="Plane"/>.
+		/// Determines if there is an intersection between the current object and a <see cref="Plane"/>.
 		/// </summary>
 		/// <param name="plane">The plane to test.</param>
 		/// <returns>Whether the two objects intersected.</returns>
@@ -104,8 +98,7 @@ namespace CryCil.Geometry
 			return Collision.PlaneIntersectsSphere(ref plane, ref this);
 		}
 		/// <summary>
-		/// Determines if there is an intersection between the current object and a
-		/// triangle.
+		/// Determines if there is an intersection between the current object and a triangle.
 		/// </summary>
 		/// <param name="vertex1">The first vertex of the triangle to test.</param>
 		/// <param name="vertex2">The second vertex of the triagnle to test.</param>
@@ -165,8 +158,7 @@ namespace CryCil.Geometry
 			return Collision.SphereContainsBox(ref this, ref box);
 		}
 		/// <summary>
-		/// Determines whether the current objects contains a
-		/// <see cref="BoundingSphere"/>.
+		/// Determines whether the current objects contains a <see cref="BoundingSphere"/>.
 		/// </summary>
 		/// <param name="sphere">The sphere to test.</param>
 		/// <returns>The type of containment the two objects have.</returns>
@@ -175,8 +167,7 @@ namespace CryCil.Geometry
 			return Collision.SphereContainsSphere(ref this, ref sphere);
 		}
 		/// <summary>
-		/// Constructs a <see cref="BoundingSphere"/> that fully contains the given
-		/// points.
+		/// Constructs a <see cref="BoundingSphere"/> that fully contains the given points.
 		/// </summary>
 		/// <param name="points">The points that will be contained by the sphere.</param>
 		/// <param name="result">
@@ -192,8 +183,8 @@ namespace CryCil.Geometry
 
 			// Find the radius of the sphere
 
-			// We are doing a relative distance comparison to find the maximum distance
-			// from the center of our sphere
+			// We are doing a relative distance comparison to find the maximum distance from the center of
+			// our sphere
 			float radius = points.Select(t => center.GetDistanceSquared(t)).Concat(new[] { 0f }).Max();
 
 			// Find the real distance from the DistanceSquared.
@@ -204,8 +195,7 @@ namespace CryCil.Geometry
 			result.Radius = radius;
 		}
 		/// <summary>
-		/// Constructs a <see cref="BoundingSphere"/> that fully contains the given
-		/// points.
+		/// Constructs a <see cref="BoundingSphere"/> that fully contains the given points.
 		/// </summary>
 		/// <param name="points">The points that will be contained by the sphere.</param>
 		/// <returns>The newly constructed bounding sphere.</returns>
@@ -218,12 +208,8 @@ namespace CryCil.Geometry
 		/// <summary>
 		/// Constructs a <see cref="BoundingSphere"/> from a given box.
 		/// </summary>
-		/// <param name="box">   
-		/// The box that will designate the extents of the sphere.
-		/// </param>
-		/// <param name="result">
-		/// When the method completes, the newly constructed bounding sphere.
-		/// </param>
+		/// <param name="box">   The box that will designate the extents of the sphere.</param>
+		/// <param name="result">When the method completes, the newly constructed bounding sphere.</param>
 		public static void FromBox(ref BoundingBox box, out BoundingSphere result)
 		{
 			result.Center = Interpolation.Linear.Create(box.Minimum, box.Maximum, 0.5f);
@@ -238,9 +224,7 @@ namespace CryCil.Geometry
 		/// <summary>
 		/// Constructs a <see cref="BoundingSphere"/> from a given box.
 		/// </summary>
-		/// <param name="box">
-		/// The box that will designate the extents of the sphere.
-		/// </param>
+		/// <param name="box">The box that will designate the extents of the sphere.</param>
 		/// <returns>The newly constructed bounding sphere.</returns>
 		public static BoundingSphere FromBox(BoundingBox box)
 		{
@@ -249,8 +233,8 @@ namespace CryCil.Geometry
 			return result;
 		}
 		/// <summary>
-		/// Constructs a <see cref="BoundingSphere"/> that is the as large as the total
-		/// combined area of the two specified spheres.
+		/// Constructs a <see cref="BoundingSphere"/> that is the as large as the total combined area of
+		/// the two specified spheres.
 		/// </summary>
 		/// <param name="value1">The first sphere to merge.</param>
 		/// <param name="value2">The second sphere to merge.</param>
@@ -288,8 +272,8 @@ namespace CryCil.Geometry
 			result.Radius = max;
 		}
 		/// <summary>
-		/// Constructs a <see cref="BoundingSphere"/> that is the as large as the total
-		/// combined area of the two specified spheres.
+		/// Constructs a <see cref="BoundingSphere"/> that is the as large as the total combined area of
+		/// the two specified spheres.
 		/// </summary>
 		/// <param name="value1">The first sphere to merge.</param>
 		/// <param name="value2">The second sphere to merge.</param>
@@ -306,8 +290,8 @@ namespace CryCil.Geometry
 		/// <param name="left"> The first value to compare.</param>
 		/// <param name="right">The second value to compare.</param>
 		/// <returns>
-		/// <c>true</c> if <paramref name="left"/> has the same value as
-		/// <paramref name="right"/>; otherwise, <c>false</c>.
+		/// <c>true</c> if <paramref name="left"/> has the same value as <paramref name="right"/>;
+		/// otherwise, <c>false</c>.
 		/// </returns>
 		public static bool operator ==(BoundingSphere left, BoundingSphere right)
 		{
@@ -319,8 +303,8 @@ namespace CryCil.Geometry
 		/// <param name="left"> The first value to compare.</param>
 		/// <param name="right">The second value to compare.</param>
 		/// <returns>
-		/// <c>true</c> if <paramref name="left"/> has a different value than
-		/// <paramref name="right"/>; otherwise, <c>false</c>.
+		/// <c>true</c> if <paramref name="left"/> has a different value than <paramref name="right"/>;
+		/// otherwise, <c>false</c>.
 		/// </returns>
 		public static bool operator !=(BoundingSphere left, BoundingSphere right)
 		{
@@ -329,9 +313,7 @@ namespace CryCil.Geometry
 		/// <summary>
 		/// Returns a <see cref="System.String"/> that represents this instance.
 		/// </summary>
-		/// <returns>
-		/// A <see cref="System.String"/> that represents this instance.
-		/// </returns>
+		/// <returns>A <see cref="System.String"/> that represents this instance.</returns>
 		public override string ToString()
 		{
 			return string.Format(CultureInfo.CurrentCulture, "Center:{0} Radius:{1}", this.Center, this.Radius);
@@ -340,9 +322,7 @@ namespace CryCil.Geometry
 		/// Returns a <see cref="System.String"/> that represents this instance.
 		/// </summary>
 		/// <param name="format">The format.</param>
-		/// <returns>
-		/// A <see cref="System.String"/> that represents this instance.
-		/// </returns>
+		/// <returns>A <see cref="System.String"/> that represents this instance.</returns>
 		public string ToString(string format)
 		{
 			if (format == null)
@@ -354,9 +334,7 @@ namespace CryCil.Geometry
 		/// Returns a <see cref="System.String"/> that represents this instance.
 		/// </summary>
 		/// <param name="formatProvider">The format provider.</param>
-		/// <returns>
-		/// A <see cref="System.String"/> that represents this instance.
-		/// </returns>
+		/// <returns>A <see cref="System.String"/> that represents this instance.</returns>
 		public string ToString(IFormatProvider formatProvider)
 		{
 			return string.Format(formatProvider, "Center:{0} Radius:{1}", this.Center, this.Radius);
@@ -366,9 +344,7 @@ namespace CryCil.Geometry
 		/// </summary>
 		/// <param name="format">        The format.</param>
 		/// <param name="formatProvider">The format provider.</param>
-		/// <returns>
-		/// A <see cref="System.String"/> that represents this instance.
-		/// </returns>
+		/// <returns>A <see cref="System.String"/> that represents this instance.</returns>
 		public string ToString(string format, IFormatProvider formatProvider)
 		{
 			return
@@ -380,8 +356,8 @@ namespace CryCil.Geometry
 		/// Returns a hash code for this instance.
 		/// </summary>
 		/// <returns>
-		/// A hash code for this instance, suitable for use in hashing algorithms and data
-		/// structures like a hash table.
+		/// A hash code for this instance, suitable for use in hashing algorithms and data structures like
+		/// a hash table.
 		/// </returns>
 		public override int GetHashCode()
 		{
@@ -397,15 +373,12 @@ namespace CryCil.Geometry
 			}
 		}
 		/// <summary>
-		/// Determines whether the specified <see cref="Vector4"/> is equal to this
-		/// instance.
+		/// Determines whether the specified <see cref="Vector4"/> is equal to this instance.
 		/// </summary>
-		/// <param name="value">
-		/// The <see cref="Vector4"/> to compare with this instance.
-		/// </param>
+		/// <param name="value">The <see cref="Vector4"/> to compare with this instance.</param>
 		/// <returns>
-		/// <c>true</c> if the specified <see cref="Vector4"/> is equal to this instance;
-		/// otherwise, <c>false</c>.
+		/// <c>true</c> if the specified <see cref="Vector4"/> is equal to this instance; otherwise,
+		/// <c>false</c>.
 		/// </returns>
 		public bool Equals(BoundingSphere value)
 		{
@@ -414,15 +387,12 @@ namespace CryCil.Geometry
 			// ReSharper restore CompareOfFloatsByEqualityOperator
 		}
 		/// <summary>
-		/// Determines whether the specified <see cref="System.Object"/> is equal to this
-		/// instance.
+		/// Determines whether the specified <see cref="System.Object"/> is equal to this instance.
 		/// </summary>
-		/// <param name="value">
-		/// The <see cref="System.Object"/> to compare with this instance.
-		/// </param>
+		/// <param name="value">The <see cref="System.Object"/> to compare with this instance.</param>
 		/// <returns>
-		/// <c>true</c> if the specified <see cref="System.Object"/> is equal to this
-		/// instance; otherwise, <c>false</c>.
+		/// <c>true</c> if the specified <see cref="System.Object"/> is equal to this instance; otherwise,
+		/// <c>false</c>.
 		/// </returns>
 		public override bool Equals(object value)
 		{
