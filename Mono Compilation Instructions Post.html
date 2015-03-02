@@ -1,0 +1,102 @@
+<html>
+	<head>
+	<title>Mono Compilation</title>
+	</head>
+	<body>
+		<div class="post-text" itemprop="text">
+		<p><strong>EDIT</strong></p>
+
+		<p>IMHO the library that you are looking for may be found in the bin directory of the mono installation folder. Actually, after installing <a href="http://download.mono-project.com/archive/3.2.3/windows-installer/mono-3.2.3-gtksharp-2.12.11-win32-0.exe" rel="nofollow">mono 3.2.3</a> there are two libraries in the <code>MONO_INSTALLATION_PATH\bin\</code> directory: <code>libmonoboehm-2.0.dll</code> and <code>libmonosgen-2.0.dll</code> (you must choose either <a href="http://www.mono-project.com/Generational_GC" rel="nofollow">Boehm</a> or <a href="http://mono-project.com/Working_With_SGen" rel="nofollow">SGen</a>  GC implementation)</p>
+
+		<p>You could create a symbolic link like this <code>libmono-2.0.dll -&gt; /opt/mymono/bin/libmonoboehm-2.0.dll</code> if for example you want to use the Boehm implementation. And that is all (I think)</p>
+
+		<p>But you could work even without creating any symolic link, you could reference the library monoboehm-2.0.dll or monosgen-2.0.dll instead of mono-2.0.dll. The problem was (I think) you were looking for the wrong library's name.</p>
+
+		<p>Anyhow, what follows are the steps that must be followed in order to compile mono from cygwin.</p>
+
+		<p><strong>END EDIT</strong></p>
+
+		<p>I managed to compile Mono from Windows 8 using cygwin (I guess, it also should work with Windows 7)</p>
+
+		<p>These are the steps that I had to follow in order to finish having the mono virtual machine and your requested library:</p>
+
+		<ol>
+		<li><p>Download and install a fresh cygwin installation for 32-bit (do not use the cygwin's 64-bit version even if you are using Windows 64-bit) In my case the cygwin version is <code>2.844 (32 bit)</code> and my operative system is Windows 8 64-bit. Even if you already have a cygwin environment it should be better (IMHO) to remove it and install and new fresh cygwin environment.</p></li>
+		<li><p>The cygwin's installation path should be (at least in my case) in: C:\cygwin</p></li>
+		<li><p>Using cygwin you must install some required dependencies running setup-86.exe. Without them, you are not going to be able to compile mono from cygwin:</p>
+
+		<blockquote>
+		  <p>autoconf, automake, bison, gcc-core, gcc-g++, mingw-gcc, libtool, make, python, automake, bison, gcc, gdb, gettext, intltool, libiconv, libtool, pkg-config, vim</p>
+		</blockquote></li>
+		<li><p>Open a cygwin console and run these commands:</p>
+
+		<p><code>Me@mewin8 ~
+		 $ mkdir -p /opt/mono323</code></p>
+
+		<p><code>Me@mewin8 ~
+		 $ mkdir -p /opt/mymono</code></p>
+
+		<p><code>Me@mewin8 ~
+		 $ cd /opt</code></p>
+
+		<p><code>Me@mewin8 /opt
+		 $ git clone https://github.com/mono/mono.git</code></p>
+
+		<p><code>Me@mewin8 /opt
+		 $ cd mono</code></p>
+
+		<p><code>Me@mewin8 /opt/mono
+		 $ git submodule init</code></p>
+
+		<p><code>Me@mewin8 /opt/mono
+		 $ git checkout --track origin/mono-3.4.0-branch</code></p></li>
+		<li><p>Outside cygwin console download mono for Windows (you are going to need it when compiling mono from cygwin): <a href="http://download.mono-project.com/archive/3.2.3/windows-installer/mono-3.2.3-gtksharp-2.12.11-win32-0.exe" rel="nofollow">http://download.mono-project.com/archive/3.2.3/windows-installer/mono-3.2.3-gtksharp-2.12.11-win32-0.exe</a></p></li>
+		<li><p>Install mono for Windows in C:\cygwin\opt\mono323</p></li>
+		<li><p>Go again to the cygwin console and run these commands:</p>
+
+		<p><code>Me@mewin8 ~
+		 $ cd /opt/mono</code></p>
+
+		<p><code>Me@mewin8 /opt/mono
+		 $ export PATH=$PATH:/opt/mono323/bin</code></p>
+
+		<p><code>Me@mewin8 /opt/mono
+		 $ ./autogen.sh --host=i686-pc-mingw32 --prefix=/opt/mymono/</code></p>
+
+		<p><code>Me@mewin8 /opt/mono
+		 $ make</code></p></li>
+		<li><p>The compilation ends with error. See this thread: <a href="http://mono.1490590.n4.nabble.com/mono-from-git-will-not-build-on-cygwin-32-td4660749.html" rel="nofollow">mono from git will not build on cygwin 32 </a> Solution:</p>
+
+		<p><code>Me@mewin8 /opt/mono
+		 $ vim /usr/i686-pc-mingw32/sys-root/mingw/include/ddk/ntapi.h</code></p>
+
+		<p>Comment out this line <code>typedef PVOID PEXECUTION_STATE;</code> If you have followed the same steps as me, the line to be commented out should be the number 49. You must finish having <code>//typedef PVOID PEXECUTION_STATE;</code></p></li>
+		<li><p>Restart compilation:</p>
+
+		<p><code>Me@mewin8 /opt/mono
+		 $ make clean</code></p>
+
+		<p><code>Me@mewin8 /opt/mono
+		 $ make</code></p>
+
+		<p><code>Me@mewin8 /opt/mono
+		 $ make install</code></p></li>
+		<li><p>You may find your requested library in this path (actually you finish having two):</p>
+
+		<ul>
+		<li><p>Implementation <a href="http://www.mono-project.com/Generational_GC" rel="nofollow">using Boehm GC</a>: <code>/opt/mymono/bin/libmonoboehm-2.0.dll</code>   </p></li>
+		<li><p>Implementation <a href="http://mono-project.com/Working_With_SGen" rel="nofollow">using SGen GC</a>: <code>/opt/mymono/bin/libmonosgen-2.0.dll</code></p></li>
+		</ul>
+
+		<p>You could create a symbolic link like this: <code>/opt/mymono/lib/libmono-2.0.dll -&gt; /opt/mymono/bin/libmonoboehm-2.0.dll</code>; or like this one: <code>/opt/mymono/lib/mono-2.0.dll -&gt; /opt/mymono/bin/libmonoboehm-2.0.dll</code> (whatever works for you)</p>
+
+		<p>Depending on how you are going to work with the library, the symbolic link could be interesting for you or not.</p></li>
+		<li><p>Besides, if gcc/ld may not find your library while trying to build your own program (I mean the program where you are going to embed mono) and you are trying to compile from a cygwin console you could do this:</p>
+
+		<p><code>export LD_LIBRARY_PATH=/opt/mymono/lib</code> See: <a href="http://man7.org/linux/man-pages/man8/ld.so.8.html" rel="nofollow">man ld</a></p></li>
+		</ol>
+
+		<p>This is all I know. Hopefully it will help you... At least I tried my best!</p>
+			</div>
+	</body>
+</html>
