@@ -23,17 +23,17 @@ void MonoExceptionWrapper::Throw()
 
 const char *MonoExceptionWrapper::GetErrorMessage()
 {
-	return ToNativeString(this->GetProperty("Message")->Getter->Invoke(this->monoEx));
+	return ToNativeString(this->GetProperty("Message")->Getter->ToInstance()->Invoke(this->monoEx));
 }
 
 const char *MonoExceptionWrapper::GetStackTrace()
 {
-	return ToNativeString(this->GetProperty("StackTrace")->Getter->Invoke(this->monoEx));
+	return ToNativeString(this->GetProperty("StackTrace")->Getter->ToInstance()->Invoke(this->monoEx));
 }
 
 IMonoException *MonoExceptionWrapper::GetInnerException()
 {
-	return new MonoExceptionWrapper(this->GetProperty("InnerException")->Getter->Invoke(this->monoEx));
+	return new MonoExceptionWrapper(this->GetProperty("InnerException")->Getter->ToInstance()->Invoke(this->monoEx));
 }
 
 mono::object MonoExceptionWrapper::Get()

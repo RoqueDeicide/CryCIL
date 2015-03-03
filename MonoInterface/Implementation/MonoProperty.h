@@ -2,14 +2,16 @@
 
 #include "IMonoInterface.h"
 #include "MonoHeaders.h"
+#include "MonoMethod.h"
+#include "MonoStaticMethod.h"
 
 struct MonoPropertyWrapper : public IMonoProperty
 {
 private:
 	MonoProperty *prop;
 	IMonoClass *klass;
-	IMonoMethod *getter;
-	IMonoMethod *setter;
+	IMonoFunction *getter;
+	IMonoFunction *setter;
 public:
 	MonoPropertyWrapper(MonoProperty *prop, IMonoClass *klass = nullptr)
 		: getter(nullptr)
@@ -17,16 +19,34 @@ public:
 	{
 		this->prop = prop;
 		this->klass = klass;
-
+		
 		MonoMethod *getterMethod = mono_property_get_get_method(prop);
 		MonoMethod *setterMethod = mono_property_get_set_method(prop);
+
+		bool isStatic =
+			mono_signature_is_instance(mono_method_signature(getterMethod ? getterMethod : setterMethod)) != 0;
+
 		if (getterMethod)
 		{
-			this->getter = new MonoMethodWrapper(getterMethod, klass);
+			if (isStatic)
+			{
+				this->getter = new MonoStaticMethod(getterMethod, klass);
+			}
+			else
+			{
+				this->getter = new MonoMethodWrapper(getterMethod, klass);
+			}
 		}
 		if (setterMethod)
 		{
-			this->setter = new MonoMethodWrapper(setterMethod, klass);
+			if (isStatic)
+			{
+				this->setter = new MonoStaticMethod(setterMethod, klass);
+			}
+			else
+			{
+				this->setter = new MonoMethodWrapper(setterMethod, klass);
+			}
 		}
 	}
 	~MonoPropertyWrapper()
@@ -35,9 +55,9 @@ public:
 		if (this->setter) delete this->setter; this->setter = nullptr;
 	}
 
-	virtual IMonoMethod *GetGetter();
+	virtual IMonoFunction *GetGetter();
 
-	virtual IMonoMethod *GetSetter();
+	virtual IMonoFunction *GetSetter();
 
 	virtual void *GetWrappedPointer();
 
@@ -45,6 +65,6 @@ public:
 
 	virtual IMonoClass *GetDeclaringClass();
 
-	virtual IMonoMethod *GetIdentifier();
+	virtual IMonoFunction *GetIdentifier();
 
 };

@@ -116,7 +116,8 @@ void TestAssemblies()
 
 	CryLogAlways("TEST: Full assembly name from reflection object:");
 
-	const char *fullAssemblyName = ToNativeString(refAssemblyWrapper->GetProperty("FullName")->Getter->Invoke(refAssembly));
+	const char *fullAssemblyName =
+		ToNativeString(refAssemblyWrapper->GetProperty("FullName")->Getter->ToInstance()->Invoke(refAssembly));
 	CryLogAlways("TEST: %s", fullAssemblyName);
 	delete fullAssemblyName;
 

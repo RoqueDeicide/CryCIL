@@ -2,12 +2,12 @@
 #include "MonoProperty.h"
 #include "MonoMethod.h"
 
-IMonoMethod *MonoPropertyWrapper::GetGetter()
+IMonoFunction *MonoPropertyWrapper::GetGetter()
 {
 	return this->getter;
 }
 
-IMonoMethod *MonoPropertyWrapper::GetSetter()
+IMonoFunction *MonoPropertyWrapper::GetSetter()
 {
 	return this->setter;
 }
@@ -27,7 +27,7 @@ IMonoClass *MonoPropertyWrapper::GetDeclaringClass()
 	return this->klass;
 }
 
-IMonoMethod *MonoPropertyWrapper::GetIdentifier()
+IMonoFunction *MonoPropertyWrapper::GetIdentifier()
 {
 	if (this->getter)
 	{
