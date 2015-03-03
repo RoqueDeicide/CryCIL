@@ -1,6 +1,7 @@
 #pragma once
 
 #include <mono/mini/jit.h>
+#include <mono/metadata/tabledefs.h>
 #include <mono/metadata/appdomain.h>
 #include <mono/metadata/assembly.h>
 #include <mono/metadata/object.h>
