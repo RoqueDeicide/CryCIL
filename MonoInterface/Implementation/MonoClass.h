@@ -58,7 +58,6 @@ public:
 	virtual IMonoProperty *GetProperty(const char *name, List<IMonoClass *> &classes);
 	virtual IMonoProperty *GetProperty(const char *name, List<ClassSpec> &specifiedClasses);
 	virtual IMonoProperty *GetProperty(const char *name, List<const char *> &paramTypeNames);
-	virtual IMonoProperty *GetProperty(const char *name, const char *params);
 	virtual IMonoProperty *GetProperty(const char *name, int paramCount);
 	
 	virtual IMonoEvent *GetEvent(const char *name);

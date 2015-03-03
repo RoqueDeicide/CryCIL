@@ -293,11 +293,6 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	VIRTUAL_API virtual IMonoProperty *GetProperty(const char *name, List<const char *> &paramTypeNames) = 0;
 	//! Gets a wrapper for a property defined in this class.
 	//!
-	//! @param name   Name of the property to get.
-	//! @param params Text that describes types arguments the property should take.
-	VIRTUAL_API virtual IMonoProperty *GetProperty(const char *name, const char *params) = 0;
-	//! Gets a wrapper for a property defined in this class.
-	//!
 	//! @param name       Name of the property to get.
 	//! @param paramCount Number of arguments the getter or setter of the property should take.
 	VIRTUAL_API virtual IMonoProperty *GetProperty(const char *name, int paramCount) = 0;
