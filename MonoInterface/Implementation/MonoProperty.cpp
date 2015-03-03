@@ -39,3 +39,15 @@ IMonoFunction *MonoPropertyWrapper::GetIdentifier()
 	}
 }
 
+int MonoPropertyWrapper::GetParameterCount()
+{
+	if (this->getter)
+	{
+		return this->getter->ParameterCount;
+	}
+	else
+	{
+		return this->setter->ParameterCount - 1;
+	}
+}
+

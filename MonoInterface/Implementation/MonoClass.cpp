@@ -449,7 +449,9 @@ IMonoProperty *MonoClassWrapper::GetProperty(const char *name, IMonoArray *types
 			IMonoProperty *p = overloads->At(i);
 			IMonoFunction *m = p->Identifier;
 
-			if (m->ParameterCount != types->Length)
+			int propParamCount = p->ParameterCount;
+
+			if (propParamCount != types->Length)
 			{
 				continue;
 			}
@@ -457,7 +459,7 @@ IMonoProperty *MonoClassWrapper::GetProperty(const char *name, IMonoArray *types
 			auto typeNames = m->ParameterTypeNames;
 
 			bool match = true;
-			for (int j = 0; j < typeNames->Length; j++)
+			for (int j = 0; j < propParamCount; j++)
 			{
 				// Look at definition of _MonoReflectionType in mono sources to see what is going on here.
 				MonoType *type = (MonoType *)((unsigned char *)types->Item(j) + sizeof(MonoObject));
@@ -486,7 +488,7 @@ IMonoProperty *MonoClassWrapper::GetProperty(const char *name, List<IMonoClass *
 			IMonoProperty *p = overloads->At(i);
 			IMonoFunction *m = p->Identifier;
 
-			if (m->ParameterCount != classes.Length)
+			if (p->ParameterCount != classes.Length)
 			{
 				continue;
 			}
@@ -544,7 +546,7 @@ IMonoProperty *MonoClassWrapper::GetProperty(const char *name, List<const char *
 			IMonoProperty *p = overloads->At(i);
 			IMonoFunction *m = p->Identifier;
 
-			if (m->ParameterCount != paramTypeNames.Length)
+			if (p->ParameterCount != paramTypeNames.Length)
 			{
 				continue;
 			}
@@ -569,23 +571,6 @@ IMonoProperty *MonoClassWrapper::GetProperty(const char *name, List<const char *
 	return nullptr;
 }
 
-IMonoProperty *MonoClassWrapper::GetProperty(const char *name, const char *params)
-{
-	List<IMonoProperty *> *overloads;
-	if (this->properties.TryGet(name, overloads))
-	{
-		for (int i = 0; i < overloads->Length; i++)
-		{
-			IMonoProperty *prop = overloads->At(i);
-			if (strcmp(prop->Identifier->Parameters, params) == 0)
-			{
-				return prop;
-			}
-		}
-	}
-	return nullptr;
-}
-
 IMonoProperty *MonoClassWrapper::GetProperty(const char *name, int paramCount)
 {
 	List<IMonoProperty *> *overloads;
@@ -594,7 +579,7 @@ IMonoProperty *MonoClassWrapper::GetProperty(const char *name, int paramCount)
 		for (int i = 0; i < overloads->Length; i++)
 		{
 			IMonoProperty *prop = overloads->At(i);
-			if (prop->Identifier->ParameterCount == paramCount)
+			if (prop->ParameterCount == paramCount)
 			{
 				return prop;
 			}

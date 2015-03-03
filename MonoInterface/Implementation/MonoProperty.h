@@ -67,4 +67,6 @@ public:
 
 	virtual IMonoFunction *GetIdentifier();
 
+	virtual int GetParameterCount();
+
 };
