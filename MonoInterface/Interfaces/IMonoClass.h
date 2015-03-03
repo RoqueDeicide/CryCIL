@@ -51,22 +51,14 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//! of them that accept the same number of arguments.
 	__forceinline IMonoConstructor *GetConstructor(int paramCount)
 	{
-#ifdef _CPPRTTI
-		return dynamic_cast<IMonoConstructor *>(this->GetFunction(".ctor", paramCount));
-#else
 		return this->GetFunction(".ctor", paramCount)->ToCtor();
-#endif //_CPPRTTI
 	}
 	//! Gets constructor that can accept arguments of specified types.
 	//!
 	//! @param types An array of System.Type objects that specify constructor signature to use.
 	__forceinline IMonoConstructor *GetConstructor(IMonoArray *types = nullptr)
 	{
-#ifdef _CPPRTTI
-		return dynamic_cast<IMonoConstructor *>(this->GetFunction(".ctor", types));
-#else
 		return this->GetFunction(".ctor", types)->ToCtor();
-#endif //_CPPRTTI
 	}
 	//! Gets constructor that can accept arguments of specified types.
 	//!
@@ -75,11 +67,7 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//! @param classes A list IMonoClass wrappers that specify constructor signature to use.
 	__forceinline IMonoConstructor *GetConstructor(List<IMonoClass *> &classes)
 	{
-#ifdef _CPPRTTI
-		return dynamic_cast<IMonoConstructor *>(this->GetFunction(".ctor", classes));
-#else
 		return this->GetFunction(".ctor", classes)->ToCtor();
-#endif //_CPPRTTI
 	}
 	//! Gets constructor that can accept arguments of specified types.
 	//!
@@ -89,11 +77,7 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!                         to use.
 	__forceinline IMonoConstructor *GetConstructor(List<ClassSpec> &specifiedClasses)
 	{
-#ifdef _CPPRTTI
-		return dynamic_cast<IMonoConstructor *>(this->GetFunction(".ctor", specifiedClasses));
-#else
 		return this->GetFunction(".ctor", specifiedClasses)->ToCtor();
-#endif //_CPPRTTI
 	}
 	//! Gets the constructor that matches given description.
 	//!
@@ -105,11 +89,7 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!          no constructor matching the description was found.
 	__forceinline IMonoConstructor *GetConstructor(const char *params)
 	{
-#ifdef _CPPRTTI
-		return dynamic_cast<IMonoConstructor *>(this->GetFunction(".ctor", params));
-#else
 		return this->GetFunction(".ctor", params)->ToCtor();
-#endif //_CPPRTTI
 	}
 	//! Gets a constructor defined in this class.
 	//!
@@ -119,11 +99,7 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!                       accepts.
 	__forceinline IMonoConstructor *GetConstructor(List<const char *> &paramTypeNames)
 	{
-#ifdef _CPPRTTI
-		return dynamic_cast<IMonoConstructor *>(this->GetFunction(".ctor", paramTypeNames));
-#else
 		return this->GetFunction(".ctor", paramTypeNames)->ToCtor();
-#endif //_CPPRTTI
 	}
 	//! Gets method that can accept arguments of specified types.
 	//!

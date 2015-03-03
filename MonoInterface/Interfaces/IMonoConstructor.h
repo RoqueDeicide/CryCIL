@@ -80,3 +80,12 @@ struct IMonoConstructor : public virtual IMonoFunction
 	//! @returns A reference to the created and initialized object.
 	VIRTUAL_API virtual void Initialize(void *obj, void **args, mono::exception *ex = nullptr) = 0;
 };
+
+__forceinline IMonoConstructor *IMonoFunction::ToCtor()
+{
+#ifdef _CPPRTTI
+	return dynamic_cast<IMonoConstructor *>(this);
+#else
+	return this->DynamicCastToCtor();
+#endif //_CPPRTTI
+}

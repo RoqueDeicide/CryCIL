@@ -48,3 +48,12 @@ struct IMonoStaticMethod : public virtual IMonoFunction
 	//! @example DoxygenExampleFiles\MonoMethodInvocations.h
 	VIRTUAL_API virtual mono::object Invoke(void **params, mono::exception *exc = nullptr) = 0;
 };
+
+__forceinline IMonoStaticMethod *IMonoFunction::ToStatic()
+{
+#ifdef _CPPRTTI
+	return dynamic_cast<IMonoStaticMethod *>(this);
+#else
+	return this->DynamicCastToStatic();
+#endif //_CPPRTTI
+}

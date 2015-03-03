@@ -74,3 +74,12 @@ struct IMonoMethod : public virtual IMonoFunction
 	VIRTUAL_API virtual mono::object Invoke
 		(void *object, void **params, mono::exception *exc = nullptr, bool polymorph = false) = 0;
 };
+
+__forceinline IMonoMethod *IMonoFunction::ToInstance()
+{
+#ifdef _CPPRTTI
+	return dynamic_cast<IMonoMethod *>(this);
+#else
+	return this->DynamicCastToInstance();
+#endif //_CPPRTTI
+}

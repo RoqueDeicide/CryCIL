@@ -46,17 +46,17 @@ MonoFunction::MonoFunction(MonoMethod *method, IMonoClass *klass)
 	}
 }
 
-IMonoMethod *MonoFunction::ToInstance()
+IMonoMethod *MonoFunction::DynamicCastToInstance()
 {
 	return dynamic_cast<IMonoMethod *>(this);
 }
 
-IMonoStaticMethod *MonoFunction::ToStatic()
+IMonoStaticMethod *MonoFunction::DynamicCastToStatic()
 {
 	return dynamic_cast<IMonoStaticMethod *>(this);
 }
 
-IMonoConstructor *MonoFunction::ToCtor()
+IMonoConstructor *MonoFunction::DynamicCastToCtor()
 {
 	return dynamic_cast<IMonoConstructor *>(this);
 }

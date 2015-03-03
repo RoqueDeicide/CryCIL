@@ -233,21 +233,21 @@ struct IMonoFunction : public IMonoMember
 	//!
 	//! @returns A result of dynamic_cast of this object to IMonoMethod, if this object is of that type,
 	//!          otherwise null is returned.
-	VIRTUAL_API virtual IMonoMethod *ToInstance() = 0;
+	__forceinline IMonoMethod *ToInstance();			// Defined in IMonoMethod.h
 	//! Attempts to dynamically cast this object to IMonoStaticMethod.
 	//!
 	//! Use this method to avoid using dynamic_cast operator, if you don't want to use /GR compiler option.
 	//!
 	//! @returns A result of dynamic_cast of this object to IMonoMethod, if this object is of that type,
 	//!          otherwise null is returned.
-	VIRTUAL_API virtual IMonoStaticMethod *ToStatic() = 0;
+	__forceinline IMonoStaticMethod *ToStatic();		// Defined in IMonoStaticMethod.h
 	//! Attempts to dynamically cast this object to IMonoConstructor.
 	//!
 	//! Use this method to avoid using dynamic_cast operator, if you don't want to use /GR compiler option.
 	//!
 	//! @returns A result of dynamic_cast of this object to IMonoMethod, if this object is of that type,
 	//!          otherwise null is returned.
-	VIRTUAL_API virtual IMonoConstructor *ToCtor() = 0;
+	__forceinline IMonoConstructor *ToCtor();			// Defined in IMonoConstructor.h
 
 	VIRTUAL_API virtual void *GetThunk() = 0;
 	VIRTUAL_API virtual void *GetFunctionPointer() = 0;
@@ -255,4 +255,10 @@ struct IMonoFunction : public IMonoMember
 	VIRTUAL_API virtual List<const char *> *GetParameterTypeNames() = 0;
 	VIRTUAL_API virtual List<IMonoClass *> *GetParameterClasses() = 0;
 	VIRTUAL_API virtual const char *GetParametersList() = 0;
+
+	//! Utility methods that cast IMonoFunction object to one of possible implementations, while hiding
+	//! dynamic_cast call behind the API.
+	VIRTUAL_API virtual IMonoMethod       *DynamicCastToInstance() = 0;
+	VIRTUAL_API virtual IMonoStaticMethod *DynamicCastToStatic() = 0;
+	VIRTUAL_API virtual IMonoConstructor  *DynamicCastToCtor() = 0;
 };

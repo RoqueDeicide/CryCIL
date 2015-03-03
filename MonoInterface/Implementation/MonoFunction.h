@@ -34,9 +34,9 @@ public:
 		this->paramTypeNames.Dispose();
 	}
 
-	virtual IMonoMethod       *ToInstance();
-	virtual IMonoStaticMethod *ToStatic();
-	virtual IMonoConstructor  *ToCtor();
+	virtual IMonoMethod       *DynamicCastToInstance();
+	virtual IMonoStaticMethod *DynamicCastToStatic();
+	virtual IMonoConstructor  *DynamicCastToCtor();
 
 	virtual void *GetThunk();
 
