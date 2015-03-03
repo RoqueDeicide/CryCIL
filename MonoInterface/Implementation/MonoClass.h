@@ -18,12 +18,13 @@ private:
 	const char *nameSpace;
 	const char *fullName;
 	const char *fullNameIL;
-	List<IMonoProperty *> properties;
 	List<IMonoEvent *> events;
 	SortedList<const char *, List<IMonoFunction *> *> methods;
+	SortedList<const char *, List<IMonoProperty *> *> properties;
 	List<IMonoField *> fields;
 	MonoVTable *vtable;
 	List<IMonoFunction *> flatMethodList;
+	List<IMonoProperty *> flatPropertyList;
 public:
 	MonoClassWrapper(MonoClass *klass);
 	~MonoClassWrapper();
@@ -53,6 +54,13 @@ public:
 	virtual void SetField(mono::object obj, IMonoField *field, void *value);
 	
 	virtual IMonoProperty *GetProperty(const char *name);
+	virtual IMonoProperty *GetProperty(const char *name, IMonoArray *types);
+	virtual IMonoProperty *GetProperty(const char *name, List<IMonoClass *> &classes);
+	virtual IMonoProperty *GetProperty(const char *name, List<ClassSpec> &specifiedClasses);
+	virtual IMonoProperty *GetProperty(const char *name, List<const char *> &paramTypeNames);
+	virtual IMonoProperty *GetProperty(const char *name, const char *params);
+	virtual IMonoProperty *GetProperty(const char *name, int paramCount);
+	
 	virtual IMonoEvent *GetEvent(const char *name);
 
 	virtual bool Inherits(const char *nameSpace, const char *className);

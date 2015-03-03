@@ -15,7 +15,7 @@ MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 	this->nameSpace = mono_class_get_namespace(klass);
 
 	this->methods    = SortedList<const char *, List<IMonoFunction *> *>(30, strcmp);
-	this->properties = List<IMonoProperty *>(30);
+	this->properties = SortedList<const char *, List<IMonoProperty *> *>(30, strcmp);
 	this->events     = List<IMonoEvent *>   (30);
 	this->fields     = List<IMonoField *>   (30);
 	
@@ -52,7 +52,13 @@ MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 		iter = 0;
 		while (MonoProperty *prop = mono_class_get_properties(base, &iter))
 		{
-			this->properties.Add(new MonoPropertyWrapper(prop));
+			const char *propName = mono_property_get_name(prop);
+
+			if (!this->properties.Contains(propName))
+			{
+				this->properties.At(propName) = new List<IMonoProperty *>(5);
+			}
+			this->properties.At(propName)->Add(new MonoPropertyWrapper(prop));
 		}
 		// Cache events.
 		iter = 0;
@@ -102,9 +108,15 @@ MonoClassWrapper::~MonoClassWrapper()
 		delete this->fullNameIL;
 	}
 
+	ReadOnlyList<List<IMonoProperty *> *> *propOverloadList = this->properties.Elements;
 	for (int i = 0; i < this->properties.Length; i++)
 	{
-		delete this->properties[i];
+		auto overloads = const_cast<List<IMonoProperty *> *>(propOverloadList->At(i));
+		for (int j = 0; j < overloads->Length; j++)
+		{
+			delete const_cast<List<IMonoProperty *> *>(overloads)->At(j);
+		}
+		delete overloads;
 	}
 	this->properties.Dispose();
 
@@ -411,11 +423,181 @@ void MonoClassWrapper::SetFieldValue(mono::object obj, MonoClassField *field, vo
 
 IMonoProperty *MonoClassWrapper::GetProperty(const char *name)
 {
-	for (int i = 0; i < this->properties.Length; i++)
+	List<IMonoProperty *> *overloads;
+	if (this->properties.TryGet(name, overloads))
 	{
-		if (strcmp(this->properties[i]->Name, name) == 0)
+		for (int i = 0; i < overloads->Length; i++)
 		{
-			return this->properties[i];
+			IMonoProperty *prop = overloads->At(i);
+			if (prop->Identifier->ParameterCount == 0)
+			{
+				return prop;
+			}
+		}
+		return overloads->At(0);
+	}
+	return nullptr;
+}
+
+IMonoProperty *MonoClassWrapper::GetProperty(const char *name, IMonoArray *types /*= nullptr*/)
+{
+	List<IMonoProperty *> *overloads;
+	if (this->properties.TryGet(name, overloads))
+	{
+		for (int i = 0; i < overloads->Length; i++)
+		{
+			IMonoProperty *p = overloads->At(i);
+			IMonoFunction *m = p->Identifier;
+
+			if (m->ParameterCount != types->Length)
+			{
+				continue;
+			}
+
+			auto typeNames = m->ParameterTypeNames;
+
+			bool match = true;
+			for (int j = 0; j < typeNames->Length; j++)
+			{
+				// Look at definition of _MonoReflectionType in mono sources to see what is going on here.
+				MonoType *type = (MonoType *)((unsigned char *)types->Item(j) + sizeof(MonoObject));
+				if (strcmp(typeNames->At(j), mono_type_get_name(type)) != 0)
+				{
+					match = false;
+					break;
+				}
+			}
+			if (match)
+			{
+				return p;
+			}
+		}
+	}
+	return nullptr;
+}
+
+IMonoProperty *MonoClassWrapper::GetProperty(const char *name, List<IMonoClass *> &classes)
+{
+	List<IMonoProperty *> *overloads;
+	if (this->properties.TryGet(name, overloads))
+	{
+		for (int i = 0; i < overloads->Length; i++)
+		{
+			IMonoProperty *p = overloads->At(i);
+			IMonoFunction *m = p->Identifier;
+
+			if (m->ParameterCount != classes.Length)
+			{
+				continue;
+			}
+
+			auto currentClasses = m->ParameterClasses;
+			bool match = true;
+
+			for (int j = 0; j < classes.Length; j++)
+			{
+				if (currentClasses->At(j) != classes[j])
+				{
+					match = false;
+					break;
+				}
+			}
+			if (match)
+			{
+				return p;
+			}
+		}
+	}
+	return nullptr;
+}
+
+IMonoProperty *MonoClassWrapper::GetProperty(const char *name, List<ClassSpec> &specifiedClasses)
+{
+	auto paramTypeNames = List<const char *>(specifiedClasses.Length);
+
+	for (int i = 0; i < specifiedClasses.Length; i++)
+	{
+		ConstructiveText typeName = ConstructiveText(10);
+		typeName << specifiedClasses[i].Value1->FullNameIL << specifiedClasses[i].Value2;
+
+		const char *typeNameNt = typeName.ToNTString();
+		paramTypeNames.Add(typeNameNt);
+	}
+
+	auto foundProp = this->GetProperty(name, paramTypeNames);
+
+	for (int i = 0; i < paramTypeNames.Length; i++)
+	{
+		delete paramTypeNames[i];
+	}
+
+	return foundProp;
+}
+
+IMonoProperty *MonoClassWrapper::GetProperty(const char *name, List<const char *> &paramTypeNames)
+{
+	List<IMonoProperty *> *overloads;
+	if (this->properties.TryGet(name, overloads))
+	{
+		for (int i = 0; i < overloads->Length; i++)
+		{
+			IMonoProperty *p = overloads->At(i);
+			IMonoFunction *m = p->Identifier;
+
+			if (m->ParameterCount != paramTypeNames.Length)
+			{
+				continue;
+			}
+
+			auto currentClasses = m->ParameterTypeNames;
+			bool match = true;
+
+			for (int j = 0; j < paramTypeNames.Length; j++)
+			{
+				if (currentClasses->At(j) != paramTypeNames[j])
+				{
+					match = false;
+					break;
+				}
+			}
+			if (match)
+			{
+				return p;
+			}
+		}
+	}
+	return nullptr;
+}
+
+IMonoProperty *MonoClassWrapper::GetProperty(const char *name, const char *params)
+{
+	List<IMonoProperty *> *overloads;
+	if (this->properties.TryGet(name, overloads))
+	{
+		for (int i = 0; i < overloads->Length; i++)
+		{
+			IMonoProperty *prop = overloads->At(i);
+			if (strcmp(prop->Identifier->Parameters, params) == 0)
+			{
+				return prop;
+			}
+		}
+	}
+	return nullptr;
+}
+
+IMonoProperty *MonoClassWrapper::GetProperty(const char *name, int paramCount)
+{
+	List<IMonoProperty *> *overloads;
+	if (this->properties.TryGet(name, overloads))
+	{
+		for (int i = 0; i < overloads->Length; i++)
+		{
+			IMonoProperty *prop = overloads->At(i);
+			if (prop->Identifier->ParameterCount == paramCount)
+			{
+				return prop;
+			}
 		}
 	}
 	return nullptr;

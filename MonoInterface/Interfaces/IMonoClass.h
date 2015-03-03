@@ -267,10 +267,40 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!
 	//! @seealso IMonoHandle::SetField
 	VIRTUAL_API virtual void SetField(mono::object obj, IMonoField *field, void *value) = 0;
-	//! Gets one of the properties defined in this class.
+	//! Gets a wrapper for a property defined in this class.
 	//!
 	//! @param name Name of the property to get.
 	VIRTUAL_API virtual IMonoProperty *GetProperty(const char *name) = 0;
+	//! Gets a wrapper for a property defined in this class.
+	//!
+	//! @param name  Name of the property to get.
+	//! @param types An array of System.Type objects that specify property signature to use.
+	VIRTUAL_API virtual IMonoProperty *GetProperty(const char *name, IMonoArray *types) = 0;
+	//! Gets a wrapper for a property defined in this class.
+	//!
+	//! @param name    Name of the property to get.
+	//! @param classes A list IMonoClass wrappers that specify property signature to use.
+	VIRTUAL_API virtual IMonoProperty *GetProperty(const char *name, List<IMonoClass *> &classes) = 0;
+	//! Gets a wrapper for a property defined in this class.
+	//!
+	//! @param name             Name of the property to get.
+	//! @param specifiedClasses A list of classes and postfixes that specify property signature to use.
+	VIRTUAL_API virtual IMonoProperty *GetProperty(const char *name, List<ClassSpec> &specifiedClasses) = 0;
+	//! Gets a wrapper for a property defined in this class.
+	//!
+	//! @param name           Name of the property to get.
+	//! @param paramTypeNames A list of full type names that specify the parameters the property accepts.
+	VIRTUAL_API virtual IMonoProperty *GetProperty(const char *name, List<const char *> &paramTypeNames) = 0;
+	//! Gets a wrapper for a property defined in this class.
+	//!
+	//! @param name   Name of the property to get.
+	//! @param params Text that describes types arguments the property should take.
+	VIRTUAL_API virtual IMonoProperty *GetProperty(const char *name, const char *params) = 0;
+	//! Gets a wrapper for a property defined in this class.
+	//!
+	//! @param name       Name of the property to get.
+	//! @param paramCount Number of arguments the getter or setter of the property should take.
+	VIRTUAL_API virtual IMonoProperty *GetProperty(const char *name, int paramCount) = 0;
 	//! Gets one of the events defined in this class.
 	//!
 	//! @param name Name of the event to get.
