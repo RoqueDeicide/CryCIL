@@ -4,12 +4,12 @@
 
 IMonoMethod *MonoPropertyWrapper::GetGetter()
 {
-	return new MonoMethodWrapper(mono_property_get_get_method(this->prop));
+	return this->getter;
 }
 
 IMonoMethod *MonoPropertyWrapper::GetSetter()
 {
-	return new MonoMethodWrapper(mono_property_get_set_method(this->prop));
+	return this->setter;
 }
 
 void *MonoPropertyWrapper::GetWrappedPointer()
