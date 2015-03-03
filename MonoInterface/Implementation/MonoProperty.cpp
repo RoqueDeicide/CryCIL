@@ -27,3 +27,15 @@ IMonoClass *MonoPropertyWrapper::GetDeclaringClass()
 	return this->klass;
 }
 
+IMonoMethod *MonoPropertyWrapper::GetIdentifier()
+{
+	if (this->getter)
+	{
+		return this->getter;
+	}
+	else
+	{
+		return this->setter;
+	}
+}
+

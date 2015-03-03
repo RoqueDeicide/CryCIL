@@ -45,4 +45,6 @@ public:
 
 	virtual IMonoClass *GetDeclaringClass();
 
+	virtual IMonoMethod *GetIdentifier();
+
 };
