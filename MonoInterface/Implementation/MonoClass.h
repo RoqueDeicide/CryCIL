@@ -27,13 +27,6 @@ private:
 public:
 	MonoClassWrapper(MonoClass *klass);
 	~MonoClassWrapper();
-
-	virtual IMonoConstructor *GetConstructor(int paramCount);
-	virtual IMonoConstructor *GetConstructor(IMonoArray *types = nullptr);
-	virtual IMonoConstructor *GetConstructor(List<IMonoClass *> &classes);
-	virtual IMonoConstructor *GetConstructor(List<ClassSpec> &specifiedClasses);
-	virtual IMonoConstructor *GetConstructor(const char *params);
-	virtual IMonoConstructor *GetConstructor(List<const char *> &paramTypeNames);
 	
 	virtual IMonoFunction *GetFunction(const char *name, IMonoArray *types = nullptr);
 	virtual IMonoFunction *GetFunction(const char *name, List<IMonoClass *> &classes);

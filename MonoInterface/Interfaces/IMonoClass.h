@@ -49,24 +49,52 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!
 	//! It's not easy to predict which one of the constructors will be acquired when there are several
 	//! of them that accept the same number of arguments.
-	VIRTUAL_API virtual IMonoConstructor *GetConstructor(int paramCount) = 0;
+	__forceinline IMonoConstructor *GetConstructor(int paramCount)
+	{
+#ifdef _CPPRTTI
+		return dynamic_cast<IMonoConstructor *>(this->GetFunction(".ctor", paramCount));
+#else
+		return this->GetFunction(".ctor", paramCount)->ToCtor();
+#endif //_CPPRTTI
+	}
 	//! Gets constructor that can accept arguments of specified types.
 	//!
 	//! @param types An array of System.Type objects that specify constructor signature to use.
-	VIRTUAL_API virtual IMonoConstructor *GetConstructor(IMonoArray *types = nullptr) = 0;
+	__forceinline IMonoConstructor *GetConstructor(IMonoArray *types = nullptr)
+	{
+#ifdef _CPPRTTI
+		return dynamic_cast<IMonoConstructor *>(this->GetFunction(".ctor", types));
+#else
+		return this->GetFunction(".ctor", types)->ToCtor();
+#endif //_CPPRTTI
+	}
 	//! Gets constructor that can accept arguments of specified types.
 	//!
 	//! Refer to documentation of corresponding GetMethod() overload for details.
 	//!
 	//! @param classes A list IMonoClass wrappers that specify constructor signature to use.
-	VIRTUAL_API virtual IMonoConstructor *GetConstructor(List<IMonoClass *> &classes) = 0;
+	__forceinline IMonoConstructor *GetConstructor(List<IMonoClass *> &classes)
+	{
+#ifdef _CPPRTTI
+		return dynamic_cast<IMonoConstructor *>(this->GetFunction(".ctor", classes));
+#else
+		return this->GetFunction(".ctor", classes)->ToCtor();
+#endif //_CPPRTTI
+	}
 	//! Gets constructor that can accept arguments of specified types.
 	//!
 	//! Refer to documentation of corresponding GetMethod() overload for details.
 	//!
 	//! @param specifiedClasses A list of classes and postfixes that specify constructor signature
 	//!                         to use.
-	VIRTUAL_API virtual IMonoConstructor *GetConstructor(List<ClassSpec> &specifiedClasses) = 0;
+	__forceinline IMonoConstructor *GetConstructor(List<ClassSpec> &specifiedClasses)
+	{
+#ifdef _CPPRTTI
+		return dynamic_cast<IMonoConstructor *>(this->GetFunction(".ctor", specifiedClasses));
+#else
+		return this->GetFunction(".ctor", specifiedClasses)->ToCtor();
+#endif //_CPPRTTI
+	}
 	//! Gets the constructor that matches given description.
 	//!
 	//! Refer to documentation of corresponding GetMethod() overload for details.
@@ -75,14 +103,28 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!
 	//! @returns A pointer to the wrapper to the found constructor. Null is returned if
 	//!          no constructor matching the description was found.
-	VIRTUAL_API virtual IMonoConstructor *GetConstructor(const char *params) = 0;
+	__forceinline IMonoConstructor *GetConstructor(const char *params)
+	{
+#ifdef _CPPRTTI
+		return dynamic_cast<IMonoConstructor *>(this->GetFunction(".ctor", params));
+#else
+		return this->GetFunction(".ctor", params)->ToCtor();
+#endif //_CPPRTTI
+	}
 	//! Gets a constructor defined in this class.
 	//!
 	//! Refer to documentation of corresponding GetMethod() overload for details.
 	//!
 	//! @param paramTypeNames A list of full type names that specify the parameters the constructor
 	//!                       accepts.
-	VIRTUAL_API virtual IMonoConstructor *GetConstructor(List<const char *> &paramTypeNames) = 0;
+	__forceinline IMonoConstructor *GetConstructor(List<const char *> &paramTypeNames)
+	{
+#ifdef _CPPRTTI
+		return dynamic_cast<IMonoConstructor *>(this->GetFunction(".ctor", paramTypeNames));
+#else
+		return this->GetFunction(".ctor", paramTypeNames)->ToCtor();
+#endif //_CPPRTTI
+	}
 	//! Gets method that can accept arguments of specified types.
 	//!
 	//! @param name  Name of the method to get.

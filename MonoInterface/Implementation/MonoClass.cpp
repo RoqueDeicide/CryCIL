@@ -133,36 +133,6 @@ MonoClassWrapper::~MonoClassWrapper()
 	this->fields.Dispose();
 }
 
-IMonoConstructor *MonoClassWrapper::GetConstructor(IMonoArray *types /*= nullptr*/)
-{
-	return dynamic_cast<IMonoConstructor *>(this->GetFunction(".ctor", types));
-}
-
-IMonoConstructor *MonoClassWrapper::GetConstructor(List<IMonoClass *> &classes)
-{
-	return dynamic_cast<IMonoConstructor *>(this->GetFunction(".ctor", classes));
-}
-
-IMonoConstructor *MonoClassWrapper::GetConstructor(List<ClassSpec> &specifiedClasses)
-{
-	return dynamic_cast<IMonoConstructor *>(this->GetFunction(".ctor", specifiedClasses));
-}
-
-IMonoConstructor *MonoClassWrapper::GetConstructor(const char *params)
-{
-	return dynamic_cast<IMonoConstructor *>(this->GetFunction(".ctor", params));
-}
-
-IMonoConstructor *MonoClassWrapper::GetConstructor(List<const char *> &paramTypeNames)
-{
-	return dynamic_cast<IMonoConstructor *>(this->GetFunction(".ctor", paramTypeNames));
-}
-
-IMonoConstructor *MonoClassWrapper::GetConstructor(int paramCount)
-{
-	return dynamic_cast<IMonoConstructor *>(this->GetFunction(".ctor", paramCount));
-}
-
 //! Gets the first that matches given description.
 IMonoFunction *MonoClassWrapper::GetFunction(const char *name, int paramCount)
 {
