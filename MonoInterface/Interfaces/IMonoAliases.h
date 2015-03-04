@@ -16,6 +16,7 @@
 #include "ReadOnlyList.h"
 #include "SortedList.h"
 #include "Text.h"
+#include "NtText.h"
 #include "Tuples.h"
 
 #include "Logs.h"

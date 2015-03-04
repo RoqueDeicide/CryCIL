@@ -56,17 +56,13 @@ IMonoFunction *MonoEventWrapper::GetRaise()
 
 		if (!this->raise)
 		{
-			ConstructiveText raiseMethodName(strlen(this->Name) + 2);
-			raiseMethodName << "On" << this->Name;
-			const char *name = raiseMethodName.ToNTString();
+			auto methodName = NtText(2, "On", mono_event_get_name(this->_event));
 
-			auto overloads = klass->GetFunctions(name);
+			auto overloads = klass->GetFunctions(methodName);
 			if (overloads)
 			{
 				this->raise = overloads->At(0);
 			}
-
-			delete name;
 		}
 
 		this->raiseDefined = this->raise ? 1 : 0;
