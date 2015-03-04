@@ -284,8 +284,8 @@ void TestGettingTheConstructors()
 	CryLogAlways("TEST: Added a pointer type of Sbyte to the array.");
 
 	mono::type int32Type = MonoEnv->CoreLibrary->Int32->GetType();
-	typesArray->At<mono::type>(0) = int32Type;
-	typesArray->At<mono::type>(0) = int32Type;
+	typesArray->At<mono::type>(1) = int32Type;
+	typesArray->At<mono::type>(2) = int32Type;
 
 	CryLogAlways("TEST: Added Int32 types to the array.");
 
