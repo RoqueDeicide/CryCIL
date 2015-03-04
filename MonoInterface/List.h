@@ -75,144 +75,6 @@ public:
 			this->elements[i] = list.elements[i];
 		}
 	}
-	//! Constructs a new list that has one value already in it.
-	List(ElementType el1)
-	{
-		this->capacity = 1;
-		this->length = 1;
-		this->elements = (ElementType *)malloc(this->capacity * sizeof(ElementType));
-		this->elements[0] = el1;
-	}
-	//! Constructs a new list that has one value already in it.
-	//!
-	//! @param capacity A number of elements to prepare space for. Will be clamped to fit at least 1 element.
-	List(ElementType el1, int capacity)
-	{
-		this->capacity = (capacity < 1) ? 1 : capacity;
-		this->length = 1;
-		this->elements = (ElementType *)malloc(this->capacity * sizeof(ElementType));
-		this->elements[0] = el1;
-	}
-	//! Constructs a new list that has 2 values already in it.
-	List(ElementType el1, ElementType el2)
-	{
-		this->capacity = 2;
-		this->length = 2;
-		this->elements = (ElementType *)malloc(this->capacity * sizeof(ElementType));
-		this->elements[0] = el1;
-		this->elements[1] = el2;
-	}
-	//! Constructs a new list that has 2 values already in it.
-	//!
-	//! @param capacity A number of elements to prepare space for. Will be clamped to fit at least 2 elements.
-	List(ElementType el1, ElementType el2, int capacity)
-	{
-		this->capacity = (capacity < 2) ? 2 : capacity;
-		this->length = 2;
-		this->elements = (ElementType *)malloc(this->capacity * sizeof(ElementType));
-		this->elements[0] = el1;
-		this->elements[1] = el2;
-	}
-	//! Constructs a new list that has 3 values already in it.
-	List(ElementType el1, ElementType el2, ElementType el3)
-	{
-		this->capacity = 3;
-		this->length = 3;
-		this->elements = (ElementType *)malloc(this->capacity * sizeof(ElementType));
-		this->elements[0] = el1;
-		this->elements[1] = el2;
-		this->elements[2] = el3;
-	}
-	//! Constructs a new list that has 3 values already in it.
-	//!
-	//! @param capacity A number of elements to prepare space for. Will be clamped to fit at least 3 elements.
-	List(ElementType el1, ElementType el2, ElementType el3, int capacity)
-	{
-		this->capacity = (capacity < 3) ? 3 : capacity;
-		this->length = 3;
-		this->elements = (ElementType *)malloc(this->capacity * sizeof(ElementType));
-		this->elements[0] = el1;
-		this->elements[1] = el2;
-		this->elements[2] = el3;
-	}
-	//! Constructs a new list that has 4 values already in it.
-	List(ElementType el1, ElementType el2, ElementType el3, ElementType el4)
-	{
-		this->capacity = 4;
-		this->length = 4;
-		this->elements = (ElementType *)malloc(this->capacity * sizeof(ElementType));
-		this->elements[0] = el1;
-		this->elements[1] = el2;
-		this->elements[2] = el3;
-		this->elements[3] = el4;
-	}
-	//! Constructs a new list that has 4 values already in it.
-	//!
-	//! @param capacity A number of elements to prepare space for. Will be clamped to fit at least 4 elements.
-	List(ElementType el1, ElementType el2, ElementType el3, ElementType el4, int capacity)
-	{
-		this->capacity = (capacity < 4) ? 4 : capacity;
-		this->length = 4;
-		this->elements = (ElementType *)malloc(this->capacity * sizeof(ElementType));
-		this->elements[0] = el1;
-		this->elements[1] = el2;
-		this->elements[2] = el3;
-		this->elements[3] = el4;
-	}
-	//! Constructs a new list that has 5 values already in it.
-	List(ElementType el1, ElementType el2, ElementType el3, ElementType el4, ElementType el5)
-	{
-		this->capacity = 5;
-		this->length = 5;
-		this->elements = (ElementType *)malloc(this->capacity * sizeof(ElementType));
-		this->elements[0] = el1;
-		this->elements[1] = el2;
-		this->elements[2] = el3;
-		this->elements[3] = el4;
-		this->elements[4] = el5;
-	}
-	//! Constructs a new list that has 5 values already in it.
-	//!
-	//! @param capacity A number of elements to prepare space for. Will be clamped to fit at least 5 elements.
-	List(ElementType el1, ElementType el2, ElementType el3, ElementType el4, ElementType el5, int capacity)
-	{
-		this->capacity = (capacity < 5) ? 5 : capacity;
-		this->length = 5;
-		this->elements = (ElementType *)malloc(this->capacity * sizeof(ElementType));
-		this->elements[0] = el1;
-		this->elements[1] = el2;
-		this->elements[2] = el3;
-		this->elements[3] = el4;
-		this->elements[4] = el5;
-	}
-	//! Constructs a new list that has 6 values already in it.
-	List(ElementType el1, ElementType el2, ElementType el3, ElementType el4, ElementType el5, ElementType el6)
-	{
-		this->capacity = 6;
-		this->length = 6;
-		this->elements = (ElementType *)malloc(this->capacity * sizeof(ElementType));
-		this->elements[0] = el1;
-		this->elements[1] = el2;
-		this->elements[2] = el3;
-		this->elements[3] = el4;
-		this->elements[4] = el5;
-		this->elements[5] = el6;
-	}
-	//! Constructs a new list that has 6 values already in it.
-	//!
-	//! @param capacity A number of elements to prepare space for. Will be clamped to fit at least 6 elements.
-	List(ElementType el1, ElementType el2, ElementType el3, ElementType el4, ElementType el5, ElementType el6, int capacity)
-	{
-		this->capacity = (capacity < 6) ? 6 : capacity;
-		this->length = 6;
-		this->elements = (ElementType *)malloc(this->capacity * sizeof(ElementType));
-		this->elements[0] = el1;
-		this->elements[1] = el2;
-		this->elements[2] = el3;
-		this->elements[3] = el4;
-		this->elements[4] = el5;
-		this->elements[5] = el6;
-	}
 	~List()
 	{
 		this->Dispose();
@@ -220,10 +82,76 @@ public:
 	//! Places an item at the end of this list.
 	//!
 	//! @param item Item to add.
-	void Add(ElementType item)
+	//!
+	//! @returns A reference to this object to allow chaining of Add() calls.
+	List<ElementType> &Add(ElementType item)
 	{
 		this->Expand(this->length + 1);
 		this->elements[this->length++] = item;
+		return *this;
+	}
+	//! Adds 2 items to the list.
+	//!
+	//! @returns A reference to this object to allow chaining of Add() calls.
+	List<ElementType> &Add(ElementType el1, ElementType el2)
+	{
+		this->Expand(this->length + 2);
+		this->elements[this->length++] = el1;
+		this->elements[this->length++] = el2;
+		return *this;
+	}
+	//! Adds 3 items to the list.
+	//!
+	//! @returns A reference to this object to allow chaining of Add() calls.
+	List<ElementType> &Add(ElementType el1, ElementType el2, ElementType el3)
+	{
+		this->Expand(this->length + 3);
+		this->elements[this->length++] = el1;
+		this->elements[this->length++] = el2;
+		this->elements[this->length++] = el3;
+		return *this;
+	}
+	//! Adds 4 items to the list.
+	//!
+	//! @returns A reference to this object to allow chaining of Add() calls.
+	List<ElementType> &Add(ElementType el1, ElementType el2, ElementType el3,
+						   ElementType el4)
+	{
+		this->Expand(this->length + 4);
+		this->elements[this->length++] = el1;
+		this->elements[this->length++] = el2;
+		this->elements[this->length++] = el3;
+		this->elements[this->length++] = el4;
+		return *this;
+	}
+	//! Adds 5 items to the list.
+	//!
+	//! @returns A reference to this object to allow chaining of Add() calls.
+	List<ElementType> &Add(ElementType el1, ElementType el2, ElementType el3,
+						   ElementType el4, ElementType el5)
+	{
+		this->Expand(this->length + 5);
+		this->elements[this->length++] = el1;
+		this->elements[this->length++] = el2;
+		this->elements[this->length++] = el3;
+		this->elements[this->length++] = el4;
+		this->elements[this->length++] = el5;
+		return *this;
+	}
+	//! Adds 6 items to the list.
+	//!
+	//! @returns A reference to this object to allow chaining of Add() calls.
+	List<ElementType> &Add(ElementType el1, ElementType el2, ElementType el3,
+						   ElementType el4, ElementType el5, ElementType el6)
+	{
+		this->Expand(this->length + 6);
+		this->elements[this->length++] = el1;
+		this->elements[this->length++] = el2;
+		this->elements[this->length++] = el3;
+		this->elements[this->length++] = el4;
+		this->elements[this->length++] = el5;
+		this->elements[this->length++] = el6;
+		return *this;
 	}
 	//! Adds a range of items to the end of the list.
 	//!
