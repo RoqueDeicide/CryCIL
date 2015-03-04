@@ -1,9 +1,5 @@
 #pragma once
 
-#include <string>
-#include <sstream>
-#include <vector>
-#include <iostream>
 // Stop compiler from complaining about strncpy.
 #pragma warning(disable:4996)
 
@@ -20,30 +16,16 @@
 #define FatalError(message) CryFatalError(message)
 
 #else
-
+#include <iostream>
+#include <string>
+#include <sstream>
+#include <vector>
 #include <stdexcept>
 #define FatalError(message) throw std::logic_error(message)
 
 #endif // CRYCIL_MODULE
 
-inline std::vector<std::string> &split(const std::string &s, char delim, std::vector<std::string> &elems)
-{
-	std::stringstream ss(s);
-	std::string item;
-	while (std::getline(ss, item, delim))
-	{
-		elems.push_back(item);
-	}
-	return elems;
-}
-
-
-inline std::vector<std::string> split(const std::string &s, char delim)
-{
-	std::vector<std::string> elems;
-	split(s, delim, elems);
-	return elems;
-}
+#include "List.h"
 
 //! Base class for Text and ConstructiveText.
 class TextBase
@@ -214,12 +196,29 @@ public:
 	//! Splits this string into parts separated by the given symbol.
 	//!
 	//! @param symbol           Symbol that will separate the parts.
-	//! @param partCount        Reference to the variable that will contain part count.
 	//! @param removeEmptyParts Indicates whether empty parts should be present in the result.
 	//!
-	//! @return An array of parts. Must be deleted after use. Before that though, each part
-	//!         must be released separately.
-	class Text **Split(char symbol, int &partCount, bool removeEmptyParts);
+	//! @return A list of parts. Must be deleted after use. Before that though, each part
+	//!         must be deleted separately.
+	List<const char *> *Split(char symbol, bool removeEmptyParts)
+	{
+		List<const char *> *parts = new List<const char *>(6);
+
+		int partStartIndex = 0;
+		for (int i = 0; i <= this->length; i++)
+		{
+			if (this->text[i] == symbol || i == this->length)
+			{
+				if (i != partStartIndex || !removeEmptyParts)
+				{
+					parts->Add(this->ToNTString(partStartIndex, i - partStartIndex));
+				}
+				partStartIndex = i + 1;
+			}
+		}
+
+		return parts;
+	}
 	//! Finds first occurrence of the given symbol.
 	//!
 	//! @param symbol Character to find.
@@ -641,26 +640,6 @@ private:
 		}
 	}
 };
-
-
-inline Text **TextBase::Split(char symbol, int &partCount, bool removeEmptyParts)
-{
-	const char *ntText = this->ToNTString();
-	std::string string_text(ntText);
-	auto parts = split(string_text, symbol);
-	Text **pars = (Text **)malloc(parts.size() * sizeof(Text *));
-	int partIndex = 0;
-	for (unsigned int i = 0; i < parts.size(); i++)
-	{
-		std::string currentPart = parts.at(i);
-		if (currentPart.size() != 0 || !removeEmptyParts)
-		{
-			pars[partIndex++] = new Text(currentPart.c_str());
-		}
-	}
-	partCount = partIndex;
-	return pars;
-}
 
 inline std::ostream &operator <<(std::ostream &out, Text &text)
 {
