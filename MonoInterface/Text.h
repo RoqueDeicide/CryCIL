@@ -317,6 +317,43 @@ public:
 	//! @param managedString Instance of type System.String.
 	Text(MonoString *managedString) : TextBase(managedString) {}
 #endif // CRYCIL_MODULE
+	//! Constructs a text out of given parts.
+	//!
+	//! @param t1 Number of arguments in the chain.
+	Text(int count...)
+	{
+		// Gather the arguments into the list and calculate total length at the same time.
+		va_list va;
+		va_start(va, count);
+
+		auto parts = List<const char *>(count);
+
+		int length = 0;
+		for (int i = 0; i < count; i++)
+		{
+			const char *next = va_arg(va, const char *);
+
+			if (next)
+			{
+				length += strlen(next);
+				parts.Add(next);
+			}
+		}
+
+		va_end(va);
+
+		this->text = new char[length];
+		this->length = length;
+		// Copy the characters to this string.
+		int j = 0;
+		for (int i = 0; i < parts.Length; i++)
+		{
+			for (int k = 0; parts[i][k]; k++)
+			{
+				this->text[j++] = parts[i][k];
+			}
+		}
+	}
 	//! Creates a substring of this text.
 	//!
 	//! @param index Zero-based index of the first symbol of the substring to copy to the result.
@@ -509,6 +546,43 @@ public:
 	ConstructiveText(Text *immutableString, int index, int count)
 	{
 		this->Init(immutableString, index, count);
+	}
+	//! Constructs a text out of given parts.
+	//!
+	//! @param t1 Number of arguments in the chain.
+	ConstructiveText(int capacity, int count...)
+	{
+		// Gather the arguments into the list and calculate total length at the same time.
+		va_list va;
+		va_start(va, count);
+
+		auto parts = List<const char *>(count);
+
+		int length = 0;
+		for (int i = 0; i < count; i++)
+		{
+			const char *next = va_arg(va, const char *);
+
+			if (next)
+			{
+				length += strlen(next);
+				parts.Add(next);
+			}
+		}
+
+		va_end(va);
+
+		this->text = new char[(length > capacity) ? length : capacity];
+		this->length = length;
+		// Copy the characters to this string.
+		int j = 0;
+		for (int i = 0; i < parts.Length; i++)
+		{
+			for (int k = 0; parts[i][k]; k++)
+			{
+				this->text[j++] = parts[i][k];
+			}
+		}
 	}
 	~ConstructiveText()
 	{
