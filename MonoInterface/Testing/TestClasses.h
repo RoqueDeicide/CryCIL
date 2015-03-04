@@ -322,9 +322,7 @@ void TestGettingTheConstructors()
 
 	CryLogAlways("TEST: Getting constructor using a list of IMonoClass wrappers with postfix strings.");
 
-	auto klassPostList = List<ClassSpec>(1);
-
-	klassPostList.Add(ClassSpec(MonoEnv->CoreLibrary->Char, "[]"));
+	auto klassPostList = List<ClassSpec>(1).Add(ClassSpec(MonoEnv->CoreLibrary->Char, "[]"));
 
 	IMonoConstructor *ctorSpecifiedClassList = stringClass->GetConstructor(klassPostList);
 
@@ -339,11 +337,7 @@ void TestGettingTheConstructors()
 
 	CryLogAlways("TEST: Getting constructor using a list of full type names.");
 
-	auto typeNameList = List<const char *>(3);
-
-	typeNameList.Add("System.Char[]");
-	typeNameList.Add("System.Int32");
-	typeNameList.Add("System.Int32");
+	auto typeNameList = List<const char *>(3).Add("System.Char[]", "System.Int32", "System.Int32");
 
 	IMonoConstructor *ctorTypeNameList = stringClass->GetConstructor(typeNameList);
 
@@ -520,10 +514,7 @@ void TestGettingMethods()
 
 	CryLogAlways("TEST: Getting the method using a list of IMonoClass objects.");
 
-	auto classes = List<IMonoClass *>(2);
-
-	classes.Add(stringClass);
-	classes.Add(arrayClass);
+	auto classes = List<IMonoClass *>(2).Add(stringClass, arrayClass);
 
 	method = typeClass->GetFunction("GetMethod", classes)->ToInstance();
 
@@ -538,11 +529,8 @@ void TestGettingMethods()
 
 	CryLogAlways("TEST: Getting the method using a list of IMonoClass objects with post-fixes.");
 
-	auto specifiedClasses = List<ClassSpec>(3);
-
-	specifiedClasses.Add(ClassSpec(stringClass, ""));
-	specifiedClasses.Add(ClassSpec(typeClass,   ""));
-	specifiedClasses.Add(ClassSpec(typeClass, "[]"));
+	auto specifiedClasses = List<ClassSpec>(3).Add(ClassSpec(stringClass, ""), ClassSpec(typeClass, ""),
+												   ClassSpec(typeClass, "[]"));
 
 	method = typeClass->GetFunction("GetProperty", specifiedClasses)->ToInstance();
 
@@ -557,10 +545,7 @@ void TestGettingMethods()
 
 	CryLogAlways("TEST: Getting the method using a list of type names.");
 
-	auto typeNames = List<const char *>(2);
-
-	typeNames.Add("System.Double");
-	typeNames.Add("System.Double");
+	auto typeNames = List<const char *>(2).Add("System.Double", "System.Double");
 
 	auto staticFunc = mathClass->GetFunction("Pow", typeNames)->ToStatic();
 
