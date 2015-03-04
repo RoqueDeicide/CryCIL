@@ -278,6 +278,7 @@
     <ClInclude Include="MonoDefinitionFiles\MonoArray.h" />
     <ClInclude Include="MonoDefinitionFiles\MonoDelegate.h" />
     <ClInclude Include="MonoHeaders.h" />
+    <ClInclude Include="NtText.h" />
     <ClInclude Include="ReadOnlyList.h" />
     <ClInclude Include="RunTime\AllInterops.h" />
     <ClInclude Include="RunTime\DebugEventReporter.h" />

@@ -256,6 +256,9 @@
     <ClInclude Include="Implementation\MonoStaticMethod.h">
       <Filter>API Implementation\Metadata</Filter>
     </ClInclude>
+    <ClInclude Include="NtText.h">
+      <Filter>Extras</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
