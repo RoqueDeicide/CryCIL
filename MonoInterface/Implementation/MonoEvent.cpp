@@ -3,39 +3,75 @@
 #include "MonoClass.h"
 
 
-IMonoMethod *MonoEventWrapper::GetAdd()
+IMonoFunction *MonoEventWrapper::GetAdd()
 {
-	return new MonoMethodWrapper(mono_event_get_add_method(this->_event));
-}
-
-IMonoMethod *MonoEventWrapper::GetRemove()
-{
-	return new MonoMethodWrapper(mono_event_get_remove_method(this->_event));
-}
-
-IMonoMethod *MonoEventWrapper::GetRaise()
-{
-	MonoMethod *method = mono_event_get_raise_method(this->_event);
-	if (!method)
+	if (!this->add)
 	{
-		ConstructiveText raiseMethodName(strlen(this->Name) + 2);
-		raiseMethodName << "On" << this->Name;
-		const char *name = raiseMethodName.ToNTString();
-		MonoClass *klass = mono_event_get_parent(this->_event);
-		for (int i = 0; i < 5; i++)
+		MonoMethod *addMethod = mono_event_get_add_method(_event);
+
+		if (isStatic)
 		{
-			method = mono_class_get_method_from_name(klass, name, i);
-			if (method)
-			{
-				break;
-			}
+			this->add = new MonoStaticMethod(addMethod, klass);
+		}
+		else
+		{
+			this->add = new MonoMethodWrapper(addMethod, klass);
 		}
 	}
-	if (!method)
+	return this->add;
+}
+
+IMonoFunction *MonoEventWrapper::GetRemove()
+{
+	if (!this->remove)
 	{
-		return nullptr;
+		MonoMethod *removeMethod = mono_event_get_remove_method(_event);
+
+		if (isStatic)
+		{
+			this->remove = new MonoStaticMethod(removeMethod, klass);
+		}
+		else
+		{
+			this->remove = new MonoMethodWrapper(removeMethod, klass);
+		}
 	}
-	return new MonoMethodWrapper(method);
+	return this->remove;
+}
+
+IMonoFunction *MonoEventWrapper::GetRaise()
+{
+	if (!this->raise && this->raiseDefined != 0)
+	{
+		MonoMethod *raiseMethod = mono_event_get_raise_method(_event);
+
+		if (isStatic)
+		{
+			this->raise = raiseMethod ? new MonoStaticMethod(raiseMethod, klass) : nullptr;
+		}
+		else
+		{
+			this->raise = raiseMethod ? new MonoMethodWrapper(raiseMethod, klass) : nullptr;
+		}
+
+		if (!this->raise)
+		{
+			ConstructiveText raiseMethodName(strlen(this->Name) + 2);
+			raiseMethodName << "On" << this->Name;
+			const char *name = raiseMethodName.ToNTString();
+
+			auto overloads = klass->GetFunctions(name);
+			if (overloads)
+			{
+				this->raise = overloads->At(0);
+			}
+
+			delete name;
+		}
+
+		this->raiseDefined = this->raise ? 1 : 0;
+	}
+	return this->raise;
 }
 
 const char *MonoEventWrapper::GetName()
