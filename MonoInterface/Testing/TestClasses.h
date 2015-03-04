@@ -12,6 +12,7 @@ void TestAssemblyLookBack();
 void TestConstructors();
 void TestMethods();
 void TestFields();
+void TestProperties();
 
 void TestClasses()
 {
@@ -40,6 +41,8 @@ void TestClasses()
 	TestMethods();
 
 	TestFields();
+
+	TestProperties();
 }
 
 #pragma region General Tests
@@ -1011,6 +1014,58 @@ void TestStaticFields()
 	const char *ntText = ToNativeString(text);
 	CryLogAlways("TEST: Text value = %s", ntText);
 	delete ntText;
+}
+
+#pragma endregion
+
+#pragma region Property Tests
+
+void TestProperties()
+{
+	CryLogAlways("TEST: Testing property wrappers.");
+
+	IMonoClass *gcClass      = MonoEnv->CoreLibrary->GetClass("System", "GC");
+	IMonoClass *vector3Class = MonoEnv->Cryambly->Vector3;
+
+	CryLogAlways("TEST: Testing instance properties.");
+
+	IMonoProperty *lengthProp = vector3Class->GetProperty("Length");
+
+	Vec3 vector(10.0f, 30.0f, -15.0f);
+
+	IMonoMethod *lengthGetter = lengthProp->Getter->ToInstance();
+
+	CryLogAlways("TEST: Length of the vector (10, 30, -15) = %f", Unbox<float>(lengthGetter->Invoke(&vector)));
+
+	CryLogAlways("TEST: Testing indexers.");
+
+	IMonoProperty *indexerProp = vector3Class->GetProperty("Item", 1);
+
+	IMonoMethod *indexerGetter = indexerProp->Getter->ToInstance();
+
+	int index = 1;
+	void *param = &index;
+	float yComponent = Unbox<float>(indexerGetter->Invoke(&vector, &param));
+
+	CryLogAlways("TEST: Y-coordinate of the vector = %f", yComponent);
+
+	IMonoMethod *indexerSetter = indexerProp->Setter->ToInstance();
+
+	index = 2;
+	float coord = 90;
+	void *params[2];
+	params[0] = &index;
+	params[1] = &coord;
+	indexerSetter->Invoke(&vector, params);
+
+	CryLogAlways("TEST: Length of the vector after setting z-coordinate to 90 = %f", Unbox<float>(lengthGetter->Invoke(&vector)));
+
+	CryLogAlways("TEST: Testing static properties.");
+
+	IMonoProperty *maxGenProp = gcClass->GetProperty("MaxGeneration");
+	IMonoStaticMethod *maxGenGetter = maxGenProp->Getter->ToStatic();
+
+	CryLogAlways("TEST: Max generation of the GC: %d", Unbox<int>(maxGenGetter->Invoke()));
 }
 
 #pragma endregion
