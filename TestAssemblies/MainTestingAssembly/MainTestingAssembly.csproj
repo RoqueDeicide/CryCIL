@@ -45,6 +45,7 @@
     <Compile Include="ConstructionTestClass.cs" />
     <Compile Include="FieldTestClass.cs" />
     <Compile Include="MethodTestClass.cs" />
+    <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
