@@ -13,9 +13,6 @@ private:
 	static CreateInstanceDelegate           createInstanceDelegate;
 public:
 	virtual IMonoDelegate *Wrap(mono::delegat delegat);
-
-	virtual IMonoDelegate *Create(IMonoClass *delegateType, IMonoMethod *method, IMonoClass *klass);
-
+	virtual IMonoDelegate *Create(IMonoClass *delegateType, IMonoMethod *method);
 	virtual IMonoDelegate *Create(IMonoClass *delegateType, IMonoMethod *method, mono::object target);
-
 };

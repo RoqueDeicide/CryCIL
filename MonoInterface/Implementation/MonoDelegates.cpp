@@ -7,7 +7,7 @@ IMonoDelegate *MonoDelegates::Wrap(mono::delegat delegat)
 	return new MonoDelegateWrapper(delegat);
 }
 
-IMonoDelegate *MonoDelegates::Create(IMonoClass *delegateType, IMonoMethod *method, IMonoClass *klass)
+IMonoDelegate *MonoDelegates::Create(IMonoClass *delegateType, IMonoMethod *method)
 {
 	if (!delegateType)
 	{
@@ -17,11 +17,6 @@ IMonoDelegate *MonoDelegates::Create(IMonoClass *delegateType, IMonoMethod *meth
 	if (!method)
 	{
 		gEnv->pLog->LogError("Unable to create a static delegate: method is null.");
-		return nullptr;
-	}
-	if (!klass)
-	{
-		gEnv->pLog->LogError("Unable to create a static delegate: klass is null.");
 		return nullptr;
 	}
 
@@ -35,21 +30,8 @@ IMonoDelegate *MonoDelegates::Create(IMonoClass *delegateType, IMonoMethod *meth
 	}
 
 	mono::exception ex;
-	(
-		mono_type_get_object
-		(
-			mono_domain_get(),
-			mono_class_get_type((MonoClass *)delegateType->GetWrappedPointer())
-		),
-		mono_method_get_object
-		(
-			mono_domain_get(),
-			(MonoMethod *)method->GetWrappedPointer(),
-			(MonoClass *)klass->GetWrappedPointer()
-		),
-		&ex
-	);
 	mono::delegat res = createStaticDelegate
+		(delegateType->GetType(), method->ReflectionObject, &ex);
 
 	if (ex)
 	{
@@ -78,27 +60,17 @@ IMonoDelegate *MonoDelegates::Create(IMonoClass *delegateType, IMonoMethod *meth
 	{
 		createInstanceDelegate = (CreateInstanceDelegate)
 			MonoEnv->CoreLibrary->GetClass("System", "Delegate")
-			->GetFunction("CreateDelegate", "System.Type,System.Object,System.Reflection.MethodInfo")
-			->UnmanagedThunk;
+								->GetFunction
+								(
+									"CreateDelegate",
+									"System.Type,System.Object,System.Reflection.MethodInfo"
+								)
+								->UnmanagedThunk;
 	}
 
 	mono::exception ex;
-	(
-		mono_type_get_object
-		(
-			mono_domain_get(),
-			mono_class_get_type((MonoClass *)delegateType->GetWrappedPointer())
-		),
-		target,
-		mono_method_get_object
-		(
-			mono_domain_get(),
-			(MonoMethod *)method->GetWrappedPointer(),
-			mono_object_get_class((MonoObject *)target)
-		),
-		&ex
-	);
 	mono::delegat res = createInstanceDelegate
+		(delegateType->GetType(), target, method->ReflectionObject, &ex);
 
 	if (ex)
 	{
