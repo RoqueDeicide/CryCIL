@@ -11,12 +11,12 @@ IMonoDelegate *MonoDelegates::Create(IMonoClass *delegateType, IMonoMethod *meth
 {
 	if (!delegateType)
 	{
-		gEnv->pLog->LogError("Unable to create a static delegate: delegateType is null.");
+		ReportError("Unable to create a static delegate: delegateType is null.");
 		return nullptr;
 	}
 	if (!method)
 	{
-		gEnv->pLog->LogError("Unable to create a static delegate: method is null.");
+		ReportError("Unable to create a static delegate: method is null.");
 		return nullptr;
 	}
 
@@ -35,7 +35,7 @@ IMonoDelegate *MonoDelegates::Create(IMonoClass *delegateType, IMonoMethod *meth
 
 	if (ex)
 	{
-		gEnv->pLog->LogError("Unable to create a static delegate: unhandled exception was thrown.");
+		ReportError("Unable to create a static delegate: unhandled exception was thrown.");
 
 		return nullptr;
 	}
@@ -47,12 +47,12 @@ IMonoDelegate *MonoDelegates::Create(IMonoClass *delegateType, IMonoMethod *meth
 {
 	if (!delegateType)
 	{
-		gEnv->pLog->LogError("Unable to create an instance delegate: delegateType is null.");
+		ReportError("Unable to create an instance delegate: delegateType is null.");
 		return nullptr;
 	}
 	if (!method)
 	{
-		gEnv->pLog->LogError("Unable to create an instance delegate: method is null.");
+		ReportError("Unable to create an instance delegate: method is null.");
 		return nullptr;
 	}
 
@@ -74,7 +74,7 @@ IMonoDelegate *MonoDelegates::Create(IMonoClass *delegateType, IMonoMethod *meth
 
 	if (ex)
 	{
-		gEnv->pLog->LogError("Unable to create an instance delegate: unhandled exception was thrown.");
+		ReportError("Unable to create an instance delegate: unhandled exception was thrown.");
 
 		return nullptr;
 	}
