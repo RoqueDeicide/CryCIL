@@ -2,9 +2,6 @@
 
 #include "MonoDelegates.h"
 
-typedef mono::delegat(__stdcall *CreateStaticDelegate)(MonoReflectionType *, MonoReflectionMethod *, mono::exception *);
-typedef mono::delegat(__stdcall *CreateInstanceDelegate)(MonoReflectionType *, mono::object, MonoReflectionMethod *, mono::exception *);
-
 IMonoDelegate *MonoDelegates::Wrap(mono::delegat delegat)
 {
 	return new MonoDelegateWrapper(delegat);
@@ -28,11 +25,9 @@ IMonoDelegate *MonoDelegates::Create(IMonoClass *delegateType, IMonoMethod *meth
 		return nullptr;
 	}
 
-	static CreateStaticDelegate thunk = 0;
-
-	if (!thunk)
+	if (!createStaticDelegate)
 	{
-		thunk = (CreateStaticDelegate)
+		createStaticDelegate = (CreateStaticDelegate)
 			MonoEnv->CoreLibrary
 				   ->GetClass("System", "Delegate")
 				   ->GetFunction("CreateDelegate", "System.Type,System.Reflection.MethodInfo")
@@ -40,7 +35,6 @@ IMonoDelegate *MonoDelegates::Create(IMonoClass *delegateType, IMonoMethod *meth
 	}
 
 	mono::exception ex;
-	mono::delegat res = thunk
 	(
 		mono_type_get_object
 		(
@@ -55,6 +49,7 @@ IMonoDelegate *MonoDelegates::Create(IMonoClass *delegateType, IMonoMethod *meth
 		),
 		&ex
 	);
+	mono::delegat res = createStaticDelegate
 
 	if (ex)
 	{
@@ -79,18 +74,15 @@ IMonoDelegate *MonoDelegates::Create(IMonoClass *delegateType, IMonoMethod *meth
 		return nullptr;
 	}
 
-	static CreateInstanceDelegate thunk = 0;
-
-	if (!thunk)
+	if (!createInstanceDelegate)
 	{
-		thunk = (CreateInstanceDelegate)
+		createInstanceDelegate = (CreateInstanceDelegate)
 			MonoEnv->CoreLibrary->GetClass("System", "Delegate")
 			->GetFunction("CreateDelegate", "System.Type,System.Object,System.Reflection.MethodInfo")
 			->UnmanagedThunk;
 	}
 
 	mono::exception ex;
-	mono::delegat res = thunk
 	(
 		mono_type_get_object
 		(
@@ -106,6 +98,7 @@ IMonoDelegate *MonoDelegates::Create(IMonoClass *delegateType, IMonoMethod *meth
 		),
 		&ex
 	);
+	mono::delegat res = createInstanceDelegate
 
 	if (ex)
 	{
@@ -116,3 +109,6 @@ IMonoDelegate *MonoDelegates::Create(IMonoClass *delegateType, IMonoMethod *meth
 
 	return new MonoDelegateWrapper(res);
 }
+
+CreateInstanceDelegate           MonoDelegates::createInstanceDelegate = nullptr;
+CreateStaticDelegate             MonoDelegates::createStaticDelegate = nullptr;
