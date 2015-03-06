@@ -56,4 +56,5 @@ public:
 
 	virtual IMonoClass *GetDeclaringClass();
 
+	virtual mono::object        GetReflectionObject();
 };

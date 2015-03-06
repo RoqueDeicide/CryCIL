@@ -219,3 +219,8 @@ mono::object MonoFunction::InternalInvokeArray(void *object, IMonoArray *args, m
 	}
 	return (mono::object)result;
 }
+
+mono::object MonoFunction::GetReflectionObject()
+{
+	return (mono::object)mono_method_get_object(mono_domain_get(), this->wrappedMethod, nullptr);
+}

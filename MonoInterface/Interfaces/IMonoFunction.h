@@ -226,6 +226,8 @@ struct IMonoFunction : public IMonoMember
 	__declspec(property(get = GetParameterClasses)) List<IMonoClass *> *ParameterClasses;
 	//! Gets a list of parameters this function accepts.
 	__declspec(property(get = GetParametersList)) const char *Parameters;
+	//! Gets an object of type System.Reflection.MethodInfo that represents this method.
+	__declspec(property(get = GetReflectionObject)) mono::object ReflectionObject;
 
 	//! Attempts to dynamically cast this object to IMonoMethod.
 	//!
@@ -255,6 +257,7 @@ struct IMonoFunction : public IMonoMember
 	VIRTUAL_API virtual List<const char *> *GetParameterTypeNames() = 0;
 	VIRTUAL_API virtual List<IMonoClass *> *GetParameterClasses() = 0;
 	VIRTUAL_API virtual const char *GetParametersList() = 0;
+	VIRTUAL_API virtual mono::object GetReflectionObject() = 0;
 
 	//! Utility methods that cast IMonoFunction object to one of possible implementations, while hiding
 	//! dynamic_cast call behind the API.
