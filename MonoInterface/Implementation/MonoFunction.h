@@ -38,23 +38,14 @@ public:
 	virtual IMonoStaticMethod *DynamicCastToStatic();
 	virtual IMonoConstructor  *DynamicCastToCtor();
 
-	virtual void *GetThunk();
-
-	virtual const char *GetName();
-
-	virtual int GetParameterCount();
-
-	virtual void *GetWrappedPointer();
-
+	virtual void               *GetThunk();
+	virtual const char         *GetName();
+	virtual int                 GetParameterCount();
+	virtual void               *GetWrappedPointer();
 	virtual List<const char *> *GetParameterTypeNames();
-
 	virtual List<IMonoClass *> *GetParameterClasses();
-
-	virtual const char *GetParametersList();
-
-	virtual void *GetFunctionPointer();
-
-	virtual IMonoClass *GetDeclaringClass();
-
+	virtual const char         *GetParametersList();
+	virtual void               *GetFunctionPointer();
+	virtual IMonoClass         *GetDeclaringClass();
 	virtual mono::object        GetReflectionObject();
 };
