@@ -13,6 +13,7 @@ void TestConstructors();
 void TestMethods();
 void TestFields();
 void TestProperties();
+void TestEvents();
 
 void TestClasses()
 {
@@ -43,6 +44,8 @@ void TestClasses()
 	TestFields();
 
 	TestProperties();
+
+	TestEvents();
 }
 
 #pragma region General Tests
@@ -1051,6 +1054,129 @@ void TestProperties()
 	IMonoStaticMethod *maxGenGetter = maxGenProp->Getter->ToStatic();
 
 	CryLogAlways("TEST: Max generation of the GC: %d", Unbox<int>(maxGenGetter->Invoke()));
+}
+
+#pragma endregion
+
+#pragma region Event Tests
+
+void UnmanagedEventHandler(mono::object sender, mono::object eventArgs)
+{
+	CryLogAlways("TEST: Unmanaged event wrapper has been invoked.");
+}
+
+void TestInstanceEvent(mono::object obj, IMonoEvent *_event);
+void TestStaticEvent(IMonoEvent *_event);
+
+IMonoStaticMethod *delegateFromFnPtr;
+
+void TestEvents()
+{
+	CryLogAlways("TEST: Testing events.");
+
+	delegateFromFnPtr = MonoEnv->CoreLibrary
+							   ->GetClass("System.Runtime.InteropServices", "Marshal")
+							   ->GetFunction("GetDelegateForFunctionPointerInternal", 2)
+							   ->ToStatic();
+
+	IMonoClass *eventHandlerClass = MonoEnv->CoreLibrary->GetClass("System", "EventHandler");
+
+	IMonoClass *eventTestClass       = mainTestingAssembly->GetClass("Test", "EventTest");
+	IMonoClass *eventTestClassClass  = mainTestingAssembly->GetClass("Test", "EventTestClass");
+	IMonoClass *eventTestObjectClass = mainTestingAssembly->GetClass("Test", "EventTestObject");
+
+	CryLogAlways("TEST: Got all class wrappers for testing events.");
+
+	mono::object eventTestObj = eventTestClass->GetFunction("Setup", 0)->ToStatic()->Invoke();
+
+	IMonoGCHandle *handle = MonoEnv->GC->Pin(eventTestObj);
+
+	CryLogAlways("TEST: Created an object for testing events.");
+
+	CryLogAlways("TEST: Testing instance events.");
+
+	TestInstanceEvent(eventTestObj, eventTestObjectClass->GetEvent("Testing"));
+	TestInstanceEvent(eventTestObj, eventTestObjectClass->GetEvent("Tested"));
+
+	CryLogAlways("TEST: Testing static events.");
+
+	TestStaticEvent(eventTestClassClass->GetEvent("Testing"));
+	TestStaticEvent(eventTestClassClass->GetEvent("Tested"));
+
+	handle->Release();
+}
+
+void TestInstanceEvent(mono::object obj, IMonoEvent *_event)
+{
+	CryLogAlways("TEST: Testing an instance event %s::%s.", _event->DeclaringClass->FullName, _event->Name);
+
+	IMonoMethod *_eventAdd    = _event->Add->ToInstance();
+	IMonoMethod *_eventRemove = _event->Remove->ToInstance();
+	IMonoMethod *_eventRaise  = _event->Raise->ToInstance();
+
+	CryLogAlways("TEST: Raising the event %s for the first time.");
+
+	_eventRaise->Invoke(obj);
+
+	CryLogAlways("TEST: Adding a delegate to the event that encapsulates an unmanaged function.");
+
+	void *param = UnmanagedEventHandler;
+	mono::object fnPtrWrapper = delegateFromFnPtr->Invoke(&param);
+
+	IMonoGCHandle *handle = MonoEnv->GC->Pin(fnPtrWrapper);
+
+	param = fnPtrWrapper;
+	_eventAdd->Invoke(obj, &param);
+
+	CryLogAlways("TEST: Raising the event %s after adding unmanaged function delegate.");
+
+	_eventRaise->Invoke(obj);
+
+	CryLogAlways("TEST: Removing the delegate from the event's invocation list.");
+
+	_eventRemove->Invoke(&param);
+
+	CryLogAlways("TEST: Raising the event %s after removing previously added delegate.");
+
+	_eventRaise->Invoke(obj);
+
+	handle->Release();
+}
+void TestStaticEvent(IMonoEvent *_event)
+{
+	CryLogAlways("TEST: Testing a static event %s::%s.", _event->DeclaringClass->FullName, _event->Name);
+
+	IMonoStaticMethod *_eventAdd    = _event->Add->ToStatic();
+	IMonoStaticMethod *_eventRemove = _event->Remove->ToStatic();
+	IMonoStaticMethod *_eventRaise  = _event->Raise->ToStatic();
+
+	CryLogAlways("TEST: Raising the event %s for the first time.");
+
+	_eventRaise->Invoke();
+
+	CryLogAlways("TEST: Adding a delegate to the event that encapsulates an unmanaged function.");
+
+	void *param = UnmanagedEventHandler;
+	mono::object fnPtrWrapper = delegateFromFnPtr->Invoke(&param);
+
+	IMonoGCHandle *handle = MonoEnv->GC->Pin(fnPtrWrapper);
+
+	param = fnPtrWrapper;
+	_eventAdd->Invoke(&param);
+
+	CryLogAlways("TEST: Raising the event %s after adding unmanaged function delegate.");
+
+	_eventRaise->Invoke();
+
+	CryLogAlways("TEST: Removing the delegate from the event's invocation list.");
+
+	_eventRemove->Invoke(&param);
+
+	CryLogAlways("TEST: Raising the event %s after removing previously added delegate.");
+
+	_eventRaise->Invoke();
+
+	handle->Release();
 }
 
 #pragma endregion
