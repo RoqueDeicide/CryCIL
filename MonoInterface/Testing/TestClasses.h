@@ -1068,18 +1068,13 @@ void UnmanagedEventHandler(mono::object sender, mono::object eventArgs)
 void TestInstanceEvent(mono::object obj, IMonoEvent *_event);
 void TestStaticEvent(IMonoEvent *_event);
 
-IMonoStaticMethod *delegateFromFnPtr;
+IMonoClass *eventHandlerClass;
 
 void TestEvents()
 {
 	CryLogAlways("TEST: Testing events.");
 
-	delegateFromFnPtr = MonoEnv->CoreLibrary
-							   ->GetClass("System.Runtime.InteropServices", "Marshal")
-							   ->GetFunction("GetDelegateForFunctionPointerInternal", 2)
-							   ->ToStatic();
-
-	IMonoClass *eventHandlerClass = MonoEnv->CoreLibrary->GetClass("System", "EventHandler");
+	eventHandlerClass = MonoEnv->CoreLibrary->GetClass("System", "EventHandler");
 
 	IMonoClass *eventTestClass       = mainTestingAssembly->GetClass("Test", "EventTest");
 	IMonoClass *eventTestClassClass  = mainTestingAssembly->GetClass("Test", "EventTestClass");
@@ -1120,12 +1115,12 @@ void TestInstanceEvent(mono::object obj, IMonoEvent *_event)
 
 	CryLogAlways("TEST: Adding a delegate to the event that encapsulates an unmanaged function.");
 
-	void *param = UnmanagedEventHandler;
-	mono::object fnPtrWrapper = delegateFromFnPtr->Invoke(&param);
+	mono::object fnPtrWrapper =
+		MonoEnv->Objects->Delegates->Create(eventHandlerClass, UnmanagedEventHandler)->Get();
 
 	IMonoGCHandle *handle = MonoEnv->GC->Pin(fnPtrWrapper);
 
-	param = fnPtrWrapper;
+	void *param = fnPtrWrapper;
 	_eventAdd->Invoke(obj, &param);
 
 	CryLogAlways("TEST: Raising the event %s after adding unmanaged function delegate.");
@@ -1156,12 +1151,12 @@ void TestStaticEvent(IMonoEvent *_event)
 
 	CryLogAlways("TEST: Adding a delegate to the event that encapsulates an unmanaged function.");
 
-	void *param = UnmanagedEventHandler;
-	mono::object fnPtrWrapper = delegateFromFnPtr->Invoke(&param);
+	mono::object fnPtrWrapper =
+		MonoEnv->Objects->Delegates->Create(eventHandlerClass, UnmanagedEventHandler)->Get();
 
 	IMonoGCHandle *handle = MonoEnv->GC->Pin(fnPtrWrapper);
 
-	param = fnPtrWrapper;
+	void *param = fnPtrWrapper;
 	_eventAdd->Invoke(&param);
 
 	CryLogAlways("TEST: Raising the event %s after adding unmanaged function delegate.");
