@@ -13,5 +13,7 @@ void BeginTheTest()
 
 	TestAssemblies();
 
+	TestClasses();
+
 
 }
