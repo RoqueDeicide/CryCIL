@@ -259,6 +259,9 @@
     <ClInclude Include="NtText.h">
       <Filter>Extras</Filter>
     </ClInclude>
+    <ClInclude Include="Testing\TestObjects.h">
+      <Filter>Testing</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />

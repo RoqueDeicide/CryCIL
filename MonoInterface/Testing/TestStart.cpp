@@ -5,6 +5,7 @@ IMonoAssembly *mainTestingAssembly;
 #include "TestStart.h"
 #include "TestAssemblies.h"
 #include "TestClasses.h"
+#include "TestObjects.h"
 
 void BeginTheTest()
 {
@@ -15,5 +16,5 @@ void BeginTheTest()
 
 	TestClasses();
 
-
+	TestObjects();
 }
