@@ -29,4 +29,25 @@ struct IMonoDelegates
 	//! @param target       Target of invocation.
 	VIRTUAL_API virtual IMonoDelegate *Create
 		(IMonoClass *delegateType, IMonoMethod *method, mono::object target) = 0;
+	//! Creates a delegate that wraps an unmanaged function pointer.
+	//!
+	//! Wrapper needs to be deleted when not used anymore.
+	//!
+	//! There is a number of restrictions on this function:
+	//! 1) Generics are not supported in interop scenarios.
+	//!
+	//! 2) You cannot pass an invalid function pointer to this method.
+	//!
+	//! 3) You can use this method only for pure unmanaged function pointers.
+	//!
+	//! 4) You cannot use this method with function pointers obtained through C++ or from the
+	//!    GetFunctionPointer method.
+	//!
+	//! 5) You cannot use this method to create a delegate from a function pointer to another managed
+	//!    delegate.
+	//!
+	//! @param delegateType    Type of the delegate to use. It needs to match the signature of unmanaged
+	//!                        method.
+	//! @param functionPointer Pointer to the function that will be wrapped by the delegate.
+	VIRTUAL_API virtual IMonoDelegate *Create(IMonoClass *delegateType, void *functionPointer) = 0;
 };

@@ -82,5 +82,41 @@ IMonoDelegate *MonoDelegates::Create(IMonoClass *delegateType, IMonoMethod *meth
 	return new MonoDelegateWrapper(res);
 }
 
+IMonoDelegate *MonoDelegates::Create(IMonoClass *delegateType, void *functionPointer)
+{
+	if (!delegateType)
+	{
+		ReportError("Unable to create a delegate wrapper for unmanaged function: delegateType is null.");
+		return nullptr;
+	}
+	if (!functionPointer)
+	{
+		ReportError("Unable to create a delegate wrapper for unmanaged function: function pointer is null.");
+		return nullptr;
+	}
+
+	if (!createDelegateForFunctionPointer)
+	{
+		createDelegateForFunctionPointer = (CreateDelegateForFunctionPointer)
+			MonoEnv->CoreLibrary
+				   ->GetClass("System.Runtime.InteropServices", "Marshal")
+				   ->GetFunction("GetDelegateForFunctionPointerInternal", 2)
+				   ->UnmanagedThunk;
+	}
+
+	mono::exception ex;
+	mono::delegat res = createDelegateForFunctionPointer(delegateType->GetType(), functionPointer, &ex);
+
+	if (ex)
+	{
+		ReportError("Unable to create a delegate wrapper for unmanaged function: unhandled exception was thrown.");
+
+		return nullptr;
+	}
+
+	return new MonoDelegateWrapper(res);
+}
+
+CreateDelegateForFunctionPointer MonoDelegates::createDelegateForFunctionPointer = nullptr;
 CreateInstanceDelegate           MonoDelegates::createInstanceDelegate = nullptr;
 CreateStaticDelegate             MonoDelegates::createStaticDelegate = nullptr;
