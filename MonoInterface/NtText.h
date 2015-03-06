@@ -3,6 +3,12 @@
 // Stop compiler from complaining about strncpy.
 #pragma warning(disable:4996)
 
+#ifdef USE_CRYCIL_API
+
+#include "IMonoInterface.h"
+
+#endif // USE_CRYCIL_API
+
 #ifdef CRYCIL_MODULE
 
 #include <mono/metadata/object.h>
@@ -45,7 +51,7 @@ public:
 	{
 		this->chars = nullptr;
 	}
-	//! Creates a new immutable string from given null-terminated one.
+	//! Creates a new null-terminated string from given null-terminated one.
 	//!
 	//! Text from given string is copied into new object without a terminating null character.
 	//!
@@ -55,7 +61,7 @@ public:
 		this->chars = t;
 	}
 #ifdef CRYCIL_MODULE
-	//! Creates a new immutable string from given .Net/Mono string.
+	//! Creates a new null-terminated string from given .Net/Mono string.
 	//!
 	//! @param managedString Instance of type System.String.
 	NtText(MonoString *managedString)
@@ -78,6 +84,19 @@ public:
 			FatalError(mono_error_get_message(&error));
 		}
 	}
+#endif // CRYCIL_MODULE
+
+#ifdef USE_CRYCIL_API
+
+	//! Creates a new null-terminated string from given .Net/Mono string.
+	//!
+	//! @param managedString Instance of type System.String.
+	NtText(mono::string managedString)
+	{
+		this->chars = ToNativeString(managedString);
+	}
+
+#endif // USE_CRYCIL_API
 	//! Constructs a text out of given parts.
 	//!
 	//! @param t1 Number of arguments in the chain.
@@ -115,7 +134,6 @@ public:
 		}
 		((char *)this->chars)[length] = '\0';
 	}
-#endif // CRYCIL_MODULE
 	virtual ~NtText()
 	{
 		if (this->chars)

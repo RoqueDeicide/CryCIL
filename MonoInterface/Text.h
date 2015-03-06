@@ -3,6 +3,12 @@
 // Stop compiler from complaining about strncpy.
 #pragma warning(disable:4996)
 
+#ifdef USE_CRYCIL_API
+
+#include "IMonoInterface.h"
+
+#endif // USE_CRYCIL_API
+
 #ifdef CRYCIL_MODULE
 
 #include <mono/metadata/object.h>
@@ -106,6 +112,15 @@ public:
 		}
 	}
 #endif // CRYCIL_MODULE
+
+#ifdef USE_CRYCIL_API
+
+	//! Creates a new null-terminated string from given .Net/Mono string.
+	//!
+	//! @param managedString Instance of type System.String.
+	TextBase(mono::string managedString) : TextBase(ToNativeString(managedString)) {}
+
+#endif // USE_CRYCIL_API
 	virtual ~TextBase()
 	{
 		if (this->text && this->length)
@@ -317,6 +332,15 @@ public:
 	//! @param managedString Instance of type System.String.
 	Text(MonoString *managedString) : TextBase(managedString) {}
 #endif // CRYCIL_MODULE
+
+#ifdef USE_CRYCIL_API
+
+	//! Creates a new null-terminated string from given .Net/Mono string.
+	//!
+	//! @param managedString Instance of type System.String.
+	Text(mono::string managedString) : TextBase(managedString) {}
+
+#endif // USE_CRYCIL_API
 	//! Constructs a text out of given parts.
 	//!
 	//! @param t1 Number of arguments in the chain.

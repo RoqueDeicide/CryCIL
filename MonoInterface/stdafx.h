@@ -35,6 +35,8 @@
 #include <ISerialize.h>
 #include <IGameFramework.h>
 
+#define USE_CRYCIL_API
+
 #include "MonoHeaders.h"
 
 #include "IMonoInterface.h"
