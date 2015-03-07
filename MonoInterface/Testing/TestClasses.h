@@ -783,19 +783,15 @@ void TestVirtualMethodInvocation()
 	params[0] = &null;
 	params[1] = &null;
 
-	const char *result = ToNativeString(toStringFormatMethod->Invoke(&number, params));
+	auto result = NtText(toStringFormatMethod->Invoke(&number, params));
 
 	CryLogAlways("TEST: Result of early-bound invocation: %s.", result);
 
-	delete result;
-
 	CryLogAlways("TEST: Invoking a virtual method using late binding.");
 
-	result = ToNativeString(toStringFormatMethod->Invoke(&number, params, nullptr, true));
+	result = NtText(toStringFormatMethod->Invoke(&number, params, nullptr, true));
 
 	CryLogAlways("TEST: Result of late-bound invocation: %s.", result);
-
-	delete result;
 }
 
 struct TestObject
@@ -849,9 +845,7 @@ void TestStaticThunkInvocation()
 	createValueThunk(number, testObj, &ex);
 
 	auto unboxedObj = Unbox<TestObject>(testObj);
-	const char *text = ToNativeString(unboxedObj.Text);
-	CryLogAlways("TEST: Result of invocation = %s", text);
-	delete text;
+	CryLogAlways("TEST: Result of invocation = %s", NtText(unboxedObj.Text));
 }
 
 void TestInstanceThunkInvocation()
@@ -875,9 +869,7 @@ void TestInstanceThunkInvocation()
 
 	if (!ex)
 	{
-		const char *text = ToNativeString(textObj);
-		CryLogAlways("TEST: Result of invocation = %s", text);
-		delete text;
+		CryLogAlways("TEST: Result of invocation = %s", NtText(textObj));
 	}
 }
 #pragma endregion
@@ -931,10 +923,8 @@ void TestInstanceFields()
 	mono::string textValue;
 	fieldTestClass->GetField(obj, "Text", &textValue);
 
-	const char *ntText = ToNativeString(textValue);
-	CryLogAlways("TEST: Acquired text value = %s", ntText);
-	delete ntText;
-
+	CryLogAlways("TEST: Acquired text value = %s", NtText(textValue));
+	
 	CryLogAlways("TEST: Setting the values of fields.");
 
 	CryLogAlways("TEST: Setting the text field value using the wrapper.");
@@ -959,10 +949,8 @@ void TestInstanceFields()
 
 	textField->Get(obj, &textValue);
 
-	ntText = ToNativeString(textValue);
-	CryLogAlways("TEST: Acquired text value = %s", ntText);
-	delete ntText;
-
+	CryLogAlways("TEST: Acquired text value = %s", NtText(textValue));
+	
 	handle->Release();
 }
 
@@ -999,9 +987,8 @@ void TestStaticFields()
 	text   = fieldTestClass->GetField<mono::string>(obj, "Text");
 
 	CryLogAlways("TEST: Numeric value = %d", number);
-	const char *ntText = ToNativeString(text);
-	CryLogAlways("TEST: Text value = %s", ntText);
-	delete ntText;
+
+	CryLogAlways("TEST: Text value = %s", NtText(text));
 }
 
 #pragma endregion
