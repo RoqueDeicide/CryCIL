@@ -7,8 +7,17 @@ using MainTestingAssembly.Annotations;
 
 namespace MainTestingAssembly
 {
+	/// <summary>
+	/// Used by underlying framework to setup testing ground for IMonoEvent implementation.
+	/// </summary>
 	public static class EventTest
 	{
+		/// <summary>
+		/// Sets up the ground for testing IMonoEvent implementation.
+		/// </summary>
+		/// <returns>
+		/// An object of type <see cref="EventTestObject"/> that is used to test instance events.
+		/// </returns>
 		public static EventTestObject Setup()
 		{
 			EventTestObject obj = new EventTestObject("Some object");
@@ -36,8 +45,10 @@ namespace MainTestingAssembly
 			return obj;
 		}
 	}
-
-	public class EventTestClass
+	/// <summary>
+	/// A static class that is used to test static events.
+	/// </summary>
+	public static class EventTestClass
 	{
 		private static readonly List<EventHandler> invocationList;
 
@@ -70,7 +81,9 @@ namespace MainTestingAssembly
 			}
 		}
 	}
-
+	/// <summary>
+	/// Represents an object that is used for testing IMonoEvent implementation.
+	/// </summary>
 	public class EventTestObject
 	{
 		#region Fields
@@ -94,9 +107,6 @@ namespace MainTestingAssembly
 			this.Name = name;
 			this.handlers = new List<EventHandler>();
 		}
-		#endregion
-		#region Interface
-		
 		#endregion
 		#region Utilities
 		protected void OnTesting()
