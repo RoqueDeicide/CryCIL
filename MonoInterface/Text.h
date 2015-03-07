@@ -61,12 +61,7 @@ public:
 		{
 			return;
 		}
-		this->length = strlen(t);
-		this->text = new char[this->length];
-		for (int i = 0; i < this->length; i++)
-		{
-			this->text[i] = t[i];
-		}
+		this->FromNtString(t);
 	}
 	//! Creates a new immutable string from given char array.
 	//!
@@ -98,12 +93,7 @@ public:
 		char *ntText = mono_string_to_utf8_checked(managedString, &error);
 		if (mono_error_ok(&error))
 		{
-			this->length = strlen(ntText);
-			this->text = new char[this->length];
-			for (int i = 0; i < this->length; i++)
-			{
-				this->text[i] = ntText[i];
-			}
+			this->FromNtString(ntText);
 			mono_free(ntText);
 		}
 		else
@@ -118,7 +108,10 @@ public:
 	//! Creates a new null-terminated string from given .Net/Mono string.
 	//!
 	//! @param managedString Instance of type System.String.
-	TextBase(mono::string managedString) : TextBase(ToNativeString(managedString)) {}
+	TextBase(mono::string managedString)
+	{
+		this->FromNtString(ToNativeString(managedString));
+	}
 
 #endif // USE_CRYCIL_API
 	virtual ~TextBase()
@@ -298,6 +291,16 @@ public:
 	const char *GetTextBuffer() const
 	{
 		return this->text;
+	}
+private:
+	void FromNtString(const char *ntString)
+	{
+		this->length = strlen(ntString);
+		this->text = new char[this->length];
+		for (int i = 0; i < this->length; i++)
+		{
+			this->text[i] = ntString[i];
+		}
 	}
 };
 

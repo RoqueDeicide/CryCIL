@@ -15,8 +15,6 @@
 #include "List.h"
 #include "ReadOnlyList.h"
 #include "SortedList.h"
-#include "Text.h"
-#include "NtText.h"
 #include "Tuples.h"
 
 #include "Logs.h"
@@ -37,6 +35,11 @@ struct IMonoSystemListener;
 struct IMonoInterface;
 struct IMonoGCHandle;
 struct IMonoGC;
+
+class TextBase;
+class Text;
+class ConstructiveText;
+struct NtText;
 
 namespace mono
 {

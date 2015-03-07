@@ -41,6 +41,7 @@
 
 #include "IMonoInterface.h"
 #include "Text.h"
+#include "NtText.h"
 
 // Include monosgen.lib from relevant folder. (Folder is defined in project properties.)
 #pragma comment(lib, "monosgen")
