@@ -442,8 +442,8 @@ void TestObjectCreation()
 	params[1] = randomObject;
 	mono::object firstComponent =
 		mainTestingAssembly->GetClass("MainTestingAssembly", "CtorTestComponent1")
-		->GetConstructor(2)
-		->Create(params);
+						   ->GetConstructor(2)
+						   ->Create(params);
 
 	CryLogAlways("TEST: Creating a second component.");
 
@@ -458,8 +458,8 @@ void TestObjectCreation()
 	params[1] = arrayCube->GetHandle<mono::Array>();
 	mono::object secondComponent =
 		mainTestingAssembly->GetClass("MainTestingAssembly", "CtorTestComponent2")
-		->GetConstructor(2)
-		->Create(params);
+						   ->GetConstructor(2)
+						   ->Create(params);
 
 	CryLogAlways("TEST: Creating a compound object.");
 
