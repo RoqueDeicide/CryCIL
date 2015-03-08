@@ -3,6 +3,8 @@
 // Stop compiler from complaining about strncpy.
 #pragma warning(disable:4996)
 
+#include "DocumentationMarkers.h"
+
 #ifdef USE_CRYCIL_API
 
 #include "IMonoInterface.h"
@@ -146,43 +148,8 @@ public:
 	}
 	//! Swaps pointers to null-terminated strings of this and another object.
 	//!
-	//! Swapping pointers allows memory to be properly deleted in a following scenario:
-	//!
-	//! @code{.cpp}
-	//!
-	//! const char *t1 = new char[100];
-	//! const char *t2 = new char[100];
-	//!
-	//! NtText text = NtText(t1);
-	//! text        = NtText(t2);       // Memory that was held by 'text' will gets transfered to the newly
-	//!                                 // constructed object that has an expression access range, which
-	//!                                 // means it will destroy itself and delete the t1 memory after the
-	//!                                 // program moves on to the next expression.
-	//!
-	//! t1 = t2 = nullptr;
-	//!
-	//! @endcode
-	//!
-	//! Since in the above code we have pointers to allocated memory blocks it can be useful to not have
-	//! second NtText object delete the memory, since there is a pointer to it. Deletion can be prevented by
-	//! detaching the memory with Detach() method call by a newly constructed object.
-	//!
-	//! @code{.cpp}
-	//!
-	//! const char *t1 = new char[100];
-	//! const char *t2 = new char[100];
-	//!
-	//! NtText text = NtText(t1);
-	//! text        = NtText(t2).Detach();  // t1 memory will not be deleted here.
-	//!                                     //
-	//! delete t1;                          // So we can delete ourselves.
-	//!
-	//! t1 = t2 = nullptr;
-	//!
-	//! @endcode
-	//!
 	//! @param another A reference to another NtText object that will manage a pointer of this object.
-	NtText &operator=(NtText &another)
+	SWAP_ASSIGNMENT NtText &operator=(NtText &another)
 	{
 		if (this->chars != another.chars)
 		{

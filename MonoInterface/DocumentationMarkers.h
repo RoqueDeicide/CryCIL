@@ -108,3 +108,43 @@
 //! bool oReally = Unbox<bool>(really);          // EASY
 //! @endcode
 #define BOX_UNBOX
+
+//! Swapping assignment operators allow automatic memory deallocation in the scenario where object's
+//! destructor should be invoked automatically. This provides convenient means of preventing memory leaks.
+//!
+//! For instance NtText has swapping assignment operator declared, which allows this code to work without
+//! leaks:
+//!
+//! @code{.cpp}
+//!
+//! const char *t1 = new char[100];
+//! const char *t2 = new char[100];
+//!
+//! NtText text = NtText(t1);
+//! text        = NtText(t2);       // Memory that was held by 'text' will gets transfered to the newly
+//!                                 // constructed object that has an expression access range, which
+//!                                 // means it will destroy itself and delete the t1 memory after the
+//!                                 // program moves on to the next expression.
+//!
+//! t1 = t2 = nullptr;
+//!
+//! @endcode
+//!
+//! Since in the above code we have pointers to allocated memory blocks it can be desirable to not have
+//! second NtText object delete the memory, since there is a pointer to it. Deletion can be prevented by
+//! detaching the memory with Detach() method call by a newly constructed object.
+//!
+//! @code{.cpp}
+//!
+//! const char *t1 = new char[100];
+//! const char *t2 = new char[100];
+//!
+//! NtText text = NtText(t1);
+//! text        = NtText(t2).Detach();  // t1 memory will not be deleted here.
+//!                                     //
+//! delete t1;                          // So we can delete ourselves.
+//!
+//! t1 = t2 = nullptr;
+//!
+//! @endcode
+#define SWAP_ASSIGNMENT
