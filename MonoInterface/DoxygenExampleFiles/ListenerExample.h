@@ -2,10 +2,6 @@
 #include "IMonoInterface.h"
 #include "List.h"
 
-#ifndef PI
-#define PI 3.14159265358979323f
-#endif
-
 #include <CryLibrary.h>
 
 struct SimpleListener : public IMonoSystemListener

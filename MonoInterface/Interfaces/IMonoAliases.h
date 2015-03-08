@@ -1,5 +1,9 @@
 #pragma once
 
+#ifndef PI
+#define PI 3.14159265358979323f
+#endif
+
 #include <CryThread.h>
 #include <Cry_Math.h>
 #include <ISystem.h>
