@@ -835,35 +835,22 @@ mono::type MonoClassWrapper::GetType()
 
 mono::type MonoClassWrapper::MakeArrayType()
 {
-	return MonoEnv->CoreLibrary->GetClass("System", "Type")
-							   ->GetFunction("MakeArrayType", 0)
-							   ->ToInstance()
-							   ->Invoke(this->GetType());
+	return (mono::type)mono_type_get_object(mono_domain_get(), mono_class_get_type(mono_bounded_array_class_get(this->wrappedClass, 1, false)));
 }
 
 mono::type MonoClassWrapper::MakeArrayType(int rank)
 {
-	void *par = &rank;
-	return MonoEnv->CoreLibrary->GetClass("System", "Type")
-							   ->GetFunction("MakeArrayType", 1)
-							   ->ToInstance()
-							   ->Invoke(this->GetType(), &par);
+	return (mono::type)mono_type_get_object(mono_domain_get(), mono_class_get_type(mono_bounded_array_class_get(this->wrappedClass, rank, false)));
 }
 
 mono::type MonoClassWrapper::MakeByRefType()
 {
-	return MonoEnv->CoreLibrary->GetClass("System", "Type")
-							   ->GetFunction("MakeByRefType", 0)
-							   ->ToInstance()
-							   ->Invoke(this->GetType());
+	return (mono::type)mono_type_get_object(mono_domain_get(), mono_class_get_byref_type(this->wrappedClass));
 }
 
 mono::type MonoClassWrapper::MakePointerType()
 {
-	return MonoEnv->CoreLibrary->GetClass("System", "Type")
-							   ->GetFunction("MakePointerType", 0)
-							   ->ToInstance()
-							   ->Invoke(this->GetType());
+	return (mono::type)mono_type_get_object(mono_domain_get(), mono_class_get_type(mono_ptr_class_get(mono_class_get_type(this->wrappedClass))));
 }
 
 // IMonoClass *MonoClassWrapper::Inflate(List<IMonoClass *> &types)
