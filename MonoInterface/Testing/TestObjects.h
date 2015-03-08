@@ -11,11 +11,14 @@ void TestObjects()
 
 void TestObjectHandles()
 {
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Testing IMonoHandle implementation.");
 
 	IMonoClass *testObjectClass = mainTestingAssembly->GetClass("Test", "TestObject");
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Creating an object.");
+	CryLogAlways("TEST:");
 
 	double number = 34.567;
 	void *param = &number;
@@ -25,6 +28,7 @@ void TestObjectHandles()
 	IMonoGCHandle *handle = MonoEnv->GC->Keep(obj->Get());
 
 	CryLogAlways("TEST: Testing object's fields.");
+	CryLogAlways("TEST:");
 
 	int fieldNumber = 0;
 	obj->GetField("Number", &fieldNumber);
@@ -36,7 +40,9 @@ void TestObjectHandles()
 
 	CryLogAlways("TEST: The text field's value: %s", NtText(fieldText));
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Testing object's property.");
+	CryLogAlways("TEST:");
 
 	auto prop = obj->GetProperty("DecimalNumber");
 
@@ -49,7 +55,9 @@ void TestObjectHandles()
 		ReportError("TEST FAILURE: Unable to get the wrapper for a property DecimalNumber.");
 	}
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Testing object's events.");
+	CryLogAlways("TEST:");
 
 	auto _event = obj->GetEvent("Something");
 
@@ -73,7 +81,9 @@ void TestObjectHandles()
 		ReportError("TEST FAILURE: Unable to get the wrapper for the object's class.");
 	}
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Testing updating the reference to the wrapped object after triggering GC.");
+	CryLogAlways("TEST:");
 
 	MonoEnv->GC->Collect();
 
@@ -88,12 +98,15 @@ void TestObjectHandles()
 		ReportError("TEST FAILURE: Unable to get the reference to the object's new location.");
 	}
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Testing getting the field value after getting a new reference to the object.");
+	CryLogAlways("TEST:");
 
 	obj->GetField("Number", &fieldNumber);
 
 	CryLogAlways("TEST: The integer field's value: %d", fieldNumber);
 
 	handle->Release();
+	CryLogAlways("TEST:");
 }
 }

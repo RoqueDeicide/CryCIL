@@ -17,23 +17,15 @@ void TestEvents();
 
 void TestClasses()
 {
-	CryLogAlways("TEST: Checking whether types that are value-types or enumerations or delegates can be identified as such.");
-
 	TestTypeSpecification();
 
 	IMonoClass *vector3Class = MonoEnv->Cryambly->Vector3;
 
-	CryLogAlways("TEST: Checking %s.", vector3Class->FullName);
-
 	TestMemberLists(vector3Class);
-
-	CryLogAlways("TEST: Finding out about base class of Vector3 class.");
 
 	TestInheritance(vector3Class);
 
 	TestInterfaceImplementation();
-	
-	CryLogAlways("TEST: Checking whether IMonoClass::Assembly property returns pointer to correct assembly wrapper.");
 
 	TestAssemblyLookBack();
 
@@ -51,7 +43,11 @@ void TestClasses()
 #pragma region General Tests
 void TestTypeSpecification()
 {
+	CryLogAlways("TEST:");
+	CryLogAlways("TEST: Checking whether types that are value-types or enumerations or delegates can be identified as such.");
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Checking whether a value-type can be identified as such.");
+	CryLogAlways("TEST:");
 
 	IMonoClass *quatClass = MonoEnv->Cryambly->Quaternion;
 
@@ -64,7 +60,9 @@ void TestTypeSpecification()
 		ReportError("TEST FAILURE: Quaternion is not identified as a value-type.");
 	}
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Checking whether an enumeration can be identified as such.");
+	CryLogAlways("TEST:");
 
 	IMonoClass *enumClass = MonoEnv->CoreLibrary->GetClass("System", "DayOfWeek");
 
@@ -77,7 +75,9 @@ void TestTypeSpecification()
 		ReportError("TEST FAILURE: System.DayOfWeek is not identified as an enumeration.");
 	}
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Checking whether a delegate can be identified as such.");
+	CryLogAlways("TEST:");
 
 	IMonoClass *delegateClass = MonoEnv->CoreLibrary->GetClass("System", "Action");
 
@@ -94,7 +94,11 @@ void TestTypeSpecification()
 void TestMemberLists(IMonoClass *klass)
 {
 
+	CryLogAlways("TEST:");
+	CryLogAlways("TEST: Checking %s.", klass->FullName);
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Printing a list of fields of type %s.", klass->Name);
+	CryLogAlways("TEST:");
 
 	auto fields = klass->Fields;
 
@@ -103,7 +107,9 @@ void TestMemberLists(IMonoClass *klass)
 		CryLogAlways("TEST: Field #%d: %s", i, fields->At(i)->Name);
 	}
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Printing a list of properties of type %s.", klass->Name);
+	CryLogAlways("TEST:");
 
 	auto properties = klass->Properties;
 
@@ -112,7 +118,9 @@ void TestMemberLists(IMonoClass *klass)
 		CryLogAlways("TEST: Property #%d: %s", i, properties->At(i)->Name);
 	}
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Printing a list of methods of type %s.", klass->Name);
+	CryLogAlways("TEST:");
 
 	auto methods = klass->Functions;
 
@@ -120,10 +128,15 @@ void TestMemberLists(IMonoClass *klass)
 	{
 		CryLogAlways("TEST: Method #%d: %s", i, methods->At(i)->Name);
 	}
+	CryLogAlways("TEST:");
 }
 
 void TestInheritance(IMonoClass *klass)
 {
+	CryLogAlways("TEST:");
+	CryLogAlways("TEST: Finding out about base class of Vector3 class.");
+	CryLogAlways("TEST:");
+
 	IMonoClass *baseClass = klass->Base;
 
 	if (!baseClass)
@@ -135,7 +148,9 @@ void TestInheritance(IMonoClass *klass)
 		CryLogAlways("TEST SUCCESS: Name of the base class of %s is %s.", klass->Name, baseClass->Name);
 	}
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Testing inheritance detection on %s.", klass->Name);
+	CryLogAlways("TEST:");
 
 	IMonoClass *valueTypeClass = MonoEnv->CoreLibrary->ValueType;
 
@@ -189,11 +204,14 @@ void TestInheritance(IMonoClass *klass)
 	{
 		CryLogAlways("TEST SUCCESS: %s doesn't inherit from System.Object directly.", klass->Name);
 	}
+	CryLogAlways("TEST:");
 }
 
 void TestInterfaceImplementation()
 {
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Checking direct interface implementation detection.");
+	CryLogAlways("TEST:");
 
 	IMonoClass *vsProjectClass =
 		MonoEnv->Cryambly->GetClass("CryCil.RunTime.Compilation", "VisualStudioDotNetProject");
@@ -210,7 +228,9 @@ void TestInterfaceImplementation()
 		ReportError("TEST FAILURE: VisualStudioDotNetProject is supposed to implement IProject.");
 	}
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Checking indirect interface implementation detection.");
+	CryLogAlways("TEST:");
 
 	IMonoClass *logWriterClass =
 		MonoEnv->Cryambly->GetClass("CryCil.RunTime.Logging", "ConsoleLogWriter");
@@ -226,10 +246,15 @@ void TestInterfaceImplementation()
 	{
 		ReportError("TEST FAILURE: ConsoleLogWriter is supposed to implement IDisposable.");
 	}
+	CryLogAlways("TEST:");
 }
 
 void TestAssemblyLookBack()
 {
+	CryLogAlways("TEST:");
+	CryLogAlways("TEST: Checking whether IMonoClass::Assembly property returns pointer to correct assembly wrapper.");
+	CryLogAlways("TEST:");
+
 	IMonoClass *quatvecClass = MonoEnv->Cryambly->Quatvec;
 
 	if (quatvecClass->Assembly == MonoEnv->Cryambly)
@@ -251,6 +276,7 @@ void TestAssemblyLookBack()
 	{
 		ReportError("TEST FAILURE: Int32 struct was not identified as one defined in mscorlib.");
 	}
+	CryLogAlways("TEST:");
 }
 #pragma endregion
 
@@ -260,11 +286,15 @@ void TestObjectCreation();
 
 void TestConstructors()
 {
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Checking the constructors.");
+	CryLogAlways("TEST:");
 
 	TestGettingTheConstructors();
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Creation of objects using the constructors.");
+	CryLogAlways("TEST:");
 
 	TestObjectCreation();
 }
@@ -274,9 +304,11 @@ void TestGettingTheConstructors()
 
 	IMonoClass *stringClass = MonoEnv->CoreLibrary->String;
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Getting constructor using a Mono array of System.Type objects.");
-
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Creating an array.");
+	CryLogAlways("TEST:");
 
 	IMonoArray *typesArray = MonoEnv->Objects->Arrays->Create(3, MonoEnv->CoreLibrary->Type);
 
@@ -305,7 +337,9 @@ void TestGettingTheConstructors()
 		ReportError("TEST FAILURE: Constructor wasn't acquired.");
 	}
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Getting constructor using a simple list of IMonoClass wrappers.");
+	CryLogAlways("TEST:");
 
 	List<IMonoClass *> klassList = List<IMonoClass *>(2);
 
@@ -323,7 +357,9 @@ void TestGettingTheConstructors()
 		ReportError("TEST FAILURE: Constructor wasn't acquired.");
 	}
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Getting constructor using a list of IMonoClass wrappers with postfix strings.");
+	CryLogAlways("TEST:");
 
 	auto klassPostList = List<ClassSpec>(1).Add(ClassSpec(MonoEnv->CoreLibrary->Char, "[]"));
 
@@ -338,7 +374,9 @@ void TestGettingTheConstructors()
 		ReportError("TEST FAILURE: Constructor wasn't acquired.");
 	}
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Getting constructor using a list of full type names.");
+	CryLogAlways("TEST:");
 
 	auto typeNameList = List<const char *>(3).Add("System.Char[]", "System.Int32", "System.Int32");
 
@@ -353,7 +391,9 @@ void TestGettingTheConstructors()
 		ReportError("TEST FAILURE: Constructor wasn't acquired.");
 	}
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Getting constructor using a text representation of the signature.");
+	CryLogAlways("TEST:");
 
 	IMonoConstructor *ctorTextParams =
 		stringClass->GetConstructor("System.Char[],System.Int32");
@@ -367,7 +407,9 @@ void TestGettingTheConstructors()
 		ReportError("TEST FAILURE: Constructor wasn't acquired.");
 	}
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Getting the only String constructor that accepts 4 arguments.");
+	CryLogAlways("TEST:");
 
 	IMonoConstructor *ctor4Params = stringClass->GetConstructor(4);
 
@@ -379,6 +421,7 @@ void TestGettingTheConstructors()
 	{
 		ReportError("TEST FAILURE: Constructor wasn't acquired.");
 	}
+	CryLogAlways("TEST:");
 }
 
 void TestObjectCreation()
@@ -388,19 +431,24 @@ void TestObjectCreation()
 	IMonoClass *ctorTestClass =
 		mainTestingAssembly->GetClass("MainTestingAssembly", "ConstructionTestClass");
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Getting a default constructor.");
+	CryLogAlways("TEST:");
 
 	IMonoConstructor *defaultCtor = ctorTestClass->GetConstructor();
 
 	CryLogAlways("TEST: Invoking a default constructor.");
+	CryLogAlways("TEST:");
 
 	defaultCtor->Create();
 
 	CryLogAlways("TEST: Getting a constructor that accepts 2 simple integers.");
+	CryLogAlways("TEST:");
 
 	IMonoConstructor *ctor2Integers = ctorTestClass->GetConstructor("System.Int32,System.Int32");
 
 	CryLogAlways("TEST: Invoking a constructor.");
+	CryLogAlways("TEST:");
 
 	int par1 = 1000;
 	int par2 = 20;
@@ -409,6 +457,7 @@ void TestObjectCreation()
 	ctor2Integers->Create(params);
 
 	CryLogAlways("TEST: Getting a constructor that accepts a Double and a reference to String.");
+	CryLogAlways("TEST:");
 
 	auto typesDoubleStringRef = List<ClassSpec>(2);
 	typesDoubleStringRef.Add(ClassSpec(MonoEnv->CoreLibrary->Double, ""));
@@ -416,6 +465,7 @@ void TestObjectCreation()
 	IMonoConstructor *ctorDoubleStringRef = ctorTestClass->GetConstructor(typesDoubleStringRef);
 
 	CryLogAlways("TEST: Invoking a constructor.");
+	CryLogAlways("TEST:");
 
 	double doublePar = 14.567;
 	mono::string textPar;
@@ -424,12 +474,14 @@ void TestObjectCreation()
 	ctorDoubleStringRef->Create(params);
 
 	CryLogAlways("TEST: Checking creation of compound objects.");
+	CryLogAlways("TEST:");
 
 	const int seed = 100000;
 
 	IMonoClass *randomClass = MonoEnv->CoreLibrary->GetClass("System", "Random");
 
 	CryLogAlways("TEST: Creating a Random with seed %d.", seed);
+	CryLogAlways("TEST:");
 
 	void *param;
 	param = (int *)(&seed);
@@ -437,6 +489,7 @@ void TestObjectCreation()
 	mono::object randomObject = randomClass->GetConstructor(1)->Create(&param);
 
 	CryLogAlways("TEST: Creating a first component.");
+	CryLogAlways("TEST:");
 
 	params[0] = ToMonoString("Some text");
 	params[1] = randomObject;
@@ -446,6 +499,7 @@ void TestObjectCreation()
 						   ->Create(params);
 
 	CryLogAlways("TEST: Creating a second component.");
+	CryLogAlways("TEST:");
 
 	unsigned char bytePar = 1;
 	unsigned int lengths[3];
@@ -462,6 +516,7 @@ void TestObjectCreation()
 						   ->Create(params);
 
 	CryLogAlways("TEST: Creating a compound object.");
+	CryLogAlways("TEST:");
 
 	IMonoClass *compoundClass = mainTestingAssembly->GetClass("MainTestingAssembly", "CtorTestCompound");
 
@@ -471,8 +526,10 @@ void TestObjectCreation()
 	mono::object compound = compoundClass->GetConstructor(2)->Create(params);
 
 	CryLogAlways("TEST: Print contents of the compound object.");
+	CryLogAlways("TEST:");
 
 	compoundClass->GetFunction("PrintStuff")->ToInstance()->Invoke(compound);
+	CryLogAlways("TEST:");
 }
 #pragma endregion
 
@@ -482,7 +539,9 @@ void TestInvokingMethods();
 
 void TestMethods()
 {
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Checking the methods.");
+	CryLogAlways("TEST:");
 
 	TestGettingMethods();
 
@@ -491,7 +550,9 @@ void TestMethods()
 
 void TestGettingMethods()
 {
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Getting the methods.");
+	CryLogAlways("TEST:");
 
 	IMonoClass *mathClass   = MonoEnv->CoreLibrary->GetClass("System", "Math");
 	IMonoClass *typeClass   = MonoEnv->CoreLibrary->Type;
@@ -499,6 +560,7 @@ void TestGettingMethods()
 	IMonoClass *arrayClass  = MonoEnv->CoreLibrary->Array;
 
 	CryLogAlways("TEST: Getting the method using an array of System.Type objects.");
+	CryLogAlways("TEST:");
 
 	IMonoArray *typesArray = MonoEnv->Objects->Arrays->Create(1, typeClass);
 
@@ -515,7 +577,9 @@ void TestGettingMethods()
 		ReportError("TEST FAILURE: Method wasn't acquired.");
 	}
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Getting the method using a list of IMonoClass objects.");
+	CryLogAlways("TEST:");
 
 	auto classes = List<IMonoClass *>(2).Add(stringClass, arrayClass);
 
@@ -530,7 +594,9 @@ void TestGettingMethods()
 		ReportError("TEST FAILURE: Method wasn't acquired.");
 	}
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Getting the method using a list of IMonoClass objects with post-fixes.");
+	CryLogAlways("TEST:");
 
 	auto specifiedClasses = List<ClassSpec>(3).Add(ClassSpec(stringClass, ""), ClassSpec(typeClass, ""),
 												   ClassSpec(typeClass, "[]"));
@@ -546,7 +612,9 @@ void TestGettingMethods()
 		ReportError("TEST FAILURE: Method wasn't acquired.");
 	}
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Getting the method using a list of type names.");
+	CryLogAlways("TEST:");
 
 	auto typeNames = List<const char *>(2).Add("System.Double", "System.Double");
 
@@ -561,7 +629,9 @@ void TestGettingMethods()
 		ReportError("TEST FAILURE: Method wasn't acquired.");
 	}
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Getting the method using a text representation of the signature.");
+	CryLogAlways("TEST:");
 
 	staticFunc = mathClass->GetFunction("Min", "System.UInt32,System.UInt32")->ToStatic();
 
@@ -574,7 +644,9 @@ void TestGettingMethods()
 		ReportError("TEST FAILURE: Method wasn't acquired.");
 	}
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Getting the method using a number of parameters.");
+	CryLogAlways("TEST:");
 
 	staticFunc = MonoEnv->CoreLibrary->GetClass("System", "GC")->GetFunction("Collect", 1)->ToStatic();
 
@@ -587,7 +659,9 @@ void TestGettingMethods()
 		ReportError("TEST FAILURE: Method wasn't acquired.");
 	}
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Getting a list of methods using just a name.");
+	CryLogAlways("TEST:");
 
 	auto funcs = mathClass->GetFunctions("Min");
 
@@ -610,7 +684,9 @@ void TestGettingMethods()
 		ReportError("TEST FAILURE: Couldn't get a list of Min method overloads.");
 	}
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Getting a list of methods using a name and a number of parameters.");
+	CryLogAlways("TEST:");
 
 	funcs = mathClass->GetFunctions("Round", 2);
 
@@ -632,6 +708,7 @@ void TestGettingMethods()
 	{
 		ReportError("TEST FAILURE: Couldn't get a list of Round method overloads.");
 	}
+	CryLogAlways("TEST:");
 }
 
 void TestStaticMethodInvocation();
@@ -661,7 +738,9 @@ void PrintDigitsArray(mono::Array digits)
 
 void TestInvokingMethods()
 {
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Invoking the methods.");
+	CryLogAlways("TEST:");
 
 	TestStaticMethodInvocation();
 	
@@ -676,7 +755,9 @@ void TestInvokingMethods()
 
 void TestStaticMethodInvocation()
 {
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Invoking static methods through IMonoMethod.");
+	CryLogAlways("TEST:");
 
 	IMonoClass *lerpClass    = MonoEnv->Cryambly->GetClass("CryCil", "Interpolation")
 												->GetNestedType("Linear");
@@ -685,6 +766,7 @@ void TestStaticMethodInvocation()
 	IMonoClass *int32Class   = MonoEnv->CoreLibrary->Int32;
 
 	CryLogAlways("TEST: Getting a method that accepts a reference to value-type object.");
+	CryLogAlways("TEST:");
 
 	auto specClasses = List<ClassSpec>(4);
 	specClasses.Add(ClassSpec(vector3Class, "&"));
@@ -695,6 +777,7 @@ void TestStaticMethodInvocation()
 	IMonoStaticMethod *staticMethod = lerpClass->GetFunction("Apply", specClasses)->ToStatic();
 
 	CryLogAlways("TEST: Invoking a method.");
+	CryLogAlways("TEST:");
 
 	Vec3 res;
 	Vec3 start(0, 0, 0);
@@ -711,12 +794,15 @@ void TestStaticMethodInvocation()
 
 	CryLogAlways("Result of interpolation: (%*.2f, %*.2f, %*.2f)", res.x, res.y, res.z);
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Getting a method that accepts a reference to an array.");
+	CryLogAlways("TEST:");
 
 	staticMethod = mainTestingAssembly->GetClass("MainTestingAssembly", "MethodTestClass")
 									  ->GetFunction("NumberToDigits", 2)->ToStatic();
 
 	CryLogAlways("TEST: Invoking a method.");
+	CryLogAlways("TEST:");
 
 	mono::Array digits;
 	int number = 123456;
@@ -729,11 +815,14 @@ void TestStaticMethodInvocation()
 	{
 		PrintDigitsArray(digits);
 	}
+	CryLogAlways("TEST:");
 }
 
 void TestInstanceMethodInvocation()
 {
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Invoking instance methods through IMonoMethod.");
+	CryLogAlways("TEST:");
 
 	IMonoClass *stringClass = MonoEnv->CoreLibrary->String;
 
@@ -742,6 +831,7 @@ void TestInstanceMethodInvocation()
 	IMonoGCHandle *handle = MonoEnv->GC->Pin(text);
 
 	CryLogAlways("TEST: Invocation of the method that accepts 4 arguments and returns an signed integer.");
+	CryLogAlways("TEST:");
 
 	IMonoMethod *indexOfMethod = stringClass->GetFunction("IndexOf", 4)->ToInstance();
 
@@ -759,6 +849,7 @@ void TestInstanceMethodInvocation()
 	int index = Unbox<int>(indexOfMethod->Invoke(text, params));
 
 	CryLogAlways("TEST: Index of the first 't' symbol in the test string within range [5; 12] = %d", index);
+	CryLogAlways("TEST:");
 
 	handle->Release();
 }
@@ -767,15 +858,19 @@ void TestVirtualMethodInvocation()
 {
 	float number = 1023.56f;
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Invoking virtual methods through IMonoMethod.");
+	CryLogAlways("TEST:");
 
 	IMonoClass *singleClass = MonoEnv->CoreLibrary->Single;
 
 	CryLogAlways("TEST: Getting the method wrapper.");
+	CryLogAlways("TEST:");
 
 	IMonoMethod *toStringFormatMethod = singleClass->GetFunction("ToString", 2)->ToInstance();
 
 	CryLogAlways("TEST: Invoking a virtual method using early binding.");
+	CryLogAlways("TEST:");
 
 	void *null = 0;
 
@@ -787,11 +882,14 @@ void TestVirtualMethodInvocation()
 
 	CryLogAlways("TEST: Result of early-bound invocation: %s.", result);
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Invoking a virtual method using late binding.");
+	CryLogAlways("TEST:");
 
 	result = NtText(toStringFormatMethod->Invoke(&number, params, nullptr, true));
 
 	CryLogAlways("TEST: Result of late-bound invocation: %s.", result);
+	CryLogAlways("TEST:");
 }
 
 struct TestObject
@@ -802,20 +900,25 @@ struct TestObject
 
 void TestStaticThunkInvocation()
 {
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Invoking static methods through unmanaged thunk.");
+	CryLogAlways("TEST:");
 
 	IMonoClass *methodTestClass = mainTestingAssembly->GetClass("MainTestingAssembly", "MethodTestClass");
 
 	CryLogAlways("TEST: Getting the method wrapper of NumberToDigits.");
+	CryLogAlways("TEST:");
 
 	IMonoFunction *method = methodTestClass->GetFunction("NumberToDigits", 2);
 
 	CryLogAlways("TEST: Getting the unmanaged thunk.");
+	CryLogAlways("TEST:");
 
 	bool(__stdcall *numberToDigitsThunk)(int *, mono::Array *, mono::exception *) =
 		(bool(__stdcall *)(int *, mono::Array *, mono::exception *))method->UnmanagedThunk;
 
 	CryLogAlways("TEST: Invoking the unmanaged thunk.");
+	CryLogAlways("TEST:");
 
 	int number = 123456;
 	mono::Array digits;
@@ -828,16 +931,20 @@ void TestStaticThunkInvocation()
 		PrintDigitsArray(digits);
 	}
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Getting the method wrapper of CreateValueTypeObject.");
+	CryLogAlways("TEST:");
 
 	method = methodTestClass->GetFunction("CreateValueTypeObject", 2);
 
 	CryLogAlways("TEST: Getting the unmanaged thunk.");
+	CryLogAlways("TEST:");
 
 	void(__stdcall *createValueThunk)(int, mono::object, mono::exception *) =
 		(void(__stdcall *)(int, mono::object, mono::exception *))method->UnmanagedThunk;
 
 	CryLogAlways("TEST: Invoking the unmanaged thunk.");
+	CryLogAlways("TEST:");
 
 	TestObject tObj;
 	mono::object testObj = mainTestingAssembly->GetClass("MainTestingAssembly", "CustomValueType")->Box(&tObj);
@@ -846,22 +953,27 @@ void TestStaticThunkInvocation()
 
 	auto unboxedObj = Unbox<TestObject>(testObj);
 	CryLogAlways("TEST: Result of invocation = %s", NtText(unboxedObj.Text));
+	CryLogAlways("TEST:");
 }
 
 void TestInstanceThunkInvocation()
 {
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Invoking instance methods through unmanaged thunk.");
-
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Getting the method wrapper of Byte::ToString(string).");
+	CryLogAlways("TEST:");
 
 	IMonoFunction *method = MonoEnv->CoreLibrary->Byte->GetFunction("ToString", "System.String");
 
 	CryLogAlways("TEST: Getting the unmanaged thunk.");
+	CryLogAlways("TEST:");
 
 	mono::string(__stdcall *thunk)(mono::object, mono::string, mono::exception *) =
 		(mono::string(__stdcall *)(mono::object, mono::string, mono::exception *))method->UnmanagedThunk;
 
 	CryLogAlways("TEST: Invoking the unmanaged thunk.");
+	CryLogAlways("TEST:");
 
 	mono::exception ex;
 
@@ -871,6 +983,7 @@ void TestInstanceThunkInvocation()
 	{
 		CryLogAlways("TEST: Result of invocation = %s", NtText(textObj));
 	}
+	CryLogAlways("TEST:");
 }
 #pragma endregion
 
@@ -887,11 +1000,14 @@ void TestFields()
 
 void TestInstanceFields()
 {
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Testing instance fields.");
+	CryLogAlways("TEST:");
 
 	IMonoClass *fieldTestClass = mainTestingAssembly->GetClass("MainTestingAssembly", "FieldTestClass");
 
 	CryLogAlways("TEST: Creating the object.");
+	CryLogAlways("TEST:");
 
 	int number = 12000;
 	mono::string text = ToMonoString("Something texty.");
@@ -905,27 +1021,33 @@ void TestInstanceFields()
 	IMonoGCHandle *handle = MonoEnv->GC->Pin(obj);
 
 	CryLogAlways("TEST: Getting the values of fields.");
-
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Getting the wrappers for both fields.");
+	CryLogAlways("TEST:");
 
 	IMonoField *numberField = fieldTestClass->GetField("Number");
 	IMonoField *textField   = fieldTestClass->GetField("Text");
 
 	CryLogAlways("TEST: Getting the number field value through the wrapper.");
+	CryLogAlways("TEST:");
 
 	int numberValue;
 	numberField->Get(obj, &numberValue);
 
 	CryLogAlways("TEST: Acquired value = %d", numberValue);
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Getting the text value through the name.");
+	CryLogAlways("TEST:");
 
 	mono::string textValue;
 	fieldTestClass->GetField(obj, "Text", &textValue);
 
 	CryLogAlways("TEST: Acquired text value = %s", NtText(textValue));
-	
+
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Setting the values of fields.");
+	CryLogAlways("TEST:");
 
 	CryLogAlways("TEST: Setting the text field value using the wrapper.");
 
@@ -933,30 +1055,38 @@ void TestInstanceFields()
 	fieldTestClass->SetField(obj, textField, &textValue);
 
 	CryLogAlways("TEST: Setting the number field value through the name.");
+	CryLogAlways("TEST:");
 
 	numberValue = 9999;
 	fieldTestClass->SetField(obj, "Number", &numberValue);
 
 	CryLogAlways("TEST: Getting the values of fields.");
+	CryLogAlways("TEST:");
 
 	CryLogAlways("TEST: Getting the number field value using the wrapper.");
+	CryLogAlways("TEST:");
 
 	fieldTestClass->GetField(obj, numberField, &numberValue);
 
 	CryLogAlways("TEST: Acquired value = %d", numberValue);
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Getting the text value through the wrapper.");
+	CryLogAlways("TEST:");
 
 	textField->Get(obj, &textValue);
 
 	CryLogAlways("TEST: Acquired text value = %s", NtText(textValue));
 	
 	handle->Release();
+	CryLogAlways("TEST:");
 }
 
 void TestStaticFields()
 {
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Testing static fields.");
+	CryLogAlways("TEST:");
 
 	IMonoClass *fieldTestClass = mainTestingAssembly->GetClass("MainTestingAssembly", "FieldTestClass");
 
@@ -972,6 +1102,7 @@ void TestStaticFields()
 	IMonoGCHandle *handle = MonoEnv->GC->Pin(obj);
 
 	CryLogAlways("TEST: Setting a static field.");
+	CryLogAlways("TEST:");
 
 	IMonoField *field = fieldTestClass->GetField("ObjectField");
 
@@ -980,6 +1111,7 @@ void TestStaticFields()
 	handle->Release();
 
 	CryLogAlways("TEST: Getting a static field.");
+	CryLogAlways("TEST:");
 
 	fieldTestClass->GetField(nullptr, field, &obj);
 
@@ -989,6 +1121,7 @@ void TestStaticFields()
 	CryLogAlways("TEST: Numeric value = %d", number);
 
 	CryLogAlways("TEST: Text value = %s", NtText(text));
+	CryLogAlways("TEST:");
 }
 
 #pragma endregion
@@ -997,12 +1130,15 @@ void TestStaticFields()
 
 void TestProperties()
 {
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Testing property wrappers.");
+	CryLogAlways("TEST:");
 
 	IMonoClass *gcClass      = MonoEnv->CoreLibrary->GetClass("System", "GC");
 	IMonoClass *vector3Class = MonoEnv->Cryambly->Vector3;
 
 	CryLogAlways("TEST: Testing instance properties.");
+	CryLogAlways("TEST:");
 
 	IMonoProperty *lengthProp = vector3Class->GetProperty("Length");
 
@@ -1012,7 +1148,9 @@ void TestProperties()
 
 	CryLogAlways("TEST: Length of the vector (10, 30, -15) = %f", Unbox<float>(lengthGetter->Invoke(&vector)));
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Testing indexers.");
+	CryLogAlways("TEST:");
 
 	IMonoProperty *indexerProp = vector3Class->GetProperty("Item", 1);
 
@@ -1023,6 +1161,7 @@ void TestProperties()
 	float yComponent = Unbox<float>(indexerGetter->Invoke(&vector, &param));
 
 	CryLogAlways("TEST: Y-coordinate of the vector = %f", yComponent);
+	CryLogAlways("TEST:");
 
 	IMonoMethod *indexerSetter = indexerProp->Setter->ToInstance();
 
@@ -1035,12 +1174,15 @@ void TestProperties()
 
 	CryLogAlways("TEST: Length of the vector after setting z-coordinate to 90 = %f", Unbox<float>(lengthGetter->Invoke(&vector)));
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Testing static properties.");
+	CryLogAlways("TEST:");
 
 	IMonoProperty *maxGenProp = gcClass->GetProperty("MaxGeneration");
 	IMonoStaticMethod *maxGenGetter = maxGenProp->Getter->ToStatic();
 
 	CryLogAlways("TEST: Max generation of the GC: %d", Unbox<int>(maxGenGetter->Invoke()));
+	CryLogAlways("TEST:");
 }
 
 #pragma endregion
@@ -1059,7 +1201,9 @@ IMonoClass *eventHandlerClass;
 
 void TestEvents()
 {
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Testing events.");
+	CryLogAlways("TEST:");
 
 	eventHandlerClass = MonoEnv->CoreLibrary->GetClass("System", "EventHandler");
 
@@ -1068,24 +1212,30 @@ void TestEvents()
 	IMonoClass *eventTestObjectClass = mainTestingAssembly->GetClass("Test", "EventTestObject");
 
 	CryLogAlways("TEST: Got all class wrappers for testing events.");
+	CryLogAlways("TEST:");
 
 	mono::object eventTestObj = eventTestClass->GetFunction("Setup", 0)->ToStatic()->Invoke();
 
 	IMonoGCHandle *handle = MonoEnv->GC->Pin(eventTestObj);
 
 	CryLogAlways("TEST: Created an object for testing events.");
+	CryLogAlways("TEST:");
 
 	CryLogAlways("TEST: Testing instance events.");
+	CryLogAlways("TEST:");
 
 	TestInstanceEvent(eventTestObj, eventTestObjectClass->GetEvent("Testing"));
 	TestInstanceEvent(eventTestObj, eventTestObjectClass->GetEvent("Tested"));
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Testing static events.");
+	CryLogAlways("TEST:");
 
 	TestStaticEvent(eventTestClassClass->GetEvent("Testing"));
 	TestStaticEvent(eventTestClassClass->GetEvent("Tested"));
 
 	handle->Release();
+	CryLogAlways("TEST:");
 }
 
 void TestInstanceEvent(mono::object obj, IMonoEvent *_event)

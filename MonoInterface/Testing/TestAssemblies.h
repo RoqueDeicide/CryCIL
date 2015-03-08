@@ -6,9 +6,11 @@ void TestClassFromAssembly(IMonoClass *, const char *);
 
 void TestAssemblies()
 {
-	CryLogAlways("Testing IMonoAssemblyCollection and IMonoAssembly implementations.");
+	CryLogAlways("TEST: Testing IMonoAssemblyCollection and IMonoAssembly implementations.");
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Loading an assembly that wasn't loaded previously.");
+	CryLogAlways("TEST:");
 
 	mainTestingAssembly =
 		MonoEnv->Assemblies->Load("Testing\\MainTestingAssembly.dll");
@@ -22,7 +24,9 @@ void TestAssemblies()
 		CryLogAlways("TEST SUCCESS: Loading an assembly that wasn't loaded previously was successful.");
 	}
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Acquiring a pointer to the wrapper of the assembly that was loaded previously.");
+	CryLogAlways("TEST:");
 
 	mainTestingAssembly = MonoEnv->Assemblies->Load("Testing\\MainTestingAssembly.dll");
 
@@ -35,7 +39,9 @@ void TestAssemblies()
 		CryLogAlways("TEST SUCCESS: Acquiring a pointer to the wrapper of the assembly that was loaded previously was successful.");
 	}
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Acquiring a pointer to the wrapper of the assembly using its short name.");
+	CryLogAlways("TEST:");
 
 	mainTestingAssembly = MonoEnv->Assemblies->GetAssembly("MainTestingAssembly");
 
@@ -48,7 +54,9 @@ void TestAssemblies()
 		CryLogAlways("TEST SUCCESS: Acquiring a pointer to the wrapper of the assembly using its short name was successful.");
 	}
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Acquiring a pointer to the wrapper of the assembly using its full name.");
+	CryLogAlways("TEST:");
 
 	mainTestingAssembly =
 		MonoEnv->Assemblies->GetAssemblyFullName
@@ -63,7 +71,9 @@ void TestAssemblies()
 		CryLogAlways("TEST SUCCESS: Acquiring a pointer to the wrapper of the assembly using its full name was successful.");
 	}
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Getting a class from the assembly.");
+	CryLogAlways("TEST:");
 
 	IMonoClass *class1 = mainTestingAssembly->GetClass("MainTestingAssembly", "Class1");
 
@@ -76,7 +86,9 @@ void TestAssemblies()
 		CryLogAlways("TEST SUCCESS: Getting a class from the assembly was successful.");
 	}
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Getting assembly details.");
+	CryLogAlways("TEST:");
 
 	const char *detail = mainTestingAssembly->Name->ToNTString();
 	CryLogAlways("TEST: Assembly short name: %s", mainTestingAssembly->Name);
@@ -88,7 +100,9 @@ void TestAssemblies()
 	CryLogAlways("TEST: Assembly file name: %s", mainTestingAssembly->FileName);
 	delete detail;
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Getting assembly reflection object.");
+	CryLogAlways("TEST:");
 
 	mono::assembly refAssembly = mainTestingAssembly->ReflectionObject;
 
@@ -101,7 +115,9 @@ void TestAssemblies()
 		CryLogAlways("TEST SUCCESS: Getting assembly reflection object was successful.");
 	}
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Wrapping assembly reflection object.");
+	CryLogAlways("TEST:");
 
 	IMonoHandle *refAssemblyWrapper = MonoEnv->Objects->Wrap(refAssembly);
 
@@ -114,7 +130,9 @@ void TestAssemblies()
 		CryLogAlways("TEST SUCCESS: Wrapping assembly reflection object was successful.");
 	}
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Full assembly name from reflection object:");
+	CryLogAlways("TEST:");
 
 	const char *fullAssemblyName =
 		ToNativeString(refAssemblyWrapper->GetProperty("FullName")->Getter->ToInstance()->Invoke(refAssembly));
@@ -123,7 +141,9 @@ void TestAssemblies()
 
 	delete refAssemblyWrapper;
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Getting a wrapper for mscorlib.");
+	CryLogAlways("TEST:");
 
 	IMonoCoreLibrary *corlib = MonoEnv->CoreLibrary;
 
@@ -136,6 +156,7 @@ void TestAssemblies()
 		CryLogAlways("TEST SUCCESS: Getting a wrapper for mscorlib was successful.");
 	}
 
+	CryLogAlways("TEST:");
 	TestClassFromAssembly(corlib->Array,     "System.Array");
 	TestClassFromAssembly(corlib->Boolean,   "System.Boolean");
 	TestClassFromAssembly(corlib->Byte,      "System.Byte");
@@ -156,7 +177,9 @@ void TestAssemblies()
 	TestClassFromAssembly(corlib->String,    "System.String");
 	TestClassFromAssembly(corlib->Type,      "System.Type");
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Getting a wrapper for Cryambly.");
+	CryLogAlways("TEST:");
 
 	ICryambly *cryambly = MonoEnv->Cryambly;
 
@@ -169,6 +192,7 @@ void TestAssemblies()
 		CryLogAlways("TEST SUCCESS: Getting a wrapper for Cryambly was successful.");
 	}
 
+	CryLogAlways("TEST:");
 	TestClassFromAssembly(cryambly->Matrix33,    "CryCil.Matrix33");
 	TestClassFromAssembly(cryambly->Matrix34,    "CryCil.Matrix34");
 	TestClassFromAssembly(cryambly->Matrix44,    "CryCil.Matrix44");
@@ -183,7 +207,8 @@ void TestAssemblies()
 	TestClassFromAssembly(cryambly->Ray,         "CryCil.Geometry.Ray");
 	TestClassFromAssembly(cryambly->Vector2,     "CryCil.Vector2");
 	TestClassFromAssembly(cryambly->Vector3,     "CryCil.Vector3");
-	TestClassFromAssembly(cryambly->Vector4,     "CryCil.Vector4");
+	TestClassFromAssembly(cryambly->Vector4, "CryCil.Vector4");
+	CryLogAlways("TEST:");
 }
 
 void TestClassFromAssembly(IMonoClass *klass, const char *name)
