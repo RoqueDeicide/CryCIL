@@ -1,6 +1,15 @@
 #pragma once
 
+void TestObjectHandles();
+
+
 void TestObjects()
+{
+	TestObjectHandles();
+
+}
+
+void TestObjectHandles()
 {
 	CryLogAlways("TEST: Testing IMonoHandle implementation.");
 
@@ -86,4 +95,5 @@ void TestObjects()
 	CryLogAlways("TEST: The integer field's value: %d", fieldNumber);
 
 	handle->Release();
+}
 }
