@@ -62,8 +62,8 @@ MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener
 	, assemblies(nullptr)
 	, broadcaster(nullptr)
 	, framework(framework)
+	, managedInterface(-1)
 {
-
 	this->assemblies = new MonoAssemblies();
 	broadcaster = new EventBroadcaster();
 	// Register all initial listeners.
@@ -189,7 +189,7 @@ void MonoInterface::RegisterFlowGraphNodes()
 		return;
 	}
 	mono::exception ex;
-	MonoInterfaceThunks::TriggerFlowNodesRegistration(this->managedInterface->Object, &ex);
+	MonoInterfaceThunks::TriggerFlowNodesRegistration(this->managedInterface.Object, &ex);
 }
 //! Shuts down Mono run-time environment.
 void MonoInterface::Shutdown()
@@ -208,7 +208,7 @@ void MonoInterface::Shutdown()
 	CryLogAlways("About to send shutdown event to Cryambly.");
 	
 	mono::exception ex;
-	MonoInterfaceThunks::Shutdown(this->managedInterface->Object, &ex);
+	MonoInterfaceThunks::Shutdown(this->managedInterface.Object, &ex);
 	
 	this->framework->UnregisterListener(this);
 	gEnv->pSystem->GetISystemEventDispatcher()->RemoveListener(this);
@@ -286,7 +286,7 @@ void MonoInterface::OnPostUpdate(float fDeltaTime)
 		this->broadcaster->Update();
 		
 		mono::exception ex;
-		MonoInterfaceThunks::Update(this->managedInterface->Object, &ex);
+		MonoInterfaceThunks::Update(this->managedInterface.Object, &ex);
 		
 		this->broadcaster->PostUpdate();
 	}

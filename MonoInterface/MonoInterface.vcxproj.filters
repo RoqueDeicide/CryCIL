@@ -82,9 +82,6 @@
     <ClInclude Include="Interfaces\IMonoGC.h">
       <Filter>Interfaces\GC</Filter>
     </ClInclude>
-    <ClInclude Include="Interfaces\IMonoGCHandle.h">
-      <Filter>Interfaces\GC</Filter>
-    </ClInclude>
     <ClInclude Include="Interfaces\IMonoArray.h">
       <Filter>Interfaces\Objects</Filter>
     </ClInclude>
@@ -155,9 +152,6 @@
       <Filter>API Implementation\Metadata</Filter>
     </ClInclude>
     <ClInclude Include="Implementation\MonoGC.h">
-      <Filter>API Implementation\GC</Filter>
-    </ClInclude>
-    <ClInclude Include="Implementation\MonoGCHandle.h">
       <Filter>API Implementation\GC</Filter>
     </ClInclude>
     <ClInclude Include="Implementation\MonoArray.h">
@@ -261,6 +255,9 @@
     </ClInclude>
     <ClInclude Include="Testing\TestObjects.h">
       <Filter>Testing</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\MonoGCHandle.h">
+      <Filter>Interfaces\GC</Filter>
     </ClInclude>
     <ClInclude Include="DocumentationMarkers.h" />
   </ItemGroup>

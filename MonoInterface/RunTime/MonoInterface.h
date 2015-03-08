@@ -37,7 +37,7 @@ private:
 	IMonoCoreLibrary *corlib;				//! Extra pointer for mscorlib.
 	IMonoAssembly *pdb2mdb;
 
-	IMonoGCHandle *managedInterface;
+	MonoGCHandle managedInterface;
 	IMonoGC *gc;
 	IGameFramework *framework;
 	IMonoObjects *objs;

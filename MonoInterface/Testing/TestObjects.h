@@ -25,7 +25,7 @@ void TestObjectHandles()
 	mono::object testObj = testObjectClass->GetConstructor(1)->Create(&param);
 	IMonoHandle *obj = MonoEnv->Objects->Wrap(testObj);
 
-	IMonoGCHandle *handle = MonoEnv->GC->Keep(obj->Get());
+	MonoGCHandle handle = MonoEnv->GC->Keep(obj->Get());
 
 	CryLogAlways("TEST: Testing object's fields.");
 	CryLogAlways("TEST:");
@@ -87,7 +87,7 @@ void TestObjectHandles()
 
 	MonoEnv->GC->Collect();
 
-	obj->Update(handle->Object);
+	obj->Update(handle.Object);
 
 	if (obj->Get())
 	{
@@ -105,8 +105,6 @@ void TestObjectHandles()
 	obj->GetField("Number", &fieldNumber);
 
 	CryLogAlways("TEST: The integer field's value: %d", fieldNumber);
-
-	handle->Release();
 	CryLogAlways("TEST:");
 }
 }

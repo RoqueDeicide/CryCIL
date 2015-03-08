@@ -33,7 +33,7 @@ struct IMonoField;
 struct IMonoConstructor;
 struct IMonoSystemListener;
 struct IMonoInterface;
-struct IMonoGCHandle;
+struct MonoGCHandle;
 struct IMonoGC;
 
 class TextBase;

@@ -230,7 +230,6 @@
     <ClInclude Include="Implementation\MonoField.h" />
     <ClInclude Include="Implementation\MonoFunction.h" />
     <ClInclude Include="Implementation\MonoGC.h" />
-    <ClInclude Include="Implementation\MonoGCHandle.h" />
     <ClInclude Include="Implementation\MonoHandle.h" />
     <ClInclude Include="Implementation\MonoMethod.h" />
     <ClInclude Include="Implementation\MonoObjects.h" />
@@ -256,7 +255,6 @@
     <ClInclude Include="Interfaces\IMonoField.h" />
     <ClInclude Include="Interfaces\IMonoFunctionalityWrapper.h" />
     <ClInclude Include="Interfaces\IMonoGC.h" />
-    <ClInclude Include="Interfaces\IMonoGCHandle.h" />
     <ClInclude Include="Interfaces\IMonoHandle.h" />
     <ClInclude Include="Interfaces\IMonoInterop.h" />
     <ClInclude Include="Interfaces\IMonoFunction.h" />
@@ -271,6 +269,7 @@
     <ClInclude Include="Interfaces\IMonoDelegates.h" />
     <ClInclude Include="Interfaces\IMonoThread.h" />
     <ClInclude Include="Interfaces\IMonoThreads.h" />
+    <ClInclude Include="Interfaces\MonoGCHandle.h" />
     <ClInclude Include="Interops\CryMarshal.h" />
     <ClInclude Include="Interops\LogPosting.h" />
     <ClInclude Include="Interops\MeshOps.h" />

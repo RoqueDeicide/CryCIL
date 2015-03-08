@@ -15,7 +15,6 @@
 #include "Interfaces/IMonoHandle.h"
 #include "Interfaces/IMonoText.h"
 #include "Interfaces/IMonoGC.h"
-#include "Interfaces/IMonoGCHandle.h"
 #include "Interfaces/IMonoAssembly.h"
 #include "Interfaces/ICryambly.h"
 #include "Interfaces/IMonoCoreLibrary.h"
@@ -284,8 +283,9 @@ typedef IMonoInterface *(*InitializeMonoInterface)(IGameFramework *, List<IMonoS
 //! @endcode
 extern IMonoInterface *MonoEnv;
 
-// Include the file here, because we need MonoEnv to be declared.
+// Include these files here, because we need MonoEnv to be declared for them.
 #include "Interfaces/IMonoInterop.h"
+#include "Interfaces/MonoGCHandle.h"
 
 #pragma region Conversions Interface
 

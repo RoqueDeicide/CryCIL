@@ -828,7 +828,7 @@ void TestInstanceMethodInvocation()
 
 	mono::string text = ToMonoString("Some text for testing.");
 
-	IMonoGCHandle *handle = MonoEnv->GC->Pin(text);
+	MonoGCHandle handle = MonoEnv->GC->Pin(text);
 
 	CryLogAlways("TEST: Invocation of the method that accepts 4 arguments and returns an signed integer.");
 	CryLogAlways("TEST:");
@@ -850,8 +850,6 @@ void TestInstanceMethodInvocation()
 
 	CryLogAlways("TEST: Index of the first 't' symbol in the test string within range [5; 12] = %d", index);
 	CryLogAlways("TEST:");
-
-	handle->Release();
 }
 
 void TestVirtualMethodInvocation()
@@ -1018,7 +1016,7 @@ void TestInstanceFields()
 
 	mono::object obj = fieldTestClass->GetConstructor(2)->Create(params);
 
-	IMonoGCHandle *handle = MonoEnv->GC->Pin(obj);
+	MonoGCHandle handle = MonoEnv->GC->Pin(obj);
 
 	CryLogAlways("TEST: Getting the values of fields.");
 	CryLogAlways("TEST:");
@@ -1077,8 +1075,6 @@ void TestInstanceFields()
 	textField->Get(obj, &textValue);
 
 	CryLogAlways("TEST: Acquired text value = %s", NtText(textValue));
-	
-	handle->Release();
 	CryLogAlways("TEST:");
 }
 
@@ -1099,7 +1095,7 @@ void TestStaticFields()
 
 	mono::object obj = fieldTestClass->GetConstructor(2)->Create(params);
 
-	IMonoGCHandle *handle = MonoEnv->GC->Pin(obj);
+	MonoGCHandle handle = MonoEnv->GC->Pin(obj);
 
 	CryLogAlways("TEST: Setting a static field.");
 	CryLogAlways("TEST:");
@@ -1107,8 +1103,6 @@ void TestStaticFields()
 	IMonoField *field = fieldTestClass->GetField("ObjectField");
 
 	fieldTestClass->SetField(nullptr, field, &obj);
-
-	handle->Release();
 
 	CryLogAlways("TEST: Getting a static field.");
 	CryLogAlways("TEST:");
@@ -1216,7 +1210,7 @@ void TestEvents()
 
 	mono::object eventTestObj = eventTestClass->GetFunction("Setup", 0)->ToStatic()->Invoke();
 
-	IMonoGCHandle *handle = MonoEnv->GC->Pin(eventTestObj);
+	MonoGCHandle handle = MonoEnv->GC->Pin(eventTestObj);
 
 	CryLogAlways("TEST: Created an object for testing events.");
 	CryLogAlways("TEST:");
@@ -1234,7 +1228,6 @@ void TestEvents()
 	TestStaticEvent(eventTestClassClass->GetEvent("Testing"));
 	TestStaticEvent(eventTestClassClass->GetEvent("Tested"));
 
-	handle->Release();
 	CryLogAlways("TEST:");
 }
 
@@ -1255,7 +1248,7 @@ void TestInstanceEvent(mono::object obj, IMonoEvent *_event)
 	mono::object fnPtrWrapper =
 		MonoEnv->Objects->Delegates->Create(eventHandlerClass, UnmanagedEventHandler)->Get();
 
-	IMonoGCHandle *handle = MonoEnv->GC->Pin(fnPtrWrapper);
+	MonoGCHandle handle = MonoEnv->GC->Pin(fnPtrWrapper);
 
 	void *param = fnPtrWrapper;
 	_eventAdd->Invoke(obj, &param);
@@ -1271,8 +1264,6 @@ void TestInstanceEvent(mono::object obj, IMonoEvent *_event)
 	CryLogAlways("TEST: Raising the event %s after removing previously added delegate.");
 
 	_eventRaise->Invoke(obj);
-
-	handle->Release();
 }
 void TestStaticEvent(IMonoEvent *_event)
 {
@@ -1291,7 +1282,7 @@ void TestStaticEvent(IMonoEvent *_event)
 	mono::object fnPtrWrapper =
 		MonoEnv->Objects->Delegates->Create(eventHandlerClass, UnmanagedEventHandler)->Get();
 
-	IMonoGCHandle *handle = MonoEnv->GC->Pin(fnPtrWrapper);
+	MonoGCHandle handle = MonoEnv->GC->Pin(fnPtrWrapper);
 
 	void *param = fnPtrWrapper;
 	_eventAdd->Invoke(&param);
@@ -1307,8 +1298,6 @@ void TestStaticEvent(IMonoEvent *_event)
 	CryLogAlways("TEST: Raising the event %s after removing previously added delegate.");
 
 	_eventRaise->Invoke();
-
-	handle->Release();
 }
 
 #pragma endregion
