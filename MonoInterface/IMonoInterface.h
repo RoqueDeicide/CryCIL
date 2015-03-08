@@ -1,5 +1,7 @@
 #pragma once
 
+#include "DocumentationMarkers.h"
+
 #include "Interfaces/IMonoAliases.h"
 #include "Interfaces/IMonoBox.h"
 #include "Interfaces/IMonoFunctionalityWrapper.h"
@@ -301,84 +303,6 @@ inline const char *ToNativeString(mono::string monoString)
 {
 	return MonoEnv->Objects->Texts->ToNative(monoString);
 }
-
-//! Boxing and unboxing are names of ways to marshal data to and from managed memory.
-//!
-//! Boxing is quite tricky due to C++ lacking any built-in metadata tracking
-//! functionality. This means that are two ways of transferring the object to managed
-//! memory:
-//!     1) Official boxing : You have to get the class that will represent unmanaged
-//!                          object in managed memory, then calling its Box method.
-//!
-//!     2) Boxing a pointer: You can use BoxPtr function to box a pointer to unmanaged
-//!                          object, pass it managed method and let it dereference
-//!                          that pointer.
-//!
-//!                          This method has some specifics though:
-//!                           1) Make sure that managed are unmanaged types are blittable:
-//!                            - Their objects take up the same amount of memory.
-//!                            - Object is treated in same way in both codes.
-//!
-//!                           2) If the object contains pointer type fields, you will have
-//!                              to dereference them as well before using them.
-//! Examples:
-//!
-//! First method with built-in value-type:
-//! @code{.cpp}
-//! {
-//!     mono::boolean boxedBool = Box(true);
-//! }
-//! @endcode
-//!
-//! First method with custom value-type:
-//! @code{.cpp}
-//! {
-//!     // Get the type that will represent our object.
-//!     IMonoClass *managedPlaneType =
-//!         MonoEnv->Cryambly->GetClass("Plane", "CryCil.Mathematics.Geometry");
-//!     // Box the object.
-//!     mono::plane boxedPlane = managedPlaneType->Box(&plane);
-//! }
-//! @endcode
-//!
-//! Second method with custom type:
-//!
-//! C++:
-//! @code{.cpp}
-//! {
-//!     Quat quaternion(1, 1, 1, 1);
-//!     mono::exception exception;
-//!     // Invoke unmanaged thunk that takes a pointer.
-//!     mono::nothing result =
-//!         ExampleQuatFunc
-//!         (
-//!             BoxPtr(&quaternion),                    // Box a pointer to our quaternion.
-//!             &exception
-//!         );
-//! }
-//! @endcode
-//!
-//! C#:
-//! @code{.cs}
-//! internal void ExampleQuatFunc(IntPtr quatHandle)
-//! {
-//!     // Convert a pointer to Quaternion * type and dereference it.
-//!     Quaternion quat = *((Quaternion *)quatHandle.ToPointer());
-//!     // Do something about this quaternion.
-//!     ...
-//! }
-//! @endcode
-//!
-//! Unboxing on the other hand is relatively easy since .Net/Mono does have built-in
-//! metadata tracking. This is why their is only one global function for unboxing.
-//!
-//! Example:
-//!
-//! @code{.cpp}
-//! mono::boolean really = (...);
-//! bool oReally = Unbox<bool>(really);          // EASY
-//! @endcode
-#define BOX_UNBOX
 
 //! Unboxes a value-type object into another unmanaged value.
 //! @tparam T type of unmanaged object to create.

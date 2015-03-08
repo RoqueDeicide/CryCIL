@@ -204,6 +204,7 @@
   <ItemGroup>
     <ClInclude Include="API_ImplementationHeaders.h" />
     <ClInclude Include="CryCilHeader.h" />
+    <ClInclude Include="DocumentationMarkers.h" />
     <ClInclude Include="DoxygenExampleFiles\ListenerExample.h" />
     <ClInclude Include="DoxygenExampleFiles\MonoMethodInvocations.h" />
     <ClInclude Include="DoxygenExampleFiles\UnmanagedThunkExample.h" />

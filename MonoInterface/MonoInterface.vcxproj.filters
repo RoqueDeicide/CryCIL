@@ -262,6 +262,7 @@
     <ClInclude Include="Testing\TestObjects.h">
       <Filter>Testing</Filter>
     </ClInclude>
+    <ClInclude Include="DocumentationMarkers.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />

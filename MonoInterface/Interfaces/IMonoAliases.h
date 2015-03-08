@@ -110,26 +110,6 @@ namespace mono
 	//! mono::object instance when you to work with it or keep it.
 	typedef class MonoObject *object;
 
-	//! Typedefs marked by this define represent a reference to an object that is located
-	//! within managed memory. Technically all of them are equivalents to mono::object
-	//! but they can be used to designate what the object is supposed to be.
-	//!
-	//! In C++'s analog for mono::object is void *. Both can be casted to whatever type
-	//! like bool *. The same can be done to mono::object.
-	//!
-	//! Examples:
-	//!
-	//! // The following two methods are technically the same, they are both are unmanaged
-	//! thunks of static String.IsNullOrWhitespace method, but the last one uses OBJECT_NAME
-	//! typedefs do describe the types of objects better.
-	//!
-	//! @code{.cpp}
-	//! bool __stdcall IsNullOrWhitespace(mono::object text, mono::object    *exception);
-	//!
-	//! bool __stdcall IsNullOrWhitespace(mono::string text, mono::exception *exception);
-	//! @endcode
-#define OBJECT_NAME
-
 	//! Represents a reference to a managed string.
 	OBJECT_NAME typedef object string;
 	//! Represents a reference to a boxed Boolean value.
@@ -209,14 +189,3 @@ namespace mono
 	//! Represents a reference to a boxed set of Euler angles.
 	OBJECT_NAME typedef object angles3;
 }
-
-//! In various programming books about C++ authors usually tell us that virtual
-//! dispatch is used for polymorphism.
-//!
-//! While that is true, there is another, less famous, usage for it: creation of
-//! cross-Dll API.
-//!
-//! That is possible thanks to the fact that objects of types that have virtual
-//! methods always carry a pointer to a VTable with them, allowing access to
-//! their interface from anywhere within the process.
-#define VIRTUAL_API
