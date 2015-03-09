@@ -518,6 +518,19 @@ public:
 		}
 		return this->elements[index];
 	}
+	List<ElementType> &Set(int index, ElementType& el)
+	{
+		if (index < 0)
+		{
+			index = 0;
+		}
+		if (index >= this->length)
+		{
+			index = this->length - 1;
+		}
+		this->elements[index] = el;
+		return *this;
+	}
 	//! Releases memory held by this list.
 	void Dispose()
 	{
