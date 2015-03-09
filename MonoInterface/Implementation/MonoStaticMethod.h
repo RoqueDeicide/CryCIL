@@ -12,7 +12,7 @@ struct MonoStaticMethod : public IMonoStaticMethod, public MonoFunction
 		: MonoFunction(method, klass) {}
 
 	virtual mono::object Invoke(mono::exception *exc = nullptr);
-	virtual mono::object Invoke(IMonoArray *params, mono::exception *exc = nullptr);
+	virtual mono::object Invoke(IMonoArray<> &params, mono::exception *exc = nullptr);
 	virtual mono::object Invoke(void **params, mono::exception *exc = nullptr);
 
 };

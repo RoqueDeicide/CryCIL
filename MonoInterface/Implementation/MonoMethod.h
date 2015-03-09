@@ -22,7 +22,7 @@ struct MonoMethodWrapper : public IMonoMethod, public MonoFunction
 	virtual mono::object Invoke
 	(
 		void *object,
-		IMonoArray *params = nullptr,
+		IMonoArray<> &params,
 		mono::exception *exc = nullptr,
 		bool polymorph = false
 	);

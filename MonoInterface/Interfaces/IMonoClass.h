@@ -49,14 +49,14 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!
 	//! It's not easy to predict which one of the constructors will be acquired when there are several
 	//! of them that accept the same number of arguments.
-	__forceinline IMonoConstructor *GetConstructor(int paramCount)
+	__forceinline IMonoConstructor *GetConstructor(int paramCount = 0)
 	{
 		return this->GetFunction(".ctor", paramCount)->ToCtor();
 	}
 	//! Gets constructor that can accept arguments of specified types.
 	//!
 	//! @param types An array of System.Type objects that specify constructor signature to use.
-	__forceinline IMonoConstructor *GetConstructor(IMonoArray *types = nullptr)
+	__forceinline IMonoConstructor *GetConstructor(IMonoArray<> &types)
 	{
 		return this->GetFunction(".ctor", types)->ToCtor();
 	}
@@ -105,7 +105,7 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!
 	//! @param name  Name of the method to get.
 	//! @param types An array of System.Type objects that specify method signature to use.
-	VIRTUAL_API virtual IMonoFunction *GetFunction(const char *name, IMonoArray *types = nullptr) = 0;
+	VIRTUAL_API virtual IMonoFunction *GetFunction(const char *name, IMonoArray<> &types) = 0;
 	//! Gets method that can accept arguments of specified types.
 	//!
 	//! This method does not bother with checking how arguments are passed to the method.
@@ -212,7 +212,7 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!
 	//! @param name       Name of the method to find.
 	//! @param paramCount Number of arguments the method should take.
-	VIRTUAL_API virtual IMonoFunction *GetFunction(const char *name, int paramCount) = 0;
+	VIRTUAL_API virtual IMonoFunction *GetFunction(const char *name, int paramCount = 0) = 0;
 	//! Gets an array of functions that matches given description.
 	//!
 	//! @param name       Name of the functions to find.
@@ -275,7 +275,7 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!
 	//! @param name  Name of the property to get.
 	//! @param types An array of System.Type objects that specify property signature to use.
-	VIRTUAL_API virtual IMonoProperty *GetProperty(const char *name, IMonoArray *types) = 0;
+	VIRTUAL_API virtual IMonoProperty *GetProperty(const char *name, IMonoArray<> &types) = 0;
 	//! Gets a wrapper for a property defined in this class.
 	//!
 	//! @param name    Name of the property to get.

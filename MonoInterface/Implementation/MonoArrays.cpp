@@ -1,18 +1,14 @@
 #include "stdafx.h"
 #include "MonoArrays.h"
-#include "MonoArray.h"
 
-IMonoArray *MonoArrays::Create(int capacity, IMonoClass *klass /*= nullptr*/)
+mono::Array MonoArrays::Create(int capacity, IMonoClass *klass /*= nullptr*/)
 {
-	return new MonoArrayWrapper(klass, capacity);
+	return (mono::Array)mono_array_new(mono_domain_get(), klass->GetHandle<MonoClass>(), capacity);
 }
 
-IMonoArray *MonoArrays::Create(int dimCount, unsigned int *lengths, IMonoClass *klass /*= nullptr*/, int *lowerBounds /*= nullptr*/)
+mono::Array MonoArrays::Create(int dimCount, unsigned int *lengths, IMonoClass *klass /*= nullptr*/, int *lowerBounds /*= nullptr*/)
 {
-	return new MonoArrayWrapper(dimCount, lengths, klass, lowerBounds);
-}
-
-IMonoArray *MonoArrays::Wrap(mono::Array arrayHandle)
-{
-	return new MonoArrayWrapper((MonoArray *)arrayHandle);
+	MonoClass *arrayClass = mono_array_class_get((klass) ? klass->GetHandle<MonoClass>()
+														 : mono_get_object_class(), dimCount);
+	return (mono::Array)mono_array_new_full(mono_domain_get(), arrayClass, lengths, lowerBounds);
 }

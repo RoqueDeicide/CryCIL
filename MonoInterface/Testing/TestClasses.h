@@ -310,17 +310,17 @@ void TestGettingTheConstructors()
 	CryLogAlways("TEST: Creating an array.");
 	CryLogAlways("TEST:");
 
-	IMonoArray *typesArray = MonoEnv->Objects->Arrays->Create(3, MonoEnv->CoreLibrary->Type);
+	auto typesArray = IMonoArray<>(MonoEnv->Objects->Arrays->Create(3, MonoEnv->CoreLibrary->Type));
 
 	CryLogAlways("TEST: Filling the array.");
 
-	typesArray->At<mono::type>(0) = MonoEnv->CoreLibrary->Sbyte->MakePointerType();
+	typesArray[0] = MonoEnv->CoreLibrary->Sbyte->MakePointerType();
 
 	CryLogAlways("TEST: Added a pointer type of Sbyte to the array.");
 
 	mono::type int32Type = MonoEnv->CoreLibrary->Int32->GetType();
-	typesArray->At<mono::type>(1) = int32Type;
-	typesArray->At<mono::type>(2) = int32Type;
+	typesArray[1] = int32Type;
+	typesArray[2] = int32Type;
 
 	CryLogAlways("TEST: Added Int32 types to the array.");
 
@@ -506,10 +506,10 @@ void TestObjectCreation()
 	lengths[0] = 3;
 	lengths[1] = 10;
 	lengths[2] = 2;
-	IMonoArray *arrayCube = MonoEnv->Objects->Arrays->Create(3, lengths, MonoEnv->CoreLibrary->Int32);
+	mono::Array arrayCube = MonoEnv->Objects->Arrays->Create(3, lengths, MonoEnv->CoreLibrary->Int32);
 
 	params[0] = ToMonoString("Some text");
-	params[1] = arrayCube->GetHandle<mono::Array>();
+	params[1] = arrayCube;
 	mono::object secondComponent =
 		mainTestingAssembly->GetClass("MainTestingAssembly", "CtorTestComponent2")
 						   ->GetConstructor(2)
@@ -562,9 +562,9 @@ void TestGettingMethods()
 	CryLogAlways("TEST: Getting the method using an array of System.Type objects.");
 	CryLogAlways("TEST:");
 
-	IMonoArray *typesArray = MonoEnv->Objects->Arrays->Create(1, typeClass);
+	auto typesArray = IMonoArray<>(MonoEnv->Objects->Arrays->Create(1, typeClass));
 
-	typesArray->At<mono::type>(0) = typeClass->MakeArrayType();
+	typesArray[0] = typeClass->MakeArrayType();
 
 	IMonoMethod *method = typeClass->GetFunction("GetConstructor", typesArray)->ToInstance();
 
@@ -719,16 +719,16 @@ void TestInstanceThunkInvocation();
 
 void PrintDigitsArray(mono::Array digits)
 {
-	IMonoArray *digitsArray = MonoEnv->Objects->Arrays->Wrap(digits);
+	auto digitsArray = IMonoArray<int>(digits);
 
 	ConstructiveText digitsText(30);
 	char symbol[2];
 
-	digitsText << itoa(digitsArray->At<int>(0), &symbol[0], 10);
-	for (int i = 1; i < digitsArray->Length; i++)
+	digitsText << itoa(digitsArray[0], &symbol[0], 10);
+	for (int i = 1; i < digitsArray.Length; i++)
 	{
 		digitsText << " ";
-		digitsText << itoa(digitsArray->At<int>(i), &symbol[0], 10);
+		digitsText << itoa(digitsArray[i], &symbol[0], 10);
 	}
 
 	const char *ntText = digitsText.ToNTString();
@@ -1246,7 +1246,7 @@ void TestInstanceEvent(mono::object obj, IMonoEvent *_event)
 	CryLogAlways("TEST: Adding a delegate to the event that encapsulates an unmanaged function.");
 
 	mono::object fnPtrWrapper =
-		MonoEnv->Objects->Delegates->Create(eventHandlerClass, UnmanagedEventHandler)->Get();
+		MonoEnv->Objects->Delegates->Create(eventHandlerClass, UnmanagedEventHandler);
 
 	MonoGCHandle handle = MonoEnv->GC->Pin(fnPtrWrapper);
 
@@ -1280,7 +1280,7 @@ void TestStaticEvent(IMonoEvent *_event)
 	CryLogAlways("TEST: Adding a delegate to the event that encapsulates an unmanaged function.");
 
 	mono::object fnPtrWrapper =
-		MonoEnv->Objects->Delegates->Create(eventHandlerClass, UnmanagedEventHandler)->Get();
+		MonoEnv->Objects->Delegates->Create(eventHandlerClass, UnmanagedEventHandler);
 
 	MonoGCHandle handle = MonoEnv->GC->Pin(fnPtrWrapper);
 

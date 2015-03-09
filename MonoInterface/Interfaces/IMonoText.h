@@ -3,8 +3,16 @@
 #include "IMonoAliases.h"
 
 //! Wraps access to Mono strings.
-struct IMonoText : public IMonoHandle
+struct IMonoText : public IMonoObject
 {
+	//! Creates new wrapper for given string.
+	IMonoText(mono::string str)
+		: IMonoObject(str)
+	{}
+	//! Creates new wrapper for given string.
+	IMonoText(MonoGCHandle &handle)
+		: IMonoObject(handle)
+	{}
 	//! Indicates whether this string is located in an intern pool (shared memory for literals).
 	//!
 	//! All interned strings are pinned, so it is highly recommended to intern any string that is
@@ -22,23 +30,47 @@ struct IMonoText : public IMonoHandle
 	__declspec(property(get = ToNativeUTF16)) const wchar_t *NativeUTF16;
 
 	//! Determines whether this string is equal to another.
-	VIRTUAL_API virtual bool Equals(IMonoText *other) = 0;
+	bool Equals(IMonoText &other)
+	{
+		return MonoEnv->Objects->StringEquals(this->obj, other.obj);
+	}
 	//! Determines whether this string is equal to another.
-	VIRTUAL_API virtual bool Equals(mono::string other) = 0;
+	bool Equals(mono::string other)
+	{
+		return MonoEnv->Objects->StringEquals(this->obj, other);
+	}
 	//! Puts this string into intern pool.
 	//!
 	//! The memory this string was taking up before interning will be eventually GCed.
 	//!
 	//! All interned strings are pinned, so it is highly recommended to intern any string that is
 	//! constantly being used.
-	VIRTUAL_API virtual void Intern() = 0;
+	void Intern()
+	{
+		this->obj = MonoEnv->Objects->InternString(this->obj);
+	}
 	//! Gets reference to a character in UTF-16 encoding.
 	//!
 	//! @param index Zero-based index of the character to get.
-	VIRTUAL_API virtual wchar_t &At(int index) = 0;
+	wchar_t &At(int index)
+	{
+		return MonoEnv->Objects->StringAt(this->obj, index);
+	}
 
-	VIRTUAL_API virtual int GetHashCode() = 0;
-	VIRTUAL_API virtual bool IsInterned() = 0;
-	VIRTUAL_API virtual const char *ToNativeUTF8() = 0;
-	VIRTUAL_API virtual const wchar_t *ToNativeUTF16() = 0;
+	int GetHashCode()
+	{
+		return MonoEnv->Objects->GetStringHashCode(this->obj);
+	}
+	bool IsInterned()
+	{
+		return MonoEnv->Objects->IsStringInterned(this->obj);
+	}
+	const char *ToNativeUTF8()
+	{
+		return MonoEnv->Objects->StringToNativeUTF8(this->obj);
+	}
+	const wchar_t *ToNativeUTF16()
+	{
+		return MonoEnv->Objects->StringToNativeUTF16(this->obj);
+	}
 };

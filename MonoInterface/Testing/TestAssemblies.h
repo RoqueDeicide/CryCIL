@@ -119,7 +119,7 @@ void TestAssemblies()
 	CryLogAlways("TEST: Wrapping assembly reflection object.");
 	CryLogAlways("TEST:");
 
-	IMonoHandle *refAssemblyWrapper = MonoEnv->Objects->Wrap(refAssembly);
+	IMonoObject refAssemblyWrapper = refAssembly;
 
 	if (!refAssemblyWrapper)
 	{
@@ -135,11 +135,8 @@ void TestAssemblies()
 	CryLogAlways("TEST:");
 
 	const char *fullAssemblyName =
-		ToNativeString(refAssemblyWrapper->GetProperty("FullName")->Getter->ToInstance()->Invoke(refAssembly));
-	CryLogAlways("TEST: %s", fullAssemblyName);
-	delete fullAssemblyName;
-
-	delete refAssemblyWrapper;
+		ToNativeString(refAssemblyWrapper.GetProperty("FullName")->Getter->ToInstance()->Invoke(refAssembly));
+	CryLogAlways("TEST: %s", NtText(fullAssemblyName));
 
 	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Getting a wrapper for mscorlib.");

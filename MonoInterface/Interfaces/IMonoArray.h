@@ -2,6 +2,23 @@
 
 #include "IMonoAliases.h"
 
+typedef struct
+{
+	unsigned int length;
+	int lower_bound;
+} MonoArrayBounds;
+
+struct _MonoArray
+{
+	MonoObject obj;
+	/* bounds is NULL for szarrays */
+	MonoArrayBounds *bounds;
+	/* total number of elements of the array */
+	unsigned int max_length;
+	/* we use double to ensure proper alignment on platforms that need it */
+	double vector[MONO_ZERO_LEN_ARRAY];
+};
+
 //! Defines interface of objects that wrap functionality of MonoArray type.
 //!
 //! All arrays wrapped with this type are the same as ordinary Mono arrays.
@@ -15,15 +32,12 @@
 //! @code{.cpp}
 //!
 //! // Create the array. Specify the class and length
-//! IMonoArray *array = MonoEnv->Objects->Arrays->Create
-//!                     (
-//!                         MonoEnv->CoreLibrary->GetClass("System", "Int32"), 10
-//!                     );
+//! IMonoArray<int> array = MonoEnv->Objects->Arrays->Create(MonoEnv->CoreLibrary->Int32, 10);
 //!
 //! // Fill it.
-//! for (int i = 0; i < array->Length; i++)
+//! for (int i = 0; i < array.Length; i++)
 //! {
-//!     array->At<int>(i) = i * 2;
+//!     array[i] = i * 2;
 //! }
 //!
 //! @endcode
@@ -33,18 +47,16 @@
 //! @code{.cpp}
 //!
 //! // Get the array and immediately wrap it.
-//! IMonoArray *array = MonoEnv->Objects->Arrays->Wrap(GetArray());
+//! IMonoArray<mono::string> array = GetArray();
 //!
 //! // Let's say, we've got the array of text information. Specifically, with 3 objects in it.
-//! CryLogAlways(array->ElementClass->Name);		// Prints "String".
-//! CryLogAlways(array->Length);					// Prints "3".
+//! CryLogAlways(array.ElementClass->Name);		// Prints "String".
+//! CryLogAlways(array.Length);					// Prints "3".
 //!
 //! // Print the contents.
-//! for (int i = 0; i < array->Length; i++)
+//! for (int i = 0; i < array.Length; i++)
 //! {
-//!     const char *content = ToNativeString(array->At<mono::string>(i));
-//!     CryLogAlways(content);
-//!     delete content;				// Always clean-up afterwards.
+//!     CryLogAlways(NtText(ToNativeString(array[i])));
 //! }
 //!
 //! @endcode
@@ -54,63 +66,185 @@
 //! @code{.cpp}
 //!
 //! // When creating object[] array, we don't need to specify the class.
-//! IMonoArray *pars = MonoEnv->Objects->Arrays->Create(4);
+//! IMonoArray<mono::object> pars = MonoEnv->Objects->Arrays->Create(4);
 //!
 //! // We can put anything into those things, however any value-type objects must be boxed
 //! // manually prior to insertion.
-//! pars->At<mono::string>(0) =  ToMonoString("Some text");
-//! pars->At<mono::vector2>(1) = Box(Vec2(10, 20));
-//! pars->At<mono::vector2>(2) = Box(Vec2(20, 10));
-//! pars->At<mono::object>(3) =  MonoEnv->Objects->Create(SomeAssembly, "Boo", "Foo");
+//! pars[0] = ToMonoString("Some text");
+//! pars[1] = Box(Vec2(10, 20));
+//! pars[2] = Box(Vec2(20, 10));
+//! pars[3] = SomeAssembly->GetClass("Boo", "Foo")->GetConstructor()->Create();
 //!
 //! // Invoke the method using this array.
 //! // Method's parameters: System.String, CryCil.Vector2, CryCil.Vector2, Boo.Foo.
-//! IMonoMethod *method =
+//! IMonoStaticMethod *method =
 //!     SomeAssembly->GetClass("BumBum", "Blabla")
 //!                 ->GetMethod
 //!                 (
 //!                     "Meth",
 //!                      "System.String, CryCil.Vector2, CryCil.Vector2, Boo.Foo"
-//!                 );
+//!                 )
+//!                 ->ToStatic();
 //!
-//! method->Invoke(nullptr, pars);
+//! method->Invoke(pars);
 //!
 //! @endcode
-struct IMonoArray : public IMonoHandle
+//!
+//! We can also work with multi-dimensional arrays.
+//!
+//! @code{.cpp}
+//!
+//! // Get the array and immediately wrap it.
+//! IMonoArray<double> array = GetArray();
+//!
+//! // Print the contents.
+//! for (int i = array.GetLowerBound(0); i < array.GetLength(0); i++)
+//! {
+//!     CryLogAlways("{ %f, %f, %f }",
+//!                  array[List<int>(2).Add(i, 1)],
+//!                  array[List<int>(2).Add(i, 2)],
+//!                  array[List<int>(2).Add(i, 3)]);
+//! }
+//!
+//! @endcode
+template<typename ElementType>
+struct IMonoArray : public IMonoObject
 {
+protected:
+	int         elementSize;			//!< Size of elements of this array.
+	IMonoClass *elementClass;			//!< Class that represents elements of this array.
+	int         rank;					//!< Number of dimensions this array has.
+public:
 	//! Gets the length of the array.
 	__declspec(property(get = GetSize)) int Length;
+	//! Gets the length of the array.
+	__declspec(property(get = GetElementSize)) int ElementSize;
 	//! Gets number of dimensions this array has.
 	__declspec(property(get = GetRank)) int Rank;
 	//! Gets the type of the elements of the array.
 	__declspec(property(get = GetElementClass)) IMonoClass *ElementClass;
-	//! Provides access to the item.
-	//!
-	//! Don't hesitate on dereferencing returned pointer: Mono arrays have tendency of
-	//! being moved around the memory.
+
+	//! Creates new wrapper for given array.
+	IMonoArray(mono::Array ar)
+		: IMonoObject()
+		, elementSize(0)
+		, elementClass(nullptr)
+		, rank(0)
+	{
+		this->Init(ar);
+	}
+	//! Creates new wrapper for given array.
+	IMonoArray(MonoGCHandle &handle)
+		: IMonoObject()
+		, elementSize(0)
+		, elementClass(nullptr)
+		, rank(0)
+	{
+		this->Init(handle.Object);
+	}
+private:
+	void Init(mono::Array ar)
+	{
+		if (ar)
+		{
+			this->obj = ar;
+			IMonoObjects *objs = MonoEnv->Objects;
+			this->klass = objs->GetObjectClass(ar);
+			this->elementClass = objs->GetArrayElementClass(ar);
+			this->elementSize = objs->GetArrayElementSize(ar);
+			this->rank = objs->GetArrayRank(ar);
+		}
+	}
+public:
+	//! Provides read/write access to the element of the array.
 	//!
 	//! @param index Zero-based index of the item to access.
 	//!
-	//! @returns Pointer to the item. The pointer is either mono::object, if this is an
-	//!          array of reference types, or a pointer to a struct that can be easily
-	//!          dereferenced, if this is an array of value types.
-	VIRTUAL_API virtual void *Item(int index) = 0;
+	//! @returns Reference to the element of the array.
+	ElementType& operator[](int index)
+	{
+		_MonoArray *a = (_MonoArray *)this->obj;
+		return *(ElementType *)(((char*)(a)->vector) + this->elementSize * index);
+	}
+	//! Provides read/write access to the element of the array.
+	//!
+	//! @param indices A list of indices that identify location of the element on the array.
+	//!
+	//! @returns Reference to the element of the array.
+	ElementType& operator[](List<int> &indices)
+	{
+		_MonoArray *a = (_MonoArray *)this->obj;
+		// Checking everything.
+		if (indices.Length == 0)
+		{
+			CryFatalError("Unable to access an element of the array using no indices.");
+		}
+		if (!a->bounds)
+		{
+			if (indices.Length == 1)
+			{
+				return this->operator[](indices[0]);
+			}
+			CryFatalError("Attempt was made to access an element of 1D array via more then 1 index.");
+		}
+		if (indices.Length != this->rank)
+		{
+			CryFatalError("Unable to access an element of the array using invalid number of indices.");
+		}
+		int position = 0;
+		for (int i = 0; i < this->rank; i++)
+		{
+			MonoArrayBounds bounds = a->bounds[i];
+			int index = indices[i];
+			if (index < bounds.lower_bound || index - bounds.lower_bound >= bounds.length)
+			{
+				CryFatalError("The index #%d is out of range of the Mono array's dimension.", i);
+			}
+			position *= bounds.length;
+			position += index - bounds.lower_bound;
+		}
+		return this->operator[](position);
+	}
 	//! Gets the length of the dimension of the array.
 	//!
 	//! @param dimensionIndex Zero-based index of the dimension which length to get.
-	VIRTUAL_API virtual int GetLength(int dimensionIndex) = 0;
+	int GetLength(int dimensionIndex) const
+	{
+		MonoArray *arrayPtr = (MonoArray *)this->obj;
+		if (!arrayPtr->bounds)
+		{
+			return 0;
+		}
+		return arrayPtr->bounds[dimensionIndex].length;
+	}
 	//! Gets the lower bound of the dimension of the array.
 	//!
 	//! @param dimensionIndex Zero-based index of the dimension which lower bound to get.
-	VIRTUAL_API virtual int GetLowerBound(int dimensionIndex) = 0;
-	
-	
-	template<typename T> T& At(int index)
+	int GetLowerBound(int dimensionIndex) const
 	{
-		return *(T *)this->Item(index);
+		MonoArray *arrayPtr = (MonoArray *)this->obj;
+		if (!arrayPtr->bounds)
+		{
+			return 0;
+		}
+		return arrayPtr->bounds[dimensionIndex].lower_bound;
 	}
 
-	VIRTUAL_API virtual int GetSize() = 0;
-	VIRTUAL_API virtual int GetRank() = 0;
-	VIRTUAL_API virtual IMonoClass *GetElementClass() = 0;
+	int GetSize() const
+	{
+		MonoArray *arrayPtr = (MonoArray *)this->obj;
+		return arrayPtr->max_length;
+	}
+	int GetElementSize() const
+	{
+		return this->elementSize;
+	}
+	int GetRank() const
+	{
+		return this->rank;
+	}
+	IMonoClass *GetElementClass() const
+	{
+		return this->elementSize;
+	}
 };

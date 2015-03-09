@@ -2,12 +2,7 @@
 
 #include "MonoDelegates.h"
 
-IMonoDelegate *MonoDelegates::Wrap(mono::delegat delegat)
-{
-	return new MonoDelegateWrapper(delegat);
-}
-
-IMonoDelegate *MonoDelegates::Create(IMonoClass *delegateType, IMonoMethod *method)
+mono::delegat MonoDelegates::Create(IMonoClass *delegateType, IMonoMethod *method)
 {
 	if (!delegateType)
 	{
@@ -40,10 +35,10 @@ IMonoDelegate *MonoDelegates::Create(IMonoClass *delegateType, IMonoMethod *meth
 		return nullptr;
 	}
 
-	return new MonoDelegateWrapper(res);
+	return res;
 }
 
-IMonoDelegate *MonoDelegates::Create(IMonoClass *delegateType, IMonoMethod *method, mono::object target)
+mono::delegat MonoDelegates::Create(IMonoClass *delegateType, IMonoMethod *method, mono::object target)
 {
 	if (!delegateType)
 	{
@@ -79,10 +74,10 @@ IMonoDelegate *MonoDelegates::Create(IMonoClass *delegateType, IMonoMethod *meth
 		return nullptr;
 	}
 
-	return new MonoDelegateWrapper(res);
+	return res;
 }
 
-IMonoDelegate *MonoDelegates::Create(IMonoClass *delegateType, void *functionPointer)
+mono::delegat MonoDelegates::Create(IMonoClass *delegateType, void *functionPointer)
 {
 	if (!delegateType)
 	{
@@ -114,7 +109,7 @@ IMonoDelegate *MonoDelegates::Create(IMonoClass *delegateType, void *functionPoi
 		return nullptr;
 	}
 
-	return new MonoDelegateWrapper(res);
+	return res;
 }
 
 CreateDelegateForFunctionPointer MonoDelegates::createDelegateForFunctionPointer = nullptr;

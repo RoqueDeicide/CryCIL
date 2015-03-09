@@ -29,7 +29,7 @@ public:
 	MonoClassWrapper(MonoClass *klass);
 	~MonoClassWrapper();
 	
-	virtual IMonoFunction *GetFunction(const char *name, IMonoArray *types = nullptr);
+	virtual IMonoFunction *GetFunction(const char *name, IMonoArray<> &types);
 	virtual IMonoFunction *GetFunction(const char *name, List<IMonoClass *> &classes);
 	virtual IMonoFunction *GetFunction(const char *name, List<ClassSpec> &specifiedClasses);
 	virtual IMonoFunction *GetFunction(const char *name, List<const char *> &paramTypeNames);
@@ -54,7 +54,7 @@ public:
 	virtual void SetField(mono::object obj, IMonoField *field, void *value);
 	
 	virtual IMonoProperty *GetProperty(const char *name);
-	virtual IMonoProperty *GetProperty(const char *name, IMonoArray *types);
+	virtual IMonoProperty *GetProperty(const char *name, IMonoArray<> &types);
 	virtual IMonoProperty *GetProperty(const char *name, List<IMonoClass *> &classes);
 	virtual IMonoProperty *GetProperty(const char *name, List<ClassSpec> &specifiedClasses);
 	virtual IMonoProperty *GetProperty(const char *name, List<const char *> &paramTypeNames);

@@ -5,11 +5,6 @@ struct IMonoTexts
 {
 	virtual ~IMonoTexts() {}
 
-	//! Wraps given Mono string, allowing access to its API.
-	//!
-	//! The result must be deleted when not needed anymore.
-	VIRTUAL_API virtual IMonoText *Wrap(mono::string text) = 0;
-
 	//! Converts given null-terminated string to Mono managed object.
 	VIRTUAL_API virtual mono::string ToManaged(const char *text) = 0;
 	//! Converts given null-terminated string to Mono managed object.

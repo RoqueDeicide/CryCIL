@@ -28,11 +28,6 @@ const char *MonoTexts::ToNative(mono::string text)
 	return t;
 }
 
-IMonoText *MonoTexts::Wrap(mono::string text)
-{
-	return new MonoText(text);
-}
-
 const wchar_t *MonoTexts::ToNative16(mono::string text)
 {
 	wchar_t *chars = (wchar_t *)mono_string_to_utf16((MonoString *)text);

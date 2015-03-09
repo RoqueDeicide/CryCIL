@@ -12,18 +12,12 @@
 #include "Interfaces/IMonoProperty.h"
 #include "Interfaces/IMonoEvent.h"
 #include "Interfaces/IMonoField.h"
-#include "Interfaces/IMonoHandle.h"
-#include "Interfaces/IMonoText.h"
 #include "Interfaces/IMonoGC.h"
 #include "Interfaces/IMonoAssembly.h"
 #include "Interfaces/ICryambly.h"
 #include "Interfaces/IMonoCoreLibrary.h"
-#include "Interfaces/IMonoArray.h"
 #include "Interfaces/IMonoClass.h"
-#include "Interfaces/IMonoException.h"
 #include "Interfaces/IMonoMethod.h"
-#include "Interfaces/IMonoDelegate.h"
-#include "Interfaces/IMonoThread.h"
 #include "Interfaces/IMonoObjects.h"
 #include "Interfaces/IMonoSystemListener.h"
 
@@ -426,3 +420,10 @@ BOX_UNBOX inline mono::float32_color Box(ColorF value) { return MonoEnv->Objects
 //! @param value Value to box.
 BOX_UNBOX inline mono::aabb Box(AABB value) { return MonoEnv->Objects->Boxer->Box(value); }
 #pragma endregion
+
+#include "Interfaces/IMonoObject.h"
+#include "Interfaces/IMonoArray.h"
+#include "Interfaces/IMonoDelegate.h"
+#include "Interfaces/IMonoException.h"
+#include "Interfaces/IMonoThread.h"
+#include "Interfaces/IMonoText.h"

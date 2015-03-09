@@ -183,7 +183,7 @@ mono::object MonoFunction::InternalInvoke(void *object, void **args, mono::excep
 	return (mono::object)result;
 }
 
-mono::object MonoFunction::InternalInvokeArray(void *object, IMonoArray *args, mono::exception *ex, bool polymorph)
+mono::object MonoFunction::InternalInvokeArray(void *object, IMonoArray<> &args, mono::exception *ex, bool polymorph)
 {
 	MonoMethod *methodToInvoke;
 	if (polymorph)
@@ -195,7 +195,7 @@ mono::object MonoFunction::InternalInvokeArray(void *object, IMonoArray *args, m
 	{
 		methodToInvoke = this->wrappedMethod;
 	}
-	MonoArray *paramsArray = args->GetHandle<MonoArray>();
+	MonoArray *paramsArray = (MonoArray *)(mono::object)args;
 	MonoObject *exception;
 	MonoObject *result = mono_runtime_invoke_array(methodToInvoke, object, paramsArray, &exception);
 	if (exception)

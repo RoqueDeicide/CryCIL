@@ -7,9 +7,6 @@ struct IMonoThreads
 {
 	virtual ~IMonoThreads() {}
 
-	//! Creates a wrapper for a MonoThread.
-	VIRTUAL_API virtual IMonoThread *Wrap(mono::Thread _thread) = 0;
-
 	//! Attaches calling thread to Mono run-time if not attached, otherwise returns a Mono object
 	//! for it.
 	//!

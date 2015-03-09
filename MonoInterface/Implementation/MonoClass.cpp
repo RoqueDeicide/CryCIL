@@ -188,7 +188,7 @@ IMonoFunction *MonoClassWrapper::GetFunction(const char *name, const char *param
 	return nullptr;
 }
 
-IMonoFunction *MonoClassWrapper::GetFunction(const char *name, IMonoArray *types /*= nullptr*/)
+IMonoFunction *MonoClassWrapper::GetFunction(const char *name, IMonoArray<> &types)
 {
 	if (!types)
 	{
@@ -202,7 +202,7 @@ IMonoFunction *MonoClassWrapper::GetFunction(const char *name, IMonoArray *types
 		{
 			IMonoFunction *m = overloads->At(i);
 			
-			if (m->ParameterCount != types->Length)
+			if (m->ParameterCount != types.Length)
 			{
 				continue;
 			}
@@ -213,7 +213,7 @@ IMonoFunction *MonoClassWrapper::GetFunction(const char *name, IMonoArray *types
 			for (int j = 0; j < typeNames->Length; j++)
 			{
 				// Look at definition of _MonoReflectionType in mono sources to see what is going on here.
-				MonoType *type = (MonoType *)((unsigned char *)types->Item(j) + sizeof(MonoObject));
+				MonoType *type = (MonoType *)((unsigned char *)(&types[j]) + sizeof(MonoObject));
 				if (strcmp(typeNames->At(j), mono_type_get_name(type)) != 0)
 				{
 					match = false;
@@ -439,7 +439,7 @@ IMonoProperty *MonoClassWrapper::GetProperty(const char *name)
 	return nullptr;
 }
 
-IMonoProperty *MonoClassWrapper::GetProperty(const char *name, IMonoArray *types /*= nullptr*/)
+IMonoProperty *MonoClassWrapper::GetProperty(const char *name, IMonoArray<> &types)
 {
 	List<IMonoProperty *> *overloads;
 	if (this->properties.TryGet(name, overloads))
@@ -451,7 +451,7 @@ IMonoProperty *MonoClassWrapper::GetProperty(const char *name, IMonoArray *types
 
 			int propParamCount = p->ParameterCount;
 
-			if (propParamCount != types->Length)
+			if (propParamCount != types.Length)
 			{
 				continue;
 			}
@@ -462,7 +462,7 @@ IMonoProperty *MonoClassWrapper::GetProperty(const char *name, IMonoArray *types
 			for (int j = 0; j < propParamCount; j++)
 			{
 				// Look at definition of _MonoReflectionType in mono sources to see what is going on here.
-				MonoType *type = (MonoType *)((unsigned char *)types->Item(j) + sizeof(MonoObject));
+				MonoType *type = (MonoType *)((unsigned char *)(&types[j]) + sizeof(MonoObject));
 				if (strcmp(typeNames->At(j), mono_type_get_name(type)) != 0)
 				{
 					match = false;

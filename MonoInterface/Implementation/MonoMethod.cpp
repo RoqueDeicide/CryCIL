@@ -4,7 +4,7 @@
 mono::object MonoMethodWrapper::Invoke
 (
 	void *object,
-	IMonoArray *params,
+	IMonoArray<> &params,
 	mono::exception *exc,
 	bool polymorph
 )

@@ -50,7 +50,7 @@ struct IMonoMethod : public virtual IMonoFunction
 	//!          If result is of value-type, it's boxed.
 	//! @example DoxygenExampleFiles\MonoMethodInvocations.h
 	VIRTUAL_API virtual mono::object Invoke
-		(void *object, IMonoArray *params, mono::exception *exc = nullptr, bool polymorph = false) = 0;
+		(void *object, IMonoArray<> &params, mono::exception *exc = nullptr, bool polymorph = false) = 0;
 	//! Invokes this method.
 	//!
 	//! Since extension methods are static by their internal nature, you can pass null

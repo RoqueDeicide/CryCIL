@@ -7,7 +7,7 @@ mono::object MonoStaticMethod::Invoke(mono::exception *exc /*= nullptr*/)
 	return this->InternalInvoke(nullptr, nullptr, exc, false);
 }
 
-mono::object MonoStaticMethod::Invoke(IMonoArray *params, mono::exception *exc /*= nullptr*/)
+mono::object MonoStaticMethod::Invoke(IMonoArray<> &params, mono::exception *exc /*= nullptr*/)
 {
 	return this->InternalInvokeArray(nullptr, params, exc, false);
 }

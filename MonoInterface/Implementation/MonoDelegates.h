@@ -1,7 +1,6 @@
 #pragma once
 
 #include "IMonoInterface.h"
-#include "MonoDelegate.h"
 
 typedef mono::delegat(__stdcall *CreateStaticDelegate)(mono::type, mono::object, mono::exception *);
 typedef mono::delegat(__stdcall *CreateInstanceDelegate)(mono::type, mono::object, mono::object, mono::exception *);
@@ -14,8 +13,7 @@ private:
 	static CreateInstanceDelegate           createInstanceDelegate;
 	static CreateDelegateForFunctionPointer createDelegateForFunctionPointer;
 public:
-	virtual IMonoDelegate *Wrap(mono::delegat delegat);
-	virtual IMonoDelegate *Create(IMonoClass *delegateType, IMonoMethod *method);
-	virtual IMonoDelegate *Create(IMonoClass *delegateType, IMonoMethod *method, mono::object target);
-	virtual IMonoDelegate *Create(IMonoClass *delegateType, void *functionPointer);
+	virtual mono::delegat Create(IMonoClass *delegateType, IMonoMethod *method);
+	virtual mono::delegat Create(IMonoClass *delegateType, IMonoMethod *method, mono::object target);
+	virtual mono::delegat Create(IMonoClass *delegateType, void *functionPointer);
 };

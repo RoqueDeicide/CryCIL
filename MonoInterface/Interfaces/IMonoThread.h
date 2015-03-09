@@ -27,8 +27,16 @@ enum ThreadPriority
 };
 
 //! Wraps functionality of Mono threads.
-struct IMonoThread : public IMonoHandle
+struct IMonoThread : public IMonoObject
 {
+	//! Creates new wrapper for given thread.
+	IMonoThread(mono::Thread thr)
+		: IMonoObject(thr)
+	{}
+	//! Creates new wrapper for given thread.
+	IMonoThread(MonoGCHandle &handle)
+		: IMonoObject(handle)
+	{}
 	//! Gets or sets the name of this thread.
 	__declspec(property(get = GetName, put = SetName)) mono::string Name;
 	//! Gets the state this thread is in.
@@ -45,37 +53,104 @@ struct IMonoThread : public IMonoHandle
 	//! Detaches this thread from Mono run-time.
 	//!
 	//! Should be done when thread is finishing its work and when run-time is shutting down.
-	VIRTUAL_API virtual void Detach() = 0;
+	void Detach()
+	{
+		MonoEnv->Objects->ThreadDetach(this->obj);
+	}
 
 	//! Starts this thread, if it wasn't started already.
 	//!
 	//! @returns Indication whether this thread was not running before.
-	VIRTUAL_API virtual bool Start() = 0;
+	bool Start()
+	{
+		mono::exception ex;
+		this->klass->GetFunction("Start", 0)->ToInstance()->Invoke(this->obj, &ex);
+		if (ex)
+		{
+			if (strcmp(IMonoException(ex).Class->Name, "ThreadStateException") == 0)
+			{
+				return false;
+			}
+			MonoEnv->HandleException(ex);
+		}
+		return true;
+	}
 	//! Starts this thread, if it wasn't started already.
 	//!
 	//! @param obj Object to pass to the method that was used to create this thread.
 	//!
 	//! @returns Indication whether this thread was not running before or wasn't created using
 	//!          parameterless method.
-	VIRTUAL_API virtual bool Start(mono::object obj) = 0;
+	bool Start(mono::object obj)
+	{
+		void *param = obj;
+		mono::exception ex;
+		this->klass->GetFunction("Start", 1)->ToInstance()->Invoke(this->obj, &param, &ex);
+		if (ex)
+		{
+			if (strcmp(IMonoException(ex).Class->Name, "ThreadStateException") == 0)
+			{
+				return false;
+			}
+			MonoEnv->HandleException(ex);
+		}
+		return true;
+	}
 
 	//! Aborts this thread by sending ThreadAbortException into it.
-	VIRTUAL_API virtual void Abort() = 0;
+	void Abort()
+	{
+		this->klass->GetFunction("Abort", 0)->ToInstance()->Invoke(this->obj);
+	}
 
 	//! Suspends calling thread until this thread terminates.
-	VIRTUAL_API virtual void Join() = 0;
+	void Join()
+	{
+		this->klass->GetFunction("Join", 0)->ToInstance()->Invoke(this->obj);
+	}
 	//! Suspends calling thread until this thread terminates or until set amount of time passes.
 	//!
 	//! @param timeSpan Time in milliseconds to wait.
-	VIRTUAL_API virtual void Join(int timeSpan) = 0;
+	void Join(int timeSpan)
+	{
+		void *param = &timeSpan;
+		this->klass->GetFunction("Join", 1)->ToInstance()->Invoke(this->obj, &param);
+	}
 
 
-	VIRTUAL_API virtual mono::string GetName() = 0;
-	VIRTUAL_API virtual void SetName(mono::string value) = 0;
-	VIRTUAL_API virtual ThreadState GetState() = 0;
-	VIRTUAL_API virtual ThreadPriority GetPriority() = 0;
-	VIRTUAL_API virtual void SetPriority(ThreadPriority value) = 0;
-	VIRTUAL_API virtual bool IsAlive() = 0;
-	VIRTUAL_API virtual bool IsBackground() = 0;
-	VIRTUAL_API virtual void SetBackground(bool value) = 0;
+	mono::string GetName()
+	{
+		return this->klass->GetProperty("Name")->Getter->ToInstance()->Invoke(this->obj);
+	}
+	void SetName(mono::string value)
+	{
+		void *param = value;
+		this->klass->GetProperty("Name")->Setter->ToInstance()->Invoke(this->obj, &param);
+	}
+	ThreadState GetState()
+	{
+		return Unbox<ThreadState>(this->klass->GetProperty("ThreadState")->Getter->ToInstance()->Invoke(this->obj));
+	}
+	ThreadPriority GetPriority()
+	{
+		return Unbox<ThreadPriority>(this->klass->GetProperty("Priority")->Getter->ToInstance()->Invoke(this->obj));
+	}
+	void SetPriority(ThreadPriority value)
+	{
+		void *param = &value;
+		this->klass->GetProperty("Priority")->Setter->ToInstance()->Invoke(this->obj, &param);
+	}
+	bool IsAlive()
+	{
+		this->klass->GetProperty("IsAlive", 0)->Getter->ToInstance()->Invoke(this->obj);
+	}
+	bool IsBackground()
+	{
+		this->klass->GetProperty("IsBackground", 0)->Getter->ToInstance()->Invoke(this->obj);
+	}
+	void SetBackground(bool value)
+	{
+		void *param = &value;
+		this->klass->GetProperty("IsBackground", 0)->Setter->ToInstance()->Invoke(this->obj, &param);
+	}
 };

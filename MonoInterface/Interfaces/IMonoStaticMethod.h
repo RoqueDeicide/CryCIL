@@ -31,7 +31,7 @@ struct IMonoStaticMethod : public virtual IMonoFunction
 	//! @returns A reference to the result of execution, if no unhandled exception was thrown.
 	//!          If result is of value-type, it's boxed.
 	//! @example DoxygenExampleFiles\MonoMethodInvocations.h
-	VIRTUAL_API virtual mono::object Invoke(IMonoArray *params, mono::exception *exc = nullptr) = 0;
+	VIRTUAL_API virtual mono::object Invoke(IMonoArray<> &params, mono::exception *exc = nullptr) = 0;
 	//! Invokes this method.
 	//!
 	//! Since extension methods are static by their internal nature, you can pass null

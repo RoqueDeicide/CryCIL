@@ -31,7 +31,7 @@ struct IMonoConstructor : public virtual IMonoFunction
 	//!             method in a default manner.
 	//!
 	//! @returns A reference to the created and initialized object.
-	VIRTUAL_API virtual mono::object Create(IMonoArray *args, mono::exception *ex = nullptr) = 0;
+	VIRTUAL_API virtual mono::object Create(IMonoArray<> &args, mono::exception *ex = nullptr) = 0;
 	//! Creates a new object of the type where this class is defined.
 	//!
 	//! Use this method to create and initialize reference-type objects.
@@ -66,7 +66,7 @@ struct IMonoConstructor : public virtual IMonoFunction
 	//!             method in a default manner.
 	//!
 	//! @returns A reference to the created and initialized object.
-	VIRTUAL_API virtual void Initialize(void *obj, IMonoArray *args, mono::exception *ex = nullptr) = 0;
+	VIRTUAL_API virtual void Initialize(void *obj, IMonoArray<> &args, mono::exception *ex = nullptr) = 0;
 	//! Initializes an object of the type where this class is defined.
 	//!
 	//! Use this method to initialize value-type objects.

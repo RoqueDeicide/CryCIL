@@ -18,7 +18,7 @@ protected:
 	IMonoClass *klass;
 
 	mono::object InternalInvoke(void *object, void **args, mono::exception *ex, bool polymorph);
-	mono::object InternalInvokeArray(void *object, IMonoArray *args, mono::exception *ex, bool polymorph);
+	mono::object InternalInvokeArray(void *object, IMonoArray<> &args, mono::exception *ex, bool polymorph);
 public:
 	MonoFunction(MonoMethod *method, IMonoClass *klass = nullptr);
 	~MonoFunction()

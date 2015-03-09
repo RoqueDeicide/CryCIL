@@ -26,10 +26,6 @@ struct IMonoObjects
 	//! Gets the object that provides access to Mono threads interface.
 	__declspec(property(get = GetThreads))    IMonoThreads      *Threads;
 
-	//! Creates a new wrapper for given MonoObject.
-	//!
-	//! @param obj An object to wrap.
-	VIRTUAL_API virtual IMonoHandle *Wrap(mono::object obj) = 0;
 	//! Unboxes managed value-type object.
 	//!
 	//! @param value Value-type object to unbox.
@@ -41,4 +37,77 @@ struct IMonoObjects
 	VIRTUAL_API virtual IMonoDelegates    *GetDelegates() = 0;
 	VIRTUAL_API virtual IDefaultBoxinator *GetBoxinator() = 0;
 	VIRTUAL_API virtual IMonoThreads      *GetThreads() = 0;
+
+	//! Gets the wrapper for a class that represents provided object.
+	VIRTUAL_API virtual IMonoClass *GetObjectClass(mono::object obj) = 0;
+
+#pragma region Array API
+	//! Gets number of dimensions in the Mono array.
+	//!
+	//! @param ar Pointer to the Mono array.
+	VIRTUAL_API virtual int GetArrayRank(mono::Array ar) = 0;
+	//! Gets the size of each element in the Mono array.
+	//!
+	//! @param ar Pointer to the Mono array.
+	VIRTUAL_API virtual int GetArrayElementSize(mono::Array ar) = 0;
+	//! Gets the pointer to the wrapper for the class that represents elements in the Mono array.
+	//!
+	//! @param ar Pointer to the Mono array.
+	VIRTUAL_API virtual IMonoClass *GetArrayElementClass(mono::Array ar) = 0;
+#pragma endregion
+
+#pragma region Exception API
+	//! Throws Mono exception in the Mono run-time.
+	//!
+	//! @param ex Exception to throw.
+	VIRTUAL_API virtual void ThrowException(mono::exception ex) = 0;
+#pragma endregion
+
+#pragma region Delegate API
+	//! Gets a wrapper for a function that is represented by the delegate.
+	//!
+	//! Returned wrapper is allocated in the heap, so delete it, once you don't need it.
+	//!
+	//! @param delegat Delegate object.
+	VIRTUAL_API virtual IMonoFunction *GetDelegateFunction(mono::delegat delegat) = 0;
+	//! Gets an object that is used when invoking instance method that is represented by the delegate.
+	//!
+	//! @param delegat Delegate object.
+	VIRTUAL_API virtual mono::object GetDelegateTarget(mono::delegat delegat) = 0;
+	//! Gets a function pointer for a method that is represented by the delegate.
+	//!
+	//! @param delegat Delegate object.
+	VIRTUAL_API virtual void *GetDelegateFunctionPointer(mono::delegat delegat) = 0;
+#pragma endregion
+
+#pragma region String API
+	//! Determines whether one string is equal to another.
+	VIRTUAL_API virtual bool StringEquals(mono::string str, mono::string other) = 0;
+	//! Puts the string into intern pool.
+	//!
+	//! The memory the string was taking up before interning will be eventually GCed.
+	//!
+	//! All interned strings are pinned, so it is highly recommended to intern any string that is
+	//! constantly being used.
+	VIRTUAL_API virtual mono::string InternString(mono::string str) = 0;
+	//! Gets reference to a string character in UTF-16 encoding.
+	//!
+	//! @param index Zero-based index of the character to get.
+	VIRTUAL_API virtual wchar_t &StringAt(mono::string str, int index) = 0;
+	//! Gets hash code of the string.
+	VIRTUAL_API virtual int GetStringHashCode(mono::string str) = 0;
+	//! Determines whether this string is interned.
+	VIRTUAL_API virtual bool IsStringInterned(mono::string str) = 0;
+	//! Creates a null-terminated array of UTF-8 characters from Mono string.
+	VIRTUAL_API virtual const char *StringToNativeUTF8(mono::string str) = 0;
+	//! Creates a null-terminated array of UTF-16 characters from Mono string.
+	VIRTUAL_API virtual const wchar_t *StringToNativeUTF16(mono::string str) = 0;
+#pragma endregion
+
+#pragma region Thread API
+	//! Detaches the thread from Mono run-time.
+	//!
+	//! Should be done when thread is finishing its work and when run-time is shutting down.
+	VIRTUAL_API virtual void ThreadDetach(mono::Thread thr) = 0;
+#pragma endregion
 };

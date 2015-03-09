@@ -26,9 +26,9 @@
 // Forward declarations.
 struct IDefaultBoxinator;
 struct IMonoFunctionalityWrapper;
-struct IMonoHandle;
+struct IMonoObject;
 struct IMonoAssembly;
-struct IMonoArray;
+template<typename ElementType = mono::object> struct IMonoArray;
 struct IMonoClass;
 struct IMonoMethod;
 struct IMonoProperty;
