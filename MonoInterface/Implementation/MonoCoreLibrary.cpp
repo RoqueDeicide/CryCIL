@@ -38,6 +38,7 @@ MonoCoreLibrary::MonoCoreLibrary()
 	this->exception   = MonoClassCache::Wrap(mono_get_exception_class());
 	this->objClass    = MonoClassCache::Wrap(mono_get_object_class());
 	this->valueType   = this->GetClass("System", "ValueType");
+	this->_thread     = MonoClassCache::Wrap(mono_get_thread_class());
 
 	List<IMonoAssembly *> *corlibList = new List<IMonoAssembly *>(1);
 	corlibList->Add(this);
@@ -154,6 +155,11 @@ IMonoClass *MonoCoreLibrary::GetObjectClass()
 IMonoClass *MonoCoreLibrary::GetValueType()
 {
 	return this->valueType;
+}
+
+IMonoClass *MonoCoreLibrary::GetThread()
+{
+	return this->_thread;
 }
 
 IMonoClass *MonoCoreLibrary::GetClass(const char *nameSpace, const char *className)

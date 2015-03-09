@@ -176,6 +176,7 @@ void TestAssemblies()
 	TestClassFromAssembly(corlib->Sbyte,     "System.Sbyte");
 	TestClassFromAssembly(corlib->String,    "System.String");
 	TestClassFromAssembly(corlib->Type,      "System.Type");
+	TestClassFromAssembly(corlib->Thread,    "System.Threading.Thread");
 
 	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Getting a wrapper for Cryambly.");

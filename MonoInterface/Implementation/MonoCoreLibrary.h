@@ -33,6 +33,7 @@ private:
 	IMonoClass *exception;
 	IMonoClass *objClass;
 	IMonoClass *valueType;
+	IMonoClass *_thread;
 public:
 	MonoCoreLibrary();
 	~MonoCoreLibrary();
@@ -58,6 +59,7 @@ public:
 	virtual IMonoClass *GetException();
 	virtual IMonoClass *GetObjectClass();
 	virtual IMonoClass *GetValueType();
+	virtual IMonoClass *GetThread();
 
 	virtual IMonoClass *GetClass(const char *nameSpace, const char *className);
 

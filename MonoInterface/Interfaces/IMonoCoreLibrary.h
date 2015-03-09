@@ -27,6 +27,7 @@ struct IMonoCoreLibrary : public IMonoAssembly
 	__declspec(property(get = GetException))   IMonoClass *Exception;
 	__declspec(property(get = GetObjectClass)) IMonoClass *Object;
 	__declspec(property(get = GetValueType))   IMonoClass *ValueType;
+	__declspec(property(get = GetThread))      IMonoClass *Thread;
 
 	VIRTUAL_API virtual IMonoClass *GetBoolean() = 0;
 	VIRTUAL_API virtual IMonoClass *GetIntPtr() = 0;
@@ -49,4 +50,5 @@ struct IMonoCoreLibrary : public IMonoAssembly
 	VIRTUAL_API virtual IMonoClass *GetException() = 0;
 	VIRTUAL_API virtual IMonoClass *GetObjectClass() = 0;
 	VIRTUAL_API virtual IMonoClass *GetValueType() = 0;
+	VIRTUAL_API virtual IMonoClass *GetThread() = 0;
 };
