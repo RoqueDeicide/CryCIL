@@ -79,6 +79,17 @@ public:
 	{
 		this->Dispose();
 	}
+	//! Swaps internal data between too lists.
+	SWAP_ASSIGNMENT List<ElementType> &operator=(List<ElementType> &other)
+	{
+		if (this->elements != other.elements)
+		{
+			std::swap(this->elements, other.elements);
+			std::swap(this->length,   other.length);
+			std::swap(this->capacity, other.capacity);
+		}
+		return *this;
+	}
 	//! Places an item at the end of this list.
 	//!
 	//! @param item Item to add.
