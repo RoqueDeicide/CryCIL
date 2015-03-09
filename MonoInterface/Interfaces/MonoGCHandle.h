@@ -94,7 +94,7 @@ public:
 	//!          this is a weak handle and held object has been collected.
 	__declspec(property(get = GetObjectPointer)) mono::object Object;
 
-	mono::object GetObjectPointer()
+	mono::object GetObjectPointer() const
 	{
 		return MonoEnv->GC->GetGCHandleTarget(this->handle);
 	}
