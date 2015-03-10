@@ -46,8 +46,8 @@ public:
 	__declspec(property(get = GetTarget)) mono::object Target;
 	//! Gets a raw function pointer that can be used to invoke this delegate.
 	//!
-	//! Returned function pointer may cease to exist after the delegate is GCed.
-	__declspec(property(get = GetFunctionPointer)) void *FunctionPointer;
+	//! Returned function pointer ceases to exist after the delegate is GCed.
+	__declspec(property(get = GetTrampoline)) void *Trampoline;
 
 	IMonoFunction *GetFunction()
 	{
@@ -61,8 +61,8 @@ public:
 	{
 		return MonoEnv->Objects->GetDelegateTarget(this->obj);
 	}
-	void *GetFunctionPointer()
+	void *GetTrampoline()
 	{
-		return MonoEnv->Objects->GetDelegateFunctionPointer(this->obj);
+		return MonoEnv->Objects->GetDelegateTrampoline(this->obj);
 	}
 };

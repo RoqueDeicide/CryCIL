@@ -74,10 +74,14 @@ struct IMonoObjects
 	//!
 	//! @param delegat Delegate object.
 	VIRTUAL_API virtual mono::object GetDelegateTarget(mono::delegat delegat) = 0;
-	//! Gets a function pointer for a method that is represented by the delegate.
+	//! Gets a function pointer for a wrapper that invokes Mono function that is represented by the delegate.
 	//!
 	//! @param delegat Delegate object.
-	VIRTUAL_API virtual void *GetDelegateFunctionPointer(mono::delegat delegat) = 0;
+	//!
+	//! @returns A pointer to the special function that is called 'delegate trampoline' which is a special
+	//!          wrapper-function that invokes method that is called by the delegate. It will be deleted
+	//!          when the delegate is collected by GC.
+	VIRTUAL_API virtual void *GetDelegateTrampoline(mono::delegat delegat) = 0;
 #pragma endregion
 
 #pragma region String API

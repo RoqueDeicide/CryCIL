@@ -106,10 +106,10 @@ mono::object MonoObjects::GetDelegateTarget(mono::delegat delegat)
 	return (mono::object)((MonoDelegate *)delegat)->target;
 }
 
-void *MonoObjects::GetDelegateFunctionPointer(mono::delegat delegat)
+void *MonoObjects::GetDelegateTrampoline(mono::delegat delegat)
 {
 	static void *(*mono_delegate_to_ftnptr_FnPtr)(mono::delegat) = nullptr;
-
+	
 	if (!mono_delegate_to_ftnptr_FnPtr)
 	{
 		MonoClass *marshalClass =
