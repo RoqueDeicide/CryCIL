@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using CryCil.Geometry;
 
@@ -357,6 +358,7 @@ namespace CryCil
 		/// <param name="result">
 		/// When the method completes, contains the dot product of the two vectors.
 		/// </param>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static void Dot(ref Vector2 left, ref Vector2 right, out float result)
 		{
 			result = (left.X * right.X) + (left.Y * right.Y);
@@ -367,6 +369,7 @@ namespace CryCil
 		/// <param name="left"> First source vector.</param>
 		/// <param name="right">Second source vector.</param>
 		/// <returns>The dot product of the two vectors.</returns>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static float Dot(Vector2 left, Vector2 right)
 		{
 			return (left.X * right.X) + (left.Y * right.Y);

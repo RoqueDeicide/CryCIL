@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using CryCil.Geometry;
 using CryCil.Graphics;
@@ -529,6 +530,7 @@ namespace CryCil
 		/// <param name="left"> Left operand.</param>
 		/// <param name="right">Right operand.</param>
 		/// <returns>Dot product.</returns>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static float operator |(Vector3 left, Vector3 right)
 		{
 			return left.X * right.X + left.Y * right.Y + left.Z * right.Z;
@@ -539,6 +541,7 @@ namespace CryCil
 		/// <param name="left"> Left operand.</param>
 		/// <param name="right">Right operand.</param>
 		/// <returns>Cross product.</returns>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static Vector3 operator %(Vector3 left, Vector3 right)
 		{
 			return
