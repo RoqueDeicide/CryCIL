@@ -122,7 +122,7 @@ MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener
 	mono_domain_set_config
 	(
 		this->appDomain,
-		DirectoryStructure::GetMonoBinariesFolder(),
+		DirectoryStructure::GetCryCilBinariesFolder(),
 		DirectoryStructure::GetMonoAppDomainConfigurationFile()
 	);
 	

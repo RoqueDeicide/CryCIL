@@ -59,7 +59,7 @@ struct DirectoryStructure
 	//! Returns a path to the folder that contains Mono libraries.
 	static const char *GetMonoLibraryFolder();
 	//! Returns a path to the folder that contains CryCIL libraries.
-	static const char *GetMonoBinariesFolder();
+	static const char *GetCryCilBinariesFolder();
 	//! Returns a path to the file that contains Cryambly.
 	static const char *GetCryamblyFile();
 	//! Returns a path to the file that contains Pdb to Mdb converter.

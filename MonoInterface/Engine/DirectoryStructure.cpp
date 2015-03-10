@@ -29,7 +29,7 @@ const char *DirectoryStructure::GetMonoLibraryFolder()
 	).Detach();
 }
 //! Returns a path to the folder that contains CryCIL libraries.
-const char *DirectoryStructure::GetMonoBinariesFolder()
+const char *DirectoryStructure::GetCryCilBinariesFolder()
 {
 	char s = PATH_SEPARATOR;
 	return NtText
