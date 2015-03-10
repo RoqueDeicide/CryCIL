@@ -33,7 +33,7 @@
 //! @param prefix Prefix which presence to check at the start of the text.
 inline bool StartsWith(const char *text, const char *prefix)
 {
-	int textLength = strlen(text);
+	int textLength   = strlen(text);
 	int prefixLength = strlen(prefix);
 
 	return textLength >= prefixLength && strncmp(text, prefix, prefixLength) == 0;

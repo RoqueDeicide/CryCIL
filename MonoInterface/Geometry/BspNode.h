@@ -102,7 +102,7 @@ struct BspNode
 		this->Plane.d = F32NAN_SAFE;
 		if (this->Faces) delete this->Faces; this->Faces = nullptr;
 		if (this->Front) delete this->Front; this->Front = nullptr;
-		if (this->Back) delete this->Back; this->Back = nullptr;
+		if (this->Back)  delete this->Back; this->Back = nullptr;
 	}
 
 	//! Gets the list of all faces in this BSP tree.

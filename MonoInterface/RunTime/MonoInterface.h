@@ -46,21 +46,13 @@ public:
 #pragma region Property Methods
 	//! Returns a pointer to app domain.
 	virtual void *GetAppDomain();
-
 	virtual IMonoAssemblies *GetAssemblies();
-
 	virtual ICryambly *GetCryambly();
-
 	virtual IMonoAssembly *GetPdbMdbAssembly();
-
 	virtual IMonoCoreLibrary *GetCoreLibrary();
-
 	virtual bool GetInitializedIndication();
-
 	virtual IGameFramework *GetGameFramework();
-
 	virtual IMonoObjects *GetObjects();
-
 	virtual IMonoGC *GetGC()
 	{
 		return this->gc;
