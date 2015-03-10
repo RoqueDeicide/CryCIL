@@ -2,6 +2,7 @@
 
 #include "IMonoInterface.h"
 
+//! Implementation for IMonoArrays.
 struct MonoArrays : public IMonoArrays
 {
 	virtual mono::Array Create(int capacity, IMonoClass *klass = nullptr);

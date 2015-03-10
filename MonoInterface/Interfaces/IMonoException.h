@@ -8,15 +8,10 @@
 struct IMonoException : public IMonoObject
 {
 	//! Creates new wrapper for given exception.
-	IMonoException(mono::exception ex)
-		: IMonoObject(ex)
-	{
-	}
+	IMonoException(mono::exception ex) : IMonoObject(ex) {}
 	//! Creates new wrapper for given exception.
-	IMonoException(MonoGCHandle &handle)
-		: IMonoObject(handle)
-	{
-	}
+	IMonoException(MonoGCHandle &handle) : IMonoObject(handle) {}
+	
 	//! Gets the message provided with this exception object.
 	//!
 	//! Result needs to be deleted after use.

@@ -35,12 +35,10 @@ public:
 	virtual IMonoClass *GetClass(const char *nameSpace, const char *className);
 
 	virtual Text *GetName();
-
 	virtual Text *GetFullName();
-
 	virtual Text *GetFileName();
-	//! Returns a pointer to the MonoAssembly for Mono API calls.
-	virtual void * GetWrappedPointer();
-	virtual mono::assembly GetReflectionObject();
 
+	virtual void *GetWrappedPointer();
+	
+	virtual mono::assembly GetReflectionObject();
 };

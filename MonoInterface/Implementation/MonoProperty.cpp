@@ -50,4 +50,3 @@ int MonoPropertyWrapper::GetParameterCount()
 		return this->setter->ParameterCount - 1;
 	}
 }
-

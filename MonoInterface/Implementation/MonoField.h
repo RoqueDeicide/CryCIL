@@ -21,18 +21,11 @@ public:
 		this->name   = mono_field_get_name(this->field);
 	}
 
-	virtual const char *GetName();
-
-	virtual IMonoClass *GetDeclaringClass();
-
-	virtual unsigned int GetOffset();
-
+	virtual const char         *GetName();
+	virtual IMonoClass         *GetDeclaringClass();
+	virtual unsigned int        GetOffset();
 	virtual MonoFieldAttributes GetAttributes();
-
-	virtual void *GetWrappedPointer();
-
-	virtual void Get(mono::object obj, void *value);
-
-	virtual void Set(mono::object obj, void *value);
-
+	virtual void               *GetWrappedPointer();
+	virtual void                Get(mono::object obj, void *value);
+	virtual void                Set(mono::object obj, void *value);
 };

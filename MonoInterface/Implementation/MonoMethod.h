@@ -9,32 +9,13 @@
 
 struct MonoMethodWrapper : public IMonoMethod, public MonoFunction
 {
-	MonoMethodWrapper(MonoMethod *method, IMonoClass *klass = nullptr)
-		: MonoFunction(method, klass) {}
-	//! Invokes this method.
+	MonoMethodWrapper(MonoMethod *method, IMonoClass *klass = nullptr) : MonoFunction(method, klass) {}
+	
+	virtual mono::object Invoke(void *object, mono::exception *exc = nullptr, bool polymorph = false);
 	virtual mono::object Invoke
-	(
-		void *object,
-		mono::exception *exc = nullptr,
-		bool polymorph = false
-	);
-	//! Invokes this method.
+		(void *object, IMonoArray<> &params, mono::exception *exc = nullptr, bool polymorph = false);
 	virtual mono::object Invoke
-	(
-		void *object,
-		IMonoArray<> &params,
-		mono::exception *exc = nullptr,
-		bool polymorph = false
-	);
-	//! Invokes this method.
-	virtual mono::object Invoke
-	(
-		void *object,
-		void **params = nullptr,
-		mono::exception *exc = nullptr,
-		bool polymorph = false
-	);
-
+		(void *object, void **params, mono::exception *exc = nullptr, bool polymorph = false);
 };
 
 #pragma warning(pop)

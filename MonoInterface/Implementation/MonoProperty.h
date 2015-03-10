@@ -56,17 +56,10 @@ public:
 	}
 
 	virtual IMonoFunction *GetGetter();
-
 	virtual IMonoFunction *GetSetter();
-
-	virtual void *GetWrappedPointer();
-
-	virtual const char *GetName();
-
-	virtual IMonoClass *GetDeclaringClass();
-
+	virtual void          *GetWrappedPointer();
+	virtual const char    *GetName();
+	virtual IMonoClass    *GetDeclaringClass();
 	virtual IMonoFunction *GetIdentifier();
-
-	virtual int GetParameterCount();
-
+	virtual int            GetParameterCount();
 };

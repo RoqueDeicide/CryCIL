@@ -35,6 +35,6 @@ public:
 	virtual IMonoFunction *GetRaise();
 
 	virtual const char *GetName();
-	virtual void *GetWrappedPointer();
+	virtual void       *GetWrappedPointer();
 	virtual IMonoClass *GetDeclaringClass();
 };

@@ -5,9 +5,11 @@
 #include <mono/metadata/object.h>
 #include <mono/metadata/mono-gc.h>
 
+//! Implementation for IMonoGC.
 struct MonoGC : public IMonoGC
 {
 	MonoGC() {}
+	
 	virtual void Collect(int generation = -1)
 	{
 		mono_gc_collect(generation);

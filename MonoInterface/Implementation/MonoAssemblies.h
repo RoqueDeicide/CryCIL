@@ -17,12 +17,9 @@ struct MonoAssemblies : public IMonoAssemblies
 		this->AssemblyRegistry->ForEach(DisposeAssemblyWrappers);
 		delete this->AssemblyRegistry;
 	}
-	//! Loads a Mono assembly into memory.
+	
 	virtual IMonoAssembly *Load(const char *path);
-	//! Wraps an assembly pointer.
 	virtual IMonoAssembly *Wrap(void *assemblyHandle);
-	//! Gets the pointer to the assembly wrapper object.
 	virtual IMonoAssembly *GetAssembly(const char *name);
-	//! Gets the pointer to the assembly wrapper object.
 	virtual IMonoAssembly *GetAssemblyFullName(const char *name);
 };

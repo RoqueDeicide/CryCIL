@@ -36,7 +36,7 @@ void MonoField::Get(mono::object obj, void *value)
 	}
 	else
 	{
-		this->klass->GetField(obj, this, value);
+		this->klass->GetField(nullptr, this, value);
 	}
 }
 
@@ -48,6 +48,6 @@ void MonoField::Set(mono::object obj, void *value)
 	}
 	else
 	{
-		this->klass->SetField(obj, this, value);
+		this->klass->SetField(nullptr, this, value);
 	}
 }
