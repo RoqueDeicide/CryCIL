@@ -5,15 +5,40 @@
 //! Wraps an object that represents a Mono delegate.
 struct IMonoDelegate : public IMonoObject
 {
+private:
+	IMonoFunction *func;
+public:
 	//! Creates new wrapper for given delegate.
 	IMonoDelegate(mono::delegat d)
 		: IMonoObject(d)
+		, func(nullptr)
 	{
 	}
 	//! Creates new wrapper for given delegate.
 	IMonoDelegate(MonoGCHandle &handle)
 		: IMonoObject(handle)
+		, func(nullptr)
 	{
+	}
+	~IMonoDelegate()
+	{
+		if (this->func)
+		{
+			delete this->func;
+		}
+	}
+	//! This operator does the same thing as one for base class, but it also releases cached IMonoFunction
+	//! wrapper.
+	IMonoDelegate &operator=(mono::delegat del)
+	{
+		if (this->obj != del)
+		{
+			if (this->func)
+			{
+				delete this->func;
+			}
+			this->obj = del;
+		}
 	}
 	//! Gets a wrapper for a Mono function that will be invoked by this delegate.
 	__declspec(property(get = GetFunction)) IMonoFunction *Function;
@@ -26,7 +51,11 @@ struct IMonoDelegate : public IMonoObject
 
 	IMonoFunction *GetFunction()
 	{
-		return MonoEnv->Objects->GetDelegateFunction(this->obj);
+		if (!this->func)
+		{
+			this->func = MonoEnv->Objects->GetDelegateFunction(this->obj);
+		}
+		return this->func;
 	}
 	mono::object GetTarget()
 	{
