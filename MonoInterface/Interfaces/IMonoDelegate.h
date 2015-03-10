@@ -16,7 +16,7 @@ struct IMonoDelegate : public IMonoObject
 	{
 	}
 	//! Gets a wrapper for a Mono function that will be invoked by this delegate.
-	__declspec(property(get = GetMethod)) IMonoFunction *Function;
+	__declspec(property(get = GetFunction)) IMonoFunction *Function;
 	//! Gets an object that will be used when invoking a method if the latter is an instance method.
 	__declspec(property(get = GetTarget)) mono::object Target;
 	//! Gets a raw function pointer that can be used to invoke this delegate.
