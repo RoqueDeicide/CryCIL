@@ -12,7 +12,7 @@ namespace CryCil
 	/// </summary>
 	[Serializable]
 	[StructLayout(LayoutKind.Sequential, Pack = 4)]
-	public struct Vector2 : IEquatable<Vector2>, IFormattable, IEnumerable<float>, IComparable<Vector2>
+	public partial struct Vector2 : IEquatable<Vector2>, IFormattable, IEnumerable<float>, IComparable<Vector2>
 	{
 		#region Static Fields
 		/// <summary>
@@ -143,14 +143,14 @@ namespace CryCil
 		/// array only contains one value, it will be assigned to both components of the vector. If array
 		/// doesn't contain any values, vector will be initialized with zeros.
 		/// </param>
-		public Vector2(float[] values)
+		public Vector2(IList<float> values)
 		{
-			if (values.Length >= 2)
+			if (values.Count >= 2)
 			{
 				this.X = values[0];
 				this.Y = values[1];
 			}
-			else if (values.Length == 1)
+			else if (values.Count == 1)
 			{
 				this.X = values[0];
 				this.Y = values[0];
@@ -353,26 +353,13 @@ namespace CryCil
 		/// <summary>
 		/// Calculates the dot product of two vectors.
 		/// </summary>
-		/// <param name="left">  First source vector.</param>
-		/// <param name="right"> Second source vector.</param>
-		/// <param name="result">
-		/// When the method completes, contains the dot product of the two vectors.
-		/// </param>
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static void Dot(ref Vector2 left, ref Vector2 right, out float result)
-		{
-			result = (left.X * right.X) + (left.Y * right.Y);
-		}
-		/// <summary>
-		/// Calculates the dot product of two vectors.
-		/// </summary>
 		/// <param name="left"> First source vector.</param>
 		/// <param name="right">Second source vector.</param>
 		/// <returns>The dot product of the two vectors.</returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static float Dot(Vector2 left, Vector2 right)
 		{
-			return (left.X * right.X) + (left.Y * right.Y);
+			return left.X * right.X + left.Y * right.Y;
 		}
 		/// <summary>
 		/// Returns a vector containing the smallest components of the specified vectors.
@@ -458,284 +445,6 @@ namespace CryCil
 		{
 			value.Normalize();
 			return value;
-		}
-		#endregion
-		#region Arithmetic Operations
-		/// <summary>
-		/// Modulates a vector with another by performing component-wise multiplication.
-		/// </summary>
-		/// <param name="left">  The first vector to modulate.</param>
-		/// <param name="right"> The second vector to modulate.</param>
-		/// <param name="result">When the method completes, contains the modulated vector.</param>
-		public static void Modulate(ref Vector2 left, ref Vector2 right, out Vector2 result)
-		{
-			result = new Vector2(left.X * right.X, left.Y * right.Y);
-		}
-		/// <summary>
-		/// Modulates a vector with another by performing component-wise multiplication.
-		/// </summary>
-		/// <param name="left"> The first vector to modulate.</param>
-		/// <param name="right">The second vector to modulate.</param>
-		/// <returns>The modulated vector.</returns>
-		public static Vector2 Modulate(Vector2 left, Vector2 right)
-		{
-			return new Vector2(left.X * right.X, left.Y * right.Y);
-		}
-		#endregion
-		#region Operators
-		#region Arithmetic Operators
-		/// <summary>
-		/// Adds two vectors.
-		/// </summary>
-		/// <param name="left"> The first vector to add.</param>
-		/// <param name="right">The second vector to add.</param>
-		/// <returns>The sum of the two vectors.</returns>
-		public static Vector2 operator +(Vector2 left, Vector2 right)
-		{
-			return new Vector2(left.X + right.X, left.Y + right.Y);
-		}
-		/// <summary>
-		/// Assert a vector (return it unchanged).
-		/// </summary>
-		/// <param name="value">The vector to assert (unchange).</param>
-		/// <returns>The asserted (unchanged) vector.</returns>
-		public static Vector2 operator +(Vector2 value)
-		{
-			return value;
-		}
-		/// <summary>
-		/// Subtracts two vectors.
-		/// </summary>
-		/// <param name="left"> The first vector to subtract.</param>
-		/// <param name="right">The second vector to subtract.</param>
-		/// <returns>The difference of the two vectors.</returns>
-		public static Vector2 operator -(Vector2 left, Vector2 right)
-		{
-			return new Vector2(left.X - right.X, left.Y - right.Y);
-		}
-		/// <summary>
-		/// Reverses the direction of a given vector.
-		/// </summary>
-		/// <param name="value">The vector to negate.</param>
-		/// <returns>A vector facing in the opposite direction.</returns>
-		public static Vector2 operator -(Vector2 value)
-		{
-			return new Vector2(-value.X, -value.Y);
-		}
-		/// <summary>
-		/// Scales a vector by the given value.
-		/// </summary>
-		/// <param name="value">The vector to scale.</param>
-		/// <param name="scale">The amount by which to scale the vector.</param>
-		/// <returns>The scaled vector.</returns>
-		public static Vector2 operator *(float scale, Vector2 value)
-		{
-			return new Vector2(value.X * scale, value.Y * scale);
-		}
-		/// <summary>
-		/// Scales a vector by the given value.
-		/// </summary>
-		/// <param name="value">The vector to scale.</param>
-		/// <param name="scale">The amount by which to scale the vector.</param>
-		/// <returns>The scaled vector.</returns>
-		public static Vector2 operator *(Vector2 value, float scale)
-		{
-			return new Vector2(value.X * scale, value.Y * scale);
-		}
-		/// <summary>
-		/// Scales a vector by the given value.
-		/// </summary>
-		/// <param name="value">The vector to scale.</param>
-		/// <param name="scale">The amount by which to scale the vector.</param>
-		/// <returns>The scaled vector.</returns>
-		public static Vector2 operator /(Vector2 value, float scale)
-		{
-			return new Vector2(value.X / scale, value.Y / scale);
-		}
-		#endregion
-		#region Comparison Operators
-		/// <summary>
-		/// Tests for equality between two objects.
-		/// </summary>
-		/// <param name="left"> The first value to compare.</param>
-		/// <param name="right">The second value to compare.</param>
-		/// <returns>
-		/// <c>true</c> if <paramref name="left"/> has the same value as <paramref name="right"/> ;
-		/// otherwise, <c>false</c> .
-		/// </returns>
-		public static bool operator ==(Vector2 left, Vector2 right)
-		{
-			return left.Equals(right);
-		}
-		/// <summary>
-		/// Tests for inequality between two objects.
-		/// </summary>
-		/// <param name="left"> The first value to compare.</param>
-		/// <param name="right">The second value to compare.</param>
-		/// <returns>
-		/// <c>true</c> if <paramref name="left"/> has a different value than <paramref name="right"/> ;
-		/// otherwise, <c>false</c> .
-		/// </returns>
-		public static bool operator !=(Vector2 left, Vector2 right)
-		{
-			return !left.Equals(right);
-		}
-		#endregion
-		#region Conversion Operators
-		/// <summary>
-		/// Performs an explicit conversion from <see cref="Vector2"/> to <see cref="Vector3"/> .
-		/// </summary>
-		/// <param name="value">The value.</param>
-		/// <returns>The result of the conversion.</returns>
-		public static explicit operator Vector3(Vector2 value)
-		{
-			return new Vector3(value);
-		}
-		/// <summary>
-		/// Performs an explicit conversion from <see cref="Vector2"/> to <see cref="Vector4"/> .
-		/// </summary>
-		/// <param name="value">The value.</param>
-		/// <returns>The result of the conversion.</returns>
-		public static explicit operator Vector4(Vector2 value)
-		{
-			return new Vector4(value, 0.0f, 0.0f);
-		}
-		#endregion
-		#endregion
-		#region Text Conversions
-		/// <summary>
-		/// Returns a <see cref="System.String"/> that represents this instance.
-		/// </summary>
-		/// <returns>A <see cref="System.String"/> that represents this instance.</returns>
-		public override string ToString()
-		{
-			return string.Format(CultureInfo.CurrentCulture, "X:{0} Y:{1}", this.X, this.Y);
-		}
-		/// <summary>
-		/// Returns a <see cref="System.String"/> that represents this instance.
-		/// </summary>
-		/// <param name="format">The format.</param>
-		/// <returns>A <see cref="System.String"/> that represents this instance.</returns>
-		public string ToString(string format)
-		{
-			if (format == null)
-				return this.ToString();
-
-			return string.Format(CultureInfo.CurrentCulture, "X:{0} Y:{1}", this.X.ToString(format, CultureInfo.CurrentCulture), this.Y.ToString(format, CultureInfo.CurrentCulture));
-		}
-		/// <summary>
-		/// Returns a <see cref="System.String"/> that represents this instance.
-		/// </summary>
-		/// <param name="formatProvider">The format provider.</param>
-		/// <returns>A <see cref="System.String"/> that represents this instance.</returns>
-		public string ToString(IFormatProvider formatProvider)
-		{
-			return string.Format(formatProvider, "X:{0} Y:{1}", this.X, this.Y);
-		}
-		/// <summary>
-		/// Returns a <see cref="System.String"/> that represents this instance.
-		/// </summary>
-		/// <param name="format">        The format.</param>
-		/// <param name="formatProvider">The format provider.</param>
-		/// <returns>A <see cref="System.String"/> that represents this instance.</returns>
-		public string ToString(string format, IFormatProvider formatProvider)
-		{
-			if (format == null)
-				this.ToString(formatProvider);
-
-			return string.Format(formatProvider, "X:{0} Y:{1}", this.X.ToString(format, formatProvider), this.Y.ToString(format, formatProvider));
-		}
-		#endregion
-		#region Equality Checks
-		/// <summary>
-		/// Returns a hash code for this instance.
-		/// </summary>
-		/// <returns>
-		/// A hash code for this instance, suitable for use in hashing algorithms and data structures like
-		/// a hash table.
-		/// </returns>
-		public override int GetHashCode()
-		{
-			// Overflow is fine, just wrap
-			unchecked
-			{
-				int hash = 17;
-
-				hash = hash * 29 + this.X.GetHashCode();
-				hash = hash * 29 + this.Y.GetHashCode();
-
-				return hash;
-			}
-		}
-		/// <summary>
-		/// Determines whether the specified <see cref="Vector2"/> is equal to this instance.
-		/// </summary>
-		/// <param name="other">The <see cref="Vector2"/> to compare with this instance.</param>
-		/// <returns>
-		/// <c>true</c> if the specified <see cref="Vector2"/> is equal to this instance; otherwise,
-		/// <c>false</c> .
-		/// </returns>
-		public bool Equals(Vector2 other)
-		{
-			// ReSharper disable CompareOfFloatsByEqualityOperator
-			return this.X == other.X && (this.Y == other.Y);
-			// ReSharper restore CompareOfFloatsByEqualityOperator
-		}
-		/// <summary>
-		/// Determines whether the specified <see cref="Vector2"/> is equal to this instance using an
-		/// epsilon value.
-		/// </summary>
-		/// <param name="other">  The <see cref="Vector2"/> to compare with this instance.</param>
-		/// <param name="epsilon">The amount of error allowed.</param>
-		/// <returns>
-		/// <c>true</c> if the specified <see cref="Vector2"/> is equal to this instance; otherwise,
-		/// <c>false</c> .
-		/// </returns>
-		public bool Equals(Vector2 other, float epsilon)
-		{
-			return (Math.Abs(other.X - this.X) < epsilon &&
-				Math.Abs(other.Y - this.Y) < epsilon);
-		}
-		/// <summary>
-		/// Determines whether the specified <see cref="System.Object"/> is equal to this instance.
-		/// </summary>
-		/// <param name="value">The <see cref="System.Object"/> to compare with this instance.</param>
-		/// <returns>
-		/// <c>true</c> if the specified <see cref="System.Object"/> is equal to this instance; otherwise,
-		/// <c>false</c> .
-		/// </returns>
-		public override bool Equals(object value)
-		{
-			return value != null && value.GetType() == this.GetType() && this.Equals((Vector2)value);
-		}
-		/// <summary>
-		/// </summary>
-		/// <param name="other"></param>
-		/// <returns></returns>
-		public int CompareTo(Vector2 other)
-		{
-			int pos = this.X.CompareTo(other.X);
-			return pos != 0 ? pos : this.Y.CompareTo(other.Y);
-		}
-		#endregion
-		#region Enumerations
-		/// <summary>
-		/// Enumerates this vector.
-		/// </summary>
-		/// <returns>Yields components of this vector.</returns>
-		public IEnumerator<float> GetEnumerator()
-		{
-			yield return this.X;
-			yield return this.Y;
-		}
-		/// <summary>
-		/// Enumerates this vector.
-		/// </summary>
-		/// <returns>Yields components of this vector.</returns>
-		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-		{
-			yield return this.X;
-			yield return this.Y;
 		}
 		#endregion
 		#endregion

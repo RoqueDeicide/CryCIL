@@ -511,13 +511,16 @@ namespace CryCil
 		/// <returns>True, if first 3 columns are orthonormal vectors.</returns>
 		public bool IsOrthonormal(float threshold = 0.001f)
 		{
-			if (Math.Abs(this.ColumnVector0 | this.ColumnVector1) > threshold) return false;
-			if (Math.Abs(this.ColumnVector0 | this.ColumnVector2) > threshold) return false;
-			if (Math.Abs(this.ColumnVector1 | this.ColumnVector2) > threshold) return false;
+			Vector3 columnVector0 = this.ColumnVector0;
+			Vector3 columnVector1 = this.ColumnVector1;
+			Vector3 columnVector2 = this.ColumnVector2;
+			if (Math.Abs(columnVector0 * columnVector1) > threshold) return false;
+			if (Math.Abs(columnVector0 * columnVector2) > threshold) return false;
+			if (Math.Abs(columnVector1 * columnVector2) > threshold) return false;
 			return
-				Math.Abs(1 - (this.ColumnVector0 | this.ColumnVector0)) < threshold &&
-				Math.Abs(1 - (this.ColumnVector1 | this.ColumnVector1)) < threshold &&
-				Math.Abs(1 - (this.ColumnVector2 | this.ColumnVector2)) < threshold;
+				Math.Abs(1 - columnVector0 * columnVector0) < threshold &&
+				Math.Abs(1 - columnVector1 * columnVector1) < threshold &&
+				Math.Abs(1 - columnVector2 * columnVector2) < threshold;
 		}
 		/// <summary>
 		/// Determines whether this matrix has an orthonormal base in right-handed coordinate system.

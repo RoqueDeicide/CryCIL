@@ -892,16 +892,14 @@ namespace CryCil.Geometry
 		/// <returns>Whether the two objects intersected.</returns>
 		public static PlaneIntersectionType PlaneIntersectsPoint(ref Plane plane, ref Vector3 point)
 		{
-			float distance = plane.Normal | point;
+			float distance = plane.Normal * point;
 			distance += plane.D;
 
-			if (distance > 0f)
-				return PlaneIntersectionType.Front;
-
-			if (distance < 0f)
-				return PlaneIntersectionType.Back;
-
-			return PlaneIntersectionType.Intersecting;
+			return distance > 0f
+				? PlaneIntersectionType.Front
+				: (distance < 0f
+					? PlaneIntersectionType.Back
+					: PlaneIntersectionType.Intersecting);
 		}
 
 		/// <summary>
@@ -1040,16 +1038,14 @@ namespace CryCil.Geometry
 			// Source: Real-Time Collision Detection by Christer Ericson
 			// Reference: Page 160
 
-			float distance = plane.Normal | sphere.Center;
+			float distance = plane.Normal * sphere.Center;
 			distance += plane.D;
 
-			if (distance > sphere.Radius)
-				return PlaneIntersectionType.Front;
-
-			if (distance < -sphere.Radius)
-				return PlaneIntersectionType.Back;
-
-			return PlaneIntersectionType.Intersecting;
+			return distance > sphere.Radius
+				? PlaneIntersectionType.Front
+				: (distance < -sphere.Radius
+					? PlaneIntersectionType.Back
+					: PlaneIntersectionType.Intersecting);
 		}
 
 		/* This implementation is wrong

@@ -23,7 +23,7 @@ namespace CryCil.Geometry
 		/// </returns>
 		public static AngleAxis ArcBetween2NormalizedVectors(Vector3 v1, Vector3 v2)
 		{
-			float cosine = v1 | v2;
+			float cosine = v1 * v2;
 
 			if (cosine + 1 < MathHelpers.ZeroTolerance)
 			{
@@ -52,7 +52,7 @@ namespace CryCil.Geometry
 			Vector3 v1 = vector1.Normalized;
 			Vector3 v2 = vector2.Normalized;
 
-			float cosine = v1 | v2;
+			float cosine = v1 * v2;
 
 			if (cosine + 1 < MathHelpers.ZeroTolerance)
 			{
@@ -76,7 +76,7 @@ namespace CryCil.Geometry
 		/// <param name="cosine">Cosine of angle between two vectors.</param>
 		public static void ArcBetween2NormalizedVectors(Vector3 v1, Vector3 v2, out Vector3 axis, out float cosine)
 		{
-			cosine = v1 | v2;
+			cosine = v1 * v2;
 
 			if (cosine + 1 < MathHelpers.ZeroTolerance)
 			{
@@ -107,7 +107,7 @@ namespace CryCil.Geometry
 			Vector3 v1 = vector1.Normalized;
 			Vector3 v2 = vector2.Normalized;
 
-			cosine = v1 | v2;
+			cosine = v1 * v2;
 
 			if (cosine + 1 < MathHelpers.ZeroTolerance)
 			{

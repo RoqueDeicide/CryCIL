@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using CryCil.Geometry;
 
 namespace CryCil
@@ -13,6 +14,7 @@ namespace CryCil
 		/// </summary>
 		/// <param name="d">Value to calculate reciprocal square root from.</param>
 		/// <returns>1 / <paramref name="d"/> .</returns>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static double ReciprocalSquareRoot(double d)
 		{
 			return 1.0 / Math.Sqrt(d);
@@ -22,6 +24,7 @@ namespace CryCil
 		/// </summary>
 		/// <param name="d">Value to calculate reciprocal square root from.</param>
 		/// <returns>1 / <paramref name="d"/> .</returns>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static float ReciprocalSquareRoot(float d)
 		{
 			return (float)(1.0 / Math.Sqrt(d));
@@ -32,6 +35,7 @@ namespace CryCil
 		/// <param name="a">     Angle to calculate sine and cosine of.</param>
 		/// <param name="sinVal">Resultant sine.</param>
 		/// <param name="cosVal">Resultant cosine.</param>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static void SinCos(double a, out double sinVal, out double cosVal)
 		{
 			sinVal = Math.Sin(a);
@@ -44,6 +48,7 @@ namespace CryCil
 		/// <param name="a">     Angle to calculate sine and cosine of.</param>
 		/// <param name="sinVal">Resultant sine.</param>
 		/// <param name="cosVal">Resultant cosine.</param>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static void SinCos(float a, out float sinVal, out float cosVal)
 		{
 			sinVal = (float)Math.Sin(a);
@@ -172,6 +177,7 @@ namespace CryCil
 		/// </summary>
 		/// <param name="value">Number to check.</param>
 		/// <returns>True, if <paramref name="value"/> is a power of 2.</returns>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static bool IsPowerOfTwo(int value)
 		{
 			return (value & (value - 1)) == 0;
@@ -181,6 +187,7 @@ namespace CryCil
 		/// </summary>
 		/// <param name="value">Number to check.</param>
 		/// <returns>True, if <paramref name="value"/> is a valid number.</returns>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static bool IsNumberValid(double value)
 		{
 			const ulong mask = (UInt64)(255 << 55);
@@ -192,6 +199,7 @@ namespace CryCil
 		/// </summary>
 		/// <param name="value">Number to check.</param>
 		/// <returns>True, if <paramref name="value"/> is a valid number.</returns>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static bool IsNumberValid(float value)
 		{
 			const int mask = 0xFF << 23;

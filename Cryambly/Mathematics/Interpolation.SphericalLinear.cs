@@ -269,7 +269,7 @@ namespace CryCil
 				double cosine = MathHelpers.Clamp((d.M00 + d.M11 + d.M22 - 1.0) * 0.5, -1.0, +1.0);
 				double angle = Math.Atan2(Math.Sqrt(1.0 - cosine * cosine), cosine);
 				var axis = new Vector3(d.M21 - d.M12, d.M02 - d.M20, d.M10 - d.M01);
-				double l = Math.Sqrt(axis | axis); if (l > 0.00001) axis /= (float)l; else axis = new Vector3(1, 0, 0);
+				double l = Math.Sqrt(axis * axis); if (l > 0.00001) axis /= (float)l; else axis = new Vector3(1, 0, 0);
 				Rotation.AroundAxis.Set(ref i, ref  axis, (float)angle * t); // angle interpolation and calculation of new delta-matrix (=26 flops)
 
 				// final concatenation (=39 flops)
@@ -352,7 +352,7 @@ namespace CryCil
 				double cosine = MathHelpers.Clamp((d.M00 + d.M11 + d.M22 - 1.0) * 0.5, -1.0, +1.0);
 				double angle = Math.Atan2(Math.Sqrt(1.0 - cosine * cosine), cosine);
 				var axis = new Vector3(d.M21 - d.M12, d.M02 - d.M20, d.M10 - d.M01);
-				double l = Math.Sqrt(axis | axis); if (l > 0.00001) axis /= (float)l; else axis = new Vector3(1, 0, 0);
+				double l = Math.Sqrt(axis * axis); if (l > 0.00001) axis /= (float)l; else axis = new Vector3(1, 0, 0);
 				Rotation.AroundAxis.Set(ref i, ref  axis, (float)angle * t); // angle interpolation and calculation of new delta-matrix (=26 flops)
 
 				// final concatenation (=39 flops)

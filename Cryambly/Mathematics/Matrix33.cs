@@ -212,12 +212,12 @@ namespace CryCil
 				Vector3 z = this.Column2;
 
 				return
-					Math.Abs(x | y) <= MathHelpers.ZeroTolerance &&
-					Math.Abs(x | z) <= MathHelpers.ZeroTolerance &&
-					Math.Abs(y | z) <= MathHelpers.ZeroTolerance &&
-					Math.Abs(1 - (x | x)) < MathHelpers.ZeroTolerance &&
-					Math.Abs(1 - (y | y)) < MathHelpers.ZeroTolerance &&
-					Math.Abs(1 - (z | z)) < MathHelpers.ZeroTolerance;
+					Math.Abs(x * y) <= MathHelpers.ZeroTolerance &&
+					Math.Abs(x * z) <= MathHelpers.ZeroTolerance &&
+					Math.Abs(y * z) <= MathHelpers.ZeroTolerance &&
+					Math.Abs(1 - x * x) < MathHelpers.ZeroTolerance &&
+					Math.Abs(1 - y * y) < MathHelpers.ZeroTolerance &&
+					Math.Abs(1 - z * z) < MathHelpers.ZeroTolerance;
 			}
 		}
 		/// <summary>
