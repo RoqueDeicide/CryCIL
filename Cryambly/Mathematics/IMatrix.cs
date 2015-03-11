@@ -37,6 +37,7 @@ namespace CryCil
 		/// Uses Cramer's Rule which is faster (branchless) but numerically more unstable than other
 		/// methods like Gaussian Elimination.
 		/// </remarks>
-		void Invert();
+		/// <returns>False, if this matrix's determinant is equal to zero, otherwise true.</returns>
+		bool Invert();
 	}
 }

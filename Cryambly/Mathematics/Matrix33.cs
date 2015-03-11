@@ -529,12 +529,13 @@ namespace CryCil
 		/// <summary>
 		/// Inverts this matrix.
 		/// </summary>
-		public void Invert()
+		/// <returns>False, if this matrix's determinant is equal to zero, otherwise true.</returns>
+		public bool Invert()
 		{
 			float det = this.Determinant;
 			if (det < MathHelpers.ZeroTolerance)
 			{
-				throw new DivideByZeroException("Cannot invert the matrix which determinant is equal to 0.");
+				return false;
 			}
 			// Co-factors.
 			float m00 = (this.M11 * this.M22 - this.M21 * this.M12) / det;
@@ -554,6 +555,7 @@ namespace CryCil
 					m01, m11, m21,
 					m02, m12, m22
 				);
+			return true;
 		}
 		/// <summary>
 		/// Determines whether this matrix is equal to another.

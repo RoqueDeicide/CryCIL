@@ -144,7 +144,10 @@ namespace CryCil
 			{
 				var dst = this;
 
-				dst.Invert();
+				if (!dst.Invert())
+				{
+					throw new DivideByZeroException("Attempt was made to invert a matrix which determinant is equal to 0.");
+				}
 
 				return dst;
 			}
@@ -461,32 +464,41 @@ namespace CryCil
 		/// <summary>
 		/// Sets value of this matrix to one that undoes all transformations this matrix represents.
 		/// </summary>
-		public void Invert()
+		/// <returns>False, if this matrix's determinant is equal to zero, otherwise true.</returns>
+		public bool Invert()
 		{
 			// Store original values of the matrix.
 			var m = this;
+			var t = this;
 
 			// Calculate 12 cofactors.
-			this.M00 = m.M22 * m.M11 - m.M12 * m.M21;
-			this.M10 = m.M12 * m.M20 - m.M22 * m.M10;
-			this.M20 = m.M10 * m.M21 - m.M20 * m.M11;
-			this.M01 = m.M02 * m.M21 - m.M22 * m.M01;
-			this.M11 = m.M22 * m.M00 - m.M02 * m.M20;
-			this.M21 = m.M20 * m.M01 - m.M00 * m.M21;
-			this.M02 = m.M12 * m.M01 - m.M02 * m.M11;
-			this.M12 = m.M02 * m.M10 - m.M12 * m.M00;
-			this.M22 = m.M00 * m.M11 - m.M10 * m.M01;
-			this.M03 = (m.M22 * m.M13 * m.M01 + m.M02 * m.M23 * m.M11 + m.M12 * m.M03 * m.M21) - (m.M12 * m.M23 * m.M01 + m.M22 * m.M03 * m.M11 + m.M02 * m.M13 * m.M21);
-			this.M13 = (m.M12 * m.M23 * m.M00 + m.M22 * m.M03 * m.M10 + m.M02 * m.M13 * m.M20) - (m.M22 * m.M13 * m.M00 + m.M02 * m.M23 * m.M10 + m.M12 * m.M03 * m.M20);
-			this.M23 = (m.M20 * m.M11 * m.M03 + m.M00 * m.M21 * m.M13 + m.M10 * m.M01 * m.M23) - (m.M10 * m.M21 * m.M03 + m.M20 * m.M01 * m.M13 + m.M00 * m.M11 * m.M23);
+			t.M00 = m.M22 * m.M11 - m.M12 * m.M21;
+			t.M10 = m.M12 * m.M20 - m.M22 * m.M10;
+			t.M20 = m.M10 * m.M21 - m.M20 * m.M11;
+			t.M01 = m.M02 * m.M21 - m.M22 * m.M01;
+			t.M11 = m.M22 * m.M00 - m.M02 * m.M20;
+			t.M21 = m.M20 * m.M01 - m.M00 * m.M21;
+			t.M02 = m.M12 * m.M01 - m.M02 * m.M11;
+			t.M12 = m.M02 * m.M10 - m.M12 * m.M00;
+			t.M22 = m.M00 * m.M11 - m.M10 * m.M01;
+			t.M03 = (m.M22 * m.M13 * m.M01 + m.M02 * m.M23 * m.M11 + m.M12 * m.M03 * m.M21) - (m.M12 * m.M23 * m.M01 + m.M22 * m.M03 * m.M11 + m.M02 * m.M13 * m.M21);
+			t.M13 = (m.M12 * m.M23 * m.M00 + m.M22 * m.M03 * m.M10 + m.M02 * m.M13 * m.M20) - (m.M22 * m.M13 * m.M00 + m.M02 * m.M23 * m.M10 + m.M12 * m.M03 * m.M20);
+			t.M23 = (m.M20 * m.M11 * m.M03 + m.M00 * m.M21 * m.M13 + m.M10 * m.M01 * m.M23) - (m.M10 * m.M21 * m.M03 + m.M20 * m.M01 * m.M13 + m.M00 * m.M11 * m.M23);
 
 			// Calculate "determinant".
-			float det = 1.0f / (m.M00 * this.M00 + m.M10 * this.M01 + m.M20 * this.M02);
+			float det = m.M00 * this.M00 + m.M10 * this.M01 + m.M20 * this.M02;
 
+			if (Math.Abs(det) < MathHelpers.ZeroTolerance)
+			{
+				return false;
+			}
+
+			det = 1.0f / det;
 			// Calculate matrix inverse.
-			this.M00 *= det; this.M01 *= det; this.M02 *= det; this.M03 *= det;
-			this.M10 *= det; this.M11 *= det; this.M12 *= det; this.M13 *= det;
-			this.M20 *= det; this.M21 *= det; this.M22 *= det; this.M23 *= det;
+			this.M00 = t.M00 * det; this.M01 = t.M01 * det; this.M02 = t.M02 * det; this.M03 = t.M03 * det;
+			this.M10 = t.M10 * det; this.M11 = t.M11 * det; this.M12 = t.M12 * det; this.M13 = t.M13 * det;
+			this.M20 = t.M20 * det; this.M21 = t.M21 * det; this.M22 = t.M22 * det; this.M23 = t.M23 * det;
+			return true;
 		}
 		/// <summary>
 		/// Removes scale from this matrix.

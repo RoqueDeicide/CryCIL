@@ -141,7 +141,11 @@ namespace CryCil
 			get
 			{
 				Matrix44 dst = this;
-				dst.Invert();
+
+				if (!dst.Invert())
+				{
+					throw new DivideByZeroException("Attempt was made to invert a matrix which determinant is equal to 0.");
+				}
 				return dst;
 			}
 		}
@@ -430,9 +434,17 @@ namespace CryCil
 		/// Uses Cramer's Rule which is faster (branchless) but numerically more unstable than other
 		/// methods like Gaussian Elimination.
 		/// </remarks>
-		public void Invert()
+		/// <returns>False, if this matrix's determinant is equal to zero, otherwise true.</returns>
+		public bool Invert()
 		{
 			float[] tmp = new float[12];
+			// Calculate determinant
+			float det = this.Determinant;
+
+			if (Math.Abs(det) < MathHelpers.ZeroTolerance)
+			{
+				return false;
+			}
 			Matrix44 m = this;
 
 			// Calculate pairs for first 8 elements (cofactors)
@@ -499,9 +511,6 @@ namespace CryCil
 			this.Row3.W = tmp[10] * m.Row2.Z + tmp[4] * m.Row0.Z + tmp[9] * m.Row1.Z;
 			this.Row3.W -= tmp[8] * m.Row1.Z + tmp[11] * m.Row2.Z + tmp[5] * m.Row0.Z;
 
-			// Calculate determinant
-			float det = (m.Row0.X * this.Row0.X + m.Row1.X * this.Row0.Y + m.Row2.X * this.Row0.Z + m.Row3.X * this.Row0.W);
-			//if (fabs_tpl(det)<0.0001f) assert(0);
 
 			// Divide the cofactor-matrix by the determinant
 			float idet = 1.0f / det;
@@ -509,6 +518,7 @@ namespace CryCil
 			this.Row1.X *= idet; this.Row1.Y *= idet; this.Row1.Z *= idet; this.Row1.W *= idet;
 			this.Row2.X *= idet; this.Row2.Y *= idet; this.Row2.Z *= idet; this.Row2.W *= idet;
 			this.Row3.X *= idet; this.Row3.Y *= idet; this.Row3.Z *= idet; this.Row3.W *= idet;
+			return true;
 		}
 		#endregion
 		#region Operators
