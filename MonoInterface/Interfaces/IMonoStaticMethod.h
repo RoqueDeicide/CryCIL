@@ -1,8 +1,11 @@
 #pragma once
 
 //! Base interface for Mono static functions.
-struct IMonoStaticMethod : public virtual IMonoFunction
+struct IMonoStaticMethod : public IMonoFunction
 {
+protected:
+	IMonoStaticMethod(_MonoMethod *method, IMonoClass *klass = nullptr) : IMonoFunction(method, klass) {}
+public:
 	//! Invokes this method without any parameters.
 	//!
 	//! Since extension methods are static by their internal nature, you can pass null
@@ -51,9 +54,5 @@ struct IMonoStaticMethod : public virtual IMonoFunction
 
 __forceinline IMonoStaticMethod *IMonoFunction::ToStatic()
 {
-#ifdef _CPPRTTI
-	return dynamic_cast<IMonoStaticMethod *>(this);
-#else
-	return this->DynamicCastToStatic();
-#endif //_CPPRTTI
+	return static_cast<IMonoStaticMethod *>(this);
 }

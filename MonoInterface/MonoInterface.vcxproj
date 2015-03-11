@@ -225,7 +225,7 @@
     <ClInclude Include="Implementation\MonoEvent.h" />
     <ClInclude Include="Implementation\MonoExceptions.h" />
     <ClInclude Include="Implementation\MonoField.h" />
-    <ClInclude Include="Implementation\MonoFunction.h" />
+    <ClInclude Include="Implementation\MonoFunctions.h" />
     <ClInclude Include="Implementation\MonoGC.h" />
     <ClInclude Include="Implementation\MonoMethod.h" />
     <ClInclude Include="Implementation\MonoObjects.h" />
@@ -248,6 +248,7 @@
     <ClInclude Include="Interfaces\IMonoExceptions.h" />
     <ClInclude Include="Interfaces\IMonoField.h" />
     <ClInclude Include="Interfaces\IMonoFunctionalityWrapper.h" />
+    <ClInclude Include="Interfaces\IMonoFunctions.h" />
     <ClInclude Include="Interfaces\IMonoGC.h" />
     <ClInclude Include="Interfaces\IMonoInterop.h" />
     <ClInclude Include="Interfaces\IMonoFunction.h" />
@@ -322,7 +323,7 @@
     <ClCompile Include="Implementation\MonoEvent.cpp" />
     <ClCompile Include="Implementation\MonoExceptions.cpp" />
     <ClCompile Include="Implementation\MonoField.cpp" />
-    <ClCompile Include="Implementation\MonoFunction.cpp" />
+    <ClCompile Include="Implementation\MonoFunctions.cpp" />
     <ClCompile Include="Implementation\MonoMethod.cpp" />
     <ClCompile Include="Implementation\MonoObjects.cpp" />
     <ClCompile Include="Implementation\MonoProperty.cpp" />

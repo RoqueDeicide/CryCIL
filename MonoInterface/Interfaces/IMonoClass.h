@@ -49,36 +49,24 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!
 	//! It's not easy to predict which one of the constructors will be acquired when there are several
 	//! of them that accept the same number of arguments.
-	__forceinline IMonoConstructor *GetConstructor(int paramCount = 0)
-	{
-		return this->GetFunction(".ctor", paramCount)->ToCtor();
-	}
+	__forceinline IMonoConstructor *GetConstructor(int paramCount = 0);			// Defined in IMonoConstructor.
 	//! Gets constructor that can accept arguments of specified types.
 	//!
 	//! @param types An array of System.Type objects that specify constructor signature to use.
-	__forceinline IMonoConstructor *GetConstructor(IMonoArray<> &types)
-	{
-		return this->GetFunction(".ctor", types)->ToCtor();
-	}
+	__forceinline IMonoConstructor *GetConstructor(IMonoArray<> &types);		// Defined in IMonoConstructor.
 	//! Gets constructor that can accept arguments of specified types.
 	//!
 	//! Refer to documentation of corresponding GetMethod() overload for details.
 	//!
 	//! @param classes A list IMonoClass wrappers that specify constructor signature to use.
-	__forceinline IMonoConstructor *GetConstructor(List<IMonoClass *> &classes)
-	{
-		return this->GetFunction(".ctor", classes)->ToCtor();
-	}
+	__forceinline IMonoConstructor *GetConstructor(List<IMonoClass *> &classes);// Defined in IMonoConstructor.
 	//! Gets constructor that can accept arguments of specified types.
 	//!
 	//! Refer to documentation of corresponding GetMethod() overload for details.
 	//!
 	//! @param specifiedClasses A list of classes and postfixes that specify constructor signature
 	//!                         to use.
-	__forceinline IMonoConstructor *GetConstructor(List<ClassSpec> &specifiedClasses)
-	{
-		return this->GetFunction(".ctor", specifiedClasses)->ToCtor();
-	}
+	__forceinline IMonoConstructor *GetConstructor(List<ClassSpec> &specifiedClasses);// Defined in IMonoConstructor.
 	//! Gets the constructor that matches given description.
 	//!
 	//! Refer to documentation of corresponding GetMethod() overload for details.
@@ -87,20 +75,14 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!
 	//! @returns A pointer to the wrapper to the found constructor. Null is returned if
 	//!          no constructor matching the description was found.
-	__forceinline IMonoConstructor *GetConstructor(const char *params)
-	{
-		return this->GetFunction(".ctor", params)->ToCtor();
-	}
+	__forceinline IMonoConstructor *GetConstructor(const char *params);			// Defined in IMonoConstructor.
 	//! Gets a constructor defined in this class.
 	//!
 	//! Refer to documentation of corresponding GetMethod() overload for details.
 	//!
 	//! @param paramTypeNames A list of full type names that specify the parameters the constructor
 	//!                       accepts.
-	__forceinline IMonoConstructor *GetConstructor(List<const char *> &paramTypeNames)
-	{
-		return this->GetFunction(".ctor", paramTypeNames)->ToCtor();
-	}
+	__forceinline IMonoConstructor *GetConstructor(List<const char *> &paramTypeNames);	// Defined in IMonoConstructor.
 	//! Gets method that can accept arguments of specified types.
 	//!
 	//! @param name  Name of the method to get.

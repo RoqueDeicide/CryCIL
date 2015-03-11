@@ -3,11 +3,11 @@
 #include "IMonoAliases.h"
 
 //! Defines interface of objects that wrap functionality of MonoMethod type.
-//!
-//! WARNING: Due to virtual inheritance if you want to cast IMonoFunction to IMonoMethod, don't use
-//!          C-style downcasts, use dynamic_cast operator instead. (/GR compiler option is necessary).
-struct IMonoMethod : public virtual IMonoFunction
+struct IMonoMethod : public IMonoFunction
 {
+protected:
+	IMonoMethod(_MonoMethod *method, IMonoClass *klass = nullptr) : IMonoFunction(method, klass) {}
+public:
 	//! Invokes this method without any parameters.
 	//!
 	//! Since extension methods are static by their internal nature, you can pass null
@@ -77,9 +77,5 @@ struct IMonoMethod : public virtual IMonoFunction
 
 __forceinline IMonoMethod *IMonoFunction::ToInstance()
 {
-#ifdef _CPPRTTI
-	return dynamic_cast<IMonoMethod *>(this);
-#else
-	return this->DynamicCastToInstance();
-#endif //_CPPRTTI
+	return static_cast<IMonoMethod *>(this);
 }

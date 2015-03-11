@@ -1,15 +1,15 @@
 #pragma once
 
 #include "IMonoInterface.h"
-#include "MonoFunction.h"
 
 #pragma warning(push)
 #pragma warning(disable : 4250)
 
-struct MonoConstructor : public IMonoConstructor, public MonoFunction
+struct MonoConstructor : public IMonoConstructor
 {
 	MonoConstructor(MonoMethod *method, IMonoClass *klass = nullptr)
-		: MonoFunction(method, klass) {}
+		: IMonoConstructor(method, klass)
+	{}
 
 	virtual mono::object Create(mono::exception *ex = nullptr);
 	virtual mono::object Create(IMonoArray<> &args, mono::exception *ex = nullptr);

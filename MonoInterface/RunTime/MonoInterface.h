@@ -28,35 +28,13 @@ class MonoInterface
 private:
 #pragma region Fields
 	EventBroadcaster *broadcaster;
-
-	bool running;
-
 	MonoDomain *appDomain;
-	IMonoAssemblies *assemblies;
-	ICryambly *cryambly;					//! Extra pointer for Cryambly.
-	IMonoCoreLibrary *corlib;				//! Extra pointer for mscorlib.
-	IMonoAssembly *pdb2mdb;
-
 	MonoGCHandle managedInterface;
-	IMonoGC *gc;
-	IGameFramework *framework;
-	IMonoObjects *objs;
 #pragma endregion
 public:
 #pragma region Property Methods
 	//! Returns a pointer to app domain.
 	virtual void *GetAppDomain();
-	virtual IMonoAssemblies *GetAssemblies();
-	virtual ICryambly *GetCryambly();
-	virtual IMonoAssembly *GetPdbMdbAssembly();
-	virtual IMonoCoreLibrary *GetCoreLibrary();
-	virtual bool GetInitializedIndication();
-	virtual IGameFramework *GetGameFramework();
-	virtual IMonoObjects *GetObjects();
-	virtual IMonoGC *GetGC()
-	{
-		return this->gc;
-	}
 #pragma endregion
 #pragma region Construction
 	//! Initializes Mono run-time environment.
@@ -73,8 +51,6 @@ public:
 #pragma region Interaction with Run-Time
 	//! Handles exception that occurred during managed method invocation.
 	virtual void HandleException(mono::exception exception);
-	//! Registers a new internal call.
-	virtual void AddInternalCall(const char *name, const char *className, const char *nameSpace, void *functionPointer);
 #pragma endregion
 #pragma region Listeners
 	//! Registers new object that receives notifications about CryCIL events.

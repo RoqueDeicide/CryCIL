@@ -17,55 +17,22 @@ void *MonoInterface::GetAppDomain()
 {
 	return this->appDomain;
 }
-
-IMonoAssemblies *MonoInterface::GetAssemblies()
-{
-	return this->assemblies;
-}
-
-ICryambly *MonoInterface::GetCryambly()
-{
-	return this->cryambly;
-}
-
-IMonoAssembly *MonoInterface::GetPdbMdbAssembly()
-{
-	return this->pdb2mdb;
-}
-
-IMonoCoreLibrary *MonoInterface::GetCoreLibrary()
-{
-	return this->corlib;
-}
-
-bool MonoInterface::GetInitializedIndication()
-{
-	return this->running;
-}
-
-IGameFramework *MonoInterface::GetGameFramework()
-{
-	return this->framework;
-}
-
-IMonoObjects *MonoInterface::GetObjects()
-{
-	return this->objs;
-}
 #pragma endregion
 #pragma region Construction
 //! Initializes Mono run-time environment.
 MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener *> *listeners)
-	: running(false)
-	, appDomain(nullptr)
-	, cryambly(nullptr)
-	, assemblies(nullptr)
+	: appDomain(nullptr)
 	, broadcaster(nullptr)
-	, framework(framework)
 	, managedInterface(-1)
 {
+	this->running = false;
+
+	this->cryambly = nullptr;
+	this->assemblies = nullptr;
+	this->framework = framework;
+
 	this->assemblies = new MonoAssemblies();
-	broadcaster = new EventBroadcaster();
+	this->broadcaster = new EventBroadcaster();
 	// Register all initial listeners.
 	this->RegisterDefaultListeners();
 	if (listeners)
@@ -240,20 +207,6 @@ void MonoInterface::HandleException(mono::exception exception)
 	}
 	mono::exception ex;
 	MonoInterfaceThunks::DisplayException(exception, &ex);
-}
-//! Registers a new internal call.
-void MonoInterface::AddInternalCall(const char *nameSpace, const char *className, const char *name, void *functionPointer)
-{
-	if (!this->running)
-	{
-		return;
-	}
-	
-	ConstructiveText fullName(30);
-	
-	fullName << nameSpace << '.' << className << "::" << name;
-	
-	mono_add_internal_call(fullName.ToNTString(), functionPointer);
 }
 #pragma endregion
 #pragma region Listeners

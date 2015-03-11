@@ -8,6 +8,46 @@ struct IMonoConstructor;
 //! constructors).
 struct IMonoFunction : public IMonoMember
 {
+protected:
+	_MonoMethod *wrappedMethod;
+	int paramCount;
+	const char *name;
+
+	const char *paramList;
+	List<IMonoClass *> paramClasses;
+	List<const char *> paramTypeNames;
+	void *rawThunk;
+
+	IMonoClass *klass;
+
+	IMonoFunction(_MonoMethod *method, IMonoClass *klass = nullptr)
+		: rawThunk(nullptr)
+	{
+		if (!method)
+		{
+			CryFatalError("Attempted to create a Mono function wrapper for a null pointer.");
+		}
+		
+		this->klass = klass ? klass : MonoEnv->Functions->GetDeclaringClass(method);
+
+		this->name       = MonoEnv->Functions->GetName(method);
+		this->paramCount = MonoEnv->Functions->ParseSignature(method, this->paramTypeNames, this->paramList);
+		
+		this->wrappedMethod = method;
+	}
+public:
+	~IMonoFunction()
+	{
+		SAFE_DELETE(this->paramList);
+
+		this->paramClasses.Dispose();
+
+		for (int i = 0; i < this->paramTypeNames.Length; i++)
+		{
+			delete this->paramTypeNames[i];
+		}
+		this->paramTypeNames.Dispose();
+	}
 	//! Returns a pointer to a C-style function that can be invoked like a standard function pointer.
 	//!
 	//! Signature of the function pointer is defined by the following rules:
@@ -229,39 +269,69 @@ struct IMonoFunction : public IMonoMember
 	//! Gets an object of type System.Reflection.MethodInfo that represents this method.
 	__declspec(property(get = GetReflectionObject)) mono::object ReflectionObject;
 
-	//! Attempts to dynamically cast this object to IMonoMethod.
+	//! Attempts to statically cast this object to IMonoMethod.
 	//!
-	//! Use this method to avoid using dynamic_cast operator, if you don't want to use /GR compiler option.
-	//!
-	//! @returns A result of dynamic_cast of this object to IMonoMethod, if this object is of that type,
-	//!          otherwise null is returned.
+	//! @returns A result of static_cast of this object to IMonoMethod.
 	__forceinline IMonoMethod *ToInstance();			// Defined in IMonoMethod.h
-	//! Attempts to dynamically cast this object to IMonoStaticMethod.
+	//! Attempts to statically cast this object to IMonoStaticMethod.
 	//!
-	//! Use this method to avoid using dynamic_cast operator, if you don't want to use /GR compiler option.
-	//!
-	//! @returns A result of dynamic_cast of this object to IMonoMethod, if this object is of that type,
-	//!          otherwise null is returned.
+	//! @returns A result of static_cast of this object to IMonoStaticMethod.
 	__forceinline IMonoStaticMethod *ToStatic();		// Defined in IMonoStaticMethod.h
-	//! Attempts to dynamically cast this object to IMonoConstructor.
+	//! Attempts to statically cast this object to IMonoConstructor.
 	//!
-	//! Use this method to avoid using dynamic_cast operator, if you don't want to use /GR compiler option.
-	//!
-	//! @returns A result of dynamic_cast of this object to IMonoMethod, if this object is of that type,
-	//!          otherwise null is returned.
+	//! @returns A result of static_cast of this object to IMonoConstructor.
 	__forceinline IMonoConstructor *ToCtor();			// Defined in IMonoConstructor.h
 
-	VIRTUAL_API virtual void *GetThunk() = 0;
-	VIRTUAL_API virtual void *GetFunctionPointer() = 0;
-	VIRTUAL_API virtual int GetParameterCount() = 0;
-	VIRTUAL_API virtual List<const char *> *GetParameterTypeNames() = 0;
-	VIRTUAL_API virtual List<IMonoClass *> *GetParameterClasses() = 0;
-	VIRTUAL_API virtual const char *GetParametersList() = 0;
-	VIRTUAL_API virtual mono::object GetReflectionObject() = 0;
+	void *GetThunk()
+	{
+		return MonoEnv->Functions->GetThunk(this->wrappedMethod);
+	}
+	void *GetFunctionPointer()
+	{
+		if (!this->rawThunk)
+		{
+			this->rawThunk = MonoEnv->Functions->GetFunctionPointer(this->wrappedMethod);
+		}
+	}
+	int GetParameterCount()
+	{
+		return this->paramCount;
+	}
+	List<const char *> *GetParameterTypeNames()
+	{
+		return &this->paramTypeNames;
+	}
+	List<IMonoClass *> *GetParameterClasses()
+	{
+		if (this->paramClasses.Length != this->paramCount)
+		{
+			MonoEnv->Functions->GetParameterClasses(this->wrappedMethod, this->paramClasses);
+		}
 
-	//! Utility methods that cast IMonoFunction object to one of possible implementations, while hiding
-	//! dynamic_cast call behind the API.
-	VIRTUAL_API virtual IMonoMethod       *DynamicCastToInstance() = 0;
-	VIRTUAL_API virtual IMonoStaticMethod *DynamicCastToStatic() = 0;
-	VIRTUAL_API virtual IMonoConstructor  *DynamicCastToCtor() = 0;
+		return &this->paramClasses;
+	}
+	const char *GetParametersList()
+	{
+		return this->paramList;
+	}
+	mono::object GetReflectionObject()
+	{
+		return MonoEnv->Functions->GetReflectionObject(this->wrappedMethod);
+	}
+
+	virtual const char *GetName()
+	{
+		return this->name;
+	}
+
+	virtual IMonoClass *GetDeclaringClass()
+	{
+		return this->klass;
+	}
+
+	virtual void *GetWrappedPointer()
+	{
+		return this->wrappedMethod;
+	}
+
 };

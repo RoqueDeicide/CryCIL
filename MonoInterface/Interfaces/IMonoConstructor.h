@@ -6,11 +6,11 @@
 //!
 //! Constructors are always instance methods and when invoked using Invoke() with null passed as an
 //! instance, they create a new object and initialize it. You cannot polymorph a constructor.
-//!
-//! WARNING: Due to virtual inheritance if you want to cast IMonoFunction to IMonoConstructor, don't use
-//!          C-style downcasts, use dynamic_cast operator instead. (/GR compiler option is necessary).
-struct IMonoConstructor : public virtual IMonoFunction
+struct IMonoConstructor : public IMonoFunction
 {
+protected:
+	IMonoConstructor(_MonoMethod *method, IMonoClass *klass = nullptr) : IMonoFunction(method, klass) {}
+public:
 	//! Creates a new object of the type where this class is defined.
 	//!
 	//! Use this method to create and initialize reference-type objects.
@@ -83,9 +83,35 @@ struct IMonoConstructor : public virtual IMonoFunction
 
 __forceinline IMonoConstructor *IMonoFunction::ToCtor()
 {
-#ifdef _CPPRTTI
-	return dynamic_cast<IMonoConstructor *>(this);
-#else
-	return this->DynamicCastToCtor();
-#endif //_CPPRTTI
+	return static_cast<IMonoConstructor *>(this);
+}
+
+__forceinline IMonoConstructor *IMonoClass::GetConstructor(int paramCount)
+{
+	return this->GetFunction(".ctor", paramCount)->ToCtor();
+}
+
+__forceinline IMonoConstructor *IMonoClass::GetConstructor(IMonoArray<> &types)
+{
+	return this->GetFunction(".ctor", types)->ToCtor();
+}
+
+__forceinline IMonoConstructor *IMonoClass::GetConstructor(List<IMonoClass *> &classes)
+{
+	return this->GetFunction(".ctor", classes)->ToCtor();
+}
+
+__forceinline IMonoConstructor *IMonoClass::GetConstructor(List<ClassSpec> &specifiedClasses)
+{
+	return this->GetFunction(".ctor", specifiedClasses)->ToCtor();
+}
+
+__forceinline IMonoConstructor *IMonoClass::GetConstructor(const char *params)
+{
+	return this->GetFunction(".ctor", params)->ToCtor();
+}
+
+__forceinline IMonoConstructor *IMonoClass::GetConstructor(List<const char *> &paramTypeNames)
+{
+	return this->GetFunction(".ctor", paramTypeNames)->ToCtor();
 }

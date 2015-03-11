@@ -2,14 +2,13 @@
 
 #include "IMonoInterface.h"
 #include "MonoHeaders.h"
-#include "MonoFunction.h"
 
 #pragma warning(push)
 #pragma warning(disable : 4250)
 
-struct MonoMethodWrapper : public IMonoMethod, public MonoFunction
+struct MonoMethodWrapper : public IMonoMethod
 {
-	MonoMethodWrapper(MonoMethod *method, IMonoClass *klass = nullptr) : MonoFunction(method, klass) {}
+	MonoMethodWrapper(MonoMethod *method, IMonoClass *klass = nullptr) : IMonoMethod(method, klass) {}
 	
 	virtual mono::object Invoke(void *object, mono::exception *exc = nullptr, bool polymorph = false);
 	virtual mono::object Invoke

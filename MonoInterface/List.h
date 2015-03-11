@@ -75,6 +75,15 @@ public:
 			this->elements[i] = list.elements[i];
 		}
 	}
+	//! Creates new list from data that was detached from another one.
+	//!
+	//! List should be trimmed before detachment.
+	List(ElementType *elements, int capacity)
+	{
+		this->capacity = capacity;
+		this->length   = capacity;
+		this->elements = elements;
+	}
 	~List()
 	{
 		this->Dispose();

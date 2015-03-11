@@ -223,9 +223,6 @@
     <ClInclude Include="Interfaces\IMonoStaticMethod.h">
       <Filter>Interfaces\Metadata</Filter>
     </ClInclude>
-    <ClInclude Include="Implementation\MonoFunction.h">
-      <Filter>API Implementation\Metadata</Filter>
-    </ClInclude>
     <ClInclude Include="Implementation\MonoStaticMethod.h">
       <Filter>API Implementation\Metadata</Filter>
     </ClInclude>
@@ -241,6 +238,12 @@
     <ClInclude Include="DocumentationMarkers.h" />
     <ClInclude Include="Interfaces\IMonoObject.h">
       <Filter>Interfaces\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\IMonoFunctions.h">
+      <Filter>Interfaces\Metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="Implementation\MonoFunctions.h">
+      <Filter>API Implementation\Metadata</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -335,10 +338,10 @@
     <ClCompile Include="Implementation\MonoField.cpp">
       <Filter>API Implementation\Metadata</Filter>
     </ClCompile>
-    <ClCompile Include="Implementation\MonoFunction.cpp">
+    <ClCompile Include="Implementation\MonoStaticMethod.cpp">
       <Filter>API Implementation\Metadata</Filter>
     </ClCompile>
-    <ClCompile Include="Implementation\MonoStaticMethod.cpp">
+    <ClCompile Include="Implementation\MonoFunctions.cpp">
       <Filter>API Implementation\Metadata</Filter>
     </ClCompile>
   </ItemGroup>

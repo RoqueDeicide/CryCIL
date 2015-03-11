@@ -15,7 +15,7 @@ struct IMonoInteropBase : public IMonoSystemListener
 	//! @param functionPointer Pointer to the method that will be called internally.
 	virtual void RegisterInteropMethod(const char *methodName, void *functionPointer)
 	{
-		this->monoInterface->AddInternalCall
+		this->monoInterface->Functions->AddInternalCall
 			(this->GetNameSpace(), this->GetName(), methodName, functionPointer);
 	}
 	//! Returns the name of the class that will declare managed counter-parts

@@ -6,9 +6,7 @@
 #include "Interfaces/IMonoBox.h"
 #include "Interfaces/IMonoFunctionalityWrapper.h"
 #include "Interfaces/IMonoMember.h"
-#include "Interfaces/IMonoFunction.h"
-#include "Interfaces/IMonoStaticMethod.h"
-#include "Interfaces/IMonoConstructor.h"
+#include "Interfaces/IMonoFunctions.h"
 #include "Interfaces/IMonoProperty.h"
 #include "Interfaces/IMonoEvent.h"
 #include "Interfaces/IMonoField.h"
@@ -17,7 +15,6 @@
 #include "Interfaces/ICryambly.h"
 #include "Interfaces/IMonoCoreLibrary.h"
 #include "Interfaces/IMonoClass.h"
-#include "Interfaces/IMonoMethod.h"
 #include "Interfaces/IMonoObjects.h"
 #include "Interfaces/IMonoSystemListener.h"
 
@@ -34,6 +31,21 @@
 //! Base class for MonoRunTime. Provides access to Mono interface.
 struct IMonoInterface
 {
+protected:
+	// You better not change these fields, it only gonna mess stuff up (If you are not working on CryCil).
+
+	bool running;
+
+	IMonoAssemblies *assemblies;
+	ICryambly *cryambly;					//! Extra pointer for Cryambly.
+	IMonoCoreLibrary *corlib;				//! Extra pointer for mscorlib.
+	IMonoAssembly *pdb2mdb;
+
+	IMonoGC *gc;
+	IGameFramework *framework;
+	IMonoObjects *objs;
+	IMonoFunctions *funcs;
+public:
 	//! Triggers registration of FlowGraph nodes.
 	//!
 	//! Call this method from Game::RegisterGameFlowNodes function.
@@ -54,170 +66,6 @@ struct IMonoInterface
 	//!
 	//! @param listener Pointer to the object that implements IMonoSystemListener.
 	VIRTUAL_API virtual void RemoveListener(IMonoSystemListener *listener) = 0;
-	//! Registers a new internal call.
-	//!
-	//! There are 2 ways of invoking unmanaged code from managed one:
-	//!     1) Platform Invoke: Allows invocation of functions exported by unmanaged DLLs
-	//!                         and provides easy marshaling for all data. Its main drawback
-	//!                         is a huge cost of invocation itself which is about 100 times
-	//!                         slower then invocation of normal method.
-	//!
-	//!     2) Internal Call:   Does not allow invocation of exported functions, requires
-	//!                         internal unmanaged code to register the call, before it can be
-	//!                         done. Also all arguments are passed using BLT with no extra
-	//!                         data processing and conversion. However that is the cost of
-	//!                         much faster invocation (speed rivals invocation of normal
-	//!                         methods).
-	//!
-	//! Rules of definition:
-	//!     1) Both parameters and the result are passed using BLT, therefore you have to
-	//!        make sure the types of arguments and the result in C# and C++ are blittable.
-	//!
-	//!     2) There are no requirements specified for the calling convention, however
-	//!        using __cdecl is recommended.
-	//!
-	//!     3) Any pointers to managed objects should be either unboxed or wrapped into
-	//!        IMonoHandle *(when using a general objects) or IMonoArray * when using
-	//!        arrays.
-	//!
-	//!     4) Passing an argument using ref or out keyword causes a pointer to be passed.
-	//!
-	//! Examples:
-	//!
-	//! With built-in types only:
-	//!
-	//! Signatures:
-	//! C#:  [MethodImpl(MethodImplOptions.InternalCall)]
-	//!      extern internal static float GetTerrainElevation(float positionX, float positionY);
-	//! C++: float GetTerrainElevation(float x, float y);
-	//!
-	//! C++ implementation:
-	//! @code{.cpp}
-	//! {
-	//!     return gEnv->p3DEngine->GetTerrainElevation(x, y);
-	//! }
-	//! @endcode
-	//!
-	//! C# invocation:
-	//! @code{.cs}
-	//! {
-	//!     float elevationAt3And5 = (ClassName).GetTerrainElevation(3, 5);
-	//! }
-	//! @endcode
-	//!
-	//! With custom structures:
-	//!
-	//! Signatures:
-	//! C#:  [MethodImpl(MethodImplOptions.InternalCall)]
-	//!      extern internal static float CalculateArea(Vector2 leftBottom, Vector2 rightTop);
-	//! C++: float CalculateArea(Vec2 leftBottom, Vec2 rightTop);
-	//!
-	//! C++ implementation:
-	//! @code{.cpp}
-	//! {
-	//!     // Calculate area.
-	//!     return abs((leftBottom.x - rightTop.x) * (leftBottom.y - rightTop.y));
-	//! }
-	//! @endcode
-	//!
-	//! C# invocation:
-	//! @code{.cs}
-	//! {
-	//!     float area = (ClassName).CalculateArea(new Vector2(2), new Vector2(4, 5));
-	//! }
-	//! @endcode
-	//!
-	//! With custom structures and managed objects:
-	//!
-	//! Signatures:
-	//! C#:  [MethodImpl(MethodImplOptions.InternalCall)]
-	//!      extern internal static Material LoadMaterial(string name, ref MaterialParameters params);
-	//! C++: mono::object LoadMaterial(mono::string name, MaterialParameters *params);
-	//!
-	//! C++ implementation:
-	//! @code{.cpp}
-	//! {
-	//!     // Get the handle to the loaded material.
-	//!     IMaterial *materialHandle = m_pMaterialManager->LoadMaterial
-	//!     (
-	//!         MonoEnv->ToNativeString(name),
-	//!         params->makeIfNotFound,
-	//!         params->nonRemovable
-	//!     );
-	//!     // Create an array for Material construction parameters.
-	//!     IMonoArray *ctorParams = MonoEnv->CreateArray(1, false);
-	//!     // Fill it.
-	//!     ctorParams->SetItem(0, BoxPtr(materialHandle));
-	//!     // Create the object.
-	//!     return MonoEnv->CreateObject
-	//!     (
-	//!         MonoEnv->Cryambly,          // Assembly where the type is defined.
-	//!         "CryCil.Engine.Materials",  // Name space where the type is defined.
-	//!         "Material",                 // Name of the type to instantiate.
-	//!         ctorParams                  // Arguments.
-	//!     );
-	//! }
-	//! @endcode
-	//!
-	//! C# invocation:
-	//! @code{.cs}
-	//! {
-	//!     // Declare variable.
-	//!     MaterialParameters params = new MaterialParameters
-	//!     {
-	//!         MakeIfNotFound = true,
-	//!         NonRemovable = false
-	//!     };
-	//!     // Pass the variable by reference.
-	//!     Material deathMetal = (ClassName).LoadMaterial("DeathMetal", ref params);
-	//! }
-	//! @endcode
-	//!
-	//! With custom structures passed with out keyword reference:
-	//!
-	//! Type definitions:
-	//! C#:
-	//! @code{.cs}
-	//!      [StructLayout(LayoutKind.Sequential)]
-	//!      struct Data
-	//!      {
-	//!          int number;
-	//!      }
-	//! @endcode
-	//! C++:
-	//! @code{.cpp}
-	//! struct Data { int number; };
-	//! @endcode
-	//!
-	//! Signatures:
-	//! C#:  [MethodImpl(MethodImplOptions.InternalCall)]
-	//!      extern internal static bool TryGet(string name, out Data data);
-	//! C++: bool TryGet(mono::string name, Data *data);
-	//!
-	//! C++ implementation:
-	//! @code{.cpp}
-	//! {
-	//!     // Modify the object.
-	//!     data->number = 5;
-	//!     return true;
-	//! }
-	//! @endcode
-	//!
-	//! C# invocation:
-	//! @code{.cs}
-	//! {
-	//!     // Declare variable.
-	//!     Data data;
-	//!     // Pass those variables by reference.
-	//!     bool success = (ClassName).TryGet("Not used", out data);
-	//! }
-	//! @endcode
-	//!
-	//! @param nameSpace       Name space where the class is located.
-	//! @param className       Name of the class where managed method is declared.
-	//! @param name            Name of the managed method.
-	//! @param functionPointer Pointer to unmanaged thunk that needs to be exposed to Mono code.
-	VIRTUAL_API virtual void AddInternalCall(const char *nameSpace, const char *className, const char *name, void *functionPointer) = 0;
 	// Properties.
 
 	//! Gets the pointer to AppDomain.
@@ -238,16 +86,46 @@ struct IMonoInterface
 	__declspec(property(get = GetGameFramework)) IGameFramework *CryAction;
 	//! Gets the interface that provides access to Mono object-related functionality.
 	__declspec(property(get = GetObjects)) IMonoObjects *Objects;
+	//! Gets the interface that provides access to Mono functions API.
+	__declspec(property(get = GetFunctions)) IMonoFunctions *Functions;
 
 	VIRTUAL_API virtual void *GetAppDomain() = 0;
-	VIRTUAL_API virtual IMonoAssemblies *GetAssemblies() = 0;
-	VIRTUAL_API virtual ICryambly *GetCryambly() = 0;
-	VIRTUAL_API virtual IMonoAssembly *GetPdbMdbAssembly() = 0;
-	VIRTUAL_API virtual IMonoCoreLibrary *GetCoreLibrary() = 0;
-	VIRTUAL_API virtual bool GetInitializedIndication() = 0;
-	VIRTUAL_API virtual IMonoGC *GetGC() = 0;
-	VIRTUAL_API virtual IGameFramework *GetGameFramework() = 0;
-	VIRTUAL_API virtual IMonoObjects *GetObjects() = 0;
+	IMonoAssemblies *GetAssemblies()
+	{
+		return this->assemblies;
+	}
+	ICryambly *GetCryambly()
+	{
+		return this->cryambly;
+	}
+	IMonoAssembly *GetPdbMdbAssembly()
+	{
+		return this->pdb2mdb;
+	}
+	IMonoCoreLibrary *GetCoreLibrary()
+	{
+		return this->corlib;
+	}
+	bool GetInitializedIndication()
+	{
+		return this->running;
+	}
+	IMonoGC *GetGC()
+	{
+		return this->gc;
+	}
+	IGameFramework *GetGameFramework()
+	{
+		return this->framework;
+	}
+	IMonoObjects *GetObjects()
+	{
+		return this->objs;
+	}
+	IMonoFunctions *GetFunctions()
+	{
+		return this->funcs;
+	}
 };
 //! Signature of the only method that is exported by MonoInterface.dll
 typedef IMonoInterface *(*InitializeMonoInterface)(IGameFramework *, List<IMonoSystemListener *> *);
@@ -280,6 +158,10 @@ extern IMonoInterface *MonoEnv;
 // Include these files here, because we need MonoEnv to be declared for them.
 #include "Interfaces/IMonoInterop.h"
 #include "Interfaces/MonoGCHandle.h"
+#include "Interfaces/IMonoFunction.h"
+#include "Interfaces/IMonoStaticMethod.h"
+#include "Interfaces/IMonoConstructor.h"
+#include "Interfaces/IMonoMethod.h"
 
 #pragma region Conversions Interface
 
