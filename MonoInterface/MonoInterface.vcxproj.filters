@@ -245,6 +245,9 @@
     <ClInclude Include="Implementation\MonoFunctions.h">
       <Filter>API Implementation\Metadata</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\BatchOps.h">
+      <Filter>Interops</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -343,6 +346,9 @@
     </ClCompile>
     <ClCompile Include="Implementation\MonoFunctions.cpp">
       <Filter>API Implementation\Metadata</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\BatchOps.cpp">
+      <Filter>Interops</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

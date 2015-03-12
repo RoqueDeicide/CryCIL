@@ -265,6 +265,7 @@
     <ClInclude Include="Interfaces\IMonoThread.h" />
     <ClInclude Include="Interfaces\IMonoThreads.h" />
     <ClInclude Include="Interfaces\MonoGCHandle.h" />
+    <ClInclude Include="Interops\BatchOps.h" />
     <ClInclude Include="Interops\CryMarshal.h" />
     <ClInclude Include="Interops\LogPosting.h" />
     <ClInclude Include="Interops\MeshOps.h" />
@@ -330,6 +331,7 @@
     <ClCompile Include="Implementation\MonoStaticMethod.cpp" />
     <ClCompile Include="Implementation\MonoTexts.cpp" />
     <ClCompile Include="Implementation\MonoThreads.cpp" />
+    <ClCompile Include="Interops\BatchOps.cpp" />
     <ClCompile Include="Interops\CryMarshal.cpp" />
     <ClCompile Include="Interops\LogPosting.cpp" />
     <ClCompile Include="Interops\MeshOps.cpp" />
