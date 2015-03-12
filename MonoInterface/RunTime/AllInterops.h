@@ -7,3 +7,5 @@
 #include "Interops/CryMarshal.h"
 
 #include "Interops/MeshOps.h"
+
+#include "Interops/BatchOps.h"
