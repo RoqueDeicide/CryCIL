@@ -85,6 +85,7 @@
     <Compile Include="Mathematics\BatchOps.cs" />
     <Compile Include="Mathematics\BatchOps.Enumerations.cs" />
     <Compile Include="Mathematics\BatchOps.Math.cs" />
+    <Compile Include="Mathematics\BatchOps.Vector.cs" />
     <Compile Include="Mathematics\Geometry\AngleAxis.cs" />
     <Compile Include="Mathematics\Geometry\BoundingBox.cs" />
     <Compile Include="Mathematics\Geometry\BoundingSphere.cs" />
