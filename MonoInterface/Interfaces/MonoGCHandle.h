@@ -24,6 +24,10 @@ struct MonoGCHandle
 protected:
 	unsigned int handle;
 public:
+	MonoGCHandle()
+	{
+		this->handle = -1;
+	}
 	MonoGCHandle(unsigned int handle)
 	{
 		this->handle = handle;

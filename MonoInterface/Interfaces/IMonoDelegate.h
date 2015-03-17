@@ -8,6 +8,12 @@ struct IMonoDelegate : public IMonoObject
 private:
 	IMonoFunction *func;
 public:
+	IMonoDelegate()
+		: IMonoObject(nullptr)
+		, func(nullptr)
+	{
+
+	}
 	//! Creates new wrapper for given delegate.
 	IMonoDelegate(mono::delegat d)
 		: IMonoObject(d)
