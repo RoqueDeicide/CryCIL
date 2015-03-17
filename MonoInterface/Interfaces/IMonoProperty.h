@@ -18,4 +18,10 @@ struct IMonoProperty : public IMonoMember
 	VIRTUAL_API virtual IMonoFunction *GetSetter() = 0;
 	VIRTUAL_API virtual IMonoFunction *GetIdentifier() = 0;
 	VIRTUAL_API virtual int GetParameterCount() = 0;
+
+	// Internal method, just ignore it.
+	__forceinline IMonoFunction *GetFunc()
+	{
+		return this->Identifier;
+	}
 };

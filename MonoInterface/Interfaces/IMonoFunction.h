@@ -334,4 +334,9 @@ public:
 		return this->wrappedMethod;
 	}
 
+	// Internal method, just ignore it.
+	__forceinline IMonoFunction *GetFunc()
+	{
+		return this;
+	}
 };

@@ -155,18 +155,7 @@ IMonoFunction *MonoClassWrapper::GetFunction(const char *name, int paramCount)
 	List<IMonoFunction *> *overloads;
 	if (this->methods.TryGet(name, overloads))
 	{
-		if (paramCount == -1)
-		{
-			return overloads->Length == 0 ? nullptr : overloads->At(0);
-		}
-		for (int i = 0; i < overloads->Length; i++)
-		{
-			IMonoFunction *m = overloads->At(i);
-			if (m->ParameterCount == paramCount)
-			{
-				return m;
-			}
-		}
+		return this->SearchTheList<IMonoFunction>(*overloads, paramCount);
 	}
 	return nullptr;
 }
@@ -202,33 +191,7 @@ IMonoFunction *MonoClassWrapper::GetFunction(const char *name, IMonoArray<> &typ
 	List<IMonoFunction *> *overloads;
 	if (this->methods.TryGet(name, overloads))
 	{
-		for (int i = 0; i < overloads->Length; i++)
-		{
-			IMonoFunction *m = overloads->At(i);
-			
-			if (m->ParameterCount != types.Length)
-			{
-				continue;
-			}
-
-			auto typeNames = m->ParameterTypeNames;
-
-			bool match = true;
-			for (int j = 0; j < typeNames->Length; j++)
-			{
-				// Look at definition of _MonoReflectionType in mono sources to see what is going on here.
-				MonoType *type = (MonoType *)((unsigned char *)(&types[j]) + sizeof(MonoObject));
-				if (strcmp(typeNames->At(j), mono_type_get_name(type)) != 0)
-				{
-					match = false;
-					break;
-				}
-			}
-			if (match)
-			{
-				return m;
-			}
-		}
+		return this->SearchTheList<IMonoFunction>(*overloads, types);
 	}
 	return nullptr;
 }
@@ -238,31 +201,7 @@ IMonoFunction *MonoClassWrapper::GetFunction(const char *name, List<IMonoClass *
 	List<IMonoFunction *> *overloads;
 	if (this->methods.TryGet(name, overloads))
 	{
-		for (int i = 0; i < overloads->Length; i++)
-		{
-			IMonoFunction *m = overloads->At(i);
-
-			if (m->ParameterCount != classes.Length)
-			{
-				continue;
-			}
-
-			auto currentClasses = m->ParameterClasses;
-			bool match = true;
-			
-			for (int j = 0; j < classes.Length; j++)
-			{
-				if (currentClasses->At(j) != classes[j])
-				{
-					match = false;
-					break;
-				}
-			}
-			if (match)
-			{
-				return m;
-			}
-		}
+		return this->SearchTheList<IMonoFunction>(*overloads, classes);
 	}
 	return nullptr;
 }
@@ -295,31 +234,7 @@ IMonoFunction *MonoClassWrapper::GetFunction(const char *name, List<const char *
 	List<IMonoFunction *> *overloads;
 	if (this->methods.TryGet(name, overloads))
 	{
-		for (int i = 0; i < overloads->Length; i++)
-		{
-			IMonoFunction *m = overloads->At(i);
-
-			if (m->ParameterCount != paramTypeNames.Length)
-			{
-				continue;
-			}
-
-			auto typeNames = m->ParameterTypeNames;
-			bool match = true;
-			
-			for (int j = 0; j < typeNames->Length; j++)
-			{
-				if (strcmp(typeNames->At(j), paramTypeNames[j]) != 0)
-				{
-					match = false;
-					break;
-				}
-			}
-			if (match)
-			{
-				return m;
-			}
-		}
+		return this->SearchTheList<IMonoFunction>(*overloads, paramTypeNames);
 	}
 	return nullptr;
 }
@@ -448,36 +363,7 @@ IMonoProperty *MonoClassWrapper::GetProperty(const char *name, IMonoArray<> &typ
 	List<IMonoProperty *> *overloads;
 	if (this->properties.TryGet(name, overloads))
 	{
-		for (int i = 0; i < overloads->Length; i++)
-		{
-			IMonoProperty *p = overloads->At(i);
-			IMonoFunction *m = p->Identifier;
-
-			int propParamCount = p->ParameterCount;
-
-			if (propParamCount != types.Length)
-			{
-				continue;
-			}
-
-			auto typeNames = m->ParameterTypeNames;
-
-			bool match = true;
-			for (int j = 0; j < propParamCount; j++)
-			{
-				// Look at definition of _MonoReflectionType in mono sources to see what is going on here.
-				MonoType *type = (MonoType *)((unsigned char *)(&types[j]) + sizeof(MonoObject));
-				if (strcmp(typeNames->At(j), mono_type_get_name(type)) != 0)
-				{
-					match = false;
-					break;
-				}
-			}
-			if (match)
-			{
-				return p;
-			}
-		}
+		return this->SearchTheList<IMonoProperty>(*overloads, types);
 	}
 	return nullptr;
 }
@@ -487,32 +373,7 @@ IMonoProperty *MonoClassWrapper::GetProperty(const char *name, List<IMonoClass *
 	List<IMonoProperty *> *overloads;
 	if (this->properties.TryGet(name, overloads))
 	{
-		for (int i = 0; i < overloads->Length; i++)
-		{
-			IMonoProperty *p = overloads->At(i);
-			IMonoFunction *m = p->Identifier;
-
-			if (p->ParameterCount != classes.Length)
-			{
-				continue;
-			}
-
-			auto currentClasses = m->ParameterClasses;
-			bool match = true;
-
-			for (int j = 0; j < classes.Length; j++)
-			{
-				if (currentClasses->At(j) != classes[j])
-				{
-					match = false;
-					break;
-				}
-			}
-			if (match)
-			{
-				return p;
-			}
-		}
+		return this->SearchTheList<IMonoProperty>(*overloads, classes);
 	}
 	return nullptr;
 }
@@ -545,32 +406,7 @@ IMonoProperty *MonoClassWrapper::GetProperty(const char *name, List<const char *
 	List<IMonoProperty *> *overloads;
 	if (this->properties.TryGet(name, overloads))
 	{
-		for (int i = 0; i < overloads->Length; i++)
-		{
-			IMonoProperty *p = overloads->At(i);
-			IMonoFunction *m = p->Identifier;
-
-			if (p->ParameterCount != paramTypeNames.Length)
-			{
-				continue;
-			}
-
-			auto currentClasses = m->ParameterTypeNames;
-			bool match = true;
-
-			for (int j = 0; j < paramTypeNames.Length; j++)
-			{
-				if (currentClasses->At(j) != paramTypeNames[j])
-				{
-					match = false;
-					break;
-				}
-			}
-			if (match)
-			{
-				return p;
-			}
-		}
+		return this->SearchTheList<IMonoProperty>(*overloads, paramTypeNames);
 	}
 	return nullptr;
 }
@@ -580,17 +416,125 @@ IMonoProperty *MonoClassWrapper::GetProperty(const char *name, int paramCount)
 	List<IMonoProperty *> *overloads;
 	if (this->properties.TryGet(name, overloads))
 	{
-		if (paramCount == -1)
+		return this->SearchTheList<IMonoProperty>(*overloads, paramCount);
+	}
+	return nullptr;
+}
+
+template<typename result_type>
+__forceinline result_type *MonoClassWrapper::SearchTheList(List<result_type *> &list, int paramCount)
+{
+	if (paramCount == -1)
+	{
+		// Take any number of parameters.
+		return list.Length == 0 ? nullptr : list[0];
+	}
+	for (int i = 0; i < list.Length; i++)
+	{
+		auto element = list[i];
+		if (element->ParameterCount == paramCount)
 		{
-			return overloads->Length == 0 ? nullptr : overloads->At(0);
+			return element;
 		}
-		for (int i = 0; i < overloads->Length; i++)
+	}
+	return nullptr;
+}
+
+template<typename result_type>
+__forceinline result_type *MonoClassWrapper::SearchTheList(List<result_type *> &list, List<const char *> &paramTypeNames)
+{
+	for (int i = 0; i < list.Length; i++)
+	{
+		auto element = list[i];
+		auto m = element->GetFunc();
+
+		if (element->ParameterCount != paramTypeNames.Length)
 		{
-			IMonoProperty *prop = overloads->At(i);
-			if (prop->ParameterCount == paramCount)
+			continue;
+		}
+
+		auto currentClasses = m->ParameterTypeNames;
+		bool match = true;
+
+		for (int j = 0; j < paramTypeNames.Length; j++)
+		{
+			if (currentClasses->At(j) != paramTypeNames[j])
 			{
-				return prop;
+				match = false;
+				break;
 			}
+		}
+		if (match)
+		{
+			return element;
+		}
+	}
+	return nullptr;
+}
+
+template<typename result_type>
+__forceinline result_type *MonoClassWrapper::SearchTheList(List<result_type *> &list, List<IMonoClass *> &classes)
+{
+	for (int i = 0; i < list.Length; i++)
+	{
+		auto element = list[i];
+		auto m = element->GetFunc();
+
+		if (element->ParameterCount != classes.Length)
+		{
+			continue;
+		}
+
+		auto currentClasses = m->ParameterClasses;
+		bool match = true;
+
+		for (int j = 0; j < classes.Length; j++)
+		{
+			if (currentClasses->At(j) != classes[j])
+			{
+				match = false;
+				break;
+			}
+		}
+		if (match)
+		{
+			return element;
+		}
+	}
+	return nullptr;
+}
+
+template<typename result_type>
+__forceinline result_type *MonoClassWrapper::SearchTheList(List<result_type *> &list, IMonoArray<> &types)
+{
+	for (int i = 0; i < list.Length; i++)
+	{
+		auto element = list[i];
+		auto m = element->GetFunc();
+
+		int paramCount = element->ParameterCount;
+
+		if (paramCount != types.Length)
+		{
+			continue;
+		}
+
+		auto typeNames = m->ParameterTypeNames;
+
+		bool match = true;
+		for (int j = 0; j < paramCount; j++)
+		{
+			// Look at definition of _MonoReflectionType in mono sources to see what is going on here.
+			MonoType *type = (MonoType *)((unsigned char *)(&types[j]) + sizeof(MonoObject));
+			if (strcmp(typeNames->At(j), mono_type_get_name(type)) != 0)
+			{
+				match = false;
+				break;
+			}
+		}
+		if (match)
+		{
+			return element;
 		}
 	}
 	return nullptr;

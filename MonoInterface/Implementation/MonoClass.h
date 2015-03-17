@@ -96,6 +96,17 @@ public:
 private:
 	void GetFieldValue(mono::object obj, MonoClassField *field, void *value);
 	void SetFieldValue(mono::object obj, MonoClassField *field, void *value);
+
+	template<typename result_type>
+	__forceinline result_type *SearchTheList(List<result_type *> &list, IMonoArray<> &types);
+	template<typename result_type>
+	__forceinline result_type *SearchTheList(List<result_type *> &list, List<IMonoClass *> &classes);
+	template<typename result_type>
+	__forceinline result_type *SearchTheList(List<result_type *> &list, List<ClassSpec> &specifiedClasses);
+	template<typename result_type>
+	__forceinline result_type *SearchTheList(List<result_type *> &list, List<const char *> &paramTypeNames);
+	template<typename result_type>
+	__forceinline result_type *SearchTheList(List<result_type *> &list, int paramCount);
 };
 
 //! Caches MonoClassWrapper objects.
