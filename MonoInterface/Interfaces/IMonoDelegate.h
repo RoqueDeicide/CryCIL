@@ -85,6 +85,20 @@ public:
 		void *param = del;
 		return this->klass->GetFunction("CombineImpl", -1)->ToInstance()->Invoke(this->obj, &param, nullptr, true);
 	}
+	//! Adds invocation list of given delegate to this one's.
+	//!
+	//! @param del Another delegate.
+	//!
+	//! @returns A new delegate that encapsulates invocation lists of this and another delegates.
+	mono::delegat operator +(IMonoDelegate &del)
+	{
+		if (strcmp(this->klass->Base->Name, "MulticastDelegate") != 0)
+		{
+			return;
+		}
+		void *param = del.obj;
+		return this->klass->GetFunction("CombineImpl", -1)->ToInstance()->Invoke(this->obj, &param, nullptr, true);
+	}
 	//! Removes invocation list of given delegate to this one's.
 	//!
 	//! @param del Another delegate.
@@ -100,14 +114,41 @@ public:
 		void *param = del;
 		return this->klass->GetFunction("RemoveImpl", -1)->ToInstance()->Invoke(this->obj, &param, nullptr, true);
 	}
+	//! Removes invocation list of given delegate to this one's.
+	//!
+	//! @param del Another delegate.
+	//!
+	//! @returns A new delegate that represents invocation list of this delegate with another delegate's
+	//!          one removed from it.
+	mono::delegat operator -(IMonoDelegate &del)
+	{
+		if (strcmp(this->klass->Base->Name, "MulticastDelegate") != 0)
+		{
+			return;
+		}
+		void *param = del.obj;
+		return this->klass->GetFunction("RemoveImpl", -1)->ToInstance()->Invoke(this->obj, &param, nullptr, true);
+	}
 	//! Combines assignment and addition.
 	IMonoDelegate &operator +=(mono::delegat del)
 	{
 		*this = *this + del;
 		return *this;
 	}
+	//! Combines assignment and addition.
+	IMonoDelegate &operator +=(IMonoDelegate &del)
+	{
+		*this = *this + del;
+		return *this;
+	}
 	//! Combines assignment and subtraction.
 	IMonoDelegate &operator -=(mono::delegat del)
+	{
+		*this = *this - del;
+		return *this;
+	}
+	//! Combines assignment and subtraction.
+	IMonoDelegate &operator -=(IMonoDelegate &del)
 	{
 		*this = *this - del;
 		return *this;
