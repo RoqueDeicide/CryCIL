@@ -145,21 +145,26 @@ MonoClassWrapper::~MonoClassWrapper()
 	this->fields.Dispose();
 }
 
-//! Gets the first that matches given description.
 IMonoFunction *MonoClassWrapper::GetFunction(const char *name, int paramCount)
 {
+	List<IMonoFunction *> *overloads;
 	if (!name)
 	{
-		return nullptr;
+		// Take any name.
+		auto names = this->methods.Keys;
+		for (int i = 0; i < names->Length; i++)
+		{
+			overloads = this->methods.At(names->At(i));
+			return this->SearchTheList<IMonoFunction>(*overloads, paramCount);
+		}
 	}
-	List<IMonoFunction *> *overloads;
 	if (this->methods.TryGet(name, overloads))
 	{
 		return this->SearchTheList<IMonoFunction>(*overloads, paramCount);
 	}
 	return nullptr;
 }
-//! Gets the method that matches given description.
+
 IMonoFunction *MonoClassWrapper::GetFunction(const char *name, const char *params)
 {
 	if (params == nullptr)
@@ -167,6 +172,23 @@ IMonoFunction *MonoClassWrapper::GetFunction(const char *name, const char *param
 		return this->GetFunction(name, (int)0);
 	}
 	List<IMonoFunction *> *overloads;
+	if (!name)
+	{
+		// Take any name.
+		auto names = this->methods.Keys;
+		for (int i = 0; i < names->Length; i++)
+		{
+			overloads = this->methods.At(names->At(i));
+			for (int i = 0; i < overloads->Length; i++)
+			{
+				IMonoFunction *m = overloads->At(i);
+				if (strcmp(m->Parameters, params) == 0)
+				{
+					return m;
+				}
+			}
+		}
+	}
 	if (this->methods.TryGet(name, overloads))
 	{
 		for (int i = 0; i < overloads->Length; i++)
@@ -189,6 +211,16 @@ IMonoFunction *MonoClassWrapper::GetFunction(const char *name, IMonoArray<> &typ
 	}
 
 	List<IMonoFunction *> *overloads;
+	if (!name)
+	{
+		// Take any name.
+		auto names = this->methods.Keys;
+		for (int i = 0; i < names->Length; i++)
+		{
+			overloads = this->methods.At(names->At(i));
+			return this->SearchTheList<IMonoFunction>(*overloads, types);
+		}
+	}
 	if (this->methods.TryGet(name, overloads))
 	{
 		return this->SearchTheList<IMonoFunction>(*overloads, types);
@@ -199,6 +231,16 @@ IMonoFunction *MonoClassWrapper::GetFunction(const char *name, IMonoArray<> &typ
 IMonoFunction *MonoClassWrapper::GetFunction(const char *name, List<IMonoClass *> &classes)
 {
 	List<IMonoFunction *> *overloads;
+	if (!name)
+	{
+		// Take any name.
+		auto names = this->methods.Keys;
+		for (int i = 0; i < names->Length; i++)
+		{
+			overloads = this->methods.At(names->At(i));
+			return this->SearchTheList<IMonoFunction>(*overloads, classes);
+		}
+	}
 	if (this->methods.TryGet(name, overloads))
 	{
 		return this->SearchTheList<IMonoFunction>(*overloads, classes);
@@ -232,6 +274,16 @@ IMonoFunction *MonoClassWrapper::GetFunction(const char *name, List<ClassSpec> &
 IMonoFunction *MonoClassWrapper::GetFunction(const char *name, List<const char *> &paramTypeNames)
 {
 	List<IMonoFunction *> *overloads;
+	if (!name)
+	{
+		// Take any name.
+		auto names = this->methods.Keys;
+		for (int i = 0; i < names->Length; i++)
+		{
+			overloads = this->methods.At(names->At(i));
+			return this->SearchTheList<IMonoFunction>(*overloads, paramTypeNames);
+		}
+	}
 	if (this->methods.TryGet(name, overloads))
 	{
 		return this->SearchTheList<IMonoFunction>(*overloads, paramTypeNames);
@@ -361,6 +413,16 @@ IMonoProperty *MonoClassWrapper::GetProperty(const char *name)
 IMonoProperty *MonoClassWrapper::GetProperty(const char *name, IMonoArray<> &types)
 {
 	List<IMonoProperty *> *overloads;
+	if (!name)
+	{
+		// Take any name.
+		auto names = this->properties.Keys;
+		for (int i = 0; i < names->Length; i++)
+		{
+			overloads = this->properties.At(names->At(i));
+			return this->SearchTheList<IMonoProperty>(*overloads, types);
+		}
+	}
 	if (this->properties.TryGet(name, overloads))
 	{
 		return this->SearchTheList<IMonoProperty>(*overloads, types);
@@ -371,6 +433,16 @@ IMonoProperty *MonoClassWrapper::GetProperty(const char *name, IMonoArray<> &typ
 IMonoProperty *MonoClassWrapper::GetProperty(const char *name, List<IMonoClass *> &classes)
 {
 	List<IMonoProperty *> *overloads;
+	if (!name)
+	{
+		// Take any name.
+		auto names = this->properties.Keys;
+		for (int i = 0; i < names->Length; i++)
+		{
+			overloads = this->properties.At(names->At(i));
+			return this->SearchTheList<IMonoProperty>(*overloads, classes);
+		}
+	}
 	if (this->properties.TryGet(name, overloads))
 	{
 		return this->SearchTheList<IMonoProperty>(*overloads, classes);
@@ -404,6 +476,16 @@ IMonoProperty *MonoClassWrapper::GetProperty(const char *name, List<ClassSpec> &
 IMonoProperty *MonoClassWrapper::GetProperty(const char *name, List<const char *> &paramTypeNames)
 {
 	List<IMonoProperty *> *overloads;
+	if (!name)
+	{
+		// Take any name.
+		auto names = this->properties.Keys;
+		for (int i = 0; i < names->Length; i++)
+		{
+			overloads = this->properties.At(names->At(i));
+			return this->SearchTheList<IMonoProperty>(*overloads, paramTypeNames);
+		}
+	}
 	if (this->properties.TryGet(name, overloads))
 	{
 		return this->SearchTheList<IMonoProperty>(*overloads, paramTypeNames);
@@ -414,6 +496,16 @@ IMonoProperty *MonoClassWrapper::GetProperty(const char *name, List<const char *
 IMonoProperty *MonoClassWrapper::GetProperty(const char *name, int paramCount)
 {
 	List<IMonoProperty *> *overloads;
+	if (!name)
+	{
+		// Take any name.
+		auto names = this->properties.Keys;
+		for (int i = 0; i < names->Length; i++)
+		{
+			overloads = this->properties.At(names->At(i));
+			return this->SearchTheList<IMonoProperty>(*overloads, paramCount);
+		}
+	}
 	if (this->properties.TryGet(name, overloads))
 	{
 		return this->SearchTheList<IMonoProperty>(*overloads, paramCount);

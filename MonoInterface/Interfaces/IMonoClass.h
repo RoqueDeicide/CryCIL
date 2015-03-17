@@ -85,7 +85,7 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	__forceinline IMonoConstructor *GetConstructor(List<const char *> &paramTypeNames);	// Defined in IMonoConstructor.
 	//! Gets method that can accept arguments of specified types.
 	//!
-	//! @param name  Name of the method to get.
+	//! @param name  Name of the method to get. If null, then any name will suffice.
 	//! @param types An array of System.Type objects that specify method signature to use.
 	VIRTUAL_API virtual IMonoFunction *GetFunction(const char *name, IMonoArray<> &types) = 0;
 	//! Gets method that can accept arguments of specified types.
@@ -114,7 +114,7 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//! klass->GetMethod("Add", type);
 	//! @endcode
 	//!
-	//! @param name    Name of the method to get.
+	//! @param name    Name of the method to get. If null, then any name will suffice.
 	//! @param classes A list IMonoClass wrappers that specify method signature to use.
 	VIRTUAL_API virtual IMonoFunction *GetFunction(const char *name, List<IMonoClass *> &classes) = 0;
 	//! Gets method that can accept arguments of specified types.
@@ -130,7 +130,7 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!     1) [] - Specifies an array type. When working with multi-dimensional arrays, put
 	//!             N - 1 number of commas between the brackets where N = number of dimensions.
 	//!
-	//! @param name             Name of the method to get.
+	//! @param name             Name of the method to get. If null, then any name will suffice.
 	//! @param specifiedClasses A list of classes and postfixes that specify method signature to use.
 	VIRTUAL_API virtual IMonoFunction *GetFunction(const char *name, List<ClassSpec> &specifiedClasses) = 0;
 	//! Gets the method that matches given description.
@@ -162,7 +162,7 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//! C# method signature: SetupNumber(out int result, ref double value, ref void *ptr, ref object[,] pars, Foo.Boo objectOfNestedType);
 	//! C++ search: GetMethod("SetupNumber", "System.Int32&,System.Double&,System.Void*&,System.Object[,]&,Foo+Boo");
 	//!
-	//! @param name   Name of the method to find.
+	//! @param name   Name of the method to find. If null, then any name will suffice.
 	//! @param params Text that describes types arguments the method should take.
 	//!
 	//! @returns A pointer to the wrapper to the found method. Null is returned if
@@ -187,12 +187,12 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!
 	//! @endcode
 	//!
-	//! @param name           Name of the method to find.
+	//! @param name           Name of the method to find. If null, then any name will suffice.
 	//! @param paramTypeNames A list of full type names that specify the parameters the method accepts.
 	VIRTUAL_API virtual IMonoFunction *GetFunction(const char *name, List<const char *> &paramTypeNames) = 0;
 	//! Gets the first method that matches given description.
 	//!
-	//! @param name       Name of the method to find.
+	//! @param name       Name of the method to find. If null, then any name will suffice.
 	//! @param paramCount Number of arguments the method should take. If it's equal to -1 then parameter
 	//!                   count is ignored.
 	VIRTUAL_API virtual IMonoFunction *GetFunction(const char *name, int paramCount = 0) = 0;
@@ -256,27 +256,27 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	VIRTUAL_API virtual IMonoProperty *GetProperty(const char *name) = 0;
 	//! Gets a wrapper for a property defined in this class.
 	//!
-	//! @param name  Name of the property to get.
+	//! @param name  Name of the property to get. If null, then any name will suffice.
 	//! @param types An array of System.Type objects that specify property signature to use.
 	VIRTUAL_API virtual IMonoProperty *GetProperty(const char *name, IMonoArray<> &types) = 0;
 	//! Gets a wrapper for a property defined in this class.
 	//!
-	//! @param name    Name of the property to get.
+	//! @param name    Name of the property to get. If null, then any name will suffice.
 	//! @param classes A list IMonoClass wrappers that specify property signature to use.
 	VIRTUAL_API virtual IMonoProperty *GetProperty(const char *name, List<IMonoClass *> &classes) = 0;
 	//! Gets a wrapper for a property defined in this class.
 	//!
-	//! @param name             Name of the property to get.
+	//! @param name             Name of the property to get. If null, then any name will suffice.
 	//! @param specifiedClasses A list of classes and postfixes that specify property signature to use.
 	VIRTUAL_API virtual IMonoProperty *GetProperty(const char *name, List<ClassSpec> &specifiedClasses) = 0;
 	//! Gets a wrapper for a property defined in this class.
 	//!
-	//! @param name           Name of the property to get.
+	//! @param name           Name of the property to get. If null, then any name will suffice.
 	//! @param paramTypeNames A list of full type names that specify the parameters the property accepts.
 	VIRTUAL_API virtual IMonoProperty *GetProperty(const char *name, List<const char *> &paramTypeNames) = 0;
 	//! Gets a wrapper for a property defined in this class.
 	//!
-	//! @param name       Name of the property to get.
+	//! @param name       Name of the property to get. If null, then any name will suffice.
 	//! @param paramCount Number of arguments the getter or setter of the property should take. If it's
 	//!                   equal to -1 then parameter count is ignored.
 	VIRTUAL_API virtual IMonoProperty *GetProperty(const char *name, int paramCount) = 0;
