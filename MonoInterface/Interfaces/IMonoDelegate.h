@@ -49,6 +49,29 @@ public:
 	//! Returned function pointer ceases to exist after the delegate is GCed.
 	__declspec(property(get = GetTrampoline)) void *Trampoline;
 
+	//! Invokes this delegate.
+	//!
+	//! @param params A pointer to an array of pointers to the arguments to pass to method(s) represented by
+	//!               this delegate. Pass null, if delegate accepts no arguments.
+	//! @param ex     A pointer to object reference that will be set to the reference to the exception
+	//!               object that represents unhandled exception if it was thrown during delegate execution.
+	//!               If set to null, then exception will caught and handled by CryCIL.
+	mono::object Invoke(void **params, mono::exception *ex = nullptr)
+	{
+		if (!ex)
+		{
+			mono::exception exo;
+
+			mono::object obj = MonoEnv->Objects->InvokeDelegate(this->obj, params, &exo);
+
+			if (exo)
+			{
+				MonoEnv->HandleException(exo);
+			}
+		}
+		return MonoEnv->Objects->InvokeDelegate(this->obj, params, ex);
+	}
+
 	IMonoFunction *GetFunction()
 	{
 		if (!this->func)

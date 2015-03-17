@@ -123,6 +123,12 @@ void *MonoObjects::GetDelegateTrampoline(mono::delegat delegat)
 	return mono_delegate_to_ftnptr_FnPtr(delegat);
 }
 
+mono::object MonoObjects::InvokeDelegate(mono::delegat delegat, void **params, mono::exception *ex)
+{
+	return (mono::object)mono_runtime_delegate_invoke((MonoObject *)delegat, params, (MonoObject **)ex);
+}
+
+
 bool MonoObjects::StringEquals(mono::string str, mono::string other)
 {
 	return mono_string_equal((MonoString *)str, (MonoString *)other) != 0;

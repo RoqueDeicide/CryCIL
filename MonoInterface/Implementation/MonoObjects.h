@@ -58,6 +58,8 @@ public:
 	virtual IMonoFunction *GetDelegateFunction(mono::delegat delegat);
 	virtual mono::object   GetDelegateTarget(mono::delegat delegat);
 	virtual void          *GetDelegateTrampoline(mono::delegat delegat);
+	virtual mono::object   InvokeDelegate(mono::delegat delegat, void **params, mono::exception *ex);
+
 
 	virtual bool           StringEquals(mono::string str, mono::string other);
 	virtual mono::string   InternString(mono::string str);

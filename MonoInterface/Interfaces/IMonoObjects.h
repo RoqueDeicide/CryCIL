@@ -82,6 +82,15 @@ struct IMonoObjects
 	//!          wrapper-function that invokes method that is called by the delegate. It will be deleted
 	//!          when the delegate is collected by GC.
 	VIRTUAL_API virtual void *GetDelegateTrampoline(mono::delegat delegat) = 0;
+	//! Invokes a delegate.
+	//!
+	//! @param delegat Delegate object.
+	//! @param params  A pointer to an array of pointers to the arguments to pass to method(s) represented by
+	//!                this delegate. Pass null, if delegate accepts no arguments.
+	//! @param ex      A pointer to object reference that will be set to the reference to the exception
+	//!                object that represents unhandled exception if it was thrown during delegate execution.
+	//!                If set to null, then exception will not be caught and will probably crash the runtime.
+	VIRTUAL_API virtual mono::object InvokeDelegate(mono::delegat delegat, void **params, mono::exception *ex) = 0;
 #pragma endregion
 
 #pragma region String API
