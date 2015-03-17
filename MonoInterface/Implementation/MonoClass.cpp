@@ -155,6 +155,10 @@ IMonoFunction *MonoClassWrapper::GetFunction(const char *name, int paramCount)
 	List<IMonoFunction *> *overloads;
 	if (this->methods.TryGet(name, overloads))
 	{
+		if (paramCount == -1)
+		{
+			return overloads->Length == 0 ? nullptr : overloads->At(0);
+		}
 		for (int i = 0; i < overloads->Length; i++)
 		{
 			IMonoFunction *m = overloads->At(i);
@@ -576,6 +580,10 @@ IMonoProperty *MonoClassWrapper::GetProperty(const char *name, int paramCount)
 	List<IMonoProperty *> *overloads;
 	if (this->properties.TryGet(name, overloads))
 	{
+		if (paramCount == -1)
+		{
+			return overloads->Length == 0 ? nullptr : overloads->At(0);
+		}
 		for (int i = 0; i < overloads->Length; i++)
 		{
 			IMonoProperty *prop = overloads->At(i);

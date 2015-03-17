@@ -58,11 +58,7 @@ IMonoFunction *MonoEventWrapper::GetRaise()
 		{
 			auto methodName = NtText(2, "On", mono_event_get_name(this->_event));
 
-			auto overloads = klass->GetFunctions(methodName);
-			if (overloads)
-			{
-				this->raise = overloads->At(0);
-			}
+			this->raise = this->klass->GetFunction(methodName, -1);
 		}
 
 		this->raiseDefined = this->raise ? 1 : 0;

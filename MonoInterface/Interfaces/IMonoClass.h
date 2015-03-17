@@ -193,7 +193,8 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//! Gets the first method that matches given description.
 	//!
 	//! @param name       Name of the method to find.
-	//! @param paramCount Number of arguments the method should take.
+	//! @param paramCount Number of arguments the method should take. If it's equal to -1 then parameter
+	//!                   count is ignored.
 	VIRTUAL_API virtual IMonoFunction *GetFunction(const char *name, int paramCount = 0) = 0;
 	//! Gets an array of functions that matches given description.
 	//!
@@ -276,7 +277,8 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//! Gets a wrapper for a property defined in this class.
 	//!
 	//! @param name       Name of the property to get.
-	//! @param paramCount Number of arguments the getter or setter of the property should take.
+	//! @param paramCount Number of arguments the getter or setter of the property should take. If it's
+	//!                   equal to -1 then parameter count is ignored.
 	VIRTUAL_API virtual IMonoProperty *GetProperty(const char *name, int paramCount) = 0;
 	//! Gets one of the events defined in this class.
 	//!
