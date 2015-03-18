@@ -45,6 +45,7 @@ public:
 			}
 			this->obj = del;
 		}
+		return *this;
 	}
 	//! Gets a wrapper for a Mono function that will be invoked by this delegate.
 	__declspec(property(get = GetFunction)) IMonoFunction *Function;
@@ -86,7 +87,7 @@ public:
 	{
 		if (strcmp(this->klass->Base->Name, "MulticastDelegate") != 0)
 		{
-			return;
+			return nullptr;
 		}
 		void *param = del;
 		return this->klass->GetFunction("CombineImpl", -1)->ToInstance()->Invoke(this->obj, &param, nullptr, true);
@@ -100,7 +101,7 @@ public:
 	{
 		if (strcmp(this->klass->Base->Name, "MulticastDelegate") != 0)
 		{
-			return;
+			return nullptr;
 		}
 		void *param = del.obj;
 		return this->klass->GetFunction("CombineImpl", -1)->ToInstance()->Invoke(this->obj, &param, nullptr, true);
@@ -115,7 +116,7 @@ public:
 	{
 		if (strcmp(this->klass->Base->Name, "MulticastDelegate") != 0)
 		{
-			return;
+			return nullptr;
 		}
 		void *param = del;
 		return this->klass->GetFunction("RemoveImpl", -1)->ToInstance()->Invoke(this->obj, &param, nullptr, true);
@@ -130,7 +131,7 @@ public:
 	{
 		if (strcmp(this->klass->Base->Name, "MulticastDelegate") != 0)
 		{
-			return;
+			return nullptr;
 		}
 		void *param = del.obj;
 		return this->klass->GetFunction("RemoveImpl", -1)->ToInstance()->Invoke(this->obj, &param, nullptr, true);
