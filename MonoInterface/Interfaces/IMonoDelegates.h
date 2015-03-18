@@ -14,7 +14,7 @@ struct IMonoDelegates
 	//! @param delegateType Type that represents the delegate that needs to be created.
 	//! @param name         Name of the delegate type.
 	//! @param method       Method for which the delegate is made.
-	VIRTUAL_API virtual mono::delegat Create(IMonoClass *delegateType, IMonoMethod *method) = 0;
+	VIRTUAL_API virtual mono::delegat Create(IMonoClass *delegateType, IMonoStaticMethod *method) = 0;
 	//! Creates a new delegate for an instance method.
 	//!
 	//! Wrapper needs to be deleted when not used anymore.

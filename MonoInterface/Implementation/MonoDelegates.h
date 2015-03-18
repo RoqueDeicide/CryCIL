@@ -13,7 +13,7 @@ private:
 	static CreateInstanceDelegate           createInstanceDelegate;
 	static CreateDelegateForFunctionPointer createDelegateForFunctionPointer;
 public:
-	virtual mono::delegat Create(IMonoClass *delegateType, IMonoMethod *method);
+	virtual mono::delegat Create(IMonoClass *delegateType, IMonoStaticMethod *method);
 	virtual mono::delegat Create(IMonoClass *delegateType, IMonoMethod *method, mono::object target);
 	virtual mono::delegat Create(IMonoClass *delegateType, void *functionPointer);
 };

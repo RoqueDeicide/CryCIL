@@ -2,7 +2,7 @@
 
 #include "MonoDelegates.h"
 
-mono::delegat MonoDelegates::Create(IMonoClass *delegateType, IMonoMethod *method)
+mono::delegat MonoDelegates::Create(IMonoClass *delegateType, IMonoStaticMethod *method)
 {
 	if (!delegateType)
 	{
