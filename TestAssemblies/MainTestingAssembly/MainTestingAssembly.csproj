@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="ConstructionTestClass.cs" />
+    <Compile Include="DelegateTest.cs" />
     <Compile Include="EventTestClass.cs" />
     <Compile Include="FieldTestClass.cs" />
     <Compile Include="MethodTestClass.cs" />
