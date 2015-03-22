@@ -70,6 +70,7 @@
     <Compile Include="ConstructionTestClass.cs" />
     <Compile Include="DelegateTest.cs" />
     <Compile Include="EventTestClass.cs" />
+    <Compile Include="ExceptionTesting.cs" />
     <Compile Include="FieldTestClass.cs" />
     <Compile Include="MethodTestClass.cs" />
     <Compile Include="Properties\Annotations.cs" />

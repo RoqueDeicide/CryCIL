@@ -3,7 +3,7 @@
 void TestObjectHandles();
 void TestArrays();
 void TestDelegates();
-
+void TestExceptions();
 
 void TestObjects()
 {
@@ -354,4 +354,130 @@ void TestDelegates()
 	nativeDel1.Invoke(&param);
 	argInt = 19;
 	nativeDel2.Invoke(&param);
+}
+
+void ThrowExceptionInternal(mono::exception ex)
+{
+	IMonoException(ex).Throw();
+}
+
+void TestExceptionObject(mono::exception ex, const char *typeName);
+
+#define TEST_EXCEPTION(e) TestExceptionObject(MonoEnv->Objects->Exceptions->e("Test message"), NtText(2, #e, "Exception"))
+
+void TestExceptions()
+{
+	MonoEnv->Functions->AddInternalCall("MainTestingAssembly",
+										"ExceptionTestingMethods",
+										"ThrowExceptionInternal",
+										ThrowExceptionInternal);
+
+	auto testClass = mainTestingAssembly->GetClass("MainTestingAssembly", "ExceptionTesting");
+
+	CryLogAlways("TEST:");
+	CryLogAlways("TEST: Testing IMonoException implementation.");
+	CryLogAlways("TEST:");
+	CryLogAlways("TEST: Trying to throw exception using CryCIL API.");
+	CryLogAlways("TEST:");
+
+	testClass->GetFunction("TestUnderlyingExceptionThrowing")->ToStatic()->Invoke();
+
+	CryLogAlways("TEST:");
+	CryLogAlways("TEST: Testing catching exceptions.");
+	CryLogAlways("TEST:");
+
+	mono::exception ex;
+	void *param = ToMonoString("Message for the exception object.");
+	testClass->GetFunction("MakeAndThrowException")->ToStatic()->Invoke(&param, &ex);
+
+	IMonoException exc(ex);
+
+	CryLogAlways("TEST: Caught exception's details are: Message = \"%s\", Length of the stack-trace is %d.", NtText(exc.Message), NtText(exc.StackTrace).Length, exc.Class->FullName);
+	CryLogAlways("TEST:");
+
+	CryLogAlways("TEST:");
+	CryLogAlways("TEST: Testing creation of exceptions via IMonoExceptions::Create.");
+	CryLogAlways("TEST:");
+
+	auto inner = MonoEnv->Objects->Exceptions
+								 ->Create
+								 (mainTestingAssembly,
+								 "MainTestingAssembly",
+								 "CryCilTestException",
+								 "Message for object that was created using IMonoExceptions::Create."
+								 );
+
+	if (inner)
+	{
+		CryLogAlways("TEST SUCCESS: A simple exception object was created.");
+	}
+	else
+	{
+		ReportError("TEST FAILURE: A simple exception object was not created.");
+	}
+
+	CryLogAlways("TEST:");
+
+	param = inner;
+	auto returnedInner = IMonoException(testClass->GetFunction("GetExceptionWithInnerOne")->ToStatic()->Invoke(&param)).InnerException;
+
+	if (returnedInner)
+	{
+		CryLogAlways("TEST SUCCESS: IMonoException::InnerException property works.");
+	}
+	else
+	{
+		ReportError("TEST FAILURE: IMonoException::InnerException property doesn't work.");
+	}
+
+	CryLogAlways("TEST:");
+	CryLogAlways("TEST: Testing creation of various built-in exceptions.");
+	CryLogAlways("TEST:");
+
+	TEST_EXCEPTION(AppDomainUnloaded);
+	TestExceptionObject(MonoEnv->Objects->Exceptions->Argument("Argument", "Test"), "ArgumentException");
+	TEST_EXCEPTION(ArgumentNull);
+	TEST_EXCEPTION(ArgumentOutOfRange);
+	TEST_EXCEPTION(Arithmetic);
+	TEST_EXCEPTION(ArrayTypeMismatch);
+	TEST_EXCEPTION(BadImageFormat);
+	TEST_EXCEPTION(BaseException);
+	TEST_EXCEPTION(CannotUnloadAppDomain);
+	TEST_EXCEPTION(DivideByZero);
+	TEST_EXCEPTION(ExecutionEngine);
+	TestExceptionObject(MonoEnv->Objects->Exceptions->FileNotFound("SomeFile.txt", "Test"), "FileNotFoundException");
+	TEST_EXCEPTION(IndexOutOfRange);
+	TEST_EXCEPTION(InvalidCast);
+	TEST_EXCEPTION(IO);
+	TEST_EXCEPTION(MissingField);
+	TEST_EXCEPTION(MissingMethod);
+	TEST_EXCEPTION(NotImplemented);
+	TEST_EXCEPTION(NotSupported);
+	TEST_EXCEPTION(NullReference);
+	TEST_EXCEPTION(Overflow);
+	TEST_EXCEPTION(Security);
+	TEST_EXCEPTION(Serialization);
+	TEST_EXCEPTION(StackOverflow);
+	TEST_EXCEPTION(SynchronizationLock);
+	TEST_EXCEPTION(ThreadAbort);
+	TEST_EXCEPTION(ThreadState);
+	TEST_EXCEPTION(TypeInitialization);
+	TEST_EXCEPTION(TypeLoad);
+
+	CryLogAlways("TEST:");
+}
+
+#undef TEST_EXCEPTION
+
+void TestExceptionObject(mono::exception ex, const char *typeName)
+{
+	if (ex)
+	{
+		CryLogAlways("TEST SUCCESS: The exception object of type %s was created.", typeName);
+	}
+	else
+	{
+		ReportError("TEST FAILURE: The exception object of type %s was not created.", typeName);
+		return;
+	}
 }
