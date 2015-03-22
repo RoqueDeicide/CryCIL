@@ -229,12 +229,12 @@ void TestArrays()
 
 void __cdecl NativeTestFunctionCdecl(int arg)
 {
-	CryLogAlways("Native function has been invoked through the delegate with a number %d passed as an argument using C calling convention.", arg);
+	CryLogAlways("TEST: Native function has been invoked through the delegate with a number %d passed as an argument using C calling convention.", arg);
 }
 
 void __stdcall NativeTestFunctionStdCall(int arg)
 {
-	CryLogAlways("Native function has been invoked through the delegate with a number %d passed as an argument using standard calling convention.", arg);
+	CryLogAlways("TEST: Native function has been invoked through the delegate with a number %d passed as an argument using standard calling convention.", arg);
 }
 
 void TestDelegates()
