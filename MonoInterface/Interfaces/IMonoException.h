@@ -21,8 +21,6 @@ struct IMonoException : public IMonoObject
 	//! Result needs to be deleted after use.
 	__declspec(property(get = GetStackTrace)) const char *StackTrace;
 	//! Gets the exception object that is a cause of this one.
-	//!
-	//! Result needs to be deleted after use.
 	__declspec(property(get = GetInnerException)) mono::exception InnerException;
 
 	//! Raises this exception in the Mono run-time.
