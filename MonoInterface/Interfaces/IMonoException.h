@@ -15,7 +15,7 @@ struct IMonoException : public IMonoObject
 	//! Gets the message provided with this exception object.
 	//!
 	//! Result needs to be deleted after use.
-	__declspec(property(get = GetMessage)) const char *Message;
+	__declspec(property(get = GetErrorMessage)) const char *Message;
 	//! Gets a string representation of the immediate frames on the call stack.
 	//!
 	//! Result needs to be deleted after use.
