@@ -294,6 +294,13 @@ public:
 		}
 		return -1;
 	}
+	//! Gets the length of the string.
+	__declspec(property(get = GetLength)) int Length;
+	//! Gets the length of the string.
+	int GetLength() const
+	{
+		return strlen(this->chars);
+	}
 	//! Determines whether this text is equal to one in the null-terminated string.
 	bool Equals(const char *ntString)
 	{
