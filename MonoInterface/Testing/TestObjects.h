@@ -4,6 +4,7 @@ void TestObjectHandles();
 void TestArrays();
 void TestDelegates();
 void TestExceptions();
+void TestStrings();
 
 void TestObjects()
 {
@@ -14,6 +15,8 @@ void TestObjects()
 	TestDelegates();
 
 	TestExceptions();
+
+	TestStrings();
 }
 
 void TestObjectHandles()
@@ -480,4 +483,86 @@ void TestExceptionObject(mono::exception ex, const char *typeName)
 		ReportError("TEST FAILURE: The exception object of type %s was not created.", typeName);
 		return;
 	}
+}
+
+void TestStrings()
+{
+	auto testClass = mainTestingAssembly->GetClass("MainTestingAssembly", "StringTest");
+
+	CryLogAlways("TEST:");
+	CryLogAlways("TEST: Testing IMonoText implementation.");
+	CryLogAlways("TEST:");
+	CryLogAlways("TEST: Testing getting a hash code of the string.");
+	CryLogAlways("TEST:");
+
+	int hashCode = IMonoText("Some text for testing purposes.").HashCode;
+	CryLogAlways("TEST: Hash code of the string = %d", hashCode);
+
+	CryLogAlways("TEST:");
+	CryLogAlways("TEST: Testing detection of interned strings when working with literals.");
+	CryLogAlways("TEST:");
+
+	IMonoText text(testClass->GetFunction("")->ToStatic()->Invoke());
+	if (text.Interned)
+	{
+		CryLogAlways("TEST SUCCESS: Literals returned from Mono are properly recognized as interned strings.");
+	}
+	else
+	{
+		ReportError("TEST FAILURE: Literals returned from Mono are not recognized as interned strings.");
+	}
+
+	CryLogAlways("TEST:");
+	CryLogAlways("TEST: Testing detection of interned strings that were interned at run-time.");
+	CryLogAlways("TEST:");
+
+	text = IMonoText("Some text that is not interned normally, but is about to be interned.");
+	if (!text.Interned)
+	{
+		CryLogAlways("TEST SUCCESS: Strings created from null-terminated ones are not recognized as interned ones.");
+	}
+	else
+	{
+		ReportError("TEST FAILURE: Strings created from null-terminated ones are recognized as interned ones.");
+	}
+
+	CryLogAlways("TEST:");
+
+	text.Intern();
+	if (text.Interned)
+	{
+		CryLogAlways("TEST SUCCESS: A string was successfully interned.");
+	}
+	else
+	{
+		ReportError("TEST FAILURE: A string was not interned.");
+	}
+
+	CryLogAlways("TEST:");
+	CryLogAlways("TEST: Testing equality checks.");
+	CryLogAlways("TEST:");
+
+	if (text.Equals(IMonoText("Some text that is not interned normally, but is about to be interned.")))
+	{
+		CryLogAlways("TEST SUCCESS: 2 exactly the same strings are equal.");
+	}
+	else
+	{
+		ReportError("TEST FAILURE: 2 exactly the same strings are not equal.");
+	}
+
+	CryLogAlways("TEST:");
+
+	if (text.Equals(ToMonoString("Some text that is not interned normally.")))
+	{
+		CryLogAlways("TEST SUCCESS: 2 different strings are not equal.");
+	}
+	else
+	{
+		ReportError("TEST FAILURE: 2 different strings are equal.");
+	}
+
+	CryLogAlways("TEST:");
+	CryLogAlways("TEST: The interned string is: %s.", NtText(text.NativeUTF8));
+	CryLogAlways("TEST:");
 }
