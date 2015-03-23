@@ -52,7 +52,7 @@ struct IMonoText : public IMonoObject
 	//! Gets reference to a character in UTF-16 encoding.
 	//!
 	//! @param index Zero-based index of the character to get.
-	wchar_t &At(int index)
+	wchar_t &operator[](int index)
 	{
 		return MonoEnv->Objects->StringAt(this->obj, index);
 	}
