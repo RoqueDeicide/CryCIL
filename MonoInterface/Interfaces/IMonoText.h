@@ -8,11 +8,31 @@ struct IMonoText : public IMonoObject
 	//! Creates new wrapper for given string.
 	IMonoText(mono::string str)
 		: IMonoObject(str)
-	{}
+	{
+#ifdef _DEBUG
+		if (strcmp(MonoEnv->Objects->GetObjectClass(str)->Name, "String") != 0)
+		{
+			ReportError("Attempt was made to create a Mono text wrapper for an object that is not of type String.");
+		}
+#endif // _DEBUG
+
+		this->klass = MonoEnv->CoreLibrary->String;
+		this->obj = str;
+	}
 	//! Creates new wrapper for given string.
 	IMonoText(MonoGCHandle &handle)
 		: IMonoObject(handle)
-	{}
+	{
+#ifdef _DEBUG
+		if (strcmp(MonoEnv->Objects->GetObjectClass(handle.Object)->Name, "String") != 0)
+		{
+			ReportError("Attempt was made to create a Mono text wrapper for an object that is not of type String.");
+		}
+#endif // _DEBUG
+
+		this->klass = MonoEnv->CoreLibrary->String;
+		this->obj = handle.Object;
+	}
 	//! Indicates whether this string is located in an intern pool (shared memory for literals).
 	//!
 	//! All interned strings are pinned, so it is highly recommended to intern any string that is
