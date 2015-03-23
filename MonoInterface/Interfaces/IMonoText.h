@@ -16,7 +16,7 @@ struct IMonoText : public IMonoObject
 		}
 #endif // _DEBUG
 
-		this->klass = MonoEnv->CoreLibrary->String;
+		this->klass = GetStringClass();
 		this->obj = str;
 	}
 	//! Creates new wrapper for given string.
@@ -30,19 +30,19 @@ struct IMonoText : public IMonoObject
 		}
 #endif // _DEBUG
 
-		this->klass = MonoEnv->CoreLibrary->String;
+		this->klass = GetStringClass();
 		this->obj = handle.Object;
 	}
 	//! Creates a wrapper for the string that is created from given null-terminated one.
 	IMonoText(const char *t)
 	{
-		this->klass = MonoEnv->CoreLibrary->String;
+		this->klass = GetStringClass();
 		this->obj = MonoEnv->Objects->Texts->ToManaged(t);
 	}
 	//! Creates a wrapper for the string that is created from given null-terminated one.
 	IMonoText(const wchar_t *t)
 	{
-		this->klass = MonoEnv->CoreLibrary->String;
+		this->klass = GetStringClass();
 		this->obj = MonoEnv->Objects->Texts->ToManaged(t);
 	}
 	//! Indicates whether this string is located in an intern pool (shared memory for literals).
@@ -104,5 +104,11 @@ struct IMonoText : public IMonoObject
 	const wchar_t *ToNativeUTF16()
 	{
 		return MonoEnv->Objects->StringToNativeUTF16(this->obj);
+	}
+
+	static IMonoClass *GetStringClass()
+	{
+		static IMonoClass *stringClass = MonoEnv->CoreLibrary->String;
+		return stringClass;
 	}
 };
