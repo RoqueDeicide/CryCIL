@@ -33,6 +33,18 @@ struct IMonoText : public IMonoObject
 		this->klass = MonoEnv->CoreLibrary->String;
 		this->obj = handle.Object;
 	}
+	//! Creates a wrapper for the string that is created from given null-terminated one.
+	IMonoText(const char *t)
+	{
+		this->klass = MonoEnv->CoreLibrary->String;
+		this->obj = MonoEnv->Objects->Texts->ToManaged(t);
+	}
+	//! Creates a wrapper for the string that is created from given null-terminated one.
+	IMonoText(const wchar_t *t)
+	{
+		this->klass = MonoEnv->CoreLibrary->String;
+		this->obj = MonoEnv->Objects->Texts->ToManaged(t);
+	}
 	//! Indicates whether this string is located in an intern pool (shared memory for literals).
 	//!
 	//! All interned strings are pinned, so it is highly recommended to intern any string that is
