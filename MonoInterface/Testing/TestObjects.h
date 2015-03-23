@@ -363,7 +363,7 @@ void ThrowExceptionInternal(mono::exception ex)
 
 void TestExceptionObject(mono::exception ex, const char *typeName);
 
-#define TEST_EXCEPTION(e) TestExceptionObject(MonoEnv->Objects->Exceptions->e("Test message"), NtText(2, #e, "Exception"))
+#define TEST_EXCEPTION(e) TestExceptionObject(MonoEnv->Objects->Exceptions->e("Test message"), NtText(2, #e, "Exception"));
 
 void TestExceptions()
 {
