@@ -365,8 +365,6 @@ void ThrowExceptionInternal(mono::exception ex)
 
 void TestExceptionObject(mono::exception ex, const char *typeName);
 
-#define TEST_EXCEPTION(e) TestExceptionObject(MonoEnv->Objects->Exceptions->e("Test message"), NtText(2, #e, "Exception"));
-
 void TestExceptions()
 {
 	MonoEnv->Functions->AddInternalCall("MainTestingAssembly",
@@ -436,40 +434,40 @@ void TestExceptions()
 	CryLogAlways("TEST: Testing creation of various built-in exceptions.");
 	CryLogAlways("TEST:");
 
-	TEST_EXCEPTION(AppDomainUnloaded);
-	TestExceptionObject(MonoEnv->Objects->Exceptions->Argument("Argument", "Test"), "ArgumentException");
-	TEST_EXCEPTION(ArgumentNull);
-	TEST_EXCEPTION(ArgumentOutOfRange);
-	TEST_EXCEPTION(Arithmetic);
-	TEST_EXCEPTION(ArrayTypeMismatch);
-	TEST_EXCEPTION(BadImageFormat);
-	TEST_EXCEPTION(BaseException);
-	TEST_EXCEPTION(CannotUnloadAppDomain);
-	TEST_EXCEPTION(DivideByZero);
-	TEST_EXCEPTION(ExecutionEngine);
-	TestExceptionObject(MonoEnv->Objects->Exceptions->FileNotFound("SomeFile.txt", "Test"), "FileNotFoundException");
-	TEST_EXCEPTION(IndexOutOfRange);
-	TEST_EXCEPTION(InvalidCast);
-	TEST_EXCEPTION(IO);
-	TEST_EXCEPTION(MissingField);
-	TEST_EXCEPTION(MissingMethod);
-	TEST_EXCEPTION(NotImplemented);
-	TEST_EXCEPTION(NotSupported);
-	TEST_EXCEPTION(NullReference);
-	TEST_EXCEPTION(Overflow);
-	TEST_EXCEPTION(Security);
-	TEST_EXCEPTION(Serialization);
-	TEST_EXCEPTION(StackOverflow);
-	TEST_EXCEPTION(SynchronizationLock);
-	TEST_EXCEPTION(ThreadAbort);
-	TEST_EXCEPTION(ThreadState);
-	TEST_EXCEPTION(TypeInitialization);
-	TEST_EXCEPTION(TypeLoad);
+	IMonoExceptions *exes = MonoEnv->Objects->Exceptions;
+
+	TestExceptionObject(exes->AppDomainUnloaded("Test Message"),     "AppDomainUnloadedException");
+	TestExceptionObject(exes->Argument("Argument", "Test"),          "ArgumentException");
+	TestExceptionObject(exes->ArgumentNull("Test Message"),          "ArgumentNullException");
+	TestExceptionObject(exes->ArgumentOutOfRange("Test Message"),    "ArgumentOutOfRangeException");
+	TestExceptionObject(exes->Arithmetic("Test Message"),            "ArithmeticException");
+	TestExceptionObject(exes->ArrayTypeMismatch("Test Message"),     "ArrayTypeMismatchException");
+	TestExceptionObject(exes->BadImageFormat("Test Message"),        "BadImageFormatException");
+	TestExceptionObject(exes->BaseException("Test Message"),         "Exception");
+	TestExceptionObject(exes->CannotUnloadAppDomain("Test Message"), "CannotUnloadAppDomainException");
+	TestExceptionObject(exes->DivideByZero("Test Message"),          "DivideByZeroException");
+	TestExceptionObject(exes->ExecutionEngine("Test Message"),       "ExecutionEngineException");
+	TestExceptionObject(exes->FileNotFound("SomeFile.txt", "Test"),  "FileNotFoundException");
+	TestExceptionObject(exes->IndexOutOfRange("Test Message"),       "IndexOutOfRangeException");
+	TestExceptionObject(exes->InvalidCast("Test Message"),           "InvalidCastException");
+	TestExceptionObject(exes->IO("Test Message"),                    "IOException");
+	TestExceptionObject(exes->MissingField("Test Message"),          "MissingFieldException");
+	TestExceptionObject(exes->MissingMethod("Test Message"),         "MissingMethodException");
+	TestExceptionObject(exes->NotImplemented("Test Message"),        "NotImplementedException");
+	TestExceptionObject(exes->NotSupported("Test Message"),          "NotSupportedException");
+	TestExceptionObject(exes->NullReference("Test Message"),         "NullReferenceException");
+	TestExceptionObject(exes->Overflow("Test Message"),              "OverflowException");
+	TestExceptionObject(exes->Security("Test Message"),              "SecurityException");
+	TestExceptionObject(exes->Serialization("Test Message"),         "SerializationException");
+	TestExceptionObject(exes->StackOverflow("Test Message"),         "StackOverflowException");
+	TestExceptionObject(exes->SynchronizationLock("Test Message"),   "SynchronizationLockException");
+	TestExceptionObject(exes->ThreadAbort("Test Message"),           "ThreadAbortException");
+	TestExceptionObject(exes->ThreadState("Test Message"),           "ThreadStateException");
+	TestExceptionObject(exes->TypeInitialization("Test Message"),    "TypeInitializationException");
+	TestExceptionObject(exes->TypeLoad("Test Message"),              "TypeLoadException");
 
 	CryLogAlways("TEST:");
 }
-
-#undef TEST_EXCEPTION
 
 void TestExceptionObject(mono::exception ex, const char *typeName)
 {
