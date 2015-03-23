@@ -12,6 +12,8 @@ void TestObjects()
 	TestArrays();
 
 	TestDelegates();
+
+	TestExceptions();
 }
 
 void TestObjectHandles()
