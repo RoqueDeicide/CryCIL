@@ -96,6 +96,9 @@ struct IMonoThread : public IMonoObject
 	}
 	//! Starts this thread, if it wasn't started already.
 	//!
+	//! Important fact to take care of: Starting a thread with a parameterized thread start delegate that
+	//! wraps an unmanaged function pointer will cause MarshalDirectiveException to be thrown.
+	//!
 	//! @param obj Object to pass to the method that was used to create this thread.
 	//!
 	//! @returns Indication whether this thread was not running before or wasn't created using

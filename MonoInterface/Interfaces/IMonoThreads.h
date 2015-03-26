@@ -24,6 +24,9 @@ struct IMonoThreads
 	VIRTUAL_API virtual mono::Thread Create(mono::delegat method) = 0;
 	//! Creates a new thread that executes given method that accepts one argument when started.
 	//!
+	//! Important fact to take care of: Starting a thread with a parameterized thread start delegate that
+	//! wraps an unmanaged function pointer will cause MarshalDirectiveException to be thrown.
+	//!
 	//! @param method A delegate of type System.Threading.ParameterizedThreadStart that represents
 	//!               a method that will be invoked and executed in a new thread when the latter is
 	//!               started.
