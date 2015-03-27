@@ -48,12 +48,16 @@ struct IMonoThread : public IMonoObject
 {
 	//! Creates new wrapper for given thread.
 	IMonoThread(mono::Thread thr)
-		: IMonoObject(thr)
-	{}
+	{
+		this->obj = thr;
+		this->klass = MonoEnv->CoreLibrary->Thread;
+	}
 	//! Creates new wrapper for given thread.
 	IMonoThread(MonoGCHandle &handle)
-		: IMonoObject(handle)
-	{}
+	{
+		this->obj = handle.Object;
+		this->klass = MonoEnv->CoreLibrary->Thread;
+	}
 	//! Gets or sets the name of this thread.
 	__declspec(property(get = GetName, put = SetName)) mono::string Name;
 	//! Gets the state this thread is in.
