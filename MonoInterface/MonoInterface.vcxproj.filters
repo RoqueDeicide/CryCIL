@@ -248,6 +248,9 @@
     <ClInclude Include="Interops\BatchOps.h">
       <Filter>Interops</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\MouseInterop.h">
+      <Filter>Interops</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -348,6 +351,9 @@
       <Filter>API Implementation\Metadata</Filter>
     </ClCompile>
     <ClCompile Include="Interops\BatchOps.cpp">
+      <Filter>Interops</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\MouseInterop.cpp">
       <Filter>Interops</Filter>
     </ClCompile>
   </ItemGroup>

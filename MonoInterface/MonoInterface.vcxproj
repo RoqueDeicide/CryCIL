@@ -269,6 +269,7 @@
     <ClInclude Include="Interops\CryMarshal.h" />
     <ClInclude Include="Interops\LogPosting.h" />
     <ClInclude Include="Interops\MeshOps.h" />
+    <ClInclude Include="Interops\MouseInterop.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="Logs.h" />
     <ClInclude Include="MonoDefinitionFiles\MonoArray.h" />
@@ -335,6 +336,7 @@
     <ClCompile Include="Interops\CryMarshal.cpp" />
     <ClCompile Include="Interops\LogPosting.cpp" />
     <ClCompile Include="Interops\MeshOps.cpp" />
+    <ClCompile Include="Interops\MouseInterop.cpp" />
     <ClCompile Include="RunTime\DebugEventReporter.cpp" />
     <ClCompile Include="RunTime\EventBroadcaster.cpp" />
     <ClCompile Include="RunTime\InitializationInterop.cpp" />

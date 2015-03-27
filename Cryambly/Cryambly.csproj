@@ -76,6 +76,7 @@
     <Compile Include="Defaults.cs" />
     <Compile Include="Engine\DebugServices\Log.cs" />
     <Compile Include="Engine\DebugServices\NamespaceDoc.cs" />
+    <Compile Include="Engine\Input\Mouse.cs" />
     <Compile Include="Engine\NamespaceDoc.cs" />
     <Compile Include="GeneralExtensions.cs" />
     <Compile Include="GenericEventArgs.cs" />

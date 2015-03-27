@@ -9,3 +9,5 @@
 #include "Interops/MeshOps.h"
 
 #include "Interops/BatchOps.h"
+
+#include "Interops/MouseInterop.h"
