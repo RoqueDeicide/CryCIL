@@ -148,6 +148,7 @@
     <Compile Include="Mathematics\Vectors\Vector2.cs" />
     <Compile Include="Mathematics\Vectors\Vector2.InterfaceImplementations.cs" />
     <Compile Include="Mathematics\Vectors\Vector2.Operations.cs" />
+    <Compile Include="Mathematics\Vectors\Vector2Int32.cs" />
     <Compile Include="Mathematics\Vectors\Vector3.cs" />
     <Compile Include="Mathematics\Vectors\Vector3.InterfaceImplementations.cs" />
     <Compile Include="Mathematics\Vectors\Vector3.Operations.cs" />
