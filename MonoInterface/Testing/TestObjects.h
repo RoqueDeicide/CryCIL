@@ -5,6 +5,7 @@ void TestArrays();
 void TestDelegates();
 void TestExceptions();
 void TestStrings();
+void TestThreads();
 
 void TestObjects()
 {
@@ -17,6 +18,8 @@ void TestObjects()
 	TestExceptions();
 
 	TestStrings();
+
+	TestThreads();
 }
 
 void TestObjectHandles()
@@ -564,5 +567,123 @@ void TestStrings()
 
 	CryLogAlways("TEST:");
 	CryLogAlways("TEST: The interned string is: %s.", NtText(text.NativeUTF8));
+	CryLogAlways("TEST:");
+}
+
+const char *ToOrdinal(int number)
+{
+	char buffer[20];
+	itoa(number, buffer, 10);
+
+	if (number <= 0) return NtText(buffer).Detach();
+
+	switch (number % 100)
+	{
+	case 11:
+	case 12:
+	case 13:
+		return NtText(2, buffer, "th").Detach();
+	}
+
+	switch (number % 10)
+	{
+	case 1:
+		return NtText(2, buffer, "st").Detach();
+	case 2:
+		return NtText(2, buffer, "nd").Detach();
+	case 3:
+		return NtText(2, buffer, "rd").Detach();
+	default:
+		return NtText(2, buffer, "th").Detach();
+	}
+}
+
+void ProcessStuffs(IMonoClass *klass, const char *threadName);
+
+void ThreadFunction()
+{
+	CryLogAlways("TEST: Unmanaged Worker: A test thread with unmanaged function has been started.");
+
+	IMonoThread thread = MonoEnv->Objects->Threads->Attach();
+	
+	CryLogAlways("TEST: Unmanaged Worker: Setting the name of this thread to [Unmanaged Worker].");
+
+	thread.Name = ToMonoString("Unmanaged Worker");
+
+	CryLogAlways("TEST: Unmanaged Worker: This thread's name is now: [%s].", NtText(thread.Name));
+	
+	ProcessStuffs(mainTestingAssembly->GetClass("MainTestingAssembly", "ThreadTestClass"), "Unmanaged Worker");
+
+	CryLogAlways("TEST: Unmanaged Worker: Putting this thread to sleep for 500 milliseconds.");
+
+	MonoEnv->Objects->Threads->Sleep(500);
+
+	CryLogAlways("TEST: Unmanaged Worker: Work complete.");
+}
+
+void ProcessStuffs(IMonoClass *klass, const char *threadName)
+{
+
+	CryLogAlways("TEST: %s: About to enter a critical section.", threadName);
+
+	mono::object lockObject = klass->GetField<mono::object>(nullptr, "Lock");
+
+	MonoEnv->Objects->MonitorEnter(lockObject);
+
+	CryLogAlways("TEST: %s: Entered the critical section.", threadName);
+
+	if (MonoEnv->Objects->MonitorIsEntered(lockObject))
+	{
+		CryLogAlways("TEST SUCCESS: %s: This thread is in fact in the critical section.", threadName);
+	}
+	else
+	{
+		ReportError("TEST FAILURE: %s: This thread is not detected as one in the critical section.", threadName);
+	}
+
+	IMonoField *lockField = klass->GetField("Counter");
+	int accessCounter = klass->GetField<int>(nullptr, lockField) + 1;
+	klass->SetField(nullptr, lockField, &accessCounter);
+
+	CryLogAlways("TEST: %s: This thread was %d to enter critical section.", threadName, NtText(ToOrdinal(accessCounter)));
+	CryLogAlways("TEST: %s: Leaving the critical section.", threadName);
+
+	MonoEnv->Objects->MonitorExit(lockObject);
+}
+
+void TestThreads()
+{
+	auto testClass        = mainTestingAssembly->GetClass("MainTestingAssembly", "ThreadTestClass");
+	auto paramThreadStart = MonoEnv->CoreLibrary->GetClass("System.Threading", "ParameterizedThreadStart");
+	auto threadStart      = MonoEnv->CoreLibrary->GetClass("System.Threading", "ThreadStart");
+
+	CryLogAlways("TEST:");
+	CryLogAlways("TEST: Testing IMonoThread implementation.");
+	CryLogAlways("TEST:");
+	CryLogAlways("TEST: Creating a thread object with parameterized method.");
+	CryLogAlways("TEST:");
+
+	auto paramFunc = testClass->GetFunction("ThreadingWithParameters", -1)->ToStatic();
+	mono::delegat paramDelegat = MonoEnv->Objects->Delegates->Create(paramThreadStart, paramFunc);
+	IMonoThread paramThread    = MonoEnv->Objects->Threads->CreateParametrized(paramDelegat);
+
+	CryLogAlways("TEST: Creating a thread object with unmanaged function.");
+	CryLogAlways("TEST:");
+
+	mono::delegat threadDelegat = MonoEnv->Objects->Delegates->Create(threadStart, ThreadFunction);
+	IMonoThread paramlessThread = MonoEnv->Objects->Threads->Create(paramDelegat);
+
+	CryLogAlways("TEST: Starting a thread with no parameters.");
+	CryLogAlways("TEST:");
+
+	paramlessThread.Start();
+
+	CryLogAlways("TEST: Starting a thread with parameterless thread as a parameter.");
+	CryLogAlways("TEST:");
+
+	paramThread.Start(paramlessThread);
+
+	ProcessStuffs(testClass, "Main Thread");
+
 	CryLogAlways("TEST:");
 }
