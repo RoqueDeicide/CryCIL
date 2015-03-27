@@ -70,4 +70,5 @@ public:
 	virtual const wchar_t *StringToNativeUTF16(mono::string str);
 
 	virtual void ThreadDetach(mono::Thread thr);
+	virtual void MonitorExit(mono::object obj);
 };

@@ -155,6 +155,34 @@ typedef IMonoInterface *(*InitializeMonoInterface)(IGameFramework *, List<IMonoS
 //! @endcode
 extern IMonoInterface *MonoEnv;
 
+inline bool IMonoObjects::MonitorTryEnter(mono::object obj, unsigned int timeout)
+{
+	static void(*try_enter_with_atomic_var)(mono::object, unsigned int, char *) =
+		(void(*)(mono::object, unsigned int, char *))
+		MonoEnv->Functions->LookupInternalCall
+		(
+			MonoEnv->CoreLibrary->GetClass("System.Threading", "Monitor")
+								->GetFunction("try_enter_with_atomic_var", -1)
+		);
+
+	char lockTaken = 0;
+	try_enter_with_atomic_var(obj, timeout, &lockTaken);
+	return lockTaken != 0;
+}
+
+inline bool IMonoObjects::MonitorIsEntered(mono::object obj)
+{
+	static int(*Monitor_test_owner)(mono::object) =
+		(int(*)(mono::object))
+		MonoEnv->Functions->LookupInternalCall
+		(
+			MonoEnv->CoreLibrary->GetClass("System.Threading", "Monitor")
+								->GetFunction("Monitor_test_owner", -1)
+		);
+
+	return Monitor_test_owner(obj) != 0;
+}
+
 // Include these files here, because we need MonoEnv to be declared for them.
 #include "Interfaces/IMonoInterop.h"
 #include "Interfaces/MonoGCHandle.h"

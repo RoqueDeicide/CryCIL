@@ -197,6 +197,12 @@ void MonoObjects::ThreadDetach(mono::Thread thr)
 	mono_thread_detach((MonoThread *)thr);
 }
 
+void MonoObjects::MonitorExit(mono::object obj)
+{
+	mono_monitor_exit((MonoObject *)obj);
+}
+
+
 IMonoClass *MonoObjects::GetObjectClass(mono::object obj)
 {
 	if (obj)

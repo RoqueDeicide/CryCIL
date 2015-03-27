@@ -122,5 +122,37 @@ struct IMonoObjects
 	//!
 	//! Should be done when thread is finishing its work and when run-time is shutting down.
 	VIRTUAL_API virtual void ThreadDetach(mono::Thread thr) = 0;
+	//! Acquires an exclusive lock on the specified object.
+	//!
+	//! If the object is locked already, then this thread will wait for it to become unlocked.
+	//!
+	//! @param obj The object to lock.
+	//!
+	//! @returns A boolean value that indicates whether the lock has been successfully acquired.
+	bool MonitorEnter(mono::object obj)
+	{
+		return this->MonitorTryEnter(obj, -1);
+	}
+	//! Acquires an exclusive lock on the specified object without blocking this thread for longer then
+	//! specified.
+	//!
+	//! @param obj     The object to lock.
+	//! @param timeout How long to wait for the object before reporting failure in milliseconds. 0 means that
+	//!                the thread won't be blocked, -1 means that the thread will wait for the object for an
+	//!                indefinite period of time.
+	//!
+	//! @returns A boolean value that indicates whether the lock has been successfully acquired.
+	bool MonitorTryEnter(mono::object obj, unsigned int timeout = 0);	// Defined in IMonoInterface.h
+	//! Releases exclusive lock that was previously acquired for the given object.
+	//!
+	//! @param obj The object to release.
+	VIRTUAL_API virtual void MonitorExit(mono::object obj) = 0;
+	//! Indicates whether calling thread is within critical section defined by the lock.
+	//!
+	//! @param obj Mono object that is used as a lock.
+	//!
+	//! @returns True, if calling thread is in the position after MonitorTryEnter() was called with given
+	//!          object and before MonitorExit() with the same object.
+	bool MonitorIsEntered(mono::object obj);							// Defined in IMonoInterface.h
 #pragma endregion
 };
