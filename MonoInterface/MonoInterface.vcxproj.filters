@@ -249,7 +249,7 @@
       <Filter>Interops</Filter>
     </ClInclude>
     <ClInclude Include="Interops\MouseInterop.h">
-      <Filter>Interops</Filter>
+      <Filter>Interops\Input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -354,7 +354,7 @@
       <Filter>Interops</Filter>
     </ClCompile>
     <ClCompile Include="Interops\MouseInterop.cpp">
-      <Filter>Interops</Filter>
+      <Filter>Interops\Input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -417,6 +417,9 @@
     </Filter>
     <Filter Include="Interfaces\Metadata">
       <UniqueIdentifier>{122a0562-3097-41c5-a5a1-9a40b464e38e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interops\Input">
+      <UniqueIdentifier>{f622504e-52a4-4881-919f-863522544f93}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
