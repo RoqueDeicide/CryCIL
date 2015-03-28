@@ -9,7 +9,10 @@ struct MouseInterop : public IMonoInterop<false, true>, public IHardwareMouseEve
 	{
 		CryLogAlways("Unregistering MouseInterop.");
 
-		gEnv->pHardwareMouse->RemoveListener(this);
+		if (gEnv && gEnv->pHardwareMouse)
+		{
+			gEnv->pHardwareMouse->RemoveListener(this);
+		}
 	}
 
 	virtual const char *GetName();
