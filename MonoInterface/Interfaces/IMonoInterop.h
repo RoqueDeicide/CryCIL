@@ -95,6 +95,12 @@ template<> struct IMonoInterop < false, true > : public IMonoInteropBase
 {
 	//! No saving.
 	virtual void SetInterface(IMonoInterface *handle) {}
+	//! Registers internal calls through MonoEnv, since internal field is a null pointer.
+	virtual void RegisterInteropMethod(const char *methodName, void *functionPointer)
+	{
+		MonoEnv->Functions->AddInternalCall
+			(this->GetNameSpace(), this->GetName(), methodName, functionPointer);
+	}
 };
 
 #define REGISTER_METHOD(method) this->RegisterInteropMethod(#method, method)
@@ -119,5 +125,11 @@ template<> struct IMonoInterop < true, true > : public IMonoInteropBase
 	{
 		MonoEnv->RemoveListener(this);
 		delete this;
+	}
+	//! Registers internal calls through MonoEnv, since internal field is a null pointer.
+	virtual void RegisterInteropMethod(const char *methodName, void *functionPointer)
+	{
+		MonoEnv->Functions->AddInternalCall
+			(this->GetNameSpace(), this->GetName(), methodName, functionPointer);
 	}
 };
