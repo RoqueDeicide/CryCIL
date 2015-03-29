@@ -11,7 +11,7 @@ namespace CryCil.Engine.Input
 	/// <summary>
 	/// Provides access to CryEngine IHardwareMouse API.
 	/// </summary>
-	public static class Mouse
+	public static class HardwareMouse
 	{
 		#region Internal Calls
 		[MethodImpl(MethodImplOptions.InternalCall)]

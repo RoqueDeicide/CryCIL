@@ -7,7 +7,7 @@ typedef void(*wheelDeltaThunk)(int, mono::exception *);
 
 const char *MouseInterop::GetName()
 {
-	return "Mouse";
+	return "HardwareMouse";
 }
 
 const char *MouseInterop::GetNameSpace()
@@ -39,7 +39,7 @@ mono::object Box(Vec2_tpl<int> vector)
 
 void MouseInterop::OnHardwareMouseEvent(int iX, int iY, EHARDWAREMOUSEEVENT eHardwareMouseEvent, int wheelDelta /*= 0*/)
 {
-	static IMonoClass *klass = MonoEnv->Cryambly->GetClass("CryCil.Engine.Input", "Mouse");
+	static IMonoClass *klass = MonoEnv->Cryambly->GetClass(this->GetNameSpace(), this->GetName());
 	static positionThunk rmbd =
 		(positionThunk)klass->GetFunction("OnRightMouseButtonDown", -1)->UnmanagedThunk;
 	static positionThunk rmbu =
