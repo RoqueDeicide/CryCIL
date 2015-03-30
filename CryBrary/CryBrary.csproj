@@ -240,13 +240,6 @@
     <Compile Include="Logic\Flowgraph\FlowNodeCloneType.cs" />
     <Compile Include="Logic\Flowgraph\PortTypes.cs" />
     <Compile Include="Logic\GameRules\GameRulesInitializationParams.cs" />
-    <Compile Include="Input\ActionmapEventArgs.cs" />
-    <Compile Include="Input\ActionmapHandler.cs" />
-    <Compile Include="Input\KeyEvent.cs" />
-    <Compile Include="Input\KeyEventArgs.cs" />
-    <Compile Include="Input\MouseEvent.cs" />
-    <Compile Include="Input\MouseEventArgs.cs" />
-    <Compile Include="Input\SerializableInput.cs" />
     <Compile Include="ListEnumerator.cs" />
     <Compile Include="Native\NamespaceDoc.cs" />
     <Compile Include="Native\PlatformInterop.cs" />
@@ -358,7 +351,6 @@
     <Compile Include="Engine\Renderer\Renderer.cs" />
     <Compile Include="Entities\EntityMovement.cs" />
     <Compile Include="Game.cs" />
-    <Compile Include="Input\Input.cs" />
     <Compile Include="Console\Commands\ConsoleCommand.cs" />
     <Compile Include="Entities\EditorProperty.cs" />
     <Compile Include="Console\Variables\CVar.cs" />

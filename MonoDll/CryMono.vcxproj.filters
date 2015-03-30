@@ -90,9 +90,6 @@
     <ClInclude Include="Interops\Platform.h">
       <Filter>Interops</Filter>
     </ClInclude>
-    <ClInclude Include="Interops\MonoInput.h">
-      <Filter>Interops</Filter>
-    </ClInclude>
     <ClInclude Include="AllInterops.h" />
     <ClInclude Include="Interops\FlowGraph\FlowManager.h">
       <Filter>Interops\FlowGraph</Filter>
@@ -182,9 +179,6 @@
       <Filter>Interops</Filter>
     </ClCompile>
     <ClCompile Include="Interops\Platform.cpp">
-      <Filter>Interops</Filter>
-    </ClCompile>
-    <ClCompile Include="Interops\MonoInput.cpp">
       <Filter>Interops</Filter>
     </ClCompile>
     <ClCompile Include="Interops\FlowGraph\FlowManager.cpp">
