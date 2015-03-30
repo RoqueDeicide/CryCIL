@@ -11,3 +11,5 @@
 #include "Interops/BatchOps.h"
 
 #include "Interops/MouseInterop.h"
+
+#include "Interops/InputInterop.h"

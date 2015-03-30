@@ -251,6 +251,9 @@
     <ClInclude Include="Interops\MouseInterop.h">
       <Filter>Interops\Input</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\InputInterop.h">
+      <Filter>Interops\Input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -354,6 +357,9 @@
       <Filter>Interops</Filter>
     </ClCompile>
     <ClCompile Include="Interops\MouseInterop.cpp">
+      <Filter>Interops\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\InputInterop.cpp">
       <Filter>Interops\Input</Filter>
     </ClCompile>
   </ItemGroup>

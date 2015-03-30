@@ -285,6 +285,7 @@ void MonoInterface::RegisterDefaultListeners()
 	this->broadcaster->listeners->Add(new MeshOpsInterop());
 	this->broadcaster->listeners->Add(new BatchOps());
 	this->broadcaster->listeners->Add(new MouseInterop());
+	this->broadcaster->listeners->Add(new InputInterop());
 }
 #pragma endregion
 #pragma region Thunks Initialization
