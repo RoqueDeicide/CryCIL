@@ -191,8 +191,6 @@
     <Compile Include="RunTime\Registration\EntityRegister.cs" />
     <Compile Include="RunTime\Registration\Exception.cs" />
     <Compile Include="RunTime\Registration\FlowNodeRegister.cs" />
-    <Compile Include="Console\Commands\ConsoleCommandArgs.cs" />
-    <Compile Include="Console\Commands\DuplicateConsoleCommandException.cs" />
     <Compile Include="Console\CryConsole.cs" />
     <Compile Include="Console\Variables\ByRefCVar.cs" />
     <Compile Include="Console\Variables\ConsoleVariableException.cs" />
@@ -351,7 +349,6 @@
     <Compile Include="Engine\Renderer\Renderer.cs" />
     <Compile Include="Entities\EntityMovement.cs" />
     <Compile Include="Game.cs" />
-    <Compile Include="Console\Commands\ConsoleCommand.cs" />
     <Compile Include="Entities\EditorProperty.cs" />
     <Compile Include="Console\Variables\CVar.cs" />
     <Compile Include="Time.cs" />

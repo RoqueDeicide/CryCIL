@@ -25,19 +25,12 @@ protected:
 
 	static void HandleException(mono::object exception);
 
-	static void Execute(mono::string string, bool silent);
-
-	// Console commands
-	static void OnMonoCmd(IConsoleCmdArgs *);
-	static void RegisterCommand(mono::string, mono::string, EVarFlags);
-
 	// CVars
 	static void RegisterCVarFloat(mono::string, float&, float, EVarFlags, mono::string);
 	static void RegisterCVarInt(mono::string, int&, int, EVarFlags, mono::string);
 	static void RegisterCVarString(mono::string, mono::string &, mono::string, EVarFlags, mono::string);
 
 	static void UnregisterCVar(mono::string, bool bDelete);
-	static void UnregisterCCommand(mono::string);
 
 	static bool HasCVar(mono::string);
 

@@ -12,16 +12,12 @@ ConsoleInterop::ConsoleInterop()
 {
 	REGISTER_METHOD(HandleException);
 
-	// Console commands
-	REGISTER_METHOD(RegisterCommand);
-
 	// CVars
 	REGISTER_METHOD(RegisterCVarFloat);
 	REGISTER_METHOD(RegisterCVarInt);
 	REGISTER_METHOD(RegisterCVarString);
 
 	REGISTER_METHOD(UnregisterCVar);
-	REGISTER_METHOD(UnregisterCCommand);
 
 	REGISTER_METHOD(HasCVar);
 
@@ -33,34 +29,12 @@ ConsoleInterop::ConsoleInterop()
 	REGISTER_METHOD(SetCVarInt);
 	REGISTER_METHOD(SetCVarString);
 
-	REGISTER_METHOD(Execute);
-
 	REGISTER_METHOD(GetCmdArg);
 }
 
 void ConsoleInterop::HandleException(mono::object exception)
 {
 	CScriptObject::HandleException((MonoObject *)exception);
-}
-
-void ConsoleInterop::Execute(mono::string string, bool silent)
-{
-	gEnv->pConsole->ExecuteString(ToCryString(string), silent);
-}
-
-#undef GetCommandLine
-void ConsoleInterop::OnMonoCmd(IConsoleCmdArgs *cmdArgs)
-{
-	IMonoArray *pArgs = CreateMonoArray(1);
-	pArgs->Insert(cmdArgs->GetCommandLine());
-
-	GetMonoRunTime()->CryBrary->GetClass("ConsoleCommand")->GetMethod("OnCommand", 1)->InvokeArray(NULL, pArgs);
-	pArgs->Release();
-}
-
-void ConsoleInterop::RegisterCommand(mono::string cmd, mono::string desc, EVarFlags flags)
-{
-	REGISTER_COMMAND(ToCryString(cmd), OnMonoCmd, flags, ToCryString(desc));
 }
 
 void ConsoleInterop::RegisterCVarFloat(mono::string name, float &val, float defaultVal, EVarFlags flags, mono::string description)
@@ -81,11 +55,6 @@ void ConsoleInterop::RegisterCVarString(mono::string name, mono::string &val, mo
 void ConsoleInterop::UnregisterCVar(mono::string name, bool bDelete)
 {
 	gEnv->pConsole->UnregisterVariable(ToCryString(name), bDelete);
-}
-
-void ConsoleInterop::UnregisterCCommand(mono::string name)
-{
-	gEnv->pConsole->RemoveCommand(ToCryString(name));
 }
 
 bool ConsoleInterop::HasCVar(mono::string name)
