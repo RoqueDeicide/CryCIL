@@ -36,11 +36,13 @@ struct IMonoFunctions
 	//!     2) There are no requirements specified for the calling convention, however
 	//!        using __cdecl is recommended.
 	//!
-	//!     3) Any pointers to managed objects should be either unboxed or wrapped into
-	//!        IMonoHandle *(when using a general objects) or IMonoArray * when using
-	//!        arrays.
+	//!     3) Any pointers to managed objects should be either unboxed (if they are boxed value-type
+	//!        objects), wrapped into IMonoObject (when using a general objects) or IMonoArray when using
+	//!        arrays or any other built-in wrapper.
 	//!
 	//!     4) Passing an argument using ref or out keyword causes a pointer to be passed.
+	//!
+	//!     5) Returning a non-primitive struct object doesn't require unboxing.
 	//!
 	//! Examples:
 	//!
