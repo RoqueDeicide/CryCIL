@@ -22,9 +22,6 @@
       <Filter>RunTime</Filter>
     </ClInclude>
     <ClInclude Include="RunTime\AllInterops.h" />
-    <ClInclude Include="Interops\LogPosting.h">
-      <Filter>Interops</Filter>
-    </ClInclude>
     <ClInclude Include="API_ImplementationHeaders.h" />
     <ClInclude Include="CryCilHeader.h" />
     <ClInclude Include="Text.h">
@@ -249,10 +246,13 @@
       <Filter>Interops</Filter>
     </ClInclude>
     <ClInclude Include="Interops\MouseInterop.h">
-      <Filter>Interops\Input</Filter>
+      <Filter>Interops\Engine\Input</Filter>
     </ClInclude>
     <ClInclude Include="Interops\InputInterop.h">
-      <Filter>Interops\Input</Filter>
+      <Filter>Interops\Engine\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\LogPosting.h">
+      <Filter>Interops\Engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -264,9 +264,6 @@
     </ClCompile>
     <ClCompile Include="RunTime\DebugEventReporter.cpp">
       <Filter>RunTime</Filter>
-    </ClCompile>
-    <ClCompile Include="Interops\LogPosting.cpp">
-      <Filter>Interops</Filter>
     </ClCompile>
     <ClCompile Include="RunTime\EventBroadcaster.cpp">
       <Filter>RunTime</Filter>
@@ -357,10 +354,13 @@
       <Filter>Interops</Filter>
     </ClCompile>
     <ClCompile Include="Interops\MouseInterop.cpp">
-      <Filter>Interops\Input</Filter>
+      <Filter>Interops\Engine\Input</Filter>
     </ClCompile>
     <ClCompile Include="Interops\InputInterop.cpp">
-      <Filter>Interops\Input</Filter>
+      <Filter>Interops\Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\LogPosting.cpp">
+      <Filter>Interops\Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -424,7 +424,10 @@
     <Filter Include="Interfaces\Metadata">
       <UniqueIdentifier>{122a0562-3097-41c5-a5a1-9a40b464e38e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Interops\Input">
+    <Filter Include="Interops\Engine">
+      <UniqueIdentifier>{a7ad318d-426d-44e5-b201-dbc7ccc1bf34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interops\Engine\Input">
       <UniqueIdentifier>{f622504e-52a4-4881-919f-863522544f93}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
