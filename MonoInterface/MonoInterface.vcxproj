@@ -266,6 +266,7 @@
     <ClInclude Include="Interfaces\IMonoThreads.h" />
     <ClInclude Include="Interfaces\MonoGCHandle.h" />
     <ClInclude Include="Interops\BatchOps.h" />
+    <ClInclude Include="Interops\Console.h" />
     <ClInclude Include="Interops\CryMarshal.h" />
     <ClInclude Include="Interops\InputInterop.h" />
     <ClInclude Include="Interops\LogPosting.h" />
@@ -339,6 +340,7 @@
     <ClCompile Include="Interops\LogPosting.cpp" />
     <ClCompile Include="Interops\MeshOps.cpp" />
     <ClCompile Include="Interops\MouseInterop.cpp" />
+    <ClCompile Include="Interops\Console.cpp" />
     <ClCompile Include="RunTime\DebugEventReporter.cpp" />
     <ClCompile Include="RunTime\EventBroadcaster.cpp" />
     <ClCompile Include="RunTime\InitializationInterop.cpp" />

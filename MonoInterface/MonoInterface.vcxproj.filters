@@ -254,6 +254,9 @@
     <ClInclude Include="Interops\LogPosting.h">
       <Filter>Interops\Engine</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\Console.h">
+      <Filter>Interops\Engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -360,6 +363,9 @@
       <Filter>Interops\Engine\Input</Filter>
     </ClCompile>
     <ClCompile Include="Interops\LogPosting.cpp">
+      <Filter>Interops\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\Console.cpp">
       <Filter>Interops\Engine</Filter>
     </ClCompile>
   </ItemGroup>

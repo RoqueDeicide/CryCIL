@@ -13,3 +13,5 @@
 #include "Interops/MouseInterop.h"
 
 #include "Interops/InputInterop.h"
+
+#include "Interops/Console.h"
