@@ -42,6 +42,15 @@ namespace CryCil.Graphics
 		[FieldOffset(3)]
 		public byte Alpha;
 		/// <summary>
+		/// Creates new color from its 32-bit representation.
+		/// </summary>
+		/// <param name="colors">32-bit representation of the color.</param>
+		public ColorByte(uint colors)
+			: this()
+		{
+			this.Bytes.UnsignedInt = colors;
+		}
+		/// <summary>
 		/// Determines whether this color is equal to another.
 		/// </summary>
 		/// <param name="other">Another color.</param>
