@@ -81,6 +81,7 @@
     <Compile Include="Engine\DebugServices\Log.cs" />
     <Compile Include="Engine\DebugServices\NamespaceDoc.cs" />
     <Compile Include="Engine\DebugServices\DebugGraphics.cs" />
+    <Compile Include="Engine\DebugServices\Profiler.cs" />
     <Compile Include="Engine\Input\AnalogInputEventArgs.cs" />
     <Compile Include="Engine\Input\GamepadAnalogInputEventArgs.cs" />
     <Compile Include="Engine\Input\GamepadKeyEventArgs.cs" />
@@ -139,6 +140,7 @@
     <Compile Include="Mathematics\Geometry\Translation.cs" />
     <Compile Include="Mathematics\Graphics\ColorByte.cs" />
     <Compile Include="Mathematics\Graphics\ColorConversion.cs" />
+    <Compile Include="Mathematics\Graphics\Colors.cs" />
     <Compile Include="Mathematics\Graphics\ColorSingle.cs" />
     <Compile Include="Mathematics\Graphics\NamespaceDoc.cs" />
     <Compile Include="Mathematics\Graphics\ViewParams.cs" />
