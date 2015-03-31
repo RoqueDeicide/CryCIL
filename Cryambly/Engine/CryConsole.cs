@@ -56,7 +56,7 @@ namespace CryCil.Engine
 		/// and have registration fail, if there was already a command with this name that was registered
 		/// through native code.
 		/// </returns>
-		public static bool RegisterCommand(string name, ConsoleCommand command, string help = "", ConsoleFlags flags = ConsoleFlags.Null, bool overwrite = false)
+		public static bool RegisterCommand(string name, ConsoleCommand command, string help = null, ConsoleFlags flags = ConsoleFlags.Null, bool overwrite = false)
 		{
 			bool registered = registeredCommands.ContainsKey(name);
 			if (registered && !overwrite)

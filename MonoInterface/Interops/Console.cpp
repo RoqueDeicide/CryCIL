@@ -24,9 +24,9 @@ void ConsoleInterop::MonoCommand(IConsoleCmdArgs *args)
 
 void ConsoleInterop::RegisterCommandInternal(mono::string name, mono::string help, EVarFlags flags)
 {
-	if (gEnv && gEnv->pConsole)
+	if (gEnv && gEnv->pConsole && name)
 	{
-		gEnv->pConsole->AddCommand(ToNativeString(name), MonoCommand, flags, ToNativeString(help));
+		gEnv->pConsole->AddCommand(ToNativeString(name), MonoCommand, flags, help ? ToNativeString(help) : nullptr);
 	}
 }
 
