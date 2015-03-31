@@ -21,4 +21,18 @@ struct ConsoleInterop : public IMonoInterop<true, true>
 	static void MonoCommand(IConsoleCmdArgs *args);
 
 	static ExecuteCommandThunk executeCommand;
+
+	static ICVar *RegisterVariable(mono::string name, float *field, float value, EVarFlags flags, mono::string help);
+	static ICVar *RegisterVariableIntRef(mono::string name, int *field, int value, EVarFlags flags, mono::string help);
+
+	static ICVar *RegisterVariableFloat(mono::string name, float value, EVarFlags flags,
+										   ConsoleVarFunc thunk, mono::string help);
+	static ICVar *RegisterVariableInt(mono::string name, int value, EVarFlags flags,
+										   ConsoleVarFunc thunk, mono::string help);
+	static ICVar *RegisterVariableString(mono::string name, mono::string value, EVarFlags flags,
+										   ConsoleVarFunc thunk, mono::string help);
+
+	static void UnregisterVariable(mono::string name, bool _delete);
+
+	static ICVar *GetVariable(mono::string name);
 };

@@ -75,6 +75,7 @@
   <ItemGroup>
     <Compile Include="Defaults.cs" />
     <Compile Include="Engine\ConsoleFlags.cs" />
+    <Compile Include="Engine\ConsoleVariable.cs" />
     <Compile Include="Engine\CryConsole.cs" />
     <Compile Include="Engine\DebugServices\Log.cs" />
     <Compile Include="Engine\DebugServices\NamespaceDoc.cs" />

@@ -267,6 +267,7 @@
     <ClInclude Include="Interfaces\MonoGCHandle.h" />
     <ClInclude Include="Interops\BatchOps.h" />
     <ClInclude Include="Interops\Console.h" />
+    <ClInclude Include="Interops\ConsoleVariable.h" />
     <ClInclude Include="Interops\CryMarshal.h" />
     <ClInclude Include="Interops\InputInterop.h" />
     <ClInclude Include="Interops\LogPosting.h" />
@@ -335,6 +336,7 @@
     <ClCompile Include="Implementation\MonoTexts.cpp" />
     <ClCompile Include="Implementation\MonoThreads.cpp" />
     <ClCompile Include="Interops\BatchOps.cpp" />
+    <ClCompile Include="Interops\ConsoleVariable.cpp" />
     <ClCompile Include="Interops\CryMarshal.cpp" />
     <ClCompile Include="Interops\InputInterop.cpp" />
     <ClCompile Include="Interops\LogPosting.cpp" />

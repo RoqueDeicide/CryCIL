@@ -257,6 +257,9 @@
     <ClInclude Include="Interops\Console.h">
       <Filter>Interops\Engine\Console</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\ConsoleVariable.h">
+      <Filter>Interops\Engine\Console</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -366,6 +369,9 @@
       <Filter>Interops\Engine</Filter>
     </ClCompile>
     <ClCompile Include="Interops\Console.cpp">
+      <Filter>Interops\Engine\Console</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\ConsoleVariable.cpp">
       <Filter>Interops\Engine\Console</Filter>
     </ClCompile>
   </ItemGroup>

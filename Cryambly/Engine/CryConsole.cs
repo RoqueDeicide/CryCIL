@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using CryCil.Annotations;
+using CryCil.Engine.DebugServices;
 
 namespace CryCil.Engine
 {
@@ -15,6 +17,11 @@ namespace CryCil.Engine
 	/// <param name="args">       An array of arguments.</param>
 	/// <param name="fullCommand">A space-delimited list of arguments, preceeded by the name.</param>
 	public delegate void ConsoleCommand(string name, string[] args, string fullCommand);
+	/// <summary>
+	/// Represents static functions that can be invoked to react to changes to the console variable.
+	/// </summary>
+	/// <param name="var">A wrapper for a console variable that has been changed.</param>
+	public delegate void ConsoleVariableCallback(ConsoleVariable var);
 	/// <summary>
 	/// Provides access to CryEngine Console API.
 	/// </summary>
@@ -142,12 +149,246 @@ namespace CryCil.Engine
 		/// </param>
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern void ExecuteCommand(string command, bool silent = true, bool deferExecution = false);
+
+		/// <summary>
+		/// Registers a console variable.
+		/// </summary>
+		/// <param name="name">        Name of the console variable.</param>
+		/// <param name="var">         
+		/// A reference to the integer variable that will be updated by the console system, when console
+		/// variable is changed. Don't pass a reference to a simple variable, pass a static field.
+		/// </param>
+		/// <param name="defaultValue">Default value of the console variable.</param>
+		/// <param name="flags">       
+		/// A set of flags that describes the variable in technical detail.
+		/// </param>
+		/// <param name="help">        
+		/// Text to display when the user enters the name of the console variable followed by the question
+		/// mark into the console.
+		/// </param>
+		/// <returns>
+		/// A wrapper for a newly created console variable. Check <see cref="ConsoleVariable.Valid"/>
+		/// property on the returned object to see if registration was successful.
+		/// </returns>
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		public static extern ConsoleVariable RegisterVariable(string name, ref int var, int defaultValue,
+															  ConsoleFlags flags, string help = null);
+		/// <summary>
+		/// Registers a console variable.
+		/// </summary>
+		/// <param name="name">        Name of the console variable.</param>
+		/// <param name="var">         
+		/// A reference to the floating-point number variable that will be updated by the console system,
+		/// when console variable is changed. Don't pass a reference to a simple variable, pass a static
+		/// field.
+		/// </param>
+		/// <param name="defaultValue">Default value of the console variable.</param>
+		/// <param name="flags">       
+		/// A set of flags that describes the variable in technical detail.
+		/// </param>
+		/// <param name="help">        
+		/// Text to display when the user enters the name of the console variable followed by the question
+		/// mark into the console.
+		/// </param>
+		/// <returns>
+		/// A wrapper for a newly created console variable. Check <see cref="ConsoleVariable.Valid"/>
+		/// property on the returned object to see if registration was successful.
+		/// </returns>
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		public static extern ConsoleVariable RegisterVariable(string name, ref float var,
+															  float defaultValue, ConsoleFlags flags,
+															  string help = null);
+		/// <summary>
+		/// Registers a new console variable that is a floating-point number.
+		/// </summary>
+		/// <example>
+		/// <para>
+		/// It's important that <paramref name="callback"/> catches any unhandled exceptions and doesn't
+		/// raise any of its own:
+		/// </para>
+		/// <code>
+		/// internal static void ExampleCallback(ConsoleVariable v)
+		/// {
+		///     try
+		///     {
+		///         // Do stuff.
+		///     }
+		///     catch				// Intercept ALL exceptions.
+		///     { }					// And just ignore them. Not doing so is guaranteed to crash the app.
+		/// }
+		/// </code>
+		/// </example>
+		/// <param name="name">    Name of the console variable.</param>
+		/// <param name="value">   Default value of the console variable.</param>
+		/// <param name="flags">   A set of flags that describes the variable in technical detail.</param>
+		/// <param name="callback">
+		/// Static method that will be invoked, when the value of the console variable changes. Can be
+		/// null.
+		/// </param>
+		/// <param name="help">    
+		/// Text to display when the user enters the name of the console variable followed by the question
+		/// mark into the console.
+		/// </param>
+		/// <returns>
+		/// A wrapper for a newly created console variable. Check <see cref="ConsoleVariable.Valid"/>
+		/// property on the returned object to see if registration was successful.
+		/// </returns>
+		/// <exception cref="ArgumentException">
+		/// Unable to use instance method as a console variable callback.
+		/// </exception>
+		public static ConsoleVariable RegisterVariable(string name, float value, ConsoleFlags flags,
+													   ConsoleVariableCallback callback = null,
+													   string help = null)
+		{
+			Contract.Requires(callback == null || callback.Method.IsStatic,
+							  "Unable to use instance method as a console variable callback.");
+
+			IntPtr fPtr = callback != null
+				? callback.Method.MethodHandle.GetFunctionPointer()
+				: IntPtr.Zero;
+
+			return RegisterVariableInternal(name, value, flags, fPtr, help);
+		}
+		/// <summary>
+		/// Registers a new console variable that is an integer number.
+		/// </summary>
+		/// <example>
+		/// <para>
+		/// It's important that <paramref name="callback"/> catches any unhandled exceptions and doesn't
+		/// raise any of its own:
+		/// </para>
+		/// <code>
+		/// internal static void ExampleCallback(ConsoleVariable v)
+		/// {
+		///     try
+		///     {
+		///         // Do stuff.
+		///     }
+		///     catch				// Intercept ALL exceptions.
+		///     { }					// And just ignore them. Not doing so is guaranteed to crash the app.
+		/// }
+		/// </code>
+		/// </example>
+		/// <param name="name">    Name of the console variable.</param>
+		/// <param name="value">   Default value of the console variable.</param>
+		/// <param name="flags">   A set of flags that describes the variable in technical detail.</param>
+		/// <param name="callback">
+		/// Static method that will be invoked, when the value of the console variable changes. Can be
+		/// null.
+		/// </param>
+		/// <param name="help">    
+		/// Text to display when the user enters the name of the console variable followed by the question
+		/// mark into the console.
+		/// </param>
+		/// <returns>
+		/// A wrapper for a newly created console variable. Check <see cref="ConsoleVariable.Valid"/>
+		/// property on the returned object to see if registration was successful.
+		/// </returns>
+		/// <exception cref="ArgumentException">
+		/// Unable to use instance method as a console variable callback.
+		/// </exception>
+		public static ConsoleVariable RegisterVariable(string name, int value, ConsoleFlags flags,
+													   ConsoleVariableCallback callback = null,
+													   string help = null)
+		{
+			Contract.Requires(callback == null || callback.Method.IsStatic,
+							  "Unable to use instance method as a console variable callback.");
+
+			IntPtr fPtr = callback != null
+				? callback.Method.MethodHandle.GetFunctionPointer()
+				: IntPtr.Zero;
+
+			return RegisterVariableInternal(name, value, flags, fPtr, help);
+		}
+		/// <summary>
+		/// Registers a new console variable that is a text value.
+		/// </summary>
+		/// <example>
+		/// <para>
+		/// It's important that <paramref name="callback"/> catches any unhandled exceptions and doesn't
+		/// raise any of its own:
+		/// </para>
+		/// <code>
+		/// internal static void ExampleCallback(ConsoleVariable v)
+		/// {
+		///     try
+		///     {
+		///         // Do stuff.
+		///     }
+		///     catch				// Intercept ALL exceptions.
+		///     { }					// And just ignore them. Not doing so is guaranteed to crash the app.
+		/// }
+		/// </code>
+		/// </example>
+		/// <param name="name">    Name of the console variable.</param>
+		/// <param name="value">   Default value of the console variable.</param>
+		/// <param name="flags">   A set of flags that describes the variable in technical detail.</param>
+		/// <param name="callback">
+		/// Static method that will be invoked, when the value of the console variable changes. Can be
+		/// null.
+		/// </param>
+		/// <param name="help">    
+		/// Text to display when the user enters the name of the console variable followed by the question
+		/// mark into the console.
+		/// </param>
+		/// <returns>
+		/// A wrapper for a newly created console variable. Check <see cref="ConsoleVariable.Valid"/>
+		/// property on the returned object to see if registration was successful.
+		/// </returns>
+		/// <exception cref="ArgumentException">
+		/// Unable to use instance method as a console variable callback.
+		/// </exception>
+		public static ConsoleVariable RegisterVariable(string name, string value, ConsoleFlags flags,
+													   ConsoleVariableCallback callback = null,
+													   string help = null)
+		{
+			Contract.Requires(callback == null || callback.Method.IsStatic,
+							  "Unable to use instance method as a console variable callback.");
+
+			IntPtr fPtr = callback != null
+				? callback.Method.MethodHandle.GetFunctionPointer()
+				: IntPtr.Zero;
+
+			return RegisterVariableInternal(name, value, flags, fPtr, help);
+		}
+		/// <summary>
+		/// Unregisters a console variable.
+		/// </summary>
+		/// <param name="name">  Name of the variable to unregister.</param>
+		/// <param name="delete">
+		/// Indicates whether there no <see cref="ConsoleVariable"/> objects for this variable hanging
+		/// around and it can be deleted.
+		/// </param>
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		public static extern void UnregisterVariable(string name, bool delete = true);
+		/// <summary>
+		/// Gets console variable.
+		/// </summary>
+		/// <param name="name">Name of the console variable to retreive.</param>
+		/// <returns>
+		/// A wrapper for a console variable. Check <see cref="ConsoleVariable.Valid"/> property on the
+		/// returned object to see if it was registered before.
+		/// </returns>
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		public static extern ConsoleVariable GetVariable(string name);
 		#endregion
 		#region Utilities
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void RegisterCommandInternal(string name, string help, ConsoleFlags flags);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void UnregisterCommandInternal(string name);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern ConsoleVariable RegisterVariableInternal(string name, float value,
+																	   ConsoleFlags flags, IntPtr thunk,
+																	   string help = null);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern ConsoleVariable RegisterVariableInternal(string name, int value,
+																	   ConsoleFlags flags, IntPtr thunk,
+																	   string help = null);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern ConsoleVariable RegisterVariableInternal(string name, string value,
+																	   ConsoleFlags flags, IntPtr thunk,
+																	   string help = null);
 		[PublicAPI("Invoked by underlying framework to execute appropriate console command.")]
 		private static void ExecuteMonoCommand(string commandLine)
 		{
