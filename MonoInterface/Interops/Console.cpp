@@ -11,7 +11,8 @@ void ConsoleInterop::OnRunTimeInitialized()
 
 	REGISTER_METHOD(RegisterCommandInternal);
 	REGISTER_METHOD(UnregisterCommandInternal);
-	REGISTER_METHOD(ExecuteCommand);
+	MonoEnv->Functions->AddInternalCall
+		(this->GetNameSpace(), this->GetName(), "ExecuteCommand(string,bool,bool)", ExecuteCommand);
 
 	MonoEnv->RemoveListener(this);	// No need to listen anymore.
 }
