@@ -133,7 +133,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Exceptions.cs" />
     <Compile Include="Logic\Actors\Actor.cs" />
     <Compile Include="Logic\Actors\ActorBase.cs" />
     <Compile Include="Engine\Renderer\RenderParams.cs" />
@@ -146,8 +145,6 @@
     <Compile Include="Logic\Flowgraph\FlowNodePort.cs" />
     <Compile Include="Logic\Flowgraph\InputPorts.cs" />
     <Compile Include="Logic\Flowgraph\OutputPorts.cs" />
-    <Compile Include="GeneralExtensions.cs" />
-    <Compile Include="GenericEventArgs.cs" />
     <Compile Include="Logic\Entities\GameObjectExtension.cs" />
     <Compile Include="Logic\Entities\GameObjectExtension.EventArgs.cs" />
     <Compile Include="Logic\Entities\GameObjectExtension.Events.cs" />
@@ -191,15 +188,6 @@
     <Compile Include="RunTime\Registration\EntityRegister.cs" />
     <Compile Include="RunTime\Registration\Exception.cs" />
     <Compile Include="RunTime\Registration\FlowNodeRegister.cs" />
-    <Compile Include="Console\CryConsole.cs" />
-    <Compile Include="Console\Variables\ByRefCVar.cs" />
-    <Compile Include="Console\Variables\ConsoleVariableException.cs" />
-    <Compile Include="Console\Variables\CVarFlags.cs" />
-    <Compile Include="Console\Variables\CVarType.cs" />
-    <Compile Include="Console\Variables\DynamicCVar.cs" />
-    <Compile Include="Console\Variables\ExternalCVar.cs" />
-    <Compile Include="Console\Variables\StaticCVarField.cs" />
-    <Compile Include="Console\Variables\StaticCVarProperty.cs" />
     <Compile Include="Native\CryPakInterop.cs" />
     <Compile Include="Engine\CryPak\PathResolutionRules.cs" />
     <Compile Include="Engine\GeometryFormat.cs" />
@@ -238,7 +226,6 @@
     <Compile Include="Logic\Flowgraph\FlowNodeCloneType.cs" />
     <Compile Include="Logic\Flowgraph\PortTypes.cs" />
     <Compile Include="Logic\GameRules\GameRulesInitializationParams.cs" />
-    <Compile Include="ListEnumerator.cs" />
     <Compile Include="Native\NamespaceDoc.cs" />
     <Compile Include="Native\PlatformInterop.cs" />
     <Compile Include="Platform.cs" />
@@ -312,12 +299,10 @@
     <Compile Include="Entities\EntityBase.cs" />
     <Compile Include="Engine\TimeOfDay\TimeOfDay.cs" />
     <Compile Include="Logic\Flowgraph\FlowNodeAttribute.cs" />
-    <Compile Include="Native\ConsoleInterop.cs" />
     <Compile Include="Native\DebugInterop.cs" />
     <Compile Include="Native\EntityInterop.cs" />
     <Compile Include="Native\FlowNodeInterop.cs" />
     <Compile Include="Native\GameRulesInterop.cs" />
-    <Compile Include="Native\InputInterop.cs" />
     <Compile Include="Native\LevelInterop.cs" />
     <Compile Include="Native\MaterialInterop.cs" />
     <Compile Include="Native\ParticleEffectInterop.cs" />
@@ -350,7 +335,6 @@
     <Compile Include="Entities\EntityMovement.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Entities\EditorProperty.cs" />
-    <Compile Include="Console\Variables\CVar.cs" />
     <Compile Include="Time.cs" />
     <Compile Include="Debug\Debug.cs" />
     <Compile Include="Entities\EntityStatics.cs" />
@@ -360,7 +344,6 @@
     <Compile Include="Engine\CryPak\CryPak.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RunTime\UnusedMarker.cs" />
-    <Compile Include="VariousConstants.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="RunTime\Testing\Reports\ReportForm.resx">
