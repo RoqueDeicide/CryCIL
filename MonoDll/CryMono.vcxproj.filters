@@ -63,9 +63,6 @@
     <ClInclude Include="Interops\Utilities\CryPak.h">
       <Filter>Interops\Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="Interops\Utilities\Debug.h">
-      <Filter>Interops\Utilities</Filter>
-    </ClInclude>
     <ClInclude Include="Interops\Utilities\Time.h">
       <Filter>Interops\Utilities</Filter>
     </ClInclude>
@@ -152,9 +149,6 @@
       <Filter>Interops\StaticObjects</Filter>
     </ClCompile>
     <ClCompile Include="Interops\Utilities\CryPak.cpp">
-      <Filter>Interops\Utilities</Filter>
-    </ClCompile>
-    <ClCompile Include="Interops\Utilities\Debug.cpp">
       <Filter>Interops\Utilities</Filter>
     </ClCompile>
     <ClCompile Include="Interops\Viewport\Renderer.cpp">

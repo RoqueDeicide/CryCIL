@@ -272,8 +272,6 @@
     <Compile Include="Physics\PrePhysicsUpdateMode.cs" />
     <Compile Include="Physics\Status\DynamicsStatus.cs" />
     <Compile Include="Physics\Status\LivingStatus.cs" />
-    <Compile Include="RunTime\Profiling\FrameProfiler.cs" />
-    <Compile Include="RunTime\Profiling\FrameProfilerSection.cs" />
     <Compile Include="Native\ScriptSystemInterop.cs" />
     <Compile Include="Physics\Explosion.cs" />
     <Compile Include="Native\NetworkInterop.cs" />
@@ -336,7 +334,6 @@
     <Compile Include="Game.cs" />
     <Compile Include="Entities\EditorProperty.cs" />
     <Compile Include="Time.cs" />
-    <Compile Include="Debug\Debug.cs" />
     <Compile Include="Entities\EntityStatics.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Logic\GameRules\GameRules.cs" />
