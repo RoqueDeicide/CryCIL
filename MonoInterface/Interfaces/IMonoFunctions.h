@@ -44,6 +44,9 @@ struct IMonoFunctions
 	//!
 	//!     5) Returning a non-primitive struct object doesn't require unboxing.
 	//!
+	//!     6) When working with internal calls for instance methods, the first argument is a pointer to
+	//!        the object (no boxing/unboxing required).
+	//!
 	//! Examples:
 	//!
 	//! With built-in types only:

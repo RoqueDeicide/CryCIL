@@ -19,27 +19,27 @@ void ConsoleVariableInterop::OnRunTimeInitialized()
 	REGISTER_METHOD(GetHelp);
 }
 
-void ConsoleVariableInterop::Release(mono::object handle)
+void ConsoleVariableInterop::Release(ICVar **handle)
 {
-	ICVar *v = *GET_BOXED_OBJECT_DATA(ICVar *, handle);
+	ICVar *v = *handle;
 	if (v)
 	{
 		v->Release();
 	}
 }
 
-void ConsoleVariableInterop::ClearFlags(mono::object handle, int flags)
+void ConsoleVariableInterop::ClearFlags(ICVar **handle, int flags)
 {
-	ICVar *v = *GET_BOXED_OBJECT_DATA(ICVar *, handle);
+	ICVar *v = *handle;
 	if (v)
 	{
 		v->ClearFlags(flags);
 	}
 }
 
-int ConsoleVariableInterop::GetFlags(mono::object handle)
+int ConsoleVariableInterop::GetFlags(ICVar **handle)
 {
-	ICVar *v = *GET_BOXED_OBJECT_DATA(ICVar *, handle);
+	ICVar *v = *handle;
 	if (v)
 	{
 		return v->GetFlags();
@@ -47,9 +47,9 @@ int ConsoleVariableInterop::GetFlags(mono::object handle)
 	return 0;
 }
 
-int ConsoleVariableInterop::SetFlags(mono::object handle, int flags)
+int ConsoleVariableInterop::SetFlags(ICVar **handle, int flags)
 {
-	ICVar *v = *GET_BOXED_OBJECT_DATA(ICVar *, handle);
+	ICVar *v = *handle;
 	if (v)
 	{
 		return v->SetFlags(flags);
@@ -57,9 +57,9 @@ int ConsoleVariableInterop::SetFlags(mono::object handle, int flags)
 	return 0;
 }
 
-int ConsoleVariableInterop::GetInt(mono::object handle)
+int ConsoleVariableInterop::GetInt(ICVar **handle)
 {
-	ICVar *v = *GET_BOXED_OBJECT_DATA(ICVar *, handle);
+	ICVar *v = *handle;
 	if (v)
 	{
 		return v->GetIVal();
@@ -67,9 +67,9 @@ int ConsoleVariableInterop::GetInt(mono::object handle)
 	return 0;
 }
 
-float ConsoleVariableInterop::GetFloat(mono::object handle)
+float ConsoleVariableInterop::GetFloat(ICVar **handle)
 {
-	ICVar *v = *GET_BOXED_OBJECT_DATA(ICVar *, handle);
+	ICVar *v = *handle;
 	if (v)
 	{
 		return v->GetFVal();
@@ -77,9 +77,9 @@ float ConsoleVariableInterop::GetFloat(mono::object handle)
 	return 0;
 }
 
-mono::string ConsoleVariableInterop::GetString(mono::object handle)
+mono::string ConsoleVariableInterop::GetString(ICVar **handle)
 {
-	ICVar *v = *GET_BOXED_OBJECT_DATA(ICVar *, handle);
+	ICVar *v = *handle;
 	if (v)
 	{
 		return ToMonoString(v->GetString());
@@ -87,36 +87,36 @@ mono::string ConsoleVariableInterop::GetString(mono::object handle)
 	return nullptr;
 }
 
-void ConsoleVariableInterop::SetString(mono::object handle, mono::string s)
+void ConsoleVariableInterop::SetString(ICVar **handle, mono::string s)
 {
-	ICVar *v = *GET_BOXED_OBJECT_DATA(ICVar *, handle);
+	ICVar *v = *handle;
 	if (v && s)
 	{
 		v->Set(ToNativeString(s));
 	}
 }
 
-void ConsoleVariableInterop::SetFloat(mono::object handle, float f)
+void ConsoleVariableInterop::SetFloat(ICVar **handle, float f)
 {
-	ICVar *v = *GET_BOXED_OBJECT_DATA(ICVar *, handle);
+	ICVar *v = *handle;
 	if (v)
 	{
 		v->Set(f);
 	}
 }
 
-void ConsoleVariableInterop::SetInt(mono::object handle, int i)
+void ConsoleVariableInterop::SetInt(ICVar **handle, int i)
 {
-	ICVar *v = *GET_BOXED_OBJECT_DATA(ICVar *, handle);
+	ICVar *v = *handle;
 	if (v)
 	{
 		v->Set(i);
 	}
 }
 
-int ConsoleVariableInterop::GetVariableType(mono::object handle)
+int ConsoleVariableInterop::GetVariableType(ICVar **handle)
 {
-	ICVar *v = *GET_BOXED_OBJECT_DATA(ICVar *, handle);
+	ICVar *v = *handle;
 	if (v)
 	{
 		return v->GetType();
@@ -124,9 +124,9 @@ int ConsoleVariableInterop::GetVariableType(mono::object handle)
 	return 0;
 }
 
-mono::string ConsoleVariableInterop::GetNameVar(mono::object handle)
+mono::string ConsoleVariableInterop::GetNameVar(ICVar **handle)
 {
-	ICVar *v = *GET_BOXED_OBJECT_DATA(ICVar *, handle);
+	ICVar *v = *handle;
 	if (v)
 	{
 		return ToMonoString(v->GetName());
@@ -134,9 +134,9 @@ mono::string ConsoleVariableInterop::GetNameVar(mono::object handle)
 	return nullptr;
 }
 
-mono::string ConsoleVariableInterop::GetHelp(mono::object handle)
+mono::string ConsoleVariableInterop::GetHelp(ICVar **handle)
 {
-	ICVar *v = *GET_BOXED_OBJECT_DATA(ICVar *, handle);
+	ICVar *v = *handle;
 	if (v)
 	{
 		return ToMonoString(v->GetHelp());

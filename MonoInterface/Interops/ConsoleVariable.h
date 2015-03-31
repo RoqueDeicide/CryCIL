@@ -11,17 +11,17 @@ struct ConsoleVariableInterop : public IMonoInterop<true, true>
 
 	virtual void OnRunTimeInitialized();
 
-	static void         Release        (mono::object handle);
-	static void         ClearFlags     (mono::object handle, int flags);
-	static int          GetFlags       (mono::object handle);
-	static int          SetFlags       (mono::object handle, int flags);
-	static int          GetInt         (mono::object handle);
-	static float        GetFloat       (mono::object handle);
-	static mono::string GetString      (mono::object handle);
-	static void         SetString      (mono::object handle, mono::string s);
-	static void         SetFloat       (mono::object handle, float f);
-	static void         SetInt         (mono::object handle, int i);
-	static int          GetVariableType(mono::object handle);
-	static mono::string GetNameVar     (mono::object handle);
-	static mono::string GetHelp        (mono::object handle);
+	static void         Release        (ICVar **handle);
+	static void         ClearFlags     (ICVar **handle, int flags);
+	static int          GetFlags       (ICVar **handle);
+	static int          SetFlags       (ICVar **handle, int flags);
+	static int          GetInt         (ICVar **handle);
+	static float        GetFloat       (ICVar **handle);
+	static mono::string GetString      (ICVar **handle);
+	static void         SetString      (ICVar **handle, mono::string s);
+	static void         SetFloat       (ICVar **handle, float f);
+	static void         SetInt         (ICVar **handle, int i);
+	static int          GetVariableType(ICVar **handle);
+	static mono::string GetNameVar     (ICVar **handle);
+	static mono::string GetHelp        (ICVar **handle);
 };
