@@ -120,6 +120,18 @@ namespace CryCil.Graphics
 			return color.Bytes;
 		}
 		/// <summary>
+		/// Converts given object of type <see cref="ColorByte"/> into object of type
+		/// <see cref="ColorSingle"/>.
+		/// </summary>
+		/// <param name="color">Color to convert to floating-point representation.</param>
+		/// <returns>
+		/// A new color that is the same as given one, but in a floating point number format.
+		/// </returns>
+		public static implicit operator ColorSingle(ColorByte color)
+		{
+			return new ColorSingle(color.Red / 255.0f, color.Green / 255.0f, color.Blue / 255.0f, color.Alpha / 255.0f);
+		}
+		/// <summary>
 		/// Creates text representation of this color object.
 		/// </summary>
 		/// <returns>Object of type <see cref="String"/> that represents this color.</returns>
