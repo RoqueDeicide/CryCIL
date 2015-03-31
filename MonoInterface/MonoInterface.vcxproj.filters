@@ -255,7 +255,7 @@
       <Filter>Interops\Engine</Filter>
     </ClInclude>
     <ClInclude Include="Interops\Console.h">
-      <Filter>Interops\Engine</Filter>
+      <Filter>Interops\Engine\Console</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -366,7 +366,7 @@
       <Filter>Interops\Engine</Filter>
     </ClCompile>
     <ClCompile Include="Interops\Console.cpp">
-      <Filter>Interops\Engine</Filter>
+      <Filter>Interops\Engine\Console</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -435,6 +435,9 @@
     </Filter>
     <Filter Include="Interops\Engine\Input">
       <UniqueIdentifier>{f622504e-52a4-4881-919f-863522544f93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interops\Engine\Console">
+      <UniqueIdentifier>{8c3566fe-c8d3-409c-bac2-a55104a890cb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
