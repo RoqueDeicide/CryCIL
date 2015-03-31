@@ -213,6 +213,7 @@
     <Compile Include="RunTime\NamespaceDoc.cs" />
     <Compile Include="Interops\Initialization.cs" />
     <Compile Include="Interops\NamespaceDoc.cs" />
+    <Compile Include="Utilities\StringPool.cs" />
     <Compile Include="VariousConstants.cs" />
   </ItemGroup>
   <ItemGroup />
