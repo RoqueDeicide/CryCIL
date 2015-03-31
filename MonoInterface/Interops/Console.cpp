@@ -14,7 +14,6 @@ void ConsoleInterop::OnRunTimeInitialized()
 	MonoEnv->Functions->AddInternalCall
 		(this->GetNameSpace(), this->GetName(), "ExecuteCommand(string,bool,bool)", ExecuteCommand);
 
-	MonoEnv->RemoveListener(this);	// No need to listen anymore.
 }
 
 void ConsoleInterop::MonoCommand(IConsoleCmdArgs *args)
