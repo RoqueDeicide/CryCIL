@@ -263,6 +263,9 @@
     <ClInclude Include="Interops\DebugDraw.h">
       <Filter>Interops\Engine\Debug</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\Profiling.h">
+      <Filter>Interops\Engine\Debug</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -378,6 +381,9 @@
       <Filter>Interops\Engine\Console</Filter>
     </ClCompile>
     <ClCompile Include="Interops\DebugDraw.cpp">
+      <Filter>Interops\Engine\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\Profiling.cpp">
       <Filter>Interops\Engine\Debug</Filter>
     </ClCompile>
   </ItemGroup>

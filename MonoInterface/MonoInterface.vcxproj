@@ -274,6 +274,7 @@
     <ClInclude Include="Interops\LogPosting.h" />
     <ClInclude Include="Interops\MeshOps.h" />
     <ClInclude Include="Interops\MouseInterop.h" />
+    <ClInclude Include="Interops\Profiling.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="Logs.h" />
     <ClInclude Include="MonoDefinitionFiles\MonoArray.h" />
@@ -345,6 +346,7 @@
     <ClCompile Include="Interops\MeshOps.cpp" />
     <ClCompile Include="Interops\MouseInterop.cpp" />
     <ClCompile Include="Interops\Console.cpp" />
+    <ClCompile Include="Interops\Profiling.cpp" />
     <ClCompile Include="RunTime\DebugEventReporter.cpp" />
     <ClCompile Include="RunTime\EventBroadcaster.cpp" />
     <ClCompile Include="RunTime\InitializationInterop.cpp" />

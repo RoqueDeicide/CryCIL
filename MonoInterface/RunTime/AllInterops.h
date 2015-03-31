@@ -19,3 +19,5 @@
 #include "Interops/ConsoleVariable.h"
 
 #include "Interops/DebugDraw.h"
+
+#include "Interops/Profiling.h"
