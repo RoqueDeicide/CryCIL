@@ -288,6 +288,7 @@ void MonoInterface::RegisterDefaultListeners()
 	this->broadcaster->listeners->Add(new InputInterop());
 	this->broadcaster->listeners->Add(new ConsoleInterop());
 	this->broadcaster->listeners->Add(new ConsoleVariableInterop());
+	this->broadcaster->listeners->Add(new DebugDrawInterop());
 }
 #pragma endregion
 #pragma region Thunks Initialization

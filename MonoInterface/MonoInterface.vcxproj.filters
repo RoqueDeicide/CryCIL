@@ -260,6 +260,9 @@
     <ClInclude Include="Interops\ConsoleVariable.h">
       <Filter>Interops\Engine\Console</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\DebugDraw.h">
+      <Filter>Interops\Engine\Debug</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -374,6 +377,9 @@
     <ClCompile Include="Interops\ConsoleVariable.cpp">
       <Filter>Interops\Engine\Console</Filter>
     </ClCompile>
+    <ClCompile Include="Interops\DebugDraw.cpp">
+      <Filter>Interops\Engine\Debug</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">
@@ -444,6 +450,9 @@
     </Filter>
     <Filter Include="Interops\Engine\Console">
       <UniqueIdentifier>{8c3566fe-c8d3-409c-bac2-a55104a890cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interops\Engine\Debug">
+      <UniqueIdentifier>{2077e220-9d9d-4c66-a30d-669b72bc92f2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

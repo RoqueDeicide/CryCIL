@@ -269,6 +269,7 @@
     <ClInclude Include="Interops\Console.h" />
     <ClInclude Include="Interops\ConsoleVariable.h" />
     <ClInclude Include="Interops\CryMarshal.h" />
+    <ClInclude Include="Interops\DebugDraw.h" />
     <ClInclude Include="Interops\InputInterop.h" />
     <ClInclude Include="Interops\LogPosting.h" />
     <ClInclude Include="Interops\MeshOps.h" />
@@ -338,6 +339,7 @@
     <ClCompile Include="Interops\BatchOps.cpp" />
     <ClCompile Include="Interops\ConsoleVariable.cpp" />
     <ClCompile Include="Interops\CryMarshal.cpp" />
+    <ClCompile Include="Interops\DebugDraw.cpp" />
     <ClCompile Include="Interops\InputInterop.cpp" />
     <ClCompile Include="Interops\LogPosting.cpp" />
     <ClCompile Include="Interops\MeshOps.cpp" />

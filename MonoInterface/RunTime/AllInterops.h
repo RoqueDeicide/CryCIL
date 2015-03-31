@@ -17,3 +17,5 @@
 #include "Interops/Console.h"
 
 #include "Interops/ConsoleVariable.h"
+
+#include "Interops/DebugDraw.h"

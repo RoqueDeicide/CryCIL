@@ -77,8 +77,10 @@
     <Compile Include="Engine\ConsoleFlags.cs" />
     <Compile Include="Engine\ConsoleVariable.cs" />
     <Compile Include="Engine\CryConsole.cs" />
+    <Compile Include="Engine\DebugServices\DebubPainter.cs" />
     <Compile Include="Engine\DebugServices\Log.cs" />
     <Compile Include="Engine\DebugServices\NamespaceDoc.cs" />
+    <Compile Include="Engine\DebugServices\DebugGraphics.cs" />
     <Compile Include="Engine\Input\AnalogInputEventArgs.cs" />
     <Compile Include="Engine\Input\GamepadAnalogInputEventArgs.cs" />
     <Compile Include="Engine\Input\GamepadKeyEventArgs.cs" />
