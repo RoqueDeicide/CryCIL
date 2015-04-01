@@ -101,6 +101,7 @@
     <Compile Include="Engine\Input\Touch.cs" />
     <Compile Include="Engine\Input\SimpleKeyEventArgs.cs" />
     <Compile Include="Engine\NamespaceDoc.cs" />
+    <Compile Include="Engine\Time.cs" />
     <Compile Include="GeneralExtensions.cs" />
     <Compile Include="GenericEventArgs.cs" />
     <Compile Include="Interops\LogPosting.cs" />

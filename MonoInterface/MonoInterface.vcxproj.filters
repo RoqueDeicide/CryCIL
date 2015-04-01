@@ -266,6 +266,9 @@
     <ClInclude Include="Interops\Profiling.h">
       <Filter>Interops\Engine\Debug</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\Timing.h">
+      <Filter>Interops\Engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -385,6 +388,9 @@
     </ClCompile>
     <ClCompile Include="Interops\Profiling.cpp">
       <Filter>Interops\Engine\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\Timing.cpp">
+      <Filter>Interops\Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

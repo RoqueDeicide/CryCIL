@@ -276,6 +276,8 @@ void MonoInterface::OnSystemEvent(ESystemEvent event, UINT_PTR wparam, UINT_PTR 
 #pragma region Default Listeners
 void MonoInterface::RegisterDefaultListeners()
 {
+	this->broadcaster->listeners->Add(new TimingInterop());			// This interop has to be first to make
+																	// sure that all timings are up-to-date.
 #ifdef _DEBUG
 	this->broadcaster->listeners->Add(new DebugEventReporter());
 #endif // _DEBUG
