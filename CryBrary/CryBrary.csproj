@@ -173,9 +173,6 @@
     <Compile Include="Physics\CryCollision.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="RunTime\BlittableAttribute.cs" />
-    <Compile Include="RunTime\Compatibility\BlitChecker.cs" />
-    <Compile Include="RunTime\Compatibility\CppType.cs" />
-    <Compile Include="RunTime\Compatibility\NativeFieldName.cs" />
     <Compile Include="RunTime\Compilation\CodeSolution.cs" />
     <Compile Include="RunTime\Compilation\Exception.cs" />
     <Compile Include="RunTime\Compilation\IProject.cs" />
@@ -253,7 +250,6 @@
     <Compile Include="Native\MeshInterop.cs" />
     <Compile Include="Native\StaticObjectInterop.cs" />
     <Compile Include="StaticObjects\StaticObject.cs" />
-    <Compile Include="Animations\AnimationEvent.cs" />
     <Compile Include="Physics\Actions\Impulse.cs" />
     <Compile Include="Physics\BreakageParameters.cs" />
     <Compile Include="Physics\ColliderInfo.cs" />
@@ -282,7 +278,6 @@
     <Compile Include="RunTime\Serialization\SerializationTarget.cs" />
     <Compile Include="RunTime\Serialization\SerializationType.cs" />
     <Compile Include="ProjectSettings.cs" />
-    <Compile Include="Animations\AnimationFlags.cs" />
     <Compile Include="Entities\EntityLight.cs" />
     <Compile Include="Logic\Actors\NativeActor.cs" />
     <Compile Include="Native\Engine3DInterop.cs" />
@@ -333,7 +328,6 @@
     <Compile Include="Entities\EntityMovement.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Entities\EditorProperty.cs" />
-    <Compile Include="Time.cs" />
     <Compile Include="Entities\EntityStatics.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Logic\GameRules\GameRules.cs" />

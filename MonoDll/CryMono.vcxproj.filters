@@ -63,9 +63,6 @@
     <ClInclude Include="Interops\Utilities\CryPak.h">
       <Filter>Interops\Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="Interops\Utilities\Time.h">
-      <Filter>Interops\Utilities</Filter>
-    </ClInclude>
     <ClInclude Include="Interops\Viewport\Renderer.h">
       <Filter>Interops\Viewport</Filter>
     </ClInclude>
