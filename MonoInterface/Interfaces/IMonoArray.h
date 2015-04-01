@@ -126,8 +126,7 @@ public:
 
 	//! Creates new wrapper for given array.
 	IMonoArray(mono::Array ar)
-		: IMonoObject()
-		, elementSize(0)
+		: elementSize(0)
 		, elementClass(nullptr)
 		, rank(0)
 	{
@@ -135,8 +134,7 @@ public:
 	}
 	//! Creates new wrapper for given array.
 	IMonoArray(MonoGCHandle &handle)
-		: IMonoObject()
-		, elementSize(0)
+		: elementSize(0)
 		, elementClass(nullptr)
 		, rank(0)
 	{

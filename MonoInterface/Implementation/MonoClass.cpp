@@ -118,13 +118,11 @@ MonoClassWrapper::~MonoClassWrapper()
 		}
 		delete overloads;
 	}
-	this->properties.Dispose();
 
 	for (int i = 0; i < this->events.Length; i++)
 	{
 		delete this->events[i];
 	}
-	this->events.Dispose();
 
 	ReadOnlyList<List<IMonoFunction *> *> *methodOverloadList = this->methods.Elements;
 	for (int i = 0; i < methodOverloadList->Length; i++)
@@ -136,13 +134,11 @@ MonoClassWrapper::~MonoClassWrapper()
 		}
 		delete overloads;
 	}
-	this->methods.Dispose();
 
 	for (int i = 0; i < this->fields.Length; i++)
 	{
 		delete this->fields[i];
 	}
-	this->fields.Dispose();
 }
 
 IMonoFunction *MonoClassWrapper::GetFunction(const char *name, int paramCount)

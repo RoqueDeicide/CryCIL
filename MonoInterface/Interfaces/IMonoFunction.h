@@ -40,13 +40,10 @@ public:
 	{
 		SAFE_DELETE(this->paramList);
 
-		this->paramClasses.Dispose();
-
 		for (int i = 0; i < this->paramTypeNames.Length; i++)
 		{
 			delete this->paramTypeNames[i];
 		}
-		this->paramTypeNames.Dispose();
 	}
 	//! Returns a pointer to a C-style function that can be invoked like a standard function pointer.
 	//!
