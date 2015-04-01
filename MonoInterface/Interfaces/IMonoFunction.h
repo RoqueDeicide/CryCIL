@@ -292,6 +292,7 @@ public:
 		{
 			this->rawThunk = MonoEnv->Functions->GetFunctionPointer(this->wrappedMethod);
 		}
+		return this->rawThunk;
 	}
 	int GetParameterCount()
 	{
