@@ -69,7 +69,7 @@ public:
 
 	}
 	//! Creates a deep copy of the list.
-	SortedList(SortedList<KeyType, ElementType, Ascending> &listToCopy)
+	SortedList(const SortedList<KeyType, ElementType, Ascending> &listToCopy)
 		: comparer(listToCopy.comparer)
 	{
 		this->keys(listToCopy.keys);

@@ -65,7 +65,7 @@ public:
 		}
 	}
 	//! Constructs a deep copy of the list.
-	List(List<ElementType> &list)
+	List(const List<ElementType> &list)
 	{
 		this->capacity = list.capacity;
 		this->length = list.length;
