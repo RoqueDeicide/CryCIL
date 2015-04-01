@@ -55,7 +55,7 @@ void ConsoleInterop::UnregisterCommandInternal(mono::string name)
 {
 	if (gEnv && gEnv->pConsole)
 	{
-		gEnv->pConsole->RemoveCommand(NtText(ToNativeString(name)));
+		gEnv->pConsole->RemoveCommand(NtText(name));
 	}
 }
 
@@ -63,7 +63,7 @@ void ConsoleInterop::ExecuteCommand(mono::string command, bool silent, bool defe
 {
 	if (gEnv && gEnv->pConsole)
 	{
-		gEnv->pConsole->ExecuteString(NtText(ToNativeString(command)), silent, deferExecution);
+		gEnv->pConsole->ExecuteString(NtText(command), silent, deferExecution);
 	}
 }
 
@@ -141,7 +141,7 @@ void ConsoleInterop::UnregisterVariable(mono::string name, bool _delete)
 {
 	if (gEnv && gEnv->pConsole && name)
 	{
-		gEnv->pConsole->UnregisterVariable(ToNativeString(name), _delete);
+		gEnv->pConsole->UnregisterVariable(NtText(name), _delete);
 	}
 }
 
@@ -149,7 +149,7 @@ ICVar *ConsoleInterop::GetVariable(mono::string name)
 {
 	if (gEnv && gEnv->pConsole && name)
 	{
-		return gEnv->pConsole->GetCVar(NtText(ToNativeString(name)));
+		return gEnv->pConsole->GetCVar(NtText(name));
 	}
 	else
 	{

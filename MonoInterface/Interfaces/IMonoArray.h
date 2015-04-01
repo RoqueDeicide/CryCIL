@@ -56,7 +56,7 @@ struct _MonoArray
 //! // Print the contents.
 //! for (int i = 0; i < array.Length; i++)
 //! {
-//!     CryLogAlways(NtText(ToNativeString(array[i])));
+//!     CryLogAlways(NtText(array[i]));
 //! }
 //!
 //! @endcode
