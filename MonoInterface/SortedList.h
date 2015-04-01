@@ -52,6 +52,14 @@ public:
 	{
 		
 	}
+	//! Assigns contents of the temporary object to the new one.
+	SortedList(SortedList<KeyType, ElementType, Ascending> &&other)
+		: keys(std::move(other.keys))
+		, values(std::move(other.values))
+		, comparer(std::move(other.comparer))
+	{
+
+	}
 	//! Creates a list with specific capacity.
 	SortedList(int capacity)
 		: keys(capacity)

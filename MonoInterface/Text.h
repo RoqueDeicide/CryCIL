@@ -48,6 +48,14 @@ public:
 		this->text = nullptr;
 		this->length = 0;
 	}
+	//! Assigns contents of the temporary object to the new one.
+	TextBase(TextBase &&other)
+		: text(other.text)
+		, length(other.length)
+	{
+		other.text = nullptr;
+		other.length = 0;
+	}
 	//! Creates a new immutable string from given null-terminated one.
 	//!
 	//! Text from given string is copied into new object without a terminating null character.
@@ -317,6 +325,8 @@ public:
 	//!
 	//! Only default text can be assigned to.
 	Text() : TextBase() {}
+	//! Assigns contents of the temporary object to the new one.
+	Text(Text &&other) : TextBase(std::move(other)) {}
 	//! Creates a new immutable string from given null-terminated one.
 	//!
 	//! Text from given string is copied into new object without a terminating null character.
@@ -532,6 +542,8 @@ public:
 	{
 		this->capacity = 0;
 	}
+	//! Assigns contents of the temporary object to the new one.
+	ConstructiveText(ConstructiveText &&other) : TextBase(std::move(other)) {}
 	//! Creates a constructive text with desired capacity.
 	//!
 	//! @param capacity Amount of space to allocate for symbols before any of them are added.

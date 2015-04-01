@@ -55,6 +55,12 @@ public:
 	{
 		this->chars = nullptr;
 	}
+	//! Assigns contents of the temporary object to the new one.
+	NtText(NtText &&other)
+		: chars(other.chars)
+	{
+		other.chars = nullptr;
+	}
 	//! Creates a new null-terminated string from given null-terminated one.
 	//!
 	//! Text from given string is copied into new object without a terminating null character.

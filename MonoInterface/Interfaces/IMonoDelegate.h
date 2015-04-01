@@ -14,6 +14,12 @@ public:
 	{
 
 	}
+	IMonoDelegate(IMonoDelegate &&other)
+		: func(other.func)
+		, IMonoObject(other.obj, other.klass)
+	{
+		other.func = nullptr;
+	}
 	//! Creates new wrapper for given delegate.
 	IMonoDelegate(mono::delegat d)
 		: IMonoObject(d)

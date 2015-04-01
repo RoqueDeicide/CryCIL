@@ -31,6 +31,11 @@ public:
 		this->obj = obj;
 		this->klass = (obj) ? MonoEnv->Objects->GetObjectClass(obj) : nullptr;
 	}
+	IMonoObject(mono::object obj, IMonoClass *klass)
+	{
+		this->obj = obj;
+		this->klass = klass;
+	}
 	//! Constructs a new wrapper for the Mono object represented by a GC handle.
 	//!
 	//! Resultant wrapper is valid as long as provided handle is valid.

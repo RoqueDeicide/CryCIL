@@ -29,6 +29,14 @@ private:
 	int length;
 	int capacity;
 public:
+	//! Assigns contents of the temporary object to the new one.
+	List(List<ElementType> &&other)
+		: elements(other.elements)
+		, length(other.length)
+		, capacity(other.length)
+	{
+		other.elements = nullptr;
+	}
 	//! Creates a default list.
 	//!
 	//! Default capacity is 10.
@@ -86,7 +94,14 @@ public:
 	}
 	~List()
 	{
-		this->Dispose();
+		if (this->elements)
+		{
+			//std::cout << "Trying to free elements:" << std::endl;
+			free(this->elements);
+			this->elements = nullptr;
+			this->length = 0;
+			this->capacity = 0;
+		}
 	}
 	//! Swaps internal data between too lists.
 	SWAP_ASSIGNMENT List<ElementType> &operator=(List<ElementType> &other)
@@ -543,14 +558,7 @@ public:
 	//! Releases memory held by this list.
 	void Dispose()
 	{
-		if (this->elements)
-		{
-			//std::cout << "Trying to free elements:" << std::endl;
-			free(this->elements);
-			this->elements = nullptr;
-			this->length = 0;
-			this->capacity = 0;
-		}
+		this->~List();
 	}
 	//! Detaches underlying array of elements allowing this list object to be released without
 	//! releasing memory.

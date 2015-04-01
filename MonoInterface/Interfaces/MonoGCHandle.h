@@ -28,6 +28,11 @@ public:
 	{
 		this->handle = -1;
 	}
+	MonoGCHandle(MonoGCHandle &&other)
+		: handle(other.handle)
+	{
+		other.handle = -1;
+	}
 	MonoGCHandle(unsigned int handle)
 	{
 		this->handle = handle;
