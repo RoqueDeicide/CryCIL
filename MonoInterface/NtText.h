@@ -97,7 +97,27 @@ public:
 	//! @param managedString Instance of type System.String.
 	NtText(mono::string managedString)
 	{
+#ifdef CRYCIL_MODULE
+		MonoError error;
+		char *ntText = mono_string_to_utf8_checked((MonoString *)managedString, &error);
+		if (mono_error_ok(&error))
+		{
+			int length = strlen(ntText);
+			this->chars = new char[length + 1];
+			for (int i = 0; i < length; i++)
+			{
+				((char *)this->chars)[i] = ntText[i];
+			}
+			mono_free(ntText);
+			((char *)this->chars)[length] = '\0';
+		}
+		else
+		{
+			FatalError(mono_error_get_message(&error));
+		}
+#else
 		this->chars = ToNativeString(managedString);
+#endif // CRYCIL_MODULE
 	}
 
 #endif // USE_CRYCIL_API
