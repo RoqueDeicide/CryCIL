@@ -23,3 +23,7 @@
 #include "Interops/Profiling.h"
 
 #include "Interops/Timing.h"
+
+#include "Interops/ArchiveStream.h"
+
+#include "Interops/CryArchive.h"

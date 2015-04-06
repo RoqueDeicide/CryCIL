@@ -269,6 +269,12 @@
     <ClInclude Include="Interops\Timing.h">
       <Filter>Interops\Engine</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\ArchiveStream.h">
+      <Filter>Interops\Engine\Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\CryArchive.h">
+      <Filter>Interops\Engine\Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -392,6 +398,12 @@
     <ClCompile Include="Interops\Timing.cpp">
       <Filter>Interops\Engine</Filter>
     </ClCompile>
+    <ClCompile Include="Interops\ArchiveStream.cpp">
+      <Filter>Interops\Engine\Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\CryArchive.cpp">
+      <Filter>Interops\Engine\Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">
@@ -465,6 +477,9 @@
     </Filter>
     <Filter Include="Interops\Engine\Debug">
       <UniqueIdentifier>{2077e220-9d9d-4c66-a30d-669b72bc92f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interops\Engine\Files">
+      <UniqueIdentifier>{3a6ddda5-3d06-4d4f-bae3-1e4149c25bf2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
