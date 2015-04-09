@@ -31,15 +31,6 @@ namespace CryCil.Engine
 		private static readonly SortedList<string, ConsoleCommand> registeredCommands =
 			new SortedList<string, ConsoleCommand>();
 		#endregion
-		#region Properties
-
-		#endregion
-		#region Events
-
-		#endregion
-		#region Construction
-
-		#endregion
 		#region Interface
 		/// <summary>
 		/// Registers a console command.
@@ -63,8 +54,23 @@ namespace CryCil.Engine
 		/// and have registration fail, if there was already a command with this name that was registered
 		/// through native code.
 		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		/// Name of the command to register must not be null.
+		/// </exception>
+		/// <exception cref="ArgumentNullException">
+		/// The delegate that represents a command cannot be null.
+		/// </exception>
 		public static bool RegisterCommand(string name, ConsoleCommand command, string help = null, ConsoleFlags flags = ConsoleFlags.Null, bool overwrite = false)
 		{
+			if (name == null)
+			{
+				throw new ArgumentNullException("name", "Name of the command to register must not be null.");
+			}
+			if (command == null)
+			{
+				throw new ArgumentNullException("command", "The delegate that represents a command cannot be null.");
+			}
+
 			bool registered = registeredCommands.ContainsKey(name);
 			if (registered && !overwrite)
 			{
@@ -85,8 +91,17 @@ namespace CryCil.Engine
 		/// Unregisters the console command with a given name.
 		/// </summary>
 		/// <param name="name">Name of the console command to unregister.</param>
+		/// <exception cref="ArgumentNullException">
+		/// Name of the command to unregister must not be null.
+		/// </exception>
 		public static void UnregisterCommand(string name)
 		{
+			if (name == null)
+			{
+				throw new ArgumentNullException("name",
+					"Name of the command to unregister must not be null.");
+			}
+
 			registeredCommands.Remove(name);
 
 			UnregisterCommandInternal(name);
@@ -110,14 +125,41 @@ namespace CryCil.Engine
 		/// If true, the command is stored in special FIFO collection that allows delayed execution by
 		/// using wait_seconds and wait_frames commands.
 		/// </param>
+		/// <exception cref="ArgumentNullException">
+		/// Name of the command to execute must not be null.
+		/// </exception>
 		public static void ExecuteCommand(string name, string[] arguments, bool silent = true, bool deferExecution = false)
 		{
-			var builder = new StringBuilder(name.Length + arguments.Sum(x => x.Length) + arguments.Length);
+			if (name == null)
+			{
+				throw new ArgumentNullException("name", "Name of the command to execute must not be null.");
+			}
+
+			int argumentsArrayLength;
+			int argummentsCombinedLength;
+
+			if (arguments == null)
+			{
+				argumentsArrayLength = 0;
+				argummentsCombinedLength = 0;
+			}
+			else
+			{
+				argumentsArrayLength = arguments.Length;
+				argummentsCombinedLength = arguments.Sum(x => x.Length);
+			}
+
+			var builder = new StringBuilder(name.Length + argummentsCombinedLength + argumentsArrayLength);
 			builder.Append(name);
-			foreach (string argument in arguments)
+			for (int i = 0; i < argumentsArrayLength; i++)
 			{
 				builder.Append(' ');
-				builder.Append(argument);
+				// NullReferenceException is not possible here since argumentsArrayLength will be equal to
+				// 0.
+
+				// ReSharper disable PossibleNullReferenceException
+				builder.Append(arguments[i]);
+				// ReSharper restore PossibleNullReferenceException
 			}
 
 			string commandLine = builder.ToString();
@@ -147,6 +189,9 @@ namespace CryCil.Engine
 		/// If true, the command is stored in special FIFO collection that allows delayed execution by
 		/// using wait_seconds and wait_frames commands.
 		/// </param>
+		/// <exception cref="ArgumentNullException">
+		/// Name of the command to execute must not be null.
+		/// </exception>
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern void ExecuteCommand(string command, bool silent = true, bool deferExecution = false);
 
@@ -170,6 +215,9 @@ namespace CryCil.Engine
 		/// A wrapper for a newly created console variable. Check <see cref="ConsoleVariable.Valid"/>
 		/// property on the returned object to see if registration was successful.
 		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		/// Cannot register a console variable using a null name.
+		/// </exception>
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern ConsoleVariable RegisterVariable(string name, ref int var, int defaultValue,
 															  ConsoleFlags flags, string help = null);
@@ -194,6 +242,9 @@ namespace CryCil.Engine
 		/// A wrapper for a newly created console variable. Check <see cref="ConsoleVariable.Valid"/>
 		/// property on the returned object to see if registration was successful.
 		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		/// Cannot register a console variable using a null name.
+		/// </exception>
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern ConsoleVariable RegisterVariable(string name, ref float var,
 															  float defaultValue, ConsoleFlags flags,
@@ -233,6 +284,9 @@ namespace CryCil.Engine
 		/// A wrapper for a newly created console variable. Check <see cref="ConsoleVariable.Valid"/>
 		/// property on the returned object to see if registration was successful.
 		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		/// Cannot register a console variable using a null name.
+		/// </exception>
 		/// <exception cref="ArgumentException">
 		/// Unable to use instance method as a console variable callback.
 		/// </exception>
@@ -240,8 +294,14 @@ namespace CryCil.Engine
 													   ConsoleVariableCallback callback = null,
 													   string help = null)
 		{
-			Contract.Requires(callback == null || callback.Method.IsStatic,
-							  "Unable to use instance method as a console variable callback.");
+			if (name == null)
+			{
+				throw new ArgumentNullException("name", "Cannot register a console variable using a null name.");
+			}
+			if (callback != null && !callback.Method.IsStatic)
+			{
+				throw new ArgumentException("Unable to use instance method as a console variable callback.");
+			}
 
 			IntPtr fPtr = callback != null
 				? callback.Method.MethodHandle.GetFunctionPointer()
@@ -284,6 +344,9 @@ namespace CryCil.Engine
 		/// A wrapper for a newly created console variable. Check <see cref="ConsoleVariable.Valid"/>
 		/// property on the returned object to see if registration was successful.
 		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		/// Cannot register a console variable using a null name.
+		/// </exception>
 		/// <exception cref="ArgumentException">
 		/// Unable to use instance method as a console variable callback.
 		/// </exception>
@@ -291,8 +354,14 @@ namespace CryCil.Engine
 													   ConsoleVariableCallback callback = null,
 													   string help = null)
 		{
-			Contract.Requires(callback == null || callback.Method.IsStatic,
-							  "Unable to use instance method as a console variable callback.");
+			if (name == null)
+			{
+				throw new ArgumentNullException("name", "Cannot register a console variable using a null name.");
+			}
+			if (callback != null && !callback.Method.IsStatic)
+			{
+				throw new ArgumentException("Unable to use instance method as a console variable callback.");
+			}
 
 			IntPtr fPtr = callback != null
 				? callback.Method.MethodHandle.GetFunctionPointer()
@@ -335,6 +404,9 @@ namespace CryCil.Engine
 		/// A wrapper for a newly created console variable. Check <see cref="ConsoleVariable.Valid"/>
 		/// property on the returned object to see if registration was successful.
 		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		/// Cannot register a console variable using a null name.
+		/// </exception>
 		/// <exception cref="ArgumentException">
 		/// Unable to use instance method as a console variable callback.
 		/// </exception>
@@ -342,8 +414,14 @@ namespace CryCil.Engine
 													   ConsoleVariableCallback callback = null,
 													   string help = null)
 		{
-			Contract.Requires(callback == null || callback.Method.IsStatic,
-							  "Unable to use instance method as a console variable callback.");
+			if (name == null)
+			{
+				throw new ArgumentNullException("name", "Cannot register a console variable using a null name.");
+			}
+			if (callback != null && !callback.Method.IsStatic)
+			{
+				throw new ArgumentException("Unable to use instance method as a console variable callback.");
+			}
 
 			IntPtr fPtr = callback != null
 				? callback.Method.MethodHandle.GetFunctionPointer()
@@ -359,6 +437,9 @@ namespace CryCil.Engine
 		/// Indicates whether there no <see cref="ConsoleVariable"/> objects for this variable hanging
 		/// around and it can be deleted.
 		/// </param>
+		/// <exception cref="ArgumentNullException">
+		/// Name of the console variable to unregister cannot be null.
+		/// </exception>
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern void UnregisterVariable(string name, bool delete = true);
 		/// <summary>
@@ -369,6 +450,9 @@ namespace CryCil.Engine
 		/// A wrapper for a console variable. Check <see cref="ConsoleVariable.Valid"/> property on the
 		/// returned object to see if it was registered before.
 		/// </returns>
+		/// <exception cref="ArgumentNullException">
+		/// Cannot get a console variable using a null name.
+		/// </exception>
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern ConsoleVariable GetVariable(string name);
 		#endregion

@@ -63,6 +63,10 @@ void ConsoleInterop::ExecuteCommand(mono::string command, bool silent, bool defe
 {
 	if (gEnv && gEnv->pConsole)
 	{
+		if (!command)
+		{
+			ArgumentNullException("Name of the command to execute cannot be null.").Throw();
+		}
 		gEnv->pConsole->ExecuteString(NtText(command), silent, deferExecution);
 	}
 }
@@ -73,86 +77,84 @@ ExecuteCommandThunk ConsoleInterop::executeCommand;
 
 ICVar *ConsoleInterop::RegisterVariableFloat(mono::string name, float value, EVarFlags flags, ConsoleVarFunc thunk, mono::string help)
 {
-	if (gEnv && gEnv->pConsole && name)
+	if (gEnv && gEnv->pConsole)
 	{
 		return gEnv->pConsole->RegisterFloat
 			(ToNativeString(name), value, flags, help ? ToNativeString(help) : nullptr, thunk);
 	}
-	else
-	{
-		return nullptr;
-	}
+	return nullptr;
 }
 
 ICVar *ConsoleInterop::RegisterVariableInt(mono::string name, int value, EVarFlags flags, ConsoleVarFunc thunk, mono::string help)
 {
-	if (gEnv && gEnv->pConsole && name)
+	if (gEnv && gEnv->pConsole)
 	{
 		return gEnv->pConsole->RegisterInt
 			(ToNativeString(name), value, flags, help ? ToNativeString(help) : nullptr, thunk);
 	}
-	else
-	{
-		return nullptr;
-	}
+	return nullptr;
 }
 
 ICVar *ConsoleInterop::RegisterVariableString(mono::string name, mono::string value, EVarFlags flags, ConsoleVarFunc thunk, mono::string help)
 {
-	if (gEnv && gEnv->pConsole && name)
+	if (gEnv && gEnv->pConsole)
 	{
 		const char *val = value ? ToNativeString(value) : nullptr;
 		const char *h = help ? ToNativeString(help) : nullptr;
 		return gEnv->pConsole->RegisterString(ToNativeString(name), val, flags, h, thunk);
 	}
-	else
-	{
-		return nullptr;
-	}
+	return nullptr;
 }
 
 ICVar *ConsoleInterop::RegisterVariable(mono::string name, float *field, float value, EVarFlags flags, mono::string help)
 {
-	if (gEnv && gEnv->pConsole && name)
+	if (gEnv && gEnv->pConsole)
 	{
+		if (!name)
+		{
+			ArgumentNullException("Cannot register a console variable using a null name.").Throw();
+		}
 		return gEnv->pConsole->Register
 			(ToNativeString(name), field, value, flags, help ? ToNativeString(help) : nullptr);
 	}
-	else
-	{
-		return nullptr;
-	}
+	return nullptr;
 }
 
 ICVar *ConsoleInterop::RegisterVariableIntRef(mono::string name, int *field, int value, EVarFlags flags, mono::string help)
 {
-	if (gEnv && gEnv->pConsole && name)
+	if (gEnv && gEnv->pConsole)
 	{
+		if (!name)
+		{
+			ArgumentNullException("Cannot register a console variable using a null name.").Throw();
+		}
 		return gEnv->pConsole->Register
 			(ToNativeString(name), field, value, flags, help ? ToNativeString(help) : nullptr);
 	}
-	else
-	{
-		return nullptr;
-	}
+	return nullptr;
 }
 
 void ConsoleInterop::UnregisterVariable(mono::string name, bool _delete)
 {
-	if (gEnv && gEnv->pConsole && name)
+	if (gEnv && gEnv->pConsole)
 	{
+		if (!name)
+		{
+			ArgumentNullException("Name of the console variable to unregister cannot be null.").Throw();
+		}
 		gEnv->pConsole->UnregisterVariable(NtText(name), _delete);
 	}
 }
 
 ICVar *ConsoleInterop::GetVariable(mono::string name)
 {
-	if (gEnv && gEnv->pConsole && name)
+	if (gEnv && gEnv->pConsole)
 	{
+		if (!name)
+		{
+			ArgumentNullException("Cannot get a console variable using a null name.").Throw();
+		}
 		return gEnv->pConsole->GetCVar(NtText(name));
 	}
-	else
-	{
-		return nullptr;
-	}
+	return nullptr;
 }

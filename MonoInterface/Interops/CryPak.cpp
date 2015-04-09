@@ -18,7 +18,7 @@ void CryPakInterop::OnRunTimeInitialized()
 
 bool CryPakInterop::Exists(mono::string path, ICryPak::EFileSearchLocation location)
 {
-	if (gEnv && gEnv->pCryPak)
+	if (gEnv && gEnv->pCryPak && path && location >= 0 && location < 3)
 	{
 		return gEnv->pCryPak->IsFileExist(NtText(path), location);
 	}
@@ -27,7 +27,7 @@ bool CryPakInterop::Exists(mono::string path, ICryPak::EFileSearchLocation locat
 
 bool CryPakInterop::IsFolder(mono::string path)
 {
-	if (gEnv && gEnv->pCryPak)
+	if (gEnv && gEnv->pCryPak && path)
 	{
 		return gEnv->pCryPak->IsFolder(NtText(path));
 	}
@@ -53,7 +53,7 @@ void CryPakInterop::Close(FILE *file)
 
 uint CryPakInterop::GetSize(FILE *file)
 {
-	if (gEnv && gEnv->pCryPak)
+	if (gEnv && gEnv->pCryPak && file)
 	{
 		return gEnv->pCryPak->FGetSize(file);
 	}
@@ -62,7 +62,7 @@ uint CryPakInterop::GetSize(FILE *file)
 
 int CryPakInterop::GetCurrentPosition(FILE *file)
 {
-	if (gEnv && gEnv->pCryPak)
+	if (gEnv && gEnv->pCryPak && file)
 	{
 		return gEnv->pCryPak->FTell(file);
 	}
@@ -71,7 +71,7 @@ int CryPakInterop::GetCurrentPosition(FILE *file)
 
 int CryPakInterop::Seek(FILE *file, int offset, int origin)
 {
-	if (gEnv && gEnv->pCryPak)
+	if (gEnv && gEnv->pCryPak && file)
 	{
 		return gEnv->pCryPak->FSeek(file, offset, origin);
 	}
@@ -80,7 +80,7 @@ int CryPakInterop::Seek(FILE *file, int offset, int origin)
 
 void CryPakInterop::Flush(FILE *file)
 {
-	if (gEnv && gEnv->pCryPak)
+	if (gEnv && gEnv->pCryPak && file)
 	{
 		gEnv->pCryPak->FFlush(file);
 	}
@@ -88,7 +88,7 @@ void CryPakInterop::Flush(FILE *file)
 
 int CryPakInterop::ReadBytes(FILE *file, mono::Array bytes, int offset, int count)
 {
-	if (gEnv && gEnv->pCryPak)
+	if (gEnv && gEnv->pCryPak && file)
 	{
 		MonoGCHandle arrayPin = MonoEnv->GC->Pin(bytes);
 		return gEnv->pCryPak->FReadRaw(&IMonoArray<unsigned char>(bytes)[0] + offset, 1, count, file);
@@ -98,7 +98,7 @@ int CryPakInterop::ReadBytes(FILE *file, mono::Array bytes, int offset, int coun
 
 int CryPakInterop::WriteBytes(FILE *file, mono::Array bytes, int offset, int count)
 {
-	if (gEnv && gEnv->pCryPak)
+	if (gEnv && gEnv->pCryPak && file)
 	{
 		MonoGCHandle arrayPin = MonoEnv->GC->Pin(bytes);
 		return gEnv->pCryPak->FWrite(&IMonoArray<unsigned char>(bytes)[0] + offset, 1, count, file);

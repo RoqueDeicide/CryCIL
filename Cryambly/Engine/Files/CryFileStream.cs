@@ -104,6 +104,11 @@ namespace CryCil.Engine.Files
 		/// <exception cref="FileAccessException">Unable to access a file.</exception>
 		public CryFileStream(string path, CryFileMode mode, CryFileType type, bool directAccess = false, FileOpenFlags flags = FileOpenFlags.Nothing)
 		{
+			if (path == null)
+			{
+				throw new ArgumentNullException("path", "Cannot open a file using a null name.");
+			}
+
 			uint encodedFlags = EncodeFlags(mode, type, directAccess);
 
 #if DEBUG
