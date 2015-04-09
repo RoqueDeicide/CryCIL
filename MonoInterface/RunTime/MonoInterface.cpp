@@ -295,6 +295,7 @@ void MonoInterface::RegisterDefaultListeners()
 	this->broadcaster->listeners->Add(new ArchiveStreamInterop());
 	this->broadcaster->listeners->Add(new CryArchiveInterop());
 	this->broadcaster->listeners->Add(new CryPakInterop());
+	this->broadcaster->listeners->Add(new AliasesInterop());
 }
 #pragma endregion
 #pragma region Thunks Initialization

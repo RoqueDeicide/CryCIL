@@ -29,3 +29,5 @@
 #include "Interops/CryArchive.h"
 
 #include "Interops/CryPak.h"
+
+#include "Interops/Aliases.h"

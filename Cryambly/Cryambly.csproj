@@ -90,6 +90,7 @@
     <Compile Include="Engine\Files\CryFileType.cs" />
     <Compile Include="Engine\Files\FileOpenFlags.cs" />
     <Compile Include="Engine\Files\CryPak.cs" />
+    <Compile Include="Engine\Files\PathAliases.cs" />
     <Compile Include="Engine\Files\SearchLocation.cs" />
     <Compile Include="Engine\Input\AnalogInputEventArgs.cs" />
     <Compile Include="Engine\Input\GamepadAnalogInputEventArgs.cs" />

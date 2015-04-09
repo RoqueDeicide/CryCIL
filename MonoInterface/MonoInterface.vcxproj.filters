@@ -278,6 +278,9 @@
     <ClInclude Include="Interops\CryPak.h">
       <Filter>Interops\Engine\Files</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\Aliases.h">
+      <Filter>Interops\Engine\Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -408,6 +411,9 @@
       <Filter>Interops\Engine\Files</Filter>
     </ClCompile>
     <ClCompile Include="Interops\CryPak.cpp">
+      <Filter>Interops\Engine\Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\Aliases.cpp">
       <Filter>Interops\Engine\Files</Filter>
     </ClCompile>
   </ItemGroup>

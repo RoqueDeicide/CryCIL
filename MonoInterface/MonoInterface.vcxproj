@@ -265,6 +265,7 @@
     <ClInclude Include="Interfaces\IMonoThread.h" />
     <ClInclude Include="Interfaces\IMonoThreads.h" />
     <ClInclude Include="Interfaces\MonoGCHandle.h" />
+    <ClInclude Include="Interops\Aliases.h" />
     <ClInclude Include="Interops\ArchiveStream.h" />
     <ClInclude Include="Interops\BatchOps.h" />
     <ClInclude Include="Interops\Console.h" />
@@ -341,6 +342,7 @@
     <ClCompile Include="Implementation\MonoStaticMethod.cpp" />
     <ClCompile Include="Implementation\MonoTexts.cpp" />
     <ClCompile Include="Implementation\MonoThreads.cpp" />
+    <ClCompile Include="Interops\Aliases.cpp" />
     <ClCompile Include="Interops\ArchiveStream.cpp" />
     <ClCompile Include="Interops\BatchOps.cpp" />
     <ClCompile Include="Interops\ConsoleVariable.cpp" />
