@@ -46,6 +46,7 @@ namespace CryCil.Engine.Files
 		/// <paramref name="alias"/> value will be returned if <paramref name="returnName"/> is set to
 		/// <c>true</c>, otherwise returns null.
 		/// </returns>
+		/// <exception cref="ArgumentNullException">Name of the alias cannot be null.</exception>
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern string Get(string alias, bool returnName = false);
 		/// <summary>
@@ -56,6 +57,7 @@ namespace CryCil.Engine.Files
 		/// Path segment the alias will unwrapped into (e.g. C:\\Users). If null the alias will be removed
 		/// from the system.
 		/// </param>
+		/// <exception cref="ArgumentNullException">Name of the alias cannot be null.</exception>
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern void Set(string alias, string value);
 	}

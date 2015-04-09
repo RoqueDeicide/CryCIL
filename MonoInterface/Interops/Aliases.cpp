@@ -15,6 +15,11 @@ mono::string AliasesInterop::Get(mono::string alias, bool returnName)
 		return nullptr;
 	}
 
+	if (!alias)
+	{
+		MonoEnv->Objects->ThrowException(MonoEnv->Objects->Exceptions->ArgumentNull("Name of the alias cannot be null."));
+	}
+
 	return ToMonoString(gEnv->pCryPak->GetAlias(NtText(alias), returnName));
 }
 
@@ -23,6 +28,11 @@ void AliasesInterop::Set(mono::string alias, mono::string value)
 	if (!gEnv || !gEnv->pCryPak)
 	{
 		return;
+	}
+
+	if (!alias)
+	{
+		MonoEnv->Objects->ThrowException(MonoEnv->Objects->Exceptions->ArgumentNull("Name of the alias cannot be null."));
 	}
 
 	CryLogAlways("WARNING: CryCIL is setting an alias, issues with memory management are possible.");
