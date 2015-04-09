@@ -276,7 +276,7 @@ namespace CryCil.Engine.Files
 		/// Number of bytes to write cannot be less then 0.
 		/// </exception>
 		/// <exception cref="ArgumentException">
-		/// Reading from the buffer would cause a buffer overrun.
+		/// Writing to the buffer would cause a buffer overrun.
 		/// </exception>
 		/// <exception cref="NotSupportedException">
 		/// Cannot write into the stream for the read-only archive.
