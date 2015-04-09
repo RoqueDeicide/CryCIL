@@ -90,6 +90,7 @@ int CryPakInterop::ReadBytes(FILE *file, mono::Array bytes, int offset, int coun
 {
 	if (gEnv && gEnv->pCryPak)
 	{
+		MonoGCHandle arrayPin = MonoEnv->GC->Pin(bytes);
 		return gEnv->pCryPak->FReadRaw(&IMonoArray<unsigned char>(bytes)[0] + offset, 1, count, file);
 	}
 	return -1;
@@ -99,6 +100,7 @@ int CryPakInterop::WriteBytes(FILE *file, mono::Array bytes, int offset, int cou
 {
 	if (gEnv && gEnv->pCryPak)
 	{
+		MonoGCHandle arrayPin = MonoEnv->GC->Pin(bytes);
 		return gEnv->pCryPak->FWrite(&IMonoArray<unsigned char>(bytes)[0] + offset, 1, count, file);
 	}
 	return -1;
