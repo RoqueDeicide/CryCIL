@@ -27,3 +27,5 @@
 #include "Interops/ArchiveStream.h"
 
 #include "Interops/CryArchive.h"
+
+#include "Interops/CryPak.h"

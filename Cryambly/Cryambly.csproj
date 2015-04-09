@@ -84,7 +84,13 @@
     <Compile Include="Engine\DebugServices\Profiler.cs" />
     <Compile Include="Engine\Files\ArchiveStream.cs" />
     <Compile Include="Engine\Files\CryArchive.cs" />
+    <Compile Include="Engine\Files\CryFileMode.cs" />
+    <Compile Include="Engine\Files\CryFileStream.cs" />
     <Compile Include="Engine\Files\FileAccessException.cs" />
+    <Compile Include="Engine\Files\CryFileType.cs" />
+    <Compile Include="Engine\Files\FileOpenFlags.cs" />
+    <Compile Include="Engine\Files\CryPak.cs" />
+    <Compile Include="Engine\Files\SearchLocation.cs" />
     <Compile Include="Engine\Input\AnalogInputEventArgs.cs" />
     <Compile Include="Engine\Input\GamepadAnalogInputEventArgs.cs" />
     <Compile Include="Engine\Input\GamepadKeyEventArgs.cs" />
