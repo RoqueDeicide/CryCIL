@@ -11,6 +11,15 @@ namespace CryCil.Engine.Files
 	/// <summary>
 	/// Provides access to CryEngine virtual file system API.
 	/// </summary>
+	/// <remarks>
+	/// <para>
+	/// WARNING: All internal path handling code uses only ASCII characters, which means, you should avoid
+	///          using absolute paths for anything, since it is entirely possible for a person with
+	///          national alphabet to have folders with Unicode characters in their names. Also warn any
+	///          mod-makers to only use ASCII characters in folder names within CryEngine installation
+	///          directory.
+	/// </para>
+	/// </remarks>
 	public static class CryPak
 	{
 		#region Fields
