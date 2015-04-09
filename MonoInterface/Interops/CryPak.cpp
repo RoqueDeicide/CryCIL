@@ -4,7 +4,16 @@
 
 void CryPakInterop::OnRunTimeInitialized()
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	REGISTER_METHOD(Exists);
+	REGISTER_METHOD(IsFolder);
+	REGISTER_METHOD(Open);
+	REGISTER_METHOD(Close);
+	REGISTER_METHOD(GetSize);
+	REGISTER_METHOD(GetCurrentPosition);
+	REGISTER_METHOD(Seek);
+	REGISTER_METHOD(Flush);
+	REGISTER_METHOD(ReadBytes);
+	REGISTER_METHOD(WriteBytes);
 }
 
 bool CryPakInterop::Exists(mono::string path, ICryPak::EFileSearchLocation location)
