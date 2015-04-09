@@ -51,7 +51,7 @@ namespace CryCil.Engine.Files
 				{
 					throw new ObjectDisposedException("Stream is closed.");
 				}
-				return CryPak.GetSize(this.fileHandle);
+				return CryFiles.GetSize(this.fileHandle);
 			}
 		}
 		/// <summary>
@@ -66,7 +66,7 @@ namespace CryCil.Engine.Files
 				{
 					throw new ObjectDisposedException("Stream is closed.");
 				}
-				return CryPak.GetCurrentPosition(this.fileHandle);
+				return CryFiles.GetCurrentPosition(this.fileHandle);
 			}
 			set
 			{
@@ -74,7 +74,7 @@ namespace CryCil.Engine.Files
 				{
 					throw new ObjectDisposedException("Stream is closed.");
 				}
-				CryPak.Seek(this.fileHandle, (int)value, SeekOrigin.Begin);
+				CryFiles.Seek(this.fileHandle, (int)value, SeekOrigin.Begin);
 			}
 		}
 		/// <summary>
@@ -112,20 +112,20 @@ namespace CryCil.Engine.Files
 			uint encodedFlags = EncodeFlags(mode, type, directAccess);
 
 #if DEBUG
-			if (!CryPak.Exists(path))
+			if (!CryFiles.Exists(path))
 			{
 				throw new FileNotFoundException(
 					string.Format("File could not be found in the virtual file system using a path = \"{0}\".",
 					path));
 			}
 
-			if (type == CryFileType.Text && CryPak.Exists(path, SearchLocation.Pak))
+			if (type == CryFileType.Text && CryFiles.Exists(path, SearchLocation.Pak))
 			{
 				throw new ArgumentException("Text file type recognition is not supported for files in .pak archives.");
 			}
 #endif
 
-			this.fileHandle = CryPak.Open(path, ref encodedFlags, flags);
+			this.fileHandle = CryFiles.Open(path, ref encodedFlags, flags);
 
 			if (this.fileHandle == IntPtr.Zero)
 			{
@@ -148,7 +148,7 @@ namespace CryCil.Engine.Files
 			{
 				throw new ObjectDisposedException("Stream is closed.");
 			}
-			CryPak.Flush(this.fileHandle);
+			CryFiles.Flush(this.fileHandle);
 		}
 		/// <summary>
 		/// Reads file data into the given buffer.
@@ -193,7 +193,7 @@ namespace CryCil.Engine.Files
 				throw new NotSupportedException("Reading is not supported for this stream.");
 			}
 
-			return CryPak.ReadBytes(this.fileHandle, buffer, offset, count);
+			return CryFiles.ReadBytes(this.fileHandle, buffer, offset, count);
 		}
 		/// <summary>
 		/// Moves position of the stream to one indicated by the given <paramref name="offset"/> relative
@@ -226,7 +226,7 @@ namespace CryCil.Engine.Files
 			{
 				throw new ArgumentOutOfRangeException();
 			}
-			return CryPak.Seek(this.fileHandle, (int)offset, origin);
+			return CryFiles.Seek(this.fileHandle, (int)offset, origin);
 		}
 		/// <summary>
 		/// Throws <see cref="NotSupportedException"/> error.
@@ -279,7 +279,7 @@ namespace CryCil.Engine.Files
 				throw new NotSupportedException("Writing is not supported for this stream.");
 			}
 
-			CryPak.WriteBytes(this.fileHandle, buffer, offset, count);
+			CryFiles.WriteBytes(this.fileHandle, buffer, offset, count);
 		}
 		#endregion
 		#region Utilities
@@ -332,7 +332,7 @@ namespace CryCil.Engine.Files
 				return;
 			}
 			this.opened = false;
-			CryPak.Close(this.fileHandle);
+			CryFiles.Close(this.fileHandle);
 			this.fileHandle = IntPtr.Zero;
 		}
 		#endregion

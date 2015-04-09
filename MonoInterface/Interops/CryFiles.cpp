@@ -2,7 +2,7 @@
 
 #include "CryPak.h"
 
-void CryPakInterop::OnRunTimeInitialized()
+void CryFilesInterop::OnRunTimeInitialized()
 {
 	REGISTER_METHOD(Exists);
 	REGISTER_METHOD(IsFolder);
@@ -16,7 +16,7 @@ void CryPakInterop::OnRunTimeInitialized()
 	REGISTER_METHOD(WriteBytes);
 }
 
-bool CryPakInterop::Exists(mono::string path, ICryPak::EFileSearchLocation location)
+bool CryFilesInterop::Exists(mono::string path, ICryPak::EFileSearchLocation location)
 {
 	if (gEnv && gEnv->pCryPak && path && location >= 0 && location < 3)
 	{
@@ -25,7 +25,7 @@ bool CryPakInterop::Exists(mono::string path, ICryPak::EFileSearchLocation locat
 	return false;
 }
 
-bool CryPakInterop::IsFolder(mono::string path)
+bool CryFilesInterop::IsFolder(mono::string path)
 {
 	if (gEnv && gEnv->pCryPak && path)
 	{
@@ -34,7 +34,7 @@ bool CryPakInterop::IsFolder(mono::string path)
 	return false;
 }
 
-FILE *CryPakInterop::Open(mono::string path, const char *modeSymbols, int flags)
+FILE *CryFilesInterop::Open(mono::string path, const char *modeSymbols, int flags)
 {
 	if (gEnv && gEnv->pCryPak)
 	{
@@ -43,7 +43,7 @@ FILE *CryPakInterop::Open(mono::string path, const char *modeSymbols, int flags)
 	return nullptr;
 }
 
-void CryPakInterop::Close(FILE *file)
+void CryFilesInterop::Close(FILE *file)
 {
 	if (gEnv && gEnv->pCryPak && file)
 	{
@@ -51,7 +51,7 @@ void CryPakInterop::Close(FILE *file)
 	}
 }
 
-uint CryPakInterop::GetSize(FILE *file)
+uint CryFilesInterop::GetSize(FILE *file)
 {
 	if (gEnv && gEnv->pCryPak && file)
 	{
@@ -60,7 +60,7 @@ uint CryPakInterop::GetSize(FILE *file)
 	return 0;
 }
 
-int CryPakInterop::GetCurrentPosition(FILE *file)
+int CryFilesInterop::GetCurrentPosition(FILE *file)
 {
 	if (gEnv && gEnv->pCryPak && file)
 	{
@@ -69,7 +69,7 @@ int CryPakInterop::GetCurrentPosition(FILE *file)
 	return -1;
 }
 
-int CryPakInterop::Seek(FILE *file, int offset, int origin)
+int CryFilesInterop::Seek(FILE *file, int offset, int origin)
 {
 	if (gEnv && gEnv->pCryPak && file)
 	{
@@ -78,7 +78,7 @@ int CryPakInterop::Seek(FILE *file, int offset, int origin)
 	return -1;
 }
 
-void CryPakInterop::Flush(FILE *file)
+void CryFilesInterop::Flush(FILE *file)
 {
 	if (gEnv && gEnv->pCryPak && file)
 	{
@@ -86,7 +86,7 @@ void CryPakInterop::Flush(FILE *file)
 	}
 }
 
-int CryPakInterop::ReadBytes(FILE *file, mono::Array bytes, int offset, int count)
+int CryFilesInterop::ReadBytes(FILE *file, mono::Array bytes, int offset, int count)
 {
 	if (gEnv && gEnv->pCryPak && file)
 	{
@@ -96,7 +96,7 @@ int CryPakInterop::ReadBytes(FILE *file, mono::Array bytes, int offset, int coun
 	return -1;
 }
 
-int CryPakInterop::WriteBytes(FILE *file, mono::Array bytes, int offset, int count)
+int CryFilesInterop::WriteBytes(FILE *file, mono::Array bytes, int offset, int count)
 {
 	if (gEnv && gEnv->pCryPak && file)
 	{

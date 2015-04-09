@@ -20,7 +20,7 @@ namespace CryCil.Engine.Files
 	///          directory.
 	/// </para>
 	/// </remarks>
-	public static class CryPak
+	public static class CryFiles
 	{
 		#region Fields
 		/// <summary>

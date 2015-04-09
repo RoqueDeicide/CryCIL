@@ -2,9 +2,9 @@
 
 #include "IMonoInterface.h"
 
-struct CryPakInterop : public IMonoInterop<true, true>
+struct CryFilesInterop : public IMonoInterop<true, true>
 {
-	virtual const char *GetName() { return "CryPak"; }
+	virtual const char *GetName() { return "CryFiles"; }
 	virtual const char *GetNameSpace() { return "CryCil.Engine.Files"; }
 
 	virtual void OnRunTimeInitialized();

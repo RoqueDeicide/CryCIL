@@ -275,10 +275,10 @@
     <ClInclude Include="Interops\CryArchive.h">
       <Filter>Interops\Engine\Files</Filter>
     </ClInclude>
-    <ClInclude Include="Interops\CryPak.h">
+    <ClInclude Include="Interops\Aliases.h">
       <Filter>Interops\Engine\Files</Filter>
     </ClInclude>
-    <ClInclude Include="Interops\Aliases.h">
+    <ClInclude Include="Interops\CryFiles.h">
       <Filter>Interops\Engine\Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -410,10 +410,10 @@
     <ClCompile Include="Interops\CryArchive.cpp">
       <Filter>Interops\Engine\Files</Filter>
     </ClCompile>
-    <ClCompile Include="Interops\CryPak.cpp">
+    <ClCompile Include="Interops\Aliases.cpp">
       <Filter>Interops\Engine\Files</Filter>
     </ClCompile>
-    <ClCompile Include="Interops\Aliases.cpp">
+    <ClCompile Include="Interops\CryFiles.cpp">
       <Filter>Interops\Engine\Files</Filter>
     </ClCompile>
   </ItemGroup>
