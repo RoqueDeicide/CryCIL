@@ -130,7 +130,7 @@ public:
 		, elementClass(nullptr)
 		, rank(0)
 	{
-		this->Init(ar);
+		this->Update(ar);
 	}
 	//! Creates new wrapper for given array.
 	IMonoArray(MonoGCHandle &handle)
@@ -138,10 +138,10 @@ public:
 		, elementClass(nullptr)
 		, rank(0)
 	{
-		this->Init(handle.Object);
+		this->Update(handle.Object);
 	}
 private:
-	void Init(mono::Array ar)
+	void Update(mono::Array ar)
 	{
 		if (ar)
 		{
@@ -154,6 +154,18 @@ private:
 		}
 	}
 public:
+	//! Updates the array data.
+	IMonoObject &operator=(mono::object obj)
+	{
+		this->Update(ar);
+		return *this;
+	}
+	//! Updates the array data.
+	IMonoObject &operator=(const MonoGCHandle &handle)
+	{
+		this->Update(handle.Object);
+		return *this;
+	}
 	//! Provides read/write access to the element of the array.
 	//!
 	//! @param index Zero-based index of the item to access.
