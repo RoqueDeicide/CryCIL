@@ -26,7 +26,7 @@ namespace CryCil.Engine.Files
 		/// <summary>
 		/// Max length of the buffer in bytes that can be used to store the file path.
 		/// </summary>
-		public const int MaxFilePathLength = 260;
+		public const int MaxFilePathLength = 2048;
 		#endregion
 		#region Properties
 
