@@ -267,6 +267,7 @@
     <ClInclude Include="Interfaces\MonoGCHandle.h" />
     <ClInclude Include="Interops\Aliases.h" />
     <ClInclude Include="Interops\ArchiveStream.h" />
+    <ClInclude Include="Interops\AuxiliaryGeometry.h" />
     <ClInclude Include="Interops\BatchOps.h" />
     <ClInclude Include="Interops\Console.h" />
     <ClInclude Include="Interops\ConsoleVariable.h" />
@@ -345,6 +346,7 @@
     <ClCompile Include="Implementation\MonoThreads.cpp" />
     <ClCompile Include="Interops\Aliases.cpp" />
     <ClCompile Include="Interops\ArchiveStream.cpp" />
+    <ClCompile Include="Interops\AuxiliaryGeometry.cpp" />
     <ClCompile Include="Interops\BatchOps.cpp" />
     <ClCompile Include="Interops\ConsoleVariable.cpp" />
     <ClCompile Include="Interops\CryArchive.cpp" />

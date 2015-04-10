@@ -284,6 +284,9 @@
     <ClInclude Include="Interops\CryPak.h">
       <Filter>Interops\Engine\Files</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\AuxiliaryGeometry.h">
+      <Filter>Interops\Engine\Debug</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -421,6 +424,9 @@
     </ClCompile>
     <ClCompile Include="Interops\CryPak.cpp">
       <Filter>Interops\Engine\Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\AuxiliaryGeometry.cpp">
+      <Filter>Interops\Engine\Debug</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

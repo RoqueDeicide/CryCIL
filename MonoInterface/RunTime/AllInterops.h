@@ -33,3 +33,5 @@
 #include "Interops/Aliases.h"
 
 #include "Interops/CryPak.h"
+
+#include "Interops/AuxiliaryGeometry.h"

@@ -297,6 +297,7 @@ void MonoInterface::RegisterDefaultListeners()
 	this->broadcaster->listeners->Add(new CryFilesInterop());
 	this->broadcaster->listeners->Add(new AliasesInterop());
 	this->broadcaster->listeners->Add(new CryPakInterop());
+	this->broadcaster->listeners->Add(new AuxiliaryGeometryInterop());
 }
 #pragma endregion
 #pragma region Thunks Initialization

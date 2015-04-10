@@ -77,6 +77,9 @@
     <Compile Include="Engine\ConsoleFlags.cs" />
     <Compile Include="Engine\ConsoleVariable.cs" />
     <Compile Include="Engine\CryConsole.cs" />
+    <Compile Include="Engine\DebugServices\AuxiliaryGeometry.cs" />
+    <Compile Include="Engine\DebugServices\AuxiliaryGeometryRenderFlags.cs" />
+    <Compile Include="Engine\DebugServices\BoundingBoxRenderStyle.cs" />
     <Compile Include="Engine\DebugServices\DebubPainter.cs" />
     <Compile Include="Engine\DebugServices\Log.cs" />
     <Compile Include="Engine\DebugServices\NamespaceDoc.cs" />
