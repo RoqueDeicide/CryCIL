@@ -60,9 +60,6 @@
     <ClInclude Include="Interops\StaticObjects\StaticObject.h">
       <Filter>Interops\StaticObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Interops\Utilities\CryPak.h">
-      <Filter>Interops\Utilities</Filter>
-    </ClInclude>
     <ClInclude Include="Interops\Viewport\Renderer.h">
       <Filter>Interops\Viewport</Filter>
     </ClInclude>
@@ -145,9 +142,6 @@
     <ClCompile Include="Interops\StaticObjects\StaticObject.cpp">
       <Filter>Interops\StaticObjects</Filter>
     </ClCompile>
-    <ClCompile Include="Interops\Utilities\CryPak.cpp">
-      <Filter>Interops\Utilities</Filter>
-    </ClCompile>
     <ClCompile Include="Interops\Viewport\Renderer.cpp">
       <Filter>Interops\Viewport</Filter>
     </ClCompile>
@@ -203,9 +197,6 @@
     </Filter>
     <Filter Include="Interops\StaticObjects">
       <UniqueIdentifier>{32b893d5-61d5-4bfc-9231-bf35d3233630}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Interops\Utilities">
-      <UniqueIdentifier>{76693c78-6092-4e31-8c05-8e5226c91219}</UniqueIdentifier>
     </Filter>
     <Filter Include="Interops\Viewport">
       <UniqueIdentifier>{dfe4c9b2-942b-4107-a837-8df22e11c60f}</UniqueIdentifier>

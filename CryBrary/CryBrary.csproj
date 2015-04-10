@@ -186,7 +186,6 @@
     <Compile Include="RunTime\Registration\Exception.cs" />
     <Compile Include="RunTime\Registration\FlowNodeRegister.cs" />
     <Compile Include="Native\CryPakInterop.cs" />
-    <Compile Include="Engine\CryPak\PathResolutionRules.cs" />
     <Compile Include="Engine\GeometryFormat.cs" />
     <Compile Include="Engine\GeometryType.cs" />
     <Compile Include="Engine\Material\MaterialFlags.cs" />
@@ -332,7 +331,6 @@
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Logic\GameRules\GameRules.cs" />
     <Compile Include="RunTime\Statistics.cs" />
-    <Compile Include="Engine\CryPak\CryPak.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RunTime\UnusedMarker.cs" />
   </ItemGroup>
