@@ -273,6 +273,7 @@
     <ClInclude Include="Interops\CryArchive.h" />
     <ClInclude Include="Interops\CryMarshal.h" />
     <ClInclude Include="Interops\CryFiles.h" />
+    <ClInclude Include="Interops\CryPak.h" />
     <ClInclude Include="Interops\DebugDraw.h" />
     <ClInclude Include="Interops\InputInterop.h" />
     <ClInclude Include="Interops\LogPosting.h" />
@@ -349,6 +350,7 @@
     <ClCompile Include="Interops\CryArchive.cpp" />
     <ClCompile Include="Interops\CryMarshal.cpp" />
     <ClCompile Include="Interops\CryFiles.cpp" />
+    <ClCompile Include="Interops\CryPak.cpp" />
     <ClCompile Include="Interops\DebugDraw.cpp" />
     <ClCompile Include="Interops\InputInterop.cpp" />
     <ClCompile Include="Interops\LogPosting.cpp" />

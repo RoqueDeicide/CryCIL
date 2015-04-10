@@ -86,11 +86,13 @@
     <Compile Include="Engine\Files\CryArchive.cs" />
     <Compile Include="Engine\Files\CryFileMode.cs" />
     <Compile Include="Engine\Files\CryFileStream.cs" />
+    <Compile Include="Engine\Files\CryPacks.cs" />
     <Compile Include="Engine\Files\FileAccessException.cs" />
     <Compile Include="Engine\Files\CryFileType.cs" />
     <Compile Include="Engine\Files\FileOpenFlags.cs" />
     <Compile Include="Engine\Files\CryFiles.cs" />
     <Compile Include="Engine\Files\PathAliases.cs" />
+    <Compile Include="Engine\Files\PathResolutionRules.cs" />
     <Compile Include="Engine\Files\SearchLocation.cs" />
     <Compile Include="Engine\Input\AnalogInputEventArgs.cs" />
     <Compile Include="Engine\Input\GamepadAnalogInputEventArgs.cs" />

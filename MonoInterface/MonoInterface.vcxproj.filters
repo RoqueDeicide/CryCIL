@@ -281,6 +281,9 @@
     <ClInclude Include="Interops\CryFiles.h">
       <Filter>Interops\Engine\Files</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\CryPak.h">
+      <Filter>Interops\Engine\Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -414,6 +417,9 @@
       <Filter>Interops\Engine\Files</Filter>
     </ClCompile>
     <ClCompile Include="Interops\CryFiles.cpp">
+      <Filter>Interops\Engine\Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\CryPak.cpp">
       <Filter>Interops\Engine\Files</Filter>
     </ClCompile>
   </ItemGroup>
