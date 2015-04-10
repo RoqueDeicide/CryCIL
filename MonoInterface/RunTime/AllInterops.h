@@ -28,6 +28,6 @@
 
 #include "Interops/CryArchive.h"
 
-#include "Interops/CryPak.h"
+#include "Interops/CryFiles.h"
 
 #include "Interops/Aliases.h"

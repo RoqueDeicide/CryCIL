@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-#include "CryPak.h"
+#include "CryFiles.h"
 
 void CryFilesInterop::OnRunTimeInitialized()
 {
