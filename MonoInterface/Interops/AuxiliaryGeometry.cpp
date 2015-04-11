@@ -1,8 +1,9 @@
 #include "stdafx.h"
 
 #include "AuxiliaryGeometry.h"
+#include <stdarg.h>
 
-// Builds a signature from a method name and paramter types.
+// Builds a signature from a method name and parameter types.
 const char *bfs(const char *methodName, List<const char *> &argNames)
 {
 	static NtText sig;
@@ -22,7 +23,69 @@ const char *bfs(const char *methodName, List<const char *> &argNames)
 	return sig;
 }
 
-typedef List<const char *> TextList;
+const char *bfs(const char *methodName, int argCount...)
+{
+	if (!methodName)
+	{
+		return nullptr;
+	}
+
+	if (argCount == 0)
+	{
+		return NtText(2, methodName, "()").Detach();
+	}
+
+	// Gather the arguments into the list and calculate total length at the same time.
+	va_list va;
+	va_start(va, argCount);
+
+	auto parts = List<const char *>(argCount);
+
+	int length = 0;
+	for (int i = 0; i < argCount; i++)
+	{
+		const char *next = va_arg(va, const char *);
+
+		if (next)
+		{
+			length += strlen(next);
+			parts.Add(next);
+		}
+	}
+
+	va_end(va);
+	int totalLength = strlen(methodName) + length + 2 /*for the ()*/ + argCount /* for commas and \0*/;
+	char *chars = new char[totalLength];
+	// Copy
+	// Copy the characters to this string.
+	int j = 0;
+	while (methodName[j] != 0)
+	{
+		chars[j++] = methodName[j];
+	}
+	chars[j++] = '(';
+	for (int i = 0; parts[0][i]; i++)		// Copy first parameter type.
+	{
+		chars[j++] = parts[0][i];
+	}
+	for (int i = 0; i < parts.Length; i++)
+	{
+		chars[j++] = ',';
+		for (int k = 0; parts[i][k]; k++)
+		{
+			chars[j++] = parts[i][k];
+		}
+	}
+	chars[j++] = ')';
+	chars[j] = '\0';
+
+	return chars;
+}
+
+void AuxiliaryGeometryInterop::RegMethod(NtText name, void *ptr)
+{
+	this->RegisterInteropMethod(name, ptr);
+}
 
 void AuxiliaryGeometryInterop::OnRunTimeInitialized()
 {
@@ -40,26 +103,26 @@ void AuxiliaryGeometryInterop::OnRunTimeInitialized()
 	REGISTER_METHOD(set_Flags);
 
 	REGISTER_METHOD(DrawPoint);
-	this->RegisterInteropMethod(bfs("DrawPoints",    TextList(3).Add(vec3an,  colorBn,  "byte")),                   DrawPoints);
-	this->RegisterInteropMethod(bfs("DrawPoints",    TextList(3).Add(vec3an,  colorBan, "byte")),                   DrawPointsColors);
-	this->RegisterInteropMethod(bfs("DrawLine",      TextList(4).Add(vec3n,   vec3n,     colorBn, "float")),        DrawLine);
-	this->RegisterInteropMethod(bfs("DrawLine",      TextList(5).Add(vec3n,   colorBn,   vec3n, colorBn, "float")), DrawLineColors);
-	this->RegisterInteropMethod(bfs("DrawLines",     TextList(3).Add(vec3an,  colorBn,  "float")),                  DrawLines);
-	this->RegisterInteropMethod(bfs("DrawLines",     TextList(3).Add(vec3an,  colorBan, "float")),                  DrawLinesColors);
-	this->RegisterInteropMethod(bfs("DrawLines",     TextList(4).Add(vec3an, "uint[]",   colorBn , "float")),       DrawLinesIndexes);
-	this->RegisterInteropMethod(bfs("DrawLines",     TextList(4).Add(vec3an, "uint[]",   colorBan, "float")),       DrawLinesIndexesColors);
-	this->RegisterInteropMethod(bfs("DrawPolyline",  TextList(4).Add(vec3an, "bool" ,    colorBn , "float")),       DrawPolyline);
-	this->RegisterInteropMethod(bfs("DrawPolyline",  TextList(4).Add(vec3an, "bool" ,    colorBan, "float")),       DrawPolylineColors);
+	this->RegMethod(bfs("DrawPoints",    3, vec3an,  colorBn,  "byte"), DrawPoints);
+	this->RegMethod(bfs("DrawPoints",    3, vec3an,  colorBan, "byte"), DrawPointsColors);
+	this->RegMethod(bfs("DrawLine",      4, vec3n,   vec3n,    colorBn,  "float"), DrawLine);
+	this->RegMethod(bfs("DrawLine",      5, vec3n,   colorBn,  vec3n,    colorBn, "float"), DrawLineColors);
+	this->RegMethod(bfs("DrawLines",     3, vec3an,  colorBn,  "float"), DrawLines);
+	this->RegMethod(bfs("DrawLines",     3, vec3an,  colorBan, "float"), DrawLinesColors);
+	this->RegMethod(bfs("DrawLines",     4, vec3an,  "uint[]", colorBn,  "float"), DrawLinesIndexes);
+	this->RegMethod(bfs("DrawLines",     4, vec3an,  "uint[]", colorBan, "float"), DrawLinesIndexesColors);
+	this->RegMethod(bfs("DrawPolyline",  4, vec3an,  "bool",   colorBn,  "float"), DrawPolyline);
+	this->RegMethod(bfs("DrawPolyline",  4, vec3an,  "bool",   colorBan, "float"), DrawPolylineColors);
 	REGISTER_METHOD(DrawTriangle);
-	this->RegisterInteropMethod(bfs("DrawTriangles", TextList(2).Add(vec3an,  colorBn )),                           DrawTriangles);
-	this->RegisterInteropMethod(bfs("DrawTriangles", TextList(2).Add(vec3an,  colorBan)),                           DrawTrianglesColors);
-	this->RegisterInteropMethod(bfs("DrawTriangles", TextList(3).Add(vec3an, "uint[]", colorBn )),                  DrawTrianglesIndexes);
-	this->RegisterInteropMethod(bfs("DrawTriangles", TextList(3).Add(vec3an, "uint[]", colorBan)),                  DrawTrianglesIndexesColors);
-	this->RegisterInteropMethod(bfs("DrawAABB",      TextList(4).Add(aabbref,"bool", colorBn, bbrs)),               DrawAABB);
-	this->RegisterInteropMethod(bfs("DrawAABB",      TextList(5).Add(aabbref, mat34ref, "bool", colorBn, bbrs)),    DrawAABBMatrix);
+	this->RegMethod(bfs("DrawTriangles", 2, vec3an,            colorBn), DrawTriangles);
+	this->RegMethod(bfs("DrawTriangles", 2, vec3an,            colorBan), DrawTrianglesColors);
+	this->RegMethod(bfs("DrawTriangles", 3, vec3an,  "uint[]", colorBn), DrawTrianglesIndexes);
+	this->RegMethod(bfs("DrawTriangles", 3, vec3an,  "uint[]", colorBan), DrawTrianglesIndexesColors);
+	this->RegMethod(bfs("DrawAABB",      4, aabbref, "bool",   colorBn, bbrs), DrawAABB);
+	this->RegMethod(bfs("DrawAABB",      5, aabbref, mat34ref, "bool",   colorBn, bbrs), DrawAABBMatrix);
 	REGISTER_METHOD(DrawAABBs);
-	this->RegisterInteropMethod(bfs("DrawOBB",       TextList(5).Add(obbref,  vec3n, "bool", colorBn, bbrs)),       DrawOBB);
-	this->RegisterInteropMethod(bfs("DrawOBB",       TextList(5).Add(obbref,  mat34ref, "bool", colorBn, bbrs)),    DrawOBBMatrix);
+	this->RegMethod(bfs("DrawOBB",       5, obbref,  vec3n,    "bool",   colorBn, bbrs), DrawOBB);
+	this->RegMethod(bfs("DrawOBB",       5, obbref,  mat34ref, "bool",   colorBn, bbrs), DrawOBBMatrix);
 	REGISTER_METHOD(DrawSphere);
 	REGISTER_METHOD(DrawCone);
 	REGISTER_METHOD(DrawCylinder);

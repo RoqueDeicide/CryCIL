@@ -18,6 +18,8 @@ struct AuxiliaryGeometryInterop : public IMonoInterop<true, true>
 
 	virtual void OnRunTimeInitialized();
 
+	void RegMethod(NtText name, void *ptr);
+
 	static IRenderAuxGeom *geom;
 
 	static uint get_Flags();
