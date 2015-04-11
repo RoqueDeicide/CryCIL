@@ -84,6 +84,9 @@
     <Compile Include="Engine\DebugServices\Log.cs" />
     <Compile Include="Engine\DebugServices\NamespaceDoc.cs" />
     <Compile Include="Engine\DebugServices\DebugGraphics.cs" />
+    <Compile Include="Engine\DebugServices\PersistenDebugEventArgs.cs" />
+    <Compile Include="Engine\DebugServices\PersistentDebug.cs" />
+    <Compile Include="Engine\DebugServices\PersistentDebugObject.cs" />
     <Compile Include="Engine\DebugServices\Profiler.cs" />
     <Compile Include="Engine\Files\ArchiveStream.cs" />
     <Compile Include="Engine\Files\CryArchive.cs" />
