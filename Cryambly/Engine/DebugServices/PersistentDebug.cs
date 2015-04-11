@@ -136,6 +136,8 @@ namespace CryCil.Engine.DebugServices
 					throw;
 				}
 			}
+
+			AuxiliaryGeometry.Flush();
 		}
 		#endregion
 	}
