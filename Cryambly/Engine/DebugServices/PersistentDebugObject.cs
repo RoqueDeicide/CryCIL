@@ -49,6 +49,16 @@ namespace CryCil.Engine.DebugServices
 		#endregion
 		#region Events
 		#endregion
+		#region Construction
+		/// <summary>
+		/// Initializes internal parts of the object with default values.
+		/// </summary>
+		protected PersistentDebugObject()
+		{
+			this.lifeTime = 0;
+			this.TimeRemaining = 0;
+		}
+		#endregion
 		#region Interface
 		/// <summary>
 		/// When implemented in derived class, renders this object.

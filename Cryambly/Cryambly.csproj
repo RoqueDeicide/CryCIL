@@ -86,7 +86,16 @@
     <Compile Include="Engine\DebugServices\DebugGraphics.cs" />
     <Compile Include="Engine\DebugServices\PersistenDebugEventArgs.cs" />
     <Compile Include="Engine\DebugServices\PersistentDebug.cs" />
+    <Compile Include="Engine\DebugServices\PersistentDebug3DObject.cs" />
+    <Compile Include="Engine\DebugServices\PersistentDebugArrow.cs" />
+    <Compile Include="Engine\DebugServices\PersistentDebugAxisAlignedBoundingBox.cs" />
+    <Compile Include="Engine\DebugServices\PersistentDebugCone.cs" />
+    <Compile Include="Engine\DebugServices\PersistentDebugCylinder.cs" />
+    <Compile Include="Engine\DebugServices\PersistentDebugDisc.cs" />
+    <Compile Include="Engine\DebugServices\PersistentDebugLine.cs" />
     <Compile Include="Engine\DebugServices\PersistentDebugObject.cs" />
+    <Compile Include="Engine\DebugServices\PersistentDebugQuaternion.cs" />
+    <Compile Include="Engine\DebugServices\PersistentDebugSphere.cs" />
     <Compile Include="Engine\DebugServices\Profiler.cs" />
     <Compile Include="Engine\Files\ArchiveStream.cs" />
     <Compile Include="Engine\Files\CryArchive.cs" />
