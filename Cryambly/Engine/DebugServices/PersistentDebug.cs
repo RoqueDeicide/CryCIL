@@ -11,6 +11,18 @@ namespace CryCil.Engine.DebugServices
 	/// <summary>
 	/// Defines functions that create simple objects for debug purposes
 	/// </summary>
+	/// <threadsafety>
+	/// <para>
+	/// To make sure that multiple threads cannot access the persistent debug objects while rendering the
+	/// critical section will be entered for each of them, use <c>lock</c> state or <see cref="Monitor"/>
+	/// functionality to lock your object while editing it.
+	/// </para>
+	/// <para>
+	/// The critical section for the object that is removed from the rendering queue will be exited before
+	/// <see cref="RenderingOver"/> event is raised, so you can safely lock the object while in the event
+	/// handler.
+	/// </para>
+	/// </threadsafety>
 	public static class PersistentDebug
 	{
 		#region Fields
