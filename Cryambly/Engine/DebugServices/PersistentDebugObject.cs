@@ -21,10 +21,10 @@ namespace CryCil.Engine.DebugServices
 		/// </summary>
 		public ColorByte Color { get; set; }
 		/// <summary>
-		/// When implemented in derived class, gets default rendering flags that can be used to render the
-		/// object using <see cref="AuxiliaryGeometry"/> API.
+		/// Gets or sets rendering flags that can be used to render the object using
+		/// <see cref="AuxiliaryGeometry"/> API.
 		/// </summary>
-		public abstract AuxiliaryGeometryRenderFlags DefaultRenderingFlags { get; }
+		public AuxiliaryGeometryRenderFlags RenderingFlags { get; set; }
 		/// <summary>
 		/// Gets or sets life time of this object.
 		/// </summary>
