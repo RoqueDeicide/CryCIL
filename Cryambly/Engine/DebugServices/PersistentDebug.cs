@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using CryCil.RunTime;
 
@@ -70,34 +71,57 @@ namespace CryCil.Engine.DebugServices
 			{
 				PersistentDebugObject debugObject = current.Value;
 
-				// Render the object.
-				debugObject.Render();
+				Monitor.Enter(debugObject);
 
-				// Update remaining time.
-				debugObject.TimeRemaining -= (float)Time.Frame.TotalSeconds;
-
-				// Check the remaining time.
-				if (debugObject.TimeRemaining <= 0)
+				try
 				{
-					// Set object's remaining time and life time to 0 in case the same object will be added
-					// later.
-					debugObject.lifeTime = 0.0f;
-					debugObject.TimeRemaining = 0.0f;
+					// Render the object.
+					debugObject.Render();
 
-					// Remove the object.
-					var previous = current.Previous;
-					objs.Remove(current);
-					current = previous;
+					// Update remaining time.
+					debugObject.TimeRemaining -= (float)Time.Frame.TotalSeconds;
 
-					// Raise the event.
-					OnRenderingOver(debugObject);
-
-					// Check, if iteration can stop now.
-					if (current == null)
+					// Check the remaining time.
+					if (debugObject.TimeRemaining <= 0)
 					{
-						// No more objects.
-						return;
+						// Set object's remaining time and life time to 0 in case the same object will be
+						// added later.
+						debugObject.lifeTime = 0.0f;
+						debugObject.TimeRemaining = 0.0f;
+
+						// Remove the object.
+						var previous = current.Previous;
+						objs.Remove(current);
+						current = previous;
+
+						// Exiting the critical section here to make sure there are no deadlocks in the
+						// event handlers.
+						Monitor.Exit(debugObject);
+
+						// Raise the event.
+						OnRenderingOver(debugObject);
+
+						// Check, if iteration can stop now.
+						if (current == null)
+						{
+							// No more objects.
+							return;
+						}
 					}
+					else
+					{
+						// Normal exit here.
+						Monitor.Exit(debugObject);
+					}
+				}
+				catch (Exception)
+				{
+					// Just in case the exception gets thrown after exiting critical section.
+					if (Monitor.IsEntered(debugObject))
+					{
+						Monitor.Exit(debugObject);
+					}
+					throw;
 				}
 			}
 		}
