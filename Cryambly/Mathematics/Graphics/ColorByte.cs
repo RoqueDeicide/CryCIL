@@ -42,6 +42,21 @@ namespace CryCil.Graphics
 		[FieldOffset(3)]
 		public byte Alpha;
 		/// <summary>
+		/// Creates new instance of this type.
+		/// </summary>
+		/// <param name="red">  Red component of the color.</param>
+		/// <param name="green">Green component of the color.</param>
+		/// <param name="blue"> Blue component of the color.</param>
+		/// <param name="alpha">Alpha component of the color.</param>
+		public ColorByte(byte red, byte green, byte blue, byte alpha)
+			: this()
+		{
+			this.Red = red;
+			this.Green = green;
+			this.Blue = blue;
+			this.Alpha = alpha;
+		}
+		/// <summary>
 		/// Creates new color from its 32-bit representation.
 		/// </summary>
 		/// <param name="colors">32-bit representation of the color.</param>
@@ -49,6 +64,16 @@ namespace CryCil.Graphics
 			: this()
 		{
 			this.Bytes.UnsignedInt = colors;
+		}
+		/// <summary>
+		/// Modifies alpha component of this color.
+		/// </summary>
+		/// <param name="value">New value to use for the alpha component.</param>
+		/// <returns>Modified color.</returns>
+		public ColorByte ModifyAlpha(byte value)
+		{
+			this.Alpha = value;
+			return this;
 		}
 		/// <summary>
 		/// Determines whether this color is equal to another.
