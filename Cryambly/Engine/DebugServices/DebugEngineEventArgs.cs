@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace CryCil.Engine.DebugServices
 {
 	/// <summary>
-	/// Provides information about events raised <see cref="PersistentDebug"/>.
+	/// Provides information about events raised <see cref="DebugEngine"/>.
 	/// </summary>
-	public class PersistenDebugEventArgs : EventArgs
+	public class DebugEngineEventArgs : EventArgs
 	{
 		/// <summary>
 		/// Gets the object related to the event.
@@ -19,7 +19,7 @@ namespace CryCil.Engine.DebugServices
 		/// Creates new instance of this type.
 		/// </summary>
 		/// <param name="obj">Object related to the event.</param>
-		public PersistenDebugEventArgs(PersistentDebugObject obj)
+		public DebugEngineEventArgs(PersistentDebugObject obj)
 		{
 			this.Object = obj;
 		}

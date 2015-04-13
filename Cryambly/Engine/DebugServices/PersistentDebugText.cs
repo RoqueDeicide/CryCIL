@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace CryCil.Engine.DebugServices
 {
 	/// <summary>
-	/// Represents a text message that is rendered using <see cref="PersistentDebug"/> class.
+	/// Represents a text message that is rendered using <see cref="DebugEngine"/> class.
 	/// </summary>
 	public class PersistentDebugText : PersistentDebug3DObject
 	{

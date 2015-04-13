@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace CryCil.Engine.DebugServices
 {
 	/// <summary>
-	/// Represents an arrow that is rendered using <see cref="PersistentDebug"/> and
+	/// Represents an arrow that is rendered using <see cref="DebugEngine"/> and
 	/// <see cref="AuxiliaryGeometry"/>.
 	/// </summary>
 	public class PersistentDebugArrow : PersistentDebug3DObject

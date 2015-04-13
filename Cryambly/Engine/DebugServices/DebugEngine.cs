@@ -23,7 +23,7 @@ namespace CryCil.Engine.DebugServices
 	/// handler.
 	/// </para>
 	/// </threadsafety>
-	public static class PersistentDebug
+	public static class DebugEngine
 	{
 		#region Fields
 		private static readonly LinkedList<PersistentDebugObject> objs;
@@ -35,10 +35,10 @@ namespace CryCil.Engine.DebugServices
 		/// <summary>
 		/// Occurs after one of the objects is rendered for the last time.
 		/// </summary>
-		public static event EventHandler<PersistenDebugEventArgs> RenderingOver;
+		public static event EventHandler<DebugEngineEventArgs> RenderingOver;
 		#endregion
 		#region Construction
-		static PersistentDebug()
+		static DebugEngine()
 		{
 			objs = new LinkedList<PersistentDebugObject>();
 			MonoInterface.Updated += RenderObjects;
@@ -70,7 +70,7 @@ namespace CryCil.Engine.DebugServices
 		#region Utilities
 		private static void OnRenderingOver(PersistentDebugObject obj)
 		{
-			if (RenderingOver != null) RenderingOver(null, new PersistenDebugEventArgs(obj));
+			if (RenderingOver != null) RenderingOver(null, new DebugEngineEventArgs(obj));
 		}
 		private static void RenderObjects()
 		{

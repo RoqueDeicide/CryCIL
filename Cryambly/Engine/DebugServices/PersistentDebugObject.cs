@@ -8,7 +8,7 @@ using CryCil.Graphics;
 namespace CryCil.Engine.DebugServices
 {
 	/// <summary>
-	/// Base class for objects that can be rendered using <see cref="PersistentDebug"/> functionality.
+	/// Base class for objects that can be rendered using <see cref="DebugEngine"/> functionality.
 	/// </summary>
 	public abstract class PersistentDebugObject
 	{

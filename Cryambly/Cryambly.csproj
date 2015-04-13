@@ -84,8 +84,8 @@
     <Compile Include="Engine\DebugServices\Log.cs" />
     <Compile Include="Engine\DebugServices\NamespaceDoc.cs" />
     <Compile Include="Engine\DebugServices\DebugGraphics.cs" />
-    <Compile Include="Engine\DebugServices\PersistenDebugEventArgs.cs" />
-    <Compile Include="Engine\DebugServices\PersistentDebug.cs" />
+    <Compile Include="Engine\DebugServices\DebugEngineEventArgs.cs" />
+    <Compile Include="Engine\DebugServices\DebugEngine.cs" />
     <Compile Include="Engine\DebugServices\PersistentDebug3DObject.cs" />
     <Compile Include="Engine\DebugServices\PersistentDebugArrow.cs" />
     <Compile Include="Engine\DebugServices\PersistentDebugAxisAlignedBoundingBox.cs" />

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace CryCil.Engine.DebugServices
 {
 	/// <summary>
-	/// Represents a line that is drawn using <see cref="PersistentDebug"/> class.
+	/// Represents a line that is drawn using <see cref="DebugEngine"/> class.
 	/// </summary>
 	public class PersistentDebugLine : PersistentDebug3DObject
 	{
