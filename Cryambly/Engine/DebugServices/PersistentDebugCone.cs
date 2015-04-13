@@ -10,44 +10,41 @@ namespace CryCil.Engine.DebugServices
 	/// <summary>
 	/// Represents persistent debug object that represents a cone.
 	/// </summary>
-	public class PersistentDebugCone : PersistentDebug3DObject
+	public class PersistentDebugCone : PersistentDebugSolidOfRevolution
 	{
-		#region Properties
-		/// <summary>
-		/// Gets or sets location of the center to the base circle of the cone.
-		/// </summary>
-		public Vector3 BaseCenter { get; set; }
-		/// <summary>
-		/// Gets or sets radius of the base circle of the cone.
-		/// </summary>
-		public float BaseRadius { get; set; }
-		/// <summary>
-		/// Gets or sets height of the cone.
-		/// </summary>
-		public float Height { get; set; }
-		/// <summary>
-		/// Gets or sets quaternion that represents orientation of this cone.
-		/// </summary>
-		/// <remarks>
-		/// 3rd column of the quaternion represents direction of line parallel to the line between top and
-		/// a bottom of the cone.
-		/// </remarks>
-		public Quaternion Orientation { get; set; }
-		#endregion
 		#region Construction
+		/// <summary>
+		/// Creates new cone that stands up-right.
+		/// </summary>
+		/// <param name="baseCenter">Coordinates of the center of the cone's bottom circle.</param>
+		/// <param name="height">    Height of the cone.</param>
+		/// <param name="radius">    Radius of the cone's base.</param>
+		public PersistentDebugCone(Vector3 baseCenter, float height, float radius)
+			: base(baseCenter, height, radius, Quaternion.Identity)
+		{
+		}
 		/// <summary>
 		/// Creates new instance of this class.
 		/// </summary>
-		/// <param name="baseCenter">Coordinates of the center of the cone's base.</param>
+		/// <param name="baseCenter"> Coordinates of the center of the cone's bottom circle.</param>
+		/// <param name="height">     Height of the cone.</param>
+		/// <param name="radius">     Radius of the cone's base.</param>
+		/// <param name="orientation">
+		/// <see cref="Quaternion"/> that represents orientation of this cone.
+		/// </param>
+		public PersistentDebugCone(Vector3 baseCenter, float height, float radius, Quaternion orientation)
+			: base(baseCenter, height, radius, orientation)
+		{
+		}
+		/// <summary>
+		/// Creates new instance of this class.
+		/// </summary>
+		/// <param name="baseCenter">Coordinates of the center of the cone's bottom circle.</param>
 		/// <param name="top">       Coordinates of the top point of the cone.</param>
 		/// <param name="radius">    Radius of the cone's base.</param>
 		public PersistentDebugCone(Vector3 baseCenter, Vector3 top, float radius)
+			: base(baseCenter, top, radius)
 		{
-			this.BaseCenter = baseCenter;
-			this.Height = (top - baseCenter).Length;
-			this.BaseRadius = radius;
-			var angleAxis = Rotation.ArcBetween2Vectors(Vector3.Up, top);
-			this.Orientation = new Quaternion(angleAxis.Axis, angleAxis.Angle);
 		}
 		#endregion
 		#region Interface
@@ -57,7 +54,14 @@ namespace CryCil.Engine.DebugServices
 		public override void Render()
 		{
 			AuxiliaryGeometry.Flags = this.RenderingFlags;
-			AuxiliaryGeometry.DrawCone(this.BaseCenter, this.Orientation.Column2, this.BaseRadius, this.Height, this.Color);
+			AuxiliaryGeometry.DrawCone
+			(
+				this.Start,
+				this.Orientation.Column2,
+				this.MaxRadius,
+				this.Height,
+				this.Color
+			);
 		}
 		#endregion
 	}
