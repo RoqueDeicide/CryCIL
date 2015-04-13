@@ -97,6 +97,7 @@
     <Compile Include="Engine\DebugServices\PersistentDebugQuaternion.cs" />
     <Compile Include="Engine\DebugServices\PersistentDebugSolidOfRevolution.cs" />
     <Compile Include="Engine\DebugServices\PersistentDebugSphere.cs" />
+    <Compile Include="Engine\DebugServices\PersistentDebugText.cs" />
     <Compile Include="Engine\DebugServices\Profiler.cs" />
     <Compile Include="Engine\Files\ArchiveStream.cs" />
     <Compile Include="Engine\Files\CryArchive.cs" />
