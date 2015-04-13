@@ -114,8 +114,7 @@ namespace CryCil.RunTime
 			// Add Cryambly to the list.
 			CryCilAssemblies.Add(Assembly.GetAssembly(typeof(MonoInterface)));
 			// A simple test for redirected console output.
-			Console.Write(CryCilAssemblies.Count);
-			Console.WriteLine(" CryCIL-specific assemblies are loaded.");			// TODO: Use string formatting feature here.
+			Console.WriteLine("{0} CryCIL-specific assemblies are loaded.", CryCilAssemblies.Count);
 			Console.WriteLine("Proceeding to stage-based initialization.");
 			ProceedWithInitializationStages();
 		}
