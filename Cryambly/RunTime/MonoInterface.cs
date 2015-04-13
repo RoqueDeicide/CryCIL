@@ -14,16 +14,11 @@ using CryCil.RunTime.Logging;
 namespace CryCil.RunTime
 {
 	/// <summary>
-	/// Represents an object that is an interface of CryCIL on managed side.
+	/// Represents an interface of CryCIL on managed side.
 	/// </summary>
-	/// <remarks>An object of this type is always created on startup from C++ code.</remarks>
-	public sealed class MonoInterface
+	public static class MonoInterface
 	{
 		#region Fields
-		/// <summary>
-		/// An object of this type that is created from C++ code when CryCIL is initialized.
-		/// </summary>
-		public static MonoInterface Instance { get; private set; }
 		#endregion
 		#region Properties
 		/// <summary>
@@ -33,39 +28,36 @@ namespace CryCil.RunTime
 		/// All CryEngine related code, like entity and FlowGraph node definitions, is located in these
 		/// assemblies, so you don't have to loop through all base libraries to find those definitions.
 		/// </remarks>
-		public List<Assembly> CryCilAssemblies { get; private set; }
+		public static readonly List<Assembly> CryCilAssemblies;
 		#endregion
 		#region Events
 		/// <summary>
 		/// Occurs when compilation starts.
 		/// </summary>
-		public event EventHandler CompilationStarted;
+		public static event Action CompilationStarted;
 		/// <summary>
 		/// Occurs when compilation is over, successfully or not.
 		/// </summary>
-		public event EventHandler<EventArgs<bool>> CompilationComplete;
+		public static event Action<bool> CompilationComplete;
 		/// <summary>
 		/// Occurs when initialization stage of specific index starts.
 		/// </summary>
-		public event EventHandler<EventArgs<int>> InitializationStageStarted;
+		public static event Action<int> InitializationStageStarted;
 		/// <summary>
 		/// Occurs when initialization stage of specific index ends.
 		/// </summary>
-		public event EventHandler<EventArgs<int>> InitializationStageFinished;
+		public static event Action<int> InitializationStageFinished;
 		/// <summary>
 		/// Occurs when CryCIL subsystem is updated.
 		/// </summary>
-		public event EventHandler Updated;
+		public static event Action Updated;
 		/// <summary>
 		/// Occurs when native Mono interface receive notification about system-wide shutdown.
 		/// </summary>
-		public event EventHandler ShuttingDown;
+		public static event Action ShuttingDown;
 		#endregion
 		#region Construction
-		/// <summary>
-		/// Called from C++ code to initialize CryCIL on C# side.
-		/// </summary>
-		private MonoInterface()
+		static MonoInterface()
 		{
 			Application.EnableVisualStyles();
 			// Register default handling of exceptions.
@@ -89,14 +81,14 @@ namespace CryCil.RunTime
 				cryEngineModules.AddRange(Directory.GetFiles(cryEngineModulesFolder, "*.dll"));
 			}
 
-			this.CryCilAssemblies = new List<Assembly>
+			CryCilAssemblies = new List<Assembly>
 			(
 				from file in gameModules.Concat(cryEngineModules)
 				where AssemblyExtras.IsAssembly(file)
 				select Assembly.Load(AssemblyName.GetAssemblyName(file))
 			);
 			// Load and compile the solution.
-			this.OnCompilationStarted();
+			OnCompilationStarted();
 			try
 			{
 				bool loadingSuccessful =
@@ -112,32 +104,35 @@ namespace CryCil.RunTime
 				{
 					throw new Exception("Unable to load the solution.");
 				}
-				this.CryCilAssemblies.AddRange(CodeSolution.Build());
-				this.OnCompilationComplete(true);
+				CryCilAssemblies.AddRange(CodeSolution.Build());
+				OnCompilationComplete(true);
 			}
 			catch (Exception)
 			{
-				this.OnCompilationComplete(false);
+				OnCompilationComplete(false);
 			}
 			// Add Cryambly to the list.
-			this.CryCilAssemblies.Add(Assembly.GetAssembly(typeof(MonoInterface)));
+			CryCilAssemblies.Add(Assembly.GetAssembly(typeof(MonoInterface)));
 			// A simple test for redirected console output.
-			Console.Write(this.CryCilAssemblies.Count);
-			Console.WriteLine(" CryCIL-specific assemblies are loaded.");
+			Console.Write(CryCilAssemblies.Count);
+			Console.WriteLine(" CryCIL-specific assemblies are loaded.");			// TODO: Use string formatting feature here.
 			Console.WriteLine("Proceeding to stage-based initialization.");
-			this.ProceedWithInitializationStages();
+			ProceedWithInitializationStages();
 		}
 		#endregion
 		#region Interface
 		[PublicAPI("Called from C++ code to initialize CryCIL on managed side.")]
-		private static MonoInterface Initialize()
+		private static void Initialize()
 		{
-			MonoInterface.Instance = new MonoInterface();
-			return MonoInterface.Instance;
+			// Accessing static variable to trigger static constructor to start initialization process.
+
+// ReSharper disable UnusedVariable
+			var l = CryCilAssemblies;
+// ReSharper restore UnusedVariable
 		}
 		[PublicAPI("Invoked from C++ code after FlowGraph is initialized" +
 				   " to register FlowGraph nodes defined in CryCIL.")]
-		private void RegisterFlowGraphNodeTypes()
+		private static void RegisterFlowGraphNodeTypes()
 		{
 		}
 		[PublicAPI("Displays exception that was not handled.")]
@@ -147,49 +142,49 @@ namespace CryCil.RunTime
 			form.ShowDialog();
 		}
 		[PublicAPI("Updates this subsystem.")]
-		private void Update()
+		private static void Update()
 		{
-			this.OnUpdated();
+			OnUpdated();
 		}
 		[PublicAPI("Informs this object about system-wide shutdown.")]
-		private void Shutdown()
+		private static void Shutdown()
 		{
-			this.OnShuttingDown();
+			OnShuttingDown();
 		}
 		#endregion
 		#region Utilities
 		#region Event Raisers
-		private void OnCompilationStarted()
+		private static void OnCompilationStarted()
 		{
 			Interops.Initialization.OnCompilationStartingBind();
-			if (this.CompilationStarted != null) this.CompilationStarted(this, EventArgs.Empty);
+			if (CompilationStarted != null) CompilationStarted();
 		}
-		private void OnCompilationComplete(bool success)
+		private static void OnCompilationComplete(bool success)
 		{
 			Interops.Initialization.OnCompilationCompleteBind(success);
-			if (this.CompilationComplete != null)
-				this.CompilationComplete(this, new EventArgs<bool>(success));
+			if (CompilationComplete != null)
+				CompilationComplete(success);
 		}
-		private void OnInitializationStageStarted(int index)
+		private static void OnInitializationStageStarted(int index)
 		{
-			if (this.InitializationStageStarted != null)
-				this.InitializationStageStarted(this, new EventArgs<int>(index));
+			if (InitializationStageStarted != null)
+				InitializationStageStarted(index);
 		}
-		private void OnInitializationStageFinished(int index)
+		private static void OnInitializationStageFinished(int index)
 		{
-			if (this.InitializationStageFinished != null)
-				this.InitializationStageFinished(this, new EventArgs<int>(index));
+			if (InitializationStageFinished != null)
+				InitializationStageFinished(index);
 		}
-		private void OnUpdated()
+		private static void OnUpdated()
 		{
-			if (this.Updated != null) this.Updated(this, EventArgs.Empty);
+			if (Updated != null) Updated();
 		}
-		private void OnShuttingDown()
+		private static void OnShuttingDown()
 		{
-			if (this.ShuttingDown != null) this.ShuttingDown(this, EventArgs.Empty);
+			if (ShuttingDown != null) ShuttingDown();
 		}
 		#endregion
-		private void ProceedWithInitializationStages()
+		private static void ProceedWithInitializationStages()
 		{
 			using (new ConsoleOutputLevel(LogPostType.Always))
 			{
@@ -200,7 +195,7 @@ namespace CryCil.RunTime
 				Console.WriteLine("Collecting data about initialization stages.");
 				// Get the types that are initialization classes.
 				List<Type> initializationTypes =
-					this.CryCilAssemblies
+					CryCilAssemblies
 						.SelectMany(x => x.GetTypes())
 						.Where(x => x.ContainsAttribute<InitializationClassAttribute>())
 						.ToList();
@@ -263,9 +258,9 @@ namespace CryCil.RunTime
 				// Now invoke everything.
 				foreach (int key in stages.Keys)
 				{
-					this.OnInitializationStageStarted(key);		//
-					stages[key](key);							// Yep, it's that simple.
-					this.OnInitializationStageFinished(key);	//
+					OnInitializationStageStarted(key);		//
+					stages[key](key);						// Yep, it's that simple.
+					OnInitializationStageFinished(key);		//
 				}
 			}
 		}

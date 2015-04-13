@@ -29,7 +29,6 @@ private:
 #pragma region Fields
 	EventBroadcaster *broadcaster;
 	MonoDomain *appDomain;
-	MonoGCHandle managedInterface;
 #pragma endregion
 public:
 #pragma region Property Methods

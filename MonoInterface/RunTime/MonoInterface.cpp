@@ -23,7 +23,6 @@ void *MonoInterface::GetAppDomain()
 MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener *> *listeners)
 	: appDomain(nullptr)
 	, broadcaster(nullptr)
-	, managedInterface(-1)
 {
 	this->running = false;
 
@@ -129,7 +128,7 @@ MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener
 	
 	// Initialize an instance of type MonoInterface.
 	mono::exception ex;
-	this->managedInterface = this->gc->Keep(MonoInterfaceThunks::Initialize(&ex));
+	MonoInterfaceThunks::Initialize(&ex);
 	if (ex)
 	{
 		this->HandleException(ex);
@@ -156,7 +155,7 @@ void MonoInterface::RegisterFlowGraphNodes()
 		return;
 	}
 	mono::exception ex;
-	MonoInterfaceThunks::TriggerFlowNodesRegistration(this->managedInterface.Object, &ex);
+	MonoInterfaceThunks::TriggerFlowNodesRegistration(&ex);
 }
 //! Shuts down Mono run-time environment.
 void MonoInterface::Shutdown()
@@ -175,7 +174,7 @@ void MonoInterface::Shutdown()
 	CryLogAlways("About to send shutdown event to Cryambly.");
 	
 	mono::exception ex;
-	MonoInterfaceThunks::Shutdown(this->managedInterface.Object, &ex);
+	MonoInterfaceThunks::Shutdown(&ex);
 	
 	this->framework->UnregisterListener(this);
 	gEnv->pSystem->GetISystemEventDispatcher()->RemoveListener(this);
@@ -239,7 +238,7 @@ void MonoInterface::OnPostUpdate(float fDeltaTime)
 		this->broadcaster->Update();
 		
 		mono::exception ex;
-		MonoInterfaceThunks::Update(this->managedInterface.Object, &ex);
+		MonoInterfaceThunks::Update(&ex);
 		
 		this->broadcaster->PostUpdate();
 	}

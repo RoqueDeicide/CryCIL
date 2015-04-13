@@ -41,7 +41,7 @@ namespace CryCil.Engine.DebugServices
 		static PersistentDebug()
 		{
 			objs = new LinkedList<PersistentDebugObject>();
-			MonoInterface.Instance.Updated += RenderObjects;
+			MonoInterface.Updated += RenderObjects;
 		}
 		#endregion
 		#region Interface
@@ -72,7 +72,7 @@ namespace CryCil.Engine.DebugServices
 		{
 			if (RenderingOver != null) RenderingOver(null, new PersistenDebugEventArgs(obj));
 		}
-		private static void RenderObjects(object sender, EventArgs eventArgs)
+		private static void RenderObjects()
 		{
 			if (objs.First == null)
 			{

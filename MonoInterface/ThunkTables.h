@@ -7,11 +7,11 @@ typedef mono::nothing(__stdcall *DisplayExceptionThunk)(mono::object, mono::exce
 //! Signature of the method MonoInterface.Initialize();
 typedef mono::object(__stdcall *InitializeThunk)(mono::exception *);
 //! Signature of the method MonoInterface.RegisterFlowGraphNodeTypes();
-typedef mono::nothing(__stdcall *RegisterFlowNodesThunk)(mono::object monoInterface, mono::exception *);
+typedef mono::nothing(__stdcall *RegisterFlowNodesThunk)(mono::exception *);
 //! Signature of the method MonoInterface.Update();
-typedef mono::nothing(__stdcall *UpdateThunk)(mono::object monoInterface, mono::exception *);
+typedef mono::nothing(__stdcall *UpdateThunk)(mono::exception *);
 //! Signature of the method MonoInterface.Shutdown();
-typedef mono::nothing(__stdcall *ShutDownThunk)(mono::object monoInterface, mono::exception *);
+typedef mono::nothing(__stdcall *ShutDownThunk)(mono::exception *);
 
 struct MonoInterfaceThunks
 {
