@@ -10,7 +10,7 @@ namespace CryCil.Engine.DebugServices
 	/// <summary>
 	/// Represents a persistent debug object that represents either a 2D ring or a 2D circle.
 	/// </summary>
-	public class PersistentDebugDisc : PersistentDebug3DObject
+	public class DebugDisc : Debug3DObject
 	{
 		#region Fields
 		private uint[] indexes;
@@ -80,7 +80,7 @@ namespace CryCil.Engine.DebugServices
 		/// Creates an object that represents a circle.
 		/// </summary>
 		/// <param name="radius">Radius of the circle.</param>
-		public PersistentDebugDisc(float radius)
+		public DebugDisc(float radius)
 			: this(radius, Quaternion.Identity)
 		{
 		}
@@ -89,7 +89,7 @@ namespace CryCil.Engine.DebugServices
 		/// </summary>
 		/// <param name="radius">     Radius of the circle.</param>
 		/// <param name="orientation">Orientation of the circle.</param>
-		public PersistentDebugDisc(float radius, Quaternion orientation)
+		public DebugDisc(float radius, Quaternion orientation)
 		{
 			this.innerRadius = 0.0f;
 			this.outerRadius = radius;
@@ -101,7 +101,7 @@ namespace CryCil.Engine.DebugServices
 		/// </summary>
 		/// <param name="innerRadius">Inner radius of the ring.</param>
 		/// <param name="outerRadius">Outer radius of the ring.</param>
-		public PersistentDebugDisc(float innerRadius, float outerRadius)
+		public DebugDisc(float innerRadius, float outerRadius)
 			: this(innerRadius, outerRadius, Quaternion.Identity)
 		{
 		}
@@ -111,7 +111,7 @@ namespace CryCil.Engine.DebugServices
 		/// <param name="innerRadius">Inner radius of the ring.</param>
 		/// <param name="outerRadius">Outer radius of the ring.</param>
 		/// <param name="orientation">Orientation of the ring.</param>
-		public PersistentDebugDisc(float innerRadius, float outerRadius, Quaternion orientation)
+		public DebugDisc(float innerRadius, float outerRadius, Quaternion orientation)
 		{
 			this.innerRadius = innerRadius;
 			this.outerRadius = outerRadius;

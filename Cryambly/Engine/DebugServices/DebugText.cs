@@ -9,7 +9,7 @@ namespace CryCil.Engine.DebugServices
 	/// <summary>
 	/// Represents a text message that is rendered using <see cref="DebugEngine"/> class.
 	/// </summary>
-	public class PersistentDebugText : PersistentDebug3DObject
+	public class DebugText : Debug3DObject
 	{
 		#region Properties
 		/// <summary>

@@ -11,7 +11,7 @@ namespace CryCil.Engine.DebugServices
 	/// <summary>
 	/// Represents a persistent debug object that is a manifestation of the quaternion in 3D world.
 	/// </summary>
-	public class PersistentDebugQuaternion : PersistentDebug3DObject
+	public class DebugQuaternion : Debug3DObject
 	{
 		#region Fields
 		private Vector3 x;
@@ -54,7 +54,7 @@ namespace CryCil.Engine.DebugServices
 		/// Creates new instance of this type.
 		/// </summary>
 		/// <param name="quat">Quaternion new object is going to represent.</param>
-		public PersistentDebugQuaternion(Quaternion quat)
+		public DebugQuaternion(Quaternion quat)
 		{
 			this.Quaternion = quat;
 		}

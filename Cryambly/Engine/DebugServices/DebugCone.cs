@@ -10,7 +10,7 @@ namespace CryCil.Engine.DebugServices
 	/// <summary>
 	/// Represents persistent debug object that represents a cone.
 	/// </summary>
-	public class PersistentDebugCone : PersistentDebugSolidOfRevolution
+	public class DebugCone : DebugSolidOfRevolution
 	{
 		#region Construction
 		/// <summary>
@@ -19,7 +19,7 @@ namespace CryCil.Engine.DebugServices
 		/// <param name="baseCenter">Coordinates of the center of the cone's bottom circle.</param>
 		/// <param name="height">    Height of the cone.</param>
 		/// <param name="radius">    Radius of the cone's base.</param>
-		public PersistentDebugCone(Vector3 baseCenter, float height, float radius)
+		public DebugCone(Vector3 baseCenter, float height, float radius)
 			: base(baseCenter, height, radius, Quaternion.Identity)
 		{
 		}
@@ -32,7 +32,7 @@ namespace CryCil.Engine.DebugServices
 		/// <param name="orientation">
 		/// <see cref="Quaternion"/> that represents orientation of this cone.
 		/// </param>
-		public PersistentDebugCone(Vector3 baseCenter, float height, float radius, Quaternion orientation)
+		public DebugCone(Vector3 baseCenter, float height, float radius, Quaternion orientation)
 			: base(baseCenter, height, radius, orientation)
 		{
 		}
@@ -42,7 +42,7 @@ namespace CryCil.Engine.DebugServices
 		/// <param name="baseCenter">Coordinates of the center of the cone's bottom circle.</param>
 		/// <param name="top">       Coordinates of the top point of the cone.</param>
 		/// <param name="radius">    Radius of the cone's base.</param>
-		public PersistentDebugCone(Vector3 baseCenter, Vector3 top, float radius)
+		public DebugCone(Vector3 baseCenter, Vector3 top, float radius)
 			: base(baseCenter, top, radius)
 		{
 		}

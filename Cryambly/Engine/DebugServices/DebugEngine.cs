@@ -26,7 +26,7 @@ namespace CryCil.Engine.DebugServices
 	public static class DebugEngine
 	{
 		#region Fields
-		private static readonly LinkedList<PersistentDebugObject> objs;
+		private static readonly LinkedList<DebugObject> objs;
 		#endregion
 		#region Properties
 
@@ -40,7 +40,7 @@ namespace CryCil.Engine.DebugServices
 		#region Construction
 		static DebugEngine()
 		{
-			objs = new LinkedList<PersistentDebugObject>();
+			objs = new LinkedList<DebugObject>();
 			MonoInterface.Updated += RenderObjects;
 		}
 		#endregion
@@ -51,7 +51,7 @@ namespace CryCil.Engine.DebugServices
 		/// <remarks>Given object will be rendered at least once.</remarks>
 		/// <param name="obj">     Object to add.</param>
 		/// <param name="lifeTime">Length of the life-time of the object.</param>
-		public static void Add(PersistentDebugObject obj, TimeSpan lifeTime)
+		public static void Add(DebugObject obj, TimeSpan lifeTime)
 		{
 			Add(obj, (float)lifeTime.TotalSeconds);
 		}
@@ -61,14 +61,14 @@ namespace CryCil.Engine.DebugServices
 		/// <remarks>Given object will be rendered at least once.</remarks>
 		/// <param name="obj">     Object to add.</param>
 		/// <param name="lifeTime">Length of the life-time of the object in seconds.</param>
-		public static void Add(PersistentDebugObject obj, float lifeTime)
+		public static void Add(DebugObject obj, float lifeTime)
 		{
 			obj.LifeTime = lifeTime;
 			objs.AddLast(obj);
 		}
 		#endregion
 		#region Utilities
-		private static void OnRenderingOver(PersistentDebugObject obj)
+		private static void OnRenderingOver(DebugObject obj)
 		{
 			if (RenderingOver != null) RenderingOver(null, new DebugEngineEventArgs(obj));
 		}
@@ -81,7 +81,7 @@ namespace CryCil.Engine.DebugServices
 
 			for (var current = objs.First; current != null; current = current.Next)
 			{
-				PersistentDebugObject debugObject = current.Value;
+				DebugObject debugObject = current.Value;
 
 				Monitor.Enter(debugObject);
 

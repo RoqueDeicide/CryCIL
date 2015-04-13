@@ -17,7 +17,7 @@ namespace CryCil.Engine.DebugServices
 	/// </para>
 	/// <para>Axis of revolution represents an "Up" axis of orientation of the solid.</para>
 	/// </remarks>
-	public abstract class PersistentDebugSolidOfRevolution : PersistentDebug3DObject
+	public abstract class DebugSolidOfRevolution : Debug3DObject
 	{
 		#region Properties
 		/// <summary>
@@ -48,7 +48,7 @@ namespace CryCil.Engine.DebugServices
 		/// <param name="start"> Coordinates of the start of axis of revolution.</param>
 		/// <param name="height">Length of the axis of revolution.</param>
 		/// <param name="radius">Maximal radius of the body.</param>
-		protected PersistentDebugSolidOfRevolution(Vector3 start, float height, float radius)
+		protected DebugSolidOfRevolution(Vector3 start, float height, float radius)
 			: this(start, height, radius, Quaternion.Identity)
 		{
 		}
@@ -61,7 +61,7 @@ namespace CryCil.Engine.DebugServices
 		/// <param name="orientation">
 		/// <see cref="Quaternion"/> that represents orientation of this body.
 		/// </param>
-		protected PersistentDebugSolidOfRevolution(Vector3 start, float height, float radius, Quaternion orientation)
+		protected DebugSolidOfRevolution(Vector3 start, float height, float radius, Quaternion orientation)
 		{
 			this.Start = start;
 			this.Height = height;
@@ -74,7 +74,7 @@ namespace CryCil.Engine.DebugServices
 		/// <param name="start"> Coordinates of the start of axis of revolution.</param>
 		/// <param name="top">   Coordinates of the start of axis of revolution.</param>
 		/// <param name="radius">Maximal radius of the body.</param>
-		protected PersistentDebugSolidOfRevolution(Vector3 start, Vector3 top, float radius)
+		protected DebugSolidOfRevolution(Vector3 start, Vector3 top, float radius)
 		{
 			this.Start = start;
 			this.Height = (top - start).Length;

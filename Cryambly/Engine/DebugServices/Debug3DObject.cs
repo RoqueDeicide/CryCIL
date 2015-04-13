@@ -9,7 +9,7 @@ namespace CryCil.Engine.DebugServices
 	/// <summary>
 	/// Base class for persistent debug objects that are rendered in 3D space.
 	/// </summary>
-	public abstract class PersistentDebug3DObject : PersistentDebugObject
+	public abstract class Debug3DObject : DebugObject
 	{
 		#region Fields
 		/// <summary>
@@ -25,7 +25,7 @@ namespace CryCil.Engine.DebugServices
 		/// <summary>
 		/// Sets rendering flags to their default value for 3D object rendering.
 		/// </summary>
-		protected PersistentDebug3DObject()
+		protected Debug3DObject()
 		{
 			this.RenderingFlags = DefaultRenderFlags;
 		}

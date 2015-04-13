@@ -10,7 +10,7 @@ namespace CryCil.Engine.DebugServices
 	/// <summary>
 	/// Represents a persistent debug object that represents axis-aligned bounding box.
 	/// </summary>
-	public class PersistentDebugAxisAlignedBoundingBox : PersistentDebug3DObject
+	public class DebugAxisAlignedBoundingBox : Debug3DObject
 	{
 		private BoundingBox box;
 		/// <summary>

@@ -9,7 +9,7 @@ namespace CryCil.Engine.DebugServices
 	/// <summary>
 	/// Represents a line that is drawn using <see cref="DebugEngine"/> class.
 	/// </summary>
-	public class PersistentDebugLine : PersistentDebug3DObject
+	public class DebugLine : Debug3DObject
 	{
 		#region Fields
 		private float length;
@@ -80,7 +80,7 @@ namespace CryCil.Engine.DebugServices
 		/// </summary>
 		/// <param name="start">Start of the line.</param>
 		/// <param name="end">  End of the line.</param>
-		public PersistentDebugLine(Vector3 start, Vector3 end)
+		public DebugLine(Vector3 start, Vector3 end)
 		{
 			this.start = start;
 			this.end = end;

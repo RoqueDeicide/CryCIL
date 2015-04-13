@@ -9,7 +9,7 @@ namespace CryCil.Engine.DebugServices
 	/// <summary>
 	/// Represents a persistent debug sphere.
 	/// </summary>
-	public sealed class PersistentDebugSphere : PersistentDebug3DObject
+	public sealed class DebugSphere : Debug3DObject
 	{
 		#region Fields
 		#endregion

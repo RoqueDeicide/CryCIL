@@ -10,7 +10,7 @@ namespace CryCil.Engine.DebugServices
 	/// <summary>
 	/// Base class for objects that can be rendered using <see cref="DebugEngine"/> functionality.
 	/// </summary>
-	public abstract class PersistentDebugObject
+	public abstract class DebugObject
 	{
 		#region Fields
 		internal float lifeTime;
@@ -53,7 +53,7 @@ namespace CryCil.Engine.DebugServices
 		/// <summary>
 		/// Initializes internal parts of the object with default values.
 		/// </summary>
-		protected PersistentDebugObject()
+		protected DebugObject()
 		{
 			this.lifeTime = 0;
 			this.TimeRemaining = 0;

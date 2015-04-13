@@ -10,7 +10,7 @@ namespace CryCil.Engine.DebugServices
 	/// <summary>
 	/// Represents a persistent debug object that looks like a cylinder.
 	/// </summary>
-	public class PersistentDebugCylinder : PersistentDebugSolidOfRevolution
+	public class DebugCylinder : DebugSolidOfRevolution
 	{
 		#region Construction
 		/// <summary>
@@ -19,7 +19,7 @@ namespace CryCil.Engine.DebugServices
 		/// <param name="baseCenter">Coordinates of the center of the cylinder's bottom circle.</param>
 		/// <param name="height">    Height of the cylinder.</param>
 		/// <param name="radius">    Radius of the cylinder.</param>
-		public PersistentDebugCylinder(Vector3 baseCenter, float height, float radius)
+		public DebugCylinder(Vector3 baseCenter, float height, float radius)
 			: base(baseCenter, height, radius, Quaternion.Identity)
 		{
 		}
@@ -32,7 +32,7 @@ namespace CryCil.Engine.DebugServices
 		/// <param name="orientation">
 		/// <see cref="Quaternion"/> that represents orientation of this cylinder.
 		/// </param>
-		public PersistentDebugCylinder(Vector3 baseCenter, float height, float radius,
+		public DebugCylinder(Vector3 baseCenter, float height, float radius,
 									   Quaternion orientation)
 			: base(baseCenter, height, radius, orientation)
 		{
@@ -43,7 +43,7 @@ namespace CryCil.Engine.DebugServices
 		/// <param name="baseCenter">Coordinates of the center of the cylinder's bottom circle.</param>
 		/// <param name="top">       Coordinates of the center of the cylinder's top circle.</param>
 		/// <param name="radius">    Radius of the cylinder.</param>
-		public PersistentDebugCylinder(Vector3 baseCenter, Vector3 top, float radius)
+		public DebugCylinder(Vector3 baseCenter, Vector3 top, float radius)
 			: base(baseCenter, top, radius)
 		{
 		}

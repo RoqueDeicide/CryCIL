@@ -14,12 +14,12 @@ namespace CryCil.Engine.DebugServices
 		/// <summary>
 		/// Gets the object related to the event.
 		/// </summary>
-		public PersistentDebugObject Object { get; private set; }
+		public DebugObject Object { get; private set; }
 		/// <summary>
 		/// Creates new instance of this type.
 		/// </summary>
 		/// <param name="obj">Object related to the event.</param>
-		public DebugEngineEventArgs(PersistentDebugObject obj)
+		public DebugEngineEventArgs(DebugObject obj)
 		{
 			this.Object = obj;
 		}

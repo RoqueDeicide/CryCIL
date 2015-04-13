@@ -10,7 +10,7 @@ namespace CryCil.Engine.DebugServices
 	/// Represents an arrow that is rendered using <see cref="DebugEngine"/> and
 	/// <see cref="AuxiliaryGeometry"/>.
 	/// </summary>
-	public class PersistentDebugArrow : PersistentDebug3DObject
+	public class DebugArrow : Debug3DObject
 	{
 		#region Fields
 		private float length;
@@ -126,7 +126,7 @@ namespace CryCil.Engine.DebugServices
 		/// <param name="start"> Coordinates of the start of the arrow.</param>
 		/// <param name="end"> Coordinates of the point of the arrow.</param>
 		/// <param name="radius">Radius of the arrow's cone.</param>
-		public PersistentDebugArrow(Vector3 start, Vector3 end, float radius)
+		public DebugArrow(Vector3 start, Vector3 end, float radius)
 		{
 			this.start = start;
 			this.end = end;
