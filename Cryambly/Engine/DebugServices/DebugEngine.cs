@@ -33,9 +33,10 @@ namespace CryCil.Engine.DebugServices
 		#endregion
 		#region Events
 		/// <summary>
-		/// Occurs after one of the objects is rendered for the last time.
+		/// Occurs after one of the objects is rendered for the last time. The first argument is that
+		/// object.
 		/// </summary>
-		public static event EventHandler<DebugEngineEventArgs> RenderingOver;
+		public static event Action<DebugObject> RenderingOver;
 		#endregion
 		#region Construction
 		static DebugEngine()
@@ -70,7 +71,7 @@ namespace CryCil.Engine.DebugServices
 		#region Utilities
 		private static void OnRenderingOver(DebugObject obj)
 		{
-			if (RenderingOver != null) RenderingOver(null, new DebugEngineEventArgs(obj));
+			if (RenderingOver != null) RenderingOver(obj);
 		}
 		private static void RenderObjects()
 		{
