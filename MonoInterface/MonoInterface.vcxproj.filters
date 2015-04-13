@@ -287,6 +287,9 @@
     <ClInclude Include="Interops\AuxiliaryGeometry.h">
       <Filter>Interops\Engine\Debug</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\Renderer.h">
+      <Filter>Interops\Engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -427,6 +430,9 @@
     </ClCompile>
     <ClCompile Include="Interops\AuxiliaryGeometry.cpp">
       <Filter>Interops\Engine\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\Renderer.cpp">
+      <Filter>Interops\Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

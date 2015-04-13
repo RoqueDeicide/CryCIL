@@ -281,6 +281,7 @@
     <ClInclude Include="Interops\MeshOps.h" />
     <ClInclude Include="Interops\MouseInterop.h" />
     <ClInclude Include="Interops\Profiling.h" />
+    <ClInclude Include="Interops\Renderer.h" />
     <ClInclude Include="Interops\Timing.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="Logs.h" />
@@ -360,6 +361,7 @@
     <ClCompile Include="Interops\MouseInterop.cpp" />
     <ClCompile Include="Interops\Console.cpp" />
     <ClCompile Include="Interops\Profiling.cpp" />
+    <ClCompile Include="Interops\Renderer.cpp" />
     <ClCompile Include="Interops\Timing.cpp" />
     <ClCompile Include="RunTime\DebugEventReporter.cpp" />
     <ClCompile Include="RunTime\EventBroadcaster.cpp" />

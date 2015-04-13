@@ -35,3 +35,5 @@
 #include "Interops/CryPak.h"
 
 #include "Interops/AuxiliaryGeometry.h"
+
+#include "Interops/Renderer.h"
