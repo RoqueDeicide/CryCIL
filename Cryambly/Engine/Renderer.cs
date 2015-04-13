@@ -18,13 +18,13 @@ namespace CryCil.Engine
 		/// Renders text using default scale.
 		/// </summary>
 		/// <param name="position">Position of the text.</param>
-		/// <param name="options">Options that specify how text is rendered.</param>
-		/// <param name="color">Color of the text.</param>
-		/// <param name="text">A composite format string that defines structure of the text.</param>
-		/// <param name="args">Arguments to be inserted into above format string.</param>
+		/// <param name="options"> Options that specify how text is rendered.</param>
+		/// <param name="color">   Color of the text.</param>
+		/// <param name="text">    A composite format string that defines structure of the text.</param>
+		/// <param name="args">    Arguments to be inserted into above format string.</param>
 		[StringFormatMethod("text")]
 		public static void DrawText(Vector3 position, TextRenderOptions options, ColorSingle color,
-			string text,params object[] args)
+			string text, params object[] args)
 		{
 			DrawTextInternal(position, options, color, new Vector2(1, 1), string.Format(text, args));
 		}
@@ -32,9 +32,9 @@ namespace CryCil.Engine
 		/// Renders text using default color and scale.
 		/// </summary>
 		/// <param name="position">Position of the text.</param>
-		/// <param name="options">Options that specify how text is rendered.</param>
-		/// <param name="text">A composite format string that defines structure of the text.</param>
-		/// <param name="args">Arguments to be inserted into above format string.</param>
+		/// <param name="options"> Options that specify how text is rendered.</param>
+		/// <param name="text">    A composite format string that defines structure of the text.</param>
+		/// <param name="args">    Arguments to be inserted into above format string.</param>
 		[StringFormatMethod("text")]
 		public static void DrawText(Vector3 position, TextRenderOptions options, string text,
 									params object[] args)
@@ -52,8 +52,8 @@ namespace CryCil.Engine
 		/// Renders text using default color, scale and options.
 		/// </summary>
 		/// <param name="position">Position of the text.</param>
-		/// <param name="text">A composite format string that defines structure of the text.</param>
-		/// <param name="args">Arguments to be inserted into above format string.</param>
+		/// <param name="text">    A composite format string that defines structure of the text.</param>
+		/// <param name="args">    Arguments to be inserted into above format string.</param>
 		[StringFormatMethod("text")]
 		public static void DrawText(Vector3 position, string text, params object[] args)
 		{
@@ -70,11 +70,11 @@ namespace CryCil.Engine
 		/// Renders text.
 		/// </summary>
 		/// <param name="position">Position of the text.</param>
-		/// <param name="options">Options that specify how text is rendered.</param>
-		/// <param name="color">Color of the text.</param>
-		/// <param name="scale">Scale of the text in local X and Y directions.</param>
-		/// <param name="text">A composite format string that defines structure of the text.</param>
-		/// <param name="args">Arguments to be inserted into above format string.</param>
+		/// <param name="options"> Options that specify how text is rendered.</param>
+		/// <param name="color">   Color of the text.</param>
+		/// <param name="scale">   Scale of the text in local X and Y directions.</param>
+		/// <param name="text">    A composite format string that defines structure of the text.</param>
+		/// <param name="args">    Arguments to be inserted into above format string.</param>
 		[StringFormatMethod("text")]
 		public static void DrawText(Vector3 position, TextRenderOptions options, ColorSingle color,
 									Vector2 scale, string text, params object[] args)
