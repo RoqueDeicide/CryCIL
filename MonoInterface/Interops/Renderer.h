@@ -5,7 +5,7 @@
 struct RendererInterop : public IMonoInterop<true, true>
 {
 	virtual const char *GetName() { return "Renderer"; }
-	virtual const char *GetNameSpace() { return "CryCil.Engine"; }
+	virtual const char *GetNameSpace() { return "CryCil.Engine.Rendering"; }
 
 	virtual void OnRunTimeInitialized();
 

@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.CompilerServices;
 using CryCil.Annotations;
 using CryCil.Graphics;
 
-namespace CryCil.Engine
+namespace CryCil.Engine.Rendering
 {
 	/// <summary>
 	/// Provides access to CryEngine rendering API.
@@ -24,7 +19,7 @@ namespace CryCil.Engine
 		/// <param name="args">    Arguments to be inserted into above format string.</param>
 		[StringFormatMethod("text")]
 		public static void DrawText(Vector3 position, TextRenderOptions options, ColorSingle color,
-			string text, params object[] args)
+									string text, params object[] args)
 		{
 			DrawTextInternal(position, options, color, new Vector2(1, 1), string.Format(text, args));
 		}
