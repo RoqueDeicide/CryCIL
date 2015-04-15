@@ -47,6 +47,18 @@ struct IMonoFunctions
 	//!     6) When working with internal calls for instance methods, the first argument is a pointer to
 	//!        the object (no boxing/unboxing required).
 	//!
+	//!     7) When constructor is an internal call, its native representation is a member function with
+	//!        constructor's signature that doesn't return anything. Names of all constructors are ".ctor".
+	//!
+	//!     8) When a property is represented by internal calls, the property itself must be defined as
+	//!        extern and each of the accessors must be marked with
+	//!        [MethodImpl(MethodImplOptions.InternalCall)] attribute and their native names are
+	//!        get_<name of the property> for getter and set_<name of the property> for setter.
+	//!        Getter's signature is <type of the property> get_<name of the property>().
+	//!        Setter's signature is void set_<name of the property>(<type of the property> value).
+	//!        Add pointers to objects to above to signatures if the property is not static.
+	//!        Structs cannot contain internal call member properties.
+	//!
 	//! Examples:
 	//!
 	//! With built-in types only:
