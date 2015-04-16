@@ -3,6 +3,7 @@
 #include "Implementation/Cryambly.h"
 #include "Implementation/MonoCoreLibrary.h"
 #include "Implementation/MonoAssemblies.h"
+#include "RunTime/AllInterops.h"
 
 
 void HandleSignalAbort(int error)

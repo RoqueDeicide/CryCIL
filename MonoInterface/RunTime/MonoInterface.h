@@ -14,7 +14,7 @@
 
 #include "RunTime/DebugEventReporter.h"
 #include "RunTime/EventBroadcaster.h"
-#include "RunTime/AllInterops.h"
+#include "InitializationInterop.h"
 
 #include "List.h"
 
