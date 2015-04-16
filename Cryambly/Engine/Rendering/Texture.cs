@@ -147,7 +147,6 @@ namespace CryCil.Engine.Rendering
 
 		#endregion
 		#region Construction
-		// ReSharper disable UnusedParameter.Local
 		/// <summary>
 		/// Creates a wrapper for a texture using specified name.
 		/// </summary>
@@ -155,8 +154,7 @@ namespace CryCil.Engine.Rendering
 		/// <param name="flags">A set of flags that specify how to load the texture file.</param>
 		/// <exception cref="ArgumentNullException">Name of the texture file cannot be null.</exception>
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		public extern Texture([CanBeNull] string name, TextureFlags flags);
-		// ReSharper restore UnusedParameter.Local
+		public extern Texture([UsedImplicitly][CanBeNull] string name, [UsedImplicitly] TextureFlags flags);
 		#endregion
 		#region Static Interface
 		#endregion
