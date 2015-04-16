@@ -179,6 +179,215 @@ namespace CryCil.Engine.Rendering
 		/// <remarks>Call this function when you are done with 2D rendering.</remarks>
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern void Disable2DMode();
+		/// <summary>
+		/// Draws a 2D image on the screen.
+		/// </summary>
+		/// <param name="position"> Position of the image on the screen.</param>
+		/// <param name="size">     
+		/// <see cref="Vector2"/> which X and Y components represent width and height of the image
+		/// respectively.
+		/// </param>
+		/// <param name="textureId">Identifier of the texture to use as an image.</param>
+		/// <param name="angle">    Angle of rotation of the image in degrees.</param>
+		/// <param name="z">        Position of the image in the depth buffer.</param>
+		public static void Draw2DImage(Vector2 position, Vector2 size, int textureId, float angle = 0,
+									   float z = 1)
+		{
+			Draw2DImageInternal(position, size, textureId, new Vector2(), new Vector2(1), new ColorSingle(1), angle, z);
+		}
+		/// <summary>
+		/// Draws a region of the 2D image on the screen.
+		/// </summary>
+		/// <param name="position"> Position of the image on the screen.</param>
+		/// <param name="size">     
+		/// <see cref="Vector2"/> which X and Y components represent width and height of the image
+		/// respectively.
+		/// </param>
+		/// <param name="textureId">Identifier of the texture to use as an image.</param>
+		/// <param name="minUv">    
+		/// Minimal position of a bounding rectangle of the area of the image to render.
+		/// </param>
+		/// <param name="maxUv">    
+		/// Maximal position of a bounding rectangle of the area of the image to render.
+		/// </param>
+		/// <param name="angle">    Angle of rotation of the image in degrees.</param>
+		/// <param name="z">        Position of the image in the depth buffer.</param>
+		public static void Draw2DImage(Vector2 position, Vector2 size, int textureId,
+									   Vector2 minUv, Vector2 maxUv, float angle = 0, float z = 1)
+		{
+			Draw2DImageInternal(position, size, textureId, minUv, maxUv, new ColorSingle(1), angle, z);
+		}
+		/// <summary>
+		/// Draws a 2D image on the screen with lighting applied to it.
+		/// </summary>
+		/// <param name="position">  Position of the image on the screen.</param>
+		/// <param name="size">      
+		/// <see cref="Vector2"/> which X and Y components represent width and height of the image
+		/// respectively.
+		/// </param>
+		/// <param name="textureId"> Identifier of the texture to use as an image.</param>
+		/// <param name="lightColor">Color of the light to apply to the image.</param>
+		/// <param name="angle">     Angle of rotation of the image in degrees.</param>
+		/// <param name="z">         Position of the image in the depth buffer.</param>
+		public static void Draw2DImage(Vector2 position, Vector2 size, int textureId,
+									   ColorSingle lightColor, float angle = 0, float z = 1)
+		{
+			Draw2DImageInternal(position, size, textureId, new Vector2(), new Vector2(1), lightColor, angle, z);
+		}
+		/// <summary>
+		/// Draws a 2D image on the screen.
+		/// </summary>
+		/// <param name="position">  Position of the image on the screen.</param>
+		/// <param name="size">      
+		/// <see cref="Vector2"/> which X and Y components represent width and height of the image
+		/// respectively.
+		/// </param>
+		/// <param name="textureId"> Identifier of the texture to use as an image.</param>
+		/// <param name="minUv">     
+		/// Minimal position of a bounding rectangle of the area of the image to render.
+		/// </param>
+		/// <param name="maxUv">     
+		/// Maximal position of a bounding rectangle of the area of the image to render.
+		/// </param>
+		/// <param name="lightColor">Color of the light to apply to the image.</param>
+		/// <param name="angle">     Angle of rotation of the image in degrees.</param>
+		/// <param name="z">         Position of the image in the depth buffer.</param>
+		public static void Draw2DImage(Vector2 position, Vector2 size, int textureId,
+									   Vector2 minUv, Vector2 maxUv,
+									   ColorSingle lightColor, float angle = 0, float z = 1)
+		{
+			Draw2DImageInternal(position, size, textureId, minUv, maxUv, lightColor, angle, z);
+		}
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void Draw2DImageInternal(Vector2 position, Vector2 size, int textureId,
+											  Vector2 minUv, Vector2 maxUv,
+											  ColorSingle lightColor, float angle = 0, float z = 1);
+		/// <summary>
+		/// Pushes a 2D image into a special list that can be rendered using <see cref="Draw2DImageList"/>.
+		/// </summary>
+		/// <remarks>
+		/// Pushing images into the queue is more efficient then separate calls to
+		/// <see cref="o:Draw2DImage"/> when rendering multiple images within one frame.
+		/// </remarks>
+		/// <param name="position">   Position of the image on the screen.</param>
+		/// <param name="size">       
+		/// <see cref="Vector2"/> which X and Y components represent width and height of the image
+		/// respectively.
+		/// </param>
+		/// <param name="textureId">  Identifier of the texture to use as an image.</param>
+		/// <param name="angle">      Angle of rotation of the image in degrees.</param>
+		/// <param name="z">          Position of the image in the depth buffer.</param>
+		/// <param name="stereoDepth">
+		/// Position of the image on a stereo screen, setting it to 0 will render the image on the screen
+		/// plane.
+		/// </param>
+		public static void Push2DImage(Vector2 position, Vector2 size, int textureId, float angle = 0,
+									   float z = 1, float stereoDepth = 0)
+		{
+			Push2DImageInternal(position, size, textureId, new Vector2(), new Vector2(1), new ColorSingle(1),
+								angle, z, stereoDepth);
+		}
+		/// <summary>
+		/// Pushes a 2D image into a special list that can be rendered using <see cref="Draw2DImageList"/>.
+		/// </summary>
+		/// <remarks>
+		/// Pushing images into the queue is more efficient then separate calls to
+		/// <see cref="o:Draw2DImage"/> when rendering multiple images within one frame.
+		/// </remarks>
+		/// <param name="position">   Position of the image on the screen.</param>
+		/// <param name="size">       
+		/// <see cref="Vector2"/> which X and Y components represent width and height of the image
+		/// respectively.
+		/// </param>
+		/// <param name="textureId">  Identifier of the texture to use as an image.</param>
+		/// <param name="minUv">      
+		/// Minimal position of a bounding rectangle of the area of the image to render.
+		/// </param>
+		/// <param name="maxUv">      
+		/// Maximal position of a bounding rectangle of the area of the image to render.
+		/// </param>
+		/// <param name="angle">      Angle of rotation of the image in degrees.</param>
+		/// <param name="z">          Position of the image in the depth buffer.</param>
+		/// <param name="stereoDepth">
+		/// Position of the image on a stereo screen, setting it to 0 will render the image on the screen
+		/// plane.
+		/// </param>
+		public static void Push2DImage(Vector2 position, Vector2 size, int textureId,
+									   Vector2 minUv, Vector2 maxUv, float angle = 0, float z = 1,
+									   float stereoDepth = 0)
+		{
+			Push2DImageInternal(position, size, textureId, minUv, maxUv, new ColorSingle(1), angle, z,
+								stereoDepth);
+		}
+		/// <summary>
+		/// Pushes a 2D image into a special list that can be rendered using <see cref="Draw2DImageList"/>.
+		/// </summary>
+		/// <remarks>
+		/// Pushing images into the queue is more efficient then separate calls to
+		/// <see cref="o:Draw2DImage"/> when rendering multiple images within one frame.
+		/// </remarks>
+		/// <param name="position">   Position of the image on the screen.</param>
+		/// <param name="size">       
+		/// <see cref="Vector2"/> which X and Y components represent width and height of the image
+		/// respectively.
+		/// </param>
+		/// <param name="textureId">  Identifier of the texture to use as an image.</param>
+		/// <param name="lightColor"> Color of the light to apply to the image.</param>
+		/// <param name="angle">      Angle of rotation of the image in degrees.</param>
+		/// <param name="z">          Position of the image in the depth buffer.</param>
+		/// <param name="stereoDepth">
+		/// Position of the image on a stereo screen, setting it to 0 will render the image on the screen
+		/// plane.
+		/// </param>
+		public static void Push2DImage(Vector2 position, Vector2 size, int textureId,
+									   ColorSingle lightColor, float angle = 0, float z = 1,
+									   float stereoDepth = 0)
+		{
+			Push2DImageInternal(position, size, textureId, new Vector2(), new Vector2(1), lightColor,
+								angle, z, stereoDepth);
+		}
+		/// <summary>
+		/// Pushes a 2D image into a special list that can be rendered using <see cref="Draw2DImageList"/>.
+		/// </summary>
+		/// <remarks>
+		/// Pushing images into the queue is more efficient then separate calls to
+		/// <see cref="o:Draw2DImage"/> when rendering multiple images within one frame.
+		/// </remarks>
+		/// <param name="position">   Position of the image on the screen.</param>
+		/// <param name="size">       
+		/// <see cref="Vector2"/> which X and Y components represent width and height of the image
+		/// respectively.
+		/// </param>
+		/// <param name="textureId">  Identifier of the texture to use as an image.</param>
+		/// <param name="minUv">      
+		/// Minimal position of a bounding rectangle of the area of the image to render.
+		/// </param>
+		/// <param name="maxUv">      
+		/// Maximal position of a bounding rectangle of the area of the image to render.
+		/// </param>
+		/// <param name="lightColor"> Color of the light to apply to the image.</param>
+		/// <param name="angle">      Angle of rotation of the image in degrees.</param>
+		/// <param name="z">          Position of the image in the depth buffer.</param>
+		/// <param name="stereoDepth">
+		/// Position of the image on a stereo screen, setting it to 0 will render the image on the screen
+		/// plane.
+		/// </param>
+		public static void Push2DImage(Vector2 position, Vector2 size, int textureId,
+									   Vector2 minUv, Vector2 maxUv, ColorSingle lightColor,
+									   float angle = 0, float z = 1, float stereoDepth = 0)
+		{
+			Push2DImageInternal(position, size, textureId, minUv, maxUv, lightColor, angle, z, stereoDepth);
+		}
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void Push2DImageInternal(Vector2 position, Vector2 size, int textureId,
+													   Vector2 minUv, Vector2 maxUv, ColorSingle lightColor,
+													   float angle = 0, float z = 1, float stereoDepth = 0);
+		/// <summary>
+		/// Triggers rendering of images that were queued for rendering using one of the overloads of the
+		/// <see cref="o:Push2DImage"/> function.
+		/// </summary>
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		public static extern void Draw2DImageList();
 		#endregion
 		#region Texture-Related Functions
 		/// <summary>
@@ -198,6 +407,18 @@ namespace CryCil.Engine.Rendering
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern void SetColorOperation(ColorOperation colorOp, ColorOperation alphaOp,
 													ColorArgument colorArg, ColorArgument alphaArg);
+		/// <summary>
+		/// Sets current bound texture to fully white texture.
+		/// </summary>
+		/// <remarks>Used for drawing primitives.</remarks>
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		public static extern void SetWhiteTexture();
+		/// <summary>
+		/// Sets current bound texture.
+		/// </summary>
+		/// <param name="id">Identifier of the texture to set the current one to.</param>
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		public static extern void SetTexture(int id);
 		#endregion
 		#region Primitives
 		/// <summary>
@@ -283,6 +504,29 @@ namespace CryCil.Engine.Rendering
 		public static extern void DrawDynamicVertexBuffer(VertexPosition3FColor4BTex2F* vertexes,
 														  int vertexCount, ushort* indexes, int indexCount,
 														  PublicRenderPrimitiveType primType);
+		#endregion
+		#region Unsorted
+		/// <summary>
+		/// ???
+		/// </summary>
+		/// <param name="x"></param>
+		/// <returns></returns>
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		public static extern float ScaleX(float x);
+		/// <summary>
+		/// ???
+		/// </summary>
+		/// <param name="y"></param>
+		/// <returns></returns>
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		public static extern float ScaleY(float y);
+		/// <summary>
+		/// ???
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		public static extern void ScaleXY(ref float x, ref float y);
 		#endregion
 		#endregion
 		#region Utilities

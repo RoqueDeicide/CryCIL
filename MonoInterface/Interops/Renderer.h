@@ -24,9 +24,20 @@ struct RendererInterop : public IMonoInterop<true, true>
 
 	static void Enable2DMode(int width, int height, float znear = -1e10f, float zfar = 1e10f);
 	static void Disable2DMode();
+	static void Draw2DImageInternal(Vec2 position, Vec2 size, int textureId, Vec2 minUv, Vec2 maxUv,
+									ColorF lightColor, float angle = 0, float z = 1);
+	static void Push2DImageInternal(Vec2 position, Vec2 size, int textureId, Vec2 minUv, Vec2 maxUv,
+									ColorF lightColor, float angle = 0, float z = 1, float stereoDepth = 0);
+	static void Draw2DImageList();
 
 	static void SetColorOperation(byte colorOp, byte alphaOp, byte colorArg, byte alphaArg);
+	static void SetWhiteTexture();
+	static void SetTexture(int id);
 
 	static void DrawDynamicVertexBuffer(SVF_P3F_C4B_T2F *vertexes, int vertexCount, uint16 *indexes,
 										int indexCount, PublicRenderPrimitiveType primType);
+
+	static float ScaleX(float x);
+	static float ScaleY(float y);
+	static void ScaleXY(float &x, float &y);
 };

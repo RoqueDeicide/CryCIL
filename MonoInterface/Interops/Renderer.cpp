@@ -139,6 +139,40 @@ void RendererInterop::Disable2DMode()
 	gEnv->pRenderer->Set2DMode(false, 0, 0);
 }
 
+void RendererInterop::Draw2DImageInternal(Vec2 position, Vec2 size, int textureId, Vec2 minUv, Vec2 maxUv, ColorF lightColor, float angle /*= 0*/, float z /*= 1*/)
+{
+	if (!gEnv || !gEnv->pRenderer)
+	{
+		return;
+	}
+
+	gEnv->pRenderer->Draw2dImage(position.x, position.y, size.x, size.y, textureId, minUv.x, minUv.y,
+								 maxUv.x, maxUv.y, angle, lightColor.r, lightColor.g, lightColor.b,
+								 lightColor.a, z);
+}
+
+void RendererInterop::Push2DImageInternal(Vec2 position, Vec2 size, int textureId, Vec2 minUv, Vec2 maxUv, ColorF lightColor, float angle /*= 0*/, float z /*= 1*/, float stereoDepth /*= 0*/)
+{
+	if (!gEnv || !gEnv->pRenderer)
+	{
+		return;
+	}
+
+	gEnv->pRenderer->Push2dImage(position.x, position.y, size.x, size.y, textureId, minUv.x, minUv.y,
+								 maxUv.x, maxUv.y, angle, lightColor.r, lightColor.g, lightColor.b,
+								 lightColor.a, z, stereoDepth);
+}
+
+void RendererInterop::Draw2DImageList()
+{
+	if (!gEnv || !gEnv->pRenderer)
+	{
+		return;
+	}
+
+	gEnv->pRenderer->Draw2dImageList();
+}
+
 void RendererInterop::SetColorOperation(byte colorOp, byte alphaOp, byte colorArg, byte alphaArg)
 {
 	if (!gEnv || !gEnv->pRenderer)
@@ -147,6 +181,26 @@ void RendererInterop::SetColorOperation(byte colorOp, byte alphaOp, byte colorAr
 	}
 
 	gEnv->pRenderer->SetColorOp(colorOp, alphaOp, colorArg, alphaArg);
+}
+
+void RendererInterop::SetWhiteTexture()
+{
+	if (!gEnv || !gEnv->pRenderer)
+	{
+		return;
+	}
+
+	gEnv->pRenderer->SetWhiteTexture();
+}
+
+void RendererInterop::SetTexture(int id)
+{
+	if (!gEnv || !gEnv->pRenderer)
+	{
+		return;
+	}
+
+	gEnv->pRenderer->SetTexture(id);
 }
 
 void RendererInterop::DrawDynamicVertexBuffer(SVF_P3F_C4B_T2F *vertexes, int vertexCount, uint16 *indexes, int indexCount, PublicRenderPrimitiveType primType)
@@ -186,4 +240,34 @@ void RendererInterop::DrawDynamicVertexBuffer(SVF_P3F_C4B_T2F *vertexes, int ver
 	}
 
 	gEnv->pRenderer->DrawDynVB(vertexes, indexes, vertexCount, indexCount, primType);
+}
+
+float RendererInterop::ScaleX(float x)
+{
+	if (!gEnv || !gEnv->pRenderer)
+	{
+		return x;
+	}
+
+	return gEnv->pRenderer->ScaleCoordX(x);
+}
+
+float RendererInterop::ScaleY(float y)
+{
+	if (!gEnv || !gEnv->pRenderer)
+	{
+		return y;
+	}
+
+	return gEnv->pRenderer->ScaleCoordY(y);
+}
+
+void RendererInterop::ScaleXY(float &x, float &y)
+{
+	if (!gEnv || !gEnv->pRenderer)
+	{
+		return;
+	}
+
+	gEnv->pRenderer->ScaleCoord(x, y);
 }
