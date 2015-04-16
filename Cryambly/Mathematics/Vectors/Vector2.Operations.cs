@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Drawing;
+using System.Runtime.CompilerServices;
 
 namespace CryCil
 {
@@ -142,6 +143,19 @@ namespace CryCil
 		}
 		#endregion
 		#region Conversion Operators
+		/// <summary>
+		/// Performs an implicit conversion from <see cref="PointF"/> to <see cref="Vector2"/> .
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <returns>
+		/// A new instance of type <see cref="Vector2"/> which has X and Y coordinates taken from
+		/// <paramref name="value"/>.
+		/// </returns>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static implicit operator Vector2(PointF value)
+		{
+			return new Vector2(value.X, value.Y);
+		}
 		/// <summary>
 		/// Performs an explicit conversion from <see cref="Vector2"/> to <see cref="Vector3"/> .
 		/// </summary>
