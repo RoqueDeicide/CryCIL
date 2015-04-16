@@ -40,6 +40,7 @@ struct MonoExceptions : IMonoExceptions
 	virtual mono::exception MissingField         (const char *class_name, const char *member_name);
 	virtual mono::exception NotSupported         (const char *message = nullptr, mono::exception inner = nullptr);
 	virtual mono::exception CryEngine            (const char *message = nullptr, mono::exception inner = nullptr);
+	virtual mono::exception ObjectDisposed       (const char *message = nullptr, mono::exception inner = nullptr);
 
 private:
 

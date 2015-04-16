@@ -255,4 +255,11 @@ struct IMonoExceptions
 	//!
 	//! @returns An IMonoException wrapper.
 	VIRTUAL_API virtual mono::exception CryEngine(const char *message = nullptr, mono::exception inner = nullptr) = 0;
+	//! Creates a new System.ObjectDisposedException object.
+	//!
+	//! @param message Text message to supply with the exception.
+	//! @param inner   Optional object that represents an exception that caused this one.
+	//!
+	//! @returns An IMonoException wrapper.
+	VIRTUAL_API virtual mono::exception ObjectDisposed(const char *message = nullptr, mono::exception inner = nullptr) = 0;
 };

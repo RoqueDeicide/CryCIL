@@ -217,6 +217,11 @@ mono::exception MonoExceptions::CryEngine(const char *message /*= nullptr*/, mon
 	return ex;
 }
 
+mono::exception MonoExceptions::ObjectDisposed(const char *message /*= nullptr*/, mono::exception inner /*= nullptr*/)
+{
+	return this->CreateExceptionObject("System", "ObjectDisposedException", message, inner);
+}
+
 mono::exception MonoExceptions::CreateExceptionObject
 (const char *name_space, const char *name, const char *message /*= nullptr*/, mono::exception inner /*= nullptr*/)
 {
