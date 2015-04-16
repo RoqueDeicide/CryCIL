@@ -200,12 +200,26 @@ inline mono::string ToMonoString(const char *ntString)
 {
 	return MonoEnv->Objects->Texts->ToManaged(ntString);
 }
+//! Creates managed string that contains given text.
+//!
+//! @param ntString Null-terminated string which text to copy to managed string.
+inline mono::string ToMonoString(const wchar_t *ntString)
+{
+	return MonoEnv->Objects->Texts->ToManaged(ntString);
+}
 //! Creates native null-terminated string from managed one.
 //!
 //! @param monoString Reference to a managed string to convert.
 inline const char *ToNativeString(mono::string monoString)
 {
 	return MonoEnv->Objects->Texts->ToNative(monoString);
+}
+//! Creates native null-terminated string from managed one.
+//!
+//! @param monoString Reference to a managed string to convert.
+inline const wchar_t *ToNative16String(mono::string monoString)
+{
+	return MonoEnv->Objects->Texts->ToNative16(monoString);
 }
 
 //! Unboxes a value-type object into another unmanaged value.
