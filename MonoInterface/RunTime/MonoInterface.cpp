@@ -300,6 +300,7 @@ void MonoInterface::RegisterDefaultListeners()
 	this->broadcaster->listeners->Add(new AuxiliaryGeometryInterop());
 	this->broadcaster->listeners->Add(new RendererInterop());
 	this->broadcaster->listeners->Add(new TextureInterop());
+	this->broadcaster->listeners->Add(new CryFontInterop());
 }
 #pragma endregion
 #pragma region Thunks Initialization

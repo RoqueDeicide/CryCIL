@@ -80,6 +80,7 @@
     <Compile Include="Engine\CryEngineException.cs" />
     <Compile Include="Engine\Rendering\ColorArgument.cs" />
     <Compile Include="Engine\Rendering\ColorOperation.cs" />
+    <Compile Include="Engine\Rendering\CryFont.cs" />
     <Compile Include="Engine\Rendering\CullMode.cs" />
     <Compile Include="Engine\DebugServices\AuxiliaryGeometry.cs" />
     <Compile Include="Engine\DebugServices\AuxiliaryGeometryRenderFlags.cs" />
@@ -133,10 +134,12 @@
     <Compile Include="Engine\Input\Touch.cs" />
     <Compile Include="Engine\Input\SimpleKeyEventArgs.cs" />
     <Compile Include="Engine\NamespaceDoc.cs" />
+    <Compile Include="Engine\Rendering\FontSmoothing.cs" />
     <Compile Include="Engine\Rendering\PublicRenderPrimitiveType.cs" />
     <Compile Include="Engine\Rendering\Renderer.cs" />
     <Compile Include="Engine\Rendering\RenderFeatures.cs" />
     <Compile Include="Engine\Rendering\RenderState.cs" />
+    <Compile Include="Engine\Rendering\TextDrawContext.cs" />
     <Compile Include="Engine\Rendering\Texture.cs" />
     <Compile Include="Engine\Rendering\TextureFilters.cs" />
     <Compile Include="Engine\Rendering\TextureFlags.cs" />

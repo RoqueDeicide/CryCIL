@@ -39,3 +39,5 @@
 #include "Interops/Renderer.h"
 
 #include "Interops/Texture.h"
+
+#include "Interops/CryFont.h"
