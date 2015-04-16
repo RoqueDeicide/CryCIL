@@ -314,4 +314,13 @@ struct IMonoExceptions
 	//!
 	//! @returns An IMonoException wrapper.
 	VIRTUAL_API virtual mono::exception NotSupported(const char *message = nullptr, mono::exception inner = nullptr) = 0;
+	//! Creates a new CryCil.Engine.CryEngineException object.
+	//!
+	//! Returned object should be deleted we no longer in use.
+	//!
+	//! @param message Text message to supply with the exception.
+	//! @param inner   Optional object that represents an exception that caused this one.
+	//!
+	//! @returns An IMonoException wrapper.
+	VIRTUAL_API virtual mono::exception CryEngine(const char *message = nullptr, mono::exception inner = nullptr) = 0;
 };

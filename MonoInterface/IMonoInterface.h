@@ -779,5 +779,18 @@ inline IMonoException NotSupportedException(const char *message = nullptr, IMono
 	static IMonoExceptions *exs = MonoEnv->Objects->Exceptions;
 	return exs->NotSupported(message, inner);
 }
+//! Creates a new System.NotSupportedException object.
+//!
+//! Returned object should be deleted we no longer in use.
+//!
+//! @param message Text message to supply with the exception.
+//! @param inner   Optional object that represents an exception that caused this one.
+//!
+//! @returns An IMonoException wrapper.
+inline IMonoException CryEngineException(const char *message = nullptr, IMonoException inner = nullptr)
+{
+	static IMonoExceptions *exs = MonoEnv->Objects->Exceptions;
+	return exs->CryEngine(message, inner);
+}
 
 #pragma endregion

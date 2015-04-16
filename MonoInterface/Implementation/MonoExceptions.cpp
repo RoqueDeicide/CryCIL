@@ -187,6 +187,36 @@ mono::exception MonoExceptions::NotSupported(const char *message /*= nullptr*/, 
 	return this->CreateExceptionObject("System", "NotSupportedException", message, inner);
 }
 
+mono::exception MonoExceptions::CryEngine(const char *message /*= nullptr*/, mono::exception inner /*= nullptr*/)
+{
+	mono::exception ex;
+	if (message || inner)
+	{
+		IMonoClass *exClass = MonoEnv->Cryambly->GetClass("CryCil.Engine", "CryEngineException");
+		if (message && !inner)
+		{
+			IMonoConstructor *constructor = exClass->GetConstructor("System.String");
+
+			void *pars[1];
+			pars[0] = ToMonoString(message);
+
+			ex = constructor->Create(pars);
+		}
+		else
+		{
+			IMonoConstructor *constructor = exClass->GetConstructor("System.String,System.Exception");
+
+			void *pars[2];
+			pars[0] = ToMonoString(message);
+			pars[1] = inner;
+
+			ex = constructor->Create(pars);
+		}
+	}
+
+	return ex;
+}
+
 mono::exception MonoExceptions::CreateExceptionObject
 (const char *name_space, const char *name, const char *message /*= nullptr*/, mono::exception inner /*= nullptr*/)
 {

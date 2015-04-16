@@ -77,6 +77,7 @@
     <Compile Include="Engine\ConsoleFlags.cs" />
     <Compile Include="Engine\ConsoleVariable.cs" />
     <Compile Include="Engine\CryConsole.cs" />
+    <Compile Include="Engine\CryEngineException.cs" />
     <Compile Include="Engine\Rendering\ColorArgument.cs" />
     <Compile Include="Engine\Rendering\ColorOperation.cs" />
     <Compile Include="Engine\Rendering\CullMode.cs" />
