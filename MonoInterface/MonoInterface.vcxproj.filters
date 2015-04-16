@@ -288,7 +288,7 @@
       <Filter>Interops\Engine\Debug</Filter>
     </ClInclude>
     <ClInclude Include="Interops\Renderer.h">
-      <Filter>Interops\Engine</Filter>
+      <Filter>Interops\Engine\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -432,7 +432,7 @@
       <Filter>Interops\Engine\Debug</Filter>
     </ClCompile>
     <ClCompile Include="Interops\Renderer.cpp">
-      <Filter>Interops\Engine</Filter>
+      <Filter>Interops\Engine\Rendering</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -510,6 +510,9 @@
     </Filter>
     <Filter Include="Interops\Engine\Files">
       <UniqueIdentifier>{3a6ddda5-3d06-4d4f-bae3-1e4149c25bf2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interops\Engine\Rendering">
+      <UniqueIdentifier>{149d9224-10a2-4050-9865-6da2c0ef52ba}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
