@@ -142,7 +142,7 @@
     <Compile Include="Engine\Rendering\TextureFlags.cs" />
     <Compile Include="Engine\Rendering\TextureType.cs" />
     <Compile Include="Engine\Rendering\VertexPosition3fColor4bTex2f.cs" />
-    <Compile Include="Engine\TextRenderOptions.cs" />
+    <Compile Include="Engine\Rendering\TextRenderOptions.cs" />
     <Compile Include="Engine\Time.cs" />
     <Compile Include="GeneralExtensions.cs" />
     <Compile Include="GenericEventArgs.cs" />
