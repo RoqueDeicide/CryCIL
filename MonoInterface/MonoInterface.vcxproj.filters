@@ -290,6 +290,9 @@
     <ClInclude Include="Interops\Renderer.h">
       <Filter>Interops\Engine\Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\Texture.h">
+      <Filter>Interops\Engine\Rendering</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -432,6 +435,9 @@
       <Filter>Interops\Engine\Debug</Filter>
     </ClCompile>
     <ClCompile Include="Interops\Renderer.cpp">
+      <Filter>Interops\Engine\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\Texture.cpp">
       <Filter>Interops\Engine\Rendering</Filter>
     </ClCompile>
   </ItemGroup>

@@ -37,3 +37,5 @@
 #include "Interops/AuxiliaryGeometry.h"
 
 #include "Interops/Renderer.h"
+
+#include "Interops/Texture.h"
