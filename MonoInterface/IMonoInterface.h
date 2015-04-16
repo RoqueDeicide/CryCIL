@@ -779,7 +779,7 @@ inline IMonoException NotSupportedException(const char *message = nullptr, IMono
 	static IMonoExceptions *exs = MonoEnv->Objects->Exceptions;
 	return exs->NotSupported(message, inner);
 }
-//! Creates a new System.NotSupportedException object.
+//! Creates a new CryCil.Engine.CryEngineException object.
 //!
 //! Returned object should be deleted we no longer in use.
 //!
