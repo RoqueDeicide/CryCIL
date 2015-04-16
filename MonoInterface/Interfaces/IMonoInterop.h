@@ -104,6 +104,7 @@ template<> struct IMonoInterop < false, true > : public IMonoInteropBase
 };
 
 #define REGISTER_METHOD(method) this->RegisterInteropMethod(#method, method)
+#define REGISTER_CTOR(method) this->RegisterInteropMethod(".ctor", method)
 
 //! Interface of interops that use classes within CryCil.Interops name space.
 template<bool callRegistrationOnly>
