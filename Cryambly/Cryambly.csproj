@@ -147,6 +147,8 @@
     <Compile Include="Engine\Rendering\VertexPosition3fColor4bTex2f.cs" />
     <Compile Include="Engine\Rendering\TextRenderOptions.cs" />
     <Compile Include="Engine\Time.cs" />
+    <Compile Include="Engine\UserInterface\UiRenderer.cs" />
+    <Compile Include="Engine\UserInterface\UiTexture.cs" />
     <Compile Include="GeneralExtensions.cs" />
     <Compile Include="GenericEventArgs.cs" />
     <Compile Include="Interops\LogPosting.cs" />
