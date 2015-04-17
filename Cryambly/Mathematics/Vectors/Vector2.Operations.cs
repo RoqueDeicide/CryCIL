@@ -157,6 +157,19 @@ namespace CryCil
 			return new Vector2(value.X, value.Y);
 		}
 		/// <summary>
+		/// Performs an implicit conversion from <see cref="SizeF"/> to <see cref="Vector2"/> .
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <returns>
+		/// A new instance of type <see cref="Vector2"/> which has X and Y coordinates taken from
+		/// <paramref name="value"/>.
+		/// </returns>
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static implicit operator Vector2(SizeF value)
+		{
+			return new Vector2(value.Width, value.Height);
+		}
+		/// <summary>
 		/// Performs an explicit conversion from <see cref="Vector2"/> to <see cref="Vector3"/> .
 		/// </summary>
 		/// <param name="value">The value.</param>
