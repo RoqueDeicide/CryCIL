@@ -25,6 +25,8 @@ MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener
 	: appDomain(nullptr)
 	, broadcaster(nullptr)
 {
+	_this = this;
+
 	this->running = false;
 
 	this->cryambly = nullptr;
@@ -124,6 +126,14 @@ MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener
 	this->InitializeThunks();
 	
 	ReportComment("Main thunks initialized.");
+
+	const char *ns = "CryCil.RunTime";
+	const char *cn = "MonoInterface";
+
+	this->funcs->AddInternalCall(ns, cn, "OnCompilationStartingBind", OnCompilationStartingBind);
+	this->funcs->AddInternalCall(ns, cn, "OnCompilationCompleteBind", OnCompilationCompleteBind);
+	this->funcs->AddInternalCall(ns, cn, "GetSubscribedStagesBind",   GetSubscribedStagesBind);
+	this->funcs->AddInternalCall(ns, cn, "OnInitializationStageBind", OnInitializationStageBind);
 	
 	this->broadcaster->OnRunTimeInitialized();
 	
@@ -281,7 +291,6 @@ void MonoInterface::RegisterDefaultListeners()
 #ifdef _DEBUG
 	this->broadcaster->listeners->Add(new DebugEventReporter());
 #endif // _DEBUG
-	this->broadcaster->listeners->Add(new InitializationInterop());
 	this->broadcaster->listeners->Add(new LogPostingInterop());
 	this->broadcaster->listeners->Add(new CryMarshalInterop());
 	this->broadcaster->listeners->Add(new MeshOpsInterop());
@@ -344,3 +353,31 @@ void MonoInterface::RegisterDefaultListeners()
 	}
 #pragma endregion
 
+#pragma region Thunks Initialization
+	void MonoInterface::OnCompilationStartingBind()
+	{
+		_this->broadcaster->OnCompilationStarting();
+	}
+	void MonoInterface::OnCompilationCompleteBind(bool success)
+	{
+		_this->broadcaster->OnCompilationComplete(success);
+	}
+	mono::Array MonoInterface::GetSubscribedStagesBind()
+	{
+		int stagesCount;
+		int *indices = _this->broadcaster->GetSubscribedStagesInfo(stagesCount);
+		IMonoClass *SystemInt32 = MonoClassCache::Wrap(mono_get_int32_class());
+		IMonoArray<int> result = MonoEnv->Objects->Arrays->Create(stagesCount, SystemInt32);
+		for (int i = 0; i < stagesCount; i++)
+		{
+			result[i] = indices[i];
+		}
+		return result;
+	}
+	void MonoInterface::OnInitializationStageBind(int stageIndex)
+	{
+		_this->broadcaster->OnInitializationStage(stageIndex);
+	}
+
+	MonoInterface *MonoInterface::_this;
+#pragma endregion

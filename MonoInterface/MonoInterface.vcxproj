@@ -296,7 +296,6 @@
     <ClInclude Include="RunTime\AllInterops.h" />
     <ClInclude Include="RunTime\DebugEventReporter.h" />
     <ClInclude Include="RunTime\EventBroadcaster.h" />
-    <ClInclude Include="RunTime\InitializationInterop.h" />
     <ClInclude Include="RunTime\MonoInterface.h" />
     <ClInclude Include="SortedList.h" />
     <ClInclude Include="stdafx.h" />
@@ -371,7 +370,6 @@
     <ClCompile Include="Interops\Timing.cpp" />
     <ClCompile Include="RunTime\DebugEventReporter.cpp" />
     <ClCompile Include="RunTime\EventBroadcaster.cpp" />
-    <ClCompile Include="RunTime\InitializationInterop.cpp" />
     <ClCompile Include="RunTime\MonoInterface.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

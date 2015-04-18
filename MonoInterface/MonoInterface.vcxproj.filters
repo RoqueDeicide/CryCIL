@@ -18,9 +18,6 @@
     <ClInclude Include="RunTime\EventBroadcaster.h">
       <Filter>RunTime</Filter>
     </ClInclude>
-    <ClInclude Include="RunTime\InitializationInterop.h">
-      <Filter>RunTime</Filter>
-    </ClInclude>
     <ClInclude Include="RunTime\AllInterops.h" />
     <ClInclude Include="API_ImplementationHeaders.h" />
     <ClInclude Include="CryCilHeader.h" />
@@ -304,9 +301,6 @@
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="CryEngineInterface.cpp" />
-    <ClCompile Include="RunTime\InitializationInterop.cpp">
-      <Filter>RunTime</Filter>
-    </ClCompile>
     <ClCompile Include="RunTime\DebugEventReporter.cpp">
       <Filter>RunTime</Filter>
     </ClCompile>

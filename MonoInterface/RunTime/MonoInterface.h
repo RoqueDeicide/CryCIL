@@ -14,7 +14,6 @@
 
 #include "RunTime/DebugEventReporter.h"
 #include "RunTime/EventBroadcaster.h"
-#include "InitializationInterop.h"
 
 #include "List.h"
 
@@ -24,11 +23,12 @@ class MonoInterface
 	, public IGameFrameworkListener
 	, public ISystemEventListener
 {
-	friend InitializationInterop;
 private:
 #pragma region Fields
 	EventBroadcaster *broadcaster;
 	MonoDomain *appDomain;
+
+	static MonoInterface *_this;
 #pragma endregion
 public:
 #pragma region Property Methods
@@ -87,5 +87,11 @@ private:
 	void InitializeAssemblyCollectionThunks();
 	template<typename MethodSignature>
 	MethodSignature GetMethodThunk(IMonoAssembly *assembly, const char *nameSpace, const char *className, const char *methodName, const char *params);
+#pragma endregion
+#pragma region Internal Calls
+	static void OnCompilationStartingBind();
+	static void OnCompilationCompleteBind(bool success);
+	static mono::Array GetSubscribedStagesBind();
+	static void OnInitializationStageBind(int stageIndex);
 #pragma endregion
 };
