@@ -19,10 +19,19 @@ void RendererInterop::OnRunTimeInitialized()
 
 	REGISTER_METHOD(Enable2DMode);
 	REGISTER_METHOD(Disable2DMode);
+	REGISTER_METHOD(Draw2DImageInternal);
+	REGISTER_METHOD(Push2DImageInternal);
+	REGISTER_METHOD(Draw2DImageList);
 
 	REGISTER_METHOD(SetColorOperation);
+	REGISTER_METHOD(SetWhiteTexture);
+	REGISTER_METHOD(SetTexture);
 
 	REGISTER_METHOD(DrawDynamicVertexBuffer);
+
+	REGISTER_METHOD(ScaleX);
+	REGISTER_METHOD(ScaleY);
+	REGISTER_METHOD(ScaleXY);
 }
 
 void RendererInterop::DrawTextInternal(Vec3 position, int options, ColorF color, Vec2 scale, mono::string text)
