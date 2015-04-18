@@ -33,7 +33,7 @@
 
 #include "List.h"
 
-//! Base class for Text and ConstructiveText.
+//! Base class for Text and TextBuilder.
 class TextBase
 {
 protected:
@@ -525,7 +525,7 @@ public:
 };
 
 //! Represents a string that can be changed.
-class ConstructiveText : public TextBase
+class TextBuilder : public TextBase
 {
 private:
 	int capacity;		//!< Size of the buffer.
@@ -538,16 +538,16 @@ public:
 		return this->capacity;
 	}
 	//! Creates default constructive text.
-	ConstructiveText() : TextBase()
+	TextBuilder() : TextBase()
 	{
 		this->capacity = 0;
 	}
 	//! Assigns contents of the temporary object to the new one.
-	ConstructiveText(ConstructiveText &&other) : TextBase(std::move(other)) {}
+	TextBuilder(TextBuilder &&other) : TextBase(std::move(other)) {}
 	//! Creates a constructive text with desired capacity.
 	//!
 	//! @param capacity Amount of space to allocate for symbols before any of them are added.
-	ConstructiveText(int capacity) : TextBase()
+	TextBuilder(int capacity) : TextBase()
 	{
 		this->capacity = capacity;
 		this->text = (char *)malloc(capacity * sizeof(char));
@@ -557,7 +557,7 @@ public:
 	//! Text from given string is copied into new object without a terminating null character.
 	//!
 	//! @param text Text to initialize this object with.
-	ConstructiveText(const char *text)
+	TextBuilder(const char *text)
 	{
 		this->Init(text, 0, strlen(text));
 	}
@@ -566,14 +566,14 @@ public:
 	//! @param text  Pointer to the beginning of the array.
 	//! @param index Zero-based index of the first character within the array to copy.
 	//! @param count Number of characters to copy.
-	ConstructiveText(const char *text, int index, int count)
+	TextBuilder(const char *text, int index, int count)
 	{
 		this->Init(text, index, count);
 	}
 	//! Creates a new mutable string from a given immutable string.
 	//!
 	//! @param immutableString Immutable string which is used for initialization.
-	ConstructiveText(Text *immutableString)
+	TextBuilder(Text *immutableString)
 	{
 		this->Init(immutableString, 0, immutableString->Length);
 	}
@@ -582,14 +582,14 @@ public:
 	//! @param immutableString  Immutable string which portion is used for initialization.
 	//! @param index            Zero-based index of the first character of the substring to copy.
 	//! @param count            Number of characters to copy.
-	ConstructiveText(Text *immutableString, int index, int count)
+	TextBuilder(Text *immutableString, int index, int count)
 	{
 		this->Init(immutableString, index, count);
 	}
 	//! Constructs a text out of given parts.
 	//!
 	//! @param t1 Number of arguments in the chain.
-	ConstructiveText(int capacity, int count...)
+	TextBuilder(int capacity, int count...)
 	{
 		// Gather the arguments into the list and calculate total length at the same time.
 		va_list va;
@@ -623,7 +623,7 @@ public:
 			}
 		}
 	}
-	~ConstructiveText()
+	~TextBuilder()
 	{
 		if (this->text)
 		{
@@ -666,7 +666,7 @@ public:
 	//!
 	//! @param index Zero-based index of the first symbol of the substring to copy to the result.
 	//! @param count Number of characters to copy.
-	ConstructiveText *Substring(int index, int count) const
+	TextBuilder *Substring(int index, int count) const
 	{
 		if (!this->text)
 		{
@@ -676,7 +676,7 @@ public:
 		{
 			FatalError("Attempt to copy too many characters from the string.");
 		}
-		ConstructiveText *result = new ConstructiveText();
+		TextBuilder *result = new TextBuilder();
 		result->length = count;
 		result->text = new char[result->length];
 		for (int i = 0; i < result->length; i++)
@@ -685,7 +685,7 @@ public:
 		}
 	}
 	//! Appends a symbol to the end of this text.
-	ConstructiveText &operator <<(char str)
+	TextBuilder &operator <<(char str)
 	{
 		int combinedLength = this->length + 1;
 		this->Resize(combinedLength);
@@ -696,19 +696,19 @@ public:
 	//! Appends a null-terminated string to the end of this text.
 	//!
 	//! Avoid invocation of this operator unless given string is a literal.
-	ConstructiveText &operator <<(const char *str)
+	TextBuilder &operator <<(const char *str)
 	{
 		this->Append((char *)str, strlen(str));
 		return *this;
 	}
 	//! Appends an immutable string to the end of this text.
-	ConstructiveText &operator <<(Text &text)
+	TextBuilder &operator <<(Text &text)
 	{
 		this->Append((char *)text.TextBuffer, text.Length);
 		return *this;
 	}
 	//! Appends a string to the end of this text.
-	ConstructiveText &operator <<(ConstructiveText &text)
+	TextBuilder &operator <<(TextBuilder &text)
 	{
 		this->Append(text.text, text.length);
 		return *this;

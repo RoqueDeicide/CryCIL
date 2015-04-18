@@ -45,7 +45,7 @@ struct IMonoGC;
 
 class TextBase;
 class Text;
-class ConstructiveText;
+class TextBuilder;
 
 namespace mono
 {

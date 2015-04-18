@@ -721,7 +721,7 @@ void PrintDigitsArray(mono::Array digits)
 {
 	auto digitsArray = IMonoArray<int>(digits);
 
-	ConstructiveText digitsText(30);
+	TextBuilder digitsText(30);
 	char symbol[2];
 
 	digitsText << itoa(digitsArray[0], &symbol[0], 10);

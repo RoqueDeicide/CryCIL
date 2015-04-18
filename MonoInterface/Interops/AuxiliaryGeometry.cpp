@@ -8,7 +8,7 @@ const char *bfs(const char *methodName, List<const char *> &argNames)
 {
 	static NtText sig;
 
-	ConstructiveText text(300);
+	TextBuilder text(300);
 	text << methodName << "(";
 	if (argNames.Length != 0)
 	{

@@ -118,7 +118,7 @@ int MonoFunctions::ParseSignature(_MonoMethod *func, List<const char *> &names, 
 	
 	names = List<const char *>(paramCount);
 
-	ConstructiveText paramsText = ConstructiveText(100);
+	TextBuilder paramsText = TextBuilder(100);
 	
 	void *iter = nullptr;
 	while (MonoType *paramType = mono_signature_get_params(sig, &iter))

@@ -250,7 +250,7 @@ IMonoFunction *MonoClassWrapper::GetFunction(const char *name, List<ClassSpec> &
 
 	for (int i = 0; i < specifiedClasses.Length; i++)
 	{
-		ConstructiveText typeName = ConstructiveText(10);
+		TextBuilder typeName = TextBuilder(10);
 		typeName << specifiedClasses[i].Value1->FullNameIL << specifiedClasses[i].Value2;
 
 		const char *typeNameNt = typeName.ToNTString();
@@ -452,7 +452,7 @@ IMonoProperty *MonoClassWrapper::GetProperty(const char *name, List<ClassSpec> &
 
 	for (int i = 0; i < specifiedClasses.Length; i++)
 	{
-		ConstructiveText typeName = ConstructiveText(10);
+		TextBuilder typeName = TextBuilder(10);
 		typeName << specifiedClasses[i].Value1->FullNameIL << specifiedClasses[i].Value2;
 
 		const char *typeNameNt = typeName.ToNTString();
@@ -742,12 +742,12 @@ const char *MonoClassWrapper::GetFullName()
 {
 	if (!this->fullName)
 	{
-		ConstructiveText fullName;
+		TextBuilder fullName;
 		if (MonoClass *nestingClass = mono_class_get_nesting_type(this->wrappedClass))
 		{
 			const char *nestingName = MonoClassCache::Wrap(nestingClass)->FullName;
 
-			fullName = ConstructiveText(strlen(this->name) + strlen(nestingName) + 1);
+			fullName = TextBuilder(strlen(this->name) + strlen(nestingName) + 1);
 
 			fullName << nestingName << "." << this->name;
 
@@ -755,8 +755,8 @@ const char *MonoClassWrapper::GetFullName()
 		}
 		else
 		{
-			ConstructiveText fullName =
-				ConstructiveText(strlen(this->name) + strlen(this->nameSpace) + 1);
+			TextBuilder fullName =
+				TextBuilder(strlen(this->name) + strlen(this->nameSpace) + 1);
 
 			fullName << this->nameSpace << "." << this->name;
 		}
@@ -769,12 +769,12 @@ const char *MonoClassWrapper::GetFullNameIL()
 {
 	if (!this->fullNameIL)
 	{
-		ConstructiveText fullName;
+		TextBuilder fullName;
 		if (MonoClass *nestingClass = mono_class_get_nesting_type(this->wrappedClass))
 		{
 			const char *nestingName = MonoClassCache::Wrap(nestingClass)->FullName;
 
-			fullName = ConstructiveText(strlen(this->name) + strlen(nestingName) + 1);
+			fullName = TextBuilder(strlen(this->name) + strlen(nestingName) + 1);
 
 			fullName << nestingName << "+" << this->name;
 
@@ -782,8 +782,8 @@ const char *MonoClassWrapper::GetFullNameIL()
 		}
 		else
 		{
-			ConstructiveText fullName =
-				ConstructiveText(strlen(this->name) + strlen(this->nameSpace) + 1);
+			TextBuilder fullName =
+				TextBuilder(strlen(this->name) + strlen(this->nameSpace) + 1);
 
 			fullName << this->nameSpace << "." << this->name;
 		}
