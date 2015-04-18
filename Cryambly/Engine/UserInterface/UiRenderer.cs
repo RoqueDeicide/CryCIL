@@ -19,16 +19,6 @@ namespace CryCil.Engine.UserInterface
 	public static unsafe class UiRenderer
 	{
 		#region Fields
-		private struct Indexes
-		{
-			[UsedImplicitly]
-			public fixed ushort Line[2];
-			[UsedImplicitly]
-			public fixed ushort Triangle[3];
-			[UsedImplicitly]
-			public fixed ushort Quad[4];
-		}
-		private static readonly Indexes indexes;
 		#endregion
 		#region Properties
 
@@ -37,21 +27,6 @@ namespace CryCil.Engine.UserInterface
 
 		#endregion
 		#region Construction
-		static UiRenderer()
-		{
-			indexes = new Indexes();
-			indexes.Line[0] = 0;
-			indexes.Line[1] = 1;
-
-			indexes.Triangle[0] = 0;
-			indexes.Triangle[1] = 1;
-			indexes.Triangle[2] = 2;
-
-			indexes.Quad[0] = 0;
-			indexes.Quad[1] = 1;
-			indexes.Quad[2] = 2;
-			indexes.Quad[3] = 3;
-		}
 		#endregion
 		#region Interface
 		/// <summary>
@@ -103,10 +78,12 @@ namespace CryCil.Engine.UserInterface
 			vertices[0].TextureCoordinates = Vector2.Zero;
 			vertices[1].TextureCoordinates = new Vector2(1);
 
+			long indexes = 0x00010000;
+
 			Renderer.DrawDynamicVertexBuffer
 			(
 				vertices, 2,
-				indexes.Line, 2,
+				(ushort*)&indexes, 2,
 				PublicRenderPrimitiveType.LineList
 			);
 		}
@@ -145,10 +122,12 @@ namespace CryCil.Engine.UserInterface
 
 			SetTexture(textureId);
 
+			long indexes = 0x000200010000;
+
 			Renderer.DrawDynamicVertexBuffer
 			(
 				vertices, 3,
-				indexes.Triangle, 3,
+				(ushort*)&indexes, 3,
 				PublicRenderPrimitiveType.TriangleList
 			);
 		}
@@ -194,10 +173,12 @@ namespace CryCil.Engine.UserInterface
 
 			SetTexture(tId);
 
+			long indexes = 0x0003000200010000;
+
 			Renderer.DrawDynamicVertexBuffer
 			(
 				vertices, 4,
-				indexes.Quad, 4,
+				(ushort *)&indexes, 4,
 				PublicRenderPrimitiveType.TriangleStrip
 			);
 		}
