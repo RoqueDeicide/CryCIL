@@ -110,12 +110,9 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
     <ClInclude Include="Interops\GameLogic\GameRules.h" />
     <ClInclude Include="Interops\LevelSystem.h" />
     <ClInclude Include="Interops\Network.h" />
-    <ClInclude Include="Interops\Platform.h" />
     <ClInclude Include="Interops\StaticObjects\CMesh.h" />
     <ClInclude Include="Interops\StaticObjects\StaticObject.h" />
-    <ClInclude Include="Interops\Viewport\ViewSystem.h" />
     <ClInclude Include="ManagedGameLogic\ManagedEntity.h" />
-    <ClInclude Include="MonoCVars.h" />
     <ClInclude Include="MonoEntity.h" />
     <ClInclude Include="NativeEntity.h" />
     <ClInclude Include="MonoEntityClass.h" />
@@ -140,12 +137,9 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
     <ClCompile Include="Interops\GameLogic\GameRules.cpp" />
     <ClCompile Include="Interops\LevelSystem.cpp" />
     <ClCompile Include="Interops\Network.cpp" />
-    <ClCompile Include="Interops\Platform.cpp" />
     <ClCompile Include="Interops\StaticObjects\CMesh.cpp" />
     <ClCompile Include="Interops\StaticObjects\StaticObject.cpp" />
-    <ClCompile Include="Interops\Viewport\ViewSystem.cpp" />
     <ClCompile Include="ManagedGameLogic\ManagedEntity.cpp" />
-    <ClCompile Include="MonoCVars.cpp" />
     <ClCompile Include="MonoEntity.cpp" />
     <ClCompile Include="MonoEntityClass.cpp" />
     <ClCompile Include="MonoEntityPropertyHandler.cpp" />

@@ -21,9 +21,6 @@
     <ClInclude Include="NativeEntity.h">
       <Filter>EntitySystem\Native</Filter>
     </ClInclude>
-    <ClInclude Include="MonoCVars.h">
-      <Filter>Mono</Filter>
-    </ClInclude>
     <ClInclude Include="EntityEventHandling.h">
       <Filter>EntitySystem</Filter>
     </ClInclude>
@@ -60,9 +57,6 @@
     <ClInclude Include="Interops\StaticObjects\StaticObject.h">
       <Filter>Interops\StaticObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Interops\Viewport\ViewSystem.h">
-      <Filter>Interops\Viewport</Filter>
-    </ClInclude>
     <ClInclude Include="Interops\CrySerialize.h">
       <Filter>Interops</Filter>
     </ClInclude>
@@ -70,9 +64,6 @@
       <Filter>Interops</Filter>
     </ClInclude>
     <ClInclude Include="Interops\Network.h">
-      <Filter>Interops</Filter>
-    </ClInclude>
-    <ClInclude Include="Interops\Platform.h">
       <Filter>Interops</Filter>
     </ClInclude>
     <ClInclude Include="AllInterops.h" />
@@ -99,9 +90,6 @@
     </ClCompile>
     <ClCompile Include="NativeEntity.cpp">
       <Filter>EntitySystem\Native</Filter>
-    </ClCompile>
-    <ClCompile Include="MonoCVars.cpp">
-      <Filter>Mono</Filter>
     </ClCompile>
     <ClCompile Include="EntityEventHandling.cpp">
       <Filter>EntitySystem</Filter>
@@ -139,9 +127,6 @@
     <ClCompile Include="Interops\StaticObjects\StaticObject.cpp">
       <Filter>Interops\StaticObjects</Filter>
     </ClCompile>
-    <ClCompile Include="Interops\Viewport\ViewSystem.cpp">
-      <Filter>Interops\Viewport</Filter>
-    </ClCompile>
     <ClCompile Include="Interops\CrySerialize.cpp">
       <Filter>Interops</Filter>
     </ClCompile>
@@ -149,9 +134,6 @@
       <Filter>Interops</Filter>
     </ClCompile>
     <ClCompile Include="Interops\Network.cpp">
-      <Filter>Interops</Filter>
-    </ClCompile>
-    <ClCompile Include="Interops\Platform.cpp">
       <Filter>Interops</Filter>
     </ClCompile>
     <ClCompile Include="Interops\FlowGraph\FlowManager.cpp">
@@ -164,9 +146,6 @@
   <ItemGroup>
     <Filter Include="EntitySystem">
       <UniqueIdentifier>{f5c2f1b4-f7f2-4f27-be93-8c656a23cdb2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Mono">
-      <UniqueIdentifier>{2de1619b-2f0c-4705-a8e5-59c8778b080d}</UniqueIdentifier>
     </Filter>
     <Filter Include="ActorSystem">
       <UniqueIdentifier>{7519e88b-de7a-4729-919b-85c4612989e9}</UniqueIdentifier>
@@ -191,9 +170,6 @@
     </Filter>
     <Filter Include="Interops\StaticObjects">
       <UniqueIdentifier>{32b893d5-61d5-4bfc-9231-bf35d3233630}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Interops\Viewport">
-      <UniqueIdentifier>{dfe4c9b2-942b-4107-a837-8df22e11c60f}</UniqueIdentifier>
     </Filter>
     <Filter Include="ManagedGameLogic">
       <UniqueIdentifier>{f7aae537-016d-424c-abe4-4948a9bb3443}</UniqueIdentifier>

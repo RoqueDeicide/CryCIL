@@ -172,14 +172,6 @@
     <Compile Include="Physics\ColliderMode.cs" />
     <Compile Include="Physics\CryCollision.cs" />
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="RunTime\BlittableAttribute.cs" />
-    <Compile Include="RunTime\Compilation\CodeSolution.cs" />
-    <Compile Include="RunTime\Compilation\Exception.cs" />
-    <Compile Include="RunTime\Compilation\IProject.cs" />
-    <Compile Include="RunTime\Compilation\NamespaceDoc.cs" />
-    <Compile Include="RunTime\Compilation\Project.cs" />
-    <Compile Include="RunTime\Compilation\CSharpProjectFile.cs" />
-    <Compile Include="RunTime\Compilation\VisualStudioDotNetProject.cs" />
     <Compile Include="RunTime\MonoInterface.cs" />
     <Compile Include="RunTime\NamespaceDoc.cs" />
     <Compile Include="RunTime\Registration\EntityRegister.cs" />
@@ -222,8 +214,6 @@
     <Compile Include="Logic\Flowgraph\PortTypes.cs" />
     <Compile Include="Logic\GameRules\GameRulesInitializationParams.cs" />
     <Compile Include="Native\NamespaceDoc.cs" />
-    <Compile Include="Native\PlatformInterop.cs" />
-    <Compile Include="Platform.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\Mesh.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\CommonTangentOperations.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\Solids\ConstructiveSolidGeometry.cs" />
@@ -266,7 +256,6 @@
     <Compile Include="Physics\PrePhysicsUpdateMode.cs" />
     <Compile Include="Physics\Status\DynamicsStatus.cs" />
     <Compile Include="Physics\Status\LivingStatus.cs" />
-    <Compile Include="Native\ScriptSystemInterop.cs" />
     <Compile Include="Physics\Explosion.cs" />
     <Compile Include="Native\NetworkInterop.cs" />
     <Compile Include="RunTime\Networking\RemoteInvocationException.cs" />
@@ -298,7 +287,6 @@
     <Compile Include="Native\MaterialInterop.cs" />
     <Compile Include="Native\ParticleEffectInterop.cs" />
     <Compile Include="Native\PhysicsInterop.cs" />
-    <Compile Include="Native\TimeInterop.cs" />
     <Compile Include="RunTime\Networking\RemoteInvocationAttribute.cs" />
     <Compile Include="Engine\Material\Material.cs" />
     <Compile Include="Engine\Particles\ParticleEffect.cs" />
@@ -307,19 +295,6 @@
     <Compile Include="Entities\NativeEntity.cs" />
     <Compile Include="RunTime\Serialization\CrySerializer.cs" />
     <Compile Include="RunTime\Serialization\SerializedObjectReference.cs" />
-    <Compile Include="RunTime\Testing\Assertion.cs" />
-    <Compile Include="RunTime\Testing\Attributes.cs" />
-    <Compile Include="RunTime\Testing\Exceptions.cs" />
-    <Compile Include="RunTime\Testing\Reports\ConsoleListener.cs" />
-    <Compile Include="RunTime\Testing\Reports\ReportForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="RunTime\Testing\Reports\ReportForm.Designer.cs">
-      <DependentUpon>ReportForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="RunTime\Testing\Internal.cs" />
-    <Compile Include="RunTime\Testing\Results.cs" />
-    <Compile Include="RunTime\Testing\Manager.cs" />
     <Compile Include="Physics\RaycastHit.cs" />
     <Compile Include="Entities\EntityMovement.cs" />
     <Compile Include="Game.cs" />
@@ -327,23 +302,8 @@
     <Compile Include="Entities\EntityStatics.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Logic\GameRules\GameRules.cs" />
-    <Compile Include="RunTime\Statistics.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RunTime\UnusedMarker.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="RunTime\Testing\Reports\ReportForm.resx">
-      <DependentUpon>ReportForm.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="RunTime\Testing\Reports\Resources\TestFailed.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="RunTime\Testing\Reports\Resources\TestIgnored.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="RunTime\Testing\Reports\Resources\TestSuccess.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

@@ -15,11 +15,7 @@
 // Static objects and meshes.
 #include "Interops/StaticObjects/CMesh.h"
 #include "Interops/StaticObjects/StaticObject.h"
-// Rendering.
-#include "Interops/Viewport/Renderer.h"
-#include "Interops/Viewport/ViewSystem.h"
 // Miscellaneous
 #include "Interops/CrySerialize.h"
 #include "Interops/LevelSystem.h"
 #include "Interops/Network.h"
-#include "Interops/Platform.h"
