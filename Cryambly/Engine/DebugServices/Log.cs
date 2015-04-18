@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,10 +15,12 @@ namespace CryCil.Engine.DebugServices
 		/// <summary>
 		/// Gets or sets log verbosity level.
 		/// </summary>
-		public static VerbosityLevels VerbosityLevel
+		public static extern VerbosityLevels VerbosityLevel
 		{
-			get { return (VerbosityLevels)Interops.LogPosting.GetVerboxity(); }
-			set { Interops.LogPosting.SetVerbosity((int)value); }
+			[MethodImpl(MethodImplOptions.InternalCall)]
+			get;
+			[MethodImpl(MethodImplOptions.InternalCall)]
+			set;
 		}
 		/// <summary>
 		/// Writes a line into the log.
@@ -66,10 +69,8 @@ namespace CryCil.Engine.DebugServices
 		/// </summary>
 		/// <param name="postType">Type of post to send.</param>
 		/// <param name="text">    Text to post.</param>
-		public static void Post(LogPostType postType, string text)
-		{
-			Interops.LogPosting.Post((int)postType, text);
-		}
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		public static extern void Post(LogPostType postType, string text);
 	}
 	/// <summary>
 	/// Enumeration of types of posts that can be sent to the log.

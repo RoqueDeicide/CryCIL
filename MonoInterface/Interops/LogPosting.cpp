@@ -1,27 +1,22 @@
 #include "stdafx.h"
 #include "LogPosting.h"
 
-const char *LogPostingInterop::GetName()
-{
-	return "LogPosting";
-}
-
 void LogPostingInterop::OnRunTimeInitialized()
 {
 	REGISTER_METHOD(Post);
-	REGISTER_METHOD(GetVerboxity);
-	REGISTER_METHOD(SetVerbosity);
+	REGISTER_METHOD(get_VerbosityLevel);
+	REGISTER_METHOD(set_VerbosityLevel);
 }
 
 void LogPostingInterop::Post(IMiniLog::ELogType postType, mono::string text)
 {
 	gEnv->pLog->LogV(postType, NtText(text), 0);
 }
-int LogPostingInterop::GetVerboxity()
+int LogPostingInterop::get_VerbosityLevel()
 {
 	return gEnv->pLog->GetVerbosityLevel();
 }
-void LogPostingInterop::SetVerbosity(int level)
+void LogPostingInterop::set_VerbosityLevel(int level)
 {
 	gEnv->pLog->SetVerbosity(level);
 }

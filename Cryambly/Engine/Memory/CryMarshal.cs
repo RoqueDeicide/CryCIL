@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 
-namespace CryCil.Interops
+namespace CryCil.Engine.Memory
 {
 	internal static class CryMarshal
 	{

@@ -106,14 +106,6 @@ template<> struct IMonoInterop < false, true > : public IMonoInteropBase
 #define REGISTER_METHOD(method) this->RegisterInteropMethod(#method, method)
 #define REGISTER_CTOR(method) this->RegisterInteropMethod(".ctor", method)
 
-//! Interface of interops that use classes within CryCil.Interops name space.
-template<bool callRegistrationOnly>
-struct IDefaultMonoInterop : public IMonoInterop < callRegistrationOnly, true >
-{
-	virtual const char *GetNameSpace() { return "CryCil.Interops"; }
-};
-
-
 //! Specialization of IMonoInterop<,> template that relies on using MonoEnv variable
 //! instead of internal field and unregisters and destroys itself after registration
 //! of internal calls.

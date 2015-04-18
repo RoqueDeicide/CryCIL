@@ -1,20 +1,33 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+using CryCil.Engine.Memory;
 using CryCil.Geometry.Csg;
 using CryCil.Geometry.Csg.Base;
 using CryCil.Graphics;
-using CryCil.Interops;
 
 namespace CryCil.Geometry
 {
+	[StructLayout(LayoutKind.Sequential)]
+	internal struct NativeListHeader
+	{
+		internal IntPtr ElementsPtr;
+		internal int Length;
+		internal int Capacity;
+	}
 	/// <summary>
 	/// Represents a triangular mesh where each face is a triangle with it's own set of vertices.
 	/// </summary>
-	public class FaceMesh
+	public unsafe class FaceMesh
 	{
+		#region Fields
 		/// <summary>
 		/// Indicates whether CSG operations must be done natively.
 		/// </summary>
 		public static readonly bool NativeCsg = true;
+#endregion
+		#region Properties
 		/// <summary>
 		/// Gets the list of faces that comprise this mesh.
 		/// </summary>
@@ -29,6 +42,8 @@ namespace CryCil.Geometry
 				return new BspNode<FullFace>(this.Faces, null);
 			}
 		}
+#endregion
+		#region Construction
 		/// <summary>
 		/// Creates empty mesh.
 		/// </summary>
@@ -44,6 +59,8 @@ namespace CryCil.Geometry
 		{
 			this.Faces = bspTree.AllElements;
 		}
+#endregion
+		#region Interface
 		/// <summary>
 		/// Combine this mesh with another.
 		/// </summary>
@@ -54,12 +71,12 @@ namespace CryCil.Geometry
 			if (NativeCsg)
 			{
 				this.Faces =
-					MeshOps.FromNativeFaceList
+					FromNativeFaceList
 					(
-						MeshOps.Combine
+						CombineInternal
 						(
-							MeshOps.ToNativeFaceList(this.Faces),
-							MeshOps.ToNativeFaceList(anotherMesh.Faces)
+							ToNativeFaceList(this.Faces),
+							ToNativeFaceList(anotherMesh.Faces)
 						)
 					);
 			}
@@ -81,12 +98,12 @@ namespace CryCil.Geometry
 			if (NativeCsg)
 			{
 				this.Faces =
-					MeshOps.FromNativeFaceList
+					FromNativeFaceList
 					(
-						MeshOps.Intersect
+						IntersectInternal
 						(
-							MeshOps.ToNativeFaceList(this.Faces),
-							MeshOps.ToNativeFaceList(anotherMesh.Faces)
+							ToNativeFaceList(this.Faces),
+							ToNativeFaceList(anotherMesh.Faces)
 						)
 					);
 			}
@@ -117,12 +134,12 @@ namespace CryCil.Geometry
 			if (NativeCsg)
 			{
 				this.Faces =
-					MeshOps.FromNativeFaceList
+					FromNativeFaceList
 					(
-						MeshOps.Subtract
+						SubtractInternal
 						(
-							MeshOps.ToNativeFaceList(this.Faces),
-							MeshOps.ToNativeFaceList(anotherMesh.Faces)
+							ToNativeFaceList(this.Faces),
+							ToNativeFaceList(anotherMesh.Faces)
 						)
 					);
 			}
@@ -145,5 +162,46 @@ namespace CryCil.Geometry
 			this.Faces.Clear();
 			this.Faces.AddRange(bspTree.AllElements);
 		}
+#endregion
+		#region Utilities
+		internal static IntPtr ToNativeFaceList(List<FullFace> faces)
+		{
+			// Allocate list header object in native memory.
+			NativeListHeader* listHeader = (NativeListHeader*)
+				CryMarshal.AllocateMemory((ulong)Marshal.SizeOf(typeof(NativeListHeader)))
+						  .ToPointer();
+			// Assign length and capacity.
+			listHeader->Length = faces.Count;
+			listHeader->Capacity = faces.Count;
+			// Allocate memory for faces.
+			listHeader->ElementsPtr =
+				CryMarshal.AllocateMemory((ulong)(Marshal.SizeOf(typeof(FullFace)) * faces.Count));
+			// Copy faces to the list.
+			FullFace* facesPtr = (FullFace*)listHeader->ElementsPtr.ToPointer();
+			for (int i = 0; i < faces.Count; i++)
+			{
+				facesPtr[i] = faces[i];
+			}
+			return new IntPtr(listHeader);
+		}
+		internal static List<FullFace> FromNativeFaceList(IntPtr facesPtr)
+		{
+			NativeListHeader* listHeader = (NativeListHeader*)facesPtr;
+			List<FullFace> list = new List<FullFace>(listHeader->Length);
+			FullFace* faces = (FullFace*)listHeader->ElementsPtr;
+			for (int i = 0; i < listHeader->Length; i++)
+			{
+				list.Add(faces[i]);
+			}
+			CryMarshal.FreeMemory(facesPtr);
+			return list;
+		}
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		internal static extern IntPtr CombineInternal(IntPtr facesPtr1, IntPtr facesPtr2);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		internal static extern IntPtr IntersectInternal(IntPtr facesPtr1, IntPtr facesPtr2);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		internal static extern IntPtr SubtractInternal(IntPtr facesPtr1, IntPtr facesPtr2);
+#endregion
 	}
 }

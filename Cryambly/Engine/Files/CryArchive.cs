@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using CryCil.Annotations;
-using CryCil.Interops;
+using CryCil.Engine.Memory;
 using CryCil.RunTime;
 using CryCil.Utilities;
 

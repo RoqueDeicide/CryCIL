@@ -1,19 +1,14 @@
 #include "stdafx.h"
 #include "MeshOps.h"
 
-const char *MeshOpsInterop::GetName()
-{
-	return "MeshOps";
-}
-
 void MeshOpsInterop::OnRunTimeInitialized()
 {
-	REGISTER_METHOD(Combine);
-	REGISTER_METHOD(Intersect);
-	REGISTER_METHOD(Subtract);
+	REGISTER_METHOD(CombineInternal);
+	REGISTER_METHOD(IntersectInternal);
+	REGISTER_METHOD(SubtractInternal);
 }
 
-List<Face> *MeshOpsInterop::Combine(List<Face> *faces1, List<Face> *faces2)
+List<Face> *MeshOpsInterop::CombineInternal(List<Face> *faces1, List<Face> *faces2)
 {
 	BspNode *node1 = new BspNode(faces1);
 	BspNode *node2 = new BspNode(faces2);
@@ -31,7 +26,7 @@ List<Face> *MeshOpsInterop::Combine(List<Face> *faces1, List<Face> *faces2)
 	return result;
 }
 
-List<Face> *MeshOpsInterop::Intersect(List<Face> *faces1, List<Face> *faces2)
+List<Face> *MeshOpsInterop::IntersectInternal(List<Face> *faces1, List<Face> *faces2)
 {
 	BspNode *node1 = new BspNode(faces1);
 	BspNode *node2 = new BspNode(faces2);
@@ -58,7 +53,7 @@ List<Face> *MeshOpsInterop::Intersect(List<Face> *faces1, List<Face> *faces2)
 	return result;
 }
 
-List<Face> *MeshOpsInterop::Subtract(List<Face> *faces1, List<Face> *faces2)
+List<Face> *MeshOpsInterop::SubtractInternal(List<Face> *faces1, List<Face> *faces2)
 {
 	BspNode *node1 = new BspNode(faces1);
 	BspNode *node2 = new BspNode(faces2);

@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Remoting.Proxies;
 using System.Text;
 using System.Threading.Tasks;
-using CryCil.Interops;
+using CryCil.Engine.Memory;
 
 namespace CryCil.Engine.Files
 {

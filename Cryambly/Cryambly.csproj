@@ -154,9 +154,7 @@
     <Compile Include="Engine\UserInterface\UiTexture.cs" />
     <Compile Include="GeneralExtensions.cs" />
     <Compile Include="GenericEventArgs.cs" />
-    <Compile Include="Interops\LogPosting.cs" />
-    <Compile Include="Interops\CryMarshal.cs" />
-    <Compile Include="Interops\MeshOps.cs" />
+    <Compile Include="Engine\Memory\CryMarshal.cs" />
     <Compile Include="Mathematics\BatchOps.cs" />
     <Compile Include="Mathematics\BatchOps.Enumerations.cs" />
     <Compile Include="Mathematics\BatchOps.Math.cs" />
@@ -267,7 +265,6 @@
     <Compile Include="RunTime\Logging\NamespaceDoc.cs" />
     <Compile Include="RunTime\MonoInterface.cs" />
     <Compile Include="RunTime\NamespaceDoc.cs" />
-    <Compile Include="Interops\NamespaceDoc.cs" />
     <Compile Include="Utilities\StringPool.cs" />
     <Compile Include="VariousConstants.cs" />
   </ItemGroup>

@@ -1,9 +1,10 @@
 #pragma once
 #include <IMonoInterface.h>
 
-struct CryMarshalInterop : public IDefaultMonoInterop<true>
+struct CryMarshalInterop : public IMonoInterop<true, true>
 {
 	virtual const char *GetName() { return "CryMarshal"; };
+	virtual const char *GetNameSpace() { return "CryCil.Engine.Memory"; }
 
 	virtual void OnRunTimeInitialized();
 	// Allocate an array of bytes of given length. Returns a pointer to the first byte.
