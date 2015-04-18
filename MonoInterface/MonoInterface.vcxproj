@@ -278,6 +278,7 @@
     <ClInclude Include="Interops\DebugDraw.h" />
     <ClInclude Include="Interops\CryFont.h" />
     <ClInclude Include="Interops\InputInterop.h" />
+    <ClInclude Include="Interops\Locale.h" />
     <ClInclude Include="Interops\LogPosting.h" />
     <ClInclude Include="Interops\MeshOps.h" />
     <ClInclude Include="Interops\MouseInterop.h" />
@@ -359,6 +360,7 @@
     <ClCompile Include="Interops\CryPak.cpp" />
     <ClCompile Include="Interops\DebugDraw.cpp" />
     <ClCompile Include="Interops\InputInterop.cpp" />
+    <ClCompile Include="Interops\Locale.cpp" />
     <ClCompile Include="Interops\LogPosting.cpp" />
     <ClCompile Include="Interops\MeshOps.cpp" />
     <ClCompile Include="Interops\MouseInterop.cpp" />

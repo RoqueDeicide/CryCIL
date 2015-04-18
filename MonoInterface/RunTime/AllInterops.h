@@ -41,3 +41,5 @@
 #include "Interops/Texture.h"
 
 #include "Interops/CryFont.h"
+
+#include "Interops/Locale.h"

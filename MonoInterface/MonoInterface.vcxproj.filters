@@ -296,6 +296,9 @@
     <ClInclude Include="Interops\CryFont.h">
       <Filter>Interops\Engine\Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\Locale.h">
+      <Filter>Interops\Engine\Localization</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -446,6 +449,9 @@
     <ClCompile Include="Interops\CryFont.cpp">
       <Filter>Interops\Engine\Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="Interops\Locale.cpp">
+      <Filter>Interops\Engine\Localization</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">
@@ -525,6 +531,9 @@
     </Filter>
     <Filter Include="Interops\Engine\Rendering">
       <UniqueIdentifier>{149d9224-10a2-4050-9865-6da2c0ef52ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interops\Engine\Localization">
+      <UniqueIdentifier>{0736572b-6efb-42de-88f9-3880c77b982f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

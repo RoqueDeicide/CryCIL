@@ -78,6 +78,8 @@
     <Compile Include="Engine\ConsoleVariable.cs" />
     <Compile Include="Engine\CryConsole.cs" />
     <Compile Include="Engine\CryEngineException.cs" />
+    <Compile Include="Engine\Localization\SupportedLanguages.cs" />
+    <Compile Include="Engine\Localization\Translator.cs" />
     <Compile Include="Engine\Rendering\ColorArgument.cs" />
     <Compile Include="Engine\Rendering\ColorOperation.cs" />
     <Compile Include="Engine\Rendering\CryFont.cs" />
