@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -155,12 +156,12 @@ namespace CryCil.RunTime
 		#region Event Raisers
 		private static void OnCompilationStarted()
 		{
-			Interops.Initialization.OnCompilationStartingBind();
+			OnCompilationStartingBind();
 			if (CompilationStarted != null) CompilationStarted();
 		}
 		private static void OnCompilationComplete(bool success)
 		{
-			Interops.Initialization.OnCompilationCompleteBind(success);
+			OnCompilationCompleteBind(success);
 			if (CompilationComplete != null)
 				CompilationComplete(success);
 		}
@@ -232,8 +233,8 @@ namespace CryCil.RunTime
 					// Add the native initialization function to the mix.
 					new Tuple<InitializationStageFunction, int[]>
 					(
-						Interops.Initialization.OnInitializationStageBind,
-						Interops.Initialization.GetSubscribedStagesBind()
+						OnInitializationStageBind,
+						GetSubscribedStagesBind()
 					)
 				);
 				Console.WriteLine("Compiling data about initialization stages.");
@@ -263,6 +264,14 @@ namespace CryCil.RunTime
 				}
 			}
 		}
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		internal static extern void OnCompilationStartingBind();
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		internal static extern void OnCompilationCompleteBind(bool success);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		internal static extern int[] GetSubscribedStagesBind();
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		internal static extern void OnInitializationStageBind(int stageIndex);
 		#endregion
 	}
 	/// <summary>
