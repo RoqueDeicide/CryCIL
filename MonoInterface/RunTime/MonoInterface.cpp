@@ -32,6 +32,7 @@ MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener
 	this->cryambly = nullptr;
 	this->assemblies = nullptr;
 	this->framework = framework;
+	this->funcs = new MonoFunctions();
 
 	this->assemblies = new MonoAssemblies();
 	this->broadcaster = new EventBroadcaster();
@@ -193,6 +194,7 @@ void MonoInterface::Shutdown()
 	delete this->assemblies;
 	delete this->gc;
 	delete this->objs;
+	delete this->funcs;
 	
 	CryLogAlways("Shutting down jit.");
 	
