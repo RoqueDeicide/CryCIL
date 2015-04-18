@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using CryCil.Graphics;
 
 namespace CryCil.Engine.Rendering
 {
@@ -56,6 +57,11 @@ namespace CryCil.Engine.Rendering
 		/// readability.
 		/// </summary>
 		public bool Framed;
+
+		/// <summary>
+		/// Overriding color of the text.
+		/// </summary>
+		public ColorByte ColorOverride;
 		#endregion
 	}
 }
