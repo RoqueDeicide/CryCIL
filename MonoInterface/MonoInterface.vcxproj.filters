@@ -296,6 +296,9 @@
     <ClInclude Include="Interops\Locale.h">
       <Filter>Interops\Engine\Localization</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\Camera.h">
+      <Filter>Interops\Engine\Rendering</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -445,6 +448,9 @@
     </ClCompile>
     <ClCompile Include="Interops\Locale.cpp">
       <Filter>Interops\Engine\Localization</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\Camera.cpp">
+      <Filter>Interops\Engine\Rendering</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

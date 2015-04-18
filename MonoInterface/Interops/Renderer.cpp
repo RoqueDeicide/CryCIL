@@ -14,6 +14,8 @@ void RendererInterop::OnRunTimeInitialized()
 	REGISTER_METHOD(get_NativeWidth);
 	REGISTER_METHOD(get_NativeHeight);
 	REGISTER_METHOD(get_AspectRatio);
+	REGISTER_METHOD(get_Camera);
+	//REGISTER_METHOD(set_Camera);
 
 	REGISTER_METHOD(GetRenderFeatures);
 
@@ -120,6 +122,26 @@ float RendererInterop::get_AspectRatio()
 
 	return gEnv->pRenderer->GetPixelAspectRatio();
 }
+
+CCamera *RendererInterop::get_Camera()
+{
+	if (!gEnv || !gEnv->pRenderer)
+	{
+		return nullptr;
+	}
+
+	return (CCamera *)&gEnv->pRenderer->GetCamera();
+}
+
+// void RendererInterop::set_Camera(CCamera *value)
+// {
+// 	if (!gEnv || !gEnv->pRenderer || !value)
+// 	{
+// 		return;
+// 	}
+// 
+// 	gEnv->pRenderer->SetCamera(*value);
+// }
 
 int RendererInterop::GetRenderFeatures()
 {

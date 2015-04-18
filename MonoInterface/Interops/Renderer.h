@@ -14,11 +14,13 @@ struct RendererInterop : public IMonoInterop<true, true>
 	static void set_CullingMode(int value);
 	static void set_State(int value);
 
-	static int   get_Width();
-	static int   get_Height();
-	static int   get_NativeWidth();
-	static int   get_NativeHeight();
-	static float get_AspectRatio();
+	static int      get_Width();
+	static int      get_Height();
+	static int      get_NativeWidth();
+	static int      get_NativeHeight();
+	static float    get_AspectRatio();
+	static CCamera *get_Camera();
+	//static void     set_Camera(CCamera *value);
 
 	static int GetRenderFeatures();
 

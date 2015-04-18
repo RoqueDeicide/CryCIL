@@ -76,6 +76,16 @@ namespace CryCil.Engine.Rendering
 		/// Gets rendering features that are currently supported.
 		/// </summary>
 		public static RenderFeatures Features { get; private set; }
+		/// <summary>
+		/// Gets the camera that is used for rendering.
+		/// </summary>
+		public static extern Camera Camera
+		{
+			[MethodImpl(MethodImplOptions.InternalCall)]
+			get;
+// 			[MethodImpl(MethodImplOptions.InternalCall)]
+// 			set;
+		}
 		#endregion
 		#region Events
 

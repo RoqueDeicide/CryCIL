@@ -41,3 +41,5 @@
 #include "Interops/CryFont.h"
 
 #include "Interops/Locale.h"
+
+#include "Interops/Camera.h"

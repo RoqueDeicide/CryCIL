@@ -313,6 +313,7 @@ void MonoInterface::RegisterDefaultListeners()
 	this->broadcaster->listeners->Add(new TextureInterop());
 	this->broadcaster->listeners->Add(new CryFontInterop());
 	this->broadcaster->listeners->Add(new LocaleInterop());
+	this->broadcaster->listeners->Add(new CameraInterop());
 }
 #pragma endregion
 #pragma region Thunks Initialization

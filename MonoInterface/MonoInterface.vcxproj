@@ -269,6 +269,7 @@
     <ClInclude Include="Interops\ArchiveStream.h" />
     <ClInclude Include="Interops\AuxiliaryGeometry.h" />
     <ClInclude Include="Interops\BatchOps.h" />
+    <ClInclude Include="Interops\Camera.h" />
     <ClInclude Include="Interops\Console.h" />
     <ClInclude Include="Interops\ConsoleVariable.h" />
     <ClInclude Include="Interops\CryArchive.h" />
@@ -351,6 +352,7 @@
     <ClCompile Include="Interops\ArchiveStream.cpp" />
     <ClCompile Include="Interops\AuxiliaryGeometry.cpp" />
     <ClCompile Include="Interops\BatchOps.cpp" />
+    <ClCompile Include="Interops\Camera.cpp" />
     <ClCompile Include="Interops\ConsoleVariable.cpp" />
     <ClCompile Include="Interops\CryArchive.cpp" />
     <ClCompile Include="Interops\CryFont.cpp" />
