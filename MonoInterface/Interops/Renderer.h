@@ -40,4 +40,7 @@ struct RendererInterop : public IMonoInterop<true, true>
 	static float ScaleX(float x);
 	static float ScaleY(float y);
 	static void ScaleXY(float &x, float &y);
+
+	static Vec3 ScreenToWorld(Vec3 position);
+	static Vec3 WorldToScreen(Vec3 position);
 };

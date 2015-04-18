@@ -32,6 +32,9 @@ void RendererInterop::OnRunTimeInitialized()
 	REGISTER_METHOD(ScaleX);
 	REGISTER_METHOD(ScaleY);
 	REGISTER_METHOD(ScaleXY);
+
+	REGISTER_METHOD(ScreenToWorld);
+	REGISTER_METHOD(WorldToScreen);
 }
 
 void RendererInterop::DrawTextInternal(Vec3 position, int options, ColorF color, Vec2 scale, mono::string text)
@@ -279,4 +282,18 @@ void RendererInterop::ScaleXY(float &x, float &y)
 	}
 
 	gEnv->pRenderer->ScaleCoord(x, y);
+}
+
+Vec3 RendererInterop::ScreenToWorld(Vec3 position)
+{
+	Vec3 world;
+	gEnv->pRenderer->UnProjectFromScreen(position.x, position.y, position.z, &world.x, &world.x, &world.x);
+	return world;
+}
+
+Vec3 RendererInterop::WorldToScreen(Vec3 position)
+{
+	Vec3 screen;
+	gEnv->pRenderer->ProjectToScreen(position.x, position.y, position.z, &screen.x, &screen.x, &screen.x);
+	return screen;
 }

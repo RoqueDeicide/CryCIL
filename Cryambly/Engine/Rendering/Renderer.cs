@@ -528,6 +528,22 @@ namespace CryCil.Engine.Rendering
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern void ScaleXY(ref float x, ref float y);
 		#endregion
+		#region Screen<->World conversions
+		/// <summary>
+		/// Converts position from screen space to world space.
+		/// </summary>
+		/// <param name="position">Coordinates of the point on the screen.</param>
+		/// <returns>Coordinates of the point in 3D world space.</returns>
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		public static extern Vector3 ScreenToWorld(Vector3 position);
+		/// <summary>
+		/// Converts position from world space to screen space.
+		/// </summary>
+		/// <param name="position">Coordinates of the point in the world.</param>
+		/// <returns>Coordinates of the point on the screen.</returns>
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		public static extern Vector3 WorldToScreen(Vector3 position);
+		#endregion
 		#endregion
 		#region Utilities
 		[MethodImpl(MethodImplOptions.InternalCall)]
