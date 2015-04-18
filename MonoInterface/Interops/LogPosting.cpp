@@ -13,9 +13,9 @@ void LogPostingInterop::OnRunTimeInitialized()
 	REGISTER_METHOD(SetVerbosity);
 }
 
-void LogPostingInterop::Post(int postType, mono::string text)
+void LogPostingInterop::Post(IMiniLog::ELogType postType, mono::string text)
 {
-	gEnv->pLog->LogV((IMiniLog::ELogType)postType, ToNativeString(text), 0);
+	gEnv->pLog->LogV(postType, NtText(text), 0);
 }
 int LogPostingInterop::GetVerboxity()
 {

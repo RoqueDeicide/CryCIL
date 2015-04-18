@@ -8,7 +8,7 @@ struct LogPostingInterop : public IDefaultMonoInterop<true>
 
 	virtual void OnRunTimeInitialized();
 	
-	static void Post(int postType, mono::string text);
 	static int  GetVerboxity();
 	static void SetVerbosity(int level);
+	static void Post(IMiniLog::ELogType postType, mono::string text);
 };
