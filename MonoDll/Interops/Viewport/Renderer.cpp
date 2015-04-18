@@ -3,16 +3,8 @@
 
 RendererInterop::RendererInterop()
 {
-	REGISTER_METHOD(GetWidth);
-	REGISTER_METHOD(GetHeight);
-
 	REGISTER_METHOD(ScreenToWorld);
 	REGISTER_METHOD(UnProjectFromScreen);
-
-	REGISTER_METHOD(DrawTextToScreen);
-
-	REGISTER_METHOD(LoadTexture);
-	REGISTER_METHOD(DrawTextureToScreen);
 
 	REGISTER_METHOD(CreateRenderTarget);
 	REGISTER_METHOD(DestroyRenderTarget);
@@ -27,23 +19,6 @@ RendererInterop::RendererInterop()
 	REGISTER_METHOD(GetCameraPosition);
 
 	REGISTER_METHOD(GetCameraFieldOfView);
-}
-
-void RendererInterop::DrawTextToScreen(float xpos, float ypos, float fontSize, ColorF color, bool center, mono::string text)
-{
-	float actualColor[] ={ color.r, color.g, color.b, color.a };
-
-	gEnv->pRenderer->Draw2dLabel(xpos, ypos, fontSize, actualColor, center, ToCryString(text));
-}
-
-int RendererInterop::GetWidth()
-{
-	return gEnv->pRenderer->GetWidth();
-}
-
-int RendererInterop::GetHeight()
-{
-	return gEnv->pRenderer->GetHeight();
 }
 
 int RendererInterop::UnProjectFromScreen(float sx, float sy, float sz, float &px, float &py, float &pz)
@@ -69,20 +44,6 @@ Vec3 RendererInterop::ScreenToWorld(int x, int y)
 	}
 
 	return Vec3(ZERO);
-}
-
-int RendererInterop::LoadTexture(mono::string texturePath)
-{
-	if (ITexture *pTexture = gEnv->pRenderer->EF_LoadTexture(ToCryString(texturePath)))
-		return pTexture->GetTextureID();
-
-	return -1;
-}
-
-void RendererInterop::DrawTextureToScreen(float xpos, float ypos, float width, float height, int textureId, float s0, float t0, float s1, float t1, float angle, float r, float g, float b, float a, float z)
-{
-	// Could expose the optional args later.
-	gEnv->pRenderer->Draw2dImage(xpos, ypos, width, height, textureId, s0, t0, s1, t1, angle, r, g, b, a, z);
 }
 
 int RendererInterop::CreateRenderTarget(int width, int height, ETEX_Format texFormat)
