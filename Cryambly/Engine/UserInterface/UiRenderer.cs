@@ -78,6 +78,7 @@ namespace CryCil.Engine.UserInterface
 			vertices[0].TextureCoordinates = Vector2.Zero;
 			vertices[1].TextureCoordinates = new Vector2(1);
 
+			// Little endian list of indexes packed into a local variable.
 			long indexes = 0x00010000;
 
 			Renderer.DrawDynamicVertexBuffer
@@ -122,6 +123,7 @@ namespace CryCil.Engine.UserInterface
 
 			SetTexture(textureId);
 
+			// Little endian list of indexes packed into a local variable.
 			long indexes = 0x000200010000;
 
 			Renderer.DrawDynamicVertexBuffer
@@ -173,6 +175,7 @@ namespace CryCil.Engine.UserInterface
 
 			SetTexture(tId);
 
+			// Little endian list of indexes packed into a local variable.
 			long indexes = 0x0003000200010000;
 
 			Renderer.DrawDynamicVertexBuffer
