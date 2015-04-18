@@ -113,7 +113,6 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
     <ClInclude Include="Interops\Platform.h" />
     <ClInclude Include="Interops\StaticObjects\CMesh.h" />
     <ClInclude Include="Interops\StaticObjects\StaticObject.h" />
-    <ClInclude Include="Interops\Viewport\Renderer.h" />
     <ClInclude Include="Interops\Viewport\ViewSystem.h" />
     <ClInclude Include="ManagedGameLogic\ManagedEntity.h" />
     <ClInclude Include="MonoCVars.h" />
@@ -144,7 +143,6 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
     <ClCompile Include="Interops\Platform.cpp" />
     <ClCompile Include="Interops\StaticObjects\CMesh.cpp" />
     <ClCompile Include="Interops\StaticObjects\StaticObject.cpp" />
-    <ClCompile Include="Interops\Viewport\Renderer.cpp" />
     <ClCompile Include="Interops\Viewport\ViewSystem.cpp" />
     <ClCompile Include="ManagedGameLogic\ManagedEntity.cpp" />
     <ClCompile Include="MonoCVars.cpp" />

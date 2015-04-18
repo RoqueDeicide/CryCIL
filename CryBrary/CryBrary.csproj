@@ -196,7 +196,6 @@
     <Compile Include="Engine\Material\SurfaceType\SurfaceTypeParams.cs" />
     <Compile Include="Engine\Particles\ParticleEmitter.cs" />
     <Compile Include="Engine\Particles\ParticleSpawnParams.cs" />
-    <Compile Include="Engine\Renderer\Camera.cs" />
     <Compile Include="Engine\TimeOfDay\CloudShadingParams.cs" />
     <Compile Include="Engine\TimeOfDay\ColorGradingParams.cs" />
     <Compile Include="Engine\TimeOfDay\FogParams.cs" />
@@ -299,7 +298,6 @@
     <Compile Include="Native\MaterialInterop.cs" />
     <Compile Include="Native\ParticleEffectInterop.cs" />
     <Compile Include="Native\PhysicsInterop.cs" />
-    <Compile Include="Native\RendererInterop.cs" />
     <Compile Include="Native\TimeInterop.cs" />
     <Compile Include="RunTime\Networking\RemoteInvocationAttribute.cs" />
     <Compile Include="Engine\Material\Material.cs" />
@@ -323,7 +321,6 @@
     <Compile Include="RunTime\Testing\Results.cs" />
     <Compile Include="RunTime\Testing\Manager.cs" />
     <Compile Include="Physics\RaycastHit.cs" />
-    <Compile Include="Engine\Renderer\Renderer.cs" />
     <Compile Include="Entities\EntityMovement.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Entities\EditorProperty.cs" />

@@ -60,9 +60,6 @@
     <ClInclude Include="Interops\StaticObjects\StaticObject.h">
       <Filter>Interops\StaticObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Interops\Viewport\Renderer.h">
-      <Filter>Interops\Viewport</Filter>
-    </ClInclude>
     <ClInclude Include="Interops\Viewport\ViewSystem.h">
       <Filter>Interops\Viewport</Filter>
     </ClInclude>
@@ -141,9 +138,6 @@
     </ClCompile>
     <ClCompile Include="Interops\StaticObjects\StaticObject.cpp">
       <Filter>Interops\StaticObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="Interops\Viewport\Renderer.cpp">
-      <Filter>Interops\Viewport</Filter>
     </ClCompile>
     <ClCompile Include="Interops\Viewport\ViewSystem.cpp">
       <Filter>Interops\Viewport</Filter>
