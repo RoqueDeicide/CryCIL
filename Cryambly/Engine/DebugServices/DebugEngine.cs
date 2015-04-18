@@ -37,6 +37,14 @@ namespace CryCil.Engine.DebugServices
 		/// object.
 		/// </summary>
 		public static event Action<DebugObject> RenderingOver;
+		/// <summary>
+		/// Occurs before rendering starts at the start of the game frame.
+		/// </summary>
+		public static event Action FrameStart;
+		/// <summary>
+		/// Occurs after rendering last object for this frame.
+		/// </summary>
+		public static event Action FrameEnd;
 		#endregion
 		#region Construction
 		static DebugEngine()
@@ -73,12 +81,22 @@ namespace CryCil.Engine.DebugServices
 		{
 			if (RenderingOver != null) RenderingOver(obj);
 		}
+		private static void OnFrameStart()
+		{
+			if (FrameStart != null) FrameStart();
+		}
+		private static void OnFrameEnd()
+		{
+			if (FrameEnd != null) FrameEnd();
+		}
 		private static void RenderObjects()
 		{
 			if (objs.First == null)
 			{
 				return;
 			}
+
+			OnFrameStart();
 
 			for (var current = objs.First; current != null; current = current.Next)
 			{
@@ -139,6 +157,8 @@ namespace CryCil.Engine.DebugServices
 			}
 
 			AuxiliaryGeometry.Flush();
+
+			OnFrameEnd();
 		}
 		#endregion
 	}
