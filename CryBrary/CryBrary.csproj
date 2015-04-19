@@ -162,8 +162,6 @@
     <Compile Include="Mathematics\Geometry\Meshes\IVertex.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\IVertex3D.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\MeshVertex.cs" />
-    <Compile Include="NativeMemory\CryMarshal.cs" />
-    <Compile Include="NativeMemory\NativeMemoryBlock.cs" />
     <Compile Include="Native\ActorInitializationParams.cs" />
     <Compile Include="Logic\Actors\ActorNetworking.cs" />
     <Compile Include="Logic\Actors\ActorStatics.cs" />
