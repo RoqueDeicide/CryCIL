@@ -249,7 +249,7 @@ namespace CryCil.Engine.Files
 			ulong memSize = (ulong)value;
 			if ((value == 0 && this.bytes != null) || value > 0)
 			{
-				IntPtr ptr = CryMarshal.ReallocateMemory((IntPtr)this.bytes, memSize);
+				IntPtr ptr = CryMarshal.Reallocate((IntPtr)this.bytes, memSize);
 				if (ptr == IntPtr.Zero)
 				{
 					throw new OutOfMemoryException
@@ -327,7 +327,7 @@ namespace CryCil.Engine.Files
 
 			this.Flush();
 
-			CryMarshal.FreeMemory(new IntPtr(this.bytes));
+			CryMarshal.Free(new IntPtr(this.bytes));
 			Marshal.FreeHGlobal(this.name);
 
 			this.alive = false;

@@ -168,14 +168,13 @@ namespace CryCil.Geometry
 		{
 			// Allocate list header object in native memory.
 			NativeListHeader* listHeader = (NativeListHeader*)
-				CryMarshal.AllocateMemory((ulong)Marshal.SizeOf(typeof(NativeListHeader)))
-						  .ToPointer();
+				CryMarshal.Allocate((ulong)Marshal.SizeOf(typeof(NativeListHeader))).ToPointer();
 			// Assign length and capacity.
 			listHeader->Length = faces.Count;
 			listHeader->Capacity = faces.Count;
 			// Allocate memory for faces.
 			listHeader->ElementsPtr =
-				CryMarshal.AllocateMemory((ulong)(Marshal.SizeOf(typeof(FullFace)) * faces.Count));
+				CryMarshal.Allocate((ulong)(Marshal.SizeOf(typeof(FullFace)) * faces.Count));
 			// Copy faces to the list.
 			FullFace* facesPtr = (FullFace*)listHeader->ElementsPtr.ToPointer();
 			for (int i = 0; i < faces.Count; i++)
@@ -193,7 +192,7 @@ namespace CryCil.Geometry
 			{
 				list.Add(faces[i]);
 			}
-			CryMarshal.FreeMemory(facesPtr);
+			CryMarshal.Free(facesPtr);
 			return list;
 		}
 		[MethodImpl(MethodImplOptions.InternalCall)]

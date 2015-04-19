@@ -333,7 +333,7 @@ namespace CryCil.Engine.Files
 
 			uint size = GetFileSize(this.handle, fileHandle);
 
-			IntPtr fileBytes = CryMarshal.AllocateMemory(size);
+			IntPtr fileBytes = CryMarshal.Allocate(size);
 
 			if (fileBytes == IntPtr.Zero)
 			{
