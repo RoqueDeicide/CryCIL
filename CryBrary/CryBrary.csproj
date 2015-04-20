@@ -273,7 +273,6 @@
     <Compile Include="RunTime\Async\Jobs\FrameDelayJob.cs" />
     <Compile Include="RunTime\Async\Jobs\IAsyncJob.cs" />
     <Compile Include="RunTime\Async\Jobs\TimeDelayJob.cs" />
-    <Compile Include="Engine\Level\Level.cs" />
     <Compile Include="Entities\EntityBase.cs" />
     <Compile Include="Engine\TimeOfDay\TimeOfDay.cs" />
     <Compile Include="Logic\Flowgraph\FlowNodeAttribute.cs" />
@@ -281,7 +280,6 @@
     <Compile Include="Native\EntityInterop.cs" />
     <Compile Include="Native\FlowNodeInterop.cs" />
     <Compile Include="Native\GameRulesInterop.cs" />
-    <Compile Include="Native\LevelInterop.cs" />
     <Compile Include="Native\MaterialInterop.cs" />
     <Compile Include="Native\ParticleEffectInterop.cs" />
     <Compile Include="Native\PhysicsInterop.cs" />
