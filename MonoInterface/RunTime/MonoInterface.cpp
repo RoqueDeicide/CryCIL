@@ -314,6 +314,11 @@ void MonoInterface::RegisterDefaultListeners()
 	this->broadcaster->listeners->Add(new CryFontInterop());
 	this->broadcaster->listeners->Add(new LocaleInterop());
 	this->broadcaster->listeners->Add(new CameraInterop());
+	this->broadcaster->listeners->Add(new LevelsInterop());
+	this->broadcaster->listeners->Add(new LevelSystemInterop());
+	this->broadcaster->listeners->Add(new LevelInterop());
+	this->broadcaster->listeners->Add(new LevelMissionsInterop());
+	this->broadcaster->listeners->Add(new LevelGameRulesInterop());
 }
 #pragma endregion
 #pragma region Thunks Initialization

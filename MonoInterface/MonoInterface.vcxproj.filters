@@ -299,6 +299,21 @@
     <ClInclude Include="Interops\Camera.h">
       <Filter>Interops\Engine\Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\LevelSystem.h">
+      <Filter>Interops\Engine\CryAction</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\Level.h">
+      <Filter>Interops\Engine\CryAction</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\Levels.h">
+      <Filter>Interops\Engine\CryAction</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\LevelMissions.h">
+      <Filter>Interops\Engine\CryAction</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\LevelGameRules.h">
+      <Filter>Interops\Engine\CryAction</Filter>
+    </ClInclude>
     <ClInclude Include="TimeUtilities.h">
       <Filter>Extras</Filter>
     </ClInclude>
@@ -455,6 +470,21 @@
     <ClCompile Include="Interops\Camera.cpp">
       <Filter>Interops\Engine\Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="Interops\LevelSystem.cpp">
+      <Filter>Interops\Engine\CryAction</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\Level.cpp">
+      <Filter>Interops\Engine\CryAction</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\Levels.cpp">
+      <Filter>Interops\Engine\CryAction</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\LevelMissions.cpp">
+      <Filter>Interops\Engine\CryAction</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\LevelGameRules.cpp">
+      <Filter>Interops\Engine\CryAction</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">
@@ -537,6 +567,9 @@
     </Filter>
     <Filter Include="Interops\Engine\Localization">
       <UniqueIdentifier>{0736572b-6efb-42de-88f9-3880c77b982f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interops\Engine\CryAction">
+      <UniqueIdentifier>{732d8bae-c3ce-41af-ad3f-76c0ce6b01dc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

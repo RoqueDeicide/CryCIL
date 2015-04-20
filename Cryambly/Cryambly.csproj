@@ -76,6 +76,12 @@
     <Compile Include="Defaults.cs" />
     <Compile Include="Engine\ConsoleFlags.cs" />
     <Compile Include="Engine\ConsoleVariable.cs" />
+    <Compile Include="Engine\CryAction\Level.cs" />
+    <Compile Include="Engine\CryAction\LevelGameRules.cs" />
+    <Compile Include="Engine\CryAction\Levels.cs" />
+    <Compile Include="Engine\CryAction\LevelMissions.cs" />
+    <Compile Include="Engine\CryAction\LevelSystem.cs" />
+    <Compile Include="Engine\CryAction\MinimapInfo.cs" />
     <Compile Include="Engine\CryConsole.cs" />
     <Compile Include="Engine\CryEngineException.cs" />
     <Compile Include="Engine\DebugServices\DebugObjects\DebugUiText.cs" />

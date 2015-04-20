@@ -279,6 +279,11 @@
     <ClInclude Include="Interops\DebugDraw.h" />
     <ClInclude Include="Interops\CryFont.h" />
     <ClInclude Include="Interops\InputInterop.h" />
+    <ClInclude Include="Interops\Level.h" />
+    <ClInclude Include="Interops\LevelGameRules.h" />
+    <ClInclude Include="Interops\LevelMissions.h" />
+    <ClInclude Include="Interops\Levels.h" />
+    <ClInclude Include="Interops\LevelSystem.h" />
     <ClInclude Include="Interops\Locale.h" />
     <ClInclude Include="Interops\LogPosting.h" />
     <ClInclude Include="Interops\MeshOps.h" />
@@ -362,6 +367,11 @@
     <ClCompile Include="Interops\CryPak.cpp" />
     <ClCompile Include="Interops\DebugDraw.cpp" />
     <ClCompile Include="Interops\InputInterop.cpp" />
+    <ClCompile Include="Interops\Level.cpp" />
+    <ClCompile Include="Interops\LevelGameRules.cpp" />
+    <ClCompile Include="Interops\LevelMissions.cpp" />
+    <ClCompile Include="Interops\Levels.cpp" />
+    <ClCompile Include="Interops\LevelSystem.cpp" />
     <ClCompile Include="Interops\Locale.cpp" />
     <ClCompile Include="Interops\LogPosting.cpp" />
     <ClCompile Include="Interops\MeshOps.cpp" />
