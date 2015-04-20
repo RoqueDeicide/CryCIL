@@ -299,6 +299,9 @@
     <ClInclude Include="Interops\Camera.h">
       <Filter>Interops\Engine\Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="TimeUtilities.h">
+      <Filter>Extras</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />

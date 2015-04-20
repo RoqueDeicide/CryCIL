@@ -1,6 +1,7 @@
 #include "stdafx.h"
 
 #include "Timing.h"
+#include "TimeUtilities.h"
 
 void TimingInterop::Update()
 {
@@ -8,11 +9,14 @@ void TimingInterop::Update()
 	{
 		return;
 	}
+
+	auto fs   = gEnv->pTimer->GetFrameStartTime(ITimer::ETIMER_GAME).GetValue();
+	auto fsui = gEnv->pTimer->GetFrameStartTime(ITimer::ETIMER_UI).GetValue();
 	
-	int64 frameStart   = gEnv->pTimer->GetFrameStartTime(ITimer::ETIMER_GAME).GetValue() * CE_to_Mono_factor;
-	int64 frameStartUi = gEnv->pTimer->GetFrameStartTime(ITimer::ETIMER_UI).GetValue() * CE_to_Mono_factor;
-	int64 frame        = (int64)(gEnv->pTimer->GetFrameTime()) * Mono_ticks_per_second;
-	int64 frameReal    = (int64)(gEnv->pTimer->GetRealFrameTime()) * Mono_ticks_per_second;
+	int64 frameStart   = TimeUtilities::TicksCryEngineToToMono(fs);
+	int64 frameStartUi = TimeUtilities::TicksCryEngineToToMono(fsui);
+	int64 frame        = TimeUtilities::TicksToMonoSeconds(gEnv->pTimer->GetFrameTime());
+	int64 frameReal    = TimeUtilities::TicksToMonoSeconds(gEnv->pTimer->GetRealFrameTime());
 	float scale        = gEnv->pTimer->GetTimeScale();
 	float frameRate    = gEnv->pTimer->GetFrameRate();
 	
@@ -34,7 +38,7 @@ int64 TimingInterop::get_Async()
 {
 	if (gEnv && gEnv->pTimer)
 	{
-		return gEnv->pTimer->GetAsyncTime().GetValue() * CE_to_Mono_factor;
+		return TimeUtilities::TicksCryEngineToToMono(gEnv->pTimer->GetAsyncTime().GetValue());
 	}
 	return 0;
 }
@@ -43,7 +47,7 @@ int64 TimingInterop::get_AsyncCurrent()
 {
 	if (gEnv && gEnv->pTimer)
 	{
-		return (int64)(gEnv->pTimer->GetAsyncCurTime()) * Mono_ticks_per_second;
+		return TimeUtilities::TicksToMonoSeconds(gEnv->pTimer->GetAsyncCurTime());
 	}
 	return 0;
 }
@@ -65,6 +69,3 @@ void TimingInterop::ClearScaling()
 }
 
 SetTimingsRawThunk TimingInterop::setTimings;
-
-int64 TimingInterop::CE_to_Mono_factor = 100L;
-int64 TimingInterop::Mono_ticks_per_second = 10000000L;

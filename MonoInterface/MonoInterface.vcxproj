@@ -307,6 +307,7 @@
     <ClInclude Include="Testing\TestStart.h" />
     <ClInclude Include="Text.h" />
     <ClInclude Include="ThunkTables.h" />
+    <ClInclude Include="TimeUtilities.h" />
     <ClInclude Include="Tuples.h" />
   </ItemGroup>
   <ItemGroup>

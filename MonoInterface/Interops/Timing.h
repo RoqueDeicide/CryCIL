@@ -18,8 +18,5 @@ struct TimingInterop : public IMonoInterop<false, true>
 	static void SetTimeScale(float value);
 	static void ClearScaling();
 
-	static int64 Mono_ticks_per_second;
-	static int64 CE_to_Mono_factor;
-
 	static SetTimingsRawThunk setTimings;
 };
