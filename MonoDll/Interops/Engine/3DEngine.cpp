@@ -3,13 +3,6 @@
 
 Engine3DInterop::Engine3DInterop()
 {
-	REGISTER_METHOD(GetTerrainElevation);
-	REGISTER_METHOD(GetTerrainZ);
-
-	REGISTER_METHOD(GetTerrainSize);
-	REGISTER_METHOD(GetTerrainSectorSize);
-	REGISTER_METHOD(GetTerrainUnitSize);
-
 	REGISTER_METHOD(SetTimeOfDay);
 	REGISTER_METHOD(GetTimeOfDay);
 
@@ -22,31 +15,6 @@ Engine3DInterop::Engine3DInterop()
 	REGISTER_METHOD(ActivatePortal);
 
 	REGISTER_METHOD(GetMaxViewDistance);
-}
-
-float Engine3DInterop::GetTerrainElevation(float x, float y)
-{
-	return gEnv->p3DEngine->GetTerrainElevation(x, y);
-}
-
-float Engine3DInterop::GetTerrainZ(int x, int y)
-{
-	return gEnv->p3DEngine->GetTerrainZ(x, y);
-}
-
-int Engine3DInterop::GetTerrainUnitSize()
-{
-	return gEnv->p3DEngine->GetHeightMapUnitSize();
-}
-
-int Engine3DInterop::GetTerrainSize()
-{
-	return gEnv->p3DEngine->GetTerrainSize();
-}
-
-int Engine3DInterop::GetTerrainSectorSize()
-{
-	return gEnv->p3DEngine->GetTerrainSectorSize();
 }
 
 void Engine3DInterop::SetTimeOfDay(float hour, bool forceUpdate)

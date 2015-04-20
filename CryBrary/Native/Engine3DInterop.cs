@@ -6,17 +6,6 @@ namespace CryEngine.Native
 {
 	internal static class Engine3DInterop
 	{
-		[MethodImpl(MethodImplOptions.InternalCall)]
-		extern internal static float GetTerrainElevation(float positionX, float positionY);
-
-		[MethodImplAttribute(MethodImplOptions.InternalCall)]
-		extern internal static int GetTerrainSize();
-		[MethodImplAttribute(MethodImplOptions.InternalCall)]
-		extern internal static int GetTerrainSectorSize();
-		[MethodImplAttribute(MethodImplOptions.InternalCall)]
-		extern internal static int GetTerrainUnitSize();
-		[MethodImplAttribute(MethodImplOptions.InternalCall)]
-		extern internal static int GetTerrainZ(int x, int y);
 
 		[MethodImplAttribute(MethodImplOptions.InternalCall)]
 		extern internal static void SetTimeOfDay(float hour, bool forceUpdate = false);

@@ -26,13 +26,6 @@ public:
 	virtual const char *GetClassName() { return "Engine3DInterop"; }
 	// ~IMonoScriptBind
 
-	static float GetTerrainElevation(float x, float y);
-	static float GetTerrainZ(int x, int y);
-
-	static int GetTerrainSize();
-	static int GetTerrainSectorSize();
-	static int GetTerrainUnitSize();
-
 	static void SetTimeOfDay(float hour, bool forceUpdate);
 	static float GetTimeOfDay();
 

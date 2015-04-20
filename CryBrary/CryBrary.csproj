@@ -286,7 +286,6 @@
     <Compile Include="RunTime\Networking\RemoteInvocationAttribute.cs" />
     <Compile Include="Engine\Material\Material.cs" />
     <Compile Include="Engine\Particles\ParticleEffect.cs" />
-    <Compile Include="Engine\Terrain.cs" />
     <Compile Include="Logic\Entities\EntityId.cs" />
     <Compile Include="Entities\NativeEntity.cs" />
     <Compile Include="RunTime\Serialization\CrySerializer.cs" />
