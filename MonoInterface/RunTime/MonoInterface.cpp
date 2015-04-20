@@ -319,6 +319,7 @@ void MonoInterface::RegisterDefaultListeners()
 	this->broadcaster->listeners->Add(new LevelInterop());
 	this->broadcaster->listeners->Add(new LevelMissionsInterop());
 	this->broadcaster->listeners->Add(new LevelGameRulesInterop());
+	this->broadcaster->listeners->Add(new TerrainInterop());
 }
 #pragma endregion
 #pragma region Thunks Initialization

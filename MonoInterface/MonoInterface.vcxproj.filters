@@ -317,6 +317,9 @@
     <ClInclude Include="TimeUtilities.h">
       <Filter>Extras</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\Terrain.h">
+      <Filter>Interops\Engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -484,6 +487,9 @@
     </ClCompile>
     <ClCompile Include="Interops\LevelGameRules.cpp">
       <Filter>Interops\Engine\CryAction</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\Terrain.cpp">
+      <Filter>Interops\Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

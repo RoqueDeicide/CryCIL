@@ -53,3 +53,5 @@
 #include "Interops/LevelMissions.h"
 
 #include "Interops/LevelGameRules.h"
+
+#include "Interops/Terrain.h"

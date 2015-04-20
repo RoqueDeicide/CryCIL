@@ -290,6 +290,7 @@
     <ClInclude Include="Interops\MouseInterop.h" />
     <ClInclude Include="Interops\Profiling.h" />
     <ClInclude Include="Interops\Renderer.h" />
+    <ClInclude Include="Interops\Terrain.h" />
     <ClInclude Include="Interops\Texture.h" />
     <ClInclude Include="Interops\Timing.h" />
     <ClInclude Include="List.h" />
@@ -379,6 +380,7 @@
     <ClCompile Include="Interops\Console.cpp" />
     <ClCompile Include="Interops\Profiling.cpp" />
     <ClCompile Include="Interops\Renderer.cpp" />
+    <ClCompile Include="Interops\Terrain.cpp" />
     <ClCompile Include="Interops\Texture.cpp" />
     <ClCompile Include="Interops\Timing.cpp" />
     <ClCompile Include="RunTime\DebugEventReporter.cpp" />

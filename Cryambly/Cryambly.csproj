@@ -157,6 +157,7 @@
     <Compile Include="Engine\Rendering\TextureType.cs" />
     <Compile Include="Engine\Rendering\VertexPosition3fColor4bTex2f.cs" />
     <Compile Include="Engine\Rendering\TextRenderOptions.cs" />
+    <Compile Include="Engine\Terrain.cs" />
     <Compile Include="Engine\Time.cs" />
     <Compile Include="Engine\UserInterface\UiRenderer.cs" />
     <Compile Include="Engine\UserInterface\UiTexture.cs" />
