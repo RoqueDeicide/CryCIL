@@ -54,7 +54,7 @@ void CryFontInterop::Ctor(mono::object obj, mono::string name)
 	*GET_BOXED_OBJECT_DATA(ManagedFontData, obj) = data;
 }
 
-void CryFontInterop::Dispose(mono::object obj)
+void CryFontInterop::Release(mono::object obj)
 {
 	ManagedFontData *data = GET_BOXED_OBJECT_DATA(ManagedFontData, obj);
 

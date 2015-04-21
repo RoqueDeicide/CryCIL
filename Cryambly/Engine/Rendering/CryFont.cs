@@ -66,13 +66,19 @@ namespace CryCil.Engine.Rendering
 		/// <exception cref="CryEngineException">Unable to create a new font object.</exception>
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public extern CryFont([UsedImplicitly] string name);
+		~CryFont()
+		{
+			this.Dispose(false);
+		}
 		#endregion
 		#region Interface
 		/// <summary>
 		/// Releases underlying IFFont object.
 		/// </summary>
-		[MethodImpl(MethodImplOptions.InternalCall)]
-		public extern void Dispose();
+		public void Dispose()
+		{
+			this.Dispose(true);
+		}
 		/// <summary>
 		/// Loads information about the font from the XML file.
 		/// </summary>
@@ -188,6 +194,20 @@ namespace CryCil.Engine.Rendering
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private extern void DrawTextInternal(float x, float y, float z, string pStr, bool asciiMultiLine,
 											 ref TextDrawContext ctx);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private extern void Release();
+		private void Dispose(bool suppressFinalize)
+		{
+			if (this.handle == IntPtr.Zero)
+			{
+				return;
+			}
+			this.Release();
+			if (suppressFinalize)
+			{
+				GC.SuppressFinalize(this);
+			}
+		}
 		#endregion
 	}
 }

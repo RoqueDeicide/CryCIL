@@ -10,7 +10,7 @@ struct CryFontInterop : public IMonoInterop<true, true>
 	virtual void OnRunTimeInitialized();
 
 	static void Ctor(mono::object obj, mono::string name);
-	static void Dispose(mono::object obj);
+	static void Release(mono::object obj);
 
 	static mono::string get_LoadedFonts();
 
