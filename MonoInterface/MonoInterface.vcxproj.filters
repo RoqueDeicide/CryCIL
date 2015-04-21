@@ -128,43 +128,43 @@
       <Filter>MonoDefinitionFiles</Filter>
     </ClInclude>
     <ClInclude Include="Implementation\MonoAssembly.h">
-      <Filter>Implementations\Mono\Metadata</Filter>
+      <Filter>Implementations\Metadata</Filter>
     </ClInclude>
     <ClInclude Include="Implementation\MonoClass.h">
-      <Filter>Implementations\Mono\Metadata</Filter>
+      <Filter>Implementations\Metadata</Filter>
     </ClInclude>
     <ClInclude Include="Implementation\MonoEvent.h">
-      <Filter>Implementations\Mono\Metadata</Filter>
+      <Filter>Implementations\Metadata</Filter>
     </ClInclude>
     <ClInclude Include="Implementation\MonoMethod.h">
-      <Filter>Implementations\Mono\Metadata</Filter>
+      <Filter>Implementations\Metadata</Filter>
     </ClInclude>
     <ClInclude Include="Implementation\MonoProperty.h">
-      <Filter>Implementations\Mono\Metadata</Filter>
+      <Filter>Implementations\Metadata</Filter>
     </ClInclude>
     <ClInclude Include="Implementation\MonoGC.h">
-      <Filter>Implementations\Mono\GC</Filter>
+      <Filter>Implementations\GC</Filter>
     </ClInclude>
     <ClInclude Include="Implementation\DefaultBoxinator.h">
-      <Filter>Implementations\Mono\ObjectSystems</Filter>
+      <Filter>Implementations\ObjectSystems</Filter>
     </ClInclude>
     <ClInclude Include="Implementation\MonoArrays.h">
-      <Filter>Implementations\Mono\ObjectSystems</Filter>
+      <Filter>Implementations\ObjectSystems</Filter>
     </ClInclude>
     <ClInclude Include="Implementation\MonoDelegates.h">
-      <Filter>Implementations\Mono\ObjectSystems</Filter>
+      <Filter>Implementations\ObjectSystems</Filter>
     </ClInclude>
     <ClInclude Include="Implementation\MonoExceptions.h">
-      <Filter>Implementations\Mono\ObjectSystems</Filter>
+      <Filter>Implementations\ObjectSystems</Filter>
     </ClInclude>
     <ClInclude Include="Implementation\MonoObjects.h">
-      <Filter>Implementations\Mono\ObjectSystems</Filter>
+      <Filter>Implementations\ObjectSystems</Filter>
     </ClInclude>
     <ClInclude Include="Implementation\MonoTexts.h">
-      <Filter>Implementations\Mono\ObjectSystems</Filter>
+      <Filter>Implementations\ObjectSystems</Filter>
     </ClInclude>
     <ClInclude Include="Implementation\MonoThreads.h">
-      <Filter>Implementations\Mono\ObjectSystems</Filter>
+      <Filter>Implementations\ObjectSystems</Filter>
     </ClInclude>
     <ClInclude Include="Tuples.h">
       <Filter>Extras</Filter>
@@ -173,7 +173,7 @@
       <Filter>Interfaces\Metadata</Filter>
     </ClInclude>
     <ClInclude Include="Implementation\MonoConstructor.h">
-      <Filter>Implementations\Mono\Metadata</Filter>
+      <Filter>Implementations\Metadata</Filter>
     </ClInclude>
     <ClInclude Include="Interfaces\IMonoAssembly.h">
       <Filter>Interfaces\Metadata</Filter>
@@ -185,16 +185,16 @@
       <Filter>Interfaces\Metadata</Filter>
     </ClInclude>
     <ClInclude Include="Implementation\AssemblyUtilities.h">
-      <Filter>Implementations\Mono\Metadata</Filter>
+      <Filter>Implementations\Metadata</Filter>
     </ClInclude>
     <ClInclude Include="Implementation\MonoCoreLibrary.h">
-      <Filter>Implementations\Mono\Metadata</Filter>
+      <Filter>Implementations\Metadata</Filter>
     </ClInclude>
     <ClInclude Include="Implementation\MonoAssemblies.h">
-      <Filter>Implementations\Mono\Metadata</Filter>
+      <Filter>Implementations\Metadata</Filter>
     </ClInclude>
     <ClInclude Include="Implementation\Cryambly.h">
-      <Filter>Implementations\Mono\Metadata</Filter>
+      <Filter>Implementations\Metadata</Filter>
     </ClInclude>
     <ClInclude Include="Testing\TestClasses.h">
       <Filter>Testing</Filter>
@@ -203,7 +203,7 @@
       <Filter>Interfaces\Metadata</Filter>
     </ClInclude>
     <ClInclude Include="Implementation\MonoField.h">
-      <Filter>Implementations\Mono\Metadata</Filter>
+      <Filter>Implementations\Metadata</Filter>
     </ClInclude>
     <ClInclude Include="ReadOnlyList.h">
       <Filter>Extras</Filter>
@@ -218,7 +218,7 @@
       <Filter>Interfaces\Metadata</Filter>
     </ClInclude>
     <ClInclude Include="Implementation\MonoStaticMethod.h">
-      <Filter>Implementations\Mono\Metadata</Filter>
+      <Filter>Implementations\Metadata</Filter>
     </ClInclude>
     <ClInclude Include="NtText.h">
       <Filter>Extras</Filter>
@@ -237,7 +237,7 @@
       <Filter>Interfaces\Metadata</Filter>
     </ClInclude>
     <ClInclude Include="Implementation\MonoFunctions.h">
-      <Filter>Implementations\Mono\Metadata</Filter>
+      <Filter>Implementations\Metadata</Filter>
     </ClInclude>
     <ClInclude Include="Interops\BatchOps.h">
       <Filter>Interops</Filter>
@@ -357,64 +357,64 @@
       <Filter>Testing</Filter>
     </ClCompile>
     <ClCompile Include="Implementation\MonoAssembly.cpp">
-      <Filter>Implementations\Mono\Metadata</Filter>
+      <Filter>Implementations\Metadata</Filter>
     </ClCompile>
     <ClCompile Include="Implementation\MonoClass.cpp">
-      <Filter>Implementations\Mono\Metadata</Filter>
+      <Filter>Implementations\Metadata</Filter>
     </ClCompile>
     <ClCompile Include="Implementation\MonoEvent.cpp">
-      <Filter>Implementations\Mono\Metadata</Filter>
+      <Filter>Implementations\Metadata</Filter>
     </ClCompile>
     <ClCompile Include="Implementation\MonoMethod.cpp">
-      <Filter>Implementations\Mono\Metadata</Filter>
+      <Filter>Implementations\Metadata</Filter>
     </ClCompile>
     <ClCompile Include="Implementation\MonoProperty.cpp">
-      <Filter>Implementations\Mono\Metadata</Filter>
+      <Filter>Implementations\Metadata</Filter>
     </ClCompile>
     <ClCompile Include="Implementation\DefaultBoxinator.cpp">
-      <Filter>Implementations\Mono\ObjectSystems</Filter>
+      <Filter>Implementations\ObjectSystems</Filter>
     </ClCompile>
     <ClCompile Include="Implementation\MonoArrays.cpp">
-      <Filter>Implementations\Mono\ObjectSystems</Filter>
+      <Filter>Implementations\ObjectSystems</Filter>
     </ClCompile>
     <ClCompile Include="Implementation\MonoDelegates.cpp">
-      <Filter>Implementations\Mono\ObjectSystems</Filter>
+      <Filter>Implementations\ObjectSystems</Filter>
     </ClCompile>
     <ClCompile Include="Implementation\MonoExceptions.cpp">
-      <Filter>Implementations\Mono\ObjectSystems</Filter>
+      <Filter>Implementations\ObjectSystems</Filter>
     </ClCompile>
     <ClCompile Include="Implementation\MonoObjects.cpp">
-      <Filter>Implementations\Mono\ObjectSystems</Filter>
+      <Filter>Implementations\ObjectSystems</Filter>
     </ClCompile>
     <ClCompile Include="Implementation\MonoTexts.cpp">
-      <Filter>Implementations\Mono\ObjectSystems</Filter>
+      <Filter>Implementations\ObjectSystems</Filter>
     </ClCompile>
     <ClCompile Include="Implementation\MonoThreads.cpp">
-      <Filter>Implementations\Mono\ObjectSystems</Filter>
+      <Filter>Implementations\ObjectSystems</Filter>
     </ClCompile>
     <ClCompile Include="Implementation\MonoConstructor.cpp">
-      <Filter>Implementations\Mono\Metadata</Filter>
+      <Filter>Implementations\Metadata</Filter>
     </ClCompile>
     <ClCompile Include="Implementation\AssemblyUtilities.cpp">
-      <Filter>Implementations\Mono\Metadata</Filter>
+      <Filter>Implementations\Metadata</Filter>
     </ClCompile>
     <ClCompile Include="Implementation\MonoCoreLibrary.cpp">
-      <Filter>Implementations\Mono\Metadata</Filter>
+      <Filter>Implementations\Metadata</Filter>
     </ClCompile>
     <ClCompile Include="Implementation\MonoAssemblies.cpp">
-      <Filter>Implementations\Mono\Metadata</Filter>
+      <Filter>Implementations\Metadata</Filter>
     </ClCompile>
     <ClCompile Include="Implementation\Cryambly.cpp">
-      <Filter>Implementations\Mono\Metadata</Filter>
+      <Filter>Implementations\Metadata</Filter>
     </ClCompile>
     <ClCompile Include="Implementation\MonoField.cpp">
-      <Filter>Implementations\Mono\Metadata</Filter>
+      <Filter>Implementations\Metadata</Filter>
     </ClCompile>
     <ClCompile Include="Implementation\MonoStaticMethod.cpp">
-      <Filter>Implementations\Mono\Metadata</Filter>
+      <Filter>Implementations\Metadata</Filter>
     </ClCompile>
     <ClCompile Include="Implementation\MonoFunctions.cpp">
-      <Filter>Implementations\Mono\Metadata</Filter>
+      <Filter>Implementations\Metadata</Filter>
     </ClCompile>
     <ClCompile Include="Interops\BatchOps.cpp">
       <Filter>Interops</Filter>
@@ -574,20 +574,14 @@
     <Filter Include="Implementations">
       <UniqueIdentifier>{824c2f39-8cc3-49b9-bce6-ffeb58467c65}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Implementations\Mono">
-      <UniqueIdentifier>{a50e1c2a-3eda-488b-80b7-8937d5067bd8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Implementations\Mono\GC">
+    <Filter Include="Implementations\GC">
       <UniqueIdentifier>{862fc339-126f-4c3f-b822-69b6b10a086f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Implementations\Mono\Metadata">
+    <Filter Include="Implementations\Metadata">
       <UniqueIdentifier>{b8aa9f55-c289-42f6-b2c7-1c035c3fddbb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Implementations\Mono\ObjectSystems">
+    <Filter Include="Implementations\ObjectSystems">
       <UniqueIdentifier>{9e12d853-cbb0-41e7-b814-b2838d42f009}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Implementations\CryEngine">
-      <UniqueIdentifier>{d044a114-58c0-46dd-a96f-ba7f9ccf9dfc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
