@@ -321,6 +321,7 @@ void MonoInterface::RegisterDefaultListeners()
 	this->broadcaster->listeners->Add(new LevelGameRulesInterop());
 	this->broadcaster->listeners->Add(new TerrainInterop());
 	this->broadcaster->listeners->Add(new OceanInterop());
+	this->broadcaster->listeners->Add(new CryXmlNodeInterop());
 }
 #pragma endregion
 #pragma region Thunks Initialization

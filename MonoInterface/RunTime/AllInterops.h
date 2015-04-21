@@ -57,3 +57,5 @@
 #include "Interops/Terrain.h"
 
 #include "Interops/Ocean.h"
+
+#include "Interops/CryXmlNode.h"

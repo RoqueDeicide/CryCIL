@@ -323,6 +323,9 @@
     <ClInclude Include="Interops\Ocean.h">
       <Filter>Interops\Engine</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\CryXmlNode.h">
+      <Filter>Interops\Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -497,6 +500,9 @@
     <ClCompile Include="Interops\Ocean.cpp">
       <Filter>Interops\Engine</Filter>
     </ClCompile>
+    <ClCompile Include="Interops\CryXmlNode.cpp">
+      <Filter>Interops\Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">
@@ -582,6 +588,9 @@
     </Filter>
     <Filter Include="Implementations\ObjectSystems">
       <UniqueIdentifier>{9e12d853-cbb0-41e7-b814-b2838d42f009}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interops\Utilities">
+      <UniqueIdentifier>{404a7fcc-92d1-494e-bf75-135766a2ba61}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
