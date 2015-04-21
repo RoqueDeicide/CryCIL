@@ -187,7 +187,7 @@ namespace CryCil
 		/// </summary>
 		/// <param name="value">The value.</param>
 		/// <returns>
-		/// A new instance of type <see cref="Vector3"/> which has X and Y coordinates taken from
+		/// A new instance of type <see cref="Vector4"/> which has X and Y coordinates taken from
 		/// <paramref name="value"/> and Z and W coordinates equal to 0.
 		/// </returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
