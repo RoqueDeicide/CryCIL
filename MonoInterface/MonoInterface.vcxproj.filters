@@ -320,6 +320,9 @@
     <ClInclude Include="Interops\Terrain.h">
       <Filter>Interops\Engine</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\Ocean.h">
+      <Filter>Interops\Engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -489,6 +492,9 @@
       <Filter>Interops\Engine\CryAction</Filter>
     </ClCompile>
     <ClCompile Include="Interops\Terrain.cpp">
+      <Filter>Interops\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\Ocean.cpp">
       <Filter>Interops\Engine</Filter>
     </ClCompile>
   </ItemGroup>

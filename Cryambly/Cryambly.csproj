@@ -88,6 +88,7 @@
     <Compile Include="Engine\Localization\SupportedLanguages.cs" />
     <Compile Include="Engine\Localization\Translator.cs" />
     <Compile Include="Engine\Memory\DisposablePointer.cs" />
+    <Compile Include="Engine\Ocean.cs" />
     <Compile Include="Engine\Rendering\Camera.cs" />
     <Compile Include="Engine\Rendering\ColorArgument.cs" />
     <Compile Include="Engine\Rendering\ColorOperation.cs" />

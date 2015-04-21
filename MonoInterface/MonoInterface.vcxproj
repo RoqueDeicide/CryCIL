@@ -288,6 +288,7 @@
     <ClInclude Include="Interops\LogPosting.h" />
     <ClInclude Include="Interops\MeshOps.h" />
     <ClInclude Include="Interops\MouseInterop.h" />
+    <ClInclude Include="Interops\Ocean.h" />
     <ClInclude Include="Interops\Profiling.h" />
     <ClInclude Include="Interops\Renderer.h" />
     <ClInclude Include="Interops\Terrain.h" />
@@ -378,6 +379,7 @@
     <ClCompile Include="Interops\MeshOps.cpp" />
     <ClCompile Include="Interops\MouseInterop.cpp" />
     <ClCompile Include="Interops\Console.cpp" />
+    <ClCompile Include="Interops\Ocean.cpp" />
     <ClCompile Include="Interops\Profiling.cpp" />
     <ClCompile Include="Interops\Renderer.cpp" />
     <ClCompile Include="Interops\Terrain.cpp" />
