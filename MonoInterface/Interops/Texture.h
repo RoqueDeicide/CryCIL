@@ -16,6 +16,4 @@ struct TextureInterop : public IMonoInterop<true,true>
 	static void Ctor(mono::object obj, mono::string name, uint32 flags);
 
 	static void Dispose(mono::object obj);
-	static bool SaveTga(mono::object obj, string name, bool mips);
-	static bool SaveJpg(mono::object obj, string name, bool mips);
 };

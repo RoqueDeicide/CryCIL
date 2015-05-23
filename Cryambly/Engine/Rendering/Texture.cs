@@ -164,28 +164,6 @@ namespace CryCil.Engine.Rendering
 		/// </summary>
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public extern void Dispose();
-		/// <summary>
-		/// Saves this texture into the file using TGA format.
-		/// </summary>
-		/// <param name="name">Name of the file to save the texture to.</param>
-		/// <param name="mips">True, if mipmaps must be saved as well.</param>
-		/// <returns>True, if successful, otherwise false.</returns>
-		/// <exception cref="NullReferenceException">
-		/// Cannot access a texture using null pointer.
-		/// </exception>
-		[MethodImpl(MethodImplOptions.InternalCall)]
-		public extern bool SaveTga(string name, bool mips = false);
-		/// <summary>
-		/// Saves this texture into the file using JPEG format.
-		/// </summary>
-		/// <param name="name">Name of the file to save the texture to.</param>
-		/// <param name="mips">True, if mipmaps must be saved as well.</param>
-		/// <returns>True, if successful, otherwise false.</returns>
-		/// <exception cref="NullReferenceException">
-		/// Cannot access a texture using null pointer.
-		/// </exception>
-		[MethodImpl(MethodImplOptions.InternalCall)]
-		public extern bool SaveJpg(string name, bool mips = false);
 		#endregion
 		#region Utilities
 
