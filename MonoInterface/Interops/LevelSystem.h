@@ -14,6 +14,7 @@ struct LevelSystemInterop : public IMonoInterop < false, true >, public ILevelSy
 
 	virtual void OnLevelNotFound(const char *levelName);
 	virtual void OnLoadingStart(ILevelInfo *pLevel);
+	virtual void OnLoadingLevelEntitiesStart(ILevelInfo* pLevel);
 	virtual void OnLoadingComplete(ILevel *pLevel);
 	virtual void OnLoadingError(ILevelInfo *pLevel, const char *error);
 	virtual void OnLoadingProgress(ILevelInfo *pLevel, int progressAmount);

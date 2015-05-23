@@ -41,6 +41,16 @@ void LevelSystemInterop::OnLoadingStart(ILevelInfo *pLevel)
 	raise->Invoke(params);
 }
 
+void LevelSystemInterop::OnLoadingLevelEntitiesStart(ILevelInfo* pLevel)
+{
+	static IMonoStaticMethod *raise =
+		MonoEnv->Cryambly->GetClass(this->GetNameSpace(), this->GetName())->GetEvent("LoadingEntitiesStart")->Raise->ToStatic();
+
+	void *params[1];
+	params[0] = pLevel;
+	raise->Invoke(params);
+}
+
 void LevelSystemInterop::OnLoadingComplete(ILevel *pLevel)
 {
 	static IMonoStaticMethod *raise =

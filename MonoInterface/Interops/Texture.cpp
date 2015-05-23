@@ -11,8 +11,6 @@ void TextureInterop::OnRunTimeInitialized()
 	REGISTER_CTOR(Ctor);
 
 	REGISTER_METHOD(Dispose);
-	REGISTER_METHOD(SaveTga);
-	REGISTER_METHOD(SaveJpg);
 }
 
 void TextureInterop::set_Clamp(mono::object obj, bool value)
@@ -106,24 +104,4 @@ void TextureInterop::Dispose(mono::object obj)
 		return;
 	}
 	tex->Release();
-}
-
-bool TextureInterop::SaveTga(mono::object obj, string name, bool mips)
-{
-	ITexture *tex = *GET_BOXED_OBJECT_DATA(ITexture *, obj);
-	if (!tex)
-	{
-		NullReferenceException("Cannot access a texture using null pointer.").Throw();
-	}
-	return tex->SaveTGA(NtText(name), mips);
-}
-
-bool TextureInterop::SaveJpg(mono::object obj, string name, bool mips)
-{
-	ITexture *tex = *GET_BOXED_OBJECT_DATA(ITexture *, obj);
-	if (!tex)
-	{
-		NullReferenceException("Cannot access a texture using null pointer.").Throw();
-	}
-	return tex->SaveJPG(NtText(name), mips);
 }
