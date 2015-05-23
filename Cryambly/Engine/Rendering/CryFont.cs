@@ -66,6 +66,9 @@ namespace CryCil.Engine.Rendering
 		/// <exception cref="CryEngineException">Unable to create a new font object.</exception>
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public extern CryFont([UsedImplicitly] string name);
+		/// <summary>
+		/// Finalizes this object.
+		/// </summary>
 		~CryFont()
 		{
 			this.Dispose(false);

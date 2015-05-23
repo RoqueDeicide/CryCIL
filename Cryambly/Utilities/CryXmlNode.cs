@@ -82,6 +82,9 @@ namespace CryCil.Utilities
 		/// <exception cref="ArgumentNullException">Name of the Xml node cannot be null.</exception>
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public extern CryXmlNode([UsedImplicitly] string name);
+		/// <summary>
+		/// Finalizes this object.
+		/// </summary>
 		~CryXmlNode()
 		{
 			this.Dispose(false);
