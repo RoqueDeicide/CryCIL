@@ -63,6 +63,14 @@ namespace CryCil.Engine.CryAction
 		/// </remarks>
 		public static event Action<Level> LoadingStart;
 		/// <summary>
+		/// Occurs during loading of the level when the engine starts loading entities.
+		/// </summary>
+		/// <remarks>
+		/// The first and only parameter of this event is wrapper object that represents the level that is
+		/// being loaded.
+		/// </remarks>
+		public static event Action<Level> LoadingEntitiesStart;
+		/// <summary>
 		/// Occurs when loading of the level ends.
 		/// </summary>
 		/// <remarks>
@@ -137,6 +145,11 @@ namespace CryCil.Engine.CryAction
 		private static void OnLoadingStart(IntPtr levelHandle)
 		{
 			if (LoadingStart != null) LoadingStart(new Level(levelHandle));
+		}
+		[PublicAPI("Invoked by underlying framework to raise LoadingEntitiesStart event")]
+		private static void OnLoadingEntitiesStart(IntPtr levelHandle)
+		{
+			if (LoadingEntitiesStart != null) LoadingEntitiesStart(new Level(levelHandle));
 		}
 		[PublicAPI("Invoked by underlying framework to raise LoadingComplete event")]
 		private static void OnLoadingComplete(IntPtr levelHandle)
