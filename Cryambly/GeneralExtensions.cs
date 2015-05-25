@@ -192,6 +192,63 @@ namespace CryCil
 				action(item);
 		}
 		/// <summary>
+		/// Shifts a range of items within the list.
+		/// </summary>
+		/// <typeparam name="T">Type of objects within the list.</typeparam>
+		/// <param name="list">        A list to shift elements within.</param>
+		/// <param name="initialIndex">Zero-based index of the start of the range before shift.</param>
+		/// <param name="desiredIndex">Zero-based index of the start of the range after shift.</param>
+		/// <param name="rangeLength"> Number of elements in the range to move.</param>
+		/// <exception cref="IndexOutOfRangeException">Initial index cannot be less then 0.</exception>
+		/// <exception cref="IndexOutOfRangeException">Desired index cannot be less then 0.</exception>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// Number of elements in the range must be greater then 0.
+		/// </exception>
+		/// <exception cref="Exception">Given list is not big enough.</exception>
+		public static void Shift<T>([NotNull] this IList<T> list, int initialIndex, int desiredIndex, int rangeLength)
+		{
+			if (initialIndex < 0)
+			{
+				throw new IndexOutOfRangeException("Initial index cannot be less then 0.");
+			}
+			if (desiredIndex < 0)
+			{
+				throw new IndexOutOfRangeException("Desired index cannot be less then 0.");
+			}
+			if (rangeLength <= 0)
+			{
+				throw new ArgumentOutOfRangeException("rangeLength", "Number of elements in the range must be greater then 0.");
+			}
+			int count = list.Count;
+			if (desiredIndex > count - rangeLength)
+			{
+				throw new Exception("Given list is not big enough.");
+			}
+
+			if (initialIndex == desiredIndex)
+			{
+				return;
+			}
+
+			int offset = desiredIndex - initialIndex;
+			if (offset > 0)
+			{
+				// Move right to left.
+				for (int i = initialIndex + count - 1; i >= initialIndex; i--)
+				{
+					list[i + offset] = list[i];
+				}
+			}
+			else if (offset < 0)
+			{
+				// Move left to right.
+				for (int i = 0; i < count; i++)
+				{
+					list[desiredIndex + i] = list[initialIndex + i];
+				}
+			}
+		}
+		/// <summary>
 		/// Tries to find one of the descendants with specified name.
 		/// </summary>
 		/// <param name="element">   This element.</param>
