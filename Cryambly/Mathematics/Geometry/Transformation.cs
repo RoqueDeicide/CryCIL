@@ -56,6 +56,18 @@ namespace CryCil.Geometry
 			vector.Z = vector.X * matrix.M20 + vector.Y * matrix.M21 + vector.Z * matrix.M22 + matrix.M23;
 		}
 		/// <summary>
+		/// Applies transformation that is represented by given matrix to the vector.
+		/// </summary>
+		/// <param name="vector">Vector to transform.</param>
+		/// <param name="matrix">Matrix that represents the transformation.</param>
+		public static void Apply(ref Vector4 vector, ref Matrix44 matrix)
+		{
+			vector.X = vector.X * matrix.M00 + vector.Y * matrix.M01 + vector.Z * matrix.M02 + vector.W * matrix.M03;
+			vector.Y = vector.X * matrix.M10 + vector.Y * matrix.M11 + vector.Z * matrix.M12 + vector.W * matrix.M13;
+			vector.Z = vector.X * matrix.M20 + vector.Y * matrix.M21 + vector.Z * matrix.M22 + vector.W * matrix.M23;
+			vector.W = vector.X * matrix.M30 + vector.Y * matrix.M31 + vector.Z * matrix.M32 + vector.W * matrix.M33;
+		}
+		/// <summary>
 		/// Combines two transformations together.
 		/// </summary>
 		/// <param name="first"> <see cref="Quaternion"/> that represents first transformation.</param>
