@@ -139,7 +139,7 @@ namespace CryCil
 			}
 		}
 		/// <summary>
-		/// Gets angles that represent rotation this matrix represents.
+		/// Gets a set of Euler angles that represent rotation this matrix represents.
 		/// </summary>
 		public Vector3 AnglesVector
 		{
@@ -165,7 +165,7 @@ namespace CryCil
 			}
 		}
 		/// <summary>
-		/// Gets angles that represent rotation this matrix represents.
+		/// Gets a set of Euler angles that represent rotation this matrix represents.
 		/// </summary>
 		public EulerAngles Angles
 		{
