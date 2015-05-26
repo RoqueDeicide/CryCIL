@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 
 namespace CryCil.Geometry
 {
@@ -267,6 +268,54 @@ namespace CryCil.Geometry
 			return (Math.Abs(1 - (this.Roll * this.Roll + this.Pitch * this.Pitch + this.Yaw * this.Yaw)) <= epsilon);
 		}
 		#endregion
+		#region Angle Operations
+		/// <summary>
+		/// Normalizes angles encapsulated by this object into [0, 2 * PI] range.
+		/// </summary>
+		public void Normalize2PI()
+		{
+			this.Normalize(0, (float)MathHelpers.PI2, (float)MathHelpers.PI2);
+		}
+		/// <summary>
+		/// Normalizes angles encapsulated by this object into [-PI, PI] range.
+		/// </summary>
+		public void NormalizePI()
+		{
+			this.Normalize(-(float)Math.PI, (float)Math.PI, (float)MathHelpers.PI2);
+		}
+		/// <summary>
+		/// Normalizes angles encapsulated by this object into [0, 360] range.
+		/// </summary>
+		public void Normalize360()
+		{
+			this.Normalize(0, 360, 360);
+		}
+		/// <summary>
+		/// Normalizes angles encapsulated by this object into [-180, 180] range.
+		/// </summary>
+		public void Normalize180()
+		{
+			this.Normalize(-180, 180, 360);
+		}
+		#endregion
+		#endregion
+		#region Utilities
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		private void Normalize(float low, float high, float step)
+		{
+			while (this.Pitch < low)
+				this.Pitch += step;
+			while (this.Pitch > high)
+				this.Pitch -= step;
+			while (this.Roll < low)
+				this.Roll += step;
+			while (this.Roll > high)
+				this.Roll -= step;
+			while (this.Yaw < low)
+				this.Yaw += step;
+			while (this.Yaw > high)
+				this.Yaw -= step;
+		}
 		#endregion
 	}
 }
