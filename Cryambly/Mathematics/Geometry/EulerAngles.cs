@@ -5,6 +5,9 @@ namespace CryCil.Geometry
 	/// <summary>
 	/// Represents Euler angles.
 	/// </summary>
+	/// <remarks>
+	/// Most functions that use objects of this type apply the rotation in order X-Y-Z (Pitch-Roll-Yaw).
+	/// </remarks>
 	public struct EulerAngles
 	{
 		#region Fields
