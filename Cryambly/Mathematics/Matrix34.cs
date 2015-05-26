@@ -110,9 +110,9 @@ namespace CryCil
 		#endregion
 		#region Properties
 		/// <summary>
-		/// Gets angles of rotations around fixed axes that are represented by this matrix.
+		/// Gets a set of Euler angles that represent rotation this matrix represents.
 		/// </summary>
-		public Vector3 Angles
+		public Vector3 AnglesVector
 		{
 			get
 			{
@@ -130,6 +130,32 @@ namespace CryCil
 				{
 					angles.X = (float)Math.Atan2(this.M21, this.M22);
 					angles.Z = (float)Math.Atan2(this.M10, this.M00);
+				}
+
+				return angles;
+			}
+		}
+		/// <summary>
+		/// Gets a set of Euler angles that represent rotation this matrix represents.
+		/// </summary>
+		public EulerAngles Angles
+		{
+			get
+			{
+				var angles = new EulerAngles
+				{
+					Roll = (float)Math.Asin(Math.Max(-1.0, Math.Min(1.0, -this.M20)))
+				};
+
+				if (Math.Abs(Math.Abs(angles.Roll) - (Math.PI * 0.5)) < 0.01)
+				{
+					angles.Pitch = 0;
+					angles.Yaw = (float)Math.Atan2(-this.M01, this.M11);
+				}
+				else
+				{
+					angles.Pitch = (float)Math.Atan2(this.M21, this.M22);
+					angles.Yaw = (float)Math.Atan2(this.M10, this.M00);
 				}
 
 				return angles;
