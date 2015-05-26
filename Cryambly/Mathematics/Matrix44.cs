@@ -404,6 +404,44 @@ namespace CryCil
 			this.Row2 = m.Row2;
 			this.Row3 = m.Row3;
 		}
+		/// <summary>
+		/// Creates a projection matrix.
+		/// </summary>
+		/// <param name="verticalFov">  Vertical field of view in radians.</param>
+		/// <param name="horizontalFov">Horizontal field of view in radians.</param>
+		/// <param name="zn">           Distance to near plane.</param>
+		/// <param name="zf">           Distance to far plane.</param>
+		public Matrix44(float verticalFov, float horizontalFov, float zn, float zf)
+			: this()
+		{
+			float yScale = (float)(1.0f / Math.Tan(verticalFov / 2.0f));
+			float xScale = (float)(1.0f / Math.Tan(horizontalFov / 2.0f));
+
+			this.M00 = xScale; this.M01 = 0; this.M02 = 0; this.M03 = 0;
+			this.M10 = 0; this.M11 = yScale; this.M12 = 0; this.M13 = 0;
+			this.M20 = 0; this.M21 = 0; this.M22 = zf / (zn - zf); this.M23 = -1.0f;
+			this.M30 = 0; this.M31 = 0; this.M32 = zn * zf / (zn - zf); this.M33 = 0;
+		}
+		/// <summary>
+		/// Creates a matrix that can be used to transform a vector from world-space to camera-bound
+		/// frustum space.
+		/// </summary>
+		/// <param name="eye">Position of the camera.</param>
+		/// <param name="at"> Direction faced by the camera.</param>
+		/// <param name="up"> Camera's Up direction.</param>
+		public Matrix44(Vector3 eye, Vector3 at, Vector3 up)
+			: this()
+		{
+			Vector3 vLightDir = eye - at;
+			Vector3 zaxis = vLightDir.Normalized;
+			Vector3 xaxis = (up % zaxis).Normalized;
+			Vector3 yaxis = zaxis % xaxis;
+
+			this.M00 = xaxis.X; this.M01 = yaxis.X; this.M02 = zaxis.X; this.M03 = 0;
+			this.M10 = xaxis.Y; this.M11 = yaxis.Y; this.M12 = zaxis.Y; this.M13 = 0;
+			this.M20 = xaxis.Z; this.M21 = yaxis.Z; this.M22 = zaxis.Z; this.M23 = 0;
+			this.M30 = -xaxis * eye; this.M31 = -yaxis * eye; this.M32 = -zaxis * eye; this.M33 = 1;
+		}
 		#endregion
 		#region Interface
 		#region Simple Operations
