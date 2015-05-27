@@ -163,6 +163,7 @@
     <Compile Include="Engine\UserInterface\UiRenderer.cs" />
     <Compile Include="Engine\UserInterface\UiTexture.cs" />
     <Compile Include="Mathematics\Geometry\Rotation.YPR.cs" />
+    <Compile Include="Mathematics\Geometry\Sphere.cs" />
     <Compile Include="Mathematics\Geometry\Transformation.Projection.cs" />
     <Compile Include="Mathematics\Geometry\Transformation.View.cs" />
     <Compile Include="Utilities\CryXmlNode.Attributes.cs" />
