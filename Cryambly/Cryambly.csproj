@@ -89,7 +89,6 @@
     <Compile Include="Engine\Localization\Translator.cs" />
     <Compile Include="Engine\Memory\DisposablePointer.cs" />
     <Compile Include="Engine\Ocean.cs" />
-    <Compile Include="Engine\Rendering\Camera.cs" />
     <Compile Include="Engine\Rendering\ColorArgument.cs" />
     <Compile Include="Engine\Rendering\ColorOperation.cs" />
     <Compile Include="Engine\Rendering\CryFont.cs" />
@@ -166,6 +165,7 @@
     <Compile Include="Mathematics\Geometry\Sphere.cs" />
     <Compile Include="Mathematics\Geometry\Transformation.Projection.cs" />
     <Compile Include="Mathematics\Geometry\Transformation.View.cs" />
+    <Compile Include="Mathematics\Graphics\Camera.cs" />
     <Compile Include="Utilities\CryXmlNode.Attributes.cs" />
     <Compile Include="Utilities\CryXmlNode.cs" />
     <Compile Include="GeneralExtensions.cs" />

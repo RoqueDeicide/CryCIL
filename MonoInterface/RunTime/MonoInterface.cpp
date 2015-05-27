@@ -313,7 +313,6 @@ void MonoInterface::RegisterDefaultListeners()
 	this->broadcaster->listeners->Add(new TextureInterop());
 	this->broadcaster->listeners->Add(new CryFontInterop());
 	this->broadcaster->listeners->Add(new LocaleInterop());
-	this->broadcaster->listeners->Add(new CameraInterop());
 	this->broadcaster->listeners->Add(new LevelsInterop());
 	this->broadcaster->listeners->Add(new LevelSystemInterop());
 	this->broadcaster->listeners->Add(new LevelInterop());

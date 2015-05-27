@@ -77,9 +77,9 @@ namespace CryCil.Engine.Rendering
 		/// </summary>
 		public static RenderFeatures Features { get; private set; }
 		/// <summary>
-		/// Gets the camera that is used for rendering.
+		/// Gets the pointer to camera object that is used for rendering.
 		/// </summary>
-		public static extern Camera Camera
+		public static extern Camera *Camera
 		{
 			[MethodImpl(MethodImplOptions.InternalCall)]
 			get;

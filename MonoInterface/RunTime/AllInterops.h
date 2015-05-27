@@ -42,8 +42,6 @@
 
 #include "Interops/Locale.h"
 
-#include "Interops/Camera.h"
-
 #include "Interops/Levels.h"
 
 #include "Interops/LevelSystem.h"
