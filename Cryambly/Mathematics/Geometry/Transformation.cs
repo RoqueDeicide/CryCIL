@@ -9,7 +9,7 @@ namespace CryCil.Geometry
 	/// <summary>
 	/// Defines functions for working with combined transformations.
 	/// </summary>
-	public static class Transformation
+	public static partial class Transformation
 	{
 		/// <summary>
 		/// Applies transformation that is represented by given quaternion to the vector.
