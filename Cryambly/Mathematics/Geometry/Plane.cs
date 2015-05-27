@@ -366,7 +366,7 @@ namespace CryCil.Geometry
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public float SignedDistance(Vector3 point)
 		{
-			return point.X * this.X + point.Y * this.Y + point.Z * this.Z - this.D;
+			return point.X * this.X + point.Y * this.Y + point.Z * this.Z + this.D;
 		}
 		/// <summary>
 		/// Determines relative position of the point in respect to position of this plane.
