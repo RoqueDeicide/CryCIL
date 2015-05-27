@@ -32,6 +32,17 @@ namespace CryCil.Geometry
 			return !left.Equals(right);
 		}
 		/// <summary>
+		/// Multiplies components of the plane by the given number.
+		/// </summary>
+		/// <remarks>This operator can be used to negate this plane when needed.</remarks>
+		/// <param name="left">  Left operand.</param>
+		/// <param name="factor">Right operand.</param>
+		/// <returns>A new plane that is a result of multiplication.</returns>
+		public static Plane operator *(Plane left, int factor)
+		{
+			return new Plane(left.X * factor, left.Y * factor, left.Z * factor, left.D * factor);
+		}
+		/// <summary>
 		/// Creates an array containing the elements of the plane.
 		/// </summary>
 		/// <returns>A four-element array containing the components of the plane.</returns>
