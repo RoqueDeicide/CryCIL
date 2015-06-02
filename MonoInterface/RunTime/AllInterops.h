@@ -57,3 +57,4 @@
 #include "Interops/Ocean.h"
 
 #include "Interops/CryXmlNode.h"
+#include "Interops/GeneralExtensions.h"

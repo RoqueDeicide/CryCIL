@@ -323,6 +323,9 @@
     <ClInclude Include="Interops\CryXmlNode.h">
       <Filter>Interops\Utilities</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\GeneralExtensions.h">
+      <Filter>Interops\Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -495,6 +498,9 @@
       <Filter>Interops\Engine</Filter>
     </ClCompile>
     <ClCompile Include="Interops\CryXmlNode.cpp">
+      <Filter>Interops\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\GeneralExtensions.cpp">
       <Filter>Interops\Utilities</Filter>
     </ClCompile>
   </ItemGroup>

@@ -278,6 +278,7 @@
     <ClInclude Include="Interops\CryXmlNode.h" />
     <ClInclude Include="Interops\DebugDraw.h" />
     <ClInclude Include="Interops\CryFont.h" />
+    <ClInclude Include="Interops\GeneralExtensions.h" />
     <ClInclude Include="Interops\InputInterop.h" />
     <ClInclude Include="Interops\Level.h" />
     <ClInclude Include="Interops\LevelGameRules.h" />
@@ -368,6 +369,7 @@
     <ClCompile Include="Interops\CryPak.cpp" />
     <ClCompile Include="Interops\CryXmlNode.cpp" />
     <ClCompile Include="Interops\DebugDraw.cpp" />
+    <ClCompile Include="Interops\GeneralExtensions.cpp" />
     <ClCompile Include="Interops\InputInterop.cpp" />
     <ClCompile Include="Interops\Level.cpp" />
     <ClCompile Include="Interops\LevelGameRules.cpp" />

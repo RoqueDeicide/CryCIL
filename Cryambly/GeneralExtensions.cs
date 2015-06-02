@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
@@ -265,6 +266,20 @@ namespace CryCil
 			foundChild = element.GetElementsByTagName(name).OfType<XmlElement>().FirstOrDefault();
 			return foundChild != null;
 		}
+		/// <summary>
+		/// Copies characters from the string to the buffer.
+		/// </summary>
+		/// <param name="str">   String object.</param>
+		/// <param name="buffer">Pointer to the beginning of the buffer.</param>
+		/// <param name="start"> Zero-based index of the first symbol in the buffer to copy into.</param>
+		/// <param name="count"> Number of characters to copy.</param>
+		/// <exception cref="ArgumentNullException">The pointer to the buffer cannot be null.</exception>
+		/// <exception cref="IndexOutOfRangeException">
+		/// Index of the first element in the buffer cannot be less then 0.
+		/// </exception>
+		/// <exception cref="ArgumentException">Input string doesn't contain enough characters.</exception>
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		public static unsafe extern void CopyToBuffer(this string str, char* buffer, int start, int count);
 	}
 	/// <summary>
 	/// Contains old value of the property that has been changed.
