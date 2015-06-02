@@ -25,6 +25,11 @@ namespace CryCil.MemoryMapping
 		/// </summary>
 		[FieldOffset(0)]
 		public float SingleFloat;
+		/// <summary>
+		/// <see cref="Boolean"/> value.
+		/// </summary>
+		[FieldOffset(0)]
+		public bool Boolean;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -77,6 +82,15 @@ namespace CryCil.MemoryMapping
 			: this()
 		{
 			this.SingleFloat = value;
+		}
+		/// <summary>
+		/// Initializes new instance of <see cref="Bytes4"/> type.
+		/// </summary>
+		/// <param name="value"><see cref="Boolean"/> value to initialize this object with.</param>
+		public Bytes4(bool value)
+			: this()
+		{
+			this.Boolean = value;
 		}
 		/// <summary>
 		/// Initializes new instance of <see cref="Bytes4"/> type.
