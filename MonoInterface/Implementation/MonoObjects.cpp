@@ -192,6 +192,11 @@ const wchar_t *MonoObjects::StringToNativeUTF16(mono::string str)
 	return t;
 }
 
+int MonoObjects::StringLength(mono::string str)
+{
+	return mono_string_length((MonoString *)str);
+}
+
 void MonoObjects::ThreadDetach(mono::Thread thr)
 {
 	mono_thread_detach((MonoThread *)thr);

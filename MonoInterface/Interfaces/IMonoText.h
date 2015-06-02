@@ -60,6 +60,8 @@ struct IMonoText : public IMonoObject
 	//!
 	//! Returned buffer needs to be deleted after use.
 	__declspec(property(get = ToNativeUTF16)) const wchar_t *NativeUTF16;
+	//! Gets the length of the string.
+	__declspec(property(get = GetLength)) int Length;
 
 	//! Determines whether this string is equal to another.
 	bool Equals(IMonoText &other)
@@ -104,6 +106,10 @@ struct IMonoText : public IMonoObject
 	const wchar_t *ToNativeUTF16()
 	{
 		return MonoEnv->Objects->StringToNativeUTF16(this->obj);
+	}
+	int GetLength()
+	{
+		return MonoEnv->Objects->StringLength(this->obj);
 	}
 
 	static IMonoClass *GetStringClass()

@@ -115,6 +115,8 @@ struct IMonoObjects
 	VIRTUAL_API virtual const char *StringToNativeUTF8(mono::string str) = 0;
 	//! Creates a null-terminated array of UTF-16 characters from Mono string.
 	VIRTUAL_API virtual const wchar_t *StringToNativeUTF16(mono::string str) = 0;
+	//! Gets the number of characters in the Mono string.
+	VIRTUAL_API virtual int StringLength(mono::string str) = 0;
 #pragma endregion
 
 #pragma region Thread API

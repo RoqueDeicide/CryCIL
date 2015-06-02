@@ -68,6 +68,7 @@ public:
 	virtual bool           IsStringInterned(mono::string str);
 	virtual const char    *StringToNativeUTF8(mono::string str);
 	virtual const wchar_t *StringToNativeUTF16(mono::string str);
+	virtual int            StringLength(mono::string str);
 
 	virtual void ThreadDetach(mono::Thread thr);
 	virtual void MonitorExit(mono::object obj);
