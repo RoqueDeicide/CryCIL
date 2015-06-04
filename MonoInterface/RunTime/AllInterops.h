@@ -57,4 +57,13 @@
 #include "Interops/Ocean.h"
 
 #include "Interops/CryXmlNode.h"
+
+#include "Interops/Materials.h"
+
 #include "Interops/GeneralExtensions.h"
+
+#include "Interops/Shading.h"
+
+#include "Interops/SurfaceTypes.h"
+
+#include "Interops/MaterialLayers.h"

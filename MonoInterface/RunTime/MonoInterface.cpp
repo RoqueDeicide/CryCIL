@@ -321,7 +321,16 @@ void MonoInterface::RegisterDefaultListeners()
 	this->broadcaster->listeners->Add(new TerrainInterop());
 	this->broadcaster->listeners->Add(new OceanInterop());
 	this->broadcaster->listeners->Add(new CryXmlNodeInterop());
+	this->broadcaster->listeners->Add(new MaterialInterop());
+	this->broadcaster->listeners->Add(new SubMaterialsInterop());
 	this->broadcaster->listeners->Add(new GeneralExtensionsInterop());
+	this->broadcaster->listeners->Add(new RenderShaderResourcesInterop());
+	this->broadcaster->listeners->Add(new ShaderParametersInterop());
+	this->broadcaster->listeners->Add(new ShaderInterop());
+	this->broadcaster->listeners->Add(new SurfaceTypeInterop());
+	this->broadcaster->listeners->Add(new SurfaceTypeEnumeratorInterop());
+	this->broadcaster->listeners->Add(new MaterialLayerCollectionInterop());
+	this->broadcaster->listeners->Add(new MaterialLayerInterop());
 }
 #pragma endregion
 #pragma region Thunks Initialization

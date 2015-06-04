@@ -323,8 +323,20 @@
     <ClInclude Include="Interops\CryXmlNode.h">
       <Filter>Interops\Utilities</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\Materials.h">
+      <Filter>Interops\Engine\Rendering</Filter>
+    </ClInclude>
     <ClInclude Include="Interops\GeneralExtensions.h">
       <Filter>Interops\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\Shading.h">
+      <Filter>Interops\Engine\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\SurfaceTypes.h">
+      <Filter>Interops\Engine\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\MaterialLayers.h">
+      <Filter>Interops\Engine\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -500,8 +512,20 @@
     <ClCompile Include="Interops\CryXmlNode.cpp">
       <Filter>Interops\Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="Interops\Materials.cpp">
+      <Filter>Interops\Engine\Rendering</Filter>
+    </ClCompile>
     <ClCompile Include="Interops\GeneralExtensions.cpp">
       <Filter>Interops\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\Shading.cpp">
+      <Filter>Interops\Engine\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\SurfaceTypes.cpp">
+      <Filter>Interops\Engine\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\MaterialLayers.cpp">
+      <Filter>Interops\Engine\Rendering</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
