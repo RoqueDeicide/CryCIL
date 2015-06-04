@@ -30,9 +30,6 @@
     <ClInclude Include="Interops\Engine\3DEngine.h">
       <Filter>Interops\3DEngine</Filter>
     </ClInclude>
-    <ClInclude Include="Interops\Engine\MaterialManager.h">
-      <Filter>Interops\3DEngine</Filter>
-    </ClInclude>
     <ClInclude Include="Interops\Engine\ParticleSystem.h">
       <Filter>Interops\3DEngine</Filter>
     </ClInclude>
@@ -95,9 +92,6 @@
       <Filter>Interops\FlowGraph</Filter>
     </ClCompile>
     <ClCompile Include="Interops\Engine\3DEngine.cpp">
-      <Filter>Interops\3DEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="Interops\Engine\MaterialManager.cpp">
       <Filter>Interops\3DEngine</Filter>
     </ClCompile>
     <ClCompile Include="Interops\Engine\ParticleSystem.cpp">

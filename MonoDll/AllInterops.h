@@ -1,7 +1,6 @@
 #pragma once
 // Engine.
 #include "Interops/Engine/3DEngine.h"
-#include "Interops/Engine/MaterialManager.h"
 #include "Interops/Engine/ParticleSystem.h"
 // Entities.
 #include "Interops/Entities/Entity.h"
@@ -17,5 +16,4 @@
 #include "Interops/StaticObjects/StaticObject.h"
 // Miscellaneous
 #include "Interops/CrySerialize.h"
-#include "Interops/LevelSystem.h"
 #include "Interops/Network.h"
