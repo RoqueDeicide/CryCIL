@@ -67,3 +67,5 @@
 #include "Interops/SurfaceTypes.h"
 
 #include "Interops/MaterialLayers.h"
+
+#include "Interops/StackString.h"

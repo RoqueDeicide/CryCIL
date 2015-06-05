@@ -338,6 +338,9 @@
     <ClInclude Include="Interops\SurfaceTypes.h">
       <Filter>Interops\Engine\Physics</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\StackString.h">
+      <Filter>Interops\Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -526,6 +529,9 @@
     </ClCompile>
     <ClCompile Include="Interops\SurfaceTypes.cpp">
       <Filter>Interops\Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\StackString.cpp">
+      <Filter>Interops\Utilities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

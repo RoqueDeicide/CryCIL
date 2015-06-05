@@ -331,6 +331,7 @@ void MonoInterface::RegisterDefaultListeners()
 	this->broadcaster->listeners->Add(new SurfaceTypeEnumeratorInterop());
 	this->broadcaster->listeners->Add(new MaterialLayerCollectionInterop());
 	this->broadcaster->listeners->Add(new MaterialLayerInterop());
+	this->broadcaster->listeners->Add(new StackStringInterop());
 }
 #pragma endregion
 #pragma region Thunks Initialization
