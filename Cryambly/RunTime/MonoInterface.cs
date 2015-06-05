@@ -121,6 +121,15 @@ namespace CryCil.RunTime
 		}
 		#endregion
 		#region Interface
+		/// <summary>
+		/// Displays an exception to the user with an option to either continue or shutdown.
+		/// </summary>
+		/// <param name="ex">An object that represents the exception.</param>
+		public static void DisplayException(object ex)
+		{
+			ExceptionDisplayForm form = new ExceptionDisplayForm(ex as Exception);
+			form.ShowDialog();
+		}
 		[PublicAPI("Called from C++ code to initialize CryCIL on managed side.")]
 		private static void Initialize()
 		{
@@ -134,12 +143,6 @@ namespace CryCil.RunTime
 				   " to register FlowGraph nodes defined in CryCIL.")]
 		private static void RegisterFlowGraphNodeTypes()
 		{
-		}
-		[PublicAPI("Displays exception that was not handled.")]
-		private static void DisplayException(object ex)
-		{
-			ExceptionDisplayForm form = new ExceptionDisplayForm(ex as Exception);
-			form.ShowDialog();
 		}
 		[PublicAPI("Updates this subsystem.")]
 		private static void Update()
