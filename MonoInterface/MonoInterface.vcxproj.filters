@@ -332,11 +332,11 @@
     <ClInclude Include="Interops\Shading.h">
       <Filter>Interops\Engine\Rendering</Filter>
     </ClInclude>
-    <ClInclude Include="Interops\SurfaceTypes.h">
-      <Filter>Interops\Engine\Rendering</Filter>
-    </ClInclude>
     <ClInclude Include="Interops\MaterialLayers.h">
       <Filter>Interops\Engine\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\SurfaceTypes.h">
+      <Filter>Interops\Engine\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -521,11 +521,11 @@
     <ClCompile Include="Interops\Shading.cpp">
       <Filter>Interops\Engine\Rendering</Filter>
     </ClCompile>
-    <ClCompile Include="Interops\SurfaceTypes.cpp">
-      <Filter>Interops\Engine\Rendering</Filter>
-    </ClCompile>
     <ClCompile Include="Interops\MaterialLayers.cpp">
       <Filter>Interops\Engine\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\SurfaceTypes.cpp">
+      <Filter>Interops\Engine\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -615,6 +615,9 @@
     </Filter>
     <Filter Include="Interops\Utilities">
       <UniqueIdentifier>{404a7fcc-92d1-494e-bf75-135766a2ba61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interops\Engine\Physics">
+      <UniqueIdentifier>{a3406974-2b23-4a2c-9bad-d4e8971f9f8e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
