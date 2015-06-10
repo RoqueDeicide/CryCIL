@@ -193,7 +193,7 @@
     <Compile Include="Engine\UserInterface\UiRenderer.cs" />
     <Compile Include="Engine\UserInterface\UiTexture.cs" />
     <Compile Include="Exceptions.cs" />
-    <Compile Include="Mathematics\Geometry\GeometryForm.cs" />
+    <Compile Include="Mathematics\Geometry\GeometryFormat.cs" />
     <Compile Include="Mathematics\Geometry\GeometryType.cs" />
     <Compile Include="Mathematics\Geometry\Quatvecale.cs" />
     <Compile Include="Mathematics\Geometry\Rotation.YPR.cs" />

@@ -194,7 +194,7 @@ namespace CryCil.Engine
 		/// <summary>
 		/// Gets or sets the value that indicates which aspect of attached geometry to emit from.
 		/// </summary>
-		public extern GeometryForm AttachForm
+		public extern GeometryFormat AttachFormat
 		{
 			[MethodImpl(MethodImplOptions.InternalCall)]
 			get;

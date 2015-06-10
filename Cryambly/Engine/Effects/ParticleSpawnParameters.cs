@@ -18,7 +18,7 @@ namespace CryCil.Engine
 		/// <summary>
 		/// Indicates what aspect of shape emitted from.
 		/// </summary>
-		public GeometryForm AttachForm;
+		public GeometryFormat AttachFormat;
 		/// <summary>
 		/// Indicates whether particle count should be multiplied by geometry extent (length/area/volume).
 		/// </summary>

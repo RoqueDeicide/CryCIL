@@ -3,7 +3,7 @@
 	/// <summary>
 	/// Enumeration of ways the geometry can be formed.
 	/// </summary>
-	public enum GeometryForm
+	public enum GeometryFormat
 	{
 		/// <summary>
 		/// Geometry is formed from vertices.
