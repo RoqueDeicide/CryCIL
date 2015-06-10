@@ -173,6 +173,7 @@ namespace CryCil.Engine.Rendering
 		/// <exception cref="ArgumentNullException">Name of the material cannot be null.</exception>
 		/// <exception cref="ArgumentException">Name of the material cannot be an empty string.</exception>
 		/// <exception cref="ArgumentNullException">Xml data provider cannot be null.</exception>
+		/// <exception cref="ObjectDisposedException">The Xml data provider is not usable.</exception>
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern Material LoadXml(string name, CryXmlNode xml);
 		#endregion
@@ -183,6 +184,7 @@ namespace CryCil.Engine.Rendering
 		/// <param name="xml">Xml date node object.</param>
 		/// <exception cref="NullReferenceException">Instance object is not valid.</exception>
 		/// <exception cref="ArgumentNullException">Xml data provider cannot be null.</exception>
+		/// <exception cref="ObjectDisposedException">The Xml data provider is not usable.</exception>
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public extern void Save(CryXmlNode xml);
 		/// <summary>

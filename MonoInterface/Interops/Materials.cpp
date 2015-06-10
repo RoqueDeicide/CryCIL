@@ -153,6 +153,10 @@ IMaterial *MaterialInterop::LoadXml(mono::string name, mono::object xml)
 		ArgumentNullException("Xml data provider cannot be null.").Throw();
 	}
 	IXmlNode *node = *GET_BOXED_OBJECT_DATA(IXmlNode *, xml);
+	if (!node)
+	{
+		ObjectDisposedException("The Xml data provider is not usable.").Throw();
+	}
 
 	return gEnv->p3DEngine->GetMaterialManager()->LoadMaterialFromXml(ntName, node);
 }
@@ -169,6 +173,10 @@ void MaterialInterop::Save(IMaterial **handle, mono::object xml)
 		ArgumentNullException("Xml data provider cannot be null.").Throw();
 	}
 	IXmlNode *node = *GET_BOXED_OBJECT_DATA(IXmlNode *, xml);
+	if (!node)
+	{
+		ObjectDisposedException("The Xml data provider is not usable.").Throw();
+	}
 
 	gEnv->p3DEngine->GetMaterialManager()->SaveMaterial(node, mat);
 }
