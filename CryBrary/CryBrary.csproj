@@ -176,8 +176,6 @@
     <Compile Include="RunTime\Registration\Exception.cs" />
     <Compile Include="RunTime\Registration\FlowNodeRegister.cs" />
     <Compile Include="Native\CryPakInterop.cs" />
-    <Compile Include="Engine\GeometryFormat.cs" />
-    <Compile Include="Engine\GeometryType.cs" />
     <Compile Include="Engine\TimeOfDay\CloudShadingParams.cs" />
     <Compile Include="Engine\TimeOfDay\ColorGradingParams.cs" />
     <Compile Include="Engine\TimeOfDay\FogParams.cs" />
