@@ -1,7 +1,6 @@
 #pragma once
 // Engine.
 #include "Interops/Engine/3DEngine.h"
-#include "Interops/Engine/ParticleSystem.h"
 // Entities.
 #include "Interops/Entities/Entity.h"
 #include "Interops/Entities/GameObject.h"

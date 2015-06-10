@@ -99,7 +99,6 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
     <ClInclude Include="EntityEventHandling.h" />
     <ClInclude Include="Interops\CrySerialize.h" />
     <ClInclude Include="Interops\Engine\3DEngine.h" />
-    <ClInclude Include="Interops\Engine\ParticleSystem.h" />
     <ClInclude Include="Interops\Entities\Entity.h" />
     <ClInclude Include="Interops\Entities\GameObject.h" />
     <ClInclude Include="Interops\Entities\Physics.h" />
@@ -124,7 +123,6 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
     <ClCompile Include="EntityEventHandling.cpp" />
     <ClCompile Include="Interops\CrySerialize.cpp" />
     <ClCompile Include="Interops\Engine\3DEngine.cpp" />
-    <ClCompile Include="Interops\Engine\ParticleSystem.cpp" />
     <ClCompile Include="Interops\Entities\Entity.cpp" />
     <ClCompile Include="Interops\Entities\GameObject.cpp" />
     <ClCompile Include="Interops\Entities\Physics.cpp" />

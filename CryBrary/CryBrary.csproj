@@ -178,8 +178,6 @@
     <Compile Include="Native\CryPakInterop.cs" />
     <Compile Include="Engine\GeometryFormat.cs" />
     <Compile Include="Engine\GeometryType.cs" />
-    <Compile Include="Engine\Particles\ParticleEmitter.cs" />
-    <Compile Include="Engine\Particles\ParticleSpawnParams.cs" />
     <Compile Include="Engine\TimeOfDay\CloudShadingParams.cs" />
     <Compile Include="Engine\TimeOfDay\ColorGradingParams.cs" />
     <Compile Include="Engine\TimeOfDay\FogParams.cs" />
@@ -277,7 +275,6 @@
     <Compile Include="Native\ParticleEffectInterop.cs" />
     <Compile Include="Native\PhysicsInterop.cs" />
     <Compile Include="RunTime\Networking\RemoteInvocationAttribute.cs" />
-    <Compile Include="Engine\Particles\ParticleEffect.cs" />
     <Compile Include="Logic\Entities\EntityId.cs" />
     <Compile Include="Entities\NativeEntity.cs" />
     <Compile Include="RunTime\Serialization\CrySerializer.cs" />
