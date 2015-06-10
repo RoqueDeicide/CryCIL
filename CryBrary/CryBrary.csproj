@@ -270,7 +270,6 @@
     <Compile Include="Native\EntityInterop.cs" />
     <Compile Include="Native\FlowNodeInterop.cs" />
     <Compile Include="Native\GameRulesInterop.cs" />
-    <Compile Include="Native\ParticleEffectInterop.cs" />
     <Compile Include="Native\PhysicsInterop.cs" />
     <Compile Include="RunTime\Networking\RemoteInvocationAttribute.cs" />
     <Compile Include="Logic\Entities\EntityId.cs" />
