@@ -130,7 +130,7 @@ IMaterial *MaterialInterop::Load(mono::string file, bool createIfNotFound, bool 
 	return
 		gEnv->p3DEngine->GetMaterialManager()->LoadMaterial
 		(
-			file ? (const char *)(NtText(file)) : nullptr,
+			NtText(file),
 			createIfNotFound,
 			nonRemovable,
 			previewMode ? IMaterialManager::ELoadingFlagsPreviewMode : 0
@@ -192,8 +192,7 @@ IMaterial *MaterialInterop::Clone(IMaterial **handle, mono::string slotName)
 		NullReferenceException("Instance object is not valid.").Throw();
 	}
 
-	return gEnv->p3DEngine->GetMaterialManager()->CloneMultiMaterial
-		(mat, slotName ? (const char *)(NtText(slotName)) : nullptr);
+	return gEnv->p3DEngine->GetMaterialManager()->CloneMultiMaterial(mat, NtText(slotName));
 }
 
 void MaterialInterop::CopyTo(IMaterial **handle, IMaterial *material, EMaterialCopyFlags flags)
@@ -215,7 +214,7 @@ bool MaterialInterop::GetFloatParameter(IMaterial **handle, mono::string name, f
 		NullReferenceException("Instance object is not valid.").Throw();
 	}
 
-	return mat->SetGetMaterialParamFloat(name ? (const char *)(NtText(name)) : nullptr, *value, true);
+	return mat->SetGetMaterialParamFloat(NtText(name), *value, true);
 }
 
 bool MaterialInterop::GetVectorParameter(IMaterial **handle, mono::string name, Vec3 *value)
@@ -226,7 +225,7 @@ bool MaterialInterop::GetVectorParameter(IMaterial **handle, mono::string name, 
 		NullReferenceException("Instance object is not valid.").Throw();
 	}
 
-	return mat->SetGetMaterialParamVec3(name ? (const char *)(NtText(name)) : nullptr, *value, true);
+	return mat->SetGetMaterialParamVec3(NtText(name), *value, true);
 }
 
 bool MaterialInterop::SetFloatParameter(IMaterial **handle, mono::string name, float value)
@@ -237,7 +236,7 @@ bool MaterialInterop::SetFloatParameter(IMaterial **handle, mono::string name, f
 		NullReferenceException("Instance object is not valid.").Throw();
 	}
 
-	return mat->SetGetMaterialParamFloat(name ? (const char *)(NtText(name)) : nullptr, value, false);
+	return mat->SetGetMaterialParamFloat(NtText(name), value, false);
 }
 
 bool MaterialInterop::SetVectorParameter(IMaterial **handle, mono::string name, Vec3 value)
@@ -248,7 +247,7 @@ bool MaterialInterop::SetVectorParameter(IMaterial **handle, mono::string name, 
 		NullReferenceException("Instance object is not valid.").Throw();
 	}
 
-	return mat->SetGetMaterialParamVec3(name ? (const char *)(NtText(name)) : nullptr, value, false);
+	return mat->SetGetMaterialParamVec3(NtText(name), value, false);
 }
 
 void SubMaterialsInterop::OnRunTimeInitialized()

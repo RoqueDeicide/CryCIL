@@ -356,6 +356,10 @@ inline mono::string NtTextTemplate<SymbolType>::_mono_str(const SymbolType *str)
 template<typename SymbolType>
 inline const SymbolType *NtTextTemplate<SymbolType>::_str_mono(mono::string str)
 {
+	if (!str)
+	{
+		return nullptr;
+	}
 #ifdef CRYCIL_MODULE
 	MonoError error;
 	char *ntText = mono_string_to_utf8_checked((MonoString *)str, &error);

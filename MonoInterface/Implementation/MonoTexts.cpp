@@ -14,6 +14,10 @@ mono::string MonoTexts::ToManaged(const wchar_t *text)
 
 const char *MonoTexts::ToNative(mono::string text)
 {
+	if (!text)
+	{
+		return nullptr;
+	}
 	MonoError er;
 	char *t = mono_string_to_utf8_checked((MonoString *)text, &er);
 	if (mono_error_ok(&er))
@@ -30,6 +34,11 @@ const char *MonoTexts::ToNative(mono::string text)
 
 const wchar_t *MonoTexts::ToNative16(mono::string text)
 {
+	if (!text)
+	{
+		return nullptr;
+	}
+
 	wchar_t *chars = (wchar_t *)mono_string_to_utf16((MonoString *)text);
 
 	int length = wcslen(chars);
