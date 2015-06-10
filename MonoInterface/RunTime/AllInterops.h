@@ -69,3 +69,11 @@
 #include "Interops/MaterialLayers.h"
 
 #include "Interops/StackString.h"
+
+#include "Interops/ParticleEffect.h"
+
+#include "Interops/ParticleEmitter.h"
+
+#include "Interops/ParticleParameters.h"
+
+#include "Interops/ParticleEffectIterator.h"

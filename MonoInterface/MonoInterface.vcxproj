@@ -290,8 +290,12 @@
     <ClInclude Include="Interops\MaterialLayers.h" />
     <ClInclude Include="Interops\Materials.h" />
     <ClInclude Include="Interops\MeshOps.h" />
+    <ClInclude Include="Interops\ParticleEffectIterator.h" />
+    <ClInclude Include="Interops\ParticleParameters.h" />
     <ClInclude Include="Interops\MouseInterop.h" />
     <ClInclude Include="Interops\Ocean.h" />
+    <ClInclude Include="Interops\ParticleEffect.h" />
+    <ClInclude Include="Interops\ParticleEmitter.h" />
     <ClInclude Include="Interops\Profiling.h" />
     <ClInclude Include="Interops\Renderer.h" />
     <ClInclude Include="Interops\Shading.h" />
@@ -389,6 +393,10 @@
     <ClCompile Include="Interops\MouseInterop.cpp" />
     <ClCompile Include="Interops\Console.cpp" />
     <ClCompile Include="Interops\Ocean.cpp" />
+    <ClCompile Include="Interops\ParticleEffect.cpp" />
+    <ClCompile Include="Interops\ParticleEffectIterator.cpp" />
+    <ClCompile Include="Interops\ParticleEmitter.cpp" />
+    <ClCompile Include="Interops\ParticleParameters.cpp" />
     <ClCompile Include="Interops\Profiling.cpp" />
     <ClCompile Include="Interops\Renderer.cpp" />
     <ClCompile Include="Interops\Shading.cpp" />

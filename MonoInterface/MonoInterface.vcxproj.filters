@@ -341,6 +341,18 @@
     <ClInclude Include="Interops\StackString.h">
       <Filter>Interops\Utilities</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\ParticleEffect.h">
+      <Filter>Interops\Engine\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\ParticleEmitter.h">
+      <Filter>Interops\Engine\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\ParticleParameters.h">
+      <Filter>Interops\Engine\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\ParticleEffectIterator.h">
+      <Filter>Interops\Engine\Effects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -533,6 +545,18 @@
     <ClCompile Include="Interops\StackString.cpp">
       <Filter>Interops\Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="Interops\ParticleEffect.cpp">
+      <Filter>Interops\Engine\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\ParticleEmitter.cpp">
+      <Filter>Interops\Engine\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\ParticleParameters.cpp">
+      <Filter>Interops\Engine\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\ParticleEffectIterator.cpp">
+      <Filter>Interops\Engine\Effects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">
@@ -624,6 +648,9 @@
     </Filter>
     <Filter Include="Interops\Engine\Physics">
       <UniqueIdentifier>{a3406974-2b23-4a2c-9bad-d4e8971f9f8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interops\Engine\Effects">
+      <UniqueIdentifier>{549c0184-7eab-435d-9f14-81fe17b88807}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
