@@ -299,6 +299,7 @@
     <ClInclude Include="Interops\Profiling.h" />
     <ClInclude Include="Interops\Renderer.h" />
     <ClInclude Include="Interops\Shading.h" />
+    <ClInclude Include="Interops\Spline.h" />
     <ClInclude Include="Interops\StackString.h" />
     <ClInclude Include="Interops\SurfaceTypes.h" />
     <ClInclude Include="Interops\Terrain.h" />
@@ -400,6 +401,7 @@
     <ClCompile Include="Interops\Profiling.cpp" />
     <ClCompile Include="Interops\Renderer.cpp" />
     <ClCompile Include="Interops\Shading.cpp" />
+    <ClCompile Include="Interops\Spline.cpp" />
     <ClCompile Include="Interops\StackString.cpp" />
     <ClCompile Include="Interops\SurfaceTypes.cpp" />
     <ClCompile Include="Interops\Terrain.cpp" />

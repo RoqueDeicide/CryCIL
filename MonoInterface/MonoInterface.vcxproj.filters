@@ -353,6 +353,9 @@
     <ClInclude Include="Interops\ParticleEffectIterator.h">
       <Filter>Interops\Engine\Effects</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\Spline.h">
+      <Filter>Interops\Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -556,6 +559,9 @@
     </ClCompile>
     <ClCompile Include="Interops\ParticleEffectIterator.cpp">
       <Filter>Interops\Engine\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\Spline.cpp">
+      <Filter>Interops\Utilities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

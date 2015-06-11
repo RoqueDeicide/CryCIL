@@ -77,3 +77,5 @@
 #include "Interops/ParticleParameters.h"
 
 #include "Interops/ParticleEffectIterator.h"
+
+#include "Interops/Spline.h"
