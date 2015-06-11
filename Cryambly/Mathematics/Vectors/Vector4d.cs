@@ -11,7 +11,7 @@ namespace CryCil
 	/// </summary>
 	[Serializable]
 	[StructLayout(LayoutKind.Sequential)]
-	public struct Vector4d : IEquatable<Vector4d>, IFormattable, IEnumerable<double>
+	public struct Vector4d : IVector<double, Vector4d>, IEquatable<Vector4d>, IFormattable, IEnumerable<double>
 	{
 		/// <summary>
 		/// Zero vector.
@@ -413,6 +413,18 @@ namespace CryCil
 			return new Vector4d(value.X, value.Y, value.Z, value.W);
 		}
 		#endregion
+		#region Product Operators
+		/// <summary>
+		/// Calculates dot product of two vectors.
+		/// </summary>
+		/// <param name="left"> Left operand.</param>
+		/// <param name="right">Right operand.</param>
+		/// <returns>Dot product.</returns>
+		public static double operator *(Vector4d left, Vector4d right)
+		{
+			return left.X * right.X + left.Y * right.Y + left.Z * right.Z + left.W * right.W;
+		}
+		#endregion
 		#endregion
 		#region Modification
 		/// <summary>
@@ -799,6 +811,64 @@ namespace CryCil
 			yield return this.Y;
 			yield return this.Z;
 			yield return this.W;
+		}
+		#endregion
+		#region IVector
+		/// <summary>
+		/// Creates deep copy of this vector.
+		/// </summary>
+		Vector4d IVector<double, Vector4d>.DeepCopy
+		{
+			get { return this; }
+		}
+		/// <summary>
+		/// Calculates the dot product of this vector and another one.
+		/// </summary>
+		/// <param name="other">Another vector.</param>
+		/// <returns>Dot product of the 2 vectors.</returns>
+		double IVector<double, Vector4d>.Dot(Vector4d other)
+		{
+			return this * other;
+		}
+		/// <summary>
+		/// Adds components from another vector to respective components of this one.
+		/// </summary>
+		/// <param name="other">Another vector.</param>
+		void IVector<double, Vector4d>.Add(Vector4d other)
+		{
+			this.X += other.X;
+			this.Y += other.Y;
+			this.Z += other.Z;
+			this.W += other.W;
+		}
+		/// <summary>
+		/// Multiplies components of this vector by the given factor.
+		/// </summary>
+		/// <param name="factor">Scaling factor.</param>
+		void IVector<double, Vector4d>.Scale(double factor)
+		{
+			this.X *= factor;
+			this.Y *= factor;
+			this.Z *= factor;
+			this.W *= factor;
+		}
+		/// <summary>
+		/// Creates a new vector that is a sum of this one and another one.
+		/// </summary>
+		/// <param name="other">Another vector.</param>
+		/// <returns>Sum of two vectors.</returns>
+		Vector4d IVector<double, Vector4d>.Added(Vector4d other)
+		{
+			return this + other;
+		}
+		/// <summary>
+		/// Creates a new vector that is a scaled version of this one.
+		/// </summary>
+		/// <param name="factor">Scaling factor.</param>
+		/// <returns>Scaled vector.</returns>
+		Vector4d IVector<double, Vector4d>.Scaled(double factor)
+		{
+			return this * factor;
 		}
 		#endregion
 		#endregion

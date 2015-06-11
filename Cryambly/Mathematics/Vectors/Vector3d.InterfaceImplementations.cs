@@ -4,6 +4,62 @@ namespace CryCil
 {
 	public partial struct Vector3d
 	{
+		#region IVector
+		/// <summary>
+		/// Creates deep copy of this vector.
+		/// </summary>
+		Vector3d IVector<double, Vector3d>.DeepCopy
+		{
+			get { return this; }
+		}
+		/// <summary>
+		/// Calculates the dot product of this vector and another one.
+		/// </summary>
+		/// <param name="other">Another vector.</param>
+		/// <returns>Dot product of the 2 vectors.</returns>
+		double IVector<double, Vector3d>.Dot(Vector3d other)
+		{
+			return this * other;
+		}
+		/// <summary>
+		/// Adds components from another vector to respective components of this one.
+		/// </summary>
+		/// <param name="other">Another vector.</param>
+		void IVector<double, Vector3d>.Add(Vector3d other)
+		{
+			this.X += other.X;
+			this.Y += other.Y;
+			this.Z += other.Z;
+		}
+		/// <summary>
+		/// Multiplies components of this vector by the given factor.
+		/// </summary>
+		/// <param name="factor">Scaling factor.</param>
+		void IVector<double, Vector3d>.Scale(double factor)
+		{
+			this.X *= factor;
+			this.Y *= factor;
+			this.Z *= factor;
+		}
+		/// <summary>
+		/// Creates a new vector that is a sum of this one and another one.
+		/// </summary>
+		/// <param name="other">Another vector.</param>
+		/// <returns>Sum of two vectors.</returns>
+		Vector3d IVector<double, Vector3d>.Added(Vector3d other)
+		{
+			return this + other;
+		}
+		/// <summary>
+		/// Creates a new vector that is a scaled version of this one.
+		/// </summary>
+		/// <param name="factor">Scaling factor.</param>
+		/// <returns>Scaled vector.</returns>
+		Vector3d IVector<double, Vector3d>.Scaled(double factor)
+		{
+			return this * factor;
+		}
+		#endregion
 		#region IEnumerable<double>
 		/// <summary>
 		/// Enumerates this vector.

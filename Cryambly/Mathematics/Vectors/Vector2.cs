@@ -12,7 +12,7 @@ namespace CryCil
 	/// </summary>
 	[Serializable]
 	[StructLayout(LayoutKind.Sequential, Pack = 4)]
-	public partial struct Vector2 : IEquatable<Vector2>, IFormattable, IEnumerable<float>, IComparable<Vector2>
+	public partial struct Vector2 : IVector<float, Vector2>, IEquatable<Vector2>, IFormattable, IEnumerable<float>, IComparable<Vector2>
 	{
 		#region Static Fields
 		/// <summary>

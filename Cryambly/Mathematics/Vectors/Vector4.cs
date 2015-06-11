@@ -11,7 +11,7 @@ namespace CryCil
 	/// </summary>
 	[Serializable]
 	[StructLayout(LayoutKind.Sequential)]
-	public struct Vector4 : IEquatable<Vector4>, IFormattable, IEnumerable<float>
+	public struct Vector4 : IVector<float, Vector4>, IEquatable<Vector4>, IFormattable, IEnumerable<float>
 	{
 		/// <summary>
 		/// Zero vector.
@@ -413,6 +413,18 @@ namespace CryCil
 			return new Vector4(value.X, value.Y, value.Z, value.W);
 		}
 		#endregion
+		#region Product Operators
+		/// <summary>
+		/// Calculates dot product of two vectors.
+		/// </summary>
+		/// <param name="left"> Left operand.</param>
+		/// <param name="right">Right operand.</param>
+		/// <returns>Dot product.</returns>
+		public static float operator *(Vector4 left, Vector4 right)
+		{
+			return left.X * right.X + left.Y * right.Y + left.Z * right.Z + left.W * right.W;
+		}
+		#endregion
 		#endregion
 		#region Modification
 		/// <summary>
@@ -799,6 +811,64 @@ namespace CryCil
 			yield return this.Y;
 			yield return this.Z;
 			yield return this.W;
+		}
+		#endregion
+		#region IVector
+		/// <summary>
+		/// Creates deep copy of this vector.
+		/// </summary>
+		Vector4 IVector<float, Vector4>.DeepCopy
+		{
+			get { return this; }
+		}
+		/// <summary>
+		/// Calculates the dot product of this vector and another one.
+		/// </summary>
+		/// <param name="other">Another vector.</param>
+		/// <returns>Dot product of the 2 vectors.</returns>
+		float IVector<float, Vector4>.Dot(Vector4 other)
+		{
+			return this * other;
+		}
+		/// <summary>
+		/// Adds components from another vector to respective components of this one.
+		/// </summary>
+		/// <param name="other">Another vector.</param>
+		void IVector<float, Vector4>.Add(Vector4 other)
+		{
+			this.X += other.X;
+			this.Y += other.Y;
+			this.Z += other.Z;
+			this.W += other.W;
+		}
+		/// <summary>
+		/// Multiplies components of this vector by the given factor.
+		/// </summary>
+		/// <param name="factor">Scaling factor.</param>
+		void IVector<float, Vector4>.Scale(float factor)
+		{
+			this.X *= factor;
+			this.Y *= factor;
+			this.Z *= factor;
+			this.W *= factor;
+		}
+		/// <summary>
+		/// Creates a new vector that is a sum of this one and another one.
+		/// </summary>
+		/// <param name="other">Another vector.</param>
+		/// <returns>Sum of two vectors.</returns>
+		Vector4 IVector<float, Vector4>.Added(Vector4 other)
+		{
+			return this + other;
+		}
+		/// <summary>
+		/// Creates a new vector that is a scaled version of this one.
+		/// </summary>
+		/// <param name="factor">Scaling factor.</param>
+		/// <returns>Scaled vector.</returns>
+		Vector4 IVector<float, Vector4>.Scaled(float factor)
+		{
+			return this * factor;
 		}
 		#endregion
 		#endregion

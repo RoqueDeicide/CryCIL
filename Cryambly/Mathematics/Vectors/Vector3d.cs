@@ -13,7 +13,7 @@ namespace CryCil
 	/// </summary>
 	[Serializable]
 	[StructLayout(LayoutKind.Sequential)]
-	public partial struct Vector3d : IEquatable<Vector3d>, IEnumerable<double>, IComparable<Vector3d>
+	public partial struct Vector3d : IVector<double, Vector3d>, IEquatable<Vector3d>, IEnumerable<double>, IComparable<Vector3d>
 	{
 		#region Static Fields
 		/// <summary>
