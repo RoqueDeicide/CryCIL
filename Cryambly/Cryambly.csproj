@@ -86,6 +86,8 @@
     <Compile Include="Engine\CryEngineException.cs" />
     <Compile Include="Engine\Effects\ParticleEffectDatabase.cs" />
     <Compile Include="Engine\Effects\ParticleEffectEnumerator.cs" />
+    <Compile Include="Mathematics\Geometry\Splines\BezierBasis.cs" />
+    <Compile Include="Mathematics\Geometry\Splines\HermiteBasis.cs" />
     <Compile Include="Mathematics\Specials\UnitSingle.cs" />
     <Compile Include="Engine\DebugServices\DebugObjects\DebugUiText.cs" />
     <Compile Include="Engine\Effects\EmitterEventArgs.cs" />
