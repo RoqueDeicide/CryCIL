@@ -1,17 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CryEngine.Mathematics;
-using CryEngine.Mathematics.Graphics;
+using CryCil.Graphics;
 
-namespace CryEngine.Engine.Renderer
+namespace CryCil.Engine.Rendering
 {
+	/// <summary>
+	/// Encapsulates parameters that define level-of-detail information used for rendering the object.
+	/// </summary>
+	public struct LodValue
+	{
+		/// <summary>
+		/// Unknown.
+		/// </summary>
+		public short LodA;
+		/// <summary>
+		/// Unknown.
+		/// </summary>
+		public short LodB;
+		/// <summary>
+		/// Unknown.
+		/// </summary>
+		public byte DissolveRef;
+	}
 	/// <summary>
 	/// Encapsulates a set of parameters that specify the way visible object is rendered.
 	/// </summary>
-	public unsafe struct RenderParams
+	public unsafe struct RenderParameters
 	{
 		/// <summary>
 		/// Matrix that represents all transformations applied to this object during this frame.
@@ -135,6 +148,10 @@ namespace CryEngine.Engine.Renderer
 		/// </summary>
 		public ushort CustomFlags;
 		/// <summary>
+		/// The LOD value for rendering.
+		/// </summary>
+		public LodValue Lod;
+		/// <summary>
 		/// Defines per object custom data.
 		/// </summary>
 		public byte CustomDataByte;
@@ -145,7 +162,7 @@ namespace CryEngine.Engine.Renderer
 		/// <summary>
 		/// Per instance vis area stencil ref id.
 		/// </summary>
-		public byte VisAreaStencilRef;
+		public byte ClipVolumeStencilRef;
 		/// <summary>
 		/// Custom offset for sorting by distance.
 		/// </summary>
@@ -154,14 +171,6 @@ namespace CryEngine.Engine.Renderer
 		/// Material layers bitmask &gt; which material layers are active.
 		/// </summary>
 		public byte MaterialLayers;
-		// Summary: LOD transition states slot id.
-
-		//uint8 nLodTransSlotId;
-
-		/// <summary>
-		/// LOD transition states slot id.
-		/// </summary>
-		public byte Lod;
 		/// <summary>
 		/// Force a sort value for render elements.
 		/// </summary>

@@ -135,7 +135,6 @@
   <ItemGroup>
     <Compile Include="Logic\Actors\Actor.cs" />
     <Compile Include="Logic\Actors\ActorBase.cs" />
-    <Compile Include="Engine\Renderer\RenderParams.cs" />
     <Compile Include="Logic\Entities\EntityFlags.cs" />
     <Compile Include="Logic\Entities\EntityManager.cs" />
     <Compile Include="Logic\Flowgraph\Exception.cs" />
