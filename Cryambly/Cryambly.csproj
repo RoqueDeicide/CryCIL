@@ -84,6 +84,10 @@
     <Compile Include="Engine\CryAction\MinimapInfo.cs" />
     <Compile Include="Engine\CryConsole.cs" />
     <Compile Include="Engine\CryEngineException.cs" />
+    <Compile Include="Engine\Data\CrySync.cs" />
+    <Compile Include="Engine\Data\CrySync.Examples.cs" />
+    <Compile Include="Engine\Data\ISynchronizable.cs" />
+    <Compile Include="Engine\Data\SyncContext.cs" />
     <Compile Include="Engine\Effects\ParticleEffectDatabase.cs" />
     <Compile Include="Engine\Effects\ParticleEffectEnumerator.cs" />
     <Compile Include="Engine\Rendering\RenderParameters.cs" />

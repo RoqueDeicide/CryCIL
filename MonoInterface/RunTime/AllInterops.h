@@ -79,3 +79,5 @@
 #include "Interops/ParticleEffectIterator.h"
 
 #include "Interops/Spline.h"
+
+#include "Interops/CrySync.h"

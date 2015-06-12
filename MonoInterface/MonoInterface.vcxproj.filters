@@ -356,6 +356,9 @@
     <ClInclude Include="Interops\Spline.h">
       <Filter>Interops\Utilities</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\CrySync.h">
+      <Filter>Interops\Engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -562,6 +565,9 @@
     </ClCompile>
     <ClCompile Include="Interops\Spline.cpp">
       <Filter>Interops\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\CrySync.cpp">
+      <Filter>Interops\Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

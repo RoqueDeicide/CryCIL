@@ -337,6 +337,7 @@ void MonoInterface::RegisterDefaultListeners()
 	this->broadcaster->listeners->Add(new ParticleEffectInterop());
 	this->broadcaster->listeners->Add(new ParticleEffectIteratorInterop());
 	this->broadcaster->listeners->Add(new SplineInterop());
+	this->broadcaster->listeners->Add(new CrySyncInterop());
 }
 #pragma endregion
 #pragma region Thunks Initialization
