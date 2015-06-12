@@ -13,10 +13,10 @@ void TimingInterop::Update()
 	auto fs   = gEnv->pTimer->GetFrameStartTime(ITimer::ETIMER_GAME).GetValue();
 	auto fsui = gEnv->pTimer->GetFrameStartTime(ITimer::ETIMER_UI).GetValue();
 	
-	int64 frameStart   = TimeUtilities::TicksCryEngineToToMono(fs);
-	int64 frameStartUi = TimeUtilities::TicksCryEngineToToMono(fsui);
-	int64 frame        = TimeUtilities::TicksToMonoSeconds(gEnv->pTimer->GetFrameTime());
-	int64 frameReal    = TimeUtilities::TicksToMonoSeconds(gEnv->pTimer->GetRealFrameTime());
+	int64 frameStart   = TimeUtilities::CryEngineTicksToMonoTicks(fs);
+	int64 frameStartUi = TimeUtilities::CryEngineTicksToMonoTicks(fsui);
+	int64 frame        = TimeUtilities::SecondsToMonoTicks(gEnv->pTimer->GetFrameTime());
+	int64 frameReal    = TimeUtilities::SecondsToMonoTicks(gEnv->pTimer->GetRealFrameTime());
 	float scale        = gEnv->pTimer->GetTimeScale();
 	float frameRate    = gEnv->pTimer->GetFrameRate();
 	
@@ -38,7 +38,7 @@ int64 TimingInterop::get_Async()
 {
 	if (gEnv && gEnv->pTimer)
 	{
-		return TimeUtilities::TicksCryEngineToToMono(gEnv->pTimer->GetAsyncTime().GetValue());
+		return TimeUtilities::CryEngineTicksToMonoTicks(gEnv->pTimer->GetAsyncTime().GetValue());
 	}
 	return 0;
 }
@@ -47,7 +47,7 @@ int64 TimingInterop::get_AsyncCurrent()
 {
 	if (gEnv && gEnv->pTimer)
 	{
-		return TimeUtilities::TicksToMonoSeconds(gEnv->pTimer->GetAsyncCurTime());
+		return TimeUtilities::SecondsToMonoTicks(gEnv->pTimer->GetAsyncCurTime());
 	}
 	return 0;
 }

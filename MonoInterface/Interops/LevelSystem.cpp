@@ -109,7 +109,7 @@ bool LevelSystemInterop::get_Loaded()
 
 uint64 LevelSystemInterop::get_LastLoadTime()
 {
-	return TimeUtilities::TicksToMonoSeconds(MonoEnv->CryAction->GetILevelSystem()->GetLastLevelLoadTime());
+	return TimeUtilities::SecondsToMonoTicks(MonoEnv->CryAction->GetILevelSystem()->GetLastLevelLoadTime());
 }
 
 void LevelSystemInterop::Unload()
