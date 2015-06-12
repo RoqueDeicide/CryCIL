@@ -246,11 +246,6 @@
     <Compile Include="Physics\Explosion.cs" />
     <Compile Include="Native\NetworkInterop.cs" />
     <Compile Include="RunTime\Networking\RemoteInvocationException.cs" />
-    <Compile Include="RunTime\Serialization\CrySerialize.cs" />
-    <Compile Include="RunTime\Serialization\ICrySerializable.cs" />
-    <Compile Include="RunTime\Serialization\ISerialize.cs" />
-    <Compile Include="RunTime\Serialization\SerializationTarget.cs" />
-    <Compile Include="RunTime\Serialization\SerializationType.cs" />
     <Compile Include="ProjectSettings.cs" />
     <Compile Include="Entities\EntityLight.cs" />
     <Compile Include="Logic\Actors\NativeActor.cs" />
@@ -273,8 +268,6 @@
     <Compile Include="RunTime\Networking\RemoteInvocationAttribute.cs" />
     <Compile Include="Logic\Entities\EntityId.cs" />
     <Compile Include="Entities\NativeEntity.cs" />
-    <Compile Include="RunTime\Serialization\CrySerializer.cs" />
-    <Compile Include="RunTime\Serialization\SerializedObjectReference.cs" />
     <Compile Include="Physics\RaycastHit.cs" />
     <Compile Include="Entities\EntityMovement.cs" />
     <Compile Include="Game.cs" />

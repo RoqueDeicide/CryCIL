@@ -51,9 +51,6 @@
     <ClInclude Include="Interops\StaticObjects\StaticObject.h">
       <Filter>Interops\StaticObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Interops\CrySerialize.h">
-      <Filter>Interops</Filter>
-    </ClInclude>
     <ClInclude Include="Interops\Network.h">
       <Filter>Interops</Filter>
     </ClInclude>
@@ -111,9 +108,6 @@
     </ClCompile>
     <ClCompile Include="Interops\StaticObjects\StaticObject.cpp">
       <Filter>Interops\StaticObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="Interops\CrySerialize.cpp">
-      <Filter>Interops</Filter>
     </ClCompile>
     <ClCompile Include="Interops\Network.cpp">
       <Filter>Interops</Filter>

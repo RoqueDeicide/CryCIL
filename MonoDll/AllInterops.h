@@ -14,5 +14,4 @@
 #include "Interops/StaticObjects/CMesh.h"
 #include "Interops/StaticObjects/StaticObject.h"
 // Miscellaneous
-#include "Interops/CrySerialize.h"
 #include "Interops/Network.h"
