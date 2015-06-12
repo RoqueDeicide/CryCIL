@@ -17,6 +17,13 @@ namespace CryCil.Utilities
 		#endregion
 		#region Properties
 		/// <summary>
+		/// Gets the pointer to the underlying object.
+		/// </summary>
+		public IntPtr Handle
+		{
+			get { return this.handle; }
+		}
+		/// <summary>
 		/// Gets the name of the node.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This Xml node is not valid.</exception>
@@ -82,6 +89,14 @@ namespace CryCil.Utilities
 		/// <exception cref="ArgumentNullException">Name of the Xml node cannot be null.</exception>
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public extern CryXmlNode([UsedImplicitly] string name);
+		/// <summary>
+		/// Creates new instance of this type.
+		/// </summary>
+		/// <param name="handle">Pointer to the underlying implementation object.</param>
+		public CryXmlNode(IntPtr handle)
+		{
+			this.handle = handle;
+		}
 		/// <summary>
 		/// Finalizes this object.
 		/// </summary>
