@@ -95,6 +95,8 @@
     <Compile Include="Engine\Environment\TimeOfDay.cs" />
     <Compile Include="Engine\Environment\TimeOfDayParameterId.cs" />
     <Compile Include="Engine\Environment\TimeOfDaySync.cs" />
+    <Compile Include="Engine\Logic\CryActor.cs" />
+    <Compile Include="Engine\Logic\CryEntity.cs" />
     <Compile Include="Engine\Rendering\RenderParameters.cs" />
     <Compile Include="Mathematics\Geometry\Splines\BezierBasis.cs" />
     <Compile Include="Mathematics\Geometry\Splines\CryEngineSpline.cs" />
