@@ -291,6 +291,7 @@
     <ClInclude Include="Interops\MaterialLayers.h" />
     <ClInclude Include="Interops\Materials.h" />
     <ClInclude Include="Interops\MeshOps.h" />
+    <ClInclude Include="Interops\MonoCryXmlNode.h" />
     <ClInclude Include="Interops\ParticleEffectIterator.h" />
     <ClInclude Include="Interops\ParticleParameters.h" />
     <ClInclude Include="Interops\MouseInterop.h" />

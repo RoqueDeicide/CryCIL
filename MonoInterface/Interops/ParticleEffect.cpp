@@ -1,12 +1,7 @@
 #include "stdafx.h"
 
 #include "ParticleEffect.h"
-
-struct MonoCryXmlNode
-{
-	MonoObject obj;
-	IXmlNode *handle;
-};
+#include "MonoCryXmlNode.h"
 
 void ParticleEffectInterop::OnRunTimeInitialized()
 {
