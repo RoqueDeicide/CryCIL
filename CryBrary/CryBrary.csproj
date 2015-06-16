@@ -175,15 +175,6 @@
     <Compile Include="RunTime\Registration\Exception.cs" />
     <Compile Include="RunTime\Registration\FlowNodeRegister.cs" />
     <Compile Include="Native\CryPakInterop.cs" />
-    <Compile Include="Engine\TimeOfDay\CloudShadingParams.cs" />
-    <Compile Include="Engine\TimeOfDay\ColorGradingParams.cs" />
-    <Compile Include="Engine\TimeOfDay\FogParams.cs" />
-    <Compile Include="Engine\TimeOfDay\HDRParams.cs" />
-    <Compile Include="Engine\TimeOfDay\NightSkyParams.cs" />
-    <Compile Include="Engine\TimeOfDay\ShadowParams.cs" />
-    <Compile Include="Engine\TimeOfDay\SkyLightParams.cs" />
-    <Compile Include="Engine\TimeOfDay\SkyParams.cs" />
-    <Compile Include="Engine\TimeOfDay\SunRaysEffectParams.cs" />
     <Compile Include="Entities\Area.cs" />
     <Compile Include="Entities\EntityGUID.cs" />
     <Compile Include="Entities\EntityAspects.cs" />
@@ -249,7 +240,6 @@
     <Compile Include="ProjectSettings.cs" />
     <Compile Include="Entities\EntityLight.cs" />
     <Compile Include="Logic\Actors\NativeActor.cs" />
-    <Compile Include="Native\Engine3DInterop.cs" />
     <Compile Include="Native\ActorInterop.cs" />
     <Compile Include="RunTime\Async\Jobs\AsyncJob.cs" />
     <Compile Include="RunTime\Async\Awaiter.cs" />
@@ -258,7 +248,6 @@
     <Compile Include="RunTime\Async\Jobs\IAsyncJob.cs" />
     <Compile Include="RunTime\Async\Jobs\TimeDelayJob.cs" />
     <Compile Include="Entities\EntityBase.cs" />
-    <Compile Include="Engine\TimeOfDay\TimeOfDay.cs" />
     <Compile Include="Logic\Flowgraph\FlowNodeAttribute.cs" />
     <Compile Include="Native\DebugInterop.cs" />
     <Compile Include="Native\EntityInterop.cs" />

@@ -97,7 +97,6 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
     <ClInclude Include="Actor.h" />
     <ClInclude Include="AllInterops.h" />
     <ClInclude Include="EntityEventHandling.h" />
-    <ClInclude Include="Interops\Engine\3DEngine.h" />
     <ClInclude Include="Interops\Entities\Entity.h" />
     <ClInclude Include="Interops\Entities\GameObject.h" />
     <ClInclude Include="Interops\Entities\Physics.h" />
@@ -120,7 +119,6 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="EntityEventHandling.cpp" />
-    <ClCompile Include="Interops\Engine\3DEngine.cpp" />
     <ClCompile Include="Interops\Entities\Entity.cpp" />
     <ClCompile Include="Interops\Entities\GameObject.cpp" />
     <ClCompile Include="Interops\Entities\Physics.cpp" />

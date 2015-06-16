@@ -27,9 +27,6 @@
     <ClInclude Include="Interops\FlowGraph\FlowGraphNode_Mono.h">
       <Filter>Interops\FlowGraph</Filter>
     </ClInclude>
-    <ClInclude Include="Interops\Engine\3DEngine.h">
-      <Filter>Interops\3DEngine</Filter>
-    </ClInclude>
     <ClInclude Include="Interops\Entities\Entity.h">
       <Filter>Interops\Entities</Filter>
     </ClInclude>
@@ -85,9 +82,6 @@
     <ClCompile Include="Interops\FlowGraph\FlowGraphNode_Mono.cpp">
       <Filter>Interops\FlowGraph</Filter>
     </ClCompile>
-    <ClCompile Include="Interops\Engine\3DEngine.cpp">
-      <Filter>Interops\3DEngine</Filter>
-    </ClCompile>
     <ClCompile Include="Interops\Entities\Entity.cpp">
       <Filter>Interops\Entities</Filter>
     </ClCompile>
@@ -134,9 +128,6 @@
     </Filter>
     <Filter Include="Interops\FlowGraph">
       <UniqueIdentifier>{d77a7b9e-d8b5-4235-ba43-583cf331dfb6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Interops\3DEngine">
-      <UniqueIdentifier>{207f7768-8653-4b64-9c28-89e7f0d7ee80}</UniqueIdentifier>
     </Filter>
     <Filter Include="Interops\Entities">
       <UniqueIdentifier>{b72986a0-1186-4c2d-9461-34d62b53b4fe}</UniqueIdentifier>
