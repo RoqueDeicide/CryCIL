@@ -359,6 +359,9 @@
     <ClInclude Include="Interops\CrySync.h">
       <Filter>Interops\Engine</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\TimeOfDay.h">
+      <Filter>Interops\Engine\Environment</Filter>
+    </ClInclude>
     <ClInclude Include="Interops\MonoCryXmlNode.h">
       <Filter>Interops\Utilities</Filter>
     </ClInclude>
@@ -572,6 +575,9 @@
     <ClCompile Include="Interops\CrySync.cpp">
       <Filter>Interops\Engine</Filter>
     </ClCompile>
+    <ClCompile Include="Interops\TimeOfDay.cpp">
+      <Filter>Interops\Engine\Environment</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">
@@ -666,6 +672,9 @@
     </Filter>
     <Filter Include="Interops\Engine\Effects">
       <UniqueIdentifier>{549c0184-7eab-435d-9f14-81fe17b88807}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interops\Engine\Environment">
+      <UniqueIdentifier>{f2919e9d-ce00-481e-afc1-c684a5477d7c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

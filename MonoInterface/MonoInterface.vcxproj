@@ -306,6 +306,7 @@
     <ClInclude Include="Interops\SurfaceTypes.h" />
     <ClInclude Include="Interops\Terrain.h" />
     <ClInclude Include="Interops\Texture.h" />
+    <ClInclude Include="Interops\TimeOfDay.h" />
     <ClInclude Include="Interops\Timing.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="Logs.h" />
@@ -409,6 +410,7 @@
     <ClCompile Include="Interops\SurfaceTypes.cpp" />
     <ClCompile Include="Interops\Terrain.cpp" />
     <ClCompile Include="Interops\Texture.cpp" />
+    <ClCompile Include="Interops\TimeOfDay.cpp" />
     <ClCompile Include="Interops\Timing.cpp" />
     <ClCompile Include="RunTime\DebugEventReporter.cpp" />
     <ClCompile Include="RunTime\EventBroadcaster.cpp" />

@@ -90,6 +90,11 @@
     <Compile Include="Engine\Data\SyncContext.cs" />
     <Compile Include="Engine\Effects\ParticleEffectDatabase.cs" />
     <Compile Include="Engine\Effects\ParticleEffectEnumerator.cs" />
+    <Compile Include="Engine\Environment\DayNightCycleInfo.cs" />
+    <Compile Include="Engine\Environment\SunPositioning.cs" />
+    <Compile Include="Engine\Environment\TimeOfDay.cs" />
+    <Compile Include="Engine\Environment\TimeOfDayParameterId.cs" />
+    <Compile Include="Engine\Environment\TimeOfDaySync.cs" />
     <Compile Include="Engine\Rendering\RenderParameters.cs" />
     <Compile Include="Mathematics\Geometry\Splines\BezierBasis.cs" />
     <Compile Include="Mathematics\Geometry\Splines\CryEngineSpline.cs" />
