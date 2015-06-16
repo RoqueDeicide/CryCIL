@@ -14,7 +14,7 @@ struct OceanAnimation
 struct OceanInterop : public IMonoInterop<true, true>
 {
 	virtual const char *GetName() { return "Ocean"; }
-	virtual const char *GetNameSpace() { return "CryCil.Engine"; }
+	virtual const char *GetNameSpace() { return "CryCil.Engine.Environment"; }
 	
 	virtual void OnRunTimeInitialized();
 

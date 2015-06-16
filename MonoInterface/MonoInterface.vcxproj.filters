@@ -314,12 +314,6 @@
     <ClInclude Include="TimeUtilities.h">
       <Filter>Extras</Filter>
     </ClInclude>
-    <ClInclude Include="Interops\Terrain.h">
-      <Filter>Interops\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Interops\Ocean.h">
-      <Filter>Interops\Engine</Filter>
-    </ClInclude>
     <ClInclude Include="Interops\CryXmlNode.h">
       <Filter>Interops\Utilities</Filter>
     </ClInclude>
@@ -364,6 +358,12 @@
     </ClInclude>
     <ClInclude Include="Interops\MonoCryXmlNode.h">
       <Filter>Interops\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\Ocean.h">
+      <Filter>Interops\Engine\Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\Terrain.h">
+      <Filter>Interops\Engine\Environment</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -530,12 +530,6 @@
     <ClCompile Include="Interops\LevelGameRules.cpp">
       <Filter>Interops\Engine\CryAction</Filter>
     </ClCompile>
-    <ClCompile Include="Interops\Terrain.cpp">
-      <Filter>Interops\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Interops\Ocean.cpp">
-      <Filter>Interops\Engine</Filter>
-    </ClCompile>
     <ClCompile Include="Interops\CryXmlNode.cpp">
       <Filter>Interops\Utilities</Filter>
     </ClCompile>
@@ -576,6 +570,12 @@
       <Filter>Interops\Engine</Filter>
     </ClCompile>
     <ClCompile Include="Interops\TimeOfDay.cpp">
+      <Filter>Interops\Engine\Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\Ocean.cpp">
+      <Filter>Interops\Engine\Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\Terrain.cpp">
       <Filter>Interops\Engine\Environment</Filter>
     </ClCompile>
   </ItemGroup>

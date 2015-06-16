@@ -5,7 +5,7 @@
 struct TerrainInterop : public IMonoInterop < true, true >
 {
 	virtual const char *GetName() { return "Terrain"; }
-	virtual const char *GetNameSpace() { return "CryCil.Engine"; }
+	virtual const char *GetNameSpace() { return "CryCil.Engine.Environment"; }
 
 	virtual void OnRunTimeInitialized();
 

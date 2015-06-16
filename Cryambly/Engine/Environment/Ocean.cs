@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace CryCil.Engine
+namespace CryCil.Engine.Environment
 {
 	/// <summary>
 	/// Enumeration of options that specify how ocean is rendered.
