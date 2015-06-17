@@ -1,6 +1,4 @@
-﻿#if DEBUG
-
-using CryCil.Geometry;
+﻿using CryCil.Geometry;
 
 namespace CryCil.Engine.Data
 {
@@ -83,5 +81,3 @@ namespace CryCil.Engine.Data
 		}
 	}
 }
-
-#endif
