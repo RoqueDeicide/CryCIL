@@ -220,6 +220,7 @@
     <Compile Include="Mathematics\Random\RandomizedSingle.cs" />
     <Compile Include="Mathematics\Specials\Angle.cs" />
     <Compile Include="Mathematics\Vectors\IVector.cs" />
+    <Compile Include="RunTime\DefaultInitializationStages.cs" />
     <Compile Include="Utilities\CryXmlNode.Attributes.cs" />
     <Compile Include="Utilities\CryXmlNode.cs" />
     <Compile Include="GeneralExtensions.cs" />
