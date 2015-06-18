@@ -23,6 +23,7 @@ namespace CryCil
 		/// <returns>
 		/// True, if <paramref name="collection"/> is null or number its elements is equal to zero.
 		/// </returns>
+		[ContractAnnotation("collection:null => true")]
 		public static bool IsNullOrEmpty<T>(this ICollection<T> collection)
 		{
 			return collection == null || collection.Count == 0;
@@ -39,6 +40,7 @@ namespace CryCil
 		/// True, if <paramref name="collection"/> is null, or it contains smaller number elements then one
 		/// defined by <paramref name="minimalCount"/> .
 		/// </returns>
+		[ContractAnnotation("collection:null => true")]
 		public static bool IsNullOrTooSmall<T>(this ICollection<T> collection, int minimalCount)
 		{
 			return collection == null || collection.Count < minimalCount;
