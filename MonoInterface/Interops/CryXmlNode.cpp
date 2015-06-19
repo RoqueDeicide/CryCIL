@@ -15,6 +15,7 @@ void CryXmlNodeInterop::OnRunTimeInitialized()
 	ctor = MonoEnv->Cryambly->GetClass(this->GetNameSpace(), this->GetName())->GetConstructor(-1);
 
 	REGISTER_CTOR(Ctor);
+	REGISTER_METHOD(AddRef);
 	REGISTER_METHOD(Release);
 
 	REGISTER_METHOD(get_TagName);
@@ -89,6 +90,17 @@ void CryXmlNodeInterop::Ctor(mono::object obj, mono::string name)
 	IXmlNode **objNode = GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
 	*objNode = GetISystem()->CreateXmlNode(NtText(name));
 	(*objNode)->AddRef();
+}
+
+void CryXmlNodeInterop::AddRef(mono::object obj)
+{
+	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	if (!objNode)
+	{
+		return;
+	}
+
+	objNode->AddRef();
 }
 
 void CryXmlNodeInterop::Release(mono::object obj)

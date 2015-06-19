@@ -96,6 +96,7 @@ namespace CryCil.Utilities
 		public CryXmlNode(IntPtr handle)
 		{
 			this.handle = handle;
+			this.AddRef();
 		}
 		/// <summary>
 		/// Finalizes this object.
@@ -193,6 +194,8 @@ namespace CryCil.Utilities
 				GC.SuppressFinalize(this);
 			}
 		}
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private extern void AddRef();
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private extern void Release();
 		#endregion

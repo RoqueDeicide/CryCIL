@@ -9,7 +9,8 @@ struct CryXmlNodeInterop : public IMonoInterop<true, true>
 	
 	virtual void OnRunTimeInitialized();
 
-	static void Ctor   (mono::object obj, mono::string name);
+	static void Ctor(mono::object obj, mono::string name);
+	static void AddRef(mono::object obj);
 	static void Release(mono::object obj);
 
 	static mono::string get_TagName       (mono::object obj);
