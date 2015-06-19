@@ -97,6 +97,19 @@
     <Compile Include="Engine\Environment\TimeOfDaySync.cs" />
     <Compile Include="Engine\Logic\CryActor.cs" />
     <Compile Include="Engine\Logic\CryEntity.cs" />
+    <Compile Include="Engine\Logic\FlowGraph\ActivationSet.cs" />
+    <Compile Include="Engine\Logic\FlowGraph\FlowData.cs" />
+    <Compile Include="Engine\Logic\FlowGraph\FlowNode.cs" />
+    <Compile Include="Engine\Logic\FlowGraph\FlowNode.Events.cs" />
+    <None Include="Engine\Logic\FlowGraph\FlowNode.Examples.cs" />
+    <Compile Include="Engine\Logic\FlowGraph\FlowNodeAttribute.cs" />
+    <Compile Include="Engine\Logic\FlowGraph\FlowNodeConfig.cs" />
+    <Compile Include="Engine\Logic\FlowGraph\FlowNodeFlags.cs" />
+    <Compile Include="Engine\Logic\FlowGraph\FlowPort.cs" />
+    <Compile Include="Engine\Logic\FlowGraph\FlowDataType.cs" />
+    <Compile Include="Engine\Logic\FlowGraph\FlowPortConfig.cs" />
+    <Compile Include="Engine\Logic\FlowGraph\InputPort.cs" />
+    <Compile Include="Engine\Logic\FlowGraph\OutputPort.cs" />
     <Compile Include="Engine\Rendering\RenderParameters.cs" />
     <Compile Include="Mathematics\Geometry\Splines\BezierBasis.cs" />
     <Compile Include="Mathematics\Geometry\Splines\CryEngineSpline.cs" />
@@ -221,6 +234,7 @@
     <Compile Include="Mathematics\Specials\Angle.cs" />
     <Compile Include="Mathematics\Vectors\IVector.cs" />
     <Compile Include="RunTime\DefaultInitializationStages.cs" />
+    <Compile Include="RunTime\Registration\FlowNodeTypeRegistry.cs" />
     <Compile Include="Utilities\CryXmlNode.Attributes.cs" />
     <Compile Include="Utilities\CryXmlNode.cs" />
     <Compile Include="GeneralExtensions.cs" />

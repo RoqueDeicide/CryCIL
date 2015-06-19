@@ -365,6 +365,15 @@
     <ClInclude Include="Interops\Terrain.h">
       <Filter>Interops\Engine\Environment</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\MonoFlowNode.h">
+      <Filter>Interops\Engine\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\FlowGraph.h">
+      <Filter>Interops\Engine\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\MonoFlowNodeFactory.h">
+      <Filter>Interops\Engine\Logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -578,6 +587,15 @@
     <ClCompile Include="Interops\Terrain.cpp">
       <Filter>Interops\Engine\Environment</Filter>
     </ClCompile>
+    <ClCompile Include="Interops\MonoFlowNode.cpp">
+      <Filter>Interops\Engine\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\FlowGraph.cpp">
+      <Filter>Interops\Engine\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\MonoFlowNodeFactory.cpp">
+      <Filter>Interops\Engine\Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">
@@ -675,6 +693,9 @@
     </Filter>
     <Filter Include="Interops\Engine\Environment">
       <UniqueIdentifier>{f2919e9d-ce00-481e-afc1-c684a5477d7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interops\Engine\Logic">
+      <UniqueIdentifier>{1678bc4d-2d83-49e4-8cc5-0c0eb8928574}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

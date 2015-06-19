@@ -339,6 +339,7 @@ void MonoInterface::RegisterDefaultListeners()
 	this->broadcaster->listeners->Add(new SplineInterop());
 	this->broadcaster->listeners->Add(new CrySyncInterop());
 	this->broadcaster->listeners->Add(new TimeOfDayInterop());
+	this->broadcaster->listeners->Add(new FlowGraphInterop());
 }
 #pragma endregion
 #pragma region Thunks Initialization
