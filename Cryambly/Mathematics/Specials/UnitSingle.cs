@@ -9,7 +9,7 @@ namespace CryCil.Specials
 	public struct UnitSingle
 	{
 		#region Fields
-		private float val;
+		private readonly float val;
 		#endregion
 		#region Properties
 
