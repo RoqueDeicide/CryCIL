@@ -19,6 +19,11 @@ namespace CryCil.Utilities
 	public static class StringPool
 	{
 		private static readonly SortedList<string, IntPtr> pool = new SortedList<string, IntPtr>();
+		private static readonly IntPtr emptyNullTerminatedString;
+		static StringPool()
+		{
+			emptyNullTerminatedString = Marshal.StringToHGlobalAnsi("");
+		}
 		/// <summary>
 		/// Gets a pointer to a null-terminated equivalent of the given string.
 		/// </summary>
@@ -28,8 +33,19 @@ namespace CryCil.Utilities
 		/// <returns>Cached result of conversion.</returns>
 		public static IntPtr Get(string text)
 		{
-			IntPtr ptr;
-			if (!pool.TryGetValue(text, out  ptr))
+			IntPtr ptr = new IntPtr();
+
+			if (text == null)
+			{
+				return ptr;
+			}
+
+			if (text == "")
+			{
+				return emptyNullTerminatedString;
+			}
+
+			if (!pool.TryGetValue(text, out ptr))
 			{
 				ptr = Marshal.StringToHGlobalAnsi(text);
 				pool.Add(text, ptr);
