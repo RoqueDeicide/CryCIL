@@ -100,8 +100,6 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
     <ClInclude Include="Interops\Entities\Entity.h" />
     <ClInclude Include="Interops\Entities\GameObject.h" />
     <ClInclude Include="Interops\Entities\Physics.h" />
-    <ClInclude Include="Interops\FlowGraph\FlowGraphNode_Mono.h" />
-    <ClInclude Include="Interops\FlowGraph\FlowManager.h" />
     <ClInclude Include="Interops\GameLogic\ActorSystem.h" />
     <ClInclude Include="Interops\GameLogic\GameRules.h" />
     <ClInclude Include="Interops\Network.h" />
@@ -122,8 +120,6 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
     <ClCompile Include="Interops\Entities\Entity.cpp" />
     <ClCompile Include="Interops\Entities\GameObject.cpp" />
     <ClCompile Include="Interops\Entities\Physics.cpp" />
-    <ClCompile Include="Interops\FlowGraph\FlowGraphNode_Mono.cpp" />
-    <ClCompile Include="Interops\FlowGraph\FlowManager.cpp" />
     <ClCompile Include="Interops\GameLogic\ActorSystem.cpp" />
     <ClCompile Include="Interops\GameLogic\GameRules.cpp" />
     <ClCompile Include="Interops\Network.cpp" />

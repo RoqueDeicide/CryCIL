@@ -24,9 +24,6 @@
     <ClInclude Include="EntityEventHandling.h">
       <Filter>EntitySystem</Filter>
     </ClInclude>
-    <ClInclude Include="Interops\FlowGraph\FlowGraphNode_Mono.h">
-      <Filter>Interops\FlowGraph</Filter>
-    </ClInclude>
     <ClInclude Include="Interops\Entities\Entity.h">
       <Filter>Interops\Entities</Filter>
     </ClInclude>
@@ -52,9 +49,6 @@
       <Filter>Interops</Filter>
     </ClInclude>
     <ClInclude Include="AllInterops.h" />
-    <ClInclude Include="Interops\FlowGraph\FlowManager.h">
-      <Filter>Interops\FlowGraph</Filter>
-    </ClInclude>
     <ClInclude Include="ManagedGameLogic\ManagedEntity.h">
       <Filter>ManagedGameLogic</Filter>
     </ClInclude>
@@ -78,9 +72,6 @@
     </ClCompile>
     <ClCompile Include="EntityEventHandling.cpp">
       <Filter>EntitySystem</Filter>
-    </ClCompile>
-    <ClCompile Include="Interops\FlowGraph\FlowGraphNode_Mono.cpp">
-      <Filter>Interops\FlowGraph</Filter>
     </ClCompile>
     <ClCompile Include="Interops\Entities\Entity.cpp">
       <Filter>Interops\Entities</Filter>
@@ -106,9 +97,6 @@
     <ClCompile Include="Interops\Network.cpp">
       <Filter>Interops</Filter>
     </ClCompile>
-    <ClCompile Include="Interops\FlowGraph\FlowManager.cpp">
-      <Filter>Interops\FlowGraph</Filter>
-    </ClCompile>
     <ClCompile Include="ManagedGameLogic\ManagedEntity.cpp">
       <Filter>ManagedGameLogic</Filter>
     </ClCompile>
@@ -125,9 +113,6 @@
     </Filter>
     <Filter Include="Interops">
       <UniqueIdentifier>{53346888-7df8-470b-b631-f549bf104199}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Interops\FlowGraph">
-      <UniqueIdentifier>{d77a7b9e-d8b5-4235-ba43-583cf331dfb6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Interops\Entities">
       <UniqueIdentifier>{b72986a0-1186-4c2d-9461-34d62b53b4fe}</UniqueIdentifier>

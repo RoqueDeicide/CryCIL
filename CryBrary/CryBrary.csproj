@@ -137,13 +137,6 @@
     <Compile Include="Logic\Actors\ActorBase.cs" />
     <Compile Include="Logic\Entities\EntityFlags.cs" />
     <Compile Include="Logic\Entities\EntityManager.cs" />
-    <Compile Include="Logic\Flowgraph\Exception.cs" />
-    <Compile Include="Logic\Flowgraph\FlowGraphNode.Configuration.cs" />
-    <Compile Include="Logic\Flowgraph\FlowGraphNode.cs" />
-    <Compile Include="Logic\Flowgraph\FlowGraphNode.Events.cs" />
-    <Compile Include="Logic\Flowgraph\FlowNodePort.cs" />
-    <Compile Include="Logic\Flowgraph\InputPorts.cs" />
-    <Compile Include="Logic\Flowgraph\OutputPorts.cs" />
     <Compile Include="Logic\Entities\GameObjectExtension.cs" />
     <Compile Include="Logic\Entities\GameObjectExtension.EventArgs.cs" />
     <Compile Include="Logic\Entities\GameObjectExtension.Events.cs" />
@@ -165,7 +158,6 @@
     <Compile Include="Logic\Actors\ActorNetworking.cs" />
     <Compile Include="Logic\Actors\ActorStatics.cs" />
     <Compile Include="Attributes.cs" />
-    <Compile Include="Native\FlowInputInterop.cs" />
     <Compile Include="Physics\ColliderMode.cs" />
     <Compile Include="Physics\CryCollision.cs" />
     <Compile Include="Properties\Annotations.cs" />
@@ -185,10 +177,6 @@
     <Compile Include="Entities\EntityUpdatePolicy.cs" />
     <Compile Include="Entities\Attachment.cs" />
     <Compile Include="Entities\EntityRemovalException.cs" />
-    <Compile Include="Logic\Flowgraph\FlowNodeFilter.cs" />
-    <Compile Include="Logic\Flowgraph\FlowNodeFlags.cs" />
-    <Compile Include="Logic\Flowgraph\FlowNodeCloneType.cs" />
-    <Compile Include="Logic\Flowgraph\PortTypes.cs" />
     <Compile Include="Logic\GameRules\GameRulesInitializationParams.cs" />
     <Compile Include="Native\NamespaceDoc.cs" />
     <Compile Include="Mathematics\Geometry\Meshes\Mesh.cs" />
@@ -247,9 +235,7 @@
     <Compile Include="RunTime\Async\Jobs\IAsyncJob.cs" />
     <Compile Include="RunTime\Async\Jobs\TimeDelayJob.cs" />
     <Compile Include="Entities\EntityBase.cs" />
-    <Compile Include="Logic\Flowgraph\FlowNodeAttribute.cs" />
     <Compile Include="Native\EntityInterop.cs" />
-    <Compile Include="Native\FlowNodeInterop.cs" />
     <Compile Include="Native\GameRulesInterop.cs" />
     <Compile Include="Native\PhysicsInterop.cs" />
     <Compile Include="RunTime\Networking\RemoteInvocationAttribute.cs" />
