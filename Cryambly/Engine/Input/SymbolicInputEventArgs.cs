@@ -9,7 +9,7 @@ namespace CryCil.Engine.Input
 	/// <summary>
 	/// Represents information about keyboard input that was translated into symbolic text input.
 	/// </summary>
-	public class SymbolicInputEventArgs
+	public class SymbolicInputEventArgs : InputEventArgs
 	{
 		#region Fields
 		private readonly uint character;
@@ -29,6 +29,7 @@ namespace CryCil.Engine.Input
 		/// </summary>
 		/// <param name="character">Character in UTF32 encoding.</param>
 		public SymbolicInputEventArgs(uint character)
+			: base(InputId.Unknown, ModifierMask.None, InputState.Pressed)
 		{
 			this.character = character;
 		}
