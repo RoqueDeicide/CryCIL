@@ -104,6 +104,50 @@ namespace CryCil.Engine.Environment
 
 		/// <summary>
 		/// </summary>
+		VolumetricFog2Color,
+		/// <summary>
+		/// </summary>
+		VolumetricFog2Height,
+		/// <summary>
+		/// </summary>
+		VolumetricFog2Density,
+		/// <summary>
+		/// </summary>
+		VolumetricFog2Height2,
+		/// <summary>
+		/// </summary>
+		VolumetricFog2Density2,
+		/// <summary>
+		/// </summary>
+		VolumetricFog2GlobalDensity,
+		/// <summary>
+		/// </summary>
+		VolumetricFog2RampStart,
+		/// <summary>
+		/// </summary>
+		VolumetricFog2RampEnd,
+
+		/// <summary>
+		/// </summary>
+		VolumetricFog2Range,
+		/// <summary>
+		/// </summary>
+		VolumetricFog2Inscatter,
+		/// <summary>
+		/// </summary>
+		VolumetricFog2Extinction,
+		/// <summary>
+		/// </summary>
+		VolumetricFog2Anisotropic,
+		/// <summary>
+		/// </summary>
+		VolumetricFog2GlobalFogVisibility,
+		/// <summary>
+		/// </summary>
+		VolumetricFog2FinalDensityClamp,
+
+		/// <summary>
+		/// </summary>
 		SkyLightSunIntensity,
 		/// <summary>
 		/// </summary>
