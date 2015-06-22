@@ -66,10 +66,6 @@ struct InputInterop
 	static OnAxisMoveThunk onX;
 	static OnAxisMoveThunk onY;
 	static OnAxisMoveThunk onZ;
-	// Head-Mounted Devices.
-	static OnAxisMoveThunk onPitch;
-	static OnAxisMoveThunk onRoll;
-	static OnAxisMoveThunk onYaw;
 	// Xbox gamepad.
 	static OnGamepadButtonThunk onXboxButton;
 	static OnTriggerThunk onLeftTrigger;

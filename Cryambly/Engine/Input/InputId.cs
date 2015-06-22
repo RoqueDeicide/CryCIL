@@ -28,10 +28,6 @@ namespace CryCil.Engine.Input
 		/// </summary>
 		PS3Controller = 1024,
 		/// <summary>
-		/// Id of the first head-mounted device input.
-		/// </summary>
-		HeadMountedDevice = 2048,
-		/// <summary>
 		/// Id of the first system input.
 		/// </summary>
 		SystemInput = 4096
@@ -789,23 +785,6 @@ namespace CryCil.Engine.Input
 		/// Identifier of the touch pad on the Play Station 4 controller.
 		/// </summary>
 		OrbisTouch,
-
-		/// <summary>
-		/// Identifier of the change in pitch orientation of the HMD.
-		/// </summary>
-		HeadMountedDevicePitch = InputIdBase.HeadMountedDevice,
-		/// <summary>
-		/// Identifier of the change in yaw orientation of the HMD.
-		/// </summary>
-		HeadMountedDeviceYaw,
-		/// <summary>
-		/// Identifier of the change in roll orientation of the HMD.
-		/// </summary>
-		HeadMountedDeviceRoll,
-		/// <summary>
-		/// For internal usage.
-		/// </summary>
-		HeadMountedDeviceLast,
 
 		/// <summary>
 		/// For internal usage.

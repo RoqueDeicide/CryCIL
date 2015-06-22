@@ -32,10 +32,6 @@ void InputInterop::OnRunTimeInitialized()
 	onRightTrigger   = getThunk<OnTriggerThunk>      (xboxClass, "OnRightTrigger");
 	onLeftTrigger    = getThunk<OnTriggerThunk>      (xboxClass, "OnLeftTrigger");
 	onXboxButton     = getThunk<OnGamepadButtonThunk>(xboxClass, "OnButton");
-	// HMDs.
-	onYaw   = getThunk<OnAxisMoveThunk>(hmdClass, "OnYaw");
-	onRoll  = getThunk<OnAxisMoveThunk>(hmdClass, "OnRoll");
-	onPitch = getThunk<OnAxisMoveThunk>(hmdClass, "OnPitch");
 	// Mouse.
 	onZ           = getThunk<OnAxisMoveThunk>  (mouseClass, "OnZ");
 	onY           = getThunk<OnAxisMoveThunk>  (mouseClass, "OnY");
@@ -124,30 +120,6 @@ bool InputInterop::OnInputEvent(const SInputEvent &_event)
 	}
 	case eIDT_Joystick:
 		break;
-	case eIDT_Headmounted:
-	{
-		switch (_event.keyId)
-		{
-		case eKI_HMD_Pitch:
-		{
-			onPitch(_event.modifiers, _event.value, &blocked, &ex);
-			break;
-		}
-		case eKI_HMD_Yaw:
-		{
-			onYaw(_event.modifiers, _event.value, &blocked, &ex);
-			break;
-		}
-		case eKI_HMD_Roll:
-		{
-			onRoll(_event.modifiers, _event.value, &blocked, &ex);
-			break;
-		}
-		default:
-			break;
-		}
-		break;
-	}
 	case eIDT_Gamepad:
 		if (_event.keyId < eKI_PS3_Select)
 		{
