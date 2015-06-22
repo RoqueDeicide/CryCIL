@@ -69,7 +69,7 @@ namespace CryCil.Engine.Input
 			blocked = InputEventPropagator.Post(keyInputHandlers, args);
 		}
 		[UnmanagedThunk("Invoked by underlying framework to raise CharacterInput event.")]
-		private static void OnCharacterInput(char input, int modifiers, out bool blocked)
+		private static void OnCharacterInput(uint input, out bool blocked)
 		{
 			var args = new SymbolicInputEventArgs(input, (ModifierMask)modifiers);
 			blocked = InputEventPropagator.Post(textInputHandlers, args);

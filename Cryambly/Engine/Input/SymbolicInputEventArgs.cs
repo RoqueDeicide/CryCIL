@@ -9,24 +9,28 @@ namespace CryCil.Engine.Input
 	/// <summary>
 	/// Represents information about keyboard input that was translated into symbolic text input.
 	/// </summary>
-	public class SymbolicInputEventArgs : InputEventArgs
+	public class SymbolicInputEventArgs
 	{
+		#region Fields
+		private readonly uint character;
+		#endregion
 		#region Properties
 		/// <summary>
 		/// Gets the identifier of the key.
 		/// </summary>
-		public char Character { get; private set; }
+		public string Character
+		{
+			get { return Encoding.UTF32.GetString(BitConverter.GetBytes(this.character)); }
+		}
 		#endregion
 		#region Construction
 		/// <summary>
 		/// Creates new object that provides information about virtual key input.
 		/// </summary>
-		/// <param name="character">Identifier of the key.</param>
-		/// <param name="modifiers">A set of modifier keys.</param>
-		public SymbolicInputEventArgs(char character, ModifierMask modifiers)
-			: base(InputId.Unknown, modifiers, InputState.Pressed)
+		/// <param name="character">Character in UTF32 encoding.</param>
+		public SymbolicInputEventArgs(uint character)
 		{
-			this.Character = character;
+			this.character = character;
 		}
 		#endregion
 	}

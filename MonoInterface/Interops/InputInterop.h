@@ -4,7 +4,7 @@
 
 #include <IInput.h>
 
-typedef void(__stdcall *OnCharacterInputThunk)(wchar_t, int, bool *, mono::exception *);
+typedef void(__stdcall *OnCharacterInputThunk)(uint32, bool *, mono::exception *);
 typedef void(__stdcall *OnKeyChangedThunk)(unsigned int, int, bool, bool *, mono::exception *);
 
 typedef void(__stdcall *OnMouseWheelThunk)(int, int, float, bool *, mono::exception *);
@@ -40,7 +40,7 @@ struct InputInterop
 	virtual void OnRunTimeInitialized();
 
 	virtual bool OnInputEvent(const SInputEvent &_event);
-	virtual bool OnInputEventUI(const SInputEvent &_event);
+	virtual bool OnInputEventUI(const SUnicodeEvent &_event);
 
 	virtual void OnTouchEvent(const STouchEvent& _event);
 	

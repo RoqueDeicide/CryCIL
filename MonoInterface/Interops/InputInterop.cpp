@@ -198,7 +198,7 @@ bool InputInterop::OnInputEvent(const SInputEvent &_event)
 	return blocked;
 }
 
-bool InputInterop::OnInputEventUI(const SInputEvent &_event)
+bool InputInterop::OnInputEventUI(const SUnicodeEvent &_event)
 {
 	if (!thunksInitialized)
 	{
@@ -208,7 +208,7 @@ bool InputInterop::OnInputEventUI(const SInputEvent &_event)
 	mono::exception ex;
 	bool blocked;
 
-	onCharacterInput(_event.inputChar, _event.modifiers, &blocked, &ex);
+	onCharacterInput(_event.inputChar, &blocked, &ex);
 
 	return blocked;
 }
