@@ -59,8 +59,7 @@ namespace CryCil.RunTime.Registration
 							 )
 							 .ToArray();
 		}
-		[PublicAPI("Invoked from underlying framework to trigger registration of flow node types.")]
-		private static void RegisterAllTypes()
+		internal static void RegisterAllTypes()
 		{
 			try
 			{

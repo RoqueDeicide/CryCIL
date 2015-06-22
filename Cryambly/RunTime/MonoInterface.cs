@@ -143,6 +143,7 @@ namespace CryCil.RunTime
 				   " to register FlowGraph nodes defined in CryCIL.")]
 		private static void RegisterFlowGraphNodeTypes()
 		{
+			FlowNodeTypeRegistry.RegisterAllTypes();
 		}
 		[PublicAPI("Updates this subsystem.")]
 		private static void Update()
