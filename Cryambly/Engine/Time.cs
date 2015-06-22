@@ -90,12 +90,19 @@ namespace CryCil.Engine
 		private static void SetTimings(long frameStart, long frameStartUi, long frame,
 									   long realFrame, float scale, float frameRate)
 		{
-			FrameStart = new DateTime(frameStart, DateTimeKind.Unspecified);
-			FrameStartUi = new DateTime(frameStartUi, DateTimeKind.Unspecified);
-			Frame = new TimeSpan(frame);
-			RealFrame = new TimeSpan(realFrame);
-			Time.timeScale = scale;
-			FrameRate = frameRate;
+			try
+			{
+				FrameStart = new DateTime(frameStart, DateTimeKind.Unspecified);
+				FrameStartUi = new DateTime(frameStartUi, DateTimeKind.Unspecified);
+				Frame = new TimeSpan(frame);
+				RealFrame = new TimeSpan(realFrame);
+				Time.timeScale = scale;
+				FrameRate = frameRate;
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		#endregion
 	}
