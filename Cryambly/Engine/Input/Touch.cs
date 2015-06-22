@@ -31,7 +31,7 @@ namespace CryCil.Engine.Input
 
 		#endregion
 		#region Utilities
-		[PublicAPI("Invoked by underlying framework to raise Event event.")]
+		[UnmanagedThunk("Invoked by underlying framework to raise Event event.")]
 		private static void OnEvent(int device, byte deviceIndex, byte id, float x, float y)
 		{
 			EventHandler<TouchEventArgs> handler = Event;

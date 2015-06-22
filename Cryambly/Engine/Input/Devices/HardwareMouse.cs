@@ -155,7 +155,7 @@ namespace CryCil.Engine.Input
 		public static extern void UseSystemCursor(bool useSystemCursor);
 		#endregion
 		#region Utilities
-		[PublicAPI("Invoked from underlying framework to raise RightMouseButtonDown event.")]
+		[UnmanagedThunk("Invoked from underlying framework to raise RightMouseButtonDown event.")]
 		private static void OnRightMouseButtonDown(int x, int y)
 		{
 			if (RightMouseButtonDown != null)
@@ -163,7 +163,7 @@ namespace CryCil.Engine.Input
 				RightMouseButtonDown(null, new EventArgs<Vector2Int32>(new Vector2Int32(x, y)));
 			}
 		}
-		[PublicAPI("Invoked from underlying framework to raise RightMouseButtonUp event.")]
+		[UnmanagedThunk("Invoked from underlying framework to raise RightMouseButtonUp event.")]
 		private static void OnRightMouseButtonUp(int x, int y)
 		{
 			if (RightMouseButtonUp != null)
@@ -171,7 +171,7 @@ namespace CryCil.Engine.Input
 				RightMouseButtonUp(null, new EventArgs<Vector2Int32>(new Vector2Int32(x, y)));
 			}
 		}
-		[PublicAPI("Invoked from underlying framework to raise RightMouseButtonDoubleClick event.")]
+		[UnmanagedThunk("Invoked from underlying framework to raise RightMouseButtonDoubleClick event.")]
 		private static void OnRightMouseButtonDoubleClick(int x, int y)
 		{
 			if (RightMouseButtonDoubleClick != null)
@@ -179,7 +179,7 @@ namespace CryCil.Engine.Input
 				RightMouseButtonDoubleClick(null, new EventArgs<Vector2Int32>(new Vector2Int32(x, y)));
 			}
 		}
-		[PublicAPI("Invoked from underlying framework to raise LeftMouseButtonDown event.")]
+		[UnmanagedThunk("Invoked from underlying framework to raise LeftMouseButtonDown event.")]
 		private static void OnLeftMouseButtonDown(int x, int y)
 		{
 			if (LeftMouseButtonDown != null)
@@ -187,7 +187,7 @@ namespace CryCil.Engine.Input
 				LeftMouseButtonDown(null, new EventArgs<Vector2Int32>(new Vector2Int32(x, y)));
 			}
 		}
-		[PublicAPI("Invoked from underlying framework to raise LeftMouseButtonUp event.")]
+		[UnmanagedThunk("Invoked from underlying framework to raise LeftMouseButtonUp event.")]
 		private static void OnLeftMouseButtonUp(int x, int y)
 		{
 			if (LeftMouseButtonUp != null)
@@ -195,7 +195,7 @@ namespace CryCil.Engine.Input
 				LeftMouseButtonUp(null, new EventArgs<Vector2Int32>(new Vector2Int32(x, y)));
 			}
 		}
-		[PublicAPI("Invoked from underlying framework to raise LeftMouseButtonDoubleClick event.")]
+		[UnmanagedThunk("Invoked from underlying framework to raise LeftMouseButtonDoubleClick event.")]
 		private static void OnLeftMouseButtonDoubleClick(int x, int y)
 		{
 			if (LeftMouseButtonDoubleClick != null)
@@ -203,7 +203,7 @@ namespace CryCil.Engine.Input
 				LeftMouseButtonDoubleClick(null, new EventArgs<Vector2Int32>(new Vector2Int32(x, y)));
 			}
 		}
-		[PublicAPI("Invoked from underlying framework to raise MiddleMouseButtonDown event.")]
+		[UnmanagedThunk("Invoked from underlying framework to raise MiddleMouseButtonDown event.")]
 		private static void OnMiddleMouseButtonDown(int x, int y)
 		{
 			if (MiddleMouseButtonDown != null)
@@ -211,7 +211,7 @@ namespace CryCil.Engine.Input
 				MiddleMouseButtonDown(null, new EventArgs<Vector2Int32>(new Vector2Int32(x, y)));
 			}
 		}
-		[PublicAPI("Invoked from underlying framework to raise MiddleMouseButtonUp event.")]
+		[UnmanagedThunk("Invoked from underlying framework to raise MiddleMouseButtonUp event.")]
 		private static void OnMiddleMouseButtonUp(int x, int y)
 		{
 			if (MiddleMouseButtonUp != null)
@@ -219,7 +219,7 @@ namespace CryCil.Engine.Input
 				MiddleMouseButtonUp(null, new EventArgs<Vector2Int32>(new Vector2Int32(x, y)));
 			}
 		}
-		[PublicAPI("Invoked from underlying framework to raise MiddleMouseButtonDoubleClick event.")]
+		[UnmanagedThunk("Invoked from underlying framework to raise MiddleMouseButtonDoubleClick event.")]
 		private static void OnMiddleMouseButtonDoubleClick(int x, int y)
 		{
 			if (MiddleMouseButtonDoubleClick != null)
@@ -227,7 +227,7 @@ namespace CryCil.Engine.Input
 				MiddleMouseButtonDoubleClick(null, new EventArgs<Vector2Int32>(new Vector2Int32(x, y)));
 			}
 		}
-		[PublicAPI("Invoked from underlying framework to raise Move event.")]
+		[UnmanagedThunk("Invoked from underlying framework to raise Move event.")]
 		private static void OnMove(int x, int y)
 		{
 			if (Move != null)
@@ -235,7 +235,7 @@ namespace CryCil.Engine.Input
 				Move(null, new EventArgs<Vector2Int32>(new Vector2Int32(x, y)));
 			}
 		}
-		[PublicAPI("Invoked from underlying framework to raise Wheel event.")]
+		[UnmanagedThunk("Invoked from underlying framework to raise Wheel event.")]
 		private static void OnWheel(int delta)
 		{
 			if (Wheel != null)

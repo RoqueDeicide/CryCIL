@@ -62,13 +62,13 @@ namespace CryCil.Engine.Input
 		#region Interface
 		#endregion
 		#region Utilities
-		[PublicAPI("Invoked by underlying framework to raise KeyChanged event.")]
+		[UnmanagedThunk("Invoked by underlying framework to raise KeyChanged event.")]
 		private static void OnKeyChanged(uint input, int modifiers, bool pressed, out bool blocked)
 		{
 			var args = new SimpleKeyEventArgs((InputId)input, (ModifierMask)modifiers, pressed);
 			blocked = InputEventPropagator.Post(keyInputHandlers, args);
 		}
-		[PublicAPI("Invoked by underlying framework to raise CharacterInput event.")]
+		[UnmanagedThunk("Invoked by underlying framework to raise CharacterInput event.")]
 		private static void OnCharacterInput(char input, int modifiers, out bool blocked)
 		{
 			var args = new SymbolicInputEventArgs(input, (ModifierMask)modifiers);

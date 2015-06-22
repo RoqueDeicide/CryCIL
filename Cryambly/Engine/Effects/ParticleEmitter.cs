@@ -138,7 +138,7 @@ namespace CryCil.Engine
 		public extern void Emit();
 		#endregion
 		#region Utilities
-		[PublicAPI("Invoked from the underlying framework to raise event Created.")]
+		[RawThunk("Invoked from the underlying framework to raise event Created.")]
 		private static void OnCreated(ParticleEmitter emitter, Quatvecale location, ParticleEffect effect, ParticleEmitterFlags flags)
 		{
 			try
@@ -153,7 +153,7 @@ namespace CryCil.Engine
 				MonoInterface.DisplayException(ex);
 			}
 		}
-		[PublicAPI("Invoked from the underlying framework to raise event Deleted.")]
+		[RawThunk("Invoked from the underlying framework to raise event Deleted.")]
 		private static void OnDeleted(ParticleEmitter emitter)
 		{
 			try

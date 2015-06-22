@@ -301,49 +301,49 @@ namespace CryCil.Engine.Input
 		public static extern bool Connected(ushort index);
 		#endregion
 		#region Utilities
-		[PublicAPI("Invoked by underlying framework to raise Button event.")]
+		[UnmanagedThunk("Invoked by underlying framework to raise Button event.")]
 		private static void OnButton(uint input, byte deviceIndex, bool pressed, out bool blocked)
 		{
 			var args = new GamepadKeyEventArgs((InputId)input, deviceIndex, pressed);
 			blocked = InputEventPropagator.Post(buttonHandlers, args);
 		}
-		[PublicAPI("Invoked by underlying framework to raise LeftTrigger event.")]
+		[UnmanagedThunk("Invoked by underlying framework to raise LeftTrigger event.")]
 		private static void OnLeftTrigger(uint input, byte deviceIndex, int state, float value, out bool blocked)
 		{
 			var args = new GamepadAnalogInputEventArgs((InputId)input, deviceIndex, (InputState)state, value);
 			blocked = InputEventPropagator.Post(leftTriggerHandlers, args);
 		}
-		[PublicAPI("Invoked by underlying framework to raise RightTrigger event.")]
+		[UnmanagedThunk("Invoked by underlying framework to raise RightTrigger event.")]
 		private static void OnRightTrigger(uint input, byte deviceIndex, int state, float value, out bool blocked)
 		{
 			var args = new GamepadAnalogInputEventArgs((InputId)input, deviceIndex, (InputState)state, value);
 			blocked = InputEventPropagator.Post(rightTriggerHandlers, args);
 		}
-		[PublicAPI("Invoked by underlying framework to raise LeftThumbX event.")]
+		[UnmanagedThunk("Invoked by underlying framework to raise LeftThumbX event.")]
 		private static void OnLeftThumbX(int state, byte deviceIndex, float value, out bool blocked)
 		{
 			var args = new GamepadAnalogInputEventArgs(InputId.XboxThumbLeftX, deviceIndex, (InputState)state, value);
 			blocked = InputEventPropagator.Post(leftThumbXHandlers, args);
 		}
-		[PublicAPI("Invoked by underlying framework to raise LeftThumbY event.")]
+		[UnmanagedThunk("Invoked by underlying framework to raise LeftThumbY event.")]
 		private static void OnLeftThumbY(int state, byte deviceIndex, float value, out bool blocked)
 		{
 			var args = new GamepadAnalogInputEventArgs(InputId.XboxThumbLeftY, deviceIndex, (InputState)state, value);
 			blocked = InputEventPropagator.Post(leftThumbYHandlers, args);
 		}
-		[PublicAPI("Invoked by underlying framework to raise RightThumbX event.")]
+		[UnmanagedThunk("Invoked by underlying framework to raise RightThumbX event.")]
 		private static void OnRightThumbX(int state, byte deviceIndex, float value, out bool blocked)
 		{
 			var args = new GamepadAnalogInputEventArgs(InputId.XboxThumbRightY, deviceIndex, (InputState)state, value);
 			blocked = InputEventPropagator.Post(rightThumbXHandlers, args);
 		}
-		[PublicAPI("Invoked by underlying framework to raise RightThumbY event.")]
+		[UnmanagedThunk("Invoked by underlying framework to raise RightThumbY event.")]
 		private static void OnRightThumbY(int state, byte deviceIndex, float value, out bool blocked)
 		{
 			var args = new GamepadAnalogInputEventArgs(InputId.XboxThumbRightY, deviceIndex, (InputState)state, value);
 			blocked = InputEventPropagator.Post(rightThumbYHandlers, args);
 		}
-		[PublicAPI("Invoked by underlying framework to raise on the directional analog stick events.")]
+		[UnmanagedThunk("Invoked by underlying framework to raise on the directional analog stick events.")]
 		private static void OnThumbDirection(uint id, byte deviceIndex, bool pressed, out bool blocked)
 		{
 			var args = new GamepadKeyEventArgs((InputId)id, deviceIndex, pressed);

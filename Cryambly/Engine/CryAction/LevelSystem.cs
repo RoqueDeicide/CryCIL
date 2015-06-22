@@ -136,37 +136,37 @@ namespace CryCil.Engine.CryAction
 		public static extern void Prepare(string name);
 		#endregion
 		#region Utilities
-		[PublicAPI("Invoked by underlying framework to raise LevelNotFound event")]
+		[RuntimeInvoke("Invoked by underlying framework to raise LevelNotFound event")]
 		private static void OnLevelNotFound(string name)
 		{
 			if (LevelNotFound != null) LevelNotFound(name);
 		}
-		[PublicAPI("Invoked by underlying framework to raise LoadingStart event")]
+		[RuntimeInvoke("Invoked by underlying framework to raise LoadingStart event")]
 		private static void OnLoadingStart(IntPtr levelHandle)
 		{
 			if (LoadingStart != null) LoadingStart(new Level(levelHandle));
 		}
-		[PublicAPI("Invoked by underlying framework to raise LoadingEntitiesStart event")]
+		[RuntimeInvoke("Invoked by underlying framework to raise LoadingEntitiesStart event")]
 		private static void OnLoadingEntitiesStart(IntPtr levelHandle)
 		{
 			if (LoadingEntitiesStart != null) LoadingEntitiesStart(new Level(levelHandle));
 		}
-		[PublicAPI("Invoked by underlying framework to raise LoadingComplete event")]
+		[RuntimeInvoke("Invoked by underlying framework to raise LoadingComplete event")]
 		private static void OnLoadingComplete(IntPtr levelHandle)
 		{
 			if (LoadingComplete != null) LoadingComplete(new Level(levelHandle));
 		}
-		[PublicAPI("Invoked by underlying framework to raise LevelNotFound event")]
+		[RuntimeInvoke("Invoked by underlying framework to raise LevelNotFound event")]
 		private static void OnLoadingError(IntPtr levelHandle, string error)
 		{
 			if (LoadingError != null) LoadingError(new Level(levelHandle), error);
 		}
-		[PublicAPI("Invoked by underlying framework to raise LoadingProgress event")]
+		[RuntimeInvoke("Invoked by underlying framework to raise LoadingProgress event")]
 		private static void OnLoadingProgress(IntPtr levelHandle, int progress)
 		{
 			if (LoadingProgress != null) LoadingProgress(new Level(levelHandle), progress);
 		}
-		[PublicAPI("Invoked by underlying framework to raise UnloadComplete event")]
+		[RuntimeInvoke("Invoked by underlying framework to raise UnloadComplete event")]
 		private static void OnUnloadComplete(IntPtr levelHandle)
 		{
 			if (UnloadComplete != null) UnloadComplete(new Level(levelHandle));

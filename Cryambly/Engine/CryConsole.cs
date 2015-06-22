@@ -473,7 +473,7 @@ namespace CryCil.Engine
 		private static extern ConsoleVariable RegisterVariableInternal(string name, string value,
 																	   ConsoleFlags flags, IntPtr thunk,
 																	   string help = null);
-		[PublicAPI("Invoked by underlying framework to execute appropriate console command.")]
+		[UnmanagedThunk("Invoked by underlying framework to execute appropriate console command.")]
 		private static void ExecuteMonoCommand(string commandLine)
 		{
 			string[] parts = commandLine.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);

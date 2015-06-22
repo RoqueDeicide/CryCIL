@@ -9,7 +9,7 @@ namespace CryCil.RunTime
 {
 	internal static class AssemblyLookUp
 	{
-		[PublicAPI("Used by IMonoAssemblyCollection implementation to try looking up loaded assemblies.")]
+		[UnmanagedThunk("Used by IMonoAssemblyCollection implementation to try looking up loaded assemblies.")]
 		private static string LookUpAssembly(string shortName)
 		{
 			var assemblies = AppDomain.CurrentDomain.GetAssemblies();

@@ -11,6 +11,7 @@ using CryCil.Annotations;
 using CryCil.Engine.DebugServices;
 using CryCil.RunTime.Compilation;
 using CryCil.RunTime.Logging;
+using CryCil.RunTime.Registration;
 
 namespace CryCil.RunTime
 {
@@ -125,12 +126,13 @@ namespace CryCil.RunTime
 		/// Displays an exception to the user with an option to either continue or shutdown.
 		/// </summary>
 		/// <param name="ex">An object that represents the exception.</param>
+		[UnmanagedThunk]
 		public static void DisplayException(object ex)
 		{
 			ExceptionDisplayForm form = new ExceptionDisplayForm(ex as Exception);
 			form.ShowDialog();
 		}
-		[PublicAPI("Called from C++ code to initialize CryCIL on managed side.")]
+		[UnmanagedThunk("Called from C++ code to initialize CryCIL on managed side.")]
 		private static void Initialize()
 		{
 			// Accessing static variable to trigger static constructor to start initialization process.
@@ -139,18 +141,18 @@ namespace CryCil.RunTime
 			var l = CryCilAssemblies;
 // ReSharper restore UnusedVariable
 		}
-		[PublicAPI("Invoked from C++ code after FlowGraph is initialized" +
+		[UnmanagedThunk("Invoked from C++ code after FlowGraph is initialized" +
 				   " to register FlowGraph nodes defined in CryCIL.")]
 		private static void RegisterFlowGraphNodeTypes()
 		{
 			FlowNodeTypeRegistry.RegisterAllTypes();
 		}
-		[PublicAPI("Updates this subsystem.")]
+		[UnmanagedThunk("Updates this subsystem.")]
 		private static void Update()
 		{
 			OnUpdated();
 		}
-		[PublicAPI("Informs this object about system-wide shutdown.")]
+		[UnmanagedThunk("Informs this object about system-wide shutdown.")]
 		private static void Shutdown()
 		{
 			OnShuttingDown();

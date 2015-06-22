@@ -218,7 +218,7 @@ namespace CryCil.Engine.Logic
 		{
 			this.Id = 0;
 		}
-		[PublicAPI("Invoked from underlying framework to create a wrapper for a new node.")]
+		[UnmanagedThunk("Invoked from underlying framework to create a wrapper for a new node.")]
 		private static object Create(IntPtr grapHandle, ushort typeId, ushort nodeId)
 		{
 			Type type = FlowNodeTypeRegistry.GetFlowNodeType(typeId);
@@ -227,7 +227,7 @@ namespace CryCil.Engine.Logic
 					? null
 					: Activator.CreateInstance(type, new object[] { nodeId, grapHandle });
 		}
-		[PublicAPI("Invoked from underlying framework when this node is removed completely from the game.")]
+		[RawThunk("Invoked from underlying framework when this node is removed completely from the game.")]
 		private void Release()
 		{
 			try
@@ -242,7 +242,7 @@ namespace CryCil.Engine.Logic
 				MonoInterface.DisplayException(ex);
 			}
 		}
-		[PublicAPI("Invoked from underlying framework to inform the flow system about how this node works.")]
+		[UnmanagedThunk("Invoked from underlying framework to inform the flow system about how this node works.")]
 		private void GetConfiguration(out FlowNodeConfig config)
 		{
 			if (this.initData != InitializationDetails.All)
@@ -280,7 +280,7 @@ namespace CryCil.Engine.Logic
 				Outputs = this.outputs.Select(output => output.Config).ToArray()
 			};
 		}
-		[PublicAPI("Invoked from underlying framework to save some data to Xml.")]
+		[RawThunk("Invoked from underlying framework to save some data to Xml.")]
 		private bool SaveData(IntPtr xmlHandle)
 		{
 			try
@@ -292,7 +292,7 @@ namespace CryCil.Engine.Logic
 				return false;
 			}
 		}
-		[PublicAPI("Invoked from underlying framework to load some data to Xml.")]
+		[RawThunk("Invoked from underlying framework to load some data to Xml.")]
 		private bool LoadData(IntPtr xmlHandle)
 		{
 			try
@@ -304,7 +304,7 @@ namespace CryCil.Engine.Logic
 				return false;
 			}
 		}
-		[PublicAPI("Invoked from underlying framework to synchronize this node.")]
+		[RawThunk("Invoked from underlying framework to synchronize this node.")]
 		private void Serialize(CrySync sync)
 		{
 			try
@@ -316,7 +316,7 @@ namespace CryCil.Engine.Logic
 				MonoInterface.DisplayException(ex);
 			}
 		}
-		[PublicAPI("Invoked from underlying framework to synchronize this node.")]
+		[RawThunk("Invoked from underlying framework to synchronize this node.")]
 		private void PostSerialize()
 		{
 			try
@@ -328,7 +328,7 @@ namespace CryCil.Engine.Logic
 				MonoInterface.DisplayException(ex);
 			}
 		}
-		[PublicAPI("Invoked from underlying framework to update this node.")]
+		[RawThunk("Invoked from underlying framework to update this node.")]
 		private void Update()
 		{
 			try
@@ -340,7 +340,7 @@ namespace CryCil.Engine.Logic
 				MonoInterface.DisplayException(ex);
 			}
 		}
-		[PublicAPI("Invoked from underlying framework to inform this node about input ports being activated.")]
+		[RawThunk("Invoked from underlying framework to inform this node about input ports being activated.")]
 		private void Activate(byte[] portIds, FlowData[] values)
 		{
 			try
@@ -370,7 +370,7 @@ namespace CryCil.Engine.Logic
 				MonoInterface.DisplayException(ex);
 			}
 		}
-		[PublicAPI("Invoked from underlying framework to trigger precaching of resources.")]
+		[RawThunk("Invoked from underlying framework to trigger precaching of resources.")]
 		private void PrecacheResourcesInternal()
 		{
 			try
@@ -382,7 +382,7 @@ namespace CryCil.Engine.Logic
 				MonoInterface.DisplayException(ex);
 			}
 		}
-		[PublicAPI("Invoked from underlying framework to initialize this node.")]
+		[RawThunk("Invoked from underlying framework to initialize this node.")]
 		private void Initialize()
 		{
 			try
@@ -394,7 +394,7 @@ namespace CryCil.Engine.Logic
 				MonoInterface.DisplayException(ex);
 			}
 		}
-		[PublicAPI("Invoked from underlying framework after initializing all nodes.")]
+		[RawThunk("Invoked from underlying framework after initializing all nodes.")]
 		private void PostInitialize()
 		{
 			try
@@ -406,7 +406,7 @@ namespace CryCil.Engine.Logic
 				MonoInterface.DisplayException(ex);
 			}
 		}
-		[PublicAPI("Invoked from underlying framework to set the entity identifier.")]
+		[RawThunk("Invoked from underlying framework to set the entity identifier.")]
 		private void SetEntityId(uint id)
 		{
 			try
@@ -419,7 +419,7 @@ namespace CryCil.Engine.Logic
 				MonoInterface.DisplayException(ex);
 			}
 		}
-		[PublicAPI("Invoked from underlying framework when this node is suspended.")]
+		[RawThunk("Invoked from underlying framework when this node is suspended.")]
 		private void Suspend()
 		{
 			try
@@ -431,7 +431,7 @@ namespace CryCil.Engine.Logic
 				MonoInterface.DisplayException(ex);
 			}
 		}
-		[PublicAPI("Invoked from underlying framework when this node is resumed.")]
+		[RawThunk("Invoked from underlying framework when this node is resumed.")]
 		private void Resume()
 		{
 			try
@@ -446,7 +446,7 @@ namespace CryCil.Engine.Logic
 
 		// I accidentally made a small reversal of events here, shouldn't matter unless you are familiar
 		// with source code of the flow graph system.
-		[PublicAPI("Invoked from underlying framework when an input port is connected to this node.")]
+		[RawThunk("Invoked from underlying framework when an input port is connected to this node.")]
 		private void ConnectInputPort(byte portId)
 		{
 			try
@@ -458,7 +458,7 @@ namespace CryCil.Engine.Logic
 				MonoInterface.DisplayException(ex);
 			}
 		}
-		[PublicAPI("Invoked from underlying framework when an input port is disconnected from this node.")]
+		[RawThunk("Invoked from underlying framework when an input port is disconnected from this node.")]
 		private void DisconnectInputPort(byte portId)
 		{
 			try
@@ -470,7 +470,7 @@ namespace CryCil.Engine.Logic
 				MonoInterface.DisplayException(ex);
 			}
 		}
-		[PublicAPI("Invoked from underlying framework when an output port is connected to this node.")]
+		[RawThunk("Invoked from underlying framework when an output port is connected to this node.")]
 		private void ConnectOutputPort(byte portId)
 		{
 			try
@@ -482,7 +482,7 @@ namespace CryCil.Engine.Logic
 				MonoInterface.DisplayException(ex);
 			}
 		}
-		[PublicAPI("Invoked from underlying framework when an output port is disconnected from this node.")]
+		[RawThunk("Invoked from underlying framework when an output port is disconnected from this node.")]
 		private void DisconnectOutputPort(byte portId)
 		{
 			try

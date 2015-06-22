@@ -94,37 +94,37 @@ namespace CryCil.Engine.Input
 
 		#endregion
 		#region Utilities
-		[PublicAPI("Invoked by underlying framework to raise Button event.")]
+		[UnmanagedThunk("Invoked by underlying framework to raise Button event.")]
 		private static void OnButton(uint input, int modifiers, bool pressed, out bool blocked)
 		{
 			var args = new SimpleKeyEventArgs((InputId)input, (ModifierMask)modifiers, pressed);
 			blocked = InputEventPropagator.Post(buttonHandlers, args);
 		}
-		[PublicAPI("Invoked by underlying framework to raise WheelUp event.")]
+		[UnmanagedThunk("Invoked by underlying framework to raise WheelUp event.")]
 		private static void OnWheelUp(int modifiers, int state, float value, out bool blocked)
 		{
 			var args = new AnalogInputEventArgs(InputId.MouseWheelUp, (ModifierMask)modifiers, (InputState)state, value);
 			blocked = InputEventPropagator.Post(wheelUpHandlers, args);
 		}
-		[PublicAPI("Invoked by underlying framework to raise WheelDown event.")]
+		[UnmanagedThunk("Invoked by underlying framework to raise WheelDown event.")]
 		private static void OnWheelDown(int modifiers, int state, float value, out bool blocked)
 		{
 			var args = new AnalogInputEventArgs(InputId.MouseWheelDown, (ModifierMask)modifiers, (InputState)state, value);
 			blocked = InputEventPropagator.Post(wheelDownHandlers, args);
 		}
-		[PublicAPI("Invoked by underlying framework to raise X event.")]
+		[UnmanagedThunk("Invoked by underlying framework to raise X event.")]
 		private static void OnX(int modifiers, float value, out bool blocked)
 		{
 			var args = new AnalogInputEventArgs(InputId.MouseX, (ModifierMask)modifiers, InputState.Changed, value);
 			blocked = InputEventPropagator.Post(xHandlers, args);
 		}
-		[PublicAPI("Invoked by underlying framework to raise Y event.")]
+		[UnmanagedThunk("Invoked by underlying framework to raise Y event.")]
 		private static void OnY(int modifiers, float value, out bool blocked)
 		{
 			var args = new AnalogInputEventArgs(InputId.MouseY, (ModifierMask)modifiers, InputState.Changed, value);
 			blocked = InputEventPropagator.Post(yHandlers, args);
 		}
-		[PublicAPI("Invoked by underlying framework to raise Z event.")]
+		[UnmanagedThunk("Invoked by underlying framework to raise Z event.")]
 		private static void OnZ(int modifiers, float value, out bool blocked)
 		{
 			var args = new AnalogInputEventArgs(InputId.MouseZ, (ModifierMask)modifiers, InputState.Changed, value);

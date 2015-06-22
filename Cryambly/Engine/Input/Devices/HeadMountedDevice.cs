@@ -64,19 +64,19 @@ namespace CryCil.Engine.Input
 
 		#endregion
 		#region Utilities
-		[PublicAPI("Invoked by underlying framework to raise Pitch event.")]
+		[UnmanagedThunk("Invoked by underlying framework to raise Pitch event.")]
 		private static void OnPitch(int modifiers, float value, out bool blocked)
 		{
 			var args = new AnalogInputEventArgs(InputId.HeadMountedDevicePitch, (ModifierMask)modifiers, InputState.Changed, value);
 			blocked = InputEventPropagator.Post(pitchHandlers, args);
 		}
-		[PublicAPI("Invoked by underlying framework to raise Yaw event.")]
+		[UnmanagedThunk("Invoked by underlying framework to raise Yaw event.")]
 		private static void OnYaw(int modifiers, float value, out bool blocked)
 		{
 			var args = new AnalogInputEventArgs(InputId.HeadMountedDeviceYaw, (ModifierMask)modifiers, InputState.Changed, value);
 			blocked = InputEventPropagator.Post(yawHandlers, args);
 		}
-		[PublicAPI("Invoked by underlying framework to raise Roll event.")]
+		[UnmanagedThunk("Invoked by underlying framework to raise Roll event.")]
 		private static void OnRoll(int modifiers, float value, out bool blocked)
 		{
 			var args = new AnalogInputEventArgs(InputId.HeadMountedDeviceRoll, (ModifierMask)modifiers, InputState.Changed, value);

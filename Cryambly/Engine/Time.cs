@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using CryCil.Annotations;
+using CryCil.RunTime;
 
 namespace CryCil.Engine
 {
@@ -86,7 +87,7 @@ namespace CryCil.Engine
 		#region Utilities
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void SetTimeScale(float value);
-		[PublicAPI("Invoked by underlying framework to update the time values at the start of the frame.")]
+		[RawThunk("Invoked by underlying framework to update the time values at the start of the frame.")]
 		private static void SetTimings(long frameStart, long frameStartUi, long frame,
 									   long realFrame, float scale, float frameRate)
 		{

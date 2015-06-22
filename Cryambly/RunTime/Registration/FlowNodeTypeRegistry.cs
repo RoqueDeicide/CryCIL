@@ -84,7 +84,7 @@ namespace CryCil.RunTime.Registration
 		}
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern ushort RegisterType(string name);
-		[PublicAPI("Invoked from underlying framework to delete the type from registry.")]
+		[RawThunk("Invoked from underlying framework to delete the type from registry.")]
 		private static void UnregisterType(ushort id)
 		{
 			try
