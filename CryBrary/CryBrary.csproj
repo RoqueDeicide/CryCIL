@@ -161,11 +161,8 @@
     <Compile Include="Physics\ColliderMode.cs" />
     <Compile Include="Physics\CryCollision.cs" />
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="RunTime\MonoInterface.cs" />
-    <Compile Include="RunTime\NamespaceDoc.cs" />
     <Compile Include="RunTime\Registration\EntityRegister.cs" />
     <Compile Include="RunTime\Registration\Exception.cs" />
-    <Compile Include="RunTime\Registration\FlowNodeRegister.cs" />
     <Compile Include="Entities\Area.cs" />
     <Compile Include="Entities\EntityGUID.cs" />
     <Compile Include="Entities\EntityAspects.cs" />
@@ -224,16 +221,9 @@
     <Compile Include="Physics\Explosion.cs" />
     <Compile Include="Native\NetworkInterop.cs" />
     <Compile Include="RunTime\Networking\RemoteInvocationException.cs" />
-    <Compile Include="ProjectSettings.cs" />
     <Compile Include="Entities\EntityLight.cs" />
     <Compile Include="Logic\Actors\NativeActor.cs" />
     <Compile Include="Native\ActorInterop.cs" />
-    <Compile Include="RunTime\Async\Jobs\AsyncJob.cs" />
-    <Compile Include="RunTime\Async\Awaiter.cs" />
-    <Compile Include="RunTime\Async\Delay.cs" />
-    <Compile Include="RunTime\Async\Jobs\FrameDelayJob.cs" />
-    <Compile Include="RunTime\Async\Jobs\IAsyncJob.cs" />
-    <Compile Include="RunTime\Async\Jobs\TimeDelayJob.cs" />
     <Compile Include="Entities\EntityBase.cs" />
     <Compile Include="Native\EntityInterop.cs" />
     <Compile Include="Native\GameRulesInterop.cs" />
@@ -243,7 +233,6 @@
     <Compile Include="Entities\NativeEntity.cs" />
     <Compile Include="Physics\RaycastHit.cs" />
     <Compile Include="Entities\EntityMovement.cs" />
-    <Compile Include="Game.cs" />
     <Compile Include="Entities\EditorProperty.cs" />
     <Compile Include="Entities\EntityStatics.cs" />
     <Compile Include="Entities\Entity.cs" />
