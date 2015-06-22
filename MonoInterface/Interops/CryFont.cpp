@@ -132,7 +132,7 @@ Vec2 CryFontInterop::GetSize(mono::object obj, mono::string text, bool multiLine
 		ArgumentNullException("Text which dimensions to calculate cannot be null").Throw();
 	}
 
-	return font->GetTextSizeW(NtText16(text), multiLine, *context);
+	return font->GetTextSize(NtText(text), multiLine, *context);
 }
 
 int CryFontInterop::GetLength(mono::object obj, mono::string text, bool multiLine)
@@ -148,7 +148,7 @@ int CryFontInterop::GetLength(mono::object obj, mono::string text, bool multiLin
 		ArgumentNullException("Text which length to calculate cannot be null").Throw();
 	}
 
-	return font->GetTextLengthW(NtText16(text), multiLine);
+	return font->GetTextLength(NtText(text), multiLine);
 }
 
 mono::string CryFontInterop::WrapText(mono::object obj, float maxWidth, mono::string text, STextDrawContext *context)
@@ -164,8 +164,8 @@ mono::string CryFontInterop::WrapText(mono::object obj, float maxWidth, mono::st
 		return nullptr;
 	}
 
-	wstring res;
-	font->WrapText(res, maxWidth, NtText16(text), *context);
+	string res;
+	font->WrapText(res, maxWidth, NtText(text), *context);
 	return ToMonoString(res.c_str());
 }
 
@@ -198,5 +198,5 @@ void CryFontInterop::DrawTextInternal(mono::object obj, float x, float y, float 
 		return;
 	}
 
-	font->DrawStringW(x, y, z, NtText16(text), asciiMultiLine, *context);
+	font->DrawString(x, y, z, NtText(text), asciiMultiLine, *context);
 }

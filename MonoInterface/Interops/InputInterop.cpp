@@ -32,10 +32,6 @@ void InputInterop::OnRunTimeInitialized()
 	onRightTrigger   = getThunk<OnTriggerThunk>      (xboxClass, "OnRightTrigger");
 	onLeftTrigger    = getThunk<OnTriggerThunk>      (xboxClass, "OnLeftTrigger");
 	onXboxButton     = getThunk<OnGamepadButtonThunk>(xboxClass, "OnButton");
-	// HMDs.
-	onYaw   = getThunk<OnAxisMoveThunk>(hmdClass, "OnYaw");
-	onRoll  = getThunk<OnAxisMoveThunk>(hmdClass, "OnRoll");
-	onPitch = getThunk<OnAxisMoveThunk>(hmdClass, "OnPitch");
 	// Mouse.
 	onZ           = getThunk<OnAxisMoveThunk>  (mouseClass, "OnZ");
 	onY           = getThunk<OnAxisMoveThunk>  (mouseClass, "OnY");
@@ -124,32 +120,8 @@ bool InputInterop::OnInputEvent(const SInputEvent &_event)
 	}
 	case eIDT_Joystick:
 		break;
-	case eIDT_Headmounted:
-	{
-		switch (_event.keyId)
-		{
-		case eKI_HMD_Pitch:
-		{
-			onPitch(_event.modifiers, _event.value, &blocked, &ex);
-			break;
-		}
-		case eKI_HMD_Yaw:
-		{
-			onYaw(_event.modifiers, _event.value, &blocked, &ex);
-			break;
-		}
-		case eKI_HMD_Roll:
-		{
-			onRoll(_event.modifiers, _event.value, &blocked, &ex);
-			break;
-		}
-		default:
-			break;
-		}
-		break;
-	}
 	case eIDT_Gamepad:
-		if (_event.keyId < eKI_PS3_Select)
+		if (_event.keyId < eKI_Orbis_Select)
 		{
 			switch (_event.keyId)
 			{
@@ -226,7 +198,7 @@ bool InputInterop::OnInputEvent(const SInputEvent &_event)
 	return blocked;
 }
 
-bool InputInterop::OnInputEventUI(const SInputEvent &_event)
+bool InputInterop::OnInputEventUI(const SUnicodeEvent &_event)
 {
 	if (!thunksInitialized)
 	{
@@ -236,7 +208,7 @@ bool InputInterop::OnInputEventUI(const SInputEvent &_event)
 	mono::exception ex;
 	bool blocked;
 
-	onCharacterInput(_event.inputChar, _event.modifiers, &blocked, &ex);
+	onCharacterInput(_event.inputChar, &blocked, &ex);
 
 	return blocked;
 }
@@ -351,10 +323,6 @@ OnThumbAxisMoveThunk InputInterop::onLeftThumbX;
 OnTriggerThunk InputInterop::onRightTrigger;
 OnTriggerThunk InputInterop::onLeftTrigger;
 OnGamepadButtonThunk InputInterop::onXboxButton;
-
-OnAxisMoveThunk InputInterop::onYaw;
-OnAxisMoveThunk InputInterop::onRoll;
-OnAxisMoveThunk InputInterop::onPitch;
 
 OnAxisMoveThunk InputInterop::onZ;
 OnAxisMoveThunk InputInterop::onY;
