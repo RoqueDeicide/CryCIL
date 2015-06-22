@@ -24,9 +24,9 @@ namespace CryCil.Engine.Input
 		/// </summary>
 		XboxController = 512,
 		/// <summary>
-		/// Id of the first PS3 controller input.
+		/// Id of the first Orbis controller input.
 		/// </summary>
-		PS3Controller = 1024,
+		OrbisController = 1024,
 		/// <summary>
 		/// Id of the first system input.
 		/// </summary>
@@ -673,113 +673,113 @@ namespace CryCil.Engine.Input
 		XboxDisconnect,
 
 		/// <summary>
-		/// Identifier of the Select button on the PS3 controller.
+		/// Identifier of the Select button on the Orbis controller.
 		/// </summary>
-		PlayStation3Select = InputIdBase.PS3Controller,
+		OrbisSelect = InputIdBase.OrbisController,
 		/// <summary>
-		/// Identifier of the L3 analog stick on the PS3 controller.
+		/// Identifier of the L3 analog stick on the Orbis controller.
 		/// </summary>
-		PlayStation3L3,
+		OrbisL3,
 		/// <summary>
-		/// Identifier of the R3 analog stick on the PS3 controller.
+		/// Identifier of the R3 analog stick on the Orbis controller.
 		/// </summary>
-		PlayStation3R3,
+		OrbisR3,
 		/// <summary>
-		/// Identifier of the Start button on the PS3 controller.
+		/// Identifier of the Start button on the Orbis controller.
 		/// </summary>
-		PlayStation3Start,
+		OrbisStart,
 		/// <summary>
-		/// Identifier of the Up button on the PS3 controller.
+		/// Identifier of the Up button on the Orbis controller.
 		/// </summary>
-		PlayStation3Up,
+		OrbisUp,
 		/// <summary>
-		/// Identifier of the Right button on the PS3 controller.
+		/// Identifier of the Right button on the Orbis controller.
 		/// </summary>
-		PlayStation3Right,
+		OrbisRight,
 		/// <summary>
-		/// Identifier of the Down button on the PS3 controller.
+		/// Identifier of the Down button on the Orbis controller.
 		/// </summary>
-		PlayStation3Down,
+		OrbisDown,
 		/// <summary>
-		/// Identifier of the Left button on the PS3 controller.
+		/// Identifier of the Left button on the Orbis controller.
 		/// </summary>
-		PlayStation3Left,
+		OrbisLeft,
 		/// <summary>
-		/// Identifier of the L2 button on the PS3 controller.
+		/// Identifier of the L2 button on the Orbis controller.
 		/// </summary>
-		PlayStation3L2,
+		OrbisL2,
 		/// <summary>
-		/// Identifier of the R2 button on the PS3 controller.
+		/// Identifier of the R2 button on the Orbis controller.
 		/// </summary>
-		PlayStation3R2,
+		OrbisR2,
 		/// <summary>
-		/// Identifier of the L1 button on the PS3 controller.
+		/// Identifier of the L1 button on the Orbis controller.
 		/// </summary>
-		PlayStation3L1,
+		OrbisL1,
 		/// <summary>
-		/// Identifier of the R1 button on the PS3 controller.
+		/// Identifier of the R1 button on the Orbis controller.
 		/// </summary>
-		PlayStation3R1,
+		OrbisR1,
 		/// <summary>
-		/// Identifier of the Triangle button on the PS3 controller.
+		/// Identifier of the Triangle button on the Orbis controller.
 		/// </summary>
-		PlayStation3Triangle,
+		OrbisTriangle,
 		/// <summary>
-		/// Identifier of the Circle button on the PS3 controller.
+		/// Identifier of the Circle button on the Orbis controller.
 		/// </summary>
-		PlayStation3Circle,
+		OrbisCircle,
 		/// <summary>
-		/// Identifier of the Cross button on the PS3 controller.
+		/// Identifier of the Cross button on the Orbis controller.
 		/// </summary>
-		PlayStation3Cross,
+		OrbisCross,
 		/// <summary>
-		/// Identifier of the Square button on the PS3 controller.
+		/// Identifier of the Square button on the Orbis controller.
 		/// </summary>
-		PlayStation3Square,
+		OrbisSquare,
 		/// <summary>
-		/// Identifier of the X-axis with left stick on the PS3 controller.
+		/// Identifier of the X-axis with left stick on the Orbis controller.
 		/// </summary>
-		PlayStation3StickLeftX,
+		OrbisStickLeftX,
 		/// <summary>
-		/// Identifier of the Y-axis with left stick on the PS3 controller.
+		/// Identifier of the Y-axis with left stick on the Orbis controller.
 		/// </summary>
-		PlayStation3StickLeftY,
+		OrbisStickLeftY,
 		/// <summary>
-		/// Identifier of the X-axis with right stick on the PS3 controller.
+		/// Identifier of the X-axis with right stick on the Orbis controller.
 		/// </summary>
-		PlayStation3StickRightX,
+		OrbisStickRightX,
 		/// <summary>
-		/// Identifier of the Y-axis with right stick on the PS3 controller.
+		/// Identifier of the Y-axis with right stick on the Orbis controller.
 		/// </summary>
-		PlayStation3StickRightY,
-		/// <summary>
-		/// Unknown.
-		/// </summary>
-		PlayStation3RotX,
+		OrbisStickRightY,
 		/// <summary>
 		/// Unknown.
 		/// </summary>
-		PlayStation3RotY,
+		OrbisRotX,
 		/// <summary>
 		/// Unknown.
 		/// </summary>
-		PlayStation3RotZ,
+		OrbisRotY,
 		/// <summary>
 		/// Unknown.
 		/// </summary>
-		PlayStation3RotXKeyL,
+		OrbisRotZ,
 		/// <summary>
 		/// Unknown.
 		/// </summary>
-		PlayStation3RotXKeyR,
+		OrbisRotXKeyL,
 		/// <summary>
 		/// Unknown.
 		/// </summary>
-		PlayStation3RotZKeyD,
+		OrbisRotXKeyR,
 		/// <summary>
 		/// Unknown.
 		/// </summary>
-		PlayStation3RotZKeyU,
+		OrbisRotZKeyD,
+		/// <summary>
+		/// Unknown.
+		/// </summary>
+		OrbisRotZKeyU,
 
 		/// <summary>
 		/// Identifier of the touch pad on the Play Station 4 controller.

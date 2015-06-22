@@ -121,7 +121,7 @@ bool InputInterop::OnInputEvent(const SInputEvent &_event)
 	case eIDT_Joystick:
 		break;
 	case eIDT_Gamepad:
-		if (_event.keyId < eKI_PS3_Select)
+		if (_event.keyId < eKI_Orbis_Select)
 		{
 			switch (_event.keyId)
 			{
@@ -323,10 +323,6 @@ OnThumbAxisMoveThunk InputInterop::onLeftThumbX;
 OnTriggerThunk InputInterop::onRightTrigger;
 OnTriggerThunk InputInterop::onLeftTrigger;
 OnGamepadButtonThunk InputInterop::onXboxButton;
-
-OnAxisMoveThunk InputInterop::onYaw;
-OnAxisMoveThunk InputInterop::onRoll;
-OnAxisMoveThunk InputInterop::onPitch;
 
 OnAxisMoveThunk InputInterop::onZ;
 OnAxisMoveThunk InputInterop::onY;
