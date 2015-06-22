@@ -37,7 +37,7 @@ mono::string LevelInterop::get_DisplayName(mono::object levelObj)
 	{
 		NullReferenceException("This level object is not valid.").Throw();
 	}
-	wstring displayName;
+	string displayName;
 	gEnv->pSystem->GetLocalizationManager()->LocalizeLabel(NtText(info->GetDisplayName()), displayName);
 	return ToMonoString(displayName.c_str());
 }

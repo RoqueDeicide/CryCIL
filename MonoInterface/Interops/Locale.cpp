@@ -23,7 +23,7 @@ mono::string LocaleInterop::Translate(mono::string text, bool forceEnglish)
 
 	auto loc = GetISystem()->GetLocalizationManager();
 	
-	wstring localized;
+	string localized;
 	if (loc->LocalizeString(NtText(text), localized, forceEnglish))
 	{
 		return ToMonoString(localized.c_str());
@@ -40,7 +40,7 @@ mono::string LocaleInterop::TranslateLabel(mono::string labelName, bool forceEng
 
 	auto loc = GetISystem()->GetLocalizationManager();
 
-	wstring localized;
+	string localized;
 	if (loc->LocalizeLabel(NtText(labelName), localized, forceEnglish))
 	{
 		return ToMonoString(localized.c_str());
