@@ -374,6 +374,9 @@
     <ClInclude Include="Interops\MonoFlowNodeFactory.h">
       <Filter>Interops\Engine\Logic</Filter>
     </ClInclude>
+    <ClInclude Include="TypeMapChecks\CheckingBasics.h">
+      <Filter>TypeMapChecks</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -596,6 +599,9 @@
     <ClCompile Include="Interops\MonoFlowNodeFactory.cpp">
       <Filter>Interops\Engine\Logic</Filter>
     </ClCompile>
+    <ClCompile Include="TypeMapChecks\EntitySpawnParams.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">
@@ -696,6 +702,9 @@
     </Filter>
     <Filter Include="Interops\Engine\Logic">
       <UniqueIdentifier>{1678bc4d-2d83-49e4-8cc5-0c0eb8928574}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TypeMapChecks">
+      <UniqueIdentifier>{8aa0ee2f-cbc4-4f09-b232-cdc5d739d4b7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

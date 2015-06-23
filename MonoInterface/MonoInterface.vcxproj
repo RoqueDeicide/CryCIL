@@ -333,6 +333,7 @@
     <ClInclude Include="ThunkTables.h" />
     <ClInclude Include="TimeUtilities.h" />
     <ClInclude Include="Tuples.h" />
+    <ClInclude Include="TypeMapChecks\CheckingBasics.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CryEngineInterface.cpp" />
@@ -429,6 +430,7 @@
     </ClCompile>
     <ClCompile Include="Testing\TestStart.cpp" />
     <ClCompile Include="ThunkTables.cpp" />
+    <ClCompile Include="TypeMapChecks\EntitySpawnParams.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
