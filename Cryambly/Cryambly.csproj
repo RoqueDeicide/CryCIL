@@ -95,6 +95,12 @@
     <Compile Include="Engine\Environment\TimeOfDay.cs" />
     <Compile Include="Engine\Environment\TimeOfDayParameterId.cs" />
     <Compile Include="Engine\Environment\TimeOfDaySync.cs" />
+    <Compile Include="Engine\Input\AnalogInputHandler.cs" />
+    <Compile Include="Engine\Input\GamepadAnalogInputHandler.cs" />
+    <Compile Include="Engine\Input\GamepadKeyInputHandler.cs" />
+    <Compile Include="Engine\Input\KeyInputHandler.cs" />
+    <Compile Include="Engine\Input\ModifierKeysStatus.cs" />
+    <Compile Include="Engine\Input\SymbolicInputHandler.cs" />
     <Compile Include="Engine\Logic\CryActor.cs" />
     <Compile Include="Engine\Logic\CryEntity.cs" />
     <Compile Include="Engine\Logic\FlowGraph\ActivationSet.cs" />
@@ -172,13 +178,8 @@
     <Compile Include="Engine\Files\PathAliases.cs" />
     <Compile Include="Engine\Files\PathResolutionRules.cs" />
     <Compile Include="Engine\Files\SearchLocation.cs" />
-    <Compile Include="Engine\Input\AnalogInputEventArgs.cs" />
-    <Compile Include="Engine\Input\GamepadAnalogInputEventArgs.cs" />
-    <Compile Include="Engine\Input\GamepadKeyEventArgs.cs" />
-    <Compile Include="Engine\Input\TouchEventArgs.cs" />
     <Compile Include="Engine\Input\Devices\XboxGamepad.cs" />
     <Compile Include="Engine\Input\InputDeviceType.cs" />
-    <Compile Include="Engine\Input\InputEventArgs.cs" />
     <Compile Include="Engine\Input\InputState.cs" />
     <Compile Include="Engine\Input\InputId.cs" />
     <Compile Include="Engine\Input\Inputs.cs" />
@@ -186,9 +187,7 @@
     <Compile Include="Engine\Input\ModifierMask.cs" />
     <Compile Include="Engine\Input\Devices\HardwareMouse.cs" />
     <Compile Include="Engine\Input\Devices\Mouse.cs" />
-    <Compile Include="Engine\Input\SymbolicInputEventArgs.cs" />
     <Compile Include="Engine\Input\Touch.cs" />
-    <Compile Include="Engine\Input\SimpleKeyEventArgs.cs" />
     <Compile Include="Engine\NamespaceDoc.cs" />
     <Compile Include="Engine\Rendering\FontSmoothing.cs" />
     <Compile Include="Engine\Rendering\Materials\MaterialCopyFlags.cs" />

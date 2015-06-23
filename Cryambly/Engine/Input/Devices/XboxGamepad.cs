@@ -14,21 +14,21 @@ namespace CryCil.Engine.Input
 	public static class XboxGamepad
 	{
 		#region Fields
-		private static readonly List<EventHandler<GamepadKeyEventArgs>> buttonHandlers;
-		private static readonly List<EventHandler<GamepadAnalogInputEventArgs>> leftTriggerHandlers;
-		private static readonly List<EventHandler<GamepadAnalogInputEventArgs>> rightTriggerHandlers;
-		private static readonly List<EventHandler<GamepadAnalogInputEventArgs>> leftThumbXHandlers;
-		private static readonly List<EventHandler<GamepadAnalogInputEventArgs>> leftThumbYHandlers;
-		private static readonly List<EventHandler<GamepadAnalogInputEventArgs>> rightThumbXHandlers;
-		private static readonly List<EventHandler<GamepadAnalogInputEventArgs>> rightThumbYHandlers;
-		private static readonly List<EventHandler<GamepadKeyEventArgs>> leftThumbUpHandlers;
-		private static readonly List<EventHandler<GamepadKeyEventArgs>> leftThumbDownHandlers;
-		private static readonly List<EventHandler<GamepadKeyEventArgs>> leftThumbLeftHandlers;
-		private static readonly List<EventHandler<GamepadKeyEventArgs>> leftThumbRightHandlers;
-		private static readonly List<EventHandler<GamepadKeyEventArgs>> rightThumbUpHandlers;
-		private static readonly List<EventHandler<GamepadKeyEventArgs>> rightThumbDownHandlers;
-		private static readonly List<EventHandler<GamepadKeyEventArgs>> rightThumbLeftHandlers;
-		private static readonly List<EventHandler<GamepadKeyEventArgs>> rightThumbRightHandlers;
+		private static readonly List<GamepadKeyInputHandler> buttonHandlers;
+		private static readonly List<GamepadAnalogInputHandler> leftTriggerHandlers;
+		private static readonly List<GamepadAnalogInputHandler> rightTriggerHandlers;
+		private static readonly List<GamepadAnalogInputHandler> leftThumbXHandlers;
+		private static readonly List<GamepadAnalogInputHandler> leftThumbYHandlers;
+		private static readonly List<GamepadAnalogInputHandler> rightThumbXHandlers;
+		private static readonly List<GamepadAnalogInputHandler> rightThumbYHandlers;
+		private static readonly List<GamepadKeyInputHandler> leftThumbUpHandlers;
+		private static readonly List<GamepadKeyInputHandler> leftThumbDownHandlers;
+		private static readonly List<GamepadKeyInputHandler> leftThumbLeftHandlers;
+		private static readonly List<GamepadKeyInputHandler> leftThumbRightHandlers;
+		private static readonly List<GamepadKeyInputHandler> rightThumbUpHandlers;
+		private static readonly List<GamepadKeyInputHandler> rightThumbDownHandlers;
+		private static readonly List<GamepadKeyInputHandler> rightThumbLeftHandlers;
+		private static readonly List<GamepadKeyInputHandler> rightThumbRightHandlers;
 		#endregion
 		#region Properties
 
@@ -37,7 +37,7 @@ namespace CryCil.Engine.Input
 		/// <summary>
 		/// Occurs when one of the mouse buttons is pressed or released.
 		/// </summary>
-		public static event EventHandler<GamepadKeyEventArgs> Button
+		public static event GamepadKeyInputHandler Button
 		{
 			add { buttonHandlers.Add(value); }
 			remove { buttonHandlers.Remove(value); }
@@ -46,13 +46,13 @@ namespace CryCil.Engine.Input
 		/// Occurs when the left trigger is moved/pressed/released.
 		/// </summary>
 		/// <remarks>
-		/// When the trigger simply moves, the movement event with <see cref="InputEventArgs.State"/> set
-		/// to <see cref="InputState.Changed"/>. After posting that event a check is made whether the
-		/// trigger crosses the threshold, if it goes above from below the threshold, then the event with
+		/// When the trigger simply moves, the movement event will be raised with state parameter equal to
+		/// <see cref="InputState.Changed"/>. After posting that event a check is made whether the trigger
+		/// crosses the threshold, if it goes above from below the threshold, then the event with
 		/// <see cref="InputState.Pressed"/> is posted, otherwise, if it goes below from above the
 		/// threshold, then the event with <see cref="InputState.Released"/> is posted.
 		/// </remarks>
-		public static event EventHandler<GamepadAnalogInputEventArgs> LeftTrigger
+		public static event GamepadAnalogInputHandler LeftTrigger
 		{
 			add { leftTriggerHandlers.Add(value); }
 			remove { leftTriggerHandlers.Remove(value); }
@@ -61,13 +61,13 @@ namespace CryCil.Engine.Input
 		/// Occurs when the right trigger is moved/pressed/released.
 		/// </summary>
 		/// <remarks>
-		/// When the trigger simply moves, the movement event with <see cref="InputEventArgs.State"/> set
-		/// to <see cref="InputState.Changed"/>. After posting that event a check is made whether the
-		/// trigger crosses the threshold, if it goes above from below the threshold, then the event with
+		/// When the trigger simply moves, the movement event will be raised with state parameter equal to
+		/// <see cref="InputState.Changed"/>. After posting that event a check is made whether the trigger
+		/// crosses the threshold, if it goes above from below the threshold, then the event with
 		/// <see cref="InputState.Pressed"/> is posted, otherwise, if it goes below from above the
 		/// threshold, then the event with <see cref="InputState.Released"/> is posted.
 		/// </remarks>
-		public static event EventHandler<GamepadAnalogInputEventArgs> RightTrigger
+		public static event GamepadAnalogInputHandler RightTrigger
 		{
 			add { rightTriggerHandlers.Add(value); }
 			remove { rightTriggerHandlers.Remove(value); }
@@ -76,7 +76,7 @@ namespace CryCil.Engine.Input
 		/// <summary>
 		/// Occurs when the left analog stick moves along X-axis.
 		/// </summary>
-		public static event EventHandler<GamepadAnalogInputEventArgs> LeftThumbX
+		public static event GamepadAnalogInputHandler LeftThumbX
 		{
 			add { leftThumbXHandlers.Add(value); }
 			remove { leftThumbXHandlers.Remove(value); }
@@ -84,7 +84,7 @@ namespace CryCil.Engine.Input
 		/// <summary>
 		/// Occurs when the left analog stick moves along Y-axis.
 		/// </summary>
-		public static event EventHandler<GamepadAnalogInputEventArgs> LeftThumbY
+		public static event GamepadAnalogInputHandler LeftThumbY
 		{
 			add { leftThumbYHandlers.Add(value); }
 			remove { leftThumbYHandlers.Remove(value); }
@@ -92,7 +92,7 @@ namespace CryCil.Engine.Input
 		/// <summary>
 		/// Occurs when the right analog stick moves along X-axis.
 		/// </summary>
-		public static event EventHandler<GamepadAnalogInputEventArgs> RightThumbX
+		public static event GamepadAnalogInputHandler RightThumbX
 		{
 			add { rightThumbXHandlers.Add(value); }
 			remove { rightThumbXHandlers.Remove(value); }
@@ -100,7 +100,7 @@ namespace CryCil.Engine.Input
 		/// <summary>
 		/// Occurs when the right analog stick moves along Y-axis.
 		/// </summary>
-		public static event EventHandler<GamepadAnalogInputEventArgs> RightThumbY
+		public static event GamepadAnalogInputHandler RightThumbY
 		{
 			add { rightThumbYHandlers.Add(value); }
 			remove { rightThumbYHandlers.Remove(value); }
@@ -113,7 +113,7 @@ namespace CryCil.Engine.Input
 		/// otherwise if the stick moves below the threshold, then <see cref="InputState.Released"/> type
 		/// event is posted.
 		/// </remarks>
-		public static event EventHandler<GamepadKeyEventArgs> LeftThumbUp
+		public static event GamepadKeyInputHandler LeftThumbUp
 		{
 			add { leftThumbUpHandlers.Add(value); }
 			remove { leftThumbUpHandlers.Remove(value); }
@@ -126,7 +126,7 @@ namespace CryCil.Engine.Input
 		/// otherwise if the stick moves below the threshold, then <see cref="InputState.Released"/> type
 		/// event is posted.
 		/// </remarks>
-		public static event EventHandler<GamepadKeyEventArgs> LeftThumbDown
+		public static event GamepadKeyInputHandler LeftThumbDown
 		{
 			add { leftThumbDownHandlers.Add(value); }
 			remove { leftThumbDownHandlers.Remove(value); }
@@ -139,7 +139,7 @@ namespace CryCil.Engine.Input
 		/// otherwise if the stick moves below the threshold, then <see cref="InputState.Released"/> type
 		/// event is posted.
 		/// </remarks>
-		public static event EventHandler<GamepadKeyEventArgs> LeftThumbLeft
+		public static event GamepadKeyInputHandler LeftThumbLeft
 		{
 			add { leftThumbLeftHandlers.Add(value); }
 			remove { leftThumbLeftHandlers.Remove(value); }
@@ -152,7 +152,7 @@ namespace CryCil.Engine.Input
 		/// otherwise if the stick moves below the threshold, then <see cref="InputState.Released"/> type
 		/// event is posted.
 		/// </remarks>
-		public static event EventHandler<GamepadKeyEventArgs> LeftThumbRight
+		public static event GamepadKeyInputHandler LeftThumbRight
 		{
 			add { leftThumbRightHandlers.Add(value); }
 			remove { leftThumbRightHandlers.Remove(value); }
@@ -165,7 +165,7 @@ namespace CryCil.Engine.Input
 		/// otherwise if the stick moves below the threshold, then <see cref="InputState.Released"/> type
 		/// event is posted.
 		/// </remarks>
-		public static event EventHandler<GamepadKeyEventArgs> RightThumbUp
+		public static event GamepadKeyInputHandler RightThumbUp
 		{
 			add { rightThumbUpHandlers.Add(value); }
 			remove { rightThumbUpHandlers.Remove(value); }
@@ -178,7 +178,7 @@ namespace CryCil.Engine.Input
 		/// otherwise if the stick moves below the threshold, then <see cref="InputState.Released"/> type
 		/// event is posted.
 		/// </remarks>
-		public static event EventHandler<GamepadKeyEventArgs> RightThumbDown
+		public static event GamepadKeyInputHandler RightThumbDown
 		{
 			add { rightThumbDownHandlers.Add(value); }
 			remove { rightThumbDownHandlers.Remove(value); }
@@ -191,7 +191,7 @@ namespace CryCil.Engine.Input
 		/// otherwise if the stick moves below the threshold, then <see cref="InputState.Released"/> type
 		/// event is posted.
 		/// </remarks>
-		public static event EventHandler<GamepadKeyEventArgs> RightThumbLeft
+		public static event GamepadKeyInputHandler RightThumbLeft
 		{
 			add { rightThumbLeftHandlers.Add(value); }
 			remove { rightThumbLeftHandlers.Remove(value); }
@@ -204,7 +204,7 @@ namespace CryCil.Engine.Input
 		/// otherwise if the stick moves below the threshold, then <see cref="InputState.Released"/> type
 		/// event is posted.
 		/// </remarks>
-		public static event EventHandler<GamepadKeyEventArgs> RightThumbRight
+		public static event GamepadKeyInputHandler RightThumbRight
 		{
 			add { rightThumbRightHandlers.Add(value); }
 			remove { rightThumbRightHandlers.Remove(value); }
@@ -214,21 +214,21 @@ namespace CryCil.Engine.Input
 		#region Construction
 		static XboxGamepad()
 		{
-			buttonHandlers = new List<EventHandler<GamepadKeyEventArgs>>();
-			leftTriggerHandlers = new List<EventHandler<GamepadAnalogInputEventArgs>>();
-			rightTriggerHandlers = new List<EventHandler<GamepadAnalogInputEventArgs>>();
-			leftThumbXHandlers = new List<EventHandler<GamepadAnalogInputEventArgs>>();
-			leftThumbYHandlers = new List<EventHandler<GamepadAnalogInputEventArgs>>();
-			rightThumbXHandlers = new List<EventHandler<GamepadAnalogInputEventArgs>>();
-			rightThumbYHandlers = new List<EventHandler<GamepadAnalogInputEventArgs>>();
-			leftThumbUpHandlers = new List<EventHandler<GamepadKeyEventArgs>>();
-			leftThumbDownHandlers = new List<EventHandler<GamepadKeyEventArgs>>();
-			leftThumbLeftHandlers = new List<EventHandler<GamepadKeyEventArgs>>();
-			leftThumbRightHandlers = new List<EventHandler<GamepadKeyEventArgs>>();
-			rightThumbUpHandlers = new List<EventHandler<GamepadKeyEventArgs>>();
-			rightThumbDownHandlers = new List<EventHandler<GamepadKeyEventArgs>>();
-			rightThumbLeftHandlers = new List<EventHandler<GamepadKeyEventArgs>>();
-			rightThumbRightHandlers = new List<EventHandler<GamepadKeyEventArgs>>();
+			buttonHandlers = new List<GamepadKeyInputHandler>();
+			leftTriggerHandlers = new List<GamepadAnalogInputHandler>();
+			rightTriggerHandlers = new List<GamepadAnalogInputHandler>();
+			leftThumbXHandlers = new List<GamepadAnalogInputHandler>();
+			leftThumbYHandlers = new List<GamepadAnalogInputHandler>();
+			rightThumbXHandlers = new List<GamepadAnalogInputHandler>();
+			rightThumbYHandlers = new List<GamepadAnalogInputHandler>();
+			leftThumbUpHandlers = new List<GamepadKeyInputHandler>();
+			leftThumbDownHandlers = new List<GamepadKeyInputHandler>();
+			leftThumbLeftHandlers = new List<GamepadKeyInputHandler>();
+			leftThumbRightHandlers = new List<GamepadKeyInputHandler>();
+			rightThumbUpHandlers = new List<GamepadKeyInputHandler>();
+			rightThumbDownHandlers = new List<GamepadKeyInputHandler>();
+			rightThumbLeftHandlers = new List<GamepadKeyInputHandler>();
+			rightThumbRightHandlers = new List<GamepadKeyInputHandler>();
 		}
 		#endregion
 		#region Interface
@@ -304,52 +304,45 @@ namespace CryCil.Engine.Input
 		[UnmanagedThunk("Invoked by underlying framework to raise Button event.")]
 		private static void OnButton(uint input, byte deviceIndex, bool pressed, out bool blocked)
 		{
-			var args = new GamepadKeyEventArgs((InputId)input, deviceIndex, pressed);
-			blocked = InputEventPropagator.Post(buttonHandlers, args);
+			blocked = InputEventPropagator.Post(buttonHandlers, (InputId)input, deviceIndex, pressed);
 		}
 		[UnmanagedThunk("Invoked by underlying framework to raise LeftTrigger event.")]
 		private static void OnLeftTrigger(uint input, byte deviceIndex, int state, float value, out bool blocked)
 		{
-			var args = new GamepadAnalogInputEventArgs((InputId)input, deviceIndex, (InputState)state, value);
-			blocked = InputEventPropagator.Post(leftTriggerHandlers, args);
+			blocked = InputEventPropagator.Post(leftTriggerHandlers, (InputId)input, deviceIndex, (InputState)state, value);
 		}
 		[UnmanagedThunk("Invoked by underlying framework to raise RightTrigger event.")]
 		private static void OnRightTrigger(uint input, byte deviceIndex, int state, float value, out bool blocked)
 		{
-			var args = new GamepadAnalogInputEventArgs((InputId)input, deviceIndex, (InputState)state, value);
-			blocked = InputEventPropagator.Post(rightTriggerHandlers, args);
+			blocked = InputEventPropagator.Post(rightTriggerHandlers, (InputId)input, deviceIndex, (InputState)state, value);
 		}
 		[UnmanagedThunk("Invoked by underlying framework to raise LeftThumbX event.")]
 		private static void OnLeftThumbX(int state, byte deviceIndex, float value, out bool blocked)
 		{
-			var args = new GamepadAnalogInputEventArgs(InputId.XboxThumbLeftX, deviceIndex, (InputState)state, value);
-			blocked = InputEventPropagator.Post(leftThumbXHandlers, args);
+			blocked = InputEventPropagator.Post(leftThumbXHandlers, InputId.XboxThumbLeftX, deviceIndex, (InputState)state, value);
 		}
 		[UnmanagedThunk("Invoked by underlying framework to raise LeftThumbY event.")]
 		private static void OnLeftThumbY(int state, byte deviceIndex, float value, out bool blocked)
 		{
-			var args = new GamepadAnalogInputEventArgs(InputId.XboxThumbLeftY, deviceIndex, (InputState)state, value);
-			blocked = InputEventPropagator.Post(leftThumbYHandlers, args);
+			blocked = InputEventPropagator.Post(leftThumbYHandlers, InputId.XboxThumbLeftY, deviceIndex, (InputState)state, value);
 		}
 		[UnmanagedThunk("Invoked by underlying framework to raise RightThumbX event.")]
 		private static void OnRightThumbX(int state, byte deviceIndex, float value, out bool blocked)
 		{
-			var args = new GamepadAnalogInputEventArgs(InputId.XboxThumbRightY, deviceIndex, (InputState)state, value);
-			blocked = InputEventPropagator.Post(rightThumbXHandlers, args);
+			blocked = InputEventPropagator.Post(rightThumbXHandlers, InputId.XboxThumbRightY, deviceIndex, (InputState)state, value);
 		}
 		[UnmanagedThunk("Invoked by underlying framework to raise RightThumbY event.")]
 		private static void OnRightThumbY(int state, byte deviceIndex, float value, out bool blocked)
 		{
-			var args = new GamepadAnalogInputEventArgs(InputId.XboxThumbRightY, deviceIndex, (InputState)state, value);
-			blocked = InputEventPropagator.Post(rightThumbYHandlers, args);
+			blocked = InputEventPropagator.Post(rightThumbYHandlers, InputId.XboxThumbRightY, deviceIndex, (InputState)state, value);
 		}
 		[UnmanagedThunk("Invoked by underlying framework to raise on the directional analog stick events.")]
 		private static void OnThumbDirection(uint id, byte deviceIndex, bool pressed, out bool blocked)
 		{
-			var args = new GamepadKeyEventArgs((InputId)id, deviceIndex, pressed);
-			List<EventHandler<GamepadKeyEventArgs>> handlers;
+			List<GamepadKeyInputHandler> handlers;
 
-			switch (args.InputIdentifier)
+			InputId input = (InputId)id;
+			switch (input)
 			{
 				case InputId.XboxThumbLeftUp:
 					handlers = leftThumbUpHandlers;
@@ -380,7 +373,7 @@ namespace CryCil.Engine.Input
 					return;
 			}
 
-			blocked = InputEventPropagator.Post(handlers, args);
+			blocked = InputEventPropagator.Post(handlers, input, deviceIndex, pressed);
 		}
 		#endregion
 	}

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CryCil.Annotations;
+using CryCil.Utilities;
 
 namespace CryCil.Engine.Input
 {
@@ -13,8 +14,8 @@ namespace CryCil.Engine.Input
 	public static class Keyboard
 	{
 		#region Fields
-		private static readonly List<EventHandler<SimpleKeyEventArgs>> keyInputHandlers;
-		private static readonly List<EventHandler<SymbolicInputEventArgs>> textInputHandlers;
+		private static readonly List<KeyInputHandler> keyInputHandlers;
+		private static readonly List<SymbolicInputHandler> textInputHandlers;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -37,7 +38,7 @@ namespace CryCil.Engine.Input
 		/// Occurs when one of the keys on the keyboard is pressed and system message about it is not
 		/// translated.
 		/// </summary>
-		public static event EventHandler<SimpleKeyEventArgs> KeyChanged
+		public static event KeyInputHandler KeyChanged
 		{
 			add { keyInputHandlers.Add(value); }
 			remove { keyInputHandlers.Remove(value); }
@@ -46,7 +47,7 @@ namespace CryCil.Engine.Input
 		/// Occurs when one of the keys on the keyboard is pressed and system message about it is
 		/// translated into text input.
 		/// </summary>
-		public static event EventHandler<SymbolicInputEventArgs> CharacterInput
+		public static event SymbolicInputHandler CharacterInput
 		{
 			add { textInputHandlers.Add(value); }
 			remove { textInputHandlers.Remove(value); }
@@ -55,8 +56,8 @@ namespace CryCil.Engine.Input
 		#region Construction
 		static Keyboard()
 		{
-			keyInputHandlers = new List<EventHandler<SimpleKeyEventArgs>>();
-			textInputHandlers = new List<EventHandler<SymbolicInputEventArgs>>();
+			keyInputHandlers = new List<KeyInputHandler>();
+			textInputHandlers = new List<SymbolicInputHandler>();
 		}
 		#endregion
 		#region Interface
@@ -65,14 +66,13 @@ namespace CryCil.Engine.Input
 		[UnmanagedThunk("Invoked by underlying framework to raise KeyChanged event.")]
 		private static void OnKeyChanged(uint input, int modifiers, bool pressed, out bool blocked)
 		{
-			var args = new SimpleKeyEventArgs((InputId)input, (ModifierMask)modifiers, pressed);
-			blocked = InputEventPropagator.Post(keyInputHandlers, args);
+			blocked = InputEventPropagator.Post(keyInputHandlers, (InputId)input,
+												new ModifierKeysStatus(modifiers), pressed);
 		}
 		[UnmanagedThunk("Invoked by underlying framework to raise CharacterInput event.")]
 		private static void OnCharacterInput(uint input, out bool blocked)
 		{
-			var args = new SymbolicInputEventArgs(input);
-			blocked = InputEventPropagator.Post(textInputHandlers, args);
+			blocked = InputEventPropagator.Post(textInputHandlers, new Utf32Char(input));
 		}
 		#endregion
 	}

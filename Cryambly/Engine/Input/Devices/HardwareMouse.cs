@@ -9,6 +9,23 @@ using CryCil.Annotations;
 namespace CryCil.Engine.Input
 {
 	/// <summary>
+	/// Defines signature of methods that handle mouse click events.
+	/// </summary>
+	/// <param name="x">
+	/// X-component of the vector that designates position of the mouse cursor at the moment of click.
+	/// </param>
+	/// <param name="y">
+	/// Y-component of the vector that designates position of the mouse cursor at the moment of click.
+	/// </param>
+	public delegate void MouseClickHandler(int x, int y);
+	/// <summary>
+	/// Defines signature of methods that handle mouse wheel rotation events.
+	/// </summary>
+	/// <param name="delta">
+	/// A value that represents how much the orientation of the wheel has changed.
+	/// </param>
+	public delegate void MouseWheelHandler(int delta);
+	/// <summary>
 	/// Provides access to CryEngine IHardwareMouse API.
 	/// </summary>
 	/// <remarks>This class provides means of getting raw and unchanged mouse input.</remarks>
@@ -51,50 +68,50 @@ namespace CryCil.Engine.Input
 		/// <summary>
 		/// Occurs when right mouse button is pressed.
 		/// </summary>
-		public static event EventHandler<EventArgs<Vector2Int32>> RightMouseButtonDown;
+		public static event MouseClickHandler RightMouseButtonDown;
 		/// <summary>
 		/// Occurs when right mouse button is released.
 		/// </summary>
-		public static event EventHandler<EventArgs<Vector2Int32>> RightMouseButtonUp;
+		public static event MouseClickHandler RightMouseButtonUp;
 		/// <summary>
 		/// Occurs when right mouse button is double-clicked.
 		/// </summary>
 		/// <remarks>Series of events when double-clicking: Down - Up - DoubleClick - Up.</remarks>
-		public static event EventHandler<EventArgs<Vector2Int32>> RightMouseButtonDoubleClick;
+		public static event MouseClickHandler RightMouseButtonDoubleClick;
 		/// <summary>
 		/// Occurs when left mouse button is pressed.
 		/// </summary>
-		public static event EventHandler<EventArgs<Vector2Int32>> LeftMouseButtonDown;
+		public static event MouseClickHandler LeftMouseButtonDown;
 		/// <summary>
 		/// Occurs when left mouse button is released.
 		/// </summary>
-		public static event EventHandler<EventArgs<Vector2Int32>> LeftMouseButtonUp;
+		public static event MouseClickHandler LeftMouseButtonUp;
 		/// <summary>
 		/// Occurs when left mouse button is double-clicked.
 		/// </summary>
 		/// <remarks>Series of events when double-clicking: Down - Up - DoubleClick - Up.</remarks>
-		public static event EventHandler<EventArgs<Vector2Int32>> LeftMouseButtonDoubleClick;
+		public static event MouseClickHandler LeftMouseButtonDoubleClick;
 		/// <summary>
 		/// Occurs when middle mouse button is pressed.
 		/// </summary>
-		public static event EventHandler<EventArgs<Vector2Int32>> MiddleMouseButtonDown;
+		public static event MouseClickHandler MiddleMouseButtonDown;
 		/// <summary>
 		/// Occurs when middle mouse button is released.
 		/// </summary>
-		public static event EventHandler<EventArgs<Vector2Int32>> MiddleMouseButtonUp;
+		public static event MouseClickHandler MiddleMouseButtonUp;
 		/// <summary>
 		/// Occurs when middle mouse button is double-clicked.
 		/// </summary>
 		/// <remarks>Series of events when double-clicking: Down - Up - DoubleClick - Up.</remarks>
-		public static event EventHandler<EventArgs<Vector2Int32>> MiddleMouseButtonDoubleClick;
+		public static event MouseClickHandler MiddleMouseButtonDoubleClick;
 		/// <summary>
 		/// Occurs when mouse movement is registered.
 		/// </summary>
-		public static event EventHandler<EventArgs<Vector2Int32>> Move;
+		public static event MouseClickHandler Move;
 		/// <summary>
 		/// Occurs when mouse wheel rotation is registered.
 		/// </summary>
-		public static event EventHandler<EventArgs<int>> Wheel;
+		public static event MouseWheelHandler Wheel;
 		#endregion
 		#region Interface
 		/// <summary>
@@ -158,7 +175,7 @@ namespace CryCil.Engine.Input
 		{
 			if (RightMouseButtonDown != null)
 			{
-				RightMouseButtonDown(null, new EventArgs<Vector2Int32>(new Vector2Int32(x, y)));
+				RightMouseButtonDown(x, y);
 			}
 		}
 		[UnmanagedThunk("Invoked from underlying framework to raise RightMouseButtonUp event.")]
@@ -166,7 +183,7 @@ namespace CryCil.Engine.Input
 		{
 			if (RightMouseButtonUp != null)
 			{
-				RightMouseButtonUp(null, new EventArgs<Vector2Int32>(new Vector2Int32(x, y)));
+				RightMouseButtonUp(x, y);
 			}
 		}
 		[UnmanagedThunk("Invoked from underlying framework to raise RightMouseButtonDoubleClick event.")]
@@ -174,7 +191,7 @@ namespace CryCil.Engine.Input
 		{
 			if (RightMouseButtonDoubleClick != null)
 			{
-				RightMouseButtonDoubleClick(null, new EventArgs<Vector2Int32>(new Vector2Int32(x, y)));
+				RightMouseButtonDoubleClick(x, y);
 			}
 		}
 		[UnmanagedThunk("Invoked from underlying framework to raise LeftMouseButtonDown event.")]
@@ -182,7 +199,7 @@ namespace CryCil.Engine.Input
 		{
 			if (LeftMouseButtonDown != null)
 			{
-				LeftMouseButtonDown(null, new EventArgs<Vector2Int32>(new Vector2Int32(x, y)));
+				LeftMouseButtonDown(x, y);
 			}
 		}
 		[UnmanagedThunk("Invoked from underlying framework to raise LeftMouseButtonUp event.")]
@@ -190,7 +207,7 @@ namespace CryCil.Engine.Input
 		{
 			if (LeftMouseButtonUp != null)
 			{
-				LeftMouseButtonUp(null, new EventArgs<Vector2Int32>(new Vector2Int32(x, y)));
+				LeftMouseButtonUp(x, y);
 			}
 		}
 		[UnmanagedThunk("Invoked from underlying framework to raise LeftMouseButtonDoubleClick event.")]
@@ -198,7 +215,7 @@ namespace CryCil.Engine.Input
 		{
 			if (LeftMouseButtonDoubleClick != null)
 			{
-				LeftMouseButtonDoubleClick(null, new EventArgs<Vector2Int32>(new Vector2Int32(x, y)));
+				LeftMouseButtonDoubleClick(x, y);
 			}
 		}
 		[UnmanagedThunk("Invoked from underlying framework to raise MiddleMouseButtonDown event.")]
@@ -206,7 +223,7 @@ namespace CryCil.Engine.Input
 		{
 			if (MiddleMouseButtonDown != null)
 			{
-				MiddleMouseButtonDown(null, new EventArgs<Vector2Int32>(new Vector2Int32(x, y)));
+				MiddleMouseButtonDown(x, y);
 			}
 		}
 		[UnmanagedThunk("Invoked from underlying framework to raise MiddleMouseButtonUp event.")]
@@ -214,7 +231,7 @@ namespace CryCil.Engine.Input
 		{
 			if (MiddleMouseButtonUp != null)
 			{
-				MiddleMouseButtonUp(null, new EventArgs<Vector2Int32>(new Vector2Int32(x, y)));
+				MiddleMouseButtonUp(x, y);
 			}
 		}
 		[UnmanagedThunk("Invoked from underlying framework to raise MiddleMouseButtonDoubleClick event.")]
@@ -222,7 +239,7 @@ namespace CryCil.Engine.Input
 		{
 			if (MiddleMouseButtonDoubleClick != null)
 			{
-				MiddleMouseButtonDoubleClick(null, new EventArgs<Vector2Int32>(new Vector2Int32(x, y)));
+				MiddleMouseButtonDoubleClick(x, y);
 			}
 		}
 		[UnmanagedThunk("Invoked from underlying framework to raise Move event.")]
@@ -230,7 +247,7 @@ namespace CryCil.Engine.Input
 		{
 			if (Move != null)
 			{
-				Move(null, new EventArgs<Vector2Int32>(new Vector2Int32(x, y)));
+				Move(x, y);
 			}
 		}
 		[UnmanagedThunk("Invoked from underlying framework to raise Wheel event.")]
@@ -238,7 +255,7 @@ namespace CryCil.Engine.Input
 		{
 			if (Wheel != null)
 			{
-				Wheel(null, new EventArgs<int>(delta));
+				Wheel(delta);
 			}
 		}
 		#endregion

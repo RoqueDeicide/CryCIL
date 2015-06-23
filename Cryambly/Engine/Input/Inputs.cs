@@ -4,18 +4,69 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using CryCil.Utilities;
 
 namespace CryCil.Engine.Input
 {
 	internal static class InputEventPropagator
 	{
-		internal static bool Post<ArgsType>(List<EventHandler<ArgsType>> handlers, ArgsType args)
-			where ArgsType : InputEventArgs
+		internal static bool Post(List<KeyInputHandler> handlers, InputId input, ModifierKeysStatus modifiers, bool pressed)
 		{
+			// I'm using for loop in this way to make sure there are no temporary managed objects.
 			for (int i = 0; i < handlers.Count; i++)
 			{
-				handlers[i](null, args);
-				if (args.BlockFurtherHandling)
+				if (handlers[i](input, pressed, modifiers))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+		internal static bool Post(List<SymbolicInputHandler> handlers, Utf32Char symbol)
+		{
+			// I'm using for loop in this way to make sure there are no temporary managed objects.
+			for (int i = 0; i < handlers.Count; i++)
+			{
+				if (handlers[i](symbol))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+		internal static bool Post(List<AnalogInputHandler> handlers, InputId input, ModifierKeysStatus modifiers,
+								  InputState state, float value)
+		{
+			// I'm using for loop in this way to make sure there are no temporary managed objects.
+			for (int i = 0; i < handlers.Count; i++)
+			{
+				if (handlers[i](input, state, value, modifiers))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+		internal static bool Post(List<GamepadAnalogInputHandler> handlers, InputId input, byte deviceIndex,
+								  InputState state, float value)
+		{
+			// I'm using for loop in this way to make sure there are no temporary managed objects.
+			for (int i = 0; i < handlers.Count; i++)
+			{
+				if (handlers[i](input, state, value, deviceIndex))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+		internal static bool Post(List<GamepadKeyInputHandler> handlers, InputId input, byte deviceIndex,
+								  bool pressed)
+		{
+			// I'm using for loop in this way to make sure there are no temporary managed objects.
+			for (int i = 0; i < handlers.Count; i++)
+			{
+				if (handlers[i](input, pressed, deviceIndex))
 				{
 					return true;
 				}

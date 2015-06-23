@@ -8,6 +8,14 @@ using CryCil.Annotations;
 namespace CryCil.Engine.Input
 {
 	/// <summary>
+	/// Defines signature of methods that handle touch events.
+	/// </summary>
+	/// <param name="device">     Type of the device.</param>
+	/// <param name="deviceIndex">Index of the device.</param>
+	/// <param name="id">         Unknown.</param>
+	/// <param name="position">   Position of the touch event.</param>
+	public delegate void TouchHandler(InputDeviceType device, byte deviceIndex, byte id, Vector2 position);
+	/// <summary>
 	/// Provides access to CryEngine Input API that deals with touch-based devices.
 	/// </summary>
 	/// <remarks>Currently touch events are not raised.</remarks>
@@ -17,17 +25,15 @@ namespace CryCil.Engine.Input
 		/// <summary>
 		/// Occurs when one of the touch devices registers the touch input.
 		/// </summary>
-		public static event EventHandler<TouchEventArgs> Event;
+		public static event TouchHandler Event;
 		#endregion
 		#region Utilities
 		[UnmanagedThunk("Invoked by underlying framework to raise Event event.")]
 		private static void OnEvent(int device, byte deviceIndex, byte id, float x, float y)
 		{
-			EventHandler<TouchEventArgs> handler = Event;
-			if (handler != null)
+			if (Event != null)
 			{
-				handler(null,
-					new TouchEventArgs((InputDeviceType)device, deviceIndex, id, new Vector2(x, y)));
+				Event((InputDeviceType)device, deviceIndex, id, new Vector2(x, y));
 			}
 		}
 		#endregion
