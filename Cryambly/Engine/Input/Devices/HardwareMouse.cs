@@ -11,9 +11,7 @@ namespace CryCil.Engine.Input
 	/// <summary>
 	/// Provides access to CryEngine IHardwareMouse API.
 	/// </summary>
-	/// <remarks>
-	/// This class provides means of getting raw and unchanged mouse input.
-	/// </remarks>
+	/// <remarks>This class provides means of getting raw and unchanged mouse input.</remarks>
 	public static class HardwareMouse
 	{
 		#region Internal Calls

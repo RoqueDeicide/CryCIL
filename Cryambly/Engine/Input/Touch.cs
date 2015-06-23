@@ -10,25 +10,14 @@ namespace CryCil.Engine.Input
 	/// <summary>
 	/// Provides access to CryEngine Input API that deals with touch-based devices.
 	/// </summary>
+	/// <remarks>Currently touch events are not raised.</remarks>
 	public static class Touch
 	{
-		#region Fields
-
-		#endregion
-		#region Properties
-
-		#endregion
 		#region Events
 		/// <summary>
 		/// Occurs when one of the touch devices registers the touch input.
 		/// </summary>
 		public static event EventHandler<TouchEventArgs> Event;
-		#endregion
-		#region Construction
-
-		#endregion
-		#region Interface
-
 		#endregion
 		#region Utilities
 		[UnmanagedThunk("Invoked by underlying framework to raise Event event.")]
