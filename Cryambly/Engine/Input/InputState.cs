@@ -31,10 +31,6 @@ namespace CryCil.Engine.Input
 		/// <summary>
 		/// A state of the key has been changed.
 		/// </summary>
-		Changed = 8,
-		/// <summary>
-		/// A key has been intercepted by UI.
-		/// </summary>
-		UI = 16
+		Changed = 8
 	}
 }
