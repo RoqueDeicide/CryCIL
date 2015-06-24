@@ -44,7 +44,7 @@ namespace CryCil.Engine.Logic
 		public FlowNodeFlags Flags
 		{
 			get { return this.flags; }
-			protected set
+			private set
 			{
 				if (this.initData.HasFlag(InitializationDetails.Flags))
 				{
@@ -61,7 +61,7 @@ namespace CryCil.Engine.Logic
 		public string Description
 		{
 			get { return this.description; }
-			protected set
+			private set
 			{
 				if (this.initData.HasFlag(InitializationDetails.Description))
 				{
@@ -115,7 +115,7 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Gets identifier of the entity this node targets.
 		/// </summary>
-		public uint TargetEntityId { get; private set; }
+		public EntityId TargetEntityId { get; private set; }
 		#endregion
 		#region Construction
 		/// <summary>
@@ -249,10 +249,13 @@ namespace CryCil.Engine.Logic
 			{
 				this.Define();
 
+				FlowNodeAttribute attribute = this.GetType().GetAttribute<FlowNodeAttribute>();
+				this.Flags = attribute.Flags;
+				this.Description = attribute.Description;
+
 				if (this.initData != InitializationDetails.All)
 				{
-					string errorText = string.Format("The node {0} is not fully initialized.",
-													 this.GetType().GetAttribute<FlowNodeAttribute>().Name);
+					string errorText = string.Format("The node {0} is not fully initialized.", attribute.Name);
 #if DEBUG
 					throw new Exception(errorText);
 #else
@@ -407,7 +410,7 @@ namespace CryCil.Engine.Logic
 			}
 		}
 		[RawThunk("Invoked from underlying framework to set the entity identifier.")]
-		private void SetEntityId(uint id)
+		private void SetEntityId(EntityId id)
 		{
 			try
 			{

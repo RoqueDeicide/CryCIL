@@ -15,12 +15,24 @@ namespace CryCil.Engine.Logic
 		/// </summary>
 		public string Name { get; private set; }
 		/// <summary>
+		/// Gets description of this flow node.
+		/// </summary>
+		public string Description { get; private set; }
+		/// <summary>
+		/// Gets a set of flags that specify this flow node.
+		/// </summary>
+		public FlowNodeFlags Flags { get; private set; }
+		/// <summary>
 		/// Creates new instance of this type.
 		/// </summary>
-		/// <param name="name">Name of the type.</param>
-		public FlowNodeAttribute(string name)
+		/// <param name="name">       Name of the type.</param>
+		/// <param name="description">Description of the type.</param>
+		/// <param name="flags">      Flags that describe this type.</param>
+		public FlowNodeAttribute(string name, string description, FlowNodeFlags flags)
 		{
 			this.Name = name;
+			this.Description = description;
+			this.Flags = flags;
 		}
 	}
 }

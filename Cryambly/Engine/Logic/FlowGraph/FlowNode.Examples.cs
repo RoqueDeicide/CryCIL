@@ -10,7 +10,13 @@ namespace CryCil.Engine.Logic
 	/// Represents a flow node that stores a value that can be incremented and decremented and a certain
 	/// level can be outputted.
 	/// </summary>
-	[FlowNode("Counter")]
+	[FlowNode
+	(
+		"Counter",
+		"This node is an analog of a Counter gate from Red Power mod for Minecraft, it stores" +
+		" an integer value that can be manipulated.",
+		FlowNodeFlags.Approved				// Use at least this flag so the node can show up in the UI.
+	)]
 	public class CounterNode : FlowNode
 	{
 		#region Fields
@@ -163,10 +169,6 @@ namespace CryCil.Engine.Logic
 					this.currentCount,
 					this.aboveThreshold
 				};
-			this.Description =
-				"This node is an analog of a Counter gate from Red Power mod for Minecraft, it stores" +
-				" an integer value that can be manipulated.";
-			this.Flags = FlowNodeFlags.Approved;			// Use at least this flag so the node can show up in the UI.
 		}
 		/// <summary>
 		/// Processes ports that were activated at the same time.
