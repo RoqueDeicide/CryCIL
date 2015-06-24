@@ -336,13 +336,13 @@ namespace CryCil.Engine.Logic
 	public sealed class InputPortEntityId : InputPort
 	{
 		#region Fields
-		private readonly Action<uint> action;
+		private readonly Action<EntityId> action;
 		#endregion
 		#region Properties
 		/// <summary>
 		/// Gets current value of this port.
 		/// </summary>
-		public uint Value { get; private set; }
+		public EntityId Value { get; private set; }
 		internal override FlowPortConfig Config
 		{
 			get
@@ -363,7 +363,7 @@ namespace CryCil.Engine.Logic
 		/// <exception cref="ArgumentException">
 		/// Given name is not valid for flow node port, because it's not valid for Xml attribute name.
 		/// </exception>
-		public InputPortEntityId(string name, string displayName, string description, Action<uint> action)
+		public InputPortEntityId(string name, string displayName, string description, Action<EntityId> action)
 			: base(name, displayName, description, FlowDataType.EntityId)
 		{
 			this.action = action;

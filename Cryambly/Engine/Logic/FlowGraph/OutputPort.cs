@@ -254,7 +254,7 @@ namespace CryCil.Engine.Logic
 		/// Activates this port and passes a value to the connected input port.
 		/// </summary>
 		/// <param name="value">Value to pass.</param>
-		public void Activate(uint value)
+		public void Activate(EntityId value)
 		{
 			this.Activate(new FlowData(value));
 		}

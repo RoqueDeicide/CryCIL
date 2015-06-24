@@ -24,7 +24,7 @@ namespace CryCil.Engine.Logic
 		/// Identifier of an entity.
 		/// </summary>
 		[FieldOffset(0)]
-		public uint EntityId;
+		public EntityId EntityId;
 		/// <summary>
 		/// 3 dimensional vector.
 		/// </summary>
@@ -95,10 +95,10 @@ namespace CryCil.Engine.Logic
 			this.Float = value;
 		}
 		/// <summary>
-		/// Initializes a new instance of this type that represents a value of type <see cref="uint"/>.
+		/// Initializes a new instance of this type that represents a value of type <see cref="EntityId"/>.
 		/// </summary>
 		/// <param name="value">A value itself.</param>
-		public FlowData(uint value)
+		public FlowData(EntityId value)
 			: this()
 		{
 			this.DataType = FlowDataType.EntityId;

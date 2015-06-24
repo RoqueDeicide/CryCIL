@@ -8,7 +8,7 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Occurs when identifier of the entity that is associated with this node changes.
 		/// </summary>
-		public event Action<FlowNode, uint> EntityTargeted;
+		public event Action<FlowNode, EntityId> EntityTargeted;
 		/// <summary>
 		/// Occurs when initialization of this node starts.
 		/// </summary>
@@ -31,7 +31,7 @@ namespace CryCil.Engine.Logic
 		/// Raises the event <see cref="EntityTargeted"/>.
 		/// </summary>
 		/// <param name="obj">Identifier of the target entity.</param>
-		protected virtual void OnEntityTargeted(uint obj)
+		protected virtual void OnEntityTargeted(EntityId obj)
 		{
 			if (this.EntityTargeted != null) this.EntityTargeted(this, obj);
 		}
