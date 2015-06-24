@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -237,52 +238,77 @@ namespace CryCil
 		/// Gives access to specific element of this matrix.
 		/// </summary>
 		/// <param name="index">Zero-based index of the element to get.</param>
-		public float this[int index]
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// Attempt to access matrix component out of range [0, 15].
+		/// </exception>
+		public unsafe float this[int index]
 		{
-			get { return this[index / 4, index % 4]; }
-			set { this[index / 4, index % 4] = value; }
+			get
+			{
+				if ((index | 0xF) != 0xF) // index < 0 || index > 3
+				{
+					throw new ArgumentOutOfRangeException("index", "Attempt to access matrix row out of range [0, 2].");
+				}
+				Contract.EndContractBlock();
+
+				fixed (float* ptr = &this.M00)
+				{
+					return ptr[index];
+				}
+			}
+			set
+			{
+				if ((index | 0xF) != 0xF) // index < 0 || index > 3
+				{
+					throw new ArgumentOutOfRangeException("index", "Attempt to access matrix row out of range [0, 2].");
+				}
+				Contract.EndContractBlock();
+
+				fixed (float* ptr = &this.M00)
+				{
+					ptr[index] = value;
+				}
+			}
 		}
 		/// <summary>
 		/// Gives access to specific element of this matrix.
 		/// </summary>
 		/// <param name="row">   Zero-based index of the row.</param>
 		/// <param name="column">Zero-based index of the column.</param>
-		public float this[int row, int column]
+		public unsafe float this[int row, int column]
 		{
 			get
 			{
-				switch (row)
+				if ((row | 0x3) != 0x3) // row < 0 || row > 3
 				{
-					case 0:
-						return this.Row0[column];
-					case 1:
-						return this.Row1[column];
-					case 2:
-						return this.Row2[column];
-					case 3:
-						return this.Row3[column];
-					default:
-						throw new ArgumentOutOfRangeException("row", "Attempt to access matrix row out of range [0, 3].");
+					throw new ArgumentOutOfRangeException("row", "Attempt to access matrix row out of range [0, 2].");
+				}
+				if ((column | 0x3) != 0x3) // column < 0 || column > 3
+				{
+					throw new ArgumentOutOfRangeException("row", "Attempt to access matrix column out of range [0, 2].");
+				}
+				Contract.EndContractBlock();
+
+				fixed (float* ptr = &this.M00)
+				{
+					return ptr[row * 4 + column];
 				}
 			}
 			set
 			{
-				switch (row)
+				if ((row | 0x3) != 0x3) // row < 0 || row > 3
 				{
-					case 0:
-						this.Row0[column] = value;
-						break;
-					case 1:
-						this.Row1[column] = value;
-						break;
-					case 2:
-						this.Row2[column] = value;
-						break;
-					case 3:
-						this.Row3[column] = value;
-						break;
-					default:
-						throw new ArgumentOutOfRangeException("row", "Attempt to access matrix row out of range [0, 3].");
+					throw new ArgumentOutOfRangeException("row", "Attempt to access matrix row out of range [0, 2].");
+				}
+				if ((column | 0x3) != 0x3) // column < 0 || column > 3
+				{
+					throw new ArgumentOutOfRangeException("row", "Attempt to access matrix column out of range [0, 2].");
+				}
+				Contract.EndContractBlock();
+
+				fixed (float* ptr = &this.M00)
+				{
+					ptr[row * 4 + column] = value;
 				}
 			}
 		}

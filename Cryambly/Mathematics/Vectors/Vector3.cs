@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -221,39 +222,34 @@ namespace CryCil
 		/// <exception cref="ArgumentOutOfRangeException">
 		/// Attempt to access vector component other then X, Y or Z.
 		/// </exception>
-		public float this[int index]
+		public unsafe float this[int index]
 		{
 			get
 			{
-				switch (index)
+				if ((index | 0x1) != 0x1 && index != 2) //index < 0 || index > 2
 				{
-					case 0:
-						return this.X;
-					case 1:
-						return this.Y;
-					case 2:
-						return this.Z;
-					default:
-						throw new ArgumentOutOfRangeException("index", "Attempt to access vector" +
-																	   " component other then X, Y or Z.");
+					throw new ArgumentOutOfRangeException("index", "Attempt to access vector" +
+																   " component other then X, Y or Z.");
+				}
+				Contract.EndContractBlock();
+
+				fixed (float* ptr = &this.X)
+				{
+					return ptr[index];
 				}
 			}
 			set
 			{
-				switch (index)
+				if ((index | 0x1) != 0x1 && index != 2) //index < 0 || index > 2
 				{
-					case 0:
-						this.X = value;
-						break;
-					case 1:
-						this.Y = value;
-						break;
-					case 2:
-						this.Z = value;
-						break;
-					default:
-						throw new ArgumentOutOfRangeException("index", "Attempt to access vector component" +
-																	   " other then X, Y or Z.");
+					throw new ArgumentOutOfRangeException("index", "Attempt to access vector" +
+																   " component other then X, Y or Z.");
+				}
+				Contract.EndContractBlock();
+
+				fixed (float* ptr = &this.X)
+				{
+					ptr[index] = value;
 				}
 			}
 		}

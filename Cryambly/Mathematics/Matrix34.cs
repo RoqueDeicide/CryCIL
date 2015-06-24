@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Runtime.InteropServices;
 using CryCil.Geometry;
@@ -307,37 +308,46 @@ namespace CryCil
 		/// </summary>
 		/// <param name="row">   Zero-based index of the row.</param>
 		/// <param name="column">Zero-based index of the column.</param>
-		public float this[int row, int column]
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// Attempt to access matrix row out of range [0, 2].
+		/// </exception>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// Attempt to access matrix column out of range [0, 3].
+		/// </exception>
+		public unsafe float this[int row, int column]
 		{
 			get
 			{
-				switch (row)
+				if (row < 0 || row > 2)
 				{
-					case 0:
-						return this.Row0[column];
-					case 1:
-						return this.Row1[column];
-					case 2:
-						return this.Row2[column];
-					default:
-						throw new ArgumentOutOfRangeException("row", "Attempt to access matrix row out of range [0, 2].");
+					throw new ArgumentOutOfRangeException("row", "Attempt to access matrix row out of range [0, 2].");
+				}
+				if ((column | 0x3) != 0x3) // column < 0 || column > 3
+				{
+					throw new ArgumentOutOfRangeException("row", "Attempt to access matrix column out of range [0, 2].");
+				}
+				Contract.EndContractBlock();
+
+				fixed (float* ptr = &this.M00)
+				{
+					return ptr[row * 4 + column];
 				}
 			}
 			set
 			{
-				switch (row)
+				if (row < 0 || row > 2)
 				{
-					case 0:
-						this.Row0[column] = value;
-						break;
-					case 1:
-						this.Row1[column] = value;
-						break;
-					case 2:
-						this.Row2[column] = value;
-						break;
-					default:
-						throw new ArgumentOutOfRangeException("row", "Attempt to access matrix row out of range [0, 2].");
+					throw new ArgumentOutOfRangeException("row", "Attempt to access matrix row out of range [0, 2].");
+				}
+				if ((column | 0x3) != 0x3) // column < 0 || column > 3
+				{
+					throw new ArgumentOutOfRangeException("row", "Attempt to access matrix column out of range [0, 2].");
+				}
+				Contract.EndContractBlock();
+
+				fixed (float* ptr = &this.M00)
+				{
+					ptr[row * 4 + column] = value;
 				}
 			}
 		}

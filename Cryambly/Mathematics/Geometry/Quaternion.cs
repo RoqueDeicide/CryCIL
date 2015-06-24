@@ -58,44 +58,34 @@ namespace CryCil.Geometry
 		/// <exception cref="System.ArgumentOutOfRangeException">
 		/// Thrown when the <paramref name="index"/> is out of the range [0, 3].
 		/// </exception>
-		public float this[int index]
+		public unsafe float this[int index]
 		{
 			get
 			{
-				switch (index)
+				if ((index | 0x3) != 0x3) //index < 0 || index > 3
 				{
-					case 0:
-						return this.X;
-					case 1:
-						return this.Y;
-					case 2:
-						return this.Z;
-					case 3:
-						return this.W;
-					default:
-						throw new ArgumentOutOfRangeException("index", "Attempt to access Euler" +
-																	   " component other then X, Y, Z or W.");
+					throw new ArgumentOutOfRangeException("index", "Attempt to access vector" +
+																   " component other then X, Y, Z or W.");
+				}
+				Contract.EndContractBlock();
+
+				fixed (float* ptr = &this.X)
+				{
+					return ptr[index];
 				}
 			}
 			set
 			{
-				switch (index)
+				if ((index | 0x3) != 0x3) //index < 0 || index > 3
 				{
-					case 0:
-						this.X = value;
-						break;
-					case 1:
-						this.Y = value;
-						break;
-					case 2:
-						this.Z = value;
-						break;
-					case 3:
-						this.W = value;
-						break;
-					default:
-						throw new ArgumentOutOfRangeException("index", "Attempt to access Euler component" +
-																	   " other then X, Y, Z or W.");
+					throw new ArgumentOutOfRangeException("index", "Attempt to access vector" +
+																   " component other then X, Y, Z or W.");
+				}
+				Contract.EndContractBlock();
+
+				fixed (float* ptr = &this.X)
+				{
+					ptr[index] = value;
 				}
 			}
 		}

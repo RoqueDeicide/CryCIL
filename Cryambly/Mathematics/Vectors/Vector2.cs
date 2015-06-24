@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -50,31 +51,34 @@ namespace CryCil
 		/// The index of the component to access. Use 0 for the X component and 1 for the Y component.
 		/// </param>
 		/// <returns>The value of the component at the specified index.</returns>
-		public float this[int index]
+		public unsafe float this[int index]
 		{
 			get
 			{
-				if (index == 0 || index == 1)
+				if ((index | 0x1) != 0x1) //index < 0 || index > 1
 				{
-					throw new ArgumentOutOfRangeException("index", "Vector2.Indexer: parameter index must be either equal to 0 or 1.");
+					throw new ArgumentOutOfRangeException("index", "Attempt to access vector" +
+																   " component other then X or Y.");
 				}
-				switch (index)
+				Contract.EndContractBlock();
+
+				fixed (float* ptr = &this.X)
 				{
-					case 0: return this.X;
-					case 1: return this.Y;
+					return ptr[index];
 				}
-				return 0;
 			}
 			set
 			{
-				if (index == 0 || index == 1)
+				if ((index | 0x1) != 0x1) //index < 0 || index > 1
 				{
-					throw new ArgumentOutOfRangeException("index", "Vector2.Indexer: parameter index must be either equal to 0 or 1.");
+					throw new ArgumentOutOfRangeException("index", "Attempt to access vector" +
+																   " component other then X or Y.");
 				}
-				switch (index)
+				Contract.EndContractBlock();
+
+				fixed (float* ptr = &this.X)
 				{
-					case 0: this.X = value; break;
-					case 1: this.Y = value; break;
+					ptr[index] = value;
 				}
 			}
 		}
