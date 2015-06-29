@@ -4,10 +4,10 @@
 
 struct MaterialInterop : public IMonoInterop < true, true >
 {
-	virtual const char *GetName() { return "Material"; }
-	virtual const char *GetNameSpace() { return "CryCil.Engine.Rendering"; }
+	virtual const char *GetName() override { return "Material"; }
+	virtual const char *GetNameSpace() override { return "CryCil.Engine.Rendering"; }
 
-	virtual void OnRunTimeInitialized();
+	virtual void OnRunTimeInitialized() override;
 
 	static IMaterial *GetDefault();
 	static IMaterial *GetDefaultTerrainLayer();
@@ -37,10 +37,10 @@ struct MaterialInterop : public IMonoInterop < true, true >
 
 struct SubMaterialsInterop : public IMonoInterop < true, true >
 {
-	virtual const char *GetName() { return "SubMaterials"; }
-	virtual const char *GetNameSpace() { return "CryCil.Engine.Rendering"; }
+	virtual const char *GetName() override { return "SubMaterials"; }
+	virtual const char *GetNameSpace() override { return "CryCil.Engine.Rendering"; }
 
-	virtual void OnRunTimeInitialized();
+	virtual void OnRunTimeInitialized() override;
 
 	static IMaterial *GetItem(IMaterial *handle, int index);
 	static void SetItem(IMaterial *handle, int index, IMaterial *mat);

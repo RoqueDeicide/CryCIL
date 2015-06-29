@@ -5,10 +5,10 @@
 
 struct LevelInterop : public IMonoInterop<true, true>
 {
-	virtual const char *GetName() { return "Level"; }
-	virtual const char *GetNameSpace() { return "CryCil.Engine.CryAction"; }
+	virtual const char *GetName() override { return "Level"; }
+	virtual const char *GetNameSpace() override { return "CryCil.Engine.CryAction"; }
 
-	virtual void OnRunTimeInitialized();
+	virtual void OnRunTimeInitialized() override;
 
 	static mono::string get_Name(mono::object levelObj);
 	static mono::string get_DisplayName(mono::object levelObj);

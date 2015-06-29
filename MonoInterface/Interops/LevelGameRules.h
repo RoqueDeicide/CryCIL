@@ -6,10 +6,10 @@ struct ILevelInfo;
 
 struct LevelGameRulesInterop : public IMonoInterop<true, true>
 {
-	virtual const char *GetName() { return "LevelGameRules"; }
-	virtual const char *GetNameSpace() { return "CryCil.Engine.CryAction"; }
+	virtual const char *GetName() override { return "LevelGameRules"; }
+	virtual const char *GetNameSpace() override { return "CryCil.Engine.CryAction"; }
 	
-	virtual void OnRunTimeInitialized();
+	virtual void OnRunTimeInitialized() override;
 
 	static mono::string GetDefault(ILevelInfo **info);
 	static mono::string GetItem(ILevelInfo **info, int index);

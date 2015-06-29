@@ -4,10 +4,10 @@
 
 struct RendererInterop : public IMonoInterop<true, true>
 {
-	virtual const char *GetName() { return "Renderer"; }
-	virtual const char *GetNameSpace() { return "CryCil.Engine.Rendering"; }
+	virtual const char *GetName() override { return "Renderer"; }
+	virtual const char *GetNameSpace() override { return "CryCil.Engine.Rendering"; }
 
-	virtual void OnRunTimeInitialized();
+	virtual void OnRunTimeInitialized() override;
 
 	static void DrawTextInternal(Vec3 position, int options, ColorF color, Vec2 scale, mono::string text);
 

@@ -2,16 +2,6 @@
 
 #include "BatchOps.h"
 
-const char *BatchOps::GetName()
-{
-	return "BatchOps";
-}
-
-const char *BatchOps::GetNameSpace()
-{
-	return "CryCil";
-}
-
 void BatchOps::OnRunTimeInitialized()
 {
 	REGISTER_METHOD(MathSimpleOpSingle);

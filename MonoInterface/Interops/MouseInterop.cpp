@@ -5,16 +5,6 @@
 typedef void(*positionThunk)(int, int, mono::exception *);
 typedef void(*wheelDeltaThunk)(int, mono::exception *);
 
-const char *MouseInterop::GetName()
-{
-	return "HardwareMouse";
-}
-
-const char *MouseInterop::GetNameSpace()
-{
-	return "CryCil.Engine.Input";
-}
-
 void MouseInterop::OnRunTimeInitialized()
 {
 	REGISTER_METHOD(IncrementCounter);

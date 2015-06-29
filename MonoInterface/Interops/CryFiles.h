@@ -4,10 +4,10 @@
 
 struct CryFilesInterop : public IMonoInterop<true, true>
 {
-	virtual const char *GetName() { return "CryFiles"; }
-	virtual const char *GetNameSpace() { return "CryCil.Engine.Files"; }
+	virtual const char *GetName() override { return "CryFiles"; }
+	virtual const char *GetNameSpace() override { return "CryCil.Engine.Files"; }
 
-	virtual void OnRunTimeInitialized();
+	virtual void OnRunTimeInitialized() override;
 
 	static bool Exists(mono::string path, ICryPak::EFileSearchLocation location);
 	static bool IsFolder(mono::string path);

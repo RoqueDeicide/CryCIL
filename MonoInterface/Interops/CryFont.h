@@ -4,10 +4,10 @@
 
 struct CryFontInterop : public IMonoInterop<true, true>
 {
-	virtual const char *GetName() { return ""; }
-	virtual const char *GetNameSpace() { return ""; }
+	virtual const char *GetName() override { return ""; }
+	virtual const char *GetNameSpace() override { return ""; }
 
-	virtual void OnRunTimeInitialized();
+	virtual void OnRunTimeInitialized() override;
 
 	static void Ctor(mono::object obj, mono::string name);
 	static void Release(mono::object obj);

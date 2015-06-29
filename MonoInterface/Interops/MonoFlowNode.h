@@ -101,24 +101,24 @@ public:
 	virtual ~MonoFlowNode();
 
 	//! Reference counting.
-	virtual void AddRef() { this->refCount++; }
+	virtual void AddRef() override { this->refCount++; }
 	//! Reference counting.
 	//!
 	//! We delete this node when the flow graph releases it completely: we are not supposed to keep any references to it
 	//! from the managed code.
-	virtual void Release() { if (--this->refCount <= 0) delete this; }
+	virtual void Release() override { if (--this->refCount <= 0) delete this; }
 
-	virtual IFlowNodePtr Clone(SActivationInfo *actInfo) { return this; }
+	virtual IFlowNodePtr Clone(SActivationInfo *actInfo) override { return this; }
 
-	virtual void GetConfiguration(SFlowNodeConfig&);
+	virtual void GetConfiguration(SFlowNodeConfig&) override;
 
-	virtual bool SerializeXML(SActivationInfo *actInfo, const XmlNodeRef& root, bool reading);
-	virtual void Serialize(SActivationInfo *actInfo, TSerialize ser);
-	virtual void PostSerialize(SActivationInfo *actInfo);
+	virtual bool SerializeXML(SActivationInfo *actInfo, const XmlNodeRef& root, bool reading) override;
+	virtual void Serialize(SActivationInfo *actInfo, TSerialize ser) override;
+	virtual void PostSerialize(SActivationInfo *actInfo) override;
 
-	virtual void ProcessEvent(EFlowEvent event, SActivationInfo *actInfo);
+	virtual void ProcessEvent(EFlowEvent event, SActivationInfo *actInfo) override;
 
-	virtual void GetMemoryUsage(ICrySizer * s) const;
+	virtual void GetMemoryUsage(ICrySizer * s) const override;
 	//! Deactivates the node, so it doesn't work anymore.
 	//!
 	//! This exists just in case Mono run-time gets shut down before flow graph system.

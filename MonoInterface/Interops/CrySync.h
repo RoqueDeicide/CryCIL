@@ -4,10 +4,10 @@
 
 struct CrySyncInterop : public IMonoInterop<true, true>
 {
-	virtual const char *GetName() { return "CrySync"; }
-	virtual const char *GetNameSpace() { return "CryCil.Engine.Data"; }
+	virtual const char *GetName() override { return "CrySync"; }
+	virtual const char *GetNameSpace() override { return "CryCil.Engine.Data"; }
 
-	virtual void OnRunTimeInitialized();
+	virtual void OnRunTimeInitialized() override;
 
 	static void FlagPartialRead(ISerialize *handle);
 	static void StartGroup(ISerialize *handle, const char *name);

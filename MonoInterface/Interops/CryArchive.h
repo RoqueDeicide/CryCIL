@@ -4,10 +4,10 @@
 
 struct CryArchiveInterop : public IMonoInterop<true, true>
 {
-	virtual const char *GetName() { return "CryArchive"; }
-	virtual const char *GetNameSpace() { return "CryCil.Engine.Files"; }
+	virtual const char *GetName() override { return "CryArchive"; }
+	virtual const char *GetNameSpace() override { return "CryCil.Engine.Files"; }
 
-	virtual void OnRunTimeInitialized();
+	virtual void OnRunTimeInitialized() override;
 
 	static uint get_Flags(mono::object obj);
 	static void set_Flags(mono::object obj, uint _value);

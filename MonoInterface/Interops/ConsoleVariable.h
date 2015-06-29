@@ -6,10 +6,10 @@ struct ConsoleVariableInterop : public IMonoInterop<true, true>
 {
 
 
-	virtual const char *GetName() { return "ConsoleVariable"; }
-	virtual const char *GetNameSpace() { return "CryCil.Engine"; }
+	virtual const char *GetName() override { return "ConsoleVariable"; }
+	virtual const char *GetNameSpace() override { return "CryCil.Engine"; }
 
-	virtual void OnRunTimeInitialized();
+	virtual void OnRunTimeInitialized() override;
 
 	static void         Release        (ICVar **handle);
 	static void         ClearFlags     (ICVar **handle, int flags);

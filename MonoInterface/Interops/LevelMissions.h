@@ -13,10 +13,10 @@ struct LevelMission
 
 struct LevelMissionsInterop : public IMonoInterop<true, true>
 {
-	virtual const char *GetName() { return "LevelMissions"; }
-	virtual const char *GetNameSpace() { return "CryCil.Engine.CryAction"; }
+	virtual const char *GetName() override { return "LevelMissions"; }
+	virtual const char *GetNameSpace() override { return "CryCil.Engine.CryAction"; }
 
-	virtual void OnRunTimeInitialized();
+	virtual void OnRunTimeInitialized() override;
 
 	static bool Supports(ILevelInfo **info, mono::string name);
 	static LevelMission GetDefault(ILevelInfo **info);

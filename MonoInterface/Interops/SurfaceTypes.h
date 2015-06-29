@@ -4,10 +4,10 @@
 
 struct SurfaceTypeInterop : public IMonoInterop < true, true >
 {
-	virtual const char *GetName() { return "SurfaceType"; }
-	virtual const char *GetNameSpace() { return "CryCil.Engine.Physics"; }
+	virtual const char *GetName() override { return "SurfaceType"; }
+	virtual const char *GetNameSpace() override { return "CryCil.Engine.Physics"; }
 
-	virtual void OnRunTimeInitialized();
+	virtual void OnRunTimeInitialized() override;
 
 	static ISurfaceType                     *Get(mono::string name);
 	static ISurfaceType                     *GetInt(int id);
@@ -28,10 +28,10 @@ struct SurfaceTypeInterop : public IMonoInterop < true, true >
 
 struct SurfaceTypeEnumeratorInterop : public IMonoInterop < true, true >
 {
-	virtual const char *GetName() { return "SurfaceTypeEnumerator"; }
-	virtual const char *GetNameSpace() { return "CryCil.Engine.Physics"; }
+	virtual const char *GetName() override { return "SurfaceTypeEnumerator"; }
+	virtual const char *GetNameSpace() override { return "CryCil.Engine.Physics"; }
 
-	virtual void OnRunTimeInitialized();
+	virtual void OnRunTimeInitialized() override;
 
 	static ISurfaceTypeEnumerator *Init();
 	static ISurfaceType *GetFirst(ISurfaceTypeEnumerator *handle);

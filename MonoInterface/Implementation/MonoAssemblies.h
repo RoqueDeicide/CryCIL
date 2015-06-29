@@ -18,8 +18,8 @@ struct MonoAssemblies : public IMonoAssemblies
 		delete this->AssemblyRegistry;
 	}
 	
-	virtual IMonoAssembly *Load(const char *path);
-	virtual IMonoAssembly *Wrap(void *assemblyHandle);
-	virtual IMonoAssembly *GetAssembly(const char *name);
-	virtual IMonoAssembly *GetAssemblyFullName(const char *name);
+	virtual IMonoAssembly *Load(const char *path) override;
+	virtual IMonoAssembly *Wrap(void *assemblyHandle) override;
+	virtual IMonoAssembly *GetAssembly(const char *name) override;
+	virtual IMonoAssembly *GetAssemblyFullName(const char *name) override;
 };

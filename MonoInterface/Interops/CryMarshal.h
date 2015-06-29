@@ -3,10 +3,10 @@
 
 struct CryMarshalInterop : public IMonoInterop<true, true>
 {
-	virtual const char *GetName() { return "CryMarshal"; };
-	virtual const char *GetNameSpace() { return "CryCil.Engine.Memory"; }
+	virtual const char *GetName() override { return "CryMarshal"; };
+	virtual const char *GetNameSpace() override { return "CryCil.Engine.Memory"; }
 
-	virtual void OnRunTimeInitialized();
+	virtual void OnRunTimeInitialized() override;
 	// Allocate an array of bytes of given length. Returns a pointer to the first byte.
 	// Allocated memory should not be referenced from unmanaged code, unless you have access
 	// to instance of INativeMemoryWrapper type that works with this memory and

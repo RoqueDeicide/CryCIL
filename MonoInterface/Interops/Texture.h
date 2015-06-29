@@ -4,10 +4,10 @@
 
 struct TextureInterop : public IMonoInterop<true,true>
 {
-	virtual const char *GetName() { return "Texture"; }
-	virtual const char *GetNameSpace() { return "CryCil.Engine.Rendering"; }
+	virtual const char *GetName() override { return "Texture"; }
+	virtual const char *GetNameSpace() override { return "CryCil.Engine.Rendering"; }
 
-	virtual void OnRunTimeInitialized();
+	virtual void OnRunTimeInitialized() override;
 
 	static void set_Clamp(mono::object obj, bool value);
 	static void set_Filter(mono::object obj, int value);

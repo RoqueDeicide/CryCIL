@@ -4,10 +4,10 @@
 
 struct ProfilingInterop : public IMonoInterop<false, true>
 {
-	virtual const char *GetName() { return ""; }
-	virtual const char *GetNameSpace() { return "CryCil.Engine.DebugServices"; }
+	virtual const char *GetName() override { return ""; }
+	virtual const char *GetNameSpace() override { return "CryCil.Engine.DebugServices"; }
 
-	virtual void OnRunTimeInitialized();
+	virtual void OnRunTimeInitialized() override;
 
 	virtual void Shutdown();
 

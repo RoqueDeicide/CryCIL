@@ -33,11 +33,11 @@ struct InputInterop
 		gEnv->pInput->RemoveTouchEventListener(this);
 	}
 	//! Not used since this class defines internal calls for multiple classes.
-	virtual const char *GetName() { return ""; }
+	virtual const char *GetName() override { return ""; }
 
-	virtual const char *GetNameSpace() { return "CryCil.Engine.Input"; }
+	virtual const char *GetNameSpace() override { return "CryCil.Engine.Input"; }
 
-	virtual void OnRunTimeInitialized();
+	virtual void OnRunTimeInitialized() override;
 
 	virtual bool OnInputEvent(const SInputEvent &_event);
 	virtual bool OnInputEventUI(const SUnicodeEvent &_event);

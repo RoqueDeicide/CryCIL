@@ -35,10 +35,10 @@ enum Math3NumberOperations
 
 struct BatchOps : public IMonoInterop<true>
 {
-	virtual const char *GetName();
-	virtual const char *GetNameSpace();
+	virtual const char *GetName() override { return "BatchOps"; }
+	virtual const char *GetNameSpace() override { return "CryCil"; }
 
-	virtual void OnRunTimeInitialized();
+	virtual void OnRunTimeInitialized() override;
 
 	static void MathSimpleOpSingle(float* numbers, __int64 count, MathSimpleOperations op);
 	static void MathSimpleOpDouble(double* numbers, __int64 count, MathSimpleOperations op);

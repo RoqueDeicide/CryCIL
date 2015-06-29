@@ -5,10 +5,10 @@
 
 struct LocaleInterop : public IMonoInterop<true, true>
 {
-	virtual const char *GetName() { return "Translator"; }
-	virtual const char *GetNameSpace() { return "CryCil.Engine.Localization"; }
+	virtual const char *GetName() override { return "Translator"; }
+	virtual const char *GetNameSpace() override { return "CryCil.Engine.Localization"; }
 
-	virtual void OnRunTimeInitialized();
+	virtual void OnRunTimeInitialized() override;
 
 	static mono::string Translate(mono::string text, bool forceEnglish);
 	static mono::string TranslateLabel(mono::string labelName, bool forceEnglish);

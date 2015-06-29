@@ -32,13 +32,13 @@ public:
 		SAFE_DELETE(this->fileName);
 	}
 	//! Gets the class.
-	virtual IMonoClass *GetClass(const char *nameSpace, const char *className);
+	virtual IMonoClass *GetClass(const char *nameSpace, const char *className) override;
 
-	virtual Text *GetName();
-	virtual Text *GetFullName();
-	virtual Text *GetFileName();
+	virtual Text *GetName() override;
+	virtual Text *GetFullName() override;
+	virtual Text *GetFileName() override;
 
-	virtual void *GetWrappedPointer();
+	virtual void *GetWrappedPointer() override;
 	
-	virtual mono::assembly GetReflectionObject();
+	virtual mono::assembly GetReflectionObject() override;
 };

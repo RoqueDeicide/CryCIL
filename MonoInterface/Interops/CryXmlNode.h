@@ -4,10 +4,10 @@
 
 struct CryXmlNodeInterop : public IMonoInterop<true, true>
 {
-	virtual const char *GetName()      { return "CryXmlNode"; }
-	virtual const char *GetNameSpace() { return "CryCil.Utilities"; }
+	virtual const char *GetName() override { return "CryXmlNode"; }
+	virtual const char *GetNameSpace() override { return "CryCil.Utilities"; }
 	
-	virtual void OnRunTimeInitialized();
+	virtual void OnRunTimeInitialized() override;
 
 	static void Ctor(mono::object obj, mono::string name);
 	static void AddRef(mono::object obj);

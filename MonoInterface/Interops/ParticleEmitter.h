@@ -5,10 +5,10 @@
 
 struct ParticleEmitterInterop : public IMonoInterop < false, true >, public IParticleEffectListener
 {
-	virtual const char *GetName() { return "ParticleEmitter"; }
-	virtual const char *GetNameSpace() { return "CryCil.Engine"; }
+	virtual const char *GetName() override { return "ParticleEmitter"; }
+	virtual const char *GetNameSpace() override { return "CryCil.Engine"; }
 
-	virtual void OnRunTimeInitialized();
+	virtual void OnRunTimeInitialized() override;
 	virtual void Shutdown();
 
 	virtual void OnCreateEmitter(IParticleEmitter* pEmitter, const QuatTS& qLoc, const IParticleEffect* pEffect, uint32 uEmitterFlags);

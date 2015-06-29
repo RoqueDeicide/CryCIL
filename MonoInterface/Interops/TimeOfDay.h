@@ -7,10 +7,10 @@ struct MonoCryXmlNode;
 
 struct TimeOfDayInterop : public IMonoInterop<true, true>
 {
-	virtual const char *GetName() { return "TimeOfDay"; }
-	virtual const char *GetNameSpace() { return "CryCil.Engine.Environment"; }
+	virtual const char *GetName() override { return "TimeOfDay"; }
+	virtual const char *GetNameSpace() override { return "CryCil.Engine.Environment"; }
 
-	virtual void OnRunTimeInitialized();
+	virtual void OnRunTimeInitialized() override;
 
 	static ITimeOfDay::SAdvancedInfo get_Cycle();
 	static void set_Cycle(ITimeOfDay::SAdvancedInfo value);

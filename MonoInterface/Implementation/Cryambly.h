@@ -31,29 +31,29 @@ public:
 	CryamblyWrapper(const char *fileName);
 	~CryamblyWrapper();
 
-	virtual IMonoClass *GetMatrix33();
-	virtual IMonoClass *GetMatrix34();
-	virtual IMonoClass *GetMatrix44();
-	virtual IMonoClass *GetVector2();
-	virtual IMonoClass *GetVector3();
-	virtual IMonoClass *GetVector4();
-	virtual IMonoClass *GetAngleAxis();
-	virtual IMonoClass *GetBoundingBox();
-	virtual IMonoClass *GetEulerAngles();
-	virtual IMonoClass *GetPlane();
-	virtual IMonoClass *GetQuaternion();
-	virtual IMonoClass *GetQuatvec();
-	virtual IMonoClass *GetRay();
-	virtual IMonoClass *GetColorByte();
-	virtual IMonoClass *GetColorSingle();
+	virtual IMonoClass *GetMatrix33() override;
+	virtual IMonoClass *GetMatrix34() override;
+	virtual IMonoClass *GetMatrix44() override;
+	virtual IMonoClass *GetVector2() override;
+	virtual IMonoClass *GetVector3() override;
+	virtual IMonoClass *GetVector4() override;
+	virtual IMonoClass *GetAngleAxis() override;
+	virtual IMonoClass *GetBoundingBox() override;
+	virtual IMonoClass *GetEulerAngles() override;
+	virtual IMonoClass *GetPlane() override;
+	virtual IMonoClass *GetQuaternion() override;
+	virtual IMonoClass *GetQuatvec() override;
+	virtual IMonoClass *GetRay() override;
+	virtual IMonoClass *GetColorByte() override;
+	virtual IMonoClass *GetColorSingle() override;
 
-	virtual IMonoClass *GetClass(const char *nameSpace, const char *className);
+	virtual IMonoClass *GetClass(const char *nameSpace, const char *className) override;
 
-	virtual Text *GetName();
-	virtual Text *GetFullName();
-	virtual Text *GetFileName();
+	virtual Text *GetName() override;
+	virtual Text *GetFullName() override;
+	virtual Text *GetFileName() override;
 
-	virtual mono::assembly GetReflectionObject();
-	virtual void *GetWrappedPointer();
+	virtual mono::assembly GetReflectionObject() override;
+	virtual void *GetWrappedPointer() override;
 
 };

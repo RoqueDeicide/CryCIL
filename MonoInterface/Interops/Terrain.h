@@ -4,10 +4,10 @@
 
 struct TerrainInterop : public IMonoInterop < true, true >
 {
-	virtual const char *GetName() { return "Terrain"; }
-	virtual const char *GetNameSpace() { return "CryCil.Engine.Environment"; }
+	virtual const char *GetName() override { return "Terrain"; }
+	virtual const char *GetNameSpace() override { return "CryCil.Engine.Environment"; }
 
-	virtual void OnRunTimeInitialized();
+	virtual void OnRunTimeInitialized() override;
 
 	static int   get_UnitSize();
 	static int   get_Size();

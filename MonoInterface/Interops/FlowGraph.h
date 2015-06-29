@@ -5,10 +5,10 @@
 
 struct FlowGraphInterop : public IMonoInterop<false, true>
 {
-	virtual const char *GetName() { return ""; }	// No class name is provided here, because this is a multi-class interop.
-	virtual const char *GetNameSpace() { return "CryCil.Engine.Logic"; }
+	virtual const char *GetName() override { return ""; }	// No class name is provided here, because this is a multi-class interop.
+	virtual const char *GetNameSpace() override { return "CryCil.Engine.Logic"; }
 
-	virtual void OnRunTimeInitialized();
+	virtual void OnRunTimeInitialized() override;
 
 	static ushort RegisterType(mono::string name);
 

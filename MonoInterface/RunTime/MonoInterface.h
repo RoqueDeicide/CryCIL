@@ -33,7 +33,7 @@ private:
 public:
 #pragma region Property Methods
 	//! Returns a pointer to app domain.
-	virtual void *GetAppDomain();
+	virtual void *GetAppDomain() override;
 #pragma endregion
 #pragma region Construction
 	//! Initializes Mono run-time environment.
@@ -43,31 +43,31 @@ public:
 #pragma endregion
 #pragma region External Triggers
 	//! Triggers registration of FlowGraph nodes.
-	virtual void RegisterFlowGraphNodes();
+	virtual void RegisterFlowGraphNodes() override;
 	//! Shuts down Mono run-time environment.
-	virtual void Shutdown();
+	virtual void Shutdown() override;
 #pragma endregion
 #pragma region Interaction with Run-Time
 	//! Handles exception that occurred during managed method invocation.
-	virtual void HandleException(mono::exception exception);
+	virtual void HandleException(mono::exception exception) override;
 #pragma endregion
 #pragma region Listeners
 	//! Registers new object that receives notifications about CryCIL events.
-	virtual void AddListener(IMonoSystemListener *listener);
+	virtual void AddListener(IMonoSystemListener *listener) override;
 	//! Unregisters an object that receives notifications about CryCIL events.
-	virtual void RemoveListener(IMonoSystemListener *listener);
+	virtual void RemoveListener(IMonoSystemListener *listener) override;
 #pragma endregion
 #pragma region IGameFrameworkListener Implementation.
 	//! Triggers Update event in MonoInterface object in Cryambly.
-	virtual void OnPostUpdate(float fDeltaTime);
+	virtual void OnPostUpdate(float fDeltaTime) override;
 	//! Not used.
-	virtual void OnSaveGame(ISaveGame* pSaveGame);
+	virtual void OnSaveGame(ISaveGame* pSaveGame) override;
 	//! Not used.
-	virtual void OnLoadGame(ILoadGame* pLoadGame);
+	virtual void OnLoadGame(ILoadGame* pLoadGame) override;
 	//! Not used.
-	virtual void OnLevelEnd(const char* nextLevel);
+	virtual void OnLevelEnd(const char* nextLevel) override;
 	//! Not used.
-	virtual void OnActionEvent(const SActionEvent& event);
+	virtual void OnActionEvent(const SActionEvent& event) override;
 #pragma endregion
 #pragma region ISystemEventListener Implementation
 	//! Reacts to system events.
@@ -75,7 +75,7 @@ public:
 	//! @param event  Identifier of the event.
 	//! @param wparam First parameter that can supply extra information about the event.
 	//! @param lparam Second parameter that can supply extra information about the event.
-	virtual void OnSystemEvent(ESystemEvent event, UINT_PTR wparam, UINT_PTR lparam);
+	virtual void OnSystemEvent(ESystemEvent event, UINT_PTR wparam, UINT_PTR lparam) override;
 #pragma endregion
 private:
 #pragma region Default Listeners

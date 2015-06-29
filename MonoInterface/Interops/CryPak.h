@@ -4,10 +4,10 @@
 
 struct CryPakInterop : public IMonoInterop<true, true>
 {
-	virtual const char *GetName() { return "CryPacks"; }
-	virtual const char *GetNameSpace() { return "CryCil.Engine.Files"; }
+	virtual const char *GetName() override { return "CryPacks"; }
+	virtual const char *GetNameSpace() override { return "CryCil.Engine.Files"; }
 
-	virtual void OnRunTimeInitialized();
+	virtual void OnRunTimeInitialized() override;
 
 	static mono::string OpenPack       (mono::string name, ICryPak::EPathResolutionRules rules);
 	static mono::string OpenPackRooted (mono::string root, mono::string name, ICryPak::EPathResolutionRules rules);

@@ -5,10 +5,10 @@
 
 struct ParticleEffectIteratorInterop : public IMonoInterop<true, true>
 {
-	virtual const char *GetName() { return "ParticleEffectEnumerator"; }
-	virtual const char *GetNameSpace() { return "CryCil.Engine"; }
+	virtual const char *GetName() override { return "ParticleEffectEnumerator"; }
+	virtual const char *GetNameSpace() override { return "CryCil.Engine"; }
 
-	virtual void OnRunTimeInitialized();
+	virtual void OnRunTimeInitialized() override;
 
 	static IParticleEffectIterator *Create();
 	static void Delete(IParticleEffectIterator *handle);

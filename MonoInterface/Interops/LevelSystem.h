@@ -7,10 +7,10 @@ struct LevelSystemInterop : public IMonoInterop < false, true >, public ILevelSy
 {
 	virtual ~LevelSystemInterop();
 
-	virtual const char *GetName() { return "LevelSystem"; }
-	virtual const char *GetNameSpace() { return "CryCil.Engine.CryAction"; }
+	virtual const char *GetName() override { return "LevelSystem"; }
+	virtual const char *GetNameSpace() override { return "CryCil.Engine.CryAction"; }
 
-	virtual void OnRunTimeInitialized();
+	virtual void OnRunTimeInitialized() override;
 
 	virtual void OnLevelNotFound(const char *levelName);
 	virtual void OnLoadingStart(ILevelInfo *pLevel);

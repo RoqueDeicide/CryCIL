@@ -55,11 +55,11 @@ public:
 		if (this->setter) delete this->setter; this->setter = nullptr;
 	}
 
-	virtual IMonoFunction *GetGetter();
-	virtual IMonoFunction *GetSetter();
-	virtual void          *GetWrappedPointer();
-	virtual const char    *GetName();
-	virtual IMonoClass    *GetDeclaringClass();
-	virtual IMonoFunction *GetIdentifier();
-	virtual int            GetParameterCount();
+	virtual IMonoFunction *GetGetter() override;
+	virtual IMonoFunction *GetSetter() override;
+	virtual void          *GetWrappedPointer() override;
+	virtual const char    *GetName() override;
+	virtual IMonoClass    *GetDeclaringClass() override;
+	virtual IMonoFunction *GetIdentifier() override;
+	virtual int            GetParameterCount() override;
 };

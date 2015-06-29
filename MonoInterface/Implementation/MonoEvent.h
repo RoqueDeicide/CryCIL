@@ -30,11 +30,11 @@ public:
 		if (this->raise)  { delete this->raise;		this->raise  = nullptr;}
 	}
 
-	virtual IMonoFunction *GetAdd();
-	virtual IMonoFunction *GetRemove();
-	virtual IMonoFunction *GetRaise();
+	virtual IMonoFunction *GetAdd() override;
+	virtual IMonoFunction *GetRemove() override;
+	virtual IMonoFunction *GetRaise() override;
 
-	virtual const char *GetName();
-	virtual void       *GetWrappedPointer();
-	virtual IMonoClass *GetDeclaringClass();
+	virtual const char *GetName() override;
+	virtual void       *GetWrappedPointer() override;
+	virtual IMonoClass *GetDeclaringClass() override;
 };

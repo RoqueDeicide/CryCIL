@@ -14,13 +14,13 @@ public:
 	MonoFlowNodeFactory();
 	~MonoFlowNodeFactory();
 
-	virtual void AddRef() { this->refCount++; }
-	virtual void Release() { if (--this->refCount <= 0) delete this; }
+	virtual void AddRef() override { this->refCount++; }
+	virtual void Release() override { if (--this->refCount <= 0) delete this; }
 
-	virtual IFlowNodePtr Create(IFlowNode::SActivationInfo *actInfo);
+	virtual IFlowNodePtr Create(IFlowNode::SActivationInfo *actInfo) override;
 
-	virtual void GetMemoryUsage(ICrySizer * s) const {}
-	virtual void Reset() {}
+	virtual void GetMemoryUsage(ICrySizer * s) const override {}
+	virtual void Reset() override {}
 
 	//! Invoked from the interop class to assign the type identifier.
 	void AssignTypeId(TFlowNodeTypeId id) { this->typeId = id; }

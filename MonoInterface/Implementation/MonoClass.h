@@ -29,70 +29,70 @@ public:
 	MonoClassWrapper(MonoClass *klass);
 	~MonoClassWrapper();
 	
-	virtual IMonoFunction *GetFunction(const char *name, IMonoArray<> &types);
-	virtual IMonoFunction *GetFunction(const char *name, List<IMonoClass *> &classes);
-	virtual IMonoFunction *GetFunction(const char *name, List<ClassSpec> &specifiedClasses);
-	virtual IMonoFunction *GetFunction(const char *name, List<const char *> &paramTypeNames);
-	virtual IMonoFunction *GetFunction(const char *name, const char *params);
-	virtual IMonoFunction *GetFunction(const char *name, int paramCount);
+	virtual IMonoFunction *GetFunction(const char *name, IMonoArray<> &types) override;
+	virtual IMonoFunction *GetFunction(const char *name, List<IMonoClass *> &classes) override;
+	virtual IMonoFunction *GetFunction(const char *name, List<ClassSpec> &specifiedClasses) override;
+	virtual IMonoFunction *GetFunction(const char *name, List<const char *> &paramTypeNames) override;
+	virtual IMonoFunction *GetFunction(const char *name, const char *params) override;
+	virtual IMonoFunction *GetFunction(const char *name, int paramCount) override;
 
-	virtual List<IMonoFunction *> *GetFunctions(const char *name, int paramCount);
-	virtual List<IMonoFunction *> *GetFunctions(const char *name);
+	virtual List<IMonoFunction *> *GetFunctions(const char *name, int paramCount) override;
+	virtual List<IMonoFunction *> *GetFunctions(const char *name) override;
 	
-	virtual mono::type GetType();
-	virtual mono::type MakeArrayType();
-	virtual mono::type MakeArrayType(int rank);
-	virtual mono::type MakeByRefType();
-	virtual mono::type MakePointerType();
+	virtual mono::type GetType() override;
+	virtual mono::type MakeArrayType() override;
+	virtual mono::type MakeArrayType(int rank) override;
+	virtual mono::type MakeByRefType() override;
+	virtual mono::type MakePointerType() override;
 
 	//virtual IMonoClass *Inflate(List<IMonoClass *> &types);
 
-	virtual IMonoField *GetField(const char *name);
-	virtual void GetField(mono::object obj, const char *name, void *value);
-	virtual void SetField(mono::object obj, const char *name, void *value);
-	virtual void GetField(mono::object obj, IMonoField *field, void *value);
-	virtual void SetField(mono::object obj, IMonoField *field, void *value);
+	virtual IMonoField *GetField(const char *name) override;
+	virtual void GetField(mono::object obj, const char *name, void *value) override;
+	virtual void SetField(mono::object obj, const char *name, void *value) override;
+	virtual void GetField(mono::object obj, IMonoField *field, void *value) override;
+	virtual void SetField(mono::object obj, IMonoField *field, void *value) override;
 	
-	virtual IMonoProperty *GetProperty(const char *name);
-	virtual IMonoProperty *GetProperty(const char *name, IMonoArray<> &types);
-	virtual IMonoProperty *GetProperty(const char *name, List<IMonoClass *> &classes);
-	virtual IMonoProperty *GetProperty(const char *name, List<ClassSpec> &specifiedClasses);
-	virtual IMonoProperty *GetProperty(const char *name, List<const char *> &paramTypeNames);
-	virtual IMonoProperty *GetProperty(const char *name, int paramCount);
+	virtual IMonoProperty *GetProperty(const char *name) override;
+	virtual IMonoProperty *GetProperty(const char *name, IMonoArray<> &types) override;
+	virtual IMonoProperty *GetProperty(const char *name, List<IMonoClass *> &classes) override;
+	virtual IMonoProperty *GetProperty(const char *name, List<ClassSpec> &specifiedClasses) override;
+	virtual IMonoProperty *GetProperty(const char *name, List<const char *> &paramTypeNames) override;
+	virtual IMonoProperty *GetProperty(const char *name, int paramCount) override;
 	
-	virtual IMonoEvent *GetEvent(const char *name);
+	virtual IMonoEvent *GetEvent(const char *name) override;
 
-	virtual bool Inherits(const char *nameSpace, const char *className);
-	virtual bool Inherits(IMonoClass *klass);
-	virtual bool Inherits(const char *nameSpace, const char *className, bool direct);
-	virtual bool Inherits(IMonoClass *klass, bool direct);
+	virtual bool Inherits(const char *nameSpace, const char *className) override;
+	virtual bool Inherits(IMonoClass *klass) override;
+	virtual bool Inherits(const char *nameSpace, const char *className, bool direct) override;
+	virtual bool Inherits(IMonoClass *klass, bool direct) override;
 
-	virtual bool Implements(const char *nameSpace, const char *interfaceName, bool searchBaseClasses);
-	virtual bool Implements(IMonoClass *interfacePtr, bool searchBaseClasses = true);
+	virtual bool Implements(const char *nameSpace, const char *interfaceName, bool searchBaseClasses) override;
+	virtual bool Implements(IMonoClass *interfacePtr, bool searchBaseClasses = true) override;
 
 
-	virtual mono::object Box(void *value);
+	virtual mono::object Box(void *value) override;
 	
-	virtual const char *GetName();
-	virtual const char *GetNameSpace();
-	virtual const char *GetFullName();
-	virtual const char *GetFullNameIL();
+	virtual const char *GetName() override;
+	virtual const char *GetNameSpace() override;
+	virtual const char *GetFullName() override;
+	virtual const char *GetFullNameIL() override;
 	
-	virtual void *GetWrappedPointer();
+	virtual void *GetWrappedPointer() override;
 
-	virtual IMonoAssembly *GetAssembly();
-	virtual IMonoClass    *GetBase();
+	virtual IMonoAssembly *GetAssembly() override;
+	virtual IMonoClass    *GetBase() override;
 
-	virtual bool GetIsValueType();
-	virtual bool GetIsEnum();
-	virtual bool GetIsDelegate();
+	virtual bool GetIsValueType() override;
+	virtual bool GetIsEnum() override;
+	virtual bool GetIsDelegate() override;
 
-	virtual IMonoClass    *GetNestedType(const char *name);
+	virtual IMonoClass    *GetNestedType(const char *name) override;
 	
-	virtual ReadOnlyList<IMonoField *>    *GetFields();
-	virtual ReadOnlyList<IMonoProperty *> *GetProperties();
-	virtual ReadOnlyList<IMonoEvent *>    *GetEvents();
-	virtual ReadOnlyList<IMonoFunction *> *GetFunctions();
+	virtual ReadOnlyList<IMonoField *>    *GetFields() override;
+	virtual ReadOnlyList<IMonoProperty *> *GetProperties() override;
+	virtual ReadOnlyList<IMonoEvent *>    *GetEvents() override;
+	virtual ReadOnlyList<IMonoFunction *> *GetFunctions() override;
 private:
 	void GetFieldValue(mono::object obj, MonoClassField *field, void *value);
 	void SetFieldValue(mono::object obj, MonoClassField *field, void *value);

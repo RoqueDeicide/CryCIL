@@ -4,10 +4,10 @@
 
 struct LevelsInterop : public IMonoInterop < true, true >
 {
-	virtual const char *GetName() { return "Levels"; }
-	virtual const char *GetNameSpace() { return "CryCil.Engine.CryAction"; }
+	virtual const char *GetName() override { return "Levels"; }
+	virtual const char *GetNameSpace() override { return "CryCil.Engine.CryAction"; }
 
-	virtual void OnRunTimeInitialized();
+	virtual void OnRunTimeInitialized() override;
 
 	static int          get_Count(mono::object obj);
 	static mono::object get_ItemInt(mono::object obj, int index);

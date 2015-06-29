@@ -6,10 +6,10 @@ struct DebugDrawInterop : public IMonoInterop<true, true>
 {
 
 
-	virtual const char *GetName() { return "DebugGraphics"; }
-	virtual const char *GetNameSpace() { return "CryCil.Engine.DebugServices"; }
+	virtual const char *GetName() override { return "DebugGraphics"; }
+	virtual const char *GetNameSpace() override { return "CryCil.Engine.DebugServices"; }
 
-	virtual void OnRunTimeInitialized();
+	virtual void OnRunTimeInitialized() override;
 
 	static void Begin(const char *name, bool clear);
 	

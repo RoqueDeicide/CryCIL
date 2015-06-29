@@ -9,10 +9,10 @@ struct ConsoleInterop : public IMonoInterop<true, true>
 {
 
 
-	virtual const char *GetName() { return "CryConsole"; }
-	virtual const char *GetNameSpace() { return "CryCil.Engine"; }
+	virtual const char *GetName() override { return "CryConsole"; }
+	virtual const char *GetNameSpace() override { return "CryCil.Engine"; }
 
-	virtual void OnRunTimeInitialized();
+	virtual void OnRunTimeInitialized() override;
 
 	static void RegisterCommandInternal(mono::string name, mono::string help, EVarFlags flags);
 	static void UnregisterCommandInternal(mono::string name);

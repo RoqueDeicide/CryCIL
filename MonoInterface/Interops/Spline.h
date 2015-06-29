@@ -4,10 +4,10 @@
 
 struct SplineInterop : public IMonoInterop < true, true >
 {
-	virtual const char *GetName() { return "CryEngineSpline"; }
-	virtual const char *GetNameSpace() { return "CryCil.Geometry.Splines"; }
+	virtual const char *GetName() override { return "CryEngineSpline"; }
+	virtual const char *GetNameSpace() override { return "CryCil.Geometry.Splines"; }
 
-	virtual void OnRunTimeInitialized();
+	virtual void OnRunTimeInitialized() override;
 
 	static int GetNumDimensionsInternal(ISplineInterpolator *handle);
 
