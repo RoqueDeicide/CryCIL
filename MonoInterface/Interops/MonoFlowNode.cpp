@@ -111,6 +111,7 @@ void MonoFlowNode::GetConfiguration(SFlowNodeConfig &config)
 	if (this->nodeConfig.sUIClassName != nullptr)
 	{
 		config = this->nodeConfig;
+		return;
 	}
 
 	MonoFlowNodeConfig conf;
