@@ -101,7 +101,7 @@ struct MonoFlowNodeConfig
 	unsigned int flags;
 };
 
-typedef void(__stdcall *GetConfigurationThunk)(MonoFlowNodeConfig *, mono::exception *);
+typedef void(__stdcall *GetConfigurationThunk)(mono::object, MonoFlowNodeConfig *, mono::exception *);
 
 void MonoFlowNode::GetConfiguration(SFlowNodeConfig &config)
 {
@@ -110,7 +110,7 @@ void MonoFlowNode::GetConfiguration(SFlowNodeConfig &config)
 
 	MonoFlowNodeConfig conf;
 	mono::exception ex;
-	thunk(&conf, &ex);
+	thunk(this->objHandle.Object, &conf, &ex);
 
 	if (ex)
 	{
