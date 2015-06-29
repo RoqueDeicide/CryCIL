@@ -108,6 +108,11 @@ void MonoFlowNode::GetConfiguration(SFlowNodeConfig &config)
 	static GetConfigurationThunk thunk = (GetConfigurationThunk)
 		GetFlowNodeClass()->GetFunction("GetConfiguration", 1)->UnmanagedThunk;
 
+	if (this->nodeConfig.sUIClassName != nullptr)
+	{
+		config = this->nodeConfig;
+	}
+
 	MonoFlowNodeConfig conf;
 	mono::exception ex;
 	thunk(this->objHandle.Object, &conf, &ex);
@@ -142,8 +147,10 @@ void MonoFlowNode::GetConfiguration(SFlowNodeConfig &config)
 
 	config.nFlags = conf.flags;
 	config.sDescription = conf.description;
+	config.sUIClassName = "";
 	config.pInputPorts = inputConfs;
 	config.pOutputPorts = outputConfs;
+	this->nodeConfig = config;
 }
 
 typedef bool(*SaveLoadThunk)(mono::object, IXmlNode *);

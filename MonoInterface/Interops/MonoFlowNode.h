@@ -94,6 +94,7 @@ private:
 	int refCount;
 	MonoGCHandle objHandle;
 	bool targetsEntity;
+	SFlowNodeConfig nodeConfig;
 public:
 	MonoFlowNode(TFlowNodeTypeId typeId, IFlowNode::SActivationInfo *info, bool &cancel);
 	//! Signals managed object to release the resources it held.
