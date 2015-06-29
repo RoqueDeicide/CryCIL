@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using CryCil.Annotations;
 using CryCil.Engine.Data;
 using CryCil.Engine.DebugServices;
@@ -133,15 +134,14 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Releases this wrapper.
 		/// </summary>
-		/// <remarks>
-		/// Really this destructor doesn't need to exist, since this object won't be collected until
-		/// underlying object releases the GC handle.
-		/// </remarks>
 		~FlowNode()
 		{
 			this.Dispose();
+			Deactivate(this.GraphHandle, this.Id);
 			this.PostDispose();
 		}
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void Deactivate(IntPtr graphHandle, ushort nodeId);
 		#endregion
 		#region Interface
 		/// <summary>

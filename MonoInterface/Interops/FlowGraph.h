@@ -13,4 +13,6 @@ struct FlowGraphInterop : public IMonoInterop<false, true>
 	static ushort RegisterType(mono::string name);
 
 	static void ActivatePort(IFlowGraph *graph, ushort nodeId, byte portId, struct MonoFlowData data);
+
+	static void DeactivateNode(IFlowGraph *graph, ushort nodeId);
 };

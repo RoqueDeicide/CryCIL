@@ -119,5 +119,8 @@ public:
 	virtual void ProcessEvent(EFlowEvent event, SActivationInfo *actInfo);
 
 	virtual void GetMemoryUsage(ICrySizer * s) const;
-
+	//! Deactivates the node, so it doesn't work anymore.
+	//!
+	//! This exists just in case Mono run-time gets shut down before flow graph system.
+	void Deactivate() { this->objHandle.Separate(); }
 };

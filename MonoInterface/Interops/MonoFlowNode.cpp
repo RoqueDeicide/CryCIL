@@ -32,10 +32,10 @@ typedef void(*NodeReleaseThunk)(mono::object);
 MonoFlowNode::~MonoFlowNode()
 {
 	static NodeReleaseThunk thunk = (NodeReleaseThunk)GetFlowNodeClass()->GetFunction("Release")->RawThunk;
-
-	if (mono::object obj = this->objHandle.Object)
+	
+	if (this->objHandle.IsValid)
 	{
-		thunk(obj);
+		thunk(this->objHandle.Object);
 	}
 }
 
@@ -108,7 +108,7 @@ void MonoFlowNode::GetConfiguration(SFlowNodeConfig &config)
 	static GetConfigurationThunk thunk = (GetConfigurationThunk)
 		GetFlowNodeClass()->GetFunction("GetConfiguration", 1)->UnmanagedThunk;
 
-	if (this->nodeConfig.sUIClassName != nullptr)
+	if (this->nodeConfig.sUIClassName != nullptr || !this->objHandle.IsValid)
 	{
 		config = this->nodeConfig;
 		return;
@@ -161,6 +161,11 @@ bool MonoFlowNode::SerializeXML(SActivationInfo *actInfo, const XmlNodeRef& root
 	static SaveLoadThunk save = (SaveLoadThunk)GetFlowNodeClass()->GetFunction("SaveData")->RawThunk;
 	static SaveLoadThunk load = (SaveLoadThunk)GetFlowNodeClass()->GetFunction("LoadData")->RawThunk;
 
+	if (!this->objHandle.IsValid)
+	{
+		return true;
+	}
+
 	if (reading)
 	{
 		return load(this->objHandle.Object, root);
@@ -177,6 +182,11 @@ void MonoFlowNode::Serialize(SActivationInfo *actInfo, TSerialize ser)
 {
 	static SerializeThunk thunk = (SerializeThunk)GetFlowNodeClass()->GetFunction("Serialize")->RawThunk;
 
+	if (!this->objHandle.IsValid)
+	{
+		return;
+	}
+
 	thunk(this->objHandle.Object, *(ISerialize **)&ser);
 }
 
@@ -185,6 +195,11 @@ typedef void(*PostSerializeThunk)(mono::object);
 void MonoFlowNode::PostSerialize(SActivationInfo *actInfo)
 {
 	static PostSerializeThunk thunk = (PostSerializeThunk)GetFlowNodeClass()->GetFunction("PostSerialize")->RawThunk;
+
+	if (!this->objHandle.IsValid)
+	{
+		return;
+	}
 
 	thunk(this->objHandle.Object);
 }
@@ -229,6 +244,11 @@ void MonoFlowNode::ProcessEvent(EFlowEvent event, SActivationInfo *actInfo)
 		klass->GetFunction("ConnectOutputPort", -1)->RawThunk;
 	static DisconnectOutputPortNodeThunk disconnectOutput = (DisconnectOutputPortNodeThunk)
 		klass->GetFunction("DisconnectOutputPort", -1)->RawThunk;
+
+	if (!this->objHandle.IsValid)
+	{
+		return;
+	}
 
 	switch (event)
 	{
