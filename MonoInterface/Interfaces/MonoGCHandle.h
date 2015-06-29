@@ -102,10 +102,18 @@ public:
 	//! @returns A pointer that can be passed directly to methods and thunks, or null if
 	//!          this is a weak handle and held object has been collected.
 	__declspec(property(get = GetObjectPointer)) mono::object Object;
+	//! Indicates whether this handle is valid.
+	//!
+	//! @returns True, if the value of this handle is not equal to -1, otherwise false.
+	__declspec(property(get = GetIsValid)) bool IsValid;
 
 	mono::object GetObjectPointer() const
 	{
 		return MonoEnv->GC->GetGCHandleTarget(this->handle);
+	}
+	bool GetIsValid()
+	{
+		return this->handle != -1;
 	}
 };
 
