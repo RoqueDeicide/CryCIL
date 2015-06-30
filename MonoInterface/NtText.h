@@ -302,6 +302,11 @@ public:
 		}
 		return -1;
 	}
+	//! Determines whether this string contains a substring.
+	bool Contains(const SymbolType *subString, bool ignoreCase = false)
+	{
+		
+	}
 	//! Gets the length of the string.
 	__declspec(property(get = GetLength)) int Length;
 	//! Gets the length of the string.
@@ -341,6 +346,8 @@ public:
 	static mono::string _mono_str(const SymbolType *str);
 	//! From managed string.
 	static const SymbolType *_str_mono(mono::string str);
+	//! Checks for the presence of the substring.
+	static bool _contains_substring(const SymbolType *str0, const SymbolType *str1, bool ignoreCase);
 };
 
 template<typename SymbolType>
@@ -397,6 +404,25 @@ inline int NtTextTemplate<SymbolType>::_strlen(const SymbolType *str)
 	return strlen(str);
 }
 
+template<typename SymbolType>
+inline bool NtTextTemplate<SymbolType>::_contains_substring(const SymbolType *str0, const SymbolType *str1, bool ignoreCase)
+{
+	if (!ignoreCase)
+	{
+		return strstr(str0, str1) != nullptr;
+	}
+
+	int nSuperstringLength = (int)strlen(str0);
+	int nSubstringLength = (int)strlen(str1);
+
+	for (int nSubstringPos = 0; nSubstringPos <= nSuperstringLength - nSubstringLength; ++nSubstringPos)
+	{
+		if (strnicmp(str0 + nSubstringPos, str1, nSubstringLength) == 0)
+			return (str0 + nSubstringPos) != nullptr;
+	}
+	return false;
+}
+
 template<>
 inline mono::string NtTextTemplate<wchar_t>::_mono_str(const wchar_t *str)
 {
@@ -436,6 +462,25 @@ inline const wchar_t *NtTextTemplate<wchar_t>::_str_mono(mono::string str)
 #else
 	return MonoEnv->Objects->Texts->ToNative16(managedString);
 #endif // CRYCIL_MODULE
+}
+
+template<>
+inline bool NtTextTemplate<wchar_t>::_contains_substring(const wchar_t *str0, const wchar_t *str1, bool ignoreCase)
+{
+	if (!ignoreCase)
+	{
+		return wcsstr(str0, str1) != nullptr;
+	}
+
+	int superstringLength = (int)wcslen(str0);
+	int substringLength = (int)wcslen(str1);
+
+	for (int substringPos = 0; substringPos <= superstringLength - substringLength; ++substringPos)
+	{
+		if (wcsnicmp(str0 + substringPos, str1, substringLength) == 0)
+			return (str0 + substringPos) != nullptr;
+	}
+	return false;
 }
 
 typedef NtTextTemplate<char> NtText;
