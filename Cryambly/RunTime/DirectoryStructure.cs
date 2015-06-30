@@ -13,6 +13,15 @@ namespace CryCil.RunTime
 	public static class DirectoryStructure
 	{
 		/// <summary>
+		/// Defines the name of the folder within CryEngine folder that contains platform-specific (x86 or x64) assemblies.
+		/// </summary>
+		public const string PlatformFolderName =
+#if WIN32
+			"Bin32";
+#else
+			"Bin64";
+#endif
+		/// <summary>
 		/// Gets the path to the CryEngine folder.
 		/// </summary>
 		/// <remarks>
@@ -20,6 +29,10 @@ namespace CryCil.RunTime
 		/// within.
 		/// </remarks>
 		public static string CryEngineFolder;
+		/// <summary>
+		/// Gets path to the platform-specific (x86 or x64) folder within main installation directory.
+		/// </summary>
+		public static string PlatformFolder;
 		/// <summary>
 		/// Gets the path to the directory that contains game content.
 		/// </summary>
@@ -69,6 +82,10 @@ namespace CryCil.RunTime
 			{
 				throw new Exception("Unable to locate base CryEngine folder.");
 			}
+
+			DirectoryStructure.PlatformFolder = Path.Combine(DirectoryStructure.CryEngineFolder,
+															 DirectoryStructure.PlatformFolderName);
+
 			// Get game folder from system.cfg
 			using (StreamReader sr = new StreamReader(Path.Combine(DirectoryStructure.CryEngineFolder, "system.cfg")))
 			{
