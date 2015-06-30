@@ -71,7 +71,7 @@ namespace CryCil.RunTime
 			string gameModulesFolder = Path.Combine
 				(DirectoryStructure.ContentFolder, "Modules", "CryCIL");
 			string cryEngineModulesFolder = Path.Combine
-				(DirectoryStructure.CryEngineFolder, "Modules", "CryCIL");
+				(DirectoryStructure.PlatformFolder, "Modules", "CryCIL");
 			List<string> gameModules = new List<string>();
 			List<string> cryEngineModules = new List<string>();
 			if (Directory.Exists(gameModulesFolder))
