@@ -97,12 +97,8 @@ namespace CryCil.RunTime
 				Path.Combine
 				(
 					DirectoryStructure.CryEngineFolder,
-#if WIN32
- "Bin32",
-#else
-					"Bin64",
-#endif
- "Modules",
+					"Bin32",
+					"Modules",
 					"CryCIL",
 					"Mono",
 					"lib"
