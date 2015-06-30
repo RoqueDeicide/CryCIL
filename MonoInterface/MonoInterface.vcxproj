@@ -68,17 +68,19 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)..\Build\Bin32\</OutDir>
+    <OutDir>$(SolutionDir)..\Build\Output\Bin32\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)..\Build\Bin64\</OutDir>
+    <OutDir>$(SolutionDir)..\Build\Output\Bin64\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)..\Build\Output\Bin32\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)..\Build\Output\Bin64\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -109,7 +111,7 @@
       <DocumentLibraryDependencies>false</DocumentLibraryDependencies>
     </Xdcmake>
     <PostBuildEvent>
-      <Command>Xcopy "$(SolutionDir)..\Build\Bin32\*" "$(SolutionDir)..\..\..\Bin32\*" /d /y /i /s</Command>
+      <Command>Xcopy "$(SolutionDir)..\Build\Output\*" "$(SolutionDir)..\..\..\*" /d /y /i /s</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>Copy output from Build directory to actual binary folder.</Message>
@@ -145,7 +147,7 @@
       <DocumentLibraryDependencies>false</DocumentLibraryDependencies>
     </Xdcmake>
     <PostBuildEvent>
-      <Command>Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i /s</Command>
+      <Command>Xcopy "$(SolutionDir)..\Build\Output\*" "$(SolutionDir)..\..\..\*" /d /y /i /s</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>Copy output from Build directory to actual binary folder.</Message>
@@ -175,6 +177,10 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <PostBuildEvent>
+      <Command>Xcopy "$(SolutionDir)..\Build\Output\*" "$(SolutionDir)..\..\..\*" /d /y /i /s</Command>
+      <Message>Copy output from Build directory to actual binary folder.</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -200,6 +206,10 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <PostBuildEvent>
+      <Command>Xcopy "$(SolutionDir)..\Build\Output\*" "$(SolutionDir)..\..\..\*" /d /y /i /s</Command>
+      <Message>Copy output from Build directory to actual binary folder.</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="API_ImplementationHeaders.h" />
