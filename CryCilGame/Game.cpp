@@ -2,162 +2,170 @@
 
 #include "Game.h"
 
+
+CryCilGame::CryCilGame()
+	: gameFramework(nullptr)
+{
+	GetISystem()->SetIGame(this);
+}
+
+CryCilGame::~CryCilGame()
+{
+	// End the game, if it was running.
+	if (this->gameFramework->StartedGameContext())
+	{
+		this->gameFramework->EndGameContext();
+	}
+	// Tell the system that this object is no longer usable.
+	GetISystem()->SetIGame(nullptr);
+}
+
 bool CryCilGame::Init(IGameFramework *pFramework)
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	// Save the pointer to the framework object.
+	this->gameFramework = pFramework;
+	// Assign a GUID to the game.
+	//
+	// TODO: set the game GUID from CryCIL, since the latter is supposed to be already running at this point.
+	this->gameFramework->SetGameGUID(GAME_GUID);
+	return true;
 }
 
 void CryCilGame::InitEditor(IGameToEditorInterface* pGameToEditor)
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	// There is nothing useful that can be done at this point.
 }
 
 void CryCilGame::GetMemoryStatistics(ICrySizer * s)
 {
-	throw std::logic_error("The method or operation is not implemented.");
 }
 
 bool CryCilGame::CompleteInit()
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	return true;
 }
 
 void CryCilGame::Shutdown()
 {
-	throw std::logic_error("The method or operation is not implemented.");
-}
-
-void CryCilGame::PrePhysicsUpdate()
-{
-	throw std::logic_error("The method or operation is not implemented.");
+	this->~CryCilGame();
 }
 
 int CryCilGame::Update(bool haveFocus, unsigned int updateFlags)
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	const bool run = this->gameFramework->PreUpdate(haveFocus, updateFlags);
+	this->gameFramework->PostUpdate(haveFocus, updateFlags);
+	return run ? 1 : 0;
 }
 
 void CryCilGame::EditorResetGame(bool bStart)
 {
-	throw std::logic_error("The method or operation is not implemented.");
 }
 
 void CryCilGame::PlayerIdSet(EntityId playerId)
 {
-	throw std::logic_error("The method or operation is not implemented.");
 }
 
-const char * CryCilGame::GetLongName()
+const char *CryCilGame::GetLongName()
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	// TODO: set the name from CryCIL, since the latter is supposed to be already running at this point.
+	return GAME_LONGNAME;
 }
 
-const char * CryCilGame::GetName()
+const char *CryCilGame::GetName()
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	// TODO: set the name from CryCIL, since the latter is supposed to be already running at this point.
+	return GAME_NAME;
 }
 
 void CryCilGame::LoadActionMaps(const char* filename)
 {
-	throw std::logic_error("The method or operation is not implemented.");
 }
 
 void CryCilGame::OnClearPlayerIds()
 {
-	throw std::logic_error("The method or operation is not implemented.");
 }
 
 IGame::TSaveGameName CryCilGame::CreateSaveGameName()
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	return TSaveGameName();
 }
 
-IGameFramework * CryCilGame::GetIGameFramework()
+IGameFramework *CryCilGame::GetIGameFramework()
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	return this->gameFramework;
 }
 
-const char* CryCilGame::GetMappedLevelName(const char *levelName) const
+const char *CryCilGame::GetMappedLevelName(const char *levelName) const
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	return "";
 }
 
-IAntiCheatManager * CryCilGame::GetAntiCheatManager()
+IAntiCheatManager *CryCilGame::GetAntiCheatManager()
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	return nullptr;
 }
 
 const bool CryCilGame::DoInitialSavegame() const
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	return true;
 }
 
 uint32 CryCilGame::AddGameWarning(const char* stringId, const char* paramMessage, IGameWarningsListener* pListener /*= NULL*/)
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	return 0;
 }
 
 void CryCilGame::OnRenderScene(const SRenderingPassInfo &passInfo)
 {
-	throw std::logic_error("The method or operation is not implemented.");
 }
 
 void CryCilGame::RenderGameWarnings()
 {
-	throw std::logic_error("The method or operation is not implemented.");
 }
 
 void CryCilGame::RemoveGameWarning(const char* stringId)
 {
-	throw std::logic_error("The method or operation is not implemented.");
 }
 
 bool CryCilGame::GameEndLevel(const char* stringId)
 {
-	throw std::logic_error("The method or operation is not implemented.");
-}
-
-void CryCilGame::SetUserProfileChanged(bool yesNo)
-{
-	throw std::logic_error("The method or operation is not implemented.");
+	return false;
 }
 
 IGameStateRecorder* CryCilGame::CreateGameStateRecorder(IGameplayListener* pL)
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	return nullptr;
 }
 
 void CryCilGame::FullSerialize(TSerialize ser)
 {
-	throw std::logic_error("The method or operation is not implemented.");
 }
 
 void CryCilGame::PostSerialize()
 {
-	throw std::logic_error("The method or operation is not implemented.");
 }
 
 IGame::ExportFilesInfo CryCilGame::ExportLevelData(const char* levelName, const char* missionName) const
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	return IGame::ExportLevelData(levelName, 0);
 }
 
 void CryCilGame::LoadExportedLevelData(const char* levelName, const char* missionName)
 {
-	throw std::logic_error("The method or operation is not implemented.");
 }
 
 void CryCilGame::RegisterGameFlowNodes()
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	// Let CryCIL handle this matter.
+	MonoEnv->RegisterFlowGraphNodes();
 }
 
 IGamePhysicsSettings* CryCilGame::GetIGamePhysicsSettings()
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	return nullptr;
 }
 
-void* CryCilGame::GetGameInterface()
+void *CryCilGame::GetGameInterface()
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	return nullptr;
 }
