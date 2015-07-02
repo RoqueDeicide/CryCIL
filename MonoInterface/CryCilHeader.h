@@ -84,14 +84,15 @@ HMODULE InitializeCryCIL
 		CryFatalError("Could not locate %s function within %s.", MONO_INTERFACE_INIT, MONOINTERFACE_LIBRARY);
 	}
 	CryLogAlways("Acquired a pointer to initializer function.");
+
+	List<IMonoSystemListener *> ls(1);
+	List<IMonoSystemListener *> *lsPtr = (listeners) ? listeners : &ls;
+
 	if (earlyMonoEnvInit)
 	{
-		if (!listeners)
-		{
-			listeners = new List<IMonoSystemListener *>(1);
-		}
-		listeners->Add(new EarlyInitializer());
+		lsPtr->Add(new EarlyInitializer());
 	}
-	MonoEnv = initFunc(framework, listeners);
+
+	MonoEnv = initFunc(framework, lsPtr);
 	return monoInterfaceDll;
 }
