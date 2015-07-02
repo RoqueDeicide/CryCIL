@@ -13,11 +13,11 @@
 #define BIN32_FOLDER            "Bin32"
 #define BIN64_FOLDER            "Bin64"
 
-#ifdef WIN32
-#define BINARIES_FOLDER         BIN32_FOLDER
-#else
+#ifdef WIN64
 #define BINARIES_FOLDER         BIN64_FOLDER
-#endif // WIN32
+#else
+#define BINARIES_FOLDER         BIN32_FOLDER
+#endif // WIN64
 
 #define MODULES_FOLDER          "Modules"
 #define CRYCIL_FOLDER           "CryCIL"
