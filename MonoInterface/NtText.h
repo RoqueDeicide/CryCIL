@@ -169,6 +169,25 @@ public:
 		}
 		return *this;
 	}
+	//! Creates a deep copy of this text.
+	//!
+	//! @returns A heap-allocated text that is a duplicate of this one. Wrapping it in NtText object is recommended
+	//!          to guarantee automatic release of the memory.
+	const SymbolType *Duplicate()
+	{
+		if (!this->chars)
+		{
+			return nullptr;
+		}
+		int length = _strlen(this->chars);
+		SymbolType *ntText = new SymbolType[count + 1];
+		ntText[count] = '\0';
+		for (int i = 0; i < count; i++)
+		{
+			ntText[i] = this->chars[i];
+		}
+		return const_cast<const SymbolType *>(ntText);
+	}
 	//! Creates a null-terminated string from substring of this text.
 	//!
 	//! Created string is allocated within the heap and needs to be deleted after use.
