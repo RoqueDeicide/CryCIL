@@ -169,6 +169,17 @@ public:
 		}
 		return *this;
 	}
+	//! Assigns another null-terminated string to this one.
+	//!
+	//! String that was wrapped by this object previously will be released, if it is not the same string as given one.
+	NtTextTemplate &operator=(const SymbolType *chars)
+	{
+		if (this->chars != chars)
+		{
+			this->~NtTextTemplate();
+		}
+		this->chars = chars;
+	}
 	//! Creates a deep copy of this text.
 	//!
 	//! @returns A heap-allocated text that is a duplicate of this one. Wrapping it in NtText object is recommended
