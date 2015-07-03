@@ -496,16 +496,16 @@ public:
 	//!
 	//! @return The first element that matched the condition, if any, otherwise 0 casted
 	//!         to the type of elements of the list is returned.
-	ElementType Find(Predicate match)
+	ElementType *Find(Predicate match)
 	{
 		for (int i = 0; i < this->length; i++)
 		{
 			if (match(this->elements[i]))
 			{
-				return this->elements[i];
+				return &this->elements[i];
 			}
 		}
-		return (ElementType)0;
+		return nullptr;
 	}
 	//! Goes through the list and returns index of the first element that satisfies a condition.
 	//!
