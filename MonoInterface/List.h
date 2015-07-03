@@ -507,6 +507,38 @@ public:
 		}
 		return (ElementType)0;
 	}
+	//! Goes through the list and returns index of the first element that satisfies a condition.
+	//!
+	//! @param match Predicate function that represents a condition.
+	//!
+	//! @return Zero-based index of the first element that matched the condition, if any, otherwise -1.
+	int IndexOf(Predicate match)
+	{
+		for (int i = 0; i < this->length; i++)
+		{
+			if (match(this->elements[i]))
+			{
+				return i;
+			}
+		}
+		return -1;
+	}
+	//! Goes through the list and returns index of the last element that satisfies a condition.
+	//!
+	//! @param match Predicate function that represents a condition.
+	//!
+	//! @return Zero-based index of the last element that matched the condition, if any, otherwise -1.
+	int LastIndexOf(Predicate match)
+	{
+		for (int i = this->length - 1; i >= 0; i--)
+		{
+			if (match(this->elements[i]))
+			{
+				return i;
+			}
+		}
+		return -1;
+	}
 	//! Gets or sets capacity of this list.
 	__declspec(property(get=GetCapacity, put=SetCapacity)) int Capacity;
 	int GetCapacity()
