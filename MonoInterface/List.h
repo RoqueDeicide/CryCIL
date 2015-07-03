@@ -44,7 +44,7 @@ public:
 	{
 		this->length = 0;
 		this->capacity = 10;
-		this->elements = (ElementType *)malloc(this->capacity * sizeof(ElementType));
+		this->elements = new ElementType[this->capacity];
 	}
 	//! Creates a new list.
 	//!
@@ -53,7 +53,7 @@ public:
 	{
 		this->length = 0;
 		this->capacity = initialCapacity;
-		this->elements = (ElementType *)malloc(this->capacity * sizeof(ElementType));
+		this->elements = new ElementType[this->capacity];
 	}
 	//! Creates a new list.
 	//!
@@ -66,7 +66,7 @@ public:
 		{
 			this->capacity = 10;
 		}
-		this->elements = (ElementType *)malloc(this->capacity * sizeof(ElementType));
+		this->elements = new ElementType[this->capacity];
 		if (collectionSize > 0)
 		{
 			this->AddRange(collection);
@@ -77,7 +77,7 @@ public:
 	{
 		this->capacity = list.capacity;
 		this->length = list.length;
-		this->elements = (ElementType *)malloc(this->capacity * sizeof(ElementType));
+		this->elements = new ElementType[this->capacity];
 		for (int i = 0; i < this->length; i++)
 		{
 			this->elements[i] = list.elements[i];
@@ -97,7 +97,7 @@ public:
 		if (this->elements)
 		{
 			//std::cout << "Trying to free elements:" << std::endl;
-			free(this->elements);
+			delete[] this->elements;
 			this->elements = nullptr;
 			this->length = 0;
 			this->capacity = 0;
@@ -516,7 +516,17 @@ public:
 	void SetCapacity(int value)
 	{
 		this->capacity = value;
-		this->elements = (ElementType *)realloc(this->elements, this->capacity * sizeof(ElementType));
+		// Allocate a new region in memory.
+		ElementType *newElements = new ElementType[this->capacity];
+		// Copy objects from old location to the new one.
+		for (int i = 0; i < this->length; i++)
+		{
+			newElements[i] = this->elements[i];
+		}
+		// Deallocate old array.
+		delete[] this->elements;
+		// Assign new array to this list.
+		this->elements = newElements;
 	}
 	//! Gets or sets number of elements within this list.
 	__declspec(property(get=GetLength)) int Length;
@@ -590,11 +600,7 @@ private:
 		if (this->capacity < size)
 		{
 			// Set new capacity.
-			this->capacity *= 2;
-			//std::cout << "Expanding to the capacity of " << this->capacity << std::endl;
-			// Reallocate the memory.
-			this->elements =
-				(ElementType *)realloc(this->elements, this->capacity * sizeof(ElementType));
+			this->Capacity = this->capacity * 2
 		}
 	}
 	void MoveRange(int originalIndex, int destinationIndex, int count)
