@@ -85,14 +85,11 @@ public:
 	}
 	~SortedList()
 	{
-		this->keys.Dispose();
-		this->values.Dispose();
 	}
 	//! Disposes of this list.
 	void Dispose()
 	{
-		this->keys.Dispose();
-		this->values.Dispose();
+		this->~SortedList();
 	}
 	//! Determines whether there is a key in the collection.
 	bool Contains(KeyType key)
