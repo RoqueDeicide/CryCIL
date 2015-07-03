@@ -600,7 +600,7 @@ private:
 		if (this->capacity < size)
 		{
 			// Set new capacity.
-			this->Capacity = this->capacity * 2
+			this->Capacity = this->capacity * 2;
 		}
 	}
 	void MoveRange(int originalIndex, int destinationIndex, int count)
