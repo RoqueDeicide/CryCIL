@@ -21,9 +21,9 @@ template<typename ElementType>
 class List
 {
 public:
-	typedef std::function<void(ElementType)> Enumerator;
-	typedef std::function<void(ElementType, int)> EnumeratorIndex;
-	typedef std::function<bool(ElementType)> Predicate;
+	typedef std::function<void(ElementType&)> Enumerator;
+	typedef std::function<void(ElementType&, int)> EnumeratorIndex;
+	typedef std::function<bool(ElementType&)> Predicate;
 private:
 	ElementType *elements;
 	int length;

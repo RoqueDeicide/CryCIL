@@ -18,7 +18,7 @@
 
 //! Default comparison function that uses KeyType's comparison operators.
 template<typename KeyType>
-inline int DefaultComparison(KeyType k1, KeyType k2)
+inline int DefaultComparison(KeyType &k1, KeyType &k2)
 {
 	if (k1 > k2)
 	{
@@ -69,7 +69,7 @@ public:
 
 	}
 	//! Creates a list with specific capacity that uses special comparison algorithm.
-	SortedList(int capacity, std::function<int(KeyType, KeyType)> comparisonFunc)
+	SortedList(int capacity, std::function<int(KeyType&, KeyType&)> comparisonFunc)
 		: keys(capacity)
 		, values(capacity)
 		, comparer(comparisonFunc)
@@ -153,7 +153,7 @@ public:
 		return false;
 	}
 	//! Processes a collection.
-	void ForEach(std::function<void(KeyType, ElementType)> processor)
+	void ForEach(std::function<void(KeyType, ElementType&)> processor)
 	{
 		if (Ascending)
 		{
