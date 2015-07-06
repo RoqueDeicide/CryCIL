@@ -356,8 +356,6 @@ BOX_UNBOX inline mono::aabb Box(AABB value) { return MonoEnv->Objects->Boxer->Bo
 
 //! Creates a new Mono exception object.
 //!
-//! Returned object should be deleted we no longer in use.
-//!
 //! @param assembly  Mono assembly where the exception class is defined.
 //! @param nameSpace Name space where the exception class is defined.
 //! @param name      Name of the exception class.
@@ -374,8 +372,6 @@ const char *name, const char *message = nullptr)
 
 //! Creates a new System.Exception object.
 //!
-//! Returned object should be deleted we no longer in use.
-//!
 //! @param message Text message to supply with the exception.
 //! @param inner   Optional object that represents an exception that caused this one.
 //!
@@ -388,8 +384,6 @@ inline IMonoException BaseException(const char *message = nullptr, IMonoExceptio
 
 //! Creates a new System.AppDomainUnloadedException object.
 //!
-//! Returned object should be deleted we no longer in use.
-//!
 //! @param message Text message to supply with the exception.
 //! @param inner   Optional object that represents an exception that caused this one.
 //!
@@ -400,8 +394,6 @@ inline IMonoException AppDomainUnloadedException(const char *message = nullptr, 
 	return exs->AppDomainUnloaded(message, inner);
 }
 //! Creates a new System.ArgumentException object.
-//!
-//! Returned object should be deleted we no longer in use.
 //!
 //! @param argumentName Name of invalid argument.
 //! @param message      Text message to supply with the exception.
@@ -415,8 +407,6 @@ inline IMonoException ArgumentException(const char *argumentName, const char *me
 }
 //! Creates a new System.ArgumentNullException object.
 //!
-//! Returned object should be deleted we no longer in use.
-//!
 //! @param message Text message to supply with the exception.
 //! @param inner   Optional object that represents an exception that caused this one.
 //!
@@ -427,8 +417,6 @@ inline IMonoException ArgumentNullException(const char *message = nullptr, IMono
 	return exs->ArgumentNull(message, inner);
 }
 //! Creates a new System.ArgumentOutOfRangeException object.
-//!
-//! Returned object should be deleted we no longer in use.
 //!
 //! @param message Text message to supply with the exception.
 //! @param inner   Optional object that represents an exception that caused this one.
@@ -441,8 +429,6 @@ inline IMonoException ArgumentOutOfRangeException(const char *message = nullptr,
 }
 //! Creates a new System.ArithmeticException object.
 //!
-//! Returned object should be deleted we no longer in use.
-//!
 //! @param message Text message to supply with the exception.
 //! @param inner   Optional object that represents an exception that caused this one.
 //!
@@ -453,8 +439,6 @@ inline IMonoException ArithmeticException(const char *message = nullptr, IMonoEx
 	return exs->Arithmetic(message, inner);
 }
 //! Creates a new System.ArrayTypeMismatchException object.
-//!
-//! Returned object should be deleted we no longer in use.
 //!
 //! @param message Text message to supply with the exception.
 //! @param inner   Optional object that represents an exception that caused this one.
@@ -467,8 +451,6 @@ inline IMonoException ArrayTypeMismatchException(const char *message = nullptr, 
 }
 //! Creates a new System.BadImageFormatException object.
 //!
-//! Returned object should be deleted we no longer in use.
-//!
 //! @param message Text message to supply with the exception.
 //! @param inner   Optional object that represents an exception that caused this one.
 //!
@@ -479,8 +461,6 @@ inline IMonoException BadImageFormatException(const char *message = nullptr, IMo
 	return exs->BadImageFormat(message, inner);
 }
 //! Creates a new System.CannotUnloadAppDomainException object.
-//!
-//! Returned object should be deleted we no longer in use.
 //!
 //! @param message Text message to supply with the exception.
 //! @param inner   Optional object that represents an exception that caused this one.
@@ -493,8 +473,6 @@ inline IMonoException CannotUnloadAppDomainException(const char *message = nullp
 }
 //! Creates a new System.DivideByZeroException object.
 //!
-//! Returned object should be deleted we no longer in use.
-//!
 //! @param message Text message to supply with the exception.
 //! @param inner   Optional object that represents an exception that caused this one.
 //!
@@ -506,8 +484,6 @@ inline IMonoException DivideByZeroException(const char *message = nullptr, IMono
 }
 //! Creates a new System.ExecutionEngineException object.
 //!
-//! Returned object should be deleted we no longer in use.
-//!
 //! @param message Text message to supply with the exception.
 //! @param inner   Optional object that represents an exception that caused this one.
 //!
@@ -518,8 +494,6 @@ inline IMonoException ExecutionEngineException(const char *message = nullptr, IM
 	return exs->ExecutionEngine(message, inner);
 }
 //! Creates a new System.IO.FileNotFoundException object.
-//!
-//! Returned object should be deleted we no longer in use.
 //!
 //! @param fileName Name of the file that was not found.
 //! @param message Text message to supply with the exception.
@@ -533,8 +507,6 @@ inline IMonoException FileNotFoundException(const char *fileName, const char *me
 }
 //! Creates a new System.IndexOutOfRangeException object.
 //!
-//! Returned object should be deleted we no longer in use.
-//!
 //! @param message Text message to supply with the exception.
 //! @param inner   Optional object that represents an exception that caused this one.
 //!
@@ -545,8 +517,6 @@ inline IMonoException IndexOutOfRangeException(const char *message = nullptr, IM
 	return exs->IndexOutOfRange(message, inner);
 }
 //! Creates a new System.InvalidCastException object.
-//!
-//! Returned object should be deleted we no longer in use.
 //!
 //! @param message Text message to supply with the exception.
 //! @param inner   Optional object that represents an exception that caused this one.
@@ -559,8 +529,6 @@ inline IMonoException InvalidCastException(const char *message = nullptr, IMonoE
 }
 //! Creates a new System.IO.IOException object.
 //!
-//! Returned object should be deleted we no longer in use.
-//!
 //! @param message Text message to supply with the exception.
 //! @param inner   Optional object that represents an exception that caused this one.
 //!
@@ -571,8 +539,6 @@ inline IMonoException IOException(const char *message = nullptr, IMonoException 
 	return exs->IO(message, inner);
 }
 //! Creates a new System.MissingMethodException object.
-//!
-//! Returned object should be deleted we no longer in use.
 //!
 //! @param message Text message to supply with the exception.
 //! @param inner   Optional object that represents an exception that caused this one.
@@ -585,8 +551,6 @@ inline IMonoException MissingMethodException(const char *message = nullptr, IMon
 }
 //! Creates a new System.MissingMethodException object.
 //!
-//! Returned object should be deleted we no longer in use.
-//!
 //! @param class_name  Name of the class where the method was looked up.
 //! @param member_name Name of missing method.
 //!
@@ -597,8 +561,6 @@ inline IMonoException MissingMethodException(const char *class_name, const char 
 	return exs->MissingMethod(class_name, member_name);
 }
 //! Creates a new System.NotImplementedException object.
-//!
-//! Returned object should be deleted we no longer in use.
 //!
 //! @param message Text message to supply with the exception.
 //! @param inner   Optional object that represents an exception that caused this one.
@@ -611,8 +573,6 @@ inline IMonoException NotImplementedException(const char *message = nullptr, IMo
 }
 //! Creates a new System.NullReferenceException object.
 //!
-//! Returned object should be deleted we no longer in use.
-//!
 //! @param message Text message to supply with the exception.
 //! @param inner   Optional object that represents an exception that caused this one.
 //!
@@ -623,8 +583,6 @@ inline IMonoException NullReferenceException(const char *message = nullptr, IMon
 	return exs->NullReference(message, inner);
 }
 //! Creates a new System.OverflowException object.
-//!
-//! Returned object should be deleted we no longer in use.
 //!
 //! @param message Text message to supply with the exception.
 //! @param inner   Optional object that represents an exception that caused this one.
@@ -637,8 +595,6 @@ inline IMonoException OverflowException(const char *message = nullptr, IMonoExce
 }
 //! Creates a new System.Security.SecurityException object.
 //!
-//! Returned object should be deleted we no longer in use.
-//!
 //! @param message Text message to supply with the exception.
 //! @param inner   Optional object that represents an exception that caused this one.
 //!
@@ -649,8 +605,6 @@ inline IMonoException SecurityException(const char *message = nullptr, IMonoExce
 	return exs->Security(message, inner);
 }
 //! Creates a new System.Runtime.Serialization.SerializationException object.
-//!
-//! Returned object should be deleted we no longer in use.
 //!
 //! @param message Text message to supply with the exception.
 //! @param inner   Optional object that represents an exception that caused this one.
@@ -663,8 +617,6 @@ inline IMonoException SerializationException(const char *message = nullptr, IMon
 }
 //! Creates a new System.StackOverflowException object.
 //!
-//! Returned object should be deleted we no longer in use.
-//!
 //! @param message Text message to supply with the exception.
 //! @param inner   Optional object that represents an exception that caused this one.
 //!
@@ -676,8 +628,6 @@ inline IMonoException StackOverflowException(const char *message = nullptr, IMon
 }
 //! Creates a new System.SynchronizationLockException object.
 //!
-//! Returned object should be deleted we no longer in use.
-//!
 //! @param message Text message to supply with the exception.
 //! @param inner   Optional object that represents an exception that caused this one.
 //!
@@ -688,8 +638,6 @@ inline IMonoException SynchronizationLockException(const char *message = nullptr
 	return exs->SynchronizationLock(message, inner);
 }
 //! Creates a new System.Threading.ThreadAbortException object.
-//!
-//! Returned object should be deleted we no longer in use.
 //!
 //! @param message Text message to supply with the exception.
 //! @param inner   Optional object that represents an exception that caused this one.
@@ -704,8 +652,6 @@ inline IMonoException ThreadAbortException(const char *message = nullptr, IMonoE
 //!
 //! @param message Message to supply with the exception object.
 //!
-//! Returned object should be deleted we no longer in use.
-//!
 //! @param message Text message to supply with the exception.
 //! @param inner   Optional object that represents an exception that caused this one.
 //!
@@ -716,8 +662,6 @@ inline IMonoException ThreadStateException(const char *message = nullptr, IMonoE
 	return exs->ThreadState(message, inner);
 }
 //! Creates a new System.TypeInitializationException object.
-//!
-//! Returned object should be deleted we no longer in use.
 //!
 //! @param type_name Name of the type that wasn't initialized properly.
 //! @param inner     Optional object that represents an exception that caused this one.
@@ -730,8 +674,6 @@ inline IMonoException TypeInitializationException(const char *type_name, IMonoEx
 }
 //! Creates a new System.TypeLoadException object.
 //!
-//! Returned object should be deleted we no longer in use.
-//!
 //! @param message Text message to supply with the exception.
 //! @param inner   Optional object that represents an exception that caused this one.
 //!
@@ -742,8 +684,6 @@ inline IMonoException TypeLoadException(const char *message = nullptr, IMonoExce
 	return exs->TypeLoad(message, inner);
 }
 //! Creates a new System.InvalidOperationException object.
-//!
-//! Returned object should be deleted we no longer in use.
 //!
 //! @param message Text message to supply with the exception.
 //! @param inner   Optional object that represents an exception that caused this one.
@@ -756,8 +696,6 @@ inline IMonoException InvalidOperationException(const char *message = nullptr, I
 }
 //! Creates a new System.MissingFieldException object.
 //!
-//! Returned object should be deleted we no longer in use.
-//!
 //! @param message Text message to supply with the exception.
 //! @param inner   Optional object that represents an exception that caused this one.
 //!
@@ -768,8 +706,6 @@ inline IMonoException MissingFieldException(const char *message = nullptr, IMono
 	return exs->MissingField(message, inner);
 }
 //! Creates a new System.MissingFieldException object.
-//!
-//! Returned object should be deleted we no longer in use.
 //!
 //! @param class_name  Name of the class where field was looked up.
 //! @param member_name Name of the missing field.
@@ -782,8 +718,6 @@ inline IMonoException MissingFieldException(const char *class_name, const char *
 }
 //! Creates a new System.NotSupportedException object.
 //!
-//! Returned object should be deleted we no longer in use.
-//!
 //! @param message Text message to supply with the exception.
 //! @param inner   Optional object that represents an exception that caused this one.
 //!
@@ -795,8 +729,6 @@ inline IMonoException NotSupportedException(const char *message = nullptr, IMono
 }
 //! Creates a new CryCil.Engine.CryEngineException object.
 //!
-//! Returned object should be deleted we no longer in use.
-//!
 //! @param message Text message to supply with the exception.
 //! @param inner   Optional object that represents an exception that caused this one.
 //!
@@ -807,8 +739,6 @@ inline IMonoException CryEngineException(const char *message = nullptr, IMonoExc
 	return exs->CryEngine(message, inner);
 }
 //! Creates a new System.ObjectDisposedException object.
-//!
-//! Returned object should be deleted we no longer in use.
 //!
 //! @param message Text message to supply with the exception.
 //! @param inner   Optional object that represents an exception that caused this one.
