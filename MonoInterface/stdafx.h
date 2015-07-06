@@ -71,3 +71,16 @@
 #endif
 
 // TODO: reference additional headers your program requires here
+
+//////////////////////////////////////////////////////////////////////////
+//! Reports a warning to validator with WARNING severity.
+inline void MonoWarning(const char *format, ...) PRINTF_PARAMS(1, 2);
+inline void MonoWarning(const char *format, ...)
+{
+	if (!format)
+		return;
+	va_list args;
+	va_start(args, format);
+	GetISystem()->WarningV(VALIDATOR_MODULE_GAME, VALIDATOR_WARNING, 0, nullptr, format, args);
+	va_end(args);
+}
