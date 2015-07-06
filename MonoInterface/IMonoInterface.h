@@ -817,7 +817,7 @@ inline IMonoException CryEngineException(const char *message = nullptr, IMonoExc
 inline IMonoException ObjectDisposedException(const char *message = nullptr, IMonoException inner = nullptr)
 {
 	static IMonoExceptions *exs = MonoEnv->Objects->Exceptions;
-	return exs->CryEngine(message, inner);
+	return exs->ObjectDisposed(message, inner);
 }
 
 #pragma endregion
