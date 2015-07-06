@@ -335,7 +335,7 @@ public:
 	//! Determines whether this string contains a substring.
 	bool Contains(const SymbolType *subString, bool ignoreCase = false)
 	{
-		
+		return _contains_substring(this->chars, subString, ignoreCase);
 	}
 	//! Gets the length of the string.
 	__declspec(property(get = GetLength)) int Length;
