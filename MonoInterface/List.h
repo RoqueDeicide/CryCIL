@@ -227,6 +227,28 @@ public:
 			this->elements[this->length++] = items->At(i);
 		}
 	}
+	//! Linearly searches for a first item for which given condition is true and replaces it with given one, or just adds
+	//! the item to the end of the list, if there are no items in the list for which the condition is true.
+	//!
+	//! @param item  An item to put into the list/override existing item with.
+	//! @param match An object that represents a condition that must be met for the item to be replaced with given one.
+	//!
+	//! @returns True, if the item was found and replaced, otherwise false.
+	bool AddOverride(ElementType item, Predicate match)
+	{
+		int index = this->IndexOf(match);
+		if (index == -1)
+		{
+			this->Add(item);
+		}
+		else
+		{
+			ElementType overridenItem = this->elements[index];
+			this->elements[index] = item;
+
+			// We are not going to do anything about the overridden item: we just gonna let its destructor invoked.
+		}
+	}
 	//! Inserts an item into specific position within the list.
 	//!
 	//! @param item     Item to insert.
