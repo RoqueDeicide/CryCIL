@@ -2,6 +2,7 @@
 #include "EventBroadcaster.h"
 
 EventBroadcaster::EventBroadcaster()
+	: latestRemovedListeners(20)
 {
 	this->listeners = new List<IMonoSystemListener *>(20);
 	this->stageMap = new SortedList<int, List<IMonoSystemListener *> *>(50);
@@ -26,23 +27,25 @@ void EventBroadcaster::RemoveListener(IMonoSystemListener *listener)
 	);
 	if (index != -1)
 	{
+		this->latestRemovedListeners.Add(Pair<int, IMonoSystemListener *>(index, this->listeners->At(index)));
 		this->listeners->RemoveAt(index);
-	}
-	// Remove listener from stage map.
-	this->stageMap->ForEach
-	(
-		[&listener](int stageIndex, List<IMonoSystemListener *> *subscribers)
-		{
-			for (int i = 0; i < subscribers->Length; i++)
+
+		// Remove listener from stage map.
+		this->stageMap->ForEach
+		(
+			[&listener](int stageIndex, List<IMonoSystemListener *> *subscribers)
 			{
-				if (subscribers->At(i) == listener)
+				for (int i = 0; i < subscribers->Length; i++)
 				{
-					subscribers->RemoveAt(i);
-					break;		// No need to proceed as there can only be one unique listener per stage.
+					if (subscribers->At(i) == listener)
+					{
+						subscribers->RemoveAt(i);
+						break;		// No need to proceed as there can only be one unique listener per stage.
+					}
 				}
 			}
-		}
-	);
+		);
+	}
 }
 
 void EventBroadcaster::SetInterface(IMonoInterface *inter)
@@ -56,42 +59,27 @@ void EventBroadcaster::SetInterface(IMonoInterface *inter)
 //! Broadcasts PreInitialization event.
 void EventBroadcaster::OnPreInitialization()
 {
-	for (int i = 0; i < this->listeners->Length; i++)
-	{
-		this->listeners->At(i)->OnPreInitialization();
-	}
+	this->SendSimpleEvent(IMonoSystemListener::OnPreInitialization);
 }
 //! Broadcasts RunTimeInitializing event.
 void EventBroadcaster::OnRunTimeInitializing()
 {
-	for (int i = 0; i < this->listeners->Length; i++)
-	{
-		this->listeners->At(i)->OnRunTimeInitializing();
-	}
+	this->SendSimpleEvent(IMonoSystemListener::OnRunTimeInitializing);
 }
 //! Broadcasts RunTimeInitialized event.
 void EventBroadcaster::OnRunTimeInitialized()
 {
-	for (int i = 0; i < this->listeners->Length; i++)
-	{
-		this->listeners->At(i)->OnRunTimeInitialized();
-	}
+	this->SendSimpleEvent(IMonoSystemListener::OnRunTimeInitialized);
 }
 //! Broadcasts CryamblyInitilizing event.
 void EventBroadcaster::OnCryamblyInitilizing()
 {
-	for (int i = 0; i < this->listeners->Length; i++)
-	{
-		this->listeners->At(i)->OnCryamblyInitilizing();
-	}
+	this->SendSimpleEvent(IMonoSystemListener::OnCryamblyInitilizing);
 }
 //! Broadcasts CompilationStarting event.
 void EventBroadcaster::OnCompilationStarting()
 {
-	for (int i = 0; i < this->listeners->Length; i++)
-	{
-		this->listeners->At(i)->OnCompilationStarting();
-	}
+	this->SendSimpleEvent(IMonoSystemListener::OnCompilationStarting);
 }
 //! Broadcasts CompilationComplete event.
 void EventBroadcaster::OnCompilationComplete(bool success)
@@ -99,6 +87,7 @@ void EventBroadcaster::OnCompilationComplete(bool success)
 	for (int i = 0; i < this->listeners->Length; i++)
 	{
 		this->listeners->At(i)->OnCompilationComplete(success);
+		this->CorrectIndex(i);
 	}
 }
 //! Gathers initialization stages data for sending it to managed code.
@@ -157,47 +146,88 @@ void EventBroadcaster::OnInitializationStage(int stageIndex)
 
 		for (int i = 0; i < stageList->Length; i++)
 		{
-			stageList->At(i)->OnInitializationStage(stageIndex);
+			IMonoSystemListener *stageListener = stageList->At(i);
+			stageListener->OnInitializationStage(stageIndex);
+
+			if (this->latestRemovedListeners.Length > 0)
+			{
+				int decrement = 0;
+				// We need to find number of listeners that were placed in the stage list not after current one that were
+				// unregistered.
+				for (int j = 0; j < this->latestRemovedListeners.Length; j++)
+				{
+					auto removedListener = this->latestRemovedListeners[j].Value2;
+					// Lambda function that checks whether one of the stage listeners was removed.
+					auto indexOfLookUp = [removedListener](int stageIndex, IMonoSystemListener *listener)
+					{
+						return listener == removedListener;
+					};
+					if (stageList->IndexOf(indexOfLookUp) <= i)
+					{
+						decrement++;
+					}
+				}
+
+				i -= decrement;
+
+				this->latestRemovedListeners.Clear();
+			}
 		}
 	}
 }
 //! Broadcasts CryamblyInitilized event.
 void EventBroadcaster::OnCryamblyInitilized()
 {
-	for (int i = 0; i < this->listeners->Length; i++)
-	{
-		this->listeners->At(i)->OnCryamblyInitilized();
-	}
+	this->SendSimpleEvent(IMonoSystemListener::OnCryamblyInitilized);
 }
 //! Broadcasts PostInitialization event.
 void EventBroadcaster::OnPostInitialization()
 {
-	for (int i = 0; i < this->listeners->Length; i++)
-	{
-		this->listeners->At(i)->OnPostInitialization();
-	}
+	this->SendSimpleEvent(IMonoSystemListener::OnPostInitialization);
 }
 //! Broadcasts Update event.
 void EventBroadcaster::Update()
 {
-	for (int i = 0; i < this->listeners->Length; i++)
-	{
-		this->listeners->At(i)->Update();
-	}
+	this->SendSimpleEvent(IMonoSystemListener::Update);
 }
 //! Broadcasts PostUpdate event.
 void EventBroadcaster::PostUpdate()
 {
-	for (int i = 0; i < this->listeners->Length; i++)
-	{
-		this->listeners->At(i)->PostUpdate();
-	}
+	this->SendSimpleEvent(IMonoSystemListener::PostUpdate);
 }
 //! Broadcasts Shutdown event.
 void EventBroadcaster::Shutdown()
 {
+	this->SendSimpleEvent(IMonoSystemListener::Shutdown);
+}
+
+void EventBroadcaster::SendSimpleEvent(SimpleEventHandler handler)
+{
 	for (int i = 0; i < this->listeners->Length; i++)
 	{
-		this->listeners->At(i)->Shutdown();
+		IMonoSystemListener *listener = this->listeners->At(i);
+		(listener->*handler)();
+		this->CorrectIndex(i);
+	}
+}
+
+void EventBroadcaster::CorrectIndex(int &index)
+{
+	if (this->latestRemovedListeners.Length > 0)
+	{
+		int decrement = 0;		// This value will be subtracted from the counter to make sure we land on correct
+								// listener on the next loop frame.
+
+		for (int i = 0; i < this->latestRemovedListeners.Length; i++)
+		{
+			if (this->latestRemovedListeners[i].Value1 <= index)
+			{
+				decrement++;
+			}
+		}
+
+		index -= decrement;
+
+		this->latestRemovedListeners.Clear();
 	}
 }
