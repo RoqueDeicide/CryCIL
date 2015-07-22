@@ -316,7 +316,7 @@ void MonoEntityExtension::CryCilRMIParameters::SerializeWith(TSerialize ser)
 	ser.Value("target", this->target, 'eid');
 	ser.Value("rmiData", this->rmiDataType);
 
-	if (this->rmiDataType.length() <= 0)
+	if (this->rmiDataType.length() == 0)
 	{
 		// No arguments here.
 		return;
