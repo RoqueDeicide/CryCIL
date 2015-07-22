@@ -340,6 +340,8 @@ void MonoInterface::RegisterDefaultListeners()
 	this->broadcaster->listeners->Add(new CrySyncInterop());
 	this->broadcaster->listeners->Add(new TimeOfDayInterop());
 	this->broadcaster->listeners->Add(new FlowGraphInterop());
+	this->broadcaster->listeners->Add(new EntityIdInterop());
+	this->broadcaster->listeners->Add(new EntityPoolInterop());
 }
 #pragma endregion
 #pragma region Thunks Initialization

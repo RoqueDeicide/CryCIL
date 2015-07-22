@@ -289,6 +289,7 @@
     <ClInclude Include="Interops\CryXmlNode.h" />
     <ClInclude Include="Interops\DebugDraw.h" />
     <ClInclude Include="Interops\CryFont.h" />
+    <ClInclude Include="Interops\Entity.h" />
     <ClInclude Include="Interops\FlowGraph.h" />
     <ClInclude Include="Interops\GeneralExtensions.h" />
     <ClInclude Include="Interops\InputInterop.h" />
@@ -303,6 +304,7 @@
     <ClInclude Include="Interops\Materials.h" />
     <ClInclude Include="Interops\MeshOps.h" />
     <ClInclude Include="Interops\MonoCryXmlNode.h" />
+    <ClInclude Include="Interops\MonoEntitySpawnParams.h" />
     <ClInclude Include="Interops\MonoFlowNode.h" />
     <ClInclude Include="Interops\MonoFlowNodeFactory.h" />
     <ClInclude Include="Interops\ParticleEffectIterator.h" />
@@ -397,6 +399,7 @@
     <ClCompile Include="Interops\CrySync.cpp" />
     <ClCompile Include="Interops\CryXmlNode.cpp" />
     <ClCompile Include="Interops\DebugDraw.cpp" />
+    <ClCompile Include="Interops\Entity.cpp" />
     <ClCompile Include="Interops\FlowGraph.cpp" />
     <ClCompile Include="Interops\GeneralExtensions.cpp" />
     <ClCompile Include="Interops\InputInterop.cpp" />
