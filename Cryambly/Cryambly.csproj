@@ -119,6 +119,8 @@
     <Compile Include="Engine\Logic\Entities\EntitySystem.cs" />
     <Compile Include="Engine\Logic\Entities\MonoEntity.cs" />
     <Compile Include="Engine\Logic\Entities\Networking\MonoNetEntity.cs" />
+    <Compile Include="Engine\Logic\Entities\Networking\RMIAttribute.cs" />
+    <Compile Include="Engine\Logic\Entities\Networking\RmiDataTransfer.cs" />
     <Compile Include="Engine\Logic\Entities\Networking\RmiParameters.cs" />
     <Compile Include="Engine\Logic\FlowGraph\ActivationSet.cs" />
     <Compile Include="Engine\Logic\FlowGraph\FlowData.cs" />
