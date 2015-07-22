@@ -104,7 +104,21 @@
     <Compile Include="Engine\Logic\CryActor.cs" />
     <Compile Include="Engine\Logic\CryEntity.cs" />
     <Compile Include="Engine\Logic\Entities\CryEntityPool.cs" />
+    <Compile Include="Engine\Logic\Entities\EditableProperty.cs" />
+    <Compile Include="Engine\Logic\Entities\EditablePropertyAttribute.cs" />
+    <Compile Include="Engine\Logic\Entities\EditablePropertyUiControl.cs" />
+    <Compile Include="Engine\Logic\Entities\EntityAspects.cs" />
+    <Compile Include="Engine\Logic\Entities\EntityAttribute.cs" />
+    <Compile Include="Engine\Logic\Entities\EntityClassFlags.cs" />
+    <Compile Include="Engine\Logic\Entities\EntityFlags.cs" />
+    <Compile Include="Engine\Logic\Entities\EntityGUID.cs" />
     <Compile Include="Engine\Logic\Entities\EntityId.cs" />
+    <Compile Include="Engine\Logic\Entities\EditablePropertyInfo.cs" />
+    <Compile Include="Engine\Logic\Entities\EditablePropertyType.cs" />
+    <Compile Include="Engine\Logic\Entities\EntitySpawnParameters.cs" />
+    <Compile Include="Engine\Logic\Entities\EntitySystem.cs" />
+    <Compile Include="Engine\Logic\Entities\MonoEntity.cs" />
+    <Compile Include="Engine\Logic\Entities\Networking\MonoNetEntity.cs" />
     <Compile Include="Engine\Logic\FlowGraph\ActivationSet.cs" />
     <Compile Include="Engine\Logic\FlowGraph\FlowData.cs" />
     <Compile Include="Engine\Logic\FlowGraph\FlowNode.cs" />
@@ -118,6 +132,7 @@
     <Compile Include="Engine\Logic\FlowGraph\FlowPortConfig.cs" />
     <Compile Include="Engine\Logic\FlowGraph\InputPort.cs" />
     <Compile Include="Engine\Logic\FlowGraph\OutputPort.cs" />
+    <Compile Include="Engine\Network\ChannelId.cs" />
     <Compile Include="Engine\Rendering\RenderParameters.cs" />
     <Compile Include="Mathematics\Geometry\Splines\BezierBasis.cs" />
     <Compile Include="Mathematics\Geometry\Splines\CryEngineSpline.cs" />
@@ -235,6 +250,7 @@
     <Compile Include="Mathematics\Vectors\IVector.cs" />
     <Compile Include="NativeInvocationAttributes.cs" />
     <Compile Include="RunTime\DefaultInitializationStages.cs" />
+    <Compile Include="RunTime\Registration\EntityRegistry.cs" />
     <Compile Include="RunTime\Registration\FlowNodeTypeRegistry.cs" />
     <Compile Include="Utilities\CryXmlNode.Attributes.cs" />
     <Compile Include="Utilities\CryXmlNode.cs" />

@@ -342,6 +342,8 @@ void MonoInterface::RegisterDefaultListeners()
 	this->broadcaster->listeners->Add(new FlowGraphInterop());
 	this->broadcaster->listeners->Add(new EntityIdInterop());
 	this->broadcaster->listeners->Add(new EntityPoolInterop());
+	this->broadcaster->listeners->Add(new EntitySystemInterop());
+	this->broadcaster->listeners->Add(new NetEntityInterop());
 }
 #pragma endregion
 #pragma region Thunks Initialization

@@ -41,3 +41,36 @@ struct EntityPoolInterop : public IMonoInterop<false, true>, public IEntityPoolL
 	static bool IsDefaultBookmarked(mono::string className);
 	static bool IsPreparingEntity(EntityId *entityId);
 };
+
+struct EntitySystemInterop : public IMonoInterop<false, true>
+{
+private:
+	static List<NtText> monoEntityClassNames;		//!< A list of registered classes of entities that interact with CryCIL.
+public:
+	virtual const char *GetName() override { return "EntitySystem"; }
+	virtual const char *GetNameSpace() override { return "CryCil.Engine.Logic"; }
+
+	static bool            IsMonoEntity(const char *className);
+	static IEntityProxyPtr CreateGameObjectForCryCilEntity(IEntity *pEntity, SEntitySpawnParams &params, void *pUserData);
+
+	virtual void OnRunTimeInitialized() override;
+
+	static bool RegisterEntityClass(mono::string name, mono::string category, mono::string editorHelper,
+									mono::string editorIcon, enum EEntityClassFlags flags, mono::object properties,
+									bool networked);
+
+	static void         RemoveEntity(EntityId id, bool now);
+	static mono::object SpawnMonoEntity(MonoEntitySpawnParams parameters);
+	static mono::object SpawnNetEntity(MonoEntitySpawnParams parameters, ushort channelId);
+	static IEntity     *SpawnCryEntity(MonoEntitySpawnParams parameters);
+};
+
+struct NetEntityInterop : public IMonoInterop<true, true>
+{
+	virtual const char *GetName() override { return "MonoNetEntity"; }
+	virtual const char *GetNameSpace() override { return "CryCil.Engine.Logic"; }
+
+	virtual void OnRunTimeInitialized() override;
+
+	static void SetChannelId(EntityId entityId, ushort channelId);
+};

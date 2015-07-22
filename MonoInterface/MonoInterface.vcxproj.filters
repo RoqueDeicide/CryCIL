@@ -377,10 +377,16 @@
     <ClInclude Include="Interops\Entity.h">
       <Filter>Interops\Engine\Logic</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\EntityExtension.h">
+      <Filter>Interops\Engine\Logic</Filter>
+    </ClInclude>
     <ClInclude Include="TypeMapChecks\CheckingBasics.h">
       <Filter>TypeMapChecks</Filter>
     </ClInclude>
     <ClInclude Include="Interops\MonoEntitySpawnParams.h">
+      <Filter>Interops\Engine\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\EntityClass.h">
       <Filter>Interops\Engine\Logic</Filter>
     </ClInclude>
   </ItemGroup>
@@ -608,7 +614,22 @@
     <ClCompile Include="Interops\Entity.cpp">
       <Filter>Interops\Engine\Logic</Filter>
     </ClCompile>
+    <ClCompile Include="Interops\EntityExtension.cpp">
+      <Filter>Interops\Engine\Logic</Filter>
+    </ClCompile>
     <ClCompile Include="TypeMapChecks\EntitySpawnParams.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\EntityFlags.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\EntityClass.cpp">
+      <Filter>Interops\Engine\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\SmallEntityStructs.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\EntityClassFlags.cpp">
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
   </ItemGroup>

@@ -290,6 +290,8 @@
     <ClInclude Include="Interops\DebugDraw.h" />
     <ClInclude Include="Interops\CryFont.h" />
     <ClInclude Include="Interops\Entity.h" />
+    <ClInclude Include="Interops\EntityClass.h" />
+    <ClInclude Include="Interops\EntityExtension.h" />
     <ClInclude Include="Interops\FlowGraph.h" />
     <ClInclude Include="Interops\GeneralExtensions.h" />
     <ClInclude Include="Interops\InputInterop.h" />
@@ -400,6 +402,8 @@
     <ClCompile Include="Interops\CryXmlNode.cpp" />
     <ClCompile Include="Interops\DebugDraw.cpp" />
     <ClCompile Include="Interops\Entity.cpp" />
+    <ClCompile Include="Interops\EntityClass.cpp" />
+    <ClCompile Include="Interops\EntityExtension.cpp" />
     <ClCompile Include="Interops\FlowGraph.cpp" />
     <ClCompile Include="Interops\GeneralExtensions.cpp" />
     <ClCompile Include="Interops\InputInterop.cpp" />
@@ -443,7 +447,10 @@
     </ClCompile>
     <ClCompile Include="Testing\TestStart.cpp" />
     <ClCompile Include="ThunkTables.cpp" />
+    <ClCompile Include="TypeMapChecks\EntityClassFlags.cpp" />
+    <ClCompile Include="TypeMapChecks\EntityFlags.cpp" />
     <ClCompile Include="TypeMapChecks\EntitySpawnParams.cpp" />
+    <ClCompile Include="TypeMapChecks\SmallEntityStructs.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
