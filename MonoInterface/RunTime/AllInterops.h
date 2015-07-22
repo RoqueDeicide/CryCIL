@@ -87,3 +87,5 @@
 #include "Interops/FlowGraph.h"
 
 #include "Interops/Entity.h"
+
+#include "Interops/Game.h"

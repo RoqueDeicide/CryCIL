@@ -293,6 +293,7 @@
     <ClInclude Include="Interops\EntityClass.h" />
     <ClInclude Include="Interops\EntityExtension.h" />
     <ClInclude Include="Interops\FlowGraph.h" />
+    <ClInclude Include="Interops\Game.h" />
     <ClInclude Include="Interops\GeneralExtensions.h" />
     <ClInclude Include="Interops\InputInterop.h" />
     <ClInclude Include="Interops\Level.h" />
@@ -405,6 +406,7 @@
     <ClCompile Include="Interops\EntityClass.cpp" />
     <ClCompile Include="Interops\EntityExtension.cpp" />
     <ClCompile Include="Interops\FlowGraph.cpp" />
+    <ClCompile Include="Interops\Game.cpp" />
     <ClCompile Include="Interops\GeneralExtensions.cpp" />
     <ClCompile Include="Interops\InputInterop.cpp" />
     <ClCompile Include="Interops\Level.cpp" />

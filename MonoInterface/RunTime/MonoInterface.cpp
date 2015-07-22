@@ -344,6 +344,7 @@ void MonoInterface::RegisterDefaultListeners()
 	this->broadcaster->listeners->Add(new EntityPoolInterop());
 	this->broadcaster->listeners->Add(new EntitySystemInterop());
 	this->broadcaster->listeners->Add(new NetEntityInterop());
+	this->broadcaster->listeners->Add(new GameInterop());
 }
 #pragma endregion
 #pragma region Thunks Initialization

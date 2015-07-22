@@ -137,6 +137,7 @@
     <Compile Include="Engine\Logic\FlowGraph\OutputPort.cs" />
     <Compile Include="Engine\Network\ChannelId.cs" />
     <Compile Include="Engine\Rendering\RenderParameters.cs" />
+    <Compile Include="Game.cs" />
     <Compile Include="Mathematics\Geometry\Splines\BezierBasis.cs" />
     <Compile Include="Mathematics\Geometry\Splines\CryEngineSpline.cs" />
     <Compile Include="Mathematics\Geometry\Splines\HermiteBasis.cs" />

@@ -389,6 +389,9 @@
     <ClInclude Include="Interops\EntityClass.h">
       <Filter>Interops\Engine\Logic</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\Game.h">
+      <Filter>Interops</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -631,6 +634,9 @@
     </ClCompile>
     <ClCompile Include="TypeMapChecks\EntityClassFlags.cpp">
       <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\Game.cpp">
+      <Filter>Interops</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
