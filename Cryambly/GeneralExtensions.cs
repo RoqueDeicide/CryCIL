@@ -445,8 +445,7 @@ namespace CryCil
 		public static T GetAttribute<T>([NotNull] this MemberInfo memberInfo)
 			where T : Attribute
 		{
-			var attributes = memberInfo.GetAttributes<T>().ToList();
-			return attributes.Count != 0 ? attributes[0] : null;
+			return memberInfo.GetAttributes<T>().FirstOrDefault();
 		}
 		/// <summary>
 		/// Tests whether the method is decorated with a given attribute, and if so, assigns it via the out
