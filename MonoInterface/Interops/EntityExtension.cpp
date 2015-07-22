@@ -343,7 +343,7 @@ void MonoEntityExtension::CryCilRMIParameters::SerializeWith(TSerialize ser)
 	}
 }
 
-typedef bool(__stdcall *ReceiveRMICallThunk)(mono::string, mono::object, mono::exception *);
+typedef bool(__stdcall *ReceiveRMICallThunk)(mono::object, mono::string, mono::object, mono::exception *);
 
 bool MonoEntityExtension::ReceiveRmiCall(CryCilRMIParameters *params)
 {
@@ -351,7 +351,8 @@ bool MonoEntityExtension::ReceiveRmiCall(CryCilRMIParameters *params)
 		GetMonoNetEntityClass()->GetFunction("ReceiveRmi", -1)->UnmanagedThunk;
 
 	mono::exception ex;
-	bool success = receiveCall(ToMonoString(params->methodName), MonoEnv->GC->GetGCHandleTarget(params->arguments), &ex);
+	bool success = receiveCall(this->objHandle.Object, ToMonoString(params->methodName),
+							   MonoEnv->GC->GetGCHandleTarget(params->arguments), &ex);
 	if (ex)
 	{
 		MonoEnv->HandleException(ex);
