@@ -26,6 +26,7 @@ namespace CryCil.Engine.Logic
 		/// Synchronizes the RMI data.
 		/// </summary>
 		/// <param name="sync">Object that handles synchronization.</param>
+		[RuntimeInvoke("Invoked from underlying object to send/receive RMI arguments.")]
 		protected abstract void Synchronize(CrySync sync);
 		#endregion
 		#region Utilities
