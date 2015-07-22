@@ -55,12 +55,12 @@ public:
 		string methodName;
 		IMonoObject arguments;
 		EntityId target;
-		string typeId;
+		string rmiDataType;
 	public:
 		//! Creates a new object that will receive the arguments for remote invocation from the network.
 		CryCilRMIParameters();
 		//! Creates a new object that will send the arguments for remote invocation across the network.
-		CryCilRMIParameters(const char *methodName, mono::object args, EntityId target, const char *typeId);
+		CryCilRMIParameters(const char *methodName, mono::object args, EntityId target, const char *rmiDataType);
 		//! Performs synchronization of arguments.
 		void SerializeWith(TSerialize ser);
 	};

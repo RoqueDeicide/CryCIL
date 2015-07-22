@@ -293,7 +293,7 @@ MonoEntityExtension::CryCilRMIParameters::CryCilRMIParameters()
 	: methodName(nullptr)
 	, target(INVALID_ENTITYID)
 	, arguments(nullptr)
-	, typeId(nullptr)
+	, rmiDataType(nullptr)
 {}
 
 MonoEntityExtension::CryCilRMIParameters::CryCilRMIParameters(const char *methodName, mono::object args, EntityId target,
@@ -301,7 +301,7 @@ MonoEntityExtension::CryCilRMIParameters::CryCilRMIParameters(const char *method
 															  : methodName(methodName)
 															  , arguments(args)
 															  , target(target)
-															  , typeId(typeId)
+															  , rmiDataType(typeId)
 {}
 
 typedef mono::object(__stdcall *AcquireArgumentsReceptorThunk)(mono::string, mono::exception *);
@@ -314,9 +314,9 @@ void MonoEntityExtension::CryCilRMIParameters::SerializeWith(TSerialize ser)
 	// Synchronize the name and identifier of the target entity so we can identify the type of argument object on reception.
 	ser.Value("method", this->methodName);
 	ser.Value("target", this->target, 'eid');
-	ser.Value("typeId", this->typeId);
+	ser.Value("rmiData", this->rmiDataType);
 
-	if (this->typeId.length() <= 0)
+	if (this->rmiDataType.length() <= 0)
 	{
 		// No arguments here.
 		return;
@@ -326,7 +326,7 @@ void MonoEntityExtension::CryCilRMIParameters::SerializeWith(TSerialize ser)
 	{
 		// We are receiving the data, therefore we need to get the object that will hold received data.
 		mono::exception ex;
-		this->arguments = IMonoObject(acquireReceptor(ToMonoString(this->typeId.c_str()), &ex));
+		this->arguments = IMonoObject(acquireReceptor(ToMonoString(this->rmiDataType.c_str()), &ex));
 		if (ex)
 		{
 			MonoEnv->HandleException(ex);
