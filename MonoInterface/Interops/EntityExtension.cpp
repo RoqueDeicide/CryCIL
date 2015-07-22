@@ -291,17 +291,15 @@ IMonoClass *GetRmiParamsClass()
 
 MonoEntityExtension::CryCilRMIParameters::CryCilRMIParameters()
 	: methodName(nullptr)
-	, target(INVALID_ENTITYID)
-	, arguments(nullptr)
+	, arguments(-1)
 	, rmiDataType(nullptr)
 {}
 
-MonoEntityExtension::CryCilRMIParameters::CryCilRMIParameters(const char *methodName, mono::object args, EntityId target,
-															  const char *typeId)
-															  : methodName(methodName)
-															  , arguments(args)
-															  , target(target)
-															  , rmiDataType(typeId)
+MonoEntityExtension::CryCilRMIParameters::CryCilRMIParameters
+(const char *methodName, uint32 args, const char *rmiDataType)
+: methodName(methodName)
+, arguments(args)
+, rmiDataType(rmiDataType)
 {}
 
 typedef mono::object(__stdcall *AcquireArgumentsReceptorThunk)(mono::string, mono::exception *);
@@ -313,7 +311,6 @@ void MonoEntityExtension::CryCilRMIParameters::SerializeWith(TSerialize ser)
 
 	// Synchronize the name and identifier of the target entity so we can identify the type of argument object on reception.
 	ser.Value("method", this->methodName);
-	ser.Value("target", this->target, 'eid');
 	ser.Value("rmiData", this->rmiDataType);
 
 	if (this->rmiDataType.length() == 0)
@@ -322,11 +319,11 @@ void MonoEntityExtension::CryCilRMIParameters::SerializeWith(TSerialize ser)
 		return;
 	}
 
-	if (this->arguments == nullptr)
+	if (this->arguments == -1)
 	{
 		// We are receiving the data, therefore we need to get the object that will hold received data.
 		mono::exception ex;
-		this->arguments = IMonoObject(acquireReceptor(ToMonoString(this->rmiDataType.c_str()), &ex));
+		this->arguments = MonoEnv->GC->Keep(acquireReceptor(ToMonoString(this->rmiDataType.c_str()), &ex));
 		if (ex)
 		{
 			MonoEnv->HandleException(ex);
@@ -336,5 +333,61 @@ void MonoEntityExtension::CryCilRMIParameters::SerializeWith(TSerialize ser)
 
 	// Synchronize the arguments.
 	void *param = *(ISerialize **)&ser;
-	GetRmiParamsClass()->GetFunction("Synchronize", 1)->ToInstance()->Invoke(this->arguments, &param, nullptr, true);
+	GetRmiParamsClass()->GetFunction("Synchronize", 1)->ToInstance()->Invoke
+		(MonoEnv->GC->GetGCHandleTarget(this->arguments), &param, nullptr, true);
+
+	if (ser.IsWriting())
+	{
+		// We won't need this anymore.
+		MonoEnv->GC->ReleaseGCHandle(this->arguments);
+	}
 }
+
+typedef bool(__stdcall *ReceiveRMICallThunk)(mono::string, mono::object, mono::exception *);
+
+bool MonoEntityExtension::ReceiveRmiCall(CryCilRMIParameters *params)
+{
+	static ReceiveRMICallThunk receiveCall = (ReceiveRMICallThunk)
+		GetMonoNetEntityClass()->GetFunction("ReceiveRmi", -1)->UnmanagedThunk;
+
+	mono::exception ex;
+	bool success = receiveCall(ToMonoString(params->methodName), MonoEnv->GC->GetGCHandleTarget(params->arguments), &ex);
+	if (ex)
+	{
+		MonoEnv->HandleException(ex);
+		return false;
+	}
+	return success;
+}
+
+#define IMPLEMENT_CRYCIL_RMI(name) IMPLEMENT_RMI(MonoEntityExtension, name) \
+{ \
+	this->ReceiveRmiCall(const_cast<Params_##name *>(&params)); \
+}
+
+IMPLEMENT_CRYCIL_RMI(svPreAttachCryCilRmi)
+IMPLEMENT_CRYCIL_RMI(clPreAttachCryCilRmi)
+IMPLEMENT_CRYCIL_RMI(svPostAttachCryCilRmi)
+IMPLEMENT_CRYCIL_RMI(clPostAttachCryCilRmi)
+IMPLEMENT_CRYCIL_RMI(svReliableNoAttachCryCilRmi)
+IMPLEMENT_CRYCIL_RMI(clReliableNoAttachCryCilRmi)
+IMPLEMENT_CRYCIL_RMI(svUnreliableNoAttachCryCilRmi)
+IMPLEMENT_CRYCIL_RMI(clUnreliableNoAttachCryCilRmi)
+IMPLEMENT_CRYCIL_RMI(svFastPreAttachCryCilRmi)
+IMPLEMENT_CRYCIL_RMI(clFastPreAttachCryCilRmi)
+IMPLEMENT_CRYCIL_RMI(svFastPostAttachCryCilRmi)
+IMPLEMENT_CRYCIL_RMI(clFastPostAttachCryCilRmi)
+IMPLEMENT_CRYCIL_RMI(svFastReliableNoAttachCryCilRmi)
+IMPLEMENT_CRYCIL_RMI(clFastReliableNoAttachCryCilRmi)
+IMPLEMENT_CRYCIL_RMI(svReliableUrgentCryCilRmi);
+IMPLEMENT_CRYCIL_RMI(clReliableUrgentCryCilRmi);
+IMPLEMENT_CRYCIL_RMI(svReliableIndependentCryCilRmi)
+IMPLEMENT_CRYCIL_RMI(clReliableIndependentCryCilRmi)
+IMPLEMENT_CRYCIL_RMI(svFastUnreliableNoAttachCryCilRmi)
+IMPLEMENT_CRYCIL_RMI(clFastUnreliableNoAttachCryCilRmi)
+IMPLEMENT_CRYCIL_RMI(svUnreliableUrgentCryCilRmi)
+IMPLEMENT_CRYCIL_RMI(clUnreliableUrgentCryCilRmi)
+IMPLEMENT_CRYCIL_RMI(svUnreliableIndependentCryCilRmi)
+IMPLEMENT_CRYCIL_RMI(clUnreliableIndependentCryCilRmi)
+
+#undef IMPLEMENT_CRYCIL_RMI

@@ -51,19 +51,58 @@ public:
 	//! invocation and a set of arguments that will be passed to the method.
 	struct CryCilRMIParameters
 	{
+		friend MonoEntityExtension;
 	private:
 		string methodName;
-		IMonoObject arguments;
-		EntityId target;
+		uint32 arguments;
 		string rmiDataType;
 	public:
 		//! Creates a new object that will receive the arguments for remote invocation from the network.
 		CryCilRMIParameters();
 		//! Creates a new object that will send the arguments for remote invocation across the network.
-		CryCilRMIParameters(const char *methodName, mono::object args, EntityId target, const char *rmiDataType);
+		CryCilRMIParameters(const char *methodName, uint32 args, const char *rmiDataType);
 		//! Performs synchronization of arguments.
 		void SerializeWith(TSerialize ser);
 	};
+
+	DECLARE_SERVER_RMI_PREATTACH(svPreAttachCryCilRmi, CryCilRMIParameters);
+	DECLARE_CLIENT_RMI_PREATTACH(clPreAttachCryCilRmi, CryCilRMIParameters);
+
+	DECLARE_SERVER_RMI_POSTATTACH(svPostAttachCryCilRmi, CryCilRMIParameters);
+	DECLARE_CLIENT_RMI_POSTATTACH(clPostAttachCryCilRmi, CryCilRMIParameters);
+
+	DECLARE_SERVER_RMI_NOATTACH(svReliableNoAttachCryCilRmi, CryCilRMIParameters, eNRT_ReliableUnordered);
+	DECLARE_CLIENT_RMI_NOATTACH(clReliableNoAttachCryCilRmi, CryCilRMIParameters, eNRT_ReliableUnordered);
+
+	DECLARE_SERVER_RMI_NOATTACH(svUnreliableNoAttachCryCilRmi, CryCilRMIParameters, eNRT_UnreliableUnordered);
+	DECLARE_CLIENT_RMI_NOATTACH(clUnreliableNoAttachCryCilRmi, CryCilRMIParameters, eNRT_UnreliableUnordered);
+
+	DECLARE_SERVER_RMI_PREATTACH_FAST(svFastPreAttachCryCilRmi, CryCilRMIParameters);
+	DECLARE_CLIENT_RMI_PREATTACH_FAST(clFastPreAttachCryCilRmi, CryCilRMIParameters);
+
+	DECLARE_SERVER_RMI_POSTATTACH_FAST(svFastPostAttachCryCilRmi, CryCilRMIParameters);
+	DECLARE_CLIENT_RMI_POSTATTACH_FAST(clFastPostAttachCryCilRmi, CryCilRMIParameters);
+
+	DECLARE_SERVER_RMI_NOATTACH_FAST(svFastReliableNoAttachCryCilRmi, CryCilRMIParameters, eNRT_ReliableUnordered);
+	DECLARE_CLIENT_RMI_NOATTACH_FAST(clFastReliableNoAttachCryCilRmi, CryCilRMIParameters, eNRT_ReliableUnordered);
+
+	DECLARE_SERVER_RMI_URGENT(svReliableUrgentCryCilRmi, CryCilRMIParameters, eNRT_ReliableUnordered);
+	DECLARE_CLIENT_RMI_URGENT(clReliableUrgentCryCilRmi, CryCilRMIParameters, eNRT_ReliableUnordered);
+
+	DECLARE_SERVER_RMI_INDEPENDENT(svReliableIndependentCryCilRmi, CryCilRMIParameters, eNRT_ReliableUnordered);
+	DECLARE_CLIENT_RMI_INDEPENDENT(clReliableIndependentCryCilRmi, CryCilRMIParameters, eNRT_ReliableUnordered);
+
+	DECLARE_SERVER_RMI_NOATTACH_FAST(svFastUnreliableNoAttachCryCilRmi, CryCilRMIParameters, eNRT_UnreliableUnordered);
+	DECLARE_CLIENT_RMI_NOATTACH_FAST(clFastUnreliableNoAttachCryCilRmi, CryCilRMIParameters, eNRT_UnreliableUnordered);
+
+	DECLARE_SERVER_RMI_URGENT(svUnreliableUrgentCryCilRmi, CryCilRMIParameters, eNRT_UnreliableUnordered);
+	DECLARE_CLIENT_RMI_URGENT(clUnreliableUrgentCryCilRmi, CryCilRMIParameters, eNRT_UnreliableUnordered);
+
+	DECLARE_SERVER_RMI_INDEPENDENT(svUnreliableIndependentCryCilRmi, CryCilRMIParameters, eNRT_UnreliableUnordered);
+	DECLARE_CLIENT_RMI_INDEPENDENT(clUnreliableIndependentCryCilRmi, CryCilRMIParameters, eNRT_UnreliableUnordered);
+
+	//! Invokes RMI method that is specified by the params object.
+	bool ReceiveRmiCall(CryCilRMIParameters *params);
 };
 
 //! Attempts to acquire an object that allows the entity to communicate with CryCIL.
