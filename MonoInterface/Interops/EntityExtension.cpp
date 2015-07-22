@@ -284,3 +284,57 @@ ComponentEventPriority MonoEntityExtension::GetEventPriority(const int eventID) 
 	return EEntityEventPriority::EEntityEventPriority_GameObject;
 }
 
+IMonoClass *GetRmiParamsClass()
+{
+	return MonoEnv->Cryambly->GetClass("CryCil.Engine.Logic", "RmiParameters");
+}
+
+MonoEntityExtension::CryCilRMIParameters::CryCilRMIParameters()
+	: methodName(nullptr)
+	, target(INVALID_ENTITYID)
+	, arguments(nullptr)
+	, typeId(nullptr)
+{}
+
+MonoEntityExtension::CryCilRMIParameters::CryCilRMIParameters(const char *methodName, mono::object args, EntityId target,
+															  const char *typeId)
+															  : methodName(methodName)
+															  , arguments(args)
+															  , target(target)
+															  , typeId(typeId)
+{}
+
+typedef mono::object(__stdcall *AcquireArgumentsReceptorThunk)(mono::string, mono::exception *);
+
+void MonoEntityExtension::CryCilRMIParameters::SerializeWith(TSerialize ser)
+{
+	static AcquireArgumentsReceptorThunk acquireReceptor = (AcquireArgumentsReceptorThunk)
+		GetRmiParamsClass()->GetFunction("AcquireReceptor", 2)->UnmanagedThunk;
+
+	// Synchronize the name and identifier of the target entity so we can identify the type of argument object on reception.
+	ser.Value("method", this->methodName);
+	ser.Value("target", this->target, 'eid');
+	ser.Value("typeId", this->typeId);
+
+	if (this->typeId.length() <= 0)
+	{
+		// No arguments here.
+		return;
+	}
+
+	if (this->arguments == nullptr)
+	{
+		// We are receiving the data, therefore we need to get the object that will hold received data.
+		mono::exception ex;
+		this->arguments = IMonoObject(acquireReceptor(ToMonoString(this->typeId.c_str()), &ex));
+		if (ex)
+		{
+			MonoEnv->HandleException(ex);
+			return;
+		}
+	}
+
+	// Synchronize the arguments.
+	void *param = *(ISerialize **)&ser;
+	GetRmiParamsClass()->GetFunction("Synchronize", 1)->ToInstance()->Invoke(this->arguments, &param, nullptr, true);
+}

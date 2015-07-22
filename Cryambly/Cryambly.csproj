@@ -119,6 +119,7 @@
     <Compile Include="Engine\Logic\Entities\EntitySystem.cs" />
     <Compile Include="Engine\Logic\Entities\MonoEntity.cs" />
     <Compile Include="Engine\Logic\Entities\Networking\MonoNetEntity.cs" />
+    <Compile Include="Engine\Logic\Entities\Networking\RmiParameters.cs" />
     <Compile Include="Engine\Logic\FlowGraph\ActivationSet.cs" />
     <Compile Include="Engine\Logic\FlowGraph\FlowData.cs" />
     <Compile Include="Engine\Logic\FlowGraph\FlowNode.cs" />
@@ -252,6 +253,7 @@
     <Compile Include="RunTime\DefaultInitializationStages.cs" />
     <Compile Include="RunTime\Registration\EntityRegistry.cs" />
     <Compile Include="RunTime\Registration\FlowNodeTypeRegistry.cs" />
+    <Compile Include="RunTime\Registration\RmiParametersRegistry.cs" />
     <Compile Include="Utilities\CryXmlNode.Attributes.cs" />
     <Compile Include="Utilities\CryXmlNode.cs" />
     <Compile Include="GeneralExtensions.cs" />

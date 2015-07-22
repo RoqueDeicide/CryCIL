@@ -47,6 +47,23 @@ public:
 	bool         IsInitialized();
 	mono::object GetManagedWrapper() { return this->objHandle.Object; }
 	__declspec(property(get = GetManagedWrapper)) mono::object MonoWrapper;
+	//! Encapsulates name of a method that should be invoked remotely, identifier of the entity that is a target of
+	//! invocation and a set of arguments that will be passed to the method.
+	struct CryCilRMIParameters
+	{
+	private:
+		string methodName;
+		IMonoObject arguments;
+		EntityId target;
+		string typeId;
+	public:
+		//! Creates a new object that will receive the arguments for remote invocation from the network.
+		CryCilRMIParameters();
+		//! Creates a new object that will send the arguments for remote invocation across the network.
+		CryCilRMIParameters(const char *methodName, mono::object args, EntityId target, const char *typeId);
+		//! Performs synchronization of arguments.
+		void SerializeWith(TSerialize ser);
+	};
 };
 
 //! Attempts to acquire an object that allows the entity to communicate with CryCIL.
