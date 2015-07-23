@@ -252,9 +252,22 @@ bool MonoEntityExtension::NetSerialize(TSerialize ser, EEntityAspects aspect, ui
 	return false;
 }
 
+typedef void(__stdcall *UpdateEntityThunk)(mono::object, SEntityUpdateContext&, mono::exception *);
+
 void MonoEntityExtension::Update(SEntityUpdateContext& ctx, int updateSlot)
 {
+	static UpdateEntityThunk update = (UpdateEntityThunk)
+		GetMonoEntityClass()->GetFunction("UpdateInternal")->UnmanagedThunk;
 
+	if (mono::object o = this->MonoWrapper)
+	{
+		mono::exception ex;
+		update(o, ctx, &ex);
+		if (ex)
+		{
+			MonoEnv->HandleException(ex);
+		}
+	}
 }
 
 void MonoEntityExtension::SetChannelId(uint16 id)
@@ -272,9 +285,22 @@ void MonoEntityExtension::SetChannelId(uint16 id)
 	}
 }
 
+typedef void(__stdcall *PostUpdateEntityThunk)(mono::object, mono::exception *);
+
 void MonoEntityExtension::PostUpdate(float frameTime)
 {
+	static PostUpdateEntityThunk update = (PostUpdateEntityThunk)
+		GetMonoEntityClass()->GetFunction("PostUpdateInternal")->UnmanagedThunk;
 
+	if (mono::object o = this->MonoWrapper)
+	{
+		mono::exception ex;
+		update(o, &ex);
+		if (ex)
+		{
+			MonoEnv->HandleException(ex);
+		}
+	}
 }
 
 typedef int ComponentEventPriority;

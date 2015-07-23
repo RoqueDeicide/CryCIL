@@ -148,12 +148,33 @@ namespace CryCil.Engine.Logic
 			return true;
 		}
 		/// <summary>
-		/// Synchronizes the state of this entity with its representation in other place (e.g. a save game file).
+		/// Synchronizes the state of this entity with its representation in other place (e.g. a save game
+		/// file).
 		/// </summary>
-		/// <param name="sync">   Object that handles synchronization.</param>
+		/// <param name="sync">Object that handles synchronization.</param>
 		public abstract void Synchronize(CrySync sync);
+		/// <summary>
+		/// When implemented in derived class updates logical state of this entity.
+		/// </summary>
+		/// <param name="context">The most up-to-date information for this frame.</param>
+		public abstract void Update(ref EntityUpdateContext context);
+		/// <summary>
+		/// When implemented in derived class updates logical state of this entity after most other stuff
+		/// is updated.
+		/// </summary>
+		public abstract void PostUpdate();
 		#endregion
 		#region Utilities
+		[UnmanagedThunk("Updates this object.")]
+		private void UpdateInternal(ref EntityUpdateContext context)
+		{
+			this.Update(ref context);
+		}
+		[UnmanagedThunk("Post-updates this object.")]
+		private void PostUpdateInternal()
+		{
+			this.PostUpdate();
+		}
 		[UnmanagedThunk("Releases this object when the entity is removed by CryEngine.")]
 		private void DisposeInternal()
 		{

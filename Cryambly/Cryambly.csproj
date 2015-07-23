@@ -117,6 +117,7 @@
     <Compile Include="Engine\Logic\Entities\EditablePropertyType.cs" />
     <Compile Include="Engine\Logic\Entities\EntitySpawnParameters.cs" />
     <Compile Include="Engine\Logic\Entities\EntitySystem.cs" />
+    <Compile Include="Engine\Logic\Entities\EntityUpdateContext.cs" />
     <Compile Include="Engine\Logic\Entities\MonoEntity.cs" />
     <Compile Include="Engine\Logic\Entities\Networking\MonoNetEntity.cs" />
     <Compile Include="Engine\Logic\Entities\Networking\MonoNetEntity.RMI.cs" />
