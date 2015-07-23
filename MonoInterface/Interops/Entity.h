@@ -73,4 +73,6 @@ struct NetEntityInterop : public IMonoInterop<true, true>
 	virtual void OnRunTimeInitialized() override;
 
 	static void SetChannelId(EntityId entityId, ushort channelId);
+	static void InvokeRmi(EntityId sender, mono::string methodName, mono::object parameters, uint32 _where, int channel,
+						  int rmiType);
 };

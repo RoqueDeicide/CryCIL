@@ -4,6 +4,13 @@ using System.Runtime.Serialization;
 namespace CryCil.Engine.Logic
 {
 	/// <summary>
+	/// Enumeration of errors that can cause <see cref="RmiException"/> to be thrown.
+	/// </summary>
+	public enum RmiError
+	{
+
+	}
+	/// <summary>
 	/// Represents an exception that is thrown when an error happens during sending/receiving of RMI calls.
 	/// </summary>
 	[Serializable]

@@ -449,6 +449,7 @@ IEntity *EntitySystemInterop::SpawnCryEntity(MonoEntitySpawnParams parameters)
 void NetEntityInterop::OnRunTimeInitialized()
 {
 	REGISTER_METHOD(SetChannelId);
+	REGISTER_METHOD(InvokeRmi);
 }
 
 void NetEntityInterop::SetChannelId(EntityId entityId, ushort channelId)
@@ -460,3 +461,140 @@ void NetEntityInterop::SetChannelId(EntityId entityId, ushort channelId)
 		gameObject->SetChannelId(channelId);
 	}
 }
+
+enum CryCilRmiType
+{
+	// Attachment flags.
+	crycil_PreAttach = 1,
+	crycil_PostAttach = 2,
+	crycil_NoAttach = 3,
+	crycil_Urgent = 4,
+	crycil_Independent = 5,
+
+	crycil_AttachmentMask = crycil_PreAttach | crycil_PostAttach | crycil_NoAttach | crycil_Urgent | crycil_Independent,
+	// Reliability flags.
+	crycil_Reliable = 1 << 3,
+	// Is Server.
+	crycil_ToServer = 1 << 4,
+	// Is Fast
+	crycil_LowDelay = 1 << 5,
+
+	crycil_PreAttachServer = crycil_PreAttach | crycil_ToServer,
+	crycil_PreAttachClient = crycil_PreAttach,
+	crycil_PostAttachServer = crycil_PostAttach | crycil_ToServer,
+	crycil_PostAttachClient = crycil_PostAttach,
+	crycil_ReliableNoAttachServer = crycil_Reliable | crycil_NoAttach | crycil_ToServer,
+	crycil_ReliableNoAttachClient = crycil_Reliable | crycil_NoAttach,
+	crycil_UnreliableNoAttachServer = crycil_NoAttach | crycil_ToServer,
+	crycil_UnreliableNoAttachClient = crycil_NoAttach,
+
+	crycil_FastPreAttachServer = crycil_LowDelay | crycil_PreAttach | crycil_ToServer,
+	crycil_FastPreAttachClient = crycil_LowDelay | crycil_PreAttach,
+	crycil_FastPostAttachServer = crycil_LowDelay | crycil_PostAttach | crycil_ToServer,
+	crycil_FastPostAttachClient = crycil_LowDelay | crycil_PostAttach,
+	crycil_FastReliableNoAttachServer = crycil_LowDelay | crycil_Reliable | crycil_NoAttach | crycil_ToServer,
+	crycil_FastReliableNoAttachClient = crycil_LowDelay | crycil_Reliable | crycil_NoAttach,
+	crycil_FastUnreliableNoAttachServer = crycil_LowDelay | crycil_NoAttach | crycil_ToServer,
+	crycil_FastUnreliableNoAttachClient = crycil_LowDelay | crycil_NoAttach,
+
+	crycil_ReliableUrgentServer = crycil_Reliable | crycil_Urgent | crycil_ToServer,
+	crycil_ReliableUrgentClient = crycil_Reliable | crycil_Urgent,
+	crycil_UnreliableUrgentServer = crycil_Urgent | crycil_ToServer,
+	crycil_UnreliableUrgentClient = crycil_Urgent,
+
+	crycil_ReliableIndependentServer = crycil_Reliable | crycil_Independent | crycil_ToServer,
+	crycil_ReliableIndependentClient = crycil_Reliable | crycil_Independent,
+	crycil_UnreliableIndependentServer = crycil_Independent | crycil_ToServer,
+	crycil_UnreliableIndependentClient = crycil_Independent
+};
+
+#define INVOKE_CRYCIL_RMI(name) gameObject->InvokeRMI(MonoEntityExtension::name, params, _where, channel);
+
+void NetEntityInterop::InvokeRmi(EntityId sender, mono::string methodName, mono::object parameters, uint32 _where, int channel, int rmiType)
+{
+	MonoEntityExtension::CryCilRMIParameters params
+		(NtText(methodName), MonoEnv->GC->Keep(parameters), IMonoObject(parameters).Class->FullName);
+
+	IGameObject *gameObject = MonoEnv->CryAction->GetGameObject(sender);
+	CryCilRmiType type = (CryCilRmiType)rmiType;
+
+	switch (type)
+	{
+	case crycil_PreAttachServer:
+		INVOKE_CRYCIL_RMI(svPreAttachCryCilRmi);
+		break;
+	case crycil_PreAttachClient:
+		INVOKE_CRYCIL_RMI(clPreAttachCryCilRmi);
+		break;
+	case crycil_PostAttachServer:
+		INVOKE_CRYCIL_RMI(svPostAttachCryCilRmi);
+		break;
+	case crycil_PostAttachClient:
+		INVOKE_CRYCIL_RMI(clPostAttachCryCilRmi);
+		break;
+	case crycil_ReliableNoAttachServer:
+		INVOKE_CRYCIL_RMI(svReliableNoAttachCryCilRmi);
+		break;
+	case crycil_ReliableNoAttachClient:
+		INVOKE_CRYCIL_RMI(clReliableNoAttachCryCilRmi);
+		break;
+	case crycil_UnreliableNoAttachServer:
+		INVOKE_CRYCIL_RMI(svUnreliableNoAttachCryCilRmi);
+		break;
+	case crycil_UnreliableNoAttachClient:
+		INVOKE_CRYCIL_RMI(clUnreliableNoAttachCryCilRmi);
+		break;
+	case crycil_FastPreAttachServer:
+		INVOKE_CRYCIL_RMI(svFastPreAttachCryCilRmi);
+		break;
+	case crycil_FastPreAttachClient:
+		INVOKE_CRYCIL_RMI(clFastPreAttachCryCilRmi);
+		break;
+	case crycil_FastPostAttachServer:
+		INVOKE_CRYCIL_RMI(svFastPostAttachCryCilRmi);
+		break;
+	case crycil_FastPostAttachClient:
+		INVOKE_CRYCIL_RMI(clFastPostAttachCryCilRmi);
+		break;
+	case crycil_FastReliableNoAttachServer:
+		INVOKE_CRYCIL_RMI(svFastReliableNoAttachCryCilRmi);
+		break;
+	case crycil_FastReliableNoAttachClient:
+		INVOKE_CRYCIL_RMI(clFastReliableNoAttachCryCilRmi);
+		break;
+	case crycil_FastUnreliableNoAttachServer:
+		INVOKE_CRYCIL_RMI(svFastUnreliableNoAttachCryCilRmi);
+		break;
+	case crycil_FastUnreliableNoAttachClient:
+		INVOKE_CRYCIL_RMI(clFastUnreliableNoAttachCryCilRmi);
+		break;
+	case crycil_ReliableUrgentServer:
+		INVOKE_CRYCIL_RMI(svReliableUrgentCryCilRmi);
+		break;
+	case crycil_ReliableUrgentClient:
+		INVOKE_CRYCIL_RMI(clReliableUrgentCryCilRmi);
+		break;
+	case crycil_UnreliableUrgentServer:
+		INVOKE_CRYCIL_RMI(svUnreliableUrgentCryCilRmi);
+		break;
+	case crycil_UnreliableUrgentClient:
+		INVOKE_CRYCIL_RMI(clUnreliableUrgentCryCilRmi);
+		break;
+	case crycil_ReliableIndependentServer:
+		INVOKE_CRYCIL_RMI(svReliableIndependentCryCilRmi);
+		break;
+	case crycil_ReliableIndependentClient:
+		INVOKE_CRYCIL_RMI(clReliableIndependentCryCilRmi);
+		break;
+	case crycil_UnreliableIndependentServer:
+		INVOKE_CRYCIL_RMI(svUnreliableIndependentCryCilRmi);
+		break;
+	case crycil_UnreliableIndependentClient:
+		INVOKE_CRYCIL_RMI(clUnreliableIndependentCryCilRmi);
+		break;
+	default:
+		break;
+	}
+}
+
+#undef INVOKE_CRYCIL_RMI

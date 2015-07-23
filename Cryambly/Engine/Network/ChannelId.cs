@@ -19,7 +19,13 @@ namespace CryCil.Engine.Network
 		private ushort id;
 		#endregion
 		#region Properties
-
+		/// <summary>
+		/// Determines whether this identifier is valid.
+		/// </summary>
+		public bool IsValid
+		{
+			get { return this.id == 0; }
+		}
 		#endregion
 		#region Events
 
@@ -35,7 +41,15 @@ namespace CryCil.Engine.Network
 		}
 		#endregion
 		#region Interface
-
+		/// <summary>
+		/// Implicitly converts this object to a 32-bit integer number.
+		/// </summary>
+		/// <param name="id">Object to convert.</param>
+		/// <returns>Underlying channel identifier represented by <see cref="int"/> type.</returns>
+		public static implicit operator int(ChannelId id)
+		{
+			return id.id;
+		}
 		#endregion
 		#region Utilities
 
