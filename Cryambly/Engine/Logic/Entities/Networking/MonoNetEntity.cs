@@ -94,18 +94,43 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Calls a method of this type remotely via RMI framework.
 		/// </summary>
-		/// <param name="method">Method to invoke.</param>
-		/// <param name="where">A set of flags that specifies game instances to which the call will be directed.</param>
-		/// <param name="channel">Identifier of the channel to use when calling specific client, can be left equal to -1 otherwise.</param>
-		/// <exception cref="ArgumentNullException">Method that must be invoked via RMI wasn't specified.</exception>
-		/// <exception cref="MissingMethodException">This type doesn't define the specified method.</exception>
-		/// <exception cref="MissingAttributeException">Methods must be marked with attribute of type <see cref="RMIAttribute"/> to be invoked via RMI framwork.</exception>
-		/// <exception cref="RmiException">Specified method must be called from a client game instance.</exception>
-		/// <exception cref="RmiException">Specified method call must be directed to the server.</exception>
-		/// <exception cref="RmiException">Attempt was made to call RMI and specifying that it must not be directed to both local and remote game instances.</exception>
-		/// <exception cref="RmiException">Attempt was made to call RMI on a specific client without specifying its identifier.</exception>
-		/// <exception cref="RmiException">Calling RMI on a specific client and own client is not supported.</exception>
-		/// <exception cref="RmiException">Cannot send RMI call to sender's client instance because it doesn't have client instance.</exception>
+		/// <param name="method"> Method to invoke.</param>
+		/// <param name="where">  
+		/// A set of flags that specifies game instances to which the call will be directed.
+		/// </param>
+		/// <param name="channel">
+		/// Identifier of the channel to use when calling specific client, can be left equal to -1
+		/// otherwise.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		/// Method that must be invoked via RMI wasn't specified.
+		/// </exception>
+		/// <exception cref="MissingMethodException">
+		/// This type doesn't define the specified method.
+		/// </exception>
+		/// <exception cref="MissingAttributeException">
+		/// Methods must be marked with attribute of type <see cref="RMIAttribute"/> to be invoked via RMI
+		/// framework.
+		/// </exception>
+		/// <exception cref="RmiException">
+		/// Specified method must be called from a client game instance.
+		/// </exception>
+		/// <exception cref="RmiException">
+		/// Specified method call must be directed to the server.
+		/// </exception>
+		/// <exception cref="RmiException">
+		/// Attempt was made to call RMI and specifying that it must not be directed to both local and
+		/// remote game instances.
+		/// </exception>
+		/// <exception cref="RmiException">
+		/// Attempt was made to call RMI on a specific client without specifying its identifier.
+		/// </exception>
+		/// <exception cref="RmiException">
+		/// Calling RMI on a specific client and own client is not supported.
+		/// </exception>
+		/// <exception cref="RmiException">
+		/// Cannot send RMI call to sender's client instance because it doesn't have client instance.
+		/// </exception>
 		[ContractAnnotation("method:null => halt")]
 		public void CallRmi(Func<bool> method, RmiTarget where, int channel = -1)
 		{
@@ -131,20 +156,49 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Calls a method of this type remotely via RMI framework.
 		/// </summary>
-		/// <param name="method">Method to invoke.</param>
-		/// <param name="where">A set of flags that specifies game instances to which the call will be directed.</param>
-		/// <param name="parameters">An object that handles transfer of additional RMI data, if needed.</param>
-		/// <param name="channel">Identifier of the channel to use when calling specific client, can be left equal to -1 otherwise.</param>
-		/// <exception cref="ArgumentNullException">Method that must be invoked via RMI wasn't specified.</exception>
-		/// <exception cref="ArgumentNullException">Parameters for the method that must be invoked via RMI weren't specified.</exception>
-		/// <exception cref="MissingMethodException">This type doesn't define the specified method.</exception>
-		/// <exception cref="MissingAttributeException">Methods must be marked with attribute of type <see cref="RMIAttribute"/> to be invoked via RMI framwork.</exception>
-		/// <exception cref="RmiException">Specified method must be called from a client game instance.</exception>
-		/// <exception cref="RmiException">Specified method call must be directed to the server.</exception>
-		/// <exception cref="RmiException">Attempt was made to call RMI and specifying that it must not be directed to both local and remote game instances.</exception>
-		/// <exception cref="RmiException">Attempt was made to call RMI on a specific client without specifying its identifier.</exception>
-		/// <exception cref="RmiException">Calling RMI on a specific client and own client is not supported.</exception>
-		/// <exception cref="RmiException">Cannot send RMI call to sender's client instance because it doesn't have client instance.</exception>
+		/// <param name="method">    Method to invoke.</param>
+		/// <param name="where">     
+		/// A set of flags that specifies game instances to which the call will be directed.
+		/// </param>
+		/// <param name="parameters">
+		/// An object that handles transfer of additional RMI data, if needed.
+		/// </param>
+		/// <param name="channel">   
+		/// Identifier of the channel to use when calling specific client, can be left equal to -1
+		/// otherwise.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		/// Method that must be invoked via RMI wasn't specified.
+		/// </exception>
+		/// <exception cref="ArgumentNullException">
+		/// Parameters for the method that must be invoked via RMI weren't specified.
+		/// </exception>
+		/// <exception cref="MissingMethodException">
+		/// This type doesn't define the specified method.
+		/// </exception>
+		/// <exception cref="MissingAttributeException">
+		/// Methods must be marked with attribute of type <see cref="RMIAttribute"/> to be invoked via RMI
+		/// framework.
+		/// </exception>
+		/// <exception cref="RmiException">
+		/// Specified method must be called from a client game instance.
+		/// </exception>
+		/// <exception cref="RmiException">
+		/// Specified method call must be directed to the server.
+		/// </exception>
+		/// <exception cref="RmiException">
+		/// Attempt was made to call RMI and specifying that it must not be directed to both local and
+		/// remote game instances.
+		/// </exception>
+		/// <exception cref="RmiException">
+		/// Attempt was made to call RMI on a specific client without specifying its identifier.
+		/// </exception>
+		/// <exception cref="RmiException">
+		/// Calling RMI on a specific client and own client is not supported.
+		/// </exception>
+		/// <exception cref="RmiException">
+		/// Cannot send RMI call to sender's client instance because it doesn't have client instance.
+		/// </exception>
 		[ContractAnnotation("parameters:null => halt")]
 		[ContractAnnotation("method:null => halt")]
 		public void CallRmi<RmiParametersType>(Func<RmiParametersType, bool> method, RmiTarget where,
@@ -178,24 +232,63 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Calls a method of this type remotely via RMI framework.
 		/// </summary>
-		/// <param name="method">Method to invoke.</param>
-		/// <param name="where">A set of flags that specifies game instances to which the call will be directed.</param>
-		/// <param name="parameters">An object that handles transfer of additional RMI data, if needed.</param>
-		/// <param name="channel">Identifier of the channel to use when calling specific client, can be left equal to -1 otherwise.</param>
-		/// <exception cref="ArgumentNullException">Method that must be invoked via RMI wasn't specified.</exception>
-		/// <exception cref="MissingMethodException">This type doesn't define the specified method.</exception>
-		/// <exception cref="ArgumentException">Specified method must return boolean value to be invoked via RMI framwork.</exception>
-		/// <exception cref="ArgumentException">Specified method doesn't accept any arguments, but it was invoked with non-null <paramref name="parameters"/> object.</exception>
-		/// <exception cref="ArgumentException">Specified method accepts parameters, but it was invoked without them.</exception>
-		/// <exception cref="ArgumentException">Methods that accept more then 1 parameter cannot be invoked via RMI framwork.</exception>
-		/// <exception cref="ArgumentException">Methods must accept 1 parameter of type that derives from <see cref="RmiParameters"/> to be invoked via RMI framwork.</exception>
-		/// <exception cref="MissingAttributeException">Methods must be marked with attribute of type <see cref="RMIAttribute"/> to be invoked via RMI framwork.</exception>
-		/// <exception cref="RmiException">Specified method must be called from a client game instance.</exception>
-		/// <exception cref="RmiException">Specified method call must be directed to the server.</exception>
-		/// <exception cref="RmiException">Attempt was made to call RMI and specifying that it must not be directed to both local and remote game instances.</exception>
-		/// <exception cref="RmiException">Attempt was made to call RMI on a specific client without specifying its identifier.</exception>
-		/// <exception cref="RmiException">Calling RMI on a specific client and own client is not supported.</exception>
-		/// <exception cref="RmiException">Cannot send RMI call to sender's client instance because it doesn't have client instance.</exception>
+		/// <param name="method">    Method to invoke.</param>
+		/// <param name="where">     
+		/// A set of flags that specifies game instances to which the call will be directed.
+		/// </param>
+		/// <param name="parameters">
+		/// An object that handles transfer of additional RMI data, if needed.
+		/// </param>
+		/// <param name="channel">   
+		/// Identifier of the channel to use when calling specific client, can be left equal to -1
+		/// otherwise.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		/// Method that must be invoked via RMI wasn't specified.
+		/// </exception>
+		/// <exception cref="MissingMethodException">
+		/// This type doesn't define the specified method.
+		/// </exception>
+		/// <exception cref="ArgumentException">
+		/// Specified method must return boolean value to be invoked via RMI framework.
+		/// </exception>
+		/// <exception cref="ArgumentException">
+		/// Specified method doesn't accept any arguments, but it was invoked with non-null
+		/// <paramref name="parameters"/> object.
+		/// </exception>
+		/// <exception cref="ArgumentException">
+		/// Specified method accepts parameters, but it was invoked without them.
+		/// </exception>
+		/// <exception cref="ArgumentException">
+		/// Methods that accept more then 1 parameter cannot be invoked via RMI framework.
+		/// </exception>
+		/// <exception cref="ArgumentException">
+		/// Methods must accept 1 parameter of type that derives from <see cref="RmiParameters"/> to be
+		/// invoked via RMI framework.
+		/// </exception>
+		/// <exception cref="MissingAttributeException">
+		/// Methods must be marked with attribute of type <see cref="RMIAttribute"/> to be invoked via RMI
+		/// framework.
+		/// </exception>
+		/// <exception cref="RmiException">
+		/// Specified method must be called from a client game instance.
+		/// </exception>
+		/// <exception cref="RmiException">
+		/// Specified method call must be directed to the server.
+		/// </exception>
+		/// <exception cref="RmiException">
+		/// Attempt was made to call RMI and specifying that it must not be directed to both local and
+		/// remote game instances.
+		/// </exception>
+		/// <exception cref="RmiException">
+		/// Attempt was made to call RMI on a specific client without specifying its identifier.
+		/// </exception>
+		/// <exception cref="RmiException">
+		/// Calling RMI on a specific client and own client is not supported.
+		/// </exception>
+		/// <exception cref="RmiException">
+		/// Cannot send RMI call to sender's client instance because it doesn't have client instance.
+		/// </exception>
 		[ContractAnnotation("method:null => halt")]
 		public void CallRmi(MethodInfo method, RmiTarget where, RmiParameters parameters = null, int channel = -1)
 		{
@@ -221,23 +314,62 @@ namespace CryCil.Engine.Logic
 		/// Calls a method of this type remotely via RMI framework.
 		/// </summary>
 		/// <param name="methodName">Name of the method to invoke.</param>
-		/// <param name="where">A set of flags that specifies game instances to which the call will be directed.</param>
-		/// <param name="parameters">An object that handles transfer of additional RMI data, if needed.</param>
-		/// <param name="channel">Identifier of the channel to use when calling specific client, can be left equal to -1 otherwise.</param>
-		/// <exception cref="ArgumentNullException">Name of the method that must be invoked via RMI wasn't specified.</exception>
-		/// <exception cref="MissingMethodException">This type doesn't define the method with given name.</exception>
-		/// <exception cref="ArgumentException">Specified method must return boolean value to be invoked via RMI framwork.</exception>
-		/// <exception cref="ArgumentException">Specified method doesn't accept any arguments, but it was invoked with non-null <paramref name="parameters"/> object.</exception>
-		/// <exception cref="ArgumentException">Specified method accepts parameters, but it was invoked without them.</exception>
-		/// <exception cref="ArgumentException">Methods that accept more then 1 parameter cannot be invoked via RMI framwork.</exception>
-		/// <exception cref="ArgumentException">Methods must accept 1 parameter of type that derives from <see cref="RmiParameters"/> to be invoked via RMI framwork.</exception>
-		/// <exception cref="MissingAttributeException">Methods must be marked with attribute of type <see cref="RMIAttribute"/> to be invoked via RMI framwork.</exception>
-		/// <exception cref="RmiException">Specified method must be called from a client game instance.</exception>
-		/// <exception cref="RmiException">Specified method call must be directed to the server.</exception>
-		/// <exception cref="RmiException">Attempt was made to call RMI and specifying that it must not be directed to both local and remote game instances.</exception>
-		/// <exception cref="RmiException">Attempt was made to call RMI on a specific client without specifying its identifier.</exception>
-		/// <exception cref="RmiException">Calling RMI on a specific client and own client is not supported.</exception>
-		/// <exception cref="RmiException">Cannot send RMI call to sender's client instance because it doesn't have client instance.</exception>
+		/// <param name="where">     
+		/// A set of flags that specifies game instances to which the call will be directed.
+		/// </param>
+		/// <param name="parameters">
+		/// An object that handles transfer of additional RMI data, if needed.
+		/// </param>
+		/// <param name="channel">   
+		/// Identifier of the channel to use when calling specific client, can be left equal to -1
+		/// otherwise.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		/// Name of the method that must be invoked via RMI wasn't specified.
+		/// </exception>
+		/// <exception cref="MissingMethodException">
+		/// This type doesn't define the method with given name.
+		/// </exception>
+		/// <exception cref="ArgumentException">
+		/// Specified method must return boolean value to be invoked via RMI framework.
+		/// </exception>
+		/// <exception cref="ArgumentException">
+		/// Specified method doesn't accept any arguments, but it was invoked with non-null
+		/// <paramref name="parameters"/> object.
+		/// </exception>
+		/// <exception cref="ArgumentException">
+		/// Specified method accepts parameters, but it was invoked without them.
+		/// </exception>
+		/// <exception cref="ArgumentException">
+		/// Methods that accept more then 1 parameter cannot be invoked via RMI framework.
+		/// </exception>
+		/// <exception cref="ArgumentException">
+		/// Methods must accept 1 parameter of type that derives from <see cref="RmiParameters"/> to be
+		/// invoked via RMI framework.
+		/// </exception>
+		/// <exception cref="MissingAttributeException">
+		/// Methods must be marked with attribute of type <see cref="RMIAttribute"/> to be invoked via RMI
+		/// framework.
+		/// </exception>
+		/// <exception cref="RmiException">
+		/// Specified method must be called from a client game instance.
+		/// </exception>
+		/// <exception cref="RmiException">
+		/// Specified method call must be directed to the server.
+		/// </exception>
+		/// <exception cref="RmiException">
+		/// Attempt was made to call RMI and specifying that it must not be directed to both local and
+		/// remote game instances.
+		/// </exception>
+		/// <exception cref="RmiException">
+		/// Attempt was made to call RMI on a specific client without specifying its identifier.
+		/// </exception>
+		/// <exception cref="RmiException">
+		/// Calling RMI on a specific client and own client is not supported.
+		/// </exception>
+		/// <exception cref="RmiException">
+		/// Cannot send RMI call to sender's client instance because it doesn't have client instance.
+		/// </exception>
 		[ContractAnnotation("methodName:null => halt")]
 		public void CallRmi(string methodName, RmiTarget where, RmiParameters parameters = null, int channel = -1)
 		{
@@ -254,7 +386,7 @@ namespace CryCil.Engine.Logic
 															   type.FullName, methodName));
 			}
 			int rmiType = this.ValidateRmiMethod(method, parameters, where, true, true);
-			
+
 			this.ValidateRmiTarget(where, channel);
 
 			Contract.EndContractBlock();
@@ -304,7 +436,7 @@ namespace CryCil.Engine.Logic
 						string.Format("Method {0} of type {1} accept one parameter of type that derives from {2} to be called " +
 									  "via RMI framework.",
 									  methodName, type.FullName, typeof(RmiParameters).FullName));
-				} 
+				}
 			}
 			RMIAttribute attribute = method.GetAttribute<RMIAttribute>();
 			if (attribute == null)
@@ -423,7 +555,7 @@ namespace CryCil.Engine.Logic
 			}
 			try
 			{
-				return (bool)method.Invoke(this, parameters != null ? new object[] {parameters} : null);
+				return (bool)method.Invoke(this, parameters != null ? new object[] { parameters } : null);
 			}
 			catch (ArgumentException ex)
 			{
