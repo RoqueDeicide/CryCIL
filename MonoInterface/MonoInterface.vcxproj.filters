@@ -638,6 +638,15 @@
     <ClCompile Include="Interops\Game.cpp">
       <Filter>Interops</Filter>
     </ClCompile>
+    <ClCompile Include="TypeMapChecks\RmiTargetEnum.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\EntityAspects.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\EntityUpdateContext.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">
