@@ -318,13 +318,21 @@ namespace CryCil.Engine.Logic
 			}
 			if (attribute.ToServer && !Game.IsClient)
 			{
-				throw new RmiException(string.Format("Method {0} of type {1} must be called from a client game instance.",
-													 methodName, type.FullName));
+				throw new RmiException
+				(
+					RmiError.IsNotClient,
+					string.Format("Method {0} of type {1} must be called from a client game instance.",
+								  methodName, type.FullName)
+				);
 			}
 			if (attribute.ToServer && !where.HasFlag(RmiTarget.ToServer))
 			{
-				throw new RmiException(string.Format("RMI call of the method {0} of type {1} must be directed to the server.",
-													 methodName, type.FullName));
+				throw new RmiException
+				(
+					RmiError.NotDirectedToServer,
+					string.Format("RMI call of the method {0} of type {1} must be directed to the server.",
+								  methodName, type.FullName)
+				);
 			}
 
 			return (int)attribute.type;
@@ -333,23 +341,26 @@ namespace CryCil.Engine.Logic
 		{
 			if (where.HasFlag(RmiTarget.NoCall))
 			{
-				throw new RmiException("Attempt was made to call RMI and specifying that it must not be directed to both " +
-									   "local and remote game instances.");
+				throw new RmiException(RmiError.NoAllowedCalls, "Attempt was made to call RMI and specifying that it must " +
+																"not be directed to both local and remote game instances.");
 			}
 			if (where.HasFlag(RmiTarget.ToClientChannel))
 			{
 				if (channel <= 0)
 				{
-					throw new RmiException("Attempt was made to call RMI on a specific client without specifying its identifier.");
+					throw new RmiException(RmiError.ClientNotSpecified,
+						"Attempt was made to call RMI on a specific client without specifying its identifier.");
 				}
 				if (where.HasFlag(RmiTarget.ToOwnClient))
 				{
-					throw new RmiException("Calling RMI on a specific client and own client is not supported.");
+					throw new RmiException(RmiError.SendingToClientAndItself,
+						"Calling RMI on a specific client and own client is not supported.");
 				}
 			}
 			if (where.HasFlag(RmiTarget.ToOwnClient) && !this.channelId.IsValid)
 			{
-				throw new RmiException("Cannot send RMI call to sender's client instance because it doesn't have client instance.");
+				throw new RmiException(RmiError.SendingToItselfWithoutOwnClient,
+					"Cannot send RMI call to sender's client instance because it doesn't have client instance.");
 			}
 		}
 
