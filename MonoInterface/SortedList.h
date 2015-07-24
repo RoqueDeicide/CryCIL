@@ -42,7 +42,7 @@ class SortedList
 private:
 	List<KeyType>     keys;
 	List<ElementType> values;
-	std::function<int(KeyType, KeyType)> comparer;
+	std::function<int(KeyType&, KeyType&)> comparer;
 public:
 	//! Creates a default list.
 	SortedList()
