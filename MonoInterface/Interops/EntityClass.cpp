@@ -62,7 +62,7 @@ void MonoEntityPropertyHandler::SetProperty(IEntity *entity, int index, const ch
 
 	if (ext && ext->IsInitialized())
 	{
-		ext->SetPropertyValue(index, propInfo.type, value);
+		ext->SetPropertyValue(index, value);
 	}
 	else
 	{
@@ -81,7 +81,6 @@ void MonoEntityPropertyHandler::SetProperty(IEntity *entity, int index, const ch
 		{
 			QueuedProperty qp;
 			qp.name = propInfo.name;
-			qp.type = propInfo.type;
 			qp.value = value;
 			props.Add(qp);
 		}

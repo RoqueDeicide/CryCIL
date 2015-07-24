@@ -43,7 +43,7 @@ public:
 	//~IGameObjectExtension
 
 	const char  *GetPropertyValue(int index);
-	const char  *SetPropertyValue(int index, int type, const char *value);
+	void         SetPropertyValue(int index, const char *value);
 	bool         IsInitialized();
 	mono::object GetManagedWrapper() { return this->objHandle.Object; }
 	__declspec(property(get = GetManagedWrapper)) mono::object MonoWrapper;

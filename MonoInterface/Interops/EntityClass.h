@@ -20,7 +20,6 @@ struct NullEntityEventHandler : public IEntityEventHandler
 struct QueuedProperty
 {
 	const char *name;			//!< Name of the property.
-	int type;					//!< Type of the property.
 	const char *value;			//!< Text representation of the value of the property.
 	int index;					//!< Index of the property for fast access.
 };
