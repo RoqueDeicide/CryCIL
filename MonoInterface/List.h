@@ -240,6 +240,7 @@ public:
 		if (index == -1)
 		{
 			this->Add(item);
+			return false;
 		}
 		else
 		{
@@ -247,6 +248,7 @@ public:
 			this->elements[index] = item;
 
 			// We are not going to do anything about the overridden item: we just gonna let its destructor invoked.
+			return true;
 		}
 	}
 	//! Inserts an item into specific position within the list.

@@ -249,6 +249,7 @@ public:
 			this->~NtTextTemplate();
 		}
 		this->chars = chars;
+		return *this;
 	}
 	//! Creates a deep copy of this text.
 	//!

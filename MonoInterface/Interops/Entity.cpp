@@ -333,6 +333,7 @@ bool EntitySystemInterop::RegisterEntityClass(mono::string name, mono::string ca
 	registry->RegisterStdClass(description);
 	static MonoEntityCreator creator;
 	MonoEnv->CryAction->GetIGameObjectSystem()->RegisterExtension(className, &creator, nullptr);
+	return true;
 }
 
 void EntitySystemInterop::RemoveEntity(EntityId id, bool now)

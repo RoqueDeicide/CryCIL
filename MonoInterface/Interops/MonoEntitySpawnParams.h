@@ -62,5 +62,6 @@ struct MonoEntitySpawnParams
 		params.qRotation           = this->rotation;
 		params.vScale              = this->scale;
 		params.bStaticEntityId     = this->staticEntityId;
+		return params;
 	}
 };
