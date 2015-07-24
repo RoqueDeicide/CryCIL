@@ -44,12 +44,6 @@ struct MonoEntityProperty
 		: info(other.info)
 		, defaultValue(other.defaultValue)
 	{}
-	//! Swap constructor.
-	MonoEntityProperty(MonoEntityProperty &other)
-	{
-		std::swap(this->info, other.info);
-		std::swap(this->defaultValue, other.defaultValue);
-	}
 	SWAP_ASSIGNMENT MonoEntityProperty &operator =(MonoEntityProperty &other)
 	{
 		std::swap(this->info, other.info);
