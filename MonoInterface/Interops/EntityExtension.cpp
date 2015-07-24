@@ -388,6 +388,43 @@ bool MonoEntityExtension::ReceiveRmiCall(CryCilRMIParameters *params)
 	return success;
 }
 
+typedef mono::string(__stdcall *GetEntityPropertyValueThunk)(mono::object, int, mono::exception *);
+
+const char *MonoEntityExtension::GetPropertyValue(int index)
+{
+	static GetEntityPropertyValueThunk get = (GetEntityPropertyValueThunk)
+		GetMonoEntityClass()->GetFunction("GetEditableProperty", -1)->UnmanagedThunk;
+
+	mono::exception ex;
+	auto value = ToNativeString(get(this->MonoWrapper, index, &ex));
+	if (ex)
+	{
+		MonoEnv->HandleException(ex);
+		return "";
+	}
+	return value;
+}
+
+typedef void(__stdcall *SetEntityPropertyValueThunk)(mono::object, int, mono::string, mono::exception *);
+
+void MonoEntityExtension::SetPropertyValue(int index, const char *value)
+{
+	static SetEntityPropertyValueThunk set = (SetEntityPropertyValueThunk)
+		GetMonoEntityClass()->GetFunction("SetEditableProperty", -1)->UnmanagedThunk;
+
+	mono::exception ex;
+	set(this->MonoWrapper, index, ToMonoString(value), &ex);
+	if (ex)
+	{
+		MonoEnv->HandleException(ex);
+	}
+}
+
+bool MonoEntityExtension::IsInitialized()
+{
+	return this->objHandle.IsValid;
+}
+
 #define IMPLEMENT_CRYCIL_RMI(name) IMPLEMENT_RMI(MonoEntityExtension, name) \
 { \
 	return this->ReceiveRmiCall(const_cast<Params_##name *>(&params)); \

@@ -29,6 +29,7 @@ namespace CryCil.Engine.Logic
 	{
 		#region Fields
 		private readonly List<EntityReloadEventHandler> reloadingEventHandlers;
+		private string entityTypeName;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -39,6 +40,16 @@ namespace CryCil.Engine.Logic
 		/// Gets the underlying CryEngine entity object.
 		/// </summary>
 		public CryEntity Entity { get; private set; }
+		/// <summary>
+		/// Gets the name of entity class that represents this entity.
+		/// </summary>
+		public string EntityClassName
+		{
+			get
+			{
+				return this.entityTypeName ?? (this.entityTypeName = this.GetType().GetAttribute<EntityAttribute>().Name);
+			}
+		}
 		#endregion
 		#region Events
 		/// <summary>
@@ -76,6 +87,7 @@ namespace CryCil.Engine.Logic
 			this.Entity = handle;
 			this.Id = id;
 			this.reloadingEventHandlers = new List<EntityReloadEventHandler>();
+			this.entityTypeName = null;
 		}
 		#endregion
 		#region Interface
@@ -239,6 +251,16 @@ namespace CryCil.Engine.Logic
 		private void SyncInternal(CrySync sync)
 		{
 			this.Synchronize(sync);
+		}
+		[UnmanagedThunk("Invoked to set one of the properties.")]
+		private void SetEditableProperty(int index, string value)
+		{
+			EntityRegistry.DefinedProperties[this.EntityClassName][index].Set(this, value);
+		}
+		[UnmanagedThunk("Invoked to set one of the properties.")]
+		private string GetEditableProperty(int index)
+		{
+			return EntityRegistry.DefinedProperties[this.EntityClassName][index].Get(this);
 		}
 		#endregion
 	}
