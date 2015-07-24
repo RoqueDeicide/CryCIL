@@ -36,6 +36,12 @@ struct Face
 {
 	Vertex Vertices[3];						//!< Vertices that comprise this face.
 
+	Face()
+	{
+		this->Vertices[0] = Vertex();
+		this->Vertices[1] = Vertex();
+		this->Vertices[2] = Vertex();
+	}
 	Face(Vertex *vertices)
 	{
 		this->Vertices[0] = vertices[0];
