@@ -586,12 +586,12 @@ public:
 	}
 	//! Gets or sets number of elements within this list.
 	__declspec(property(get=GetLength)) int Length;
-	int GetLength()
+	int GetLength() const
 	{
 		return this->length;
 	}
 	//! Returns a reference to the element at specified index. No checks are performed.
-	ElementType &operator[](int index)
+	ElementType &operator[](int index) const
 	{
 		return this->elements[index];
 	}
