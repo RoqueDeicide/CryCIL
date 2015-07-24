@@ -188,7 +188,7 @@ List<NtText> EntitySystemInterop::monoEntityClassNames;
 
 bool EntitySystemInterop::IsMonoEntity(const char *className)
 {
-	return monoEntityClassNames.Find([className](NtText &name) { name.Equals(className); });
+	return monoEntityClassNames.Find([className](NtText &name) { return name.Equals(className); }) != nullptr;
 }
 
 IEntityProxyPtr EntitySystemInterop::CreateGameObjectForCryCilEntity(IEntity *pEntity, SEntitySpawnParams &params,
