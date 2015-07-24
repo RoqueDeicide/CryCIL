@@ -48,6 +48,7 @@ struct MonoEntityProperty
 	{
 		std::swap(this->info, other.info);
 		std::swap(this->defaultValue, other.defaultValue);
+		return *this;
 	}
 	~MonoEntityProperty()
 	{
