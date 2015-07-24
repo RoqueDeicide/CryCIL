@@ -379,6 +379,7 @@ bool MonoEntityExtension::ReceiveRmiCall(CryCilRMIParameters *params)
 	mono::exception ex;
 	bool success = receiveCall(this->objHandle.Object, ToMonoString(params->methodName),
 							   MonoEnv->GC->GetGCHandleTarget(params->arguments), &ex);
+	MonoEnv->GC->ReleaseGCHandle(params->arguments);			// We won't need this anymore.
 	if (ex)
 	{
 		MonoEnv->HandleException(ex);
