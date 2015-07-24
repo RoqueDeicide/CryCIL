@@ -85,3 +85,15 @@ inline void MonoWarning(const char *format, ...)
 	GetISystem()->WarningV(VALIDATOR_MODULE_GAME, VALIDATOR_WARNING, 0, nullptr, format, args);
 	va_end(args);
 }
+//! Prints out a warning that is associated with a game.
+//!
+//! This definition is needed for declaration and implementation of RMI calls.
+inline void GameWarning(const char *format, ...)
+{
+	if (!format)
+		return;
+	va_list args;
+	va_start(args, format);
+	GetISystem()->WarningV(VALIDATOR_MODULE_GAME, VALIDATOR_WARNING, 0, nullptr, format, args);
+	va_end(args);
+}
