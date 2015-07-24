@@ -4,6 +4,8 @@
 #include "IEntitySystem.h"
 #include "IEntityPoolManager.h"
 
+struct MonoEntitySpawnParams;
+
 struct EntityIdInterop : public IMonoInterop<true, true>
 {
 	virtual const char *GetName() override { return "EntityId"; }
