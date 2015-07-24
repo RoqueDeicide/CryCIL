@@ -158,7 +158,7 @@ void EventBroadcaster::OnInitializationStage(int stageIndex)
 				{
 					auto removedListener = this->latestRemovedListeners[j].Value2;
 					// Lambda function that checks whether one of the stage listeners was removed.
-					auto indexOfLookUp = [removedListener](int stageIndex, IMonoSystemListener *listener)
+					auto indexOfLookUp = [removedListener](IMonoSystemListener *&listener)
 					{
 						return listener == removedListener;
 					};
