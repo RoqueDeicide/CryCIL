@@ -390,7 +390,7 @@ bool MonoEntityExtension::ReceiveRmiCall(CryCilRMIParameters *params)
 
 #define IMPLEMENT_CRYCIL_RMI(name) IMPLEMENT_RMI(MonoEntityExtension, name) \
 { \
-	this->ReceiveRmiCall(const_cast<Params_##name *>(&params)); \
+	return this->ReceiveRmiCall(const_cast<Params_##name *>(&params)); \
 }
 
 IMPLEMENT_CRYCIL_RMI(svPreAttachCryCilRmi)
