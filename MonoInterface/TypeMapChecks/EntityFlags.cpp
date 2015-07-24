@@ -55,7 +55,7 @@ enum EntityFlagsExtended
 #define CHECK_ENUM1(x) static_assert (EntityFlags::x ## _check == EEntityFlags::x, "EEntityFlags enumeration has been changed.")
 #define CHECK_ENUM2(x) static_assert (EntityFlagsExtended::x ## _check == EEntityFlagsExtended::x, "EEntityFlagsExtended enumeration has been changed.")
 
-void Check()
+inline void Check()
 {
 	CHECK_ENUM1(ENTITY_FLAG_CASTSHADOW);
 	CHECK_ENUM1(ENTITY_FLAG_UNREMOVABLE);

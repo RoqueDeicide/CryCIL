@@ -14,7 +14,7 @@ TYPE_MIRROR enum EntityClassFlags
 
 #define CHECK_ENUM(x) static_assert (EntityClassFlags::x ## _check == EEntityClassFlags::x, "EEntityClassFlags enumeration has been changed.")
 
-void Check()
+inline void Check()
 {
 	CHECK_ENUM(ECLF_INVISIBLE);
 	CHECK_ENUM(ECLF_DEFAULT);
