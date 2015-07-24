@@ -84,7 +84,7 @@ public:
 	//! Doesn't do anything.
 	virtual void LoadArchetypeXMLProperties(const char *archetypeName, const XmlNodeRef &xml) override {}
 	//! Doesn't do anything.
-	virtual void InitArchetypeEntity(IEntity *entity, const char* archetypeName, const SEntitySpawnParams &spawnParams) override;
+	virtual void InitArchetypeEntity(IEntity *entity, const char* archetypeName, const SEntitySpawnParams &spawnParams) override {}
 	//! Gets the number of properties defined in this entity class.
 	virtual int GetPropertyCount() const override;
 	//! Gets information about a property.
@@ -111,7 +111,7 @@ public:
 	//! Gets default value of the property.
 	virtual const char *GetDefaultProperty(int index) const override;
 	//! Returns 0.
-	virtual uint32 GetScriptFlags() const override {}
+	virtual uint32 GetScriptFlags() const override { return 0; }
 	//! Doesn't do anything.
 	virtual void PropertiesChanged(IEntity *entity) override {}
 
