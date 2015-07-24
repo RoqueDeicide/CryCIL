@@ -73,7 +73,7 @@ bool MonoEntityExtension::Init(IGameObject* pGameObject)
 	for (int i = 0; i < queuedProps.Length; i++)
 	{
 		auto prop = queuedProps[i];
-		this->SetPropertyValue(prop.index, prop.type, prop.value);
+		this->SetPropertyValue(prop.index, prop.value);
 	}
 
 	raise(this->objHandle.Object, &ex);
