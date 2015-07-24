@@ -59,27 +59,27 @@ void EventBroadcaster::SetInterface(IMonoInterface *inter)
 //! Broadcasts PreInitialization event.
 void EventBroadcaster::OnPreInitialization()
 {
-	this->SendSimpleEvent(IMonoSystemListener::OnPreInitialization);
+	this->SendSimpleEvent(&IMonoSystemListener::OnPreInitialization);
 }
 //! Broadcasts RunTimeInitializing event.
 void EventBroadcaster::OnRunTimeInitializing()
 {
-	this->SendSimpleEvent(IMonoSystemListener::OnRunTimeInitializing);
+	this->SendSimpleEvent(&IMonoSystemListener::OnRunTimeInitializing);
 }
 //! Broadcasts RunTimeInitialized event.
 void EventBroadcaster::OnRunTimeInitialized()
 {
-	this->SendSimpleEvent(IMonoSystemListener::OnRunTimeInitialized);
+	this->SendSimpleEvent(&IMonoSystemListener::OnRunTimeInitialized);
 }
 //! Broadcasts CryamblyInitilizing event.
 void EventBroadcaster::OnCryamblyInitilizing()
 {
-	this->SendSimpleEvent(IMonoSystemListener::OnCryamblyInitilizing);
+	this->SendSimpleEvent(&IMonoSystemListener::OnCryamblyInitilizing);
 }
 //! Broadcasts CompilationStarting event.
 void EventBroadcaster::OnCompilationStarting()
 {
-	this->SendSimpleEvent(IMonoSystemListener::OnCompilationStarting);
+	this->SendSimpleEvent(&IMonoSystemListener::OnCompilationStarting);
 }
 //! Broadcasts CompilationComplete event.
 void EventBroadcaster::OnCompilationComplete(bool success)
@@ -178,27 +178,27 @@ void EventBroadcaster::OnInitializationStage(int stageIndex)
 //! Broadcasts CryamblyInitilized event.
 void EventBroadcaster::OnCryamblyInitilized()
 {
-	this->SendSimpleEvent(IMonoSystemListener::OnCryamblyInitilized);
+	this->SendSimpleEvent(&IMonoSystemListener::OnCryamblyInitilized);
 }
 //! Broadcasts PostInitialization event.
 void EventBroadcaster::OnPostInitialization()
 {
-	this->SendSimpleEvent(IMonoSystemListener::OnPostInitialization);
+	this->SendSimpleEvent(&IMonoSystemListener::OnPostInitialization);
 }
 //! Broadcasts Update event.
 void EventBroadcaster::Update()
 {
-	this->SendSimpleEvent(IMonoSystemListener::Update);
+	this->SendSimpleEvent(&IMonoSystemListener::Update);
 }
 //! Broadcasts PostUpdate event.
 void EventBroadcaster::PostUpdate()
 {
-	this->SendSimpleEvent(IMonoSystemListener::PostUpdate);
+	this->SendSimpleEvent(&IMonoSystemListener::PostUpdate);
 }
 //! Broadcasts Shutdown event.
 void EventBroadcaster::Shutdown()
 {
-	this->SendSimpleEvent(IMonoSystemListener::Shutdown);
+	this->SendSimpleEvent(&IMonoSystemListener::Shutdown);
 }
 
 void EventBroadcaster::SendSimpleEvent(SimpleEventHandler handler)
