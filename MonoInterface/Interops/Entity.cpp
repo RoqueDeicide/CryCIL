@@ -509,7 +509,7 @@ enum CryCilRmiType
 	crycil_UnreliableIndependentClient = crycil_Independent
 };
 
-#define INVOKE_CRYCIL_RMI(name) gameObject->InvokeRMI(MonoEntityExtension::name, params, _where, channel);
+#define INVOKE_CRYCIL_RMI(name) gameObject->InvokeRMI(MonoEntityExtension::name(), params, _where, channel);
 
 void NetEntityInterop::InvokeRmi(EntityId sender, mono::string methodName, mono::object parameters, uint32 _where, int channel, int rmiType)
 {
