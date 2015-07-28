@@ -265,12 +265,9 @@ struct MonoEntityCreator : public IGameObjectExtensionCreatorBase
 	}
 };
 
-bool _true = true;		//!< Used when registering new entity classes to avoid heap-allocating new boolean values.
-bool _false = false;	//!< Used when registering new entity classes to avoid heap-allocating new boolean values.
-
 bool EntitySystemInterop::RegisterEntityClass(mono::string name, mono::string category, mono::string editorHelper,
 										mono::string editorIcon, EEntityClassFlags flags, mono::Array properties,
-										bool networked)
+										bool networked, bool dontSyncProps)
 {
 	const char *className = ToNativeString(name);
 
@@ -328,7 +325,7 @@ bool EntitySystemInterop::RegisterEntityClass(mono::string name, mono::string ca
 	description.pPropertyHandler = new MonoEntityPropertyHandler(props);
 	// For now this all user data that will come with a class.
 	description.pUserProxyCreateFunc = CreateGameObjectForCryCilEntity;
-	description.pUserProxyData = networked ? &_true : &_false;
+	description.pUserProxyData = new MonoEntityClassUserData(networked, dontSyncProps);
 
 	registry->RegisterStdClass(description);
 	static MonoEntityCreator creator;

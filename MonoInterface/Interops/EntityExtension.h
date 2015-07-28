@@ -10,6 +10,7 @@ struct MonoEntityExtension : CGameObjectExtensionHelper<MonoEntityExtension, IGa
 private:
 	MonoGCHandle objHandle;
 	bool networking;
+	bool dontSyncProps;
 public:
 	MonoEntityExtension();
 	virtual ~MonoEntityExtension();

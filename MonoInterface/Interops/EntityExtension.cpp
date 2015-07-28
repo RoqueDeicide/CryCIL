@@ -65,7 +65,9 @@ bool MonoEntityExtension::Init(IGameObject* pGameObject)
 	}
 	this->objHandle = MonoEnv->GC->Keep(obj);
 
-	this->networking = *(bool *)pGameObject->GetUserData();
+	MonoEntityClassUserData *userData = (MonoEntityClassUserData *)pGameObject->GetUserData();
+	this->dontSyncProps = userData->dontSyncProps;
+	this->networking = userData->networked;
 	
 	// Set all queued properties.
 	auto propHandler = static_cast<MonoEntityPropertyHandler *>(entityClass->GetPropertyHandler());
@@ -612,6 +614,36 @@ void MonoEntityExtension::FullSerialize(TSerialize ser)
 
 		ser.EndGroup();
 	}
+
+	if (this->dontSyncProps)
+	{
+		return;
+	}
+
+	ser.BeginGroup("Properties");
+
+	auto entity = this->GetEntity();
+	auto propHandler = entity->GetClass()->GetPropertyHandler();
+
+	int propCount = propHandler->GetPropertyCount();
+
+	for (int i = 0; i < propCount; i++)
+	{
+		IEntityPropertyHandler::SPropertyInfo propInfo;
+		propHandler->GetPropertyInfo(i, propInfo);
+		string currentValue;
+		if (ser.IsWriting())
+		{
+			currentValue = propHandler->GetProperty(entity, i);
+		}
+		ser.Value(propInfo.name, currentValue);
+		if (ser.IsReading())
+		{
+			propHandler->SetProperty(entity, i, currentValue.c_str());
+		}
+	}
+
+	ser.EndGroup();
 }
 
 typedef bool(__stdcall *NetSyncInternalThunk)(mono::object, ISerialize *, EEntityAspects, byte, int, mono::exception *);

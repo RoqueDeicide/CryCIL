@@ -49,6 +49,16 @@ namespace CryCil.Engine.Logic
 		/// Gets a set of flags that describe this entity class.
 		/// </summary>
 		public EntityClassFlags Flags { get; private set; }
+		/// <summary>
+		/// Can be set to <c>true</c> to instruct underlying object to not synchronize any editable
+		/// properties of entities of this class.
+		/// </summary>
+		/// <remarks>
+		/// Setting this property to <c>true</c> makes sense when a lot of editable properties of this
+		/// entity class are numerical or vectors in which case allowing the underlying object to
+		/// synchronize is going to be quite slow, since it synchronizes all of them using text format.
+		/// </remarks>
+		public bool DontSyncEditableProperties { get; set; }
 		#endregion
 		#region Construction
 		/// <summary>

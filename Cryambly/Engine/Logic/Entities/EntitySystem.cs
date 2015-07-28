@@ -87,7 +87,8 @@ namespace CryCil.Engine.Logic
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		internal static extern bool RegisterEntityClass(string name, string category, string editorHelper,
 														string editorIcon, EntityClassFlags flags,
-														EditablePropertyInfo[] properties, bool networked);
+														EditablePropertyInfo[] properties, bool networked,
+														bool dontSyncProperties);
 		#endregion
 		#region Utilities
 

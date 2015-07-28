@@ -118,13 +118,13 @@ public:
 };
 
 //! Provides additional data for initialization of CryCIL entities.
-struct MonoEntityClassUserData : IGameObjectSystem::SEntitySpawnParamsForGameObjectWithPreactivatedExtension
+struct MonoEntityClassUserData
 {
-	MonoEntityClassUserData()
+	bool networked;			//!< Indicates whether the class represents entities that work with network.
+	bool dontSyncProps;		//!< Indicates whether native code needs to handle synchronization of all editable props.
+	MonoEntityClassUserData(bool networked, bool dontSyncProps)
+		: networked(networked)
+		, dontSyncProps(dontSyncProps)
 	{
-		this->m_type = eSpawnParamsType_Custom;
-		this->hookFunction = CreateEntityAbstractionLayer;
 	}
-
-	static bool CreateEntityAbstractionLayer(IEntity *entity, IGameObject *gameObject, void *userData);
 };

@@ -59,7 +59,7 @@ public:
 
 	static bool RegisterEntityClass(mono::string name, mono::string category, mono::string editorHelper,
 									mono::string editorIcon, enum EEntityClassFlags flags, mono::object properties,
-									bool networked);
+									bool networked, bool dontSyncProps);
 
 	static void         RemoveEntity(EntityId id, bool now);
 	static mono::object SpawnMonoEntity(MonoEntitySpawnParams parameters);

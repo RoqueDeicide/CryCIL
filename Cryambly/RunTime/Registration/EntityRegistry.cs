@@ -137,7 +137,8 @@ namespace CryCil.RunTime.Registration
 						attribute.EditorIcon,
 						attribute.Flags,
 						GetEditableProperties(entityType),
-						entityType.Implements<MonoNetEntity>()
+						entityType.Implements<MonoNetEntity>(),
+						attribute.DontSyncEditableProperties
 					);
 			}
 		}
