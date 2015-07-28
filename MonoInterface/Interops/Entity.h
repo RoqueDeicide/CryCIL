@@ -77,4 +77,5 @@ struct NetEntityInterop : public IMonoInterop<true, true>
 	static void SetChannelId(EntityId entityId, ushort channelId);
 	static void InvokeRmi(EntityId sender, mono::string methodName, mono::object parameters, uint32 _where, int channel,
 						  int rmiType);
+	static void ChangeNetworkStateInternal(EntityId id, uint32 aspects);
 };

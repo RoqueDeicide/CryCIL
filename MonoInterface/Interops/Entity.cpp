@@ -448,6 +448,7 @@ void NetEntityInterop::OnRunTimeInitialized()
 {
 	REGISTER_METHOD(SetChannelId);
 	REGISTER_METHOD(InvokeRmi);
+	REGISTER_METHOD(ChangeNetworkStateInternal);
 }
 
 void NetEntityInterop::SetChannelId(EntityId entityId, ushort channelId)
@@ -596,3 +597,10 @@ void NetEntityInterop::InvokeRmi(EntityId sender, mono::string methodName, mono:
 }
 
 #undef INVOKE_CRYCIL_RMI
+
+void NetEntityInterop::ChangeNetworkStateInternal(EntityId id, uint32 aspects)
+{
+	auto gameObject = MonoEnv->CryAction->GetGameObject(id);
+
+	gameObject->ChangedNetworkState(aspects);
+}

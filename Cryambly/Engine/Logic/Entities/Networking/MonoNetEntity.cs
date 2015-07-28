@@ -85,6 +85,17 @@ namespace CryCil.Engine.Logic
 		/// <param name="pflags"> Physics flags(?).</param>
 		/// <returns>True, if synchronization was successful.</returns>
 		public abstract bool SynchronizeWithNetwork(CrySync sync, EntityAspects aspect, byte profile, int pflags);
+		/// <summary>
+		/// Informs the networking system that parts of this entity have changed and it must be
+		/// synchronized with its proxies on other game instances.
+		/// </summary>
+		/// <param name="aspects">
+		/// A set of flags that indicate which aspects of the entity need to be synchronized.
+		/// </param>
+		public void ChangeNetworkState(EntityAspects aspects)
+		{
+			ChangeNetworkStateInternal(this.Id, aspects);
+		}
 		#endregion
 		#region Utilities
 		[UnmanagedThunk("Invoked from underlying object to raise the event ClientInitializing.")]
@@ -106,6 +117,8 @@ namespace CryCil.Engine.Logic
 		}
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void SetChannelId(EntityId entityId, ChannelId channelId);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void ChangeNetworkStateInternal(EntityId id, EntityAspects aspects);
 		#endregion
 	}
 }
