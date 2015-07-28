@@ -601,12 +601,16 @@ void MonoEntityExtension::FullSerialize(TSerialize ser)
 
 	if (mono::object obj = this->MonoWrapper)
 	{
+		ser.BeginGroup("AbstractionLayer");
+
 		mono::exception ex;
 		thunk(obj, *(ISerialize **)&ser, &ex);
 		if (ex)
 		{
 			MonoEnv->HandleException(ex);
 		}
+
+		ser.EndGroup();
 	}
 }
 
