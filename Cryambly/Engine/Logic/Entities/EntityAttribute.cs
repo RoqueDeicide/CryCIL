@@ -97,7 +97,7 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Creates new attribute that provides full description of the entity class.
 		/// </summary>
-		/// <param name="name">Name of the entity class.</param>
+		/// <param name="name">        Name of the entity class.</param>
 		/// <param name="description"> <see cref="Description"/></param>
 		/// <param name="category">    <see cref="Category"/></param>
 		/// <param name="editorHelper"><see cref="EditorHelper"/></param>
@@ -122,7 +122,7 @@ namespace CryCil.Engine.Logic
 		/// Any blanks in information this attribute provides will be filled with information defined
 		/// attributes that mark classes the one this attribute marks derives from.
 		/// </remarks>
-		/// <param name="name">Name of the entity class.</param>
+		/// <param name="name">        Name of the entity class.</param>
 		/// <param name="combineFlags"><see cref="CombineFlags"/></param>
 		/// <param name="description"> <see cref="Description"/></param>
 		/// <param name="category">    <see cref="Category"/></param>
@@ -151,7 +151,8 @@ namespace CryCil.Engine.Logic
 		public EntityAttribute InheritFrom(Type type)
 		{
 			var baseAttributes =
-				from attribute in (from baseType in type.EnumerateInheritancChain() select baseType.GetAttribute<EntityAttribute>() )
+				from attribute in
+					(from baseType in type.EnumerateInheritancChain() select baseType.GetAttribute<EntityAttribute>())
 				where attribute != null
 				select attribute;
 
