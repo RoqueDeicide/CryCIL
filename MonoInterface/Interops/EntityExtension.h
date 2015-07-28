@@ -103,6 +103,23 @@ public:
 
 	//! Invokes RMI method that is specified by the params object.
 	bool ReceiveRmiCall(CryCilRMIParameters *params);
+
+
+private:
+	template<const char *eventName>
+	void raiseEntityEvent();
+	template<const char *eventName, typename arg0Type>
+	void raiseEntityEvent(arg0Type arg0);
+	template<const char *eventName, typename arg0Type, typename arg1Type>
+	void raiseEntityEvent(arg0Type arg0, arg1Type arg1);
+	template<const char *eventName, typename arg0Type, typename arg1Type, typename arg2Type>
+	void raiseEntityEvent(arg0Type arg0, arg1Type arg1, arg2Type arg2);
+	template<const char *eventName, typename arg0Type, typename arg1Type, typename arg2Type, typename arg3Type>
+	void raiseEntityEvent(arg0Type arg0, arg1Type arg1, arg2Type arg2, arg3Type arg3);
+	template<const char *eventName, typename arg0Type, typename arg1Type, typename arg2Type, typename arg3Type, typename arg4Type>
+	void raiseEntityEvent(arg0Type arg0, arg1Type arg1, arg2Type arg2, arg3Type arg3, arg4Type arg4);
+	template<const char *eventName, typename arg0Type, typename arg1Type, typename arg2Type, typename arg3Type, typename arg4Type, typename arg5Type>
+	void raiseEntityEvent(arg0Type arg0, arg1Type arg1, arg2Type arg2, arg3Type arg3, arg4Type arg4, arg5Type arg5);
 };
 
 //! Attempts to acquire an object that allows the entity to communicate with CryCIL.

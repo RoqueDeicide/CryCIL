@@ -107,6 +107,8 @@
     <Compile Include="Engine\Logic\Entities\EditableProperty.cs" />
     <Compile Include="Engine\Logic\Entities\EditablePropertyAttribute.cs" />
     <Compile Include="Engine\Logic\Entities\EditablePropertyUiControl.cs" />
+    <Compile Include="Engine\Logic\Entities\EntityXFormChange.cs" />
+    <Compile Include="Engine\Logic\Entities\MonoEntity.Events.cs" />
     <Compile Include="Engine\Logic\Entities\Networking\EntityAspects.cs" />
     <Compile Include="Engine\Logic\Entities\EntityAttribute.cs" />
     <Compile Include="Engine\Logic\Entities\EntityClassFlags.cs" />
@@ -140,6 +142,7 @@
     <Compile Include="Engine\Logic\FlowGraph\InputPort.cs" />
     <Compile Include="Engine\Logic\FlowGraph\OutputPort.cs" />
     <Compile Include="Engine\Network\ChannelId.cs" />
+    <Compile Include="Engine\Physics\CollisionEventInfo.cs" />
     <Compile Include="Engine\Rendering\RenderParameters.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Mathematics\Geometry\Splines\BezierBasis.cs" />

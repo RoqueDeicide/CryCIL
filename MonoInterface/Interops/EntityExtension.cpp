@@ -98,10 +98,394 @@ void MonoEntityExtension::PostInit(IGameObject* pGameObject)
 	}
 }
 
-void MonoEntityExtension::ProcessEvent(SEntityEvent& event)
+#pragma region Entity Event Raisers
+template<const char *eventName>
+void MonoEntityExtension::raiseEntityEvent()
 {
+	static void(__stdcall *raise)(mono::object, mono::exception *) =
+		(void(__stdcall *)(mono::object, mono::exception *))
+		GetMonoEntityClass()->GetEvent(eventName)->Raise->UnmanagedThunk;
 
+	if (mono::object obj = this->MonoWrapper)
+	{
+		mono::exception ex;
+		raise(obj, &ex);
+		if (ex)
+		{
+			MonoEnv->HandleException(ex);
+		}
+	}
 }
+template<const char *eventName, typename arg0Type>
+void MonoEntityExtension::raiseEntityEvent(arg0Type arg0)
+{
+	static void(__stdcall *raise)(mono::object, arg0Type, mono::exception *) =
+		(void(__stdcall *)(mono::object, arg0Type, mono::exception *))
+		GetMonoEntityClass()->GetEvent(eventName)->Raise->UnmanagedThunk;
+
+	if (mono::object obj = this->MonoWrapper)
+	{
+		mono::exception ex;
+		raise(obj, arg0, &ex);
+		if (ex)
+		{
+			MonoEnv->HandleException(ex);
+		}
+	}
+}
+template<const char *eventName, typename arg0Type, typename arg1Type>
+void MonoEntityExtension::raiseEntityEvent(arg0Type arg0, arg1Type arg1)
+{
+	static void(__stdcall *raise)(mono::object, arg0Type, arg1Type, mono::exception *) =
+		(void(__stdcall *)(mono::object, arg0Type, arg1Type, mono::exception *))
+		GetMonoEntityClass()->GetEvent(eventName)->Raise->UnmanagedThunk;
+
+	if (mono::object obj = this->MonoWrapper)
+	{
+		mono::exception ex;
+		raise(obj, arg0, arg1, &ex);
+		if (ex)
+		{
+			MonoEnv->HandleException(ex);
+		}
+	}
+}
+template<const char *eventName, typename arg0Type, typename arg1Type, typename arg2Type>
+void MonoEntityExtension::raiseEntityEvent(arg0Type arg0, arg1Type arg1, arg2Type arg2)
+{
+	static void(__stdcall *raise)(mono::object, arg0Type, arg1Type, arg2Type, mono::exception *) =
+		(void(__stdcall *)(mono::object, arg0Type, arg1Type, arg2Type, mono::exception *))
+		GetMonoEntityClass()->GetEvent(eventName)->Raise->UnmanagedThunk;
+
+	if (mono::object obj = this->MonoWrapper)
+	{
+		mono::exception ex;
+		raise(obj, arg0, arg1, arg2, &ex);
+		if (ex)
+		{
+			MonoEnv->HandleException(ex);
+		}
+	}
+}
+template<const char *eventName, typename arg0Type, typename arg1Type, typename arg2Type, typename arg3Type>
+void MonoEntityExtension::raiseEntityEvent(arg0Type arg0, arg1Type arg1, arg2Type arg2, arg3Type arg3)
+{
+	static void(__stdcall *raise)(mono::object, arg0Type, arg1Type, arg2Type, arg3Type, mono::exception *) =
+		(void(__stdcall *)(mono::object, arg0Type, arg1Type, arg2Type, arg3Type, mono::exception *))
+		GetMonoEntityClass()->GetEvent(eventName)->Raise->UnmanagedThunk;
+
+	if (mono::object obj = this->MonoWrapper)
+	{
+		mono::exception ex;
+		raise(obj, arg0, arg1, arg2, arg3, &ex);
+		if (ex)
+		{
+			MonoEnv->HandleException(ex);
+		}
+	}
+}
+template<const char *eventName, typename arg0Type, typename arg1Type, typename arg2Type, typename arg3Type, typename arg4Type>
+void MonoEntityExtension::raiseEntityEvent(arg0Type arg0, arg1Type arg1, arg2Type arg2, arg3Type arg3, arg4Type arg4)
+{
+	static void(__stdcall *raise)(mono::object, arg0Type, arg1Type, arg2Type, arg3Type, arg4Type, mono::exception *) =
+		(void(__stdcall *)(mono::object, arg0Type, arg1Type, arg2Type, arg3Type, arg4Type, mono::exception *))
+		GetMonoEntityClass()->GetEvent(eventName)->Raise->UnmanagedThunk;
+
+	if (mono::object obj = this->MonoWrapper)
+	{
+		mono::exception ex;
+		raise(obj, arg0, arg1, arg2, arg3, arg4, &ex);
+		if (ex)
+		{
+			MonoEnv->HandleException(ex);
+		}
+	}
+}
+template<const char *eventName, typename arg0Type, typename arg1Type, typename arg2Type, typename arg3Type, typename arg4Type, typename arg5Type>
+void MonoEntityExtension::raiseEntityEvent(arg0Type arg0, arg1Type arg1, arg2Type arg2, arg3Type arg3, arg4Type arg4, arg5Type arg5)
+{
+	static void(__stdcall *raise)(mono::object, arg0Type, arg1Type, arg2Type, arg3Type, arg4Type, arg5Type, mono::exception *) =
+		(void(__stdcall *)(mono::object, arg0Type, arg1Type, arg2Type, arg3Type, arg4Type, arg5Type, mono::exception *))
+		GetMonoEntityClass()->GetEvent(eventName)->Raise->UnmanagedThunk;
+
+	if (mono::object obj = this->MonoWrapper)
+	{
+		mono::exception ex;
+		raise(obj, arg0, arg1, arg2, arg3, arg4, arg5, &ex);
+		if (ex)
+		{
+			MonoEnv->HandleException(ex);
+		}
+	}
+}
+#pragma endregion
+#pragma region Entity Event Names
+// Gotta have these global variables here, cause simple string literals are not compile-time constants even with string
+// pooling option on.
+
+#define define_entity_event_name(eventName) extern const char entityEventName##eventName[] = #eventName;
+
+define_entity_event_name(Moved);
+define_entity_event_name(MovedInEditor);
+define_entity_event_name(TimedOut);
+define_entity_event_name(Ressurected);
+define_entity_event_name(Done);
+define_entity_event_name(ReturningToPool);
+define_entity_event_name(ResetInEditor);
+define_entity_event_name(Attached);
+define_entity_event_name(AttachedTo);
+define_entity_event_name(Detached);
+define_entity_event_name(DetachedFrom);
+define_entity_event_name(Linked);
+define_entity_event_name(Unlinked);
+define_entity_event_name(Hidden);
+define_entity_event_name(NotHidden);
+define_entity_event_name(PhysicsEnabled);
+define_entity_event_name(Awoken);
+define_entity_event_name(AreaEntered);
+define_entity_event_name(AreaLeft);
+define_entity_event_name(Broken);
+define_entity_event_name(NotSeen);
+define_entity_event_name(Collided);
+define_entity_event_name(Rendered);
+define_entity_event_name(BeforePhysicsUpdate);
+define_entity_event_name(LevelLoaded);
+define_entity_event_name(LevelStarted);
+define_entity_event_name(GameStarted);
+define_entity_event_name(Synchronizing);
+define_entity_event_name(Synchronized);
+define_entity_event_name(BecameVisible);
+define_entity_event_name(BecameInvisible);
+define_entity_event_name(MaterialChanged);
+define_entity_event_name(MaterialLayersChanged);
+define_entity_event_name(Activated);
+define_entity_event_name(Deactivated);
+
+#undef define_entity_event_name
+
+#pragma endregion
+
+#define entity_event(eventName) entityEventName##eventName
+
+void MonoEntityExtension::ProcessEvent(SEntityEvent& _event)
+{
+	static 
+
+	auto _eventType = _event.event;
+	switch (_eventType)
+	{
+	case ENTITY_EVENT_XFORM:
+	{
+		EEntityXFormFlags flags = (EEntityXFormFlags)_event.nParam[0];
+		this->raiseEntityEvent<entity_event(Moved), EEntityXFormFlags>(flags);
+	}
+		break;
+	case ENTITY_EVENT_XFORM_FINISHED_EDITOR:
+		this->raiseEntityEvent<entity_event(MovedInEditor)>();
+		break;
+	case ENTITY_EVENT_TIMER:
+	{
+		auto timerId = (int)_event.nParam[0];
+		auto milliseconds = (int)_event.nParam[1];
+		this->raiseEntityEvent<entity_event(TimedOut), int, int>(timerId, milliseconds);
+	}
+		break;
+	case ENTITY_EVENT_INIT:
+		this->raiseEntityEvent<entity_event(Ressurected)>();
+		break;
+	case ENTITY_EVENT_DONE:
+		this->raiseEntityEvent<entity_event(Done)>();
+		break;
+	case ENTITY_EVENT_RETURNING_TO_POOL:
+		this->raiseEntityEvent<entity_event(ReturningToPool)>();
+		break;
+	case ENTITY_EVENT_RESET:
+	{
+		auto enterGameMode = _event.nParam[0] != 0;
+		this->raiseEntityEvent<entity_event(ResetInEditor), bool>(enterGameMode);
+	}
+		break;
+	case ENTITY_EVENT_ATTACH:
+	{
+		auto entityId = (EntityId)_event.nParam[0];
+		this->raiseEntityEvent<entity_event(Attached), EntityId>(entityId);
+	}
+		break;
+	case ENTITY_EVENT_ATTACH_THIS:
+	{
+		auto entityId = (EntityId)_event.nParam[0];
+		this->raiseEntityEvent<entity_event(AttachedTo), EntityId>(entityId);
+	}
+		break;
+	case ENTITY_EVENT_DETACH:
+	{
+		auto entityId = (EntityId)_event.nParam[0];
+		this->raiseEntityEvent<entity_event(Detached), EntityId>(entityId);
+	}
+		break;
+	case ENTITY_EVENT_DETACH_THIS:
+	{
+		auto entityId = (EntityId)_event.nParam[0];
+		this->raiseEntityEvent<entity_event(DetachedFrom), EntityId>(entityId);
+	}
+		break;
+	case ENTITY_EVENT_LINK:
+	{
+		auto link = (IEntityLink *)_event.nParam[0];
+		this->raiseEntityEvent<entity_event(Linked), mono::string, EntityId, EntityGUID>
+			(ToMonoString(link->name), link->entityId, link->entityGuid);
+	}
+		break;
+	case ENTITY_EVENT_DELINK:
+	{
+		auto link = (IEntityLink *)_event.nParam[0];
+		this->raiseEntityEvent<entity_event(Unlinked), mono::string, EntityId, EntityGUID>
+			(ToMonoString(link->name), link->entityId, link->entityGuid);
+	}
+		break;
+	case ENTITY_EVENT_HIDE:
+		this->raiseEntityEvent<entity_event(Hidden)>();
+		break;
+	case ENTITY_EVENT_UNHIDE:
+		this->raiseEntityEvent<entity_event(NotHidden)>();
+		break;
+	case ENTITY_EVENT_ENABLE_PHYSICS:
+	{
+		auto enablePhysics = _event.nParam[0] != 0;
+		this->raiseEntityEvent<entity_event(PhysicsEnabled), bool>(enablePhysics);
+	}
+		break;
+	case ENTITY_EVENT_PHYSICS_CHANGE_STATE:
+	{
+		auto awake = _event.nParam[0] != 0;
+		this->raiseEntityEvent<entity_event(Awoken), bool>(awake);
+	}
+		break;
+	case ENTITY_EVENT_SCRIPT_EVENT:
+		break;
+	case ENTITY_EVENT_ENTERAREA:
+	case ENTITY_EVENT_ENTERNEARAREA:
+	{
+		auto entityId = (EntityId)_event.nParam[0];
+		auto areaId = (int)_event.nParam[1];
+		auto areaEntityId = (EntityId)_event.nParam[2];
+		auto fadeFactor = _event.fParam[0];
+		this->raiseEntityEvent<entity_event(AreaEntered), EntityId, int, EntityId, float>
+			(entityId, areaId, areaEntityId, fadeFactor);
+	}
+		break;
+	case ENTITY_EVENT_LEAVEAREA:
+	case ENTITY_EVENT_LEAVENEARAREA:
+	{
+		auto entityId = (EntityId)_event.nParam[0];
+		auto areaId = (int)_event.nParam[1];
+		auto areaEntityId = (EntityId)_event.nParam[2];
+		auto fadeFactor = _event.fParam[0];
+		this->raiseEntityEvent<entity_event(AreaLeft), EntityId, int, EntityId, float>
+			(entityId, areaId, areaEntityId, fadeFactor);
+	}
+		break;
+	case ENTITY_EVENT_MOVEINSIDEAREA:
+		break;
+	case ENTITY_EVENT_MOVENEARAREA:
+		break;
+	case ENTITY_EVENT_CROSS_AREA:
+		break;
+	case ENTITY_EVENT_PHYS_POSTSTEP:
+		break;
+	case ENTITY_EVENT_PHYS_BREAK:
+		this->raiseEntityEvent<entity_event(Broken)>();
+		break;
+	case ENTITY_EVENT_AI_DONE:
+		break;
+	case ENTITY_EVENT_SOUND_DONE:
+		break;
+	case ENTITY_EVENT_NOT_SEEN_TIMEOUT:
+		this->raiseEntityEvent<entity_event(NotSeen)>();
+		break;
+	case ENTITY_EVENT_COLLISION:
+	{
+		auto infoPointer = (void *)_event.nParam[0];
+		auto isCollider = _event.nParam[1] != 0;
+		this->raiseEntityEvent<entity_event(Collided), void *, bool>(infoPointer, isCollider);
+	}
+		break;
+	case ENTITY_EVENT_RENDER:
+	{
+		auto infoPointer = (void *)_event.nParam[0];
+		this->raiseEntityEvent<entity_event(Rendered), void *>(infoPointer);
+	}
+		break;
+	case ENTITY_EVENT_PREPHYSICSUPDATE:
+	{
+		auto frameTime = _event.fParam[0];
+		this->raiseEntityEvent<entity_event(BeforePhysicsUpdate), float>(frameTime);
+	}
+		break;
+	case ENTITY_EVENT_LEVEL_LOADED:
+		this->raiseEntityEvent<entity_event(LevelLoaded)>();
+		break;
+	case ENTITY_EVENT_START_LEVEL:
+		this->raiseEntityEvent<entity_event(LevelStarted)>();
+		break;
+	case ENTITY_EVENT_START_GAME:
+		this->raiseEntityEvent<entity_event(GameStarted)>();
+		break;
+	case ENTITY_EVENT_ENTER_SCRIPT_STATE:
+		break;
+	case ENTITY_EVENT_LEAVE_SCRIPT_STATE:
+		break;
+	case ENTITY_EVENT_PRE_SERIALIZE:
+		this->raiseEntityEvent<entity_event(Synchronizing)>();
+		break;
+	case ENTITY_EVENT_POST_SERIALIZE:
+		this->raiseEntityEvent<entity_event(Synchronized)>();
+		break;
+	case ENTITY_EVENT_INVISIBLE:
+		this->raiseEntityEvent<entity_event(BecameVisible)>();
+		break;
+	case ENTITY_EVENT_VISIBLE:
+		this->raiseEntityEvent<entity_event(BecameInvisible)>();
+		break;
+	case ENTITY_EVENT_MATERIAL:
+	{
+		auto newMaterial = (void *)_event.nParam[0];
+		this->raiseEntityEvent<entity_event(MaterialChanged), void *>(newMaterial);
+	}
+		break;
+	case ENTITY_EVENT_MATERIAL_LAYER:
+	{
+		auto _new = (byte)_event.nParam[0];
+		auto _old = (byte)_event.nParam[1];
+		this->raiseEntityEvent<entity_event(MaterialLayersChanged), byte, byte>(_new, _old);
+	}
+		break;
+	case ENTITY_EVENT_ONHIT:
+		break;
+	case ENTITY_EVENT_ANIM_EVENT:
+		break;
+	case ENTITY_EVENT_SCRIPT_REQUEST_COLLIDERMODE:
+		break;
+	case ENTITY_EVENT_ACTIVATE_FLOW_NODE_OUTPUT:
+		break;
+	case ENTITY_EVENT_EDITOR_PROPERTY_CHANGED:
+		break;
+	case ENTITY_EVENT_RELOAD_SCRIPT:
+		break;
+	case ENTITY_EVENT_ACTIVATED:
+		this->raiseEntityEvent<entity_event(Activated)>();
+		break;
+	case ENTITY_EVENT_DEACTIVATED:
+		this->raiseEntityEvent<entity_event(Deactivated)>();
+		break;
+	case ENTITY_EVENT_LAST:
+		break;
+	default:
+		break;
+	}
+}
+
+#undef entity_event
 
 typedef void(__stdcall *ClientInitRaiseThunk)(mono::object, ushort, mono::exception *);
 

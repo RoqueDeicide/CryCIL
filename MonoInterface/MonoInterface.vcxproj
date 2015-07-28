@@ -454,6 +454,9 @@
     <ClCompile Include="TypeMapChecks\EntityFlags.cpp" />
     <ClCompile Include="TypeMapChecks\EntitySpawnParams.cpp" />
     <ClCompile Include="TypeMapChecks\EntityUpdateContext.cpp" />
+    <ClCompile Include="TypeMapChecks\EntityXFormFlags.cpp" />
+    <ClCompile Include="TypeMapChecks\EventPhysCollision.cpp" />
+    <ClCompile Include="TypeMapChecks\RenderParameters.cpp" />
     <ClCompile Include="TypeMapChecks\RmiTargetEnum.cpp" />
     <ClCompile Include="TypeMapChecks\SmallEntityStructs.cpp" />
   </ItemGroup>

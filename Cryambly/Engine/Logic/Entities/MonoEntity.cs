@@ -25,7 +25,7 @@ namespace CryCil.Engine.Logic
 	/// <summary>
 	/// Base class for CryEngine entities with custom logic that is defined in CryCIL.
 	/// </summary>
-	public abstract class MonoEntity : IDisposable
+	public abstract partial class MonoEntity : IDisposable
 	{
 		#region Fields
 		private readonly List<EntityReloadEventHandler> reloadingEventHandlers;

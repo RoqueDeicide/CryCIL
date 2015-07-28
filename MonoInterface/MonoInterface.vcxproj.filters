@@ -647,6 +647,15 @@
     <ClCompile Include="TypeMapChecks\EntityUpdateContext.cpp">
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
+    <ClCompile Include="TypeMapChecks\EntityXFormFlags.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\EventPhysCollision.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\RenderParameters.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">

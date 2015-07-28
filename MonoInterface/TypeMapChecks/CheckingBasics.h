@@ -29,5 +29,7 @@ struct is_same_type<T, T>
 	is_same_type(T first, T second) {}
 };
 
+#define ASSIGN_FIELD(fieldName) this->fieldName = other.fieldName
+
 // Determines whether a field that is defined in declaring type is of the same type as the same field in the mirrored type.
 #define CHECK_TYPE(fieldName) static_assert (is_same_type<decltype(this->fieldName), decltype(other.fieldName)>::value, "Type of the field named "#fieldName" has been changed.")
