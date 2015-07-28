@@ -2,6 +2,8 @@
 using CryCil.Annotations;
 using CryCil.Geometry;
 
+#pragma warning disable 169,649
+
 namespace CryCil.Engine.Logic
 {
 	/// <summary>
@@ -201,3 +203,4 @@ namespace CryCil.Engine.Logic
 		#endregion
 	}
 }
+#pragma warning restore 169,649
