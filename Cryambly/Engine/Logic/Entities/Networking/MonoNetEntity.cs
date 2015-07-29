@@ -7,6 +7,14 @@ using CryCil.Engine.Network;
 namespace CryCil.Engine.Logic
 {
 	/// <summary>
+	/// Defines signature of methods that can handle
+	/// </summary>
+	/// <param name="sender">       An entity that raised the event.</param>
+	/// <param name="clientChannel">
+	/// Identifier of the network channel that can be used to communicate with the client object.
+	/// </param>
+	public delegate void NetEntityClientEventHandler(MonoNetEntity sender, ChannelId clientChannel);
+	/// <summary>
 	/// Base class for all objects that define logic for CryEngine entities that are bound to and
 	/// synchronized via network.
 	/// </summary>
@@ -36,19 +44,11 @@ namespace CryCil.Engine.Logic
 		/// Occurs when this entity is informed that a mirroring entity is about to be initialized on the
 		/// client-side.
 		/// </summary>
-		/// <remarks>
-		/// First parameter is an entity object for which the event was raised and second parameter is
-		/// identifier of channel that can be used to communicate with the client.
-		/// </remarks>
-		public event Action<object, ChannelId> ClientInitializing;
+		public event NetEntityClientEventHandler ClientInitializing;
 		/// <summary>
 		/// Occurs when this entity is informed that a mirroring entity was initialized on the client-side.
 		/// </summary>
-		/// <remarks>
-		/// First parameter is an entity object for which the event was raised and second parameter is
-		/// identifier of channel that can be used to communicate with the client.
-		/// </remarks>
-		public event Action<object, ChannelId> ClientInitialized;
+		public event NetEntityClientEventHandler ClientInitialized;
 		#endregion
 		#region Construction
 		/// <summary>
