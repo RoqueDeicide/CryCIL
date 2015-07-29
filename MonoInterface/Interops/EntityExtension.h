@@ -31,7 +31,7 @@ public:
 	virtual void PostSerialize() override {}
 	//! Not used, we don't set the spawn serializer for Mono entities.
 	virtual void SerializeSpawnInfo(TSerialize ser) override {}
-	//! Not sure how to make it work and whether its need that much.
+	//! Not sure how to make it work and whether its needed that much.
 	virtual ISerializableInfoPtr GetSpawnInfo() override { return nullptr; }
 	virtual void Update(SEntityUpdateContext& ctx, int updateSlot) override;
 	virtual void SetChannelId(uint16 id) override;
