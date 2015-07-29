@@ -79,3 +79,17 @@ struct NetEntityInterop : public IMonoInterop<true, true>
 						  int rmiType);
 	static void ChangeNetworkStateInternal(EntityId id, uint32 aspects);
 };
+
+struct CryEntityInterop : public IMonoInterop < true, true >
+{
+	virtual const char *GetName() override { return "CryEntity"; }
+	virtual const char *GetNameSpace() override { return "CryCil.Engine.Logic"; }
+
+	virtual void OnRunTimeInitialized() override;
+
+	static void SetFlags(IEntity *handle, uint64 flags);
+	static uint64 GetFlags(IEntity *handle);
+	static void AddFlagsInternal(IEntity *handle, uint64 flagsToAdd);
+	static void ClearFlagsInternal(IEntity *handle, uint64 flagsToClear);
+	static bool CheckFlagsInternal(IEntity *handle, uint64 flagsToCheck, bool all);
+};

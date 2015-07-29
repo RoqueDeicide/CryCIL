@@ -604,3 +604,67 @@ void NetEntityInterop::ChangeNetworkStateInternal(EntityId id, uint32 aspects)
 
 	gameObject->ChangedNetworkState(aspects);
 }
+
+void CryEntityInterop::OnRunTimeInitialized()
+{
+	REGISTER_METHOD(SetFlags);
+	REGISTER_METHOD(GetFlags);
+	REGISTER_METHOD(AddFlagsInternal);
+	REGISTER_METHOD(ClearFlagsInternal);
+	REGISTER_METHOD(CheckFlagsInternal);
+}
+
+void CryEntityInterop::SetFlags(IEntity *handle, uint64 flags)
+{
+	handle->SetFlags(*(uint32 *)&flags);
+	handle->SetFlagsExtended((uint32)(flags >> 32));
+}
+
+uint64 CryEntityInterop::GetFlags(IEntity *handle)
+{
+	return (uint64)(handle->GetFlags()) | ((uint64)(handle->GetFlagsExtended()) << 32);
+}
+
+void CryEntityInterop::AddFlagsInternal(IEntity *handle, uint64 flagsToAdd)
+{
+	uint32 normalFlags = *(uint32 *)&flagsToAdd;
+	uint32 extendedFlags = (uint32)(flagsToAdd >> 32);
+
+	if (normalFlags != 0)
+	{
+		handle->AddFlags(normalFlags);
+	}
+	if (extendedFlags != 0)
+	{
+		handle->SetFlagsExtended(handle->GetFlagsExtended() | extendedFlags);
+	}
+}
+
+void CryEntityInterop::ClearFlagsInternal(IEntity *handle, uint64 flagsToClear)
+{
+	uint32 normalFlags = *(uint32 *)&flagsToClear;
+	uint32 extendedFlags = (uint32)(flagsToClear >> 32);
+
+	if (normalFlags != 0)
+	{
+		handle->ClearFlags(normalFlags);
+	}
+	if (extendedFlags != 0)
+	{
+		handle->SetFlagsExtended(handle->GetFlagsExtended() & ~extendedFlags);
+	}
+}
+
+bool CryEntityInterop::CheckFlagsInternal(IEntity *handle, uint64 flagsToCheck, bool all)
+{
+	uint64 currentFlags = GetFlags(handle);
+
+	if (all)
+	{
+		return (currentFlags & flagsToCheck) == flagsToCheck;
+	}
+	else
+	{
+		return (currentFlags & flagsToCheck) != 0;
+	}
+}
