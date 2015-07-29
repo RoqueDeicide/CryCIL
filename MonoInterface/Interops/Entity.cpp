@@ -612,6 +612,11 @@ void CryEntityInterop::OnRunTimeInitialized()
 	REGISTER_METHOD(AddFlagsInternal);
 	REGISTER_METHOD(ClearFlagsInternal);
 	REGISTER_METHOD(CheckFlagsInternal);
+	REGISTER_METHOD(GetIsGarbage);
+	REGISTER_METHOD(SetNameInternal);
+	REGISTER_METHOD(GetNameInternal);
+	REGISTER_METHOD(GetIsLoadedFromLevelFile);
+	REGISTER_METHOD(GetIsFromPool);
 }
 
 void CryEntityInterop::SetFlags(IEntity *handle, uint64 flags)
