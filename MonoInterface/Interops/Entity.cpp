@@ -752,15 +752,16 @@ IEntity *CryEntityInterop::GetChildInternal(IEntity *handle, int nIndex)
 
 IEntity *CryEntityInterop::GetParent(IEntity *handle)
 {
-
+	return handle->GetParent();
 }
 
 Matrix34 CryEntityInterop::GetParentAttachPointWorldTM(IEntity *handle)
 {
-
+	return handle->GetParentAttachPointWorldTM();
 }
 
 bool CryEntityInterop::GetIsParentAttachmentValid(IEntity *handle)
 {
+	return handle->IsParentAttachmentValid();
 
 }
