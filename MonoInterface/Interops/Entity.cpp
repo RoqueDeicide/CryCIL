@@ -668,3 +668,18 @@ bool CryEntityInterop::CheckFlagsInternal(IEntity *handle, uint64 flagsToCheck, 
 		return (currentFlags & flagsToCheck) != 0;
 	}
 }
+
+bool CryEntityInterop::GetIsGarbage(IEntity *handle)
+{
+	return handle->IsGarbage();
+}
+
+void CryEntityInterop::SetNameInternal(IEntity *handle, mono::string sName)
+{
+	handle->SetName(NtText(sName));
+}
+
+mono::string CryEntityInterop::GetNameInternal(IEntity *handle)
+{
+	return ToMonoString(handle->GetName());
+}

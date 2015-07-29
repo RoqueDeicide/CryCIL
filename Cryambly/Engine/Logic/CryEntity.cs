@@ -48,6 +48,38 @@ namespace CryCil.Engine.Logic
 				SetFlags(this.handle, (ulong)value);
 			}
 		}
+		/// <summary>
+		/// Indicates whether this entity is scheduled to be deleted on the next frame.
+		/// </summary>
+		public bool IsGarbage
+		{
+			get
+			{
+				this.AssertEntity();
+				return GetIsGarbage(this.handle);
+			}
+		}
+		/// <summary>
+		/// Gets or sets the name of this entity.
+		/// </summary>
+		/// <remarks>The name is not required to be unique.</remarks>
+		public string Name
+		{
+			get
+			{
+				this.AssertEntity();
+				return GetNameInternal(this.handle);
+			}
+			set
+			{
+				this.AssertEntity();
+				if (value == null)
+				{
+					throw new ArgumentNullException("value", "Name of the entity cannot be null.");
+				}
+				SetNameInternal(this.handle, value);
+			}
+		}
 		#endregion
 		#region Construction
 		internal CryEntity(IntPtr handle)
@@ -145,6 +177,12 @@ namespace CryCil.Engine.Logic
 		private static extern void ClearFlagsInternal(IntPtr handle, ulong flagsToClear);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern bool CheckFlagsInternal(IntPtr handle, ulong flagsToCheck, bool all);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern bool GetIsGarbage(IntPtr handle);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void SetNameInternal(IntPtr handle, string sName);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern string GetNameInternal(IntPtr handle);
 		#endregion
 	}
 }

@@ -87,9 +87,12 @@ struct CryEntityInterop : public IMonoInterop < true, true >
 
 	virtual void OnRunTimeInitialized() override;
 
-	static void SetFlags(IEntity *handle, uint64 flags);
-	static uint64 GetFlags(IEntity *handle);
-	static void AddFlagsInternal(IEntity *handle, uint64 flagsToAdd);
-	static void ClearFlagsInternal(IEntity *handle, uint64 flagsToClear);
-	static bool CheckFlagsInternal(IEntity *handle, uint64 flagsToCheck, bool all);
+	static void         SetFlags(IEntity *handle, uint64 flags);
+	static uint64       GetFlags(IEntity *handle);
+	static void         AddFlagsInternal(IEntity *handle, uint64 flagsToAdd);
+	static void         ClearFlagsInternal(IEntity *handle, uint64 flagsToClear);
+	static bool         CheckFlagsInternal(IEntity *handle, uint64 flagsToCheck, bool all);
+	static bool         GetIsGarbage(IEntity *handle);
+	static void         SetNameInternal(IEntity *handle, mono::string sName);
+	static mono::string GetNameInternal(IEntity *handle);
 };
