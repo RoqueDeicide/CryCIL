@@ -705,6 +705,24 @@ void MonoEntityExtension::SetChannelId(uint16 id)
 	}
 }
 
+typedef void(__stdcall *OnAuthorizedEntityThunk)(mono::object, bool, mono::exception *);
+
+void MonoEntityExtension::SetAuthority(bool auth)
+{
+	static OnAuthorizedEntityThunk update = (OnAuthorizedEntityThunk)
+		GetMonoEntityClass()->GetEvent("Authorized")->Raise->UnmanagedThunk;
+
+	if (mono::object o = this->MonoWrapper)
+	{
+		mono::exception ex;
+		update(o, auth, &ex);
+		if (ex)
+		{
+			MonoEnv->HandleException(ex);
+		}
+	}
+}
+
 typedef void(__stdcall *PostUpdateEntityThunk)(mono::object, mono::exception *);
 
 void MonoEntityExtension::PostUpdate(float frameTime)

@@ -35,8 +35,7 @@ public:
 	virtual ISerializableInfoPtr GetSpawnInfo() override { return nullptr; }
 	virtual void Update(SEntityUpdateContext& ctx, int updateSlot) override;
 	virtual void SetChannelId(uint16 id) override;
-	// Not sure what this really does, maybe will write some event for it later.
-	virtual void SetAuthority(bool auth) override {}
+	virtual void SetAuthority(bool auth) override;
 	virtual void PostUpdate(float frameTime) override;
 	virtual void PostRemoteSpawn() override {}
 	virtual void GetMemoryUsage(ICrySizer* pSizer) const override {}
