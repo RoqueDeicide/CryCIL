@@ -63,19 +63,23 @@ namespace CryCil.Engine.Logic
 		#endregion
 		#region Interface
 		/// <summary>
-		/// Reacts to initialization of the client.
+		/// Can be overridden to implement custom logic for when the client entity is about to be initialized.
 		/// </summary>
 		/// <param name="id">
 		/// Identifier of the network channel that is used to communicate with the client.
 		/// </param>
-		public abstract void InitializeClient(ChannelId id);
+		public virtual void InitializeClient(ChannelId id)
+		{
+		}
 		/// <summary>
-		/// Reacts to end of initialization of the client.
+		/// Can be overridden to implement custom logic for when the client entity is initialized.
 		/// </summary>
 		/// <param name="id">
 		/// Identifier of the network channel that is used to communicate with the client.
 		/// </param>
-		public abstract void PostInitializeClient(ChannelId id);
+		public virtual void PostInitializeClient(ChannelId id)
+		{
+		}
 		/// <summary>
 		/// Synchronizes the state of this entity with its representatives on other machines over network.
 		/// </summary>
