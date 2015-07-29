@@ -7,7 +7,7 @@ using CryCil.Engine.Network;
 namespace CryCil.Engine.Logic
 {
 	/// <summary>
-	/// Defines signature of methods that can handle
+	/// Defines signature of methods that can handle events related to initialization of entity clients.
 	/// </summary>
 	/// <param name="sender">       An entity that raised the event.</param>
 	/// <param name="clientChannel">
