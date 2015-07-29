@@ -625,6 +625,24 @@ void CryEntityInterop::OnRunTimeInitialized()
 	REGISTER_METHOD(GetParent);
 	REGISTER_METHOD(GetParentAttachPointWorldTM);
 	REGISTER_METHOD(GetIsParentAttachmentValid);
+	REGISTER_METHOD(SetWorldTM);
+	REGISTER_METHOD(SetLocalTM);
+	REGISTER_METHOD(GetWorldTM);
+	REGISTER_METHOD(GetLocalTM);
+	REGISTER_METHOD(GetWorldBounds);
+	REGISTER_METHOD(GetLocalBounds);
+	REGISTER_METHOD(SetPos);
+	REGISTER_METHOD(GetPos);
+	REGISTER_METHOD(SetRotation);
+	REGISTER_METHOD(GetRotation);
+	REGISTER_METHOD(SetScale);
+	REGISTER_METHOD(GetScale);
+	REGISTER_METHOD(GetPosRotScale);
+	REGISTER_METHOD(SetPosRotScale);
+	REGISTER_METHOD(GetWorldPos);
+	REGISTER_METHOD(GetWorldAngles);
+	REGISTER_METHOD(GetWorldRotation);
+	REGISTER_METHOD(GetForwardDir);
 }
 
 void CryEntityInterop::SetFlags(IEntity *handle, uint64 flags)
@@ -763,5 +781,96 @@ Matrix34 CryEntityInterop::GetParentAttachPointWorldTM(IEntity *handle)
 bool CryEntityInterop::GetIsParentAttachmentValid(IEntity *handle)
 {
 	return handle->IsParentAttachmentValid();
+}
 
+void CryEntityInterop::SetWorldTM(IEntity *handle, Matrix34 *tm)
+{
+	handle->SetWorldTM(*tm);
+}
+
+void CryEntityInterop::SetLocalTM(IEntity *handle, Matrix34 *tm)
+{
+	handle->SetLocalTM(*tm);
+}
+
+Matrix34 CryEntityInterop::GetWorldTM(IEntity *handle)
+{
+	return handle->GetWorldTM();
+}
+
+Matrix34 CryEntityInterop::GetLocalTM(IEntity *handle)
+{
+	return handle->GetLocalTM();
+}
+
+void CryEntityInterop::GetWorldBounds(IEntity *handle, AABB *bbox)
+{
+	handle->GetWorldBounds(*bbox);
+}
+
+void CryEntityInterop::GetLocalBounds(IEntity *handle, AABB *bbox)
+{
+	handle->GetLocalBounds(*bbox);
+}
+
+void CryEntityInterop::SetPos(IEntity *handle, Vec3 *vPos, bool bRecalcPhyBounds)
+{
+	handle->SetPos(*vPos, bRecalcPhyBounds);
+}
+
+Vec3 CryEntityInterop::GetPos(IEntity *handle)
+{
+	return handle->GetPos();
+}
+
+void CryEntityInterop::SetRotation(IEntity *handle, Quat *qRotation)
+{
+	handle->SetRotation(*qRotation);
+}
+
+Quat CryEntityInterop::GetRotation(IEntity *handle)
+{
+	return handle->GetRotation();
+}
+
+void CryEntityInterop::SetScale(IEntity *handle, Vec3 *vScale)
+{
+	handle->SetScale(*vScale);
+}
+
+Vec3 CryEntityInterop::GetScale(IEntity *handle)
+{
+	return handle->GetScale();
+}
+
+void CryEntityInterop::GetPosRotScale(IEntity *handle, Vec3 *pos, Quat *rotation, Vec3 *scale)
+{
+	*pos = handle->GetPos();
+	*rotation = handle->GetRotation();
+	*scale = handle->GetScale();
+}
+
+void CryEntityInterop::SetPosRotScale(IEntity *handle, Vec3 *pos, Quat *rotation, Vec3 *scale)
+{
+	handle->SetPosRotScale(*pos, *rotation, *scale);
+}
+
+Vec3 CryEntityInterop::GetWorldPos(IEntity *handle)
+{
+	return handle->GetWorldPos();
+}
+
+Ang3 CryEntityInterop::GetWorldAngles(IEntity *handle)
+{
+	return handle->GetWorldAngles();
+}
+
+Quat CryEntityInterop::GetWorldRotation(IEntity *handle)
+{
+	return handle->GetWorldRotation();
+}
+
+Vec3 CryEntityInterop::GetForwardDir(IEntity *handle)
+{
+	return handle->GetForwardDir();
 }
