@@ -106,6 +106,7 @@
     <Compile Include="Engine\Logic\Entities\EditableProperty.cs" />
     <Compile Include="Engine\Logic\Entities\EditablePropertyAttribute.cs" />
     <Compile Include="Engine\Logic\Entities\EditablePropertyUiControl.cs" />
+    <Compile Include="Engine\Logic\Entities\EntityAttachmentFlags.cs" />
     <Compile Include="Engine\Logic\Entities\EntityXFormChange.cs" />
     <Compile Include="Engine\Logic\Entities\MonoEntity.Events.cs" />
     <Compile Include="Engine\Logic\Entities\Networking\EntityAspects.cs" />

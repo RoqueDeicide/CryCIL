@@ -97,4 +97,12 @@ struct CryEntityInterop : public IMonoInterop < true, true >
 	static mono::string GetNameInternal(IEntity *handle);
 	static bool         GetIsLoadedFromLevelFile(IEntity *handle);
 	static bool         GetIsFromPool(IEntity *handle);
+	static void         AttachChildInternal(IEntity *handle, IEntity *child, int flags, mono::string target);
+	static void         DetachAllInternal(IEntity *handle, bool keepWorldTM);
+	static void         DetachThisInternal(IEntity *handle, bool keepWorldTM);
+	static int          GetChildCount(IEntity *handle);
+	static IEntity     *GetChildInternal(IEntity *handle, int nIndex);
+	static IEntity     *GetParent(IEntity *handle);
+	static Matrix34     GetParentAttachPointWorldTM(IEntity *handle);
+	static bool         GetIsParentAttachmentValid(IEntity *handle);
 };

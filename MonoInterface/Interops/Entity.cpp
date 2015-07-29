@@ -617,6 +617,14 @@ void CryEntityInterop::OnRunTimeInitialized()
 	REGISTER_METHOD(GetNameInternal);
 	REGISTER_METHOD(GetIsLoadedFromLevelFile);
 	REGISTER_METHOD(GetIsFromPool);
+	REGISTER_METHOD(AttachChildInternal);
+	REGISTER_METHOD(DetachAllInternal);
+	REGISTER_METHOD(DetachThisInternal);
+	REGISTER_METHOD(GetChildCount);
+	REGISTER_METHOD(GetChildInternal);
+	REGISTER_METHOD(GetParent);
+	REGISTER_METHOD(GetParentAttachPointWorldTM);
+	REGISTER_METHOD(GetIsParentAttachmentValid);
 }
 
 void CryEntityInterop::SetFlags(IEntity *handle, uint64 flags)
@@ -697,4 +705,62 @@ bool CryEntityInterop::GetIsLoadedFromLevelFile(IEntity *handle)
 bool CryEntityInterop::GetIsFromPool(IEntity *handle)
 {
 	return handle->IsFromPool();
+}
+
+void CryEntityInterop::AttachChildInternal(IEntity *handle, IEntity *child, int flags, mono::string target)
+{
+	// Check for recursive attachment.
+	for (IEntity *parent = handle->GetParent(); parent; parent = parent->GetParent())
+	{
+		if (parent != child)
+		{
+			ArgumentException("Cannot create a recursive attachment.").Throw();
+		}
+	}
+	// Actually attach.
+	handle->AttachChild(child, SChildAttachParams(flags, NtText(target)));
+}
+
+void CryEntityInterop::DetachAllInternal(IEntity *handle, bool keepWorldTM)
+{
+	handle->DetachAll(keepWorldTM ? IEntity::EAttachmentFlags::ATTACHMENT_KEEP_TRANSFORMATION : 0);
+}
+
+void CryEntityInterop::DetachThisInternal(IEntity *handle, bool keepWorldTM)
+{
+	handle->DetachThis(keepWorldTM ? IEntity::EAttachmentFlags::ATTACHMENT_KEEP_TRANSFORMATION : 0)
+}
+
+int CryEntityInterop::GetChildCount(IEntity *handle)
+{
+	return handle->GetChildCount();
+}
+
+IEntity *CryEntityInterop::GetChildInternal(IEntity *handle, int nIndex)
+{
+	if (nIndex < 0)
+	{
+		ArgumentOutOfRangeException("Index of the child entity cannot be less then 0.").Throw();
+	}
+	if (nIndex >= handle->GetChildCount())
+	{
+		ArgumentOutOfRangeException("Index of the child entity cannot be greater then total number of children.").Throw();
+	}
+
+	return handle->GetChild(nIndex);
+}
+
+IEntity *CryEntityInterop::GetParent(IEntity *handle)
+{
+
+}
+
+Matrix34 CryEntityInterop::GetParentAttachPointWorldTM(IEntity *handle)
+{
+
+}
+
+bool CryEntityInterop::GetIsParentAttachmentValid(IEntity *handle)
+{
+
 }
