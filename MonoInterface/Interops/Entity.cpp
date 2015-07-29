@@ -728,7 +728,7 @@ void CryEntityInterop::DetachAllInternal(IEntity *handle, bool keepWorldTM)
 
 void CryEntityInterop::DetachThisInternal(IEntity *handle, bool keepWorldTM)
 {
-	handle->DetachThis(keepWorldTM ? IEntity::EAttachmentFlags::ATTACHMENT_KEEP_TRANSFORMATION : 0)
+	handle->DetachThis(keepWorldTM ? IEntity::EAttachmentFlags::ATTACHMENT_KEEP_TRANSFORMATION : 0);
 }
 
 int CryEntityInterop::GetChildCount(IEntity *handle)
