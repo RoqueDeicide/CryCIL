@@ -80,6 +80,31 @@ namespace CryCil.Engine.Logic
 				SetNameInternal(this.handle, value);
 			}
 		}
+		/// <summary>
+		/// Indicates whether this entity was created by the entity load manager using information stored in the level file.
+		/// </summary>
+		/// <remarks>
+		/// Returns <c>false</c> for any entities created dynamically through code.
+		/// </remarks>
+		public bool IsLoadedFromLevelFile
+		{
+			get
+			{
+				this.AssertEntity();
+				return GetIsLoadedFromLevelFile(this.handle);
+			}
+		}
+		/// <summary>
+		/// Indicates whether this entity is a part of the entity pool.
+		/// </summary>
+		public bool IsFromPool
+		{
+			get
+			{
+				this.AssertEntity();
+				return GetIsFromPool(this.handle);
+			}
+		}
 		#endregion
 		#region Construction
 		internal CryEntity(IntPtr handle)
@@ -183,6 +208,8 @@ namespace CryCil.Engine.Logic
 		private static extern void SetNameInternal(IntPtr handle, string sName);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern string GetNameInternal(IntPtr handle);
+		private static extern bool GetIsLoadedFromLevelFile(IntPtr handle);
+		private static extern bool GetIsFromPool(IntPtr handle);
 		#endregion
 	}
 }

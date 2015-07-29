@@ -683,3 +683,13 @@ mono::string CryEntityInterop::GetNameInternal(IEntity *handle)
 {
 	return ToMonoString(handle->GetName());
 }
+
+bool CryEntityInterop::GetIsLoadedFromLevelFile(IEntity *handle)
+{
+	return handle->IsLoadedFromLevelFile();
+}
+
+bool CryEntityInterop::GetIsFromPool(IEntity *handle)
+{
+	return handle->IsFromPool();
+}

@@ -95,4 +95,6 @@ struct CryEntityInterop : public IMonoInterop < true, true >
 	static bool         GetIsGarbage(IEntity *handle);
 	static void         SetNameInternal(IEntity *handle, mono::string sName);
 	static mono::string GetNameInternal(IEntity *handle);
+	static bool         GetIsLoadedFromLevelFile(IEntity *handle);
+	static bool         GetIsFromPool(IEntity *handle);
 };
