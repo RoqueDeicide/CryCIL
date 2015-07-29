@@ -84,9 +84,12 @@ namespace CryCil.Engine.Logic
 		/// Synchronizes the state of this entity with its representatives on other machines over network.
 		/// </summary>
 		/// <param name="sync">   Object that handles synchronization.</param>
-		/// <param name="aspect"> Designates synchronized aspect.</param>
-		/// <param name="profile">Unknown.</param>
 		/// <param name="pflags"> Physics flags(?).</param>
+		/// <param name="aspect"> Designates the aspect that requires synchronization.</param>
+		/// <param name="profile">
+		/// A number in range [0; 7] that specifies the data format that has to be used to synchronize the
+		/// aspect data.
+		/// </param>
 		/// <returns>True, if synchronization was successful.</returns>
 		public abstract bool SynchronizeWithNetwork(CrySync sync, EntityAspects aspect, byte profile, int pflags);
 		/// <summary>
