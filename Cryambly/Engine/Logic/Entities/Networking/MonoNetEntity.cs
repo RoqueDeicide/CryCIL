@@ -33,7 +33,7 @@ namespace CryCil.Engine.Logic
 		#endregion
 		#region Events
 		/// <summary>
-		/// Occurs when the entity is informed that a mirroring entity is about to be initialized on the
+		/// Occurs when this entity is informed that a mirroring entity is about to be initialized on the
 		/// client-side.
 		/// </summary>
 		/// <remarks>
@@ -42,7 +42,7 @@ namespace CryCil.Engine.Logic
 		/// </remarks>
 		public event Action<object, ChannelId> ClientInitializing;
 		/// <summary>
-		/// Occurs when the entity is informed that a mirroring entity was initialized on the client-side.
+		/// Occurs when this entity is informed that a mirroring entity was initialized on the client-side.
 		/// </summary>
 		/// <remarks>
 		/// First parameter is an entity object for which the event was raised and second parameter is
