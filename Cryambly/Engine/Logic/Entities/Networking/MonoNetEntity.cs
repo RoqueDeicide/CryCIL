@@ -84,14 +84,13 @@ namespace CryCil.Engine.Logic
 		/// Synchronizes the state of this entity with its representatives on other machines over network.
 		/// </summary>
 		/// <param name="sync">   Object that handles synchronization.</param>
-		/// <param name="pflags"> Physics flags(?).</param>
 		/// <param name="aspect"> Designates the aspect that requires synchronization.</param>
 		/// <param name="profile">
 		/// A number in range [0; 7] that specifies the data format that has to be used to synchronize the
 		/// aspect data.
 		/// </param>
 		/// <returns>True, if synchronization was successful.</returns>
-		public abstract bool SynchronizeWithNetwork(CrySync sync, EntityAspects aspect, byte profile, int pflags);
+		public abstract bool SynchronizeWithNetwork(CrySync sync, EntityAspects aspect, byte profile);
 		/// <summary>
 		/// Informs the networking system that parts of this entity have changed and it must be
 		/// synchronized with its proxies on other game instances.
@@ -118,9 +117,9 @@ namespace CryCil.Engine.Logic
 			if (this.ClientInitialized != null) this.ClientInitialized(this, id);
 		}
 		[UnmanagedThunk("Invoked from underlying object to invoke SynchronizeWithNetwork method.")]
-		private bool NetSyncInternal(CrySync sync, EntityAspects aspect, byte profile, int pflags)
+		private bool NetSyncInternal(CrySync sync, EntityAspects aspect, byte profile)
 		{
-			return this.SynchronizeWithNetwork(sync, aspect, profile, pflags);
+			return this.SynchronizeWithNetwork(sync, aspect, profile);
 		}
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void SetChannelId(EntityId entityId, ChannelId channelId);
