@@ -99,46 +99,26 @@ MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 }
 MonoClassWrapper::~MonoClassWrapper()
 {
-	if (this->fullName)
-	{
-		delete this->fullName;
-	}
-	if (this->fullNameIL)
-	{
-		delete this->fullNameIL;
-	}
+	SAFE_DELETE(this->fullName);
+	SAFE_DELETE(this->fullNameIL);
 
-	ReadOnlyList<List<IMonoProperty *> *> *propOverloadList = this->properties.Elements;
-	for (int i = 0; i < this->properties.Length; i++)
+	auto deletePropertyOverloads = [](const char *name, List<IMonoProperty *> *&overloads)
 	{
-		auto overloads = const_cast<List<IMonoProperty *> *>(propOverloadList->At(i));
-		for (int j = 0; j < overloads->Length; j++)
-		{
-			delete const_cast<List<IMonoProperty *> *>(overloads)->At(j);
-		}
+		overloads->DeleteAll();
 		delete overloads;
-	}
+	};
+	this->properties.ForEach(deletePropertyOverloads);
 
-	for (int i = 0; i < this->events.Length; i++)
-	{
-		delete this->events[i];
-	}
+	this->events.DeleteAll();
 
-	ReadOnlyList<List<IMonoFunction *> *> *methodOverloadList = this->methods.Elements;
-	for (int i = 0; i < methodOverloadList->Length; i++)
+	auto deleteMethodOverloads = [](const char *name, List<IMonoFunction *> *&overloads)
 	{
-		auto overloads = const_cast<List<IMonoFunction *> *>(methodOverloadList->At(i));
-		for (int j = 0; j < overloads->Length; j++)
-		{
-			delete const_cast<List<IMonoFunction *> *>(overloads)->At(j);
-		}
+		overloads->DeleteAll();
 		delete overloads;
-	}
+	};
+	this->methods.ForEach(deleteMethodOverloads);
 
-	for (int i = 0; i < this->fields.Length; i++)
-	{
-		delete this->fields[i];
-	}
+	this->fields.DeleteAll();
 }
 
 IMonoFunction *MonoClassWrapper::GetFunction(const char *name, int paramCount)
