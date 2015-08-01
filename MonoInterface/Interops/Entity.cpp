@@ -645,6 +645,8 @@ void CryEntityInterop::OnRunTimeInitialized()
 	REGISTER_METHOD(GetForwardDir);
 	REGISTER_METHOD(Activate);
 	REGISTER_METHOD(IsActive);
+	REGISTER_METHOD(PrePhysicsActivate);
+	REGISTER_METHOD(IsPrePhysicsActive);
 }
 
 void CryEntityInterop::SetFlags(IEntity *handle, uint64 flags)
