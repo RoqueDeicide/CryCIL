@@ -195,6 +195,7 @@ void MonoInterface::Shutdown()
 	delete this->gc;
 	delete this->objs;
 	delete this->funcs;
+	MonoClassCache::Dispose();
 	
 	CryLogAlways("Shutting down jit.");
 	

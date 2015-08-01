@@ -967,3 +967,9 @@ IMonoClass *MonoClassCache::Wrap(MonoClass *klass)
 	MonoClassCache::cachedClasses.Add(wrapper);
 	return wrapper;
 }
+
+void MonoClassCache::Dispose()
+{
+	cachedClasses.DeleteAll();
+	cachedClasses.Clear();
+}

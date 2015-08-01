@@ -123,4 +123,6 @@ public:
 	//!
 	//! @returns A wrapper object, either newly created or taken from cache.
 	static IMonoClass *Wrap(MonoClass *klass);
+	//! Clears the cache.
+	static void Dispose();
 };
