@@ -130,6 +130,7 @@
     <Compile Include="Engine\Logic\Entities\Networking\RmiException.cs" />
     <Compile Include="Engine\Logic\Entities\Networking\RmiParameters.cs" />
     <Compile Include="Engine\Logic\Entities\Networking\RmiTarget.cs" />
+    <Compile Include="Engine\Logic\EntityUpdatePolicy.cs" />
     <Compile Include="Engine\Logic\FlowGraph\ActivationSet.cs" />
     <Compile Include="Engine\Logic\FlowGraph\FlowData.cs" />
     <Compile Include="Engine\Logic\FlowGraph\FlowNode.cs" />

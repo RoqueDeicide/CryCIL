@@ -133,4 +133,6 @@ struct CryEntityInterop : public IMonoInterop < true, true >
 	static bool         IsHidden(IEntity *handle);
 	static void         MakeInvisible(IEntity *handle, bool bInvisible);
 	static bool         IsInvisible(IEntity *handle);
+	static void         SetUpdatePolicy(IEntity *handle, EEntityUpdatePolicy eUpdatePolicy);
+	static EEntityUpdatePolicy GetUpdatePolicy(IEntity *handle);
 };

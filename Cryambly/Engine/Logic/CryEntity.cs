@@ -229,6 +229,26 @@ namespace CryCil.Engine.Logic
 				MakeInvisible(this.handle, value);
 			}
 		}
+		/// <summary>
+		/// Gets or sets entity's automatic (de-)activation policy.
+		/// </summary>
+		public EntityUpdatePolicy UpdatePolicy
+		{
+			get
+			{
+				this.AssertEntity();
+				Contract.EndContractBlock();
+
+				return GetUpdatePolicy(this.handle);
+			}
+			set
+			{
+				this.AssertEntity();
+				Contract.EndContractBlock();
+
+				SetUpdatePolicy(this.handle, value);
+			}
+		}
 		#endregion
 		#region Construction
 		internal CryEntity(IntPtr handle)
@@ -407,6 +427,10 @@ namespace CryCil.Engine.Logic
 		private static extern void MakeInvisible(IntPtr handle, bool bInvisible);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern bool IsInvisible(IntPtr handle);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void SetUpdatePolicy(IntPtr handle, EntityUpdatePolicy eUpdatePolicy);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern EntityUpdatePolicy GetUpdatePolicy(IntPtr handle);
 		#endregion
 	}
 }

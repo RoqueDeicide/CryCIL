@@ -653,6 +653,8 @@ void CryEntityInterop::OnRunTimeInitialized()
 	REGISTER_METHOD(IsHidden);
 	REGISTER_METHOD(MakeInvisible);
 	REGISTER_METHOD(IsInvisible);
+	REGISTER_METHOD(GetUpdatePolicy);
+	REGISTER_METHOD(SetUpdatePolicy);
 }
 
 void CryEntityInterop::SetFlags(IEntity *handle, uint64 flags)
@@ -933,4 +935,14 @@ void CryEntityInterop::MakeInvisible(IEntity *handle, bool bInvisible)
 bool CryEntityInterop::IsInvisible(IEntity *handle)
 {
 	return handle->IsInvisible();
+}
+
+void CryEntityInterop::SetUpdatePolicy(IEntity *handle, EEntityUpdatePolicy eUpdatePolicy)
+{
+	handle->SetUpdatePolicy(eUpdatePolicy);
+}
+
+EEntityUpdatePolicy CryEntityInterop::GetUpdatePolicy(IEntity *handle)
+{
+	return handle->GetUpdatePolicy();
 }
