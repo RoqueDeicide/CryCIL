@@ -156,6 +156,32 @@ namespace CryCil.Engine.Logic
 				Activate(this.handle, value);
 			}
 		}
+		/// <summary>
+		/// Gets or sets the value that indicates whether this entity is going to receive an extra update
+		/// just before the update of the physics engine.
+		/// </summary>
+		/// <remarks>
+		/// Make sure to add this instruction: <c>this.Entity.ReceivesPrePhysicsUpdates = true;</c> in
+		/// <see cref="MonoEntity.PostInitialize"/> if your entity is going to have its own physical
+		/// movement logic.
+		/// </remarks>
+		public bool ReceivesPrePhysicsUpdates
+		{
+			get
+			{
+				this.AssertEntity();
+				Contract.EndContractBlock();
+
+				return IsPrePhysicsActive(this.handle);
+			}
+			set
+			{
+				this.AssertEntity();
+				Contract.EndContractBlock();
+
+				PrePhysicsActivate(this.handle, value);
+			}
+		}
 		#endregion
 		#region Construction
 		internal CryEntity(IntPtr handle)
@@ -273,6 +299,10 @@ namespace CryCil.Engine.Logic
 		private static extern void Activate(IntPtr handle, bool bActive);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern bool IsActive(IntPtr handle);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void PrePhysicsActivate(IntPtr handle, bool bActive);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern bool IsPrePhysicsActive(IntPtr handle);
 		#endregion
 	}
 }

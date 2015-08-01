@@ -886,3 +886,13 @@ bool CryEntityInterop::IsActive(IEntity *handle)
 {
 	return handle->IsActive();
 }
+
+void CryEntityInterop::PrePhysicsActivate(IEntity *handle, bool bActive)
+{
+	handle->PrePhysicsActivate(bActive);
+}
+
+bool CryEntityInterop::IsPrePhysicsActive(IEntity *handle)
+{
+	return handle->IsPrePhysicsActive();
+}

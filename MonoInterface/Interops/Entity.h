@@ -125,4 +125,6 @@ struct CryEntityInterop : public IMonoInterop < true, true >
 	static Vec3         GetForwardDir(IEntity *handle);
 	static void         Activate(IEntity *handle, bool bActive);
 	static bool         IsActive(IEntity *handle);
+	static void         PrePhysicsActivate(IEntity *handle, bool bActive);
+	static bool         IsPrePhysicsActive(IEntity *handle);
 };
