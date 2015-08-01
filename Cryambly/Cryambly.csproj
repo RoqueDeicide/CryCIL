@@ -101,6 +101,7 @@
     <Compile Include="Engine\Input\KeyInputHandler.cs" />
     <Compile Include="Engine\Input\ModifierKeysStatus.cs" />
     <Compile Include="Engine\Input\SymbolicInputHandler.cs" />
+    <Compile Include="Engine\Logic\CryEntity.Children.cs" />
     <Compile Include="Engine\Logic\CryEntity.cs" />
     <Compile Include="Engine\Logic\CryEntity.Location.cs" />
     <Compile Include="Engine\Logic\Entities\CryEntityPool.cs" />
