@@ -205,7 +205,34 @@ namespace CryCil.Engine.Logic
 				return GetForwardDir(this.handle);
 			}
 		}
+		/// <summary>
+		/// Gets location of this entity in local space.
+		/// </summary>
+		/// <param name="position">   Position of this entity.</param>
+		/// <param name="orientation">Orientation of this entity.</param>
+		/// <param name="scale">      Scale of this entity.</param>
+		public void GetLocation(out Vector3 position, out Quaternion orientation, out Vector3 scale)
+		{
+			this.AssertEntity();
 
+			Contract.EndContractBlock();
+
+			GetPosRotScale(this.handle, out position, out orientation, out scale);
+		}
+		/// <summary>
+		/// Sets location of this entity in local space.
+		/// </summary>
+		/// <param name="position">   Position of this entity.</param>
+		/// <param name="orientation">Orientation of this entity.</param>
+		/// <param name="scale">      Scale of this entity.</param>
+		public void SetLocation(ref Vector3 position, ref Quaternion orientation, ref Vector3 scale)
+		{
+			this.AssertEntity();
+
+			Contract.EndContractBlock();
+
+			SetPosRotScale(this.handle, ref position, ref orientation, ref scale);
+		}
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void SetWorldTM(IntPtr handle, ref Matrix34 tm);
 		[MethodImpl(MethodImplOptions.InternalCall)]
