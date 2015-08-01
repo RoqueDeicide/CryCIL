@@ -182,6 +182,53 @@ namespace CryCil.Engine.Logic
 				PrePhysicsActivate(this.handle, value);
 			}
 		}
+		/// <summary>
+		/// Gets or sets the value that indicates whether this entity is hidden.
+		/// </summary>
+		/// <remarks>
+		/// Hidden entities don't receive updates unless they have <see cref="EntityFlags.UpdateHidden"/>
+		/// flag set, are not rendered and their physics is disabled.
+		/// </remarks>
+		public bool Hidden
+		{
+			get
+			{
+				this.AssertEntity();
+				Contract.EndContractBlock();
+
+				return IsHidden(this.handle);
+			}
+			set
+			{
+				this.AssertEntity();
+				Contract.EndContractBlock();
+
+				Hide(this.handle, value);
+			}
+		}
+		/// <summary>
+		/// Gets or sets the value that indicates whether this entity is invisible.
+		/// </summary>
+		/// <remarks>
+		/// Hidden entities don't receive updates, are not rendered and their physics is disabled.
+		/// </remarks>
+		public bool Invisible
+		{
+			get
+			{
+				this.AssertEntity();
+				Contract.EndContractBlock();
+
+				return IsInvisible(this.handle);
+			}
+			set
+			{
+				this.AssertEntity();
+				Contract.EndContractBlock();
+
+				MakeInvisible(this.handle, value);
+			}
+		}
 		#endregion
 		#region Construction
 		internal CryEntity(IntPtr handle)
@@ -352,6 +399,14 @@ namespace CryCil.Engine.Logic
 		private static extern void SetTimerInternal(IntPtr handle, int nTimerId, int nMilliSeconds);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void KillTimerInternal(IntPtr handle, int nTimerId);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void Hide(IntPtr handle, bool bHide);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern bool IsHidden(IntPtr handle);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void MakeInvisible(IntPtr handle, bool bInvisible);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern bool IsInvisible(IntPtr handle);
 		#endregion
 	}
 }

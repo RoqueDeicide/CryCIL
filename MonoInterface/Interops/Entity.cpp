@@ -649,6 +649,10 @@ void CryEntityInterop::OnRunTimeInitialized()
 	REGISTER_METHOD(IsPrePhysicsActive);
 	REGISTER_METHOD(SetTimerInternal);
 	REGISTER_METHOD(KillTimerInternal);
+	REGISTER_METHOD(Hide);
+	REGISTER_METHOD(IsHidden);
+	REGISTER_METHOD(MakeInvisible);
+	REGISTER_METHOD(IsInvisible);
 }
 
 void CryEntityInterop::SetFlags(IEntity *handle, uint64 flags)
@@ -909,4 +913,24 @@ void CryEntityInterop::SetTimerInternal(IEntity *handle, int nTimerId, int nMill
 void CryEntityInterop::KillTimerInternal(IEntity *handle, int nTimerId)
 {
 	handle->KillTimer(nTimerId);
+}
+
+void CryEntityInterop::Hide(IEntity *handle, bool bHide)
+{
+	handle->Hide(bHide);
+}
+
+bool CryEntityInterop::IsHidden(IEntity *handle)
+{
+	return handle->IsHidden();
+}
+
+void CryEntityInterop::MakeInvisible(IEntity *handle, bool bInvisible)
+{
+	handle->Invisible(bInvisible);
+}
+
+bool CryEntityInterop::IsInvisible(IEntity *handle)
+{
+	return handle->IsInvisible();
 }
