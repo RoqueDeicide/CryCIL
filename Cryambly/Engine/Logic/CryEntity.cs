@@ -263,7 +263,52 @@ namespace CryCil.Engine.Logic
 
 			return flagsToCheck == 0 || CheckFlagsInternal(this.handle, (ulong)flagsToCheck, all);
 		}
+		/// <summary>
+		/// Starts a timer.
+		/// </summary>
+		/// <remarks>
+		/// <para>
+		/// All timers are specific to entities, so timer identifiers don't have to be globally unique.
+		/// </para>
+		/// <para>
+		/// When timer is set using an identifier of a timer that is still active, that timer will be
+		/// overridden without raising a Time-Out event.
+		/// </para>
+		/// <para>
+		/// For native entities ENTITY_EVENT_TIME will be sent, while for Mono entities
+		/// <see cref="MonoEntity.TimedOut"/> event is raised.
+		/// </para>
+		/// </remarks>
+		/// <param name="timerId">Identifier of the timer to start.</param>
+		/// <param name="time">   Amount of time the timer should be active for.</param>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// Identifier of the timer cannot be less then 0.
+		/// </exception>
+		public void SetTimer(int timerId, TimeSpan time)
+		{
+			this.AssertEntity();
+			if (timerId < 0)
+			{
+				throw new ArgumentOutOfRangeException("timerId", "Identifier of the timer cannot be less then 0.");
+			}
+			Contract.EndContractBlock();
 
+			SetTimerInternal(this.handle, timerId, time.Duration().Milliseconds);
+		}
+		/// <summary>
+		/// Stops an already active timer.
+		/// </summary>
+		/// <remarks>Kill timers don't send or raise any events.</remarks>
+		/// <param name="timerId">
+		/// Identifier of the timer to kill. If this value is less then 0 then all timers will be killed.
+		/// </param>
+		public void KillTimer(int timerId)
+		{
+			this.AssertEntity();
+			Contract.EndContractBlock();
+
+			KillTimerInternal(this.handle, timerId);
+		}
 		#endregion
 		#region Utilities
 		// Assertion method.
@@ -303,6 +348,10 @@ namespace CryCil.Engine.Logic
 		private static extern void PrePhysicsActivate(IntPtr handle, bool bActive);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern bool IsPrePhysicsActive(IntPtr handle);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void SetTimerInternal(IntPtr handle, int nTimerId, int nMilliSeconds);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void KillTimerInternal(IntPtr handle, int nTimerId);
 		#endregion
 	}
 }

@@ -127,4 +127,6 @@ struct CryEntityInterop : public IMonoInterop < true, true >
 	static bool         IsActive(IEntity *handle);
 	static void         PrePhysicsActivate(IEntity *handle, bool bActive);
 	static bool         IsPrePhysicsActive(IEntity *handle);
+	static void         SetTimerInternal(IEntity *handle, int nTimerId, int nMilliSeconds);
+	static void         KillTimerInternal(IEntity *handle, int nTimerId);
 };

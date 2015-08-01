@@ -647,6 +647,8 @@ void CryEntityInterop::OnRunTimeInitialized()
 	REGISTER_METHOD(IsActive);
 	REGISTER_METHOD(PrePhysicsActivate);
 	REGISTER_METHOD(IsPrePhysicsActive);
+	REGISTER_METHOD(SetTimerInternal);
+	REGISTER_METHOD(KillTimerInternal);
 }
 
 void CryEntityInterop::SetFlags(IEntity *handle, uint64 flags)
@@ -897,4 +899,14 @@ void CryEntityInterop::PrePhysicsActivate(IEntity *handle, bool bActive)
 bool CryEntityInterop::IsPrePhysicsActive(IEntity *handle)
 {
 	return handle->IsPrePhysicsActive();
+}
+
+void CryEntityInterop::SetTimerInternal(IEntity *handle, int nTimerId, int nMilliSeconds)
+{
+	handle->SetTimer(nTimerId, nMilliSeconds);
+}
+
+void CryEntityInterop::KillTimerInternal(IEntity *handle, int nTimerId)
+{
+	handle->KillTimer(nTimerId);
 }
