@@ -643,6 +643,8 @@ void CryEntityInterop::OnRunTimeInitialized()
 	REGISTER_METHOD(GetWorldAngles);
 	REGISTER_METHOD(GetWorldRotation);
 	REGISTER_METHOD(GetForwardDir);
+	REGISTER_METHOD(Activate);
+	REGISTER_METHOD(IsActive);
 }
 
 void CryEntityInterop::SetFlags(IEntity *handle, uint64 flags)
@@ -873,4 +875,14 @@ Quat CryEntityInterop::GetWorldRotation(IEntity *handle)
 Vec3 CryEntityInterop::GetForwardDir(IEntity *handle)
 {
 	return handle->GetForwardDir();
+}
+
+void CryEntityInterop::Activate(IEntity *handle, bool bActive)
+{
+	handle->Activate(bActive);
+}
+
+bool CryEntityInterop::IsActive(IEntity *handle)
+{
+	return handle->IsActive();
 }

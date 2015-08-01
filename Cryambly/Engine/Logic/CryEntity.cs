@@ -128,6 +128,34 @@ namespace CryCil.Engine.Logic
 				return GetIsFromPool(this.handle);
 			}
 		}
+		/// <summary>
+		/// Gets or sets the value that indicates whether this entity is considered active.
+		/// </summary>
+		/// <remarks>
+		/// <para>Active entities are updated by the engine every frame.</para>
+		/// <para>
+		/// Make sure to add this instruction: <c>this.Entity.Active = true;</c> in
+		/// <see cref="MonoEntity.PostInitialize"/> if you rely on any custom functionality defined in
+		/// <see cref="MonoEntity.Update"/> and <see cref="MonoEntity.PostUpdate"/>.
+		/// </para>
+		/// </remarks>
+		public bool Active
+		{
+			get
+			{
+				this.AssertEntity();
+				Contract.EndContractBlock();
+
+				return IsActive(this.handle);
+			}
+			set
+			{
+				this.AssertEntity();
+				Contract.EndContractBlock();
+
+				Activate(this.handle, value);
+			}
+		}
 		#endregion
 		#region Construction
 		internal CryEntity(IntPtr handle)
@@ -241,6 +269,10 @@ namespace CryCil.Engine.Logic
 		private static extern bool GetIsLoadedFromLevelFile(IntPtr handle);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern bool GetIsFromPool(IntPtr handle);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void Activate(IntPtr handle, bool bActive);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern bool IsActive(IntPtr handle);
 		#endregion
 	}
 }

@@ -123,4 +123,6 @@ struct CryEntityInterop : public IMonoInterop < true, true >
 	static Ang3         GetWorldAngles(IEntity *handle);
 	static Quat         GetWorldRotation(IEntity *handle);
 	static Vec3         GetForwardDir(IEntity *handle);
+	static void         Activate(IEntity *handle, bool bActive);
+	static bool         IsActive(IEntity *handle);
 };
