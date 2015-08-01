@@ -14,6 +14,51 @@
 
 #endif // CRYCIL_MODULE
 
+template<typename ElementType> class List;
+
+//! Represents an object that iterates through a List.
+//!
+//! @tparam ElementType Type that represents items the list contains.
+template<typename ElementType>
+class ListIterator
+{
+	const List<ElementType> *list;
+	int currentPosition;
+public:
+	//! Creates an iterator for a given list that starts iteration from a specified position.
+	//!
+	//! @param list 
+	ListIterator(const List<ElementType> *list, int initialPosition)
+	{
+		this->list = list;
+		this->currentPosition = initialPosition;
+	}
+	//! Determines whether this iterator is not on the same position within the same list as the other iterator.
+	bool operator !=(const ListIterator<ElementType> &other) const
+	{
+		// I don't think that the second check is needed, but whatever, its mostly the same in terms of performance.
+		return this->currentPosition != other.currentPosition && this->list != other.list;
+	}
+	//! Returns modifiable reference to the element this iterator is currently at.
+	ElementType &operator *();
+	//! Returns unmodifiable reference to the element this iterator is currently at.
+	const ElementType &operator *() const;
+	//! Moves this iterator to the next element in the list.
+	const ListIterator<ElementType> &operator ++()
+	{
+		this->currentPosition++;
+		return *this;
+	}
+	//! Moves this iterator to the previous element in the list.
+	const ListIterator<ElementType> &operator --()
+	{
+		this->currentPosition--;
+		return *this;
+	}
+	//! Removes the element this iterator is currently at from the list.
+	void RemoveHere();
+};
+
 //! Represents an expandable list of items.
 //!
 //! @tparam ElementType        Type that represents items this list contains.
@@ -679,4 +724,42 @@ private:
 			}
 		}
 	}
+	// For STL-style iteration:
+public:
+	//! Creates an object that can iterate this list from the start.
+	ListIterator<ElementType> begin() const
+	{
+		return ListIterator<ElementType>(this, 0);
+	}
+	//! Creates an object that can iterate this list from a specified position.
+	//!
+	//! @param start Zero-based index of the first element to start iteration from.
+	ListIterator<ElementType> begin_from(int start) const
+	{
+		return ListIterator<ElementType>(this, 0);
+	}
+	//! Creates an object that represents an iterator that reached the end of this list.
+	ListIterator<ElementType> end() const
+	{
+		return ListIterator<ElementType>(this, this->length);
+	}
 };
+
+template<typename ElementType>
+inline const ElementType &ListIterator<ElementType>::operator*() const
+{
+	return (*this->list)[this->currentPosition];
+}
+
+template<typename ElementType>
+inline ElementType &ListIterator<ElementType>::operator*()
+{
+	return (*this->list)[this->currentPosition];
+}
+
+template<typename ElementType>
+inline void ListIterator<ElementType>::RemoveHere()
+{
+	this->list->RemoveAt(this->currentPosition);
+	this->currentPosition--;
+}
