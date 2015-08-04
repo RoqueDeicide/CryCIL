@@ -5,7 +5,7 @@
 
 IFlowNodePtr MonoFlowNodeFactory::Create(IFlowNode::SActivationInfo *actInfo)
 {
-	bool cancel;
+	bool cancel = false;
 	auto node = new MonoFlowNode(this->typeId, actInfo, cancel);
 	if (!cancel)
 	{

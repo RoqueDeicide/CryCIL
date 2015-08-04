@@ -8,6 +8,8 @@
 MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 	: fullName(nullptr)
 	, fullNameIL(nullptr)
+	, events(30)
+	, fields(30)
 {
 	this->wrappedClass = klass;
 
@@ -16,14 +18,12 @@ MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 
 	this->methods    = SortedList<const char *, List<IMonoFunction *> *>(30, strcmp);
 	this->properties = SortedList<const char *, List<IMonoProperty *> *>(30, strcmp);
-	this->events     = List<IMonoEvent *>   (30);
-	this->fields     = List<IMonoField *>   (30);
 	
 	MonoClass *base = klass;
 	while (base)
 	{
 		// Cache methods.
-		void *iter = 0;
+		void *iter = nullptr;
 		while (MonoMethod *met  = mono_class_get_methods(base, &iter))
 		{
 			const char *methodName = mono_method_get_name(met);
@@ -49,7 +49,7 @@ MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 			this->methods.At(methodName)->Add(methodWrapper);
 		}
 		// Cache properties.
-		iter = 0;
+		iter = nullptr;
 		while (MonoProperty *prop = mono_class_get_properties(base, &iter))
 		{
 			const char *propName = mono_property_get_name(prop);
@@ -61,13 +61,13 @@ MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 			this->properties.At(propName)->Add(new MonoPropertyWrapper(prop));
 		}
 		// Cache events.
-		iter = 0;
+		iter = nullptr;
 		while (MonoEvent *ev   = mono_class_get_events(base, &iter))
 		{
 			this->events.Add(new MonoEventWrapper(ev));
 		}
 		// Cache fields.
-		iter = 0;
+		iter = nullptr;
 		while (MonoClassField *f = mono_class_get_fields(base, &iter))
 		{
 			this->fields.Add(new MonoField(f, this));
@@ -131,7 +131,10 @@ IMonoFunction *MonoClassWrapper::GetFunction(const char *name, int paramCount)
 		for (int i = 0; i < names->Length; i++)
 		{
 			overloads = this->methods.At(names->At(i));
-			return this->SearchTheList<IMonoFunction>(*overloads, paramCount);
+			if (auto found = this->SearchTheList<IMonoFunction>(*overloads, paramCount))
+			{
+				return found;
+			}
 		}
 	}
 	if (this->methods.TryGet(name, overloads))
@@ -155,9 +158,9 @@ IMonoFunction *MonoClassWrapper::GetFunction(const char *name, const char *param
 		for (int i = 0; i < names->Length; i++)
 		{
 			overloads = this->methods.At(names->At(i));
-			for (int i = 0; i < overloads->Length; i++)
+			for (int j = 0; j < overloads->Length; j++)
 			{
-				IMonoFunction *m = overloads->At(i);
+				IMonoFunction *m = overloads->At(j);
 				if (strcmp(m->Parameters, params) == 0)
 				{
 					return m;
@@ -194,7 +197,10 @@ IMonoFunction *MonoClassWrapper::GetFunction(const char *name, IMonoArray<> &typ
 		for (int i = 0; i < names->Length; i++)
 		{
 			overloads = this->methods.At(names->At(i));
-			return this->SearchTheList<IMonoFunction>(*overloads, types);
+			if (auto found = this->SearchTheList<IMonoFunction>(*overloads, types))
+			{
+				return found;
+			}
 		}
 	}
 	if (this->methods.TryGet(name, overloads))
@@ -214,7 +220,10 @@ IMonoFunction *MonoClassWrapper::GetFunction(const char *name, List<IMonoClass *
 		for (int i = 0; i < names->Length; i++)
 		{
 			overloads = this->methods.At(names->At(i));
-			return this->SearchTheList<IMonoFunction>(*overloads, classes);
+			if (auto found = this->SearchTheList<IMonoFunction>(*overloads, classes))
+			{
+				return found;
+			}
 		}
 	}
 	if (this->methods.TryGet(name, overloads))
@@ -257,7 +266,10 @@ IMonoFunction *MonoClassWrapper::GetFunction(const char *name, List<const char *
 		for (int i = 0; i < names->Length; i++)
 		{
 			overloads = this->methods.At(names->At(i));
-			return this->SearchTheList<IMonoFunction>(*overloads, paramTypeNames);
+			if (auto found = this->SearchTheList<IMonoFunction>(*overloads, paramTypeNames))
+			{
+				return found;
+			}
 		}
 	}
 	if (this->methods.TryGet(name, overloads))
@@ -396,7 +408,10 @@ IMonoProperty *MonoClassWrapper::GetProperty(const char *name, IMonoArray<> &typ
 		for (int i = 0; i < names->Length; i++)
 		{
 			overloads = this->properties.At(names->At(i));
-			return this->SearchTheList<IMonoProperty>(*overloads, types);
+			if (auto found = this->SearchTheList<IMonoProperty>(*overloads, types))
+			{
+				return found;
+			}
 		}
 	}
 	if (this->properties.TryGet(name, overloads))
@@ -416,7 +431,10 @@ IMonoProperty *MonoClassWrapper::GetProperty(const char *name, List<IMonoClass *
 		for (int i = 0; i < names->Length; i++)
 		{
 			overloads = this->properties.At(names->At(i));
-			return this->SearchTheList<IMonoProperty>(*overloads, classes);
+			if (auto found = this->SearchTheList<IMonoProperty>(*overloads, classes))
+			{
+				return found;
+			}
 		}
 	}
 	if (this->properties.TryGet(name, overloads))
@@ -459,7 +477,10 @@ IMonoProperty *MonoClassWrapper::GetProperty(const char *name, List<const char *
 		for (int i = 0; i < names->Length; i++)
 		{
 			overloads = this->properties.At(names->At(i));
-			return this->SearchTheList<IMonoProperty>(*overloads, paramTypeNames);
+			if (auto found = this->SearchTheList<IMonoProperty>(*overloads, paramTypeNames))
+			{
+				return found;
+			}
 		}
 	}
 	if (this->properties.TryGet(name, overloads))
@@ -479,7 +500,10 @@ IMonoProperty *MonoClassWrapper::GetProperty(const char *name, int paramCount)
 		for (int i = 0; i < names->Length; i++)
 		{
 			overloads = this->properties.At(names->At(i));
-			return this->SearchTheList<IMonoProperty>(*overloads, paramCount);
+			if (auto found = this->SearchTheList<IMonoProperty>(*overloads, paramCount))
+			{
+				return found;
+			}
 		}
 	}
 	if (this->properties.TryGet(name, overloads))
@@ -735,8 +759,7 @@ const char *MonoClassWrapper::GetFullName()
 		}
 		else
 		{
-			TextBuilder fullName =
-				TextBuilder(strlen(this->name) + strlen(this->nameSpace) + 1);
+			fullName = TextBuilder(strlen(this->name) + strlen(this->nameSpace) + 1);
 
 			fullName << this->nameSpace << "." << this->name;
 		}
@@ -762,8 +785,7 @@ const char *MonoClassWrapper::GetFullNameIL()
 		}
 		else
 		{
-			TextBuilder fullName =
-				TextBuilder(strlen(this->name) + strlen(this->nameSpace) + 1);
+			fullName = TextBuilder(strlen(this->name) + strlen(this->nameSpace) + 1);
 
 			fullName << this->nameSpace << "." << this->name;
 		}
@@ -784,7 +806,7 @@ void *MonoClassWrapper::GetWrappedPointer()
 
 bool MonoClassWrapper::Implements(const char *nameSpace, const char *interfaceName, bool searchBaseClasses)
 {
-	void *iterator = 0;
+	void *iterator = nullptr;
 	MonoClass *currentClass = this->wrappedClass;
 	do
 	{
@@ -808,7 +830,7 @@ bool MonoClassWrapper::Implements(const char *nameSpace, const char *interfaceNa
 
 bool MonoClassWrapper::Implements(IMonoClass *interfacePtr, bool searchBaseClasses /*= true*/)
 {
-	void *iterator = 0;
+	void *iterator = nullptr;
 	MonoClass *currentClass = this->wrappedClass;
 	do
 	{

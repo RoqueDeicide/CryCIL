@@ -151,7 +151,7 @@ int MonoObjects::GetStringHashCode(mono::string str)
 
 bool MonoObjects::IsStringInterned(mono::string str)
 {
-	return mono_string_is_interned((MonoString *)str) != 0;
+	return mono_string_is_interned((MonoString *)str) != nullptr;
 }
 
 const char *MonoObjects::StringToNativeUTF8(mono::string str)

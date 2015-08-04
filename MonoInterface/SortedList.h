@@ -147,7 +147,7 @@ public:
 		int index = this->BinarySearch(key);
 		if (index >= 0)
 		{
-			this->values[index] = returnedValue;
+			this->values[index] = value;
 			return true;
 		}
 		return false;

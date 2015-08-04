@@ -102,8 +102,6 @@ private:
 	template<typename result_type>
 	__forceinline result_type *SearchTheList(List<result_type *> &list, List<IMonoClass *> &classes);
 	template<typename result_type>
-	__forceinline result_type *SearchTheList(List<result_type *> &list, List<ClassSpec> &specifiedClasses);
-	template<typename result_type>
 	__forceinline result_type *SearchTheList(List<result_type *> &list, List<const char *> &paramTypeNames);
 	template<typename result_type>
 	__forceinline result_type *SearchTheList(List<result_type *> &list, int paramCount);

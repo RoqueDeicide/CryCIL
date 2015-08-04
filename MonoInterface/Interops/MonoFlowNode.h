@@ -17,6 +17,9 @@ struct MonoFlowData
 	};
 	EFlowDataTypes DataType;
 
+	MonoFlowData()
+	{
+	}
 	MonoFlowData(TFlowInputData &data)
 	{
 		EFlowDataTypes type = data.GetType();

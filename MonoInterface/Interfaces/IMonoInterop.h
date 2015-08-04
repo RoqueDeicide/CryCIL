@@ -25,40 +25,40 @@ struct IMonoInteropBase : public IMonoSystemListener
 	//! of the internal calls is declared.
 	virtual const char *GetNameSpace() = 0;
 	//! Unnecessary for most interops.
-	virtual void OnPreInitialization()
+	virtual void OnPreInitialization() override
 	{}
 	//! Unnecessary for most interops.
-	virtual void OnRunTimeInitializing() {}
+	virtual void OnRunTimeInitializing() override {}
 	//! Unnecessary for most interops.
-	virtual void OnCryamblyInitilizing() {}
+	virtual void OnCryamblyInitilizing() override {}
 	//! Unnecessary for most interops.
-	virtual void OnCompilationStarting()
+	virtual void OnCompilationStarting() override
 	{}
 	//! Unnecessary for most interops.
-	virtual void OnCompilationComplete(bool success)
+	virtual void OnCompilationComplete(bool success) override
 	{}
 	//! Unnecessary for most interops.
-	virtual List<int> *GetSubscribedStages()
+	virtual List<int> *GetSubscribedStages() override
 	{
 		return nullptr;
 	}
 	//! Unnecessary for most interops.
-	virtual void OnInitializationStage(int stageIndex)
+	virtual void OnInitializationStage(int stageIndex) override
 	{}
 	//! Unnecessary for most interops.
-	virtual void OnCryamblyInitilized()
+	virtual void OnCryamblyInitilized() override
 	{}
 	//! Unnecessary for most interops.
-	virtual void OnPostInitialization()
+	virtual void OnPostInitialization() override
 	{}
 	//! Unnecessary for most interops.
-	virtual void Update()
+	virtual void Update() override
 	{}
 	//! Unnecessary for most interops.
-	virtual void PostUpdate()
+	virtual void PostUpdate() override
 	{}
 	//! Unnecessary for most interops.
-	virtual void Shutdown()
+	virtual void Shutdown() override
 	{}
 };
 
@@ -83,7 +83,7 @@ template<> struct IMonoInterop<false, false> : public IMonoInteropBase
 template<> struct IMonoInterop<true, false> : public IMonoInteropBase
 {
 	//! Unregisters itself and commits suicide.
-	virtual void OnCryamblyInitilizing()
+	virtual void OnCryamblyInitilizing() override
 	{
 		this->monoInterface->RemoveListener(this);
 		delete this;
@@ -94,9 +94,9 @@ template<> struct IMonoInterop<true, false> : public IMonoInteropBase
 template<> struct IMonoInterop < false, true > : public IMonoInteropBase
 {
 	//! No saving.
-	virtual void SetInterface(IMonoInterface *handle) {}
+	virtual void SetInterface(IMonoInterface *handle) override {}
 	//! Registers internal calls through MonoEnv, since internal field is a null pointer.
-	virtual void RegisterInteropMethod(const char *methodName, void *functionPointer)
+	virtual void RegisterInteropMethod(const char *methodName, void *functionPointer) override
 	{
 		MonoEnv->Functions->AddInternalCall
 			(this->GetNameSpace(), this->GetName(), methodName, functionPointer);
@@ -112,15 +112,15 @@ template<> struct IMonoInterop < false, true > : public IMonoInteropBase
 template<> struct IMonoInterop < true, true > : public IMonoInteropBase
 {
 	//! No saving.
-	virtual void SetInterface(IMonoInterface *handle) {}
+	virtual void SetInterface(IMonoInterface *handle) override {}
 	//! Unregisters itself and commits suicide.
-	virtual void OnCryamblyInitilizing()
+	virtual void OnCryamblyInitilizing() override
 	{
 		MonoEnv->RemoveListener(this);
 		delete this;
 	}
 	//! Registers internal calls through MonoEnv, since internal field is a null pointer.
-	virtual void RegisterInteropMethod(const char *methodName, void *functionPointer)
+	virtual void RegisterInteropMethod(const char *methodName, void *functionPointer) override
 	{
 		MonoEnv->Functions->AddInternalCall
 			(this->GetNameSpace(), this->GetName(), methodName, functionPointer);

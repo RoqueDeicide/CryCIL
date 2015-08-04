@@ -5,7 +5,7 @@
 // Define the signature.
 typedef void (__stdcall *Clamp)(mono::vector2 value, mono::vector2 min, mono::vector2 max, mono::vector2 result, mono::exception *ex);
 
-void example()
+inline void example()
 {
 	// Get the method.
 	auto clampMethod = MonoEnv->Cryambly->GetClass("CryCil", "Vector2")->GetFunction("Clamp", 4);

@@ -332,7 +332,7 @@ public:
 	//! Text from given string is copied into new object without a terminating null character.
 	//!
 	//! @param t Text to initialize this object with.
-	Text(const char *t) : TextBase(t) {}
+	explicit Text(const char *t) : TextBase(t) {}
 	//! Creates a new immutable string from given char array.
 	//!
 	//! @param t         Text to initialize this object with.
@@ -343,7 +343,7 @@ public:
 	//! Creates a new immutable string from given .Net/Mono string.
 	//!
 	//! @param managedString Instance of type System.String.
-	Text(MonoString *managedString) : TextBase(managedString) {}
+	explicit Text(MonoString *managedString) : TextBase(managedString) {}
 #endif // CRYCIL_MODULE
 
 #ifdef USE_CRYCIL_API
@@ -351,13 +351,13 @@ public:
 	//! Creates a new null-terminated string from given .Net/Mono string.
 	//!
 	//! @param managedString Instance of type System.String.
-	Text(mono::string managedString) : TextBase(managedString) {}
+	explicit Text(mono::string managedString) : TextBase(managedString) {}
 
 #endif // USE_CRYCIL_API
 	//! Constructs a text out of given parts.
 	//!
 	//! @param t1 Number of arguments in the chain.
-	Text(int count...)
+	explicit Text(int count...)
 	{
 		// Gather the arguments into the list and calculate total length at the same time.
 		va_list va;
@@ -412,6 +412,7 @@ public:
 		{
 			result->text[i] = this->text[i + index];
 		}
+		return result;
 	}
 	//! Assigns a null-terminated string to this object.
 	//!
@@ -683,6 +684,7 @@ public:
 		{
 			result->text[i] = this->text[i + index];
 		}
+		return result;
 	}
 	//! Appends a symbol to the end of this text.
 	TextBuilder &operator <<(char str)

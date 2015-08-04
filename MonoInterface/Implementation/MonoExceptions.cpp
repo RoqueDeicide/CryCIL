@@ -189,7 +189,7 @@ mono::exception MonoExceptions::NotSupported(const char *message /*= nullptr*/, 
 
 mono::exception MonoExceptions::CryEngine(const char *message /*= nullptr*/, mono::exception inner /*= nullptr*/)
 {
-	mono::exception ex;
+	mono::exception ex = nullptr;
 	if (message || inner)
 	{
 		IMonoClass *exClass = MonoEnv->Cryambly->GetClass("CryCil.Engine", "CryEngineException");
@@ -225,7 +225,7 @@ mono::exception MonoExceptions::ObjectDisposed(const char *message /*= nullptr*/
 mono::exception MonoExceptions::CreateExceptionObject
 (const char *name_space, const char *name, const char *message /*= nullptr*/, mono::exception inner /*= nullptr*/)
 {
-	mono::exception ex;
+	mono::exception ex = nullptr;
 	if (message || inner)
 	{
 		IMonoClass *exClass = MonoEnv->CoreLibrary->GetClass(name_space, name);

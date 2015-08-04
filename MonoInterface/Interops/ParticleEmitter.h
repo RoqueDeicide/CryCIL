@@ -9,10 +9,10 @@ struct ParticleEmitterInterop : public IMonoInterop < false, true >, public IPar
 	virtual const char *GetNameSpace() override { return "CryCil.Engine"; }
 
 	virtual void OnRunTimeInitialized() override;
-	virtual void Shutdown();
+	virtual void Shutdown() override;
 
-	virtual void OnCreateEmitter(IParticleEmitter* pEmitter, const QuatTS& qLoc, const IParticleEffect* pEffect, uint32 uEmitterFlags);
-	virtual void OnDeleteEmitter(IParticleEmitter* pEmitter);
+	virtual void OnCreateEmitter(IParticleEmitter* pEmitter, const QuatTS& qLoc, const IParticleEffect* pEffect, uint32 uEmitterFlags) override;
+	virtual void OnDeleteEmitter(IParticleEmitter* pEmitter) override;
 
 	static void Activate  (IParticleEmitter **handle);
 	static void Deactivate(IParticleEmitter **handle);

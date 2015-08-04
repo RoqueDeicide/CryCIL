@@ -114,7 +114,7 @@ public:
 	//! Creates a new list.
 	//!
 	//! @param initialCapacity Number of items this list is planned to hold.
-	List(int initialCapacity)
+	explicit List(int initialCapacity)
 	{
 		this->length = 0;
 		this->capacity = initialCapacity;
@@ -258,7 +258,7 @@ public:
 	//! @param collection A collection of elements to add.
 	void AddRange(std::vector<ElementType> &collection)
 	{
-		collectionSize = collection.size();
+		int collectionSize = collection.size();
 		if (collectionSize <= 0)
 		{
 			return;
@@ -764,7 +764,6 @@ public:
 		return ListIterator<ElementType, true>(this, this->length);
 	}
 	//! Used by this class when iterating through the list in reverse.
-	template<typename ElementType>
 	class ReversedList
 	{
 		const List<ElementType> *list;
@@ -783,7 +782,7 @@ public:
 		//! @param start Zero-based index of the first element to start iteration from.
 		ListIterator<ElementType, false> begin_from(int start) const
 		{
-			return ListIterator<ElementType, false>(this, , this->list->length - 1 - start);
+			return ListIterator<ElementType, false>(this, this->list->length - 1 - start);
 		}
 		//! Creates an object that represents an iterator that reached the end of this list.
 		ListIterator<ElementType, false> end() const
@@ -810,10 +809,10 @@ public:
 	//! @endcode
 	//! 
 	//! The code above will print: "3210".
-	__declspec(property(get = GetReversed)) ReversedList<ElementType> Reversed;
-	ReversedList<ElementType> GetReversed() const
+	__declspec(property(get = GetReversed)) ReversedList Reversed;
+	ReversedList GetReversed() const
 	{
-		return ReversedList<ElementType>(this);
+		return ReversedList(this);
 	}
 };
 

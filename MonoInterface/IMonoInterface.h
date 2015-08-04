@@ -46,6 +46,10 @@ protected:
 	IMonoObjects *objs;
 	IMonoFunctions *funcs;
 public:
+	virtual ~IMonoInterface()
+	{
+	}
+
 	//! Triggers registration of FlowGraph nodes.
 	//!
 	//! Call this method from Game::RegisterGameFlowNodes function.

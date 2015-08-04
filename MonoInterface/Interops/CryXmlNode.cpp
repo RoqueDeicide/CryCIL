@@ -112,7 +112,6 @@ void CryXmlNodeInterop::Release(mono::object obj)
 	}
 
 	objNode->Release();
-	objNode = nullptr;
 }
 
 mono::string CryXmlNodeInterop::get_TagName(mono::object obj)

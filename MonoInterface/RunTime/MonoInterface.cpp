@@ -22,8 +22,8 @@ void *MonoInterface::GetAppDomain()
 #pragma region Construction
 //! Initializes Mono run-time environment.
 MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener *> *listeners)
-	: appDomain(nullptr)
-	, broadcaster(nullptr)
+	: broadcaster(nullptr)
+	, appDomain(nullptr)
 {
 	_this = this;
 
@@ -143,7 +143,8 @@ MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener
 	MonoInterfaceThunks::Initialize(&ex);
 	if (ex)
 	{
-		this->HandleException(ex);
+		mono::exception eX;
+		MonoInterfaceThunks::DisplayException(ex, &eX);
 		CryFatalError("CryCil.RunTime.MonoInterface object was not initialized. Cannot continue.");
 	}
 	

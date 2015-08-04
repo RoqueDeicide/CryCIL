@@ -20,7 +20,7 @@ struct MouseInterop : public IMonoInterop<false, true>, public IHardwareMouseEve
 
 	virtual void OnRunTimeInitialized() override;
 
-	virtual void OnHardwareMouseEvent(int iX, int iY, EHARDWAREMOUSEEVENT eHardwareMouseEvent, int wheelDelta = 0);
+	virtual void OnHardwareMouseEvent(int iX, int iY, EHARDWAREMOUSEEVENT eHardwareMouseEvent, int wheelDelta = 0) override;
 
 	static void IncrementCounter();
 	static void DecrementCounter();

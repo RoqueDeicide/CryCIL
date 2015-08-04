@@ -255,11 +255,11 @@ struct EntityPropertyInfo
 
 struct MonoEntityCreator : public IGameObjectExtensionCreatorBase
 {
-	virtual IGameObjectExtensionPtr Create()
+	virtual IGameObjectExtensionPtr Create() override
 	{
 		return ComponentCreate_DeleteWithRelease<MonoEntityExtension>();
 	}
-	virtual void GetGameObjectExtensionRMIData(void **ppRMI, size_t *nCount)
+	virtual void GetGameObjectExtensionRMIData(void **ppRMI, size_t *nCount) override
 	{
 		return MonoEntityExtension::GetGameObjectExtensionRMIData(ppRMI, nCount);
 	}
@@ -274,9 +274,9 @@ bool EntitySystemInterop::RegisterEntityClass(mono::string name, mono::string ca
 	auto registry = gEnv->pEntitySystem->GetClassRegistry();
 
 	auto nameMatch =
-		[className](NtText &name)
+		[className](NtText &registeredName)
 		{
-			return name.Equals(className);
+			return registeredName.Equals(className);
 		};
 
 	if ((flags && EEntityClassFlags::ECLF_MODIFY_EXISTING) == 0)

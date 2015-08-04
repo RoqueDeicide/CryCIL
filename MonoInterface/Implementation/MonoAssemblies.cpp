@@ -18,7 +18,7 @@ IMonoAssembly *MonoAssemblies::Load(const char *path)
 	{
 		return nullptr;
 	}
-	bool failed;
+	bool failed = false;
 	IMonoAssembly *wrapper = new MonoAssemblyWrapper(path, failed);
 	if (Pdb2MdbThunks::Convert)
 	{

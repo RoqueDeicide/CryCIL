@@ -157,7 +157,7 @@ public:
 	//! Updates the array data.
 	IMonoObject &operator=(mono::object obj)
 	{
-		this->Update(ar);
+		this->Update(obj);
 		return *this;
 	}
 	//! Updates the array data.

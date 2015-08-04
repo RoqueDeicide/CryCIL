@@ -70,7 +70,7 @@ bool CryPakInterop::OpenPacks(mono::string wildcard, mono::Array *paths, ICryPak
 {
 	if (!gEnv || !gEnv->pCryPak)
 	{
-		return nullptr;
+		return false;
 	}
 
 	if (!wildcard)
@@ -105,7 +105,7 @@ bool CryPakInterop::OpenPacksRooted(mono::string root, mono::string wildcard, mo
 {
 	if (!gEnv || !gEnv->pCryPak)
 	{
-		return nullptr;
+		return false;
 	}
 
 	if (!root)
@@ -152,7 +152,7 @@ bool CryPakInterop::ClosePack(mono::string name, bool closeMany, ICryPak::EPathR
 		ArgumentNullException("Cannot close a .pak file using a null name/wildcard.").Throw();
 	}
 
-	bool ok = false;
+	bool ok;
 
 	if (closeMany)
 	{

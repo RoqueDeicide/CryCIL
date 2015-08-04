@@ -261,7 +261,7 @@ public:
 		{
 			return nullptr;
 		}
-		int length = _strlen(this->chars);
+		int count = _strlen(this->chars);
 		SymbolType *ntText = new SymbolType[count + 1];
 		ntText[count] = '\0';
 		for (int i = 0; i < count; i++)

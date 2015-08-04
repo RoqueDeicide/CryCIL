@@ -11,25 +11,25 @@ private:
 public:
 	SimpleListener() : monoEnv(nullptr) {}
 
-	virtual void SetInterface(IMonoInterface *handle)
+	virtual void SetInterface(IMonoInterface *handle) override
 	{
 		// This is the only IMonoInterface pointer we can use before MonoEnv is initialized.
 		this->monoEnv = handle;
 	}
 
-	virtual void OnPreInitialization()
+	virtual void OnPreInitialization() override
 	{
 		// Cannot really interact with IMonoInterface right now.
 		CryLogAlways("CryCIL initialization is about to begin.");
 	}
 
-	virtual void OnRunTimeInitializing()
+	virtual void OnRunTimeInitializing() override
 	{
 		// Same as in the method above.
 		CryLogAlways("Mono run-time initialization is about to begin.");
 	}
 
-	virtual void OnRunTimeInitialized()
+	virtual void OnRunTimeInitialized() override
 	{
 		// Now we can use Mono.
 		mono::nothing(*BeepFunc)(mono::exception *);
@@ -40,7 +40,7 @@ public:
 		BeepFunc(&ex);
 	}
 
-	virtual void OnCryamblyInitilizing()
+	virtual void OnCryamblyInitilizing() override
 	{
 		// Cryambly is loaded, now we can do stuff like working with quaternions.
 		Vec3 up(0, 0, 1);
@@ -58,12 +58,12 @@ public:
 		CryLogAlways("Quat = %s, %s, %s, %s", rotation.v.x, rotation.v.y, rotation.v.z, rotation.w);
 	}
 
-	virtual void OnCompilationStarting()
+	virtual void OnCompilationStarting() override
 	{
 		CryLogAlways("Extra assemblies in Modules folder are loaded at this point.");
 	}
 
-	virtual void OnCompilationComplete(bool success)
+	virtual void OnCompilationComplete(bool success) override
 	{
 		if (success)
 		{
@@ -75,7 +75,7 @@ public:
 		}
 	}
 
-	virtual List<int> *GetSubscribedStages()
+	virtual List<int> *GetSubscribedStages() override
 	{
 		List<int> *stages = new List<int>(8);
 		stages->Add(ENTITY_REGISTRATION_STAGE - 1);			// Before entities registration.
@@ -89,7 +89,7 @@ public:
 		return stages;
 	}
 
-	virtual void OnInitializationStage(int stageIndex)
+	virtual void OnInitializationStage(int stageIndex) override
 	{
 		switch (stageIndex)
 		{
@@ -122,33 +122,33 @@ public:
 		}
 	}
 
-	virtual void OnCryamblyInitilized()
+	virtual void OnCryamblyInitilized() override
 	{
 		CryLogAlways("Managed part of IMonoInterface implementation is fully initialized.");
 	}
 
-	virtual void OnPostInitialization()
+	virtual void OnPostInitialization() override
 	{
 		CryLogAlways("CryCIL is fully initialized.");
 	}
 
-	virtual void Update()
+	virtual void Update() override
 	{
 		CryLogAlways("Logical update of CryCIL.");
 	}
 
-	virtual void PostUpdate()
+	virtual void PostUpdate() override
 	{
 		CryLogAlways("Logical update of CryCIL is over.");
 	}
 
-	virtual void Shutdown()
+	virtual void Shutdown() override
 	{
 		CryLogAlways("Shutting down.");
 	}
 };
 
-void HowToRegisterListeners()
+inline void HowToRegisterListeners()
 {
 	// We have to pass listeners to InitializeModule if you them to react to initialization events.
 	auto listeners = List<IMonoSystemListener *>(1);
@@ -157,8 +157,7 @@ void HowToRegisterListeners()
 	HMODULE monoInterfaceDll = CryLoadLibrary(MONOINTERFACE_LIBRARY);
 	if (monoInterfaceDll)
 	{
-		InitializeMonoInterface init =
-			(InitializeMonoInterface)CryGetProcAddress(monoInterfaceDll, MONO_INTERFACE_INIT);
+		auto init = reinterpret_cast<InitializeMonoInterface>(CryGetProcAddress(monoInterfaceDll, MONO_INTERFACE_INIT));
 		// Replace nullptr with a pointer to IGameFramework.
 		init(nullptr, &listeners);
 	}

@@ -1,9 +1,5 @@
 #pragma once
 
-#include <stdarg.h>
-
-#include <sstream>
-
 #if defined(PS3) || defined(LINUX) || defined(APPLE) || defined(ORBIS)
 #define PATH_SEPARATOR '/'
 #else

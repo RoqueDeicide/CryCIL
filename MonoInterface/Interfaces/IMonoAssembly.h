@@ -30,6 +30,10 @@ struct IMonoAssembly : public IMonoFunctionalityWrapper
 //! through MonoEnv variable.
 struct IMonoAssemblies
 {
+	virtual ~IMonoAssemblies()
+	{
+	}
+
 	//! Loads a Mono assembly into memory.
 	//!
 	//! If the assembly was already loaded from the same file, original wrapper will be returned.
