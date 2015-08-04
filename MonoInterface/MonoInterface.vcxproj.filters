@@ -659,6 +659,9 @@
     <ClCompile Include="TypeMapChecks\EntityUpdatePolicy.cpp">
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
+    <ClCompile Include="TypeMapChecks\SpawnParams.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">

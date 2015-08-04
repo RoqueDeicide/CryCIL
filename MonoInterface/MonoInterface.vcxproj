@@ -460,6 +460,7 @@
     <ClCompile Include="TypeMapChecks\RenderParameters.cpp" />
     <ClCompile Include="TypeMapChecks\RmiTargetEnum.cpp" />
     <ClCompile Include="TypeMapChecks\SmallEntityStructs.cpp" />
+    <ClCompile Include="TypeMapChecks\SpawnParams.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
