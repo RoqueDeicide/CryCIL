@@ -270,6 +270,19 @@ namespace CryCil.Engine.Logic
 				SetMaterial(this.handle, value);
 			}
 		}
+		/// <summary>
+		/// Gets an object that provides access to slots of this entity.
+		/// </summary>
+		public EntitySlotCollection Slots
+		{
+			get
+			{
+				this.AssertEntity();
+				Contract.EndContractBlock();
+
+				return new EntitySlotCollection(this.handle);
+			}
+		}
 		#endregion
 		#region Construction
 		internal CryEntity(IntPtr handle)

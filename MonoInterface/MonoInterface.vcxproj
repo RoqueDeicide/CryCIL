@@ -452,6 +452,7 @@
     <ClCompile Include="TypeMapChecks\EntityAspects.cpp" />
     <ClCompile Include="TypeMapChecks\EntityClassFlags.cpp" />
     <ClCompile Include="TypeMapChecks\EntityFlags.cpp" />
+    <ClCompile Include="TypeMapChecks\EntitySlotInfo.cpp" />
     <ClCompile Include="TypeMapChecks\EntitySpawnParams.cpp" />
     <ClCompile Include="TypeMapChecks\EntityUpdateContext.cpp" />
     <ClCompile Include="TypeMapChecks\EntityUpdatePolicy.cpp" />

@@ -346,6 +346,7 @@ void MonoInterface::RegisterDefaultListeners()
 	this->broadcaster->listeners->Add(new EntitySystemInterop());
 	this->broadcaster->listeners->Add(new NetEntityInterop());
 	this->broadcaster->listeners->Add(new CryEntityInterop());
+	this->broadcaster->listeners->Add(new EntitySlotsInterop());
 	this->broadcaster->listeners->Add(new GameInterop());
 }
 #pragma endregion

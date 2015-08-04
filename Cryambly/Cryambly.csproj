@@ -104,6 +104,7 @@
     <Compile Include="Engine\Logic\CryEntity.Children.cs" />
     <Compile Include="Engine\Logic\CryEntity.cs" />
     <Compile Include="Engine\Logic\CryEntity.Location.cs" />
+    <Compile Include="Engine\Logic\Slots\CryEntitySlot.cs" />
     <Compile Include="Engine\Logic\Entities\CryEntityPool.cs" />
     <Compile Include="Engine\Logic\Entities\EditableProperty.cs" />
     <Compile Include="Engine\Logic\Entities\EditablePropertyAttribute.cs" />
@@ -130,6 +131,10 @@
     <Compile Include="Engine\Logic\Entities\Networking\RmiException.cs" />
     <Compile Include="Engine\Logic\Entities\Networking\RmiParameters.cs" />
     <Compile Include="Engine\Logic\Entities\Networking\RmiTarget.cs" />
+    <Compile Include="Engine\Logic\Slots\EntitySlotCollection.cs" />
+    <Compile Include="Engine\Logic\Slots\EntitySlotFlags.cs" />
+    <Compile Include="Engine\Logic\Slots\EntitySlotInfo.cs" />
+    <Compile Include="Engine\Logic\Slots\EntitySlotOps.cs" />
     <Compile Include="Engine\Logic\EntityUpdatePolicy.cs" />
     <Compile Include="Engine\Logic\FlowGraph\ActivationSet.cs" />
     <Compile Include="Engine\Logic\FlowGraph\FlowData.cs" />

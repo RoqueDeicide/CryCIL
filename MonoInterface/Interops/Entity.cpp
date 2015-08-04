@@ -958,3 +958,175 @@ IMaterial *CryEntityInterop::GetMaterial(IEntity *handle)
 {
 	return handle->GetMaterial();
 }
+
+void EntitySlotsInterop::OnRunTimeInitialized()
+{
+	REGISTER_METHOD(IsSlotValid);
+	REGISTER_METHOD(FreeSlot);
+	REGISTER_METHOD(GetSlotInfo);
+	REGISTER_METHOD(GetSlotWorldTM);
+	REGISTER_METHOD(GetSlotLocalTM);
+	REGISTER_METHOD(SetSlotLocalTM);
+	REGISTER_METHOD(SetSlotCameraSpacePos);
+	REGISTER_METHOD(GetSlotCameraSpacePos);
+	REGISTER_METHOD(SetParentSlot);
+	REGISTER_METHOD(SetSlotMaterial);
+	REGISTER_METHOD(SetSlotFlags);
+	REGISTER_METHOD(GetSlotFlags);
+	REGISTER_METHOD(ShouldUpdateCharacter);
+	REGISTER_METHOD(GetCharacter);
+	REGISTER_METHOD(SetCharacter);
+	REGISTER_METHOD(GetStatObj);
+	REGISTER_METHOD(GetParticleEmitter);
+	REGISTER_METHOD(GetGeomCacheRenderNode);
+	REGISTER_METHOD(MoveSlot);
+	REGISTER_METHOD(SetStatObj);
+	REGISTER_METHOD(LoadGeometry);
+	REGISTER_METHOD(LoadCharacter);
+	REGISTER_METHOD(LoadGeomCache);
+	REGISTER_METHOD(LoadParticleEmitterDefault);
+	REGISTER_METHOD(LoadParticleEmitter);
+	REGISTER_METHOD(SetParticleEmitter);
+	REGISTER_METHOD(LoadLight);
+	REGISTER_METHOD(GetSlotCount);
+}
+
+bool EntitySlotsInterop::IsSlotValid(IEntity *handle, int nIndex)
+{
+	return handle->IsSlotValid(nIndex);
+}
+
+void EntitySlotsInterop::FreeSlot(IEntity *handle, int nIndex)
+{
+	handle->FreeSlot(nIndex);
+}
+
+bool EntitySlotsInterop::GetSlotInfo(IEntity *handle, int nIndex, SEntitySlotInfo *slotInfo)
+{
+	return handle->GetSlotInfo(nIndex, *slotInfo);
+}
+
+void EntitySlotsInterop::GetSlotWorldTM(IEntity *handle, int slot, Matrix34 *matrix)
+{
+	*matrix = handle->GetSlotWorldTM(slot);
+}
+
+void EntitySlotsInterop::GetSlotLocalTM(IEntity *handle, int slot, bool bRelativeToParent, Matrix34 *matrix)
+{
+	*matrix = handle->GetSlotLocalTM(slot, bRelativeToParent);
+}
+
+void EntitySlotsInterop::SetSlotLocalTM(IEntity *handle, int slot, Matrix34 *localTM)
+{
+	handle->SetSlotLocalTM(slot, *localTM);
+}
+
+void EntitySlotsInterop::SetSlotCameraSpacePos(IEntity *handle, int slot, Vec3 *cameraSpacePos)
+{
+	handle->SetSlotCameraSpacePos(slot, *cameraSpacePos);
+}
+
+void EntitySlotsInterop::GetSlotCameraSpacePos(IEntity *handle, int slot, Vec3 *cameraSpacePos)
+{
+	handle->GetSlotCameraSpacePos(slot, *cameraSpacePos);
+}
+
+bool EntitySlotsInterop::SetParentSlot(IEntity *handle, int nParentIndex, int nChildIndex)
+{
+	return handle->SetParentSlot(nParentIndex, nChildIndex);
+}
+
+void EntitySlotsInterop::SetSlotMaterial(IEntity *handle, int slot, IMaterial *pMaterial)
+{
+	handle->SetSlotMaterial(slot, pMaterial);
+}
+
+void EntitySlotsInterop::SetSlotFlags(IEntity *handle, int slot, int nFlags)
+{
+	handle->SetSlotFlags(slot, nFlags);
+}
+
+int EntitySlotsInterop::GetSlotFlags(IEntity *handle, int slot)
+{
+	return handle->GetSlotFlags(slot);
+}
+
+bool EntitySlotsInterop::ShouldUpdateCharacter(IEntity *handle, int slot)
+{
+	return handle->ShouldUpdateCharacter(slot);
+}
+
+ICharacterInstance *EntitySlotsInterop::GetCharacter(IEntity *handle, int slot)
+{
+	return handle->GetCharacter(slot);
+}
+
+int EntitySlotsInterop::SetCharacter(IEntity *handle, ICharacterInstance *pCharacter, int slot)
+{
+	return handle->SetCharacter(pCharacter, slot);
+}
+
+IStatObj *EntitySlotsInterop::GetStatObj(IEntity *handle, int slot)
+{
+	return handle->GetStatObj(slot);
+}
+
+IParticleEmitter *EntitySlotsInterop::GetParticleEmitter(IEntity *handle, int slot)
+{
+	return handle->GetParticleEmitter(slot);
+}
+
+IGeomCacheRenderNode *EntitySlotsInterop::GetGeomCacheRenderNode(IEntity *handle, int slot)
+{
+	return handle->GetGeomCacheRenderNode(slot);
+}
+
+void EntitySlotsInterop::MoveSlot(IEntity *handle, IEntity *targetIEnt, int slot)
+{
+	handle->MoveSlot(targetIEnt, slot);
+}
+
+int EntitySlotsInterop::SetStatObj(IEntity *handle, IStatObj *pStatObj, int slot, bool bUpdatePhysics, float mass)
+{
+	return handle->SetStatObj(pStatObj, slot, bUpdatePhysics, mass);
+}
+
+int EntitySlotsInterop::LoadGeometry(IEntity *handle, int slot, mono::string sFilename, mono::string sGeomName, int nLoadFlags)
+{
+	return handle->LoadGeometry(slot, NtText(sFilename), NtText(sGeomName), nLoadFlags);
+}
+
+int EntitySlotsInterop::LoadCharacter(IEntity *handle, int slot, mono::string sFilename, int nLoadFlags)
+{
+	return handle->LoadCharacter(slot, NtText(sFilename), nLoadFlags);
+}
+
+int EntitySlotsInterop::LoadGeomCache(IEntity *handle, int slot, mono::string sFilename)
+{
+	return handle->LoadGeomCache(slot, NtText(sFilename));
+}
+
+int EntitySlotsInterop::LoadParticleEmitterDefault(IEntity *handle, int slot, IParticleEffect *pEffect, bool bPrime, bool bSerialize)
+{
+	return handle->LoadParticleEmitter(slot, pEffect, nullptr, bPrime, bSerialize);
+}
+
+int EntitySlotsInterop::LoadParticleEmitter(IEntity *handle, int slot, IParticleEffect *pEffect, SpawnParams *parameters, bool bPrime, bool bSerialize)
+{
+	return handle->LoadParticleEmitter(slot, pEffect, parameters, bPrime, bSerialize);
+}
+
+int EntitySlotsInterop::SetParticleEmitter(IEntity *handle, int slot, IParticleEmitter *pEmitter, bool bSerialize)
+{
+	return handle->SetParticleEmitter(slot, pEmitter, bSerialize);
+}
+
+int EntitySlotsInterop::LoadLight(IEntity *handle, int slot, CDLight *pLight)
+{
+	return handle->LoadLight(slot, pLight);
+}
+
+int EntitySlotsInterop::GetSlotCount(IEntity *handle)
+{
+	return handle->GetSlotCount();
+}

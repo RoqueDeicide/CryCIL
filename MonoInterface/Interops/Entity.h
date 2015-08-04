@@ -138,3 +138,41 @@ struct CryEntityInterop : public IMonoInterop < true, true >
 	static void         SetMaterial(IEntity *handle, IMaterial *pMaterial);
 	static IMaterial   *GetMaterial(IEntity *handle);
 };
+
+struct EntitySlotsInterop : IMonoInterop<true, true>
+{
+	virtual const char *GetName() override { return "EntitySlotOps"; }
+	virtual const char *GetNameSpace() override { return "CryCil.Engine.Logic"; }
+
+	virtual void OnRunTimeInitialized() override;
+
+	static bool         IsSlotValid(IEntity *entityHandle, int nIndex);
+	static void         FreeSlot(IEntity *entityHandle, int nIndex);
+	static bool         GetSlotInfo(IEntity *entityHandle, int nIndex, SEntitySlotInfo *slotInfo);
+	static void         GetSlotWorldTM(IEntity *entityHandle, int slot, Matrix34 *matrix);
+	static void         GetSlotLocalTM(IEntity *entityHandle, int slot, bool bRelativeToParent, Matrix34 *matrix);
+	static void         SetSlotLocalTM(IEntity *entityHandle, int slot, Matrix34 *localTM);
+	static void         SetSlotCameraSpacePos(IEntity *entityHandle, int slot, Vec3 *cameraSpacePos);
+	static void         GetSlotCameraSpacePos(IEntity *entityHandle, int slot, Vec3 *cameraSpacePos);
+	static bool         SetParentSlot(IEntity *entityHandle, int nParentIndex, int nChildIndex);
+	static void         SetSlotMaterial(IEntity *entityHandle, int slot, IMaterial *pMaterial);
+	static void         SetSlotFlags(IEntity *entityHandle, int slot, int nFlags);
+	static int          GetSlotFlags(IEntity *entityHandle, int slot);
+	static bool         ShouldUpdateCharacter(IEntity *entityHandle, int slot);
+	static ICharacterInstance *GetCharacter(IEntity *entityHandle, int slot);
+	static int          SetCharacter(IEntity *entityHandle, ICharacterInstance *pCharacter, int slot);
+	static IStatObj    *GetStatObj(IEntity *entityHandle, int slot);
+	static IParticleEmitter *GetParticleEmitter(IEntity *entityHandle, int slot);
+	static IGeomCacheRenderNode *GetGeomCacheRenderNode(IEntity *entityHandle, int slot);
+	static void         MoveSlot(IEntity *entityHandle, IEntity *targetIEnt, int slot);
+	static int          SetStatObj(IEntity *entityHandle, IStatObj *pStatObj, int slot, bool bUpdatePhysics, float mass);
+	static int          LoadGeometry(IEntity *entityHandle, int slot, mono::string sFilename, mono::string sGeomName, int nLoadFlags);
+	static int          LoadCharacter(IEntity *entityHandle, int slot, mono::string sFilename, int nLoadFlags);
+	static int          LoadGeomCache(IEntity *entityHandle, int slot, mono::string sFilename);
+	static int          LoadParticleEmitterDefault(IEntity *entityHandle, int slot, IParticleEffect *pEffect, bool bPrime, bool bSerialize);
+	static int          LoadParticleEmitter(IEntity *entityHandle, int slot, IParticleEffect *pEffect, SpawnParams *parameters,
+											bool bPrime, bool bSerialize);
+	static int          SetParticleEmitter(IEntity *entityHandle, int slot, IParticleEmitter *pEmitter, bool bSerialize);
+	static int          LoadLight(IEntity *entityHandle, int slot, CDLight *pLight);
+	static int          GetSlotCount(IEntity *entityHandle);
+};
