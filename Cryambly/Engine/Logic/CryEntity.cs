@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using CryCil.Annotations;
+using CryCil.Engine.Rendering;
 using CryCil.Geometry;
 
 namespace CryCil.Engine.Logic
@@ -249,6 +250,26 @@ namespace CryCil.Engine.Logic
 				SetUpdatePolicy(this.handle, value);
 			}
 		}
+		/// <summary>
+		/// Gets or sets the pointer to the material that this entity is using.
+		/// </summary>
+		public Material Material
+		{
+			get
+			{
+				this.AssertEntity();
+				Contract.EndContractBlock();
+
+				return GetMaterial(this.handle);
+			}
+			set
+			{
+				this.AssertEntity();
+				Contract.EndContractBlock();
+
+				SetMaterial(this.handle, value);
+			}
+		}
 		#endregion
 		#region Construction
 		internal CryEntity(IntPtr handle)
@@ -431,6 +452,10 @@ namespace CryCil.Engine.Logic
 		private static extern void SetUpdatePolicy(IntPtr handle, EntityUpdatePolicy eUpdatePolicy);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern EntityUpdatePolicy GetUpdatePolicy(IntPtr handle);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void SetMaterial(IntPtr handle, Material pMaterial);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern Material GetMaterial(IntPtr handle);
 		#endregion
 	}
 }

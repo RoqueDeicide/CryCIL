@@ -655,6 +655,8 @@ void CryEntityInterop::OnRunTimeInitialized()
 	REGISTER_METHOD(IsInvisible);
 	REGISTER_METHOD(GetUpdatePolicy);
 	REGISTER_METHOD(SetUpdatePolicy);
+	REGISTER_METHOD(SetMaterial);
+	REGISTER_METHOD(GetMaterial);
 }
 
 void CryEntityInterop::SetFlags(IEntity *handle, uint64 flags)
@@ -945,4 +947,14 @@ void CryEntityInterop::SetUpdatePolicy(IEntity *handle, EEntityUpdatePolicy eUpd
 EEntityUpdatePolicy CryEntityInterop::GetUpdatePolicy(IEntity *handle)
 {
 	return handle->GetUpdatePolicy();
+}
+
+void CryEntityInterop::SetMaterial(IEntity *handle, IMaterial *pMaterial)
+{
+	handle->SetMaterial(pMaterial);
+}
+
+IMaterial *CryEntityInterop::GetMaterial(IEntity *handle)
+{
+	return handle->GetMaterial();
 }

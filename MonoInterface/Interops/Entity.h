@@ -135,4 +135,6 @@ struct CryEntityInterop : public IMonoInterop < true, true >
 	static bool         IsInvisible(IEntity *handle);
 	static void         SetUpdatePolicy(IEntity *handle, EEntityUpdatePolicy eUpdatePolicy);
 	static EEntityUpdatePolicy GetUpdatePolicy(IEntity *handle);
+	static void         SetMaterial(IEntity *handle, IMaterial *pMaterial);
+	static IMaterial   *GetMaterial(IEntity *handle);
 };
