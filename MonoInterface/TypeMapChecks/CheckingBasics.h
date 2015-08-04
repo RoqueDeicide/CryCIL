@@ -29,6 +29,8 @@ struct is_same_type<T, T>
 	is_same_type(T first, T second) {}
 };
 
+#define CHECK_TYPE_SIZE(typeName) static_assert(sizeof(typeName) == sizeof(S##typeName), "S"#typeName" structure has been changed.")
+
 #define ASSIGN_FIELD(fieldName) this->fieldName = other.fieldName
 
 // Determines whether a field that is defined in declaring type is of the same type as the same field in the mirrored type.
