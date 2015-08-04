@@ -939,12 +939,12 @@ bool CryEntityInterop::IsInvisible(IEntity *handle)
 	return handle->IsInvisible();
 }
 
-void CryEntityInterop::SetUpdatePolicy(IEntity *handle, EEntityUpdatePolicy eUpdatePolicy)
+void CryEntityInterop::SetUpdatePolicy(IEntity *handle, int eUpdatePolicy)
 {
-	handle->SetUpdatePolicy(eUpdatePolicy);
+	handle->SetUpdatePolicy((EEntityUpdatePolicy)eUpdatePolicy);
 }
 
-EEntityUpdatePolicy CryEntityInterop::GetUpdatePolicy(IEntity *handle)
+int CryEntityInterop::GetUpdatePolicy(IEntity *handle)
 {
 	return handle->GetUpdatePolicy();
 }
