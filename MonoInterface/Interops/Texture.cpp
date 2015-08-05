@@ -86,7 +86,7 @@ void TextureInterop::Ctor(mono::object obj, mono::string name, uint32 flags)
 	
 	data->handle     = tex;
 	data->deviceSize = tex->GetDeviceDataSize();
-	data->dims       = Vec3((float)tex->GetWidth(), (float)tex->GetHeight(), (float)tex->GetDepth());
+	data->dims       = Vec3(float(tex->GetWidth()), float(tex->GetHeight()), float(tex->GetDepth()));
 	data->flags      = tex->GetFlags();
 	data->id         = tex->GetTextureID();
 	data->name       = name;

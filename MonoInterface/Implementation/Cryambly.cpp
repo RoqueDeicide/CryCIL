@@ -155,7 +155,7 @@ Text *CryamblyWrapper::GetFileName()
 
 mono::assembly CryamblyWrapper::GetReflectionObject()
 {
-	return (mono::assembly)mono_assembly_get_object(mono_domain_get(), this->assembly);
+	return mono::assembly(mono_assembly_get_object(mono_domain_get(), this->assembly));
 }
 
 void *CryamblyWrapper::GetWrappedPointer()

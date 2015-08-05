@@ -5,7 +5,7 @@
 template<typename thunkT>
 thunkT getThunk(IMonoClass *klass, const char *name)
 {
-	return (thunkT)klass->GetFunction(name, -1)->UnmanagedThunk;
+	return thunkT(klass->GetFunction(name, -1)->UnmanagedThunk);
 }
 
 void InputInterop::OnRunTimeInitialized()
@@ -269,7 +269,7 @@ bool InputInterop::DeviceAvailable(int deviceType)
 		return false;
 	}
 
-	return gEnv->pInput->HasInputDeviceOfType((EInputDeviceType)deviceType);
+	return gEnv->pInput->HasInputDeviceOfType(EInputDeviceType(deviceType));
 }
 
 bool InputInterop::GamepadConnected(uint16 index)

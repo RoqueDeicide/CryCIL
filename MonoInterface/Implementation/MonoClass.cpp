@@ -148,7 +148,7 @@ IMonoFunction *MonoClassWrapper::GetFunction(const char *name, const char *param
 {
 	if (params == nullptr)
 	{
-		return this->GetFunction(name, (int)0);
+		return this->GetFunction(name, int(0));
 	}
 	List<IMonoFunction *> *overloads;
 	if (!name)
@@ -186,7 +186,7 @@ IMonoFunction *MonoClassWrapper::GetFunction(const char *name, IMonoArray<> &typ
 {
 	if (!types)
 	{
-		return this->GetFunction(name, (int)0);
+		return this->GetFunction(name, int(0));
 	}
 
 	List<IMonoFunction *> *overloads;
@@ -359,7 +359,7 @@ void MonoClassWrapper::GetFieldValue(mono::object obj, MonoClassField *field, vo
 {
 	if (obj)
 	{
-		mono_field_get_value((MonoObject *)obj, field, value);
+		mono_field_get_value(reinterpret_cast<MonoObject *>(obj), field, value);
 	}
 	else
 	{
@@ -371,7 +371,7 @@ void MonoClassWrapper::SetFieldValue(mono::object obj, MonoClassField *field, vo
 {
 	if (obj)
 	{
-		mono_field_set_value((MonoObject *)obj, field, value);
+		mono_field_set_value(reinterpret_cast<MonoObject *>(obj), field, value);
 	}
 	else
 	{
@@ -617,7 +617,7 @@ __forceinline result_type *MonoClassWrapper::SearchTheList(List<result_type *> &
 		for (int j = 0; j < paramCount; j++)
 		{
 			// Look at definition of _MonoReflectionType in mono sources to see what is going on here.
-			MonoType *type = (MonoType *)((unsigned char *)(&types[j]) + sizeof(MonoObject));
+			MonoType *type = *GET_BOXED_OBJECT_DATA(MonoType *, types[j]);
 			if (strcmp(typeNames->At(j), mono_type_get_name(type)) != 0)
 			{
 				match = false;
@@ -727,7 +727,7 @@ mono::object MonoClassWrapper::Box(void *value)
 	MonoClass *klass = this->wrappedClass;
 	if (mono_class_is_valuetype(klass))
 	{
-		return (mono::object)mono_value_box((MonoDomain *)MonoEnv->AppDomain, klass, value);
+		return mono::object(mono_value_box(static_cast<MonoDomain *>(MonoEnv->AppDomain), klass, value));
 	}
 	return nullptr;
 }
@@ -872,27 +872,27 @@ IMonoClass *MonoClassWrapper::GetNestedType(const char *name)
 
 mono::type MonoClassWrapper::GetType()
 {
-	return (mono::type)mono_type_get_object(mono_domain_get(), mono_class_get_type(this->wrappedClass));
+	return mono::type(mono_type_get_object(mono_domain_get(), mono_class_get_type(this->wrappedClass)));
 }
 
 mono::type MonoClassWrapper::MakeArrayType()
 {
-	return (mono::type)mono_type_get_object(mono_domain_get(), mono_class_get_type(mono_bounded_array_class_get(this->wrappedClass, 1, false)));
+	return mono::type(mono_type_get_object(mono_domain_get(), mono_class_get_type(mono_bounded_array_class_get(this->wrappedClass, 1, false))));
 }
 
 mono::type MonoClassWrapper::MakeArrayType(int rank)
 {
-	return (mono::type)mono_type_get_object(mono_domain_get(), mono_class_get_type(mono_bounded_array_class_get(this->wrappedClass, rank, false)));
+	return mono::type(mono_type_get_object(mono_domain_get(), mono_class_get_type(mono_bounded_array_class_get(this->wrappedClass, rank, false))));
 }
 
 mono::type MonoClassWrapper::MakeByRefType()
 {
-	return (mono::type)mono_type_get_object(mono_domain_get(), mono_class_get_byref_type(this->wrappedClass));
+	return mono::type(mono_type_get_object(mono_domain_get(), mono_class_get_byref_type(this->wrappedClass)));
 }
 
 mono::type MonoClassWrapper::MakePointerType()
 {
-	return (mono::type)mono_type_get_object(mono_domain_get(), mono_class_get_type(mono_ptr_class_get(mono_class_get_type(this->wrappedClass))));
+	return mono::type(mono_type_get_object(mono_domain_get(), mono_class_get_type(mono_ptr_class_get(mono_class_get_type(this->wrappedClass)))));
 }
 
 // IMonoClass *MonoClassWrapper::Inflate(List<IMonoClass *> &types)
@@ -938,22 +938,22 @@ mono::type MonoClassWrapper::MakePointerType()
 
 ReadOnlyList<IMonoField *> *MonoClassWrapper::GetFields()
 {
-	return (ReadOnlyList<IMonoField *> *)&this->fields;
+	return reinterpret_cast<ReadOnlyList<IMonoField *> *>(&this->fields);
 }
 
 ReadOnlyList<IMonoFunction *> *MonoClassWrapper::GetFunctions()
 {
-	return (ReadOnlyList<IMonoFunction *> *)&this->flatMethodList;
+	return reinterpret_cast<ReadOnlyList<IMonoFunction *> *>(&this->flatMethodList);
 }
 
 ReadOnlyList<IMonoProperty *> *MonoClassWrapper::GetProperties()
 {
-	return (ReadOnlyList<IMonoProperty *> *)&this->properties;
+	return reinterpret_cast<ReadOnlyList<IMonoProperty *> *>(&this->properties);
 }
 
 ReadOnlyList<IMonoEvent *> *MonoClassWrapper::GetEvents()
 {
-	return (ReadOnlyList<IMonoEvent *> *)&this->events;
+	return reinterpret_cast<ReadOnlyList<IMonoEvent *> *>(&this->events);
 }
 
 bool MonoClassWrapper::GetIsValueType()

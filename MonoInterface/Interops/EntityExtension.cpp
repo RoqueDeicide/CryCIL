@@ -25,8 +25,8 @@ typedef void(__stdcall *DisposeMonoEntityThunk)(mono::exception *);
 
 MonoEntityExtension::~MonoEntityExtension()
 {
-	static DisposeMonoEntityThunk thunk = (DisposeMonoEntityThunk)
-		GetMonoEntityClass()->GetFunction("DisposeInternal", -1)->UnmanagedThunk;
+	static DisposeMonoEntityThunk thunk =
+		DisposeMonoEntityThunk(GetMonoEntityClass()->GetFunction("DisposeInternal", -1)->UnmanagedThunk);
 
 	if (!this->objHandle.IsValid)
 	{
@@ -46,10 +46,10 @@ typedef mono::object(__stdcall *RaiseOnInitThunk)(mono::object, mono::exception 
 
 bool MonoEntityExtension::Init(IGameObject* pGameObject)
 {
-	static CreateAbstractionLayerThunk create = (CreateAbstractionLayerThunk)
-		GetMonoEntityClass()->GetFunction("CreateAbstractionLayer", -1)->UnmanagedThunk;
-	static RaiseOnInitThunk raise = (RaiseOnInitThunk)
-		GetMonoEntityClass()->GetEvent("Initializing")->GetRaise()->UnmanagedThunk;
+	static CreateAbstractionLayerThunk create =
+		CreateAbstractionLayerThunk(GetMonoEntityClass()->GetFunction("CreateAbstractionLayer", -1)->UnmanagedThunk);
+	static RaiseOnInitThunk raise =
+		RaiseOnInitThunk(GetMonoEntityClass()->GetEvent("Initializing")->GetRaise()->UnmanagedThunk);
 
 	this->SetGameObject(pGameObject);
 
@@ -65,7 +65,7 @@ bool MonoEntityExtension::Init(IGameObject* pGameObject)
 	}
 	this->objHandle = MonoEnv->GC->Keep(obj);
 
-	MonoEntityClassUserData *userData = (MonoEntityClassUserData *)pGameObject->GetUserData();
+	auto userData = static_cast<MonoEntityClassUserData *>(pGameObject->GetUserData());
 	this->dontSyncProps = userData->dontSyncProps;
 	this->networking = userData->networked;
 	
@@ -90,8 +90,8 @@ bool MonoEntityExtension::Init(IGameObject* pGameObject)
 
 void MonoEntityExtension::PostInit(IGameObject* pGameObject)
 {
-	static RaiseOnInitThunk raise = (RaiseOnInitThunk)
-		GetMonoEntityClass()->GetEvent("Initialized")->GetRaise()->UnmanagedThunk;
+	static RaiseOnInitThunk raise =
+		RaiseOnInitThunk(GetMonoEntityClass()->GetEvent("Initialized")->GetRaise()->UnmanagedThunk);
 
 	if (this->objHandle.IsValid)
 	{
@@ -105,8 +105,8 @@ template<const char *eventName>
 void MonoEntityExtension::raiseEntityEvent()
 {
 	static void(__stdcall *raise)(mono::object, mono::exception *) =
-		(void(__stdcall *)(mono::object, mono::exception *))
-		GetMonoEntityClass()->GetEvent(eventName)->Raise->UnmanagedThunk;
+		reinterpret_cast<void(__stdcall *)(mono::object, mono::exception *)>
+		(GetMonoEntityClass()->GetEvent(eventName)->Raise->UnmanagedThunk);
 
 	if (mono::object obj = this->MonoWrapper)
 	{
@@ -122,8 +122,8 @@ template<const char *eventName, typename arg0Type>
 void MonoEntityExtension::raiseEntityEvent(arg0Type arg0)
 {
 	static void(__stdcall *raise)(mono::object, arg0Type, mono::exception *) =
-		(void(__stdcall *)(mono::object, arg0Type, mono::exception *))
-		GetMonoEntityClass()->GetEvent(eventName)->Raise->UnmanagedThunk;
+		reinterpret_cast<void(__stdcall *)(mono::object, arg0Type, mono::exception *)>
+		(GetMonoEntityClass()->GetEvent(eventName)->Raise->UnmanagedThunk);
 
 	if (mono::object obj = this->MonoWrapper)
 	{
@@ -139,8 +139,8 @@ template<const char *eventName, typename arg0Type, typename arg1Type>
 void MonoEntityExtension::raiseEntityEvent(arg0Type arg0, arg1Type arg1)
 {
 	static void(__stdcall *raise)(mono::object, arg0Type, arg1Type, mono::exception *) =
-		(void(__stdcall *)(mono::object, arg0Type, arg1Type, mono::exception *))
-		GetMonoEntityClass()->GetEvent(eventName)->Raise->UnmanagedThunk;
+		reinterpret_cast<void(__stdcall *)(mono::object, arg0Type, arg1Type, mono::exception *)>
+		(GetMonoEntityClass()->GetEvent(eventName)->Raise->UnmanagedThunk);
 
 	if (mono::object obj = this->MonoWrapper)
 	{
@@ -156,8 +156,8 @@ template<const char *eventName, typename arg0Type, typename arg1Type, typename a
 void MonoEntityExtension::raiseEntityEvent(arg0Type arg0, arg1Type arg1, arg2Type arg2)
 {
 	static void(__stdcall *raise)(mono::object, arg0Type, arg1Type, arg2Type, mono::exception *) =
-		(void(__stdcall *)(mono::object, arg0Type, arg1Type, arg2Type, mono::exception *))
-		GetMonoEntityClass()->GetEvent(eventName)->Raise->UnmanagedThunk;
+		reinterpret_cast<void(__stdcall *)(mono::object, arg0Type, arg1Type, arg2Type, mono::exception *)>
+		(GetMonoEntityClass()->GetEvent(eventName)->Raise->UnmanagedThunk);
 
 	if (mono::object obj = this->MonoWrapper)
 	{
@@ -173,8 +173,8 @@ template<const char *eventName, typename arg0Type, typename arg1Type, typename a
 void MonoEntityExtension::raiseEntityEvent(arg0Type arg0, arg1Type arg1, arg2Type arg2, arg3Type arg3)
 {
 	static void(__stdcall *raise)(mono::object, arg0Type, arg1Type, arg2Type, arg3Type, mono::exception *) =
-		(void(__stdcall *)(mono::object, arg0Type, arg1Type, arg2Type, arg3Type, mono::exception *))
-		GetMonoEntityClass()->GetEvent(eventName)->Raise->UnmanagedThunk;
+		reinterpret_cast<void(__stdcall *)(mono::object, arg0Type, arg1Type, arg2Type, arg3Type, mono::exception *)>
+		(GetMonoEntityClass()->GetEvent(eventName)->Raise->UnmanagedThunk);
 
 	if (mono::object obj = this->MonoWrapper)
 	{
@@ -190,8 +190,9 @@ template<const char *eventName, typename arg0Type, typename arg1Type, typename a
 void MonoEntityExtension::raiseEntityEvent(arg0Type arg0, arg1Type arg1, arg2Type arg2, arg3Type arg3, arg4Type arg4)
 {
 	static void(__stdcall *raise)(mono::object, arg0Type, arg1Type, arg2Type, arg3Type, arg4Type, mono::exception *) =
-		(void(__stdcall *)(mono::object, arg0Type, arg1Type, arg2Type, arg3Type, arg4Type, mono::exception *))
-		GetMonoEntityClass()->GetEvent(eventName)->Raise->UnmanagedThunk;
+		reinterpret_cast<void(__stdcall *)
+		(mono::object, arg0Type, arg1Type, arg2Type, arg3Type, arg4Type, mono::exception *)>
+		(GetMonoEntityClass()->GetEvent(eventName)->Raise->UnmanagedThunk);
 
 	if (mono::object obj = this->MonoWrapper)
 	{
@@ -207,8 +208,9 @@ template<const char *eventName, typename arg0Type, typename arg1Type, typename a
 void MonoEntityExtension::raiseEntityEvent(arg0Type arg0, arg1Type arg1, arg2Type arg2, arg3Type arg3, arg4Type arg4, arg5Type arg5)
 {
 	static void(__stdcall *raise)(mono::object, arg0Type, arg1Type, arg2Type, arg3Type, arg4Type, arg5Type, mono::exception *) =
-		(void(__stdcall *)(mono::object, arg0Type, arg1Type, arg2Type, arg3Type, arg4Type, arg5Type, mono::exception *))
-		GetMonoEntityClass()->GetEvent(eventName)->Raise->UnmanagedThunk;
+		reinterpret_cast<void(__stdcall *)
+		(mono::object, arg0Type, arg1Type, arg2Type, arg3Type, arg4Type, arg5Type, mono::exception *)>
+		(GetMonoEntityClass()->GetEvent(eventName)->Raise->UnmanagedThunk);
 
 	if (mono::object obj = this->MonoWrapper)
 	{
@@ -278,7 +280,7 @@ void MonoEntityExtension::ProcessEvent(SEntityEvent& _event)
 	{
 	case ENTITY_EVENT_XFORM:
 	{
-		EEntityXFormFlags flags = (EEntityXFormFlags)_event.nParam[0];
+		EEntityXFormFlags flags = EEntityXFormFlags(_event.nParam[0]);
 		this->raiseEntityEvent<entity_event(Moved), EEntityXFormFlags>(flags);
 	}
 		break;
@@ -287,8 +289,8 @@ void MonoEntityExtension::ProcessEvent(SEntityEvent& _event)
 		break;
 	case ENTITY_EVENT_TIMER:
 	{
-		auto timerId = (int)_event.nParam[0];
-		auto milliseconds = (int)_event.nParam[1];
+		auto timerId = int(_event.nParam[0]);
+		auto milliseconds = int(_event.nParam[1]);
 		this->raiseEntityEvent<entity_event(TimedOut), int, int>(timerId, milliseconds);
 	}
 		break;
@@ -309,38 +311,38 @@ void MonoEntityExtension::ProcessEvent(SEntityEvent& _event)
 		break;
 	case ENTITY_EVENT_ATTACH:
 	{
-		auto entityId = (EntityId)_event.nParam[0];
+		auto entityId = EntityId(_event.nParam[0]);
 		this->raiseEntityEvent<entity_event(Attached), EntityId>(entityId);
 	}
 		break;
 	case ENTITY_EVENT_ATTACH_THIS:
 	{
-		auto entityId = (EntityId)_event.nParam[0];
+		auto entityId = EntityId(_event.nParam[0]);
 		this->raiseEntityEvent<entity_event(AttachedTo), EntityId>(entityId);
 	}
 		break;
 	case ENTITY_EVENT_DETACH:
 	{
-		auto entityId = (EntityId)_event.nParam[0];
+		auto entityId = EntityId(_event.nParam[0]);
 		this->raiseEntityEvent<entity_event(Detached), EntityId>(entityId);
 	}
 		break;
 	case ENTITY_EVENT_DETACH_THIS:
 	{
-		auto entityId = (EntityId)_event.nParam[0];
+		auto entityId = EntityId(_event.nParam[0]);
 		this->raiseEntityEvent<entity_event(DetachedFrom), EntityId>(entityId);
 	}
 		break;
 	case ENTITY_EVENT_LINK:
 	{
-		auto link = (IEntityLink *)_event.nParam[0];
+		auto link = reinterpret_cast<IEntityLink *>(_event.nParam[0]);
 		this->raiseEntityEvent<entity_event(Linked), mono::string, EntityId, EntityGUID>
 			(ToMonoString(link->name), link->entityId, link->entityGuid);
 	}
 		break;
 	case ENTITY_EVENT_DELINK:
 	{
-		auto link = (IEntityLink *)_event.nParam[0];
+		auto link = reinterpret_cast<IEntityLink *>(_event.nParam[0]);
 		this->raiseEntityEvent<entity_event(Unlinked), mono::string, EntityId, EntityGUID>
 			(ToMonoString(link->name), link->entityId, link->entityGuid);
 	}
@@ -368,9 +370,9 @@ void MonoEntityExtension::ProcessEvent(SEntityEvent& _event)
 	case ENTITY_EVENT_ENTERAREA:
 	case ENTITY_EVENT_ENTERNEARAREA:
 	{
-		auto entityId = (EntityId)_event.nParam[0];
-		auto areaId = (int)_event.nParam[1];
-		auto areaEntityId = (EntityId)_event.nParam[2];
+		auto entityId = EntityId(_event.nParam[0]);
+		auto areaId = int(_event.nParam[1]);
+		auto areaEntityId = EntityId(_event.nParam[2]);
 		auto fadeFactor = _event.fParam[0];
 		this->raiseEntityEvent<entity_event(AreaEntered), EntityId, int, EntityId, float>
 			(entityId, areaId, areaEntityId, fadeFactor);
@@ -379,9 +381,9 @@ void MonoEntityExtension::ProcessEvent(SEntityEvent& _event)
 	case ENTITY_EVENT_LEAVEAREA:
 	case ENTITY_EVENT_LEAVENEARAREA:
 	{
-		auto entityId = (EntityId)_event.nParam[0];
-		auto areaId = (int)_event.nParam[1];
-		auto areaEntityId = (EntityId)_event.nParam[2];
+		auto entityId = EntityId(_event.nParam[0]);
+		auto areaId = int(_event.nParam[1]);
+		auto areaEntityId = EntityId(_event.nParam[2]);
 		auto fadeFactor = _event.fParam[0];
 		this->raiseEntityEvent<entity_event(AreaLeft), EntityId, int, EntityId, float>
 			(entityId, areaId, areaEntityId, fadeFactor);
@@ -407,14 +409,14 @@ void MonoEntityExtension::ProcessEvent(SEntityEvent& _event)
 		break;
 	case ENTITY_EVENT_COLLISION:
 	{
-		auto infoPointer = (void *)_event.nParam[0];
+		auto infoPointer = reinterpret_cast<void *>(_event.nParam[0]);
 		auto isCollider = _event.nParam[1] != 0;
 		this->raiseEntityEvent<entity_event(Collided), void *, bool>(infoPointer, isCollider);
 	}
 		break;
 	case ENTITY_EVENT_RENDER:
 	{
-		auto infoPointer = (void *)_event.nParam[0];
+		auto infoPointer = reinterpret_cast<void *>(_event.nParam[0]);
 		this->raiseEntityEvent<entity_event(Rendered), void *>(infoPointer);
 	}
 		break;
@@ -451,14 +453,14 @@ void MonoEntityExtension::ProcessEvent(SEntityEvent& _event)
 		break;
 	case ENTITY_EVENT_MATERIAL:
 	{
-		auto newMaterial = (void *)_event.nParam[0];
+		auto newMaterial = reinterpret_cast<void *>(_event.nParam[0]);
 		this->raiseEntityEvent<entity_event(MaterialChanged), void *>(newMaterial);
 	}
 		break;
 	case ENTITY_EVENT_MATERIAL_LAYER:
 	{
-		auto _new = (byte)_event.nParam[0];
-		auto _old = (byte)_event.nParam[1];
+		auto _new = byte(_event.nParam[0]);
+		auto _old = byte(_event.nParam[1]);
 		this->raiseEntityEvent<entity_event(MaterialLayersChanged), byte, byte>(_new, _old);
 	}
 		break;
@@ -493,8 +495,8 @@ typedef void(__stdcall *ClientInitRaiseThunk)(mono::object, ushort, mono::except
 
 void MonoEntityExtension::InitClient(int channelId)
 {
-	ClientInitRaiseThunk thunk = (ClientInitRaiseThunk)
-		GetMonoNetEntityClass()->GetEvent("ClientInitializing")->Raise->UnmanagedThunk;
+	static ClientInitRaiseThunk thunk =
+		ClientInitRaiseThunk(GetMonoNetEntityClass()->GetEvent("ClientInitializing")->Raise->UnmanagedThunk);
 
 	if (!this->networking)
 	{
@@ -511,8 +513,8 @@ void MonoEntityExtension::InitClient(int channelId)
 
 void MonoEntityExtension::PostInitClient(int channelId)
 {
-	ClientInitRaiseThunk thunk = (ClientInitRaiseThunk)
-		GetMonoNetEntityClass()->GetEvent("ClientInitialized")->Raise->UnmanagedThunk;
+	static ClientInitRaiseThunk thunk =
+		ClientInitRaiseThunk(GetMonoNetEntityClass()->GetEvent("ClientInitialized")->Raise->UnmanagedThunk);
 
 	if (!this->networking)
 	{
@@ -531,8 +533,8 @@ typedef bool(__stdcall *ReloadEventThunk)(mono::object, MonoEntitySpawnParams *,
 
 bool MonoEntityExtension::ReloadExtension(IGameObject* pGameObject, const SEntitySpawnParams& params)
 {
-	static ReloadEventThunk thunk = (ReloadEventThunk)
-		GetMonoEntityClass()->GetEvent("Reloading")->GetRaise()->UnmanagedThunk;
+	static ReloadEventThunk thunk =
+		ReloadEventThunk(GetMonoEntityClass()->GetEvent("Reloading")->GetRaise()->UnmanagedThunk);
 
 	if (mono::object obj = this->MonoWrapper)
 	{
@@ -553,8 +555,8 @@ typedef void(__stdcall *ReloadedEventThunk)(mono::object, MonoEntitySpawnParams 
 
 void MonoEntityExtension::PostReloadExtension(IGameObject* pGameObject, const SEntitySpawnParams& params)
 {
-	static ReloadedEventThunk thunk = (ReloadedEventThunk)
-		GetMonoEntityClass()->GetEvent("Reloaded")->GetRaise()->UnmanagedThunk;
+	static ReloadedEventThunk thunk =
+		ReloadedEventThunk(GetMonoEntityClass()->GetEvent("Reloaded")->GetRaise()->UnmanagedThunk);
 
 	if (mono::object obj = this->MonoWrapper)
 	{
@@ -572,13 +574,13 @@ typedef bool(__stdcall *GetSignatureThunk)(mono::object, ISerialize *, mono::exc
 
 bool MonoEntityExtension::GetEntityPoolSignature(TSerialize signature)
 {
-	static GetSignatureThunk thunk = (GetSignatureThunk)
-		GetMonoEntityClass()->GetFunction("GetSignature", -1)->UnmanagedThunk;
+	static GetSignatureThunk thunk =
+		GetSignatureThunk(GetMonoEntityClass()->GetFunction("GetSignature", -1)->UnmanagedThunk);
 
 	if (mono::object obj = this->MonoWrapper)
 	{
 		mono::exception ex;
-		bool result = thunk(obj, *(ISerialize **)&signature, &ex);
+		bool result = thunk(obj, *reinterpret_cast<ISerialize **>(&signature), &ex);
 		if (ex)
 		{
 			MonoEnv->HandleException(ex);
@@ -598,15 +600,15 @@ typedef bool(__stdcall *SyncInternalThunk)(mono::object, ISerialize *, mono::exc
 
 void MonoEntityExtension::FullSerialize(TSerialize ser)
 {
-	static SyncInternalThunk thunk = (SyncInternalThunk)
-		GetMonoEntityClass()->GetFunction("SyncInternal", -1)->UnmanagedThunk;
+	static SyncInternalThunk thunk =
+		SyncInternalThunk(GetMonoEntityClass()->GetFunction("SyncInternal", -1)->UnmanagedThunk);
 
 	if (mono::object obj = this->MonoWrapper)
 	{
 		ser.BeginGroup("AbstractionLayer");
 
 		mono::exception ex;
-		thunk(obj, *(ISerialize **)&ser, &ex);
+		thunk(obj, *reinterpret_cast<ISerialize **>(&ser), &ex);
 		if (ex)
 		{
 			MonoEnv->HandleException(ex);
@@ -655,13 +657,13 @@ bool MonoEntityExtension::NetSerialize(TSerialize ser, EEntityAspects aspect, ui
 		return true;
 	}
 
-	static NetSyncInternalThunk thunk = (NetSyncInternalThunk)
-		GetMonoNetEntityClass()->GetFunction("NetSyncInternal", -1)->UnmanagedThunk;
+	static NetSyncInternalThunk thunk =
+		NetSyncInternalThunk(GetMonoNetEntityClass()->GetFunction("NetSyncInternal", -1)->UnmanagedThunk);
 
 	if (mono::object obj = this->MonoWrapper)
 	{
 		mono::exception ex;
-		bool result = thunk(obj, *(ISerialize **)&ser, aspect, profile, &ex);
+		bool result = thunk(obj, *reinterpret_cast<ISerialize **>(&ser), aspect, profile, &ex);
 		if (ex)
 		{
 			MonoEnv->HandleException(ex);
@@ -676,8 +678,8 @@ typedef void(__stdcall *UpdateEntityThunk)(mono::object, SEntityUpdateContext&, 
 
 void MonoEntityExtension::Update(SEntityUpdateContext& ctx, int updateSlot)
 {
-	static UpdateEntityThunk update = (UpdateEntityThunk)
-		GetMonoEntityClass()->GetFunction("UpdateInternal")->UnmanagedThunk;
+	static UpdateEntityThunk update =
+		UpdateEntityThunk(GetMonoEntityClass()->GetFunction("UpdateInternal")->UnmanagedThunk);
 
 	if (mono::object o = this->MonoWrapper)
 	{
@@ -709,8 +711,8 @@ typedef void(__stdcall *OnAuthorizedEntityThunk)(mono::object, bool, mono::excep
 
 void MonoEntityExtension::SetAuthority(bool auth)
 {
-	static OnAuthorizedEntityThunk update = (OnAuthorizedEntityThunk)
-		GetMonoEntityClass()->GetEvent("Authorized")->Raise->UnmanagedThunk;
+	static OnAuthorizedEntityThunk update =
+		OnAuthorizedEntityThunk(GetMonoEntityClass()->GetEvent("Authorized")->Raise->UnmanagedThunk);
 
 	if (mono::object o = this->MonoWrapper)
 	{
@@ -727,8 +729,8 @@ typedef void(__stdcall *PostUpdateEntityThunk)(mono::object, mono::exception *);
 
 void MonoEntityExtension::PostUpdate(float frameTime)
 {
-	static PostUpdateEntityThunk update = (PostUpdateEntityThunk)
-		GetMonoEntityClass()->GetFunction("PostUpdateInternal")->UnmanagedThunk;
+	static PostUpdateEntityThunk update =
+		PostUpdateEntityThunk(GetMonoEntityClass()->GetFunction("PostUpdateInternal")->UnmanagedThunk);
 
 	if (mono::object o = this->MonoWrapper)
 	{
@@ -770,8 +772,8 @@ typedef mono::object(__stdcall *AcquireArgumentsReceptorThunk)(mono::string, mon
 
 void MonoEntityExtension::CryCilRMIParameters::SerializeWith(TSerialize ser)
 {
-	static AcquireArgumentsReceptorThunk acquireReceptor = (AcquireArgumentsReceptorThunk)
-		GetRmiParamsClass()->GetFunction("AcquireReceptor", 2)->UnmanagedThunk;
+	static AcquireArgumentsReceptorThunk acquireReceptor =
+		AcquireArgumentsReceptorThunk(GetRmiParamsClass()->GetFunction("AcquireReceptor", 2)->UnmanagedThunk);
 
 	// Synchronize the name and identifier of the target entity so we can identify the type of argument object on reception.
 	ser.Value("method", this->methodName);
@@ -796,7 +798,7 @@ void MonoEntityExtension::CryCilRMIParameters::SerializeWith(TSerialize ser)
 	}
 
 	// Synchronize the arguments.
-	void *param = *(ISerialize **)&ser;
+	void *param = *reinterpret_cast<ISerialize **>(&ser);
 	GetRmiParamsClass()->GetFunction("Synchronize", 1)->ToInstance()->Invoke
 		(MonoEnv->GC->GetGCHandleTarget(this->arguments), &param, nullptr, true);
 
@@ -811,8 +813,8 @@ typedef bool(__stdcall *ReceiveRMICallThunk)(mono::object, mono::string, mono::o
 
 bool MonoEntityExtension::ReceiveRmiCall(CryCilRMIParameters *params)
 {
-	static ReceiveRMICallThunk receiveCall = (ReceiveRMICallThunk)
-		GetMonoNetEntityClass()->GetFunction("ReceiveRmi", -1)->UnmanagedThunk;
+	static ReceiveRMICallThunk receiveCall =
+		ReceiveRMICallThunk(GetMonoNetEntityClass()->GetFunction("ReceiveRmi", -1)->UnmanagedThunk);
 
 	mono::exception ex;
 	bool success = receiveCall(this->objHandle.Object, ToMonoString(params->methodName),
@@ -830,8 +832,8 @@ typedef mono::string(__stdcall *GetEntityPropertyValueThunk)(mono::object, int, 
 
 const char *MonoEntityExtension::GetPropertyValue(int index)
 {
-	static GetEntityPropertyValueThunk get = (GetEntityPropertyValueThunk)
-		GetMonoEntityClass()->GetFunction("GetEditableProperty", -1)->UnmanagedThunk;
+	static GetEntityPropertyValueThunk get =
+		GetEntityPropertyValueThunk(GetMonoEntityClass()->GetFunction("GetEditableProperty", -1)->UnmanagedThunk);
 
 	mono::exception ex;
 	auto value = ToNativeString(get(this->MonoWrapper, index, &ex));
@@ -847,8 +849,8 @@ typedef void(__stdcall *SetEntityPropertyValueThunk)(mono::object, int, mono::st
 
 void MonoEntityExtension::SetPropertyValue(int index, const char *value)
 {
-	static SetEntityPropertyValueThunk set = (SetEntityPropertyValueThunk)
-		GetMonoEntityClass()->GetFunction("SetEditableProperty", -1)->UnmanagedThunk;
+	static SetEntityPropertyValueThunk set =
+		SetEntityPropertyValueThunk(GetMonoEntityClass()->GetFunction("SetEditableProperty", -1)->UnmanagedThunk);
 
 	mono::exception ex;
 	set(this->MonoWrapper, index, ToMonoString(value), &ex);

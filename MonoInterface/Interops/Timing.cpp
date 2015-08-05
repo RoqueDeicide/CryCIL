@@ -25,8 +25,8 @@ void TimingInterop::Update()
 
 void TimingInterop::OnRunTimeInitialized()
 {
-	setTimings = (SetTimingsRawThunk)MonoEnv->Cryambly->GetClass(this->GetNameSpace(), this->GetName())
-													  ->GetFunction("SetTimings")->RawThunk;
+	setTimings = SetTimingsRawThunk(MonoEnv->Cryambly->GetClass(this->GetNameSpace(), this->GetName())
+										   ->GetFunction("SetTimings")->RawThunk);
 
 	REGISTER_METHOD(get_Async);
 	REGISTER_METHOD(get_AsyncCurrent);

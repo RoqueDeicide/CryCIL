@@ -27,7 +27,7 @@ struct MonoEntitySpawnParams
 		this->entityNode         = params.entityNode;
 		this->flags              = 0;
 		this->flags             |= params.nFlags;
-		this->flags             |= (uint64)(params.nFlagsExtended) << 32;
+		this->flags             |= uint64(params.nFlagsExtended) << 32;
 		this->guid               = params.guid;
 		this->prevGuid           = params.prevGuid;
 		this->id                 = params.id;
@@ -47,8 +47,8 @@ struct MonoEntitySpawnParams
 		SEntitySpawnParams params;
 		params.bCreatedThroughPool = this->createdThroughPool;
 		params.entityNode          = this->entityNode;
-		params.nFlags              = (uint32)this->flags;
-		params.nFlagsExtended      = (uint32)(this->flags >> 32);
+		params.nFlags              = uint32(this->flags);
+		params.nFlagsExtended      = uint32(this->flags >> 32);
 		params.guid                = this->guid;
 		params.prevGuid            = this->prevGuid;
 		params.id                  = this->id;

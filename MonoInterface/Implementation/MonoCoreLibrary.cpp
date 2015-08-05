@@ -184,7 +184,7 @@ Text *MonoCoreLibrary::GetFileName()
 
 mono::assembly MonoCoreLibrary::GetReflectionObject()
 {
-	return (mono::assembly)mono_assembly_get_object(mono_domain_get(), this->assembly);
+	return mono::assembly(mono_assembly_get_object(mono_domain_get(), this->assembly));
 }
 
 void *MonoCoreLibrary::GetWrappedPointer()

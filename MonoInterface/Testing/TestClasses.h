@@ -484,7 +484,7 @@ inline void TestObjectCreation()
 	CryLogAlways("TEST:");
 
 	void *param;
-	param = (int *)(&seed);
+	param = const_cast<int *>(&seed);
 
 	mono::object randomObject = randomClass->GetConstructor(1)->Create(&param);
 
@@ -912,7 +912,7 @@ inline void TestStaticThunkInvocation()
 	CryLogAlways("TEST:");
 
 	bool(__stdcall *numberToDigitsThunk)(int *, mono::Array *, mono::exception *) =
-		(bool(__stdcall *)(int *, mono::Array *, mono::exception *))method->UnmanagedThunk;
+		reinterpret_cast<bool(__stdcall *)(int *, mono::Array *, mono::exception *)>(method->UnmanagedThunk);
 
 	CryLogAlways("TEST: Invoking the unmanaged thunk.");
 	CryLogAlways("TEST:");
@@ -938,7 +938,7 @@ inline void TestStaticThunkInvocation()
 	CryLogAlways("TEST:");
 
 	void(__stdcall *createValueThunk)(int, mono::object, mono::exception *) =
-		(void(__stdcall *)(int, mono::object, mono::exception *))method->UnmanagedThunk;
+		reinterpret_cast<void(__stdcall *)(int, mono::object, mono::exception *)>(method->UnmanagedThunk);
 
 	CryLogAlways("TEST: Invoking the unmanaged thunk.");
 	CryLogAlways("TEST:");
@@ -967,14 +967,14 @@ inline void TestInstanceThunkInvocation()
 	CryLogAlways("TEST:");
 
 	mono::string(__stdcall *thunk)(mono::object, mono::string, mono::exception *) =
-		(mono::string(__stdcall *)(mono::object, mono::string, mono::exception *))method->UnmanagedThunk;
+		reinterpret_cast<mono::string(__stdcall *)(mono::object, mono::string, mono::exception *)>(method->UnmanagedThunk);
 
 	CryLogAlways("TEST: Invoking the unmanaged thunk.");
 	CryLogAlways("TEST:");
 
 	mono::exception ex;
 
-	mono::string textObj = thunk(Box((unsigned char)100), nullptr, &ex);
+	mono::string textObj = thunk(Box(unsigned char(100)), nullptr, &ex);
 
 	if (!ex)
 	{

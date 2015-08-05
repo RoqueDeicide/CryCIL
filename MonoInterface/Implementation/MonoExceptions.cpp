@@ -7,12 +7,9 @@ mono::exception MonoExceptions::Create(IMonoAssembly *assembly, const char *name
 {
 	if (message)
 	{
-		return (mono::exception)mono_exception_from_name_msg(mono_assembly_get_image((MonoAssembly *)assembly->GetWrappedPointer()), nameSpace, name, message);
+		return mono::exception(mono_exception_from_name_msg(mono_assembly_get_image(static_cast<MonoAssembly *>(assembly->GetWrappedPointer())), nameSpace, name, message));
 	}
-	else
-	{
-		return (mono::exception)mono_exception_from_name(mono_assembly_get_image((MonoAssembly *)assembly->GetWrappedPointer()), nameSpace, name);
-	}
+	return mono::exception(mono_exception_from_name(mono_assembly_get_image(static_cast<MonoAssembly *>(assembly->GetWrappedPointer())), nameSpace, name));
 }
 
 mono::exception MonoExceptions::BaseException(const char *message /*= nullptr*/, mono::exception inner /*= nullptr*/)
@@ -107,7 +104,7 @@ mono::exception MonoExceptions::MissingMethod(const char *message, mono::excepti
 
 mono::exception MonoExceptions::MissingMethod(const char *class_name, const char *member_name)
 {
-	return (mono::exception)mono_get_exception_missing_method(class_name, member_name);
+	return mono::exception(mono_get_exception_missing_method(class_name, member_name));
 }
 
 mono::exception MonoExceptions::NotImplemented(const char *message /*= nullptr*/, mono::exception inner /*= nullptr*/)
@@ -179,7 +176,7 @@ mono::exception MonoExceptions::MissingField
 mono::exception MonoExceptions::MissingField
 (const char *class_name, const char *member_name)
 {
-	return (mono::exception)mono_get_exception_missing_field(class_name, member_name);
+	return mono::exception(mono_get_exception_missing_field(class_name, member_name));
 }
 
 mono::exception MonoExceptions::NotSupported(const char *message /*= nullptr*/, mono::exception inner /*= nullptr*/)

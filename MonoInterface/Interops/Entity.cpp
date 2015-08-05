@@ -80,8 +80,8 @@ typedef void(__stdcall *OnPoolDefinitionsLoadedThunk)(mono::exception *);
 
 void EntityPoolInterop::OnPoolBookmarkCreated(EntityId entityId, const SEntitySpawnParams& params, XmlNodeRef entityNode)
 {
-	static OnPoolBookmarkCreatedThunk thunk = (OnPoolBookmarkCreatedThunk)
-		this->GetMonoClass()->GetFunction("OnPoolBookmarkCreated", 3)->UnmanagedThunk;
+	static OnPoolBookmarkCreatedThunk thunk =
+		OnPoolBookmarkCreatedThunk(this->GetMonoClass()->GetFunction("OnPoolBookmarkCreated", 3)->UnmanagedThunk);
 
 	mono::exception ex;
 	thunk(entityId, params, entityNode, &ex);
@@ -93,8 +93,8 @@ void EntityPoolInterop::OnPoolBookmarkCreated(EntityId entityId, const SEntitySp
 
 void EntityPoolInterop::OnEntityPreparedFromPool(EntityId entityId, IEntity *pEntity)
 {
-	static PoolMigrationHandlerThunk thunk = (PoolMigrationHandlerThunk)
-		this->GetMonoClass()->GetFunction("OnEntityPrepared", 2)->UnmanagedThunk;
+	static PoolMigrationHandlerThunk thunk =
+		PoolMigrationHandlerThunk(this->GetMonoClass()->GetFunction("OnEntityPrepared", 2)->UnmanagedThunk);
 
 	mono::exception ex;
 	thunk(entityId, pEntity, &ex);
@@ -106,8 +106,8 @@ void EntityPoolInterop::OnEntityPreparedFromPool(EntityId entityId, IEntity *pEn
 
 void EntityPoolInterop::OnEntityReturningToPool(EntityId entityId, IEntity *pEntity)
 {
-	static PoolMigrationHandlerThunk thunk = (PoolMigrationHandlerThunk)
-		this->GetMonoClass()->GetFunction("OnEntityReturning", 2)->UnmanagedThunk;
+	static PoolMigrationHandlerThunk thunk =
+		PoolMigrationHandlerThunk(this->GetMonoClass()->GetFunction("OnEntityReturning", 2)->UnmanagedThunk);
 
 	mono::exception ex;
 	thunk(entityId, pEntity, &ex);
@@ -119,8 +119,8 @@ void EntityPoolInterop::OnEntityReturningToPool(EntityId entityId, IEntity *pEnt
 
 void EntityPoolInterop::OnEntityReturnedToPool(EntityId entityId, IEntity *pEntity)
 {
-	static PoolMigrationHandlerThunk thunk = (PoolMigrationHandlerThunk)
-		this->GetMonoClass()->GetFunction("OnEntityReturned", 2)->UnmanagedThunk;
+	static PoolMigrationHandlerThunk thunk =
+		PoolMigrationHandlerThunk(this->GetMonoClass()->GetFunction("OnEntityReturned", 2)->UnmanagedThunk);
 
 	mono::exception ex;
 	thunk(entityId, pEntity, &ex);
@@ -132,8 +132,8 @@ void EntityPoolInterop::OnEntityReturnedToPool(EntityId entityId, IEntity *pEnti
 
 void EntityPoolInterop::OnPoolDefinitionsLoaded(size_t numAI)
 {
-	static OnPoolDefinitionsLoadedThunk thunk = (OnPoolDefinitionsLoadedThunk)
-		this->GetMonoClass()->GetFunction("OnDefinitionsLoaded", 0)->UnmanagedThunk;
+	static OnPoolDefinitionsLoadedThunk thunk =
+		OnPoolDefinitionsLoadedThunk(this->GetMonoClass()->GetFunction("OnDefinitionsLoaded", 0)->UnmanagedThunk);
 
 	mono::exception ex;
 	thunk(&ex);
@@ -145,11 +145,11 @@ void EntityPoolInterop::OnPoolDefinitionsLoaded(size_t numAI)
 
 void EntityPoolInterop::OnBookmarkEntitySerialize(TSerialize serialize, void *pVEntity)
 {
-	static PoolBookmarkSyncHandlerThunk thunk = (PoolBookmarkSyncHandlerThunk)
-		this->GetMonoClass()->GetFunction("OnBookmarkSyncing", 2)->UnmanagedThunk;
+	static PoolBookmarkSyncHandlerThunk thunk =
+		PoolBookmarkSyncHandlerThunk(this->GetMonoClass()->GetFunction("OnBookmarkSyncing", 2)->UnmanagedThunk);
 
 	mono::exception ex;
-	thunk(*(ISerialize **)&serialize, (IEntity *)pVEntity, &ex);
+	thunk(*reinterpret_cast<ISerialize **>(&serialize), static_cast<IEntity *>(pVEntity), &ex);
 	if (ex)
 	{
 		MonoEnv->HandleException(ex);
@@ -405,7 +405,7 @@ mono::object EntitySystemInterop::SpawnNetEntity(MonoEntitySpawnParams parameter
 		return nullptr;
 	}
 	// Check if this entity class represents entities that are bound to network.
-	if (!*(bool *)entityClass->GetUserProxyData())
+	if (!static_cast<MonoEntityClassUserData *>(entityClass->GetUserProxyData())->networked)
 	{
 		ArgumentException("EntitySystem.SpawnNetEntity cannot be used to spawn entities that are not bound to network.").Throw();
 		return nullptr;
@@ -515,7 +515,7 @@ void NetEntityInterop::InvokeRmi(EntityId sender, mono::string methodName, mono:
 		(NtText(methodName), MonoEnv->GC->Keep(parameters), IMonoObject(parameters).Class->FullName);
 
 	IGameObject *gameObject = MonoEnv->CryAction->GetGameObject(sender);
-	CryCilRmiType type = (CryCilRmiType)rmiType;
+	CryCilRmiType type = CryCilRmiType(rmiType);
 
 	switch (type)
 	{
@@ -661,19 +661,19 @@ void CryEntityInterop::OnRunTimeInitialized()
 
 void CryEntityInterop::SetFlags(IEntity *handle, uint64 flags)
 {
-	handle->SetFlags(*(uint32 *)&flags);
-	handle->SetFlagsExtended((uint32)(flags >> 32));
+	handle->SetFlags(*reinterpret_cast<uint32 *>(&flags));
+	handle->SetFlagsExtended(uint32(flags >> 32));
 }
 
 uint64 CryEntityInterop::GetFlags(IEntity *handle)
 {
-	return (uint64)(handle->GetFlags()) | ((uint64)(handle->GetFlagsExtended()) << 32);
+	return uint64(handle->GetFlags()) | (uint64(handle->GetFlagsExtended()) << 32);
 }
 
 void CryEntityInterop::AddFlagsInternal(IEntity *handle, uint64 flagsToAdd)
 {
-	uint32 normalFlags = *(uint32 *)&flagsToAdd;
-	uint32 extendedFlags = (uint32)(flagsToAdd >> 32);
+	uint32 normalFlags = *reinterpret_cast<uint32 *>(&flagsToAdd);
+	uint32 extendedFlags = uint32(flagsToAdd >> 32);
 
 	if (normalFlags != 0)
 	{
@@ -687,8 +687,8 @@ void CryEntityInterop::AddFlagsInternal(IEntity *handle, uint64 flagsToAdd)
 
 void CryEntityInterop::ClearFlagsInternal(IEntity *handle, uint64 flagsToClear)
 {
-	uint32 normalFlags = *(uint32 *)&flagsToClear;
-	uint32 extendedFlags = (uint32)(flagsToClear >> 32);
+	uint32 normalFlags = *reinterpret_cast<uint32 *>(&flagsToClear);
+	uint32 extendedFlags = uint32(flagsToClear >> 32);
 
 	if (normalFlags != 0)
 	{
@@ -941,7 +941,7 @@ bool CryEntityInterop::IsInvisible(IEntity *handle)
 
 void CryEntityInterop::SetUpdatePolicy(IEntity *handle, int eUpdatePolicy)
 {
-	handle->SetUpdatePolicy((EEntityUpdatePolicy)eUpdatePolicy);
+	handle->SetUpdatePolicy(EEntityUpdatePolicy(eUpdatePolicy));
 }
 
 int CryEntityInterop::GetUpdatePolicy(IEntity *handle)

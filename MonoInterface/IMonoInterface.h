@@ -159,30 +159,34 @@ typedef IMonoInterface *(*InitializeMonoInterface)(IGameFramework *, List<IMonoS
 //! @endcode
 extern IMonoInterface *MonoEnv;
 
+typedef void(*try_enter_with_atomic_var_thunk)(mono::object, unsigned int, char *);
+
 inline bool IMonoObjects::MonitorTryEnter(mono::object obj, unsigned int timeout)
 {
-	static void(*try_enter_with_atomic_var)(mono::object, unsigned int, char *) =
-		(void(*)(mono::object, unsigned int, char *))
-		MonoEnv->Functions->LookupInternalCall
-		(
-			MonoEnv->CoreLibrary->GetClass("System.Threading", "Monitor")
-								->GetFunction("try_enter_with_atomic_var", -1)
-		);
+	static try_enter_with_atomic_var_thunk try_enter_with_atomic_var = nullptr;
+	if (!try_enter_with_atomic_var)
+	{
+		auto monitorClass = MonoEnv->CoreLibrary->GetClass("System.Threading", "Monitor");
+		auto tryEnterFunc = monitorClass->GetFunction("try_enter_with_atomic_var", -1);
+		try_enter_with_atomic_var = try_enter_with_atomic_var_thunk(MonoEnv->Functions->LookupInternalCall(tryEnterFunc));
+	}
 
 	char lockTaken = 0;
 	try_enter_with_atomic_var(obj, timeout, &lockTaken);
 	return lockTaken != 0;
 }
 
+typedef int(*Monitor_test_owner_thunk)(mono::object);
+
 inline bool IMonoObjects::MonitorIsEntered(mono::object obj)
 {
-	static int(*Monitor_test_owner)(mono::object) =
-		(int(*)(mono::object))
-		MonoEnv->Functions->LookupInternalCall
-		(
-			MonoEnv->CoreLibrary->GetClass("System.Threading", "Monitor")
-								->GetFunction("Monitor_test_owner", -1)
-		);
+	static Monitor_test_owner_thunk Monitor_test_owner = nullptr;
+	if (!Monitor_test_owner)
+	{
+		auto monitorClass = MonoEnv->CoreLibrary->GetClass("System.Threading", "Monitor");
+		auto tryEnterFunc = monitorClass->GetFunction("Monitor_test_owner", -1);
+		Monitor_test_owner = Monitor_test_owner_thunk(MonoEnv->Functions->LookupInternalCall(tryEnterFunc));
+	}
 
 	return Monitor_test_owner(obj) != 0;
 }
@@ -233,7 +237,7 @@ inline const wchar_t *ToNative16String(mono::string monoString)
 template<typename T>
 BOX_UNBOX T Unbox(mono::object value)
 {
-	return *(T *)MonoEnv->Objects->Unbox(value);
+	return *reinterpret_cast<T *>(MonoEnv->Objects->Unbox(value));
 }
 //! Boxes a value.
 //!

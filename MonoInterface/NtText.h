@@ -152,10 +152,10 @@ public:
 			this->chars = new SymbolType[length + 1];
 			for (int i = 0; i < length; i++)
 			{
-				((SymbolType *)this->chars)[i] = ntText[i];
+				reinterpret_cast<SymbolType *>(this->chars)[i] = ntText[i];
 			}
 			mono_free(ntText);
-			((SymbolType *)this->chars)[length] = '\0';
+			reinterpret_cast<SymbolType *>(this->chars)[length] = '\0';
 		}
 		else
 		{
@@ -209,10 +209,10 @@ public:
 		{
 			for (int k = 0; parts[i][k]; k++)
 			{
-				((SymbolType *)this->chars)[j++] = parts[i][k];
+				reinterpret_cast<SymbolType *>(this->chars)[j++] = parts[i][k];
 			}
 		}
-		((SymbolType *)this->chars)[length] = '\0';
+		reinterpret_cast<SymbolType *>(this->chars)[length] = '\0';
 	}
 	virtual ~NtTextTemplate()
 	{
@@ -478,7 +478,7 @@ inline const SymbolType *NtTextTemplate<SymbolType>::_str_mono(mono_string str)
 	}
 #ifdef MONO_API
 	MonoError error;
-	char *ntText = mono_string_to_utf8_checked((MonoString *)str, &error);
+	char *ntText = mono_string_to_utf8_checked(static_cast<MonoString *>(str), &error);
 	if (mono_error_ok(&error))
 	{
 		int length = _strlen(ntText);
@@ -523,8 +523,8 @@ inline bool NtTextTemplate<SymbolType>::_contains_substring(const SymbolType *st
 		return strstr(str0, str1) != nullptr;
 	}
 
-	int nSuperstringLength = (int)strlen(str0);
-	int nSubstringLength = (int)strlen(str1);
+	int nSuperstringLength = int(strlen(str0));
+	int nSubstringLength = int(strlen(str1));
 
 	for (int nSubstringPos = 0; nSubstringPos <= nSuperstringLength - nSubstringLength; ++nSubstringPos)
 	{
@@ -538,7 +538,7 @@ template<>
 inline mono_string NtTextTemplate<wchar_t>::_mono_str(const wchar_t *str)
 {
 #ifdef MONO_API
-	return mono_string_from_utf16((mono_unichar2 *)str);
+	return mono_string_from_utf16(reinterpret_cast<mono_unichar2 *>(const_cast<wchar_t *>(str)));
 #elif defined(USE_CRYCIL_API)
 	return MonoEnv->Objects->Texts->ToManaged(str);
 #else
@@ -550,7 +550,7 @@ template<>
 inline const wchar_t *NtTextTemplate<wchar_t>::_str_mono(mono_string str)
 {
 #ifdef MONO_API
-	wchar_t *ntText = (wchar_t *)mono_string_to_utf16(str);
+	wchar_t *ntText = reinterpret_cast<wchar_t *>(mono_string_to_utf16(str));
 	int length = wcslen(ntText);
 	wchar_t *chars = new wchar_t[length + 1];
 	for (int i = 0; i < length; i++)
@@ -587,8 +587,8 @@ inline bool NtTextTemplate<wchar_t>::_contains_substring(const wchar_t *str0, co
 		return wcsstr(str0, str1) != nullptr;
 	}
 
-	int superstringLength = (int)wcslen(str0);
-	int substringLength = (int)wcslen(str1);
+	int superstringLength = int(wcslen(str0));
+	int substringLength = int(wcslen(str1));
 
 	for (int substringPos = 0; substringPos <= superstringLength - substringLength; ++substringPos)
 	{

@@ -5,7 +5,7 @@
 
 mono::Thread MonoThreads::Attach()
 {
-	return (mono::Thread)mono_thread_attach(mono_domain_get());
+	return mono::Thread(mono_thread_attach(mono_domain_get()));
 }
 
 mono::Thread MonoThreads::Create(mono::delegat method)

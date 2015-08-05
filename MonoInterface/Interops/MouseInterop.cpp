@@ -31,27 +31,27 @@ void MouseInterop::OnHardwareMouseEvent(int iX, int iY, EHARDWAREMOUSEEVENT eHar
 {
 	static IMonoClass *klass = MonoEnv->Cryambly->GetClass(this->GetNameSpace(), this->GetName());
 	static positionThunk rmbd =
-		(positionThunk)klass->GetFunction("OnRightMouseButtonDown", -1)->UnmanagedThunk;
+		positionThunk(klass->GetFunction("OnRightMouseButtonDown", -1)->UnmanagedThunk);
 	static positionThunk rmbu =
-		(positionThunk)klass->GetFunction("OnRightMouseButtonUp", -1)->UnmanagedThunk;
+		positionThunk(klass->GetFunction("OnRightMouseButtonUp", -1)->UnmanagedThunk);
 	static positionThunk rmbdd =
-		(positionThunk)klass->GetFunction("OnRightMouseButtonDoubleClick", -1)->UnmanagedThunk;
+		positionThunk(klass->GetFunction("OnRightMouseButtonDoubleClick", -1)->UnmanagedThunk);
 	static positionThunk lmbd =
-		(positionThunk)klass->GetFunction("OnLeftMouseButtonDown", -1)->UnmanagedThunk;
+		positionThunk(klass->GetFunction("OnLeftMouseButtonDown", -1)->UnmanagedThunk);
 	static positionThunk lmbu =
-		(positionThunk)klass->GetFunction("OnLeftMouseButtonUp", -1)->UnmanagedThunk;
+		positionThunk(klass->GetFunction("OnLeftMouseButtonUp", -1)->UnmanagedThunk);
 	static positionThunk lmbdd =
-		(positionThunk)klass->GetFunction("OnLeftMouseButtonDoubleClick", -1)->UnmanagedThunk;
+		positionThunk(klass->GetFunction("OnLeftMouseButtonDoubleClick", -1)->UnmanagedThunk);
 	static positionThunk mmbd =
-		(positionThunk)klass->GetFunction("OnMiddleMouseButtonDown", -1)->UnmanagedThunk;
+		positionThunk(klass->GetFunction("OnMiddleMouseButtonDown", -1)->UnmanagedThunk);
 	static positionThunk mmbu =
-		(positionThunk)klass->GetFunction("OnMiddleMouseButtonUp", -1)->UnmanagedThunk;
+		positionThunk(klass->GetFunction("OnMiddleMouseButtonUp", -1)->UnmanagedThunk);
 	static positionThunk mmbdd =
-		(positionThunk)klass->GetFunction("OnMiddleMouseButtonDoubleClick", -1)->UnmanagedThunk;
+		positionThunk(klass->GetFunction("OnMiddleMouseButtonDoubleClick", -1)->UnmanagedThunk);
 	
-	static positionThunk moveM = (positionThunk)klass->GetFunction("OnMove", -1)->UnmanagedThunk;
+	static positionThunk moveM = positionThunk(klass->GetFunction("OnMove", -1)->UnmanagedThunk);
 	
-	static wheelDeltaThunk wheel = (wheelDeltaThunk)klass->GetFunction("OnWheel", -1)->UnmanagedThunk;
+	static wheelDeltaThunk wheel = wheelDeltaThunk(klass->GetFunction("OnWheel", -1)->UnmanagedThunk);
 
 	mono::exception ex;
 	switch (eHardwareMouseEvent)

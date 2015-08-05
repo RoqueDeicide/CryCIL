@@ -7,7 +7,7 @@
 void ConsoleInterop::OnRunTimeInitialized()
 {
 	auto klass = MonoEnv->Cryambly->GetClass(this->GetNameSpace(), this->GetName());
-	executeCommand = (ExecuteCommandThunk)klass->GetFunction("ExecuteMonoCommand", -1)->UnmanagedThunk;
+	executeCommand = ExecuteCommandThunk(klass->GetFunction("ExecuteMonoCommand", -1)->UnmanagedThunk);
 
 	REGISTER_METHOD(RegisterCommandInternal);
 	REGISTER_METHOD(UnregisterCommandInternal);

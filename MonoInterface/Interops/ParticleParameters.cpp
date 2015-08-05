@@ -15,14 +15,14 @@ struct RandomizedSingle
 	template < class S >
 	RandomizedSingle(TVarParam<S> p)
 	{
-		this->_base = (float)p.Base();
-		this->range = (float)p.GetRandomRange();
+		this->_base = float(p.Base());
+		this->range = float(p.GetRandomRange());
 	}
 	template < class S >
 	RandomizedSingle(TVarEParam<S> p)
 	{
-		this->_base = (float)p;
-		this->range = (float)p.GetRandomRange();
+		this->_base = float(p);
+		this->range = float(p.GetRandomRange());
 	}
 };
 

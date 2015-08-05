@@ -8,7 +8,7 @@ Pair<Text *, Text *> GetAssemblyNames(MonoImage *image)
 	mono_assembly_fill_assembly_name(image, aname);
 
 	char *fullNameNt = mono_stringify_assembly_name(aname);
-	char *nameNt = (char *)mono_assembly_name_get_name(aname);
+	char *nameNt = const_cast<char *>(mono_assembly_name_get_name(aname));
 
 	mono_assembly_name_free(aname);
 	mono_free(aname);

@@ -17,11 +17,11 @@ mono::delegat MonoDelegates::Create(IMonoClass *delegateType, IMonoStaticMethod 
 
 	if (!createStaticDelegate)
 	{
-		createStaticDelegate = (CreateStaticDelegate)
-			MonoEnv->CoreLibrary
-				   ->GetClass("System", "Delegate")
-				   ->GetFunction("CreateDelegate", "System.Type,System.Reflection.MethodInfo")
-				   ->UnmanagedThunk;
+		createStaticDelegate = CreateStaticDelegate
+			(MonoEnv->CoreLibrary
+					->GetClass("System", "Delegate")
+					->GetFunction("CreateDelegate", "System.Type,System.Reflection.MethodInfo")
+					->UnmanagedThunk);
 	}
 
 	mono::exception ex;
@@ -53,14 +53,13 @@ mono::delegat MonoDelegates::Create(IMonoClass *delegateType, IMonoMethod *metho
 
 	if (!createInstanceDelegate)
 	{
-		createInstanceDelegate = (CreateInstanceDelegate)
-			MonoEnv->CoreLibrary->GetClass("System", "Delegate")
-								->GetFunction
-								(
-									"CreateDelegate",
-									"System.Type,System.Object,System.Reflection.MethodInfo"
-								)
-								->UnmanagedThunk;
+		createInstanceDelegate = CreateInstanceDelegate(MonoEnv->CoreLibrary->GetClass("System", "Delegate")
+															   ->GetFunction
+															   (
+																   "CreateDelegate",
+																   "System.Type,System.Object,System.Reflection.MethodInfo"
+															   )
+															   ->UnmanagedThunk);
 	}
 
 	mono::exception ex;
@@ -92,11 +91,11 @@ mono::delegat MonoDelegates::Create(IMonoClass *delegateType, void *functionPoin
 
 	if (!createDelegateForFunctionPointer)
 	{
-		createDelegateForFunctionPointer = (CreateDelegateForFunctionPointer)
-			MonoEnv->CoreLibrary
-				   ->GetClass("System.Runtime.InteropServices", "Marshal")
-				   ->GetFunction("GetDelegateForFunctionPointerInternal", 2)
-				   ->UnmanagedThunk;
+		createDelegateForFunctionPointer =
+			CreateDelegateForFunctionPointer(MonoEnv->CoreLibrary
+													->GetClass("System.Runtime.InteropServices", "Marshal")
+													->GetFunction("GetDelegateForFunctionPointerInternal", 2)
+													->UnmanagedThunk);
 	}
 
 	mono::exception ex;

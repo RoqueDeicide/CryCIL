@@ -32,7 +32,7 @@ int SplineInterop::GetNumDimensionsInternal(ISplineInterpolator *handle)
 
 int SplineInterop::InsertKeyInternal(ISplineInterpolator *handle, float time, Vec4 value)
 {
-	return handle->InsertKey(time, (float *)&value);
+	return handle->InsertKey(time, reinterpret_cast<float *>(&value));
 }
 
 void SplineInterop::RemoveKeyInternal(ISplineInterpolator *handle, int key)
@@ -67,38 +67,38 @@ float SplineInterop::GetKeyTimeInternal(ISplineInterpolator *handle, int key)
 
 void SplineInterop::SetKeyValueInternal(ISplineInterpolator *handle, int key, Vec4 value)
 {
-	handle->SetKeyValue(key, (float *)&value);
+	handle->SetKeyValue(key, reinterpret_cast<float *>(&value));
 }
 
 bool SplineInterop::GetKeyValueInternal(ISplineInterpolator *handle, int key, Vec4 *value)
 {
 	ISplineInterpolator::ValueType v;
 	bool result = handle->GetKeyValue(key, v);
-	*value = *(Vec4 *)v;
+	*value = *reinterpret_cast<Vec4 *>(v);
 	return result;
 }
 
 void SplineInterop::SetKeyInTangentInternal(ISplineInterpolator *handle, int key, Vec4 tin)
 {
-	handle->SetKeyInTangent(key, (float *)&tin);
+	handle->SetKeyInTangent(key, reinterpret_cast<float *>(&tin));
 }
 
 void SplineInterop::SetKeyOutTangentInternal(ISplineInterpolator *handle, int key, Vec4 tout)
 {
-	handle->SetKeyInTangent(key, (float *)&tout);
+	handle->SetKeyInTangent(key, reinterpret_cast<float *>(&tout));
 }
 
 void SplineInterop::SetKeyTangentsInternal(ISplineInterpolator *handle, int key, Vec4 tin, Vec4 tout)
 {
-	handle->SetKeyTangents(key, (float *)&tin, (float *)&tout);
+	handle->SetKeyTangents(key, reinterpret_cast<float *>(&tin), reinterpret_cast<float *>(&tout));
 }
 
 bool SplineInterop::GetKeyTangentsInternal(ISplineInterpolator *handle, int key, Vec4 *tin, Vec4 *tout)
 {
 	ISplineInterpolator::ValueType v0, v1;
 	bool result = handle->GetKeyTangents(key, v0, v1);
-	*tin = *(Vec4 *)v0;
-	*tout = *(Vec4 *)v1;
+	*tin = *reinterpret_cast<Vec4 *>(v0);
+	*tout = *reinterpret_cast<Vec4 *>(v1);
 	return result;
 }
 
@@ -106,5 +106,5 @@ void SplineInterop::InterpolateInternal(ISplineInterpolator *handle, float time,
 {
 	ISplineInterpolator::ValueType v;
 	handle->Interpolate(time, v);
-	*value = *(Vec4 *)v;
+	*value = *reinterpret_cast<Vec4 *>(v);
 }

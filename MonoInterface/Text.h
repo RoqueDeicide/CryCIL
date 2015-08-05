@@ -551,7 +551,7 @@ public:
 	TextBuilder(int capacity) : TextBase()
 	{
 		this->capacity = capacity;
-		this->text = (char *)malloc(capacity * sizeof(char));
+		this->text = static_cast<char *>(malloc(capacity * sizeof(char)));
 	}
 	//! Creates a new mutable string from given null-terminated one.
 	//!
@@ -700,13 +700,13 @@ public:
 	//! Avoid invocation of this operator unless given string is a literal.
 	TextBuilder &operator <<(const char *str)
 	{
-		this->Append((char *)str, strlen(str));
+		this->Append(const_cast<char *>(str), strlen(str));
 		return *this;
 	}
 	//! Appends an immutable string to the end of this text.
 	TextBuilder &operator <<(Text &text)
 	{
-		this->Append((char *)text.TextBuffer, text.Length);
+		this->Append(const_cast<char *>(text.TextBuffer), text.Length);
 		return *this;
 	}
 	//! Appends a string to the end of this text.
@@ -731,7 +731,7 @@ private:
 	void Init(const char *text, int index, int count)
 	{
 		this->capacity = this->length = count;
-		this->text = (char *)malloc(capacity * sizeof(char));
+		this->text = static_cast<char *>(malloc(capacity * sizeof(char)));
 		strncpy(this->text, text + index, this->capacity);
 	}
 	void Init(Text *immutableString, int index, int count)
@@ -741,7 +741,7 @@ private:
 			FatalError("Attempt to copy too many characters from the string.");
 		}
 		this->capacity = this->length = count;
-		this->text = (char *)malloc(capacity * sizeof(char));
+		this->text = static_cast<char *>(malloc(capacity * sizeof(char)));
 		immutableString->CopyTo(this->text, index, 0, this->length);
 	}
 	void Resize(int combinedLength)
@@ -750,7 +750,7 @@ private:
 		if (this->capacity < combinedLength)
 		{
 			// Allocate new memory.
-			this->text = (char *)realloc(this->text, combinedLength * sizeof(char));
+			this->text = static_cast<char *>(realloc(this->text, combinedLength * sizeof(char)));
 			this->capacity = combinedLength;
 		}
 	}

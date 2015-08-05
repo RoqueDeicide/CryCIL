@@ -25,9 +25,9 @@ typedef void(*UnregisterTypeThunk)(ushort);
 
 MonoFlowNodeFactory::~MonoFlowNodeFactory()
 {
-	static UnregisterTypeThunk thunk = (UnregisterTypeThunk)
-		MonoEnv->Cryambly->GetClass("CryCil.RunTime.Registration", "FlowNodeTypeRegistry")
-						 ->GetFunction("UnregisterType", 1)->RawThunk;
+	static UnregisterTypeThunk thunk =
+		UnregisterTypeThunk(MonoEnv->Cryambly->GetClass("CryCil.RunTime.Registration", "FlowNodeTypeRegistry")
+											 ->GetFunction("UnregisterType", 1)->RawThunk);
 
 	thunk(this->typeId);
 }

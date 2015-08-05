@@ -102,7 +102,7 @@ inline void TestObjectHandles()
 
 	obj = handle.Object;
 
-	if ((mono::object)obj)
+	if (mono::object(obj))
 	{
 		CryLogAlways("TEST SUCCESS: Successfully got a reference to the object's new location.");
 	}
@@ -340,7 +340,7 @@ inline void TestDelegates()
 	CryLogAlways("TEST: Invoking first instance delegate through trampoline");
 	CryLogAlways("TEST:");
 
-	((void(*)(mono::string))instanceDel1.Trampoline)(text);
+	reinterpret_cast<void(*)(mono::string)>(instanceDel1.Trampoline)(text);
 
 	CryLogAlways("TEST: Testing delegates that wrap function pointers.");
 	CryLogAlways("TEST:");

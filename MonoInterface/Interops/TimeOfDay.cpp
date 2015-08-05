@@ -141,7 +141,7 @@ bool TimeOfDayInterop::GetVariableInfo(int id, MonoTodVarInfo *info)
 
 	if (gEnv->p3DEngine->GetTimeOfDay()->GetVariableInfo(id, varInfo))
 	{
-		*info = *(MonoTodVarInfo *)&varInfo;
+		*info = *reinterpret_cast<MonoTodVarInfo *>(&varInfo);
 		return true;
 	}
 

@@ -60,28 +60,28 @@ struct MonoFlowData
 
 		switch (this->DataType)
 		{
-		case EFlowDataTypes::eFDT_Bool:
+		case eFDT_Bool:
 			data = TFlowInputData(this->Bool, true);
 			break;
-		case EFlowDataTypes::eFDT_EntityId:
+		case eFDT_EntityId:
 			data = TFlowInputData(this->EntityId, true);
 			break;
-		case EFlowDataTypes::eFDT_Float:
+		case eFDT_Float:
 			data = TFlowInputData(this->Float, true);
 			break;
-		case EFlowDataTypes::eFDT_Int:
+		case eFDT_Int:
 			data = TFlowInputData(this->Integer32, true);
 			break;
-		case EFlowDataTypes::eFDT_String:
+		case eFDT_String:
 			data = TFlowInputData(string(this->text), true);
 			break;
-		case EFlowDataTypes::eFDT_Vec3:
+		case eFDT_Vec3:
 		{
-			Vec3 v = *(Vec3 *)this->Vector3;
+			Vec3 v = *reinterpret_cast<Vec3 *>(this->Vector3);
 			data = TFlowInputData(v, true);
 			break;
 		}
-		case EFlowDataTypes::eFDT_Void:
+		case eFDT_Void:
 			data = TFlowInputData(SFlowSystemVoid(), true);
 			break;
 		default:
@@ -91,6 +91,7 @@ struct MonoFlowData
 	}
 };
 
+//! Represents an abstraction layer between Flow System and CryCIL.
 struct MonoFlowNode : public IFlowNode
 {
 private:
@@ -99,7 +100,7 @@ private:
 	bool targetsEntity;
 	SFlowNodeConfig nodeConfig;
 public:
-	MonoFlowNode(TFlowNodeTypeId typeId, IFlowNode::SActivationInfo *info, bool &cancel);
+	MonoFlowNode(TFlowNodeTypeId typeId, SActivationInfo *info, bool &cancel);
 	//! Signals managed object to release the resources it held.
 	virtual ~MonoFlowNode();
 
@@ -111,7 +112,7 @@ public:
 	//! from the managed code.
 	virtual void Release() override { if (--this->refCount <= 0) delete this; }
 
-	virtual IFlowNodePtr Clone(SActivationInfo *actInfo) override { return this; }
+	virtual IFlowNodePtr Clone(SActivationInfo *) override { return this; }
 
 	virtual void GetConfiguration(SFlowNodeConfig&) override;
 

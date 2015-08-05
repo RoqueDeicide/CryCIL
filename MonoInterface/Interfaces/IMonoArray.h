@@ -173,8 +173,8 @@ public:
 	//! @returns Reference to the element of the array.
 	ElementType& operator[](int index)
 	{
-		_MonoArray *a = (_MonoArray *)this->obj;
-		return *(ElementType *)(((char*)(a)->vector) + this->elementSize * index);
+		_MonoArray *a = reinterpret_cast<_MonoArray *>(this->obj);
+		return *reinterpret_cast<ElementType *>(reinterpret_cast<char*>((a)->vector) + this->elementSize * index);
 	}
 	//! Provides read/write access to the element of the array.
 	//!
@@ -183,7 +183,7 @@ public:
 	//! @returns Reference to the element of the array.
 	ElementType& operator[](List<int> &indices)
 	{
-		_MonoArray *a = (_MonoArray *)this->obj;
+		_MonoArray *a = reinterpret_cast<_MonoArray *>(this->obj);
 		// Checking everything.
 		if (indices.Length == 0)
 		{
@@ -220,7 +220,7 @@ public:
 	//! @param dimensionIndex Zero-based index of the dimension which length to get.
 	int GetLength(int dimensionIndex) const
 	{
-		MonoArray *arrayPtr = (MonoArray *)this->obj;
+		MonoArray *arrayPtr = reinterpret_cast<MonoArray *>(this->obj);
 		if (!arrayPtr->bounds)
 		{
 			return 0;
@@ -232,7 +232,7 @@ public:
 	//! @param dimensionIndex Zero-based index of the dimension which lower bound to get.
 	int GetLowerBound(int dimensionIndex) const
 	{
-		MonoArray *arrayPtr = (MonoArray *)this->obj;
+		MonoArray *arrayPtr = reinterpret_cast<MonoArray *>(this->obj);
 		if (!arrayPtr->bounds)
 		{
 			return 0;
@@ -242,7 +242,7 @@ public:
 
 	int GetSize() const
 	{
-		MonoArray *arrayPtr = (MonoArray *)this->obj;
+		MonoArray *arrayPtr = reinterpret_cast<MonoArray *>(this->obj);
 		return arrayPtr->max_length;
 	}
 	int GetElementSize() const

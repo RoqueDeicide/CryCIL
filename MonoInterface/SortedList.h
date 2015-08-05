@@ -187,13 +187,13 @@ public:
 	__declspec(property(get = GetKeys)) ReadOnlyList<KeyType> *Keys;
 	ReadOnlyList<KeyType> *GetKeys()
 	{
-		return (ReadOnlyList<KeyType> *)&this->keys;
+		return reinterpret_cast<ReadOnlyList<KeyType> *>(&this->keys);
 	}
 	//! Gets read/only access to the collection of elements.
 	__declspec(property(get = GetElements)) ReadOnlyList<ElementType> *Elements;
 	ReadOnlyList<ElementType> *GetElements()
 	{
-		return (ReadOnlyList<ElementType> *)&this->values;
+		return reinterpret_cast<ReadOnlyList<ElementType> *>(&this->values);
 	}
 private:
 	int BinarySearch(KeyType key)

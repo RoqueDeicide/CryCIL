@@ -33,8 +33,8 @@ public:
 	{
 		// Now we can use Mono.
 		mono::nothing(*BeepFunc)(mono::exception *);
-		BeepFunc = (mono::nothing(*)(mono::exception *))this->monoEnv->CoreLibrary
-			->GetClass("Console", "System")->GetFunction("Beep")->UnmanagedThunk;
+		BeepFunc = reinterpret_cast<mono::nothing(*)(mono::exception *)>
+			(this->monoEnv->CoreLibrary->GetClass("Console", "System")->GetFunction("Beep")->UnmanagedThunk);
 		// Beep!
 		mono::exception ex;
 		BeepFunc(&ex);
@@ -47,11 +47,11 @@ public:
 		float rads = 60 * PI / 180;
 
 		auto thunk =
-			(mono::quaternion(*)(mono::vector3, float, mono::exception *))
-			this->monoEnv->Cryambly->GetClass("Rotation", "CryCil.Geometry")
-								   ->GetNestedType("AroundAxis")
-								   ->GetFunction("CreateQuaternion", 2)
-								   ->UnmanagedThunk;
+			reinterpret_cast<mono::quaternion(*)(mono::vector3, float, mono::exception *)>
+			(this->monoEnv->Cryambly->GetClass("Rotation", "CryCil.Geometry")
+									->GetNestedType("AroundAxis")
+									->GetFunction("CreateQuaternion", 2)
+									->UnmanagedThunk);
 
 		mono::exception ex;
 		Quat rotation = Unbox<Quat>((thunk)(Box(up), rads, &ex));
