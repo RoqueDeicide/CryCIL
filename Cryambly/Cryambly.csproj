@@ -104,6 +104,7 @@
     <Compile Include="Engine\Logic\CryEntity.Children.cs" />
     <Compile Include="Engine\Logic\CryEntity.cs" />
     <Compile Include="Engine\Logic\CryEntity.Location.cs" />
+    <Compile Include="Engine\Logic\EntityLink.cs" />
     <Compile Include="Engine\Logic\Slots\CryEntitySlot.cs" />
     <Compile Include="Engine\Logic\Entities\CryEntityPool.cs" />
     <Compile Include="Engine\Logic\Entities\EditableProperty.cs" />

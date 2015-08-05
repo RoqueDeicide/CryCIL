@@ -137,6 +137,14 @@ struct CryEntityInterop : public IMonoInterop < true, true >
 	static int          GetUpdatePolicy(IEntity *handle);
 	static void         SetMaterial(IEntity *handle, IMaterial *pMaterial);
 	static IMaterial   *GetMaterial(IEntity *handle);
+	static IEntityLink *GetEntityLinks(IEntity *handle);
+	static IEntityLink *AddEntityLink(IEntity *handle, mono::string linkName, EntityId entityId, EntityGUID entityGuid);
+	static void         RemoveEntityLink(IEntity *handle, IEntityLink *pLink);
+	static void         RemoveAllEntityLinks(IEntity *handle);
+	static IEntityLink *GetNextLink(IEntityLink *linkHandle);
+	static mono::string GetLinkName(IEntityLink *linkHandle);
+	static EntityId     GetLinkedEntityId(IEntityLink *linkHandle);
+	static EntityGUID   GetLinkedEntityGuid(IEntityLink *linkHandle);
 };
 
 struct EntitySlotsInterop : IMonoInterop<true, true>

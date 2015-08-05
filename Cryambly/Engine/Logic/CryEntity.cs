@@ -283,6 +283,20 @@ namespace CryCil.Engine.Logic
 				return new EntitySlotCollection(this.handle);
 			}
 		}
+		/// <summary>
+		/// Gets the first in a linked list of entity links.
+		/// </summary>
+		/// <returns>If this entity is linked to at least one other entity, a valid object of type <see cref="EntityLink"/> will be returned, otherwise an invalid one will be returned.</returns>
+		public EntityLink Links
+		{
+			get
+			{
+				this.AssertEntity();
+				Contract.EndContractBlock();
+
+				return GetEntityLinks(this.handle);
+			}
+		}
 		#endregion
 		#region Construction
 		internal CryEntity(IntPtr handle)
@@ -410,6 +424,60 @@ namespace CryCil.Engine.Logic
 
 			KillTimerInternal(this.handle, timerId);
 		}
+		/// <summary>
+		/// Links another entity to this one.
+		/// </summary>
+		/// <param name="linkName">Name of the link between this and another entity.</param>
+		/// <param name="id">Identifier of the entity to link to this one.</param>
+		/// <param name="guid">Globally unique identifier of the entity to link.</param>
+		/// <returns>An object that represents the link.</returns>
+		/// <exception cref="ArgumentNullException">Name of the link cannot be null or empty.</exception>
+		/// <exception cref="ArgumentOutOfRangeException">Name of the link cannot be longer then 31 symbol.</exception>
+		/// <exception cref="ArgumentException">Unable to identify the entity that will be linked to this one.</exception>
+		public EntityLink Link(string linkName, EntityId id, EntityGUID guid)
+		{
+			this.AssertEntity();
+			if (string.IsNullOrEmpty(linkName))
+			{
+				throw new ArgumentNullException("linkName", "Name of the link cannot be null or empty.");
+			}
+			if (linkName.Length > 31)
+			{
+				throw new ArgumentOutOfRangeException("linkName", "Name of the link cannot be longer then 31 symbol.");
+			}
+			if (id == default(EntityId) && guid == default(EntityGUID))
+			{
+				throw new ArgumentException("Unable to identify the entity that will be linked to this one.");
+			}
+			Contract.EndContractBlock();
+
+			return AddEntityLink(this.handle, linkName, id, guid);
+		}
+		/// <summary>
+		/// Unlinks this entity from another.
+		/// </summary>
+		/// <param name="link">An object that represents the link between this entity and another that must be removed.</param>
+		public void Unlink(EntityLink link)
+		{
+			this.AssertEntity();
+			if (!link.IsValid)
+			{
+				throw new ArgumentNullException("link", "Object that represents the link that must be removed cannot be null.");
+			}
+			Contract.EndContractBlock();
+
+			RemoveEntityLink(this.handle, link);
+		}
+		/// <summary>
+		/// Unlinks this entity from everything.
+		/// </summary>
+		public void UnlinkEverything()
+		{
+			this.AssertEntity();
+			Contract.EndContractBlock();
+
+			RemoveAllEntityLinks(this.handle);
+		}
 		#endregion
 		#region Utilities
 		// Assertion method.
@@ -469,6 +537,23 @@ namespace CryCil.Engine.Logic
 		private static extern void SetMaterial(IntPtr handle, Material pMaterial);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern Material GetMaterial(IntPtr handle);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern EntityLink GetEntityLinks(IntPtr handle);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern EntityLink AddEntityLink(IntPtr handle, string linkName, EntityId entityId,
+													   EntityGUID entityGuid);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void RemoveEntityLink(IntPtr handle, EntityLink pLink);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void RemoveAllEntityLinks(IntPtr handle);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		internal static extern EntityLink GetNextLink(IntPtr linkHandle);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		internal static extern string GetLinkName(IntPtr linkHandle);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		internal static extern EntityId GetLinkedEntityId(IntPtr linkHandle);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		internal static extern EntityGUID GetLinkedEntityGuid(IntPtr linkHandle);
 		#endregion
 	}
 }

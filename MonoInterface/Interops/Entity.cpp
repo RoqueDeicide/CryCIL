@@ -657,6 +657,14 @@ void CryEntityInterop::OnRunTimeInitialized()
 	REGISTER_METHOD(SetUpdatePolicy);
 	REGISTER_METHOD(SetMaterial);
 	REGISTER_METHOD(GetMaterial);
+	REGISTER_METHOD(GetEntityLinks);
+	REGISTER_METHOD(AddEntityLink);
+	REGISTER_METHOD(RemoveEntityLink);
+	REGISTER_METHOD(RemoveAllEntityLinks);
+	REGISTER_METHOD(GetNextLink);
+	REGISTER_METHOD(GetLinkName);
+	REGISTER_METHOD(GetLinkedEntityId);
+	REGISTER_METHOD(GetLinkedEntityGuid);
 }
 
 void CryEntityInterop::SetFlags(IEntity *handle, uint64 flags)
@@ -957,6 +965,46 @@ void CryEntityInterop::SetMaterial(IEntity *handle, IMaterial *pMaterial)
 IMaterial *CryEntityInterop::GetMaterial(IEntity *handle)
 {
 	return handle->GetMaterial();
+}
+
+IEntityLink *CryEntityInterop::GetEntityLinks(IEntity *handle)
+{
+	return handle->GetEntityLinks();
+}
+
+IEntityLink *CryEntityInterop::AddEntityLink(IEntity *handle, mono::string linkName, EntityId entityId, EntityGUID entityGuid)
+{
+	return handle->AddEntityLink(NtText(linkName), entityId, entityGuid);
+}
+
+void CryEntityInterop::RemoveEntityLink(IEntity *handle, IEntityLink *pLink)
+{
+	handle->RemoveEntityLink(pLink);
+}
+
+void CryEntityInterop::RemoveAllEntityLinks(IEntity *handle)
+{
+	handle->RemoveAllEntityLinks();
+}
+
+IEntityLink *CryEntityInterop::GetNextLink(IEntityLink *linkHandle)
+{
+	return linkHandle->next;
+}
+
+mono::string CryEntityInterop::GetLinkName(IEntityLink *linkHandle)
+{
+	return ToMonoString(linkHandle->name);
+}
+
+EntityId CryEntityInterop::GetLinkedEntityId(IEntityLink *linkHandle)
+{
+	return linkHandle->entityId;
+}
+
+EntityGUID CryEntityInterop::GetLinkedEntityGuid(IEntityLink *linkHandle)
+{
+	return linkHandle->entityGuid;
 }
 
 void EntitySlotsInterop::OnRunTimeInitialized()
