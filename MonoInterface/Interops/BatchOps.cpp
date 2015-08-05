@@ -209,7 +209,7 @@ void BatchOps::Math3NumberOpDouble(Vec3d* numbers, __int64 count, Math3NumberOpe
 {
 	for (__int64 i = 0; i < count; i++)
 	{
-		Vec3 v = numbers[i];
+		Vec3d v = numbers[i];
 		switch (op)
 		{
 		case Power:

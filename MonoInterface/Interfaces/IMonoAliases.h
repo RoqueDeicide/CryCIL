@@ -23,30 +23,6 @@
 
 #include "Logs.h"
 
-// Forward declarations.
-struct IDefaultBoxinator;
-struct IMonoFunctionalityWrapper;
-struct IMonoObject;
-struct IMonoAssembly;
-template<typename ElementType = mono::object> struct IMonoArray;
-struct IMonoClass;
-struct IMonoMethod;
-struct IMonoStaticMethod;
-struct IMonoFunction;
-struct IMonoConstructor;
-struct IMonoProperty;
-struct IMonoEvent;
-struct IMonoField;
-struct IMonoConstructor;
-struct IMonoSystemListener;
-struct IMonoInterface;
-struct MonoGCHandle;
-struct IMonoGC;
-
-class TextBase;
-class Text;
-class TextBuilder;
-
 namespace mono
 {
 	//! This typedef is here to represent a reference to an object located within managed heap.
@@ -195,3 +171,27 @@ namespace mono
 	//! Represents a reference to a boxed set of Euler angles.
 	OBJECT_NAME typedef object angles3;
 }
+
+// Forward declarations.
+struct IDefaultBoxinator;
+struct IMonoFunctionalityWrapper;
+struct IMonoObject;
+struct IMonoAssembly;
+template<typename ElementType = mono::object> struct IMonoArray;
+struct IMonoClass;
+struct IMonoMethod;
+struct IMonoStaticMethod;
+struct IMonoFunction;
+struct IMonoConstructor;
+struct IMonoProperty;
+struct IMonoEvent;
+struct IMonoField;
+struct IMonoConstructor;
+struct IMonoSystemListener;
+struct IMonoInterface;
+struct MonoGCHandle;
+struct IMonoGC;
+
+class TextBase;
+class Text;
+class TextBuilder;

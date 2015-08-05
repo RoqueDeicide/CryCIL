@@ -53,7 +53,7 @@ public:
 		{
 			unsigned int temp = this->handle;
 			this->handle = other.handle;
-			other.handle = this->handle;
+			other.handle = temp;
 		}
 		return *this;
 	}

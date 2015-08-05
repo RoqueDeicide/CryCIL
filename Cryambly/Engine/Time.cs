@@ -83,6 +83,15 @@ namespace CryCil.Engine
 		/// </summary>
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern void ClearScaling();
+		/// <summary>
+		/// Converts time from seconds into <see cref="DateTime"/> object.
+		/// </summary>
+		/// <param name="seconds">System time in seconds.</param>
+		/// <returns><see cref="DateTime"/> that represents given time.</returns>
+		public static DateTime FromSeconds(float seconds)
+		{
+			return new DateTime((long)(seconds * 10000000L), DateTimeKind.Unspecified);
+		}
 		#endregion
 		#region Utilities
 		[MethodImpl(MethodImplOptions.InternalCall)]

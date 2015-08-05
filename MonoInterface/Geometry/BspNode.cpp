@@ -10,7 +10,7 @@ void PointPosition(Plane plane, Vec3 point, PlanePosition &pointPlanePosition, P
 		pointPlanePosition = PlanePosition::Front;
 	}
 	pointPlanePosition = signedDistance < -0.00000001 ? PlanePosition::Back : PlanePosition::Coplanar;
-	polygonPlanePosition = (PlanePosition)(polygonPlanePosition | pointPlanePosition);
+	polygonPlanePosition = PlanePosition(polygonPlanePosition | pointPlanePosition);
 }
 
 Vertex Vertex::CreateLerp(Vertex &other, float parameter)
@@ -90,7 +90,7 @@ void Face::Split(Plane splitter, List<Face> *frontCoplanarFaces, List<Face> *bac
 		// Prepare to create a split of this triangle.
 		//
 		// Cash vertices into an array, so we can loop through it.
-		Vertex *vertices = (Vertex*)this;
+		Vertex *vertices = this->Vertices;
 		// Create lists for vertices on the front and back.
 		List<Vertex> fvs(4);
 		List<Vertex> bvs(4);

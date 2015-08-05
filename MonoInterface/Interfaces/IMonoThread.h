@@ -84,7 +84,7 @@ struct IMonoThread : public IMonoObject
 	//! @returns Indication whether this thread was not running before.
 	bool Start()
 	{
-		static StartThunk thunk = (StartThunk)this->klass->GetFunction("Start")->ToInstance()->UnmanagedThunk;
+		static StartThunk thunk = StartThunk(this->klass->GetFunction("Start")->ToInstance()->UnmanagedThunk);
 
 		mono::exception ex;
 		thunk(this->obj, &ex);
@@ -109,7 +109,7 @@ struct IMonoThread : public IMonoObject
 	//!          parameterless method.
 	bool Start(mono::object obj)
 	{
-		static StartObjThunk thunk = (StartObjThunk)this->klass->GetFunction("Start", 1)->ToInstance()->UnmanagedThunk;
+		static StartObjThunk thunk = StartObjThunk(this->klass->GetFunction("Start", 1)->ToInstance()->UnmanagedThunk);
 
 		mono::exception ex;
 		thunk(this->obj, obj, &ex);
@@ -127,7 +127,7 @@ struct IMonoThread : public IMonoObject
 	//! Aborts this thread by sending ThreadAbortException into it.
 	void Abort()
 	{
-		static AbortThunk thunk = (AbortThunk)this->klass->GetFunction("Abort")->ToInstance()->UnmanagedThunk;
+		static AbortThunk thunk = AbortThunk(this->klass->GetFunction("Abort")->ToInstance()->UnmanagedThunk);
 
 		mono::exception ex;
 		thunk(this->obj, &ex);
@@ -136,7 +136,7 @@ struct IMonoThread : public IMonoObject
 	//! Suspends calling thread until this thread terminates.
 	void Join()
 	{
-		static JoinThunk thunk = (JoinThunk)this->klass->GetFunction("Join")->ToInstance()->UnmanagedThunk;
+		static JoinThunk thunk = JoinThunk(this->klass->GetFunction("Join")->ToInstance()->UnmanagedThunk);
 
 		mono::exception ex;
 		thunk(this->obj, &ex);
@@ -146,7 +146,7 @@ struct IMonoThread : public IMonoObject
 	//! @param timeSpan Time in milliseconds to wait.
 	void Join(int timeSpan)
 	{
-		static JoinIntThunk thunk = (JoinIntThunk)this->klass->GetFunction("Join", 1)->ToInstance()->UnmanagedThunk;
+		static JoinIntThunk thunk = JoinIntThunk(this->klass->GetFunction("Join", 1)->ToInstance()->UnmanagedThunk);
 
 		mono::exception ex;
 		thunk(this->obj, timeSpan, &ex);
@@ -155,21 +155,21 @@ struct IMonoThread : public IMonoObject
 
 	mono::string GetName()
 	{
-		static GetNameThunk thunk = (GetNameThunk)this->klass->GetProperty("Name")->Getter->ToInstance()->UnmanagedThunk;
+		static GetNameThunk thunk = GetNameThunk(this->klass->GetProperty("Name")->Getter->ToInstance()->UnmanagedThunk);
 
 		mono::exception ex;
 		return thunk(this->obj, &ex);
 	}
 	void SetName(mono::string value)
 	{
-		static SetNameThunk thunk = (SetNameThunk)this->klass->GetProperty("Name")->Setter->ToInstance()->UnmanagedThunk;
+		static SetNameThunk thunk = SetNameThunk(this->klass->GetProperty("Name")->Setter->ToInstance()->UnmanagedThunk);
 
 		mono::exception ex;
 		thunk(this->obj, value, &ex);
 	}
 	ThreadState GetState()
 	{
-		static GetStateThunk thunk = (GetStateThunk)this->klass->GetProperty("ThreadState")->Getter->ToInstance()->UnmanagedThunk;
+		static GetStateThunk thunk = GetStateThunk(this->klass->GetProperty("ThreadState")->Getter->ToInstance()->UnmanagedThunk);
 
 		mono::exception ex;
 		int result = thunk(this->obj, &ex);
@@ -177,11 +177,11 @@ struct IMonoThread : public IMonoObject
 		{
 			return ThreadState::Aborted;
 		}
-		return (ThreadState)result;
+		return ThreadState(result);
 	}
 	ThreadPriority GetPriority()
 	{
-		static GetPriorityThunk thunk = (GetPriorityThunk)this->klass->GetProperty("Priority")->Getter->ToInstance()->UnmanagedThunk;
+		static GetPriorityThunk thunk = GetPriorityThunk(this->klass->GetProperty("Priority")->Getter->ToInstance()->UnmanagedThunk);
 
 		mono::exception ex;
 		int result = thunk(this->obj, &ex);
@@ -189,18 +189,18 @@ struct IMonoThread : public IMonoObject
 		{
 			return ThreadPriority::Normal;
 		}
-		return (ThreadPriority)result;
+		return ThreadPriority(result);
 	}
 	void SetPriority(ThreadPriority value)
 	{
-		static SetPriorityThunk thunk = (SetPriorityThunk)this->klass->GetProperty("Priority")->Setter->ToInstance()->UnmanagedThunk;
+		static SetPriorityThunk thunk = SetPriorityThunk(this->klass->GetProperty("Priority")->Setter->ToInstance()->UnmanagedThunk);
 
 		mono::exception ex;
 		thunk(this->obj, value, &ex);
 	}
 	bool IsAlive()
 	{
-		static GetIsAliveThunk thunk = (GetIsAliveThunk)this->klass->GetProperty("IsAlive", 0)->Getter->ToInstance()->UnmanagedThunk;
+		static GetIsAliveThunk thunk = GetIsAliveThunk(this->klass->GetProperty("IsAlive", 0)->Getter->ToInstance()->UnmanagedThunk);
 
 		mono::exception ex;
 		bool result = thunk(this->obj, &ex);
@@ -212,7 +212,7 @@ struct IMonoThread : public IMonoObject
 	}
 	bool IsBackground()
 	{
-		static GetBackgroundThunk thunk = (GetBackgroundThunk)this->klass->GetProperty("IsBackground", 0)->Getter->ToInstance()->UnmanagedThunk;
+		static GetBackgroundThunk thunk = GetBackgroundThunk(this->klass->GetProperty("IsBackground", 0)->Getter->ToInstance()->UnmanagedThunk);
 
 		mono::exception ex;
 		bool result = thunk(this->obj, &ex);
@@ -224,7 +224,7 @@ struct IMonoThread : public IMonoObject
 	}
 	void SetBackground(bool value)
 	{
-		static SetBackgroundThunk thunk = (SetBackgroundThunk)this->klass->GetProperty("IsBackground", 0)->Setter->ToInstance()->UnmanagedThunk;
+		static SetBackgroundThunk thunk = SetBackgroundThunk(this->klass->GetProperty("IsBackground", 0)->Setter->ToInstance()->UnmanagedThunk);
 
 		mono::exception ex;
 		thunk(this->obj, value, &ex);

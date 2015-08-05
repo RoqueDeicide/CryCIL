@@ -44,7 +44,7 @@ void RendererInterop::DrawTextInternal(Vec3 position, int options, ColorF color,
 	if (gEnv && gEnv->pRenderer)
 	{
 		SDrawTextInfo textInfo;
-		*(ColorF *)(&textInfo.color[0]) = color;
+		*reinterpret_cast<ColorF *>(&textInfo.color[0]) = color;
 		textInfo.flags = options;
 		textInfo.xscale = scale.x;
 		textInfo.yscale = scale.y;
@@ -130,7 +130,7 @@ CCamera *RendererInterop::get_Camera()
 		return nullptr;
 	}
 
-	return (CCamera *)&gEnv->pRenderer->GetCamera();
+	return const_cast<CCamera *>(&gEnv->pRenderer->GetCamera());
 }
 
 // void RendererInterop::set_Camera(CCamera *value)

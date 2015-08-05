@@ -11,12 +11,27 @@
 
 #endif // USE_CRYCIL_API
 
-#ifdef CRYCIL_MODULE
+#ifdef MONO_API
 
 #include <mono/metadata/object.h>
 #include <mono/metadata/appdomain.h>
 
-#endif // CRYCIL_MODULE
+#endif // MONO_API
+
+#ifdef MONO_API
+
+typedef MonoString *mono_string;
+
+#elif defined(USE_CRYCIL_API)
+
+typedef mono::string mono_string;
+
+#else
+
+typedef void *mono_string;
+
+#endif // MONO_API
+
 
 #ifdef CRYCIL_MODULE
 #include <ISystem.h>
@@ -32,6 +47,25 @@
 #define FatalError(message) throw std::logic_error(message)
 
 #endif // CRYCIL_MODULE
+
+#ifdef ENABLE_NTTEXT_DEBUG_REPORT
+
+#ifdef CRYCIL_MODULE
+#include <ISystem.h>
+
+#define DebugReport(message) CryLogAlways(message);
+
+#else
+
+#define DebugReport(message) std::cout << message << std::endl;
+
+#endif // CRYCIL_MODULE
+
+#else
+
+#define DebugReport(message)
+
+#endif // ENABLE_NTTEXT_DEBUG_REPORT
 
 #include "List.h"
 
@@ -56,30 +90,60 @@ public:
 	//! Only default text can be assigned to.
 	NtTextTemplate()
 	{
+		DebugReport("Default constructor for NtText has been invoked.");
+
 		this->chars = nullptr;
 	}
 	//! Assigns contents of the temporary object to the new one.
 	NtTextTemplate(NtTextTemplate &&other)
 		: chars(other.chars)
 	{
+		DebugReport("Move constructor for NtText has been invoked.");
+
 		other.chars = nullptr;
 	}
 	//! Creates a new null-terminated string from given null-terminated one.
 	//!
-	//! Text from given string is copied into new object without a terminating null character.
-	//!
 	//! @param t Text to initialize this object with.
 	NtTextTemplate(const SymbolType *t)
 	{
+		DebugReport("Wrapping constructor for NtText has been invoked.");
+
 		this->chars = t;
 	}
-#ifdef CRYCIL_MODULE
+	//! Creates a new null-terminated string from given null-terminated one.
+	//!
+	//! @param t         Text to initialize this object with.
+	//! @param duplicate Indicates whether given string should be duplicated.
+	NtTextTemplate(const SymbolType *t, bool duplicate)
+	{
+		DebugReport("Wrapping constructor with optional duplication for NtText has been invoked.");
+
+		if (!duplicate)
+		{
+			this->chars = t;
+		}
+		else
+		{
+			int count = strlen(t);
+
+			SymbolType *buffer = new SymbolType[count + 1];
+			buffer[count] = '\0';
+
+			for (int i = 0; i < count; i++)
+			{
+				buffer[i] = t[i];
+			}
+
+			this->chars = const_cast<const SymbolType *>(buffer);
+		}
+	}
 	//! Creates a new null-terminated string from given .Net/Mono string.
 	//!
 	//! @param managedString Instance of type System.String.
-	NtTextTemplate(MonoString *managedString)
+	NtTextTemplate(mono_string managedString)
 	{
-		this->chars = _str_mono((mono::string)managedString);
+#ifdef MONO_API
 		MonoError error;
 		char *ntText = mono_string_to_utf8_checked(managedString, &error);
 		if (mono_error_ok(&error))
@@ -88,29 +152,31 @@ public:
 			this->chars = new SymbolType[length + 1];
 			for (int i = 0; i < length; i++)
 			{
-				((SymbolType *)this->chars)[i] = ntText[i];
+				reinterpret_cast<SymbolType *>(this->chars)[i] = ntText[i];
 			}
 			mono_free(ntText);
-			((SymbolType *)this->chars)[length] = '\0';
+			reinterpret_cast<SymbolType *>(this->chars)[length] = '\0';
 		}
 		else
 		{
 			FatalError(mono_error_get_message(&error));
 		}
+#elif defined(USE_CRYCIL_API)
+		this->chars = _str_mono(managedString);
+#else
+		this->chars = nullptr;
+#endif // MONO_API
 	}
-#endif // CRYCIL_MODULE
-
-#ifdef USE_CRYCIL_API
-
+#ifdef CRYCIL_MODULE
 	//! Creates a new null-terminated string from given .Net/Mono string.
 	//!
 	//! @param managedString Instance of type System.String.
 	NtTextTemplate(mono::string managedString)
 	{
-		this->chars = _str_mono(managedString);
+		this->chars = ToNativeString(managedString);
 	}
+#endif // CRYCIL_MODULE
 
-#endif // USE_CRYCIL_API
 	//! Constructs a text out of given parts.
 	//!
 	//! @param t1 Number of arguments in the chain.
@@ -143,15 +209,19 @@ public:
 		{
 			for (int k = 0; parts[i][k]; k++)
 			{
-				((SymbolType *)this->chars)[j++] = parts[i][k];
+				const_cast<SymbolType *>(this->chars)[j++] = parts[i][k];
 			}
 		}
-		((SymbolType *)this->chars)[length] = '\0';
+		const_cast<SymbolType *>(this->chars)[length] = '\0';
 	}
 	virtual ~NtTextTemplate()
 	{
+		DebugReport("Destructor has been invoked.");
+
 		if (this->chars)
 		{
+			DebugReport("Releasing characters.");
+
 			delete this->chars;
 			this->chars = nullptr;
 		}
@@ -179,6 +249,7 @@ public:
 			this->~NtTextTemplate();
 		}
 		this->chars = chars;
+		return *this;
 	}
 	//! Creates a deep copy of this text.
 	//!
@@ -190,7 +261,7 @@ public:
 		{
 			return nullptr;
 		}
-		int length = _strlen(this->chars);
+		int count = _strlen(this->chars);
 		SymbolType *ntText = new SymbolType[count + 1];
 		ntText[count] = '\0';
 		for (int i = 0; i < count; i++)
@@ -221,11 +292,11 @@ public:
 		SymbolType *ntText = new SymbolType[count + 1];
 		ntText[count] = '\0';
 		for
-		(
+			(
 			int i = index, j = 0, counter = 0;
-			counter < count;					// Counter tells us where to stop.
-			i++, j++, counter++					//
-		)
+		counter < count;					// Counter tells us where to stop.
+		i++, j++, counter++					//
+			)
 		{
 			ntText[j] = this->chars[i];
 		}
@@ -256,17 +327,17 @@ public:
 			FatalError("Attempt to copy too many characters from the string.");
 		}
 		for
-		(
+			(
 			int i = sourceIndex, j = destinationIndex, counter = 0;
-			counter < charCount;						// Counter tells us where to stop.
-			i++, j++, counter++							//
-		)
+		counter < charCount;						// Counter tells us where to stop.
+		i++, j++, counter++							//
+			)
 		{
 			destination[j] = this->chars[i];
 		}
 	}
 	//! Creates a managed string from this one.
-	mono::string ToManagedString() const
+	mono_string ToManagedString() const
 	{
 		return _mono_str(this->chars);
 	}
@@ -349,9 +420,15 @@ public:
 	{
 		return _compare(this->chars, ntString) == 0;
 	}
+	//! Compares this object to another.
 	int CompareTo(NtTextTemplate &other)
 	{
 		return _compare(this->chars, other.chars);
+	}
+	//! Compares this object to another.
+	int CompareTo(const SymbolType *other)
+	{
+		return _compare(this->chars, other);
 	}
 	//! Detaches the pointer wrapped by this object from it.
 	//!
@@ -373,33 +450,35 @@ public:
 	//! Compares 2 strings.
 	static int _compare(const SymbolType *str1, const SymbolType *str2);
 	//! To managed string.
-	static mono::string _mono_str(const SymbolType *str);
+	static mono_string _mono_str(const SymbolType *str);
 	//! From managed string.
-	static const SymbolType *_str_mono(mono::string str);
+	static const SymbolType *_str_mono(mono_string str);
 	//! Checks for the presence of the substring.
 	static bool _contains_substring(const SymbolType *str0, const SymbolType *str1, bool ignoreCase);
 };
 
 template<typename SymbolType>
-inline mono::string NtTextTemplate<SymbolType>::_mono_str(const SymbolType *str)
+inline mono_string NtTextTemplate<SymbolType>::_mono_str(const SymbolType *str)
 {
-#ifdef CRYCIL_MODULE
-	return (mono::string)mono_string_new(mono_domain_get(), str);
-#else
+#ifdef MONO_API
+	return mono_string_new(mono_domain_get(), str);
+#elif defined(USE_CRYCIL_API)
 	return ToMonoString(str);
-#endif // CRYCIL_MODULE
+#else
+	return nullptr;
+#endif // MONO_API
 }
 
 template<typename SymbolType>
-inline const SymbolType *NtTextTemplate<SymbolType>::_str_mono(mono::string str)
+inline const SymbolType *NtTextTemplate<SymbolType>::_str_mono(mono_string str)
 {
 	if (!str)
 	{
 		return nullptr;
 	}
-#ifdef CRYCIL_MODULE
+#ifdef MONO_API
 	MonoError error;
-	char *ntText = mono_string_to_utf8_checked((MonoString *)str, &error);
+	char *ntText = mono_string_to_utf8_checked(static_cast<MonoString *>(str), &error);
 	if (mono_error_ok(&error))
 	{
 		int length = _strlen(ntText);
@@ -417,9 +496,11 @@ inline const SymbolType *NtTextTemplate<SymbolType>::_str_mono(mono::string str)
 		FatalError(mono_error_get_message(&error));
 		return nullptr;
 	}
-#else
+#elif defined(USE_CRYCIL_API)
 	return ToNativeString(managedString);
-#endif // CRYCIL_MODULE
+#else
+	return nullptr;
+#endif // MONO_API
 }
 
 template<typename SymbolType>
@@ -442,8 +523,8 @@ inline bool NtTextTemplate<SymbolType>::_contains_substring(const SymbolType *st
 		return strstr(str0, str1) != nullptr;
 	}
 
-	int nSuperstringLength = (int)strlen(str0);
-	int nSubstringLength = (int)strlen(str1);
+	int nSuperstringLength = int(strlen(str0));
+	int nSubstringLength = int(strlen(str1));
 
 	for (int nSubstringPos = 0; nSubstringPos <= nSuperstringLength - nSubstringLength; ++nSubstringPos)
 	{
@@ -454,13 +535,36 @@ inline bool NtTextTemplate<SymbolType>::_contains_substring(const SymbolType *st
 }
 
 template<>
-inline mono::string NtTextTemplate<wchar_t>::_mono_str(const wchar_t *str)
+inline mono_string NtTextTemplate<wchar_t>::_mono_str(const wchar_t *str)
 {
-#ifdef CRYCIL_MODULE
-	return (mono::string)mono_string_from_utf16((uint16 *)str);
-#else
+#ifdef MONO_API
+	return mono_string_from_utf16(reinterpret_cast<mono_unichar2 *>(const_cast<wchar_t *>(str)));
+#elif defined(USE_CRYCIL_API)
 	return MonoEnv->Objects->Texts->ToManaged(str);
-#endif // CRYCIL_MODULE
+#else
+	return nullptr;
+#endif // MONO_API
+}
+
+template<>
+inline const wchar_t *NtTextTemplate<wchar_t>::_str_mono(mono_string str)
+{
+#ifdef MONO_API
+	wchar_t *ntText = reinterpret_cast<wchar_t *>(mono_string_to_utf16(str));
+	int length = wcslen(ntText);
+	wchar_t *chars = new wchar_t[length + 1];
+	for (int i = 0; i < length; i++)
+	{
+		chars[i] = ntText[i];
+	}
+	mono_free(ntText);
+	chars[length] = '\0';
+	return chars;
+#elif defined(USE_CRYCIL_API)
+	return MonoEnv->Objects->Texts->ToNative16(managedString);
+#else
+	return nullptr;
+#endif // MONO_API
 }
 
 template<>
@@ -476,25 +580,6 @@ inline int NtTextTemplate<wchar_t>::_strlen(const wchar_t *str)
 }
 
 template<>
-inline const wchar_t *NtTextTemplate<wchar_t>::_str_mono(mono::string str)
-{
-#ifdef CRYCIL_MODULE
-	wchar_t *ntText = (wchar_t *)mono_string_to_utf16((MonoString *)str);
-	int length = _strlen(ntText);
-	wchar_t *chars = new wchar_t[length + 1];
-	for (int i = 0; i < length; i++)
-	{
-		chars[i] = ntText[i];
-	}
-	mono_free(ntText);
-	chars[length] = '\0';
-	return chars;
-#else
-	return MonoEnv->Objects->Texts->ToNative16(managedString);
-#endif // CRYCIL_MODULE
-}
-
-template<>
 inline bool NtTextTemplate<wchar_t>::_contains_substring(const wchar_t *str0, const wchar_t *str1, bool ignoreCase)
 {
 	if (!ignoreCase)
@@ -502,8 +587,8 @@ inline bool NtTextTemplate<wchar_t>::_contains_substring(const wchar_t *str0, co
 		return wcsstr(str0, str1) != nullptr;
 	}
 
-	int superstringLength = (int)wcslen(str0);
-	int substringLength = (int)wcslen(str1);
+	int superstringLength = int(wcslen(str0));
+	int substringLength = int(wcslen(str1));
 
 	for (int substringPos = 0; substringPos <= superstringLength - substringLength; ++substringPos)
 	{

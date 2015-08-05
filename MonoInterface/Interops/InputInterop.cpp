@@ -5,7 +5,7 @@
 template<typename thunkT>
 thunkT getThunk(IMonoClass *klass, const char *name)
 {
-	return (thunkT)klass->GetFunction(name, -1)->UnmanagedThunk;
+	return thunkT(klass->GetFunction(name, -1)->UnmanagedThunk);
 }
 
 void InputInterop::OnRunTimeInitialized()
@@ -19,7 +19,6 @@ void InputInterop::OnRunTimeInitialized()
 	auto mouseClass = cryambly->GetClass(this->GetNameSpace(), "Mouse");
 	auto xboxClass = cryambly->GetClass(this->GetNameSpace(), "XboxGamepad");
 	auto keyboardClass = cryambly->GetClass(this->GetNameSpace(), "Keyboard");
-	auto hmdClass = cryambly->GetClass(this->GetNameSpace(), "HeadMountedDevice");
 
 	// Touchy stuff.
 	onTouchEvent = getThunk<OnTouchEventThunk>(touchClass, "OnEvent");
@@ -270,7 +269,7 @@ bool InputInterop::DeviceAvailable(int deviceType)
 		return false;
 	}
 
-	return gEnv->pInput->HasInputDeviceOfType((EInputDeviceType)deviceType);
+	return gEnv->pInput->HasInputDeviceOfType(EInputDeviceType(deviceType));
 }
 
 bool InputInterop::GamepadConnected(uint16 index)
@@ -280,7 +279,7 @@ bool InputInterop::GamepadConnected(uint16 index)
 		return false;
 	}
 
-	return gEnv->pInput->GetDevice(index, eIDT_Gamepad) != 0;
+	return gEnv->pInput->GetDevice(index, eIDT_Gamepad) != nullptr;
 }
 
 int InputInterop::GetModifiers()

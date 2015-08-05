@@ -32,7 +32,7 @@ void MonoField::Get(mono::object obj, void *value)
 {
 	if (obj)
 	{
-		mono_field_get_value((MonoObject *)obj, this->field, value);
+		mono_field_get_value(reinterpret_cast<MonoObject *>(obj), this->field, value);
 	}
 	else
 	{
@@ -44,7 +44,7 @@ void MonoField::Set(mono::object obj, void *value)
 {
 	if (obj)
 	{
-		mono_field_set_value((MonoObject *)obj, this->field, value);
+		mono_field_set_value(reinterpret_cast<MonoObject *>(obj), this->field, value);
 	}
 	else
 	{

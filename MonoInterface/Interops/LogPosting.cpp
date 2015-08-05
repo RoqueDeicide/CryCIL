@@ -10,7 +10,7 @@ void LogPostingInterop::OnRunTimeInitialized()
 
 void LogPostingInterop::Post(IMiniLog::ELogType postType, mono::string text)
 {
-	gEnv->pLog->LogV(postType, NtText(text), 0);
+	gEnv->pLog->LogV(postType, NtText(text), nullptr);
 }
 int LogPostingInterop::get_VerbosityLevel()
 {

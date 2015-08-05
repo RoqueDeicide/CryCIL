@@ -16,7 +16,7 @@ public:
 		: field(f)
 		, klass(parent)
 	{
-		this->attrs  = (MonoFieldAttributes)mono_field_get_flags(this->field);
+		this->attrs  = MonoFieldAttributes(mono_field_get_flags(this->field));
 		this->offset = mono_field_get_offset(this->field);
 		this->name   = mono_field_get_name(this->field);
 	}

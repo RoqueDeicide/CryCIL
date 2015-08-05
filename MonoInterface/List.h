@@ -14,6 +14,71 @@
 
 #endif // CRYCIL_MODULE
 
+template<typename ElementType> class List;
+
+//! Specializations of this template define the static field named "shift" are used by a list iterator to advance to next
+//! object.
+template<bool normal>
+struct DirectionTraits
+{
+};
+//! Used by iterators that advance in normal direction.
+template<>
+struct DirectionTraits<true>
+{
+	static const int shift = 1;
+};
+//! Used by iterators that advance in reversed direction.
+template<>
+struct DirectionTraits<false>
+{
+	static const int shift = -1;
+};
+
+//! Represents an object that iterates through a List.
+//!
+//! @tparam ElementType     Type that represents items the list contains.
+//! @tparam NormalIteration Indicates whether the iterator will not reverse the order of iteration.
+template<typename ElementType, bool NormalIteration>
+class ListIterator
+{
+	const List<ElementType> *list;
+	int currentPosition;
+public:
+	//! Creates an iterator for a given list that starts iteration from a specified position.
+	//!
+	//! @param list 
+	ListIterator(const List<ElementType> *list, int initialPosition)
+	{
+		this->list = list;
+		this->currentPosition = initialPosition;
+	}
+	//! Determines whether this iterator is not on the same position within the same list as the other iterator.
+	bool operator !=(const ListIterator<ElementType, NormalIteration> &other) const
+	{
+		// I don't think that the second check is needed, but whatever, its mostly the same in terms of performance.
+		return this->currentPosition != other.currentPosition && this->list != other.list;
+	}
+	//! Returns modifiable reference to the element this iterator is currently at.
+	ElementType &operator *();
+	//! Returns unmodifiable reference to the element this iterator is currently at.
+	const ElementType &operator *() const;
+	//! Moves this iterator to the next element in the list.
+	const ListIterator<ElementType, NormalIteration> &operator ++()
+	{
+		this->currentPosition += DirectionTraits<NormalIteration>::shift;
+		return *this;
+	}
+	//! Moves this iterator to the previous element in the list.
+	const ListIterator<ElementType, NormalIteration> &operator --()
+	{
+		this->currentPosition -= DirectionTraits<NormalIteration>::shift;
+		return *this;
+	}
+	//! Removes the element this iterator is currently at from the list.
+	void RemoveHere();
+};
+
 //! Represents an expandable list of items.
 //!
 //! @tparam ElementType        Type that represents items this list contains.
@@ -49,7 +114,7 @@ public:
 	//! Creates a new list.
 	//!
 	//! @param initialCapacity Number of items this list is planned to hold.
-	List(int initialCapacity)
+	explicit List(int initialCapacity)
 	{
 		this->length = 0;
 		this->capacity = initialCapacity;
@@ -193,7 +258,7 @@ public:
 	//! @param collection A collection of elements to add.
 	void AddRange(std::vector<ElementType> &collection)
 	{
-		collectionSize = collection.size();
+		int collectionSize = collection.size();
 		if (collectionSize <= 0)
 		{
 			return;
@@ -240,6 +305,7 @@ public:
 		if (index == -1)
 		{
 			this->Add(item);
+			return false;
 		}
 		else
 		{
@@ -247,6 +313,7 @@ public:
 			this->elements[index] = item;
 
 			// We are not going to do anything about the overridden item: we just gonna let its destructor invoked.
+			return true;
 		}
 	}
 	//! Inserts an item into specific position within the list.
@@ -584,12 +651,12 @@ public:
 	}
 	//! Gets or sets number of elements within this list.
 	__declspec(property(get=GetLength)) int Length;
-	int GetLength()
+	int GetLength() const
 	{
 		return this->length;
 	}
 	//! Returns a reference to the element at specified index. No checks are performed.
-	ElementType &operator[](int index)
+	ElementType &operator[](int index) const
 	{
 		return this->elements[index];
 	}
@@ -677,4 +744,97 @@ private:
 			}
 		}
 	}
+	// For STL-style iteration:
+public:
+	//! Creates an object that can iterate this list from the start.
+	ListIterator<ElementType, true> begin() const
+	{
+		return ListIterator<ElementType, true>(this, 0);
+	}
+	//! Creates an object that can iterate this list from a specified position.
+	//!
+	//! @param start Zero-based index of the first element to start iteration from.
+	ListIterator<ElementType, true> begin_from(int start) const
+	{
+		return ListIterator<ElementType, true>(this, start);
+	}
+	//! Creates an object that represents an iterator that reached the end of this list.
+	ListIterator<ElementType, true> end() const
+	{
+		return ListIterator<ElementType, true>(this, this->length);
+	}
+	//! Used by this class when iterating through the list in reverse.
+	class ReversedList
+	{
+		const List<ElementType> *list;
+	public:
+		ReversedList(const List<ElementType> *list)
+		{
+			this->list = list;
+		}
+		//! Creates an object that can iterate this list from the last element.
+		ListIterator<ElementType, false> begin() const
+		{
+			return ListIterator<ElementType, false>(this->list, this->list->length - 1);
+		}
+		//! Creates an object that can iterate this list from a specified position.
+		//!
+		//! @param start Zero-based index of the first element to start iteration from.
+		ListIterator<ElementType, false> begin_from(int start) const
+		{
+			return ListIterator<ElementType, false>(this, this->list->length - 1 - start);
+		}
+		//! Creates an object that represents an iterator that reached the end of this list.
+		ListIterator<ElementType, false> end() const
+		{
+			return ListIterator<ElementType, false>(this, -1);
+		}
+	};
+	//! Gets the object that allows this list to be iterated in reversed order.
+	//!
+	//! Example:
+	//!
+	//! @code{.cpp}
+	//! List<int> numbers(4);
+	//! // Fill the list with indexes.
+	//! for (int i = 0; i < numbers.Length; i++)
+	//! {
+	//!     numbers[i] = i;
+	//! }
+	//! // Print the numbers in reverse order.
+	//! for (const int &number : numbers.Reversed)
+	//! {
+	//!     std::cout << number;
+	//! }
+	//! @endcode
+	//! 
+	//! The code above will print: "3210".
+	__declspec(property(get = GetReversed)) ReversedList Reversed;
+	ReversedList GetReversed() const
+	{
+		return ReversedList(this);
+	}
 };
+
+template<typename ElementType, bool NormalIteration>
+inline const ElementType &ListIterator<ElementType, NormalIteration>::operator*() const
+{
+	return (*this->list)[this->currentPosition];
+}
+
+template<typename ElementType, bool NormalIteration>
+inline ElementType &ListIterator<ElementType, NormalIteration>::operator*()
+{
+	return (*this->list)[this->currentPosition];
+}
+
+template<typename ElementType, bool NormalIteration>
+inline void ListIterator<ElementType, NormalIteration>::RemoveHere()
+{
+	this->list->RemoveAt(this->currentPosition);
+	if (NormalIteration)
+	{
+		// We only need to change our current position when iterating in normal order.
+		this->currentPosition--;
+	}
+}

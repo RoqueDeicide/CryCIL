@@ -5,6 +5,12 @@ struct Pair
 {
 	T1 Value1;					//!< First value.
 	T2 Value2;					//!< Second value.
+	//! Creates default instance of this type.
+	Pair()
+		: Value1()
+		, Value2()
+	{
+	}
 	//! Creates a new instance of this type.
 	//!
 	//! @param value1 First object.
@@ -22,6 +28,12 @@ struct Triple
 	T1 Value1;					//!< First value.
 	T2 Value2;					//!< Second value.
 	T3 Value3;					//!< Third value.
+	//! Creates default instance of this type.
+	Triple()
+		: Value1()
+		, Value2()
+		, Value3()
+	{}
 	//! Creates a new instance of this type.
 	//!
 	//! @param value1 First object.
@@ -42,6 +54,13 @@ struct Quad
 	T2 Value2;					//!< Second value.
 	T3 Value3;					//!< Third value.
 	T4 Value4;					//!< Fourth value.
+	//! Creates default instance of this type.
+	Quad()
+		: Value1()
+		, Value2()
+		, Value3()
+		, Value4()
+	{}
 	//! Creates a new instance of this type.
 	//!
 	//! @param value1 First object.

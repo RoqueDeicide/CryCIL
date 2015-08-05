@@ -4,12 +4,13 @@
 
 mono::string MonoTexts::ToManaged(const char *text)
 {
-	return (mono::string)mono_string_new(mono_domain_get(), text);
+	return mono::string(mono_string_new(mono_domain_get(), text));
 }
 
 mono::string MonoTexts::ToManaged(const wchar_t *text)
 {
-	return (mono::string)mono_string_new_utf16(mono_domain_get(), (const mono_unichar2 *)text, wcslen(text));
+	return mono::string(mono_string_new_utf16(mono_domain_get(),
+		reinterpret_cast<const mono_unichar2 *>(text), wcslen(text)));
 }
 
 const char *MonoTexts::ToNative(mono::string text)
@@ -19,7 +20,7 @@ const char *MonoTexts::ToNative(mono::string text)
 		return nullptr;
 	}
 	MonoError er;
-	char *t = mono_string_to_utf8_checked((MonoString *)text, &er);
+	char *t = mono_string_to_utf8_checked(reinterpret_cast<MonoString *>(text), &er);
 	if (mono_error_ok(&er))
 	{
 		gEnv->pLog->LogError("%s", mono_error_get_message(&er));
@@ -39,7 +40,7 @@ const wchar_t *MonoTexts::ToNative16(mono::string text)
 		return nullptr;
 	}
 
-	wchar_t *chars = (wchar_t *)mono_string_to_utf16((MonoString *)text);
+	wchar_t *chars = reinterpret_cast<wchar_t *>(mono_string_to_utf16(reinterpret_cast<MonoString *>(text)));
 
 	int length = wcslen(chars);
 

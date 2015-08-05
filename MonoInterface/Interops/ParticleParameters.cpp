@@ -15,14 +15,14 @@ struct RandomizedSingle
 	template < class S >
 	RandomizedSingle(TVarParam<S> p)
 	{
-		this->_base = (float)p.Base();
-		this->range = (float)p.GetRandomRange();
+		this->_base = float(p.Base());
+		this->range = float(p.GetRandomRange());
 	}
 	template < class S >
 	RandomizedSingle(TVarEParam<S> p)
 	{
-		this->_base = (float)p;
-		this->range = (float)p.GetRandomRange();
+		this->_base = float(p);
+		this->range = float(p.GetRandomRange());
 	}
 };
 
@@ -171,7 +171,12 @@ void ParticleParametersInterop::set_RemainWhileVisible(ParticleParametersObject 
 
 Vec3 ParticleParametersInterop::get_PositionOffset(ParticleParametersObject *obj)
 {
-	return obj->handle->vPositionOffset;
+	Vec3S offset = obj->handle->vPositionOffset;
+	Vec3 vec;
+	vec.x = offset.x;
+	vec.y = offset.y;
+	vec.z = offset.z;
+	return vec;
 }
 
 void ParticleParametersInterop::set_PositionOffset(ParticleParametersObject *obj, Vec3 value)
@@ -181,7 +186,12 @@ void ParticleParametersInterop::set_PositionOffset(ParticleParametersObject *obj
 
 Vec3 ParticleParametersInterop::get_RandomOffset(ParticleParametersObject *obj)
 {
-	return obj->handle->vRandomOffset;
+	Vec3U offset = obj->handle->vRandomOffset;
+	Vec3 vec;
+	vec.x = offset.x;
+	vec.y = offset.y;
+	vec.z = offset.z;
+	return vec;
 }
 
 void ParticleParametersInterop::set_RandomOffset(ParticleParametersObject *obj, Vec3 value)

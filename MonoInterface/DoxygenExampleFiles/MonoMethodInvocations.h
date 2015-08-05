@@ -2,7 +2,7 @@
 
 #include "IMonoInterface.h"
 
-void NoParameters_ValueTypeInstance_Virtual_DefaultExceptionHandling()
+inline void NoParameters_ValueTypeInstance_Virtual_DefaultExceptionHandling()
 {
 	// Get System.Int32 class.
 	IMonoClass *int32Class = MonoEnv->CoreLibrary->GetClass("System", "Int32");
@@ -28,7 +28,7 @@ void NoParameters_ValueTypeInstance_Virtual_DefaultExceptionHandling()
 	delete resultPolymorphismNT;
 }
 
-void NoParameters_ReferenceTypeInstance_Virtual_NoExceptionHandling()
+inline void NoParameters_ReferenceTypeInstance_Virtual_NoExceptionHandling()
 {
 	// Get System.String class.
 	IMonoClass *stringClass = MonoEnv->CoreLibrary->GetClass("System", "String");
@@ -47,7 +47,7 @@ void NoParameters_ReferenceTypeInstance_Virtual_NoExceptionHandling()
 	CryLogAlways("%d", Unbox<int>(boxedHashCode));
 }
 
-void StackParameters_Static()
+inline void StackParameters_Static()
 {
 	// Get CryCil.Geometry.Rotation.AroundAxis class.
 	IMonoClass *aroundAxis = MonoEnv->Cryambly->GetClass("CryCil.Geometry", "Rotation")
@@ -75,7 +75,7 @@ void StackParameters_Static()
 	// Now "matrix" should be quite different.
 }
 
-void ArrayParameters_Static()
+inline void ArrayParameters_Static()
 {
 	// Get System.Int32 class.
 	IMonoClass *int32Class = MonoEnv->CoreLibrary->GetClass("System", "Int32");
@@ -84,8 +84,8 @@ void ArrayParameters_Static()
 	auto parseFunc = int32Class->GetFunction("Parse", "System.String")->ToStatic();
 
 	// Create an array of parameters.
-	IMonoArray *pars = MonoEnv->Objects->Arrays->Create(1);
-	pars->At<mono::string>(0) = ToMonoString("123");
+	IMonoArray<mono::string> pars = MonoEnv->Objects->Arrays->Create(1);
+	pars[0] = ToMonoString("123");
 
 	// Invoke the method.
 	mono::int32 parsedBoxedNumber = parseFunc->Invoke(pars);

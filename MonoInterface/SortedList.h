@@ -42,7 +42,7 @@ class SortedList
 private:
 	List<KeyType>     keys;
 	List<ElementType> values;
-	std::function<int(KeyType, KeyType)> comparer;
+	std::function<int(KeyType&, KeyType&)> comparer;
 public:
 	//! Creates a default list.
 	SortedList()
@@ -147,7 +147,7 @@ public:
 		int index = this->BinarySearch(key);
 		if (index >= 0)
 		{
-			this->values[index] = returnedValue;
+			this->values[index] = value;
 			return true;
 		}
 		return false;
@@ -187,13 +187,13 @@ public:
 	__declspec(property(get = GetKeys)) ReadOnlyList<KeyType> *Keys;
 	ReadOnlyList<KeyType> *GetKeys()
 	{
-		return (ReadOnlyList<KeyType> *)&this->keys;
+		return reinterpret_cast<ReadOnlyList<KeyType> *>(&this->keys);
 	}
 	//! Gets read/only access to the collection of elements.
 	__declspec(property(get = GetElements)) ReadOnlyList<ElementType> *Elements;
 	ReadOnlyList<ElementType> *GetElements()
 	{
-		return (ReadOnlyList<ElementType> *)&this->values;
+		return reinterpret_cast<ReadOnlyList<ElementType> *>(&this->values);
 	}
 private:
 	int BinarySearch(KeyType key)

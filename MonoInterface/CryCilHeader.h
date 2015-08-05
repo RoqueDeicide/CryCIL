@@ -11,38 +11,38 @@ IMonoInterface *MonoEnv = nullptr;
 struct EarlyInitializer : IMonoSystemListener
 {
 	//! Sets MonoEnv and removes itself.
-	virtual void SetInterface(IMonoInterface *handle)
+	virtual void SetInterface(IMonoInterface *handle) override
 	{
 		MonoEnv = handle;
 		MonoEnv->RemoveListener(this);
 		delete this;
 	}
 	//! Not used since this listener is set to unregister itself after MonoEnv is set.
-	virtual void OnPreInitialization() {}
+	virtual void OnPreInitialization() override {}
 	//! Not used since this listener is set to unregister itself after MonoEnv is set.
-	virtual void OnRunTimeInitializing() {}
+	virtual void OnRunTimeInitializing() override {}
 	//! Not used since this listener is set to unregister itself after MonoEnv is set.
-	virtual void OnRunTimeInitialized() {}
+	virtual void OnRunTimeInitialized() override {}
 	//! Not used since this listener is set to unregister itself after MonoEnv is set.
-	virtual void OnCryamblyInitilizing() {}
+	virtual void OnCryamblyInitilizing() override {}
 	//! Not used since this listener is set to unregister itself after MonoEnv is set.
-	virtual void OnCompilationStarting() {}
+	virtual void OnCompilationStarting() override {}
 	//! Not used since this listener is set to unregister itself after MonoEnv is set.
-	virtual void OnCompilationComplete(bool success) {}
+	virtual void OnCompilationComplete(bool success) override {}
 	//! Not used since this listener is set to unregister itself after MonoEnv is set.
-	virtual List<int> *GetSubscribedStages() {}
+	virtual List<int> *GetSubscribedStages() override { return nullptr; }
 	//! Not used since this listener is set to unregister itself after MonoEnv is set.
-	virtual void OnInitializationStage(int stageIndex) {}
+	virtual void OnInitializationStage(int stageIndex) override {}
 	//! Not used since this listener is set to unregister itself after MonoEnv is set.
-	virtual void OnCryamblyInitilized() {}
+	virtual void OnCryamblyInitilized() override {}
 	//! Not used since this listener is set to unregister itself after MonoEnv is set.
-	virtual void OnPostInitialization() {}
+	virtual void OnPostInitialization() override {}
 	//! Not used since this listener is set to unregister itself after MonoEnv is set.
-	virtual void Update() {}
+	virtual void Update() override {}
 	//! Not used since this listener is set to unregister itself after MonoEnv is set.
-	virtual void PostUpdate() {}
+	virtual void PostUpdate() override {}
 	//! Not used since this listener is set to unregister itself after MonoEnv is set.
-	virtual void Shutdown() {}
+	virtual void Shutdown() override {}
 };
 //! Loads up and initializes CryCIL.
 //!
@@ -64,7 +64,7 @@ struct EarlyInitializer : IMonoSystemListener
 //!                         calls that require MonoEnv and can be invoked before it's done.
 //!
 //! @return A Dll handle that represents CryCil library.
-HMODULE InitializeCryCIL
+inline HMODULE InitializeCryCIL
 (
 	IGameFramework *framework,
 	List<IMonoSystemListener *> *listeners,
@@ -77,8 +77,7 @@ HMODULE InitializeCryCIL
 		CryFatalError("Could not locate %s.", MONOINTERFACE_LIBRARY);
 	}
 	CryLogAlways("Loaded CryCIL interface library.");
-	InitializeMonoInterface initFunc =
-		(InitializeMonoInterface)CryGetProcAddress(monoInterfaceDll, MONO_INTERFACE_INIT);
+	auto initFunc = reinterpret_cast<InitializeMonoInterface>(CryGetProcAddress(monoInterfaceDll, MONO_INTERFACE_INIT));
 	if (!initFunc)
 	{
 		CryFatalError("Could not locate %s function within %s.", MONO_INTERFACE_INIT, MONOINTERFACE_LIBRARY);
@@ -86,7 +85,7 @@ HMODULE InitializeCryCIL
 	CryLogAlways("Acquired a pointer to initializer function.");
 
 	List<IMonoSystemListener *> ls(1);
-	List<IMonoSystemListener *> *lsPtr = (listeners) ? listeners : &ls;
+	auto lsPtr = (listeners) ? listeners : &ls;
 
 	if (earlyMonoEnvInit)
 	{

@@ -58,7 +58,7 @@ mono::string SurfaceTypeInterop::GetTypeName(ISurfaceType *handle)
 
 ESurfaceTypeFlags SurfaceTypeInterop::GetFlags(ISurfaceType *handle)
 {
-	return (ESurfaceTypeFlags)handle->GetFlags();
+	return ESurfaceTypeFlags(handle->GetFlags());
 }
 
 int SurfaceTypeInterop::GetBreakability(ISurfaceType *handle)

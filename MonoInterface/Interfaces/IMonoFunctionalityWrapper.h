@@ -12,6 +12,6 @@ struct IMonoFunctionalityWrapper
 
 	template<typename T> T *GetHandle()
 	{
-		return (T *)this->GetWrappedPointer();
+		return reinterpret_cast<T *>(this->GetWrappedPointer());
 	}
 };

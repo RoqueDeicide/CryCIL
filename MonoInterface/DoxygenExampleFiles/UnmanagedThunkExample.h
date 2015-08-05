@@ -5,12 +5,12 @@
 // Define the signature.
 typedef void (__stdcall *Clamp)(mono::vector2 value, mono::vector2 min, mono::vector2 max, mono::vector2 result, mono::exception *ex);
 
-void example()
+inline void example()
 {
 	// Get the method.
 	auto clampMethod = MonoEnv->Cryambly->GetClass("CryCil", "Vector2")->GetFunction("Clamp", 4);
 	// Get the pointer to the thunk.
-	Clamp clamp = (Clamp)clampMethod->UnmanagedThunk;
+	Clamp clamp = Clamp(clampMethod->UnmanagedThunk);
 	// Prepare to invoke it.
 	mono::vector2 value =  Box(Vec2(10, 13));
 	mono::vector2 min =    Box(Vec2(13, 8));

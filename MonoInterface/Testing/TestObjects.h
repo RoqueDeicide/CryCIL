@@ -7,7 +7,7 @@ void TestExceptions();
 void TestStrings();
 void TestThreads();
 
-void TestObjects()
+inline void TestObjects()
 {
 	TestObjectHandles();
 
@@ -22,7 +22,7 @@ void TestObjects()
 	TestThreads();
 }
 
-void TestObjectHandles()
+inline void TestObjectHandles()
 {
 	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Testing IMonoHandle implementation.");
@@ -102,7 +102,7 @@ void TestObjectHandles()
 
 	obj = handle.Object;
 
-	if ((mono::object)obj)
+	if (mono::object(obj))
 	{
 		CryLogAlways("TEST SUCCESS: Successfully got a reference to the object's new location.");
 	}
@@ -121,7 +121,7 @@ void TestObjectHandles()
 	CryLogAlways("TEST:");
 }
 
-void TestArrays()
+inline void TestArrays()
 {
 	IMonoClass *matrix33Class = MonoEnv->Cryambly->Matrix33;
 	IMonoArrays *arrays = MonoEnv->Objects->Arrays;
@@ -235,17 +235,17 @@ void TestArrays()
 	CryLogAlways("TEST:");
 }
 
-void __cdecl NativeTestFunctionCdecl(int arg)
+inline void __cdecl NativeTestFunctionCdecl(int arg)
 {
 	CryLogAlways("TEST: Native function has been invoked through the delegate with a number %d passed as an argument using C calling convention.", arg);
 }
 
-void __stdcall NativeTestFunctionStdCall(int arg)
+inline void __stdcall NativeTestFunctionStdCall(int arg)
 {
 	CryLogAlways("TEST: Native function has been invoked through the delegate with a number %d passed as an argument using standard calling convention.", arg);
 }
 
-void TestDelegates()
+inline void TestDelegates()
 {
 	IMonoClass *staticTestDelegateClass   = mainTestingAssembly->GetClass("Test", "StaticTestDelegate");
 	IMonoClass *instanceTestDelegateClass = mainTestingAssembly->GetClass("Test", "InstanceTestDelegate");
@@ -340,7 +340,7 @@ void TestDelegates()
 	CryLogAlways("TEST: Invoking first instance delegate through trampoline");
 	CryLogAlways("TEST:");
 
-	((void(*)(mono::string))instanceDel1.Trampoline)(text);
+	reinterpret_cast<void(*)(mono::string)>(instanceDel1.Trampoline)(text);
 
 	CryLogAlways("TEST: Testing delegates that wrap function pointers.");
 	CryLogAlways("TEST:");
@@ -364,14 +364,14 @@ void TestDelegates()
 	nativeDel2.Invoke(&param);
 }
 
-void ThrowExceptionInternal(mono::exception ex)
+inline void ThrowExceptionInternal(mono::exception ex)
 {
 	IMonoException(ex).Throw();
 }
 
 void TestExceptionObject(mono::exception ex, const char *typeName);
 
-void TestExceptions()
+inline void TestExceptions()
 {
 	MonoEnv->Functions->AddInternalCall("MainTestingAssembly",
 										"ExceptionTestingMethods",
@@ -475,7 +475,7 @@ void TestExceptions()
 	CryLogAlways("TEST:");
 }
 
-void TestExceptionObject(mono::exception ex, const char *typeName)
+inline void TestExceptionObject(mono::exception ex, const char *typeName)
 {
 	if (ex)
 	{
@@ -488,7 +488,7 @@ void TestExceptionObject(mono::exception ex, const char *typeName)
 	}
 }
 
-void TestStrings()
+inline void TestStrings()
 {
 	auto testClass = mainTestingAssembly->GetClass("MainTestingAssembly", "StringTest");
 
@@ -570,7 +570,7 @@ void TestStrings()
 	CryLogAlways("TEST:");
 }
 
-const char *ToOrdinal(int number)
+inline const char *ToOrdinal(int number)
 {
 	char buffer[20];
 	itoa(number, buffer, 10);
@@ -600,7 +600,7 @@ const char *ToOrdinal(int number)
 
 void ProcessStuffs(IMonoClass *klass, const char *threadName);
 
-void ThreadFunction()
+inline void ThreadFunction()
 {
 	CryLogAlways("TEST: Unmanaged Worker: A test thread with unmanaged function has been started.");
 
@@ -621,7 +621,7 @@ void ThreadFunction()
 	CryLogAlways("TEST: Unmanaged Worker: Work complete.");
 }
 
-void ProcessStuffs(IMonoClass *klass, const char *threadName)
+inline void ProcessStuffs(IMonoClass *klass, const char *threadName)
 {
 
 	CryLogAlways("TEST: %s: About to enter a critical section.", threadName);
@@ -651,7 +651,7 @@ void ProcessStuffs(IMonoClass *klass, const char *threadName)
 	MonoEnv->Objects->MonitorExit(lockObject);
 }
 
-void TestThreads()
+inline void TestThreads()
 {
 	auto testClass        = mainTestingAssembly->GetClass("MainTestingAssembly", "ThreadTestClass");
 	auto paramThreadStart = MonoEnv->CoreLibrary->GetClass("System.Threading", "ParameterizedThreadStart");
@@ -671,7 +671,7 @@ void TestThreads()
 	CryLogAlways("TEST:");
 
 	mono::delegat threadDelegat = MonoEnv->Objects->Delegates->Create(threadStart, ThreadFunction);
-	IMonoThread paramlessThread = MonoEnv->Objects->Threads->Create(paramDelegat);
+	IMonoThread paramlessThread = MonoEnv->Objects->Threads->Create(threadDelegat);
 
 	CryLogAlways("TEST: Starting a thread with no parameters.");
 	CryLogAlways("TEST:");

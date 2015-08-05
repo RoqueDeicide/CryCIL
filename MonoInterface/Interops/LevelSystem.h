@@ -12,13 +12,13 @@ struct LevelSystemInterop : public IMonoInterop < false, true >, public ILevelSy
 
 	virtual void OnRunTimeInitialized() override;
 
-	virtual void OnLevelNotFound(const char *levelName);
-	virtual void OnLoadingStart(ILevelInfo *pLevel);
-	virtual void OnLoadingLevelEntitiesStart(ILevelInfo* pLevel);
-	virtual void OnLoadingComplete(ILevel *pLevel);
-	virtual void OnLoadingError(ILevelInfo *pLevel, const char *error);
-	virtual void OnLoadingProgress(ILevelInfo *pLevel, int progressAmount);
-	virtual void OnUnloadComplete(ILevel* pLevel);
+	virtual void OnLevelNotFound(const char *levelName) override;
+	virtual void OnLoadingStart(ILevelInfo *pLevel) override;
+	virtual void OnLoadingLevelEntitiesStart(ILevelInfo* pLevel) override;
+	virtual void OnLoadingComplete(ILevel *pLevel) override;
+	virtual void OnLoadingError(ILevelInfo *pLevel, const char *error) override;
+	virtual void OnLoadingProgress(ILevelInfo *pLevel, int progressAmount) override;
+	virtual void OnUnloadComplete(ILevel* pLevel) override;
 
 	static mono::object get_Current();
 	static bool         get_Loaded();

@@ -39,10 +39,10 @@ struct InputInterop
 
 	virtual void OnRunTimeInitialized() override;
 
-	virtual bool OnInputEvent(const SInputEvent &_event);
-	virtual bool OnInputEventUI(const SUnicodeEvent &_event);
+	virtual bool OnInputEvent(const SInputEvent &_event) override;
+	virtual bool OnInputEventUI(const SUnicodeEvent &_event) override;
 
-	virtual void OnTouchEvent(const STouchEvent& _event);
+	virtual void OnTouchEvent(const STouchEvent& _event) override;
 	
 	static bool thunksInitialized;
 

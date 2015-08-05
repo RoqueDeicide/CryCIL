@@ -13,7 +13,7 @@ void *CryMarshalInterop::AllocateMemory(unsigned __int64 size)
 #ifdef WIN64
 	return malloc(size);
 #else
-	return malloc((unsigned int)size);
+	return malloc(unsigned int(size));
 #endif
 }
 
@@ -22,7 +22,7 @@ void *CryMarshalInterop::ReallocateMemory(void *ptr, unsigned __int64 sizeNew)
 #ifdef WIN64
 	return realloc(ptr, sizeNew);
 #else
-	return realloc(ptr, (unsigned int)sizeNew);
+	return realloc(ptr, unsigned int(sizeNew));
 #endif
 }
 

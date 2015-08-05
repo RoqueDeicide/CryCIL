@@ -29,7 +29,7 @@ mono::object MonoFunctions::InternalInvoke(_MonoMethod *func, void *object, void
 	if (polymorph)
 	{
 		methodToInvoke =
-			mono_object_get_virtual_method((MonoObject *)object, func);
+			mono_object_get_virtual_method(static_cast<MonoObject *>(object), func);
 	}
 	else
 	{
@@ -41,12 +41,12 @@ mono::object MonoFunctions::InternalInvoke(_MonoMethod *func, void *object, void
 	{
 		if (ex)
 		{
-			*ex = (mono::exception)exception;
+			*ex = mono::exception(exception);
 		}
 		else
 		{
 #ifdef _DEBUG
-			MonoEnv->HandleException((mono::exception)exception);
+			MonoEnv->HandleException(mono::exception(exception));
 #else
 			MonoObject *messageString = &exception[3];
 			const char *message = mono_string_to_utf8((MonoString *)messageString);
@@ -56,7 +56,7 @@ mono::object MonoFunctions::InternalInvoke(_MonoMethod *func, void *object, void
 		}
 		return nullptr;
 	}
-	return (mono::object)result;
+	return mono::object(result);
 }
 
 mono::object MonoFunctions::InternalInvokeArray(_MonoMethod *func, void *object, IMonoArray<> &args, mono::exception *ex, bool polymorph)
@@ -65,25 +65,25 @@ mono::object MonoFunctions::InternalInvokeArray(_MonoMethod *func, void *object,
 	if (polymorph)
 	{
 		methodToInvoke =
-			mono_object_get_virtual_method((MonoObject *)object, func);
+			mono_object_get_virtual_method(static_cast<MonoObject *>(object), func);
 	}
 	else
 	{
 		methodToInvoke = func;
 	}
-	MonoArray *paramsArray = (MonoArray *)(mono::object)args;
+	MonoArray *paramsArray = reinterpret_cast<MonoArray *>(mono::object(args));
 	MonoObject *exception;
 	MonoObject *result = mono_runtime_invoke_array(methodToInvoke, object, paramsArray, &exception);
 	if (exception)
 	{
 		if (ex)
 		{
-			*ex = (mono::exception)exception;
+			*ex = mono::exception(exception);
 		}
 		else
 		{
 #ifdef _DEBUG
-			MonoEnv->HandleException((mono::exception)exception);
+			MonoEnv->HandleException(mono::exception(exception));
 #else
 			MonoObject *messageString = &exception[3];
 			const char *message = mono_string_to_utf8((MonoString *)messageString);
@@ -93,7 +93,7 @@ mono::object MonoFunctions::InternalInvokeArray(_MonoMethod *func, void *object,
 		}
 		return nullptr;
 	}
-	return (mono::object)result;
+	return mono::object(result);
 }
 
 void *MonoFunctions::GetThunk(_MonoMethod *func)
@@ -159,7 +159,7 @@ void MonoFunctions::GetParameterClasses(_MonoMethod *func, List<IMonoClass *> &c
 	void *iter = nullptr;
 	while (MonoType *paramType = mono_signature_get_params(sig, &iter))
 	{
-		MonoTypeEnum typeId = (MonoTypeEnum)mono_type_get_type(paramType);
+		MonoTypeEnum typeId = MonoTypeEnum(mono_type_get_type(paramType));
 		if (typeId == MonoTypeEnum::MONO_TYPE_ARRAY ||
 			typeId == MonoTypeEnum::MONO_TYPE_SZARRAY)
 		{
@@ -178,5 +178,5 @@ void MonoFunctions::GetParameterClasses(_MonoMethod *func, List<IMonoClass *> &c
 
 mono::object MonoFunctions::GetReflectionObject(_MonoMethod *func)
 {
-	return (mono::object)mono_method_get_object(mono_domain_get(), func, nullptr);
+	return mono::object(mono_method_get_object(mono_domain_get(), func, nullptr));
 }

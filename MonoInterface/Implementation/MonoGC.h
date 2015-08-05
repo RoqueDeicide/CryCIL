@@ -19,7 +19,7 @@ struct MonoGC : public IMonoGC
 	{
 		if (obj)
 		{
-			mono_gchandle_new_weakref((MonoObject *)obj, false);
+			mono_gchandle_new_weakref(reinterpret_cast<MonoObject *>(obj), false);
 		}
 		ReportError("Attempted to create weak GC handle for null pointer.");
 		return -1;
@@ -29,7 +29,7 @@ struct MonoGC : public IMonoGC
 	{
 		if (obj)
 		{
-			return mono_gchandle_new_weakref((MonoObject *)obj, true);
+			return mono_gchandle_new_weakref(reinterpret_cast<MonoObject *>(obj), true);
 		}
 		ReportError("Attempted to create weak GC handle for null pointer.");
 		return -1;
@@ -39,7 +39,7 @@ struct MonoGC : public IMonoGC
 	{
 		if (obj)
 		{
-			return mono_gchandle_new((MonoObject *)obj, false);
+			return mono_gchandle_new(reinterpret_cast<MonoObject *>(obj), false);
 		}
 		ReportError("Attempted to create strong GC handle for null pointer.");
 		return -1;
@@ -49,7 +49,7 @@ struct MonoGC : public IMonoGC
 	{
 		if (obj)
 		{
-			return mono_gchandle_new((MonoObject *)obj, true);
+			return mono_gchandle_new(reinterpret_cast<MonoObject *>(obj), true);
 		}
 		ReportError("Attempted to create pinning GC handle for null pointer.");
 		return -1;
@@ -80,6 +80,6 @@ struct MonoGC : public IMonoGC
 		{
 			return nullptr;
 		}
-		return (mono::object)mono_gchandle_get_target(handle);
+		return mono::object(mono_gchandle_get_target(handle));
 	}
 };

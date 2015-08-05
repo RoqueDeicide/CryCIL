@@ -85,3 +85,7 @@
 #include "Interops/TimeOfDay.h"
 
 #include "Interops/FlowGraph.h"
+
+#include "Interops/Entity.h"
+
+#include "Interops/Game.h"

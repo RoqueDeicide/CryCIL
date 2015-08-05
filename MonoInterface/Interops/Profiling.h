@@ -9,7 +9,7 @@ struct ProfilingInterop : public IMonoInterop<false, true>
 
 	virtual void OnRunTimeInitialized() override;
 
-	virtual void Shutdown();
+	virtual void Shutdown() override;
 
 	static void constructor(mono::object profiler, mono::string name);
 	static CFrameProfilerSection *StartSection(mono::object profiler);

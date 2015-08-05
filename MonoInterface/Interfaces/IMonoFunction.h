@@ -317,17 +317,17 @@ public:
 		return MonoEnv->Functions->GetReflectionObject(this->wrappedMethod);
 	}
 
-	virtual const char *GetName()
+	virtual const char *GetName() override
 	{
 		return this->name;
 	}
 
-	virtual IMonoClass *GetDeclaringClass()
+	virtual IMonoClass *GetDeclaringClass() override
 	{
 		return this->klass;
 	}
 
-	virtual void *GetWrappedPointer()
+	virtual void *GetWrappedPointer() override
 	{
 		return this->wrappedMethod;
 	}

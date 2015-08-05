@@ -5,7 +5,7 @@
 
 IFlowNodePtr MonoFlowNodeFactory::Create(IFlowNode::SActivationInfo *actInfo)
 {
-	bool cancel;
+	bool cancel = false;
 	auto node = new MonoFlowNode(this->typeId, actInfo, cancel);
 	if (!cancel)
 	{
@@ -25,9 +25,9 @@ typedef void(*UnregisterTypeThunk)(ushort);
 
 MonoFlowNodeFactory::~MonoFlowNodeFactory()
 {
-	static UnregisterTypeThunk thunk = (UnregisterTypeThunk)
-		MonoEnv->Cryambly->GetClass("CryCil.RunTime.Registration", "FlowNodeTypeRegistry")
-						 ->GetFunction("UnregisterType", 1)->RawThunk;
+	static UnregisterTypeThunk thunk =
+		UnregisterTypeThunk(MonoEnv->Cryambly->GetClass("CryCil.RunTime.Registration", "FlowNodeTypeRegistry")
+											 ->GetFunction("UnregisterType", 1)->RawThunk);
 
 	thunk(this->typeId);
 }

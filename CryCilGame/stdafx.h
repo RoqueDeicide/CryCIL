@@ -40,5 +40,6 @@
 #include "IMonoInterface.h"
 #include "Text.h"
 #include "NtText.h"
+#include "List.h"
 
 // TODO: reference additional headers your program requires here

@@ -15,8 +15,8 @@ public:
 
 	}
 	IMonoDelegate(IMonoDelegate &&other)
-		: func(other.func)
-		, IMonoObject(other.obj, other.klass)
+		: IMonoObject(other.obj, other.klass)
+		, func(other.func)
 	{
 		other.func = nullptr;
 	}
@@ -80,7 +80,10 @@ public:
 			if (exo)
 			{
 				MonoEnv->HandleException(exo);
+				return nullptr;
 			}
+
+			return obj;
 		}
 		return MonoEnv->Objects->InvokeDelegate(this->obj, params, ex);
 	}

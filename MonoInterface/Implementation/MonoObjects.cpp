@@ -10,7 +10,7 @@
 
 void *MonoObjects::Unbox(mono::object value)
 {
-	return mono_object_unbox((MonoObject *)value);
+	return mono_object_unbox(reinterpret_cast<MonoObject *>(value));
 }
 
 IMonoArrays *MonoObjects::GetArrays()
@@ -45,12 +45,12 @@ IMonoThreads *MonoObjects::GetThreads()
 
 int MonoObjects::GetArrayRank(mono::Array ar)
 {
-	return mono_class_get_rank(mono_object_get_class((MonoObject *)ar));
+	return mono_class_get_rank(mono_object_get_class(reinterpret_cast<MonoObject *>(ar)));
 }
 
 int MonoObjects::GetArrayElementSize(mono::Array ar)
 {
-	return mono_array_element_size(mono_object_get_class((MonoObject *)ar));
+	return mono_array_element_size(mono_object_get_class(reinterpret_cast<MonoObject *>(ar)));
 }
 
 IMonoClass *MonoObjects::GetArrayElementClass(mono::Array ar)
@@ -59,19 +59,19 @@ IMonoClass *MonoObjects::GetArrayElementClass(mono::Array ar)
 			(
 				mono_class_get_element_class
 				(
-					mono_object_get_class((MonoObject *)ar)
+					mono_object_get_class(reinterpret_cast<MonoObject *>(ar))
 				)
 			);
 }
 
 void MonoObjects::ThrowException(mono::exception ex)
 {
-	mono_raise_exception((MonoException *)ex);
+	mono_raise_exception(reinterpret_cast<MonoException *>(ex));
 }
 
 IMonoFunction *MonoObjects::GetDelegateFunction(mono::delegat delegat)
 {
-	MonoMethod *m = ((MonoDelegate *)delegat)->method;
+	MonoMethod *m = reinterpret_cast<MonoDelegate *>(delegat)->method;
 	if (!m)
 	{
 		return nullptr;
@@ -103,7 +103,7 @@ IMonoFunction *MonoObjects::GetDelegateFunction(mono::delegat delegat)
 
 mono::object MonoObjects::GetDelegateTarget(mono::delegat delegat)
 {
-	return (mono::object)((MonoDelegate *)delegat)->target;
+	return mono::object(reinterpret_cast<MonoDelegate *>(delegat)->target);
 }
 
 void *MonoObjects::GetDelegateTrampoline(mono::delegat delegat)
@@ -116,8 +116,7 @@ void *MonoObjects::GetDelegateTrampoline(mono::delegat delegat)
 			mono_class_from_name(mono_get_corlib(), "System.Runtime.InteropServices", "Marshal");
 		MonoMethod *method =
 			mono_class_get_method_from_name(marshalClass, "GetFunctionPointerForDelegateInternal", 1);
-		mono_delegate_to_ftnptr_FnPtr = (void *(*)(mono::delegat))
-			mono_lookup_internal_call(method);
+		mono_delegate_to_ftnptr_FnPtr = reinterpret_cast<void *(*)(mono::delegat)>(mono_lookup_internal_call(method));
 	}
 
 	return mono_delegate_to_ftnptr_FnPtr(delegat);
@@ -125,39 +124,40 @@ void *MonoObjects::GetDelegateTrampoline(mono::delegat delegat)
 
 mono::object MonoObjects::InvokeDelegate(mono::delegat delegat, void **params, mono::exception *ex)
 {
-	return (mono::object)mono_runtime_delegate_invoke((MonoObject *)delegat, params, (MonoObject **)ex);
+	return mono::object(mono_runtime_delegate_invoke
+						(reinterpret_cast<MonoObject *>(delegat), params, reinterpret_cast<MonoObject **>(ex)));
 }
 
 
 bool MonoObjects::StringEquals(mono::string str, mono::string other)
 {
-	return mono_string_equal((MonoString *)str, (MonoString *)other) != 0;
+	return mono_string_equal(reinterpret_cast<MonoString *>(str), reinterpret_cast<MonoString *>(other)) != 0;
 }
 
 mono::string MonoObjects::InternString(mono::string str)
 {
-	return (mono::string)mono_string_intern((MonoString *)str);
+	return mono::string(mono_string_intern(reinterpret_cast<MonoString *>(str)));
 }
 
 wchar_t &MonoObjects::StringAt(mono::string str, int index)
 {
-	return ((wchar_t *)mono_string_chars((MonoString *)str))[index];
+	return reinterpret_cast<wchar_t *>(mono_string_chars(reinterpret_cast<MonoString *>(str)))[index];
 }
 
 int MonoObjects::GetStringHashCode(mono::string str)
 {
-	return mono_string_hash((MonoString *)str);
+	return mono_string_hash(reinterpret_cast<MonoString *>(str));
 }
 
 bool MonoObjects::IsStringInterned(mono::string str)
 {
-	return mono_string_is_interned((MonoString *)str) != 0;
+	return mono_string_is_interned(reinterpret_cast<MonoString *>(str)) != nullptr;
 }
 
 const char *MonoObjects::StringToNativeUTF8(mono::string str)
 {
 	MonoError er;
-	char *t = mono_string_to_utf8_checked((MonoString *)str, &er);
+	char *t = mono_string_to_utf8_checked(reinterpret_cast<MonoString *>(str), &er);
 	if (mono_error_ok(&er))
 	{
 		ReportError("%s", mono_error_get_message(&er));
@@ -175,7 +175,7 @@ const char *MonoObjects::StringToNativeUTF8(mono::string str)
 
 const wchar_t *MonoObjects::StringToNativeUTF16(mono::string str)
 {
-	wchar_t *chars = (wchar_t *)mono_string_to_utf16((MonoString *)str);
+	wchar_t *chars = reinterpret_cast<wchar_t *>(mono_string_to_utf16(reinterpret_cast<MonoString *>(str)));
 
 	int length = wcslen(chars);
 
@@ -194,17 +194,17 @@ const wchar_t *MonoObjects::StringToNativeUTF16(mono::string str)
 
 int MonoObjects::StringLength(mono::string str)
 {
-	return mono_string_length((MonoString *)str);
+	return mono_string_length(reinterpret_cast<MonoString *>(str));
 }
 
 void MonoObjects::ThreadDetach(mono::Thread thr)
 {
-	mono_thread_detach((MonoThread *)thr);
+	mono_thread_detach(reinterpret_cast<MonoThread *>(thr));
 }
 
 void MonoObjects::MonitorExit(mono::object obj)
 {
-	mono_monitor_exit((MonoObject *)obj);
+	mono_monitor_exit(reinterpret_cast<MonoObject *>(obj));
 }
 
 
@@ -212,7 +212,7 @@ IMonoClass *MonoObjects::GetObjectClass(mono::object obj)
 {
 	if (obj)
 	{
-		return MonoClassCache::Wrap(mono_object_get_class((MonoObject *)obj));
+		return MonoClassCache::Wrap(mono_object_get_class(reinterpret_cast<MonoObject *>(obj)));
 	}
 	return nullptr;
 }

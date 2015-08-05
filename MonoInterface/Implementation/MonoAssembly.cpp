@@ -88,5 +88,5 @@ void *MonoAssemblyWrapper::GetWrappedPointer()
 
 mono::assembly MonoAssemblyWrapper::GetReflectionObject()
 {
-	return (mono::assembly)mono_assembly_get_object((MonoDomain *)MonoEnv->AppDomain, this->assembly);
+	return mono::assembly(mono_assembly_get_object(static_cast<MonoDomain *>(MonoEnv->AppDomain), this->assembly));
 }

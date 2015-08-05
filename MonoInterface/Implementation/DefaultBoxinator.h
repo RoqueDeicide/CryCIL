@@ -9,7 +9,7 @@ struct DefaultBoxinator : public IDefaultBoxinator
 private:
 	__forceinline mono::object box(MonoClass *klass, void *value)
 	{
-		return (mono::object)mono_value_box((MonoDomain *)MonoEnv->AppDomain, klass, value);
+		return mono::object(mono_value_box(static_cast<MonoDomain *>(MonoEnv->AppDomain), klass, value));
 	}
 public:
 	virtual mono::object BoxUPtr(void *value) override;

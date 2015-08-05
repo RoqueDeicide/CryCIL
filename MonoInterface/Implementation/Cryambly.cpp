@@ -28,21 +28,21 @@ CryamblyWrapper::CryamblyWrapper(const char *fileName)
 	
 	this->fileName = new Text(fileName);
 
-	this->matrix33    = this->GetClass("CryCil", "Matrix33");
-	this->matrix34    = this->GetClass("CryCil", "Matrix34");
-	this->matrix44    = this->GetClass("CryCil", "Matrix44");
-	this->vector2     = this->GetClass("CryCil", "Vector2");
-	this->vector3     = this->GetClass("CryCil", "Vector3");
-	this->vector4     = this->GetClass("CryCil", "Vector4");
-	this->angleAxis   = this->GetClass("CryCil.Geometry", "AngleAxis");
-	this->boundingBox = this->GetClass("CryCil.Geometry", "BoundingBox");
-	this->eulerAngles = this->GetClass("CryCil.Geometry", "EulerAngles");
-	this->plane       = this->GetClass("CryCil.Geometry", "Plane");
-	this->quaternion  = this->GetClass("CryCil.Geometry", "Quaternion");
-	this->quatvec     = this->GetClass("CryCil.Geometry", "Quatvec");
-	this->ray         = this->GetClass("CryCil.Geometry", "Ray");
-	this->colorByte   = this->GetClass("CryCil.Graphics", "ColorByte");
-	this->colorSingle = this->GetClass("CryCil.Graphics", "ColorSingle");
+	this->matrix33    = MonoClassCache::Wrap(mono_class_from_name(this->image, "CryCil", "Matrix33"));
+	this->matrix34    = MonoClassCache::Wrap(mono_class_from_name(this->image, "CryCil", "Matrix34"));
+	this->matrix44    = MonoClassCache::Wrap(mono_class_from_name(this->image, "CryCil", "Matrix44"));
+	this->vector2     = MonoClassCache::Wrap(mono_class_from_name(this->image, "CryCil", "Vector2"));
+	this->vector3     = MonoClassCache::Wrap(mono_class_from_name(this->image, "CryCil", "Vector3"));
+	this->vector4     = MonoClassCache::Wrap(mono_class_from_name(this->image, "CryCil", "Vector4"));
+	this->angleAxis   = MonoClassCache::Wrap(mono_class_from_name(this->image, "CryCil.Geometry", "AngleAxis"));
+	this->boundingBox = MonoClassCache::Wrap(mono_class_from_name(this->image, "CryCil.Geometry", "BoundingBox"));
+	this->eulerAngles = MonoClassCache::Wrap(mono_class_from_name(this->image, "CryCil.Geometry", "EulerAngles"));
+	this->plane       = MonoClassCache::Wrap(mono_class_from_name(this->image, "CryCil.Geometry", "Plane"));
+	this->quaternion  = MonoClassCache::Wrap(mono_class_from_name(this->image, "CryCil.Geometry", "Quaternion"));
+	this->quatvec     = MonoClassCache::Wrap(mono_class_from_name(this->image, "CryCil.Geometry", "Quatvec"));
+	this->ray         = MonoClassCache::Wrap(mono_class_from_name(this->image, "CryCil.Geometry", "Ray"));
+	this->colorByte   = MonoClassCache::Wrap(mono_class_from_name(this->image, "CryCil.Graphics", "ColorByte"));
+	this->colorSingle = MonoClassCache::Wrap(mono_class_from_name(this->image, "CryCil.Graphics", "ColorSingle"));
 
 	List<IMonoAssembly *> *cryamblyList = new List<IMonoAssembly *>(1);
 	cryamblyList->Add(this);
@@ -155,7 +155,7 @@ Text *CryamblyWrapper::GetFileName()
 
 mono::assembly CryamblyWrapper::GetReflectionObject()
 {
-	return (mono::assembly)mono_assembly_get_object(mono_domain_get(), this->assembly);
+	return mono::assembly(mono_assembly_get_object(mono_domain_get(), this->assembly));
 }
 
 void *CryamblyWrapper::GetWrappedPointer()

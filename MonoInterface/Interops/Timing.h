@@ -9,7 +9,7 @@ struct TimingInterop : public IMonoInterop<false, true>
 	virtual const char *GetName() override { return "Time"; }
 	virtual const char *GetNameSpace() override { return "CryCil.Engine"; }
 
-	virtual void Update();
+	virtual void Update() override;
 
 	virtual void OnRunTimeInitialized() override;
 

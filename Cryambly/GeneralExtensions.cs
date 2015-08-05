@@ -412,6 +412,25 @@ namespace CryCil
 
 			return null;
 		}
+		/// <summary>
+		/// Gets all types given one inherits from.
+		/// </summary>
+		/// <param name="type">Type which base types to get.</param>
+		/// <returns>An array of all types given one inherits from.</returns>
+		public static Type[] GetInheritanceChain(this Type type)
+		{
+			return type.EnumerateInheritancChain().ToArray();
+		}
+		/// <summary>
+		/// Enumerates through types this one inherits from.
+		/// </summary>
+		/// <param name="type">This type.</param>
+		/// <returns>Enumerable collection that represents the inheritance chain.</returns>
+		public static IEnumerable<Type> EnumerateInheritancChain(this Type type)
+		{
+			for (var current = type; current != null; current = current.BaseType)
+				yield return current;
+		}
 		#endregion
 		#region Attributes
 		/// <summary>
@@ -445,8 +464,7 @@ namespace CryCil
 		public static T GetAttribute<T>([NotNull] this MemberInfo memberInfo)
 			where T : Attribute
 		{
-			var attributes = memberInfo.GetAttributes<T>().ToList();
-			return attributes.Count != 0 ? attributes[0] : null;
+			return memberInfo.GetAttributes<T>().FirstOrDefault();
 		}
 		/// <summary>
 		/// Tests whether the method is decorated with a given attribute, and if so, assigns it via the out

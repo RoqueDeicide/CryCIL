@@ -289,7 +289,11 @@
     <ClInclude Include="Interops\CryXmlNode.h" />
     <ClInclude Include="Interops\DebugDraw.h" />
     <ClInclude Include="Interops\CryFont.h" />
+    <ClInclude Include="Interops\Entity.h" />
+    <ClInclude Include="Interops\EntityClass.h" />
+    <ClInclude Include="Interops\EntityExtension.h" />
     <ClInclude Include="Interops\FlowGraph.h" />
+    <ClInclude Include="Interops\Game.h" />
     <ClInclude Include="Interops\GeneralExtensions.h" />
     <ClInclude Include="Interops\InputInterop.h" />
     <ClInclude Include="Interops\Level.h" />
@@ -303,6 +307,7 @@
     <ClInclude Include="Interops\Materials.h" />
     <ClInclude Include="Interops\MeshOps.h" />
     <ClInclude Include="Interops\MonoCryXmlNode.h" />
+    <ClInclude Include="Interops\MonoEntitySpawnParams.h" />
     <ClInclude Include="Interops\MonoFlowNode.h" />
     <ClInclude Include="Interops\MonoFlowNodeFactory.h" />
     <ClInclude Include="Interops\ParticleEffectIterator.h" />
@@ -397,7 +402,11 @@
     <ClCompile Include="Interops\CrySync.cpp" />
     <ClCompile Include="Interops\CryXmlNode.cpp" />
     <ClCompile Include="Interops\DebugDraw.cpp" />
+    <ClCompile Include="Interops\Entity.cpp" />
+    <ClCompile Include="Interops\EntityClass.cpp" />
+    <ClCompile Include="Interops\EntityExtension.cpp" />
     <ClCompile Include="Interops\FlowGraph.cpp" />
+    <ClCompile Include="Interops\Game.cpp" />
     <ClCompile Include="Interops\GeneralExtensions.cpp" />
     <ClCompile Include="Interops\InputInterop.cpp" />
     <ClCompile Include="Interops\Level.cpp" />
@@ -440,7 +449,19 @@
     </ClCompile>
     <ClCompile Include="Testing\TestStart.cpp" />
     <ClCompile Include="ThunkTables.cpp" />
+    <ClCompile Include="TypeMapChecks\EntityAspects.cpp" />
+    <ClCompile Include="TypeMapChecks\EntityClassFlags.cpp" />
+    <ClCompile Include="TypeMapChecks\EntityFlags.cpp" />
+    <ClCompile Include="TypeMapChecks\EntitySlotInfo.cpp" />
     <ClCompile Include="TypeMapChecks\EntitySpawnParams.cpp" />
+    <ClCompile Include="TypeMapChecks\EntityUpdateContext.cpp" />
+    <ClCompile Include="TypeMapChecks\EntityUpdatePolicy.cpp" />
+    <ClCompile Include="TypeMapChecks\EntityXFormFlags.cpp" />
+    <ClCompile Include="TypeMapChecks\EventPhysCollision.cpp" />
+    <ClCompile Include="TypeMapChecks\RenderParameters.cpp" />
+    <ClCompile Include="TypeMapChecks\RmiTargetEnum.cpp" />
+    <ClCompile Include="TypeMapChecks\SmallEntityStructs.cpp" />
+    <ClCompile Include="TypeMapChecks\SpawnParams.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

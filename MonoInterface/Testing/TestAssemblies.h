@@ -4,7 +4,7 @@
 
 void TestClassFromAssembly(IMonoClass *, const char *);
 
-void TestAssemblies()
+inline void TestAssemblies()
 {
 	CryLogAlways("TEST: Testing IMonoAssemblyCollection and IMonoAssembly implementations.");
 
@@ -209,7 +209,7 @@ void TestAssemblies()
 	CryLogAlways("TEST:");
 }
 
-void TestClassFromAssembly(IMonoClass *klass, const char *name)
+inline void TestClassFromAssembly(IMonoClass *klass, const char *name)
 {
 	CryLogAlways("TEST: Getting a wrapper for a klass.");
 

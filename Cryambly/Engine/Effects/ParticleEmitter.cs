@@ -90,6 +90,12 @@ namespace CryCil.Engine
 		/// </summary>
 		public static event EventHandler<EmitterEventArgs> Deleted;
 		#endregion
+		#region Construction
+		internal ParticleEmitter(IntPtr handle)
+		{
+			this.handle = handle;
+		}
+		#endregion
 		#region Interface
 		/// <summary>
 		/// Activates this emitter.

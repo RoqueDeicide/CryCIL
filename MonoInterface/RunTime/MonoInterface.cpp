@@ -22,8 +22,8 @@ void *MonoInterface::GetAppDomain()
 #pragma region Construction
 //! Initializes Mono run-time environment.
 MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener *> *listeners)
-	: appDomain(nullptr)
-	, broadcaster(nullptr)
+	: broadcaster(nullptr)
+	, appDomain(nullptr)
 {
 	_this = this;
 
@@ -143,7 +143,8 @@ MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener
 	MonoInterfaceThunks::Initialize(&ex);
 	if (ex)
 	{
-		this->HandleException(ex);
+		mono::exception eX;
+		MonoInterfaceThunks::DisplayException(ex, &eX);
 		CryFatalError("CryCil.RunTime.MonoInterface object was not initialized. Cannot continue.");
 	}
 	
@@ -195,6 +196,7 @@ void MonoInterface::Shutdown()
 	delete this->gc;
 	delete this->objs;
 	delete this->funcs;
+	MonoClassCache::Dispose();
 	
 	CryLogAlways("Shutting down jit.");
 	
@@ -340,6 +342,13 @@ void MonoInterface::RegisterDefaultListeners()
 	this->broadcaster->listeners->Add(new CrySyncInterop());
 	this->broadcaster->listeners->Add(new TimeOfDayInterop());
 	this->broadcaster->listeners->Add(new FlowGraphInterop());
+	this->broadcaster->listeners->Add(new EntityIdInterop());
+	this->broadcaster->listeners->Add(new EntityPoolInterop());
+	this->broadcaster->listeners->Add(new EntitySystemInterop());
+	this->broadcaster->listeners->Add(new NetEntityInterop());
+	this->broadcaster->listeners->Add(new CryEntityInterop());
+	this->broadcaster->listeners->Add(new EntitySlotsInterop());
+	this->broadcaster->listeners->Add(new GameInterop());
 }
 #pragma endregion
 #pragma region Thunks Initialization
@@ -376,9 +385,9 @@ void MonoInterface::RegisterDefaultListeners()
 	template<typename MethodSignature>
 	MethodSignature MonoInterface::GetMethodThunk(IMonoAssembly *assembly, const char *nameSpace, const char *className, const char *methodName, const char *params)
 	{
-		return (MethodSignature)assembly->GetClass(nameSpace, className)
-										->GetFunction(methodName, params)
-										->UnmanagedThunk;
+		return MethodSignature(assembly->GetClass(nameSpace, className)
+									   ->GetFunction(methodName, params)
+									   ->UnmanagedThunk);
 	}
 #pragma endregion
 

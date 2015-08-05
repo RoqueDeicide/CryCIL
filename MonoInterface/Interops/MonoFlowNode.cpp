@@ -9,12 +9,12 @@ IMonoClass *GetFlowNodeClass()
 
 typedef mono::object(__stdcall *CreateThunk)(IFlowGraph *, ushort, ushort, mono::exception *);
 
-MonoFlowNode::MonoFlowNode(TFlowNodeTypeId typeId, IFlowNode::SActivationInfo *info, bool &cancel)
+MonoFlowNode::MonoFlowNode(TFlowNodeTypeId typeId, SActivationInfo *info, bool &cancel)
 	: refCount(0)
 	, objHandle(-1)
 	, targetsEntity(false)
 {
-	static CreateThunk thunk = (CreateThunk)GetFlowNodeClass()->GetFunction("Create")->UnmanagedThunk;
+	static CreateThunk thunk = CreateThunk(GetFlowNodeClass()->GetFunction("Create")->UnmanagedThunk);
 
 	mono::exception ex;
 	mono::object obj = thunk(info->pGraph, typeId, info->myID, &ex);
@@ -31,7 +31,7 @@ typedef void(*NodeReleaseThunk)(mono::object);
 
 MonoFlowNode::~MonoFlowNode()
 {
-	static NodeReleaseThunk thunk = (NodeReleaseThunk)GetFlowNodeClass()->GetFunction("Release")->RawThunk;
+	static NodeReleaseThunk thunk = NodeReleaseThunk(GetFlowNodeClass()->GetFunction("Release")->RawThunk);
 	
 	if (this->objHandle.IsValid)
 	{
@@ -105,8 +105,8 @@ typedef void(__stdcall *GetConfigurationThunk)(mono::object, MonoFlowNodeConfig 
 
 void MonoFlowNode::GetConfiguration(SFlowNodeConfig &config)
 {
-	static GetConfigurationThunk thunk = (GetConfigurationThunk)
-		GetFlowNodeClass()->GetFunction("GetConfiguration", 1)->UnmanagedThunk;
+	static GetConfigurationThunk thunk =
+		GetConfigurationThunk(GetFlowNodeClass()->GetFunction("GetConfiguration", 1)->UnmanagedThunk);
 
 	if (this->nodeConfig.sUIClassName != nullptr || !this->objHandle.IsValid)
 	{
@@ -123,7 +123,7 @@ void MonoFlowNode::GetConfiguration(SFlowNodeConfig &config)
 		MonoEnv->HandleException(ex);
 	}
 
-	this->targetsEntity = (conf.flags & EFlowNodeFlags::EFLN_TARGET_ENTITY) != 0;
+	this->targetsEntity = (conf.flags & EFLN_TARGET_ENTITY) != 0;
 
 	// Pin those arrays just in case.
 	MonoGCHandle inputsGC  = MonoEnv->GC->Pin(conf.inputs);
@@ -158,8 +158,8 @@ typedef bool(*SaveLoadThunk)(mono::object, IXmlNode *);
 
 bool MonoFlowNode::SerializeXML(SActivationInfo *actInfo, const XmlNodeRef& root, bool reading)
 {
-	static SaveLoadThunk save = (SaveLoadThunk)GetFlowNodeClass()->GetFunction("SaveData")->RawThunk;
-	static SaveLoadThunk load = (SaveLoadThunk)GetFlowNodeClass()->GetFunction("LoadData")->RawThunk;
+	static SaveLoadThunk save = SaveLoadThunk(GetFlowNodeClass()->GetFunction("SaveData")->RawThunk);
+	static SaveLoadThunk load = SaveLoadThunk(GetFlowNodeClass()->GetFunction("LoadData")->RawThunk);
 
 	if (!this->objHandle.IsValid)
 	{
@@ -180,21 +180,21 @@ typedef void(*SerializeThunk)(mono::object, ISerialize *);
 
 void MonoFlowNode::Serialize(SActivationInfo *actInfo, TSerialize ser)
 {
-	static SerializeThunk thunk = (SerializeThunk)GetFlowNodeClass()->GetFunction("Serialize")->RawThunk;
+	static SerializeThunk thunk = SerializeThunk(GetFlowNodeClass()->GetFunction("Serialize")->RawThunk);
 
 	if (!this->objHandle.IsValid)
 	{
 		return;
 	}
 
-	thunk(this->objHandle.Object, *(ISerialize **)&ser);
+	thunk(this->objHandle.Object, *reinterpret_cast<ISerialize **>(&ser));
 }
 
 typedef void(*PostSerializeThunk)(mono::object);
 
 void MonoFlowNode::PostSerialize(SActivationInfo *actInfo)
 {
-	static PostSerializeThunk thunk = (PostSerializeThunk)GetFlowNodeClass()->GetFunction("PostSerialize")->RawThunk;
+	static PostSerializeThunk thunk = PostSerializeThunk(GetFlowNodeClass()->GetFunction("PostSerialize")->RawThunk);
 
 	if (!this->objHandle.IsValid)
 	{
@@ -220,30 +220,23 @@ typedef void(*DisconnectOutputPortNodeThunk)(mono::object, byte);
 void MonoFlowNode::ProcessEvent(EFlowEvent event, SActivationInfo *actInfo)
 {
 	IMonoClass *klass = GetFlowNodeClass();
-	static UpdateNodeThunk update = (UpdateNodeThunk)
-		klass->GetFunction("Update", -1)->RawThunk;
-	static ActivatePortsThunk activate = (ActivatePortsThunk)
-		klass->GetFunction("Activate", -1)->RawThunk;
-	static PrecacheResourcesThunk precache = (PrecacheResourcesThunk)
-		klass->GetFunction("PrecacheResourcesInternal", -1)->RawThunk;
-	static InitializeNodeThunk init = (InitializeNodeThunk)
-		klass->GetFunction("Initialize", -1)->RawThunk;
-	static PostInitializeNodeThunk postInit = (PostInitializeNodeThunk)
-		klass->GetFunction("PostInitialize", -1)->RawThunk;
-	static SetEntityIdNodeThunk setEnt = (SetEntityIdNodeThunk)
-		klass->GetFunction("SetEntityId", -1)->RawThunk;
-	static SuspendNodeThunk suspend = (SuspendNodeThunk)
-		klass->GetFunction("Suspend", -1)->RawThunk;
-	static ResumeNodeThunk resume = (ResumeNodeThunk)
-		klass->GetFunction("Resume", -1)->RawThunk;
-	static ConnectInputPortNodeThunk connectInput = (ConnectInputPortNodeThunk)
-		klass->GetFunction("ConnectInputPort", -1)->RawThunk;
-	static DisconnectInputPortNodeThunk disconnectInput = (DisconnectInputPortNodeThunk)
-		klass->GetFunction("DisconnectInputPort", -1)->RawThunk;
-	static ConnectOutputPortNodeThunk connectOutput = (ConnectOutputPortNodeThunk)
-		klass->GetFunction("ConnectOutputPort", -1)->RawThunk;
-	static DisconnectOutputPortNodeThunk disconnectOutput = (DisconnectOutputPortNodeThunk)
-		klass->GetFunction("DisconnectOutputPort", -1)->RawThunk;
+	static UpdateNodeThunk update = UpdateNodeThunk(klass->GetFunction("Update", -1)->RawThunk);
+	static ActivatePortsThunk activate = ActivatePortsThunk(klass->GetFunction("Activate", -1)->RawThunk);
+	static PrecacheResourcesThunk precache =
+		PrecacheResourcesThunk(klass->GetFunction("PrecacheResourcesInternal", -1)->RawThunk);
+	static InitializeNodeThunk init = InitializeNodeThunk(klass->GetFunction("Initialize", -1)->RawThunk);
+	static PostInitializeNodeThunk postInit = PostInitializeNodeThunk(klass->GetFunction("PostInitialize", -1)->RawThunk);
+	static SetEntityIdNodeThunk setEnt = SetEntityIdNodeThunk(klass->GetFunction("SetEntityId", -1)->RawThunk);
+	static SuspendNodeThunk suspend = SuspendNodeThunk(klass->GetFunction("Suspend", -1)->RawThunk);
+	static ResumeNodeThunk resume = ResumeNodeThunk(klass->GetFunction("Resume", -1)->RawThunk);
+	static ConnectInputPortNodeThunk connectInput =
+		ConnectInputPortNodeThunk(klass->GetFunction("ConnectInputPort", -1)->RawThunk);
+	static DisconnectInputPortNodeThunk disconnectInput =
+		DisconnectInputPortNodeThunk(klass->GetFunction("DisconnectInputPort", -1)->RawThunk);
+	static ConnectOutputPortNodeThunk connectOutput =
+		ConnectOutputPortNodeThunk(klass->GetFunction("ConnectOutputPort", -1)->RawThunk);
+	static DisconnectOutputPortNodeThunk disconnectOutput =
+		DisconnectOutputPortNodeThunk(klass->GetFunction("DisconnectOutputPort", -1)->RawThunk);
 
 	if (!this->objHandle.IsValid)
 	{
@@ -252,10 +245,10 @@ void MonoFlowNode::ProcessEvent(EFlowEvent event, SActivationInfo *actInfo)
 
 	switch (event)
 	{
-	case IFlowNode::eFE_Update:
+	case eFE_Update:
 		update(this->objHandle.Object);
 		break;
-	case IFlowNode::eFE_Activate:
+	case eFE_Activate:
 	{
 		List<byte> listIds(64);
 		
@@ -295,39 +288,39 @@ void MonoFlowNode::ProcessEvent(EFlowEvent event, SActivationInfo *actInfo)
 
 		break;
 	}
-	case IFlowNode::eFE_FinalActivate:
+	case eFE_FinalActivate:
 		break;
-	case IFlowNode::eFE_PrecacheResources:
+	case eFE_PrecacheResources:
 		precache(this->objHandle.Object);
 		break;
-	case IFlowNode::eFE_Initialize:
+	case eFE_Initialize:
 		init(this->objHandle.Object);
 		break;
-	case IFlowNode::eFE_FinalInitialize:
+	case eFE_FinalInitialize:
 		postInit(this->objHandle.Object);
 		break;
-	case IFlowNode::eFE_SetEntityId:
+	case eFE_SetEntityId:
 		setEnt(this->objHandle.Object, actInfo->pEntity->GetId());
 		break;
-	case IFlowNode::eFE_Suspend:
+	case eFE_Suspend:
 		suspend(this->objHandle.Object);
 		break;
-	case IFlowNode::eFE_Resume:
+	case eFE_Resume:
 		resume(this->objHandle.Object);
 		break;
-	case IFlowNode::eFE_ConnectInputPort:
+	case eFE_ConnectInputPort:
 		connectInput(this->objHandle.Object, actInfo->connectPort);
 		break;
-	case IFlowNode::eFE_DisconnectInputPort:
+	case eFE_DisconnectInputPort:
 		disconnectInput(this->objHandle.Object, actInfo->connectPort);
 		break;
-	case IFlowNode::eFE_ConnectOutputPort:
+	case eFE_ConnectOutputPort:
 		connectOutput(this->objHandle.Object, actInfo->connectPort);
 		break;
-	case IFlowNode::eFE_DisconnectOutputPort:
+	case eFE_DisconnectOutputPort:
 		disconnectOutput(this->objHandle.Object, actInfo->connectPort);
 		break;
-	case IFlowNode::eFE_DontDoAnythingWithThisPlease:
+	case eFE_DontDoAnythingWithThisPlease:
 		break;
 	default:
 		break;

@@ -18,7 +18,7 @@ IMonoAssembly *MonoAssemblies::Load(const char *path)
 	{
 		return nullptr;
 	}
-	bool failed;
+	bool failed = false;
 	IMonoAssembly *wrapper = new MonoAssemblyWrapper(path, failed);
 	if (Pdb2MdbThunks::Convert)
 	{
@@ -74,7 +74,7 @@ IMonoAssembly *MonoAssemblies::Wrap(void *assemblyHandle)
 	if (!wrapper)
 	{
 		// Register this wrapper.
-		wrapper = new MonoAssemblyWrapper((MonoAssembly *)assemblyHandle);
+		wrapper = new MonoAssemblyWrapper(static_cast<MonoAssembly *>(assemblyHandle));
 		if (this->AssemblyRegistry->Contains(wrapper->Name))
 		{
 			this->AssemblyRegistry->At(wrapper->Name)->Add(wrapper);
@@ -115,7 +115,7 @@ IMonoAssembly *MonoAssemblies::GetAssembly(const char *name)
 		mono::string fullName = AssemblyCollectionThunks::LookUpAssembly(ToMonoString(name), &ex);
 		if (fullName && !ex)
 		{
-			char *fullNameNative = mono_string_to_utf8((MonoString *)fullName);
+			char *fullNameNative = mono_string_to_utf8(reinterpret_cast<MonoString *>(fullName));
 			wrapper = this->GetAssemblyFullName(fullNameNative);
 			mono_free(fullNameNative);
 		}

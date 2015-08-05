@@ -33,11 +33,11 @@ MonoCoreLibrary::MonoCoreLibrary()
 	this->float64     = MonoClassCache::Wrap(mono_get_double_class());
 	this->text        = MonoClassCache::Wrap(mono_get_string_class());
 	this->fixedArray  = MonoClassCache::Wrap(mono_get_array_class());
-	this->typeInfo    = this->GetClass("System", "Type");
+	this->typeInfo    = MonoClassCache::Wrap(mono_class_from_name(this->image, "System", "Type"));
 	this->enumeration = MonoClassCache::Wrap(mono_get_enum_class());
 	this->exception   = MonoClassCache::Wrap(mono_get_exception_class());
 	this->objClass    = MonoClassCache::Wrap(mono_get_object_class());
-	this->valueType   = this->GetClass("System", "ValueType");
+	this->valueType   = MonoClassCache::Wrap(mono_class_from_name(this->image, "System", "ValueType"));
 	this->_thread     = MonoClassCache::Wrap(mono_get_thread_class());
 
 	List<IMonoAssembly *> *corlibList = new List<IMonoAssembly *>(1);
@@ -184,7 +184,7 @@ Text *MonoCoreLibrary::GetFileName()
 
 mono::assembly MonoCoreLibrary::GetReflectionObject()
 {
-	return (mono::assembly)mono_assembly_get_object(mono_domain_get(), this->assembly);
+	return mono::assembly(mono_assembly_get_object(mono_domain_get(), this->assembly));
 }
 
 void *MonoCoreLibrary::GetWrappedPointer()

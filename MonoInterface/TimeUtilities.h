@@ -19,5 +19,5 @@ inline long long TimeUtilities::MonoTicksToCryEngineTicks(long long ticks)
 
 inline long long TimeUtilities::SecondsToMonoTicks(float seconds)
 {
-	return (long long)(seconds * 10000000L);
+	return long long(seconds * 10000000L);
 }
