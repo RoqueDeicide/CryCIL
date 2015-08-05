@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace CryCil.Engine.Logic
@@ -7,7 +8,7 @@ namespace CryCil.Engine.Logic
 	/// Represents identifier of a CryEngine entity.
 	/// </summary>
 	[StructLayout(LayoutKind.Sequential)]
-	public struct EntityId
+	public struct EntityId : IEquatable<EntityId>
 	{
 		#region Fields
 		private readonly uint id;
@@ -89,6 +90,56 @@ namespace CryCil.Engine.Logic
 		public void ResetBookmark()
 		{
 			ResetBookmarkInternal(this);
+		}
+		/// <summary>
+		/// Indicates whether this identifier is equal to another.
+		/// </summary>
+		/// <param name="other">Another identifier.</param>
+		/// <returns>True, if both identifiers are equal to each other.</returns>
+		public bool Equals(EntityId other)
+		{
+			return this.id == other.id;
+		}
+		/// <summary>
+		/// Indicates whether this identifier is equal to another object.
+		/// </summary>
+		/// <param name="obj">Another object.</param>
+		/// <returns>True, if given object is of type <see cref="EntityId"/> and is equal to this identifier.</returns>
+		public override bool Equals(object obj)
+		{
+			if (ReferenceEquals(null, obj)) return false;
+			return obj is EntityId && this.Equals((EntityId)obj);
+		}
+		/// <summary>
+		/// Gets hash code of this identifier.
+		/// </summary>
+		/// <remarks>
+		/// Don't use it.
+		/// </remarks>
+		/// <returns>Hash code of this identifier.</returns>
+		public override int GetHashCode()
+		{
+			return (int)this.id;
+		}
+		/// <summary>
+		/// Determines equality of 2 objects of type <see cref="EntityId"/>.
+		/// </summary>
+		/// <param name="left">Left operand.</param>
+		/// <param name="right">Right operand.</param>
+		/// <returns>True, if 2 objects are equal.</returns>
+		public static bool operator ==(EntityId left, EntityId right)
+		{
+			return left.Equals(right);
+		}
+		/// <summary>
+		/// Determines inequality of 2 objects of type <see cref="EntityId"/>.
+		/// </summary>
+		/// <param name="left">Left operand.</param>
+		/// <param name="right">Right operand.</param>
+		/// <returns>True, if 2 objects are not equal.</returns>
+		public static bool operator !=(EntityId left, EntityId right)
+		{
+			return !left.Equals(right);
 		}
 		#endregion
 		#region Utilities
