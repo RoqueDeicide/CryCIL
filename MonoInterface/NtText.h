@@ -209,10 +209,10 @@ public:
 		{
 			for (int k = 0; parts[i][k]; k++)
 			{
-				reinterpret_cast<SymbolType *>(this->chars)[j++] = parts[i][k];
+				const_cast<SymbolType *>(this->chars)[j++] = parts[i][k];
 			}
 		}
-		reinterpret_cast<SymbolType *>(this->chars)[length] = '\0';
+		const_cast<SymbolType *>(this->chars)[length] = '\0';
 	}
 	virtual ~NtTextTemplate()
 	{
