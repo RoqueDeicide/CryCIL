@@ -282,6 +282,35 @@ namespace CryCil
 		/// <exception cref="ArgumentException">Input string doesn't contain enough characters.</exception>
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static unsafe extern void CopyToBuffer(this string str, char* buffer, int start, int count);
+		/// <summary>
+		/// Creates English ordinal number.
+		/// </summary>
+		/// <param name="number">A number to convert into ordinal form.</param>
+		/// <returns>A text representation of the ordinal number.</returns>
+		public static string ToOrdinal(this int number)
+		{
+			if (num <= 0) return num.ToString();
+
+			switch (num % 100)
+			{
+				case 11:
+				case 12:
+				case 13:
+					return num + "th";
+			}
+
+			switch (num % 10)
+			{
+				case 1:
+					return num + "st";
+				case 2:
+					return num + "nd";
+				case 3:
+					return num + "rd";
+				default:
+					return num + "th";
+			}
+		}
 	}
 	/// <summary>
 	/// Contains old value of the property that has been changed.
