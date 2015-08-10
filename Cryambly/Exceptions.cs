@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace CryCil
 {
 	/// <summary>
-	/// Represents an exception that is thrown to data doesn't fit the buffer.
+	/// Represents an exception that is thrown when data doesn't fit the buffer.
 	/// </summary>
 	[Serializable]
 	public class BufferOverflowException : Exception
