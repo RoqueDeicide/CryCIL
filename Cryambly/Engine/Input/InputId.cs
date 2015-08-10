@@ -612,7 +612,7 @@ namespace CryCil.Engine.Input
 		/// </summary>
 		XboxThumbLeftX,
 		/// <summary>
-		/// Identifier of the change in T-coordinate of the left analog stick of the Xbox360 controller.
+		/// Identifier of the change in Y-coordinate of the left analog stick of the Xbox360 controller.
 		/// </summary>
 		XboxThumbLeftY,
 		/// <summary>
