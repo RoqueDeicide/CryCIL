@@ -37,6 +37,13 @@ void ActionMappingInterop::OnRunTimeInitialized()
 	MonoEnv->Functions->AddInternalCall(nameSpace, cryInputActionClass, "AddInputInternal", AddInputInternal);
 	MonoEnv->Functions->AddInternalCall(nameSpace, cryInputActionClass, "RemoveInputInternal", RemoveInputInternal);
 	MonoEnv->Functions->AddInternalCall(nameSpace, cryInputActionClass, "RebindInputInternal", RebindInputInternal);
+
+	MonoEnv->CryAction->GetIActionMapManager()->AddExtraActionListener(this);
+}
+
+void ActionMappingInterop::Shutdown()
+{
+	MonoEnv->CryAction->GetIActionMapManager()->RemoveExtraActionListener(this);
 }
 
 int currentDevices;

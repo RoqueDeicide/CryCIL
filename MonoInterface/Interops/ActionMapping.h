@@ -39,6 +39,7 @@ struct ActionMappingInterop : public IMonoInterop<false, true>, public IActionLi
 	virtual const char *GetNameSpace() override { return "CryCil.Engine.Input.ActionMapping"; }
 
 	virtual void OnRunTimeInitialized() override;
+	virtual void Shutdown() override;
 
 	// Internal calls for ActionMaps.
 	static void          AddDeviceMapping(SupportedInputDevices device);
