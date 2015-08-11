@@ -42,8 +42,8 @@ namespace CryCil.Engine.Memory
 			}
 			if (track)
 			{
-				CryMarshal.allocatedBlocks.Add(handle, size);
-				CryMarshal.AllocatedMemory += size;
+				allocatedBlocks.Add(handle, size);
+				AllocatedMemory += size;
 				GC.AddMemoryPressure((long)size);
 			}
 			return handle;
@@ -132,10 +132,10 @@ namespace CryCil.Engine.Memory
 				
 				ulong size = allocatedBlocks.Values[index];
 				
-				CryMarshal.AllocatedMemory -= size;
+				AllocatedMemory -= size;
 				GC.RemoveMemoryPressure((long)size);
 				
-				CryMarshal.allocatedBlocks.RemoveAt(index);
+				allocatedBlocks.RemoveAt(index);
 			}
 			else if (force)
 			{

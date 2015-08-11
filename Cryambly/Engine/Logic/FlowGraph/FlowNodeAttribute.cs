@@ -7,7 +7,7 @@ namespace CryCil.Engine.Logic
 	/// <see cref="FlowNode"/> class, define the constructor that has the same signature as
 	/// <see cref="FlowNode(ushort,IntPtr)"/> otherwise it will be ignored.
 	/// </summary>
-	[AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
+	[AttributeUsage(AttributeTargets.Class, Inherited = false)]
 	public sealed class FlowNodeAttribute : Attribute
 	{
 		/// <summary>

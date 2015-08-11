@@ -20,11 +20,11 @@ namespace CryCil
 			{
 				result = new FullVertex
 				{
-					Position = Interpolation.Linear.Create(first.Position, second.Position, parameter),
-					Normal = Interpolation.Linear.Create(first.Normal, second.Normal, parameter),
-					UvPosition = Interpolation.Linear.Create(first.UvPosition, second.UvPosition, parameter),
-					PrimaryColor = Interpolation.Linear.Create(first.PrimaryColor, second.PrimaryColor, parameter),
-					SecondaryColor = Interpolation.Linear.Create(first.SecondaryColor, second.SecondaryColor, parameter)
+					Position = Create(first.Position, second.Position, parameter),
+					Normal = Create(first.Normal, second.Normal, parameter),
+					UvPosition = Create(first.UvPosition, second.UvPosition, parameter),
+					PrimaryColor = Create(first.PrimaryColor, second.PrimaryColor, parameter),
+					SecondaryColor = Create(first.SecondaryColor, second.SecondaryColor, parameter)
 				};
 			}
 			/// <summary>
@@ -41,11 +41,11 @@ namespace CryCil
 			{
 				return new FullVertex
 				{
-					Position = Interpolation.Linear.Create(first.Position, second.Position, parameter),
-					Normal = Interpolation.Linear.Create(first.Normal, second.Normal, parameter),
-					UvPosition = Interpolation.Linear.Create(first.UvPosition, second.UvPosition, parameter),
-					PrimaryColor = Interpolation.Linear.Create(first.PrimaryColor, second.PrimaryColor, parameter),
-					SecondaryColor = Interpolation.Linear.Create(first.SecondaryColor, second.SecondaryColor, parameter)
+					Position = Create(first.Position, second.Position, parameter),
+					Normal = Create(first.Normal, second.Normal, parameter),
+					UvPosition = Create(first.UvPosition, second.UvPosition, parameter),
+					PrimaryColor = Create(first.PrimaryColor, second.PrimaryColor, parameter),
+					SecondaryColor = Create(first.SecondaryColor, second.SecondaryColor, parameter)
 				};
 			}
 		}

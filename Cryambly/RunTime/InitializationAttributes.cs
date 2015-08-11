@@ -10,8 +10,7 @@ namespace CryCil.RunTime
 	/// <summary>
 	/// Marks classes that define methods that are invoked during initialization.
 	/// </summary>
-	[AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct,
-					Inherited = false, AllowMultiple = false)]
+	[AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct, Inherited = false)]
 	public sealed class InitializationClassAttribute : Attribute
 	{
 	}

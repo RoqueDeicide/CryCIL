@@ -242,7 +242,7 @@ namespace CryCil.RunTime.Compilation
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		private static bool SpecificConditionMet(string specifier, StringComparison icic)
 		{
-			string[] configPlatform = specifier.Split(new[] { '|' });
+			string[] configPlatform = specifier.Split('|');
 			return configPlatform[0].Equals(Config, icic)
 				   &&
 				   (

@@ -131,6 +131,7 @@
 			this.Controls.Add(this.label1);
 			this.Name = "ExceptionDisplayForm";
 			this.Text = "An unhandled exception has been caught";
+			this.Shown += new System.EventHandler(this.ExceptionDisplayForm_Shown);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

@@ -71,23 +71,23 @@ namespace CryCil.RunTime
 					if (contents.Contains("sys_game_folder=") ||
 						contents.Contains("sys_game_folder ="))
 					{
-						DirectoryStructure.CryEngineFolder = Path.GetDirectoryName(systemFile);
+						CryEngineFolder = Path.GetDirectoryName(systemFile);
 						break;
 					}
 				}
 				// Move to the parent directory.
 				currentDirectory = Path.GetDirectoryName(currentDirectory);
 			}
-			if (DirectoryStructure.CryEngineFolder == null)
+			if (CryEngineFolder == null)
 			{
 				throw new Exception("Unable to locate base CryEngine folder.");
 			}
 
-			DirectoryStructure.PlatformFolder = Path.Combine(DirectoryStructure.CryEngineFolder,
-															 DirectoryStructure.PlatformFolderName);
+			PlatformFolder = Path.Combine(CryEngineFolder,
+															 PlatformFolderName);
 
 			// Get game folder from system.cfg
-			using (StreamReader sr = new StreamReader(Path.Combine(DirectoryStructure.CryEngineFolder, "system.cfg")))
+			using (StreamReader sr = new StreamReader(Path.Combine(CryEngineFolder, "system.cfg")))
 			{
 				contents = sr.ReadToEnd();
 			}
@@ -99,10 +99,10 @@ namespace CryCil.RunTime
 				throw new Exception("Unable to find location of game folder.");
 			}
 			int gameFolderNameStart = gameFolderLine.LastIndexOf('=') + 1;
-			DirectoryStructure.ContentFolder =
+			ContentFolder =
 				Path.Combine
 				(
-					DirectoryStructure.CryEngineFolder,
+					CryEngineFolder,
 					gameFolderLine.Substring
 					(
 						gameFolderNameStart,
@@ -110,10 +110,10 @@ namespace CryCil.RunTime
 					)
 				);
 			// Get Mono lib folder.
-			DirectoryStructure.AssembliesFolder =
+			AssembliesFolder =
 				Path.Combine
 				(
-					DirectoryStructure.CryEngineFolder,
+					CryEngineFolder,
 					"Bin32",
 					"Modules",
 					"CryCIL",

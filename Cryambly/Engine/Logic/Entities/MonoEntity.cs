@@ -200,7 +200,7 @@ namespace CryCil.Engine.Logic
 			{
 				try
 				{
-					return (MonoEntity)Activator.CreateInstance(entityType, new object[] { handle, identifier });
+					return (MonoEntity)Activator.CreateInstance(entityType, handle, identifier);
 				}
 				catch (Exception)
 				{

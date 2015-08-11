@@ -78,7 +78,7 @@ namespace CryCil.Engine
 		#region Utilities
 		object IEnumerator.Current
 		{
-			get { return Current; }
+			get { return this.Current; }
 		}
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern IntPtr Create();

@@ -206,8 +206,8 @@ namespace CryCil.Geometry
 							bvs.Add(splittingVertex);
 						}
 						// Create front and back triangle(s) from vertices from corresponding lists.
-						if (frontFaces != null) FullFace.TriangulateLinearly(fvs, false, frontFaces);
-						if (backFaces != null) FullFace.TriangulateLinearly(bvs, false, backFaces);
+						if (frontFaces != null) TriangulateLinearly(fvs, false, frontFaces);
+						if (backFaces != null) TriangulateLinearly(bvs, false, backFaces);
 					}
 					break;
 				default:

@@ -291,7 +291,7 @@ namespace CryCil.Engine
 		/// </summary>
 		public void Dispose()
 		{
-			if (unbound)
+			if (this.unbound)
 			{
 				Delete(this.handle);
 				this.unbound = false;

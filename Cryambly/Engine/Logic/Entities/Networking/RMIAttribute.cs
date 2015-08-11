@@ -56,7 +56,7 @@ namespace CryCil.Engine.Logic
 	/// Marks methods that should be invoked remotely via CryEngine RMI (Remote Method Invocation)
 	/// framework.
 	/// </summary>
-	[AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
+	[AttributeUsage(AttributeTargets.Method, Inherited = false)]
 	[StructLayout(LayoutKind.Explicit)]
 	public sealed class RMIAttribute : Attribute
 	{

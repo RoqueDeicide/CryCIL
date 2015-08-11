@@ -374,7 +374,7 @@ namespace CryCil.Geometry
 			// Set it to identity quaternion if it's norm is close to zero.
 			if (norm < MathHelpers.ZeroTolerance)
 			{
-				this = Quaternion.Identity;
+				this = Identity;
 			}
 			else
 			{
@@ -438,7 +438,7 @@ namespace CryCil.Geometry
 		public override bool Equals(object obj)
 		{
 			if (ReferenceEquals(null, obj)) return false;
-			return obj is Quaternion && Equals((Quaternion)obj);
+			return obj is Quaternion && this.Equals((Quaternion)obj);
 		}
 		/// <summary>
 		/// Calculates simple hash code.

@@ -189,7 +189,7 @@ namespace CryCil
 				if (this.X == 0 && this.Y == 0 && this.Z == 0)
 				// ReSharper restore CompareOfFloatsByEqualityOperator
 				{
-					return Vector3.Up;
+					return Up;
 				}
 				return new Vector3(-this.Y, this.X, 0);
 			}
@@ -353,7 +353,7 @@ namespace CryCil
 			: this()
 		{
 			if (values == null) return;
-			for (int i = 0; i < Vector3.ComponentCount || i < values.Count; i++)
+			for (int i = 0; i < ComponentCount || i < values.Count; i++)
 			{
 				this[i] = values[i];
 			}

@@ -39,7 +39,7 @@ namespace CryCil.Engine.Files
 		/// </summary>
 		public override bool CanSeek
 		{
-			get { return alive; }
+			get { return this.alive; }
 		}
 		/// <summary>
 		/// Indicates whether this is possible to write the file.

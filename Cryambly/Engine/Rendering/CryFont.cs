@@ -38,7 +38,7 @@ namespace CryCil.Engine.Rendering
 		/// </summary>
 		public static string[] LoadedFontsArray
 		{
-			get { return LoadedFonts.Split(new[] { ',' }); }
+			get { return LoadedFonts.Split(','); }
 		}
 		/// <summary>
 		/// Gets the name of this font object.

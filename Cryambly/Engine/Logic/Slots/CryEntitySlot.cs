@@ -26,7 +26,7 @@ namespace CryCil.Engine.Logic
 		/// </summary>
 		public bool IsValid
 		{
-			get { return this.entityHandle != IntPtr.Zero && this.index >= 0 && EntitySlotOps.IsSlotValid(this.entityHandle, index); }
+			get { return this.entityHandle != IntPtr.Zero && this.index >= 0 && EntitySlotOps.IsSlotValid(this.entityHandle, this.index); }
 		}
 		/// <summary>
 		/// Gets collective information about this slot.
@@ -274,7 +274,7 @@ namespace CryCil.Engine.Logic
 		{
 			if (this.IsValid)
 			{
-				EntitySlotOps.FreeSlot(this.entityHandle, index);
+				EntitySlotOps.FreeSlot(this.entityHandle, this.index);
 				// I'm not setting entityHandle and index to invalid values so AssertSlotValidity function
 				// can throw ObjectDisposedException instead of NullReferenceException.
 			}

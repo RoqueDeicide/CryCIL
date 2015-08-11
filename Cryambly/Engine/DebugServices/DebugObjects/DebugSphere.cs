@@ -35,7 +35,7 @@ namespace CryCil.Engine.DebugServices
 		public override void Render()
 		{
 			AuxiliaryGeometry.Flags = this.RenderingFlags;
-			AuxiliaryGeometry.DrawSphere(this.Center, Radius, Color, this.Shaded);
+			AuxiliaryGeometry.DrawSphere(this.Center, this.Radius, this.Color, this.Shaded);
 		}
 		#endregion
 	}

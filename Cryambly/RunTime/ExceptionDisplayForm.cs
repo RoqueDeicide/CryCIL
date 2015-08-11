@@ -21,9 +21,7 @@ namespace CryCil.RunTime
 		/// </summary>
 		public ExceptionDisplayForm(Exception ex)
 		{
-			InitializeComponent();
-
-			this.Cursor = Cursors.Arrow;
+			this.InitializeComponent();
 
 			if (ex == null)
 			{
@@ -85,6 +83,11 @@ namespace CryCil.RunTime
 		private void Terminate(object sender, EventArgs e)
 		{
 			Process.GetCurrentProcess().Kill();
+		}
+
+		private void ExceptionDisplayForm_Shown(object sender, EventArgs e)
+		{
+			this.Cursor = Cursors.Arrow;
 		}
 	}
 }

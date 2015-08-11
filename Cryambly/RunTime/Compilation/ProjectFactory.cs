@@ -14,12 +14,12 @@ namespace CryCil.RunTime.Compilation
 	/// </summary>
 	public static class ProjectFactory
 	{
-		private static List<Type> projectTypes;
-		private static List<string> projectExtensions;
+		private static readonly List<Type> projectTypes;
+		private static readonly List<string> projectExtensions;
 		static ProjectFactory()
 		{
 			// Find types in this assembly that implement IProjectFile interface.
-			ProjectFactory.projectTypes =
+			projectTypes =
 			(
 				from type in AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes())
 				where type.ContainsAttribute<ProjectFileAttribute>()
@@ -27,14 +27,14 @@ namespace CryCil.RunTime.Compilation
 			).ToList();
 
 #if DEBUG
-			if (ProjectFactory.projectTypes.Count == 0)
+			if (projectTypes.Count == 0)
 			{
 				throw new Exception("Cannot compile the code without any types that implement IProjectFile and marked with ProjectFileAttribute.");
 			}
 #endif
 			// Register extensions of project files.
 			Type[] ctorParameters = { typeof(string), typeof(string) };
-			ProjectFactory.projectExtensions =
+			projectExtensions =
 			(
 				from projectType in projectTypes
 				let attr = projectType.GetAttribute<ProjectFileAttribute>()
@@ -71,7 +71,7 @@ namespace CryCil.RunTime.Compilation
 					quoteIndices[4] + 1, quoteIndices[5] - quoteIndices[4] - 1
 				);
 			return
-				ProjectFactory.Create
+				Create
 				(
 					projectName,
 					Path.Combine(CodeSolution.SolutionFolder, projectPath)
@@ -94,12 +94,12 @@ namespace CryCil.RunTime.Compilation
 				return null;
 			}
 			// Try finding type that works with the extension.
-			int extensionIndex = ProjectFactory.projectExtensions.IndexOf(Path.GetExtension(projectFile));
+			int extensionIndex = projectExtensions.IndexOf(Path.GetExtension(projectFile));
 			if (extensionIndex == -1)
 			{
 				return null;
 			}
-			Type projectType = ProjectFactory.projectTypes[extensionIndex];
+			Type projectType = projectTypes[extensionIndex];
 			return Activator.CreateInstance(projectType, projectName, projectFile) as IProject;
 		}
 	}
@@ -111,7 +111,7 @@ namespace CryCil.RunTime.Compilation
 	/// <see cref="String"/>, first one being a name, and last one being the path to the file.
 	/// </remarks>
 	[BaseTypeRequired(typeof(IProject))]
-	[AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
+	[AttributeUsage(AttributeTargets.Class, Inherited = false)]
 	public sealed class ProjectFileAttribute : Attribute
 	{
 		/// <summary>

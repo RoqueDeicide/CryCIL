@@ -39,24 +39,24 @@ namespace CryCil.RunTime.Logging
 		public override void Flush()
 		{
 			string[] lines =									// Don't remove empty entries.
-				buffer.ToString().Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+				this.buffer.ToString().Split(new[] { Environment.NewLine }, StringSplitOptions.None);
 			if (lines.Length == 1)	// Only happens when there is no new line symbol in the buffer.
 			{
 				// This code is executed when Flush is called from external class, which means we should
 				// post whatever we have in the buffer and empty it afterwards.
-				Log.Post(ConsoleLogWriter.PostType, lines[0]);
-				buffer = new StringBuilder("", 70);
+				Log.Post(PostType, lines[0]);
+				this.buffer = new StringBuilder("", 70);
 			}
 			else
 			{
 				// Print all of the lines except the last one.
 				for (int i = 0; i < lines.Length - 1; i++)
 				{
-					Log.Post(ConsoleLogWriter.PostType, lines[i]);
+					Log.Post(PostType, lines[i]);
 				}
 				// Reset the buffer to be the last line. It will be empty if <value> ended with new line
 				// symbol.
-				buffer = new StringBuilder(lines[lines.Length - 1], 70);
+				this.buffer = new StringBuilder(lines[lines.Length - 1], 70);
 			}
 		}
 	}

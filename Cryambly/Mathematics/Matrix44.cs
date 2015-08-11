@@ -1008,7 +1008,7 @@ namespace CryCil
 		public override bool Equals(object obj)
 		{
 			if (ReferenceEquals(null, obj)) return false;
-			return obj is Matrix44 && Equals((Matrix44)obj);
+			return obj is Matrix44 && this.Equals((Matrix44)obj);
 		}
 		/// <summary>
 		/// Calculates hash code of this matrix.
@@ -1067,7 +1067,7 @@ namespace CryCil
 		/// <returns>True, if matrices are equal.</returns>
 		public bool Equals(Matrix44 other)
 		{
-			return Matrix44.IsEquivalent(ref this, ref other);
+			return IsEquivalent(ref this, ref other);
 		}
 		#endregion
 		#region Enumeration

@@ -17,7 +17,7 @@ namespace CryCil
 		/// <summary>
 		/// Zero vector.
 		/// </summary>
-		public readonly static Vector4d Zero = new Vector4d();
+		public readonly static Vector4d Zero;
 		/// <summary>
 		/// Number of components of this vector.
 		/// </summary>
@@ -235,12 +235,12 @@ namespace CryCil
 				throw new ArgumentOutOfRangeException
 					("firstComponent", "Index of the first component to assign cannot be negative.");
 			}
-			if (count > Vector4d.ComponentCount - firstComponent)
+			if (count > ComponentCount - firstComponent)
 			{
 				throw new ArgumentOutOfRangeException
 					("count", "Number of elements to copy is bigger then number of components to assign.");
 			}
-			for (int i = firstComponent; i < Vector4d.ComponentCount || i < count; i++)
+			for (int i = firstComponent; i < ComponentCount || i < count; i++)
 			{
 				this[i] = values[i];
 			}

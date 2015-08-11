@@ -225,7 +225,7 @@ namespace CryCil.Engine.Logic
 			return
 				type == null
 					? null
-					: Activator.CreateInstance(type, new object[] { nodeId, grapHandle });
+					: Activator.CreateInstance(type, nodeId, grapHandle);
 		}
 		[RawThunk("Invoked from underlying framework when this node is removed completely from the game.")]
 		private void Release()

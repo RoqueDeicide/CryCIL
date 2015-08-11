@@ -76,7 +76,7 @@ namespace CryCil.Engine.Physics
 		private static extern SurfaceType Release(IntPtr handle);
 		object IEnumerator.Current
 		{
-			get { return Current; }
+			get { return this.Current; }
 		}
 		#endregion
 	}

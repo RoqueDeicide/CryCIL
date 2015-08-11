@@ -6,7 +6,7 @@ namespace CryCil.Engine.Logic
 	/// <summary>
 	/// Marks fields and properties of the entity that can be edited in Sandbox editor.
 	/// </summary>
-	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
+	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public sealed class EditablePropertyAttribute : Attribute
 	{
 		/// <summary>

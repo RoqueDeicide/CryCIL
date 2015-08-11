@@ -91,7 +91,7 @@ namespace CryCil.Engine.DebugServices
 
 				Vector3 delta = this.end - this.start;
 
-				this.Center = start + delta * 0.5f;
+				this.Center = this.start + delta * 0.5f;
 
 				this.length = delta.Length;
 				this.dir = delta.Normalized;
@@ -109,7 +109,7 @@ namespace CryCil.Engine.DebugServices
 
 				Vector3 delta = this.end - this.start;
 
-				this.Center = start + delta * 0.5f;
+				this.Center = this.start + delta * 0.5f;
 
 				this.length = delta.Length;
 				this.dir = delta.Normalized;

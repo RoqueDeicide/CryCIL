@@ -53,8 +53,8 @@ namespace CryCil.RunTime.Compilation
 		{
 			if (File.Exists(solutionFile))
 			{
-				CodeSolution.SolutionFolder = Path.GetDirectoryName(solutionFile);
-				CodeSolution.ParseFile(solutionFile);
+				SolutionFolder = Path.GetDirectoryName(solutionFile);
+				ParseFile(solutionFile);
 				return true;
 			}
 			return false;
@@ -66,9 +66,9 @@ namespace CryCil.RunTime.Compilation
 		public static Assembly[] Build()
 		{
 			// This is the list of projects to compile.
-			List<IProject> buildList = new List<IProject>(CodeSolution.Projects.Count);
+			List<IProject> buildList = new List<IProject>(Projects.Count);
 			// We gonna organize the list so, projects that depend on other projects are built after them.
-			List<IProject> projects = new List<IProject>(CodeSolution.Projects);
+			List<IProject> projects = new List<IProject>(Projects);
 			while (projects.Count != 0)
 			{
 				// Go through the list and put into the build list those who already have their
@@ -173,7 +173,7 @@ namespace CryCil.RunTime.Compilation
 				IProject project = ProjectFactory.Create(projectDescription);
 				if (project != null)
 				{
-					CodeSolution.Projects.Add(project);
+					Projects.Add(project);
 				}
 			}
 		}

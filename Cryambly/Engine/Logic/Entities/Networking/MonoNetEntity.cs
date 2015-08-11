@@ -37,7 +37,7 @@ namespace CryCil.Engine.Logic
 		/// </summary>
 		public ChannelId ChannelId
 		{
-			get { return channelId; }
+			get { return this.channelId; }
 			set
 			{
 				SetChannelId(this.Id, value);

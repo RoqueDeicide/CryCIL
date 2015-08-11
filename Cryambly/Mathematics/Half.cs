@@ -34,27 +34,27 @@ namespace System
 		/// <summary>
 		/// Represents the smallest positive System.Half value greater than zero. This field is constant.
 		/// </summary>
-		public static readonly Half Epsilon = Half.ToHalf(0x0001);
+		public static readonly Half Epsilon = ToHalf(0x0001);
 		/// <summary>
 		/// Represents the largest possible value of System.Half. This field is constant.
 		/// </summary>
-		public static readonly Half MaxValue = Half.ToHalf(0x7bff);
+		public static readonly Half MaxValue = ToHalf(0x7bff);
 		/// <summary>
 		/// Represents the smallest possible value of System.Half. This field is constant.
 		/// </summary>
-		public static readonly Half MinValue = Half.ToHalf(0xfbff);
+		public static readonly Half MinValue = ToHalf(0xfbff);
 		/// <summary>
 		/// Represents not a number (NaN). This field is constant.
 		/// </summary>
-		public static readonly Half NaN = Half.ToHalf(0xfe00);
+		public static readonly Half NaN = ToHalf(0xfe00);
 		/// <summary>
 		/// Represents negative infinity. This field is constant.
 		/// </summary>
-		public static readonly Half NegativeInfinity = Half.ToHalf(0xfc00);
+		public static readonly Half NegativeInfinity = ToHalf(0xfc00);
 		/// <summary>
 		/// Represents positive infinity. This field is constant.
 		/// </summary>
-		public static readonly Half PositiveInfinity = Half.ToHalf(0x7c00);
+		public static readonly Half PositiveInfinity = ToHalf(0x7c00);
 		#endregion
 
 		#region Constructors
@@ -473,7 +473,7 @@ namespace System
 		/// <returns>A 32-bit signed integer hash code.</returns>
 		public override int GetHashCode()
 		{
-			return value.GetHashCode();
+			return this.value.GetHashCode();
 		}
 		/// <summary>
 		/// Returns the System.TypeCode for value type System.Half.
@@ -523,7 +523,7 @@ namespace System
 		/// </exception>
 		public static Half ToHalf(byte[] value, int startIndex)
 		{
-			return Half.ToHalf((ushort)BitConverter.ToInt16(value, startIndex));
+			return ToHalf((ushort)BitConverter.ToInt16(value, startIndex));
 		}
 		/// <summary>
 		/// Returns a half-precision floating point number converted from its binary representation.
@@ -866,7 +866,7 @@ namespace System
 		}
 		TypeCode IConvertible.GetTypeCode()
 		{
-			return GetTypeCode();
+			return this.GetTypeCode();
 		}
 		bool IConvertible.ToBoolean(IFormatProvider provider)
 		{

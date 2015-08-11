@@ -64,7 +64,7 @@ namespace CryCil.RunTime
 			Application.EnableVisualStyles();
 			// Register default handling of exceptions.
 			AppDomain.CurrentDomain.UnhandledException +=
-				(sender, args) => MonoInterface.DisplayException(args.ExceptionObject);
+				(sender, args) => DisplayException(args.ExceptionObject);
 			// Redirect Console output.
 			Console.SetOut(new ConsoleLogWriter());
 			// Load all extra modules.

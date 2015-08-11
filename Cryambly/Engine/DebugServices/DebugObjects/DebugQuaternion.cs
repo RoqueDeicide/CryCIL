@@ -43,9 +43,9 @@ namespace CryCil.Engine.DebugServices
 
 				this.quat = value;
 				// Update axes.
-				this.x = quat.Column0;
-				this.y = quat.Column1;
-				this.z = quat.Column2;
+				this.x = this.quat.Column0;
+				this.y = this.quat.Column1;
+				this.z = this.quat.Column2;
 			}
 		}
 		#endregion

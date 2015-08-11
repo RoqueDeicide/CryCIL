@@ -35,7 +35,7 @@ namespace CryCil.Engine.Physics
 		#endregion
 		#region Fields
 		[UsedImplicitly]
-		private IntPtr handle;
+		private readonly IntPtr handle;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -165,7 +165,7 @@ namespace CryCil.Engine.Physics
 		public override bool Equals(object obj)
 		{
 			if (ReferenceEquals(null, obj)) return false;
-			return obj is SurfaceType && Equals((SurfaceType)obj);
+			return obj is SurfaceType && this.Equals((SurfaceType)obj);
 		}
 		/// <summary>
 		/// Gets hash code of this object.

@@ -54,7 +54,7 @@ namespace CryCil.Engine.DebugServices
 		/// </param>
 		public static void BeginDrawing(string name, bool clear)
 		{
-			DebugGraphics.Begin(StringPool.Get(name), clear);
+			Begin(StringPool.Get(name), clear);
 		}
 		/// <summary>
 		/// Draws a sphere.
@@ -65,7 +65,7 @@ namespace CryCil.Engine.DebugServices
 		/// <param name="timeout">Timespan during which the object will be displayed in seconds.</param>
 		public static void DrawSphere(Vector3 center, float radius, ColorSingle color, float timeout)
 		{
-			DebugGraphics.AddSphere(center, radius, color, timeout);
+			AddSphere(center, radius, color, timeout);
 		}
 		/// <summary>
 		/// Draws an arrow.
@@ -77,7 +77,7 @@ namespace CryCil.Engine.DebugServices
 		/// <param name="timeout">  Timespan during which the object will be displayed in seconds.</param>
 		public static void DrawDirection(Vector3 origin, float radius, Vector3 direction, ColorSingle color, float timeout)
 		{
-			DebugGraphics.AddDirection(origin, radius, direction, color, timeout);
+			AddDirection(origin, radius, direction, color, timeout);
 		}
 		/// <summary>
 		/// Draws a line.
@@ -88,7 +88,7 @@ namespace CryCil.Engine.DebugServices
 		/// <param name="timeout">Timespan during which the object will be displayed in seconds.</param>
 		public static void DrawLine(Vector3 start, Vector3 end, ColorSingle color, float timeout)
 		{
-			DebugGraphics.AddLine(start, end, color, timeout);
+			AddLine(start, end, color, timeout);
 		}
 		/// <summary>
 		/// Draws a disc.
@@ -102,7 +102,7 @@ namespace CryCil.Engine.DebugServices
 		/// </param>
 		public static void DrawPlanarDisc(Vector3 position, float innerRadius, float outerRadius, ColorSingle color, float timeout)
 		{
-			DebugGraphics.AddPlanarDisc(position, innerRadius, outerRadius, color, timeout);
+			AddPlanarDisc(position, innerRadius, outerRadius, color, timeout);
 		}
 		/// <summary>
 		/// Draws a cone.
@@ -115,7 +115,7 @@ namespace CryCil.Engine.DebugServices
 		/// <param name="timeout">   Timespan during which the object will be displayed in seconds.</param>
 		public static void DrawCone(Vector3 position, Vector3 direction, float baseRadius, float height, ColorSingle color, float timeout)
 		{
-			DebugGraphics.AddCone(position, direction, baseRadius, height, color, timeout);
+			AddCone(position, direction, baseRadius, height, color, timeout);
 		}
 		/// <summary>
 		/// Draws a cylinder.
@@ -128,7 +128,7 @@ namespace CryCil.Engine.DebugServices
 		/// <param name="timeout">  Timespan during which the object will be displayed in seconds.</param>
 		public static void DrawCylinder(Vector3 position, Vector3 direction, float radius, float height, ColorSingle color, float timeout)
 		{
-			DebugGraphics.AddCylinder(position, direction, radius, height, color, timeout);
+			AddCylinder(position, direction, radius, height, color, timeout);
 		}
 		/// <summary>
 		/// Draws text somewhere on the screen.
@@ -141,7 +141,7 @@ namespace CryCil.Engine.DebugServices
 		[StringFormatMethod("format")]
 		public static void Draw2DText(float size, ColorSingle color, float timeout, string format, params object[] args)
 		{
-			DebugGraphics.Add2DText(string.Format(format, args), size, color, timeout);
+			Add2DText(string.Format(format, args), size, color, timeout);
 		}
 		/// <summary>
 		/// Draws text at the specified location on the screen.
@@ -156,7 +156,7 @@ namespace CryCil.Engine.DebugServices
 		[StringFormatMethod("format")]
 		public static void DrawText(float x, float y, float size, ColorSingle color, float timeout, string format, params object[] args)
 		{
-			DebugGraphics.AddText(x, y, size, color, timeout, string.Format(format, args));
+			AddText(x, y, size, color, timeout, string.Format(format, args));
 		}
 		/// <summary>
 		/// Draws a 2D line on the screen.
@@ -169,7 +169,7 @@ namespace CryCil.Engine.DebugServices
 		/// <param name="timeout">Timespan during which the object will be displayed in seconds.</param>
 		public static void Draw2DLine(float x1, float y1, float x2, float y2, ColorSingle color, float timeout)
 		{
-			DebugGraphics.Add2DLine(x1, y1, x2, y2, color, timeout);
+			Add2DLine(x1, y1, x2, y2, color, timeout);
 		}
 		/// <summary>
 		/// Draws Oriented Bounding Box (OBB).
@@ -183,7 +183,7 @@ namespace CryCil.Engine.DebugServices
 		/// <param name="timeout">   Timespan during which the object will be displayed in seconds.</param>
 		public static void DrawOBB(Vector3 position, Quaternion quaternion, float r, ColorSingle color, float timeout)
 		{
-			DebugGraphics.AddQuat(position, quaternion, r, color, timeout);
+			AddQuat(position, quaternion, r, color, timeout);
 		}
 		/// <summary>
 		/// Draws Axis-Aligned Bounding Box (AABB).
@@ -194,7 +194,7 @@ namespace CryCil.Engine.DebugServices
 		/// <param name="timeout">Timespan during which the object will be displayed in seconds.</param>
 		public static void DrawAABB(Vector3 min, Vector3 max, ColorSingle color, float timeout)
 		{
-			DebugGraphics.AddAABB(min, max, color, timeout);
+			AddAABB(min, max, color, timeout);
 		}
 		#endregion
 		#region Utilities

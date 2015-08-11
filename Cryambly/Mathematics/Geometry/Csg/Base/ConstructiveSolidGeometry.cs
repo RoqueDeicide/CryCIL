@@ -638,7 +638,7 @@ namespace CryCil.Geometry.Csg.Base
 			/// <returns>Result of <see cref="ConstructiveSolidGeometry.Union"/> .</returns>
 			public static Solid operator |(Solid left, Solid right)
 			{
-				return ConstructiveSolidGeometry.Union(left, right);
+				return Union(left, right);
 			}
 			/// <summary>
 			/// Combines two solids together.
@@ -653,7 +653,7 @@ namespace CryCil.Geometry.Csg.Base
 			/// <returns>Result of <see cref="ConstructiveSolidGeometry.Intersection"/> .</returns>
 			public static Solid operator &(Solid left, Solid right)
 			{
-				return ConstructiveSolidGeometry.Intersection(left, right);
+				return Intersection(left, right);
 			}
 			/// <summary>
 			/// Subtracts right solid from left one.
@@ -668,7 +668,7 @@ namespace CryCil.Geometry.Csg.Base
 			/// <returns>Result of <see cref="ConstructiveSolidGeometry.Subtract"/> .</returns>
 			public static Solid operator -(Solid left, Solid right)
 			{
-				return ConstructiveSolidGeometry.Subtract(left, right);
+				return Subtract(left, right);
 			}
 		}
 	#endregion
@@ -924,9 +924,9 @@ namespace CryCil.Geometry.Csg.Base
 			{
 				float signedDistance = this.Normal.Dot(point) - this.W;
 				return
-					signedDistance < -Plane.Epsilon
+					signedDistance < -Epsilon
 						? PlaneRelativePositionClass.Back
-						: signedDistance > Plane.Epsilon
+						: signedDistance > Epsilon
 							? PlaneRelativePositionClass.Front
 							: PlaneRelativePositionClass.Coplanar;
 			}

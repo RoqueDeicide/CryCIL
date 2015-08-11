@@ -7,7 +7,7 @@ namespace CryCil.Engine.Logic
 	/// <summary>
 	/// Marks classes that define logic for entities that are defined in CryCIL.
 	/// </summary>
-	[AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
+	[AttributeUsage(AttributeTargets.Class, Inherited = false)]
 	public sealed class EntityAttribute : Attribute
 	{
 		#region Properties

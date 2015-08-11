@@ -171,7 +171,7 @@ namespace CryCil.Engine.Physics
 		/// </summary>
 		public int Breakability
 		{
-			get { return breakability; }
+			get { return this.breakability; }
 		}
 		/// <summary>
 		/// Unknown.

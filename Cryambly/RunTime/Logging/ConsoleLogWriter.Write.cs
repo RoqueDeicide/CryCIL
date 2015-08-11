@@ -27,8 +27,8 @@ namespace CryCil.RunTime.Logging
 		/// <param name="symbols">Symbols to write.</param>
 		public override void Write(char[] symbols)
 		{
-			buffer.Append(symbols);
-			if (buffer.ToString().Contains(Environment.NewLine))
+			this.buffer.Append(symbols);
+			if (this.buffer.ToString().Contains(Environment.NewLine))
 			{
 				this.Flush();
 			}
@@ -41,8 +41,8 @@ namespace CryCil.RunTime.Logging
 		/// <param name="count">  Number of symbols to write.</param>
 		public override void Write(char[] symbols, int index, int count)
 		{
-			buffer.Append(symbols, index, count);
-			if (buffer.ToString().Contains(Environment.NewLine))
+			this.buffer.Append(symbols, index, count);
+			if (this.buffer.ToString().Contains(Environment.NewLine))
 			{
 				this.Flush();
 			}
@@ -101,8 +101,8 @@ namespace CryCil.RunTime.Logging
 		/// <param name="value">Text to write.</param>
 		public override void Write(string value)
 		{
-			buffer.Append(value);
-			if (buffer.ToString().Contains(Environment.NewLine))
+			this.buffer.Append(value);
+			if (this.buffer.ToString().Contains(Environment.NewLine))
 			{
 				this.Flush();
 			}
@@ -115,8 +115,8 @@ namespace CryCil.RunTime.Logging
 		[StringFormatMethod("format")]
 		public override void Write(string format, object arg0)
 		{
-			buffer.AppendFormat(format, arg0);
-			if (buffer.ToString().Contains(Environment.NewLine))
+			this.buffer.AppendFormat(format, arg0);
+			if (this.buffer.ToString().Contains(Environment.NewLine))
 			{
 				this.Flush();
 			}
@@ -130,8 +130,8 @@ namespace CryCil.RunTime.Logging
 		[StringFormatMethod("format")]
 		public override void Write(string format, object arg0, object arg1)
 		{
-			buffer.AppendFormat(format, arg0, arg1);
-			if (buffer.ToString().Contains(Environment.NewLine))
+			this.buffer.AppendFormat(format, arg0, arg1);
+			if (this.buffer.ToString().Contains(Environment.NewLine))
 			{
 				this.Flush();
 			}
@@ -146,8 +146,8 @@ namespace CryCil.RunTime.Logging
 		[StringFormatMethod("format")]
 		public override void Write(string format, object arg0, object arg1, object arg2)
 		{
-			buffer.AppendFormat(format, arg0, arg1, arg2);
-			if (buffer.ToString().Contains(Environment.NewLine))
+			this.buffer.AppendFormat(format, arg0, arg1, arg2);
+			if (this.buffer.ToString().Contains(Environment.NewLine))
 			{
 				this.Flush();
 			}
@@ -160,8 +160,8 @@ namespace CryCil.RunTime.Logging
 		[StringFormatMethod("format")]
 		public override void Write(string format, params object[] arg)
 		{
-			buffer.AppendFormat(format, arg);
-			if (buffer.ToString().Contains(Environment.NewLine))
+			this.buffer.AppendFormat(format, arg);
+			if (this.buffer.ToString().Contains(Environment.NewLine))
 			{
 				this.Flush();
 			}

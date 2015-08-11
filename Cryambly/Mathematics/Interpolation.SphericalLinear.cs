@@ -310,7 +310,7 @@ namespace CryCil
 			public static Matrix34 Create(Matrix34 first, Matrix34 second, float t)
 			{
 				var matrix = new Matrix34();
-				Interpolation.SphericalLinear.Apply(ref matrix, first, second, t);
+				Apply(ref matrix, first, second, t);
 
 				return matrix;
 			}
@@ -389,7 +389,7 @@ namespace CryCil
 			public static Matrix33 Create(Matrix33 first, Matrix33 second, float t)
 			{
 				var matrix = new Matrix33();
-				Interpolation.SphericalLinear.Apply(ref matrix, first, second, t);
+				Apply(ref matrix, first, second, t);
 
 				return matrix;
 			}

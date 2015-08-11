@@ -116,7 +116,7 @@ namespace CryCil.Engine.Environment
 			/// </summary>
 			public CryEngineSpline Spline
 			{
-				get { return spline; }
+				get { return this.spline; }
 			}
 			#endregion
 		}

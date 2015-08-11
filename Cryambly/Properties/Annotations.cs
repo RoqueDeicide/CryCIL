@@ -35,7 +35,7 @@ namespace CryCil.Annotations
 	[AttributeUsage(
 	  AttributeTargets.Method | AttributeTargets.Parameter |
 	  AttributeTargets.Property | AttributeTargets.Delegate |
-	  AttributeTargets.Field, AllowMultiple = false, Inherited = true)]
+	  AttributeTargets.Field)]
 	public sealed class CanBeNullAttribute : Attribute { }
 	/// <summary>
 	/// Indicates that the value of the marked element could never be <c>null</c>
@@ -51,7 +51,7 @@ namespace CryCil.Annotations
 	[AttributeUsage(
 	  AttributeTargets.Method | AttributeTargets.Parameter |
 	  AttributeTargets.Property | AttributeTargets.Delegate |
-	  AttributeTargets.Field, AllowMultiple = false, Inherited = true)]
+	  AttributeTargets.Field)]
 	public sealed class NotNullAttribute : Attribute { }
 	/// <summary>
 	/// Indicates that the marked method builds string by format pattern and (optional) arguments.
@@ -69,8 +69,7 @@ namespace CryCil.Annotations
 	/// </code>
 	/// </example>
 	[AttributeUsage(
-	  AttributeTargets.Constructor | AttributeTargets.Method,
-	  AllowMultiple = false, Inherited = true)]
+	  AttributeTargets.Constructor | AttributeTargets.Method)]
 	public sealed class StringFormatMethodAttribute : Attribute
 	{
 		/// <param name="formatParameterName">
@@ -78,7 +77,7 @@ namespace CryCil.Annotations
 		/// </param>
 		public StringFormatMethodAttribute(string formatParameterName)
 		{
-			FormatParameterName = formatParameterName;
+			this.FormatParameterName = formatParameterName;
 		}
 
 		public string FormatParameterName { get; private set; }
@@ -97,7 +96,7 @@ namespace CryCil.Annotations
 	/// }
 	/// </code>
 	/// </example>
-	[AttributeUsage(AttributeTargets.Parameter, AllowMultiple = false, Inherited = true)]
+	[AttributeUsage(AttributeTargets.Parameter)]
 	public sealed class InvokerParameterNameAttribute : Attribute { }
 	/// <summary>
 	/// Indicates that the method is contained in a type that implements
@@ -131,13 +130,13 @@ namespace CryCil.Annotations
 	/// Property) </c></item><item><c>NotifyChanged((VM x) =&gt;
 	/// x.Property)</c></item><item><c>SetProperty(ref myField, value, "Property")</c></item></list>
 	/// </example>
-	[AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
+	[AttributeUsage(AttributeTargets.Method)]
 	public sealed class NotifyPropertyChangedInvocatorAttribute : Attribute
 	{
 		public NotifyPropertyChangedInvocatorAttribute() { }
 		public NotifyPropertyChangedInvocatorAttribute(string parameterName)
 		{
-			ParameterName = parameterName;
+			this.ParameterName = parameterName;
 		}
 
 		public string ParameterName { get; private set; }
@@ -181,7 +180,7 @@ namespace CryCil.Annotations
 	/// public bool TryParse(string s, out Person result)
 	/// </code></item></list>
 	/// </examples>
-	[AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
+	[AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
 	public sealed class ContractAnnotationAttribute : Attribute
 	{
 		public ContractAnnotationAttribute([NotNull] string contract)
@@ -189,8 +188,8 @@ namespace CryCil.Annotations
 
 		public ContractAnnotationAttribute([NotNull] string contract, bool forceFullStates)
 		{
-			Contract = contract;
-			ForceFullStates = forceFullStates;
+			this.Contract = contract;
+			this.ForceFullStates = forceFullStates;
 		}
 
 		public string Contract { get; private set; }
@@ -208,13 +207,13 @@ namespace CryCil.Annotations
 	/// }
 	/// </code>
 	/// </example>
-	[AttributeUsage(AttributeTargets.All, AllowMultiple = false, Inherited = true)]
+	[AttributeUsage(AttributeTargets.All)]
 	public sealed class LocalizationRequiredAttribute : Attribute
 	{
 		public LocalizationRequiredAttribute() : this(true) { }
 		public LocalizationRequiredAttribute(bool required)
 		{
-			Required = required;
+			this.Required = required;
 		}
 
 		public bool Required { get; private set; }
@@ -245,7 +244,7 @@ namespace CryCil.Annotations
 	/// </example>
 	[AttributeUsage(
 	  AttributeTargets.Interface | AttributeTargets.Class |
-	  AttributeTargets.Struct, AllowMultiple = false, Inherited = true)]
+	  AttributeTargets.Struct)]
 	public sealed class CannotApplyEqualityOperatorAttribute : Attribute { }
 	/// <summary>
 	/// When applied to a target attribute, specifies a requirement for any type marked with the target
@@ -259,13 +258,13 @@ namespace CryCil.Annotations
 	/// public class MyComponent : IComponent { }
 	/// </code>
 	/// </example>
-	[AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = true)]
+	[AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
 	[BaseTypeRequired(typeof(Attribute))]
 	public sealed class BaseTypeRequiredAttribute : Attribute
 	{
 		public BaseTypeRequiredAttribute([NotNull] Type baseType)
 		{
-			BaseType = baseType;
+			this.BaseType = baseType;
 		}
 
 		[NotNull]
@@ -275,7 +274,7 @@ namespace CryCil.Annotations
 	/// Indicates that the marked symbol is used implicitly (e.g. via reflection, in external library), so
 	/// this symbol will not be marked as unused (as well as by other usage inspections)
 	/// </summary>
-	[AttributeUsage(AttributeTargets.All, AllowMultiple = false, Inherited = true)]
+	[AttributeUsage(AttributeTargets.All)]
 	public sealed class UsedImplicitlyAttribute : Attribute
 	{
 		public UsedImplicitlyAttribute()
@@ -290,8 +289,8 @@ namespace CryCil.Annotations
 		public UsedImplicitlyAttribute(
 		  ImplicitUseKindFlags useKindFlags, ImplicitUseTargetFlags targetFlags)
 		{
-			UseKindFlags = useKindFlags;
-			TargetFlags = targetFlags;
+			this.UseKindFlags = useKindFlags;
+			this.TargetFlags = targetFlags;
 		}
 
 		public ImplicitUseKindFlags UseKindFlags { get; private set; }
@@ -301,7 +300,7 @@ namespace CryCil.Annotations
 	/// Should be used on attributes and causes ReSharper to not mark symbols marked with such attributes
 	/// as unused (as well as by other usage inspections)
 	/// </summary>
-	[AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
+	[AttributeUsage(AttributeTargets.Class)]
 	public sealed class MeansImplicitUseAttribute : Attribute
 	{
 		public MeansImplicitUseAttribute()
@@ -316,8 +315,8 @@ namespace CryCil.Annotations
 		public MeansImplicitUseAttribute(
 		  ImplicitUseKindFlags useKindFlags, ImplicitUseTargetFlags targetFlags)
 		{
-			UseKindFlags = useKindFlags;
-			TargetFlags = targetFlags;
+			this.UseKindFlags = useKindFlags;
+			this.TargetFlags = targetFlags;
 		}
 
 		[UsedImplicitly]
@@ -379,10 +378,13 @@ namespace CryCil.Annotations
 	[MeansImplicitUse]
 	public sealed class PublicAPIAttribute : Attribute
 	{
-		public PublicAPIAttribute() { }
+		public PublicAPIAttribute()
+		{
+			this.Comment = "";
+		}
 		public PublicAPIAttribute([NotNull] string comment)
 		{
-			Comment = comment;
+			this.Comment = comment;
 		}
 
 		[NotNull]
@@ -395,7 +397,7 @@ namespace CryCil.Annotations
 	/// executed. If the parameter is an enumerable, indicates that it is enumerated while the method is
 	/// executed
 	/// </summary>
-	[AttributeUsage(AttributeTargets.Parameter, Inherited = true)]
+	[AttributeUsage(AttributeTargets.Parameter)]
 	public sealed class InstantHandleAttribute : Attribute { }
 	/// <summary>
 	/// Indicates that a method does not make any observable state changes. The same as
@@ -411,7 +413,7 @@ namespace CryCil.Annotations
 	/// }
 	/// </code>
 	/// </example>
-	[AttributeUsage(AttributeTargets.Method, Inherited = true)]
+	[AttributeUsage(AttributeTargets.Method)]
 	public sealed class PureAttribute : Attribute { }
 	/// <summary>
 	/// Indicates that a parameter is a path to a file or a folder within a web project. Path can be
@@ -420,10 +422,13 @@ namespace CryCil.Annotations
 	[AttributeUsage(AttributeTargets.Parameter)]
 	public class PathReferenceAttribute : Attribute
 	{
-		public PathReferenceAttribute() { }
+		public PathReferenceAttribute()
+		{
+			this.BasePath = "";
+		}
 		public PathReferenceAttribute([PathReference] string basePath)
 		{
-			BasePath = basePath;
+			this.BasePath = basePath;
 		}
 
 		[NotNull]
@@ -477,10 +482,13 @@ namespace CryCil.Annotations
 	[AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Method)]
 	public sealed class AspMvcActionAttribute : Attribute
 	{
-		public AspMvcActionAttribute() { }
+		public AspMvcActionAttribute()
+		{
+			this.AnonymousProperty = "";
+		}
 		public AspMvcActionAttribute([NotNull] string anonymousProperty)
 		{
-			AnonymousProperty = anonymousProperty;
+			this.AnonymousProperty = anonymousProperty;
 		}
 
 		[NotNull]
@@ -495,10 +503,13 @@ namespace CryCil.Annotations
 	[AttributeUsage(AttributeTargets.Parameter)]
 	public sealed class AspMvcAreaAttribute : PathReferenceAttribute
 	{
-		public AspMvcAreaAttribute() { }
+		public AspMvcAreaAttribute()
+		{
+			this.AnonymousProperty = "";
+		}
 		public AspMvcAreaAttribute([NotNull] string anonymousProperty)
 		{
-			AnonymousProperty = anonymousProperty;
+			this.AnonymousProperty = anonymousProperty;
 		}
 
 		[NotNull]
@@ -515,10 +526,13 @@ namespace CryCil.Annotations
 	[AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Method)]
 	public sealed class AspMvcControllerAttribute : Attribute
 	{
-		public AspMvcControllerAttribute() { }
+		public AspMvcControllerAttribute()
+		{
+			this.AnonymousProperty = "";
+		}
 		public AspMvcControllerAttribute([NotNull] string anonymousProperty)
 		{
-			AnonymousProperty = anonymousProperty;
+			this.AnonymousProperty = anonymousProperty;
 		}
 
 		[NotNull]
@@ -606,13 +620,16 @@ namespace CryCil.Annotations
 
 	[AttributeUsage(
 	  AttributeTargets.Parameter | AttributeTargets.Property |
-	  AttributeTargets.Field, Inherited = true)]
+	  AttributeTargets.Field)]
 	public sealed class HtmlElementAttributesAttribute : Attribute
 	{
-		public HtmlElementAttributesAttribute() { }
+		public HtmlElementAttributesAttribute()
+		{
+			this.Name = "";
+		}
 		public HtmlElementAttributesAttribute([NotNull] string name)
 		{
-			Name = name;
+			this.Name = name;
 		}
 
 		[NotNull]
@@ -621,12 +638,12 @@ namespace CryCil.Annotations
 
 	[AttributeUsage(
 	  AttributeTargets.Parameter | AttributeTargets.Field |
-	  AttributeTargets.Property, Inherited = true)]
+	  AttributeTargets.Property)]
 	public sealed class HtmlAttributeValueAttribute : Attribute
 	{
 		public HtmlAttributeValueAttribute([NotNull] string name)
 		{
-			Name = name;
+			this.Name = name;
 		}
 
 		[NotNull]
@@ -639,6 +656,6 @@ namespace CryCil.Annotations
 	/// Razor attribute. Indicates that a parameter or a method is a Razor section. Use this attribute for
 	/// custom wrappers similar to <c>System.Web.WebPages.WebPageBase.RenderSection(String)</c>
 	/// </summary>
-	[AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Method, Inherited = true)]
+	[AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Method)]
 	public sealed class RazorSectionAttribute : Attribute { }
 }

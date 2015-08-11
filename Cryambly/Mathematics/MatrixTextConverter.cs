@@ -97,7 +97,7 @@ namespace CryCil
 			{
 				return ToString(matrix, formatProvider);
 			}
-			string[] parts = format.Split(new[] { '|' });
+			string[] parts = format.Split('|');
 			int outerEncloserIndex = parts[0].IndexOf('o');
 			int innerEncloserIndex = parts[0].IndexOf('i');
 			MatrixTextFormat formatObject = new MatrixTextFormat

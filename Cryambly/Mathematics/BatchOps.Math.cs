@@ -55,7 +55,7 @@ namespace CryCil
 
 				fixed (float* ptr = numbers)
 				{
-					BatchOps.MathSimpleOpSingle(ptr, numbers.LongLength, MathSimpleOperations.Sine);
+					MathSimpleOpSingle(ptr, numbers.LongLength, MathSimpleOperations.Sine);
 				}
 			}
 			/// <summary>
@@ -76,7 +76,7 @@ namespace CryCil
 
 				fixed (float* ptr = results)
 				{
-					BatchOps.MathSimpleOpSingle(ptr, source.LongLength, MathSimpleOperations.Sine);
+					MathSimpleOpSingle(ptr, source.LongLength, MathSimpleOperations.Sine);
 				}
 			}
 			/// <summary>
@@ -94,7 +94,7 @@ namespace CryCil
 
 				fixed (double* ptr = numbers)
 				{
-					BatchOps.MathSimpleOpDouble(ptr, numbers.LongLength, MathSimpleOperations.Sine);
+					MathSimpleOpDouble(ptr, numbers.LongLength, MathSimpleOperations.Sine);
 				}
 			}
 			/// <summary>
@@ -115,7 +115,7 @@ namespace CryCil
 
 				fixed (double* ptr = results)
 				{
-					BatchOps.MathSimpleOpDouble(ptr, source.LongLength, MathSimpleOperations.Sine);
+					MathSimpleOpDouble(ptr, source.LongLength, MathSimpleOperations.Sine);
 				}
 			}
 			/// <summary>
@@ -133,7 +133,7 @@ namespace CryCil
 
 				fixed (float* ptr = numbers)
 				{
-					BatchOps.MathSimpleOpSingle(ptr, numbers.LongLength, MathSimpleOperations.Cosine);
+					MathSimpleOpSingle(ptr, numbers.LongLength, MathSimpleOperations.Cosine);
 				}
 			}
 			/// <summary>
@@ -154,7 +154,7 @@ namespace CryCil
 
 				fixed (float* ptr = results)
 				{
-					BatchOps.MathSimpleOpSingle(ptr, source.LongLength, MathSimpleOperations.Cosine);
+					MathSimpleOpSingle(ptr, source.LongLength, MathSimpleOperations.Cosine);
 				}
 			}
 			/// <summary>
@@ -172,7 +172,7 @@ namespace CryCil
 
 				fixed (double* ptr = numbers)
 				{
-					BatchOps.MathSimpleOpDouble(ptr, numbers.LongLength, MathSimpleOperations.Cosine);
+					MathSimpleOpDouble(ptr, numbers.LongLength, MathSimpleOperations.Cosine);
 				}
 			}
 			/// <summary>
@@ -193,7 +193,7 @@ namespace CryCil
 
 				fixed (double* ptr = results)
 				{
-					BatchOps.MathSimpleOpDouble(ptr, source.LongLength, MathSimpleOperations.Cosine);
+					MathSimpleOpDouble(ptr, source.LongLength, MathSimpleOperations.Cosine);
 				}
 			}
 			/// <summary>
@@ -211,7 +211,7 @@ namespace CryCil
 
 				fixed (float* ptr = numbers)
 				{
-					BatchOps.MathSimpleOpSingle(ptr, numbers.LongLength, MathSimpleOperations.Tangent);
+					MathSimpleOpSingle(ptr, numbers.LongLength, MathSimpleOperations.Tangent);
 				}
 			}
 			/// <summary>
@@ -232,7 +232,7 @@ namespace CryCil
 
 				fixed (float* ptr = results)
 				{
-					BatchOps.MathSimpleOpSingle(ptr, source.LongLength, MathSimpleOperations.Tangent);
+					MathSimpleOpSingle(ptr, source.LongLength, MathSimpleOperations.Tangent);
 				}
 			}
 			/// <summary>
@@ -250,7 +250,7 @@ namespace CryCil
 
 				fixed (double* ptr = numbers)
 				{
-					BatchOps.MathSimpleOpDouble(ptr, numbers.LongLength, MathSimpleOperations.Tangent);
+					MathSimpleOpDouble(ptr, numbers.LongLength, MathSimpleOperations.Tangent);
 				}
 			}
 			/// <summary>
@@ -271,7 +271,7 @@ namespace CryCil
 
 				fixed (double* ptr = results)
 				{
-					BatchOps.MathSimpleOpDouble(ptr, source.LongLength, MathSimpleOperations.Tangent);
+					MathSimpleOpDouble(ptr, source.LongLength, MathSimpleOperations.Tangent);
 				}
 			}
 			/// <summary>
@@ -289,7 +289,7 @@ namespace CryCil
 
 				fixed (float* ptr = numbers)
 				{
-					BatchOps.MathSimpleOpSingle(ptr, numbers.LongLength, MathSimpleOperations.Cotangent);
+					MathSimpleOpSingle(ptr, numbers.LongLength, MathSimpleOperations.Cotangent);
 				}
 			}
 			/// <summary>
@@ -310,7 +310,7 @@ namespace CryCil
 
 				fixed (float* ptr = results)
 				{
-					BatchOps.MathSimpleOpSingle(ptr, source.LongLength, MathSimpleOperations.Cotangent);
+					MathSimpleOpSingle(ptr, source.LongLength, MathSimpleOperations.Cotangent);
 				}
 			}
 			/// <summary>
@@ -328,7 +328,7 @@ namespace CryCil
 
 				fixed (double* ptr = numbers)
 				{
-					BatchOps.MathSimpleOpDouble(ptr, numbers.LongLength, MathSimpleOperations.Cotangent);
+					MathSimpleOpDouble(ptr, numbers.LongLength, MathSimpleOperations.Cotangent);
 				}
 			}
 			/// <summary>
@@ -349,7 +349,7 @@ namespace CryCil
 
 				fixed (double* ptr = results)
 				{
-					BatchOps.MathSimpleOpDouble(ptr, source.LongLength, MathSimpleOperations.Cotangent);
+					MathSimpleOpDouble(ptr, source.LongLength, MathSimpleOperations.Cotangent);
 				}
 			}
 			/// <summary>
@@ -367,7 +367,7 @@ namespace CryCil
 
 				fixed (float* ptr = numbers)
 				{
-					BatchOps.MathSimpleOpSingle(ptr, numbers.LongLength, MathSimpleOperations.Arcsine);
+					MathSimpleOpSingle(ptr, numbers.LongLength, MathSimpleOperations.Arcsine);
 				}
 			}
 			/// <summary>
@@ -388,7 +388,7 @@ namespace CryCil
 
 				fixed (float* ptr = results)
 				{
-					BatchOps.MathSimpleOpSingle(ptr, source.LongLength, MathSimpleOperations.Arcsine);
+					MathSimpleOpSingle(ptr, source.LongLength, MathSimpleOperations.Arcsine);
 				}
 			}
 			/// <summary>
@@ -406,7 +406,7 @@ namespace CryCil
 
 				fixed (double* ptr = numbers)
 				{
-					BatchOps.MathSimpleOpDouble(ptr, numbers.LongLength, MathSimpleOperations.Arcsine);
+					MathSimpleOpDouble(ptr, numbers.LongLength, MathSimpleOperations.Arcsine);
 				}
 			}
 			/// <summary>
@@ -427,7 +427,7 @@ namespace CryCil
 
 				fixed (double* ptr = results)
 				{
-					BatchOps.MathSimpleOpDouble(ptr, source.LongLength, MathSimpleOperations.Arcsine);
+					MathSimpleOpDouble(ptr, source.LongLength, MathSimpleOperations.Arcsine);
 				}
 			}
 			/// <summary>
@@ -445,7 +445,7 @@ namespace CryCil
 
 				fixed (float* ptr = numbers)
 				{
-					BatchOps.MathSimpleOpSingle(ptr, numbers.LongLength, MathSimpleOperations.Arccosine);
+					MathSimpleOpSingle(ptr, numbers.LongLength, MathSimpleOperations.Arccosine);
 				}
 			}
 			/// <summary>
@@ -466,7 +466,7 @@ namespace CryCil
 
 				fixed (float* ptr = results)
 				{
-					BatchOps.MathSimpleOpSingle(ptr, source.LongLength, MathSimpleOperations.Arccosine);
+					MathSimpleOpSingle(ptr, source.LongLength, MathSimpleOperations.Arccosine);
 				}
 			}
 			/// <summary>
@@ -484,7 +484,7 @@ namespace CryCil
 
 				fixed (double* ptr = numbers)
 				{
-					BatchOps.MathSimpleOpDouble(ptr, numbers.LongLength, MathSimpleOperations.Arccosine);
+					MathSimpleOpDouble(ptr, numbers.LongLength, MathSimpleOperations.Arccosine);
 				}
 			}
 			/// <summary>
@@ -505,7 +505,7 @@ namespace CryCil
 
 				fixed (double* ptr = results)
 				{
-					BatchOps.MathSimpleOpDouble(ptr, source.LongLength, MathSimpleOperations.Arccosine);
+					MathSimpleOpDouble(ptr, source.LongLength, MathSimpleOperations.Arccosine);
 				}
 			}
 			/// <summary>
@@ -523,7 +523,7 @@ namespace CryCil
 
 				fixed (float* ptr = numbers)
 				{
-					BatchOps.MathSimpleOpSingle(ptr, numbers.LongLength, MathSimpleOperations.Arctangent);
+					MathSimpleOpSingle(ptr, numbers.LongLength, MathSimpleOperations.Arctangent);
 				}
 			}
 			/// <summary>
@@ -544,7 +544,7 @@ namespace CryCil
 
 				fixed (float* ptr = results)
 				{
-					BatchOps.MathSimpleOpSingle(ptr, source.LongLength, MathSimpleOperations.Arctangent);
+					MathSimpleOpSingle(ptr, source.LongLength, MathSimpleOperations.Arctangent);
 				}
 			}
 			/// <summary>
@@ -562,7 +562,7 @@ namespace CryCil
 
 				fixed (double* ptr = numbers)
 				{
-					BatchOps.MathSimpleOpDouble(ptr, numbers.LongLength, MathSimpleOperations.Arctangent);
+					MathSimpleOpDouble(ptr, numbers.LongLength, MathSimpleOperations.Arctangent);
 				}
 			}
 			/// <summary>
@@ -583,7 +583,7 @@ namespace CryCil
 
 				fixed (double* ptr = results)
 				{
-					BatchOps.MathSimpleOpDouble(ptr, source.LongLength, MathSimpleOperations.Arctangent);
+					MathSimpleOpDouble(ptr, source.LongLength, MathSimpleOperations.Arctangent);
 				}
 			}
 			/// <summary>
@@ -601,7 +601,7 @@ namespace CryCil
 
 				fixed (float* ptr = numbers)
 				{
-					BatchOps.MathSimpleOpSingle(ptr, numbers.LongLength, MathSimpleOperations.Arccotangent);
+					MathSimpleOpSingle(ptr, numbers.LongLength, MathSimpleOperations.Arccotangent);
 				}
 			}
 			/// <summary>
@@ -622,7 +622,7 @@ namespace CryCil
 
 				fixed (float* ptr = results)
 				{
-					BatchOps.MathSimpleOpSingle(ptr, source.LongLength, MathSimpleOperations.Arccotangent);
+					MathSimpleOpSingle(ptr, source.LongLength, MathSimpleOperations.Arccotangent);
 				}
 			}
 			/// <summary>
@@ -640,7 +640,7 @@ namespace CryCil
 
 				fixed (double* ptr = numbers)
 				{
-					BatchOps.MathSimpleOpDouble(ptr, numbers.LongLength, MathSimpleOperations.Arccotangent);
+					MathSimpleOpDouble(ptr, numbers.LongLength, MathSimpleOperations.Arccotangent);
 				}
 			}
 			/// <summary>
@@ -661,7 +661,7 @@ namespace CryCil
 
 				fixed (double* ptr = results)
 				{
-					BatchOps.MathSimpleOpDouble(ptr, source.LongLength, MathSimpleOperations.Arccotangent);
+					MathSimpleOpDouble(ptr, source.LongLength, MathSimpleOperations.Arccotangent);
 				}
 			}
 			/// <summary>
@@ -679,7 +679,7 @@ namespace CryCil
 
 				fixed (float* ptr = numbers)
 				{
-					BatchOps.MathSimpleOpSingle(ptr, numbers.LongLength, MathSimpleOperations.SineHyperbolic);
+					MathSimpleOpSingle(ptr, numbers.LongLength, MathSimpleOperations.SineHyperbolic);
 				}
 			}
 			/// <summary>
@@ -700,7 +700,7 @@ namespace CryCil
 
 				fixed (float* ptr = results)
 				{
-					BatchOps.MathSimpleOpSingle(ptr, source.LongLength, MathSimpleOperations.SineHyperbolic);
+					MathSimpleOpSingle(ptr, source.LongLength, MathSimpleOperations.SineHyperbolic);
 				}
 			}
 			/// <summary>
@@ -718,7 +718,7 @@ namespace CryCil
 
 				fixed (double* ptr = numbers)
 				{
-					BatchOps.MathSimpleOpDouble(ptr, numbers.LongLength, MathSimpleOperations.SineHyperbolic);
+					MathSimpleOpDouble(ptr, numbers.LongLength, MathSimpleOperations.SineHyperbolic);
 				}
 			}
 			/// <summary>
@@ -739,7 +739,7 @@ namespace CryCil
 
 				fixed (double* ptr = results)
 				{
-					BatchOps.MathSimpleOpDouble(ptr, source.LongLength, MathSimpleOperations.SineHyperbolic);
+					MathSimpleOpDouble(ptr, source.LongLength, MathSimpleOperations.SineHyperbolic);
 				}
 			}
 			/// <summary>
@@ -757,7 +757,7 @@ namespace CryCil
 
 				fixed (float* ptr = numbers)
 				{
-					BatchOps.MathSimpleOpSingle(ptr, numbers.LongLength, MathSimpleOperations.CosineHyperbolic);
+					MathSimpleOpSingle(ptr, numbers.LongLength, MathSimpleOperations.CosineHyperbolic);
 				}
 			}
 			/// <summary>
@@ -778,7 +778,7 @@ namespace CryCil
 
 				fixed (float* ptr = results)
 				{
-					BatchOps.MathSimpleOpSingle(ptr, source.LongLength, MathSimpleOperations.CosineHyperbolic);
+					MathSimpleOpSingle(ptr, source.LongLength, MathSimpleOperations.CosineHyperbolic);
 				}
 			}
 			/// <summary>
@@ -796,7 +796,7 @@ namespace CryCil
 
 				fixed (double* ptr = numbers)
 				{
-					BatchOps.MathSimpleOpDouble(ptr, numbers.LongLength, MathSimpleOperations.CosineHyperbolic);
+					MathSimpleOpDouble(ptr, numbers.LongLength, MathSimpleOperations.CosineHyperbolic);
 				}
 			}
 			/// <summary>
@@ -817,7 +817,7 @@ namespace CryCil
 
 				fixed (double* ptr = results)
 				{
-					BatchOps.MathSimpleOpDouble(ptr, source.LongLength, MathSimpleOperations.CosineHyperbolic);
+					MathSimpleOpDouble(ptr, source.LongLength, MathSimpleOperations.CosineHyperbolic);
 				}
 			}
 			/// <summary>
@@ -835,7 +835,7 @@ namespace CryCil
 
 				fixed (float* ptr = numbers)
 				{
-					BatchOps.MathSimpleOpSingle(ptr, numbers.LongLength, MathSimpleOperations.TangentHyperbolic);
+					MathSimpleOpSingle(ptr, numbers.LongLength, MathSimpleOperations.TangentHyperbolic);
 				}
 			}
 			/// <summary>
@@ -856,7 +856,7 @@ namespace CryCil
 
 				fixed (float* ptr = results)
 				{
-					BatchOps.MathSimpleOpSingle(ptr, source.LongLength, MathSimpleOperations.TangentHyperbolic);
+					MathSimpleOpSingle(ptr, source.LongLength, MathSimpleOperations.TangentHyperbolic);
 				}
 			}
 			/// <summary>
@@ -874,7 +874,7 @@ namespace CryCil
 
 				fixed (double* ptr = numbers)
 				{
-					BatchOps.MathSimpleOpDouble(ptr, numbers.LongLength, MathSimpleOperations.TangentHyperbolic);
+					MathSimpleOpDouble(ptr, numbers.LongLength, MathSimpleOperations.TangentHyperbolic);
 				}
 			}
 			/// <summary>
@@ -895,7 +895,7 @@ namespace CryCil
 
 				fixed (double* ptr = results)
 				{
-					BatchOps.MathSimpleOpDouble(ptr, source.LongLength, MathSimpleOperations.TangentHyperbolic);
+					MathSimpleOpDouble(ptr, source.LongLength, MathSimpleOperations.TangentHyperbolic);
 				}
 			}
 			/// <summary>
@@ -913,7 +913,7 @@ namespace CryCil
 
 				fixed (float* ptr = numbers)
 				{
-					BatchOps.MathSimpleOpSingle(ptr, numbers.LongLength, MathSimpleOperations.CotangentHyperbolic);
+					MathSimpleOpSingle(ptr, numbers.LongLength, MathSimpleOperations.CotangentHyperbolic);
 				}
 			}
 			/// <summary>
@@ -934,7 +934,7 @@ namespace CryCil
 
 				fixed (float* ptr = results)
 				{
-					BatchOps.MathSimpleOpSingle(ptr, source.LongLength, MathSimpleOperations.CotangentHyperbolic);
+					MathSimpleOpSingle(ptr, source.LongLength, MathSimpleOperations.CotangentHyperbolic);
 				}
 			}
 			/// <summary>
@@ -952,7 +952,7 @@ namespace CryCil
 
 				fixed (double* ptr = numbers)
 				{
-					BatchOps.MathSimpleOpDouble(ptr, numbers.LongLength, MathSimpleOperations.CotangentHyperbolic);
+					MathSimpleOpDouble(ptr, numbers.LongLength, MathSimpleOperations.CotangentHyperbolic);
 				}
 			}
 			/// <summary>
@@ -973,7 +973,7 @@ namespace CryCil
 
 				fixed (double* ptr = results)
 				{
-					BatchOps.MathSimpleOpDouble(ptr, source.LongLength, MathSimpleOperations.CotangentHyperbolic);
+					MathSimpleOpDouble(ptr, source.LongLength, MathSimpleOperations.CotangentHyperbolic);
 				}
 			}
 			/// <summary>
@@ -991,7 +991,7 @@ namespace CryCil
 
 				fixed (float* ptr = numbers)
 				{
-					BatchOps.MathSimpleOpSingle(ptr, numbers.LongLength, MathSimpleOperations.ArcsineHyperbolic);
+					MathSimpleOpSingle(ptr, numbers.LongLength, MathSimpleOperations.ArcsineHyperbolic);
 				}
 			}
 			/// <summary>
@@ -1012,7 +1012,7 @@ namespace CryCil
 
 				fixed (float* ptr = results)
 				{
-					BatchOps.MathSimpleOpSingle(ptr, source.LongLength, MathSimpleOperations.ArcsineHyperbolic);
+					MathSimpleOpSingle(ptr, source.LongLength, MathSimpleOperations.ArcsineHyperbolic);
 				}
 			}
 			/// <summary>
@@ -1030,7 +1030,7 @@ namespace CryCil
 
 				fixed (double* ptr = numbers)
 				{
-					BatchOps.MathSimpleOpDouble(ptr, numbers.LongLength, MathSimpleOperations.ArcsineHyperbolic);
+					MathSimpleOpDouble(ptr, numbers.LongLength, MathSimpleOperations.ArcsineHyperbolic);
 				}
 			}
 			/// <summary>
@@ -1051,7 +1051,7 @@ namespace CryCil
 
 				fixed (double* ptr = results)
 				{
-					BatchOps.MathSimpleOpDouble(ptr, source.LongLength, MathSimpleOperations.ArcsineHyperbolic);
+					MathSimpleOpDouble(ptr, source.LongLength, MathSimpleOperations.ArcsineHyperbolic);
 				}
 			}
 			/// <summary>
@@ -1069,7 +1069,7 @@ namespace CryCil
 
 				fixed (float* ptr = numbers)
 				{
-					BatchOps.MathSimpleOpSingle(ptr, numbers.LongLength, MathSimpleOperations.ArccosineHyperbolic);
+					MathSimpleOpSingle(ptr, numbers.LongLength, MathSimpleOperations.ArccosineHyperbolic);
 				}
 			}
 			/// <summary>
@@ -1090,7 +1090,7 @@ namespace CryCil
 
 				fixed (float* ptr = results)
 				{
-					BatchOps.MathSimpleOpSingle(ptr, source.LongLength, MathSimpleOperations.ArccosineHyperbolic);
+					MathSimpleOpSingle(ptr, source.LongLength, MathSimpleOperations.ArccosineHyperbolic);
 				}
 			}
 			/// <summary>
@@ -1108,7 +1108,7 @@ namespace CryCil
 
 				fixed (double* ptr = numbers)
 				{
-					BatchOps.MathSimpleOpDouble(ptr, numbers.LongLength, MathSimpleOperations.ArccosineHyperbolic);
+					MathSimpleOpDouble(ptr, numbers.LongLength, MathSimpleOperations.ArccosineHyperbolic);
 				}
 			}
 			/// <summary>
@@ -1129,7 +1129,7 @@ namespace CryCil
 
 				fixed (double* ptr = results)
 				{
-					BatchOps.MathSimpleOpDouble(ptr, source.LongLength, MathSimpleOperations.ArccosineHyperbolic);
+					MathSimpleOpDouble(ptr, source.LongLength, MathSimpleOperations.ArccosineHyperbolic);
 				}
 			}
 			/// <summary>
@@ -1147,7 +1147,7 @@ namespace CryCil
 
 				fixed (float* ptr = numbers)
 				{
-					BatchOps.MathSimpleOpSingle(ptr, numbers.LongLength, MathSimpleOperations.ArctangentHyperbolic);
+					MathSimpleOpSingle(ptr, numbers.LongLength, MathSimpleOperations.ArctangentHyperbolic);
 				}
 			}
 			/// <summary>
@@ -1168,7 +1168,7 @@ namespace CryCil
 
 				fixed (float* ptr = results)
 				{
-					BatchOps.MathSimpleOpSingle(ptr, source.LongLength, MathSimpleOperations.ArctangentHyperbolic);
+					MathSimpleOpSingle(ptr, source.LongLength, MathSimpleOperations.ArctangentHyperbolic);
 				}
 			}
 			/// <summary>
@@ -1186,7 +1186,7 @@ namespace CryCil
 
 				fixed (double* ptr = numbers)
 				{
-					BatchOps.MathSimpleOpDouble(ptr, numbers.LongLength, MathSimpleOperations.ArctangentHyperbolic);
+					MathSimpleOpDouble(ptr, numbers.LongLength, MathSimpleOperations.ArctangentHyperbolic);
 				}
 			}
 			/// <summary>
@@ -1207,7 +1207,7 @@ namespace CryCil
 
 				fixed (double* ptr = results)
 				{
-					BatchOps.MathSimpleOpDouble(ptr, source.LongLength, MathSimpleOperations.ArctangentHyperbolic);
+					MathSimpleOpDouble(ptr, source.LongLength, MathSimpleOperations.ArctangentHyperbolic);
 				}
 			}
 			/// <summary>
@@ -1225,7 +1225,7 @@ namespace CryCil
 
 				fixed (float* ptr = numbers)
 				{
-					BatchOps.MathSimpleOpSingle(ptr, numbers.LongLength, MathSimpleOperations.ArccotangentHyperbolic);
+					MathSimpleOpSingle(ptr, numbers.LongLength, MathSimpleOperations.ArccotangentHyperbolic);
 				}
 			}
 			/// <summary>
@@ -1246,7 +1246,7 @@ namespace CryCil
 
 				fixed (float* ptr = results)
 				{
-					BatchOps.MathSimpleOpSingle(ptr, source.LongLength, MathSimpleOperations.ArccotangentHyperbolic);
+					MathSimpleOpSingle(ptr, source.LongLength, MathSimpleOperations.ArccotangentHyperbolic);
 				}
 			}
 			/// <summary>
@@ -1264,7 +1264,7 @@ namespace CryCil
 
 				fixed (double* ptr = numbers)
 				{
-					BatchOps.MathSimpleOpDouble(ptr, numbers.LongLength, MathSimpleOperations.ArccotangentHyperbolic);
+					MathSimpleOpDouble(ptr, numbers.LongLength, MathSimpleOperations.ArccotangentHyperbolic);
 				}
 			}
 			/// <summary>
@@ -1285,7 +1285,7 @@ namespace CryCil
 
 				fixed (double* ptr = results)
 				{
-					BatchOps.MathSimpleOpDouble(ptr, source.LongLength, MathSimpleOperations.ArccotangentHyperbolic);
+					MathSimpleOpDouble(ptr, source.LongLength, MathSimpleOperations.ArccotangentHyperbolic);
 				}
 			}
 			/// <summary>
@@ -1303,7 +1303,7 @@ namespace CryCil
 
 				fixed (float* ptr = numbers)
 				{
-					BatchOps.MathSimpleOpSingle(ptr, numbers.LongLength, MathSimpleOperations.LogarithmNatural);
+					MathSimpleOpSingle(ptr, numbers.LongLength, MathSimpleOperations.LogarithmNatural);
 				}
 			}
 			/// <summary>
@@ -1324,7 +1324,7 @@ namespace CryCil
 
 				fixed (float* ptr = results)
 				{
-					BatchOps.MathSimpleOpSingle(ptr, source.LongLength, MathSimpleOperations.LogarithmNatural);
+					MathSimpleOpSingle(ptr, source.LongLength, MathSimpleOperations.LogarithmNatural);
 				}
 			}
 			/// <summary>
@@ -1342,7 +1342,7 @@ namespace CryCil
 
 				fixed (double* ptr = numbers)
 				{
-					BatchOps.MathSimpleOpDouble(ptr, numbers.LongLength, MathSimpleOperations.LogarithmNatural);
+					MathSimpleOpDouble(ptr, numbers.LongLength, MathSimpleOperations.LogarithmNatural);
 				}
 			}
 			/// <summary>
@@ -1363,7 +1363,7 @@ namespace CryCil
 
 				fixed (double* ptr = results)
 				{
-					BatchOps.MathSimpleOpDouble(ptr, source.LongLength, MathSimpleOperations.LogarithmNatural);
+					MathSimpleOpDouble(ptr, source.LongLength, MathSimpleOperations.LogarithmNatural);
 				}
 			}
 			/// <summary>
@@ -1381,7 +1381,7 @@ namespace CryCil
 
 				fixed (float* ptr = numbers)
 				{
-					BatchOps.MathSimpleOpSingle(ptr, numbers.LongLength, MathSimpleOperations.LogarithmDecimal);
+					MathSimpleOpSingle(ptr, numbers.LongLength, MathSimpleOperations.LogarithmDecimal);
 				}
 			}
 			/// <summary>
@@ -1402,7 +1402,7 @@ namespace CryCil
 
 				fixed (float* ptr = results)
 				{
-					BatchOps.MathSimpleOpSingle(ptr, source.LongLength, MathSimpleOperations.LogarithmDecimal);
+					MathSimpleOpSingle(ptr, source.LongLength, MathSimpleOperations.LogarithmDecimal);
 				}
 			}
 			/// <summary>
@@ -1420,7 +1420,7 @@ namespace CryCil
 
 				fixed (double* ptr = numbers)
 				{
-					BatchOps.MathSimpleOpDouble(ptr, numbers.LongLength, MathSimpleOperations.LogarithmDecimal);
+					MathSimpleOpDouble(ptr, numbers.LongLength, MathSimpleOperations.LogarithmDecimal);
 				}
 			}
 			/// <summary>
@@ -1441,7 +1441,7 @@ namespace CryCil
 
 				fixed (double* ptr = results)
 				{
-					BatchOps.MathSimpleOpDouble(ptr, source.LongLength, MathSimpleOperations.LogarithmDecimal);
+					MathSimpleOpDouble(ptr, source.LongLength, MathSimpleOperations.LogarithmDecimal);
 				}
 			}
 			/// <summary>
@@ -1459,7 +1459,7 @@ namespace CryCil
 
 				fixed (float* ptr = numbers)
 				{
-					BatchOps.MathSimpleOpSingle(ptr, numbers.LongLength, MathSimpleOperations.Exponent);
+					MathSimpleOpSingle(ptr, numbers.LongLength, MathSimpleOperations.Exponent);
 				}
 			}
 			/// <summary>
@@ -1480,7 +1480,7 @@ namespace CryCil
 
 				fixed (float* ptr = results)
 				{
-					BatchOps.MathSimpleOpSingle(ptr, source.LongLength, MathSimpleOperations.Exponent);
+					MathSimpleOpSingle(ptr, source.LongLength, MathSimpleOperations.Exponent);
 				}
 			}
 			/// <summary>
@@ -1498,7 +1498,7 @@ namespace CryCil
 
 				fixed (double* ptr = numbers)
 				{
-					BatchOps.MathSimpleOpDouble(ptr, numbers.LongLength, MathSimpleOperations.Exponent);
+					MathSimpleOpDouble(ptr, numbers.LongLength, MathSimpleOperations.Exponent);
 				}
 			}
 			/// <summary>
@@ -1519,7 +1519,7 @@ namespace CryCil
 
 				fixed (double* ptr = results)
 				{
-					BatchOps.MathSimpleOpDouble(ptr, source.LongLength, MathSimpleOperations.Exponent);
+					MathSimpleOpDouble(ptr, source.LongLength, MathSimpleOperations.Exponent);
 				}
 			}
 			/// <summary>
@@ -1539,7 +1539,7 @@ namespace CryCil
 
 				fixed (Vector3* ptr = data)
 				{
-					BatchOps.Math3NumberOpSingle(ptr, data.LongLength, Math3NumberOperations.Power);
+					Math3NumberOpSingle(ptr, data.LongLength, Math3NumberOperations.Power);
 				}
 			}
 			/// <summary>
@@ -1559,7 +1559,7 @@ namespace CryCil
 
 				fixed (Vector3Double* ptr = data)
 				{
-					BatchOps.Math3NumberOpDouble(ptr, data.LongLength, Math3NumberOperations.Power);
+					Math3NumberOpDouble(ptr, data.LongLength, Math3NumberOperations.Power);
 				}
 			}
 			/// <summary>
@@ -1579,7 +1579,7 @@ namespace CryCil
 
 				fixed (Vector3* ptr = data)
 				{
-					BatchOps.Math3NumberOpSingle(ptr, data.LongLength, Math3NumberOperations.Logarithm);
+					Math3NumberOpSingle(ptr, data.LongLength, Math3NumberOperations.Logarithm);
 				}
 			}
 			/// <summary>
@@ -1599,7 +1599,7 @@ namespace CryCil
 
 				fixed (Vector3Double* ptr = data)
 				{
-					BatchOps.Math3NumberOpDouble(ptr, data.LongLength, Math3NumberOperations.Logarithm);
+					Math3NumberOpDouble(ptr, data.LongLength, Math3NumberOperations.Logarithm);
 				}
 			}
 			/// <summary>
@@ -1618,7 +1618,7 @@ namespace CryCil
 
 				fixed (Vector3* ptr = data)
 				{
-					BatchOps.Math3NumberOpSingle(ptr, data.LongLength, Math3NumberOperations.SineCosine);
+					Math3NumberOpSingle(ptr, data.LongLength, Math3NumberOperations.SineCosine);
 				}
 			}
 			/// <summary>
@@ -1637,7 +1637,7 @@ namespace CryCil
 
 				fixed (Vector3Double* ptr = data)
 				{
-					BatchOps.Math3NumberOpDouble(ptr, data.LongLength, Math3NumberOperations.SineCosine);
+					Math3NumberOpDouble(ptr, data.LongLength, Math3NumberOperations.SineCosine);
 				}
 			}
 			/// <summary>
@@ -1656,7 +1656,7 @@ namespace CryCil
 
 				fixed (Vector3* ptr = data)
 				{
-					BatchOps.Math3NumberOpSingle(ptr, data.LongLength, Math3NumberOperations.Arctangent2);
+					Math3NumberOpSingle(ptr, data.LongLength, Math3NumberOperations.Arctangent2);
 				}
 			}
 			/// <summary>
@@ -1675,7 +1675,7 @@ namespace CryCil
 
 				fixed (Vector3Double* ptr = data)
 				{
-					BatchOps.Math3NumberOpDouble(ptr, data.LongLength, Math3NumberOperations.Arctangent2);
+					Math3NumberOpDouble(ptr, data.LongLength, Math3NumberOperations.Arctangent2);
 				}
 			}
 		}

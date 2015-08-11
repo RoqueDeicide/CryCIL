@@ -106,7 +106,7 @@ namespace CryCil.Engine
 				FrameStartUi = new DateTime(frameStartUi, DateTimeKind.Unspecified);
 				Frame = new TimeSpan(frame);
 				RealFrame = new TimeSpan(realFrame);
-				Time.timeScale = scale;
+				timeScale = scale;
 				FrameRate = frameRate;
 			}
 			catch (Exception ex)

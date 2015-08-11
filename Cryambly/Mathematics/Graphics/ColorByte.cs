@@ -171,7 +171,7 @@ namespace CryCil.Graphics
 		/// <returns>Object of type <see cref="String"/> that represents this color.</returns>
 		public override string ToString()
 		{
-			return String.Format("[{0} {1} {2} {3}]", this.Red, this.Green, this.Blue, this.Alpha);
+			return string.Format("[{0} {1} {2} {3}]", this.Red, this.Green, this.Blue, this.Alpha);
 		}
 		/// <summary>
 		/// Converts text representation of the color to type <see cref="ColorByte"/> .
@@ -192,15 +192,15 @@ namespace CryCil.Graphics
 			{
 				throw new ArgumentException("Attempt to parse text that is not a recognizable Color32 representation as object of that type.");
 			}
-			string[] componentStrings = text.Substring(1, text.Length - 2).Split(new[] { ' ' });
+			string[] componentStrings = text.Substring(1, text.Length - 2).Split(' ');
 			try
 			{
 				ColorByte color = new ColorByte
 				{
-					Red = Byte.Parse(componentStrings[0]),
-					Green = Byte.Parse(componentStrings[1]),
-					Blue = Byte.Parse(componentStrings[2]),
-					Alpha = Byte.Parse(componentStrings[3])
+					Red = byte.Parse(componentStrings[0]),
+					Green = byte.Parse(componentStrings[1]),
+					Blue = byte.Parse(componentStrings[2]),
+					Alpha = byte.Parse(componentStrings[3])
 				};
 				return color;
 			}
@@ -224,7 +224,7 @@ namespace CryCil.Graphics
 		{
 			try
 			{
-				color = ColorByte.Parse(text);
+				color = Parse(text);
 				return true;
 			}
 			catch (Exception)

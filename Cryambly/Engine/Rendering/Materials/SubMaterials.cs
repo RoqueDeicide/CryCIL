@@ -34,8 +34,8 @@ namespace CryCil.Engine.Rendering
 		/// </exception>
 		public Material this[int index]
 		{
-			get { return GetItem(index); }
-			set { SetItem(index, value); }
+			get { return this.GetItem(index); }
+			set { this.SetItem(index, value); }
 		}
 		/// <summary>
 		/// Gets or sets number of slots for sub-materials.
@@ -48,8 +48,8 @@ namespace CryCil.Engine.Rendering
 		/// </exception>
 		public int Count
 		{
-			get { return GetCount(); }
-			set { SetCount(value); }
+			get { return this.GetCount(); }
+			set { this.SetCount(value); }
 		}
 		/// <summary>
 		/// Returns false.

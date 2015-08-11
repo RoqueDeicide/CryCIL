@@ -28,7 +28,7 @@ namespace CryCil.Engine.DebugServices
 		/// <param name="value">Text to write.</param>
 		public static void Line(string value)
 		{
-			Log.Post(LogPostType.Message, value);
+			Post(LogPostType.Message, value);
 		}
 		/// <summary>
 		/// Writes a line into the log that will be visible on any log verbosity level.
@@ -36,7 +36,7 @@ namespace CryCil.Engine.DebugServices
 		/// <param name="value">Text to post.</param>
 		public static void Always(string value)
 		{
-			Log.Post(LogPostType.Always, value);
+			Post(LogPostType.Always, value);
 		}
 		/// <summary>
 		/// Writes a warning into the log. Displayed with yellow font.
@@ -45,7 +45,7 @@ namespace CryCil.Engine.DebugServices
 		/// <param name="important">Indicates whether the message is very important to post.</param>
 		public static void Warning(string value, bool important)
 		{
-			Log.Post(important ? LogPostType.WarningAlways : LogPostType.Warning, value);
+			Post(important ? LogPostType.WarningAlways : LogPostType.Warning, value);
 		}
 		/// <summary>
 		/// Writes an error message into the log. Displayed with red font.
@@ -54,7 +54,7 @@ namespace CryCil.Engine.DebugServices
 		/// <param name="important">Indicates whether the message is very important to post.</param>
 		public static void Error(string value, bool important)
 		{
-			Log.Post(important ? LogPostType.ErrorAlways : LogPostType.Error, value);
+			Post(important ? LogPostType.ErrorAlways : LogPostType.Error, value);
 		}
 		/// <summary>
 		/// Posts a comment into the log.
@@ -62,7 +62,7 @@ namespace CryCil.Engine.DebugServices
 		/// <param name="value">Text to post.</param>
 		public static void Comment(string value)
 		{
-			Log.Post(LogPostType.Comment, value);
+			Post(LogPostType.Comment, value);
 		}
 		/// <summary>
 		/// Posts a line of text to the log.

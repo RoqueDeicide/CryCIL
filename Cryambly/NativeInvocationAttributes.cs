@@ -11,7 +11,7 @@ namespace CryCil
 	/// <summary>
 	/// Marks a method that is invoked from native code using unmanaged thunk.
 	/// </summary>
-	[AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
+	[AttributeUsage(AttributeTargets.Method, Inherited = false)]
 	[MeansImplicitUse]
 	public sealed class UnmanagedThunkAttribute : Attribute
 	{
@@ -28,7 +28,7 @@ namespace CryCil
 		/// <param name="comment">A comment about the context of the method's invocation.</param>
 		public UnmanagedThunkAttribute([NotNull] string comment)
 		{
-			Comment = comment;
+			this.Comment = comment;
 		}
 		/// <summary>
 		/// A comment about the context of the method's invocation.
@@ -44,7 +44,7 @@ namespace CryCil
 	/// and handles them in some way (by invoking <see cref="MonoInterface.DisplayException"/> for
 	/// instance) , otherwise any unhandled exception will crash the program.
 	/// </remarks>
-	[AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
+	[AttributeUsage(AttributeTargets.Method, Inherited = false)]
 	[MeansImplicitUse]
 	public sealed class RawThunkAttribute : Attribute
 	{
@@ -61,7 +61,7 @@ namespace CryCil
 		/// <param name="comment">A comment about the context of the method's invocation.</param>
 		public RawThunkAttribute([NotNull] string comment)
 		{
-			Comment = comment;
+			this.Comment = comment;
 		}
 		/// <summary>
 		/// A comment about the context of the method's invocation.
@@ -73,7 +73,7 @@ namespace CryCil
 	/// Marks a method that is invoked from native code using mono_runtime_invoke that can be called via
 	/// IMonoFunction's derivatives.
 	/// </summary>
-	[AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
+	[AttributeUsage(AttributeTargets.Method, Inherited = false)]
 	[MeansImplicitUse]
 	public sealed class RuntimeInvokeAttribute : Attribute
 	{
@@ -90,7 +90,7 @@ namespace CryCil
 		/// <param name="comment">A comment about the context of the method's invocation.</param>
 		public RuntimeInvokeAttribute([NotNull] string comment)
 		{
-			Comment = comment;
+			this.Comment = comment;
 		}
 		/// <summary>
 		/// A comment about the context of the method's invocation.

@@ -21,28 +21,28 @@ namespace CryCil.Engine.Logic
 		/// </summary>
 		public string Name
 		{
-			get { return name; }
+			get { return this.name; }
 		}
 		/// <summary>
 		/// Type of the property.
 		/// </summary>
 		public EditablePropertyType Type
 		{
-			get { return type; }
+			get { return this.type; }
 		}
 		/// <summary>
 		/// Prefix that designates which edit control to use.
 		/// </summary>
 		public string EditType
 		{
-			get { return editType; }
+			get { return this.editType; }
 		}
 		/// <summary>
 		/// Description of the property.
 		/// </summary>
 		public string Description
 		{
-			get { return description; }
+			get { return this.description; }
 		}
 		/// <summary>
 		/// A set of flags that describes the property.
@@ -50,7 +50,7 @@ namespace CryCil.Engine.Logic
 		/// <remarks>Not used.</remarks>
 		public uint Flags
 		{
-			get { return flags; }
+			get { return this.flags; }
 		}
 		/// <summary>
 		/// 2D vector where <see cref="Vector2.X"/> field designates minimal value this property can take
@@ -58,14 +58,14 @@ namespace CryCil.Engine.Logic
 		/// </summary>
 		public Vector2 Limits
 		{
-			get { return limits; }
+			get { return this.limits; }
 		}
 		/// <summary>
 		/// Text representation of the default value of this property.
 		/// </summary>
 		public string DefaultValue
 		{
-			get { return defaultValue; }
+			get { return this.defaultValue; }
 		}
 		/// <summary>
 		/// Creates new instance of this type.
