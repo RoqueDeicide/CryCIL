@@ -463,49 +463,61 @@ namespace CryCil
 		#endregion
 		#region Attributes
 		/// <summary>
-		/// Determines whether this member is decorated with at least one instance of a given attribute.
+		/// Determines whether this reflection object is decorated with at least one instance of a given
+		/// attribute.
 		/// </summary>
 		/// <typeparam name="T">The attribute to search for.</typeparam>
-		/// <param name="info">The member on which the search is performed.</param>
-		/// <returns>True if the member is decorated with at least one instance of attribute T.</returns>
-		public static bool ContainsAttribute<T>([NotNull] this MemberInfo info)
+		/// <param name="reflectionObject">The member on which the search is performed.</param>
+		/// <returns>
+		/// True if the member is decorated with at least one instance of attribute
+		/// <typeparamref name="T"/>.
+		/// </returns>
+		public static bool ContainsAttribute<T>([NotNull] this ICustomAttributeProvider reflectionObject)
 			where T : Attribute
 		{
-			return info.GetCustomAttributes(typeof(T), true).Length > 0;
+			return reflectionObject.IsDefined(typeof(T), true);
 		}
 		/// <summary>
-		/// Gets all instances of a given attribute on the selected member.
+		/// Gets all instances of a given attribute on the specified reflection object.
 		/// </summary>
 		/// <typeparam name="T">The attribute to search for.</typeparam>
-		/// <param name="memberInfo">The member on which the search is performed.</param>
-		/// <returns>The first instance of attribute T, or null if none is found.</returns>
-		public static IEnumerable<T> GetAttributes<T>([NotNull] this MemberInfo memberInfo)
+		/// <param name="reflectionObject">The object on which the search is performed.</param>
+		/// <returns>
+		/// An array of <typeparamref name="T"/> that contains all found attributes. Can be empty.
+		/// </returns>
+		[NotNull]
+		public static T[] GetAttributes<T>([NotNull] this ICustomAttributeProvider reflectionObject)
 			where T : Attribute
 		{
-			return (T[])memberInfo.GetCustomAttributes(typeof(T), true);
+			return (T[])reflectionObject.GetCustomAttributes(typeof(T), true);
 		}
 		/// <summary>
-		/// Gets the first instance of a given attribute on the selected member.
+		/// Gets the first instance of a given attribute on the specified reflection object.
 		/// </summary>
 		/// <typeparam name="T">The attribute to search for.</typeparam>
-		/// <param name="memberInfo">The member on which the search is performed.</param>
-		/// <returns>The first instance of attribute T, or null if none is found.</returns>
-		public static T GetAttribute<T>([NotNull] this MemberInfo memberInfo)
+		/// <param name="reflectionObject">The object on which the search is performed.</param>
+		/// <returns>
+		/// The first instance of attribute <typeparamref name="T"/>, or null if none is found.
+		/// </returns>
+		public static T GetAttribute<T>([NotNull] this ICustomAttributeProvider reflectionObject)
 			where T : Attribute
 		{
-			return memberInfo.GetAttributes<T>().FirstOrDefault();
+			return reflectionObject.GetAttributes<T>().FirstOrDefault();
 		}
 		/// <summary>
-		/// Tests whether the method is decorated with a given attribute, and if so, assigns it via the out
-		/// variable.
+		/// Tests whether the reflection object is decorated with a given attribute, and if so, assigns it
+		/// via the out variable.
 		/// </summary>
 		/// <typeparam name="T">The attribute to search for.</typeparam>
-		/// <param name="memberInfo">The member on which the search is performed.</param>
-		/// <param name="attribute"> The out parameter to which the attribute will be assigned.</param>
+		/// <param name="reflectionObject">The reflection object on which the search is performed.</param>
+		/// <param name="attribute">       
+		/// The out parameter to which the attribute will be assigned.
+		/// </param>
 		/// <returns>True if the attribute exists.</returns>
-		public static bool TryGetAttribute<T>([NotNull] this MemberInfo memberInfo, out T attribute) where T : Attribute
+		public static bool TryGetAttribute<T>([NotNull] this ICustomAttributeProvider reflectionObject, out T attribute)
+			where T : Attribute
 		{
-			var attributes = memberInfo.GetCustomAttributes(typeof(T), true);
+			var attributes = reflectionObject.GetCustomAttributes(typeof(T), true);
 
 			if (attributes.Length > 0)
 			{
