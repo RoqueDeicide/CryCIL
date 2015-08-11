@@ -275,6 +275,7 @@
     <ClInclude Include="Interfaces\IMonoThread.h" />
     <ClInclude Include="Interfaces\IMonoThreads.h" />
     <ClInclude Include="Interfaces\MonoGCHandle.h" />
+    <ClInclude Include="Interops\ActionMapping.h" />
     <ClInclude Include="Interops\Aliases.h" />
     <ClInclude Include="Interops\ArchiveStream.h" />
     <ClInclude Include="Interops\AuxiliaryGeometry.h" />
@@ -389,6 +390,7 @@
     <ClCompile Include="Implementation\MonoStaticMethod.cpp" />
     <ClCompile Include="Implementation\MonoTexts.cpp" />
     <ClCompile Include="Implementation\MonoThreads.cpp" />
+    <ClCompile Include="Interops\ActionMapping.cpp" />
     <ClCompile Include="Interops\Aliases.cpp" />
     <ClCompile Include="Interops\ArchiveStream.cpp" />
     <ClCompile Include="Interops\AuxiliaryGeometry.cpp" />
@@ -449,6 +451,10 @@
     </ClCompile>
     <ClCompile Include="Testing\TestStart.cpp" />
     <ClCompile Include="ThunkTables.cpp" />
+    <ClCompile Include="TypeMapChecks\ActionActivationMode.cpp" />
+    <ClCompile Include="TypeMapChecks\ActionAnalogCompareOperation.cpp" />
+    <ClCompile Include="TypeMapChecks\ActionInputBlockType.cpp" />
+    <ClCompile Include="TypeMapChecks\EKeyId.cpp" />
     <ClCompile Include="TypeMapChecks\EntityAspects.cpp" />
     <ClCompile Include="TypeMapChecks\EntityClassFlags.cpp" />
     <ClCompile Include="TypeMapChecks\EntityFlags.cpp" />

@@ -89,3 +89,5 @@
 #include "Interops/Entity.h"
 
 #include "Interops/Game.h"
+
+#include <Interops/ActionMapping.h>

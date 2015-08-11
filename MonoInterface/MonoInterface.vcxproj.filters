@@ -392,6 +392,9 @@
     <ClInclude Include="Interops\Game.h">
       <Filter>Interops</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\ActionMapping.h">
+      <Filter>Interops\Engine\Input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -663,6 +666,21 @@
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
     <ClCompile Include="TypeMapChecks\SpawnParams.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\ActionMapping.cpp">
+      <Filter>Interops\Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\ActionAnalogCompareOperation.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\EKeyId.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\ActionInputBlockType.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\ActionActivationMode.cpp">
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
   </ItemGroup>
