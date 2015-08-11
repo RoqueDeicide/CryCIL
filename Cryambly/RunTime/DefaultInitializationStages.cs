@@ -23,7 +23,7 @@ namespace CryCil.RunTime
 		/// <summary>
 		/// Index of the initialization stage during which actors defined in CryCIL are registered.
 		/// </summary>
-		ActorsRegistrationStage = 2000000,
+		ActionMapsRegistrationStage = 2000000,
 		/// <summary>
 		/// Index of the initialization stage during which game modes defined in CryCIL are registered.
 		/// </summary>

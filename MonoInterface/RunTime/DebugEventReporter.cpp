@@ -36,7 +36,7 @@ List<int> *DebugEventReporter::GetSubscribedStages()
 {
 	List<int> *stages = new List<int>(4);
 	stages->Add(ENTITY_REGISTRATION_STAGE);				// Entities registration.
-	stages->Add(ACTORS_REGISTRATION_STAGE);				// Actors registration.
+	stages->Add(ACTION_MAPS_REGISTRATION_STAGE);				// Actors registration.
 	stages->Add(GAME_MODE_REGISTRATION_STAGE);			// Game modes registration.
 	stages->Add(FLOWNODE_RECOGNITION_STAGE);			// Flow graph nodes recognition.
 	return stages;
@@ -49,8 +49,8 @@ void DebugEventReporter::OnInitializationStage(int stageIndex)
 	case ENTITY_REGISTRATION_STAGE:
 		CryLogAlways("Registering entities.");
 		break;
-	case ACTORS_REGISTRATION_STAGE:
-		CryLogAlways("Registering actors.");
+	case ACTION_MAPS_REGISTRATION_STAGE:
+		CryLogAlways("Registering action maps.");
 		break;
 	case GAME_MODE_REGISTRATION_STAGE:
 		CryLogAlways("Registering game modes.");

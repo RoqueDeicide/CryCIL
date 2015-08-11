@@ -80,8 +80,8 @@ public:
 		List<int> *stages = new List<int>(8);
 		stages->Add(ENTITY_REGISTRATION_STAGE - 1);			// Before entities registration.
 		stages->Add(ENTITY_REGISTRATION_STAGE + 1);			// After entities registration.
-		stages->Add(ACTORS_REGISTRATION_STAGE - 1);			// Before actors registration.
-		stages->Add(ACTORS_REGISTRATION_STAGE + 1);			// After actors registration.
+		stages->Add(ACTION_MAPS_REGISTRATION_STAGE - 1);			// Before actors registration.
+		stages->Add(ACTION_MAPS_REGISTRATION_STAGE + 1);			// After actors registration.
 		stages->Add(GAME_MODE_REGISTRATION_STAGE - 1);		// Before game modes registration.
 		stages->Add(GAME_MODE_REGISTRATION_STAGE + 1);		// After game modes registration.
 		stages->Add(FLOWNODE_RECOGNITION_STAGE - 1);		// Before flow graph nodes recognition.
@@ -99,10 +99,10 @@ public:
 		case ENTITY_REGISTRATION_STAGE + 1:
 			CryLogAlways("Entities defined by CryCIL are registered.");
 			break;
-		case ACTORS_REGISTRATION_STAGE - 1:
+		case ACTION_MAPS_REGISTRATION_STAGE - 1:
 			CryLogAlways("Actors defined by CryCIL are about to be registered.");
 			break;
-		case ACTORS_REGISTRATION_STAGE + 1:
+		case ACTION_MAPS_REGISTRATION_STAGE + 1:
 			CryLogAlways("Actors defined by CryCIL are registered.");
 			break;
 		case GAME_MODE_REGISTRATION_STAGE - 1:

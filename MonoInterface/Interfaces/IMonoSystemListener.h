@@ -10,8 +10,8 @@
 
 //! Index of the initialization stage during which entities defined in CryCIL are registered.
 #define ENTITY_REGISTRATION_STAGE DEFAULT_INITIALIZATION_STAGE 1000000
-//! Index of the initialization stage during which actors defined in CryCIL are registered.
-#define ACTORS_REGISTRATION_STAGE DEFAULT_INITIALIZATION_STAGE 2000000
+//! Index of the initialization stage during which action maps that are defined in CryCIL are registered.
+#define ACTION_MAPS_REGISTRATION_STAGE DEFAULT_INITIALIZATION_STAGE 2000000
 //! Index of the initialization stage during which game modes defined in CryCIL are registered.
 #define GAME_MODE_REGISTRATION_STAGE DEFAULT_INITIALIZATION_STAGE 3000000
 //! Index of the initialization stage during which data required to register CryCIL flow nodes
