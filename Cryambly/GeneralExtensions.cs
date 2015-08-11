@@ -289,26 +289,26 @@ namespace CryCil
 		/// <returns>A text representation of the ordinal number.</returns>
 		public static string ToOrdinal(this int number)
 		{
-			if (num <= 0) return num.ToString();
+			if (number <= 0) return number.ToString();
 
-			switch (num % 100)
+			switch (number % 100)
 			{
 				case 11:
 				case 12:
 				case 13:
-					return num + "th";
+					return number + "th";
 			}
 
-			switch (num % 10)
+			switch (number % 10)
 			{
 				case 1:
-					return num + "st";
+					return number + "st";
 				case 2:
-					return num + "nd";
+					return number + "nd";
 				case 3:
-					return num + "rd";
+					return number + "rd";
 				default:
-					return num + "th";
+					return number + "th";
 			}
 		}
 	}
