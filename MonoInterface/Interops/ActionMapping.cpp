@@ -79,25 +79,11 @@ void ActionMappingInterop::AddDeviceMapping(SupportedInputDevices device)
 	}
 }
 
-IMonoField *ActionMappingInterop::GetActionEventField(mono::object eventInfo)
+IMonoField *ActionMappingInterop::GetActionEventField(MonoClassField *fieldHandle)
 {
-	MonoEvent *_event = GET_BOXED_OBJECT_DATA(MonoEvent, eventInfo);
-	const char *eventName = mono_event_get_name(_event);
-	IMonoClass *eventClass = MonoClassCache::Wrap(mono_event_get_parent(_event));
+	IMonoClass *eventClass = MonoClassCache::Wrap(mono_field_get_parent(fieldHandle));
 
-	IMonoField *field = eventClass->GetField(eventName);
-	if (field == nullptr || (field->Attributes & MonoFieldAttributes::Static) == 0)
-	{
-		// Try finding _eventName.
-		NtText _eventName(2, "_", eventName);
-		field = eventClass->GetField(_eventName);
-
-		if ((field->Attributes & MonoFieldAttributes::Static) == 0)
-		{
-			return nullptr;
-		}
-	}
-	return field;
+	return eventClass->GetField(mono_field_get_name(fieldHandle));
 }
 
 mono::delegat ActionMappingInterop::acquireActionHandler(IMonoField *actionField)

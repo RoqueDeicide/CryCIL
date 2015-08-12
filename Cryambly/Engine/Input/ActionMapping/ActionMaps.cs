@@ -28,6 +28,7 @@ namespace CryCil.Engine.Input.ActionMapping
 
 		#endregion
 		#region Interface
+
 		#endregion
 		#region Utilities
 		[InitializationStage((int)DefaultInitializationStages.ActionMapsRegistrationStage)]
@@ -96,8 +97,12 @@ namespace CryCil.Engine.Input.ActionMapping
 					}
 
 					registeredHashes.Add(nameHash, actionName);
-					IntPtr actionEventField = GetActionEventField(actionEvent);
-					if (actionEventField == IntPtr.Zero)
+					Type declaringType = actionEvent.DeclaringType;
+					// ReSharper disable PossibleNullReferenceException
+					FieldInfo actionHandlerField = declaringType.GetField(actionEvent.Name, bindingFlags) ??
+												   declaringType.GetField("_" + actionEvent.Name);
+					// ReSharper restore PossibleNullReferenceException
+					if (actionHandlerField == null)
 					{
 						string message =
 							string.Format
@@ -109,6 +114,7 @@ namespace CryCil.Engine.Input.ActionMapping
 						MonoInterface.DisplayException(new RegistrationException(message));
 						continue;
 					}
+					IntPtr actionEventField = GetActionEventField(actionHandlerField.FieldHandle);
 					actions.Add(nameHash, actionEventField);
 
 					// Add inputs to the action.
@@ -160,7 +166,7 @@ namespace CryCil.Engine.Input.ActionMapping
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void AddDeviceMapping(SupportedInputDevices device);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern IntPtr GetActionEventField(EventInfo eventInfo);
+		private static extern IntPtr GetActionEventField(RuntimeFieldHandle eventInfo);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern InputActionHandler acquireActionHandler(IntPtr actionField);
 		[MethodImpl(MethodImplOptions.InternalCall)]

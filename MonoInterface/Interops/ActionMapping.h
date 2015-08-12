@@ -43,7 +43,7 @@ struct ActionMappingInterop : public IMonoInterop<false, true>, public IActionLi
 
 	// Internal calls for ActionMaps.
 	static void          AddDeviceMapping(SupportedInputDevices device);
-	static IMonoField   *GetActionEventField(mono::object eventInfo);
+	static IMonoField   *GetActionEventField(MonoClassField *fieldHandle);
 	static mono::delegat acquireActionHandler(IMonoField *actionField);
 	static IActionMap   *CreateActionMap(mono::string name);
 
