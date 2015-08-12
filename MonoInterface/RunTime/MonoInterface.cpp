@@ -245,7 +245,7 @@ void MonoInterface::RemoveListener(IMonoSystemListener *listener)
 #pragma endregion
 #pragma region IGameFrameworkListener Implementation.
 //! Triggers Update event in MonoInterface object in Cryambly.
-void MonoInterface::OnPostUpdate(float fDeltaTime)
+void MonoInterface::OnPostUpdate(float)
 {
 	// Notify everything about the update.
 	if (this->running)
@@ -259,13 +259,13 @@ void MonoInterface::OnPostUpdate(float fDeltaTime)
 	}
 }
 //! Not used.
-void MonoInterface::OnSaveGame(ISaveGame* pSaveGame) {}
+void MonoInterface::OnSaveGame(ISaveGame*) {}
 //! Not used.
-void MonoInterface::OnLoadGame(ILoadGame* pLoadGame) {}
+void MonoInterface::OnLoadGame(ILoadGame*) {}
 //! Not used.
-void MonoInterface::OnLevelEnd(const char* nextLevel) {}
+void MonoInterface::OnLevelEnd(const char*) {}
 //! Not used.
-void MonoInterface::OnActionEvent(const SActionEvent& event) {}
+void MonoInterface::OnActionEvent(const SActionEvent&) {}
 #pragma endregion
 #pragma region ISystemEventListener Implementation
 //! Reacts to system events.
@@ -273,7 +273,7 @@ void MonoInterface::OnActionEvent(const SActionEvent& event) {}
 //! @param event  Identifier of the event.
 //! @param wparam First parameter that can supply extra information about the event.
 //! @param lparam Second parameter that can supply extra information about the event.
-void MonoInterface::OnSystemEvent(ESystemEvent event, UINT_PTR wparam, UINT_PTR lparam)
+void MonoInterface::OnSystemEvent(ESystemEvent, UINT_PTR, UINT_PTR)
 {
 // 	switch (event)
 // 	{
