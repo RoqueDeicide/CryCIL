@@ -3,6 +3,7 @@
 #include "Entity.h"
 #include "EntityClass.h"
 #include "EntityExtension.h"
+#include "MonoLightProperties.h"
 
 IEntityPoolManager *poolManager;
 IEntitySystem *entitySystem;
@@ -1169,9 +1170,11 @@ int EntitySlotsInterop::SetParticleEmitter(IEntity *handle, int slot, IParticleE
 	return handle->SetParticleEmitter(slot, pEmitter, bSerialize);
 }
 
-int EntitySlotsInterop::LoadLight(IEntity *handle, int slot, CDLight *pLight)
+int EntitySlotsInterop::LoadLight(IEntity *handle, int slot, const LightProperties &pLight)
 {
-	return handle->LoadLight(slot, pLight);
+	CDLight light;
+	pLight.ToCDLight(light);
+	return handle->LoadLight(slot, &light);
 }
 
 int EntitySlotsInterop::GetSlotCount(IEntity *handle)

@@ -302,6 +302,7 @@
     <ClInclude Include="Interops\LevelMissions.h" />
     <ClInclude Include="Interops\Levels.h" />
     <ClInclude Include="Interops\LevelSystem.h" />
+    <ClInclude Include="Interops\LightSource.h" />
     <ClInclude Include="Interops\Locale.h" />
     <ClInclude Include="Interops\LogPosting.h" />
     <ClInclude Include="Interops\MaterialLayers.h" />
@@ -311,6 +312,7 @@
     <ClInclude Include="Interops\MonoEntitySpawnParams.h" />
     <ClInclude Include="Interops\MonoFlowNode.h" />
     <ClInclude Include="Interops\MonoFlowNodeFactory.h" />
+    <ClInclude Include="Interops\MonoLightProperties.h" />
     <ClInclude Include="Interops\ParticleEffectIterator.h" />
     <ClInclude Include="Interops\ParticleParameters.h" />
     <ClInclude Include="Interops\MouseInterop.h" />
@@ -416,6 +418,7 @@
     <ClCompile Include="Interops\LevelMissions.cpp" />
     <ClCompile Include="Interops\Levels.cpp" />
     <ClCompile Include="Interops\LevelSystem.cpp" />
+    <ClCompile Include="Interops\LightSource.cpp" />
     <ClCompile Include="Interops\Locale.cpp" />
     <ClCompile Include="Interops\LogPosting.cpp" />
     <ClCompile Include="Interops\MaterialLayers.cpp" />
@@ -454,6 +457,7 @@
     <ClCompile Include="TypeMapChecks\ActionActivationMode.cpp" />
     <ClCompile Include="TypeMapChecks\ActionAnalogCompareOperation.cpp" />
     <ClCompile Include="TypeMapChecks\ActionInputBlockType.cpp" />
+    <ClCompile Include="TypeMapChecks\DynamicLightFlags.cpp" />
     <ClCompile Include="TypeMapChecks\EKeyId.cpp" />
     <ClCompile Include="TypeMapChecks\EntityAspects.cpp" />
     <ClCompile Include="TypeMapChecks\EntityClassFlags.cpp" />

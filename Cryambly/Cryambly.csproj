@@ -165,6 +165,9 @@
     <Compile Include="Engine\Network\ChannelId.cs" />
     <Compile Include="Engine\Physics\CollisionEventInfo.cs" />
     <Compile Include="Engine\Rendering\RenderParameters.cs" />
+    <Compile Include="Engine\Rendering\Shading\Lighting\DynamicLightFlags.cs" />
+    <Compile Include="Engine\Rendering\Shading\Lighting\LightSource.cs" />
+    <Compile Include="Engine\Rendering\Shading\Lighting\LightProperties.cs" />
     <Compile Include="Engine\StaticObjects\StaticObject.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Mathematics\Geometry\Splines\BezierBasis.cs" />

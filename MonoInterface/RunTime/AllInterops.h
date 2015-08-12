@@ -90,4 +90,6 @@
 
 #include "Interops/Game.h"
 
-#include <Interops/ActionMapping.h>
+#include "Interops/ActionMapping.h"
+
+#include "Interops/LightSource.h"

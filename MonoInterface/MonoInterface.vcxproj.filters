@@ -395,6 +395,12 @@
     <ClInclude Include="Interops\ActionMapping.h">
       <Filter>Interops\Engine\Input</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\MonoLightProperties.h">
+      <Filter>Interops\Engine\Rendering\Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\LightSource.h">
+      <Filter>Interops\Engine\Rendering\Lighting</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -683,6 +689,12 @@
     <ClCompile Include="TypeMapChecks\ActionActivationMode.cpp">
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
+    <ClCompile Include="TypeMapChecks\DynamicLightFlags.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\LightSource.cpp">
+      <Filter>Interops\Engine\Rendering\Lighting</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">
@@ -786,6 +798,9 @@
     </Filter>
     <Filter Include="TypeMapChecks">
       <UniqueIdentifier>{8aa0ee2f-cbc4-4f09-b232-cdc5d739d4b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interops\Engine\Rendering\Lighting">
+      <UniqueIdentifier>{eb5f820d-a1d4-472d-80a1-e8b2f492c1f2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

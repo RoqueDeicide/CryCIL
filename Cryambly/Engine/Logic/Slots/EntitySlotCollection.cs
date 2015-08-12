@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using CryCil.Engine.Rendering.Lighting;
 
 namespace CryCil.Engine.Logic
 {
@@ -127,6 +128,19 @@ namespace CryCil.Engine.Logic
 			Contract.EndContractBlock();
 
 			return new CryEntitySlot(this.entityHandle, EntitySlotOps.LoadParticleEmitter(this.entityHandle, -1, effect, ref parameters, prime, sync));
+		}
+		/// <summary>
+		/// Puts a light source with given parameters into next available slot.
+		/// </summary>
+		/// <param name="properties">A set of properties that describe the light source.</param>
+		/// <returns>A valid entity slot the light source has been assigned to.</returns>
+		/// <exception cref="NullReferenceException">Cannot access slots of an invalid entity.</exception>
+		public CryEntitySlot Load(ref LightProperties properties)
+		{
+			this.AssertEntity();
+			Contract.EndContractBlock();
+
+			return new CryEntitySlot(this.entityHandle, EntitySlotOps.LoadLight(this.entityHandle, -1, ref properties));
 		}
 		/// <summary>
 		/// Puts given particle emitter into the next available slot.

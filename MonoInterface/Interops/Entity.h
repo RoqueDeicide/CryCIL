@@ -4,6 +4,7 @@
 #include "IEntitySystem.h"
 #include "IEntityPoolManager.h"
 
+struct LightProperties;
 struct MonoEntitySpawnParams;
 
 struct EntityIdInterop : public IMonoInterop<true, true>
@@ -181,6 +182,6 @@ struct EntitySlotsInterop : IMonoInterop<true, true>
 	static int          LoadParticleEmitter(IEntity *entityHandle, int slot, IParticleEffect *pEffect, SpawnParams *parameters,
 											bool bPrime, bool bSerialize);
 	static int          SetParticleEmitter(IEntity *entityHandle, int slot, IParticleEmitter *pEmitter, bool bSerialize);
-	static int          LoadLight(IEntity *entityHandle, int slot, CDLight *pLight);
+	static int          LoadLight(IEntity *entityHandle, int slot, const LightProperties &pLight);
 	static int          GetSlotCount(IEntity *entityHandle);
 };

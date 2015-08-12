@@ -2,6 +2,7 @@
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using CryCil.Engine.Rendering;
+using CryCil.Engine.Rendering.Lighting;
 using CryCil.Engine.StaticObjects;
 
 namespace CryCil.Engine.Logic
@@ -376,6 +377,19 @@ namespace CryCil.Engine.Logic
 			Contract.EndContractBlock();
 
 			EntitySlotOps.LoadParticleEmitter(this.entityHandle, this.index, effect, ref parameters, prime, sync);
+		}
+		/// <summary>
+		/// Puts a light source with given parameters into this slot.
+		/// </summary>
+		/// <param name="properties">A set of properties that describe the light source.</param>
+		/// <exception cref="NullReferenceException">This entity slot object is not valid.</exception>
+		/// <exception cref="ObjectDisposedException">This entity slot doesn't exist.</exception>
+		public void LoadLight(ref LightProperties properties)
+		{
+			this.AssertSlotValidity();
+			Contract.EndContractBlock();
+
+			EntitySlotOps.LoadLight(this.entityHandle, this.index, ref properties);
 		}
 		#endregion
 		#region Utilities

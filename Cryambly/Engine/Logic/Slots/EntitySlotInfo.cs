@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using CryCil.Annotations;
 using CryCil.Engine.Rendering;
+using CryCil.Engine.Rendering.Lighting;
 
 namespace CryCil.Engine.Logic
 {
@@ -89,6 +90,14 @@ namespace CryCil.Engine.Logic
 		public ParticleEmitter BoundEmitter
 		{
 			get { return new ParticleEmitter(this.pParticleEmitter); }
+		}
+		/// <summary>
+		/// Gets valid object that represents the light source that is bound to this slot. Returned
+		/// object is not valid if the light source is not bound to this slot.
+		/// </summary>
+		public LightSource BoundLight
+		{
+			get { return new LightSource(this.pLight);}
 		}
 
 		/// <summary>

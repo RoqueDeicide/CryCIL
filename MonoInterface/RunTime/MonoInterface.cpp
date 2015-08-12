@@ -350,6 +350,7 @@ void MonoInterface::RegisterDefaultListeners()
 	this->broadcaster->listeners->Add(new EntitySlotsInterop());
 	this->broadcaster->listeners->Add(new GameInterop());
 	this->broadcaster->listeners->Add(new ActionMappingInterop());
+	this->broadcaster->listeners->Add(new LightSourceInterop());
 }
 #pragma endregion
 #pragma region Thunks Initialization

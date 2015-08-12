@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
 using CryCil.Engine.Rendering;
+using CryCil.Engine.Rendering.Lighting;
 using CryCil.Engine.StaticObjects;
 
 namespace CryCil.Engine.Logic
@@ -132,13 +133,8 @@ namespace CryCil.Engine.Logic
 		internal static extern int LoadParticleEmitter(IntPtr entityHandle, int slot, ParticleEffect pEffect, ref ParticleSpawnParameters parameters, bool bPrime = false, bool bSerialize = false);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		internal static extern int SetParticleEmitter(IntPtr entityHandle, int slot, ParticleEmitter pEmitter, bool bSerialize = false);
-
-		// Description:
-		//     Loads a light source to the specified slot, or to next available slot.
-		// Return:
-		//     Slot id where the light source was loaded, or -1 if loading failed.
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		internal static extern int LoadLight(IntPtr entityHandle, int slot, IntPtr pLight);
+		internal static extern int LoadLight(IntPtr entityHandle, int slot, ref LightProperties pLight);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		internal static extern int GetSlotCount(IntPtr entityHandle);
 	}
