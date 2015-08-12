@@ -4,8 +4,8 @@
 
 struct CryXmlNodeInterop : public IMonoInterop<true, true>
 {
-	virtual const char *GetName() override { return "CryXmlNode"; }
-	virtual const char *GetNameSpace() override { return "CryCil.Utilities"; }
+	virtual const char *GetInteropClassName() override { return "CryXmlNode"; }
+	virtual const char *GetInteropNameSpace() override { return "CryCil.Utilities"; }
 	
 	virtual void OnRunTimeInitialized() override;
 

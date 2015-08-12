@@ -6,8 +6,8 @@ struct ILevelInfo;
 
 struct LevelGameRulesInterop : public IMonoInterop<true, true>
 {
-	virtual const char *GetName() override { return "LevelGameRules"; }
-	virtual const char *GetNameSpace() override { return "CryCil.Engine.CryAction"; }
+	virtual const char *GetInteropClassName() override { return "LevelGameRules"; }
+	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.CryAction"; }
 	
 	virtual void OnRunTimeInitialized() override;
 

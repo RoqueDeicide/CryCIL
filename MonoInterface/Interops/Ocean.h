@@ -13,8 +13,8 @@ struct OceanAnimation
 
 struct OceanInterop : public IMonoInterop<true, true>
 {
-	virtual const char *GetName() override { return "Ocean"; }
-	virtual const char *GetNameSpace() override { return "CryCil.Engine.Environment"; }
+	virtual const char *GetInteropClassName() override { return "Ocean"; }
+	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Environment"; }
 	
 	virtual void OnRunTimeInitialized() override;
 

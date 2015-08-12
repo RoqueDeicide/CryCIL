@@ -4,8 +4,8 @@
 
 struct SurfaceTypeInterop : public IMonoInterop < true, true >
 {
-	virtual const char *GetName() override { return "SurfaceType"; }
-	virtual const char *GetNameSpace() override { return "CryCil.Engine.Physics"; }
+	virtual const char *GetInteropClassName() override { return "SurfaceType"; }
+	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Physics"; }
 
 	virtual void OnRunTimeInitialized() override;
 
@@ -28,8 +28,8 @@ struct SurfaceTypeInterop : public IMonoInterop < true, true >
 
 struct SurfaceTypeEnumeratorInterop : public IMonoInterop < true, true >
 {
-	virtual const char *GetName() override { return "SurfaceTypeEnumerator"; }
-	virtual const char *GetNameSpace() override { return "CryCil.Engine.Physics"; }
+	virtual const char *GetInteropClassName() override { return "SurfaceTypeEnumerator"; }
+	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Physics"; }
 
 	virtual void OnRunTimeInitialized() override;
 

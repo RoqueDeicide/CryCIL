@@ -12,7 +12,7 @@ void CryXmlNodeInterop::RegAttributeFunc(const char *argType, bool setter, void 
 
 void CryXmlNodeInterop::OnRunTimeInitialized()
 {
-	ctor = MonoEnv->Cryambly->GetClass(this->GetNameSpace(), this->GetName())->GetConstructor(-1);
+	ctor = MonoEnv->Cryambly->GetClass(this->GetInteropNameSpace(), this->GetInteropClassName())->GetConstructor(-1);
 
 	REGISTER_CTOR(Ctor);
 	REGISTER_METHOD(AddRef);

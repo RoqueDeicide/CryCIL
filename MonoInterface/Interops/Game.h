@@ -4,8 +4,8 @@
 
 struct GameInterop : public IMonoInterop<true, true>
 {
-	virtual const char *GetName() override { return "Game"; }
-	virtual const char *GetNameSpace() override { return "CryCil"; }
+	virtual const char *GetInteropClassName() override { return "Game"; }
+	virtual const char *GetInteropNameSpace() override { return "CryCil"; }
 
 	virtual void OnRunTimeInitialized() override;
 

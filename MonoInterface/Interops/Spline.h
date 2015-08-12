@@ -4,8 +4,8 @@
 
 struct SplineInterop : public IMonoInterop < true, true >
 {
-	virtual const char *GetName() override { return "CryEngineSpline"; }
-	virtual const char *GetNameSpace() override { return "CryCil.Geometry.Splines"; }
+	virtual const char *GetInteropClassName() override { return "CryEngineSpline"; }
+	virtual const char *GetInteropNameSpace() override { return "CryCil.Geometry.Splines"; }
 
 	virtual void OnRunTimeInitialized() override;
 

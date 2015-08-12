@@ -6,8 +6,8 @@ typedef void(*SetTimingsRawThunk)(int64, int64, int64, int64, float, float);
 
 struct TimingInterop : public IMonoInterop<false, true>
 {
-	virtual const char *GetName() override { return "Time"; }
-	virtual const char *GetNameSpace() override { return "CryCil.Engine"; }
+	virtual const char *GetInteropClassName() override { return "Time"; }
+	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine"; }
 
 	virtual void Update() override;
 

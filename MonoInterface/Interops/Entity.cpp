@@ -59,7 +59,7 @@ mono::string EntityIdInterop::GetBookmarkedEntityNameInternal(EntityId entityId)
 
 IMonoClass *EntityPoolInterop::GetMonoClass()
 {
-	return MonoEnv->Cryambly->GetClass(this->GetNameSpace(), this->GetName());
+	return MonoEnv->Cryambly->GetClass(this->GetInteropNameSpace(), this->GetInteropClassName());
 }
 
 void EntityPoolInterop::OnRunTimeInitialized()

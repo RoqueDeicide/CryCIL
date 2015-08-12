@@ -16,14 +16,14 @@ struct IMonoInteropBase : public IMonoSystemListener
 	virtual void RegisterInteropMethod(const char *methodName, void *functionPointer)
 	{
 		this->monoInterface->Functions->AddInternalCall
-			(this->GetNameSpace(), this->GetName(), methodName, functionPointer);
+			(this->GetInteropNameSpace(), this->GetInteropClassName(), methodName, functionPointer);
 	}
 	//! Returns the name of the class that will declare managed counter-parts
 	//! of the internal calls.
-	virtual const char *GetName() = 0;
+	virtual const char *GetInteropClassName() = 0;
 	//! Returns the name space where the class that will declare managed counter-parts
 	//! of the internal calls is declared.
-	virtual const char *GetNameSpace() = 0;
+	virtual const char *GetInteropNameSpace() = 0;
 	//! Unnecessary for most interops.
 	virtual void OnPreInitialization() override
 	{}
@@ -99,7 +99,7 @@ template<> struct IMonoInterop < false, true > : public IMonoInteropBase
 	virtual void RegisterInteropMethod(const char *methodName, void *functionPointer) override
 	{
 		MonoEnv->Functions->AddInternalCall
-			(this->GetNameSpace(), this->GetName(), methodName, functionPointer);
+			(this->GetInteropNameSpace(), this->GetInteropClassName(), methodName, functionPointer);
 	}
 };
 
@@ -123,6 +123,6 @@ template<> struct IMonoInterop < true, true > : public IMonoInteropBase
 	virtual void RegisterInteropMethod(const char *methodName, void *functionPointer) override
 	{
 		MonoEnv->Functions->AddInternalCall
-			(this->GetNameSpace(), this->GetName(), methodName, functionPointer);
+			(this->GetInteropNameSpace(), this->GetInteropClassName(), methodName, functionPointer);
 	}
 };

@@ -4,8 +4,8 @@
 
 struct RendererInterop : public IMonoInterop<true, true>
 {
-	virtual const char *GetName() override { return "Renderer"; }
-	virtual const char *GetNameSpace() override { return "CryCil.Engine.Rendering"; }
+	virtual const char *GetInteropClassName() override { return "Renderer"; }
+	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Rendering"; }
 
 	virtual void OnRunTimeInitialized() override;
 

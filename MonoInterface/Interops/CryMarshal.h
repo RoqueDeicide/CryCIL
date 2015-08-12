@@ -3,8 +3,8 @@
 
 struct CryMarshalInterop : public IMonoInterop<true, true>
 {
-	virtual const char *GetName() override { return "CryMarshal"; };
-	virtual const char *GetNameSpace() override { return "CryCil.Engine.Memory"; }
+	virtual const char *GetInteropClassName() override { return "CryMarshal"; };
+	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Memory"; }
 
 	virtual void OnRunTimeInitialized() override;
 	// Allocate an array of bytes of given length. Returns a pointer to the first byte.

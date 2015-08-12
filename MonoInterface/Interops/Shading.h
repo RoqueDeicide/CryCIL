@@ -4,8 +4,8 @@
 
 struct RenderShaderResourcesInterop : public IMonoInterop < true, true >
 {
-	virtual const char *GetName() override { return "RenderShaderResources"; }
-	virtual const char *GetNameSpace() override { return "CryCil.Engine.Rendering"; }
+	virtual const char *GetInteropClassName() override { return "RenderShaderResources"; }
+	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Rendering"; }
 
 	virtual void OnRunTimeInitialized() override;
 
@@ -22,8 +22,8 @@ struct RenderShaderResourcesInterop : public IMonoInterop < true, true >
 
 struct ShaderParametersInterop : public IMonoInterop<true, true>
 {
-	virtual const char *GetName() override { return "ShaderParameters"; }
-	virtual const char *GetNameSpace() override { return "CryCil.Engine.Rendering"; }
+	virtual const char *GetInteropClassName() override { return "ShaderParameters"; }
+	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Rendering"; }
 
 	virtual void OnRunTimeInitialized() override;
 
@@ -34,8 +34,8 @@ struct ShaderParametersInterop : public IMonoInterop<true, true>
 
 struct ShaderInterop : public IMonoInterop < true, true >
 {
-	virtual const char *GetName() override { return "Shader"; }
-	virtual const char *GetNameSpace() override { return "CryCil.Engine.Rendering"; }
+	virtual const char *GetInteropClassName() override { return "Shader"; }
+	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Rendering"; }
 
 	virtual void OnRunTimeInitialized() override;
 

@@ -13,8 +13,8 @@ struct LevelMission
 
 struct LevelMissionsInterop : public IMonoInterop<true, true>
 {
-	virtual const char *GetName() override { return "LevelMissions"; }
-	virtual const char *GetNameSpace() override { return "CryCil.Engine.CryAction"; }
+	virtual const char *GetInteropClassName() override { return "LevelMissions"; }
+	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.CryAction"; }
 
 	virtual void OnRunTimeInitialized() override;
 

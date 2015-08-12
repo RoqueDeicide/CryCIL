@@ -11,7 +11,7 @@ void LevelsInterop::OnRunTimeInitialized()
 	this->RegisterInteropMethod("get_Item(string)", get_Item);
 
 	system    = MonoEnv->CryAction->GetILevelSystem();
-	levelCtor = MonoEnv->Cryambly->GetClass(this->GetNameSpace(), this->GetName())->GetConstructor(1);
+	levelCtor = MonoEnv->Cryambly->GetClass(this->GetInteropNameSpace(), this->GetInteropClassName())->GetConstructor(1);
 }
 
 int LevelsInterop::get_Count(mono::object obj)

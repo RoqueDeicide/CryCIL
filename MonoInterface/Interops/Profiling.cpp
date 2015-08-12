@@ -4,10 +4,10 @@
 
 void ProfilingInterop::OnRunTimeInitialized()
 {
-	MonoEnv->Functions->AddInternalCall(this->GetNameSpace(), "Profiler", ".ctor", constructor);
-	MonoEnv->Functions->AddInternalCall(this->GetNameSpace(), "Profiler", "Start", StartSection);
+	MonoEnv->Functions->AddInternalCall(this->GetInteropNameSpace(), "Profiler", ".ctor", constructor);
+	MonoEnv->Functions->AddInternalCall(this->GetInteropNameSpace(), "Profiler", "Start", StartSection);
 
-	MonoEnv->Functions->AddInternalCall(this->GetNameSpace(), "ProfilingSection", "Dispose", FinishSection);
+	MonoEnv->Functions->AddInternalCall(this->GetInteropNameSpace(), "ProfilingSection", "Dispose", FinishSection);
 }
 
 void ProfilingInterop::constructor(mono::object profiler, mono::string name)

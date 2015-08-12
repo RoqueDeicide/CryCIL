@@ -35,8 +35,8 @@ enum Math3NumberOperations
 
 struct BatchOps : public IMonoInterop<true>
 {
-	virtual const char *GetName() override { return "BatchOps"; }
-	virtual const char *GetNameSpace() override { return "CryCil"; }
+	virtual const char *GetInteropClassName() override { return "BatchOps"; }
+	virtual const char *GetInteropNameSpace() override { return "CryCil"; }
 
 	virtual void OnRunTimeInitialized() override;
 

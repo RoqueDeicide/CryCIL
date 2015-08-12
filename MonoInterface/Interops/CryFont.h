@@ -4,8 +4,8 @@
 
 struct CryFontInterop : public IMonoInterop<true, true>
 {
-	virtual const char *GetName() override { return ""; }
-	virtual const char *GetNameSpace() override { return ""; }
+	virtual const char *GetInteropClassName() override { return ""; }
+	virtual const char *GetInteropNameSpace() override { return ""; }
 
 	virtual void OnRunTimeInitialized() override;
 

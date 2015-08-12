@@ -15,10 +15,10 @@ void InputInterop::OnRunTimeInitialized()
 
 	auto cryambly = MonoEnv->Cryambly;
 	
-	auto touchClass = cryambly->GetClass(this->GetNameSpace(), "Touch");
-	auto mouseClass = cryambly->GetClass(this->GetNameSpace(), "Mouse");
-	auto xboxClass = cryambly->GetClass(this->GetNameSpace(), "XboxGamepad");
-	auto keyboardClass = cryambly->GetClass(this->GetNameSpace(), "Keyboard");
+	auto touchClass = cryambly->GetClass(this->GetInteropNameSpace(), "Touch");
+	auto mouseClass = cryambly->GetClass(this->GetInteropNameSpace(), "Mouse");
+	auto xboxClass = cryambly->GetClass(this->GetInteropNameSpace(), "XboxGamepad");
+	auto keyboardClass = cryambly->GetClass(this->GetInteropNameSpace(), "Keyboard");
 
 	// Touchy stuff.
 	onTouchEvent = getThunk<OnTouchEventThunk>(touchClass, "OnEvent");
@@ -44,15 +44,15 @@ void InputInterop::OnRunTimeInitialized()
 
 	thunksInitialized = true;
 
-	MonoEnv->Functions->AddInternalCall(this->GetNameSpace(), "XboxGamepad", "Rumble", XboxRumble);
-	MonoEnv->Functions->AddInternalCall(this->GetNameSpace(), "XboxGamepad", "SetDeadzone", XboxSetDeadzone);
-	MonoEnv->Functions->AddInternalCall(this->GetNameSpace(), "XboxGamepad", "RestoreDeadzone", XboxRestoreDeadzone);
-	MonoEnv->Functions->AddInternalCall(this->GetNameSpace(), "XboxGamepad", "Connected", GamepadConnected);
+	MonoEnv->Functions->AddInternalCall(this->GetInteropNameSpace(), "XboxGamepad", "Rumble", XboxRumble);
+	MonoEnv->Functions->AddInternalCall(this->GetInteropNameSpace(), "XboxGamepad", "SetDeadzone", XboxSetDeadzone);
+	MonoEnv->Functions->AddInternalCall(this->GetInteropNameSpace(), "XboxGamepad", "RestoreDeadzone", XboxRestoreDeadzone);
+	MonoEnv->Functions->AddInternalCall(this->GetInteropNameSpace(), "XboxGamepad", "Connected", GamepadConnected);
 	
-	MonoEnv->Functions->AddInternalCall(this->GetNameSpace(), "Inputs", "DeviceAvailable", DeviceAvailable);
-	MonoEnv->Functions->AddInternalCall(this->GetNameSpace(), "Inputs", "GetModifiers", GetModifiers);
-	MonoEnv->Functions->AddInternalCall(this->GetNameSpace(), "Inputs", "ClearKeys", ClearKeys);
-	MonoEnv->Functions->AddInternalCall(this->GetNameSpace(), "Inputs", "ClearAnalogInputs", ClearAnalogInputs);
+	MonoEnv->Functions->AddInternalCall(this->GetInteropNameSpace(), "Inputs", "DeviceAvailable", DeviceAvailable);
+	MonoEnv->Functions->AddInternalCall(this->GetInteropNameSpace(), "Inputs", "GetModifiers", GetModifiers);
+	MonoEnv->Functions->AddInternalCall(this->GetInteropNameSpace(), "Inputs", "ClearKeys", ClearKeys);
+	MonoEnv->Functions->AddInternalCall(this->GetInteropNameSpace(), "Inputs", "ClearAnalogInputs", ClearAnalogInputs);
 }
 
 bool InputInterop::OnInputEvent(const SInputEvent &_event)

@@ -5,8 +5,8 @@
 
 struct ParticleEmitterInterop : public IMonoInterop < false, true >, public IParticleEffectListener
 {
-	virtual const char *GetName() override { return "ParticleEmitter"; }
-	virtual const char *GetNameSpace() override { return "CryCil.Engine"; }
+	virtual const char *GetInteropClassName() override { return "ParticleEmitter"; }
+	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine"; }
 
 	virtual void OnRunTimeInitialized() override;
 	virtual void Shutdown() override;

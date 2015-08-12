@@ -10,7 +10,7 @@ typedef void(__stdcall *ActivateActionThunk)(uint32, int32, float value, mono::e
 void ActionMappingInterop::OnAction(const ActionId& action, int activationMode, float value)
 {
 	static ActivateActionThunk activate =
-		ActivateActionThunk(MonoEnv->Cryambly->GetClass(this->GetNameSpace(), this->GetName())
+		ActivateActionThunk(MonoEnv->Cryambly->GetClass(this->GetInteropNameSpace(), this->GetInteropClassName())
 											 ->GetFunction("ActivateAction", -1)->UnmanagedThunk);
 
 	mono::exception ex;
@@ -19,7 +19,7 @@ void ActionMappingInterop::OnAction(const ActionId& action, int activationMode, 
 
 void ActionMappingInterop::OnRunTimeInitialized()
 {
-	const char *nameSpace = this->GetNameSpace();
+	const char *nameSpace = this->GetInteropNameSpace();
 	const char *actionMapsClass = "ActionMaps";
 	const char *cryActionMapClass = "CryActionMap";
 	const char *cryInputActionClass = "CryInputAction";

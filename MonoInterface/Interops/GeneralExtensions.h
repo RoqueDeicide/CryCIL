@@ -4,8 +4,8 @@
 
 struct GeneralExtensionsInterop : public IMonoInterop<true, true>
 {
-	virtual const char *GetName() override { return "GeneralExtensions"; }
-	virtual const char *GetNameSpace() override { return "CryCil"; }
+	virtual const char *GetInteropClassName() override { return "GeneralExtensions"; }
+	virtual const char *GetInteropNameSpace() override { return "CryCil"; }
 
 	virtual void OnRunTimeInitialized() override;
 

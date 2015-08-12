@@ -4,8 +4,8 @@
 
 struct MaterialInterop : public IMonoInterop < true, true >
 {
-	virtual const char *GetName() override { return "Material"; }
-	virtual const char *GetNameSpace() override { return "CryCil.Engine.Rendering"; }
+	virtual const char *GetInteropClassName() override { return "Material"; }
+	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Rendering"; }
 
 	virtual void OnRunTimeInitialized() override;
 
@@ -37,8 +37,8 @@ struct MaterialInterop : public IMonoInterop < true, true >
 
 struct SubMaterialsInterop : public IMonoInterop < true, true >
 {
-	virtual const char *GetName() override { return "SubMaterials"; }
-	virtual const char *GetNameSpace() override { return "CryCil.Engine.Rendering"; }
+	virtual const char *GetInteropClassName() override { return "SubMaterials"; }
+	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Rendering"; }
 
 	virtual void OnRunTimeInitialized() override;
 

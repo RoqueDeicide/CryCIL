@@ -5,8 +5,8 @@
 
 struct LevelInterop : public IMonoInterop<true, true>
 {
-	virtual const char *GetName() override { return "Level"; }
-	virtual const char *GetNameSpace() override { return "CryCil.Engine.CryAction"; }
+	virtual const char *GetInteropClassName() override { return "Level"; }
+	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.CryAction"; }
 
 	virtual void OnRunTimeInitialized() override;
 

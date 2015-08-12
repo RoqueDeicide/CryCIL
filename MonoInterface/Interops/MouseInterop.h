@@ -15,8 +15,8 @@ struct MouseInterop : public IMonoInterop<false, true>, public IHardwareMouseEve
 		}
 	}
 
-	virtual const char *GetName() override { return "HardwareMouse"; }
-	virtual const char *GetNameSpace() override { return "CryCil.Engine.Input"; }
+	virtual const char *GetInteropClassName() override { return "HardwareMouse"; }
+	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Input"; }
 
 	virtual void OnRunTimeInitialized() override;
 

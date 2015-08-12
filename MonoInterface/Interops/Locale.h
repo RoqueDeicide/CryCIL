@@ -5,8 +5,8 @@
 
 struct LocaleInterop : public IMonoInterop<true, true>
 {
-	virtual const char *GetName() override { return "Translator"; }
-	virtual const char *GetNameSpace() override { return "CryCil.Engine.Localization"; }
+	virtual const char *GetInteropClassName() override { return "Translator"; }
+	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Localization"; }
 
 	virtual void OnRunTimeInitialized() override;
 

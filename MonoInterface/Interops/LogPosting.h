@@ -4,8 +4,8 @@
 
 struct LogPostingInterop : public IMonoInterop<true, true>
 {
-	virtual const char *GetName() override { return "Log"; }
-	virtual const char *GetNameSpace() override { return "CryCil.Engine.DebugServices"; }
+	virtual const char *GetInteropClassName() override { return "Log"; }
+	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.DebugServices"; }
 
 	virtual void OnRunTimeInitialized() override;
 	

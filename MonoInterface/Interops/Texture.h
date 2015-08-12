@@ -4,8 +4,8 @@
 
 struct TextureInterop : public IMonoInterop<true,true>
 {
-	virtual const char *GetName() override { return "Texture"; }
-	virtual const char *GetNameSpace() override { return "CryCil.Engine.Rendering"; }
+	virtual const char *GetInteropClassName() override { return "Texture"; }
+	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Rendering"; }
 
 	virtual void OnRunTimeInitialized() override;
 

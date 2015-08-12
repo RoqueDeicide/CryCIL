@@ -5,8 +5,8 @@
 
 struct ParticleEffectIteratorInterop : public IMonoInterop<true, true>
 {
-	virtual const char *GetName() override { return "ParticleEffectEnumerator"; }
-	virtual const char *GetNameSpace() override { return "CryCil.Engine"; }
+	virtual const char *GetInteropClassName() override { return "ParticleEffectEnumerator"; }
+	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine"; }
 
 	virtual void OnRunTimeInitialized() override;
 

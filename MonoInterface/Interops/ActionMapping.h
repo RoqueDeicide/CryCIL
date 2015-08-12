@@ -35,8 +35,8 @@ struct ActionMappingInterop : public IMonoInterop<false, true>, public IActionLi
 {
 	virtual void OnAction(const ActionId& action, int activationMode, float value) override;
 
-	virtual const char *GetName() override { return "ActionMaps"; }
-	virtual const char *GetNameSpace() override { return "CryCil.Engine.Input.ActionMapping"; }
+	virtual const char *GetInteropClassName() override { return "ActionMaps"; }
+	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Input.ActionMapping"; }
 
 	virtual void OnRunTimeInitialized() override;
 	virtual void Shutdown() override;

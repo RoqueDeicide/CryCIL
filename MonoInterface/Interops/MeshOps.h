@@ -6,8 +6,8 @@
 
 struct MeshOpsInterop : public IMonoInterop<true, true>
 {
-	virtual const char *GetName() override { return "FaceMesh"; }
-	virtual const char *GetNameSpace() override { return "CryCil.Geometry"; }
+	virtual const char *GetInteropClassName() override { return "FaceMesh"; }
+	virtual const char *GetInteropNameSpace() override { return "CryCil.Geometry"; }
 
 	virtual void OnRunTimeInitialized() override;
 

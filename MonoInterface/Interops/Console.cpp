@@ -6,31 +6,31 @@
 
 void ConsoleInterop::OnRunTimeInitialized()
 {
-	auto klass = MonoEnv->Cryambly->GetClass(this->GetNameSpace(), this->GetName());
+	auto klass = MonoEnv->Cryambly->GetClass(this->GetInteropNameSpace(), this->GetInteropClassName());
 	executeCommand = ExecuteCommandThunk(klass->GetFunction("ExecuteMonoCommand", -1)->UnmanagedThunk);
 
 	REGISTER_METHOD(RegisterCommandInternal);
 	REGISTER_METHOD(UnregisterCommandInternal);
 	MonoEnv->Functions->AddInternalCall
-		(this->GetNameSpace(), this->GetName(), "ExecuteCommand(string,bool,bool)", ExecuteCommand);
+		(this->GetInteropNameSpace(), this->GetInteropClassName(), "ExecuteCommand(string,bool,bool)", ExecuteCommand);
 
 	MonoEnv->Functions->AddInternalCall
-		(this->GetNameSpace(), this->GetName(),
+		(this->GetInteropNameSpace(), this->GetInteropClassName(),
 		"RegisterVariable(string,float&,float,CryCil.Engine.ConsoleFlags,string)", RegisterVariable);
 	MonoEnv->Functions->AddInternalCall
-		(this->GetNameSpace(), this->GetName(),
+		(this->GetInteropNameSpace(), this->GetInteropClassName(),
 		"RegisterVariable(string,int&,int,CryCil.Engine.ConsoleFlags,string)", RegisterVariableIntRef);
 
 	MonoEnv->Functions->AddInternalCall
-		(this->GetNameSpace(), this->GetName(),
+		(this->GetInteropNameSpace(), this->GetInteropClassName(),
 		"RegisterVariableInternal(string,float,CryCil.Engine.ConsoleFlags,intptr,string)",
 		RegisterVariableFloat);
 	MonoEnv->Functions->AddInternalCall
-		(this->GetNameSpace(), this->GetName(),
+		(this->GetInteropNameSpace(), this->GetInteropClassName(),
 		"RegisterVariableInternal(string,int,CryCil.Engine.ConsoleFlags,intptr,string)",
 		RegisterVariableInt);
 	MonoEnv->Functions->AddInternalCall
-		(this->GetNameSpace(), this->GetName(),
+		(this->GetInteropNameSpace(), this->GetInteropClassName(),
 		"RegisterVariableInternal(string,string,CryCil.Engine.ConsoleFlags,intptr,string)",
 		RegisterVariableString);
 

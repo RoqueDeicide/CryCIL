@@ -4,8 +4,8 @@
 
 struct CryPakInterop : public IMonoInterop<true, true>
 {
-	virtual const char *GetName() override { return "CryPacks"; }
-	virtual const char *GetNameSpace() override { return "CryCil.Engine.Files"; }
+	virtual const char *GetInteropClassName() override { return "CryPacks"; }
+	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Files"; }
 
 	virtual void OnRunTimeInitialized() override;
 
