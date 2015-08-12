@@ -19,16 +19,15 @@ namespace CryCil.Engine.Input.ActionMapping
 		private static readonly SortedList<uint, IntPtr> actions = new SortedList<uint, IntPtr>();
 		#endregion
 		#region Properties
-		
+
 		#endregion
 		#region Events
-		
+
 		#endregion
 		#region Construction
-		
+
 		#endregion
 		#region Interface
-		
 		#endregion
 		#region Utilities
 		[InitializationStage((int)DefaultInitializationStages.ActionMapsRegistrationStage)]
@@ -114,7 +113,8 @@ namespace CryCil.Engine.Input.ActionMapping
 
 					// Add inputs to the action.
 
-					// Get master input specification. All other input specifications will inherit from the master.
+					// Get master input specification. All other input specifications will inherit from the
+					// master.
 					ActionInputSpecification masterSpec = actionAttribute.MasterSpec;
 					masterSpec.Complete();
 
