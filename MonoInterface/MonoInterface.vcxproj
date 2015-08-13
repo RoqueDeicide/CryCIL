@@ -293,6 +293,7 @@
     <ClInclude Include="Interops\Entity.h" />
     <ClInclude Include="Interops\EntityClass.h" />
     <ClInclude Include="Interops\EntityExtension.h" />
+    <ClInclude Include="Interops\ExplosionStructs.h" />
     <ClInclude Include="Interops\FlowGraph.h" />
     <ClInclude Include="Interops\Game.h" />
     <ClInclude Include="Interops\GeneralExtensions.h" />
@@ -319,6 +320,7 @@
     <ClInclude Include="Interops\Ocean.h" />
     <ClInclude Include="Interops\ParticleEffect.h" />
     <ClInclude Include="Interops\ParticleEmitter.h" />
+    <ClInclude Include="Interops\PhysicalWorld.h" />
     <ClInclude Include="Interops\Profiling.h" />
     <ClInclude Include="Interops\Renderer.h" />
     <ClInclude Include="Interops\Shading.h" />
@@ -433,6 +435,7 @@
     <ClCompile Include="Interops\ParticleEffectIterator.cpp" />
     <ClCompile Include="Interops\ParticleEmitter.cpp" />
     <ClCompile Include="Interops\ParticleParameters.cpp" />
+    <ClCompile Include="Interops\PhysicalWorld.cpp" />
     <ClCompile Include="Interops\Profiling.cpp" />
     <ClCompile Include="Interops\Renderer.cpp" />
     <ClCompile Include="Interops\Shading.cpp" />

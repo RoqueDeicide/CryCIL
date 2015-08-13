@@ -93,3 +93,5 @@
 #include "Interops/ActionMapping.h"
 
 #include "Interops/LightSource.h"
+
+#include "Interops/PhysicalWorld.h"

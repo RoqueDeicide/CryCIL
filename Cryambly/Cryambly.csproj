@@ -167,8 +167,10 @@
     <Compile Include="Engine\Physics\EntityQueryFlags.cs" />
     <Compile Include="Engine\Physics\ExplosionParameters.cs" />
     <Compile Include="Engine\Physics\ExplosionResult.cs" />
+    <Compile Include="Engine\Physics\PhysicalEntity.cs" />
     <Compile Include="Engine\Physics\PhysicalEntityFlags.cs" />
     <Compile Include="Engine\Physics\PhysicalEntityType.cs" />
+    <Compile Include="Engine\Physics\PhysicalWorld.cs" />
     <Compile Include="Engine\Rendering\RenderParameters.cs" />
     <Compile Include="Engine\Rendering\Shading\Lighting\DynamicLightFlags.cs" />
     <Compile Include="Engine\Rendering\Shading\Lighting\LightSource.cs" />
