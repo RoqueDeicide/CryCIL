@@ -165,6 +165,8 @@
     <Compile Include="Engine\Network\ChannelId.cs" />
     <Compile Include="Engine\Physics\CollisionEventInfo.cs" />
     <Compile Include="Engine\Physics\EntityQueryFlags.cs" />
+    <Compile Include="Engine\Physics\ExplosionParameters.cs" />
+    <Compile Include="Engine\Physics\ExplosionResult.cs" />
     <Compile Include="Engine\Physics\PhysicalEntityFlags.cs" />
     <Compile Include="Engine\Physics\PhysicalEntityType.cs" />
     <Compile Include="Engine\Rendering\RenderParameters.cs" />
