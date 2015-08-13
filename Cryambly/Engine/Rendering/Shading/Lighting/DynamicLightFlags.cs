@@ -6,6 +6,7 @@ namespace CryCil.Engine.Rendering.Lighting
 	/// <summary>
 	/// Enumeration of flags that describe the dynamic light source.
 	/// </summary>
+	[Flags]
 	public enum DynamicLightFlags
 	{
 		/// <summary>

@@ -40,7 +40,7 @@ TYPE_MIRROR enum DynamicLightFlags
 	DLF_SPECULAROCCLUSION_check = BIT(30),
 	DLF_DIFFUSEOCCLUSION_check = BIT(31),
 
-	DLF_LIGHTTYPE_MASK_check = (DLF_DIRECTIONAL | DLF_POINT | DLF_PROJECT | DLF_AREA_LIGHT)
+	DLF_LIGHTTYPE_MASK_check = (DLF_DIRECTIONAL_check | DLF_POINT_check | DLF_PROJECT_check | DLF_AREA_LIGHT_check)
 };
 
 #define CHECK_ENUM(x) static_assert (DynamicLightFlags::x ## _check == eDynamicLightFlags::x, "eDynamicLightFlags enumeration has been changed.")
