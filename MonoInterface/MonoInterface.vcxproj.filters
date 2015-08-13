@@ -695,6 +695,15 @@
     <ClCompile Include="Interops\LightSource.cpp">
       <Filter>Interops\Engine\Rendering\Lighting</Filter>
     </ClCompile>
+    <ClCompile Include="TypeMapChecks\EntityQueryFlags.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\PhysicalEntityFlags.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\PhysicalEntityType.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">
