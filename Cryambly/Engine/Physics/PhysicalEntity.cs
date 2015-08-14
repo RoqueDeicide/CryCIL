@@ -54,6 +54,10 @@ namespace CryCil.Engine.Physics
 		/// A reference to a base part of the structure that encapsulates parameters to set.
 		/// </param>
 		/// <returns>True, if successful.</returns>
+		/// <exception cref="ArgumentException">
+		/// Don't use <see cref="PhysicsParametersLocation"/> structure when getting parameters, call
+		/// <see cref="GetStatus"/> with <see cref="PhysicsStatusLocation"/> instead.
+		/// </exception>
 		/// <exception cref="ArgumentOutOfRangeException">
 		/// Unknown type of physics parameters was used.
 		/// </exception>
@@ -63,6 +67,7 @@ namespace CryCil.Engine.Physics
 			switch (parameters.Type)
 			{
 				case PhysicsParametersTypes.Position:
+					throw new ArgumentException("Don't use PhysicsParametersLocation structure when getting parameters, call GetStatus with PhysicsStatusLocation instead.");
 				case PhysicsParametersTypes.PlayerDimensions:
 					break;
 				case PhysicsParametersTypes.Vehicle:

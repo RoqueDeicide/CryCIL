@@ -24,12 +24,15 @@ void ConvertParamsToMono(pe_params *pars, PhysicsParameters *parameters)
 
 ConvertToNativeParametersFunc paramConverters[EPE_Params::ePE_Params_Count] =
 {
+	ConvertToParams<PhysicsParametersLocation>
 };
 DisposeParametersFunc paramDisposers[EPE_Params::ePE_Params_Count] =
 {
+	DisposeParams<PhysicsParametersLocation>
 };
 ConvertToMonoParametersFunc paramConvertersToMono[EPE_Params::ePE_Params_Count] =
 {
+	ConvertParamsToMono<PhysicsParametersLocation>
 };
 
 void PhysicalEntityInterop::OnRunTimeInitialized()

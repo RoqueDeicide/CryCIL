@@ -1,6 +1,7 @@
 #pragma once
 
 #include "IMonoInterface.h"
+#include "PhysicsParameterStructs.h"
 
 struct PhysicalEntityInterop : public IMonoInterop<true, true>
 {
