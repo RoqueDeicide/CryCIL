@@ -2,6 +2,8 @@
 
 #include <type_traits>
 
+//! Regex for replacing " = [number]," with ");": " = \b[0-9]*\.*[0-9]+\b," with ");"
+
 //! Types that are marked with this macro are mirrors of specific types and are used to detect most changes that can be made
 //! the mirrored type at compile time with only one change being undetectable which is reordering of fields.
 #define TYPE_MIRROR
