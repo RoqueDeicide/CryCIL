@@ -32,6 +32,7 @@ functionPtrType name(int type)\
 	{\
 		memset(funcs, 0, sizeof(functionPtrType) * typeCount);\
 		funcs[ePE_params_pos] = functionPtr<PhysicsParametersLocation>;\
+		initialized = true;\
 	}\
 	\
 	if (type < 0 || type >= typeCount)\
