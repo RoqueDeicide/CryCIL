@@ -19,11 +19,11 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// 32-bit signed integer number that is recognized as unused.
 		/// </summary>
-		public static readonly int Int32;
+		public const int Int32 = 1 << 31;
 		/// <summary>
 		/// 32-bit unsigned integer number that is recognized as unused.
 		/// </summary>
-		public static readonly uint UInt32;
+		public const uint UInt32 = 1u << 31;
 		/// <summary>
 		/// 3D vector that is recognized as unused.
 		/// </summary>
@@ -37,8 +37,6 @@ namespace CryCil.Engine.Physics
 		{
 			Single = new Bytes4(0xFFBFFFFF).SingleFloat;
 			Double = new Bytes8(0xFFF7FFFF).DoubleFloat;
-			Int32 = 1 << 31;
-			UInt32 = 1u << 31;
 			Vector = new Vector3(Single, 0, 0);
 			Quaternion = new Quaternion(0, 0, 0, Single);
 		}
