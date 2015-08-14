@@ -321,6 +321,7 @@
     <ClInclude Include="Interops\ParticleEffect.h" />
     <ClInclude Include="Interops\ParticleEmitter.h" />
     <ClInclude Include="Interops\PhysicalWorld.h" />
+    <ClInclude Include="Interops\PhysicsParameterStructs.h" />
     <ClInclude Include="Interops\Profiling.h" />
     <ClInclude Include="Interops\Renderer.h" />
     <ClInclude Include="Interops\Shading.h" />

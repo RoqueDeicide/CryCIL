@@ -407,6 +407,9 @@
     <ClInclude Include="Interops\ExplosionStructs.h">
       <Filter>Interops\Engine\Physics</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\PhysicsParameterStructs.h">
+      <Filter>Interops\Engine\Physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
