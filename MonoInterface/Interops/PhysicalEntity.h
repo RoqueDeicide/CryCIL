@@ -2,6 +2,9 @@
 
 #include "IMonoInterface.h"
 #include "PhysicsParameterStructs.h"
+#include "PhysicsActionStructs.h"
+#include "PhysicsStatusStructs.h"
+#include "PhysicsGeometryStructs.h"
 
 struct PhysicalEntityInterop : public IMonoInterop<true, true>
 {
@@ -12,4 +15,6 @@ struct PhysicalEntityInterop : public IMonoInterop<true, true>
 
 	static int SetParams(IPhysicalEntity *handle, PhysicsParameters *parameters, bool threadSafe);
 	static int GetParams(IPhysicalEntity *handle, PhysicsParameters *parameters);
+	static int GetStatusInternal(IPhysicalEntity *handle, PhysicsStatus *status);
+	static int Action(IPhysicalEntity *handle, PhysicsAction *action, bool threadSafe);
 };

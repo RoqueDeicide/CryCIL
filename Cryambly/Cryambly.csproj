@@ -163,6 +163,7 @@
     <Compile Include="Engine\Logic\FlowGraph\InputPort.cs" />
     <Compile Include="Engine\Logic\FlowGraph\OutputPort.cs" />
     <Compile Include="Engine\Network\ChannelId.cs" />
+    <Compile Include="Engine\Physics\Actions\PhysicsAction.cs" />
     <Compile Include="Engine\Physics\CollisionEventInfo.cs" />
     <Compile Include="Engine\Physics\EntityQueryFlags.cs" />
     <Compile Include="Engine\Physics\ExplosionParameters.cs" />
@@ -178,6 +179,7 @@
     <Compile Include="Engine\Physics\Parameters\PhysicsParameters.cs" />
     <Compile Include="Engine\Physics\Parameters\PhysicsParametersTypes.cs" />
     <Compile Include="Engine\Physics\PhysicsSimulationClass.cs" />
+    <Compile Include="Engine\Physics\Statuses\PhysicsStatus.cs" />
     <Compile Include="Engine\Physics\Statuses\PhysicsStatusTypes.cs" />
     <Compile Include="Engine\Physics\UnusedValues\UnusedValue.cs" />
     <Compile Include="Engine\Rendering\RenderParameters.cs" />

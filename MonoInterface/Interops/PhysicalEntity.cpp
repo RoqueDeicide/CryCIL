@@ -6,6 +6,12 @@ typedef pe_params *(*ConvertToNativeParametersFunc)(PhysicsParameters *);
 typedef void(*DisposeParametersFunc)(PhysicsParameters *);
 typedef void(*ConvertToMonoParametersFunc)(pe_params *, PhysicsParameters *);
 
+typedef pe_action *(*ConvertToNativeActionFunc)(PhysicsAction *);
+typedef void(*DisposeActionFunc)(PhysicsAction *);
+
+typedef pe_status *(*ConvertToNativeStatusFunc)(PhysicsStatus *);
+typedef void(*ConvertToMonoStatusFunc)(pe_status *, PhysicsStatus *);
+
 template<typename ParamsType>
 pe_params *ParamsToCE(PhysicsParameters *parameters)
 {
@@ -20,6 +26,28 @@ template<typename ParamsType>
 void ParamsToMono(pe_params *pars, PhysicsParameters *parameters)
 {
 	reinterpret_cast<ParamsType *>(parameters)->FromParams(pars);
+}
+
+template<typename ActionType>
+pe_action *ActionToCE(PhysicsAction *action)
+{
+	return reinterpret_cast<ActionType *>(action)->ToAction();
+}
+template<typename ActionType>
+void DisposeAction(PhysicsAction *action)
+{
+	reinterpret_cast<ActionType *>(action)->Dispose();
+}
+
+template<typename StatusType>
+pe_status *StatusToCE(PhysicsStatus *status)
+{
+	return reinterpret_cast<StatusType *>(status)->ToStatus();
+}
+template<typename StatusType>
+void StatusToMono(pe_status *stat, PhysicsStatus *status)
+{
+	reinterpret_cast<StatusType *>(status)->FromStatus(stat);
 }
 
 #define DECLARE_PARAMS_PROCESSING_FUNC(name, functionPtrType, functionPtr, typeCount) \
@@ -42,15 +70,62 @@ functionPtrType name(int type)\
 	\
 	return funcs[type];\
 }
+#define DECLARE_ACTION_PROCESSING_FUNC(name, functionPtrType, functionPtr, typeCount) \
+functionPtrType name(int type)\
+{\
+	static functionPtrType funcs[typeCount];\
+	static bool initialized = false;\
+	\
+	if (!initialized)\
+	{\
+		memset(funcs, 0, sizeof(functionPtrType) * typeCount);\
+		initialized = true;\
+	}\
+	\
+	if (type < 0 || type >= typeCount)\
+	{\
+		return nullptr;\
+	}\
+	\
+	return funcs[type];\
+}
+#define DECLARE_STATUS_PROCESSING_FUNC(name, functionPtrType, functionPtr, typeCount) \
+functionPtrType name(int type)\
+{\
+	static functionPtrType funcs[typeCount];\
+	static bool initialized = false;\
+	\
+	if (!initialized)\
+	{\
+		memset(funcs, 0, sizeof(functionPtrType) * typeCount);\
+		initialized = true;\
+	}\
+	\
+	if (type < 0 || type >= typeCount)\
+	{\
+		return nullptr;\
+	}\
+	\
+	return funcs[type];\
+}
 
-DECLARE_PARAMS_PROCESSING_FUNC(GetParamConverterToCE,   ConvertToNativeParametersFunc, ParamsToCE,    ePE_Params_Count)
-DECLARE_PARAMS_PROCESSING_FUNC(GetParamDisposer,        DisposeParametersFunc,         DisposeParams, ePE_Params_Count)
-DECLARE_PARAMS_PROCESSING_FUNC(GetParamConverterToMono, ConvertToMonoParametersFunc,   ParamsToMono,  ePE_Params_Count)
+DECLARE_PARAMS_PROCESSING_FUNC(GetParamConverterToCE,    ConvertToNativeParametersFunc, ParamsToCE,    ePE_Params_Count)
+DECLARE_PARAMS_PROCESSING_FUNC(GetParamDisposer,         DisposeParametersFunc,         DisposeParams, ePE_Params_Count)
+DECLARE_PARAMS_PROCESSING_FUNC(GetParamConverterToMono,  ConvertToMonoParametersFunc,   ParamsToMono,  ePE_Params_Count)
+
+DECLARE_ACTION_PROCESSING_FUNC(GetActionConverterToCE,   ConvertToNativeActionFunc,     ActionToCE,    ePE_Action_Count)
+DECLARE_ACTION_PROCESSING_FUNC(GetActionDisposer,        DisposeActionFunc,             DisposeAction, ePE_Action_Count)
+
+DECLARE_STATUS_PROCESSING_FUNC(GetStatusConverterToCE,   ConvertToNativeStatusFunc,     StatusToCE,    ePE_Status_Count)
+DECLARE_STATUS_PROCESSING_FUNC(GetStatusConverterToMono, ConvertToMonoStatusFunc,       StatusToMono,  ePE_Status_Count)
+
 
 void PhysicalEntityInterop::OnRunTimeInitialized()
 {
 	REGISTER_METHOD(SetParams);
 	REGISTER_METHOD(GetParams);
+	REGISTER_METHOD(GetStatusInternal);
+	REGISTER_METHOD(Action);
 }
 
 int PhysicalEntityInterop::SetParams(IPhysicalEntity *handle, PhysicsParameters *parameters, bool threadSafe)
@@ -86,5 +161,40 @@ int PhysicalEntityInterop::GetParams(IPhysicalEntity *handle, PhysicsParameters 
 	GetParamConverterToMono(parameters->type)(params, parameters);
 	// Delete CryEngine object.
 	delete params;
+	return result;
+}
+
+int PhysicalEntityInterop::GetStatusInternal(IPhysicalEntity *handle, PhysicsStatus *status)
+{
+	auto converter = GetStatusConverterToCE(status->type);
+	if (!converter)
+	{
+		return 0;
+	}
+
+	// Convert CryCIL object to CryEngine one.
+	auto stat = converter(status);
+	int result = handle->GetStatus(stat);
+	// Store result in the CryCIL object.
+	GetStatusConverterToMono(status->type)(stat, status);
+	// Delete CryEngine object.
+	delete stat;
+	return result;
+}
+
+int PhysicalEntityInterop::Action(IPhysicalEntity *handle, PhysicsAction *action, bool threadSafe)
+{
+	auto converter = GetActionConverterToCE(action->type);
+	if (!converter)
+	{
+		return 0;
+	}
+
+	// Convert CryCIL object to CryEngine one.
+	auto act = converter(action);
+	// Store result in the CryCIL object.
+	int result = handle->Action(act, threadSafe);
+	// Delete CryEngine object.
+	delete act;
 	return result;
 }

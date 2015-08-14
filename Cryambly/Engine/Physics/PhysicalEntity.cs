@@ -129,6 +129,39 @@ namespace CryCil.Engine.Physics
 
 			return GetParams(this.handle, ref parameters) != 0;
 		}
+		/// <summary>
+		/// Queries the status of this physical entity.
+		/// </summary>
+		/// <param name="status">
+		/// A reference to the base part of the object that defines what query to do and will contain the
+		/// results.
+		/// </param>
+		/// <returns>An integer number which meaning depends on the query.</returns>
+		public int GetStatus(ref PhysicsStatus status)
+		{
+			this.AssertInstance();
+			Contract.EndContractBlock();
+
+			return GetStatusInternal(this.handle, ref status);
+		}
+		/// <summary>
+		/// Executes an action upon this physical entity.
+		/// </summary>
+		/// <param name="action">    
+		/// A reference to the base part of the object that describes the action.
+		/// </param>
+		/// <param name="threadSafe">
+		/// An optional value that indicates whether this action must be executed immediately in a
+		/// thread-safe manner, rather then after undefined amount of time when safe.
+		/// </param>
+		/// <returns>True, if action was executed or queued successfully.</returns>
+		public bool ActUpon(ref PhysicsAction action, bool threadSafe = false)
+		{
+			this.AssertInstance();
+			Contract.EndContractBlock();
+
+			return Action(this.handle, ref action, threadSafe) != 0;
+		}
 		#endregion
 		#region Utilities
 		private void AssertInstance()
@@ -143,6 +176,10 @@ namespace CryCil.Engine.Physics
 		private static extern int SetParams(IntPtr handle, ref PhysicsParameters parameters, bool threadSafe);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern int GetParams(IntPtr handle, ref PhysicsParameters parameters);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern int GetStatusInternal(IntPtr handle, ref PhysicsStatus status);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern int Action(IntPtr handle, ref PhysicsAction action, bool threadSafe);
 		#endregion
 	}
 }
