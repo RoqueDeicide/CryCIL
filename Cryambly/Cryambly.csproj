@@ -171,10 +171,10 @@
     <Compile Include="Engine\Physics\PhysicalEntityFlags.cs" />
     <Compile Include="Engine\Physics\PhysicalEntityType.cs" />
     <Compile Include="Engine\Physics\PhysicalWorld.cs" />
-    <Compile Include="Engine\Physics\PhysicsParameters\PhysicsActionTypes.cs" />
-    <Compile Include="Engine\Physics\PhysicsParameters\PhysicsGeometryParametersTypes.cs" />
-    <Compile Include="Engine\Physics\PhysicsParameters\PhysicsParametersTypes.cs" />
-    <Compile Include="Engine\Physics\PhysicsParameters\PhysicsStatusTypes.cs" />
+    <Compile Include="Engine\Physics\Actions\PhysicsActionTypes.cs" />
+    <Compile Include="Engine\Physics\GeometryParameters\PhysicsGeometryParametersTypes.cs" />
+    <Compile Include="Engine\Physics\Parameters\PhysicsParametersTypes.cs" />
+    <Compile Include="Engine\Physics\Statuses\PhysicsStatusTypes.cs" />
     <Compile Include="Engine\Rendering\RenderParameters.cs" />
     <Compile Include="Engine\Rendering\Shading\Lighting\DynamicLightFlags.cs" />
     <Compile Include="Engine\Rendering\Shading\Lighting\LightSource.cs" />
