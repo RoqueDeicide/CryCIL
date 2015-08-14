@@ -8,16 +8,14 @@ namespace CryCil.Engine.Physics
 	/// <summary>
 	/// Encapsulates a set of parameters that is used to change location of the physical entity.
 	/// </summary>
-	/// <remarks>
-	/// Don't use this type when calling <see cref="PhysicalEntity.GetParameters"/>.
-	/// </remarks>
+	/// <remarks>Don't use this type when calling <see cref="PhysicalEntity.GetParameters"/>.</remarks>
 	[StructLayout(LayoutKind.Sequential)]
 	public unsafe struct PhysicsParametersLocation
 	{
 		#region Fields
 		/// <summary>
-		/// Pass reference to <see cref="PhysicalEntity.SetParameters"/> in order apply this set of
-		/// parameters to the entity.
+		/// Pass reference to this field to <see cref="PhysicalEntity.SetParameters"/> in order apply this
+		/// set of parameters to the entity.
 		/// </summary>
 		[UsedImplicitly]
 		public PhysicsParameters Base;
