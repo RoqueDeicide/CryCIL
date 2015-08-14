@@ -164,6 +164,7 @@
     <Compile Include="Engine\Logic\FlowGraph\OutputPort.cs" />
     <Compile Include="Engine\Network\ChannelId.cs" />
     <Compile Include="Engine\Physics\Actions\PhysicsAction.cs" />
+    <Compile Include="Engine\Physics\Actions\PhysicsActionImpulse.cs" />
     <Compile Include="Engine\Physics\CollisionEventInfo.cs" />
     <Compile Include="Engine\Physics\EntityQueryFlags.cs" />
     <Compile Include="Engine\Physics\ExplosionParameters.cs" />
