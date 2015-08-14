@@ -99,6 +99,7 @@ functionPtrType name(int type)\
 	if (!initialized)\
 	{\
 		memset(funcs, 0, sizeof(functionPtrType) * typeCount);\
+		funcs[ePE_status_pos] = functionPtr<PhysicsStatusLocation>;\
 		initialized = true;\
 	}\
 	\
