@@ -95,3 +95,5 @@
 #include "Interops/LightSource.h"
 
 #include "Interops/PhysicalWorld.h"
+
+#include "Interops/PhysicalEntity.h"

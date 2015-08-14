@@ -410,6 +410,9 @@
     <ClInclude Include="Interops\PhysicsParameterStructs.h">
       <Filter>Interops\Engine\Physics</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\PhysicalEntity.h">
+      <Filter>Interops\Engine\Physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -719,6 +722,9 @@
     <ClCompile Include="TypeMapChecks\PhysicsTypeEnumerations.cpp" />
     <ClCompile Include="TypeMapChecks\SimClass.cpp">
       <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\PhysicalEntity.cpp">
+      <Filter>Interops\Engine\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
