@@ -9,4 +9,6 @@ struct PhysicalEntityInterop : public IMonoInterop<true, true>
 
 	virtual void OnRunTimeInitialized() override;
 
+	static int SetParams(IPhysicalEntity *handle, PhysicsParameters *parameters, bool threadSafe);
+	static int GetParams(IPhysicalEntity *handle, PhysicsParameters *parameters);
 };
