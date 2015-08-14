@@ -713,6 +713,7 @@
     <ClCompile Include="Interops\PhysicalWorld.cpp">
       <Filter>Interops\Engine\Physics</Filter>
     </ClCompile>
+    <ClCompile Include="TypeMapChecks\PhysicsTypeEnumerations.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">
