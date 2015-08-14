@@ -6,6 +6,11 @@
 	public enum PhysicsSimulationClass
 	{
 		/// <summary>
+		/// Used in situations where simulation class can be changed to indicate that class should remain
+		/// the same.
+		/// </summary>
+		Unused = -1,
+		/// <summary>
 		/// Static simulation class. Used by physical entities of type
 		/// <see cref="PhysicalEntityType.Static"/>.
 		/// </summary>
