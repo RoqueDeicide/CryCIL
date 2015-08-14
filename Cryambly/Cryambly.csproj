@@ -177,6 +177,7 @@
     <Compile Include="Engine\Physics\Parameters\PhysicsParametersTypes.cs" />
     <Compile Include="Engine\Physics\PhysicsSimulationClass.cs" />
     <Compile Include="Engine\Physics\Statuses\PhysicsStatusTypes.cs" />
+    <Compile Include="Engine\Physics\UnusedValues\UnusedValue.cs" />
     <Compile Include="Engine\Rendering\RenderParameters.cs" />
     <Compile Include="Engine\Rendering\Shading\Lighting\DynamicLightFlags.cs" />
     <Compile Include="Engine\Rendering\Shading\Lighting\LightSource.cs" />
