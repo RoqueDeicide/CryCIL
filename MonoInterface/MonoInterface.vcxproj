@@ -298,6 +298,7 @@
     <ClInclude Include="Interops\Game.h" />
     <ClInclude Include="Interops\GeneralExtensions.h" />
     <ClInclude Include="Interops\InputInterop.h" />
+    <ClInclude Include="Interops\Lattice.h" />
     <ClInclude Include="Interops\Level.h" />
     <ClInclude Include="Interops\LevelGameRules.h" />
     <ClInclude Include="Interops\LevelMissions.h" />
@@ -420,6 +421,7 @@
     <ClCompile Include="Interops\Game.cpp" />
     <ClCompile Include="Interops\GeneralExtensions.cpp" />
     <ClCompile Include="Interops\InputInterop.cpp" />
+    <ClCompile Include="Interops\Lattice.cpp" />
     <ClCompile Include="Interops\Level.cpp" />
     <ClCompile Include="Interops\LevelGameRules.cpp" />
     <ClCompile Include="Interops\LevelMissions.cpp" />

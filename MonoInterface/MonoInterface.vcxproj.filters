@@ -422,6 +422,9 @@
     <ClInclude Include="Interops\PhysicalEntity.h">
       <Filter>Interops\Engine\Physics</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\Lattice.h">
+      <Filter>Interops\Engine\Physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -733,6 +736,9 @@
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
     <ClCompile Include="Interops\PhysicalEntity.cpp">
+      <Filter>Interops\Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\Lattice.cpp">
       <Filter>Interops\Engine\Physics</Filter>
     </ClCompile>
   </ItemGroup>

@@ -353,6 +353,7 @@ void MonoInterface::RegisterDefaultListeners()
 	this->broadcaster->listeners->Add(new LightSourceInterop());
 	this->broadcaster->listeners->Add(new PhysicalWorldInterop());
 	this->broadcaster->listeners->Add(new PhysicalEntityInterop());
+	this->broadcaster->listeners->Add(new LatticeInterop());
 }
 #pragma endregion
 #pragma region Thunks Initialization

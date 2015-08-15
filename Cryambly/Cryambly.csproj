@@ -172,6 +172,7 @@
     <Compile Include="Engine\Physics\Parameters\BoundingBox.cs" />
     <Compile Include="Engine\Physics\Parameters\Location.cs" />
     <Compile Include="Engine\Physics\Parameters\OuterEntity.cs" />
+    <Compile Include="Engine\Physics\Parameters\TetraLattice.cs" />
     <Compile Include="Engine\Physics\PhysicalEntity.cs" />
     <Compile Include="Engine\Physics\PhysicalEntityFlags.cs" />
     <Compile Include="Engine\Physics\PhysicalEntityType.cs" />
@@ -185,6 +186,7 @@
     <Compile Include="Engine\Physics\Statuses\PhysicsStatus.cs" />
     <Compile Include="Engine\Physics\Statuses\PhysicsStatusLocation.cs" />
     <Compile Include="Engine\Physics\Statuses\PhysicsStatusTypes.cs" />
+    <Compile Include="Engine\Physics\TetraLattice.cs" />
     <Compile Include="Engine\Physics\UnusedValues\UnusedValue.cs" />
     <Compile Include="Engine\Rendering\RenderParameters.cs" />
     <Compile Include="Engine\Rendering\Shading\Lighting\DynamicLightFlags.cs" />

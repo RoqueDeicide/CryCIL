@@ -97,3 +97,5 @@
 #include "Interops/PhysicalWorld.h"
 
 #include "Interops/PhysicalEntity.h"
+
+#include "Interops/Lattice.h"
