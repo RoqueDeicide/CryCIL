@@ -59,7 +59,8 @@ functionPtrType name(int type)\
 	if (!initialized)\
 	{\
 		memset(funcs, 0, sizeof(functionPtrType) * typeCount);\
-		funcs[ePE_params_pos] = functionPtr<PhysicsParametersLocation>;\
+		funcs[ePE_params_pos]  = functionPtr<PhysicsParametersLocation>;\
+		funcs[ePE_params_bbox] = functionPtr<PhysicsParametersBoundingBox>;\
 		initialized = true;\
 	}\
 	\

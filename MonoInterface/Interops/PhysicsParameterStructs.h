@@ -43,3 +43,27 @@ struct PhysicsParametersLocation
 		if (this->pMtx3x4) free(this->pMtx3x4);
 	}
 };
+
+struct PhysicsParametersBoundingBox
+{
+	PhysicsParameters Base;
+	AABB aabb;
+	pe_params *ToParams() const
+	{
+		pe_params_bbox *params = new pe_params_bbox();
+
+		params->BBox[0] = this->aabb.min;
+		params->BBox[1] = this->aabb.max;
+
+		return params;
+	}
+	void FromParams(const pe_params *pars)
+	{
+		const pe_params_bbox *params = static_cast<const pe_params_bbox *>(pars);
+
+		this->aabb = AABB(params->BBox[0], params->BBox[1]);
+	}
+	void Dispose()
+	{
+	}
+};
