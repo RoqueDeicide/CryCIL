@@ -169,8 +169,8 @@
     <Compile Include="Engine\Physics\EntityQueryFlags.cs" />
     <Compile Include="Engine\Physics\ExplosionParameters.cs" />
     <Compile Include="Engine\Physics\ExplosionResult.cs" />
-    <Compile Include="Engine\Physics\Parameters\PhysicsParametersBoundingBox.cs" />
-    <Compile Include="Engine\Physics\Parameters\PhysicsParametersLocation.cs" />
+    <Compile Include="Engine\Physics\Parameters\BoundingBox.cs" />
+    <Compile Include="Engine\Physics\Parameters\Location.cs" />
     <Compile Include="Engine\Physics\PhysicalEntity.cs" />
     <Compile Include="Engine\Physics\PhysicalEntityFlags.cs" />
     <Compile Include="Engine\Physics\PhysicalEntityType.cs" />
