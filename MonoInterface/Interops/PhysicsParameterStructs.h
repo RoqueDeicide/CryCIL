@@ -67,3 +67,28 @@ struct PhysicsParametersBoundingBox
 	{
 	}
 };
+
+struct PhysicsParametersOuterEntity
+{
+	PhysicsParameters Base;
+	IPhysicalEntity *entity;
+	IGeometry *geom;
+	pe_params *ToParams() const
+	{
+		pe_params_outer_entity *params = new pe_params_outer_entity();
+
+		params->pOuterEntity      = this->entity;
+		params->pBoundingGeometry = this->geom;
+
+		return params;
+	}
+	void FromParams(const pe_params *pars)
+	{
+		const pe_params_outer_entity *params = static_cast<const pe_params_outer_entity *>(pars);
+
+		this->entity = params->pOuterEntity;
+		this->geom   = params->pBoundingGeometry;
+	}
+	void Dispose()
+	{}
+};
