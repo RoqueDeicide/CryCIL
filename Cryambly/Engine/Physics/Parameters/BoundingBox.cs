@@ -1,4 +1,5 @@
-﻿using CryCil.Annotations;
+﻿using System.Runtime.InteropServices;
+using CryCil.Annotations;
 using CryCil.Geometry;
 
 namespace CryCil.Engine.Physics
@@ -11,6 +12,7 @@ namespace CryCil.Engine.Physics
 	/// Never use objects of this type that were created using a default constructor (they are not
 	/// configured properly!).
 	/// </remarks>
+	[StructLayout(LayoutKind.Sequential)]
 	public struct PhysicsParametersBoundingBox
 	{
 		#region Fields

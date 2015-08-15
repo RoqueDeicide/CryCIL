@@ -1,4 +1,5 @@
-﻿using CryCil.Annotations;
+﻿using System.Runtime.InteropServices;
+using CryCil.Annotations;
 
 namespace CryCil.Engine.Physics
 {
@@ -18,6 +19,7 @@ namespace CryCil.Engine.Physics
 	/// configured properly!).
 	/// </para>
 	/// </remarks>
+	[StructLayout(LayoutKind.Sequential)]
 	public struct PhysicsParametersOuterEntity
 	{
 		#region Fields
