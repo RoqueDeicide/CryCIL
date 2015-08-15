@@ -11,6 +11,10 @@ namespace CryCil.Engine.Physics
 	/// When querying location of the entity using <see cref="PhysicalEntity.GetStatus"/> function the
 	/// result will !0 when successful.
 	/// </para>
+	/// <para>
+	/// Never use objects of this type that were created using a default constructor (they are not
+	/// configured properly!).
+	/// </para>
 	/// </remarks>
 	public struct PhysicsStatusLocation
 	{

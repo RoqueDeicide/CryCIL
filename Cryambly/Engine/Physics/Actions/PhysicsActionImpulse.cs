@@ -25,6 +25,10 @@ namespace CryCil.Engine.Physics
 	/// <summary>
 	/// Encapsulates description of the action that applies impulse to the physical entity.
 	/// </summary>
+	/// <remarks>
+	/// Never use objects of this type that were created using a default constructor (they are not
+	/// configured properly!).
+	/// </remarks>
 	[StructLayout(LayoutKind.Sequential)]
 	public struct PhysicsActionImpulse
 	{
