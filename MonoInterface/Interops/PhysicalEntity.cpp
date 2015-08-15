@@ -50,68 +50,44 @@ void StatusToMono(pe_status *stat, PhysicsStatus *status)
 	reinterpret_cast<StatusType *>(status)->FromStatus(stat);
 }
 
-#define DECLARE_PARAMS_PROCESSING_FUNC(name, functionPtrType, functionPtr, typeCount) \
+#define START_PROCESSING_FUNC_DECLARATION(name, functionPtrType, functionPtr, typeCount) \
 functionPtrType name(int type)\
 {\
 	static functionPtrType funcs[typeCount];\
 	static bool initialized = false;\
 	\
 	if (!initialized)\
+		{\
+		memset(funcs, 0, sizeof(functionPtrType) * typeCount);
+
+#define END_PROCESSING_FUNC_DECLARATION(typeCount) \
+		initialized = true;\
+	}\
+	\
+	if (type < 0 || type >= typeCount)\
 	{\
-		memset(funcs, 0, sizeof(functionPtrType) * typeCount);\
+		return nullptr;\
+	}\
+	\
+	return funcs[type];\
+}
+
+#define DECLARE_PARAMS_PROCESSING_FUNC(name, functionPtrType, functionPtr, typeCount) \
+START_PROCESSING_FUNC_DECLARATION(name, functionPtrType, functionPtr, typeCount) \
 		funcs[ePE_params_pos]          = functionPtr<PhysicsParametersLocation>;\
 		funcs[ePE_params_bbox]         = functionPtr<PhysicsParametersBoundingBox>;\
 		funcs[ePE_params_outer_entity] = functionPtr<PhysicsParametersOuterEntity>;\
-		initialized = true;\
-	}\
-	\
-	if (type < 0 || type >= typeCount)\
-	{\
-		return nullptr;\
-	}\
-	\
-	return funcs[type];\
-}
+END_PROCESSING_FUNC_DECLARATION(typeCount)
+
 #define DECLARE_ACTION_PROCESSING_FUNC(name, functionPtrType, functionPtr, typeCount) \
-functionPtrType name(int type)\
-{\
-	static functionPtrType funcs[typeCount];\
-	static bool initialized = false;\
-	\
-	if (!initialized)\
-	{\
-		memset(funcs, 0, sizeof(functionPtrType) * typeCount);\
-		funcs[ePE_action_impulse] = functionPtr<PhysicsActionImpulse>;\
-		initialized = true;\
-	}\
-	\
-	if (type < 0 || type >= typeCount)\
-	{\
-		return nullptr;\
-	}\
-	\
-	return funcs[type];\
-}
+START_PROCESSING_FUNC_DECLARATION(name, functionPtrType, functionPtr, typeCount) \
+		funcs[ePE_action_impulse]      = functionPtr<PhysicsActionImpulse>;\
+END_PROCESSING_FUNC_DECLARATION(typeCount)
+
 #define DECLARE_STATUS_PROCESSING_FUNC(name, functionPtrType, functionPtr, typeCount) \
-functionPtrType name(int type)\
-{\
-	static functionPtrType funcs[typeCount];\
-	static bool initialized = false;\
-	\
-	if (!initialized)\
-	{\
-		memset(funcs, 0, sizeof(functionPtrType) * typeCount);\
-		funcs[ePE_status_pos] = functionPtr<PhysicsStatusLocation>;\
-		initialized = true;\
-	}\
-	\
-	if (type < 0 || type >= typeCount)\
-	{\
-		return nullptr;\
-	}\
-	\
-	return funcs[type];\
-}
+START_PROCESSING_FUNC_DECLARATION(name, functionPtrType, functionPtr, typeCount) \
+		funcs[ePE_status_pos]          = functionPtr<PhysicsStatusLocation>;\
+END_PROCESSING_FUNC_DECLARATION(typeCount)
 
 DECLARE_PARAMS_PROCESSING_FUNC(GetParamConverterToCE,    ConvertToNativeParametersFunc, ParamsToCE,    ePE_Params_Count)
 DECLARE_PARAMS_PROCESSING_FUNC(GetParamDisposer,         DisposeParametersFunc,         DisposeParams, ePE_Params_Count)
