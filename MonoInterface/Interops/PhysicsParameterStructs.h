@@ -140,3 +140,64 @@ struct PhysicsParametersSensors
 		}
 	}
 };
+
+struct PhysicsParametersSimulation
+{
+	PhysicsParameters Base;
+	int iSimClass;
+	float maxTimeStep;
+	float minEnergy;
+	float damping;
+	Vec3 gravity;
+	float dampingFreefall;
+	Vec3 gravityFreefall;
+	float maxRotVel;
+	float mass;
+	float density;
+	int maxLoggedCollisions;
+	int disablePreCG;
+	float maxFriction;
+	int collTypes;
+	pe_params *ToParams() const
+	{
+		pe_simulation_params *params = new pe_simulation_params();
+
+		params->iSimClass           = this->iSimClass;
+		params->maxTimeStep         = this->maxTimeStep;
+		params->minEnergy           = this->minEnergy;
+		params->damping             = this->damping;
+		params->gravity             = this->gravity;
+		params->dampingFreefall     = this->dampingFreefall;
+		params->gravityFreefall     = this->gravityFreefall;
+		params->maxRotVel           = this->maxRotVel;
+		params->mass                = this->mass;
+		params->density             = this->density;
+		params->maxLoggedCollisions = this->maxLoggedCollisions;
+		params->disablePreCG        = this->disablePreCG;
+		params->maxFriction         = this->maxFriction;
+		params->collTypes           = this->collTypes;
+
+		return params;
+	}
+	void FromParams(const pe_params *pars)
+	{
+		const pe_simulation_params *params = static_cast<const pe_simulation_params *>(pars);
+
+		this->iSimClass           = params->iSimClass;
+		this->maxTimeStep         = params->maxTimeStep;
+		this->minEnergy           = params->minEnergy;
+		this->damping             = params->damping;
+		this->gravity             = params->gravity;
+		this->dampingFreefall     = params->dampingFreefall;
+		this->gravityFreefall     = params->gravityFreefall;
+		this->maxRotVel           = params->maxRotVel;
+		this->mass                = params->mass;
+		this->density             = params->density;
+		this->maxLoggedCollisions = params->maxLoggedCollisions;
+		this->disablePreCG        = params->disablePreCG;
+		this->maxFriction         = params->maxFriction;
+		this->collTypes           = params->collTypes;
+	}
+	void Dispose()
+	{}
+};
