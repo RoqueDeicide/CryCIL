@@ -6,11 +6,14 @@ using CryCil.Geometry;
 namespace CryCil.Engine.Physics
 {
 	/// <summary>
-	/// Encapsulates a set of parameters that allows to the physical entity.
+	/// Encapsulates a set of parameters that allows get/set sensors on the physical entity.
 	/// </summary>
 	/// <remarks>
+	/// <para>
 	/// Never use objects of this type that were created using a default constructor (they are not
 	/// configured properly!).
+	/// </para>
+	/// <para>Sensors can be used by AI object for visual/audial and other types of detection.</para>
 	/// </remarks>
 	[StructLayout(LayoutKind.Sequential)]
 	public unsafe struct PhysicsParametersSensors
