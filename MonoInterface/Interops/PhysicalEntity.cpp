@@ -77,6 +77,7 @@ START_PROCESSING_FUNC_DECLARATION(name, functionPtrType, functionPtr, typeCount)
 		funcs[ePE_params_pos]          = functionPtr<PhysicsParametersLocation>;\
 		funcs[ePE_params_bbox]         = functionPtr<PhysicsParametersBoundingBox>;\
 		funcs[ePE_params_outer_entity] = functionPtr<PhysicsParametersOuterEntity>;\
+		funcs[ePE_params_sensors]      = functionPtr<PhysicsParametersSensors>;\
 END_PROCESSING_FUNC_DECLARATION(typeCount)
 
 #define DECLARE_ACTION_PROCESSING_FUNC(name, functionPtrType, functionPtr, typeCount) \

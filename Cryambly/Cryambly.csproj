@@ -172,6 +172,7 @@
     <Compile Include="Engine\Physics\Parameters\BoundingBox.cs" />
     <Compile Include="Engine\Physics\Parameters\Location.cs" />
     <Compile Include="Engine\Physics\Parameters\OuterEntity.cs" />
+    <Compile Include="Engine\Physics\Parameters\Sensors.cs" />
     <Compile Include="Engine\Physics\Parameters\TetraLattice.cs" />
     <Compile Include="Engine\Physics\PhysicalEntity.cs" />
     <Compile Include="Engine\Physics\PhysicalEntityFlags.cs" />

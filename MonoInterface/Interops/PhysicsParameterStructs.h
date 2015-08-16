@@ -93,3 +93,50 @@ struct PhysicsParametersOuterEntity
 	void Dispose()
 	{}
 };
+
+struct PhysicsParametersSensors
+{
+	PhysicsParameters Base;
+	mono::Array rays;
+	Vec3 *origins;
+	Vec3 *dirs;
+	int32 count;
+	pe_params *ToParams()
+	{
+		pe_params_sensors *params = new pe_params_sensors();
+
+		params->nSensors    = this->count;
+		params->pOrigins    = this->origins;
+		params->pDirections = this->dirs;
+
+		return params;
+	}
+	void FromParams(const pe_params *pars)
+	{
+		const pe_params_sensors *params = static_cast<const pe_params_sensors *>(pars);
+
+		if (params->nSensors == 0)
+		{
+			this->rays = nullptr;
+			return;
+		}
+
+		IMonoArray<Ray> rays = MonoEnv->Objects->Arrays->Create(params->nSensors, MonoEnv->Cryambly->Ray);
+		MonoGCHandle handle = MonoEnv->GC->Pin(rays);
+
+		for (int i = 0; i < params->nSensors; i++)
+		{
+			rays[i] = Ray(params->pOrigins[i], params->pDirections[i]);
+		}
+
+		this->rays = rays;
+	}
+	void Dispose()
+	{
+		if (this->count != 0)	// Only possible when we set the sensors to an array that has elements in it.
+		{
+			free(this->origins);
+			free(this->dirs);
+		}
+	}
+};
