@@ -40,9 +40,17 @@ namespace CryCil.Engine.Physics
 		/// thread-safe manner, rather then after undefined amount of time when safe.
 		/// </param>
 		/// <returns>True, if successful.</returns>
+		/// <exception cref="ArgumentNullException">
+		/// An object that represents a set of parameters to set was created via default constructor which
+		/// is not allowed.
+		/// </exception>
 		public bool SetParameters(ref PhysicsParameters parameters, bool threadSafe = false)
 		{
 			this.AssertInstance();
+			if (!parameters.Initialized)
+			{
+				throw new ArgumentNullException("parameters", "An object that represents a set of parameters to set was created via default constructor which is not allowed.");
+			}
 			Contract.EndContractBlock();
 
 			return SetParams(this.handle, ref parameters, threadSafe) != 0;
@@ -54,6 +62,10 @@ namespace CryCil.Engine.Physics
 		/// A reference to a base part of the structure that encapsulates parameters to set.
 		/// </param>
 		/// <returns>True, if successful.</returns>
+		/// <exception cref="ArgumentNullException">
+		/// An object that represents a set of parameters to get was created via default constructor which
+		/// is not allowed.
+		/// </exception>
 		/// <exception cref="ArgumentException">
 		/// Don't use <see cref="PhysicsParametersLocation"/> structure when getting parameters, call
 		/// <see cref="GetStatus"/> with <see cref="PhysicsStatusLocation"/> instead.
@@ -64,6 +76,10 @@ namespace CryCil.Engine.Physics
 		public bool GetParameters(ref PhysicsParameters parameters)
 		{
 			this.AssertInstance();
+			if (!parameters.Initialized)
+			{
+				throw new ArgumentNullException("parameters", "An object that represents a set of parameters to get was created via default constructor which is not allowed.");
+			}
 			switch (parameters.Type)
 			{
 				case PhysicsParametersTypes.Position:
@@ -137,9 +153,17 @@ namespace CryCil.Engine.Physics
 		/// results.
 		/// </param>
 		/// <returns>An integer number which meaning depends on the query.</returns>
+		/// <exception cref="ArgumentNullException">
+		/// An object that represents information to query was created via default constructor which is not
+		/// allowed.
+		/// </exception>
 		public int GetStatus(ref PhysicsStatus status)
 		{
 			this.AssertInstance();
+			if (!status.Initialized)
+			{
+				throw new ArgumentNullException("status", "An object that represents information to query was created via default constructor which is not allowed.");
+			}
 			Contract.EndContractBlock();
 
 			return GetStatusInternal(this.handle, ref status);
@@ -155,9 +179,17 @@ namespace CryCil.Engine.Physics
 		/// thread-safe manner, rather then after undefined amount of time when safe.
 		/// </param>
 		/// <returns>True, if action was executed or queued successfully.</returns>
+		/// <exception cref="ArgumentNullException">
+		/// An object that represents an action to execute was created via default constructor which is not
+		/// allowed.
+		/// </exception>
 		public bool ActUpon(ref PhysicsAction action, bool threadSafe = false)
 		{
 			this.AssertInstance();
+			if (!action.Initialized)
+			{
+				throw new ArgumentNullException("action", "An object that represents an action to execute was created via default constructor which is not allowed.");
+			}
 			Contract.EndContractBlock();
 
 			return Action(this.handle, ref action, threadSafe) != 0;

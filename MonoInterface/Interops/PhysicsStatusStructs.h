@@ -5,6 +5,7 @@
 struct PhysicsStatus
 {
 	int type;
+	bool initialized;
 };
 
 struct PhysicsStatusLocation

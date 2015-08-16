@@ -5,6 +5,7 @@
 struct PhysicsAction
 {
 	int type;
+	bool initialized;
 };
 
 struct PhysicsActionImpulse
