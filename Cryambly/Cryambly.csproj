@@ -166,6 +166,7 @@
     <Compile Include="Engine\Physics\EntityManipulation\Actions\PhysicsAction.cs" />
     <Compile Include="Engine\Physics\EntityManipulation\Actions\PhysicsActionImpulse.cs" />
     <Compile Include="Engine\Physics\CollisionEventInfo.cs" />
+    <Compile Include="Engine\Physics\EntityManipulation\EntityPartSpec.cs" />
     <Compile Include="Engine\Physics\EntityQueryFlags.cs" />
     <Compile Include="Engine\Physics\ExplosionParameters.cs" />
     <Compile Include="Engine\Physics\ExplosionResult.cs" />
