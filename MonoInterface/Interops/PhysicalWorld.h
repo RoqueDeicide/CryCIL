@@ -13,4 +13,7 @@ struct PhysicalWorldInterop : public IMonoInterop<true, true>
 	virtual void OnRunTimeInitialized() override;
 
 	static ExplosionResult SimulateExplosion(const ExplosionParameters &parameters, mono::Array entitiesToSkip, int types);
+	static int             AddExplosionShape(IGeometry *shape, float size, int index, float probability = 1.0f);
+	static void            RemoveExplosionShape(int index);
+	static void            RemoveAllExplosionShapes();
 };

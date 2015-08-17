@@ -6,6 +6,9 @@
 void PhysicalWorldInterop::OnRunTimeInitialized()
 {
 	REGISTER_METHOD(SimulateExplosion);
+	REGISTER_METHOD(AddExplosionShape);
+	REGISTER_METHOD(RemoveExplosionShape);
+	REGISTER_METHOD(RemoveAllExplosionShapes);
 }
 
 ExplosionResult PhysicalWorldInterop::SimulateExplosion(const ExplosionParameters &parameters, mono::Array entitiesToSkip,
@@ -33,4 +36,19 @@ ExplosionResult PhysicalWorldInterop::SimulateExplosion(const ExplosionParameter
 	expResult.FromExplosion(e, affectedEntsHandle);
 
 	return expResult;
+}
+
+int PhysicalWorldInterop::AddExplosionShape(IGeometry *shape, float size, int index, float probability /*= 1.0f*/)
+{
+	return gEnv->pPhysicalWorld->AddExplosionShape(shape, size, index, probability);
+}
+
+void PhysicalWorldInterop::RemoveExplosionShape(int index)
+{
+	gEnv->pPhysicalWorld->RemoveExplosionShape(index);
+}
+
+void PhysicalWorldInterop::RemoveAllExplosionShapes()
+{
+	gEnv->pPhysicalWorld->RemoveAllExplosionShapes();
 }

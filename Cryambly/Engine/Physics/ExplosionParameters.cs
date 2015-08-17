@@ -161,8 +161,7 @@ namespace CryCil.Engine.Physics
 		/// Gets the identifier of the type of hole that will be created by this explosion.
 		/// </summary>
 		/// <remarks>
-		/// Types of holes are defined elsewhere and they declare the shape of the hole as well as the size
-		/// of it.
+		/// Types of holes are defined using <see cref="ExplosionShapes.Add"/>.
 		/// </remarks>
 		public int HoleType
 		{
