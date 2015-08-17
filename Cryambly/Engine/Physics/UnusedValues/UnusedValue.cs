@@ -1,4 +1,5 @@
-﻿using CryCil.Geometry;
+﻿using System;
+using CryCil.Geometry;
 using CryCil.MemoryMapping;
 
 namespace CryCil.Engine.Physics
@@ -32,6 +33,10 @@ namespace CryCil.Engine.Physics
 		/// Quaternion that is recognized as unused.
 		/// </summary>
 		public static readonly Quaternion Quaternion;
+		/// <summary>
+		/// Pointer that is recognized as unused.
+		/// </summary>
+		public static readonly IntPtr Pointer;
 
 		static UnusedValue()
 		{
@@ -39,6 +44,7 @@ namespace CryCil.Engine.Physics
 			Double = new Bytes8(0xFFF7FFFF).DoubleFloat;
 			Vector = new Vector3(Single, 0, 0);
 			Quaternion = new Quaternion(0, 0, 0, Single);
+			Pointer = new IntPtr(-1);
 		}
 
 		// Extension methods.
@@ -96,6 +102,15 @@ namespace CryCil.Engine.Physics
 		public static bool IsUsed(this Quaternion value)
 		{
 			return value.W.IsUsed();
+		}
+		/// <summary>
+		/// Indicates whether this value is used.
+		/// </summary>
+		/// <param name="value">Value to check.</param>
+		/// <returns>True, if value wasn't marked as unused.</returns>
+		public static bool IsUsed(this IntPtr value)
+		{
+			return value == Pointer;
 		}
 	}
 }
