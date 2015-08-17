@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
+using CryCil.Engine.Memory;
 using CryCil.Engine.Physics;
 using CryCil.Graphics;
 using CryCil.Utilities;
@@ -251,6 +252,21 @@ namespace CryCil.Engine.Rendering
 		/// <exception cref="NullReferenceException">Instance object is not valid.</exception>
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public extern bool SetVectorParameter(string name, Vector3 value);
+		/// <summary>
+		/// Gets an array of identifiers of surface types that are used by this material.
+		/// </summary>
+		/// <returns>An array of identifiers of surface types that are used by this material.</returns>
+		/// <exception cref="NullReferenceException">Instance object is not valid.</exception>
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		public extern int[] GetSurfaceTypesTable();
+		/// <summary>
+		/// Fills native array with identifiers of surface types that are used by this material.
+		/// </summary>
+		/// <param name="filledItems">Number of filled items.</param>
+		/// <returns>A pointer that will need to be deleted with <see cref="CryMarshal.Free"/>.</returns>
+		/// <exception cref="NullReferenceException">Instance object is not valid.</exception>
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		public extern unsafe int* FillSurfaceTypesTable(out int filledItems);
 		#endregion
 		#region Utilities
 
