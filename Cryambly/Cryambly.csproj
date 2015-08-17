@@ -177,6 +177,7 @@
     <Compile Include="Engine\Physics\EntityManipulation\Parameters\Sensors.cs" />
     <Compile Include="Engine\Physics\EntityManipulation\Parameters\Simulation.cs" />
     <Compile Include="Engine\Physics\EntityManipulation\Parameters\TetraLattice.cs" />
+    <Compile Include="Engine\Physics\ExplosionShapes.cs" />
     <Compile Include="Engine\Physics\PhysicalEntity.cs" />
     <Compile Include="Engine\Physics\PhysicalEntityFlags.cs" />
     <Compile Include="Engine\Physics\PhysicalEntityType.cs" />
