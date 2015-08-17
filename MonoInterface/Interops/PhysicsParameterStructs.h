@@ -201,3 +201,105 @@ struct PhysicsParametersSimulation
 	void Dispose()
 	{}
 };
+
+struct PhysicsParametersPart
+{
+	PhysicsParameters Base;
+	// Indicates whether this object is set up for assignment of parameters.
+	bool forAssignment;
+	int partid;
+	int ipart;
+	bool bRecalcBBox;
+	QuatTS location;
+	Matrix34 pMtx3x4;
+	uint flagsCond;
+	uint flagsOR, flagsAND;
+	uint flagsColliderOR, flagsColliderAND;
+	float mass;
+	float density;
+	float minContactDist;
+	phys_geometry *pPhysGeom, *pPhysGeomProxy;
+	int idmatBreakable;
+	ITetrLattice *pLattice;
+	int idSkeleton;
+	mono::Array matMappings;
+	int* pMatMapping;
+	int nMats;
+	int idParent;
+	pe_params *ToParams()
+	{
+		pe_params_part *params = new pe_params_part();
+
+		params->partid           = this->partid;
+		params->ipart            = this->ipart;
+		params->bRecalcBBox      = this->bRecalcBBox ? 1 : 0;
+		params->pos              = this->location.t;
+		params->q                = this->location.q;
+		params->scale            = this->location.s;
+		params->pMtx3x4          = &this->pMtx3x4;
+		params->flagsCond        = this->flagsCond;
+		params->flagsOR          = this->flagsOR;
+		params->flagsAND         = this->flagsAND;
+		params->flagsColliderOR  = this->flagsColliderOR;
+		params->flagsColliderAND = this->flagsColliderAND;
+		params->mass             = this->mass;
+		params->minContactDist   = this->minContactDist;
+		params->pPhysGeom        = this->pPhysGeom;
+		params->pPhysGeomProxy   = this->pPhysGeomProxy;
+		params->idmatBreakable   = this->idmatBreakable;
+		params->pLattice         = this->pLattice;
+		params->idSkeleton       = this->idSkeleton;
+		params->pMatMapping      = this->pMatMapping;
+		params->nMats            = this->nMats;
+		params->idParent         = this->idParent;
+
+		return params;
+	}
+	void FromParams(const pe_params *pars)
+	{
+		const pe_params_part *params = static_cast<const pe_params_part *>(pars);
+
+		this->partid           = params->partid;
+		this->ipart            = params->ipart;
+		this->bRecalcBBox      = params->bRecalcBBox ? 1 : 0;
+		this->location.t       = params->pos;
+		this->location.q       = params->q;
+		this->location.s       = params->scale;
+		this->pMtx3x4          = *params->pMtx3x4;
+		this->flagsCond        = params->flagsCond;
+		this->flagsOR          = params->flagsOR;
+		this->flagsAND         = params->flagsAND;
+		this->flagsColliderOR  = params->flagsColliderOR;
+		this->flagsColliderAND = params->flagsColliderAND;
+		this->mass             = params->mass;
+		this->minContactDist   = params->minContactDist;
+		this->pPhysGeom        = params->pPhysGeom;
+		this->pPhysGeomProxy   = params->pPhysGeomProxy;
+		this->idmatBreakable   = params->idmatBreakable;
+		this->pLattice         = params->pLattice;
+		this->idSkeleton       = params->idSkeleton;
+		this->idParent         = params->idParent;
+		if (params->nMats == 0)
+		{
+			this->matMappings = nullptr;
+			return;
+		}
+
+		IMonoArray<int> mappings = MonoEnv->Objects->Arrays->Create(params->nMats, MonoEnv->CoreLibrary->Int32);
+		MonoGCHandle handle = MonoEnv->GC->Pin(mappings);
+
+		for (int i = 0; i < params->nMats; i++)
+		{
+			mappings[i] = params->pMatMapping[i];
+		}
+
+		this->matMappings = mappings;
+	}
+	void Dispose()
+	{
+		if (this->nMats != 0)
+		{
+			free(this->pMatMapping);
+		}
+	}
+};

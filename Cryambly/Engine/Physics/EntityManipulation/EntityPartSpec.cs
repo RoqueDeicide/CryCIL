@@ -21,6 +21,10 @@ namespace CryCil.Engine.Physics
 		/// An object of type <see cref="EntityPartSpec"/> that can be used to designate entire entity.
 		/// </summary>
 		public static readonly EntityPartSpec EntireEntity;
+		/// <summary>
+		/// An object of type <see cref="EntityPartSpec"/> that can be used to designate all parts of the entity.
+		/// </summary>
+		public static readonly EntityPartSpec AllParts;
 		#endregion
 		#region Properties
 		/// <summary>
