@@ -20,6 +20,8 @@ struct PhysicsStatusLocation
 	int SimulationClass;
 	Matrix34 Transformation;
 	uint32 flags;
+	IGeometry *geom;
+	IGeometry *geomProxy;
 	pe_status *ToStatus()
 	{
 		pe_status_pos *stat = new pe_status_pos();
@@ -42,5 +44,7 @@ struct PhysicsStatusLocation
 		this->SimulationClass = stat->iSimClass;
 		this->Transformation = *stat->pMtx3x4;
 		this->flags = stat->flagsOR;
+		this->geom = stat->pGeom;
+		this->geomProxy = stat->pGeomProxy;
 	}
 };

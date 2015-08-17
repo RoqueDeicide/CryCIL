@@ -32,12 +32,13 @@ namespace CryCil.Engine.Physics
 		private bool localSpace;
 
 		/// <summary>
-		/// An object that encapsulates coordinates of the center of the part/entity, orientation of it and its scale.
+		/// An object that encapsulates coordinates of the center of the part/entity, orientation of it and
+		/// its scale.
 		/// </summary>
 		public Quatvecale Location;
 		/// <summary>
-		/// When query is complete this field will contain an AABB that is relative to the
-		/// center of the part/entity.
+		/// When query is complete this field will contain an AABB that is relative to the center of the
+		/// part/entity.
 		/// </summary>
 		public BoundingBox BoundingBox;
 		/// <summary>
@@ -54,6 +55,15 @@ namespace CryCil.Engine.Physics
 		/// A set of user-defined flags that are assigned to the part of the entity.
 		/// </summary>
 		public uint Flags;
+		/// <summary>
+		/// A wrapper for a pointer to the geometry that is used by the part/entity for ray-tracing.
+		/// </summary>
+		public PhysicalGeometry Geometry;
+		/// <summary>
+		/// A wrapper for a pointer to the geometry that is used by the part/entity for physical
+		/// interactions.
+		/// </summary>
+		public PhysicalGeometry GeometryProxy;
 		#endregion
 		#region Construction
 		/// <summary>
@@ -86,8 +96,8 @@ namespace CryCil.Engine.Physics
 		/// Creates a new object that can be used to query location of the entity.
 		/// </summary>
 		/// <param name="localSpace">
-		/// Indicates whether location of the entity must be specified in local entity space, rather
-		/// then world space.
+		/// Indicates whether location of the entity must be specified in local entity space, rather then
+		/// world space.
 		/// </param>
 		public PhysicsStatusLocation(bool localSpace)
 			: this()
