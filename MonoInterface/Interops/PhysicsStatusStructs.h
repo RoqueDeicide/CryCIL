@@ -15,10 +15,8 @@ struct PhysicsStatusLocation
 	int ipart;
 	bool localSpace;
 
-	Vec3 Center;
+	QuatTS loc;
 	AABB BoundingBox;
-	Quat Orientation;
-	float Scale;
 	int SimulationClass;
 	Matrix34 Transformation;
 	pe_status *ToStatus()
@@ -36,10 +34,10 @@ struct PhysicsStatusLocation
 	{
 		const pe_status_pos *stat = static_cast<const pe_status_pos *>(status);
 
-		this->Center = stat->pos;
+		this->loc.t = stat->pos;
 		this->BoundingBox = AABB(stat->BBox[0], stat->BBox[1]);
-		this->Orientation = stat->q;
-		this->Scale = stat->scale;
+		this->loc.q = stat->q;
+		this->loc.s = stat->scale;
 		this->SimulationClass = stat->iSimClass;
 		this->Transformation = *stat->pMtx3x4;
 	}

@@ -32,24 +32,14 @@ namespace CryCil.Engine.Physics
 		private bool localSpace;
 
 		/// <summary>
-		/// When query is complete this field will contain coordinates of the center of the physical
-		/// entity.
+		/// An object that encapsulates coordinates of the center of the part/entity, orientation of it and its scale.
 		/// </summary>
-		public Vector3 Center;
+		public Quatvecale Location;
 		/// <summary>
 		/// When query is complete this field will contain an AABB that is relative to the
-		/// <see cref="Center"/>.
+		/// center of the part/entity.
 		/// </summary>
 		public BoundingBox BoundingBox;
-		/// <summary>
-		/// When query is complete this field will contain <see cref="Quaternion"/> that represents
-		/// orientation of the physical entity.
-		/// </summary>
-		public Quaternion Orientation;
-		/// <summary>
-		/// When query is complete this field will contain uniform scale factor of this entity.
-		/// </summary>
-		public float Scale;
 		/// <summary>
 		/// When query is complete this field will contain a value that specifies current simulation class
 		/// of the entity.
