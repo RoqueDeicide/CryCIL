@@ -50,6 +50,10 @@ namespace CryCil.Engine.Physics
 		/// position, orientation and scale of the entity.
 		/// </summary>
 		public Matrix34 Transformation;
+		/// <summary>
+		/// A set of user-defined flags that are assigned to the part of the entity.
+		/// </summary>
+		public uint Flags;
 		#endregion
 		#region Construction
 		/// <summary>

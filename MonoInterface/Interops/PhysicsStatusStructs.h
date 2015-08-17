@@ -19,6 +19,7 @@ struct PhysicsStatusLocation
 	AABB BoundingBox;
 	int SimulationClass;
 	Matrix34 Transformation;
+	uint32 flags;
 	pe_status *ToStatus()
 	{
 		pe_status_pos *stat = new pe_status_pos();
@@ -40,5 +41,6 @@ struct PhysicsStatusLocation
 		this->loc.s = stat->scale;
 		this->SimulationClass = stat->iSimClass;
 		this->Transformation = *stat->pMtx3x4;
+		this->flags = stat->flagsOR;
 	}
 };
