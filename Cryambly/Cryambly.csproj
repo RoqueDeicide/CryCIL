@@ -191,6 +191,7 @@
     <Compile Include="Engine\Physics\EntityManipulation\Statuses\PhysicsStatus.cs" />
     <Compile Include="Engine\Physics\EntityManipulation\Statuses\PhysicsStatusLocation.cs" />
     <Compile Include="Engine\Physics\EntityManipulation\Statuses\PhysicsStatusTypes.cs" />
+    <Compile Include="Engine\Physics\RegisteredPhysicalGeometry.cs" />
     <Compile Include="Engine\Physics\TetraLattice.cs" />
     <Compile Include="Engine\Physics\UnusedValues\UnusedValue.cs" />
     <Compile Include="Engine\Rendering\RenderParameters.cs" />
