@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using CryCil.Annotations;
 
 namespace CryCil.Engine.Physics
@@ -56,10 +55,9 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets directional impulse that will be applied to the entity.
 		/// </summary>
-		/// <returns><c>null</c>, if directional impulse won't be applied.</returns>
-		public Vector3? Impulse
+		public Vector3 Impulse
 		{
-			get { return this.impulse.IsUsed() ? this.impulse : (Vector3?)null; }
+			get { return this.impulse; }
 		}
 		/// <summary>
 		/// Gets angular impulse that will be applied to the entity.
@@ -103,97 +101,29 @@ namespace CryCil.Engine.Physics
 		#endregion
 		#region Construction
 		/// <summary>
-		/// Creates a new action that applies directional impulse.
+		/// Creates a new action that applies the impulse to the physical entity.
 		/// </summary>
-		/// <param name="impulse">        A vector that defines the directional impulse.</param>
-		/// <param name="partId">         
-		/// Optional identifier of the part of the entity to apply impulse to. Don't specify, if
-		/// <paramref name="partIndex"/> is specified.
-		/// </param>
-		/// <param name="partIndex">      
-		/// Optional index of the part of the entity to apply impulse to. Don't specify, if
-		/// <paramref name="partId"/> is specified.
-		/// </param>
-		/// <param name="applicationTime">Optional value that indicates when to apply the impulse.</param>
-		/// <exception cref="ArgumentException">
-		/// Don't specify identifier of the part of the entity and the index. You can only specify one of
-		/// them.
-		/// </exception>
-		public PhysicsActionImpulse(Vector3 impulse, int partId = UnusedValue.Int32, int partIndex = UnusedValue.Int32,
-									ImpulseApplicationTime applicationTime = ImpulseApplicationTime.AfterTimeStep)
-			: this(impulse, UnusedValue.Vector, UnusedValue.Vector, partId, partIndex, applicationTime)
-		{
-		}
-		/// <summary>
-		/// Creates a new action that applies directional and angular impulse.
-		/// </summary>
-		/// <param name="impulse">        
-		/// A vector that defines the directional impulse. Pass <see cref="UnusedValue.Vector"/>, if you
-		/// don't need this parameter.
-		/// </param>
-		/// <param name="angularImpulse"> A vector that defines the angular impulse.</param>
-		/// <param name="partId">         
-		/// Optional identifier of the part of the entity to apply impulse to. Don't specify, if
-		/// <paramref name="partIndex"/> is specified.
-		/// </param>
-		/// <param name="partIndex">      
-		/// Optional index of the part of the entity to apply impulse to. Don't specify, if
-		/// <paramref name="partId"/> is specified.
-		/// </param>
-		/// <param name="applicationTime">Optional value that indicates when to apply the impulse.</param>
-		/// <exception cref="ArgumentException">
-		/// Don't specify identifier of the part of the entity and the index. You can only specify one of
-		/// them.
-		/// </exception>
-		public PhysicsActionImpulse(Vector3 impulse, Vector3 angularImpulse, int partId = UnusedValue.Int32, int partIndex = UnusedValue.Int32,
-									ImpulseApplicationTime applicationTime = ImpulseApplicationTime.AfterTimeStep)
-			: this(impulse, angularImpulse, UnusedValue.Vector, partId, partIndex, applicationTime)
-		{
-		}
-		/// <summary>
-		/// Creates a new action that applies directional and angular impulse.
-		/// </summary>
-		/// <param name="impulse">        
-		/// A vector that defines the directional impulse. Pass <see cref="UnusedValue.Vector"/>, if you
-		/// don't need this parameter.
-		/// </param>
-		/// <param name="angularImpulse"> 
-		/// A vector that defines the angular impulse. Pass <see cref="UnusedValue.Vector"/>, if you don't
-		/// need this parameter.
-		/// </param>
-		/// <param name="point">          
-		/// A vector that defines the point of application of the impulse in world space.
-		/// </param>
-		/// <param name="partId">         
-		/// Optional identifier of the part of the entity to apply impulse to. Don't specify, if
-		/// <paramref name="partIndex"/> is specified.
-		/// </param>
-		/// <param name="partIndex">      
-		/// Optional index of the part of the entity to apply impulse to. Don't specify, if
-		/// <paramref name="partId"/> is specified.
-		/// </param>
-		/// <param name="applicationTime">Optional value that indicates when to apply the impulse.</param>
-		/// <exception cref="ArgumentException">
-		/// Don't specify identifier of the part of the entity and the index. You can only specify one of
-		/// them.
-		/// </exception>
-		public PhysicsActionImpulse(Vector3 impulse, Vector3 angularImpulse, Vector3 point, int partId = UnusedValue.Int32,
-									int partIndex = UnusedValue.Int32, ImpulseApplicationTime applicationTime =
-																		   ImpulseApplicationTime.AfterTimeStep)
+		/// <param name="impulse">An object that describes the impulse.</param>
+		/// <param name="part">   Optionally specifies the part of the entity to apply impulse to.</param>
+		/// <param name="apply">  Optional value that indicates when to apply the impulse.</param>
+		public PhysicsActionImpulse(ImpulseSpec impulse, EntityPartSpec part = new EntityPartSpec(),
+			ImpulseApplicationTime apply = ImpulseApplicationTime.AfterTimeStep)
 		{
 			this.Base = new PhysicsAction(PhysicsActionTypes.Impulse);
-			this.impulse = impulse;
-			this.angImpulse = angularImpulse;
-			this.point = point;
-			this.partid = partId;
-			this.ipart = partIndex;
-			this.iApplyTime = applicationTime;
-
-			if (this.partid.IsUsed() && this.ipart.IsUsed())
+			this.impulse = impulse.HasDir ? impulse.Dir : new Vector3();
+			this.angImpulse = impulse.HasAng ? impulse.Ang : UnusedValue.Vector;
+			this.point = impulse.HasPoint ? impulse.Point : UnusedValue.Vector;
+			if (part.partIsSpecified)
 			{
-				throw new ArgumentException("Don't specify identifier of the part of the entity and the index. You can " +
-											"only specify one of them.");
+				this.partid = part.PartId;
+				this.ipart = part.PartIndex;
 			}
+			else
+			{
+				this.partid = UnusedValue.Int32;
+				this.ipart = UnusedValue.Int32;
+			}
+			this.iApplyTime = apply;
 		}
 		#endregion
 	}

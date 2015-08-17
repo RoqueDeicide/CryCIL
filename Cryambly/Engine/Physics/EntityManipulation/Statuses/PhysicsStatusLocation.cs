@@ -28,6 +28,8 @@ namespace CryCil.Engine.Physics
 		private int partid;
 		[UsedImplicitly]
 		private int ipart;
+		[UsedImplicitly]
+		private bool localSpace;
 
 		/// <summary>
 		/// When query is complete this field will contain coordinates of the center of the physical
@@ -63,25 +65,42 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Creates a new object that can be used to query location of the part of the entity.
 		/// </summary>
-		/// <param name="part">
-		/// An value that identifies the part of the entity that must be queried. If -1 is passed then the
-		/// entire entity will be queried.
+		/// <param name="part">      
+		/// Specifies which part of the entity to query. If <see cref="EntityPartSpec.EntireEntity"/> is
+		/// passed, then the part won't be specified.
 		/// </param>
-		/// <param name="isId">
-		/// An optional value that indicates how to treat <paramref name="part"/>. If <c>true</c>, it will
-		/// be treated as identifier, otherwise it will be treated as an index.
+		/// <param name="localSpace">
+		/// Indicates whether location of the part/entity must be specified in local entity space, rather
+		/// then world space.
 		/// </param>
-		public PhysicsStatusLocation(int part, bool isId = true)
+		public PhysicsStatusLocation(EntityPartSpec part, bool localSpace = false)
 			: this()
 		{
-			if (part != -1 && !isId)
+			this.localSpace = localSpace;
+			if (part.partIsSpecified)
 			{
-				this.ipart = part;
+				this.partid = part.PartId;
+				this.ipart = part.PartIndex;
 			}
 			else
 			{
-				this.partid = part;
+				this.partid = -1;
+				this.ipart = -1;
 			}
+		}
+		/// <summary>
+		/// Creates a new object that can be used to query location of the entity.
+		/// </summary>
+		/// <param name="localSpace">
+		/// Indicates whether location of the entity must be specified in local entity space, rather
+		/// then world space.
+		/// </param>
+		public PhysicsStatusLocation(bool localSpace)
+			: this()
+		{
+			this.localSpace = localSpace;
+			this.partid = -1;
+			this.ipart = -1;
 		}
 		#endregion
 	}

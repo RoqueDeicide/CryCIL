@@ -13,6 +13,7 @@ struct PhysicsStatusLocation
 	PhysicsStatus Base;
 	int partid;
 	int ipart;
+	bool localSpace;
 
 	Vec3 Center;
 	AABB BoundingBox;
@@ -26,6 +27,7 @@ struct PhysicsStatusLocation
 
 		stat->partid = this->partid;
 		stat->ipart = this->ipart;
+		stat->flags = this->localSpace ? status_local : 0;
 		stat->pMtx3x4 = &this->Transformation;
 
 		return stat;
