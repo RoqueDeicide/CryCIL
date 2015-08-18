@@ -172,7 +172,7 @@
     <Compile Include="Engine\Physics\EntityManipulation\EntityPartSpec.cs" />
     <Compile Include="Engine\Physics\EntityManipulation\ImpulseSpec.cs" />
     <Compile Include="Engine\Physics\EntityManipulation\Parameters\Part.cs" />
-    <Compile Include="Engine\Physics\EntityManipulation\PartFlags.cs" />
+    <Compile Include="Engine\Physics\EntityManipulation\FlagParameters.cs" />
     <Compile Include="Engine\Physics\EntityQueryFlags.cs" />
     <Compile Include="Engine\Physics\ExplosionParameters.cs" />
     <Compile Include="Engine\Physics\ExplosionResult.cs" />

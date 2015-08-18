@@ -156,7 +156,7 @@ namespace CryCil.Engine.Physics
 		/// modify the flags that are assigned to the part.</item><item>2 sets of flags that are used to
 		/// modify the collision flags that are assigned to the part.</item></list>
 		/// </summary>
-		public PartFlags Flags
+		public FlagParameters Flags
 		{
 			set
 			{

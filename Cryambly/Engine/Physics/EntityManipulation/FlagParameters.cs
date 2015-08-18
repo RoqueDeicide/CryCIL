@@ -1,10 +1,12 @@
-﻿namespace CryCil.Engine.Physics
+﻿using CryCil.MemoryMapping;
+
+namespace CryCil.Engine.Physics
 {
 	/// <summary>
 	/// Encapsulates information that can be used to: select parts of the physical entity using its flags,
-	/// modify the flags that are assigned to the part of the physical entity.
+	/// modify the flags that are assigned to the physical entity or parts of it.
 	/// </summary>
-	public struct PartFlags
+	public struct FlagParameters
 	{
 		#region Fields
 		internal bool LocalSpace;
@@ -20,7 +22,7 @@
 		#endregion
 		#region Properties
 		/// <summary>
-		/// Gets the flags that are assigned to the part.
+		/// Gets the flags that are assigned to the part or physical entity.
 		/// </summary>
 		public uint Flags
 		{
@@ -33,10 +35,10 @@
 		/// set.
 		/// </summary>
 		/// <param name="flagCondition">A set of flags that must be set on the part.</param>
-		/// <returns>An object of type <see cref="PartFlags"/>.</returns>
-		public static PartFlags Condition(uint flagCondition)
+		/// <returns>An object of type <see cref="FlagParameters"/>.</returns>
+		public static FlagParameters Condition(uint flagCondition)
 		{
-			return new PartFlags
+			return new FlagParameters
 			{
 				HasFlagCond = true,
 				FlagsCond = flagCondition
@@ -44,19 +46,19 @@
 		}
 		/// <summary>
 		/// Creates an object that can be used to modify the flags that are assigned to the part of the
-		/// entity.
+		/// entity or the entity itself.
 		/// </summary>
 		/// <remarks>
 		/// The flags are modified like this: <c>partFlags = (partFlags &amp; flagsAnd) | flagsOr);</c>
 		/// </remarks>
-		/// <param name="flagsOr"> A value that can be used to add flags to the part of the entity.</param>
+		/// <param name="flagsOr"> A value that can be used to add flags to the part of the entity or the entity itself.</param>
 		/// <param name="flagsAnd">
-		/// A value that can be used to remove flags from the part of the entity.
+		/// A value that can be used to remove flags from the part of the entity or the entity itself.
 		/// </param>
-		/// <returns>An object of type <see cref="PartFlags"/>.</returns>
-		public static PartFlags Modifiers(uint flagsOr, uint flagsAnd = uint.MaxValue)
+		/// <returns>An object of type <see cref="FlagParameters"/>.</returns>
+		public static FlagParameters Modifiers(uint flagsOr, uint flagsAnd = uint.MaxValue)
 		{
-			return new PartFlags
+			return new FlagParameters
 			{
 				HasModFlags = true,
 				FlagsOr = flagsOr,
@@ -65,25 +67,46 @@
 		}
 		/// <summary>
 		/// Creates an object that can be used to modify the collision-related flags that are assigned to
-		/// the part of the entity.
+		/// the part of the entity or the entity itself.
 		/// </summary>
 		/// <remarks>
 		/// The flags are modified like this: <c>partFlags = (partFlags &amp; flagsAnd) | flagsOr);</c>
 		/// </remarks>
 		/// <param name="flagsColliderOr"> 
-		/// A value that can be used to add flags to the part of the entity.
+		/// A value that can be used to add flags to the part of the entity or the entity itself.
 		/// </param>
 		/// <param name="flagsColliderAnd">
-		/// A value that can be used to remove flags from the part of the entity.
+		/// A value that can be used to remove flags from the part of the entity or the entity itself.
 		/// </param>
-		/// <returns>An object of type <see cref="PartFlags"/>.</returns>
-		public static PartFlags ModifiersExtended(uint flagsColliderOr, uint flagsColliderAnd = uint.MaxValue)
+		/// <returns>An object of type <see cref="FlagParameters"/>.</returns>
+		public static FlagParameters ModifiersExtended(uint flagsColliderOr, uint flagsColliderAnd = uint.MaxValue)
 		{
-			return new PartFlags
+			return new FlagParameters
 			{
 				HasColliderModFlags = true,
 				FlagsColliderOr = flagsColliderOr,
 				FlagsColliderAnd = flagsColliderAnd
+			};
+		}
+		/// <summary>
+		/// Creates an object that can be used to modify the flags that are assigned to the part of the
+		/// entity or the entity itself.
+		/// </summary>
+		/// <remarks>
+		/// The flags are modified like this: <c>partFlags = (partFlags &amp; flagsAnd) | flagsOr);</c>
+		/// </remarks>
+		/// <param name="flagsOr"> A value that can be used to add flags to the part of the entity or the entity itself.</param>
+		/// <param name="flagsAnd">
+		/// A value that can be used to remove flags from the part of the entity or the entity itself.
+		/// </param>
+		/// <returns>An object of type <see cref="FlagParameters"/>.</returns>
+		public static FlagParameters Modifiers(int flagsOr, int flagsAnd = -1)
+		{
+			return new FlagParameters
+			{
+				HasModFlags = true,
+				FlagsOr = new Bytes4(flagsOr).UnsignedInt,
+				FlagsAnd = new Bytes4(flagsAnd).UnsignedInt
 			};
 		}
 		/// <summary>
@@ -100,10 +123,10 @@
 		/// <param name="flagsAnd">     
 		/// A value that can be used to remove flags to the part of the entity.
 		/// </param>
-		/// <returns>An object of type <see cref="PartFlags"/>.</returns>
-		public static PartFlags ConditionWithModifiers(uint flagCondition, uint flagsOr, uint flagsAnd = uint.MaxValue)
+		/// <returns>An object of type <see cref="FlagParameters"/>.</returns>
+		public static FlagParameters ConditionWithModifiers(uint flagCondition, uint flagsOr, uint flagsAnd = uint.MaxValue)
 		{
-			return new PartFlags
+			return new FlagParameters
 			{
 				HasFlagCond = true,
 				FlagsCond = flagCondition,
@@ -132,12 +155,12 @@
 		/// <param name="flagsColliderAnd">
 		/// A value that can be used to remove collision-related flags from the part of the entity.
 		/// </param>
-		/// <returns>An object of type <see cref="PartFlags"/>.</returns>
-		public static PartFlags ConditionWithModifiersExtended(uint flagCondition, uint flagsOr,
+		/// <returns>An object of type <see cref="FlagParameters"/>.</returns>
+		public static FlagParameters ConditionWithModifiersExtended(uint flagCondition, uint flagsOr,
 															   uint flagsAnd = uint.MaxValue, uint flagsColliderOr = 0,
 															   uint flagsColliderAnd = uint.MaxValue)
 		{
-			return new PartFlags
+			return new FlagParameters
 			{
 				HasFlagCond = true,
 				FlagsCond = flagCondition,
