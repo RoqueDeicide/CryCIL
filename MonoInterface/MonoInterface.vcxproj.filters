@@ -731,7 +731,6 @@
     <ClCompile Include="Interops\PhysicalWorld.cpp">
       <Filter>Interops\Engine\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="TypeMapChecks\PhysicsTypeEnumerations.cpp" />
     <ClCompile Include="TypeMapChecks\SimClass.cpp">
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
@@ -740,6 +739,9 @@
     </ClCompile>
     <ClCompile Include="Interops\Lattice.cpp">
       <Filter>Interops\Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\PhysicsTypeEnumerations.cpp">
+      <Filter>TypeMapChecks</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
