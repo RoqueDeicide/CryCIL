@@ -5,7 +5,7 @@ using CryCil.Engine.Physics.Primitives;
 namespace CryCil.Engine.Physics
 {
 	/// <summary>
-	/// Encapsulates a set of parameters that allows to the physical entity.
+	/// Encapsulates a set of parameters that allows to get/set buoyancy parameters of the physical entity.
 	/// </summary>
 	/// <remarks>
 	/// Never use objects of this type that were created using a default constructor (they are not
