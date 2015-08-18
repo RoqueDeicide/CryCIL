@@ -384,3 +384,31 @@ struct PhysicsParametersBuoyancy
 	void Dispose()
 	{}
 };
+
+struct PhysicsParametersFlags
+{
+	PhysicsParameters Base;
+	uint32 flags;
+	uint32 flagsOR;
+	uint32 flagsAND;
+	pe_params *ToParams() const
+	{
+		pe_params_flags *params = new pe_params_flags();
+
+		params->flags = this->flags;
+		params->flagsOR = this->flagsOR;
+		params->flagsAND = this->flagsAND;
+
+		return params;
+	}
+	void FromParams(const pe_params *pars)
+	{
+		const pe_params_flags *params = static_cast<const pe_params_flags *>(pars);
+
+		this->flags = params->flags;
+		this->flagsOR = params->flagsOR;
+		this->flagsAND = params->flagsAND;
+	}
+	void Dispose()
+	{}
+};

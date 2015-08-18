@@ -82,6 +82,7 @@ START_PROCESSING_FUNC_DECLARATION(name, functionPtrType, functionPtr, typeCount)
 		funcs[ePE_params_part]         = functionPtr<PhysicsParametersPart>;\
 		funcs[ePE_params_foreign_data] = functionPtr<PhysicsParametersForeignData>;\
 		funcs[ePE_params_buoyancy]     = functionPtr<PhysicsParametersBuoyancy>;\
+		funcs[ePE_params_flags]        = functionPtr<PhysicsParametersFlags>;\
 END_PROCESSING_FUNC_DECLARATION(typeCount)
 
 #define DECLARE_ACTION_PROCESSING_FUNC(name, functionPtrType, functionPtr, typeCount) \
