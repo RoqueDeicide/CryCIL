@@ -484,6 +484,7 @@
     <ClCompile Include="TypeMapChecks\PhysicalEntityType.cpp" />
     <ClCompile Include="TypeMapChecks\PhysicsForeignIds.cpp" />
     <ClCompile Include="TypeMapChecks\PhysicsTypeEnumerations.cpp" />
+    <ClCompile Include="TypeMapChecks\Primitives.cpp" />
     <ClCompile Include="TypeMapChecks\RenderParameters.cpp" />
     <ClCompile Include="TypeMapChecks\RmiTargetEnum.cpp" />
     <ClCompile Include="TypeMapChecks\SimClass.cpp" />

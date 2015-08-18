@@ -197,6 +197,10 @@
     <Compile Include="Engine\Physics\EntityManipulation\Statuses\PhysicsStatus.cs" />
     <Compile Include="Engine\Physics\EntityManipulation\Statuses\PhysicsStatusLocation.cs" />
     <Compile Include="Engine\Physics\EntityManipulation\Statuses\PhysicsStatusTypes.cs" />
+    <Compile Include="Engine\Physics\Primitives\Box.cs" />
+    <Compile Include="Engine\Physics\Primitives\Plane.cs" />
+    <Compile Include="Engine\Physics\Primitives\Primitive.cs" />
+    <Compile Include="Engine\Physics\Primitives\Triangle.cs" />
     <Compile Include="Engine\Physics\RegisteredPhysicalGeometry.cs" />
     <Compile Include="Engine\Physics\TetraLattice.cs" />
     <Compile Include="Engine\Physics\UnusedValues\UnusedValue.cs" />
