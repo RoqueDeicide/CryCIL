@@ -16,8 +16,9 @@ namespace CryCil.Engine.Physics
 	{
 		#region Fields
 		/// <summary>
-		/// Pass reference to this field to the <see cref="PhysicalEntity.SetParams"/> to apply these onto
-		/// physical entity or to <see cref="PhysicalEntity.GetParams"/> to get the currently applied ones.
+		/// Pass reference to this field to the <see cref="PhysicalEntity.SetParameters"/> to apply these
+		/// onto physical entity or to <see cref="PhysicalEntity.GetParameters"/> to get the currently
+		/// applied ones.
 		/// </summary>
 		[UsedImplicitly]
 		public PhysicsParameters Base;

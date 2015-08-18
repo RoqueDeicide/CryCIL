@@ -24,9 +24,9 @@ namespace CryCil.Engine.Physics
 	{
 		#region Fields
 		/// <summary>
-		/// Pass reference to this field to the <see cref="PhysicalEntity.SetParams"/> to set the outer
-		/// entity for this physical entity or to <see cref="PhysicalEntity.GetParams"/> to query the outer
-		/// entity.
+		/// Pass reference to this field to the <see cref="PhysicalEntity.SetParameters"/> to set the outer
+		/// entity for this physical entity or to <see cref="PhysicalEntity.GetParameters"/> to query the
+		/// outer entity.
 		/// </summary>
 		[UsedImplicitly]
 		public PhysicsParameters Base;
@@ -59,7 +59,7 @@ namespace CryCil.Engine.Physics
 		/// </summary>
 		/// <returns>
 		/// A valid object of type <see cref="PhysicsParametersOuterEntity"/> that can be passed to
-		/// <see cref="PhysicalEntity.GetParams"/>.
+		/// <see cref="PhysicalEntity.GetParameters"/>.
 		/// </returns>
 		public static PhysicsParametersOuterEntity Create()
 		{
@@ -79,7 +79,7 @@ namespace CryCil.Engine.Physics
 		/// </param>
 		/// <returns>
 		/// A valid object of type <see cref="PhysicsParametersOuterEntity"/> that can be passed to
-		/// <see cref="PhysicalEntity.SetParams"/>.
+		/// <see cref="PhysicalEntity.SetParameters"/>.
 		/// </returns>
 		public static PhysicsParametersOuterEntity Create(PhysicalEntity outerEntity)
 		{
@@ -102,7 +102,7 @@ namespace CryCil.Engine.Physics
 		/// </param>
 		/// <returns>
 		/// A valid object of type <see cref="PhysicsParametersOuterEntity"/> that can be passed to
-		/// <see cref="PhysicalEntity.SetParams"/>.
+		/// <see cref="PhysicalEntity.SetParameters"/>.
 		/// </returns>
 		public static PhysicsParametersOuterEntity Create(PhysicalEntity outerEntity, PhysicalGeometry encompassingGeometry)
 		{

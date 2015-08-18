@@ -17,8 +17,8 @@ namespace CryCil.Engine.Physics
 	{
 		#region Fields
 		/// <summary>
-		/// Pass reference to this field to the <see cref="PhysicalEntity.SetParams"/> to force the
-		/// bounding box onto physical entity or to <see cref="PhysicalEntity.GetParams"/> to get the
+		/// Pass reference to this field to the <see cref="PhysicalEntity.SetParameters"/> to force the
+		/// bounding box onto physical entity or to <see cref="PhysicalEntity.GetParameters"/> to get the
 		/// current one.
 		/// </summary>
 		[UsedImplicitly]
@@ -48,7 +48,7 @@ namespace CryCil.Engine.Physics
 		/// </summary>
 		/// <returns>
 		/// A valid instance of type <see cref="PhysicsParametersBoundingBox"/> that can be passed to
-		/// <see cref="PhysicalEntity.GetParams"/>.
+		/// <see cref="PhysicalEntity.GetParameters"/>.
 		/// </returns>
 		public static PhysicsParametersBoundingBox Create()
 		{
@@ -64,7 +64,7 @@ namespace CryCil.Engine.Physics
 		/// </param>
 		/// <returns>
 		/// A valid instance of type <see cref="PhysicsParametersBoundingBox"/> that can be passed to
-		/// <see cref="PhysicalEntity.SetParams"/>.
+		/// <see cref="PhysicalEntity.SetParameters"/>.
 		/// </returns>
 		public static PhysicsParametersBoundingBox Create(BoundingBox box)
 		{
