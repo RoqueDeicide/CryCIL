@@ -303,3 +303,36 @@ struct PhysicsParametersPart
 		}
 	}
 };
+
+struct PhysicsParametersForeignData
+{
+	PhysicsParameters Base;
+	void *data;
+	int foreignDataId;
+	int iForeignFlags;
+	int iForeignFlagsAND, iForeignFlagsOR;
+	pe_params *ToParams() const
+	{
+		pe_params_foreign_data *params = new pe_params_foreign_data();
+
+		params->pForeignData     = this->data;
+		params->iForeignData     = this->foreignDataId;
+		params->iForeignFlags    = this->iForeignFlags;
+		params->iForeignFlagsAND = this->iForeignFlagsAND;
+		params->iForeignFlagsOR  = this->iForeignFlagsOR;
+
+		return params;
+	}
+	void FromParams(const pe_params *pars)
+	{
+		const pe_params_foreign_data *params = static_cast<const pe_params_foreign_data *>(pars);
+
+		this->data             = params->pForeignData;
+		this->foreignDataId    = params->iForeignData;
+		this->iForeignFlags    = params->iForeignFlags;
+		this->iForeignFlagsAND = params->iForeignFlagsAND;
+		this->iForeignFlagsOR  = params->iForeignFlagsOR;
+	}
+	void Dispose()
+	{}
+};

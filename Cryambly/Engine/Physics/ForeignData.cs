@@ -43,8 +43,13 @@ namespace CryCil.Engine.Physics
 	public struct ForeignData
 	{
 		#region Fields
-		private readonly IntPtr handle;
-		private readonly ForeignDataIds id;
+		private IntPtr handle;
+		private ForeignDataIds id;
+		internal static readonly ForeignData Unused = new ForeignData
+		{
+			handle = UnusedValue.Pointer,
+			id = (ForeignDataIds)UnusedValue.Int32
+		};
 		#endregion
 		#region Properties
 		/// <summary>
