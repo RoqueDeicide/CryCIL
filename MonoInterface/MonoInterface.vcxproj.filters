@@ -743,6 +743,9 @@
     <ClCompile Include="TypeMapChecks\PhysicsTypeEnumerations.cpp">
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
+    <ClCompile Include="TypeMapChecks\PhysicsForeignIds.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">

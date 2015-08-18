@@ -482,6 +482,7 @@
     <ClCompile Include="TypeMapChecks\EventPhysCollision.cpp" />
     <ClCompile Include="TypeMapChecks\PhysicalEntityFlags.cpp" />
     <ClCompile Include="TypeMapChecks\PhysicalEntityType.cpp" />
+    <ClCompile Include="TypeMapChecks\PhysicsForeignIds.cpp" />
     <ClCompile Include="TypeMapChecks\PhysicsTypeEnumerations.cpp" />
     <ClCompile Include="TypeMapChecks\RenderParameters.cpp" />
     <ClCompile Include="TypeMapChecks\RmiTargetEnum.cpp" />

@@ -95,6 +95,9 @@
     <Compile Include="Engine\Environment\TimeOfDay.cs" />
     <Compile Include="Engine\Environment\TimeOfDayParameterId.cs" />
     <Compile Include="Engine\Environment\TimeOfDaySync.cs" />
+    <Compile Include="Engine\Physics\ForeignData.cs" />
+    <Compile Include="Engine\Physics\ForeignDataIds.cs" />
+    <Compile Include="Engine\Physics\IForeignDataProvider.cs" />
     <Compile Include="Engine\Input\ActionMapping\Action.cs" />
     <None Include="Engine\Input\ActionMapping\Action.Examples.GameSDK.cs" />
     <None Include="Engine\Input\ActionMapping\Action.Examples.GameZero.cs" />

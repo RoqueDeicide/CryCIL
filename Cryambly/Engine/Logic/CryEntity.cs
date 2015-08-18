@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using CryCil.Annotations;
+using CryCil.Engine.Physics;
 using CryCil.Engine.Rendering;
 using CryCil.Geometry;
 
@@ -14,13 +15,35 @@ namespace CryCil.Engine.Logic
 	/// <summary>
 	/// Represents a wrapper object for CryEngine entities.
 	/// </summary>
-	public partial struct CryEntity
+	public partial struct CryEntity : IForeignDataProvider
 	{
 		#region Fields
 		[UsedImplicitly]
 		private IntPtr handle;
 		#endregion
 		#region Properties
+		/// <summary>
+		/// Gets the pointer to the ILevel object that can be used as foreign data.
+		/// </summary>
+		public ForeignData ForeignData
+		{
+			get { return new ForeignData(this); }
+		}
+		/// <summary>
+		/// Assigns foreign data to this object.
+		/// </summary>
+		/// <param name="handle">Foreign data.</param>
+		public void SetForeignData(IntPtr handle)
+		{
+			this.handle = handle;
+		}
+		/// <summary>
+		/// Gets the identifier of foreign data type for this type.
+		/// </summary>
+		public ForeignDataIds ForeignDataId
+		{
+			get { return ForeignDataIds.Entity; }
+		}
 		/// <summary>
 		/// Gets the pointer to the underlying object.
 		/// </summary>
