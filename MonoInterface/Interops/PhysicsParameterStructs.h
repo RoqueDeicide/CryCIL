@@ -336,3 +336,51 @@ struct PhysicsParametersForeignData
 	void Dispose()
 	{}
 };
+
+struct PhysicsParametersBuoyancy
+{
+	PhysicsParameters Base;
+	float waterDensity;
+	float kwaterDensity;
+	float waterDamping;
+	float waterResistance, kwaterResistance;
+	Vec3 waterFlow;
+	float flowVariance;
+	primitives::plane waterPlane;
+	float waterEmin;
+	int iMedium;
+	pe_params *ToParams() const
+	{
+		pe_params_buoyancy *params = new pe_params_buoyancy();
+
+		params->waterDensity     = this->waterDensity;
+		params->kwaterDensity    = this->kwaterDensity;
+		params->waterDamping     = this->waterDamping;
+		params->waterResistance  = this->waterResistance;
+		params->kwaterResistance = this->kwaterResistance;
+		params->waterFlow        = this->waterFlow;
+		params->flowVariance     = this->flowVariance;
+		params->waterPlane       = this->waterPlane;
+		params->waterEmin        = this->waterEmin;
+		params->iMedium          = this->iMedium;
+
+		return params;
+	}
+	void FromParams(const pe_params *pars)
+	{
+		const pe_params_buoyancy *params = static_cast<const pe_params_buoyancy *>(pars);
+
+		this->waterDensity     = params->waterDensity;
+		this->kwaterDensity    = params->kwaterDensity;
+		this->waterDamping     = params->waterDamping;
+		this->waterResistance  = params->waterResistance;
+		this->kwaterResistance = params->kwaterResistance;
+		this->waterFlow        = params->waterFlow;
+		this->flowVariance     = params->flowVariance;
+		this->waterPlane       = params->waterPlane;
+		this->waterEmin        = params->waterEmin;
+		this->iMedium          = params->iMedium;
+	}
+	void Dispose()
+	{}
+};

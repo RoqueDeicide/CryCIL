@@ -95,6 +95,7 @@
     <Compile Include="Engine\Environment\TimeOfDay.cs" />
     <Compile Include="Engine\Environment\TimeOfDayParameterId.cs" />
     <Compile Include="Engine\Environment\TimeOfDaySync.cs" />
+    <Compile Include="Engine\Physics\EntityManipulation\Parameters\Buoyancy.cs" />
     <Compile Include="Engine\Physics\EntityManipulation\Parameters\ForeignData.cs" />
     <Compile Include="Engine\Physics\ForeignData.cs" />
     <Compile Include="Engine\Physics\ForeignDataIds.cs" />
