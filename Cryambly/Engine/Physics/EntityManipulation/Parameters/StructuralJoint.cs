@@ -318,8 +318,11 @@ namespace CryCil.Engine.Physics
 			this.bBroken = UnusedValue.Int32;
 			this.partidEpicenter = UnusedValue.Int32;
 
-			this.id = joint.PartId;
-			this.idx = joint.PartIndex;
+			if (joint.partIsSpecified)
+			{
+				this.id = joint.PartId;
+				this.idx = joint.PartIndex;
+			}
 		}
 		#endregion
 	}
