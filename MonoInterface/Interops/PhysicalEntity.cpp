@@ -74,16 +74,18 @@ functionPtrType name(int type)\
 
 #define DECLARE_PARAMS_PROCESSING_FUNC(name, functionPtrType, functionPtr, typeCount) \
 START_PROCESSING_FUNC_DECLARATION(name, functionPtrType, functionPtr, typeCount) \
-		funcs[ePE_params_pos]             = functionPtr<PhysicsParametersLocation>;\
-		funcs[ePE_params_bbox]            = functionPtr<PhysicsParametersBoundingBox>;\
-		funcs[ePE_params_outer_entity]    = functionPtr<PhysicsParametersOuterEntity>;\
-		funcs[ePE_params_sensors]         = functionPtr<PhysicsParametersSensors>;\
-		funcs[ePE_simulation_params]      = functionPtr<PhysicsParametersSimulation>;\
-		funcs[ePE_params_part]            = functionPtr<PhysicsParametersPart>;\
-		funcs[ePE_params_foreign_data]    = functionPtr<PhysicsParametersForeignData>;\
-		funcs[ePE_params_buoyancy]        = functionPtr<PhysicsParametersBuoyancy>;\
-		funcs[ePE_params_flags]           = functionPtr<PhysicsParametersFlags>;\
-		funcs[ePE_params_collision_class] = functionPtr<PhysicsParametersCollisionClass>;\
+		funcs[ePE_params_pos]                         = functionPtr<PhysicsParametersLocation>;\
+		funcs[ePE_params_bbox]                        = functionPtr<PhysicsParametersBoundingBox>;\
+		funcs[ePE_params_outer_entity]                = functionPtr<PhysicsParametersOuterEntity>;\
+		funcs[ePE_params_sensors]                     = functionPtr<PhysicsParametersSensors>;\
+		funcs[ePE_simulation_params]                  = functionPtr<PhysicsParametersSimulation>;\
+		funcs[ePE_params_part]                        = functionPtr<PhysicsParametersPart>;\
+		funcs[ePE_params_foreign_data]                = functionPtr<PhysicsParametersForeignData>;\
+		funcs[ePE_params_buoyancy]                    = functionPtr<PhysicsParametersBuoyancy>;\
+		funcs[ePE_params_flags]                       = functionPtr<PhysicsParametersFlags>;\
+		funcs[ePE_params_collision_class]             = functionPtr<PhysicsParametersCollisionClass>;\
+		funcs[ePE_params_structural_joint]            = functionPtr<PhysicsParametersStructuralJoint>;\
+		funcs[ePE_params_structural_initial_velocity] = functionPtr<PhysicsParametersStructuralInitialVelocity>;\
 END_PROCESSING_FUNC_DECLARATION(typeCount)
 
 #define DECLARE_ACTION_PROCESSING_FUNC(name, functionPtrType, functionPtr, typeCount) \

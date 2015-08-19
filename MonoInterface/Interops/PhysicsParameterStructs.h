@@ -437,3 +437,116 @@ struct PhysicsParametersCollisionClass
 	void Dispose()
 	{}
 };
+
+struct PhysicsParametersStructuralJoint
+{
+	PhysicsParameters Base;
+	int id;
+	int idx;
+	int bReplaceExisting;
+	int partid[2];
+	Vec3 pt;
+	Vec3 n;
+	Vec3 axisx;
+	float maxForcePush, maxForcePull, maxForceShift;
+	float maxTorqueBend, maxTorqueTwist;
+	float damageAccum, damageAccumThresh;
+	Vec3 limitConstraint;
+	int bBreakable;
+	int bConstraintWillIgnoreCollisions;
+	int bDirectBreaksOnly;
+	float dampingConstraint;
+	float szSensor;
+	int bBroken;
+	int partidEpicenter;
+
+	pe_params *ToParams() const
+	{
+		pe_params_structural_joint *params = new pe_params_structural_joint();
+
+		params->id                              = this->id;
+		params->idx                             = this->idx;
+		params->bReplaceExisting                = this->bReplaceExisting;
+		params->partid[0]                       = this->partid[0];
+		params->partid[1]                       = this->partid[1];
+		params->pt                              = this->pt;
+		params->n                               = this->n;
+		params->axisx                           = this->axisx;
+		params->maxForcePush                    = this->maxForcePush;
+		params->maxForcePull                    = this->maxForcePull;
+		params->maxForceShift                   = this->maxForceShift;
+		params->maxTorqueBend                   = this->maxTorqueBend;
+		params->maxTorqueTwist                  = this->maxTorqueTwist;
+		params->damageAccum                     = this->damageAccum;
+		params->damageAccumThresh               = this->damageAccumThresh;
+		params->limitConstraint                 = this->limitConstraint;
+		params->bBreakable                      = this->bBreakable;
+		params->bConstraintWillIgnoreCollisions = this->bConstraintWillIgnoreCollisions;
+		params->bDirectBreaksOnly               = this->bDirectBreaksOnly;
+		params->dampingConstraint               = this->dampingConstraint;
+		params->szSensor                        = this->szSensor;
+		params->bBroken                         = this->bBroken;
+		params->partidEpicenter                 = this->partidEpicenter;
+
+		return params;
+	}
+	void FromParams(const pe_params *pars)
+	{
+		const pe_params_structural_joint *params = static_cast<const pe_params_structural_joint *>(pars);
+
+		this->id                              = params->id;
+		this->idx                             = params->idx;
+		this->bReplaceExisting                = params->bReplaceExisting;
+		this->partid[0]                       = params->partid[0];
+		this->partid[1]                       = params->partid[1];
+		this->pt                              = params->pt;
+		this->n                               = params->n;
+		this->axisx                           = params->axisx;
+		this->maxForcePush                    = params->maxForcePush;
+		this->maxForcePull                    = params->maxForcePull;
+		this->maxForceShift                   = params->maxForceShift;
+		this->maxTorqueBend                   = params->maxTorqueBend;
+		this->maxTorqueTwist                  = params->maxTorqueTwist;
+		this->damageAccum                     = params->damageAccum;
+		this->damageAccumThresh               = params->damageAccumThresh;
+		this->limitConstraint                 = params->limitConstraint;
+		this->bBreakable                      = params->bBreakable;
+		this->bConstraintWillIgnoreCollisions = params->bConstraintWillIgnoreCollisions;
+		this->bDirectBreaksOnly               = params->bDirectBreaksOnly;
+		this->dampingConstraint               = params->dampingConstraint;
+		this->szSensor                        = params->szSensor;
+		this->bBroken                         = params->bBroken;
+		this->partidEpicenter                 = params->partidEpicenter;
+	}
+	void Dispose()
+	{}
+};
+
+struct PhysicsParametersStructuralInitialVelocity
+{
+	PhysicsParameters Base;
+	int partid;
+	Vec3 v;
+	Vec3 w;
+
+	pe_params *ToParams() const
+	{
+		pe_params_structural_initial_velocity *params = new pe_params_structural_initial_velocity();
+
+		params->partid = this->partid;
+		params->v = this->v;
+		params->w = this->w;
+
+		return params;
+	}
+	void FromParams(const pe_params *pars)
+	{
+		const pe_params_structural_initial_velocity *params = static_cast<const pe_params_structural_initial_velocity *>(pars);
+
+		this->partid = params->partid;
+		this->v = params->v;
+		this->w = params->w;
+	}
+	void Dispose()
+	{}
+};

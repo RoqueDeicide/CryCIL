@@ -100,6 +100,8 @@
     <Compile Include="Engine\Physics\EntityManipulation\Parameters\CollisionClass.cs" />
     <Compile Include="Engine\Physics\EntityManipulation\Parameters\Flags.cs" />
     <Compile Include="Engine\Physics\EntityManipulation\Parameters\ForeignData.cs" />
+    <Compile Include="Engine\Physics\EntityManipulation\Parameters\StructuralJoint.cs" />
+    <Compile Include="Engine\Physics\EntityManipulation\Parameters\StructuralInitialVelocity.cs" />
     <Compile Include="Engine\Physics\ForeignData.cs" />
     <Compile Include="Engine\Physics\ForeignDataIds.cs" />
     <Compile Include="Engine\Physics\IForeignDataProvider.cs" />
