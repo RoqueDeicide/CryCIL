@@ -70,6 +70,16 @@ namespace CryCil.Geometry
 		/// <summary>
 		/// Creates new instance of <see cref="EulerAngles"/> struct.
 		/// </summary>
+		/// <param name="allAngles">A value to assign to all angles.</param>
+		public EulerAngles(float allAngles)
+		{
+			this.Pitch = allAngles;
+			this.Roll = allAngles;
+			this.Yaw = allAngles;
+		}
+		/// <summary>
+		/// Creates new instance of <see cref="EulerAngles"/> struct.
+		/// </summary>
 		/// <param name="pitch">Angle of rotation around X-axis.</param>
 		/// <param name="roll"> Angle of rotation around Y-axis.</param>
 		/// <param name="yaw">  Angle of rotation around Z-axis.</param>
