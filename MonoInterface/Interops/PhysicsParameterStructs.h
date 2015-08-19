@@ -629,3 +629,104 @@ struct PhysicsParametersSkeleton
 	void Dispose()
 	{}
 };
+
+struct PhysicsParametersJoint
+{
+	PhysicsParameters Base;
+	uint32 flags;
+	int flagsPivot;
+	Vec3 pivot;
+	Quat q0;
+	Ang3 limits1;
+	Ang3 limits2;
+	Ang3 bounciness;
+	Ang3 ks, kd;
+	Ang3 qdashpot;
+	Ang3 kdashpot;
+	Ang3 q;
+	Ang3 qext;
+	Ang3 qtarget;
+	int op1;
+	int op2;
+	mono::Array selfCollidingParts;
+	int nSelfCollidingParts;
+	int* pSelfCollidingParts;
+	int bNoUpdate;
+	float animationTimeStep;
+	float ranimationTimeStep;
+
+	pe_params *ToParams() const
+	{
+		pe_params_joint *params = new pe_params_joint();
+
+		params->flags               = this->flags;
+		params->flagsPivot          = this->flagsPivot;
+		params->pivot               = this->pivot;
+		params->q0                  = this->q0;
+		params->limits[0]           = Vec3(this->limits1);
+		params->limits[1]           = Vec3(this->limits2);
+		params->bounciness          = Vec3(this->bounciness);
+		params->ks                  = Vec3(this->ks);
+		params->kd                  = Vec3(this->kd);
+		params->qdashpot            = Vec3(this->qdashpot);
+		params->kdashpot            = Vec3(this->kdashpot);
+		params->q                   = this->q;
+		params->qext                = this->qext;
+		params->qtarget             = this->qtarget;
+		params->op[0]               = this->op1;
+		params->op[1]               = this->op2;
+		params->pSelfCollidingParts = this->pSelfCollidingParts;
+		params->nSelfCollidingParts = this->nSelfCollidingParts;
+		params->bNoUpdate           = this->bNoUpdate;
+		params->animationTimeStep   = this->animationTimeStep;
+		params->ranimationTimeStep  = this->ranimationTimeStep;
+
+		return params;
+	}
+	void FromParams(const pe_params *pars)
+	{
+		const pe_params_joint *params = static_cast<const pe_params_joint *>(pars);
+
+		this->flags               = params->flags;
+		this->flagsPivot          = params->flagsPivot;
+		this->pivot               = params->pivot;
+		this->q0                  = params->q0;
+		this->limits1             = Ang3(params->limits[0]);
+		this->limits2             = Ang3(params->limits[1]);
+		this->bounciness          = Ang3(params->bounciness);
+		this->ks                  = Ang3(params->ks);
+		this->kd                  = Ang3(params->kd);
+		this->qdashpot            = Ang3(params->qdashpot);
+		this->kdashpot            = Ang3(params->kdashpot);
+		this->q                   = params->q;
+		this->qext                = params->qext;
+		this->qtarget             = params->qtarget;
+		this->op1                 = params->op[0];
+		this->op2                 = params->op[1];
+		this->bNoUpdate           = params->bNoUpdate;
+		this->animationTimeStep   = params->animationTimeStep;
+		this->ranimationTimeStep  = params->ranimationTimeStep;
+		this->pSelfCollidingParts = nullptr;
+		this->nSelfCollidingParts = 0;
+
+		if (params->nSelfCollidingParts > 0)
+		{
+			IMonoArray<int> idArray = MonoEnv->Objects->Arrays->Create(nSelfCollidingParts, MonoEnv->CoreLibrary->Int32);
+			MonoGCHandle gcHandle = MonoEnv->GC->Pin(idArray);
+
+			for (int i = 0; i < params->nSelfCollidingParts; i++)
+			{
+				idArray[i] = this->pSelfCollidingParts[i];
+			}
+
+			this->selfCollidingParts = idArray;
+		}
+	}
+	void Dispose()
+	{
+		if (this->nSelfCollidingParts > 0)
+		{
+			free(this->pSelfCollidingParts);
+		}
+	}
+};

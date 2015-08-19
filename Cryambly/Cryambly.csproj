@@ -96,10 +96,12 @@
     <Compile Include="Engine\Environment\TimeOfDayParameterId.cs" />
     <Compile Include="Engine\Environment\TimeOfDaySync.cs" />
     <Compile Include="Engine\Physics\EntityManipulation\CollisionClass.cs" />
+    <Compile Include="Engine\Physics\EntityManipulation\JointFlags.cs" />
     <Compile Include="Engine\Physics\EntityManipulation\Parameters\Buoyancy.cs" />
     <Compile Include="Engine\Physics\EntityManipulation\Parameters\CollisionClass.cs" />
     <Compile Include="Engine\Physics\EntityManipulation\Parameters\Flags.cs" />
     <Compile Include="Engine\Physics\EntityManipulation\Parameters\ForeignData.cs" />
+    <Compile Include="Engine\Physics\EntityManipulation\Parameters\Joint.cs" />
     <Compile Include="Engine\Physics\EntityManipulation\Parameters\Skeleton.cs" />
     <Compile Include="Engine\Physics\EntityManipulation\Parameters\StructuralJoint.cs" />
     <Compile Include="Engine\Physics\EntityManipulation\Parameters\StructuralInitialVelocity.cs" />

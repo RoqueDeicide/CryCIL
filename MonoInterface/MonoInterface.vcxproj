@@ -480,6 +480,7 @@
     <ClCompile Include="TypeMapChecks\EntityUpdatePolicy.cpp" />
     <ClCompile Include="TypeMapChecks\EntityXFormFlags.cpp" />
     <ClCompile Include="TypeMapChecks\EventPhysCollision.cpp" />
+    <ClCompile Include="TypeMapChecks\JointFlagscpp.cpp" />
     <ClCompile Include="TypeMapChecks\PhysicalEntityFlags.cpp" />
     <ClCompile Include="TypeMapChecks\PhysicalEntityType.cpp" />
     <ClCompile Include="TypeMapChecks\PhysicsForeignIds.cpp" />
