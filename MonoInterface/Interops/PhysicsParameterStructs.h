@@ -576,3 +576,56 @@ struct PhysicsParametersTimeout
 	void Dispose()
 	{}
 };
+
+struct PhysicsParametersSkeleton
+{
+	PhysicsParameters Base;
+	int partid;
+	int ipart;
+	float stiffness;
+	float thickness;
+	float maxStretch;
+	float maxImpulse;
+	float timeStep;
+	int nSteps;
+	float hardness;
+	float explosionScale;
+	int bReset;
+
+	pe_params *ToParams() const
+	{
+		pe_params_skeleton *params = new pe_params_skeleton();
+
+		params->partid         = this->partid;
+		params->ipart          = this->ipart;
+		params->stiffness      = this->stiffness;
+		params->thickness      = this->thickness;
+		params->maxStretch     = this->maxStretch;
+		params->maxImpulse     = this->maxImpulse;
+		params->timeStep       = this->timeStep;
+		params->nSteps         = this->nSteps;
+		params->hardness       = this->hardness;
+		params->explosionScale = this->explosionScale;
+		params->bReset         = this->bReset;
+
+		return params;
+	}
+	void FromParams(const pe_params *pars)
+	{
+		const pe_params_skeleton *params = static_cast<const pe_params_skeleton *>(pars);
+
+		this->partid         = params->partid;
+		this->ipart          = params->ipart;
+		this->stiffness      = params->stiffness;
+		this->thickness      = params->thickness;
+		this->maxStretch     = params->maxStretch;
+		this->maxImpulse     = params->maxImpulse;
+		this->timeStep       = params->timeStep;
+		this->nSteps         = params->nSteps;
+		this->hardness       = params->hardness;
+		this->explosionScale = params->explosionScale;
+		this->bReset         = params->bReset;
+	}
+	void Dispose()
+	{}
+};
