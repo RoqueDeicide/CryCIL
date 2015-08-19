@@ -96,8 +96,8 @@ namespace CryCil.Engine.Physics
 				Base = new PhysicsParameters(PhysicsParametersTypes.ForeignData),
 				data = data,
 				iForeignFlags = UnusedValue.Int32,
-				iForeignFlagsAND = flags.HasModFlags ? new Bytes4(flags.FlagsAnd).SignedInt : -1,
-				iForeignFlagsOR = flags.HasModFlags ? new Bytes4(flags.FlagsOr).SignedInt : 0
+				iForeignFlagsAND = flags.HasModFlags ? flags.FlagsAnd.SignedInt : -1,
+				iForeignFlagsOR = flags.HasModFlags ? flags.FlagsOr.SignedInt : 0
 			};
 		}
 		/// <summary>
@@ -115,8 +115,8 @@ namespace CryCil.Engine.Physics
 				Base = new PhysicsParameters(PhysicsParametersTypes.ForeignData),
 				data = ForeignData.Unused,
 				iForeignFlags = UnusedValue.Int32,
-				iForeignFlagsAND = flags.HasModFlags ? new Bytes4(flags.FlagsAnd).SignedInt : -1,
-				iForeignFlagsOR = flags.HasModFlags ? new Bytes4(flags.FlagsOr).SignedInt : 0
+				iForeignFlagsAND = flags.HasModFlags ? flags.FlagsAnd.SignedInt : -1,
+				iForeignFlagsOR = flags.HasModFlags ? flags.FlagsOr.SignedInt : 0
 			};
 		}
 		#endregion

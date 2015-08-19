@@ -458,6 +458,7 @@
     <Compile Include="Utilities\StringPool.cs" />
     <Compile Include="Utilities\Utf32Char.cs" />
     <Compile Include="VariousConstants.cs" />
+    <Compile Include="Engine\Physics\EntityManipulation\FlagParameters.Example.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Engine\CustomTypes\" />

@@ -69,8 +69,8 @@ namespace CryCil.Engine.Physics
 			{
 				Base = new PhysicsParameters(PhysicsParametersTypes.Flags),
 				flags = UnusedValue.UInt32,
-				flagsAND = flagParameters.HasModFlags ? flagParameters.FlagsAnd : UnusedValue.UInt32,
-				flagsOR = flagParameters.HasModFlags ? flagParameters.FlagsOr : UnusedValue.UInt32
+				flagsAND = flagParameters.HasModFlags ? flagParameters.FlagsAnd.UnsignedInt : UnusedValue.UInt32,
+				flagsOR = flagParameters.HasModFlags ? flagParameters.FlagsOr.UnsignedInt : UnusedValue.UInt32
 			};
 		}
 		#endregion

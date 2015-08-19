@@ -165,12 +165,12 @@ namespace CryCil.Engine.Physics
 
 				if (value.HasFlagCond)
 				{
-					this.flagsCond = value.FlagsCond;
+					this.flagsCond = value.FlagsCond.UnsignedInt;
 				}
 				if (value.HasModFlags)
 				{
-					this.flagsOR = value.FlagsOr;
-					this.flagsAND = value.FlagsAnd;
+					this.flagsOR = value.FlagsOr.UnsignedInt;
+					this.flagsAND = value.FlagsAnd.UnsignedInt;
 				}
 				if (value.HasColliderModFlags)
 				{
@@ -178,6 +178,21 @@ namespace CryCil.Engine.Physics
 					this.flagsColliderAND = value.FlagsColliderAnd;
 				}
 			}
+		}
+		/// <summary>
+		/// Gets the flags that are assigned to the part, if this instance was used to query parameters.
+		/// </summary>
+		public uint PartFlags
+		{
+			get { return this.flagsOR; }
+		}
+		/// <summary>
+		/// Gets the flags that are assigned to the part collider (whatever it is), if this instance was
+		/// used to query parameters.
+		/// </summary>
+		public uint PartColliderFlags
+		{
+			get { return this.flagsOR; }
 		}
 		/// <summary>
 		/// Gets or sets the mass of the part in kilograms.
