@@ -412,3 +412,28 @@ struct PhysicsParametersFlags
 	void Dispose()
 	{}
 };
+
+struct PhysicsParametersCollisionClass
+{
+	PhysicsParameters Base;
+	SCollisionClass or;
+	SCollisionClass and;
+	pe_params *ToParams() const
+	{
+		pe_params_collision_class *params = new pe_params_collision_class();
+
+		params->collisionClassOR = this->or;
+		params->collisionClassAND = this->and;
+
+		return params;
+	}
+	void FromParams(const pe_params *pars)
+	{
+		const pe_params_collision_class *params = static_cast<const pe_params_collision_class *>(pars);
+
+		this->or = params->collisionClassOR;
+		this->and = params->collisionClassAND;
+	}
+	void Dispose()
+	{}
+};
