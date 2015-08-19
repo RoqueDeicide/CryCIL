@@ -102,6 +102,7 @@
     <Compile Include="Engine\Physics\EntityManipulation\Parameters\ForeignData.cs" />
     <Compile Include="Engine\Physics\EntityManipulation\Parameters\StructuralJoint.cs" />
     <Compile Include="Engine\Physics\EntityManipulation\Parameters\StructuralInitialVelocity.cs" />
+    <Compile Include="Engine\Physics\EntityManipulation\Parameters\Timeout.cs" />
     <Compile Include="Engine\Physics\ForeignData.cs" />
     <Compile Include="Engine\Physics\ForeignDataIds.cs" />
     <Compile Include="Engine\Physics\IForeignDataProvider.cs" />

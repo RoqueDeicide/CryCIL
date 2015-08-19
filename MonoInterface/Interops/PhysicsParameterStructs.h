@@ -550,3 +550,29 @@ struct PhysicsParametersStructuralInitialVelocity
 	void Dispose()
 	{}
 };
+
+struct PhysicsParametersTimeout
+{
+	PhysicsParameters Base;
+	float timeIdle;
+	float maxTimeIdle;
+
+	pe_params *ToParams() const
+	{
+		pe_params_timeout *params = new pe_params_timeout();
+
+		params->timeIdle = this->timeIdle;
+		params->maxTimeIdle = this->maxTimeIdle;
+
+		return params;
+	}
+	void FromParams(const pe_params *pars)
+	{
+		const pe_params_timeout *params = static_cast<const pe_params_timeout *>(pars);
+
+		this->timeIdle = params->timeIdle;
+		this->maxTimeIdle = params->maxTimeIdle;
+	}
+	void Dispose()
+	{}
+};

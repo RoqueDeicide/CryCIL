@@ -86,6 +86,7 @@ START_PROCESSING_FUNC_DECLARATION(name, functionPtrType, functionPtr, typeCount)
 		funcs[ePE_params_collision_class]             = functionPtr<PhysicsParametersCollisionClass>;\
 		funcs[ePE_params_structural_joint]            = functionPtr<PhysicsParametersStructuralJoint>;\
 		funcs[ePE_params_structural_initial_velocity] = functionPtr<PhysicsParametersStructuralInitialVelocity>;\
+		funcs[ePE_params_timeout]                     = functionPtr<PhysicsParametersTimeout>;\
 END_PROCESSING_FUNC_DECLARATION(typeCount)
 
 #define DECLARE_ACTION_PROCESSING_FUNC(name, functionPtrType, functionPtr, typeCount) \
