@@ -68,7 +68,8 @@ namespace CryCil.Engine.Physics
 		/// </summary>
 		public static readonly JointFlags IsolatedAccelerations = new JointFlags(2000);
 		/// <summary>
-		/// Unknown.
+		/// When set, specifies that this joint is using 2 point-to-point constraints representation of
+		/// hinge points.
 		/// </summary>
 		public static readonly JointFlags ExpandHinge = new JointFlags(4000);
 		/// <summary>
