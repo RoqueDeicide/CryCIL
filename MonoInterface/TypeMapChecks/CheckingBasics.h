@@ -2,7 +2,13 @@
 
 #include <type_traits>
 
-//! Regex for replacing " = [number]," with ");": " = \b[0-9]*\.*[0-9]+\b," with ");"
+// Regex for replacing " = [enum value initializer]," with ");":
+// 1) For decimals: " = \b[0-9]*\.*[0-9]+\b," with ");"
+// 2) For hexes: " = \b0[xX]([0-9a-fA-F])\b," with ");"
+// 3) For enum identifiers: " = \b(_\w+|[\w-[0-9_]]\w*)\b," with ");"
+
+// Regex for removing the comments from the end of the string:
+//     " //(.*?)\r?\n"
 
 //! Types that are marked with this macro are mirrors of specific types and are used to detect most changes that can be made
 //! the mirrored type at compile time with only one change being undetectable which is reordering of fields.
