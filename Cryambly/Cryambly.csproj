@@ -98,7 +98,10 @@
     <Compile Include="Engine\Physics\EntityManipulation\CollisionClass.cs" />
     <Compile Include="Engine\Physics\EntityManipulation\ColliderTypes.cs" />
     <Compile Include="Engine\Physics\EntityManipulation\GeometryCollisionTypeCodes.cs" />
+    <Compile Include="Engine\Physics\EntityManipulation\GeometryParameters\ArticulatedBody.cs" />
+    <Compile Include="Engine\Physics\EntityManipulation\GeometryParameters\GeometryParameters.cs" />
     <Compile Include="Engine\Physics\EntityManipulation\PhysicsGeometryFlags.cs" />
+    <Compile Include="Engine\Physics\EntityManipulation\GeometryParameters\Vehicle.cs" />
     <Compile Include="Engine\Physics\EntityManipulation\JointFlags.cs" />
     <Compile Include="Engine\Physics\EntityManipulation\Parameters\Buoyancy.cs" />
     <Compile Include="Engine\Physics\EntityManipulation\Parameters\CollisionClass.cs" />
