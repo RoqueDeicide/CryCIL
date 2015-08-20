@@ -730,3 +730,95 @@ struct PhysicsParametersJoint
 		}
 	}
 };
+
+struct PhysicsParametersArticulatedBody
+{
+	PhysicsParameters Base;
+	int bGrounded;
+	int bCheckCollisions;
+	int bCollisionResp;
+	Vec3 pivot;
+	Vec3 a;
+	Vec3 wa;
+	Vec3 w;
+	Vec3 v;
+	float scaleBounceResponse;
+	int bApply_dqext;
+	int bAwake;
+	IPhysicalEntity *pHost;
+	Vec3 posHostPivot; // attachment position inside pHost
+	Quat qHostPivot;
+	int bInheritVel;
+	int nCollLyingMode;
+	Vec3 gravityLyingMode;
+	float dampingLyingMode;
+	float minEnergyLyingMode;
+	int iSimType;
+	int iSimTypeLyingMode;
+	int nRoots; // only used in GetParams
+	int nJointsAlloc;
+	int bRecalcJoints;
+
+	pe_params *ToParams() const
+	{
+		pe_params_articulated_body *params = new pe_params_articulated_body();
+
+		params->bGrounded           = this->bGrounded;
+		params->bCheckCollisions    = this->bCheckCollisions;
+		params->bCollisionResp      = this->bCollisionResp;
+		params->pivot               = this->pivot;
+		params->a                   = this->a;
+		params->wa                  = this->wa;
+		params->w                   = this->w;
+		params->v                   = this->v;
+		params->scaleBounceResponse = this->scaleBounceResponse;
+		params->bApply_dqext        = this->bApply_dqext;
+		params->bAwake              = this->bAwake;
+		params->pHost               = this->pHost;
+		params->posHostPivot        = this->posHostPivot;
+		params->qHostPivot          = this->qHostPivot;
+		params->bInheritVel         = this->bInheritVel;
+		params->nCollLyingMode      = this->nCollLyingMode;
+		params->gravityLyingMode    = this->gravityLyingMode;
+		params->dampingLyingMode    = this->dampingLyingMode;
+		params->minEnergyLyingMode  = this->minEnergyLyingMode;
+		params->iSimType            = this->iSimType;
+		params->iSimTypeLyingMode   = this->iSimTypeLyingMode;
+		params->nRoots              = this->nRoots;
+		params->nJointsAlloc        = this->nJointsAlloc;
+		params->bRecalcJoints       = this->bRecalcJoints;
+
+		return params;
+	}
+	void FromParams(const pe_params *pars)
+	{
+		const pe_params_articulated_body *params = static_cast<const pe_params_articulated_body *>(pars);
+
+		this->bGrounded           = params->bGrounded;
+		this->bCheckCollisions    = params->bCheckCollisions;
+		this->bCollisionResp      = params->bCollisionResp;
+		this->pivot               = params->pivot;
+		this->a                   = params->a;
+		this->wa                  = params->wa;
+		this->w                   = params->w;
+		this->v                   = params->v;
+		this->scaleBounceResponse = params->scaleBounceResponse;
+		this->bApply_dqext        = params->bApply_dqext;
+		this->bAwake              = params->bAwake;
+		this->pHost               = params->pHost;
+		this->posHostPivot        = params->posHostPivot;
+		this->qHostPivot          = params->qHostPivot;
+		this->bInheritVel         = params->bInheritVel;
+		this->nCollLyingMode      = params->nCollLyingMode;
+		this->gravityLyingMode    = params->gravityLyingMode;
+		this->dampingLyingMode    = params->dampingLyingMode;
+		this->minEnergyLyingMode  = params->minEnergyLyingMode;
+		this->iSimType            = params->iSimType;
+		this->iSimTypeLyingMode   = params->iSimTypeLyingMode;
+		this->nRoots              = params->nRoots;
+		this->nJointsAlloc        = params->nJointsAlloc;
+		this->bRecalcJoints       = params->bRecalcJoints;
+	}
+	void Dispose()
+	{}
+};
