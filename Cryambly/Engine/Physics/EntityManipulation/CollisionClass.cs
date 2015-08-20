@@ -10,14 +10,14 @@ namespace CryCil.Engine.Physics
 	public struct CollisionClass
 	{
 		#region Fields
-		private uint type;
-		private uint ignore;
+		private ColliderTypes type;
+		private ColliderTypes ignore;
 		#endregion
 		#region Properties
 		/// <summary>
 		/// Gets or sets flags that specify this collision class.
 		/// </summary>
-		public uint Type
+		public ColliderTypes Type
 		{
 			get { return this.type; }
 			set { this.type = value; }
@@ -27,7 +27,7 @@ namespace CryCil.Engine.Physics
 		/// class has any bits from this entity's 'ignore' flags set in its 'type' flags, the collision
 		/// will be ignored.
 		/// </summary>
-		public uint Ignore
+		public ColliderTypes Ignore
 		{
 			get { return this.ignore; }
 			set { this.ignore = value; }

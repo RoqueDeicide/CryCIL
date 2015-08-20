@@ -85,25 +85,27 @@ namespace CryCil.Engine.Physics
 
 			// Now for parts:
 
-			// This object can be used to designate the parts of physical entity that have all but second
-			// flag set.
-			FlagParameters condition = FlagParameters.Condition((uint)FlagsEnum1.First) |
-									   FlagParameters.Condition((uint)(FlagsEnum1.Third | FlagsEnum1.Fourth));
+			// This object can be used to designate the parts of physical entity that float, can have their
+			// geometry modified and can be broken via code.
+			FlagParameters condition = FlagParameters.Condition((uint)PhysicsGeometryFlags.Floats) |
+									   FlagParameters.Condition((uint)(PhysicsGeometryFlags.CanModify |
+									   PhysicsGeometryFlags.ManuallyBreakable));
 
-			// This object removes fourth flag and sets the second one.
-			FlagParameters partFlagModification = FlagParameters.Remove((uint)FlagsEnum1.Fourth) |
-												  FlagParameters.Set((uint)FlagsEnum1.Second);
+			// This object makes the part not float anymore and makes collidable with any solid object.
+			FlagParameters partFlagModification = FlagParameters.Remove((uint)PhysicsGeometryFlags.Floats) |
+												  FlagParameters.Set((uint)PhysicsGeometryFlags.CollisionTypeSolid);
 
-			// This object removes fourth flag and sets the second one on every part of the entity that has
-			// all but second flag set.
+			// This object makes the part that float, can have their geometry modified and can be broken
+			// via code, not float anymore and makes collidable with any solid object.
 			FlagParameters conditionWithModification = condition | partFlagModification;
 
-			// This object removes third collider flag and sets the second one.
-			FlagParameters colliderModification = FlagParameters.Remove((uint)ColliderFlagsEnum1.Third) |
-												  FlagParameters.Set((uint)ColliderFlagsEnum1.Second);
+			// This object changes the part from obstruction into debris.
+			FlagParameters colliderModification = FlagParameters.Remove((uint)ColliderTypes.Obstruct) |
+												  FlagParameters.Set((uint)ColliderTypes.Debris);
 
-			// This object removes fourth flag and sets the second one as well as removes third collider
-			// flag and sets the second one on every part of the entity that has all but second flag set.
+			// This object makes the part that float, can have their geometry modified and can be broken
+			// via code, not float anymore and makes collidable with any solid object as will as turns into
+			// debris from obstruction.
 			FlagParameters massPartFlagModification = colliderModification | conditionWithModification;
 		}
 	}

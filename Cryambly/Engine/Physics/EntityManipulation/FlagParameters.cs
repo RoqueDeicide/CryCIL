@@ -17,8 +17,8 @@ namespace CryCil.Engine.Physics
 		internal Bytes4 FlagsOr;
 		internal Bytes4 FlagsAnd;
 		internal bool HasColliderModFlags;
-		internal uint FlagsColliderOr;
-		internal uint FlagsColliderAnd;
+		internal ColliderTypes FlagsColliderOr;
+		internal ColliderTypes FlagsColliderAnd;
 		#endregion
 		#region Properties
 		#endregion
@@ -92,30 +92,34 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Creates new object of this type that can be used to remove specific flags.
 		/// </summary>
-		/// <param name="flagsToRemove">  A set of flags to remove from the part/entity.</param>
-		/// <param name="isColliderFlags">
-		/// An optional boolean value that indicates whether this object will be used to remove collider
-		/// flags. (Specific to <see cref="PhysicsParametersPart"/>, collider flags can be used to stop
-		/// ropes from colliding with the part.)
-		/// </param>
+		/// <param name="flagsToRemove">A set of flags to remove from the part/entity.</param>
 		/// <returns>
 		/// A valid object of this type that can be combined with other objects using
 		/// <see cref="operator|"/>.
 		/// </returns>
-		public static FlagParameters Remove(uint flagsToRemove, bool isColliderFlags = false)
+		public static FlagParameters Remove(uint flagsToRemove)
 		{
-			var parameters = new FlagParameters();
-			if (isColliderFlags)
+			return new FlagParameters
 			{
-				parameters.HasModFlags = true;
-				parameters.FlagsAnd = new Bytes4(~flagsToRemove);
-			}
-			else
+				HasModFlags = true,
+				FlagsAnd = new Bytes4(~flagsToRemove)
+			};
+		}
+		/// <summary>
+		/// Creates new object of this type that can be used to remove specific flags.
+		/// </summary>
+		/// <param name="flagsToRemove">A set of flags to remove from the part/entity.</param>
+		/// <returns>
+		/// A valid object of this type that can be combined with other objects using
+		/// <see cref="operator|"/>.
+		/// </returns>
+		public static FlagParameters Remove(ColliderTypes flagsToRemove)
+		{
+			return new FlagParameters
 			{
-				parameters.HasColliderModFlags = true;
-				parameters.FlagsColliderAnd = ~flagsToRemove;
-			}
-			return parameters;
+				HasColliderModFlags = true,
+				FlagsColliderAnd = ~flagsToRemove
+			};
 		}
 		/// <summary>
 		/// Creates new object of this type that can be used to remove specific flags.
@@ -133,30 +137,34 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Creates new object of this type that can be used to set specific flags.
 		/// </summary>
-		/// <param name="flagsToSet">     A set of flags to set for the part/entity.</param>
-		/// <param name="isColliderFlags">
-		/// An optional boolean value that indicates whether this object will be used to set collider
-		/// flags. (Specific to <see cref="PhysicsParametersPart"/>, collider flags can be used to stop
-		/// ropes from colliding with the part.)
-		/// </param>
+		/// <param name="flagsToSet">A set of flags to set for the part/entity.</param>
 		/// <returns>
 		/// A valid object of this type that can be combined with other objects using
 		/// <see cref="operator|"/>.
 		/// </returns>
-		public static FlagParameters Set(uint flagsToSet, bool isColliderFlags = false)
+		public static FlagParameters Set(uint flagsToSet)
 		{
-			var parameters = new FlagParameters();
-			if (isColliderFlags)
+			return new FlagParameters
 			{
-				parameters.HasModFlags = true;
-				parameters.FlagsOr = new Bytes4(flagsToSet);
-			}
-			else
+				HasModFlags = true,
+				FlagsOr = new Bytes4(flagsToSet)
+			};
+		}
+		/// <summary>
+		/// Creates new object of this type that can be used to set specific flags.
+		/// </summary>
+		/// <param name="flagsToSet">A set of flags to set for the part/entity.</param>
+		/// <returns>
+		/// A valid object of this type that can be combined with other objects using
+		/// <see cref="operator|"/>.
+		/// </returns>
+		public static FlagParameters Set(ColliderTypes flagsToSet)
+		{
+			return new FlagParameters
 			{
-				parameters.HasColliderModFlags = true;
-				parameters.FlagsColliderOr = flagsToSet;
-			}
-			return parameters;
+				HasColliderModFlags = true,
+				FlagsColliderAnd = flagsToSet
+			};
 		}
 		/// <summary>
 		/// Creates new object of this type that can be used to set specific flags.

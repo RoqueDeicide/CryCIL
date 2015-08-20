@@ -25,8 +25,7 @@ namespace CryCil.Engine.Physics
 		/// onto physical entity or to <see cref="PhysicalEntity.GetParameters"/> to get the currently
 		/// applied ones.
 		/// </summary>
-		[UsedImplicitly]
-		public PhysicsParameters Base;
+		[UsedImplicitly] public PhysicsParameters Base;
 		// Indicates whether this object is set up for assignment of parameters.
 		private readonly bool forAssignment;
 		private readonly int partid;
@@ -34,9 +33,10 @@ namespace CryCil.Engine.Physics
 		private bool bRecalcBBox;
 		private Quatvecale location;
 		private Matrix34 pMtx3x4;
-		private uint flagsCond;
-		private uint flagsOR, flagsAND;
-		private uint flagsColliderOR, flagsColliderAND;
+		private PhysicsGeometryFlags flagsCond;
+		private PhysicsGeometryFlags flagsOR, flagsAND;
+		private ColliderTypes flagsColliderOR;
+		private ColliderTypes flagsColliderAND;
 		private float mass;
 		private float density;
 		private float minContactDist;
@@ -165,12 +165,12 @@ namespace CryCil.Engine.Physics
 
 				if (value.HasFlagCond)
 				{
-					this.flagsCond = value.FlagsCond.UnsignedInt;
+					this.flagsCond = (PhysicsGeometryFlags)value.FlagsCond.UnsignedInt;
 				}
 				if (value.HasModFlags)
 				{
-					this.flagsOR = value.FlagsOr.UnsignedInt;
-					this.flagsAND = value.FlagsAnd.UnsignedInt;
+					this.flagsOR = (PhysicsGeometryFlags)value.FlagsOr.UnsignedInt;
+					this.flagsAND = (PhysicsGeometryFlags)value.FlagsAnd.UnsignedInt;
 				}
 				if (value.HasColliderModFlags)
 				{
@@ -182,17 +182,17 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the flags that are assigned to the part, if this instance was used to query parameters.
 		/// </summary>
-		public uint PartFlags
+		public PhysicsGeometryFlags PartFlags
 		{
 			get { return this.flagsOR; }
 		}
 		/// <summary>
-		/// Gets the flags that are assigned to the part collider (whatever it is), if this instance was
-		/// used to query parameters.
+		/// Gets the flags that are assigned to the part collider, if this instance was used to query
+		/// parameters.
 		/// </summary>
-		public uint PartColliderFlags
+		public ColliderTypes PartColliderFlags
 		{
-			get { return this.flagsOR; }
+			get { return this.flagsColliderOR; }
 		}
 		/// <summary>
 		/// Gets or sets the mass of the part in kilograms.
@@ -388,11 +388,11 @@ namespace CryCil.Engine.Physics
 			this.bRecalcBBox = true;
 			this.pMtx3x4 = Matrix34.Identity;
 			this.location = new Quatvecale(UnusedValue.Quaternion, UnusedValue.Vector, UnusedValue.Single);
-			this.flagsCond = UnusedValue.UInt32;
+			this.flagsCond = (PhysicsGeometryFlags)UnusedValue.UInt32;
 			this.flagsOR = 0;
-			this.flagsAND = uint.MaxValue;
+			this.flagsAND = (PhysicsGeometryFlags)uint.MaxValue;
 			this.flagsColliderOR = 0;
-			this.flagsColliderAND = uint.MaxValue;
+			this.flagsColliderAND = (ColliderTypes)uint.MaxValue;
 			this.mass = UnusedValue.Single;
 			this.density = UnusedValue.Single;
 			this.minContactDist = UnusedValue.Single;
@@ -414,7 +414,7 @@ namespace CryCil.Engine.Physics
 		/// A value that designates the flags that must be set for parts to have these parameters applied
 		/// to them.
 		/// </param>
-		public PhysicsParametersPart(uint flags)
+		public PhysicsParametersPart(PhysicsGeometryFlags flags)
 		{
 			this.Base = new PhysicsParameters(PhysicsParametersTypes.Part);
 			this.flagsCond = flags;
@@ -426,9 +426,9 @@ namespace CryCil.Engine.Physics
 			this.pMtx3x4 = Matrix34.Identity;
 			this.location = new Quatvecale(UnusedValue.Quaternion, UnusedValue.Vector, UnusedValue.Single);
 			this.flagsOR = 0;
-			this.flagsAND = uint.MaxValue;
+			this.flagsAND = (PhysicsGeometryFlags)uint.MaxValue;
 			this.flagsColliderOR = 0;
-			this.flagsColliderAND = uint.MaxValue;
+			this.flagsColliderAND = (ColliderTypes)uint.MaxValue;
 			this.mass = UnusedValue.Single;
 			this.density = UnusedValue.Single;
 			this.minContactDist = UnusedValue.Single;
@@ -481,7 +481,7 @@ namespace CryCil.Engine.Physics
 		/// to them.
 		/// </param>
 		/// <param name="parameters">A set of parameters to copy.</param>
-		public PhysicsParametersPart(uint flags, ref PhysicsParametersPart parameters)
+		public PhysicsParametersPart(PhysicsGeometryFlags flags, ref PhysicsParametersPart parameters)
 		{
 			this = parameters;
 			this.flagsCond = flags;
