@@ -206,23 +206,43 @@ namespace CryCil
 		/// <summary>
 		/// Gets first column in a for of a <see cref="Vector3"/> .
 		/// </summary>
-		public Vector3 ColumnVector0 { get { return new Vector3(this.M00, this.M10, this.M20); } }
+		public Vector3 ColumnVector0
+		{
+			get { return new Vector3(this.M00, this.M10, this.M20); }
+			set { this.M00 = value.X; this.M10 = value.Y; this.M20 = value.Z; }
+		}
 		/// <summary>
 		/// Gets second column in a for of a <see cref="Vector3"/> .
 		/// </summary>
-		public Vector3 ColumnVector1 { get { return new Vector3(this.M01, this.M11, this.M21); } }
+		public Vector3 ColumnVector1
+		{
+			get { return new Vector3(this.M01, this.M11, this.M21); }
+			set { this.M01 = value.X; this.M11 = value.Y; this.M21 = value.Z; }
+		}
 		/// <summary>
 		/// Gets third column in a for of a <see cref="Vector3"/> .
 		/// </summary>
-		public Vector3 ColumnVector2 { get { return new Vector3(this.M02, this.M12, this.M22); } }
+		public Vector3 ColumnVector2
+		{
+			get { return new Vector3(this.M02, this.M12, this.M22); }
+			set { this.M02 = value.X; this.M12 = value.Y; this.M22 = value.Z; }
+		}
 		/// <summary>
 		/// Gets fourth column in a for of a <see cref="Vector3"/> .
 		/// </summary>
-		public Vector3 ColumnVector3 { get { return new Vector3(this.M03, this.M13, this.M23); } }
+		public Vector3 ColumnVector3
+		{
+			get { return new Vector3(this.M03, this.M13, this.M23); }
+			set { this.M03 = value.X; this.M13 = value.Y; this.M23 = value.Z; }
+		}
 		/// <summary>
 		/// Gets translation vector from this matrix.
 		/// </summary>
-		public Vector3 Translation { get { return new Vector3(this.M03, this.M13, this.M23); } }
+		public Vector3 Translation
+		{
+			get { return new Vector3(this.M03, this.M13, this.M23); }
+			set { this.M03 = value.X; this.M13 = value.Y; this.M23 = value.Z; }
+		}
 		/// <summary>
 		/// Calculates determinant of the matrix composed from first 3 columns of this matrix.
 		/// </summary>
