@@ -822,3 +822,136 @@ struct PhysicsParametersArticulatedBody
 	void Dispose()
 	{}
 };
+
+struct PhysicsParametersDimensions
+{
+	PhysicsParameters Base;
+	float heightPivot;
+	float heightEye;
+	Vec3 sizeCollider;
+	float heightCollider;
+	float headRadius;
+	float heightHead;
+	Vec3 dirUnproj;
+	float maxUnproj;
+	int bUseCapsule;
+	float groundContactEps;
+
+	pe_params *ToParams() const
+	{
+		pe_player_dimensions *params = new pe_player_dimensions();
+
+		params->heightPivot      = this->heightPivot;
+		params->heightEye        = this->heightEye;
+		params->sizeCollider     = this->sizeCollider;
+		params->heightCollider   = this->heightCollider;
+		params->headRadius       = this->headRadius;
+		params->heightHead       = this->heightHead;
+		params->dirUnproj        = this->dirUnproj;
+		params->maxUnproj        = this->maxUnproj;
+		params->bUseCapsule      = this->bUseCapsule;
+		params->groundContactEps = this->groundContactEps;
+
+		return params;
+	}
+	void FromParams(const pe_params *pars)
+	{
+		const pe_player_dimensions *params = static_cast<const pe_player_dimensions *>(pars);
+
+		this->heightPivot      = params->heightPivot;
+		this->heightEye        = params->heightEye;
+		this->sizeCollider     = params->sizeCollider;
+		this->heightCollider   = params->heightCollider;
+		this->headRadius       = params->headRadius;
+		this->heightHead       = params->heightHead;
+		this->dirUnproj        = params->dirUnproj;
+		this->maxUnproj        = params->maxUnproj;
+		this->bUseCapsule      = params->bUseCapsule;
+		this->groundContactEps = params->groundContactEps;
+	}
+	void Dispose()
+	{}
+};
+
+struct PhysicsParametersDynamics
+{
+	PhysicsParameters Base;
+	float kInertia;
+	float kInertiaAccel;
+	float kAirControl;
+	float kAirResistance;
+	Vec3 gravity;
+	float nodSpeed;
+	int bSwimming;
+	float mass;
+	int surface_idx;
+	float minSlideAngle;
+	float maxClimbAngle;
+	float maxJumpAngle;
+	float minFallAngle;
+	float maxVelGround;
+	float timeImpulseRecover;
+	int collTypes;
+	IPhysicalEntity *pLivingEntToIgnore;
+	int bNetwork;
+	int bActive;
+	int iRequestedTime;
+	int bReleaseGroundColliderWhenNotActive;
+
+	pe_params *ToParams() const
+	{
+		pe_player_dynamics *params = new pe_player_dynamics();
+
+		params->kInertia                            = this->kInertia;
+		params->kInertiaAccel                       = this->kInertiaAccel;
+		params->kAirControl                         = this->kAirControl;
+		params->kAirResistance                      = this->kAirResistance;
+		params->gravity                             = this->gravity;
+		params->nodSpeed                            = this->nodSpeed;
+		params->bSwimming                           = this->bSwimming;
+		params->mass                                = this->mass;
+		params->surface_idx                         = this->surface_idx;
+		params->minSlideAngle                       = this->minSlideAngle;
+		params->maxClimbAngle                       = this->maxClimbAngle;
+		params->maxJumpAngle                        = this->maxJumpAngle;
+		params->minFallAngle                        = this->minFallAngle;
+		params->maxVelGround                        = this->maxVelGround;
+		params->timeImpulseRecover                  = this->timeImpulseRecover;
+		params->collTypes                           = this->collTypes;
+		params->pLivingEntToIgnore                  = this->pLivingEntToIgnore;
+		params->bNetwork                            = this->bNetwork;
+		params->bActive                             = this->bActive;
+		params->iRequestedTime                      = this->iRequestedTime;
+		params->bReleaseGroundColliderWhenNotActive = this->bReleaseGroundColliderWhenNotActive;
+
+		return params;
+	}
+	void FromParams(const pe_params *pars)
+	{
+		const pe_player_dynamics *params = static_cast<const pe_player_dynamics *>(pars);
+
+		this->kInertia                            = params->kInertia;
+		this->kInertiaAccel                       = params->kInertiaAccel;
+		this->kAirControl                         = params->kAirControl;
+		this->kAirResistance                      = params->kAirResistance;
+		this->gravity                             = params->gravity;
+		this->nodSpeed                            = params->nodSpeed;
+		this->bSwimming                           = params->bSwimming;
+		this->mass                                = params->mass;
+		this->surface_idx                         = params->surface_idx;
+		this->minSlideAngle                       = params->minSlideAngle;
+		this->maxClimbAngle                       = params->maxClimbAngle;
+		this->maxJumpAngle                        = params->maxJumpAngle;
+		this->minFallAngle                        = params->minFallAngle;
+		this->maxVelGround                        = params->maxVelGround;
+		this->timeImpulseRecover                  = params->timeImpulseRecover;
+		this->collTypes                           = params->collTypes;
+		this->pLivingEntToIgnore                  = params->pLivingEntToIgnore;
+		this->bNetwork                            = params->bNetwork;
+		this->bActive                             = params->bActive;
+		this->iRequestedTime                      = params->iRequestedTime;
+		this->bReleaseGroundColliderWhenNotActive = params->bReleaseGroundColliderWhenNotActive;
+	}
+	void Dispose()
+	{}
+};

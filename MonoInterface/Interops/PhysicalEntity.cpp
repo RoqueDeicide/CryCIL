@@ -90,6 +90,8 @@ START_PROCESSING_FUNC_DECLARATION(name, functionPtrType, functionPtr, typeCount)
 		funcs[ePE_params_skeleton]                    = functionPtr<PhysicsParametersSkeleton>;\
 		funcs[ePE_params_joint]                       = functionPtr<PhysicsParametersJoint>;\
 		funcs[ePE_params_articulated_body]            = functionPtr<PhysicsParametersArticulatedBody>;\
+		funcs[ePE_player_dimensions]                  = functionPtr<PhysicsParametersDimensions>;\
+		funcs[ePE_player_dynamics]                    = functionPtr<PhysicsParametersDynamics>;\
 END_PROCESSING_FUNC_DECLARATION(typeCount)
 
 #define DECLARE_ACTION_PROCESSING_FUNC(name, functionPtrType, functionPtr, typeCount) \
