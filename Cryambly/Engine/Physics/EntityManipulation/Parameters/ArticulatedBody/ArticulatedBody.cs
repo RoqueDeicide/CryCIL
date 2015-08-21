@@ -103,13 +103,31 @@ namespace CryCil.Engine.Physics
 			set { this.bInheritVel = value ? 1 : 0; }
 		}
 		/// <summary>
-		/// Gets or sets the position on the <see cref="Ground"/> this entity is attached to when it's
-		/// grounded.
+		/// Gets or sets the position on the first point in the joint that connects this articulated body
+		/// with a ground.
 		/// </summary>
-		public Vector3 Pivot
+		public Vector3 BodyPivot
 		{
 			get { return this.pivot; }
 			set { this.pivot = value; }
+		}
+		/// <summary>
+		/// Gets or sets the position on the second point in the joint that connects this articulated body
+		/// with a ground.
+		/// </summary>
+		public Vector3 GroundPivot
+		{
+			get { return this.posHostPivot; }
+			set { this.posHostPivot = value; }
+		}
+		/// <summary>
+		/// Gets or sets orientation of the joint that connects this articulated body with a ground
+		/// relative to the ground.
+		/// </summary>
+		public Quaternion GroundPivotOrientation
+		{
+			get { return this.qHostPivot; }
+			set { this.qHostPivot = value; }
 		}
 		/// <summary>
 		/// Gets or sets the acceleration of the <see cref="Ground"/> entity.
