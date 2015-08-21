@@ -100,7 +100,7 @@
     <Compile Include="Engine\Physics\EntityManipulation\GeometryCollisionTypeCodes.cs" />
     <Compile Include="Engine\Physics\EntityManipulation\GeometryParameters\ArticulatedBody.cs" />
     <Compile Include="Engine\Physics\EntityManipulation\GeometryParameters\GeometryParameters.cs" />
-    <Compile Include="Engine\Physics\EntityManipulation\Parameters\ArticulatedBody.cs" />
+    <Compile Include="Engine\Physics\EntityManipulation\Parameters\ArticulatedBody\ArticulatedBody.cs" />
     <Compile Include="Engine\Physics\EntityManipulation\PhysicsGeometryFlags.cs" />
     <Compile Include="Engine\Physics\EntityManipulation\GeometryParameters\Vehicle.cs" />
     <Compile Include="Engine\Physics\EntityManipulation\JointFlags.cs" />
@@ -108,7 +108,7 @@
     <Compile Include="Engine\Physics\EntityManipulation\Parameters\CollisionClass.cs" />
     <Compile Include="Engine\Physics\EntityManipulation\Parameters\Flags.cs" />
     <Compile Include="Engine\Physics\EntityManipulation\Parameters\ForeignData.cs" />
-    <Compile Include="Engine\Physics\EntityManipulation\Parameters\Joint.cs" />
+    <Compile Include="Engine\Physics\EntityManipulation\Parameters\ArticulatedBody\Joint.cs" />
     <Compile Include="Engine\Physics\EntityManipulation\Parameters\Skeleton.cs" />
     <Compile Include="Engine\Physics\EntityManipulation\Parameters\StructuralJoint.cs" />
     <Compile Include="Engine\Physics\EntityManipulation\Parameters\StructuralInitialVelocity.cs" />
