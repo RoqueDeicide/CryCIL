@@ -297,7 +297,7 @@ struct PhysicsParametersPart
 	}
 	void Dispose()
 	{
-		if (this->nMats != 0)
+		if (this->nMats != 0 && this->pMatMapping && !is_unused(this->pMatMapping))
 		{
 			free(this->pMatMapping);
 		}
@@ -724,7 +724,7 @@ struct PhysicsParametersJoint
 	}
 	void Dispose()
 	{
-		if (this->nSelfCollidingParts > 0)
+		if (this->nSelfCollidingParts > 0 && !is_unused(this->pSelfCollidingParts) && this->pSelfCollidingParts)
 		{
 			free(this->pSelfCollidingParts);
 		}
