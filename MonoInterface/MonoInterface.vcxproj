@@ -492,6 +492,7 @@
     <ClCompile Include="TypeMapChecks\SimClass.cpp" />
     <ClCompile Include="TypeMapChecks\SmallEntityStructs.cpp" />
     <ClCompile Include="TypeMapChecks\SpawnParams.cpp" />
+    <ClCompile Include="TypeMapChecks\StridedPointer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

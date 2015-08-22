@@ -475,6 +475,7 @@
     <Compile Include="RunTime\MonoInterface.cs" />
     <Compile Include="RunTime\NamespaceDoc.cs" />
     <Compile Include="Utilities\StackString.cs" />
+    <Compile Include="Utilities\StridedPointer.cs" />
     <Compile Include="Utilities\StringPool.cs" />
     <Compile Include="Utilities\Utf32Char.cs" />
     <Compile Include="VariousConstants.cs" />
