@@ -24,24 +24,15 @@ namespace CryCil.Engine.Physics
 		/// Pass reference to this field to <see cref="PhysicalEntity.SetParameters"/> in order apply this
 		/// set of parameters to the entity.
 		/// </summary>
-		[UsedImplicitly]
-		public PhysicsParameters Base;
-		[UsedImplicitly]
-		private Vector3 position;
-		[UsedImplicitly]
-		private Quaternion orientation;
-		[UsedImplicitly]
-		private float scale;
-		[UsedImplicitly]
-		private Matrix34* pMtx3x4;
-		[UsedImplicitly]
-		private Matrix33* pMtx3x3;
-		[UsedImplicitly]
-		private PhysicsSimulationClass simClass;
-		[UsedImplicitly]
-		private bool bRecalcBounds;
-		[UsedImplicitly]
-		private bool bEntGridUseOBB;
+		[UsedImplicitly] public PhysicsParameters Base;
+		[UsedImplicitly] private Vector3 position;
+		[UsedImplicitly] private Quaternion orientation;
+		[UsedImplicitly] private float scale;
+		[UsedImplicitly] private Matrix34* pMtx3x4;
+		[UsedImplicitly] private Matrix33* pMtx3x3;
+		[UsedImplicitly] private PhysicsSimulationClass simClass;
+		[UsedImplicitly] private bool bRecalcBounds;
+		[UsedImplicitly] private bool bEntGridUseOBB;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -124,7 +115,8 @@ namespace CryCil.Engine.Physics
 		}
 		#endregion
 		#region Construction
-		private PhysicsParametersLocation(Vector3 position, Quaternion orientation, float scale, Matrix34* pMtx3X4, Matrix33* pMtx3X3, PhysicsSimulationClass simClass, bool bRecalcBounds, bool bEntGridUseObb)
+		private PhysicsParametersLocation(Vector3 position, Quaternion orientation, float scale, Matrix34* pMtx3X4,
+										  Matrix33* pMtx3X3, PhysicsSimulationClass simClass, bool bRecalcBounds, bool bEntGridUseObb)
 			: this()
 		{
 			this.Base = new PhysicsParameters(PhysicsParametersTypes.Position);
@@ -135,8 +127,8 @@ namespace CryCil.Engine.Physics
 			this.pMtx3x3 = pMtx3X3;
 			this.simClass =
 				simClass == PhysicsSimulationClass.Unused
-				? (PhysicsSimulationClass)UnusedValue.Int32
-				: simClass;
+					? (PhysicsSimulationClass)UnusedValue.Int32
+					: simClass;
 			this.bRecalcBounds = bRecalcBounds;
 			this.bEntGridUseOBB = bEntGridUseObb;
 		}
@@ -155,7 +147,7 @@ namespace CryCil.Engine.Physics
 		/// of the entity in the entity grid instead of <see cref="BoundingBox"/>.
 		/// </param>
 		public PhysicsParametersLocation(Vector3 position, PhysicsSimulationClass simClass = PhysicsSimulationClass.Unused,
-			bool recalcBounds = true, bool useOBB = false)
+										 bool recalcBounds = true, bool useOBB = false)
 			: this(position, UnusedValue.Quaternion, UnusedValue.Single, null, null, simClass, recalcBounds, useOBB)
 		{
 		}
@@ -176,7 +168,8 @@ namespace CryCil.Engine.Physics
 		/// of the entity in the entity grid instead of <see cref="BoundingBox"/>.
 		/// </param>
 		public PhysicsParametersLocation(Vector3 position, Quaternion orientation,
-			PhysicsSimulationClass simClass = PhysicsSimulationClass.Unused, bool recalcBounds = true, bool useOBB = false)
+										 PhysicsSimulationClass simClass = PhysicsSimulationClass.Unused, bool recalcBounds = true,
+										 bool useOBB = false)
 			: this(position, orientation, UnusedValue.Single, null, null, simClass, recalcBounds, useOBB)
 		{
 		}
@@ -197,7 +190,8 @@ namespace CryCil.Engine.Physics
 		/// of the entity in the entity grid instead of <see cref="BoundingBox"/>.
 		/// </param>
 		public PhysicsParametersLocation(Vector3 position, Matrix33 orientation,
-			PhysicsSimulationClass simClass = PhysicsSimulationClass.Unused, bool recalcBounds = true, bool useOBB = false)
+										 PhysicsSimulationClass simClass = PhysicsSimulationClass.Unused, bool recalcBounds = true,
+										 bool useOBB = false)
 			: this(position, UnusedValue.Quaternion, UnusedValue.Single, null, null, simClass, recalcBounds, useOBB)
 		{
 			this.pMtx3x3 = (Matrix33*)CryMarshal.Allocate((ulong)sizeof(Matrix33), false).ToPointer();
@@ -221,7 +215,8 @@ namespace CryCil.Engine.Physics
 		/// of the entity in the entity grid instead of <see cref="BoundingBox"/>.
 		/// </param>
 		public PhysicsParametersLocation(Vector3 position, Quaternion orientation, float scale,
-			PhysicsSimulationClass simClass = PhysicsSimulationClass.Unused, bool recalcBounds = true, bool useOBB = false)
+										 PhysicsSimulationClass simClass = PhysicsSimulationClass.Unused, bool recalcBounds = true,
+										 bool useOBB = false)
 			: this(position, orientation, scale, null, null, simClass, recalcBounds, useOBB)
 		{
 		}
@@ -243,7 +238,8 @@ namespace CryCil.Engine.Physics
 		/// of the entity in the entity grid instead of <see cref="BoundingBox"/>.
 		/// </param>
 		public PhysicsParametersLocation(Vector3 position, Matrix33 orientation, float scale,
-			PhysicsSimulationClass simClass = PhysicsSimulationClass.Unused, bool recalcBounds = true, bool useOBB = false)
+										 PhysicsSimulationClass simClass = PhysicsSimulationClass.Unused, bool recalcBounds = true,
+										 bool useOBB = false)
 			: this(position, UnusedValue.Quaternion, scale, null, null, simClass, recalcBounds, useOBB)
 		{
 			this.pMtx3x3 = (Matrix33*)CryMarshal.Allocate((ulong)sizeof(Matrix33), false).ToPointer();
@@ -264,7 +260,8 @@ namespace CryCil.Engine.Physics
 		/// of the entity in the entity grid instead of <see cref="BoundingBox"/>.
 		/// </param>
 		public PhysicsParametersLocation(Quaternion orientation,
-			PhysicsSimulationClass simClass = PhysicsSimulationClass.Unused, bool recalcBounds = true, bool useOBB = false)
+										 PhysicsSimulationClass simClass = PhysicsSimulationClass.Unused, bool recalcBounds = true,
+										 bool useOBB = false)
 			: this(UnusedValue.Vector, orientation, UnusedValue.Single, null, null, simClass, recalcBounds, useOBB)
 		{
 		}
@@ -283,9 +280,10 @@ namespace CryCil.Engine.Physics
 		/// of the entity in the entity grid instead of <see cref="BoundingBox"/>.
 		/// </param>
 		public PhysicsParametersLocation(Matrix33 orientation,
-			PhysicsSimulationClass simClass = PhysicsSimulationClass.Unused, bool recalcBounds = true, bool useOBB = false)
+										 PhysicsSimulationClass simClass = PhysicsSimulationClass.Unused, bool recalcBounds = true,
+										 bool useOBB = false)
 			: this(UnusedValue.Vector, UnusedValue.Quaternion, UnusedValue.Single, null, null, simClass, recalcBounds,
-			useOBB)
+				   useOBB)
 		{
 			this.pMtx3x3 = (Matrix33*)CryMarshal.Allocate((ulong)sizeof(Matrix33), false).ToPointer();
 			*this.pMtx3x3 = orientation;
@@ -306,7 +304,8 @@ namespace CryCil.Engine.Physics
 		/// of the entity in the entity grid instead of <see cref="BoundingBox"/>.
 		/// </param>
 		public PhysicsParametersLocation(Quaternion orientation, float scale,
-			PhysicsSimulationClass simClass = PhysicsSimulationClass.Unused, bool recalcBounds = true, bool useOBB = false)
+										 PhysicsSimulationClass simClass = PhysicsSimulationClass.Unused, bool recalcBounds = true,
+										 bool useOBB = false)
 			: this(UnusedValue.Vector, orientation, scale, null, null, simClass, recalcBounds, useOBB)
 		{
 		}
@@ -326,7 +325,8 @@ namespace CryCil.Engine.Physics
 		/// of the entity in the entity grid instead of <see cref="BoundingBox"/>.
 		/// </param>
 		public PhysicsParametersLocation(Matrix33 orientation, float scale,
-			PhysicsSimulationClass simClass = PhysicsSimulationClass.Unused, bool recalcBounds = true, bool useOBB = false)
+										 PhysicsSimulationClass simClass = PhysicsSimulationClass.Unused, bool recalcBounds = true,
+										 bool useOBB = false)
 			: this(UnusedValue.Vector, UnusedValue.Quaternion, scale, null, null, simClass, recalcBounds, useOBB)
 		{
 			this.pMtx3x3 = (Matrix33*)CryMarshal.Allocate((ulong)sizeof(Matrix33), false).ToPointer();
@@ -347,7 +347,8 @@ namespace CryCil.Engine.Physics
 		/// of the entity in the entity grid instead of <see cref="BoundingBox"/>.
 		/// </param>
 		public PhysicsParametersLocation(float scale,
-			PhysicsSimulationClass simClass = PhysicsSimulationClass.Unused, bool recalcBounds = true, bool useOBB = false)
+										 PhysicsSimulationClass simClass = PhysicsSimulationClass.Unused, bool recalcBounds = true,
+										 bool useOBB = false)
 			: this(UnusedValue.Vector, UnusedValue.Quaternion, scale, null, null, simClass, recalcBounds, useOBB)
 		{
 		}
@@ -369,9 +370,10 @@ namespace CryCil.Engine.Physics
 		/// of the entity in the entity grid instead of <see cref="BoundingBox"/>.
 		/// </param>
 		public PhysicsParametersLocation(Matrix34 transformation,
-			PhysicsSimulationClass simClass = PhysicsSimulationClass.Unused, bool recalcBounds = true, bool useOBB = false)
+										 PhysicsSimulationClass simClass = PhysicsSimulationClass.Unused, bool recalcBounds = true,
+										 bool useOBB = false)
 			: this(UnusedValue.Vector, UnusedValue.Quaternion, UnusedValue.Single, null, null, simClass, recalcBounds,
-			useOBB)
+				   useOBB)
 		{
 			this.pMtx3x4 = (Matrix34*)CryMarshal.Allocate((ulong)sizeof(Matrix34), false).ToPointer();
 			*this.pMtx3x4 = transformation;

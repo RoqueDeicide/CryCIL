@@ -20,36 +20,21 @@ namespace CryCil.Engine.Physics
 		/// onto physical entity or to <see cref="PhysicalEntity.GetParameters"/> to get the currently
 		/// applied ones.
 		/// </summary>
-		[UsedImplicitly]
-		public PhysicsParameters Base;
-		[UsedImplicitly]
-		private int iSimClass;
-		[UsedImplicitly]
-		private float maxTimeStep;
-		[UsedImplicitly]
-		private float minEnergy;
-		[UsedImplicitly]
-		private float damping;
-		[UsedImplicitly]
-		private Vector3 gravity;
-		[UsedImplicitly]
-		private float dampingFreefall;
-		[UsedImplicitly]
-		private Vector3 gravityFreefall;
-		[UsedImplicitly]
-		private float maxRotVel;
-		[UsedImplicitly]
-		private float mass;
-		[UsedImplicitly]
-		private float density;
-		[UsedImplicitly]
-		private int maxLoggedCollisions;
-		[UsedImplicitly]
-		private int disablePreCG;
-		[UsedImplicitly]
-		private float maxFriction;
-		[UsedImplicitly]
-		private int collTypes;
+		[UsedImplicitly] public PhysicsParameters Base;
+		[UsedImplicitly] private int iSimClass;
+		[UsedImplicitly] private float maxTimeStep;
+		[UsedImplicitly] private float minEnergy;
+		[UsedImplicitly] private float damping;
+		[UsedImplicitly] private Vector3 gravity;
+		[UsedImplicitly] private float dampingFreefall;
+		[UsedImplicitly] private Vector3 gravityFreefall;
+		[UsedImplicitly] private float maxRotVel;
+		[UsedImplicitly] private float mass;
+		[UsedImplicitly] private float density;
+		[UsedImplicitly] private int maxLoggedCollisions;
+		[UsedImplicitly] private int disablePreCG;
+		[UsedImplicitly] private float maxFriction;
+		[UsedImplicitly] private int collTypes;
 		#endregion
 		#region Properties
 		/// <summary>

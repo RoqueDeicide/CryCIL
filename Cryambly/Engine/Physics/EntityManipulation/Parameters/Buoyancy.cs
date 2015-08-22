@@ -5,7 +5,7 @@ using CryCil.Engine.Physics.Primitives;
 namespace CryCil.Engine.Physics
 {
 	/// <summary>
-	/// Encapsulates a set of parameters that allows to get/set buoyancy parameters of the physical entity.
+	/// Encapsulates a set of parameters that allows to specify buoyancy properties of the physical entity.
 	/// </summary>
 	/// <remarks>
 	/// Never use objects of this type that were created using a default constructor (they are not
@@ -20,26 +20,16 @@ namespace CryCil.Engine.Physics
 		/// onto physical entity or to <see cref="PhysicalEntity.GetParameters"/> to get the currently
 		/// applied ones.
 		/// </summary>
-		[UsedImplicitly]
-		public PhysicsParameters Base;
-		[UsedImplicitly]
-		private float waterDensity;
-		[UsedImplicitly]
-		private float kwaterDensity;
-		[UsedImplicitly]
-		private float waterDamping;
-		[UsedImplicitly]
-		private float waterResistance, kwaterResistance;
-		[UsedImplicitly]
-		private Vector3 waterFlow;
-		[UsedImplicitly]
-		private float flowVariance;
-		[UsedImplicitly]
-		private Primitive.Plane waterPlane;
-		[UsedImplicitly]
-		private float waterEmin;
-		[UsedImplicitly]
-		private int iMedium;
+		[UsedImplicitly] public PhysicsParameters Base;
+		[UsedImplicitly] private float waterDensity;
+		[UsedImplicitly] private float kwaterDensity;
+		[UsedImplicitly] private float waterDamping;
+		[UsedImplicitly] private float waterResistance, kwaterResistance;
+		[UsedImplicitly] private Vector3 waterFlow;
+		[UsedImplicitly] private float flowVariance;
+		[UsedImplicitly] private Primitive.Plane waterPlane;
+		[UsedImplicitly] private float waterEmin;
+		[UsedImplicitly] private int iMedium;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -137,7 +127,7 @@ namespace CryCil.Engine.Physics
 		/// <param name="ignored">
 		/// When passed, causes invocation of this particular constructor. Does nothing otherwise.
 		/// </param>
-		public PhysicsParametersBuoyancy(bool ignored)
+		public PhysicsParametersBuoyancy([UsedImplicitly] bool ignored)
 		{
 			this.Base = new PhysicsParameters(PhysicsParametersTypes.Buoyancy);
 			this.waterDensity = UnusedValue.Single;

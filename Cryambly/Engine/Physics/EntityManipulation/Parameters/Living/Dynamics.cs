@@ -2,10 +2,10 @@
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
 
-namespace CryCil.Engine.Physics.Living
+namespace CryCil.Engine.Physics
 {
 	/// <summary>
-	/// Encapsulates a set of parameters that allows to changes special simulation parameters of the
+	/// Encapsulates a set of parameters that allows to change special simulation parameters of the
 	/// physical entity that is a living entity.
 	/// </summary>
 	/// <remarks>

@@ -29,8 +29,8 @@ namespace CryCil.Engine.Physics
 		Both = 3
 	}
 	/// <summary>
-	/// Encapsulates a set of parameters that allows to get and set parameters of the joint in the physical
-	/// entity that is an articulated body.
+	/// Encapsulates a set of parameters that allows to specify the joint in the physical entity that is an
+	/// articulated body.
 	/// </summary>
 	/// <remarks>
 	/// Never use objects of this type that were created using a default constructor (they are not

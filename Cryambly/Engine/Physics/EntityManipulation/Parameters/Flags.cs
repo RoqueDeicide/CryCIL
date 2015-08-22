@@ -20,21 +20,19 @@ namespace CryCil.Engine.Physics
 		/// onto physical entity or to <see cref="PhysicalEntity.GetParameters"/> to get the currently
 		/// applied ones.
 		/// </summary>
-		[UsedImplicitly]
-		public PhysicsParameters Base;
-		[UsedImplicitly]
-		private uint flags;
-		[UsedImplicitly]
-		private uint flagsOR;
-		[UsedImplicitly]
-		private uint flagsAND;
+		[UsedImplicitly] public PhysicsParameters Base;
+		[UsedImplicitly] private uint flags;
+		[UsedImplicitly] private uint flagsOR;
+		[UsedImplicitly] private uint flagsAND;
 		#endregion
 		#region Properties
 		/// <summary>
 		/// Gets the flags that are assigned to the entity.
 		/// </summary>
 		public PhysicalEntityFlags Flags
-		{ get { return (PhysicalEntityFlags)this.flags; } }
+		{
+			get { return (PhysicalEntityFlags)this.flags; }
+		}
 		#endregion
 		#region Construction
 		/// <summary>

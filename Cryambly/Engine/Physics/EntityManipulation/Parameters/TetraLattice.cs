@@ -20,18 +20,12 @@ namespace CryCil.Engine.Physics
 	public struct PhysicsParametersTetraLattice
 	{
 		#region Fields
-		[UsedImplicitly]
-		private bool initialized;
-		[UsedImplicitly]
-		private int nMaxCracks;
-		[UsedImplicitly]
-		private float maxForcePush, maxForcePull, maxForceShift;
-		[UsedImplicitly]
-		private float maxTorqueTwist, maxTorqueBend;
-		[UsedImplicitly]
-		private float crackWeaken;
-		[UsedImplicitly]
-		private float density;
+		[UsedImplicitly] private bool initialized;
+		[UsedImplicitly] private int nMaxCracks;
+		[UsedImplicitly] private float maxForcePush, maxForcePull, maxForceShift;
+		[UsedImplicitly] private float maxTorqueTwist, maxTorqueBend;
+		[UsedImplicitly] private float crackWeaken;
+		[UsedImplicitly] private float density;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -118,7 +112,7 @@ namespace CryCil.Engine.Physics
 		/// This parameter is not used, but it must be provided to make sure correct constructor is
 		/// invoked.
 		/// </param>
-		public PhysicsParametersTetraLattice(bool notUsed)
+		public PhysicsParametersTetraLattice([UsedImplicitly] bool notUsed)
 		{
 			this.initialized = true;
 			this.nMaxCracks = UnusedValue.Int32;

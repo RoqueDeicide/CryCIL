@@ -1,6 +1,5 @@
 ﻿using System.Runtime.InteropServices;
 using CryCil.Annotations;
-using CryCil.MemoryMapping;
 
 namespace CryCil.Engine.Physics
 {
@@ -21,14 +20,10 @@ namespace CryCil.Engine.Physics
 		/// onto physical entity or to <see cref="PhysicalEntity.GetParameters"/> to get the currently
 		/// applied ones.
 		/// </summary>
-		[UsedImplicitly]
-		public PhysicsParameters Base;
-		[UsedImplicitly]
-		private ForeignData data;
-		[UsedImplicitly]
-		private int iForeignFlags;
-		[UsedImplicitly]
-		private int iForeignFlagsAND, iForeignFlagsOR;
+		[UsedImplicitly] public PhysicsParameters Base;
+		[UsedImplicitly] private ForeignData data;
+		[UsedImplicitly] private int iForeignFlags;
+		[UsedImplicitly] private int iForeignFlagsAND, iForeignFlagsOR;
 		#endregion
 		#region Properties
 		/// <summary>

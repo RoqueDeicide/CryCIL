@@ -4,8 +4,8 @@ using CryCil.Annotations;
 namespace CryCil.Engine.Physics
 {
 	/// <summary>
-	/// Encapsulates a set of parameters that allows to specify parameters of the skeleton (hidden mesh
-	/// that uses cloth simulation to skin the main physics geometry) of the physical entity.
+	/// Encapsulates a set of parameters that allows to specify the skeleton (hidden mesh that uses cloth
+	/// simulation to skin the main physics geometry) of the physical entity.
 	/// </summary>
 	/// <remarks>
 	/// Never use objects of this type that were created using a default constructor (they are not

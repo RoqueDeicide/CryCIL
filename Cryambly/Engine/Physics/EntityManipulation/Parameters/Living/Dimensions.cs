@@ -1,12 +1,11 @@
 ﻿using System.Runtime.InteropServices;
-using System.Text.RegularExpressions;
 using CryCil.Annotations;
 
-namespace CryCil.Engine.Physics.Living
+namespace CryCil.Engine.Physics
 {
 	/// <summary>
-	/// Encapsulates a set of parameters that allows to get and set dimensions of the physical entity that
-	/// is a living entity.
+	/// Encapsulates a set of parameters that allows to specify dimensions of the physical entity that is a
+	/// living entity.
 	/// </summary>
 	/// <remarks>
 	/// Never use objects of this type that were created using a default constructor (they are not

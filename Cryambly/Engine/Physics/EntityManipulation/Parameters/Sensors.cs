@@ -24,16 +24,12 @@ namespace CryCil.Engine.Physics
 		/// onto physical entity or to <see cref="PhysicalEntity.GetParameters"/> to get the currently
 		/// applied ones.
 		/// </summary>
-		[UsedImplicitly]
-		public PhysicsParameters Base;
-		private readonly Ray[] sensorsAsRays;	// Used when getting sensors.
+		[UsedImplicitly] public PhysicsParameters Base;
+		private readonly Ray[] sensorsAsRays;
 
-		[UsedImplicitly]
-		private readonly Vector3* origins;		//
-		[UsedImplicitly]						//
-		private readonly Vector3* dirs;			// Used when setting sensors.
-		[UsedImplicitly]						//
-		private readonly int count;				//
+		[UsedImplicitly] private readonly Vector3* origins;
+		[UsedImplicitly] private readonly Vector3* dirs;
+		[UsedImplicitly] private readonly int count;
 		#endregion
 		#region Properties
 		/// <summary>

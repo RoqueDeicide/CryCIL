@@ -36,20 +36,13 @@ namespace CryCil.Engine.Physics
 		/// Pass reference to this field to <see cref="PhysicalEntity.ActUpon"/> in order execute this
 		/// action.
 		/// </summary>
-		[UsedImplicitly]
-		public PhysicsAction Base;
-		[UsedImplicitly]
-		private Vector3 impulse;
-		[UsedImplicitly]
-		private Vector3 angImpulse;
-		[UsedImplicitly]
-		private Vector3 point;
-		[UsedImplicitly]
-		private int partid;
-		[UsedImplicitly]
-		private int ipart;
-		[UsedImplicitly]
-		private ImpulseApplicationTime iApplyTime;
+		[UsedImplicitly] public PhysicsAction Base;
+		[UsedImplicitly] private Vector3 impulse;
+		[UsedImplicitly] private Vector3 angImpulse;
+		[UsedImplicitly] private Vector3 point;
+		[UsedImplicitly] private int partid;
+		[UsedImplicitly] private int ipart;
+		[UsedImplicitly] private ImpulseApplicationTime iApplyTime;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -107,7 +100,7 @@ namespace CryCil.Engine.Physics
 		/// <param name="part">   Optionally specifies the part of the entity to apply impulse to.</param>
 		/// <param name="apply">  Optional value that indicates when to apply the impulse.</param>
 		public PhysicsActionImpulse(ImpulseSpec impulse, EntityPartSpec part = new EntityPartSpec(),
-			ImpulseApplicationTime apply = ImpulseApplicationTime.AfterTimeStep)
+									ImpulseApplicationTime apply = ImpulseApplicationTime.AfterTimeStep)
 		{
 			this.Base = new PhysicsAction(PhysicsActionTypes.Impulse);
 			this.impulse = impulse.HasDir ? impulse.Dir : new Vector3();

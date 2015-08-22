@@ -24,12 +24,9 @@ namespace CryCil.Engine.Physics
 		/// physical entity.
 		/// </summary>
 		public PhysicsStatus Base;
-		[UsedImplicitly]
-		private int partid;
-		[UsedImplicitly]
-		private int ipart;
-		[UsedImplicitly]
-		private bool localSpace;
+		[UsedImplicitly] private int partid;
+		[UsedImplicitly] private int ipart;
+		[UsedImplicitly] private bool localSpace;
 
 		/// <summary>
 		/// An object that encapsulates coordinates of the center of the part/entity, orientation of it and

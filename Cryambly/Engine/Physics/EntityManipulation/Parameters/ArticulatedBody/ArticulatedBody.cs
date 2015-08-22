@@ -5,8 +5,8 @@ using CryCil.Geometry;
 namespace CryCil.Engine.Physics
 {
 	/// <summary>
-	/// Encapsulates a set of parameters that allows to get or set the parameters of the physical entity
-	/// that us an articulated body.
+	/// Encapsulates a set of parameters that allows to specify the physical entity that us an articulated
+	/// body.
 	/// </summary>
 	/// <remarks>
 	/// Never use objects of this type that were created using a default constructor (they are not

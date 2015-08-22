@@ -4,8 +4,8 @@ using CryCil.Annotations;
 namespace CryCil.Engine.Physics
 {
 	/// <summary>
-	/// Encapsulates a set of parameters that allows to get and set parameters of the structural joint in
-	/// the physical entity.
+	/// Encapsulates a set of parameters that allows to specify the structural joint in the physical
+	/// entity.
 	/// </summary>
 	/// <remarks>
 	/// Never use objects of this type that were created using a default constructor (they are not
@@ -20,46 +20,26 @@ namespace CryCil.Engine.Physics
 		/// onto physical entity or to <see cref="PhysicalEntity.GetParameters"/> to get the currently
 		/// applied ones.
 		/// </summary>
-		[UsedImplicitly]
-		public PhysicsParameters Base;
-		[UsedImplicitly]
-		private int id;
-		[UsedImplicitly]
-		private int idx;
-		[UsedImplicitly]
-		private int bReplaceExisting;
-		[UsedImplicitly]
-		private int partid1;
-		[UsedImplicitly]
-		private int partid2;
-		[UsedImplicitly]
-		private Vector3 pt;
-		[UsedImplicitly]
-		private Vector3 n;
-		[UsedImplicitly]
-		private Vector3 axisx;
-		[UsedImplicitly]
-		private float maxForcePush, maxForcePull, maxForceShift;
-		[UsedImplicitly]
-		private float maxTorqueBend, maxTorqueTwist;
-		[UsedImplicitly]
-		private float damageAccum, damageAccumThresh;
-		[UsedImplicitly]
-		private Vector3 limitConstraint;
-		[UsedImplicitly]
-		private int bBreakable;
-		[UsedImplicitly]
-		private int bConstraintWillIgnoreCollisions;
-		[UsedImplicitly]
-		private int bDirectBreaksOnly;
-		[UsedImplicitly]
-		private float dampingConstraint;
-		[UsedImplicitly]
-		private float szSensor;
-		[UsedImplicitly]
-		private int bBroken;
-		[UsedImplicitly]
-		private int partidEpicenter;
+		[UsedImplicitly] public PhysicsParameters Base;
+		[UsedImplicitly] private int id;
+		[UsedImplicitly] private int idx;
+		[UsedImplicitly] private int bReplaceExisting;
+		[UsedImplicitly] private int partid1;
+		[UsedImplicitly] private int partid2;
+		[UsedImplicitly] private Vector3 pt;
+		[UsedImplicitly] private Vector3 n;
+		[UsedImplicitly] private Vector3 axisx;
+		[UsedImplicitly] private float maxForcePush, maxForcePull, maxForceShift;
+		[UsedImplicitly] private float maxTorqueBend, maxTorqueTwist;
+		[UsedImplicitly] private float damageAccum, damageAccumThresh;
+		[UsedImplicitly] private Vector3 limitConstraint;
+		[UsedImplicitly] private int bBreakable;
+		[UsedImplicitly] private int bConstraintWillIgnoreCollisions;
+		[UsedImplicitly] private int bDirectBreaksOnly;
+		[UsedImplicitly] private float dampingConstraint;
+		[UsedImplicitly] private float szSensor;
+		[UsedImplicitly] private int bBroken;
+		[UsedImplicitly] private int partidEpicenter;
 		#endregion
 		#region Properties
 		/// <summary>

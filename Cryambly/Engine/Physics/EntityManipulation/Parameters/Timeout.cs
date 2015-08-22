@@ -5,8 +5,8 @@ using CryCil.Annotations;
 namespace CryCil.Engine.Physics
 {
 	/// <summary>
-	/// Encapsulates a set of parameters that allows to get and the time it takes for the physical entity
-	/// to go into sleep mode if it is not receiving any external impulses.
+	/// Encapsulates a set of parameters that allows to get and set the time it takes for the physical
+	/// entity to go into sleep mode if it is not receiving any external impulses.
 	/// </summary>
 	/// <remarks>
 	/// Never use objects of this type that were created using a default constructor (they are not

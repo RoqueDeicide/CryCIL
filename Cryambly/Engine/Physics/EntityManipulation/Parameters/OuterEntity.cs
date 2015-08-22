@@ -28,12 +28,9 @@ namespace CryCil.Engine.Physics
 		/// entity for this physical entity or to <see cref="PhysicalEntity.GetParameters"/> to query the
 		/// outer entity.
 		/// </summary>
-		[UsedImplicitly]
-		public PhysicsParameters Base;
-		[UsedImplicitly]
-		private PhysicalEntity outerEntity;
-		[UsedImplicitly]
-		private PhysicalGeometry outerGeometry;
+		[UsedImplicitly] public PhysicsParameters Base;
+		[UsedImplicitly] private PhysicalEntity outerEntity;
+		[UsedImplicitly] private PhysicalGeometry outerGeometry;
 		#endregion
 		#region Properties
 		/// <summary>

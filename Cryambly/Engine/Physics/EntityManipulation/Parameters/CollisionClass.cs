@@ -20,12 +20,9 @@ namespace CryCil.Engine.Physics
 		/// onto physical entity or to <see cref="PhysicalEntity.GetParameters"/> to get the currently
 		/// applied ones.
 		/// </summary>
-		[UsedImplicitly]
-		public PhysicsParameters Base;
-		[UsedImplicitly]
-		private CollisionClass or;
-		[UsedImplicitly]
-		private CollisionClass and;
+		[UsedImplicitly] public PhysicsParameters Base;
+		[UsedImplicitly] private CollisionClass or;
+		[UsedImplicitly] private CollisionClass and;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -49,8 +46,8 @@ namespace CryCil.Engine.Physics
 				or = new CollisionClass(),
 				and = new CollisionClass
 				{
-					Type = uint.MaxValue,
-					Ignore = uint.MaxValue
+					Type = (ColliderTypes)uint.MaxValue,
+					Ignore = (ColliderTypes)uint.MaxValue
 				}
 			};
 			return parameters;
@@ -68,7 +65,7 @@ namespace CryCil.Engine.Physics
 		/// collision class of the entity.
 		/// </param>
 		public static PhysicsParametersCollisionClass Create(CollisionClass flagsToSet,
-			CollisionClass flagsToRemove = new CollisionClass())
+															 CollisionClass flagsToRemove = new CollisionClass())
 		{
 			PhysicsParametersCollisionClass parameters = new PhysicsParametersCollisionClass
 			{
