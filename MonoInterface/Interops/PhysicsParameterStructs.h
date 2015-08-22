@@ -955,3 +955,95 @@ struct PhysicsParametersDynamics
 	void Dispose()
 	{}
 };
+
+struct PhysicsParametersParticle
+{
+	PhysicsParameters Base;
+	uint32 flags;
+	float mass;
+	float size;
+	float thickness;
+	Vec3 heading;
+	float velocity;
+	float kAirResistance;
+	float kWaterResistance;
+	float accThrust;
+	float accLift;
+	int surface_idx;
+	Ang3 wspin;
+	Vec3 gravity;
+	Vec3 waterGravity;
+	Vec3 normal;
+	Vec3 rollAxis;
+	Quat q0;
+	float minBounceVel;
+	float minVel;
+	IPhysicalEntity *pColliderToIgnore;
+	int iPierceability;
+	int collTypes;
+	int areaCheckPeriod;
+	int dontPlayHitEffect;
+
+	pe_params *ToParams() const
+	{
+		pe_params_particle *params = new pe_params_particle();
+
+		params->flags = this->flags;
+		params->mass = this->mass;
+		params->size = this->size;
+		params->thickness = this->thickness;
+		params->heading = this->heading;
+		params->velocity = this->velocity;
+		params->kAirResistance = this->kAirResistance;
+		params->kWaterResistance = this->kWaterResistance;
+		params->accThrust = this->accThrust;
+		params->accLift = this->accLift;
+		params->surface_idx = this->surface_idx;
+		params->wspin = Vec3(this->wspin);
+		params->gravity = this->gravity;
+		params->waterGravity = this->waterGravity;
+		params->normal = this->normal;
+		params->collTypes = this->collTypes;
+		params->rollAxis = this->rollAxis;
+		params->q0 = this->q0;
+		params->minBounceVel = this->minBounceVel;
+		params->minVel = this->minVel;
+		params->pColliderToIgnore = this->pColliderToIgnore;
+		params->iPierceability = this->iPierceability;
+		params->areaCheckPeriod = this->areaCheckPeriod;
+		params->dontPlayHitEffect = this->dontPlayHitEffect;
+
+		return params;
+	}
+	void FromParams(const pe_params *pars)
+	{
+		const pe_params_particle *params = static_cast<const pe_params_particle *>(pars);
+
+		this->flags = params->flags;
+		this->mass = params->mass;
+		this->size = params->size;
+		this->thickness = params->thickness;
+		this->heading = params->heading;
+		this->velocity = params->velocity;
+		this->kAirResistance = params->kAirResistance;
+		this->kWaterResistance = params->kWaterResistance;
+		this->accThrust = params->accThrust;
+		this->accLift = params->accLift;
+		this->surface_idx = params->surface_idx;
+		this->wspin = Ang3(params->wspin);
+		this->gravity = params->gravity;
+		this->waterGravity = params->waterGravity;
+		this->normal = params->normal;
+		this->collTypes = params->collTypes;
+		this->rollAxis = params->rollAxis;
+		this->q0 = params->q0;
+		this->minBounceVel = params->minBounceVel;
+		this->minVel = params->minVel;
+		this->pColliderToIgnore = params->pColliderToIgnore;
+		this->iPierceability = params->iPierceability;
+		this->areaCheckPeriod = params->areaCheckPeriod;
+		this->dontPlayHitEffect = params->dontPlayHitEffect;
+	}
+	void Dispose()
+	{}
+};
