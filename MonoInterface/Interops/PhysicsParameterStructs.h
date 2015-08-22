@@ -1047,3 +1047,194 @@ struct PhysicsParametersParticle
 	void Dispose()
 	{}
 };
+
+struct PhysicsParametersVehicle
+{
+	PhysicsParameters Base;
+	float axleFriction;
+	float enginePower;
+	float maxSteer;
+	float engineMaxRPM;
+	float brakeTorque;
+	int iIntegrationType;
+	float maxTimeStep;
+	float minEnergy;
+	float damping;
+	float minBrakingFriction;
+	float maxBrakingFriction;
+	float kStabilizer;
+	int nWheels;
+	float engineMinRPM;
+	float engineShiftUpRPM;
+	float engineShiftDownRPM;
+	float engineIdleRPM;
+	float engineStartRPM;
+	float clutchSpeed;
+	int nGears;
+	float* gearRatios;
+	int maxGear, minGear;
+	float slipThreshold;
+	float gearDirSwitchRPM;
+	float kDynFriction;
+	float steerTrackNeutralTurn;
+	float pullTilt;
+	float maxTilt;
+	int bKeepTractionWhenTilted;
+
+	pe_params *ToParams() const
+	{
+		pe_params_car *params = new pe_params_car();
+
+		params->axleFriction            = this->axleFriction;
+		params->enginePower             = this->enginePower;
+		params->maxSteer                = this->maxSteer;
+		params->engineMaxRPM            = this->engineMaxRPM;
+		params->brakeTorque             = this->brakeTorque;
+		params->iIntegrationType        = this->iIntegrationType;
+		params->maxTimeStep             = this->maxTimeStep;
+		params->minEnergy               = this->minEnergy;
+		params->damping                 = this->damping;
+		params->minBrakingFriction      = this->minBrakingFriction;
+		params->maxBrakingFriction      = this->maxBrakingFriction;
+		params->kStabilizer             = this->kStabilizer;
+		params->nWheels                 = this->nWheels;
+		params->engineMinRPM            = this->engineMinRPM;
+		params->engineShiftUpRPM        = this->engineShiftUpRPM;
+		params->engineShiftDownRPM      = this->engineShiftDownRPM;
+		params->engineIdleRPM           = this->engineIdleRPM;
+		params->engineStartRPM          = this->engineStartRPM;
+		params->clutchSpeed             = this->clutchSpeed;
+		params->nGears                  = this->nGears;
+		params->gearRatios              = this->gearRatios;
+		params->maxGear                 = this->maxGear;
+		params->minGear                 = this->minGear;
+		params->slipThreshold           = this->slipThreshold;
+		params->gearDirSwitchRPM        = this->gearDirSwitchRPM;
+		params->kDynFriction            = this->kDynFriction;
+		params->steerTrackNeutralTurn   = this->steerTrackNeutralTurn;
+		params->pullTilt                = this->pullTilt;
+		params->maxTilt                 = this->maxTilt;
+		params->bKeepTractionWhenTilted = this->bKeepTractionWhenTilted;
+
+		return params;
+	}
+	void FromParams(const pe_params *pars)
+	{
+		const pe_params_car *params = static_cast<const pe_params_car *>(pars);
+
+		this->axleFriction            = params->axleFriction;
+		this->enginePower             = params->enginePower;
+		this->maxSteer                = params->maxSteer;
+		this->engineMaxRPM            = params->engineMaxRPM;
+		this->brakeTorque             = params->brakeTorque;
+		this->iIntegrationType        = params->iIntegrationType;
+		this->maxTimeStep             = params->maxTimeStep;
+		this->minEnergy               = params->minEnergy;
+		this->damping                 = params->damping;
+		this->minBrakingFriction      = params->minBrakingFriction;
+		this->maxBrakingFriction      = params->maxBrakingFriction;
+		this->kStabilizer             = params->kStabilizer;
+		this->nWheels                 = params->nWheels;
+		this->engineMinRPM            = params->engineMinRPM;
+		this->engineShiftUpRPM        = params->engineShiftUpRPM;
+		this->engineShiftDownRPM      = params->engineShiftDownRPM;
+		this->engineIdleRPM           = params->engineIdleRPM;
+		this->engineStartRPM          = params->engineStartRPM;
+		this->clutchSpeed             = params->clutchSpeed;
+		this->nGears                  = params->nGears;
+		this->gearRatios              = params->gearRatios;
+		this->maxGear                 = params->maxGear;
+		this->minGear                 = params->minGear;
+		this->slipThreshold           = params->slipThreshold;
+		this->gearDirSwitchRPM        = params->gearDirSwitchRPM;
+		this->kDynFriction            = params->kDynFriction;
+		this->steerTrackNeutralTurn   = params->steerTrackNeutralTurn;
+		this->pullTilt                = params->pullTilt;
+		this->maxTilt                 = params->maxTilt;
+		this->bKeepTractionWhenTilted = params->bKeepTractionWhenTilted;
+	}
+	void Dispose()
+	{
+		if (this->nGears > 0 && this->gearRatios != nullptr && !is_unused(this->gearRatios))
+		{
+			free(this->gearRatios);
+			this->gearRatios = nullptr;
+			this->nGears = 0;
+		}
+	}
+};
+
+struct PhysicsParametersWheel
+{
+	PhysicsParameters Base;
+	int iWheel;
+	int bDriving;
+	int iAxle;
+	int bCanBrake;
+	int bBlocked;
+	int bCanSteer;
+	float suspLenMax;
+	float suspLenInitial;
+	float minFriction;
+	float maxFriction;
+	int surface_idx;
+	int bRayCast;
+	float kStiffness;
+	float kStiffnessWeight;
+	float kDamping;
+	float kLatFriction;
+	float Tscale;
+	float w;
+
+	pe_params *ToParams() const
+	{
+		pe_params_wheel *params = new pe_params_wheel();
+
+		params->iWheel           = this->iWheel;
+		params->bDriving         = this->bDriving;
+		params->iAxle            = this->iAxle;
+		params->bCanBrake        = this->bCanBrake;
+		params->bBlocked         = this->bBlocked;
+		params->bCanSteer        = this->bCanSteer;
+		params->suspLenMax       = this->suspLenMax;
+		params->suspLenInitial   = this->suspLenInitial;
+		params->minFriction      = this->minFriction;
+		params->maxFriction      = this->maxFriction;
+		params->surface_idx      = this->surface_idx;
+		params->bRayCast         = this->bRayCast;
+		params->kStiffness       = this->kStiffness;
+		params->kStiffnessWeight = this->kStiffnessWeight;
+		params->kDamping         = this->kDamping;
+		params->kLatFriction     = this->kLatFriction;
+		params->Tscale           = this->Tscale;
+		params->w                = this->w;
+
+		return params;
+	}
+	void FromParams(const pe_params *pars)
+	{
+		const pe_params_wheel *params = static_cast<const pe_params_wheel *>(pars);
+
+		this->iWheel           = params->iWheel;
+		this->bDriving         = params->bDriving;
+		this->iAxle            = params->iAxle;
+		this->bCanBrake        = params->bCanBrake;
+		this->bBlocked         = params->bBlocked;
+		this->bCanSteer        = params->bCanSteer;
+		this->suspLenMax       = params->suspLenMax;
+		this->suspLenInitial   = params->suspLenInitial;
+		this->minFriction      = params->minFriction;
+		this->maxFriction      = params->maxFriction;
+		this->surface_idx      = params->surface_idx;
+		this->bRayCast         = params->bRayCast;
+		this->kStiffness       = params->kStiffness;
+		this->kStiffnessWeight = params->kStiffnessWeight;
+		this->kDamping         = params->kDamping;
+		this->kLatFriction     = params->kLatFriction;
+		this->Tscale           = params->Tscale;
+		this->w                = params->w;
+	}
+	void Dispose()
+	{
+	}
+};

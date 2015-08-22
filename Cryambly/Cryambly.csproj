@@ -104,6 +104,8 @@
     <Compile Include="Engine\Physics\EntityManipulation\Parameters\Living\Dimensions.cs" />
     <Compile Include="Engine\Physics\EntityManipulation\Parameters\Living\Dynamics.cs" />
     <Compile Include="Engine\Physics\EntityManipulation\Parameters\Particles\Particle.cs" />
+    <Compile Include="Engine\Physics\EntityManipulation\Parameters\Vehicles\Vehicle.cs" />
+    <Compile Include="Engine\Physics\EntityManipulation\Parameters\Vehicles\Wheel.cs" />
     <Compile Include="Engine\Physics\EntityManipulation\PhysicsGeometryFlags.cs" />
     <Compile Include="Engine\Physics\EntityManipulation\GeometryParameters\Vehicle.cs" />
     <Compile Include="Engine\Physics\EntityManipulation\JointFlags.cs" />
