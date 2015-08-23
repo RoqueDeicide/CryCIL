@@ -99,12 +99,12 @@ namespace CryCil.Engine.Physics
 		/// <remarks>This flag is specific to <see cref="PhysicalEntityType.Rope"/>.</remarks>
 		RopeIgnoreAttachments = 0x4,
 		/// <summary>
-		/// When set, specifies that this physical entity targets a vertex in the first attached entity/
+		/// When set, specifies that this physical entity targets a vertex in the first attached entity.
 		/// </summary>
 		/// <remarks>This flag is specific to <see cref="PhysicalEntityType.Rope"/>.</remarks>
 		RopeTargetVertexRelative0 = 0x08,
 		/// <summary>
-		/// When set, specifies that this physical entity targets a vertex in the second attached entity/
+		/// When set, specifies that this physical entity targets a vertex in the second attached entity.
 		/// </summary>
 		/// <remarks>This flag is specific to <see cref="PhysicalEntityType.Rope"/>.</remarks>
 		RopeTargetVertexRelative1 = 0x10,

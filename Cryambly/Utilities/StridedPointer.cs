@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using CryCil.Engine.Physics;
 
 namespace CryCil.Utilities
 {
@@ -10,8 +11,15 @@ namespace CryCil.Utilities
 	public unsafe struct StridedPointer
 	{
 		#region Fields
-		private readonly void* data;
+		private void* data;
 		private readonly int stride;
+		/// <summary>
+		/// Represents a strided pointer that should be ignored by the physics system.
+		/// </summary>
+		public static readonly StridedPointer Unused = new StridedPointer
+		{
+			data = UnusedValue.Pointer.ToPointer()
+		};
 		#endregion
 		#region Properties
 		/// <summary>
