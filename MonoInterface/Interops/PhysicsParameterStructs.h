@@ -1238,3 +1238,149 @@ struct PhysicsParametersWheel
 	{
 	}
 };
+
+struct PhysicsParametersRope
+{
+	PhysicsParameters Base;
+	float length;
+	float mass;
+	float collDist;
+	int surface_idx;
+	float friction;
+	float frictionPull;
+	float stiffness;
+	float stiffnessAnim;
+	float stiffnessDecayAnim;
+	float dampingAnim;
+	int bTargetPoseActive;
+	Vec3 wind;
+	float windVariance;
+	float airResistance;
+	float waterResistance;
+	float density;
+	float jointLimit;
+	float jointLimitDecay;
+	float sensorRadius;
+	float maxForce;
+	float penaltyScale;
+	float attachmentZone;
+	float minSegLen;
+	float unprojLimit;
+	float noCollDist;
+	int maxIters;
+	int nSegments;
+	int flagsCollider;
+	int collTypes;
+	int nMaxSubVtx;
+	Vec3 collisionBBox0;
+	Vec3 collisionBBox1;
+	Vec3 hingeAxis;
+	strided_pointer<Vec3> pPoints;
+	strided_pointer<Vec3> pVelocities;
+	IPhysicalEntity *pEntTiedTo0;
+	IPhysicalEntity *pEntTiedTo1;
+	int bLocalPtTied;
+	Vec3 ptTiedTo0;
+	Vec3 ptTiedTo1;
+	int idPartTiedTo0;
+	int idPartTiedTo1;
+
+	pe_params *ToParams() const
+	{
+		pe_params_rope *params = new pe_params_rope();
+
+		params->length             = this->length;
+		params->mass               = this->mass;
+		params->collDist           = this->collDist;
+		params->surface_idx        = this->surface_idx;
+		params->friction           = this->friction;
+		params->frictionPull       = this->frictionPull;
+		params->stiffness          = this->stiffness;
+		params->stiffnessAnim      = this->stiffnessAnim;
+		params->stiffnessDecayAnim = this->stiffnessDecayAnim;
+		params->dampingAnim        = this->dampingAnim;
+		params->bTargetPoseActive  = this->bTargetPoseActive;
+		params->wind               = this->wind;
+		params->windVariance       = this->windVariance;
+		params->airResistance      = this->airResistance;
+		params->waterResistance    = this->waterResistance;
+		params->density            = this->density;
+		params->jointLimit         = this->jointLimit;
+		params->jointLimitDecay    = this->jointLimitDecay;
+		params->sensorRadius       = this->sensorRadius;
+		params->maxForce           = this->maxForce;
+		params->penaltyScale       = this->penaltyScale;
+		params->attachmentZone     = this->attachmentZone;
+		params->minSegLen          = this->minSegLen;
+		params->unprojLimit        = this->unprojLimit;
+		params->noCollDist         = this->noCollDist;
+		params->maxIters           = this->maxIters;
+		params->nSegments          = this->nSegments;
+		params->flagsCollider      = this->flagsCollider;
+		params->collTypes          = this->collTypes;
+		params->nMaxSubVtx         = this->nMaxSubVtx;
+		params->collisionBBox[0]   = this->collisionBBox0;
+		params->collisionBBox[1]   = this->collisionBBox1;
+		params->hingeAxis          = this->hingeAxis;
+		params->pPoints            = this->pPoints;
+		params->pVelocities        = this->pVelocities;
+		params->pEntTiedTo[0]      = this->pEntTiedTo0;
+		params->pEntTiedTo[1]      = this->pEntTiedTo1;
+		params->bLocalPtTied       = this->bLocalPtTied;
+		params->ptTiedTo[0]        = this->ptTiedTo0;
+		params->ptTiedTo[1]        = this->ptTiedTo1;
+		params->idPartTiedTo[0]    = this->idPartTiedTo0;
+		params->idPartTiedTo[1]    = this->idPartTiedTo1;
+
+		return params;
+	}
+	void FromParams(const pe_params *pars)
+	{
+		const pe_params_rope *params = static_cast<const pe_params_rope *>(pars);
+
+		this->length             = params->length;
+		this->mass               = params->mass;
+		this->collDist           = params->collDist;
+		this->surface_idx        = params->surface_idx;
+		this->friction           = params->friction;
+		this->frictionPull       = params->frictionPull;
+		this->stiffness          = params->stiffness;
+		this->stiffnessAnim      = params->stiffnessAnim;
+		this->stiffnessDecayAnim = params->stiffnessDecayAnim;
+		this->dampingAnim        = params->dampingAnim;
+		this->bTargetPoseActive  = params->bTargetPoseActive;
+		this->wind               = params->wind;
+		this->windVariance       = params->windVariance;
+		this->airResistance      = params->airResistance;
+		this->waterResistance    = params->waterResistance;
+		this->density            = params->density;
+		this->jointLimit         = params->jointLimit;
+		this->jointLimitDecay    = params->jointLimitDecay;
+		this->sensorRadius       = params->sensorRadius;
+		this->maxForce           = params->maxForce;
+		this->penaltyScale       = params->penaltyScale;
+		this->attachmentZone     = params->attachmentZone;
+		this->minSegLen          = params->minSegLen;
+		this->unprojLimit        = params->unprojLimit;
+		this->noCollDist         = params->noCollDist;
+		this->maxIters           = params->maxIters;
+		this->nSegments          = params->nSegments;
+		this->flagsCollider      = params->flagsCollider;
+		this->collTypes          = params->collTypes;
+		this->nMaxSubVtx         = params->nMaxSubVtx;
+		this->collisionBBox0     = params->collisionBBox[0];
+		this->collisionBBox1     = params->collisionBBox[1];
+		this->hingeAxis          = params->hingeAxis;
+		this->pPoints            = params->pPoints;
+		this->pVelocities        = params->pVelocities;
+		this->pEntTiedTo0        = params->pEntTiedTo[0];
+		this->pEntTiedTo1        = params->pEntTiedTo[1];
+		this->bLocalPtTied       = params->bLocalPtTied;
+		this->ptTiedTo0          = params->ptTiedTo[0];
+		this->ptTiedTo1          = params->ptTiedTo[1];
+		this->idPartTiedTo0      = params->idPartTiedTo[0];
+		this->idPartTiedTo1      = params->idPartTiedTo[1];
+	}
+	void Dispose()
+	{}
+};
