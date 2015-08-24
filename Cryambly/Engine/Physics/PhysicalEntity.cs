@@ -11,6 +11,11 @@ namespace CryCil.Engine.Physics
 	{
 		#region Fields
 		private readonly IntPtr handle;
+		/// <summary>
+		/// An object that represents the world physical entity. Cannot be manipulated directly, but can be
+		/// passed to certain objects.
+		/// </summary>
+		public static readonly PhysicalEntity World = new PhysicalEntity(new IntPtr(-10));
 		#endregion
 		#region Properties
 		/// <summary>
@@ -18,7 +23,7 @@ namespace CryCil.Engine.Physics
 		/// </summary>
 		public bool IsValid
 		{
-			get { return this.handle != IntPtr.Zero; }
+			get { return this.handle != IntPtr.Zero && this.handle != new IntPtr(-10); }
 		}
 		#endregion
 		#region Construction
