@@ -193,7 +193,7 @@
     <Compile Include="Engine\Logic\FlowGraph\OutputPort.cs" />
     <Compile Include="Engine\Network\ChannelId.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Actions\PhysicsAction.cs" />
-    <Compile Include="Engine\Physics\EntityAPIDetails\Actions\PhysicsActionImpulse.cs" />
+    <Compile Include="Engine\Physics\EntityAPIDetails\Actions\Impulse.cs" />
     <Compile Include="Engine\Physics\CollisionEventInfo.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\EntityPartSpec.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\ImpulseSpec.cs" />
