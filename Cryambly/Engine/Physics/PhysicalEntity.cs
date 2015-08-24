@@ -43,14 +43,6 @@ namespace CryCil.Engine.Physics
 		/// An object that represents a set of parameters to set was created via default constructor which
 		/// is not allowed.
 		/// </exception>
-		/// <exception cref="ArgumentException">
-		/// Don't use <see cref="PhysicsParametersTetraLattice"/> with
-		/// <see cref="PhysicalEntity.SetParameters"/>.
-		/// </exception>
-		/// <exception cref="ArgumentException">
-		/// Don't use <see cref="PhysicsParametersWaterManager"/> with
-		/// <see cref="PhysicalEntity.SetParameters"/>.
-		/// </exception>
 		public bool SetParameters(ref PhysicsParameters parameters, bool threadSafe = false)
 		{
 			this.AssertInstance();
@@ -58,18 +50,6 @@ namespace CryCil.Engine.Physics
 			{
 				throw new ArgumentNullException("parameters",
 												"An object that represents a set of parameters to set was created via default constructor which is not allowed.");
-			}
-			string message;
-			switch (parameters.Type)
-			{
-				case PhysicsParametersTypes.TetraLattice:
-					message = string.Format("Don't use {0} with {1}.{2}.", typeof(PhysicsParametersTetraLattice).Name,
-											typeof(PhysicalEntity).Name, "SetParameters");
-					throw new ArgumentException(message);
-				case PhysicsParametersTypes.WaterMananger:
-					message = string.Format("Don't use {0} with {1}.{2}.", typeof(PhysicsParametersWaterManager).Name,
-											typeof(PhysicalEntity).Name, "SetParameters");
-					throw new ArgumentException(message);
 			}
 			Contract.EndContractBlock();
 
@@ -93,14 +73,6 @@ namespace CryCil.Engine.Physics
 		/// <exception cref="ArgumentOutOfRangeException">
 		/// Unknown type of physics parameters was used.
 		/// </exception>
-		/// <exception cref="ArgumentException">
-		/// Don't use <see cref="PhysicsParametersTetraLattice"/> with
-		/// <see cref="PhysicalEntity.GetParameters"/>.
-		/// </exception>
-		/// <exception cref="ArgumentException">
-		/// Don't use <see cref="PhysicsParametersWaterManager"/> with
-		/// <see cref="PhysicalEntity.GetParameters"/>.
-		/// </exception>
 		public bool GetParameters(ref PhysicsParameters parameters)
 		{
 			this.AssertInstance();
@@ -109,7 +81,6 @@ namespace CryCil.Engine.Physics
 				throw new ArgumentNullException("parameters",
 												"An object that represents a set of parameters to get was created via default constructor which is not allowed.");
 			}
-			string message;
 			switch (parameters.Type)
 			{
 				case PhysicsParametersTypes.Position:
@@ -152,17 +123,13 @@ namespace CryCil.Engine.Physics
 				case PhysicsParametersTypes.Area:
 					break;
 				case PhysicsParametersTypes.TetraLattice:
-					message = string.Format("Don't use {0} with {1}.{2}.", typeof(PhysicsParametersTetraLattice).Name,
-											typeof(PhysicalEntity).Name, "GetParameters");
-					throw new ArgumentException(message);
+					break;
 				case PhysicsParametersTypes.GroundPlane:
 					break;
 				case PhysicsParametersTypes.StructuralJoint:
 					break;
 				case PhysicsParametersTypes.WaterMananger:
-					message = string.Format("Don't use {0} with {1}.{2}.", typeof(PhysicsParametersWaterManager).Name,
-											typeof(PhysicalEntity).Name, "GetParameters");
-					throw new ArgumentException(message);
+					break;
 				case PhysicsParametersTypes.Timeout:
 					break;
 				case PhysicsParametersTypes.Skeleton:
