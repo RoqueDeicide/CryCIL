@@ -105,6 +105,7 @@
     <Compile Include="Engine\Physics\EntityAPIDetails\Parameters\Living\Dynamics.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Parameters\Particles\Particle.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Parameters\Ropes\Rope.cs" />
+    <Compile Include="Engine\Physics\EntityAPIDetails\Parameters\SoftBodies\SoftBody.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Parameters\Vehicles\Vehicle.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Parameters\Vehicles\Wheel.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\PhysicsGeometryFlags.cs" />

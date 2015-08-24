@@ -1384,3 +1384,95 @@ struct PhysicsParametersRope
 	void Dispose()
 	{}
 };
+
+struct PhysicsParametersSoftBody
+{
+	PhysicsParameters Base;
+	float thickness;
+	float maxSafeStep;
+	float ks;
+	float kdRatio;
+	float friction;
+	float waterResistance;
+	float airResistance;
+	Vec3 wind;
+	float windVariance;
+	int nMaxIters;
+	float accuracy;
+	float impulseScale;
+	float explosionScale;
+	float collisionImpulseScale;
+	float maxCollisionImpulse;
+	int collTypes;
+	float massDecay;
+	float shapeStiffnessNorm;
+	float shapeStiffnessTang;
+	float stiffnessAnim;
+	float stiffnessDecayAnim;
+	float dampingAnim;
+	float maxDistAnim;
+	float hostSpaceSim;
+
+	pe_params *ToParams() const
+	{
+		pe_params_softbody *params = new pe_params_softbody();
+
+		params->thickness             = this->thickness;
+		params->maxSafeStep           = this->maxSafeStep;
+		params->ks                    = this->ks;
+		params->kdRatio               = this->kdRatio;
+		params->friction              = this->friction;
+		params->waterResistance       = this->waterResistance;
+		params->airResistance         = this->airResistance;
+		params->wind                  = this->wind;
+		params->windVariance          = this->windVariance;
+		params->nMaxIters             = this->nMaxIters;
+		params->accuracy              = this->accuracy;
+		params->impulseScale          = this->impulseScale;
+		params->explosionScale        = this->explosionScale;
+		params->collisionImpulseScale = this->collisionImpulseScale;
+		params->maxCollisionImpulse   = this->maxCollisionImpulse;
+		params->collTypes             = this->collTypes;
+		params->massDecay             = this->massDecay;
+		params->shapeStiffnessNorm    = this->shapeStiffnessNorm;
+		params->shapeStiffnessTang    = this->shapeStiffnessTang;
+		params->stiffnessAnim         = this->stiffnessAnim;
+		params->stiffnessDecayAnim    = this->stiffnessDecayAnim;
+		params->dampingAnim           = this->dampingAnim;
+		params->maxDistAnim           = this->maxDistAnim;
+		params->hostSpaceSim          = this->hostSpaceSim;
+
+		return params;
+	}
+	void FromParams(const pe_params *pars)
+	{
+		const pe_params_softbody *params = static_cast<const pe_params_softbody *>(pars);
+
+		this->thickness             = params->thickness;
+		this->maxSafeStep           = params->maxSafeStep;
+		this->ks                    = params->ks;
+		this->kdRatio               = params->kdRatio;
+		this->friction              = params->friction;
+		this->waterResistance       = params->waterResistance;
+		this->airResistance         = params->airResistance;
+		this->wind                  = params->wind;
+		this->windVariance          = params->windVariance;
+		this->nMaxIters             = params->nMaxIters;
+		this->accuracy              = params->accuracy;
+		this->impulseScale          = params->impulseScale;
+		this->explosionScale        = params->explosionScale;
+		this->collisionImpulseScale = params->collisionImpulseScale;
+		this->maxCollisionImpulse   = params->maxCollisionImpulse;
+		this->collTypes             = params->collTypes;
+		this->massDecay             = params->massDecay;
+		this->shapeStiffnessNorm    = params->shapeStiffnessNorm;
+		this->shapeStiffnessTang    = params->shapeStiffnessTang;
+		this->stiffnessAnim         = params->stiffnessAnim;
+		this->stiffnessDecayAnim    = params->stiffnessDecayAnim;
+		this->dampingAnim           = params->dampingAnim;
+		this->maxDistAnim           = params->maxDistAnim;
+		this->hostSpaceSim          = params->hostSpaceSim;
+	}
+	void Dispose()
+	{}
+};
