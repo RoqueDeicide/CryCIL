@@ -103,6 +103,7 @@ END_PROCESSING_FUNC_DECLARATION(typeCount)
 #define DECLARE_ACTION_PROCESSING_FUNC(name, functionPtrType, functionPtr, typeCount) \
 START_PROCESSING_FUNC_DECLARATION(name, functionPtrType, functionPtr, typeCount) \
 		funcs[ePE_action_impulse]      = functionPtr<PhysicsActionImpulse>;\
+		funcs[ePE_action_reset]        = functionPtr<PhysicsActionReset>;\
 END_PROCESSING_FUNC_DECLARATION(typeCount)
 
 #define DECLARE_STATUS_PROCESSING_FUNC(name, functionPtrType, functionPtr, typeCount) \

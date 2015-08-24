@@ -34,3 +34,20 @@ struct PhysicsActionImpulse
 	{
 	}
 };
+
+struct PhysicsActionReset
+{
+	PhysicsAction Base;
+	bool clearContacts;
+
+	pe_action *ToAction() const
+	{
+		pe_action_reset *act = new pe_action_reset();
+
+		act->bClearContacts = this->clearContacts ? 1 : 0;
+
+		return act;
+	}
+	void Dispose()
+	{}
+};
