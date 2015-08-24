@@ -96,6 +96,7 @@ START_PROCESSING_FUNC_DECLARATION(name, functionPtrType, functionPtr, typeCount)
 		funcs[ePE_params_car]                         = functionPtr<PhysicsParametersVehicle>;\
 		funcs[ePE_params_wheel]                       = functionPtr<PhysicsParametersWheel>;\
 		funcs[ePE_params_rope]                        = functionPtr<PhysicsParametersRope>;\
+		funcs[ePE_params_softbody]                    = functionPtr<PhysicsParametersSoftBody>;\
 END_PROCESSING_FUNC_DECLARATION(typeCount)
 
 #define DECLARE_ACTION_PROCESSING_FUNC(name, functionPtrType, functionPtr, typeCount) \
