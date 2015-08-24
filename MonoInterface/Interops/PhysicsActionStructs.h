@@ -51,3 +51,89 @@ struct PhysicsActionReset
 	void Dispose()
 	{}
 };
+
+struct PhysicsActionAddConstraint
+{
+	PhysicsAction Base;
+	int id;
+	IPhysicalEntity *pBuddy;
+	Vec3 pt0;
+	Vec3 pt1;
+	int partid0;
+	int partid1;
+	Quat qframe0;
+	Quat qframe1;
+	float xlimits0;
+	float xlimits1;
+	float yzlimits0;
+	float yzlimits1;
+	uint32 flags;
+	float damping;
+	float sensorRadius;
+	float maxPullForce, maxBendTorque;
+
+	pe_action *ToAction() const
+	{
+		pe_action_add_constraint *act = new pe_action_add_constraint();
+
+		act->id            = this->id;
+		act->pBuddy        = this->pBuddy;
+		act->pt[0]         = this->pt0;
+		act->pt[1]         = this->pt1;
+		act->partid[0]     = this->partid0;
+		act->partid[1]     = this->partid1;
+		act->qframe[0]     = this->qframe0;
+		act->qframe[1]     = this->qframe1;
+		act->xlimits[0]    = this->xlimits0;
+		act->xlimits[1]    = this->xlimits1;
+		act->yzlimits[0]   = this->yzlimits0;
+		act->yzlimits[1]   = this->yzlimits1;
+		act->flags         = this->flags;
+		act->damping       = this->damping;
+		act->sensorRadius  = this->sensorRadius;
+		act->maxPullForce  = this->maxPullForce;
+		act->maxBendTorque = this->maxBendTorque;
+
+		return act;
+	}
+	void Dispose()
+	{}
+};
+
+struct PhysicsActionUpdateConstraint
+{
+	PhysicsAction Base;
+	int idConstraint;
+	uint32 flagsOR;
+	uint32 flagsAND;
+	int bRemove;
+	Vec3 pt0;
+	Vec3 pt1;
+	Quat qframe0;
+	Quat qframe1;
+	float maxPullForce, maxBendTorque;
+	float damping;
+	int flags;
+
+	pe_action *ToAction() const
+	{
+		pe_action_update_constraint *act = new pe_action_update_constraint();
+
+		act->idConstraint = this->idConstraint;
+		act->flagsOR = this->flagsOR;
+		act->flagsAND = this->flagsAND;
+		act->flags = this->flags;
+		act->pt[0] = this->pt0;
+		act->pt[1] = this->pt1;
+		act->qframe[0] = this->qframe0;
+		act->qframe[1] = this->qframe1;
+		act->damping = this->damping;
+		act->bRemove = this->bRemove;
+		act->maxPullForce = this->maxPullForce;
+		act->maxBendTorque = this->maxBendTorque;
+
+		return act;
+	}
+	void Dispose()
+	{}
+};

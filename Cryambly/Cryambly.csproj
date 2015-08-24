@@ -95,9 +95,12 @@
     <Compile Include="Engine\Environment\TimeOfDay.cs" />
     <Compile Include="Engine\Environment\TimeOfDayParameterId.cs" />
     <Compile Include="Engine\Environment\TimeOfDaySync.cs" />
+    <Compile Include="Engine\Physics\EntityAPIDetails\Actions\AddConstraint.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Actions\Reset.cs" />
+    <Compile Include="Engine\Physics\EntityAPIDetails\Actions\UpdateConstraint.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\CollisionClass.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\ColliderTypes.cs" />
+    <Compile Include="Engine\Physics\EntityAPIDetails\ConstraintFlags.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\GeometryCollisionTypeCodes.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\GeometryParameters\ArticulatedBody.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\GeometryParameters\GeometryParameters.cs" />
