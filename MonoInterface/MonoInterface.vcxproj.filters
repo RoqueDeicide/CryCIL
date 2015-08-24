@@ -758,6 +758,12 @@
     <ClCompile Include="TypeMapChecks\StridedPointer.cpp">
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
+    <ClCompile Include="TypeMapChecks\WaveSimParams.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\WaterManagerStructs.h">
+      <Filter>Interops\Engine\Physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">

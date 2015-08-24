@@ -34,5 +34,17 @@ namespace CryCil.Engine.Physics
 		internal static extern void RemoveExplosionShape(int index);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		internal static extern void RemoveAllExplosionShapes();
+		/// <summary>
+		/// Fills given object with parameters to that specify global water simulation.
+		/// </summary>
+		/// <param name="parameters">A reference to the object to fill with parameters.</param>
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		public static extern void GetWaterManagerParameters(ref WaterManagerParameters parameters);
+		/// <summary>
+		/// Updates parameters for the water simulation.
+		/// </summary>
+		/// <param name="parameters">A reference to the object that provides parameters to change.</param>
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		public static extern void SetWaterManagerParameters(ref WaterManagerParameters parameters);
 	}
 }

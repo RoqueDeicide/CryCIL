@@ -454,6 +454,7 @@
     <ClCompile Include="Interops\Texture.cpp" />
     <ClCompile Include="Interops\TimeOfDay.cpp" />
     <ClCompile Include="Interops\Timing.cpp" />
+    <ClCompile Include="Interops\WaterManagerStructs.h" />
     <ClCompile Include="RunTime\DebugEventReporter.cpp" />
     <ClCompile Include="RunTime\EventBroadcaster.cpp" />
     <ClCompile Include="RunTime\MonoInterface.cpp" />
@@ -493,6 +494,7 @@
     <ClCompile Include="TypeMapChecks\SmallEntityStructs.cpp" />
     <ClCompile Include="TypeMapChecks\SpawnParams.cpp" />
     <ClCompile Include="TypeMapChecks\StridedPointer.cpp" />
+    <ClCompile Include="TypeMapChecks\WaveSimParams.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

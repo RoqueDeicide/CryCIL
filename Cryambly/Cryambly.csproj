@@ -100,6 +100,7 @@
     <Compile Include="Engine\Physics\EntityAPIDetails\GeometryCollisionTypeCodes.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\GeometryParameters\ArticulatedBody.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\GeometryParameters\GeometryParameters.cs" />
+    <Compile Include="Engine\Physics\EntityAPIDetails\Parameters\Areas\Area.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Parameters\ArticulatedBody\ArticulatedBody.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Parameters\Living\Dimensions.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Parameters\Living\Dynamics.cs" />

@@ -1476,3 +1476,65 @@ struct PhysicsParametersSoftBody
 	void Dispose()
 	{}
 };
+
+struct PhysicsParametersArea
+{
+	PhysicsParameters Base;
+	Vec3 gravity;
+	float falloff0;
+	int bUniform;
+	int bUseCallback;
+	float damping;
+	IGeometry *pGeom;
+	float volume;
+	float volumeAccuracy;
+	float borderPad;
+	int bConvexBorder;
+	float objectVolumeThreshold;
+	float cellSize;
+	params_wavesim waveSim;
+	float growthReserve;
+
+	pe_params *ToParams() const
+	{
+		pe_params_area *params = new pe_params_area();
+
+		params->gravity               = this->gravity;
+		params->falloff0              = this->falloff0;
+		params->bUniform              = this->bUniform;
+		params->bUseCallback          = this->bUseCallback;
+		params->damping               = this->damping;
+		params->pGeom                 = this->pGeom;
+		params->volume                = this->volume;
+		params->volumeAccuracy        = this->volumeAccuracy;
+		params->borderPad             = this->borderPad;
+		params->bConvexBorder         = this->bConvexBorder;
+		params->objectVolumeThreshold = this->objectVolumeThreshold;
+		params->cellSize              = this->cellSize;
+		params->waveSim               = this->waveSim;
+		params->growthReserve         = this->growthReserve;
+
+		return params;
+	}
+	void FromParams(const pe_params *pars)
+	{
+		const pe_params_area *params = static_cast<const pe_params_area *>(pars);
+
+		this->gravity               = params->gravity;
+		this->falloff0              = params->falloff0;
+		this->bUniform              = params->bUniform;
+		this->bUseCallback          = params->bUseCallback;
+		this->damping               = params->damping;
+		this->pGeom                 = params->pGeom;
+		this->volume                = params->volume;
+		this->volumeAccuracy        = params->volumeAccuracy;
+		this->borderPad             = params->borderPad;
+		this->bConvexBorder         = params->bConvexBorder;
+		this->objectVolumeThreshold = params->objectVolumeThreshold;
+		this->cellSize              = params->cellSize;
+		this->waveSim               = params->waveSim;
+		this->growthReserve         = params->growthReserve;
+	}
+	void Dispose()
+	{}
+};

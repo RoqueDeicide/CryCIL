@@ -2,6 +2,7 @@
 
 #include "PhysicalWorld.h"
 #include "ExplosionStructs.h"
+#include "WaterManagerStructs.h"
 
 void PhysicalWorldInterop::OnRunTimeInitialized()
 {
@@ -9,6 +10,8 @@ void PhysicalWorldInterop::OnRunTimeInitialized()
 	REGISTER_METHOD(AddExplosionShape);
 	REGISTER_METHOD(RemoveExplosionShape);
 	REGISTER_METHOD(RemoveAllExplosionShapes);
+	REGISTER_METHOD(SetWaterManagerParameters);
+	REGISTER_METHOD(GetWaterManagerParameters);
 }
 
 ExplosionResult PhysicalWorldInterop::SimulateExplosion(const ExplosionParameters &parameters, mono::Array entitiesToSkip,
@@ -51,4 +54,22 @@ void PhysicalWorldInterop::RemoveExplosionShape(int index)
 void PhysicalWorldInterop::RemoveAllExplosionShapes()
 {
 	gEnv->pPhysicalWorld->RemoveAllExplosionShapes();
+}
+
+void PhysicalWorldInterop::GetWaterManagerParameters(WaterManagerParameters &parameters)
+{
+	pe_params_waterman pars;
+	parameters.ToParams(pars);
+
+	gEnv->pPhysicalWorld->GetWaterManagerParams(&pars);
+
+	parameters.FromParams(pars);
+}
+
+void PhysicalWorldInterop::SetWaterManagerParameters(const WaterManagerParameters &parameters)
+{
+	pe_params_waterman pars;
+	parameters.ToParams(pars);
+
+	gEnv->pPhysicalWorld->SetWaterManagerParams(&pars);
 }

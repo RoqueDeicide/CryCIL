@@ -2,6 +2,7 @@
 
 #include "IMonoInterface.h"
 
+struct WaterManagerParameters;
 struct ExplosionResult;
 struct ExplosionParameters;
 
@@ -16,4 +17,6 @@ struct PhysicalWorldInterop : public IMonoInterop<true, true>
 	static int             AddExplosionShape(IGeometry *shape, float size, int index, float probability = 1.0f);
 	static void            RemoveExplosionShape(int index);
 	static void            RemoveAllExplosionShapes();
+	static void            GetWaterManagerParameters(WaterManagerParameters &parameters);
+	static void            SetWaterManagerParameters(const WaterManagerParameters &parameters);
 };
