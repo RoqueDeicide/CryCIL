@@ -329,9 +329,9 @@ namespace CryCil.Engine.Physics.Ropes
 		/// <summary>
 		/// Gets or sets
 		/// </summary>
-		public PhysicalEntityType CollidesWith
+		public PhysicalEntityTypes CollidesWith
 		{
-			get { return (PhysicalEntityType)this.collTypes; }
+			get { return (PhysicalEntityTypes)this.collTypes; }
 			set { this.collTypes = (int)value; }
 		}
 		/// <summary>

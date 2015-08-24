@@ -210,6 +210,7 @@
     <Compile Include="Engine\Physics\PhysicalEntity.cs" />
     <Compile Include="Engine\Physics\PhysicalEntityFlags.cs" />
     <Compile Include="Engine\Physics\PhysicalEntityType.cs" />
+    <Compile Include="Engine\Physics\PhysicalEntityTypes.cs" />
     <Compile Include="Engine\Physics\PhysicalGeometry.cs" />
     <Compile Include="Engine\Physics\PhysicalWorld.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Actions\PhysicsActionTypes.cs" />
