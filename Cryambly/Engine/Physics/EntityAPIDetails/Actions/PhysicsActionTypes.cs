@@ -14,7 +14,7 @@
 		/// </summary>
 		Impulse = 2,
 		/// <summary>
-		/// Identifier of the action that drive the physical entity that is a vehicle.
+		/// Identifier of the action that drives the physical entity that is a vehicle.
 		/// </summary>
 		Drive = 3,
 		/// <summary>
