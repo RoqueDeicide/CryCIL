@@ -96,6 +96,7 @@
     <Compile Include="Engine\Environment\TimeOfDayParameterId.cs" />
     <Compile Include="Engine\Environment\TimeOfDaySync.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Actions\AddConstraint.cs" />
+    <Compile Include="Engine\Physics\EntityAPIDetails\Actions\AttachPoints.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Actions\AutoPartDetachment.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Actions\Awake.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Actions\BatchPartsUpdate.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="Engine\Physics\EntityAPIDetails\Actions\RemoveAllParts.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Actions\Reset.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Actions\ResetPartMatrix.cs" />
+    <Compile Include="Engine\Physics\EntityAPIDetails\Actions\SetRopePose.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Actions\SetVelocity.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Actions\Slice.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Actions\TransferParts.cs" />

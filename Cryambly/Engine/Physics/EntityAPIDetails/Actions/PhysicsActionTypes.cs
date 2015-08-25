@@ -50,10 +50,9 @@
 		/// </summary>
 		AttachPoints = 11,
 		/// <summary>
-		/// Identifier of the action that attaches the physical entity that is a rope to the vertex of
-		/// another entity.
+		/// Identifier of the action that sets the target pose for the physical entity that is a rope.
 		/// </summary>
-		TargetVertex = 12,
+		SetRopeTargetPose = 12,
 		/// <summary>
 		/// Identifier of the action that resets the transformation matrix of one of the parts of the
 		/// physical entity.

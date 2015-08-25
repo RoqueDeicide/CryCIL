@@ -117,6 +117,8 @@ START_PROCESSING_FUNC_DECLARATION(name, functionPtrType, functionPtr, typeCount)
 		funcs[ePE_action_slice]                = functionPtr<PhysicsActionSlice>;\
 		funcs[ePE_action_move]                 = functionPtr<PhysicsActionMove>;\
 		funcs[ePE_action_drive]                = functionPtr<PhysicsActionDrive>;\
+		funcs[ePE_action_target_vtx]           = functionPtr<PhysicsActionSetRopePose>;\
+		funcs[ePE_action_attach_points]        = functionPtr<PhysicsActionAttachPoints>;\
 END_PROCESSING_FUNC_DECLARATION(typeCount)
 
 #define DECLARE_STATUS_PROCESSING_FUNC(name, functionPtrType, functionPtr, typeCount) \

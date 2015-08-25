@@ -440,3 +440,100 @@ struct PhysicsActionDrive
 	void Dispose()
 	{}
 };
+
+struct PhysicsActionSetRopePose
+{
+	PhysicsAction Base;
+	mono::object points;
+	Vec3 posHost;
+	Quat qHost;
+	Vec3 *internal0;
+
+	pe_action *ToAction()
+	{
+		pe_action_target_vtx *act = new pe_action_target_vtx();
+
+		act->posHost = this->posHost;
+		act->qHost = this->qHost;
+
+		if (this->points)
+		{
+			MonoGCHandle handle = MonoEnv->GC->Pin(this->points);
+
+			IMonoArray<Vec3> vecs = this->points;
+
+			act->nPoints = vecs.Length;
+			this->internal0 = new Vec3[act->nPoints];
+			act->points = this->internal0;
+
+			for (int i = 0; i < act->nPoints; i++)
+			{
+				act->points[i] = vecs[i];
+			}
+		}
+
+		return act;
+	}
+	void Dispose()
+	{
+		SAFE_DELETE(this->internal0);
+	}
+};
+
+struct PhysicsActionAttachPoints
+{
+	PhysicsAction Base;
+	IPhysicalEntity *pEntity;
+	int partid;
+	mono::object piVtx;
+	mono::object points;
+	int bLocal;
+	int *internal0;
+	Vec3 *internal1;
+
+	pe_action *ToAction()
+	{
+		pe_action_attach_points *act = new pe_action_attach_points();
+
+		act->pEntity = this->pEntity;
+		act->partid  = this->partid;
+		act->bLocal  = this->bLocal;
+
+		if (this->piVtx || this->points)
+		{
+			MonoGCHandle handleIndexes = MonoEnv->GC->Pin(this->piVtx);
+			MonoGCHandle handlePoints  = MonoEnv->GC->Pin(this->points);
+
+			if (this->piVtx)
+			{
+				IMonoArray<int> indices = this->piVtx;
+				this->internal0 = new int[indices.Length];
+				act->nPoints = indices.Length;
+
+				for (int i = 0; i < act->nPoints; i++)
+				{
+					this->internal0[i] = indices[i];
+				}
+			}
+
+			if (this->points)
+			{
+				IMonoArray<Vec3> vecs = this->points;
+				this->internal1 = new Vec3[vecs.Length];
+				act->nPoints = vecs.Length;
+
+				for (int i = 0; i < act->nPoints; i++)
+				{
+					this->internal1[i] = vecs[i];
+				}
+			}
+		}
+
+		return act;
+	}
+	void Dispose()
+	{
+		SAFE_DELETE(this->piVtx);
+		SAFE_DELETE(this->points);
+	}
+};
