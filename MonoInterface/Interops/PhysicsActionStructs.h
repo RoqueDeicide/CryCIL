@@ -352,3 +352,39 @@ struct PhysicsActionBatchPartsUpdate
 		SAFE_DELETE(this->qs);
 	}
 };
+
+struct PhysicsActionSlice
+{
+	PhysicsAction Base;
+	Plane slicingPlane;
+	int ipart;
+	int partid;
+	Vec3 *internal0;
+
+	pe_action *ToAction()
+	{
+		pe_action_slice *act = new pe_action_slice();
+
+		act->ipart = this->ipart;
+		act->partid = this->partid;
+		
+		this->internal0 = new Vec3[3];
+		act->pt = this->internal0;
+
+		float distance = this->slicingPlane.DistFromPlane(Vec3(type_zero::ZERO));
+		Vec3 offset = this->slicingPlane.n * distance;
+		// Create extremely crude orthogonal basis.
+		Vec3 normalNormalized = this->slicingPlane.n.GetOrthogonal();
+		Vec3 secondNormalized = normalNormalized.Cross(this->slicingPlane.n);
+		// Translate the basis along the normal to the plane by the distance from the origin to the plane.
+		act->pt[0] = offset;
+		act->pt[1] = offset + normalNormalized;
+		act->pt[2] = offset + secondNormalized;
+
+		return act;
+	}
+	void Dispose()
+	{
+		SAFE_DELETE(this->internal0);
+	}
+};

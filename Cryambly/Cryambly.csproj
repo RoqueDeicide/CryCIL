@@ -104,6 +104,7 @@
     <Compile Include="Engine\Physics\EntityAPIDetails\Actions\Reset.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Actions\ResetPartMatrix.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Actions\SetVelocity.cs" />
+    <Compile Include="Engine\Physics\EntityAPIDetails\Actions\Slice.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Actions\TransferParts.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Actions\UpdateConstraint.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\CollisionClass.cs" />
