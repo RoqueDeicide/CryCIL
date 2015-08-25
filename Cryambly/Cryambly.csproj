@@ -99,6 +99,7 @@
     <Compile Include="Engine\Physics\EntityAPIDetails\Actions\AutoPartDetachment.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Actions\Awake.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Actions\BatchPartsUpdate.cs" />
+    <Compile Include="Engine\Physics\EntityAPIDetails\Actions\Drive.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Actions\Move.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Actions\RegisterCollisionEvent.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Actions\RemoveAllParts.cs" />

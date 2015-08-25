@@ -409,3 +409,34 @@ struct PhysicsActionMove
 	void Dispose()
 	{}
 };
+
+struct PhysicsActionDrive
+{
+	PhysicsAction Base;
+	float pedal;
+	float dpedal;
+	float steer;
+	float ackermanOffset;
+	float dsteer;
+	float clutch;
+	int bHandBrake;
+	int iGear;
+
+	pe_action *ToAction() const
+	{
+		pe_action_drive *act = new pe_action_drive();
+
+		act->pedal          = this->pedal;
+		act->dpedal         = this->dpedal;
+		act->steer          = this->steer;
+		act->dsteer         = this->dsteer;
+		act->clutch         = this->clutch;
+		act->ackermanOffset = this->ackermanOffset;
+		act->bHandBrake     = this->bHandBrake;
+		act->iGear          = this->iGear;
+
+		return act;
+	}
+	void Dispose()
+	{}
+};

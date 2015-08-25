@@ -116,6 +116,7 @@ START_PROCESSING_FUNC_DECLARATION(name, functionPtrType, functionPtr, typeCount)
 		funcs[ePE_action_batch_parts_update]   = functionPtr<PhysicsActionBatchPartsUpdate>;\
 		funcs[ePE_action_slice]                = functionPtr<PhysicsActionSlice>;\
 		funcs[ePE_action_move]                 = functionPtr<PhysicsActionMove>;\
+		funcs[ePE_action_drive]                = functionPtr<PhysicsActionDrive>;\
 END_PROCESSING_FUNC_DECLARATION(typeCount)
 
 #define DECLARE_STATUS_PROCESSING_FUNC(name, functionPtrType, functionPtr, typeCount) \
