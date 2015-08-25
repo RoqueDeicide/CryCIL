@@ -388,3 +388,24 @@ struct PhysicsActionSlice
 		SAFE_DELETE(this->internal0);
 	}
 };
+
+struct PhysicsActionMove
+{
+	PhysicsAction Base;
+	Vec3 dir;
+	int iJump;
+	float dt;
+
+	pe_action *ToAction() const
+	{
+		pe_action_move *act = new pe_action_move();
+
+		act->dir = this->dir;
+		act->iJump = this->iJump;
+		act->dt = this->dt;
+
+		return act;
+	}
+	void Dispose()
+	{}
+};
