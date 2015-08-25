@@ -102,10 +102,11 @@ END_PROCESSING_FUNC_DECLARATION(typeCount)
 
 #define DECLARE_ACTION_PROCESSING_FUNC(name, functionPtrType, functionPtr, typeCount) \
 START_PROCESSING_FUNC_DECLARATION(name, functionPtrType, functionPtr, typeCount) \
-		funcs[ePE_action_impulse]           = functionPtr<PhysicsActionImpulse>;\
-		funcs[ePE_action_reset]             = functionPtr<PhysicsActionReset>;\
-		funcs[ePE_action_add_constraint]    = functionPtr<PhysicsActionAddConstraint>;\
-		funcs[ePE_action_update_constraint] = functionPtr<PhysicsActionUpdateConstraint>;\
+		funcs[ePE_action_impulse]             = functionPtr<PhysicsActionImpulse>;\
+		funcs[ePE_action_reset]               = functionPtr<PhysicsActionReset>;\
+		funcs[ePE_action_add_constraint]      = functionPtr<PhysicsActionAddConstraint>;\
+		funcs[ePE_action_update_constraint]   = functionPtr<PhysicsActionUpdateConstraint>;\
+		funcs[ePE_action_register_coll_event] = functionPtr<PhysicsActionRegisterCollisionEvent>;\
 END_PROCESSING_FUNC_DECLARATION(typeCount)
 
 #define DECLARE_STATUS_PROCESSING_FUNC(name, functionPtrType, functionPtr, typeCount) \

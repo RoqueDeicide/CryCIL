@@ -96,6 +96,7 @@
     <Compile Include="Engine\Environment\TimeOfDayParameterId.cs" />
     <Compile Include="Engine\Environment\TimeOfDaySync.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Actions\AddConstraint.cs" />
+    <Compile Include="Engine\Physics\EntityAPIDetails\Actions\RegisterCollisionEvent.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Actions\Reset.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Actions\UpdateConstraint.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\CollisionClass.cs" />

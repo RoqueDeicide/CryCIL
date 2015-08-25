@@ -137,3 +137,42 @@ struct PhysicsActionUpdateConstraint
 	void Dispose()
 	{}
 };
+
+struct PhysicsActionRegisterCollisionEvent
+{
+	PhysicsAction Base;
+	Vec3 pt;
+	Vec3 n;
+	Vec3 v;
+	Vec3 vSelf;
+	float collMass;
+	IPhysicalEntity *pCollider;
+	int partid0;
+	int partid1;
+	int idmat0;
+	int idmat1;
+	short iPrim0;
+	short iPrim1;
+
+	pe_action *ToAction() const
+	{
+		pe_action_register_coll_event *act = new pe_action_register_coll_event();
+
+		act->pt = this->pt;
+		act->n = this->n;
+		act->v = this->v;
+		act->vSelf = this->vSelf;
+		act->collMass = this->collMass;
+		act->pCollider = this->pCollider;
+		act->partid[0] = this->partid0;
+		act->partid[1] = this->partid1;
+		act->idmat[0] = this->idmat0;
+		act->idmat[1] = this->idmat1;
+		act->iPrim[0] = this->iPrim0;
+		act->iPrim[1] = this->iPrim1;
+
+		return act;
+	}
+	void Dispose()
+	{}
+};
