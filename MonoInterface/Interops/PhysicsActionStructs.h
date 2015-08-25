@@ -295,3 +295,60 @@ struct PhysicsActionTransferParts
 	void Dispose()
 	{}
 };
+
+struct PartUpdateInfo
+{
+	int Id;
+	Vec3 NewPosition;
+	Quat NewOrientation;
+};
+
+struct PhysicsActionBatchPartsUpdate
+{
+	PhysicsAction Base;
+	mono::object updateInfos;
+	Quat qOffs;
+	Vec3 posOffs;
+	int *ids;
+	Vec3 *poses;
+	Quat *qs;
+
+	pe_action *ToAction()
+	{
+		pe_action_batch_parts_update *act = new pe_action_batch_parts_update();
+
+		act->qOffs = this->qOffs;
+		act->posOffs = this->posOffs;
+
+		if (this->updateInfos)
+		{
+			MonoGCHandle handle = MonoEnv->GC->Pin(this->updateInfos);
+
+			IMonoArray<PartUpdateInfo> infos = this->updateInfos;
+			int infoCount = infos.Length;
+			act->numParts = infoCount;
+			this->ids = new int[infoCount];
+			this->poses = new Vec3[infoCount];
+			this->qs = new Quat[infoCount];
+
+			for (int i = 0; i < infoCount; i++)
+			{
+				this->ids[i] = infos[i].Id;
+				this->poses[i] = infos[i].NewPosition;
+				this->qs[i] = infos[i].NewOrientation;
+			}
+
+			act->pIds = this->ids;
+			act->posParts = strided_pointer<Vec3>(this->poses);
+			act->qParts = strided_pointer<Quat>(this->qs);
+		}
+
+		return act;
+	}
+	void Dispose()
+	{
+		SAFE_DELETE(this->ids);
+		SAFE_DELETE(this->poses);
+		SAFE_DELETE(this->qs);
+	}
+};
