@@ -119,17 +119,17 @@ struct PhysicsActionUpdateConstraint
 	{
 		pe_action_update_constraint *act = new pe_action_update_constraint();
 
-		act->idConstraint = this->idConstraint;
-		act->flagsOR = this->flagsOR;
-		act->flagsAND = this->flagsAND;
-		act->flags = this->flags;
-		act->pt[0] = this->pt0;
-		act->pt[1] = this->pt1;
-		act->qframe[0] = this->qframe0;
-		act->qframe[1] = this->qframe1;
-		act->damping = this->damping;
-		act->bRemove = this->bRemove;
-		act->maxPullForce = this->maxPullForce;
+		act->idConstraint  = this->idConstraint;
+		act->flagsOR       = this->flagsOR;
+		act->flagsAND      = this->flagsAND;
+		act->flags         = this->flags;
+		act->pt[0]         = this->pt0;
+		act->pt[1]         = this->pt1;
+		act->qframe[0]     = this->qframe0;
+		act->qframe[1]     = this->qframe1;
+		act->damping       = this->damping;
+		act->bRemove       = this->bRemove;
+		act->maxPullForce  = this->maxPullForce;
 		act->maxBendTorque = this->maxBendTorque;
 
 		return act;
@@ -158,18 +158,18 @@ struct PhysicsActionRegisterCollisionEvent
 	{
 		pe_action_register_coll_event *act = new pe_action_register_coll_event();
 
-		act->pt = this->pt;
-		act->n = this->n;
-		act->v = this->v;
-		act->vSelf = this->vSelf;
-		act->collMass = this->collMass;
+		act->pt        = this->pt;
+		act->n         = this->n;
+		act->v         = this->v;
+		act->vSelf     = this->vSelf;
+		act->collMass  = this->collMass;
 		act->pCollider = this->pCollider;
 		act->partid[0] = this->partid0;
 		act->partid[1] = this->partid1;
-		act->idmat[0] = this->idmat0;
-		act->idmat[1] = this->idmat1;
-		act->iPrim[0] = this->iPrim0;
-		act->iPrim[1] = this->iPrim1;
+		act->idmat[0]  = this->idmat0;
+		act->idmat[1]  = this->idmat1;
+		act->iPrim[0]  = this->iPrim0;
+		act->iPrim[1]  = this->iPrim1;
 
 		return act;
 	}
