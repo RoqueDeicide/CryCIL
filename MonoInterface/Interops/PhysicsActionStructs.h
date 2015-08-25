@@ -176,3 +176,122 @@ struct PhysicsActionRegisterCollisionEvent
 	void Dispose()
 	{}
 };
+
+struct PhysicsActionAwake
+{
+	PhysicsAction Base;
+	int bAwake;
+	float minAwakeTime;
+
+	pe_action *ToAction() const
+	{
+		pe_action_awake *act = new pe_action_awake();
+
+		act->bAwake = this->bAwake;
+		act->minAwakeTime = this->minAwakeTime;
+
+		return act;
+	}
+	void Dispose()
+	{}
+};
+
+struct PhysicsActionRemoveAllParts
+{
+	PhysicsAction Base;
+
+	pe_action *ToAction() const
+	{
+		pe_action_remove_all_parts *act = new pe_action_remove_all_parts();
+
+		return act;
+	}
+	void Dispose()
+	{}
+};
+
+struct PhysicsActionResetPartMatrix
+{
+	PhysicsAction Base;
+	int ipart;
+	int partid;
+
+	pe_action *ToAction() const
+	{
+		pe_action_reset_part_mtx *act = new pe_action_reset_part_mtx();
+
+		act->ipart = this->ipart;
+		act->partid = this->partid;
+
+		return act;
+	}
+	void Dispose()
+	{}
+};
+
+struct PhysicsActionSetVelocity
+{
+	PhysicsAction Base;
+	int ipart;
+	int partid;
+	Vec3 v, w;
+	int bRotationAroundPivot;
+
+	pe_action *ToAction() const
+	{
+		pe_action_set_velocity *act = new pe_action_set_velocity();
+
+		act->ipart = this->ipart;
+		act->partid = this->partid;
+		act->v = this->v;
+		act->w = this->w;
+		act->bRotationAroundPivot = this->bRotationAroundPivot;
+
+		return act;
+	}
+	void Dispose()
+	{}
+};
+
+struct PhysicsActionAutoPartDetachment
+{
+	PhysicsAction Base;
+	float threshold;
+	float autoDetachmentDist;
+
+	pe_action *ToAction() const
+	{
+		pe_action_auto_part_detachment *act = new pe_action_auto_part_detachment();
+
+		act->threshold = this->threshold;
+		act->autoDetachmentDist = this->autoDetachmentDist;
+
+		return act;
+	}
+	void Dispose()
+	{}
+};
+
+struct PhysicsActionTransferParts
+{
+	PhysicsAction Base;
+	int idStart, idEnd;
+	int idOffset;
+	IPhysicalEntity *pTarget;
+	Matrix34 mtxRel;
+
+	pe_action *ToAction() const
+	{
+		pe_action_move_parts *act = new pe_action_move_parts();
+
+		act->idStart = this->idStart;
+		act->idEnd = this->idEnd;
+		act->idOffset = this->idOffset;
+		act->pTarget = this->pTarget;
+		act->mtxRel = this->mtxRel;
+
+		return act;
+	}
+	void Dispose()
+	{}
+};

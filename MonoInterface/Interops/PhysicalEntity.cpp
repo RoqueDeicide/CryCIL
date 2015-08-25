@@ -102,11 +102,17 @@ END_PROCESSING_FUNC_DECLARATION(typeCount)
 
 #define DECLARE_ACTION_PROCESSING_FUNC(name, functionPtrType, functionPtr, typeCount) \
 START_PROCESSING_FUNC_DECLARATION(name, functionPtrType, functionPtr, typeCount) \
-		funcs[ePE_action_impulse]             = functionPtr<PhysicsActionImpulse>;\
-		funcs[ePE_action_reset]               = functionPtr<PhysicsActionReset>;\
-		funcs[ePE_action_add_constraint]      = functionPtr<PhysicsActionAddConstraint>;\
-		funcs[ePE_action_update_constraint]   = functionPtr<PhysicsActionUpdateConstraint>;\
-		funcs[ePE_action_register_coll_event] = functionPtr<PhysicsActionRegisterCollisionEvent>;\
+		funcs[ePE_action_impulse]              = functionPtr<PhysicsActionImpulse>;\
+		funcs[ePE_action_reset]                = functionPtr<PhysicsActionReset>;\
+		funcs[ePE_action_add_constraint]       = functionPtr<PhysicsActionAddConstraint>;\
+		funcs[ePE_action_update_constraint]    = functionPtr<PhysicsActionUpdateConstraint>;\
+		funcs[ePE_action_register_coll_event]  = functionPtr<PhysicsActionRegisterCollisionEvent>;\
+		funcs[ePE_action_awake]                = functionPtr<PhysicsActionAwake>;\
+		funcs[ePE_action_remove_all_parts]     = functionPtr<PhysicsActionRemoveAllParts>;\
+		funcs[ePE_action_reset_part_mtx]       = functionPtr<PhysicsActionResetPartMatrix>;\
+		funcs[ePE_action_set_velocity]         = functionPtr<PhysicsActionSetVelocity>;\
+		funcs[ePE_action_auto_part_detachment] = functionPtr<PhysicsActionAutoPartDetachment>;\
+		funcs[ePE_action_move_parts]           = functionPtr<PhysicsActionTransferParts>;\
 END_PROCESSING_FUNC_DECLARATION(typeCount)
 
 #define DECLARE_STATUS_PROCESSING_FUNC(name, functionPtrType, functionPtr, typeCount) \
