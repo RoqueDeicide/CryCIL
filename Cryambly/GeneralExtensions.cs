@@ -112,7 +112,7 @@ namespace CryCil
 				throw new ArgumentException("Cannot perform search for an empty string.");
 			}
 			List<int> indexes = new List<int>(text.Length / substring.Length);
-			for (int i = text.IndexOf(substring, options); i != -1; )
+			for (int i = text.IndexOf(substring, options); i != -1;)
 			{
 				indexes.Add(i);
 				i = text.IndexOf(substring, i + substring.Length, options);
@@ -156,8 +156,8 @@ namespace CryCil
 		{
 			return
 				!(String.IsNullOrWhiteSpace(text)
-				|| Regex.IsMatch(text, VariousConstants.InvalidXmlCharsPattern)
-				|| text.Any(Char.IsWhiteSpace));
+				  || Regex.IsMatch(text, VariousConstants.InvalidXmlCharsPattern)
+				  || text.Any(Char.IsWhiteSpace));
 		}
 		/// <summary>
 		/// Gets file that contains the assembly.
@@ -177,7 +177,8 @@ namespace CryCil
 		/// <param name="value">     Values which to try to get.</param>
 		/// <param name="key">       Resultant key.</param>
 		/// <returns>True, if successful.</returns>
-		public static bool TryGetKey<TKey, TValue>([NotNull]this IDictionary<TKey, TValue> dictionary, TValue value, out TKey key)
+		public static bool TryGetKey<TKey, TValue>([NotNull] this IDictionary<TKey, TValue> dictionary, TValue value,
+												   out TKey key)
 		{
 			key = dictionary.FirstOrDefault(x => x.Value.Equals(value)).Key;
 
@@ -281,7 +282,7 @@ namespace CryCil
 		/// </exception>
 		/// <exception cref="ArgumentException">Input string doesn't contain enough characters.</exception>
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		public static unsafe extern void CopyToBuffer(this string str, char* buffer, int start, int count);
+		public static extern unsafe void CopyToBuffer(this string str, char* buffer, int start, int count);
 		/// <summary>
 		/// Creates English ordinal number.
 		/// </summary>
