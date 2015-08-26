@@ -284,3 +284,79 @@ struct PhysicsStatusConstraint
 		this->pConstraintEntity = stat->pConstraintEntity;
 	}
 };
+
+struct PhysicsStatusLiving
+{
+	PhysicsStatus Base;
+	int bFlying;
+	float timeFlying;
+	Vec3 camOffset;
+	Vec3 vel;
+	Vec3 velUnconstrained;
+	Vec3 velRequested;
+	Vec3 velGround;
+	float groundHeight;
+	Vec3 groundSlope;
+	int groundSurfaceIdx;
+	int groundSurfaceIdxAux;
+	IPhysicalEntity *pGroundCollider;
+	int iGroundColliderPart;
+	float timeSinceStanceChange;
+	int bStuck;
+	int bSquashed;
+
+	pe_status *ToStatus()
+	{
+		return new pe_status_living();
+	}
+	void FromStatus(const pe_status *status)
+	{
+		const pe_status_living *stat = static_cast<const pe_status_living *>(status);
+
+		this->bFlying               = stat->bFlying;
+		this->timeFlying            = stat->timeFlying;
+		this->camOffset             = stat->camOffset;
+		this->vel                   = stat->vel;
+		this->velUnconstrained      = stat->velUnconstrained;
+		this->velRequested          = stat->velRequested;
+		this->velGround             = stat->velGround;
+		this->groundHeight          = stat->groundHeight;
+		this->groundSlope           = stat->groundSlope;
+		this->groundSurfaceIdx      = stat->groundSurfaceIdx;
+		this->groundSurfaceIdxAux   = stat->groundSurfaceIdxAux;
+		this->pGroundCollider       = stat->pGroundCollider;
+		this->iGroundColliderPart   = stat->iGroundColliderPart;
+		this->timeSinceStanceChange = stat->timeSinceStanceChange;
+		this->bStuck                = stat->bStuck;
+		this->bSquashed             = stat->bSquashed;
+	}
+};
+
+struct PhysicsStatusCheckStance
+{
+	PhysicsStatus Base;
+	Vec3 pos;
+	Quat q;
+	Vec3 sizeCollider;
+	float heightCollider;
+	Vec3 dirUnproj;
+	float unproj;
+	int bUseCapsule;
+
+	pe_status *ToStatus()
+	{
+		pe_status_check_stance *stat = new pe_status_check_stance();
+
+		stat->pos = this->pos;
+		stat->q = this->q;
+		stat->sizeCollider = this->sizeCollider;
+		stat->heightCollider = this->heightCollider;
+		stat->dirUnproj = this->dirUnproj;
+		stat->unproj = this->unproj;
+		stat->bUseCapsule = this->bUseCapsule;
+
+		return stat;
+	}
+	void FromStatus(const pe_status *)
+	{}
+};

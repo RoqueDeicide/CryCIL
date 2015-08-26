@@ -134,6 +134,8 @@ START_PROCESSING_FUNC_DECLARATION(name, functionPtrType, functionPtr, typeCount)
 		funcs[ePE_status_placeholder]         = functionPtr<PhysicsStatusPlaceHolder>;\
 		funcs[ePE_status_sample_contact_area] = functionPtr<PhysicsStatusSampleContactArea>;\
 		funcs[ePE_status_constraint]          = functionPtr<PhysicsStatusConstraint>;\
+		funcs[ePE_status_living]              = functionPtr<PhysicsStatusLiving>;\
+		funcs[ePE_status_check_stance]        = functionPtr<PhysicsStatusCheckStance>;\
 END_PROCESSING_FUNC_DECLARATION(typeCount)
 
 DECLARE_PARAMS_PROCESSING_FUNC(GetParamConverterToCE,    ConvertToNativeParametersFunc, ParamsToCE,    ePE_Params_Count)
