@@ -138,6 +138,16 @@
     <Compile Include="Engine\Physics\EntityAPIDetails\Parameters\StructuralJoint.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Parameters\StructuralInitialVelocity.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Parameters\Timeout.cs" />
+    <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\Awake.cs" />
+    <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\Constraint.cs" />
+    <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\ContainsPoint.cs" />
+    <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\Dynamics.cs" />
+    <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\NetworkLocation.cs" />
+    <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\PartCount.cs" />
+    <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\PlaceHolder.cs" />
+    <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\SampleContactArea.cs" />
+    <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\Sensors.cs" />
+    <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\SurfaceId.cs" />
     <Compile Include="Engine\Physics\ForeignData.cs" />
     <Compile Include="Engine\Physics\ForeignDataIds.cs" />
     <Compile Include="Engine\Physics\IForeignDataProvider.cs" />

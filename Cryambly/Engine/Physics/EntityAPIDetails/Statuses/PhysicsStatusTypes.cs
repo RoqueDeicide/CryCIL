@@ -48,7 +48,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Identifier of the structure that is used to query surface identifier of the physical entity.
 		/// </summary>
-		Id = 10,
+		SurfaceId = 10,
 		/// <summary>
 		/// Deprecated.
 		/// </summary>
@@ -129,7 +129,7 @@ namespace CryCil.Engine.Physics
 		/// Identifier of the structure that is used to query position of the physical entity in the
 		/// network.
 		/// </summary>
-		NetworkPosition = 27,
+		NetworkLocation = 27,
 		/// <summary>
 		/// Number of identifiers.
 		/// </summary>

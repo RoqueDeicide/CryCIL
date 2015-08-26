@@ -123,7 +123,17 @@ END_PROCESSING_FUNC_DECLARATION(typeCount)
 
 #define DECLARE_STATUS_PROCESSING_FUNC(name, functionPtrType, functionPtr, typeCount) \
 START_PROCESSING_FUNC_DECLARATION(name, functionPtrType, functionPtr, typeCount) \
-		funcs[ePE_status_pos]          = functionPtr<PhysicsStatusLocation>;\
+		funcs[ePE_status_pos]                 = functionPtr<PhysicsStatusLocation>;\
+		funcs[ePE_status_netpos]              = functionPtr<PhysicsStatusNetworkLocation>;\
+		funcs[ePE_status_sensors]             = functionPtr<PhysicsStatusSensors>;\
+		funcs[ePE_status_dynamics]            = functionPtr<PhysicsStatusDynamics>;\
+		funcs[ePE_status_id]                  = functionPtr<PhysicsStatusSurfaceId>;\
+		funcs[ePE_status_nparts]              = functionPtr<PhysicsStatusPartCount>;\
+		funcs[ePE_status_awake]               = functionPtr<PhysicsStatusAwake>;\
+		funcs[ePE_status_contains_point]      = functionPtr<PhysicsStatusContainsPoint>;\
+		funcs[ePE_status_placeholder]         = functionPtr<PhysicsStatusPlaceHolder>;\
+		funcs[ePE_status_sample_contact_area] = functionPtr<PhysicsStatusSampleContactArea>;\
+		funcs[ePE_status_constraint]          = functionPtr<PhysicsStatusConstraint>;\
 END_PROCESSING_FUNC_DECLARATION(typeCount)
 
 DECLARE_PARAMS_PROCESSING_FUNC(GetParamConverterToCE,    ConvertToNativeParametersFunc, ParamsToCE,    ePE_Params_Count)
