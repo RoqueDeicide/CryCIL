@@ -150,6 +150,9 @@
     <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\SampleContactArea.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\Sensors.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\SurfaceId.cs" />
+    <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\Vehicle.cs" />
+    <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\VehicleAbilities.cs" />
+    <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\Wheel.cs" />
     <Compile Include="Engine\Physics\ForeignData.cs" />
     <Compile Include="Engine\Physics\ForeignDataIds.cs" />
     <Compile Include="Engine\Physics\IForeignDataProvider.cs" />

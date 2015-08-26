@@ -360,3 +360,118 @@ struct PhysicsStatusCheckStance
 	void FromStatus(const pe_status *)
 	{}
 };
+
+struct PhysicsStatusVehicle
+{
+	PhysicsStatus Base;
+	float steer;
+	float pedal;
+	int bHandBrake;
+	float footbrake;
+	Vec3 vel;
+	int bWheelContact;
+	int iCurGear;
+	float engineRPM;
+	float clutch;
+	float drivingTorque;
+	int nActiveColliders;
+
+	pe_status *ToStatus()
+	{
+		return new pe_status_vehicle();
+	}
+	void FromStatus(const pe_status *status)
+	{
+		const pe_status_vehicle *stat = static_cast<const pe_status_vehicle *>(status);
+
+		this->steer            = stat->steer;
+		this->pedal            = stat->pedal;
+		this->bHandBrake       = stat->bHandBrake;
+		this->footbrake        = stat->footbrake;
+		this->vel              = stat->vel;
+		this->bWheelContact    = stat->bWheelContact;
+		this->iCurGear         = stat->iCurGear;
+		this->engineRPM        = stat->engineRPM;
+		this->clutch           = stat->clutch;
+		this->drivingTorque    = stat->drivingTorque;
+		this->nActiveColliders = stat->nActiveColliders;
+	}
+};
+
+struct PhysicsStatusWheel
+{
+	PhysicsStatus Base;
+	int iWheel;
+	int partid;
+	int bContact;
+	Vec3 ptContact;
+	Vec3 normContact;
+	float w;
+	int bSlip;
+	Vec3 velSlip;
+	int contactSurfaceIdx;
+	float friction;
+	float suspLen;
+	float suspLenFull;
+	float suspLen0;
+	float r;
+	float torque;
+	float steer;
+	IPhysicalEntity *pCollider;
+
+	pe_status *ToStatus()
+	{
+		pe_status_wheel *stat = new pe_status_wheel();
+
+		stat->iWheel = this->iWheel;
+		stat->partid = this->partid;
+
+		return stat;
+	}
+	void FromStatus(const pe_status *status)
+	{
+		const pe_status_wheel *stat = static_cast<const pe_status_wheel *>(status);
+
+		this->iWheel            = stat->iWheel;
+		this->partid            = stat->partid;
+		this->bContact          = stat->bContact;
+		this->ptContact         = stat->ptContact;
+		this->normContact       = stat->normContact;
+		this->w                 = stat->w;
+		this->bSlip             = stat->bSlip;
+		this->velSlip           = stat->velSlip;
+		this->contactSurfaceIdx = stat->contactSurfaceIdx;
+		this->friction          = stat->friction;
+		this->suspLen           = stat->suspLen;
+		this->suspLenFull       = stat->suspLenFull;
+		this->suspLen0          = stat->suspLen0;
+		this->r                 = stat->r;
+		this->torque            = stat->torque;
+		this->steer             = stat->steer;
+		this->pCollider         = stat->pCollider;
+	}
+};
+
+struct PhysicsStatusVehicleAbilities
+{
+	PhysicsStatus Base;
+	float steer;
+	Vec3 rotPivot;
+	float maxVelocity;
+
+	pe_status *ToStatus()
+	{
+		pe_status_vehicle_abilities *stat = new pe_status_vehicle_abilities();
+
+		stat->steer = this->steer;
+
+		return stat;
+	}
+	void FromStatus(const pe_status *status)
+	{
+		const pe_status_vehicle_abilities *stat = static_cast<const pe_status_vehicle_abilities *>(status);
+
+		this->rotPivot    = stat->rotPivot;
+		this->maxVelocity = stat->maxVelocity;
+	}
+};
