@@ -7,15 +7,21 @@ namespace CryCil.Engine.Physics
 	/// Encapsulates description of the object that is used to query status of the wheel of the vehicle.
 	/// </summary>
 	/// <remarks>
-	/// <para>When passed to <see cref="PhysicalEntity.GetStatus"/> the return value is an indication of success.</para>
-	/// <para>Never use objects of this type that were created using a default constructor (they are not configured properly!).</para>
+	/// <para>
+	/// When passed to <see cref="PhysicalEntity.GetStatus"/> the return value is an indication of success.
+	/// </para>
+	/// <para>
+	/// Never use objects of this type that were created using a default constructor (they are not
+	/// configured properly!).
+	/// </para>
 	/// </remarks>
 	[StructLayout(LayoutKind.Sequential)]
 	public struct PhysicsStatusWheel
 	{
 		#region Fields
 		/// <summary>
-		/// Pass reference to this field to the <see cref="PhysicalEntity.GetStatus"/> to query information about the physical entity.
+		/// Pass reference to this field to the <see cref="PhysicalEntity.GetStatus"/> to query information
+		/// about the physical entity.
 		/// </summary>
 		[UsedImplicitly] public PhysicsStatus Base;
 		[UsedImplicitly] private int iWheel;
@@ -41,7 +47,8 @@ namespace CryCil.Engine.Physics
 		/// Gets zero-based index of this wheel.
 		/// </summary>
 		/// <remarks>
-		/// This property is useful if you are querying the wheel by the identifier of the part that represents it.
+		/// This property is useful if you are querying the wheel by the identifier of the part that
+		/// represents it.
 		/// </remarks>
 		public int WheelIndex
 		{
@@ -65,14 +72,16 @@ namespace CryCil.Engine.Physics
 			get { return this.bContact != 0; }
 		}
 		/// <summary>
-		/// Gets the coordinates of the point where this wheel touches the ground, if <see cref="ContactsGround"/> returns <c>true</c>.
+		/// Gets the coordinates of the point where this wheel touches the ground, if
+		/// <see cref="ContactsGround"/> returns <c>true</c>.
 		/// </summary>
 		public Vector3 GroundContactPoint
 		{
 			get { return this.ptContact; }
 		}
 		/// <summary>
-		/// Gets the direction of the normal to the ground surface this wheel is touching, if <see cref="ContactsGround"/> returns <c>true</c>.
+		/// Gets the direction of the normal to the ground surface this wheel is touching, if
+		/// <see cref="ContactsGround"/> returns <c>true</c>.
 		/// </summary>
 		public Vector3 GroundContactNormal
 		{
@@ -86,7 +95,8 @@ namespace CryCil.Engine.Physics
 			get { return this.w; }
 		}
 		/// <summary>
-		/// Gets the value that indicates whether this wheel is slipping (has a velocity component that is not caused by the wheel's rotation).
+		/// Gets the value that indicates whether this wheel is slipping (has a velocity component that is
+		/// not caused by the wheel's rotation).
 		/// </summary>
 		public bool Slipping
 		{
@@ -167,8 +177,14 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Creates a valid object of this type.
 		/// </summary>
-		/// <param name="number">A number that can an identifier of the part that represents a wheel or it can be a zero-based index of the wheel. What it is is defined by <paramref name="getByPartId"/> argument.</param>
-		/// <param name="getByPartId">Indicates whether <paramref name="number"/> is an identifier of the part that represents a wheel rather then a zero-based index of one.</param>
+		/// <param name="number">     
+		/// A number that can an identifier of the part that represents a wheel or it can be a zero-based
+		/// index of the wheel. What it is is defined by <paramref name="getByPartId"/> argument.
+		/// </param>
+		/// <param name="getByPartId">
+		/// Indicates whether <paramref name="number"/> is an identifier of the part that represents a
+		/// wheel rather then a zero-based index of one.
+		/// </param>
 		public PhysicsStatusWheel(int number, bool getByPartId = true)
 			: this()
 		{
