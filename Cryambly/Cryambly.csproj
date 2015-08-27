@@ -151,6 +151,7 @@
     <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\Rope.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\SampleContactArea.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\Sensors.cs" />
+    <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\SoftBodyVertices.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\SurfaceId.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\Vehicle.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\VehicleAbilities.cs" />

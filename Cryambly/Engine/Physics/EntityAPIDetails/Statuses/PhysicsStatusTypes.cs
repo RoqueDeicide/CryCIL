@@ -81,7 +81,7 @@ namespace CryCil.Engine.Physics
 		/// Identifier of the structure that is used to query positions vertexes of the physical entity
 		/// that is a soft body.
 		/// </summary>
-		SoftVertex = 17,
+		SoftBodyVertices = 17,
 		/// <summary>
 		/// Identifier of the structure that is used to query status of sensors that are attached to the
 		/// physical entity.

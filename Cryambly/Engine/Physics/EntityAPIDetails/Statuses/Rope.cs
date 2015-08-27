@@ -246,7 +246,7 @@ namespace CryCil.Engine.Physics
 		/// Gets the position of the first entity part this rope was attached to when this status was
 		/// queried.
 		/// </summary>
-		public Vector3 HostPosition
+		public Vector3 AttachmentPointPosition
 		{
 			get { return this.posHost; }
 		}
@@ -254,7 +254,7 @@ namespace CryCil.Engine.Physics
 		/// Gets the orientation of the first entity part this rope was attached to when this status was
 		/// queried.
 		/// </summary>
-		public Quaternion HostOrientation
+		public Quaternion AttachmentPointOrientation
 		{
 			get { return this.qHost; }
 		}

@@ -579,3 +579,39 @@ struct PhysicsStatusRope
 		if (this->gcHandle2 != -1) MonoEnv->GC->ReleaseGCHandle(this->gcHandle2);
 	}
 };
+
+struct PhysicsStatusSoftBodyVertices
+{
+	PhysicsStatus Base;
+	int nVtx;
+	strided_pointer<Vec3> pVtx;
+	strided_pointer<Vec3> pNormals;
+	IGeometry *pMesh;
+	int flags;
+	Quat qHost;
+	Vec3 posHost;
+	Vec3 pos;
+	Quat q;
+
+	pe_status *ToStatus()
+	{
+		pe_status_softvtx *stat = new pe_status_softvtx();
+
+		stat->flags = this->flags;
+
+		return stat;
+	}
+	void FromStatus(const pe_status *status)
+	{
+		const pe_status_softvtx *stat = static_cast<const pe_status_softvtx *>(status);
+
+		this->nVtx     = stat->nVtx;
+		this->pVtx     = stat->pVtx;
+		this->pNormals = stat->pNormals;
+		this->pMesh    = stat->pMesh;
+		this->qHost    = stat->qHost;
+		this->posHost  = stat->posHost;
+		this->pos      = stat->pos;
+		this->q        = stat->q;
+	}
+};
