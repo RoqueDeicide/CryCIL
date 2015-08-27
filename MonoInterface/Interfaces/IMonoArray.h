@@ -173,6 +173,11 @@ public:
 	//! @returns Reference to the element of the array.
 	ElementType& operator[](int index)
 	{
+		if (!this->obj)
+		{
+			return nullptr;
+		}
+
 		_MonoArray *a = reinterpret_cast<_MonoArray *>(this->obj);
 		return *reinterpret_cast<ElementType *>(reinterpret_cast<char*>((a)->vector) + this->elementSize * index);
 	}

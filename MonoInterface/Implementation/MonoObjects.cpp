@@ -45,16 +45,31 @@ IMonoThreads *MonoObjects::GetThreads()
 
 int MonoObjects::GetArrayRank(mono::Array ar)
 {
+	if (!ar)
+	{
+		return 0;
+	}
+
 	return mono_class_get_rank(mono_object_get_class(reinterpret_cast<MonoObject *>(ar)));
 }
 
 int MonoObjects::GetArrayElementSize(mono::Array ar)
 {
+	if (!ar)
+	{
+		return 0;
+	}
+
 	return mono_array_element_size(mono_object_get_class(reinterpret_cast<MonoObject *>(ar)));
 }
 
 IMonoClass *MonoObjects::GetArrayElementClass(mono::Array ar)
 {
+	if (!ar)
+	{
+		return nullptr;
+	}
+
 	return  MonoClassCache::Wrap
 			(
 				mono_class_get_element_class
