@@ -3,7 +3,7 @@ using CryCil.Annotations;
 using CryCil.Geometry;
 using CryCil.Utilities;
 
-namespace CryCil.Engine.Physics.Ropes
+namespace CryCil.Engine.Physics
 {
 	/// <summary>
 	/// Enumeration of ways the rope can try preserving its shape.
