@@ -189,7 +189,7 @@ namespace CryCil.Engine.Physics
 			: this()
 		{
 			this.Base = new PhysicsStatus(PhysicsStatusTypes.Wheel);
-			this.iWheel = number;
+			this.iWheel = 0;
 			this.partid = UnusedValue.Int32;
 
 			if (getByPartId)
