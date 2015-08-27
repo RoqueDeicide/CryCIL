@@ -172,6 +172,7 @@ namespace CryCil.Engine.Physics
 		public PhysicsStatusWheel(int number, bool getByPartId = true)
 			: this()
 		{
+			this.Base = new PhysicsStatus(PhysicsStatusTypes.Wheel);
 			this.iWheel = number;
 			this.partid = UnusedValue.Int32;
 

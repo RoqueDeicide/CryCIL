@@ -11,7 +11,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Identifier of the structure that is used to query position of the physical entity.
 		/// </summary>
-		Position = 1,
+		Location = 1,
 		/// <summary>
 		/// Identifier of the structure that is used to query status of the living physical entity.
 		/// </summary>

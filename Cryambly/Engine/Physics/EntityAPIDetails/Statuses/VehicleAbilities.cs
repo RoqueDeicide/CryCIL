@@ -53,6 +53,7 @@ namespace CryCil.Engine.Physics
 		/// maximal speed.
 		/// </param>
 		public PhysicsStatusVehicleAbilities(float steer)
+			: this()
 		{
 			this.Base = new PhysicsStatus(PhysicsStatusTypes.VehicleAbilities);
 			this.steer = steer;

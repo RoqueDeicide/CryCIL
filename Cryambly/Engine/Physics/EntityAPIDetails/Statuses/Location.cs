@@ -77,6 +77,7 @@ namespace CryCil.Engine.Physics
 		public PhysicsStatusLocation(EntityPartSpec part, bool localSpace = false)
 			: this()
 		{
+			this.Base = new PhysicsStatus(PhysicsStatusTypes.Location);
 			this.localSpace = localSpace;
 			if (part.partIsSpecified)
 			{
@@ -99,6 +100,7 @@ namespace CryCil.Engine.Physics
 		public PhysicsStatusLocation(bool localSpace)
 			: this()
 		{
+			this.Base = new PhysicsStatus(PhysicsStatusTypes.Location);
 			this.localSpace = localSpace;
 			this.partid = -1;
 			this.ipart = -1;
