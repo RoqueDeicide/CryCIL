@@ -139,6 +139,8 @@ START_PROCESSING_FUNC_DECLARATION(name, functionPtrType, functionPtr, typeCount)
 		funcs[ePE_status_vehicle]             = functionPtr<PhysicsStatusVehicle>;\
 		funcs[ePE_status_wheel]               = functionPtr<PhysicsStatusWheel>;\
 		funcs[ePE_status_vehicle_abilities]   = functionPtr<PhysicsStatusVehicleAbilities>;\
+		funcs[ePE_status_joint]               = functionPtr<PhysicsStatusJoint>;\
+		funcs[ePE_status_rope]                = functionPtr<PhysicsStatusRope>;\
 END_PROCESSING_FUNC_DECLARATION(typeCount)
 
 DECLARE_PARAMS_PROCESSING_FUNC(GetParamConverterToCE,    ConvertToNativeParametersFunc, ParamsToCE,    ePE_Params_Count)

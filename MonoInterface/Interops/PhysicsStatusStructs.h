@@ -475,3 +475,107 @@ struct PhysicsStatusVehicleAbilities
 		this->maxVelocity = stat->maxVelocity;
 	}
 };
+
+struct PhysicsStatusJoint
+{
+	PhysicsStatus Base;
+	int idChildBody;
+	int partid;
+	uint32 flags;
+	Ang3 q;
+	Ang3 qext;
+	Ang3 dq;
+	Quat quat0;
+
+	pe_status *ToStatus()
+	{
+		pe_status_joint *stat = new pe_status_joint();
+
+		stat->idChildBody = this->idChildBody;
+		stat->partid      = this->partid;
+
+		return stat;
+	}
+	void FromStatus(const pe_status *status)
+	{
+		const pe_status_joint *stat = static_cast<const pe_status_joint *>(status);
+
+		this->flags = stat->flags;
+		this->q     = stat->q;
+		this->qext  = stat->qext;
+		this->dq    = stat->dq;
+		this->quat0 = stat->quat0;
+	}
+};
+
+struct PhysicsStatusRope
+{
+	PhysicsStatus Base;
+	int nSegments;
+	int nVtx;
+	mono::Array pPoints;
+	mono::Array pVelocities;
+	mono::Array pVtx;
+	int nCollStat, nCollDyn;
+	int bTargetPoseActive;
+	float stiffnessAnim;
+	int bStrained;
+	strided_pointer<IPhysicalEntity *> pContactEnts;
+	float timeLastActive;
+	Vec3 posHost;
+	Quat qHost;
+	int lock;
+	uint32 gcHandle0;
+	uint32 gcHandle1;
+	uint32 gcHandle2;
+
+	pe_status *ToStatus()
+	{
+		pe_status_rope *stat = new pe_status_rope();
+
+		if (this->nSegments > 0)
+		{
+			// Allocate the arrays and pin them.
+			int pc         = this->nSegments + 1;
+			IMonoClass *vc = MonoEnv->Cryambly->Vector3;
+			this->gcHandle0 = MonoEnv->GC->Pin(this->pPoints     = MonoEnv->Objects->Arrays->Create(pc, vc));
+			this->gcHandle1 = MonoEnv->GC->Pin(this->pVelocities = MonoEnv->Objects->Arrays->Create(pc, vc));
+		}
+		if (this->nVtx > 0)
+		{
+			// Allocate the array and pin it.
+			this->pVtx = MonoEnv->Objects->Arrays->Create(this->nVtx, MonoEnv->Cryambly->Vector3);
+			this->gcHandle2 = MonoEnv->GC->Pin(this->pVtx);
+		}
+
+		stat->nSegments   = this->nSegments;
+		stat->pPoints     = &(IMonoArray<Vec3>(this->pPoints)[0]);
+		stat->pVelocities = &(IMonoArray<Vec3>(this->pVelocities)[0]);
+		stat->pVtx        = &(IMonoArray<Vec3>(this->pVtx)[0]);
+		stat->nVtx        = this->nVtx;
+		stat->lock        = this->lock;
+
+		return stat;
+	}
+	void FromStatus(const pe_status *status)
+	{
+		const pe_status_rope *stat = static_cast<const pe_status_rope *>(status);
+
+		this->nSegments         = stat->nSegments;
+		this->nVtx              = stat->nVtx;
+		this->nCollStat         = stat->nCollStat;
+		this->nCollDyn          = stat->nCollDyn;
+		this->bTargetPoseActive = stat->bTargetPoseActive;
+		this->stiffnessAnim     = stat->stiffnessAnim;
+		this->bStrained         = stat->bStrained;
+		this->pContactEnts      = stat->pContactEnts;
+		this->timeLastActive    = stat->timeLastActive;
+		this->posHost           = stat->posHost;
+		this->qHost             = stat->qHost;
+
+		// Release the handles, if they were allocated previously.
+		if (this->gcHandle0 != -1) MonoEnv->GC->ReleaseGCHandle(this->gcHandle0);
+		if (this->gcHandle1 != -1) MonoEnv->GC->ReleaseGCHandle(this->gcHandle1);
+		if (this->gcHandle2 != -1) MonoEnv->GC->ReleaseGCHandle(this->gcHandle2);
+	}
+};

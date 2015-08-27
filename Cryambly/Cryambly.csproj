@@ -143,10 +143,12 @@
     <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\Constraint.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\ContainsPoint.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\Dynamics.cs" />
+    <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\Joint.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\Living.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\NetworkLocation.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\PartCount.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\PlaceHolder.cs" />
+    <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\Rope.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\SampleContactArea.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\Sensors.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\SurfaceId.cs" />
