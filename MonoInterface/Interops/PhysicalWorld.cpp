@@ -3,6 +3,7 @@
 #include "PhysicalWorld.h"
 #include "ExplosionStructs.h"
 #include "WaterManagerStructs.h"
+#include "PhysicsEventRaisers.h"
 
 void PhysicalWorldInterop::OnRunTimeInitialized()
 {
@@ -12,6 +13,13 @@ void PhysicalWorldInterop::OnRunTimeInitialized()
 	REGISTER_METHOD(RemoveAllExplosionShapes);
 	REGISTER_METHOD(SetWaterManagerParameters);
 	REGISTER_METHOD(GetWaterManagerParameters);
+
+	RegisterEventClients();
+}
+
+void PhysicalWorldInterop::Shutdown()
+{
+	UnregisterEventClients();
 }
 
 ExplosionResult PhysicalWorldInterop::SimulateExplosion(const ExplosionParameters &parameters, mono::Array entitiesToSkip,

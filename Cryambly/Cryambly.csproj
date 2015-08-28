@@ -115,6 +115,17 @@
     <Compile Include="Engine\Physics\EntityAPIDetails\CollisionClass.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\ColliderTypes.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\ConstraintFlags.cs" />
+    <Compile Include="Engine\Physics\EntityAPIDetails\Events\CollisionInfo.cs" />
+    <Compile Include="Engine\Physics\EntityAPIDetails\Events\CollisionParticipantInfo.cs" />
+    <Compile Include="Engine\Physics\EntityAPIDetails\Events\CreatedPartInfo.cs" />
+    <Compile Include="Engine\Physics\EntityAPIDetails\Events\EventHandlerDelegates.cs" />
+    <Compile Include="Engine\Physics\EntityAPIDetails\Events\JointBreakInfo.cs" />
+    <Compile Include="Engine\Physics\EntityAPIDetails\Events\MeshUpdateInfoProvider.cs" />
+    <Compile Include="Engine\Physics\EntityAPIDetails\Events\MonoPhysicsEventData.cs" />
+    <Compile Include="Engine\Physics\EntityAPIDetails\Events\PhysicalEntityStateInfo.cs" />
+    <Compile Include="Engine\Physics\EntityAPIDetails\Events\PhysicsMeshUpdateReason.cs" />
+    <Compile Include="Engine\Physics\EntityAPIDetails\Events\PhysicsPartCreationReason.cs" />
+    <Compile Include="Engine\Physics\EntityAPIDetails\Events\StereoPhysicsEventData.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\GeometryCollisionTypeCodes.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\GeometryParameters\ArticulatedBody.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\GeometryParameters\GeometryParameters.cs" />
@@ -246,6 +257,7 @@
     <Compile Include="Engine\Physics\ExplosionShapes.cs" />
     <Compile Include="Engine\Physics\PhysicalEntity.cs" />
     <Compile Include="Engine\Physics\PhysicalEntityFlags.cs" />
+    <Compile Include="Engine\Physics\PhysicalEntityRemovalMode.cs" />
     <Compile Include="Engine\Physics\PhysicalEntityType.cs" />
     <Compile Include="Engine\Physics\PhysicalEntityTypes.cs" />
     <Compile Include="Engine\Physics\PhysicalGeometry.cs" />

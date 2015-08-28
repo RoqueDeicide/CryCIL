@@ -12,6 +12,7 @@ struct PhysicalWorldInterop : public IMonoInterop<true, true>
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Physics"; }
 
 	virtual void OnRunTimeInitialized() override;
+	virtual void Shutdown() override;
 
 	static ExplosionResult SimulateExplosion(const ExplosionParameters &parameters, mono::Array entitiesToSkip, int types);
 	static int             AddExplosionShape(IGeometry *shape, float size, int index, float probability = 1.0f);

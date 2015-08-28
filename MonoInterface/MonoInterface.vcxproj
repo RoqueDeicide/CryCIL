@@ -324,6 +324,7 @@
     <ClInclude Include="Interops\PhysicalEntity.h" />
     <ClInclude Include="Interops\PhysicalWorld.h" />
     <ClInclude Include="Interops\PhysicsActionStructs.h" />
+    <ClInclude Include="Interops\PhysicsEventRaisers.h" />
     <ClInclude Include="Interops\PhysicsGeometryStructs.h" />
     <ClInclude Include="Interops\PhysicsParameterStructs.h" />
     <ClInclude Include="Interops\PhysicsStatusStructs.h" />
@@ -494,6 +495,7 @@
     <ClCompile Include="TypeMapChecks\SmallEntityStructs.cpp" />
     <ClCompile Include="TypeMapChecks\SpawnParams.cpp" />
     <ClCompile Include="TypeMapChecks\StridedPointer.cpp" />
+    <ClCompile Include="TypeMapChecks\UpdateMeshReason.cpp" />
     <ClCompile Include="TypeMapChecks\WaveSimParams.cpp" />
     <ClCompile Include="TypeMapChecks\_constrflags.cpp" />
   </ItemGroup>
