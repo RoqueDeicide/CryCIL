@@ -126,6 +126,7 @@
     <Compile Include="Engine\Physics\EntityAPIDetails\Events\PhysicsMeshUpdateReason.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Events\PhysicsPartCreationReason.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Events\StereoPhysicsEventData.cs" />
+    <Compile Include="Engine\Physics\EntityAPIDetails\Events\TimeStepInfo.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\GeometryCollisionTypeCodes.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\GeometryParameters\ArticulatedBody.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\GeometryParameters\GeometryParameters.cs" />
@@ -531,6 +532,7 @@
     <Compile Include="Utilities\Utf32Char.cs" />
     <Compile Include="VariousConstants.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\FlagParameters.Example.cs" />
+    <Compile Include="Engine\Physics\PhysicalWorld.Events.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Engine\CustomTypes\" />

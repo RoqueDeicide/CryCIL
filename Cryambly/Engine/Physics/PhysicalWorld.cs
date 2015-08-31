@@ -5,7 +5,7 @@ namespace CryCil.Engine.Physics
 	/// <summary>
 	/// Provides access to CryEngine physics API.
 	/// </summary>
-	public static class PhysicalWorld
+	public static partial class PhysicalWorld
 	{
 		/// <summary>
 		/// Simulates an explosion.
