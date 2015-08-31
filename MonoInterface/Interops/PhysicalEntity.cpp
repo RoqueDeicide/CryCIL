@@ -161,6 +161,8 @@ void PhysicalEntityInterop::OnRunTimeInitialized()
 	REGISTER_METHOD(GetParams);
 	REGISTER_METHOD(GetStatusInternal);
 	REGISTER_METHOD(Action);
+	REGISTER_METHOD(AddGeometry);
+	REGISTER_METHOD(RemoveGeometry);
 }
 
 int PhysicalEntityInterop::SetParams(IPhysicalEntity *handle, PhysicsParameters *parameters, bool threadSafe)
@@ -232,4 +234,44 @@ int PhysicalEntityInterop::Action(IPhysicalEntity *handle, PhysicsAction *action
 	// Delete CryEngine object.
 	delete act;
 	return result;
+}
+
+int PhysicalEntityInterop::AddGeometry(IPhysicalEntity *handle, phys_geometry *pgeom, GeometryParameters *parameters, int id, bool threadSafe)
+{
+	EPE_GeomParams paramsType = EPE_GeomParams(parameters->type);
+
+	switch (paramsType)
+	{
+	case ePE_geomparams:
+	{
+		pe_geomparams geomParams;
+		parameters->ToGeomParams(geomParams);
+		return handle->AddGeometry(pgeom, &geomParams, id, threadSafe ? 1 : 0);
+	}
+	case ePE_cargeomparams:
+	{
+		pe_cargeomparams geomParams;
+		GeometryParametersVehicle *carParams =
+			reinterpret_cast<GeometryParametersVehicle *>(parameters);
+		carParams->ToGeomParams(geomParams);
+		return handle->AddGeometry(pgeom, &geomParams, id, threadSafe ? 1 : 0);
+	}
+	case ePE_articgeomparams:
+	{
+		pe_articgeomparams geomParams;
+		GeometryParametersArticulatedBody *artParams =
+			reinterpret_cast<GeometryParametersArticulatedBody *>(parameters);
+		artParams->ToGeomParams(geomParams);
+		return handle->AddGeometry(pgeom, &geomParams, id, threadSafe ? 1 : 0);
+	}
+	case ePE_GeomParams_Count: break;
+	default: break;
+	}
+
+	return -1;
+}
+
+void PhysicalEntityInterop::RemoveGeometry(IPhysicalEntity *handle, int id, bool threadSafe)
+{
+	handle->RemoveGeometry(id, threadSafe ? 1 : 0);
 }

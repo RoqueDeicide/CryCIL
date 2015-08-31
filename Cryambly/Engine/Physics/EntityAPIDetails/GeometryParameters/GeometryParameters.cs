@@ -160,6 +160,7 @@ namespace CryCil.Engine.Physics
 			get { return this.matMappings; }
 			set
 			{
+				this.matMappings = value;
 				if (this.pMatMapping != null)
 				{
 					CryMarshal.Free(new IntPtr(this.pMatMapping), true);
@@ -214,7 +215,7 @@ namespace CryCil.Engine.Physics
 			this.initialized = true;
 
 			this.type = PhysicsGeometryParametersTypes.General;
-			this.pMtx3x4 = new Matrix34();
+			this.pMtx3x4 = new Matrix34 {M00 = UnusedValue.Single};
 			this.matMappings = null;
 			this.density = this.mass = 0;
 			this.pos = new Vector3();

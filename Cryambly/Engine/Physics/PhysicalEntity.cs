@@ -203,6 +203,62 @@ namespace CryCil.Engine.Physics
 
 			return Action(this.handle, ref action, threadSafe) != 0;
 		}
+		/// <summary>
+		/// Adds a part to this physical entity.
+		/// </summary>
+		/// <param name="body">      A physical body that represents the part.</param>
+		/// <param name="parameters">
+		/// A reference to the base part of the object that provides a set of parameters that specify the
+		/// body.
+		/// </param>
+		/// <param name="id">        
+		/// An identifier to assign to the part. Expected to be unique within the entity. If default value
+		/// of -1 is passed, the identifier is assigned automatically.
+		/// </param>
+		/// <param name="threadSafe">
+		/// Indicates whether part must be created at the end of simulation step, rather then immediately
+		/// which makes it more thread-safe.
+		/// </param>
+		/// <returns>An identifier that was assigned to the part, or -1, if creation has failed.</returns>
+		/// <exception cref="ArgumentNullException">
+		/// The object that represents the physical body must be valid.
+		/// </exception>
+		/// <exception cref="ArgumentException">
+		/// The object that represents parameters that specify the physical body must not be created
+		/// through default constructor.
+		/// </exception>
+		public int AddBody(PhysicalBody body, ref GeometryParameters parameters, int id = -1, bool threadSafe = false)
+		{
+			this.AssertInstance();
+			if (!body.IsValid)
+			{
+				throw new ArgumentNullException("body", "The object that represents the physical body must be valid.");
+			}
+			if (!parameters.Initialized)
+			{
+				throw new ArgumentException(
+					"The object that represents parameters that specify the physical body must not be created through default constructor.",
+					"parameters");
+			}
+			Contract.EndContractBlock();
+
+			return AddGeometry(this.handle, body, ref parameters, id, threadSafe);
+		}
+		/// <summary>
+		/// Removes a part of the entity.
+		/// </summary>
+		/// <param name="id">        An identifier of the part to remove.</param>
+		/// <param name="threadSafe">
+		/// Indicates whether part must be created at the end of simulation step, rather then immediately
+		/// which makes it more thread-safe.
+		/// </param>
+		public void RemoveBody(int id, bool threadSafe = false)
+		{
+			this.AssertInstance();
+			Contract.EndContractBlock();
+
+			RemoveGeometry(this.handle, id, threadSafe);
+		}
 		#endregion
 		#region Utilities
 		private void AssertInstance()
@@ -221,6 +277,11 @@ namespace CryCil.Engine.Physics
 		private static extern int GetStatusInternal(IntPtr handle, ref PhysicsStatus status);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern int Action(IntPtr handle, ref PhysicsAction action, bool threadSafe);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern int AddGeometry(IntPtr handle, PhysicalBody pgeom, ref GeometryParameters parameters,
+											  int id, bool threadSafe);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void RemoveGeometry(IntPtr handle, int id, bool threadSafe);
 		#endregion
 	}
 }

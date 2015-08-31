@@ -13,8 +13,11 @@ struct PhysicalEntityInterop : public IMonoInterop<true, true>
 
 	virtual void OnRunTimeInitialized() override;
 
-	static int SetParams(IPhysicalEntity *handle, PhysicsParameters *parameters, bool threadSafe);
-	static int GetParams(IPhysicalEntity *handle, PhysicsParameters *parameters);
-	static int GetStatusInternal(IPhysicalEntity *handle, PhysicsStatus *status);
-	static int Action(IPhysicalEntity *handle, PhysicsAction *action, bool threadSafe);
+	static int  SetParams(IPhysicalEntity *handle, PhysicsParameters *parameters, bool threadSafe);
+	static int  GetParams(IPhysicalEntity *handle, PhysicsParameters *parameters);
+	static int  GetStatusInternal(IPhysicalEntity *handle, PhysicsStatus *status);
+	static int  Action(IPhysicalEntity *handle, PhysicsAction *action, bool threadSafe);
+	static int  AddGeometry(IPhysicalEntity *handle, phys_geometry *pgeom, GeometryParameters *parameters, int id,
+							bool threadSafe);
+	static void RemoveGeometry(IPhysicalEntity *handle, int id, bool threadSafe);
 };
