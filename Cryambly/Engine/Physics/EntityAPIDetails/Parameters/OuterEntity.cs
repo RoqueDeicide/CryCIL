@@ -30,7 +30,7 @@ namespace CryCil.Engine.Physics
 		/// </summary>
 		[UsedImplicitly] public PhysicsParameters Base;
 		[UsedImplicitly] private PhysicalEntity outerEntity;
-		[UsedImplicitly] private PhysicalGeometry outerGeometry;
+		[UsedImplicitly] private GeometryShape outerGeometry;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -44,7 +44,7 @@ namespace CryCil.Engine.Physics
 		/// Gets the encompassing geometry (this geometry is used when querying containment of a certain
 		/// point using <see cref="PhysicsStatusContainsPoint"/>).
 		/// </summary>
-		public PhysicalGeometry OuterGeometry
+		public GeometryShape OuterGeometry
 		{
 			get { return this.outerGeometry; }
 		}
@@ -64,7 +64,7 @@ namespace CryCil.Engine.Physics
 			{
 				Base = new PhysicsParameters(PhysicsParametersTypes.OuterEntity),
 				outerEntity = new PhysicalEntity(),
-				outerGeometry = new PhysicalGeometry()
+				outerGeometry = new GeometryShape()
 			};
 		}
 		/// <summary>
@@ -84,7 +84,7 @@ namespace CryCil.Engine.Physics
 			{
 				Base = new PhysicsParameters(PhysicsParametersTypes.OuterEntity),
 				outerEntity = outerEntity,
-				outerGeometry = new PhysicalGeometry()
+				outerGeometry = new GeometryShape()
 			};
 		}
 		/// <summary>
@@ -101,7 +101,7 @@ namespace CryCil.Engine.Physics
 		/// A valid object of type <see cref="PhysicsParametersOuterEntity"/> that can be passed to
 		/// <see cref="PhysicalEntity.SetParameters"/>.
 		/// </returns>
-		public static PhysicsParametersOuterEntity Create(PhysicalEntity outerEntity, PhysicalGeometry encompassingGeometry)
+		public static PhysicsParametersOuterEntity Create(PhysicalEntity outerEntity, GeometryShape encompassingGeometry)
 		{
 			return new PhysicsParametersOuterEntity()
 			{

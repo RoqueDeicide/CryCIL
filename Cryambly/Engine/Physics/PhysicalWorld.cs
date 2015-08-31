@@ -29,7 +29,7 @@ namespace CryCil.Engine.Physics
 																						EntityQueryFlags.Living |
 																						EntityQueryFlags.Independent);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		internal static extern int AddExplosionShape(PhysicalGeometry shape, float size, int index, float probability = 1.0f);
+		internal static extern int AddExplosionShape(GeometryShape shape, float size, int index, float probability = 1.0f);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		internal static extern void RemoveExplosionShape(int index);
 		[MethodImpl(MethodImplOptions.InternalCall)]

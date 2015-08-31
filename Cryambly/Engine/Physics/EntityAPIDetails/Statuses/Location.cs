@@ -55,12 +55,12 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// A wrapper for a pointer to the geometry that is used by the part/entity for ray-tracing.
 		/// </summary>
-		public PhysicalGeometry Geometry;
+		public GeometryShape Geometry;
 		/// <summary>
 		/// A wrapper for a pointer to the geometry that is used by the part/entity for physical
 		/// interactions.
 		/// </summary>
-		public PhysicalGeometry GeometryProxy;
+		public GeometryShape GeometryProxy;
 		#endregion
 		#region Construction
 		/// <summary>

@@ -24,7 +24,7 @@ namespace CryCil.Engine.Physics
 		private readonly Vector3 cutPartPosition;
 		private readonly Vector3 cutSourceNormal;
 		private readonly Vector3 cutPartNormal;
-		private readonly PhysicalGeometry newMesh;
+		private readonly GeometryShape newMesh;
 		private readonly MeshUpdateInfoProvider meshUpdates;
 		#endregion
 		#region Properties
@@ -150,7 +150,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the object that represents the new mesh that is used by the part that has broken off.
 		/// </summary>
-		public PhysicalGeometry NewMesh
+		public GeometryShape NewMesh
 		{
 			get { return this.newMesh; }
 		}
@@ -169,7 +169,7 @@ namespace CryCil.Engine.Physics
 								 Vector3 breakageImpulse, bool invalid, PhysicsPartCreationReason reason,
 								 Vector3 ejectionVelocity, float breakageSize, float cutRadius,
 								 Vector3 cutSourcePosition, Vector3 cutPartPosition, Vector3 cutSourceNormal,
-								 Vector3 cutPartNormal, PhysicalGeometry newMesh,
+								 Vector3 cutPartNormal, GeometryShape newMesh,
 								 MeshUpdateInfoProvider meshUpdates)
 		{
 			this.newEntity = newEntity;

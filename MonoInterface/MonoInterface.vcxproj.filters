@@ -773,6 +773,9 @@
     <ClCompile Include="TypeMapChecks\UpdateMeshReason.cpp">
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
+    <ClCompile Include="TypeMapChecks\PhysicalGeometry.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">

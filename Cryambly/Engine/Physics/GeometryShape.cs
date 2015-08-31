@@ -3,9 +3,9 @@
 namespace CryCil.Engine.Physics
 {
 	/// <summary>
-	/// Represents .
+	/// Represents an object that defines the shape of geometric object that is used by the physics subsystem.
 	/// </summary>
-	public struct PhysicalGeometry
+	public struct GeometryShape
 	{
 		#region Fields
 		private readonly IntPtr handle;
@@ -21,7 +21,7 @@ namespace CryCil.Engine.Physics
 
 		#endregion
 		#region Construction
-		internal PhysicalGeometry(IntPtr handle)
+		internal GeometryShape(IntPtr handle)
 		{
 			this.handle = handle;
 		}

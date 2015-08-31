@@ -261,7 +261,7 @@
     <Compile Include="Engine\Physics\PhysicalEntityRemovalMode.cs" />
     <Compile Include="Engine\Physics\PhysicalEntityType.cs" />
     <Compile Include="Engine\Physics\PhysicalEntityTypes.cs" />
-    <Compile Include="Engine\Physics\PhysicalGeometry.cs" />
+    <Compile Include="Engine\Physics\GeometryShape.cs" />
     <Compile Include="Engine\Physics\PhysicalWorld.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Actions\PhysicsActionTypes.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\GeometryParameters\PhysicsGeometryParametersTypes.cs" />
@@ -275,7 +275,7 @@
     <Compile Include="Engine\Physics\Primitives\Plane.cs" />
     <Compile Include="Engine\Physics\Primitives\Primitive.cs" />
     <Compile Include="Engine\Physics\Primitives\Triangle.cs" />
-    <Compile Include="Engine\Physics\RegisteredPhysicalGeometry.cs" />
+    <Compile Include="Engine\Physics\PhysicalBody.cs" />
     <Compile Include="Engine\Physics\TetraLattice.cs" />
     <Compile Include="Engine\Physics\UnusedValues\UnusedValue.cs" />
     <Compile Include="Engine\Rendering\RenderParameters.cs" />

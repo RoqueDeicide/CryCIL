@@ -547,9 +547,9 @@ namespace CryCil.Engine.Physics
 		}
 		[UnmanagedThunk("Raises one of the physical events.")]
 		private static bool OnMeshChanged(ref MonoPhysicsEventData entity, int partId, bool invalid,
-										  PhysicsMeshUpdateReason reason, PhysicalGeometry mesh,
+										  PhysicsMeshUpdateReason reason, GeometryShape mesh,
 										  ref MeshUpdateInfoProvider updatesInfo, ref Matrix34 skeletonToMesh,
-										  PhysicalGeometry skeletonMesh, bool logged)
+										  GeometryShape skeletonMesh, bool logged)
 		{
 			var handlers = logged ? meshHandlersLogged : meshHandlers;
 			bool proceed = true;

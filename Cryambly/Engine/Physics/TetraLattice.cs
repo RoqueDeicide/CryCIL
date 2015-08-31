@@ -67,7 +67,7 @@ namespace CryCil.Engine.Physics
 		/// <exception cref="ArgumentOutOfRangeException">
 		/// Maximal number of triangles per BV node must be more then 0.
 		/// </exception>
-		public PhysicalGeometry CreateSkin(int maxTrianglesPerBVNode = 8)
+		public GeometryShape CreateSkin(int maxTrianglesPerBVNode = 8)
 		{
 			this.AssertInstance();
 			if (maxTrianglesPerBVNode <= 0)
@@ -93,7 +93,7 @@ namespace CryCil.Engine.Physics
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void SetParams(IntPtr handle, ref PhysicsParametersTetraLattice parameters);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern PhysicalGeometry CreateSkinMesh(IntPtr handle, int maxTrisPerBvNode);
+		private static extern GeometryShape CreateSkinMesh(IntPtr handle, int maxTrisPerBvNode);
 		#endregion
 	}
 }

@@ -49,7 +49,7 @@ namespace CryCil.Engine.Physics
 		[UsedImplicitly] private int nVtx;
 		[UsedImplicitly] private StridedPointer pVtx;
 		[UsedImplicitly] private StridedPointer pNormals;
-		[UsedImplicitly] private PhysicalGeometry pMesh;
+		[UsedImplicitly] private GeometryShape pMesh;
 		[UsedImplicitly] private SoftBodyLockMode flags;
 		[UsedImplicitly] private Quaternion qHost;
 		[UsedImplicitly] private Vector3 posHost;
@@ -82,7 +82,7 @@ namespace CryCil.Engine.Physics
 		/// Gets the object that represents the current geometry. You need to engage the lock on the soft
 		/// body to make sure this geometry doesn't get invalidated while you use it.
 		/// </summary>
-		public PhysicalGeometry Mesh
+		public GeometryShape Mesh
 		{
 			get { return this.pMesh; }
 		}

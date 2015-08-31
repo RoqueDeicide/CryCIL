@@ -39,7 +39,7 @@ namespace CryCil.Engine.Physics
 		private float mass;
 		private float density;
 		private float minContactDist;
-		private RegisteredPhysicalGeometry pPhysGeom, pPhysGeomProxy;
+		private PhysicalBody pPhysGeom, pPhysGeomProxy;
 		private int idmatBreakable;
 		private TetraLattice pLattice;
 		private int idSkeleton;
@@ -249,7 +249,7 @@ namespace CryCil.Engine.Physics
 		/// Just assign this property without assigning <see cref="GeometryProxy"/> if you want the part to
 		/// use the same geometry to be used for both ray-tracing and physical interactions.
 		/// </remarks>
-		public RegisteredPhysicalGeometry Geometry
+		public PhysicalBody Geometry
 		{
 			get { return this.pPhysGeom; }
 			set
@@ -267,7 +267,7 @@ namespace CryCil.Engine.Physics
 		/// Just assign this property without assigning <see cref="Geometry"/> if you want the part to use
 		/// the same geometry to be used for both ray-tracing and physical interactions.
 		/// </remarks>
-		public RegisteredPhysicalGeometry GeometryProxy
+		public PhysicalBody GeometryProxy
 		{
 			get { return this.pPhysGeomProxy; }
 			set
@@ -402,8 +402,8 @@ namespace CryCil.Engine.Physics
 			this.pMatMapping = (int*)UnusedValue.Pointer.ToPointer();
 			this.nMats = UnusedValue.Int32;
 			this.idParent = UnusedValue.Int32;
-			this.pPhysGeom = new RegisteredPhysicalGeometry(UnusedValue.Pointer);
-			this.pPhysGeomProxy = new RegisteredPhysicalGeometry(UnusedValue.Pointer);
+			this.pPhysGeom = new PhysicalBody(UnusedValue.Pointer);
+			this.pPhysGeomProxy = new PhysicalBody(UnusedValue.Pointer);
 		}
 		/// <summary>
 		/// Creates a new object of this type that can be used to get/set parameters of one (or more)
@@ -438,8 +438,8 @@ namespace CryCil.Engine.Physics
 			this.pMatMapping = (int*)UnusedValue.Pointer.ToPointer();
 			this.nMats = UnusedValue.Int32;
 			this.idParent = UnusedValue.Int32;
-			this.pPhysGeom = new RegisteredPhysicalGeometry(UnusedValue.Pointer);
-			this.pPhysGeomProxy = new RegisteredPhysicalGeometry(UnusedValue.Pointer);
+			this.pPhysGeom = new PhysicalBody(UnusedValue.Pointer);
+			this.pPhysGeomProxy = new PhysicalBody(UnusedValue.Pointer);
 		}
 		/// <summary>
 		/// Creates a copy of parameters to be reassigned to the same part.

@@ -8,7 +8,7 @@ namespace CryCil.Engine.Physics
 	public struct MeshUpdateInfoProvider
 	{
 		#region Fields
-		private readonly PhysicalGeometry geometry;
+		private readonly GeometryShape geometry;
 		private readonly IntPtr lastUpdate;
 		#endregion
 		#region Properties
@@ -21,7 +21,7 @@ namespace CryCil.Engine.Physics
 		}
 		#endregion
 		#region Construction
-		internal MeshUpdateInfoProvider(PhysicalGeometry geometry, IntPtr lastUpdate)
+		internal MeshUpdateInfoProvider(GeometryShape geometry, IntPtr lastUpdate)
 		{
 			this.geometry = geometry;
 			this.lastUpdate = lastUpdate;

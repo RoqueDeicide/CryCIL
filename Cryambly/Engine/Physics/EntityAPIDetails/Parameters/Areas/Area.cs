@@ -208,7 +208,7 @@ namespace CryCil.Engine.Physics
 		[UsedImplicitly] private int bUniform;
 		[UsedImplicitly] private int bUseCallback;
 		[UsedImplicitly] private float damping;
-		[UsedImplicitly] private PhysicalGeometry pGeom;
+		[UsedImplicitly] private GeometryShape pGeom;
 		[UsedImplicitly] private float volume;
 		[UsedImplicitly] private float volumeAccuracy;
 		[UsedImplicitly] private float borderPad;
@@ -266,7 +266,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets or sets the geometry that defines the extents of this area.
 		/// </summary>
-		public PhysicalGeometry Geometry
+		public GeometryShape Geometry
 		{
 			get { return this.pGeom; }
 			set { this.pGeom = value; }
@@ -357,7 +357,7 @@ namespace CryCil.Engine.Physics
 			this.bUniform = UnusedValue.Int32;
 			this.falloff0 = UnusedValue.Single;
 			this.damping = UnusedValue.Single;
-			this.pGeom = new PhysicalGeometry(UnusedValue.Pointer);
+			this.pGeom = new GeometryShape(UnusedValue.Pointer);
 			this.volume = UnusedValue.Single;
 			this.borderPad = UnusedValue.Single;
 			this.volumeAccuracy = UnusedValue.Single;

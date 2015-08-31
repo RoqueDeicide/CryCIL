@@ -28,7 +28,7 @@ namespace CryCil.Engine.Physics
 		/// <exception cref="ArgumentNullException">
 		/// Cannot use null geometry for boolean carvings.
 		/// </exception>
-		public static int Add(PhysicalGeometry shape, float size, int index, float probability = 1.0f)
+		public static int Add(GeometryShape shape, float size, int index, float probability = 1.0f)
 		{
 			if (!shape.IsValid)
 			{

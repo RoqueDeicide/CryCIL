@@ -98,9 +98,9 @@ namespace CryCil.Engine.Physics
 	/// <param name="skeletonMesh">  A skeleton physics mesh, used by deformable bodies.</param>
 	/// <returns>A value that indicates whether propagation of this event can continue.</returns>
 	public delegate bool PhysicsMeshChangedEventHandler(ref MonoPhysicsEventData entity, int partId, bool invalid,
-														PhysicsMeshUpdateReason reason, PhysicalGeometry mesh,
+														PhysicsMeshUpdateReason reason, GeometryShape mesh,
 														ref MeshUpdateInfoProvider updatesInfo, ref Matrix34 skeletonToMesh,
-														PhysicalGeometry skeletonMesh);
+														GeometryShape skeletonMesh);
 	/// <summary>
 	/// Defines a signature of methods that can handle <see cref="PhysicalWorld.PartCreated"/> event.
 	/// </summary>
