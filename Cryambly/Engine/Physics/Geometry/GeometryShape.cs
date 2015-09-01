@@ -76,7 +76,6 @@ namespace CryCil.Engine.Physics
 		{
 			this.handle = IntPtr.Zero;
 
-			this.AssertInstance();
 			if (vertices.IsNullOrTooSmall(3))
 			{
 				throw new ArgumentException("An array of vertices needs to have at least 3 vertices.", "vertices");
@@ -148,7 +147,6 @@ namespace CryCil.Engine.Physics
 		{
 			this.handle = IntPtr.Zero;
 
-			this.AssertInstance();
 			if (vertices.IsNullOrTooSmall(3))
 			{
 				throw new ArgumentException("An array of vertices needs to have at least 3 vertices.", "vertices");
@@ -224,7 +222,6 @@ namespace CryCil.Engine.Physics
 		{
 			this.handle = IntPtr.Zero;
 
-			this.AssertInstance();
 			if (vertices.IsNullOrTooSmall(3))
 			{
 				throw new ArgumentException("An array of vertices needs to have at least 3 vertices.", "vertices");
@@ -313,7 +310,6 @@ namespace CryCil.Engine.Physics
 		{
 			this.handle = IntPtr.Zero;
 
-			this.AssertInstance();
 			if (vertices.IsNullOrTooSmall(3))
 			{
 				throw new ArgumentException("An array of vertices needs to have at least 3 vertices.", "vertices");
@@ -395,7 +391,6 @@ namespace CryCil.Engine.Physics
 		{
 			this.handle = IntPtr.Zero;
 
-			this.AssertInstance();
 			if (vertices.IsNullOrTooSmall(3))
 			{
 				throw new ArgumentException("An array of vertices needs to have at least 3 vertices.", "vertices");
@@ -481,7 +476,6 @@ namespace CryCil.Engine.Physics
 		{
 			this.handle = IntPtr.Zero;
 
-			this.AssertInstance();
 			if (vertices.IsNullOrTooSmall(3))
 			{
 				throw new ArgumentException("An array of vertices needs to have at least 3 vertices.", "vertices");
