@@ -8,8 +8,13 @@ namespace CryCil.Engine.Physics.Primitives
 		/// Represents a primitive geometric object that represents a triangle.
 		/// </summary>
 		[StructLayout(LayoutKind.Explicit)]
+		[PrimitiveType]
 		public struct Triangle
 		{
+			/// <summary>
+			/// Identifier of this type of primitives.
+			/// </summary>
+			public const int Id = 1;
 			/// <summary>
 			/// You can pass a reference to this field to any method that accepts reference to
 			/// <see cref="BasePrimitive"/> object.
@@ -37,6 +42,10 @@ namespace CryCil.Engine.Physics.Primitives
 		/// </summary>
 		public struct IndexedTriangle
 		{
+			/// <summary>
+			/// Identifier of this type of primitives.
+			/// </summary>
+			public const int Id = 1;
 			/// <summary>
 			/// Base part of this object.
 			/// </summary>
