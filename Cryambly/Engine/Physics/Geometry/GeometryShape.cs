@@ -178,7 +178,7 @@ namespace CryCil.Engine.Physics
 			fixed (ushort* indexesPtr = indices)
 			{
 				this.handle = CreateMeshBv(verticesPtr, indexesPtr, null, null, indices.Length / 3, flags,
-										 ref bvParams, approximationTolerance);
+										   ref bvParams, approximationTolerance);
 			}
 		}
 		/// <summary>
@@ -257,7 +257,7 @@ namespace CryCil.Engine.Physics
 			fixed (ushort* indexesPtr = indices)
 			{
 				this.handle = CreateMeshVg(verticesPtr, indexesPtr, null, null, indices.Length / 3,
-										 flags | PhysicsMeshFlags.VoxelGrid, ref vgParams, approximationTolerance);
+										   flags | PhysicsMeshFlags.VoxelGrid, ref vgParams, approximationTolerance);
 			}
 		}
 		/// <summary>
@@ -428,7 +428,7 @@ namespace CryCil.Engine.Physics
 			fixed (byte* matPtr = materialIds)
 			{
 				this.handle = CreateMeshBv(verticesPtr, indexesPtr, matPtr, null, indices.Length / 3, flags,
-										 ref bvParams, approximationTolerance);
+										   ref bvParams, approximationTolerance);
 			}
 		}
 		/// <summary>
@@ -517,7 +517,7 @@ namespace CryCil.Engine.Physics
 			fixed (byte* matPtr = materialIds)
 			{
 				this.handle = CreateMeshVg(verticesPtr, indexesPtr, matPtr, null, indices.Length / 3,
-										 flags | PhysicsMeshFlags.VoxelGrid, ref vgParams, approximationTolerance);
+										   flags | PhysicsMeshFlags.VoxelGrid, ref vgParams, approximationTolerance);
 			}
 		}
 		/// <summary>
@@ -563,12 +563,12 @@ namespace CryCil.Engine.Physics
 												int maxTrianglesPerNode = 4, float favorAabb = 1);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern IntPtr CreateMeshBv(Vector3* vertices, ushort* indices, byte* materialIds, int* foreignIds,
-												int triangleCount, PhysicsMeshFlags flags,
-												ref BoundingVolumeParameters bvParams, float approximationTolerance = 0.05f);
+												  int triangleCount, PhysicsMeshFlags flags,
+												  ref BoundingVolumeParameters bvParams, float approximationTolerance = 0.05f);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern IntPtr CreateMeshVg(Vector3* vertices, ushort* indices, byte* materialIds, int* foreignIds,
-												int triangleCount, PhysicsMeshFlags flags, ref VoxelGridParameters vgParams,
-												float approximationTolerance = 0.05f);
+												  int triangleCount, PhysicsMeshFlags flags, ref VoxelGridParameters vgParams,
+												  float approximationTolerance = 0.05f);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern IntPtr CreatePrimitive(int type, ref Primitive.BasePrimitive primitive);
 		#endregion
