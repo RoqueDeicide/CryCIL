@@ -275,8 +275,8 @@
     <Compile Include="Engine\Physics\Primitives\Plane.cs" />
     <Compile Include="Engine\Physics\Primitives\Primitive.cs" />
     <Compile Include="Engine\Physics\Primitives\Triangle.cs" />
-    <Compile Include="Engine\Physics\PhysicalBody.cs" />
-    <Compile Include="Engine\Physics\TetraLattice.cs" />
+    <Compile Include="Engine\Physics\Geometry\PhysicalBody.cs" />
+    <Compile Include="Engine\Physics\Geometry\TetraLattice.cs" />
     <Compile Include="Engine\Physics\UnusedValues\UnusedValue.cs" />
     <Compile Include="Engine\Rendering\RenderParameters.cs" />
     <Compile Include="Engine\Rendering\Shading\Lighting\DynamicLightFlags.cs" />
