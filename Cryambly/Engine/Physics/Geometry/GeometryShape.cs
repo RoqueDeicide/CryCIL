@@ -2,6 +2,7 @@
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using CryCil.Engine.Physics.Primitives;
 
 namespace CryCil.Engine.Physics
 {
@@ -519,6 +520,30 @@ namespace CryCil.Engine.Physics
 										 flags | PhysicsMeshFlags.VoxelGrid, ref vgParams, approximationTolerance);
 			}
 		}
+		/// <summary>
+		/// Creates a geometry object that represents a primitive geometric object.
+		/// </summary>
+		/// <param name="type">     
+		/// Type of geometric object to create. There is no way to detect a mismatch between a type what is
+		/// actually passed with <paramref name="primitive"/>.
+		/// </param>
+		/// <param name="primitive">
+		/// Reference to the base part of the object that provides information about a primitive.
+		/// </param>
+		public GeometryShape(int type, ref Primitive.BasePrimitive primitive)
+		{
+			this.handle = IntPtr.Zero;
+
+			if (Array.BinarySearch(Primitive.RegisteredTypes, type) < 0)
+			{
+				throw new NotSupportedException(string.Format("Primitive type with identifier = {0} is not supported",
+															  type));
+			}
+
+			Contract.EndContractBlock();
+
+			this.handle = CreatePrimitive(type, ref primitive);
+		}
 		#endregion
 		#region Interface
 		#endregion
@@ -544,6 +569,8 @@ namespace CryCil.Engine.Physics
 		private static extern IntPtr CreateMeshVg(Vector3* vertices, ushort* indices, byte* materialIds, int* foreignIds,
 												int triangleCount, PhysicsMeshFlags flags, ref VoxelGridParameters vgParams,
 												float approximationTolerance = 0.05f);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern IntPtr CreatePrimitive(int type, ref Primitive.BasePrimitive primitive);
 		#endregion
 	}
 }

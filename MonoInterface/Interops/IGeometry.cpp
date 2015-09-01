@@ -6,6 +6,7 @@ void IGeometryInterop::OnRunTimeInitialized()
 	REGISTER_METHOD(CreateMesh);
 	REGISTER_METHOD(CreateMeshBv);
 	REGISTER_METHOD(CreateMeshVg);
+	REGISTER_METHOD(CreatePrimitive);
 }
 
 IGeometry *IGeometryInterop::CreateMesh(Vec3* vertices, uint16* indices, byte* materialIds, int* foreignIds,
@@ -33,4 +34,9 @@ IGeometry *IGeometryInterop::CreateMeshVg(Vec3* vertices, uint16* indices, byte*
 	return gEnv->pPhysicalWorld->GetGeomManager()->CreateMesh(vertices, indices, reinterpret_cast<char *>(materialIds),
 															  foreignIds, triangleCount, flags, approximationTolerance,
 															  vgParams);
+}
+
+IGeometry *IGeometryInterop::CreatePrimitive(int type, primitives::primitive *prim)
+{
+	return gEnv->pPhysicalWorld->GetGeomManager()->CreatePrimitive(type, prim);
 }

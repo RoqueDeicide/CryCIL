@@ -16,4 +16,5 @@ struct IGeometryInterop : public IMonoInterop < true, true >
 								   int flags, SMeshBVParams *vgParams, float approximationTolerance);
 	static IGeometry *CreateMeshVg(Vec3* vertices, uint16* indices, byte* materialIds, int* foreignIds, int triangleCount,
 								   int flags, SMeshBVParams *vgParams, float approximationTolerance);
+	static IGeometry *CreatePrimitive(int type, primitives::primitive *prim);
 };
