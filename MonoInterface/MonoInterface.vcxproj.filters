@@ -428,6 +428,9 @@
     <ClInclude Include="Interops\PhysicsEventRaisers.h">
       <Filter>Interops\Engine\Physics</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\IGeometry.h">
+      <Filter>Interops\Engine\Physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -775,6 +778,12 @@
     </ClCompile>
     <ClCompile Include="TypeMapChecks\PhysicalGeometry.cpp">
       <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\PhysicsMeshFlags.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\IGeometry.cpp">
+      <Filter>Interops\Engine\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

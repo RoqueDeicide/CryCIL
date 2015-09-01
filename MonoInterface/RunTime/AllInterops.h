@@ -99,3 +99,5 @@
 #include "Interops/PhysicalEntity.h"
 
 #include "Interops/Lattice.h"
+
+#include "Interops/IGeometry.h"

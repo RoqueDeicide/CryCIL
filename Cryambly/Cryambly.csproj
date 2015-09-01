@@ -170,6 +170,8 @@
     <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\Wheel.cs" />
     <Compile Include="Engine\Physics\ForeignData.cs" />
     <Compile Include="Engine\Physics\ForeignDataIds.cs" />
+    <Compile Include="Engine\Physics\Geometry\BoundingVolumeParameters.cs" />
+    <Compile Include="Engine\Physics\Geometry\PhysicsMeshFlags.cs" />
     <Compile Include="Engine\Physics\IForeignDataProvider.cs" />
     <Compile Include="Engine\Input\ActionMapping\Action.cs" />
     <None Include="Engine\Input\ActionMapping\Action.Examples.GameSDK.cs" />
@@ -261,7 +263,7 @@
     <Compile Include="Engine\Physics\PhysicalEntityRemovalMode.cs" />
     <Compile Include="Engine\Physics\PhysicalEntityType.cs" />
     <Compile Include="Engine\Physics\PhysicalEntityTypes.cs" />
-    <Compile Include="Engine\Physics\GeometryShape.cs" />
+    <Compile Include="Engine\Physics\Geometry\GeometryShape.cs" />
     <Compile Include="Engine\Physics\PhysicalWorld.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Actions\PhysicsActionTypes.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\GeometryParameters\PhysicsGeometryParametersTypes.cs" />
@@ -399,6 +401,7 @@
     <Compile Include="Mathematics\Random\RandomizedSingle.cs" />
     <Compile Include="Mathematics\Specials\Angle.cs" />
     <Compile Include="Mathematics\Vectors\IVector.cs" />
+    <Compile Include="Mathematics\Vectors\Vector3Int32.cs" />
     <Compile Include="NativeInvocationAttributes.cs" />
     <Compile Include="RunTime\DefaultInitializationStages.cs" />
     <Compile Include="RunTime\Registration\EntityRegistry.cs" />

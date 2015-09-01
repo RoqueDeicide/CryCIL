@@ -297,6 +297,7 @@
     <ClInclude Include="Interops\FlowGraph.h" />
     <ClInclude Include="Interops\Game.h" />
     <ClInclude Include="Interops\GeneralExtensions.h" />
+    <ClInclude Include="Interops\IGeometry.h" />
     <ClInclude Include="Interops\InputInterop.h" />
     <ClInclude Include="Interops\Lattice.h" />
     <ClInclude Include="Interops\Level.h" />
@@ -421,6 +422,7 @@
     <ClCompile Include="Interops\FlowGraph.cpp" />
     <ClCompile Include="Interops\Game.cpp" />
     <ClCompile Include="Interops\GeneralExtensions.cpp" />
+    <ClCompile Include="Interops\IGeometry.cpp" />
     <ClCompile Include="Interops\InputInterop.cpp" />
     <ClCompile Include="Interops\Lattice.cpp" />
     <ClCompile Include="Interops\Level.cpp" />
@@ -488,6 +490,7 @@
     <ClCompile Include="TypeMapChecks\PhysicalEntityType.cpp" />
     <ClCompile Include="TypeMapChecks\PhysicalGeometry.cpp" />
     <ClCompile Include="TypeMapChecks\PhysicsForeignIds.cpp" />
+    <ClCompile Include="TypeMapChecks\PhysicsMeshFlags.cpp" />
     <ClCompile Include="TypeMapChecks\PhysicsTypeEnumerations.cpp" />
     <ClCompile Include="TypeMapChecks\Primitives.cpp" />
     <ClCompile Include="TypeMapChecks\RenderParameters.cpp" />
