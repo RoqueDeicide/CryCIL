@@ -4,8 +4,8 @@
 
 struct IGeometryInterop : public IMonoInterop < true, true >
 {
-	virtual const char *GetInteropClassName() override { return "IGeometry"; }
-	virtual const char *GetInteropNameSpace() override { return "CryCil."; }
+	virtual const char *GetInteropClassName() override { return "GeometryShape"; }
+	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Physics"; }
 
 	virtual void OnRunTimeInitialized() override;
 
