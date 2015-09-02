@@ -24,6 +24,13 @@ namespace CryCil.Utilities
 		[UsedImplicitly] private IntPtr handle;
 		#endregion
 		#region Properties
+		/// <summary>
+		/// Gets the internal handle of this object.
+		/// </summary>
+		public IntPtr Handle
+		{
+			get { return this.handle; }
+		}
 		#endregion
 		#region Events
 		#endregion
