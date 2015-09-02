@@ -734,6 +734,39 @@ namespace CryCil
 				right.X * left.M10 + right.Y * left.M11 + right.Z * left.M12,
 				right.X * left.M20 + right.Y * left.M21 + right.Z * left.M22);
 		}
+		public override bool Equals(object obj)
+		{
+			if (ReferenceEquals(null, obj)) return false;
+			return obj is Matrix33 && this.Equals((Matrix33)obj);
+		}
+		/// <summary>
+		/// Determines whether internal representations of 2 matrices are equal.
+		/// </summary>
+		/// <param name="left"> Left operand.</param>
+		/// <param name="right">Right operand.</param>
+		/// <returns>True, if 2 operands are precisely equal.</returns>
+		public static bool operator ==(Matrix33 left, Matrix33 right)
+		{
+			// ReSharper disable CompareOfFloatsByEqualityOperator
+			return left.M00 == right.M00 && left.M01 == right.M01 && left.M02 == right.M02 &&
+				   left.M10 == right.M10 && left.M11 == right.M11 && left.M12 == right.M12 &&
+				   left.M20 == right.M20 && left.M21 == right.M21 && left.M22 == right.M22;
+			// ReSharper restore CompareOfFloatsByEqualityOperator
+		}
+		/// <summary>
+		/// Determines whether internal representations of 2 matrices are not equal.
+		/// </summary>
+		/// <param name="left"> Left operand.</param>
+		/// <param name="right">Right operand.</param>
+		/// <returns>True, if 2 operands are precisely not equal.</returns>
+		public static bool operator !=(Matrix33 left, Matrix33 right)
+		{
+			// ReSharper disable CompareOfFloatsByEqualityOperator
+			return left.M00 != right.M00 && left.M01 != right.M01 && left.M02 != right.M02 &&
+				   left.M10 != right.M10 && left.M11 != right.M11 && left.M12 != right.M12 &&
+				   left.M20 != right.M20 && left.M21 != right.M21 && left.M22 != right.M22;
+			// ReSharper restore CompareOfFloatsByEqualityOperator
+		}
 		#endregion
 	}
 }
