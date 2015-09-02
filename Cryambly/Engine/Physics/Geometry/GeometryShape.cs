@@ -2,6 +2,7 @@
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using CryCil.Annotations;
 using CryCil.Engine.Physics.Primitives;
 using CryCil.Geometry;
 using CryCil.Utilities;
@@ -655,6 +656,89 @@ namespace CryCil.Engine.Physics
 
 			return PointInsideStatus(this.handle, ref point) != 0;
 		}
+		/// <summary>
+		/// Tests this geometry against another and returns a list of contacts.
+		/// </summary>
+		/// <param name="other">Another geometry object to check this one against.</param>
+		/// <param name="pdata1">Reference to the object that describes location and movement of this geometric object.</param>
+		/// <param name="pdata2">Reference to the object that describes location and movement of <paramref name="other"/> geometric object.</param>
+		/// <param name="pparams">Reference to the object that provides a set of parameters that specify the check.</param>
+		/// <returns>The array of contacts.</returns>
+		/// <exception cref="ArgumentNullException">An object that represents another geometry must not be valid.</exception>
+		[CanBeNull]
+		public GeometryContact[] Intersection(GeometryShape other, ref GeometryWorldData pdata1,
+											  ref GeometryWorldData pdata2, ref IntersectionParameters pparams)
+		{
+			this.AssertInstance();
+			if (!other.IsValid)
+			{
+				throw new ArgumentNullException("other", "An object that represents another geometry must not be valid.");
+			}
+			Contract.EndContractBlock();
+
+			using (var @lock = new WriteLockCond())
+			{
+				GeometryContact* contactsPtr;
+				int contactCount = IntersectLocked(this.handle, other, ref pdata1, ref pdata2, ref pparams, out contactsPtr,
+												   @lock.Handle);
+
+				if (contactCount == 0)
+				{
+					return null;
+				}
+
+				GeometryContact[] contacts = new GeometryContact[contactCount];
+
+				fixed (GeometryContact* contactsArrayPtr = contacts)
+				{
+					for (int i = 0; i < contactCount; i++)
+					{
+						contactsArrayPtr[i] = contactsPtr[i];
+					}
+				}
+
+				return contacts;
+			}
+		}
+		/// <summary>
+		/// Tests this geometry against another and returns a list of contacts.
+		/// </summary>
+		/// <param name="other">Another geometry object to check this one against.</param>
+		/// <returns>The array of contacts.</returns>
+		/// <exception cref="ArgumentNullException">An object that represents another geometry must not be valid.</exception>
+		[CanBeNull]
+		public GeometryContact[] Intersection(GeometryShape other)
+		{
+			this.AssertInstance();
+			if (!other.IsValid)
+			{
+				throw new ArgumentNullException("other", "An object that represents another geometry must not be valid.");
+			}
+			Contract.EndContractBlock();
+
+			using (var @lock = new WriteLockCond())
+			{
+				GeometryContact* contactsPtr;
+				int contactCount = IntersectLockedDefault(this.handle, other, out contactsPtr, @lock.Handle);
+
+				if (contactCount == 0)
+				{
+					return null;
+				}
+
+				GeometryContact[] contacts = new GeometryContact[contactCount];
+
+				fixed (GeometryContact* contactsArrayPtr = contacts)
+				{
+					for (int i = 0; i < contactCount; i++)
+					{
+						contactsArrayPtr[i] = contactsPtr[i];
+					}
+				}
+
+				return contacts;
+			}
+		}
 		#endregion
 		#region Utilities
 		private void AssertInstance()
@@ -695,13 +779,11 @@ namespace CryCil.Engine.Physics
 		private static extern void GetBBox(IntPtr handle,  out Primitive.Box pbox);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern int PointInsideStatus(IntPtr handle, ref Vector3 pt);
-	// IntersectLocked - the main function for geomtries. pdata1,pdata2,pparams can be 0 - defaults will be assumed.
-	// returns a pointer to an internal thread-specific contact buffer, locked with the lock argument
-	[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern int IntersectLocked(IntPtr handle, GeometryShape pCollider, ref GeometryWorldData pdata1, ref GeometryWorldData pdata2, ref IntersectionParameters pparams, out GeometryContact *pcontacts, WriteLockCond @lock);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern int IntersectLocked(IntPtr handle, GeometryShape pCollider, ref GeometryWorldData pdata1, ref GeometryWorldData pdata2, ref IntersectionParameters pparams, out GeometryContact* pcontacts, IntPtr @lock);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern int IntersectLockedDefault(IntPtr handle, GeometryShape pCollider, out GeometryContact* pcontacts, IntPtr @lock);
 	// Intersect - same as Intersect, but doesn't lock pcontacts
-	[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern int Intersect(IntPtr handle, GeometryShape pCollider, ref GeometryWorldData pdata1,ref GeometryWorldData pdata2, ref IntersectionParameters pparams, out GeometryContact *pcontacts);
 	// FindClosestPoint - for non-convex meshes only does local search, doesn't guarantee global minimum
 	// iFeature's format: (feature type: 2-face, 1-edge, 0-vertex)<<9 | feature index
 	// if ptdst0 and ptdst1 are different, searches for a closest point on a line segment
