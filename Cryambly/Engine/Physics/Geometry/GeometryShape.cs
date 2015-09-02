@@ -840,6 +840,50 @@ namespace CryCil.Engine.Physics
 
 			CalcVolumetricPressure(this.handle, ref wd, ref epicenter, k, minRadius, out impulse, out angularImpulse);
 		}
+		/// <summary>
+		/// Calculates buoyancy properties.
+		/// </summary>
+		/// <param name="surface">Reference to the object that describe the surface of the liquid body.</param>
+		/// <param name="wd">Reference to the object that specifies the location and movement of this geometry.</param>
+		/// <param name="submergedCenter">Resultant vector that provides coordinates of the center of submerged mass.</param>
+		/// <returns>Volume of submerged part of this geometric object.</returns>
+		public float CalculateBuoyancy(ref Primitive.Plane surface, ref GeometryWorldData wd, out Vector3 submergedCenter)
+		{
+			this.AssertInstance();
+			Contract.EndContractBlock();
+
+			wd.CompleteInitialization();
+
+			return CalculateBuoyancyInternal(this.handle, ref surface, ref wd, out submergedCenter);
+		}
+		/// <summary>
+		/// Calculates buoyancy properties.
+		/// </summary>
+		/// <param name="surface">Reference to the object that describes the surface of the liquid body.</param>
+		/// <param name="submergedCenter">Resultant vector that provides coordinates of the center of submerged mass.</param>
+		/// <returns>Volume of submerged part of this geometric object.</returns>
+		public float CalculateBuoyancy(ref Primitive.Plane surface, out Vector3 submergedCenter)
+		{
+			GeometryWorldData wd = new GeometryWorldData();
+			return this.CalculateBuoyancy(ref surface, ref wd, out submergedCenter);
+		}
+		/// <summary>
+		/// Calculates the medium resistance.
+		/// </summary>
+		/// <param name="surface">Reference to the object that describes the plane that specifies where the medium affects the geometry.</param>
+		/// <param name="wd">Reference to the object that specifies the location and movement of this geometry.</param>
+		/// <param name="pressure">Resultant pressure from the medium(?).</param>
+		/// <param name="resistance">Resultant resistant force from the medium(?).</param>
+		public void CalculateMediumResistance(ref Primitive.Plane surface, ref GeometryWorldData wd, out Vector3 pressure,
+											  out Vector3 resistance)
+		{
+			this.AssertInstance();
+			Contract.EndContractBlock();
+
+			wd.CompleteInitialization();
+
+			CalculateMediumResistanceInternal(this.handle, ref surface, ref wd, out pressure, out resistance);
+		}
 		#endregion
 		#region Utilities
 		private void AssertInstance()
@@ -881,9 +925,12 @@ namespace CryCil.Engine.Physics
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern int PointInsideStatus(IntPtr handle, ref Vector3 pt);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern int IntersectLocked(IntPtr handle, GeometryShape pCollider, ref GeometryWorldData pdata1, ref GeometryWorldData pdata2, ref IntersectionParameters pparams, out GeometryContact* pcontacts, IntPtr @lock);
+		private static extern int IntersectLocked(IntPtr handle, GeometryShape pCollider, ref GeometryWorldData pdata1,
+												  ref GeometryWorldData pdata2, ref IntersectionParameters pparams,
+												  out GeometryContact* pcontacts, IntPtr @lock);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern int IntersectLockedDefault(IntPtr handle, GeometryShape pCollider, out GeometryContact* pcontacts, IntPtr @lock);
+		private static extern int IntersectLockedDefault(IntPtr handle, GeometryShape pCollider,
+														 out GeometryContact* pcontacts, IntPtr @lock);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern int FindClosestPointInternal(IntPtr handle, ref GeometryWorldData pgwd, out int iPrim,
 														   out int iFeature, ref Vector3 ptdst0, ref Vector3 ptdst1,
@@ -891,13 +938,13 @@ namespace CryCil.Engine.Physics
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void CalcVolumetricPressure(IntPtr handle, ref GeometryWorldData gwd, ref Vector3 epicenter,
 														  float k, float rmin, out Vector3 P, out EulerAngles L);
-	// CalculateBuoyancy: computes the submerged volume (return value) and the mass center of the submerged part
-	[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern float CalculateBuoyancy(IntPtr handle, ref Primitive.Plane pplane, ref GeometryWorldData pgwd, out Vector3 submergedMassCenter);
-	// CalculateMediumResistance: computes medium resistance integral of the surface; self flow of the medium should be baked into pgwd
-	// for a surface fragment dS with normal n and velocity v impulse is: -n*max(0,n*v) (can be scaled by the medium resistance coeff. later)
-	[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern void CalculateMediumResistance(IntPtr handle, ref Primitive.Plane pplane, ref GeometryWorldData pgwd, out Vector3 dPres,out Vector3 dLres);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern float CalculateBuoyancyInternal(IntPtr handle, ref Primitive.Plane pplane,
+															  ref GeometryWorldData pgwd, out Vector3 submergedMassCenter);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void CalculateMediumResistanceInternal(IntPtr handle, ref Primitive.Plane pplane,
+																	 ref GeometryWorldData pgwd, out Vector3 dPres,
+																	 out Vector3 dLres);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern int GetPrimitiveId(IntPtr handle, int iPrim,int iFeature); // get material id for a primitive (iFeature is ignored currently)
 	// GetPrimitive: expects a valid pprim pointer, type depends on GetType; meshes return primitives::triangle
