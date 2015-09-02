@@ -643,6 +643,18 @@ namespace CryCil.Engine.Physics
 
 			Unlock(this.handle, 0);
 		}
+		/// <summary>
+		/// Determines whether this object contains specified point.
+		/// </summary>
+		/// <param name="point">Coordinates of the point to check against this geometry.</param>
+		/// <returns>True, if this geometry contains the point.</returns>
+		public bool ContainsPoint(ref Vector3 point)
+		{
+			this.AssertInstance();
+			Contract.EndContractBlock();
+
+			return PointInsideStatus(this.handle, ref point) != 0;
+		}
 		#endregion
 		#region Utilities
 		private void AssertInstance()
@@ -680,11 +692,9 @@ namespace CryCil.Engine.Physics
 	[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void Unlock(IntPtr handle, int bWrite);
 	[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern void GetBBox(IntPtr handle,  out Primitive.Box pbox); // possibly oriented bbox (depends on BV tree type)
-	[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern int CalcPhysicalProperties(IntPtr handle, PhysicalBody pgeom);	// O(num_triangles) for meshes, unless mesh_always_static is set
-	[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern int PointInsideStatus(IntPtr handle, ref Vector3 pt); // for meshes, will create an auxiliary hashgrid for acceleration
+		private static extern void GetBBox(IntPtr handle,  out Primitive.Box pbox);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern int PointInsideStatus(IntPtr handle, ref Vector3 pt);
 	// IntersectLocked - the main function for geomtries. pdata1,pdata2,pparams can be 0 - defaults will be assumed.
 	// returns a pointer to an internal thread-specific contact buffer, locked with the lock argument
 	[MethodImpl(MethodImplOptions.InternalCall)]
