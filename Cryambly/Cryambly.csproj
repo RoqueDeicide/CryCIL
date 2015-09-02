@@ -171,6 +171,7 @@
     <Compile Include="Engine\Physics\ForeignData.cs" />
     <Compile Include="Engine\Physics\ForeignDataIds.cs" />
     <Compile Include="Engine\Physics\Geometry\BoundingVolumeParameters.cs" />
+    <Compile Include="Engine\Physics\Geometry\GeometryTypes.cs" />
     <Compile Include="Engine\Physics\Geometry\PhysicsMeshFlags.cs" />
     <Compile Include="Engine\Physics\IForeignDataProvider.cs" />
     <Compile Include="Engine\Input\ActionMapping\Action.cs" />
