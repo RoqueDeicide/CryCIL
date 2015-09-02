@@ -293,6 +293,7 @@
     <Compile Include="Engine\Rendering\Shading\Lighting\LightProperties.cs" />
     <Compile Include="Engine\StaticObjects\StaticObject.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="Mathematics\AngleHelpers.cs" />
     <Compile Include="Mathematics\Geometry\Splines\BezierBasis.cs" />
     <Compile Include="Mathematics\Geometry\Splines\CryEngineSpline.cs" />
     <Compile Include="Mathematics\Geometry\Splines\HermiteBasis.cs" />
