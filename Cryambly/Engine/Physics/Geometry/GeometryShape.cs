@@ -39,6 +39,21 @@ namespace CryCil.Engine.Physics
 				return GetGeometryType(this.handle);
 			}
 		}
+		/// <summary>
+		/// Gets the primitive that represents a bounding box for this geometry object.
+		/// </summary>
+		public Primitive.Box BoundingBox
+		{
+			get
+			{
+				this.AssertInstance();
+				Contract.EndContractBlock();
+
+				Primitive.Box box;
+				GetBBox(this.handle, out box);
+				return box;
+			}
+		}
 		#endregion
 		#region Construction
 		internal GeometryShape(IntPtr handle)
