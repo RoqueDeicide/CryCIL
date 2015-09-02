@@ -807,6 +807,39 @@ namespace CryCil.Engine.Physics
 			GeometryWorldData wd = new GeometryWorldData();
 			this.FindClosestPoint(ref wd, ref segment0, ref segment1, out pointOnSurface, out pointOnSegment, maxIters);
 		}
+		/// <summary>
+		/// Calculates the effect the explosion would have on this geometric object.
+		/// </summary>
+		/// <remarks>
+		/// Formula for pressure:
+		/// <code>
+		/// // k*dS*cos(surface_normal,direction to epicenter) / max(rmin, distance to epicenter)^2
+		/// 
+		/// float pressureModfier = k;
+		/// float surfaceArea = dS;
+		/// Vector3 surfaceNormal = surface_normal;
+		/// Vector3 directionToEpicenter = direction to epicenter;
+		/// float distance = Math.Max(rmin, distance to epicenter);
+		/// 
+		/// float pressure = pressureModfier * surfaceArea * (surfaceNormal * directionToEpicenter) / distance * distance;
+		/// </code>
+		/// </remarks>
+		/// <param name="wd">Reference to the object that specifies the location and movement of this geometry.</param>
+		/// <param name="epicenter">Coordinates of the epicenter of the explosion.</param>
+		/// <param name="k">Pressure modifier.</param>
+		/// <param name="minRadius">Minimal radius to use in calculation.</param>
+		/// <param name="impulse">Resultant linear impulse.</param>
+		/// <param name="angularImpulse">Resultant angular impulse.</param>
+		public void CalculateExplosionEffect(ref GeometryWorldData wd, ref Vector3 epicenter, float k, float minRadius,
+											 out Vector3 impulse, out EulerAngles angularImpulse)
+		{
+			this.AssertInstance();
+			Contract.EndContractBlock();
+
+			wd.CompleteInitialization();
+
+			CalcVolumetricPressure(this.handle, ref wd, ref epicenter, k, minRadius, out impulse, out angularImpulse);
+		}
 		#endregion
 		#region Utilities
 		private void AssertInstance()
@@ -855,11 +888,9 @@ namespace CryCil.Engine.Physics
 		private static extern int FindClosestPointInternal(IntPtr handle, ref GeometryWorldData pgwd, out int iPrim,
 														   out int iFeature, ref Vector3 ptdst0, ref Vector3 ptdst1,
 														   Vector3* ptres, int nMaxIters);
-	// CalcVolumetricPressure: a fairly correct computation of volumetric pressure with inverse-quadratic falloff (ex: explosions)
-	// for a surface fragment dS, impulse is: k*dS*cos(surface_normal,direction to epicenter) / max(rmin, distance to epicenter)^2
-	// returns integral impulse and angular impulse
-	[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern void CalcVolumetricPressure(IntPtr handle, ref GeometryWorldData gwd, ref Vector3 epicenter,float k,float rmin, ref Vector3 centerOfMass, out Vector3 P,out Vector3 L);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void CalcVolumetricPressure(IntPtr handle, ref GeometryWorldData gwd, ref Vector3 epicenter,
+														  float k, float rmin, out Vector3 P, out EulerAngles L);
 	// CalculateBuoyancy: computes the submerged volume (return value) and the mass center of the submerged part
 	[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern float CalculateBuoyancy(IntPtr handle, ref Primitive.Plane pplane, ref GeometryWorldData pgwd, out Vector3 submergedMassCenter);
