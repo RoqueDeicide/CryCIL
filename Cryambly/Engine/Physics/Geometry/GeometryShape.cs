@@ -739,6 +739,74 @@ namespace CryCil.Engine.Physics
 				return contacts;
 			}
 		}
+		/// <summary>
+		/// Finds the closest point on the surface of this geometry to specified point.
+		/// </summary>
+		/// <param name="start">Coordinates of the point to go from.</param>
+		/// <param name="maxIters">Optional value that specifies how many to tests to run. Higher - more expensive but higher probability of finding an actually closest point.</param>
+		/// <returns>Point on the surface of the geometry.</returns>
+		public Vector3 FindClosestPoint(ref Vector3 start, int maxIters = 10)
+		{
+			GeometryWorldData wd = new GeometryWorldData();
+			return this.FindClosestPoint(ref wd, ref start, maxIters);
+		}
+		/// <summary>
+		/// Finds the closest point on the surface of this geometry to specified point.
+		/// </summary>
+		/// <param name="wd">Reference to the object that specifies the location and movement of this geometry.</param>
+		/// <param name="start">Coordinates of the point to go from.</param>
+		/// <param name="maxIters">Optional value that specifies how many to tests to run. Higher - more expensive but higher probability of finding an actually closest point.</param>
+		/// <returns>Point on the surface of the geometry.</returns>
+		public Vector3 FindClosestPoint(ref GeometryWorldData wd, ref Vector3 start, int maxIters = 10)
+		{
+			Vector3 pointOnSurface, pointOnSegment;
+			this.FindClosestPoint(ref wd, ref start, ref start, out pointOnSurface, out pointOnSegment, maxIters);
+			return pointOnSurface;
+		}
+		/// <summary>
+		/// Finds the closest point on the surface of this geometry to specified segment.
+		/// </summary>
+		/// <remarks>
+		/// <paramref name="pointOnSurface"/> and <paramref name="pointOnSegment"/> form a segment that represents a shortest distance between provided segment and this geometry.
+		/// </remarks>
+		/// <param name="wd">Reference to the object that specifies the location and movement of this geometry.</param>
+		/// <param name="segment0">Starting point of the segment.</param>
+		/// <param name="segment1">Ending point of the segment.</param>
+		/// <param name="pointOnSurface">The coordinates of the closest point on the surface of geometry.</param>
+		/// <param name="pointOnSegment">The coordinates of the closest point on the segment.</param>
+		/// <param name="maxIters">Optional value that specifies how many to tests to run. Higher - more expensive but higher probability of finding an actually closest point.</param>
+		public void FindClosestPoint(ref GeometryWorldData wd, ref Vector3 segment0, ref Vector3 segment1,
+									 out Vector3 pointOnSurface, out Vector3 pointOnSegment, int maxIters = 10)
+		{
+			this.AssertInstance();
+			Contract.EndContractBlock();
+
+			wd.CompleteInitialization();
+
+			int prim, feature;
+			Vector3* resultPoints = stackalloc Vector3[2];
+			FindClosestPointInternal(this.handle, ref wd, out prim, out feature, ref segment0, ref segment1, resultPoints,
+									 maxIters);
+			pointOnSegment = resultPoints[1];
+			pointOnSurface = resultPoints[0];
+		}
+		/// <summary>
+		/// Finds the closest point on the surface of this geometry to specified segment.
+		/// </summary>
+		/// <remarks>
+		/// <paramref name="pointOnSurface"/> and <paramref name="pointOnSegment"/> form a segment that represents a shortest distance between provided segment and this geometry.
+		/// </remarks>
+		/// <param name="segment0">Starting point of the segment.</param>
+		/// <param name="segment1">Ending point of the segment.</param>
+		/// <param name="pointOnSurface">The coordinates of the closest point on the surface of geometry.</param>
+		/// <param name="pointOnSegment">The coordinates of the closest point on the segment.</param>
+		/// <param name="maxIters">Optional value that specifies how many to tests to run. Higher - more expensive but higher probability of finding an actually closest point.</param>
+		public void FindClosestPoint(ref Vector3 segment0, ref Vector3 segment1,
+									 out Vector3 pointOnSurface, out Vector3 pointOnSegment, int maxIters = 10)
+		{
+			GeometryWorldData wd = new GeometryWorldData();
+			this.FindClosestPoint(ref wd, ref segment0, ref segment1, out pointOnSurface, out pointOnSegment, maxIters);
+		}
 		#endregion
 		#region Utilities
 		private void AssertInstance()
@@ -783,13 +851,10 @@ namespace CryCil.Engine.Physics
 		private static extern int IntersectLocked(IntPtr handle, GeometryShape pCollider, ref GeometryWorldData pdata1, ref GeometryWorldData pdata2, ref IntersectionParameters pparams, out GeometryContact* pcontacts, IntPtr @lock);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern int IntersectLockedDefault(IntPtr handle, GeometryShape pCollider, out GeometryContact* pcontacts, IntPtr @lock);
-	// Intersect - same as Intersect, but doesn't lock pcontacts
-	// FindClosestPoint - for non-convex meshes only does local search, doesn't guarantee global minimum
-	// iFeature's format: (feature type: 2-face, 1-edge, 0-vertex)<<9 | feature index
-	// if ptdst0 and ptdst1 are different, searches for a closest point on a line segment
-	// ptres[0] is the closest point on the geometry, ptres[1] - on the test line segment
-	[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern int FindClosestPoint(IntPtr handle, ref GeometryWorldData pgwd, out int iPrim,out int iFeature, ref Vector3 ptdst0,ref Vector3 ptdst1, Vector3 *ptres, int nMaxIters=10);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern int FindClosestPointInternal(IntPtr handle, ref GeometryWorldData pgwd, out int iPrim,
+														   out int iFeature, ref Vector3 ptdst0, ref Vector3 ptdst1,
+														   Vector3* ptres, int nMaxIters);
 	// CalcVolumetricPressure: a fairly correct computation of volumetric pressure with inverse-quadratic falloff (ex: explosions)
 	// for a surface fragment dS, impulse is: k*dS*cos(surface_normal,direction to epicenter) / max(rmin, distance to epicenter)^2
 	// returns integral impulse and angular impulse
