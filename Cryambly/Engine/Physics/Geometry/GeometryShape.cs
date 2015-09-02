@@ -55,6 +55,58 @@ namespace CryCil.Engine.Physics
 				return box;
 			}
 		}
+		/// <summary>
+		/// Gets the value that indicates whether this geometric object is convex.
+		/// </summary>
+		public bool IsConvex
+		{
+			get
+			{
+				this.AssertInstance();
+				Contract.EndContractBlock();
+
+				return IsConvexInternal(this.handle, MathHelpers.ZeroTolerance) != 0;
+			}
+		}
+		/// <summary>
+		/// Gets the number of primitive objects that comprise this one.
+		/// </summary>
+		public int PrimitiveCount
+		{
+			get
+			{
+				this.AssertInstance();
+				Contract.EndContractBlock();
+
+				return GetPrimitiveCount(this.handle);
+			}
+		}
+		/// <summary>
+		/// Gets the volume of this geometric object.
+		/// </summary>
+		public float Volume
+		{
+			get
+			{
+				this.AssertInstance();
+				Contract.EndContractBlock();
+
+				return GetVolume(this.handle);
+			}
+		}
+		/// <summary>
+		/// Gets the coordinates of center of mass of this geometric object.
+		/// </summary>
+		public Vector3 Center
+		{
+			get
+			{
+				this.AssertInstance();
+				Contract.EndContractBlock();
+
+				return GetCenter(this.handle) ;
+			}
+		}
 		#endregion
 		#region Construction
 		internal GeometryShape(IntPtr handle)
@@ -946,28 +998,12 @@ namespace CryCil.Engine.Physics
 																	 ref GeometryWorldData pgwd, out Vector3 dPres,
 																	 out Vector3 dLres);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern int GetPrimitiveId(IntPtr handle, int iPrim,int iFeature); // get material id for a primitive (iFeature is ignored currently)
-	// GetPrimitive: expects a valid pprim pointer, type depends on GetType; meshes return primitives::triangle
-	[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern int GetPrimitive(IntPtr handle, int iPrim, out Primitive.BasePrimitive pprim); 
-	[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern int GetForeignIdx(IntPtr handle, int iPrim);	// only works for meshes
-	[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern int GetFeature(IntPtr handle, int iPrim,int iFeature, Vector3 *pt); // returns vertices of face, edge, or vertex; only for boxes and meshes currently
-	[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern int IsConvex(IntPtr handle, float tolerance);
-	// PrepareForRayTest: creates an auxiliary hash structure for short rays test acceleration
-	[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern void PrepareForRayTest(IntPtr handle, float raylen);	// raylen - 'expected' ray length to optimize the hash for
-	[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern int IsConvexInternal(IntPtr handle, float tolerance);
+		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern int GetPrimitiveCount(IntPtr handle);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern Primitive.BasePrimitive *GetData(IntPtr handle);	// returns an pointer to an internal structure; for meshes returns mesh_data
-	[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern void SetData(IntPtr handle, ref Primitive.BasePrimitive primitive);	// not supported by meshes
-	[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern float GetVolume(IntPtr handle );
-	[MethodImpl(MethodImplOptions.InternalCall)]
+		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern Vector3 GetCenter(IntPtr handle );
 	// Subtract: performs boolean subtraction; if bLogUpdates==1, will create bop_meshupdate inside the mesh
 	[MethodImpl(MethodImplOptions.InternalCall)]
