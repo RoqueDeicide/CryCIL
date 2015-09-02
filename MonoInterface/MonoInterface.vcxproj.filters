@@ -431,6 +431,9 @@
     <ClInclude Include="Interops\IGeometry.h">
       <Filter>Interops\Engine\Physics</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\WriteLockCond.h">
+      <Filter>Interops\Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -787,6 +790,9 @@
     </ClCompile>
     <ClCompile Include="TypeMapChecks\GeometryTypes.cpp">
       <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\WriteLockCond.cpp">
+      <Filter>Interops\Utilities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

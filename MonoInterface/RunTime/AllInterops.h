@@ -101,3 +101,5 @@
 #include "Interops/Lattice.h"
 
 #include "Interops/IGeometry.h"
+
+#include "Interops/WriteLockCond.h"

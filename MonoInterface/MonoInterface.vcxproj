@@ -339,6 +339,7 @@
     <ClInclude Include="Interops\Texture.h" />
     <ClInclude Include="Interops\TimeOfDay.h" />
     <ClInclude Include="Interops\Timing.h" />
+    <ClInclude Include="Interops\WriteLockCond.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="Logs.h" />
     <ClInclude Include="MonoDefinitionFiles\MonoArray.h" />
@@ -458,6 +459,7 @@
     <ClCompile Include="Interops\TimeOfDay.cpp" />
     <ClCompile Include="Interops\Timing.cpp" />
     <ClCompile Include="Interops\WaterManagerStructs.h" />
+    <ClCompile Include="Interops\WriteLockCond.cpp" />
     <ClCompile Include="RunTime\DebugEventReporter.cpp" />
     <ClCompile Include="RunTime\EventBroadcaster.cpp" />
     <ClCompile Include="RunTime\MonoInterface.cpp" />

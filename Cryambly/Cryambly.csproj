@@ -419,6 +419,7 @@
     <Compile Include="RunTime\Registration\EntityRegistry.cs" />
     <Compile Include="RunTime\Registration\FlowNodeTypeRegistry.cs" />
     <Compile Include="RunTime\Registration\RmiParametersRegistry.cs" />
+    <Compile Include="Utilities\CryLock.cs" />
     <Compile Include="Utilities\CryXmlNode.Attributes.cs" />
     <Compile Include="Utilities\CryXmlNode.cs" />
     <Compile Include="GeneralExtensions.cs" />
