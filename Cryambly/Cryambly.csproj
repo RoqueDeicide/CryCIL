@@ -275,13 +275,16 @@
     <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\PhysicsStatusTypes.cs" />
     <Compile Include="Engine\Physics\Primitives\Box.cs" />
     <Compile Include="Engine\Physics\Primitives\Cylinder.cs" />
+    <Compile Include="Engine\Physics\Primitives\HeightField.cs" />
     <Compile Include="Engine\Physics\Primitives\Plane.cs" />
     <Compile Include="Engine\Physics\Primitives\Primitive.cs" />
     <Compile Include="Engine\Physics\Primitives\PrimitiveType.cs" />
+    <Compile Include="Engine\Physics\Primitives\Ray.cs" />
     <Compile Include="Engine\Physics\Primitives\Sphere.cs" />
     <Compile Include="Engine\Physics\Primitives\Triangle.cs" />
     <Compile Include="Engine\Physics\Geometry\PhysicalBody.cs" />
     <Compile Include="Engine\Physics\Geometry\TetraLattice.cs" />
+    <Compile Include="Engine\Physics\Primitives\VoxelGrid.cs" />
     <Compile Include="Engine\Physics\UnusedValues\UnusedValue.cs" />
     <Compile Include="Engine\Rendering\RenderParameters.cs" />
     <Compile Include="Engine\Rendering\Shading\Lighting\DynamicLightFlags.cs" />

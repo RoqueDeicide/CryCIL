@@ -51,6 +51,10 @@ namespace CryCil.Engine.Physics.Primitives
 					{
 						throw new ArgumentException("Given matrix must be orthonormal.");
 					}
+					else
+					{
+						this.oriented = true;
+					}
 				}
 			}
 		}
