@@ -3,6 +3,8 @@ using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using CryCil.Engine.Physics.Primitives;
+using CryCil.Geometry;
+using CryCil.Utilities;
 
 namespace CryCil.Engine.Physics
 {
@@ -571,6 +573,105 @@ namespace CryCil.Engine.Physics
 												  float approximationTolerance = 0.05f);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern IntPtr CreatePrimitive(int type, ref Primitive.BasePrimitive primitive);
+
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern int GetGeometryType(); // see enum geomtypes
+	[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern int AddRef();
+	[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void Release();
+	[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void Lock(int bWrite=1); // locks the geometry for reading or writing
+	[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void Unlock(int bWrite=1); // bWrite should match the preceding Lock
+	[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void GetBBox( out Primitive.Box pbox); // possibly oriented bbox (depends on BV tree type)
+	[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern int CalcPhysicalProperties(PhysicalBody pgeom);	// O(num_triangles) for meshes, unless mesh_always_static is set
+	[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern int PointInsideStatus(ref Vector3 pt); // for meshes, will create an auxiliary hashgrid for acceleration
+	// IntersectLocked - the main function for geomtries. pdata1,pdata2,pparams can be 0 - defaults will be assumed.
+	// returns a pointer to an internal thread-specific contact buffer, locked with the lock argument
+	[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern int IntersectLocked(GeometryShape pCollider, ref GeometryWorldData pdata1, ref GeometryWorldData pdata2, ref IntersectionParameters pparams, out GeometryContact *pcontacts, WriteLockCond @lock);
+	// Intersect - same as Intersect, but doesn't lock pcontacts
+	[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern int Intersect(GeometryShape pCollider, ref GeometryWorldData pdata1,ref GeometryWorldData pdata2, ref IntersectionParameters pparams, out GeometryContact *pcontacts);
+	// FindClosestPoint - for non-convex meshes only does local search, doesn't guarantee global minimum
+	// iFeature's format: (feature type: 2-face, 1-edge, 0-vertex)<<9 | feature index
+	// if ptdst0 and ptdst1 are different, searches for a closest point on a line segment
+	// ptres[0] is the closest point on the geometry, ptres[1] - on the test line segment
+	[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern int FindClosestPoint(ref GeometryWorldData pgwd, out int iPrim,out int iFeature, ref Vector3 ptdst0,ref Vector3 ptdst1, Vector3 *ptres, int nMaxIters=10);
+	// CalcVolumetricPressure: a fairly correct computation of volumetric pressure with inverse-quadratic falloff (ex: explosions)
+	// for a surface fragment dS, impulse is: k*dS*cos(surface_normal,direction to epicenter) / max(rmin, distance to epicenter)^2
+	// returns integral impulse and angular impulse
+	[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void CalcVolumetricPressure(ref GeometryWorldData gwd, ref Vector3 epicenter,float k,float rmin, ref Vector3 centerOfMass, out Vector3 P,out Vector3 L);
+	// CalculateBuoyancy: computes the submerged volume (return value) and the mass center of the submerged part
+	[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern float CalculateBuoyancy(ref Primitive.Plane pplane, ref GeometryWorldData pgwd, out Vector3 submergedMassCenter);
+	// CalculateMediumResistance: computes medium resistance integral of the surface; self flow of the medium should be baked into pgwd
+	// for a surface fragment dS with normal n and velocity v impulse is: -n*max(0,n*v) (can be scaled by the medium resistance coeff. later)
+	[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void CalculateMediumResistance(ref Primitive.Plane pplane, ref GeometryWorldData pgwd, out Vector3 dPres,out Vector3 dLres);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern int GetPrimitiveId(int iPrim,int iFeature); // get material id for a primitive (iFeature is ignored currently)
+	// GetPrimitive: expects a valid pprim pointer, type depends on GetType; meshes return primitives::triangle
+	[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern int GetPrimitive(int iPrim, out Primitive.BasePrimitive pprim); 
+	[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern int GetForeignIdx(int iPrim);	// only works for meshes
+	[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern int GetFeature(int iPrim,int iFeature, Vector3 *pt); // returns vertices of face, edge, or vertex; only for boxes and meshes currently
+	[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern int IsConvex(float tolerance);
+	// PrepareForRayTest: creates an auxiliary hash structure for short rays test acceleration
+	[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void PrepareForRayTest(float raylen);	// raylen - 'expected' ray length to optimize the hash for
+	[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern int GetPrimitiveCount();
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern Primitive.BasePrimitive *GetData();	// returns an pointer to an internal structure; for meshes returns mesh_data
+	[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void SetData(ref Primitive.BasePrimitive primitive);	// not supported by meshes
+	[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern float GetVolume();
+	[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern Vector3 GetCenter();
+	// Subtract: performs boolean subtraction; if bLogUpdates==1, will create bop_meshupdate inside the mesh
+	[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern int Subtract(GeometryShape pGeom, ref GeometryWorldData pdata1,ref GeometryWorldData pdata2, int bLogUpdates=1);
+	[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern int GetSubtractionsCount();	// number of Subtract()s the mesh has survived so far
+	// GetForeignData: returns a pointer associated with the geometry
+	// special: GetForeignData(DATA_MESHUPDATE) returns the internal bop_meshupdate list (does not interfere with the main foreign pointer)
+	[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void *GetForeignData(int iForeignData=0); 
+	[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern int GetiForeignData(); // foreign data type 
+	[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void SetForeignData(void *pForeignData, int iForeignData);
+	[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern int GetErrorCount(); // for meshes, the number of edges that don't belong to exactly 2 triangles
+	[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void DestroyAuxilaryMeshData(int idata); // see meshAuxData enum
+	[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void RemapForeignIdx(int *pCurForeignIdx, int *pNewForeignIdx, int nTris); // used in rendermesh-physics sync after boolean ops
+	[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void AppendVertices(Vector3 *pVtx,int *pVtxMap, int nVtx);	// used in rendermesh-physics sync after boolean ops
+	[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern float GetExtent(GeometryFormat eForm);
+	[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void GetRandomPos( out Vector3 position, out Vector3 normal, GeometryFormat eForm);	
+	[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void CompactMemory(); // used only by non-breakable meshes to compact non-shared vertices into same contingous block of memory
+	// Boxify: attempts to build a set of boxes covering the geometry's volume (only supported by trimeshes)
+	[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern int Boxify(Primitive.Box *pboxes,int nMaxBoxes, ref BoxificationParameters parameters);
+	// Sanity check the geometry. i.e. its tree doesn't have an excessive depth. returns 0 if fails
+	[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern int SanityCheck();
 		#endregion
 	}
 }
