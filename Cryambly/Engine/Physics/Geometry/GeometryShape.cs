@@ -26,6 +26,19 @@ namespace CryCil.Engine.Physics
 		{
 			get { return this.handle != IntPtr.Zero; }
 		}
+		/// <summary>
+		/// Gets the type of this geometry object, it can be a triangular mesh or some primitive.
+		/// </summary>
+		public GeometryTypes GeometryType
+		{
+			get
+			{
+				this.AssertInstance();
+				Contract.EndContractBlock();
+				
+				return GetGeometryType(this.handle);
+			}
+		}
 		#endregion
 		#region Construction
 		internal GeometryShape(IntPtr handle)
