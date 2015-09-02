@@ -588,6 +588,46 @@ namespace CryCil.Engine.Physics
 
 			Release(this.handle);
 		}
+		/// <summary>
+		/// Locks this geometry object and prevents anyone from being able to write into its internal data buffers.
+		/// </summary>
+		public void LockWrite()
+		{
+			this.AssertInstance();
+			Contract.EndContractBlock();
+
+			Lock(this.handle, 1);
+		}
+		/// <summary>
+		/// Locks this geometry object and prevents anyone from being able to read its internal data buffers.
+		/// </summary>
+		public void LockRead()
+		{
+			this.AssertInstance();
+			Contract.EndContractBlock();
+
+			Lock(this.handle, 0);
+		}
+		/// <summary>
+		/// Unlocks this geometry object. The call to this method must come after <see cref="LockWrite"/>, otherwise the behavior is not defined.
+		/// </summary>
+		public void UnlockWrite()
+		{
+			this.AssertInstance();
+			Contract.EndContractBlock();
+
+			Unlock(this.handle, 1);
+		}
+		/// <summary>
+		/// Unlocks this geometry object. The call to this method must come after <see cref="LockRead"/>, otherwise the behavior is not defined.
+		/// </summary>
+		public void UnlockRead()
+		{
+			this.AssertInstance();
+			Contract.EndContractBlock();
+
+			Unlock(this.handle, 0);
+		}
 		#endregion
 		#region Utilities
 		private void AssertInstance()
@@ -621,9 +661,9 @@ namespace CryCil.Engine.Physics
 	[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void Release(IntPtr handle);
 	[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern void Lock(IntPtr handle, int bWrite=1); // locks the geometry for reading or writing
+		private static extern void Lock(IntPtr handle, int bWrite);
 	[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern void Unlock(IntPtr handle, int bWrite=1); // bWrite should match the preceding Lock
+		private static extern void Unlock(IntPtr handle, int bWrite);
 	[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void GetBBox(IntPtr handle,  out Primitive.Box pbox); // possibly oriented bbox (depends on BV tree type)
 	[MethodImpl(MethodImplOptions.InternalCall)]
