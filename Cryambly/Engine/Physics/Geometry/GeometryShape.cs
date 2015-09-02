@@ -548,6 +548,33 @@ namespace CryCil.Engine.Physics
 		}
 		#endregion
 		#region Interface
+		/// <summary>
+		/// Increases the internal reference count for this geometry object.
+		/// </summary>
+		/// <remarks>
+		/// Use this method when you use the same geometry object by multiple parts or entities.
+		/// </remarks>
+		/// <returns>Current number of references(?).</returns>
+		public int IncrementReferenceCount()
+		{
+			this.AssertInstance();
+			Contract.EndContractBlock();
+
+			return AddRef(this.handle);
+		}
+		/// <summary>
+		/// Decreases the internal reference count for this geometry object.
+		/// </summary>
+		/// <remarks>
+		/// Use this method when you were using the same geometry object by multiple parts or entities when you don't need this geometry.
+		/// </remarks>
+		public void DecrementReferenceCount()
+		{
+			this.AssertInstance();
+			Contract.EndContractBlock();
+
+			Release(this.handle);
+		}
 		#endregion
 		#region Utilities
 		private void AssertInstance()
