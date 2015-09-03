@@ -107,6 +107,19 @@ namespace CryCil.Engine.Physics
 				return GetCenter(this.handle) ;
 			}
 		}
+		/// <summary>
+		/// Gets the number of subtractions this object has survived so far.
+		/// </summary>
+		public int SurvivedSubtractions
+		{
+			get
+			{
+				this.AssertInstance();
+				Contract.EndContractBlock();
+
+				return GetSubtractionsCount(this.handle);
+			}
+		}
 		#endregion
 		#region Construction
 		internal GeometryShape(IntPtr handle)
