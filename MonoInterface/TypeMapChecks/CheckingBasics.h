@@ -38,6 +38,7 @@ struct is_same_type<T, T>
 };
 
 #define CHECK_TYPE_SIZE(typeName) static_assert(sizeof(typeName) == sizeof(S##typeName), "S"#typeName" structure has been changed.")
+#define CHECK_TYPES_SIZE(typeName, originalName) static_assert(sizeof(typeName) == sizeof(originalName), #originalName" structure has been changed.")
 
 #define ASSIGN_FIELD(fieldName) this->fieldName = other.fieldName
 
