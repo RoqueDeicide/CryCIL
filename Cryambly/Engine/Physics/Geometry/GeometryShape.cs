@@ -927,6 +927,28 @@ namespace CryCil.Engine.Physics
 
 			return Subtraction(this.handle, subtrahend, ref pdata1, ref pdata2, logUpdates) != 0;
 		}
+		/// <summary>
+		/// Attempts to acquire the first object that represents the first set of changes that were made to this geometric object.
+		/// </summary>
+		/// <param name="firstUpdate">Resultant object that will only be assigned if this method returns <c>true</c>.</param>
+		/// <returns>True, if <paramref name="firstUpdate"/> was assigned and is usable.</returns>
+		public bool GetMeshUpdates(out MeshUpdate firstUpdate)
+		{
+			this.AssertInstance();
+			Contract.EndContractBlock();
+
+			MeshUpdate* first = GetMeshUpdates(this.handle);
+
+			if (first == null)
+			{
+				firstUpdate = new MeshUpdate();
+
+				return false;
+			}
+
+			firstUpdate = *first;
+			return true;
+		}
 		#endregion
 		#region Utilities
 		private void AssertInstance()
@@ -1006,6 +1028,8 @@ namespace CryCil.Engine.Physics
 		private static extern void *GetForeignData(IntPtr handle, int iForeignData=0); 
 	[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern int GetiForeignData(IntPtr handle ); // foreign data type 
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern MeshUpdate* GetMeshUpdates(IntPtr handle);
 	[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void SetForeignData(IntPtr handle, void *pForeignData, int iForeignData);
 	[MethodImpl(MethodImplOptions.InternalCall)]
