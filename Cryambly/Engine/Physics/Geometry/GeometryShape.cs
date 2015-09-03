@@ -120,6 +120,26 @@ namespace CryCil.Engine.Physics
 				return GetSubtractionsCount(this.handle);
 			}
 		}
+		/// <summary>
+		/// Gets or sets the object that represents the foreign data that can be associated with this geometric object.
+		/// </summary>
+		public ForeignData ForeignData
+		{
+			get
+			{
+				this.AssertInstance();
+				Contract.EndContractBlock();
+
+				return GetForeignData(this.handle);
+			}
+			set
+			{
+				this.AssertInstance();
+				Contract.EndContractBlock();
+
+				SetForeignData(this.handle, value);
+			}
+		}
 		#endregion
 		#region Construction
 		internal GeometryShape(IntPtr handle)
@@ -1022,16 +1042,12 @@ namespace CryCil.Engine.Physics
 											  ref GeometryWorldData pdata2, bool logUpdates = true);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern int GetSubtractionsCount(IntPtr handle);
-	// GetForeignData: returns a pointer associated with the geometry
-	// special: GetForeignData(DATA_MESHUPDATE) returns the internal bop_meshupdate list (does not interfere with the main foreign pointer)
-	[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern void *GetForeignData(IntPtr handle, int iForeignData=0); 
-	[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern int GetiForeignData(IntPtr handle ); // foreign data type 
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern MeshUpdate* GetMeshUpdates(IntPtr handle);
-	[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern void SetForeignData(IntPtr handle, void *pForeignData, int iForeignData);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern ForeignData GetForeignData(IntPtr handle);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void SetForeignData(IntPtr handle, ForeignData data);
 	[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern int GetErrorCount(IntPtr handle ); // for meshes, the number of edges that don't belong to exactly 2 triangles
 	[MethodImpl(MethodImplOptions.InternalCall)]
