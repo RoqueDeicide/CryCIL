@@ -728,29 +728,7 @@ namespace CryCil.Engine.Physics
 			}
 			Contract.EndContractBlock();
 
-			using (var @lock = new WriteLockCond())
-			{
-				GeometryContact* contactsPtr;
-				int contactCount = IntersectLocked(this.handle, other, ref pdata1, ref pdata2, ref pparams, out contactsPtr,
-												   @lock.Handle);
-
-				if (contactCount == 0)
-				{
-					return null;
-				}
-
-				GeometryContact[] contacts = new GeometryContact[contactCount];
-
-				fixed (GeometryContact* contactsArrayPtr = contacts)
-				{
-					for (int i = 0; i < contactCount; i++)
-					{
-						contactsArrayPtr[i] = contactsPtr[i];
-					}
-				}
-
-				return contacts;
-			}
+			return IntersectLocked(this.handle, other, ref pdata1, ref pdata2, ref pparams);
 		}
 		/// <summary>
 		/// Tests this geometry against another and returns a list of contacts.
@@ -768,28 +746,7 @@ namespace CryCil.Engine.Physics
 			}
 			Contract.EndContractBlock();
 
-			using (var @lock = new WriteLockCond())
-			{
-				GeometryContact* contactsPtr;
-				int contactCount = IntersectLockedDefault(this.handle, other, out contactsPtr, @lock.Handle);
-
-				if (contactCount == 0)
-				{
-					return null;
-				}
-
-				GeometryContact[] contacts = new GeometryContact[contactCount];
-
-				fixed (GeometryContact* contactsArrayPtr = contacts)
-				{
-					for (int i = 0; i < contactCount; i++)
-					{
-						contactsArrayPtr[i] = contactsPtr[i];
-					}
-				}
-
-				return contacts;
-			}
+			return IntersectLockedDefault(this.handle, other);
 		}
 		/// <summary>
 		/// Finds the closest point on the surface of this geometry to specified point.
@@ -977,12 +934,11 @@ namespace CryCil.Engine.Physics
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern int PointInsideStatus(IntPtr handle, ref Vector3 pt);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern int IntersectLocked(IntPtr handle, GeometryShape pCollider, ref GeometryWorldData pdata1,
-												  ref GeometryWorldData pdata2, ref IntersectionParameters pparams,
-												  out GeometryContact* pcontacts, IntPtr @lock);
+		private static extern GeometryContact[] IntersectLocked(IntPtr handle, GeometryShape pCollider,
+																ref GeometryWorldData pdata1, ref GeometryWorldData pdata2,
+																ref IntersectionParameters pparams);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern int IntersectLockedDefault(IntPtr handle, GeometryShape pCollider,
-														 out GeometryContact* pcontacts, IntPtr @lock);
+		private static extern GeometryContact[] IntersectLockedDefault(IntPtr handle, GeometryShape pCollider);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern int FindClosestPointInternal(IntPtr handle, ref GeometryWorldData pgwd, out int iPrim,
 														   out int iFeature, ref Vector3 ptdst0, ref Vector3 ptdst1,
