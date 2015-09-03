@@ -893,6 +893,27 @@ namespace CryCil.Engine.Physics
 
 			CalculateMediumResistanceInternal(this.handle, ref surface, ref wd, out pressure, out resistance);
 		}
+		/// <summary>
+		/// Subtracts the shape out of this one.
+		/// </summary>
+		/// <param name="subtrahend">A geometric object to subtract from this one.</param>
+		/// <param name="pdata1">Reference to the object that describes location and movement of this geometric object.</param>
+		/// <param name="pdata2">Reference to the object that describes location and movement of <paramref name="subtrahend"/>.</param>
+		/// <param name="logUpdates">Indicates whether a new <see cref="MeshUpdate"/> should be created in this object that details the changes that were to this object during subtraction.</param>
+		/// <returns>True, if this geometric object "survived" the subtraction (if its volume is not equal to 0).</returns>
+		public bool Subtract(GeometryShape subtrahend, ref GeometryWorldData pdata1, ref GeometryWorldData pdata2,
+							bool logUpdates = true)
+		{
+			this.AssertInstance();
+			Contract.EndContractBlock();
+
+			if (!subtrahend.IsValid)
+			{
+				return true;
+			}
+
+			return Subtraction(this.handle, subtrahend, ref pdata1, ref pdata2, logUpdates) != 0;
+		}
 		#endregion
 		#region Utilities
 		private void AssertInstance()
@@ -961,11 +982,11 @@ namespace CryCil.Engine.Physics
 		private static extern float GetVolume(IntPtr handle );
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern Vector3 GetCenter(IntPtr handle );
-	// Subtract: performs boolean subtraction; if bLogUpdates==1, will create bop_meshupdate inside the mesh
-	[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern int Subtract(IntPtr handle, GeometryShape pGeom, ref GeometryWorldData pdata1,ref GeometryWorldData pdata2, int bLogUpdates=1);
-	[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern int GetSubtractionsCount(IntPtr handle );	// number of Subtract()s the mesh has survived so far
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern int Subtraction(IntPtr handle, GeometryShape pGeom, ref GeometryWorldData pdata1,
+											  ref GeometryWorldData pdata2, bool logUpdates = true);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern int GetSubtractionsCount(IntPtr handle);
 	// GetForeignData: returns a pointer associated with the geometry
 	// special: GetForeignData(DATA_MESHUPDATE) returns the internal bop_meshupdate list (does not interfere with the main foreign pointer)
 	[MethodImpl(MethodImplOptions.InternalCall)]
