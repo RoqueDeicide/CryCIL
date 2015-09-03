@@ -1,6 +1,4 @@
-﻿using CryCil.Geometry;
-
-namespace CryCil.Engine.Physics
+﻿namespace CryCil.Engine.Physics
 {
 	/// <summary>
 	/// Defines a signature of methods that can handle <see cref="PhysicalWorld.BoundingBoxOverlapped"/>
@@ -69,10 +67,10 @@ namespace CryCil.Engine.Physics
 	/// <summary>
 	/// Defines a signature of methods that can handle <see cref="PhysicalWorld.StepComplete"/> event.
 	/// </summary>
-	/// <param name="entity">     
+	/// <param name="entity">  
 	/// A reference to an object that represents the entity that completed the simulation step.
 	/// </param>
-	/// <param name="stepInfo">   An object that provides information about the step.</param>
+	/// <param name="stepInfo">An object that provides information about the step.</param>
 	/// <returns>A value that indicates whether propagation of this event can continue.</returns>
 	public delegate bool SimulationStepCompleteEventHandler(ref MonoPhysicsEventData entity, ref TimeStepInfo stepInfo);
 	/// <summary>
@@ -87,9 +85,10 @@ namespace CryCil.Engine.Physics
 	/// <param name="invalid">       Indicates whether the new mesh is a valid physics mesh(?).</param>
 	/// <param name="reason">        A value that indicates why the mesh was changed.</param>
 	/// <param name="mesh">          An object that represents current physical geometry.</param>
-	/// <param name="updatesInfo">   
-	/// An object that provides the array of objects that represent changes that were made to the geometry.
-	/// Don't copy this object.
+	/// <param name="lastUpdate">    
+	/// The pointer to the last mesh update that was applied to the geometry at the moment of this event.
+	/// Pass this pointer to <see cref="MeshUpdate.GetNext"/> if you want to traverse the linked list of
+	/// updates up-to this point.
 	/// </param>
 	/// <param name="skeletonToMesh">
 	/// A reference to 3x4 matrix that represents the transformation from skeleton mesh to actual physics
@@ -97,10 +96,10 @@ namespace CryCil.Engine.Physics
 	/// </param>
 	/// <param name="skeletonMesh">  A skeleton physics mesh, used by deformable bodies.</param>
 	/// <returns>A value that indicates whether propagation of this event can continue.</returns>
-	public delegate bool PhysicsMeshChangedEventHandler(ref MonoPhysicsEventData entity, int partId, bool invalid,
-														PhysicsMeshUpdateReason reason, GeometryShape mesh,
-														ref MeshUpdateInfoProvider updatesInfo, ref Matrix34 skeletonToMesh,
-														GeometryShape skeletonMesh);
+	public unsafe delegate bool PhysicsMeshChangedEventHandler(ref MonoPhysicsEventData entity, int partId, bool invalid,
+															   PhysicsMeshUpdateReason reason, GeometryShape mesh,
+															   MeshUpdate* lastUpdate, ref Matrix34 skeletonToMesh,
+															   GeometryShape skeletonMesh);
 	/// <summary>
 	/// Defines a signature of methods that can handle <see cref="PhysicalWorld.PartCreated"/> event.
 	/// </summary>

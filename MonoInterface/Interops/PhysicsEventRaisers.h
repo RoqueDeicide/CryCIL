@@ -46,12 +46,6 @@ struct CollisionParticipantInfo
 	short iPrim;
 };
 
-struct MeshUpdateInfoProvider
-{
-	IGeometry *geometry;
-	bop_meshupdate *lastUpdate;
-};
-
 struct CreatedPartInfo
 {
 	IPhysicalEntity *newEntity;
@@ -71,7 +65,7 @@ struct CreatedPartInfo
 	Vec3 cutSourceNormal;
 	Vec3 cutPartNormal;
 	IGeometry *newMesh;
-	MeshUpdateInfoProvider meshUpdates;
+	bop_meshupdate *lastUpdate;
 };
 
 struct JointBreakInfo
@@ -115,9 +109,8 @@ typedef bool(__stdcall *StateChangePhysicsEventThunk)(MonoPhysicsEventData *, Ph
 typedef bool(__stdcall *EnvChangePhysicsEventThunk)(MonoPhysicsEventData *, IPhysicalEntity *, IPhysicalEntity *, bool,
 													mono::exception *);
 typedef bool(__stdcall *PostStepPhysicsEventThunk)(MonoPhysicsEventData *, TimeStepInfo *, bool, mono::exception *);
-typedef bool(__stdcall *UpdateMeshPhysicsEventThunk)(MonoPhysicsEventData *, int, bool, int, IGeometry *,
-													 MeshUpdateInfoProvider *, Matrix34 *, IGeometry *, bool,
-													 mono::exception *);
+typedef bool(__stdcall *UpdateMeshPhysicsEventThunk)(MonoPhysicsEventData *, int, bool, int, IGeometry *, bop_meshupdate *,
+													 Matrix34 *, IGeometry *, bool, mono::exception *);
 typedef bool(__stdcall *CreateEntityPartPhysicsEventThunk)(MonoPhysicsEventData *, CreatedPartInfo *, bool,
 														   mono::exception *);
 typedef bool(__stdcall *RevealEntityPartPhysicsEventThunk)(MonoPhysicsEventData *, int, bool, mono::exception *);
@@ -224,14 +217,11 @@ auto result = raise(&data, &step, logged, &ex);
 END_EVENT_CLIENT
 
 BEGIN_MONO_EVENT_CLIENT(UpdateMeshEventClient, UpdateMeshPhysicsEventThunk, EventPhysUpdateMesh, "MeshChanged")
-MeshUpdateInfoProvider updatesInfo;
-updatesInfo.geometry   = _eventInfo->pMesh;
-updatesInfo.lastUpdate = _eventInfo->pLastUpdate;
 
 Matrix34 m = _eventInfo->mtxSkelToMesh;
 
 auto result = raise(&data, _eventInfo->partid, _eventInfo->bInvalid != 0, _eventInfo->iReason, _eventInfo->pMesh,
-					&updatesInfo, &m, _eventInfo->pMeshSkel, logged, &ex);
+					_eventInfo->pLastUpdate, &m, _eventInfo->pMeshSkel, logged, &ex);
 END_EVENT_CLIENT
 
 BEGIN_MONO_EVENT_CLIENT(CreateEntityPartEventClient, CreateEntityPartPhysicsEventThunk, EventPhysCreateEntityPart, "PartCreated")
@@ -247,8 +237,7 @@ partInfo.cutRadius               = _eventInfo->cutRadius;
 partInfo.ejectionAngularVelocity = Ang3(_eventInfo->w);
 partInfo.ejectionVelocity        = _eventInfo->v;
 partInfo.invalid                 = _eventInfo->bInvalid != 0;
-partInfo.meshUpdates.geometry    = _eventInfo->pMeshNew;
-partInfo.meshUpdates.lastUpdate  = _eventInfo->pLastUpdate;
+partInfo.lastUpdate              = _eventInfo->pLastUpdate;
 partInfo.newEntity               = _eventInfo->pEntNew;
 partInfo.newMesh                 = _eventInfo->pMeshNew;
 partInfo.newPartId               = _eventInfo->partidNew;

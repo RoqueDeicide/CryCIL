@@ -5,7 +5,7 @@ namespace CryCil.Engine.Physics
 	/// <summary>
 	/// Encapsulates information about a part that was created by having it break off the entity.
 	/// </summary>
-	public struct CreatedPartInfo
+	public unsafe struct CreatedPartInfo
 	{
 		#region Fields
 		private readonly PhysicalEntity newEntity;
@@ -25,7 +25,7 @@ namespace CryCil.Engine.Physics
 		private readonly Vector3 cutSourceNormal;
 		private readonly Vector3 cutPartNormal;
 		private readonly GeometryShape newMesh;
-		private readonly MeshUpdateInfoProvider meshUpdates;
+		private readonly MeshUpdate* lastUpdate;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -155,12 +155,16 @@ namespace CryCil.Engine.Physics
 			get { return this.newMesh; }
 		}
 		/// <summary>
-		/// Gets the object that provides information about the changes that were made to the source entity
-		/// mesh.
+		/// Gets the pointer to the last mesh update that was applied to the geometry at the moment of this
+		/// event.
 		/// </summary>
-		public MeshUpdateInfoProvider MeshUpdates
+		/// <remarks>
+		/// Pass this pointer to <see cref="MeshUpdate.GetNext"/> if you want to traverse the linked list
+		/// of updates up-to this point.
+		/// </remarks>
+		public MeshUpdate* LastMeshUpdate
 		{
-			get { return this.meshUpdates; }
+			get { return this.lastUpdate; }
 		}
 		#endregion
 		#region Construction
@@ -170,7 +174,7 @@ namespace CryCil.Engine.Physics
 								 Vector3 ejectionVelocity, float breakageSize, float cutRadius,
 								 Vector3 cutSourcePosition, Vector3 cutPartPosition, Vector3 cutSourceNormal,
 								 Vector3 cutPartNormal, GeometryShape newMesh,
-								 MeshUpdateInfoProvider meshUpdates)
+								 MeshUpdate* lastUpdate)
 		{
 			this.newEntity = newEntity;
 			this.oldPartId = oldPartId;
@@ -189,7 +193,7 @@ namespace CryCil.Engine.Physics
 			this.cutSourceNormal = cutSourceNormal;
 			this.cutPartNormal = cutPartNormal;
 			this.newMesh = newMesh;
-			this.meshUpdates = meshUpdates;
+			this.lastUpdate = lastUpdate;
 		}
 		#endregion
 	}

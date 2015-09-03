@@ -120,7 +120,6 @@
     <Compile Include="Engine\Physics\EntityAPIDetails\Events\CreatedPartInfo.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Events\EventHandlerDelegates.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Events\JointBreakInfo.cs" />
-    <Compile Include="Engine\Physics\EntityAPIDetails\Events\MeshUpdateInfoProvider.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Events\MonoPhysicsEventData.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Events\PhysicalEntityStateInfo.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Events\PhysicsMeshUpdateReason.cs" />
