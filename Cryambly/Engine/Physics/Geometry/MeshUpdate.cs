@@ -217,6 +217,13 @@ namespace CryCil.Engine.Physics
 				return this.pNewVtx[index];
 			}
 		}
+		/// <summary>
+		/// Gets the number of changed vertexes.
+		/// </summary>
+		public int Count
+		{
+			get { return this.nNewVtx; }
+		}
 		#endregion
 	}
 	/// <summary>
@@ -245,6 +252,13 @@ namespace CryCil.Engine.Physics
 
 				return this.pNewTri[index];
 			}
+		}
+		/// <summary>
+		/// Gets the number of changed triangles.
+		/// </summary>
+		public int Count
+		{
+			get { return this.nNewTri; }
 		}
 		#endregion
 	}
@@ -276,6 +290,13 @@ namespace CryCil.Engine.Physics
 				return this.pTJFixes[index];
 			}
 		}
+		/// <summary>
+		/// Gets the number of fixes.
+		/// </summary>
+		public int Count
+		{
+			get { return this.nTJFixes; }
+		}
 		#endregion
 	}
 	/// <summary>
@@ -304,6 +325,13 @@ namespace CryCil.Engine.Physics
 
 				return this.pMovedBoxes[index];
 			}
+		}
+		/// <summary>
+		/// Gets the number of moved boxes.
+		/// </summary>
+		public int Count
+		{
+			get { return this.nMovedBoxes; }
 		}
 		#endregion
 	}
@@ -335,6 +363,13 @@ namespace CryCil.Engine.Physics
 				return this.pRemovedVtx[index];
 			}
 		}
+		/// <summary>
+		/// Gets the number of removed vertexes.
+		/// </summary>
+		public int Count
+		{
+			get { return this.nRemovedVtx; }
+		}
 		#endregion
 	}
 	/// <summary>
@@ -364,6 +399,13 @@ namespace CryCil.Engine.Physics
 
 				return this.pRemovedTri[index];
 			}
+		}
+		/// <summary>
+		/// Gets the number of removed triangles.
+		/// </summary>
+		public int Count
+		{
+			get { return this.nRemovedTri; }
 		}
 		#endregion
 	}

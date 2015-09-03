@@ -175,6 +175,7 @@
     <Compile Include="Engine\Physics\Geometry\GeometryTypes.cs" />
     <Compile Include="Engine\Physics\Geometry\GeometryWorldData.cs" />
     <Compile Include="Engine\Physics\Geometry\IntersectionParameters.cs" />
+    <Compile Include="Engine\Physics\Geometry\MeshData.cs" />
     <Compile Include="Engine\Physics\Geometry\MeshUpdate.cs" />
     <Compile Include="Engine\Physics\Geometry\PhysicsMeshFlags.cs" />
     <Compile Include="Engine\Physics\IForeignDataProvider.cs" />

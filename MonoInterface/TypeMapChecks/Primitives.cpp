@@ -335,3 +335,52 @@ TYPE_MIRROR struct coord_plane : plane
 		CHECK_TYPE(axes);
 	}
 };
+
+TYPE_MIRROR struct _mesh_data : primitives::primitive
+{
+	index_t *pIndices;
+	char *pMats;
+	int *pForeignIdx;
+	strided_pointer<Vec3> pVertices;
+	Vec3 *pNormals;
+	int *pVtxMap;
+	trinfo *pTopology;
+	int nTris, nVertices;
+	mesh_island *pIslands;
+	int nIslands;
+	tri2isle *pTri2Island;
+	int flags;
+
+	explicit _mesh_data(mesh_data &other)
+	{
+		static_assert(sizeof(_mesh_data) == sizeof(mesh_data), "mesh_data structure has been changed.");
+
+		ASSIGN_FIELD(pIndices);
+		ASSIGN_FIELD(pMats);
+		ASSIGN_FIELD(pForeignIdx);
+		ASSIGN_FIELD(pVertices);
+		ASSIGN_FIELD(pNormals);
+		ASSIGN_FIELD(pVtxMap);
+		ASSIGN_FIELD(pTopology);
+		ASSIGN_FIELD(nTris);
+		ASSIGN_FIELD(nVertices);
+		ASSIGN_FIELD(pIslands);
+		ASSIGN_FIELD(nIslands);
+		ASSIGN_FIELD(pTri2Island);
+		ASSIGN_FIELD(flags);
+
+		CHECK_TYPE(pIndices);
+		CHECK_TYPE(pMats);
+		CHECK_TYPE(pForeignIdx);
+		CHECK_TYPE(pVertices);
+		CHECK_TYPE(pNormals);
+		CHECK_TYPE(pVtxMap);
+		CHECK_TYPE(pTopology);
+		CHECK_TYPE(nTris);
+		CHECK_TYPE(nVertices);
+		CHECK_TYPE(pIslands);
+		CHECK_TYPE(nIslands);
+		CHECK_TYPE(pTri2Island);
+		CHECK_TYPE(flags);
+	}
+};
