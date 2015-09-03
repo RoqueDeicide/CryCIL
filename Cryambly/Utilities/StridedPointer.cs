@@ -41,6 +41,7 @@ namespace CryCil.Utilities
 		/// </summary>
 		/// <param name="index">Zero-based index of the element.</param>
 		/// <returns>A vector.</returns>
+		[Pure]
 		public Vector3 GetVector3(int index)
 		{
 			this.AssertInstanceValidity();
