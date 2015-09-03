@@ -489,6 +489,7 @@
     <ClCompile Include="TypeMapChecks\GeometryFlags.cpp" />
     <ClCompile Include="TypeMapChecks\GeometryTypes.cpp" />
     <ClCompile Include="TypeMapChecks\JointFlagscpp.cpp" />
+    <ClCompile Include="TypeMapChecks\MeshUpdateTypes.cpp" />
     <ClCompile Include="TypeMapChecks\PhysicalEntityFlags.cpp" />
     <ClCompile Include="TypeMapChecks\PhysicalEntityType.cpp" />
     <ClCompile Include="TypeMapChecks\PhysicalGeometry.cpp" />

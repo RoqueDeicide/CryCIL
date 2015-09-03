@@ -794,6 +794,9 @@
     <ClCompile Include="Interops\WriteLockCond.cpp">
       <Filter>Interops\Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="TypeMapChecks\MeshUpdateTypes.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">
