@@ -39,6 +39,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets or sets the object that represents the shape of this body.
 		/// </summary>
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public GeometryShape Geometry
 		{
 			get
@@ -63,6 +64,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the vector that represents the rotational inertia around each axis in body frame.
 		/// </summary>
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public Vector3 InertiaVector
 		{
 			get
@@ -78,6 +80,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the orientation of the body frame.
 		/// </summary>
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public Quaternion Orientation
 		{
 			get
@@ -93,6 +96,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the position of this body.
 		/// </summary>
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public Vector3 Position
 		{
 			get
@@ -108,6 +112,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the volume of this body.
 		/// </summary>
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public float Volume
 		{
 			get
@@ -123,6 +128,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the number of references to this object.
 		/// </summary>
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public int ReferenceCount
 		{
 			get
@@ -146,6 +152,7 @@ namespace CryCil.Engine.Physics
 		/// Gets or sets the surface type that is used for this body, if its shape is represented by either
 		/// a primitive or a <see cref="GeometryShape"/> that doesn't have its own surface types.
 		/// </summary>
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public SurfaceType SurfaceType
 		{
 			get
@@ -186,6 +193,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Assigns the array of surface type mappings to this physical body.
 		/// </summary>
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public Material MaterialMapping
 		{
 			set
@@ -205,9 +213,19 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Creates a new physical body.
 		/// </summary>
-		/// <param name="shape">Geometric object that defines the shape of the body. If you pass a <c>default(GeometryShape)</c>, then a body will be created without mass properties, but you can still assign the shape later with <see cref="P:Geometry"/>.</param>
-		/// <param name="surfaceType">The surface type to use until it gets overriden by the entity part. Should only be used, if <paramref name="shape"/> doesn't have per-face materials.</param>
-		/// <param name="material">An object that provides a table that maps per-face material indexes to actual surface type indexes.</param>
+		/// <param name="shape">      
+		/// Geometric object that defines the shape of the body. If you pass a
+		/// <c>default(GeometryShape)</c>, then a body will be created without mass properties, but you can
+		/// still assign the shape later with <see cref="P:Geometry"/>.
+		/// </param>
+		/// <param name="surfaceType">
+		/// The surface type to use until it gets overridden by the entity part. Should only be used, if
+		/// <paramref name="shape"/> doesn't have per-face materials.
+		/// </param>
+		/// <param name="material">   
+		/// An object that provides a table that maps per-face material indexes to actual surface type
+		/// indexes.
+		/// </param>
 		public PhysicalBody(GeometryShape shape, SurfaceType surfaceType, Material material)
 		{
 			this.handle = IntPtr.Zero;
@@ -217,8 +235,15 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Creates a new physical body.
 		/// </summary>
-		/// <param name="shape">Geometric object that defines the shape of the body. If you pass a <c>default(GeometryShape)</c>, then a body will be created without mass properties, but you can still assign the shape later with <see cref="P:Geometry"/>.</param>
-		/// <param name="surfaceType">The surface type to use until it gets overriden by the entity part. Should only be used, if <paramref name="shape"/> doesn't have per-face materials.</param>
+		/// <param name="shape">      
+		/// Geometric object that defines the shape of the body. If you pass a
+		/// <c>default(GeometryShape)</c>, then a body will be created without mass properties, but you can
+		/// still assign the shape later with <see cref="P:Geometry"/>.
+		/// </param>
+		/// <param name="surfaceType">
+		/// The surface type to use until it gets overridden by the entity part. Should only be used, if
+		/// <paramref name="shape"/> doesn't have per-face materials.
+		/// </param>
 		public PhysicalBody(GeometryShape shape, SurfaceType surfaceType)
 		{
 			this.handle = IntPtr.Zero;
@@ -228,8 +253,15 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Creates a new physical body.
 		/// </summary>
-		/// <param name="shape">Geometric object that defines the shape of the body. If you pass a <c>default(GeometryShape)</c>, then a body will be created without mass properties, but you can still assign the shape later with <see cref="P:Geometry"/>.</param>
-		/// <param name="material">An object that provides a table that maps per-face material indexes to actual surface type indexes.</param>
+		/// <param name="shape">   
+		/// Geometric object that defines the shape of the body. If you pass a
+		/// <c>default(GeometryShape)</c>, then a body will be created without mass properties, but you can
+		/// still assign the shape later with <see cref="P:Geometry"/>.
+		/// </param>
+		/// <param name="material">
+		/// An object that provides a table that maps per-face material indexes to actual surface type
+		/// indexes.
+		/// </param>
 		public PhysicalBody(GeometryShape shape, Material material)
 		{
 			this.handle = IntPtr.Zero;
@@ -239,7 +271,11 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Creates a new physical body.
 		/// </summary>
-		/// <param name="shape">Geometric object that defines the shape of the body. If you pass a <c>default(GeometryShape)</c>, then a body will be created without mass properties, but you can still assign the shape later with <see cref="P:Geometry"/>.</param>
+		/// <param name="shape">
+		/// Geometric object that defines the shape of the body. If you pass a
+		/// <c>default(GeometryShape)</c>, then a body will be created without mass properties, but you can
+		/// still assign the shape later with <see cref="P:Geometry"/>.
+		/// </param>
 		public PhysicalBody(GeometryShape shape)
 		{
 			this.handle = IntPtr.Zero;
