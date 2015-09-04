@@ -103,3 +103,5 @@
 #include "Interops/IGeometry.h"
 
 #include "Interops/WriteLockCond.h"
+
+#include "Interops/PhysicalBody.h"

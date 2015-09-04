@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
+using System.Runtime.CompilerServices;
+using CryCil.Engine.Rendering;
 using CryCil.Geometry;
 
 namespace CryCil.Engine.Physics
@@ -35,7 +37,7 @@ namespace CryCil.Engine.Physics
 			get { return this.handle != IntPtr.Zero; }
 		}
 		/// <summary>
-		/// Gets the object that represents the shape of this body.
+		/// Gets or sets the object that represents the shape of this body.
 		/// </summary>
 		public GeometryShape Geometry
 		{
@@ -47,6 +49,15 @@ namespace CryCil.Engine.Physics
 				var ptr = (phys_geometry*)this.handle.ToPointer();
 
 				return ptr->pGeom;
+			}
+			set
+			{
+				this.AssertInstance();
+				Contract.EndContractBlock();
+
+				var ptr = (phys_geometry*)this.handle.ToPointer();
+
+				ptr->pGeom = value;
 			}
 		}
 		/// <summary>
@@ -110,7 +121,7 @@ namespace CryCil.Engine.Physics
 			}
 		}
 		/// <summary>
-		/// Gets or sets the number of references to this object.
+		/// Gets the number of references to this object.
 		/// </summary>
 		public int ReferenceCount
 		{
@@ -122,17 +133,17 @@ namespace CryCil.Engine.Physics
 				var ptr = (phys_geometry*)this.handle.ToPointer();
 				return ptr->nRefCount;
 			}
-			set
-			{
-				this.AssertInstance();
-				Contract.EndContractBlock();
+			//set
+			//{
+			//	this.AssertInstance();
+			//	Contract.EndContractBlock();
 
-				var ptr = (phys_geometry*)this.handle.ToPointer();
-				ptr->nRefCount = value;
-			}
+			//	var ptr = (phys_geometry*)this.handle.ToPointer();
+			//	ptr->nRefCount = value;
+			//}
 		}
 		/// <summary>
-		/// Gets or sets the surface type that is used for this bidy, if its shape is represented by either
+		/// Gets or sets the surface type that is used for this body, if its shape is represented by either
 		/// a primitive or a <see cref="GeometryShape"/> that doesn't have its own surface types.
 		/// </summary>
 		public SurfaceType SurfaceType
@@ -172,14 +183,102 @@ namespace CryCil.Engine.Physics
 				ptr->surface_idx = surfaceId;
 			}
 		}
+		/// <summary>
+		/// Assigns the array of surface type mappings to this physical body.
+		/// </summary>
+		public Material MaterialMapping
+		{
+			set
+			{
+				this.AssertInstance();
+				Contract.EndContractBlock();
+
+				SetMaterialMappings(this.handle, value);
+			}
+		}
 		#endregion
 		#region Construction
 		internal PhysicalBody(IntPtr handle)
 		{
 			this.handle = handle;
 		}
+		/// <summary>
+		/// Creates a new physical body.
+		/// </summary>
+		/// <param name="shape">Geometric object that defines the shape of the body. If you pass a <c>default(GeometryShape)</c>, then a body will be created without mass properties, but you can still assign the shape later with <see cref="P:Geometry"/>.</param>
+		/// <param name="surfaceType">The surface type to use until it gets overriden by the entity part. Should only be used, if <paramref name="shape"/> doesn't have per-face materials.</param>
+		/// <param name="material">An object that provides a table that maps per-face material indexes to actual surface type indexes.</param>
+		public PhysicalBody(GeometryShape shape, SurfaceType surfaceType, Material material)
+		{
+			this.handle = IntPtr.Zero;
+
+			this.handle = RegisterGeometry(shape, surfaceType, material);
+		}
+		/// <summary>
+		/// Creates a new physical body.
+		/// </summary>
+		/// <param name="shape">Geometric object that defines the shape of the body. If you pass a <c>default(GeometryShape)</c>, then a body will be created without mass properties, but you can still assign the shape later with <see cref="P:Geometry"/>.</param>
+		/// <param name="surfaceType">The surface type to use until it gets overriden by the entity part. Should only be used, if <paramref name="shape"/> doesn't have per-face materials.</param>
+		public PhysicalBody(GeometryShape shape, SurfaceType surfaceType)
+		{
+			this.handle = IntPtr.Zero;
+
+			this.handle = RegisterGeometry(shape, surfaceType, default(Material));
+		}
+		/// <summary>
+		/// Creates a new physical body.
+		/// </summary>
+		/// <param name="shape">Geometric object that defines the shape of the body. If you pass a <c>default(GeometryShape)</c>, then a body will be created without mass properties, but you can still assign the shape later with <see cref="P:Geometry"/>.</param>
+		/// <param name="material">An object that provides a table that maps per-face material indexes to actual surface type indexes.</param>
+		public PhysicalBody(GeometryShape shape, Material material)
+		{
+			this.handle = IntPtr.Zero;
+
+			this.handle = RegisterGeometry(shape, default(SurfaceType), material);
+		}
+		/// <summary>
+		/// Creates a new physical body.
+		/// </summary>
+		/// <param name="shape">Geometric object that defines the shape of the body. If you pass a <c>default(GeometryShape)</c>, then a body will be created without mass properties, but you can still assign the shape later with <see cref="P:Geometry"/>.</param>
+		public PhysicalBody(GeometryShape shape)
+		{
+			this.handle = IntPtr.Zero;
+
+			this.handle = RegisterGeometry(shape, default(SurfaceType), default(Material));
+		}
 		#endregion
 		#region Interface
+		/// <summary>
+		/// Increases the internal reference count for this physical body.
+		/// </summary>
+		/// <remarks>
+		/// Use this method when you use the same physical body for multiple parts or entities.
+		/// </remarks>
+		/// <returns>Current number of references(?).</returns>
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
+		public int IncrementReferenceCount()
+		{
+			this.AssertInstance();
+			Contract.EndContractBlock();
+
+			return AddRefGeometry(this.handle);
+		}
+		/// <summary>
+		/// Decreases the internal reference count for this physical body.
+		/// </summary>
+		/// <remarks>
+		/// Use this method when you were using the same physical body for multiple parts or entities when
+		/// you don't need this body.
+		/// </remarks>
+		/// <returns>Current number of references(?).</returns>
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
+		public int DecrementReferenceCount()
+		{
+			this.AssertInstance();
+			Contract.EndContractBlock();
+
+			return UnregisterGeometry(this.handle);
+		}
 		#endregion
 		#region Utilities
 		private void AssertInstance()
@@ -189,6 +288,15 @@ namespace CryCil.Engine.Physics
 				throw new NullReferenceException("This instance is not valid.");
 			}
 		}
+
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern IntPtr RegisterGeometry(GeometryShape shape, SurfaceType surfaceType, Material material);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern int AddRefGeometry(IntPtr handle);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern int UnregisterGeometry(IntPtr handle);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void SetMaterialMappings(IntPtr handle, Material material);
 		#endregion
 	}
 }

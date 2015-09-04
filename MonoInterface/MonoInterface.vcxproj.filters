@@ -437,6 +437,9 @@
     <ClInclude Include="Interops\ForeignData.h">
       <Filter>Interops\Engine\Physics</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\PhysicalBody.h">
+      <Filter>Interops\Engine\Physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -799,6 +802,9 @@
     </ClCompile>
     <ClCompile Include="TypeMapChecks\MeshUpdateTypes.cpp">
       <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\PhysicalBody.cpp">
+      <Filter>Interops\Engine\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

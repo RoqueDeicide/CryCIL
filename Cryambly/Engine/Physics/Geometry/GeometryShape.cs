@@ -41,10 +41,12 @@ namespace CryCil.Engine.Physics
 			}
 		}
 		/// <summary>
-		/// Gets the pointer to the internal structure that represents this geometric object. See Remarks for details.
+		/// Gets the pointer to the internal structure that represents this geometric object. See Remarks
+		/// for details.
 		/// </summary>
 		/// <remarks>
-		/// You can cast returned pointer to one of the corresponding primitives that is specified by <see cref="P:GeometryType"/>.
+		/// You can cast returned pointer to one of the corresponding primitives that is specified by
+		/// <see cref="P:GeometryType"/>.
 		/// </remarks>
 		public Primitive.BasePrimitive* Data
 		{
@@ -724,7 +726,7 @@ namespace CryCil.Engine.Physics
 		/// Increases the internal reference count for this geometry object.
 		/// </summary>
 		/// <remarks>
-		/// Use this method when you use the same geometry object by multiple parts or entities.
+		/// Use this method when you use the same geometry object for multiple parts or entities.
 		/// </remarks>
 		/// <returns>Current number of references(?).</returns>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
@@ -739,8 +741,8 @@ namespace CryCil.Engine.Physics
 		/// Decreases the internal reference count for this geometry object.
 		/// </summary>
 		/// <remarks>
-		/// Use this method when you were using the same geometry object by multiple parts or entities when
-		/// you don't need this geometry.
+		/// Use this method when you were using the same geometry object for multiple parts or entities
+		/// when you don't need this geometry.
 		/// </remarks>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public void DecrementReferenceCount()
@@ -1224,7 +1226,7 @@ namespace CryCil.Engine.Physics
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern int SanityCheck(IntPtr handle);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern Primitive.BasePrimitive *GetData(IntPtr handle);
+		private static extern Primitive.BasePrimitive* GetData(IntPtr handle);
 		#endregion
 	}
 }
