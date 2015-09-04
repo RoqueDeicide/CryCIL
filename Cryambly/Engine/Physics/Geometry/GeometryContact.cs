@@ -2,22 +2,23 @@
 
 namespace CryCil.Engine.Physics
 {
-	/// <summary>
-	/// Encapsulates information about an area of geometry contact.
-	/// </summary>
-	public unsafe struct GeometryContactArea
-	{
-		int type;
-		int npt;
-		int nmaxpt;
-		float minedge;
-		int *piPrim0;
-		int *piPrim1;
-		int *piFeature0;
-		int *piFeature1;
-		Vector3 *pt;
-		Vector3 n1; // normal of other object surface (or edge)
-	}
+	///// <summary>
+	///// Encapsulates information about an area of geometry contact.
+	///// </summary>
+	//public unsafe struct GeometryContactArea
+	//{
+	//	int type;
+	//	int npt;
+	//	int nmaxpt;
+	//	float minedge;
+	//	int *piPrim0;
+	//	int *piPrim1;
+	//	int *piFeature0;
+	//	int *piFeature1;
+	//	Vector3 *pt;
+	//	Vector3 n1; // normal of other object surface (or edge)
+	//}
+
 	/// <summary>
 	/// Encapsulates information about a contact between to geometric shapes.
 	/// </summary>
@@ -38,14 +39,14 @@ namespace CryCil.Engine.Physics
 		[UsedImplicitly] private int iFeature1;
 		[UsedImplicitly] private int iNode0; // BV-tree nodes of contacting primitives
 		[UsedImplicitly] private int iNode1; // BV-tree nodes of contacting primitives
-		[UsedImplicitly] private Vector3 *ptborder; // intersection border
-		[UsedImplicitly] private int *idxborder0; // primitive index | primitive's feature's id << IFEAT_LOG2
-		[UsedImplicitly] private int *idxborder1; // primitive index | primitive's feature's id << IFEAT_LOG2
+		[UsedImplicitly] private Vector3* ptborder; // intersection border
+		[UsedImplicitly] private int* idxborder0; // primitive index | primitive's feature's id << IFEAT_LOG2
+		[UsedImplicitly] private int* idxborder1; // primitive index | primitive's feature's id << IFEAT_LOG2
 		[UsedImplicitly] private int nborderpt;
 		[UsedImplicitly] private int bClosed;
 		[UsedImplicitly] private Vector3 center;
 		[UsedImplicitly] private bool bBorderConsecutive;
-		[UsedImplicitly] private GeometryContactArea *parea;
+		[UsedImplicitly] private void* parea;
 		#endregion
 		#region Properties
 		///// <summary>
@@ -78,20 +79,14 @@ namespace CryCil.Engine.Physics
 		//{
 		//	get { return this.dir; }
 		//}
-
-
 		#endregion
 		#region Events
-		
 		#endregion
 		#region Construction
-		
 		#endregion
 		#region Interface
-		
 		#endregion
 		#region Utilities
-		
 		#endregion
 	}
 }
