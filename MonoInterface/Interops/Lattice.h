@@ -22,4 +22,5 @@ struct LatticeInterop : public IMonoInterop<true, true>
 	static PhysParamsLattice GetParams(ITetrLattice *handle);
 	static void              SetParams(ITetrLattice *handle, PhysParamsLattice &parameters);
 	static IGeometry        *CreateSkinMesh(ITetrLattice *handle, int maxTrisPerBvNode);
+	static ITetrLattice     *CreateTetraLattice(Vec3* pt, int npt, int* pTets, int nTets);
 };

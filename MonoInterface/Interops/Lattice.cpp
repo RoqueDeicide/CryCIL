@@ -7,6 +7,7 @@ void LatticeInterop::OnRunTimeInitialized()
 	REGISTER_METHOD(GetParams);
 	REGISTER_METHOD(SetParams);
 	REGISTER_METHOD(CreateSkinMesh);
+	REGISTER_METHOD(CreateTetraLattice);
 }
 
 PhysParamsLattice LatticeInterop::GetParams(ITetrLattice *handle)
@@ -45,4 +46,9 @@ void LatticeInterop::SetParams(ITetrLattice *handle, PhysParamsLattice &params)
 IGeometry *LatticeInterop::CreateSkinMesh(ITetrLattice *handle, int maxTrisPerBvNode)
 {
 	return handle->CreateSkinMesh(maxTrisPerBvNode);
+}
+
+ITetrLattice *LatticeInterop::CreateTetraLattice(Vec3* pt, int npt, int* pTets, int nTets)
+{
+	return gEnv->pPhysicalWorld->GetGeomManager()->CreateTetrLattice(pt, npt, pTets, nTets);
 }
