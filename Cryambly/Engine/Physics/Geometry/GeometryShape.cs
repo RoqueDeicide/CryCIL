@@ -841,6 +841,8 @@ namespace CryCil.Engine.Physics
 			}
 			Contract.EndContractBlock();
 
+			pparams.CompleteInitialization();
+
 			return IntersectLocked(this.handle, other, ref pdata1, ref pdata2, ref pparams);
 		}
 		/// <summary>
