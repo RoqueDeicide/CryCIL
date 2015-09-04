@@ -295,6 +295,7 @@
     <ClInclude Include="Interops\EntityExtension.h" />
     <ClInclude Include="Interops\ExplosionStructs.h" />
     <ClInclude Include="Interops\FlowGraph.h" />
+    <ClInclude Include="Interops\ForeignData.h" />
     <ClInclude Include="Interops\Game.h" />
     <ClInclude Include="Interops\GeneralExtensions.h" />
     <ClInclude Include="Interops\IGeometry.h" />
