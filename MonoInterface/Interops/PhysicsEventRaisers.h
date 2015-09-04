@@ -1,16 +1,11 @@
 #pragma once
 
 #include "IMonoInterface.h"
+#include "ForeignData.h"
 
 //
 // Mirrors for C# structures.
 //
-
-struct ForeignData
-{
-	void *handle;
-	int id;
-};
 
 struct MonoPhysicsEventData
 {
