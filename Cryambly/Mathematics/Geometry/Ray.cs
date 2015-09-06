@@ -11,6 +11,7 @@ namespace CryCil.Geometry
 	[StructLayout(LayoutKind.Sequential, Pack = 4)]
 	public struct Ray : IEquatable<Ray>, IFormattable
 	{
+		#region Fields
 		/// <summary>
 		/// The position in three dimensional space where the ray starts.
 		/// </summary>
@@ -19,6 +20,8 @@ namespace CryCil.Geometry
 		/// The normalized direction in which the ray points.
 		/// </summary>
 		public Vector3 Direction;
+		#endregion
+		#region Construction
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Ray"/> struct.
 		/// </summary>
@@ -31,6 +34,8 @@ namespace CryCil.Geometry
 			this.Position = position;
 			this.Direction = direction;
 		}
+		#endregion
+		#region Interface
 		/// <summary>
 		/// Tests for equality between two objects.
 		/// </summary>
@@ -137,5 +142,9 @@ namespace CryCil.Geometry
 		{
 			return value != null && value.GetType() == this.GetType() && this.Equals((Ray)value);
 		}
+		#endregion
+		#region Utilities
+
+		#endregion
 	}
 }
