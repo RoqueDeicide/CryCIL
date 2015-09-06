@@ -150,11 +150,21 @@ namespace CryCil.Geometry
 		/// <summary>
 		/// Casts a ray.
 		/// </summary>
-		/// <param name="hit">Resultant singular hit.</param>
-		/// <param name="query">A set of flags that specify which entities to check for collision with ray and how to process the result.</param>
-		/// <param name="flags">A set of flags that specify how to cast the ray. <see cref="RayCastFlags.StopAtPierceable"/> will be set internally.</param>
-		/// <param name="entitiesToSkip">An optional array of entities that have to be ignored by the ray.</param>
-		/// <param name="collisionClass">An optional value that specifies the collision class for the ray.</param>
+		/// <param name="hit">           Resultant singular hit.</param>
+		/// <param name="query">         
+		/// A set of flags that specify which entities to check for collision with ray and how to process
+		/// the result.
+		/// </param>
+		/// <param name="flags">         
+		/// A set of flags that specify how to cast the ray. <see cref="RayCastFlags.StopAtPierceable"/>
+		/// will be set internally.
+		/// </param>
+		/// <param name="entitiesToSkip">
+		/// An optional array of entities that have to be ignored by the ray.
+		/// </param>
+		/// <param name="collisionClass">
+		/// An optional value that specifies the collision class for the ray.
+		/// </param>
 		/// <returns>True, if the ray has hit anything.</returns>
 		[Annotations.Pure]
 		public bool Cast(out RayHit hit, EntityQueryFlags query = EntityQueryFlags.All, RayCastFlags flags = 0,
@@ -169,7 +179,7 @@ namespace CryCil.Geometry
 				fixed (PhysicalEntity* skipped = entitiesToSkip)
 				{
 					hitCount = CastRay(ref this.Position, ref this.Direction, query, flags, &h, 1, skipped,
-						entitiesToSkip.Length, collisionClass);
+									   entitiesToSkip.Length, collisionClass);
 				}
 			}
 			else
@@ -188,18 +198,35 @@ namespace CryCil.Geometry
 		/// <summary>
 		/// Casts a ray.
 		/// </summary>
-		/// <param name="query">>A set of flags that specify which entities to check for collision with ray and how to process the result.</param>
-		/// <param name="flags">A set of flags that specify how to cast the ray.</param>
-		/// <param name="entitiesToSkip">An optional array of entities that have to be ignored by the ray.</param>
-		/// <param name="maxHits">Maximal number of hits. Larger values can potentially waste RAM.</param>
-		/// <param name="collisionClass">An optional value that specifies the collision class for the ray.</param>
-		/// <returns>An array of objects that describe hits that is sorted by distance away from <see cref="Position"/> in ascending order, unless <see cref="RayCastFlags.SeparateImportantHits"/> is set in <paramref name="flags"/> in which case hit on surface that has <see cref="SurfaceFlags.Important"/> flag set will go before other pierceable hits.</returns>
-		/// <exception cref="ArgumentOutOfRangeException">Maximal number of hits cannot be lass or equal to 0.</exception>
+		/// <param name="query">         
+		/// &gt;A set of flags that specify which entities to check for collision with ray and how to
+		/// process the result.
+		/// </param>
+		/// <param name="flags">         A set of flags that specify how to cast the ray.</param>
+		/// <param name="entitiesToSkip">
+		/// An optional array of entities that have to be ignored by the ray.
+		/// </param>
+		/// <param name="maxHits">       
+		/// Maximal number of hits. Larger values can potentially waste RAM.
+		/// </param>
+		/// <param name="collisionClass">
+		/// An optional value that specifies the collision class for the ray.
+		/// </param>
+		/// <returns>
+		/// An array of objects that describe hits that is sorted by distance away from
+		/// <see cref="Position"/> in ascending order, unless
+		/// <see cref="RayCastFlags.SeparateImportantHits"/> is set in <paramref name="flags"/> in which
+		/// case hit on surface that has <see cref="SurfaceFlags.Important"/> flag set will go before other
+		/// pierceable hits.
+		/// </returns>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// Maximal number of hits cannot be lass or equal to 0.
+		/// </exception>
 		[CanBeNull]
 		[Annotations.Pure]
 		public RayHit[] Cast(EntityQueryFlags query = EntityQueryFlags.All, RayCastFlags flags = RayCastFlags.StopAtPierceable,
 							 PhysicalEntity[] entitiesToSkip = null, CollisionClass collisionClass = new CollisionClass(),
-			int maxHits = 16)
+							 int maxHits = 16)
 		{
 			if (maxHits <= 0)
 			{
@@ -208,7 +235,7 @@ namespace CryCil.Geometry
 			Contract.EndContractBlock();
 
 			RayHit* hitsBuffer = (RayHit*)CryMarshal.Allocate((ulong)(maxHits * sizeof(RayHit))).ToPointer();
-			
+
 			int hitCount;
 			if (!entitiesToSkip.IsNullOrEmpty())
 			{
@@ -221,7 +248,7 @@ namespace CryCil.Geometry
 			else
 			{
 				hitCount = CastRay(ref this.Position, ref this.Direction, query, flags, hitsBuffer, maxHits, null, 0,
-					collisionClass);
+								   collisionClass);
 			}
 
 			if (hitCount == 0)
