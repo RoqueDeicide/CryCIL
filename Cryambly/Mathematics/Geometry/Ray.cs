@@ -1,6 +1,11 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using CryCil.Annotations;
+using CryCil.Engine.Memory;
+using CryCil.Engine.Physics;
 
 namespace CryCil.Geometry
 {
@@ -9,7 +14,7 @@ namespace CryCil.Geometry
 	/// </summary>
 	[Serializable]
 	[StructLayout(LayoutKind.Sequential, Pack = 4)]
-	public struct Ray : IEquatable<Ray>, IFormattable
+	public unsafe struct Ray : IEquatable<Ray>, IFormattable
 	{
 		#region Fields
 		/// <summary>
@@ -142,9 +147,107 @@ namespace CryCil.Geometry
 		{
 			return value != null && value.GetType() == this.GetType() && this.Equals((Ray)value);
 		}
+		/// <summary>
+		/// Casts a ray.
+		/// </summary>
+		/// <param name="hit">Resultant singular hit.</param>
+		/// <param name="query">A set of flags that specify which entities to check for collision with ray and how to process the result.</param>
+		/// <param name="flags">A set of flags that specify how to cast the ray. <see cref="RayCastFlags.StopAtPierceable"/> will be set internally.</param>
+		/// <param name="entitiesToSkip">An optional array of entities that have to be ignored by the ray.</param>
+		/// <param name="collisionClass">An optional value that specifies the collision class for the ray.</param>
+		/// <returns>True, if the ray has hit anything.</returns>
+		[Annotations.Pure]
+		public bool Cast(out RayHit hit, EntityQueryFlags query = EntityQueryFlags.All, RayCastFlags flags = 0,
+						 PhysicalEntity[] entitiesToSkip = null, CollisionClass collisionClass = new CollisionClass())
+		{
+			flags |= RayCastFlags.StopAtPierceable;
+
+			RayHit h;
+			int hitCount;
+			if (!entitiesToSkip.IsNullOrEmpty())
+			{
+				fixed (PhysicalEntity* skipped = entitiesToSkip)
+				{
+					hitCount = CastRay(ref this.Position, ref this.Direction, query, flags, &h, 1, skipped,
+						entitiesToSkip.Length, collisionClass);
+				}
+			}
+			else
+			{
+				hitCount = CastRay(ref this.Position, ref this.Direction, query, flags, &h, 1, null, 0, collisionClass);
+			}
+
+			if (hitCount == 0)
+			{
+				hit = new RayHit();
+				return false;
+			}
+			hit = h;
+			return true;
+		}
+		/// <summary>
+		/// Casts a ray.
+		/// </summary>
+		/// <param name="query">>A set of flags that specify which entities to check for collision with ray and how to process the result.</param>
+		/// <param name="flags">A set of flags that specify how to cast the ray.</param>
+		/// <param name="entitiesToSkip">An optional array of entities that have to be ignored by the ray.</param>
+		/// <param name="maxHits">Maximal number of hits. Larger values can potentially waste RAM.</param>
+		/// <param name="collisionClass">An optional value that specifies the collision class for the ray.</param>
+		/// <returns>An array of objects that describe hits that is sorted by distance away from <see cref="Position"/> in ascending order, unless <see cref="RayCastFlags.SeparateImportantHits"/> is set in <paramref name="flags"/> in which case hit on surface that has <see cref="SurfaceFlags.Important"/> flag set will go before other pierceable hits.</returns>
+		/// <exception cref="ArgumentOutOfRangeException">Maximal number of hits cannot be lass or equal to 0.</exception>
+		[CanBeNull]
+		[Annotations.Pure]
+		public RayHit[] Cast(EntityQueryFlags query = EntityQueryFlags.All, RayCastFlags flags = RayCastFlags.StopAtPierceable,
+							 PhysicalEntity[] entitiesToSkip = null, CollisionClass collisionClass = new CollisionClass(),
+			int maxHits = 16)
+		{
+			if (maxHits <= 0)
+			{
+				throw new ArgumentOutOfRangeException("maxHits", "Maximal number of hits cannot be lass or equal to 0.");
+			}
+			Contract.EndContractBlock();
+
+			RayHit* hitsBuffer = (RayHit*)CryMarshal.Allocate((ulong)(maxHits * sizeof(RayHit))).ToPointer();
+			
+			int hitCount;
+			if (!entitiesToSkip.IsNullOrEmpty())
+			{
+				fixed (PhysicalEntity* skipped = entitiesToSkip)
+				{
+					hitCount = CastRay(ref this.Position, ref this.Direction, query, flags, hitsBuffer, maxHits, skipped,
+									   entitiesToSkip.Length, collisionClass);
+				}
+			}
+			else
+			{
+				hitCount = CastRay(ref this.Position, ref this.Direction, query, flags, hitsBuffer, maxHits, null, 0,
+					collisionClass);
+			}
+
+			if (hitCount == 0)
+			{
+				return null;
+			}
+
+			RayHit[] hits = new RayHit[hitCount];
+
+			fixed (RayHit* hitsPtr = hits)
+			{
+				for (int i = 0; i < hitCount; i++)
+				{
+					hitsPtr[i] = hitsBuffer[i];
+				}
+			}
+
+			return hits;
+		}
 		#endregion
 		#region Utilities
-
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern int CastRay(ref Vector3 origin, ref Vector3 direction, EntityQueryFlags query,
+										  RayCastFlags castFlags, RayHit* hits, int nMaxHits,
+										  PhysicalEntity* entitiesToSkip, int skipEntityCount,
+										  CollisionClass collisionClass);
 		#endregion
 	}
 }

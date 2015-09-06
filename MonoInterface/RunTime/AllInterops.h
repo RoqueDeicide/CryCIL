@@ -105,3 +105,5 @@
 #include "Interops/WriteLockCond.h"
 
 #include "Interops/PhysicalBody.h"
+
+#include "Interops/Ray.h"

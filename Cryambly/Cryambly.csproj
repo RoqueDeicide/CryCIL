@@ -291,6 +291,9 @@
     <Compile Include="Engine\Physics\Geometry\PhysicalBody.cs" />
     <Compile Include="Engine\Physics\Geometry\TetraLattice.cs" />
     <Compile Include="Engine\Physics\Primitives\VoxelGrid.cs" />
+    <Compile Include="Engine\Physics\RayCastFlags.cs" />
+    <Compile Include="Engine\Physics\RayHit.cs" />
+    <Compile Include="Engine\Physics\SurfaceFlags.cs" />
     <Compile Include="Engine\Physics\UnusedValues\UnusedValue.cs" />
     <Compile Include="Engine\Rendering\RenderParameters.cs" />
     <Compile Include="Engine\Rendering\Shading\Lighting\DynamicLightFlags.cs" />

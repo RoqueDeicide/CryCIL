@@ -332,6 +332,7 @@
     <ClInclude Include="Interops\PhysicsParameterStructs.h" />
     <ClInclude Include="Interops\PhysicsStatusStructs.h" />
     <ClInclude Include="Interops\Profiling.h" />
+    <ClInclude Include="Interops\Ray.h" />
     <ClInclude Include="Interops\Renderer.h" />
     <ClInclude Include="Interops\Shading.h" />
     <ClInclude Include="Interops\Spline.h" />
@@ -452,6 +453,7 @@
     <ClCompile Include="Interops\PhysicalEntity.cpp" />
     <ClCompile Include="Interops\PhysicalWorld.cpp" />
     <ClCompile Include="Interops\Profiling.cpp" />
+    <ClCompile Include="Interops\Ray.cpp" />
     <ClCompile Include="Interops\Renderer.cpp" />
     <ClCompile Include="Interops\Shading.cpp" />
     <ClCompile Include="Interops\Spline.cpp" />
@@ -500,12 +502,15 @@
     <ClCompile Include="TypeMapChecks\PhysicsMeshFlags.cpp" />
     <ClCompile Include="TypeMapChecks\PhysicsTypeEnumerations.cpp" />
     <ClCompile Include="TypeMapChecks\Primitives.cpp" />
+    <ClCompile Include="TypeMapChecks\RayHit.cpp" />
     <ClCompile Include="TypeMapChecks\RenderParameters.cpp" />
     <ClCompile Include="TypeMapChecks\RmiTargetEnum.cpp" />
+    <ClCompile Include="TypeMapChecks\RwiFlags.cpp" />
     <ClCompile Include="TypeMapChecks\SimClass.cpp" />
     <ClCompile Include="TypeMapChecks\SmallEntityStructs.cpp" />
     <ClCompile Include="TypeMapChecks\SpawnParams.cpp" />
     <ClCompile Include="TypeMapChecks\StridedPointer.cpp" />
+    <ClCompile Include="TypeMapChecks\SurfaceFlags.cpp" />
     <ClCompile Include="TypeMapChecks\UpdateMeshReason.cpp" />
     <ClCompile Include="TypeMapChecks\WaveSimParams.cpp" />
     <ClCompile Include="TypeMapChecks\_constrflags.cpp" />

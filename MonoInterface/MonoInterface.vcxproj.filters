@@ -440,6 +440,9 @@
     <ClInclude Include="Interops\PhysicalBody.h">
       <Filter>Interops\Engine\Physics</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\Ray.h">
+      <Filter>Interops\Engine\Physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -804,6 +807,18 @@
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
     <ClCompile Include="Interops\PhysicalBody.cpp">
+      <Filter>Interops\Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\RwiFlags.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\SurfaceFlags.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\RayHit.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\Ray.cpp">
       <Filter>Interops\Engine\Physics</Filter>
     </ClCompile>
   </ItemGroup>
