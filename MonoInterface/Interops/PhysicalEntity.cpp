@@ -163,6 +163,7 @@ void PhysicalEntityInterop::OnRunTimeInitialized()
 	REGISTER_METHOD(Action);
 	REGISTER_METHOD(AddGeometry);
 	REGISTER_METHOD(RemoveGeometry);
+	REGISTER_METHOD(CollideEntityWithBeam);
 }
 
 int PhysicalEntityInterop::SetParams(IPhysicalEntity *handle, PhysicsParameters *parameters, bool threadSafe)
@@ -274,4 +275,9 @@ int PhysicalEntityInterop::AddGeometry(IPhysicalEntity *handle, phys_geometry *p
 void PhysicalEntityInterop::RemoveGeometry(IPhysicalEntity *handle, int id, bool threadSafe)
 {
 	handle->RemoveGeometry(id, threadSafe ? 1 : 0);
+}
+
+bool PhysicalEntityInterop::CollideEntityWithBeam(IPhysicalEntity *handle, Vec3 *org, Vec3 *dir, float r, ray_hit *phit)
+{
+	return gEnv->pPhysicalWorld->CollideEntityWithBeam(handle, *org, *dir, r, phit);
 }

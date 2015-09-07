@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
+using CryCil.Geometry;
 
 namespace CryCil.Engine.Physics
 {
@@ -259,6 +260,34 @@ namespace CryCil.Engine.Physics
 
 			RemoveGeometry(this.handle, id, threadSafe);
 		}
+		/// <summary>
+		/// "Collides" this entity with a sphere that moves in a certain direction.
+		/// </summary>
+		/// <param name="ray">   
+		/// An object that describes the trajectory of sphere's movement. To detect collisions properly the
+		/// <see cref="Ray.Position"/> must be further then <paramref name="radius"/> away from this
+		/// entity.
+		/// </param>
+		/// <param name="radius">Radius of the sphere.</param>
+		/// <param name="hit">   
+		/// An object that describes the hit, if this method returns <c>true</c>.
+		/// </param>
+		/// <returns>A value that indicates whether a beam has collided with this entity.</returns>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// Radius of the sphere cannot be less then 0.
+		/// </exception>
+		[Annotations.Pure]
+		public bool CollideWithBeam(Ray ray, float radius, out RayHit hit)
+		{
+			this.AssertInstance();
+			if (radius < MathHelpers.NZeroTolerance)
+			{
+				throw new ArgumentOutOfRangeException("radius", "Radius of the sphere cannot be less then 0.");
+			}
+			Contract.EndContractBlock();
+
+			return CollideEntityWithBeam(this.handle, ref ray.Position, ref ray.Direction, radius, out hit);
+		}
 		#endregion
 		#region Utilities
 		private void AssertInstance()
@@ -282,6 +311,9 @@ namespace CryCil.Engine.Physics
 											  int id, bool threadSafe);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void RemoveGeometry(IntPtr handle, int id, bool threadSafe);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern bool CollideEntityWithBeam(IntPtr handle, ref Vector3 org, ref Vector3 dir, float r,
+														 out RayHit phit);
 		#endregion
 	}
 }

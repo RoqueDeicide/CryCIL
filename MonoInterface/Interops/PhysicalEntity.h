@@ -20,4 +20,5 @@ struct PhysicalEntityInterop : public IMonoInterop<true, true>
 	static int  AddGeometry(IPhysicalEntity *handle, phys_geometry *pgeom, GeometryParameters *parameters, int id,
 							bool threadSafe);
 	static void RemoveGeometry(IPhysicalEntity *handle, int id, bool threadSafe);
+	static bool CollideEntityWithBeam(IPhysicalEntity *handle, Vec3 *org, Vec3 *dir, float r, ray_hit *phit);
 };
