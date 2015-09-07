@@ -1,11 +1,12 @@
 ﻿using System.Runtime.CompilerServices;
+using CryCil.Engine.Physics.Primitives;
 
 namespace CryCil.Engine.Physics
 {
 	/// <summary>
 	/// Provides access to CryEngine physics API.
 	/// </summary>
-	public static partial class PhysicalWorld
+	public static unsafe partial class PhysicalWorld
 	{
 		/// <summary>
 		/// Simulates an explosion.
@@ -46,5 +47,65 @@ namespace CryCil.Engine.Physics
 		/// <param name="parameters">A reference to the object that provides parameters to change.</param>
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern void SetWaterManagerParameters(ref WaterManagerParameters parameters);
+		internal static int PrimitiveIntersection(out GeometryContact[] contacts,
+												  ref Primitive.BasePrimitive primitive, int primitiveType,
+												  EntityQueryFlags queryFlags, PhysicsGeometryFlags flagsAll,
+												  PhysicsGeometryFlags flagsAny,
+												  ref IntersectionParameters parameters,
+												  ref CollisionClass collisionClass, PhysicalEntity[] entitiesToSkip)
+		{
+			int count;
+			if (entitiesToSkip == null)
+			{
+				count = PrimitiveIntersectionInternal(out contacts, ref primitive, primitiveType, queryFlags, flagsAll,
+													  flagsAny, ref parameters, ref collisionClass, null, 0);
+			}
+			else
+				fixed (PhysicalEntity* skip = entitiesToSkip)
+				{
+					count = PrimitiveIntersectionInternal(out contacts, ref primitive, primitiveType, queryFlags, flagsAll,
+														  flagsAny, ref parameters, ref collisionClass, skip,
+														  entitiesToSkip.Length);
+				}
+			return count;
+		}
+		internal static float PrimitiveCast(out GeometryContact contact, ref Primitive.BasePrimitive primitive,
+											int primitiveType, ref Vector3 sweepDirection,
+											EntityQueryFlags queryFlags, PhysicsGeometryFlags flagsAll,
+											PhysicsGeometryFlags flagsAny, ref IntersectionParameters parameters,
+											ref CollisionClass collisionClass, PhysicalEntity[] entitiesToSkip)
+		{
+			float distance;
+			if (entitiesToSkip == null)
+			{
+				distance = PrimitiveCastInternal(out contact, ref primitive, primitiveType, ref sweepDirection, queryFlags, flagsAll,
+												 flagsAny, ref parameters, ref collisionClass, null, 0);
+			}
+			else
+				fixed (PhysicalEntity* skip = entitiesToSkip)
+				{
+					distance = PrimitiveCastInternal(out contact, ref primitive, primitiveType, ref sweepDirection,
+													 queryFlags, flagsAll, flagsAny, ref parameters, ref collisionClass,
+													 skip, entitiesToSkip.Length);
+				}
+			return distance;
+		}
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern int PrimitiveIntersectionInternal
+			(out GeometryContact[] contacts,
+			 ref Primitive.BasePrimitive primitive, int primitiveType,
+			 EntityQueryFlags queryFlags, PhysicsGeometryFlags flagsAll,
+			 PhysicsGeometryFlags flagsAny,
+			 ref IntersectionParameters parameters,
+			 ref CollisionClass collisionClass, PhysicalEntity* entitiesToSkip,
+			 int skipCount);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern float PrimitiveCastInternal
+			(out GeometryContact contact, ref Primitive.BasePrimitive primitive,
+			 int primitiveType, ref Vector3 sweepDirection,
+			 EntityQueryFlags queryFlags, PhysicsGeometryFlags flagsAll,
+			 PhysicsGeometryFlags flagsAny, ref IntersectionParameters parameters,
+			 ref CollisionClass collisionClass, PhysicalEntity* entitiesToSkip,
+			 int skipCount);
 	}
 }

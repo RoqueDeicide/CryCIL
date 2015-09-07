@@ -20,4 +20,13 @@ struct PhysicalWorldInterop : public IMonoInterop<true, true>
 	static void            RemoveAllExplosionShapes();
 	static void            GetWaterManagerParameters(WaterManagerParameters &parameters);
 	static void            SetWaterManagerParameters(const WaterManagerParameters &parameters);
+	static int             PrimitiveIntersectionInternal(mono::Array *contacts, primitives::primitive *primitive,
+														 int primitiveType, int queryFlags, int flagsAll, int flagsAny,
+														 intersection_params *parameters, SCollisionClass collisionClass,
+														 IPhysicalEntity **entitiesToSkip, int skipCount);
+	static float           PrimitiveCastInternal(geom_contact *contact, primitives::primitive *primitive,
+												 int primitiveType, Vec3 *sweepDirection, int queryFlags, int flagsAll,
+												 int flagsAny, intersection_params *parameters,
+												 SCollisionClass collisionClass, IPhysicalEntity **entitiesToSkip,
+												 int skipCount);
 };
