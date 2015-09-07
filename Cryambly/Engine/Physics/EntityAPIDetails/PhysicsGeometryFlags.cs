@@ -70,6 +70,11 @@ namespace CryCil.Engine.Physics
 		BreakApproximation = 0x4000000,
 		/// <summary>
 		/// When set, indicates that the geometry/part can collide with physical entities or their parts
+		/// that are marked as default geometry.
+		/// </summary>
+		CollisionTypeDefault = GeometryCollisionTypeCodes.collision_type0,
+		/// <summary>
+		/// When set, indicates that the geometry/part can collide with physical entities or their parts
 		/// that are marked as players.
 		/// </summary>
 		CollisionTypePlayer = GeometryCollisionTypeCodes.collision_type1,
