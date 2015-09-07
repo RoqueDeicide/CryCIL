@@ -34,6 +34,23 @@ namespace CryCil.Engine.Physics
 		[UsedImplicitly] private int bThreadSafeMesh;
 		[UsedImplicitly] private GeometryContact* pGlobalContacts;
 		private bool initialized;
+		private bool readOnly;
+
+		/// <summary>
+		/// Default set of initialization parameters. Don't try changing it.
+		/// </summary>
+		public static IntersectionParameters Default = new IntersectionParameters
+		{
+			readOnly = true,
+			initialized = true,
+			vrel_min = 1e-6f,
+			time_interval = 100,
+			maxSurfaceGapAngle = Degree.ToRadian(1),
+			axisContactNormal = Vector3.Up,
+			ptOutsidePivot0 = new Vector3(1e11f),
+			ptOutsidePivot1 = new Vector3(1e11f),
+			maxUnproj = 1e10f
+		};
 		#endregion
 		#region Properties
 		/// <summary>
@@ -43,7 +60,14 @@ namespace CryCil.Engine.Physics
 		public bool RotationalUnprojection
 		{
 			get { return this.iUnprojectionMode != 0; }
-			set { this.iUnprojectionMode = value ? 1 : 0; }
+			set
+			{
+				if (this.readOnly)
+				{
+					throw new InvalidOperationException("This object is read-only.");
+				}
+				this.iUnprojectionMode = value ? 1 : 0;
+			}
 		}
 		/// <summary>
 		/// Gets or sets the coordinates of the point that is used as a center of rotation when
@@ -52,7 +76,14 @@ namespace CryCil.Engine.Physics
 		public Vector3 RotationCenter
 		{
 			get { return this.centerOfRotation; }
-			set { this.centerOfRotation = value; }
+			set
+			{
+				if (this.readOnly)
+				{
+					throw new InvalidOperationException("This object is read-only.");
+				}
+				this.centerOfRotation = value;
+			}
 		}
 		/// <summary>
 		/// Gets or sets the direction of the axis of rotation that is used for unprojection.
@@ -60,7 +91,14 @@ namespace CryCil.Engine.Physics
 		public Vector3 RotationAxis
 		{
 			get { return this.axisOfRotation; }
-			set { this.axisOfRotation = value; }
+			set
+			{
+				if (this.readOnly)
+				{
+					throw new InvalidOperationException("This object is read-only.");
+				}
+				this.axisOfRotation = value;
+			}
 		}
 		/// <summary>
 		/// Gets or sets the time interval limit that is used for unprojection.
@@ -68,7 +106,14 @@ namespace CryCil.Engine.Physics
 		public float TimeInterval
 		{
 			get { return this.time_interval; }
-			set { this.time_interval = value; }
+			set
+			{
+				if (this.readOnly)
+				{
+					throw new InvalidOperationException("This object is read-only.");
+				}
+				this.time_interval = value;
+			}
 		}
 		/// <summary>
 		/// Gets or sets the relative speed threshold. When relative speed is above this, then unprojection
@@ -77,7 +122,14 @@ namespace CryCil.Engine.Physics
 		public float MinimalRelativeSpeed
 		{
 			get { return this.vrel_min; }
-			set { this.vrel_min = value; }
+			set
+			{
+				if (this.readOnly)
+				{
+					throw new InvalidOperationException("This object is read-only.");
+				}
+				this.vrel_min = value;
+			}
 		}
 		/// <summary>
 		/// Gets or sets the value that is used when generating area contacts.
@@ -85,7 +137,14 @@ namespace CryCil.Engine.Physics
 		public float MaxSurfaceGapAngle
 		{
 			get { return this.maxSurfaceGapAngle; }
-			set { this.maxSurfaceGapAngle = value; }
+			set
+			{
+				if (this.readOnly)
+				{
+					throw new InvalidOperationException("This object is read-only.");
+				}
+				this.maxSurfaceGapAngle = value;
+			}
 		}
 		/// <summary>
 		/// Gets or sets the minimal distance to axis of rotation from contact point when rotational
@@ -94,7 +153,14 @@ namespace CryCil.Engine.Physics
 		public float MinDistanceToAxis
 		{
 			get { return this.minAxisDist; }
-			set { this.minAxisDist = value; }
+			set
+			{
+				if (this.readOnly)
+				{
+					throw new InvalidOperationException("This object is read-only.");
+				}
+				this.minAxisDist = value;
+			}
 		}
 		/// <summary>
 		/// Gets or sets the normal to the plane to restrict linear unprojection to.
@@ -102,7 +168,14 @@ namespace CryCil.Engine.Physics
 		public Vector3 UnprojectionPlaneNormal
 		{
 			get { return this.unprojectionPlaneNormal; }
-			set { this.unprojectionPlaneNormal = value; }
+			set
+			{
+				if (this.readOnly)
+				{
+					throw new InvalidOperationException("This object is read-only.");
+				}
+				this.unprojectionPlaneNormal = value;
+			}
 		}
 		/// <summary>
 		/// Gets or sets the normal that is used as a hint for potential area contact normal.
@@ -110,7 +183,14 @@ namespace CryCil.Engine.Physics
 		public Vector3 ContactNormalHint
 		{
 			get { return this.axisContactNormal; }
-			set { this.axisContactNormal = value; }
+			set
+			{
+				if (this.readOnly)
+				{
+					throw new InvalidOperationException("This object is read-only.");
+				}
+				this.axisContactNormal = value;
+			}
 		}
 		/// <summary>
 		/// Gets or sets the maximal unprojection length for contacts that are not discarded.
@@ -118,7 +198,14 @@ namespace CryCil.Engine.Physics
 		public float MaxUnprojectionDistance
 		{
 			get { return this.maxUnproj; }
-			set { this.maxUnproj = value; }
+			set
+			{
+				if (this.readOnly)
+				{
+					throw new InvalidOperationException("This object is read-only.");
+				}
+				this.maxUnproj = value;
+			}
 		}
 		/// <summary>
 		/// Gets or sets the value that indicates whether a sweep test needs to be requested for each
@@ -128,7 +215,14 @@ namespace CryCil.Engine.Physics
 		public bool PerformSweepTest
 		{
 			get { return this.bSweepTest; }
-			set { this.bSweepTest = value; }
+			set
+			{
+				if (this.readOnly)
+				{
+					throw new InvalidOperationException("This object is read-only.");
+				}
+				this.bSweepTest = value;
+			}
 		}
 		/// <summary>
 		/// Gets or sets the value that indicates whether new contacts need to be appended to the existing
@@ -137,7 +231,14 @@ namespace CryCil.Engine.Physics
 		public bool KeepPreviousContacts
 		{
 			get { return this.bKeepPrevContacts; }
-			set { this.bKeepPrevContacts = value; }
+			set
+			{
+				if (this.readOnly)
+				{
+					throw new InvalidOperationException("This object is read-only.");
+				}
+				this.bKeepPrevContacts = value;
+			}
 		}
 		/// <summary>
 		/// Gets or sets the value that indicates whether intersection check must stop after first
@@ -146,7 +247,14 @@ namespace CryCil.Engine.Physics
 		public bool SingleContact
 		{
 			get { return this.bStopAtFirstTri; }
-			set { this.bStopAtFirstTri = value; }
+			set
+			{
+				if (this.readOnly)
+				{
+					throw new InvalidOperationException("This object is read-only.");
+				}
+				this.bStopAtFirstTri = value;
+			}
 		}
 		/// <summary>
 		/// Gets or sets the value that indicates whether area contacts should not be detected.
@@ -154,7 +262,14 @@ namespace CryCil.Engine.Physics
 		public bool NoAreaContacts
 		{
 			get { return this.bNoAreaContacts; }
-			set { this.bNoAreaContacts = value; }
+			set
+			{
+				if (this.readOnly)
+				{
+					throw new InvalidOperationException("This object is read-only.");
+				}
+				this.bNoAreaContacts = value;
+			}
 		}
 		/// <summary>
 		/// Gets or sets the value that indicates whether contact border needs to be traced.
@@ -162,7 +277,14 @@ namespace CryCil.Engine.Physics
 		public bool NoContactBorder
 		{
 			get { return this.bNoBorder; }
-			set { this.bNoBorder = value; }
+			set
+			{
+				if (this.readOnly)
+				{
+					throw new InvalidOperationException("This object is read-only.");
+				}
+				this.bNoBorder = value;
+			}
 		}
 		/// <summary>
 		/// Gets or sets the value that indicates whether only consecutive borders must be returned. Useful
@@ -171,7 +293,14 @@ namespace CryCil.Engine.Physics
 		public bool ExactBorder
 		{
 			get { return this.bExactBorder != 0; }
-			set { this.bExactBorder = value ? 1 : 0; }
+			set
+			{
+				if (this.readOnly)
+				{
+					throw new InvalidOperationException("This object is read-only.");
+				}
+				this.bExactBorder = value ? 1 : 0;
+			}
 		}
 		/// <summary>
 		/// Gets or sets the value that indicates whether all intersection points should not be looked for.
@@ -180,7 +309,14 @@ namespace CryCil.Engine.Physics
 		public bool NoIntersectionPoints
 		{
 			get { return this.bNoIntersection != 0; }
-			set { this.bNoIntersection = value ? 1 : 0; }
+			set
+			{
+				if (this.readOnly)
+				{
+					throw new InvalidOperationException("This object is read-only.");
+				}
+				this.bNoIntersection = value ? 1 : 0;
+			}
 		}
 		#endregion
 		#region Construction
@@ -215,7 +351,7 @@ namespace CryCil.Engine.Physics
 				}
 				if (this.ptOutsidePivot1 == new Vector3())
 				{
-					this.ptOutsidePivot0 = new Vector3(1e11f);
+					this.ptOutsidePivot1 = new Vector3(1e11f);
 				}
 				if (Math.Abs(this.maxUnproj) < MathHelpers.ZeroTolerance)
 				{
