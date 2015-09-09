@@ -17,7 +17,7 @@ namespace CryCil.Engine.Physics
 	/// </para>
 	/// </remarks>
 	[StructLayout(LayoutKind.Sequential)]
-	public struct PhysicsStatusSurfaceId
+	public struct PhysicsStatusSurface
 	{
 		#region Fields
 		/// <summary>
@@ -34,11 +34,11 @@ namespace CryCil.Engine.Physics
 		#endregion
 		#region Properties
 		/// <summary>
-		/// Gets the object that represents the surface type of requested geometry.
+		/// Gets the object that represents the surface of requested geometry.
 		/// </summary>
-		public SurfaceType SurfaceType
+		public PhysicalSurface Surface
 		{
-			get { return SurfaceType.Get(this.id); }
+			get { return new PhysicalSurface(this.id); }
 		}
 		#endregion
 		#region Construction
@@ -50,10 +50,10 @@ namespace CryCil.Engine.Physics
 		/// Indicates whether to retrieve the surface identifier from the geometry object that is used
 		/// specifically for physical interactions.
 		/// </param>
-		public PhysicsStatusSurfaceId(EntityPartSpec part, bool useProxy = true)
+		public PhysicsStatusSurface(EntityPartSpec part, bool useProxy = true)
 			: this()
 		{
-			this.Base = new PhysicsStatus(PhysicsStatusTypes.SurfaceId);
+			this.Base = new PhysicsStatus(PhysicsStatusTypes.Surface);
 			this.partid = -1;
 			this.ipart = -1;
 			this.bUseProxy = useProxy ? 1 : 0;

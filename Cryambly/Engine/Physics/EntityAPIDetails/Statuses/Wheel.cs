@@ -110,11 +110,11 @@ namespace CryCil.Engine.Physics
 			get { return this.velSlip; }
 		}
 		/// <summary>
-		/// Gets an object that represents the ground surface type.
+		/// Gets an object that represents the ground surface.
 		/// </summary>
-		public SurfaceType GroundSurfaceType
+		public PhysicalSurface GroundSurface
 		{
-			get { return SurfaceType.Get(this.contactSurfaceIdx); }
+			get { return new PhysicalSurface(this.contactSurfaceIdx); }
 		}
 		/// <summary>
 		/// Gets the current friction between the wheel and the surface.

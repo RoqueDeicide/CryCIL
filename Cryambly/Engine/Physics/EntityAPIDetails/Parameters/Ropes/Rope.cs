@@ -74,8 +74,7 @@ namespace CryCil.Engine.Physics
 		[UsedImplicitly] private Vector3 collisionBBox0;
 		[UsedImplicitly] private Vector3 collisionBBox1;
 		[UsedImplicitly] private Vector3 hingeAxis;
-										 // only allow rotation around this axis (in parent's frame if
-										 // rope_target_vtx_rel is set)
+		// only allow rotation around this axis (in parent's frame if rope_target_vtx_rel is set)
 		[UsedImplicitly] private StridedPointer pPoints;
 		[UsedImplicitly] private StridedPointer pVelocities;
 		[UsedImplicitly] private PhysicalEntity pEntTiedTo0;
@@ -113,13 +112,12 @@ namespace CryCil.Engine.Physics
 			set { this.collDist = value; }
 		}
 		/// <summary>
-		/// Gets or sets the object that represents the surface type that is used by this entity for
-		/// collisions.
+		/// Gets or sets the object that represents the surface that is used by this entity for collisions.
 		/// </summary>
-		public SurfaceType SurfaceType
+		public PhysicalSurface Surface
 		{
-			get { return SurfaceType.Get(this.surface_idx); }
-			set { this.surface_idx = value.Identifier; }
+			get { return new PhysicalSurface(this.surface_idx); }
+			set { this.surface_idx = value.Index; }
 		}
 		/// <summary>
 		/// Gets or sets the value that specifies the friction in free state and lateral friction in

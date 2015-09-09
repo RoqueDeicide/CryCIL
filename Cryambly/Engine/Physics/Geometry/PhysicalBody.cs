@@ -149,11 +149,11 @@ namespace CryCil.Engine.Physics
 			//}
 		}
 		/// <summary>
-		/// Gets or sets the surface type that is used for this body, if its shape is represented by either
-		/// a primitive or a <see cref="GeometryShape"/> that doesn't have its own surface types.
+		/// Gets or sets the surface that is used for this body, if its shape is represented by either a
+		/// primitive or a <see cref="GeometryShape"/> that doesn't have its own surface object.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
-		public SurfaceType SurfaceType
+		public PhysicalSurface Surface
 		{
 			get
 			{
@@ -163,9 +163,9 @@ namespace CryCil.Engine.Physics
 				var ptr = (phys_geometry*)this.handle.ToPointer();
 				if (ptr->pMatMapping != null && ptr->surface_idx < ptr->nMats)
 				{
-					return SurfaceType.Get(ptr->pMatMapping[ptr->surface_idx]);
+					return new PhysicalSurface(ptr->pMatMapping[ptr->surface_idx]);
 				}
-				return SurfaceType.Get(ptr->surface_idx);
+				return new PhysicalSurface(ptr->surface_idx);
 			}
 			set
 			{
@@ -173,7 +173,7 @@ namespace CryCil.Engine.Physics
 				Contract.EndContractBlock();
 
 				var ptr = (phys_geometry*)this.handle.ToPointer();
-				var surfaceId = value.Identifier;
+				var surfaceId = value.Index;
 
 				if (ptr->pMatMapping != null)
 				{
@@ -213,42 +213,42 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Creates a new physical body.
 		/// </summary>
-		/// <param name="shape">      
+		/// <param name="shape">   
 		/// Geometric object that defines the shape of the body. If you pass a
 		/// <c>default(GeometryShape)</c>, then a body will be created without mass properties, but you can
 		/// still assign the shape later with <see cref="P:Geometry"/>.
 		/// </param>
-		/// <param name="surfaceType">
-		/// The surface type to use until it gets overridden by the entity part. Should only be used, if
-		/// <paramref name="shape"/> doesn't have per-face materials.
+		/// <param name="surface"> 
+		/// The object that represents a surface to use until it gets overridden by the entity part. Should
+		/// only be used, if <paramref name="shape"/> doesn't have per-face materials.
 		/// </param>
-		/// <param name="material">   
+		/// <param name="material">
 		/// An object that provides a table that maps per-face material indexes to actual surface type
 		/// indexes.
 		/// </param>
-		public PhysicalBody(GeometryShape shape, SurfaceType surfaceType, Material material)
+		public PhysicalBody(GeometryShape shape, PhysicalSurface surface, Material material)
 		{
 			this.handle = IntPtr.Zero;
 
-			this.handle = RegisterGeometry(shape, surfaceType, material);
+			this.handle = RegisterGeometry(shape, surface, material);
 		}
 		/// <summary>
 		/// Creates a new physical body.
 		/// </summary>
-		/// <param name="shape">      
+		/// <param name="shape">  
 		/// Geometric object that defines the shape of the body. If you pass a
 		/// <c>default(GeometryShape)</c>, then a body will be created without mass properties, but you can
 		/// still assign the shape later with <see cref="P:Geometry"/>.
 		/// </param>
-		/// <param name="surfaceType">
-		/// The surface type to use until it gets overridden by the entity part. Should only be used, if
-		/// <paramref name="shape"/> doesn't have per-face materials.
+		/// <param name="surface">
+		/// The object that represents a surface to use until it gets overridden by the entity part. Should
+		/// only be used, if <paramref name="shape"/> doesn't have per-face materials.
 		/// </param>
-		public PhysicalBody(GeometryShape shape, SurfaceType surfaceType)
+		public PhysicalBody(GeometryShape shape, PhysicalSurface surface)
 		{
 			this.handle = IntPtr.Zero;
 
-			this.handle = RegisterGeometry(shape, surfaceType, default(Material));
+			this.handle = RegisterGeometry(shape, surface, default(Material));
 		}
 		/// <summary>
 		/// Creates a new physical body.
@@ -266,7 +266,7 @@ namespace CryCil.Engine.Physics
 		{
 			this.handle = IntPtr.Zero;
 
-			this.handle = RegisterGeometry(shape, default(SurfaceType), material);
+			this.handle = RegisterGeometry(shape, default(PhysicalSurface), material);
 		}
 		/// <summary>
 		/// Creates a new physical body.
@@ -280,7 +280,7 @@ namespace CryCil.Engine.Physics
 		{
 			this.handle = IntPtr.Zero;
 
-			this.handle = RegisterGeometry(shape, default(SurfaceType), default(Material));
+			this.handle = RegisterGeometry(shape, default(PhysicalSurface), default(Material));
 		}
 		#endregion
 		#region Interface
@@ -326,7 +326,7 @@ namespace CryCil.Engine.Physics
 		}
 
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern IntPtr RegisterGeometry(GeometryShape shape, SurfaceType surfaceType, Material material);
+		private static extern IntPtr RegisterGeometry(GeometryShape shape, PhysicalSurface surface, Material material);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern int AddRefGeometry(IntPtr handle);
 		[MethodImpl(MethodImplOptions.InternalCall)]

@@ -115,9 +115,9 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the object that represents the ground surface.
 		/// </summary>
-		public SurfaceType GroundSurfaceType
+		public PhysicalSurface GroundSurface
 		{
-			get { return SurfaceType.Get(this.groundSurfaceIdxAux > 0 ? this.groundSurfaceIdxAux : this.groundSurfaceIdx); }
+			get { return new PhysicalSurface(this.groundSurfaceIdxAux > 0 ? this.groundSurfaceIdxAux : this.groundSurfaceIdx); }
 		}
 		/// <summary>
 		/// Gets the entity this one stands on.

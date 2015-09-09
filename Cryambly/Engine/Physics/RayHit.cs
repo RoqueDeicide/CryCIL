@@ -53,11 +53,11 @@ namespace CryCil.Engine.Physics
 			get { return this.ipart; }
 		}
 		/// <summary>
-		/// Gets the object that represents the surface type of the body that was hit by the ray.
+		/// Gets the object that represents the surface of the body that was hit by the ray.
 		/// </summary>
-		public SurfaceType SurfaceType
+		public PhysicalSurface Surface
 		{
-			get { return SurfaceType.Get(this.surface_idx); }
+			get { return new PhysicalSurface(this.surface_idx); }
 		}
 		/// <summary>
 		/// Gets the normal identifier of the material of the body that was hit by the ray.

@@ -138,6 +138,8 @@
     <Compile Include="Engine\Physics\EntityAPIDetails\Parameters\SoftBodies\SoftBody.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Parameters\Vehicles\Vehicle.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Parameters\Vehicles\Wheel.cs" />
+    <Compile Include="Engine\Physics\PhysicalSurfaces\PhysicalSurface.cs" />
+    <Compile Include="Engine\Physics\PhysicalSurfaces\PhysicalSurfaces.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\PhysicsGeometryFlags.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\GeometryParameters\Vehicle.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\JointFlags.cs" />
@@ -163,7 +165,7 @@
     <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\SampleContactArea.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\Sensors.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\SoftBodyVertices.cs" />
-    <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\SurfaceId.cs" />
+    <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\Surface.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\Vehicle.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\VehicleAbilities.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Statuses\Wheel.cs" />
@@ -293,7 +295,7 @@
     <Compile Include="Engine\Physics\Primitives\VoxelGrid.cs" />
     <Compile Include="Engine\Physics\RayCastFlags.cs" />
     <Compile Include="Engine\Physics\RayHit.cs" />
-    <Compile Include="Engine\Physics\SurfaceFlags.cs" />
+    <Compile Include="Engine\Physics\PhysicalSurfaces\SurfaceFlags.cs" />
     <Compile Include="Engine\Physics\UnusedValues\UnusedValue.cs" />
     <Compile Include="Engine\Rendering\RenderParameters.cs" />
     <Compile Include="Engine\Rendering\Shading\Lighting\DynamicLightFlags.cs" />

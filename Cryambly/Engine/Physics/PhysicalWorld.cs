@@ -10,6 +10,11 @@ namespace CryCil.Engine.Physics
 	public static unsafe partial class PhysicalWorld
 	{
 		/// <summary>
+		/// An object that provides access to a global collection of objects that specify parameters of
+		/// surfaces of physical bodies.
+		/// </summary>
+		public static readonly PhysicalSurfaces Surfaces = new PhysicalSurfaces();
+		/// <summary>
 		/// Simulates an explosion.
 		/// </summary>
 		/// <param name="parameters">    A set of parameters that describe the explosion.</param>
@@ -128,5 +133,20 @@ namespace CryCil.Engine.Physics
 		internal static extern IntPtr CreatePlaceHolderNoParams(PhysicalEntityType type, ForeignData foreignData, int id);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		internal static extern int DestroyPhysicalEntity(IntPtr pent, int mode, int bThreadSafe);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		internal static extern int SetSurfaceParameters(int surfaceIdx, float bounciness, float friction,
+														SurfaceFlags flags);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		internal static extern int GetSurfaceParameters(int surfaceIdx, out float bounciness, out float friction,
+														out SurfaceFlags flags);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		internal static extern int SetSurfaceParametersExt(int surfaceIdx, float bounciness, float friction,
+														   float damageReduction, float ricAngle, float ricDamReduction,
+														   float ricVelReduction, SurfaceFlags flags);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		internal static extern int GetSurfaceParametersExt(int surfaceIdx, out float bounciness, out float friction,
+														   out float damage_reduction, out float ric_angle,
+														   out float ric_dam_reduction, out float ric_vel_reduction,
+														   out SurfaceFlags flags);
 	}
 }

@@ -9,7 +9,7 @@ struct PhysicalBodyInterop : public IMonoInterop<true, true>
 
 	virtual void OnRunTimeInitialized() override;
 
-	static phys_geometry *RegisterGeometry(IGeometry *shape, ISurfaceType *surfaceType, IMaterial *material);
+	static phys_geometry *RegisterGeometry(IGeometry *shape, int surfaceIdx, IMaterial *material);
 	static int            AddRefGeometry(phys_geometry *handle);
 	static int            UnregisterGeometry(phys_geometry *handle);
 	static void           SetMaterialMappings(phys_geometry *handle, IMaterial *material);

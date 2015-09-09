@@ -7,14 +7,17 @@ namespace CryCil.Engine.Physics
 	/// Encapsulates a set of parameters that allows to specify the wheel of the vehicle.
 	/// </summary>
 	/// <remarks>
-	/// Never use objects of this type that were created using a default constructor (they are not configured properly!).
+	/// Never use objects of this type that were created using a default constructor (they are not
+	/// configured properly!).
 	/// </remarks>
 	[StructLayout(LayoutKind.Sequential)]
 	public struct PhysicsParametersWheel
 	{
 		#region Fields
 		/// <summary>
-		/// Pass reference to this field to the <see cref="PhysicalEntity.SetParameters"/> to apply these onto physical entity or to <see cref="PhysicalEntity.GetParameters"/> to get the currently applied ones.
+		/// Pass reference to this field to the <see cref="PhysicalEntity.SetParameters"/> to apply these
+		/// onto physical entity or to <see cref="PhysicalEntity.GetParameters"/> to get the currently
+		/// applied ones.
 		/// </summary>
 		[UsedImplicitly] public PhysicsParameters Base;
 		[UsedImplicitly] private int iWheel;
@@ -56,8 +59,8 @@ namespace CryCil.Engine.Physics
 		/// Gets or sets the index of the axle this wheel is on.
 		/// </summary>
 		/// <remarks>
-		/// wheels on the same axle align their coordinates (if only slightly misaligned)
-		/// and apply stabilizer force (if set); axle&lt;0 means the wheel does not affect the physics.
+		/// wheels on the same axle align their coordinates (if only slightly misaligned) and apply
+		/// stabilizer force (if set); axle&lt;0 means the wheel does not affect the physics.
 		/// </remarks>
 		public int AxleIndex
 		{
@@ -75,9 +78,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets or sets the value that indicates whether this wheel is blocked.
 		/// </summary>
-		/// <remarks>
-		/// This property can be used to force the wheel into hand brake state.
-		/// </remarks>
+		/// <remarks>This property can be used to force the wheel into hand brake state.</remarks>
 		public bool Blocked
 		{
 			get { return this.bBlocked != 0; }
@@ -111,8 +112,7 @@ namespace CryCil.Engine.Physics
 		/// Gets or sets the minimal amount of friction that can be induced by the wheel.
 		/// </summary>
 		/// <remarks>
-		/// <para>Amount of friction depends how deep the wheel is in the ground.</para>
-		/// </remarks>
+		/// <para>Amount of friction depends how deep the wheel is in the ground.</para></remarks>
 		public float MinimalTireFriction
 		{
 			get { return this.minFriction; }
@@ -122,24 +122,23 @@ namespace CryCil.Engine.Physics
 		/// Gets or sets the maximal amount of friction that can be induced by the wheel.
 		/// </summary>
 		/// <remarks>
-		/// <para>Amount of friction depends how deep the wheel is in the ground.</para>
-		/// </remarks>
+		/// <para>Amount of friction depends how deep the wheel is in the ground.</para></remarks>
 		public float MaximalTireFriction
 		{
 			get { return this.maxFriction; }
 			set { this.maxFriction = value; }
 		}
 		/// <summary>
-		/// Gets or sets the object that represents the surface type that is used by this entity for
-		/// collisions.
+		/// Gets or sets the object that represents the surface that is used by this entity for collisions.
 		/// </summary>
-		public SurfaceType SurfaceType
+		public PhysicalSurface Surface
 		{
-			get { return SurfaceType.Get(this.surface_idx); }
-			set { this.surface_idx = value.Identifier; }
+			get { return new PhysicalSurface(this.surface_idx); }
+			set { this.surface_idx = value.Index; }
 		}
 		/// <summary>
-		/// Gets or sets the value that indicates whether this wheel uses more simple ray-casting instead of cylinder geometry.
+		/// Gets or sets the value that indicates whether this wheel uses more simple ray-casting instead
+		/// of cylinder geometry.
 		/// </summary>
 		public bool RayCasts
 		{
@@ -203,7 +202,7 @@ namespace CryCil.Engine.Physics
 		/// Creates a valid object of this type.
 		/// </summary>
 		/// <param name="wheel">Zero-based index of the wheel to customize.</param>
-		public PhysicsParametersWheel( int wheel)
+		public PhysicsParametersWheel(int wheel)
 		{
 			this.Base = new PhysicsParameters(PhysicsParametersTypes.Wheel);
 			this.iWheel = wheel;

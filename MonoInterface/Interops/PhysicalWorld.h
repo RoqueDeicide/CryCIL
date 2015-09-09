@@ -40,4 +40,12 @@ struct PhysicalWorldInterop : public IMonoInterop<true, true>
 	static IPhysicalEntity *CreatePlaceHolder(pe_type type, pe_params *initialParameters, ForeignData foreignData, int id);
 	static IPhysicalEntity *CreatePlaceHolderNoParams(pe_type type, ForeignData foreignData, int id);
 	static int              DestroyPhysicalEntity(IPhysicalEntity *pent, int mode, int bThreadSafe);
+	static int              SetSurfaceParameters(int surfaceIdx, float bounciness, float friction, uint32 flags);
+	static int              GetSurfaceParameters(int surfaceIdx, float &bounciness, float &friction, uint32 &flags);
+	static int              SetSurfaceParametersExt(int surfaceIdx, float bounciness, float friction,
+													float damageReduction, float ricAngle, float ricDamReduction,
+													float ricVelReduction, uint32 flags);
+	static int              GetSurfaceParametersExt(int surfaceIdx, float &bounciness, float &friction,
+													float &damage_reduction, float &ric_angle, float &ric_dam_reduction,
+													float &ric_vel_reduction, uint32 &flags);
 };

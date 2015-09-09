@@ -40,7 +40,7 @@ namespace CryCil.Engine.Physics
 		/// When set, specifies that hits that pierce the surfaces that have flag
 		/// <see cref="SurfaceFlags.Important"/> set should be listed before other piercing hits.
 		/// </summary>
-		SeparateImportantHits = SurfaceFlags.Important,
+		SeparateImportantHits = SurfaceFlags.important,
 		/// <summary>
 		/// Number of bits to shift in order to store the flags from <see cref="ColliderTypes"/> in this
 		/// set of flags to specify which bits must be set on the part of the entity to register the hit.

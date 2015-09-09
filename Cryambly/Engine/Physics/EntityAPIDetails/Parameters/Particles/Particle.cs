@@ -162,13 +162,12 @@ namespace CryCil.Engine.Physics
 			set { this.kWaterResistance = value; }
 		}
 		/// <summary>
-		/// Gets or sets the object that represents the surface type that is used by this entity for
-		/// collisions.
+		/// Gets or sets the object that represents the surface that is used by this entity for collisions.
 		/// </summary>
-		public SurfaceType SurfaceType
+		public PhysicalSurface Surface
 		{
-			get { return SurfaceType.Get(this.surface_idx); }
-			set { this.surface_idx = value.Identifier; }
+			get { return new PhysicalSurface(this.surface_idx); }
+			set { this.surface_idx = value.Index; }
 		}
 		/// <summary>
 		/// Gets or sets the vector that overrides the global gravity for this particle.

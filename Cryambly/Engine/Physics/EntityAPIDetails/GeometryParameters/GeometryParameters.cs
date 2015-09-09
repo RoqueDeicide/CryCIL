@@ -105,13 +105,12 @@ namespace CryCil.Engine.Physics
 			set { this.pMtx3x4 = value; }
 		}
 		/// <summary>
-		/// Gets or sets the identifier of the surface that is used if corresponding geometry object lacks
-		/// such data.
+		/// Gets or sets the object that represents the surface that overrides one in corresponding geometry object.
 		/// </summary>
-		public SurfaceType SurfaceType
+		public PhysicalSurface Surface
 		{
-			get { return SurfaceType.Get(this.surface_idx); }
-			set { this.surface_idx = value.Identifier; }
+			get { return new PhysicalSurface(this.surface_idx); }
+			set { this.surface_idx = value.Index; }
 		}
 		/// <summary>
 		/// Gets or sets a set of flags that specifies the geometry.

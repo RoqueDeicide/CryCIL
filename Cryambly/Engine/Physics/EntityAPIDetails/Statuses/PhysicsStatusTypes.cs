@@ -46,9 +46,9 @@ namespace CryCil.Engine.Physics
 		[Obsolete]
 		Collisions = 9,
 		/// <summary>
-		/// Identifier of the structure that is used to query surface identifier of the physical entity.
+		/// Identifier of the structure that is used to query surface of the physical entity.
 		/// </summary>
-		SurfaceId = 10,
+		Surface = 10,
 		/// <summary>
 		/// Deprecated.
 		/// </summary>

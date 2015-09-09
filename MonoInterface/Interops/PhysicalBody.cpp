@@ -10,12 +10,12 @@ void PhysicalBodyInterop::OnRunTimeInitialized()
 	REGISTER_METHOD(SetMaterialMappings);
 }
 
-phys_geometry *PhysicalBodyInterop::RegisterGeometry(IGeometry *shape, ISurfaceType *surfaceType, IMaterial *material)
+phys_geometry *PhysicalBodyInterop::RegisterGeometry(IGeometry *shape, int surfaceIdx, IMaterial *material)
 {
 	int matMap[MAX_SUB_MATERIALS];
 	int matCount = material->FillSurfaceTypeIds(matMap);
 
-	return gEnv->pPhysicalWorld->GetGeomManager()->RegisterGeometry(shape, surfaceType->GetId(), matMap, matCount);
+	return gEnv->pPhysicalWorld->GetGeomManager()->RegisterGeometry(shape, surfaceIdx, matMap, matCount);
 }
 
 int PhysicalBodyInterop::AddRefGeometry(phys_geometry *handle)

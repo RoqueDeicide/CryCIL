@@ -22,6 +22,10 @@ void PhysicalWorldInterop::OnRunTimeInitialized()
 	REGISTER_METHOD(CreatePlaceHolder);
 	REGISTER_METHOD(CreatePlaceHolderNoParams);
 	REGISTER_METHOD(DestroyPhysicalEntity);
+	REGISTER_METHOD(SetSurfaceParameters);
+	REGISTER_METHOD(GetSurfaceParameters);
+	REGISTER_METHOD(SetSurfaceParametersExt);
+	REGISTER_METHOD(GetSurfaceParametersExt);
 
 	RegisterEventClients();
 }
@@ -181,4 +185,30 @@ IPhysicalEntity *PhysicalWorldInterop::CreatePlaceHolderNoParams(pe_type type, F
 int PhysicalWorldInterop::DestroyPhysicalEntity(IPhysicalEntity *pent, int mode, int bThreadSafe)
 {
 	return gEnv->pPhysicalWorld->DestroyPhysicalEntity(pent, mode, bThreadSafe);
+}
+
+int PhysicalWorldInterop::SetSurfaceParameters(int surfaceIdx, float bounciness, float friction, uint32 flags)
+{
+	return gEnv->pPhysicalWorld->SetSurfaceParameters(surfaceIdx, bounciness, friction, flags);
+}
+
+int PhysicalWorldInterop::GetSurfaceParameters(int surfaceIdx, float &bounciness, float &friction, uint32 &flags)
+{
+	return gEnv->pPhysicalWorld->GetSurfaceParameters(surfaceIdx, bounciness, friction, flags);
+}
+
+int PhysicalWorldInterop::SetSurfaceParametersExt(int surfaceIdx, float bounciness, float friction, float damageReduction,
+												  float ricAngle, float ricDamReduction, float ricVelReduction,
+												  uint32 flags)
+{
+	return gEnv->pPhysicalWorld->SetSurfaceParameters(surfaceIdx, bounciness, friction, damageReduction, ricAngle,
+													  ricDamReduction, ricVelReduction, flags);
+}
+
+int PhysicalWorldInterop::GetSurfaceParametersExt(int surfaceIdx, float &bounciness, float &friction,
+												  float &damage_reduction, float &ric_angle, float &ric_dam_reduction,
+												  float &ric_vel_reduction, uint32 &flags)
+{
+	return gEnv->pPhysicalWorld->GetSurfaceParameters(surfaceIdx, bounciness, friction, damage_reduction, ric_angle,
+													  ric_dam_reduction, ric_vel_reduction, flags);
 }
