@@ -21,4 +21,7 @@ struct PhysicalEntityInterop : public IMonoInterop<true, true>
 							bool threadSafe);
 	static void RemoveGeometry(IPhysicalEntity *handle, int id, bool threadSafe);
 	static bool CollideEntityWithBeam(IPhysicalEntity *handle, Vec3 *org, Vec3 *dir, float r, ray_hit *phit);
+	static int  SetPhysicalEntityId(IPhysicalEntity *pent, int id, int bReplace, int bThreadSafe);
+	static int  GetPhysicalEntityId(IPhysicalEntity *pent);
+	static IPhysicalEntity* GetPhysicalEntityById(int id);
 };

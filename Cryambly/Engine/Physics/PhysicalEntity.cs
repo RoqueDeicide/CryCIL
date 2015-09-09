@@ -26,11 +26,39 @@ namespace CryCil.Engine.Physics
 		{
 			get { return this.handle != IntPtr.Zero && this.handle != new IntPtr(-10); }
 		}
+		/// <summary>
+		/// Gets or sets identifier of this physical entity.
+		/// </summary>
+		public int Identifier
+		{
+			get
+			{
+				this.AssertInstance();
+				Contract.EndContractBlock();
+
+				return GetPhysicalEntityId(this.handle);
+			}
+			set
+			{
+				this.AssertInstance();
+				Contract.EndContractBlock();
+
+				SetPhysicalEntityId(this.handle, value);
+			}
+		}
 		#endregion
 		#region Construction
 		internal PhysicalEntity(IntPtr handle)
 		{
 			this.handle = handle;
+		}
+		/// <summary>
+		/// Gets the physical entity.
+		/// </summary>
+		/// <param name="id">Identifier of the entity to get.</param>
+		public PhysicalEntity(int id)
+		{
+			this.handle = GetPhysicalEntityById(id);
 		}
 		/// <summary>
 		/// Creates a new physical entity or a place holder for it.
@@ -431,6 +459,12 @@ namespace CryCil.Engine.Physics
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern bool CollideEntityWithBeam(IntPtr handle, ref Vector3 org, ref Vector3 dir, float r,
 														 out RayHit phit);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern int SetPhysicalEntityId(IntPtr handle, int id, int bReplace = 1, int bThreadSafe = 0);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern int GetPhysicalEntityId(IntPtr handle);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern IntPtr GetPhysicalEntityById(int id);
 		#endregion
 	}
 }

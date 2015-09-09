@@ -164,6 +164,9 @@ void PhysicalEntityInterop::OnRunTimeInitialized()
 	REGISTER_METHOD(AddGeometry);
 	REGISTER_METHOD(RemoveGeometry);
 	REGISTER_METHOD(CollideEntityWithBeam);
+	REGISTER_METHOD(SetPhysicalEntityId);
+	REGISTER_METHOD(GetPhysicalEntityId);
+	REGISTER_METHOD(GetPhysicalEntityById);
 }
 
 int PhysicalEntityInterop::SetParams(IPhysicalEntity *handle, PhysicsParameters *parameters, bool threadSafe)
@@ -280,4 +283,19 @@ void PhysicalEntityInterop::RemoveGeometry(IPhysicalEntity *handle, int id, bool
 bool PhysicalEntityInterop::CollideEntityWithBeam(IPhysicalEntity *handle, Vec3 *org, Vec3 *dir, float r, ray_hit *phit)
 {
 	return gEnv->pPhysicalWorld->CollideEntityWithBeam(handle, *org, *dir, r, phit);
+}
+
+int PhysicalEntityInterop::SetPhysicalEntityId(IPhysicalEntity *pent, int id, int bReplace, int bThreadSafe)
+{
+	return gEnv->pPhysicalWorld->SetPhysicalEntityId(pent, id, bReplace, bThreadSafe);
+}
+
+int PhysicalEntityInterop::GetPhysicalEntityId(IPhysicalEntity *pent)
+{
+	return gEnv->pPhysicalWorld->GetPhysicalEntityId(pent);
+}
+
+IPhysicalEntity* PhysicalEntityInterop::GetPhysicalEntityById(int id)
+{
+	return gEnv->pPhysicalWorld->GetPhysicalEntityById(id);
 }
