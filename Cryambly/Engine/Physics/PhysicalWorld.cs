@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Runtime.CompilerServices;
 using CryCil.Engine.Physics.Primitives;
 
 namespace CryCil.Engine.Physics
@@ -107,5 +108,25 @@ namespace CryCil.Engine.Physics
 			 PhysicsGeometryFlags flagsAny, ref IntersectionParameters parameters,
 			 ref CollisionClass collisionClass, PhysicalEntity* entitiesToSkip,
 			 int skipCount);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		internal static extern IntPtr CreatePhysicalEntity
+			(PhysicalEntityType type, ref PhysicsParameters initialParameters, ForeignData foreignData, int id);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		internal static extern IntPtr CreatePhysicalEntityNoParams
+			(PhysicalEntityType type, ForeignData foreignData, int id);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		internal static extern IntPtr CreatePhysicalEntityFromHolder
+			(PhysicalEntityType type, float lifeTime, ref PhysicsParameters initialParameters, ForeignData foreignData,
+			 int id, PhysicalEntity placeHolder);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		internal static extern IntPtr CreatePhysicalEntityNoParamsFromHolder
+			(PhysicalEntityType type, float lifeTime, ForeignData foreignData, int id, PhysicalEntity placeHolder);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		internal static extern IntPtr CreatePlaceHolder(PhysicalEntityType type, ref PhysicsParameters initialParameters,
+														ForeignData foreignData, int id);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		internal static extern IntPtr CreatePlaceHolderNoParams(PhysicalEntityType type, ForeignData foreignData, int id);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		internal static extern int DestroyPhysicalEntity(IntPtr pent, int mode, int bThreadSafe);
 	}
 }

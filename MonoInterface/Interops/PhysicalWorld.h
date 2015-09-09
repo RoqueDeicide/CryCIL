@@ -2,6 +2,7 @@
 
 #include "IMonoInterface.h"
 
+struct ForeignData;
 struct WaterManagerParameters;
 struct ExplosionResult;
 struct ExplosionParameters;
@@ -29,4 +30,14 @@ struct PhysicalWorldInterop : public IMonoInterop<true, true>
 												 int flagsAny, intersection_params *parameters,
 												 SCollisionClass collisionClass, IPhysicalEntity **entitiesToSkip,
 												 int skipCount);
+	static IPhysicalEntity *CreatePhysicalEntity(pe_type type, pe_params *initialParameters, ForeignData foreignData,
+												 int id);
+	static IPhysicalEntity *CreatePhysicalEntityNoParams(pe_type type, ForeignData foreignData, int id);
+	static IPhysicalEntity *CreatePhysicalEntityFromHolder(pe_type type, float lifeTime, pe_params *initialParameters,
+														   ForeignData foreignData, int id, IPhysicalEntity *placeHolder);
+	static IPhysicalEntity *CreatePhysicalEntityNoParamsFromHolder(pe_type type, float lifeTime, ForeignData foreignData,
+																   int id, IPhysicalEntity *placeHolder);
+	static IPhysicalEntity *CreatePlaceHolder(pe_type type, pe_params *initialParameters, ForeignData foreignData, int id);
+	static IPhysicalEntity *CreatePlaceHolderNoParams(pe_type type, ForeignData foreignData, int id);
+	static int              DestroyPhysicalEntity(IPhysicalEntity *pent, int mode, int bThreadSafe);
 };

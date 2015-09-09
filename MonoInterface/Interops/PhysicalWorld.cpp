@@ -15,6 +15,13 @@ void PhysicalWorldInterop::OnRunTimeInitialized()
 	REGISTER_METHOD(GetWaterManagerParameters);
 	REGISTER_METHOD(PrimitiveIntersectionInternal);
 	REGISTER_METHOD(PrimitiveCastInternal);
+	REGISTER_METHOD(CreatePhysicalEntity);
+	REGISTER_METHOD(CreatePhysicalEntityNoParams);
+	REGISTER_METHOD(CreatePhysicalEntityFromHolder);
+	REGISTER_METHOD(CreatePhysicalEntityNoParamsFromHolder);
+	REGISTER_METHOD(CreatePlaceHolder);
+	REGISTER_METHOD(CreatePlaceHolderNoParams);
+	REGISTER_METHOD(DestroyPhysicalEntity);
 
 	RegisterEventClients();
 }
@@ -129,4 +136,49 @@ float PhysicalWorldInterop::PrimitiveCastInternal(geom_contact *contact, primiti
 				parameters, nullptr, 0, entitiesToSkip, skipCount);
 	WriteLockCond _lock;
 	return gEnv->pPhysicalWorld->PrimitiveWorldIntersection(params, &_lock);
+}
+
+IPhysicalEntity *PhysicalWorldInterop::CreatePhysicalEntity(pe_type type, pe_params *initialParameters,
+															ForeignData foreignData, int id)
+{
+	return gEnv->pPhysicalWorld->CreatePhysicalEntity(type, initialParameters, foreignData.handle, foreignData.id, id);
+}
+
+IPhysicalEntity *PhysicalWorldInterop::CreatePhysicalEntityNoParams(pe_type type, ForeignData foreignData, int id)
+{
+	return gEnv->pPhysicalWorld->CreatePhysicalEntity(type, nullptr, foreignData.handle, foreignData.id, id);
+}
+
+IPhysicalEntity *PhysicalWorldInterop::CreatePhysicalEntityFromHolder(pe_type type, float lifeTime,
+																	  pe_params *initialParameters,
+																	  ForeignData foreignData, int id,
+																	  IPhysicalEntity *placeHolder)
+{
+	return gEnv->pPhysicalWorld->CreatePhysicalEntity(type, lifeTime, initialParameters, foreignData.handle,
+													  foreignData.id, id, placeHolder);
+}
+
+IPhysicalEntity *PhysicalWorldInterop::CreatePhysicalEntityNoParamsFromHolder(pe_type type, float lifeTime,
+																			  ForeignData foreignData, int id,
+																			  IPhysicalEntity *placeHolder)
+{
+	return gEnv->pPhysicalWorld->CreatePhysicalEntity(type, lifeTime, nullptr, foreignData.handle, foreignData.id, id,
+													  placeHolder);
+}
+
+IPhysicalEntity *PhysicalWorldInterop::CreatePlaceHolder(pe_type type, pe_params *initialParameters,
+														 ForeignData foreignData, int id)
+{
+	return gEnv->pPhysicalWorld->CreatePhysicalPlaceholder(type, initialParameters, foreignData.handle, foreignData.id,
+														   id);
+}
+
+IPhysicalEntity *PhysicalWorldInterop::CreatePlaceHolderNoParams(pe_type type, ForeignData foreignData, int id)
+{
+	return gEnv->pPhysicalWorld->CreatePhysicalPlaceholder(type, nullptr, foreignData.handle, foreignData.id, id);
+}
+
+int PhysicalWorldInterop::DestroyPhysicalEntity(IPhysicalEntity *pent, int mode, int bThreadSafe)
+{
+	return gEnv->pPhysicalWorld->DestroyPhysicalEntity(pent, mode, bThreadSafe);
 }

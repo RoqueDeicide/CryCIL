@@ -32,6 +32,109 @@ namespace CryCil.Engine.Physics
 		{
 			this.handle = handle;
 		}
+		/// <summary>
+		/// Creates a new physical entity or a place holder for it.
+		/// </summary>
+		/// <param name="type">         Type of physical entity to create.</param>
+		/// <param name="parameters">   
+		/// Reference to the base part of the object that provides initial parameters for the new entity's
+		/// simulation.
+		/// </param>
+		/// <param name="foreignData">  
+		/// An optional object that specifies the external data that is associated with a new entity.
+		/// </param>
+		/// <param name="id">           
+		/// An optional identifier of the new entity. If not specified an id will be generated
+		/// automatically. Avoid using big numbers, since there is a simple array-based map id to entity.
+		/// </param>
+		/// <param name="isPlaceHolder">
+		/// Indicates whether we are creating a place-holder for temporary entities.
+		/// </param>
+		public PhysicalEntity(PhysicalEntityType type, ref PhysicsParameters parameters,
+							  ForeignData foreignData = new ForeignData(), int id = -1, bool isPlaceHolder = false)
+		{
+			this.handle =
+				isPlaceHolder
+					? PhysicalWorld.CreatePlaceHolder(type, ref parameters, foreignData, id)
+					: PhysicalWorld.CreatePhysicalEntity(type, ref parameters, foreignData, id);
+		}
+		/// <summary>
+		/// Creates a new physical entity or a place holder for it.
+		/// </summary>
+		/// <param name="type">         Type of physical entity to create.</param>
+		/// <param name="foreignData">  
+		/// An optional object that specifies the external data that is associated with a new entity.
+		/// </param>
+		/// <param name="id">           
+		/// An optional identifier of the new entity. If not specified an id will be generated
+		/// automatically. Avoid using big numbers, since there is a simple array-based map id to entity.
+		/// </param>
+		/// <param name="isPlaceHolder">
+		/// Indicates whether we are creating a place-holder for temporary entities.
+		/// </param>
+		public PhysicalEntity(PhysicalEntityType type, ForeignData foreignData = new ForeignData(), int id = -1,
+							  bool isPlaceHolder = false)
+		{
+			this.handle =
+				isPlaceHolder
+					? PhysicalWorld.CreatePlaceHolderNoParams(type, foreignData, id)
+					: PhysicalWorld.CreatePhysicalEntityNoParams(type, foreignData, id);
+		}
+		/// <summary>
+		/// Creates a temporary entity.
+		/// </summary>
+		/// <param name="type">       Type of physical entity to create.</param>
+		/// <param name="lifeTime">   
+		/// If <paramref name="placeHolder"/> is not specified then this parameter defines the time
+		/// interval before new entity will be destroyed, otherwise its the time that must pass since last
+		/// interaction before entity is converted back into place-holder.
+		/// </param>
+		/// <param name="parameters"> 
+		/// Reference to the base part of the object that provides initial parameters for the new entity's
+		/// simulation.
+		/// </param>
+		/// <param name="foreignData">
+		/// An optional object that specifies the external data that is associated with a new entity.
+		/// </param>
+		/// <param name="id">         
+		/// An optional identifier of the new entity. If not specified an id will be generated
+		/// automatically. Avoid using big numbers, since there is a simple array-based map id to entity.
+		/// </param>
+		/// <param name="placeHolder">
+		/// An optional object that represents a place-holder to create the entity from.
+		/// </param>
+		public PhysicalEntity(PhysicalEntityType type, float lifeTime, ref PhysicsParameters parameters,
+							  ForeignData foreignData = new ForeignData(), int id = -1,
+							  PhysicalEntity placeHolder = new PhysicalEntity())
+		{
+			this.handle = PhysicalWorld.CreatePhysicalEntityFromHolder(type, lifeTime, ref parameters, foreignData, id,
+																	   placeHolder);
+		}
+		/// <summary>
+		/// Creates a temporary entity.
+		/// </summary>
+		/// <param name="type">       Type of physical entity to create.</param>
+		/// <param name="lifeTime">   
+		/// If <paramref name="placeHolder"/> is not specified then this parameter defines the time
+		/// interval before new entity will be destroyed, otherwise its the time that must pass since last
+		/// interaction before entity is converted back into place-holder.
+		/// </param>
+		/// <param name="foreignData">
+		/// An optional object that specifies the external data that is associated with a new entity.
+		/// </param>
+		/// <param name="id">         
+		/// An optional identifier of the new entity. If not specified an id will be generated
+		/// automatically. Avoid using big numbers, since there is a simple array-based map id to entity.
+		/// </param>
+		/// <param name="placeHolder">
+		/// An optional object that represents a place-holder to create the entity from.
+		/// </param>
+		public PhysicalEntity(PhysicalEntityType type, float lifeTime, ForeignData foreignData = new ForeignData(),
+							  int id = -1, PhysicalEntity placeHolder = new PhysicalEntity())
+		{
+			this.handle = PhysicalWorld.CreatePhysicalEntityNoParamsFromHolder(type, lifeTime, foreignData, id,
+																			   placeHolder);
+		}
 		#endregion
 		#region Interface
 		/// <summary>
@@ -287,6 +390,20 @@ namespace CryCil.Engine.Physics
 			Contract.EndContractBlock();
 
 			return CollideEntityWithBeam(this.handle, ref ray.Position, ref ray.Direction, radius, out hit);
+		}
+		/// <summary>
+		/// Destroys this entity.
+		/// </summary>
+		/// <param name="mode">      An object that specifies how to destroy the entity.</param>
+		/// <param name="threadSafe">
+		/// Indicates whether destruction must be done in a thread-safe manner.
+		/// </param>
+		public void Destroy(PhysicalEntityRemovalMode mode = PhysicalEntityRemovalMode.Destroy, bool threadSafe = false)
+		{
+			this.AssertInstance();
+			Contract.EndContractBlock();
+
+			PhysicalWorld.DestroyPhysicalEntity(this.handle, (int)mode, threadSafe ? 1 : 0);
 		}
 		#endregion
 		#region Utilities
