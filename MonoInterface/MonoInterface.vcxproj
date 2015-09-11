@@ -331,6 +331,7 @@
     <ClInclude Include="Interops\PhysicsGeometryStructs.h" />
     <ClInclude Include="Interops\PhysicsParameterStructs.h" />
     <ClInclude Include="Interops\PhysicsStatusStructs.h" />
+    <ClInclude Include="Interops\PhysicsStructConversionUtilities.h" />
     <ClInclude Include="Interops\Profiling.h" />
     <ClInclude Include="Interops\Ray.h" />
     <ClInclude Include="Interops\Renderer.h" />
