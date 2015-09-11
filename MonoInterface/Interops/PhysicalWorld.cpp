@@ -4,6 +4,7 @@
 #include "ExplosionStructs.h"
 #include "WaterManagerStructs.h"
 #include "PhysicsEventRaisers.h"
+#include "PhysicsStructConversionUtilities.h"
 
 void PhysicalWorldInterop::OnRunTimeInitialized()
 {
@@ -142,10 +143,23 @@ float PhysicalWorldInterop::PrimitiveCastInternal(geom_contact *contact, primiti
 	return gEnv->pPhysicalWorld->PrimitiveWorldIntersection(params, &_lock);
 }
 
-IPhysicalEntity *PhysicalWorldInterop::CreatePhysicalEntity(pe_type type, pe_params *initialParameters,
+IPhysicalEntity *PhysicalWorldInterop::CreatePhysicalEntity(pe_type type, PhysicsParameters *initialParameters,
 															ForeignData foreignData, int id)
 {
-	return gEnv->pPhysicalWorld->CreatePhysicalEntity(type, initialParameters, foreignData.handle, foreignData.id, id);
+	auto converter = GetParamConverterToCE(initialParameters->type);
+	if (!converter)
+	{
+		return nullptr;
+	}
+
+	// Convert CryCIL object to CryEngine one.
+	auto params = converter(initialParameters);
+	auto result = gEnv->pPhysicalWorld->CreatePhysicalEntity(type, params, foreignData.handle, foreignData.id, id);
+	// Delete CryEngine object.
+	delete params;
+	// Dispose the CryCIL object.
+	GetParamDisposer(initialParameters->type)(initialParameters);
+	return result;
 }
 
 IPhysicalEntity *PhysicalWorldInterop::CreatePhysicalEntityNoParams(pe_type type, ForeignData foreignData, int id)
@@ -154,12 +168,25 @@ IPhysicalEntity *PhysicalWorldInterop::CreatePhysicalEntityNoParams(pe_type type
 }
 
 IPhysicalEntity *PhysicalWorldInterop::CreatePhysicalEntityFromHolder(pe_type type, float lifeTime,
-																	  pe_params *initialParameters,
+																	  PhysicsParameters *initialParameters,
 																	  ForeignData foreignData, int id,
 																	  IPhysicalEntity *placeHolder)
 {
-	return gEnv->pPhysicalWorld->CreatePhysicalEntity(type, lifeTime, initialParameters, foreignData.handle,
-													  foreignData.id, id, placeHolder);
+	auto converter = GetParamConverterToCE(initialParameters->type);
+	if (!converter)
+	{
+		return nullptr;
+	}
+
+	// Convert CryCIL object to CryEngine one.
+	auto params = converter(initialParameters);
+	auto result = gEnv->pPhysicalWorld->CreatePhysicalEntity(type, lifeTime, params, foreignData.handle, foreignData.id,
+															 id, placeHolder);
+	// Delete CryEngine object.
+	delete params;
+	// Dispose the CryCIL object.
+	GetParamDisposer(initialParameters->type)(initialParameters);
+	return result;
 }
 
 IPhysicalEntity *PhysicalWorldInterop::CreatePhysicalEntityNoParamsFromHolder(pe_type type, float lifeTime,
@@ -170,11 +197,24 @@ IPhysicalEntity *PhysicalWorldInterop::CreatePhysicalEntityNoParamsFromHolder(pe
 													  placeHolder);
 }
 
-IPhysicalEntity *PhysicalWorldInterop::CreatePlaceHolder(pe_type type, pe_params *initialParameters,
+IPhysicalEntity *PhysicalWorldInterop::CreatePlaceHolder(pe_type type, PhysicsParameters *initialParameters,
 														 ForeignData foreignData, int id)
 {
-	return gEnv->pPhysicalWorld->CreatePhysicalPlaceholder(type, initialParameters, foreignData.handle, foreignData.id,
-														   id);
+	auto converter = GetParamConverterToCE(initialParameters->type);
+	if (!converter)
+	{
+		return nullptr;
+	}
+
+	// Convert CryCIL object to CryEngine one.
+	auto params = converter(initialParameters);
+	auto result = gEnv->pPhysicalWorld->CreatePhysicalPlaceholder(type, params, foreignData.handle, foreignData.id,
+																  id);
+	// Delete CryEngine object.
+	delete params;
+	// Dispose the CryCIL object.
+	GetParamDisposer(initialParameters->type)(initialParameters);
+	return result;
 }
 
 IPhysicalEntity *PhysicalWorldInterop::CreatePlaceHolderNoParams(pe_type type, ForeignData foreignData, int id)
