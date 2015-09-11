@@ -1,15 +1,14 @@
-﻿using System;
-
-namespace CryCil.Engine.Physics
+﻿namespace CryCil.Engine.Physics
 {
 	/// <summary>
 	/// Enumeration of values that specify how to remove the physical entity.
 	/// </summary>
-	[Flags]
 	public enum PhysicalEntityRemovalMode
 	{
 		/// <summary>
-		/// Specifies the entity to be moved into to-destroy list, delete areas and placeholders.
+		/// Specifies the entity to be moved into to-destroy list, delete areas and placeholders. If the
+		/// entity has non-zero reference count, then the entity will be scheduled for deletion as soon as
+		/// the the reference count is 0.
 		/// </summary>
 		Destroy = 0,
 		/// <summary>
@@ -21,9 +20,9 @@ namespace CryCil.Engine.Physics
 		/// </summary>
 		Unsuspend = 2,
 		/// <summary>
-		/// An optional flag that specifies that operation specified by one of other flags is to be
-		/// attempted. The operation won't take place if it's reference count is not 0.
+		/// Specifies the entity to be deleted but deletion must be canceled if the entity has non-zero
+		/// reference count.
 		/// </summary>
-		Attempt = 4
+		AttemptDeletion = 4
 	}
 }

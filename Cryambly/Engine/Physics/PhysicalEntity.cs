@@ -426,12 +426,17 @@ namespace CryCil.Engine.Physics
 		/// <param name="threadSafe">
 		/// Indicates whether destruction must be done in a thread-safe manner.
 		/// </param>
-		public void Destroy(PhysicalEntityRemovalMode mode = PhysicalEntityRemovalMode.Destroy, bool threadSafe = false)
+		/// <returns>
+		/// True, if operation was successful. False can only be returned if <paramref name="mode"/> is
+		/// equal to <see cref="PhysicalEntityRemovalMode.AttemptDeletion"/> and this entity has non-zero
+		/// reference count.
+		/// </returns>
+		public bool Destroy(PhysicalEntityRemovalMode mode = PhysicalEntityRemovalMode.Destroy, bool threadSafe = false)
 		{
 			this.AssertInstance();
 			Contract.EndContractBlock();
 
-			PhysicalWorld.DestroyPhysicalEntity(this.handle, (int)mode, threadSafe ? 1 : 0);
+			return PhysicalWorld.DestroyPhysicalEntity(this.handle, (int)mode, threadSafe ? 1 : 0) != 0;
 		}
 		#endregion
 		#region Utilities
