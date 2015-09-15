@@ -30,9 +30,6 @@
     <ClInclude Include="Interops\Entities\GameObject.h">
       <Filter>Interops\Entities</Filter>
     </ClInclude>
-    <ClInclude Include="Interops\Entities\Physics.h">
-      <Filter>Interops\Entities</Filter>
-    </ClInclude>
     <ClInclude Include="Interops\GameLogic\ActorSystem.h">
       <Filter>Interops\Game Logic</Filter>
     </ClInclude>
@@ -44,9 +41,6 @@
     </ClInclude>
     <ClInclude Include="Interops\StaticObjects\StaticObject.h">
       <Filter>Interops\StaticObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Interops\Network.h">
-      <Filter>Interops</Filter>
     </ClInclude>
     <ClInclude Include="AllInterops.h" />
     <ClInclude Include="ManagedGameLogic\ManagedEntity.h">
@@ -79,9 +73,6 @@
     <ClCompile Include="Interops\Entities\GameObject.cpp">
       <Filter>Interops\Entities</Filter>
     </ClCompile>
-    <ClCompile Include="Interops\Entities\Physics.cpp">
-      <Filter>Interops\Entities</Filter>
-    </ClCompile>
     <ClCompile Include="Interops\GameLogic\ActorSystem.cpp">
       <Filter>Interops\Game Logic</Filter>
     </ClCompile>
@@ -93,9 +84,6 @@
     </ClCompile>
     <ClCompile Include="Interops\StaticObjects\StaticObject.cpp">
       <Filter>Interops\StaticObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="Interops\Network.cpp">
-      <Filter>Interops</Filter>
     </ClCompile>
     <ClCompile Include="ManagedGameLogic\ManagedEntity.cpp">
       <Filter>ManagedGameLogic</Filter>

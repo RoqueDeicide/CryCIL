@@ -99,10 +99,8 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
     <ClInclude Include="EntityEventHandling.h" />
     <ClInclude Include="Interops\Entities\Entity.h" />
     <ClInclude Include="Interops\Entities\GameObject.h" />
-    <ClInclude Include="Interops\Entities\Physics.h" />
     <ClInclude Include="Interops\GameLogic\ActorSystem.h" />
     <ClInclude Include="Interops\GameLogic\GameRules.h" />
-    <ClInclude Include="Interops\Network.h" />
     <ClInclude Include="Interops\StaticObjects\CMesh.h" />
     <ClInclude Include="Interops\StaticObjects\StaticObject.h" />
     <ClInclude Include="ManagedGameLogic\ManagedEntity.h" />
@@ -119,10 +117,8 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
     <ClCompile Include="EntityEventHandling.cpp" />
     <ClCompile Include="Interops\Entities\Entity.cpp" />
     <ClCompile Include="Interops\Entities\GameObject.cpp" />
-    <ClCompile Include="Interops\Entities\Physics.cpp" />
     <ClCompile Include="Interops\GameLogic\ActorSystem.cpp" />
     <ClCompile Include="Interops\GameLogic\GameRules.cpp" />
-    <ClCompile Include="Interops\Network.cpp" />
     <ClCompile Include="Interops\StaticObjects\CMesh.cpp" />
     <ClCompile Include="Interops\StaticObjects\StaticObject.cpp" />
     <ClCompile Include="ManagedGameLogic\ManagedEntity.cpp" />
