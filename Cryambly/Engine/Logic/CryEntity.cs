@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using CryCil.Annotations;
 using CryCil.Engine.Physics;
 using CryCil.Engine.Rendering;
-using CryCil.Geometry;
 
 namespace CryCil.Engine.Logic
 {
@@ -18,8 +13,7 @@ namespace CryCil.Engine.Logic
 	public partial struct CryEntity : IForeignDataProvider
 	{
 		#region Fields
-		[UsedImplicitly]
-		private IntPtr handle;
+		[UsedImplicitly] private IntPtr handle;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -309,7 +303,10 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Gets the first in a linked list of entity links.
 		/// </summary>
-		/// <returns>If this entity is linked to at least one other entity, a valid object of type <see cref="EntityLink"/> will be returned, otherwise an invalid one will be returned.</returns>
+		/// <returns>
+		/// If this entity is linked to at least one other entity, a valid object of type
+		/// <see cref="EntityLink"/> will be returned, otherwise an invalid one will be returned.
+		/// </returns>
 		public EntityLink Links
 		{
 			get
@@ -318,6 +315,19 @@ namespace CryCil.Engine.Logic
 				Contract.EndContractBlock();
 
 				return GetEntityLinks(this.handle);
+			}
+		}
+		/// <summary>
+		/// Gets the physical entity that represents this entity in physical world.
+		/// </summary>
+		public PhysicalEntity Physics
+		{
+			get
+			{
+				this.AssertEntity();
+				Contract.EndContractBlock();
+
+				return GetPhysics(this.handle);
 			}
 		}
 		#endregion
@@ -451,12 +461,16 @@ namespace CryCil.Engine.Logic
 		/// Links another entity to this one.
 		/// </summary>
 		/// <param name="linkName">Name of the link between this and another entity.</param>
-		/// <param name="id">Identifier of the entity to link to this one.</param>
-		/// <param name="guid">Globally unique identifier of the entity to link.</param>
+		/// <param name="id">      Identifier of the entity to link to this one.</param>
+		/// <param name="guid">    Globally unique identifier of the entity to link.</param>
 		/// <returns>An object that represents the link.</returns>
 		/// <exception cref="ArgumentNullException">Name of the link cannot be null or empty.</exception>
-		/// <exception cref="ArgumentOutOfRangeException">Name of the link cannot be longer then 31 symbol.</exception>
-		/// <exception cref="ArgumentException">Unable to identify the entity that will be linked to this one.</exception>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// Name of the link cannot be longer then 31 symbol.
+		/// </exception>
+		/// <exception cref="ArgumentException">
+		/// Unable to identify the entity that will be linked to this one.
+		/// </exception>
 		public EntityLink Link(string linkName, EntityId id, EntityGUID guid)
 		{
 			this.AssertEntity();
@@ -479,7 +493,9 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Unlinks this entity from another.
 		/// </summary>
-		/// <param name="link">An object that represents the link between this entity and another that must be removed.</param>
+		/// <param name="link">
+		/// An object that represents the link between this entity and another that must be removed.
+		/// </param>
 		public void Unlink(EntityLink link)
 		{
 			this.AssertEntity();
@@ -500,6 +516,37 @@ namespace CryCil.Engine.Logic
 			Contract.EndContractBlock();
 
 			RemoveAllEntityLinks(this.handle);
+		}
+		/// <summary>
+		/// Physicalizes this entity.
+		/// </summary>
+		/// <param name="parameters">
+		/// A set of parameters that describes how to physicalize this entity.
+		/// </param>
+		/// <exception cref="PhysicalizationException">
+		/// An array of points must be provided when creating an area definition for a spline or shape
+		/// area.
+		/// </exception>
+		/// <exception cref="PhysicalizationException">
+		/// Physicalization of entity as area requires a valid pointer to AreaDefinition structure.
+		/// </exception>
+		public void Physicalize(ref EntityPhysicalizationParameters parameters)
+		{
+			this.AssertEntity();
+			parameters.Validate();
+			Contract.EndContractBlock();
+
+			PhysicalizeInternal(this.handle, ref parameters);
+		}
+		/// <summary>
+		/// Dephysicalizes this entity.
+		/// </summary>
+		public void Unphysicalize()
+		{
+			this.AssertEntity();
+			Contract.EndContractBlock();
+
+			UnphysicalizeInternal(this.handle);
 		}
 		#endregion
 		#region Utilities
@@ -577,6 +624,12 @@ namespace CryCil.Engine.Logic
 		internal static extern EntityId GetLinkedEntityId(IntPtr linkHandle);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		internal static extern EntityGUID GetLinkedEntityGuid(IntPtr linkHandle);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void PhysicalizeInternal(IntPtr handle, ref EntityPhysicalizationParameters parameters);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void UnphysicalizeInternal(IntPtr handle);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern PhysicalEntity GetPhysics(IntPtr handle);
 		#endregion
 	}
 }

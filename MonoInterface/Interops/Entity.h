@@ -4,6 +4,7 @@
 #include "IEntitySystem.h"
 #include "IEntityPoolManager.h"
 
+struct EntityPhysicalizationParameters;
 struct LightProperties;
 struct MonoEntitySpawnParams;
 
@@ -146,6 +147,9 @@ struct CryEntityInterop : public IMonoInterop < true, true >
 	static mono::string GetLinkName(IEntityLink *linkHandle);
 	static EntityId     GetLinkedEntityId(IEntityLink *linkHandle);
 	static EntityGUID   GetLinkedEntityGuid(IEntityLink *linkHandle);
+	static void         PhysicalizeInternal(IEntity *handle, EntityPhysicalizationParameters *parameters);
+	static void         UnphysicalizeInternal(IEntity *handle);
+	static IPhysicalEntity *GetPhysics(IEntity *handle);
 };
 
 struct EntitySlotsInterop : IMonoInterop<true, true>
@@ -184,4 +188,7 @@ struct EntitySlotsInterop : IMonoInterop<true, true>
 	static int          SetParticleEmitter(IEntity *entityHandle, int slot, IParticleEmitter *pEmitter, bool bSerialize);
 	static int          LoadLight(IEntity *entityHandle, int slot, const LightProperties &pLight);
 	static int          GetSlotCount(IEntity *entityHandle);
+	static int          PhysicalizeSlot(IEntity *entityHandle, int slot, EntityPhysicalizationParameters *parameters);
+	static void         UnphysicalizeSlot(IEntity *entityHandle, int slot);
+	static void         UpdateSlotPhysics(IEntity *entityHandle, int slot);
 };

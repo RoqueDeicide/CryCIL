@@ -137,5 +137,12 @@ namespace CryCil.Engine.Logic
 		internal static extern int LoadLight(IntPtr entityHandle, int slot, ref LightProperties pLight);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		internal static extern int GetSlotCount(IntPtr entityHandle);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		internal static extern int PhysicalizeSlot(IntPtr entityHandle, int slot,
+												  ref EntityPhysicalizationParameters parameters);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		internal static extern void UnphysicalizeSlot(IntPtr entityHandle, int slot);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		internal static extern void UpdateSlotPhysics(IntPtr entityHandle, int slot);
 	}
 }

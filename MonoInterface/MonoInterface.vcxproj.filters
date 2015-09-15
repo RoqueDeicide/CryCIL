@@ -446,6 +446,9 @@
     <ClInclude Include="Interops\PhysicsStructConversionUtilities.h">
       <Filter>Interops\Engine\Physics</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\PhysicalizationParameters.h">
+      <Filter>Interops\Engine\Logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />

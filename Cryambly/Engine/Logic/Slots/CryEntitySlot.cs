@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
-using System.Runtime.CompilerServices;
 using CryCil.Engine.Rendering;
 using CryCil.Engine.Rendering.Lighting;
 using CryCil.Engine.StaticObjects;
@@ -18,6 +17,11 @@ namespace CryCil.Engine.Logic
 	public struct CryEntitySlot
 	{
 		#region Fields
+		/// <summary>
+		/// A value that is usually used to designate all slots at the same time.
+		/// </summary>
+		public const int All = -1;
+
 		private readonly IntPtr entityHandle;
 		private readonly int index;
 		#endregion
@@ -27,7 +31,11 @@ namespace CryCil.Engine.Logic
 		/// </summary>
 		public bool IsValid
 		{
-			get { return this.entityHandle != IntPtr.Zero && this.index >= 0 && EntitySlotOps.IsSlotValid(this.entityHandle, this.index); }
+			get
+			{
+				return this.entityHandle != IntPtr.Zero && this.index >= 0 &&
+					   EntitySlotOps.IsSlotValid(this.entityHandle, this.index);
+			}
 		}
 		/// <summary>
 		/// Gets collective information about this slot.
@@ -390,6 +398,40 @@ namespace CryCil.Engine.Logic
 			Contract.EndContractBlock();
 
 			EntitySlotOps.LoadLight(this.entityHandle, this.index, ref properties);
+		}
+		/// <summary>
+		/// Physicalizes this slot. Can only be done, if the entity was physicalized before.
+		/// </summary>
+		/// <param name="parameters">
+		/// Reference to object that describes how to physicalize the slot.
+		/// </param>
+		/// <returns>Some number, not sure what it means.</returns>
+		public int Physicalize(ref EntityPhysicalizationParameters parameters)
+		{
+			this.AssertSlotValidity();
+			Contract.EndContractBlock();
+
+			return EntitySlotOps.PhysicalizeSlot(this.entityHandle, this.index, ref parameters);
+		}
+		/// <summary>
+		/// Dephysicalizes this slot.
+		/// </summary>
+		public void Unphysicalize()
+		{
+			this.AssertSlotValidity();
+			Contract.EndContractBlock();
+
+			EntitySlotOps.UnphysicalizeSlot(this.entityHandle, this.index);
+		}
+		/// <summary>
+		/// Updates physics of this slot(?).
+		/// </summary>
+		public void UpdatePhysics()
+		{
+			this.AssertSlotValidity();
+			Contract.EndContractBlock();
+
+			EntitySlotOps.UpdateSlotPhysics(this.entityHandle, this.index);
 		}
 		#endregion
 		#region Utilities
