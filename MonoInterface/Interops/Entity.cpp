@@ -131,7 +131,7 @@ void EntityPoolInterop::OnEntityReturnedToPool(EntityId entityId, IEntity *pEnti
 	}
 }
 
-void EntityPoolInterop::OnPoolDefinitionsLoaded(size_t numAI)
+void EntityPoolInterop::OnPoolDefinitionsLoaded(size_t)
 {
 	static OnPoolDefinitionsLoadedThunk thunk =
 		OnPoolDefinitionsLoadedThunk(this->GetMonoClass()->GetFunction("OnDefinitionsLoaded", 0)->UnmanagedThunk);
@@ -192,7 +192,7 @@ bool EntitySystemInterop::IsMonoEntity(const char *className)
 	return monoEntityClassNames.Find([className](NtText &name) { return name.Equals(className); }) != nullptr;
 }
 
-IEntityProxyPtr EntitySystemInterop::CreateGameObjectForCryCilEntity(IEntity *pEntity, SEntitySpawnParams &params,
+IEntityProxyPtr EntitySystemInterop::CreateGameObjectForCryCilEntity(IEntity *pEntity, SEntitySpawnParams &,
 																	 void *pUserData)
 {
 	auto className = pEntity->GetClass()->GetName();
