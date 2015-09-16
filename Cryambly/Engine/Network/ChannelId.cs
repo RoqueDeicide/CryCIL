@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.InteropServices;
 using CryCil.Annotations;
 
 namespace CryCil.Engine.Network
@@ -15,8 +10,7 @@ namespace CryCil.Engine.Network
 	public struct ChannelId
 	{
 		#region Fields
-		[UsedImplicitly]
-		private ushort id;
+		[UsedImplicitly] private ushort id;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -28,7 +22,6 @@ namespace CryCil.Engine.Network
 		}
 		#endregion
 		#region Events
-
 		#endregion
 		#region Construction
 		/// <summary>
@@ -52,7 +45,6 @@ namespace CryCil.Engine.Network
 		}
 		#endregion
 		#region Utilities
-
 		#endregion
 	}
 }

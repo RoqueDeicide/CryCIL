@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 
 namespace CryCil.Graphics
 {
@@ -21,702 +16,702 @@ namespace CryCil.Graphics
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte AliceBlue
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.AliceBlue]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.AliceBlue]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte AntiqueWhite
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.AntiqueWhite]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.AntiqueWhite]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Aqua
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Aqua]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Aqua]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Aquamarine
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Aquamarine]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Aquamarine]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Azure
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Azure]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Azure]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Beige
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Beige]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Beige]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Bisque
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Bisque]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Bisque]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Black
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Black]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Black]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte BlanchedAlmond
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.BlanchedAlmond]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.BlanchedAlmond]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Blue
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Blue]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Blue]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte BlueViolet
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.BlueViolet]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.BlueViolet]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Brown
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Brown]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Brown]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte BurlyWood
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.BurlyWood]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.BurlyWood]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte CadetBlue
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.CadetBlue]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.CadetBlue]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Chartreuse
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Chartreuse]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Chartreuse]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Chocolate
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Chocolate]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Chocolate]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Coral
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Coral]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Coral]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte CornflowerBlue
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.CornflowerBlue]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.CornflowerBlue]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Cornsilk
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Cornsilk]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Cornsilk]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Crimson
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Crimson]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Crimson]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Cyan
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Cyan]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Cyan]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte DarkBlue
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.DarkBlue]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.DarkBlue]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte DarkCyan
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.DarkCyan]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.DarkCyan]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte DarkGoldenrod
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.DarkGoldenrod]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.DarkGoldenrod]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte DarkGray
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.DarkGray]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.DarkGray]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte DarkGreen
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.DarkGreen]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.DarkGreen]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte DarkKhaki
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.DarkKhaki]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.DarkKhaki]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte DarkMagenta
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.DarkMagenta]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.DarkMagenta]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte DarkOliveGreen
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.DarkOliveGreen]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.DarkOliveGreen]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte DarkOrange
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.DarkOrange]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.DarkOrange]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte DarkOrchid
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.DarkOrchid]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.DarkOrchid]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte DarkRed
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.DarkRed]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.DarkRed]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte DarkSalmon
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.DarkSalmon]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.DarkSalmon]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte DarkSeaGreen
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.DarkSeaGreen]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.DarkSeaGreen]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte DarkSlateBlue
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.DarkSlateBlue]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.DarkSlateBlue]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte DarkSlateGray
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.DarkSlateGray]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.DarkSlateGray]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte DarkTurquoise
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.DarkTurquoise]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.DarkTurquoise]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte DarkViolet
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.DarkViolet]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.DarkViolet]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte DeepPink
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.DeepPink]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.DeepPink]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte DeepSkyBlue
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.DeepSkyBlue]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.DeepSkyBlue]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte DimGray
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.DimGray]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.DimGray]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte DodgerBlue
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.DodgerBlue]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.DodgerBlue]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Firebrick
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Firebrick]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Firebrick]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte FloralWhite
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.FloralWhite]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.FloralWhite]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte ForestGreen
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.ForestGreen]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.ForestGreen]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Fuchsia
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Fuchsia]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Fuchsia]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Gainsboro
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Gainsboro]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Gainsboro]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte GhostWhite
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.GhostWhite]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.GhostWhite]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Gold
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Gold]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Gold]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Goldenrod
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Goldenrod]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Goldenrod]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Gray
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Gray]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Gray]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Green
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Green]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Green]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte GreenYellow
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.GreenYellow]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.GreenYellow]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Honeydew
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Honeydew]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Honeydew]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte HotPink
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.HotPink]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.HotPink]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte IndianRed
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.IndianRed]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.IndianRed]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Indigo
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Indigo]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Indigo]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Ivory
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Ivory]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Ivory]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Khaki
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Khaki]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Khaki]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Lavender
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Lavender]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Lavender]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte LavenderBlush
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.LavenderBlush]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.LavenderBlush]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte LawnGreen
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.LawnGreen]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.LawnGreen]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte LemonChiffon
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.LemonChiffon]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.LemonChiffon]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte LightBlue
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.LightBlue]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.LightBlue]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte LightCoral
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.LightCoral]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.LightCoral]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte LightCyan
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.LightCyan]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.LightCyan]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte LightGoldenrodYellow
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.LightGoldenrodYellow]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.LightGoldenrodYellow]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte LightGreen
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.LightGreen]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.LightGreen]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte LightGray
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.LightGray]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.LightGray]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte LightPink
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.LightPink]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.LightPink]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte LightSalmon
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.LightSalmon]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.LightSalmon]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte LightSeaGreen
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.LightSeaGreen]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.LightSeaGreen]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte LightSkyBlue
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.LightSkyBlue]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.LightSkyBlue]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte LightSlateGray
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.LightSlateGray]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.LightSlateGray]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte LightSteelBlue
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.LightSteelBlue]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.LightSteelBlue]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte LightYellow
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.LightYellow]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.LightYellow]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Lime
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Lime]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Lime]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte LimeGreen
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.LimeGreen]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.LimeGreen]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Linen
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Linen]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Linen]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Magenta
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Magenta]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Magenta]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Maroon
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Maroon]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Maroon]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte MediumAquamarine
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.MediumAquamarine]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.MediumAquamarine]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte MediumBlue
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.MediumBlue]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.MediumBlue]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte MediumOrchid
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.MediumOrchid]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.MediumOrchid]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte MediumPurple
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.MediumPurple]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.MediumPurple]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte MediumSeaGreen
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.MediumSeaGreen]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.MediumSeaGreen]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte MediumSlateBlue
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.MediumSlateBlue]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.MediumSlateBlue]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte MediumSpringGreen
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.MediumSpringGreen]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.MediumSpringGreen]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte MediumTurquoise
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.MediumTurquoise]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.MediumTurquoise]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte MediumVioletRed
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.MediumVioletRed]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.MediumVioletRed]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte MidnightBlue
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.MidnightBlue]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.MidnightBlue]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte MintCream
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.MintCream]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.MintCream]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte MistyRose
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.MistyRose]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.MistyRose]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Moccasin
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Moccasin]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Moccasin]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte NavajoWhite
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.NavajoWhite]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.NavajoWhite]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Navy
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Navy]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Navy]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte OldLace
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.OldLace]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.OldLace]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Olive
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Olive]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Olive]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte OliveDrab
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.OliveDrab]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.OliveDrab]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Orange
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Orange]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Orange]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte OrangeRed
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.OrangeRed]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.OrangeRed]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Orchid
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Orchid]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Orchid]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte PaleGoldenrod
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.PaleGoldenrod]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.PaleGoldenrod]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte PaleGreen
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.PaleGreen]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.PaleGreen]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte PaleTurquoise
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.PaleTurquoise]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.PaleTurquoise]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte PaleVioletRed
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.PaleVioletRed]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.PaleVioletRed]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte PapayaWhip
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.PapayaWhip]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.PapayaWhip]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte PeachPuff
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.PeachPuff]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.PeachPuff]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Peru
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Peru]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Peru]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Pink
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Pink]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Pink]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Plum
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Plum]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Plum]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte PowderBlue
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.PowderBlue]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.PowderBlue]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Purple
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Purple]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Purple]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Red
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Red]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Red]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte RosyBrown
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.RosyBrown]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.RosyBrown]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte RoyalBlue
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.RoyalBlue]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.RoyalBlue]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte SaddleBrown
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.SaddleBrown]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.SaddleBrown]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Salmon
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Salmon]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Salmon]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte SandyBrown
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.SandyBrown]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.SandyBrown]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte SeaGreen
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.SeaGreen]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.SeaGreen]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte SeaShell
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.SeaShell]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.SeaShell]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Sienna
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Sienna]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Sienna]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Silver
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Silver]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Silver]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte SkyBlue
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.SkyBlue]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.SkyBlue]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte SlateBlue
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.SlateBlue]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.SlateBlue]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte SlateGray
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.SlateGray]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.SlateGray]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Snow
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Snow]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Snow]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte SpringGreen
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.SpringGreen]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.SpringGreen]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte SteelBlue
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.SteelBlue]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.SteelBlue]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Tan
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Tan]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Tan]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Teal
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Teal]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Teal]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Thistle
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Thistle]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Thistle]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Tomato
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Tomato]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Tomato]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Turquoise
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Turquoise]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Turquoise]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Violet
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Violet]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Violet]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Wheat
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Wheat]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Wheat]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte White
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.White]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.White]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte WhiteSmoke
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.WhiteSmoke]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.WhiteSmoke]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte Yellow
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Yellow]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.Yellow]);
 		/// <summary>
 		/// A known color value.
 		/// </summary>
 		public static readonly ColorByte YellowGreen
-					= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.YellowGreen]);
+			= new ColorByte(ColorValues.ArgbValues[(int)KnownColor.YellowGreen]);
 	}
 	internal class ColorValues
 	{
@@ -889,8 +884,8 @@ namespace CryCil.Graphics
 			0xFFFFFFFF, /* 164 - White */
 			0xFFF5F5F5, /* 165 - WhiteSmoke */
 			0xFFFFFF00, /* 166 - Yellow */
-			0xFF9ACD32  /* 167 - YellowGreen */
-}
-;
+			0xFF9ACD32 /* 167 - YellowGreen */
+		}
+							   ;
 	}
 }

@@ -420,7 +420,7 @@ namespace CryCil.Engine.Logic
 		/// Given name is not valid for flow node port, because it's not valid for Xml attribute name.
 		/// </exception>
 		public InputPortVector3(string name, string displayName, string description, Action<Vector3> action,
-							  Vector3 defaultValue = new Vector3())
+								Vector3 defaultValue = new Vector3())
 			: base(name, displayName, description, FlowDataType.Vector3)
 		{
 			this.action = action;
@@ -482,7 +482,7 @@ namespace CryCil.Engine.Logic
 		/// Given name is not valid for flow node port, because it's not valid for Xml attribute name.
 		/// </exception>
 		public InputPortString(string name, string displayName, string description, Action<string> action,
-							  string defaultValue = "", SortedList<string, string> selectableValues = null)
+							   string defaultValue = "", SortedList<string, string> selectableValues = null)
 			: base(name, displayName, description, FlowDataType.String)
 		{
 			this.action = action;
@@ -560,7 +560,7 @@ namespace CryCil.Engine.Logic
 		/// Given name is not valid for flow node port, because it's not valid for Xml attribute name.
 		/// </exception>
 		public InputPortBool(string name, string displayName, string description, Action<bool> action,
-							  bool defaultValue = false)
+							 bool defaultValue = false)
 			: base(name, displayName, description, FlowDataType.Bool)
 		{
 			this.action = action;

@@ -13,8 +13,7 @@ namespace CryCil.Engine.Rendering
 	public struct MaterialLayerCollection : IList<MaterialLayer>
 	{
 		#region Fields
-		[UsedImplicitly]
-		private IntPtr handle;
+		[UsedImplicitly] private IntPtr handle;
 		#endregion
 		#region Properties
 		/// <summary>

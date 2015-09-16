@@ -10,14 +10,10 @@ namespace CryCil.Engine.Rendering
 	public struct ShaderItem
 	{
 		#region Fields
-		[UsedImplicitly]
-		private Shader shader;
-		[UsedImplicitly]
-		private RenderShaderResources shaderResources;
-		[UsedImplicitly]
-		private int m_nTechnique;
-		[UsedImplicitly]
-		private ShaderPreprocessFlags preprocessFlags;
+		[UsedImplicitly] private Shader shader;
+		[UsedImplicitly] private RenderShaderResources shaderResources;
+		[UsedImplicitly] private int m_nTechnique;
+		[UsedImplicitly] private ShaderPreprocessFlags preprocessFlags;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -36,16 +32,12 @@ namespace CryCil.Engine.Rendering
 		}
 		#endregion
 		#region Events
-
 		#endregion
 		#region Construction
-
 		#endregion
 		#region Interface
-
 		#endregion
 		#region Utilities
-
 		#endregion
 	}
 }

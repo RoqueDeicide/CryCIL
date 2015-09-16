@@ -1,6 +1,4 @@
-﻿using CryCil.Geometry;
-
-namespace CryCil
+﻿namespace CryCil
 {
 	public static partial class Interpolation
 	{

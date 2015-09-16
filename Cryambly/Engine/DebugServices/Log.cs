@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.CompilerServices;
 
 namespace CryCil.Engine.DebugServices
 {
@@ -15,13 +10,8 @@ namespace CryCil.Engine.DebugServices
 		/// <summary>
 		/// Gets or sets log verbosity level.
 		/// </summary>
-		public static extern VerbosityLevels VerbosityLevel
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			get;
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			set;
-		}
+		public static extern VerbosityLevels VerbosityLevel { [MethodImpl(MethodImplOptions.InternalCall)] get;
+			[MethodImpl(MethodImplOptions.InternalCall)] set; }
 		/// <summary>
 		/// Writes a line into the log.
 		/// </summary>

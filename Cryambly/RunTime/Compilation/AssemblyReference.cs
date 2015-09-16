@@ -32,12 +32,12 @@ namespace CryCil.RunTime.Compilation
 			{
 				XmlElement customTargetFrameworkElement;
 				this.Path = ReferenceHelper.GetLocation
-				(
-					referenceElement.GetAttribute("Include"),
-					referenceElement.TryGetElement("RequiredTargetFramework", out customTargetFrameworkElement)
-						? "v" + customTargetFrameworkElement.FirstChild.Value
-						: project.TargetFramework
-				);
+					(
+					 referenceElement.GetAttribute("Include"),
+					 referenceElement.TryGetElement("RequiredTargetFramework", out customTargetFrameworkElement)
+						 ? "v" + customTargetFrameworkElement.FirstChild.Value
+						 : project.TargetFramework
+					);
 			}
 		}
 	}

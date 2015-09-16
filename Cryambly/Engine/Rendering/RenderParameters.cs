@@ -34,7 +34,7 @@ namespace CryCil.Engine.Rendering
 		/// Pointer to object that provides information about instancing of this object.
 		/// </summary>
 		/// <remarks>Used internally by the renderer.</remarks>
-		public IntPtr InstancingInformation;			// SInstancingInfo *
+		public IntPtr InstancingInformation; // SInstancingInfo *
 		/// <summary>
 		/// Matrix that represents all transformations that were applied to this object during last frame.
 		/// </summary>
@@ -48,24 +48,24 @@ namespace CryCil.Engine.Rendering
 		/// Pointer to VisArea that contains this object.
 		/// </summary>
 		/// <remarks>Used for RAM ambient cube query.</remarks>
-		public IntPtr VisArea;					// IVisArea*
+		public IntPtr VisArea; // IVisArea*
 		/// <summary>
 		/// Pointer to material that overrides object's one(?).
 		/// </summary>
-		public IntPtr Material;							// IMaterial *
+		public IntPtr Material; // IMaterial *
 		/// <summary>
 		/// Pointer to object that provides skeleton implementation for bendable foliage.
 		/// </summary>
-		public IntPtr Foliage;							// IFoliage *
+		public IntPtr Foliage; // IFoliage *
 		/// <summary>
 		/// Pointer to render mesh that contains a stream of weight values used for deformation morphs.
 		/// </summary>
-		public IntPtr Weights;							// IRenderMesh *
+		public IntPtr Weights; // IRenderMesh *
 		/// <summary>
 		/// Pointer to Render Node object.
 		/// </summary>
 		/// <remarks>Original comment: Object Id for objects identification in renderer.</remarks>
-		public IntPtr RenderNode;						// IRenderNode *
+		public IntPtr RenderNode; // IRenderNode *
 		/// <summary>
 		/// Unique identifier of the rendered object in the renderer.
 		/// </summary>
@@ -74,15 +74,15 @@ namespace CryCil.Engine.Rendering
 		/// <summary>
 		/// Pointer to object that provides data for rendering grass.
 		/// </summary>
-		public IntPtr TerrainTextureInfo;				// SSectorTextureSet *
+		public IntPtr TerrainTextureInfo; // SSectorTextureSet *
 		/// <summary>
 		/// Pointer to the storage of LOD transition states.
 		/// </summary>
-		public IntPtr RNTmpData;			// CRNTmpData **
+		public IntPtr RNTmpData; // CRNTmpData **
 		/// <summary>
 		/// Dynamic render data object which can be set by the game.
 		/// </summary>
-		public IntPtr ShaderParameters;		// DynArray<SShaderParam> *
+		public IntPtr ShaderParameters; // DynArray<SShaderParam> *
 		/// <summary>
 		/// Object's ambient color.
 		/// </summary>

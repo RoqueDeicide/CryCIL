@@ -4,6 +4,7 @@
 #include "EntityClass.h"
 #include "EntityExtension.h"
 #include "MonoLightProperties.h"
+#include "PhysicalizationParameters.h"
 
 IEntityPoolManager *poolManager;
 IEntitySystem *entitySystem;
@@ -131,7 +132,7 @@ void EntityPoolInterop::OnEntityReturnedToPool(EntityId entityId, IEntity *pEnti
 	}
 }
 
-void EntityPoolInterop::OnPoolDefinitionsLoaded(size_t numAI)
+void EntityPoolInterop::OnPoolDefinitionsLoaded(size_t)
 {
 	static OnPoolDefinitionsLoadedThunk thunk =
 		OnPoolDefinitionsLoadedThunk(this->GetMonoClass()->GetFunction("OnDefinitionsLoaded", 0)->UnmanagedThunk);
@@ -192,7 +193,7 @@ bool EntitySystemInterop::IsMonoEntity(const char *className)
 	return monoEntityClassNames.Find([className](NtText &name) { return name.Equals(className); }) != nullptr;
 }
 
-IEntityProxyPtr EntitySystemInterop::CreateGameObjectForCryCilEntity(IEntity *pEntity, SEntitySpawnParams &params,
+IEntityProxyPtr EntitySystemInterop::CreateGameObjectForCryCilEntity(IEntity *pEntity, SEntitySpawnParams &,
 																	 void *pUserData)
 {
 	auto className = pEntity->GetClass()->GetName();
@@ -666,6 +667,9 @@ void CryEntityInterop::OnRunTimeInitialized()
 	REGISTER_METHOD(GetLinkName);
 	REGISTER_METHOD(GetLinkedEntityId);
 	REGISTER_METHOD(GetLinkedEntityGuid);
+	REGISTER_METHOD(PhysicalizeInternal);
+	REGISTER_METHOD(UnphysicalizeInternal);
+	REGISTER_METHOD(GetPhysics);
 }
 
 void CryEntityInterop::SetFlags(IEntity *handle, uint64 flags)
@@ -1008,6 +1012,28 @@ EntityGUID CryEntityInterop::GetLinkedEntityGuid(IEntityLink *linkHandle)
 	return linkHandle->entityGuid;
 }
 
+void CryEntityInterop::PhysicalizeInternal(IEntity *handle, EntityPhysicalizationParameters *parameters)
+{
+	SEntityPhysicalizeParams params;
+	parameters->ToParams(params);
+
+	handle->Physicalize(params);
+
+	parameters->Dispose(params);
+}
+
+void CryEntityInterop::UnphysicalizeInternal(IEntity *handle)
+{
+	SEntityPhysicalizeParams params;
+	params.type = PE_NONE;
+	handle->Physicalize(params);
+}
+
+IPhysicalEntity *CryEntityInterop::GetPhysics(IEntity *handle)
+{
+	return handle->GetPhysics();
+}
+
 void EntitySlotsInterop::OnRunTimeInitialized()
 {
 	REGISTER_METHOD(IsSlotValid);
@@ -1038,6 +1064,9 @@ void EntitySlotsInterop::OnRunTimeInitialized()
 	REGISTER_METHOD(SetParticleEmitter);
 	REGISTER_METHOD(LoadLight);
 	REGISTER_METHOD(GetSlotCount);
+	REGISTER_METHOD(PhysicalizeSlot);
+	REGISTER_METHOD(UnphysicalizeSlot);
+	REGISTER_METHOD(UpdateSlotPhysics);
 }
 
 bool EntitySlotsInterop::IsSlotValid(IEntity *handle, int nIndex)
@@ -1180,4 +1209,26 @@ int EntitySlotsInterop::LoadLight(IEntity *handle, int slot, const LightProperti
 int EntitySlotsInterop::GetSlotCount(IEntity *handle)
 {
 	return handle->GetSlotCount();
+}
+
+int EntitySlotsInterop::PhysicalizeSlot(IEntity *entityHandle, int slot, EntityPhysicalizationParameters *parameters)
+{
+	SEntityPhysicalizeParams params;
+	parameters->ToParams(params);
+
+	int result = entityHandle->PhysicalizeSlot(slot, params);
+
+	parameters->Dispose(params);
+
+	return result;
+}
+
+void EntitySlotsInterop::UnphysicalizeSlot(IEntity *entityHandle, int slot)
+{
+	entityHandle->UnphysicalizeSlot(slot);
+}
+
+void EntitySlotsInterop::UpdateSlotPhysics(IEntity *entityHandle, int slot)
+{
+	entityHandle->UpdateSlotPhysics(slot);
 }

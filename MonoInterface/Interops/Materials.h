@@ -33,6 +33,9 @@ struct MaterialInterop : public IMonoInterop < true, true >
 	static bool       GetVectorParameter(IMaterial **handle, mono::string name, Vec3 *value);
 	static bool       SetFloatParameter(IMaterial **handle, mono::string name, float value);
 	static bool       SetVectorParameter(IMaterial **handle, mono::string name, Vec3 value);
+
+	static mono::Array GetSurfaceTypesTable(IMaterial **handle);
+	static int        *FillSurfaceTypesTable(IMaterial **handle, int &filledItems);
 };
 
 struct SubMaterialsInterop : public IMonoInterop < true, true >

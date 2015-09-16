@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading.Tasks;
-using CryCil.Annotations;
-using CryCil.Engine.DebugServices;
 
 namespace CryCil.Engine
 {
@@ -60,7 +56,8 @@ namespace CryCil.Engine
 		/// <exception cref="ArgumentNullException">
 		/// The delegate that represents a command cannot be null.
 		/// </exception>
-		public static bool RegisterCommand(string name, ConsoleCommand command, string help = null, ConsoleFlags flags = ConsoleFlags.Null, bool overwrite = false)
+		public static bool RegisterCommand(string name, ConsoleCommand command, string help = null,
+										   ConsoleFlags flags = ConsoleFlags.Null, bool overwrite = false)
 		{
 			if (name == null)
 			{
@@ -99,7 +96,7 @@ namespace CryCil.Engine
 			if (name == null)
 			{
 				throw new ArgumentNullException("name",
-					"Name of the command to unregister must not be null.");
+												"Name of the command to unregister must not be null.");
 			}
 
 			registeredCommands.Remove(name);
@@ -476,7 +473,7 @@ namespace CryCil.Engine
 		[UnmanagedThunk("Invoked by underlying framework to execute appropriate console command.")]
 		private static void ExecuteMonoCommand(string commandLine)
 		{
-			string[] parts = commandLine.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+			string[] parts = commandLine.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
 
 			string[] args = new string[parts.Length - 1];
 			string name = parts[0];

@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CryCil.RunTime
@@ -38,11 +32,11 @@ namespace CryCil.RunTime
 			StringBuilder indent = new StringBuilder(64);
 			StringBuilder traceBuilder = new StringBuilder(1000);
 			for
-			(
+				(
 				Exception currentException = ex;
 				currentException != null;
 				currentException = currentException.InnerException
-			)
+				)
 			{
 				// Print out the name of the type.
 				traceBuilder.Append(indent);
@@ -61,9 +55,9 @@ namespace CryCil.RunTime
 				// Print out the stack trace. Split default string into lines for indentation.
 				string[] stackTraceLines =
 					currentException.StackTrace.Split
-					(
-						new[] { Environment.NewLine }, StringSplitOptions.None
-					);
+						(
+						 new[] {Environment.NewLine}, StringSplitOptions.None
+						);
 				foreach (string stackTraceLine in stackTraceLines)
 				{
 					traceBuilder.Append(indent);

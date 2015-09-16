@@ -12,8 +12,7 @@ namespace CryCil.Engine.Rendering
 	public struct Shader
 	{
 		#region Fields
-		[UsedImplicitly]
-		private IntPtr handle;
+		[UsedImplicitly] private IntPtr handle;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -35,16 +34,12 @@ namespace CryCil.Engine.Rendering
 		}
 		#endregion
 		#region Events
-
 		#endregion
 		#region Construction
-
 		#endregion
 		#region Interface
-
 		#endregion
 		#region Utilities
-
 		#endregion
 	}
 }

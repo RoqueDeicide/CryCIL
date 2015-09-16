@@ -1,6 +1,4 @@
-﻿using System;
-using System.Text;
-using CryCil.Annotations;
+﻿using CryCil.Annotations;
 using CryCil.Geometry;
 using CryCil.Utilities;
 
@@ -56,8 +54,7 @@ namespace CryCil.Engine
 		/// Controls parameter strength curves.
 		/// </summary>
 		public float Strength;
-		[UsedImplicitly]
-		private StackString audioRtpc;
+		[UsedImplicitly] private StackString audioRtpc;
 		/// <summary>
 		/// Gets or sets the name of the audio RTPC this particle effect instance drives.
 		/// </summary>

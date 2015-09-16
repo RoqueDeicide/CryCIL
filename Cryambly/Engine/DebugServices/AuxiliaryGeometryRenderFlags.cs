@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CryCil.Engine.DebugServices
 {
@@ -30,7 +26,7 @@ namespace CryCil.Engine.DebugServices
 		DepthTestMask = 0x1 << DepthTestShift,
 
 		PublicParamsMask = Mode2D3DMask | AlphaBlendingMask | DrawInFrontMask | FillModeMask |
-			CullModeMask | DepthWriteMask | DepthTestMask
+						   CullModeMask | DepthWriteMask | DepthTestMask
 	}
 	/// <summary>
 	/// numeration of flags that describe the rendering of auxiliary geometry.
@@ -116,11 +112,11 @@ namespace CryCil.Engine.DebugServices
 		/// Default flags that can be used for rendering 3D geometry objects.
 		/// </summary>
 		Default3DRenderFlags = Mode3D | BlendingNone | DrawInFrontOff | FillModeSolid |
-		CullModeBack | DepthWriteOn | DepthTestOn,
+							   CullModeBack | DepthWriteOn | DepthTestOn,
 		/// <summary>
 		/// Default flags that can be used for rendering 2D geometry objects.
 		/// </summary>
 		Default2DRenderFlags = Mode2D | BlendingNone | DrawInFrontOff | FillModeSolid |
-		CullModeBack | DepthWriteOn | DepthTestOn
+							   CullModeBack | DepthWriteOn | DepthTestOn
 	}
 }

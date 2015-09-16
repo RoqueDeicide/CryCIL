@@ -42,12 +42,12 @@ namespace CryCil.Geometry
 				float p = -q * nearPlaneDistance;
 
 				return new Matrix44
-				(
+					(
 					w, 0, 0, 0,
 					0, h, 0, 0,
 					0, 0, q, 1,
 					0, 0, p, 0
-				);
+					);
 			}
 			/// <summary>
 			/// Creates a projection transformation matrix.
@@ -69,12 +69,12 @@ namespace CryCil.Geometry
 				float p = -q * nearPlaneDistance;
 
 				return new Matrix44
-				(
+					(
 					w, 0, 0, 0,
 					0, h, 0, 0,
 					0, 0, q, 1,
 					0, 0, p, 0
-				);
+					);
 			}
 			/// <summary>
 			/// Creates a projection transformation matrix.
@@ -101,12 +101,12 @@ namespace CryCil.Geometry
 				float p = -q * near;
 
 				return new Matrix44
-				(
+					(
 					w, 0, 0, 0,
 					0, h, 0, 0,
 					a, b, q, 1,
 					0, 0, p, 0
-				);
+					);
 			}
 		}
 	}

@@ -25,7 +25,6 @@
 		public Vector3 Vector;
 		#endregion
 		#region Properties
-
 		#endregion
 		#region Construction
 		/// <summary>
@@ -51,10 +50,8 @@
 		}
 		#endregion
 		#region Interface
-
 		#endregion
 		#region Utilities
-
 		#endregion
 	}
 }

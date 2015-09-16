@@ -14,8 +14,7 @@ namespace CryCil.Engine
 	public struct ParticleEffect
 	{
 		#region Fields
-		[UsedImplicitly]
-		private IntPtr handle;
+		[UsedImplicitly] private IntPtr handle;
 		#endregion
 		#region Static Properties
 		/// <summary>
@@ -295,7 +294,7 @@ namespace CryCil.Engine
 																	ref ParticleSpawnParameters spawnParameters);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern ParticleEmitter CreateEmitterInternalDsp(Quatvecale loc, IntPtr parameters,
-																	ParticleEmitterFlags flags);
+																	   ParticleEmitterFlags flags);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern ParticleEmitter CreateEmitterInternalDfDsp(Quatvecale loc, IntPtr parameters);
 		/// <summary>

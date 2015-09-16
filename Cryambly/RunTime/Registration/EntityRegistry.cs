@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using CryCil.Engine.Logic;
 
 namespace CryCil.RunTime.Registration
@@ -55,26 +53,18 @@ namespace CryCil.RunTime.Registration
 			new EditablePropertyTypeDesc("b", typeof(bool), "Simple Boolean value."),
 			new EditablePropertyTypeDesc("f", typeof(float), "Simple single-precision floating point number."),
 			new EditablePropertyTypeDesc("s", typeof(string), "Plain text."),
-
 			new EditablePropertyTypeDesc("shader", typeof(string), "Name of the shader."),
 			new EditablePropertyTypeDesc("clr", typeof(Vector3), "Simple color without alpha component."),
-
 			new EditablePropertyTypeDesc("vector", typeof(Vector3), "Simple 3D vector."),
-
 			new EditablePropertyTypeDesc("snd", typeof(string), "Path to the sound file."),
 			new EditablePropertyTypeDesc("dialog", typeof(string), "Identifier of the dialog."),
-
 			new EditablePropertyTypeDesc("tex", typeof(string), "Path to the texture file."),
-
 			new EditablePropertyTypeDesc("obj", typeof(string), "Path to the object(?)."),
-
 			new EditablePropertyTypeDesc("file", typeof(string), "Path to the file."),
-
 			new EditablePropertyTypeDesc("text", typeof(string), "Simple text."),
 			new EditablePropertyTypeDesc("equip", typeof(string), "Name of the equipment pack."),
 			new EditablePropertyTypeDesc("reverbpreset", typeof(string), "Name of the reverberation preset."),
 			new EditablePropertyTypeDesc("eaxpreset", typeof(string), "Name of the EAX preset."),
-
 			new EditablePropertyTypeDesc("gametoken", typeof(string), "Name of the game token."),
 			new EditablePropertyTypeDesc("seq_", typeof(string), "Name of the TrackView sequence."),
 			new EditablePropertyTypeDesc("mission_", typeof(string), "Name of the mission.")
@@ -131,14 +121,14 @@ namespace CryCil.RunTime.Registration
 				EntitySystem
 					.RegisterEntityClass
 					(
-						entityClassName,
-						attribute.Category,
-						attribute.EditorHelper,
-						attribute.EditorIcon,
-						attribute.Flags,
-						GetEditableProperties(entityType),
-						entityType.Implements<MonoNetEntity>(),
-						attribute.DontSyncEditableProperties
+					 entityClassName,
+					 attribute.Category,
+					 attribute.EditorHelper,
+					 attribute.EditorIcon,
+					 attribute.Flags,
+					 GetEditableProperties(entityType),
+					 entityType.Implements<MonoNetEntity>(),
+					 attribute.DontSyncEditableProperties
 					);
 			}
 		}
@@ -191,8 +181,8 @@ namespace CryCil.RunTime.Registration
 			}
 
 			// Organize all properties into an array, so that all props can be accessed via index.
-			List<EditableProperty> propList = new List<EditableProperty>();			// These are used in managed code.
-			List<EditablePropertyInfo> propInfoList = new List<EditablePropertyInfo>();	// These are passed to native code.
+			List<EditableProperty> propList = new List<EditableProperty>(); // These are used in managed code.
+			List<EditablePropertyInfo> propInfoList = new List<EditablePropertyInfo>(); // These are passed to native code.
 
 			foreach (var folder in folders)
 			{
@@ -203,9 +193,10 @@ namespace CryCil.RunTime.Registration
 				}
 				else
 				{
-					propList.Add(new EditableProperty());	// Not gonna be used, but has to take up the slot to insure consistency of indices.
+					propList.Add(new EditableProperty());
+						// Not gonna be used, but has to take up the slot to insure consistency of indices.
 					propList.AddRange(folder.Value);
-					propList.Add(new EditableProperty());	// Same as one above.
+					propList.Add(new EditableProperty()); // Same as one above.
 
 					propInfoList.Add(new EditablePropertyInfo(folder.Key, true));
 					propInfoList.AddRange(folder.Value.Select(prop => new EditablePropertyInfo(prop)));

@@ -108,7 +108,7 @@ namespace CryCil
 		public bool Equals(Vector2 other, float epsilon)
 		{
 			return (Math.Abs(other.X - this.X) < epsilon &&
-				Math.Abs(other.Y - this.Y) < epsilon);
+					Math.Abs(other.Y - this.Y) < epsilon);
 		}
 		#endregion
 		#region IComparable<Vector2>
@@ -149,11 +149,11 @@ namespace CryCil
 			}
 		}
 		/// <summary>
-		/// Determines whether the specified <see cref="Object"/> is equal to this instance.
+		/// Determines whether the specified <see cref="object"/> is equal to this instance.
 		/// </summary>
-		/// <param name="value">The <see cref="Object"/> to compare with this instance.</param>
+		/// <param name="value">The <see cref="object"/> to compare with this instance.</param>
 		/// <returns>
-		/// <c>true</c> if the specified <see cref="Object"/> is equal to this instance; otherwise,
+		/// <c>true</c> if the specified <see cref="object"/> is equal to this instance; otherwise,
 		/// <c>false</c> .
 		/// </returns>
 		public override bool Equals(object value)
@@ -181,8 +181,9 @@ namespace CryCil
 		{
 			return
 				format == null
-				? this.ToString()
-				: string.Format(CultureInfo.CurrentCulture, "X:{0} Y:{1}", this.X.ToString(format, CultureInfo.CurrentCulture), this.Y.ToString(format, CultureInfo.CurrentCulture));
+					? this.ToString()
+					: string.Format(CultureInfo.CurrentCulture, "X:{0} Y:{1}", this.X.ToString(format, CultureInfo.CurrentCulture),
+									this.Y.ToString(format, CultureInfo.CurrentCulture));
 		}
 		/// <summary>
 		/// Returns a <see cref="System.String"/> that represents this instance.
@@ -204,7 +205,8 @@ namespace CryCil
 			if (format == null)
 				this.ToString(formatProvider);
 
-			return string.Format(formatProvider, "X:{0} Y:{1}", this.X.ToString(format, formatProvider), this.Y.ToString(format, formatProvider));
+			return string.Format(formatProvider, "X:{0} Y:{1}", this.X.ToString(format, formatProvider),
+								 this.Y.ToString(format, formatProvider));
 		}
 		#endregion
 	}

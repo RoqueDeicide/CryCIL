@@ -49,7 +49,6 @@ namespace CryCil.Engine.Logic
 		}
 		#endregion
 		#region Events
-
 		#endregion
 		#region Construction
 		/// <summary>
@@ -64,14 +63,14 @@ namespace CryCil.Engine.Logic
 			if (typeIndex == -1)
 			{
 				throw new NotSupportedException
-				(
-					string.Format
 					(
-						"Attempt was made to register an editable property with type {0} that is not supported. Supported types are: {1}",
-						type.FullName,
-						supportedTypes.Select(supportedType => supportedType.FullName).ContentsToString(", ")
-					)
-				);
+					string.Format
+						(
+						 "Attempt was made to register an editable property with type {0} that is not supported. Supported types are: {1}",
+						 type.FullName,
+						 supportedTypes.Select(supportedType => supportedType.FullName).ContentsToString(", ")
+						)
+					);
 			}
 			this.type = (EditablePropertyType)typeIndex;
 		}
@@ -97,14 +96,14 @@ namespace CryCil.Engine.Logic
 			PropertyInfo propertyInfo = this.Member as PropertyInfo;
 			return
 				propertyInfo != null
-				? propertyInfo.GetValue(entity).ToString()
-				: null;
+					? propertyInfo.GetValue(entity).ToString()
+					: null;
 		}
 		/// <summary>
 		/// Sets the value of the property.
 		/// </summary>
 		/// <param name="entity">Entity which editable property value to set.</param>
-		/// <param name="value">Text representation of the new value.</param>
+		/// <param name="value"> Text representation of the new value.</param>
 		public void Set(object entity, string value)
 		{
 			if (entity == null)

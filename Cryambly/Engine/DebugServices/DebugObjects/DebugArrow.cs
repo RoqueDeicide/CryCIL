@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CryCil.Engine.DebugServices
 {
@@ -117,14 +113,13 @@ namespace CryCil.Engine.DebugServices
 		}
 		#endregion
 		#region Events
-
 		#endregion
 		#region Construction
 		/// <summary>
 		/// Creates new instance of this class.
 		/// </summary>
 		/// <param name="start"> Coordinates of the start of the arrow.</param>
-		/// <param name="end"> Coordinates of the point of the arrow.</param>
+		/// <param name="end">   Coordinates of the point of the arrow.</param>
 		/// <param name="radius">Radius of the arrow's cone.</param>
 		public DebugArrow(Vector3 start, Vector3 end, float radius)
 		{
@@ -150,25 +145,24 @@ namespace CryCil.Engine.DebugServices
 			AuxiliaryGeometry.Flags = this.RenderingFlags;
 			// Draw a line with Center vector in its center.
 			AuxiliaryGeometry.DrawLine
-			(
-				this.start,
-				this.end,
-				this.Color
-			);
+				(
+				 this.start,
+				 this.end,
+				 this.Color
+				);
 			// Draw a cone with its top point at the end of the above line. Its height is .33 of the total
 			// length of the arrow.
 			AuxiliaryGeometry.DrawCone
-			(
-				this.center + this.dir * this.length * 0.17f,
-				this.dir,
-				this.ArrowTipRadius,
-				this.length * 0.33f,
-				this.Color
-			);
+				(
+				 this.center + this.dir * this.length * 0.17f,
+				 this.dir,
+				 this.ArrowTipRadius,
+				 this.length * 0.33f,
+				 this.Color
+				);
 		}
 		#endregion
 		#region Utilities
-
 		#endregion
 	}
 }

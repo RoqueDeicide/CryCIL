@@ -156,7 +156,7 @@ void MonoFlowNode::GetConfiguration(SFlowNodeConfig &config)
 
 typedef bool(*SaveLoadThunk)(mono::object, IXmlNode *);
 
-bool MonoFlowNode::SerializeXML(SActivationInfo *actInfo, const XmlNodeRef& root, bool reading)
+bool MonoFlowNode::SerializeXML(SActivationInfo *, const XmlNodeRef& root, bool reading)
 {
 	static SaveLoadThunk save = SaveLoadThunk(GetFlowNodeClass()->GetFunction("SaveData")->RawThunk);
 	static SaveLoadThunk load = SaveLoadThunk(GetFlowNodeClass()->GetFunction("LoadData")->RawThunk);
@@ -178,7 +178,7 @@ bool MonoFlowNode::SerializeXML(SActivationInfo *actInfo, const XmlNodeRef& root
 
 typedef void(*SerializeThunk)(mono::object, ISerialize *);
 
-void MonoFlowNode::Serialize(SActivationInfo *actInfo, TSerialize ser)
+void MonoFlowNode::Serialize(SActivationInfo *, TSerialize ser)
 {
 	static SerializeThunk thunk = SerializeThunk(GetFlowNodeClass()->GetFunction("Serialize")->RawThunk);
 
@@ -192,7 +192,7 @@ void MonoFlowNode::Serialize(SActivationInfo *actInfo, TSerialize ser)
 
 typedef void(*PostSerializeThunk)(mono::object);
 
-void MonoFlowNode::PostSerialize(SActivationInfo *actInfo)
+void MonoFlowNode::PostSerialize(SActivationInfo *)
 {
 	static PostSerializeThunk thunk = PostSerializeThunk(GetFlowNodeClass()->GetFunction("PostSerialize")->RawThunk);
 
@@ -327,7 +327,7 @@ void MonoFlowNode::ProcessEvent(EFlowEvent event, SActivationInfo *actInfo)
 	}
 }
 
-void MonoFlowNode::GetMemoryUsage(ICrySizer * s) const
+void MonoFlowNode::GetMemoryUsage(ICrySizer *) const
 {
 	
 }

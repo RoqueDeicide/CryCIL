@@ -463,7 +463,7 @@ bool CryXmlNodeInterop::GetAttributeuint64(mono::object obj, mono::string name, 
 		return false;
 	}
 
-	return objNode->getAttr(NtText(name), value);
+	return objNode->getAttr(NtText(name), value, useHex);
 }
 
 bool CryXmlNodeInterop::GetAttributefloat(mono::object obj, mono::string name, float &value)
@@ -657,7 +657,7 @@ void CryXmlNodeInterop::SetAttributeuint64(mono::object obj, mono::string name, 
 		NullReferenceException("This Xml node is not valid.").Throw();
 	}
 
-	objNode->setAttr(NtText(name), value);
+	objNode->setAttr(NtText(name), value, useHex);
 }
 
 void CryXmlNodeInterop::SetAttributefloat(mono::object obj, mono::string name, float value)

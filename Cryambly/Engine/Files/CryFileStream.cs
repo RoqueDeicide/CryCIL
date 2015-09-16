@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CryCil.Engine.Files
 {
@@ -102,7 +98,8 @@ namespace CryCil.Engine.Files
 		/// Text file type recognition is not supported for files in .pak archives.
 		/// </exception>
 		/// <exception cref="FileAccessException">Unable to access a file.</exception>
-		public CryFileStream(string path, CryFileMode mode, CryFileType type, bool directAccess = false, FileOpenFlags flags = FileOpenFlags.Nothing)
+		public CryFileStream(string path, CryFileMode mode, CryFileType type, bool directAccess = false,
+							 FileOpenFlags flags = FileOpenFlags.Nothing)
 		{
 			if (path == null)
 			{
@@ -116,7 +113,7 @@ namespace CryCil.Engine.Files
 			{
 				throw new FileNotFoundException(
 					string.Format("File could not be found in the virtual file system using a path = \"{0}\".",
-					path));
+								  path));
 			}
 
 			if (type == CryFileType.Text && CryFiles.Exists(path, SearchLocation.Pak))

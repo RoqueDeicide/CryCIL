@@ -68,11 +68,11 @@ namespace CryCil.Geometry
 				float dot = vector.X * normal.X + vector.Y * normal.Y + vector.Z * normal.Z;
 				return
 					new Vector3
-					(
+						(
 						2.0f * dot * normal.X - vector.X,
 						2.0f * dot * normal.Y - vector.Y,
 						2.0f * dot * normal.Z - vector.Z
-					);
+						);
 			}
 			/// <summary>
 			/// Mirrors given vector over a given surface.
@@ -154,11 +154,11 @@ namespace CryCil.Geometry
 				float dot = vector.X * normal.X + vector.Y * normal.Y + vector.Z * normal.Z;
 				return
 					new Vector3
-					(
+						(
 						vector.X - 2.0f * dot * normal.X,
 						vector.Y - 2.0f * dot * normal.Y,
 						vector.Z - 2.0f * dot * normal.Z
-					);
+						);
 			}
 			/// <summary>
 			/// Bounces given vector over a given surface.

@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Globalization;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using CryCil.Geometry;
-using CryCil.Graphics;
 
 namespace CryCil
 {
@@ -15,7 +13,7 @@ namespace CryCil
 	[Serializable]
 	[StructLayout(LayoutKind.Sequential)]
 	public partial struct Vector3 : IVector<float, Vector3>, IEquatable<Vector3>, IEnumerable<float>,
-		IComparable<Vector3>
+									IComparable<Vector3>
 	{
 		#region Static Fields
 		/// <summary>
@@ -75,10 +73,7 @@ namespace CryCil
 		/// </summary>
 		public float Length
 		{
-			get
-			{
-				return (float)Math.Sqrt(this.X * this.X + this.Y * this.Y + this.Z * this.Z);
-			}
+			get { return (float)Math.Sqrt(this.X * this.X + this.Y * this.Y + this.Z * this.Z); }
 			set
 			{
 				float lengthSquared = this.LengthSquared;
@@ -96,30 +91,21 @@ namespace CryCil
 		/// </summary>
 		public float LengthSquared
 		{
-			get
-			{
-				return this.X * this.X + this.Y * this.Y + this.Z * this.Z;
-			}
+			get { return this.X * this.X + this.Y * this.Y + this.Z * this.Z; }
 		}
 		/// <summary>
 		/// Gets length of this vector projected onto XY plane.
 		/// </summary>
 		public float Length2D
 		{
-			get
-			{
-				return (float)Math.Sqrt(this.X * this.X + this.Y * this.Y);
-			}
+			get { return (float)Math.Sqrt(this.X * this.X + this.Y * this.Y); }
 		}
 		/// <summary>
 		/// Gets squared length of this vector projected onto XY plane.
 		/// </summary>
 		public float Length2DSquared
 		{
-			get
-			{
-				return this.X * this.X + this.Y * this.Y;
-			}
+			get { return this.X * this.X + this.Y * this.Y; }
 		}
 		/// <summary>
 		/// Gets normalized vector.
@@ -137,20 +123,14 @@ namespace CryCil
 		/// </summary>
 		public float Volume
 		{
-			get
-			{
-				return this.X * this.Y * this.Z;
-			}
+			get { return this.X * this.Y * this.Z; }
 		}
 		/// <summary>
 		/// Gets vector which components are absolute values of components of this vector.
 		/// </summary>
 		public Vector3 Absolute
 		{
-			get
-			{
-				return new Vector3(Math.Abs(this.X), Math.Abs(this.Y), Math.Abs(this.Z));
-			}
+			get { return new Vector3(Math.Abs(this.X), Math.Abs(this.Y), Math.Abs(this.Z)); }
 		}
 		/// <summary>
 		/// Gets flipped vector.
@@ -171,7 +151,7 @@ namespace CryCil
 			{
 				// ReSharper disable CompareOfFloatsByEqualityOperator
 				if (this.X == 0 && this.Y == 0 && this.Z == 0)
-				// ReSharper restore CompareOfFloatsByEqualityOperator
+					// ReSharper restore CompareOfFloatsByEqualityOperator
 				{
 					throw new InvalidOperationException("Cannot get vector that is orthogonal to zero.");
 				}
@@ -187,7 +167,7 @@ namespace CryCil
 			{
 				// ReSharper disable CompareOfFloatsByEqualityOperator
 				if (this.X == 0 && this.Y == 0 && this.Z == 0)
-				// ReSharper restore CompareOfFloatsByEqualityOperator
+					// ReSharper restore CompareOfFloatsByEqualityOperator
 				{
 					return Up;
 				}
@@ -203,7 +183,7 @@ namespace CryCil
 			{
 				// ReSharper disable CompareOfFloatsByEqualityOperator
 				if (this.X == 0 && this.Y == 0 && this.Z == 0)
-				// ReSharper restore CompareOfFloatsByEqualityOperator
+					// ReSharper restore CompareOfFloatsByEqualityOperator
 				{
 					return null;
 				}
@@ -274,7 +254,7 @@ namespace CryCil
 			get
 			{
 				byte[] bytes = new byte[12];
-				float[] components = { this.X, this.Y, this.Z };
+				float[] components = {this.X, this.Y, this.Z};
 
 				Buffer.BlockCopy(components, 0, bytes, 0, bytes.Length);
 				return bytes;
@@ -389,7 +369,7 @@ namespace CryCil
 		/// <returns>An array of 3 elements which contain corresponding vector components.</returns>
 		public float[] ToArray()
 		{
-			return new[] { this.X, this.Y, this.Z };
+			return new[] {this.X, this.Y, this.Z};
 		}
 		/// <summary>
 		/// Creates a list that contains components of this vector.
@@ -494,7 +474,9 @@ namespace CryCil
 		public void Normalize()
 		{
 			float fInvLen = MathHelpers.ReciprocalSquareRoot(this.X * this.X + this.Y * this.Y + this.Z * this.Z);
-			this.X *= fInvLen; this.Y *= fInvLen; this.Z *= fInvLen;
+			this.X *= fInvLen;
+			this.Y *= fInvLen;
+			this.Z *= fInvLen;
 		}
 		#endregion
 		#region Clamping
@@ -561,7 +543,10 @@ namespace CryCil
 		/// </returns>
 		public float GetDistance(Vector3 vec1)
 		{
-			return (float)Math.Sqrt((this.X - vec1.X) * (this.X - vec1.X) + (this.Y - vec1.Y) * (this.Y - vec1.Y) + (this.Z - vec1.Z) * (this.Z - vec1.Z));
+			return
+				(float)
+					Math.Sqrt((this.X - vec1.X) * (this.X - vec1.X) + (this.Y - vec1.Y) * (this.Y - vec1.Y) +
+							  (this.Z - vec1.Z) * (this.Z - vec1.Z));
 		}
 		/// <summary>
 		/// Gets squared distance between this vector and another one.
@@ -572,7 +557,8 @@ namespace CryCil
 		/// </returns>
 		public float GetDistanceSquared(Vector3 vec1)
 		{
-			return (this.X - vec1.X) * (this.X - vec1.X) + (this.Y - vec1.Y) * (this.Y - vec1.Y) + (this.Z - vec1.Z) * (this.Z - vec1.Z);
+			return (this.X - vec1.X) * (this.X - vec1.X) + (this.Y - vec1.Y) * (this.Y - vec1.Y) +
+				   (this.Z - vec1.Z) * (this.Z - vec1.Z);
 		}
 		/// <summary>
 		/// Gets projected distance between this vector and another one.
@@ -684,7 +670,8 @@ namespace CryCil
 		/// </returns>
 		public bool IsEquivalent(Vector3 v1, float epsilon = 0.05f)
 		{
-			return ((Math.Abs(this.X - v1.X) <= epsilon) && (Math.Abs(this.Y - v1.Y) <= epsilon) && (Math.Abs(this.Z - v1.Z) <= epsilon));
+			return ((Math.Abs(this.X - v1.X) <= epsilon) && (Math.Abs(this.Y - v1.Y) <= epsilon) &&
+					(Math.Abs(this.Z - v1.Z) <= epsilon));
 		}
 		/// <summary>
 		/// Indicates whether this vector is a unit vector.
@@ -759,14 +746,14 @@ namespace CryCil
 			{
 				string[] split = value.Split(',');
 				return new Vector3(System.Convert.ToSingle(split[0]),
-					System.Convert.ToSingle(split[1]), System.Convert.ToSingle(split[2]));
+								   System.Convert.ToSingle(split[1]), System.Convert.ToSingle(split[2]));
 			}
 			catch (Exception ex)
 			{
 				throw new ArgumentException
-				(
+					(
 					"Vector3.Parse:Given string doesn't contain an equivalent of the vector.", "value", ex
-				);
+					);
 			}
 		}
 		#endregion

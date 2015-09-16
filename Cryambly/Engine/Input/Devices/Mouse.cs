@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CryCil.Annotations;
+﻿using System.Collections.Generic;
 
 namespace CryCil.Engine.Input
 {
@@ -91,7 +86,6 @@ namespace CryCil.Engine.Input
 		}
 		#endregion
 		#region Interface
-
 		#endregion
 		#region Utilities
 		[UnmanagedThunk("Invoked by underlying framework to raise Button event.")]

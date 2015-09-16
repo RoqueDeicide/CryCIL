@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CryCil.Engine.Files
 {
@@ -29,13 +25,10 @@ namespace CryCil.Engine.Files
 		public const int MaxFilePathLength = 2048;
 		#endregion
 		#region Properties
-
 		#endregion
 		#region Events
-
 		#endregion
 		#region Construction
-
 		#endregion
 		#region Interface
 		/// <summary>

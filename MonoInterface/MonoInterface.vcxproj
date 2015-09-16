@@ -293,10 +293,14 @@
     <ClInclude Include="Interops\Entity.h" />
     <ClInclude Include="Interops\EntityClass.h" />
     <ClInclude Include="Interops\EntityExtension.h" />
+    <ClInclude Include="Interops\ExplosionStructs.h" />
     <ClInclude Include="Interops\FlowGraph.h" />
+    <ClInclude Include="Interops\ForeignData.h" />
     <ClInclude Include="Interops\Game.h" />
     <ClInclude Include="Interops\GeneralExtensions.h" />
+    <ClInclude Include="Interops\IGeometry.h" />
     <ClInclude Include="Interops\InputInterop.h" />
+    <ClInclude Include="Interops\Lattice.h" />
     <ClInclude Include="Interops\Level.h" />
     <ClInclude Include="Interops\LevelGameRules.h" />
     <ClInclude Include="Interops\LevelMissions.h" />
@@ -319,7 +323,18 @@
     <ClInclude Include="Interops\Ocean.h" />
     <ClInclude Include="Interops\ParticleEffect.h" />
     <ClInclude Include="Interops\ParticleEmitter.h" />
+    <ClInclude Include="Interops\PhysicalBody.h" />
+    <ClInclude Include="Interops\PhysicalEntity.h" />
+    <ClInclude Include="Interops\PhysicalizationParameters.h" />
+    <ClInclude Include="Interops\PhysicalWorld.h" />
+    <ClInclude Include="Interops\PhysicsActionStructs.h" />
+    <ClInclude Include="Interops\PhysicsEventRaisers.h" />
+    <ClInclude Include="Interops\PhysicsGeometryStructs.h" />
+    <ClInclude Include="Interops\PhysicsParameterStructs.h" />
+    <ClInclude Include="Interops\PhysicsStatusStructs.h" />
+    <ClInclude Include="Interops\PhysicsStructConversionUtilities.h" />
     <ClInclude Include="Interops\Profiling.h" />
+    <ClInclude Include="Interops\Ray.h" />
     <ClInclude Include="Interops\Renderer.h" />
     <ClInclude Include="Interops\Shading.h" />
     <ClInclude Include="Interops\Spline.h" />
@@ -329,6 +344,7 @@
     <ClInclude Include="Interops\Texture.h" />
     <ClInclude Include="Interops\TimeOfDay.h" />
     <ClInclude Include="Interops\Timing.h" />
+    <ClInclude Include="Interops\WriteLockCond.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="Logs.h" />
     <ClInclude Include="MonoDefinitionFiles\MonoArray.h" />
@@ -352,6 +368,7 @@
     <ClInclude Include="TimeUtilities.h" />
     <ClInclude Include="Tuples.h" />
     <ClInclude Include="TypeMapChecks\CheckingBasics.h" />
+    <ClInclude Include="Interops\WaterManagerStructs.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CryEngineInterface.cpp" />
@@ -412,7 +429,9 @@
     <ClCompile Include="Interops\FlowGraph.cpp" />
     <ClCompile Include="Interops\Game.cpp" />
     <ClCompile Include="Interops\GeneralExtensions.cpp" />
+    <ClCompile Include="Interops\IGeometry.cpp" />
     <ClCompile Include="Interops\InputInterop.cpp" />
+    <ClCompile Include="Interops\Lattice.cpp" />
     <ClCompile Include="Interops\Level.cpp" />
     <ClCompile Include="Interops\LevelGameRules.cpp" />
     <ClCompile Include="Interops\LevelMissions.cpp" />
@@ -433,7 +452,11 @@
     <ClCompile Include="Interops\ParticleEffectIterator.cpp" />
     <ClCompile Include="Interops\ParticleEmitter.cpp" />
     <ClCompile Include="Interops\ParticleParameters.cpp" />
+    <ClCompile Include="Interops\PhysicalBody.cpp" />
+    <ClCompile Include="Interops\PhysicalEntity.cpp" />
+    <ClCompile Include="Interops\PhysicalWorld.cpp" />
     <ClCompile Include="Interops\Profiling.cpp" />
+    <ClCompile Include="Interops\Ray.cpp" />
     <ClCompile Include="Interops\Renderer.cpp" />
     <ClCompile Include="Interops\Shading.cpp" />
     <ClCompile Include="Interops\Spline.cpp" />
@@ -443,6 +466,7 @@
     <ClCompile Include="Interops\Texture.cpp" />
     <ClCompile Include="Interops\TimeOfDay.cpp" />
     <ClCompile Include="Interops\Timing.cpp" />
+    <ClCompile Include="Interops\WriteLockCond.cpp" />
     <ClCompile Include="RunTime\DebugEventReporter.cpp" />
     <ClCompile Include="RunTime\EventBroadcaster.cpp" />
     <ClCompile Include="RunTime\MonoInterface.cpp" />
@@ -462,16 +486,36 @@
     <ClCompile Include="TypeMapChecks\EntityAspects.cpp" />
     <ClCompile Include="TypeMapChecks\EntityClassFlags.cpp" />
     <ClCompile Include="TypeMapChecks\EntityFlags.cpp" />
+    <ClCompile Include="TypeMapChecks\EntityQueryFlags.cpp" />
     <ClCompile Include="TypeMapChecks\EntitySlotInfo.cpp" />
     <ClCompile Include="TypeMapChecks\EntitySpawnParams.cpp" />
     <ClCompile Include="TypeMapChecks\EntityUpdateContext.cpp" />
     <ClCompile Include="TypeMapChecks\EntityUpdatePolicy.cpp" />
     <ClCompile Include="TypeMapChecks\EntityXFormFlags.cpp" />
     <ClCompile Include="TypeMapChecks\EventPhysCollision.cpp" />
+    <ClCompile Include="TypeMapChecks\GeometryFlags.cpp" />
+    <ClCompile Include="TypeMapChecks\GeometryTypes.cpp" />
+    <ClCompile Include="TypeMapChecks\JointFlagscpp.cpp" />
+    <ClCompile Include="TypeMapChecks\MeshUpdateTypes.cpp" />
+    <ClCompile Include="TypeMapChecks\PhysicalEntityFlags.cpp" />
+    <ClCompile Include="TypeMapChecks\PhysicalEntityType.cpp" />
+    <ClCompile Include="TypeMapChecks\PhysicalGeometry.cpp" />
+    <ClCompile Include="TypeMapChecks\PhysicsForeignIds.cpp" />
+    <ClCompile Include="TypeMapChecks\PhysicsMeshFlags.cpp" />
+    <ClCompile Include="TypeMapChecks\PhysicsTypeEnumerations.cpp" />
+    <ClCompile Include="TypeMapChecks\Primitives.cpp" />
+    <ClCompile Include="TypeMapChecks\RayHit.cpp" />
     <ClCompile Include="TypeMapChecks\RenderParameters.cpp" />
     <ClCompile Include="TypeMapChecks\RmiTargetEnum.cpp" />
+    <ClCompile Include="TypeMapChecks\RwiFlags.cpp" />
+    <ClCompile Include="TypeMapChecks\SimClass.cpp" />
     <ClCompile Include="TypeMapChecks\SmallEntityStructs.cpp" />
     <ClCompile Include="TypeMapChecks\SpawnParams.cpp" />
+    <ClCompile Include="TypeMapChecks\StridedPointer.cpp" />
+    <ClCompile Include="TypeMapChecks\SurfaceFlags.cpp" />
+    <ClCompile Include="TypeMapChecks\UpdateMeshReason.cpp" />
+    <ClCompile Include="TypeMapChecks\WaveSimParams.cpp" />
+    <ClCompile Include="TypeMapChecks\_constrflags.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

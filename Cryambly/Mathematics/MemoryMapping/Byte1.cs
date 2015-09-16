@@ -11,15 +11,13 @@ namespace CryCil.MemoryMapping
 	{
 		#region Fields
 		/// <summary>
-		/// <see cref="Byte"/> value.
+		/// <see cref="byte"/> value.
 		/// </summary>
-		[FieldOffset(0)]
-		public byte UnsignedByte;
+		[FieldOffset(0)] public byte UnsignedByte;
 		/// <summary>
-		/// <see cref="SByte"/> value.
+		/// <see cref="sbyte"/> value.
 		/// </summary>
-		[FieldOffset(0)]
-		public sbyte SignedByte;
+		[FieldOffset(0)] public sbyte SignedByte;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -35,14 +33,8 @@ namespace CryCil.MemoryMapping
 		/// <param name="index">Ignored as object of this type is just one byte.</param>
 		public byte this[int index]
 		{
-			get
-			{
-				return this.UnsignedByte;
-			}
-			set
-			{
-				this.UnsignedByte = value;
-			}
+			get { return this.UnsignedByte; }
+			set { this.UnsignedByte = value; }
 		}
 		#endregion
 		#region Construction
@@ -76,7 +68,8 @@ namespace CryCil.MemoryMapping
 		{
 			if (pointer == null)
 			{
-				throw new ArgumentNullException("pointer", "Byte1.Constructor: Unable to initialize new object of type Byte1: Provided pointer is null.");
+				throw new ArgumentNullException("pointer",
+												"Byte1.Constructor: Unable to initialize new object of type Byte1: Provided pointer is null.");
 			}
 			this.UnsignedByte = Marshal.ReadByte(pointer, index);
 		}

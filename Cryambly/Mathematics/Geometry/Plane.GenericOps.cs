@@ -48,7 +48,7 @@ namespace CryCil.Geometry
 		/// <returns>A four-element array containing the components of the plane.</returns>
 		public float[] ToArray()
 		{
-			return new[] { this.Normal.X, this.Normal.Y, this.Normal.Z, this.D };
+			return new[] {this.Normal.X, this.Normal.Y, this.Normal.Z, this.D};
 		}
 		/// <summary>
 		/// Returns a <see cref="System.String"/> that represents this instance.
@@ -56,7 +56,8 @@ namespace CryCil.Geometry
 		/// <returns>A <see cref="System.String"/> that represents this instance.</returns>
 		public override string ToString()
 		{
-			return string.Format(CultureInfo.CurrentCulture, "A:{0} B:{1} C:{2} D:{3}", this.Normal.X, this.Normal.Y, this.Normal.Z, this.D);
+			return string.Format(CultureInfo.CurrentCulture, "A:{0} B:{1} C:{2} D:{3}", this.Normal.X, this.Normal.Y,
+								 this.Normal.Z, this.D);
 		}
 		/// <summary>
 		/// Returns a <see cref="System.String"/> that represents this instance.
@@ -65,7 +66,10 @@ namespace CryCil.Geometry
 		/// <returns>A <see cref="System.String"/> that represents this instance.</returns>
 		public string ToString(string format)
 		{
-			return string.Format(CultureInfo.CurrentCulture, "A:{0} B:{1} C:{2} D:{3}", this.Normal.X.ToString(format, CultureInfo.CurrentCulture), this.Normal.Y.ToString(format, CultureInfo.CurrentCulture), this.Normal.Z.ToString(format, CultureInfo.CurrentCulture), this.D.ToString(format, CultureInfo.CurrentCulture));
+			return string.Format(CultureInfo.CurrentCulture, "A:{0} B:{1} C:{2} D:{3}",
+								 this.Normal.X.ToString(format, CultureInfo.CurrentCulture),
+								 this.Normal.Y.ToString(format, CultureInfo.CurrentCulture),
+								 this.Normal.Z.ToString(format, CultureInfo.CurrentCulture), this.D.ToString(format, CultureInfo.CurrentCulture));
 		}
 		/// <summary>
 		/// Returns a <see cref="System.String"/> that represents this instance.
@@ -84,7 +88,9 @@ namespace CryCil.Geometry
 		/// <returns>A <see cref="System.String"/> that represents this instance.</returns>
 		public string ToString(string format, IFormatProvider formatProvider)
 		{
-			return string.Format(formatProvider, "A:{0} B:{1} C:{2} D:{3}", this.Normal.X.ToString(format, formatProvider), this.Normal.Y.ToString(format, formatProvider), this.Normal.Z.ToString(format, formatProvider), this.D.ToString(format, formatProvider));
+			return string.Format(formatProvider, "A:{0} B:{1} C:{2} D:{3}", this.Normal.X.ToString(format, formatProvider),
+								 this.Normal.Y.ToString(format, formatProvider), this.Normal.Z.ToString(format, formatProvider),
+								 this.D.ToString(format, formatProvider));
 		}
 		/// <summary>
 		/// Returns a hash code for this instance.

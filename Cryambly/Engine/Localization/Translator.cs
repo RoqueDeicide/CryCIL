@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using CryCil.Utilities;
 
 namespace CryCil.Engine.Localization
@@ -59,13 +55,13 @@ namespace CryCil.Engine.Localization
 				if (index < 0)
 				{
 					throw new NotSupportedException
-					(
-						string.Format
 						(
-							"Culture with name \"{0}\" is not supported by CryEngine localization API.",
-							value.Name
-						)
-					);
+						string.Format
+							(
+							 "Culture with name \"{0}\" is not supported by CryEngine localization API.",
+							 value.Name
+							)
+						);
 				}
 
 				SetCurrentLanguage(langPtrs[index]);
@@ -73,7 +69,6 @@ namespace CryCil.Engine.Localization
 		}
 		#endregion
 		#region Events
-
 		#endregion
 		#region Construction
 		static Translator()
@@ -87,7 +82,7 @@ namespace CryCil.Engine.Localization
 			{
 				string name = GetLanguageNameInternal((SupportedLanguages)i);
 				Languages[i] = name;
-				langPtrs[i] = StringPool.Get(name);		// Cache native representation of the name.
+				langPtrs[i] = StringPool.Get(name); // Cache native representation of the name.
 			}
 
 			cultureMap = new string[langCount];

@@ -14,18 +14,18 @@ void LevelsInterop::OnRunTimeInitialized()
 	levelCtor = MonoEnv->Cryambly->GetClass(this->GetInteropNameSpace(), this->GetInteropClassName())->GetConstructor(1);
 }
 
-int LevelsInterop::get_Count(mono::object obj)
+int LevelsInterop::get_Count(mono::object)
 {
 	return system->GetLevelCount();
 }
 
-mono::object LevelsInterop::get_ItemInt(mono::object obj, int index)
+mono::object LevelsInterop::get_ItemInt(mono::object, int index)
 {
 	void *param = system->GetLevelInfo(index);
 	return levelCtor->Create(&param);
 }
 
-mono::object LevelsInterop::get_Item(mono::object obj, mono::string name)
+mono::object LevelsInterop::get_Item(mono::object, mono::string name)
 {
 	if (!name)
 	{

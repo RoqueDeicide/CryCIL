@@ -15,8 +15,7 @@ namespace CryCil.Geometry.Splines
 	public struct CryEngineSpline : ISpline<float, Vector4>
 	{
 		#region Fields
-		[UsedImplicitly]
-		private IntPtr handle;
+		[UsedImplicitly] private IntPtr handle;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -63,7 +62,7 @@ namespace CryCil.Geometry.Splines
 		}
 		#endregion
 		#region Interface
-		/// <inheritdoc />
+		/// <inheritdoc/>
 		/// <exception cref="NullReferenceException">Instance object is invalid.</exception>
 		public int InsertKey(float time, Vector4 position)
 		{
@@ -74,7 +73,7 @@ namespace CryCil.Geometry.Splines
 
 			return InsertKeyInternal(this.handle, time, position);
 		}
-		/// <inheritdoc />
+		/// <inheritdoc/>
 		/// <exception cref="NullReferenceException">Instance object is invalid.</exception>
 		public void RemoveKey(int index)
 		{
@@ -85,7 +84,7 @@ namespace CryCil.Geometry.Splines
 
 			RemoveKeyInternal(this.handle, index);
 		}
-		/// <inheritdoc />
+		/// <inheritdoc/>
 		/// <exception cref="NullReferenceException">Instance object is invalid.</exception>
 		public void FindKeys(float startTime, float endTime, out int firstFoundKey, out int numFoundKeys)
 		{
@@ -96,7 +95,7 @@ namespace CryCil.Geometry.Splines
 
 			FindKeysInternal(this.handle, startTime, endTime, out firstFoundKey, out numFoundKeys);
 		}
-		/// <inheritdoc />
+		/// <inheritdoc/>
 		/// <exception cref="NullReferenceException">Instance object is invalid.</exception>
 		public void RemoveKeys(float startTime, float endTime)
 		{
@@ -107,7 +106,7 @@ namespace CryCil.Geometry.Splines
 
 			RemoveKeysInternal(this.handle, startTime, endTime);
 		}
-		/// <inheritdoc />
+		/// <inheritdoc/>
 		/// <exception cref="NullReferenceException">Instance object is invalid.</exception>
 		public void SetKeyTime(int index, float time)
 		{
@@ -118,7 +117,7 @@ namespace CryCil.Geometry.Splines
 
 			SetKeyTimeInternal(this.handle, index, time);
 		}
-		/// <inheritdoc />
+		/// <inheritdoc/>
 		/// <exception cref="NullReferenceException">Instance object is invalid.</exception>
 		public float GetKeyTime(int index)
 		{
@@ -129,7 +128,7 @@ namespace CryCil.Geometry.Splines
 
 			return GetKeyTimeInternal(this.handle, index);
 		}
-		/// <inheritdoc />
+		/// <inheritdoc/>
 		/// <exception cref="NullReferenceException">Instance object is invalid.</exception>
 		public void SetKeyPosition(int index, Vector4 value)
 		{
@@ -140,7 +139,7 @@ namespace CryCil.Geometry.Splines
 
 			SetKeyValueInternal(this.handle, index, value);
 		}
-		/// <inheritdoc />
+		/// <inheritdoc/>
 		/// <exception cref="NullReferenceException">Instance object is invalid.</exception>
 		public Vector4 GetKeyPosition(int index)
 		{
@@ -153,7 +152,7 @@ namespace CryCil.Geometry.Splines
 			GetKeyValueInternal(this.handle, index, out v);
 			return v;
 		}
-		/// <inheritdoc />
+		/// <inheritdoc/>
 		/// <exception cref="NullReferenceException">Instance object is invalid.</exception>
 		public bool GetKeyPosition(int index, out Vector4 value)
 		{
@@ -164,7 +163,7 @@ namespace CryCil.Geometry.Splines
 
 			return GetKeyValueInternal(this.handle, index, out value);
 		}
-		/// <inheritdoc />
+		/// <inheritdoc/>
 		/// <exception cref="NullReferenceException">Instance object is invalid.</exception>
 		public void SetKeyInTangent(int index, Vector4 tin)
 		{
@@ -175,7 +174,7 @@ namespace CryCil.Geometry.Splines
 
 			SetKeyInTangentInternal(this.handle, index, tin);
 		}
-		/// <inheritdoc />
+		/// <inheritdoc/>
 		/// <exception cref="NullReferenceException">Instance object is invalid.</exception>
 		public void SetKeyOutTangent(int index, Vector4 tout)
 		{
@@ -186,7 +185,7 @@ namespace CryCil.Geometry.Splines
 
 			SetKeyOutTangentInternal(this.handle, index, tout);
 		}
-		/// <inheritdoc />
+		/// <inheritdoc/>
 		/// <exception cref="NullReferenceException">Instance object is invalid.</exception>
 		public void SetKeyTangents(int index, Vector4 tin, Vector4 tout)
 		{
@@ -197,7 +196,7 @@ namespace CryCil.Geometry.Splines
 
 			SetKeyTangentsInternal(this.handle, index, tin, tout);
 		}
-		/// <inheritdoc />
+		/// <inheritdoc/>
 		/// <exception cref="NullReferenceException">Instance object is invalid.</exception>
 		public bool GetKeyTangents(int index, out Vector4 tin, out Vector4 tout)
 		{
@@ -208,7 +207,7 @@ namespace CryCil.Geometry.Splines
 
 			return GetKeyTangentsInternal(this.handle, index, out tin, out tout);
 		}
-		/// <inheritdoc />
+		/// <inheritdoc/>
 		/// <exception cref="NullReferenceException">Instance object is invalid.</exception>
 		public Vector4 Interpolate(float time)
 		{
@@ -257,7 +256,8 @@ namespace CryCil.Geometry.Splines
 		private static extern void RemoveKeyInternal(IntPtr handle, int key);
 
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern void FindKeysInternal(IntPtr handle, float startTime, float endTime, out int firstFoundKey, out int numFoundKeys);
+		private static extern void FindKeysInternal(IntPtr handle, float startTime, float endTime, out int firstFoundKey,
+													out int numFoundKeys);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void RemoveKeysInternal(IntPtr handle, float startTime, float endTime);
 

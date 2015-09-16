@@ -24,11 +24,11 @@ namespace CryCil.Geometry
 #endif
 			float dot = vector.X * normal.X + vector.Y * normal.Y + vector.Z * normal.Z;
 			return new Vector3
-			(
+				(
 				vector.X - normal.X * dot,
 				vector.Y - normal.Y * dot,
 				vector.Z - normal.Z * dot
-			);
+				);
 		}
 		/// <summary>
 		/// Projects this vector onto a plane specified by given normal and one of the points on the plane

@@ -93,3 +93,17 @@
 #include "Interops/ActionMapping.h"
 
 #include "Interops/LightSource.h"
+
+#include "Interops/PhysicalWorld.h"
+
+#include "Interops/PhysicalEntity.h"
+
+#include "Interops/Lattice.h"
+
+#include "Interops/IGeometry.h"
+
+#include "Interops/WriteLockCond.h"
+
+#include "Interops/PhysicalBody.h"
+
+#include "Interops/Ray.h"

@@ -401,6 +401,54 @@
     <ClInclude Include="Interops\LightSource.h">
       <Filter>Interops\Engine\Rendering\Lighting</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\PhysicalWorld.h">
+      <Filter>Interops\Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\ExplosionStructs.h">
+      <Filter>Interops\Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\PhysicsParameterStructs.h">
+      <Filter>Interops\Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\PhysicsActionStructs.h">
+      <Filter>Interops\Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\PhysicsGeometryStructs.h">
+      <Filter>Interops\Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\PhysicsStatusStructs.h">
+      <Filter>Interops\Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\PhysicalEntity.h">
+      <Filter>Interops\Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\Lattice.h">
+      <Filter>Interops\Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\PhysicsEventRaisers.h">
+      <Filter>Interops\Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\IGeometry.h">
+      <Filter>Interops\Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\WriteLockCond.h">
+      <Filter>Interops\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\ForeignData.h">
+      <Filter>Interops\Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\PhysicalBody.h">
+      <Filter>Interops\Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\Ray.h">
+      <Filter>Interops\Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\PhysicsStructConversionUtilities.h">
+      <Filter>Interops\Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\PhysicalizationParameters.h">
+      <Filter>Interops\Engine\Logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -694,6 +742,90 @@
     </ClCompile>
     <ClCompile Include="Interops\LightSource.cpp">
       <Filter>Interops\Engine\Rendering\Lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\EntityQueryFlags.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\PhysicalEntityFlags.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\PhysicalEntityType.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\PhysicalWorld.cpp">
+      <Filter>Interops\Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\SimClass.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\PhysicalEntity.cpp">
+      <Filter>Interops\Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\Lattice.cpp">
+      <Filter>Interops\Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\PhysicsTypeEnumerations.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\PhysicsForeignIds.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\Primitives.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\JointFlagscpp.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\GeometryFlags.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\StridedPointer.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\WaveSimParams.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\WaterManagerStructs.h">
+      <Filter>Interops\Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\_constrflags.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\UpdateMeshReason.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\PhysicalGeometry.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\PhysicsMeshFlags.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\IGeometry.cpp">
+      <Filter>Interops\Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\GeometryTypes.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\WriteLockCond.cpp">
+      <Filter>Interops\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\MeshUpdateTypes.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\PhysicalBody.cpp">
+      <Filter>Interops\Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\RwiFlags.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\SurfaceFlags.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\RayHit.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\Ray.cpp">
+      <Filter>Interops\Engine\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

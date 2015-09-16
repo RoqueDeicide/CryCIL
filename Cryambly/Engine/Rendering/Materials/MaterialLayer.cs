@@ -10,8 +10,7 @@ namespace CryCil.Engine.Rendering
 	public struct MaterialLayer
 	{
 		#region Fields
-		[UsedImplicitly]
-		private IntPtr handle;
+		[UsedImplicitly] private IntPtr handle;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -91,7 +90,6 @@ namespace CryCil.Engine.Rendering
 		}
 		#endregion
 		#region Events
-
 		#endregion
 		#region Construction
 		/// <summary>

@@ -11,67 +11,38 @@ namespace CryCil.Engine.Rendering
 	public static unsafe class Renderer
 	{
 		#region Fields
-
 		#endregion
 		#region Properties
 		/// <summary>
 		/// Sets culling mode.
 		/// </summary>
-		public static extern CullMode CullingMode
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			set;
-		}
+		public static extern CullMode CullingMode { [MethodImpl(MethodImplOptions.InternalCall)] set; }
 		/// <summary>
 		/// Sets render state. Don't use unless you know what you are doing.
 		/// </summary>
-		public static extern RenderState State
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			set;
-		}
+		public static extern RenderState State { [MethodImpl(MethodImplOptions.InternalCall)] set; }
 		/// <summary>
 		/// Gets width of the potentially native resolution frame-buffer used for UI and debug output in
 		/// pixels.
 		/// </summary>
-		public static extern int NativeWidth
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			get;
-		}
+		public static extern int NativeWidth { [MethodImpl(MethodImplOptions.InternalCall)] get; }
 		/// <summary>
 		/// Gets height of the potentially native resolution frame-buffer used for UI and debug output in
 		/// pixels.
 		/// </summary>
-		public static extern int NativeHeight
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			get;
-		}
+		public static extern int NativeHeight { [MethodImpl(MethodImplOptions.InternalCall)] get; }
 		/// <summary>
 		/// Gets width of the main rendering resolution.
 		/// </summary>
-		public static extern int Width
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			get;
-		}
+		public static extern int Width { [MethodImpl(MethodImplOptions.InternalCall)] get; }
 		/// <summary>
 		/// Gets height of the main rendering resolution.
 		/// </summary>
-		public static extern int Height
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			get;
-		}
+		public static extern int Height { [MethodImpl(MethodImplOptions.InternalCall)] get; }
 		/// <summary>
 		/// Gets current aspect ratio.
 		/// </summary>
-		public static extern float AspectRatio
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			get;
-		}
+		public static extern float AspectRatio { [MethodImpl(MethodImplOptions.InternalCall)] get; }
 		/// <summary>
 		/// Gets rendering features that are currently supported.
 		/// </summary>
@@ -79,16 +50,11 @@ namespace CryCil.Engine.Rendering
 		/// <summary>
 		/// Gets the pointer to camera object that is used for rendering.
 		/// </summary>
-		public static extern Camera *Camera
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			get;
-// 			[MethodImpl(MethodImplOptions.InternalCall)]
-// 			set;
+		public static extern Camera* Camera { [MethodImpl(MethodImplOptions.InternalCall)] get;
+// [MethodImpl(MethodImplOptions.InternalCall)] set;
 		}
 		#endregion
 		#region Events
-
 		#endregion
 		#region Construction
 		static Renderer()
@@ -124,13 +90,13 @@ namespace CryCil.Engine.Rendering
 									params object[] args)
 		{
 			DrawTextInternal
-			(
-				position,
-				options,
-				new ColorSingle(1, 1, 1),
-				new Vector2(1, 1),
-				string.Format(text, args)
-			);
+				(
+				 position,
+				 options,
+				 new ColorSingle(1, 1, 1),
+				 new Vector2(1, 1),
+				 string.Format(text, args)
+				);
 		}
 		/// <summary>
 		/// Renders text using default color, scale and options.
@@ -142,13 +108,13 @@ namespace CryCil.Engine.Rendering
 		public static void DrawText(Vector3 position, string text, params object[] args)
 		{
 			DrawTextInternal
-			(
-				position,
-				TextRenderOptions.Nothing,
-				new ColorSingle(1, 1, 1),
-				new Vector2(1, 1),
-				string.Format(text, args)
-			);
+				(
+				 position,
+				 TextRenderOptions.Nothing,
+				 new ColorSingle(1, 1, 1),
+				 new Vector2(1, 1),
+				 string.Format(text, args)
+				);
 		}
 		/// <summary>
 		/// Renders text.
@@ -270,8 +236,8 @@ namespace CryCil.Engine.Rendering
 		}
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void Draw2DImageInternal(Vector2 position, Vector2 size, int textureId,
-											  Vector2 minUv, Vector2 maxUv,
-											  ColorSingle lightColor, float angle = 0, float z = 1);
+													   Vector2 minUv, Vector2 maxUv,
+													   ColorSingle lightColor, float angle = 0, float z = 1);
 		/// <summary>
 		/// Pushes a 2D image into a special list that can be rendered using <see cref="Draw2DImageList"/>.
 		/// </summary>

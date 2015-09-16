@@ -80,30 +80,21 @@ namespace CryCil.Geometry
 		/// </summary>
 		public Vector3 Row0
 		{
-			get
-			{
-				return this.Orientation.Row0;
-			}
+			get { return this.Orientation.Row0; }
 		}
 		/// <summary>
 		/// Gets the second row of the 3x4 matrix that represents the same transformation as this object.
 		/// </summary>
 		public Vector3 Row1
 		{
-			get
-			{
-				return this.Orientation.Row1;
-			}
+			get { return this.Orientation.Row1; }
 		}
 		/// <summary>
 		/// Gets the third row of the 3x4 matrix that represents the same transformation as this object.
 		/// </summary>
 		public Vector3 Row2
 		{
-			get
-			{
-				return this.Orientation.Row2;
-			}
+			get { return this.Orientation.Row2; }
 		}
 		#endregion
 		#region Construction
@@ -160,7 +151,7 @@ namespace CryCil.Geometry
 			Vector3 v1 = (r2 % r0).Normalized;
 			Vector3 v2 = (v0 % v1);
 
-			Matrix33 m33 = new Matrix33 { Row0 = v0, Row1 = v1, Row2 = v2 };
+			Matrix33 m33 = new Matrix33 {Row0 = v0, Row1 = v1, Row2 = v2};
 
 			this.Orientation = new Quaternion(m33);
 		}
@@ -204,7 +195,6 @@ namespace CryCil.Geometry
 		}
 		#endregion
 		#region Utilities
-
 		#endregion
 	}
 }

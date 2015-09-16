@@ -12,11 +12,11 @@ namespace CryCil.RunTime.Compilation
 		/// <summary>
 		/// An array of .Net framework versions.
 		/// </summary>
-		public static string[] Versions = { "v1.1", "v2.0", "v3.0", "v3.5", "v4.0", "v4.5" };
+		public static string[] Versions = {"v1.1", "v2.0", "v3.0", "v3.5", "v4.0", "v4.5"};
 		/// <summary>
 		/// An array of .Net framework versions without leading letter v.
 		/// </summary>
-		public static string[] VersionsShort = { "1.1", "2.0", "3.0", "3.5", "4.0", "4.5" };
+		public static string[] VersionsShort = {"1.1", "2.0", "3.0", "3.5", "4.0", "4.5"};
 		/// <summary>
 		/// Maps names of .Net framework versions to constants defined in
 		/// <see cref="TargetDotNetFrameworkVersion"/> enumeration.
@@ -49,7 +49,7 @@ namespace CryCil.RunTime.Compilation
 			{
 				TargetDotNetFrameworkVersion versionId = TargetFrameworkVersionMap[Versions[i]];
 				string path = Path.Combine(ToolLocationHelper.GetPathToDotNetFramework(versionId), VersionsShort[i],
-								 assemblyName);
+										   assemblyName);
 				if (File.Exists(path))
 				{
 					return path;

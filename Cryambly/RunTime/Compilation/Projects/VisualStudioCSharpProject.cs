@@ -1,9 +1,5 @@
-﻿using System;
-using System.CodeDom.Compiler;
+﻿using System.CodeDom.Compiler;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CryCil.Annotations;
 using Microsoft.CSharp;
 
@@ -33,10 +29,12 @@ namespace CryCil.RunTime.Compilation.Projects
 		/// <param name="projectName">Name of the project.</param>
 		/// <param name="projectFile">Path to the project file.</param>
 		public VisualStudioCSharpProject
-		(
+			(
 			string projectName,
 			[PathReference] string projectFile
-		)
-			: base(projectName, projectFile) { }
+			)
+			: base(projectName, projectFile)
+		{
+		}
 	}
 }

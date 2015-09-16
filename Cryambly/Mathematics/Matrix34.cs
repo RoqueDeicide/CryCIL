@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
@@ -21,92 +22,74 @@ namespace CryCil
 		/// Identity matrix is a matrix where all elements on main diagonal are equal to 1, and all others
 		/// are zeroed.
 		/// </remarks>
-		public static readonly Matrix34 Identity = new Matrix34
-		(
-			1, 0, 0, 0,
-			0, 1, 0, 0,
-			0, 0, 1, 0
-		);
+		public static readonly Matrix34 Identity = new Matrix34(1, 0, 0, 0,
+																0, 1, 0, 0,
+																0, 0, 1, 0);
 		#endregion
 		#region Fields
 		#region Individual Elements
 		/// <summary>
 		/// First row, First column.
 		/// </summary>
-		[FieldOffset(0)]
-		public float M00;
+		[FieldOffset(0)] public float M00;
 		/// <summary>
 		/// First row, Second column.
 		/// </summary>
-		[FieldOffset(4)]
-		public float M01;
+		[FieldOffset(4)] public float M01;
 		/// <summary>
 		/// First row, Third column.
 		/// </summary>
-		[FieldOffset(8)]
-		public float M02;
+		[FieldOffset(8)] public float M02;
 		/// <summary>
 		/// First row, Fourth column.
 		/// </summary>
-		[FieldOffset(12)]
-		public float M03;
+		[FieldOffset(12)] public float M03;
 		/// <summary>
 		/// Second row, First column.
 		/// </summary>
-		[FieldOffset(16)]
-		public float M10;
+		[FieldOffset(16)] public float M10;
 		/// <summary>
 		/// Second row, Second column.
 		/// </summary>
-		[FieldOffset(20)]
-		public float M11;
+		[FieldOffset(20)] public float M11;
 		/// <summary>
 		/// Second row, Third column.
 		/// </summary>
-		[FieldOffset(24)]
-		public float M12;
+		[FieldOffset(24)] public float M12;
 		/// <summary>
 		/// Second row, Fourth column.
 		/// </summary>
-		[FieldOffset(28)]
-		public float M13;
+		[FieldOffset(28)] public float M13;
 		/// <summary>
 		/// Third row, First column.
 		/// </summary>
-		[FieldOffset(32)]
-		public float M20;
+		[FieldOffset(32)] public float M20;
 		/// <summary>
 		/// Third row, Second column.
 		/// </summary>
-		[FieldOffset(36)]
-		public float M21;
+		[FieldOffset(36)] public float M21;
 		/// <summary>
 		/// Third row, Third column.
 		/// </summary>
-		[FieldOffset(40)]
-		public float M22;
+		[FieldOffset(40)] public float M22;
 		/// <summary>
 		/// Third row, Fourth column.
 		/// </summary>
-		[FieldOffset(44)]
-		public float M23;
+		[FieldOffset(44)] public float M23;
 		#endregion
 		#region Rows
 		/// <summary>
 		/// First row.
 		/// </summary>
-		[FieldOffset(0)]
-		public Vector4 Row0;
+		[FieldOffset(0)] public Vector4 Row0;
 		/// <summary>
 		/// Second row.
 		/// </summary>
-		[FieldOffset(16)]
-		public Vector4 Row1;
+		[FieldOffset(16)] public Vector4 Row1;
 		/// <summary>
 		/// Third row.
 		/// </summary>
-		[FieldOffset(32)]
-		public Vector4 Row2;
+		[FieldOffset(32)] public Vector4 Row2;
 		#endregion
 		#endregion
 		#region Properties
@@ -117,23 +100,21 @@ namespace CryCil
 		{
 			get
 			{
-				var angles = new Vector3
-				{
-					Y = (float)Math.Asin(Math.Max(-1.0, Math.Min(1.0, -this.M20)))
-				};
+				double r = Math.Asin(Math.Max(-1.0, Math.Min(1.0, -this.M20)));
+				double p = 0;
+				double y;
 
-				if (Math.Abs(Math.Abs(angles.Y) - (Math.PI * 0.5)) < 0.01)
+				if (Math.Abs(Math.Abs(r) - Math.PI / 2) < 0.01)
 				{
-					angles.X = 0;
-					angles.Z = (float)Math.Atan2(-this.M01, this.M11);
+					y = Math.Atan2(-this.M01, this.M11);
 				}
 				else
 				{
-					angles.X = (float)Math.Atan2(this.M21, this.M22);
-					angles.Z = (float)Math.Atan2(this.M10, this.M00);
+					p = Math.Atan2(this.M21, this.M22);
+					y = Math.Atan2(this.M10, this.M00);
 				}
 
-				return angles;
+				return new Vector3((float)p, (float)r, (float)y);
 			}
 		}
 		/// <summary>
@@ -143,23 +124,21 @@ namespace CryCil
 		{
 			get
 			{
-				var angles = new EulerAngles
-				{
-					Roll = (float)Math.Asin(Math.Max(-1.0, Math.Min(1.0, -this.M20)))
-				};
+				double r = Math.Asin(Math.Max(-1.0, Math.Min(1.0, -this.M20)));
+				double p = 0;
+				double y;
 
-				if (Math.Abs(Math.Abs(angles.Roll) - (Math.PI * 0.5)) < 0.01)
+				if (Math.Abs(Math.Abs(r) - Math.PI / 2) < 0.01)
 				{
-					angles.Pitch = 0;
-					angles.Yaw = (float)Math.Atan2(-this.M01, this.M11);
+					y = Math.Atan2(-this.M01, this.M11);
 				}
 				else
 				{
-					angles.Pitch = (float)Math.Atan2(this.M21, this.M22);
-					angles.Yaw = (float)Math.Atan2(this.M10, this.M00);
+					p = Math.Atan2(this.M21, this.M22);
+					y = Math.Atan2(this.M10, this.M00);
 				}
 
-				return angles;
+				return new EulerAngles((float)p, (float)r, (float)y);
 			}
 		}
 		/// <summary>
@@ -206,23 +185,68 @@ namespace CryCil
 		/// <summary>
 		/// Gets first column in a for of a <see cref="Vector3"/> .
 		/// </summary>
-		public Vector3 ColumnVector0 { get { return new Vector3(this.M00, this.M10, this.M20); } }
+		public Vector3 ColumnVector0
+		{
+			get { return new Vector3(this.M00, this.M10, this.M20); }
+			set
+			{
+				this.M00 = value.X;
+				this.M10 = value.Y;
+				this.M20 = value.Z;
+			}
+		}
 		/// <summary>
 		/// Gets second column in a for of a <see cref="Vector3"/> .
 		/// </summary>
-		public Vector3 ColumnVector1 { get { return new Vector3(this.M01, this.M11, this.M21); } }
+		public Vector3 ColumnVector1
+		{
+			get { return new Vector3(this.M01, this.M11, this.M21); }
+			set
+			{
+				this.M01 = value.X;
+				this.M11 = value.Y;
+				this.M21 = value.Z;
+			}
+		}
 		/// <summary>
 		/// Gets third column in a for of a <see cref="Vector3"/> .
 		/// </summary>
-		public Vector3 ColumnVector2 { get { return new Vector3(this.M02, this.M12, this.M22); } }
+		public Vector3 ColumnVector2
+		{
+			get { return new Vector3(this.M02, this.M12, this.M22); }
+			set
+			{
+				this.M02 = value.X;
+				this.M12 = value.Y;
+				this.M22 = value.Z;
+			}
+		}
 		/// <summary>
 		/// Gets fourth column in a for of a <see cref="Vector3"/> .
 		/// </summary>
-		public Vector3 ColumnVector3 { get { return new Vector3(this.M03, this.M13, this.M23); } }
+		public Vector3 ColumnVector3
+		{
+			get { return new Vector3(this.M03, this.M13, this.M23); }
+			set
+			{
+				this.M03 = value.X;
+				this.M13 = value.Y;
+				this.M23 = value.Z;
+			}
+		}
 		/// <summary>
 		/// Gets translation vector from this matrix.
 		/// </summary>
-		public Vector3 Translation { get { return new Vector3(this.M03, this.M13, this.M23); } }
+		public Vector3 Translation
+		{
+			get { return new Vector3(this.M03, this.M13, this.M23); }
+			set
+			{
+				this.M03 = value.X;
+				this.M13 = value.Y;
+				this.M23 = value.Z;
+			}
+		}
 		/// <summary>
 		/// Calculates determinant of the matrix composed from first 3 columns of this matrix.
 		/// </summary>
@@ -230,13 +254,12 @@ namespace CryCil
 		{
 			get
 			{
-				return
-					(this.M00 * this.M11 * this.M22) +
-					(this.M01 * this.M12 * this.M20) +
-					(this.M02 * this.M10 * this.M21) -
-					(this.M02 * this.M11 * this.M20) -
-					(this.M00 * this.M12 * this.M21) -
-					(this.M01 * this.M10 * this.M22);
+				return this.M00 * this.M11 * this.M22 +
+					   this.M01 * this.M12 * this.M20 +
+					   this.M02 * this.M10 * this.M21 -
+					   this.M02 * this.M11 * this.M20 -
+					   this.M00 * this.M12 * this.M21 -
+					   this.M01 * this.M10 * this.M22;
 			}
 		}
 		/// <summary>
@@ -246,19 +269,21 @@ namespace CryCil
 		{
 			get
 			{
-				return
-					new Matrix33
-					(
-						this.M00, this.M01, this.M02,
-						this.M10, this.M11, this.M12,
-						this.M20, this.M21, this.M22
-					);
+				return new Matrix33(this.M00, this.M01, this.M02,
+									this.M10, this.M11, this.M12,
+									this.M20, this.M21, this.M22);
 			}
 			set
 			{
-				this.M00 = value.M00; this.M01 = value.M01; this.M02 = value.M02;
-				this.M10 = value.M10; this.M11 = value.M11; this.M12 = value.M12;
-				this.M20 = value.M20; this.M21 = value.M21; this.M22 = value.M22;
+				this.M00 = value.M00;
+				this.M01 = value.M01;
+				this.M02 = value.M02;
+				this.M10 = value.M10;
+				this.M11 = value.M11;
+				this.M12 = value.M12;
+				this.M20 = value.M20;
+				this.M21 = value.M21;
+				this.M22 = value.M22;
 			}
 		}
 		/// <summary>
@@ -368,12 +393,23 @@ namespace CryCil
 		/// <param name="v21">Third row, Second column.</param>
 		/// <param name="v22">Third row, Third column.</param>
 		/// <param name="v23">Third row, Fourth column.</param>
-		public Matrix34(float v00, float v01, float v02, float v03, float v10, float v11, float v12, float v13, float v20, float v21, float v22, float v23)
+		public Matrix34(float v00, float v01, float v02, float v03,
+						float v10, float v11, float v12, float v13,
+						float v20, float v21, float v22, float v23)
 			: this()
 		{
-			this.M00 = v00; this.M01 = v01; this.M02 = v02; this.M03 = v03;
-			this.M10 = v10; this.M11 = v11; this.M12 = v12; this.M13 = v13;
-			this.M20 = v20; this.M21 = v21; this.M22 = v22; this.M23 = v23;
+			this.M00 = v00;
+			this.M01 = v01;
+			this.M02 = v02;
+			this.M03 = v03;
+			this.M10 = v10;
+			this.M11 = v11;
+			this.M12 = v12;
+			this.M13 = v13;
+			this.M20 = v20;
+			this.M21 = v21;
+			this.M22 = v22;
+			this.M23 = v23;
 		}
 		/// <summary>
 		/// Creates new instance of type <see cref="Matrix34"/> .
@@ -407,9 +443,18 @@ namespace CryCil
 		/// </summary>
 		public void SetIdentity()
 		{
-			this.M00 = 1.0f; this.M01 = 0.0f; this.M02 = 0.0f; this.M03 = 0.0f;
-			this.M10 = 0.0f; this.M11 = 1.0f; this.M12 = 0.0f; this.M13 = 0.0f;
-			this.M20 = 0.0f; this.M21 = 0.0f; this.M22 = 1.0f; this.M23 = 0.0f;
+			this.M00 = 1.0f;
+			this.M01 = 0.0f;
+			this.M02 = 0.0f;
+			this.M03 = 0.0f;
+			this.M10 = 0.0f;
+			this.M11 = 1.0f;
+			this.M12 = 0.0f;
+			this.M13 = 0.0f;
+			this.M20 = 0.0f;
+			this.M21 = 0.0f;
+			this.M22 = 1.0f;
+			this.M23 = 0.0f;
 		}
 		/// <summary>
 		/// Sets the value of the matrix to one that represents transformations represented by given
@@ -420,12 +465,27 @@ namespace CryCil
 		/// <param name="t">Optional <see cref="Vector3"/> object that represents translation.</param>
 		public void Set(Vector3 s, Quaternion q, Vector3 t = default(Vector3))
 		{
-			float vxvx = q.X * q.X; float vzvz = q.Z * q.Z; float vyvy = q.Y * q.Y;
-			float vxvy = q.X * q.Y; float vxvz = q.X * q.Z; float vyvz = q.Y * q.Z;
-			float svx = q.W * q.X; float svy = q.W * q.Y; float svz = q.W * q.Z;
-			this.M00 = (1 - (vyvy + vzvz) * 2) * s.X; this.M01 = (vxvy - svz) * 2 * s.Y; this.M02 = (vxvz + svy) * 2 * s.Z; this.M03 = t.X;
-			this.M10 = (vxvy + svz) * 2 * s.X; this.M11 = (1 - (vxvx + vzvz) * 2) * s.Y; this.M12 = (vyvz - svx) * 2 * s.Z; this.M13 = t.Y;
-			this.M20 = (vxvz - svy) * 2 * s.X; this.M21 = (vyvz + svx) * 2 * s.Y; this.M22 = (1 - (vxvx + vyvy) * 2) * s.Z; this.M23 = t.Z;
+			float vxvx = q.X * q.X;
+			float vzvz = q.Z * q.Z;
+			float vyvy = q.Y * q.Y;
+			float vxvy = q.X * q.Y;
+			float vxvz = q.X * q.Z;
+			float vyvz = q.Y * q.Z;
+			float svx = q.W * q.X;
+			float svy = q.W * q.Y;
+			float svz = q.W * q.Z;
+			this.M00 = (1 - (vyvy + vzvz) * 2) * s.X;
+			this.M01 = (vxvy - svz) * 2 * s.Y;
+			this.M02 = (vxvz + svy) * 2 * s.Z;
+			this.M03 = t.X;
+			this.M10 = (vxvy + svz) * 2 * s.X;
+			this.M11 = (1 - (vxvx + vzvz) * 2) * s.Y;
+			this.M12 = (vyvz - svx) * 2 * s.Z;
+			this.M13 = t.Y;
+			this.M20 = (vxvz - svy) * 2 * s.X;
+			this.M21 = (vyvz + svx) * 2 * s.Y;
+			this.M22 = (1 - (vxvx + vyvy) * 2) * s.Z;
+			this.M23 = t.Z;
 		}
 		/// <summary>
 		/// Creates a matrix that represents transformations represented by given arguments.
@@ -458,9 +518,18 @@ namespace CryCil
 		/// </param>
 		public void SetColumns(Vector3 vx, Vector3 vy, Vector3 vz, Vector3 vw)
 		{
-			this.M00 = vx.X; this.M01 = vy.X; this.M02 = vz.X; this.M03 = vw.X;
-			this.M10 = vx.Y; this.M11 = vy.Y; this.M12 = vz.Y; this.M13 = vw.Y;
-			this.M20 = vx.Z; this.M21 = vy.Z; this.M22 = vz.Z; this.M23 = vw.Z;
+			this.M00 = vx.X;
+			this.M01 = vy.X;
+			this.M02 = vz.X;
+			this.M03 = vw.X;
+			this.M10 = vx.Y;
+			this.M11 = vy.Y;
+			this.M12 = vz.Y;
+			this.M13 = vw.Y;
+			this.M20 = vx.Z;
+			this.M21 = vy.Z;
+			this.M22 = vz.Z;
+			this.M23 = vw.Z;
 		}
 		/// <summary>
 		/// Creates a new matrix which columns are initialized with values supplied by given vectors.
@@ -493,9 +562,18 @@ namespace CryCil
 		public void InvertFast()
 		{
 			var v = new Vector3(this.M03, this.M13, this.M23);
-			float t = this.M01; this.M01 = this.M10; this.M10 = t; this.M03 = -v.X * this.M00 - v.Y * this.M01 - v.Z * this.M20;
-			t = this.M02; this.M02 = this.M20; this.M20 = t; this.M13 = -v.X * this.M10 - v.Y * this.M11 - v.Z * this.M21;
-			t = this.M12; this.M12 = this.M21; this.M21 = t; this.M23 = -v.X * this.M20 - v.Y * this.M21 - v.Z * this.M22;
+			float t = this.M01;
+			this.M01 = this.M10;
+			this.M10 = t;
+			this.M03 = -v.X * this.M00 - v.Y * this.M01 - v.Z * this.M20;
+			t = this.M02;
+			this.M02 = this.M20;
+			this.M20 = t;
+			this.M13 = -v.X * this.M10 - v.Y * this.M11 - v.Z * this.M21;
+			t = this.M12;
+			this.M12 = this.M21;
+			this.M21 = t;
+			this.M23 = -v.X * this.M20 - v.Y * this.M21 - v.Z * this.M22;
 		}
 		/// <summary>
 		/// Sets value of this matrix to one that undoes all transformations this matrix represents.
@@ -517,9 +595,12 @@ namespace CryCil
 			t.M02 = m.M12 * m.M01 - m.M02 * m.M11;
 			t.M12 = m.M02 * m.M10 - m.M12 * m.M00;
 			t.M22 = m.M00 * m.M11 - m.M10 * m.M01;
-			t.M03 = (m.M22 * m.M13 * m.M01 + m.M02 * m.M23 * m.M11 + m.M12 * m.M03 * m.M21) - (m.M12 * m.M23 * m.M01 + m.M22 * m.M03 * m.M11 + m.M02 * m.M13 * m.M21);
-			t.M13 = (m.M12 * m.M23 * m.M00 + m.M22 * m.M03 * m.M10 + m.M02 * m.M13 * m.M20) - (m.M22 * m.M13 * m.M00 + m.M02 * m.M23 * m.M10 + m.M12 * m.M03 * m.M20);
-			t.M23 = (m.M20 * m.M11 * m.M03 + m.M00 * m.M21 * m.M13 + m.M10 * m.M01 * m.M23) - (m.M10 * m.M21 * m.M03 + m.M20 * m.M01 * m.M13 + m.M00 * m.M11 * m.M23);
+			t.M03 = (m.M22 * m.M13 * m.M01 + m.M02 * m.M23 * m.M11 + m.M12 * m.M03 * m.M21) -
+					(m.M12 * m.M23 * m.M01 + m.M22 * m.M03 * m.M11 + m.M02 * m.M13 * m.M21);
+			t.M13 = (m.M12 * m.M23 * m.M00 + m.M22 * m.M03 * m.M10 + m.M02 * m.M13 * m.M20) -
+					(m.M22 * m.M13 * m.M00 + m.M02 * m.M23 * m.M10 + m.M12 * m.M03 * m.M20);
+			t.M23 = (m.M20 * m.M11 * m.M03 + m.M00 * m.M21 * m.M13 + m.M10 * m.M01 * m.M23) -
+					(m.M10 * m.M21 * m.M03 + m.M20 * m.M01 * m.M13 + m.M00 * m.M11 * m.M23);
 
 			// Calculate "determinant".
 			float det = m.M00 * this.M00 + m.M10 * this.M01 + m.M20 * this.M02;
@@ -531,9 +612,18 @@ namespace CryCil
 
 			det = 1.0f / det;
 			// Calculate matrix inverse.
-			this.M00 = t.M00 * det; this.M01 = t.M01 * det; this.M02 = t.M02 * det; this.M03 = t.M03 * det;
-			this.M10 = t.M10 * det; this.M11 = t.M11 * det; this.M12 = t.M12 * det; this.M13 = t.M13 * det;
-			this.M20 = t.M20 * det; this.M21 = t.M21 * det; this.M22 = t.M22 * det; this.M23 = t.M23 * det;
+			this.M00 = t.M00 * det;
+			this.M01 = t.M01 * det;
+			this.M02 = t.M02 * det;
+			this.M03 = t.M03 * det;
+			this.M10 = t.M10 * det;
+			this.M11 = t.M11 * det;
+			this.M12 = t.M12 * det;
+			this.M13 = t.M13 * det;
+			this.M20 = t.M20 * det;
+			this.M21 = t.M21 * det;
+			this.M22 = t.M22 * det;
+			this.M23 = t.M23 * det;
 			return true;
 		}
 		/// <summary>
@@ -546,9 +636,15 @@ namespace CryCil
 			x = x.Normalized;
 			var z = (x % y).Normalized;
 			y = (z % x).Normalized;
-			this.M00 = x.X; this.M10 = x.Y; this.M20 = x.Z;
-			this.M01 = y.X; this.M11 = y.Y; this.M21 = y.Z;
-			this.M02 = z.X; this.M12 = z.Y; this.M22 = z.Z;
+			this.M00 = x.X;
+			this.M10 = x.Y;
+			this.M20 = x.Z;
+			this.M01 = y.X;
+			this.M11 = y.Y;
+			this.M21 = y.Z;
+			this.M02 = z.X;
+			this.M12 = z.Y;
+			this.M22 = z.Z;
 		}
 
 		/// <summary>
@@ -562,13 +658,12 @@ namespace CryCil
 			Vector3 columnVector0 = this.ColumnVector0;
 			Vector3 columnVector1 = this.ColumnVector1;
 			Vector3 columnVector2 = this.ColumnVector2;
-			if (Math.Abs(columnVector0 * columnVector1) > threshold) return false;
-			if (Math.Abs(columnVector0 * columnVector2) > threshold) return false;
-			if (Math.Abs(columnVector1 * columnVector2) > threshold) return false;
-			return
-				Math.Abs(1 - columnVector0 * columnVector0) < threshold &&
-				Math.Abs(1 - columnVector1 * columnVector1) < threshold &&
-				Math.Abs(1 - columnVector2 * columnVector2) < threshold;
+			return !(Math.Abs(columnVector0 * columnVector1) > threshold) &&
+				   (!(Math.Abs(columnVector0 * columnVector2) > threshold) &&
+					(!(Math.Abs(columnVector1 * columnVector2) > threshold) &&
+					 (Math.Abs(1 - columnVector0 * columnVector0) < threshold &&
+					  Math.Abs(1 - columnVector1 * columnVector1) < threshold &&
+					  Math.Abs(1 - columnVector2 * columnVector2) < threshold)));
 		}
 		/// <summary>
 		/// Determines whether this matrix has an orthonormal base in right-handed coordinate system.
@@ -579,10 +674,9 @@ namespace CryCil
 		/// </returns>
 		public bool IsOrthonormalRightHanded(float threshold = 0.001f)
 		{
-			return
-				this.ColumnVector0.IsEquivalent(this.ColumnVector1 % this.ColumnVector2, threshold) &&
-				this.ColumnVector1.IsEquivalent(this.ColumnVector2 % this.ColumnVector0, threshold) &&
-				this.ColumnVector2.IsEquivalent(this.ColumnVector0 % this.ColumnVector1, threshold);
+			return this.ColumnVector0.IsEquivalent(this.ColumnVector1 % this.ColumnVector2, threshold) &&
+				   this.ColumnVector1.IsEquivalent(this.ColumnVector2 % this.ColumnVector0, threshold) &&
+				   this.ColumnVector2.IsEquivalent(this.ColumnVector0 % this.ColumnVector1, threshold);
 		}
 		/// <summary>
 		/// Determines whether this matrix can be considered equal to another one within bounds of given
@@ -599,20 +693,18 @@ namespace CryCil
 		/// </returns>
 		public bool IsEquivalent(Matrix34 m, float e = 0.05f)
 		{
-			return
-			(
-				(Math.Abs(this.M00 - m.M00) <= e) &&
-				(Math.Abs(this.M01 - m.M01) <= e) &&
-				(Math.Abs(this.M02 - m.M02) <= e) &&
-				(Math.Abs(this.M03 - m.M03) <= e) &&
-				(Math.Abs(this.M10 - m.M10) <= e) &&
-				(Math.Abs(this.M11 - m.M11) <= e) &&
-				(Math.Abs(this.M12 - m.M12) <= e) &&
-				(Math.Abs(this.M13 - m.M13) <= e) &&
-				(Math.Abs(this.M20 - m.M20) <= e) &&
-				(Math.Abs(this.M21 - m.M21) <= e) &&
-				(Math.Abs(this.M22 - m.M22) <= e) &&
-				(Math.Abs(this.M23 - m.M23) <= e));
+			return (Math.Abs(this.M00 - m.M00) <= e) &&
+				   (Math.Abs(this.M01 - m.M01) <= e) &&
+				   (Math.Abs(this.M02 - m.M02) <= e) &&
+				   (Math.Abs(this.M03 - m.M03) <= e) &&
+				   (Math.Abs(this.M10 - m.M10) <= e) &&
+				   (Math.Abs(this.M11 - m.M11) <= e) &&
+				   (Math.Abs(this.M12 - m.M12) <= e) &&
+				   (Math.Abs(this.M13 - m.M13) <= e) &&
+				   (Math.Abs(this.M20 - m.M20) <= e) &&
+				   (Math.Abs(this.M21 - m.M21) <= e) &&
+				   (Math.Abs(this.M22 - m.M22) <= e) &&
+				   (Math.Abs(this.M23 - m.M23) <= e);
 		}
 		/// <summary>
 		/// Calculates a hash code of this matrix.
@@ -667,13 +759,9 @@ namespace CryCil
 		/// </summary>
 		public void Transpose()
 		{
-			this =
-				new Matrix34
-				(
-					this.M00, this.M10, this.M20, this.M03,
-					this.M01, this.M11, this.M21, this.M03,
-					this.M02, this.M12, this.M22, this.M03
-				);
+			this = new Matrix34(this.M00, this.M10, this.M20, this.M03,
+								this.M01, this.M11, this.M21, this.M03,
+								this.M02, this.M12, this.M22, this.M03);
 		}
 		/// <summary>
 		/// Determines whether this matrix is equal to another.
@@ -763,9 +851,15 @@ namespace CryCil
 		/// </param>
 		public void ScaleColumns(Vector3 s)
 		{
-			this.M00 *= s.X; this.M01 *= s.Y; this.M02 *= s.Z;
-			this.M10 *= s.X; this.M11 *= s.Y; this.M12 *= s.Z;
-			this.M20 *= s.X; this.M21 *= s.Y; this.M22 *= s.Z;
+			this.M00 *= s.X;
+			this.M01 *= s.Y;
+			this.M02 *= s.Z;
+			this.M10 *= s.X;
+			this.M11 *= s.Y;
+			this.M12 *= s.Z;
+			this.M20 *= s.X;
+			this.M21 *= s.Y;
+			this.M22 *= s.Z;
 		}
 		/// <summary>
 		/// Apples scaling to the columns of the matrix.
@@ -776,9 +870,18 @@ namespace CryCil
 		/// </param>
 		public void ScaleColumns(Vector4 s)
 		{
-			this.M00 *= s.X; this.M01 *= s.Y; this.M02 *= s.Z; this.M03 *= s.W;
-			this.M10 *= s.X; this.M11 *= s.Y; this.M12 *= s.Z; this.M13 *= s.W;
-			this.M20 *= s.X; this.M21 *= s.Y; this.M22 *= s.Z; this.M23 *= s.W;
+			this.M00 *= s.X;
+			this.M01 *= s.Y;
+			this.M02 *= s.Z;
+			this.M03 *= s.W;
+			this.M10 *= s.X;
+			this.M11 *= s.Y;
+			this.M12 *= s.Z;
+			this.M13 *= s.W;
+			this.M20 *= s.X;
+			this.M21 *= s.Y;
+			this.M22 *= s.Z;
+			this.M23 *= s.W;
 		}
 		#endregion
 		#region Operators
@@ -809,7 +912,7 @@ namespace CryCil
 		#endregion
 		#endregion
 		#region Utilities
-		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return this.GetEnumerator();
 		}

@@ -41,7 +41,7 @@ namespace CryCil.Specials
 					/// <returns>An object.</returns>
 					public static implicit operator Unsigned(float a)
 					{
-						return new Unsigned { val = a < 0 ? 0 : a > 180 ? 180 : a };
+						return new Unsigned {val = a < 0 ? 0 : a > 180 ? 180 : a};
 					}
 				}
 				/// <summary>
@@ -66,7 +66,7 @@ namespace CryCil.Specials
 					/// <returns>An object.</returns>
 					public static implicit operator Signed(float a)
 					{
-						return new Signed { val = a < -90 ? -90 : a > 90 ? 90 : a };
+						return new Signed {val = a < -90 ? -90 : a > 90 ? 90 : a};
 					}
 				}
 			}
@@ -98,11 +98,12 @@ namespace CryCil.Specials
 					/// <returns>An object.</returns>
 					public static implicit operator Unsigned(float a)
 					{
-						return new Unsigned { val = a < 0 ? 0 : a > Math.PI ? (float)Math.PI : a };
+						return new Unsigned {val = a < 0 ? 0 : a > Math.PI ? (float)Math.PI : a};
 					}
 				}
 				/// <summary>
-				/// Represents an angle within the range from -<see cref="Math.PI"/> / 2 to <see cref="Math.PI"/> / 2 degrees.
+				/// Represents an angle within the range from - <see cref="Math.PI"/> / 2 to
+				/// <see cref="Math.PI"/> / 2 degrees.
 				/// </summary>
 				public struct Signed
 				{

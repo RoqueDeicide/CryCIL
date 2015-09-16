@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CryCil.Engine.DebugServices;
-using CryCil.Engine.Rendering;
+﻿using CryCil.Engine.Rendering;
 
 namespace CryCil.Engine.UserInterface
 {
@@ -16,10 +10,8 @@ namespace CryCil.Engine.UserInterface
 		#region Fields
 		#endregion
 		#region Properties
-
 		#endregion
 		#region Events
-
 		#endregion
 		#region Construction
 		/// <summary>
@@ -41,7 +33,6 @@ namespace CryCil.Engine.UserInterface
 		#region Interface
 		#endregion
 		#region Utilities
-
 		#endregion
 	}
 }

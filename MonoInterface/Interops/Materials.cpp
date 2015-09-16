@@ -28,6 +28,8 @@ void MaterialInterop::OnRunTimeInitialized()
 	REGISTER_METHOD(GetVectorParameter);
 	REGISTER_METHOD(SetFloatParameter);
 	REGISTER_METHOD(SetVectorParameter);
+	REGISTER_METHOD(GetSurfaceTypesTable);
+	REGISTER_METHOD(FillSurfaceTypesTable);
 }
 
 IMaterial *MaterialInterop::GetDefault()
@@ -256,6 +258,41 @@ bool MaterialInterop::SetVectorParameter(IMaterial **handle, mono::string name, 
 	}
 
 	return mat->SetGetMaterialParamVec3(NtText(name), value, false);
+}
+
+mono::Array MaterialInterop::GetSurfaceTypesTable(IMaterial **handle)
+{
+	IMaterial *material = *handle;
+	if (!material)
+	{
+		NullReferenceException("Instance object is not valid.").Throw();
+	}
+
+	int ids[MAX_SUB_MATERIALS];
+	int idCount = material->FillSurfaceTypeIds(ids);
+
+	IMonoArray<int> idArray = MonoEnv->Objects->Arrays->Create(idCount);
+	MonoGCHandle gcHandle = MonoEnv->GC->Pin(idArray);
+
+	for (int i = 0; i < idCount; i++)
+	{
+		idArray[i] = ids[i];
+	}
+
+	return idArray;
+}
+
+int *MaterialInterop::FillSurfaceTypesTable(IMaterial **handle, int &filledItems)
+{
+	IMaterial *material = *handle;
+	if (!material)
+	{
+		NullReferenceException("Instance object is not valid.").Throw();
+	}
+
+	int *ids = static_cast<int *>(malloc(sizeof(int) * MAX_SUB_MATERIALS));
+	filledItems = material->FillSurfaceTypeIds(ids);
+	return ids;
 }
 
 void SubMaterialsInterop::OnRunTimeInitialized()

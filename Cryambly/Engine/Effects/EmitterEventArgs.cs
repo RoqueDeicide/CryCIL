@@ -37,7 +37,8 @@ namespace CryCil.Engine
 		/// <param name="flags">   
 		/// A set of flags that describes a particle emitter that has been created.
 		/// </param>
-		public EmitterEventArgs(ParticleEmitter emitter, Quatvecale location, ParticleEffect effect, ParticleEmitterFlags flags)
+		public EmitterEventArgs(ParticleEmitter emitter, Quatvecale location, ParticleEffect effect,
+								ParticleEmitterFlags flags)
 		{
 			this.Emitter = emitter;
 			this.Location = location;

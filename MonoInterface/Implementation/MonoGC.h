@@ -21,7 +21,7 @@ struct MonoGC : public IMonoGC
 		{
 			mono_gchandle_new_weakref(reinterpret_cast<MonoObject *>(obj), false);
 		}
-		ReportError("Attempted to create weak GC handle for null pointer.");
+		//ReportError("Attempted to create weak GC handle for null pointer.");
 		return -1;
 	}
 
@@ -31,7 +31,7 @@ struct MonoGC : public IMonoGC
 		{
 			return mono_gchandle_new_weakref(reinterpret_cast<MonoObject *>(obj), true);
 		}
-		ReportError("Attempted to create weak GC handle for null pointer.");
+		//ReportError("Attempted to create weak GC handle for null pointer.");
 		return -1;
 	}
 
@@ -41,7 +41,7 @@ struct MonoGC : public IMonoGC
 		{
 			return mono_gchandle_new(reinterpret_cast<MonoObject *>(obj), false);
 		}
-		ReportError("Attempted to create strong GC handle for null pointer.");
+		//ReportError("Attempted to create strong GC handle for null pointer.");
 		return -1;
 	}
 
@@ -51,7 +51,7 @@ struct MonoGC : public IMonoGC
 		{
 			return mono_gchandle_new(reinterpret_cast<MonoObject *>(obj), true);
 		}
-		ReportError("Attempted to create pinning GC handle for null pointer.");
+		//ReportError("Attempted to create pinning GC handle for null pointer.");
 		return -1;
 	}
 

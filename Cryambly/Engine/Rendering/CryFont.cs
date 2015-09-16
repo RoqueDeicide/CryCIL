@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using CryCil.Annotations;
 
 namespace CryCil.Engine.Rendering
@@ -16,10 +12,8 @@ namespace CryCil.Engine.Rendering
 	public class CryFont : IDisposable
 	{
 		#region Fields
-		[UsedImplicitly]
-		private IntPtr handle;
-		[UsedImplicitly]
-		private string name;
+		[UsedImplicitly] private IntPtr handle;
+		[UsedImplicitly] private string name;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -28,11 +22,7 @@ namespace CryCil.Engine.Rendering
 		/// <exception cref="CryEngineException">
 		/// Cannot fetch the list of loaded fonts: CryEngine is not loaded.
 		/// </exception>
-		public static extern string LoadedFonts
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			get;
-		}
+		public static extern string LoadedFonts { [MethodImpl(MethodImplOptions.InternalCall)] get; }
 		/// <summary>
 		/// Gets an array of names of registered CryEngine fonts.
 		/// </summary>
@@ -49,7 +39,6 @@ namespace CryCil.Engine.Rendering
 		}
 		#endregion
 		#region Events
-
 		#endregion
 		#region Construction
 		/// <summary>

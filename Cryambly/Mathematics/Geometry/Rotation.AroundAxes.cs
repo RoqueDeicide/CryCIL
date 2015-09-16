@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Diagnostics.Contracts;
 
 namespace CryCil.Geometry
 {
@@ -23,15 +18,18 @@ namespace CryCil.Geometry
 			{
 				Contract.Assert(angles.IsUnit());
 
-				double sx, cx; MathHelpers.SinCos(angles.Pitch, out sx, out cx);
-				double sy, cy; MathHelpers.SinCos(angles.Roll, out sy, out cy);
-				double sz, cz; MathHelpers.SinCos(angles.Yaw, out sz, out cz);
+				double sx, cx;
+				MathHelpers.SinCos(angles.Pitch, out sx, out cx);
+				double sy, cy;
+				MathHelpers.SinCos(angles.Roll, out sy, out cy);
+				double sz, cz;
+				MathHelpers.SinCos(angles.Yaw, out sz, out cz);
 				double sycz = (sy * cz), sysz = (sy * sz);
 				vector = new Vector3
 					(
 					(float)(cy * cz * vector.X + (sycz * sx - cx * sz) * vector.Y + (sycz * cx + sx * sz) * vector.Z),
-				(float)(cy * sz * vector.X + (sysz * sx + cx * cz) * vector.Y + (sysz * cx - sx * cz) * vector.Z),
-				(float)((-sy) * vector.X + cy * sx * vector.Y + vector.Z)
+					(float)(cy * sz * vector.X + (sysz * sx + cx * cz) * vector.Y + (sysz * cx - sx * cz) * vector.Z),
+					(float)((-sy) * vector.X + cy * sx * vector.Y + vector.Z)
 					);
 			}
 			/// <summary>
@@ -179,14 +177,23 @@ namespace CryCil.Geometry
 			/// <returns>3x3 matrix that represents rotation with Euler angles.</returns>
 			public static Matrix33 Create33(ref EulerAngles angles)
 			{
-				double sx, cx; MathHelpers.SinCos(angles.Pitch, out sx, out cx);
-				double sy, cy; MathHelpers.SinCos(angles.Roll, out sy, out cy);
-				double sz, cz; MathHelpers.SinCos(angles.Yaw, out sz, out cz);
+				double sx, cx;
+				MathHelpers.SinCos(angles.Pitch, out sx, out cx);
+				double sy, cy;
+				MathHelpers.SinCos(angles.Roll, out sy, out cy);
+				double sz, cz;
+				MathHelpers.SinCos(angles.Yaw, out sz, out cz);
 				double sycz = (sy * cz), sysz = (sy * sz);
 				Matrix33 mat = Matrix33.Identity;
-				mat.M00 = (float)(cy * cz); mat.M01 = (float)(sycz * sx - cx * sz); mat.M02 = (float)(sycz * cx + sx * sz);
-				mat.M10 = (float)(cy * sz); mat.M11 = (float)(sysz * sx + cx * cz); mat.M12 = (float)(sysz * cx - sx * cz);
-				mat.M20 = (float)(-sy); mat.M21 = (float)(cy * sx); mat.M22 = (float)(cy * cx);
+				mat.M00 = (float)(cy * cz);
+				mat.M01 = (float)(sycz * sx - cx * sz);
+				mat.M02 = (float)(sycz * cx + sx * sz);
+				mat.M10 = (float)(cy * sz);
+				mat.M11 = (float)(sysz * sx + cx * cz);
+				mat.M12 = (float)(sysz * cx - sx * cz);
+				mat.M20 = (float)(-sy);
+				mat.M21 = (float)(cy * sx);
+				mat.M22 = (float)(cy * cx);
 				return mat;
 			}
 			/// <summary>
@@ -196,14 +203,23 @@ namespace CryCil.Geometry
 			/// <returns>3x4 matrix that represents rotation with Euler angles.</returns>
 			public static Matrix34 Create34(ref EulerAngles angles)
 			{
-				double sx, cx; MathHelpers.SinCos(angles.Pitch, out sx, out cx);
-				double sy, cy; MathHelpers.SinCos(angles.Roll, out sy, out cy);
-				double sz, cz; MathHelpers.SinCos(angles.Yaw, out sz, out cz);
+				double sx, cx;
+				MathHelpers.SinCos(angles.Pitch, out sx, out cx);
+				double sy, cy;
+				MathHelpers.SinCos(angles.Roll, out sy, out cy);
+				double sz, cz;
+				MathHelpers.SinCos(angles.Yaw, out sz, out cz);
 				double sycz = (sy * cz), sysz = (sy * sz);
 				Matrix34 mat = Matrix34.Identity;
-				mat.M00 = (float)(cy * cz); mat.M01 = (float)(sycz * sx - cx * sz); mat.M02 = (float)(sycz * cx + sx * sz);
-				mat.M10 = (float)(cy * sz); mat.M11 = (float)(sysz * sx + cx * cz); mat.M12 = (float)(sysz * cx - sx * cz);
-				mat.M20 = (float)(-sy); mat.M21 = (float)(cy * sx); mat.M22 = (float)(cy * cx);
+				mat.M00 = (float)(cy * cz);
+				mat.M01 = (float)(sycz * sx - cx * sz);
+				mat.M02 = (float)(sycz * cx + sx * sz);
+				mat.M10 = (float)(cy * sz);
+				mat.M11 = (float)(sysz * sx + cx * cz);
+				mat.M12 = (float)(sysz * cx - sx * cz);
+				mat.M20 = (float)(-sy);
+				mat.M21 = (float)(cy * sx);
+				mat.M22 = (float)(cy * cx);
 				return mat;
 			}
 			/// <summary>
@@ -213,14 +229,23 @@ namespace CryCil.Geometry
 			/// <returns>4x4 matrix that represents rotation with Euler angles.</returns>
 			public static Matrix44 Create44(ref EulerAngles angles)
 			{
-				double sx, cx; MathHelpers.SinCos(angles.Pitch, out sx, out cx);
-				double sy, cy; MathHelpers.SinCos(angles.Roll, out sy, out cy);
-				double sz, cz; MathHelpers.SinCos(angles.Yaw, out sz, out cz);
+				double sx, cx;
+				MathHelpers.SinCos(angles.Pitch, out sx, out cx);
+				double sy, cy;
+				MathHelpers.SinCos(angles.Roll, out sy, out cy);
+				double sz, cz;
+				MathHelpers.SinCos(angles.Yaw, out sz, out cz);
 				double sycz = (sy * cz), sysz = (sy * sz);
 				Matrix44 mat = Matrix44.Identity;
-				mat.M00 = (float)(cy * cz); mat.M01 = (float)(sycz * sx - cx * sz); mat.M02 = (float)(sycz * cx + sx * sz);
-				mat.M10 = (float)(cy * sz); mat.M11 = (float)(sysz * sx + cx * cz); mat.M12 = (float)(sysz * cx - sx * cz);
-				mat.M20 = (float)(-sy); mat.M21 = (float)(cy * sx); mat.M22 = (float)(cy * cx);
+				mat.M00 = (float)(cy * cz);
+				mat.M01 = (float)(sycz * sx - cx * sz);
+				mat.M02 = (float)(sycz * cx + sx * sz);
+				mat.M10 = (float)(cy * sz);
+				mat.M11 = (float)(sysz * sx + cx * cz);
+				mat.M12 = (float)(sysz * cx - sx * cz);
+				mat.M20 = (float)(-sy);
+				mat.M21 = (float)(cy * sx);
+				mat.M22 = (float)(cy * cx);
 				return mat;
 			}
 			/// <summary>
@@ -230,16 +255,19 @@ namespace CryCil.Geometry
 			/// <returns>Quaternion that represents rotation defined by a set of Euler angles.</returns>
 			public static Quaternion CreateQuaternion(ref EulerAngles angles)
 			{
-				float sx, cx; MathHelpers.SinCos(angles.Pitch * 0.5f, out sx, out cx);
-				float sy, cy; MathHelpers.SinCos(angles.Roll * 0.5f, out sy, out cy);
-				float sz, cz; MathHelpers.SinCos(angles.Yaw * 0.5f, out sz, out cz);
+				float sx, cx;
+				MathHelpers.SinCos(angles.Pitch * 0.5f, out sx, out cx);
+				float sy, cy;
+				MathHelpers.SinCos(angles.Roll * 0.5f, out sy, out cy);
+				float sz, cz;
+				MathHelpers.SinCos(angles.Yaw * 0.5f, out sz, out cz);
 				return new Quaternion
-				(
+					(
 					cz * cy * sx - sz * sy * cx,
 					cz * sy * cx + sz * cy * sx,
 					sz * cy * cx - cz * sy * sx,
 					cx * cy * cz + sx * sy * sz
-				);
+					);
 			}
 		}
 	}

@@ -11,10 +11,10 @@
 struct NullEntityEventHandler : public IEntityEventHandler
 {
 	virtual void RefreshEvents() override {}
-	virtual void LoadEntityXMLEvents(IEntity* entity, const XmlNodeRef& xml) override {}
+	virtual void LoadEntityXMLEvents(IEntity*, const XmlNodeRef&) override {}
 	virtual int GetEventCount() const override { return 0; }
-	virtual bool GetEventInfo(int index, SEventInfo& info) const override { return true; }
-	virtual void SendEvent(IEntity* entity, const char* eventName) override {}
+	virtual bool GetEventInfo(int, SEventInfo&) const override { return true; }
+	virtual void SendEvent(IEntity*, const char*) override {}
 };
 //! Represents a value of an entity property that should be assigned to the entity when it's created.
 struct QueuedProperty
@@ -82,9 +82,9 @@ public:
 	//! Loads properties from Xml and assigns them to an entity.
 	virtual void LoadEntityXMLProperties(IEntity *entity, const XmlNodeRef& xml) override;
 	//! Doesn't do anything.
-	virtual void LoadArchetypeXMLProperties(const char *archetypeName, const XmlNodeRef &xml) override {}
+	virtual void LoadArchetypeXMLProperties(const char *, const XmlNodeRef &) override {}
 	//! Doesn't do anything.
-	virtual void InitArchetypeEntity(IEntity *entity, const char* archetypeName, const SEntitySpawnParams &spawnParams) override {}
+	virtual void InitArchetypeEntity(IEntity *, const char* , const SEntitySpawnParams &) override {}
 	//! Gets the number of properties defined in this entity class.
 	virtual int GetPropertyCount() const override;
 	//! Gets information about a property.
@@ -113,7 +113,7 @@ public:
 	//! Returns 0.
 	virtual uint32 GetScriptFlags() const override { return 0; }
 	//! Doesn't do anything.
-	virtual void PropertiesChanged(IEntity *entity) override {}
+	virtual void PropertiesChanged(IEntity *) override {}
 
 };
 

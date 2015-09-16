@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
 using CryCil.Graphics;
@@ -71,42 +70,27 @@ namespace CryCil.Engine.Rendering
 		[StructLayout(LayoutKind.Explicit)]
 		private struct ParameterValue
 		{
-			[FieldOffset(0)]
-			public Byte1 byte1;
-			[FieldOffset(0)]
-			public Bytes2 bytes2;
-			[FieldOffset(0)]
-			public Bytes4 bytes4;
-			[UsedImplicitly]
-			[FieldOffset(0)]
-			public IntPtr ntString;
-			[FieldOffset(0)]
-			public ColorSingle color;
-			[FieldOffset(0)]
-			public Vector3 vector;
-			[FieldOffset(0)]
-			public readonly Camera* camera;
+			[FieldOffset(0)] public Byte1 byte1;
+			[FieldOffset(0)] public Bytes2 bytes2;
+			[FieldOffset(0)] public Bytes4 bytes4;
+			[UsedImplicitly] [FieldOffset(0)] public IntPtr ntString;
+			[FieldOffset(0)] public ColorSingle color;
+			[FieldOffset(0)] public Vector3 vector;
+			[FieldOffset(0)] public readonly Camera* camera;
 		}
 		#endregion
 		#region Fields
-		[UsedImplicitly]
-		[FieldOffset(0)]
-		private byte nameBuffer;
-		[UsedImplicitly]
-		[FieldOffset(32)]
-		private ShaderParameterType currentType;
-		[FieldOffset(36)]
-		private ParameterValue value;
-		[UsedImplicitly]
-		[FieldOffset(52)]
-		private IntPtr script;
+		[UsedImplicitly] [FieldOffset(0)] private byte nameBuffer;
+		[UsedImplicitly] [FieldOffset(32)] private ShaderParameterType currentType;
+		[FieldOffset(36)] private ParameterValue value;
+		[UsedImplicitly] [FieldOffset(52)] private IntPtr script;
 		[UsedImplicitly]
 #if WIN32
 		[FieldOffset(56)]
 #else
 		[FieldOffset(60)]
 #endif
-		private byte semantic;
+			private byte semantic;
 		#endregion
 		#region Properties
 		#region General Values
@@ -508,10 +492,8 @@ namespace CryCil.Engine.Rendering
 		}
 		#endregion
 		#region Events
-
 		#endregion
 		#region Construction
-
 		#endregion
 		#region Interface
 		#endregion

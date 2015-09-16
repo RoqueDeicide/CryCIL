@@ -9,7 +9,7 @@ namespace CryCil.Engine.Input.ActionMapping
 	/// </summary>
 	public struct CryActionMap
 	{
-		 #region Fields
+		#region Fields
 		private readonly IntPtr handle;
 		#endregion
 		#region Properties
@@ -37,7 +37,6 @@ namespace CryCil.Engine.Input.ActionMapping
 		}
 		#endregion
 		#region Events
-
 		#endregion
 		#region Construction
 		internal CryActionMap(IntPtr handle)
@@ -50,7 +49,9 @@ namespace CryCil.Engine.Input.ActionMapping
 		/// Creates an input action.
 		/// </summary>
 		/// <param name="name">Name of the action.</param>
-		/// <returns>A valid object of type <see cref="CryInputAction"/> if the action was created successfully.</returns>
+		/// <returns>
+		/// A valid object of type <see cref="CryInputAction"/> if the action was created successfully.
+		/// </returns>
 		public CryInputAction CreateAction(string name)
 		{
 			this.AssertInstance();
@@ -79,7 +80,7 @@ namespace CryCil.Engine.Input.ActionMapping
 				throw new NullReferenceException("This instance is not usable.");
 			}
 		}
-		
+
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern CryInputAction GetAction(IntPtr handle, string name);
 		[MethodImpl(MethodImplOptions.InternalCall)]

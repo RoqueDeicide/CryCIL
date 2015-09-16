@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 
@@ -127,7 +126,8 @@ namespace CryCil.Geometry.Splines
 		VectorType Interpolate(float time);
 	}
 	[ContractClassFor(typeof(ISpline<,>))]
-	internal abstract class SplineContracts<ComponentType, VectorType> : ISpline<ComponentType, VectorType> where VectorType : IVector<ComponentType, VectorType>
+	internal abstract class SplineContracts<ComponentType, VectorType> : ISpline<ComponentType, VectorType>
+		where VectorType : IVector<ComponentType, VectorType>
 	{
 		IEnumerator<VectorType> IEnumerable<VectorType>.GetEnumerator()
 		{
@@ -165,7 +165,8 @@ namespace CryCil.Geometry.Splines
 		{
 			Contract.Requires(index >= 0 && index < ((ISpline<ComponentType, VectorType>)this).KeyCount);
 		}
-		void ISpline<ComponentType, VectorType>.FindKeys(float startTime, float endTime, out int firstFoundKey, out int numFoundKeys)
+		void ISpline<ComponentType, VectorType>.FindKeys(float startTime, float endTime, out int firstFoundKey,
+														 out int numFoundKeys)
 		{
 			firstFoundKey = 0;
 			numFoundKeys = 0;

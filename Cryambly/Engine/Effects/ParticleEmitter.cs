@@ -14,8 +14,7 @@ namespace CryCil.Engine
 	public struct ParticleEmitter
 	{
 		#region Fields
-		[UsedImplicitly]
-		private IntPtr handle;
+		[UsedImplicitly] private IntPtr handle;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -145,7 +144,8 @@ namespace CryCil.Engine
 		#endregion
 		#region Utilities
 		[RawThunk("Invoked from the underlying framework to raise event Created.")]
-		private static void OnCreated(ParticleEmitter emitter, Quatvecale location, ParticleEffect effect, ParticleEmitterFlags flags)
+		private static void OnCreated(ParticleEmitter emitter, Quatvecale location, ParticleEffect effect,
+									  ParticleEmitterFlags flags)
 		{
 			try
 			{

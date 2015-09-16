@@ -49,10 +49,7 @@ namespace CryCil.Geometry
 		/// </summary>
 		public bool IsValid
 		{
-			get
-			{
-				return this.Minimum.IsValid && this.Maximum.IsValid;
-			}
+			get { return this.Minimum.IsValid && this.Maximum.IsValid; }
 		}
 		/// <summary>
 		/// Gets an array of eight corners of the bounding box.
@@ -75,7 +72,6 @@ namespace CryCil.Geometry
 		}
 		#endregion
 		#region Events
-
 		#endregion
 		#region Construction
 		/// <summary>
@@ -118,8 +114,10 @@ namespace CryCil.Geometry
 		/// <param name="sphere">A sphere that needs to be encompassed.</param>
 		public BoundingBox(ref BoundingSphere sphere)
 		{
-			this.Minimum = new Vector3(sphere.Center.X - sphere.Radius, sphere.Center.Y - sphere.Radius, sphere.Center.Z - sphere.Radius);
-			this.Maximum = new Vector3(sphere.Center.X + sphere.Radius, sphere.Center.Y + sphere.Radius, sphere.Center.Z + sphere.Radius);
+			this.Minimum = new Vector3(sphere.Center.X - sphere.Radius, sphere.Center.Y - sphere.Radius,
+									   sphere.Center.Z - sphere.Radius);
+			this.Maximum = new Vector3(sphere.Center.X + sphere.Radius, sphere.Center.Y + sphere.Radius,
+									   sphere.Center.Z + sphere.Radius);
 		}
 		/// <summary>
 		/// Creates a new <see cref="BoundingBox"/> that encompasses a sphere.
@@ -127,8 +125,10 @@ namespace CryCil.Geometry
 		/// <param name="sphere">A sphere that needs to be encompassed.</param>
 		public BoundingBox(BoundingSphere sphere)
 		{
-			this.Minimum = new Vector3(sphere.Center.X - sphere.Radius, sphere.Center.Y - sphere.Radius, sphere.Center.Z - sphere.Radius);
-			this.Maximum = new Vector3(sphere.Center.X + sphere.Radius, sphere.Center.Y + sphere.Radius, sphere.Center.Z + sphere.Radius);
+			this.Minimum = new Vector3(sphere.Center.X - sphere.Radius, sphere.Center.Y - sphere.Radius,
+									   sphere.Center.Z - sphere.Radius);
+			this.Maximum = new Vector3(sphere.Center.X + sphere.Radius, sphere.Center.Y + sphere.Radius,
+									   sphere.Center.Z + sphere.Radius);
 		}
 		#endregion
 		#region Interface
@@ -254,9 +254,7 @@ namespace CryCil.Geometry
 		}
 		#endregion
 		#region Utilities
-
 		#endregion
-
 		/// <summary>
 		/// Constructs a <see cref="BoundingBox"/> that is as large as the total combined area of the two
 		/// specified boxes.
@@ -318,11 +316,11 @@ namespace CryCil.Geometry
 		public override string ToString()
 		{
 			return string.Format
-			(
-				CultureInfo.CurrentCulture,
-				"Minimum:{0} Maximum:{1}",
-				this.Minimum, this.Maximum
-			);
+				(
+				 CultureInfo.CurrentCulture,
+				 "Minimum:{0} Maximum:{1}",
+				 this.Minimum, this.Maximum
+				);
 		}
 		/// <summary>
 		/// Returns a <see cref="System.String"/> that represents this instance.
@@ -334,11 +332,11 @@ namespace CryCil.Geometry
 			return format == null
 				? this.ToString()
 				: string.Format
-				(
-					CultureInfo.CurrentCulture,
-					"Minimum:{0} Maximum:{1}",
-					this.Minimum, this.Maximum
-				);
+					(
+					 CultureInfo.CurrentCulture,
+					 "Minimum:{0} Maximum:{1}",
+					 this.Minimum, this.Maximum
+					);
 		}
 		/// <summary>
 		/// Returns a <see cref="System.String"/> that represents this instance.
@@ -404,8 +402,8 @@ namespace CryCil.Geometry
 		public override bool Equals(object value)
 		{
 			return value != null
-				&& (value.GetType() == this.GetType()
-				&& this.Equals((BoundingBox)value));
+				   && (value.GetType() == this.GetType()
+					   && this.Equals((BoundingBox)value));
 		}
 		/// <summary>
 		/// Determines whether this bounding box is a point.
@@ -413,10 +411,7 @@ namespace CryCil.Geometry
 		#region Properties
 		public bool IsEmpty
 		{
-			get
-			{
-				return this.Minimum == this.Maximum;
-			}
+			get { return this.Minimum == this.Maximum; }
 		}
 		/// <summary>
 		/// Gets the <see cref="Vector3"/> object that encapsulates coordinates of the center of this
@@ -424,10 +419,7 @@ namespace CryCil.Geometry
 		/// </summary>
 		public Vector3 Center
 		{
-			get
-			{
-				return (this.Minimum + this.Maximum) * 0.5f;
-			}
+			get { return (this.Minimum + this.Maximum) * 0.5f; }
 		}
 		#endregion
 	}

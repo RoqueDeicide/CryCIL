@@ -185,7 +185,7 @@ namespace CryCil.Geometry
 
 			// We are doing a relative distance comparison to find the maximum distance from the center of
 			// our sphere
-			float radius = points.Select(t => center.GetDistanceSquared(t)).Concat(new[] { 0f }).Max();
+			float radius = points.Select(t => center.GetDistanceSquared(t)).Concat(new[] {0f}).Max();
 
 			// Find the real distance from the DistanceSquared.
 			radius = (float)Math.Sqrt(radius);
@@ -349,8 +349,8 @@ namespace CryCil.Geometry
 		{
 			return
 				format == null
-				? this.ToString(formatProvider)
-				: string.Format(formatProvider, "Center:{0} Radius:{1}", this.Center, this.Radius);
+					? this.ToString(formatProvider)
+					: string.Format(formatProvider, "Center:{0} Radius:{1}", this.Center, this.Radius);
 		}
 		/// <summary>
 		/// Returns a hash code for this instance.
@@ -399,7 +399,7 @@ namespace CryCil.Geometry
 			return
 				value != null &&
 				(value.GetType() == this.GetType() &&
-				this.Equals((BoundingSphere)value));
+				 this.Equals((BoundingSphere)value));
 		}
 	}
 }

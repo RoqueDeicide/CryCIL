@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using CryCil.Annotations;
 using CryCil.Geometry;
 using CryCil.Graphics;
@@ -19,13 +15,13 @@ namespace CryCil.Engine.DebugServices
 	/// static void Example()
 	/// {
 	///     // Lets say, we have an explosion and a wind.
-	///
+	/// 
 	///     var center = new Vector3(100, 120, 40);			// Center of the explosion.
 	///     DebugGraphics.BeginDrawing("Explosion with wind", true);
-	///
+	/// 
 	///     // We gonna represent explosion and its damage radius with a sphere.
 	///     DebugGraphics.DrawSphere(center, 4, Colors.DarkRed, 10);
-	///
+	/// 
 	///     // And the direction of the wind that will blow that particle effects away is an arrow:
 	///     DebugGraphics.DrawDirection(center, 0.1f, Vector3.Forward, Colors.LightBlue, 10);
 	/// }
@@ -34,13 +30,10 @@ namespace CryCil.Engine.DebugServices
 	public static class DebugGraphics
 	{
 		#region Fields
-
 		#endregion
 		#region Properties
-
 		#endregion
 		#region Events
-
 		#endregion
 		#region Construction
 		#endregion
@@ -100,7 +93,8 @@ namespace CryCil.Engine.DebugServices
 		/// <param name="timeout">    
 		/// Timespan during which the object will be displayed in seconds.
 		/// </param>
-		public static void DrawPlanarDisc(Vector3 position, float innerRadius, float outerRadius, ColorSingle color, float timeout)
+		public static void DrawPlanarDisc(Vector3 position, float innerRadius, float outerRadius, ColorSingle color,
+										  float timeout)
 		{
 			AddPlanarDisc(position, innerRadius, outerRadius, color, timeout);
 		}
@@ -113,7 +107,8 @@ namespace CryCil.Engine.DebugServices
 		/// <param name="height">    Height of the cone.</param>
 		/// <param name="color">     Color to use when drawing.</param>
 		/// <param name="timeout">   Timespan during which the object will be displayed in seconds.</param>
-		public static void DrawCone(Vector3 position, Vector3 direction, float baseRadius, float height, ColorSingle color, float timeout)
+		public static void DrawCone(Vector3 position, Vector3 direction, float baseRadius, float height, ColorSingle color,
+									float timeout)
 		{
 			AddCone(position, direction, baseRadius, height, color, timeout);
 		}
@@ -126,7 +121,8 @@ namespace CryCil.Engine.DebugServices
 		/// <param name="height">   Height of the cylinder.</param>
 		/// <param name="color">    Color to use when drawing.</param>
 		/// <param name="timeout">  Timespan during which the object will be displayed in seconds.</param>
-		public static void DrawCylinder(Vector3 position, Vector3 direction, float radius, float height, ColorSingle color, float timeout)
+		public static void DrawCylinder(Vector3 position, Vector3 direction, float radius, float height, ColorSingle color,
+										float timeout)
 		{
 			AddCylinder(position, direction, radius, height, color, timeout);
 		}
@@ -154,7 +150,8 @@ namespace CryCil.Engine.DebugServices
 		/// <param name="format"> Formattable text to draw.</param>
 		/// <param name="args">   Arguments to insert into text with formatting.</param>
 		[StringFormatMethod("format")]
-		public static void DrawText(float x, float y, float size, ColorSingle color, float timeout, string format, params object[] args)
+		public static void DrawText(float x, float y, float size, ColorSingle color, float timeout, string format,
+									params object[] args)
 		{
 			AddText(x, y, size, color, timeout, string.Format(format, args));
 		}
@@ -207,11 +204,14 @@ namespace CryCil.Engine.DebugServices
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		internal static extern void AddLine(Vector3 pos1, Vector3 pos2, ColorSingle color, float timeout);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		internal static extern void AddPlanarDisc(Vector3 pos, float innerRadius, float outerRadius, ColorSingle color, float timeout);
+		internal static extern void AddPlanarDisc(Vector3 pos, float innerRadius, float outerRadius, ColorSingle color,
+												  float timeout);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		internal static extern void AddCone(Vector3 pos, Vector3 dir, float baseRadius, float height, ColorSingle color, float timeout);
+		internal static extern void AddCone(Vector3 pos, Vector3 dir, float baseRadius, float height, ColorSingle color,
+											float timeout);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		internal static extern void AddCylinder(Vector3 pos, Vector3 dir, float radius, float height, ColorSingle color, float timeout);
+		internal static extern void AddCylinder(Vector3 pos, Vector3 dir, float radius, float height, ColorSingle color,
+												float timeout);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		internal static extern void Add2DText(string text, float size, ColorSingle color, float timeout);
 		[MethodImpl(MethodImplOptions.InternalCall)]

@@ -35,7 +35,8 @@ namespace CryCil.Engine.Rendering.Lighting
 		/// </summary>
 		public EnvironmentProbeProperties EnvProbeProperties;
 		/// <summary>
-		/// A box to project the light into when the flag <see cref="DynamicLightFlags.BoxProjected"/> is set in <see cref="Flags"/>.
+		/// A box to project the light into when the flag <see cref="DynamicLightFlags.BoxProjected"/> is
+		/// set in <see cref="Flags"/>.
 		/// </summary>
 		public LightProjectionBox ProjectionBox;
 		/// <summary>
@@ -81,8 +82,14 @@ namespace CryCil.Engine.Rendering.Lighting
 		/// A value from 0 to 1 that defines when influence of the cubemap starts to fall off.
 		/// </summary>
 		/// <remarks>
-		/// <para>A value of 0 means that the box shape will have hard edges and there is no falloff (cheaper performance).</para>
-		/// <para>A value of 1 means the falloff will begin at the center of the box and blend out to the box extents (most expensive on performance).</para>
+		/// <para>
+		/// A value of 0 means that the box shape will have hard edges and there is no falloff (cheaper
+		/// performance).
+		/// </para>
+		/// <para>
+		/// A value of 1 means the falloff will begin at the center of the box and blend out to the box
+		/// extents (most expensive on performance).
+		/// </para>
 		/// <para>A value of 0.8 means the falloff begins at 80% of the extents of the box shape.</para>
 		/// </remarks>
 		public float AttenuationFallOffMax;

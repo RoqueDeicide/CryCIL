@@ -1,14 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using CryCil.Annotations;
-using CryCil.Engine.DebugServices;
+﻿using System.Drawing;
 using CryCil.Engine.Rendering;
-using CryCil.Geometry;
 using CryCil.Graphics;
 
 namespace CryCil.Engine.UserInterface
@@ -21,10 +12,8 @@ namespace CryCil.Engine.UserInterface
 		#region Fields
 		#endregion
 		#region Properties
-
 		#endregion
 		#region Events
-
 		#endregion
 		#region Construction
 		#endregion
@@ -82,11 +71,11 @@ namespace CryCil.Engine.UserInterface
 			long indexes = 0x00010000;
 
 			Renderer.DrawDynamicVertexBuffer
-			(
-				vertices, 2,
-				(ushort*)&indexes, 2,
-				PublicRenderPrimitiveType.LineList
-			);
+				(
+				 vertices, 2,
+				 (ushort*)&indexes, 2,
+				 PublicRenderPrimitiveType.LineList
+				);
 		}
 		/// <summary>
 		/// Draws a triangle on the screen.
@@ -127,11 +116,11 @@ namespace CryCil.Engine.UserInterface
 			long indexes = 0x000200010000;
 
 			Renderer.DrawDynamicVertexBuffer
-			(
-				vertices, 3,
-				(ushort*)&indexes, 3,
-				PublicRenderPrimitiveType.TriangleList
-			);
+				(
+				 vertices, 3,
+				 (ushort*)&indexes, 3,
+				 PublicRenderPrimitiveType.TriangleList
+				);
 		}
 		/// <summary>
 		/// Draws a quad on the screen.
@@ -179,11 +168,11 @@ namespace CryCil.Engine.UserInterface
 			long indexes = 0x0003000200010000;
 
 			Renderer.DrawDynamicVertexBuffer
-			(
-				vertices, 4,
-				(ushort *)&indexes, 4,
-				PublicRenderPrimitiveType.TriangleStrip
-			);
+				(
+				 vertices, 4,
+				 (ushort*)&indexes, 4,
+				 PublicRenderPrimitiveType.TriangleStrip
+				);
 		}
 		/// <summary>
 		/// Draws a rectangle on the screen.
@@ -210,17 +199,16 @@ namespace CryCil.Engine.UserInterface
 			float height = rect2D.Height;
 
 			DrawQuad
-			(
-				pos,										// Top left.
-				new Vector2(pos.X + width, pos.Y),			// Top right.
-				new Vector2(pos.X, pos.Y + height),			// Bottom left.
-				new Vector2(pos.X + width, pos.Y + height),	// Bottom right.
+				(
+				 pos, // Top left.
+				 new Vector2(pos.X + width, pos.Y), // Top right.
+				 new Vector2(pos.X, pos.Y + height), // Bottom left.
+				 new Vector2(pos.X + width, pos.Y + height), // Bottom right.
 
-				Vector2.Zero, new Vector2(1, 0), new Vector2(0, 1), new Vector2(1, 1),
-
-				color, color, color, color,
-				tId
-			);
+				 Vector2.Zero, new Vector2(1, 0), new Vector2(0, 1), new Vector2(1, 1),
+				 color, color, color, color,
+				 tId
+				);
 		}
 		/// <summary>
 		/// Draws a rectangle on the screen.
@@ -255,20 +243,20 @@ namespace CryCil.Engine.UserInterface
 			float heightUv = rectUV.Height;
 
 			DrawQuad
-			(
-				p2D,											// Top left.
-				new Vector2(p2D.X + width2D, p2D.Y),			// Top right.
-				new Vector2(p2D.X, p2D.Y + height2D),			// Bottom left.
-				new Vector2(p2D.X + width2D, p2D.Y + height2D),	// Bottom right.
+				(
+				 p2D, // Top left.
+				 new Vector2(p2D.X + width2D, p2D.Y), // Top right.
+				 new Vector2(p2D.X, p2D.Y + height2D), // Bottom left.
+				 new Vector2(p2D.X + width2D, p2D.Y + height2D), // Bottom right.
 
-				pUv,											// Top left.
-				new Vector2(pUv.X + widthUv, pUv.Y),			// Top right.
-				new Vector2(pUv.X, pUv.Y + heightUv),			// Bottom left.
-				new Vector2(pUv.X + widthUv, pUv.Y + heightUv),	// Bottom right.
+				 pUv, // Top left.
+				 new Vector2(pUv.X + widthUv, pUv.Y), // Top right.
+				 new Vector2(pUv.X, pUv.Y + heightUv), // Bottom left.
+				 new Vector2(pUv.X + widthUv, pUv.Y + heightUv), // Bottom right.
 
-				color, color, color, color,
-				tId
-			);
+				 color, color, color, color,
+				 tId
+				);
 		}
 		#endregion
 		#region Utilities

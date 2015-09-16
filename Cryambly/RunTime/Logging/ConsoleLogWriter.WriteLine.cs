@@ -14,7 +14,7 @@ namespace CryCil.RunTime.Logging
 			this.Flush();
 		}
 		/// <summary>
-		/// Writes <see cref="Boolean"/> value followed up by new line symbol to CryEngine log.
+		/// Writes <see cref="bool"/> value followed up by new line symbol to CryEngine log.
 		/// </summary>
 		/// <param name="value">Value to write.</param>
 		public override void WriteLine(bool value)
@@ -24,7 +24,7 @@ namespace CryCil.RunTime.Logging
 			this.Flush();
 		}
 		/// <summary>
-		/// Writes <see cref="Char"/> value followed up by new line symbol to CryEngine log.
+		/// Writes <see cref="char"/> value followed up by new line symbol to CryEngine log.
 		/// </summary>
 		/// <param name="value">Value to write.</param>
 		public override void WriteLine(char value)
@@ -56,7 +56,7 @@ namespace CryCil.RunTime.Logging
 			this.Flush();
 		}
 		/// <summary>
-		/// Writes <see cref="Decimal"/> value followed up by new line symbol to CryEngine log.
+		/// Writes <see cref="decimal"/> value followed up by new line symbol to CryEngine log.
 		/// </summary>
 		/// <param name="value">Value to write.</param>
 		public override void WriteLine(decimal value)
@@ -66,7 +66,7 @@ namespace CryCil.RunTime.Logging
 			this.Flush();
 		}
 		/// <summary>
-		/// Writes <see cref="Double"/> value followed up by new line symbol to CryEngine log.
+		/// Writes <see cref="double"/> value followed up by new line symbol to CryEngine log.
 		/// </summary>
 		/// <param name="value">Value to write.</param>
 		public override void WriteLine(double value)
@@ -76,7 +76,7 @@ namespace CryCil.RunTime.Logging
 			this.Flush();
 		}
 		/// <summary>
-		/// Writes <see cref="Single"/> value followed up by new line symbol to CryEngine log.
+		/// Writes <see cref="float"/> value followed up by new line symbol to CryEngine log.
 		/// </summary>
 		/// <param name="value">Value to write.</param>
 		public override void WriteLine(float value)
@@ -86,7 +86,7 @@ namespace CryCil.RunTime.Logging
 			this.Flush();
 		}
 		/// <summary>
-		/// Writes <see cref="Int32"/> value followed up by new line symbol to CryEngine log.
+		/// Writes <see cref="int"/> value followed up by new line symbol to CryEngine log.
 		/// </summary>
 		/// <param name="value">Value to write.</param>
 		public override void WriteLine(int value)
@@ -96,7 +96,7 @@ namespace CryCil.RunTime.Logging
 			this.Flush();
 		}
 		/// <summary>
-		/// Writes <see cref="Int64"/> value followed up by new line symbol to CryEngine log.
+		/// Writes <see cref="long"/> value followed up by new line symbol to CryEngine log.
 		/// </summary>
 		/// <param name="value">Value to write.</param>
 		public override void WriteLine(long value)
@@ -106,7 +106,7 @@ namespace CryCil.RunTime.Logging
 			this.Flush();
 		}
 		/// <summary>
-		/// Writes <see cref="Object"/> value followed up by new line symbol to CryEngine log.
+		/// Writes <see cref="object"/> value followed up by new line symbol to CryEngine log.
 		/// </summary>
 		/// <param name="value">Value to write.</param>
 		public override void WriteLine(object value)
@@ -166,7 +166,7 @@ namespace CryCil.RunTime.Logging
 			this.Flush();
 		}
 		/// <summary>
-		/// Writes <see cref="UInt32"/> value followed up by new line symbol to CryEngine log.
+		/// Writes <see cref="uint"/> value followed up by new line symbol to CryEngine log.
 		/// </summary>
 		/// <param name="value">Value to write.</param>
 		public override void WriteLine(uint value)
@@ -176,7 +176,7 @@ namespace CryCil.RunTime.Logging
 			this.Flush();
 		}
 		/// <summary>
-		/// Writes <see cref="UInt64"/> value followed up by new line symbol to CryEngine log.
+		/// Writes <see cref="ulong"/> value followed up by new line symbol to CryEngine log.
 		/// </summary>
 		/// <param name="value">Value to write.</param>
 		public override void WriteLine(ulong value)
@@ -186,7 +186,7 @@ namespace CryCil.RunTime.Logging
 			this.Flush();
 		}
 		/// <summary>
-		/// Writes <see cref="String"/> value followed up by new line symbol to CryEngine log.
+		/// Writes <see cref="string"/> value followed up by new line symbol to CryEngine log.
 		/// </summary>
 		/// <param name="value">Value to write.</param>
 		public override void WriteLine(string value)

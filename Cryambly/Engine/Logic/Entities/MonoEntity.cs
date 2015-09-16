@@ -45,10 +45,7 @@ namespace CryCil.Engine.Logic
 		/// </summary>
 		public string EntityClassName
 		{
-			get
-			{
-				return this.entityTypeName ?? (this.entityTypeName = this.GetType().GetAttribute<EntityAttribute>().Name);
-			}
+			get { return this.entityTypeName ?? (this.entityTypeName = this.GetType().GetAttribute<EntityAttribute>().Name); }
 		}
 		#endregion
 		#region Events
@@ -161,7 +158,7 @@ namespace CryCil.Engine.Logic
 		}
 		/// <summary>
 		/// Synchronizes the state of this entity with its representation in other place (e.g. a save game
-		/// file).
+		/// file) .
 		/// </summary>
 		/// <param name="sync">Object that handles synchronization.</param>
 		public abstract void Synchronize(CrySync sync);

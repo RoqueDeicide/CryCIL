@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using CryCil.Annotations;
 
 namespace CryCil.Engine.CryAction
@@ -14,82 +10,49 @@ namespace CryCil.Engine.CryAction
 	public class Level
 	{
 		#region Fields
-		[UsedImplicitly]
-		private IntPtr handle;
+		[UsedImplicitly] private IntPtr handle;
 		#endregion
 		#region Properties
 		/// <summary>
 		/// Gets the name of this level.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This level object is not valid.</exception>
-		public extern string Name
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			get;
-		}
+		public extern string Name { [MethodImpl(MethodImplOptions.InternalCall)] get; }
 		/// <summary>
 		/// Gets the localized name of this level.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This level object is not valid.</exception>
-		public extern string DisplayName
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			get;
-		}
+		public extern string DisplayName { [MethodImpl(MethodImplOptions.InternalCall)] get; }
 		/// <summary>
 		/// Gets the path to the level.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This level object is not valid.</exception>
-		public extern string Path
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			get;
-		}
+		public extern string Path { [MethodImpl(MethodImplOptions.InternalCall)] get; }
 		/// <summary>
 		/// Gets the wildcard path that can be used to identify the .pak files that a part of this level.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This level object is not valid.</exception>
-		public extern string Paks
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			get;
-		}
+		public extern string Paks { [MethodImpl(MethodImplOptions.InternalCall)] get; }
 		/// <summary>
 		/// Indicates whether this level is from a CryEngine standard mod.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This level object is not valid.</exception>
-		public extern bool IsFromMod
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			get;
-		}
+		public extern bool IsFromMod { [MethodImpl(MethodImplOptions.InternalCall)] get; }
 		/// <summary>
 		/// Gets the path to the preview image of this level.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This level object is not valid.</exception>
-		public extern string PreviewPath
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			get;
-		}
+		public extern string PreviewPath { [MethodImpl(MethodImplOptions.InternalCall)] get; }
 		/// <summary>
 		/// Gets the path to the background image of this level.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This level object is not valid.</exception>
-		public extern string BackgroundPath
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			get;
-		}
+		public extern string BackgroundPath { [MethodImpl(MethodImplOptions.InternalCall)] get; }
 		/// <summary>
 		/// Gets the path to the minimap image of this level.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This level object is not valid.</exception>
-		public extern string MinimapPath
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			get;
-		}
+		public extern string MinimapPath { [MethodImpl(MethodImplOptions.InternalCall)] get; }
 		/// <summary>
 		/// Gets the array of missions defined in this level.
 		/// </summary>
@@ -124,11 +87,7 @@ namespace CryCil.Engine.CryAction
 		/// Gets information about level's minimap.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This level object is not valid.</exception>
-		public extern MinimapInfo Minimap
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			get;
-		}
+		public extern MinimapInfo Minimap { [MethodImpl(MethodImplOptions.InternalCall)] get; }
 		#endregion
 		#region Construction
 		/// <summary>
@@ -148,7 +107,6 @@ namespace CryCil.Engine.CryAction
 		/// <returns>True, if the level is of that type.</returns>
 		/// <exception cref="NullReferenceException">This level object is not valid.</exception>
 		/// <exception cref="ArgumentNullException">Name of the level type cannot be null.</exception>
-
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public extern bool IsOfType(string typeName);
 		#endregion

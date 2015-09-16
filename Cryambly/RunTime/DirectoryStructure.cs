@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CryCil.RunTime
 {
@@ -13,7 +10,8 @@ namespace CryCil.RunTime
 	public static class DirectoryStructure
 	{
 		/// <summary>
-		/// Defines the name of the folder within CryEngine folder that contains platform-specific (x86 or x64) assemblies.
+		/// Defines the name of the folder within CryEngine folder that contains platform-specific (x86 or
+		/// x64) assemblies.
 		/// </summary>
 		public const string PlatformFolderName =
 #if WIN32
@@ -59,8 +57,8 @@ namespace CryCil.RunTime
 				}
 				string systemFile =
 					Directory
-					.GetFiles(currentDirectory, "system.cfg", SearchOption.TopDirectoryOnly)
-					.FirstOrDefault();
+						.GetFiles(currentDirectory, "system.cfg", SearchOption.TopDirectoryOnly)
+						.FirstOrDefault();
 				if (systemFile != null)
 				{
 					// Found one, lets check it for presence of sys_game_folder
@@ -84,7 +82,7 @@ namespace CryCil.RunTime
 			}
 
 			PlatformFolder = Path.Combine(CryEngineFolder,
-															 PlatformFolderName);
+										  PlatformFolderName);
 
 			// Get game folder from system.cfg
 			using (StreamReader sr = new StreamReader(Path.Combine(CryEngineFolder, "system.cfg")))
@@ -92,7 +90,7 @@ namespace CryCil.RunTime
 				contents = sr.ReadToEnd();
 			}
 			string[] lines =
-				contents.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+				contents.Split(new[] {Environment.NewLine}, StringSplitOptions.RemoveEmptyEntries);
 			string gameFolderLine = lines.FirstOrDefault(l => l.Contains("sys_game_folder"));
 			if (gameFolderLine == null)
 			{
@@ -101,25 +99,25 @@ namespace CryCil.RunTime
 			int gameFolderNameStart = gameFolderLine.LastIndexOf('=') + 1;
 			ContentFolder =
 				Path.Combine
-				(
-					CryEngineFolder,
-					gameFolderLine.Substring
 					(
-						gameFolderNameStart,
-						gameFolderLine.Length - gameFolderNameStart
-					)
-				);
+					 CryEngineFolder,
+					 gameFolderLine.Substring
+						 (
+						  gameFolderNameStart,
+						  gameFolderLine.Length - gameFolderNameStart
+						 )
+					);
 			// Get Mono lib folder.
 			AssembliesFolder =
 				Path.Combine
-				(
-					CryEngineFolder,
-					"Bin32",
-					"Modules",
-					"CryCIL",
-					"Mono",
-					"lib"
-				);
+					(
+					 CryEngineFolder,
+					 "Bin32",
+					 "Modules",
+					 "CryCIL",
+					 "Mono",
+					 "lib"
+					);
 		}
 	}
 }

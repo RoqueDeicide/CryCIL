@@ -68,7 +68,7 @@
 		Unknown = Max,
 
 		// NOTE: currently aliases, to get it's own ID and assigned dynamically to a texture slot later
-		
+
 		/// <summary>
 		/// Temporary identifier for emission maps.
 		/// </summary>

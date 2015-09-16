@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CryCil.Engine.Input
+﻿namespace CryCil.Engine.Input
 {
 	/// <summary>
 	/// Enumeration of recognizable types of input devices.

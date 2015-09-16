@@ -1,5 +1,4 @@
 ﻿using System;
-using CryCil.Geometry;
 
 namespace CryCil.Graphics
 {
@@ -102,14 +101,18 @@ namespace CryCil.Graphics
 		/// </summary>
 		/// <param name="rgb"><see cref="Vector3"/> that specifies RGB values.</param>
 		/// <param name="a">  Alpha component of the color.</param>
-		public ColorSingle(Vector3 rgb, float a = 1) : this(rgb.X, rgb.Y, rgb.Z, a) { }
+		public ColorSingle(Vector3 rgb, float a = 1) : this(rgb.X, rgb.Y, rgb.Z, a)
+		{
+		}
 		/// <summary>
 		/// Constructs a new gray-scale color object.
 		/// </summary>
 		/// <param name="brightness">
 		/// The brightness of the object, where 0 is black, and 1 is white.
 		/// </param>
-		public ColorSingle(float brightness) : this(brightness, brightness, brightness) { }
+		public ColorSingle(float brightness) : this(brightness, brightness, brightness)
+		{
+		}
 		#endregion
 		#region Interface
 		/// <summary>
@@ -276,7 +279,9 @@ namespace CryCil.Graphics
 
 			float s = 3.0f * fScale;
 
-			output.R *= s; output.G *= s; output.B *= s;
+			output.R *= s;
+			output.G *= s;
+			output.B *= s;
 
 			output.Clamp();
 

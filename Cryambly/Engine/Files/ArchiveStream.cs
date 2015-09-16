@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Runtime.Remoting.Proxies;
-using System.Text;
-using System.Threading.Tasks;
 using CryCil.Engine.Memory;
 
 namespace CryCil.Engine.Files
@@ -98,7 +93,6 @@ namespace CryCil.Engine.Files
 		}
 		#endregion
 		#region Events
-
 		#endregion
 		#region Construction
 		internal ArchiveStream(IntPtr archive, IntPtr fileName, bool canWrite, uint size, byte* bytes)

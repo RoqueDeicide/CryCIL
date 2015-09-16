@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using CryCil.Annotations;
 using CryCil.RunTime;
 
 namespace CryCil.Engine
@@ -72,10 +67,8 @@ namespace CryCil.Engine
 		public static float FrameRate { get; internal set; }
 		#endregion
 		#region Events
-
 		#endregion
 		#region Construction
-
 		#endregion
 		#region Interface
 		/// <summary>

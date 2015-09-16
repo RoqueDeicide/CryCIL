@@ -54,7 +54,7 @@ namespace CryCil.MemoryMapping
 			}
 			// ReSharper disable ValueParameterNotUsed
 			set
-			// ReSharper restore ValueParameterNotUsed
+				// ReSharper restore ValueParameterNotUsed
 			{
 				Contract.Requires(index > -1, "Index of the byte to access must be greater or equal to zero.");
 				Contract.Requires(index < ((IBuffer)this).Length, "Index of the byte to access must be less then buffer length.");

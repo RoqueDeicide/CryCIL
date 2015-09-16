@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CryCil.Annotations;
-
-namespace CryCil.Engine.Input
+﻿namespace CryCil.Engine.Input
 {
 	/// <summary>
 	/// Defines signature of methods that handle touch events.

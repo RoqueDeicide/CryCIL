@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using CryCil.Annotations;
 using CryCil.RunTime.Compilation.Reporting;
 
@@ -99,7 +95,7 @@ namespace CryCil.RunTime.Compilation
 				else
 				{
 					failures.Add(currentProject.Name,
-						"Failed to build, check the log for possible errors.");
+								 "Failed to build, check the log for possible errors.");
 					// Consider builds of all projects that depend on this one a failure.
 					IProject[] deps = buildList.Where(x => x.Dependencies.Any(y => y.FileName == currentProject.FileName)).ToArray();
 					for (int i = 0; i < deps.Length; i++)
@@ -128,13 +124,13 @@ namespace CryCil.RunTime.Compilation
 			// Load up the file.
 			string solutionFileText;
 			using
-			(
+				(
 				StreamReader sr =
 					new StreamReader
-					(
+						(
 						new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read)
-					)
-			)
+						)
+				)
 			{
 				solutionFileText = sr.ReadToEnd();
 			}
@@ -145,20 +141,20 @@ namespace CryCil.RunTime.Compilation
 				solutionFileText.IndexOf(GlobalTag, StringComparison.InvariantCulture);
 			solutionFileText =
 				solutionFileText.Substring
-				(
-					firstProjectWordIndex,
-					firstGlobalWordIndex - firstProjectWordIndex + 2
-				);
+					(
+					 firstProjectWordIndex,
+					 firstGlobalWordIndex - firstProjectWordIndex + 2
+					);
 			// Find starts and ends of each Project section.
 			List<int> projectSectionStartIndices = solutionFileText.AllIndexesOf(ProjectTag);
 			List<int> projectSectionEndIndices = solutionFileText.AllIndexesOf(EndProjectTag);
 			if (projectSectionStartIndices.Count != projectSectionEndIndices.Count)
 			{
 				throw new Exception
-				(
+					(
 					"Solution file is not properly written: Number of project section" +
 					" start points is not the same as number of end points."
-				);
+					);
 			}
 			// Load up projects.
 			for (int i = 0; i < projectSectionStartIndices.Count; i++)
@@ -166,10 +162,10 @@ namespace CryCil.RunTime.Compilation
 				// Get the text between Project and EndProject tags.
 				string projectDescription =
 					solutionFileText.Substring
-					(
-						projectSectionStartIndices[i] + "Project".Length,
-						projectSectionEndIndices[i] - projectSectionStartIndices[i]
-					);
+						(
+						 projectSectionStartIndices[i] + "Project".Length,
+						 projectSectionEndIndices[i] - projectSectionStartIndices[i]
+						);
 				IProject project = ProjectFactory.Create(projectDescription);
 				if (project != null)
 				{

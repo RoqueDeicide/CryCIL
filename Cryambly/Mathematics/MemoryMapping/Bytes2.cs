@@ -11,25 +11,21 @@ namespace CryCil.MemoryMapping
 	{
 		#region Fields
 		/// <summary>
-		/// <see cref="UInt16"/> value.
+		/// <see cref="ushort"/> value.
 		/// </summary>
-		[FieldOffset(0)]
-		public ushort UnsignedShort;
+		[FieldOffset(0)] public ushort UnsignedShort;
 		/// <summary>
-		/// <see cref="Int16"/> value.
+		/// <see cref="short"/> value.
 		/// </summary>
-		[FieldOffset(0)]
-		public short SignedShort;
+		[FieldOffset(0)] public short SignedShort;
 		/// <summary>
 		/// <see cref="Half"/> value.
 		/// </summary>
-		[FieldOffset(0)]
-		public Half HalfFloat;
+		[FieldOffset(0)] public Half HalfFloat;
 		/// <summary>
 		/// <see cref="Char"/> value.
 		/// </summary>
-		[FieldOffset(0)]
-		public char Character;
+		[FieldOffset(0)] public char Character;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -109,7 +105,8 @@ namespace CryCil.MemoryMapping
 		{
 			if (pointer == IntPtr.Zero)
 			{
-				throw new ArgumentNullException("pointer", "Bytes2.Constructor: Unable to initialize new object of type Bytes2: Provided pointer is null.");
+				throw new ArgumentNullException("pointer",
+												"Bytes2.Constructor: Unable to initialize new object of type Bytes2: Provided pointer is null.");
 			}
 			this.SignedShort = Marshal.ReadInt16(pointer, index);
 		}

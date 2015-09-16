@@ -13,40 +13,33 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// 32-bit signed integer value.
 		/// </summary>
-		[FieldOffset(0)]
-		public int Integer32;
+		[FieldOffset(0)] public int Integer32;
 		/// <summary>
 		/// Single precision floating point value.
 		/// </summary>
-		[FieldOffset(0)]
-		public float Float;
+		[FieldOffset(0)] public float Float;
 		/// <summary>
 		/// Identifier of an entity.
 		/// </summary>
-		[FieldOffset(0)]
-		public EntityId EntityId;
+		[FieldOffset(0)] public EntityId EntityId;
 		/// <summary>
 		/// 3 dimensional vector.
 		/// </summary>
-		[FieldOffset(0)]
-		public Vector3 Vector3;
+		[FieldOffset(0)] public Vector3 Vector3;
 		/// <summary>
 		/// Text information.
 		/// </summary>
-		[FieldOffset(0)]
-		public IntPtr text;
+		[FieldOffset(0)] public IntPtr text;
 		/// <summary>
 		/// Boolean value.
 		/// </summary>
-		[FieldOffset(0)]
-		public bool Bool;
+		[FieldOffset(0)] public bool Bool;
 		/// <summary>
 		/// Type of this input data. Don't use fields or properties within this structure, if its type is
 		/// <see cref="FlowDataType.Void"/>. Its type will never be equal to
 		/// <see cref="FlowDataType.Any"/>.
 		/// </summary>
-		[FieldOffset(12)]
-		public FlowDataType DataType;
+		[FieldOffset(12)] public FlowDataType DataType;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -149,7 +142,6 @@ namespace CryCil.Engine.Logic
 		}
 		#endregion
 		#region Utilities
-
 		#endregion
 	}
 }

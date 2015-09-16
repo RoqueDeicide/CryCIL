@@ -100,7 +100,7 @@ namespace CryCil.Engine.Input.ActionMapping
 		float BlockDuration { get; }
 		/// <summary>
 		/// When implemented in derived class, gets the index of the device which inputs must be blocked,
-		/// if equal to <see cref="Byte.MaxValue"/> all devices of specific type will be blocked.
+		/// if equal to <see cref="byte.MaxValue"/> all devices of specific type will be blocked.
 		/// </summary>
 		byte BlockedDevice { get; }
 
@@ -123,7 +123,8 @@ namespace CryCil.Engine.Input.ActionMapping
 		/// <remarks>Ignored when left at its default value of -1.0f.</remarks>
 		float ReleaseTriggerThreshold { get; }
 		/// <summary>
-		/// When implemented in derived class, gets the priority of the input when it comes to being delayed.
+		/// When implemented in derived class, gets the priority of the input when it comes to being
+		/// delayed.
 		/// </summary>
 		/// <remarks>
 		/// When two inputs are delayed, one with a higher priority will override another.
@@ -166,10 +167,20 @@ namespace CryCil.Engine.Input.ActionMapping
 	/// <remarks>
 	/// <para>Important notes:</para>
 	/// <para>When declaring an event that will be an action:</para>
-	/// <para>1) Don't create custom implementation of that event with a custom pair of <c>add</c>/<c>remove</c> methods.</para>
-	/// <para>2) If you do need that custom implementation, then make sure that you have a static field of type <see cref="InputActionHandler"/> with the same name as the event but with an underscore '_' symbol in front of it (e.g. if the event is called "Event", the field must be named "_Event"), because the value of that field will be taken and invoked every time the action is activated.</para>
-	/// <para>3) Internally names of action maps and actions are
-	/// converted into lowercase, so make sure there are no case-insensitive conflicts.</para>
+	/// <para>
+	/// 1) Don't create custom implementation of that event with a custom pair of <c>add</c>/ <c>remove</c>
+	///    methods.
+	/// </para>
+	/// <para>
+	/// 2) If you do need that custom implementation, then make sure that you have a static field of type
+	///    <see cref="InputActionHandler"/> with the same name as the event but with an underscore '_'
+	///    symbol in front of it (e.g. if the event is called "Event", the field must be named "_Event"),
+	///    because the value of that field will be taken and invoked every time the action is activated.
+	/// </para>
+	/// <para>
+	/// 3) Internally names of action maps and actions are converted into lowercase, so make sure there are
+	/// no case-insensitive conflicts.
+	/// </para>
 	/// </remarks>
 	/// <example>
 	/// <code source="ActionMapSample"/>
@@ -294,8 +305,9 @@ namespace CryCil.Engine.Input.ActionMapping
 		}
 		/// <summary>
 		/// A boolean operation to use to compare analog input to <see cref="AnalogCompareValue"/>. Analog
-		/// input can only activate the action when this.MasterSpec comparison succeeds (returns <c>true</c>). If left
-		/// at its default value of <see cref="AnalogComparisonOperation.None"/>, no comparison is done.
+		/// input can only activate the action when this.MasterSpec comparison succeeds (returns
+		/// <c>true</c>). If left at its default value of <see cref="AnalogComparisonOperation.None"/>, no
+		/// comparison is done.
 		/// </summary>
 		public AnalogComparisonOperation ComparisonOperation
 		{
@@ -633,20 +645,20 @@ namespace CryCil.Engine.Input.ActionMapping
 		/// An optional value that can be used to initialize backing field for <see cref="BlockedDevice"/>.
 		/// </param>
 		public InputActionAttribute(InputId input,
-			ActionActivationMode activationMode = InputSpecDefaults.DefaultActivationMode,
-			float pressTriggerDelay = InputSpecDefaults.DefaultPressTriggerDelay,
-			bool overridePressDelay = InputSpecDefaults.DefaultOverridePressDelay,
-			int pressDelayPriority = InputSpecDefaults.DefaultPressDelayPriority,
-			float holdTriggerDelay = InputSpecDefaults.DefaultHoldTriggerDelay,
-			float holdRepeatDelay = InputSpecDefaults.DefaultHoldRepeatDelay,
-			float overrideHoldRepeat = InputSpecDefaults.DefaultOverrideHoldRepeat,
-			float releaseThreshold = InputSpecDefaults.DefaultReleaseThreshold,
-			AnalogComparisonOperation op = InputSpecDefaults.DefaultOperation,
-			float analogCompareValue = InputSpecDefaults.DefaultAnalogCompareValue,
-			InputBlockMode blockMode = InputSpecDefaults.DefaultBlockMode,
-			InputId[] blockedInputs = InputSpecDefaults.DefaultBlockedInputs,
-			float blockDuration = InputSpecDefaults.DefaultBlockDuration,
-			byte blockedDevice = InputSpecDefaults.DefaultBlockedDevice)
+									ActionActivationMode activationMode = InputSpecDefaults.DefaultActivationMode,
+									float pressTriggerDelay = InputSpecDefaults.DefaultPressTriggerDelay,
+									bool overridePressDelay = InputSpecDefaults.DefaultOverridePressDelay,
+									int pressDelayPriority = InputSpecDefaults.DefaultPressDelayPriority,
+									float holdTriggerDelay = InputSpecDefaults.DefaultHoldTriggerDelay,
+									float holdRepeatDelay = InputSpecDefaults.DefaultHoldRepeatDelay,
+									float overrideHoldRepeat = InputSpecDefaults.DefaultOverrideHoldRepeat,
+									float releaseThreshold = InputSpecDefaults.DefaultReleaseThreshold,
+									AnalogComparisonOperation op = InputSpecDefaults.DefaultOperation,
+									float analogCompareValue = InputSpecDefaults.DefaultAnalogCompareValue,
+									InputBlockMode blockMode = InputSpecDefaults.DefaultBlockMode,
+									InputId[] blockedInputs = InputSpecDefaults.DefaultBlockedInputs,
+									float blockDuration = InputSpecDefaults.DefaultBlockDuration,
+									byte blockedDevice = InputSpecDefaults.DefaultBlockedDevice)
 		{
 			this.Input = input;
 			this.ExtraSpec.ActivationMode = activationMode;

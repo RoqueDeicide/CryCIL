@@ -28,11 +28,11 @@ struct EarlyInitializer : IMonoSystemListener
 	//! Not used since this listener is set to unregister itself after MonoEnv is set.
 	virtual void OnCompilationStarting() override {}
 	//! Not used since this listener is set to unregister itself after MonoEnv is set.
-	virtual void OnCompilationComplete(bool success) override {}
+	virtual void OnCompilationComplete(bool) override {}
 	//! Not used since this listener is set to unregister itself after MonoEnv is set.
 	virtual List<int> *GetSubscribedStages() override { return nullptr; }
 	//! Not used since this listener is set to unregister itself after MonoEnv is set.
-	virtual void OnInitializationStage(int stageIndex) override {}
+	virtual void OnInitializationStage(int) override {}
 	//! Not used since this listener is set to unregister itself after MonoEnv is set.
 	virtual void OnCryamblyInitilized() override {}
 	//! Not used since this listener is set to unregister itself after MonoEnv is set.

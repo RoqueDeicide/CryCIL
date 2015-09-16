@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CryCil.Engine.Files
+﻿namespace CryCil.Engine.Files
 {
 	/// <summary>
 	/// Enumeration of modes files in CryEngine virtual file system can be opened in.
@@ -20,7 +14,8 @@ namespace CryCil.Engine.Files
 		/// </summary>
 		Write,
 		/// <summary>
-		/// File will be opened in 'Write' mode and it's stream position will be set to the end of the file.
+		/// File will be opened in 'Write' mode and it's stream position will be set to the end of the
+		/// file.
 		/// </summary>
 		Append
 	}

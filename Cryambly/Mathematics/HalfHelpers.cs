@@ -101,27 +101,32 @@ namespace System
 			{
 				sbyte e = (sbyte)(127 - i);
 				if (e > 24)
-				{ // Very small numbers map to zero
+				{
+					// Very small numbers map to zero
 					baseTable[i | 0x000] = 0x0000;
 					baseTable[i | 0x100] = 0x8000;
 				}
 				else if (e > 14)
-				{ // Small numbers map to denorms
+				{
+					// Small numbers map to denorms
 					baseTable[i | 0x000] = (ushort)(0x0400 >> (18 + e));
 					baseTable[i | 0x100] = (ushort)((0x0400 >> (18 + e)) | 0x8000);
 				}
 				else if (e >= -15)
-				{ // Normal numbers just lose precision
+				{
+					// Normal numbers just lose precision
 					baseTable[i | 0x000] = (ushort)((15 - e) << 10);
 					baseTable[i | 0x100] = (ushort)(((15 - e) << 10) | 0x8000);
 				}
 				else if (e > -128)
-				{ // Large numbers map to Infinity
+				{
+					// Large numbers map to Infinity
 					baseTable[i | 0x000] = 0x7c00;
 					baseTable[i | 0x100] = 0xfc00;
 				}
 				else
-				{ // Infinity and NaN's stay Infinity and NaN's
+				{
+					// Infinity and NaN's stay Infinity and NaN's
 					baseTable[i | 0x000] = 0x7c00;
 					baseTable[i | 0x100] = 0xfc00;
 				}
@@ -138,27 +143,32 @@ namespace System
 			{
 				sbyte e = (sbyte)(127 - i);
 				if (e > 24)
-				{ // Very small numbers map to zero
+				{
+					// Very small numbers map to zero
 					shiftTable[i | 0x000] = 24;
 					shiftTable[i | 0x100] = 24;
 				}
 				else if (e > 14)
-				{ // Small numbers map to denorms
+				{
+					// Small numbers map to denorms
 					shiftTable[i | 0x000] = (sbyte)(e - 1);
 					shiftTable[i | 0x100] = (sbyte)(e - 1);
 				}
 				else if (e >= -15)
-				{ // Normal numbers just lose precision
+				{
+					// Normal numbers just lose precision
 					shiftTable[i | 0x000] = 13;
 					shiftTable[i | 0x100] = 13;
 				}
 				else if (e > -128)
-				{ // Large numbers map to Infinity
+				{
+					// Large numbers map to Infinity
 					shiftTable[i | 0x000] = 24;
 					shiftTable[i | 0x100] = 24;
 				}
 				else
-				{ // Infinity and NaN's stay Infinity and NaN's
+				{
+					// Infinity and NaN's stay Infinity and NaN's
 					shiftTable[i | 0x000] = 13;
 					shiftTable[i | 0x100] = 13;
 				}

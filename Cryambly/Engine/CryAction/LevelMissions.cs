@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using CryCil.Annotations;
 
 namespace CryCil.Engine.CryAction
@@ -52,8 +49,7 @@ namespace CryCil.Engine.CryAction
 	public struct LevelMissions : IEnumerable<LevelMission>
 	{
 		#region Fields
-		[UsedImplicitly]
-		private IntPtr levelHandle;
+		[UsedImplicitly] private IntPtr levelHandle;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -77,7 +73,8 @@ namespace CryCil.Engine.CryAction
 				}
 				if (index < 0 || index >= this.GetCount())
 				{
-					throw new IndexOutOfRangeException("Index cannot be less then 0 or bigger then number of objects in the collection.");
+					throw new IndexOutOfRangeException(
+						"Index cannot be less then 0 or bigger then number of objects in the collection.");
 				}
 				return this.GetItem(index);
 			}

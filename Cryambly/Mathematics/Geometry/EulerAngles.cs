@@ -70,6 +70,16 @@ namespace CryCil.Geometry
 		/// <summary>
 		/// Creates new instance of <see cref="EulerAngles"/> struct.
 		/// </summary>
+		/// <param name="allAngles">A value to assign to all angles.</param>
+		public EulerAngles(float allAngles)
+		{
+			this.Pitch = allAngles;
+			this.Roll = allAngles;
+			this.Yaw = allAngles;
+		}
+		/// <summary>
+		/// Creates new instance of <see cref="EulerAngles"/> struct.
+		/// </summary>
 		/// <param name="pitch">Angle of rotation around X-axis.</param>
 		/// <param name="roll"> Angle of rotation around Y-axis.</param>
 		/// <param name="yaw">  Angle of rotation around Z-axis.</param>
@@ -189,17 +199,26 @@ namespace CryCil.Geometry
 			{
 				Roll =
 					System.Convert.ToSingle(
-						Math.Asin(Math.Max(-1.0f, Math.Min(1.0f, -(quaternion.X * quaternion.Z - quaternion.W * quaternion.Y) * 2))))
+										    Math.Asin(Math.Max(-1.0f, Math.Min(1.0f, -(quaternion.X * quaternion.Z - quaternion.W * quaternion.Y) * 2))))
 			};
 			if (Math.Abs(Math.Abs(result.Roll) - (float)(Math.PI * 0.5)) < 0.01f)
 			{
 				result.Pitch = 0;
-				result.Yaw = (float)(Math.Atan2(-2 * (quaternion.X * quaternion.Y - quaternion.W * quaternion.Z), 1 - (quaternion.X * quaternion.X + quaternion.Z * quaternion.Z) * 2));
+				result.Yaw =
+					(float)
+						(Math.Atan2(-2 * (quaternion.X * quaternion.Y - quaternion.W * quaternion.Z),
+									1 - (quaternion.X * quaternion.X + quaternion.Z * quaternion.Z) * 2));
 			}
 			else
 			{
-				result.Pitch = (float)(Math.Atan2(-2 * (quaternion.Y * quaternion.Z - quaternion.W * quaternion.X), 1 - (quaternion.X * quaternion.X + quaternion.Y * quaternion.Y) * 2));
-				result.Yaw = (float)(Math.Atan2(-2 * (quaternion.X * quaternion.Y - quaternion.W * quaternion.Z), 1 - (quaternion.Z * quaternion.Z + quaternion.Y * quaternion.Y) * 2));
+				result.Pitch =
+					(float)
+						(Math.Atan2(-2 * (quaternion.Y * quaternion.Z - quaternion.W * quaternion.X),
+									1 - (quaternion.X * quaternion.X + quaternion.Y * quaternion.Y) * 2));
+				result.Yaw =
+					(float)
+						(Math.Atan2(-2 * (quaternion.X * quaternion.Y - quaternion.W * quaternion.Z),
+									1 - (quaternion.Z * quaternion.Z + quaternion.Y * quaternion.Y) * 2));
 			}
 			return result;
 		}

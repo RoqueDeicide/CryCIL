@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using CryCil.Annotations;
 using CryCil.Engine.Rendering;
 using CryCil.Engine.Rendering.Lighting;
@@ -17,33 +13,20 @@ namespace CryCil.Engine.Logic
 	public unsafe struct EntitySlotInfo
 	{
 		#region Fields
-		[UsedImplicitly]
-		private EntitySlotFlags nFlags;
-		[UsedImplicitly]
-		private int nParentSlot;
+		[UsedImplicitly] private EntitySlotFlags nFlags;
+		[UsedImplicitly] private int nParentSlot;
 		// Hide mask used by breakable object to indicate what index of the CStatObj sub-object is hidden.
-		[UsedImplicitly]
-		private ulong nSubObjHideMask;
-		[UsedImplicitly]
-		private Matrix34* pLocalTM;
-		[UsedImplicitly]
-		private Matrix34* pWorldTM;
-		[UsedImplicitly]
-		private EntityId entityId;
-		[UsedImplicitly]
-		private IntPtr pStatObj;
-		[UsedImplicitly]
-		private IntPtr pCharacter;
-		[UsedImplicitly]
-		private IntPtr pParticleEmitter;
-		[UsedImplicitly]
-		private IntPtr pLight;
-		[UsedImplicitly]
-		private IntPtr pChildRenderNode;
-		[UsedImplicitly]
-		private IntPtr pGeomCacheRenderNode;
-		[UsedImplicitly]
-		private Material pMaterial;
+		[UsedImplicitly] private ulong nSubObjHideMask;
+		[UsedImplicitly] private Matrix34* pLocalTM;
+		[UsedImplicitly] private Matrix34* pWorldTM;
+		[UsedImplicitly] private EntityId entityId;
+		[UsedImplicitly] private IntPtr pStatObj;
+		[UsedImplicitly] private IntPtr pCharacter;
+		[UsedImplicitly] private IntPtr pParticleEmitter;
+		[UsedImplicitly] private IntPtr pLight;
+		[UsedImplicitly] private IntPtr pChildRenderNode;
+		[UsedImplicitly] private IntPtr pGeomCacheRenderNode;
+		[UsedImplicitly] private Material pMaterial;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -92,12 +75,12 @@ namespace CryCil.Engine.Logic
 			get { return new ParticleEmitter(this.pParticleEmitter); }
 		}
 		/// <summary>
-		/// Gets valid object that represents the light source that is bound to this slot. Returned
-		/// object is not valid if the light source is not bound to this slot.
+		/// Gets valid object that represents the light source that is bound to this slot. Returned object
+		/// is not valid if the light source is not bound to this slot.
 		/// </summary>
 		public LightSource BoundLight
 		{
-			get { return new LightSource(this.pLight);}
+			get { return new LightSource(this.pLight); }
 		}
 
 		/// <summary>

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CryCil.Engine.Localization
+﻿namespace CryCil.Engine.Localization
 {
 	/// <summary>
 	/// Enumeration of identifiers of supported languages.

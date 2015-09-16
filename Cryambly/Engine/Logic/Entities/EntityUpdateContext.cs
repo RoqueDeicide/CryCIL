@@ -12,26 +12,16 @@ namespace CryCil.Engine.Logic
 	public unsafe struct EntityUpdateContext
 	{
 		#region Fields
-		[UsedImplicitly]
-		private int frameID;
-		[UsedImplicitly]
-		private Camera* camera;
-		[UsedImplicitly]
-		private float currTime;
-		[UsedImplicitly]
-		private float frameTime;
-		[UsedImplicitly]
-		private bool profileToLog;
-		[UsedImplicitly]
-		private int numUpdatedEntities;
-		[UsedImplicitly]
-		private int numVisibleEntities;
-		[UsedImplicitly]
-		private float maxViewDist;
-		[UsedImplicitly]
-		private float maxViewDistSquared;
-		[UsedImplicitly]
-		private Vector3 cameraPos;
+		[UsedImplicitly] private int frameID;
+		[UsedImplicitly] private Camera* camera;
+		[UsedImplicitly] private float currTime;
+		[UsedImplicitly] private float frameTime;
+		[UsedImplicitly] private bool profileToLog;
+		[UsedImplicitly] private int numUpdatedEntities;
+		[UsedImplicitly] private int numVisibleEntities;
+		[UsedImplicitly] private float maxViewDist;
+		[UsedImplicitly] private float maxViewDistSquared;
+		[UsedImplicitly] private Vector3 cameraPos;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -51,9 +41,7 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Gets current system time.
 		/// </summary>
-		/// <remarks>
-		/// This time is more up to date then <see cref="Time.FrameStart"/>.
-		/// </remarks>
+		/// <remarks>This time is more up to date then <see cref="Time.FrameStart"/>.</remarks>
 		public DateTime CurrentTime
 		{
 			get { return Time.FromSeconds(this.currTime); }
@@ -61,9 +49,7 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Gets length of the last frame in seconds.
 		/// </summary>
-		/// <remarks>
-		/// This time is more up to date then <see cref="Time.Frame"/>.
-		/// </remarks>
+		/// <remarks>This time is more up to date then <see cref="Time.Frame"/>.</remarks>
 		public float FrameTime
 		{
 			get { return this.frameTime; }

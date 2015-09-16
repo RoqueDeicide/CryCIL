@@ -10,27 +10,15 @@ namespace CryCil.Engine.Environment
 		/// <summary>
 		/// Gets the size of the height map pixel in meters.
 		/// </summary>
-		public static extern int UnitSize
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			get;
-		}
+		public static extern int UnitSize { [MethodImpl(MethodImplOptions.InternalCall)] get; }
 		/// <summary>
 		/// Gets the size of the height map in pixels (units).
 		/// </summary>
-		public static extern int Size
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			get;
-		}
+		public static extern int Size { [MethodImpl(MethodImplOptions.InternalCall)] get; }
 		/// <summary>
 		/// Gets the size of the height map sector in pixels (units).
 		/// </summary>
-		public static extern int SectorSize
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			get;
-		}
+		public static extern int SectorSize { [MethodImpl(MethodImplOptions.InternalCall)] get; }
 		/// <summary>
 		/// Gets interpolated terrain elevation.
 		/// </summary>

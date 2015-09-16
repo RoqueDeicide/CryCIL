@@ -74,12 +74,8 @@ namespace CryCil.Engine.Logic
 		}
 		#endregion
 		#region Fields
-		[FieldOffset(0)]
-		[UsedImplicitly]
-		private BitVector32 bits;
-		[FieldOffset(0)]
-		[UsedImplicitly]
-		internal RmiType type;
+		[FieldOffset(0)] [UsedImplicitly] private BitVector32 bits;
+		[FieldOffset(0)] [UsedImplicitly] internal RmiType type;
 		#endregion
 		#region Properties
 		/// <summary>

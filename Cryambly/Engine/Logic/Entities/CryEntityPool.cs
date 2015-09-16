@@ -39,10 +39,8 @@ namespace CryCil.Engine.Logic
 	public static class CryEntityPool
 	{
 		#region Fields
-
 		#endregion
 		#region Properties
-
 		#endregion
 		#region Events
 		/// <summary>
@@ -75,7 +73,6 @@ namespace CryCil.Engine.Logic
 		public static event PoolBookmarkSyncHandler BookmarkSyncing;
 		#endregion
 		#region Construction
-
 		#endregion
 		#region Interface
 		/// <summary>

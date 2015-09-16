@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using CryCil.Utilities;
 
 namespace CryCil.Engine.Input
@@ -80,15 +76,12 @@ namespace CryCil.Engine.Input
 	public static class Inputs
 	{
 		#region Fields
-		
 		#endregion
 		#region Properties
-		
 		#endregion
 		#region Events
 		#endregion
 		#region Construction
-
 		#endregion
 		#region Interface
 		[MethodImpl(MethodImplOptions.InternalCall)]
@@ -107,7 +100,6 @@ namespace CryCil.Engine.Input
 		public static extern void ClearAnalogInputs();
 		#endregion
 		#region Utilities
-
 		#endregion
 	}
 }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CryCil.Annotations;
+﻿using CryCil.Annotations;
 using CryCil.Geometry;
 using CryCil.Graphics;
 using CryCil.Utilities;
@@ -28,17 +23,17 @@ namespace CryCil.Engine.DebugServices
 	/// static void Example()
 	/// {
 	///     // Lets say, we have an explosion and a wind.
-	///
+	/// 
 	///     var center = new Vector3(100, 120, 40);			// Center of the explosion.
 	///     var painter = new DebubPainter("Explosion with wind")
 	///     {
 	///     	Timeout = 10,
 	///     	Color = Colors.DarkRed
 	///     };
-	///
+	/// 
 	///     // We gonna represent explosion and its damage radius with a sphere.
 	///     painter.Sphere(center, 4);
-	///
+	/// 
 	///     // And the direction of the wind that will blow that particle effects away is an arrow:
 	///     painter.Color = Colors.LightBlue;
 	///     painter.Arrow(center, 0.1f, Vector3.Forward);
@@ -55,11 +50,17 @@ namespace CryCil.Engine.DebugServices
 		/// <summary>
 		/// Sets the time after which the drawn object will expire (in seconds).
 		/// </summary>
-		public float Timeout { set { this.timeout = value; } }
+		public float Timeout
+		{
+			set { this.timeout = value; }
+		}
 		/// <summary>
 		/// Sets color to use for drawn objects.
 		/// </summary>
-		public ColorSingle Color { set { this.color = value; } }
+		public ColorSingle Color
+		{
+			set { this.color = value; }
+		}
 		#endregion
 		#region Construction
 		/// <summary>

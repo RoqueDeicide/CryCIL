@@ -157,7 +157,7 @@ namespace CryCil
 				var q2 = new Quaternion();
 
 				var cosine = (first | second);
-				if (cosine < 0.0f)				// take shortest arc
+				if (cosine < 0.0f) // take shortest arc
 				{
 					cosine = -cosine;
 					second = second.Flipped;
@@ -200,7 +200,7 @@ namespace CryCil
 				var q2 = new Quaternion();
 
 				var cosine = (first | second);
-				if (cosine < 0.0f)				// take shortest arc
+				if (cosine < 0.0f) // take shortest arc
 				{
 					cosine = -cosine;
 					second = second.Flipped;
@@ -261,21 +261,36 @@ namespace CryCil
 			{
 				// calculate delta-rotation between m and n (=39 flops)
 				Matrix33 d = new Matrix33(), i = new Matrix33();
-				d.M00 = first.M00 * second.M00 + first.M10 * second.M10 + first.M20 * second.M20; d.M01 = first.M00 * second.M01 + first.M10 * second.M11 + first.M20 * second.M21; d.M02 = first.M00 * second.M02 + first.M10 * second.M12 + first.M20 * second.M22;
-				d.M10 = first.M01 * second.M00 + first.M11 * second.M10 + first.M21 * second.M20; d.M11 = first.M01 * second.M01 + first.M11 * second.M11 + first.M21 * second.M21; d.M12 = first.M01 * second.M02 + first.M11 * second.M12 + first.M21 * second.M22;
-				d.M20 = d.M01 * d.M12 - d.M02 * d.M11; d.M21 = d.M02 * d.M10 - d.M00 * d.M12; d.M22 = d.M00 * d.M11 - d.M01 * d.M10;
+				d.M00 = first.M00 * second.M00 + first.M10 * second.M10 + first.M20 * second.M20;
+				d.M01 = first.M00 * second.M01 + first.M10 * second.M11 + first.M20 * second.M21;
+				d.M02 = first.M00 * second.M02 + first.M10 * second.M12 + first.M20 * second.M22;
+				d.M10 = first.M01 * second.M00 + first.M11 * second.M10 + first.M21 * second.M20;
+				d.M11 = first.M01 * second.M01 + first.M11 * second.M11 + first.M21 * second.M21;
+				d.M12 = first.M01 * second.M02 + first.M11 * second.M12 + first.M21 * second.M22;
+				d.M20 = d.M01 * d.M12 - d.M02 * d.M11;
+				d.M21 = d.M02 * d.M10 - d.M00 * d.M12;
+				d.M22 = d.M00 * d.M11 - d.M01 * d.M10;
 
 				// extract angle and axis
 				double cosine = MathHelpers.Clamp((d.M00 + d.M11 + d.M22 - 1.0) * 0.5, -1.0, +1.0);
 				double angle = Math.Atan2(Math.Sqrt(1.0 - cosine * cosine), cosine);
 				var axis = new Vector3(d.M21 - d.M12, d.M02 - d.M20, d.M10 - d.M01);
-				double l = Math.Sqrt(axis * axis); if (l > 0.00001) axis /= (float)l; else axis = new Vector3(1, 0, 0);
-				Rotation.AroundAxis.Set(ref i, ref  axis, (float)angle * t); // angle interpolation and calculation of new delta-matrix (=26 flops)
+				double l = Math.Sqrt(axis * axis);
+				if (l > 0.00001) axis /= (float)l;
+				else axis = new Vector3(1, 0, 0);
+				Rotation.AroundAxis.Set(ref i, ref axis, (float)angle * t);
+					// angle interpolation and calculation of new delta-matrix (=26 flops)
 
 				// final concatenation (=39 flops)
-				matrix.M00 = first.M00 * i.M00 + first.M01 * i.M10 + first.M02 * i.M20; matrix.M01 = first.M00 * i.M01 + first.M01 * i.M11 + first.M02 * i.M21; matrix.M02 = first.M00 * i.M02 + first.M01 * i.M12 + first.M02 * i.M22;
-				matrix.M10 = first.M10 * i.M00 + first.M11 * i.M10 + first.M12 * i.M20; matrix.M11 = first.M10 * i.M01 + first.M11 * i.M11 + first.M12 * i.M21; matrix.M12 = first.M10 * i.M02 + first.M11 * i.M12 + first.M12 * i.M22;
-				matrix.M20 = matrix.M01 * matrix.M12 - matrix.M02 * matrix.M11; matrix.M21 = matrix.M02 * matrix.M10 - matrix.M00 * matrix.M12; matrix.M22 = matrix.M00 * matrix.M11 - matrix.M01 * matrix.M10;
+				matrix.M00 = first.M00 * i.M00 + first.M01 * i.M10 + first.M02 * i.M20;
+				matrix.M01 = first.M00 * i.M01 + first.M01 * i.M11 + first.M02 * i.M21;
+				matrix.M02 = first.M00 * i.M02 + first.M01 * i.M12 + first.M02 * i.M22;
+				matrix.M10 = first.M10 * i.M00 + first.M11 * i.M10 + first.M12 * i.M20;
+				matrix.M11 = first.M10 * i.M01 + first.M11 * i.M11 + first.M12 * i.M21;
+				matrix.M12 = first.M10 * i.M02 + first.M11 * i.M12 + first.M12 * i.M22;
+				matrix.M20 = matrix.M01 * matrix.M12 - matrix.M02 * matrix.M11;
+				matrix.M21 = matrix.M02 * matrix.M10 - matrix.M00 * matrix.M12;
+				matrix.M22 = matrix.M00 * matrix.M11 - matrix.M01 * matrix.M10;
 
 				matrix.M03 = first.M03 * (1 - t) + second.M03 * t;
 				matrix.M13 = first.M13 * (1 - t) + second.M13 * t;
@@ -344,21 +359,36 @@ namespace CryCil
 			{
 				// calculate delta-rotation between m and n (=39 flops)
 				Matrix33 d = new Matrix33(), i = new Matrix33();
-				d.M00 = first.M00 * second.M00 + first.M10 * second.M10 + first.M20 * second.M20; d.M01 = first.M00 * second.M01 + first.M10 * second.M11 + first.M20 * second.M21; d.M02 = first.M00 * second.M02 + first.M10 * second.M12 + first.M20 * second.M22;
-				d.M10 = first.M01 * second.M00 + first.M11 * second.M10 + first.M21 * second.M20; d.M11 = first.M01 * second.M01 + first.M11 * second.M11 + first.M21 * second.M21; d.M12 = first.M01 * second.M02 + first.M11 * second.M12 + first.M21 * second.M22;
-				d.M20 = d.M01 * d.M12 - d.M02 * d.M11; d.M21 = d.M02 * d.M10 - d.M00 * d.M12; d.M22 = d.M00 * d.M11 - d.M01 * d.M10;
+				d.M00 = first.M00 * second.M00 + first.M10 * second.M10 + first.M20 * second.M20;
+				d.M01 = first.M00 * second.M01 + first.M10 * second.M11 + first.M20 * second.M21;
+				d.M02 = first.M00 * second.M02 + first.M10 * second.M12 + first.M20 * second.M22;
+				d.M10 = first.M01 * second.M00 + first.M11 * second.M10 + first.M21 * second.M20;
+				d.M11 = first.M01 * second.M01 + first.M11 * second.M11 + first.M21 * second.M21;
+				d.M12 = first.M01 * second.M02 + first.M11 * second.M12 + first.M21 * second.M22;
+				d.M20 = d.M01 * d.M12 - d.M02 * d.M11;
+				d.M21 = d.M02 * d.M10 - d.M00 * d.M12;
+				d.M22 = d.M00 * d.M11 - d.M01 * d.M10;
 
 				// extract angle and axis
 				double cosine = MathHelpers.Clamp((d.M00 + d.M11 + d.M22 - 1.0) * 0.5, -1.0, +1.0);
 				double angle = Math.Atan2(Math.Sqrt(1.0 - cosine * cosine), cosine);
 				var axis = new Vector3(d.M21 - d.M12, d.M02 - d.M20, d.M10 - d.M01);
-				double l = Math.Sqrt(axis * axis); if (l > 0.00001) axis /= (float)l; else axis = new Vector3(1, 0, 0);
-				Rotation.AroundAxis.Set(ref i, ref  axis, (float)angle * t); // angle interpolation and calculation of new delta-matrix (=26 flops)
+				double l = Math.Sqrt(axis * axis);
+				if (l > 0.00001) axis /= (float)l;
+				else axis = new Vector3(1, 0, 0);
+				Rotation.AroundAxis.Set(ref i, ref axis, (float)angle * t);
+					// angle interpolation and calculation of new delta-matrix (=26 flops)
 
 				// final concatenation (=39 flops)
-				matrix.M00 = first.M00 * i.M00 + first.M01 * i.M10 + first.M02 * i.M20; matrix.M01 = first.M00 * i.M01 + first.M01 * i.M11 + first.M02 * i.M21; matrix.M02 = first.M00 * i.M02 + first.M01 * i.M12 + first.M02 * i.M22;
-				matrix.M10 = first.M10 * i.M00 + first.M11 * i.M10 + first.M12 * i.M20; matrix.M11 = first.M10 * i.M01 + first.M11 * i.M11 + first.M12 * i.M21; matrix.M12 = first.M10 * i.M02 + first.M11 * i.M12 + first.M12 * i.M22;
-				matrix.M20 = matrix.M01 * matrix.M12 - matrix.M02 * matrix.M11; matrix.M21 = matrix.M02 * matrix.M10 - matrix.M00 * matrix.M12; matrix.M22 = matrix.M00 * matrix.M11 - matrix.M01 * matrix.M10;
+				matrix.M00 = first.M00 * i.M00 + first.M01 * i.M10 + first.M02 * i.M20;
+				matrix.M01 = first.M00 * i.M01 + first.M01 * i.M11 + first.M02 * i.M21;
+				matrix.M02 = first.M00 * i.M02 + first.M01 * i.M12 + first.M02 * i.M22;
+				matrix.M10 = first.M10 * i.M00 + first.M11 * i.M10 + first.M12 * i.M20;
+				matrix.M11 = first.M10 * i.M01 + first.M11 * i.M11 + first.M12 * i.M21;
+				matrix.M12 = first.M10 * i.M02 + first.M11 * i.M12 + first.M12 * i.M22;
+				matrix.M20 = matrix.M01 * matrix.M12 - matrix.M02 * matrix.M11;
+				matrix.M21 = matrix.M02 * matrix.M10 - matrix.M00 * matrix.M12;
+				matrix.M22 = matrix.M00 * matrix.M11 - matrix.M01 * matrix.M10;
 			}
 			/// <summary>
 			/// Creates a matrix that represents a spherical linear interpolation from one matrix to

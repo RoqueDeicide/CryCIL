@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using CryCil.Annotations;
 
 namespace CryCil.Utilities
@@ -16,14 +11,10 @@ namespace CryCil.Utilities
 	public unsafe struct StackString
 	{
 		#region Fields
-		[UsedImplicitly]
-		private int length;
-		[UsedImplicitly]
-		private int allocSize;
-		[UsedImplicitly]
-		private char* m_str;
-		[UsedImplicitly]
-		private fixed char m_strBuf[512];
+		[UsedImplicitly] private int length;
+		[UsedImplicitly] private int allocSize;
+		[UsedImplicitly] private char* m_str;
+		[UsedImplicitly] private fixed char m_strBuf [512];
 		#endregion
 		#region Properties
 		/// <summary>
@@ -48,13 +39,10 @@ namespace CryCil.Utilities
 		}
 		#endregion
 		#region Events
-
 		#endregion
 		#region Construction
-
 		#endregion
 		#region Interface
-
 		#endregion
 		#region Utilities
 		[MethodImpl(MethodImplOptions.InternalCall)]

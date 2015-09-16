@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
 using System.Runtime.InteropServices;
-using CryCil.MemoryMapping;
 
 namespace CryCil.Geometry
 {
@@ -22,28 +21,23 @@ namespace CryCil.Geometry
 		/// <summary>
 		/// X-component of the quaternion.
 		/// </summary>
-		[FieldOffset(0)]
-		public float X;
+		[FieldOffset(0)] public float X;
 		/// <summary>
 		/// Y-component of the quaternion.
 		/// </summary>
-		[FieldOffset(4)]
-		public float Y;
+		[FieldOffset(4)] public float Y;
 		/// <summary>
 		/// Z-component of the quaternion.
 		/// </summary>
-		[FieldOffset(8)]
-		public float Z;
+		[FieldOffset(8)] public float Z;
 		/// <summary>
 		/// W-component of the quaternion.
 		/// </summary>
-		[FieldOffset(12)]
-		public float W;
+		[FieldOffset(12)] public float W;
 		/// <summary>
 		/// Vector portion of this quaternion.
 		/// </summary>
-		[FieldOffset(0)]
-		public Vector3 Vector;
+		[FieldOffset(0)] public Vector3 Vector;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -106,10 +100,7 @@ namespace CryCil.Geometry
 		/// <remarks>Inverted quaternion is the quaternion where vector part is negated.</remarks>
 		public Quaternion Inverted
 		{
-			get
-			{
-				return new Quaternion(-this.X, -this.Y, -this.Z, this.W);
-			}
+			get { return new Quaternion(-this.X, -this.Y, -this.Z, this.W); }
 		}
 		/// <summary>
 		/// Gets flipped quaternion.
@@ -117,10 +108,7 @@ namespace CryCil.Geometry
 		/// <remarks>Flipped quaternion is the quaternion where all 4 components are negated.</remarks>
 		public Quaternion Flipped
 		{
-			get
-			{
-				return new Quaternion(-this.X, -this.Y, -this.Z, this.W);
-			}
+			get { return new Quaternion(-this.X, -this.Y, -this.Z, this.W); }
 		}
 		/// <summary>
 		/// Treating this quaternion as a compressed rotation matrix, gets first column of that matrix.
@@ -129,7 +117,14 @@ namespace CryCil.Geometry
 		/// First column of rotation matrix represents a vector that points to the right from the point
 		/// that is oriented using this quaternion.
 		/// </remarks>
-		public Vector3 Column0 { get { return new Vector3(2 * (this.X * this.X + this.W * this.W) - 1, 2 * (this.Y * this.X + this.Z * this.W), 2 * (this.Z * this.X - this.Y * this.W)); } }
+		public Vector3 Column0
+		{
+			get
+			{
+				return new Vector3(2 * (this.X * this.X + this.W * this.W) - 1, 2 * (this.Y * this.X + this.Z * this.W),
+								   2 * (this.Z * this.X - this.Y * this.W));
+			}
+		}
 		/// <summary>
 		/// Treating this quaternion as a compressed rotation matrix, gets second column of that matrix.
 		/// </summary>
@@ -137,7 +132,14 @@ namespace CryCil.Geometry
 		/// Second column of rotation matrix represents a vector that points forward from the point that is
 		/// oriented using this quaternion.
 		/// </remarks>
-		public Vector3 Column1 { get { return new Vector3(2 * (this.X * this.Y - this.Z * this.W), 2 * (this.Y * this.Y + this.W * this.W) - 1, 2 * (this.Z * this.Y + this.X * this.W)); } }
+		public Vector3 Column1
+		{
+			get
+			{
+				return new Vector3(2 * (this.X * this.Y - this.Z * this.W), 2 * (this.Y * this.Y + this.W * this.W) - 1,
+								   2 * (this.Z * this.Y + this.X * this.W));
+			}
+		}
 		/// <summary>
 		/// Treating this quaternion as a compressed rotation matrix, gets third column of that matrix.
 		/// </summary>
@@ -145,22 +147,50 @@ namespace CryCil.Geometry
 		/// Third column of rotation matrix represents a vector that points up from the point that is
 		/// oriented using this quaternion.
 		/// </remarks>
-		public Vector3 Column2 { get { return new Vector3(2 * (this.X * this.Z + this.Y * this.W), 2 * (this.Y * this.Z - this.X * this.W), 2 * (this.Z * this.Z + this.W * this.W) - 1); } }
+		public Vector3 Column2
+		{
+			get
+			{
+				return new Vector3(2 * (this.X * this.Z + this.Y * this.W), 2 * (this.Y * this.Z - this.X * this.W),
+								   2 * (this.Z * this.Z + this.W * this.W) - 1);
+			}
+		}
 		/// <summary>
 		/// Treating this quaternion as a compressed rotation matrix, gets first row of that matrix.
 		/// </summary>
 		/// <remarks>First row of rotation matrix contains X-coordinates of rotation axes.</remarks>
-		public Vector3 Row0 { get { return new Vector3(2 * (this.X * this.X + this.W * this.W) - 1, 2 * (this.X * this.Y - this.Z * this.W), 2 * (this.X * this.Z + this.Y * this.W)); } }
+		public Vector3 Row0
+		{
+			get
+			{
+				return new Vector3(2 * (this.X * this.X + this.W * this.W) - 1, 2 * (this.X * this.Y - this.Z * this.W),
+								   2 * (this.X * this.Z + this.Y * this.W));
+			}
+		}
 		/// <summary>
 		/// Treating this quaternion as a compressed rotation matrix, gets second row of that matrix.
 		/// </summary>
 		/// <remarks>Second row of rotation matrix contains Y-coordinates of rotation axes.</remarks>
-		public Vector3 Row1 { get { return new Vector3(2 * (this.Y * this.X + this.Z * this.W), 2 * (this.Y * this.Y + this.W * this.W) - 1, 2 * (this.Y * this.Z - this.X * this.W)); } }
+		public Vector3 Row1
+		{
+			get
+			{
+				return new Vector3(2 * (this.Y * this.X + this.Z * this.W), 2 * (this.Y * this.Y + this.W * this.W) - 1,
+								   2 * (this.Y * this.Z - this.X * this.W));
+			}
+		}
 		/// <summary>
 		/// Treating this quaternion as a compressed rotation matrix, gets third row of that matrix.
 		/// </summary>
 		/// <remarks>Third row of rotation matrix contains Z-coordinates of rotation axes.</remarks>
-		public Vector3 Row2 { get { return new Vector3(2 * (this.Z * this.X - this.Y * this.W), 2 * (this.Z * this.Y + this.X * this.W), 2 * (this.Z * this.Z + this.W * this.W) - 1); } }
+		public Vector3 Row2
+		{
+			get
+			{
+				return new Vector3(2 * (this.Z * this.X - this.Y * this.W), 2 * (this.Z * this.Y + this.X * this.W),
+								   2 * (this.Z * this.Z + this.W * this.W) - 1);
+			}
+		}
 		#endregion
 		#region Construction
 		/// <summary>
@@ -187,9 +217,12 @@ namespace CryCil.Geometry
 		public Quaternion(EulerAngles angles)
 			: this()
 		{
-			double sx, cx; MathHelpers.SinCos(angles.Pitch * 0.5, out sx, out cx);
-			double sy, cy; MathHelpers.SinCos(angles.Roll * 0.5, out sy, out cy);
-			double sz, cz; MathHelpers.SinCos(angles.Yaw * 0.5, out sz, out cz);
+			double sx, cx;
+			MathHelpers.SinCos(angles.Pitch * 0.5, out sx, out cx);
+			double sy, cy;
+			MathHelpers.SinCos(angles.Roll * 0.5, out sy, out cy);
+			double sz, cz;
+			MathHelpers.SinCos(angles.Yaw * 0.5, out sz, out cz);
 
 			this.W = (float)(cx * cy * cz + sx * sy * sz);
 			this.X = (float)(cz * cy * sx - sz * sy * cx);
@@ -206,7 +239,8 @@ namespace CryCil.Geometry
 		{
 			Contract.Assert(axis.IsUnit(0.0001f));
 
-			float sine, cosine; MathHelpers.SinCos(angle / 2, out sine, out cosine);
+			float sine, cosine;
+			MathHelpers.SinCos(angle / 2, out sine, out cosine);
 
 			this.Vector = axis * sine;
 			this.W = cosine;
@@ -235,10 +269,10 @@ namespace CryCil.Geometry
 		/// Normalized <see cref="Vector3"/> that represents direction to finish rotation at.
 		/// </param>
 		public Quaternion
-		(
+			(
 			Vector3 originalDirection,
 			Vector3 desiredDirection
-		)
+			)
 			: this()
 		{
 			Vector3 start = originalDirection;
@@ -256,15 +290,15 @@ namespace CryCil.Geometry
 					originalDirection.SelectiveOrthogonal
 					?? desiredDirection.SelectiveOrthogonal
 					?? Vector3.Up;
-				cosine = 0;			// Cosine and sine of the half of the angle between vectors.
-				sine = 1;			//
+				cosine = 0; // Cosine and sine of the half of the angle between vectors.
+				sine = 1; //
 			}
 			else
 			{
 				// Use cross product.
 				axis = start % end;
-				cosine = (1 - cosine) / 2;						// Get cosine of half-angle.
-				sine = (float)Math.Sqrt(1 - cosine * cosine);	// Get sine from cosine.
+				cosine = (1 - cosine) / 2; // Get cosine of half-angle.
+				sine = (float)Math.Sqrt(1 - cosine * cosine); // Get sine from cosine.
 			}
 			// Define quaternion from calculated angle-axis combination.
 			this.Vector = axis * sine;
@@ -329,7 +363,9 @@ namespace CryCil.Geometry
 		/// Matrix that represents rotation that needs to be packed into the quaternion.
 		/// </param>
 		public Quaternion(Matrix34 matrix)
-			: this(new Matrix33(matrix)) { }
+			: this(new Matrix33(matrix))
+		{
+		}
 		/// <summary>
 		/// Creates new instance of type <see cref="Quaternion"/>.
 		/// </summary>
@@ -337,7 +373,9 @@ namespace CryCil.Geometry
 		/// Matrix that represents rotation that needs to be packed into the quaternion.
 		/// </param>
 		public Quaternion(Matrix44 matrix)
-			: this(new Matrix33(matrix)) { }
+			: this(new Matrix33(matrix))
+		{
+		}
 		#endregion
 		#region Interface
 		#region Self-Modification
@@ -398,8 +436,10 @@ namespace CryCil.Geometry
 		public bool IsEquivalent(Quaternion q, float epsilon = 0.05f)
 		{
 			var p = q.Flipped;
-			bool t0 = (Math.Abs(this.X - q.X) <= epsilon) && (Math.Abs(this.Y - q.Y) <= epsilon) && (Math.Abs(this.Z - q.Z) <= epsilon) && (Math.Abs(this.W - q.W) <= epsilon);
-			bool t1 = (Math.Abs(this.X - p.X) <= epsilon) && (Math.Abs(this.Y - p.Y) <= epsilon) && (Math.Abs(this.Z - p.Z) <= epsilon) && (Math.Abs(this.W - p.W) <= epsilon);
+			bool t0 = (Math.Abs(this.X - q.X) <= epsilon) && (Math.Abs(this.Y - q.Y) <= epsilon) &&
+					  (Math.Abs(this.Z - q.Z) <= epsilon) && (Math.Abs(this.W - q.W) <= epsilon);
+			bool t1 = (Math.Abs(this.X - p.X) <= epsilon) && (Math.Abs(this.Y - p.Y) <= epsilon) &&
+					  (Math.Abs(this.Z - p.Z) <= epsilon) && (Math.Abs(this.W - p.W) <= epsilon);
 			t0 |= t1;
 			return t0;
 		}
@@ -409,7 +449,10 @@ namespace CryCil.Geometry
 		/// <seealso cref="Quaternion.Identity"/>
 
 		// ReSharper disable CompareOfFloatsByEqualityOperator
-		public bool IsIdentity { get { return this.W == 1 && this.X == 0 && this.Y == 0 && this.Z == 0; } }
+		public bool IsIdentity
+		{
+			get { return this.W == 1 && this.X == 0 && this.Y == 0 && this.Z == 0; }
+		}
 		// ReSharper restore CompareOfFloatsByEqualityOperator
 
 		/// <summary>

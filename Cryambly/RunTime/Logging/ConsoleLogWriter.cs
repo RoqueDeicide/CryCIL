@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using CryCil.Engine.DebugServices;
 
 namespace CryCil.RunTime.Logging
@@ -38,9 +35,9 @@ namespace CryCil.RunTime.Logging
 		/// </summary>
 		public override void Flush()
 		{
-			string[] lines =									// Don't remove empty entries.
-				this.buffer.ToString().Split(new[] { Environment.NewLine }, StringSplitOptions.None);
-			if (lines.Length == 1)	// Only happens when there is no new line symbol in the buffer.
+			string[] lines = // Don't remove empty entries.
+				this.buffer.ToString().Split(new[] {Environment.NewLine}, StringSplitOptions.None);
+			if (lines.Length == 1) // Only happens when there is no new line symbol in the buffer.
 			{
 				// This code is executed when Flush is called from external class, which means we should
 				// post whatever we have in the buffer and empty it afterwards.

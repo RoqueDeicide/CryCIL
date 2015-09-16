@@ -4,7 +4,9 @@
 	/// Defines common properties and functionality of types that represent vectors.
 	/// </summary>
 	/// <typeparam name="ComponentType">Type of vector components.</typeparam>
-	/// <typeparam name="VectorType">Type that represents the vector itself, or any other type this one can operate with.</typeparam>
+	/// <typeparam name="VectorType">
+	/// Type that represents the vector itself, or any other type this one can operate with.
+	/// </typeparam>
 	public interface IVector<ComponentType, VectorType>
 	{
 		/// <summary>
@@ -27,7 +29,8 @@
 		/// Gets the length of the vector.
 		/// </summary>
 		/// <remarks>
-		/// Length of the vector is a square root of sum of all components of this vector raised to power of 2.
+		/// Length of the vector is a square root of sum of all components of this vector raised to power
+		/// of 2.
 		/// </remarks>
 		/// <example>
 		/// Implementation of this property in <see cref="Vector3"/>:
@@ -55,9 +58,7 @@
 		/// <summary>
 		/// Calculates the dot product of this vector and another one.
 		/// </summary>
-		/// <remarks>
-		/// Dot product of 2 vectors is a sum of products of corresponding components.
-		/// </remarks>
+		/// <remarks>Dot product of 2 vectors is a sum of products of corresponding components.</remarks>
 		/// <example>
 		/// Implementation of this method in <see cref="Vector3"/>:
 		/// <code>

@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CryCil.Engine.Files
 {
@@ -221,7 +217,8 @@ namespace CryCil.Engine.Files
 		/// Cannot close a .pak file using a null name/wildcard.
 		/// </exception>
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		public static extern bool Close(string name, bool closeMany = false, PathResolutionRules rules = PathResolutionRules.PathReal);
+		public static extern bool Close(string name, bool closeMany = false,
+										PathResolutionRules rules = PathResolutionRules.PathReal);
 		/// <summary>
 		/// Determines whether it is possible to load pak files using the given wildcard pattern.
 		/// </summary>

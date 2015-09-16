@@ -6,7 +6,7 @@ namespace CryCil.RunTime.Logging
 	partial class ConsoleLogWriter
 	{
 		/// <summary>
-		/// Writes <see cref="Boolean"/> value to CryEngine log.
+		/// Writes <see cref="bool"/> value to CryEngine log.
 		/// </summary>
 		/// <param name="value">Value to write.</param>
 		public override void Write(bool value)
@@ -14,7 +14,7 @@ namespace CryCil.RunTime.Logging
 			this.buffer.Append(value);
 		}
 		/// <summary>
-		/// Writes <see cref="Char"/> value to CryEngine log.
+		/// Writes <see cref="char"/> value to CryEngine log.
 		/// </summary>
 		/// <param name="value">Value to write.</param>
 		public override void Write(char value)
@@ -48,7 +48,7 @@ namespace CryCil.RunTime.Logging
 			}
 		}
 		/// <summary>
-		/// Writes <see cref="Decimal"/> value to CryEngine log.
+		/// Writes <see cref="decimal"/> value to CryEngine log.
 		/// </summary>
 		/// <param name="value">Value to write.</param>
 		public override void Write(decimal value)
@@ -56,7 +56,7 @@ namespace CryCil.RunTime.Logging
 			this.buffer.Append(value);
 		}
 		/// <summary>
-		/// Writes <see cref="Double"/> value to CryEngine log.
+		/// Writes <see cref="double"/> value to CryEngine log.
 		/// </summary>
 		/// <param name="value">Value to write.</param>
 		public override void Write(double value)
@@ -64,7 +64,7 @@ namespace CryCil.RunTime.Logging
 			this.buffer.Append(value);
 		}
 		/// <summary>
-		/// Writes <see cref="Single"/> value to CryEngine log.
+		/// Writes <see cref="float"/> value to CryEngine log.
 		/// </summary>
 		/// <param name="value">Value to write.</param>
 		public override void Write(float value)
@@ -72,7 +72,7 @@ namespace CryCil.RunTime.Logging
 			this.buffer.Append(value);
 		}
 		/// <summary>
-		/// Writes <see cref="Int32"/> value to CryEngine log.
+		/// Writes <see cref="int"/> value to CryEngine log.
 		/// </summary>
 		/// <param name="value">Value to write.</param>
 		public override void Write(int value)
@@ -80,7 +80,7 @@ namespace CryCil.RunTime.Logging
 			this.buffer.Append(value);
 		}
 		/// <summary>
-		/// Writes <see cref="Int64"/> value to CryEngine log.
+		/// Writes <see cref="long"/> value to CryEngine log.
 		/// </summary>
 		/// <param name="value">Value to write.</param>
 		public override void Write(long value)
@@ -88,7 +88,7 @@ namespace CryCil.RunTime.Logging
 			this.buffer.Append(value);
 		}
 		/// <summary>
-		/// Writes <see cref="Object"/> value to CryEngine log.
+		/// Writes <see cref="object"/> value to CryEngine log.
 		/// </summary>
 		/// <param name="value">Value to write.</param>
 		public override void Write(object value)
@@ -167,7 +167,7 @@ namespace CryCil.RunTime.Logging
 			}
 		}
 		/// <summary>
-		/// Writes <see cref="UInt64"/> value to CryEngine log.
+		/// Writes <see cref="ulong"/> value to CryEngine log.
 		/// </summary>
 		/// <param name="value">Value to write.</param>
 		public override void Write(uint value)
@@ -175,7 +175,7 @@ namespace CryCil.RunTime.Logging
 			this.buffer.Append(value);
 		}
 		/// <summary>
-		/// Writes <see cref="UInt64"/> value to CryEngine log.
+		/// Writes <see cref="ulong"/> value to CryEngine log.
 		/// </summary>
 		/// <param name="value">Value to write.</param>
 		public override void Write(ulong value)

@@ -22,28 +22,23 @@ namespace CryCil.Geometry
 		/// <summary>
 		/// X-component of the normal to this plane.
 		/// </summary>
-		[FieldOffset(0)]
-		public float X;
+		[FieldOffset(0)] public float X;
 		/// <summary>
 		/// Y-component of the normal to this plane.
 		/// </summary>
-		[FieldOffset(4)]
-		public float Y;
+		[FieldOffset(4)] public float Y;
 		/// <summary>
 		/// Z-component of the normal to this plane.
 		/// </summary>
-		[FieldOffset(8)]
-		public float Z;
+		[FieldOffset(8)] public float Z;
 		/// <summary>
 		/// The normal vector of the plane.
 		/// </summary>
-		[FieldOffset(0)]
-		public Vector3 Normal;
+		[FieldOffset(0)] public Vector3 Normal;
 		/// <summary>
 		/// The distance of the plane along its normal from the origin.
 		/// </summary>
-		[FieldOffset(12)]
-		public float D;
+		[FieldOffset(12)] public float D;
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Plane"/> struct.
 		/// </summary>
@@ -168,10 +163,14 @@ namespace CryCil.Geometry
 			{
 				switch (index)
 				{
-					case 0: return this.X;
-					case 1: return this.Y;
-					case 2: return this.Z;
-					case 3: return this.D;
+					case 0:
+						return this.X;
+					case 1:
+						return this.Y;
+					case 2:
+						return this.Z;
+					case 3:
+						return this.D;
 				}
 
 				throw new ArgumentOutOfRangeException("index", "Indices for Plane run from 0 to 3, inclusive.");
@@ -181,13 +180,17 @@ namespace CryCil.Geometry
 			{
 				switch (index)
 				{
-					case 0: this.X = value;
+					case 0:
+						this.X = value;
 						break;
-					case 1: this.Y = value;
+					case 1:
+						this.Y = value;
 						break;
-					case 2: this.Z = value;
+					case 2:
+						this.Z = value;
 						break;
-					case 3: this.D = value;
+					case 3:
+						this.D = value;
 						break;
 					default:
 						throw new ArgumentOutOfRangeException("index", "Indices for Plane run from 0 to 3, inclusive.");
@@ -289,12 +292,12 @@ namespace CryCil.Geometry
 			 * Factor common arithmetic out of loop.
 			*/
 			return new Plane
-			(
+				(
 				((x * ((1.0f - yy) - zz)) + (y * (xy - wz))) + (z * (xz + wy)),
 				((x * (xy + wz)) + (y * ((1.0f - xx) - zz))) + (z * (yz - wx)),
 				((x * (xz - wy)) + (y * (yz + wx))) + (z * ((1.0f - xx) - yy)),
 				plane.D
-			);
+				);
 		}
 		/// <summary>
 		/// Transforms an array of normalized planes by a quaternion rotation.
@@ -388,7 +391,7 @@ namespace CryCil.Geometry
 		/// </param>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public void PointPosition(Vector3 point, out PlanePosition pointPlanePosition,
-											   ref PlanePosition polygonPlanePosition)
+								  ref PlanePosition polygonPlanePosition)
 		{
 			pointPlanePosition = this.PointPosition(point);
 			polygonPlanePosition |= pointPlanePosition;
@@ -412,7 +415,8 @@ namespace CryCil.Geometry
 				return PlanePosition.Front;
 			}
 			return signedDistance < -MathHelpers.ZeroTolerance
-				? PlanePosition.Back : PlanePosition.Coplanar;
+				? PlanePosition.Back
+				: PlanePosition.Coplanar;
 		}
 		/// <summary>
 		/// Flips the orientation of this plane.

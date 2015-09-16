@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CryCil.Engine.DebugServices
+﻿namespace CryCil.Engine.DebugServices
 {
 	/// <summary>
 	/// Represents a line that is drawn using <see cref="DebugEngine"/> class.
@@ -72,7 +66,6 @@ namespace CryCil.Engine.DebugServices
 		}
 		#endregion
 		#region Events
-
 		#endregion
 		#region Construction
 		/// <summary>
@@ -100,7 +93,6 @@ namespace CryCil.Engine.DebugServices
 		}
 		#endregion
 		#region Utilities
-
 		#endregion
 	}
 }

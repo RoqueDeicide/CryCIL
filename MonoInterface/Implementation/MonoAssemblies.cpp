@@ -4,7 +4,7 @@
 #include "MonoAssembly.h"
 #include "ThunkTables.h"
 
-void DisposeAssemblyWrappers(Text *assemblyShortName, List<IMonoAssembly *> *assemblySet)
+void DisposeAssemblyWrappers(Text *, List<IMonoAssembly *> *assemblySet)
 {
 	for (int i = 0; i < assemblySet->Length; i++)
 	{

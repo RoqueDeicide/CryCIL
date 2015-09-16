@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CryCil.Engine.Rendering
 {
@@ -33,7 +29,8 @@ namespace CryCil.Engine.Rendering
 		/// </summary>
 		UsageAllowReadsRgb = 0x00000010,
 		/// <summary>
-		/// When set, specifies that the texture only uses a single file (prevents loading additional files like _DDNIF when specified when loading a texture).
+		/// When set, specifies that the texture only uses a single file (prevents loading additional files
+		/// like _DDNIF when specified when loading a texture).
 		/// </summary>
 		FileSingle = 0x00000020,
 		/// <summary>

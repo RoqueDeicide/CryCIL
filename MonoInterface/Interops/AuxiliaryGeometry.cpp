@@ -529,7 +529,7 @@ void AuxiliaryGeometryInterop::DrawCone(Vec3 center, Vec3 direction, float radiu
 
 void AuxiliaryGeometryInterop::DrawCylinder(Vec3 center, Vec3 direction, float radius, float height, ColorB color, bool shaded)
 {
-	if (geom) geom->DrawCylinder(center, direction, radius, height, color);
+	if (geom) geom->DrawCylinder(center, direction, radius, height, color, shaded);
 }
 
 void AuxiliaryGeometryInterop::DrawBone(Vec3 parent, Vec3 bone, ColorB color)
