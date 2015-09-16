@@ -303,7 +303,7 @@
     <Compile Include="Engine\Rendering\Shading\Lighting\DynamicLightFlags.cs" />
     <Compile Include="Engine\Rendering\Shading\Lighting\LightSource.cs" />
     <Compile Include="Engine\Rendering\Shading\Lighting\LightProperties.cs" />
-    <Compile Include="Engine\StaticObjects\StaticObject.cs" />
+    <Compile Include="Engine\Models\StaticObjects\StaticObject.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Mathematics\AngleHelpers.cs" />
     <Compile Include="Mathematics\Geometry\Splines\BezierBasis.cs" />
