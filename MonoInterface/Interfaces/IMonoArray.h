@@ -123,6 +123,8 @@ public:
 	__declspec(property(get = GetRank)) int Rank;
 	//! Gets the type of the elements of the array.
 	__declspec(property(get = GetElementClass)) IMonoClass *ElementClass;
+	// Gets the pointer to the first element in the array.
+	__declspec(property(get = GetData)) ElementType *Data;
 
 	//! Creates new wrapper for given array.
 	IMonoArray(mono::Array ar)
@@ -173,11 +175,6 @@ public:
 	//! @returns Reference to the element of the array.
 	ElementType& operator[](int index)
 	{
-		if (!this->obj)
-		{
-			return nullptr;
-		}
-
 		_MonoArray *a = reinterpret_cast<_MonoArray *>(this->obj);
 		return *reinterpret_cast<ElementType *>(reinterpret_cast<char*>((a)->vector) + this->elementSize * index);
 	}
@@ -261,5 +258,15 @@ public:
 	IMonoClass *GetElementClass() const
 	{
 		return this->elementSize;
+	}
+	ElementType *GetData() const
+	{
+		if (!this->obj)
+		{
+			return nullptr;
+		}
+
+		_MonoArray *a = reinterpret_cast<_MonoArray *>(this->obj);
+		return reinterpret_cast<ElementType *>(reinterpret_cast<char*>((a)->vector) + this->elementSize);
 	}
 };

@@ -556,7 +556,7 @@
     <Compile Include="Utilities\StringPool.cs" />
     <Compile Include="Utilities\Utf32Char.cs" />
     <Compile Include="VariousConstants.cs" />
-    <Compile Include="Engine\Physics\EntityAPIDetails\FlagParameters.Example.cs" />
+    <None Include="Engine\Physics\EntityAPIDetails\FlagParameters.Example.cs" />
     <Compile Include="Engine\Physics\PhysicalWorld.Events.cs" />
   </ItemGroup>
   <ItemGroup>

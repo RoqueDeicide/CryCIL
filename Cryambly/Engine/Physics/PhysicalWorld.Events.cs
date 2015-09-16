@@ -306,7 +306,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Occurs when a physical entity has its physical geometry changed.
 		/// </summary>
-		public static event PhysicsMeshChangedEventHandler MeshChanged
+		public static unsafe event PhysicsMeshChangedEventHandler MeshChanged
 		{
 			add
 			{
@@ -545,10 +545,10 @@ namespace CryCil.Engine.Physics
 			return proceed;
 		}
 		[UnmanagedThunk("Raises one of the physical events.")]
-		private static bool OnMeshChanged(ref MonoPhysicsEventData entity, int partId, bool invalid,
-										  PhysicsMeshUpdateReason reason, GeometryShape mesh,
-										  ref MeshUpdateInfoProvider updatesInfo, ref Matrix34 skeletonToMesh,
-										  GeometryShape skeletonMesh, bool logged)
+		private static unsafe bool OnMeshChanged(ref MonoPhysicsEventData entity, int partId, bool invalid,
+												 PhysicsMeshUpdateReason reason, GeometryShape mesh,
+												 MeshUpdate* lastUpdate, ref Matrix34 skeletonToMesh,
+												 GeometryShape skeletonMesh, bool logged)
 		{
 			var handlers = logged ? meshHandlersLogged : meshHandlers;
 			bool proceed = true;
@@ -559,7 +559,7 @@ namespace CryCil.Engine.Physics
 				int count = handlers.Count;
 				for (int i = 0; i < count; i++)
 				{
-					if (!handlers[i](ref entity, partId, invalid, reason, mesh, ref updatesInfo, ref skeletonToMesh,
+					if (!handlers[i](ref entity, partId, invalid, reason, mesh, lastUpdate, ref skeletonToMesh,
 									 skeletonMesh))
 					{
 						proceed = false;

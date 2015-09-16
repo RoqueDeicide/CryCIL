@@ -1,4 +1,5 @@
 ﻿using System;
+using CryCil.Geometry;
 
 namespace CryCil.Engine.Physics
 {
@@ -82,13 +83,13 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// When set, instructs water to be included in results of the query.
 		/// </summary>
-		/// <remarks>Can only be used in <see cref="PhysicalWorld.RayWorldIntersection"/>.</remarks>
+		/// <remarks>Can only be used in <see cref="o:Ray.Cast"/>.</remarks>
 		Water = 0x200,
 		/// <summary>
 		/// When set, instruct to not have results activated(?). (Used by small background physical
 		/// objects, like fish and insects).
 		/// </summary>
-		/// <remarks>Can only be used in <see cref="PhysicalWorld.RayWorldIntersection"/>.</remarks>
+		/// <remarks>Can only be used in <see cref="o:Ray.Cast"/>.</remarks>
 		NoOnDemandActivation = 0x80000, // can only be used in RayWorldIntersection
 		/// <summary>
 		/// When set, instructs procedural breakage events to be queued.

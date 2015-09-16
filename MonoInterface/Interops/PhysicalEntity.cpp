@@ -129,7 +129,7 @@ void PhysicalEntityInterop::RemoveGeometry(IPhysicalEntity *handle, int id, bool
 
 bool PhysicalEntityInterop::CollideEntityWithBeam(IPhysicalEntity *handle, Vec3 *org, Vec3 *dir, float r, ray_hit *phit)
 {
-	return gEnv->pPhysicalWorld->CollideEntityWithBeam(handle, *org, *dir, r, phit);
+	return gEnv->pPhysicalWorld->CollideEntityWithBeam(handle, *org, *dir, r, phit) != 0;
 }
 
 int PhysicalEntityInterop::SetPhysicalEntityId(IPhysicalEntity *pent, int id, int bReplace, int bThreadSafe)

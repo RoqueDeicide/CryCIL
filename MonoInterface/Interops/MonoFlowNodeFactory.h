@@ -19,7 +19,7 @@ public:
 
 	virtual IFlowNodePtr Create(IFlowNode::SActivationInfo *actInfo) override;
 
-	virtual void GetMemoryUsage(ICrySizer * s) const override {}
+	virtual void GetMemoryUsage(ICrySizer *) const override {}
 	virtual void Reset() override {}
 
 	//! Invoked from the interop class to assign the type identifier.

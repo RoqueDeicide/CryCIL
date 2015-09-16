@@ -295,8 +295,8 @@ namespace CryCil.Engine.Physics
 		/// </summary>
 		AlwaysNotifyOnDeletion = 0x100000,
 		/// <summary>
-		/// When set, specifies that this physical entity will ignore
-		/// <see cref="PhysicsVariables.BreakImpulseScale"/>.
+		/// When set, specifies that this physical entity will ignore an impulse scale setting for the
+		/// solver.
 		/// </summary>
 		OverrideImpulseScale = 0x200000,
 		/// <summary>

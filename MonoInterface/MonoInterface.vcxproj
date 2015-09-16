@@ -368,6 +368,7 @@
     <ClInclude Include="TimeUtilities.h" />
     <ClInclude Include="Tuples.h" />
     <ClInclude Include="TypeMapChecks\CheckingBasics.h" />
+    <ClInclude Include="Interops\WaterManagerStructs.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CryEngineInterface.cpp" />
@@ -465,7 +466,6 @@
     <ClCompile Include="Interops\Texture.cpp" />
     <ClCompile Include="Interops\TimeOfDay.cpp" />
     <ClCompile Include="Interops\Timing.cpp" />
-    <ClCompile Include="Interops\WaterManagerStructs.h" />
     <ClCompile Include="Interops\WriteLockCond.cpp" />
     <ClCompile Include="RunTime\DebugEventReporter.cpp" />
     <ClCompile Include="RunTime\EventBroadcaster.cpp" />

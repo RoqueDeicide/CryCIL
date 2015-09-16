@@ -535,7 +535,7 @@ public:
 	//! @param count Number of elements to iterate through.
 	void ForEach(Enumerator func, int index, int count)
 	{
-		for (int i = 0, counter; counter < count; i++, counter++)
+		for (int i = index, counter; counter < count; i++, counter++)
 		{
 			func(this->elements[i]);
 		}
@@ -574,7 +574,7 @@ public:
 	//! @param count Number of elements to iterate through.
 	void ThroughEach(EnumeratorIndex func, int index, int count)
 	{
-		for (int i = 0, counter; counter < count; i++, counter++)
+		for (int i = index, counter; counter < count; i++, counter++)
 		{
 			func(this->elements[i], i);
 		}

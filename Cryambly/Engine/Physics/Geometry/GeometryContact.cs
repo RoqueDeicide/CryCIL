@@ -9,6 +9,7 @@ namespace CryCil.Engine.Physics
 	/// </summary>
 	public unsafe struct GeometryContactArea
 	{
+#pragma warning disable 169
 		[UsedImplicitly] private int type;
 		[UsedImplicitly] private int npt;
 		[UsedImplicitly] private int nmaxpt;
@@ -19,6 +20,7 @@ namespace CryCil.Engine.Physics
 		[UsedImplicitly] private int* piFeature1;
 		[UsedImplicitly] private Vector3* pt;
 		[UsedImplicitly] private Vector3 n1;
+#pragma warning restore 169
 	}
 	/// <summary>
 	/// Encapsulates information about a border of an areal contact.
@@ -27,12 +29,14 @@ namespace CryCil.Engine.Physics
 	public unsafe struct GeometryContactBorder
 	{
 		#region Fields
+#pragma warning disable 169
 		[UsedImplicitly] private Vector3* ptborder; // intersection border
 		[UsedImplicitly] private int* idxborder; // primitive index | primitive's feature's id << IFEAT_LOG2
 		[UsedImplicitly] private int nborderpt;
 		[UsedImplicitly] private int bClosed;
 		[UsedImplicitly] private Vector3 center;
 		[UsedImplicitly] private bool bBorderConsecutive;
+#pragma warning restore 169
 		#endregion
 		#region Properties
 		/// <summary>
@@ -101,6 +105,7 @@ namespace CryCil.Engine.Physics
 	public unsafe struct GeometryContact
 	{
 		#region Fields
+#pragma warning disable 169
 		[UsedImplicitly] private double t;
 		[UsedImplicitly] private Vector3 pt;
 		[UsedImplicitly] private Vector3 n;
@@ -117,6 +122,7 @@ namespace CryCil.Engine.Physics
 		[UsedImplicitly] private int iNode1;
 		[UsedImplicitly] private GeometryContactBorder border;
 		[UsedImplicitly] private GeometryContactArea* parea;
+#pragma warning restore 169
 		#endregion
 		#region Properties
 		/// <summary>

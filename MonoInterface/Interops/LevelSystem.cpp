@@ -61,7 +61,7 @@ void LevelSystemInterop::OnLoadingComplete(ILevel *pLevel)
 	raise->Invoke(params);
 }
 
-void LevelSystemInterop::OnLoadingError(ILevelInfo *pLevel, const char *error)
+void LevelSystemInterop::OnLoadingError(ILevelInfo *pLevel, const char *)
 {
 	static IMonoStaticMethod *raise =
 		MonoEnv->Cryambly->GetClass(this->GetInteropNameSpace(), this->GetInteropClassName())->GetEvent("LoadingError")->Raise->ToStatic();

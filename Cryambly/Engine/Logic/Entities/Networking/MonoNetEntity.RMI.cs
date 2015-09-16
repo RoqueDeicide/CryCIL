@@ -313,8 +313,8 @@ namespace CryCil.Engine.Logic
 
 			InvokeRmi(this.Id, methodName, parameters, where, channel, rmiType);
 		}
-		private int ValidateRmiMethod(MethodInfo method, [CanBeNull] RmiParameters parameters, RmiTarget where,
-									  bool checkReturnType, bool checkParameters)
+		private int ValidateRmiMethod(MethodInfo method, [CanBeNull] RmiParameters parameters,
+									  [UsedImplicitly] RmiTarget where, bool checkReturnType, bool checkParameters)
 		{
 			Type type = this.GetType();
 			string methodName = method.Name;
@@ -369,21 +369,17 @@ namespace CryCil.Engine.Logic
 			}
 			if (attribute.ToServer && !Game.IsClient)
 			{
-				throw new RmiException
-					(
-					RmiError.IsNotClient,
-					string.Format("Method {0} of type {1} must be called from a client game instance.",
-								  methodName, type.FullName)
-					);
+				throw
+					new RmiException(RmiError.IsNotClient,
+									 string.Format("Method {0} of type {1} must be called from a client game instance.",
+												   methodName, type.FullName));
 			}
 			if (attribute.ToServer && !where.HasFlag(RmiTarget.ToServer))
 			{
-				throw new RmiException
-					(
-					RmiError.NotDirectedToServer,
-					string.Format("RMI call of the method {0} of type {1} must be directed to the server.",
-								  methodName, type.FullName)
-					);
+				throw
+					new RmiException(RmiError.NotDirectedToServer,
+									 string.Format("RMI call of the method {0} of type {1} must be directed to the server.",
+												   methodName, type.FullName));
 			}
 
 			return (int)attribute.type;

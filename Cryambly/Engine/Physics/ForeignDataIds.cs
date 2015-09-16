@@ -1,5 +1,6 @@
 ﻿using System;
 using CryCil.Engine.Logic;
+using CryCil.Engine.Models.Characters;
 
 namespace CryCil.Engine.Physics
 {

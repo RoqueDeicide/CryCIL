@@ -17,7 +17,7 @@ public:
 	//IGameObjectExtension
 	virtual bool Init(IGameObject* pGameObject) override;
 	virtual void PostInit(IGameObject* pGameObject) override;
-	virtual void HandleEvent(const SGameObjectEvent& event) override {}
+	virtual void HandleEvent(const SGameObjectEvent&) override {}
 	virtual void ProcessEvent(SEntityEvent& event) override;
 	virtual void InitClient(int channelId) override;
 	virtual void PostInitClient(int channelId) override;
@@ -30,7 +30,7 @@ public:
 	//! This method is not needed because the same event goes through ProcessEvent method.
 	virtual void PostSerialize() override {}
 	//! Not used, we don't set the spawn serializer for Mono entities.
-	virtual void SerializeSpawnInfo(TSerialize ser) override {}
+	virtual void SerializeSpawnInfo(TSerialize) override {}
 	//! Not sure how to make it work and whether its needed that much.
 	virtual ISerializableInfoPtr GetSpawnInfo() override { return nullptr; }
 	virtual void Update(SEntityUpdateContext& ctx, int updateSlot) override;
@@ -38,7 +38,7 @@ public:
 	virtual void SetAuthority(bool auth) override;
 	virtual void PostUpdate(float frameTime) override;
 	virtual void PostRemoteSpawn() override {}
-	virtual void GetMemoryUsage(ICrySizer* pSizer) const override {}
+	virtual void GetMemoryUsage(ICrySizer*) const override {}
 	virtual ComponentEventPriority GetEventPriority(const int eventID) const override;
 	//~IGameObjectExtension
 

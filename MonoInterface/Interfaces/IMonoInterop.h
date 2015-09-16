@@ -35,7 +35,7 @@ struct IMonoInteropBase : public IMonoSystemListener
 	virtual void OnCompilationStarting() override
 	{}
 	//! Unnecessary for most interops.
-	virtual void OnCompilationComplete(bool success) override
+	virtual void OnCompilationComplete(bool) override
 	{}
 	//! Unnecessary for most interops.
 	virtual List<int> *GetSubscribedStages() override
@@ -43,7 +43,7 @@ struct IMonoInteropBase : public IMonoSystemListener
 		return nullptr;
 	}
 	//! Unnecessary for most interops.
-	virtual void OnInitializationStage(int stageIndex) override
+	virtual void OnInitializationStage(int) override
 	{}
 	//! Unnecessary for most interops.
 	virtual void OnCryamblyInitilized() override
@@ -94,7 +94,7 @@ template<> struct IMonoInterop<true, false> : public IMonoInteropBase
 template<> struct IMonoInterop < false, true > : public IMonoInteropBase
 {
 	//! No saving.
-	virtual void SetInterface(IMonoInterface *handle) override {}
+	virtual void SetInterface(IMonoInterface *) override {}
 	//! Registers internal calls through MonoEnv, since internal field is a null pointer.
 	virtual void RegisterInteropMethod(const char *methodName, void *functionPointer) override
 	{
@@ -112,7 +112,7 @@ template<> struct IMonoInterop < false, true > : public IMonoInteropBase
 template<> struct IMonoInterop < true, true > : public IMonoInteropBase
 {
 	//! No saving.
-	virtual void SetInterface(IMonoInterface *handle) override {}
+	virtual void SetInterface(IMonoInterface *) override {}
 	//! Unregisters itself and commits suicide.
 	virtual void OnCryamblyInitilizing() override
 	{

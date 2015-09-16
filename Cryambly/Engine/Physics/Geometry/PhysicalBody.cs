@@ -8,6 +8,7 @@ namespace CryCil.Engine.Physics
 {
 	internal unsafe struct phys_geometry
 	{
+#pragma warning disable 649
 		internal GeometryShape pGeom;
 		internal Vector3 Ibody;
 		internal Quaternion q;
@@ -18,6 +19,7 @@ namespace CryCil.Engine.Physics
 		internal int* pMatMapping; // mat mapping; can later be overridden inside entity part
 		internal int nMats;
 		internal void* pForeignData; // any external pointer to be associated with phys geometry
+#pragma warning restore 649
 	}
 	/// <summary>
 	/// Represents a geometric object that is physicalized (has its physical properties, inertia tensor,

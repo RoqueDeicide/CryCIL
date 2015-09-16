@@ -141,11 +141,13 @@ namespace CryCil.Engine.Physics
 	public struct JunctionVertexFix
 	{
 		#region Fields
+#pragma warning disable 649
 		[UsedImplicitly] private int iABC;
 		[UsedImplicitly] private int iACJ;
 		[UsedImplicitly] private int iCA;
 		[UsedImplicitly] private int iAC;
 		[UsedImplicitly] private int iTJvtx;
+#pragma warning restore 649
 		#endregion
 		#region Properties
 		/// <summary>

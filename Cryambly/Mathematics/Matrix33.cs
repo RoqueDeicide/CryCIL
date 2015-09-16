@@ -706,6 +706,11 @@ namespace CryCil
 							   right.X * left.M10 + right.Y * left.M11 + right.Z * left.M12,
 							   right.X * left.M20 + right.Y * left.M21 + right.Z * left.M22);
 		}
+		/// <summary>
+		/// Determines whether another object is a matrix that is equal to this one.
+		/// </summary>
+		/// <param name="obj">Another object.</param>
+		/// <returns>True, if another object is of this type and is equal to this matrix.</returns>
 		public override bool Equals(object obj)
 		{
 			if (ReferenceEquals(null, obj)) return false;

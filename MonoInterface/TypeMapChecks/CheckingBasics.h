@@ -2,9 +2,9 @@
 
 #include <type_traits>
 
-// Regex for replacing " = [enum value initializer]," with ");":
-// 1) For decimals: " = \b[0-9]*\.*[0-9]+\b[,|);]" with ");"
-// 2) For hexes: " = \b0[xX]([0-9a-fA-F]+)\b[,|);]" with ");"
+// Regex for replacing      " = [enum value initializer],"       with ");":
+// 1) For decimals:         " = \b[0-9]*\.*[0-9]+\b[,|);]"       with ");"
+// 2) For hexes:            " = \b0[xX]([0-9a-fA-F]+)\b[,|);]"   with ");"
 // 3) For enum identifiers: " = \b(_\w+|[\w-[0-9_]]\w*)\b[,|);]" with ");"
 
 // Regex for removing the comments from the end of the string:
@@ -24,7 +24,7 @@ struct is_same_type
 {
 	static const bool value = false;
 
-	is_same_type(T first, U second) {}
+	is_same_type(T, U) {}
 };
 
 //! This specialization of the above template is only used when the same type is specified for both parameters and
@@ -34,7 +34,7 @@ struct is_same_type<T, T>
 {
 	static const bool value = true;
 
-	is_same_type(T first, T second) {}
+	is_same_type(T, T) {}
 };
 
 #define CHECK_TYPE_SIZE(typeName) static_assert(sizeof(typeName) == sizeof(S##typeName), "S"#typeName" structure has been changed.")

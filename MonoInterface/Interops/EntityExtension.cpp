@@ -88,7 +88,7 @@ bool MonoEntityExtension::Init(IGameObject* pGameObject)
 	return this->networking ? pGameObject->BindToNetwork() : true;
 }
 
-void MonoEntityExtension::PostInit(IGameObject* pGameObject)
+void MonoEntityExtension::PostInit(IGameObject*)
 {
 	static RaiseOnInitThunk raise =
 		RaiseOnInitThunk(GetMonoEntityClass()->GetEvent("Initialized")->GetRaise()->UnmanagedThunk);
@@ -531,7 +531,7 @@ void MonoEntityExtension::PostInitClient(int channelId)
 
 typedef bool(__stdcall *ReloadEventThunk)(mono::object, MonoEntitySpawnParams *, mono::exception *);
 
-bool MonoEntityExtension::ReloadExtension(IGameObject* pGameObject, const SEntitySpawnParams& params)
+bool MonoEntityExtension::ReloadExtension(IGameObject*, const SEntitySpawnParams& params)
 {
 	static ReloadEventThunk thunk =
 		ReloadEventThunk(GetMonoEntityClass()->GetEvent("Reloading")->GetRaise()->UnmanagedThunk);
@@ -553,7 +553,7 @@ bool MonoEntityExtension::ReloadExtension(IGameObject* pGameObject, const SEntit
 
 typedef void(__stdcall *ReloadedEventThunk)(mono::object, MonoEntitySpawnParams *, mono::exception *);
 
-void MonoEntityExtension::PostReloadExtension(IGameObject* pGameObject, const SEntitySpawnParams& params)
+void MonoEntityExtension::PostReloadExtension(IGameObject*, const SEntitySpawnParams& params)
 {
 	static ReloadedEventThunk thunk =
 		ReloadedEventThunk(GetMonoEntityClass()->GetEvent("Reloaded")->GetRaise()->UnmanagedThunk);
@@ -650,7 +650,7 @@ void MonoEntityExtension::FullSerialize(TSerialize ser)
 
 typedef bool(__stdcall *NetSyncInternalThunk)(mono::object, ISerialize *, EEntityAspects, byte, mono::exception *);
 
-bool MonoEntityExtension::NetSerialize(TSerialize ser, EEntityAspects aspect, uint8 profile, int pflags)
+bool MonoEntityExtension::NetSerialize(TSerialize ser, EEntityAspects aspect, uint8 profile, int)
 {
 	if (!this->networking)
 	{
@@ -676,7 +676,7 @@ bool MonoEntityExtension::NetSerialize(TSerialize ser, EEntityAspects aspect, ui
 
 typedef void(__stdcall *UpdateEntityThunk)(mono::object, SEntityUpdateContext&, mono::exception *);
 
-void MonoEntityExtension::Update(SEntityUpdateContext& ctx, int updateSlot)
+void MonoEntityExtension::Update(SEntityUpdateContext& ctx, int)
 {
 	static UpdateEntityThunk update =
 		UpdateEntityThunk(GetMonoEntityClass()->GetFunction("UpdateInternal")->UnmanagedThunk);
@@ -727,7 +727,7 @@ void MonoEntityExtension::SetAuthority(bool auth)
 
 typedef void(__stdcall *PostUpdateEntityThunk)(mono::object, mono::exception *);
 
-void MonoEntityExtension::PostUpdate(float frameTime)
+void MonoEntityExtension::PostUpdate(float)
 {
 	static PostUpdateEntityThunk update =
 		PostUpdateEntityThunk(GetMonoEntityClass()->GetFunction("PostUpdateInternal")->UnmanagedThunk);
@@ -745,7 +745,7 @@ void MonoEntityExtension::PostUpdate(float frameTime)
 
 typedef int ComponentEventPriority;
 
-ComponentEventPriority MonoEntityExtension::GetEventPriority(const int eventID) const
+ComponentEventPriority MonoEntityExtension::GetEventPriority(const int) const
 {
 	return EEntityEventPriority::EEntityEventPriority_GameObject;
 }

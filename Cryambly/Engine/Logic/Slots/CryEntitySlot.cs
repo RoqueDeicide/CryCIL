@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
+using CryCil.Engine.Models.StaticObjects;
 using CryCil.Engine.Rendering;
 using CryCil.Engine.Rendering.Lighting;
-using CryCil.Engine.StaticObjects;
 
 namespace CryCil.Engine.Logic
 {

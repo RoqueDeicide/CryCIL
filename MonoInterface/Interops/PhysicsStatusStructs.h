@@ -549,9 +549,9 @@ struct PhysicsStatusRope
 		}
 
 		stat->nSegments   = this->nSegments;
-		stat->pPoints     = &(IMonoArray<Vec3>(this->pPoints)[0]);
-		stat->pVelocities = &(IMonoArray<Vec3>(this->pVelocities)[0]);
-		stat->pVtx        = &(IMonoArray<Vec3>(this->pVtx)[0]);
+		stat->pPoints     = IMonoArray<Vec3>(this->pPoints).Data;
+		stat->pVelocities = IMonoArray<Vec3>(this->pVelocities).Data;
+		stat->pVtx        = IMonoArray<Vec3>(this->pVtx).Data;
 		stat->nVtx        = this->nVtx;
 		stat->lock        = this->lock;
 

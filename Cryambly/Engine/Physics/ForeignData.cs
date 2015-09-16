@@ -114,7 +114,7 @@ namespace CryCil.Engine.Physics
 		/// </typeparam>
 		/// <returns>
 		/// A valid object of type <typeparamref name="UserForeignDataType"/> if extracted successfully,
-		/// otherwise a result of <c>default()</c> with <see cref="UserForeignDataType"/> as an argument is
+		/// otherwise a result of <c>default()</c> with <typeparamref name="UserForeignDataType"/> as an argument is
 		/// returned.
 		/// </returns>
 		public UserForeignDataType User<UserForeignDataType>()

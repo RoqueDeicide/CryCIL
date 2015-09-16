@@ -533,7 +533,7 @@ struct PhysicsActionAttachPoints
 	}
 	void Dispose()
 	{
-		SAFE_DELETE(this->piVtx);
-		SAFE_DELETE(this->points);
+		SAFE_DELETE(this->internal0);
+		SAFE_DELETE(this->internal1);
 	}
 };

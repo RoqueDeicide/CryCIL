@@ -1182,7 +1182,7 @@ inline void TestProperties()
 
 #pragma region Event Tests
 
-inline void UnmanagedEventHandler(mono::object sender, mono::object eventArgs)
+inline void UnmanagedEventHandler(mono::object, mono::object)
 {
 	CryLogAlways("TEST: Unmanaged event wrapper has been invoked.");
 }

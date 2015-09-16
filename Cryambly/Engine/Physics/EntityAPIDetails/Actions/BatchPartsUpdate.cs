@@ -67,11 +67,10 @@ namespace CryCil.Engine.Physics
 		/// <param name="positionOffset">   
 		/// Extra position offset to apply to each part, mentioned in <paramref name="infos"/>.
 		/// </param>
-#if DEBUG
 		/// <exception cref="ArgumentException">
-		/// Given array of part update object has duplicated identifiers.
+		/// Given array of part update object has duplicated identifiers. Doesn't get thrown in non-DEBUG
+		/// builds.
 		/// </exception>
-#endif
 		public PhysicsActionBatchPartsUpdate(PartUpdateInfo[] infos, Quaternion orientationOffset,
 											 Vector3 positionOffset = new Vector3())
 			: this()
@@ -104,11 +103,10 @@ namespace CryCil.Engine.Physics
 		/// <param name="positionOffset">
 		/// Extra position offset to apply to each part, mentioned in <paramref name="infos"/>.
 		/// </param>
-#if DEBUG
 		/// <exception cref="ArgumentException">
-		/// Given array of part update object has duplicated identifiers.
+		/// Given array of part update object has duplicated identifiers. Doesn't get thrown in non-DEBUG
+		/// builds.
 		/// </exception>
-#endif
 		public PhysicsActionBatchPartsUpdate(PartUpdateInfo[] infos, Vector3 positionOffset = new Vector3())
 			: this(infos, Quaternion.Identity, positionOffset)
 		{

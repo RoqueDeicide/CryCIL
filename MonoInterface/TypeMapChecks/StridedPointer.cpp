@@ -4,12 +4,12 @@
 
 TYPE_MIRROR struct StridedPointerMirror
 {
-	void *data;
+	int *data;
 	int iStride;
 
-	explicit StridedPointerMirror(strided_pointer<void> other)
+	explicit StridedPointerMirror(strided_pointer<int> other)
 	{
-		static_assert(sizeof(strided_pointer<void>) == sizeof(StridedPointerMirror), "strided_pointer<void *> structure has been changed.");
+		static_assert(sizeof(strided_pointer<int>) == sizeof(StridedPointerMirror), "strided_pointer<int> structure has been changed.");
 		
 		ASSIGN_FIELD(data);
 		ASSIGN_FIELD(iStride);

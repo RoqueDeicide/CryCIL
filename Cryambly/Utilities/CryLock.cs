@@ -42,6 +42,9 @@ namespace CryCil.Utilities
 		{
 			this.handle = CreateLock();
 		}
+		/// <summary>
+		/// Releases this lock.
+		/// </summary>
 		~WriteLockCond()
 		{
 			this.Dispose(true);
