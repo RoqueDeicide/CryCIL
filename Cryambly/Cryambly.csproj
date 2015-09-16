@@ -97,6 +97,7 @@
     <Compile Include="Engine\Environment\TimeOfDaySync.cs" />
     <Compile Include="Engine\Logic\EntityPhysicalizationParameters.cs" />
     <Compile Include="Engine\Logic\PhysicalizationException.cs" />
+    <Compile Include="Engine\Models\Characters\Character.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Actions\AddConstraint.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Actions\AttachPoints.cs" />
     <Compile Include="Engine\Physics\EntityAPIDetails\Actions\AutoPartDetachment.cs" />
