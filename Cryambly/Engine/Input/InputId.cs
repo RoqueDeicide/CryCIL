@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CryCil.Engine.Input
+﻿namespace CryCil.Engine.Input
 {
 	/// <summary>
 	/// Enumeration of Id starter numbers for various input devices.
@@ -656,11 +650,13 @@ namespace CryCil.Engine.Input
 		/// </summary>
 		XboxThumbRightRight,
 		/// <summary>
-		/// Identifier of the event when the left trigger of the Xbox360 controller is pressed and released in quick succession.
+		/// Identifier of the event when the left trigger of the Xbox360 controller is pressed and released
+		/// in quick succession.
 		/// </summary>
 		XboxTriggerLeftButton,
 		/// <summary>
-		/// Identifier of the event when the right trigger of the Xbox360 controller is pressed and released in quick succession.
+		/// Identifier of the event when the right trigger of the Xbox360 controller is pressed and
+		/// released in quick succession.
 		/// </summary>
 		XboxTriggerRightButton,
 		/// <summary>

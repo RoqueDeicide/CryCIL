@@ -129,18 +129,15 @@ namespace CryCil.Engine.Rendering.Lighting
 		/// <summary>
 		/// Deprecated.
 		/// </summary>
-		[Obsolete]
-		DeferredLight = 1 << 29,
+		[Obsolete] DeferredLight = 1 << 29,
 		/// <summary>
 		/// Deprecated.
 		/// </summary>
-		[Obsolete]
-		SpecularOcclusion = 1 << 30,
+		[Obsolete] SpecularOcclusion = 1 << 30,
 		/// <summary>
 		/// Deprecated.
 		/// </summary>
-		[Obsolete]
-		DiffuseOcclusion = 1 << 31,
+		[Obsolete] DiffuseOcclusion = 1 << 31,
 
 		/// <summary>
 		/// A mask that allows to check whether light source has a defined type.

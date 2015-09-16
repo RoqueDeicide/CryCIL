@@ -150,7 +150,7 @@ namespace CryCil.Engine.Physics
 		#endregion
 	}
 	internal delegate UserForeignDataType ForeignDataExtractor<out UserForeignDataType>(IntPtr handle, ForeignDataIds id)
-	where UserForeignDataType : IForeignDataProvider;
+		where UserForeignDataType : IForeignDataProvider;
 	internal static class ForeignDataTypeRegistry
 	{
 		internal static SortedList<ForeignDataIds, Delegate> Extractors;
@@ -158,7 +158,7 @@ namespace CryCil.Engine.Physics
 		{
 			BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
 			Extractors = new SortedList<ForeignDataIds, Delegate>
-			(
+				(
 				(
 					from assembly in MonoInterface.CryCilAssemblies
 					from type in assembly.GetTypes()
@@ -170,12 +170,12 @@ namespace CryCil.Engine.Physics
 					where parameters[1].ParameterType == typeof(ForeignDataIds)
 					where method.ReturnType.Implements<IForeignDataProvider>()
 					select method
-				).ToDictionary
-				(
-					method => method.GetAttribute<ForeignDataExtractorAttribute>().Id,
-					method => method.CreateDelegate(typeof(ForeignDataExtractor<>).MakeGenericType(method.ReturnType))
-				)
-			);
+					).ToDictionary
+					(
+					 method => method.GetAttribute<ForeignDataExtractorAttribute>().Id,
+					 method => method.CreateDelegate(typeof(ForeignDataExtractor<>).MakeGenericType(method.ReturnType))
+					)
+				);
 		}
 	}
 }

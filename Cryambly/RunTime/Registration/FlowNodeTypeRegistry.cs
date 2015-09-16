@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using CryCil.Annotations;
 using CryCil.Engine.Logic;
 
@@ -17,13 +15,11 @@ namespace CryCil.RunTime.Registration
 	{
 		#region Fields
 		// Contains references and identifiers of all successfully registered flow node types.
-		[NotNull]
-		private static readonly SortedList<ushort, Type> registeredTypes = new SortedList<ushort, Type>();
+		[NotNull] private static readonly SortedList<ushort, Type> registeredTypes = new SortedList<ushort, Type>();
 		// Contains an array of all types that have [FlowNode] attribute. This data is gathered when CryCIL
 		// is initialized (which happens before flow graph is initialized) and types here will be
 		// registered later.
-		[CanBeNull]
-		private static Type[] compiledTypes;
+		[CanBeNull] private static Type[] compiledTypes;
 		#endregion
 		#region Interface
 		/// <summary>
@@ -38,8 +34,8 @@ namespace CryCil.RunTime.Registration
 			Type type;
 			return
 				registeredTypes.TryGetValue(id, out type)
-				? type
-				: null;
+					? type
+					: null;
 		}
 		#endregion
 		#region Utilities
@@ -50,13 +46,13 @@ namespace CryCil.RunTime.Registration
 				MonoInterface.CryCilAssemblies
 							 .SelectMany(assembly => assembly.GetTypes())
 							 .Where
-							 (
-								 type =>
-									 type.ContainsAttribute<FlowNodeAttribute>() &&
-									 !type.ContainsAttribute<ObsoleteAttribute>() &&
-									 type.Implements<FlowNode>() &&
-									 type.GetConstructor(new[] { typeof(ushort), typeof(IntPtr) }) != null
-							 )
+					(
+					 type =>
+						 type.ContainsAttribute<FlowNodeAttribute>() &&
+						 !type.ContainsAttribute<ObsoleteAttribute>() &&
+						 type.Implements<FlowNode>() &&
+						 type.GetConstructor(new[] {typeof(ushort), typeof(IntPtr)}) != null
+					)
 							 .ToArray();
 		}
 		internal static void RegisterAllTypes()

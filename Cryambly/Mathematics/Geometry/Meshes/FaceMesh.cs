@@ -5,7 +5,6 @@ using System.Runtime.InteropServices;
 using CryCil.Engine.Memory;
 using CryCil.Geometry.Csg;
 using CryCil.Geometry.Csg.Base;
-using CryCil.Graphics;
 
 namespace CryCil.Geometry
 {
@@ -26,7 +25,7 @@ namespace CryCil.Geometry
 		/// Indicates whether CSG operations must be done natively.
 		/// </summary>
 		public static readonly bool NativeCsg = true;
-#endregion
+		#endregion
 		#region Properties
 		/// <summary>
 		/// Gets the list of faces that comprise this mesh.
@@ -37,12 +36,9 @@ namespace CryCil.Geometry
 		/// </summary>
 		public BspNode<FullFace> BspTree
 		{
-			get
-			{
-				return new BspNode<FullFace>(this.Faces, null);
-			}
+			get { return new BspNode<FullFace>(this.Faces, null); }
 		}
-#endregion
+		#endregion
 		#region Construction
 		/// <summary>
 		/// Creates empty mesh.
@@ -59,7 +55,7 @@ namespace CryCil.Geometry
 		{
 			this.Faces = bspTree.AllElements;
 		}
-#endregion
+		#endregion
 		#region Interface
 		/// <summary>
 		/// Combine this mesh with another.
@@ -72,13 +68,13 @@ namespace CryCil.Geometry
 			{
 				this.Faces =
 					FromNativeFaceList
-					(
-						CombineInternal
 						(
-							ToNativeFaceList(this.Faces),
-							ToNativeFaceList(anotherMesh.Faces)
-						)
-					);
+						 CombineInternal
+							 (
+							  ToNativeFaceList(this.Faces),
+							  ToNativeFaceList(anotherMesh.Faces)
+							 )
+						);
 			}
 			else
 			{
@@ -99,22 +95,22 @@ namespace CryCil.Geometry
 			{
 				this.Faces =
 					FromNativeFaceList
-					(
-						IntersectInternal
 						(
-							ToNativeFaceList(this.Faces),
-							ToNativeFaceList(anotherMesh.Faces)
-						)
-					);
+						 IntersectInternal
+							 (
+							  ToNativeFaceList(this.Faces),
+							  ToNativeFaceList(anotherMesh.Faces)
+							 )
+						);
 			}
 			else
 			{
 				BspNode<FullFace> a = this.BspTree;
 				BspNode<FullFace> b = anotherMesh.BspTree;
-				a.Invert();					// Cut geometry that is not common for the meshes.
-				b.CutTreeOut(a, null);		//
-				b.Invert();					//
-				a.CutTreeOut(b, null);		//
+				a.Invert(); // Cut geometry that is not common for the meshes.
+				b.CutTreeOut(a, null); //
+				b.Invert(); //
+				a.CutTreeOut(b, null); //
 				// Clean up remains.
 				b.CutTreeOut(a, null);
 				// Combine geometry.
@@ -135,13 +131,13 @@ namespace CryCil.Geometry
 			{
 				this.Faces =
 					FromNativeFaceList
-					(
-						SubtractInternal
 						(
-							ToNativeFaceList(this.Faces),
-							ToNativeFaceList(anotherMesh.Faces)
-						)
-					);
+						 SubtractInternal
+							 (
+							  ToNativeFaceList(this.Faces),
+							  ToNativeFaceList(anotherMesh.Faces)
+							 )
+						);
 			}
 			else
 			{
@@ -162,7 +158,7 @@ namespace CryCil.Geometry
 			this.Faces.Clear();
 			this.Faces.AddRange(bspTree.AllElements);
 		}
-#endregion
+		#endregion
 		#region Utilities
 		internal static IntPtr ToNativeFaceList(List<FullFace> faces)
 		{
@@ -201,6 +197,6 @@ namespace CryCil.Geometry
 		internal static extern IntPtr IntersectInternal(IntPtr facesPtr1, IntPtr facesPtr2);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		internal static extern IntPtr SubtractInternal(IntPtr facesPtr1, IntPtr facesPtr2);
-#endregion
+		#endregion
 	}
 }

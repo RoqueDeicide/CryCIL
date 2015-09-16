@@ -1,5 +1,4 @@
-﻿using System;
-using CryCil.Engine.Localization;
+﻿using CryCil.Engine.Localization;
 using CryCil.Engine.Rendering;
 
 namespace CryCil.Engine.DebugServices
@@ -36,14 +35,13 @@ namespace CryCil.Engine.DebugServices
 		}
 		#endregion
 		#region Events
-
 		#endregion
 		#region Construction
 		static DebugUiText()
 		{
 			currentTextPosition = 400.0f;
-			DebugEngine.FrameStart +=				// Reset position so UI messages start rendering from
-				() => currentTextPosition = 400.0f;	// the top and go down.
+			DebugEngine.FrameStart += // Reset position so UI messages start rendering from
+				() => currentTextPosition = 400.0f; // the top and go down.
 		}
 		#endregion
 		#region Interface
@@ -64,7 +62,6 @@ namespace CryCil.Engine.DebugServices
 		}
 		#endregion
 		#region Utilities
-
 		#endregion
 	}
 }

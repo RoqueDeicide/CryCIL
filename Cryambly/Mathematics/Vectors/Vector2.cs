@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using CryCil.Geometry;
 
 namespace CryCil
 {
@@ -13,7 +11,8 @@ namespace CryCil
 	/// </summary>
 	[Serializable]
 	[StructLayout(LayoutKind.Sequential, Pack = 4)]
-	public partial struct Vector2 : IVector<float, Vector2>, IEquatable<Vector2>, IFormattable, IEnumerable<float>, IComparable<Vector2>
+	public partial struct Vector2 : IVector<float, Vector2>, IEquatable<Vector2>, IFormattable, IEnumerable<float>,
+									IComparable<Vector2>
 	{
 		#region Static Fields
 		/// <summary>
@@ -114,7 +113,7 @@ namespace CryCil
 			get
 			{
 				return MathHelpers.IsNumberValid(this.X) &&
-					MathHelpers.IsNumberValid(this.Y);
+					   MathHelpers.IsNumberValid(this.Y);
 			}
 		}
 		#endregion
@@ -214,7 +213,7 @@ namespace CryCil
 		/// <returns>A two-element array containing the components of the vector.</returns>
 		public float[] ToArray()
 		{
-			return new[] { this.X, this.Y };
+			return new[] {this.X, this.Y};
 		}
 		/// <summary>
 		/// Creates a list that contains components of this vector.
@@ -225,7 +224,7 @@ namespace CryCil
 		/// </returns>
 		public List<float> ToList()
 		{
-			List<float> result = new List<float>(2) { this.X, this.Y };
+			List<float> result = new List<float>(2) {this.X, this.Y};
 			return result;
 		}
 		/// <summary>
@@ -237,7 +236,7 @@ namespace CryCil
 		/// </returns>
 		public Dictionary<string, float> ToDictionary()
 		{
-			Dictionary<string, float> result = new Dictionary<string, float>(2) { { "X", this.X }, { "Y", this.Y } };
+			Dictionary<string, float> result = new Dictionary<string, float>(2) {{"X", this.X}, {"Y", this.Y}};
 			return result;
 		}
 		#endregion

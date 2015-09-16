@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using CryCil.Annotations;
 
 namespace CryCil.Engine.Rendering
@@ -16,26 +12,16 @@ namespace CryCil.Engine.Rendering
 	public class Texture : IDisposable
 	{
 		#region Fields
-		[UsedImplicitly]
-		private IntPtr handle;
-		[UsedImplicitly]
-		private string name;
-		[UsedImplicitly]
-		private TextureFlags flags;
-		[UsedImplicitly]
-		private int id;
-		[UsedImplicitly]
-		private Vector3 dims;
-		[UsedImplicitly]
-		private int numMips;
-		[UsedImplicitly]
-		private int reqMip;
-		[UsedImplicitly]
-		private int deviceSize;
-		[UsedImplicitly]
-		private int size;
-		[UsedImplicitly]
-		private TextureType type;
+		[UsedImplicitly] private IntPtr handle;
+		[UsedImplicitly] private string name;
+		[UsedImplicitly] private TextureFlags flags;
+		[UsedImplicitly] private int id;
+		[UsedImplicitly] private Vector3 dims;
+		[UsedImplicitly] private int numMips;
+		[UsedImplicitly] private int reqMip;
+		[UsedImplicitly] private int deviceSize;
+		[UsedImplicitly] private int size;
+		[UsedImplicitly] private TextureType type;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -65,33 +51,21 @@ namespace CryCil.Engine.Rendering
 		/// <exception cref="NullReferenceException">
 		/// Cannot access a texture using null pointer.
 		/// </exception>
-		public extern bool Clamp
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			set;
-		}
+		public extern bool Clamp { [MethodImpl(MethodImplOptions.InternalCall)] set; }
 		/// <summary>
 		/// Sets texture filter that will be applied to this texture.
 		/// </summary>
 		/// <exception cref="NullReferenceException">
 		/// Cannot access a texture using null pointer.
 		/// </exception>
-		public extern TextureFilters Filter
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			set;
-		}
+		public extern TextureFilters Filter { [MethodImpl(MethodImplOptions.InternalCall)] set; }
 		/// <summary>
 		/// Determines whether this texture is currently loaded into memory.
 		/// </summary>
 		/// <exception cref="NullReferenceException">
 		/// Cannot access a texture using null pointer.
 		/// </exception>
-		public extern bool Loaded
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			get;
-		}
+		public extern bool Loaded { [MethodImpl(MethodImplOptions.InternalCall)] get; }
 		/// <summary>
 		/// Gets <see cref="Vector3"/> object which X coordinate represents width of the texture, Y
 		/// coordinate represents its height and Z - depth.
@@ -144,7 +118,6 @@ namespace CryCil.Engine.Rendering
 		}
 		#endregion
 		#region Events
-
 		#endregion
 		#region Construction
 		/// <summary>
@@ -154,7 +127,7 @@ namespace CryCil.Engine.Rendering
 		/// <param name="flags">A set of flags that specify how to load the texture file.</param>
 		/// <exception cref="ArgumentNullException">Name of the texture file cannot be null.</exception>
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		public extern Texture([UsedImplicitly][CanBeNull] string name, [UsedImplicitly] TextureFlags flags);
+		public extern Texture([UsedImplicitly] [CanBeNull] string name, [UsedImplicitly] TextureFlags flags);
 		#endregion
 		#region Static Interface
 		#endregion
@@ -166,7 +139,6 @@ namespace CryCil.Engine.Rendering
 		public extern void Dispose();
 		#endregion
 		#region Utilities
-
 		#endregion
 	}
 }

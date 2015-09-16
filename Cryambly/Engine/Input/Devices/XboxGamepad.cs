@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using CryCil.Annotations;
 
 namespace CryCil.Engine.Input
 {
@@ -31,7 +26,6 @@ namespace CryCil.Engine.Input
 		private static readonly List<GamepadKeyInputHandler> rightThumbRightHandlers;
 		#endregion
 		#region Properties
-
 		#endregion
 		#region Events
 		/// <summary>
@@ -329,12 +323,14 @@ namespace CryCil.Engine.Input
 		[UnmanagedThunk("Invoked by underlying framework to raise RightThumbX event.")]
 		private static void OnRightThumbX(int state, byte deviceIndex, float value, out bool blocked)
 		{
-			blocked = InputEventPropagator.Post(rightThumbXHandlers, InputId.XboxThumbRightY, deviceIndex, (InputState)state, value);
+			blocked = InputEventPropagator.Post(rightThumbXHandlers, InputId.XboxThumbRightY, deviceIndex, (InputState)state,
+												value);
 		}
 		[UnmanagedThunk("Invoked by underlying framework to raise RightThumbY event.")]
 		private static void OnRightThumbY(int state, byte deviceIndex, float value, out bool blocked)
 		{
-			blocked = InputEventPropagator.Post(rightThumbYHandlers, InputId.XboxThumbRightY, deviceIndex, (InputState)state, value);
+			blocked = InputEventPropagator.Post(rightThumbYHandlers, InputId.XboxThumbRightY, deviceIndex, (InputState)state,
+												value);
 		}
 		[UnmanagedThunk("Invoked by underlying framework to raise on the directional analog stick events.")]
 		private static void OnThumbDirection(uint id, byte deviceIndex, bool pressed, out bool blocked)

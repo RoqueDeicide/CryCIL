@@ -9,7 +9,7 @@ namespace CryCil.Engine.Input.ActionMapping
 	/// </summary>
 	public struct CryInputAction
 	{
-		  #region Fields
+		#region Fields
 		private readonly IntPtr handle;
 		#endregion
 		#region Properties
@@ -32,7 +32,9 @@ namespace CryCil.Engine.Input.ActionMapping
 		/// Adds input to the list of inputs that can activate this action.
 		/// </summary>
 		/// <param name="input">Identifier of the input that can activate this action.</param>
-		/// <param name="spec">Additional information that specify when the action can be activated by this input.</param>
+		/// <param name="spec"> 
+		/// Additional information that specify when the action can be activated by this input.
+		/// </param>
 		/// <returns>True, if input has been successfully added and bound, otherwise false.</returns>
 		public bool AddInput(InputId input, ActionInputSpecification spec)
 		{
@@ -56,11 +58,11 @@ namespace CryCil.Engine.Input.ActionMapping
 		/// <summary>
 		/// Rebinds one of the inputs to the different input.
 		/// </summary>
-		/// <remarks>
-		/// Input specification remains the same.
-		/// </remarks>
+		/// <remarks>Input specification remains the same.</remarks>
 		/// <param name="oldInput">Input to rebind.</param>
-		/// <param name="newInput">A new input. If equal to <see cref="InputId.Unknown"/> then it will be cleared.</param>
+		/// <param name="newInput">
+		/// A new input. If equal to <see cref="InputId.Unknown"/> then it will be cleared.
+		/// </param>
 		/// <returns>True, if successful, otherwise false.</returns>
 		public bool RebindInput(InputId oldInput, InputId newInput)
 		{

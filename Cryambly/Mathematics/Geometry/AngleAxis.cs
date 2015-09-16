@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CryCil.Geometry
 {
@@ -60,9 +56,12 @@ namespace CryCil.Geometry
 		/// </param>
 		public AngleAxis(EulerAngles angles)
 		{
-			float sx, cx; MathHelpers.SinCos(angles.Pitch * 0.5f, out sx, out cx);
-			float sy, cy; MathHelpers.SinCos(angles.Roll * 0.5f, out sy, out cy);
-			float sz, cz; MathHelpers.SinCos(angles.Yaw * 0.5f, out sz, out cz);
+			float sx, cx;
+			MathHelpers.SinCos(angles.Pitch * 0.5f, out sx, out cx);
+			float sy, cy;
+			MathHelpers.SinCos(angles.Roll * 0.5f, out sy, out cy);
+			float sz, cz;
+			MathHelpers.SinCos(angles.Yaw * 0.5f, out sz, out cz);
 
 			float w = cx * cy * cz + sx * sy * sz;
 			if (Math.Abs(w - 1) < MathHelpers.ZeroTolerance)
@@ -74,7 +73,7 @@ namespace CryCil.Geometry
 				this.Vector = new Vector3(cz * cy * sx - sz * sy * cx,
 										  cz * sy * cx + sz * cy * sx,
 										  sz * cy * cx - cz * sy * sx
-										  ) * (float)(Math.Acos(w) * 2);
+					) * (float)(Math.Acos(w) * 2);
 			}
 		}
 		/// <summary>

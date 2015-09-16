@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using CryCil.Annotations;
 using CryCil.Engine.Memory;
 using CryCil.RunTime;
@@ -101,8 +98,7 @@ namespace CryCil.Engine.Files
 	public unsafe class CryArchive : IDisposable
 	{
 		#region Fields
-		[UsedImplicitly]
-		private IntPtr handle;
+		[UsedImplicitly] private IntPtr handle;
 		private readonly string fullPath;
 		private bool disposed;
 		#endregion
@@ -110,13 +106,8 @@ namespace CryCil.Engine.Files
 		/// <summary>
 		/// Gets or sets flags assigned to the archive object.
 		/// </summary>
-		public extern ArchiveOptions Flags
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			get;
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			set;
-		}
+		public extern ArchiveOptions Flags { [MethodImpl(MethodImplOptions.InternalCall)] get;
+			[MethodImpl(MethodImplOptions.InternalCall)] set; }
 		/// <summary>
 		/// Gets full path to the archive file.
 		/// </summary>
@@ -133,7 +124,6 @@ namespace CryCil.Engine.Files
 		}
 		#endregion
 		#region Events
-
 		#endregion
 		#region Construction
 		/// <summary>
@@ -156,15 +146,15 @@ namespace CryCil.Engine.Files
 				if (File.Exists(path))
 				{
 					throw new FileAccessException
-					(
-						String.Format
 						(
-							"Unable to open the archive file.{0}",
-							Directory.EnumerateFiles(DirectoryStructure.ContentFolder).Contains(path)
-								? "The archives located inside the game content folder can only be opened in read-only mode."
-								: ""
-						)
-					);
+						String.Format
+							(
+							 "Unable to open the archive file.{0}",
+							 Directory.EnumerateFiles(DirectoryStructure.ContentFolder).Contains(path)
+								 ? "The archives located inside the game content folder can only be opened in read-only mode."
+								 : ""
+							)
+						);
 				}
 				throw new FileNotFoundException("Unable to find the archive file.");
 			}
@@ -291,9 +281,9 @@ namespace CryCil.Engine.Files
 				return;
 			}
 			this.disposed = true;
-			
+
 			CloseArchive(this.handle);
-			
+
 			this.handle = IntPtr.Zero;
 
 			GC.SuppressFinalize(this);

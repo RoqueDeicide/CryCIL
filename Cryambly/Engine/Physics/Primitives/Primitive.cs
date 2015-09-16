@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
-using CryCil.RunTime;
 
 namespace CryCil.Engine.Physics.Primitives
 {

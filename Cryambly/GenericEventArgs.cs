@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 
 namespace CryCil
@@ -39,7 +38,7 @@ namespace CryCil
 		public bool Equals(EventArgs<ExtraDataType> other)
 		{
 			return other != null &&
-				(ReferenceEquals(this, other) || this.Parameter.Equals(other.Parameter));
+				   (ReferenceEquals(this, other) || this.Parameter.Equals(other.Parameter));
 		}
 		/// <summary>
 		/// Determines whether this object is equal to another.
@@ -53,11 +52,11 @@ namespace CryCil
 		public override bool Equals(object obj)
 		{
 			return obj != null &&
-			(
-				ReferenceEquals(this, obj) ||
-				obj.GetType() == this.GetType() &&
-				this.Parameter.Equals(((EventArgs<ExtraDataType>)obj).Parameter)
-			);
+				   (
+					   ReferenceEquals(this, obj) ||
+					   obj.GetType() == this.GetType() &&
+					   this.Parameter.Equals(((EventArgs<ExtraDataType>)obj).Parameter)
+					   );
 		}
 		/// <summary>
 		/// Gets hash code of this object.

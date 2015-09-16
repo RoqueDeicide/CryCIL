@@ -11,25 +11,21 @@ namespace CryCil.MemoryMapping
 	{
 		#region Fields
 		/// <summary>
-		/// <see cref="UInt32"/> value.
+		/// <see cref="uint"/> value.
 		/// </summary>
-		[FieldOffset(0)]
-		public uint UnsignedInt;
+		[FieldOffset(0)] public uint UnsignedInt;
 		/// <summary>
-		/// <see cref="Int32"/> value.
+		/// <see cref="int"/> value.
 		/// </summary>
-		[FieldOffset(0)]
-		public int SignedInt;
+		[FieldOffset(0)] public int SignedInt;
 		/// <summary>
-		/// <see cref="Single"/> value.
+		/// <see cref="float"/> value.
 		/// </summary>
-		[FieldOffset(0)]
-		public float SingleFloat;
+		[FieldOffset(0)] public float SingleFloat;
 		/// <summary>
 		/// <see cref="Boolean"/> value.
 		/// </summary>
-		[FieldOffset(0)]
-		public bool Boolean;
+		[FieldOffset(0)] public bool Boolean;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -59,7 +55,7 @@ namespace CryCil.MemoryMapping
 		/// <summary>
 		/// Initializes new instance of <see cref="Bytes4"/> type.
 		/// </summary>
-		/// <param name="value"><see cref="Int32"/> value to initialize this object with.</param>
+		/// <param name="value"><see cref="int"/> value to initialize this object with.</param>
 		public Bytes4(int value)
 			: this()
 		{
@@ -68,7 +64,7 @@ namespace CryCil.MemoryMapping
 		/// <summary>
 		/// Initializes new instance of <see cref="Bytes4"/> type.
 		/// </summary>
-		/// <param name="value"><see cref="UInt32"/> value to initialize this object with.</param>
+		/// <param name="value"><see cref="uint"/> value to initialize this object with.</param>
 		public Bytes4(uint value)
 			: this()
 		{
@@ -77,7 +73,7 @@ namespace CryCil.MemoryMapping
 		/// <summary>
 		/// Initializes new instance of <see cref="Bytes4"/> type.
 		/// </summary>
-		/// <param name="value"><see cref="Single"/> value to initialize this object with.</param>
+		/// <param name="value"><see cref="float"/> value to initialize this object with.</param>
 		public Bytes4(float value)
 			: this()
 		{
@@ -134,7 +130,8 @@ namespace CryCil.MemoryMapping
 		{
 			if (pointer == null)
 			{
-				throw new ArgumentNullException("pointer", "Bytes4.Constructor: Unable to initialize new object of type Bytes4: Provided pointer is null.");
+				throw new ArgumentNullException("pointer",
+												"Bytes4.Constructor: Unable to initialize new object of type Bytes4: Provided pointer is null.");
 			}
 			this.SignedInt = Marshal.ReadInt32(pointer, index);
 		}
@@ -147,7 +144,6 @@ namespace CryCil.MemoryMapping
 		/// <param name="offset">
 		/// Zero-based index of first of 4 bytes within native memory cluster to get.
 		/// </param>
-
 		public void Get(IntPtr handle, int offset)
 		{
 			this.SignedInt = Marshal.ReadInt32(handle, offset);

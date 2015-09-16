@@ -14,8 +14,7 @@ namespace CryCil.Engine
 	public class ParticleEffectEnumerator : IEnumerator<ParticleEffect>
 	{
 		#region Fields
-		[UsedImplicitly]
-		private IntPtr handle;
+		[UsedImplicitly] private IntPtr handle;
 		private ParticleEffect current;
 		#endregion
 		#region Properties

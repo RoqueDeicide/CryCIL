@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using CryCil.Geometry;
 using CryCil.Graphics;
 
@@ -19,13 +15,8 @@ namespace CryCil.Engine.DebugServices
 		/// Gets or sets flags that specify rendering auxiliary geometry objects.
 		/// </summary>
 		/// <remarks>Only public flags are available for getting/setting.</remarks>
-		public static extern AuxiliaryGeometryRenderFlags Flags
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			get;
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			set;
-		}
+		public static extern AuxiliaryGeometryRenderFlags Flags { [MethodImpl(MethodImplOptions.InternalCall)] get;
+			[MethodImpl(MethodImplOptions.InternalCall)] set; }
 		#endregion
 		#region Interface
 		/// <summary>
@@ -147,7 +138,7 @@ namespace CryCil.Engine.DebugServices
 		/// <exception cref="ArgumentNullException">Array of vertexes cannot be null.</exception>
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern void DrawPolyline(Vector3[] vertexes, bool closed, ColorByte color,
-											float thickness = 1.0f);
+											   float thickness = 1.0f);
 		/// <summary>
 		/// Draws a polyline.
 		/// </summary>
@@ -162,7 +153,7 @@ namespace CryCil.Engine.DebugServices
 		/// </exception>
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern void DrawPolyline(Vector3[] vertexes, bool closed, ColorByte[] colors,
-											float thickness = 1.0f);
+											   float thickness = 1.0f);
 		/// <summary>
 		/// Draws a triangle.
 		/// </summary>
@@ -257,7 +248,7 @@ namespace CryCil.Engine.DebugServices
 		/// <param name="style">Style of rendering the boxes.</param>
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern void DrawAABBs(BoundingBox[] boxes, bool solid, ColorByte color,
-										   BoundingBoxRenderStyle style = BoundingBoxRenderStyle.Faceted);
+											BoundingBoxRenderStyle style = BoundingBoxRenderStyle.Faceted);
 		/// <summary>
 		/// Draws an oriented bounding box.
 		/// </summary>
@@ -322,7 +313,7 @@ namespace CryCil.Engine.DebugServices
 		/// <param name="shaded">   Indicates the the cone is shaded.</param>
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern void DrawCone(Vector3 center, Vector3 direction, float radius,
-											   float height, ColorByte color, bool shaded = true);
+										   float height, ColorByte color, bool shaded = true);
 		/// <summary>
 		/// Draws a cylinder.
 		/// </summary>

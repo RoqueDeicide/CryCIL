@@ -19,28 +19,23 @@ namespace CryCil.Graphics
 		/// <summary>
 		/// All 4 bytes of this structure.
 		/// </summary>
-		[FieldOffset(0)]
-		public Bytes4 Bytes;
+		[FieldOffset(0)] public Bytes4 Bytes;
 		/// <summary>
 		/// Red component of the color.
 		/// </summary>
-		[FieldOffset(0)]
-		public byte Red;
+		[FieldOffset(0)] public byte Red;
 		/// <summary>
 		/// Green component of the color.
 		/// </summary>
-		[FieldOffset(1)]
-		public byte Green;
+		[FieldOffset(1)] public byte Green;
 		/// <summary>
 		/// Blue component of the color.
 		/// </summary>
-		[FieldOffset(2)]
-		public byte Blue;
+		[FieldOffset(2)] public byte Blue;
 		/// <summary>
 		/// Alpha component of the color.
 		/// </summary>
-		[FieldOffset(3)]
-		public byte Alpha;
+		[FieldOffset(3)] public byte Alpha;
 		/// <summary>
 		/// Creates new instance of this type.
 		/// </summary>
@@ -190,7 +185,8 @@ namespace CryCil.Graphics
 			}
 			if (text[0] != '[')
 			{
-				throw new ArgumentException("Attempt to parse text that is not a recognizable Color32 representation as object of that type.");
+				throw new ArgumentException(
+					"Attempt to parse text that is not a recognizable Color32 representation as object of that type.");
 			}
 			string[] componentStrings = text.Substring(1, text.Length - 2).Split(' ');
 			try
@@ -206,7 +202,8 @@ namespace CryCil.Graphics
 			}
 			catch (Exception)
 			{
-				throw new ArgumentException("Attempt to parse text that is not a recognizable Color32 representation as object of that type.");
+				throw new ArgumentException(
+					"Attempt to parse text that is not a recognizable Color32 representation as object of that type.");
 			}
 		}
 		/// <summary>

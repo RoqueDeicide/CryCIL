@@ -12,8 +12,7 @@ namespace CryCil.Engine.Rendering
 	public struct SubMaterials : IList<Material>
 	{
 		#region Fields
-		[UsedImplicitly]
-		private IntPtr matHandle;
+		[UsedImplicitly] private IntPtr matHandle;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -105,13 +104,11 @@ namespace CryCil.Engine.Rendering
 		/// Inserts a sub-material at specified position.
 		/// </summary>
 		/// <param name="index">Zero-based index of the position of insertion.</param>
-		/// <param name="item">Material to insert.</param>
+		/// <param name="item"> Material to insert.</param>
 		/// <exception cref="NullReferenceException">
 		/// Unable to access the sub-material of an invalid material object.
 		/// </exception>
-		/// <exception cref="IndexOutOfRangeException">
-		/// Index cannot be less then 0.
-		/// </exception>
+		/// <exception cref="IndexOutOfRangeException">Index cannot be less then 0.</exception>
 		/// <exception cref="ArgumentNullException">
 		/// Cannot insert invalid material into the collection.
 		/// </exception>
@@ -148,15 +145,12 @@ namespace CryCil.Engine.Rendering
 			this[index] = item;
 		}
 		/// <summary>
-		/// 
 		/// </summary>
 		/// <param name="index"></param>
 		/// <exception cref="NullReferenceException">
 		/// Unable to access the sub-material of an invalid material object.
 		/// </exception>
-		/// <exception cref="IndexOutOfRangeException">
-		/// Index cannot be less then 0.
-		/// </exception>
+		/// <exception cref="IndexOutOfRangeException">Index cannot be less then 0.</exception>
 		public void RemoveAt(int index)
 		{
 			if (index < 0)
@@ -175,8 +169,10 @@ namespace CryCil.Engine.Rendering
 		/// <summary>
 		/// Copies sub-materials from this collection to the array.
 		/// </summary>
-		/// <param name="array">An array to copy sub-materials to.</param>
-		/// <param name="arrayIndex">Zero-based index of the first slot in the array to start copying to.</param>
+		/// <param name="array">     An array to copy sub-materials to.</param>
+		/// <param name="arrayIndex">
+		/// Zero-based index of the first slot in the array to start copying to.
+		/// </param>
 		/// <exception cref="NullReferenceException">
 		/// Unable to access the sub-material of an invalid material object.
 		/// </exception>

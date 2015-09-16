@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using CryCil.Annotations;
 using CryCil.Engine.Data;
 using CryCil.Geometry.Splines;
@@ -26,20 +22,13 @@ namespace CryCil.Engine.Environment
 		public struct VariableInfo
 		{
 			#region Fields
-			[UsedImplicitly]
-			private IntPtr name;
-			[UsedImplicitly]
-			private IntPtr displayName;
-			[UsedImplicitly]
-			private IntPtr group;
-			[UsedImplicitly]
-			private TimeOfDayParameterId id;
-			[UsedImplicitly]
-			private bool isColor;
-			[UsedImplicitly]
-			private Vector3 value;
-			[UsedImplicitly]
-			private CryEngineSpline spline;
+			[UsedImplicitly] private IntPtr name;
+			[UsedImplicitly] private IntPtr displayName;
+			[UsedImplicitly] private IntPtr group;
+			[UsedImplicitly] private TimeOfDayParameterId id;
+			[UsedImplicitly] private bool isColor;
+			[UsedImplicitly] private Vector3 value;
+			[UsedImplicitly] private CryEngineSpline spline;
 			#endregion
 			#region Properties
 			/// <summary>
@@ -125,13 +114,8 @@ namespace CryCil.Engine.Environment
 		/// <summary>
 		/// Gets or sets information about the day/night cycle.
 		/// </summary>
-		public static extern DayNightCycleInfo Cycle
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			get;
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			set;
-		}
+		public static extern DayNightCycleInfo Cycle { [MethodImpl(MethodImplOptions.InternalCall)] get;
+			[MethodImpl(MethodImplOptions.InternalCall)] set; }
 		/// <summary>
 		/// Gets or sets information about the sun positioning in the sky.
 		/// </summary>
@@ -139,23 +123,13 @@ namespace CryCil.Engine.Environment
 		/// <see cref="SunPositioning.LinkedToTimeOfDay"/> field is set <c>false</c> by default until this
 		/// property is set at least once.
 		/// </remarks>
-		public static extern SunPositioning Sun
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			get;
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			set;
-		}
+		public static extern SunPositioning Sun { [MethodImpl(MethodImplOptions.InternalCall)] get;
+			[MethodImpl(MethodImplOptions.InternalCall)] set; }
 		/// <summary>
 		/// Gets or sets current time stamp.
 		/// </summary>
-		public static extern float Time
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			get;
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			set;
-		}
+		public static extern float Time { [MethodImpl(MethodImplOptions.InternalCall)] get;
+			[MethodImpl(MethodImplOptions.InternalCall)] set; }
 		#endregion
 		#region Interface
 		/// <summary>

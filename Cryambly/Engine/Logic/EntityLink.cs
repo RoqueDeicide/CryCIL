@@ -10,8 +10,7 @@ namespace CryCil.Engine.Logic
 	public struct EntityLink
 	{
 		#region Fields
-		[UsedImplicitly]
-		private IntPtr handle;
+		[UsedImplicitly] private IntPtr handle;
 		#endregion
 		#region Properties
 		/// <summary>

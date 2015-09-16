@@ -17,7 +17,7 @@ namespace CryCil
 		/// <summary>
 		/// Zero vector.
 		/// </summary>
-		public readonly static Vector4 Zero;
+		public static readonly Vector4 Zero;
 		/// <summary>
 		/// Number of components of this vector.
 		/// </summary>
@@ -46,7 +46,11 @@ namespace CryCil
 		/// </summary>
 		public bool IsNormalized
 		{
-			get { return Math.Abs((this.X * this.X) + (this.Y * this.Y) + (this.Z * this.Z) + (this.W * this.W) - 1f) < MathHelpers.ZeroTolerance; }
+			get
+			{
+				return Math.Abs((this.X * this.X) + (this.Y * this.Y) + (this.Z * this.Z) + (this.W * this.W) - 1f) <
+					   MathHelpers.ZeroTolerance;
+			}
 		}
 		/// <summary>
 		/// Gets or sets the component at the specified index.
@@ -113,9 +117,9 @@ namespace CryCil
 			get
 			{
 				return MathHelpers.IsNumberValid(this.X) &&
-					MathHelpers.IsNumberValid(this.Y) &&
-					MathHelpers.IsNumberValid(this.Z) &&
-					MathHelpers.IsNumberValid(this.W);
+					   MathHelpers.IsNumberValid(this.Y) &&
+					   MathHelpers.IsNumberValid(this.Z) &&
+					   MathHelpers.IsNumberValid(this.W);
 			}
 		}
 		#endregion
@@ -641,8 +645,10 @@ namespace CryCil
 			if (format == null)
 				return this.ToString();
 
-			return string.Format(CultureInfo.CurrentCulture, "X:{0} Y:{1} Z:{2} W:{3}", this.X.ToString(format, CultureInfo.CurrentCulture),
-				this.Y.ToString(format, CultureInfo.CurrentCulture), this.Z.ToString(format, CultureInfo.CurrentCulture), this.W.ToString(format, CultureInfo.CurrentCulture));
+			return string.Format(CultureInfo.CurrentCulture, "X:{0} Y:{1} Z:{2} W:{3}",
+								 this.X.ToString(format, CultureInfo.CurrentCulture),
+								 this.Y.ToString(format, CultureInfo.CurrentCulture), this.Z.ToString(format, CultureInfo.CurrentCulture),
+								 this.W.ToString(format, CultureInfo.CurrentCulture));
 		}
 		/// <summary>
 		/// Returns a <see cref="System.String"/> that represents this instance.
@@ -665,7 +671,8 @@ namespace CryCil
 				this.ToString(formatProvider);
 
 			return string.Format(formatProvider, "X:{0} Y:{1} Z:{2} W:{3}", this.X.ToString(format, formatProvider),
-				this.Y.ToString(format, formatProvider), this.Z.ToString(format, formatProvider), this.W.ToString(format, formatProvider));
+								 this.Y.ToString(format, formatProvider), this.Z.ToString(format, formatProvider),
+								 this.W.ToString(format, formatProvider));
 		}
 		#endregion
 		#region Equality Checks
@@ -717,12 +724,12 @@ namespace CryCil
 		public bool Equals(Vector4 other, float epsilon)
 		{
 			return
-			(
-				Math.Abs(other.X - this.X) < epsilon &&
-				Math.Abs(other.Y - this.Y) < epsilon &&
-				Math.Abs(other.Z - this.Z) < epsilon &&
-				Math.Abs(other.W - this.W) < epsilon
-			);
+				(
+					Math.Abs(other.X - this.X) < epsilon &&
+					Math.Abs(other.Y - this.Y) < epsilon &&
+					Math.Abs(other.Z - this.Z) < epsilon &&
+					Math.Abs(other.W - this.W) < epsilon
+					);
 		}
 		/// <summary>
 		/// Determines whether the specified <see cref="System.Object"/> is equal to this instance.
@@ -750,7 +757,7 @@ namespace CryCil
 		/// <returns>An array of four elements which contain corresponding vector components.</returns>
 		public float[] ToArray()
 		{
-			return new[] { this.X, this.Y, this.Z, this.W };
+			return new[] {this.X, this.Y, this.Z, this.W};
 		}
 		/// <summary>
 		/// Creates a list that contains components of this vector.
@@ -758,7 +765,7 @@ namespace CryCil
 		/// <returns>A list of four elements which contain corresponding vector components.</returns>
 		public List<float> ToList()
 		{
-			List<float> result = new List<float>(4) { this.X, this.Y, this.Z, this.W };
+			List<float> result = new List<float>(4) {this.X, this.Y, this.Z, this.W};
 			return result;
 		}
 		/// <summary>

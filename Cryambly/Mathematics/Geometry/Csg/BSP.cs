@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using CryCil.Annotations;
 
@@ -17,7 +16,7 @@ namespace CryCil.Geometry.Csg
 		/// </summary>
 		/// <remarks>
 		/// When this property is not initialized, its <see cref="CryCil.Geometry.Plane.D"/> is equal to
-		/// <see cref="Single.NaN"/> .
+		/// <see cref="float.NaN"/> .
 		/// </remarks>
 		public Plane Plane { get; private set; }
 		/// <summary>
@@ -63,7 +62,7 @@ namespace CryCil.Geometry.Csg
 		/// <param name="customData">
 		/// An optional reference to data that can be used by a splitting algorithm.
 		/// </param>
-		public BspNode(IList<T> elements, [CanBeNull]  object customData)
+		public BspNode(IList<T> elements, [CanBeNull] object customData)
 		{
 			this.Plane = new Plane(0, 0, 0, float.NaN);
 			this.Elements = new List<T>();
@@ -96,14 +95,14 @@ namespace CryCil.Geometry.Csg
 			for (int i = 0; i < elements.Count; i++)
 			{
 				elements[i].Split
-				(
-					this.Plane,
-					this.Elements,			// Coplanars are assigned to this node.
-					this.Elements,			//
-					frontalElements,		// This will go into front branch.
-					backElements,			// This will go into back branch.
-					customData				// This might be a reference to the mesh object.
-				);
+					(
+					 this.Plane,
+					 this.Elements, // Coplanars are assigned to this node.
+					 this.Elements, //
+					 frontalElements, // This will go into front branch.
+					 backElements, // This will go into back branch.
+					 customData // This might be a reference to the mesh object.
+					);
 			}
 			// Assign front and back branches.
 			BspNode<T> t = this.Front;
@@ -222,7 +221,7 @@ namespace CryCil.Geometry.Csg
 		/// <param name="customData">
 		/// An optional reference to data that can be used by a splitting algorithm.
 		/// </param>
-		public void CutTreeOut(BspNode<T> bsp, [CanBeNull]  object customData)
+		public void CutTreeOut(BspNode<T> bsp, [CanBeNull] object customData)
 		{
 			this.Elements = bsp.FilterList(this.Elements, customData);
 			if (this.Front != null) this.Front.CutTreeOut(bsp, customData);
@@ -249,7 +248,7 @@ namespace CryCil.Geometry.Csg
 		}
 		#endregion
 		#region Utilities
-		private static void AssignBranch(ref BspNode<T> branch, IList<T> elements, [CanBeNull]  object customData)
+		private static void AssignBranch(ref BspNode<T> branch, IList<T> elements, [CanBeNull] object customData)
 		{
 			if (branch == null)
 			{

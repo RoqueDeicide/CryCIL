@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using CryCil.Annotations;
 using CryCil.Geometry;
 using CryCil.Utilities;
@@ -19,8 +16,7 @@ namespace CryCil.Engine.Data
 	public struct CrySync
 	{
 		#region Fields
-		[UsedImplicitly]
-		private IntPtr handle;
+		[UsedImplicitly] private IntPtr handle;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -76,10 +72,8 @@ namespace CryCil.Engine.Data
 		}
 		#endregion
 		#region Events
-
 		#endregion
 		#region Construction
-
 		#endregion
 		#region Interface
 		/// <summary>
@@ -142,7 +136,7 @@ namespace CryCil.Engine.Data
 		/// </para>
 		/// </remarks>
 		/// <example>
-		/// <code source="CrySync.Examples" lang="C#" />
+		/// <code source="CrySync.Examples" lang="C#"/>
 		/// </example>
 		/// <param name="name">     Name of the group.</param>
 		/// <param name="condition">Indicates whether the group should be started.</param>

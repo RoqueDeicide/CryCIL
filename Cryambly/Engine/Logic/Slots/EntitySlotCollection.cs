@@ -97,7 +97,8 @@ namespace CryCil.Engine.Logic
 			}
 			Contract.EndContractBlock();
 
-			return new CryEntitySlot(this.entityHandle, EntitySlotOps.LoadParticleEmitterDefault(this.entityHandle, -1, effect, prime, sync));
+			return new CryEntitySlot(this.entityHandle,
+									 EntitySlotOps.LoadParticleEmitterDefault(this.entityHandle, -1, effect, prime, sync));
 		}
 		/// <summary>
 		/// Creates a particle emitter and binds it to the next available slot.
@@ -117,7 +118,7 @@ namespace CryCil.Engine.Logic
 		/// Cannot use null particle effect to create an emitter that can be bound to the entity slot.
 		/// </exception>
 		public CryEntitySlot Load(ParticleEffect effect, ref ParticleSpawnParameters parameters,
-			bool prime = false, bool sync = false)
+								  bool prime = false, bool sync = false)
 		{
 			this.AssertEntity();
 			if (!effect.IsValid)
@@ -127,7 +128,8 @@ namespace CryCil.Engine.Logic
 			}
 			Contract.EndContractBlock();
 
-			return new CryEntitySlot(this.entityHandle, EntitySlotOps.LoadParticleEmitter(this.entityHandle, -1, effect, ref parameters, prime, sync));
+			return new CryEntitySlot(this.entityHandle,
+									 EntitySlotOps.LoadParticleEmitter(this.entityHandle, -1, effect, ref parameters, prime, sync));
 		}
 		/// <summary>
 		/// Puts a light source with given parameters into next available slot.
@@ -165,7 +167,6 @@ namespace CryCil.Engine.Logic
 
 			return new CryEntitySlot(this.entityHandle, EntitySlotOps.SetParticleEmitter(this.entityHandle, -1, emitter, sync));
 		}
-
 		#endregion
 		#region Utilities
 		// Assertion method.

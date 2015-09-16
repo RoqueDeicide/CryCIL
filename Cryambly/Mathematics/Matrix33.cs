@@ -17,77 +17,62 @@ namespace CryCil
 		/// <summary>
 		/// Identity matrix.
 		/// </summary>
-		public static readonly Matrix33 Identity = new Matrix33
-		(
-			1, 0, 0,
-			0, 1, 0,
-			0, 0, 1
-		);
+		public static readonly Matrix33 Identity = new Matrix33(1, 0, 0,
+																0, 1, 0,
+																0, 0, 1);
 		#endregion
 		#region Fields
 		#region Individual Elements
 		/// <summary>
 		/// First row, First Column.
 		/// </summary>
-		[FieldOffset(0)]
-		public float M00;
+		[FieldOffset(0)] public float M00;
 		/// <summary>
 		/// First row, Second Column.
 		/// </summary>
-		[FieldOffset(4)]
-		public float M01;
+		[FieldOffset(4)] public float M01;
 		/// <summary>
 		/// First row, Third Column.
 		/// </summary>
-		[FieldOffset(8)]
-		public float M02;
+		[FieldOffset(8)] public float M02;
 		/// <summary>
 		/// Second row, First Column.
 		/// </summary>
-		[FieldOffset(12)]
-		public float M10;
+		[FieldOffset(12)] public float M10;
 		/// <summary>
 		/// Second row, Second Column.
 		/// </summary>
-		[FieldOffset(16)]
-		public float M11;
+		[FieldOffset(16)] public float M11;
 		/// <summary>
 		/// Second row, Third Column.
 		/// </summary>
-		[FieldOffset(20)]
-		public float M12;
+		[FieldOffset(20)] public float M12;
 		/// <summary>
 		/// Third row, First Column.
 		/// </summary>
-		[FieldOffset(24)]
-		public float M20;
+		[FieldOffset(24)] public float M20;
 		/// <summary>
 		/// Third row, Second Column.
 		/// </summary>
-		[FieldOffset(28)]
-		public float M21;
+		[FieldOffset(28)] public float M21;
 		/// <summary>
 		/// Third row, Third Column.
 		/// </summary>
-		[FieldOffset(32)]
-		public float M22;
+		[FieldOffset(32)] public float M22;
 		#endregion
 		#region Rows
 		/// <summary>
 		/// First row.
 		/// </summary>
-		[FieldOffset(0)]
-		public Vector3 Row0;
+		[FieldOffset(0)] public Vector3 Row0;
 		/// <summary>
 		/// Second row.
 		/// </summary>
-		[FieldOffset(12)]
-		public Vector3 Row1;
+		[FieldOffset(12)] public Vector3 Row1;
 		/// <summary>
 		/// Third row.
 		/// </summary>
-		[FieldOffset(24)]
-		public Vector3 Row2;
+		[FieldOffset(24)] public Vector3 Row2;
 		#endregion
 		#endregion
 		#region Properties
@@ -96,10 +81,7 @@ namespace CryCil
 		/// </summary>
 		public Vector3 Column0
 		{
-			get
-			{
-				return new Vector3(this.M00, this.M10, this.M20);
-			}
+			get { return new Vector3(this.M00, this.M10, this.M20); }
 			set
 			{
 				this.M00 = value.X;
@@ -112,10 +94,7 @@ namespace CryCil
 		/// </summary>
 		public Vector3 Column1
 		{
-			get
-			{
-				return new Vector3(this.M01, this.M11, this.M21);
-			}
+			get { return new Vector3(this.M01, this.M11, this.M21); }
 			set
 			{
 				this.M01 = value.X;
@@ -128,10 +107,7 @@ namespace CryCil
 		/// </summary>
 		public Vector3 Column2
 		{
-			get
-			{
-				return new Vector3(this.M02, this.M12, this.M22);
-			}
+			get { return new Vector3(this.M02, this.M12, this.M22); }
 			set
 			{
 				this.M02 = value.X;
@@ -146,23 +122,21 @@ namespace CryCil
 		{
 			get
 			{
-				var angles = new Vector3
-				{
-					Y = (float)Math.Asin(Math.Max(-1.0, Math.Min(1.0, -this.M20)))
-				};
+				double r = Math.Asin(Math.Max(-1.0, Math.Min(1.0, -this.M20)));
+				double p = 0;
+				double y;
 
-				if (Math.Abs(Math.Abs(angles.Y) - (Math.PI * 0.5)) < 0.01)
+				if (Math.Abs(Math.Abs(r) - Math.PI / 2) < 0.01)
 				{
-					angles.X = 0;
-					angles.Z = (float)Math.Atan2(-this.M01, this.M11);
+					y = Math.Atan2(-this.M01, this.M11);
 				}
 				else
 				{
-					angles.X = (float)Math.Atan2(this.M21, this.M22);
-					angles.Z = (float)Math.Atan2(this.M10, this.M00);
+					p = Math.Atan2(this.M21, this.M22);
+					y = Math.Atan2(this.M10, this.M00);
 				}
 
-				return angles;
+				return new Vector3((float)p, (float)r, (float)y);
 			}
 		}
 		/// <summary>
@@ -172,23 +146,21 @@ namespace CryCil
 		{
 			get
 			{
-				var angles = new EulerAngles
-				{
-					Roll = (float)Math.Asin(Math.Max(-1.0, Math.Min(1.0, -this.M20)))
-				};
+				double r = Math.Asin(Math.Max(-1.0, Math.Min(1.0, -this.M20)));
+				double p = 0;
+				double y;
 
-				if (Math.Abs(Math.Abs(angles.Roll) - (Math.PI * 0.5)) < 0.01)
+				if (Math.Abs(Math.Abs(r) - Math.PI / 2) < 0.01)
 				{
-					angles.Pitch = 0;
-					angles.Yaw = (float)Math.Atan2(-this.M01, this.M11);
+					y = Math.Atan2(-this.M01, this.M11);
 				}
 				else
 				{
-					angles.Pitch = (float)Math.Atan2(this.M21, this.M22);
-					angles.Yaw = (float)Math.Atan2(this.M10, this.M00);
+					p = Math.Atan2(this.M21, this.M22);
+					y = Math.Atan2(this.M10, this.M00);
 				}
 
-				return angles;
+				return new EulerAngles((float)p, (float)r, (float)y);
 			}
 		}
 		/// <summary>
@@ -196,10 +168,7 @@ namespace CryCil
 		/// </summary>
 		public bool IsValid
 		{
-			get
-			{
-				return this.All(MathHelpers.IsNumberValid);
-			}
+			get { return this.All(MathHelpers.IsNumberValid); }
 		}
 		/// <summary>
 		/// Determines whether this matrix is orthonormal.
@@ -212,13 +181,12 @@ namespace CryCil
 				Vector3 y = this.Column1;
 				Vector3 z = this.Column2;
 
-				return
-					Math.Abs(x * y) <= MathHelpers.ZeroTolerance &&
-					Math.Abs(x * z) <= MathHelpers.ZeroTolerance &&
-					Math.Abs(y * z) <= MathHelpers.ZeroTolerance &&
-					Math.Abs(1 - x * x) < MathHelpers.ZeroTolerance &&
-					Math.Abs(1 - y * y) < MathHelpers.ZeroTolerance &&
-					Math.Abs(1 - z * z) < MathHelpers.ZeroTolerance;
+				return Math.Abs(x * y) <= MathHelpers.ZeroTolerance &&
+					   Math.Abs(x * z) <= MathHelpers.ZeroTolerance &&
+					   Math.Abs(y * z) <= MathHelpers.ZeroTolerance &&
+					   Math.Abs(1 - x * x) < MathHelpers.ZeroTolerance &&
+					   Math.Abs(1 - y * y) < MathHelpers.ZeroTolerance &&
+					   Math.Abs(1 - z * z) < MathHelpers.ZeroTolerance;
 			}
 		}
 		/// <summary>
@@ -232,10 +200,9 @@ namespace CryCil
 				Vector3 y = this.Column1;
 				Vector3 z = this.Column2;
 
-				return
-					x.IsEquivalent(y % z) && x.IsUnit(MathHelpers.ZeroTolerance) &&
-					y.IsEquivalent(z % x) && y.IsUnit(MathHelpers.ZeroTolerance) &&
-					z.IsEquivalent(x % y) && z.IsUnit(MathHelpers.ZeroTolerance);
+				return x.IsEquivalent(y % z) && x.IsUnit(MathHelpers.ZeroTolerance) &&
+					   y.IsEquivalent(z % x) && y.IsUnit(MathHelpers.ZeroTolerance) &&
+					   z.IsEquivalent(x % y) && z.IsUnit(MathHelpers.ZeroTolerance);
 			}
 		}
 		/// <summary>
@@ -246,12 +213,12 @@ namespace CryCil
 			get
 			{
 				return
-					   (this.M00 * this.M11 * this.M22) +
-					   (this.M01 * this.M12 * this.M20) +
-					   (this.M02 * this.M10 * this.M21) -
-					   (this.M02 * this.M11 * this.M20) -
-					   (this.M00 * this.M12 * this.M21) -
-					   (this.M01 * this.M10 * this.M22);
+					(this.M00 * this.M11 * this.M22) +
+					(this.M01 * this.M12 * this.M20) +
+					(this.M02 * this.M10 * this.M21) -
+					(this.M02 * this.M11 * this.M20) -
+					(this.M00 * this.M12 * this.M21) -
+					(this.M01 * this.M10 * this.M22);
 			}
 		}
 		/// <summary>
@@ -331,12 +298,9 @@ namespace CryCil
 		/// <param name="m20">Third row, First Column.</param>
 		/// <param name="m21">Third row, Second Column.</param>
 		/// <param name="m22">Third row, Third Column.</param>
-		public Matrix33
-		(
-			float m00, float m01, float m02,
-			float m10, float m11, float m12,
-			float m20, float m21, float m22
-		)
+		public Matrix33(float m00, float m01, float m02,
+						float m10, float m11, float m12,
+						float m20, float m21, float m22)
 			: this()
 		{
 			this.M00 = m00;
@@ -452,9 +416,15 @@ namespace CryCil
 		/// <param name="vz"><see cref="Vector3"/> object that contains third row.</param>
 		public void SetFromVectors(Vector3 vx, Vector3 vy, Vector3 vz)
 		{
-			this.M00 = vx.X; this.M01 = vy.X; this.M02 = vz.X;
-			this.M10 = vx.Y; this.M11 = vy.Y; this.M12 = vz.Y;
-			this.M20 = vx.Z; this.M21 = vy.Z; this.M22 = vz.Z;
+			this.M00 = vx.X;
+			this.M01 = vy.X;
+			this.M02 = vz.X;
+			this.M10 = vx.Y;
+			this.M11 = vy.Y;
+			this.M12 = vz.Y;
+			this.M20 = vx.Z;
+			this.M21 = vy.Z;
+			this.M22 = vz.Z;
 		}
 		/// <summary>
 		/// Creates new matrix from vectors that represent rows.
@@ -511,7 +481,6 @@ namespace CryCil
 		public bool IsEquivalent(Matrix33 m, float e = 0.05f)
 		{
 			return
-			(
 				(Math.Abs(this.M00 - m.M00) <= e) &&
 				(Math.Abs(this.M01 - m.M01) <= e) &&
 				(Math.Abs(this.M02 - m.M02) <= e) &&
@@ -520,21 +489,16 @@ namespace CryCil
 				(Math.Abs(this.M12 - m.M12) <= e) &&
 				(Math.Abs(this.M20 - m.M20) <= e) &&
 				(Math.Abs(this.M21 - m.M21) <= e) &&
-				(Math.Abs(this.M22 - m.M22) <= e)
-			);
+				(Math.Abs(this.M22 - m.M22) <= e);
 		}
 		/// <summary>
 		/// Swaps columns and rows of this matrix.
 		/// </summary>
 		public void Transpose()
 		{
-			this =
-				new Matrix33
-				(
-					this.M00, this.M10, this.M20,
-					this.M01, this.M11, this.M21,
-					this.M02, this.M12, this.M22
-				);
+			this = new Matrix33(this.M00, this.M10, this.M20,
+								this.M01, this.M11, this.M21,
+								this.M02, this.M12, this.M22);
 		}
 		/// <summary>
 		/// Inverts this matrix.
@@ -558,13 +522,9 @@ namespace CryCil
 			float m21 = (this.M02 * this.M10 - this.M12 * this.M00) / det;
 			float m22 = (this.M00 * this.M11 - this.M10 * this.M01) / det;
 			// Construct the matrix (transposed).
-			this =
-				new Matrix33
-				(
-					m00, m10, m20,
-					m01, m11, m21,
-					m02, m12, m22
-				);
+			this = new Matrix33(m00, m10, m20,
+								m01, m11, m21,
+								m02, m12, m22);
 			return true;
 		}
 		/// <summary>
@@ -680,9 +640,15 @@ namespace CryCil
 		public static Matrix33 operator *(Matrix33 left, float right)
 		{
 			var m33 = left;
-			m33.M00 *= right; m33.M01 *= right; m33.M02 *= right;
-			m33.M10 *= right; m33.M11 *= right; m33.M12 *= right;
-			m33.M20 *= right; m33.M21 *= right; m33.M22 *= right;
+			m33.M00 *= right;
+			m33.M01 *= right;
+			m33.M02 *= right;
+			m33.M10 *= right;
+			m33.M11 *= right;
+			m33.M12 *= right;
+			m33.M20 *= right;
+			m33.M21 *= right;
+			m33.M22 *= right;
 			return m33;
 		}
 		/// <summary>
@@ -695,9 +661,15 @@ namespace CryCil
 		{
 			var m33 = left;
 			var iop = 1.0f / right;
-			m33.M00 *= iop; m33.M01 *= iop; m33.M02 *= iop;
-			m33.M10 *= iop; m33.M11 *= iop; m33.M12 *= iop;
-			m33.M20 *= iop; m33.M21 *= iop; m33.M22 *= iop;
+			m33.M00 *= iop;
+			m33.M01 *= iop;
+			m33.M02 *= iop;
+			m33.M10 *= iop;
+			m33.M11 *= iop;
+			m33.M12 *= iop;
+			m33.M20 *= iop;
+			m33.M21 *= iop;
+			m33.M22 *= iop;
 			return m33;
 		}
 		/// <summary>
@@ -731,8 +703,8 @@ namespace CryCil
 		public static Vector3 operator *(Matrix33 left, Vector3 right)
 		{
 			return new Vector3(right.X * left.M00 + right.Y * left.M01 + right.Z * left.M02,
-				right.X * left.M10 + right.Y * left.M11 + right.Z * left.M12,
-				right.X * left.M20 + right.Y * left.M21 + right.Z * left.M22);
+							   right.X * left.M10 + right.Y * left.M11 + right.Z * left.M12,
+							   right.X * left.M20 + right.Y * left.M21 + right.Z * left.M22);
 		}
 		public override bool Equals(object obj)
 		{

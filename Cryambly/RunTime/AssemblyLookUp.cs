@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CryCil.Annotations;
 
 namespace CryCil.RunTime
 {
@@ -15,7 +10,7 @@ namespace CryCil.RunTime
 			var assemblies = AppDomain.CurrentDomain.GetAssemblies();
 			// ReSharper disable LoopCanBeConvertedToQuery
 			for (int i = 0; i < assemblies.Length; i++)
-			// ReSharper restore LoopCanBeConvertedToQuery
+				// ReSharper restore LoopCanBeConvertedToQuery
 			{
 				if (assemblies[i].GetName().Name == shortName)
 				{

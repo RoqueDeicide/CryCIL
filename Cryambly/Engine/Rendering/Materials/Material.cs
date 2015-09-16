@@ -16,8 +16,7 @@ namespace CryCil.Engine.Rendering
 	public struct Material
 	{
 		#region Fields
-		[UsedImplicitly]
-		private IntPtr handle;
+		[UsedImplicitly] private IntPtr handle;
 		#endregion
 		#region Static Properties
 		/// <summary>
@@ -134,7 +133,7 @@ namespace CryCil.Engine.Rendering
 		/// </summary>
 		public MaterialLayerCollection Layers
 		{
-			get { return new MaterialLayerCollection(this.handle);}
+			get { return new MaterialLayerCollection(this.handle); }
 		}
 		#endregion
 		#region Static Interface
@@ -219,7 +218,7 @@ namespace CryCil.Engine.Rendering
 		/// <summary>
 		/// Gets the value of the material parameter.
 		/// </summary>
-		/// <param name="name">Name of the parameter which value to get.</param>
+		/// <param name="name"> Name of the parameter which value to get.</param>
 		/// <param name="value">Returned value.</param>
 		/// <returns>True, if the parameter was found and it is a floating point parameter.</returns>
 		/// <exception cref="NullReferenceException">Instance object is not valid.</exception>
@@ -228,7 +227,7 @@ namespace CryCil.Engine.Rendering
 		/// <summary>
 		/// Gets the value of the material parameter.
 		/// </summary>
-		/// <param name="name">Name of the parameter which value to get.</param>
+		/// <param name="name"> Name of the parameter which value to get.</param>
 		/// <param name="value">Returned value.</param>
 		/// <returns>True, if the parameter was found and it is a vector parameter.</returns>
 		/// <exception cref="NullReferenceException">Instance object is not valid.</exception>
@@ -237,7 +236,7 @@ namespace CryCil.Engine.Rendering
 		/// <summary>
 		/// Sets the value of the material parameter.
 		/// </summary>
-		/// <param name="name">Name of the parameter which value to set.</param>
+		/// <param name="name"> Name of the parameter which value to set.</param>
 		/// <param name="value">The new value for the parameter.</param>
 		/// <returns>True, if the parameter was found and it is a floating point parameter.</returns>
 		/// <exception cref="NullReferenceException">Instance object is not valid.</exception>
@@ -246,7 +245,7 @@ namespace CryCil.Engine.Rendering
 		/// <summary>
 		/// Sets the value of the material parameter.
 		/// </summary>
-		/// <param name="name">Name of the parameter which value to set.</param>
+		/// <param name="name"> Name of the parameter which value to set.</param>
 		/// <param name="value">The new value for the parameter.</param>
 		/// <returns>True, if the parameter was found and it is a vector parameter.</returns>
 		/// <exception cref="NullReferenceException">Instance object is not valid.</exception>
@@ -269,7 +268,6 @@ namespace CryCil.Engine.Rendering
 		public extern unsafe int* FillSurfaceTypesTable(out int filledItems);
 		#endregion
 		#region Utilities
-
 		#endregion
 	}
 }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CryCil.Geometry
+﻿namespace CryCil.Geometry
 {
 	/// <summary>
 	/// Defines functions for working with combined transformations.
@@ -18,9 +12,18 @@ namespace CryCil.Geometry
 		/// <param name="quaternion">Quaternion that represents the transformation.</param>
 		public static void Apply(ref Vector3 vector, ref Quaternion quaternion)
 		{
-			vector.X = quaternion.W * quaternion.W * vector.X + 2 * quaternion.Y * quaternion.W * vector.Z - 2 * quaternion.Z * quaternion.W * vector.Y + quaternion.X * quaternion.X * vector.X + 2 * quaternion.Y * quaternion.X * vector.Y + 2 * quaternion.Z * quaternion.X * vector.Z - quaternion.Z * quaternion.Z * vector.X - quaternion.Y * quaternion.Y * vector.X;
-			vector.Y = 2 * quaternion.X * quaternion.Y * vector.X + quaternion.Y * quaternion.Y * vector.Y + 2 * quaternion.Z * quaternion.Y * vector.Z + 2 * quaternion.W * quaternion.Z * vector.X - quaternion.Z * quaternion.Z * vector.Y + quaternion.W * quaternion.W * vector.Y - 2 * quaternion.X * quaternion.W * vector.Z - quaternion.X * quaternion.X * vector.Y;
-			vector.Z = 2 * quaternion.X * quaternion.Z * vector.X + 2 * quaternion.Y * quaternion.Z * vector.Y + quaternion.Z * quaternion.Z * vector.Z - 2 * quaternion.W * quaternion.Y * vector.X - quaternion.Y * quaternion.Y * vector.Z + 2 * quaternion.W * quaternion.X * vector.Y - quaternion.X * quaternion.X * vector.Z + quaternion.W * quaternion.W * vector.Z;
+			vector.X = quaternion.W * quaternion.W * vector.X + 2 * quaternion.Y * quaternion.W * vector.Z -
+					   2 * quaternion.Z * quaternion.W * vector.Y + quaternion.X * quaternion.X * vector.X +
+					   2 * quaternion.Y * quaternion.X * vector.Y + 2 * quaternion.Z * quaternion.X * vector.Z -
+					   quaternion.Z * quaternion.Z * vector.X - quaternion.Y * quaternion.Y * vector.X;
+			vector.Y = 2 * quaternion.X * quaternion.Y * vector.X + quaternion.Y * quaternion.Y * vector.Y +
+					   2 * quaternion.Z * quaternion.Y * vector.Z + 2 * quaternion.W * quaternion.Z * vector.X -
+					   quaternion.Z * quaternion.Z * vector.Y + quaternion.W * quaternion.W * vector.Y -
+					   2 * quaternion.X * quaternion.W * vector.Z - quaternion.X * quaternion.X * vector.Y;
+			vector.Z = 2 * quaternion.X * quaternion.Z * vector.X + 2 * quaternion.Y * quaternion.Z * vector.Y +
+					   quaternion.Z * quaternion.Z * vector.Z - 2 * quaternion.W * quaternion.Y * vector.X -
+					   quaternion.Y * quaternion.Y * vector.Z + 2 * quaternion.W * quaternion.X * vector.Y -
+					   quaternion.X * quaternion.X * vector.Z + quaternion.W * quaternion.W * vector.Z;
 		}
 		/// <summary>
 		/// Applies transformation that is represented by given matrix to the vector.

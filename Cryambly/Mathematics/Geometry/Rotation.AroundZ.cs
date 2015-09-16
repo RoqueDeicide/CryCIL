@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CryCil.Geometry
+﻿namespace CryCil.Geometry
 {
 	public partial class Rotation
 	{
@@ -20,7 +14,8 @@ namespace CryCil.Geometry
 			/// <param name="angle"> Angle of rotation in radians.</param>
 			public static void Apply(ref Vector3 vector, float angle)
 			{
-				double s, c; MathHelpers.SinCos(angle, out s, out c);
+				double s, c;
+				MathHelpers.SinCos(angle, out s, out c);
 
 				Vector3 temp = vector;
 
@@ -51,9 +46,12 @@ namespace CryCil.Geometry
 			public static void Override(out Matrix33 matrix, float angle)
 			{
 				matrix = Matrix33.Identity;
-				float sine, cosine; MathHelpers.SinCos(angle, out sine, out cosine);
-				matrix.M00 = cosine; matrix.M01 = -sine;
-				matrix.M10 = sine; matrix.M11 = cosine;
+				float sine, cosine;
+				MathHelpers.SinCos(angle, out sine, out cosine);
+				matrix.M00 = cosine;
+				matrix.M01 = -sine;
+				matrix.M10 = sine;
+				matrix.M11 = cosine;
 			}
 			/// <summary>
 			/// Overrides given matrix with one that represents rotation around Z-axis.
@@ -63,9 +61,12 @@ namespace CryCil.Geometry
 			public static void Override(out Matrix34 matrix, float angle)
 			{
 				matrix = Matrix34.Identity;
-				float sine, cosine; MathHelpers.SinCos(angle, out sine, out cosine);
-				matrix.M00 = cosine; matrix.M01 = -sine;
-				matrix.M10 = sine; matrix.M11 = cosine;
+				float sine, cosine;
+				MathHelpers.SinCos(angle, out sine, out cosine);
+				matrix.M00 = cosine;
+				matrix.M01 = -sine;
+				matrix.M10 = sine;
+				matrix.M11 = cosine;
 			}
 			/// <summary>
 			/// Overrides given quaternion with one that represents rotation around Z-axis.
@@ -75,9 +76,12 @@ namespace CryCil.Geometry
 			public static void Override(out Matrix44 matrix, float angle)
 			{
 				matrix = Matrix44.Identity;
-				float sine, cosine; MathHelpers.SinCos(angle, out sine, out cosine);
-				matrix.M00 = cosine; matrix.M01 = -sine;
-				matrix.M10 = sine; matrix.M11 = cosine;
+				float sine, cosine;
+				MathHelpers.SinCos(angle, out sine, out cosine);
+				matrix.M00 = cosine;
+				matrix.M01 = -sine;
+				matrix.M10 = sine;
+				matrix.M11 = cosine;
 			}
 			/// <summary>
 			/// Overrides given quaternion with one that represents rotation around Z-axis.
@@ -99,10 +103,17 @@ namespace CryCil.Geometry
 			/// <param name="angle"> Angle of rotation in radians.</param>
 			public static void Set(ref Matrix33 matrix, float angle)
 			{
-				float s, c; MathHelpers.SinCos(angle, out s, out c);
-				matrix.M00 = c; matrix.M01 = -s; matrix.M02 = 0.0f;
-				matrix.M10 = s; matrix.M11 = c; matrix.M12 = 0.0f;
-				matrix.M20 = 0.0f; matrix.M21 = 0.0f; matrix.M22 = 1.0f;
+				float s, c;
+				MathHelpers.SinCos(angle, out s, out c);
+				matrix.M00 = c;
+				matrix.M01 = -s;
+				matrix.M02 = 0.0f;
+				matrix.M10 = s;
+				matrix.M11 = c;
+				matrix.M12 = 0.0f;
+				matrix.M20 = 0.0f;
+				matrix.M21 = 0.0f;
+				matrix.M22 = 1.0f;
 			}
 			/// <summary>
 			/// Changes first 3 columns of given matrix so they represent a rotation around Z-axis.
@@ -111,10 +122,17 @@ namespace CryCil.Geometry
 			/// <param name="angle"> Angle of rotation in radians.</param>
 			public static void Set(ref Matrix34 matrix, float angle)
 			{
-				float s, c; MathHelpers.SinCos(angle, out s, out c);
-				matrix.M00 = c; matrix.M01 = -s; matrix.M02 = 0.0f;
-				matrix.M10 = s; matrix.M11 = c; matrix.M12 = 0.0f;
-				matrix.M20 = 0.0f; matrix.M21 = 0.0f; matrix.M22 = 1.0f;
+				float s, c;
+				MathHelpers.SinCos(angle, out s, out c);
+				matrix.M00 = c;
+				matrix.M01 = -s;
+				matrix.M02 = 0.0f;
+				matrix.M10 = s;
+				matrix.M11 = c;
+				matrix.M12 = 0.0f;
+				matrix.M20 = 0.0f;
+				matrix.M21 = 0.0f;
+				matrix.M22 = 1.0f;
 			}
 			/// <summary>
 			/// Changes top-left 3x3 submatrix of given matrix so it represent a rotation around Z-axis.
@@ -123,10 +141,17 @@ namespace CryCil.Geometry
 			/// <param name="angle"> Angle of rotation in radians.</param>
 			public static void Set(ref Matrix44 matrix, float angle)
 			{
-				float s, c; MathHelpers.SinCos(angle, out s, out c);
-				matrix.M00 = c; matrix.M01 = -s; matrix.M02 = 0.0f;
-				matrix.M10 = s; matrix.M11 = c; matrix.M12 = 0.0f;
-				matrix.M20 = 0.0f; matrix.M21 = 0.0f; matrix.M22 = 1.0f;
+				float s, c;
+				MathHelpers.SinCos(angle, out s, out c);
+				matrix.M00 = c;
+				matrix.M01 = -s;
+				matrix.M02 = 0.0f;
+				matrix.M10 = s;
+				matrix.M11 = c;
+				matrix.M12 = 0.0f;
+				matrix.M20 = 0.0f;
+				matrix.M21 = 0.0f;
+				matrix.M22 = 1.0f;
 			}
 			/// <summary>
 			/// Overrides given quaternion with one that represents rotation around Z-axis.
@@ -151,10 +176,13 @@ namespace CryCil.Geometry
 			public static void StackUp(ref Matrix33 matrix, float angle)
 			{
 				Matrix33 rm = Matrix33.Identity;
-				float sine, cosine; MathHelpers.SinCos(angle, out sine, out cosine);
+				float sine, cosine;
+				MathHelpers.SinCos(angle, out sine, out cosine);
 
-				rm.M00 = cosine; rm.M01 = -sine;
-				rm.M10 = sine; rm.M11 = cosine;
+				rm.M00 = cosine;
+				rm.M01 = -sine;
+				rm.M10 = sine;
+				rm.M11 = cosine;
 
 				matrix = rm * matrix;
 			}
@@ -167,10 +195,13 @@ namespace CryCil.Geometry
 			public static void StackUp(ref Matrix34 matrix, float angle)
 			{
 				Matrix34 rm = Matrix34.Identity;
-				float sine, cosine; MathHelpers.SinCos(angle, out sine, out cosine);
+				float sine, cosine;
+				MathHelpers.SinCos(angle, out sine, out cosine);
 
-				rm.M00 = cosine; rm.M01 = -sine;
-				rm.M10 = sine; rm.M11 = cosine;
+				rm.M00 = cosine;
+				rm.M01 = -sine;
+				rm.M10 = sine;
+				rm.M11 = cosine;
 
 				matrix = rm * matrix;
 			}
@@ -183,10 +214,13 @@ namespace CryCil.Geometry
 			public static void StackUp(ref Matrix44 matrix, float angle)
 			{
 				Matrix44 rm = Matrix44.Identity;
-				float sine, cosine; MathHelpers.SinCos(angle, out sine, out cosine);
+				float sine, cosine;
+				MathHelpers.SinCos(angle, out sine, out cosine);
 
-				rm.M00 = cosine; rm.M01 = -sine;
-				rm.M10 = sine; rm.M11 = cosine;
+				rm.M00 = cosine;
+				rm.M01 = -sine;
+				rm.M10 = sine;
+				rm.M11 = cosine;
 
 				matrix = rm * matrix;
 			}
@@ -219,9 +253,12 @@ namespace CryCil.Geometry
 			public static Matrix33 Create33(float angle)
 			{
 				Matrix33 matrix = Matrix33.Identity;
-				float sine, cosine; MathHelpers.SinCos(angle, out sine, out cosine);
-				matrix.M00 = cosine; matrix.M01 = -sine;
-				matrix.M10 = sine; matrix.M11 = cosine;
+				float sine, cosine;
+				MathHelpers.SinCos(angle, out sine, out cosine);
+				matrix.M00 = cosine;
+				matrix.M01 = -sine;
+				matrix.M10 = sine;
+				matrix.M11 = cosine;
 				return matrix;
 			}
 			/// <summary>
@@ -232,9 +269,12 @@ namespace CryCil.Geometry
 			public static Matrix34 Create34(float angle)
 			{
 				Matrix34 matrix = Matrix34.Identity;
-				float sine, cosine; MathHelpers.SinCos(angle, out sine, out cosine);
-				matrix.M00 = cosine; matrix.M01 = -sine;
-				matrix.M10 = sine; matrix.M11 = cosine;
+				float sine, cosine;
+				MathHelpers.SinCos(angle, out sine, out cosine);
+				matrix.M00 = cosine;
+				matrix.M01 = -sine;
+				matrix.M10 = sine;
+				matrix.M11 = cosine;
 				return matrix;
 			}
 			/// <summary>
@@ -245,9 +285,12 @@ namespace CryCil.Geometry
 			public static Matrix44 Create44(float angle)
 			{
 				Matrix44 matrix = Matrix44.Identity;
-				float sine, cosine; MathHelpers.SinCos(angle, out sine, out cosine);
-				matrix.M00 = cosine; matrix.M01 = -sine;
-				matrix.M10 = sine; matrix.M11 = cosine;
+				float sine, cosine;
+				MathHelpers.SinCos(angle, out sine, out cosine);
+				matrix.M00 = cosine;
+				matrix.M01 = -sine;
+				matrix.M10 = sine;
+				matrix.M11 = cosine;
 				return matrix;
 			}
 			/// <summary>

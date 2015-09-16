@@ -17,7 +17,7 @@ namespace CryCil.RunTime.Compilation.Reporting
 		{
 			this.InitializeComponent();
 
-			foreach (ListViewItem item in failures.Select(failure => new ListViewItem(new[] { failure.Key, failure.Value })))
+			foreach (ListViewItem item in failures.Select(failure => new ListViewItem(new[] {failure.Key, failure.Value})))
 			{
 				this.ProblemsList.Items.Add(item);
 			}

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CryCil.Geometry
+﻿namespace CryCil.Geometry
 {
 	public partial class Rotation
 	{
@@ -22,7 +16,8 @@ namespace CryCil.Geometry
 			/// </param>
 			public static void Apply(ref Vector3 vector, ref AngleAxis angleAxis)
 			{
-				double sine; double cosine;
+				double sine;
+				double cosine;
 				MathHelpers.SinCos(angleAxis.Angle, out sine, out cosine);
 				Vector3 axis = angleAxis.Axis;
 				Apply(ref vector, ref axis, (float)sine, (float)cosine);
@@ -35,7 +30,8 @@ namespace CryCil.Geometry
 			/// <param name="angle"> Angle of rotation.</param>
 			public static void Apply(ref Vector3 vector, ref Vector3 axis, float angle)
 			{
-				double sine; double cosine;
+				double sine;
+				double cosine;
 				MathHelpers.SinCos(angle, out sine, out cosine);
 
 				Apply(ref vector, ref axis, (float)sine, (float)cosine);
@@ -51,32 +47,32 @@ namespace CryCil.Geometry
 			{
 				double ic = 1 - cosine;
 				vector = new Vector3
-				(
-					(float)
 					(
-						(ic * axis.X * axis.X + cosine) * vector.X
-						+
-						(ic * axis.X * axis.Y - axis.Z * sine) * vector.Y
-						+
-						(ic * axis.X * axis.Z + axis.Y * sine) * vector.Z
-					),
 					(float)
-					(
-						(ic * axis.Y * axis.X + axis.Z * sine) * vector.X
-						+
-						(ic * axis.Y * axis.Y + cosine) * vector.Y
-						+
-						(ic * axis.Y * axis.Z - axis.X * sine) * vector.Z
-					),
+						(
+							(ic * axis.X * axis.X + cosine) * vector.X
+							+
+							(ic * axis.X * axis.Y - axis.Z * sine) * vector.Y
+							+
+							(ic * axis.X * axis.Z + axis.Y * sine) * vector.Z
+							),
 					(float)
-					(
-						(ic * axis.Z * axis.X - axis.Y * sine) * vector.X
-						+
-						(ic * axis.Z * axis.Y + axis.X * sine) * vector.Y
-						+
-						(ic * axis.Z * axis.Z + cosine) * vector.Z
-					)
-				);
+						(
+							(ic * axis.Y * axis.X + axis.Z * sine) * vector.X
+							+
+							(ic * axis.Y * axis.Y + cosine) * vector.Y
+							+
+							(ic * axis.Y * axis.Z - axis.X * sine) * vector.Z
+							),
+					(float)
+						(
+							(ic * axis.Z * axis.X - axis.Y * sine) * vector.X
+							+
+							(ic * axis.Z * axis.Y + axis.X * sine) * vector.Y
+							+
+							(ic * axis.Z * axis.Z + cosine) * vector.Z
+							)
+					);
 			}
 			/// <summary>
 			/// Rotates given vector around a given axis using specified pivot.
@@ -138,7 +134,8 @@ namespace CryCil.Geometry
 			/// </param>
 			public static void Override(out Matrix33 matrix, ref AngleAxis angleAxis)
 			{
-				double sine; double cosine;
+				double sine;
+				double cosine;
 				MathHelpers.SinCos(angleAxis.Angle, out sine, out cosine);
 				Vector3 axis = angleAxis.Axis;
 				Override(out matrix, ref axis, (float)sine, (float)cosine);
@@ -151,7 +148,8 @@ namespace CryCil.Geometry
 			/// <param name="angle"> Angle of rotation in radians.</param>
 			public static void Override(out Matrix33 matrix, ref Vector3 axis, float angle)
 			{
-				double sine; double cosine;
+				double sine;
+				double cosine;
 				MathHelpers.SinCos(angle, out sine, out cosine);
 
 				Override(out matrix, ref axis, (float)sine, (float)cosine);
@@ -176,7 +174,8 @@ namespace CryCil.Geometry
 			/// </param>
 			public static void Override(out Matrix34 matrix, ref AngleAxis angleAxis)
 			{
-				double sine; double cosine;
+				double sine;
+				double cosine;
 				MathHelpers.SinCos(angleAxis.Angle, out sine, out cosine);
 				Vector3 axis = angleAxis.Axis;
 				Override(out matrix, ref axis, (float)sine, (float)cosine);
@@ -189,7 +188,8 @@ namespace CryCil.Geometry
 			/// <param name="angle"> Angle of rotation in radians.</param>
 			public static void Override(out Matrix34 matrix, ref Vector3 axis, float angle)
 			{
-				double sine; double cosine;
+				double sine;
+				double cosine;
 				MathHelpers.SinCos(angle, out sine, out cosine);
 
 				Override(out matrix, ref axis, (float)sine, (float)cosine);
@@ -214,7 +214,8 @@ namespace CryCil.Geometry
 			/// </param>
 			public static void Override(out Matrix44 matrix, ref AngleAxis angleAxis)
 			{
-				double sine; double cosine;
+				double sine;
+				double cosine;
 				MathHelpers.SinCos(angleAxis.Angle, out sine, out cosine);
 				Vector3 axis = angleAxis.Axis;
 				Override(out matrix, ref axis, (float)sine, (float)cosine);
@@ -227,7 +228,8 @@ namespace CryCil.Geometry
 			/// <param name="angle"> Angle of rotation in radians.</param>
 			public static void Override(out Matrix44 matrix, ref Vector3 axis, float angle)
 			{
-				double sine; double cosine;
+				double sine;
+				double cosine;
 				MathHelpers.SinCos(angle, out sine, out cosine);
 
 				Override(out matrix, ref axis, (float)sine, (float)cosine);
@@ -252,7 +254,8 @@ namespace CryCil.Geometry
 			/// </param>
 			public static void Override(out Quaternion quaternion, ref AngleAxis angleAxis)
 			{
-				double sine; double cosine;
+				double sine;
+				double cosine;
 				MathHelpers.SinCos(angleAxis.Angle / 2, out sine, out cosine);
 				Vector3 axis = angleAxis.Axis;
 				Override(out quaternion, ref axis, (float)sine, (float)cosine);
@@ -265,7 +268,8 @@ namespace CryCil.Geometry
 			/// <param name="angle">     Angle of rotation in radians.</param>
 			public static void Override(out Quaternion quaternion, ref Vector3 axis, float angle)
 			{
-				double sine; double cosine;
+				double sine;
+				double cosine;
 				MathHelpers.SinCos(angle / 2, out sine, out cosine);
 
 				Override(out quaternion, ref axis, (float)sine, (float)cosine);
@@ -290,7 +294,8 @@ namespace CryCil.Geometry
 			/// </param>
 			public static void Set(ref Matrix33 matrix, ref AngleAxis angleAxis)
 			{
-				double sine; double cosine;
+				double sine;
+				double cosine;
 				MathHelpers.SinCos(angleAxis.Angle, out sine, out cosine);
 				Vector3 axis = angleAxis.Axis;
 
@@ -304,7 +309,8 @@ namespace CryCil.Geometry
 			/// <param name="angle"> Angle of rotation in radians.</param>
 			public static void Set(ref Matrix33 matrix, ref Vector3 axis, float angle)
 			{
-				double sine; double cosine;
+				double sine;
+				double cosine;
 				MathHelpers.SinCos(angle, out sine, out cosine);
 
 				Set(ref matrix, ref axis, (float)sine, (float)cosine);
@@ -321,9 +327,15 @@ namespace CryCil.Geometry
 				float s = sine;
 				float c = cosine;
 				float mc = 1 - c;
-				matrix.M00 = mc * axis.X * axis.X + c; matrix.M01 = mc * axis.X * axis.Y - axis.Z * s; matrix.M02 = mc * axis.X * axis.Z + axis.Y * s;
-				matrix.M10 = mc * axis.Y * axis.X + axis.Z * s; matrix.M11 = mc * axis.Y * axis.Y + c; matrix.M12 = mc * axis.Y * axis.Z - axis.X * s;
-				matrix.M20 = mc * axis.Z * axis.X - axis.Y * s; matrix.M21 = mc * axis.Z * axis.Y + axis.X * s; matrix.M22 = mc * axis.Z * axis.Z + c;
+				matrix.M00 = mc * axis.X * axis.X + c;
+				matrix.M01 = mc * axis.X * axis.Y - axis.Z * s;
+				matrix.M02 = mc * axis.X * axis.Z + axis.Y * s;
+				matrix.M10 = mc * axis.Y * axis.X + axis.Z * s;
+				matrix.M11 = mc * axis.Y * axis.Y + c;
+				matrix.M12 = mc * axis.Y * axis.Z - axis.X * s;
+				matrix.M20 = mc * axis.Z * axis.X - axis.Y * s;
+				matrix.M21 = mc * axis.Z * axis.Y + axis.X * s;
+				matrix.M22 = mc * axis.Z * axis.Z + c;
 			}
 			/// <summary>
 			/// Modifies given matrix so it represents rotation around specified axis.
@@ -334,7 +346,8 @@ namespace CryCil.Geometry
 			/// </param>
 			public static void Set(ref Matrix34 matrix, ref AngleAxis angleAxis)
 			{
-				double sine; double cosine;
+				double sine;
+				double cosine;
 				MathHelpers.SinCos(angleAxis.Angle, out sine, out cosine);
 				Vector3 axis = angleAxis.Axis;
 				Set(ref matrix, ref axis, (float)sine, (float)cosine);
@@ -347,7 +360,8 @@ namespace CryCil.Geometry
 			/// <param name="angle"> Angle of rotation in radians.</param>
 			public static void Set(ref Matrix34 matrix, ref Vector3 axis, float angle)
 			{
-				double sine; double cosine;
+				double sine;
+				double cosine;
 				MathHelpers.SinCos(angle, out sine, out cosine);
 
 				Set(ref matrix, ref axis, (float)sine, (float)cosine);
@@ -364,9 +378,15 @@ namespace CryCil.Geometry
 				float s = sine;
 				float c = cosine;
 				float mc = 1 - c;
-				matrix.M00 = mc * axis.X * axis.X + c; matrix.M01 = mc * axis.X * axis.Y - axis.Z * s; matrix.M02 = mc * axis.X * axis.Z + axis.Y * s;
-				matrix.M10 = mc * axis.Y * axis.X + axis.Z * s; matrix.M11 = mc * axis.Y * axis.Y + c; matrix.M12 = mc * axis.Y * axis.Z - axis.X * s;
-				matrix.M20 = mc * axis.Z * axis.X - axis.Y * s; matrix.M21 = mc * axis.Z * axis.Y + axis.X * s; matrix.M22 = mc * axis.Z * axis.Z + c;
+				matrix.M00 = mc * axis.X * axis.X + c;
+				matrix.M01 = mc * axis.X * axis.Y - axis.Z * s;
+				matrix.M02 = mc * axis.X * axis.Z + axis.Y * s;
+				matrix.M10 = mc * axis.Y * axis.X + axis.Z * s;
+				matrix.M11 = mc * axis.Y * axis.Y + c;
+				matrix.M12 = mc * axis.Y * axis.Z - axis.X * s;
+				matrix.M20 = mc * axis.Z * axis.X - axis.Y * s;
+				matrix.M21 = mc * axis.Z * axis.Y + axis.X * s;
+				matrix.M22 = mc * axis.Z * axis.Z + c;
 			}
 			/// <summary>
 			/// Modifies given matrix so it represents rotation around specified axis.
@@ -377,7 +397,8 @@ namespace CryCil.Geometry
 			/// </param>
 			public static void Set(ref Matrix44 matrix, ref AngleAxis angleAxis)
 			{
-				double sine; double cosine;
+				double sine;
+				double cosine;
 				MathHelpers.SinCos(angleAxis.Angle, out sine, out cosine);
 				Vector3 axis = angleAxis.Axis;
 				Set(ref matrix, ref axis, (float)sine, (float)cosine);
@@ -390,7 +411,8 @@ namespace CryCil.Geometry
 			/// <param name="angle"> Angle of rotation in radians.</param>
 			public static void Set(ref Matrix44 matrix, ref Vector3 axis, float angle)
 			{
-				double sine; double cosine;
+				double sine;
+				double cosine;
 				MathHelpers.SinCos(angle, out sine, out cosine);
 
 				Set(ref matrix, ref axis, (float)sine, (float)cosine);
@@ -407,9 +429,15 @@ namespace CryCil.Geometry
 				float s = sine;
 				float c = cosine;
 				float mc = 1 - c;
-				matrix.M00 = mc * axis.X * axis.X + c; matrix.M01 = mc * axis.X * axis.Y - axis.Z * s; matrix.M02 = mc * axis.X * axis.Z + axis.Y * s;
-				matrix.M10 = mc * axis.Y * axis.X + axis.Z * s; matrix.M11 = mc * axis.Y * axis.Y + c; matrix.M12 = mc * axis.Y * axis.Z - axis.X * s;
-				matrix.M20 = mc * axis.Z * axis.X - axis.Y * s; matrix.M21 = mc * axis.Z * axis.Y + axis.X * s; matrix.M22 = mc * axis.Z * axis.Z + c;
+				matrix.M00 = mc * axis.X * axis.X + c;
+				matrix.M01 = mc * axis.X * axis.Y - axis.Z * s;
+				matrix.M02 = mc * axis.X * axis.Z + axis.Y * s;
+				matrix.M10 = mc * axis.Y * axis.X + axis.Z * s;
+				matrix.M11 = mc * axis.Y * axis.Y + c;
+				matrix.M12 = mc * axis.Y * axis.Z - axis.X * s;
+				matrix.M20 = mc * axis.Z * axis.X - axis.Y * s;
+				matrix.M21 = mc * axis.Z * axis.Y + axis.X * s;
+				matrix.M22 = mc * axis.Z * axis.Z + c;
 			}
 			/// <summary>
 			/// Modifies given quaternion so it represents rotation around specified axis.
@@ -420,7 +448,8 @@ namespace CryCil.Geometry
 			/// </param>
 			public static void Set(ref Quaternion quaternion, ref AngleAxis angleAxis)
 			{
-				double sine; double cosine;
+				double sine;
+				double cosine;
 				MathHelpers.SinCos(angleAxis.Angle / 2, out sine, out cosine);
 				Vector3 axis = angleAxis.Axis;
 				Set(ref quaternion, ref axis, (float)sine, (float)cosine);
@@ -433,7 +462,8 @@ namespace CryCil.Geometry
 			/// <param name="angle">     Angle of rotation in radians.</param>
 			public static void Set(ref Quaternion quaternion, ref Vector3 axis, float angle)
 			{
-				double sine; double cosine;
+				double sine;
+				double cosine;
 				MathHelpers.SinCos(angle / 2, out sine, out cosine);
 
 				Set(ref quaternion, ref axis, (float)sine, (float)cosine);
@@ -459,7 +489,8 @@ namespace CryCil.Geometry
 			/// </param>
 			public static void StackUp(ref Matrix33 matrix, ref AngleAxis angleAxis)
 			{
-				double sine; double cosine;
+				double sine;
+				double cosine;
 				MathHelpers.SinCos(angleAxis.Angle, out sine, out cosine);
 				Vector3 axis = angleAxis.Axis;
 
@@ -473,7 +504,8 @@ namespace CryCil.Geometry
 			/// <param name="angle"> Angle of rotation in radians.</param>
 			public static void StackUp(ref Matrix33 matrix, ref Vector3 axis, float angle)
 			{
-				double sine; double cosine;
+				double sine;
+				double cosine;
 				MathHelpers.SinCos(angle, out sine, out cosine);
 
 				StackUp(ref matrix, ref axis, (float)sine, (float)cosine);
@@ -492,9 +524,15 @@ namespace CryCil.Geometry
 				float s = sine;
 				float c = cosine;
 				float mc = 1 - c;
-				matrix.M00 = mc * axis.X * axis.X + c; matrix.M01 = mc * axis.X * axis.Y - axis.Z * s; matrix.M02 = mc * axis.X * axis.Z + axis.Y * s;
-				matrix.M10 = mc * axis.Y * axis.X + axis.Z * s; matrix.M11 = mc * axis.Y * axis.Y + c; matrix.M12 = mc * axis.Y * axis.Z - axis.X * s;
-				matrix.M20 = mc * axis.Z * axis.X - axis.Y * s; matrix.M21 = mc * axis.Z * axis.Y + axis.X * s; matrix.M22 = mc * axis.Z * axis.Z + c;
+				matrix.M00 = mc * axis.X * axis.X + c;
+				matrix.M01 = mc * axis.X * axis.Y - axis.Z * s;
+				matrix.M02 = mc * axis.X * axis.Z + axis.Y * s;
+				matrix.M10 = mc * axis.Y * axis.X + axis.Z * s;
+				matrix.M11 = mc * axis.Y * axis.Y + c;
+				matrix.M12 = mc * axis.Y * axis.Z - axis.X * s;
+				matrix.M20 = mc * axis.Z * axis.X - axis.Y * s;
+				matrix.M21 = mc * axis.Z * axis.Y + axis.X * s;
+				matrix.M22 = mc * axis.Z * axis.Z + c;
 
 				matrix *= temp;
 			}
@@ -507,7 +545,8 @@ namespace CryCil.Geometry
 			/// </param>
 			public static void StackUp(ref Matrix34 matrix, ref AngleAxis angleAxis)
 			{
-				double sine; double cosine;
+				double sine;
+				double cosine;
 				MathHelpers.SinCos(angleAxis.Angle, out sine, out cosine);
 				Vector3 axis = angleAxis.Axis;
 
@@ -521,7 +560,8 @@ namespace CryCil.Geometry
 			/// <param name="angle"> Angle of rotation in radians.</param>
 			public static void StackUp(ref Matrix34 matrix, ref Vector3 axis, float angle)
 			{
-				double sine; double cosine;
+				double sine;
+				double cosine;
 				MathHelpers.SinCos(angle, out sine, out cosine);
 
 				StackUp(ref matrix, ref axis, (float)sine, (float)cosine);
@@ -540,9 +580,15 @@ namespace CryCil.Geometry
 				float s = sine;
 				float c = cosine;
 				float mc = 1 - c;
-				matrix.M00 = mc * axis.X * axis.X + c; matrix.M01 = mc * axis.X * axis.Y - axis.Z * s; matrix.M02 = mc * axis.X * axis.Z + axis.Y * s;
-				matrix.M10 = mc * axis.Y * axis.X + axis.Z * s; matrix.M11 = mc * axis.Y * axis.Y + c; matrix.M12 = mc * axis.Y * axis.Z - axis.X * s;
-				matrix.M20 = mc * axis.Z * axis.X - axis.Y * s; matrix.M21 = mc * axis.Z * axis.Y + axis.X * s; matrix.M22 = mc * axis.Z * axis.Z + c;
+				matrix.M00 = mc * axis.X * axis.X + c;
+				matrix.M01 = mc * axis.X * axis.Y - axis.Z * s;
+				matrix.M02 = mc * axis.X * axis.Z + axis.Y * s;
+				matrix.M10 = mc * axis.Y * axis.X + axis.Z * s;
+				matrix.M11 = mc * axis.Y * axis.Y + c;
+				matrix.M12 = mc * axis.Y * axis.Z - axis.X * s;
+				matrix.M20 = mc * axis.Z * axis.X - axis.Y * s;
+				matrix.M21 = mc * axis.Z * axis.Y + axis.X * s;
+				matrix.M22 = mc * axis.Z * axis.Z + c;
 
 				matrix *= temp;
 			}
@@ -555,7 +601,8 @@ namespace CryCil.Geometry
 			/// </param>
 			public static void StackUp(ref Matrix44 matrix, ref AngleAxis angleAxis)
 			{
-				double sine; double cosine;
+				double sine;
+				double cosine;
 				MathHelpers.SinCos(angleAxis.Angle, out sine, out cosine);
 				Vector3 axis = angleAxis.Axis;
 
@@ -569,7 +616,8 @@ namespace CryCil.Geometry
 			/// <param name="angle"> Angle of rotation in radians.</param>
 			public static void StackUp(ref Matrix44 matrix, ref Vector3 axis, float angle)
 			{
-				double sine; double cosine;
+				double sine;
+				double cosine;
 				MathHelpers.SinCos(angle, out sine, out cosine);
 
 				StackUp(ref matrix, ref axis, (float)sine, (float)cosine);
@@ -588,9 +636,15 @@ namespace CryCil.Geometry
 				float s = sine;
 				float c = cosine;
 				float mc = 1 - c;
-				matrix.M00 = mc * axis.X * axis.X + c; matrix.M01 = mc * axis.X * axis.Y - axis.Z * s; matrix.M02 = mc * axis.X * axis.Z + axis.Y * s;
-				matrix.M10 = mc * axis.Y * axis.X + axis.Z * s; matrix.M11 = mc * axis.Y * axis.Y + c; matrix.M12 = mc * axis.Y * axis.Z - axis.X * s;
-				matrix.M20 = mc * axis.Z * axis.X - axis.Y * s; matrix.M21 = mc * axis.Z * axis.Y + axis.X * s; matrix.M22 = mc * axis.Z * axis.Z + c;
+				matrix.M00 = mc * axis.X * axis.X + c;
+				matrix.M01 = mc * axis.X * axis.Y - axis.Z * s;
+				matrix.M02 = mc * axis.X * axis.Z + axis.Y * s;
+				matrix.M10 = mc * axis.Y * axis.X + axis.Z * s;
+				matrix.M11 = mc * axis.Y * axis.Y + c;
+				matrix.M12 = mc * axis.Y * axis.Z - axis.X * s;
+				matrix.M20 = mc * axis.Z * axis.X - axis.Y * s;
+				matrix.M21 = mc * axis.Z * axis.Y + axis.X * s;
+				matrix.M22 = mc * axis.Z * axis.Z + c;
 
 				matrix *= temp;
 			}
@@ -603,7 +657,8 @@ namespace CryCil.Geometry
 			/// </param>
 			public static void StackUp(ref Quaternion quaternion, ref AngleAxis angleAxis)
 			{
-				double sine; double cosine;
+				double sine;
+				double cosine;
 				MathHelpers.SinCos(angleAxis.Angle / 2, out sine, out cosine);
 				Vector3 axis = angleAxis.Axis;
 
@@ -617,7 +672,8 @@ namespace CryCil.Geometry
 			/// <param name="angle">     Angle of rotation in radians.</param>
 			public static void StackUp(ref Quaternion quaternion, ref Vector3 axis, float angle)
 			{
-				double sine; double cosine;
+				double sine;
+				double cosine;
 				MathHelpers.SinCos(angle / 2, out sine, out cosine);
 
 				StackUp(ref quaternion, ref axis, (float)sine, (float)cosine);
@@ -642,7 +698,8 @@ namespace CryCil.Geometry
 			/// <returns>Matrix that represents rotation around specified axis.</returns>
 			public static Matrix33 Create33(ref AngleAxis angleAxis)
 			{
-				double sine; double cosine;
+				double sine;
+				double cosine;
 				MathHelpers.SinCos(angleAxis.Angle, out sine, out cosine);
 				Vector3 axis = angleAxis.Axis;
 
@@ -656,7 +713,8 @@ namespace CryCil.Geometry
 			/// <returns>Matrix that represents rotation around specified axis.</returns>
 			public static Matrix33 Create33(ref Vector3 axis, float angle)
 			{
-				double sine; double cosine;
+				double sine;
+				double cosine;
 				MathHelpers.SinCos(angle, out sine, out cosine);
 
 				return Create33(ref axis, (float)sine, (float)cosine);
@@ -675,9 +733,15 @@ namespace CryCil.Geometry
 				float c = cosine;
 				float s = sine;
 				float mc = 1 - c;
-				matrix.M00 = mc * axis.X * axis.X + c; matrix.M01 = mc * axis.X * axis.Y - axis.Z * s; matrix.M02 = mc * axis.X * axis.Z + axis.Y * s;
-				matrix.M10 = mc * axis.Y * axis.X + axis.Z * s; matrix.M11 = mc * axis.Y * axis.Y + c; matrix.M12 = mc * axis.Y * axis.Z - axis.X * s;
-				matrix.M20 = mc * axis.Z * axis.X - axis.Y * s; matrix.M21 = mc * axis.Z * axis.Y + axis.X * s; matrix.M22 = mc * axis.Z * axis.Z + c;
+				matrix.M00 = mc * axis.X * axis.X + c;
+				matrix.M01 = mc * axis.X * axis.Y - axis.Z * s;
+				matrix.M02 = mc * axis.X * axis.Z + axis.Y * s;
+				matrix.M10 = mc * axis.Y * axis.X + axis.Z * s;
+				matrix.M11 = mc * axis.Y * axis.Y + c;
+				matrix.M12 = mc * axis.Y * axis.Z - axis.X * s;
+				matrix.M20 = mc * axis.Z * axis.X - axis.Y * s;
+				matrix.M21 = mc * axis.Z * axis.Y + axis.X * s;
+				matrix.M22 = mc * axis.Z * axis.Z + c;
 
 				return matrix;
 			}
@@ -690,7 +754,8 @@ namespace CryCil.Geometry
 			/// <returns>Matrix that represents rotation around specified axis.</returns>
 			public static Matrix34 Create34(ref AngleAxis angleAxis)
 			{
-				double sine; double cosine;
+				double sine;
+				double cosine;
 				MathHelpers.SinCos(angleAxis.Angle, out sine, out cosine);
 				Vector3 axis = angleAxis.Axis;
 				return Create34(ref axis, (float)sine, (float)cosine);
@@ -703,7 +768,8 @@ namespace CryCil.Geometry
 			/// <returns>Matrix that represents rotation around specified axis.</returns>
 			public static Matrix34 Create34(ref Vector3 axis, float angle)
 			{
-				double sine; double cosine;
+				double sine;
+				double cosine;
 				MathHelpers.SinCos(angle, out sine, out cosine);
 
 				return Create34(ref axis, (float)sine, (float)cosine);
@@ -722,9 +788,15 @@ namespace CryCil.Geometry
 				float c = cosine;
 				float s = sine;
 				float mc = 1 - c;
-				matrix.M00 = mc * axis.X * axis.X + c; matrix.M01 = mc * axis.X * axis.Y - axis.Z * s; matrix.M02 = mc * axis.X * axis.Z + axis.Y * s;
-				matrix.M10 = mc * axis.Y * axis.X + axis.Z * s; matrix.M11 = mc * axis.Y * axis.Y + c; matrix.M12 = mc * axis.Y * axis.Z - axis.X * s;
-				matrix.M20 = mc * axis.Z * axis.X - axis.Y * s; matrix.M21 = mc * axis.Z * axis.Y + axis.X * s; matrix.M22 = mc * axis.Z * axis.Z + c;
+				matrix.M00 = mc * axis.X * axis.X + c;
+				matrix.M01 = mc * axis.X * axis.Y - axis.Z * s;
+				matrix.M02 = mc * axis.X * axis.Z + axis.Y * s;
+				matrix.M10 = mc * axis.Y * axis.X + axis.Z * s;
+				matrix.M11 = mc * axis.Y * axis.Y + c;
+				matrix.M12 = mc * axis.Y * axis.Z - axis.X * s;
+				matrix.M20 = mc * axis.Z * axis.X - axis.Y * s;
+				matrix.M21 = mc * axis.Z * axis.Y + axis.X * s;
+				matrix.M22 = mc * axis.Z * axis.Z + c;
 
 				return matrix;
 			}
@@ -737,7 +809,8 @@ namespace CryCil.Geometry
 			/// <returns>Matrix that represents rotation around specified axis.</returns>
 			public static Matrix44 Create44(ref AngleAxis angleAxis)
 			{
-				double sine; double cosine;
+				double sine;
+				double cosine;
 				MathHelpers.SinCos(angleAxis.Angle, out sine, out cosine);
 				Vector3 axis = angleAxis.Axis;
 				return Create44(ref axis, (float)sine, (float)cosine);
@@ -750,7 +823,8 @@ namespace CryCil.Geometry
 			/// <returns>Matrix that represents rotation around specified axis.</returns>
 			public static Matrix44 Create44(ref Vector3 axis, float angle)
 			{
-				double sine; double cosine;
+				double sine;
+				double cosine;
 				MathHelpers.SinCos(angle, out sine, out cosine);
 
 				return Create44(ref axis, (float)sine, (float)cosine);
@@ -769,9 +843,15 @@ namespace CryCil.Geometry
 				float c = cosine;
 				float s = sine;
 				float mc = 1 - c;
-				matrix.M00 = mc * axis.X * axis.X + c; matrix.M01 = mc * axis.X * axis.Y - axis.Z * s; matrix.M02 = mc * axis.X * axis.Z + axis.Y * s;
-				matrix.M10 = mc * axis.Y * axis.X + axis.Z * s; matrix.M11 = mc * axis.Y * axis.Y + c; matrix.M12 = mc * axis.Y * axis.Z - axis.X * s;
-				matrix.M20 = mc * axis.Z * axis.X - axis.Y * s; matrix.M21 = mc * axis.Z * axis.Y + axis.X * s; matrix.M22 = mc * axis.Z * axis.Z + c;
+				matrix.M00 = mc * axis.X * axis.X + c;
+				matrix.M01 = mc * axis.X * axis.Y - axis.Z * s;
+				matrix.M02 = mc * axis.X * axis.Z + axis.Y * s;
+				matrix.M10 = mc * axis.Y * axis.X + axis.Z * s;
+				matrix.M11 = mc * axis.Y * axis.Y + c;
+				matrix.M12 = mc * axis.Y * axis.Z - axis.X * s;
+				matrix.M20 = mc * axis.Z * axis.X - axis.Y * s;
+				matrix.M21 = mc * axis.Z * axis.Y + axis.X * s;
+				matrix.M22 = mc * axis.Z * axis.Z + c;
 
 				return matrix;
 			}
@@ -784,7 +864,8 @@ namespace CryCil.Geometry
 			/// <returns>Quaternion that represents rotation around specified axis.</returns>
 			public static Quaternion CreateQuaternion(ref AngleAxis angleAxis)
 			{
-				double sine; double cosine;
+				double sine;
+				double cosine;
 				MathHelpers.SinCos(angleAxis.Angle / 2, out sine, out cosine);
 				Vector3 axis = angleAxis.Axis;
 
@@ -796,10 +877,10 @@ namespace CryCil.Geometry
 			/// <param name="axis"> Normalized vector that represents axis of rotation.</param>
 			/// <param name="angle">Angle of rotation in radians.</param>
 			/// <returns>Quaternion that represents rotation around specified axis.</returns>
-
 			public static Quaternion CreateQuaternion(ref Vector3 axis, float angle)
 			{
-				double sine; double cosine;
+				double sine;
+				double cosine;
 				MathHelpers.SinCos(angle / 2, out sine, out cosine);
 
 				return CreateQuaternion(ref axis, (float)sine, (float)cosine);
@@ -814,10 +895,10 @@ namespace CryCil.Geometry
 			public static Quaternion CreateQuaternion(ref Vector3 axis, float sine, float cosine)
 			{
 				return new Quaternion
-				(
+					(
 					axis * sine,
 					cosine
-				);
+					);
 			}
 		}
 	}

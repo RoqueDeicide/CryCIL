@@ -9,15 +9,21 @@ namespace CryCil.Engine.Physics
 	/// Encapsulates description of the action that slices the physical entity or part of it with a plane.
 	/// </summary>
 	/// <remarks>
-	/// <para>When passed to <see cref="PhysicalEntity.ActUpon"/> the return value is an indication of success.</para>
-	/// <para>Never use objects of this type that were created using a default constructor (they are not configured properly!).</para>
+	/// <para>
+	/// When passed to <see cref="PhysicalEntity.ActUpon"/> the return value is an indication of success.
+	/// </para>
+	/// <para>
+	/// Never use objects of this type that were created using a default constructor (they are not
+	/// configured properly!).
+	/// </para>
 	/// </remarks>
 	[StructLayout(LayoutKind.Sequential)]
 	public struct PhysicsActionSlice
 	{
 		#region Fields
 		/// <summary>
-		/// Pass reference to this field to the <see cref="PhysicalEntity.ActUpon"/> to apply this action to the physical entity.
+		/// Pass reference to this field to the <see cref="PhysicalEntity.ActUpon"/> to apply this action
+		/// to the physical entity.
 		/// </summary>
 		[UsedImplicitly] public PhysicsAction Base;
 		[UsedImplicitly] private Plane slicingPlane;
@@ -29,7 +35,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Creates an object that represents an action that slices the entity of part of it with a plane.
 		/// </summary>
-		/// <param name="part">An object that specify which part of the entity to slice.</param>
+		/// <param name="part"> An object that specify which part of the entity to slice.</param>
 		/// <param name="plane">An object that represents a slicing plane.</param>
 		public PhysicsActionSlice(EntityPartSpec part, Plane plane)
 		{

@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using CryCil.Engine.Logic;
 
 namespace CryCil.RunTime.Registration
@@ -24,27 +22,25 @@ namespace CryCil.RunTime.Registration
 		private static SortedList<string, RmiTypeDesc> rmiParamTypes;
 		#endregion
 		#region Properties
-
 		#endregion
 		#region Events
-
 		#endregion
 		#region Construction
-
 		#endregion
 		#region Interface
 		[InitializationStage((int)DefaultInitializationStages.RmiRegistrationStage)]
 		private static void RegisterRmiParamTypes(int index)
 		{
 			rmiParamTypes = new SortedList<string, RmiTypeDesc>
-			(
+				(
 				(
 					from assembly in MonoInterface.CryCilAssemblies
 					from type in assembly.GetTypes()
 					let valid = type.Implements<RmiParameters>()
 					let defCtor = type.GetConstructor(BindingFlags.Public, null, Type.EmptyTypes, null)
 					let hasDefaultCtor = defCtor != null
-					let acquireProperty = type.GetProperty("Receptor", BindingFlags.Static, null, typeof(RmiParameters), Type.EmptyTypes, null)
+					let acquireProperty =
+					type.GetProperty("Receptor", BindingFlags.Static, null, typeof(RmiParameters), Type.EmptyTypes, null)
 					let hasAcquireProperty = acquireProperty != null
 					let acquireMethod = type.GetMethod("GetReceptor", BindingFlags.Static, null, Type.EmptyTypes, null)
 					let hasAcquireMethod = acquireMethod != null
@@ -55,13 +51,13 @@ namespace CryCil.RunTime.Registration
 						DefaultConstructor = defCtor,
 						GetReceptorMethod = acquireMethod ?? acquireProperty.GetGetMethod()
 					}
-				)
-				.ToDictionary
-				(
-					desc => desc.Type.FullName,
-					desc => desc
-				)
-			);
+					)
+					.ToDictionary
+					(
+					 desc => desc.Type.FullName,
+					 desc => desc
+					)
+				);
 		}
 		/// <summary>
 		/// Creates an object of type that derives from <see cref="RmiParameters"/>.
@@ -86,7 +82,6 @@ namespace CryCil.RunTime.Registration
 		}
 		#endregion
 		#region Utilities
-
 		#endregion
 	}
 }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CryCil.Geometry;
+﻿using CryCil.Geometry;
 
 namespace CryCil.Engine.DebugServices
 {
@@ -55,13 +50,13 @@ namespace CryCil.Engine.DebugServices
 		{
 			AuxiliaryGeometry.Flags = this.RenderingFlags;
 			AuxiliaryGeometry.DrawCone
-			(
-				this.Start,
-				this.Orientation.Column2,
-				this.MaxRadius,
-				this.Height,
-				this.Color
-			);
+				(
+				 this.Start,
+				 this.Orientation.Column2,
+				 this.MaxRadius,
+				 this.Height,
+				 this.Color
+				);
 		}
 		#endregion
 	}

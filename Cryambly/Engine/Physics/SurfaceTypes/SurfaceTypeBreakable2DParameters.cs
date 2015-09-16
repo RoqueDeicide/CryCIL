@@ -9,46 +9,26 @@ namespace CryCil.Engine.Physics
 	/// </summary>
 	public struct SurfaceTypeBreakable2DParameters
 	{
-		[UsedImplicitly]
-		private IntPtr particleEffect;
-		[UsedImplicitly]
-		private float blastRadius;
-		[UsedImplicitly]
-		private float blastRadiusFirst;
-		[UsedImplicitly]
-		private float vertexSizeSpread;
-		[UsedImplicitly]
-		private int rigidBody;
-		[UsedImplicitly]
-		private float lifeTime;
-		[UsedImplicitly]
-		private float cellSize;
-		[UsedImplicitly]
-		private int maxPatchTriangles;
-		[UsedImplicitly]
-		private float filterAngle;
-		[UsedImplicitly]
-		private float shardDensity;
-		[UsedImplicitly]
-		private int useEdgeAlpha;
-		[UsedImplicitly]
-		private float crackDecalScale;
-		[UsedImplicitly]
-		private IntPtr crackDecalMtl;
-		[UsedImplicitly]
-		private float maxFracture;
-		[UsedImplicitly]
-		private IntPtr fullFractureFx;
-		[UsedImplicitly]
-		private IntPtr fractureFx;
-		[UsedImplicitly]
-		private int noProceduralFullFracture;
-		[UsedImplicitly]
-		private IntPtr brokenMtl;
-		[UsedImplicitly]
-		private float destroyTimeout;
-		[UsedImplicitly]
-		private float destroyTimeoutSpread;
+		[UsedImplicitly] private IntPtr particleEffect;
+		[UsedImplicitly] private float blastRadius;
+		[UsedImplicitly] private float blastRadiusFirst;
+		[UsedImplicitly] private float vertexSizeSpread;
+		[UsedImplicitly] private int rigidBody;
+		[UsedImplicitly] private float lifeTime;
+		[UsedImplicitly] private float cellSize;
+		[UsedImplicitly] private int maxPatchTriangles;
+		[UsedImplicitly] private float filterAngle;
+		[UsedImplicitly] private float shardDensity;
+		[UsedImplicitly] private int useEdgeAlpha;
+		[UsedImplicitly] private float crackDecalScale;
+		[UsedImplicitly] private IntPtr crackDecalMtl;
+		[UsedImplicitly] private float maxFracture;
+		[UsedImplicitly] private IntPtr fullFractureFx;
+		[UsedImplicitly] private IntPtr fractureFx;
+		[UsedImplicitly] private int noProceduralFullFracture;
+		[UsedImplicitly] private IntPtr brokenMtl;
+		[UsedImplicitly] private float destroyTimeout;
+		[UsedImplicitly] private float destroyTimeoutSpread;
 		/// <summary>
 		/// Gets the name of the particle effect associated with this surface.
 		/// </summary>

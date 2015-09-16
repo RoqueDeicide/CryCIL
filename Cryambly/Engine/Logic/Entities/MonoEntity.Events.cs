@@ -5,7 +5,8 @@ using CryCil.Engine.Rendering;
 namespace CryCil.Engine.Logic
 {
 	/// <summary>
-	/// Defines signature of methods that can handle <see cref="MonoEntity"/> events that don't provide any special data.
+	/// Defines signature of methods that can handle <see cref="MonoEntity"/> events that don't provide any
+	/// special data.
 	/// </summary>
 	/// <param name="sender">The entity that raised the event.</param>
 	public delegate void EntitySimpleEventHandler(MonoEntity sender);
@@ -13,94 +14,113 @@ namespace CryCil.Engine.Logic
 	/// Defines signature of methods that can handle <see cref="MonoEntity.Moved"/> event.
 	/// </summary>
 	/// <param name="sender">The entity that has been moved.</param>
-	/// <param name="why">A set of flags that describe why the event was raised.</param>
+	/// <param name="why">   A set of flags that describe why the event was raised.</param>
 	public delegate void EntityMovementEventHandler(MonoEntity sender, EntityXFormChange why);
 	/// <summary>
 	/// Defines signature of methods that can handle <see cref="MonoEntity.TimedOut"/> event.
 	/// </summary>
-	/// <param name="sender">The entity that raised the event.</param>
-	/// <param name="timerId">Identifier of the timer that reached the end of its time.</param>
+	/// <param name="sender">  The entity that raised the event.</param>
+	/// <param name="timerId"> Identifier of the timer that reached the end of its time.</param>
 	/// <param name="timeSpan">How long the timer has been active for.</param>
 	public delegate void EntityTimerEventHandler(MonoEntity sender, int timerId, TimeSpan timeSpan);
 	/// <summary>
 	/// Defines signature of methods that can handle <see cref="MonoEntity.ResetInEditor"/> event.
 	/// </summary>
-	/// <param name="sender">The entity that raised the event.</param>
-	/// <param name="enteringGameMode">Indicates whether this event was caused by the user entering game mode.</param>
+	/// <param name="sender">          The entity that raised the event.</param>
+	/// <param name="enteringGameMode">
+	/// Indicates whether this event was caused by the user entering game mode.
+	/// </param>
 	public delegate void EntityResetEventHandler(MonoEntity sender, bool enteringGameMode);
 	/// <summary>
-	/// Defines signature of methods that can handle <see cref="MonoEntity"/> events related to (de/at)tachment of entities to/from each other.
+	/// Defines signature of methods that can handle <see cref="MonoEntity"/> events related to
+	/// (de/at)tachment of entities to/from each other.
 	/// </summary>
 	/// <param name="sender">The entity that raised the event.</param>
-	/// <param name="other">Identifier of another entity that is specific to this event.</param>
+	/// <param name="other"> Identifier of another entity that is specific to this event.</param>
 	public delegate void EntityAttachmentEventHandler(MonoEntity sender, EntityId other);
 	/// <summary>
-	/// Defines signature of methods that can handle <see cref="MonoEntity"/> events related to entities (becoming/stopping being) linked to the <paramref name="sender"/>.
+	/// Defines signature of methods that can handle <see cref="MonoEntity"/> events related to entities
+	/// (becoming/stopping being) linked to the <paramref name="sender"/>.
 	/// </summary>
-	/// <param name="sender">The entity that raised the event.</param>
-	/// <param name="linkName">Name of the object that describes the link.</param>
-	/// <param name="other">Identifier of another entity that (un-)linked to/from this one.</param>
+	/// <param name="sender">   The entity that raised the event.</param>
+	/// <param name="linkName"> Name of the object that describes the link.</param>
+	/// <param name="other">    Identifier of another entity that (un-)linked to/from this one.</param>
 	/// <param name="otherGuid">Identifier of another entity that (un-)linked to/from this one.</param>
-	public delegate void EntityLinkageEventHandler(MonoEntity sender, string linkName, EntityId other, EntityGUID otherGuid);
+	public delegate void EntityLinkageEventHandler(MonoEntity sender, string linkName, EntityId other, EntityGUID otherGuid
+		);
 	/// <summary>
-	/// Defines signature of methods that can handle <see cref="MonoEntity.Hidden"/> and <see cref="MonoEntity.NotHidden"/> events.
+	/// Defines signature of methods that can handle <see cref="MonoEntity.Hidden"/> and
+	/// <see cref="MonoEntity.NotHidden"/> events.
 	/// </summary>
 	/// <param name="sender">The entity that raised the event.</param>
 	/// <param name="hidden">Indicates whether entity has been hidden.</param>
 	public delegate void EntityHidingEventHandler(MonoEntity sender, bool hidden);
 	/// <summary>
-	/// Defines signature of methods that can handle <see cref="MonoEntity.PhysicsEnabled"/> and <see cref="MonoEntity.PhysicsDisabled"/> events.
+	/// Defines signature of methods that can handle <see cref="MonoEntity.PhysicsEnabled"/> and
+	/// <see cref="MonoEntity.PhysicsDisabled"/> events.
 	/// </summary>
 	/// <param name="sender">The entity that raised the event.</param>
 	/// <param name="enable">Indicates whether physics processing was enabled for this entity.</param>
 	public delegate void EntityPhysicsChangeEventHandler(MonoEntity sender, bool enable);
 	/// <summary>
-	/// Defines signature of methods that can handle <see cref="MonoEntity.Awoken"/> and <see cref="MonoEntity.PutToSleep"/> events.
+	/// Defines signature of methods that can handle <see cref="MonoEntity.Awoken"/> and
+	/// <see cref="MonoEntity.PutToSleep"/> events.
 	/// </summary>
 	/// <param name="sender">The entity that raised the event.</param>
-	/// <param name="awoken">Indicates entity has been awoken (<c>true</c>) or put to sleep (<c>false</c>).</param>
+	/// <param name="awoken">
+	/// Indicates entity has been awoken ( <c>true</c>) or put to sleep ( <c>false</c>).
+	/// </param>
 	public delegate void EntityPhysicsAwakeningEventHandler(MonoEntity sender, bool awoken);
 	/// <summary>
-	/// Defines signature of methods that can handle <see cref="MonoEntity"/> events that are raised when an entity enters/leaves the area that has <paramref name="sender"/> entity as one of its targets.
+	/// Defines signature of methods that can handle <see cref="MonoEntity"/> events that are raised when
+	/// an entity enters/leaves the area that has <paramref name="sender"/> entity as one of its targets.
 	/// </summary>
-	/// <param name="sender">Entity that is targeted by the area.</param>
-	/// <param name="entity">Identifier of the entity that has entered/left the area.</param>
-	/// <param name="areaId">Identifier of the area.</param>
+	/// <param name="sender">      Entity that is targeted by the area.</param>
+	/// <param name="entity">      Identifier of the entity that has entered/left the area.</param>
+	/// <param name="areaId">      Identifier of the area.</param>
 	/// <param name="areaEntityId">Identifier of the entity that represents the area.</param>
-	/// <param name="fadeFactor">A multiplier that determines how close the <paramref name="entity"/> is to the "inside" region of the area. If the area doesn't have the "inside" region this parameter will be equal to 1.</param>
+	/// <param name="fadeFactor">  
+	/// A multiplier that determines how close the <paramref name="entity"/> is to the "inside" region of
+	/// the area. If the area doesn't have the "inside" region this parameter will be equal to 1.
+	/// </param>
 	public delegate void EntityAreaBorderEventHandler(MonoEntity sender, EntityId entity, int areaId,
 													  EntityId areaEntityId, float fadeFactor);
 	/// <summary>
 	/// Defines signature of methods that can handle <see cref="MonoEntity.Collided"/> event.
 	/// </summary>
-	/// <param name="sender">The entity that raised the event.</param>
+	/// <param name="sender">   The entity that raised the event.</param>
 	/// <param name="collision">A reference to the object that describes the collision.</param>
-	/// <param name="isTarget">Indicates whether <paramref name="sender"/> is an entity that got collided with.</param>
+	/// <param name="isTarget"> 
+	/// Indicates whether <paramref name="sender"/> is an entity that got collided with.
+	/// </param>
 	public delegate void EntityCollisionEventHandler(MonoEntity sender, ref CollisionEventInfo collision, bool isTarget);
 	/// <summary>
 	/// Defines signature of methods that can handle <see cref="MonoEntity.Rendered"/> event.
 	/// </summary>
-	/// <param name="sender">The entity that raised the event.</param>
-	/// <param name="renderParameters">A reference to the object that describes the parameters that are used to render this entity. Modifying this object changes the way all slots of this entity are rendered.</param>
+	/// <param name="sender">          The entity that raised the event.</param>
+	/// <param name="renderParameters">
+	/// A reference to the object that describes the parameters that are used to render this entity.
+	/// Modifying this object changes the way all slots of this entity are rendered.
+	/// </param>
 	public delegate void EntityRenderEventHandler(MonoEntity sender, ref RenderParameters renderParameters);
 	/// <summary>
 	/// Defines signature of methods that can handle <see cref="MonoEntity.BeforePhysicsUpdate"/> event.
 	/// </summary>
-	/// <param name="sender">The entity that raised the event.</param>
+	/// <param name="sender">   The entity that raised the event.</param>
 	/// <param name="frameTime">Length of the previous frame.</param>
 	public delegate void EntityPrePhysicsEventHandler(MonoEntity sender, TimeSpan frameTime);
 	/// <summary>
 	/// Defines signature of methods that can handle <see cref="MonoEntity.MaterialChanged"/> event.
 	/// </summary>
-	/// <param name="sender">The entity that raised the event.</param>
+	/// <param name="sender">     The entity that raised the event.</param>
 	/// <param name="newMaterial">A new material for the entity.</param>
 	public delegate void EntityMaterialEventHandler(MonoEntity sender, Material newMaterial);
 	/// <summary>
 	/// Defines signature of methods that can handle <see cref="MonoEntity.MaterialLayersChanged"/> event.
 	/// </summary>
 	/// <param name="sender">The entity that raised the event.</param>
-	/// <param name="new">A new material layers mask.</param>
-	/// <param name="old">An old material layers mask.</param>
+	/// <param name="new">   A new material layers mask.</param>
+	/// <param name="old">   An old material layers mask.</param>
 	public delegate void EntityMaterialLayersEventHandler(MonoEntity sender, byte @new, byte old);
 	public partial class MonoEntity
 	{
@@ -117,9 +137,7 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Occurs when entity's X-Form transformation changes by the editor user outside of game mode.
 		/// </summary>
-		/// <remarks>
-		/// This event is sent when the user releases the button.
-		/// </remarks>
+		/// <remarks>This event is sent when the user releases the button.</remarks>
 		public event EntitySimpleEventHandler MovedInEditor;
 		[UnmanagedThunk("Invoked from underlying object to raise event MovedInEditor.")]
 		private void OnMovedInEditor()
@@ -332,7 +350,9 @@ namespace CryCil.Engine.Logic
 			if (handler != null) handler(this);
 		}
 		/// <summary>
-		/// Occurs when entity has <see cref="EntityFlags.SendNotSeenTimeout"/> flag set for it and has not been rendered on screen for a while (time is specified via "es_not_seen_timeout" console variable which is equal to 30 by default).
+		/// Occurs when entity has <see cref="EntityFlags.SendNotSeenTimeout"/> flag set for it and has not
+		/// been rendered on screen for a while (time is specified via "es_not_seen_timeout" console
+		/// variable which is equal to 30 by default).
 		/// </summary>
 		public event EntitySimpleEventHandler NotSeen;
 		[UnmanagedThunk("Invoked from underlying object to raise event NotSeen.")]
@@ -366,7 +386,8 @@ namespace CryCil.Engine.Logic
 		/// </summary>
 		public event EntityPrePhysicsEventHandler BeforePhysicsUpdate;
 		/// <summary>
-		/// Can be overridden in derived class to allow the entity to request changes to the entity's positioning in physical world, before physics engine updates it.
+		/// Can be overridden in derived class to allow the entity to request changes to the entity's
+		/// positioning in physical world, before physics engine updates it.
 		/// </summary>
 		/// <param name="frameTime">Length of the last frame.</param>
 		public virtual void PrePhysicsUpdate(TimeSpan frameTime)
@@ -401,7 +422,8 @@ namespace CryCil.Engine.Logic
 			if (handler != null) handler(this);
 		}
 		/// <summary>
-		/// Occurs when a game starts on a level. Unlike <see cref="LevelStarted"/> this event can be raised multiple times within the level (in case of multiplayer matches).
+		/// Occurs when a game starts on a level. Unlike <see cref="LevelStarted"/> this event can be
+		/// raised multiple times within the level (in case of multiplayer matches).
 		/// </summary>
 		public event EntitySimpleEventHandler GameStarted;
 		[UnmanagedThunk("Invoked from underlying object to raise event GameStarted.")]
@@ -411,7 +433,8 @@ namespace CryCil.Engine.Logic
 			if (handler != null) handler(this);
 		}
 		/// <summary>
-		/// Occurs before this entity is synchronized with it representation in the file (when saving and loading games).
+		/// Occurs before this entity is synchronized with it representation in the file (when saving and
+		/// loading games).
 		/// </summary>
 		public event EntitySimpleEventHandler Synchronizing;
 		[UnmanagedThunk("Invoked from underlying object to raise event Synchronizing.")]
@@ -421,7 +444,8 @@ namespace CryCil.Engine.Logic
 			if (handler != null) handler(this);
 		}
 		/// <summary>
-		/// Occurs after this entity is synchronized with it representation in the file (when saving and loading games).
+		/// Occurs after this entity is synchronized with it representation in the file (when saving and
+		/// loading games).
 		/// </summary>
 		public event EntitySimpleEventHandler Synchronized;
 		[UnmanagedThunk("Invoked from underlying object to raise event Synchronized.")]
@@ -473,9 +497,7 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Occurs when this entity becomes active.
 		/// </summary>
-		/// <remarks>
-		/// Active entities are updated each frame.
-		/// </remarks>
+		/// <remarks>Active entities are updated each frame.</remarks>
 		public event EntitySimpleEventHandler Activated;
 		[UnmanagedThunk("Invoked from underlying object to raise event Activated.")]
 		private void OnActivated()
@@ -486,9 +508,7 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Occurs when this entity stops being active.
 		/// </summary>
-		/// <remarks>
-		/// Active entities are updated each frame.
-		/// </remarks>
+		/// <remarks>Active entities are updated each frame.</remarks>
 		public event EntitySimpleEventHandler Deactivated;
 		[UnmanagedThunk("Invoked from underlying object to raise event Deactivated.")]
 		private void OnDeactivated()

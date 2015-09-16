@@ -5,7 +5,7 @@ namespace CryCil
 	/// <summary>
 	/// Defines classes where various batch operations are defined.
 	/// </summary>
-	public unsafe static partial class BatchOps
+	public static unsafe partial class BatchOps
 	{
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		internal static extern void MathSimpleOpSingle(float* numbers, long count, MathSimpleOperations op);

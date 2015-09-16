@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using CryCil.Annotations;
 
 #pragma warning disable 0169
-
 namespace CryCil.Engine.DebugServices
 {
 	/// <summary>
@@ -64,14 +59,11 @@ namespace CryCil.Engine.DebugServices
 	public class Profiler
 	{
 		#region Fields
-		[UsedImplicitly]
-		private IntPtr handle;
+		[UsedImplicitly] private IntPtr handle;
 		#endregion
 		#region Properties
-
 		#endregion
 		#region Events
-
 		#endregion
 		#region Construction
 		/// <summary>
@@ -97,8 +89,7 @@ namespace CryCil.Engine.DebugServices
 	[StructLayout(LayoutKind.Sequential)]
 	public struct ProfilingSection : IDisposable
 	{
-		[UsedImplicitly]
-		private IntPtr handle;
+		[UsedImplicitly] private IntPtr handle;
 		/// <summary>
 		/// Finishes measurement on this profiling section.
 		/// </summary>
@@ -113,5 +104,4 @@ namespace CryCil.Engine.DebugServices
 		public extern void Dispose();
 	}
 }
-
 #pragma warning restore 0169

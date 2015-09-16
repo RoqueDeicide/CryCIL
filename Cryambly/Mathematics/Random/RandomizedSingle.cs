@@ -46,13 +46,13 @@ namespace CryCil
 		/// </returns>
 		public static implicit operator RandomizedSingle(float @base)
 		{
-			return new RandomizedSingle { Base = @base };
+			return new RandomizedSingle {Base = @base};
 		}
 		#endregion
 	}
 	/// <summary>
 	/// Represents a randomized unsigned single-precision floating point number that cannot be bigger then
-	/// <see cref="Int32.MaxValue"/>.
+	/// <see cref="int.MaxValue"/>.
 	/// </summary>
 	public struct RandomizedUSingle
 	{
@@ -95,7 +95,7 @@ namespace CryCil
 		/// </returns>
 		public static implicit operator RandomizedUSingle(float @base)
 		{
-			return new RandomizedUSingle { Base = @base };
+			return new RandomizedUSingle {Base = @base};
 		}
 		#endregion
 	}

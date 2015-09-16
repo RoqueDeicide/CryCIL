@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CryCil.Engine.Rendering
+﻿namespace CryCil.Engine.Rendering
 {
 	/// <summary>
 	/// Enumeration of color arguments that can be used with <see cref="Renderer.SetColorOperation"/>.

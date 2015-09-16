@@ -3,7 +3,6 @@ using CryCil.Annotations;
 using CryCil.Geometry;
 
 #pragma warning disable 169,649
-
 namespace CryCil.Engine.Logic
 {
 	/// <summary>
@@ -12,51 +11,35 @@ namespace CryCil.Engine.Logic
 	public struct EntitySpawnParameters
 	{
 		#region Fields
-		[UsedImplicitly]
-		private EntityId id;
-		[UsedImplicitly]
-		private EntityId prevId;
+		[UsedImplicitly] private EntityId id;
+		[UsedImplicitly] private EntityId prevId;
 
-		[UsedImplicitly]
-		private EntityGUID guid;
-		[UsedImplicitly]
-		private EntityGUID prevGuid;
+		[UsedImplicitly] private EntityGUID guid;
+		[UsedImplicitly] private EntityGUID prevGuid;
 
 		// Class of entity.
-		[UsedImplicitly]
-		private string pClass;
+		[UsedImplicitly] private string pClass;
 
 		/// Entity archetype.
-		[UsedImplicitly]
-		private IntPtr pArchetype;
+		[UsedImplicitly] private IntPtr pArchetype;
 
-		[UsedImplicitly]
-		private string layerName;
+		[UsedImplicitly] private string layerName;
 
 		// Reference to entity's xml node in level data
-		[UsedImplicitly]
-		private IntPtr entityNode;
+		[UsedImplicitly] private IntPtr entityNode;
 
-		[UsedImplicitly]
-		private string name;
-		[UsedImplicitly]
-		private EntityFlags flags;
+		[UsedImplicitly] private string name;
+		[UsedImplicitly] private EntityFlags flags;
 
 		// Spawn lock.
-		[UsedImplicitly]
-		private bool ignoreLock;
+		[UsedImplicitly] private bool ignoreLock;
 		// Note: To support save games compatible with patched levels (patched levels might use more
 		// EntityIDs and save game might conflict with dynamic ones).
-		[UsedImplicitly]
-		private bool staticEntityId;
-		[UsedImplicitly]
-		private bool createdThroughPool;
-		[UsedImplicitly]
-		private Vector3 position;
-		[UsedImplicitly]
-		private Quaternion rotation;
-		[UsedImplicitly]
-		private Vector3 scale;
+		[UsedImplicitly] private bool staticEntityId;
+		[UsedImplicitly] private bool createdThroughPool;
+		[UsedImplicitly] private Vector3 position;
+		[UsedImplicitly] private Quaternion rotation;
+		[UsedImplicitly] private Vector3 scale;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -147,7 +130,6 @@ namespace CryCil.Engine.Logic
 		}
 		#endregion
 		#region Events
-
 		#endregion
 		#region Construction
 		/// <summary>
@@ -196,10 +178,8 @@ namespace CryCil.Engine.Logic
 		}
 		#endregion
 		#region Interface
-
 		#endregion
 		#region Utilities
-
 		#endregion
 	}
 }

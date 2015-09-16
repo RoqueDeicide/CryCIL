@@ -56,18 +56,12 @@ namespace CryCil.Graphics
 		private Plane left;
 		private Plane top;
 		private Plane bottom;
-		[UsedImplicitly]
-		private fixed uint m_idx1[(int)FrustumPlanes.Count];
-		[UsedImplicitly]
-		private fixed uint m_idy1[(int)FrustumPlanes.Count];
-		[UsedImplicitly]
-		private fixed uint m_idz1[(int)FrustumPlanes.Count];
-		[UsedImplicitly]
-		private fixed uint m_idx2[(int)FrustumPlanes.Count];
-		[UsedImplicitly]
-		private fixed uint m_idy2[(int)FrustumPlanes.Count];
-		[UsedImplicitly]
-		private fixed uint m_idz2[(int)FrustumPlanes.Count];
+		[UsedImplicitly] private fixed uint m_idx1 [(int)FrustumPlanes.Count];
+		[UsedImplicitly] private fixed uint m_idy1 [(int)FrustumPlanes.Count];
+		[UsedImplicitly] private fixed uint m_idz1 [(int)FrustumPlanes.Count];
+		[UsedImplicitly] private fixed uint m_idx2 [(int)FrustumPlanes.Count];
+		[UsedImplicitly] private fixed uint m_idy2 [(int)FrustumPlanes.Count];
+		[UsedImplicitly] private fixed uint m_idz2 [(int)FrustumPlanes.Count];
 		/// <summary>
 		/// Gets the frustum plane.
 		/// </summary>
@@ -289,12 +283,9 @@ namespace CryCil.Graphics
 		/// </summary>
 		public Rectangle Viewport;
 
-		[UsedImplicitly]
-		private IntPtr portal;
-		[UsedImplicitly]
-		private ulong scissorInfo;
-		[UsedImplicitly]
-		private IntPtr multiCamera;
+		[UsedImplicitly] private IntPtr portal;
+		[UsedImplicitly] private ulong scissorInfo;
+		[UsedImplicitly] private IntPtr multiCamera;
 
 		private Vector3 OccPosition;
 		private int justActivated;
@@ -570,10 +561,10 @@ namespace CryCil.Graphics
 			// Set up the projection matrix.
 			Matrix44 projection =
 				Transformation.Projection.Create
-				(
-					this.HorizontalFieldOfView, this.VerticalFieldOfView,
-					this.NearDistance, this.FarDistance
-				);
+					(
+					 this.HorizontalFieldOfView, this.VerticalFieldOfView,
+					 this.NearDistance, this.FarDistance
+					);
 			// Set up the look-at matrix.
 			Vector3 cameraPosition = this.Position;
 			Matrix44 view = Transformation.View.Create(cameraPosition, cameraPosition + this.ViewDirection);
@@ -630,10 +621,10 @@ namespace CryCil.Graphics
 			// Set up the projection matrix.
 			Matrix44 projection =
 				Transformation.Projection.Create
-				(
-					this.HorizontalFieldOfView, this.VerticalFieldOfView,
-					this.NearDistance, this.FarDistance
-				);
+					(
+					 this.HorizontalFieldOfView, this.VerticalFieldOfView,
+					 this.NearDistance, this.FarDistance
+					);
 			// Set up the look-at matrix.
 			Vector3 cameraPosition = this.Position;
 			Matrix44 view = Transformation.View.Create(cameraPosition, cameraPosition + this.ViewDirection);
@@ -696,10 +687,10 @@ namespace CryCil.Graphics
 			// Set up the projection matrix.
 			Matrix44 projection =
 				Transformation.Projection.Create
-				(
-					this.HorizontalFieldOfView, this.VerticalFieldOfView,
-					this.NearDistance, this.FarDistance
-				);
+					(
+					 this.HorizontalFieldOfView, this.VerticalFieldOfView,
+					 this.NearDistance, this.FarDistance
+					);
 			// Set up the look-at matrix.
 			Vector3 cameraPosition = this.Position;
 			Matrix44 view = Transformation.View.Create(cameraPosition, cameraPosition + this.ViewDirection);
@@ -748,7 +739,7 @@ namespace CryCil.Graphics
 		/// </summary>
 		/// <param name="widthPixels">     Horizontal resolution of the camera in pixels.</param>
 		/// <param name="heightPixels">    Vertical resolution of the camera in pixels</param>
-		/// <param name="_fov">             Vertical field of view.</param>
+		/// <param name="_fov">            Vertical field of view.</param>
 		/// <param name="nearPlane">       Near clipping distance.</param>
 		/// <param name="farPlane">        Far clipping distance.</param>
 		/// <param name="pixelAspectRatio">Aspect ratio of the pixels (1 for square pixels.)</param>
@@ -760,7 +751,8 @@ namespace CryCil.Graphics
 		{
 			Contract.Assert(nearPlane > 0.001, "Near clipping plane distance is to small.");
 			Contract.Assert(farPlane > 0.1, "Far clipping plane distance is to small.");
-			Contract.Assert(farPlane > nearPlane, "Far clipping plane distance must be greater then near clipping plane distance.");
+			Contract.Assert(farPlane > nearPlane,
+							"Far clipping plane distance must be greater then near clipping plane distance.");
 			Contract.Assert(_fov >= 0.0000001f && _fov < Math.PI, "Vertical field of view must be in range [0, 180].");
 
 			this.fov = _fov;
@@ -784,7 +776,9 @@ namespace CryCil.Graphics
 			this.topLeftProj.Y = projLeftTopY;
 			this.topLeftProj.Z = projLeftTopZ;
 
-			Contract.Assert(Math.Abs(Math.Acos(new Vector3(0, this.topLeftProj.Y, this.topLeftProj.Z).Normalized.Y) * 2 - this.fov) < 0.001);
+			Contract.Assert(
+						    Math.Abs(Math.Acos(new Vector3(0, this.topLeftProj.Y, this.topLeftProj.Z).Normalized.Y) * 2 - this.fov) <
+							0.001);
 
 			float invProjLeftTopY = 1.0f / projLeftTopY;
 			this.topLeftNear.X = nearPlane * projLeftTopX * invProjLeftTopY;
@@ -864,11 +858,11 @@ namespace CryCil.Graphics
 
 			return !this.CameraFrustumPlanes.Any
 				(
-					plane =>
-					{
-						float t = plane.SignedDistance(p);
-						return t > 0 && t > Math.Abs(plane.Normal * ax) + Math.Abs(plane.Normal * ay) + Math.Abs(plane.Normal * az);
-					}
+				 plane =>
+				 {
+					 float t = plane.SignedDistance(p);
+					 return t > 0 && t > Math.Abs(plane.Normal * ax) + Math.Abs(plane.Normal * ay) + Math.Abs(plane.Normal * az);
+				 }
 				);
 		}
 		#endregion

@@ -89,7 +89,7 @@ namespace CryCil.Engine.Physics
 			// geometry modified and can be broken via code.
 			FlagParameters condition = FlagParameters.Condition((uint)PhysicsGeometryFlags.Floats) |
 									   FlagParameters.Condition((uint)(PhysicsGeometryFlags.CanModify |
-									   PhysicsGeometryFlags.ManuallyBreakable));
+																	   PhysicsGeometryFlags.ManuallyBreakable));
 
 			// This object makes the part not float anymore and makes collidable with any solid object.
 			FlagParameters partFlagModification = FlagParameters.Remove((uint)PhysicsGeometryFlags.Floats) |

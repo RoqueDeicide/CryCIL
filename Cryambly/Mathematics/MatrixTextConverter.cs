@@ -23,7 +23,7 @@ namespace CryCil
 		/// </returns>
 		public static string ToString<MatrixType>(IMatrix<MatrixType> matrix, IFormatProvider formatProvider)
 		{
-			return ToString(matrix, new MatrixTextFormat { FormatProvider = formatProvider });
+			return ToString(matrix, new MatrixTextFormat {FormatProvider = formatProvider});
 		}
 		/// <summary>
 		/// Creates text representation of the matrix.

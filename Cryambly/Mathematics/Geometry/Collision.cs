@@ -63,7 +63,8 @@ namespace CryCil.Geometry
 		/// <param name="result"> 
 		/// When the method completes, contains the closest point between the two objects.
 		/// </param>
-		public static void ClosestPointPointTriangle(ref Vector3 point, ref Vector3 vertex1, ref Vector3 vertex2, ref Vector3 vertex3, out Vector3 result)
+		public static void ClosestPointPointTriangle(ref Vector3 point, ref Vector3 vertex1, ref Vector3 vertex2,
+													 ref Vector3 vertex3, out Vector3 result)
 		{
 			// Source: Real-Time Collision Detection by Christer Ericson
 			// Reference: Page 136
@@ -569,7 +570,8 @@ namespace CryCil.Geometry
 		/// intersection of the ray and the triangle is behind the origin of the ray, no intersection is
 		/// assumed to have happened. In both cases of assumptions, this method returns false.
 		/// </remarks>
-		public static bool RayIntersectsTriangle(ref Ray ray, ref Vector3 vertex1, ref Vector3 vertex2, ref Vector3 vertex3, out float distance)
+		public static bool RayIntersectsTriangle(ref Ray ray, ref Vector3 vertex1, ref Vector3 vertex2, ref Vector3 vertex3,
+												 out float distance)
 		{
 			// Source: Fast Minimum Storage Ray / Triangle Intersection Reference: http:
 			// //www.cs.virginia.edu/~gfx/Courses/2003/ImageSynthesis/papers/Acceleration/Fast%20MinimumStorage%20RayTriangle%20Intersection.pdf
@@ -594,7 +596,8 @@ namespace CryCil.Geometry
 			directioncrossedge2.Z = (ray.Direction.X * edge2.Y) - (ray.Direction.Y * edge2.X);
 
 			// Compute the determinant. Dot product of edge1 and the first part of determinant.
-			float determinant = (edge1.X * directioncrossedge2.X) + (edge1.Y * directioncrossedge2.Y) + (edge1.Z * directioncrossedge2.Z);
+			float determinant = (edge1.X * directioncrossedge2.X) + (edge1.Y * directioncrossedge2.Y) +
+								(edge1.Z * directioncrossedge2.Z);
 
 			// If the ray is parallel to the triangle plane, there is no collision. This also means that we
 			// are not culling, the ray may hit both the back and the front of the triangle.
@@ -612,7 +615,8 @@ namespace CryCil.Geometry
 			distanceVector.Y = ray.Position.Y - vertex1.Y;
 			distanceVector.Z = ray.Position.Z - vertex1.Z;
 
-			float triangleU = (distanceVector.X * directioncrossedge2.X) + (distanceVector.Y * directioncrossedge2.Y) + (distanceVector.Z * directioncrossedge2.Z);
+			float triangleU = (distanceVector.X * directioncrossedge2.X) + (distanceVector.Y * directioncrossedge2.Y) +
+							  (distanceVector.Z * directioncrossedge2.Z);
 			triangleU *= inversedeterminant;
 
 			// Make sure it is inside the triangle.
@@ -628,7 +632,8 @@ namespace CryCil.Geometry
 			distancecrossedge1.Y = (distanceVector.Z * edge1.X) - (distanceVector.X * edge1.Z);
 			distancecrossedge1.Z = (distanceVector.X * edge1.Y) - (distanceVector.Y * edge1.X);
 
-			float triangleV = ((ray.Direction.X * distancecrossedge1.X) + (ray.Direction.Y * distancecrossedge1.Y)) + (ray.Direction.Z * distancecrossedge1.Z);
+			float triangleV = ((ray.Direction.X * distancecrossedge1.X) + (ray.Direction.Y * distancecrossedge1.Y)) +
+							  (ray.Direction.Z * distancecrossedge1.Z);
 			triangleV *= inversedeterminant;
 
 			// Make sure it is inside the triangle.
@@ -639,7 +644,8 @@ namespace CryCil.Geometry
 			}
 
 			// Compute the distance along the ray to the triangle.
-			float raydistance = (edge2.X * distancecrossedge1.X) + (edge2.Y * distancecrossedge1.Y) + (edge2.Z * distancecrossedge1.Z);
+			float raydistance = (edge2.X * distancecrossedge1.X) + (edge2.Y * distancecrossedge1.Y) +
+								(edge2.Z * distancecrossedge1.Z);
 			raydistance *= inversedeterminant;
 
 			// Is the triangle behind the ray origin?
@@ -665,7 +671,8 @@ namespace CryCil.Geometry
 		/// there was no intersection.
 		/// </param>
 		/// <returns>Whether the two objects intersected.</returns>
-		public static bool RayIntersectsTriangle(ref Ray ray, ref Vector3 vertex1, ref Vector3 vertex2, ref Vector3 vertex3, out Vector3 point)
+		public static bool RayIntersectsTriangle(ref Ray ray, ref Vector3 vertex1, ref Vector3 vertex2, ref Vector3 vertex3,
+												 out Vector3 point)
 		{
 			float distance;
 			if (!RayIntersectsTriangle(ref ray, ref vertex1, ref vertex2, ref vertex3, out distance))
@@ -973,7 +980,8 @@ namespace CryCil.Geometry
 		/// <param name="vertex2">The second vertex of the triagnle to test.</param>
 		/// <param name="vertex3">The third vertex of the triangle to test.</param>
 		/// <returns>Whether the two objects intersected.</returns>
-		public static PlaneIntersectionType PlaneIntersectsTriangle(ref Plane plane, ref Vector3 vertex1, ref Vector3 vertex2, ref Vector3 vertex3)
+		public static PlaneIntersectionType PlaneIntersectsTriangle(ref Plane plane, ref Vector3 vertex1, ref Vector3 vertex2,
+																	ref Vector3 vertex3)
 		{
 			// Source: Real-Time Collision Detection by Christer Ericson
 			// Reference: Page 207
@@ -982,7 +990,8 @@ namespace CryCil.Geometry
 			PlaneIntersectionType test2 = PlaneIntersectsPoint(ref plane, ref vertex2);
 			PlaneIntersectionType test3 = PlaneIntersectsPoint(ref plane, ref vertex3);
 
-			if (test1 == PlaneIntersectionType.Front && test2 == PlaneIntersectionType.Front && test3 == PlaneIntersectionType.Front)
+			if (test1 == PlaneIntersectionType.Front && test2 == PlaneIntersectionType.Front &&
+				test3 == PlaneIntersectionType.Front)
 				return PlaneIntersectionType.Front;
 
 			if (test1 == PlaneIntersectionType.Back && test2 == PlaneIntersectionType.Back && test3 == PlaneIntersectionType.Back)
@@ -1122,7 +1131,8 @@ namespace CryCil.Geometry
 		/// <param name="vertex2">The second vertex of the triagnle to test.</param>
 		/// <param name="vertex3">The third vertex of the triangle to test.</param>
 		/// <returns>Whether the two objects intersected.</returns>
-		public static bool SphereIntersectsTriangle(ref BoundingSphere sphere, ref Vector3 vertex1, ref Vector3 vertex2, ref Vector3 vertex3)
+		public static bool SphereIntersectsTriangle(ref BoundingSphere sphere, ref Vector3 vertex1, ref Vector3 vertex2,
+													ref Vector3 vertex3)
 		{
 			// Source: Real-Time Collision Detection by Christer Ericson
 			// Reference: Page 167
@@ -1158,8 +1168,8 @@ namespace CryCil.Geometry
 		public static bool BoxContainsPoint(ref BoundingBox box, ref Vector3 point)
 		{
 			return (box.Minimum.X <= point.X && box.Maximum.X >= point.X &&
-				box.Minimum.Y <= point.Y && box.Maximum.Y >= point.Y &&
-				box.Minimum.Z <= point.Z && box.Maximum.Z >= point.Z);
+					box.Minimum.Y <= point.Y && box.Maximum.Y >= point.Y &&
+					box.Minimum.Z <= point.Z && box.Maximum.Z >= point.Z);
 		}
 
 		/* This implementation is wrong
@@ -1205,7 +1215,7 @@ namespace CryCil.Geometry
 				return ContainmentType.Disjoint;
 
 			if (box1.Minimum.X <= box2.Minimum.X && (box2.Maximum.X <= box1.Maximum.X &&
-				box1.Minimum.Y <= box2.Minimum.Y && box2.Maximum.Y <= box1.Maximum.Y) &&
+													 box1.Minimum.Y <= box2.Minimum.Y && box2.Maximum.Y <= box1.Maximum.Y) &&
 				box1.Minimum.Z <= box2.Minimum.Z && box2.Maximum.Z <= box1.Maximum.Z)
 			{
 				return ContainmentType.Contains;
@@ -1229,9 +1239,12 @@ namespace CryCil.Geometry
 			if (distance > sphere.Radius * sphere.Radius)
 				return ContainmentType.Disjoint;
 
-			if ((((box.Minimum.X + sphere.Radius <= sphere.Center.X) && (sphere.Center.X <= box.Maximum.X - sphere.Radius)) && ((box.Maximum.X - box.Minimum.X > sphere.Radius) &&
-				(box.Minimum.Y + sphere.Radius <= sphere.Center.Y))) && (((sphere.Center.Y <= box.Maximum.Y - sphere.Radius) && (box.Maximum.Y - box.Minimum.Y > sphere.Radius)) &&
-				(((box.Minimum.Z + sphere.Radius <= sphere.Center.Z) && (sphere.Center.Z <= box.Maximum.Z - sphere.Radius)) && (box.Maximum.X - box.Minimum.X > sphere.Radius))))
+			if ((((box.Minimum.X + sphere.Radius <= sphere.Center.X) && (sphere.Center.X <= box.Maximum.X - sphere.Radius)) &&
+				 ((box.Maximum.X - box.Minimum.X > sphere.Radius) &&
+				  (box.Minimum.Y + sphere.Radius <= sphere.Center.Y))) &&
+				(((sphere.Center.Y <= box.Maximum.Y - sphere.Radius) && (box.Maximum.Y - box.Minimum.Y > sphere.Radius)) &&
+				 (((box.Minimum.Z + sphere.Radius <= sphere.Center.Z) && (sphere.Center.Z <= box.Maximum.Z - sphere.Radius)) &&
+				  (box.Maximum.X - box.Minimum.X > sphere.Radius))))
 			{
 				return ContainmentType.Contains;
 			}
@@ -1258,14 +1271,15 @@ namespace CryCil.Geometry
 		/// <param name="vertex2">The second vertex of the triagnle to test.</param>
 		/// <param name="vertex3">The third vertex of the triangle to test.</param>
 		/// <returns>The type of containment the two objects have.</returns>
-		public static ContainmentType SphereContainsTriangle(ref BoundingSphere sphere, ref Vector3 vertex1, ref Vector3 vertex2, ref Vector3 vertex3)
+		public static ContainmentType SphereContainsTriangle(ref BoundingSphere sphere, ref Vector3 vertex1,
+															 ref Vector3 vertex2, ref Vector3 vertex3)
 		{
 			// Source: Jorgy343
 			// Reference: None
 
 			return SphereContainsPoint(ref sphere, ref vertex1)
-				&& SphereContainsPoint(ref sphere, ref vertex2)
-				&& SphereContainsPoint(ref sphere, ref vertex3)
+				   && SphereContainsPoint(ref sphere, ref vertex2)
+				   && SphereContainsPoint(ref sphere, ref vertex3)
 				? ContainmentType.Contains
 				: (SphereIntersectsTriangle(ref sphere, ref vertex1, ref vertex2, ref vertex3)
 					? ContainmentType.Intersects

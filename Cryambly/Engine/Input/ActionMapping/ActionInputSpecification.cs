@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using CryCil.Engine.DebugServices;
+﻿using System.Linq;
 
 namespace CryCil.Engine.Input.ActionMapping
 {
@@ -62,7 +60,8 @@ namespace CryCil.Engine.Input.ActionMapping
 		/// </summary>
 		public float AnalogCompareValue;
 		/// <summary>
-		/// Boolean operation to use when comparing <see cref="AnalogCompareValue"/> to the current analog input.
+		/// Boolean operation to use when comparing <see cref="AnalogCompareValue"/> to the current analog
+		/// input.
 		/// </summary>
 		public AnalogComparisonOperation ComparisonOperation;
 		/// <summary>
@@ -105,7 +104,8 @@ namespace CryCil.Engine.Input.ActionMapping
 				// If both are blocking inputs, then combine lists of inputs to block.
 				if (this.BlockMode == InputBlockMode.Block && other.BlockMode == InputBlockMode.Block)
 				{
-					this.BlockedInputs = (this.BlockedInputs ?? new InputId[] { }).Concat(other.BlockedInputs ?? new InputId[] { }).ToArray();
+					this.BlockedInputs =
+						(this.BlockedInputs ?? new InputId[] {}).Concat(other.BlockedInputs ?? new InputId[] {}).ToArray();
 				}
 				// If we still don't have anything to block then don't block anything.
 				if (this.BlockedInputs.IsNullOrEmpty())

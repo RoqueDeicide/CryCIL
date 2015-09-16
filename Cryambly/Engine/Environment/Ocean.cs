@@ -72,18 +72,15 @@ namespace CryCil.Engine.Environment
 		/// <summary>
 		/// Distance attenuation of light.
 		/// </summary>
-		[FieldOffset(4)]
-		public float DistanceAttenuation;
+		[FieldOffset(4)] public float DistanceAttenuation;
 		/// <summary>
 		/// Caustics multiplier.
 		/// </summary>
-		[FieldOffset(8)]
-		public float Multiplier;
+		[FieldOffset(8)] public float Multiplier;
 		/// <summary>
 		/// Caustics darkening multiplier.
 		/// </summary>
-		[FieldOffset(12)]
-		public float DarkeningMultiplier;
+		[FieldOffset(12)] public float DarkeningMultiplier;
 	}
 	/// <summary>
 	/// Encapsulates ocean caustics animation parameters.
@@ -94,18 +91,15 @@ namespace CryCil.Engine.Environment
 		/// <summary>
 		/// Distance animation eight.
 		/// </summary>
-		[FieldOffset(4)]
-		public float Height;
+		[FieldOffset(4)] public float Height;
 		/// <summary>
 		/// Caustics animation depth.
 		/// </summary>
-		[FieldOffset(8)]
-		public float Depth;
+		[FieldOffset(8)] public float Depth;
 		/// <summary>
 		/// Caustics animation intensity.
 		/// </summary>
-		[FieldOffset(12)]
-		public float Intensity;
+		[FieldOffset(12)] public float Intensity;
 	}
 	/// <summary>
 	/// Encapsulates parameters that specify ocean animation.
@@ -154,53 +148,29 @@ namespace CryCil.Engine.Environment
 		/// <summary>
 		/// Gets or sets options that specify whether ocean should be rendered.
 		/// </summary>
-		public static extern OceanRenderOptions RenderOptions
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			get;
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			set;
-		}
+		public static extern OceanRenderOptions RenderOptions { [MethodImpl(MethodImplOptions.InternalCall)] get;
+			[MethodImpl(MethodImplOptions.InternalCall)] set; }
 		/// <summary>
 		/// Gets number of ocean pixels that are visible on the screen.
 		/// </summary>
-		public static extern uint VisiblePixelCount
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			get;
-		}
+		public static extern uint VisiblePixelCount { [MethodImpl(MethodImplOptions.InternalCall)] get; }
 		/// <summary>
 		/// Gets the height of the ocean relative to the origin of coordinates.
 		/// </summary>
-		public static extern float WaterLevel
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			get;
-		}
+		public static extern float WaterLevel { [MethodImpl(MethodImplOptions.InternalCall)] get; }
 		/// <summary>
 		/// Gets ocean caustics parameters.
 		/// </summary>
-		public static extern OceanCaustics CausticsParameters
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			get;
-		}
+		public static extern OceanCaustics CausticsParameters { [MethodImpl(MethodImplOptions.InternalCall)] get; }
 		/// <summary>
 		/// Gets ocean caustics animation parameters.
 		/// </summary>
-		public static extern OceanAnimationCaustics CausticsAnimationParameters
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			get;
-		}
+		public static extern OceanAnimationCaustics CausticsAnimationParameters {
+			[MethodImpl(MethodImplOptions.InternalCall)] get; }
 		/// <summary>
 		/// Gets ocean animation parameters.
 		/// </summary>
-		public static extern OceanAnimation AnimationParameters
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			get;
-		}
+		public static extern OceanAnimation AnimationParameters { [MethodImpl(MethodImplOptions.InternalCall)] get; }
 		#endregion
 		#region Interface
 		/// <summary>

@@ -19,16 +19,12 @@ namespace CryCil.Engine.Input.ActionMapping
 		private static readonly SortedList<uint, IntPtr> actions = new SortedList<uint, IntPtr>();
 		#endregion
 		#region Properties
-
 		#endregion
 		#region Events
-
 		#endregion
 		#region Construction
-
 		#endregion
 		#region Interface
-
 		#endregion
 		#region Utilities
 		[InitializationStage((int)DefaultInitializationStages.ActionMapsRegistrationStage)]
@@ -106,11 +102,11 @@ namespace CryCil.Engine.Input.ActionMapping
 					{
 						string message =
 							string.Format
-							(
-								"Action named {0}, must either have default event implementation or its declaring class " +
-								"must define static field named _{1}.",
-								actionName, actionEvent.Name
-							);
+								(
+								 "Action named {0}, must either have default event implementation or its declaring class " +
+								 "must define static field named _{1}.",
+								 actionName, actionEvent.Name
+								);
 						MonoInterface.DisplayException(new RegistrationException(message));
 						continue;
 					}

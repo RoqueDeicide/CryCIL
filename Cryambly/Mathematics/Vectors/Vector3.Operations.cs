@@ -132,11 +132,11 @@ namespace CryCil
 		{
 			return
 				new Vector3
-				(
+					(
 					left.Y * right.Z - left.Z * right.Y,
 					left.Z * right.X - left.X * right.Z,
 					left.X * right.Y - left.Y * right.X
-				);
+					);
 		}
 		#endregion
 		#region Unary Operators
@@ -206,11 +206,11 @@ namespace CryCil
 		{
 			return
 				new Vector3
-				(
+					(
 					first.Y * v.Z - first.Z * v.Y,
 					first.Z * v.X - first.X * v.Z,
 					first.X * v.Y - first.Y * v.X
-				);
+					);
 		}
 		/// <summary>
 		/// Calculates dot product of two vectors.
@@ -235,11 +235,11 @@ namespace CryCil
 		public static float Mixed(Vector3 v0, Vector3 v1, Vector3 v2)
 		{
 			Vector3 cross = new Vector3
-							(
-								v1.Y * v2.Z - v1.Z * v2.Y,
-								v1.Z * v2.X - v1.X * v2.Z,
-								v1.X * v2.Y - v1.Y * v2.X
-							);
+				(
+				v1.Y * v2.Z - v1.Z * v2.Y,
+				v1.Z * v2.X - v1.X * v2.Z,
+				v1.X * v2.Y - v1.Y * v2.X
+				);
 			return v0.X * cross.X + v0.Y * cross.Y + v0.Z * cross.Z;
 		}
 		#endregion

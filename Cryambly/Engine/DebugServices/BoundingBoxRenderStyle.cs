@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CryCil.Engine.DebugServices
+﻿namespace CryCil.Engine.DebugServices
 {
 	/// <summary>
 	/// Enumeration of rendering styles for bounding boxes.

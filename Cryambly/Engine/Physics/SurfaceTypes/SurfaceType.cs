@@ -34,8 +34,7 @@ namespace CryCil.Engine.Physics
 		}
 		#endregion
 		#region Fields
-		[UsedImplicitly]
-		private readonly IntPtr handle;
+		[UsedImplicitly] private readonly IntPtr handle;
 		#endregion
 		#region Properties
 		/// <summary>

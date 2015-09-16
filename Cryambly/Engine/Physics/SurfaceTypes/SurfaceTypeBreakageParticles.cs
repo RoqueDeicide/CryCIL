@@ -9,21 +9,17 @@ namespace CryCil.Engine.Physics
 	/// </summary>
 	public struct SurfaceTypeBreakageParticles
 	{
-		[UsedImplicitly]
-		private IntPtr type;
-		[UsedImplicitly]
-		private IntPtr particleEffect;
-		[UsedImplicitly]
-		private int countPerUnit;
-		[UsedImplicitly]
-		private float countScale;
-		[UsedImplicitly]
-		private float scale;
+		[UsedImplicitly] private IntPtr type;
+		[UsedImplicitly] private IntPtr particleEffect;
+		[UsedImplicitly] private int countPerUnit;
+		[UsedImplicitly] private float countScale;
+		[UsedImplicitly] private float scale;
 		/// <summary>
 		/// Gets the name of the breakage event during which this particle effect will spawn.
 		/// </summary>
 		/// <remarks>
-		/// Currently known breakage events are: breakage, destroy, joint_shatter, joint_break, freeze_vapor, freeze_shatter.
+		/// Currently known breakage events are: breakage, destroy, joint_shatter, joint_break,
+		/// freeze_vapor, freeze_shatter.
 		/// </remarks>
 		public string Type
 		{

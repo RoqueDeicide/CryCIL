@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using CryCil.Annotations;
 using CryCil.Engine.Data;
-using CryCil.Engine.DebugServices;
 using CryCil.RunTime;
 using CryCil.RunTime.Registration;
 using CryCil.Utilities;
@@ -21,10 +19,10 @@ namespace CryCil.Engine.Logic
 		[Flags]
 		private enum InitializationDetails
 		{
-			Flags = 1,			// When set indicates that flags are already assigned.
-			Description = 2,	// When set indicates that description is already provided.
-			Inputs = 4,			// When set indicates that input ports are already defined.
-			Outputs = 8,		// When set indicates that output ports are already defined.
+			Flags = 1, // When set indicates that flags are already assigned.
+			Description = 2, // When set indicates that description is already provided.
+			Inputs = 4, // When set indicates that input ports are already defined.
+			Outputs = 8, // When set indicates that output ports are already defined.
 			All = Flags | Description | Inputs | Outputs
 		}
 		#endregion
@@ -188,7 +186,8 @@ namespace CryCil.Engine.Logic
 		/// Can be overridden in derived class to react to activation of multiple ports at once.
 		/// </summary>
 		/// <param name="activatedPorts">
-		/// A collection of objects that represent input ports that were activated (with new values already assigned to them).
+		/// A collection of objects that represent input ports that were activated (with new values already
+		/// assigned to them).
 		/// </param>
 		public virtual void MultiActivate(ActivationSet activatedPorts)
 		{

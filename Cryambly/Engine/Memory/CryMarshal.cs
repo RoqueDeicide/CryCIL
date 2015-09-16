@@ -116,7 +116,9 @@ namespace CryCil.Engine.Memory
 		/// Indicates whether the memory block must be released even if it is not tracked by
 		/// <see cref="CryMarshal"/> .
 		/// </param>
-		/// <exception cref="ArgumentNullException">Pointer to memory block to be released cannot be null.</exception>
+		/// <exception cref="ArgumentNullException">
+		/// Pointer to memory block to be released cannot be null.
+		/// </exception>
 		public static void Free(IntPtr handle, bool force = false)
 		{
 			if (handle == IntPtr.Zero)
@@ -129,12 +131,12 @@ namespace CryCil.Engine.Memory
 			if (index > 0)
 			{
 				FreeMemory(handle);
-				
+
 				ulong size = allocatedBlocks.Values[index];
-				
+
 				AllocatedMemory -= size;
 				GC.RemoveMemoryPressure((long)size);
-				
+
 				allocatedBlocks.RemoveAt(index);
 			}
 			else if (force)

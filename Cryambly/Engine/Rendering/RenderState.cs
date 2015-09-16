@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CryCil.Engine.Rendering
 {
@@ -24,7 +20,7 @@ namespace CryCil.Engine.Rendering
 		GS_BLSRC_DSTALPHA = 0x7,
 		GS_BLSRC_ONEMINUSDSTALPHA = 0x8,
 		GS_BLSRC_ALPHASATURATE = 0x9,
-		GS_BLSRC_SRCALPHA_A_ZERO = 0xa,// separate alpha blend state
+		GS_BLSRC_SRCALPHA_A_ZERO = 0xa, // separate alpha blend state
 		GS_BLSRC_SRC1ALPHA = 0xb, // dual source blending
 
 		GS_BLDST_MASK = 0xf0,

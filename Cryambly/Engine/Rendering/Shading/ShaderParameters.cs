@@ -26,8 +26,7 @@ namespace CryCil.Engine.Rendering
 	public unsafe struct ShaderParameters : IEnumerable<ShaderParameterPtr>
 	{
 		#region Fields
-		[UsedImplicitly]
-		private IntPtr handle;
+		[UsedImplicitly] private IntPtr handle;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -72,7 +71,6 @@ namespace CryCil.Engine.Rendering
 		}
 		#endregion
 		#region Events
-
 		#endregion
 		#region Construction
 		internal ShaderParameters(IntPtr handle)
@@ -95,7 +93,6 @@ namespace CryCil.Engine.Rendering
 				yield return GetItemInt(this.handle, i);
 			}
 		}
-
 		#endregion
 		#region Utilities
 		IEnumerator IEnumerable.GetEnumerator()

@@ -7,44 +7,25 @@ namespace CryCil.Engine.Physics
 	/// </summary>
 	public struct SurfaceTypePhysicalParameters
 	{
-		[UsedImplicitly]
-		private int breakableId;
-		[UsedImplicitly]
-		private int breakEnergy;
-		[UsedImplicitly]
-		private float holeSize;
-		[UsedImplicitly]
-		private float holeSizeExplosion;
-		[UsedImplicitly]
-		private float hitRadius;
-		[UsedImplicitly]
-		private float hitPoints;
-		[UsedImplicitly]
-		private float hitPointsSecondary;
-		[UsedImplicitly]
-		private float hitMaxDamage;
-		[UsedImplicitly]
-		private float hitLifeTime;
-		[UsedImplicitly]
-		private int pierceability;
-		[UsedImplicitly]
-		private float damageReduction;
-		[UsedImplicitly]
-		private float ricochetAngle;
-		[UsedImplicitly]
-		private float ricochetDamageReduction;
-		[UsedImplicitly]
-		private float ricochetVelocityReduction;
-		[UsedImplicitly]
-		private float friction;
-		[UsedImplicitly]
-		private float bouncyness;
-		[UsedImplicitly]
-		private int breakability;
-		[UsedImplicitly]
-		private int collType;
-		[UsedImplicitly]
-		private float soundObstruction;
+		[UsedImplicitly] private int breakableId;
+		[UsedImplicitly] private int breakEnergy;
+		[UsedImplicitly] private float holeSize;
+		[UsedImplicitly] private float holeSizeExplosion;
+		[UsedImplicitly] private float hitRadius;
+		[UsedImplicitly] private float hitPoints;
+		[UsedImplicitly] private float hitPointsSecondary;
+		[UsedImplicitly] private float hitMaxDamage;
+		[UsedImplicitly] private float hitLifeTime;
+		[UsedImplicitly] private int pierceability;
+		[UsedImplicitly] private float damageReduction;
+		[UsedImplicitly] private float ricochetAngle;
+		[UsedImplicitly] private float ricochetDamageReduction;
+		[UsedImplicitly] private float ricochetVelocityReduction;
+		[UsedImplicitly] private float friction;
+		[UsedImplicitly] private float bouncyness;
+		[UsedImplicitly] private int breakability;
+		[UsedImplicitly] private int collType;
+		[UsedImplicitly] private float soundObstruction;
 		/// <summary>
 		/// Unknown.
 		/// </summary>

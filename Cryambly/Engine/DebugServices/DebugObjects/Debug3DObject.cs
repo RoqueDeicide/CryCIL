@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CryCil.Engine.DebugServices
+﻿namespace CryCil.Engine.DebugServices
 {
 	/// <summary>
 	/// Base class for persistent debug objects that are rendered in 3D space.
@@ -17,7 +11,7 @@ namespace CryCil.Engine.DebugServices
 		/// </summary>
 		public const AuxiliaryGeometryRenderFlags DefaultRenderFlags =
 			AuxiliaryGeometryRenderFlags.Default3DRenderFlags |
-					AuxiliaryGeometryRenderFlags.BlendingAlpha;
+			AuxiliaryGeometryRenderFlags.BlendingAlpha;
 		#endregion
 		#region Properties
 		#endregion

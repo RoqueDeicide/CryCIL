@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CryCil.Geometry;
 
 namespace CryCil.Engine.DebugServices
@@ -18,8 +15,8 @@ namespace CryCil.Engine.DebugServices
 		private float innerRadius;
 		private float outerRadius;
 		private Quaternion orientation;
-		private static readonly uint[] triangleIndexes = { 0u, 1u, 2u };
-		private static readonly uint[] quadIndexes = { 0u, 2u, 1u, 0u, 3u, 2u };
+		private static readonly uint[] triangleIndexes = {0u, 1u, 2u};
+		private static readonly uint[] quadIndexes = {0u, 2u, 1u, 0u, 3u, 2u};
 		#endregion
 		#region Properties
 		/// <summary>

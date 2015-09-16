@@ -12,8 +12,7 @@ namespace CryCil.Utilities
 	public sealed partial class CryXmlNode : IDisposable
 	{
 		#region Fields
-		[UsedImplicitly]
-		private IntPtr handle;
+		[UsedImplicitly] private IntPtr handle;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -27,59 +26,33 @@ namespace CryCil.Utilities
 		/// Gets the name of the node.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This Xml node is not valid.</exception>
-		public extern string TagName
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			get;
-		}
+		public extern string TagName { [MethodImpl(MethodImplOptions.InternalCall)] get; }
 		/// <summary>
 		/// Gets number of attributes this node has.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This Xml node is not valid.</exception>
-		public extern int AttributeCount
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			get;
-		}
+		public extern int AttributeCount { [MethodImpl(MethodImplOptions.InternalCall)] get; }
 		/// <summary>
 		/// Gets number of children this node has.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This Xml node is not valid.</exception>
-		public extern int ChildCount
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			get;
-		}
+		public extern int ChildCount { [MethodImpl(MethodImplOptions.InternalCall)] get; }
 		/// <summary>
 		/// Gets parent node of this one.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This Xml node is not valid.</exception>
-		public extern CryXmlNode Parent
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			get;
-		}
+		public extern CryXmlNode Parent { [MethodImpl(MethodImplOptions.InternalCall)] get; }
 		/// <summary>
 		/// Gets or sets content of this Xml node in text form.
 		/// </summary>
-		public extern string Content
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			get;
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			set;
-		}
+		public extern string Content { [MethodImpl(MethodImplOptions.InternalCall)] get;
+			[MethodImpl(MethodImplOptions.InternalCall)] set; }
 		/// <summary>
 		/// Creates deep clone of this Xml node.
 		/// </summary>
-		public extern CryXmlNode Clone
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			get;
-		}
+		public extern CryXmlNode Clone { [MethodImpl(MethodImplOptions.InternalCall)] get; }
 		#endregion
 		#region Events
-
 		#endregion
 		#region Construction
 		/// <summary>

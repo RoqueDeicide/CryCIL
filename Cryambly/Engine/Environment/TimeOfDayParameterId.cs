@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CryCil.Engine.Environment
+﻿namespace CryCil.Engine.Environment
 {
 	/// <summary>
 	/// Enumeration of identifiers of all variables.

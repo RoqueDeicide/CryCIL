@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 
 namespace CryCil.Engine.Input.ActionMapping
 {
@@ -16,15 +15,14 @@ namespace CryCil.Engine.Input.ActionMapping
 		/// A combination of keyboard and a mouse.
 		/// </summary>
 		/// <remarks>
-		/// Typically supported by PCs, however default GameSDK implementation thinks that both Xbox One and Play Station 4 can support these.
+		/// Typically supported by PCs, however default GameSDK implementation thinks that both Xbox One
+		/// and Play Station 4 can support these.
 		/// </remarks>
 		KeyboardMouse,
 		/// <summary>
 		/// Xbox One controller.
 		/// </summary>
-		/// <remarks>
-		/// Typically supported by PCs as well as by a titular platform.
-		/// </remarks>
+		/// <remarks>Typically supported by PCs as well as by a titular platform.</remarks>
 		XboxPad,
 		/// <summary>
 		/// A DualShock 4 controller (aka Play Station 4, aka Orbis controller).

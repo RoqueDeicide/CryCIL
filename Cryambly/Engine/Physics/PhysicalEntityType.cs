@@ -12,30 +12,34 @@
 		/// <summary>
 		/// Represents an entity that is static.
 		/// </summary>
-		/// <remarks>
-		/// Static entities cannot be moved via physical interactions.
-		/// </remarks>
+		/// <remarks>Static entities cannot be moved via physical interactions.</remarks>
 		Static = 1,
 		/// <summary>
 		/// Represents an entity that is a rigid body.
 		/// </summary>
 		/// <remarks>
-		/// <para>Rigid bodies have a shape that cannot be changed by physical interactions but they can be moved via physical interactions.</para>
-		/// <para>Rigid bodies with mass of zero are similar to static entities with only difference being the collision detection algorithm being more reliable for cases when the entity changes its position via code.</para>
+		/// <para>
+		/// Rigid bodies have a shape that cannot be changed by physical interactions but they can be moved
+		/// via physical interactions.
+		/// </para>
+		/// <para>
+		/// Rigid bodies with mass of zero are similar to static entities with only difference being the
+		/// collision detection algorithm being more reliable for cases when the entity changes its
+		/// position via code.
+		/// </para>
 		/// </remarks>
 		Rigid = 2,
 		/// <summary>
 		/// Represents an entity that is a vehicle with wheels.
 		/// </summary>
-		/// <remarks>
-		/// Vehicles with wheels are extended versions of rigid bodies.
-		/// </remarks>
+		/// <remarks>Vehicles with wheels are extended versions of rigid bodies.</remarks>
 		WheeledVehicle = 3,
 		/// <summary>
 		/// Represents a living entity.
 		/// </summary>
 		/// <remarks>
-		/// Living entities are rigid bodies that have extended set of simulation parameters and they are always kept up-right.
+		/// Living entities are rigid bodies that have extended set of simulation parameters and they are
+		/// always kept up-right.
 		/// </remarks>
 		Living = 4,
 		/// <summary>
@@ -49,7 +53,8 @@
 		/// Represents an articulated entity.
 		/// </summary>
 		/// <remarks>
-		/// Articulated entities consist of multiple physical entities that are rigid bodies that are linked to each other into an hierarchy that represents a tree with a single root.
+		/// Articulated entities consist of multiple physical entities that are rigid bodies that are
+		/// linked to each other into an hierarchy that represents a tree with a single root.
 		/// </remarks>
 		Articulated = 6,
 		/// <summary>
@@ -70,7 +75,8 @@
 		/// Represents an area.
 		/// </summary>
 		/// <remarks>
-		/// Areas are incorporeal static entities: they can collide with other entities, but otherwise they don't interact with physical world. Areas are used for proximity triggers.
+		/// Areas are incorporeal static entities: they can collide with other entities, but otherwise they
+		/// don't interact with physical world. Areas are used for proximity triggers.
 		/// </remarks>
 		Area = 9
 	}

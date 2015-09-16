@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CryCil.Geometry;
+﻿using CryCil.Geometry;
 
 namespace CryCil.Engine.DebugServices
 {
@@ -33,7 +28,7 @@ namespace CryCil.Engine.DebugServices
 		/// <see cref="Quaternion"/> that represents orientation of this cylinder.
 		/// </param>
 		public DebugCylinder(Vector3 baseCenter, float height, float radius,
-									   Quaternion orientation)
+							 Quaternion orientation)
 			: base(baseCenter, height, radius, orientation)
 		{
 		}
@@ -56,13 +51,13 @@ namespace CryCil.Engine.DebugServices
 		{
 			AuxiliaryGeometry.Flags = this.RenderingFlags;
 			AuxiliaryGeometry.DrawCylinder
-			(
-				this.Start,
-				this.Orientation.Column2,
-				this.MaxRadius,
-				this.Height,
-				this.Color
-			);
+				(
+				 this.Start,
+				 this.Orientation.Column2,
+				 this.MaxRadius,
+				 this.Height,
+				 this.Color
+				);
 		}
 		#endregion
 	}

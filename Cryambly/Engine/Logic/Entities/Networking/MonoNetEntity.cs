@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using CryCil.Annotations;
 using CryCil.Engine.Data;
 using CryCil.Engine.Network;
@@ -15,9 +14,10 @@ namespace CryCil.Engine.Logic
 	/// </param>
 	public delegate void NetEntityClientEventHandler(MonoNetEntity sender, ChannelId clientChannel);
 	/// <summary>
-	/// Defines signature of methods that can handle events related to entities gaining/losing authority over their representation across the network.
+	/// Defines signature of methods that can handle events related to entities gaining/losing authority
+	/// over their representation across the network.
 	/// </summary>
-	/// <param name="sender">An entity that raised the event.</param>
+	/// <param name="sender">         An entity that raised the event.</param>
 	/// <param name="gainedAuthority">Indicates whether authority was gained or lost.</param>
 	public delegate void NetEntityAuthorizationEventHandler(MonoNetEntity sender, bool gainedAuthority);
 	/// <summary>
@@ -27,8 +27,7 @@ namespace CryCil.Engine.Logic
 	public abstract partial class MonoNetEntity : MonoEntity
 	{
 		#region Fields
-		[UsedImplicitly]
-		private ChannelId channelId;
+		[UsedImplicitly] private ChannelId channelId;
 		#endregion
 		#region Properties
 		/// <summary>

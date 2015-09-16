@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Text;
 using CryCil.Annotations;
 using CryCil.Graphics;
 
@@ -14,8 +13,7 @@ namespace CryCil.Engine.Rendering
 	public struct RenderShaderResources
 	{
 		#region Fields
-		[UsedImplicitly]
-		private IntPtr handle;
+		[UsedImplicitly] private IntPtr handle;
 		#endregion
 		#region Properties
 		/// <summary>

@@ -9,16 +9,12 @@ namespace CryCil.Engine.Logic
 	public static class EntitySystem
 	{
 		#region Fields
-
 		#endregion
 		#region Properties
-
 		#endregion
 		#region Events
-
 		#endregion
 		#region Construction
-
 		#endregion
 		#region Interface
 		/// <summary>
@@ -91,7 +87,6 @@ namespace CryCil.Engine.Logic
 														bool dontSyncProperties);
 		#endregion
 		#region Utilities
-
 		#endregion
 	}
 }

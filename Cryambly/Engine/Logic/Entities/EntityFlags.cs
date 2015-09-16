@@ -61,7 +61,7 @@
 		UseAllInAABBCalculations = 1 << 11,
 		/// <summary>
 		/// When set specifies that this entity is a volume sound (will get moved around by the sound
-		/// proxy).
+		/// proxy) .
 		/// </summary>
 		VolumeSound = 1 << 12,
 		/// <summary>

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CryCil.Engine.Data
+﻿namespace CryCil.Engine.Data
 {
 	/// <summary>
 	/// Defines interface of objects that can be synchronized.

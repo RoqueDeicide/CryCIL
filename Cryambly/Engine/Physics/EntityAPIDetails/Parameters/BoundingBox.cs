@@ -21,10 +21,8 @@ namespace CryCil.Engine.Physics
 		/// bounding box onto physical entity or to <see cref="PhysicalEntity.GetParameters"/> to get the
 		/// current one.
 		/// </summary>
-		[UsedImplicitly]
-		public PhysicsParameters Base;
-		[UsedImplicitly]
-		private BoundingBox boundingBox;
+		[UsedImplicitly] public PhysicsParameters Base;
+		[UsedImplicitly] private BoundingBox boundingBox;
 		#endregion
 		#region Properties
 		/// <summary>

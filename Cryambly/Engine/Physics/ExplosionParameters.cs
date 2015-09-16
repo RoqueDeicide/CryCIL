@@ -10,32 +10,19 @@ namespace CryCil.Engine.Physics
 	public struct ExplosionParameters
 	{
 		#region Fields
-		[UsedImplicitly]
-		private Vector3 occlusionEpicenter;
-		[UsedImplicitly]
-		private Vector3 impulseEpicenter;
-		[UsedImplicitly]
-		private float minimalRadius;
-		[UsedImplicitly]
-		private float maximalRadius;
-		[UsedImplicitly]
-		private float radius;
-		[UsedImplicitly]
-		private float impulsivePressureAtRadius;
-		[UsedImplicitly]
-		private int occlusionResolution;
-		[UsedImplicitly]
-		private int grow;
-		[UsedImplicitly]
-		private float minimalOcclusionRadius;
-		[UsedImplicitly]
-		private float holeSize;
-		[UsedImplicitly]
-		private Vector3 explodingDirection;
-		[UsedImplicitly]
-		private int holeType;
-		[UsedImplicitly]
-		private bool forceDeformEntities;
+		[UsedImplicitly] private Vector3 occlusionEpicenter;
+		[UsedImplicitly] private Vector3 impulseEpicenter;
+		[UsedImplicitly] private float minimalRadius;
+		[UsedImplicitly] private float maximalRadius;
+		[UsedImplicitly] private float radius;
+		[UsedImplicitly] private float impulsivePressureAtRadius;
+		[UsedImplicitly] private int occlusionResolution;
+		[UsedImplicitly] private int grow;
+		[UsedImplicitly] private float minimalOcclusionRadius;
+		[UsedImplicitly] private float holeSize;
+		[UsedImplicitly] private Vector3 explodingDirection;
+		[UsedImplicitly] private int holeType;
+		[UsedImplicitly] private bool forceDeformEntities;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -160,9 +147,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the identifier of the type of hole that will be created by this explosion.
 		/// </summary>
-		/// <remarks>
-		/// Types of holes are defined using <see cref="ExplosionShapes.Add"/>.
-		/// </remarks>
+		/// <remarks>Types of holes are defined using <see cref="ExplosionShapes.Add"/>.</remarks>
 		public int HoleType
 		{
 			get { return this.holeType; }

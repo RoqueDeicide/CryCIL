@@ -1,5 +1,4 @@
-﻿using System;
-using CryCil.Engine.Data;
+﻿using CryCil.Engine.Data;
 using CryCil.RunTime.Registration;
 
 namespace CryCil.Engine.Logic
@@ -10,16 +9,12 @@ namespace CryCil.Engine.Logic
 	public abstract class RmiParameters
 	{
 		#region Fields
-
 		#endregion
 		#region Properties
-
 		#endregion
 		#region Events
-
 		#endregion
 		#region Construction
-
 		#endregion
 		#region Interface
 		/// <summary>

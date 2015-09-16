@@ -12,10 +12,8 @@ namespace CryCil.Specials
 		private readonly float val;
 		#endregion
 		#region Properties
-
 		#endregion
 		#region Events
-
 		#endregion
 		#region Construction
 		/// <summary>
@@ -54,7 +52,6 @@ namespace CryCil.Specials
 		}
 		#endregion
 		#region Utilities
-
 		#endregion
 	}
 }

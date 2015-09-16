@@ -4,10 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using CryCil.Annotations;
 using CryCil.Engine.DebugServices;
 using CryCil.RunTime.Compilation;
 using CryCil.RunTime.Logging;
@@ -84,24 +81,24 @@ namespace CryCil.RunTime
 			}
 
 			CryCilAssemblies = new List<Assembly>
-			(
+				(
 				from file in gameModules.Concat(cryEngineModules)
 				where AssemblyExtras.IsAssembly(file)
 				select Assembly.Load(AssemblyName.GetAssemblyName(file))
-			);
+				);
 			// Load and compile the solution.
 			OnCompilationStarted();
 			try
 			{
 				bool loadingSuccessful =
 					CodeSolution.Load
-					(
-						Path.Combine
 						(
-							DirectoryStructure.ContentFolder,
-							"Code", "Solutions", "CryCilCode.sln"
-						)
-					);
+						 Path.Combine
+							 (
+							  DirectoryStructure.ContentFolder,
+							  "Code", "Solutions", "CryCilCode.sln"
+							 )
+						);
 				if (!loadingSuccessful)
 				{
 					throw new Exception("Unable to load the solution.");
@@ -142,7 +139,7 @@ namespace CryCil.RunTime
 // ReSharper restore UnusedVariable
 		}
 		[UnmanagedThunk("Invoked from C++ code after FlowGraph is initialized" +
-				   " to register FlowGraph nodes defined in CryCIL.")]
+						" to register FlowGraph nodes defined in CryCIL.")]
 		private static void RegisterFlowGraphNodeTypes()
 		{
 			FlowNodeTypeRegistry.RegisterAllTypes();
@@ -210,39 +207,39 @@ namespace CryCil.RunTime
 						.SelectMany(x => x.GetMethods())
 						.Where
 						(
-							method =>
-							{
-								// Get the methods that are initialization ones with appropriate signature.
-								ParameterInfo[] pars = method.GetParameters();
-								return
-									method.ContainsAttribute<InitializationStageAttribute>() &&
-									method.IsStatic &&
-									pars.Length == 1 &&
-									pars[0].ParameterType == typeof(int);
-							}
+						 method =>
+						 {
+							 // Get the methods that are initialization ones with appropriate signature.
+							 ParameterInfo[] pars = method.GetParameters();
+							 return
+								 method.ContainsAttribute<InitializationStageAttribute>() &&
+								 method.IsStatic &&
+								 pars.Length == 1 &&
+								 pars[0].ParameterType == typeof(int);
+						 }
 						)
-					// Parse the method info and gather usable data.
+						// Parse the method info and gather usable data.
 						.Select
 						(
-							method =>
-								new Tuple<InitializationStageFunction, int[]>
-								(
-									method.CreateDelegate<InitializationStageFunction>(),
-									method.GetCustomAttributes<InitializationStageAttribute>()
-											.Select(attr => attr.StageIndex)
-											.ToArray()
-								)
+						 method =>
+							 new Tuple<InitializationStageFunction, int[]>
+							 (
+							 method.CreateDelegate<InitializationStageFunction>(),
+							 method.GetCustomAttributes<InitializationStageAttribute>()
+								   .Select(attr => attr.StageIndex)
+								   .ToArray()
+							 )
 						).ToList();
 				// Create a map of functions and their indices.
 				functionsMap.Add
-				(
-					// Add the native initialization function to the mix.
-					new Tuple<InitializationStageFunction, int[]>
 					(
-						OnInitializationStageBind,
-						GetSubscribedStagesBind()
-					)
-				);
+					 // Add the native initialization function to the mix.
+					 new Tuple<InitializationStageFunction, int[]>
+						 (
+						 OnInitializationStageBind,
+						 GetSubscribedStagesBind()
+						 )
+					);
 				Console.WriteLine("Compiling data about initialization stages.");
 				// Switch keys and values in the function map.
 				for (int i = 0; i < functionsMap.Count; i++)
@@ -264,9 +261,9 @@ namespace CryCil.RunTime
 				// Now invoke everything.
 				foreach (int key in stages.Keys)
 				{
-					OnInitializationStageStarted(key);		//
-					stages[key](key);						// Yep, it's that simple.
-					OnInitializationStageFinished(key);		//
+					OnInitializationStageStarted(key); //
+					stages[key](key); // Yep, it's that simple.
+					OnInitializationStageFinished(key); //
 				}
 			}
 		}

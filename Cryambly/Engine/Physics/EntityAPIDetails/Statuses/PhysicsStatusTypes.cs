@@ -43,8 +43,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Deprecated.
 		/// </summary>
-		[Obsolete]
-		Collisions = 9,
+		[Obsolete] Collisions = 9,
 		/// <summary>
 		/// Identifier of the structure that is used to query surface of the physical entity.
 		/// </summary>
@@ -52,8 +51,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Deprecated.
 		/// </summary>
-		[Obsolete]
-		TimeSlices = 11,
+		[Obsolete] TimeSlices = 11,
 		/// <summary>
 		/// Identifier of the structure that is used to query number of parts the physical entity currently
 		/// consists of.

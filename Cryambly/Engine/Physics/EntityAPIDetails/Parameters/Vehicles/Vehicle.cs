@@ -9,14 +9,17 @@ namespace CryCil.Engine.Physics
 	/// Encapsulates a set of parameters that allows to specify the physical entity that is a vehicle.
 	/// </summary>
 	/// <remarks>
-	/// Never use objects of this type that were created using a default constructor (they are not configured properly!).
+	/// Never use objects of this type that were created using a default constructor (they are not
+	/// configured properly!).
 	/// </remarks>
 	[StructLayout(LayoutKind.Sequential)]
 	public unsafe struct PhysicsParametersVehicle
 	{
 		#region Fields
 		/// <summary>
-		/// Pass reference to this field to the <see cref="PhysicalEntity.SetParameters"/> to apply these onto physical entity or to <see cref="PhysicalEntity.GetParameters"/> to get the currently applied ones.
+		/// Pass reference to this field to the <see cref="PhysicalEntity.SetParameters"/> to apply these
+		/// onto physical entity or to <see cref="PhysicalEntity.GetParameters"/> to get the currently
+		/// applied ones.
 		/// </summary>
 		[UsedImplicitly] public PhysicsParameters Base;
 		[UsedImplicitly] private float axleFriction;
@@ -42,12 +45,14 @@ namespace CryCil.Engine.Physics
 		[UsedImplicitly] private float* gearRatios;
 		[UsedImplicitly] private int maxGear, minGear; // additional gear index clamping
 		[UsedImplicitly] private float slipThreshold;
-		[UsedImplicitly] private float gearDirSwitchRPM;	// RPM threshold for switching back and forward gears
+		[UsedImplicitly] private float gearDirSwitchRPM; // RPM threshold for switching back and forward gears
 		[UsedImplicitly] private float kDynFriction;
 		[UsedImplicitly] private float steerTrackNeutralTurn;
-		[UsedImplicitly] private float pullTilt; // for tracked vehicles, tilt angle of pulling force towards ground	
-		[UsedImplicitly] private float maxTilt; // maximum wheel contact normal tilt (left or right) after which it acts as a locked part of the hull; it's a cosine of the angle
-		[UsedImplicitly] private int bKeepTractionWhenTilted; // keeps wheel traction in tilted mode 
+		[UsedImplicitly] private float pullTilt; // for tracked vehicles, tilt angle of pulling force towards ground
+		[UsedImplicitly] private float maxTilt;
+									   // maximum wheel contact normal tilt (left or right) after which it
+									   // acts as a locked part of the hull; it's a cosine of the angle
+		[UsedImplicitly] private int bKeepTractionWhenTilted; // keeps wheel traction in tilted mode
 		#endregion
 		#region Properties
 		/// <summary>
@@ -61,9 +66,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets or sets the power of the engine in kilowatts.
 		/// </summary>
-		/// <remarks>
-		/// Usual values are 10 000 to 100 000 kW (13.404 to 134.04 hp).
-		/// </remarks>
+		/// <remarks>Usual values are 10 000 to 100 000 kW (13.404 to 134.04 hp).</remarks>
 		public float EnginePower
 		{
 			get { return this.enginePower; }
@@ -72,9 +75,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets or sets the power of the engine in horsepower.
 		/// </summary>
-		/// <remarks>
-		/// Usual values are 13.404 to 134.04 hp (10 000 to 100 000 kW).
-		/// </remarks>
+		/// <remarks>Usual values are 13.404 to 134.04 hp (10 000 to 100 000 kW).</remarks>
 		public float EnginePowerInHorsePower
 		{
 			get { return this.enginePower / 746.0f; }
@@ -83,9 +84,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets or sets maximal number of revolutions per minute the engine can reach.
 		/// </summary>
-		/// <remarks>
-		/// At this rate the engines torque is 0.
-		/// </remarks>
+		/// <remarks>At this rate the engines torque is 0.</remarks>
 		public float EngineMaxRotationFrequency
 		{
 			get { return this.engineMaxRPM; }
@@ -119,7 +118,8 @@ namespace CryCil.Engine.Physics
 			set { this.engineStartRPM = value; }
 		}
 		/// <summary>
-		/// Gets or sets the number of revolutions per minute the engine has to reach for automatic gearbox to shift the gear up.
+		/// Gets or sets the number of revolutions per minute the engine has to reach for automatic gearbox
+		/// to shift the gear up.
 		/// </summary>
 		public float EngineShiftUpRotationFrequency
 		{
@@ -127,7 +127,8 @@ namespace CryCil.Engine.Physics
 			set { this.engineShiftUpRPM = value; }
 		}
 		/// <summary>
-		/// Gets or sets the number of revolutions per minute the engine has to reach for automatic gearbox to shift the gear down.
+		/// Gets or sets the number of revolutions per minute the engine has to reach for automatic gearbox
+		/// to shift the gear down.
 		/// </summary>
 		public float EngineShiftDownRotationFrequency
 		{
@@ -153,9 +154,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets or sets the array of gear ratios.
 		/// </summary>
-		/// <remarks>
-		/// Indices of gears: 0 - backwards; 1 - neutral; 2 and above - forward.
-		/// </remarks>
+		/// <remarks>Indices of gears: 0 - backwards; 1 - neutral; 2 and above - forward.</remarks>
 		/// <exception cref="ArgumentException">At least 3 gear ratios need to be provided.</exception>
 		[CanBeNull]
 		public float[] Gears
@@ -209,7 +208,8 @@ namespace CryCil.Engine.Physics
 			set { this.maxSteer = value; }
 		}
 		/// <summary>
-		/// Gets or sets maximal length of simulation time step when the vehicle is not touching anything with its body.
+		/// Gets or sets maximal length of simulation time step when the vehicle is not touching anything
+		/// with its body.
 		/// </summary>
 		public float MaximalTimeStep
 		{
@@ -217,7 +217,8 @@ namespace CryCil.Engine.Physics
 			set { this.maxTimeStep = value; }
 		}
 		/// <summary>
-		/// Gets or sets minimal kinetic energy the vehicle can have without switching to 'sleep' state when the vehicle is not touching anything with its body.
+		/// Gets or sets minimal kinetic energy the vehicle can have without switching to 'sleep' state
+		/// when the vehicle is not touching anything with its body.
 		/// </summary>
 		public float MinimalEnergy
 		{
@@ -225,7 +226,8 @@ namespace CryCil.Engine.Physics
 			set { this.minEnergy = value; }
 		}
 		/// <summary>
-		/// Gets or sets the magnitude of damping that is applied to vehicle velocity when the it is not touching anything with its body.
+		/// Gets or sets the magnitude of damping that is applied to vehicle velocity when the it is not
+		/// touching anything with its body.
 		/// </summary>
 		public float Damping
 		{
@@ -281,7 +283,8 @@ namespace CryCil.Engine.Physics
 			set { this.kDynFriction = value; }
 		}
 		/// <summary>
-		/// Gets or sets the angle of steering for vehicles with tracks (tanks, bulldozers) at which the vehicle starts turning in place.
+		/// Gets or sets the angle of steering for vehicles with tracks (tanks, bulldozers) at which the
+		/// vehicle starts turning in place.
 		/// </summary>
 		public float NeutralTurnSteeringWithTracks
 		{

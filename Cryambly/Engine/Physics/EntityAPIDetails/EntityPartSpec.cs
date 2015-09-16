@@ -12,17 +12,16 @@ namespace CryCil.Engine.Physics
 	{
 		#region Fields
 		internal bool partIsSpecified;
-		[UsedImplicitly]
-		private int partId;
-		[UsedImplicitly]
-		private int partIndex;
+		[UsedImplicitly] private int partId;
+		[UsedImplicitly] private int partIndex;
 
 		/// <summary>
 		/// An object of type <see cref="EntityPartSpec"/> that can be used to designate entire entity.
 		/// </summary>
 		public static readonly EntityPartSpec EntireEntity;
 		/// <summary>
-		/// An object of type <see cref="EntityPartSpec"/> that can be used to designate all parts of the entity.
+		/// An object of type <see cref="EntityPartSpec"/> that can be used to designate all parts of the
+		/// entity.
 		/// </summary>
 		public static readonly EntityPartSpec AllParts;
 		#endregion

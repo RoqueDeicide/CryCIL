@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CryCil.Utilities
 {
@@ -13,7 +9,8 @@ namespace CryCil.Utilities
 	{
 		private readonly int value;
 		/// <summary>
-		/// Gets a string that contains a surrogate pair that represents the character that is encoded using UTF-32 format.
+		/// Gets a string that contains a surrogate pair that represents the character that is encoded
+		/// using UTF-32 format.
 		/// </summary>
 		public string SurrogatePair
 		{
@@ -24,7 +21,7 @@ namespace CryCil.Utilities
 		/// </summary>
 		public char Character
 		{
-			get { return Convert.ToChar(this.value);}
+			get { return Convert.ToChar(this.value); }
 		}
 		/// <summary>
 		/// Initializes new object of this type.

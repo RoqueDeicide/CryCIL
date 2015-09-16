@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using CryCil.Geometry;
 
 namespace CryCil
 {
 	/// <summary>
-	/// Represents a two dimensional mathematical vector that uses double precision floating point numbers for coordinates.
+	/// Represents a two dimensional mathematical vector that uses double precision floating point numbers
+	/// for coordinates.
 	/// </summary>
 	[Serializable]
 	[StructLayout(LayoutKind.Sequential)]
-	public partial struct Vector2d : IVector<double, Vector2d>, IEquatable<Vector2d>, IFormattable, IEnumerable<double>, IComparable<Vector2d>
+	public partial struct Vector2d : IVector<double, Vector2d>, IEquatable<Vector2d>, IFormattable, IEnumerable<double>,
+									 IComparable<Vector2d>
 	{
 		#region Static Fields
 		/// <summary>
@@ -111,10 +111,7 @@ namespace CryCil
 		/// </summary>
 		public bool IsValid
 		{
-			get
-			{
-				return MathHelpers.IsNumberValid(this.X) && MathHelpers.IsNumberValid(this.Y);
-			}
+			get { return MathHelpers.IsNumberValid(this.X) && MathHelpers.IsNumberValid(this.Y); }
 		}
 		#endregion
 		#region Interface
@@ -213,7 +210,7 @@ namespace CryCil
 		/// <returns>A two-element array containing the components of the vector.</returns>
 		public double[] ToArray()
 		{
-			return new[] { this.X, this.Y };
+			return new[] {this.X, this.Y};
 		}
 		/// <summary>
 		/// Creates a list that contains components of this vector.
@@ -224,7 +221,7 @@ namespace CryCil
 		/// </returns>
 		public List<double> ToList()
 		{
-			List<double> result = new List<double>(2) { this.X, this.Y };
+			List<double> result = new List<double>(2) {this.X, this.Y};
 			return result;
 		}
 		/// <summary>
@@ -236,7 +233,7 @@ namespace CryCil
 		/// </returns>
 		public Dictionary<string, double> ToDictionary()
 		{
-			Dictionary<string, double> result = new Dictionary<string, double>(2) { { "X", this.X }, { "Y", this.Y } };
+			Dictionary<string, double> result = new Dictionary<string, double>(2) {{"X", this.X}, {"Y", this.Y}};
 			return result;
 		}
 		#endregion
@@ -299,8 +296,8 @@ namespace CryCil
 		/// <param name="value2">The second vector.</param>
 		/// <returns>The distance between the two vectors.</returns>
 		/// <remarks>
-		/// <see cref="Vector2d.DistanceSquared(Vector2d, Vector2d)"/> may be preferred when only the relative
-		/// distance is needed and speed is of the essence.
+		/// <see cref="Vector2d.DistanceSquared(Vector2d, Vector2d)"/> may be preferred when only the
+		/// relative distance is needed and speed is of the essence.
 		/// </remarks>
 		public static double Distance(Vector2d value1, Vector2d value2)
 		{

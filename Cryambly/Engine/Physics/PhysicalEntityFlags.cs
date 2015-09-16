@@ -163,8 +163,7 @@ namespace CryCil.Engine.Physics
 		/// <see cref="PhysicalEntityType.Articulated"/> and
 		/// <see cref="PhysicalEntityType.WheeledVehicle"/>.
 		/// </remarks>
-		[Obsolete]
-		RigidEntityUseSimpleSolver = 0x01,
+		[Obsolete] RigidEntityUseSimpleSolver = 0x01,
 		/// <summary>
 		/// When set, specifies that this physical entity will not report contacts with water.
 		/// </summary>
@@ -182,8 +181,7 @@ namespace CryCil.Engine.Physics
 		/// <see cref="PhysicalEntityType.Articulated"/> and
 		/// <see cref="PhysicalEntityType.WheeledVehicle"/>.
 		/// </remarks>
-		[Obsolete]
-		RigidEntityCheckSumReceived = 0x04,
+		[Obsolete] RigidEntityCheckSumReceived = 0x04,
 		/// <summary>
 		/// Deprecated.
 		/// </summary>
@@ -192,8 +190,7 @@ namespace CryCil.Engine.Physics
 		/// <see cref="PhysicalEntityType.Articulated"/> and
 		/// <see cref="PhysicalEntityType.WheeledVehicle"/>.
 		/// </remarks>
-		[Obsolete]
-		RigidEntityCheckSumOutOfSync = 0x08,
+		[Obsolete] RigidEntityCheckSumOutOfSync = 0x08,
 		/// <summary>
 		/// When set, specifies that this physical entity will trace rays against alive characters (used
 		/// for small and fast objects like bullets to make sure they don't go through any players without

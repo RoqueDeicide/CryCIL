@@ -36,7 +36,7 @@ namespace CryCil.Engine.Physics
 		CanModify = 0x80000,
 		/// <summary>
 		/// When set, indicates that this geometry/part supports 'soft' collisions (used for tree foliage
-		/// proxy).
+		/// proxy) .
 		/// </summary>
 		Squashy = 0x100000,
 		/// <summary>

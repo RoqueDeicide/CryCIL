@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using CryCil.Annotations;
 using CryCil.Geometry.Csg;
 
 namespace CryCil.Geometry
@@ -28,20 +27,14 @@ namespace CryCil.Geometry
 		/// </summary>
 		public Plane Plane
 		{
-			get
-			{
-				return new Plane(this.First.Position, this.Second.Position, this.Third.Position);
-			}
+			get { return new Plane(this.First.Position, this.Second.Position, this.Third.Position); }
 		}
 		/// <summary>
 		/// Gets a normal to the plane this face is located on.
 		/// </summary>
 		public Vector3 Normal
 		{
-			get
-			{
-				return (this.Second.Position - this.First.Position) % (this.Third.Position - this.First.Position).Normalized;
-			}
+			get { return (this.Second.Position - this.First.Position) % (this.Third.Position - this.First.Position).Normalized; }
 		}
 		/// <summary>
 		/// Gets a plane this face is located on.
@@ -68,7 +61,7 @@ namespace CryCil.Geometry
 		/// </summary>
 		public FullVertex[] Vertices
 		{
-			get { return new[] { this.First, this.Second, this.Third }; }
+			get { return new[] {this.First, this.Second, this.Third}; }
 		}
 		/// <summary>
 		/// Creates new instance of type <see cref="FullFace"/> .
@@ -132,8 +125,8 @@ namespace CryCil.Geometry
 		/// </param>
 		/// <param name="customData">        Not used.</param>
 		public void Split(Plane splitter,
-			ICollection<FullFace> frontCoplanarFaces, ICollection<FullFace> backCoplanarFaces,
-			ICollection<FullFace> frontFaces, ICollection<FullFace> backFaces, object customData = null)
+						  ICollection<FullFace> frontCoplanarFaces, ICollection<FullFace> backCoplanarFaces,
+						  ICollection<FullFace> frontFaces, ICollection<FullFace> backFaces, object customData = null)
 		{
 			PlanePosition triangleType = 0;
 			PlanePosition[] positions = new PlanePosition[3];
@@ -164,7 +157,7 @@ namespace CryCil.Geometry
 				case PlanePosition.Spanning:
 					if (frontFaces == null && backFaces == null)
 					{
-						return;				// Any calculations won't be saved anywhere.
+						return; // Any calculations won't be saved anywhere.
 					}
 					// Prepare to create a split of this triangle.
 					// 
@@ -244,7 +237,7 @@ namespace CryCil.Geometry
 			// If we are given a triangle, there is no need to bother about anything.
 			if (vertices.Count == 3)
 			{
-				return new[] { new FullFace(vertices) };
+				return new[] {new FullFace(vertices)};
 			}
 			if (checkForCoplanarity)
 			{

@@ -105,7 +105,8 @@ namespace CryCil.Engine.Physics
 			set { this.pMtx3x4 = value; }
 		}
 		/// <summary>
-		/// Gets or sets the object that represents the surface that overrides one in corresponding geometry object.
+		/// Gets or sets the object that represents the surface that overrides one in corresponding
+		/// geometry object.
 		/// </summary>
 		public PhysicalSurface Surface
 		{

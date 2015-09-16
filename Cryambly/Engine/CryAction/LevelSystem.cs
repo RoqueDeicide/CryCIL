@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using CryCil.Annotations;
 
 namespace CryCil.Engine.CryAction
 {
@@ -23,27 +18,15 @@ namespace CryCil.Engine.CryAction
 		/// <summary>
 		/// Gets the wrapper for a currently loaded level. Null will be returned if no level is loaded.
 		/// </summary>
-		public static extern Level Current
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			get;
-		}
+		public static extern Level Current { [MethodImpl(MethodImplOptions.InternalCall)] get; }
 		/// <summary>
 		/// Indicates whether a level is currently loaded.
 		/// </summary>
-		public static extern bool Loaded
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			get;
-		}
+		public static extern bool Loaded { [MethodImpl(MethodImplOptions.InternalCall)] get; }
 		/// <summary>
 		/// Gets the time it took to load the last (current, if it's not unloaded) level.
 		/// </summary>
-		public static extern TimeSpan LastLoadTime
-		{
-			[MethodImpl(MethodImplOptions.InternalCall)]
-			get;
-		}
+		public static extern TimeSpan LastLoadTime { [MethodImpl(MethodImplOptions.InternalCall)] get; }
 		#endregion
 		#region Events
 		/// <summary>
@@ -108,7 +91,6 @@ namespace CryCil.Engine.CryAction
 		public static event Action<Level> UnloadComplete;
 		#endregion
 		#region Construction
-
 		#endregion
 		#region Interface
 		/// <summary>

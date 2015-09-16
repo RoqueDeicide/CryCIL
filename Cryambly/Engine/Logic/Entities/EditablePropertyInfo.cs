@@ -88,13 +88,13 @@ namespace CryCil.Engine.Logic
 			if (typeDesc.ManagedType != memberType)
 			{
 				throw new Exception
-				(
-					string.Format
 					(
-						"Ui control specified for the property {0} of type {1} cannot be used: it works only with properties of type {2}",
-						member.Name, memberType.FullName, typeDesc.ManagedType.FullName
-					)
-				);
+					string.Format
+						(
+						 "Ui control specified for the property {0} of type {1} cannot be used: it works only with properties of type {2}",
+						 member.Name, memberType.FullName, typeDesc.ManagedType.FullName
+						)
+					);
 			}
 			this.editType = typeDesc.Prefix;
 
@@ -109,13 +109,13 @@ namespace CryCil.Engine.Logic
 			else if (attribute.DefaultValue.GetType() != typeDesc.ManagedType)
 			{
 				throw new Exception
-				(
-					string.Format
 					(
-						"Default value for the property {0} of type {1} is of incompatible type {2}.",
-						member.Name, memberType.FullName, attribute.DefaultValue.GetType().FullName
-					)
-				);
+					string.Format
+						(
+						 "Default value for the property {0} of type {1} is of incompatible type {2}.",
+						 member.Name, memberType.FullName, attribute.DefaultValue.GetType().FullName
+						)
+					);
 			}
 			else
 			{

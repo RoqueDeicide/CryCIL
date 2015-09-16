@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CryCil.Engine.Rendering;
+﻿using CryCil.Engine.Rendering;
 
 namespace CryCil.Engine.DebugServices
 {
@@ -16,7 +11,7 @@ namespace CryCil.Engine.DebugServices
 		/// <summary>
 		/// Gets or sets location of this text message in 3D world space or on screen (if
 		/// <see cref="TextRenderOptions.OnScreen"/> is set on <see cref="RenderOptions"/> property of this
-		/// object).
+		/// object) .
 		/// </summary>
 		public Vector3 Location { get; set; }
 		/// <summary>
@@ -39,13 +34,13 @@ namespace CryCil.Engine.DebugServices
 		public override void Render()
 		{
 			Renderer.DrawText
-			(
-				this.Location,
-				this.RenderOptions,
-				this.Color,
-				new Vector2(this.FontSize),
-				this.Text
-			);
+				(
+				 this.Location,
+				 this.RenderOptions,
+				 this.Color,
+				 new Vector2(this.FontSize),
+				 this.Text
+				);
 		}
 		#endregion
 	}

@@ -8,7 +8,7 @@ namespace CryCil
 	public class MatrixTextFormat
 	{
 		/// <summary>
-		/// <see cref="String"/> that describes format that is used to format matrix elements.
+		/// <see cref="string"/> that describes format that is used to format matrix elements.
 		/// </summary>
 		public string NumberFormat;
 		/// <summary>

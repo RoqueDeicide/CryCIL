@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CryCil.Engine.Files
+﻿namespace CryCil.Engine.Files
 {
 	/// <summary>
 	/// Enumeration of types files in CryEngine virtual file system can be treated as.

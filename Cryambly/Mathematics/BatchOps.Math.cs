@@ -38,7 +38,7 @@ namespace CryCil
 		/// <summary>
 		/// Defines functions that perform math operations in batches.
 		/// </summary>
-		public unsafe static class Math
+		public static unsafe class Math
 		{
 			/// <summary>
 			/// Calculates sines of all numbers in the given array.

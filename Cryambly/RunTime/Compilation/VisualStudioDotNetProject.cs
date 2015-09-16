@@ -6,7 +6,6 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using CryCil.Annotations;
 
@@ -20,13 +19,13 @@ namespace CryCil.RunTime.Compilation
 		#region Fields
 		private const string Config
 #if DEBUG
- = "Debug";
+			= "Debug";
 #else
 			= "Release";
 #endif
 		private const string Platform
 #if WIN32
- = "x86";
+			= "x86";
 #else
  = "x64";
 #endif
@@ -54,7 +53,7 @@ namespace CryCil.RunTime.Compilation
 				List<IProject> projects = CodeSolution.Projects;
 				return
 					projects.Where(x => this.projectReferences.Any(y => x.FileName == y))
-										 .ToArray();
+							.ToArray();
 			}
 		}
 		/// <summary>
@@ -134,10 +133,10 @@ namespace CryCil.RunTime.Compilation
 		/// <param name="projectName">Name of the project.</param>
 		/// <param name="projectFile">Path to the project file.</param>
 		protected VisualStudioDotNetProject
-		(
+			(
 			string projectName,
 			[PathReference] string projectFile
-		)
+			)
 		{
 			this.Name = projectName;
 			this.FileName = projectFile;
@@ -159,16 +158,16 @@ namespace CryCil.RunTime.Compilation
 				Settings sets = new Settings();
 				XmlElement[] propertyGroups =
 					document.GetElementsByTagName("PropertyGroup")
-					.OfType<XmlElement>().ToArray();
+							.OfType<XmlElement>().ToArray();
 				for (int i = 0; i < propertyGroups.Length; i++)
 				{
 					// Get the condition.
 					string specifier = ExtractConditionSpecifier(propertyGroups[i]);
 					// Check the condition.
-					if (specifier == null ||					// No condition == true.
-						!specifier.Contains("|") &&				// Condition with just a config or platform.
-						SimpleConditionMet(specifier, icic) ||	// ^
-						SpecificConditionMet(specifier, icic))	// Condition with both config and platform.
+					if (specifier == null || // No condition == true.
+						!specifier.Contains("|") && // Condition with just a config or platform.
+						SimpleConditionMet(specifier, icic) || // ^
+						SpecificConditionMet(specifier, icic)) // Condition with both config and platform.
 					{
 						// Get the settings from the property group.
 						sets.FromXml(propertyGroups[i]);
@@ -197,30 +196,30 @@ namespace CryCil.RunTime.Compilation
 				this.TargetFramework = sets.Framework;
 				// Save project references.
 				this.projectReferences =
-				(
-					from XmlElement element in document.GetElementsByTagName("ProjectReference")
-					select PathUtilities.ToAbsolute(element.GetAttribute("Include"), this.ProjectFolder ?? "")
-				).ToArray();
+					(
+						from XmlElement element in document.GetElementsByTagName("ProjectReference")
+						select PathUtilities.ToAbsolute(element.GetAttribute("Include"), this.ProjectFolder ?? "")
+						).ToArray();
 				// Save references.
 				this.References =
-				(
-					from XmlElement element in document.GetElementsByTagName("Reference")
-					select new AssemblyReference(element, this).Path
-				).ToArray();
+					(
+						from XmlElement element in document.GetElementsByTagName("Reference")
+						select new AssemblyReference(element, this).Path
+						).ToArray();
 				// Save a list of files for compilation.
 				this.CodeFiles =
-				(
-					from XmlElement element in document.GetElementsByTagName("Compile")
-					select PathUtilities.ToAbsolute(element.GetAttribute("Include"), this.ProjectFolder ?? "")
-				).ToArray();
+					(
+						from XmlElement element in document.GetElementsByTagName("Compile")
+						select PathUtilities.ToAbsolute(element.GetAttribute("Include"), this.ProjectFolder ?? "")
+						).ToArray();
 			}
 			catch (Exception ex)
 			{
 				throw new ArgumentException
-				(
+					(
 					String.Format("File {0} is not a recognizable project file.", this.FileName),
 					ex
-				);
+					);
 			}
 		}
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -249,7 +248,7 @@ namespace CryCil.RunTime.Compilation
 					   configPlatform[1].Equals(Platform, icic)
 					   ||
 					   configPlatform[1].Equals("AnyCPU", icic)
-				   );
+					   );
 		}
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		private static bool SimpleConditionMet(string specifier, StringComparison icic)
@@ -267,7 +266,7 @@ namespace CryCil.RunTime.Compilation
 		public bool Build()
 		{
 			// ReSharper disable RedundantEmptyObjectOrCollectionInitializer
-			CompilerParameters parameters = new CompilerParameters { };
+			CompilerParameters parameters = new CompilerParameters {};
 			// ReSharper restore RedundantEmptyObjectOrCollectionInitializer
 
 			// Output.
@@ -284,13 +283,13 @@ namespace CryCil.RunTime.Compilation
 					if (ex is UnauthorizedAccessException || ex is IOException)
 					{
 						throw new CodeCompilationException
-						(
-							String.Format
 							(
-								"Unable to compile the code: Assembly file {0} cannot be overwritten.",
-								parameters.OutputAssembly
-							)
-						);
+							String.Format
+								(
+								 "Unable to compile the code: Assembly file {0} cannot be overwritten.",
+								 parameters.OutputAssembly
+								)
+							);
 					}
 					throw;
 				}
@@ -352,7 +351,10 @@ namespace CryCil.RunTime.Compilation
 			else
 			{
 				results =
-					this.CreateCompiler(new Dictionary<string, string> { { "CompilerVersion", this.TargetFramework == "v4.5" ? "v4.0" : this.TargetFramework } })
+					this.CreateCompiler(new Dictionary<string, string>
+					{
+						{"CompilerVersion", this.TargetFramework == "v4.5" ? "v4.0" : this.TargetFramework}
+					})
 						.CompileAssemblyFromFile(parameters, this.CodeFiles);
 			}
 
@@ -369,12 +371,12 @@ namespace CryCil.RunTime.Compilation
 				for (int i = 0; i < results.Errors.Count; i++)
 				{
 					Console.WriteLine
-					(
-						"    {0}) Line: {1}, Column: {2}, {5}: {3} ({4})",
-						i, results.Errors[i].Line, results.Errors[i].Column,
-						results.Errors[i].ErrorText, results.Errors[i].ErrorNumber,
-						results.Errors[i].IsWarning ? "Warning" : "Error"
-					);
+						(
+						 "    {0}) Line: {1}, Column: {2}, {5}: {3} ({4})",
+						 i, results.Errors[i].Line, results.Errors[i].Column,
+						 results.Errors[i].ErrorText, results.Errors[i].ErrorNumber,
+						 results.Errors[i].IsWarning ? "Warning" : "Error"
+						);
 				}
 				return false;
 			}
@@ -385,19 +387,18 @@ namespace CryCil.RunTime.Compilation
 		}
 		#endregion
 		#region Utilities
-
 		#endregion
 		private struct Settings
 		{
-			public string Output;			// Output path.
-			public string Doc;				// Documentation file.
-			public string Target;			// x86, x64, AnyCPU etc.
+			public string Output; // Output path.
+			public string Doc; // Documentation file.
+			public string Target; // x86, x64, AnyCPU etc.
 			public string AllowUnsafe;
-			public string Debug;			// full, pdbonly, nothing
-			public string Consts;			// Compilation symbols.
-			public string WarningsAsErrors;	// Treat warning as errors.
-			public string Optimize;			// Optimize code.
-			public string Framework;		// e.g. 4.5
+			public string Debug; // full, pdbonly, nothing
+			public string Consts; // Compilation symbols.
+			public string WarningsAsErrors; // Treat warning as errors.
+			public string Optimize; // Optimize code.
+			public string Framework; // e.g. 4.5
 			public void FromXml([NotNull] XmlElement propertyGroup)
 			{
 				this.Output = GetVal(propertyGroup, "OutputPath") ?? this.Output;

@@ -30,7 +30,7 @@ namespace CryCil.Utilities
 		{
 			get { return this.data != null && this.stride > 0; }
 		}
-		internal void *Pointer
+		internal void* Pointer
 		{
 			get { return this.data; }
 		}

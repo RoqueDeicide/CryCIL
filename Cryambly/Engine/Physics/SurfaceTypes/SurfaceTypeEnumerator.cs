@@ -12,8 +12,7 @@ namespace CryCil.Engine.Physics
 	public struct SurfaceTypeEnumerator : IEnumerator<SurfaceType>
 	{
 		#region Fields
-		[UsedImplicitly]
-		private IntPtr handle;
+		[UsedImplicitly] private IntPtr handle;
 		private SurfaceType current;
 
 		private static readonly SurfaceType zero = new SurfaceType();

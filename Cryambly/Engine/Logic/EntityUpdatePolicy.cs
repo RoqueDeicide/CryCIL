@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CryCil.Engine.Logic
+﻿namespace CryCil.Engine.Logic
 {
 	/// <summary>
 	/// Enumeration of policies that define when to automatically activate entities.

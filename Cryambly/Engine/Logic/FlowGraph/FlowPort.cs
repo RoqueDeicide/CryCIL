@@ -45,7 +45,8 @@ namespace CryCil.Engine.Logic
 		{
 			if (!name.IsValidFlowGraphName())
 			{
-				throw new ArgumentException("Given name is not valid for flow node port, because it's not valid for Xml attribute name.");
+				throw new ArgumentException(
+					"Given name is not valid for flow node port, because it's not valid for Xml attribute name.");
 			}
 			this.Name = name;
 			this.DisplayName = displayName;
@@ -74,7 +75,6 @@ namespace CryCil.Engine.Logic
 		}
 		#endregion
 		#region Utilities
-
 		#endregion
 	}
 }

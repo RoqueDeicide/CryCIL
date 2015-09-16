@@ -39,34 +39,34 @@ namespace CryCil.Graphics
 		public bool GroundOnly;
 		/// <summary>
 		/// </summary>
-		public float ShakingRatio;//whats the amount of shake, from 0.0 to 1.0
+		public float ShakingRatio; //whats the amount of shake, from 0.0 to 1.0
 		/// <summary>
 		/// </summary>
-		public Quaternion CurrentShakeQuaternion;//what the current angular shake
+		public Quaternion CurrentShakeQuaternion; //what the current angular shake
 		/// <summary>
 		/// </summary>
-		public Vector3 CurrentShakeShift;//what is the current translational shake
+		public Vector3 CurrentShakeShift; //what is the current translational shake
 
 		// For damping camera movement.
 
 		/// <summary>
 		/// </summary>
-		public uint TargetId;  // Who we're watching. 0 == nobody.
+		public uint TargetId; // Who we're watching. 0 == nobody.
 		/// <summary>
 		/// </summary>
-		public Vector3 TargetPos;     // Where the target was.
+		public Vector3 TargetPos; // Where the target was.
 		/// <summary>
 		/// </summary>
-		public float FrameTime;    // current dt.
+		public float FrameTime; // current dt.
 		/// <summary>
 		/// </summary>
-		public float AngleVel;     // previous rate of change of angle.
+		public float AngleVel; // previous rate of change of angle.
 		/// <summary>
 		/// </summary>
-		public float Vel;          // previous rate of change of dist between target and camera.
+		public float Vel; // previous rate of change of dist between target and camera.
 		/// <summary>
 		/// </summary>
-		public float Dist;         // previous dist of cam from target
+		public float Dist; // previous dist of cam from target
 
 		//blending
 
@@ -100,10 +100,10 @@ namespace CryCil.Graphics
 		private ushort ViewIDLast;
 		/// <summary>
 		/// </summary>
-		public Vector3 PositionLast;//last view position
+		public Vector3 PositionLast; //last view position
 		/// <summary>
 		/// </summary>
-		public Quaternion RotationLast;//last view orientation
+		public Quaternion RotationLast; //last view orientation
 		/// <summary>
 		/// </summary>
 		public float FOVLast;

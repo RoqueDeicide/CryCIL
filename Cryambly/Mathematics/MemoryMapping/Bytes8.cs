@@ -11,30 +11,25 @@ namespace CryCil.MemoryMapping
 	{
 		#region Fields
 		/// <summary>
-		/// <see cref="UInt64"/> value.
+		/// <see cref="ulong"/> value.
 		/// </summary>
-		[FieldOffset(0)]
-		public ulong UnsignedLong;
+		[FieldOffset(0)] public ulong UnsignedLong;
 		/// <summary>
-		/// <see cref="Int64"/> value.
+		/// <see cref="long"/> value.
 		/// </summary>
-		[FieldOffset(0)]
-		public long SignedLong;
+		[FieldOffset(0)] public long SignedLong;
 		/// <summary>
-		/// <see cref="Double"/> value.
+		/// <see cref="double"/> value.
 		/// </summary>
-		[FieldOffset(0)]
-		public double DoubleFloat;
+		[FieldOffset(0)] public double DoubleFloat;
 		/// <summary>
 		/// First 4-byte number.
 		/// </summary>
-		[FieldOffset(0)]
-		public float FirstSingleFloat;
+		[FieldOffset(0)] public float FirstSingleFloat;
 		/// <summary>
 		/// Second 4-byte number.
 		/// </summary>
-		[FieldOffset(4)]
-		public float SecondSingleFloat;
+		[FieldOffset(4)] public float SecondSingleFloat;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -64,7 +59,7 @@ namespace CryCil.MemoryMapping
 		/// <summary>
 		/// Initializes new instance of <see cref="Bytes8"/> type.
 		/// </summary>
-		/// <param name="value"><see cref="Int64"/> value to initialize this object with.</param>
+		/// <param name="value"><see cref="long"/> value to initialize this object with.</param>
 		public Bytes8(long value)
 			: this()
 		{
@@ -73,7 +68,7 @@ namespace CryCil.MemoryMapping
 		/// <summary>
 		/// Initializes new instance of <see cref="Bytes8"/> type.
 		/// </summary>
-		/// <param name="value"><see cref="UInt64"/> value to initialize this object with.</param>
+		/// <param name="value"><see cref="ulong"/> value to initialize this object with.</param>
 		public Bytes8(ulong value)
 			: this()
 		{
@@ -82,7 +77,7 @@ namespace CryCil.MemoryMapping
 		/// <summary>
 		/// Initializes new instance of <see cref="Bytes8"/> type.
 		/// </summary>
-		/// <param name="value"><see cref="Double"/> value to initialize this object with.</param>
+		/// <param name="value"><see cref="double"/> value to initialize this object with.</param>
 		public Bytes8(double value)
 			: this()
 		{
@@ -130,7 +125,8 @@ namespace CryCil.MemoryMapping
 		{
 			if (pointer == null)
 			{
-				throw new ArgumentNullException("pointer", "Bytes8.Constructor: Unable to initialize new object of type Bytes8: Provided pointer is null.");
+				throw new ArgumentNullException("pointer",
+												"Bytes8.Constructor: Unable to initialize new object of type Bytes8: Provided pointer is null.");
 			}
 			this.SignedLong = Marshal.ReadInt64(pointer, index);
 		}

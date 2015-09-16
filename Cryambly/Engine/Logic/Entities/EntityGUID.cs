@@ -21,7 +21,6 @@ namespace CryCil.Engine.Logic
 		}
 		#endregion
 		#region Events
-
 		#endregion
 		#region Construction
 		/// <summary>
@@ -47,7 +46,9 @@ namespace CryCil.Engine.Logic
 		/// Indicates whether this identifier is equal to another object.
 		/// </summary>
 		/// <param name="obj">Another object.</param>
-		/// <returns>True, if given object is of type <see cref="EntityGUID"/> and is equal to this identifier.</returns>
+		/// <returns>
+		/// True, if given object is of type <see cref="EntityGUID"/> and is equal to this identifier.
+		/// </returns>
 		public override bool Equals(object obj)
 		{
 			if (ReferenceEquals(null, obj)) return false;
@@ -56,9 +57,7 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Gets hash code of this identifier.
 		/// </summary>
-		/// <remarks>
-		/// Don't use it.
-		/// </remarks>
+		/// <remarks>Don't use it.</remarks>
 		/// <returns>Hash code of this identifier.</returns>
 		public override int GetHashCode()
 		{
@@ -67,7 +66,7 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Determines equality of 2 objects of type <see cref="EntityGUID"/>.
 		/// </summary>
-		/// <param name="left">Left operand.</param>
+		/// <param name="left"> Left operand.</param>
 		/// <param name="right">Right operand.</param>
 		/// <returns>True, if 2 objects are equal.</returns>
 		public static bool operator ==(EntityGUID left, EntityGUID right)
@@ -77,7 +76,7 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Determines inequality of 2 objects of type <see cref="EntityGUID"/>.
 		/// </summary>
-		/// <param name="left">Left operand.</param>
+		/// <param name="left"> Left operand.</param>
 		/// <param name="right">Right operand.</param>
 		/// <returns>True, if 2 objects are not equal.</returns>
 		public static bool operator !=(EntityGUID left, EntityGUID right)

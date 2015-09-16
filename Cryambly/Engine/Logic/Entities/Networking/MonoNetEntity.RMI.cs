@@ -313,7 +313,8 @@ namespace CryCil.Engine.Logic
 
 			InvokeRmi(this.Id, methodName, parameters, where, channel, rmiType);
 		}
-		private int ValidateRmiMethod(MethodInfo method, [CanBeNull] RmiParameters parameters, RmiTarget where, bool checkReturnType, bool checkParameters)
+		private int ValidateRmiMethod(MethodInfo method, [CanBeNull] RmiParameters parameters, RmiTarget where,
+									  bool checkReturnType, bool checkParameters)
 		{
 			Type type = this.GetType();
 			string methodName = method.Name;
@@ -369,20 +370,20 @@ namespace CryCil.Engine.Logic
 			if (attribute.ToServer && !Game.IsClient)
 			{
 				throw new RmiException
-				(
+					(
 					RmiError.IsNotClient,
 					string.Format("Method {0} of type {1} must be called from a client game instance.",
 								  methodName, type.FullName)
-				);
+					);
 			}
 			if (attribute.ToServer && !where.HasFlag(RmiTarget.ToServer))
 			{
 				throw new RmiException
-				(
+					(
 					RmiError.NotDirectedToServer,
 					string.Format("RMI call of the method {0} of type {1} must be directed to the server.",
 								  methodName, type.FullName)
-				);
+					);
 			}
 
 			return (int)attribute.type;
@@ -399,18 +400,18 @@ namespace CryCil.Engine.Logic
 				if (channel <= 0)
 				{
 					throw new RmiException(RmiError.ClientNotSpecified,
-						"Attempt was made to call RMI on a specific client without specifying its identifier.");
+										   "Attempt was made to call RMI on a specific client without specifying its identifier.");
 				}
 				if (where.HasFlag(RmiTarget.ToOwnClient))
 				{
 					throw new RmiException(RmiError.SendingToClientAndItself,
-						"Calling RMI on a specific client and own client is not supported.");
+										   "Calling RMI on a specific client and own client is not supported.");
 				}
 			}
 			if (where.HasFlag(RmiTarget.ToOwnClient) && !this.channelId.IsValid)
 			{
 				throw new RmiException(RmiError.SendingToItselfWithoutOwnClient,
-					"Cannot send RMI call to sender's client instance because it doesn't have client instance.");
+									   "Cannot send RMI call to sender's client instance because it doesn't have client instance.");
 			}
 		}
 		[MethodImpl(MethodImplOptions.InternalCall)]
@@ -425,7 +426,7 @@ namespace CryCil.Engine.Logic
 			if (method == null)
 			{
 				Log.Error(string.Format("A request to invoke the method {0} of type {1} has been received from remote " +
-										  "location, but the method is not defined.", methodName, type.FullName), true);
+										"location, but the method is not defined.", methodName, type.FullName), true);
 				return false;
 			}
 			RMIAttribute attribute = method.GetAttribute<RMIAttribute>();
@@ -454,7 +455,7 @@ namespace CryCil.Engine.Logic
 			}
 			try
 			{
-				return (bool)method.Invoke(this, parameters != null ? new object[] { parameters } : null);
+				return (bool)method.Invoke(this, parameters != null ? new object[] {parameters} : null);
 			}
 			catch (ArgumentException ex)
 			{
@@ -465,22 +466,22 @@ namespace CryCil.Engine.Logic
 					if (parameters == null)
 					{
 						message =
-						string.Format("Method {0} of type {1} accepts parameters, but it was invoked with no arguments.",
-									  method.Name, type.FullName);
+							string.Format("Method {0} of type {1} accepts parameters, but it was invoked with no arguments.",
+										  method.Name, type.FullName);
 					}
 					else if (pars.Length == 0)
 					{
 						message =
-						string.Format("Method {0} of type {1} doesn't accept any parameters, but was invoked with one.",
-									  method.Name, type.FullName);
+							string.Format("Method {0} of type {1} doesn't accept any parameters, but was invoked with one.",
+										  method.Name, type.FullName);
 					}
 					else
 					{
 						message =
-						string.Format("Method {0} of type {1} must only accept one parameter of type {2}, " +
-									  "but it actually accepts {3} parameters of types {4}.",
-									  method.Name, type.FullName, parameters.GetType().FullName, pars.Length,
-									  pars.Select(t => t.ParameterType.FullName).ContentsToString(", "));
+							string.Format("Method {0} of type {1} must only accept one parameter of type {2}, " +
+										  "but it actually accepts {3} parameters of types {4}.",
+										  method.Name, type.FullName, parameters.GetType().FullName, pars.Length,
+										  pars.Select(t => t.ParameterType.FullName).ContentsToString(", "));
 					}
 					RmiException rex = new RmiException(message, ex);
 					MonoInterface.DisplayException(rex);
