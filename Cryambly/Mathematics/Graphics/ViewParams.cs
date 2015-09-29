@@ -1,4 +1,5 @@
-﻿using CryCil.Geometry;
+﻿using CryCil.Engine.Logic;
+using CryCil.Geometry;
 
 namespace CryCil.Graphics
 {
@@ -29,86 +30,110 @@ namespace CryCil.Graphics
 		/// </summary>
 		public float FieldOfView;
 		/// <summary>
+		/// Identifier of the view object.
 		/// </summary>
 		public byte ViewId;
 
 		//view shake status
 
 		/// <summary>
+		/// Indicates whether camera shaking should only be applied when on the ground.
 		/// </summary>
 		public bool GroundOnly;
 		/// <summary>
+		/// The value between 0 and 1 that represents amount of shake.
 		/// </summary>
-		public float ShakingRatio; //whats the amount of shake, from 0.0 to 1.0
+		public float ShakingRatio;
 		/// <summary>
+		/// Current angular shake;
 		/// </summary>
-		public Quaternion CurrentShakeQuaternion; //what the current angular shake
+		public Quaternion CurrentShakeQuaternion;
 		/// <summary>
+		/// Current translational shake.
 		/// </summary>
-		public Vector3 CurrentShakeShift; //what is the current translational shake
+		public Vector3 CurrentShakeShift;
 
 		// For damping camera movement.
 
 		/// <summary>
+		/// Entity that is a target of the view.
 		/// </summary>
-		public uint TargetId; // Who we're watching. 0 == nobody.
+		public EntityId TargetId;
 		/// <summary>
+		/// Position of the target.
 		/// </summary>
-		public Vector3 TargetPos; // Where the target was.
+		public Vector3 TargetPosition;
 		/// <summary>
+		/// Length of the last frame.
 		/// </summary>
-		public float FrameTime; // current dt.
+		public float FrameTime;
 		/// <summary>
+		/// Previous angular velocity.
 		/// </summary>
-		public float AngleVel; // previous rate of change of angle.
+		public float AngularVelocity;
 		/// <summary>
+		/// Previous velocity.
 		/// </summary>
-		public float Vel; // previous rate of change of dist between target and camera.
+		public float Velocity;
 		/// <summary>
+		/// Previous distance from the target.
 		/// </summary>
-		public float Dist; // previous dist of cam from target
+		public float Distance;
 
 		//blending
 
 		/// <summary>
+		/// Unknown.
 		/// </summary>
 		public bool Blend;
 		/// <summary>
+		/// Unknown.
 		/// </summary>
 		public float BlendPosSpeed;
 		/// <summary>
+		/// Unknown.
 		/// </summary>
 		public float BlendRotSpeed;
 		/// <summary>
+		/// Unknown.
 		/// </summary>
 		public float BlendFOVSpeed;
 		/// <summary>
+		/// Unknown.
 		/// </summary>
 		public Vector3 BlendPosOffset;
 		/// <summary>
+		/// Unknown.
 		/// </summary>
 		public Quaternion BlendRotOffset;
 		/// <summary>
+		/// Unknown.
 		/// </summary>
 		public float BlendFOVOffset;
 		/// <summary>
+		/// Unknown.
 		/// </summary>
 		public bool JustActivated;
 
 		/// <summary>
+		/// Unknown.
 		/// </summary>
 		private ushort ViewIDLast;
 		/// <summary>
+		/// Unknown.
 		/// </summary>
 		public Vector3 PositionLast; //last view position
 		/// <summary>
+		/// Unknown.
 		/// </summary>
 		public Quaternion RotationLast; //last view orientation
 		/// <summary>
+		/// Unknown.
 		/// </summary>
 		public float FOVLast;
 
 		/// <summary>
+		/// Unknown.
 		/// </summary>
 		public void SaveLast()
 		{

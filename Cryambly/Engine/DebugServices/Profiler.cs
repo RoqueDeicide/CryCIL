@@ -77,6 +77,7 @@ namespace CryCil.Engine.DebugServices
 		/// <summary>
 		/// Starts a profiling section.
 		/// </summary>
+		/// <returns>An object that will close the profiling section, once it's disposed of.</returns>
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public extern ProfilingSection Start();
 		#endregion

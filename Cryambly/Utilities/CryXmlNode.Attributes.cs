@@ -139,6 +139,7 @@ namespace CryCil.Utilities
 		/// </summary>
 		/// <param name="name"> Name of the attribute which value to get.</param>
 		/// <param name="value">Returned quaternion value of the attribute.</param>
+		/// <returns>True, if attribute exists, otherwise false.</returns>
 		/// <exception cref="NullReferenceException">This Xml node is not valid.</exception>
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public extern bool GetAttribute(string name, out Quaternion value);

@@ -11,7 +11,7 @@ namespace CryCil.Engine.Input.ActionMapping
 	/// converted into lowercase, so make sure there are no case-insensitive conflicts.
 	/// </remarks>
 	/// <example>
-	/// <code source="ActionMapSample"/>
+	/// <code source="Engine\Input\ActionMapping\ActionMapSample.cs"/>
 	/// </example>
 	[AttributeUsage(AttributeTargets.Class, Inherited = false)]
 	public class ActionMapAttribute : Attribute

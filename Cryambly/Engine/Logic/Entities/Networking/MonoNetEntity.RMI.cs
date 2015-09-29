@@ -76,6 +76,7 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Calls a method of this type remotely via RMI framework.
 		/// </summary>
+		/// <typeparam name="RmiParametersType">A type of object that provides RMI arguments.</typeparam>
 		/// <param name="method">    Method to invoke.</param>
 		/// <param name="where">     
 		/// A set of flags that specifies game instances to which the call will be directed.

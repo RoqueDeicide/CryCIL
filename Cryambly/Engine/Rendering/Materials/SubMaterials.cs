@@ -145,8 +145,9 @@ namespace CryCil.Engine.Rendering
 			this[index] = item;
 		}
 		/// <summary>
+		/// Removes a sub-material at specified index.
 		/// </summary>
-		/// <param name="index"></param>
+		/// <param name="index">Zero-based index of the sub-material to remove.</param>
 		/// <exception cref="NullReferenceException">
 		/// Unable to access the sub-material of an invalid material object.
 		/// </exception>

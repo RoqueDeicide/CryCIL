@@ -1110,8 +1110,9 @@ namespace CryCil
 		#endregion
 		#region Enumeration
 		/// <summary>
+		/// Creates an object that enumerates this matrix.
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>An object that enumerates this matrix.</returns>
 		public IEnumerator<float> GetEnumerator()
 		{
 			yield return this.M00;

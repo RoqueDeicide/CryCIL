@@ -89,14 +89,11 @@ namespace CryCil.Engine.Rendering
 		public static void DrawText(Vector3 position, TextRenderOptions options, string text,
 									params object[] args)
 		{
-			DrawTextInternal
-				(
-				 position,
-				 options,
-				 new ColorSingle(1, 1, 1),
-				 new Vector2(1, 1),
-				 string.Format(text, args)
-				);
+			DrawTextInternal(position,
+							 options,
+							 new ColorSingle(1, 1, 1),
+							 new Vector2(1, 1),
+							 string.Format(text, args));
 		}
 		/// <summary>
 		/// Renders text using default color, scale and options.
@@ -107,14 +104,11 @@ namespace CryCil.Engine.Rendering
 		[StringFormatMethod("text")]
 		public static void DrawText(Vector3 position, string text, params object[] args)
 		{
-			DrawTextInternal
-				(
-				 position,
-				 TextRenderOptions.Nothing,
-				 new ColorSingle(1, 1, 1),
-				 new Vector2(1, 1),
-				 string.Format(text, args)
-				);
+			DrawTextInternal(position,
+							 TextRenderOptions.Nothing,
+							 new ColorSingle(1, 1, 1),
+							 new Vector2(1, 1),
+							 string.Format(text, args));
 		}
 		/// <summary>
 		/// Renders text.
@@ -243,7 +237,8 @@ namespace CryCil.Engine.Rendering
 		/// </summary>
 		/// <remarks>
 		/// Pushing images into the queue is more efficient then separate calls to
-		/// <see cref="o:Draw2DImage"/> when rendering multiple images within one frame.
+		/// <see cref="O:CryCil.Engine.Rendering.Renderer.Draw2DImage"/> when rendering multiple images
+		/// within one frame.
 		/// </remarks>
 		/// <param name="position">   Position of the image on the screen.</param>
 		/// <param name="size">       
@@ -268,7 +263,8 @@ namespace CryCil.Engine.Rendering
 		/// </summary>
 		/// <remarks>
 		/// Pushing images into the queue is more efficient then separate calls to
-		/// <see cref="o:Draw2DImage"/> when rendering multiple images within one frame.
+		/// <see cref="O:CryCil.Engine.Rendering.Renderer.Draw2DImage"/> when rendering multiple images
+		/// within one frame.
 		/// </remarks>
 		/// <param name="position">   Position of the image on the screen.</param>
 		/// <param name="size">       
@@ -300,7 +296,8 @@ namespace CryCil.Engine.Rendering
 		/// </summary>
 		/// <remarks>
 		/// Pushing images into the queue is more efficient then separate calls to
-		/// <see cref="o:Draw2DImage"/> when rendering multiple images within one frame.
+		/// <see cref="O:CryCil.Engine.Rendering.Renderer.Draw2DImage"/> when rendering multiple images
+		/// within one frame.
 		/// </remarks>
 		/// <param name="position">   Position of the image on the screen.</param>
 		/// <param name="size">       
@@ -327,7 +324,8 @@ namespace CryCil.Engine.Rendering
 		/// </summary>
 		/// <remarks>
 		/// Pushing images into the queue is more efficient then separate calls to
-		/// <see cref="o:Draw2DImage"/> when rendering multiple images within one frame.
+		/// <see cref="O:CryCil.Engine.Rendering.Renderer.Draw2DImage"/> when rendering multiple images
+		/// within one frame.
 		/// </remarks>
 		/// <param name="position">   Position of the image on the screen.</param>
 		/// <param name="size">       
@@ -360,7 +358,7 @@ namespace CryCil.Engine.Rendering
 													   float angle = 0, float z = 1, float stereoDepth = 0);
 		/// <summary>
 		/// Triggers rendering of images that were queued for rendering using one of the overloads of the
-		/// <see cref="o:Push2DImage"/> function.
+		/// <see cref="O:CryCil.Engine.Rendering.Renderer.Push2DImage"/> function.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern void Draw2DImageList();
@@ -485,22 +483,22 @@ namespace CryCil.Engine.Rendering
 		/// <summary>
 		/// ???
 		/// </summary>
-		/// <param name="x"></param>
-		/// <returns></returns>
+		/// <param name="x">???</param>
+		/// <returns>???</returns>
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern float ScaleX(float x);
 		/// <summary>
 		/// ???
 		/// </summary>
-		/// <param name="y"></param>
-		/// <returns></returns>
+		/// <param name="y">???</param>
+		/// <returns>???</returns>
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern float ScaleY(float y);
 		/// <summary>
 		/// ???
 		/// </summary>
-		/// <param name="x"></param>
-		/// <param name="y"></param>
+		/// <param name="x">???</param>
+		/// <param name="y">???</param>
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern void ScaleXY(ref float x, ref float y);
 		#endregion

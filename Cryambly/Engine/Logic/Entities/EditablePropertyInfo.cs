@@ -9,6 +9,7 @@ namespace CryCil.Engine.Logic
 	/// </summary>
 	public struct EditablePropertyInfo
 	{
+		#region Fields
 		private readonly string name;
 		private readonly EditablePropertyType type;
 		private readonly string editType;
@@ -16,6 +17,8 @@ namespace CryCil.Engine.Logic
 		private readonly uint flags;
 		private readonly Vector2 limits;
 		private readonly string defaultValue;
+		#endregion
+		#region Properties
 		/// <summary>
 		/// Name of the property.
 		/// </summary>
@@ -67,10 +70,12 @@ namespace CryCil.Engine.Logic
 		{
 			get { return this.defaultValue; }
 		}
+		#endregion
+		#region Construction
 		/// <summary>
 		/// Creates new instance of this type.
 		/// </summary>
-		/// <param name="property"></param>
+		/// <param name="property">An object that represents the editable property.</param>
 		public EditablePropertyInfo(EditableProperty property)
 		{
 			MemberInfo member = property.Member;
@@ -87,14 +92,11 @@ namespace CryCil.Engine.Logic
 			// Gotta validate that type.
 			if (typeDesc.ManagedType != memberType)
 			{
-				throw new Exception
-					(
-					string.Format
-						(
-						 "Ui control specified for the property {0} of type {1} cannot be used: it works only with properties of type {2}",
-						 member.Name, memberType.FullName, typeDesc.ManagedType.FullName
-						)
-					);
+				string error =
+					string.Format("Ui control specified for the property {0} of type {1} cannot be used: it works only " +
+								  "with properties of type {2}",
+								  member.Name, memberType.FullName, typeDesc.ManagedType.FullName);
+				throw new Exception(error);
 			}
 			this.editType = typeDesc.Prefix;
 
@@ -108,14 +110,10 @@ namespace CryCil.Engine.Logic
 			}
 			else if (attribute.DefaultValue.GetType() != typeDesc.ManagedType)
 			{
-				throw new Exception
-					(
-					string.Format
-						(
-						 "Default value for the property {0} of type {1} is of incompatible type {2}.",
-						 member.Name, memberType.FullName, attribute.DefaultValue.GetType().FullName
-						)
-					);
+				string error =
+					string.Format("Default value for the property {0} of type {1} is of incompatible type {2}.",
+								  member.Name, memberType.FullName, attribute.DefaultValue.GetType().FullName);
+				throw new Exception(error);
 			}
 			else
 			{
@@ -133,5 +131,6 @@ namespace CryCil.Engine.Logic
 			this.name = folderName;
 			this.type = start ? EditablePropertyType.FolderBegin : EditablePropertyType.FolderEnd;
 		}
+		#endregion
 	}
 }

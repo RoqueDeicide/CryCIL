@@ -96,6 +96,7 @@ namespace CryCil.Engine.Physics
 		/// <param name="maxTrianglesPerBVNode">
 		/// Maximal number of triangles in each BV node (used to optimize the mesh).
 		/// </param>
+		/// <returns>An object that represents the skin mesh.</returns>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		/// <exception cref="ArgumentOutOfRangeException">
 		/// Maximal number of triangles per BV node must be more then 0.

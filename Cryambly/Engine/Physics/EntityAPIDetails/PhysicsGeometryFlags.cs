@@ -22,7 +22,7 @@ namespace CryCil.Engine.Physics
 		Floats = 0x10000,
 		/// <summary>
 		/// When set, indicates that this geometry must be used as a proxy for physical interactions when
-		/// added via <see cref="PhysicalEntity.AddGeometry"/>.
+		/// added via <see cref="PhysicalEntity.AddBody"/>.
 		/// </summary>
 		Proxy = 0x20000,
 		/// <summary>

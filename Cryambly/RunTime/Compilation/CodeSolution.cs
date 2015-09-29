@@ -45,6 +45,7 @@ namespace CryCil.RunTime.Compilation
 		/// <param name="solutionFile">
 		/// Full name of .sln file that contains details about the solution.
 		/// </param>
+		/// <returns>Indication of success.</returns>
 		public static bool Load([PathReference] string solutionFile)
 		{
 			if (File.Exists(solutionFile))

@@ -37,6 +37,7 @@ namespace CryCil.RunTime.Compilation
 		/// Gets an object that will handle compilation of the code files within this project.
 		/// </summary>
 		/// <param name="options">Options that specify the way the code compiler is created.</param>
+		/// <returns>An object that can compile the code.</returns>
 		public abstract CodeDomProvider CreateCompiler(IDictionary<string, string> options);
 		/// <summary>
 		/// When implemented in derived class, gets an object that will handle compilation of the code
@@ -51,9 +52,7 @@ namespace CryCil.RunTime.Compilation
 			get
 			{
 				List<IProject> projects = CodeSolution.Projects;
-				return
-					projects.Where(x => this.projectReferences.Any(y => x.FileName == y))
-							.ToArray();
+				return projects.Where(x => this.projectReferences.Any(y => x.FileName == y)).ToArray();
 			}
 		}
 		/// <summary>
@@ -132,33 +131,29 @@ namespace CryCil.RunTime.Compilation
 		/// </summary>
 		/// <param name="projectName">Name of the project.</param>
 		/// <param name="projectFile">Path to the project file.</param>
-		protected VisualStudioDotNetProject
-			(
-			string projectName,
-			[PathReference] string projectFile
-			)
+		protected VisualStudioDotNetProject([NotNull] string projectName, [PathReference] string projectFile)
 		{
 			this.Name = projectName;
 			this.FileName = projectFile;
+
 			if (!File.Exists(this.FileName))
 			{
-				throw new ArgumentException
-					(String.Format("Couldn't locate a project file: {0}", this.FileName));
+				throw new ArgumentException(string.Format("Couldn't locate a project file: {0}", this.FileName));
 			}
-			const StringComparison icic =
-				StringComparison.InvariantCultureIgnoreCase;
+
+			const StringComparison icic = StringComparison.InvariantCultureIgnoreCase;
+
 			XmlDocument document = new XmlDocument();
+
 			try
 			{
-				// ReSharper disable AssignNullToNotNullAttribute
 				document.Load(this.FileName);
-				// ReSharper restore AssignNullToNotNullAttribute
 
 				// Declare properties to get from the file.
 				Settings sets = new Settings();
-				XmlElement[] propertyGroups =
-					document.GetElementsByTagName("PropertyGroup")
-							.OfType<XmlElement>().ToArray();
+				XmlElement[] propertyGroups = document.GetElementsByTagName("PropertyGroup")
+													  .OfType<XmlElement>().ToArray();
+
 				for (int i = 0; i < propertyGroups.Length; i++)
 				{
 					// Get the condition.
@@ -174,13 +169,14 @@ namespace CryCil.RunTime.Compilation
 					}
 				}
 				// Save the properties.
-				this.OutputPath =
-					PathUtilities.ToAbsolute(sets.Output ?? "", this.ProjectFolder ?? "");
+				this.OutputPath = PathUtilities.ToAbsolute(sets.Output ?? "", this.ProjectFolder ?? "");
+
 				if (sets.Doc != null)
 				{
 					this.DocumentationFile =
 						PathUtilities.ToAbsolute(sets.Doc, this.ProjectFolder ?? "");
 				}
+
 				this.DebugInformation =
 					sets.Debug == null ||
 					sets.Debug.Equals("None", icic)
@@ -188,38 +184,31 @@ namespace CryCil.RunTime.Compilation
 						: sets.Debug.Equals("pdbonly", icic)
 							? DebugInformationLevels.PdbOnly
 							: DebugInformationLevels.Full;
+
 				this.TargetPlatform = sets.Target;
 				this.AllowUnsafeCode = (sets.AllowUnsafe ?? "").Equals("true", icic);
 				this.DefinedConstants = sets.Consts;
 				this.TreatWarningsAsErrors = (sets.WarningsAsErrors ?? "").Equals("true", icic);
 				this.OptimizeCode = (sets.Optimize ?? "").Equals("true", icic);
 				this.TargetFramework = sets.Framework;
+
 				// Save project references.
 				this.projectReferences =
-					(
-						from XmlElement element in document.GetElementsByTagName("ProjectReference")
-						select PathUtilities.ToAbsolute(element.GetAttribute("Include"), this.ProjectFolder ?? "")
-						).ToArray();
+					(from XmlElement element in document.GetElementsByTagName("ProjectReference")
+					 select PathUtilities.ToAbsolute(element.GetAttribute("Include"), this.ProjectFolder ?? "")).ToArray();
 				// Save references.
 				this.References =
-					(
-						from XmlElement element in document.GetElementsByTagName("Reference")
-						select new AssemblyReference(element, this).Path
-						).ToArray();
+					(from XmlElement element in document.GetElementsByTagName("Reference")
+					 select new AssemblyReference(element, this).Path).ToArray();
 				// Save a list of files for compilation.
 				this.CodeFiles =
-					(
-						from XmlElement element in document.GetElementsByTagName("Compile")
-						select PathUtilities.ToAbsolute(element.GetAttribute("Include"), this.ProjectFolder ?? "")
-						).ToArray();
+					(from XmlElement element in document.GetElementsByTagName("Compile")
+					 select PathUtilities.ToAbsolute(element.GetAttribute("Include"), this.ProjectFolder ?? "")).ToArray();
 			}
 			catch (Exception ex)
 			{
-				throw new ArgumentException
-					(
-					String.Format("File {0} is not a recognizable project file.", this.FileName),
-					ex
-					);
+				throw new ArgumentException(string.Format("File {0} is not a recognizable project file.", this.FileName),
+											ex);
 			}
 		}
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -242,13 +231,9 @@ namespace CryCil.RunTime.Compilation
 		private static bool SpecificConditionMet(string specifier, StringComparison icic)
 		{
 			string[] configPlatform = specifier.Split('|');
-			return configPlatform[0].Equals(Config, icic)
-				   &&
-				   (
-					   configPlatform[1].Equals(Platform, icic)
-					   ||
-					   configPlatform[1].Equals("AnyCPU", icic)
-					   );
+			return configPlatform[0].Equals(Config, icic) &&
+				   (configPlatform[1].Equals(Platform, icic)||
+					configPlatform[1].Equals("AnyCPU", icic));
 		}
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		private static bool SimpleConditionMet(string specifier, StringComparison icic)
@@ -265,12 +250,12 @@ namespace CryCil.RunTime.Compilation
 		/// <returns>True, if compilation was a success, otherwise false.</returns>
 		public bool Build()
 		{
-			// ReSharper disable RedundantEmptyObjectOrCollectionInitializer
-			CompilerParameters parameters = new CompilerParameters {};
-			// ReSharper restore RedundantEmptyObjectOrCollectionInitializer
+			CompilerParameters parameters = new CompilerParameters
+			{
+				// Output.
+				OutputAssembly = Path.Combine(this.OutputPath ?? "", this.Name + ".dll")
+			};
 
-			// Output.
-			parameters.OutputAssembly = Path.Combine(this.OutputPath ?? "", this.Name + ".dll");
 			// Delete previous assembly.
 			if (File.Exists(parameters.OutputAssembly))
 			{
@@ -282,14 +267,10 @@ namespace CryCil.RunTime.Compilation
 				{
 					if (ex is UnauthorizedAccessException || ex is IOException)
 					{
-						throw new CodeCompilationException
-							(
-							String.Format
-								(
-								 "Unable to compile the code: Assembly file {0} cannot be overwritten.",
-								 parameters.OutputAssembly
-								)
-							);
+						string message =
+							string.Format("Unable to compile the code: Assembly file {0} cannot be overwritten.",
+										  parameters.OutputAssembly);
+						throw new CodeCompilationException(message);
 					}
 					throw;
 				}
@@ -310,21 +291,28 @@ namespace CryCil.RunTime.Compilation
 				default:
 					throw new ArgumentOutOfRangeException();
 			}
+
 			extraOptions.AppendFormat("/define:{0} ", this.DefinedConstants);
-			if (!String.IsNullOrWhiteSpace(this.DocumentationFile))
+
+			if (!string.IsNullOrWhiteSpace(this.DocumentationFile))
 			{
 				extraOptions.AppendFormat("/doc:{0} ", this.DocumentationFile);
 			}
+
 			if (this.OptimizeCode)
 			{
 				extraOptions.Append("/optimize ");
 			}
+
 			extraOptions.AppendFormat("/platform:{0} ", this.TargetPlatform);
+
 			parameters.TreatWarningsAsErrors = this.TreatWarningsAsErrors;
+
 			if (this.AllowUnsafeCode)
 			{
 				extraOptions.Append("/unsafe ");
 			}
+
 			parameters.CompilerOptions = extraOptions.ToString();
 			// References.
 			parameters.ReferencedAssemblies.AddRange(this.References);
@@ -344,7 +332,7 @@ namespace CryCil.RunTime.Compilation
 			parameters.ReferencedAssemblies.AddRange(dependencyLocations);
 			// Build.
 			CompilerResults results;
-			if (String.IsNullOrWhiteSpace(this.TargetFramework))
+			if (string.IsNullOrWhiteSpace(this.TargetFramework))
 			{
 				results = this.Compiler.CompileAssemblyFromFile(parameters, this.CodeFiles);
 			}
@@ -370,13 +358,10 @@ namespace CryCil.RunTime.Compilation
 				Console.WriteLine("Problems:");
 				for (int i = 0; i < results.Errors.Count; i++)
 				{
-					Console.WriteLine
-						(
-						 "    {0}) Line: {1}, Column: {2}, {5}: {3} ({4})",
-						 i, results.Errors[i].Line, results.Errors[i].Column,
-						 results.Errors[i].ErrorText, results.Errors[i].ErrorNumber,
-						 results.Errors[i].IsWarning ? "Warning" : "Error"
-						);
+					Console.WriteLine("    {0}) Line: {1}, Column: {2}, {5}: {3} ({4})",
+									  i, results.Errors[i].Line, results.Errors[i].Column,
+									  results.Errors[i].ErrorText, results.Errors[i].ErrorNumber,
+									  results.Errors[i].IsWarning ? "Warning" : "Error");
 				}
 				return false;
 			}

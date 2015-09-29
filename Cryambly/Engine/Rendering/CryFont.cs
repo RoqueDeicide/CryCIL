@@ -92,7 +92,7 @@ namespace CryCil.Engine.Rendering
 		public extern bool LoadTtf(string ttfFile, int width, int height, FontSmoothing smoothing);
 		/// <summary>
 		/// Frees internal resources that were allocated when the font was loaded and allows
-		/// <see cref="o:Load"/> to be used again.
+		/// <see cref="LoadXml"/> or <see cref="LoadTtf"/> to be used again.
 		/// </summary>
 		/// <exception cref="ObjectDisposedException">Cannot use invalid font object.</exception>
 		[MethodImpl(MethodImplOptions.InternalCall)]

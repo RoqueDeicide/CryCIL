@@ -66,6 +66,7 @@ namespace CryCil.Graphics
 		/// Gets the frustum plane.
 		/// </summary>
 		/// <param name="index">Zero-based index of the frustum plane to get.</param>
+		/// <returns>The frustum plane.</returns>
 		public Plane GetPlane(FrustumPlanes index)
 		{
 			switch (index)
@@ -141,9 +142,9 @@ namespace CryCil.Graphics
 		/// <summary>
 		/// Gets the index of the coordinate of the frustum edge vertex.
 		/// </summary>
-		/// <param name="planeIndex"></param>
-		/// <param name="edgeVertex"></param>
-		/// <param name="coordIndex"></param>
+		/// <param name="planeIndex">???</param>
+		/// <param name="edgeVertex">???</param>
+		/// <param name="coordIndex">???</param>
 		/// <returns>An index that is used for quick intersection tests.</returns>
 		public uint GetEdgeIndex(FrustumPlanes planeIndex, uint edgeVertex, uint coordIndex)
 		{

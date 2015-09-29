@@ -218,7 +218,7 @@ namespace CryCil.Engine.Physics
 		/// <param name="shape">   
 		/// Geometric object that defines the shape of the body. If you pass a
 		/// <c>default(GeometryShape)</c>, then a body will be created without mass properties, but you can
-		/// still assign the shape later with <see cref="P:Geometry"/>.
+		/// still assign the shape later with <see cref="P:CryCil.Engine.Physics.PhysicalBody.Geometry"/>.
 		/// </param>
 		/// <param name="surface"> 
 		/// The object that represents a surface to use until it gets overridden by the entity part. Should
@@ -240,7 +240,7 @@ namespace CryCil.Engine.Physics
 		/// <param name="shape">  
 		/// Geometric object that defines the shape of the body. If you pass a
 		/// <c>default(GeometryShape)</c>, then a body will be created without mass properties, but you can
-		/// still assign the shape later with <see cref="P:Geometry"/>.
+		/// still assign the shape later with <see cref="P:CryCil.Engine.Physics.PhysicalBody.Geometry"/>.
 		/// </param>
 		/// <param name="surface">
 		/// The object that represents a surface to use until it gets overridden by the entity part. Should
@@ -258,7 +258,7 @@ namespace CryCil.Engine.Physics
 		/// <param name="shape">   
 		/// Geometric object that defines the shape of the body. If you pass a
 		/// <c>default(GeometryShape)</c>, then a body will be created without mass properties, but you can
-		/// still assign the shape later with <see cref="P:Geometry"/>.
+		/// still assign the shape later with <see cref="P:CryCil.Engine.Physics.PhysicalBody.Geometry"/>.
 		/// </param>
 		/// <param name="material">
 		/// An object that provides a table that maps per-face material indexes to actual surface type
@@ -276,7 +276,7 @@ namespace CryCil.Engine.Physics
 		/// <param name="shape">
 		/// Geometric object that defines the shape of the body. If you pass a
 		/// <c>default(GeometryShape)</c>, then a body will be created without mass properties, but you can
-		/// still assign the shape later with <see cref="P:Geometry"/>.
+		/// still assign the shape later with <see cref="P:CryCil.Engine.Physics.PhysicalBody.Geometry"/>.
 		/// </param>
 		public PhysicalBody(GeometryShape shape)
 		{

@@ -33,13 +33,10 @@
 				float yaxisnd = -yaxis * eye;
 				float zaxisnd = -zaxis * eye;
 
-				return new Matrix44
-					(
-					xaxis.X, yaxis.X, zaxis.X, 0,
-					xaxis.Y, yaxis.Y, zaxis.Y, 0,
-					xaxis.Z, yaxis.Z, zaxis.Z, 0,
-					xaxisnd, yaxisnd, zaxisnd, 1
-					);
+				return new Matrix44(xaxis.X, yaxis.X, zaxis.X, 0,
+									xaxis.Y, yaxis.Y, zaxis.Y, 0,
+									xaxis.Z, yaxis.Z, zaxis.Z, 0,
+									xaxisnd, yaxisnd, zaxisnd, 1);
 			}
 			/// <summary>
 			/// Creates a look-at transformation matrix.
@@ -62,13 +59,10 @@
 				float yaxisnd = -yaxis * eye;
 				float zaxisnd = -zaxis * eye;
 
-				return new Matrix44
-					(
-					xaxis.X, yaxis.X, zaxis.X, 0,
-					xaxis.Y, yaxis.Y, zaxis.Y, 0,
-					xaxis.Z, yaxis.Z, zaxis.Z, 0,
-					xaxisnd, yaxisnd, zaxisnd, 1
-					);
+				return new Matrix44(xaxis.X, yaxis.X, zaxis.X, 0,
+									xaxis.Y, yaxis.Y, zaxis.Y, 0,
+									xaxis.Z, yaxis.Z, zaxis.Z, 0,
+									xaxisnd, yaxisnd, zaxisnd, 1);
 			}
 		}
 	}

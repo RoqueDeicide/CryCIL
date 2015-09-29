@@ -6,6 +6,10 @@ namespace CryCil.Engine.Physics
 	/// Encapsulates information that can be used to: select parts of the physical entity using its flags,
 	/// modify the flags that are assigned to the physical entity or parts of it.
 	/// </summary>
+	/// <example>
+	/// <code source="Engine\Physics\EntityAPIDetails\FlagParameters.Example.cs">
+	/// </code>
+	/// </example>
 	public struct FlagParameters
 	{
 		#region Fields
@@ -170,7 +174,10 @@ namespace CryCil.Engine.Physics
 		/// Creates new object of this type that can be used to set specific flags.
 		/// </summary>
 		/// <param name="flagsToSet">A set of flags to set for the part/entity.</param>
-		///<returns>A valid object of this type that can be combined with other objects using <see cref="operator|"/>.</returns>
+		/// <returns>
+		/// A valid object of this type that can be combined with other objects using
+		/// <see cref="operator|"/>.
+		/// </returns>
 		public static FlagParameters Set(int flagsToSet)
 		{
 			return new FlagParameters
@@ -185,31 +192,42 @@ namespace CryCil.Engine.Physics
 		/// <remarks>
 		/// <para>Rules of combining the instances:</para>
 		/// <para>
-		/// When both operands were either created using <see cref="o:Assign"/> or were combined with
-		/// objects that were created using that function, the value from right operand will always be used
-		/// and left value will be discarded.
+		/// When both operands were either created using
+		/// <see cref="O:CryCil.Engine.Physics.FlagParameters.Assign"/> or were combined with objects that
+		/// were created using that function, the value from right operand will always be used and left
+		/// value will be discarded.
 		/// </para>
 		/// <para>
-		/// When both operands were either created using <see cref="o:Remove"/> or were combined with
-		/// objects that were created using that function, all flags from both operands will be removed.
+		/// When both operands were either created using
+		/// <see cref="O:CryCil.Engine.Physics.FlagParameters.Remove"/> or were combined with objects that
+		/// were created using that function, all flags from both operands will be removed.
 		/// </para>
 		/// <para>
-		/// When both operands were either created using <see cref="o:Set"/> or were combined with objects
-		/// that were created using that function, all flags from both operands will be set.
+		/// When both operands were either created using
+		/// <see cref="O:CryCil.Engine.Physics.FlagParameters.Set"/> or were combined with objects that
+		/// were created using that function, all flags from both operands will be set.
 		/// </para>
 		/// <para>
-		/// When both operands were either created using <see cref="o:Condition"/> or were combined with
-		/// objects that were created using that function, the flags from operands will be combined using
-		/// bitwise AND.
+		/// When both operands were either created using
+		/// <see cref="O:CryCil.Engine.Physics.FlagParameters.Condition"/> or were combined with objects
+		/// that were created using that function, the flags from operands will be combined using bitwise
+		/// AND.
 		/// </para>
 		/// <para/>
 		/// <para>Order of application of flags in the combined object:</para>
 		/// <para>
-		/// Value that was put into object using <see cref="o:Assign"/> is assigned to the flags of the
+		/// Value that was put into object using
+		/// <see cref="O:CryCil.Engine.Physics.FlagParameters.Assign"/> is assigned to the flags of the
 		/// object.
 		/// </para>
-		/// <para>All flags that were added to the object with <see cref="o:Remove"/> are removed.</para>
-		/// <para>All flags that were added to the object with <see cref="o:Set"/> are set.</para>
+		/// <para>
+		/// All flags that were added to the object with
+		/// <see cref="O:CryCil.Engine.Physics.FlagParameters.Remove"/> are removed.
+		/// </para>
+		/// <para>
+		/// All flags that were added to the object with
+		/// <see cref="O:CryCil.Engine.Physics.FlagParameters.Set"/> are set.
+		/// </para>
 		/// </remarks>
 		/// <param name="left"> Left operand.</param>
 		/// <param name="right">Right operand.</param>

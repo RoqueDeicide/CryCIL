@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Text;
 using System.Windows.Forms;
+using CryCil.Annotations;
 
 namespace CryCil.RunTime
 {
@@ -13,7 +14,8 @@ namespace CryCil.RunTime
 		/// <summary>
 		/// Initializes new instance of this type.
 		/// </summary>
-		public ExceptionDisplayForm(Exception ex)
+		/// <param name="ex">The object that represents the exception that has to be displayed.</param>
+		public ExceptionDisplayForm([CanBeNull] Exception ex)
 		{
 			this.InitializeComponent();
 
@@ -28,15 +30,14 @@ namespace CryCil.RunTime
 				this.ExceptionTypeBox.Text = ex.GetType().FullName;
 				this.ExceptionMessageBox.Text = ex.Message;
 			}
+
 			Exception parentException = null;
 			StringBuilder indent = new StringBuilder(64);
 			StringBuilder traceBuilder = new StringBuilder(1000);
-			for
-				(
-				Exception currentException = ex;
-				currentException != null;
-				currentException = currentException.InnerException
-				)
+
+			for (Exception currentException = ex;
+				 currentException != null;
+				 currentException = currentException.InnerException)
 			{
 				// Print out the name of the type.
 				traceBuilder.Append(indent);
@@ -53,11 +54,8 @@ namespace CryCil.RunTime
 				traceBuilder.Append('"');
 				traceBuilder.AppendLine(" at:");
 				// Print out the stack trace. Split default string into lines for indentation.
-				string[] stackTraceLines =
-					currentException.StackTrace.Split
-						(
-						 new[] {Environment.NewLine}, StringSplitOptions.None
-						);
+				string[] stackTraceLines = currentException.StackTrace.Split(new[] {Environment.NewLine},
+																			 StringSplitOptions.None);
 				foreach (string stackTraceLine in stackTraceLines)
 				{
 					traceBuilder.Append(indent);

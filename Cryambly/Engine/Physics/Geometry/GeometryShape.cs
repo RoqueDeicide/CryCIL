@@ -46,7 +46,7 @@ namespace CryCil.Engine.Physics
 		/// </summary>
 		/// <remarks>
 		/// You can cast returned pointer to one of the corresponding primitives that is specified by
-		/// <see cref="P:GeometryType"/>.
+		/// <see cref="P:CryCil.Engine.Physics.GeometryShape.GeometryType"/>.
 		/// </remarks>
 		public Primitive.BasePrimitive* Data
 		{

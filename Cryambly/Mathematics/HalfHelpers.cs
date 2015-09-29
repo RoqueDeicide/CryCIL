@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace System
+namespace CryCil
 {
 	/// <summary>
 	/// Helper class for Half conversions and some low level operations. This class is internally used in

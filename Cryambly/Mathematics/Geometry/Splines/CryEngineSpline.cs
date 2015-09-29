@@ -62,7 +62,12 @@ namespace CryCil.Geometry.Splines
 		}
 		#endregion
 		#region Interface
-		/// <inheritdoc/>
+		/// <summary>
+		/// Inserts a new point into the spline.
+		/// </summary>
+		/// <param name="time">    Time stamp where to insert the new key.</param>
+		/// <param name="position">Location of the point that represents the key.</param>
+		/// <returns>Zero-based index of slot that is now occupied by the given key.</returns>
 		/// <exception cref="NullReferenceException">Instance object is invalid.</exception>
 		public int InsertKey(float time, Vector4 position)
 		{
@@ -73,7 +78,10 @@ namespace CryCil.Geometry.Splines
 
 			return InsertKeyInternal(this.handle, time, position);
 		}
-		/// <inheritdoc/>
+		/// <summary>
+		/// Removes a key.
+		/// </summary>
+		/// <param name="index">Zero-based index of the key to remove.</param>
 		/// <exception cref="NullReferenceException">Instance object is invalid.</exception>
 		public void RemoveKey(int index)
 		{
@@ -84,7 +92,17 @@ namespace CryCil.Geometry.Splines
 
 			RemoveKeyInternal(this.handle, index);
 		}
-		/// <inheritdoc/>
+		/// <summary>
+		/// Searches for keys within given time span.
+		/// </summary>
+		/// <param name="startTime">    Start of the time interval to look for keys within.</param>
+		/// <param name="endTime">      End of the time interval to look for keys within.</param>
+		/// <param name="firstFoundKey">
+		/// Zero-based index of the first found key. -1 if nothing was found.
+		/// </param>
+		/// <param name="numFoundKeys"> 
+		/// Number of keys that were found within the time span. 0 if nothing was found.
+		/// </param>
 		/// <exception cref="NullReferenceException">Instance object is invalid.</exception>
 		public void FindKeys(float startTime, float endTime, out int firstFoundKey, out int numFoundKeys)
 		{
@@ -95,7 +113,11 @@ namespace CryCil.Geometry.Splines
 
 			FindKeysInternal(this.handle, startTime, endTime, out firstFoundKey, out numFoundKeys);
 		}
-		/// <inheritdoc/>
+		/// <summary>
+		/// Removes all keys within the time span.
+		/// </summary>
+		/// <param name="startTime">Start of the time interval to look for keys within.</param>
+		/// <param name="endTime">  End of the time interval to look for keys within.</param>
 		/// <exception cref="NullReferenceException">Instance object is invalid.</exception>
 		public void RemoveKeys(float startTime, float endTime)
 		{
@@ -106,7 +128,11 @@ namespace CryCil.Geometry.Splines
 
 			RemoveKeysInternal(this.handle, startTime, endTime);
 		}
-		/// <inheritdoc/>
+		/// <summary>
+		/// Relocates the key to the different time stamp.
+		/// </summary>
+		/// <param name="index">Zero-based index of the key to relocate.</param>
+		/// <param name="time"> A new time-stamp for the key.</param>
 		/// <exception cref="NullReferenceException">Instance object is invalid.</exception>
 		public void SetKeyTime(int index, float time)
 		{
@@ -117,7 +143,11 @@ namespace CryCil.Geometry.Splines
 
 			SetKeyTimeInternal(this.handle, index, time);
 		}
-		/// <inheritdoc/>
+		/// <summary>
+		/// Gets the time-stamp of the key.
+		/// </summary>
+		/// <param name="index">Zero-based index of the key which time-stamp to get.</param>
+		/// <returns>Time-stamp of the key.</returns>
 		/// <exception cref="NullReferenceException">Instance object is invalid.</exception>
 		public float GetKeyTime(int index)
 		{
@@ -128,7 +158,11 @@ namespace CryCil.Geometry.Splines
 
 			return GetKeyTimeInternal(this.handle, index);
 		}
-		/// <inheritdoc/>
+		/// <summary>
+		/// Moves the position of the key.
+		/// </summary>
+		/// <param name="index">Zero-based index of the key to move.</param>
+		/// <param name="value">New position of the key.</param>
 		/// <exception cref="NullReferenceException">Instance object is invalid.</exception>
 		public void SetKeyPosition(int index, Vector4 value)
 		{
@@ -139,7 +173,11 @@ namespace CryCil.Geometry.Splines
 
 			SetKeyValueInternal(this.handle, index, value);
 		}
-		/// <inheritdoc/>
+		/// <summary>
+		/// Gets the position of the key.
+		/// </summary>
+		/// <param name="index">Zero-based index of the key.</param>
+		/// <returns>Vector that represents position of the key.</returns>
 		/// <exception cref="NullReferenceException">Instance object is invalid.</exception>
 		public Vector4 GetKeyPosition(int index)
 		{
@@ -152,7 +190,15 @@ namespace CryCil.Geometry.Splines
 			GetKeyValueInternal(this.handle, index, out v);
 			return v;
 		}
-		/// <inheritdoc/>
+		/// <summary>
+		/// Gets the position of the key.
+		/// </summary>
+		/// <param name="index">Zero-based index of the key.</param>
+		/// <param name="value">Vector that represents position of the key.</param>
+		/// <returns>
+		/// True, if the index was greater then or equal to zero and less then total number of keys in the
+		/// spline.
+		/// </returns>
 		/// <exception cref="NullReferenceException">Instance object is invalid.</exception>
 		public bool GetKeyPosition(int index, out Vector4 value)
 		{
@@ -163,7 +209,11 @@ namespace CryCil.Geometry.Splines
 
 			return GetKeyValueInternal(this.handle, index, out value);
 		}
-		/// <inheritdoc/>
+		/// <summary>
+		/// Sets the in-going tangent for the key.
+		/// </summary>
+		/// <param name="index">Zero-based index of the key.</param>
+		/// <param name="tin">  New in-going tangent point of the key.</param>
 		/// <exception cref="NullReferenceException">Instance object is invalid.</exception>
 		public void SetKeyInTangent(int index, Vector4 tin)
 		{
@@ -174,7 +224,11 @@ namespace CryCil.Geometry.Splines
 
 			SetKeyInTangentInternal(this.handle, index, tin);
 		}
-		/// <inheritdoc/>
+		/// <summary>
+		/// Sets the out-going tangent for the key.
+		/// </summary>
+		/// <param name="index">Zero-based index of the key.</param>
+		/// <param name="tout"> New out-going tangent point of the key.</param>
 		/// <exception cref="NullReferenceException">Instance object is invalid.</exception>
 		public void SetKeyOutTangent(int index, Vector4 tout)
 		{
@@ -185,7 +239,12 @@ namespace CryCil.Geometry.Splines
 
 			SetKeyOutTangentInternal(this.handle, index, tout);
 		}
-		/// <inheritdoc/>
+		/// <summary>
+		/// Sets both tangents of the key.
+		/// </summary>
+		/// <param name="index">Zero-based index of the key.</param>
+		/// <param name="tin">  New in-going tangent point of the key.</param>
+		/// <param name="tout"> New out-going tangent point of the key.</param>
 		/// <exception cref="NullReferenceException">Instance object is invalid.</exception>
 		public void SetKeyTangents(int index, Vector4 tin, Vector4 tout)
 		{
@@ -196,7 +255,16 @@ namespace CryCil.Geometry.Splines
 
 			SetKeyTangentsInternal(this.handle, index, tin, tout);
 		}
-		/// <inheritdoc/>
+		/// <summary>
+		/// Gets both tangents of the key.
+		/// </summary>
+		/// <param name="index">Zero-based index of the key.</param>
+		/// <param name="tin">  In-going tangent point of the key.</param>
+		/// <param name="tout"> Out-going tangent point of the key.</param>
+		/// <returns>
+		/// True, if the index was greater then or equal to zero and less then total number of keys in the
+		/// spline.
+		/// </returns>
 		/// <exception cref="NullReferenceException">Instance object is invalid.</exception>
 		public bool GetKeyTangents(int index, out Vector4 tin, out Vector4 tout)
 		{
@@ -207,7 +275,11 @@ namespace CryCil.Geometry.Splines
 
 			return GetKeyTangentsInternal(this.handle, index, out tin, out tout);
 		}
-		/// <inheritdoc/>
+		/// <summary>
+		/// Gets the point along the spline at the specified time stamp.
+		/// </summary>
+		/// <param name="time">Time stamp at which the point is located.</param>
+		/// <returns>Interpolated point.</returns>
 		/// <exception cref="NullReferenceException">Instance object is invalid.</exception>
 		public Vector4 Interpolate(float time)
 		{

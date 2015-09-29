@@ -108,25 +108,28 @@ namespace CryCil.Engine.Logic
 			get { return this.createdThroughPool; }
 		}
 		/// <summary>
-		/// Gets initial position of the entity.
+		/// Gets or sets initial position of the entity in world space.
 		/// </summary>
 		public Vector3 Position
 		{
 			get { return this.position; }
+			set { this.position = value; }
 		}
 		/// <summary>
-		/// Gets initial orientation of the entity.
+		/// Gets or sets initial orientation of the entity in world space.
 		/// </summary>
 		public Quaternion Rotation
 		{
 			get { return this.rotation; }
+			set { this.rotation = value; }
 		}
 		/// <summary>
-		/// Gets initial scale of the entity.
+		/// Gets or sets initial scale of the entity.
 		/// </summary>
 		public Vector3 Scale
 		{
 			get { return this.scale; }
+			set { this.scale = value; }
 		}
 		#endregion
 		#region Events
@@ -135,16 +138,12 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Creates new set of parameters that can be used to spawn an entity.
 		/// </summary>
-		/// <param name="className"></param>
-		/// <param name="id">       </param>
-		/// <param name="guid">     </param>
-		/// <param name="name">     </param>
-		/// <param name="flags">    </param>
-		/// <param name="position"> </param>
-		/// <param name="rotation"> </param>
-		/// <param name="scale">    </param>
-		public EntitySpawnParameters(string className, EntityId id, EntityGUID guid, string name, EntityFlags flags,
-									 Vector3 position, Quaternion rotation, Vector3 scale)
+		/// <param name="className">Name of the class that will represent the new entity.</param>
+		/// <param name="id">       Id to assign to the new entity.</param>
+		/// <param name="guid">     Guid to assign to the new entity.</param>
+		/// <param name="name">     The name of the new entity.</param>
+		/// <param name="flags">    A set of flags to assign to the new entity.</param>
+		public EntitySpawnParameters(string className, EntityId id, EntityGUID guid, string name, EntityFlags flags)
 			: this()
 		{
 			this.pClass = className;
@@ -152,29 +151,23 @@ namespace CryCil.Engine.Logic
 			this.guid = guid;
 			this.name = name;
 			this.flags = flags;
-			this.position = position;
-			this.rotation = rotation;
-			this.scale = scale;
+			this.rotation = Quaternion.Identity;
+			this.scale = new Vector3(1);
 		}
 		/// <summary>
 		/// Creates new set of parameters that can be used to spawn an entity.
 		/// </summary>
-		/// <param name="className"></param>
-		/// <param name="name">     </param>
-		/// <param name="flags">    </param>
-		/// <param name="position"> </param>
-		/// <param name="rotation"> </param>
-		/// <param name="scale">    </param>
-		public EntitySpawnParameters(string className, string name, EntityFlags flags, Vector3 position,
-									 Quaternion rotation, Vector3 scale)
+		/// <param name="className">Name of the class that will represent the new entity.</param>
+		/// <param name="name">     The name of the new entity.</param>
+		/// <param name="flags">    A set of flags to assign to the new entity.</param>
+		public EntitySpawnParameters(string className, string name, EntityFlags flags)
 			: this()
 		{
 			this.pClass = className;
 			this.name = name;
 			this.flags = flags;
-			this.position = position;
-			this.rotation = rotation;
-			this.scale = scale;
+			this.rotation = Quaternion.Identity;
+			this.scale = new Vector3(1);
 		}
 		#endregion
 		#region Interface

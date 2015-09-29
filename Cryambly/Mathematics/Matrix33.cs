@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
@@ -441,8 +442,9 @@ namespace CryCil
 			return matrix;
 		}
 		/// <summary>
+		/// Calculates a simple hash code of this matrix.
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>A simple hash code of this matrix.</returns>
 		public override int GetHashCode()
 		{
 			// Overflow is fine, just wrap
@@ -610,7 +612,7 @@ namespace CryCil
 		/// <summary>
 		/// Enumerates this matrix.
 		/// </summary>
-		/// <returns></returns>
+		/// <returns>An object that handles enumeration.</returns>
 		public IEnumerator<float> GetEnumerator()
 		{
 			yield return this.M00;
@@ -624,7 +626,7 @@ namespace CryCil
 			yield return this.M22;
 		}
 
-		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return this.GetEnumerator();
 		}

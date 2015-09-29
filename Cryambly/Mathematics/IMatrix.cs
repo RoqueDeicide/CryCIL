@@ -6,6 +6,7 @@ namespace CryCil
 	/// <summary>
 	/// Base interface for all matrices.
 	/// </summary>
+	/// <typeparam name="MatrixType">The type that represents this matrix.</typeparam>
 	public interface IMatrix<MatrixType> : IEnumerable<float>, IEquatable<MatrixType>
 	{
 		/// <summary>

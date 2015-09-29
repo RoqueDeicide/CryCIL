@@ -48,7 +48,7 @@ namespace CryCil
 				}
 			}
 			/// <summary>
-			/// Applies spherical interpolation to the vector.
+			/// Creates a spherical interpolation vector between 2 vectors.
 			/// </summary>
 			/// <param name="first">    First vector.</param>
 			/// <param name="second">   Second vector.</param>
@@ -56,6 +56,7 @@ namespace CryCil
 			/// Scalar that defines orientation of resultant vector relative to orientation of the first
 			/// vector relative to the second one.
 			/// </param>
+			/// <returns>A new vector that is a result of interpolation.</returns>
 			public static Vector2 Create(Vector2 first, Vector2 second, float parameter)
 			{
 				Vector2 result;
@@ -111,7 +112,7 @@ namespace CryCil
 				}
 			}
 			/// <summary>
-			/// Applies spherical interpolation to the vector.
+			/// Creates a spherical interpolation vector between 2 vectors.
 			/// </summary>
 			/// <param name="first">    First vector.</param>
 			/// <param name="second">   Second vector.</param>
@@ -119,6 +120,7 @@ namespace CryCil
 			/// Scalar that defines orientation of resultant vector relative to orientation of the first
 			/// vector relative to the second one.
 			/// </param>
+			/// <returns>A new vector that is a result of interpolation.</returns>
 			public static Vector3 Create(Vector3 first, Vector3 second, float parameter)
 			{
 				Vector3 result;
@@ -143,14 +145,14 @@ namespace CryCil
 				return result;
 			}
 			/// <summary>
-			/// Applies spherical interpolation to the vector.
+			/// Applies spherical interpolation to the quaternion.
 			/// </summary>
 			/// <param name="result">   Result of interpolation.</param>
 			/// <param name="first">    First quaternion.</param>
 			/// <param name="second">   Second quaternion.</param>
 			/// <param name="parameter">
-			/// Scalar that defines orientation of resultant vector relative to orientation of the first
-			/// vector relative to the second one.
+			/// Scalar that defines the ratio of rotation represented by resultant quaternion relative to
+			/// rotations represented by given 2 quaternions.
 			/// </param>
 			public static void Apply(out Quaternion result, Quaternion first, Quaternion second, float parameter)
 			{
@@ -186,14 +188,15 @@ namespace CryCil
 				};
 			}
 			/// <summary>
-			/// Applies spherical interpolation to the vector.
+			/// Creates a spherical interpolation quaternion between 2 quaternions.
 			/// </summary>
-			/// <param name="first">    First vector.</param>
-			/// <param name="second">   Second vector.</param>
+			/// <param name="first">    First quaternion.</param>
+			/// <param name="second">   Second quaternion.</param>
 			/// <param name="parameter">
-			/// Scalar that defines orientation of resultant vector relative to orientation of the first
-			/// vector relative to the second one.
+			/// Scalar that defines the ratio of rotation represented by resultant quaternion relative to
+			/// rotations represented by given 2 quaternions.
 			/// </param>
+			/// <returns>A new quaternion that is a result of interpolation.</returns>
 			public static Quaternion Create(Quaternion first, Quaternion second, float parameter)
 			{
 				Quaternion result;
@@ -279,7 +282,7 @@ namespace CryCil
 				if (l > 0.00001) axis /= (float)l;
 				else axis = new Vector3(1, 0, 0);
 				Rotation.AroundAxis.Set(ref i, ref axis, (float)angle * t);
-					// angle interpolation and calculation of new delta-matrix (=26 flops)
+				// angle interpolation and calculation of new delta-matrix (=26 flops)
 
 				// final concatenation (=39 flops)
 				matrix.M00 = first.M00 * i.M00 + first.M01 * i.M10 + first.M02 * i.M20;
@@ -377,7 +380,7 @@ namespace CryCil
 				if (l > 0.00001) axis /= (float)l;
 				else axis = new Vector3(1, 0, 0);
 				Rotation.AroundAxis.Set(ref i, ref axis, (float)angle * t);
-					// angle interpolation and calculation of new delta-matrix (=26 flops)
+				// angle interpolation and calculation of new delta-matrix (=26 flops)
 
 				// final concatenation (=39 flops)
 				matrix.M00 = first.M00 * i.M00 + first.M01 * i.M10 + first.M02 * i.M20;

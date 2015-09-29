@@ -28,9 +28,9 @@ namespace CryCil.Geometry
 			/// <para>
 			/// To apply the transformation to the vector use
 			/// <see cref="Transformation.Apply(ref Vector4,ref Matrix44)"/> function after applying the
-			/// view transformation using a matrix created by <see cref="o:Transformation.View.Create()"/>.
-			/// The view transformation is needed because all provided arguments are only valid in camera
-			/// space.
+			/// view transformation using a matrix created by
+			/// <see cref="O:CryCil.Geometry.Transformation.View.Create"/>. The view transformation is
+			/// needed because all provided arguments are only valid in camera space.
 			/// </para></summary>
 			/// </overloads>
 			public static Matrix44 Create(float horizontalFov, float verticalFov, float nearPlaneDistance,
@@ -41,13 +41,10 @@ namespace CryCil.Geometry
 				float q = farPlaneDistance / (farPlaneDistance - nearPlaneDistance);
 				float p = -q * nearPlaneDistance;
 
-				return new Matrix44
-					(
-					w, 0, 0, 0,
-					0, h, 0, 0,
-					0, 0, q, 1,
-					0, 0, p, 0
-					);
+				return new Matrix44(w, 0, 0, 0,
+									0, h, 0, 0,
+									0, 0, q, 1,
+									0, 0, p, 0);
 			}
 			/// <summary>
 			/// Creates a projection transformation matrix.
@@ -68,13 +65,10 @@ namespace CryCil.Geometry
 				float q = farPlaneDistance / (farPlaneDistance - nearPlaneDistance);
 				float p = -q * nearPlaneDistance;
 
-				return new Matrix44
-					(
-					w, 0, 0, 0,
-					0, h, 0, 0,
-					0, 0, q, 1,
-					0, 0, p, 0
-					);
+				return new Matrix44(w, 0, 0, 0,
+									0, h, 0, 0,
+									0, 0, q, 1,
+									0, 0, p, 0);
 			}
 			/// <summary>
 			/// Creates a projection transformation matrix.
@@ -100,13 +94,10 @@ namespace CryCil.Geometry
 				float q = far / (far - near);
 				float p = -q * near;
 
-				return new Matrix44
-					(
-					w, 0, 0, 0,
-					0, h, 0, 0,
-					a, b, q, 1,
-					0, 0, p, 0
-					);
+				return new Matrix44(w, 0, 0, 0,
+									0, h, 0, 0,
+									a, b, q, 1,
+									0, 0, p, 0);
 			}
 		}
 	}

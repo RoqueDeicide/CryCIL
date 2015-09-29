@@ -41,7 +41,7 @@ namespace CryCil.Engine.Environment
 		/// </summary>
 		/// <param name="x">X-coordinate of the point at which the elevation is requested.</param>
 		/// <param name="y">Y-coordinate of the point at which the elevation is requested.</param>
-		/// <returns></returns>
+		/// <returns>Elevation of the terrain at the specified pixel of the height map.</returns>
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern float Elevation(int x, int y);
 		/// <summary>

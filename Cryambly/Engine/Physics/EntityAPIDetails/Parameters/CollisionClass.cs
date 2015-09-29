@@ -38,6 +38,7 @@ namespace CryCil.Engine.Physics
 		/// Creates a new instance of this type that can be used to query the collision class of the
 		/// entity.
 		/// </summary>
+		/// <returns>A valid object of this type.</returns>
 		public static PhysicsParametersCollisionClass Create()
 		{
 			PhysicsParametersCollisionClass parameters = new PhysicsParametersCollisionClass
@@ -64,6 +65,7 @@ namespace CryCil.Engine.Physics
 		/// The bit flags that are set in this class will be removed from flags that are set in the
 		/// collision class of the entity.
 		/// </param>
+		/// <returns>A valid object of this type.</returns>
 		public static PhysicsParametersCollisionClass Create(CollisionClass flagsToSet,
 															 CollisionClass flagsToRemove = new CollisionClass())
 		{

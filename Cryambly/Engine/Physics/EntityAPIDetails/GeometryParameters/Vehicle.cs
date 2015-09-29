@@ -34,7 +34,7 @@ namespace CryCil.Engine.Physics
 	{
 		#region Fields
 		/// <summary>
-		/// Pass a reference to this field to <see cref="PhysicalEntity.AddGeometry"/> to add the geometry
+		/// Pass a reference to this field to <see cref="PhysicalEntity.AddBody"/> to add the geometry
 		/// with these parameters.
 		/// </summary>
 		public GeometryParameters Base;

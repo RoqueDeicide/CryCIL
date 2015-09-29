@@ -816,6 +816,7 @@ namespace CryCil.Geometry.Csg.Base
 			/// </summary>
 			/// <param name="other">Another vertex.</param>
 			/// <param name="t">    Interpolation value.</param>
+			/// <returns>Result of interpolation.</returns>
 			public Vertex Interpolate(Vertex other, float t)
 			{
 				return new Vertex
@@ -1198,12 +1199,9 @@ namespace CryCil.Geometry.Csg.Base
 			public Vector3 Scaled(float scaleFactor)
 			{
 				return
-					new Vector3
-						(
-						this.X *= scaleFactor,
-						this.Y *= scaleFactor,
-						this.Z *= scaleFactor
-						);
+					new Vector3(this.X *= scaleFactor,
+								this.Y *= scaleFactor,
+								this.Z *= scaleFactor);
 			}
 			/// <summary>
 			/// Calculates dot product of this vector and another one.
@@ -1221,7 +1219,9 @@ namespace CryCil.Geometry.Csg.Base
 			/// <returns>Cross product.</returns>
 			public Vector3 Cross(Vector3 v)
 			{
-				return new Vector3(this.Y * v.Z - this.Z * v.Y, this.Z * v.X - this.X * v.Z, this.X * v.Y - this.Y * v.X);
+				return new Vector3(this.Y * v.Z - this.Z * v.Y,
+								   this.Z * v.X - this.X * v.Z,
+								   this.X * v.Y - this.Y * v.X);
 			}
 			/// <summary>
 			/// Calculates mixed product of three vectors.
@@ -1243,6 +1243,7 @@ namespace CryCil.Geometry.Csg.Base
 			/// <param name="t">
 			/// A value between 0 and 1 that defines position of interpolated vector.
 			/// </param>
+			/// <returns>Result of interpolation.</returns>
 			public static Vector3 CreateLinearInterpolation(Vector3 p, Vector3 q, float t)
 			{
 				Vector3 diff = q - p;
@@ -1441,14 +1442,11 @@ namespace CryCil.Geometry.Csg.Base
 				// Split polygons with the plane.
 				for (int i = 0; i < polygons.Count; i++)
 				{
-					this.Plane.SplitPolygon
-						(
-						 polygons[i],
-						 // Polys that are on the same plane as this node end up in the node.
-						 ref this.Polygons, ref this.Polygons,
-						 // These will form front and back branches resectively.
-						 ref frontPolygons, ref backPolygons
-						);
+					this.Plane.SplitPolygon(polygons[i],
+											// Polys that are on the same plane as this node end up in the node.
+											ref this.Polygons, ref this.Polygons,
+											// These will form front and back branches respectively.
+											ref frontPolygons, ref backPolygons);
 				}
 				// Build front branch from front polygons.
 				if (frontPolygons.Count > 0)
