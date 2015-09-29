@@ -1,6 +1,7 @@
 ﻿// This file contains a set of sample Action maps that match the contents of "defaultProfile.xml" file in
 // GameZero.
 
+using CryCil.Engine.Input;
 using CryCil.Engine.Input.ActionMapping;
 
 #if WIN32 || Durango || Orbis
@@ -20,7 +21,7 @@ using CryCil.Engine.Input.ActionMapping;
 
 #pragma warning disable 67
 
-namespace CryCil.Engine.Input.ActionMapping.GameZero
+namespace CSharpSamples.ActionMaps.GameZero
 {
 	/// <summary>
 	/// Represents an action map that defines player's actions.

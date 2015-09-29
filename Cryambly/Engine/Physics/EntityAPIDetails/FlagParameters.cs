@@ -7,7 +7,7 @@ namespace CryCil.Engine.Physics
 	/// modify the flags that are assigned to the physical entity or parts of it.
 	/// </summary>
 	/// <example>
-	/// <code source="Engine\Physics\EntityAPIDetails\FlagParameters.Example.cs">
+	/// <code source="FlagParameters.cs">
 	/// </code>
 	/// </example>
 	public struct FlagParameters

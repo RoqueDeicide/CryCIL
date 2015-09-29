@@ -18,14 +18,14 @@
     <HtmlHelpName>Documentation</HtmlHelpName>
     <Language>en-US</Language>
     <BuildAssemblerVerbosity>OnlyWarningsAndErrors</BuildAssemblerVerbosity>
-    <HelpFileFormat>Markdown</HelpFileFormat>
+    <HelpFileFormat>Website</HelpFileFormat>
     <IndentHtml>True</IndentHtml>
     <KeepLogFile>True</KeepLogFile>
     <DisableCodeBlockComponent>False</DisableCodeBlockComponent>
     <CppCommentsFixup>False</CppCommentsFixup>
     <CleanIntermediates>True</CleanIntermediates>
     <DocumentationSources>
-      <DocumentationSource sourceFile="Cryambly.csproj" />
+      <DocumentationSource sourceFile="..\..\Cryambly\Cryambly.csproj" />
     </DocumentationSources>
     <BuildLogFile />
     <HtmlHelp1xCompilerPath />
@@ -37,7 +37,7 @@
     <SyntaxFilters>C#</SyntaxFilters>
     <SdkLinkTarget>Blank</SdkLinkTarget>
     <RootNamespaceContainer>False</RootNamespaceContainer>
-    <PresentationStyle>Markdown</PresentationStyle>
+    <PresentationStyle>VS2013</PresentationStyle>
     <Preliminary>False</Preliminary>
     <NamingMethod>MemberName</NamingMethod>
     <HelpTitle>Cryambly documentation</HelpTitle>

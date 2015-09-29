@@ -136,7 +136,7 @@ namespace CryCil.Engine.Data
 		/// </para>
 		/// </remarks>
 		/// <example>
-		/// <code source="Engine\Data\CrySync.Examples.cs" language="cs"/>
+		/// <code source="CrySync.cs" language="cs"/>
 		/// </example>
 		/// <param name="name">     Name of the group.</param>
 		/// <param name="condition">Indicates whether the group should be started.</param>

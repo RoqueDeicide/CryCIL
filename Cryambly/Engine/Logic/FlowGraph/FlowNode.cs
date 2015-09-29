@@ -12,6 +12,9 @@ namespace CryCil.Engine.Logic
 	/// <summary>
 	/// Base class for all FlowGraph nodes.
 	/// </summary>
+	/// <example>
+	/// <code source="FlowNode.cs" />
+	/// </example>
 	public abstract partial class FlowNode : IDisposable
 	{
 		#region Nested Types

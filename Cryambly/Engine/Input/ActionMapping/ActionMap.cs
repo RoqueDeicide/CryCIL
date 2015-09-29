@@ -11,7 +11,12 @@ namespace CryCil.Engine.Input.ActionMapping
 	/// converted into lowercase, so make sure there are no case-insensitive conflicts.
 	/// </remarks>
 	/// <example>
-	/// <code source="Engine\Input\ActionMapping\ActionMapSample.cs"/>
+	/// <code source="ActionMaps/Sample.cs"/>
+	/// <para>Here are default CryEngine sample action maps:</para>
+	/// <para>GameSDK:</para>
+	/// <code source="ActionMaps/GameSDK/ActionMaps.cs"/>
+	/// <para>GameZero:</para>
+	/// <code source="ActionMaps/GameZero/ActionMaps.cs"/>
 	/// </example>
 	[AttributeUsage(AttributeTargets.Class, Inherited = false)]
 	public class ActionMapAttribute : Attribute

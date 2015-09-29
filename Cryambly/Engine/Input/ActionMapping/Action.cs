@@ -183,7 +183,7 @@ namespace CryCil.Engine.Input.ActionMapping
 	/// </para>
 	/// </remarks>
 	/// <example>
-	/// <code source="Engine\Input\ActionMapping\ActionMapSample.cs"/>
+	/// <code source="ActionMaps/Sample.cs"/>
 	/// </example>
 	[AttributeUsage(AttributeTargets.Event)]
 	[MeansImplicitUse]

@@ -1,6 +1,7 @@
-﻿using CryCil.Geometry;
+﻿using CryCil.Engine.Data;
+using CryCil.Geometry;
 
-namespace CryCil.Engine.Data
+namespace CSharpSamples
 {
 	/// <summary>
 	/// Represents an example of synchronization

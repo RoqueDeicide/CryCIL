@@ -1,6 +1,9 @@
 ﻿using System;
+using CryCil.Engine.Physics;
 
-namespace CryCil.Engine.Physics
+// ReSharper disable UnusedVariable
+
+namespace CSharpSamples
 {
 	/// <summary>
 	/// Enumeration of sample flags.
@@ -56,13 +59,13 @@ namespace CryCil.Engine.Physics
 		public static void Sample()
 		{
 			// This object will override all flags that were previously assigned to the part/entity.
-			FlagsEnum1 flagsToAssign = FlagsEnum1.First | FlagsEnum1.Fourth;
+			const FlagsEnum1 flagsToAssign = FlagsEnum1.First | FlagsEnum1.Fourth;
 
 			// These flags will be removed from the object.
-			FlagsEnum1 flagsToRemove = FlagsEnum1.Second | FlagsEnum1.Third;
+			const FlagsEnum1 flagsToRemove = FlagsEnum1.Second | FlagsEnum1.Third;
 
 			// These flags will be set.
-			FlagsEnum1 flagsToSet = FlagsEnum1.First | FlagsEnum1.Second;
+			const FlagsEnum1 flagsToSet = FlagsEnum1.First | FlagsEnum1.Second;
 
 			// This object can be used to just assign the flags.
 			FlagParameters params1 = FlagParameters.Assign((uint)flagsToAssign);

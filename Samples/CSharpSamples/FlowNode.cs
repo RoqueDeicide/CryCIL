@@ -1,26 +1,41 @@
 ﻿using System;
-using System.Collections.Generic;
+using CryCil;
 using CryCil.Engine.Data;
 using CryCil.Engine.DebugServices;
+using CryCil.Engine.Logic;
 using CryCil.Utilities;
 
-namespace CryCil.Engine.Logic
+namespace CSharpSamples
 {
 	/// <summary>
 	/// Represents a flow node that stores a value that can be incremented and decremented and a certain
 	/// level can be outputted.
 	/// </summary>
-	[FlowNode
-	(
+	[FlowNode(
 		"Counter",
 		"This node is an analog of a Counter gate from Red Power mod for Minecraft, it stores" +
 		" an integer value that can be manipulated.",
-		FlowNodeFlags.Approved				// Use at least this flag so the node can show up in the UI.
-	)]
+		FlowNodeFlags.Approved // Use at least this flag so the node can show up in the UI.
+		)]
 	public class CounterNode : FlowNode
 	{
 		#region Fields
 		private int count;
+		// These fields provide convenient access to specific ports without having to make enumerations of
+		// indices of each particular port.
+		private InputPortInt decrementValue;
+		private InputPortInt incrementValue;
+		private InputPortVoid decrementTrigger;
+		private InputPortVoid incrementTrigger;
+
+		private InputPortInt threshold;
+		private InputPortInt minLevel;
+		private InputPortInt maxLevel;
+
+		private OutputPortInt currentCount;
+		private OutputPortBool aboveThreshold;
+		#endregion
+		#region Properties
 		/// <summary>
 		/// Gets or sets current count.
 		/// </summary>
@@ -39,25 +54,8 @@ namespace CryCil.Engine.Logic
 				this.aboveThreshold.Activate(value >= this.threshold.Value);
 			}
 		}
-		// These fields provide convenient access to specific ports without having to make enumerations of
-		// indices of each particular port.
-		private InputPortInt decrementValue;
-		private InputPortInt incrementValue;
-		private InputPortVoid decrementTrigger;
-		private InputPortVoid incrementTrigger;
-
-		private InputPortInt threshold;
-		private InputPortInt minLevel;
-		private InputPortInt maxLevel;
-
-		private OutputPortInt currentCount;
-		private OutputPortBool aboveThreshold;
-		#endregion
-		#region Properties
-
 		#endregion
 		#region Events
-
 		#endregion
 		#region Construction
 		/// <summary>
@@ -77,98 +75,69 @@ namespace CryCil.Engine.Logic
 		public override void Define()
 		{
 			this.decrementValue =
-				new InputPortInt
-				(
-					"decrementValue",
-					"DecrementValue",
-					"How much to subtract from the current value when DecrementTrigger port is activated.",
-					null,
-					1
-				);
+				new InputPortInt("decrementValue",
+								 "DecrementValue",
+								 "How much to subtract from the current value when DecrementTrigger port is activated.",
+								 null,
+								 1);
 			this.decrementTrigger =
-				new InputPortVoid
-				(
-					"decrementTrigger",
-					"DecrementTrigger",
-					"When activated decrements current value by the amount specified by DecrementValue port.",
-					Decrement
-				);
+				new InputPortVoid("decrementTrigger",
+								  "DecrementTrigger",
+								  "When activated decrements current value by the amount specified by DecrementValue port.",
+								  this.Decrement);
 			this.incrementValue =
-				new InputPortInt
-				(
-					"incrementValue",
-					"IncrementValue",
-					"How much to add to the current value when IncrementTrigger port is activated.",
-					null,
-					1
-				);
+				new InputPortInt("incrementValue",
+								 "IncrementValue",
+								 "How much to add to the current value when IncrementTrigger port is activated.",
+								 null,
+								 1);
 			this.incrementTrigger =
-				new InputPortVoid
-				(
-					"incrementTrigger",
-					"IncrementTrigger",
-					"When activated increments current value by the amount specified by IncrementValue port.",
-					Increment
-				);
+				new InputPortVoid("incrementTrigger",
+								  "IncrementTrigger",
+								  "When activated increments current value by the amount specified by IncrementValue port.",
+								  this.Increment);
 
 			this.threshold =
-				new InputPortInt
-				(
-					"thresholdValue",
-					"ThresholdValue",
-					"Determines the value that is a threshold that when passed passes true to AboveThresholdIndicator port.",
-					SetThreshold
-				);
+				new InputPortInt("thresholdValue",
+								 "ThresholdValue",
+								 "Determines the value that is a threshold that when passed passes true to AboveThresholdIndicator port.",
+								 this.SetThreshold);
 			this.minLevel =
-				new InputPortInt
-				(
-					"minLevelValue",
-					"MinLevelValue",
-					"Determines the value current value cannot go below.",
-					SetLevel
-				);
+				new InputPortInt("minLevelValue",
+								 "MinLevelValue",
+								 "Determines the value current value cannot go below.",
+								 this.SetLevel);
 			this.maxLevel =
-				new InputPortInt
-				(
-					"maxLevelValue",
-					"MaxLevelValue",
-					"Determines the value current value cannot go above.",
-					SetLevel
-				);
+				new InputPortInt("maxLevelValue",
+								 "MaxLevelValue",
+								 "Determines the value current value cannot go above.",
+								 this.SetLevel);
 
-			this.currentCount =
-				new OutputPortInt
-				(
-					"currentCountValue",
-					"CurrentCountValue",
-					"Outputs current counter value."
-				);
+			this.currentCount = new OutputPortInt("currentCountValue",
+												  "CurrentCountValue",
+												  "Outputs current counter value.");
 			this.aboveThreshold =
-				new OutputPortBool
-				(
-					"aboveThresholdIndicator",
-					"AboveThresholdIndicator",
-					"Outputs boolean value that indicates whether current counter value is above or on the threshold."
-				);
+				new OutputPortBool("aboveThresholdIndicator",
+								   "AboveThresholdIndicator",
+								   "Outputs boolean value that indicates whether current counter value is " +
+								   "above or on the threshold.");
 
 			// Now we need to set all 4 of the following properties, not setting even 1 is bad.
-			this.Inputs =
-				new InputPort[]
-				{
-					this.decrementValue,
-					this.decrementTrigger,
-					this.incrementValue,
-					this.incrementTrigger,
-					this.minLevel,
-					this.threshold,
-					this.maxLevel
-				};
-			this.Outputs =
-				new OutputPort[]
-				{
-					this.currentCount,
-					this.aboveThreshold
-				};
+			this.Inputs = new InputPort[]
+			{
+				this.decrementValue,
+				this.decrementTrigger,
+				this.incrementValue,
+				this.incrementTrigger,
+				this.minLevel,
+				this.threshold,
+				this.maxLevel
+			};
+			this.Outputs = new OutputPort[]
+			{
+				this.currentCount,
+				this.aboveThreshold
+			};
 		}
 		/// <summary>
 		/// Processes ports that were activated at the same time.
@@ -176,7 +145,7 @@ namespace CryCil.Engine.Logic
 		/// <param name="activatedPorts">A collection of ports that were activated.</param>
 		public override void MultiActivate(ActivationSet activatedPorts)
 		{
-			if (activatedPorts.Pop(new InputPort[] { this.minLevel, this.maxLevel }))
+			if (activatedPorts.Pop(new InputPort[] {this.minLevel, this.maxLevel}))
 			{
 				if (this.minLevel.Value > this.maxLevel.Value)
 				{
@@ -186,7 +155,7 @@ namespace CryCil.Engine.Logic
 				this.Count = MathHelpers.Clamp(this.count, this.minLevel.Value, this.maxLevel.Value);
 			}
 
-			if (activatedPorts.Pop(new InputPort[] { this.decrementTrigger, this.incrementTrigger }))
+			if (activatedPorts.Pop(new InputPort[] {this.decrementTrigger, this.incrementTrigger}))
 			{
 				this.Count += this.incrementValue.Value - this.decrementValue.Value;
 			}

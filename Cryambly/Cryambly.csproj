@@ -107,7 +107,6 @@
     <Compile Include="Mathematics\Specials\NamespaceDoc.cs" />
     <Compile Include="Properties\NamespaceDoc.cs" />
     <Compile Include="Engine\Data\CrySync.cs" />
-    <None Include="Engine\Data\CrySync.Examples.cs" />
     <Compile Include="Engine\Data\ISynchronizable.cs" />
     <Compile Include="Engine\Data\NamespaceDoc.cs" />
     <Compile Include="Engine\Data\SyncContext.cs" />
@@ -208,13 +207,10 @@
     <Compile Include="Engine\Physics\Geometry\PhysicsMeshFlags.cs" />
     <Compile Include="Engine\Physics\IForeignDataProvider.cs" />
     <Compile Include="Engine\Input\ActionMapping\Action.cs" />
-    <None Include="Engine\Input\ActionMapping\Action.Examples.GameSDK.cs" />
-    <None Include="Engine\Input\ActionMapping\Action.Examples.GameZero.cs" />
     <Compile Include="Engine\Input\ActionMapping\ActionActivationMode.cs" />
     <Compile Include="Engine\Input\ActionMapping\ActionInputSpecification.cs" />
     <Compile Include="Engine\Input\ActionMapping\ActionMap.cs" />
     <Compile Include="Engine\Input\ActionMapping\ActionMaps.cs" />
-    <None Include="Engine\Input\ActionMapping\ActionMapSample.cs" />
     <Compile Include="Engine\Input\ActionMapping\CryInputAction.cs" />
     <Compile Include="Engine\Input\ActionMapping\CryActionMap.cs" />
     <Compile Include="Engine\Input\ActionMapping\DeviceMapping.cs" />
@@ -265,7 +261,6 @@
     <Compile Include="Engine\Logic\FlowGraph\FlowData.cs" />
     <Compile Include="Engine\Logic\FlowGraph\FlowNode.cs" />
     <Compile Include="Engine\Logic\FlowGraph\FlowNode.Events.cs" />
-    <None Include="Engine\Logic\FlowGraph\FlowNode.Examples.cs" />
     <Compile Include="Engine\Logic\FlowGraph\FlowNodeAttribute.cs" />
     <Compile Include="Engine\Logic\FlowGraph\FlowNodeConfig.cs" />
     <Compile Include="Engine\Logic\FlowGraph\FlowNodeFlags.cs" />
@@ -581,7 +576,6 @@
     <Compile Include="Utilities\StringPool.cs" />
     <Compile Include="Utilities\Utf32Char.cs" />
     <Compile Include="VariousConstants.cs" />
-    <None Include="Engine\Physics\EntityAPIDetails\FlagParameters.Example.cs" />
     <Compile Include="Engine\Physics\PhysicalWorld.Events.cs" />
   </ItemGroup>
   <ItemGroup>
