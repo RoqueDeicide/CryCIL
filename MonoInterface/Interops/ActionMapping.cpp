@@ -27,6 +27,7 @@ void ActionMappingInterop::OnRunTimeInitialized()
 	MonoEnv->Functions->AddInternalCall(nameSpace, actionMapsClass, "GetActionEventField", GetActionEventField);
 	MonoEnv->Functions->AddInternalCall(nameSpace, actionMapsClass, "acquireActionHandler", acquireActionHandler);
 	MonoEnv->Functions->AddInternalCall(nameSpace, actionMapsClass, "CreateActionMap", CreateActionMap);
+	MonoEnv->Functions->AddInternalCall(nameSpace, actionMapsClass, "EnableActionMap", EnableActionMap);
 
 	// Internal calls for CryActionMap.
 	MonoEnv->Functions->AddInternalCall(nameSpace, cryActionMapClass, "GetAction", GetAction);
@@ -94,6 +95,11 @@ mono::delegat ActionMappingInterop::acquireActionHandler(IMonoField *actionField
 IActionMap *ActionMappingInterop::CreateActionMap(mono::string name)
 {
 	return MonoEnv->CryAction->GetIActionMapManager()->CreateActionMap(NtText(name));
+}
+
+void ActionMappingInterop::EnableActionMap(mono::string name, bool enable)
+{
+	MonoEnv->CryAction->GetIActionMapManager()->EnableActionMap(NtText(name), enable);
 }
 
 IActionMapAction *ActionMappingInterop::GetAction(IActionMap *handle, mono::string name)

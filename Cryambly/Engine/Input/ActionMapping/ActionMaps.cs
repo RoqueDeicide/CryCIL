@@ -25,6 +25,30 @@ namespace CryCil.Engine.Input.ActionMapping
 		#region Construction
 		#endregion
 		#region Interface
+		/// <summary>
+		/// Enables an action map.
+		/// </summary>
+		/// <remarks>
+		/// <para>Action maps need to be enabled in order to have the actions in it activated.</para>
+		/// <para>All new action maps are enabled by default.</para>
+		/// </remarks>
+		/// <param name="actionMapName">Name of the map to enable.</param>
+		public static void Enable(string actionMapName)
+		{
+			EnableActionMap(actionMapName, true);
+		}
+		/// <summary>
+		/// Disables an action map.
+		/// </summary>
+		/// <remarks>
+		/// <para>Action maps need to be enabled in order to have the actions in it activated.</para>
+		/// <para>All new action maps are enabled by default.</para>
+		/// </remarks>
+		/// <param name="actionMapName">Name of the map to disable.</param>
+		public static void Disable(string actionMapName)
+		{
+			EnableActionMap(actionMapName, false);
+		}
 		#endregion
 		#region Utilities
 		[InitializationStage((int)DefaultInitializationStages.ActionMapsRegistrationStage)]
@@ -167,6 +191,8 @@ namespace CryCil.Engine.Input.ActionMapping
 		private static extern InputActionHandler acquireActionHandler(IntPtr actionField);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern CryActionMap CreateActionMap(string name);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void EnableActionMap(string name, bool enable);
 		#endregion
 	}
 }

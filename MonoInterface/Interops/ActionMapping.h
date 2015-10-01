@@ -46,6 +46,7 @@ struct ActionMappingInterop : public IMonoInterop<false, true>, public IActionLi
 	static IMonoField   *GetActionEventField(MonoClassField *fieldHandle);
 	static mono::delegat acquireActionHandler(IMonoField *actionField);
 	static IActionMap   *CreateActionMap(mono::string name);
+	static void          EnableActionMap(mono::string name, bool enable);
 
 	// Internal calls for CryActionMap.
 	static IActionMapAction *GetAction(IActionMap *handle, mono::string name);
