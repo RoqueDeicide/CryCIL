@@ -4,6 +4,7 @@
 #include <Implementation/MonoClass.h>
 #include <ActionMap.h>
 #include <CryCrc32.h>
+#include "MonoCryXmlNode.h"
 
 typedef void(__stdcall *ActivateActionThunk)(uint32, int32, float value, mono::exception *);
 
@@ -28,6 +29,8 @@ void ActionMappingInterop::OnRunTimeInitialized()
 	MonoEnv->Functions->AddInternalCall(nameSpace, actionMapsClass, "acquireActionHandler", acquireActionHandler);
 	MonoEnv->Functions->AddInternalCall(nameSpace, actionMapsClass, "CreateActionMap", CreateActionMap);
 	MonoEnv->Functions->AddInternalCall(nameSpace, actionMapsClass, "EnableActionMap", EnableActionMap);
+	MonoEnv->Functions->AddInternalCall(nameSpace, actionMapsClass, "SyncRebindDataWithFile", SyncRebindDataWithFile);
+	MonoEnv->Functions->AddInternalCall(nameSpace, actionMapsClass, "SyncRebindDataWithNode", SyncRebindDataWithNode);
 
 	// Internal calls for CryActionMap.
 	MonoEnv->Functions->AddInternalCall(nameSpace, cryActionMapClass, "GetAction", GetAction);
@@ -106,6 +109,49 @@ IActionMapAction *ActionMappingInterop::GetAction(IActionMap *handle, mono::stri
 {
 	ActionId id = ActionId(NtText(name));
 	return handle->GetAction(id);
+}
+
+bool ActionMappingInterop::SyncRebindDataWithFile(mono::string file, bool save)
+{
+	if (!file)
+	{
+		return false;
+	}
+
+	NtText fileName(file);
+
+	if (fileName.Length == 0)
+	{
+		return false;
+	}
+
+	XmlNodeRef root;
+
+	if (save)
+	{
+		root = gEnv->pSystem->CreateXmlNode("rebindData");
+
+		bool syncedWithNode = MonoEnv->CryAction->GetIActionMapManager()->SaveRebindDataToXML(root);
+
+		return syncedWithNode && root->saveToFile(fileName);
+	}
+
+	root = gEnv->pSystem->LoadXmlFromFile(fileName);
+
+	return root != nullptr && MonoEnv->CryAction->GetIActionMapManager()->LoadRebindDataFromXML(root);
+}
+
+bool ActionMappingInterop::SyncRebindDataWithNode(MonoCryXmlNode *node, bool save)
+{
+	if (!node || !node->handle)
+	{
+		return false;
+	}
+	
+	XmlNodeRef nodeRef(node->handle);
+
+	return save ? MonoEnv->CryAction->GetIActionMapManager()->SaveRebindDataToXML(nodeRef)
+				: MonoEnv->CryAction->GetIActionMapManager()->LoadRebindDataFromXML(nodeRef);
 }
 
 IActionMapAction *ActionMappingInterop::CreateActionInternal(IActionMap *handle, mono::string name)

@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using CryCil.Hashing;
 using CryCil.RunTime;
+using CryCil.Utilities;
 
 namespace CryCil.Engine.Input.ActionMapping
 {
@@ -48,6 +49,42 @@ namespace CryCil.Engine.Input.ActionMapping
 		public static void Disable(string actionMapName)
 		{
 			EnableActionMap(actionMapName, false);
+		}
+		/// <summary>
+		/// Saves the rebind data into the file.
+		/// </summary>
+		/// <param name="file">Path to the file.</param>
+		/// <returns>True, if operation was successful.</returns>
+		public static bool SaveRebindData(string file)
+		{
+			return SyncRebindDataWithFile(file, true);
+		}
+		/// <summary>
+		/// Saves the rebind data into the Xml node.
+		/// </summary>
+		/// <param name="node">Object that represents the Xml node.</param>
+		/// <returns>True, if operation was successful.</returns>
+		public static bool SaveRebindData(CryXmlNode node)
+		{
+			return SyncRebindDataWithNode(node, true);
+		}
+		/// <summary>
+		/// Loads the rebind data from the file.
+		/// </summary>
+		/// <param name="file">Path to the file.</param>
+		/// <returns>True, if operation was successful.</returns>
+		public static bool LoadRebindData(string file)
+		{
+			return SyncRebindDataWithFile(file, false);
+		}
+		/// <summary>
+		/// Loads the rebind data from the Xml node.
+		/// </summary>
+		/// <param name="node">Object that represents the Xml node.</param>
+		/// <returns>True, if operation was successful.</returns>
+		public static bool LoadRebindData(CryXmlNode node)
+		{
+			return SyncRebindDataWithNode(node, false);
 		}
 		#endregion
 		#region Utilities
@@ -193,6 +230,10 @@ namespace CryCil.Engine.Input.ActionMapping
 		private static extern CryActionMap CreateActionMap(string name);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void EnableActionMap(string name, bool enable);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern bool SyncRebindDataWithFile(string file, bool save);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern bool SyncRebindDataWithNode(CryXmlNode node, bool save);
 		#endregion
 	}
 }

@@ -3,6 +3,8 @@
 #include "IMonoInterface.h"
 #include <IActionMapManager.h>
 
+struct MonoCryXmlNode;
+
 enum SupportedInputDevices
 {
 	eSID_None,
@@ -47,6 +49,8 @@ struct ActionMappingInterop : public IMonoInterop<false, true>, public IActionLi
 	static mono::delegat acquireActionHandler(IMonoField *actionField);
 	static IActionMap   *CreateActionMap(mono::string name);
 	static void          EnableActionMap(mono::string name, bool enable);
+	static bool          SyncRebindDataWithFile(mono::string file, bool save);
+	static bool          SyncRebindDataWithNode(MonoCryXmlNode *node, bool save);
 
 	// Internal calls for CryActionMap.
 	static IActionMapAction *GetAction(IActionMap *handle, mono::string name);
