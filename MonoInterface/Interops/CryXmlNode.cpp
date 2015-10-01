@@ -80,21 +80,20 @@ void CryXmlNodeInterop::OnRunTimeInitialized()
 	REGISTER_METHOD(RemoveAttributes);
 }
 
-void CryXmlNodeInterop::Ctor(mono::object obj, mono::string name)
+void CryXmlNodeInterop::Ctor(MonoCryXmlNode *cryXmlNode, mono::string name)
 {
 	if (!name)
 	{
 		ArgumentNullException("Name of the Xml node cannot be null.").Throw();
 	}
 
-	IXmlNode **objNode = GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
-	*objNode = GetISystem()->CreateXmlNode(NtText(name));
-	(*objNode)->AddRef();
+	cryXmlNode->handle = GetISystem()->CreateXmlNode(NtText(name));
+	cryXmlNode->handle->AddRef();
 }
 
-void CryXmlNodeInterop::AddRef(mono::object obj)
+void CryXmlNodeInterop::AddRef(MonoCryXmlNode *cryXmlNode)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		return;
@@ -103,9 +102,9 @@ void CryXmlNodeInterop::AddRef(mono::object obj)
 	objNode->AddRef();
 }
 
-void CryXmlNodeInterop::Release(mono::object obj)
+void CryXmlNodeInterop::Release(MonoCryXmlNode *cryXmlNode)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		return;
@@ -114,9 +113,9 @@ void CryXmlNodeInterop::Release(mono::object obj)
 	objNode->Release();
 }
 
-mono::string CryXmlNodeInterop::get_TagName(mono::object obj)
+mono::string CryXmlNodeInterop::get_TagName(MonoCryXmlNode *cryXmlNode)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -125,9 +124,9 @@ mono::string CryXmlNodeInterop::get_TagName(mono::object obj)
 	return ToMonoString(objNode->getTag());
 }
 
-int CryXmlNodeInterop::get_AttributeCount(mono::object obj)
+int CryXmlNodeInterop::get_AttributeCount(MonoCryXmlNode *cryXmlNode)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -136,9 +135,9 @@ int CryXmlNodeInterop::get_AttributeCount(mono::object obj)
 	return objNode->getNumAttributes();
 }
 
-int CryXmlNodeInterop::get_ChildCount(mono::object obj)
+int CryXmlNodeInterop::get_ChildCount(MonoCryXmlNode *cryXmlNode)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -147,9 +146,9 @@ int CryXmlNodeInterop::get_ChildCount(mono::object obj)
 	return objNode->getChildCount();
 }
 
-mono::object CryXmlNodeInterop::get_Parent(mono::object obj)
+mono::object CryXmlNodeInterop::get_Parent(MonoCryXmlNode *cryXmlNode)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -160,9 +159,9 @@ mono::object CryXmlNodeInterop::get_Parent(mono::object obj)
 	return ctor->Create(&param);
 }
 
-mono::string CryXmlNodeInterop::get_Content(mono::object obj)
+mono::string CryXmlNodeInterop::get_Content(MonoCryXmlNode *cryXmlNode)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -171,9 +170,9 @@ mono::string CryXmlNodeInterop::get_Content(mono::object obj)
 	return ToMonoString(objNode->getContent());
 }
 
-void CryXmlNodeInterop::set_Content(mono::object obj, mono::string name)
+void CryXmlNodeInterop::set_Content(MonoCryXmlNode *cryXmlNode, mono::string name)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -182,9 +181,9 @@ void CryXmlNodeInterop::set_Content(mono::object obj, mono::string name)
 	objNode->setContent(NtText(name));
 }
 
-mono::object CryXmlNodeInterop::get_Clone(mono::object obj)
+mono::object CryXmlNodeInterop::get_Clone(MonoCryXmlNode *cryXmlNode)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -195,9 +194,9 @@ mono::object CryXmlNodeInterop::get_Clone(mono::object obj)
 	return ctor->Create(&param);
 }
 
-void CryXmlNodeInterop::AddChild(mono::object obj, mono::object node)
+void CryXmlNodeInterop::AddChild(MonoCryXmlNode *cryXmlNode, mono::object node)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -218,9 +217,9 @@ void CryXmlNodeInterop::AddChild(mono::object obj, mono::object node)
 	objNode->addChild(nodeRef);
 }
 
-void CryXmlNodeInterop::InsertChild(mono::object obj, int index, mono::object node)
+void CryXmlNodeInterop::InsertChild(MonoCryXmlNode *cryXmlNode, int index, mono::object node)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -250,9 +249,9 @@ void CryXmlNodeInterop::InsertChild(mono::object obj, int index, mono::object no
 	objNode->insertChild(index, nodeRef);
 }
 
-void CryXmlNodeInterop::RemoveChild(mono::object obj, mono::object node)
+void CryXmlNodeInterop::RemoveChild(MonoCryXmlNode *cryXmlNode, mono::object node)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -273,9 +272,9 @@ void CryXmlNodeInterop::RemoveChild(mono::object obj, mono::object node)
 	objNode->removeChild(nodeRef);
 }
 
-void CryXmlNodeInterop::RemoveChildAt(mono::object obj, int index)
+void CryXmlNodeInterop::RemoveChildAt(MonoCryXmlNode *cryXmlNode, int index)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -293,9 +292,9 @@ void CryXmlNodeInterop::RemoveChildAt(mono::object obj, int index)
 	objNode->deleteChildAt(index);
 }
 
-void CryXmlNodeInterop::RemoveChildren(mono::object obj)
+void CryXmlNodeInterop::RemoveChildren(MonoCryXmlNode *cryXmlNode)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -304,9 +303,9 @@ void CryXmlNodeInterop::RemoveChildren(mono::object obj)
 	objNode->removeAllChilds();
 }
 
-mono::object CryXmlNodeInterop::GetChild(mono::object obj, int index)
+mono::object CryXmlNodeInterop::GetChild(MonoCryXmlNode *cryXmlNode, int index)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -321,9 +320,9 @@ mono::object CryXmlNodeInterop::GetChild(mono::object obj, int index)
 	return ctor->Create(&param);
 }
 
-mono::string CryXmlNodeInterop::XmlData(mono::object obj, int level)
+mono::string CryXmlNodeInterop::XmlData(MonoCryXmlNode *cryXmlNode, int level)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -337,9 +336,9 @@ mono::string CryXmlNodeInterop::XmlData(mono::object obj, int level)
 	return ToMonoString(objNode->getXML(level).c_str());
 }
 
-bool CryXmlNodeInterop::Save(mono::object obj, mono::string file)
+bool CryXmlNodeInterop::Save(MonoCryXmlNode *cryXmlNode, mono::string file)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -352,9 +351,9 @@ bool CryXmlNodeInterop::Save(mono::object obj, mono::string file)
 	return objNode->saveToFile(NtText(file));
 }
 
-bool CryXmlNodeInterop::GetAttribute(mono::object obj, int index, mono::string &name, mono::string &value)
+bool CryXmlNodeInterop::GetAttribute(MonoCryXmlNode *cryXmlNode, int index, mono::string &name, mono::string &value)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -378,9 +377,9 @@ bool CryXmlNodeInterop::GetAttribute(mono::object obj, int index, mono::string &
 	return success;
 }
 
-bool CryXmlNodeInterop::GetAttributestring(mono::object obj, mono::string name, mono::string &value)
+bool CryXmlNodeInterop::GetAttributestring(MonoCryXmlNode *cryXmlNode, mono::string name, mono::string &value)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -406,9 +405,9 @@ bool CryXmlNodeInterop::GetAttributestring(mono::object obj, mono::string name, 
 	return success;
 }
 
-bool CryXmlNodeInterop::GetAttributeint(mono::object obj, mono::string name, int &value)
+bool CryXmlNodeInterop::GetAttributeint(MonoCryXmlNode *cryXmlNode, mono::string name, int &value)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -421,9 +420,9 @@ bool CryXmlNodeInterop::GetAttributeint(mono::object obj, mono::string name, int
 	return objNode->getAttr(NtText(name), value);
 }
 
-bool CryXmlNodeInterop::GetAttributeuint(mono::object obj, mono::string name, uint &value)
+bool CryXmlNodeInterop::GetAttributeuint(MonoCryXmlNode *cryXmlNode, mono::string name, uint &value)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -436,9 +435,9 @@ bool CryXmlNodeInterop::GetAttributeuint(mono::object obj, mono::string name, ui
 	return objNode->getAttr(NtText(name), value);
 }
 
-bool CryXmlNodeInterop::GetAttributeint64(mono::object obj, mono::string name, int64 &value)
+bool CryXmlNodeInterop::GetAttributeint64(MonoCryXmlNode *cryXmlNode, mono::string name, int64 &value)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -451,9 +450,9 @@ bool CryXmlNodeInterop::GetAttributeint64(mono::object obj, mono::string name, i
 	return objNode->getAttr(NtText(name), value);
 }
 
-bool CryXmlNodeInterop::GetAttributeuint64(mono::object obj, mono::string name, uint64 &value, bool useHex)
+bool CryXmlNodeInterop::GetAttributeuint64(MonoCryXmlNode *cryXmlNode, mono::string name, uint64 &value, bool useHex)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -466,9 +465,9 @@ bool CryXmlNodeInterop::GetAttributeuint64(mono::object obj, mono::string name, 
 	return objNode->getAttr(NtText(name), value, useHex);
 }
 
-bool CryXmlNodeInterop::GetAttributefloat(mono::object obj, mono::string name, float &value)
+bool CryXmlNodeInterop::GetAttributefloat(MonoCryXmlNode *cryXmlNode, mono::string name, float &value)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -481,9 +480,9 @@ bool CryXmlNodeInterop::GetAttributefloat(mono::object obj, mono::string name, f
 	return objNode->getAttr(NtText(name), value);
 }
 
-bool CryXmlNodeInterop::GetAttributedouble(mono::object obj, mono::string name, double &value)
+bool CryXmlNodeInterop::GetAttributedouble(MonoCryXmlNode *cryXmlNode, mono::string name, double &value)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -496,9 +495,9 @@ bool CryXmlNodeInterop::GetAttributedouble(mono::object obj, mono::string name, 
 	return objNode->getAttr(NtText(name), value);
 }
 
-bool CryXmlNodeInterop::GetAttributeVec2(mono::object obj, mono::string name, Vec2 &value)
+bool CryXmlNodeInterop::GetAttributeVec2(MonoCryXmlNode *cryXmlNode, mono::string name, Vec2 &value)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -511,9 +510,9 @@ bool CryXmlNodeInterop::GetAttributeVec2(mono::object obj, mono::string name, Ve
 	return objNode->getAttr(NtText(name), value);
 }
 
-bool CryXmlNodeInterop::GetAttributeVec2d(mono::object obj, mono::string name, Vec2d &value)
+bool CryXmlNodeInterop::GetAttributeVec2d(MonoCryXmlNode *cryXmlNode, mono::string name, Vec2d &value)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -526,9 +525,9 @@ bool CryXmlNodeInterop::GetAttributeVec2d(mono::object obj, mono::string name, V
 	return objNode->getAttr(NtText(name), value);
 }
 
-bool CryXmlNodeInterop::GetAttributeAng3(mono::object obj, mono::string name, Ang3 &value)
+bool CryXmlNodeInterop::GetAttributeAng3(MonoCryXmlNode *cryXmlNode, mono::string name, Ang3 &value)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -541,9 +540,9 @@ bool CryXmlNodeInterop::GetAttributeAng3(mono::object obj, mono::string name, An
 	return objNode->getAttr(NtText(name), value);
 }
 
-bool CryXmlNodeInterop::GetAttributeVec3(mono::object obj, mono::string name, Vec3 &value)
+bool CryXmlNodeInterop::GetAttributeVec3(MonoCryXmlNode *cryXmlNode, mono::string name, Vec3 &value)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -556,9 +555,9 @@ bool CryXmlNodeInterop::GetAttributeVec3(mono::object obj, mono::string name, Ve
 	return objNode->getAttr(NtText(name), value);
 }
 
-bool CryXmlNodeInterop::GetAttributeVec3d(mono::object obj, mono::string name, Vec3d &value)
+bool CryXmlNodeInterop::GetAttributeVec3d(MonoCryXmlNode *cryXmlNode, mono::string name, Vec3d &value)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -571,9 +570,9 @@ bool CryXmlNodeInterop::GetAttributeVec3d(mono::object obj, mono::string name, V
 	return objNode->getAttr(NtText(name), value);
 }
 
-bool CryXmlNodeInterop::GetAttributeVec4(mono::object obj, mono::string name, Vec4 &value)
+bool CryXmlNodeInterop::GetAttributeVec4(MonoCryXmlNode *cryXmlNode, mono::string name, Vec4 &value)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -586,9 +585,9 @@ bool CryXmlNodeInterop::GetAttributeVec4(mono::object obj, mono::string name, Ve
 	return objNode->getAttr(NtText(name), value);
 }
 
-bool CryXmlNodeInterop::GetAttributeQuat(mono::object obj, mono::string name, Quat &value)
+bool CryXmlNodeInterop::GetAttributeQuat(MonoCryXmlNode *cryXmlNode, mono::string name, Quat &value)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -601,9 +600,9 @@ bool CryXmlNodeInterop::GetAttributeQuat(mono::object obj, mono::string name, Qu
 	return objNode->getAttr(NtText(name), value);
 }
 
-void CryXmlNodeInterop::SetAttributestring(mono::object obj, mono::string name, mono::string value)
+void CryXmlNodeInterop::SetAttributestring(MonoCryXmlNode *cryXmlNode, mono::string name, mono::string value)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -616,9 +615,9 @@ void CryXmlNodeInterop::SetAttributestring(mono::object obj, mono::string name, 
 	objNode->setAttr(NtText(name), NtText(value));
 }
 
-void CryXmlNodeInterop::SetAttributeint(mono::object obj, mono::string name, int value)
+void CryXmlNodeInterop::SetAttributeint(MonoCryXmlNode *cryXmlNode, mono::string name, int value)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -627,9 +626,9 @@ void CryXmlNodeInterop::SetAttributeint(mono::object obj, mono::string name, int
 	objNode->setAttr(NtText(name), value);
 }
 
-void CryXmlNodeInterop::SetAttributeuint(mono::object obj, mono::string name, uint value)
+void CryXmlNodeInterop::SetAttributeuint(MonoCryXmlNode *cryXmlNode, mono::string name, uint value)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -638,9 +637,9 @@ void CryXmlNodeInterop::SetAttributeuint(mono::object obj, mono::string name, ui
 	objNode->setAttr(NtText(name), value);
 }
 
-void CryXmlNodeInterop::SetAttributeint64(mono::object obj, mono::string name, int64 value)
+void CryXmlNodeInterop::SetAttributeint64(MonoCryXmlNode *cryXmlNode, mono::string name, int64 value)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -649,9 +648,9 @@ void CryXmlNodeInterop::SetAttributeint64(mono::object obj, mono::string name, i
 	objNode->setAttr(NtText(name), value);
 }
 
-void CryXmlNodeInterop::SetAttributeuint64(mono::object obj, mono::string name, uint64 value, bool useHex)
+void CryXmlNodeInterop::SetAttributeuint64(MonoCryXmlNode *cryXmlNode, mono::string name, uint64 value, bool useHex)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -660,9 +659,9 @@ void CryXmlNodeInterop::SetAttributeuint64(mono::object obj, mono::string name, 
 	objNode->setAttr(NtText(name), value, useHex);
 }
 
-void CryXmlNodeInterop::SetAttributefloat(mono::object obj, mono::string name, float value)
+void CryXmlNodeInterop::SetAttributefloat(MonoCryXmlNode *cryXmlNode, mono::string name, float value)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -671,9 +670,9 @@ void CryXmlNodeInterop::SetAttributefloat(mono::object obj, mono::string name, f
 	objNode->setAttr(NtText(name), value);
 }
 
-void CryXmlNodeInterop::SetAttributedouble(mono::object obj, mono::string name, double value)
+void CryXmlNodeInterop::SetAttributedouble(MonoCryXmlNode *cryXmlNode, mono::string name, double value)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -682,9 +681,9 @@ void CryXmlNodeInterop::SetAttributedouble(mono::object obj, mono::string name, 
 	objNode->setAttr(NtText(name), value);
 }
 
-void CryXmlNodeInterop::SetAttributeVec2(mono::object obj, mono::string name, Vec2 value)
+void CryXmlNodeInterop::SetAttributeVec2(MonoCryXmlNode *cryXmlNode, mono::string name, Vec2 value)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -693,9 +692,9 @@ void CryXmlNodeInterop::SetAttributeVec2(mono::object obj, mono::string name, Ve
 	objNode->setAttr(NtText(name), value);
 }
 
-void CryXmlNodeInterop::SetAttributeVec2d(mono::object obj, mono::string name, Vec2d value)
+void CryXmlNodeInterop::SetAttributeVec2d(MonoCryXmlNode *cryXmlNode, mono::string name, Vec2d value)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -704,9 +703,9 @@ void CryXmlNodeInterop::SetAttributeVec2d(mono::object obj, mono::string name, V
 	objNode->setAttr(NtText(name), value);
 }
 
-void CryXmlNodeInterop::SetAttributeAng3(mono::object obj, mono::string name, Ang3 value)
+void CryXmlNodeInterop::SetAttributeAng3(MonoCryXmlNode *cryXmlNode, mono::string name, Ang3 value)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -715,9 +714,9 @@ void CryXmlNodeInterop::SetAttributeAng3(mono::object obj, mono::string name, An
 	objNode->setAttr(NtText(name), value);
 }
 
-void CryXmlNodeInterop::SetAttributeVec3(mono::object obj, mono::string name, Vec3 value)
+void CryXmlNodeInterop::SetAttributeVec3(MonoCryXmlNode *cryXmlNode, mono::string name, Vec3 value)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -726,9 +725,9 @@ void CryXmlNodeInterop::SetAttributeVec3(mono::object obj, mono::string name, Ve
 	objNode->setAttr(NtText(name), value);
 }
 
-void CryXmlNodeInterop::SetAttributeVec3d(mono::object obj, mono::string name, Vec3d value)
+void CryXmlNodeInterop::SetAttributeVec3d(MonoCryXmlNode *cryXmlNode, mono::string name, Vec3d value)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -737,9 +736,9 @@ void CryXmlNodeInterop::SetAttributeVec3d(mono::object obj, mono::string name, V
 	objNode->setAttr(NtText(name), value);
 }
 
-void CryXmlNodeInterop::SetAttributeVec4(mono::object obj, mono::string name, Vec4 value)
+void CryXmlNodeInterop::SetAttributeVec4(MonoCryXmlNode *cryXmlNode, mono::string name, Vec4 value)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -748,9 +747,9 @@ void CryXmlNodeInterop::SetAttributeVec4(mono::object obj, mono::string name, Ve
 	objNode->setAttr(NtText(name), value);
 }
 
-void CryXmlNodeInterop::SetAttributeQuat(mono::object obj, mono::string name, Quat value)
+void CryXmlNodeInterop::SetAttributeQuat(MonoCryXmlNode *cryXmlNode, mono::string name, Quat value)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -759,9 +758,9 @@ void CryXmlNodeInterop::SetAttributeQuat(mono::object obj, mono::string name, Qu
 	objNode->setAttr(NtText(name), value);
 }
 
-bool CryXmlNodeInterop::HasAttribute(mono::object obj, mono::string name)
+bool CryXmlNodeInterop::HasAttribute(MonoCryXmlNode *cryXmlNode, mono::string name)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -774,9 +773,9 @@ bool CryXmlNodeInterop::HasAttribute(mono::object obj, mono::string name)
 	return objNode->haveAttr(NtText(name));
 }
 
-void CryXmlNodeInterop::CopyAttributes(mono::object obj, mono::object node)
+void CryXmlNodeInterop::CopyAttributes(MonoCryXmlNode *cryXmlNode, mono::object node)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -797,9 +796,9 @@ void CryXmlNodeInterop::CopyAttributes(mono::object obj, mono::object node)
 	objNode->copyAttributes(nodeRef);
 }
 
-void CryXmlNodeInterop::RemoveAttribute(mono::object obj, mono::string name)
+void CryXmlNodeInterop::RemoveAttribute(MonoCryXmlNode *cryXmlNode, mono::string name)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
@@ -812,9 +811,9 @@ void CryXmlNodeInterop::RemoveAttribute(mono::object obj, mono::string name)
 	objNode->delAttr(NtText(name));
 }
 
-void CryXmlNodeInterop::RemoveAttributes(mono::object obj)
+void CryXmlNodeInterop::RemoveAttributes(MonoCryXmlNode *cryXmlNode)
 {
-	IXmlNode *objNode = *GET_BOXED_OBJECT_DATA(IXmlNode *, obj);
+	IXmlNode *objNode = cryXmlNode->handle;
 	if (!objNode)
 	{
 		NullReferenceException("This Xml node is not valid.").Throw();
