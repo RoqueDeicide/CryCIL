@@ -506,6 +506,7 @@
     <ClCompile Include="TypeMapChecks\Primitives.cpp" />
     <ClCompile Include="TypeMapChecks\RayHit.cpp" />
     <ClCompile Include="TypeMapChecks\RenderParameters.cpp" />
+    <ClCompile Include="TypeMapChecks\ResRefreshFlags.cpp" />
     <ClCompile Include="TypeMapChecks\RmiTargetEnum.cpp" />
     <ClCompile Include="TypeMapChecks\RwiFlags.cpp" />
     <ClCompile Include="TypeMapChecks\SimClass.cpp" />

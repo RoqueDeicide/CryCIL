@@ -827,6 +827,9 @@
     <ClCompile Include="Interops\Ray.cpp">
       <Filter>Interops\Engine\Physics</Filter>
     </ClCompile>
+    <ClCompile Include="TypeMapChecks\ResRefreshFlags.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">

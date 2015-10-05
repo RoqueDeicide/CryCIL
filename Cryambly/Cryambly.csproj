@@ -99,6 +99,7 @@
     <Compile Include="Engine\Physics\Primitives\NamespaceDoc.cs" />
     <Compile Include="Engine\Rendering\NamespaceDoc.cs" />
     <Compile Include="Engine\Rendering\Shading\Lighting\NamespaceDoc.cs" />
+    <Compile Include="Engine\Rendering\Shading\ResourceRefreshFlags.cs" />
     <Compile Include="Engine\UserInterface\NamespaceDoc.cs" />
     <Compile Include="Mathematics\Geometry\Csg\Base\NamespaceDoc.cs" />
     <Compile Include="Mathematics\Geometry\Csg\NamespaceDoc.cs" />
