@@ -28,7 +28,7 @@ namespace CryCil.Engine.Physics
 	public unsafe struct PhysicalBody
 	{
 		#region Fields
-		private readonly IntPtr handle;
+		private readonly phys_geometry* handle;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -36,7 +36,7 @@ namespace CryCil.Engine.Physics
 		/// </summary>
 		public bool IsValid
 		{
-			get { return this.handle != IntPtr.Zero; }
+			get { return this.handle != null; }
 		}
 		/// <summary>
 		/// Gets or sets the object that represents the shape of this body.
@@ -49,18 +49,14 @@ namespace CryCil.Engine.Physics
 				this.AssertInstance();
 				Contract.EndContractBlock();
 
-				var ptr = (phys_geometry*)this.handle.ToPointer();
-
-				return ptr->pGeom;
+				return this.handle->pGeom;
 			}
 			set
 			{
 				this.AssertInstance();
 				Contract.EndContractBlock();
 
-				var ptr = (phys_geometry*)this.handle.ToPointer();
-
-				ptr->pGeom = value;
+				this.handle->pGeom = value;
 			}
 		}
 		/// <summary>
@@ -74,9 +70,7 @@ namespace CryCil.Engine.Physics
 				this.AssertInstance();
 				Contract.EndContractBlock();
 
-				var ptr = (phys_geometry*)this.handle.ToPointer();
-
-				return ptr->Ibody;
+				return this.handle->Ibody;
 			}
 		}
 		/// <summary>
@@ -90,9 +84,7 @@ namespace CryCil.Engine.Physics
 				this.AssertInstance();
 				Contract.EndContractBlock();
 
-				var ptr = (phys_geometry*)this.handle.ToPointer();
-
-				return ptr->q;
+				return this.handle->q;
 			}
 		}
 		/// <summary>
@@ -106,9 +98,7 @@ namespace CryCil.Engine.Physics
 				this.AssertInstance();
 				Contract.EndContractBlock();
 
-				var ptr = (phys_geometry*)this.handle.ToPointer();
-
-				return ptr->origin;
+				return this.handle->origin;
 			}
 		}
 		/// <summary>
@@ -122,9 +112,7 @@ namespace CryCil.Engine.Physics
 				this.AssertInstance();
 				Contract.EndContractBlock();
 
-				var ptr = (phys_geometry*)this.handle.ToPointer();
-
-				return ptr->V;
+				return this.handle->V;
 			}
 		}
 		/// <summary>
@@ -138,16 +126,14 @@ namespace CryCil.Engine.Physics
 				this.AssertInstance();
 				Contract.EndContractBlock();
 
-				var ptr = (phys_geometry*)this.handle.ToPointer();
-				return ptr->nRefCount;
+				return this.handle->nRefCount;
 			}
 			//set
 			//{
 			//	this.AssertInstance();
 			//	Contract.EndContractBlock();
 
-			//	var ptr = (phys_geometry*)this.handle.ToPointer();
-			//	ptr->nRefCount = value;
+			//	this.handle->nRefCount = value;
 			//}
 		}
 		/// <summary>
@@ -162,34 +148,32 @@ namespace CryCil.Engine.Physics
 				this.AssertInstance();
 				Contract.EndContractBlock();
 
-				var ptr = (phys_geometry*)this.handle.ToPointer();
-				if (ptr->pMatMapping != null && ptr->surface_idx < ptr->nMats)
+				if (this.handle->pMatMapping != null && this.handle->surface_idx < this.handle->nMats)
 				{
-					return new PhysicalSurface(ptr->pMatMapping[ptr->surface_idx]);
+					return new PhysicalSurface(this.handle->pMatMapping[this.handle->surface_idx]);
 				}
-				return new PhysicalSurface(ptr->surface_idx);
+				return new PhysicalSurface(this.handle->surface_idx);
 			}
 			set
 			{
 				this.AssertInstance();
 				Contract.EndContractBlock();
 
-				var ptr = (phys_geometry*)this.handle.ToPointer();
 				var surfaceId = value.Index;
 
-				if (ptr->pMatMapping != null)
+				if (this.handle->pMatMapping != null)
 				{
-					for (int i = 0; i < ptr->nMats; i++)
+					for (int i = 0; i < this.handle->nMats; i++)
 					{
-						if (ptr->pMatMapping[i] == surfaceId)
+						if (this.handle->pMatMapping[i] == surfaceId)
 						{
-							ptr->surface_idx = i;
+							this.handle->surface_idx = i;
 							return;
 						}
 					}
 				}
 
-				ptr->surface_idx = surfaceId;
+				this.handle->surface_idx = surfaceId;
 			}
 		}
 		/// <summary>
@@ -209,6 +193,10 @@ namespace CryCil.Engine.Physics
 		#endregion
 		#region Construction
 		internal PhysicalBody(IntPtr handle)
+		{
+			this.handle = (phys_geometry*)handle.ToPointer();
+		}
+		internal PhysicalBody(phys_geometry* handle)
 		{
 			this.handle = handle;
 		}
@@ -230,7 +218,7 @@ namespace CryCil.Engine.Physics
 		/// </param>
 		public PhysicalBody(GeometryShape shape, PhysicalSurface surface, Material material)
 		{
-			this.handle = IntPtr.Zero;
+			this.handle = null;
 
 			this.handle = RegisterGeometry(shape, surface, material);
 		}
@@ -248,7 +236,7 @@ namespace CryCil.Engine.Physics
 		/// </param>
 		public PhysicalBody(GeometryShape shape, PhysicalSurface surface)
 		{
-			this.handle = IntPtr.Zero;
+			this.handle = null;
 
 			this.handle = RegisterGeometry(shape, surface, default(Material));
 		}
@@ -266,7 +254,7 @@ namespace CryCil.Engine.Physics
 		/// </param>
 		public PhysicalBody(GeometryShape shape, Material material)
 		{
-			this.handle = IntPtr.Zero;
+			this.handle = null;
 
 			this.handle = RegisterGeometry(shape, default(PhysicalSurface), material);
 		}
@@ -280,7 +268,7 @@ namespace CryCil.Engine.Physics
 		/// </param>
 		public PhysicalBody(GeometryShape shape)
 		{
-			this.handle = IntPtr.Zero;
+			this.handle = null;
 
 			this.handle = RegisterGeometry(shape, default(PhysicalSurface), default(Material));
 		}
@@ -328,13 +316,14 @@ namespace CryCil.Engine.Physics
 		}
 
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern IntPtr RegisterGeometry(GeometryShape shape, PhysicalSurface surface, Material material);
+		private static extern phys_geometry* RegisterGeometry(GeometryShape shape, PhysicalSurface surface,
+															  Material material);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern int AddRefGeometry(IntPtr handle);
+		private static extern int AddRefGeometry(phys_geometry* handle);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern int UnregisterGeometry(IntPtr handle);
+		private static extern int UnregisterGeometry(phys_geometry* handle);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern void SetMaterialMappings(IntPtr handle, Material material);
+		private static extern void SetMaterialMappings(phys_geometry* handle, Material material);
 		#endregion
 	}
 }
