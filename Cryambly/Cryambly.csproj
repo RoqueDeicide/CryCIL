@@ -103,6 +103,7 @@
     <Compile Include="Engine\UserInterface\NamespaceDoc.cs" />
     <Compile Include="Mathematics\Geometry\Csg\Base\NamespaceDoc.cs" />
     <Compile Include="Mathematics\Geometry\Csg\NamespaceDoc.cs" />
+    <Compile Include="Mathematics\Geometry\PositionNormal.cs" />
     <Compile Include="Mathematics\Geometry\Splines\NamespaceDoc.cs" />
     <Compile Include="Mathematics\Hashing\NamespaceDoc.cs" />
     <Compile Include="Mathematics\Specials\NamespaceDoc.cs" />
