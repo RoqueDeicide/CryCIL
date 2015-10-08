@@ -339,6 +339,8 @@
     <ClInclude Include="Interops\Shading.h" />
     <ClInclude Include="Interops\Spline.h" />
     <ClInclude Include="Interops\StackString.h" />
+    <ClInclude Include="Interops\StaticObject.h" />
+    <ClInclude Include="Interops\StaticSubObject.h" />
     <ClInclude Include="Interops\SurfaceTypes.h" />
     <ClInclude Include="Interops\Terrain.h" />
     <ClInclude Include="Interops\Texture.h" />
@@ -461,6 +463,8 @@
     <ClCompile Include="Interops\Shading.cpp" />
     <ClCompile Include="Interops\Spline.cpp" />
     <ClCompile Include="Interops\StackString.cpp" />
+    <ClCompile Include="Interops\StaticObject.cpp" />
+    <ClCompile Include="Interops\StaticSubObject.cpp" />
     <ClCompile Include="Interops\SurfaceTypes.cpp" />
     <ClCompile Include="Interops\Terrain.cpp" />
     <ClCompile Include="Interops\Texture.cpp" />
@@ -512,6 +516,7 @@
     <ClCompile Include="TypeMapChecks\SimClass.cpp" />
     <ClCompile Include="TypeMapChecks\SmallEntityStructs.cpp" />
     <ClCompile Include="TypeMapChecks\SpawnParams.cpp" />
+    <ClCompile Include="TypeMapChecks\StaticObjectStuff.cpp" />
     <ClCompile Include="TypeMapChecks\StridedPointer.cpp" />
     <ClCompile Include="TypeMapChecks\SurfaceFlags.cpp" />
     <ClCompile Include="TypeMapChecks\UpdateMeshReason.cpp" />

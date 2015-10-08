@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
+using CryCil.Engine.Models.StaticObjects;
 using CryCil.Engine.Rendering;
 using CryCil.Engine.Rendering.Lighting;
 
@@ -47,10 +48,6 @@ namespace CryCil.Engine.Logic
 		// instance. Return Value: An integer which refers to the slot index which used.
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		internal static extern int SetCharacter(IntPtr entityHandle, IntPtr pCharacter, int slot);
-
-		// Description: Fast method to get the static object at the specified slot. Arguments: slot - Index
-		// of the slot; | with ENTITY_SLOT_ACTUAL to disable compound statobj handling. Return Value:
-		// StatObj pointer or NULL if stat object with this slot does not exist.
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		internal static extern IntPtr GetStatObj(IntPtr entityHandle, int slot);
 		[MethodImpl(MethodImplOptions.InternalCall)]
@@ -63,19 +60,9 @@ namespace CryCil.Engine.Logic
 		internal static extern IntPtr GetGeomCacheRenderNode(IntPtr entityHandle, int slot);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		internal static extern void MoveSlot(IntPtr entityHandle, CryEntity targetIEnt, int slot);
-
-		// Description: Sets static object of a slot, creates slot if necessary Arguments: slot - Index of
-		// a slot, or -1 if a new slot need to be allocated; | with ENTITY_SLOT_ACTUAL to disable compound
-		// statobj handling pStatObj - pointer to the new static object mass - new mass of the slot,
-		// negative value to keep the current Return: An integer which refer to the slot index which used
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		internal static extern int SetStatObj(IntPtr entityHandle, IntPtr pStatObj, int slot, bool bUpdatePhysics,
 											  float mass = -1.0f);
-
-		// Description: Loads static geometry to the specified slot, or to next available slot. If same
-		// object is already loaded in this slot, operation is ignored. If this slot number is occupied by
-		// different kind of object it is overwritten with static object. nLoadFlags - @see ELoadFlags
-		// Return: Slot id where the object was loaded, or -1 if loading failed.
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		internal static extern int LoadGeometry(IntPtr entityHandle, int slot, string sFilename, string sGeomName = null,
 												int nLoadFlags = 0);

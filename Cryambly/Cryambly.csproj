@@ -94,6 +94,12 @@
     <Compile Include="Engine\Memory\NamespaceDoc.cs" />
     <Compile Include="Engine\Models\Characters\NamespaceDoc.cs" />
     <Compile Include="Engine\Models\StaticObjects\NamespaceDoc.cs" />
+    <Compile Include="Engine\Models\StaticObjects\StaticObjectFlags.cs" />
+    <Compile Include="Engine\Models\StaticObjects\StaticObjectLoadingFlags.cs" />
+    <Compile Include="Engine\Models\StaticObjects\StaticObjectStatistics.cs" />
+    <Compile Include="Engine\Models\StaticObjects\StaticSubObject.cs" />
+    <Compile Include="Engine\Models\StaticObjects\StaticSubObjects.cs" />
+    <Compile Include="Engine\Models\StaticObjects\StaticSubObjectType.cs" />
     <Compile Include="Engine\Network\NamespaceDoc.cs" />
     <Compile Include="Engine\Physics\NamespaceDoc.cs" />
     <Compile Include="Engine\Physics\Primitives\NamespaceDoc.cs" />

@@ -358,6 +358,8 @@ void MonoInterface::RegisterDefaultListeners()
 	this->broadcaster->listeners->Add(new WriteLockCondInterop());
 	this->broadcaster->listeners->Add(new PhysicalBodyInterop());
 	this->broadcaster->listeners->Add(new RayInterop());
+	this->broadcaster->listeners->Add(new StaticSubObjectInterop());
+	this->broadcaster->listeners->Add(new StaticObjectInterop());
 }
 #pragma endregion
 #pragma region Thunks Initialization

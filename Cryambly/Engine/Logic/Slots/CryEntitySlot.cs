@@ -265,6 +265,32 @@ namespace CryCil.Engine.Logic
 				EntitySlotOps.SetParticleEmitter(this.entityHandle, this.index, value, true);
 			}
 		}
+		/// <summary>
+		/// Gets or sets static object that is bound to this slot.
+		/// </summary>
+		public StaticObject BoundStaticObject
+		{
+			get
+			{
+				this.AssertSlotValidity();
+				Contract.EndContractBlock();
+
+				return new StaticObject(EntitySlotOps.GetStatObj(this.entityHandle, this.index));
+			}
+			set
+			{
+				this.AssertSlotValidity();
+				if (!value.IsValid)
+				{
+					throw new ArgumentNullException("value", "Cannot bind null emitter to the entity slot.");
+				}
+				Contract.EndContractBlock();
+
+				float mass, density;
+				value.GetPhysicalProperties(out mass, out density);
+				EntitySlotOps.SetStatObj(this.entityHandle, value.Handle, this.index, true, mass);
+			}
+		}
 		#endregion
 		#region Construction
 		internal CryEntitySlot(IntPtr entityHandle, int index)
@@ -398,6 +424,21 @@ namespace CryCil.Engine.Logic
 			Contract.EndContractBlock();
 
 			EntitySlotOps.LoadLight(this.entityHandle, this.index, ref properties);
+		}
+		/// <summary>
+		/// Loads a static object into this slot. Anything within this slot will be overwritten.
+		/// </summary>
+		/// <param name="filename">    Path to the file to load.</param>
+		/// <param name="geometryName">Name to assign to static object's geometry.</param>
+		/// <returns>True, if successful.</returns>
+		/// <exception cref="NullReferenceException">This entity slot object is not valid.</exception>
+		/// <exception cref="ObjectDisposedException">This entity slot doesn't exist.</exception>
+		public bool LoadStaticObject(string filename, string geometryName = null)
+		{
+			this.AssertSlotValidity();
+			Contract.EndContractBlock();
+
+			return EntitySlotOps.LoadGeometry(this.entityHandle, this.index, filename, geometryName) != 0;
 		}
 		/// <summary>
 		/// Physicalizes this slot. Can only be done, if the entity was physicalized before.

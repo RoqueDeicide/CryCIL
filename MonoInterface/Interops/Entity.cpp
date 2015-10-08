@@ -1146,7 +1146,7 @@ int EntitySlotsInterop::SetCharacter(IEntity *handle, ICharacterInstance *pChara
 
 IStatObj *EntitySlotsInterop::GetStatObj(IEntity *handle, int slot)
 {
-	return handle->GetStatObj(slot);
+	return handle->GetStatObj(slot | ENTITY_SLOT_ACTUAL);
 }
 
 IParticleEmitter *EntitySlotsInterop::GetParticleEmitter(IEntity *handle, int slot)

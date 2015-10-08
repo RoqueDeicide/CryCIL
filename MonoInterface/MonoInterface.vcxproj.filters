@@ -449,6 +449,15 @@
     <ClInclude Include="Interops\PhysicalizationParameters.h">
       <Filter>Interops\Engine\Logic</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\WaterManagerStructs.h">
+      <Filter>Interops\Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\StaticSubObject.h">
+      <Filter>Interops\Engine\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\StaticObject.h">
+      <Filter>Interops\Engine\Models</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -785,9 +794,6 @@
     <ClCompile Include="TypeMapChecks\WaveSimParams.cpp">
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
-    <ClCompile Include="Interops\WaterManagerStructs.h">
-      <Filter>Interops\Engine\Physics</Filter>
-    </ClCompile>
     <ClCompile Include="TypeMapChecks\_constrflags.cpp">
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
@@ -829,6 +835,15 @@
     </ClCompile>
     <ClCompile Include="TypeMapChecks\ResRefreshFlags.cpp">
       <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\StaticObjectStuff.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\StaticSubObject.cpp">
+      <Filter>Interops\Engine\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\StaticObject.cpp">
+      <Filter>Interops\Engine\Models</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -936,6 +951,9 @@
     </Filter>
     <Filter Include="Interops\Engine\Rendering\Lighting">
       <UniqueIdentifier>{eb5f820d-a1d4-472d-80a1-e8b2f492c1f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interops\Engine\Models">
+      <UniqueIdentifier>{17e3da0d-a1c1-4018-951c-48194af1667f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

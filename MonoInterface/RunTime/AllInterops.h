@@ -107,3 +107,7 @@
 #include "Interops/PhysicalBody.h"
 
 #include "Interops/Ray.h"
+
+#include "Interops/StaticSubObject.h"
+
+#include "Interops/StaticObject.h"

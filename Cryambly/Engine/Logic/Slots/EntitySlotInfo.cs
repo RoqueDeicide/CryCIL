@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
+using CryCil.Engine.Models.StaticObjects;
 using CryCil.Engine.Rendering;
 using CryCil.Engine.Rendering.Lighting;
 
@@ -73,6 +74,14 @@ namespace CryCil.Engine.Logic
 		public ParticleEmitter BoundEmitter
 		{
 			get { return new ParticleEmitter(this.pParticleEmitter); }
+		}
+		/// <summary>
+		/// Gets the static object that is bound to this slot. Returned
+		/// object is not valid if the static object is not bound to this slot.
+		/// </summary>
+		public StaticObject BoundStaticObject
+		{
+			get { return new StaticObject(this.pStatObj);}
 		}
 		/// <summary>
 		/// Gets valid object that represents the light source that is bound to this slot. Returned object
