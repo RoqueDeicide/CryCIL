@@ -162,6 +162,207 @@ namespace CryCil
 			return val1.CompareTo(val2) > 0 ? val1 : val2;
 		}
 		/// <summary>
+		/// Returns the biggest of all given arguments.
+		/// </summary>
+		/// <typeparam name="T">Type that implements <see cref="IComparable{T}"/> interface.</typeparam>
+		/// <param name="v0">Argument №0.</param>
+		/// <param name="v1">Argument №1.</param>
+		/// <param name="v2">Argument №2.</param>
+		/// <param name="v3">Argument №3.</param>
+		/// <param name="v4">Argument №4.</param>
+		/// <param name="v5">Argument №5.</param>
+		/// <param name="v6">Argument №6.</param>
+		/// <param name="v7">Argument №7.</param>
+		/// <returns></returns>
+		public static T Max<T>(T v0, T v1, T v2, T v3, T v4, T v5, T v6, T v7) where T : IComparable<T>
+		{
+			T max = v0;
+			if (v1.CompareTo(max) > 0)
+			{
+				max = v1;
+			}
+			if (v2.CompareTo(max) > 0)
+			{
+				max = v2;
+			}
+			if (v3.CompareTo(max) > 0)
+			{
+				max = v3;
+			}
+			if (v4.CompareTo(max) > 0)
+			{
+				max = v4;
+			}
+			if (v5.CompareTo(max) > 0)
+			{
+				max = v5;
+			}
+			if (v6.CompareTo(max) > 0)
+			{
+				max = v6;
+			}
+			if (v7.CompareTo(max) > 0)
+			{
+				max = v7;
+			}
+			return max;
+		}
+		/// <summary>
+		/// Returns the biggest of all given arguments.
+		/// </summary>
+		/// <typeparam name="T">Type that implements <see cref="IComparable{T}"/> interface.</typeparam>
+		/// <param name="v0">Argument №0.</param>
+		/// <param name="v1">Argument №1.</param>
+		/// <param name="v2">Argument №2.</param>
+		/// <param name="v3">Argument №3.</param>
+		/// <param name="v4">Argument №4.</param>
+		/// <param name="v5">Argument №5.</param>
+		/// <param name="v6">Argument №6.</param>
+		/// <returns></returns>
+		public static T Max<T>(T v0, T v1, T v2, T v3, T v4, T v5, T v6) where T : IComparable<T>
+		{
+			T max = v0;
+			if (v1.CompareTo(max) > 0)
+			{
+				max = v1;
+			}
+			if (v2.CompareTo(max) > 0)
+			{
+				max = v2;
+			}
+			if (v3.CompareTo(max) > 0)
+			{
+				max = v3;
+			}
+			if (v4.CompareTo(max) > 0)
+			{
+				max = v4;
+			}
+			if (v5.CompareTo(max) > 0)
+			{
+				max = v5;
+			}
+			if (v6.CompareTo(max) > 0)
+			{
+				max = v6;
+			}
+			return max;
+		}
+		/// <summary>
+		/// Returns the biggest of all given arguments.
+		/// </summary>
+		/// <typeparam name="T">Type that implements <see cref="IComparable{T}"/> interface.</typeparam>
+		/// <param name="v0">Argument №0.</param>
+		/// <param name="v1">Argument №1.</param>
+		/// <param name="v2">Argument №2.</param>
+		/// <param name="v3">Argument №3.</param>
+		/// <param name="v4">Argument №4.</param>
+		/// <param name="v5">Argument №5.</param>
+		/// <returns></returns>
+		public static T Max<T>(T v0, T v1, T v2, T v3, T v4, T v5) where T : IComparable<T>
+		{
+			T max = v0;
+			if (v1.CompareTo(max) > 0)
+			{
+				max = v1;
+			}
+			if (v2.CompareTo(max) > 0)
+			{
+				max = v2;
+			}
+			if (v3.CompareTo(max) > 0)
+			{
+				max = v3;
+			}
+			if (v4.CompareTo(max) > 0)
+			{
+				max = v4;
+			}
+			if (v5.CompareTo(max) > 0)
+			{
+				max = v5;
+			}
+			return max;
+		}
+		/// <summary>
+		/// Returns the biggest of all given arguments.
+		/// </summary>
+		/// <typeparam name="T">Type that implements <see cref="IComparable{T}"/> interface.</typeparam>
+		/// <param name="v0">Argument №0.</param>
+		/// <param name="v1">Argument №1.</param>
+		/// <param name="v2">Argument №2.</param>
+		/// <param name="v3">Argument №3.</param>
+		/// <param name="v4">Argument №4.</param>
+		/// <returns></returns>
+		public static T Max<T>(T v0, T v1, T v2, T v3, T v4) where T : IComparable<T>
+		{
+			T max = v0;
+			if (v1.CompareTo(max) > 0)
+			{
+				max = v1;
+			}
+			if (v2.CompareTo(max) > 0)
+			{
+				max = v2;
+			}
+			if (v3.CompareTo(max) > 0)
+			{
+				max = v3;
+			}
+			if (v4.CompareTo(max) > 0)
+			{
+				max = v4;
+			}
+			return max;
+		}
+		/// <summary>
+		/// Returns the biggest of all given arguments.
+		/// </summary>
+		/// <typeparam name="T">Type that implements <see cref="IComparable{T}"/> interface.</typeparam>
+		/// <param name="v0">Argument №0.</param>
+		/// <param name="v1">Argument №1.</param>
+		/// <param name="v2">Argument №2.</param>
+		/// <param name="v3">Argument №3.</param>
+		/// <returns></returns>
+		public static T Max<T>(T v0, T v1, T v2, T v3) where T : IComparable<T>
+		{
+			T max = v0;
+			if (v1.CompareTo(max) > 0)
+			{
+				max = v1;
+			}
+			if (v2.CompareTo(max) > 0)
+			{
+				max = v2;
+			}
+			if (v3.CompareTo(max) > 0)
+			{
+				max = v3;
+			}
+			return max;
+		}
+		/// <summary>
+		/// Returns the biggest of all given arguments.
+		/// </summary>
+		/// <typeparam name="T">Type that implements <see cref="IComparable{T}"/> interface.</typeparam>
+		/// <param name="v0">Argument №0.</param>
+		/// <param name="v1">Argument №1.</param>
+		/// <param name="v2">Argument №2.</param>
+		/// <returns></returns>
+		public static T Max<T>(T v0, T v1, T v2) where T : IComparable<T>
+		{
+			T max = v0;
+			if (v1.CompareTo(max) > 0)
+			{
+				max = v1;
+			}
+			if (v2.CompareTo(max) > 0)
+			{
+				max = v2;
+			}
+			return max;
+		}
+		/// <summary>
 		/// Determines which of two comparable values is the smallest one.
 		/// </summary>
 		/// <typeparam name="T">Type that implements <see cref="IComparable{T}"/> interface.</typeparam>
@@ -171,6 +372,207 @@ namespace CryCil
 		public static T Min<T>(T val1, T val2) where T : IComparable<T>
 		{
 			return val1.CompareTo(val2) < 0 ? val1 : val2;
+		}
+		/// <summary>
+		/// Returns the smallest of all given arguments.
+		/// </summary>
+		/// <typeparam name="T">Type that implements <see cref="IComparable{T}"/> interface.</typeparam>
+		/// <param name="v0">Argument №0.</param>
+		/// <param name="v1">Argument №1.</param>
+		/// <param name="v2">Argument №2.</param>
+		/// <param name="v3">Argument №3.</param>
+		/// <param name="v4">Argument №4.</param>
+		/// <param name="v5">Argument №5.</param>
+		/// <param name="v6">Argument №6.</param>
+		/// <param name="v7">Argument №7.</param>
+		/// <returns></returns>
+		public static T Min<T>(T v0, T v1, T v2, T v3, T v4, T v5, T v6, T v7) where T : IComparable<T>
+		{
+			T min = v0;
+			if (v1.CompareTo(min) < 0)
+			{
+				min = v1;
+			}
+			if (v2.CompareTo(min) < 0)
+			{
+				min = v2;
+			}
+			if (v3.CompareTo(min) < 0)
+			{
+				min = v3;
+			}
+			if (v4.CompareTo(min) < 0)
+			{
+				min = v4;
+			}
+			if (v5.CompareTo(min) < 0)
+			{
+				min = v5;
+			}
+			if (v6.CompareTo(min) < 0)
+			{
+				min = v6;
+			}
+			if (v7.CompareTo(min) < 0)
+			{
+				min = v7;
+			}
+			return min;
+		}
+		/// <summary>
+		/// Returns the smallest of all given arguments.
+		/// </summary>
+		/// <typeparam name="T">Type that implements <see cref="IComparable{T}"/> interface.</typeparam>
+		/// <param name="v0">Argument №0.</param>
+		/// <param name="v1">Argument №1.</param>
+		/// <param name="v2">Argument №2.</param>
+		/// <param name="v3">Argument №3.</param>
+		/// <param name="v4">Argument №4.</param>
+		/// <param name="v5">Argument №5.</param>
+		/// <param name="v6">Argument №6.</param>
+		/// <returns></returns>
+		public static T Min<T>(T v0, T v1, T v2, T v3, T v4, T v5, T v6) where T : IComparable<T>
+		{
+			T min = v0;
+			if (v1.CompareTo(min) < 0)
+			{
+				min = v1;
+			}
+			if (v2.CompareTo(min) < 0)
+			{
+				min = v2;
+			}
+			if (v3.CompareTo(min) < 0)
+			{
+				min = v3;
+			}
+			if (v4.CompareTo(min) < 0)
+			{
+				min = v4;
+			}
+			if (v5.CompareTo(min) < 0)
+			{
+				min = v5;
+			}
+			if (v6.CompareTo(min) < 0)
+			{
+				min = v6;
+			}
+			return min;
+		}
+		/// <summary>
+		/// Returns the smallest of all given arguments.
+		/// </summary>
+		/// <typeparam name="T">Type that implements <see cref="IComparable{T}"/> interface.</typeparam>
+		/// <param name="v0">Argument №0.</param>
+		/// <param name="v1">Argument №1.</param>
+		/// <param name="v2">Argument №2.</param>
+		/// <param name="v3">Argument №3.</param>
+		/// <param name="v4">Argument №4.</param>
+		/// <param name="v5">Argument №5.</param>
+		/// <returns></returns>
+		public static T Min<T>(T v0, T v1, T v2, T v3, T v4, T v5) where T : IComparable<T>
+		{
+			T min = v0;
+			if (v1.CompareTo(min) < 0)
+			{
+				min = v1;
+			}
+			if (v2.CompareTo(min) < 0)
+			{
+				min = v2;
+			}
+			if (v3.CompareTo(min) < 0)
+			{
+				min = v3;
+			}
+			if (v4.CompareTo(min) < 0)
+			{
+				min = v4;
+			}
+			if (v5.CompareTo(min) < 0)
+			{
+				min = v5;
+			}
+			return min;
+		}
+		/// <summary>
+		/// Returns the smallest of all given arguments.
+		/// </summary>
+		/// <typeparam name="T">Type that implements <see cref="IComparable{T}"/> interface.</typeparam>
+		/// <param name="v0">Argument №0.</param>
+		/// <param name="v1">Argument №1.</param>
+		/// <param name="v2">Argument №2.</param>
+		/// <param name="v3">Argument №3.</param>
+		/// <param name="v4">Argument №4.</param>
+		/// <returns></returns>
+		public static T Min<T>(T v0, T v1, T v2, T v3, T v4) where T : IComparable<T>
+		{
+			T min = v0;
+			if (v1.CompareTo(min) < 0)
+			{
+				min = v1;
+			}
+			if (v2.CompareTo(min) < 0)
+			{
+				min = v2;
+			}
+			if (v3.CompareTo(min) < 0)
+			{
+				min = v3;
+			}
+			if (v4.CompareTo(min) < 0)
+			{
+				min = v4;
+			}
+			return min;
+		}
+		/// <summary>
+		/// Returns the smallest of all given arguments.
+		/// </summary>
+		/// <typeparam name="T">Type that implements <see cref="IComparable{T}"/> interface.</typeparam>
+		/// <param name="v0">Argument №0.</param>
+		/// <param name="v1">Argument №1.</param>
+		/// <param name="v2">Argument №2.</param>
+		/// <param name="v3">Argument №3.</param>
+		/// <returns></returns>
+		public static T Min<T>(T v0, T v1, T v2, T v3) where T : IComparable<T>
+		{
+			T min = v0;
+			if (v1.CompareTo(min) < 0)
+			{
+				min = v1;
+			}
+			if (v2.CompareTo(min) < 0)
+			{
+				min = v2;
+			}
+			if (v3.CompareTo(min) < 0)
+			{
+				min = v3;
+			}
+			return min;
+		}
+		/// <summary>
+		/// Returns the smallest of all given arguments.
+		/// </summary>
+		/// <typeparam name="T">Type that implements <see cref="IComparable{T}"/> interface.</typeparam>
+		/// <param name="v0">Argument №0.</param>
+		/// <param name="v1">Argument №1.</param>
+		/// <param name="v2">Argument №2.</param>
+		/// <returns></returns>
+		public static T Min<T>(T v0, T v1, T v2) where T : IComparable<T>
+		{
+			T min = v0;
+			if (v1.CompareTo(min) < 0)
+			{
+				min = v1;
+			}
+			if (v2.CompareTo(min) < 0)
+			{
+				min = v2;
+			}
+			return min;
 		}
 		/// <summary>
 		/// Determines whether given value is a power of 2.
