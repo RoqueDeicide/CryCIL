@@ -113,6 +113,8 @@
     <Compile Include="Mathematics\Geometry\Splines\NamespaceDoc.cs" />
     <Compile Include="Mathematics\Hashing\NamespaceDoc.cs" />
     <Compile Include="Mathematics\Specials\NamespaceDoc.cs" />
+    <Compile Include="Mathematics\Vectors\Vector2Half.cs" />
+    <Compile Include="Mathematics\Vectors\Vector4Int16.cs" />
     <Compile Include="Properties\NamespaceDoc.cs" />
     <Compile Include="Engine\Data\CrySync.cs" />
     <Compile Include="Engine\Data\ISynchronizable.cs" />
