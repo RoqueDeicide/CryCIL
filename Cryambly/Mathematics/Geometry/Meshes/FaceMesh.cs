@@ -66,15 +66,8 @@ namespace CryCil.Geometry
 		{
 			if (NativeCsg)
 			{
-				this.Faces =
-					FromNativeFaceList
-						(
-						 CombineInternal
-							 (
-							  ToNativeFaceList(this.Faces),
-							  ToNativeFaceList(anotherMesh.Faces)
-							 )
-						);
+				this.Faces = FromNativeFaceList(CombineInternal(ToNativeFaceList(this.Faces),
+																ToNativeFaceList(anotherMesh.Faces)));
 			}
 			else
 			{
@@ -93,15 +86,8 @@ namespace CryCil.Geometry
 		{
 			if (NativeCsg)
 			{
-				this.Faces =
-					FromNativeFaceList
-						(
-						 IntersectInternal
-							 (
-							  ToNativeFaceList(this.Faces),
-							  ToNativeFaceList(anotherMesh.Faces)
-							 )
-						);
+				this.Faces = FromNativeFaceList(IntersectInternal(ToNativeFaceList(this.Faces),
+																  ToNativeFaceList(anotherMesh.Faces)));
 			}
 			else
 			{
@@ -129,15 +115,8 @@ namespace CryCil.Geometry
 		{
 			if (NativeCsg)
 			{
-				this.Faces =
-					FromNativeFaceList
-						(
-						 SubtractInternal
-							 (
-							  ToNativeFaceList(this.Faces),
-							  ToNativeFaceList(anotherMesh.Faces)
-							 )
-						);
+				this.Faces = FromNativeFaceList(SubtractInternal(ToNativeFaceList(this.Faces),
+																 ToNativeFaceList(anotherMesh.Faces)));
 			}
 			else
 			{
