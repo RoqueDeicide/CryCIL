@@ -10,6 +10,7 @@ void StaticObjectInterop::OnRunTimeInitialized()
 	REGISTER_METHOD(SetFlags);
 	REGISTER_METHOD(GetFlags);
 	REGISTER_METHOD(GetIdMatBreakable);
+	REGISTER_METHOD(GetIndexedMeshInternal);
 	REGISTER_METHOD(GetPhysGeom);
 	REGISTER_METHOD(UpdateVerticesInternal);
 	REGISTER_METHOD(SetPhysGeom);
@@ -87,6 +88,11 @@ int StaticObjectInterop::GetFlags(IStatObj *handle)
 int StaticObjectInterop::GetIdMatBreakable(IStatObj *handle)
 {
 	return handle->GetIDMatBreakable();
+}
+
+IIndexedMesh *StaticObjectInterop::GetIndexedMeshInternal(IStatObj *handle, bool bCreateIfNone)
+{
+	return handle->GetIndexedMesh(bCreateIfNone);
 }
 
 phys_geometry *StaticObjectInterop::GetPhysGeom(IStatObj *handle)

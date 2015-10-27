@@ -360,6 +360,8 @@ void MonoInterface::RegisterDefaultListeners()
 	this->broadcaster->listeners->Add(new RayInterop());
 	this->broadcaster->listeners->Add(new StaticSubObjectInterop());
 	this->broadcaster->listeners->Add(new StaticObjectInterop());
+	this->broadcaster->listeners->Add(new CMeshInterop());
+	this->broadcaster->listeners->Add(new IndexedMeshInterop());
 }
 #pragma endregion
 #pragma region Thunks Initialization

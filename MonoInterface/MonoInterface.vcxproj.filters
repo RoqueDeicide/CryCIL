@@ -458,6 +458,12 @@
     <ClInclude Include="Interops\StaticObject.h">
       <Filter>Interops\Engine\Models</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\CMesh.h">
+      <Filter>Interops\Engine\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\IndexedMesh.h">
+      <Filter>Interops\Engine\Models</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -845,8 +851,20 @@
     <ClCompile Include="Interops\StaticObject.cpp">
       <Filter>Interops\Engine\Models</Filter>
     </ClCompile>
+    <ClCompile Include="TypeMapChecks\MeshTypes.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\DynamicArray.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
     <ClCompile Include="TypeMapChecks\PhysicsGeomType.cpp">
       <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\CMesh.cpp">
+      <Filter>Interops\Engine\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\IndexedMesh.cpp">
+      <Filter>Interops\Engine\Models</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

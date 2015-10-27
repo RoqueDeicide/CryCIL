@@ -280,6 +280,7 @@
     <ClInclude Include="Interops\ArchiveStream.h" />
     <ClInclude Include="Interops\AuxiliaryGeometry.h" />
     <ClInclude Include="Interops\BatchOps.h" />
+    <ClInclude Include="Interops\CMesh.h" />
     <ClInclude Include="Interops\Console.h" />
     <ClInclude Include="Interops\ConsoleVariable.h" />
     <ClInclude Include="Interops\CryArchive.h" />
@@ -299,6 +300,7 @@
     <ClInclude Include="Interops\Game.h" />
     <ClInclude Include="Interops\GeneralExtensions.h" />
     <ClInclude Include="Interops\IGeometry.h" />
+    <ClInclude Include="Interops\IndexedMesh.h" />
     <ClInclude Include="Interops\InputInterop.h" />
     <ClInclude Include="Interops\Lattice.h" />
     <ClInclude Include="Interops\Level.h" />
@@ -416,6 +418,7 @@
     <ClCompile Include="Interops\ArchiveStream.cpp" />
     <ClCompile Include="Interops\AuxiliaryGeometry.cpp" />
     <ClCompile Include="Interops\BatchOps.cpp" />
+    <ClCompile Include="Interops\CMesh.cpp" />
     <ClCompile Include="Interops\ConsoleVariable.cpp" />
     <ClCompile Include="Interops\CryArchive.cpp" />
     <ClCompile Include="Interops\CryFont.cpp" />
@@ -432,6 +435,7 @@
     <ClCompile Include="Interops\Game.cpp" />
     <ClCompile Include="Interops\GeneralExtensions.cpp" />
     <ClCompile Include="Interops\IGeometry.cpp" />
+    <ClCompile Include="Interops\IndexedMesh.cpp" />
     <ClCompile Include="Interops\InputInterop.cpp" />
     <ClCompile Include="Interops\Lattice.cpp" />
     <ClCompile Include="Interops\Level.cpp" />
@@ -485,6 +489,7 @@
     <ClCompile Include="TypeMapChecks\ActionActivationMode.cpp" />
     <ClCompile Include="TypeMapChecks\ActionAnalogCompareOperation.cpp" />
     <ClCompile Include="TypeMapChecks\ActionInputBlockType.cpp" />
+    <ClCompile Include="TypeMapChecks\DynamicArray.cpp" />
     <ClCompile Include="TypeMapChecks\DynamicLightFlags.cpp" />
     <ClCompile Include="TypeMapChecks\EKeyId.cpp" />
     <ClCompile Include="TypeMapChecks\EntityAspects.cpp" />
@@ -500,6 +505,7 @@
     <ClCompile Include="TypeMapChecks\GeometryFlags.cpp" />
     <ClCompile Include="TypeMapChecks\GeometryTypes.cpp" />
     <ClCompile Include="TypeMapChecks\JointFlagscpp.cpp" />
+    <ClCompile Include="TypeMapChecks\MeshTypes.cpp" />
     <ClCompile Include="TypeMapChecks\MeshUpdateTypes.cpp" />
     <ClCompile Include="TypeMapChecks\PhysicalEntityFlags.cpp" />
     <ClCompile Include="TypeMapChecks\PhysicalEntityType.cpp" />

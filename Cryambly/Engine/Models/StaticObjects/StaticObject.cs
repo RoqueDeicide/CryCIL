@@ -736,6 +736,24 @@ namespace CryCil.Engine.Models.StaticObjects
 
 			return GetLastBooleanOp(this.handle, out scale);
 		}
+		/// <summary>
+		/// Gets the object that contains the mesh data before its converted into render mesh.
+		/// </summary>
+		/// <param name="createIfNone">
+		/// Indicates whether a new mesh needs to be created if it doesn't exist.
+		/// </param>
+		/// <returns>
+		/// An object that contains the triangular mesh. If one didn't exist, then either invalid object
+		/// will be returned or a new one depending on <paramref name="createIfNone"/>.
+		/// </returns>
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
+		public CryIndexedMesh GetIndexedMesh(bool createIfNone = false)
+		{
+			this.AssertInstance();
+			Contract.EndContractBlock();
+
+			return GetIndexedMeshInternal(this.handle, createIfNone);
+		}
 		#endregion
 		#region Utilities
 		private void AssertInstance()
@@ -756,24 +774,8 @@ namespace CryCil.Engine.Models.StaticObjects
 		private static extern StaticObjectFlags GetFlags(IntPtr handle);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern int GetIdMatBreakable(IntPtr handle);
-
-		//// Description:
-		////     Provide access to the faces, vertices, texture coordinates, normals and
-		////     colors of the object used later for CRenderMesh construction.
-		//// Return Value:
-		////
-		//// Summary:
-		////     Get the object source geometry
-		//[MethodImpl(MethodImplOptions.InternalCall)]
-		//private static extern struct IIndexedMesh * GetIndexedMesh(bool bCreateIfNone=false);
-
-		//// Description:
-		////     Create an empty indexed mesh ready to be filled with data
-		////		If an indexed mesh already exists it is returned
-		//// Return Value:
-		////     An empty indexed mesh or the existing indexed mesh
-		//[MethodImpl(MethodImplOptions.InternalCall)]
-		//private static extern struct IIndexedMesh * CreateIndexedMesh();
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern CryIndexedMesh GetIndexedMeshInternal(IntPtr handle, bool bCreateIfNone);
 
 		////! Access to rendering geometry for indoor engine ( optimized vertex arrays, lists of shader pointers )
 		//[MethodImpl(MethodImplOptions.InternalCall)]

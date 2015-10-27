@@ -3,6 +3,10 @@
 #include "IMonoAliases.h"
 #include "IMonoSystemListener.h"
 
+// A Regex pattern for detecting method signatures for internal calls: "static \S+\s*\**\&*([a-zA-Z]+)\(.+\);"
+
+// Text for replacing method signatures for internal calls: "REGISTER_METHOD($1);"
+
 //! Base class for a template class that defines interface for Mono interops.
 //!
 //! This class is here to reduce amount of code that has to be duplicated when

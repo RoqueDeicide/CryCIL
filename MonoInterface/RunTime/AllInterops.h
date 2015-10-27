@@ -111,3 +111,7 @@
 #include "Interops/StaticSubObject.h"
 
 #include "Interops/StaticObject.h"
+
+#include "Interops/CMesh.h"
+
+#include "Interops/IndexedMesh.h"

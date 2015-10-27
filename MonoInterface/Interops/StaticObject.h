@@ -16,6 +16,7 @@ struct StaticObjectInterop : IMonoInterop<true, true>
 	static void SetFlags(IStatObj *handle, int nFlags);
 	static int GetFlags(IStatObj *handle);
 	static int GetIdMatBreakable(IStatObj *handle);
+	static IIndexedMesh *GetIndexedMeshInternal(IStatObj *handle, bool bCreateIfNone);
 	static phys_geometry *GetPhysGeom(IStatObj *handle);
 	static IStatObj *UpdateVerticesInternal(IStatObj *handle, Vec3* vertices, Vec3* normals, int firstVertex,
 											int vertexCount, float scale);
