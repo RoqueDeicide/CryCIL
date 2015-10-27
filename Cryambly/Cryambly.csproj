@@ -101,6 +101,7 @@
     <Compile Include="Engine\Models\StaticObjects\StaticSubObjects.cs" />
     <Compile Include="Engine\Models\StaticObjects\StaticSubObjectType.cs" />
     <Compile Include="Engine\Network\NamespaceDoc.cs" />
+    <Compile Include="Engine\Physics\Geometry\PhysicalGeometryType.cs" />
     <Compile Include="Engine\Physics\NamespaceDoc.cs" />
     <Compile Include="Engine\Physics\Primitives\NamespaceDoc.cs" />
     <Compile Include="Engine\Rendering\NamespaceDoc.cs" />

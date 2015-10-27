@@ -505,6 +505,7 @@
     <ClCompile Include="TypeMapChecks\PhysicalEntityType.cpp" />
     <ClCompile Include="TypeMapChecks\PhysicalGeometry.cpp" />
     <ClCompile Include="TypeMapChecks\PhysicsForeignIds.cpp" />
+    <ClCompile Include="TypeMapChecks\PhysicsGeomType.cpp" />
     <ClCompile Include="TypeMapChecks\PhysicsMeshFlags.cpp" />
     <ClCompile Include="TypeMapChecks\PhysicsTypeEnumerations.cpp" />
     <ClCompile Include="TypeMapChecks\Primitives.cpp" />

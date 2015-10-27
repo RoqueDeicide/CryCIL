@@ -845,6 +845,9 @@
     <ClCompile Include="Interops\StaticObject.cpp">
       <Filter>Interops\Engine\Models</Filter>
     </ClCompile>
+    <ClCompile Include="TypeMapChecks\PhysicsGeomType.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">
