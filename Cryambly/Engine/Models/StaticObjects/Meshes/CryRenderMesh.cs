@@ -9,6 +9,10 @@ namespace CryCil.Engine.Models.StaticObjects
 	/// <summary>
 	/// Represents an optimized triangular mesh that is stored in video memory for rendering.
 	/// </summary>
+	/// <example>
+	/// Example of updating the colors in VRAM:
+	/// <code source="MeshRecoloring.cs" />
+	/// </example>
 	public unsafe struct CryRenderMesh
 	{
 		#region Fields
