@@ -3,7 +3,7 @@
 namespace CryCil.Engine.Models.StaticObjects
 {
 	/// <summary>
-	/// A set of flags that specifies how to convert <see cref="GeneralCryMesh"/> to
+	/// A set of flags that specifies how to convert <see cref="CryMesh"/> to
 	/// <see cref="CryRenderMesh"/>.
 	/// </summary>
 	[Flags]

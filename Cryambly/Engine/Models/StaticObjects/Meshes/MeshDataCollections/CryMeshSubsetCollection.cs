@@ -25,14 +25,14 @@ namespace CryCil.Engine.Models.StaticObjects
 				this.AssertInstance();
 				Contract.EndContractBlock();
 
-				return GeneralCryMesh.GetSubsetCount(this.meshHandle);
+				return CryMesh.GetSubsetCount(this.meshHandle);
 			}
 			set
 			{
 				this.AssertInstance();
 				Contract.EndContractBlock();
 
-				GeneralCryMesh.SetSubsetCount(this.meshHandle, value);
+				CryMesh.SetSubsetCount(this.meshHandle, value);
 			}
 		}
 		/// <summary>

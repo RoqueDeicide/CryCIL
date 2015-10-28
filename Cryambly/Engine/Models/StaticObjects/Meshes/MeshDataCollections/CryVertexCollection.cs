@@ -11,7 +11,7 @@ namespace CryCil.Engine.Models.StaticObjects
 	public unsafe struct CryVertexCollection
 	{
 		#region Fields
-		[FieldOffset(0)] private readonly GeneralCryMesh mesh;
+		[FieldOffset(0)] private readonly CryMesh mesh;
 		[FieldOffset(0)] private readonly CMeshInternals* meshHandle;
 		#endregion
 		#region Properties
@@ -43,23 +43,23 @@ namespace CryCil.Engine.Models.StaticObjects
 					return;
 				}
 
-				GeneralCryMesh.ReallocateStream(this.meshHandle, GeneralMeshStreamId.Positions, value);
-				GeneralCryMesh.ReallocateStream(this.meshHandle, GeneralMeshStreamId.PositionsF16, 0);
-				GeneralCryMesh.ReallocateStream(this.meshHandle, GeneralMeshStreamId.Normals, value);
+				CryMesh.ReallocateStream(this.meshHandle, GeneralMeshStreamId.Positions, value);
+				CryMesh.ReallocateStream(this.meshHandle, GeneralMeshStreamId.PositionsF16, 0);
+				CryMesh.ReallocateStream(this.meshHandle, GeneralMeshStreamId.Normals, value);
 
 				if (this.meshHandle->pColor0 != null)
 				{
-					GeneralCryMesh.ReallocateStream(this.meshHandle, GeneralMeshStreamId.Colors0, value);
+					CryMesh.ReallocateStream(this.meshHandle, GeneralMeshStreamId.Colors0, value);
 				}
 
 				if (this.meshHandle->pColor1 != null)
 				{
-					GeneralCryMesh.ReallocateStream(this.meshHandle, GeneralMeshStreamId.Colors1, value);
+					CryMesh.ReallocateStream(this.meshHandle, GeneralMeshStreamId.Colors1, value);
 				}
 
 				if (this.meshHandle->pVertMats != null)
 				{
-					GeneralCryMesh.ReallocateStream(this.meshHandle, GeneralMeshStreamId.VertexMaterials, value);
+					CryMesh.ReallocateStream(this.meshHandle, GeneralMeshStreamId.VertexMaterials, value);
 				}
 			}
 		}
@@ -76,7 +76,7 @@ namespace CryCil.Engine.Models.StaticObjects
 				Contract.EndContractBlock();
 
 				int count;
-				Vector3* ptr = (Vector3*)GeneralCryMesh.GetStreamPtr(this.meshHandle, GeneralMeshStreamId.Positions,
+				Vector3* ptr = (Vector3*)CryMesh.GetStreamPtr(this.meshHandle, GeneralMeshStreamId.Positions,
 																	 out count);
 				return new VertexPositionCollection(ptr, count);
 			}
@@ -94,7 +94,7 @@ namespace CryCil.Engine.Models.StaticObjects
 				Contract.EndContractBlock();
 
 				int count;
-				CryMeshNormal* ptr = (CryMeshNormal*)GeneralCryMesh.GetStreamPtr(this.meshHandle,
+				CryMeshNormal* ptr = (CryMeshNormal*)CryMesh.GetStreamPtr(this.meshHandle,
 																				 GeneralMeshStreamId.Normals, out count);
 				return new VertexNormalCollection(ptr, count);
 			}
@@ -112,7 +112,7 @@ namespace CryCil.Engine.Models.StaticObjects
 				Contract.EndContractBlock();
 
 				int count;
-				int* ptr = (int*)GeneralCryMesh.GetStreamPtr(this.meshHandle, GeneralMeshStreamId.VertexMaterials,
+				int* ptr = (int*)CryMesh.GetStreamPtr(this.meshHandle, GeneralMeshStreamId.VertexMaterials,
 															 out count);
 				return new VertexMaterialCollection(ptr, count);
 			}
@@ -130,7 +130,7 @@ namespace CryCil.Engine.Models.StaticObjects
 				Contract.EndContractBlock();
 
 				int count;
-				CryMeshColor* ptr = (CryMeshColor*)GeneralCryMesh.GetStreamPtr(this.meshHandle,
+				CryMeshColor* ptr = (CryMeshColor*)CryMesh.GetStreamPtr(this.meshHandle,
 																			   GeneralMeshStreamId.Colors0, out count);
 				return new VertexColorCollection(ptr, count);
 			}
@@ -148,7 +148,7 @@ namespace CryCil.Engine.Models.StaticObjects
 				Contract.EndContractBlock();
 
 				int count;
-				CryMeshColor* ptr = (CryMeshColor*)GeneralCryMesh.GetStreamPtr(this.meshHandle,
+				CryMeshColor* ptr = (CryMeshColor*)CryMesh.GetStreamPtr(this.meshHandle,
 																			   GeneralMeshStreamId.Colors1, out count);
 				return new VertexColorCollection(ptr, count);
 			}
@@ -169,7 +169,7 @@ namespace CryCil.Engine.Models.StaticObjects
 			int vertexCount = this.Count;
 			if (vertexCount != 0)
 			{
-				GeneralCryMesh.ReallocateStream(this.meshHandle, GeneralMeshStreamId.Colors0, vertexCount);
+				CryMesh.ReallocateStream(this.meshHandle, GeneralMeshStreamId.Colors0, vertexCount);
 			}
 		}
 		/// <summary>
@@ -186,7 +186,7 @@ namespace CryCil.Engine.Models.StaticObjects
 			int vertexCount = this.Count;
 			if (vertexCount != 0)
 			{
-				GeneralCryMesh.ReallocateStream(this.meshHandle, GeneralMeshStreamId.Colors1, vertexCount);
+				CryMesh.ReallocateStream(this.meshHandle, GeneralMeshStreamId.Colors1, vertexCount);
 			}
 		}
 		/// <summary>
@@ -203,12 +203,12 @@ namespace CryCil.Engine.Models.StaticObjects
 			int vertexCount = this.Count;
 			if (vertexCount != 0)
 			{
-				GeneralCryMesh.ReallocateStream(this.meshHandle, GeneralMeshStreamId.VertexMaterials, vertexCount);
+				CryMesh.ReallocateStream(this.meshHandle, GeneralMeshStreamId.VertexMaterials, vertexCount);
 			}
 		}
 		#endregion
 		#region Construction
-		internal CryVertexCollection(GeneralCryMesh mesh, CMeshInternals* meshHandle)
+		internal CryVertexCollection(CryMesh mesh, CMeshInternals* meshHandle)
 		{
 			this.mesh = mesh;
 			this.meshHandle = meshHandle;

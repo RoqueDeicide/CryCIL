@@ -92,7 +92,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// Gets or sets the editable object that represents this mesh.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
-		public GeneralCryMesh Mesh
+		public CryMesh Mesh
 		{
 			get
 			{
@@ -295,9 +295,9 @@ namespace CryCil.Engine.Models.StaticObjects
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void GetMeshDescription(IntPtr handle, out IndexedMeshData meshDesc);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern GeneralCryMesh GetMesh(IntPtr handle);
+		private static extern CryMesh GetMesh(IntPtr handle);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern void SetMesh(IntPtr handle, GeneralCryMesh mesh);
+		private static extern void SetMesh(IntPtr handle, CryMesh mesh);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void FreeStreams(IntPtr handle);
 		[MethodImpl(MethodImplOptions.InternalCall)]

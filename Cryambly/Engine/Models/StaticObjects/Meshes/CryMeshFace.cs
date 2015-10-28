@@ -3,7 +3,7 @@
 namespace CryCil.Engine.Models.StaticObjects
 {
 	/// <summary>
-	/// Encapsulates information about a triangle face in <see cref="GeneralCryMesh"/> topology.
+	/// Encapsulates information about a triangle face in <see cref="CryMesh"/> topology.
 	/// </summary>
 	[StructLayout(LayoutKind.Sequential)]
 	public struct CryMeshFace

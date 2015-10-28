@@ -335,7 +335,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// </param>
 		/// <returns>Size of resultant data if successful, <c>~0U</c> if not.</returns>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
-		public uint SetMesh(GeneralCryMesh mesh, int secondayColorsSetOffset, MeshToRenderMeshFlags flags,
+		public uint SetMesh(CryMesh mesh, int secondayColorsSetOffset, MeshToRenderMeshFlags flags,
 							ref Vector3 positionOffset, bool requiresLock)
 		{
 			this.AssertInstance();
@@ -365,7 +365,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// <param name="pBoneMapping">     Primary bone mapping data array.</param>
 		/// <param name="pExtraBoneMapping">Secondary bone mapping data array.</param>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
-		public void SetSkinningDataCharacter(GeneralCryMesh mesh, CryMeshBoneMappingUint16* pBoneMapping,
+		public void SetSkinningDataCharacter(CryMesh mesh, CryMeshBoneMappingUint16* pBoneMapping,
 											 CryMeshBoneMappingUint16* pExtraBoneMapping)
 		{
 			this.AssertInstance();
@@ -786,7 +786,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern float GetGeometricMeanFaceArea(IntPtr handle);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern uint SetMeshInternal(IntPtr handle, GeneralCryMesh mesh, int nSecColorsSetOffset,
+		private static extern uint SetMeshInternal(IntPtr handle, CryMesh mesh, int nSecColorsSetOffset,
 												   MeshToRenderMeshFlags flags, ref Vector3 pPosOffset, bool requiresLock);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void CopyToInternal(IntPtr handle, CryRenderMesh pDst, int nAppendVtx, bool bDynamic,
@@ -794,7 +794,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void SetSkinningDataVegetation(IntPtr handle, CryMeshBoneMappingByte* pBoneMapping);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern void SetSkinningDataCharacterInternal(IntPtr handle, GeneralCryMesh mesh,
+		private static extern void SetSkinningDataCharacterInternal(IntPtr handle, CryMesh mesh,
 																	CryMeshBoneMappingUint16* pBoneMapping,
 																	CryMeshBoneMappingUint16* pExtraBoneMapping);
 		[MethodImpl(MethodImplOptions.InternalCall)]

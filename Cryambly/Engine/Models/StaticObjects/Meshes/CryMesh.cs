@@ -7,7 +7,7 @@ namespace CryCil.Engine.Models.StaticObjects
 	/// <summary>
 	/// This type is a mirror of CryEngine's general purpose mesh class.
 	/// </summary>
-	public unsafe struct GeneralCryMesh : IEquatable<GeneralCryMesh>
+	public unsafe struct CryMesh : IEquatable<CryMesh>
 	{
 		#region Fields
 		private readonly CMeshInternals* handle;
@@ -122,7 +122,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		//}
 		#endregion
 		#region Construction
-		internal GeneralCryMesh(IntPtr handle)
+		internal CryMesh(IntPtr handle)
 		{
 			this.handle = (CMeshInternals*)handle.ToPointer();
 		}
@@ -133,7 +133,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// </summary>
 		/// <param name="source">Mesh object to copy the data from.</param>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
-		public void Copy(GeneralCryMesh source)
+		public void Copy(CryMesh source)
 		{
 			this.AssertInstance();
 			Contract.EndContractBlock();
@@ -151,7 +151,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// <param name="other">Another mesh object.</param>
 		/// <returns>True, another object is valid and contains the same data.</returns>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
-		public bool Equals(GeneralCryMesh other)
+		public bool Equals(CryMesh other)
 		{
 			this.AssertInstance();
 			Contract.EndContractBlock();
@@ -171,7 +171,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// An error has occurred when appending data. This exception can only be thrown if
 		/// <paramref name="throwError"/> is set to <c>true</c>.
 		/// </exception>
-		public void Append(GeneralCryMesh source, bool throwError = false)
+		public void Append(CryMesh source, bool throwError = false)
 		{
 			this.AssertInstance();
 			Contract.EndContractBlock();
@@ -205,7 +205,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// An error has occurred when appending data. This exception can only be thrown if
 		/// <paramref name="throwError"/> is set to <c>true</c>.
 		/// </exception>
-		public void Append(GeneralCryMesh source, int firstVertex, int vertexCount, int firstFace, int faceCount,
+		public void Append(CryMesh source, int firstVertex, int vertexCount, int firstFace, int faceCount,
 						   bool throwError = false)
 		{
 			this.AssertInstance();

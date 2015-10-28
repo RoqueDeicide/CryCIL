@@ -105,7 +105,7 @@
     <Compile Include="Engine\Models\StaticObjects\Meshes\CryMeshTangents.cs" />
     <Compile Include="Engine\Models\StaticObjects\Meshes\CryMeshTexturePosition.cs" />
     <Compile Include="Engine\Models\StaticObjects\Meshes\CryRenderMesh.cs" />
-    <Compile Include="Engine\Models\StaticObjects\Meshes\GeneralCryMesh.cs" />
+    <Compile Include="Engine\Models\StaticObjects\Meshes\CryMesh.cs" />
     <Compile Include="Engine\Models\StaticObjects\Meshes\GeneralMeshStreamId.cs" />
     <Compile Include="Engine\Models\StaticObjects\Meshes\MeshDataCollections\CryMeshFaceCollection.cs" />
     <Compile Include="Engine\Models\StaticObjects\Meshes\MeshDataCollections\CryMeshSubsetCollection.cs" />

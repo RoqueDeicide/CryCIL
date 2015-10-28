@@ -15,7 +15,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		#region Fields
 		private const GeneralMeshStreamId MainStreamId = GeneralMeshStreamId.TextureCoordinates;
 
-		[FieldOffset(0)] private readonly GeneralCryMesh mesh;
+		[FieldOffset(0)] private readonly CryMesh mesh;
 		[FieldOffset(0)] private readonly CMeshInternals* meshHandle;
 		[FieldOffset(VariousConstants.PointerSize)] private CryMeshTexturePosition* texPosPtr;
 		#endregion
@@ -25,7 +25,7 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				int c;
-				return (CryMeshTexturePosition*)GeneralCryMesh.GetStreamPtr(this.meshHandle, MainStreamId, out c);
+				return (CryMeshTexturePosition*)CryMesh.GetStreamPtr(this.meshHandle, MainStreamId, out c);
 			}
 		}
 		/// <summary>
@@ -47,7 +47,7 @@ namespace CryCil.Engine.Models.StaticObjects
 				this.AssertInstance();
 				Contract.EndContractBlock();
 
-				GeneralCryMesh.ReallocateStream(this.meshHandle, MainStreamId, value);
+				CryMesh.ReallocateStream(this.meshHandle, MainStreamId, value);
 				this.texPosPtr = this.DataPointer;
 			}
 		}
@@ -95,7 +95,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		}
 		#endregion
 		#region Construction
-		internal CryTexturePositionCollection(GeneralCryMesh mesh, CMeshInternals* meshHandle)
+		internal CryTexturePositionCollection(CryMesh mesh, CMeshInternals* meshHandle)
 			: this()
 		{
 			this.mesh = mesh;
@@ -120,7 +120,7 @@ namespace CryCil.Engine.Models.StaticObjects
 			Contract.EndContractBlock();
 
 			first = first < 0 ? 0 : first;
-			GeneralCryMesh.RemoveRangeFromStreamInternal(this.meshHandle, MainStreamId, first, count);
+			CryMesh.RemoveRangeFromStreamInternal(this.meshHandle, MainStreamId, first, count);
 		}
 		/// <summary>
 		/// Removes an element from this collection.
