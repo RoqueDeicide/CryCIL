@@ -48,6 +48,7 @@
     <Compile Include="FlagParameters.cs" />
     <Compile Include="FlowNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StaticObjectMesh.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Cryambly\Cryambly.csproj">

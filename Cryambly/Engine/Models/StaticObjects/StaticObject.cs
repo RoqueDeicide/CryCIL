@@ -14,6 +14,10 @@ namespace CryCil.Engine.Models.StaticObjects
 	/// <summary>
 	/// Represents a static object - a render mesh that doesn't have any animations.
 	/// </summary>
+	/// <example>
+	/// Example of creating a mesh at run-time:
+	/// <code source="StaticObjectMesh.cs" />
+	/// </example>
 	[StructLayout(LayoutKind.Explicit)]
 	public unsafe struct StaticObject
 	{
