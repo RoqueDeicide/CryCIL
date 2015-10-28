@@ -279,10 +279,12 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// <summary>
 		/// Creates new render mesh.
 		/// </summary>
-		/// <param name="type">Name of the type of render mesh.</param>
-		/// <param name="source">Name of source of render mesh, file name for instance.</param>
-		/// <param name="parameters">Optional pointer to the structure that contains description of the mesh.</param>
-		/// <param name="meshType">Type of the mesh.</param>
+		/// <param name="type">      Name of the type of render mesh.</param>
+		/// <param name="source">    Name of source of render mesh, file name for instance.</param>
+		/// <param name="parameters">
+		/// Optional pointer to the structure that contains description of the mesh.
+		/// </param>
+		/// <param name="meshType">  Type of the mesh.</param>
 		public CryRenderMesh(string type, string source, RenderMeshInitializationParameters* parameters = null,
 							 RenderMeshType meshType = RenderMeshType.Static)
 		{
