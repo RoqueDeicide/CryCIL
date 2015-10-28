@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using CryCil.Engine.Models.StaticObjects;
 using CryCil.Engine.Rendering.Lighting;
 
 namespace CryCil.Engine.Logic
@@ -166,6 +167,28 @@ namespace CryCil.Engine.Logic
 			Contract.EndContractBlock();
 
 			return new CryEntitySlot(this.entityHandle, EntitySlotOps.SetParticleEmitter(this.entityHandle, -1, emitter, sync));
+		}
+		/// <summary>
+		/// Adds static object to one of the slots.
+		/// </summary>
+		/// <param name="staticObject"> Static object to assign.</param>
+		/// <param name="updatePhysics">Indicates whether physics of the entity should be updated.</param>
+		/// <param name="mass">         
+		/// Optional value that can be used to designate the mass of added static object.
+		/// </param>
+		/// <returns>An object that represents the slot where added static object now resides.</returns>
+		public CryEntitySlot Add(StaticObject staticObject, bool updatePhysics, float mass = -1.0f)
+		{
+			this.AssertEntity();
+			if (!staticObject.IsValid)
+			{
+				throw new ArgumentNullException("staticObject", "Cannot bind null static object to the entity slot.");
+			}
+			Contract.EndContractBlock();
+
+			return new CryEntitySlot(this.entityHandle,
+									 EntitySlotOps.SetStatObj(this.entityHandle, staticObject.Handle, -1,
+															  updatePhysics, mass));
 		}
 		#endregion
 		#region Utilities
