@@ -226,6 +226,19 @@ namespace CryCil.Engine.Models.StaticObjects
 				SetBBox(this.handle, ref value);
 			}
 		}
+		/// <summary>
+		/// Gets the collection of mesh subsets.
+		/// </summary>
+		public CryIndexedMeshSubsets Subsets
+		{
+			get
+			{
+				this.AssertInstance();
+				Contract.EndContractBlock();
+
+				return new CryIndexedMeshSubsets(this.handle);
+			}
+		}
 		#endregion
 		#region Construction
 		internal CryIndexedMesh(IntPtr handle)
