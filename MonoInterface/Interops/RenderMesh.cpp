@@ -304,5 +304,6 @@ void RenderMeshInterop::OffsetPositionInternal(IRenderMesh *handle, Vec3 &delta)
 IRenderMesh *RenderMeshInterop::CreateRenderMesh(mono::string szType, mono::string szSourceName,
 												 IRenderMesh::SInitParamerers *pInitParams, ERenderMeshType eBufType)
 {
-	return gEnv->pRenderer->CreateRenderMesh(NtText(szType), NtText(szSourceName), pInitParams, eBufType);
+	auto renderMesh = gEnv->pRenderer->CreateRenderMesh(NtText(szType), NtText(szSourceName), pInitParams, eBufType);
+	return ReleaseOwnership(renderMesh);
 }
