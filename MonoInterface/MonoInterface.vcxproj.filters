@@ -464,6 +464,9 @@
     <ClInclude Include="Interops\IndexedMesh.h">
       <Filter>Interops\Engine\Models</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\RenderMesh.h">
+      <Filter>Interops\Engine\Models</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -865,6 +868,12 @@
     </ClCompile>
     <ClCompile Include="Interops\IndexedMesh.cpp">
       <Filter>Interops\Engine\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\RenderMesh.cpp">
+      <Filter>Interops\Engine\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\VertexFormatsAndPips.cpp">
+      <Filter>TypeMapChecks</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

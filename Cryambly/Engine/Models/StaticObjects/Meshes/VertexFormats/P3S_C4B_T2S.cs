@@ -3,11 +3,9 @@
 namespace CryCil.Engine.Models.StaticObjects
 {
 	/// <summary>
-	/// Represents a vertex that has its position, color and texture coordinates are represented by 3D
-	/// vector with half-precision floating point numbers, 4 <see cref="byte"/> size numbers in range [0;
-	/// 255] and 2D vector with half-precision floating point numbers respectively.
+	/// Represents a vertex that is defined by <see cref="VertexFormat.P3S_C4B_T2S"/>.
 	/// </summary>
-	public struct Position3HalfColor4ByteTexture2Half
+	public struct P3S_C4B_T2S
 	{
 		/// <summary>
 		/// Coordinates of the vertex.

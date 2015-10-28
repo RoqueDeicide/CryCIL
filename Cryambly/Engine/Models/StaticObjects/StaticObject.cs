@@ -342,6 +342,20 @@ namespace CryCil.Engine.Models.StaticObjects
 				return stats;
 			}
 		}
+		/// <summary>
+		/// Gets the object that grants access to the render mesh.
+		/// </summary>
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
+		public CryRenderMesh RenderMesh
+		{
+			get
+			{
+				this.AssertInstance();
+				Contract.EndContractBlock();
+
+				return GetRenderMesh(this.handle);
+			}
+		}
 		#endregion
 		#region Construction
 		internal StaticObject(IntPtr handle)
@@ -776,11 +790,8 @@ namespace CryCil.Engine.Models.StaticObjects
 		private static extern int GetIdMatBreakable(IntPtr handle);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern CryIndexedMesh GetIndexedMeshInternal(IntPtr handle, bool bCreateIfNone);
-
-		////! Access to rendering geometry for indoor engine ( optimized vertex arrays, lists of shader pointers )
-		//[MethodImpl(MethodImplOptions.InternalCall)]
-		//private static extern struct IRenderMesh * GetRenderMesh();
-
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern CryRenderMesh GetRenderMesh(IntPtr handle);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern PhysicalBody GetPhysGeom(IntPtr handle);
 		[MethodImpl(MethodImplOptions.InternalCall)]

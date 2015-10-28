@@ -338,6 +338,7 @@
     <ClInclude Include="Interops\Profiling.h" />
     <ClInclude Include="Interops\Ray.h" />
     <ClInclude Include="Interops\Renderer.h" />
+    <ClInclude Include="Interops\RenderMesh.h" />
     <ClInclude Include="Interops\Shading.h" />
     <ClInclude Include="Interops\Spline.h" />
     <ClInclude Include="Interops\StackString.h" />
@@ -464,6 +465,7 @@
     <ClCompile Include="Interops\Profiling.cpp" />
     <ClCompile Include="Interops\Ray.cpp" />
     <ClCompile Include="Interops\Renderer.cpp" />
+    <ClCompile Include="Interops\RenderMesh.cpp" />
     <ClCompile Include="Interops\Shading.cpp" />
     <ClCompile Include="Interops\Spline.cpp" />
     <ClCompile Include="Interops\StackString.cpp" />
@@ -527,6 +529,7 @@
     <ClCompile Include="TypeMapChecks\StridedPointer.cpp" />
     <ClCompile Include="TypeMapChecks\SurfaceFlags.cpp" />
     <ClCompile Include="TypeMapChecks\UpdateMeshReason.cpp" />
+    <ClCompile Include="TypeMapChecks\VertexFormatsAndPips.cpp" />
     <ClCompile Include="TypeMapChecks\WaveSimParams.cpp" />
     <ClCompile Include="TypeMapChecks\_constrflags.cpp" />
   </ItemGroup>

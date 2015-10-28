@@ -10,6 +10,7 @@ void StaticObjectInterop::OnRunTimeInitialized()
 	REGISTER_METHOD(SetFlags);
 	REGISTER_METHOD(GetFlags);
 	REGISTER_METHOD(GetIdMatBreakable);
+	REGISTER_METHOD(GetRenderMesh);
 	REGISTER_METHOD(GetIndexedMeshInternal);
 	REGISTER_METHOD(GetPhysGeom);
 	REGISTER_METHOD(UpdateVerticesInternal);
@@ -359,4 +360,9 @@ IStatObj *StaticObjectInterop::CreateStatObjOptionalIndexedMesh(bool createIndex
 IStatObj *StaticObjectInterop::UpdateDeformableStatObj(IGeometry *pPhysGeom, bop_meshupdate *pLastUpdate)
 {
 	return gEnv->p3DEngine->UpdateDeformableStatObj(pPhysGeom, pLastUpdate);
+}
+
+IRenderMesh *StaticObjectInterop::GetRenderMesh(IStatObj *handle)
+{
+	return handle->GetRenderMesh();
 }

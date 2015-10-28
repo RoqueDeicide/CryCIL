@@ -371,3 +371,180 @@ struct MeshDescription
 		CHECK_TYPE(m_nIndexCount);
 	}
 };
+
+TYPE_MIRROR enum VertexFormat
+{
+	eVF_Unknown_check = 0,
+
+	// Base stream
+	eVF_P3F_C4B_T2F_check = 1,
+	eVF_P3S_C4B_T2S_check = 2,
+	eVF_P3S_N4B_C4B_T2S_check = 3,
+
+	eVF_P3F_C4B_T4B_N3F2_check = 4, // Particles.
+	eVF_TP3F_C4B_T2F_check = 5, // Fonts (28 bytes).
+	eVF_TP3F_T2F_T3F_check = 6,  // Miscellaneous.
+	eVF_P3F_T3F_check = 7,       // Miscellaneous.
+	eVF_P3F_T2F_T3F_check = 8,   // Miscellaneous.
+
+	// Additional streams
+	eVF_T2F_check = 9,           // Light maps TC (8 bytes).
+	eVF_W4B_I4B_check = 10,  // Skinned weights/indices stream.
+	eVF_C4B_C4B_check = 11,      // SH coefficients.
+	eVF_P3F_P3F_I4B_check = 12,  // Shape deformation stream.
+	eVF_P3F_check = 13,       // Velocity stream.
+
+	eVF_C4B_T2S_check = 14,     // General (Position is merged with Tangent stream)
+
+	// Lens effects simulation
+	eVF_P2F_T4F_C4F_check = 15,  // primary
+	eVF_P2F_T4F_T4F_C4F_check = 16,
+
+	eVF_P2S_N4B_C4B_T1F_check = 17,
+	eVF_P3F_C4B_T2S_check = 18,
+
+	eVF_Max_check
+};
+
+#undef CHECK_ENUM
+#define CHECK_ENUM(x) static_assert (VertexFormat::x ## _check == EVertexFormat::x, "EVertexFormat enumeration has been changed.")
+
+inline void CheckVertexFormats()
+{
+	CHECK_ENUM(eVF_Unknown);
+	CHECK_ENUM(eVF_P3F_C4B_T2F);
+	CHECK_ENUM(eVF_P3S_C4B_T2S);
+	CHECK_ENUM(eVF_P3S_N4B_C4B_T2S);
+	CHECK_ENUM(eVF_P3F_C4B_T4B_N3F2);
+	CHECK_ENUM(eVF_TP3F_C4B_T2F);
+	CHECK_ENUM(eVF_TP3F_T2F_T3F);
+	CHECK_ENUM(eVF_P3F_T3F);
+	CHECK_ENUM(eVF_P3F_T2F_T3F);
+	CHECK_ENUM(eVF_T2F);
+	CHECK_ENUM(eVF_W4B_I4B);
+	CHECK_ENUM(eVF_C4B_C4B);
+	CHECK_ENUM(eVF_P3F_P3F_I4B);
+	CHECK_ENUM(eVF_P3F);
+	CHECK_ENUM(eVF_C4B_T2S);
+	CHECK_ENUM(eVF_P2F_T4F_C4F);
+	CHECK_ENUM(eVF_P2F_T4F_T4F_C4F);
+	CHECK_ENUM(eVF_P2S_N4B_C4B_T1F);
+	CHECK_ENUM(eVF_P3F_C4B_T2S);
+	CHECK_ENUM(eVF_Max);
+}
+
+TYPE_MIRROR enum RenderMeshType
+{
+	eRMT_Immmutable_check = 0,
+	eRMT_Static_check = 1,
+	eRMT_Dynamic_check = 2,
+	eRMT_Transient_check = 3
+};
+
+#undef CHECK_ENUM
+#define CHECK_ENUM(x) static_assert (RenderMeshType::x ## _check == ERenderMeshType::x, "ERenderMeshType enumeration has been changed.")
+
+inline void CheckRenderMeshType()
+{
+	CHECK_ENUM(eRMT_Immmutable);
+	CHECK_ENUM(eRMT_Static);
+	CHECK_ENUM(eRMT_Dynamic);
+	CHECK_ENUM(eRMT_Transient);
+}
+
+TYPE_MIRROR enum RenderMeshConversionFlags
+{
+	FSM_VERTEX_VELOCITY_check = 1,
+	FSM_NO_TANGENTS_check = 2,
+	FSM_CREATE_DEVICE_MESH_check = 4,
+	FSM_SETMESH_ASYNC_check = 8,
+	FSM_ENABLE_NORMALSTREAM_check = 16,
+	FSM_IGNORE_TEXELDENSITY_check = 32
+};
+
+#undef CHECK_ENUM
+#define CHECK_ENUM(x) static_assert (RenderMeshConversionFlags::x ## _check == x, "A set of defines for conversion of normal meshes to renderable one has been changed.")
+
+inline void CheckRenderMeshConversionFlags()
+{
+	CHECK_ENUM(FSM_VERTEX_VELOCITY);
+	CHECK_ENUM(FSM_NO_TANGENTS);
+	CHECK_ENUM(FSM_CREATE_DEVICE_MESH);
+	CHECK_ENUM(FSM_SETMESH_ASYNC);
+	CHECK_ENUM(FSM_ENABLE_NORMALSTREAM);
+	CHECK_ENUM(FSM_IGNORE_TEXELDENSITY);
+}
+
+TYPE_MIRROR enum RenderMeshAccessFlags
+{
+	FSL_READ_check = 0x01,
+	FSL_WRITE_check = 0x02,
+	FSL_DYNAMIC_check = 0x04,
+	FSL_DISCARD_check = 0x08,
+	FSL_VIDEO_check = 0x10,
+	FSL_SYSTEM_check = 0x20,
+	FSL_INSTANCED_check = 0x40,
+	FSL_NONSTALL_MAP_check = 0x80, // Map must not stall for VB/IB locking
+	FSL_VBIBPUSHDOWN_check = 0x100, // Push down from vram on demand if target architecture supports it, used internally
+	FSL_DIRECT_check = 0x200, // Access VRAM directly if target architecture supports it, used internally
+	FSL_LOCKED_check = 0x400, // Internal use
+	FSL_SYSTEM_CREATE_check = (FSL_WRITE | FSL_DISCARD | FSL_SYSTEM),
+	FSL_SYSTEM_UPDATE_check = (FSL_WRITE | FSL_SYSTEM),
+	FSL_VIDEO_CREATE_check = (FSL_WRITE | FSL_DISCARD | FSL_VIDEO),
+	FSL_VIDEO_UPDATE_check = (FSL_WRITE | FSL_VIDEO)
+};
+
+#undef CHECK_ENUM
+#define CHECK_ENUM(x) static_assert (RenderMeshAccessFlags::x ## _check == x, "A set of defines for render mesh access flags has been changed.")
+
+inline void CheckRenderMeshAccessFlags()
+{
+	CHECK_ENUM(FSL_READ);
+	CHECK_ENUM(FSL_WRITE);
+	CHECK_ENUM(FSL_DYNAMIC);
+	CHECK_ENUM(FSL_DISCARD);
+	CHECK_ENUM(FSL_VIDEO);
+	CHECK_ENUM(FSL_SYSTEM);
+	CHECK_ENUM(FSL_INSTANCED);
+	CHECK_ENUM(FSL_NONSTALL_MAP);
+	CHECK_ENUM(FSL_VBIBPUSHDOWN);
+	CHECK_ENUM(FSL_DIRECT);
+	CHECK_ENUM(FSL_LOCKED);
+	CHECK_ENUM(FSL_SYSTEM_CREATE);
+	CHECK_ENUM(FSL_SYSTEM_UPDATE);
+	CHECK_ENUM(FSL_VIDEO_CREATE);
+	CHECK_ENUM(FSL_VIDEO_UPDATE);
+}
+
+TYPE_MIRROR enum StreamIDs
+{
+	VSF_GENERAL_check,                 // General vertex buffer
+	VSF_TANGENTS_check,                // Tangents buffer
+	VSF_QTANGENTS_check,               // Tangents buffer
+	VSF_HWSKIN_INFO_check,             // HW skinning buffer
+	VSF_VERTEX_VELOCITY_check,                // Velocity buffer
+	VSF_NORMALS_check,                 // Normals, used for skinning
+	// <- Insert new stream IDs here
+	VSF_NUM_check,                     // Number of vertex streams
+
+	VSF_MORPHBUDDY_check = 8,          // Morphing (from m_pMorphBuddy)
+	VSF_INSTANCED_check = 9,           // Data is for instance stream
+	VSF_MORPHBUDDY_WEIGHTS_check = 15
+};
+
+#undef CHECK_ENUM
+#define CHECK_ENUM(x) static_assert (StreamIDs::x ## _check == EStreamIDs::x, "EStreamIDs enumeration has been changed.")
+
+inline void CheckStreamIDs()
+{
+	CHECK_ENUM(VSF_GENERAL);
+	CHECK_ENUM(VSF_TANGENTS);
+	CHECK_ENUM(VSF_QTANGENTS);
+	CHECK_ENUM(VSF_HWSKIN_INFO);
+	CHECK_ENUM(VSF_VERTEX_VELOCITY);
+	CHECK_ENUM(VSF_NORMALS);
+	CHECK_ENUM(VSF_NUM);
+	CHECK_ENUM(VSF_MORPHBUDDY);
+	CHECK_ENUM(VSF_INSTANCED);
+	CHECK_ENUM(VSF_MORPHBUDDY_WEIGHTS);
+}

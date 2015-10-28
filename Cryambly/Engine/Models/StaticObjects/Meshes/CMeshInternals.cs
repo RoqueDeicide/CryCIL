@@ -22,7 +22,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		internal CryMeshColor* pColor1;
 	
 		internal int *pVertMats;
-		internal Position3HalfColor4ByteTexture2Half* pP3S_C4B_T2S;
+		internal P3S_C4B_T2S* pP3S_C4B_T2S;
 
 		internal CryMeshBoneMappingUint16* pBoneMapping;  //bone-mapping for the final render-mesh
 		internal CryMeshBoneMappingByte* pExtraBoneMapping;	//bone indices and weights for bones 5 to 8.

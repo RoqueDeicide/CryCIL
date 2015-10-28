@@ -115,3 +115,5 @@
 #include "Interops/CMesh.h"
 
 #include "Interops/IndexedMesh.h"
+
+#include "Interops/RenderMesh.h"
