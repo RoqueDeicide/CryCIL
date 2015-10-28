@@ -104,7 +104,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// Assigns the identifier of the material to the subset.
 		/// </summary>
 		/// <param name="index">     Zero-based index of the subset to set the material for.</param>
-		/// <param name="materialId">Identifier of the material.</param>
+		/// <param name="materialId">Index of the sub-material within main material.</param>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public void SetSubsetMaterialId(int index, int materialId)
 		{
