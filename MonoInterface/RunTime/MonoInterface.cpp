@@ -363,6 +363,7 @@ void MonoInterface::RegisterDefaultListeners()
 	this->broadcaster->listeners->Add(new CMeshInterop());
 	this->broadcaster->listeners->Add(new IndexedMeshInterop());
 	this->broadcaster->listeners->Add(new RenderMeshInterop());
+	this->broadcaster->listeners->Add(new CharacterInterop());
 }
 #pragma endregion
 #pragma region Thunks Initialization

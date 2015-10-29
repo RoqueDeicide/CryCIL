@@ -280,6 +280,7 @@
     <ClInclude Include="Interops\ArchiveStream.h" />
     <ClInclude Include="Interops\AuxiliaryGeometry.h" />
     <ClInclude Include="Interops\BatchOps.h" />
+    <ClInclude Include="Interops\Character.h" />
     <ClInclude Include="Interops\CMesh.h" />
     <ClInclude Include="Interops\Console.h" />
     <ClInclude Include="Interops\ConsoleVariable.h" />
@@ -419,6 +420,7 @@
     <ClCompile Include="Interops\ArchiveStream.cpp" />
     <ClCompile Include="Interops\AuxiliaryGeometry.cpp" />
     <ClCompile Include="Interops\BatchOps.cpp" />
+    <ClCompile Include="Interops\Character.cpp" />
     <ClCompile Include="Interops\CMesh.cpp" />
     <ClCompile Include="Interops\ConsoleVariable.cpp" />
     <ClCompile Include="Interops\CryArchive.cpp" />
@@ -491,6 +493,7 @@
     <ClCompile Include="TypeMapChecks\ActionActivationMode.cpp" />
     <ClCompile Include="TypeMapChecks\ActionAnalogCompareOperation.cpp" />
     <ClCompile Include="TypeMapChecks\ActionInputBlockType.cpp" />
+    <ClCompile Include="TypeMapChecks\CharacterTypes.cpp" />
     <ClCompile Include="TypeMapChecks\DynamicArray.cpp" />
     <ClCompile Include="TypeMapChecks\DynamicLightFlags.cpp" />
     <ClCompile Include="TypeMapChecks\EKeyId.cpp" />

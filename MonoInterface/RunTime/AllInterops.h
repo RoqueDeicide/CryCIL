@@ -117,3 +117,5 @@
 #include "Interops/IndexedMesh.h"
 
 #include "Interops/RenderMesh.h"
+
+#include "Interops/Character.h"

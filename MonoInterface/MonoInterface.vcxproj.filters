@@ -467,6 +467,9 @@
     <ClInclude Include="Interops\RenderMesh.h">
       <Filter>Interops\Engine\Models</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\Character.h">
+      <Filter>Interops\Engine\Models\Characters</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -875,6 +878,12 @@
     <ClCompile Include="TypeMapChecks\VertexFormatsAndPips.cpp">
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
+    <ClCompile Include="TypeMapChecks\CharacterTypes.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\Character.cpp">
+      <Filter>Interops\Engine\Models\Characters</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">
@@ -984,6 +993,9 @@
     </Filter>
     <Filter Include="Interops\Engine\Models">
       <UniqueIdentifier>{17e3da0d-a1c1-4018-951c-48194af1667f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interops\Engine\Models\Characters">
+      <UniqueIdentifier>{45e016b3-d283-4e0d-8fa6-122fa699165f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
