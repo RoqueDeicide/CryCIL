@@ -233,4 +233,29 @@
 		}
 		#endregion
 	}
+	/// <summary>
+	/// Represents a CRC32 checksum that is computed from lower-case strings.
+	/// </summary>
+	public unsafe struct LowerCaseCrc32
+	{
+		private uint hash;
+		/// <summary>
+		/// Computes the CRC32 hash from lower-case version of given text.
+		/// </summary>
+		/// <param name="text">String that represents the text to compute the hash from.</param>
+		public LowerCaseCrc32(string text)
+		{
+			this.hash = Crc32.ComputeLowercase(text);
+		}
+		/// <summary>
+		/// Computes hash code of the data chunk (where each ASCII character is converted into lower case)
+		/// using CRC32 hash algorithm.
+		/// </summary>
+		/// <param name="data">     A pointer to the beginning of data chunk.</param>
+		/// <param name="byteCount">Number of bytes in the data chunk.</param>
+		public LowerCaseCrc32(void* data, int byteCount)
+		{
+			this.hash = Crc32.ComputeLowercase(data, byteCount);
+		}
+	}
 }
