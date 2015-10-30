@@ -473,6 +473,7 @@
     <ClInclude Include="Interops\DefaultSkeleton.h">
       <Filter>Interops\Engine\Models\Characters</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\CharacterSkin.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -890,6 +891,7 @@
     <ClCompile Include="Interops\DefaultSkeleton.cpp">
       <Filter>Interops\Engine\Models\Characters</Filter>
     </ClCompile>
+    <ClCompile Include="Interops\CharacterSkin.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">

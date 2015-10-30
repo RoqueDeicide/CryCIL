@@ -281,6 +281,7 @@
     <ClInclude Include="Interops\AuxiliaryGeometry.h" />
     <ClInclude Include="Interops\BatchOps.h" />
     <ClInclude Include="Interops\Character.h" />
+    <ClInclude Include="Interops\CharacterSkin.h" />
     <ClInclude Include="Interops\CMesh.h" />
     <ClInclude Include="Interops\Console.h" />
     <ClInclude Include="Interops\ConsoleVariable.h" />
@@ -422,6 +423,7 @@
     <ClCompile Include="Interops\AuxiliaryGeometry.cpp" />
     <ClCompile Include="Interops\BatchOps.cpp" />
     <ClCompile Include="Interops\Character.cpp" />
+    <ClCompile Include="Interops\CharacterSkin.cpp" />
     <ClCompile Include="Interops\CMesh.cpp" />
     <ClCompile Include="Interops\ConsoleVariable.cpp" />
     <ClCompile Include="Interops\CryArchive.cpp" />

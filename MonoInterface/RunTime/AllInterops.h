@@ -121,3 +121,5 @@
 #include "Interops/Character.h"
 
 #include "Interops/DefaultSkeleton.h"
+
+#include "Interops/CharacterSkin.h"
