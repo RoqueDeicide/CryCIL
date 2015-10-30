@@ -470,6 +470,9 @@
     <ClInclude Include="Interops\Character.h">
       <Filter>Interops\Engine\Models\Characters</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\DefaultSkeleton.h">
+      <Filter>Interops\Engine\Models\Characters</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -882,6 +885,9 @@
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
     <ClCompile Include="Interops\Character.cpp">
+      <Filter>Interops\Engine\Models\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\DefaultSkeleton.cpp">
       <Filter>Interops\Engine\Models\Characters</Filter>
     </ClCompile>
   </ItemGroup>

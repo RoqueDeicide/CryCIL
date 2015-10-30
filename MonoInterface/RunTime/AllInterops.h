@@ -119,3 +119,5 @@
 #include "Interops/RenderMesh.h"
 
 #include "Interops/Character.h"
+
+#include "Interops/DefaultSkeleton.h"

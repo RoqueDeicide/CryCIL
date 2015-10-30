@@ -99,6 +99,7 @@
     <Compile Include="Engine\Models\Characters\CharacterManagerStatistics.cs" />
     <Compile Include="Engine\Models\Characters\CharacterRenderFlags.cs" />
     <Compile Include="Engine\Models\Characters\DbaStreamingPriority.cs" />
+    <Compile Include="Engine\Models\Characters\DefaultSkeleton.cs" />
     <Compile Include="Engine\Models\Characters\NamespaceDoc.cs" />
     <Compile Include="Engine\Models\Characters\ReloadCafResult.cs" />
     <Compile Include="Engine\Models\StaticObjects\Meshes\CMeshInternals.cs" />
