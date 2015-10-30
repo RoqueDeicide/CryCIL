@@ -6,7 +6,7 @@
 struct CharacterInterop : IMonoInterop<true, true>
 {
 	virtual const char *GetInteropClassName() override { return "Character"; }
-	virtual const char *GetInteropNameSpace() override { return "CryCil."; }
+	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Models.Characters"; }
 
 	virtual void OnRunTimeInitialized() override;
 
