@@ -5,6 +5,9 @@
 #include "EntityClass.h"
 #include "MonoEntitySpawnParams.h"
 
+#include <CryCharAnimationParams.h>
+#include "MonoAnimationEvent.h"
+
 IMonoClass *GetMonoEntityClass()
 {
 	return MonoEnv->Cryambly->GetClass("CryCil.Engine.Logic", "MonoEntity");
@@ -264,6 +267,7 @@ define_entity_event_name(MaterialChanged);
 define_entity_event_name(MaterialLayersChanged);
 define_entity_event_name(Activated);
 define_entity_event_name(Deactivated);
+define_entity_event_name(AnimationEvent);
 
 #undef define_entity_event_name
 
@@ -467,6 +471,12 @@ void MonoEntityExtension::ProcessEvent(SEntityEvent& _event)
 	case ENTITY_EVENT_ONHIT:
 		break;
 	case ENTITY_EVENT_ANIM_EVENT:
+	{
+		auto animEvent = MonoAnimationEvent(reinterpret_cast<AnimEventInstance &>(_event.nParam[0]));
+		auto character = reinterpret_cast<ICharacterInstance *>(_event.nParam[1]);
+		this->raiseEntityEvent<entity_event(MaterialLayersChanged), MonoAnimationEvent, ICharacterInstance *>
+			(animEvent, character);
+	}
 		break;
 	case ENTITY_EVENT_SCRIPT_REQUEST_COLLIDERMODE:
 		break;

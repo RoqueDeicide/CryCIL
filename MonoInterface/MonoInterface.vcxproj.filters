@@ -483,6 +483,9 @@
     <ClInclude Include="Interops\SkeletonAnimation.h">
       <Filter>Interops\Engine\Models\Characters</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\MonoAnimationEvent.h">
+      <Filter>Interops\Engine\Models\Characters</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -908,6 +911,9 @@
       <Filter>Interops\Engine\Models\Characters</Filter>
     </ClCompile>
     <ClCompile Include="Interops\SkeletonAnimation.cpp">
+      <Filter>Interops\Engine\Models\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\MonoAnimationEvent.cpp">
       <Filter>Interops\Engine\Models\Characters</Filter>
     </ClCompile>
   </ItemGroup>

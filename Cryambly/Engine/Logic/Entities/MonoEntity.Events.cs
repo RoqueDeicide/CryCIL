@@ -1,4 +1,5 @@
 ﻿using System;
+using CryCil.Engine.Models.Characters;
 using CryCil.Engine.Physics;
 using CryCil.Engine.Rendering;
 
@@ -122,6 +123,13 @@ namespace CryCil.Engine.Logic
 	/// <param name="new">   A new material layers mask.</param>
 	/// <param name="old">   An old material layers mask.</param>
 	public delegate void EntityMaterialLayersEventHandler(MonoEntity sender, byte @new, byte old);
+	/// <summary>
+	/// Defines signature of methods that can handle <see cref="MonoEntity.AnimationEvent"/> event.
+	/// </summary>
+	/// <param name="sender">The entity that raised the event.</param>
+	/// <param name="event">Reference to the object that contains information about the event.</param>
+	/// <param name="character">Object that represents the animated character that caused the event.</param>
+	public delegate void EntityAnimationEventHandler(MonoEntity sender, ref AnimationEvent @event, Character character);
 	public partial class MonoEntity
 	{
 		/// <summary>
@@ -515,6 +523,16 @@ namespace CryCil.Engine.Logic
 		{
 			var handler = this.Deactivated;
 			if (handler != null) handler(this);
+		}
+		/// <summary>
+		/// Occurs when an event happens during animation of the character that is used by this entity.
+		/// </summary>
+		public event EntityAnimationEventHandler AnimationEvent;
+		[UnmanagedThunk("Invoked from underlying object to raise event AnimationEvent.")]
+		private void OnAnimationEvent(AnimationEvent @event, Character character)
+		{
+			var handler = this.AnimationEvent;
+			if (handler != null) handler(this, ref @event, character);
 		}
 	}
 }

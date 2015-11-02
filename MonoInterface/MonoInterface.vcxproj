@@ -318,6 +318,7 @@
     <ClInclude Include="Interops\MaterialLayers.h" />
     <ClInclude Include="Interops\Materials.h" />
     <ClInclude Include="Interops\MeshOps.h" />
+    <ClInclude Include="Interops\MonoAnimationEvent.h" />
     <ClInclude Include="Interops\MonoCryXmlNode.h" />
     <ClInclude Include="Interops\MonoEntitySpawnParams.h" />
     <ClInclude Include="Interops\MonoFlowNode.h" />
@@ -460,6 +461,7 @@
     <ClCompile Include="Interops\MaterialLayers.cpp" />
     <ClCompile Include="Interops\Materials.cpp" />
     <ClCompile Include="Interops\MeshOps.cpp" />
+    <ClCompile Include="Interops\MonoAnimationEvent.cpp" />
     <ClCompile Include="Interops\MonoFlowNode.cpp" />
     <ClCompile Include="Interops\MonoFlowNodeFactory.cpp" />
     <ClCompile Include="Interops\MouseInterop.cpp" />
