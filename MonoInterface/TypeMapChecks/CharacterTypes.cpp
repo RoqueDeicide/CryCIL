@@ -166,3 +166,178 @@ TYPE_MIRROR struct AnimationProcessParams
 		CHECK_TYPE(overrideDeltaTime);
 	}
 };
+
+TYPE_MIRROR struct SCryCharAnimationParams
+{
+	f32 m_fTransTime;
+	f32 m_fKeyTime;
+	f32	m_fPlaybackSpeed;
+	f32	m_fAllowMultilayerAnim;
+	int32 m_nLayerID;
+	f32 m_fPlaybackWeight;
+	uint32 m_nFlags;
+	uint32 m_nUserToken;
+	f32 m_fUserData[8];
+
+	explicit SCryCharAnimationParams(CryCharAnimationParams &other)
+	{
+		CHECK_TYPE_SIZE(CryCharAnimationParams);
+
+		ASSIGN_FIELD(m_fTransTime);
+		ASSIGN_FIELD(m_fKeyTime);
+		ASSIGN_FIELD(m_fPlaybackSpeed);
+		ASSIGN_FIELD(m_fAllowMultilayerAnim);
+		ASSIGN_FIELD(m_nLayerID);
+		ASSIGN_FIELD(m_fPlaybackWeight);
+		ASSIGN_FIELD(m_nFlags);
+		ASSIGN_FIELD(m_nUserToken);
+		ASSIGN_FIELD(m_fUserData[0]);
+
+		CHECK_TYPE(m_fTransTime);
+		CHECK_TYPE(m_fKeyTime);
+		CHECK_TYPE(m_fPlaybackSpeed);
+		CHECK_TYPE(m_fAllowMultilayerAnim);
+		CHECK_TYPE(m_nLayerID);
+		CHECK_TYPE(m_fPlaybackWeight);
+		CHECK_TYPE(m_nFlags);
+		CHECK_TYPE(m_nUserToken);
+		CHECK_TYPE(m_fUserData);
+	}
+};
+
+TYPE_MIRROR enum AnimationFlags
+{
+	CA_MANUAL_UPDATE_check = 0x000001,
+	CA_LOOP_ANIMATION_check = 0x000002,
+	CA_REPEAT_LAST_KEY_check = 0x000004,
+	CA_TRANSITION_TIMEWARPING_check = 0x000008,
+	CA_START_AT_KEYTIME_check = 0x000010,
+	CA_START_AFTER_check = 0x000020,
+	CA_IDLE2MOVE_check = 0x000040,
+	CA_MOVE2IDLE_check = 0x000080,
+	CA_ALLOW_ANIM_RESTART_check = 0x000100,
+	CA_KEYFRAME_SAMPLE_30Hz_check = 0x000200,
+	CA_DISABLE_MULTILAYER_check = 0x000400,
+	CA_FORCE_SKELETON_UPDATE_check = 0x000800,
+	CA_TRACK_VIEW_EXCLUSIVE_check = 0x001000,
+	CA_REMOVE_FROM_FIFO_check = 0x002000,
+	CA_FULL_ROOT_PRIORITY_check = 0x004000,
+	CA_FORCE_TRANSITION_TO_ANIM_check = 0x008000,
+	CA_FADEOUT_check = 0x40000000
+};
+
+#undef CHECK_ENUM
+#define CHECK_ENUM(x) static_assert (AnimationFlags::x ## _check == CA_AnimationFlags::x, "CA_AnimationFlags enumeration has been changed.")
+
+inline void CheckAnimationFlags()
+{
+	CHECK_ENUM(CA_MANUAL_UPDATE);
+	CHECK_ENUM(CA_LOOP_ANIMATION);
+	CHECK_ENUM(CA_REPEAT_LAST_KEY);
+	CHECK_ENUM(CA_TRANSITION_TIMEWARPING);
+	CHECK_ENUM(CA_START_AT_KEYTIME);
+	CHECK_ENUM(CA_START_AFTER);
+	CHECK_ENUM(CA_IDLE2MOVE);
+	CHECK_ENUM(CA_MOVE2IDLE);
+	CHECK_ENUM(CA_ALLOW_ANIM_RESTART);
+	CHECK_ENUM(CA_KEYFRAME_SAMPLE_30Hz);
+	CHECK_ENUM(CA_DISABLE_MULTILAYER);
+	CHECK_ENUM(CA_FORCE_SKELETON_UPDATE);
+	CHECK_ENUM(CA_TRACK_VIEW_EXCLUSIVE);
+	CHECK_ENUM(CA_REMOVE_FROM_FIFO);
+	CHECK_ENUM(CA_FULL_ROOT_PRIORITY);
+	CHECK_ENUM(CA_FORCE_TRANSITION_TO_ANIM);
+	CHECK_ENUM(CA_FADEOUT);
+}
+
+TYPE_MIRROR struct ParametricSampler
+{
+	void *vtable;
+	uint8	  m_nParametricType;        //Type of Group: i.e. I2M, M2I, MOVE, Idle-Step, Idle-Rot, etc....
+	uint8	  m_numDimensions;          //how many dimensions are used in this Parametric Group 
+	f32			m_MotionParameter[4];			//we have only 4 dimensions per blend-space
+	uint8		m_MotionParameterID[4];		//we have only 4 dimensions per blend-space 
+	uint8		m_MotionParameterFlags[4];	//we have only 4 dimensions per blend-space 
+
+	explicit ParametricSampler(SParametricSampler &other)
+		: vtable(nullptr)
+	{
+		CHECK_TYPE_SIZE(ParametricSampler);
+
+		ASSIGN_FIELD(m_nParametricType);
+		ASSIGN_FIELD(m_numDimensions);
+		ASSIGN_FIELD(m_MotionParameter[0]);
+		ASSIGN_FIELD(m_MotionParameterID[0]);
+		ASSIGN_FIELD(m_MotionParameterFlags[0]);
+
+		CHECK_TYPE(m_nParametricType);
+		CHECK_TYPE(m_numDimensions);
+		CHECK_TYPE(m_MotionParameter);
+		CHECK_TYPE(m_MotionParameterID);
+		CHECK_TYPE(m_MotionParameterFlags);
+	}
+};
+
+TYPE_MIRROR enum Dimension_Flags
+{
+	CA_Dim_Initialized_check = 0x001,
+	CA_Dim_LockedParameter_check = 0x002,
+	CA_Dim_DeltaExtraction_check = 0x004
+};
+
+#undef CHECK_ENUM
+#define CHECK_ENUM(x) static_assert (Dimension_Flags::x ## _check == CA_Dimension_Flags::x, "CA_Dimension_Flags enumeration has been changed.")
+
+inline void CheckDimension_Flags()
+{
+	CHECK_ENUM(CA_Dim_Initialized);
+	CHECK_ENUM(CA_Dim_LockedParameter);
+	CHECK_ENUM(CA_Dim_DeltaExtraction);
+}
+
+TYPE_MIRROR enum MotionParamID
+{
+	eMotionParamID_TravelSpeed_check = 0,
+	eMotionParamID_TurnSpeed_check,
+	eMotionParamID_TravelAngle_check,     //forward, backwards and sidestepping  
+	eMotionParamID_TravelSlope_check,
+	eMotionParamID_TurnAngle_check,       //Idle2Move and idle-rotations
+	eMotionParamID_TravelDist_check,      //idle-steps 
+	eMotionParamID_StopLeg_check,         //Move2Idle
+
+	eMotionParamID_BlendWeight_check,     //custom parameters
+	eMotionParamID_BlendWeight2_check,
+	eMotionParamID_BlendWeight3_check,
+	eMotionParamID_BlendWeight4_check,
+	eMotionParamID_BlendWeight5_check,
+	eMotionParamID_BlendWeight6_check,
+	eMotionParamID_BlendWeight7_check,
+	eMotionParamID_BlendWeight_Last_check = eMotionParamID_BlendWeight7,
+
+	eMotionParamID_COUNT_check
+};
+
+#undef CHECK_ENUM
+#define CHECK_ENUM(x) static_assert (MotionParamID::x ## _check == EMotionParamID::x, "EMotionParamID enumeration has been changed.")
+
+inline void CheckMotionParamID()
+{
+	CHECK_ENUM(eMotionParamID_TravelSpeed);
+	CHECK_ENUM(eMotionParamID_TurnSpeed);
+	CHECK_ENUM(eMotionParamID_TravelAngle);
+	CHECK_ENUM(eMotionParamID_TravelSlope);
+	CHECK_ENUM(eMotionParamID_TurnAngle);
+	CHECK_ENUM(eMotionParamID_TravelDist);
+	CHECK_ENUM(eMotionParamID_StopLeg);
+
+	CHECK_ENUM(eMotionParamID_BlendWeight);
+	CHECK_ENUM(eMotionParamID_BlendWeight2);
+	CHECK_ENUM(eMotionParamID_BlendWeight3);
+	CHECK_ENUM(eMotionParamID_BlendWeight4);
+	CHECK_ENUM(eMotionParamID_BlendWeight5);
+	CHECK_ENUM(eMotionParamID_BlendWeight6);
+	CHECK_ENUM(eMotionParamID_BlendWeight7);
+	CHECK_ENUM(eMotionParamID_BlendWeight_Last);
+
+	CHECK_ENUM(eMotionParamID_COUNT);
+}

@@ -474,6 +474,15 @@
       <Filter>Interops\Engine\Models\Characters</Filter>
     </ClInclude>
     <ClInclude Include="Interops\CharacterSkin.h" />
+    <ClInclude Include="Interops\CharacterAnimation.h">
+      <Filter>Interops\Engine\Models\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\ParametricSampler.h">
+      <Filter>Interops\Engine\Models\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\SkeletonAnimation.h">
+      <Filter>Interops\Engine\Models\Characters</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -892,6 +901,15 @@
       <Filter>Interops\Engine\Models\Characters</Filter>
     </ClCompile>
     <ClCompile Include="Interops\CharacterSkin.cpp" />
+    <ClCompile Include="Interops\CharacterAnimation.cpp">
+      <Filter>Interops\Engine\Models\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\ParametricSampler.cpp">
+      <Filter>Interops\Engine\Models\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\SkeletonAnimation.cpp">
+      <Filter>Interops\Engine\Models\Characters</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">

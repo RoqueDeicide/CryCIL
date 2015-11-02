@@ -123,3 +123,9 @@
 #include "Interops/DefaultSkeleton.h"
 
 #include "Interops/CharacterSkin.h"
+
+#include "Interops/CharacterAnimation.h"
+
+#include "Interops/ParametricSampler.h"
+
+#include "Interops/SkeletonAnimation.h"

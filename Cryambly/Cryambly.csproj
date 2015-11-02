@@ -93,8 +93,11 @@
     <Compile Include="Engine\Logic\NamespaceDoc.cs" />
     <Compile Include="Engine\Memory\NamespaceDoc.cs" />
     <Compile Include="Engine\Models\Characters\AnimationFileFormatIds.cs" />
+    <Compile Include="Engine\Models\Characters\AnimationFlags.cs" />
     <Compile Include="Engine\Models\Characters\AnimationProcessParameters.cs" />
     <Compile Include="Engine\Models\Characters\Character.Statics.cs" />
+    <Compile Include="Engine\Models\Characters\CharacterAnimation.cs" />
+    <Compile Include="Engine\Models\Characters\CharacterAnimationParameters.cs" />
     <Compile Include="Engine\Models\Characters\CharacterLoadingFlags.cs" />
     <Compile Include="Engine\Models\Characters\CharacterManagerStatistics.cs" />
     <Compile Include="Engine\Models\Characters\CharacterRenderFlags.cs" />
@@ -102,7 +105,10 @@
     <Compile Include="Engine\Models\Characters\DbaStreamingPriority.cs" />
     <Compile Include="Engine\Models\Characters\DefaultSkeleton.cs" />
     <Compile Include="Engine\Models\Characters\NamespaceDoc.cs" />
+    <Compile Include="Engine\Models\Characters\ParametricSampler.cs" />
     <Compile Include="Engine\Models\Characters\ReloadCafResult.cs" />
+    <Compile Include="Engine\Models\Characters\SkeletonAnimation.cs" />
+    <Compile Include="Engine\Models\Characters\SkeletonAnimationLayers.cs" />
     <Compile Include="Engine\Models\StaticObjects\Meshes\CMeshInternals.cs" />
     <Compile Include="Engine\Models\StaticObjects\Meshes\CryIndexedMesh.cs" />
     <Compile Include="Engine\Models\StaticObjects\Meshes\CryIndexedMeshSubsets.cs" />
