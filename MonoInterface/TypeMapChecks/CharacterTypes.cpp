@@ -2,6 +2,7 @@
 
 #include "CheckingBasics.h"
 #include <ICryAnimation.h>
+#include <IFacialAnimation.h>
 
 TYPE_MIRROR enum CharRenderFlags
 {
@@ -11,13 +12,13 @@ TYPE_MIRROR enum CharRenderFlags
 	CS_FLAG_UPDATE_ALWAYS_check = 1 << 3,
 	CS_FLAG_COMPOUND_BASE_check = 1 << 4,
 
-	CS_FLAG_DRAW_WIREFRAME_check = 1 << 5, //just for debug
-	CS_FLAG_DRAW_TANGENTS_check = 1 << 6, //just for debug
-	CS_FLAG_DRAW_BINORMALS_check = 1 << 7, //just for debug
-	CS_FLAG_DRAW_NORMALS_check = 1 << 8, //just for debug
+	CS_FLAG_DRAW_WIREFRAME_check = 1 << 5,
+	CS_FLAG_DRAW_TANGENTS_check = 1 << 6,
+	CS_FLAG_DRAW_BINORMALS_check = 1 << 7,
+	CS_FLAG_DRAW_NORMALS_check = 1 << 8,
 
-	CS_FLAG_DRAW_LOCATOR_check = 1 << 9, //just for debug
-	CS_FLAG_DRAW_SKELETON_check = 1 << 10,//just for debug
+	CS_FLAG_DRAW_LOCATOR_check = 1 << 9,
+	CS_FLAG_DRAW_SKELETON_check = 1 << 10,
 
 	CS_FLAG_BIAS_SKIN_SORT_DIST_check = 1 << 11,
 
@@ -119,13 +120,9 @@ inline void CheckCHRLOADINGFLAGS()
 
 TYPE_MIRROR struct CharacterManagerStatistics
 {
-	// Number of character instances
 	unsigned numCharacters;
-	// Number of character models (CGF)
 	unsigned numCharModels;
-	// Number of animobjects
 	unsigned numAnimObjects;
-	// Number of animobject models
 	unsigned numAnimObjectModels;
 
 	explicit CharacterManagerStatistics(ICharacterManager::Statistics &other)
@@ -253,11 +250,11 @@ inline void CheckAnimationFlags()
 TYPE_MIRROR struct ParametricSampler
 {
 	void *vtable;
-	uint8	  m_nParametricType;        //Type of Group: i.e. I2M, M2I, MOVE, Idle-Step, Idle-Rot, etc....
-	uint8	  m_numDimensions;          //how many dimensions are used in this Parametric Group 
-	f32			m_MotionParameter[4];			//we have only 4 dimensions per blend-space
-	uint8		m_MotionParameterID[4];		//we have only 4 dimensions per blend-space 
-	uint8		m_MotionParameterFlags[4];	//we have only 4 dimensions per blend-space 
+	uint8	  m_nParametricType;
+	uint8	  m_numDimensions;
+	f32			m_MotionParameter[4];
+	uint8		m_MotionParameterID[4];
+	uint8		m_MotionParameterFlags[4];
 
 	explicit ParametricSampler(SParametricSampler &other)
 		: vtable(nullptr)
@@ -299,13 +296,13 @@ TYPE_MIRROR enum MotionParamID
 {
 	eMotionParamID_TravelSpeed_check = 0,
 	eMotionParamID_TurnSpeed_check,
-	eMotionParamID_TravelAngle_check,     //forward, backwards and sidestepping  
+	eMotionParamID_TravelAngle_check,
 	eMotionParamID_TravelSlope_check,
-	eMotionParamID_TurnAngle_check,       //Idle2Move and idle-rotations
-	eMotionParamID_TravelDist_check,      //idle-steps 
-	eMotionParamID_StopLeg_check,         //Move2Idle
+	eMotionParamID_TurnAngle_check,
+	eMotionParamID_TravelDist_check,
+	eMotionParamID_StopLeg_check,
 
-	eMotionParamID_BlendWeight_check,     //custom parameters
+	eMotionParamID_BlendWeight_check,
 	eMotionParamID_BlendWeight2_check,
 	eMotionParamID_BlendWeight3_check,
 	eMotionParamID_BlendWeight4_check,
@@ -414,4 +411,109 @@ inline void CheckAssetFlags()
 	CHECK_ENUM(CA_ASSET_TCB);
 	CHECK_ENUM(CA_ASSET_INTERNALTYPE);
 	CHECK_ENUM(CA_ASSET_BIG_ENDIAN);
+}
+
+TYPE_MIRROR enum FacialSequenceLayer
+{
+	eFacialSequenceLayer_Preview_check,
+	eFacialSequenceLayer_Dialogue_check,
+	eFacialSequenceLayer_Trackview_check,
+	eFacialSequenceLayer_AGStateAndAIAlertness_check,
+	eFacialSequenceLayer_Mannequin_check,
+	eFacialSequenceLayer_AIExpression_check,
+	eFacialSequenceLayer_FlowGraph_check,
+
+	eFacialSequenceLayer_COUNT_check
+};
+
+#undef CHECK_ENUM
+#define CHECK_ENUM(x) static_assert (FacialSequenceLayer::x ## _check == EFacialSequenceLayer::x, "EFacialSequenceLayer enumeration has been changed.")
+
+inline void CheckFacialSequenceLayer()
+{
+	CHECK_ENUM(eFacialSequenceLayer_Preview);
+	CHECK_ENUM(eFacialSequenceLayer_Dialogue);
+	CHECK_ENUM(eFacialSequenceLayer_Trackview);
+	CHECK_ENUM(eFacialSequenceLayer_AGStateAndAIAlertness);
+	CHECK_ENUM(eFacialSequenceLayer_Mannequin);
+	CHECK_ENUM(eFacialSequenceLayer_AIExpression);
+	CHECK_ENUM(eFacialSequenceLayer_FlowGraph);
+
+	CHECK_ENUM(eFacialSequenceLayer_COUNT);
+}
+
+TYPE_MIRROR enum FacialEffectorType
+{
+	EFE_TYPE_GROUP_check = 0x00,
+	EFE_TYPE_EXPRESSION_check = 0x01,
+	EFE_TYPE_MORPH_TARGET_check = 0x02,
+	EFE_TYPE_BONE_check = 0x03,
+	EFE_TYPE_MATERIAL_check = 0x04,
+	EFE_TYPE_ATTACHMENT_check = 0x05
+};
+
+#undef CHECK_ENUM
+#define CHECK_ENUM(x) static_assert (FacialEffectorType::x ## _check == EFacialEffectorType::x, "EFacialEffectorType enumeration has been changed.")
+
+inline void CheckFacialEffectorType()
+{
+	CHECK_ENUM(EFE_TYPE_GROUP);
+	CHECK_ENUM(EFE_TYPE_EXPRESSION);
+	CHECK_ENUM(EFE_TYPE_MORPH_TARGET);
+	CHECK_ENUM(EFE_TYPE_BONE);
+	CHECK_ENUM(EFE_TYPE_MATERIAL);
+	CHECK_ENUM(EFE_TYPE_ATTACHMENT);
+}
+
+TYPE_MIRROR enum FacialEffectorFlags
+{
+	EFE_FLAG_ROOT_check = 0x00001,
+
+	EFE_FLAG_UI_EXTENDED_check = 0x01000,
+	EFE_FLAG_UI_MODIFIED_check = 0x02000,
+	EFE_FLAG_UI_PREVIEW_check = 0x04000
+};
+
+#undef CHECK_ENUM
+#define CHECK_ENUM(x) static_assert (FacialEffectorFlags::x ## _check == EFacialEffectorFlags::x, "EFacialEffectorFlags enumeration has been changed.")
+
+inline void CheckFacialEffectorFlags()
+{
+	CHECK_ENUM(EFE_FLAG_ROOT);
+
+	CHECK_ENUM(EFE_FLAG_UI_EXTENDED);
+	CHECK_ENUM(EFE_FLAG_UI_MODIFIED);
+	CHECK_ENUM(EFE_FLAG_UI_PREVIEW);
+}
+
+TYPE_MIRROR enum FacialEffectorParam
+{
+	EFE_PARAM_BONE_NAME_check,
+	EFE_PARAM_BONE_ROT_AXIS_check,
+	EFE_PARAM_BONE_POS_AXIS_check
+};
+
+#undef CHECK_ENUM
+#define CHECK_ENUM(x) static_assert (FacialEffectorParam::x ## _check == EFacialEffectorParam::x, "EFacialEffectorParam enumeration has been changed.")
+
+inline void CheckFacialEffectorParam()
+{
+	CHECK_ENUM(EFE_PARAM_BONE_NAME);
+	CHECK_ENUM(EFE_PARAM_BONE_ROT_AXIS);
+	CHECK_ENUM(EFE_PARAM_BONE_POS_AXIS);
+}
+
+TYPE_MIRROR enum EMergeCollisionAction
+{
+	MergeCollisionActionNoOverwrite_check,
+	MergeCollisionActionOverwrite_check
+};
+
+#undef CHECK_ENUM
+#define CHECK_ENUM(x) static_assert (EMergeCollisionAction::x ## _check == MergeCollisionAction::x, "MergeCollisionAction enumeration has been changed.")
+
+inline void CheckEMergeCollisionAction()
+{
+	CHECK_ENUM(MergeCollisionActionNoOverwrite);
+	CHECK_ENUM(MergeCollisionActionOverwrite);
 }
