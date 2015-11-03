@@ -247,11 +247,18 @@ namespace CryCil.Engine.Models.Characters
 		/// </summary>
 		/// <param name="index">Zero-based index of the layer.</param>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
+		/// <exception cref="IndexOutOfRangeException" accessor="get">
+		/// Index of the layer must be less then 16.
+		/// </exception>
 		public SkeletonAnimationLayer this[uint index]
 		{
 			get
 			{
 				this.AssertInstance();
+				if (index >= 16)
+				{
+					throw new IndexOutOfRangeException("Index of the layer must be less then 16.");
+				}
 				Contract.EndContractBlock();
 
 				return new SkeletonAnimationLayer(this.handle, index);

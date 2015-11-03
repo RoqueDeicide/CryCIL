@@ -341,3 +341,16 @@ inline void CheckMotionParamID()
 
 	CHECK_ENUM(eMotionParamID_COUNT);
 }
+
+TYPE_MIRROR enum LayerCountCheck
+{
+	LayerCount_check = 16
+};
+
+#undef CHECK_ENUM
+#define CHECK_ENUM(x) static_assert (LayerCountCheck::x ## _check == ISkeletonAnim::x, "ISkeletonAnim::LayerCount has been changed.")
+
+inline void CheckLayerCount()
+{
+	CHECK_ENUM(LayerCount);
+}
