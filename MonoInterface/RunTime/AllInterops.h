@@ -131,3 +131,5 @@
 #include "Interops/SkeletonAnimation.h"
 
 #include "Interops/SkeletonPose.h"
+
+#include "Interops/AnimationSet.h"

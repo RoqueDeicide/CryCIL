@@ -488,6 +488,9 @@
     <ClInclude Include="Interops\SkeletonPose.h">
       <Filter>Interops\Engine\Models\Characters</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\AnimationSet.h">
+      <Filter>Interops\Engine\Models\Characters</Filter>
+    </ClInclude>
     <ClInclude Include="Interops\CharacterSkin.h">
       <Filter>Interops\Engine\Models\Characters</Filter>
     </ClInclude>
@@ -921,6 +924,9 @@
       <Filter>Interops\Engine\Models\Characters</Filter>
     </ClCompile>
     <ClCompile Include="Interops\SkeletonPose.cpp">
+      <Filter>Interops\Engine\Models\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\AnimationSet.cpp">
       <Filter>Interops\Engine\Models\Characters</Filter>
     </ClCompile>
     <ClCompile Include="Interops\CharacterSkin.cpp">

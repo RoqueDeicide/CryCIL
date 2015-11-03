@@ -354,3 +354,64 @@ inline void CheckLayerCount()
 {
 	CHECK_ENUM(LayerCount);
 }
+
+TYPE_MIRROR enum SampleResult
+{
+	eSR_Success_check,
+
+	eSR_InvalidAnimationId_check,
+	eSR_UnsupportedAssetType_check,
+	eSR_NotInMemory_check,
+	eSR_ControllerNotFound_check
+};
+
+#undef CHECK_ENUM
+#define CHECK_ENUM(x) static_assert (SampleResult::x ## _check == IAnimationSet::ESampleResult::x, "IAnimationSet::ESampleResult enumeration has been changed.")
+
+inline void CheckSampleResult()
+{
+	CHECK_ENUM(eSR_Success);
+	CHECK_ENUM(eSR_InvalidAnimationId);
+	CHECK_ENUM(eSR_UnsupportedAssetType);
+	CHECK_ENUM(eSR_NotInMemory);
+	CHECK_ENUM(eSR_ControllerNotFound);
+}
+
+TYPE_MIRROR enum AssetFlags
+{
+	CA_ASSET_ADDITIVE_check = 0x001,
+	CA_ASSET_CYCLE_check = 0x002,
+	CA_ASSET_LOADED_check = 0x004,
+	CA_ASSET_LMG_check = 0x008,
+	CA_ASSET_LMG_VALID_check = 0x020,
+	CA_ASSET_CREATED_check = 0x800,
+	CA_ASSET_REQUESTED_check = 0x1000,
+	CA_ASSET_ONDEMAND_check = 0x2000,
+	CA_AIMPOSE_check = 0x4000,
+	CA_AIMPOSE_UNLOADED_check = 0x8000,
+	CA_ASSET_NOT_FOUND_check = 0x10000,
+	CA_ASSET_TCB_check = 0x20000,
+	CA_ASSET_INTERNALTYPE_check = 0x40000,
+	CA_ASSET_BIG_ENDIAN_check = 0x80000000
+};
+
+#undef CHECK_ENUM
+#define CHECK_ENUM(x) static_assert (AssetFlags::x ## _check == CA_AssetFlags::x, "CA_AssetFlags enumeration has been changed.")
+
+inline void CheckAssetFlags()
+{
+	CHECK_ENUM(CA_ASSET_ADDITIVE);
+	CHECK_ENUM(CA_ASSET_CYCLE);
+	CHECK_ENUM(CA_ASSET_LOADED);
+	CHECK_ENUM(CA_ASSET_LMG);
+	CHECK_ENUM(CA_ASSET_LMG_VALID);
+	CHECK_ENUM(CA_ASSET_CREATED);
+	CHECK_ENUM(CA_ASSET_REQUESTED);
+	CHECK_ENUM(CA_ASSET_ONDEMAND);
+	CHECK_ENUM(CA_AIMPOSE);
+	CHECK_ENUM(CA_AIMPOSE_UNLOADED);
+	CHECK_ENUM(CA_ASSET_NOT_FOUND);
+	CHECK_ENUM(CA_ASSET_TCB);
+	CHECK_ENUM(CA_ASSET_INTERNALTYPE);
+	CHECK_ENUM(CA_ASSET_BIG_ENDIAN);
+}

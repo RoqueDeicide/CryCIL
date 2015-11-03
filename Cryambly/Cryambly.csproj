@@ -92,10 +92,12 @@
     <Compile Include="Engine\Localization\NamespaceDoc.cs" />
     <Compile Include="Engine\Logic\NamespaceDoc.cs" />
     <Compile Include="Engine\Memory\NamespaceDoc.cs" />
+    <Compile Include="Engine\Models\Characters\AnimationAssetFlags.cs" />
     <Compile Include="Engine\Models\Characters\AnimationEvent.cs" />
     <Compile Include="Engine\Models\Characters\AnimationFileFormatIds.cs" />
     <Compile Include="Engine\Models\Characters\AnimationFlags.cs" />
     <Compile Include="Engine\Models\Characters\AnimationProcessParameters.cs" />
+    <Compile Include="Engine\Models\Characters\AnimationSet.cs" />
     <Compile Include="Engine\Models\Characters\Character.Statics.cs" />
     <Compile Include="Engine\Models\Characters\CharacterAnimation.cs" />
     <Compile Include="Engine\Models\Characters\CharacterAnimationParameters.cs" />
