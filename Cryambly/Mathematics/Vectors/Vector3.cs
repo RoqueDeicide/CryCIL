@@ -20,6 +20,8 @@ namespace CryCil
 		/// A zero vector - a point.
 		/// </summary>
 		public static readonly Vector3 Zero = new Vector3(0, 0, 0);
+		// For internal use.
+		internal static Vector3 SecretZero = new Vector3(0, 0, 0);
 		/// <summary>
 		/// A vector that points straight up.
 		/// </summary>
