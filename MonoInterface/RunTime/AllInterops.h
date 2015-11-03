@@ -129,3 +129,5 @@
 #include "Interops/ParametricSampler.h"
 
 #include "Interops/SkeletonAnimation.h"
+
+#include "Interops/SkeletonPose.h"

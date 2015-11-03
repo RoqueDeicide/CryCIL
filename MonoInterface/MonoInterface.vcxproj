@@ -347,6 +347,7 @@
     <ClInclude Include="Interops\RenderMesh.h" />
     <ClInclude Include="Interops\Shading.h" />
     <ClInclude Include="Interops\SkeletonAnimation.h" />
+    <ClInclude Include="Interops\SkeletonPose.h" />
     <ClInclude Include="Interops\Spline.h" />
     <ClInclude Include="Interops\StackString.h" />
     <ClInclude Include="Interops\StaticObject.h" />
@@ -481,6 +482,7 @@
     <ClCompile Include="Interops\RenderMesh.cpp" />
     <ClCompile Include="Interops\Shading.cpp" />
     <ClCompile Include="Interops\SkeletonAnimation.cpp" />
+    <ClCompile Include="Interops\SkeletonPose.cpp" />
     <ClCompile Include="Interops\Spline.cpp" />
     <ClCompile Include="Interops\StackString.cpp" />
     <ClCompile Include="Interops\StaticObject.cpp" />

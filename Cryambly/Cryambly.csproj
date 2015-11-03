@@ -110,6 +110,8 @@
     <Compile Include="Engine\Models\Characters\ReloadCafResult.cs" />
     <Compile Include="Engine\Models\Characters\SkeletonAnimation.cs" />
     <Compile Include="Engine\Models\Characters\SkeletonAnimationLayers.cs" />
+    <Compile Include="Engine\Models\Characters\SkeletonJoints.cs" />
+    <Compile Include="Engine\Models\Characters\SkeletonPose.cs" />
     <Compile Include="Engine\Models\StaticObjects\Meshes\CMeshInternals.cs" />
     <Compile Include="Engine\Models\StaticObjects\Meshes\CryIndexedMesh.cs" />
     <Compile Include="Engine\Models\StaticObjects\Meshes\CryIndexedMeshSubsets.cs" />
