@@ -108,12 +108,14 @@
     <Compile Include="Engine\Models\Characters\DbaStreamingPriority.cs" />
     <Compile Include="Engine\Models\Characters\DefaultSkeleton.cs" />
     <Compile Include="Engine\Models\Characters\Faces\FaceIdentifier.cs" />
+    <Compile Include="Engine\Models\Characters\Faces\FaceState.cs" />
     <Compile Include="Engine\Models\Characters\Faces\FacialEffector.cs" />
     <Compile Include="Engine\Models\Characters\Faces\FacialEffectorController.cs" />
     <Compile Include="Engine\Models\Characters\Faces\FacialEffectorFlags.cs" />
     <Compile Include="Engine\Models\Characters\Faces\FacialEffectorParameterId.cs" />
     <Compile Include="Engine\Models\Characters\Faces\FacialEffectorsLibrary.cs" />
     <Compile Include="Engine\Models\Characters\Faces\FacialEffectorType.cs" />
+    <Compile Include="Engine\Models\Characters\Faces\FacialModel.cs" />
     <Compile Include="Engine\Models\Characters\NamespaceDoc.cs" />
     <Compile Include="Engine\Models\Characters\ParametricSampler.cs" />
     <Compile Include="Engine\Models\Characters\ReloadCafResult.cs" />

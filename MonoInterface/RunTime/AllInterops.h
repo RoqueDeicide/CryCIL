@@ -143,3 +143,7 @@
 #include "Interops/FacialEffector.h"
 
 #include "Interops/FacialEffectorsLibrary.h"
+
+#include "Interops/FacialModel.h"
+
+#include "Interops/FaceState.h"

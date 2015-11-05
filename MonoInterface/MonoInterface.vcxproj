@@ -302,9 +302,11 @@
     <ClInclude Include="Interops\EntityExtension.h" />
     <ClInclude Include="Interops\ExplosionStructs.h" />
     <ClInclude Include="Interops\FaceIdentifier.h" />
+    <ClInclude Include="Interops\FaceState.h" />
     <ClInclude Include="Interops\FacialEffector.h" />
     <ClInclude Include="Interops\FacialEffectorController.h" />
     <ClInclude Include="Interops\FacialEffectorsLibrary.h" />
+    <ClInclude Include="Interops\FacialModel.h" />
     <ClInclude Include="Interops\FlowGraph.h" />
     <ClInclude Include="Interops\ForeignData.h" />
     <ClInclude Include="Interops\Game.h" />
@@ -453,9 +455,11 @@
     <ClCompile Include="Interops\EntityClass.cpp" />
     <ClCompile Include="Interops\EntityExtension.cpp" />
     <ClCompile Include="Interops\FaceIdentifier.cpp" />
+    <ClCompile Include="Interops\FaceState.cpp" />
     <ClCompile Include="Interops\FacialEffector.cpp" />
     <ClCompile Include="Interops\FacialEffectorController.cpp" />
     <ClCompile Include="Interops\FacialEffectorsLibrary.cpp" />
+    <ClCompile Include="Interops\FacialModel.cpp" />
     <ClCompile Include="Interops\FlowGraph.cpp" />
     <ClCompile Include="Interops\Game.cpp" />
     <ClCompile Include="Interops\GeneralExtensions.cpp" />

@@ -376,6 +376,8 @@ void MonoInterface::RegisterDefaultListeners()
 	this->broadcaster->listeners->Add(new CustomMarshalingInterop());
 	this->broadcaster->listeners->Add(new FaceIdentifierInterop());
 	this->broadcaster->listeners->Add(new FacialEffectorsLibraryInterop());
+	this->broadcaster->listeners->Add(new FacialModelInterop());
+	this->broadcaster->listeners->Add(new FaceStateInterop());
 }
 #pragma endregion
 #pragma region Thunks Initialization
