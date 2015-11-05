@@ -133,3 +133,13 @@
 #include "Interops/SkeletonPose.h"
 
 #include "Interops/AnimationSet.h"
+
+#include "Interops/CustomMarshaling.h"
+
+#include "Interops/FaceIdentifier.h"
+
+#include "Interops/FacialEffectorController.h"
+
+#include "Interops/FacialEffector.h"
+
+#include "Interops/FacialEffectorsLibrary.h"

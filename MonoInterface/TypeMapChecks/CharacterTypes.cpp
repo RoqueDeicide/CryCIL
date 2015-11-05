@@ -503,17 +503,44 @@ inline void CheckFacialEffectorParam()
 	CHECK_ENUM(EFE_PARAM_BONE_POS_AXIS);
 }
 
-TYPE_MIRROR enum EMergeCollisionAction
+TYPE_MIRROR enum FacialEffCtrlControlType
 {
-	MergeCollisionActionNoOverwrite_check,
-	MergeCollisionActionOverwrite_check
+	CTRL_LINEAR_check,
+	CTRL_SPLINE_check
 };
 
 #undef CHECK_ENUM
-#define CHECK_ENUM(x) static_assert (EMergeCollisionAction::x ## _check == MergeCollisionAction::x, "MergeCollisionAction enumeration has been changed.")
+#define CHECK_ENUM(x) static_assert (FacialEffCtrlControlType::x ## _check == IFacialEffCtrl::x, "IFacialEffCtrl::ControlType enumeration has been changed.")
 
-inline void CheckEMergeCollisionAction()
+inline void CheckFacialEffCtrlControlType()
 {
-	CHECK_ENUM(MergeCollisionActionNoOverwrite);
-	CHECK_ENUM(MergeCollisionActionOverwrite);
+	CHECK_ENUM(CTRL_LINEAR);
+	CHECK_ENUM(CTRL_SPLINE);
 }
+
+TYPE_MIRROR enum FacialEffCtrlControlFlags
+{
+	CTRL_FLAG_UI_EXPENDED_check = 0x01000
+};
+
+#undef CHECK_ENUM
+#define CHECK_ENUM(x) static_assert (FacialEffCtrlControlFlags::x ## _check == IFacialEffCtrl::x, "IFacialEffCtrl::ControlFlags enumeration has been changed.")
+
+inline void CheckFacialEffCtrlControlFlags()
+{
+	CHECK_ENUM(CTRL_FLAG_UI_EXPENDED);
+}
+
+TYPE_MIRROR struct FaceIdentifier
+{
+	const char *str;
+	uint32 crc;
+
+	explicit FaceIdentifier()
+	{
+		CHECK_TYPES_SIZE(FaceIdentifier, CFaceIdentifierHandle);
+
+		str = nullptr;
+		crc = 0;
+	}
+};

@@ -6,7 +6,7 @@ namespace CryCil.Engine.Models.Characters.Faces
 	/// Enumeration of flags that specify facial effectors.
 	/// </summary>
 	[Flags]
-	public enum FacialEffectorFlags
+	public enum FacialEffectorFlags : uint
 	{
 		/// <summary>
 		/// When set, species that this facial effector is a root effector in the library.

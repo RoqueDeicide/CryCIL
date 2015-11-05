@@ -107,6 +107,13 @@
     <Compile Include="Engine\Models\Characters\CharacterSkin.cs" />
     <Compile Include="Engine\Models\Characters\DbaStreamingPriority.cs" />
     <Compile Include="Engine\Models\Characters\DefaultSkeleton.cs" />
+    <Compile Include="Engine\Models\Characters\Faces\FaceIdentifier.cs" />
+    <Compile Include="Engine\Models\Characters\Faces\FacialEffector.cs" />
+    <Compile Include="Engine\Models\Characters\Faces\FacialEffectorController.cs" />
+    <Compile Include="Engine\Models\Characters\Faces\FacialEffectorFlags.cs" />
+    <Compile Include="Engine\Models\Characters\Faces\FacialEffectorParameterId.cs" />
+    <Compile Include="Engine\Models\Characters\Faces\FacialEffectorsLibrary.cs" />
+    <Compile Include="Engine\Models\Characters\Faces\FacialEffectorType.cs" />
     <Compile Include="Engine\Models\Characters\NamespaceDoc.cs" />
     <Compile Include="Engine\Models\Characters\ParametricSampler.cs" />
     <Compile Include="Engine\Models\Characters\ReloadCafResult.cs" />
@@ -649,6 +656,7 @@
     <Compile Include="RunTime\Logging\NamespaceDoc.cs" />
     <Compile Include="RunTime\MonoInterface.cs" />
     <Compile Include="RunTime\NamespaceDoc.cs" />
+    <Compile Include="Utilities\CustomMarshaling.cs" />
     <Compile Include="Utilities\NamespaceDoc.cs" />
     <Compile Include="Utilities\StackString.cs" />
     <Compile Include="Utilities\StridedPointer.cs" />

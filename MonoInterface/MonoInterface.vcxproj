@@ -293,6 +293,7 @@
     <ClInclude Include="Interops\CryPak.h" />
     <ClInclude Include="Interops\CrySync.h" />
     <ClInclude Include="Interops\CryXmlNode.h" />
+    <ClInclude Include="Interops\CustomMarshaling.h" />
     <ClInclude Include="Interops\DebugDraw.h" />
     <ClInclude Include="Interops\CryFont.h" />
     <ClInclude Include="Interops\DefaultSkeleton.h" />
@@ -300,6 +301,10 @@
     <ClInclude Include="Interops\EntityClass.h" />
     <ClInclude Include="Interops\EntityExtension.h" />
     <ClInclude Include="Interops\ExplosionStructs.h" />
+    <ClInclude Include="Interops\FaceIdentifier.h" />
+    <ClInclude Include="Interops\FacialEffector.h" />
+    <ClInclude Include="Interops\FacialEffectorController.h" />
+    <ClInclude Include="Interops\FacialEffectorsLibrary.h" />
     <ClInclude Include="Interops\FlowGraph.h" />
     <ClInclude Include="Interops\ForeignData.h" />
     <ClInclude Include="Interops\Game.h" />
@@ -441,11 +446,16 @@
     <ClCompile Include="Interops\CryPak.cpp" />
     <ClCompile Include="Interops\CrySync.cpp" />
     <ClCompile Include="Interops\CryXmlNode.cpp" />
+    <ClCompile Include="Interops\CustomMarshaling.cpp" />
     <ClCompile Include="Interops\DebugDraw.cpp" />
     <ClCompile Include="Interops\DefaultSkeleton.cpp" />
     <ClCompile Include="Interops\Entity.cpp" />
     <ClCompile Include="Interops\EntityClass.cpp" />
     <ClCompile Include="Interops\EntityExtension.cpp" />
+    <ClCompile Include="Interops\FaceIdentifier.cpp" />
+    <ClCompile Include="Interops\FacialEffector.cpp" />
+    <ClCompile Include="Interops\FacialEffectorController.cpp" />
+    <ClCompile Include="Interops\FacialEffectorsLibrary.cpp" />
     <ClCompile Include="Interops\FlowGraph.cpp" />
     <ClCompile Include="Interops\Game.cpp" />
     <ClCompile Include="Interops\GeneralExtensions.cpp" />

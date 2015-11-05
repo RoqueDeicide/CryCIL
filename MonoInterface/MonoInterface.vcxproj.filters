@@ -494,6 +494,21 @@
     <ClInclude Include="Interops\CharacterSkin.h">
       <Filter>Interops\Engine\Models\Characters</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\FacialEffectorController.h">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\FacialEffector.h">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\CustomMarshaling.h">
+      <Filter>Interops\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\FaceIdentifier.h">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\FacialEffectorsLibrary.h">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -932,6 +947,21 @@
     <ClCompile Include="Interops\CharacterSkin.cpp">
       <Filter>Interops\Engine\Models\Characters</Filter>
     </ClCompile>
+    <ClCompile Include="Interops\FacialEffectorController.cpp">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\FacialEffector.cpp">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\CustomMarshaling.cpp">
+      <Filter>Interops\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\FaceIdentifier.cpp">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\FacialEffectorsLibrary.cpp">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">
@@ -1044,6 +1074,9 @@
     </Filter>
     <Filter Include="Interops\Engine\Models\Characters">
       <UniqueIdentifier>{45e016b3-d283-4e0d-8fa6-122fa699165f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interops\Engine\Models\Characters\FacialAnimation">
+      <UniqueIdentifier>{d2049067-19d0-437b-b952-abaa3435cdee}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
