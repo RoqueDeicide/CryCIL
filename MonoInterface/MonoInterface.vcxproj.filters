@@ -452,48 +452,6 @@
     <ClInclude Include="Interops\WaterManagerStructs.h">
       <Filter>Interops\Engine\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="Interops\StaticSubObject.h">
-      <Filter>Interops\Engine\Models</Filter>
-    </ClInclude>
-    <ClInclude Include="Interops\StaticObject.h">
-      <Filter>Interops\Engine\Models</Filter>
-    </ClInclude>
-    <ClInclude Include="Interops\CMesh.h">
-      <Filter>Interops\Engine\Models</Filter>
-    </ClInclude>
-    <ClInclude Include="Interops\IndexedMesh.h">
-      <Filter>Interops\Engine\Models</Filter>
-    </ClInclude>
-    <ClInclude Include="Interops\RenderMesh.h">
-      <Filter>Interops\Engine\Models</Filter>
-    </ClInclude>
-    <ClInclude Include="Interops\Character.h">
-      <Filter>Interops\Engine\Models\Characters</Filter>
-    </ClInclude>
-    <ClInclude Include="Interops\DefaultSkeleton.h">
-      <Filter>Interops\Engine\Models\Characters</Filter>
-    </ClInclude>
-    <ClInclude Include="Interops\CharacterAnimation.h">
-      <Filter>Interops\Engine\Models\Characters</Filter>
-    </ClInclude>
-    <ClInclude Include="Interops\ParametricSampler.h">
-      <Filter>Interops\Engine\Models\Characters</Filter>
-    </ClInclude>
-    <ClInclude Include="Interops\SkeletonAnimation.h">
-      <Filter>Interops\Engine\Models\Characters</Filter>
-    </ClInclude>
-    <ClInclude Include="Interops\MonoAnimationEvent.h">
-      <Filter>Interops\Engine\Models\Characters</Filter>
-    </ClInclude>
-    <ClInclude Include="Interops\SkeletonPose.h">
-      <Filter>Interops\Engine\Models\Characters</Filter>
-    </ClInclude>
-    <ClInclude Include="Interops\AnimationSet.h">
-      <Filter>Interops\Engine\Models\Characters</Filter>
-    </ClInclude>
-    <ClInclude Include="Interops\CharacterSkin.h">
-      <Filter>Interops\Engine\Models\Characters</Filter>
-    </ClInclude>
     <ClInclude Include="Interops\FacialEffectorController.h">
       <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
     </ClInclude>
@@ -514,6 +472,48 @@
     </ClInclude>
     <ClInclude Include="Interops\FaceState.h">
       <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\CMesh.h">
+      <Filter>Interops\Engine\Models\StaticObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\IndexedMesh.h">
+      <Filter>Interops\Engine\Models\StaticObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\RenderMesh.h">
+      <Filter>Interops\Engine\Models\StaticObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\StaticObject.h">
+      <Filter>Interops\Engine\Models\StaticObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\StaticSubObject.h">
+      <Filter>Interops\Engine\Models\StaticObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\AnimationSet.h">
+      <Filter>Interops\Engine\Models\Characters\SimpleAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\Character.h">
+      <Filter>Interops\Engine\Models\Characters\SimpleAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\CharacterAnimation.h">
+      <Filter>Interops\Engine\Models\Characters\SimpleAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\CharacterSkin.h">
+      <Filter>Interops\Engine\Models\Characters\SimpleAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\DefaultSkeleton.h">
+      <Filter>Interops\Engine\Models\Characters\SimpleAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\MonoAnimationEvent.h">
+      <Filter>Interops\Engine\Models\Characters\SimpleAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\ParametricSampler.h">
+      <Filter>Interops\Engine\Models\Characters\SimpleAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\SkeletonAnimation.h">
+      <Filter>Interops\Engine\Models\Characters\SimpleAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\SkeletonPose.h">
+      <Filter>Interops\Engine\Models\Characters\SimpleAnimation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -896,12 +896,6 @@
     <ClCompile Include="TypeMapChecks\StaticObjectStuff.cpp">
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
-    <ClCompile Include="Interops\StaticSubObject.cpp">
-      <Filter>Interops\Engine\Models</Filter>
-    </ClCompile>
-    <ClCompile Include="Interops\StaticObject.cpp">
-      <Filter>Interops\Engine\Models</Filter>
-    </ClCompile>
     <ClCompile Include="TypeMapChecks\MeshTypes.cpp">
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
@@ -911,47 +905,11 @@
     <ClCompile Include="TypeMapChecks\PhysicsGeomType.cpp">
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
-    <ClCompile Include="Interops\CMesh.cpp">
-      <Filter>Interops\Engine\Models</Filter>
-    </ClCompile>
-    <ClCompile Include="Interops\IndexedMesh.cpp">
-      <Filter>Interops\Engine\Models</Filter>
-    </ClCompile>
-    <ClCompile Include="Interops\RenderMesh.cpp">
-      <Filter>Interops\Engine\Models</Filter>
-    </ClCompile>
     <ClCompile Include="TypeMapChecks\VertexFormatsAndPips.cpp">
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
     <ClCompile Include="TypeMapChecks\CharacterTypes.cpp">
       <Filter>TypeMapChecks</Filter>
-    </ClCompile>
-    <ClCompile Include="Interops\Character.cpp">
-      <Filter>Interops\Engine\Models\Characters</Filter>
-    </ClCompile>
-    <ClCompile Include="Interops\DefaultSkeleton.cpp">
-      <Filter>Interops\Engine\Models\Characters</Filter>
-    </ClCompile>
-    <ClCompile Include="Interops\CharacterAnimation.cpp">
-      <Filter>Interops\Engine\Models\Characters</Filter>
-    </ClCompile>
-    <ClCompile Include="Interops\ParametricSampler.cpp">
-      <Filter>Interops\Engine\Models\Characters</Filter>
-    </ClCompile>
-    <ClCompile Include="Interops\SkeletonAnimation.cpp">
-      <Filter>Interops\Engine\Models\Characters</Filter>
-    </ClCompile>
-    <ClCompile Include="Interops\MonoAnimationEvent.cpp">
-      <Filter>Interops\Engine\Models\Characters</Filter>
-    </ClCompile>
-    <ClCompile Include="Interops\SkeletonPose.cpp">
-      <Filter>Interops\Engine\Models\Characters</Filter>
-    </ClCompile>
-    <ClCompile Include="Interops\AnimationSet.cpp">
-      <Filter>Interops\Engine\Models\Characters</Filter>
-    </ClCompile>
-    <ClCompile Include="Interops\CharacterSkin.cpp">
-      <Filter>Interops\Engine\Models\Characters</Filter>
     </ClCompile>
     <ClCompile Include="Interops\FacialEffectorController.cpp">
       <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
@@ -973,6 +931,48 @@
     </ClCompile>
     <ClCompile Include="Interops\FaceState.cpp">
       <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\CMesh.cpp">
+      <Filter>Interops\Engine\Models\StaticObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\IndexedMesh.cpp">
+      <Filter>Interops\Engine\Models\StaticObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\RenderMesh.cpp">
+      <Filter>Interops\Engine\Models\StaticObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\StaticObject.cpp">
+      <Filter>Interops\Engine\Models\StaticObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\StaticSubObject.cpp">
+      <Filter>Interops\Engine\Models\StaticObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\AnimationSet.cpp">
+      <Filter>Interops\Engine\Models\Characters\SimpleAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\Character.cpp">
+      <Filter>Interops\Engine\Models\Characters\SimpleAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\CharacterAnimation.cpp">
+      <Filter>Interops\Engine\Models\Characters\SimpleAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\CharacterSkin.cpp">
+      <Filter>Interops\Engine\Models\Characters\SimpleAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\DefaultSkeleton.cpp">
+      <Filter>Interops\Engine\Models\Characters\SimpleAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\MonoAnimationEvent.cpp">
+      <Filter>Interops\Engine\Models\Characters\SimpleAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\ParametricSampler.cpp">
+      <Filter>Interops\Engine\Models\Characters\SimpleAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\SkeletonAnimation.cpp">
+      <Filter>Interops\Engine\Models\Characters\SimpleAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\SkeletonPose.cpp">
+      <Filter>Interops\Engine\Models\Characters\SimpleAnimation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1089,6 +1089,12 @@
     </Filter>
     <Filter Include="Interops\Engine\Models\Characters\FacialAnimation">
       <UniqueIdentifier>{d2049067-19d0-437b-b952-abaa3435cdee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interops\Engine\Models\StaticObjects">
+      <UniqueIdentifier>{ca233a3f-af78-4780-9a7b-4dc8b6503800}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interops\Engine\Models\Characters\SimpleAnimation">
+      <UniqueIdentifier>{893ac42c-6593-4737-b9fc-4be892de8f51}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
