@@ -149,3 +149,5 @@
 #include "Interops/FaceState.h"
 
 #include "Interops/PhonemeLibrary.h"
+
+#include "Interops/FacialSentence.h"

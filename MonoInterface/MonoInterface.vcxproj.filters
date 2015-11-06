@@ -518,6 +518,9 @@
     <ClInclude Include="Interops\PhonemeLibrary.h">
       <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\FacialSentence.h">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -978,6 +981,9 @@
       <Filter>Interops\Engine\Models\Characters\SimpleAnimation</Filter>
     </ClCompile>
     <ClCompile Include="Interops\PhonemeLibrary.cpp">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\FacialSentence.cpp">
       <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
     </ClCompile>
   </ItemGroup>

@@ -564,3 +564,46 @@ TYPE_MIRROR struct PhonemeInfo
 		CHECK_TYPE(description);
 	}
 };
+
+TYPE_MIRROR struct SentencePhoneme
+{
+	char phoneme[4];    // Phoneme name.
+	int time;           // Start time of the phoneme in milliseconds.
+	int endtime;        // End time the phoneme in milliseconds.
+	float intensity;
+
+	explicit SentencePhoneme(const IFacialSentence::Phoneme &other)
+	{
+		CHECK_TYPES_SIZE(SentencePhoneme, IFacialSentence::Phoneme);
+
+		ASSIGN_FIELD(phoneme[0]);
+		ASSIGN_FIELD(time);
+		ASSIGN_FIELD(endtime);
+		ASSIGN_FIELD(intensity);
+
+		CHECK_TYPE(phoneme);
+		CHECK_TYPE(time);
+		CHECK_TYPE(endtime);
+		CHECK_TYPE(intensity);
+	}
+};
+
+TYPE_MIRROR struct SentenceWord
+{
+	const char *sWord;  // Word text
+	int startTime;     // Start time of the word in milliseconds.
+	int endTime;
+
+	explicit SentenceWord(const IFacialSentence::Word &other)
+	{
+		CHECK_TYPES_SIZE(SentenceWord, IFacialSentence::Word);
+
+		ASSIGN_FIELD(sWord);
+		ASSIGN_FIELD(startTime);
+		ASSIGN_FIELD(endTime);
+
+		CHECK_TYPE(sWord);
+		CHECK_TYPE(startTime);
+		CHECK_TYPE(endTime);
+	}
+};

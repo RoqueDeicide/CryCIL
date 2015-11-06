@@ -307,6 +307,7 @@
     <ClInclude Include="Interops\FacialEffectorController.h" />
     <ClInclude Include="Interops\FacialEffectorsLibrary.h" />
     <ClInclude Include="Interops\FacialModel.h" />
+    <ClInclude Include="Interops\FacialSentence.h" />
     <ClInclude Include="Interops\FlowGraph.h" />
     <ClInclude Include="Interops\ForeignData.h" />
     <ClInclude Include="Interops\Game.h" />
@@ -461,6 +462,7 @@
     <ClCompile Include="Interops\FacialEffectorController.cpp" />
     <ClCompile Include="Interops\FacialEffectorsLibrary.cpp" />
     <ClCompile Include="Interops\FacialModel.cpp" />
+    <ClCompile Include="Interops\FacialSentence.cpp" />
     <ClCompile Include="Interops\FlowGraph.cpp" />
     <ClCompile Include="Interops\Game.cpp" />
     <ClCompile Include="Interops\GeneralExtensions.cpp" />
