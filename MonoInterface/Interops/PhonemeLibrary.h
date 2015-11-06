@@ -12,7 +12,7 @@ struct PhonemeLibraryInterop : IMonoInterop<true, true>
 
 	virtual void OnRunTimeInitialized() override;
 
-	static int  GetPhonemeCount(IPhonemeLibrary *handle);
-	static bool GetPhonemeInfo(IPhonemeLibrary *handle, int nIndex, SPhonemeInfo &phoneme);
-	static int  FindPhonemeByName(IPhonemeLibrary *handle, const char* sPhonemeName);
+	static int  GetPhonemeCount();
+	static bool GetPhonemeInfo(int nIndex, SPhonemeInfo &phoneme);
+	static int  FindPhonemeByName(const char* sPhonemeName);
 };

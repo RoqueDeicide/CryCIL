@@ -1,6 +1,7 @@
 ﻿#include "stdafx.h"
 
 #include "PhonemeLibrary.h"
+#include <ICryAnimation.h>
 #include <IFacialAnimation.h>
 
 void PhonemeLibraryInterop::OnRunTimeInitialized()
@@ -10,17 +11,17 @@ void PhonemeLibraryInterop::OnRunTimeInitialized()
 	REGISTER_METHOD(FindPhonemeByName);
 }
 
-int PhonemeLibraryInterop::GetPhonemeCount(IPhonemeLibrary *handle)
+int PhonemeLibraryInterop::GetPhonemeCount()
 {
-	return handle->GetPhonemeCount();
+	return gEnv->pCharacterManager->GetIFacialAnimation()->GetPhonemeLibrary()->GetPhonemeCount();
 }
 
-bool PhonemeLibraryInterop::GetPhonemeInfo(IPhonemeLibrary *handle, int nIndex, SPhonemeInfo &phoneme)
+bool PhonemeLibraryInterop::GetPhonemeInfo(int nIndex, SPhonemeInfo &phoneme)
 {
-	return handle->GetPhonemeInfo(nIndex, phoneme);
+	return gEnv->pCharacterManager->GetIFacialAnimation()->GetPhonemeLibrary()->GetPhonemeInfo(nIndex, phoneme);
 }
 
-int PhonemeLibraryInterop::FindPhonemeByName(IPhonemeLibrary *handle, const char* sPhonemeName)
+int PhonemeLibraryInterop::FindPhonemeByName(const char* sPhonemeName)
 {
-	return handle->FindPhonemeByName(sPhonemeName);
+	return gEnv->pCharacterManager->GetIFacialAnimation()->GetPhonemeLibrary()->FindPhonemeByName(sPhonemeName);
 }
