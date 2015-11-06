@@ -151,3 +151,11 @@
 #include "Interops/PhonemeLibrary.h"
 
 #include "Interops/FacialSentence.h"
+
+#include "Interops/FacialAnimationChannel.h"
+
+#include "Interops/FacialAnimationSequence.h"
+
+#include "Interops/FacialAnimationSoundEntry.h"
+
+#include "Interops/FacialAnimationSkeletonAnimationEntry.h"

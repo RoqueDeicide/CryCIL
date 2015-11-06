@@ -521,6 +521,21 @@
     <ClInclude Include="Interops\FacialSentence.h">
       <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\FacialAnimationChannel.h">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\FacialAnimationSoundEntry.h">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\FacialAnimationSequence.h">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\FacialAnimationSkeletonAnimationEntry.h">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\MergingUtility.h">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -984,6 +999,18 @@
       <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
     </ClCompile>
     <ClCompile Include="Interops\FacialSentence.cpp">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\FacialAnimationChannel.cpp">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\FacialAnimationSequence.cpp">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\FacialAnimationSkeletonAnimationEntry.cpp">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\FacialAnimationSoundEntry.cpp">
       <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
     </ClCompile>
   </ItemGroup>

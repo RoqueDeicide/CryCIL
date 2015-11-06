@@ -2,6 +2,7 @@
 
 #include "FacialEffectorsLibrary.h"
 #include <IFacialAnimation.h>
+#include "MergingUtility.h"
 
 void FacialEffectorsLibraryInterop::OnRunTimeInitialized()
 {
@@ -90,30 +91,9 @@ void FacialEffectorsLibraryInterop::RemoveEffector(IFacialEffectorsLibrary *hand
 	handle->RemoveEffector(pEffector);
 }
 
-//! Used when merging libraries when name-conflicts must be resolved by overwriting one of the effectors.
-MergeCollisionAction overwriteStrategy(const char *)
-{
-	return MergeCollisionActionOverwrite;
-}
-
-//! Used when merging libraries when name-conflicts must be resolved by not overwriting one of the effectors.
-MergeCollisionAction notOverwriteStrategy(const char *)
-{
-	return MergeCollisionActionNoOverwrite;
-}
-
 void FacialEffectorsLibraryInterop::MergeLibrary(IFacialEffectorsLibrary *handle, IFacialEffectorsLibrary *pMergeLibrary, bool overwrite)
 {
-	// This is a functor object that works with non-member functions.
-	CBFunctionTranslator1wRet<const char *, MergeCollisionAction, MergeCollisionAction(*)(const char *)>
-		funcObj
-		(
-			overwrite
-				? overwriteStrategy
-				: notOverwriteStrategy
-		);
-
-	handle->MergeLibrary(pMergeLibrary, funcObj);
+	handle->MergeLibrary(pMergeLibrary, CreateMergingFunctor(overwrite));
 }
 
 void FacialEffectorsLibraryInterop::Serialize(IFacialEffectorsLibrary *handle, IXmlNode *xmlNodeHandle, bool bLoading)

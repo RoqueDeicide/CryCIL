@@ -380,6 +380,10 @@ void MonoInterface::RegisterDefaultListeners()
 	this->broadcaster->listeners->Add(new FaceStateInterop());
 	this->broadcaster->listeners->Add(new PhonemeLibraryInterop());
 	this->broadcaster->listeners->Add(new FacialSentenceInterop());
+	this->broadcaster->listeners->Add(new FacialAnimationChannelInterop());
+	this->broadcaster->listeners->Add(new FacialAnimationSequenceInterop());
+	this->broadcaster->listeners->Add(new FacialAnimationSkeletonAnimationEntryInterop());
+	this->broadcaster->listeners->Add(new FacialAnimationSoundEntryInterop());
 }
 #pragma endregion
 #pragma region Thunks Initialization

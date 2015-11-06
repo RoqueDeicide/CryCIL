@@ -607,3 +607,66 @@ TYPE_MIRROR struct SentenceWord
 		CHECK_TYPE(endTime);
 	}
 };
+
+TYPE_MIRROR enum IFacialAnimChannelFlags
+{
+	FLAG_GROUP_check = 0x00001,  // If set this channel is a group.
+	FLAG_PHONEME_STRENGTH_check = 0x00002,  // This channel is the current phoneme strength.
+	FLAG_VERTEX_DRAG_check = 0x00004,  // This channel is the vertex drag coefficient.
+	FLAG_BALANCE_check = 0x00008, // This channel controls the balance of the expressions.
+	FLAG_CATEGORY_BALANCE_check = 0x00010, // This channel controls the balance of the expressions in a certain folder.
+	FLAG_PROCEDURAL_STRENGTH_check = 0x00020, // This channel controls the strength of procedural animation.
+	FLAG_LIPSYNC_CATEGORY_STRENGTH_check = 0x00040, // This channel dampens all expressions in a folder during lipsyncing.
+	FLAG_BAKED_LIPSYNC_GROUP_check = 0x00080, // The contents of this folder override the auto-lipsynch.
+	FLAG_UI_SELECTED_check = 0x01000,
+	FLAG_UI_EXTENDED_check = 0x02000
+};
+
+#undef CHECK_ENUM
+#define CHECK_ENUM(x) static_assert (IFacialAnimChannelFlags::x ## _check == IFacialAnimChannel::EFlags::x, "IFacialAnimChannel::EFlags enumeration has been changed.")
+
+inline void CheckIFacialAnimChannelFlags()
+{
+	CHECK_ENUM(FLAG_GROUP);
+	CHECK_ENUM(FLAG_PHONEME_STRENGTH);
+	CHECK_ENUM(FLAG_VERTEX_DRAG);
+	CHECK_ENUM(FLAG_BALANCE);
+	CHECK_ENUM(FLAG_CATEGORY_BALANCE);
+	CHECK_ENUM(FLAG_PROCEDURAL_STRENGTH);
+	CHECK_ENUM(FLAG_LIPSYNC_CATEGORY_STRENGTH);
+	CHECK_ENUM(FLAG_BAKED_LIPSYNC_GROUP);
+	CHECK_ENUM(FLAG_UI_SELECTED);
+	CHECK_ENUM(FLAG_UI_EXTENDED);
+}
+
+TYPE_MIRROR enum IFacialAnimSequenceFlags
+{
+	FLAG_RANGE_FROM_SOUND_check = 0x00001
+};
+
+#undef CHECK_ENUM
+#define CHECK_ENUM(x) static_assert (IFacialAnimSequenceFlags::x ## _check == IFacialAnimSequence::EFlags::x, "IFacialAnimSequence::EFlags enumeration has been changed.")
+
+inline void CheckIFacialAnimSequenceFlags()
+{
+	CHECK_ENUM(FLAG_RANGE_FROM_SOUND);
+}
+
+TYPE_MIRROR enum SerializationFlags
+{
+	SFLAG_SOUND_ENTRIES_check = 0x00000001,
+	SFLAG_CAMERA_PATH_check = 0x00000002,
+	SFLAG_ANIMATION_check = 0x00000004,
+	SFLAG_ALL_check = 0xFFFFFFFF
+};
+
+#undef CHECK_ENUM
+#define CHECK_ENUM(x) static_assert (SerializationFlags::x ## _check == IFacialAnimSequence::x, "IFacialAnimSequence::ESerializationFlags enumeration has been changed.")
+
+inline void CheckSerializationFlags()
+{
+	CHECK_ENUM(SFLAG_SOUND_ENTRIES);
+	CHECK_ENUM(SFLAG_CAMERA_PATH);
+	CHECK_ENUM(SFLAG_ANIMATION);
+	CHECK_ENUM(SFLAG_ALL);
+}
