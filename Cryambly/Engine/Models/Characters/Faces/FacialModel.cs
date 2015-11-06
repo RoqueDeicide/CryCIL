@@ -146,7 +146,7 @@ namespace CryCil.Engine.Models.Characters.Faces
 		#endregion
 	}
 	/// <summary>
-	/// Represents a face in facial animation system.
+	/// Represents a collection of elements that form a face model in facial animation system.
 	/// </summary>
 	[StructLayout(LayoutKind.Explicit)]
 	public struct FacialModel

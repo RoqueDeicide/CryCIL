@@ -159,3 +159,5 @@
 #include "Interops/FacialAnimationSoundEntry.h"
 
 #include "Interops/FacialAnimationSkeletonAnimationEntry.h"
+
+#include "Interops/Face.h"

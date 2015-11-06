@@ -536,6 +536,9 @@
     <ClInclude Include="Interops\MergingUtility.h">
       <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\Face.h">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -1011,6 +1014,9 @@
       <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
     </ClCompile>
     <ClCompile Include="Interops\FacialAnimationSoundEntry.cpp">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\Face.cpp">
       <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
     </ClCompile>
   </ItemGroup>

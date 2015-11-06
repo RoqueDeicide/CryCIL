@@ -122,6 +122,7 @@
     <Compile Include="Engine\Models\Characters\Faces\FacialEffectorParameterId.cs" />
     <Compile Include="Engine\Models\Characters\Faces\FacialEffectorsLibrary.cs" />
     <Compile Include="Engine\Models\Characters\Faces\FacialEffectorType.cs" />
+    <Compile Include="Engine\Models\Characters\Faces\Face.cs" />
     <Compile Include="Engine\Models\Characters\Faces\FacialModel.cs" />
     <Compile Include="Engine\Models\Characters\Faces\FacialSentence.cs" />
     <Compile Include="Engine\Models\Characters\Faces\FacialSequenceLayer.cs" />

@@ -301,6 +301,7 @@
     <ClInclude Include="Interops\EntityClass.h" />
     <ClInclude Include="Interops\EntityExtension.h" />
     <ClInclude Include="Interops\ExplosionStructs.h" />
+    <ClInclude Include="Interops\Face.h" />
     <ClInclude Include="Interops\FaceIdentifier.h" />
     <ClInclude Include="Interops\FaceState.h" />
     <ClInclude Include="Interops\FacialAnimationChannel.h" />
@@ -461,6 +462,7 @@
     <ClCompile Include="Interops\Entity.cpp" />
     <ClCompile Include="Interops\EntityClass.cpp" />
     <ClCompile Include="Interops\EntityExtension.cpp" />
+    <ClCompile Include="Interops\Face.cpp" />
     <ClCompile Include="Interops\FaceIdentifier.cpp" />
     <ClCompile Include="Interops\FaceState.cpp" />
     <ClCompile Include="Interops\FacialAnimationChannel.cpp" />

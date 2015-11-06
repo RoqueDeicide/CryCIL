@@ -670,3 +670,20 @@ inline void CheckSerializationFlags()
 	CHECK_ENUM(SFLAG_ANIMATION);
 	CHECK_ENUM(SFLAG_ALL);
 }
+
+TYPE_MIRROR struct FacialAnimForcedRotationEntry
+{
+	int jointId;
+	Quat rotation;
+
+	explicit FacialAnimForcedRotationEntry(const CFacialAnimForcedRotationEntry &other)
+	{
+		CHECK_TYPES_SIZE(FacialAnimForcedRotationEntry, CFacialAnimForcedRotationEntry);
+
+		ASSIGN_FIELD(jointId);
+		ASSIGN_FIELD(rotation);
+
+		CHECK_TYPE(jointId);
+		CHECK_TYPE(rotation);
+	}
+};

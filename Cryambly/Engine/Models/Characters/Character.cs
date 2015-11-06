@@ -3,6 +3,7 @@ using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using CryCil.Engine.Data;
 using CryCil.Engine.Decals;
+using CryCil.Engine.Models.Characters.Faces;
 using CryCil.Engine.Rendering;
 using CryCil.Geometry;
 
@@ -267,7 +268,7 @@ namespace CryCil.Engine.Models.Characters
 		/// Gets the object that handles facial animations for this character.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
-		public FacialInstance FacialInstance
+		public Face Face
 		{
 			get
 			{
@@ -734,7 +735,7 @@ namespace CryCil.Engine.Models.Characters
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern Material GetIMaterial_Instance(IntPtr handle);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern FacialInstance GetFacialInstance(IntPtr handle);
+		private static extern Face GetFacialInstance(IntPtr handle);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void EnableFacialAnimationInternal(IntPtr handle, bool bEnable);
 		[MethodImpl(MethodImplOptions.InternalCall)]
