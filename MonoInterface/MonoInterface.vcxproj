@@ -339,6 +339,7 @@
     <ClInclude Include="Interops\Ocean.h" />
     <ClInclude Include="Interops\ParticleEffect.h" />
     <ClInclude Include="Interops\ParticleEmitter.h" />
+    <ClInclude Include="Interops\PhonemeLibrary.h" />
     <ClInclude Include="Interops\PhysicalBody.h" />
     <ClInclude Include="Interops\PhysicalEntity.h" />
     <ClInclude Include="Interops\PhysicalizationParameters.h" />
@@ -489,6 +490,7 @@
     <ClCompile Include="Interops\ParticleEffectIterator.cpp" />
     <ClCompile Include="Interops\ParticleEmitter.cpp" />
     <ClCompile Include="Interops\ParticleParameters.cpp" />
+    <ClCompile Include="Interops\PhonemeLibrary.cpp" />
     <ClCompile Include="Interops\PhysicalBody.cpp" />
     <ClCompile Include="Interops\PhysicalEntity.cpp" />
     <ClCompile Include="Interops\PhysicalWorld.cpp" />

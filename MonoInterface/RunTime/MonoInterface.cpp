@@ -378,6 +378,7 @@ void MonoInterface::RegisterDefaultListeners()
 	this->broadcaster->listeners->Add(new FacialEffectorsLibraryInterop());
 	this->broadcaster->listeners->Add(new FacialModelInterop());
 	this->broadcaster->listeners->Add(new FaceStateInterop());
+	this->broadcaster->listeners->Add(new PhonemeLibraryInterop());
 }
 #pragma endregion
 #pragma region Thunks Initialization

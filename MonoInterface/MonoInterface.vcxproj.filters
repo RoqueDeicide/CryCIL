@@ -515,6 +515,9 @@
     <ClInclude Include="Interops\SkeletonPose.h">
       <Filter>Interops\Engine\Models\Characters\SimpleAnimation</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\PhonemeLibrary.h">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -973,6 +976,9 @@
     </ClCompile>
     <ClCompile Include="Interops\SkeletonPose.cpp">
       <Filter>Interops\Engine\Models\Characters\SimpleAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\PhonemeLibrary.cpp">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

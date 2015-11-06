@@ -147,3 +147,5 @@
 #include "Interops/FacialModel.h"
 
 #include "Interops/FaceState.h"
+
+#include "Interops/PhonemeLibrary.h"

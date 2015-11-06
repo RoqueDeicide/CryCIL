@@ -544,3 +544,23 @@ TYPE_MIRROR struct FaceIdentifier
 		crc = 0;
 	}
 };
+
+TYPE_MIRROR struct PhonemeInfo
+{
+	wchar_t codeIPA;
+	char ASCII[4];
+	const char* description;
+
+	explicit PhonemeInfo(const SPhonemeInfo &other)
+	{
+		CHECK_TYPE_SIZE(PhonemeInfo);
+
+		ASSIGN_FIELD(codeIPA);
+		ASSIGN_FIELD(ASCII[0]);
+		ASSIGN_FIELD(description);
+
+		CHECK_TYPE(codeIPA);
+		CHECK_TYPE(ASCII);
+		CHECK_TYPE(description);
+	}
+};
