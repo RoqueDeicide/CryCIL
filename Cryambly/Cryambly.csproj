@@ -109,6 +109,7 @@
     <Compile Include="Engine\Models\Characters\DefaultSkeleton.cs" />
     <Compile Include="Engine\Models\Characters\Faces\FaceIdentifier.cs" />
     <Compile Include="Engine\Models\Characters\Faces\FaceState.cs" />
+    <Compile Include="Engine\Models\Characters\Faces\FacialAnimation.cs" />
     <Compile Include="Engine\Models\Characters\Faces\FacialAnimationChannel.cs" />
     <Compile Include="Engine\Models\Characters\Faces\FacialAnimationChannelFlags.cs" />
     <Compile Include="Engine\Models\Characters\Faces\FacialAnimationSequence.cs" />

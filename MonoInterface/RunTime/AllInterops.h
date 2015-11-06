@@ -161,3 +161,5 @@
 #include "Interops/FacialAnimationSkeletonAnimationEntry.h"
 
 #include "Interops/Face.h"
+
+#include "Interops/FacialAnimation.h"

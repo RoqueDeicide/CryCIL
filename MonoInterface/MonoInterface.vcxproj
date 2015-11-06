@@ -304,6 +304,7 @@
     <ClInclude Include="Interops\Face.h" />
     <ClInclude Include="Interops\FaceIdentifier.h" />
     <ClInclude Include="Interops\FaceState.h" />
+    <ClInclude Include="Interops\FacialAnimation.h" />
     <ClInclude Include="Interops\FacialAnimationChannel.h" />
     <ClInclude Include="Interops\FacialAnimationSequence.h" />
     <ClInclude Include="Interops\FacialAnimationSkeletonAnimationEntry.h" />
@@ -465,6 +466,7 @@
     <ClCompile Include="Interops\Face.cpp" />
     <ClCompile Include="Interops\FaceIdentifier.cpp" />
     <ClCompile Include="Interops\FaceState.cpp" />
+    <ClCompile Include="Interops\FacialAnimation.cpp" />
     <ClCompile Include="Interops\FacialAnimationChannel.cpp" />
     <ClCompile Include="Interops\FacialAnimationSequence.cpp" />
     <ClCompile Include="Interops\FacialAnimationSkeletonAnimationEntry.cpp" />

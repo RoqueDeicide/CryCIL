@@ -539,6 +539,9 @@
     <ClInclude Include="Interops\Face.h">
       <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\FacialAnimation.h">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -1017,6 +1020,9 @@
       <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
     </ClCompile>
     <ClCompile Include="Interops\Face.cpp">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\FacialAnimation.cpp">
       <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
     </ClCompile>
   </ItemGroup>
