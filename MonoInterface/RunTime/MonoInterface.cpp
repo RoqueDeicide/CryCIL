@@ -386,6 +386,13 @@ void MonoInterface::RegisterDefaultListeners()
 	this->broadcaster->listeners->Add(new FacialAnimationSoundEntryInterop());
 	this->broadcaster->listeners->Add(new FaceInterop());
 	this->broadcaster->listeners->Add(new FacialAnimationInterop());
+	this->broadcaster->listeners->Add(new AttachmentManagerInterop());
+	this->broadcaster->listeners->Add(new AttachedObjectsCommonsInterop());
+	this->broadcaster->listeners->Add(new AttachmentRowSimulationParametersInterop());
+	this->broadcaster->listeners->Add(new AttachmentSimulationParametersInterop());
+	this->broadcaster->listeners->Add(new AttachmentSocketInterop());
+	this->broadcaster->listeners->Add(new AttachmentSkinInterop());
+	this->broadcaster->listeners->Add(new AttachmentProxyInterop());
 }
 #pragma endregion
 #pragma region Thunks Initialization

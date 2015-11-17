@@ -3,6 +3,7 @@ using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using CryCil.Engine.Data;
 using CryCil.Engine.Decals;
+using CryCil.Engine.Models.Characters.Attachments;
 using CryCil.Engine.Models.Characters.Faces;
 using CryCil.Engine.Rendering;
 using CryCil.Geometry;

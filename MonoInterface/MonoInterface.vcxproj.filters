@@ -542,6 +542,28 @@
     <ClInclude Include="Interops\FacialAnimation.h">
       <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\AttachmentManager.h">
+      <Filter>Interops\Engine\Models\Characters\Attachments</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\AttachedObjectsCommons.h">
+      <Filter>Interops\Engine\Models\Characters\Attachments</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\DynArrayToMonoArray.h">
+      <Filter>Interops\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\AttachmentRowSimulationParameters.h">
+      <Filter>Interops\Engine\Models\Characters\Attachments</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\AttachmentSimulationParameters.h">
+      <Filter>Interops\Engine\Models\Characters\Attachments</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\AttachmentSocket.h">
+      <Filter>Interops\Engine\Models\Characters\Attachments</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\AttachmentSkin.h">
+      <Filter>Interops\Engine\Models\Characters\Attachments</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\AttachmentProxy.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -1025,6 +1047,28 @@
     <ClCompile Include="Interops\FacialAnimation.cpp">
       <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
     </ClCompile>
+    <ClCompile Include="Interops\AttachmentManager.cpp">
+      <Filter>Interops\Engine\Models\Characters\Attachments</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\AttachedObjectsCommons.cpp">
+      <Filter>Interops\Engine\Models\Characters\Attachments</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\CryName.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\AttachmentRowSimulationParameters.cpp">
+      <Filter>Interops\Engine\Models\Characters\Attachments</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\AttachmentSimulationParameters.cpp">
+      <Filter>Interops\Engine\Models\Characters\Attachments</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\AttachmentSocket.cpp">
+      <Filter>Interops\Engine\Models\Characters\Attachments</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\AttachmentSkin.cpp">
+      <Filter>Interops\Engine\Models\Characters\Attachments</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\AttachmentProxy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">
@@ -1146,6 +1190,9 @@
     </Filter>
     <Filter Include="Interops\Engine\Models\Characters\SimpleAnimation">
       <UniqueIdentifier>{893ac42c-6593-4737-b9fc-4be892de8f51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interops\Engine\Models\Characters\Attachments">
+      <UniqueIdentifier>{9cdc558e-b1ef-4b5c-b4fd-acd6e2c78cb4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

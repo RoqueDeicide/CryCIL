@@ -687,3 +687,322 @@ TYPE_MIRROR struct FacialAnimForcedRotationEntry
 		CHECK_TYPE(rotation);
 	}
 };
+
+TYPE_MIRROR enum EAttachmentTypes
+{
+	CA_BONE_check,
+	CA_FACE_check,
+	CA_SKIN_check,
+	CA_PROX_check,
+	CA_PROW_check,
+	CA_VCLOTH_check,
+	CA_Invalid_check
+};
+
+#undef CHECK_ENUM
+#define CHECK_ENUM(x) static_assert (EAttachmentTypes::x ## _check == AttachmentTypes::x, "AttachmentTypes enumeration has been changed.")
+
+inline void CheckAttachmentTypes()
+{
+	CHECK_ENUM(CA_BONE);
+	CHECK_ENUM(CA_FACE);
+	CHECK_ENUM(CA_SKIN);
+	CHECK_ENUM(CA_PROX);
+	CHECK_ENUM(CA_PROW);
+	CHECK_ENUM(CA_VCLOTH);
+	CHECK_ENUM(CA_Invalid);
+}
+
+TYPE_MIRROR enum EAttachmentFlags
+{
+	FLAGS_ATTACH_HIDE_ATTACHMENT_check = 0x01,	//already stored in CDF, so don't change this
+	FLAGS_ATTACH_PHYSICALIZED_RAYS_check = 0x02, //already stored in CDF, so don't change this
+	FLAGS_ATTACH_PHYSICALIZED_COLLISIONS_check = 0x04, //already stored in CDF, so don't change this
+	FLAGS_ATTACH_SW_SKINNING_check = 0x08,	//already stored in CDF, so don't change this
+	FLAGS_ATTACH_RENDER_ONLY_EXISTING_LOD_check = 0x10,	//already stored in CDF, so don't change this
+	FLAGS_ATTACH_LINEAR_SKINNING_check = 0x20, //already stored in CDF, so don't change this
+	FLAGS_ATTACH_PHYSICALIZED_check = FLAGS_ATTACH_PHYSICALIZED_RAYS | FLAGS_ATTACH_PHYSICALIZED_COLLISIONS,
+	FLAGS_ATTACH_VISIBLE_check = 1 << 13,	//we set this flag if we can render the object
+	FLAGS_ATTACH_PROJECTED_check = 1 << 14,	//we set this flag if we can the object to a triangle
+	FLAGS_ATTACH_WAS_PHYSICALIZED_check = 1 << 15, // the attachment actually was physicalized
+	FLAGS_ATTACH_HIDE_MAIN_PASS_check = 1 << 16,
+	FLAGS_ATTACH_HIDE_SHADOW_PASS_check = 1 << 17,
+	FLAGS_ATTACH_HIDE_RECURSION_check = 1 << 18,
+	FLAGS_ATTACH_NEAREST_NOFOV_check = 1 << 19,
+	FLAGS_ATTACH_NO_BBOX_INFLUENCE_check = 1 << 21,
+	FLAGS_ATTACH_COMBINEATTACHMENT_check = 1 << 24
+};
+
+#undef CHECK_ENUM
+#define CHECK_ENUM(x) static_assert (EAttachmentFlags::x ## _check == AttachmentFlags::x, "AttachmentFlags enumeration has been changed.")
+
+inline void CheckAttachmentFlags()
+{
+	CHECK_ENUM(FLAGS_ATTACH_HIDE_ATTACHMENT);
+	CHECK_ENUM(FLAGS_ATTACH_PHYSICALIZED_RAYS);
+	CHECK_ENUM(FLAGS_ATTACH_PHYSICALIZED_COLLISIONS);
+	CHECK_ENUM(FLAGS_ATTACH_SW_SKINNING);
+	CHECK_ENUM(FLAGS_ATTACH_RENDER_ONLY_EXISTING_LOD);
+	CHECK_ENUM(FLAGS_ATTACH_LINEAR_SKINNING);
+	CHECK_ENUM(FLAGS_ATTACH_PHYSICALIZED);
+	CHECK_ENUM(FLAGS_ATTACH_VISIBLE);
+	CHECK_ENUM(FLAGS_ATTACH_PROJECTED);
+	CHECK_ENUM(FLAGS_ATTACH_WAS_PHYSICALIZED);
+	CHECK_ENUM(FLAGS_ATTACH_HIDE_MAIN_PASS);
+	CHECK_ENUM(FLAGS_ATTACH_HIDE_SHADOW_PASS);
+	CHECK_ENUM(FLAGS_ATTACH_HIDE_RECURSION);
+	CHECK_ENUM(FLAGS_ATTACH_NEAREST_NOFOV);
+	CHECK_ENUM(FLAGS_ATTACH_NO_BBOX_INFLUENCE);
+	CHECK_ENUM(FLAGS_ATTACH_COMBINEATTACHMENT);
+}
+
+TYPE_MIRROR enum EAttachmentObjectType
+{
+	eAttachment_Unknown_check,
+	eAttachment_StatObj_check,
+	eAttachment_Skeleton_check,
+	eAttachment_SkinMesh_check,
+	eAttachment_Entity_check,
+	eAttachment_Light_check,
+	eAttachment_Effect_check
+};
+
+#undef CHECK_ENUM
+#define CHECK_ENUM(x) static_assert (EAttachmentObjectType::x ## _check == IAttachmentObject::EType::x, "IAttachmentObject::EType enumeration has been changed.")
+
+inline void CheckEAttachmentObjectType()
+{
+	CHECK_ENUM(eAttachment_Unknown);
+	CHECK_ENUM(eAttachment_StatObj);
+	CHECK_ENUM(eAttachment_Skeleton);
+	CHECK_ENUM(eAttachment_SkinMesh);
+	CHECK_ENUM(eAttachment_Entity);
+	CHECK_ENUM(eAttachment_Light);
+	CHECK_ENUM(eAttachment_Effect);
+}
+
+TYPE_MIRROR enum SimulationParamsCollisionProxiesCount
+{
+	MaxCollisionProxies_check = 10
+};
+
+#undef CHECK_ENUM
+#define CHECK_ENUM(x) static_assert (SimulationParamsCollisionProxiesCount::x ## _check == SimulationParams::x, "SimulationParams::MaxCollisionProxies value has been changed.")
+
+inline void CheckSimulationParamsCollisionProxiesCount()
+{
+	CHECK_ENUM(MaxCollisionProxies);
+}
+
+TYPE_MIRROR enum SimulationParamsClampType
+{
+	DISABLED_check = 0x00,
+
+	PENDULUM_CONE_check = 0x01,
+	PENDULUM_HINGE_PLANE_check = 0x02,
+	PENDULUM_HALF_CONE_check = 0x03,
+	SPRING_ELLIPSOID_check = 0x04,
+	TRANSLATIONAL_PROJECTION_check = 0x05
+};
+
+#undef CHECK_ENUM
+#define CHECK_ENUM(x) static_assert (SimulationParamsClampType::x ## _check == SimulationParams::x, "SimulationParams::ClampType enumeration has been changed.")
+
+inline void CheckSimulationParamsClampType()
+{
+	CHECK_ENUM(DISABLED);
+	CHECK_ENUM(PENDULUM_CONE);
+	CHECK_ENUM(PENDULUM_HINGE_PLANE);
+	CHECK_ENUM(PENDULUM_HALF_CONE);
+	CHECK_ENUM(SPRING_ELLIPSOID);
+	CHECK_ENUM(TRANSLATIONAL_PROJECTION);
+}
+
+TYPE_MIRROR struct SSimulationParams
+{
+	SimulationParams::ClampType m_nClampType;
+	bool     m_useDebugSetup;
+	bool     m_useDebugText;
+	bool     m_useSimulation;
+	bool     m_useRedirect;
+	uint8    m_nSimFPS;
+
+	f32      m_fMaxAngle;
+	f32      m_fRadius;
+	Vec2     m_vSphereScale;
+	Vec2     m_vDiskRotation;
+
+	f32      m_fMass;
+	f32      m_fGravity;
+	f32      m_fDamping;
+	f32      m_fStiffness;
+
+	Vec3     m_vPivotOffset;
+	Vec3     m_vSimulationAxis;
+	Vec3     m_vStiffnessTarget;
+	Vec2     m_vCapsule;
+	CCryName m_strProcFunction;
+
+	int32    m_nProjectionType;
+	CCryName m_strDirTransJoint;
+	DynArray<CCryName> m_arrProxyNames;
+
+	explicit SSimulationParams(const SimulationParams &other)
+	{
+		CHECK_TYPE_SIZE(SimulationParams);
+
+		ASSIGN_FIELD(m_nClampType);
+		ASSIGN_FIELD(m_useDebugSetup);
+		ASSIGN_FIELD(m_useDebugText);
+		ASSIGN_FIELD(m_useSimulation);
+		ASSIGN_FIELD(m_useRedirect);
+		ASSIGN_FIELD(m_nSimFPS);
+		ASSIGN_FIELD(m_fMaxAngle);
+		ASSIGN_FIELD(m_fRadius);
+		ASSIGN_FIELD(m_vSphereScale);
+		ASSIGN_FIELD(m_vDiskRotation);
+		ASSIGN_FIELD(m_fMass);
+		ASSIGN_FIELD(m_fGravity);
+		ASSIGN_FIELD(m_fDamping);
+		ASSIGN_FIELD(m_fStiffness);
+		ASSIGN_FIELD(m_vPivotOffset);
+		ASSIGN_FIELD(m_vSimulationAxis);
+		ASSIGN_FIELD(m_vStiffnessTarget);
+		ASSIGN_FIELD(m_vCapsule);
+		ASSIGN_FIELD(m_strProcFunction);
+		ASSIGN_FIELD(m_nProjectionType);
+		ASSIGN_FIELD(m_strDirTransJoint);
+		ASSIGN_FIELD(m_arrProxyNames);
+
+		CHECK_TYPE(m_nClampType);
+		CHECK_TYPE(m_useDebugSetup);
+		CHECK_TYPE(m_useDebugText);
+		CHECK_TYPE(m_useSimulation);
+		CHECK_TYPE(m_useRedirect);
+		CHECK_TYPE(m_nSimFPS);
+		CHECK_TYPE(m_fMaxAngle);
+		CHECK_TYPE(m_fRadius);
+		CHECK_TYPE(m_vSphereScale);
+		CHECK_TYPE(m_vDiskRotation);
+		CHECK_TYPE(m_fMass);
+		CHECK_TYPE(m_fGravity);
+		CHECK_TYPE(m_fDamping);
+		CHECK_TYPE(m_fStiffness);
+		CHECK_TYPE(m_vPivotOffset);
+		CHECK_TYPE(m_vSimulationAxis);
+		CHECK_TYPE(m_vStiffnessTarget);
+		CHECK_TYPE(m_vCapsule);
+		CHECK_TYPE(m_strProcFunction);
+		CHECK_TYPE(m_nProjectionType);
+		CHECK_TYPE(m_strDirTransJoint);
+		CHECK_TYPE(m_arrProxyNames);
+	}
+};
+
+TYPE_MIRROR struct RowSimulationParamsClampType
+{
+	enum
+	{
+		PENDULUM_CONE_check = 0x00,
+		PENDULUM_HINGE_PLANE_check = 0x01,
+		PENDULUM_HALF_CONE_check = 0x02,
+		TRANSLATIONAL_PROJECTION_check = 0x03
+	};
+};
+
+#undef CHECK_ENUM
+#define CHECK_ENUM(x) static_assert (RowSimulationParamsClampType::x ## _check == RowSimulationParams::x, "RowSimulationParams::ClampType enumeration has been changed.")
+
+inline void CheckRowSimulationParamsClampType()
+{
+	CHECK_ENUM(PENDULUM_CONE);
+	CHECK_ENUM(PENDULUM_HINGE_PLANE);
+	CHECK_ENUM(PENDULUM_HALF_CONE);
+	CHECK_ENUM(TRANSLATIONAL_PROJECTION);
+}
+
+TYPE_MIRROR struct SRowSimulationParams
+{
+	RowSimulationParams::ClampMode m_nClampMode;
+	bool     m_useDebugSetup;
+	bool     m_useDebugText;
+	bool     m_useSimulation;
+	uint8    m_nSimFPS;
+
+	f32      m_fConeAngle;
+	Vec3     m_vConeRotation;
+
+	f32      m_fMass;
+	f32      m_fGravity;
+	f32      m_fDamping;
+	f32      m_fJointSpring;
+	f32      m_fRodLength;
+	Vec2     m_vStiffnessTarget;
+	Vec2     m_vTurbulence;
+	f32      m_fMaxVelocity;
+
+	bool     m_cycle;
+	f32      m_fStretch;
+	uint32   m_relaxationLoops;
+
+
+	Vec3     m_vTranslationAxis;
+	CCryName m_strDirTransJoint;
+
+	Vec2     m_vCapsule;
+	int32    m_nProjectionType;
+	DynArray<CCryName> m_arrProxyNames;
+
+	explicit SRowSimulationParams(const RowSimulationParams &other)
+	{
+		CHECK_TYPE_SIZE(RowSimulationParams);
+
+		ASSIGN_FIELD(m_nClampMode);
+		ASSIGN_FIELD(m_useDebugSetup);
+		ASSIGN_FIELD(m_useDebugText);
+		ASSIGN_FIELD(m_useSimulation);
+		ASSIGN_FIELD(m_nSimFPS);
+		ASSIGN_FIELD(m_fConeAngle);
+		ASSIGN_FIELD(m_vConeRotation);
+		ASSIGN_FIELD(m_fMass);
+		ASSIGN_FIELD(m_fGravity);
+		ASSIGN_FIELD(m_fDamping);
+		ASSIGN_FIELD(m_fJointSpring);
+		ASSIGN_FIELD(m_fRodLength);
+		ASSIGN_FIELD(m_vStiffnessTarget);
+		ASSIGN_FIELD(m_vTurbulence);
+		ASSIGN_FIELD(m_fMaxVelocity);
+		ASSIGN_FIELD(m_cycle);
+		ASSIGN_FIELD(m_fStretch);
+		ASSIGN_FIELD(m_relaxationLoops);
+		ASSIGN_FIELD(m_vTranslationAxis);
+		ASSIGN_FIELD(m_strDirTransJoint);
+		ASSIGN_FIELD(m_vCapsule);
+		ASSIGN_FIELD(m_nProjectionType);
+		ASSIGN_FIELD(m_arrProxyNames);
+
+		CHECK_TYPE(m_nClampMode);
+		CHECK_TYPE(m_useDebugSetup);
+		CHECK_TYPE(m_useDebugText);
+		CHECK_TYPE(m_useSimulation);
+		CHECK_TYPE(m_nSimFPS);
+		CHECK_TYPE(m_fConeAngle);
+		CHECK_TYPE(m_vConeRotation);
+		CHECK_TYPE(m_fMass);
+		CHECK_TYPE(m_fGravity);
+		CHECK_TYPE(m_fDamping);
+		CHECK_TYPE(m_fJointSpring);
+		CHECK_TYPE(m_fRodLength);
+		CHECK_TYPE(m_vStiffnessTarget);
+		CHECK_TYPE(m_vTurbulence);
+		CHECK_TYPE(m_fMaxVelocity);
+		CHECK_TYPE(m_cycle);
+		CHECK_TYPE(m_fStretch);
+		CHECK_TYPE(m_relaxationLoops);
+		CHECK_TYPE(m_vTranslationAxis);
+		CHECK_TYPE(m_strDirTransJoint);
+		CHECK_TYPE(m_vCapsule);
+		CHECK_TYPE(m_nProjectionType);
+		CHECK_TYPE(m_arrProxyNames);
+	}
+};

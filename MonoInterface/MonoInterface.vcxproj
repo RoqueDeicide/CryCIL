@@ -279,6 +279,13 @@
     <ClInclude Include="Interops\Aliases.h" />
     <ClInclude Include="Interops\AnimationSet.h" />
     <ClInclude Include="Interops\ArchiveStream.h" />
+    <ClInclude Include="Interops\AttachedObjectsCommons.h" />
+    <ClInclude Include="Interops\AttachmentManager.h" />
+    <ClInclude Include="Interops\AttachmentProxy.h" />
+    <ClInclude Include="Interops\AttachmentRowSimulationParameters.h" />
+    <ClInclude Include="Interops\AttachmentSimulationParameters.h" />
+    <ClInclude Include="Interops\AttachmentSkin.h" />
+    <ClInclude Include="Interops\AttachmentSocket.h" />
     <ClInclude Include="Interops\AuxiliaryGeometry.h" />
     <ClInclude Include="Interops\BatchOps.h" />
     <ClInclude Include="Interops\Character.h" />
@@ -297,6 +304,7 @@
     <ClInclude Include="Interops\DebugDraw.h" />
     <ClInclude Include="Interops\CryFont.h" />
     <ClInclude Include="Interops\DefaultSkeleton.h" />
+    <ClInclude Include="Interops\DynArrayToMonoArray.h" />
     <ClInclude Include="Interops\Entity.h" />
     <ClInclude Include="Interops\EntityClass.h" />
     <ClInclude Include="Interops\EntityExtension.h" />
@@ -443,6 +451,13 @@
     <ClCompile Include="Interops\Aliases.cpp" />
     <ClCompile Include="Interops\AnimationSet.cpp" />
     <ClCompile Include="Interops\ArchiveStream.cpp" />
+    <ClCompile Include="Interops\AttachedObjectsCommons.cpp" />
+    <ClCompile Include="Interops\AttachmentManager.cpp" />
+    <ClCompile Include="Interops\AttachmentProxy.cpp" />
+    <ClCompile Include="Interops\AttachmentRowSimulationParameters.cpp" />
+    <ClCompile Include="Interops\AttachmentSimulationParameters.cpp" />
+    <ClCompile Include="Interops\AttachmentSkin.cpp" />
+    <ClCompile Include="Interops\AttachmentSocket.cpp" />
     <ClCompile Include="Interops\AuxiliaryGeometry.cpp" />
     <ClCompile Include="Interops\BatchOps.cpp" />
     <ClCompile Include="Interops\Character.cpp" />
@@ -541,6 +556,7 @@
     <ClCompile Include="TypeMapChecks\ActionAnalogCompareOperation.cpp" />
     <ClCompile Include="TypeMapChecks\ActionInputBlockType.cpp" />
     <ClCompile Include="TypeMapChecks\CharacterTypes.cpp" />
+    <ClCompile Include="TypeMapChecks\CryName.cpp" />
     <ClCompile Include="TypeMapChecks\DynamicArray.cpp" />
     <ClCompile Include="TypeMapChecks\DynamicLightFlags.cpp" />
     <ClCompile Include="TypeMapChecks\EKeyId.cpp" />

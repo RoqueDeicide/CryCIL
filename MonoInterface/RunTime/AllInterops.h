@@ -163,3 +163,17 @@
 #include "Interops/Face.h"
 
 #include "Interops/FacialAnimation.h"
+
+#include "Interops/AttachmentManager.h"
+
+#include "Interops/AttachedObjectsCommons.h"
+
+#include "Interops/AttachmentRowSimulationParameters.h"
+
+#include "Interops/AttachmentSimulationParameters.h"
+
+#include "Interops/AttachmentSocket.h"
+
+#include "Interops/AttachmentSkin.h"
+
+#include "Interops/AttachmentProxy.h"
