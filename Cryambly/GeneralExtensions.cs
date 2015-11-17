@@ -29,6 +29,28 @@ namespace CryCil
 			return collection == null || collection.Count == 0;
 		}
 		/// <summary>
+		/// Determines whether given text is <c>null</c> or an empty <c>string</c>.
+		/// </summary>
+		/// <param name="text">This text.</param>
+		/// <returns>True, if <paramref name="text"/> is equal to <c>null</c> or is a <c>string</c> with 0 characters in it.</returns>
+		[Pure]
+		[ContractAnnotation("text:null => true")]
+		public static bool IsNullOrEmpty(this string text)
+		{
+			return string.IsNullOrEmpty(text);
+		}
+		/// <summary>
+		/// Determines whether given text is <c>null</c> or an empty <c>string</c>.
+		/// </summary>
+		/// <param name="text">This text.</param>
+		/// <returns>True, if <paramref name="text"/> is equal to <c>null</c> or is a <c>string</c> with 0 characters in it.</returns>
+		[Pure]
+		[ContractAnnotation("text:null => true")]
+		public static bool IsNullOrWhiteSpace(this string text)
+		{
+			return string.IsNullOrWhiteSpace(text);
+		}
+		/// <summary>
 		/// Indicates whether this collection is null or is too small.
 		/// </summary>
 		/// <typeparam name="T">Type of elements in the collection.</typeparam>
