@@ -563,7 +563,9 @@
     <ClInclude Include="Interops\AttachmentSkin.h">
       <Filter>Interops\Engine\Models\Characters\Attachments</Filter>
     </ClInclude>
-    <ClInclude Include="Interops\AttachmentProxy.h" />
+    <ClInclude Include="Interops\AttachmentProxy.h">
+      <Filter>Interops\Engine\Models\Characters\Attachments</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -1068,7 +1070,9 @@
     <ClCompile Include="Interops\AttachmentSkin.cpp">
       <Filter>Interops\Engine\Models\Characters\Attachments</Filter>
     </ClCompile>
-    <ClCompile Include="Interops\AttachmentProxy.cpp" />
+    <ClCompile Include="Interops\AttachmentProxy.cpp">
+      <Filter>Interops\Engine\Models\Characters\Attachments</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">
