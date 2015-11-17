@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using CryCil.Annotations;
 using CryCil.Engine.Physics;
@@ -55,13 +54,12 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Gets or sets flags that describe this entity.
 		/// </summary>
+		/// <exception cref="NullReferenceException">This entity is not usable.</exception>
 		public EntityFlags Flags
 		{
 			get
 			{
 				this.AssertEntity();
-
-				Contract.EndContractBlock();
 
 				return (EntityFlags)GetFlags(this.handle);
 			}
@@ -69,21 +67,18 @@ namespace CryCil.Engine.Logic
 			{
 				this.AssertEntity();
 
-				Contract.EndContractBlock();
-
 				SetFlags(this.handle, (ulong)value);
 			}
 		}
 		/// <summary>
 		/// Indicates whether this entity is scheduled to be deleted on the next frame.
 		/// </summary>
+		/// <exception cref="NullReferenceException">This entity is not usable.</exception>
 		public bool IsGarbage
 		{
 			get
 			{
 				this.AssertEntity();
-
-				Contract.EndContractBlock();
 
 				return GetIsGarbage(this.handle);
 			}
@@ -92,14 +87,13 @@ namespace CryCil.Engine.Logic
 		/// Gets or sets the name of this entity.
 		/// </summary>
 		/// <remarks>The name is not required to be unique.</remarks>
+		/// <exception cref="NullReferenceException">This entity is not usable.</exception>
 		/// <exception cref="ArgumentNullException">Name of the entity cannot be null.</exception>
 		public string Name
 		{
 			get
 			{
 				this.AssertEntity();
-
-				Contract.EndContractBlock();
 
 				return GetNameInternal(this.handle);
 			}
@@ -111,8 +105,6 @@ namespace CryCil.Engine.Logic
 					throw new ArgumentNullException("value", "Name of the entity cannot be null.");
 				}
 
-				Contract.EndContractBlock();
-
 				SetNameInternal(this.handle, value);
 			}
 		}
@@ -121,13 +113,12 @@ namespace CryCil.Engine.Logic
 		/// in the level file.
 		/// </summary>
 		/// <remarks>Returns <c>false</c> for any entities created dynamically through code.</remarks>
+		/// <exception cref="NullReferenceException">This entity is not usable.</exception>
 		public bool IsLoadedFromLevelFile
 		{
 			get
 			{
 				this.AssertEntity();
-
-				Contract.EndContractBlock();
 
 				return GetIsLoadedFromLevelFile(this.handle);
 			}
@@ -135,13 +126,12 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Indicates whether this entity is a part of the entity pool.
 		/// </summary>
+		/// <exception cref="NullReferenceException">This entity is not usable.</exception>
 		public bool IsFromPool
 		{
 			get
 			{
 				this.AssertEntity();
-
-				Contract.EndContractBlock();
 
 				return GetIsFromPool(this.handle);
 			}
@@ -157,19 +147,18 @@ namespace CryCil.Engine.Logic
 		/// <see cref="MonoEntity.Update"/> and <see cref="MonoEntity.PostUpdate"/>.
 		/// </para>
 		/// </remarks>
+		/// <exception cref="NullReferenceException">This entity is not usable.</exception>
 		public bool Active
 		{
 			get
 			{
 				this.AssertEntity();
-				Contract.EndContractBlock();
 
 				return IsActive(this.handle);
 			}
 			set
 			{
 				this.AssertEntity();
-				Contract.EndContractBlock();
 
 				Activate(this.handle, value);
 			}
@@ -183,19 +172,18 @@ namespace CryCil.Engine.Logic
 		/// <see cref="MonoEntity.PostInitialize"/> if your entity is going to have its own physical
 		/// movement logic.
 		/// </remarks>
+		/// <exception cref="NullReferenceException">This entity is not usable.</exception>
 		public bool ReceivesPrePhysicsUpdates
 		{
 			get
 			{
 				this.AssertEntity();
-				Contract.EndContractBlock();
 
 				return IsPrePhysicsActive(this.handle);
 			}
 			set
 			{
 				this.AssertEntity();
-				Contract.EndContractBlock();
 
 				PrePhysicsActivate(this.handle, value);
 			}
@@ -207,19 +195,18 @@ namespace CryCil.Engine.Logic
 		/// Hidden entities don't receive updates unless they have <see cref="EntityFlags.UpdateHidden"/>
 		/// flag set, are not rendered and their physics is disabled.
 		/// </remarks>
+		/// <exception cref="NullReferenceException">This entity is not usable.</exception>
 		public bool Hidden
 		{
 			get
 			{
 				this.AssertEntity();
-				Contract.EndContractBlock();
 
 				return IsHidden(this.handle);
 			}
 			set
 			{
 				this.AssertEntity();
-				Contract.EndContractBlock();
 
 				Hide(this.handle, value);
 			}
@@ -230,19 +217,18 @@ namespace CryCil.Engine.Logic
 		/// <remarks>
 		/// Hidden entities don't receive updates, are not rendered and their physics is disabled.
 		/// </remarks>
+		/// <exception cref="NullReferenceException">This entity is not usable.</exception>
 		public bool Invisible
 		{
 			get
 			{
 				this.AssertEntity();
-				Contract.EndContractBlock();
 
 				return IsInvisible(this.handle);
 			}
 			set
 			{
 				this.AssertEntity();
-				Contract.EndContractBlock();
 
 				MakeInvisible(this.handle, value);
 			}
@@ -250,19 +236,18 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Gets or sets entity's automatic (de-)activation policy.
 		/// </summary>
+		/// <exception cref="NullReferenceException">This entity is not usable.</exception>
 		public EntityUpdatePolicy UpdatePolicy
 		{
 			get
 			{
 				this.AssertEntity();
-				Contract.EndContractBlock();
 
 				return GetUpdatePolicy(this.handle);
 			}
 			set
 			{
 				this.AssertEntity();
-				Contract.EndContractBlock();
 
 				SetUpdatePolicy(this.handle, value);
 			}
@@ -270,19 +255,18 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Gets or sets the pointer to the material that this entity is using.
 		/// </summary>
+		/// <exception cref="NullReferenceException">This entity is not usable.</exception>
 		public Material Material
 		{
 			get
 			{
 				this.AssertEntity();
-				Contract.EndContractBlock();
 
 				return GetMaterial(this.handle);
 			}
 			set
 			{
 				this.AssertEntity();
-				Contract.EndContractBlock();
 
 				SetMaterial(this.handle, value);
 			}
@@ -290,12 +274,12 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Gets an object that provides access to slots of this entity.
 		/// </summary>
+		/// <exception cref="NullReferenceException">This entity is not usable.</exception>
 		public EntitySlotCollection Slots
 		{
 			get
 			{
 				this.AssertEntity();
-				Contract.EndContractBlock();
 
 				return new EntitySlotCollection(this.handle);
 			}
@@ -307,12 +291,12 @@ namespace CryCil.Engine.Logic
 		/// If this entity is linked to at least one other entity, a valid object of type
 		/// <see cref="EntityLink"/> will be returned, otherwise an invalid one will be returned.
 		/// </returns>
+		/// <exception cref="NullReferenceException">This entity is not usable.</exception>
 		public EntityLink Links
 		{
 			get
 			{
 				this.AssertEntity();
-				Contract.EndContractBlock();
 
 				return GetEntityLinks(this.handle);
 			}
@@ -320,12 +304,12 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Gets the physical entity that represents this entity in physical world.
 		/// </summary>
+		/// <exception cref="NullReferenceException">This entity is not usable.</exception>
 		public PhysicalEntity Physics
 		{
 			get
 			{
 				this.AssertEntity();
-				Contract.EndContractBlock();
 
 				return GetPhysics(this.handle);
 			}
@@ -350,11 +334,10 @@ namespace CryCil.Engine.Logic
 		/// check.
 		/// </remarks>
 		/// <param name="flagsToAdd">Flags to set.</param>
+		/// <exception cref="NullReferenceException">This entity is not usable.</exception>
 		public void AddFlags(EntityFlags flagsToAdd)
 		{
 			this.AssertEntity();
-
-			Contract.EndContractBlock();
 
 			if (flagsToAdd == 0)
 			{
@@ -375,11 +358,10 @@ namespace CryCil.Engine.Logic
 		/// check.
 		/// </remarks>
 		/// <param name="flagsToClear">Combination of bit flags to remove.</param>
+		/// <exception cref="NullReferenceException">This entity is not usable.</exception>
 		public void ClearFlags(EntityFlags flagsToClear)
 		{
 			this.AssertEntity();
-
-			Contract.EndContractBlock();
 
 			if (flagsToClear == 0)
 			{
@@ -403,11 +385,10 @@ namespace CryCil.Engine.Logic
 		/// <c>true</c>.
 		/// </param>
 		/// <returns>True, if all specified flags are checked.</returns>
+		/// <exception cref="NullReferenceException">This entity is not usable.</exception>
 		public bool CheckFlags(EntityFlags flagsToCheck, bool all = true)
 		{
 			this.AssertEntity();
-
-			Contract.EndContractBlock();
 
 			return flagsToCheck == 0 || CheckFlagsInternal(this.handle, (ulong)flagsToCheck, all);
 		}
@@ -429,6 +410,7 @@ namespace CryCil.Engine.Logic
 		/// </remarks>
 		/// <param name="timerId">Identifier of the timer to start.</param>
 		/// <param name="time">   Amount of time the timer should be active for.</param>
+		/// <exception cref="NullReferenceException">This entity is not usable.</exception>
 		/// <exception cref="ArgumentOutOfRangeException">
 		/// Identifier of the timer cannot be less then 0.
 		/// </exception>
@@ -439,9 +421,14 @@ namespace CryCil.Engine.Logic
 			{
 				throw new ArgumentOutOfRangeException("timerId", "Identifier of the timer cannot be less then 0.");
 			}
-			Contract.EndContractBlock();
 
-			SetTimerInternal(this.handle, timerId, time.Duration().Milliseconds);
+			try
+			{
+				SetTimerInternal(this.handle, timerId, time.Duration().Milliseconds);
+			}
+			catch (OverflowException)
+			{
+			}
 		}
 		/// <summary>
 		/// Stops an already active timer.
@@ -450,10 +437,10 @@ namespace CryCil.Engine.Logic
 		/// <param name="timerId">
 		/// Identifier of the timer to kill. If this value is less then 0 then all timers will be killed.
 		/// </param>
+		/// <exception cref="NullReferenceException">This entity is not usable.</exception>
 		public void KillTimer(int timerId)
 		{
 			this.AssertEntity();
-			Contract.EndContractBlock();
 
 			KillTimerInternal(this.handle, timerId);
 		}
@@ -464,6 +451,7 @@ namespace CryCil.Engine.Logic
 		/// <param name="id">      Identifier of the entity to link to this one.</param>
 		/// <param name="guid">    Globally unique identifier of the entity to link.</param>
 		/// <returns>An object that represents the link.</returns>
+		/// <exception cref="NullReferenceException">This entity is not usable.</exception>
 		/// <exception cref="ArgumentNullException">Name of the link cannot be null or empty.</exception>
 		/// <exception cref="ArgumentOutOfRangeException">
 		/// Name of the link cannot be longer then 31 symbol.
@@ -486,7 +474,6 @@ namespace CryCil.Engine.Logic
 			{
 				throw new ArgumentException("Unable to identify the entity that will be linked to this one.");
 			}
-			Contract.EndContractBlock();
 
 			return AddEntityLink(this.handle, linkName, id, guid);
 		}
@@ -496,6 +483,10 @@ namespace CryCil.Engine.Logic
 		/// <param name="link">
 		/// An object that represents the link between this entity and another that must be removed.
 		/// </param>
+		/// <exception cref="NullReferenceException">This entity is not usable.</exception>
+		/// <exception cref="ArgumentNullException">
+		/// Object that represents the link that must be removed cannot be null.
+		/// </exception>
 		public void Unlink(EntityLink link)
 		{
 			this.AssertEntity();
@@ -503,17 +494,16 @@ namespace CryCil.Engine.Logic
 			{
 				throw new ArgumentNullException("link", "Object that represents the link that must be removed cannot be null.");
 			}
-			Contract.EndContractBlock();
 
 			RemoveEntityLink(this.handle, link);
 		}
 		/// <summary>
 		/// Unlinks this entity from everything.
 		/// </summary>
+		/// <exception cref="NullReferenceException">This entity is not usable.</exception>
 		public void UnlinkEverything()
 		{
 			this.AssertEntity();
-			Contract.EndContractBlock();
 
 			RemoveAllEntityLinks(this.handle);
 		}
@@ -523,6 +513,7 @@ namespace CryCil.Engine.Logic
 		/// <param name="parameters">
 		/// A set of parameters that describes how to physicalize this entity.
 		/// </param>
+		/// <exception cref="NullReferenceException">This entity is not usable.</exception>
 		/// <exception cref="PhysicalizationException">
 		/// An array of points must be provided when creating an area definition for a spline or shape
 		/// area.
@@ -534,23 +525,23 @@ namespace CryCil.Engine.Logic
 		{
 			this.AssertEntity();
 			parameters.Validate();
-			Contract.EndContractBlock();
 
 			PhysicalizeInternal(this.handle, ref parameters);
 		}
 		/// <summary>
 		/// Dephysicalizes this entity.
 		/// </summary>
+		/// <exception cref="NullReferenceException">This entity is not usable.</exception>
 		public void Unphysicalize()
 		{
 			this.AssertEntity();
-			Contract.EndContractBlock();
 
 			UnphysicalizeInternal(this.handle);
 		}
 		#endregion
 		#region Utilities
 		// Assertion method.
+		/// <exception cref="NullReferenceException">This entity is not usable.</exception>
 		private void AssertEntity()
 		{
 			if (this.handle == IntPtr.Zero)

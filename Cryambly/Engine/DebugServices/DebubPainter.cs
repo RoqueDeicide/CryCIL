@@ -1,4 +1,5 @@
-﻿using CryCil.Annotations;
+﻿using System;
+using CryCil.Annotations;
 using CryCil.Geometry;
 using CryCil.Graphics;
 using CryCil.Utilities;
@@ -70,6 +71,7 @@ namespace CryCil.Engine.DebugServices
 		/// <param name="clear">
 		/// Indicates whether existing group that uses this name should be cleared.
 		/// </param>
+		/// <exception cref="OutOfMemoryException">There is insufficient memory available.</exception>
 		public DebubPainter(string name, bool clear = true)
 		{
 			DebugGraphics.Begin(StringPool.Get(name), clear);

@@ -1,4 +1,6 @@
-﻿namespace CryCil.Engine.Physics
+﻿using System;
+
+namespace CryCil.Engine.Physics
 {
 	/// <summary>
 	/// Enumeration of types of structures that encapsulate parameters that are used to update geometry of

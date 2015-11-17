@@ -67,6 +67,7 @@ namespace CryCil.Graphics
 		/// </summary>
 		/// <param name="index">Zero-based index of the frustum plane to get.</param>
 		/// <returns>The frustum plane.</returns>
+		/// <exception cref="ArgumentOutOfRangeException">Index is out of range.</exception>
 		public Plane GetPlane(FrustumPlanes index)
 		{
 			switch (index)
@@ -92,6 +93,7 @@ namespace CryCil.Graphics
 		/// </summary>
 		/// <param name="index">Zero-based index of the frustum plane to set.</param>
 		/// <param name="value">A value to set.</param>
+		/// <exception cref="ArgumentOutOfRangeException">Index is out of range.</exception>
 		public void SetPlane(FrustumPlanes index, Plane value)
 		{
 			switch (index)
@@ -308,6 +310,9 @@ namespace CryCil.Graphics
 		/// <summary>
 		/// Gets the view transformation matrix. It can be used for something.
 		/// </summary>
+		/// <exception cref="DivideByZeroException">
+		/// Attempt was made to invert a matrix which determinant is equal to 0.
+		/// </exception>
 		public Matrix34 ViewMatrix
 		{
 			get { return this.matrix.Inverted; }
@@ -617,6 +622,10 @@ namespace CryCil.Graphics
 		/// results into.
 		/// </param>
 		/// <returns>An array of boolean values that indicate visibility of respective vectors.</returns>
+		/// <exception cref="OverflowException">
+		/// The array is multidimensional and contains more than <see cref="F:System.Int32.MaxValue"/>
+		/// elements.
+		/// </exception>
 		public bool[] Project(Vector3[] position, out Vector3[] result, Rectangle customViewport = new Rectangle())
 		{
 			// Set up the projection matrix.

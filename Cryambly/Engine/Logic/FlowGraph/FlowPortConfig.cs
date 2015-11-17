@@ -13,6 +13,7 @@ namespace CryCil.Engine.Logic
 		[UsedImplicitly] private IntPtr enumConfig; // Enumeration of selectable values for an input port.
 		[UsedImplicitly] private FlowData defaultValue; // Default value and type for input ports and type for output ports.
 		// Creates an object that describes an input port.
+		/// <exception cref="OutOfMemoryException">There is insufficient memory available.</exception>
 		internal FlowPortConfig(string name, string displayName, string description, string enumConfig, FlowData def)
 		{
 			this.name = StringPool.Get(name);
@@ -22,6 +23,7 @@ namespace CryCil.Engine.Logic
 			this.defaultValue = def;
 		}
 		// Creates an object that describes an output port.
+		/// <exception cref="OutOfMemoryException">There is insufficient memory available.</exception>
 		internal FlowPortConfig(string name, string displayName, string description, FlowDataType type)
 		{
 			this.name = StringPool.Get(name);

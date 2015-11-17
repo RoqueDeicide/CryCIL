@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using CryCil.Annotations;
 
 namespace CryCil.Engine.Logic
@@ -29,7 +28,6 @@ namespace CryCil.Engine.Logic
 			get
 			{
 				this.AssertLink();
-				Contract.EndContractBlock();
 
 				return CryEntity.GetNextLink(this.handle);
 			}
@@ -51,7 +49,6 @@ namespace CryCil.Engine.Logic
 			get
 			{
 				this.AssertLink();
-				Contract.EndContractBlock();
 
 				return CryEntity.GetLinkedEntityId(this.handle);
 			}
@@ -65,7 +62,6 @@ namespace CryCil.Engine.Logic
 			get
 			{
 				this.AssertLink();
-				Contract.EndContractBlock();
 
 				return CryEntity.GetLinkedEntityGuid(this.handle);
 			}
@@ -83,7 +79,6 @@ namespace CryCil.Engine.Logic
 			get
 			{
 				this.AssertLink();
-				Contract.EndContractBlock();
 
 				return CryEntity.GetLinkName(this.handle);
 			}
@@ -97,6 +92,7 @@ namespace CryCil.Engine.Logic
 		#endregion
 		#region Utilities
 		// Assertion method.
+		/// <exception cref="NullReferenceException">This instance object is not usable.</exception>
 		private void AssertLink()
 		{
 			if (this.handle == IntPtr.Zero)

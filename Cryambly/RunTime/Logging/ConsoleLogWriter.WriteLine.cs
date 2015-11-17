@@ -3,7 +3,7 @@ using CryCil.Annotations;
 
 namespace CryCil.RunTime.Logging
 {
-	partial class ConsoleLogWriter
+	public partial class ConsoleLogWriter
 	{
 		/// <summary>
 		/// Writes a new line symbol to CryEngine log.

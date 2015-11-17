@@ -1,4 +1,6 @@
-﻿namespace CryCil.RunTime
+﻿using System;
+
+namespace CryCil.RunTime
 {
 	/// <summary>
 	/// Enumeration of indices of default initialization stages.

@@ -1,4 +1,6 @@
-﻿namespace CryCil.Engine.Physics
+﻿using System;
+
+namespace CryCil.Engine.Physics
 {
 	/// <summary>
 	/// Enumeration of reasons that can cause creation a new physics part.

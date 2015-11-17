@@ -63,6 +63,13 @@ namespace CryCil.MemoryMapping
 		/// <param name="index">  
 		/// Zero-based index of the byte within native memory cluster to use as initial value.
 		/// </param>
+		/// <exception cref="ArgumentNullException">
+		/// Unable to initialize new object of type Bytes4: Provided pointer is null.
+		/// </exception>
+		/// <exception cref="AccessViolationException">
+		/// Base address ( <paramref name="pointer"/>) plus offset byte ( <paramref name="index"/>)
+		/// produces a null or invalid address.
+		/// </exception>
 		public Byte1(IntPtr pointer, int index)
 			: this()
 		{
@@ -80,6 +87,10 @@ namespace CryCil.MemoryMapping
 		/// </summary>
 		/// <param name="handle">Pointer to the beginning of native memory cluster.</param>
 		/// <param name="offset">Zero-based index of the byte within native memory cluster to get.</param>
+		/// <exception cref="AccessViolationException">
+		/// Base address ( <paramref name="handle"/>) plus offset byte ( <paramref name="offset"/>)
+		/// produces a null or invalid address.
+		/// </exception>
 		public void Get(IntPtr handle, int offset)
 		{
 			if (handle == IntPtr.Zero)
@@ -93,6 +104,10 @@ namespace CryCil.MemoryMapping
 		/// </summary>
 		/// <param name="handle">Pointer to the beginning of native memory cluster.</param>
 		/// <param name="offset">Zero-based index of the byte within native memory cluster to set.</param>
+		/// <exception cref="AccessViolationException">
+		/// Base address ( <paramref name="handle"/>) plus offset byte ( <paramref name="offset"/>)
+		/// produces a null or invalid address.
+		/// </exception>
 		public void Set(IntPtr handle, int offset)
 		{
 			if (handle == IntPtr.Zero)

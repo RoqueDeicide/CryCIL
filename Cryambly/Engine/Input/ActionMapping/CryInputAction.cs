@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 
 namespace CryCil.Engine.Input.ActionMapping
@@ -36,10 +35,10 @@ namespace CryCil.Engine.Input.ActionMapping
 		/// Additional information that specify when the action can be activated by this input.
 		/// </param>
 		/// <returns>True, if input has been successfully added and bound, otherwise false.</returns>
+		/// <exception cref="NullReferenceException">This instance is not usable.</exception>
 		public bool AddInput(InputId input, ActionInputSpecification spec)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return AddInputInternal(this.handle, input, spec);
 		}
@@ -48,10 +47,10 @@ namespace CryCil.Engine.Input.ActionMapping
 		/// </summary>
 		/// <param name="input">Identifier of the input that can activate this action.</param>
 		/// <returns>True, if input has been successfully found and removed, otherwise false.</returns>
+		/// <exception cref="NullReferenceException">This instance is not usable.</exception>
 		public bool RemoveInput(InputId input)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return RemoveInputInternal(this.handle, input);
 		}
@@ -64,15 +63,16 @@ namespace CryCil.Engine.Input.ActionMapping
 		/// A new input. If equal to <see cref="InputId.Unknown"/> then it will be cleared.
 		/// </param>
 		/// <returns>True, if successful, otherwise false.</returns>
+		/// <exception cref="NullReferenceException">This instance is not usable.</exception>
 		public bool RebindInput(InputId oldInput, InputId newInput)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return RebindInputInternal(this.handle, oldInput, newInput);
 		}
 		#endregion
 		#region Utilities
+		/// <exception cref="NullReferenceException">This instance is not usable.</exception>
 		private void AssertInstance()
 		{
 			if (!this.IsValid)

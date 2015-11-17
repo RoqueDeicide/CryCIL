@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using CryCil.Engine.Data;
 using CryCil.RunTime.Registration;
 
@@ -43,6 +44,7 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Gets the name of entity class that represents this entity.
 		/// </summary>
+		/// <exception cref="TypeLoadException">The custom attribute type cannot be loaded.</exception>
 		public string EntityClassName
 		{
 			get { return this.entityTypeName ?? (this.entityTypeName = this.GetType().GetAttribute<EntityAttribute>().Name); }
@@ -250,11 +252,13 @@ namespace CryCil.Engine.Logic
 			this.Synchronize(sync);
 		}
 		[UnmanagedThunk("Invoked to set one of the properties.")]
+		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		private void SetEditableProperty(int index, string value)
 		{
 			EntityRegistry.DefinedProperties[this.EntityClassName][index].Set(this, value);
 		}
 		[UnmanagedThunk("Invoked to set one of the properties.")]
+		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		private string GetEditableProperty(int index)
 		{
 			return EntityRegistry.DefinedProperties[this.EntityClassName][index].Get(this);

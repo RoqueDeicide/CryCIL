@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
@@ -23,6 +24,7 @@ namespace CryCil.Engine.Rendering
 	/// Represents a wrapper for a collection of shader parameters.
 	/// </summary>
 	[StructLayout(LayoutKind.Sequential)]
+	[SuppressMessage("ReSharper", "ExceptionNotThrown")]
 	public unsafe struct ShaderParameters : IEnumerable<ShaderParameterPtr>
 	{
 		#region Fields
@@ -95,6 +97,7 @@ namespace CryCil.Engine.Rendering
 		}
 		#endregion
 		#region Utilities
+		/// <exception cref="NullReferenceException">Instance object is invalid.</exception>
 		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return this.GetEnumerator();

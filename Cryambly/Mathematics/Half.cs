@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 namespace CryCil
@@ -22,12 +23,15 @@ namespace CryCil
 	/// link: http://grouper.ieee.org/groups/754/</item></list>
 	/// </remarks>
 	[Serializable]
+	[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 	public struct Half : IComparable, IFormattable, IConvertible, IComparable<Half>, IEquatable<Half>
 	{
 		/// <summary>
 		/// Internal representation of the half-precision floating-point number.
 		/// </summary>
-		[DebuggerBrowsable(DebuggerBrowsableState.Never)] internal ushort value;
+		[DebuggerBrowsable(DebuggerBrowsableState.Never)] [SuppressMessage("StyleCop.CSharp.NamingRules",
+			"SA1307:AccessibleFieldsMustBeginWithUpperCaseLetter",
+			Justification = "Reviewed. Suppression is OK here.")] internal ushort value;
 		#region Constants
 		/// <summary>
 		/// Represents the smallest positive System.Half value greater than zero. This field is constant.
@@ -158,7 +162,8 @@ namespace CryCil
 		/// <param name="half1">A System.Half (the dividend).</param>
 		/// <param name="half2">A System.Half (the divisor).</param>
 		/// <returns>The System.Half that is the result of dividing half1 by half2.</returns>
-		/// <exception cref="System.DivideByZeroException">half2 is zero.</exception>
+		/// <exception cref="DivideByZeroException">half2 is zero.</exception>
+		[SuppressMessage("ReSharper", "ExceptionNotThrown")]
 		public static Half Divide(Half half1, Half half2)
 		{
 			return half1 / half2;
@@ -249,7 +254,7 @@ namespace CryCil
 		/// <returns>true if half1 and half2 are equal; otherwise, false.</returns>
 		public static bool operator ==(Half half1, Half half2)
 		{
-			return (!IsNaN(half1) && (half1.value == half2.value));
+			return !IsNaN(half1) && (half1.value == half2.value);
 		}
 		/// <summary>
 		/// Returns a value indicating whether two instances of System.Half are not equal.
@@ -592,7 +597,7 @@ namespace CryCil
 		/// <returns>true if value is equal to this instance; otherwise, false.</returns>
 		public bool Equals(Half other)
 		{
-			return ((other == this) || (IsNaN(other) && IsNaN(this)));
+			return (other == this) || (IsNaN(other) && IsNaN(this));
 		}
 		/// <summary>
 		/// Returns a value indicating whether this instance and a specified System.Object represent the
@@ -986,7 +991,8 @@ namespace CryCil
 		/// <returns>
 		/// The string representation of the value of this instance as specified by format and provider.
 		/// </returns>
-		/// <exception cref="System.FormatException">format is invalid.</exception>
+		/// <exception cref="FormatException">format is invalid.</exception>
+		[SuppressMessage("ReSharper", "ExceptionNotThrown")]
 		public string ToString(string format, IFormatProvider formatProvider)
 		{
 			return ((float)this).ToString(format, formatProvider);
@@ -1011,12 +1017,14 @@ namespace CryCil
 		}
 		char IConvertible.ToChar(IFormatProvider provider)
 		{
-			throw new InvalidCastException(string.Format(CultureInfo.CurrentCulture, "Invalid cast from '{0}' to '{1}'.", "Half",
+			throw new InvalidCastException(string.Format(CultureInfo.CurrentCulture,
+														 "Invalid cast from '{0}' to '{1}'.", "Half",
 														 "Char"));
 		}
 		DateTime IConvertible.ToDateTime(IFormatProvider provider)
 		{
-			throw new InvalidCastException(string.Format(CultureInfo.CurrentCulture, "Invalid cast from '{0}' to '{1}'.", "Half",
+			throw new InvalidCastException(string.Format(CultureInfo.CurrentCulture,
+														 "Invalid cast from '{0}' to '{1}'.", "Half",
 														 "DateTime"));
 		}
 		decimal IConvertible.ToDecimal(IFormatProvider provider)

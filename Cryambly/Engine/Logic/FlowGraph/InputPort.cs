@@ -83,8 +83,9 @@ namespace CryCil.Engine.Logic
 		{
 			get
 			{
-				return new FlowPortConfig
-					(this.Name, this.DisplayName, this.DisplayName, null, new FlowData(FlowDataType.Any));
+				// ReSharper disable ExceptionNotDocumented
+				return new FlowPortConfig(this.Name, this.DisplayName, this.DisplayName, null,
+										  new FlowData(FlowDataType.Any));
 			}
 		}
 		#endregion
@@ -130,8 +131,8 @@ namespace CryCil.Engine.Logic
 		{
 			get
 			{
-				return new FlowPortConfig
-					(this.Name, this.DisplayName, this.DisplayName, null, new FlowData(FlowDataType.Void));
+				return new FlowPortConfig(this.Name, this.DisplayName, this.DisplayName, null,
+										  new FlowData(FlowDataType.Void));
 			}
 		}
 		#endregion
@@ -157,6 +158,9 @@ namespace CryCil.Engine.Logic
 		{
 			if (this.action != null) this.action();
 		}
+		/// <exception cref="Exception">
+		/// Input port of type Void has been invoked with non-void data.
+		/// </exception>
 		internal override void Assign(FlowData input)
 		{
 			if (input.DataType != FlowDataType.Void)
@@ -183,8 +187,8 @@ namespace CryCil.Engine.Logic
 		{
 			get
 			{
-				return new FlowPortConfig
-					(this.Name, this.DisplayName, this.DisplayName, this.UiConfig, new FlowData(this.Value));
+				return new FlowPortConfig(this.Name, this.DisplayName, this.DisplayName, this.UiConfig,
+										  new FlowData(this.Value));
 			}
 		}
 		#endregion
@@ -237,6 +241,9 @@ namespace CryCil.Engine.Logic
 		{
 			if (this.action != null) this.action(this.Value);
 		}
+		/// <exception cref="Exception">
+		/// Input port of type Int has been invoked with non-integer data.
+		/// </exception>
 		internal override void Assign(FlowData input)
 		{
 			if (input.DataType != FlowDataType.Int)
@@ -265,8 +272,8 @@ namespace CryCil.Engine.Logic
 		{
 			get
 			{
-				return new FlowPortConfig
-					(this.Name, this.DisplayName, this.DisplayName, this.UiConfig, new FlowData(this.Value));
+				return new FlowPortConfig(this.Name, this.DisplayName, this.DisplayName, this.UiConfig,
+										  new FlowData(this.Value));
 			}
 		}
 		#endregion
@@ -319,6 +326,9 @@ namespace CryCil.Engine.Logic
 		{
 			if (this.action != null) this.action(this.Value);
 		}
+		/// <exception cref="Exception">
+		/// Input port of type Float has been invoked with non-floating-point data.
+		/// </exception>
 		internal override void Assign(FlowData input)
 		{
 			if (input.DataType != FlowDataType.Float)
@@ -347,8 +357,8 @@ namespace CryCil.Engine.Logic
 		{
 			get
 			{
-				return new FlowPortConfig
-					(this.Name, this.DisplayName, this.DisplayName, this.UiConfig, new FlowData(FlowDataType.EntityId));
+				return new FlowPortConfig(this.Name, this.DisplayName, this.DisplayName, this.UiConfig,
+										  new FlowData(FlowDataType.EntityId));
 			}
 		}
 		#endregion
@@ -374,6 +384,9 @@ namespace CryCil.Engine.Logic
 		{
 			if (this.action != null) this.action(this.Value);
 		}
+		/// <exception cref="Exception">
+		/// Input port of type EntityId has been invoked with non-integer data.
+		/// </exception>
 		internal override void Assign(FlowData input)
 		{
 			if (input.DataType != FlowDataType.EntityId)
@@ -402,8 +415,8 @@ namespace CryCil.Engine.Logic
 		{
 			get
 			{
-				return new FlowPortConfig
-					(this.Name, this.DisplayName, this.DisplayName, this.UiConfig, new FlowData(this.Value));
+				return new FlowPortConfig(this.Name, this.DisplayName, this.DisplayName, this.UiConfig,
+										  new FlowData(this.Value));
 			}
 		}
 		#endregion
@@ -432,6 +445,9 @@ namespace CryCil.Engine.Logic
 		{
 			if (this.action != null) this.action(this.Value);
 		}
+		/// <exception cref="Exception">
+		/// Input port of type Vector3 has been invoked with non-vector data.
+		/// </exception>
 		internal override void Assign(FlowData input)
 		{
 			if (input.DataType != FlowDataType.Vector3)
@@ -456,12 +472,13 @@ namespace CryCil.Engine.Logic
 		/// Gets current value of this port.
 		/// </summary>
 		public string Value { get; private set; }
+		/// <exception cref="OutOfMemoryException">There is insufficient memory available.</exception>
 		internal override FlowPortConfig Config
 		{
 			get
 			{
-				return new FlowPortConfig
-					(this.Name, this.DisplayName, this.DisplayName, this.UiConfig, new FlowData(this.Value));
+				return new FlowPortConfig(this.Name, this.DisplayName, this.DisplayName, this.UiConfig,
+										  new FlowData(this.Value));
 			}
 		}
 		#endregion
@@ -514,6 +531,9 @@ namespace CryCil.Engine.Logic
 		{
 			if (this.action != null) this.action(this.Value);
 		}
+		/// <exception cref="Exception">
+		/// Input port of type String has been invoked with non-text data.
+		/// </exception>
 		internal override void Assign(FlowData input)
 		{
 			if (input.DataType != FlowDataType.String)
@@ -542,8 +562,8 @@ namespace CryCil.Engine.Logic
 		{
 			get
 			{
-				return new FlowPortConfig
-					(this.Name, this.DisplayName, this.DisplayName, this.UiConfig, new FlowData(this.Value));
+				return new FlowPortConfig(this.Name, this.DisplayName, this.DisplayName, this.UiConfig,
+										  new FlowData(this.Value));
 			}
 		}
 		#endregion
@@ -572,6 +592,9 @@ namespace CryCil.Engine.Logic
 		{
 			if (this.action != null) this.action(this.Value);
 		}
+		/// <exception cref="Exception">
+		/// Input port of type Bool has been invoked with non-boolean data.
+		/// </exception>
 		internal override void Assign(FlowData input)
 		{
 			if (input.DataType != FlowDataType.Bool)

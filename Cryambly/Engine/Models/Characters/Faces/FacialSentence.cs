@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -33,7 +32,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return FacialSentence.GetPhonemeCount(this.handle);
 			}
@@ -48,7 +46,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				FacialSentence.Phoneme phoneme;
 				FacialSentence.GetPhoneme(this.handle, index, out phoneme);
@@ -72,7 +69,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public int Add(FacialSentence.Phoneme phoneme)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return FacialSentence.AddPhoneme(this.handle, ref phoneme);
 		}
@@ -83,7 +79,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public void Clear()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			FacialSentence.ClearAllPhonemes(this.handle);
 		}
@@ -124,7 +119,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return FacialSentence.GetWordCount(this.handle);
 			}
@@ -139,7 +133,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				FacialSentence.Word word;
 				FacialSentence.GetWord(this.handle, index, out word);
@@ -162,7 +155,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public void Add(FacialSentence.Word word)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			FacialSentence.AddWord(this.handle, ref word);
 		}
@@ -173,7 +165,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public void Clear()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			FacialSentence.ClearAllWords(this.handle);
 		}
@@ -362,30 +353,14 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetText(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetText(this.handle, value);
-			}
-		}
-		/// <summary>
-		/// Gets the phoneme library that is used by this sentence.
-		/// </summary>
-		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
-		public PhonemeLibrary PhonemeLibrary
-		{
-			get
-			{
-				this.AssertInstance();
-				Contract.EndContractBlock();
-
-				return GetPhonemeLib(this.handle);
 			}
 		}
 		#endregion
@@ -410,8 +385,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		private static extern void SetText(IntPtr handle, string text);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern string GetText(IntPtr handle);
-		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern PhonemeLibrary GetPhonemeLib(IntPtr handle);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		internal static extern void ClearAllPhonemes(IntPtr handle);
 		[MethodImpl(MethodImplOptions.InternalCall)]

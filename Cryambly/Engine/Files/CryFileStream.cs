@@ -87,6 +87,7 @@ namespace CryCil.Engine.Files
 		/// <param name="type">        Type as which the file will be recognized.</param>
 		/// <param name="directAccess">Indicates if low-level access to the file should be used.</param>
 		/// <param name="flags">       A set of flags that further specify the opening process.</param>
+		/// <exception cref="ArgumentNullException">Cannot open a file using a null name.</exception>
 		/// <exception cref="ArgumentOutOfRangeException">Invalid file opening mode specified.</exception>
 		/// <exception cref="ArgumentOutOfRangeException">
 		/// Invalid file recognition type specified.
@@ -219,7 +220,7 @@ namespace CryCil.Engine.Files
 				default:
 					throw new ArgumentOutOfRangeException("origin", "Unknown origin was specified.");
 			}
-			if (offset > Int32.MaxValue)
+			if (offset > int.MaxValue)
 			{
 				throw new ArgumentOutOfRangeException();
 			}
@@ -280,6 +281,10 @@ namespace CryCil.Engine.Files
 		}
 		#endregion
 		#region Utilities
+		/// <exception cref="ArgumentOutOfRangeException">Invalid file opening mode specified.</exception>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// Invalid file recognition type specified.
+		/// </exception>
 		private static uint EncodeFlags(CryFileMode mode, CryFileType type, bool directAccess)
 		{
 			uint flags = 0;

@@ -1,4 +1,6 @@
-﻿namespace CryCil.Engine.Models.Characters
+﻿using System;
+
+namespace CryCil.Engine.Models.Characters
 {
 	/// <summary>
 	/// Enumeration of priorities that are used when streaming DBA files.
@@ -12,6 +14,6 @@
 		/// <summary>
 		/// Urgent priority.
 		/// </summary>
-		Urgent =1
+		Urgent = 1
 	}
 }

@@ -1,4 +1,7 @@
-﻿namespace CryCil.Hashing
+﻿using System;
+using CryCil.Annotations;
+
+namespace CryCil.Hashing
 {
 	/// <summary>
 	/// Represents a result of a CRC32 hash function.
@@ -14,7 +17,7 @@
 		private const byte aUpper = 65;
 		private const byte zUpper = 90;
 		private const byte UpperToLower = aLow - aUpper;
-		private static readonly uint[] table =
+		[NotNull] private static readonly uint[] table =
 		{
 			0x00000000, 0x77073096, 0xEE0E612C, 0x990951BA,
 			0x076DC419, 0x706AF48F, 0xE963A535, 0x9E6495A3,
@@ -238,7 +241,25 @@
 	/// </summary>
 	public unsafe struct LowerCaseCrc32
 	{
-		private uint hash;
+		private readonly uint hash;
+		/// <summary>
+		/// Gets the stored hash code.
+		/// </summary>
+		public uint Hash
+		{
+			get { return this.hash; }
+		}
+		/// <summary>
+		/// Creates a new object of this type.
+		/// </summary>
+		/// <param name="hash">
+		/// A number that is assumed to be a CRC32 hash code that was calculated from all-lower-case
+		/// version of some text.
+		/// </param>
+		public LowerCaseCrc32(uint hash)
+		{
+			this.hash = hash;
+		}
 		/// <summary>
 		/// Computes the CRC32 hash from lower-case version of given text.
 		/// </summary>

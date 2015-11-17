@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using CryCil.RunTime;
 using CryCil.Utilities;
@@ -37,14 +36,12 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetName(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetName(this.handle, value);
 			}
@@ -59,7 +56,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetRoot(this.handle);
 			}
@@ -80,7 +76,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public void IncrementReferenceCount()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			AddRef(this.handle);
 		}
@@ -92,7 +87,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public void DecrementReferenceCount()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			Release(this.handle);
 		}
@@ -105,7 +99,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public FacialEffector Find(FaceIdentifier id)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return FindInternal(this.handle, id);
 		}
@@ -119,7 +112,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public void Visit(EffectorsLibraryVisitor visitor)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			VisitEffectors(this.handle, visitor);
 		}
@@ -133,7 +125,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public FacialEffector Create(FacialEffectorType type, FaceIdentifier id)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return CreateEffector(this.handle, type, id);
 		}
@@ -145,7 +136,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public void Remove(FacialEffector effector)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			RemoveEffector(this.handle, effector);
 		}
@@ -161,7 +151,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public void Merge(FacialEffectorsLibrary other, bool overwrite)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			MergeLibrary(this.handle, other, overwrite);
 		}
@@ -176,7 +165,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public void Save(CryXmlNode node)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			Serialize(this.handle, node.Handle, false);
 		}
@@ -191,7 +179,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public void Load(CryXmlNode node)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			Serialize(this.handle, node.Handle, true);
 		}

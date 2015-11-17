@@ -1,4 +1,6 @@
-﻿namespace CryCil.Engine.Logic
+﻿using System;
+
+namespace CryCil.Engine.Logic
 {
 	/// <summary>
 	/// Enumeration of types of data that can be transfered via flow node ports.

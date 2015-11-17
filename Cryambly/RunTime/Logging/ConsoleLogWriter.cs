@@ -53,7 +53,13 @@ namespace CryCil.RunTime.Logging
 				}
 				// Reset the buffer to be the last line. It will be empty if <value> ended with new line
 				// symbol.
-				this.buffer = new StringBuilder(lines[lines.Length - 1], 70);
+				try
+				{
+					this.buffer = new StringBuilder(lines[lines.Length - 1], 70);
+				}
+				catch (OverflowException)
+				{
+				}
 			}
 		}
 	}

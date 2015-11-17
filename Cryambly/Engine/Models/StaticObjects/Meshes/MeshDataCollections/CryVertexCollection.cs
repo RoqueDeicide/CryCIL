@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Runtime.InteropServices;
 
 namespace CryCil.Engine.Models.StaticObjects
@@ -25,7 +24,6 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return MathHelpers.Max(this.meshHandle->streamSize[(int)GeneralMeshStreamId.Positions],
 									   this.meshHandle->streamSize[(int)GeneralMeshStreamId.PositionsF16],
@@ -34,7 +32,6 @@ namespace CryCil.Engine.Models.StaticObjects
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				value = value < 0 ? 0 : value; // Clamp negative values.
 
@@ -73,11 +70,10 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				int count;
 				Vector3* ptr = (Vector3*)CryMesh.GetStreamPtr(this.meshHandle, GeneralMeshStreamId.Positions,
-																	 out count);
+															  out count);
 				return new VertexPositionCollection(ptr, count);
 			}
 		}
@@ -91,11 +87,10 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				int count;
 				CryMeshNormal* ptr = (CryMeshNormal*)CryMesh.GetStreamPtr(this.meshHandle,
-																				 GeneralMeshStreamId.Normals, out count);
+																		  GeneralMeshStreamId.Normals, out count);
 				return new VertexNormalCollection(ptr, count);
 			}
 		}
@@ -109,11 +104,10 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				int count;
 				int* ptr = (int*)CryMesh.GetStreamPtr(this.meshHandle, GeneralMeshStreamId.VertexMaterials,
-															 out count);
+													  out count);
 				return new VertexMaterialCollection(ptr, count);
 			}
 		}
@@ -127,11 +121,10 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				int count;
 				CryMeshColor* ptr = (CryMeshColor*)CryMesh.GetStreamPtr(this.meshHandle,
-																			   GeneralMeshStreamId.Colors0, out count);
+																		GeneralMeshStreamId.Colors0, out count);
 				return new VertexColorCollection(ptr, count);
 			}
 		}
@@ -145,11 +138,10 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				int count;
 				CryMeshColor* ptr = (CryMeshColor*)CryMesh.GetStreamPtr(this.meshHandle,
-																			   GeneralMeshStreamId.Colors1, out count);
+																		GeneralMeshStreamId.Colors1, out count);
 				return new VertexColorCollection(ptr, count);
 			}
 		}
@@ -164,7 +156,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public void EnablePrimaryColors()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			int vertexCount = this.Count;
 			if (vertexCount != 0)
@@ -181,7 +172,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public void EnableSecondaryColors()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			int vertexCount = this.Count;
 			if (vertexCount != 0)
@@ -198,7 +188,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public void EnableMaterialIds()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			int vertexCount = this.Count;
 			if (vertexCount != 0)
@@ -215,6 +204,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		}
 		#endregion
 		#region Utilities
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		private void AssertInstance()
 		{
 			if (!this.mesh.IsValid)

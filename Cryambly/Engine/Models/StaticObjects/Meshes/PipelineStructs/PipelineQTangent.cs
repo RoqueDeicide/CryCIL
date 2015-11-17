@@ -1,4 +1,6 @@
-﻿namespace CryCil.Engine.Models.StaticObjects
+﻿using System;
+
+namespace CryCil.Engine.Models.StaticObjects
 {
 	/// <summary>
 	/// A quaternion-based tangent-space normal in format that is used for storage in video memory.

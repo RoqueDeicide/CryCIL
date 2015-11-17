@@ -167,8 +167,7 @@ namespace CryCil.Engine.Models.Characters.Attachments
 		/// </summary>
 		/// <param name="name">Name of the socket to find.</param>
 		/// <returns>
-		/// Zero-based index of the socket, if it was found. Otherwise a negative value will be
-		/// returned.
+		/// Zero-based index of the socket, if it was found. Otherwise a negative value will be returned.
 		/// </returns>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public int IndexOf(string name)
@@ -184,8 +183,7 @@ namespace CryCil.Engine.Models.Characters.Attachments
 		/// CRC32 hash code of a lower-case version of the name of the socket to find.
 		/// </param>
 		/// <returns>
-		/// Zero-based index of the socket, if it was found. Otherwise a negative value will be
-		/// returned.
+		/// Zero-based index of the socket, if it was found. Otherwise a negative value will be returned.
 		/// </returns>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public int IndexOf(LowerCaseCrc32 hash)
@@ -209,16 +207,14 @@ namespace CryCil.Engine.Models.Characters.Attachments
 		/// Physicalizes socket(s) in this collection.
 		/// </summary>
 		/// <param name="index"> 
-		/// Zero-based index of the socket to physicalize. If equal to <c>-1</c> then all attachments
-		/// will physicalized(?).
+		/// Zero-based index of the socket to physicalize. If equal to <c>-1</c> then all attachments will
+		/// physicalized(?).
 		/// </param>
 		/// <param name="entity">
 		/// Optional object that represents a physical entity that shall host physical representations of
 		/// attachments.
 		/// </param>
-		/// <param name="lod">   
-		/// Zero-based index of the LOD model of the socket(s) to physicalize.
-		/// </param>
+		/// <param name="lod">   Zero-based index of the LOD model of the socket(s) to physicalize.</param>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public void Physicalize(int index, PhysicalEntity entity = new PhysicalEntity(), int lod = 0)
 		{

@@ -1,4 +1,6 @@
-﻿namespace CryCil.Engine.Physics
+﻿using System;
+
+namespace CryCil.Engine.Physics
 {
 	/// <summary>
 	/// Enumeration of simulation classes that can be applied to entities.

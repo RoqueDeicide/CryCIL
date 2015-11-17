@@ -1,4 +1,6 @@
-﻿namespace CryCil.Engine
+﻿using System;
+
+namespace CryCil.Engine
 {
 	/// <summary>
 	/// Enumeration of flags that describe the particle emitter.

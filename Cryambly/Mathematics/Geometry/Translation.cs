@@ -1,4 +1,6 @@
-﻿namespace CryCil.Geometry
+﻿using System;
+
+namespace CryCil.Geometry
 {
 	/// <summary>
 	/// Defines functions that are used when there is a need to perform translation affine transformation.

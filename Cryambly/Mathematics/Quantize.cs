@@ -1,4 +1,6 @@
-﻿namespace CryCil
+﻿using System;
+
+namespace CryCil
 {
 	/// <summary>
 	/// Defines quantization operations.
@@ -26,8 +28,8 @@
 			return (short)(value * 32767);
 		}
 		/// <summary>
-		/// Quantizes the 16-bit integer number in range [-32768; 32767] into 16-bit integer number in range
-		/// [-1; 1];
+		/// Quantizes the 16-bit integer number in range [-32768; 32767] into 16-bit integer number in
+		/// range [-1; 1];
 		/// </summary>
 		/// <param name="value">Value to quantize.</param>
 		/// <returns>Quantized value.</returns>
@@ -68,8 +70,8 @@
 									SingleToInt16(value.Z), SingleToInt16(value.W));
 		}
 		/// <summary>
-		/// Quantizes 4 16-bit integer numbers in range [-32768; 32767] into 4 single-precision numbers in range
-		/// [-1; 1];
+		/// Quantizes 4 16-bit integer numbers in range [-32768; 32767] into 4 single-precision numbers in
+		/// range [-1; 1];
 		/// </summary>
 		/// <param name="value">Value to quantize.</param>
 		/// <returns>Quantized value.</returns>

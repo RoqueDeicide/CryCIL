@@ -1,4 +1,6 @@
-﻿namespace CryCil.Engine.Models.StaticObjects
+﻿using System;
+
+namespace CryCil.Engine.Models.StaticObjects
 {
 	/// <summary>
 	/// Represents a vertex data that is defined by <see cref="VertexFormat.T2F"/>.

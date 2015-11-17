@@ -1,4 +1,6 @@
-﻿namespace CryCil.Engine.Models.Characters
+﻿using System;
+
+namespace CryCil.Engine.Models.Characters
 {
 	/// <summary>
 	/// Enumeration of results of reloading a .caf file.

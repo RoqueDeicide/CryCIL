@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace CryCil.Engine.Physics
 {
@@ -12,6 +13,7 @@ namespace CryCil.Engine.Physics
 	public sealed class ImmediatePhysicsEventHandlerAttribute : Attribute
 	{
 	}
+	[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 	internal class SafeIterationList<T> : IList<T>
 	{
 		#region Fields
@@ -420,6 +422,7 @@ namespace CryCil.Engine.Physics
 		#region Interface
 		#endregion
 		#region Utilities
+		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		private static bool IsHandlerForLogged(Delegate @delegate)
 		{
 			return !@delegate.Method.ContainsAttribute<ImmediatePhysicsEventHandlerAttribute>();

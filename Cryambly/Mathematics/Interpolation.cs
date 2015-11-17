@@ -1,4 +1,6 @@
-﻿namespace CryCil
+﻿using System;
+
+namespace CryCil
 {
 	/// <summary>
 	/// Defines means of using various types of interpolations.

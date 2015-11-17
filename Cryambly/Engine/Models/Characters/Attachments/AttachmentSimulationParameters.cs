@@ -830,7 +830,8 @@ namespace CryCil.Engine.Models.Characters.Attachments
 			}
 		}
 		/// <summary>
-		/// Gets or sets the array of names of attachment proxies that should participate in collision detection with this attachment.
+		/// Gets or sets the array of names of attachment proxies that should participate in collision
+		/// detection with this attachment.
 		/// </summary>
 		/// <remarks>
 		/// If this array is empty then the attachment will not collide with the rest of the character.

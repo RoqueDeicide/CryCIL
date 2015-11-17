@@ -114,9 +114,12 @@ namespace CryCil.Engine.Physics
 		/// </typeparam>
 		/// <returns>
 		/// A valid object of type <typeparamref name="UserForeignDataType"/> if extracted successfully,
-		/// otherwise a result of <c>default()</c> with <typeparamref name="UserForeignDataType"/> as an argument is
-		/// returned.
+		/// otherwise a result of <c>default()</c> with <typeparamref name="UserForeignDataType"/> as an
+		/// argument is returned.
 		/// </returns>
+		/// <exception cref="NotSupportedException">
+		/// Type doesn't define a valid extractor method for foreign data type identifier.
+		/// </exception>
 		public UserForeignDataType User<UserForeignDataType>()
 			where UserForeignDataType : IForeignDataProvider, new()
 		{
@@ -132,7 +135,7 @@ namespace CryCil.Engine.Physics
 				{
 					ForeignDataExtractor<UserForeignDataType> extractor =
 						extractorDelegate as ForeignDataExtractor<UserForeignDataType>;
-					Debug.Assert(extractor != null);
+					Debug.Assert(extractor != null, "extractor != null");
 					obj = extractor(this.handle, this.id);
 				}
 				else
@@ -157,25 +160,23 @@ namespace CryCil.Engine.Physics
 		static ForeignDataTypeRegistry()
 		{
 			BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static;
-			Extractors = new SortedList<ForeignDataIds, Delegate>
-				(
-				(
-					from assembly in MonoInterface.CryCilAssemblies
-					from type in assembly.GetTypes()
-					from method in type.GetMethods(bindingFlags)
-					where method.ContainsAttribute<ForeignDataExtractorAttribute>()
-					let parameters = method.GetParameters()
-					where parameters.Length == 2
-					where parameters[0].ParameterType == typeof(IntPtr)
-					where parameters[1].ParameterType == typeof(ForeignDataIds)
-					where method.ReturnType.Implements<IForeignDataProvider>()
-					select method
-					).ToDictionary
-					(
-					 method => method.GetAttribute<ForeignDataExtractorAttribute>().Id,
-					 method => method.CreateDelegate(typeof(ForeignDataExtractor<>).MakeGenericType(method.ReturnType))
-					)
-				);
+
+			var linq = from assembly in MonoInterface.CryCilAssemblies
+					   from type in assembly.GetTypes()
+					   from method in type.GetMethods(bindingFlags)
+					   where method.ContainsAttribute<ForeignDataExtractorAttribute>()
+					   let parameters = method.GetParameters()
+					   where parameters.Length == 2
+					   where parameters[0].ParameterType == typeof(IntPtr)
+					   where parameters[1].ParameterType == typeof(ForeignDataIds)
+					   where method.ReturnType.Implements<IForeignDataProvider>()
+					   select method;
+
+			Extractors =
+				new SortedList<ForeignDataIds, Delegate>(
+					linq.ToDictionary(method => method.GetAttribute<ForeignDataExtractorAttribute>().Id,
+									  method => method.CreateDelegate(typeof(ForeignDataExtractor<>)
+																		  .MakeGenericType(method.ReturnType))));
 		}
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
 using CryCil.Engine.Logic;
@@ -155,6 +156,7 @@ namespace CryCil.Engine.Physics
 		/// Gets or sets an array of surface type mappings that are used the geometry of this part.
 		/// </summary>
 		[CanBeNull]
+		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		public int[] SurfaceTypesMapping
 		{
 			get { return this.matMappings; }
@@ -191,9 +193,20 @@ namespace CryCil.Engine.Physics
 		/// Takes a table of surface type identifiers from the material that should be taken from the main
 		/// <see cref="CryEntity"/> object and puts into this object.
 		/// </summary>
+		/// <exception cref="ArgumentNullException">Given material is null.</exception>
 		public Material MaterialSurfaceTypesMapping
 		{
-			set { this.pMatMapping = value.FillSurfaceTypesTable(out this.nMats); }
+			set
+			{
+				try
+				{
+					this.pMatMapping = value.FillSurfaceTypesTable(out this.nMats);
+				}
+				catch (NullReferenceException nullReferenceException)
+				{
+					throw new ArgumentNullException("Given material is null", nullReferenceException);
+				}
+			}
 		}
 		/// <summary>
 		/// Gets or sets the value that indicates how close another entity must be to this part, to make

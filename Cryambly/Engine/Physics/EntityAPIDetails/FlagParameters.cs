@@ -1,4 +1,5 @@
-﻿using CryCil.MemoryMapping;
+﻿using System;
+using CryCil.MemoryMapping;
 
 namespace CryCil.Engine.Physics
 {

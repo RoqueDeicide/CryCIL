@@ -1,4 +1,6 @@
-﻿namespace CryCil.Engine.Models.Characters.Attachments
+﻿using System;
+
+namespace CryCil.Engine.Models.Characters.Attachments
 {
 	internal enum AttachmentObjectTypes
 	{

@@ -1,4 +1,6 @@
-﻿namespace CryCil.Engine.Models.Characters.Faces
+﻿using System;
+
+namespace CryCil.Engine.Models.Characters.Faces
 {
 	/// <summary>
 	/// Enumeration of identifiers of layers of facial animation.

@@ -1,4 +1,6 @@
-﻿namespace CryCil.Engine.Environment
+﻿using System;
+
+namespace CryCil.Engine.Environment
 {
 	/// <summary>
 	/// Enumeration of identifiers of all variables.

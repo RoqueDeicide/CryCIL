@@ -1,4 +1,6 @@
-﻿namespace CryCil.MemoryMapping
+﻿using System;
+
+namespace CryCil.MemoryMapping
 {
 	/// <summary>
 	/// Defines methods that convert fixed size buffers to arrays.

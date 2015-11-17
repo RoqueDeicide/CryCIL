@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using CryCil.Geometry;
@@ -47,7 +46,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 					throw new InvalidOperationException(
 						"Text value can only be acquired from FacialEffectorParameterId.BoneName parameter.");
 				}
-				Contract.EndContractBlock();
 
 				return FacialEffector.GetParamString(this.handle, this.id);
 			}
@@ -58,7 +56,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 				{
 					throw new InvalidOperationException("Text value can only be set for FacialEffectorParameterId.BoneName parameter.");
 				}
-				Contract.EndContractBlock();
 
 				FacialEffector.SetParamString(this.handle, this.id, value);
 			}
@@ -85,7 +82,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 					throw new InvalidOperationException(
 						"Vector value can only be acquired from FacialEffectorParameterId.BonePositionAxis parameter.");
 				}
-				Contract.EndContractBlock();
 
 				return FacialEffector.GetParamVec3(this.handle, this.id);
 			}
@@ -97,7 +93,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 					throw new InvalidOperationException(
 						"Vector value can only be set for FacialEffectorParameterId.BonePositionAxis parameter.");
 				}
-				Contract.EndContractBlock();
 
 				FacialEffector.SetParamVec3(this.handle, this.id, value);
 			}
@@ -124,7 +119,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 					throw new InvalidOperationException(
 						"A set of Euler angles can only be acquired from FacialEffectorParameterId.BoneRotationAxis parameter.");
 				}
-				Contract.EndContractBlock();
 
 				Vector3 vector = FacialEffector.GetParamVec3(this.handle, this.id);
 
@@ -141,7 +135,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 					throw new InvalidOperationException(
 						"A set of Euler angles can only be set for FacialEffectorParameterId.BoneRotationAxis parameter.");
 				}
-				Contract.EndContractBlock();
 
 				unsafe
 				{
@@ -203,7 +196,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 					throw new ArgumentOutOfRangeException("id",
 														  "Identifier of the parameter must be a valid value from FacialEffectorParameterId enumeration.");
 				}
-				Contract.EndContractBlock();
 
 				return new FacialEffectorParameter(this.handle, id);
 			}
@@ -251,7 +243,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return FacialEffector.GetSubEffectorCount(this.handle);
 			}
@@ -271,7 +262,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 				{
 					throw new IndexOutOfRangeException("Index is out of range.");
 				}
-				Contract.EndContractBlock();
 
 				return FacialEffector.GetSubEffector(this.handle, index);
 			}
@@ -286,7 +276,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				var controller = FacialEffector.GetSubEffCtrlByName(this.handle, name);
 
@@ -310,7 +299,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public FacialEffectorController Add(FacialEffector effector)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return FacialEffector.AddSubEffector(this.handle, effector);
 		}
@@ -322,7 +310,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public void Remove(FacialEffector effector)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			FacialEffector.RemoveSubEffector(this.handle, effector);
 		}
@@ -336,7 +323,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public void RemoveAt(int index)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			FacialEffector.RemoveSubEffector(this.handle, this[index]);
 		}
@@ -347,7 +333,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public void Clear()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			FacialEffector.RemoveAllSubEffectors(this.handle);
 		}
@@ -403,7 +388,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return FacialEffector.GetSubEffectorCount(this.handle);
 			}
@@ -423,7 +407,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 				{
 					throw new IndexOutOfRangeException("Index is out of range.");
 				}
-				Contract.EndContractBlock();
 
 				return FacialEffector.GetSubEffCtrl(this.handle, index);
 			}
@@ -438,7 +421,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return FacialEffector.GetSubEffCtrlByName(this.handle, name);
 			}
@@ -517,14 +499,12 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetIdentifier(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetIdentifier(this.handle, value);
 			}
@@ -538,7 +518,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetEffectorType(this.handle);
 			}
@@ -552,14 +531,12 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetFlags(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetFlags(this.handle, value);
 			}
@@ -574,7 +551,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetIndexInState(this.handle);
 			}

@@ -1,4 +1,6 @@
-﻿namespace CryCil
+﻿using System;
+
+namespace CryCil
 {
 	public static partial class Interpolation
 	{

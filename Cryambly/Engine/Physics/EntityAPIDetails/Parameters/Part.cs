@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
 using CryCil.Engine.Logic;
@@ -68,13 +67,17 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets or sets the value that indicates whether bounding box the part must be recalculated.
 		/// </summary>
+		/// <exception cref="InvalidOperationException">
+		/// Attempt was made to change an object that represents a set of parameters that represents
+		/// parameters that were taken from the part of the physical entity. Pass this object to one of the
+		/// constructors to create the copy that can be assigned.
+		/// </exception>
 		public bool RecalculateBoundingBox
 		{
 			get { return this.bRecalcBBox; }
 			set
 			{
 				this.AssertAssignment();
-				Contract.EndContractBlock();
 
 				this.bRecalcBBox = value;
 			}
@@ -82,13 +85,17 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets or sets position of the part.
 		/// </summary>
+		/// <exception cref="InvalidOperationException">
+		/// Attempt was made to change an object that represents a set of parameters that represents
+		/// parameters that were taken from the part of the physical entity. Pass this object to one of the
+		/// constructors to create the copy that can be assigned.
+		/// </exception>
 		public Vector3 Position
 		{
 			get { return this.location.Translation; }
 			set
 			{
 				this.AssertAssignment();
-				Contract.EndContractBlock();
 
 				this.location.Translation = value;
 			}
@@ -96,13 +103,17 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets or sets orientation of the part.
 		/// </summary>
+		/// <exception cref="InvalidOperationException">
+		/// Attempt was made to change an object that represents a set of parameters that represents
+		/// parameters that were taken from the part of the physical entity. Pass this object to one of the
+		/// constructors to create the copy that can be assigned.
+		/// </exception>
 		public Quaternion Orientation
 		{
 			get { return this.location.Orientation; }
 			set
 			{
 				this.AssertAssignment();
-				Contract.EndContractBlock();
 
 				this.location.Orientation = value;
 			}
@@ -110,13 +121,17 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets or sets scale of the part.
 		/// </summary>
+		/// <exception cref="InvalidOperationException">
+		/// Attempt was made to change an object that represents a set of parameters that represents
+		/// parameters that were taken from the part of the physical entity. Pass this object to one of the
+		/// constructors to create the copy that can be assigned.
+		/// </exception>
 		public float Scale
 		{
 			get { return this.location.Scale; }
 			set
 			{
 				this.AssertAssignment();
-				Contract.EndContractBlock();
 
 				this.location.Scale = value;
 			}
@@ -124,13 +139,17 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets or sets an object that represents position, orientation and scale of the part.
 		/// </summary>
+		/// <exception cref="InvalidOperationException">
+		/// Attempt was made to change an object that represents a set of parameters that represents
+		/// parameters that were taken from the part of the physical entity. Pass this object to one of the
+		/// constructors to create the copy that can be assigned.
+		/// </exception>
 		public Quatvecale Location
 		{
 			get { return this.location; }
 			set
 			{
 				this.AssertAssignment();
-				Contract.EndContractBlock();
 
 				this.location = value;
 			}
@@ -138,13 +157,17 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets or sets the matrix that represents position, orientation and scale of the part.
 		/// </summary>
+		/// <exception cref="InvalidOperationException">
+		/// Attempt was made to change an object that represents a set of parameters that represents
+		/// parameters that were taken from the part of the physical entity. Pass this object to one of the
+		/// constructors to create the copy that can be assigned.
+		/// </exception>
 		public Matrix34 Transformation
 		{
 			get { return this.pMtx3x4; }
 			set
 			{
 				this.AssertAssignment();
-				Contract.EndContractBlock();
 
 				this.pMtx3x4 = value;
 			}
@@ -155,12 +178,16 @@ namespace CryCil.Engine.Physics
 		/// modify the flags that are assigned to the part.</item><item>2 sets of flags that are used to
 		/// modify the collision flags that are assigned to the part.</item></list>
 		/// </summary>
+		/// <exception cref="InvalidOperationException">
+		/// Attempt was made to change an object that represents a set of parameters that represents
+		/// parameters that were taken from the part of the physical entity. Pass this object to one of the
+		/// constructors to create the copy that can be assigned.
+		/// </exception>
 		public FlagParameters Flags
 		{
 			set
 			{
 				this.AssertAssignment();
-				Contract.EndContractBlock();
 
 				if (value.HasFlagCond)
 				{
@@ -199,13 +226,17 @@ namespace CryCil.Engine.Physics
 		/// <remarks>
 		/// Assigning this property will clear the value of <see cref="Density"/> property.
 		/// </remarks>
+		/// <exception cref="InvalidOperationException">
+		/// Attempt was made to change an object that represents a set of parameters that represents
+		/// parameters that were taken from the part of the physical entity. Pass this object to one of the
+		/// constructors to create the copy that can be assigned.
+		/// </exception>
 		public float Mass
 		{
 			get { return this.mass; }
 			set
 			{
 				this.AssertAssignment();
-				Contract.EndContractBlock();
 
 				this.mass = value;
 				this.density = UnusedValue.Single;
@@ -215,13 +246,17 @@ namespace CryCil.Engine.Physics
 		/// Gets or sets the density of the part in kilograms per cubic meter.
 		/// </summary>
 		/// <remarks>Assigning this property will clear the value of <see cref="Mass"/> property.</remarks>
+		/// <exception cref="InvalidOperationException">
+		/// Attempt was made to change an object that represents a set of parameters that represents
+		/// parameters that were taken from the part of the physical entity. Pass this object to one of the
+		/// constructors to create the copy that can be assigned.
+		/// </exception>
 		public float Density
 		{
 			get { return this.density; }
 			set
 			{
 				this.AssertAssignment();
-				Contract.EndContractBlock();
 
 				this.density = value;
 				this.mass = UnusedValue.Single;
@@ -231,13 +266,17 @@ namespace CryCil.Engine.Physics
 		/// Gets or sets the value that indicates how close another entity must be to this part, to make
 		/// the part report the contact.
 		/// </summary>
+		/// <exception cref="InvalidOperationException">
+		/// Attempt was made to change an object that represents a set of parameters that represents
+		/// parameters that were taken from the part of the physical entity. Pass this object to one of the
+		/// constructors to create the copy that can be assigned.
+		/// </exception>
 		public float MinimalContactDistance
 		{
 			get { return this.minContactDist; }
 			set
 			{
 				this.AssertAssignment();
-				Contract.EndContractBlock();
 
 				this.minContactDist = value;
 			}
@@ -249,13 +288,17 @@ namespace CryCil.Engine.Physics
 		/// Just assign this property without assigning <see cref="GeometryProxy"/> if you want the part to
 		/// use the same geometry to be used for both ray-tracing and physical interactions.
 		/// </remarks>
+		/// <exception cref="InvalidOperationException">
+		/// Attempt was made to change an object that represents a set of parameters that represents
+		/// parameters that were taken from the part of the physical entity. Pass this object to one of the
+		/// constructors to create the copy that can be assigned.
+		/// </exception>
 		public PhysicalBody Geometry
 		{
 			get { return this.pPhysGeom; }
 			set
 			{
 				this.AssertAssignment();
-				Contract.EndContractBlock();
 
 				this.pPhysGeom = value;
 			}
@@ -267,13 +310,17 @@ namespace CryCil.Engine.Physics
 		/// Just assign this property without assigning <see cref="Geometry"/> if you want the part to use
 		/// the same geometry to be used for both ray-tracing and physical interactions.
 		/// </remarks>
+		/// <exception cref="InvalidOperationException">
+		/// Attempt was made to change an object that represents a set of parameters that represents
+		/// parameters that were taken from the part of the physical entity. Pass this object to one of the
+		/// constructors to create the copy that can be assigned.
+		/// </exception>
 		public PhysicalBody GeometryProxy
 		{
 			get { return this.pPhysGeomProxy; }
 			set
 			{
 				this.AssertAssignment();
-				Contract.EndContractBlock();
 
 				this.pPhysGeomProxy = value;
 			}
@@ -282,13 +329,17 @@ namespace CryCil.Engine.Physics
 		/// Gets or sets the breakability index that can be acquired from
 		/// <see cref="ExplosionShapes.Add"/>.
 		/// </summary>
+		/// <exception cref="InvalidOperationException">
+		/// Attempt was made to change an object that represents a set of parameters that represents
+		/// parameters that were taken from the part of the physical entity. Pass this object to one of the
+		/// constructors to create the copy that can be assigned.
+		/// </exception>
 		public int BreakabilityIndex
 		{
 			get { return this.idmatBreakable; }
 			set
 			{
 				this.AssertAssignment();
-				Contract.EndContractBlock();
 
 				this.idmatBreakable = value;
 			}
@@ -297,13 +348,17 @@ namespace CryCil.Engine.Physics
 		/// Gets or sets the object that specifies tetrahedral lattice that is used by soft bodies and
 		/// procedurally breakable objects.
 		/// </summary>
+		/// <exception cref="InvalidOperationException">
+		/// Attempt was made to change an object that represents a set of parameters that represents
+		/// parameters that were taken from the part of the physical entity. Pass this object to one of the
+		/// constructors to create the copy that can be assigned.
+		/// </exception>
 		public TetraLattice Lattice
 		{
 			get { return this.pLattice; }
 			set
 			{
 				this.AssertAssignment();
-				Contract.EndContractBlock();
 
 				this.pLattice = value;
 			}
@@ -312,13 +367,17 @@ namespace CryCil.Engine.Physics
 		/// Gets or sets identifier of the part of this entity that is used by this part as a deformation
 		/// skeleton.
 		/// </summary>
+		/// <exception cref="InvalidOperationException">
+		/// Attempt was made to change an object that represents a set of parameters that represents
+		/// parameters that were taken from the part of the physical entity. Pass this object to one of the
+		/// constructors to create the copy that can be assigned.
+		/// </exception>
 		public int SkeletonId
 		{
 			get { return this.idSkeleton; }
 			set
 			{
 				this.AssertAssignment();
-				Contract.EndContractBlock();
 
 				this.idSkeleton = value;
 			}
@@ -334,12 +393,17 @@ namespace CryCil.Engine.Physics
 		/// Takes a table of surface type identifiers from the material that should be taken from the main
 		/// <see cref="CryEntity"/> object and puts into this object.
 		/// </summary>
+		/// <exception cref="InvalidOperationException">
+		/// Attempt was made to change an object that represents a set of parameters that represents
+		/// parameters that were taken from the part of the physical entity. Pass this object to one of the
+		/// constructors to create the copy that can be assigned.
+		/// </exception>
+		/// <exception cref="NullReferenceException">Instance object is not valid.</exception>
 		public Material MaterialSurfaceTypesMapping
 		{
 			set
 			{
 				this.AssertAssignment();
-				Contract.EndContractBlock();
 
 				this.pMatMapping = value.FillSurfaceTypesTable(out this.nMats);
 			}
@@ -348,13 +412,17 @@ namespace CryCil.Engine.Physics
 		/// Gets or sets the identifier of the part of the entity that must be broken in order for this
 		/// part to show up.
 		/// </summary>
+		/// <exception cref="InvalidOperationException">
+		/// Attempt was made to change an object that represents a set of parameters that represents
+		/// parameters that were taken from the part of the physical entity. Pass this object to one of the
+		/// constructors to create the copy that can be assigned.
+		/// </exception>
 		public int BreakageParentId
 		{
 			get { return this.idParent; }
 			set
 			{
 				this.AssertAssignment();
-				Contract.EndContractBlock();
 
 				this.idParent = value;
 			}
@@ -490,6 +558,11 @@ namespace CryCil.Engine.Physics
 		}
 		#endregion
 		#region Utility
+		/// <exception cref="InvalidOperationException">
+		/// Attempt was made to change an object that represents a set of parameters that represents
+		/// parameters that were taken from the part of the physical entity. Pass this object to one of the
+		/// constructors to create the copy that can be assigned.
+		/// </exception>
 		private void AssertAssignment()
 		{
 			if (!this.forAssignment)

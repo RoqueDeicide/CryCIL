@@ -1,4 +1,6 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
 using CryCil.Annotations;
 using CryCil.Geometry;
 using CryCil.Utilities;
@@ -344,6 +346,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the array of vectors that represent positions of points that connect the segments.
 		/// </summary>
+		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		public Vector3[] Points
 		{
 			get
@@ -361,6 +364,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the array of vectors that represent velocities of points that connect the segments.
 		/// </summary>
+		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		public Vector3[] Velocities
 		{
 			get

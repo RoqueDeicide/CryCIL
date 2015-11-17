@@ -76,12 +76,12 @@ namespace CryCil.Engine.Logic
 			get { return new ParticleEmitter(this.pParticleEmitter); }
 		}
 		/// <summary>
-		/// Gets the static object that is bound to this slot. Returned
-		/// object is not valid if the static object is not bound to this slot.
+		/// Gets the static object that is bound to this slot. Returned object is not valid if the static
+		/// object is not bound to this slot.
 		/// </summary>
 		public StaticObject BoundStaticObject
 		{
-			get { return new StaticObject(this.pStatObj);}
+			get { return new StaticObject(this.pStatObj); }
 		}
 		/// <summary>
 		/// Gets valid object that represents the light source that is bound to this slot. Returned object

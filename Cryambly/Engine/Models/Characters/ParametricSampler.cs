@@ -1,17 +1,16 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 
 namespace CryCil.Engine.Models.Characters
 {
 	internal unsafe struct ParametricSamplerInternals
 	{
-		internal void* vtable;
-		internal byte m_nParametricType; //Type of Group: i.e. I2M, M2I, MOVE, Idle-Step, Idle-Rot, etc....
-		internal byte m_numDimensions; //how many dimensions are used in this Parametric Group
-		internal fixed float m_MotionParameter [4]; //we have only 4 dimensions per blend-space
-		internal fixed byte m_MotionParameterID [4]; //we have only 4 dimensions per blend-space
-		internal fixed byte m_MotionParameterFlags [4]; //we have only 4 dimensions per blend-space
+		internal void* Vtable;
+		internal byte ParametricType; //Type of Group: i.e. I2M, M2I, MOVE, Idle-Step, Idle-Rot, etc....
+		internal byte NumDimensions; //how many dimensions are used in this Parametric Group
+		internal fixed float MotionParameter [4]; //we have only 4 dimensions per blend-space
+		internal fixed byte MotionParameterID [4]; //we have only 4 dimensions per blend-space
+		internal fixed byte MotionParameterFlags [4]; //we have only 4 dimensions per blend-space
 	}
 	/// <summary>
 	/// Enumeration of flags that specifies dimensions of the parametric group in
@@ -130,9 +129,8 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
-				return this.handle->m_nParametricType;
+				return this.handle->ParametricType;
 			}
 		}
 		/// <summary>
@@ -144,9 +142,8 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
-				return this.handle->m_numDimensions;
+				return this.handle->NumDimensions;
 			}
 		}
 		/// <summary>
@@ -158,7 +155,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetCurrentSegmentIndexBSpace(this.handle);
 			}
@@ -187,9 +183,8 @@ namespace CryCil.Engine.Models.Characters
 			{
 				throw new IndexOutOfRangeException("Index of the dimension must be in range from 0 to 3 inclusively.");
 			}
-			Contract.EndContractBlock();
 
-			return this.handle->m_MotionParameter[index];
+			return this.handle->MotionParameter[index];
 		}
 		/// <summary>
 		/// Gets the identifier of motion parameter.
@@ -209,9 +204,8 @@ namespace CryCil.Engine.Models.Characters
 			{
 				throw new IndexOutOfRangeException("Index of the dimension must be in range from 0 to 3 inclusively.");
 			}
-			Contract.EndContractBlock();
 
-			return (MotionParameterId)this.handle->m_MotionParameterID[index];
+			return (MotionParameterId)this.handle->MotionParameterID[index];
 		}
 		/// <summary>
 		/// Gets a set of flags that are assigned to the motion parameter.
@@ -229,9 +223,8 @@ namespace CryCil.Engine.Models.Characters
 			{
 				throw new IndexOutOfRangeException("Index of the dimension must be in range from 0 to 3 inclusively.");
 			}
-			Contract.EndContractBlock();
 
-			return (DimensionFlags)this.handle->m_MotionParameterFlags[index];
+			return (DimensionFlags)this.handle->MotionParameterFlags[index];
 		}
 		#endregion
 		#region Utilities

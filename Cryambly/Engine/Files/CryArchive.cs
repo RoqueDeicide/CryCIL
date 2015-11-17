@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Security;
 using CryCil.Annotations;
 using CryCil.Engine.Memory;
 using CryCil.RunTime;
@@ -138,6 +139,17 @@ namespace CryCil.Engine.Files
 		/// <param name="options">A set of options that specify how the archive will be loaded.</param>
 		/// <exception cref="FileAccessException">Unable to open the archive file.</exception>
 		/// <exception cref="FileNotFoundException">Unable to find the archive file.</exception>
+		/// <exception cref="DirectoryNotFoundException">
+		/// <paramref name="path"/> is invalid, such as referring to an unmapped drive.
+		/// </exception>
+		/// <exception cref="IOException"><paramref name="path"/> is a file name.</exception>
+		/// <exception cref="SecurityException">
+		/// The caller does not have the required permission.
+		/// </exception>
+		/// <exception cref="UnauthorizedAccessException">
+		/// The caller does not have the required permission.
+		/// </exception>
+		/// <exception cref="OutOfMemoryException">There is insufficient memory available.</exception>
 		public CryArchive(string path, ArchiveOptions options)
 		{
 			this.handle = OpenArchive(StringPool.Get(path), options);
@@ -145,16 +157,10 @@ namespace CryCil.Engine.Files
 			{
 				if (File.Exists(path))
 				{
-					throw new FileAccessException
-						(
-						String.Format
-							(
-							 "Unable to open the archive file.{0}",
-							 Directory.EnumerateFiles(DirectoryStructure.ContentFolder).Contains(path)
-								 ? "The archives located inside the game content folder can only be opened in read-only mode."
-								 : ""
-							)
-						);
+					throw new FileAccessException(string.Format("Unable to open the archive file.{0}",
+																Directory.EnumerateFiles(DirectoryStructure.ContentFolder).Contains(path)
+																	? "The archives located inside the game content folder can only be opened in read-only mode."
+																	: string.Empty));
 				}
 				throw new FileNotFoundException("Unable to find the archive file.");
 			}
@@ -178,6 +184,7 @@ namespace CryCil.Engine.Files
 		/// A new object of type <see cref="ArchiveStream"/> that can read contents of the file, or null,
 		/// if file wasn't found.
 		/// </returns>
+		/// <exception cref="ObjectDisposedException">The archive is closed.</exception>
 		/// <exception cref="OutOfMemoryException">
 		/// Cannot allocate enough memory for the file data.
 		/// </exception>
@@ -194,6 +201,7 @@ namespace CryCil.Engine.Files
 		/// </summary>
 		/// <param name="path">Path to the file within the archive.</param>
 		/// <returns>A new object of type <see cref="ArchiveStream"/> that update the file.</returns>
+		/// <exception cref="ObjectDisposedException">The archive is closed.</exception>
 		/// <exception cref="OutOfMemoryException">
 		/// Cannot allocate enough memory for the file data.
 		/// </exception>
@@ -216,6 +224,7 @@ namespace CryCil.Engine.Files
 		/// Deletes the file from the archive.
 		/// </summary>
 		/// <param name="name">Name of the file to delete.</param>
+		/// <exception cref="ObjectDisposedException">The archive is closed.</exception>
 		/// <exception cref="NotSupportedException">
 		/// This operation is not supported in read-only archives.
 		/// </exception>
@@ -236,6 +245,7 @@ namespace CryCil.Engine.Files
 		/// Deletes the directory from the archive.
 		/// </summary>
 		/// <param name="name">Name of the directory to delete.</param>
+		/// <exception cref="ObjectDisposedException">The archive is closed.</exception>
 		/// <exception cref="NotSupportedException">
 		/// This operation is not supported in read-only archives.
 		/// </exception>
@@ -255,6 +265,7 @@ namespace CryCil.Engine.Files
 		/// <summary>
 		/// Empties this archive.
 		/// </summary>
+		/// <exception cref="ObjectDisposedException">The archive is closed.</exception>
 		/// <exception cref="NotSupportedException">
 		/// This operation is not supported in read-only archives.
 		/// </exception>
@@ -310,6 +321,10 @@ namespace CryCil.Engine.Files
 		internal static extern void RemoveDirectory(IntPtr archive, string path);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		internal static extern void ClearAll(IntPtr archive);
+		/// <exception cref="OutOfMemoryException">There is insufficient memory available.</exception>
+		/// <exception cref="OutOfMemoryException">
+		/// Cannot allocate enough memory for the file data.
+		/// </exception>
 		private ArchiveStream Open(string name, bool writing)
 		{
 			IntPtr pathPtr = Marshal.StringToHGlobalAnsi(name);

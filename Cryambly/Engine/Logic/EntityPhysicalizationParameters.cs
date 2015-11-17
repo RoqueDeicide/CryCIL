@@ -79,6 +79,11 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Sets the array of points that are used if this area is shape or a spline.
 		/// </summary>
+		/// <exception cref="OutOfMemoryException">Unable to allocate native memory block.</exception>
+		/// <exception cref="OverflowException">
+		/// The array is multidimensional and contains more than <see cref="F:System.Int32.MaxValue"/>
+		/// elements.
+		/// </exception>
 		public Vector3[] Points
 		{
 			set
@@ -158,6 +163,10 @@ namespace CryCil.Engine.Logic
 		}
 		#endregion
 		#region Interface
+		/// <exception cref="PhysicalizationException">
+		/// An array of points must be provided when creating an area definition for a spline or shape
+		/// area.
+		/// </exception>
 		internal void Validate()
 		{
 			if (this.areaType == AreaType.Shape || this.areaType == AreaType.Spline)
@@ -484,6 +493,9 @@ namespace CryCil.Engine.Logic
 		}
 		#endregion
 		#region Interface
+		/// <exception cref="PhysicalizationException">
+		/// Physicalization of entity as area requires a valid pointer to AreaDefinition structure.
+		/// </exception>
 		internal void Validate()
 		{
 			if (this.type == PhysicalEntityType.Area)

@@ -1,4 +1,6 @@
-﻿namespace CryCil.Engine.DebugServices
+﻿using System;
+
+namespace CryCil.Engine.DebugServices
 {
 	/// <summary>
 	/// Represents a persistent debug sphere.

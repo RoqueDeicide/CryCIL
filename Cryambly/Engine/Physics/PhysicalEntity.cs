@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using CryCil.Geometry;
 
@@ -29,19 +28,18 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets or sets identifier of this physical entity.
 		/// </summary>
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public int Identifier
 		{
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetPhysicalEntityId(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetPhysicalEntityId(this.handle, value);
 			}
@@ -180,6 +178,7 @@ namespace CryCil.Engine.Physics
 		/// An object that represents a set of parameters to set was created via default constructor which
 		/// is not allowed.
 		/// </exception>
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public bool SetParameters(ref PhysicsParameters parameters, bool threadSafe = false)
 		{
 			this.AssertInstance();
@@ -188,7 +187,6 @@ namespace CryCil.Engine.Physics
 				throw new ArgumentNullException("parameters",
 												"An object that represents a set of parameters to set was created via default constructor which is not allowed.");
 			}
-			Contract.EndContractBlock();
 
 			return SetParams(this.handle, ref parameters, threadSafe) != 0;
 		}
@@ -210,6 +208,7 @@ namespace CryCil.Engine.Physics
 		/// <exception cref="ArgumentOutOfRangeException">
 		/// Unknown type of physics parameters was used.
 		/// </exception>
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public bool GetParameters(ref PhysicsParameters parameters)
 		{
 			this.AssertInstance();
@@ -280,7 +279,6 @@ namespace CryCil.Engine.Physics
 				default:
 					throw new ArgumentOutOfRangeException("parameters", "Unknown type of physics parameters was used.");
 			}
-			Contract.EndContractBlock();
 
 			return GetParams(this.handle, ref parameters) != 0;
 		}
@@ -296,6 +294,7 @@ namespace CryCil.Engine.Physics
 		/// An object that represents information to query was created via default constructor which is not
 		/// allowed.
 		/// </exception>
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public int GetStatus(ref PhysicsStatus status)
 		{
 			this.AssertInstance();
@@ -304,7 +303,6 @@ namespace CryCil.Engine.Physics
 				throw new ArgumentNullException("status",
 												"An object that represents information to query was created via default constructor which is not allowed.");
 			}
-			Contract.EndContractBlock();
 
 			return GetStatusInternal(this.handle, ref status);
 		}
@@ -323,6 +321,7 @@ namespace CryCil.Engine.Physics
 		/// An object that represents an action to execute was created via default constructor which is not
 		/// allowed.
 		/// </exception>
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public bool ActUpon(ref PhysicsAction action, bool threadSafe = false)
 		{
 			this.AssertInstance();
@@ -331,7 +330,6 @@ namespace CryCil.Engine.Physics
 				throw new ArgumentNullException("action",
 												"An object that represents an action to execute was created via default constructor which is not allowed.");
 			}
-			Contract.EndContractBlock();
 
 			return Action(this.handle, ref action, threadSafe) != 0;
 		}
@@ -359,6 +357,7 @@ namespace CryCil.Engine.Physics
 		/// The object that represents parameters that specify the physical body must not be created
 		/// through default constructor.
 		/// </exception>
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public int AddBody(PhysicalBody body, ref GeometryParameters parameters, int id = -1, bool threadSafe = false)
 		{
 			this.AssertInstance();
@@ -372,7 +371,6 @@ namespace CryCil.Engine.Physics
 					"The object that represents parameters that specify the physical body must not be created through default constructor.",
 					"parameters");
 			}
-			Contract.EndContractBlock();
 
 			return AddGeometry(this.handle, body, ref parameters, id, threadSafe);
 		}
@@ -384,10 +382,10 @@ namespace CryCil.Engine.Physics
 		/// Indicates whether part must be created at the end of simulation step, rather then immediately
 		/// which makes it more thread-safe.
 		/// </param>
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public void RemoveBody(int id, bool threadSafe = false)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			RemoveGeometry(this.handle, id, threadSafe);
 		}
@@ -407,6 +405,7 @@ namespace CryCil.Engine.Physics
 		/// <exception cref="ArgumentOutOfRangeException">
 		/// Radius of the sphere cannot be less then 0.
 		/// </exception>
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		[Annotations.Pure]
 		public bool CollideWithBeam(Ray ray, float radius, out RayHit hit)
 		{
@@ -415,7 +414,6 @@ namespace CryCil.Engine.Physics
 			{
 				throw new ArgumentOutOfRangeException("radius", "Radius of the sphere cannot be less then 0.");
 			}
-			Contract.EndContractBlock();
 
 			return CollideEntityWithBeam(this.handle, ref ray.Position, ref ray.Direction, radius, out hit);
 		}
@@ -431,15 +429,16 @@ namespace CryCil.Engine.Physics
 		/// equal to <see cref="PhysicalEntityRemovalMode.AttemptDeletion"/> and this entity has non-zero
 		/// reference count.
 		/// </returns>
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public bool Destroy(PhysicalEntityRemovalMode mode = PhysicalEntityRemovalMode.Destroy, bool threadSafe = false)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return PhysicalWorld.DestroyPhysicalEntity(this.handle, (int)mode, threadSafe ? 1 : 0) != 0;
 		}
 		#endregion
 		#region Utilities
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		private void AssertInstance()
 		{
 			if (!this.IsValid)

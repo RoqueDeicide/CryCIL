@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using CryCil.Geometry.Splines;
@@ -33,7 +32,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return FacialAnimationChannel.GetInterpolatorCount(this.handle);
 			}
@@ -53,7 +51,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 				{
 					throw new IndexOutOfRangeException("Index is out of range.");
 				}
-				Contract.EndContractBlock();
 
 				return FacialAnimationChannel.GetInterpolator(this.handle, index);
 			}
@@ -67,7 +64,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return FacialAnimationChannel.GetLastInterpolator(this.handle);
 			}
@@ -87,7 +83,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public void Add()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			FacialAnimationChannel.AddInterpolator(this.handle);
 		}
@@ -100,7 +95,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public bool RemoveAt(int index)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			if (index < 0 || index >= this.Count)
 			{
@@ -152,14 +146,12 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetIdentifier(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetIdentifier(this.handle, value);
 			}
@@ -173,14 +165,12 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetEffectorIdentifier(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetEffectorIdentifier(this.handle, value);
 			}
@@ -194,14 +184,12 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetParent(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetParent(this.handle, value);
 			}
@@ -215,14 +203,12 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetFlags(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetFlags(this.handle, value);
 			}
@@ -236,14 +222,12 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetEffector(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetEffector(this.handle, value);
 			}
@@ -265,7 +249,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public void CleanupKeys(float errorMax)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			CleanupKeysInternal(this.handle, errorMax);
 		}
@@ -277,7 +260,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public void SmoothKeys(float sigma)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			SmoothKeysInternal(this.handle, sigma);
 		}
@@ -290,7 +272,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public void RemoveNoise(float sigma, float threshold)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			RemoveNoiseInternal(this.handle, sigma, threshold);
 		}

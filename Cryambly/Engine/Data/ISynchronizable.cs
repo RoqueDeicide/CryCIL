@@ -1,4 +1,6 @@
-﻿namespace CryCil.Engine.Data
+﻿using System;
+
+namespace CryCil.Engine.Data
 {
 	/// <summary>
 	/// Defines interface of objects that can be synchronized.

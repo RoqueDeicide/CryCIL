@@ -39,6 +39,12 @@ namespace CryCil
 		/// </summary>
 		/// <param name="info">   The object that holds the serialized object data.</param>
 		/// <param name="context">The contextual information about the source or destination.</param>
+		/// <exception cref="ArgumentNullException">
+		/// The <paramref name="info"/> parameter is null.
+		/// </exception>
+		/// <exception cref="SerializationException">
+		/// The class name is null or <see cref="P:System.Exception.HResult"/> is zero (0).
+		/// </exception>
 		protected BufferOverflowException(SerializationInfo info, StreamingContext context)
 			: base(info, context)
 		{
@@ -127,6 +133,12 @@ namespace CryCil
 		/// </summary>
 		/// <param name="info">   The object that holds the serialized object data.</param>
 		/// <param name="context">The contextual information about the source or destination.</param>
+		/// <exception cref="ArgumentNullException">
+		/// The <paramref name="info"/> parameter is null.
+		/// </exception>
+		/// <exception cref="SerializationException">
+		/// The class name is null or <see cref="P:System.Exception.HResult"/> is zero (0).
+		/// </exception>
 		protected MissingAttributeException(SerializationInfo info, StreamingContext context)
 			: base(info, context)
 		{
@@ -169,6 +181,12 @@ namespace CryCil
 		/// </summary>
 		/// <param name="info">   The object that holds the serialized object data.</param>
 		/// <param name="context">The contextual information about the source or destination.</param>
+		/// <exception cref="ArgumentNullException">
+		/// The <paramref name="info"/> parameter is null.
+		/// </exception>
+		/// <exception cref="SerializationException">
+		/// The class name is null or <see cref="P:System.Exception.HResult"/> is zero (0).
+		/// </exception>
 		protected RegistrationException(SerializationInfo info, StreamingContext context)
 			: base(info, context)
 		{

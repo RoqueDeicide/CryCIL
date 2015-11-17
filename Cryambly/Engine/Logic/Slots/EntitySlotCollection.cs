@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using CryCil.Engine.Models.StaticObjects;
 using CryCil.Engine.Rendering.Lighting;
 
@@ -33,7 +32,6 @@ namespace CryCil.Engine.Logic
 			get
 			{
 				this.AssertEntity();
-				Contract.EndContractBlock();
 
 				return EntitySlotOps.GetSlotCount(this.entityHandle);
 			}
@@ -96,7 +94,6 @@ namespace CryCil.Engine.Logic
 				throw new ArgumentNullException("effect", "Cannot use null particle effect to create an emitter that can " +
 														  "be bound to the entity slot.");
 			}
-			Contract.EndContractBlock();
 
 			return new CryEntitySlot(this.entityHandle,
 									 EntitySlotOps.LoadParticleEmitterDefault(this.entityHandle, -1, effect, prime, sync));
@@ -127,7 +124,6 @@ namespace CryCil.Engine.Logic
 				throw new ArgumentNullException("effect", "Cannot use null particle effect to create an emitter that can " +
 														  "be bound to the entity slot.");
 			}
-			Contract.EndContractBlock();
 
 			return new CryEntitySlot(this.entityHandle,
 									 EntitySlotOps.LoadParticleEmitter(this.entityHandle, -1, effect, ref parameters, prime, sync));
@@ -141,7 +137,6 @@ namespace CryCil.Engine.Logic
 		public CryEntitySlot Load(ref LightProperties properties)
 		{
 			this.AssertEntity();
-			Contract.EndContractBlock();
 
 			return new CryEntitySlot(this.entityHandle, EntitySlotOps.LoadLight(this.entityHandle, -1, ref properties));
 		}
@@ -164,7 +159,6 @@ namespace CryCil.Engine.Logic
 			{
 				throw new ArgumentNullException("emitter", "Cannot bind null emitter to the entity slot.");
 			}
-			Contract.EndContractBlock();
 
 			return new CryEntitySlot(this.entityHandle, EntitySlotOps.SetParticleEmitter(this.entityHandle, -1, emitter, sync));
 		}
@@ -177,6 +171,10 @@ namespace CryCil.Engine.Logic
 		/// Optional value that can be used to designate the mass of added static object.
 		/// </param>
 		/// <returns>An object that represents the slot where added static object now resides.</returns>
+		/// <exception cref="NullReferenceException">Cannot access slots of an invalid entity.</exception>
+		/// <exception cref="ArgumentNullException">
+		/// Cannot bind null static object to the entity slot.
+		/// </exception>
 		public CryEntitySlot Add(StaticObject staticObject, bool updatePhysics, float mass = -1.0f)
 		{
 			this.AssertEntity();
@@ -184,7 +182,6 @@ namespace CryCil.Engine.Logic
 			{
 				throw new ArgumentNullException("staticObject", "Cannot bind null static object to the entity slot.");
 			}
-			Contract.EndContractBlock();
 
 			return new CryEntitySlot(this.entityHandle,
 									 EntitySlotOps.SetStatObj(this.entityHandle, staticObject.Handle, -1,
@@ -193,6 +190,7 @@ namespace CryCil.Engine.Logic
 		#endregion
 		#region Utilities
 		// Assertion method.
+		/// <exception cref="NullReferenceException">Cannot access slots of an invalid entity.</exception>
 		private void AssertEntity()
 		{
 			if (this.entityHandle == IntPtr.Zero)
@@ -200,6 +198,7 @@ namespace CryCil.Engine.Logic
 				throw new NullReferenceException("Cannot access slots of an invalid entity.");
 			}
 		}
+		/// <exception cref="NullReferenceException">Cannot access slots of an invalid entity.</exception>
 		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return this.GetEnumerator();

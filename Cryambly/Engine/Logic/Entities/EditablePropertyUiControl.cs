@@ -1,4 +1,6 @@
-﻿namespace CryCil.Engine.Logic
+﻿using System;
+
+namespace CryCil.Engine.Logic
 {
 	/// <summary>
 	/// Enumeration of UI controls that can be used to edit entity properties.

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 
 namespace CryCil.Engine.Models.Characters
 {
@@ -29,7 +28,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return SkeletonAnimation.GetNumAnimsInFifo(this.handle, this.index);
 			}
@@ -54,7 +52,6 @@ namespace CryCil.Engine.Models.Characters
 					throw new IndexOutOfRangeException("Index of the animation must be less then number of animations in the layer.");
 				}
 #endif
-				Contract.EndContractBlock();
 
 				return SkeletonAnimation.GetAnimFromFifo(this.handle, this.index, index);
 			}
@@ -68,7 +65,6 @@ namespace CryCil.Engine.Models.Characters
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SkeletonAnimation.SetLayerBlendWeight(this.handle, (int)this.index, value);
 			}
@@ -82,14 +78,12 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return SkeletonAnimation.GetLayerPlaybackScale(this.handle, this.index);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SkeletonAnimation.SetLayerPlaybackScale(this.handle, (int)this.index, value);
 			}
@@ -104,14 +98,12 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return SkeletonAnimation.GetLayerNormalizedTime(this.handle, this.index);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SkeletonAnimation.SetLayerNormalizedTime(this.handle, this.index, value);
 			}
@@ -136,7 +128,6 @@ namespace CryCil.Engine.Models.Characters
 		public CharacterAnimation Find(uint userToken)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return SkeletonAnimation.FindAnimInFifo(this.handle, userToken, (int)this.index);
 		}
@@ -152,7 +143,6 @@ namespace CryCil.Engine.Models.Characters
 		public bool RemoveAt(uint index, bool force = false)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return SkeletonAnimation.RemoveAnimFromFifo(this.handle, this.index, index, force);
 		}
@@ -169,7 +159,6 @@ namespace CryCil.Engine.Models.Characters
 		public void Advance(uint index, float time, bool triggerEvents)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			SkeletonAnimation.ManualSeekAnimationInFifo(this.handle, this.index, index, time, triggerEvents);
 		}
@@ -186,7 +175,6 @@ namespace CryCil.Engine.Models.Characters
 		public void Advance(uint index, TimeSpan time, bool triggerEvents)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			SkeletonAnimation.ManualSeekAnimationInFifo(this.handle, this.index, index, time.Milliseconds / 1000.0f,
 														triggerEvents);
@@ -199,7 +187,6 @@ namespace CryCil.Engine.Models.Characters
 		public void RemoveTransitionDelayConditions()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			SkeletonAnimation.RemoveTransitionDelayConditions(this.handle, this.index);
 		}
@@ -210,7 +197,6 @@ namespace CryCil.Engine.Models.Characters
 		public void Clear()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			SkeletonAnimation.ClearFifoLayer(this.handle, this.index);
 		}
@@ -259,7 +245,6 @@ namespace CryCil.Engine.Models.Characters
 				{
 					throw new IndexOutOfRangeException("Index of the layer must be less then 16.");
 				}
-				Contract.EndContractBlock();
 
 				return new SkeletonAnimationLayer(this.handle, index);
 			}
@@ -273,7 +258,6 @@ namespace CryCil.Engine.Models.Characters
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SkeletonAnimation.SetLayerBlendWeight(this.handle, -1, value);
 			}
@@ -287,7 +271,6 @@ namespace CryCil.Engine.Models.Characters
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SkeletonAnimation.SetLayerPlaybackScale(this.handle, -1, value);
 			}
@@ -311,7 +294,6 @@ namespace CryCil.Engine.Models.Characters
 		public CharacterAnimation Find(uint userToken)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return SkeletonAnimation.FindAnimInFifo(this.handle, userToken, -1);
 		}

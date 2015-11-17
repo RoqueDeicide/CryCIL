@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
-using CryCil.Engine.Models.StaticObjects;
 using CryCil.Engine.Rendering;
 using CryCil.Engine.Rendering.Lighting;
 

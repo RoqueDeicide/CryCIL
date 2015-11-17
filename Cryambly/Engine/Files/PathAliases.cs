@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 namespace CryCil.Engine.Files
@@ -26,6 +27,7 @@ namespace CryCil.Engine.Files
 	///          alphabets for stuff like Windows user names.
 	/// </para>
 	/// </remarks>
+	[SuppressMessage("ReSharper", "ExceptionNotThrown")]
 	public static class PathAliases
 	{
 		/// <summary>

@@ -1,4 +1,6 @@
-﻿namespace CryCil.Engine.Input
+﻿using System;
+
+namespace CryCil.Engine.Input
 {
 	/// <summary>
 	/// Encapsulates information about modifier keys that were pressed at the moment of the input event.

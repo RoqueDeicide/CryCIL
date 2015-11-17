@@ -49,7 +49,7 @@ namespace CryCil
 		public override bool Equals(object obj)
 		{
 			if (ReferenceEquals(null, obj)) return false;
-			return obj is Vector4Int16 && Equals((Vector4Int16)obj);
+			return obj is Vector4Int16 && this.Equals((Vector4Int16)obj);
 		}
 		/// <summary>
 		/// Gets hash code of this object.

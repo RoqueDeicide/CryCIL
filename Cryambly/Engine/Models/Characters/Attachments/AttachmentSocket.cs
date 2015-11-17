@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
-using CryCil.Annotations;
 using CryCil.Engine.Data;
 using CryCil.Geometry;
 using CryCil.Hashing;
@@ -243,7 +242,8 @@ namespace CryCil.Engine.Models.Characters.Attachments
 			}
 		}
 		/// <summary>
-		/// Gets the object that provides parameters that specify how movement of the attached object is simulated if this attachment is not part of the pendula row.
+		/// Gets the object that provides parameters that specify how movement of the attached object is
+		/// simulated if this attachment is not part of the pendula row.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public AttachmentSimulationParameters SimulationParameters
@@ -256,7 +256,8 @@ namespace CryCil.Engine.Models.Characters.Attachments
 			}
 		}
 		/// <summary>
-		/// Gets the object that provides parameters that specify how movement of the attached object is simulated if this attachment is a pendula row.
+		/// Gets the object that provides parameters that specify how movement of the attached object is
+		/// simulated if this attachment is a pendula row.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public AttachmentRowSimulationParameters RowSimulationParameters
@@ -277,8 +278,8 @@ namespace CryCil.Engine.Models.Characters.Attachments
 		#endregion
 		#region Interface
 		/// <summary>
-		/// Increases the reference count of this socket. Call this when you have multiple
-		/// references to the same socket.
+		/// Increases the reference count of this socket. Call this when you have multiple references to
+		/// the same socket.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public void IncrementReferenceCount()
@@ -288,8 +289,8 @@ namespace CryCil.Engine.Models.Characters.Attachments
 			AddRef(this.handle);
 		}
 		/// <summary>
-		/// Decreases the reference count of this socket. Call this when you destroy an object that
-		/// held an extra reference to the this socket.
+		/// Decreases the reference count of this socket. Call this when you destroy an object that held an
+		/// extra reference to the this socket.
 		/// </summary>
 		/// <remarks>When reference count reaches zero, the object is deleted.</remarks>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
@@ -312,7 +313,8 @@ namespace CryCil.Engine.Models.Characters.Attachments
 			return SetJointName(this.handle, name);
 		}
 		/// <summary>
-		/// Updates location of this socket in model-space. It's not known exactly where and when to use this function.
+		/// Updates location of this socket in model-space. It's not known exactly where and when to use
+		/// this function.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public void UpdateModelLocation()

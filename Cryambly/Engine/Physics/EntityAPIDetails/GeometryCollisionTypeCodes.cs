@@ -1,4 +1,6 @@
-﻿namespace CryCil.Engine.Physics
+﻿using System;
+
+namespace CryCil.Engine.Physics
 {
 	internal enum GeometryCollisionTypeCodes
 	{

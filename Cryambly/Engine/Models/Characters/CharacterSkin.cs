@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using CryCil.Engine.Models.StaticObjects;
 using CryCil.Engine.Rendering;
@@ -31,7 +30,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetIRenderMesh(this.handle, 0);
 			}
@@ -45,7 +43,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetIMaterial(this.handle, 0);
 			}
@@ -59,7 +56,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetModelFilePath(this.handle);
 			}
@@ -69,6 +65,15 @@ namespace CryCil.Engine.Models.Characters
 		internal CharacterSkin(IntPtr handle)
 		{
 			this.handle = handle;
+		}
+		/// <summary>
+		/// Creates a new object of this type and loads skinned mesh into it.
+		/// </summary>
+		/// <param name="file"> Path to the file.</param>
+		/// <param name="flags">A set of flags that specify how to load the model.</param>
+		public CharacterSkin(string file, CharacterLoadingFlags flags)
+		{
+			this.handle = Character.LoadModelSKIN(file, flags);
 		}
 		#endregion
 		#region Interface
@@ -81,7 +86,6 @@ namespace CryCil.Engine.Models.Characters
 		public CryRenderMesh GetRenderMesh(uint lod)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return GetIRenderMesh(this.handle, lod);
 		}
@@ -94,7 +98,6 @@ namespace CryCil.Engine.Models.Characters
 		public Material GetMaterial(uint lod)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return GetIMaterial(this.handle, 0);
 		}

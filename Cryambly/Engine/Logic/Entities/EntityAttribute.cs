@@ -157,6 +157,7 @@ namespace CryCil.Engine.Logic
 		/// </summary>
 		/// <param name="type">Class this attribute marks.</param>
 		/// <returns>A new object of this type with inherited information.</returns>
+		/// <exception cref="TypeLoadException">The custom attribute type cannot be loaded.</exception>
 		public EntityAttribute InheritFrom(Type type)
 		{
 			var baseAttributes =

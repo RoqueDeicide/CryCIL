@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using CryCil.Engine.Models.StaticObjects;
 using CryCil.Engine.Rendering;
 using CryCil.Engine.Rendering.Lighting;
@@ -47,7 +46,6 @@ namespace CryCil.Engine.Logic
 			get
 			{
 				this.AssertSlotValidity();
-				Contract.EndContractBlock();
 
 				EntitySlotInfo info;
 				EntitySlotOps.GetSlotInfo(this.entityHandle, this.index, out info);
@@ -55,7 +53,7 @@ namespace CryCil.Engine.Logic
 			}
 		}
 		/// <summary>
-		/// Gets or sets world transformation matrix for this slot.
+		/// Gets world transformation matrix for this slot.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This entity slot object is not valid.</exception>
 		/// <exception cref="ObjectDisposedException">This entity slot doesn't exist.</exception>
@@ -64,7 +62,6 @@ namespace CryCil.Engine.Logic
 			get
 			{
 				this.AssertSlotValidity();
-				Contract.EndContractBlock();
 
 				Matrix34 matrix;
 				EntitySlotOps.GetSlotWorldTM(this.entityHandle, this.index, out matrix);
@@ -81,7 +78,6 @@ namespace CryCil.Engine.Logic
 			get
 			{
 				this.AssertSlotValidity();
-				Contract.EndContractBlock();
 
 				Matrix34 matrix;
 				EntitySlotOps.GetSlotLocalTM(this.entityHandle, this.index, false, out matrix);
@@ -90,13 +86,12 @@ namespace CryCil.Engine.Logic
 			set
 			{
 				this.AssertSlotValidity();
-				Contract.EndContractBlock();
 
 				EntitySlotOps.SetSlotLocalTM(this.entityHandle, this.index, ref value);
 			}
 		}
 		/// <summary>
-		/// Gets or sets local transformation matrix for this slot relative to its parent slot.
+		/// Gets local transformation matrix for this slot relative to its parent slot.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This entity slot object is not valid.</exception>
 		/// <exception cref="ObjectDisposedException">This entity slot doesn't exist.</exception>
@@ -105,7 +100,6 @@ namespace CryCil.Engine.Logic
 			get
 			{
 				this.AssertSlotValidity();
-				Contract.EndContractBlock();
 
 				Matrix34 matrix;
 				EntitySlotOps.GetSlotLocalTM(this.entityHandle, this.index, true, out matrix);
@@ -125,7 +119,6 @@ namespace CryCil.Engine.Logic
 			get
 			{
 				this.AssertSlotValidity();
-				Contract.EndContractBlock();
 
 				Vector3 position;
 				EntitySlotOps.GetSlotCameraSpacePos(this.entityHandle, this.index, out position);
@@ -134,7 +127,6 @@ namespace CryCil.Engine.Logic
 			set
 			{
 				this.AssertSlotValidity();
-				Contract.EndContractBlock();
 
 				EntitySlotOps.SetSlotCameraSpacePos(this.entityHandle, this.index, ref value);
 			}
@@ -160,7 +152,6 @@ namespace CryCil.Engine.Logic
 			get
 			{
 				this.AssertSlotValidity();
-				Contract.EndContractBlock();
 
 				return new CryEntitySlot(this.entityHandle, this.Information.ParentSlot);
 			}
@@ -175,7 +166,6 @@ namespace CryCil.Engine.Logic
 				{
 					throw new ArgumentException("Cannot set a slot of another entity as a parent slot for this one.");
 				}
-				Contract.EndContractBlock();
 
 				EntitySlotOps.SetParentSlot(this.entityHandle, value.index, this.index);
 			}
@@ -198,7 +188,6 @@ namespace CryCil.Engine.Logic
 			get
 			{
 				this.AssertSlotValidity();
-				Contract.EndContractBlock();
 
 				return this.Information.Material;
 			}
@@ -209,7 +198,6 @@ namespace CryCil.Engine.Logic
 				{
 					throw new ArgumentNullException("value", "Cannot assign invalid material to the entity slot.");
 				}
-				Contract.EndContractBlock();
 
 				EntitySlotOps.SetSlotMaterial(this.entityHandle, this.index, value);
 			}
@@ -224,14 +212,12 @@ namespace CryCil.Engine.Logic
 			get
 			{
 				this.AssertSlotValidity();
-				Contract.EndContractBlock();
 
 				return EntitySlotOps.GetSlotFlags(this.entityHandle, this.index);
 			}
 			set
 			{
 				this.AssertSlotValidity();
-				Contract.EndContractBlock();
 
 				EntitySlotOps.SetSlotFlags(this.entityHandle, this.index, value);
 			}
@@ -249,7 +235,6 @@ namespace CryCil.Engine.Logic
 			get
 			{
 				this.AssertSlotValidity();
-				Contract.EndContractBlock();
 
 				return EntitySlotOps.GetParticleEmitter(this.entityHandle, this.index);
 			}
@@ -260,7 +245,6 @@ namespace CryCil.Engine.Logic
 				{
 					throw new ArgumentNullException("value", "Cannot bind null emitter to the entity slot.");
 				}
-				Contract.EndContractBlock();
 
 				EntitySlotOps.SetParticleEmitter(this.entityHandle, this.index, value, true);
 			}
@@ -268,12 +252,16 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Gets or sets static object that is bound to this slot.
 		/// </summary>
+		/// <exception cref="NullReferenceException">This entity slot object is not valid.</exception>
+		/// <exception cref="ObjectDisposedException">This entity slot doesn't exist.</exception>
+		/// <exception cref="ArgumentNullException">
+		/// Cannot bind null emitter to the entity slot.
+		/// </exception>
 		public StaticObject BoundStaticObject
 		{
 			get
 			{
 				this.AssertSlotValidity();
-				Contract.EndContractBlock();
 
 				return new StaticObject(EntitySlotOps.GetStatObj(this.entityHandle, this.index));
 			}
@@ -284,7 +272,6 @@ namespace CryCil.Engine.Logic
 				{
 					throw new ArgumentNullException("value", "Cannot bind null emitter to the entity slot.");
 				}
-				Contract.EndContractBlock();
 
 				float mass, density;
 				value.GetPhysicalProperties(out mass, out density);
@@ -303,8 +290,6 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Releases this entity slot.
 		/// </summary>
-		/// <exception cref="NullReferenceException">This entity slot object is not valid.</exception>
-		/// <exception cref="ObjectDisposedException">This entity slot doesn't exist.</exception>
 		public void Release()
 		{
 			if (this.IsValid)
@@ -334,7 +319,6 @@ namespace CryCil.Engine.Logic
 			{
 				throw new ArgumentNullException("target", "Cannot transfer a slot to an invalid entity.");
 			}
-			Contract.EndContractBlock();
 
 			EntitySlotOps.MoveSlot(this.entityHandle, target.Entity, this.index);
 		}
@@ -358,7 +342,6 @@ namespace CryCil.Engine.Logic
 			{
 				throw new ArgumentNullException("target", "Cannot transfer a slot to an invalid entity.");
 			}
-			Contract.EndContractBlock();
 
 			EntitySlotOps.MoveSlot(this.entityHandle, target, this.index);
 		}
@@ -381,7 +364,6 @@ namespace CryCil.Engine.Logic
 				throw new ArgumentNullException("effect", "Cannot use null particle effect to create an emitter that can " +
 														  "be bound to the entity slot.");
 			}
-			Contract.EndContractBlock();
 
 			EntitySlotOps.LoadParticleEmitterDefault(this.entityHandle, this.index, effect, prime, sync);
 		}
@@ -408,7 +390,6 @@ namespace CryCil.Engine.Logic
 				throw new ArgumentNullException("effect", "Cannot use null particle effect to create an emitter that can " +
 														  "be bound to the entity slot.");
 			}
-			Contract.EndContractBlock();
 
 			EntitySlotOps.LoadParticleEmitter(this.entityHandle, this.index, effect, ref parameters, prime, sync);
 		}
@@ -421,7 +402,6 @@ namespace CryCil.Engine.Logic
 		public void LoadLight(ref LightProperties properties)
 		{
 			this.AssertSlotValidity();
-			Contract.EndContractBlock();
 
 			EntitySlotOps.LoadLight(this.entityHandle, this.index, ref properties);
 		}
@@ -436,7 +416,6 @@ namespace CryCil.Engine.Logic
 		public bool LoadStaticObject(string filename, string geometryName = null)
 		{
 			this.AssertSlotValidity();
-			Contract.EndContractBlock();
 
 			return EntitySlotOps.LoadGeometry(this.entityHandle, this.index, filename, geometryName) != 0;
 		}
@@ -447,35 +426,40 @@ namespace CryCil.Engine.Logic
 		/// Reference to object that describes how to physicalize the slot.
 		/// </param>
 		/// <returns>Some number, not sure what it means.</returns>
+		/// <exception cref="NullReferenceException">This entity slot object is not valid.</exception>
+		/// <exception cref="ObjectDisposedException">This entity slot doesn't exist.</exception>
 		public int Physicalize(ref EntityPhysicalizationParameters parameters)
 		{
 			this.AssertSlotValidity();
-			Contract.EndContractBlock();
 
 			return EntitySlotOps.PhysicalizeSlot(this.entityHandle, this.index, ref parameters);
 		}
 		/// <summary>
 		/// Dephysicalizes this slot.
 		/// </summary>
+		/// <exception cref="NullReferenceException">This entity slot object is not valid.</exception>
+		/// <exception cref="ObjectDisposedException">This entity slot doesn't exist.</exception>
 		public void Unphysicalize()
 		{
 			this.AssertSlotValidity();
-			Contract.EndContractBlock();
 
 			EntitySlotOps.UnphysicalizeSlot(this.entityHandle, this.index);
 		}
 		/// <summary>
 		/// Updates physics of this slot(?).
 		/// </summary>
+		/// <exception cref="NullReferenceException">This entity slot object is not valid.</exception>
+		/// <exception cref="ObjectDisposedException">This entity slot doesn't exist.</exception>
 		public void UpdatePhysics()
 		{
 			this.AssertSlotValidity();
-			Contract.EndContractBlock();
 
 			EntitySlotOps.UpdateSlotPhysics(this.entityHandle, this.index);
 		}
 		#endregion
 		#region Utilities
+		/// <exception cref="NullReferenceException">This entity slot object is not valid.</exception>
+		/// <exception cref="ObjectDisposedException">This entity slot doesn't exist.</exception>
 		private void AssertSlotValidity()
 		{
 			if (this.entityHandle == IntPtr.Zero && this.index < 0)

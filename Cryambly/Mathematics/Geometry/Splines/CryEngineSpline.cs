@@ -314,6 +314,7 @@ namespace CryCil.Geometry.Splines
 		}
 		#endregion
 		#region Utilities
+		/// <exception cref="NullReferenceException">Instance object is invalid.</exception>
 		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return this.GetEnumerator();

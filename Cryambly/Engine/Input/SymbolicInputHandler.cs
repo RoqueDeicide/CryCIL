@@ -1,4 +1,5 @@
-﻿using CryCil.Utilities;
+﻿using System;
+using CryCil.Utilities;
 
 namespace CryCil.Engine.Input
 {

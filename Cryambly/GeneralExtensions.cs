@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -32,7 +33,10 @@ namespace CryCil
 		/// Determines whether given text is <c>null</c> or an empty <c>string</c>.
 		/// </summary>
 		/// <param name="text">This text.</param>
-		/// <returns>True, if <paramref name="text"/> is equal to <c>null</c> or is a <c>string</c> with 0 characters in it.</returns>
+		/// <returns>
+		/// True, if <paramref name="text"/> is equal to <c>null</c> or is a <c>string</c> with 0
+		/// characters in it.
+		/// </returns>
 		[Pure]
 		[ContractAnnotation("text:null => true")]
 		public static bool IsNullOrEmpty(this string text)
@@ -43,7 +47,10 @@ namespace CryCil
 		/// Determines whether given text is <c>null</c> or an empty <c>string</c>.
 		/// </summary>
 		/// <param name="text">This text.</param>
-		/// <returns>True, if <paramref name="text"/> is equal to <c>null</c> or is a <c>string</c> with 0 characters in it.</returns>
+		/// <returns>
+		/// True, if <paramref name="text"/> is equal to <c>null</c> or is a <c>string</c> with 0
+		/// characters in it.
+		/// </returns>
 		[Pure]
 		[ContractAnnotation("text:null => true")]
 		public static bool IsNullOrWhiteSpace(this string text)
@@ -123,13 +130,15 @@ namespace CryCil
 		/// <param name="substring">Piece of text to look for.</param>
 		/// <param name="options">  Text comparison options.</param>
 		/// <returns>A list of all indexes.</returns>
+		/// <exception cref="ArgumentException">Cannot perform search in the empty string.</exception>
+		/// <exception cref="ArgumentException">Cannot perform search for an empty string.</exception>
 		public static List<int> AllIndexesOf([NotNull] this string text, string substring, StringComparison options)
 		{
-			if (String.IsNullOrEmpty(text))
+			if (string.IsNullOrEmpty(text))
 			{
 				throw new ArgumentException("Cannot perform search in the empty string.");
 			}
-			if (String.IsNullOrEmpty(substring))
+			if (string.IsNullOrEmpty(substring))
 			{
 				throw new ArgumentException("Cannot perform search for an empty string.");
 			}
@@ -163,7 +172,7 @@ namespace CryCil
 		/// </returns>
 		public static bool ContainsAny(this string text, string[] strings)
 		{
-			if (String.IsNullOrEmpty(text) || strings.IsNullOrEmpty())
+			if (string.IsNullOrEmpty(text) || strings.IsNullOrEmpty())
 			{
 				return false;
 			}
@@ -176,10 +185,16 @@ namespace CryCil
 		/// <returns>True, if this string can be used as a name for flow node or a port.</returns>
 		public static bool IsValidFlowGraphName(this string text)
 		{
-			return
-				!(String.IsNullOrWhiteSpace(text)
-				  || Regex.IsMatch(text, VariousConstants.InvalidXmlCharsPattern)
-				  || text.Any(Char.IsWhiteSpace));
+			try
+			{
+				return !(string.IsNullOrWhiteSpace(text) ||
+						 Regex.IsMatch(text, VariousConstants.InvalidXmlCharsPattern) ||
+						 text.Any(char.IsWhiteSpace));
+			}
+			catch (RegexMatchTimeoutException)
+			{
+				return false;
+			}
 		}
 		/// <summary>
 		/// Gets file that contains the assembly.
@@ -283,7 +298,7 @@ namespace CryCil
 		/// <returns>True, if search was a success, otherwise false.</returns>
 		public static bool TryGetElement([NotNull] this XmlElement element, string name, out XmlElement foundChild)
 		{
-			if (String.IsNullOrWhiteSpace(name))
+			if (string.IsNullOrWhiteSpace(name))
 			{
 				foundChild = null;
 				return false;
@@ -304,6 +319,7 @@ namespace CryCil
 		/// </exception>
 		/// <exception cref="ArgumentException">Input string doesn't contain enough characters.</exception>
 		[MethodImpl(MethodImplOptions.InternalCall)]
+		[SuppressMessage("ReSharper", "ExceptionNotThrown")]
 		public static extern unsafe void CopyToBuffer(this string str, char* buffer, int start, int count);
 		/// <summary>
 		/// Creates English ordinal number.
@@ -390,6 +406,9 @@ namespace CryCil
 		/// </summary>
 		/// <typeparam name="T">Type of enumeration.</typeparam>
 		/// <returns>A list of values of the enumeration.</returns>
+		/// <exception cref="InvalidCastException">
+		/// An element in the sequence cannot be cast to type <typeparamref name="T"/>.
+		/// </exception>
 		public static IEnumerable<T> Values<T>()
 		{
 			return Enum.GetValues(typeof(T)).Cast<T>();
@@ -451,6 +470,9 @@ namespace CryCil
 		/// <param name="thisType">       This type.</param>
 		/// <param name="genericBaseType">Generic type.</param>
 		/// <returns>True, this type implements given generic type.</returns>
+		/// <exception cref="TargetInvocationException">
+		/// A static initializer is invoked and throws an exception.
+		/// </exception>
 		public static bool ImplementsGeneric([NotNull] this Type thisType, [NotNull] Type genericBaseType)
 		{
 			var type = thisType;
@@ -478,6 +500,9 @@ namespace CryCil
 		/// <param name="thisType">       This type.</param>
 		/// <param name="genericBaseType">Generic base type.</param>
 		/// <returns>Enumeration of types.</returns>
+		/// <exception cref="TargetInvocationException">
+		/// A static initializer is invoked and throws an exception.
+		/// </exception>
 		public static IEnumerable<Type> GetGenericArguments([NotNull] this Type thisType, [NotNull] Type genericBaseType)
 		{
 			var type = thisType;
@@ -543,7 +568,9 @@ namespace CryCil
 		/// <returns>
 		/// An array of <typeparamref name="T"/> that contains all found attributes. Can be empty.
 		/// </returns>
+		/// <exception cref="TypeLoadException">The custom attribute type cannot be loaded.</exception>
 		[NotNull]
+		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		public static T[] GetAttributes<T>([NotNull] this ICustomAttributeProvider reflectionObject)
 			where T : Attribute
 		{
@@ -557,6 +584,7 @@ namespace CryCil
 		/// <returns>
 		/// The first instance of attribute <typeparamref name="T"/>, or null if none is found.
 		/// </returns>
+		/// <exception cref="TypeLoadException">The custom attribute type cannot be loaded.</exception>
 		public static T GetAttribute<T>([NotNull] this ICustomAttributeProvider reflectionObject)
 			where T : Attribute
 		{
@@ -572,6 +600,8 @@ namespace CryCil
 		/// The out parameter to which the attribute will be assigned.
 		/// </param>
 		/// <returns>True if the attribute exists.</returns>
+		/// <exception cref="TypeLoadException">The custom attribute type cannot be loaded.</exception>
+		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		public static bool TryGetAttribute<T>([NotNull] this ICustomAttributeProvider reflectionObject, out T attribute)
 			where T : Attribute
 		{

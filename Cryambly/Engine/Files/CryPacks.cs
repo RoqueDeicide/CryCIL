@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 namespace CryCil.Engine.Files
@@ -6,6 +7,7 @@ namespace CryCil.Engine.Files
 	/// <summary>
 	/// Provides access to CryEngine pack-related API.
 	/// </summary>
+	[SuppressMessage("ReSharper", "ExceptionNotThrown")]
 	public static class CryPacks
 	{
 		/// <summary>

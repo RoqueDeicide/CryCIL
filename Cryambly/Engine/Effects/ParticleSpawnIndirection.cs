@@ -1,4 +1,6 @@
-﻿namespace CryCil.Engine
+﻿using System;
+
+namespace CryCil.Engine
 {
 	/// <summary>
 	/// Enumeration of values that indicates the spawn location of the particles.

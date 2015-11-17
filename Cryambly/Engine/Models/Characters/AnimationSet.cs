@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using CryCil.Geometry;
 using CryCil.Hashing;
@@ -58,7 +57,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return AnimationSet.GetNameByAnimID(this.handle, this.index);
 			}
@@ -72,7 +70,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return AnimationSet.GetCRCByAnimID(this.handle, this.index);
 			}
@@ -86,7 +83,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return AnimationSet.GetFilePathByID(this.handle, this.index);
 			}
@@ -100,7 +96,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return AnimationSet.GetFilePathCRCByAnimID(this.handle, this.index);
 			}
@@ -114,7 +109,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				try
 				{
@@ -138,7 +132,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return AnimationSet.GetAnimationFlags(this.handle, this.index);
 			}
@@ -152,7 +145,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return AnimationSet.GetAnimationSize(this.handle, (uint)this.index);
 			}
@@ -166,7 +158,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return AnimationSet.IsAnimLoaded(this.handle, this.index);
 			}
@@ -188,7 +179,6 @@ namespace CryCil.Engine.Models.Characters
 		public void IncrementReferenceCount()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			AnimationSet.AddRef(this.handle, this.index);
 		}
@@ -200,7 +190,6 @@ namespace CryCil.Engine.Models.Characters
 		public void DecrementReferenceCount()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			AnimationSet.Release(this.handle, this.index);
 		}
@@ -215,7 +204,6 @@ namespace CryCil.Engine.Models.Characters
 		public bool GetAnimationStartLocation(out Quatvec startLocation)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return AnimationSet.GetAnimationDCCWorldSpaceLocationId(this.handle, this.index, out startLocation);
 		}
@@ -237,7 +225,6 @@ namespace CryCil.Engine.Models.Characters
 											out Quatvec relativeLocationOutput)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return AnimationSet.SampleAnimation(this.handle, this.index, animationNormalizedTime, controllerId,
 												out relativeLocationOutput);
@@ -294,7 +281,6 @@ namespace CryCil.Engine.Models.Characters
 					throw new IndexOutOfRangeException("Index of animation must be less then total number of animations.");
 				}
 #endif
-				Contract.EndContractBlock();
 
 				return new AnimationAsset(this.handle, index);
 			}
@@ -308,7 +294,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetAnimationCount(this.handle);
 			}
@@ -330,7 +315,6 @@ namespace CryCil.Engine.Models.Characters
 		public int IndexOf(string name)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			if (name == null)
 			{
@@ -350,7 +334,6 @@ namespace CryCil.Engine.Models.Characters
 		public int IndexOf(LowerCaseCrc32 nameHash)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return GetAnimIDByCRC(this.handle, nameHash);
 		}
@@ -366,7 +349,6 @@ namespace CryCil.Engine.Models.Characters
 		public bool GetAnimationStartLocation(string animationName, out Quatvec startLocation)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return GetAnimationDCCWorldSpaceLocationName(this.handle, animationName, out startLocation);
 		}
@@ -383,7 +365,6 @@ namespace CryCil.Engine.Models.Characters
 		public bool GetAnimationStartLocation(CharacterAnimation animation, out Quatvec startLocation, uint controllerId)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return GetAnimationDCCWorldSpaceLocationObject(this.handle, animation, out startLocation, controllerId);
 		}

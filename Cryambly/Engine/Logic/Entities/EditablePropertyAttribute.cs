@@ -45,13 +45,16 @@ namespace CryCil.Engine.Logic
 		/// </summary>
 		/// <param name="sortHelper">  <see cref="SortHelper"/></param>
 		/// <param name="folder">      <see cref="Folder"/></param>
+		/// <param name="defaultValue"><see cref="DefaultValue"/></param>
 		/// <param name="uiControl">   <see cref="UiControl"/></param>
 		/// <param name="description"> <see cref="Description"/></param>
-		/// <param name="defaultValue"><see cref="DefaultValue"/></param>
 		/// <param name="min">         Minimal value of this property, if it is numeric.</param>
 		/// <param name="max">         Maximal value of this property, if it is numeric.</param>
 		/// <exception cref="Exception">
 		/// Provided default value cannot be null, if UI control has to be chosen automatically.
+		/// </exception>
+		/// <exception cref="ArgumentNullException">
+		/// <paramref name="folder"/> is <see langword="null"/>.
 		/// </exception>
 		public EditablePropertyAttribute(int sortHelper = 0, [NotNull] string folder = "", object defaultValue = null,
 										 EditablePropertyUiControl uiControl = EditablePropertyUiControl.Default,

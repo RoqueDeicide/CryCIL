@@ -1,4 +1,6 @@
-﻿namespace CryCil.Engine.Localization
+﻿using System;
+
+namespace CryCil.Engine.Localization
 {
 	/// <summary>
 	/// Enumeration of identifiers of supported languages.

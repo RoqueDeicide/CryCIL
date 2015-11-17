@@ -3,8 +3,7 @@
 namespace CryCil.Engine.Models.StaticObjects
 {
 	/// <summary>
-	/// A set of flags that specifies how to convert <see cref="CryMesh"/> to
-	/// <see cref="CryRenderMesh"/>.
+	/// A set of flags that specifies how to convert <see cref="CryMesh"/> to <see cref="CryRenderMesh"/>.
 	/// </summary>
 	[Flags]
 	public enum MeshToRenderMeshFlags : uint

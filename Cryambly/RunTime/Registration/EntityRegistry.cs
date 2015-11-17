@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using CryCil.Engine.Logic;
@@ -82,6 +83,7 @@ namespace CryCil.RunTime.Registration
 		#endregion
 		#region Interface
 		[InitializationStage((int)DefaultInitializationStages.EntityRegistrationStage)]
+		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		private static void RegisterEntities(int index)
 		{
 			var entityTypes =
@@ -118,22 +120,19 @@ namespace CryCil.RunTime.Registration
 					DefinedEntityClasses.Add(entityClassName, entityType);
 				}
 
-				EntitySystem
-					.RegisterEntityClass
-					(
-					 entityClassName,
-					 attribute.Category,
-					 attribute.EditorHelper,
-					 attribute.EditorIcon,
-					 attribute.Flags,
-					 GetEditableProperties(entityType),
-					 entityType.Implements<MonoNetEntity>(),
-					 attribute.DontSyncEditableProperties
-					);
+				EntitySystem.RegisterEntityClass(entityClassName,
+												 attribute.Category,
+												 attribute.EditorHelper,
+												 attribute.EditorIcon,
+												 attribute.Flags,
+												 GetEditableProperties(entityType),
+												 entityType.Implements<MonoNetEntity>(),
+												 attribute.DontSyncEditableProperties);
 			}
 		}
 		#endregion
 		#region Utilities
+		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		private static EditablePropertyInfo[] GetEditableProperties(Type type)
 		{
 			if (type == null)
@@ -173,7 +172,7 @@ namespace CryCil.RunTime.Registration
 				int res = attribute0.SortHelper.CompareTo(attribute1.SortHelper);
 				return res != 0
 					? res
-					: String.Compare(property0.Member.Name, property1.Member.Name, StringComparison.Ordinal);
+					: string.Compare(property0.Member.Name, property1.Member.Name, StringComparison.Ordinal);
 			};
 			foreach (string folderName in folders.Keys)
 			{
@@ -194,7 +193,7 @@ namespace CryCil.RunTime.Registration
 				else
 				{
 					propList.Add(new EditableProperty());
-						// Not gonna be used, but has to take up the slot to insure consistency of indices.
+					// Not gonna be used, but has to take up the slot to insure consistency of indices.
 					propList.AddRange(folder.Value);
 					propList.Add(new EditableProperty()); // Same as one above.
 

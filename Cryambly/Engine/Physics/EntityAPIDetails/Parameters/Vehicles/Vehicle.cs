@@ -50,8 +50,8 @@ namespace CryCil.Engine.Physics
 		[UsedImplicitly] private float steerTrackNeutralTurn;
 		[UsedImplicitly] private float pullTilt; // for tracked vehicles, tilt angle of pulling force towards ground
 		[UsedImplicitly] private float maxTilt;
-									   // maximum wheel contact normal tilt (left or right) after which it
-									   // acts as a locked part of the hull; it's a cosine of the angle
+		// maximum wheel contact normal tilt (left or right) after which it acts as a locked part of the
+		// hull; it's a cosine of the angle
 		[UsedImplicitly] private int bKeepTractionWhenTilted; // keeps wheel traction in tilted mode
 		#endregion
 		#region Properties
@@ -156,6 +156,11 @@ namespace CryCil.Engine.Physics
 		/// </summary>
 		/// <remarks>Indices of gears: 0 - backwards; 1 - neutral; 2 and above - forward.</remarks>
 		/// <exception cref="ArgumentException">At least 3 gear ratios need to be provided.</exception>
+		/// <exception cref="OutOfMemoryException">Unable to allocate native memory block.</exception>
+		/// <exception cref="OverflowException">
+		/// The array is multidimensional and contains more than <see cref="F:System.Int32.MaxValue"/>
+		/// elements.
+		/// </exception>
 		[CanBeNull]
 		public float[] Gears
 		{

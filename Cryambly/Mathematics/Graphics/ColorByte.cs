@@ -177,16 +177,21 @@ namespace CryCil.Graphics
 		/// <returns>
 		/// Object of type <see cref="ColorByte"/> that is represented by given <paramref name="text"/> .
 		/// </returns>
+		/// <exception cref="ArgumentNullException">Attempt to parse empty string as ColorByte.</exception>
+		/// <exception cref="ArgumentException">
+		/// Attempt to parse text that is not a recognizable ColorByte representation as object of that
+		/// type.
+		/// </exception>
 		public static ColorByte Parse(string text)
 		{
 			if (string.IsNullOrEmpty(text))
 			{
-				throw new ArgumentNullException("text", "Attempt to parse empty string as Color32.");
+				throw new ArgumentNullException("text", "Attempt to parse empty string as ColorByte.");
 			}
 			if (text[0] != '[')
 			{
 				throw new ArgumentException(
-					"Attempt to parse text that is not a recognizable Color32 representation as object of that type.");
+					"Attempt to parse text that is not a recognizable ColorByte representation as object of that type.");
 			}
 			string[] componentStrings = text.Substring(1, text.Length - 2).Split(' ');
 			try
@@ -200,10 +205,10 @@ namespace CryCil.Graphics
 				};
 				return color;
 			}
-			catch (Exception)
+			catch (Exception ex)
 			{
 				throw new ArgumentException(
-					"Attempt to parse text that is not a recognizable Color32 representation as object of that type.");
+					"Attempt to parse text that is not a recognizable ColorByte representation as object of that type.", ex);
 			}
 		}
 		/// <summary>

@@ -1,4 +1,6 @@
-﻿namespace CryCil.Engine.Rendering
+﻿using System;
+
+namespace CryCil.Engine.Rendering
 {
 	/// <summary>
 	/// Enumeration of identifiers of various types of textures.

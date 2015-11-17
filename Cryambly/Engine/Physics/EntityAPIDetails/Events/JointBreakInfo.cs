@@ -1,4 +1,6 @@
-﻿namespace CryCil.Engine.Physics
+﻿using System;
+
+namespace CryCil.Engine.Physics
 {
 	/// <summary>
 	/// Encapsulates information about the joint that was broken.

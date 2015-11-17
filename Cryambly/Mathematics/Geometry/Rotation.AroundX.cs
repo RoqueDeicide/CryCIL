@@ -1,4 +1,6 @@
-﻿namespace CryCil.Geometry
+﻿using System;
+
+namespace CryCil.Geometry
 {
 	public partial class Rotation
 	{

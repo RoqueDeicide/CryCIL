@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using CryCil.Engine.Models.Characters;
 using CryCil.Engine.Physics;
 using CryCil.Engine.Rendering;
@@ -126,9 +127,11 @@ namespace CryCil.Engine.Logic
 	/// <summary>
 	/// Defines signature of methods that can handle <see cref="MonoEntity.AnimationEvent"/> event.
 	/// </summary>
-	/// <param name="sender">The entity that raised the event.</param>
-	/// <param name="event">Reference to the object that contains information about the event.</param>
-	/// <param name="character">Object that represents the animated character that caused the event.</param>
+	/// <param name="sender">   The entity that raised the event.</param>
+	/// <param name="event">    Reference to the object that contains information about the event.</param>
+	/// <param name="character">
+	/// Object that represents the animated character that caused the event.
+	/// </param>
 	public delegate void EntityAnimationEventHandler(MonoEntity sender, ref AnimationEvent @event, Character character);
 	public partial class MonoEntity
 	{
@@ -158,6 +161,7 @@ namespace CryCil.Engine.Logic
 		/// </summary>
 		public event EntityTimerEventHandler TimedOut;
 		[UnmanagedThunk("Invoked from underlying object to raise event TimedOut.")]
+		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		private void OnTimedOut(int timerId, int milliseconds)
 		{
 			var handler = this.TimedOut;
@@ -402,6 +406,7 @@ namespace CryCil.Engine.Logic
 		{
 		}
 		[UnmanagedThunk("Invoked from underlying object to raise event BeforePhysicsUpdate.")]
+		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		private void OnBeforePhysicsUpdate(float frameTimeSeconds)
 		{
 			TimeSpan frameTime = TimeSpan.FromSeconds(frameTimeSeconds);

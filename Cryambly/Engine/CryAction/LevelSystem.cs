@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 namespace CryCil.Engine.CryAction
@@ -6,6 +7,7 @@ namespace CryCil.Engine.CryAction
 	/// <summary>
 	/// Provides access to CryEngine level system.
 	/// </summary>
+	[SuppressMessage("ReSharper", "ExceptionNotThrown")]
 	public static class LevelSystem
 	{
 		#region Fields

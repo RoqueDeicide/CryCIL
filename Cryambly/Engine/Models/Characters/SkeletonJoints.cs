@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using CryCil.Engine.Models.StaticObjects;
 using CryCil.Engine.Physics;
 using CryCil.Engine.Rendering;
@@ -33,14 +32,12 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return SkeletonPose.GetPhysEntOnJoint(this.handle, this.id);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SkeletonPose.SetPhysEntOnJoint(this.handle, this.id, value);
 			}
@@ -54,7 +51,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return SkeletonPose.GetPhysIdOnJoint(this.handle, this.id);
 			}
@@ -68,7 +64,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return SkeletonPose.GetAbsJointById(this.handle, this.id);
 			}
@@ -82,7 +77,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return SkeletonPose.GetRelJointById(this.handle, this.id);
 			}
@@ -96,14 +90,12 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return SkeletonPose.GetStatObjOnJoint(this.handle, this.id);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SkeletonPose.SetStatObjOnJoint(this.handle, this.id, value);
 			}
@@ -117,14 +109,12 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return SkeletonPose.GetMaterialOnJoint(this.handle, this.id);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SkeletonPose.SetMaterialOnJoint(this.handle, this.id, value);
 			}
@@ -138,7 +128,6 @@ namespace CryCil.Engine.Models.Characters
 		}
 		#endregion
 		#region Interface
-
 		#endregion
 		#region Utilities
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
@@ -177,7 +166,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return new SkeletonJoint(this.handle, id);
 			}
@@ -190,7 +178,6 @@ namespace CryCil.Engine.Models.Characters
 		}
 		#endregion
 		#region Interface
-
 		#endregion
 		#region Utilities
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>

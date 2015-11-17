@@ -23,6 +23,7 @@ namespace CryCil.Geometry
 			/// <param name="vector">Vector that needs to be reflected.</param>
 			/// <param name="normal">Normal vector to the surface.</param>
 			/// <returns>A new reflected vector.</returns>
+			/// <exception cref="ArgumentException">Normal to a plane must be a unit vector.</exception>
 			public static Vector2 Create(Vector2 vector, Vector2 normal)
 			{
 #if DEBUG
@@ -39,6 +40,7 @@ namespace CryCil.Geometry
 			/// </summary>
 			/// <param name="vector">Vector to reflect.</param>
 			/// <param name="normal">Normal vector to the surface.</param>
+			/// <exception cref="ArgumentException">Normal to a plane must be a unit vector.</exception>
 			public static void Apply(ref Vector2 vector, Vector2 normal)
 			{
 #if DEBUG
@@ -57,6 +59,7 @@ namespace CryCil.Geometry
 			/// <param name="vector">Vector that needs to be reflected.</param>
 			/// <param name="normal">Normal vector to the surface.</param>
 			/// <returns>A new reflected vector.</returns>
+			/// <exception cref="ArgumentException">Normal to a plane must be a unit vector.</exception>
 			public static Vector3 Create(Vector3 vector, Vector3 normal)
 			{
 #if DEBUG
@@ -67,18 +70,16 @@ namespace CryCil.Geometry
 #endif
 				float dot = vector.X * normal.X + vector.Y * normal.Y + vector.Z * normal.Z;
 				return
-					new Vector3
-						(
-						2.0f * dot * normal.X - vector.X,
-						2.0f * dot * normal.Y - vector.Y,
-						2.0f * dot * normal.Z - vector.Z
-						);
+					new Vector3(2.0f * dot * normal.X - vector.X,
+								2.0f * dot * normal.Y - vector.Y,
+								2.0f * dot * normal.Z - vector.Z);
 			}
 			/// <summary>
 			/// Mirrors given vector over a given surface.
 			/// </summary>
 			/// <param name="vector">Vector to reflect.</param>
 			/// <param name="normal">Normal vector to the surface.</param>
+			/// <exception cref="ArgumentException">Normal to a plane must be a unit vector.</exception>
 			public static void Apply(ref Vector3 vector, Vector3 normal)
 			{
 #if DEBUG
@@ -88,6 +89,7 @@ namespace CryCil.Geometry
 				}
 #endif
 				float dot = vector.X * normal.X + vector.Y * normal.Y + vector.Z * normal.Z;
+
 				vector.X = 2.0f * dot * normal.X - vector.X;
 				vector.Y = 2.0f * dot * normal.Y - vector.Y;
 				vector.Z = 2.0f * dot * normal.Z - vector.Z;
@@ -109,6 +111,7 @@ namespace CryCil.Geometry
 			/// <param name="vector">Vector that needs to be reflected.</param>
 			/// <param name="normal">Normal vector to the surface.</param>
 			/// <returns>A new reflected vector.</returns>
+			/// <exception cref="ArgumentException">Normal to a plane must be a unit vector.</exception>
 			public static Vector2 Apply(Vector2 vector, Vector2 normal)
 			{
 #if DEBUG
@@ -125,6 +128,7 @@ namespace CryCil.Geometry
 			/// </summary>
 			/// <param name="vector">Vector to reflect.</param>
 			/// <param name="normal">Normal vector to the surface.</param>
+			/// <exception cref="ArgumentException">Normal to a plane must be a unit vector.</exception>
 			public static void Apply(ref Vector2 vector, Vector2 normal)
 			{
 #if DEBUG
@@ -143,6 +147,7 @@ namespace CryCil.Geometry
 			/// <param name="vector">Vector that needs to be reflected.</param>
 			/// <param name="normal">Normal vector to the surface.</param>
 			/// <returns>A new reflected vector.</returns>
+			/// <exception cref="ArgumentException">Normal to a plane must be a unit vector.</exception>
 			public static Vector3 Apply(Vector3 vector, Vector3 normal)
 			{
 #if DEBUG
@@ -153,18 +158,16 @@ namespace CryCil.Geometry
 #endif
 				float dot = vector.X * normal.X + vector.Y * normal.Y + vector.Z * normal.Z;
 				return
-					new Vector3
-						(
-						vector.X - 2.0f * dot * normal.X,
-						vector.Y - 2.0f * dot * normal.Y,
-						vector.Z - 2.0f * dot * normal.Z
-						);
+					new Vector3(vector.X - 2.0f * dot * normal.X,
+								vector.Y - 2.0f * dot * normal.Y,
+								vector.Z - 2.0f * dot * normal.Z);
 			}
 			/// <summary>
 			/// Bounces given vector over a given surface.
 			/// </summary>
 			/// <param name="vector">Vector to reflect.</param>
 			/// <param name="normal">Normal vector to the surface.</param>
+			/// <exception cref="ArgumentException">Normal to a plane must be a unit vector.</exception>
 			public static void Apply(ref Vector3 vector, Vector3 normal)
 			{
 #if DEBUG
@@ -174,6 +177,7 @@ namespace CryCil.Geometry
 				}
 #endif
 				float dot = vector.X * normal.X + vector.Y * normal.Y + vector.Z * normal.Z;
+
 				vector.X = vector.X - 2.0f * dot * normal.X;
 				vector.Y = vector.Y - 2.0f * dot * normal.Y;
 				vector.Z = vector.Z - 2.0f * dot * normal.Z;

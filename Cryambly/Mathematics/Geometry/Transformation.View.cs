@@ -1,4 +1,6 @@
-﻿namespace CryCil.Geometry
+﻿using System;
+
+namespace CryCil.Geometry
 {
 	public static partial class Transformation
 	{
@@ -50,8 +52,8 @@
 				Vector3 zaxis = (at - eye).Normalized;
 				// X-axis points to the left from the camera (this is why we need an Up vector).
 				Vector3 xaxis = new Vector3(-zaxis.Y, zaxis.X, 0);
-					// This is a cross-product of the default Up vector and a Z-axis that we calculated
-					// above. Y-axis points upwards from the camera.
+				// This is a cross-product of the default Up vector and a Z-axis that we calculated above.
+				// Y-axis points upwards from the camera.
 				Vector3 yaxis = xaxis % zaxis;
 
 				// For nicer formatting of the return statement.

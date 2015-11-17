@@ -9,6 +9,7 @@ namespace CryCil.Engine.Logic
 	public abstract class OutputPort : FlowPort
 	{
 		#region Properties
+		/// <exception cref="OutOfMemoryException">There is insufficient memory available.</exception>
 		internal override FlowPortConfig Config
 		{
 			get { return new FlowPortConfig(this.Name, this.DisplayName, this.DisplayName, this.DataType); }
@@ -135,6 +136,7 @@ namespace CryCil.Engine.Logic
 		/// Activates this port and passes a value to the connected input port.
 		/// </summary>
 		/// <param name="value">Value to pass.</param>
+		/// <exception cref="OutOfMemoryException">There is insufficient memory available.</exception>
 		public void Activate(string value)
 		{
 			this.Activate(new FlowData(value));
@@ -310,6 +312,7 @@ namespace CryCil.Engine.Logic
 		/// Activates this port and passes a value to the connected input port.
 		/// </summary>
 		/// <param name="value">Value to pass.</param>
+		/// <exception cref="OutOfMemoryException">There is insufficient memory available.</exception>
 		public void Activate(string value)
 		{
 			this.Activate(new FlowData(value));

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using CryCil.Engine.Data;
-using CryCil.Engine.Decals;
 using CryCil.Engine.Models.Characters.Attachments;
 using CryCil.Engine.Models.Characters.Faces;
 using CryCil.Engine.Rendering;
@@ -35,7 +33,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetRefCount(this.handle);
 			}
@@ -49,7 +46,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetISkeletonAnim(this.handle);
 			}
@@ -63,7 +59,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetISkeletonPose(this.handle);
 			}
@@ -77,7 +72,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetIAttachmentManager(this.handle);
 			}
@@ -91,7 +85,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetIDefaultSkeleton(this.handle);
 			}
@@ -105,7 +98,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetIAnimationSet(this.handle);
 			}
@@ -119,7 +111,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetModelAnimEventDatabase(this.handle);
 			}
@@ -133,7 +124,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetAABB(this.handle);
 			}
@@ -147,7 +137,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetRadiusSqr(this.handle);
 			}
@@ -161,14 +150,12 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetFlags(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetFlags(this.handle, value);
 			}
@@ -183,7 +170,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetObjectType(this.handle);
 			}
@@ -197,7 +183,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetFilePath(this.handle);
 			}
@@ -212,7 +197,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetHasVertexAnimation(this.handle);
 			}
@@ -230,7 +214,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetIMaterial(this.handle);
 			}
@@ -249,7 +232,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetIMaterial_Instance(this.handle);
 			}
@@ -260,7 +242,6 @@ namespace CryCil.Engine.Models.Characters
 				{
 					throw new ArgumentNullException("value", "Material instance cannot be null.");
 				}
-				Contract.EndContractBlock();
 
 				SetIMaterial_Instance(this.handle, value);
 			}
@@ -274,7 +255,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetFacialInstance(this.handle);
 			}
@@ -294,14 +274,12 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetPlaybackScale(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetPlaybackScale(this.handle, value);
 			}
@@ -315,7 +293,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return IsCharacterVisible(this.handle);
 			}
@@ -332,7 +309,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetUniformScale(this.handle);
 			}
@@ -344,9 +320,10 @@ namespace CryCil.Engine.Models.Characters
 			this.handle = handle;
 		}
 		/// <summary>
-		/// Creates a new character instance by loading a model file along with any available animation files.
+		/// Creates a new character instance by loading a model file along with any available animation
+		/// files.
 		/// </summary>
-		/// <param name="file">Path to the model file to load.</param>
+		/// <param name="file"> Path to the model file to load.</param>
 		/// <param name="flags">A set of flags that specifies how to load the character.</param>
 		public Character(string file, CharacterLoadingFlags flags)
 		{
@@ -362,7 +339,6 @@ namespace CryCil.Engine.Models.Characters
 		public void IncrementReferenceCount()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			AddRef(this.handle);
 		}
@@ -374,7 +350,6 @@ namespace CryCil.Engine.Models.Characters
 		public void DecrementReferenceCount()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			Release(this.handle);
 		}
@@ -388,7 +363,6 @@ namespace CryCil.Engine.Models.Characters
 		public void SwitchStartAnimation(bool enable)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			EnableStartAnimationInternal(this.handle, enable);
 		}
@@ -399,7 +373,6 @@ namespace CryCil.Engine.Models.Characters
 		public void EnableStartAnimation()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			EnableStartAnimationInternal(this.handle, true);
 		}
@@ -410,7 +383,6 @@ namespace CryCil.Engine.Models.Characters
 		public void DisableStartAnimation()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			EnableStartAnimationInternal(this.handle, false);
 		}
@@ -425,7 +397,6 @@ namespace CryCil.Engine.Models.Characters
 		public void UpdateAnimationProcessing(ref AnimationProcessParameters parameters)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			StartAnimationProcessing(this.handle, ref parameters);
 		}
@@ -440,7 +411,6 @@ namespace CryCil.Engine.Models.Characters
 		public PositionNormal GetRandomPosition(GeometryFormat aspect)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			PositionNormal positionNormal;
 			GetRandomPos(this.handle, out positionNormal, aspect);
@@ -454,7 +424,6 @@ namespace CryCil.Engine.Models.Characters
 		public void SwitchDecals(bool enable)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			EnableDecalsInternal(this.handle, enable);
 		}
@@ -465,7 +434,6 @@ namespace CryCil.Engine.Models.Characters
 		public void EnableDecals()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			EnableDecalsInternal(this.handle, true);
 		}
@@ -476,7 +444,6 @@ namespace CryCil.Engine.Models.Characters
 		public void DisableDecals()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			EnableDecalsInternal(this.handle, false);
 		}
@@ -491,7 +458,6 @@ namespace CryCil.Engine.Models.Characters
 		public void CreateDecal(ref CryEngineDecalInfo decal)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			CreateDecalInternal(this.handle, ref decal);
 		}
@@ -503,7 +469,6 @@ namespace CryCil.Engine.Models.Characters
 		public void SwitchFacialAnimation(bool enable)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			EnableFacialAnimationInternal(this.handle, enable);
 		}
@@ -514,7 +479,6 @@ namespace CryCil.Engine.Models.Characters
 		public void EnableFacialAnimation()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			EnableFacialAnimationInternal(this.handle, true);
 		}
@@ -525,7 +489,6 @@ namespace CryCil.Engine.Models.Characters
 		public void DisableFacialAnimation()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			EnableFacialAnimationInternal(this.handle, false);
 		}
@@ -539,7 +502,6 @@ namespace CryCil.Engine.Models.Characters
 		public void SwitchProceduralFacialAnimation(bool enable)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			EnableProceduralFacialAnimationInternal(this.handle, enable);
 		}
@@ -550,7 +512,6 @@ namespace CryCil.Engine.Models.Characters
 		public void EnableProceduralFacialAnimation()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			EnableProceduralFacialAnimationInternal(this.handle, true);
 		}
@@ -561,7 +522,6 @@ namespace CryCil.Engine.Models.Characters
 		public void DisableProceduralFacialAnimation()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			EnableProceduralFacialAnimationInternal(this.handle, false);
 		}
@@ -574,7 +534,6 @@ namespace CryCil.Engine.Models.Characters
 		public void SyncLips(uint soundId, bool stop = false)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			LipSyncWithSound(this.handle, soundId, stop);
 		}
@@ -593,7 +552,6 @@ namespace CryCil.Engine.Models.Characters
 										ref Vector3 offset, ref Vector3 direction, ref Quatvecale entityLocation)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			SpawnSkeletonEffectInternal(this.handle, animationId, animationName, effectName, boneName, ref offset,
 										ref direction, ref entityLocation);
@@ -605,7 +563,6 @@ namespace CryCil.Engine.Models.Characters
 		public void KillSkeletonEffects()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			KillAllSkeletonEffects(this.handle);
 		}
@@ -617,7 +574,6 @@ namespace CryCil.Engine.Models.Characters
 		public void CopyPoseFrom(Character instance)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			CopyPoseFromInternal(this.handle, instance);
 		}
@@ -628,7 +584,6 @@ namespace CryCil.Engine.Models.Characters
 		public void FinishAnimationComputations()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			FinishAnimationComputationsInternal(this.handle);
 		}
@@ -640,7 +595,6 @@ namespace CryCil.Engine.Models.Characters
 		public void SwitchHiding(bool hide)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			HideMaster(this.handle, hide);
 		}
@@ -651,7 +605,6 @@ namespace CryCil.Engine.Models.Characters
 		public void Hide()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			HideMaster(this.handle, true);
 		}
@@ -662,7 +615,6 @@ namespace CryCil.Engine.Models.Characters
 		public void Unhide()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			HideMaster(this.handle, false);
 		}
@@ -673,12 +625,12 @@ namespace CryCil.Engine.Models.Characters
 		public void Synchronize(CrySync sync)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			Serialize(this.handle, sync);
 		}
 		#endregion
 		#region Utilities
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		private void AssertInstance()
 		{
 			if (!this.IsValid)

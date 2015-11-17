@@ -14,14 +14,14 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// Contains number of vertices in each LOD model.
 		/// </summary>
 #pragma warning disable 649,169
-		public fixed int VerticesPerLod[6];
+		public fixed int VerticesPerLod [6];
 #pragma warning restore 649,169
 		private readonly int indices;
 		/// <summary>
 		/// Contains number of indices in each LOD model.
 		/// </summary>
 #pragma warning disable 649,169
-		public fixed int IndicesPerLod[6];
+		public fixed int IndicesPerLod [6];
 #pragma warning restore 649,169
 		private readonly int meshSize;
 		private readonly int meshSizeLoaded;

@@ -1,4 +1,6 @@
-﻿namespace CryCil.Engine.Models.StaticObjects
+﻿using System;
+
+namespace CryCil.Engine.Models.StaticObjects
 {
 	/// <summary>
 	/// Normal in format that is used for storage in video memory.

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 
 namespace CryCil.Engine.Models.StaticObjects
@@ -29,7 +28,6 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return new CryMeshFaceCollection(this, this.handle);
 			}
@@ -43,7 +41,6 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return new CryVertexCollection(this, this.handle);
 			}
@@ -57,7 +54,6 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return new CryTexturePositionCollection(this, this.handle);
 			}
@@ -98,7 +94,6 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return new CryMeshSubsetCollection(this.handle);
 			}
@@ -136,7 +131,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public void Copy(CryMesh source)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			if (!source.IsValid)
 			{
@@ -154,7 +148,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public bool Equals(CryMesh other)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return other.IsValid && CompareStreams(this.handle, other.handle);
 		}
@@ -174,7 +167,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public void Append(CryMesh source, bool throwError = false)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			if (!source.IsValid)
 			{
@@ -209,7 +201,6 @@ namespace CryCil.Engine.Models.StaticObjects
 						   bool throwError = false)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			if (!source.IsValid)
 			{
@@ -252,6 +243,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		}
 		#endregion
 		#region Utilities
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		private void AssertInstance()
 		{
 			if (!this.IsValid)

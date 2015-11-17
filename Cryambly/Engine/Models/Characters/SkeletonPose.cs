@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using CryCil.Engine.Models.StaticObjects;
@@ -46,14 +45,12 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetCharacterPhysics(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetCharacterPhysics(this.handle, value);
 			}
@@ -91,7 +88,6 @@ namespace CryCil.Engine.Models.Characters
 										float stiffness = 1.0f, int lod = 0, int firstPartId = 0)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			BuildPhysicalEntityInternal(this.handle, entity, mass, ref location, surfaceIndex, stiffness, lod,
 										firstPartId);
@@ -117,7 +113,6 @@ namespace CryCil.Engine.Models.Characters
 										int lod = 0, int firstPartId = 0)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			BuildPhysicalEntityInternal(this.handle, entity, mass, ref Matrix34.SecretIdentity, surfaceIndex, stiffness,
 										lod, firstPartId);
@@ -148,7 +143,6 @@ namespace CryCil.Engine.Models.Characters
 													 int surfaceIndex = -1, float stiffness = 1.0f, int lod = 0)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return CreateCharacterPhysicsInternal(this.handle, entity, mass, ref location, surfaceIndex, stiffness, lod);
 		}
@@ -175,7 +169,6 @@ namespace CryCil.Engine.Models.Characters
 													 float stiffness = 1.0f, int lod = 0)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return CreateCharacterPhysicsInternal(this.handle, entity, mass, ref Matrix34.SecretIdentity, surfaceIndex,
 												  stiffness, lod);
@@ -197,7 +190,6 @@ namespace CryCil.Engine.Models.Characters
 		public int CreateAuxilaryPhysics(PhysicalEntity entity, ref Matrix34 location, int lod = 0)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return CreateAuxilaryPhysicsInternal(this.handle, entity, ref location, lod);
 		}
@@ -210,7 +202,6 @@ namespace CryCil.Engine.Models.Characters
 		public PhysicalEntity GetBonePhysics(string boneName)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return GetCharacterPhysicsBone(this.handle, boneName);
 		}
@@ -225,7 +216,6 @@ namespace CryCil.Engine.Models.Characters
 		public PhysicalEntity GetAuxiliaryPhysics(int id)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return GetCharacterPhysicsAux(this.handle, id);
 		}
@@ -245,7 +235,6 @@ namespace CryCil.Engine.Models.Characters
 		public void SyncWithPhysics(PhysicalEntity entity, ref Vector3 masterPosition, ref Quaternion masterOrientation)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			SynchronizeWithPhysicalEntity(this.handle, entity, ref masterPosition, ref masterOrientation);
 		}
@@ -262,7 +251,6 @@ namespace CryCil.Engine.Models.Characters
 		public void SyncWithPhysics(PhysicalEntity entity, ref Vector3 masterPosition)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			SynchronizeWithPhysicalEntity(this.handle, entity, ref masterPosition, ref Quaternion.SecretIdentity);
 		}
@@ -279,7 +267,6 @@ namespace CryCil.Engine.Models.Characters
 		public void SyncWithPhysics(PhysicalEntity entity, ref Quaternion masterOrientation)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			SynchronizeWithPhysicalEntity(this.handle, entity, ref Vector3.SecretZero, ref masterOrientation);
 		}
@@ -293,7 +280,6 @@ namespace CryCil.Engine.Models.Characters
 		public void SyncWithPhysics(PhysicalEntity entity)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			SynchronizeWithPhysicalEntity(this.handle, entity, ref Vector3.SecretZero, ref Quaternion.SecretIdentity);
 		}
@@ -317,7 +303,6 @@ namespace CryCil.Engine.Models.Characters
 												bool copyJointVelocities = false)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return RelinquishCharacterPhysics(this.handle, ref location, ref initialVelocity, stiffness,
 											  copyJointVelocities);
@@ -340,7 +325,6 @@ namespace CryCil.Engine.Models.Characters
 		public PhysicalEntity RelinquishPhysics(ref Matrix34 location, float stiffness = 0, bool copyJointVelocities = false)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return RelinquishCharacterPhysics(this.handle, ref location, ref Vector3.SecretZero, stiffness,
 											  copyJointVelocities);
@@ -353,7 +337,6 @@ namespace CryCil.Engine.Models.Characters
 		public void DestroyPhysics(PhysicalEntityRemovalMode mode)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			DestroyCharacterPhysics(this.handle, mode);
 		}
@@ -367,7 +350,6 @@ namespace CryCil.Engine.Models.Characters
 		public void RegisterImpulse(int partId, Vector3 point, Vector3 impulse)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			AddImpact(this.handle, partId, point, impulse);
 		}
@@ -383,7 +365,6 @@ namespace CryCil.Engine.Models.Characters
 		public int GetAuxiliaryBone(int auxiliaryId, int partId)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return GetAuxPhysicsBoneId(this.handle, auxiliaryId, partId);
 		}
@@ -403,7 +384,6 @@ namespace CryCil.Engine.Models.Characters
 									 bool threeDegreesOfFreedom = false)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return BlendFromRagdoll(this.handle, ref location, out physicalEntity, threeDegreesOfFreedom);
 		}
@@ -419,7 +399,6 @@ namespace CryCil.Engine.Models.Characters
 		public int GetBoneJointId(int boneIndex, int lod = 0)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return GetBonePhysParentOrSelfIndex(this.handle, boneIndex, lod);
 		}
@@ -438,18 +417,17 @@ namespace CryCil.Engine.Models.Characters
 		public void SetBoneUpdateHandler(ref CharacterBonesUpdateEventHandler handler)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			SetPostProcessCallback(this.handle, ref handler);
 		}
 		/// <summary>
-		/// Removes the previously set bone update handler. This function will remove any handlers including native ones.
+		/// Removes the previously set bone update handler. This function will remove any handlers
+		/// including native ones.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public void ClearBoneUpdateHandler()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			ClearPostProcessCallback(this.handle);
 		}
@@ -464,7 +442,6 @@ namespace CryCil.Engine.Models.Characters
 		public void ForceSkeletonUpdate(int frames)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			SetForceSkeletonUpdate(this.handle, frames);
 		}
@@ -475,7 +452,6 @@ namespace CryCil.Engine.Models.Characters
 		public void ForceDefaultPose()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			SetDefaultPose(this.handle);
 		}

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Windows.Forms;
 using CryCil.Annotations;
@@ -72,6 +73,7 @@ namespace CryCil.RunTime
 			this.Close();
 		}
 
+		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		private void Terminate(object sender, EventArgs e)
 		{
 			Process.GetCurrentProcess().Kill();

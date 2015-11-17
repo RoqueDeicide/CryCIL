@@ -1,4 +1,5 @@
-﻿using CryCil.Engine.Localization;
+﻿using System;
+using CryCil.Engine.Localization;
 using CryCil.Engine.Rendering;
 
 namespace CryCil.Engine.DebugServices

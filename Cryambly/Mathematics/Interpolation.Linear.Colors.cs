@@ -1,4 +1,5 @@
-﻿using CryCil.Graphics;
+﻿using System;
+using CryCil.Graphics;
 
 namespace CryCil
 {

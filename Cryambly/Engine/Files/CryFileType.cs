@@ -1,4 +1,6 @@
-﻿namespace CryCil.Engine.Files
+﻿using System;
+
+namespace CryCil.Engine.Files
 {
 	/// <summary>
 	/// Enumeration of types files in CryEngine virtual file system can be treated as.

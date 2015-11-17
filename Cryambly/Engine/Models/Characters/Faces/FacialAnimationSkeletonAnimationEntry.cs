@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 
 namespace CryCil.Engine.Models.Characters.Faces
@@ -30,14 +29,12 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetName(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetName(this.handle, value);
 			}
@@ -51,14 +48,12 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetStartTime(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetStartTime(this.handle, value);
 			}
@@ -72,14 +67,12 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetEndTime(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetEndTime(this.handle, value);
 			}
@@ -92,7 +85,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		}
 		#endregion
 		#region Interface
-
 		#endregion
 		#region Utilities
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>

@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 using CryCil.Geometry;
 using CryCil.Graphics;
 
@@ -84,7 +85,7 @@ namespace CryCil.Engine.Rendering.Lighting
 		/// <remarks>
 		/// <para>
 		/// A value of 0 means that the box shape will have hard edges and there is no falloff (cheaper
-		/// performance).
+		/// performance) .
 		/// </para>
 		/// <para>
 		/// A value of 1 means the falloff will begin at the center of the box and blend out to the box

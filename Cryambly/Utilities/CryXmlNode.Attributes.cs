@@ -4,6 +4,7 @@ using CryCil.Geometry;
 
 namespace CryCil.Utilities
 {
+	// ReSharper disable ExceptionNotThrown
 	public partial class CryXmlNode
 	{
 		/// <summary>

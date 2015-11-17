@@ -1,4 +1,6 @@
-﻿namespace CryCil.Engine.Logic
+﻿using System;
+
+namespace CryCil.Engine.Logic
 {
 	/// <summary>
 	/// Enumeration of possible ways RMI data can be transferred when invoking methods.

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
@@ -12,6 +13,7 @@ namespace CryCil.Engine.Environment
 	/// <summary>
 	/// Provides access to CryEngine Time-Of-Day API.
 	/// </summary>
+	[SuppressMessage("ReSharper", "ExceptionNotThrown")]
 	public static class TimeOfDay
 	{
 		#region Nested Types

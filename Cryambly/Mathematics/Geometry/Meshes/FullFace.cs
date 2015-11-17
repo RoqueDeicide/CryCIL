@@ -80,6 +80,7 @@ namespace CryCil.Geometry
 		/// <param name="vertices">
 		/// A collection of vertices first 3 elements of which will define a triangle.
 		/// </param>
+		/// <exception cref="ArgumentException">Not enough vertices to define a triangle.</exception>
 		public FullFace(ICollection<FullVertex> vertices)
 			: this()
 		{
@@ -95,6 +96,7 @@ namespace CryCil.Geometry
 		/// <param name="vertices">
 		/// A collection of vertices first 3 elements of which will define a triangle.
 		/// </param>
+		/// <exception cref="ArgumentException">Not enough vertices to define a triangle.</exception>
 		public FullFace(IList<FullVertex> vertices)
 			: this()
 		{
@@ -203,8 +205,6 @@ namespace CryCil.Geometry
 						if (backFaces != null) TriangulateLinearly(bvs, false, backFaces);
 					}
 					break;
-				default:
-					throw new ArgumentOutOfRangeException();
 			}
 		}
 		/// <summary>
@@ -228,6 +228,10 @@ namespace CryCil.Geometry
 		/// your polygon is on one plane.
 		/// </param>
 		/// <returns>An array of triangles.</returns>
+		/// <exception cref="ArgumentException">
+		/// Vertices that describe a border of a polygon for triangulation are not located on the same
+		/// plane.
+		/// </exception>
 		public static FullFace[] TriangulateLinearly(IList<FullVertex> vertices, bool checkForCoplanarity)
 		{
 			if (vertices.IsNullOrEmpty())
@@ -244,8 +248,8 @@ namespace CryCil.Geometry
 				Plane plane = new Plane(vertices[0].Position, vertices[1].Position, vertices[2].Position);
 				if (vertices.Any(x => plane.PointPosition(x.Position) != PlanePosition.Coplanar))
 				{
-					throw new ArgumentException("Vertices that describe a border of a polygon for" +
-												" triangulation are not located on the same plane.");
+					throw new ArgumentException(
+						"Vertices that describe a border of a polygon for triangulation are not located on the same plane.");
 				}
 			}
 			FullFace[] result = new FullFace[vertices.Count - 2];
@@ -271,6 +275,10 @@ namespace CryCil.Geometry
 		/// your polygon is on one plane.
 		/// </param>
 		/// <param name="polygons">           The list of polygon to which to add the triangles.</param>
+		/// <exception cref="ArgumentException">
+		/// Vertices that describe a border of a polygon for triangulation are not located on the same
+		/// plane.
+		/// </exception>
 		public static void TriangulateLinearly(IList<FullVertex> vertices, bool checkForCoplanarity,
 											   ICollection<FullFace> polygons)
 		{
@@ -288,8 +296,8 @@ namespace CryCil.Geometry
 				Plane plane = new Plane(vertices[0].Position, vertices[1].Position, vertices[2].Position);
 				if (vertices.Any(x => plane.PointPosition(x.Position) != PlanePosition.Coplanar))
 				{
-					throw new ArgumentException("Vertices that describe a border of a polygon for" +
-												" triangulation are not located on the same plane.");
+					throw new ArgumentException(
+						"Vertices that describe a border of a polygon for triangulation are not located on the same plane.");
 				}
 			}
 			int triangleCount = vertices.Count - 2;
@@ -303,6 +311,7 @@ namespace CryCil.Geometry
 				});
 			}
 		}
+		/// <exception cref="ArgumentException">Not enough vertices to define a triangle.</exception>
 		private void Init(IEnumerable<FullVertex> vertices)
 		{
 			IEnumerator<FullVertex> enumerator = vertices.GetEnumerator();
@@ -311,9 +320,17 @@ namespace CryCil.Geometry
 			{
 				this.First = enumerator.Current;
 			}
+			else
+			{
+				throw new ArgumentException("Not enough vertices to define a triangle.");
+			}
 			if (enumerator.MoveNext())
 			{
 				this.Second = enumerator.Current;
+			}
+			else
+			{
+				throw new ArgumentException("Not enough vertices to define a triangle.");
 			}
 			if (!enumerator.MoveNext())
 			{

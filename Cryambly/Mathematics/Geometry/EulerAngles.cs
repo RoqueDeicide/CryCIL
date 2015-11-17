@@ -30,6 +30,7 @@ namespace CryCil.Geometry
 		/// Gets or sets component of angles specified by given index.
 		/// </summary>
 		/// <param name="index">Index of component.</param>
+		/// <exception cref="IndexOutOfRangeException">Index out of range.</exception>
 		public float this[int index]
 		{
 			get
@@ -191,34 +192,23 @@ namespace CryCil.Geometry
 		/// <summary>
 		/// Converts unit quaternion to angles.
 		/// </summary>
-		/// <param name="quaternion">Quaternion to convert.</param>
+		/// <param name="q">Quaternion to convert.</param>
 		/// <returns>Result of conversion.</returns>
-		public static explicit operator EulerAngles(Quaternion quaternion)
+		public static explicit operator EulerAngles(Quaternion q)
 		{
 			EulerAngles result = new EulerAngles
 			{
-				Roll =
-					System.Convert.ToSingle(
-										    Math.Asin(Math.Max(-1.0f, Math.Min(1.0f, -(quaternion.X * quaternion.Z - quaternion.W * quaternion.Y) * 2))))
+				Roll = System.Convert.ToSingle(Math.Asin(Math.Max(-1.0f, Math.Min(1.0f, -(q.X * q.Z - q.W * q.Y) * 2))))
 			};
 			if (Math.Abs(Math.Abs(result.Roll) - (float)(Math.PI * 0.5)) < 0.01f)
 			{
 				result.Pitch = 0;
-				result.Yaw =
-					(float)
-						(Math.Atan2(-2 * (quaternion.X * quaternion.Y - quaternion.W * quaternion.Z),
-									1 - (quaternion.X * quaternion.X + quaternion.Z * quaternion.Z) * 2));
+				result.Yaw = (float)Math.Atan2(-2 * (q.X * q.Y - q.W * q.Z), 1 - (q.X * q.X + q.Z * q.Z) * 2);
 			}
 			else
 			{
-				result.Pitch =
-					(float)
-						(Math.Atan2(-2 * (quaternion.Y * quaternion.Z - quaternion.W * quaternion.X),
-									1 - (quaternion.X * quaternion.X + quaternion.Y * quaternion.Y) * 2));
-				result.Yaw =
-					(float)
-						(Math.Atan2(-2 * (quaternion.X * quaternion.Y - quaternion.W * quaternion.Z),
-									1 - (quaternion.Z * quaternion.Z + quaternion.Y * quaternion.Y) * 2));
+				result.Pitch = (float)Math.Atan2(-2 * (q.Y * q.Z - q.W * q.X), 1 - (q.X * q.X + q.Y * q.Y) * 2);
+				result.Yaw = (float)Math.Atan2(-2 * (q.X * q.Y - q.W * q.Z), 1 - (q.Z * q.Z + q.Y * q.Y) * 2);
 			}
 			return result;
 		}
@@ -284,7 +274,7 @@ namespace CryCil.Geometry
 		/// </returns>
 		public bool IsUnit(float epsilon = 0.05f)
 		{
-			return (Math.Abs(1 - (this.Roll * this.Roll + this.Pitch * this.Pitch + this.Yaw * this.Yaw)) <= epsilon);
+			return Math.Abs(1 - (this.Roll * this.Roll + this.Pitch * this.Pitch + this.Yaw * this.Yaw)) <= epsilon;
 		}
 		#endregion
 		#region Angle Operations

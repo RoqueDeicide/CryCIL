@@ -1,4 +1,6 @@
-﻿namespace CryCil
+﻿using System;
+
+namespace CryCil
 {
 	/// <summary>
 	/// Encapsulates 3 integer numbers.

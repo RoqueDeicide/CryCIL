@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 
 namespace CryCil.Engine.Models.StaticObjects
 {
@@ -37,7 +36,6 @@ namespace CryCil.Engine.Models.StaticObjects
 				{
 					throw new IndexOutOfRangeException("Index cannot be greater or equal to the size of this collection.");
 				}
-				Contract.EndContractBlock();
 
 				return this.ptr[index];
 			}
@@ -52,7 +50,6 @@ namespace CryCil.Engine.Models.StaticObjects
 				{
 					throw new IndexOutOfRangeException("Index cannot be greater or equal to the size of this collection.");
 				}
-				Contract.EndContractBlock();
 
 				this.ptr[index] = value;
 			}
@@ -66,6 +63,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		}
 		#endregion
 		#region Utilities
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		private void AssertInstance()
 		{
 			if (this.ptr == null)
@@ -74,6 +72,7 @@ namespace CryCil.Engine.Models.StaticObjects
 			}
 		}
 
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return this.GetEnumerator();
@@ -85,6 +84,8 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public IEnumerator<Vector3> GetEnumerator()
 		{
+			this.AssertInstance();
+
 			for (int i = 0; i < this.count; i++)
 			{
 				yield return this[i];
@@ -124,7 +125,6 @@ namespace CryCil.Engine.Models.StaticObjects
 				{
 					throw new IndexOutOfRangeException("Index cannot be greater or equal to the size of this collection.");
 				}
-				Contract.EndContractBlock();
 
 				return this.ptr[index];
 			}
@@ -139,7 +139,6 @@ namespace CryCil.Engine.Models.StaticObjects
 				{
 					throw new IndexOutOfRangeException("Index cannot be greater or equal to the size of this collection.");
 				}
-				Contract.EndContractBlock();
 
 				this.ptr[index] = value;
 			}
@@ -153,6 +152,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		}
 		#endregion
 		#region Utilities
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		private void AssertInstance()
 		{
 			if (this.ptr == null)
@@ -161,6 +161,7 @@ namespace CryCil.Engine.Models.StaticObjects
 			}
 		}
 
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return this.GetEnumerator();
@@ -172,6 +173,8 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public IEnumerator<CryMeshNormal> GetEnumerator()
 		{
+			this.AssertInstance();
+
 			for (int i = 0; i < this.count; i++)
 			{
 				yield return this[i];
@@ -211,7 +214,6 @@ namespace CryCil.Engine.Models.StaticObjects
 				{
 					throw new IndexOutOfRangeException("Index cannot be greater or equal to the size of this collection.");
 				}
-				Contract.EndContractBlock();
 
 				return this.ptr[index];
 			}
@@ -226,7 +228,6 @@ namespace CryCil.Engine.Models.StaticObjects
 				{
 					throw new IndexOutOfRangeException("Index cannot be greater or equal to the size of this collection.");
 				}
-				Contract.EndContractBlock();
 
 				this.ptr[index] = value;
 			}
@@ -240,6 +241,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		}
 		#endregion
 		#region Utilities
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		private void AssertInstance()
 		{
 			if (this.ptr == null)
@@ -248,6 +250,7 @@ namespace CryCil.Engine.Models.StaticObjects
 			}
 		}
 
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return this.GetEnumerator();
@@ -259,6 +262,8 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public IEnumerator<CryMeshColor> GetEnumerator()
 		{
+			this.AssertInstance();
+
 			for (int i = 0; i < this.count; i++)
 			{
 				yield return this[i];
@@ -298,7 +303,6 @@ namespace CryCil.Engine.Models.StaticObjects
 				{
 					throw new IndexOutOfRangeException("Index cannot be greater or equal to the size of this collection.");
 				}
-				Contract.EndContractBlock();
 
 				return this.ptr[index];
 			}
@@ -313,7 +317,6 @@ namespace CryCil.Engine.Models.StaticObjects
 				{
 					throw new IndexOutOfRangeException("Index cannot be greater or equal to the size of this collection.");
 				}
-				Contract.EndContractBlock();
 
 				this.ptr[index] = value;
 			}
@@ -327,6 +330,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		}
 		#endregion
 		#region Utilities
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		private void AssertInstance()
 		{
 			if (this.ptr == null)
@@ -335,6 +339,7 @@ namespace CryCil.Engine.Models.StaticObjects
 			}
 		}
 
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return this.GetEnumerator();
@@ -346,6 +351,8 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public IEnumerator<int> GetEnumerator()
 		{
+			this.AssertInstance();
+
 			for (int i = 0; i < this.count; i++)
 			{
 				yield return this[i];

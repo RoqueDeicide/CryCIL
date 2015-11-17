@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -88,7 +89,16 @@ namespace CryCil.Engine.Input.ActionMapping
 		}
 		#endregion
 		#region Utilities
+		/// <exception cref="ReflectionTypeLoadException">
+		/// The assembly contains one or more types that cannot be loaded. The array returned by the
+		/// <see cref="P:System.Reflection.ReflectionTypeLoadException.Types"/> property of this exception
+		/// contains a <see cref="T:System.Type"/> object for each type that was loaded and null for each
+		/// type that could not be loaded, while the
+		/// <see cref="P:System.Reflection.ReflectionTypeLoadException.LoaderExceptions"/> property
+		/// contains an exception for each type that could not be loaded.
+		/// </exception>
 		[InitializationStage((int)DefaultInitializationStages.ActionMapsRegistrationStage)]
+		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		private static void RegisterActionMaps(int stageIndex)
 		{
 			var assemblies = MonoInterface.CryCilAssemblies;
@@ -135,9 +145,9 @@ namespace CryCil.Engine.Input.ActionMapping
 					// Check the hash.
 					if (registeredHashes.ContainsKey(nameHash))
 					{
-						string message = string.Format
-							("An action named \"{0}\" already exists its name has the same lowercase hash as {1}",
-							 actionName, registeredHashes[nameHash]);
+						string message =
+							string.Format("An action named \"{0}\" already exists its name has the same lowercase hash as {1}",
+										  actionName, registeredHashes[nameHash]);
 						MonoInterface.DisplayException(new RegistrationException(message));
 						continue;
 					}
@@ -162,12 +172,9 @@ namespace CryCil.Engine.Input.ActionMapping
 					if (actionHandlerField == null)
 					{
 						string message =
-							string.Format
-								(
-								 "Action named {0}, must either have default event implementation or its declaring class " +
-								 "must define static field named _{1}.",
-								 actionName, actionEvent.Name
-								);
+							string.Format("Action named {0}, must either have default event implementation or its declaring class " +
+										  "must define static field named _{1}.",
+										  actionName, actionEvent.Name);
 						MonoInterface.DisplayException(new RegistrationException(message));
 						continue;
 					}
@@ -213,7 +220,7 @@ namespace CryCil.Engine.Input.ActionMapping
 			IntPtr actionField;
 			if (actions.TryGetValue(actionNameHash, out actionField))
 			{
-				InputActionHandler handler = acquireActionHandler(actionField);
+				InputActionHandler handler = AcquireActionHandler(actionField);
 				if (handler != null)
 				{
 					handler(registeredHashes[actionNameHash], (ActionActivationMode)activationMode, value);
@@ -225,7 +232,7 @@ namespace CryCil.Engine.Input.ActionMapping
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern IntPtr GetActionEventField(RuntimeFieldHandle eventInfo);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern InputActionHandler acquireActionHandler(IntPtr actionField);
+		private static extern InputActionHandler AcquireActionHandler(IntPtr actionField);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern CryActionMap CreateActionMap(string name);
 		[MethodImpl(MethodImplOptions.InternalCall)]

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using CryCil.Geometry;
@@ -52,7 +51,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public void Play(FacialAnimationSequence sequence, bool exclusive = false, bool looping = false)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			Face.PlaySequence(this.handle, sequence, this.layer, exclusive, looping);
 		}
@@ -63,7 +61,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public void Stop()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			Face.StopSequence(this.handle, this.layer);
 		}
@@ -76,7 +73,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public bool IsPlaying(FacialAnimationSequence sequence)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return Face.IsPlaySequence(this.handle, sequence, this.layer);
 		}
@@ -88,7 +84,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public void ChangeState(bool pause)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			Face.PauseSequence(this.handle, this.layer, pause);
 		}
@@ -99,7 +94,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public void Pause()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			Face.PauseSequence(this.handle, this.layer, true);
 		}
@@ -110,7 +104,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public void Resume()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			Face.PauseSequence(this.handle, this.layer, false);
 		}
@@ -122,7 +115,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public void Seek(float time)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			Face.SeekSequence(this.handle, this.layer, time);
 		}
@@ -171,7 +163,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return new FaceSequenceLayer(this.handle, layer);
 			}
@@ -225,7 +216,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetFacialModel(this.handle);
 			}
@@ -239,7 +229,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetFaceState(this.handle);
 			}
@@ -254,14 +243,12 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return IsProceduralFacialAnimationEnabled(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				EnableProceduralFacialAnimation(this.handle, value);
 			}
@@ -276,7 +263,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				if (value == null)
 				{
@@ -304,7 +290,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetMasterCharacter(this.handle, value);
 			}
@@ -345,7 +330,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 			{
 				throw new ArgumentNullException("effector", "Facial effector cannot be null.");
 			}
-			Contract.EndContractBlock();
 
 			return StartEffectorChannel(this.handle, effector, weight, fadeTime, lifeTime, repeatitionCount);
 		}
@@ -362,7 +346,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public void EndEffectorChannel(uint channelId, float fadeOutTime = 0)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			StopEffectorChannel(this.handle, channelId, fadeOutTime);
 		}
@@ -378,7 +361,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public FacialAnimationSequence Load(string file, bool cache = true)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return LoadSequence(this.handle, file, cache);
 		}
@@ -390,7 +372,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public void Precache(string file)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			PrecacheFacialExpression(this.handle, file);
 		}
@@ -403,7 +384,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public void ChangeLipSync(uint soundId, bool stop)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			LipSyncWithSound(this.handle, soundId, stop);
 		}
@@ -415,7 +395,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public void StartLipSync(uint soundId)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			LipSyncWithSound(this.handle, soundId, false);
 		}
@@ -427,7 +406,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public void StopLipSync(uint soundId)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			LipSyncWithSound(this.handle, soundId, true);
 		}
@@ -438,7 +416,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public void StopAllAnimations()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			StopAllSequencesAndChannels(this.handle);
 		}

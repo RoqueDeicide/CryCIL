@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using CryCil.Annotations;
 using CryCil.Graphics;
@@ -415,6 +416,10 @@ namespace CryCil.Engine.Rendering
 		/// Invalid number of indexes specified for a line list.
 		/// </exception>
 		/// <exception cref="ArgumentOutOfRangeException">Unknown primitive type specified.</exception>
+		/// <exception cref="OverflowException">
+		/// The array is multidimensional and contains more than <see cref="F:System.Int32.MaxValue"/>
+		/// elements.
+		/// </exception>
 		public static void DrawDynamicVertexBuffer([NotNull] VertexPosition3FColor4BTex2F[] vertexes,
 												   [NotNull] ushort[] indexes,
 												   PublicRenderPrimitiveType primType)
@@ -475,30 +480,31 @@ namespace CryCil.Engine.Rendering
 		/// </exception>
 		/// <exception cref="ArgumentOutOfRangeException">Unknown primitive type specified.</exception>
 		[MethodImpl(MethodImplOptions.InternalCall)]
+		[SuppressMessage("ReSharper", "ExceptionNotThrown")]
 		public static extern void DrawDynamicVertexBuffer(VertexPosition3FColor4BTex2F* vertexes,
 														  int vertexCount, ushort* indexes, int indexCount,
 														  PublicRenderPrimitiveType primType);
 		#endregion
 		#region Unsorted
 		/// <summary>
-		/// ???
+		/// Unknown.
 		/// </summary>
-		/// <param name="x">???</param>
-		/// <returns>???</returns>
+		/// <param name="x">Unknown.</param>
+		/// <returns>Unknown.</returns>
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern float ScaleX(float x);
 		/// <summary>
-		/// ???
+		/// Unknown.
 		/// </summary>
-		/// <param name="y">???</param>
-		/// <returns>???</returns>
+		/// <param name="y">Unknown.</param>
+		/// <returns>Unknown.</returns>
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern float ScaleY(float y);
 		/// <summary>
-		/// ???
+		/// Unknown.
 		/// </summary>
-		/// <param name="x">???</param>
-		/// <param name="y">???</param>
+		/// <param name="x">Unknown.</param>
+		/// <param name="y">Unknown.</param>
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern void ScaleXY(ref float x, ref float y);
 		#endregion

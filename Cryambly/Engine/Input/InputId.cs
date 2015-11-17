@@ -1,4 +1,6 @@
-﻿namespace CryCil.Engine.Input
+﻿using System;
+
+namespace CryCil.Engine.Input
 {
 	/// <summary>
 	/// Enumeration of Id starter numbers for various input devices.

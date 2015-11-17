@@ -1,4 +1,6 @@
-﻿namespace CryCil.Geometry
+﻿using System;
+
+namespace CryCil.Geometry
 {
 	/// <summary>
 	/// Encapsulates coordinates of the point on the surface and a normal to surface at the point.

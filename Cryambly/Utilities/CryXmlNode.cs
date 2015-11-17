@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
@@ -9,6 +10,7 @@ namespace CryCil.Utilities
 	/// Represents an interface for the implementation of the Xml node defined in CryEngine.
 	/// </summary>
 	[StructLayout(LayoutKind.Sequential)]
+	[SuppressMessage("ReSharper", "ExceptionNotThrown")]
 	public sealed partial class CryXmlNode : IDisposable
 	{
 		#region Fields

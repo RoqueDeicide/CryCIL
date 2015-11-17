@@ -1,4 +1,6 @@
-﻿namespace CryCil.Engine.Models.StaticObjects
+﻿using System;
+
+namespace CryCil.Engine.Models.StaticObjects
 {
 	/// <summary>
 	/// A 3D vector which coordinates are represented by half-precision floating point numbers.

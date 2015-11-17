@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
-using System.Text;
 using CryCil.Annotations;
 
 namespace CryCil.Utilities

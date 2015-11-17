@@ -28,6 +28,7 @@ namespace CryCil.Utilities
 		/// Text to convert to null-terminated representation and cache the result.
 		/// </param>
 		/// <returns>Cached result of conversion.</returns>
+		/// <exception cref="OutOfMemoryException">There is insufficient memory available.</exception>
 		public static IntPtr Get(string text)
 		{
 			IntPtr ptr = new IntPtr();

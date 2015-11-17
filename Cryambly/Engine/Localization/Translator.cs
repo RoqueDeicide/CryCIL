@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using CryCil.Utilities;
@@ -8,6 +9,7 @@ namespace CryCil.Engine.Localization
 	/// <summary>
 	/// Provides access to CryEngine localization API.
 	/// </summary>
+	[SuppressMessage("ReSharper", "ExceptionNotThrown")]
 	public static class Translator
 	{
 		#region Fields
@@ -54,14 +56,9 @@ namespace CryCil.Engine.Localization
 				}
 				if (index < 0)
 				{
-					throw new NotSupportedException
-						(
-						string.Format
-							(
-							 "Culture with name \"{0}\" is not supported by CryEngine localization API.",
-							 value.Name
-							)
-						);
+					throw new NotSupportedException(
+						string.Format("Culture with name \"{0}\" is not supported by CryEngine localization API.",
+									  value.Name));
 				}
 
 				SetCurrentLanguage(langPtrs[index]);

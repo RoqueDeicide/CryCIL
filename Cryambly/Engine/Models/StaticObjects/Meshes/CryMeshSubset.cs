@@ -1,4 +1,5 @@
-﻿using CryCil.Engine.Physics;
+﻿using System;
+using CryCil.Engine.Physics;
 using CryCil.Engine.Rendering;
 
 namespace CryCil.Engine.Models.StaticObjects

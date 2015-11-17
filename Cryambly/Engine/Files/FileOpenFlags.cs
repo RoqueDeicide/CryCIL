@@ -1,4 +1,6 @@
-﻿namespace CryCil.Engine.Files
+﻿using System;
+
+namespace CryCil.Engine.Files
 {
 	/// <summary>
 	/// Enumeration of flags that specify how the file is opened when using virtual file system.

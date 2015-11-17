@@ -173,6 +173,10 @@ namespace CryCil.Geometry
 		/// <param name="result">
 		/// When the method completes, contains the newly constructed bounding sphere.
 		/// </param>
+		/// <exception cref="OverflowException">
+		/// The array is multidimensional and contains more than <see cref="F:System.Int32.MaxValue"/>
+		/// elements.
+		/// </exception>
 		public static void FromPoints(Vector3[] points, out BoundingSphere result)
 		{
 			// Find the center of all points.
@@ -199,6 +203,10 @@ namespace CryCil.Geometry
 		/// </summary>
 		/// <param name="points">The points that will be contained by the sphere.</param>
 		/// <returns>The newly constructed bounding sphere.</returns>
+		/// <exception cref="OverflowException">
+		/// The array is multidimensional and contains more than <see cref="F:System.Int32.MaxValue"/>
+		/// elements.
+		/// </exception>
 		public static BoundingSphere FromPoints(Vector3[] points)
 		{
 			BoundingSphere result;
@@ -218,7 +226,7 @@ namespace CryCil.Geometry
 			float y = box.Minimum.Y - box.Maximum.Y;
 			float z = box.Minimum.Z - box.Maximum.Z;
 
-			var distance = (Math.Sqrt((x * x) + (y * y) + (z * z)));
+			var distance = Math.Sqrt((x * x) + (y * y) + (z * z));
 			result.Radius = (float)distance * 0.5f;
 		}
 		/// <summary>

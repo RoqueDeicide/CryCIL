@@ -38,6 +38,9 @@ namespace CryCil.Graphics
 		/// Provides read/write access to the color component.
 		/// </summary>
 		/// <param name="index">Zero-based index of the color component to access.</param>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// Attempt to access color component other then R, G, B or A.
+		/// </exception>
 		public float this[int index]
 		{
 			get
@@ -53,8 +56,8 @@ namespace CryCil.Graphics
 					case 3:
 						return this.A;
 					default:
-						throw new ArgumentOutOfRangeException("index", "Attempt to access color" +
-																	   " component other then R, G, B or A.");
+						throw new ArgumentOutOfRangeException("index",
+															  "Attempt to access color component other then R, G, B or A.");
 				}
 			}
 			set
@@ -148,7 +151,7 @@ namespace CryCil.Graphics
 		/// </returns>
 		public override string ToString()
 		{
-			return String.Format("R {0} G {1} B {2} A {3}", this.R, this.G, this.B, this.A);
+			return string.Format("R {0} G {1} B {2} A {3}", this.R, this.G, this.B, this.A);
 		}
 		/// <summary>
 		/// Gets hash code of this color.

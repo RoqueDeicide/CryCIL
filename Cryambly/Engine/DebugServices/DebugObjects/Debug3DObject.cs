@@ -1,4 +1,6 @@
-﻿namespace CryCil.Engine.DebugServices
+﻿using System;
+
+namespace CryCil.Engine.DebugServices
 {
 	/// <summary>
 	/// Base class for persistent debug objects that are rendered in 3D space.

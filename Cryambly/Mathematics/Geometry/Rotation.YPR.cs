@@ -101,7 +101,7 @@ namespace CryCil.Geometry
 				MathHelpers.SinCos(angles.Pitch, out sz, out cz); // Yaw.
 				float sx, cx;
 				MathHelpers.SinCos(angles.Roll, out sx, out cx);
-					// Pitch. Yes, they are switched up because of different order of rotations.
+				// Pitch. Yes, they are switched up because of different order of rotations.
 
 				return new Vector3(-sz * cx, cz * cx, sx);
 			}

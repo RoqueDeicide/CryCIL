@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 
 namespace CryCil.Engine.Models.StaticObjects
 {
@@ -23,14 +22,12 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return CryMesh.GetSubsetCount(this.meshHandle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				CryMesh.SetSubsetCount(this.meshHandle, value);
 			}
@@ -57,7 +54,6 @@ namespace CryCil.Engine.Models.StaticObjects
 				{
 					throw new IndexOutOfRangeException("Index cannot be greater or equal to the size of this collection.");
 				}
-				Contract.EndContractBlock();
 
 				return this.meshHandle->subsets[index];
 			}
@@ -72,7 +68,6 @@ namespace CryCil.Engine.Models.StaticObjects
 				{
 					throw new IndexOutOfRangeException("Index cannot be greater or equal to the size of this collection.");
 				}
-				Contract.EndContractBlock();
 
 				this.meshHandle->subsets[index] = value;
 			}
@@ -85,6 +80,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		}
 		#endregion
 		#region Utilities
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		private void AssertInstance()
 		{
 			if (this.meshHandle == null)
@@ -93,6 +89,7 @@ namespace CryCil.Engine.Models.StaticObjects
 			}
 		}
 
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return this.GetEnumerator();
@@ -104,6 +101,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public IEnumerator<CryMeshSubset> GetEnumerator()
 		{
+			this.AssertInstance();
 			for (int i = 0; i < this.Count; i++)
 			{
 				yield return this[i];

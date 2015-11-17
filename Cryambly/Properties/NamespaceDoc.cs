@@ -1,7 +1,7 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Runtime.CompilerServices;
 
 // ReSharper disable CheckNamespace
-
 namespace CryCil.Annotations
 {
 	/// <summary>

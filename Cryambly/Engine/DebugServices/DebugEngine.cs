@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using CryCil.RunTime;
 
@@ -85,6 +86,7 @@ namespace CryCil.Engine.DebugServices
 		{
 			if (FrameEnd != null) FrameEnd();
 		}
+		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		private static void RenderObjects()
 		{
 			if (objs.First == null)

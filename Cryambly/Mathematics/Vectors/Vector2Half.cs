@@ -1,4 +1,6 @@
-﻿namespace CryCil
+﻿using System;
+
+namespace CryCil
 {
 	/// <summary>
 	/// Encapsulates 2 half-precision floating point numbers that represent coordinates in 2D space.

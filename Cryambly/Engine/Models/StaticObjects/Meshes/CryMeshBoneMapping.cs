@@ -1,4 +1,6 @@
-﻿namespace CryCil.Engine.Models.StaticObjects
+﻿using System;
+
+namespace CryCil.Engine.Models.StaticObjects
 {
 	/// <summary>
 	/// Encapsulates bone-mapping data using <see cref="ushort"/> values as indices.

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
@@ -9,6 +10,7 @@ namespace CryCil.Engine.Rendering
 	/// Represents an object that provides access to one of the rendering shaders.
 	/// </summary>
 	[StructLayout(LayoutKind.Sequential)]
+	[SuppressMessage("ReSharper", "ExceptionNotThrown")]
 	public struct Shader
 	{
 		#region Fields

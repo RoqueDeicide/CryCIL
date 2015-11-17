@@ -1,4 +1,6 @@
-﻿namespace CryCil.Geometry
+﻿using System;
+
+namespace CryCil.Geometry
 {
 	/// <summary>
 	/// Enumeration of types of geometry used in the engine.

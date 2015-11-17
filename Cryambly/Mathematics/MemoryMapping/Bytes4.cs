@@ -96,18 +96,25 @@ namespace CryCil.MemoryMapping
 		/// Index of the first element of the array portion from which to start copying bytes.
 		/// </param>
 		/// <param name="count">     Number of elements to copy from array.</param>
+		/// <exception cref="ArgumentNullException">
+		/// Array which elements are supposed to be transferred to buffer is null or empty.
+		/// </exception>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// Too many elements are requested to be transferred to buffer.
+		/// </exception>
+		/// <exception cref="ArgumentException">This buffer is too small.</exception>
 		public Bytes4(byte[] array, int startIndex, int count)
 			: this()
 		{
 			if (array == null || array.Length == 0)
 			{
-				throw new ArgumentNullException
-					("array", "Array which elements are supposed to be transferred to buffer is null or empty.");
+				throw new ArgumentNullException("array",
+												"Array which elements are supposed to be transferred to buffer is null or empty.");
 			}
 			if (array.LongLength - startIndex < count)
 			{
-				throw new ArgumentOutOfRangeException
-					("count", "Too many elements are requested to be transferred to buffer.");
+				throw new ArgumentOutOfRangeException("count",
+													  "Too many elements are requested to be transferred to buffer.");
 			}
 			if (this.Length < count)
 			{
@@ -125,13 +132,20 @@ namespace CryCil.MemoryMapping
 		/// <param name="index">  
 		/// Zero-based index of the first of 4 bytes within native memory cluster.
 		/// </param>
+		/// <exception cref="ArgumentNullException">
+		/// Unable to initialize new object of type Bytes4: Provided pointer is null.
+		/// </exception>
+		/// <exception cref="AccessViolationException">
+		/// Base address ( <paramref name="pointer"/>) plus offset byte ( <paramref name="index"/>)
+		/// produces a null or invalid address.
+		/// </exception>
 		public Bytes4(IntPtr pointer, int index)
 			: this()
 		{
 			if (pointer == null)
 			{
 				throw new ArgumentNullException("pointer",
-												"Bytes4.Constructor: Unable to initialize new object of type Bytes4: Provided pointer is null.");
+												"Unable to initialize new object of type Bytes4: Provided pointer is null.");
 			}
 			this.SignedInt = Marshal.ReadInt32(pointer, index);
 		}
@@ -144,6 +158,10 @@ namespace CryCil.MemoryMapping
 		/// <param name="offset">
 		/// Zero-based index of first of 4 bytes within native memory cluster to get.
 		/// </param>
+		/// <exception cref="AccessViolationException">
+		/// Base address ( <paramref name="handle"/>) plus offset byte ( <paramref name="offset"/>)
+		/// produces a null or invalid address.
+		/// </exception>
 		public void Get(IntPtr handle, int offset)
 		{
 			this.SignedInt = Marshal.ReadInt32(handle, offset);
@@ -155,6 +173,10 @@ namespace CryCil.MemoryMapping
 		/// <param name="offset">
 		/// Zero-based index of first of 4 bytes within native memory cluster to set.
 		/// </param>
+		/// <exception cref="AccessViolationException">
+		/// Base address ( <paramref name="handle"/>) plus offset byte ( <paramref name="offset"/>)
+		/// produces a null or invalid address.
+		/// </exception>
 		public void Set(IntPtr handle, int offset)
 		{
 			Marshal.WriteInt32(handle, offset, this.SignedInt);

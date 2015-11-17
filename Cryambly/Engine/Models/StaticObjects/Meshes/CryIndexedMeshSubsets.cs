@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using CryCil.Engine.Physics;
 using CryCil.Engine.Rendering;
 
@@ -31,14 +30,12 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return CryIndexedMesh.GetSubSetCount(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				CryIndexedMesh.SetSubSetCount(this.handle, value);
 			}
@@ -53,7 +50,6 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return CryIndexedMesh.GetSubSet(this.handle, index);
 			}
@@ -78,7 +74,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public void SetSubsetBounds(int index, ref Vector3 center, float radius)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			CryIndexedMesh.SetSubsetBounds(this.handle, index, ref center, radius);
 		}
@@ -95,7 +90,6 @@ namespace CryCil.Engine.Models.StaticObjects
 											   int vertexCount)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			CryIndexedMesh.SetSubsetIndexVertexRanges(this.handle, index, firstIndex, indexCount, firstVertex,
 													  vertexCount);
@@ -109,7 +103,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public void SetSubsetMaterialId(int index, int materialId)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			CryIndexedMesh.SetSubsetMaterialId(this.handle, index, materialId);
 		}
@@ -126,12 +119,12 @@ namespace CryCil.Engine.Models.StaticObjects
 												PhysicalGeometryType physicalizeType)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			CryIndexedMesh.SetSubsetMaterialProperties(this.handle, index, materialFlags, physicalizeType);
 		}
 		#endregion
 		#region Utilities
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		private void AssertInstance()
 		{
 			if (!this.IsValid)

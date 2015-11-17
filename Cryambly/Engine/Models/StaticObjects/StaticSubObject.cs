@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 
 namespace CryCil.Engine.Models.StaticObjects
@@ -46,14 +45,12 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return this.handle->type;
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				this.handle->type = value;
 			}
@@ -67,14 +64,12 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetName(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetName(this.handle, value);
 			}
@@ -89,14 +84,12 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetProperties(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetProperties(this.handle, value);
 			}
@@ -110,14 +103,12 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return this.handle->parent;
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				this.handle->parent = value;
 			}
@@ -131,7 +122,6 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return this.handle->tm;
 			}
@@ -146,14 +136,12 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return this.handle->localTM;
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				this.handle->localTM = value;
 			}
@@ -167,14 +155,12 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return this.handle->statObj;
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				this.handle->statObj = value;
 			}
@@ -188,7 +174,6 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return this.handle->helperSize;
 			}
@@ -201,6 +186,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		}
 		#endregion
 		#region Utilities
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		private void AssertInstance()
 		{
 			if (!this.IsValid)

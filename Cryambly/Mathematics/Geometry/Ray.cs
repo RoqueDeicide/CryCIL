@@ -166,6 +166,10 @@ namespace CryCil.Geometry
 		/// An optional value that specifies the collision class for the ray.
 		/// </param>
 		/// <returns>True, if the ray has hit anything.</returns>
+		/// <exception cref="OverflowException">
+		/// The array is multidimensional and contains more than <see cref="F:System.Int32.MaxValue"/>
+		/// elements.
+		/// </exception>
 		[Annotations.Pure]
 		public bool Cast(out RayHit hit, EntityQueryFlags query = EntityQueryFlags.All, RayCastFlags flags = 0,
 						 PhysicalEntity[] entitiesToSkip = null, CollisionClass collisionClass = new CollisionClass())
@@ -199,18 +203,18 @@ namespace CryCil.Geometry
 		/// Casts a ray.
 		/// </summary>
 		/// <param name="query">         
-		/// &gt;A set of flags that specify which entities to check for collision with ray and how to
-		/// process the result.
+		/// A set of flags that specify which entities to check for collision with ray and how to process
+		/// the result.
 		/// </param>
 		/// <param name="flags">         A set of flags that specify how to cast the ray.</param>
 		/// <param name="entitiesToSkip">
 		/// An optional array of entities that have to be ignored by the ray.
 		/// </param>
-		/// <param name="maxHits">       
-		/// Maximal number of hits. Larger values can potentially waste RAM.
-		/// </param>
 		/// <param name="collisionClass">
 		/// An optional value that specifies the collision class for the ray.
+		/// </param>
+		/// <param name="maxHits">       
+		/// Maximal number of hits. Larger values can potentially waste RAM.
 		/// </param>
 		/// <returns>
 		/// An array of objects that describe hits that is sorted by distance away from
@@ -222,6 +226,11 @@ namespace CryCil.Geometry
 		/// <exception cref="ArgumentOutOfRangeException">
 		/// Maximal number of hits cannot be lass or equal to 0.
 		/// </exception>
+		/// <exception cref="OverflowException">
+		/// The array is multidimensional and contains more than <see cref="F:System.Int32.MaxValue"/>
+		/// elements.
+		/// </exception>
+		/// <exception cref="OutOfMemoryException">Unable to allocate native memory block.</exception>
 		[CanBeNull]
 		[Annotations.Pure]
 		public RayHit[] Cast(EntityQueryFlags query = EntityQueryFlags.All, RayCastFlags flags = RayCastFlags.StopAtPierceable,

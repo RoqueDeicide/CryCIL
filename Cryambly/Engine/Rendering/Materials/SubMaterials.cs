@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using CryCil.Annotations;
 
@@ -9,6 +10,7 @@ namespace CryCil.Engine.Rendering
 	/// <summary>
 	/// Provides access to sub-materials held by the material object.
 	/// </summary>
+	[SuppressMessage("ReSharper", "ExceptionNotThrown")]
 	public struct SubMaterials : IList<Material>
 	{
 		#region Fields
@@ -112,6 +114,7 @@ namespace CryCil.Engine.Rendering
 		/// <exception cref="ArgumentNullException">
 		/// Cannot insert invalid material into the collection.
 		/// </exception>
+		/// <exception cref="Exception">Given list is not big enough.</exception>
 		public void Insert(int index, Material item)
 		{
 			if (index < 0)
@@ -152,6 +155,7 @@ namespace CryCil.Engine.Rendering
 		/// Unable to access the sub-material of an invalid material object.
 		/// </exception>
 		/// <exception cref="IndexOutOfRangeException">Index cannot be less then 0.</exception>
+		/// <exception cref="Exception">Given list is not big enough.</exception>
 		public void RemoveAt(int index)
 		{
 			if (index < 0)
@@ -176,6 +180,11 @@ namespace CryCil.Engine.Rendering
 		/// </param>
 		/// <exception cref="NullReferenceException">
 		/// Unable to access the sub-material of an invalid material object.
+		/// </exception>
+		/// <exception cref="ArgumentNullException">Cannot copy sub-material to the null array.</exception>
+		/// <exception cref="IndexOutOfRangeException">Array index cannot be less then 0.</exception>
+		/// <exception cref="ArgumentException">
+		/// Cannot fit the sub-materials into the given array.
 		/// </exception>
 		public void CopyTo(Material[] array, int arrayIndex)
 		{
@@ -203,6 +212,7 @@ namespace CryCil.Engine.Rendering
 		/// </summary>
 		/// <param name="item">Ignored.</param>
 		/// <returns>Nothing.</returns>
+		/// <exception cref="NotSupportedException">This operation is not supported.</exception>
 		public bool Contains(Material item)
 		{
 			throw new NotSupportedException();
@@ -212,6 +222,7 @@ namespace CryCil.Engine.Rendering
 		/// </summary>
 		/// <param name="item">Ignored.</param>
 		/// <returns>Nothing.</returns>
+		/// <exception cref="NotSupportedException">This operation is not supported.</exception>
 		public int IndexOf(Material item)
 		{
 			throw new NotSupportedException();
@@ -221,6 +232,7 @@ namespace CryCil.Engine.Rendering
 		/// </summary>
 		/// <param name="item">Ignored.</param>
 		/// <returns>Nothing.</returns>
+		/// <exception cref="NotSupportedException">This operation is not supported.</exception>
 		public bool Remove(Material item)
 		{
 			throw new NotSupportedException();
@@ -241,6 +253,9 @@ namespace CryCil.Engine.Rendering
 		}
 		#endregion
 		#region Utilities
+		/// <exception cref="NullReferenceException">
+		/// Unable to access the sub-material of an invalid material object.
+		/// </exception>
 		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return this.GetEnumerator();

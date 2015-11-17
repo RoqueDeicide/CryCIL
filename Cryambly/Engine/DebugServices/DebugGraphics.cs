@@ -29,14 +29,6 @@ namespace CryCil.Engine.DebugServices
 	/// </example>
 	public static class DebugGraphics
 	{
-		#region Fields
-		#endregion
-		#region Properties
-		#endregion
-		#region Events
-		#endregion
-		#region Construction
-		#endregion
 		#region Interface
 		/// <summary>
 		/// Begins drawing. Not invoking this method before any Draw methods may cause a crash.
@@ -45,6 +37,7 @@ namespace CryCil.Engine.DebugServices
 		/// <param name="clear">
 		/// Indicates whether existing group that uses this name should be cleared.
 		/// </param>
+		/// <exception cref="OutOfMemoryException">There is insufficient memory available.</exception>
 		public static void BeginDrawing(string name, bool clear)
 		{
 			Begin(StringPool.Get(name), clear);

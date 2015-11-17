@@ -1,4 +1,6 @@
-﻿namespace CryCil.Engine.Input
+﻿using System;
+
+namespace CryCil.Engine.Input
 {
 	/// <summary>
 	/// Defines signature of methods that handle touch events.

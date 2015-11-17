@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
@@ -9,6 +10,7 @@ namespace CryCil.Engine.Rendering
 	/// Provides access to CryEngine font API.
 	/// </summary>
 	[StructLayout(LayoutKind.Sequential)]
+	[SuppressMessage("ReSharper", "ExceptionNotThrown")]
 	public class CryFont : IDisposable
 	{
 		#region Fields
@@ -26,6 +28,9 @@ namespace CryCil.Engine.Rendering
 		/// <summary>
 		/// Gets an array of names of registered CryEngine fonts.
 		/// </summary>
+		/// <exception cref="CryEngineException">
+		/// Cannot fetch the list of loaded fonts: CryEngine is not loaded.
+		/// </exception>
 		public static string[] LoadedFontsArray
 		{
 			get { return LoadedFonts.Split(','); }

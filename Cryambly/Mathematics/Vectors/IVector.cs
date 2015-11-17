@@ -1,4 +1,6 @@
-﻿namespace CryCil
+﻿using System;
+
+namespace CryCil
 {
 	/// <summary>
 	/// Defines common properties and functionality of types that represent vectors.

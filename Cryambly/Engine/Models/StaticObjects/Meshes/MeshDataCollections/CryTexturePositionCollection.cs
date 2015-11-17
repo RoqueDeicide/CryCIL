@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Runtime.InteropServices;
 
 namespace CryCil.Engine.Models.StaticObjects
@@ -38,14 +37,12 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return this.meshHandle->streamSize[(int)MainStreamId];
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				CryMesh.ReallocateStream(this.meshHandle, MainStreamId, value);
 				this.texPosPtr = this.DataPointer;
@@ -73,7 +70,6 @@ namespace CryCil.Engine.Models.StaticObjects
 				{
 					throw new IndexOutOfRangeException("Index cannot be greater or equal to the size of this collection.");
 				}
-				Contract.EndContractBlock();
 
 				return this.texPosPtr[index];
 			}
@@ -88,7 +84,6 @@ namespace CryCil.Engine.Models.StaticObjects
 				{
 					throw new IndexOutOfRangeException("Index cannot be greater or equal to the size of this collection.");
 				}
-				Contract.EndContractBlock();
 
 				this.texPosPtr[index] = value;
 			}
@@ -117,7 +112,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public void RemoveRange(int first, int count)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			first = first < 0 ? 0 : first;
 			CryMesh.RemoveRangeFromStreamInternal(this.meshHandle, MainStreamId, first, count);
@@ -133,6 +127,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		}
 		#endregion
 		#region Utilities
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		private void AssertInstance()
 		{
 			if (!this.mesh.IsValid)
@@ -141,6 +136,7 @@ namespace CryCil.Engine.Models.StaticObjects
 			}
 		}
 
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return this.GetEnumerator();
@@ -152,6 +148,8 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public IEnumerator<CryMeshTexturePosition> GetEnumerator()
 		{
+			this.AssertInstance();
+
 			for (int i = 0; i < this.Count; i++)
 			{
 				yield return this[i];

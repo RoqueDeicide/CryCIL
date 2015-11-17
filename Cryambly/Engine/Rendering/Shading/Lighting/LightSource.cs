@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 
 namespace CryCil.Engine.Rendering.Lighting
@@ -23,12 +22,12 @@ namespace CryCil.Engine.Rendering.Lighting
 		/// <summary>
 		/// Gets or sets a set of properties that define this light source.
 		/// </summary>
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public LightProperties Properties
 		{
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				LightProperties properties;
 				GetLightProperties(this.handle, out properties);
@@ -37,7 +36,6 @@ namespace CryCil.Engine.Rendering.Lighting
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetLightProperties(this.handle, ref value);
 			}
@@ -45,12 +43,12 @@ namespace CryCil.Engine.Rendering.Lighting
 		/// <summary>
 		/// Gets or sets world transformation matrix of this light source.
 		/// </summary>
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public Matrix34 Transformation
 		{
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				Matrix34 matrix;
 				GetMatrix(this.handle, out matrix);
@@ -59,7 +57,6 @@ namespace CryCil.Engine.Rendering.Lighting
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetMatrix(this.handle, ref value);
 			}
@@ -93,6 +90,7 @@ namespace CryCil.Engine.Rendering.Lighting
 		}
 		#endregion
 		#region Utilities
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		private void AssertInstance()
 		{
 			if (!this.IsValid)

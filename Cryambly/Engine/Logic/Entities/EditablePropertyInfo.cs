@@ -76,6 +76,13 @@ namespace CryCil.Engine.Logic
 		/// Creates new instance of this type.
 		/// </summary>
 		/// <param name="property">An object that represents the editable property.</param>
+		/// <exception cref="Exception">
+		/// Invalid member was passed to EditablePropertyInfo constructor.
+		/// </exception>
+		/// <exception cref="Exception">
+		/// Ui control specified for the property cannot be used for it.
+		/// </exception>
+		/// <exception cref="TypeLoadException">The custom attribute type cannot be loaded.</exception>
 		public EditablePropertyInfo(EditableProperty property)
 		{
 			MemberInfo member = property.Member;
@@ -106,7 +113,7 @@ namespace CryCil.Engine.Logic
 
 			if (attribute.DefaultValue == null)
 			{
-				this.defaultValue = "";
+				this.defaultValue = string.Empty;
 			}
 			else if (attribute.DefaultValue.GetType() != typeDesc.ManagedType)
 			{

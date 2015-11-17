@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using CryCil.Geometry;
@@ -36,7 +35,6 @@ namespace CryCil.Engine.Models.Characters
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetDebugging(this.handle, value);
 			}
@@ -50,14 +48,12 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetAnimationDrivenMotion(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetAnimationDrivenMotion(this.handle, value);
 			}
@@ -71,7 +67,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetTrackViewStatus(this.handle);
 			}
@@ -85,7 +80,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetCurrentVelocity(this.handle);
 			}
@@ -103,7 +97,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				Quatvec movement;
 				GetRelMovement(this.handle, out movement);
@@ -131,7 +124,6 @@ namespace CryCil.Engine.Models.Characters
 		public bool BeginAnimation(string name, ref CharacterAnimationParameters parameters)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return StartAnimation(this.handle, name, ref parameters);
 		}
@@ -147,7 +139,6 @@ namespace CryCil.Engine.Models.Characters
 		public bool BeginAnimation(int identifier, ref CharacterAnimationParameters parameters)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return StartAnimationById(this.handle, identifier, ref parameters);
 		}
@@ -161,7 +152,6 @@ namespace CryCil.Engine.Models.Characters
 		public bool StopAnimation(int layer, float blendOutTime)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return StopAnimationInLayer(this.handle, layer, blendOutTime);
 		}
@@ -175,7 +165,6 @@ namespace CryCil.Engine.Models.Characters
 		public bool StopAnimation(int layer, TimeSpan blendOutTime)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return StopAnimationInLayer(this.handle, layer, blendOutTime.Milliseconds / 1000.0f);
 		}
@@ -187,7 +176,6 @@ namespace CryCil.Engine.Models.Characters
 		public bool StopAnimation()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return StopAnimationsAllLayers(this.handle);
 		}
@@ -201,7 +189,6 @@ namespace CryCil.Engine.Models.Characters
 		public void SetDesiredMotionParameter(MotionParameterId id, float value, float frameTime)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			SetDesiredMotionParam(this.handle, id, value, frameTime);
 		}
@@ -215,7 +202,6 @@ namespace CryCil.Engine.Models.Characters
 		public bool GetDesiredMotionParameter(MotionParameterId id, out float value)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return GetDesiredMotionParam(this.handle, id, out value);
 		}

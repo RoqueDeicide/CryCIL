@@ -1,4 +1,6 @@
-﻿namespace CryCil.Engine.Models.Characters
+﻿using System;
+
+namespace CryCil.Engine.Models.Characters
 {
 	/// <summary>
 	/// Encapsulates a set of parameters that are used to start animations.

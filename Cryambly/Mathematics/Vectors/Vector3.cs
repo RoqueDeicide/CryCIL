@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Globalization;
 using System.Runtime.InteropServices;
@@ -251,6 +252,7 @@ namespace CryCil
 		/// <summary>
 		/// Gets an array of bytes that forms this object.
 		/// </summary>
+		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		public byte[] Bytes
 		{
 			get
@@ -454,11 +456,14 @@ namespace CryCil
 		/// <param name="offset">   Index of first component to be modified.</param>
 		/// <param name="newValues">New values for components to modify.</param>
 		/// <returns>Modified vector.</returns>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// Offset must be belong to interval [0; 2].
+		/// </exception>
 		public Vector3 ModifyVector(int offset, params float[] newValues)
 		{
 			if (offset < 0 || offset > 2)
 			{
-				throw new ArgumentOutOfRangeException("offset", "offset must be belong to interval [0; 2]");
+				throw new ArgumentOutOfRangeException("offset", "Offset must be belong to interval [0; 2].");
 			}
 
 			Vector3 result = new Vector3(this.X, this.Y, this.Z);
@@ -672,8 +677,8 @@ namespace CryCil
 		/// </returns>
 		public bool IsEquivalent(Vector3 v1, float epsilon = 0.05f)
 		{
-			return ((Math.Abs(this.X - v1.X) <= epsilon) && (Math.Abs(this.Y - v1.Y) <= epsilon) &&
-					(Math.Abs(this.Z - v1.Z) <= epsilon));
+			return (Math.Abs(this.X - v1.X) <= epsilon) && (Math.Abs(this.Y - v1.Y) <= epsilon) &&
+				   (Math.Abs(this.Z - v1.Z) <= epsilon);
 		}
 		/// <summary>
 		/// Indicates whether this vector is a unit vector.
@@ -684,7 +689,7 @@ namespace CryCil
 		/// </returns>
 		public bool IsUnit(float epsilon = 0.05f)
 		{
-			return (Math.Abs(1 - this.LengthSquared) <= epsilon);
+			return Math.Abs(1 - this.LengthSquared) <= epsilon;
 		}
 		/// <summary>
 		/// Flips direction of this vector.
@@ -738,9 +743,15 @@ namespace CryCil
 		/// </summary>
 		/// <param name="value">Text that is supposed to be equivalent of the vector.</param>
 		/// <returns>Vector which is an equivalent of the given text.</returns>
+		/// <exception cref="ArgumentNullException">
+		/// Attempt to parse null or empty string as a vector.
+		/// </exception>
+		/// <exception cref="ArgumentException">
+		/// Given string doesn't contain an equivalent of the vector.
+		/// </exception>
 		public static Vector3 Parse(string value)
 		{
-			if (String.IsNullOrEmpty(value))
+			if (string.IsNullOrEmpty(value))
 			{
 				throw new ArgumentNullException("value", "Attempt to parse null or empty string as a vector.");
 			}
@@ -752,10 +763,7 @@ namespace CryCil
 			}
 			catch (Exception ex)
 			{
-				throw new ArgumentException
-					(
-					"Vector3.Parse:Given string doesn't contain an equivalent of the vector.", "value", ex
-					);
+				throw new ArgumentException("Given string doesn't contain an equivalent of the vector.", "value", ex);
 			}
 		}
 		#endregion

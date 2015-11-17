@@ -1,4 +1,6 @@
-﻿using System.Xml;
+﻿using System;
+using System.Security;
+using System.Xml;
 
 namespace CryCil.RunTime.Compilation
 {
@@ -20,6 +22,9 @@ namespace CryCil.RunTime.Compilation
 		/// <param name="project">         
 		/// Reference to the project for which the assembly reference is defined.
 		/// </param>
+		/// <exception cref="SecurityException">
+		/// The caller does not have the required permissions.
+		/// </exception>
 		public AssemblyReference(XmlElement referenceElement, VisualStudioDotNetProject project)
 		{
 			XmlElement hintPath;
@@ -31,13 +36,11 @@ namespace CryCil.RunTime.Compilation
 			else
 			{
 				XmlElement customTargetFrameworkElement;
-				this.Path = ReferenceHelper.GetLocation
-					(
-					 referenceElement.GetAttribute("Include"),
-					 referenceElement.TryGetElement("RequiredTargetFramework", out customTargetFrameworkElement)
-						 ? "v" + customTargetFrameworkElement.FirstChild.Value
-						 : project.TargetFramework
-					);
+				this.Path =
+					ReferenceHelper.GetLocation(referenceElement.GetAttribute("Include"),
+												referenceElement.TryGetElement("RequiredTargetFramework", out customTargetFrameworkElement)
+													? "v" + customTargetFrameworkElement.FirstChild.Value
+													: project.TargetFramework);
 			}
 		}
 	}

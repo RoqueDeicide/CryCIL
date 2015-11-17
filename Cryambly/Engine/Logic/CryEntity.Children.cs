@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 namespace CryCil.Engine.Logic
@@ -9,13 +9,12 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Gets number of entities that are attached to this one as children.
 		/// </summary>
+		/// <exception cref="NullReferenceException">This entity is not usable.</exception>
 		public int ChildCount
 		{
 			get
 			{
 				this.AssertEntity();
-
-				Contract.EndContractBlock();
 
 				return GetChildCount(this.handle);
 			}
@@ -24,13 +23,12 @@ namespace CryCil.Engine.Logic
 		/// Gets an entity this one is attached to as a child.
 		/// </summary>
 		/// <returns>A valid object if this entity has a parent, otherwise returns invalid one.</returns>
+		/// <exception cref="NullReferenceException">This entity is not usable.</exception>
 		public CryEntity Parent
 		{
 			get
 			{
 				this.AssertEntity();
-
-				Contract.EndContractBlock();
 
 				return GetParent(this.handle);
 			}
@@ -43,13 +41,12 @@ namespace CryCil.Engine.Logic
 		/// Can yield a result that is different from <c>entity.Parent.WorldTransformationMatrix</c>, e.g.
 		/// when attachment point is not a pivot point.
 		/// </remarks>
+		/// <exception cref="NullReferenceException">This entity is not usable.</exception>
 		public Matrix34 ParentAttachPointWorldTransformationMatrix
 		{
 			get
 			{
 				this.AssertEntity();
-
-				Contract.EndContractBlock();
 
 				return GetParentAttachPointWorldTM(this.handle);
 			}
@@ -62,13 +59,12 @@ namespace CryCil.Engine.Logic
 		/// Can return <c>false</c> when this entite e.g. is attached to a geometry cache node but geometry
 		/// cache frame is not loaded yet.
 		/// </remarks>
+		/// <exception cref="NullReferenceException">This entity is not usable.</exception>
 		public bool IsParentAttachmentValid
 		{
 			get
 			{
 				this.AssertEntity();
-
-				Contract.EndContractBlock();
 
 				return GetIsParentAttachmentValid(this.handle);
 			}
@@ -90,8 +86,6 @@ namespace CryCil.Engine.Logic
 		/// <exception cref="ArgumentException">Cannot create a recursive attachment.</exception>
 		public void AttachChild(CryEntity child, EntityAttachmentFlags flags = 0, string target = null)
 		{
-			this.AssertEntity();
-
 			if (!child.IsValid)
 			{
 				throw new ArgumentNullException("child", "Cannot attach a null entity as a child to another.");
@@ -101,8 +95,6 @@ namespace CryCil.Engine.Logic
 				throw new ArgumentException("Cannot attach the entity to itself.");
 			}
 
-			Contract.EndContractBlock();
-
 			AttachChildInternal(this.handle, child.handle, flags, target);
 		}
 		/// <summary>
@@ -111,11 +103,10 @@ namespace CryCil.Engine.Logic
 		/// <param name="keepWorldTM">
 		/// Indicates whether all child entities should keep their world transformation matrix.
 		/// </param>
+		/// <exception cref="NullReferenceException">This entity is not usable.</exception>
 		public void DetachAll(bool keepWorldTM = false)
 		{
 			this.AssertEntity();
-
-			Contract.EndContractBlock();
 
 			DetachAllInternal(this.handle, keepWorldTM);
 		}
@@ -125,11 +116,10 @@ namespace CryCil.Engine.Logic
 		/// <param name="keepWorldTM">
 		/// Indicates whether this entity should keep its world transformation matrix.
 		/// </param>
+		/// <exception cref="NullReferenceException">This entity is not usable.</exception>
 		public void DetachThis(bool keepWorldTM = false)
 		{
 			this.AssertEntity();
-
-			Contract.EndContractBlock();
 
 			DetachThisInternal(this.handle, keepWorldTM);
 		}
@@ -138,6 +128,7 @@ namespace CryCil.Engine.Logic
 		/// </summary>
 		/// <param name="index">Zero-based index of the entity to get.</param>
 		/// <returns>An object that represents the child entity.</returns>
+		/// <exception cref="NullReferenceException">This entity is not usable.</exception>
 		/// <exception cref="ArgumentOutOfRangeException">
 		/// Index of the child entity cannot be less then 0.
 		/// </exception>
@@ -147,8 +138,6 @@ namespace CryCil.Engine.Logic
 		public CryEntity GetChild(int index)
 		{
 			this.AssertEntity();
-
-			Contract.EndContractBlock();
 
 			return GetChildInternal(this.handle, index);
 		}
@@ -161,7 +150,14 @@ namespace CryCil.Engine.Logic
 		private static extern void DetachThisInternal(IntPtr handle, bool keepWorldTM);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern int GetChildCount(IntPtr handle);
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// Index of the child entity cannot be less then 0.
+		/// </exception>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// Index of the child entity cannot be greater then total number of children.
+		/// </exception>
 		[MethodImpl(MethodImplOptions.InternalCall)]
+		[SuppressMessage("ReSharper", "ExceptionNotThrown")]
 		private static extern CryEntity GetChildInternal(IntPtr handle, int nIndex);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern CryEntity GetParent(IntPtr handle);

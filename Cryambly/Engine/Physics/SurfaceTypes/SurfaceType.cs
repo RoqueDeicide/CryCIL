@@ -204,9 +204,10 @@ namespace CryCil.Engine.Physics
 		/// <returns>
 		/// A pointer to the object that describes the particle effect, or null pointer if not found.
 		/// </returns>
+		/// <exception cref="OutOfMemoryException">There is insufficient memory available.</exception>
 		public SurfaceTypeBreakageParticles* GetBreakageParticles(string eventName, bool lookInDefault = true)
 		{
-			Contract.Requires(!String.IsNullOrEmpty(eventName), "The name of the event cannot be null or empty.");
+			Contract.Requires(!string.IsNullOrEmpty(eventName), "The name of the event cannot be null or empty.");
 
 			return GetBreakageParticles(this.handle, StringPool.Get(eventName), lookInDefault);
 		}

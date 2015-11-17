@@ -207,6 +207,7 @@ namespace CryCil.Engine.Physics
 		/// Gets the object that represents a change to one of the vertexes.
 		/// </summary>
 		/// <param name="index">Zero-based index of the object to get.</param>
+		/// <exception cref="IndexOutOfRangeException">Index is out of range.</exception>
 		public VertexChange this[int index]
 		{
 			get
@@ -243,6 +244,7 @@ namespace CryCil.Engine.Physics
 		/// Gets the object that represents a change to one of the triangles.
 		/// </summary>
 		/// <param name="index">Zero-based index of the object to get.</param>
+		/// <exception cref="IndexOutOfRangeException">Index is out of range.</exception>
 		public TriangleChange this[int index]
 		{
 			get
@@ -280,6 +282,7 @@ namespace CryCil.Engine.Physics
 		/// Gets the object that represents a fix.
 		/// </summary>
 		/// <param name="index">Zero-based index of the object to get.</param>
+		/// <exception cref="IndexOutOfRangeException">Index is out of range.</exception>
 		public JunctionVertexFix this[int index]
 		{
 			get
@@ -316,6 +319,7 @@ namespace CryCil.Engine.Physics
 		/// Gets the object that represents a moved bounding volume box.
 		/// </summary>
 		/// <param name="index">Zero-based index of the object to get.</param>
+		/// <exception cref="IndexOutOfRangeException">Index is out of range.</exception>
 		public Primitive.Box this[int index]
 		{
 			get
@@ -353,6 +357,7 @@ namespace CryCil.Engine.Physics
 		/// Gets the object that represents a moved bounding volume box.
 		/// </summary>
 		/// <param name="index">Zero-based index of the object to get.</param>
+		/// <exception cref="IndexOutOfRangeException">Index is out of range.</exception>
 		public int this[int index]
 		{
 			get
@@ -390,6 +395,7 @@ namespace CryCil.Engine.Physics
 		/// Gets the object that represents a moved bounding volume box.
 		/// </summary>
 		/// <param name="index">Zero-based index of the object to get.</param>
+		/// <exception cref="IndexOutOfRangeException">Index is out of range.</exception>
 		public int this[int index]
 		{
 			get

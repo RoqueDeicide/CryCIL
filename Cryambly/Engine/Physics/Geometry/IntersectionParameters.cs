@@ -57,6 +57,7 @@ namespace CryCil.Engine.Physics
 		/// Gets or sets the value that indicates whether rotational unprojection mode should be used
 		/// instead of angular.
 		/// </summary>
+		/// <exception cref="InvalidOperationException">This object is read-only.</exception>
 		public bool RotationalUnprojection
 		{
 			get { return this.iUnprojectionMode != 0; }
@@ -73,6 +74,7 @@ namespace CryCil.Engine.Physics
 		/// Gets or sets the coordinates of the point that is used as a center of rotation when
 		/// <see cref="RotationalUnprojection"/> is set to <c>true</c>.
 		/// </summary>
+		/// <exception cref="InvalidOperationException">This object is read-only.</exception>
 		public Vector3 RotationCenter
 		{
 			get { return this.centerOfRotation; }
@@ -88,6 +90,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets or sets the direction of the axis of rotation that is used for unprojection.
 		/// </summary>
+		/// <exception cref="InvalidOperationException">This object is read-only.</exception>
 		public Vector3 RotationAxis
 		{
 			get { return this.axisOfRotation; }
@@ -103,6 +106,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets or sets the time interval limit that is used for unprojection.
 		/// </summary>
+		/// <exception cref="InvalidOperationException">This object is read-only.</exception>
 		public float TimeInterval
 		{
 			get { return this.time_interval; }
@@ -119,6 +123,7 @@ namespace CryCil.Engine.Physics
 		/// Gets or sets the relative speed threshold. When relative speed is above this, then unprojection
 		/// will be done along the velocity vector, otherwise along area normal.
 		/// </summary>
+		/// <exception cref="InvalidOperationException">This object is read-only.</exception>
 		public float MinimalRelativeSpeed
 		{
 			get { return this.vrel_min; }
@@ -134,6 +139,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets or sets the value that is used when generating area contacts.
 		/// </summary>
+		/// <exception cref="InvalidOperationException">This object is read-only.</exception>
 		public float MaxSurfaceGapAngle
 		{
 			get { return this.maxSurfaceGapAngle; }
@@ -150,6 +156,7 @@ namespace CryCil.Engine.Physics
 		/// Gets or sets the minimal distance to axis of rotation from contact point when rotational
 		/// unprojection can be used.
 		/// </summary>
+		/// <exception cref="InvalidOperationException">This object is read-only.</exception>
 		public float MinDistanceToAxis
 		{
 			get { return this.minAxisDist; }
@@ -165,6 +172,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets or sets the normal to the plane to restrict linear unprojection to.
 		/// </summary>
+		/// <exception cref="InvalidOperationException">This object is read-only.</exception>
 		public Vector3 UnprojectionPlaneNormal
 		{
 			get { return this.unprojectionPlaneNormal; }
@@ -180,6 +188,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets or sets the normal that is used as a hint for potential area contact normal.
 		/// </summary>
+		/// <exception cref="InvalidOperationException">This object is read-only.</exception>
 		public Vector3 ContactNormalHint
 		{
 			get { return this.axisContactNormal; }
@@ -195,6 +204,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets or sets the maximal unprojection length for contacts that are not discarded.
 		/// </summary>
+		/// <exception cref="InvalidOperationException">This object is read-only.</exception>
 		public float MaxUnprojectionDistance
 		{
 			get { return this.maxUnproj; }
@@ -212,6 +222,7 @@ namespace CryCil.Engine.Physics
 		/// contact point.
 		/// </summary>
 		/// <remarks>The sweep is done along v*time_interval (v from geom_world_data).</remarks>
+		/// <exception cref="InvalidOperationException">This object is read-only.</exception>
 		public bool PerformSweepTest
 		{
 			get { return this.bSweepTest; }
@@ -228,6 +239,7 @@ namespace CryCil.Engine.Physics
 		/// Gets or sets the value that indicates whether new contacts need to be appended to the existing
 		/// buffer.
 		/// </summary>
+		/// <exception cref="InvalidOperationException">This object is read-only.</exception>
 		public bool KeepPreviousContacts
 		{
 			get { return this.bKeepPrevContacts; }
@@ -244,6 +256,7 @@ namespace CryCil.Engine.Physics
 		/// Gets or sets the value that indicates whether intersection check must stop after first
 		/// collision detection.
 		/// </summary>
+		/// <exception cref="InvalidOperationException">This object is read-only.</exception>
 		public bool SingleContact
 		{
 			get { return this.bStopAtFirstTri; }
@@ -259,6 +272,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets or sets the value that indicates whether area contacts should not be detected.
 		/// </summary>
+		/// <exception cref="InvalidOperationException">This object is read-only.</exception>
 		public bool NoAreaContacts
 		{
 			get { return this.bNoAreaContacts; }
@@ -274,6 +288,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets or sets the value that indicates whether contact border needs to be traced.
 		/// </summary>
+		/// <exception cref="InvalidOperationException">This object is read-only.</exception>
 		public bool NoContactBorder
 		{
 			get { return this.bNoBorder; }
@@ -290,6 +305,7 @@ namespace CryCil.Engine.Physics
 		/// Gets or sets the value that indicates whether only consecutive borders must be returned. Useful
 		/// for boolean operations.
 		/// </summary>
+		/// <exception cref="InvalidOperationException">This object is read-only.</exception>
 		public bool ExactBorder
 		{
 			get { return this.bExactBorder != 0; }
@@ -306,6 +322,7 @@ namespace CryCil.Engine.Physics
 		/// Gets or sets the value that indicates whether all intersection points should not be looked for.
 		/// Works for primitive-primitive intersection.
 		/// </summary>
+		/// <exception cref="InvalidOperationException">This object is read-only.</exception>
 		public bool NoIntersectionPoints
 		{
 			get { return this.bNoIntersection != 0; }
@@ -318,10 +335,6 @@ namespace CryCil.Engine.Physics
 				this.bNoIntersection = value ? 1 : 0;
 			}
 		}
-		#endregion
-		#region Construction
-		#endregion
-		#region Interface
 		#endregion
 		#region Utilities
 		internal void CompleteInitialization()

@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 using CryCil.Annotations;
 
 namespace CryCil.Engine.Physics
@@ -16,8 +17,8 @@ namespace CryCil.Engine.Physics
 	{
 		#region Fields
 		/// <summary>
-		/// Pass a reference to this field to <see cref="PhysicalEntity.AddBody"/> to add the geometry
-		/// with these parameters.
+		/// Pass a reference to this field to <see cref="PhysicalEntity.AddBody"/> to add the geometry with
+		/// these parameters.
 		/// </summary>
 		public GeometryParameters Base;
 		[UsedImplicitly] private int idBody;

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
 using CryCil.Engine.Rendering;
-using CryCil.Geometry;
 
 namespace CryCil.Engine.Models.Characters.Attachments
 {
@@ -78,9 +77,13 @@ namespace CryCil.Engine.Models.Characters.Attachments
 		/// <summary>
 		/// Gets the base material that is used to render this model.
 		/// </summary>
-		/// <param name="lod">Zero-based index of the LOD model to get the custom material from. Cannot be greater then 5.</param>
+		/// <param name="lod">
+		/// Zero-based index of the LOD model to get the custom material from. Cannot be greater then 5.
+		/// </param>
 		/// <returns>Base material that is used to render this model.</returns>
-		/// <exception cref="IndexOutOfRangeException">Index must be between 0 and 5 inclusively.</exception>
+		/// <exception cref="IndexOutOfRangeException">
+		/// Index must be between 0 and 5 inclusively.
+		/// </exception>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public Material GetBaseMaterial(uint lod = 0)
 		{
@@ -96,9 +99,13 @@ namespace CryCil.Engine.Models.Characters.Attachments
 		/// <summary>
 		/// Gets the custom material that is used to render this model.
 		/// </summary>
-		/// <param name="lod">Zero-based index of the LOD model to get the custom material from. Cannot be greater then 5.</param>
+		/// <param name="lod">
+		/// Zero-based index of the LOD model to get the custom material from. Cannot be greater then 5.
+		/// </param>
 		/// <returns>Custom material that is used to render this model.</returns>
-		/// <exception cref="IndexOutOfRangeException">Index must be between 0 and 5 inclusively.</exception>
+		/// <exception cref="IndexOutOfRangeException">
+		/// Index must be between 0 and 5 inclusively.
+		/// </exception>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public Material GetCustomMaterial(uint lod = 0)
 		{
@@ -115,8 +122,12 @@ namespace CryCil.Engine.Models.Characters.Attachments
 		/// Changes the material that is used to render this model.
 		/// </summary>
 		/// <param name="material">An object that represents the new material to use.</param>
-		/// <param name="lod">Zero-based index of the LOD model to get the custom material from. Cannot be greater then 5.</param>
-		/// <exception cref="IndexOutOfRangeException">Index must be between 0 and 5 inclusively.</exception>
+		/// <param name="lod">     
+		/// Zero-based index of the LOD model to get the custom material from. Cannot be greater then 5.
+		/// </param>
+		/// <exception cref="IndexOutOfRangeException">
+		/// Index must be between 0 and 5 inclusively.
+		/// </exception>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public void SetCustomMaterial(Material material, uint lod = 0)
 		{
@@ -139,9 +150,6 @@ namespace CryCil.Engine.Models.Characters.Attachments
 				throw new NullReferenceException("This instance is not valid.");
 			}
 		}
-
-
 		#endregion
-		 
 	}
 }

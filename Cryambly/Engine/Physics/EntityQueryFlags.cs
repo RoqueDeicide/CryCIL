@@ -1,5 +1,4 @@
 ﻿using System;
-using CryCil.Geometry;
 
 namespace CryCil.Engine.Physics
 {

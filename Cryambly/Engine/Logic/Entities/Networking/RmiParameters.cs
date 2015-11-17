@@ -1,4 +1,5 @@
-﻿using CryCil.Engine.Data;
+﻿using System;
+using CryCil.Engine.Data;
 using CryCil.RunTime.Registration;
 
 namespace CryCil.Engine.Logic

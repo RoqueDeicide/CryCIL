@@ -1,6 +1,7 @@
 ﻿using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -131,6 +132,7 @@ namespace CryCil.RunTime.Compilation
 		/// </summary>
 		/// <param name="projectName">Name of the project.</param>
 		/// <param name="projectFile">Path to the project file.</param>
+		/// <exception cref="ArgumentException">Couldn't locate a project file.</exception>
 		protected VisualStudioDotNetProject([NotNull] string projectName, [PathReference] string projectFile)
 		{
 			this.Name = projectName;
@@ -232,7 +234,7 @@ namespace CryCil.RunTime.Compilation
 		{
 			string[] configPlatform = specifier.Split('|');
 			return configPlatform[0].Equals(Config, icic) &&
-				   (configPlatform[1].Equals(Platform, icic)||
+				   (configPlatform[1].Equals(Platform, icic) ||
 					configPlatform[1].Equals("AnyCPU", icic));
 		}
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -248,6 +250,18 @@ namespace CryCil.RunTime.Compilation
 		/// Compiles code from this project into assembly.
 		/// </summary>
 		/// <returns>True, if compilation was a success, otherwise false.</returns>
+		/// <exception cref="CodeCompilationException">
+		/// Unable to compile the code: Assembly file cannot be overwritten.
+		/// </exception>
+		/// <exception cref="Exception">Some error has occurred.</exception>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// Unknown debug information was specified.
+		/// </exception>
+		/// <exception cref="OverflowException">
+		/// The array is multidimensional and contains more than <see cref="F:System.Int32.MaxValue"/>
+		/// elements.
+		/// </exception>
+		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		public bool Build()
 		{
 			CompilerParameters parameters = new CompilerParameters
@@ -270,7 +284,7 @@ namespace CryCil.RunTime.Compilation
 						string message =
 							string.Format("Unable to compile the code: Assembly file {0} cannot be overwritten.",
 										  parameters.OutputAssembly);
-						throw new CodeCompilationException(message);
+						throw new CodeCompilationException(message, ex);
 					}
 					throw;
 				}

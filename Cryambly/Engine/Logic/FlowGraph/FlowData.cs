@@ -29,7 +29,7 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Text information.
 		/// </summary>
-		[FieldOffset(0)] public IntPtr text;
+		[FieldOffset(0)] public IntPtr Text;
 		/// <summary>
 		/// Boolean value.
 		/// </summary>
@@ -47,7 +47,7 @@ namespace CryCil.Engine.Logic
 		/// </summary>
 		public string String
 		{
-			get { return this.text != IntPtr.Zero ? Marshal.PtrToStringAnsi(this.text) : null; }
+			get { return this.Text != IntPtr.Zero ? Marshal.PtrToStringAnsi(this.Text) : null; }
 		}
 		#endregion
 		#region Construction
@@ -101,11 +101,12 @@ namespace CryCil.Engine.Logic
 		/// Initializes a new instance of this type that represents a value of type <see cref="string"/>.
 		/// </summary>
 		/// <param name="value">A value itself.</param>
+		/// <exception cref="OutOfMemoryException">There is insufficient memory available.</exception>
 		public FlowData(string value)
 			: this()
 		{
 			this.DataType = FlowDataType.String;
-			this.text = Marshal.StringToHGlobalAnsi(value);
+			this.Text = Marshal.StringToHGlobalAnsi(value);
 		}
 		/// <summary>
 		/// Initializes a new instance of this type that represents a value of type <see cref="Vector3"/>.
@@ -134,10 +135,10 @@ namespace CryCil.Engine.Logic
 		/// </summary>
 		public void Dispose()
 		{
-			if (this.DataType == FlowDataType.String && this.text != IntPtr.Zero)
+			if (this.DataType == FlowDataType.String && this.Text != IntPtr.Zero)
 			{
-				Marshal.FreeHGlobal(this.text);
-				this.text = IntPtr.Zero;
+				Marshal.FreeHGlobal(this.Text);
+				this.Text = IntPtr.Zero;
 			}
 		}
 		#endregion

@@ -111,6 +111,9 @@ namespace CryCil
 		/// <summary>
 		/// Gets inverted variation of this matrix.
 		/// </summary>
+		/// <exception cref="DivideByZeroException">
+		/// Attempt was made to invert a matrix which determinant is equal to 0.
+		/// </exception>
 		public Matrix44 Inverted
 		{
 			get
@@ -239,6 +242,12 @@ namespace CryCil
 		/// </summary>
 		/// <param name="row">   Zero-based index of the row.</param>
 		/// <param name="column">Zero-based index of the column.</param>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// Attempt to access matrix row out of range [0, 2].
+		/// </exception>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// Attempt to access matrix column out of range [0, 2].
+		/// </exception>
 		public unsafe float this[int row, int column]
 		{
 			get
@@ -364,6 +373,7 @@ namespace CryCil
 		/// Creates new instance of <see cref="Matrix44"/> class.
 		/// </summary>
 		/// <param name="m"><see cref="Matrix33"/> to fill new matrix with.</param>
+		/// <exception cref="ArgumentException">Parameter must be a valid matrix.</exception>
 		public Matrix44(ref Matrix33 m)
 			: this()
 		{
@@ -392,6 +402,7 @@ namespace CryCil
 		/// Creates new instance of <see cref="Matrix44"/> class.
 		/// </summary>
 		/// <param name="m"><see cref="Matrix34"/> to fill new matrix with.</param>
+		/// <exception cref="ArgumentException">Parameter must be a valid matrix.</exception>
 		public Matrix44(ref Matrix34 m)
 			: this()
 		{
@@ -419,7 +430,8 @@ namespace CryCil
 		/// <summary>
 		/// Copies contents from <see cref="Matrix44"/> to new one.
 		/// </summary>
-		/// <param name="m"></param>
+		/// <param name="m">Reference to the matrix to create this one from.</param>
+		/// <exception cref="ArgumentException">Parameter must be a valid matrix.</exception>
 		public Matrix44(ref Matrix44 m)
 			: this()
 		{
@@ -834,6 +846,7 @@ namespace CryCil
 		/// </summary>
 		/// <param name="b">Vector to transform.</param>
 		/// <returns>Transformed vector.</returns>
+		/// <exception cref="ArgumentException">Parameter must be a valid vector.</exception>
 		public Vector3 TransformVector(Vector3 b)
 		{
 			if (!b.IsValid)
@@ -897,6 +910,9 @@ namespace CryCil
 		/// </summary>
 		/// <param name="i">Zero-based index of the column to set.</param>
 		/// <param name="v">Vector that supplies new values.</param>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// Index of the column must be in [0; 3].
+		/// </exception>
 		public void SetColumn(int i, Vector3 v)
 		{
 			if (i < 0 || i > 3)
@@ -932,6 +948,9 @@ namespace CryCil
 		/// </summary>
 		/// <param name="i">Zero-based index of the column to set.</param>
 		/// <param name="v">Vector that supplies new values.</param>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// Index of the column must be in [0; 3].
+		/// </exception>
 		public void SetColumn(int i, Vector4 v)
 		{
 			if (i < 0 || i > 3)
@@ -971,6 +990,9 @@ namespace CryCil
 		/// </summary>
 		/// <param name="i">Zero-based index of the column to get.</param>
 		/// <returns>Vector that contains values.</returns>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// Index of the column must be in [0; 3].
+		/// </exception>
 		public Vector3 GetColumn(int i)
 		{
 			if (i < 0 || i > 3)
@@ -996,6 +1018,9 @@ namespace CryCil
 		/// </summary>
 		/// <param name="i">Zero-based index of the column to get.</param>
 		/// <returns>Vector that contains values.</returns>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// Index of the column must be in [0; 3].
+		/// </exception>
 		public Vector4 GetColumn4(int i)
 		{
 			if (i < 0 || i > 3)

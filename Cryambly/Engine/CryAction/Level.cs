@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using CryCil.Annotations;
 
@@ -7,6 +8,7 @@ namespace CryCil.Engine.CryAction
 	/// <summary>
 	/// Represents standard CryEngine level.
 	/// </summary>
+	[SuppressMessage("ReSharper", "ExceptionNotThrown")]
 	public class Level
 	{
 		#region Fields

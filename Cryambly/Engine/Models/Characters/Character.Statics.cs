@@ -352,9 +352,9 @@ namespace CryCil.Engine.Models.Characters
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern IntPtr CreateInstance(string szFilename, CharacterLoadingFlags nLoadingFlags = 0);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern IntPtr LoadModelSKEL(string szFilePath, CharacterLoadingFlags nLoadingFlags);
+		internal static extern IntPtr LoadModelSKEL(string szFilePath, CharacterLoadingFlags nLoadingFlags);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern IntPtr LoadModelSKIN(string szFilePath, CharacterLoadingFlags nLoadingFlags);
+		internal static extern IntPtr LoadModelSKIN(string szFilePath, CharacterLoadingFlags nLoadingFlags);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern bool LoadAndLockResources(string szFilePath, CharacterLoadingFlags nLoadingFlags);
 		[MethodImpl(MethodImplOptions.InternalCall)]

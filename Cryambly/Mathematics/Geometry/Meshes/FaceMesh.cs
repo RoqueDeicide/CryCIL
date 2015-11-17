@@ -62,6 +62,7 @@ namespace CryCil.Geometry
 		/// </summary>
 		/// <param name="anotherMesh">Another mesh.</param>
 		/// <seealso cref="ConstructiveSolidGeometry.Union"/>
+		/// <exception cref="OutOfMemoryException">Unable to allocate native memory block.</exception>
 		public virtual void Combine(FaceMesh anotherMesh)
 		{
 			if (NativeCsg)
@@ -82,6 +83,7 @@ namespace CryCil.Geometry
 		/// </summary>
 		/// <param name="anotherMesh">Another mesh.</param>
 		/// <seealso cref="ConstructiveSolidGeometry.Intersection"/>
+		/// <exception cref="OutOfMemoryException">Unable to allocate native memory block.</exception>
 		public virtual void Intersect(FaceMesh anotherMesh)
 		{
 			if (NativeCsg)
@@ -93,10 +95,11 @@ namespace CryCil.Geometry
 			{
 				BspNode<FullFace> a = this.BspTree;
 				BspNode<FullFace> b = anotherMesh.BspTree;
-				a.Invert(); // Cut geometry that is not common for the meshes.
-				b.CutTreeOut(a, null); //
-				b.Invert(); //
-				a.CutTreeOut(b, null); //
+				// Cut geometry that is not common for the meshes.
+				a.Invert();
+				b.CutTreeOut(a, null);
+				b.Invert();
+				a.CutTreeOut(b, null);
 				// Clean up remains.
 				b.CutTreeOut(a, null);
 				// Combine geometry.
@@ -111,6 +114,7 @@ namespace CryCil.Geometry
 		/// </summary>
 		/// <param name="anotherMesh">Another mesh.</param>
 		/// <seealso cref="ConstructiveSolidGeometry.Subtract"/>
+		/// <exception cref="OutOfMemoryException">Unable to allocate native memory block.</exception>
 		public virtual void Subtract(FaceMesh anotherMesh)
 		{
 			if (NativeCsg)
@@ -139,6 +143,7 @@ namespace CryCil.Geometry
 		}
 		#endregion
 		#region Utilities
+		/// <exception cref="OutOfMemoryException">Unable to allocate native memory block.</exception>
 		internal static IntPtr ToNativeFaceList(List<FullFace> faces)
 		{
 			// Allocate list header object in native memory.

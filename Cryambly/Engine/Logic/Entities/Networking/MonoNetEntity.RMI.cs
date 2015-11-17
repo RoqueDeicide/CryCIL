@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -51,6 +51,14 @@ namespace CryCil.Engine.Logic
 		/// <exception cref="RmiException">
 		/// Cannot send RMI call to sender's client instance because it doesn't have client instance.
 		/// </exception>
+		/// <exception cref="AmbiguousMatchException">
+		/// More than one method is found with the specified name.
+		/// </exception>
+		/// <exception cref="MemberAccessException">
+		/// The caller does not have access to the method represented by the delegate (for example, if the
+		/// method is private).
+		/// </exception>
+		/// <exception cref="TypeLoadException">The custom attribute type cannot be loaded.</exception>
 		[ContractAnnotation("method:null => halt")]
 		public void CallRmi(Func<bool> method, RmiTarget where, int channel = -1)
 		{
@@ -68,8 +76,6 @@ namespace CryCil.Engine.Logic
 			int rmiType = this.ValidateRmiMethod(methodInfo, null, where, false, false);
 
 			this.ValidateRmiTarget(where, channel);
-
-			Contract.EndContractBlock();
 
 			InvokeRmi(this.Id, methodInfo.Name, null, where, channel, rmiType);
 		}
@@ -120,6 +126,14 @@ namespace CryCil.Engine.Logic
 		/// <exception cref="RmiException">
 		/// Cannot send RMI call to sender's client instance because it doesn't have client instance.
 		/// </exception>
+		/// <exception cref="AmbiguousMatchException">
+		/// More than one method is found with the specified name.
+		/// </exception>
+		/// <exception cref="MemberAccessException">
+		/// The caller does not have access to the method represented by the delegate (for example, if the
+		/// method is private).
+		/// </exception>
+		/// <exception cref="TypeLoadException">The custom attribute type cannot be loaded.</exception>
 		[ContractAnnotation("parameters:null => halt")]
 		[ContractAnnotation("method:null => halt")]
 		public void CallRmi<RmiParametersType>(Func<RmiParametersType, bool> method, RmiTarget where,
@@ -145,8 +159,6 @@ namespace CryCil.Engine.Logic
 			int rmiType = this.ValidateRmiMethod(methodInfo, parameters, where, false, false);
 
 			this.ValidateRmiTarget(where, channel);
-
-			Contract.EndContractBlock();
 
 			InvokeRmi(this.Id, methodInfo.Name, parameters, where, channel, rmiType);
 		}
@@ -210,6 +222,10 @@ namespace CryCil.Engine.Logic
 		/// <exception cref="RmiException">
 		/// Cannot send RMI call to sender's client instance because it doesn't have client instance.
 		/// </exception>
+		/// <exception cref="AmbiguousMatchException">
+		/// More than one method is found with the specified name.
+		/// </exception>
+		/// <exception cref="TypeLoadException">The custom attribute type cannot be loaded.</exception>
 		[ContractAnnotation("method:null => halt")]
 		public void CallRmi(MethodInfo method, RmiTarget where, RmiParameters parameters = null, int channel = -1)
 		{
@@ -226,8 +242,6 @@ namespace CryCil.Engine.Logic
 			int rmiType = this.ValidateRmiMethod(method, parameters, where, true, true);
 
 			this.ValidateRmiTarget(where, channel);
-
-			Contract.EndContractBlock();
 
 			InvokeRmi(this.Id, method.Name, parameters, where, channel, rmiType);
 		}
@@ -291,10 +305,14 @@ namespace CryCil.Engine.Logic
 		/// <exception cref="RmiException">
 		/// Cannot send RMI call to sender's client instance because it doesn't have client instance.
 		/// </exception>
+		/// <exception cref="AmbiguousMatchException">
+		/// More than one method is found with the specified name.
+		/// </exception>
+		/// <exception cref="TypeLoadException">The custom attribute type cannot be loaded.</exception>
 		[ContractAnnotation("methodName:null => halt")]
 		public void CallRmi(string methodName, RmiTarget where, RmiParameters parameters = null, int channel = -1)
 		{
-			if (String.IsNullOrWhiteSpace(methodName))
+			if (string.IsNullOrWhiteSpace(methodName))
 			{
 				throw new ArgumentNullException("methodName",
 												"You must specify a name of the method that must be invoked via RMI.");
@@ -310,10 +328,14 @@ namespace CryCil.Engine.Logic
 
 			this.ValidateRmiTarget(where, channel);
 
-			Contract.EndContractBlock();
-
 			InvokeRmi(this.Id, methodName, parameters, where, channel, rmiType);
 		}
+		/// <exception cref="ArgumentException">Method has failed validation.</exception>
+		/// <exception cref="MissingAttributeException">Condition.</exception>
+		/// <exception cref="RmiException">
+		/// An error has occurred when checking Rmi configuration of the method.
+		/// </exception>
+		/// <exception cref="TypeLoadException">The custom attribute type cannot be loaded.</exception>
 		private int ValidateRmiMethod(MethodInfo method, [CanBeNull] RmiParameters parameters,
 									  [UsedImplicitly] RmiTarget where, bool checkReturnType, bool checkParameters)
 		{
@@ -362,11 +384,10 @@ namespace CryCil.Engine.Logic
 			if (attribute == null)
 			{
 				Type emiAttributeType = typeof(RMIAttribute);
-				throw new MissingAttributeException
-					(emiAttributeType,
-					 string.Format("Method {0} of type {1} must be marked by an attribute named {2} to be called via " +
-								   "RMI framework.",
-								   methodName, type.FullName, emiAttributeType.FullName));
+				throw new MissingAttributeException(emiAttributeType,
+													string.Format("Method {0} of type {1} must be marked by an attribute " +
+																  "named {2} to be called via RMI framework.",
+																  methodName, type.FullName, emiAttributeType.FullName));
 			}
 			if (attribute.ToServer && !Game.IsClient)
 			{
@@ -385,6 +406,9 @@ namespace CryCil.Engine.Logic
 
 			return (int)attribute.type;
 		}
+		/// <exception cref="RmiException">
+		/// Method that is being invoked is not configured to be invoked in specified way.
+		/// </exception>
 		private void ValidateRmiTarget(RmiTarget where, int channel)
 		{
 			if (where.HasFlag(RmiTarget.NoCall))
@@ -416,6 +440,7 @@ namespace CryCil.Engine.Logic
 											 int channel, int rmiType);
 		[UnmanagedThunk("Invoked from underlying object when it receives a request to invoke RMI method from somewhere " +
 						"else.")]
+		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		private bool ReceiveRmi(string methodName, RmiParameters parameters)
 		{
 			Type type = this.GetType();

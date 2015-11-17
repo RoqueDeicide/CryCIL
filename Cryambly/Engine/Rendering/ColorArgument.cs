@@ -1,4 +1,6 @@
-﻿namespace CryCil.Engine.Rendering
+﻿using System;
+
+namespace CryCil.Engine.Rendering
 {
 	/// <summary>
 	/// Enumeration of color arguments that can be used with <see cref="Renderer.SetColorOperation"/>.

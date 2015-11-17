@@ -1,4 +1,5 @@
-﻿using CryCil.Graphics;
+﻿using System;
+using CryCil.Graphics;
 
 namespace CryCil.Engine.Models.StaticObjects
 {
@@ -18,6 +19,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// <summary>
 		/// Coordinates of the vertex on UV map.
 		/// </summary>
-		public Vector2 TexturePosition; 
+		public Vector2 TexturePosition;
 	}
 }

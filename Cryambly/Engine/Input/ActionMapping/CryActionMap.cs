@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 
 namespace CryCil.Engine.Input.ActionMapping
@@ -25,12 +24,12 @@ namespace CryCil.Engine.Input.ActionMapping
 		/// </summary>
 		/// <param name="name">Name of the action to get.</param>
 		/// <returns>A valid object of type <see cref="CryInputAction"/> if action was found.</returns>
+		/// <exception cref="NullReferenceException">This instance is not usable.</exception>
 		public CryInputAction this[string name]
 		{
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetAction(this.handle, name);
 			}
@@ -52,10 +51,10 @@ namespace CryCil.Engine.Input.ActionMapping
 		/// <returns>
 		/// A valid object of type <see cref="CryInputAction"/> if the action was created successfully.
 		/// </returns>
+		/// <exception cref="NullReferenceException">This instance is not usable.</exception>
 		public CryInputAction CreateAction(string name)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return CreateActionInternal(this.handle, name);
 		}
@@ -64,15 +63,16 @@ namespace CryCil.Engine.Input.ActionMapping
 		/// </summary>
 		/// <param name="name">Name of the action.</param>
 		/// <returns>True, if action was found and removed.</returns>
+		/// <exception cref="NullReferenceException">This instance is not usable.</exception>
 		public bool RemoveAction(string name)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return RemoveActionInternal(this.handle, name);
 		}
 		#endregion
 		#region Utilities
+		/// <exception cref="NullReferenceException">This instance is not usable.</exception>
 		private void AssertInstance()
 		{
 			if (!this.IsValid)

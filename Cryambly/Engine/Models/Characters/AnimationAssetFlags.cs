@@ -18,7 +18,7 @@ namespace CryCil.Engine.Models.Characters
 		Cycle = 0x002,
 		/// <summary>
 		/// When set, specifies that this animation asset has valid information (has been loaded at least
-		/// once).
+		/// once) .
 		/// </summary>
 		Loaded = 0x004,
 

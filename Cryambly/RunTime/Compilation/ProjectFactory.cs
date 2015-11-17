@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using CryCil.Annotations;
@@ -17,11 +18,10 @@ namespace CryCil.RunTime.Compilation
 		{
 			// Find types in this assembly that implement IProjectFile interface.
 			projectTypes =
-				(
-					from type in AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes())
-					where type.ContainsAttribute<ProjectFileAttribute>()
-					select type
-					).ToList();
+				(from type in AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes())
+				 where type.ContainsAttribute<ProjectFileAttribute>()
+				 select type)
+					.ToList();
 
 #if DEBUG
 			if (projectTypes.Count == 0)
@@ -33,13 +33,11 @@ namespace CryCil.RunTime.Compilation
 			// Register extensions of project files.
 			Type[] ctorParameters = {typeof(string), typeof(string)};
 			projectExtensions =
-				(
-					from projectType in projectTypes
-					let attr = projectType.GetAttribute<ProjectFileAttribute>()
-					where !String.IsNullOrWhiteSpace(attr.Extension) &&
-						  projectType.GetConstructor(ctorParameters) != null
-					select attr.Extension
-					).ToList();
+				(from projectType in projectTypes
+				 let attr = projectType.GetAttribute<ProjectFileAttribute>()
+				 where !string.IsNullOrWhiteSpace(attr.Extension) && projectType.GetConstructor(ctorParameters) != null
+				 select attr.Extension)
+					.ToList();
 		}
 		/// <summary>
 		/// Creates a project file wrapper object of type that corresponds given description.
@@ -57,23 +55,13 @@ namespace CryCil.RunTime.Compilation
 			// Find name of the project and path to the file in the description.
 			List<int> quoteIndices = projectFileDescription.AllIndexesOf("\"");
 			string projectName =
-				projectFileDescription.Substring
-					(
-					 // Name of the project is between third and fourth quotation marks.
-					 quoteIndices[2] + 1, quoteIndices[3] - quoteIndices[2] - 1
-					);
+				projectFileDescription.Substring( // Name of the project is between third and fourth quotation marks.
+												 quoteIndices[2] + 1, quoteIndices[3] - quoteIndices[2] - 1);
 			string projectPath =
-				projectFileDescription.Substring
-					(
-					 // Path is between fifth and sixth quotation marks.
-					 quoteIndices[4] + 1, quoteIndices[5] - quoteIndices[4] - 1
-					);
-			return
-				Create
-					(
-					 projectName,
-					 Path.Combine(CodeSolution.SolutionFolder, projectPath)
-					);
+				projectFileDescription.Substring( // Path is between fifth and sixth quotation marks.
+												 quoteIndices[4] + 1, quoteIndices[5] - quoteIndices[4] - 1);
+			return Create(projectName,
+						  Path.Combine(CodeSolution.SolutionFolder, projectPath));
 		}
 		/// <summary>
 		/// Creates new wrapper object for a project file.
@@ -84,6 +72,7 @@ namespace CryCil.RunTime.Compilation
 		/// An instance of type that implements <see cref="IProject"/> that can parse given file format.
 		/// </returns>
 		[CanBeNull]
+		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		public static IProject Create([NotNull] string projectName, [NotNull] string projectFile)
 		{
 			// Check if file exists. If doesn't, then just ignore it.

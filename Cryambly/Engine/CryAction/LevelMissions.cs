@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
@@ -133,6 +134,7 @@ namespace CryCil.Engine.CryAction
 		/// The level missions collection is not valid.
 		/// </exception>
 		[MethodImpl(MethodImplOptions.InternalCall)]
+		[SuppressMessage("ReSharper", "ExceptionNotThrown")]
 		public extern bool Supports(string name);
 		/// <summary>
 		/// Enumerates through this collection.
@@ -157,6 +159,9 @@ namespace CryCil.Engine.CryAction
 		private extern LevelMission GetItem(int index);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private extern int GetCount();
+		/// <exception cref="NullReferenceException">
+		/// The level missions collection is not valid.
+		/// </exception>
 		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return this.GetEnumerator();

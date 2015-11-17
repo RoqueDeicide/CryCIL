@@ -1,4 +1,6 @@
-﻿namespace CryCil.Engine.DebugServices
+﻿using System;
+
+namespace CryCil.Engine.DebugServices
 {
 	/// <summary>
 	/// Represents a line that is drawn using <see cref="DebugEngine"/> class.

@@ -41,6 +41,7 @@ namespace CryCil.Engine.Physics.Primitives
 			/// <summary>
 			/// Gets or sets the matrix which rows form a basis of box's local coordinate system.
 			/// </summary>
+			/// <exception cref="ArgumentException">Given matrix must be orthonormal.</exception>
 			public Matrix33 Basis
 			{
 				get { return this.basis; }
@@ -87,6 +88,10 @@ namespace CryCil.Engine.Physics.Primitives
 			/// An optional array of entities to ignore during the test.
 			/// </param>
 			/// <returns>An array of contacts this primitive has with other entities.</returns>
+			/// <exception cref="OverflowException">
+			/// The array is multidimensional and contains more than <see cref="F:System.Int32.MaxValue"/>
+			/// elements.
+			/// </exception>
 			[CanBeNull]
 			[Pure]
 			public GeometryContact[] Intersect(ref IntersectionParameters parameters,
@@ -124,6 +129,10 @@ namespace CryCil.Engine.Physics.Primitives
 			/// An optional array of entities to ignore during the test.
 			/// </param>
 			/// <returns>An array of contacts this primitive has with other entities.</returns>
+			/// <exception cref="OverflowException">
+			/// The array is multidimensional and contains more than <see cref="F:System.Int32.MaxValue"/>
+			/// elements.
+			/// </exception>
 			[CanBeNull]
 			[Pure]
 			public GeometryContact[] Intersect(EntityQueryFlags queryFlags = EntityQueryFlags.All,
@@ -168,6 +177,10 @@ namespace CryCil.Engine.Physics.Primitives
 			/// An optional array of entities to ignore during the test.
 			/// </param>
 			/// <returns>Distance to the contact. If less then 0, then there is no contact.</returns>
+			/// <exception cref="OverflowException">
+			/// The array is multidimensional and contains more than <see cref="F:System.Int32.MaxValue"/>
+			/// elements.
+			/// </exception>
 			[Pure]
 			public float Cast(out GeometryContact contact, ref IntersectionParameters parameters, ref Vector3 direction,
 							  EntityQueryFlags queryFlags = EntityQueryFlags.All,
@@ -205,6 +218,10 @@ namespace CryCil.Engine.Physics.Primitives
 			/// An optional array of entities to ignore during the test.
 			/// </param>
 			/// <returns>Distance to the contact. If less then 0, then there is no contact.</returns>
+			/// <exception cref="OverflowException">
+			/// The array is multidimensional and contains more than <see cref="F:System.Int32.MaxValue"/>
+			/// elements.
+			/// </exception>
 			[Pure]
 			public float Cast(out GeometryContact contact, ref Vector3 direction,
 							  EntityQueryFlags queryFlags = EntityQueryFlags.All,

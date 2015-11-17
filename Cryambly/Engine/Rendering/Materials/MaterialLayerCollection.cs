@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using CryCil.Annotations;
 
@@ -10,6 +11,7 @@ namespace CryCil.Engine.Rendering
 	/// Represents a collection of material layers.
 	/// </summary>
 	/// <remarks>This collection does not support search-related functions.</remarks>
+	[SuppressMessage("ReSharper", "ExceptionNotThrown")]
 	public struct MaterialLayerCollection : IList<MaterialLayer>
 	{
 		#region Fields
@@ -52,6 +54,9 @@ namespace CryCil.Engine.Rendering
 		/// <summary>
 		/// Returns false.
 		/// </summary>
+		/// <exception cref="NullReferenceException" accessor="get">
+		/// Instance object is not valid.
+		/// </exception>
 		public bool IsReadOnly
 		{
 			get
@@ -153,6 +158,7 @@ namespace CryCil.Engine.Rendering
 		/// <summary>
 		/// Clears the entire collection.
 		/// </summary>
+		/// <exception cref="NullReferenceException">Instance object is not valid.</exception>
 		public void Clear()
 		{
 			if (!this.IsValid)
@@ -166,9 +172,10 @@ namespace CryCil.Engine.Rendering
 		/// </summary>
 		/// <param name="item">Ignored.</param>
 		/// <returns>Nothing</returns>
+		/// <exception cref="NotSupportedException">This operation is not supported.</exception>
 		public bool Contains(MaterialLayer item)
 		{
-			throw new NotSupportedException();
+			throw new NotSupportedException("This operation is not supported.");
 		}
 		/// <summary>
 		/// Copies the material layers to the array.
@@ -177,6 +184,10 @@ namespace CryCil.Engine.Rendering
 		/// <param name="arrayIndex">
 		/// Zero-based index of the first position in the array to start copying to.
 		/// </param>
+		/// <exception cref="NullReferenceException">Instance object is not valid.</exception>
+		/// <exception cref="ArgumentNullException">Given array cannot be of 0 length.</exception>
+		/// <exception cref="IndexOutOfRangeException">Index cannot be less then 0.</exception>
+		/// <exception cref="BufferOverflowException">Given array is too small.</exception>
 		public void CopyTo(MaterialLayer[] array, int arrayIndex)
 		{
 			if (!this.IsValid)
@@ -207,18 +218,20 @@ namespace CryCil.Engine.Rendering
 		/// </summary>
 		/// <param name="item">Ignored.</param>
 		/// <returns>Nothing</returns>
+		/// <exception cref="NotSupportedException">This operation is not supported.</exception>
 		public bool Remove(MaterialLayer item)
 		{
-			throw new NotSupportedException();
+			throw new NotSupportedException("This operation is not supported.");
 		}
 		/// <summary>
 		/// Throws <see cref="NotSupportedException"/>.
 		/// </summary>
 		/// <param name="item">Ignored.</param>
 		/// <returns>Nothing</returns>
+		/// <exception cref="NotSupportedException">This operation is not supported.</exception>
 		public int IndexOf(MaterialLayer item)
 		{
-			throw new NotSupportedException();
+			throw new NotSupportedException("This operation is not supported.");
 		}
 		/// <summary>
 		/// Inserts the material layer at the specified slot.
@@ -231,6 +244,7 @@ namespace CryCil.Engine.Rendering
 		/// <exception cref="IndexOutOfRangeException">
 		/// Index cannot be greater then number of layers in the collection.
 		/// </exception>
+		/// <exception cref="Exception">Given list is not big enough.</exception>
 		public void Insert(int index, MaterialLayer item)
 		{
 			if (!this.IsValid)
@@ -271,6 +285,7 @@ namespace CryCil.Engine.Rendering
 		/// <exception cref="IndexOutOfRangeException">
 		/// Index cannot be greater then or equal to number of layers in the collection.
 		/// </exception>
+		/// <exception cref="Exception">Given list is not big enough.</exception>
 		public void RemoveAt(int index)
 		{
 			if (!this.IsValid)
@@ -292,6 +307,7 @@ namespace CryCil.Engine.Rendering
 		}
 		#endregion
 		#region Utilities
+		/// <exception cref="NullReferenceException">Instance object is not valid.</exception>
 		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return this.GetEnumerator();

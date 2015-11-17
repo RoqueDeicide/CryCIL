@@ -225,24 +225,33 @@ namespace CryCil
 		/// <param name="firstIndex">    Index of first element of list to copy.</param>
 		/// <param name="firstComponent">Index of the first component to assign.</param>
 		/// <param name="count">         Number of components to assign.</param>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// Index of the first element to copy cannot be negative.
+		/// </exception>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// Index of the first component to assign cannot be negative.
+		/// </exception>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// Number of elements to copy is bigger then number of components to assign.
+		/// </exception>
 		public Vector4d(IList<double> values, int firstIndex, int firstComponent, int count)
 			: this()
 		{
 			if (values == null) return;
 			if (firstIndex < 0)
 			{
-				throw new ArgumentOutOfRangeException
-					("firstIndex", "Index of the first element to copy cannot be negative.");
+				throw new ArgumentOutOfRangeException("firstIndex",
+													  "Index of the first element to copy cannot be negative.");
 			}
 			if (firstComponent < 0)
 			{
-				throw new ArgumentOutOfRangeException
-					("firstComponent", "Index of the first component to assign cannot be negative.");
+				throw new ArgumentOutOfRangeException("firstComponent",
+													  "Index of the first component to assign cannot be negative.");
 			}
 			if (count > ComponentCount - firstComponent)
 			{
-				throw new ArgumentOutOfRangeException
-					("count", "Number of elements to copy is bigger then number of components to assign.");
+				throw new ArgumentOutOfRangeException("count",
+													  "Number of elements to copy is bigger then number of components to assign.");
 			}
 			for (int i = firstComponent; i < ComponentCount || i < count; i++)
 			{
@@ -303,8 +312,8 @@ namespace CryCil
 		/// <summary>
 		/// Scales a vector by the given value.
 		/// </summary>
-		/// <param name="value">The vector to scale.</param>
 		/// <param name="scale">The amount by which to scale the vector.</param>
+		/// <param name="value">The vector to scale.</param>
 		/// <returns>The scaled vector.</returns>
 		public static Vector4d operator *(double scale, Vector4d value)
 		{
@@ -483,11 +492,14 @@ namespace CryCil
 		/// <param name="offset">   Index of first component to be modified.</param>
 		/// <param name="newValues">New values for components to modify.</param>
 		/// <returns>Modified vector.</returns>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// Offset must be belong to interval [0; 3].
+		/// </exception>
 		public Vector4d ModifyVector(int offset, params double[] newValues)
 		{
 			if (offset < 0 || offset > 2)
 			{
-				throw new ArgumentOutOfRangeException("offset", "offset must be belong to interval [0; 3]");
+				throw new ArgumentOutOfRangeException("offset", "Offset must be belong to interval [0; 3].");
 			}
 
 			Vector4d result = new Vector4d(this.X, this.Y, this.Z, this.W);
@@ -723,13 +735,10 @@ namespace CryCil
 		/// </returns>
 		public bool Equals(Vector4d other, double epsilon)
 		{
-			return
-				(
-					Math.Abs(other.X - this.X) < epsilon &&
-					Math.Abs(other.Y - this.Y) < epsilon &&
-					Math.Abs(other.Z - this.Z) < epsilon &&
-					Math.Abs(other.W - this.W) < epsilon
-					);
+			return Math.Abs(other.X - this.X) < epsilon &&
+				   Math.Abs(other.Y - this.Y) < epsilon &&
+				   Math.Abs(other.Z - this.Z) < epsilon &&
+				   Math.Abs(other.W - this.W) < epsilon;
 		}
 		/// <summary>
 		/// Determines whether the specified <see cref="System.Object"/> is equal to this instance.

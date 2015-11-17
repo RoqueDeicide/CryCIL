@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 
 namespace CryCil.Engine.Physics
@@ -33,7 +32,6 @@ namespace CryCil.Engine.Physics
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetParams(this.handle);
 			}
@@ -45,7 +43,6 @@ namespace CryCil.Engine.Physics
 					throw new ArgumentException(
 						"Cannot accept the instance of type PhysicsParametersTetraLattice that was created using default constructor.");
 				}
-				Contract.EndContractBlock();
 
 				SetParams(this.handle, ref value);
 			}
@@ -64,6 +61,19 @@ namespace CryCil.Engine.Physics
 		/// <param name="tetrahedra">
 		/// An array of indexes of points that form the tetrahedra that form the lattice.
 		/// </param>
+		/// <exception cref="ArgumentNullException">
+		/// Array of points that form the lattice needs to have at least 4 vectors.
+		/// </exception>
+		/// <exception cref="ArgumentNullException">
+		/// The array of indexes cannot be null or empty.
+		/// </exception>
+		/// <exception cref="ArgumentException">
+		/// Number of indexes that form tetrahedra must be divisible by 4.
+		/// </exception>
+		/// <exception cref="OverflowException">
+		/// The array is multidimensional and contains more than <see cref="F:System.Int32.MaxValue"/>
+		/// elements.
+		/// </exception>
 		public unsafe TetraLattice(Vector3[] points, int[] tetrahedra)
 		{
 			this.handle = IntPtr.Zero;
@@ -81,7 +91,6 @@ namespace CryCil.Engine.Physics
 			{
 				throw new ArgumentException("Number of indexes that form tetrahedra must be divisible by 4.", "tetrahedra");
 			}
-			Contract.EndContractBlock();
 
 			fixed (Vector3* pts = points)
 			fixed (int* tets = tetrahedra)
@@ -109,12 +118,12 @@ namespace CryCil.Engine.Physics
 				throw new ArgumentOutOfRangeException("maxTrianglesPerBVNode",
 													  "Maximal number of triangles per BV node must be more then 0.");
 			}
-			Contract.EndContractBlock();
 
 			return CreateSkinMesh(this.handle, maxTrianglesPerBVNode);
 		}
 		#endregion
 		#region Utilities
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		private void AssertInstance()
 		{
 			if (!this.IsValid)

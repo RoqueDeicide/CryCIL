@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 namespace CryCil.Engine.CryAction
@@ -8,6 +9,7 @@ namespace CryCil.Engine.CryAction
 	/// <summary>
 	/// Represents a collection of level CryEngine level system is aware of.
 	/// </summary>
+	[SuppressMessage("ReSharper", "ExceptionNotThrown")]
 	public class Levels : IEnumerable<Level>
 	{
 		#region Properties

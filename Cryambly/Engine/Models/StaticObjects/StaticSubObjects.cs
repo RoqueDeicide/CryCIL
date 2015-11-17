@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using CryCil.Engine.Physics;
 
 namespace CryCil.Engine.Models.StaticObjects
@@ -50,7 +49,6 @@ namespace CryCil.Engine.Models.StaticObjects
 					throw new IndexOutOfRangeException("Index cannot be greater then or equal to number of sub-objects.");
 				}
 #endif
-				Contract.EndContractBlock();
 
 				return StaticObject.GetSubObject(this.handle, index);
 			}
@@ -65,14 +63,12 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return StaticObject.GetSubObjectCount(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				StaticObject.SetSubObjectCount(this.handle, value);
 			}
@@ -121,7 +117,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public void Add(StaticObject item)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			StaticObject.AddSubObject(this.handle, item);
 		}
@@ -133,7 +128,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public void RemoveAt(int index)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			StaticObject.RemoveSubObject(this.handle, index);
 		}
@@ -146,7 +140,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public StaticSubObject Find(string name)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return StaticObject.FindSubObject(this.handle, name);
 		}
@@ -159,7 +152,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public StaticSubObject FindCga(string name)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return StaticObject.FindSubObject_CGA(this.handle, name);
 		}
@@ -172,7 +164,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public StaticSubObject FindFullName(string name)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return StaticObject.FindSubObject_StrStr(this.handle, name);
 		}
@@ -187,16 +178,16 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// <exception cref="ArgumentNullException">
 		/// Static object to copy a sub-object from cannot be null.
 		/// </exception>
-		/// <exception cref="ArgumentNullException">
+		/// <exception cref="ArgumentOutOfRangeException">
 		/// Index of the sub-object to copy cannot be less then 0.
 		/// </exception>
-		/// <exception cref="ArgumentNullException">
+		/// <exception cref="ArgumentOutOfRangeException">
 		/// Index of the sub-object to copy cannot be greater then or equal to number of sub-objects.
 		/// </exception>
-		/// <exception cref="ArgumentNullException">
+		/// <exception cref="ArgumentOutOfRangeException">
 		/// Index of the sub-object slot to copy to cannot be less then 0.
 		/// </exception>
-		/// <exception cref="ArgumentNullException">
+		/// <exception cref="ArgumentOutOfRangeException">
 		/// Index of the sub-object slot to copy to cannot be greater then or equal to number of
 		/// sub-objects.
 		/// </exception>
@@ -214,9 +205,9 @@ namespace CryCil.Engine.Models.StaticObjects
 			}
 			if (sourceIndex >= source.SubObjects.Count)
 			{
-				throw new ArgumentOutOfRangeException
-					("sourceIndex",
-					 "Index of the sub-object to copy cannot be greater then or equal to number of sub-objects.");
+				throw new ArgumentOutOfRangeException("sourceIndex",
+													  "Index of the sub-object to copy cannot be greater then or equal " +
+													  "to number of sub-objects.");
 			}
 			if (destinationIndex < 0)
 			{
@@ -225,11 +216,10 @@ namespace CryCil.Engine.Models.StaticObjects
 			}
 			if (destinationIndex >= this.Count)
 			{
-				throw new ArgumentOutOfRangeException
-					("destinationIndex",
-					 "Index of the sub-object slot to copy to cannot be greater then or equal to number of sub-objects.");
+				throw new ArgumentOutOfRangeException("destinationIndex",
+													  "Index of the sub-object slot to copy to cannot be greater then or " +
+													  "equal to number of sub-objects.");
 			}
-			Contract.EndContractBlock();
 
 			return StaticObject.CopySubObject(this.handle, destinationIndex, source, sourceIndex);
 		}
@@ -255,13 +245,13 @@ namespace CryCil.Engine.Models.StaticObjects
 							   string szPropsOverride = null)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return StaticObject.PhysicalizeSubobjects(this.handle, entity, ref matrix, mass, density, id0,
 													  szPropsOverride);
 		}
 		#endregion
 		#region Utilities
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		private void AssertInstance()
 		{
 			if (!this.IsValid)
@@ -269,30 +259,37 @@ namespace CryCil.Engine.Models.StaticObjects
 				throw new NullReferenceException("This instance is not valid.");
 			}
 		}
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return this.GetEnumerator();
 		}
+		/// <exception cref="NotSupportedException">This operation is not supported.</exception>
 		void ICollection<StaticSubObject>.Add(StaticSubObject item)
 		{
 			throw new NotSupportedException();
 		}
+		/// <exception cref="NotSupportedException">This operation is not supported.</exception>
 		bool ICollection<StaticSubObject>.Contains(StaticSubObject item)
 		{
 			throw new NotSupportedException();
 		}
+		/// <exception cref="NotSupportedException">This operation is not supported.</exception>
 		void ICollection<StaticSubObject>.CopyTo(StaticSubObject[] array, int arrayIndex)
 		{
 			throw new NotSupportedException();
 		}
+		/// <exception cref="NotSupportedException">This operation is not supported.</exception>
 		bool ICollection<StaticSubObject>.Remove(StaticSubObject item)
 		{
 			throw new NotSupportedException();
 		}
+		/// <exception cref="NotSupportedException">This operation is not supported.</exception>
 		int IList<StaticSubObject>.IndexOf(StaticSubObject item)
 		{
 			throw new NotSupportedException();
 		}
+		/// <exception cref="NotSupportedException">This operation is not supported.</exception>
 		void IList<StaticSubObject>.Insert(int index, StaticSubObject item)
 		{
 			throw new NotSupportedException();

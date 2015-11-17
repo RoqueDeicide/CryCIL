@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security;
 using System.Text;
 
 namespace CryCil.Engine
@@ -21,6 +23,7 @@ namespace CryCil.Engine
 	/// <summary>
 	/// Provides access to CryEngine Console API.
 	/// </summary>
+	[SuppressMessage("ReSharper", "ExceptionNotThrown")]
 	public static class CryConsole
 	{
 		#region Fields
@@ -125,6 +128,10 @@ namespace CryCil.Engine
 		/// <exception cref="ArgumentNullException">
 		/// Name of the command to execute must not be null.
 		/// </exception>
+		/// <exception cref="OverflowException">
+		/// The sum is larger than <see cref="F:System.Int32.MaxValue"/>.
+		/// </exception>
+		/// <exception cref="Exception">A delegate callback throws an exception.</exception>
 		public static void ExecuteCommand(string name, string[] arguments, bool silent = true, bool deferExecution = false)
 		{
 			if (name == null)
@@ -287,6 +294,14 @@ namespace CryCil.Engine
 		/// <exception cref="ArgumentException">
 		/// Unable to use instance method as a console variable callback.
 		/// </exception>
+		/// <exception cref="SecurityException">
+		/// The caller does not have the necessary permission to perform this operation.
+		/// </exception>
+		/// <exception cref="MemberAccessException">
+		/// The caller does not have access to the method represented by the delegate (for example, if the
+		/// method is private).
+		/// </exception>
+		/// <exception cref="Exception">A delegate callback throws an exception.</exception>
 		public static ConsoleVariable RegisterVariable(string name, float value, ConsoleFlags flags,
 													   ConsoleVariableCallback callback = null,
 													   string help = null)
@@ -347,6 +362,14 @@ namespace CryCil.Engine
 		/// <exception cref="ArgumentException">
 		/// Unable to use instance method as a console variable callback.
 		/// </exception>
+		/// <exception cref="SecurityException">
+		/// The caller does not have the necessary permission to perform this operation.
+		/// </exception>
+		/// <exception cref="MemberAccessException">
+		/// The caller does not have access to the method represented by the delegate (for example, if the
+		/// method is private).
+		/// </exception>
+		/// <exception cref="Exception">A delegate callback throws an exception.</exception>
 		public static ConsoleVariable RegisterVariable(string name, int value, ConsoleFlags flags,
 													   ConsoleVariableCallback callback = null,
 													   string help = null)
@@ -407,6 +430,14 @@ namespace CryCil.Engine
 		/// <exception cref="ArgumentException">
 		/// Unable to use instance method as a console variable callback.
 		/// </exception>
+		/// <exception cref="SecurityException">
+		/// The caller does not have the necessary permission to perform this operation.
+		/// </exception>
+		/// <exception cref="MemberAccessException">
+		/// The caller does not have access to the method represented by the delegate (for example, if the
+		/// method is private).
+		/// </exception>
+		/// <exception cref="Exception">A delegate callback throws an exception.</exception>
 		public static ConsoleVariable RegisterVariable(string name, string value, ConsoleFlags flags,
 													   ConsoleVariableCallback callback = null,
 													   string help = null)
@@ -471,6 +502,8 @@ namespace CryCil.Engine
 																	   ConsoleFlags flags, IntPtr thunk,
 																	   string help = null);
 		[UnmanagedThunk("Invoked by underlying framework to execute appropriate console command.")]
+		[SuppressMessage("ReSharper", "ExceptionNotDocumentedOptional")]
+		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		private static void ExecuteMonoCommand(string commandLine)
 		{
 			string[] parts = commandLine.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);

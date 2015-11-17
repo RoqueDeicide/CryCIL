@@ -1,4 +1,6 @@
-﻿namespace CryCil.Engine.Physics
+﻿using System;
+
+namespace CryCil.Engine.Physics
 {
 	/// <summary>
 	/// Defines a signature of methods that can handle <see cref="PhysicalWorld.BoundingBoxOverlapped"/>

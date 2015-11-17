@@ -50,14 +50,16 @@ namespace CryCil
 		/// The index of the component to access. Use 0 for the X component and 1 for the Y component.
 		/// </param>
 		/// <returns>The value of the component at the specified index.</returns>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// Attempt to access vector component other then X or Y.
+		/// </exception>
 		public unsafe float this[int index]
 		{
 			get
 			{
 				if ((index | 0x1) != 0x1) //index < 0 || index > 1
 				{
-					throw new ArgumentOutOfRangeException("index", "Attempt to access vector" +
-																   " component other then X or Y.");
+					throw new ArgumentOutOfRangeException("index", "Attempt to access vector component other then X or Y.");
 				}
 				Contract.EndContractBlock();
 
@@ -70,8 +72,7 @@ namespace CryCil
 			{
 				if ((index | 0x1) != 0x1) //index < 0 || index > 1
 				{
-					throw new ArgumentOutOfRangeException("index", "Attempt to access vector" +
-																   " component other then X or Y.");
+					throw new ArgumentOutOfRangeException("index", "Attempt to access vector component other then X or Y.");
 				}
 				Contract.EndContractBlock();
 

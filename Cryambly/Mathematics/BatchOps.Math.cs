@@ -1,4 +1,6 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
 
 namespace CryCil
 {
@@ -38,6 +40,7 @@ namespace CryCil
 		/// <summary>
 		/// Defines functions that perform math operations in batches.
 		/// </summary>
+		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		public static unsafe class Math
 		{
 			/// <summary>

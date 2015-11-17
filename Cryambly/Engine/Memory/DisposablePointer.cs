@@ -61,6 +61,7 @@ namespace CryCil.Engine.Memory
 				return;
 			}
 
+			// ReSharper disable once ExceptionNotDocumented
 			this.handle = CryMarshal.Reallocate(this.handle, 0);
 
 			if (suppressFinalize)

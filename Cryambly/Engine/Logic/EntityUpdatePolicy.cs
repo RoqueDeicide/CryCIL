@@ -1,4 +1,6 @@
-﻿namespace CryCil.Engine.Logic
+﻿using System;
+
+namespace CryCil.Engine.Logic
 {
 	/// <summary>
 	/// Enumeration of policies that define when to automatically activate entities.

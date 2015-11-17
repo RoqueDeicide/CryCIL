@@ -56,6 +56,9 @@ namespace CryCil.Engine.Files
 		/// <exception cref="ObjectDisposedException">This stream is closed.</exception>
 		/// <exception cref="ArgumentException">Cannot set position of the stream beyond 4GB.</exception>
 		/// <exception cref="ArgumentException">Cannot extend the file beyond 4GB when seeking.</exception>
+		/// <exception cref="OutOfMemoryException">
+		/// Unable to expand the file length to the given number of bytes.
+		/// </exception>
 		public override long Position
 		{
 			get
@@ -72,7 +75,7 @@ namespace CryCil.Engine.Files
 				{
 					throw new ObjectDisposedException("This stream is closed.");
 				}
-				if (value > UInt32.MaxValue)
+				if (value > uint.MaxValue)
 				{
 					throw new ArgumentException("Cannot set position of the stream beyond 4GB.");
 				}
@@ -110,6 +113,7 @@ namespace CryCil.Engine.Files
 		/// <summary>
 		/// Updates the file this stream is associated with.
 		/// </summary>
+		/// <exception cref="ObjectDisposedException">This stream is closed.</exception>
 		public override void Flush()
 		{
 			if (!this.alive)
@@ -180,6 +184,9 @@ namespace CryCil.Engine.Files
 		/// <exception cref="ArgumentOutOfRangeException">Unknown origin was specified.</exception>
 		/// <exception cref="ArgumentException">Cannot set position of the stream beyond 4GB.</exception>
 		/// <exception cref="ArgumentException">Cannot extend the file beyond 4GB when seeking.</exception>
+		/// <exception cref="OutOfMemoryException">
+		/// Unable to expand the file length to the given number of bytes.
+		/// </exception>
 		public override long Seek(long offset, SeekOrigin origin)
 		{
 			if (!this.alive)
@@ -235,7 +242,7 @@ namespace CryCil.Engine.Files
 			{
 				throw new ArgumentOutOfRangeException("value", "Cannot set the length of the file to the negative value.");
 			}
-			if (value > UInt32.MaxValue)
+			if (value > uint.MaxValue)
 			{
 				throw new ArgumentOutOfRangeException("value", "Cannot set the length of the file to more then 4GB.");
 			}
@@ -246,8 +253,7 @@ namespace CryCil.Engine.Files
 				IntPtr ptr = CryMarshal.Reallocate((IntPtr)this.bytes, memSize);
 				if (ptr == IntPtr.Zero)
 				{
-					throw new OutOfMemoryException
-						(string.Format("Unable to expand the file length to {0} bytes.", value));
+					throw new OutOfMemoryException(string.Format("Unable to expand the file length to {0} bytes.", value));
 				}
 				this.bytes = (byte*)ptr;
 				this.length = (uint)memSize;
@@ -276,6 +282,9 @@ namespace CryCil.Engine.Files
 		/// Cannot write into the stream for the read-only archive.
 		/// </exception>
 		/// <exception cref="ArgumentException">Cannot extend the file beyond 4GB when writing.</exception>
+		/// <exception cref="OutOfMemoryException">
+		/// Unable to expand the file length to the given number of bytes.
+		/// </exception>
 		public override void Write(byte[] buffer, int offset, int count)
 		{
 			if (offset < 0)
@@ -304,6 +313,9 @@ namespace CryCil.Engine.Files
 		/// Cannot write into the stream for the read-only archive.
 		/// </exception>
 		/// <exception cref="ArgumentException">Cannot extend the file beyond 4GB when writing.</exception>
+		/// <exception cref="OutOfMemoryException">
+		/// Unable to expand the file length to the given number of bytes.
+		/// </exception>
 		public override void WriteByte(byte value)
 		{
 			this.Write(&value, 1);
@@ -330,6 +342,14 @@ namespace CryCil.Engine.Files
 		#region Utilities
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		internal static extern void UpdateFile(IntPtr path, byte* data, uint length);
+		/// <exception cref="ObjectDisposedException">This stream is closed.</exception>
+		/// <exception cref="NotSupportedException">
+		/// Cannot write into the stream for the read-only archive.
+		/// </exception>
+		/// <exception cref="OutOfMemoryException">
+		/// Unable to expand the file length to the given number of bytes.
+		/// </exception>
+		/// <exception cref="ArgumentException">Cannot extend the file beyond 4GB when writing.</exception>
 		private void Write(byte* data, int count)
 		{
 			if (!this.alive)

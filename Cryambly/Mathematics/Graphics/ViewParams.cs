@@ -1,4 +1,5 @@
-﻿using CryCil.Engine.Logic;
+﻿using System;
+using CryCil.Engine.Logic;
 using CryCil.Geometry;
 
 namespace CryCil.Graphics

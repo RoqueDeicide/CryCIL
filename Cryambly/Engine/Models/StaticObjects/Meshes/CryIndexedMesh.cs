@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using CryCil.Engine.Physics;
 using CryCil.Engine.Rendering;
@@ -44,7 +43,8 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// </summary>
 		public int FaceCount;
 		/// <summary>
-		/// Number of faces that can be accessed via <see cref="VertexPositions"/>, <see cref="Normals"/> and <see cref="Colors"/>.
+		/// Number of faces that can be accessed via <see cref="VertexPositions"/>, <see cref="Normals"/>
+		/// and <see cref="Colors"/>.
 		/// </summary>
 		public int VertexCount;
 		/// <summary>
@@ -81,7 +81,6 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				IndexedMeshData desc;
 				GetMeshDescription(this.handle, out desc);
@@ -97,14 +96,12 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetMesh(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetMesh(this.handle, value);
 			}
@@ -113,7 +110,8 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// Gets or sets the number of faces that comprise this mesh.
 		/// </summary>
 		/// <remarks>
-		/// Setting this property invalidates <see cref="IndexedMeshData.Faces"/> pointer in <see cref="Data"/>.
+		/// Setting this property invalidates <see cref="IndexedMeshData.Faces"/> pointer in
+		/// <see cref="Data"/>.
 		/// </remarks>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public int FaceCount
@@ -121,14 +119,12 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetFaceCount(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetFaceCount(this.handle, value);
 			}
@@ -137,7 +133,9 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// Gets or sets the number of vertices that comprise this mesh.
 		/// </summary>
 		/// <remarks>
-		/// Setting this property invalidates <see cref="IndexedMeshData.VertexPositions"/>, <see cref="IndexedMeshData.Normals"/> and <see cref="IndexedMeshData.Colors"/> pointers in <see cref="Data"/>.
+		/// Setting this property invalidates <see cref="IndexedMeshData.VertexPositions"/>,
+		/// <see cref="IndexedMeshData.Normals"/> and <see cref="IndexedMeshData.Colors"/> pointers in
+		/// <see cref="Data"/>.
 		/// </remarks>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public int VertexCount
@@ -145,14 +143,12 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetVertexCount(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetVertexCount(this.handle, value);
 			}
@@ -161,7 +157,8 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// Gets or sets the number of texture coordinates that map this mesh onto texture map.
 		/// </summary>
 		/// <remarks>
-		/// Setting this property invalidates <see cref="IndexedMeshData.TextureCoordinates"/> pointer in <see cref="Data"/>.
+		/// Setting this property invalidates <see cref="IndexedMeshData.TextureCoordinates"/> pointer in
+		/// <see cref="Data"/>.
 		/// </remarks>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public int TextureCoordinatesCount
@@ -169,14 +166,12 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetTexCoordCount(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetTexCoordCount(this.handle, value);
 			}
@@ -185,7 +180,8 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// Gets or sets the number of indices that form faces that comprise this mesh.
 		/// </summary>
 		/// <remarks>
-		/// Setting this property invalidates <see cref="IndexedMeshData.Indices"/> pointer in <see cref="Data"/>.
+		/// Setting this property invalidates <see cref="IndexedMeshData.Indices"/> pointer in
+		/// <see cref="Data"/>.
 		/// </remarks>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public int IndexCount
@@ -193,14 +189,12 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetIndexCount(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetIndexCount(this.handle, value);
 			}
@@ -214,14 +208,12 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetBBox(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetBBox(this.handle, ref value);
 			}
@@ -229,12 +221,12 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// <summary>
 		/// Gets the collection of mesh subsets.
 		/// </summary>
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public CryIndexedMeshSubsets Subsets
 		{
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return new CryIndexedMeshSubsets(this.handle);
 			}
@@ -267,7 +259,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public void ReleaseData()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			FreeStreams(this.handle);
 		}
@@ -278,7 +269,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public void CalculateBoundingBox()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			CalcBBox(this.handle);
 		}
@@ -289,12 +279,12 @@ namespace CryCil.Engine.Models.StaticObjects
 		public void Optimize()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			OptimizeInternal(this.handle);
 		}
 		#endregion
 		#region Utilities
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		private void AssertInstance()
 		{
 			if (!this.IsValid)

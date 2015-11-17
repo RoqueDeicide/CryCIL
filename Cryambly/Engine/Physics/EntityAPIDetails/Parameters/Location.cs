@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 using CryCil.Annotations;
 using CryCil.Engine.Memory;
 using CryCil.Geometry;
@@ -189,8 +190,10 @@ namespace CryCil.Engine.Physics
 		/// Optional value that indicates whether <see cref="OBB"/> must be used to register new position
 		/// of the entity in the entity grid instead of <see cref="BoundingBox"/>.
 		/// </param>
+		/// <exception cref="OutOfMemoryException">Unable to allocate native memory block.</exception>
 		public PhysicsParametersLocation(Vector3 position, Matrix33 orientation,
-										 PhysicsSimulationClass simClass = PhysicsSimulationClass.Unused, bool recalcBounds = true,
+										 PhysicsSimulationClass simClass = PhysicsSimulationClass.Unused,
+										 bool recalcBounds = true,
 										 bool useOBB = false)
 			: this(position, UnusedValue.Quaternion, UnusedValue.Single, null, null, simClass, recalcBounds, useOBB)
 		{
@@ -237,8 +240,10 @@ namespace CryCil.Engine.Physics
 		/// Optional value that indicates whether <see cref="OBB"/> must be used to register new position
 		/// of the entity in the entity grid instead of <see cref="BoundingBox"/>.
 		/// </param>
+		/// <exception cref="OutOfMemoryException">Unable to allocate native memory block.</exception>
 		public PhysicsParametersLocation(Vector3 position, Matrix33 orientation, float scale,
-										 PhysicsSimulationClass simClass = PhysicsSimulationClass.Unused, bool recalcBounds = true,
+										 PhysicsSimulationClass simClass = PhysicsSimulationClass.Unused,
+										 bool recalcBounds = true,
 										 bool useOBB = false)
 			: this(position, UnusedValue.Quaternion, scale, null, null, simClass, recalcBounds, useOBB)
 		{
@@ -279,8 +284,10 @@ namespace CryCil.Engine.Physics
 		/// Optional value that indicates whether <see cref="OBB"/> must be used to register new position
 		/// of the entity in the entity grid instead of <see cref="BoundingBox"/>.
 		/// </param>
+		/// <exception cref="OutOfMemoryException">Unable to allocate native memory block.</exception>
 		public PhysicsParametersLocation(Matrix33 orientation,
-										 PhysicsSimulationClass simClass = PhysicsSimulationClass.Unused, bool recalcBounds = true,
+										 PhysicsSimulationClass simClass = PhysicsSimulationClass.Unused,
+										 bool recalcBounds = true,
 										 bool useOBB = false)
 			: this(UnusedValue.Vector, UnusedValue.Quaternion, UnusedValue.Single, null, null, simClass, recalcBounds,
 				   useOBB)
@@ -304,7 +311,8 @@ namespace CryCil.Engine.Physics
 		/// of the entity in the entity grid instead of <see cref="BoundingBox"/>.
 		/// </param>
 		public PhysicsParametersLocation(Quaternion orientation, float scale,
-										 PhysicsSimulationClass simClass = PhysicsSimulationClass.Unused, bool recalcBounds = true,
+										 PhysicsSimulationClass simClass = PhysicsSimulationClass.Unused,
+										 bool recalcBounds = true,
 										 bool useOBB = false)
 			: this(UnusedValue.Vector, orientation, scale, null, null, simClass, recalcBounds, useOBB)
 		{
@@ -324,8 +332,10 @@ namespace CryCil.Engine.Physics
 		/// Optional value that indicates whether <see cref="OBB"/> must be used to register new position
 		/// of the entity in the entity grid instead of <see cref="BoundingBox"/>.
 		/// </param>
+		/// <exception cref="OutOfMemoryException">Unable to allocate native memory block.</exception>
 		public PhysicsParametersLocation(Matrix33 orientation, float scale,
-										 PhysicsSimulationClass simClass = PhysicsSimulationClass.Unused, bool recalcBounds = true,
+										 PhysicsSimulationClass simClass = PhysicsSimulationClass.Unused,
+										 bool recalcBounds = true,
 										 bool useOBB = false)
 			: this(UnusedValue.Vector, UnusedValue.Quaternion, scale, null, null, simClass, recalcBounds, useOBB)
 		{
@@ -347,7 +357,8 @@ namespace CryCil.Engine.Physics
 		/// of the entity in the entity grid instead of <see cref="BoundingBox"/>.
 		/// </param>
 		public PhysicsParametersLocation(float scale,
-										 PhysicsSimulationClass simClass = PhysicsSimulationClass.Unused, bool recalcBounds = true,
+										 PhysicsSimulationClass simClass = PhysicsSimulationClass.Unused,
+										 bool recalcBounds = true,
 										 bool useOBB = false)
 			: this(UnusedValue.Vector, UnusedValue.Quaternion, scale, null, null, simClass, recalcBounds, useOBB)
 		{
@@ -369,8 +380,10 @@ namespace CryCil.Engine.Physics
 		/// Optional value that indicates whether <see cref="OBB"/> must be used to register new position
 		/// of the entity in the entity grid instead of <see cref="BoundingBox"/>.
 		/// </param>
+		/// <exception cref="OutOfMemoryException">Unable to allocate native memory block.</exception>
 		public PhysicsParametersLocation(Matrix34 transformation,
-										 PhysicsSimulationClass simClass = PhysicsSimulationClass.Unused, bool recalcBounds = true,
+										 PhysicsSimulationClass simClass = PhysicsSimulationClass.Unused,
+										 bool recalcBounds = true,
 										 bool useOBB = false)
 			: this(UnusedValue.Vector, UnusedValue.Quaternion, UnusedValue.Single, null, null, simClass, recalcBounds,
 				   useOBB)

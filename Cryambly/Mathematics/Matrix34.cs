@@ -148,6 +148,9 @@ namespace CryCil
 		/// <summary>
 		/// Gets inverted variation of this matrix.
 		/// </summary>
+		/// <exception cref="DivideByZeroException">
+		/// Attempt was made to invert a matrix which determinant is equal to 0.
+		/// </exception>
 		public Matrix34 Inverted
 		{
 			get

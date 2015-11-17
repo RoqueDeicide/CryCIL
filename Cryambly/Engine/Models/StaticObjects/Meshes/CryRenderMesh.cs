@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using CryCil.Geometry;
 using CryCil.Utilities;
@@ -11,7 +10,7 @@ namespace CryCil.Engine.Models.StaticObjects
 	/// </summary>
 	/// <example>
 	/// Example of updating the colors in VRAM:
-	/// <code source="MeshRecoloring.cs" />
+	/// <code source="MeshRecoloring.cs"/>
 	/// </example>
 	public unsafe struct CryRenderMesh
 	{
@@ -35,7 +34,6 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return CanRender(this.handle);
 			}
@@ -49,7 +47,6 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetTypeName(this.handle);
 			}
@@ -63,7 +60,6 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetSourceName(this.handle);
 			}
@@ -77,7 +73,6 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetIndicesCount(this.handle);
 			}
@@ -91,7 +86,6 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetVerticesCount(this.handle);
 			}
@@ -105,7 +99,6 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetVertexFormat(this.handle);
 			}
@@ -119,7 +112,6 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetMeshType(this.handle);
 			}
@@ -133,7 +125,6 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetGeometricMeanFaceArea(this.handle);
 			}
@@ -147,7 +138,6 @@ namespace CryCil.Engine.Models.StaticObjects
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetSkinningDataVegetation(this.handle, value);
 			}
@@ -161,7 +151,6 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetIndexedMesh(this.handle);
 			}
@@ -176,7 +165,6 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GenerateMorphWeights(this.handle);
 			}
@@ -190,14 +178,12 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetMorphBuddy(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetMorphBuddy(this.handle, value);
 			}
@@ -211,7 +197,6 @@ namespace CryCil.Engine.Models.StaticObjects
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetCustomTexID(this.handle, value);
 			}
@@ -225,14 +210,12 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetVertexContainer(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetVertexContainer(this.handle, value);
 			}
@@ -246,7 +229,6 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				BoundingBox box;
 				GetBBox(this.handle, out box.Minimum, out box.Maximum);
@@ -255,7 +237,6 @@ namespace CryCil.Engine.Models.StaticObjects
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetBBox(this.handle, ref value.Minimum, ref value.Maximum);
 			}
@@ -269,7 +250,6 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return IsEmptyInternal(this.handle);
 			}
@@ -304,7 +284,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public void IncrementReferenceCount()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			AddRef(this.handle);
 		}
@@ -318,7 +297,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public int DecrementReferenceCount()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return Release(this.handle);
 		}
@@ -345,7 +323,6 @@ namespace CryCil.Engine.Models.StaticObjects
 							ref Vector3 positionOffset, bool requiresLock)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return SetMeshInternal(this.handle, mesh, secondayColorsSetOffset, flags, ref positionOffset, requiresLock);
 		}
@@ -360,7 +337,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public void CopyTo(CryRenderMesh destination, int appendVertex = 0, bool dynamic = false, bool fullCopy = true)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			CopyToInternal(this.handle, destination, appendVertex, dynamic, fullCopy);
 		}
@@ -375,7 +351,6 @@ namespace CryCil.Engine.Models.StaticObjects
 											 CryMeshBoneMappingUint16* pExtraBoneMapping)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			SetSkinningDataCharacterInternal(this.handle, mesh, pBoneMapping, pExtraBoneMapping);
 		}
@@ -397,11 +372,11 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// is passed, <see cref="CryRenderMesh.UnlockStream"/> will need to be called.
 		/// </param>
 		/// <returns>True, if successful.</returns>
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public bool UpdateVertices(void* vertices, int vertexCount, int offset, int stream, uint copyFlags,
 								   bool requiresLock = true)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return UpdateVerticesInternal(this.handle, vertices, vertexCount, offset, stream, copyFlags, requiresLock);
 		}
@@ -419,10 +394,10 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// <see cref="CryRenderMesh.UnlockIndexStream"/> will need to be called.
 		/// </param>
 		/// <returns>True, if successful.</returns>
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public bool UpdateIndices(uint* indices, int indexCount, int offset, uint copyFlags, bool requiresLock = true)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return UpdateIndicesInternal(this.handle, indices, indexCount, offset, copyFlags, requiresLock);
 		}
@@ -433,7 +408,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public void GenerateQTangents()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			GenerateQTangentsInternal(this.handle);
 		}
@@ -444,7 +418,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public void CalculateBoundingBox()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			UpdateBBoxFromMesh(this.handle);
 		}
@@ -463,7 +436,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public StridedPointer GetPositionsPointerNoCache(RenderMeshAccessFlags flags, int offset = 0)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			int stride;
 			byte* ptr = GetPosPtrNoCache(this.handle, out stride, flags, offset);
@@ -484,7 +456,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public StridedPointer GetPositionsPointer(RenderMeshAccessFlags flags, int offset = 0)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			int stride;
 			byte* ptr = GetPosPtr(this.handle, out stride, flags, offset);
@@ -505,7 +476,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public StridedPointer GetColorsPointer(RenderMeshAccessFlags flags, int offset = 0)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			int stride;
 			byte* ptr = GetColorPtr(this.handle, out stride, flags, offset);
@@ -526,7 +496,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public StridedPointer GetNormalsPointer(RenderMeshAccessFlags flags, int offset = 0)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			int stride;
 			byte* ptr = GetNormPtr(this.handle, out stride, flags, offset);
@@ -547,7 +516,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public StridedPointer GetUVPointerNoCache(RenderMeshAccessFlags flags, int offset = 0)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			int stride;
 			byte* ptr = GetUVPtrNoCache(this.handle, out stride, flags, offset);
@@ -568,7 +536,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public StridedPointer GetUVPointer(RenderMeshAccessFlags flags, int offset = 0)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			int stride;
 			byte* ptr = GetUVPtr(this.handle, out stride, flags, offset);
@@ -589,7 +556,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public StridedPointer GetTangentsPointer(RenderMeshAccessFlags flags, int offset = 0)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			int stride;
 			byte* ptr = GetTangentPtr(this.handle, out stride, flags, offset);
@@ -610,7 +576,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public StridedPointer GetQTangentsPointer(RenderMeshAccessFlags flags, int offset = 0)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			int stride;
 			byte* ptr = GetQTangentPtr(this.handle, out stride, flags, offset);
@@ -632,7 +597,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public StridedPointer GetHWSkinPointer(RenderMeshAccessFlags flags, int offset = 0, bool remapped = false)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			int stride;
 			byte* ptr = GetHWSkinPtr(this.handle, out stride, flags, offset, remapped);
@@ -653,7 +617,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public StridedPointer GetVelocityPointer(RenderMeshAccessFlags flags, int offset = 0)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			int stride;
 			byte* ptr = GetVelocityPtr(this.handle, out stride, flags, offset);
@@ -672,7 +635,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public uint* GetIndexPointer(RenderMeshAccessFlags flags, int offset = 0)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return GetIndexPtr(this.handle, flags, offset);
 		}
@@ -684,7 +646,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public void UnlockStream(RenderMeshStreamIds stream)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			UnlockStreamInternal(this.handle, stream);
 		}
@@ -695,7 +656,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public void UnlockIndexStream()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			UnlockIndexStreamInternal(this.handle);
 		}
@@ -712,7 +672,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public int GetAllocatedBytes(bool videoMemory)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return GetAllocatedBytesInternal(this.handle, videoMemory);
 		}
@@ -724,7 +683,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public void SetMeshLod(int lod)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			SetMeshLodInternal(this.handle, lod);
 		}
@@ -735,7 +693,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public void LockForThreadAccess()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			LockForThreadAccessInternal(this.handle);
 		}
@@ -746,7 +703,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public void UnLockForThreadAccess()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			UnLockForThreadAccessInternal(this.handle);
 		}
@@ -758,12 +714,12 @@ namespace CryCil.Engine.Models.StaticObjects
 		public void OffsetPosition(ref Vector3 delta)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			OffsetPositionInternal(this.handle, ref delta);
 		}
 		#endregion
 		#region Utilities
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		private void AssertInstance()
 		{
 			if (!this.IsValid)

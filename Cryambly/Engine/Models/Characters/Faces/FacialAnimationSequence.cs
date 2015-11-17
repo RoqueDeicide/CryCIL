@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using CryCil.Geometry.Splines;
@@ -33,7 +32,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return FacialAnimationSequence.GetChannelCount(this.handle);
 			}
@@ -53,7 +51,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 				{
 					throw new IndexOutOfRangeException("Index is out of range.");
 				}
-				Contract.EndContractBlock();
 
 				return FacialAnimationSequence.GetChannel(this.handle, index);
 			}
@@ -74,7 +71,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public FacialAnimationChannel Create()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return FacialAnimationSequence.CreateChannel(this.handle);
 		}
@@ -86,7 +82,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public FacialAnimationChannel CreateGroup()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return FacialAnimationSequence.CreateChannelGroup(this.handle);
 		}
@@ -98,7 +93,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public void Remove(FacialAnimationChannel channel)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			FacialAnimationSequence.RemoveChannel(this.handle, channel);
 		}
@@ -140,7 +134,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return FacialAnimationSequence.GetSoundEntryCount(this.handle);
 			}
@@ -160,7 +153,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 				{
 					throw new IndexOutOfRangeException("Index is out of range.");
 				}
-				Contract.EndContractBlock();
 
 				return FacialAnimationSequence.GetSoundEntry(this.handle, index);
 			}
@@ -181,7 +173,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public void Insert(int index)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			FacialAnimationSequence.InsertSoundEntry(this.handle, index);
 		}
@@ -193,7 +184,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public void RemoveAt(int index)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			FacialAnimationSequence.DeleteSoundEntry(this.handle, index);
 		}
@@ -235,7 +225,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return FacialAnimationSequence.GetSkeletonAnimationEntryCount(this.handle);
 			}
@@ -255,7 +244,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 				{
 					throw new IndexOutOfRangeException("Index is out of range.");
 				}
-				Contract.EndContractBlock();
 
 				return FacialAnimationSequence.GetSkeletonAnimationEntry(this.handle, index);
 			}
@@ -276,7 +264,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public void Insert(int index)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			FacialAnimationSequence.InsertSkeletonAnimationEntry(this.handle, index);
 		}
@@ -288,7 +275,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public void RemoveAt(int index)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			FacialAnimationSequence.DeleteSkeletonAnimationEntry(this.handle, index);
 		}
@@ -343,14 +329,12 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetName(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetName(this.handle, value);
 			}
@@ -364,14 +348,12 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetJoystickFile(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetJoystickFile(this.handle, value);
 			}
@@ -385,14 +367,12 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetFlags(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetFlags(this.handle, value);
 			}
@@ -406,14 +386,12 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetTimeRange(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetTimeRange(this.handle, value);
 			}
@@ -428,14 +406,12 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return IsInMemory(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetInMemory(this.handle, value);
 			}
@@ -449,7 +425,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetCameraPathPosition(this.handle);
 			}
@@ -463,7 +438,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetCameraPathOrientation(this.handle);
 			}
@@ -477,7 +451,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetCameraPathFOV(this.handle);
 			}
@@ -499,7 +472,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public void IncrementReferenceCount()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			AddRef(this.handle);
 		}
@@ -511,7 +483,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public void DecrementReferenceCount()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			Release(this.handle);
 		}
@@ -524,7 +495,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public bool StartStreaming(string file)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return StartStreamingInternal(this.handle, file);
 		}
@@ -540,7 +510,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 						 FacialAnimationSequenceSerializationFlags flags = FacialAnimationSequenceSerializationFlags.All)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			Serialize(this.handle, node.Handle, false, flags);
 		}
@@ -555,7 +524,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public void Merge(FacialAnimationSequence other, bool overwrite)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			MergeSequence(this.handle, other, overwrite);
 		}

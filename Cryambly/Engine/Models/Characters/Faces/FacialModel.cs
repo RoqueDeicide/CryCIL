@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -30,7 +29,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return FacialModel.GetMorphTargetCount(this.handle);
 			}
@@ -52,7 +50,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 					throw new IndexOutOfRangeException("Index is out of range.");
 				}
 #endif
-				Contract.EndContractBlock();
 
 				return FacialModel.GetMorphTargetName(this.handle, index);
 			}
@@ -100,7 +97,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return FacialModel.GetEffectorCount(this.handle);
 			}
@@ -122,7 +118,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 					throw new IndexOutOfRangeException("Index is out of range.");
 				}
 #endif
-				Contract.EndContractBlock();
 
 				return FacialModel.GetEffector(this.handle, index);
 			}
@@ -152,18 +147,15 @@ namespace CryCil.Engine.Models.Characters.Faces
 	public struct FacialModel
 	{
 		#region Fields
-		[FieldOffset(0)]
-		private readonly IntPtr handle;
+		[FieldOffset(0)] private readonly IntPtr handle;
 		/// <summary>
 		/// Provides access to this model's collection of names of morph targets.
 		/// </summary>
-		[FieldOffset(0)]
-		public readonly FacialModelMorphTargetNames ModelMorphTargetNames;
+		[FieldOffset(0)] public readonly FacialModelMorphTargetNames ModelMorphTargetNames;
 		/// <summary>
 		/// Provides access to this model's collection of facial effectors.
 		/// </summary>
-		[FieldOffset(0)]
-		public readonly FacialModelEffectors Effectors;
+		[FieldOffset(0)] public readonly FacialModelEffectors Effectors;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -182,14 +174,12 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetLibrary(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				AssignLibrary(this.handle, value);
 			}

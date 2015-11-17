@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using CryCil.Engine.Data;
@@ -13,7 +14,7 @@ namespace CryCil.Engine.Logic
 	/// Base class for all FlowGraph nodes.
 	/// </summary>
 	/// <example>
-	/// <code source="FlowNode.cs" />
+	/// <code source="FlowNode.cs"/>
 	/// </example>
 	public abstract partial class FlowNode : IDisposable
 	{
@@ -221,13 +222,13 @@ namespace CryCil.Engine.Logic
 			this.Id = 0;
 		}
 		[UnmanagedThunk("Invoked from underlying framework to create a wrapper for a new node.")]
+		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		private static object Create(IntPtr grapHandle, ushort typeId, ushort nodeId)
 		{
 			Type type = FlowNodeTypeRegistry.GetFlowNodeType(typeId);
-			return
-				type == null
-					? null
-					: Activator.CreateInstance(type, nodeId, grapHandle);
+			return type == null
+				? null
+				: Activator.CreateInstance(type, nodeId, grapHandle);
 		}
 		[RawThunk("Invoked from underlying framework when this node is removed completely from the game.")]
 		private void Release()
@@ -245,6 +246,7 @@ namespace CryCil.Engine.Logic
 			}
 		}
 		[UnmanagedThunk("Invoked from underlying framework to inform the flow system about how this node works.")]
+		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		private void GetConfiguration(out FlowNodeConfig config)
 		{
 			if (this.initData != InitializationDetails.All)

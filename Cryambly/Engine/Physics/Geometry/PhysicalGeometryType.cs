@@ -1,4 +1,6 @@
-﻿namespace CryCil.Engine.Physics
+﻿using System;
+
+namespace CryCil.Engine.Physics
 {
 	/// <summary>
 	/// Enumeration of geometry physicalization types. Used mostly be static objects.
@@ -18,7 +20,8 @@
 		/// </summary>
 		NoCollide = 0x1000 + 1,
 		/// <summary>
-		/// Specifies that geometry is physicalized, but it's only presence in physical world is expressed with collisions.
+		/// Specifies that geometry is physicalized, but it's only presence in physical world is expressed
+		/// with collisions.
 		/// </summary>
 		Obstruct = 0x1000 + 2,
 		/// <summary>

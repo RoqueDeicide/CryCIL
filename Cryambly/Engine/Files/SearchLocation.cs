@@ -1,4 +1,6 @@
-﻿namespace CryCil.Engine.Files
+﻿using System;
+
+namespace CryCil.Engine.Files
 {
 	/// <summary>
 	/// Enumeration of locations where files can be searched for in the virtual file system.

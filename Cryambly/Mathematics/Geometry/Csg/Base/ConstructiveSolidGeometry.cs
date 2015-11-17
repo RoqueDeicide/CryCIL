@@ -307,17 +307,18 @@ namespace CryCil.Geometry.Csg.Base
 			Node aNode = new Node(a.Polygons);
 			Node bNode = new Node(b.Polygons);
 
-			aNode.Invert(); // Invert A.
+			// Invert A.
+			aNode.Invert();
+			aNode.ClipTo(bNode);
+			bNode.ClipTo(aNode);
+			// Union of inverted A with B.
+			bNode.Invert();
+			bNode.ClipTo(aNode);
+			bNode.Invert();
+			aNode.Build(bNode.AllPolygons);
 
-			aNode.ClipTo(bNode); //
-			bNode.ClipTo(aNode); //
-			bNode.Invert(); // Union of inverted A with B.
-			bNode.ClipTo(aNode); //
-			bNode.Invert(); //
-			aNode.Build(bNode.AllPolygons); //
-
-			aNode.Invert() // Invert everything since what we've got
-				; // above is what we need but it's inside out.
+			// Invert everything since what we've got above is what we need but it's inside out.
+			aNode.Invert();
 			return new Solid(aNode.AllPolygons);
 		}
 		/// <summary>
@@ -377,97 +378,62 @@ namespace CryCil.Geometry.Csg.Base
 				// ReSharper disable EmptyStatement
 
 				List<Polygon> polys = new List<Polygon>(6);
-				; // Top.		[A  B  C  D ].
-				polys.Add
-					(
-					 new Polygon
-						 (
-						 new[]
-						 {
-							 new Vertex {Position = vertexPositions[0], Normal = Vector3.Up},
-							 new Vertex {Position = vertexPositions[1], Normal = Vector3.Up},
-							 new Vertex {Position = vertexPositions[2], Normal = Vector3.Up},
-							 new Vertex {Position = vertexPositions[3], Normal = Vector3.Up}
-						 }.ToList(),
-						 0
-						 )
-					);
+
+				; // Top.			[A  B  C  D ].
+				polys.Add(new Polygon(new[]
+				{
+					new Vertex {Position = vertexPositions[0], Normal = Vector3.Up},
+					new Vertex {Position = vertexPositions[1], Normal = Vector3.Up},
+					new Vertex {Position = vertexPositions[2], Normal = Vector3.Up},
+					new Vertex {Position = vertexPositions[3], Normal = Vector3.Up}
+				}.ToList(), 0));
+
 				; // Bottom.		[D1 C1 B1 A1].
-				polys.Add
-					(
-					 new Polygon
-						 (
-						 new[]
-						 {
-							 new Vertex {Position = vertexPositions[7], Normal = Vector3.Down},
-							 new Vertex {Position = vertexPositions[6], Normal = Vector3.Down},
-							 new Vertex {Position = vertexPositions[5], Normal = Vector3.Down},
-							 new Vertex {Position = vertexPositions[4], Normal = Vector3.Down}
-						 }.ToList(),
-						 0
-						 )
-					);
-				; // Right.		[A  D  D1 A1].
-				polys.Add
-					(
-					 new Polygon
-						 (
-						 new[]
-						 {
-							 new Vertex {Position = vertexPositions[0], Normal = Vector3.Right},
-							 new Vertex {Position = vertexPositions[3], Normal = Vector3.Right},
-							 new Vertex {Position = vertexPositions[7], Normal = Vector3.Right},
-							 new Vertex {Position = vertexPositions[4], Normal = Vector3.Right}
-						 }.ToList(),
-						 0
-						 )
-					);
-				; // Left.		[B1 C1 C  B ].
-				polys.Add
-					(
-					 new Polygon
-						 (
-						 new[]
-						 {
-							 new Vertex {Position = vertexPositions[5], Normal = Vector3.Left},
-							 new Vertex {Position = vertexPositions[6], Normal = Vector3.Left},
-							 new Vertex {Position = vertexPositions[2], Normal = Vector3.Left},
-							 new Vertex {Position = vertexPositions[3], Normal = Vector3.Left}
-						 }.ToList(),
-						 0
-						 )
-					);
-				; // Front.		[A1 B1 B  A ].
-				polys.Add
-					(
-					 new Polygon
-						 (
-						 new[]
-						 {
-							 new Vertex {Position = vertexPositions[4], Normal = Vector3.Forward},
-							 new Vertex {Position = vertexPositions[5], Normal = Vector3.Forward},
-							 new Vertex {Position = vertexPositions[1], Normal = Vector3.Forward},
-							 new Vertex {Position = vertexPositions[0], Normal = Vector3.Forward}
-						 }.ToList(),
-						 0
-						 )
-					);
+				polys.Add(new Polygon(new[]
+				{
+					new Vertex {Position = vertexPositions[7], Normal = Vector3.Down},
+					new Vertex {Position = vertexPositions[6], Normal = Vector3.Down},
+					new Vertex {Position = vertexPositions[5], Normal = Vector3.Down},
+					new Vertex {Position = vertexPositions[4], Normal = Vector3.Down}
+				}.ToList(), 0));
+				; // Right.			[A  D  D1 A1].
+				polys.Add(new Polygon(new[]
+				{
+					new Vertex {Position = vertexPositions[0], Normal = Vector3.Right},
+					new Vertex {Position = vertexPositions[3], Normal = Vector3.Right},
+					new Vertex {Position = vertexPositions[7], Normal = Vector3.Right},
+					new Vertex {Position = vertexPositions[4], Normal = Vector3.Right}
+				}.ToList(), 0));
+
+				; // Left.			[B1 C1 C  B ].
+				polys.Add(new Polygon(new[]
+				{
+					new Vertex {Position = vertexPositions[5], Normal = Vector3.Left},
+					new Vertex {Position = vertexPositions[6], Normal = Vector3.Left},
+					new Vertex {Position = vertexPositions[2], Normal = Vector3.Left},
+					new Vertex {Position = vertexPositions[3], Normal = Vector3.Left}
+				}.ToList(), 0));
+
+				; // Front.			[A1 B1 B  A ].
+				polys.Add(new Polygon(new[]
+				{
+					new Vertex {Position = vertexPositions[4], Normal = Vector3.Forward},
+					new Vertex {Position = vertexPositions[5], Normal = Vector3.Forward},
+					new Vertex {Position = vertexPositions[1], Normal = Vector3.Forward},
+					new Vertex {Position = vertexPositions[0], Normal = Vector3.Forward}
+				}.ToList(), 0));
+
 				; // Back.		[D  C  C1 D1].
-				polys.Add
-					(
-					 new Polygon
-						 (
-						 new[]
-						 {
-							 new Vertex {Position = vertexPositions[3], Normal = Vector3.Backward},
-							 new Vertex {Position = vertexPositions[2], Normal = Vector3.Backward},
-							 new Vertex {Position = vertexPositions[6], Normal = Vector3.Backward},
-							 new Vertex {Position = vertexPositions[7], Normal = Vector3.Backward}
-						 }.ToList(),
-						 0
-						 )
-					);
+				polys.Add(new Polygon(new[]
+				{
+					new Vertex {Position = vertexPositions[3], Normal = Vector3.Backward},
+					new Vertex {Position = vertexPositions[2], Normal = Vector3.Backward},
+					new Vertex {Position = vertexPositions[6], Normal = Vector3.Backward},
+					new Vertex {Position = vertexPositions[7], Normal = Vector3.Backward}
+				}.ToList(), 0));
+
 				// ReSharper restore EmptyStatement
+
 				return new Solid(polys);
 			}
 			/// <summary>
@@ -493,12 +459,10 @@ namespace CryCil.Geometry.Csg.Base
 					theta *= (float)(Math.PI * 2);
 					phi *= (float)Math.PI;
 
-					Vector3 direction = new Vector3
-						(
-						vx: (float)(Math.Cos(theta) * Math.Sin(phi)),
-						vy: (float)Math.Cos(phi),
-						vz: (float)(Math.Sin(theta) * Math.Sin(phi))
-						);
+					Vector3 direction = new Vector3(vx: (float)(Math.Cos(theta) * Math.Sin(phi)),
+													vy: (float)Math.Cos(phi),
+													vz: (float)(Math.Sin(theta) * Math.Sin(phi)));
+
 					return new Vertex
 					{
 						Position = center + direction.Scaled(radius),
@@ -550,13 +514,9 @@ namespace CryCil.Geometry.Csg.Base
 
 				Vector3 axisZ = ray.Normalized;
 				bool isY = Math.Abs(axisZ.Y) > 0.5;
-				Vector3 axisX =
-					new Vector3
-						(
-						Convert.ToInt32(isY),
-						Convert.ToInt32(!isY),
-						0
-						).Cross(axisZ).Normalized;
+				Vector3 axisX = new Vector3(Convert.ToInt32(isY),
+											Convert.ToInt32(!isY),
+											0).Cross(axisZ).Normalized;
 				Vector3 axisY = axisX.Cross(axisZ).Normalized;
 
 				Vertex startVertex = new Vertex {Position = start, Normal = axisZ.Flipped};
@@ -570,7 +530,7 @@ namespace CryCil.Geometry.Csg.Base
 						float angle = (float)(slice * Math.PI * 2);
 						Vector3 outPoint = axisX.Scaled((float)Math.Cos(angle)) + axisY.Scaled((float)Math.Sin(angle));
 						Vector3 position = start + ray.Scaled(stack) + outPoint.Scaled(radius);
-						Vector3 normal = outPoint.Scaled((1 - Math.Abs(normalBlend))) + axisZ.Scaled(normalBlend);
+						Vector3 normal = outPoint.Scaled(1 - Math.Abs(normalBlend)) + axisZ.Scaled(normalBlend);
 						return new Vertex {Position = position, Normal = normal};
 					};
 				// Create polygons.
@@ -579,46 +539,27 @@ namespace CryCil.Geometry.Csg.Base
 					float t0 = i / slices;
 					float t1 = (i + 1) / slices;
 
-					polygons.Add
-						(
-						 new Polygon
-							 (
-							 new[]
-							 {
-								 startVertex,
-								 createPoint(0, t0, -1),
-								 createPoint(0, t1, -1)
-							 },
-							 0
-							 )
-						);
-					polygons.Add
-						(
-						 new Polygon
-							 (
-							 new[]
-							 {
-								 createPoint(0, t1, 0),
-								 createPoint(0, t0, 0),
-								 createPoint(1, t0, 0),
-								 createPoint(1, t1, 0)
-							 },
-							 0
-							 )
-						);
-					polygons.Add
-						(
-						 new Polygon
-							 (
-							 new[]
-							 {
-								 endVertex,
-								 createPoint(1, t1, 1),
-								 createPoint(1, t0, 1)
-							 },
-							 0
-							 )
-						);
+					polygons.Add(new Polygon(new[]
+					{
+						startVertex,
+						createPoint(0, t0, -1),
+						createPoint(0, t1, -1)
+					}, 0));
+
+					polygons.Add(new Polygon(new[]
+					{
+						createPoint(0, t1, 0),
+						createPoint(0, t0, 0),
+						createPoint(1, t0, 0),
+						createPoint(1, t1, 0)
+					}, 0));
+
+					polygons.Add(new Polygon(new[]
+					{
+						endVertex,
+						createPoint(1, t1, 1),
+						createPoint(1, t0, 1)
+					}, 0));
 				}
 				return new Solid(polygons);
 			}
@@ -715,6 +656,7 @@ namespace CryCil.Geometry.Csg.Base
 			/// <remarks>A plane is created using first three vertices.</remarks>
 			/// <param name="vertices">A list of vertices that define the outline of the polygon.</param>
 			/// <param name="shared">  An identifier of shared properties.</param>
+			/// <exception cref="ArgumentException">Not enough vertices.</exception>
 			public Polygon(IList<Vertex> vertices, int shared)
 			{
 				if (vertices == null || vertices.Count < 3)
@@ -875,9 +817,8 @@ namespace CryCil.Geometry.Csg.Base
 			/// Initializes default instance of this class.
 			/// </summary>
 			/// <remarks>
-			/// Normal is initialized to <see cref="Vector3.Forward"/>.
-			/// 
-			/// W is initialized to 0.
+			/// <para>Normal is initialized to <see cref="Vector3.Forward"/>.</para>
+			/// <para>W is initialized to 0.</para>
 			/// </remarks>
 			public Plane()
 			{
@@ -973,10 +914,9 @@ namespace CryCil.Geometry.Csg.Base
 				{
 					case PlaneRelativePositionClass.Coplanar:
 						// Just assign the polygon to either back or front coplanar.
-						(
-							(this.Normal.Dot(polygon.Plane.Normal) > 0)
-								? frontCoplanarPolygons
-								: backCoplanarPolygons
+						((this.Normal.Dot(polygon.Plane.Normal) > 0)
+							? frontCoplanarPolygons
+							: backCoplanarPolygons
 							).Add(polygon);
 						return;
 					case PlaneRelativePositionClass.Front:
@@ -1011,12 +951,9 @@ namespace CryCil.Geometry.Csg.Base
 							{
 								// Put the start of the edge into the list of back vertices. Clone it if it
 								// is on this plane.
-								b.Add
-									(
-									 (edgeStartType != PlaneRelativePositionClass.Back)
-										 ? edgeStartVertex.Clone
-										 : edgeStartVertex
-									);
+								b.Add((edgeStartType != PlaneRelativePositionClass.Back)
+									? edgeStartVertex.Clone
+									: edgeStartVertex);
 							}
 							if ((edgeStartType | edgeEndType) == PlaneRelativePositionClass.Spanning)
 							{
@@ -1024,7 +961,7 @@ namespace CryCil.Geometry.Csg.Base
 								float positionParameter =
 									(this.W - this.Normal.Dot(edgeStartVertex.Position))
 									/
-									(this.Normal.Dot(edgeEndVertex.Position - edgeStartVertex.Position));
+									this.Normal.Dot(edgeEndVertex.Position - edgeStartVertex.Position);
 								// Calculate position of the splitting vertex using the parameter.
 								Vertex splittingVertex =
 									edgeStartVertex.Interpolate(edgeEndVertex, positionParameter);
@@ -1043,8 +980,6 @@ namespace CryCil.Geometry.Csg.Base
 							}
 						}
 						return;
-					default:
-						throw new ArgumentOutOfRangeException();
 				}
 			}
 			/// <summary>
@@ -1247,7 +1182,7 @@ namespace CryCil.Geometry.Csg.Base
 			public static Vector3 CreateLinearInterpolation(Vector3 p, Vector3 q, float t)
 			{
 				Vector3 diff = q - p;
-				return p + (diff.Scaled(t));
+				return p + diff.Scaled(t);
 			}
 			#endregion
 			#region Arithmetic Operators
@@ -1374,10 +1309,7 @@ namespace CryCil.Geometry.Csg.Base
 						backPolycount = 0;
 					}
 					// Make a list that fits all polygons from this tree.
-					List<Polygon> allPolygons = new List<Polygon>
-						(
-						this.Polygons.Count + frontPolycount + backPolycount
-						);
+					List<Polygon> allPolygons = new List<Polygon>(this.Polygons.Count + frontPolycount + backPolycount);
 					allPolygons.AddRange(this.Polygons);
 					if (frontPolygons != null) allPolygons.AddRange(frontPolygons);
 					if (backPolygons != null) allPolygons.AddRange(backPolygons);
@@ -1443,7 +1375,8 @@ namespace CryCil.Geometry.Csg.Base
 				for (int i = 0; i < polygons.Count; i++)
 				{
 					this.Plane.SplitPolygon(polygons[i],
-											// Polys that are on the same plane as this node end up in the node.
+											// Polys that are on the same plane as this node end up in the
+											// node.
 											ref this.Polygons, ref this.Polygons,
 											// These will form front and back branches respectively.
 											ref frontPolygons, ref backPolygons);

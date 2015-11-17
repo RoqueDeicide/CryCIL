@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using CryCil.Geometry.Splines;
 
@@ -57,14 +56,12 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetControlType(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetControlType(this.handle, value);
 			}
@@ -78,7 +75,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetEffector(this.handle);
 			}
@@ -92,14 +88,12 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetConstantWeight(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetConstantWeight(this.handle, MathHelpers.Clamp(value, -1, 1));
 			}
@@ -113,14 +107,12 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetConstantBalance(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetConstantBalance(this.handle, value);
 			}
@@ -134,7 +126,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetSpline(this.handle);
 			}
@@ -148,14 +139,12 @@ namespace CryCil.Engine.Models.Characters.Faces
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetFlags(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetFlags(this.handle, value);
 			}
@@ -177,7 +166,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		public float Evaluate(float input)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return EvaluateInternal(this.handle, input);
 		}

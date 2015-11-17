@@ -107,6 +107,9 @@ namespace CryCil.Engine.CryAction
 		private extern string GetItem(int index);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private extern int GetCount();
+		/// <exception cref="NullReferenceException">
+		/// The level game rules set collection is not valid.
+		/// </exception>
 		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return this.GetEnumerator();

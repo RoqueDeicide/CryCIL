@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using CryCil.Engine.Rendering;
 using CryCil.Geometry;
@@ -47,14 +46,12 @@ namespace CryCil.Engine.Physics
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return this.handle->pGeom;
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				this.handle->pGeom = value;
 			}
@@ -68,7 +65,6 @@ namespace CryCil.Engine.Physics
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return this.handle->Ibody;
 			}
@@ -82,7 +78,6 @@ namespace CryCil.Engine.Physics
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return this.handle->q;
 			}
@@ -96,7 +91,6 @@ namespace CryCil.Engine.Physics
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return this.handle->origin;
 			}
@@ -110,7 +104,6 @@ namespace CryCil.Engine.Physics
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return this.handle->V;
 			}
@@ -124,7 +117,6 @@ namespace CryCil.Engine.Physics
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return this.handle->nRefCount;
 			}
@@ -146,7 +138,6 @@ namespace CryCil.Engine.Physics
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				if (this.handle->pMatMapping != null && this.handle->surface_idx < this.handle->nMats)
 				{
@@ -157,7 +148,6 @@ namespace CryCil.Engine.Physics
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				var surfaceId = value.Index;
 
@@ -185,7 +175,6 @@ namespace CryCil.Engine.Physics
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetMaterialMappings(this.handle, value);
 			}
@@ -285,7 +274,6 @@ namespace CryCil.Engine.Physics
 		public int IncrementReferenceCount()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return AddRefGeometry(this.handle);
 		}
@@ -301,12 +289,12 @@ namespace CryCil.Engine.Physics
 		public int DecrementReferenceCount()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return UnregisterGeometry(this.handle);
 		}
 		#endregion
 		#region Utilities
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		private void AssertInstance()
 		{
 			if (!this.IsValid)

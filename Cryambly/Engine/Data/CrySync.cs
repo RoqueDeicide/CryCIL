@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -13,6 +14,7 @@ namespace CryCil.Engine.Data
 	/// Represents an object that handles synchronization of objects.
 	/// </summary>
 	[StructLayout(LayoutKind.Sequential)]
+	[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 	public struct CrySync
 	{
 		#region Fields
@@ -106,11 +108,11 @@ namespace CryCil.Engine.Data
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
-			if (String.IsNullOrEmpty(name))
+			if (string.IsNullOrEmpty(name))
 			{
 				throw new ArgumentNullException("name", "The name cannot be null or empty.");
 			}
-			if (name.Any(Char.IsWhiteSpace))
+			if (name.Any(char.IsWhiteSpace))
 			{
 				throw new ArgumentException("Whitespace characters cause undefined behavior and are not allowed in names.");
 			}
@@ -152,11 +154,11 @@ namespace CryCil.Engine.Data
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
-			if (String.IsNullOrEmpty(name))
+			if (string.IsNullOrEmpty(name))
 			{
 				throw new ArgumentNullException("name", "The name cannot be null or empty.");
 			}
-			if (name.Any(Char.IsWhiteSpace))
+			if (name.Any(char.IsWhiteSpace))
 			{
 				throw new ArgumentException("Whitespace characters cause undefined behavior and are not allowed in names.");
 			}
@@ -194,11 +196,11 @@ namespace CryCil.Engine.Data
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
-			if (String.IsNullOrEmpty(name))
+			if (string.IsNullOrEmpty(name))
 			{
 				throw new ArgumentNullException("name", "The name cannot be null or empty.");
 			}
-			if (name.Any(Char.IsWhiteSpace))
+			if (name.Any(char.IsWhiteSpace))
 			{
 				throw new ArgumentException("Whitespace characters cause undefined behavior and are not allowed in names.");
 			}
@@ -226,11 +228,11 @@ namespace CryCil.Engine.Data
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
-			if (String.IsNullOrEmpty(name))
+			if (string.IsNullOrEmpty(name))
 			{
 				throw new ArgumentNullException("name", "The name cannot be null or empty.");
 			}
-			if (name.Any(Char.IsWhiteSpace))
+			if (name.Any(char.IsWhiteSpace))
 			{
 				throw new ArgumentException("Whitespace characters cause undefined behavior and are not allowed in names.");
 			}
@@ -254,11 +256,11 @@ namespace CryCil.Engine.Data
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
-			if (String.IsNullOrEmpty(name))
+			if (string.IsNullOrEmpty(name))
 			{
 				throw new ArgumentNullException("name", "The name cannot be null or empty.");
 			}
-			if (name.Any(Char.IsWhiteSpace))
+			if (name.Any(char.IsWhiteSpace))
 			{
 				throw new ArgumentException("Whitespace characters cause undefined behavior and are not allowed in names.");
 			}
@@ -286,11 +288,11 @@ namespace CryCil.Engine.Data
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
-			if (String.IsNullOrEmpty(name))
+			if (string.IsNullOrEmpty(name))
 			{
 				throw new ArgumentNullException("name", "The name cannot be null or empty.");
 			}
-			if (name.Any(Char.IsWhiteSpace))
+			if (name.Any(char.IsWhiteSpace))
 			{
 				throw new ArgumentException("Whitespace characters cause undefined behavior and are not allowed in names.");
 			}
@@ -314,11 +316,11 @@ namespace CryCil.Engine.Data
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
-			if (String.IsNullOrEmpty(name))
+			if (string.IsNullOrEmpty(name))
 			{
 				throw new ArgumentNullException("name", "The name cannot be null or empty.");
 			}
-			if (name.Any(Char.IsWhiteSpace))
+			if (name.Any(char.IsWhiteSpace))
 			{
 				throw new ArgumentException("Whitespace characters cause undefined behavior and are not allowed in names.");
 			}
@@ -346,11 +348,11 @@ namespace CryCil.Engine.Data
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
-			if (String.IsNullOrEmpty(name))
+			if (string.IsNullOrEmpty(name))
 			{
 				throw new ArgumentNullException("name", "The name cannot be null or empty.");
 			}
-			if (name.Any(Char.IsWhiteSpace))
+			if (name.Any(char.IsWhiteSpace))
 			{
 				throw new ArgumentException("Whitespace characters cause undefined behavior and are not allowed in names.");
 			}
@@ -374,11 +376,11 @@ namespace CryCil.Engine.Data
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
-			if (String.IsNullOrEmpty(name))
+			if (string.IsNullOrEmpty(name))
 			{
 				throw new ArgumentNullException("name", "The name cannot be null or empty.");
 			}
-			if (name.Any(Char.IsWhiteSpace))
+			if (name.Any(char.IsWhiteSpace))
 			{
 				throw new ArgumentException("Whitespace characters cause undefined behavior and are not allowed in names.");
 			}
@@ -406,11 +408,11 @@ namespace CryCil.Engine.Data
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
-			if (String.IsNullOrEmpty(name))
+			if (string.IsNullOrEmpty(name))
 			{
 				throw new ArgumentNullException("name", "The name cannot be null or empty.");
 			}
-			if (name.Any(Char.IsWhiteSpace))
+			if (name.Any(char.IsWhiteSpace))
 			{
 				throw new ArgumentException("Whitespace characters cause undefined behavior and are not allowed in names.");
 			}
@@ -434,11 +436,11 @@ namespace CryCil.Engine.Data
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
-			if (String.IsNullOrEmpty(name))
+			if (string.IsNullOrEmpty(name))
 			{
 				throw new ArgumentNullException("name", "The name cannot be null or empty.");
 			}
-			if (name.Any(Char.IsWhiteSpace))
+			if (name.Any(char.IsWhiteSpace))
 			{
 				throw new ArgumentException("Whitespace characters cause undefined behavior and are not allowed in names.");
 			}
@@ -466,11 +468,11 @@ namespace CryCil.Engine.Data
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
-			if (String.IsNullOrEmpty(name))
+			if (string.IsNullOrEmpty(name))
 			{
 				throw new ArgumentNullException("name", "The name cannot be null or empty.");
 			}
-			if (name.Any(Char.IsWhiteSpace))
+			if (name.Any(char.IsWhiteSpace))
 			{
 				throw new ArgumentException("Whitespace characters cause undefined behavior and are not allowed in names.");
 			}
@@ -494,11 +496,11 @@ namespace CryCil.Engine.Data
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
-			if (String.IsNullOrEmpty(name))
+			if (string.IsNullOrEmpty(name))
 			{
 				throw new ArgumentNullException("name", "The name cannot be null or empty.");
 			}
-			if (name.Any(Char.IsWhiteSpace))
+			if (name.Any(char.IsWhiteSpace))
 			{
 				throw new ArgumentException("Whitespace characters cause undefined behavior and are not allowed in names.");
 			}
@@ -526,11 +528,11 @@ namespace CryCil.Engine.Data
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
-			if (String.IsNullOrEmpty(name))
+			if (string.IsNullOrEmpty(name))
 			{
 				throw new ArgumentNullException("name", "The name cannot be null or empty.");
 			}
-			if (name.Any(Char.IsWhiteSpace))
+			if (name.Any(char.IsWhiteSpace))
 			{
 				throw new ArgumentException("Whitespace characters cause undefined behavior and are not allowed in names.");
 			}
@@ -554,11 +556,11 @@ namespace CryCil.Engine.Data
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
-			if (String.IsNullOrEmpty(name))
+			if (string.IsNullOrEmpty(name))
 			{
 				throw new ArgumentNullException("name", "The name cannot be null or empty.");
 			}
-			if (name.Any(Char.IsWhiteSpace))
+			if (name.Any(char.IsWhiteSpace))
 			{
 				throw new ArgumentException("Whitespace characters cause undefined behavior and are not allowed in names.");
 			}
@@ -586,11 +588,11 @@ namespace CryCil.Engine.Data
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
-			if (String.IsNullOrEmpty(name))
+			if (string.IsNullOrEmpty(name))
 			{
 				throw new ArgumentNullException("name", "The name cannot be null or empty.");
 			}
-			if (name.Any(Char.IsWhiteSpace))
+			if (name.Any(char.IsWhiteSpace))
 			{
 				throw new ArgumentException("Whitespace characters cause undefined behavior and are not allowed in names.");
 			}
@@ -614,11 +616,11 @@ namespace CryCil.Engine.Data
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
-			if (String.IsNullOrEmpty(name))
+			if (string.IsNullOrEmpty(name))
 			{
 				throw new ArgumentNullException("name", "The name cannot be null or empty.");
 			}
-			if (name.Any(Char.IsWhiteSpace))
+			if (name.Any(char.IsWhiteSpace))
 			{
 				throw new ArgumentException("Whitespace characters cause undefined behavior and are not allowed in names.");
 			}
@@ -646,11 +648,11 @@ namespace CryCil.Engine.Data
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
-			if (String.IsNullOrEmpty(name))
+			if (string.IsNullOrEmpty(name))
 			{
 				throw new ArgumentNullException("name", "The name cannot be null or empty.");
 			}
-			if (name.Any(Char.IsWhiteSpace))
+			if (name.Any(char.IsWhiteSpace))
 			{
 				throw new ArgumentException("Whitespace characters cause undefined behavior and are not allowed in names.");
 			}
@@ -674,11 +676,11 @@ namespace CryCil.Engine.Data
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
-			if (String.IsNullOrEmpty(name))
+			if (string.IsNullOrEmpty(name))
 			{
 				throw new ArgumentNullException("name", "The name cannot be null or empty.");
 			}
-			if (name.Any(Char.IsWhiteSpace))
+			if (name.Any(char.IsWhiteSpace))
 			{
 				throw new ArgumentException("Whitespace characters cause undefined behavior and are not allowed in names.");
 			}
@@ -706,11 +708,11 @@ namespace CryCil.Engine.Data
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
-			if (String.IsNullOrEmpty(name))
+			if (string.IsNullOrEmpty(name))
 			{
 				throw new ArgumentNullException("name", "The name cannot be null or empty.");
 			}
-			if (name.Any(Char.IsWhiteSpace))
+			if (name.Any(char.IsWhiteSpace))
 			{
 				throw new ArgumentException("Whitespace characters cause undefined behavior and are not allowed in names.");
 			}
@@ -734,11 +736,11 @@ namespace CryCil.Engine.Data
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
-			if (String.IsNullOrEmpty(name))
+			if (string.IsNullOrEmpty(name))
 			{
 				throw new ArgumentNullException("name", "The name cannot be null or empty.");
 			}
-			if (name.Any(Char.IsWhiteSpace))
+			if (name.Any(char.IsWhiteSpace))
 			{
 				throw new ArgumentException("Whitespace characters cause undefined behavior and are not allowed in names.");
 			}
@@ -766,11 +768,11 @@ namespace CryCil.Engine.Data
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
-			if (String.IsNullOrEmpty(name))
+			if (string.IsNullOrEmpty(name))
 			{
 				throw new ArgumentNullException("name", "The name cannot be null or empty.");
 			}
-			if (name.Any(Char.IsWhiteSpace))
+			if (name.Any(char.IsWhiteSpace))
 			{
 				throw new ArgumentException("Whitespace characters cause undefined behavior and are not allowed in names.");
 			}
@@ -794,11 +796,11 @@ namespace CryCil.Engine.Data
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
-			if (String.IsNullOrEmpty(name))
+			if (string.IsNullOrEmpty(name))
 			{
 				throw new ArgumentNullException("name", "The name cannot be null or empty.");
 			}
-			if (name.Any(Char.IsWhiteSpace))
+			if (name.Any(char.IsWhiteSpace))
 			{
 				throw new ArgumentException("Whitespace characters cause undefined behavior and are not allowed in names.");
 			}
@@ -826,11 +828,11 @@ namespace CryCil.Engine.Data
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
-			if (String.IsNullOrEmpty(name))
+			if (string.IsNullOrEmpty(name))
 			{
 				throw new ArgumentNullException("name", "The name cannot be null or empty.");
 			}
-			if (name.Any(Char.IsWhiteSpace))
+			if (name.Any(char.IsWhiteSpace))
 			{
 				throw new ArgumentException("Whitespace characters cause undefined behavior and are not allowed in names.");
 			}
@@ -854,11 +856,11 @@ namespace CryCil.Engine.Data
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
-			if (String.IsNullOrEmpty(name))
+			if (string.IsNullOrEmpty(name))
 			{
 				throw new ArgumentNullException("name", "The name cannot be null or empty.");
 			}
-			if (name.Any(Char.IsWhiteSpace))
+			if (name.Any(char.IsWhiteSpace))
 			{
 				throw new ArgumentException("Whitespace characters cause undefined behavior and are not allowed in names.");
 			}
@@ -886,11 +888,11 @@ namespace CryCil.Engine.Data
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
-			if (String.IsNullOrEmpty(name))
+			if (string.IsNullOrEmpty(name))
 			{
 				throw new ArgumentNullException("name", "The name cannot be null or empty.");
 			}
-			if (name.Any(Char.IsWhiteSpace))
+			if (name.Any(char.IsWhiteSpace))
 			{
 				throw new ArgumentException("Whitespace characters cause undefined behavior and are not allowed in names.");
 			}
@@ -914,11 +916,11 @@ namespace CryCil.Engine.Data
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
-			if (String.IsNullOrEmpty(name))
+			if (string.IsNullOrEmpty(name))
 			{
 				throw new ArgumentNullException("name", "The name cannot be null or empty.");
 			}
-			if (name.Any(Char.IsWhiteSpace))
+			if (name.Any(char.IsWhiteSpace))
 			{
 				throw new ArgumentException("Whitespace characters cause undefined behavior and are not allowed in names.");
 			}
@@ -946,11 +948,11 @@ namespace CryCil.Engine.Data
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
-			if (String.IsNullOrEmpty(name))
+			if (string.IsNullOrEmpty(name))
 			{
 				throw new ArgumentNullException("name", "The name cannot be null or empty.");
 			}
-			if (name.Any(Char.IsWhiteSpace))
+			if (name.Any(char.IsWhiteSpace))
 			{
 				throw new ArgumentException("Whitespace characters cause undefined behavior and are not allowed in names.");
 			}
@@ -974,11 +976,11 @@ namespace CryCil.Engine.Data
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
-			if (String.IsNullOrEmpty(name))
+			if (string.IsNullOrEmpty(name))
 			{
 				throw new ArgumentNullException("name", "The name cannot be null or empty.");
 			}
-			if (name.Any(Char.IsWhiteSpace))
+			if (name.Any(char.IsWhiteSpace))
 			{
 				throw new ArgumentException("Whitespace characters cause undefined behavior and are not allowed in names.");
 			}
@@ -1006,11 +1008,11 @@ namespace CryCil.Engine.Data
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
-			if (String.IsNullOrEmpty(name))
+			if (string.IsNullOrEmpty(name))
 			{
 				throw new ArgumentNullException("name", "The name cannot be null or empty.");
 			}
-			if (name.Any(Char.IsWhiteSpace))
+			if (name.Any(char.IsWhiteSpace))
 			{
 				throw new ArgumentException("Whitespace characters cause undefined behavior and are not allowed in names.");
 			}
@@ -1034,11 +1036,11 @@ namespace CryCil.Engine.Data
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
-			if (String.IsNullOrEmpty(name))
+			if (string.IsNullOrEmpty(name))
 			{
 				throw new ArgumentNullException("name", "The name cannot be null or empty.");
 			}
-			if (name.Any(Char.IsWhiteSpace))
+			if (name.Any(char.IsWhiteSpace))
 			{
 				throw new ArgumentException("Whitespace characters cause undefined behavior and are not allowed in names.");
 			}
@@ -1066,11 +1068,11 @@ namespace CryCil.Engine.Data
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
-			if (String.IsNullOrEmpty(name))
+			if (string.IsNullOrEmpty(name))
 			{
 				throw new ArgumentNullException("name", "The name cannot be null or empty.");
 			}
-			if (name.Any(Char.IsWhiteSpace))
+			if (name.Any(char.IsWhiteSpace))
 			{
 				throw new ArgumentException("Whitespace characters cause undefined behavior and are not allowed in names.");
 			}
@@ -1094,11 +1096,11 @@ namespace CryCil.Engine.Data
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
-			if (String.IsNullOrEmpty(name))
+			if (string.IsNullOrEmpty(name))
 			{
 				throw new ArgumentNullException("name", "The name cannot be null or empty.");
 			}
-			if (name.Any(Char.IsWhiteSpace))
+			if (name.Any(char.IsWhiteSpace))
 			{
 				throw new ArgumentException("Whitespace characters cause undefined behavior and are not allowed in names.");
 			}
@@ -1133,11 +1135,11 @@ namespace CryCil.Engine.Data
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
-			if (String.IsNullOrEmpty(name))
+			if (string.IsNullOrEmpty(name))
 			{
 				throw new ArgumentNullException("name", "The name cannot be null or empty.");
 			}
-			if (name.Any(Char.IsWhiteSpace))
+			if (name.Any(char.IsWhiteSpace))
 			{
 				throw new ArgumentException("Whitespace characters cause undefined behavior and are not allowed in names.");
 			}
@@ -1168,11 +1170,11 @@ namespace CryCil.Engine.Data
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
-			if (String.IsNullOrEmpty(name))
+			if (string.IsNullOrEmpty(name))
 			{
 				throw new ArgumentNullException("name", "The name cannot be null or empty.");
 			}
-			if (name.Any(Char.IsWhiteSpace))
+			if (name.Any(char.IsWhiteSpace))
 			{
 				throw new ArgumentException("Whitespace characters cause undefined behavior and are not allowed in names.");
 			}

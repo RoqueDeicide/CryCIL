@@ -30,6 +30,12 @@ namespace CryCil.Engine.Physics
 		/// Gets the time that passed since last time this entity received an impulse (had a contact) from
 		/// outside.
 		/// </summary>
+		/// <exception cref="OverflowException">
+		/// Time-span value is less than <see cref="F:System.TimeSpan.MinValue"/> or greater than
+		/// <see cref="F:System.TimeSpan.MaxValue"/>. Or it'is
+		/// <see cref="F:System.Double.PositiveInfinity"/>. Or it'is
+		/// <see cref="F:System.Double.NegativeInfinity"/>.
+		/// </exception>
 		public TimeSpan TimeSinceLastImpulse
 		{
 			get { return TimeSpan.FromSeconds(this.timeIdle); }
@@ -38,6 +44,12 @@ namespace CryCil.Engine.Physics
 		/// Gets or sets amount of time that must pass since entity's last interaction with physical world
 		/// or last reception of external impulse before the entity enters sleep state.
 		/// </summary>
+		/// <exception cref="OverflowException">
+		/// Time-span value is less than <see cref="F:System.TimeSpan.MinValue"/> or greater than
+		/// <see cref="F:System.TimeSpan.MaxValue"/>. Or it'is
+		/// <see cref="F:System.Double.PositiveInfinity"/>. Or it'is
+		/// <see cref="F:System.Double.NegativeInfinity"/>.
+		/// </exception>
 		public TimeSpan MaxIdleTime
 		{
 			get { return TimeSpan.FromSeconds(this.maxTimeIdle); }

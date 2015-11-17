@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
@@ -13,6 +14,7 @@ namespace CryCil.Engine.Rendering
 	/// Represents a material that can be assigned to entities.
 	/// </summary>
 	[StructLayout(LayoutKind.Sequential)]
+	[SuppressMessage("ReSharper", "ExceptionNotThrown")]
 	public struct Material
 	{
 		#region Fields

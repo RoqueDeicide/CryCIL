@@ -1,4 +1,6 @@
-﻿namespace CryCil.Engine.Data
+﻿using System;
+
+namespace CryCil.Engine.Data
 {
 	/// <summary>
 	/// Enumeration of contexts in which the synchronization can occur.

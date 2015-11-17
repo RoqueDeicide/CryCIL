@@ -20,6 +20,9 @@ namespace CryCil.Engine.Physics
 			/// </summary>
 			/// <param name="index">Zero-based index of the angle to get the flag for.</param>
 			/// <returns>The flag for the specified angle.</returns>
+			/// <exception cref="IndexOutOfRangeException" accessor="get">
+			/// Index of the angle to get the flag can either be 0, 1 or 2.
+			/// </exception>
 			public JointFlags this[int index]
 			{
 				[Pure]

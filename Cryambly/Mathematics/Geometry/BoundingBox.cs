@@ -90,6 +90,9 @@ namespace CryCil.Geometry
 		/// <param name="points">
 		/// An array of <see cref="Vector3"/> objects that represent the points.
 		/// </param>
+		/// <exception cref="ArgumentNullException">
+		/// <paramref name="points"/> is <see langword="null"/>.
+		/// </exception>
 		public BoundingBox(Vector3[] points)
 		{
 #if !(RELEASE && RELEASE_DISABLE_CHECKS)
@@ -315,12 +318,9 @@ namespace CryCil.Geometry
 		/// <returns>A <see cref="System.String"/> that represents this instance.</returns>
 		public override string ToString()
 		{
-			return string.Format
-				(
-				 CultureInfo.CurrentCulture,
-				 "Minimum:{0} Maximum:{1}",
-				 this.Minimum, this.Maximum
-				);
+			return string.Format(CultureInfo.CurrentCulture,
+								 "Minimum:{0} Maximum:{1}",
+								 this.Minimum, this.Maximum);
 		}
 		/// <summary>
 		/// Returns a <see cref="System.String"/> that represents this instance.
@@ -331,12 +331,9 @@ namespace CryCil.Geometry
 		{
 			return format == null
 				? this.ToString()
-				: string.Format
-					(
-					 CultureInfo.CurrentCulture,
-					 "Minimum:{0} Maximum:{1}",
-					 this.Minimum, this.Maximum
-					);
+				: string.Format(CultureInfo.CurrentCulture,
+								"Minimum:{0} Maximum:{1}",
+								this.Minimum, this.Maximum);
 		}
 		/// <summary>
 		/// Returns a <see cref="System.String"/> that represents this instance.

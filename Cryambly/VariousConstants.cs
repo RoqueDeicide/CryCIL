@@ -1,4 +1,6 @@
-﻿namespace CryCil
+﻿using System;
+
+namespace CryCil
 {
 	// A Regex pattern for detecting just imported soon-to-be-internal calls:
 	//
@@ -20,7 +22,7 @@
 		/// <summary>
 		/// The constant that contains the size of pointers in bytes.
 		/// </summary>
-		public const int PointerSize = 
+		public const int PointerSize =
 #if WIN64
 			8
 #else

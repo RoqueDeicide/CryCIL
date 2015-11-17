@@ -1,4 +1,6 @@
-﻿namespace CryCil.Engine.Input.ActionMapping
+﻿using System;
+
+namespace CryCil.Engine.Input.ActionMapping
 {
 	/// <summary>
 	/// Defines signature of methods that can handle action map events.

@@ -53,6 +53,10 @@ namespace CryCil.Engine.Physics
 		/// <param name="parameters">A reference to the object that provides parameters to change.</param>
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern void SetWaterManagerParameters(ref WaterManagerParameters parameters);
+		/// <exception cref="OverflowException">
+		/// The array is multidimensional and contains more than <see cref="F:System.Int32.MaxValue"/>
+		/// elements.
+		/// </exception>
 		internal static int PrimitiveIntersection(out GeometryContact[] contacts,
 												  ref Primitive.BasePrimitive primitive, int primitiveType,
 												  EntityQueryFlags queryFlags, PhysicsGeometryFlags flagsAll,
@@ -75,6 +79,10 @@ namespace CryCil.Engine.Physics
 				}
 			return count;
 		}
+		/// <exception cref="OverflowException">
+		/// The array is multidimensional and contains more than <see cref="F:System.Int32.MaxValue"/>
+		/// elements.
+		/// </exception>
 		internal static float PrimitiveCast(out GeometryContact contact, ref Primitive.BasePrimitive primitive,
 											int primitiveType, ref Vector3 sweepDirection,
 											EntityQueryFlags queryFlags, PhysicsGeometryFlags flagsAll,
@@ -97,35 +105,46 @@ namespace CryCil.Engine.Physics
 			return distance;
 		}
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern int PrimitiveIntersectionInternal
-			(out GeometryContact[] contacts,
-			 ref Primitive.BasePrimitive primitive, int primitiveType,
-			 EntityQueryFlags queryFlags, PhysicsGeometryFlags flagsAll,
-			 PhysicsGeometryFlags flagsAny,
-			 ref IntersectionParameters parameters,
-			 ref CollisionClass collisionClass, PhysicalEntity* entitiesToSkip,
-			 int skipCount);
+		private static extern int PrimitiveIntersectionInternal(out GeometryContact[] contacts,
+																ref Primitive.BasePrimitive primitive, int primitiveType,
+																EntityQueryFlags queryFlags, PhysicsGeometryFlags flagsAll,
+																PhysicsGeometryFlags flagsAny,
+																ref IntersectionParameters parameters,
+																ref CollisionClass collisionClass,
+																PhysicalEntity* entitiesToSkip,
+																int skipCount);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern float PrimitiveCastInternal
-			(out GeometryContact contact, ref Primitive.BasePrimitive primitive,
-			 int primitiveType, ref Vector3 sweepDirection,
-			 EntityQueryFlags queryFlags, PhysicsGeometryFlags flagsAll,
-			 PhysicsGeometryFlags flagsAny, ref IntersectionParameters parameters,
-			 ref CollisionClass collisionClass, PhysicalEntity* entitiesToSkip,
-			 int skipCount);
+		private static extern float PrimitiveCastInternal(out GeometryContact contact,
+														  ref Primitive.BasePrimitive primitive,
+														  int primitiveType, ref Vector3 sweepDirection,
+														  EntityQueryFlags queryFlags,
+														  PhysicsGeometryFlags flagsAll,
+														  PhysicsGeometryFlags flagsAny,
+														  ref IntersectionParameters parameters,
+														  ref CollisionClass collisionClass,
+														  PhysicalEntity* entitiesToSkip,
+														  int skipCount);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		internal static extern IntPtr CreatePhysicalEntity
-			(PhysicalEntityType type, ref PhysicsParameters initialParameters, ForeignData foreignData, int id);
+		internal static extern IntPtr CreatePhysicalEntity(PhysicalEntityType type,
+														   ref PhysicsParameters initialParameters,
+														   ForeignData foreignData,
+														   int id);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		internal static extern IntPtr CreatePhysicalEntityNoParams
-			(PhysicalEntityType type, ForeignData foreignData, int id);
+		internal static extern IntPtr CreatePhysicalEntityNoParams(PhysicalEntityType type, ForeignData foreignData,
+																   int id);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		internal static extern IntPtr CreatePhysicalEntityFromHolder
-			(PhysicalEntityType type, float lifeTime, ref PhysicsParameters initialParameters, ForeignData foreignData,
-			 int id, PhysicalEntity placeHolder);
+		internal static extern IntPtr CreatePhysicalEntityFromHolder(PhysicalEntityType type,
+																	 float lifeTime,
+																	 ref PhysicsParameters initialParameters,
+																	 ForeignData foreignData,
+																	 int id,
+																	 PhysicalEntity placeHolder);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		internal static extern IntPtr CreatePhysicalEntityNoParamsFromHolder
-			(PhysicalEntityType type, float lifeTime, ForeignData foreignData, int id, PhysicalEntity placeHolder);
+		internal static extern IntPtr CreatePhysicalEntityNoParamsFromHolder(PhysicalEntityType type,
+																			 float lifeTime,
+																			 ForeignData foreignData,
+																			 int id,
+																			 PhysicalEntity placeHolder);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		internal static extern IntPtr CreatePlaceHolder(PhysicalEntityType type, ref PhysicsParameters initialParameters,
 														ForeignData foreignData, int id);

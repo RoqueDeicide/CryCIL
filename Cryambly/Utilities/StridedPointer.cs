@@ -40,7 +40,7 @@ namespace CryCil.Utilities
 		/// <summary>
 		/// Creates a new object of this type.
 		/// </summary>
-		/// <param name="data">Pointer to strided data.</param>
+		/// <param name="data">  Pointer to strided data.</param>
 		/// <param name="stride">Length of the stride in bytes.</param>
 		public StridedPointer(void* data, int stride)
 		{
@@ -54,6 +54,12 @@ namespace CryCil.Utilities
 		/// </summary>
 		/// <param name="index">Zero-based index of the element.</param>
 		/// <returns>A vector.</returns>
+		/// <exception cref="NullReferenceException">
+		/// Attempted to dereference null strided pointer.
+		/// </exception>
+		/// <exception cref="InvalidOperationException">
+		/// Attempted to dereference a strided pointer with invalid stride.
+		/// </exception>
 		[Pure]
 		public Vector3 GetVector3(int index)
 		{
@@ -65,6 +71,12 @@ namespace CryCil.Utilities
 		/// </summary>
 		/// <param name="index">Zero-based index of the element to get the pointer to.</param>
 		/// <returns>Internal pointer advanced by <paramref name="index"/> * stride.</returns>
+		/// <exception cref="NullReferenceException">
+		/// Attempted to dereference null strided pointer.
+		/// </exception>
+		/// <exception cref="InvalidOperationException">
+		/// Attempted to dereference a strided pointer with invalid stride.
+		/// </exception>
 		[Pure]
 		[SuppressMessage("ReSharper", "PureAttributeOnVoidMethod")]
 		public void* GetElement(int index)
@@ -74,6 +86,12 @@ namespace CryCil.Utilities
 		}
 		#endregion
 		#region Utilities
+		/// <exception cref="NullReferenceException">
+		/// Attempted to dereference null strided pointer.
+		/// </exception>
+		/// <exception cref="InvalidOperationException">
+		/// Attempted to dereference a strided pointer with invalid stride.
+		/// </exception>
 		private void AssertInstanceValidity()
 		{
 			if (this.data == null)

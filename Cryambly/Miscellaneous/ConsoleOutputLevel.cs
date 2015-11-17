@@ -1,4 +1,5 @@
-﻿using CryCil.Engine.DebugServices;
+﻿using System;
+using CryCil.Engine.DebugServices;
 using CryCil.RunTime.Logging;
 
 namespace CryCil

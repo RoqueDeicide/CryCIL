@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using CryCil.Geometry;
 using CryCil.Hashing;
@@ -31,7 +30,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetJointCount(this.handle);
 			}
@@ -45,7 +43,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetModelFilePath(this.handle);
 			}
@@ -55,6 +52,15 @@ namespace CryCil.Engine.Models.Characters
 		internal DefaultSkeleton(IntPtr handle)
 		{
 			this.handle = handle;
+		}
+		/// <summary>
+		/// Creates a new object of this type and loads information about a skeleton into it.
+		/// </summary>
+		/// <param name="file"> Path to the file.</param>
+		/// <param name="flags">A set of flags that specify how to load the model.</param>
+		public DefaultSkeleton(string file, CharacterLoadingFlags flags)
+		{
+			this.handle = Character.LoadModelSKEL(file, flags);
 		}
 		#endregion
 		#region Interface
@@ -67,7 +73,6 @@ namespace CryCil.Engine.Models.Characters
 		public int GetJointParent(int index)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return GetJointParentIDByID(this.handle, index);
 		}
@@ -80,7 +85,6 @@ namespace CryCil.Engine.Models.Characters
 		public int GetJointController(int index)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return GetControllerIDByID(this.handle, index);
 		}
@@ -93,7 +97,6 @@ namespace CryCil.Engine.Models.Characters
 		public int IndexOfJoint(LowerCaseCrc32 crc32)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return GetJointIDByCRC32(this.handle, crc32);
 		}
@@ -106,7 +109,6 @@ namespace CryCil.Engine.Models.Characters
 		public int IndexOfJoint(string name)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return GetJointIDByName(this.handle, name);
 		}
@@ -119,7 +121,6 @@ namespace CryCil.Engine.Models.Characters
 		public uint GetJointHash(int index)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return GetJointCRC32ByID(this.handle, index);
 		}
@@ -132,7 +133,6 @@ namespace CryCil.Engine.Models.Characters
 		public string GetJointName(int index)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return GetJointNameByID(this.handle, index);
 		}
@@ -145,7 +145,6 @@ namespace CryCil.Engine.Models.Characters
 		public Quatvec GetJointDefaultAbsoluteLocation(uint index)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			Quatvec location;
 			GetDefaultAbsJointByID(this.handle, index, out location);
@@ -160,7 +159,6 @@ namespace CryCil.Engine.Models.Characters
 		public Quatvec GetJointDefaultRelativeLocation(uint index)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			Quatvec location;
 			GetDefaultRelJointByID(this.handle, index, out location);

@@ -1,4 +1,6 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
 using CryCil.Annotations;
 using CryCil.Engine.Memory;
 using CryCil.Geometry;
@@ -219,6 +221,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets or sets array of parts of the articulated body that can collide with each other.
 		/// </summary>
+		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		public int[] SelfCollidingParts
 		{
 			get { return this.selfCollidingParts; }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -19,18 +20,15 @@ namespace CryCil.RunTime.Compilation
 		/// <summary>
 		/// Project tag within solution file.
 		/// </summary>
-		public static readonly string ProjectTag =
-			String.Format("{0}Project(", Environment.NewLine);
+		public static readonly string ProjectTag = string.Format("{0}Project(", Environment.NewLine);
 		/// <summary>
 		/// EndProject tag within solution file.
 		/// </summary>
-		public static readonly string EndProjectTag =
-			String.Format("{0}EndProject{0}", Environment.NewLine);
+		public static readonly string EndProjectTag = string.Format("{0}EndProject{0}", Environment.NewLine);
 		/// <summary>
 		/// Global tag within solution file.
 		/// </summary>
-		public static readonly string GlobalTag =
-			String.Format("{0}Global{0}", Environment.NewLine);
+		public static readonly string GlobalTag = string.Format("{0}Global{0}", Environment.NewLine);
 		#endregion
 		#region Properties
 		/// <summary>
@@ -104,7 +102,7 @@ namespace CryCil.RunTime.Compilation
 						var dependant = deps[0];
 						buildList.Remove(dependant);
 						failures.Add(dependant.Name,
-									 String.Format("Failed to compile this project, because it depends on failed project {0}", currentProject.Name));
+									 string.Format("Failed to compile this project, because it depends on failed project {0}", currentProject.Name));
 					}
 				}
 			}
@@ -120,18 +118,13 @@ namespace CryCil.RunTime.Compilation
 		}
 		#endregion
 		#region Utilities
+		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		private static void ParseFile([PathReference] string file)
 		{
 			// Load up the file.
 			string solutionFileText;
-			using
-				(
-				StreamReader sr =
-					new StreamReader
-						(
-						new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read)
-						)
-				)
+			FileStream fs = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read);
+			using (StreamReader sr = new StreamReader(fs))
 			{
 				solutionFileText = sr.ReadToEnd();
 			}
@@ -140,33 +133,23 @@ namespace CryCil.RunTime.Compilation
 				solutionFileText.IndexOf(ProjectTag, StringComparison.InvariantCulture);
 			int firstGlobalWordIndex =
 				solutionFileText.IndexOf(GlobalTag, StringComparison.InvariantCulture);
-			solutionFileText =
-				solutionFileText.Substring
-					(
-					 firstProjectWordIndex,
-					 firstGlobalWordIndex - firstProjectWordIndex + 2
-					);
+			solutionFileText = solutionFileText.Substring(firstProjectWordIndex,
+														  firstGlobalWordIndex - firstProjectWordIndex + 2);
 			// Find starts and ends of each Project section.
 			List<int> projectSectionStartIndices = solutionFileText.AllIndexesOf(ProjectTag);
 			List<int> projectSectionEndIndices = solutionFileText.AllIndexesOf(EndProjectTag);
 			if (projectSectionStartIndices.Count != projectSectionEndIndices.Count)
 			{
-				throw new Exception
-					(
-					"Solution file is not properly written: Number of project section" +
-					" start points is not the same as number of end points."
-					);
+				throw new Exception("Solution file is not properly written: Number of project section" +
+									" start points is not the same as number of end points.");
 			}
 			// Load up projects.
 			for (int i = 0; i < projectSectionStartIndices.Count; i++)
 			{
 				// Get the text between Project and EndProject tags.
 				string projectDescription =
-					solutionFileText.Substring
-						(
-						 projectSectionStartIndices[i] + "Project".Length,
-						 projectSectionEndIndices[i] - projectSectionStartIndices[i]
-						);
+					solutionFileText.Substring(projectSectionStartIndices[i] + "Project".Length,
+											   projectSectionEndIndices[i] - projectSectionStartIndices[i]);
 				IProject project = ProjectFactory.Create(projectDescription);
 				if (project != null)
 				{

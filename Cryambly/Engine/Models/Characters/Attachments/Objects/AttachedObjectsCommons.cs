@@ -51,6 +51,7 @@ namespace CryCil.Engine.Models.Characters.Attachments
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		internal static extern IntPtr LoadEffectAttachment(string effectName, ref Vector3 offset, ref Vector3 dir, float scale);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		internal static extern IntPtr CreateEffectAttachment(ParticleEffect pParticleEffect, ref Vector3 offset, ref Vector3 dir, float scale);
+		internal static extern IntPtr CreateEffectAttachment(ParticleEffect pParticleEffect, ref Vector3 offset,
+															 ref Vector3 dir, float scale);
 	}
 }

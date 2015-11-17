@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
@@ -35,7 +34,6 @@ namespace CryCil.Engine.Physics
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetGeometryType(this.handle);
 			}
@@ -48,12 +46,12 @@ namespace CryCil.Engine.Physics
 		/// You can cast returned pointer to one of the corresponding primitives that is specified by
 		/// <see cref="P:CryCil.Engine.Physics.GeometryShape.GeometryType"/>.
 		/// </remarks>
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public Primitive.BasePrimitive* Data
 		{
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetData(this.handle);
 			}
@@ -67,7 +65,6 @@ namespace CryCil.Engine.Physics
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				Primitive.Box box;
 				GetBBox(this.handle, out box);
@@ -83,7 +80,6 @@ namespace CryCil.Engine.Physics
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return IsConvexInternal(this.handle, MathHelpers.ZeroTolerance) != 0;
 			}
@@ -97,7 +93,6 @@ namespace CryCil.Engine.Physics
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetPrimitiveCount(this.handle);
 			}
@@ -111,7 +106,6 @@ namespace CryCil.Engine.Physics
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetVolume(this.handle);
 			}
@@ -125,7 +119,6 @@ namespace CryCil.Engine.Physics
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetCenter(this.handle);
 			}
@@ -139,7 +132,6 @@ namespace CryCil.Engine.Physics
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetSubtractionsCount(this.handle);
 			}
@@ -154,14 +146,12 @@ namespace CryCil.Engine.Physics
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetForeignData(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetForeignData(this.handle, value);
 			}
@@ -180,7 +170,6 @@ namespace CryCil.Engine.Physics
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetErrorCount(this.handle);
 			}
@@ -195,7 +184,6 @@ namespace CryCil.Engine.Physics
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return SanityCheck(this.handle) != 0;
 			}
@@ -247,6 +235,10 @@ namespace CryCil.Engine.Physics
 		/// <exception cref="ArgumentOutOfRangeException">
 		/// An array of vertices cannot be longer then 65535.
 		/// </exception>
+		/// <exception cref="OverflowException">
+		/// The array is multidimensional and contains more than <see cref="F:System.Int32.MaxValue"/>
+		/// elements.
+		/// </exception>
 		public GeometryShape(Vector3[] vertices, ushort[] indices, PhysicsMeshFlags flags,
 							 float approximationTolerance = 0.05f, int minTrianglesPerNode = 2, int maxTrianglesPerNode = 4,
 							 float favorAabb = 1)
@@ -279,7 +271,6 @@ namespace CryCil.Engine.Physics
 			{
 				throw new ArgumentOutOfRangeException("vertices", "An array of vertices cannot be longer then 65535.");
 			}
-			Contract.EndContractBlock();
 
 			fixed (Vector3* verticesPtr = vertices)
 			fixed (ushort* indexesPtr = indices)
@@ -319,6 +310,10 @@ namespace CryCil.Engine.Physics
 		/// <exception cref="ArgumentOutOfRangeException">
 		/// An array of vertices cannot be longer then 65535.
 		/// </exception>
+		/// <exception cref="OverflowException">
+		/// The array is multidimensional and contains more than <see cref="F:System.Int32.MaxValue"/>
+		/// elements.
+		/// </exception>
 		public GeometryShape(Vector3[] vertices, ushort[] indices, PhysicsMeshFlags flags,
 							 BoundingVolumeParameters bvParams, float approximationTolerance = 0.05f)
 		{
@@ -348,7 +343,6 @@ namespace CryCil.Engine.Physics
 			{
 				throw new ArgumentOutOfRangeException("vertices", "An array of vertices cannot be longer then 65535.");
 			}
-			Contract.EndContractBlock();
 
 			fixed (Vector3* verticesPtr = vertices)
 			fixed (ushort* indexesPtr = indices)
@@ -394,6 +388,10 @@ namespace CryCil.Engine.Physics
 		/// <exception cref="ArgumentException">
 		/// Dimensions of the voxel grid cannot be less then 0.
 		/// </exception>
+		/// <exception cref="OverflowException">
+		/// The array is multidimensional and contains more than <see cref="F:System.Int32.MaxValue"/>
+		/// elements.
+		/// </exception>
 		public GeometryShape(Vector3[] vertices, ushort[] indices, PhysicsMeshFlags flags,
 							 VoxelGridParameters vgParams, float approximationTolerance = 0.05f)
 		{
@@ -427,7 +425,6 @@ namespace CryCil.Engine.Physics
 			{
 				throw new ArgumentException("Dimensions of the voxel grid cannot be less then 0.", "vgParams");
 			}
-			Contract.EndContractBlock();
 
 			fixed (Vector3* verticesPtr = vertices)
 			fixed (ushort* indexesPtr = indices)
@@ -481,6 +478,10 @@ namespace CryCil.Engine.Physics
 		/// <exception cref="ArgumentException">
 		/// The number of ids for materials must be equal to number of triangles.
 		/// </exception>
+		/// <exception cref="OverflowException">
+		/// The array is multidimensional and contains more than <see cref="F:System.Int32.MaxValue"/>
+		/// elements.
+		/// </exception>
 		public GeometryShape(Vector3[] vertices, ushort[] indices, byte[] materialIds, PhysicsMeshFlags flags,
 							 float approximationTolerance = 0.05f, int minTrianglesPerNode = 2, int maxTrianglesPerNode = 4,
 							 float favorAabb = 1)
@@ -518,7 +519,6 @@ namespace CryCil.Engine.Physics
 			{
 				throw new ArgumentException("The number of ids for materials must be equal to number of triangles.");
 			}
-			Contract.EndContractBlock();
 
 			fixed (Vector3* verticesPtr = vertices)
 			fixed (ushort* indexesPtr = indices)
@@ -563,6 +563,10 @@ namespace CryCil.Engine.Physics
 		/// <exception cref="ArgumentException">
 		/// The number of ids for materials must be equal to number of triangles.
 		/// </exception>
+		/// <exception cref="OverflowException">
+		/// The array is multidimensional and contains more than <see cref="F:System.Int32.MaxValue"/>
+		/// elements.
+		/// </exception>
 		public GeometryShape(Vector3[] vertices, ushort[] indices, byte[] materialIds, PhysicsMeshFlags flags,
 							 BoundingVolumeParameters bvParams, float approximationTolerance = 0.05f)
 		{
@@ -597,7 +601,6 @@ namespace CryCil.Engine.Physics
 			{
 				throw new ArgumentException("The number of ids for materials must be equal to number of triangles.");
 			}
-			Contract.EndContractBlock();
 
 			fixed (Vector3* verticesPtr = vertices)
 			fixed (ushort* indexesPtr = indices)
@@ -648,6 +651,10 @@ namespace CryCil.Engine.Physics
 		/// <exception cref="ArgumentException">
 		/// Dimensions of the voxel grid cannot be less then 0.
 		/// </exception>
+		/// <exception cref="OverflowException">
+		/// The array is multidimensional and contains more than <see cref="F:System.Int32.MaxValue"/>
+		/// elements.
+		/// </exception>
 		public GeometryShape(Vector3[] vertices, ushort[] indices, byte[] materialIds, PhysicsMeshFlags flags,
 							 VoxelGridParameters vgParams, float approximationTolerance = 0.05f)
 		{
@@ -686,7 +693,6 @@ namespace CryCil.Engine.Physics
 			{
 				throw new ArgumentException("Dimensions of the voxel grid cannot be less then 0.", "vgParams");
 			}
-			Contract.EndContractBlock();
 
 			fixed (Vector3* verticesPtr = vertices)
 			fixed (ushort* indexesPtr = indices)
@@ -706,6 +712,7 @@ namespace CryCil.Engine.Physics
 		/// <param name="primitive">
 		/// Reference to the base part of the object that provides information about a primitive.
 		/// </param>
+		/// <exception cref="NotSupportedException">Primitive type is not supported.</exception>
 		public GeometryShape(int type, ref Primitive.BasePrimitive primitive)
 		{
 			this.handle = IntPtr.Zero;
@@ -715,8 +722,6 @@ namespace CryCil.Engine.Physics
 				throw new NotSupportedException(string.Format("Primitive type with identifier = {0} is not supported",
 															  type));
 			}
-
-			Contract.EndContractBlock();
 
 			this.handle = CreatePrimitive(type, ref primitive);
 		}
@@ -733,7 +738,6 @@ namespace CryCil.Engine.Physics
 		public int IncrementReferenceCount()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return AddRef(this.handle);
 		}
@@ -748,7 +752,6 @@ namespace CryCil.Engine.Physics
 		public void DecrementReferenceCount()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			Release(this.handle);
 		}
@@ -760,7 +763,6 @@ namespace CryCil.Engine.Physics
 		public void LockWrite()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			Lock(this.handle, 1);
 		}
@@ -772,7 +774,6 @@ namespace CryCil.Engine.Physics
 		public void LockRead()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			Lock(this.handle, 0);
 		}
@@ -784,7 +785,6 @@ namespace CryCil.Engine.Physics
 		public void UnlockWrite()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			Unlock(this.handle, 1);
 		}
@@ -796,7 +796,6 @@ namespace CryCil.Engine.Physics
 		public void UnlockRead()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			Unlock(this.handle, 0);
 		}
@@ -809,7 +808,6 @@ namespace CryCil.Engine.Physics
 		public bool ContainsPoint(ref Vector3 point)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return PointInsideStatus(this.handle, ref point) != 0;
 		}
@@ -841,7 +839,6 @@ namespace CryCil.Engine.Physics
 			{
 				throw new ArgumentNullException("other", "An object that represents another geometry must not be valid.");
 			}
-			Contract.EndContractBlock();
 
 			pparams.CompleteInitialization();
 
@@ -864,7 +861,6 @@ namespace CryCil.Engine.Physics
 			{
 				throw new ArgumentNullException("other", "An object that represents another geometry must not be valid.");
 			}
-			Contract.EndContractBlock();
 
 			return IntersectLockedDefault(this.handle, other);
 		}
@@ -927,7 +923,6 @@ namespace CryCil.Engine.Physics
 									 out Vector3 pointOnSurface, out Vector3 pointOnSegment, int maxIters = 10)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			wd.CompleteInitialization();
 
@@ -992,7 +987,6 @@ namespace CryCil.Engine.Physics
 											 out Vector3 impulse, out EulerAngles angularImpulse)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			wd.CompleteInitialization();
 
@@ -1015,7 +1009,6 @@ namespace CryCil.Engine.Physics
 		public float CalculateBuoyancy(ref Primitive.Plane surface, ref GeometryWorldData wd, out Vector3 submergedCenter)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			wd.CompleteInitialization();
 
@@ -1054,7 +1047,6 @@ namespace CryCil.Engine.Physics
 											  out Vector3 resistance)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			wd.CompleteInitialization();
 
@@ -1082,7 +1074,6 @@ namespace CryCil.Engine.Physics
 							 bool logUpdates = true)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			if (!subtrahend.IsValid)
 			{
@@ -1103,7 +1094,6 @@ namespace CryCil.Engine.Physics
 		public bool GetMeshUpdates(out MeshUpdate firstUpdate)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			MeshUpdate* first = GetMeshUpdatesInternal(this.handle);
 
@@ -1124,10 +1114,13 @@ namespace CryCil.Engine.Physics
 		/// <param name="parameters">Reference to the object that defines how to boxify this mesh.</param>
 		/// <returns>Number of created boxes.</returns>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
+		/// <exception cref="OverflowException">
+		/// The array is multidimensional and contains more than <see cref="F:System.Int32.MaxValue"/>
+		/// elements.
+		/// </exception>
 		public int Boxify(Primitive.Box[] boxes, ref BoxificationParameters parameters)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			if (boxes.IsNullOrEmpty())
 			{
@@ -1141,6 +1134,7 @@ namespace CryCil.Engine.Physics
 		}
 		#endregion
 		#region Utilities
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		private void AssertInstance()
 		{
 			if (!this.IsValid)

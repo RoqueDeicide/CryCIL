@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
@@ -16,7 +15,7 @@ namespace CryCil.Engine.Models.StaticObjects
 	/// </summary>
 	/// <example>
 	/// Example of creating a mesh at run-time:
-	/// <code source="StaticObjectMesh.cs" />
+	/// <code source="StaticObjectMesh.cs"/>
 	/// </example>
 	[StructLayout(LayoutKind.Explicit)]
 	public unsafe struct StaticObject
@@ -47,14 +46,12 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetFlags(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetFlags(this.handle, value);
 			}
@@ -68,7 +65,6 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetIdMatBreakable(this.handle);
 			}
@@ -82,14 +78,12 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetPhysGeom(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetPhysGeom(this.handle, value);
 			}
@@ -103,7 +97,6 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetTetrLattice(this.handle);
 			}
@@ -117,14 +110,12 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetMaterial(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetMaterial(this.handle, value);
 			}
@@ -138,14 +129,12 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetBox(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetBBox(this.handle, value);
 			}
@@ -159,7 +148,6 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetRadius(this.handle);
 			}
@@ -173,7 +161,6 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetLowestLodInternal(this.handle);
 			}
@@ -187,14 +174,12 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetFilePath(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetFilePath(this.handle, value);
 			}
@@ -208,14 +193,12 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetGeoName(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetGeoName(this.handle, value);
 			}
@@ -232,7 +215,6 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return IsDefaultObject(this.handle);
 			}
@@ -246,7 +228,6 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return IsPhysicsExist(this.handle);
 			}
@@ -268,7 +249,6 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return IsSubObjectInternal(this.handle);
 			}
@@ -282,7 +262,6 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetParentObject(this.handle);
 			}
@@ -296,7 +275,6 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetCloneSourceObject(this.handle);
 			}
@@ -310,7 +288,6 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return IsDeformableInternal(this.handle);
 			}
@@ -325,7 +302,6 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetProperties(this.handle);
 			}
@@ -339,7 +315,6 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				StaticObjectStatistics stats;
 				GetStatistics(this.handle, out stats);
@@ -355,7 +330,6 @@ namespace CryCil.Engine.Models.StaticObjects
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetRenderMesh(this.handle);
 			}
@@ -402,7 +376,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public int IncrementReferenceCount()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return AddRef(this.handle);
 		}
@@ -416,7 +389,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public int DecrementReferenceCount()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return Release(this.handle);
 		}
@@ -475,7 +447,6 @@ namespace CryCil.Engine.Models.StaticObjects
 				throw new ArgumentOutOfRangeException("firstVertex",
 													  "Index of the first vertex to update cannot be less then 0.");
 			}
-			Contract.EndContractBlock();
 
 			fixed (Vector3* verticesPtr = vertices)
 			fixed (Vector3* normalsPtr = normals)
@@ -495,7 +466,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public void Refresh(ResourceRefreshFlags flags)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 #if DEBUG
 			ResourceRefreshFlags acceptableFlags = ResourceRefreshFlags.Shaders | ResourceRefreshFlags.Textures |
@@ -523,7 +493,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public PositionNormal GetRandomPoint(GeometryFormat aspect)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return GetRandomPos(this.handle, aspect);
 		}
@@ -540,7 +509,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public StaticObject GetLodObject(int lodLevel, bool returnNearest = false)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return GetLodObjectInternal(this.handle, lodLevel, returnNearest);
 		}
@@ -554,7 +522,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public int FindNearestLoadedLod(int lodIn, bool searchUp = false)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return FindNearesLoadedLodInternal(this.handle, lodIn, searchUp);
 		}
@@ -567,7 +534,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public int FindHighestLod(int bias)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return FindHighestLodInternal(this.handle, bias);
 		}
@@ -580,7 +546,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public Vector3 GetHelperPosition(string helperName)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return GetHelperPos(this.handle, helperName);
 		}
@@ -593,7 +558,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public Matrix34 GetHelperTransformation(string helperName)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return GetHelperTM(this.handle, helperName);
 		}
@@ -608,7 +572,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public void ReleaseIndexedMesh()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			FreeIndexedMesh(this.handle);
 		}
@@ -622,7 +585,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public void Invalidate(bool physics = false, float tolerance = 0.05f)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			InvalidateInternal(this.handle, physics, tolerance);
 		}
@@ -641,7 +603,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public int Physicalize(PhysicalEntity entity, ref GeometryParameters pgp, int id = 0, string propsOverride = null)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return PhysicalizeInternal(this.handle, entity, ref pgp, id, propsOverride);
 		}
@@ -655,7 +616,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public bool Save([PathReference] string file, bool savePhysics = false)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return SaveToCGF(this.handle, file, savePhysics);
 		}
@@ -670,7 +630,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public StaticObject Clone(bool cloneGeometry, bool cloneChildren, bool meshesOnly)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return CloneInternal(this.handle, cloneGeometry, cloneChildren, meshesOnly);
 		}
@@ -684,7 +643,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public bool SetDeformationMorphTarget(StaticObject deformed)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return SetDeformationMorphTargetInternal(this.handle, deformed) != 0;
 		}
@@ -699,7 +657,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public StaticObject Deform(ref Vector3 point, float radius, float strength)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return DeformMorph(this.handle, ref point, radius, strength);
 		}
@@ -711,7 +668,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public StaticObject HideNonPhysicalizedGeometry()
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return HideFoliage(this.handle);
 		}
@@ -723,7 +679,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public void Synchronize(CrySync sync)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			Serialize(this.handle, sync);
 		}
@@ -737,7 +692,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public bool GetPhysicalProperties(out float mass, out float density)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return GetPhysicalPropertiesInternal(this.handle, out mass, out density);
 		}
@@ -750,7 +704,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		public StaticObject GetLastCutOut(out float scale)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return GetLastBooleanOp(this.handle, out scale);
 		}
@@ -768,12 +721,12 @@ namespace CryCil.Engine.Models.StaticObjects
 		public CryIndexedMesh GetIndexedMesh(bool createIfNone = false)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return GetIndexedMeshInternal(this.handle, createIfNone);
 		}
 		#endregion
 		#region Utilities
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		private void AssertInstance()
 		{
 			if (!this.IsValid)

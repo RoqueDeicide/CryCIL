@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Runtime.CompilerServices;
 
 namespace CryCil.Engine.Input
 {
@@ -111,11 +112,11 @@ namespace CryCil.Engine.Input
 		/// <summary>
 		/// Signals underlying framework that mouse pointer needs to be on the screen.
 		/// </summary>
-		/// <returns>
+		/// <remarks>
 		/// There is an internal counter that is in(de)cremented when <see cref="Show"/>(
 		/// <see cref="Hide()"/>) is invoked. When the counter is positive, the mouse appears on the
 		/// screen.
-		/// </returns>
+		/// </remarks>
 		public static void Show()
 		{
 			IncrementCounter();
@@ -123,11 +124,11 @@ namespace CryCil.Engine.Input
 		/// <summary>
 		/// Signals underlying framework that mouse pointer needs to disappear from the screen.
 		/// </summary>
-		/// <returns>
+		/// <remarks>
 		/// There is an internal counter that is in(de)cremented when <see cref="Show"/>(
 		/// <see cref="Hide()"/>) is invoked. When the counter is positive, the mouse appears on the
 		/// screen.
-		/// </returns>
+		/// </remarks>
 		public static void Hide()
 		{
 			IncrementCounter();

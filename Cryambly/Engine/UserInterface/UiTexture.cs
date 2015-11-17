@@ -1,4 +1,5 @@
-﻿using CryCil.Engine.Rendering;
+﻿using System;
+using CryCil.Engine.Rendering;
 
 namespace CryCil.Engine.UserInterface
 {
@@ -21,13 +22,21 @@ namespace CryCil.Engine.UserInterface
 		/// <param name="dontRelease">
 		/// Indication whether the texture should be kept loaded all the time.
 		/// </param>
+		/// <exception cref="ArgumentException">Unable to load the texture properly.</exception>
 		public UiTexture(string name, bool dontRelease)
 			: base(name, TextureFlags.NoMips |
 						 TextureFlags.DontResize |
 						 TextureFlags.DontStream |
 						 (dontRelease ? TextureFlags.DontRelease : 0))
 		{
-			this.Clamp = true;
+			try
+			{
+				this.Clamp = true;
+			}
+			catch (NullReferenceException nullReferenceException)
+			{
+				throw new ArgumentException("Unable to load the texture properly.", nullReferenceException);
+			}
 		}
 		#endregion
 		#region Interface

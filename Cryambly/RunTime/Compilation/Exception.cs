@@ -39,9 +39,13 @@ namespace CryCil.RunTime.Compilation
 		/// </summary>
 		/// <param name="info">   The object that holds the serialized object data.</param>
 		/// <param name="context">The contextual information about the source or destination.</param>
-		protected CodeCompilationException(
-			SerializationInfo info,
-			StreamingContext context)
+		/// <exception cref="SerializationException">
+		/// The class name is null or <see cref="P:System.Exception.HResult"/> is zero (0).
+		/// </exception>
+		/// <exception cref="ArgumentNullException">
+		/// The <paramref name="info"/> parameter is null.
+		/// </exception>
+		protected CodeCompilationException(SerializationInfo info, StreamingContext context)
 			: base(info, context)
 		{
 		}

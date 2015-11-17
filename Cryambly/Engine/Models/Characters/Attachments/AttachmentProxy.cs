@@ -7,7 +7,8 @@ using CryCil.Hashing;
 namespace CryCil.Engine.Models.Characters.Attachments
 {
 	/// <summary>
-	/// Represents a simple object that is used to simulate physical interactions of objects that are attached to animated characters with characters themselves.
+	/// Represents a simple object that is used to simulate physical interactions of objects that are
+	/// attached to animated characters with characters themselves.
 	/// </summary>
 	public struct AttachmentProxy
 	{
@@ -154,7 +155,7 @@ namespace CryCil.Engine.Models.Characters.Attachments
 			set
 			{
 				this.AssertInstance();
-				
+
 				SetHideProxy(this.handle, (byte)(value ? 1 : 0));
 			}
 		}
@@ -172,7 +173,7 @@ namespace CryCil.Engine.Models.Characters.Attachments
 		/// <param name="name">New name of the joint.</param>
 		/// <returns>Hash code of the new name(?).</returns>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
-		public LowerCaseCrc32 UpdateJointName([CanBeNull]string name)
+		public LowerCaseCrc32 UpdateJointName([CanBeNull] string name)
 		{
 			this.AssertInstance();
 

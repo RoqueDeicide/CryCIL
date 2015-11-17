@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
 using System.Runtime.CompilerServices;
 using CryCil.Engine.Data;
 
@@ -30,7 +29,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetParametricSampler(this.handle);
 			}
@@ -44,7 +42,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetAnimationId(this.handle);
 			}
@@ -58,7 +55,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetCurrentSegmentIndex(this.handle);
 			}
@@ -73,14 +69,12 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetCurrentSegmentNormalizedTime(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetCurrentSegmentNormalizedTime(this.handle, value);
 			}
@@ -95,14 +89,12 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetTransitionPriority(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetTransitionPriority(this.handle, value);
 			}
@@ -116,14 +108,12 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetTransitionWeight(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetTransitionWeight(this.handle, value);
 			}
@@ -137,14 +127,12 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetTransitionTime(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetTransitionTime(this.handle, value);
 			}
@@ -159,14 +147,12 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetPlaybackWeight(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetPlaybackWeight(this.handle, MathHelpers.Clamp(value, 0.0f, 1.0f));
 			}
@@ -180,14 +166,12 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetPlaybackScale(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetPlaybackScale(this.handle, MathHelpers.Clamp(value, 0.0000001f, float.MaxValue));
 			}
@@ -201,14 +185,12 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetUserToken(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetUserToken(this.handle, value);
 			}
@@ -222,14 +204,12 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetExpectedTotalDurationSeconds(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				SetExpectedTotalDurationSeconds(this.handle, value);
 			}
@@ -243,7 +223,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return IsActivated(this.handle) != 0;
 			}
@@ -257,7 +236,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetLoop(this.handle) != 0;
 			}
@@ -271,7 +249,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetEndOfCycle(this.handle) != 0;
 			}
@@ -285,7 +262,6 @@ namespace CryCil.Engine.Models.Characters
 			get
 			{
 				this.AssertInstance();
-				Contract.EndContractBlock();
 
 				return GetUseTimeWarping(this.handle) != 0;
 			}
@@ -306,7 +282,6 @@ namespace CryCil.Engine.Models.Characters
 		public void Synchronize(CrySync sync)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			Serialize(this.handle, sync);
 		}
@@ -319,7 +294,6 @@ namespace CryCil.Engine.Models.Characters
 		public bool HasStaticFlags(AnimationFlags flags)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			return HasStaticFlagInternal(this.handle, flags);
 		}
@@ -331,7 +305,6 @@ namespace CryCil.Engine.Models.Characters
 		public void SetStaticFlags(AnimationFlags flags)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			SetStaticFlagInternal(this.handle, flags);
 		}
@@ -343,7 +316,6 @@ namespace CryCil.Engine.Models.Characters
 		public void ClearStaticFlags(AnimationFlags flags)
 		{
 			this.AssertInstance();
-			Contract.EndContractBlock();
 
 			ClearStaticFlagInternal(this.handle, flags);
 		}

@@ -1,4 +1,6 @@
-﻿namespace CryCil.Geometry
+﻿using System;
+
+namespace CryCil.Geometry
 {
 	/// <summary>
 	/// Enumeration of ways the geometry can be formed.

@@ -1,4 +1,6 @@
-﻿namespace CryCil.Geometry
+﻿using System;
+
+namespace CryCil.Geometry
 {
 	/// <summary>
 	/// Represents a combination of quaternion and a vector.

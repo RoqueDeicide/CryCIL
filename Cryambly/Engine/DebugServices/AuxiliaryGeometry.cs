@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using CryCil.Geometry;
 using CryCil.Graphics;
@@ -8,6 +9,7 @@ namespace CryCil.Engine.DebugServices
 	/// <summary>
 	/// Provides access to CryEngine auxiliary geometry rendering API.
 	/// </summary>
+	[SuppressMessage("ReSharper", "ExceptionNotThrown")]
 	public static class AuxiliaryGeometry
 	{
 		#region Properties

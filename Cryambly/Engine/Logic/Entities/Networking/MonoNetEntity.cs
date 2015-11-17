@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Runtime.CompilerServices;
 using CryCil.Annotations;
 using CryCil.Engine.Data;
 using CryCil.Engine.Network;

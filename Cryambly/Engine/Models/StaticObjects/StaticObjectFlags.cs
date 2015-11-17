@@ -21,7 +21,8 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// </summary>
 		Generated = 1 << 2,
 		/// <summary>
-		/// When set, specifies that this static object contains geometry that is not suitable for procedural breaking.
+		/// When set, specifies that this static object contains geometry that is not suitable for
+		/// procedural breaking.
 		/// </summary>
 		CantBreak = 1 << 3,
 		/// <summary>

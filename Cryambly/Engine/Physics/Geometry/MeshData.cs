@@ -36,6 +36,7 @@ namespace CryCil.Engine.Physics
 		/// Gets the object that encapsulates information about neighbors of each edge of the triangle.
 		/// </summary>
 		/// <param name="index">Zero-based index of the object to get.</param>
+		/// <exception cref="IndexOutOfRangeException">Index is out of range.</exception>
 		public TriangleTopologyInfo this[int index]
 		{
 			get
@@ -106,6 +107,7 @@ namespace CryCil.Engine.Physics
 		/// Gets the object that represents mesh island.
 		/// </summary>
 		/// <param name="index">Zero-based index of the object to get.</param>
+		/// <exception cref="IndexOutOfRangeException">Index is out of range.</exception>
 		public MeshIsland this[int index]
 		{
 			get
@@ -142,6 +144,7 @@ namespace CryCil.Engine.Physics
 		/// Gets the index of one of the vertexes that forms one of the triangles.
 		/// </summary>
 		/// <param name="index">Zero-based index of the object to get.</param>
+		/// <exception cref="IndexOutOfRangeException">Index is out of range.</exception>
 		public int this[int index]
 		{
 			get
@@ -159,6 +162,10 @@ namespace CryCil.Engine.Physics
 		/// </summary>
 		/// <param name="triangleIndex">Zero-based index of the triangle which vertex index to get.</param>
 		/// <param name="vertexIndex">  Zero-based index of the vertex of a triangle to get.</param>
+		/// <exception cref="ArgumentOutOfRangeException">
+		/// Index of the triangle was out of range.
+		/// </exception>
+		/// <exception cref="ArgumentOutOfRangeException">Index of the vertex was out of range.</exception>
 		public int this[int triangleIndex, int vertexIndex]
 		{
 			get
@@ -207,6 +214,7 @@ namespace CryCil.Engine.Physics
 		/// Gets the index of the material that is assigned to the triangle with this index.
 		/// </summary>
 		/// <param name="index">Zero-based index of the object to get.</param>
+		/// <exception cref="IndexOutOfRangeException">Index is out of range.</exception>
 		public int this[int index]
 		{
 			get
@@ -250,6 +258,10 @@ namespace CryCil.Engine.Physics
 		/// Gets the coordinates of the vertex.
 		/// </summary>
 		/// <param name="index">Zero-based index of the object to get.</param>
+		/// <exception cref="IndexOutOfRangeException">Index is out of range.</exception>
+		/// <exception cref="NullReferenceException">
+		/// Attempted to dereference null strided pointer.
+		/// </exception>
 		public Vector3 this[int index]
 		{
 			get
@@ -293,6 +305,7 @@ namespace CryCil.Engine.Physics
 		/// Gets the normal to the respective vertex.
 		/// </summary>
 		/// <param name="index">Zero-based index of the object to get.</param>
+		/// <exception cref="IndexOutOfRangeException">Index is out of range.</exception>
 		public Vector3 this[int index]
 		{
 			get
@@ -337,6 +350,7 @@ namespace CryCil.Engine.Physics
 		/// Gets the new index of the respective vertex.
 		/// </summary>
 		/// <param name="index">Zero-based index of the object to get.</param>
+		/// <exception cref="IndexOutOfRangeException">Index is out of range.</exception>
 		public int this[int index]
 		{
 			get

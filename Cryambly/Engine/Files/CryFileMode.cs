@@ -1,4 +1,6 @@
-﻿namespace CryCil.Engine.Files
+﻿using System;
+
+namespace CryCil.Engine.Files
 {
 	/// <summary>
 	/// Enumeration of modes files in CryEngine virtual file system can be opened in.

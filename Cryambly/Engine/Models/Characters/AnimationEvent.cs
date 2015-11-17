@@ -1,4 +1,5 @@
-﻿using CryCil.Hashing;
+﻿using System;
+using CryCil.Hashing;
 
 namespace CryCil.Engine.Models.Characters
 {
