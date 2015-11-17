@@ -117,3 +117,63 @@
 #include "Interops/IndexedMesh.h"
 
 #include "Interops/RenderMesh.h"
+
+#include "Interops/Character.h"
+
+#include "Interops/DefaultSkeleton.h"
+
+#include "Interops/CharacterSkin.h"
+
+#include "Interops/CharacterAnimation.h"
+
+#include "Interops/ParametricSampler.h"
+
+#include "Interops/SkeletonAnimation.h"
+
+#include "Interops/SkeletonPose.h"
+
+#include "Interops/AnimationSet.h"
+
+#include "Interops/CustomMarshaling.h"
+
+#include "Interops/FaceIdentifier.h"
+
+#include "Interops/FacialEffectorController.h"
+
+#include "Interops/FacialEffector.h"
+
+#include "Interops/FacialEffectorsLibrary.h"
+
+#include "Interops/FacialModel.h"
+
+#include "Interops/FaceState.h"
+
+#include "Interops/PhonemeLibrary.h"
+
+#include "Interops/FacialSentence.h"
+
+#include "Interops/FacialAnimationChannel.h"
+
+#include "Interops/FacialAnimationSequence.h"
+
+#include "Interops/FacialAnimationSoundEntry.h"
+
+#include "Interops/FacialAnimationSkeletonAnimationEntry.h"
+
+#include "Interops/Face.h"
+
+#include "Interops/FacialAnimation.h"
+
+#include "Interops/AttachmentManager.h"
+
+#include "Interops/AttachedObjectsCommons.h"
+
+#include "Interops/AttachmentRowSimulationParameters.h"
+
+#include "Interops/AttachmentSimulationParameters.h"
+
+#include "Interops/AttachmentSocket.h"
+
+#include "Interops/AttachmentSkin.h"
+
+#include "Interops/AttachmentProxy.h"

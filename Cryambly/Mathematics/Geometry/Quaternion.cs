@@ -17,6 +17,8 @@ namespace CryCil.Geometry
 		/// </summary>
 		/// <remarks>Identity quaternion has W equal to 1, and vector is equal to 0.</remarks>
 		public static readonly Quaternion Identity = new Quaternion(0.0f, 0.0f, 0.0f, 1.0f);
+		// For internal use.
+		internal static Quaternion SecretIdentity = new Quaternion(0.0f, 0.0f, 0.0f, 1.0f);
 		#region Fields
 		/// <summary>
 		/// X-component of the quaternion.

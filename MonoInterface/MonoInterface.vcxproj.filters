@@ -452,21 +452,118 @@
     <ClInclude Include="Interops\WaterManagerStructs.h">
       <Filter>Interops\Engine\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="Interops\StaticSubObject.h">
-      <Filter>Interops\Engine\Models</Filter>
+    <ClInclude Include="Interops\FacialEffectorController.h">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
     </ClInclude>
-    <ClInclude Include="Interops\StaticObject.h">
-      <Filter>Interops\Engine\Models</Filter>
+    <ClInclude Include="Interops\FacialEffector.h">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\CustomMarshaling.h">
+      <Filter>Interops\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\FaceIdentifier.h">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\FacialEffectorsLibrary.h">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\FacialModel.h">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\FaceState.h">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
     </ClInclude>
     <ClInclude Include="Interops\CMesh.h">
-      <Filter>Interops\Engine\Models</Filter>
+      <Filter>Interops\Engine\Models\StaticObjects</Filter>
     </ClInclude>
     <ClInclude Include="Interops\IndexedMesh.h">
-      <Filter>Interops\Engine\Models</Filter>
+      <Filter>Interops\Engine\Models\StaticObjects</Filter>
     </ClInclude>
     <ClInclude Include="Interops\RenderMesh.h">
-      <Filter>Interops\Engine\Models</Filter>
+      <Filter>Interops\Engine\Models\StaticObjects</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\StaticObject.h">
+      <Filter>Interops\Engine\Models\StaticObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\StaticSubObject.h">
+      <Filter>Interops\Engine\Models\StaticObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\AnimationSet.h">
+      <Filter>Interops\Engine\Models\Characters\SimpleAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\Character.h">
+      <Filter>Interops\Engine\Models\Characters\SimpleAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\CharacterAnimation.h">
+      <Filter>Interops\Engine\Models\Characters\SimpleAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\CharacterSkin.h">
+      <Filter>Interops\Engine\Models\Characters\SimpleAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\DefaultSkeleton.h">
+      <Filter>Interops\Engine\Models\Characters\SimpleAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\MonoAnimationEvent.h">
+      <Filter>Interops\Engine\Models\Characters\SimpleAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\ParametricSampler.h">
+      <Filter>Interops\Engine\Models\Characters\SimpleAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\SkeletonAnimation.h">
+      <Filter>Interops\Engine\Models\Characters\SimpleAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\SkeletonPose.h">
+      <Filter>Interops\Engine\Models\Characters\SimpleAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\PhonemeLibrary.h">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\FacialSentence.h">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\FacialAnimationChannel.h">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\FacialAnimationSoundEntry.h">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\FacialAnimationSequence.h">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\FacialAnimationSkeletonAnimationEntry.h">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\MergingUtility.h">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\Face.h">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\FacialAnimation.h">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\AttachmentManager.h">
+      <Filter>Interops\Engine\Models\Characters\Attachments</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\AttachedObjectsCommons.h">
+      <Filter>Interops\Engine\Models\Characters\Attachments</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\DynArrayToMonoArray.h">
+      <Filter>Interops\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\AttachmentRowSimulationParameters.h">
+      <Filter>Interops\Engine\Models\Characters\Attachments</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\AttachmentSimulationParameters.h">
+      <Filter>Interops\Engine\Models\Characters\Attachments</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\AttachmentSocket.h">
+      <Filter>Interops\Engine\Models\Characters\Attachments</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\AttachmentSkin.h">
+      <Filter>Interops\Engine\Models\Characters\Attachments</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\AttachmentProxy.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -848,12 +945,6 @@
     <ClCompile Include="TypeMapChecks\StaticObjectStuff.cpp">
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
-    <ClCompile Include="Interops\StaticSubObject.cpp">
-      <Filter>Interops\Engine\Models</Filter>
-    </ClCompile>
-    <ClCompile Include="Interops\StaticObject.cpp">
-      <Filter>Interops\Engine\Models</Filter>
-    </ClCompile>
     <ClCompile Include="TypeMapChecks\MeshTypes.cpp">
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
@@ -863,18 +954,121 @@
     <ClCompile Include="TypeMapChecks\PhysicsGeomType.cpp">
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
-    <ClCompile Include="Interops\CMesh.cpp">
-      <Filter>Interops\Engine\Models</Filter>
-    </ClCompile>
-    <ClCompile Include="Interops\IndexedMesh.cpp">
-      <Filter>Interops\Engine\Models</Filter>
-    </ClCompile>
-    <ClCompile Include="Interops\RenderMesh.cpp">
-      <Filter>Interops\Engine\Models</Filter>
-    </ClCompile>
     <ClCompile Include="TypeMapChecks\VertexFormatsAndPips.cpp">
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
+    <ClCompile Include="TypeMapChecks\CharacterTypes.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\FacialEffectorController.cpp">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\FacialEffector.cpp">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\CustomMarshaling.cpp">
+      <Filter>Interops\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\FaceIdentifier.cpp">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\FacialEffectorsLibrary.cpp">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\FacialModel.cpp">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\FaceState.cpp">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\CMesh.cpp">
+      <Filter>Interops\Engine\Models\StaticObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\IndexedMesh.cpp">
+      <Filter>Interops\Engine\Models\StaticObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\RenderMesh.cpp">
+      <Filter>Interops\Engine\Models\StaticObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\StaticObject.cpp">
+      <Filter>Interops\Engine\Models\StaticObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\StaticSubObject.cpp">
+      <Filter>Interops\Engine\Models\StaticObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\AnimationSet.cpp">
+      <Filter>Interops\Engine\Models\Characters\SimpleAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\Character.cpp">
+      <Filter>Interops\Engine\Models\Characters\SimpleAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\CharacterAnimation.cpp">
+      <Filter>Interops\Engine\Models\Characters\SimpleAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\CharacterSkin.cpp">
+      <Filter>Interops\Engine\Models\Characters\SimpleAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\DefaultSkeleton.cpp">
+      <Filter>Interops\Engine\Models\Characters\SimpleAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\MonoAnimationEvent.cpp">
+      <Filter>Interops\Engine\Models\Characters\SimpleAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\ParametricSampler.cpp">
+      <Filter>Interops\Engine\Models\Characters\SimpleAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\SkeletonAnimation.cpp">
+      <Filter>Interops\Engine\Models\Characters\SimpleAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\SkeletonPose.cpp">
+      <Filter>Interops\Engine\Models\Characters\SimpleAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\PhonemeLibrary.cpp">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\FacialSentence.cpp">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\FacialAnimationChannel.cpp">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\FacialAnimationSequence.cpp">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\FacialAnimationSkeletonAnimationEntry.cpp">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\FacialAnimationSoundEntry.cpp">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\Face.cpp">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\FacialAnimation.cpp">
+      <Filter>Interops\Engine\Models\Characters\FacialAnimation</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\AttachmentManager.cpp">
+      <Filter>Interops\Engine\Models\Characters\Attachments</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\AttachedObjectsCommons.cpp">
+      <Filter>Interops\Engine\Models\Characters\Attachments</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\CryName.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\AttachmentRowSimulationParameters.cpp">
+      <Filter>Interops\Engine\Models\Characters\Attachments</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\AttachmentSimulationParameters.cpp">
+      <Filter>Interops\Engine\Models\Characters\Attachments</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\AttachmentSocket.cpp">
+      <Filter>Interops\Engine\Models\Characters\Attachments</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\AttachmentSkin.cpp">
+      <Filter>Interops\Engine\Models\Characters\Attachments</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\AttachmentProxy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">
@@ -984,6 +1178,21 @@
     </Filter>
     <Filter Include="Interops\Engine\Models">
       <UniqueIdentifier>{17e3da0d-a1c1-4018-951c-48194af1667f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interops\Engine\Models\Characters">
+      <UniqueIdentifier>{45e016b3-d283-4e0d-8fa6-122fa699165f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interops\Engine\Models\Characters\FacialAnimation">
+      <UniqueIdentifier>{d2049067-19d0-437b-b952-abaa3435cdee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interops\Engine\Models\StaticObjects">
+      <UniqueIdentifier>{ca233a3f-af78-4780-9a7b-4dc8b6503800}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interops\Engine\Models\Characters\SimpleAnimation">
+      <UniqueIdentifier>{893ac42c-6593-4737-b9fc-4be892de8f51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interops\Engine\Models\Characters\Attachments">
+      <UniqueIdentifier>{9cdc558e-b1ef-4b5c-b4fd-acd6e2c78cb4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

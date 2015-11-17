@@ -363,6 +363,36 @@ void MonoInterface::RegisterDefaultListeners()
 	this->broadcaster->listeners->Add(new CMeshInterop());
 	this->broadcaster->listeners->Add(new IndexedMeshInterop());
 	this->broadcaster->listeners->Add(new RenderMeshInterop());
+	this->broadcaster->listeners->Add(new CharacterInterop());
+	this->broadcaster->listeners->Add(new DefaultSkeletonInterop());
+	this->broadcaster->listeners->Add(new CharacterInterop());
+	this->broadcaster->listeners->Add(new ParametricSamplerInterop());
+	this->broadcaster->listeners->Add(new CharacterAnimationInterop());
+	this->broadcaster->listeners->Add(new SkeletonAnimationInterop());
+	this->broadcaster->listeners->Add(new SkeletonPoseInterop());
+	this->broadcaster->listeners->Add(new AnimationSetInterop());
+	this->broadcaster->listeners->Add(new FacialEffectorControllerInterop());
+	this->broadcaster->listeners->Add(new FacialEffectorInterop());
+	this->broadcaster->listeners->Add(new CustomMarshalingInterop());
+	this->broadcaster->listeners->Add(new FaceIdentifierInterop());
+	this->broadcaster->listeners->Add(new FacialEffectorsLibraryInterop());
+	this->broadcaster->listeners->Add(new FacialModelInterop());
+	this->broadcaster->listeners->Add(new FaceStateInterop());
+	this->broadcaster->listeners->Add(new PhonemeLibraryInterop());
+	this->broadcaster->listeners->Add(new FacialSentenceInterop());
+	this->broadcaster->listeners->Add(new FacialAnimationChannelInterop());
+	this->broadcaster->listeners->Add(new FacialAnimationSequenceInterop());
+	this->broadcaster->listeners->Add(new FacialAnimationSkeletonAnimationEntryInterop());
+	this->broadcaster->listeners->Add(new FacialAnimationSoundEntryInterop());
+	this->broadcaster->listeners->Add(new FaceInterop());
+	this->broadcaster->listeners->Add(new FacialAnimationInterop());
+	this->broadcaster->listeners->Add(new AttachmentManagerInterop());
+	this->broadcaster->listeners->Add(new AttachedObjectsCommonsInterop());
+	this->broadcaster->listeners->Add(new AttachmentRowSimulationParametersInterop());
+	this->broadcaster->listeners->Add(new AttachmentSimulationParametersInterop());
+	this->broadcaster->listeners->Add(new AttachmentSocketInterop());
+	this->broadcaster->listeners->Add(new AttachmentSkinInterop());
+	this->broadcaster->listeners->Add(new AttachmentProxyInterop());
 }
 #pragma endregion
 #pragma region Thunks Initialization

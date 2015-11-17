@@ -25,6 +25,10 @@ namespace CryCil
 		public static readonly Matrix34 Identity = new Matrix34(1, 0, 0, 0,
 																0, 1, 0, 0,
 																0, 0, 1, 0);
+		// For internal usage.
+		internal static Matrix34 SecretIdentity = new Matrix34(1, 0, 0, 0,
+															   0, 1, 0, 0,
+															   0, 0, 1, 0);
 		#endregion
 		#region Fields
 		#region Individual Elements
