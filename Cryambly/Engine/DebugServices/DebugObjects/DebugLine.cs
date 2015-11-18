@@ -67,8 +67,6 @@ namespace CryCil.Engine.DebugServices
 			}
 		}
 		#endregion
-		#region Events
-		#endregion
 		#region Construction
 		/// <summary>
 		/// Initializes new directed object by calculating direction and length out of given two vectors.
@@ -93,8 +91,6 @@ namespace CryCil.Engine.DebugServices
 			AuxiliaryGeometry.Flags = this.RenderingFlags;
 			AuxiliaryGeometry.DrawLine(this.start, this.end, this.Color);
 		}
-		#endregion
-		#region Utilities
 		#endregion
 	}
 }

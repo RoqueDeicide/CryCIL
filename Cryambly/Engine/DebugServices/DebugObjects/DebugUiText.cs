@@ -35,8 +35,6 @@ namespace CryCil.Engine.DebugServices
 			}
 		}
 		#endregion
-		#region Events
-		#endregion
 		#region Construction
 		static DebugUiText()
 		{
@@ -56,13 +54,14 @@ namespace CryCil.Engine.DebugServices
 				DrawTextFlags = TextRenderOptions.AlignmentCentered,
 				ColorOverride = this.Color
 			};
+
 			Vector2 textSize = defaultFont.GetSize(this.DisplayText, true, ref context);
+
 			defaultFont.DrawText(new Vector2(0, 400 + currentTextPosition), this.DisplayText, true, ref context);
+
 			// Change currentTextPosition so next UI text message will be rendered slightly below this one.
 			currentTextPosition += textSize.Y + 2;
 		}
-		#endregion
-		#region Utilities
 		#endregion
 	}
 }

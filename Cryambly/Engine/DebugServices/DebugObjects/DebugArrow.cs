@@ -112,8 +112,6 @@ namespace CryCil.Engine.DebugServices
 			}
 		}
 		#endregion
-		#region Events
-		#endregion
 		#region Construction
 		/// <summary>
 		/// Creates new instance of this class.
@@ -144,25 +142,17 @@ namespace CryCil.Engine.DebugServices
 		{
 			AuxiliaryGeometry.Flags = this.RenderingFlags;
 			// Draw a line with Center vector in its center.
-			AuxiliaryGeometry.DrawLine
-				(
-				 this.start,
-				 this.end,
-				 this.Color
-				);
+			AuxiliaryGeometry.DrawLine(this.start,
+									   this.end,
+									   this.Color);
 			// Draw a cone with its top point at the end of the above line. Its height is .33 of the total
 			// length of the arrow.
-			AuxiliaryGeometry.DrawCone
-				(
-				 this.center + this.dir * this.length * 0.17f,
-				 this.dir,
-				 this.ArrowTipRadius,
-				 this.length * 0.33f,
-				 this.Color
-				);
+			AuxiliaryGeometry.DrawCone(this.center + this.dir * this.length * 0.17f,
+									   this.dir,
+									   this.ArrowTipRadius,
+									   this.length * 0.33f,
+									   this.Color);
 		}
-		#endregion
-		#region Utilities
 		#endregion
 	}
 }

@@ -7,8 +7,6 @@ namespace CryCil.Engine.DebugServices
 	/// </summary>
 	public sealed class DebugSphere : Debug3DObject
 	{
-		#region Fields
-		#endregion
 		#region Properties
 		/// <summary>
 		/// Gets or sets coordinates of the center of the sphere.

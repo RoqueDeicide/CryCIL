@@ -51,14 +51,11 @@ namespace CryCil.Engine.DebugServices
 		public override void Render()
 		{
 			AuxiliaryGeometry.Flags = this.RenderingFlags;
-			AuxiliaryGeometry.DrawCylinder
-				(
-				 this.Start,
-				 this.Orientation.Column2,
-				 this.MaxRadius,
-				 this.Height,
-				 this.Color
-				);
+			AuxiliaryGeometry.DrawCylinder(this.Start,
+										   this.Orientation.Column2,
+										   this.MaxRadius,
+										   this.Height,
+										   this.Color);
 		}
 		#endregion
 	}

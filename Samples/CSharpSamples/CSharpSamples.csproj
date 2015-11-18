@@ -47,6 +47,8 @@
     <Compile Include="ActionMaps\GameZero\ActionMaps.cs" />
     <Compile Include="ActionMaps\Sample.cs" />
     <Compile Include="CrySync.cs" />
+    <Compile Include="DebugServices\Graphics.cs" />
+    <Compile Include="DebugServices\Painter.cs" />
     <Compile Include="FlagParameters.cs" />
     <Compile Include="FlowNode.cs" />
     <Compile Include="MeshRecoloring.cs" />

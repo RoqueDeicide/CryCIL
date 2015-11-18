@@ -61,7 +61,5 @@ namespace CryCil.Engine.DebugServices
 		/// </summary>
 		public abstract void Render();
 		#endregion
-		#region Utilities
-		#endregion
 	}
 }

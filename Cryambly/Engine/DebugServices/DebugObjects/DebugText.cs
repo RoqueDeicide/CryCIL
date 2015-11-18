@@ -34,14 +34,11 @@ namespace CryCil.Engine.DebugServices
 		/// </summary>
 		public override void Render()
 		{
-			Renderer.DrawText
-				(
-				 this.Location,
-				 this.RenderOptions,
-				 this.Color,
-				 new Vector2(this.FontSize),
-				 this.Text
-				);
+			Renderer.DrawText(this.Location,
+							  this.RenderOptions,
+							  this.Color,
+							  new Vector2(this.FontSize),
+							  this.Text);
 		}
 		#endregion
 	}

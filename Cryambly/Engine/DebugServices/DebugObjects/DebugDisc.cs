@@ -120,6 +120,10 @@ namespace CryCil.Engine.DebugServices
 		/// <summary>
 		/// Renders this disc.
 		/// </summary>
+		/// <exception cref="OverflowException">
+		/// The array is multidimensional and contains more than <see cref="F:System.Int32.MaxValue"/>
+		/// elements.
+		/// </exception>
 		public override void Render()
 		{
 			AuxiliaryGeometry.Flags = this.RenderingFlags;

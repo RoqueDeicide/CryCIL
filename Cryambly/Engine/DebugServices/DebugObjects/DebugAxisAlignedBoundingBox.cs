@@ -8,15 +8,10 @@ namespace CryCil.Engine.DebugServices
 	/// </summary>
 	public class DebugAxisAlignedBoundingBox : Debug3DObject
 	{
-		private BoundingBox box;
 		/// <summary>
 		/// Gets or sets a bounding box to render.
 		/// </summary>
-		public BoundingBox Box
-		{
-			get { return this.box; }
-			set { this.box = value; }
-		}
+		public BoundingBox Box { get; set; }
 		/// <summary>
 		/// Gets or sets translation vector that is applied to the AABB before rendering.
 		/// </summary>
@@ -27,8 +22,7 @@ namespace CryCil.Engine.DebugServices
 		public override void Render()
 		{
 			AuxiliaryGeometry.Flags = this.RenderingFlags;
-			BoundingBox b = new BoundingBox(this.box.Minimum + this.Translation,
-											this.box.Maximum + this.Translation);
+			BoundingBox b = new BoundingBox(this.Box.Minimum + this.Translation, this.Box.Maximum + this.Translation);
 			AuxiliaryGeometry.DrawAABB(ref b, true, this.Color);
 		}
 	}

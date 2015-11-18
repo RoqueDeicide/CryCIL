@@ -11,11 +11,8 @@ namespace CryCil.Engine.DebugServices
 		/// <summary>
 		/// Constant that represents default rendering flags for 3D persistent debug objects.
 		/// </summary>
-		public const AuxiliaryGeometryRenderFlags DefaultRenderFlags =
-			AuxiliaryGeometryRenderFlags.Default3DRenderFlags |
-			AuxiliaryGeometryRenderFlags.BlendingAlpha;
-		#endregion
-		#region Properties
+		public const AuxiliaryGeometryRenderFlags DefaultRenderFlags = AuxiliaryGeometryRenderFlags.Default3DRenderFlags |
+																	   AuxiliaryGeometryRenderFlags.BlendingAlpha;
 		#endregion
 		#region Construction
 		/// <summary>

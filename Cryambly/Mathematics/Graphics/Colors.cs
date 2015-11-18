@@ -886,7 +886,6 @@ namespace CryCil.Graphics
 			0xFFF5F5F5, /* 165 - WhiteSmoke */
 			0xFFFFFF00, /* 166 - Yellow */
 			0xFF9ACD32 /* 167 - YellowGreen */
-		}
-							   ;
+		};
 	}
 }

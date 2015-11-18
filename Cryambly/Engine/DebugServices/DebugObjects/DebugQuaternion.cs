@@ -62,7 +62,8 @@ namespace CryCil.Engine.DebugServices
 		public override void Render()
 		{
 			AuxiliaryGeometry.Flags = this.RenderingFlags;
-			AuxiliaryGeometry.DrawOBB(ref obb, this.Position, false, this.Color, BoundingBoxRenderStyle.ExtremesColorEncoded);
+			AuxiliaryGeometry.DrawOBB(ref obb, this.Position, false, this.Color,
+									  BoundingBoxRenderStyle.ExtremesColorEncoded);
 			AuxiliaryGeometry.DrawLine(this.Position, this.Position + this.x, red.ModifyAlpha(this.Color.Alpha));
 			AuxiliaryGeometry.DrawLine(this.Position, this.Position + this.y, green.ModifyAlpha(this.Color.Alpha));
 			AuxiliaryGeometry.DrawLine(this.Position, this.Position + this.z, blue.ModifyAlpha(this.Color.Alpha));

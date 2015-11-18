@@ -26,8 +26,6 @@ namespace CryCil.Engine.DebugServices
 		#region Fields
 		private static readonly LinkedList<DebugObject> objs;
 		#endregion
-		#region Properties
-		#endregion
 		#region Events
 		/// <summary>
 		/// Occurs after one of the objects is rendered for the last time. The first argument is that
@@ -86,7 +84,6 @@ namespace CryCil.Engine.DebugServices
 		{
 			if (FrameEnd != null) FrameEnd();
 		}
-		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		private static void RenderObjects()
 		{
 			if (objs.First == null)
