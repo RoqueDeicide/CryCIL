@@ -552,14 +552,10 @@
     </ClCompile>
     <ClCompile Include="Testing\TestStart.cpp" />
     <ClCompile Include="ThunkTables.cpp" />
-    <ClCompile Include="TypeMapChecks\ActionActivationMode.cpp" />
-    <ClCompile Include="TypeMapChecks\ActionAnalogCompareOperation.cpp" />
-    <ClCompile Include="TypeMapChecks\ActionInputBlockType.cpp" />
     <ClCompile Include="TypeMapChecks\CharacterTypes.cpp" />
     <ClCompile Include="TypeMapChecks\CryName.cpp" />
     <ClCompile Include="TypeMapChecks\DynamicArray.cpp" />
     <ClCompile Include="TypeMapChecks\DynamicLightFlags.cpp" />
-    <ClCompile Include="TypeMapChecks\EKeyId.cpp" />
     <ClCompile Include="TypeMapChecks\EntityAspects.cpp" />
     <ClCompile Include="TypeMapChecks\EntityClassFlags.cpp" />
     <ClCompile Include="TypeMapChecks\EntityFlags.cpp" />
@@ -569,6 +565,7 @@
     <ClCompile Include="TypeMapChecks\EntityUpdateContext.cpp" />
     <ClCompile Include="TypeMapChecks\EntityUpdatePolicy.cpp" />
     <ClCompile Include="TypeMapChecks\EntityXFormFlags.cpp" />
+    <ClCompile Include="TypeMapChecks\InputTypes.cpp" />
     <ClCompile Include="TypeMapChecks\MeshTypes.cpp" />
     <ClCompile Include="TypeMapChecks\PhysicsTypes.cpp" />
     <ClCompile Include="TypeMapChecks\RenderParameters.cpp" />

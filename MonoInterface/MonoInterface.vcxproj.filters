@@ -839,18 +839,6 @@
     <ClCompile Include="Interops\ActionMapping.cpp">
       <Filter>Interops\Engine\Input</Filter>
     </ClCompile>
-    <ClCompile Include="TypeMapChecks\ActionAnalogCompareOperation.cpp">
-      <Filter>TypeMapChecks</Filter>
-    </ClCompile>
-    <ClCompile Include="TypeMapChecks\EKeyId.cpp">
-      <Filter>TypeMapChecks</Filter>
-    </ClCompile>
-    <ClCompile Include="TypeMapChecks\ActionInputBlockType.cpp">
-      <Filter>TypeMapChecks</Filter>
-    </ClCompile>
-    <ClCompile Include="TypeMapChecks\ActionActivationMode.cpp">
-      <Filter>TypeMapChecks</Filter>
-    </ClCompile>
     <ClCompile Include="TypeMapChecks\DynamicLightFlags.cpp">
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
@@ -1014,6 +1002,9 @@
       <Filter>Interops\Engine\Models\Characters\Attachments</Filter>
     </ClCompile>
     <ClCompile Include="TypeMapChecks\PhysicsTypes.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\InputTypes.cpp">
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
   </ItemGroup>

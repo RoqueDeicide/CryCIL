@@ -1,6 +1,75 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 
 #include "CheckingBasics.h"
+#include <IActionMapManager.h>
+
+TYPE_MIRROR enum ActionActivationMode
+{
+	eAAM_Invalid_check = 0,
+	eAAM_OnPress_check = BIT(0), // Used when the action key is pressed
+	eAAM_OnRelease_check = BIT(1), // Used when the action key is released
+	eAAM_OnHold_check = BIT(2), // Used when the action key is held
+	eAAM_Always_check = BIT(3),
+
+	// Special modifiers.
+	eAAM_Retriggerable_check = BIT(4),
+	eAAM_NoModifiers_check = BIT(5),
+	eAAM_ConsoleCmd_check = BIT(6),
+	eAAM_AnalogCompare_check = BIT(7)
+};
+
+#define CHECK_ENUM(x) static_assert (ActionActivationMode::x ## _check == EActionActivationMode::x, "EActionActivationMode enumeration has been changed.")
+
+inline void CheckActionActivationMode()
+{
+	CHECK_ENUM(eAAM_Invalid);
+	CHECK_ENUM(eAAM_OnPress);
+	CHECK_ENUM(eAAM_OnRelease);
+	CHECK_ENUM(eAAM_OnHold);
+	CHECK_ENUM(eAAM_Always);
+	CHECK_ENUM(eAAM_Retriggerable);
+	CHECK_ENUM(eAAM_NoModifiers);
+	CHECK_ENUM(eAAM_ConsoleCmd);
+	CHECK_ENUM(eAAM_AnalogCompare);
+}
+
+TYPE_MIRROR enum ActionAnalogCompareOperation
+{
+	eAACO_None_check = 0,
+	eAACO_Equals_check,
+	eAACO_NotEquals_check,
+	eAACO_GreaterThan_check,
+	eAACO_LessThan_check
+};
+
+#undef CHECK_ENUM
+#define CHECK_ENUM(x) static_assert (ActionAnalogCompareOperation::x ## _check == EActionAnalogCompareOperation::x, "EActionAnalogCompareOperation enumeration has been changed.")
+
+inline void CheckActionAnalogCompareOperation()
+{
+	CHECK_ENUM(eAACO_None);
+	CHECK_ENUM(eAACO_Equals);
+	CHECK_ENUM(eAACO_NotEquals);
+	CHECK_ENUM(eAACO_GreaterThan);
+	CHECK_ENUM(eAACO_LessThan);
+}
+
+TYPE_MIRROR enum ActionInputBlockType
+{
+	eAIBT_None_check = 0,
+	eAIBT_BlockInputs_check,
+	eAIBT_Clear_check
+};
+
+#undef CHECK_ENUM
+#define CHECK_ENUM(x) static_assert (ActionInputBlockType::x ## _check == EActionInputBlockType::x, "EActionInputBlockType enumeration has been changed.")
+
+inline void CheckActionInputBlockType()
+{
+	CHECK_ENUM(eAIBT_None);
+	CHECK_ENUM(eAIBT_BlockInputs);
+	CHECK_ENUM(eAIBT_Clear);
+}
 
 #define _KI_KEYBOARD_BASE	0
 #define _KI_MOUSE_BASE			256
@@ -215,16 +284,17 @@ TYPE_MIRROR enum KeyId
 	eKI_Unknown_check = 0xffffffff
 };
 
+#undef CHECK_ENUM
 #define CHECK_DEFINE(x, y) static_assert (x == y, #x" define has been changed.")
 #define CHECK_ENUM(x) static_assert (KeyId::x ## _check == EKeyId::x, "EKeyId enumeration has been changed.")
 
-inline void Check()
+inline void CheckKeyId()
 {
 	CHECK_DEFINE(KI_KEYBOARD_BASE, _KI_KEYBOARD_BASE);
-	CHECK_DEFINE(KI_MOUSE_BASE,    _KI_MOUSE_BASE);
-	CHECK_DEFINE(KI_XINPUT_BASE,   _KI_XINPUT_BASE);
-	CHECK_DEFINE(KI_ORBIS_BASE,    _KI_ORBIS_BASE);
-	CHECK_DEFINE(KI_SYS_BASE,      _KI_SYS_BASE);
+	CHECK_DEFINE(KI_MOUSE_BASE, _KI_MOUSE_BASE);
+	CHECK_DEFINE(KI_XINPUT_BASE, _KI_XINPUT_BASE);
+	CHECK_DEFINE(KI_ORBIS_BASE, _KI_ORBIS_BASE);
+	CHECK_DEFINE(KI_SYS_BASE, _KI_SYS_BASE);
 
 	CHECK_ENUM(eKI_Escape);
 	CHECK_ENUM(eKI_1);
