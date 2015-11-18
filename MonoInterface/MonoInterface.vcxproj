@@ -550,6 +550,7 @@
     <ClCompile Include="ThunkTables.cpp" />
     <ClCompile Include="TypeMapChecks\CharacterTypes.cpp" />
     <ClCompile Include="TypeMapChecks\CryName.cpp" />
+    <ClCompile Include="TypeMapChecks\DebugTypes.cpp" />
     <ClCompile Include="TypeMapChecks\DynamicArray.cpp" />
     <ClCompile Include="TypeMapChecks\DynamicLightFlags.cpp" />
     <ClCompile Include="TypeMapChecks\EntityTypes.cpp" />

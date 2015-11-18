@@ -18,37 +18,36 @@ struct AuxiliaryGeometryInterop : public IMonoInterop<true, true>
 
 	virtual void OnRunTimeInitialized() override;
 
-	void RegMethod(NtText name, void *ptr);
+	static bool CacheApi();
 
 	static IRenderAuxGeom *geom;
 
-	static uint get_Flags();
-	static void set_Flags(uint flags);
-
-	static void DrawPoint(Vec3 position, ColorB color, byte thickness = 1);
-	static void DrawPoints(mono::Array positions, ColorB color, byte thickness = 1);
-	static void DrawPointsColors(mono::Array positions, mono::Array colors, byte thickness = 1);
-	static void DrawLine(Vec3 start, Vec3 end, ColorB color, float thickness = 1.0f);
-	static void DrawLineColors(Vec3 start, ColorB colorStart, Vec3 end, ColorB colorEnd, float thickness = 1.0f);
-	static void DrawLines(mono::Array vertexes, ColorB color, float thickness = 1.0f);
-	static void DrawLinesColors(mono::Array vertexes, mono::Array colors, float thickness = 1.0f);
-	static void DrawLinesIndexes(mono::Array vertexes, mono::Array indexes, ColorB color, float thickness = 1.0f);
-	static void DrawLinesIndexesColors(mono::Array vertexes, mono::Array indexes, mono::Array colors, float thickness = 1.0f);
-	static void DrawPolyline(mono::Array vertexes, bool closed, ColorB color, float thickness = 1.0f);
-	static void DrawPolylineColors(mono::Array vertexes, bool closed, mono::Array colors, float thickness = 1.0f);
-	static void DrawTriangle(Vec3 first, ColorB firstColor, Vec3 second, ColorB secondColor, Vec3 third, ColorB thirdColor);
-	static void DrawTriangles(mono::Array vertexes, ColorB color);
-	static void DrawTrianglesColors(mono::Array vertexes, mono::Array colors);
-	static void DrawTrianglesIndexes(mono::Array vertexes, mono::Array indexes, ColorB color);
-	static void DrawTrianglesIndexesColors(mono::Array vertexes, mono::Array indexes, mono::Array colors);
-	static void DrawAABB(const AABB *box, bool solid, ColorB color, EBoundingBoxDrawStyle style);
-	static void DrawAABBMatrix(const AABB *box, Matrix34 *mat, bool solid, ColorB color, EBoundingBoxDrawStyle style);
-	static void DrawAABBs(mono::Array boxes, bool solid, ColorB color, EBoundingBoxDrawStyle style);
-	static void DrawOBB(OBB *box, Vec3 translation, bool solid, ColorB color, EBoundingBoxDrawStyle style);
-	static void DrawOBBMatrix(OBB *box, Matrix34 *matWorld, bool solid, ColorB color, EBoundingBoxDrawStyle style);
-	static void DrawSphere(Vec3 center, float radius, ColorB color, bool shaded);
-	static void DrawCone(Vec3 center, Vec3 direction, float radius, float height, ColorB color, bool shaded);
-	static void DrawCylinder(Vec3 center, Vec3 direction, float radius, float height, ColorB color, bool shaded);
-	static void DrawBone(Vec3 parent, Vec3 bone, ColorB color);
-	static void Flush();
+	static uint GetFlags();
+	static void SetFlags(uint flags);
+	static void DrawPointInternal(Vec3 position, ColorB color, byte thickness);
+	static void DrawPointsInternal(Vec3* positions, int positionCount, ColorB color, byte thickness);
+	static void DrawPointsColorsInternal(Vec3* positions, int positionCount, ColorB* colors, byte thickness);
+	static void DrawLineInternal(Vec3 start, Vec3 end, ColorB color, float thickness);
+	static void DrawLineColorsInternal(Vec3 start, ColorB colorStart, Vec3 end, ColorB colorEnd, float thickness);
+	static void DrawLinesInternal(Vec3* vertexes, int vertexCount, ColorB color, float thickness);
+	static void DrawLinesColorsInternal(Vec3* vertexes, int vertexCount, ColorB* colors, float thickness);
+	static void DrawLinesIndexesInternal(Vec3* vertexes, int vertexCount, uint* indexes, int indexCount, ColorB color, float thickness);
+	static void DrawLinesIndexesColorsInternal(Vec3* vertexes, int vertexCount, uint* indexes, int indexCount, ColorB* colors, float thickness);
+	static void DrawPolylineInternal(Vec3* vertexes, int vertexCount, bool closed, ColorB color, float thickness);
+	static void DrawPolylineColorsInternal(Vec3* vertexes, int vertexCount, bool closed, ColorB* colors, float thickness);
+	static void DrawTriangleInternal(Vec3 first, ColorB firstColor, Vec3 second, ColorB secondColor, Vec3 third, ColorB thirdColor);
+	static void DrawTrianglesInternal(Vec3* vertexes, int vertexCount, ColorB color);
+	static void DrawTrianglesColorsInternal(Vec3* vertexes, int vertexCount, ColorB* colors);
+	static void DrawTrianglesIndexesInternal(Vec3* vertexes, int vertexCount, uint* indexes, int indexCount, ColorB color);
+	static void DrawTrianglesIndexesColorsInternal(Vec3* vertexes, int vertexCount, uint* indexes, int indexCount, ColorB* colors);
+	static void DrawAABBInternal(const AABB &box, bool solid, ColorB color, EBoundingBoxDrawStyle style);
+	static void DrawAABBMatrixInternal(const AABB &box, const Matrix34 &mat, bool solid, ColorB color, EBoundingBoxDrawStyle style);
+	static void DrawAABBsInternal(AABB* boxes, int boxCount, bool solid, ColorB color, EBoundingBoxDrawStyle style);
+	static void DrawOBBInternal(const OBB &box, Vec3 translation, bool solid, ColorB color, EBoundingBoxDrawStyle style);
+	static void DrawOBBMatrixInternal(const OBB &box, const Matrix34 &matWorld, bool solid, ColorB color, EBoundingBoxDrawStyle style);
+	static void DrawSphereInternal(Vec3 center, float radius, ColorB color, bool shaded);
+	static void DrawConeInternal(Vec3 center, Vec3 direction, float radius, float height, ColorB color, bool shaded);
+	static void DrawCylinderInternal(Vec3 center, Vec3 direction, float radius, float height, ColorB color, bool shaded);
+	static void DrawBoneInternal(Vec3 parent, Vec3 bone, ColorB color);
+	static void FlushInternal();
 };
