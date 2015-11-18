@@ -9,14 +9,16 @@ namespace CryCil.Engine.CryAction
 	/// <summary>
 	/// Represents a collection of level CryEngine level system is aware of.
 	/// </summary>
-	[SuppressMessage("ReSharper", "ExceptionNotThrown")]
-	public class Levels : IEnumerable<Level>
+	public struct Levels : IEnumerable<Level>
 	{
 		#region Properties
 		/// <summary>
 		/// Gets number of levels.
 		/// </summary>
-		public extern int Count { [MethodImpl(MethodImplOptions.InternalCall)] get; }
+		public int Count
+		{
+			get { return GetCount(); }
+		}
 		/// <summary>
 		/// Gets the information about a level using its index.
 		/// </summary>
@@ -25,13 +27,34 @@ namespace CryCil.Engine.CryAction
 		/// <exception cref="IndexOutOfRangeException">
 		/// Index cannot be less then 0 or greater then <see cref="Count"/>.
 		/// </exception>
-		public extern Level this[int index] { [MethodImpl(MethodImplOptions.InternalCall)] get; }
+		public Level this[int index]
+		{
+			get
+			{
+				bool outOfRange;
+
+				Level level = GetItemInt(index, out outOfRange);
+
+				if (outOfRange)
+				{
+					throw new IndexOutOfRangeException("Index cannot be less then 0 or greater then Count");
+				}
+
+				return level;
+			}
+		}
 		/// <summary>
 		/// Gets the information about a level using its name.
 		/// </summary>
 		/// <param name="name">Name of the level to get.</param>
-		/// <returns>A wrapper object for the level, if found, otherwise null is returned.</returns>
-		public extern Level this[string name] { [MethodImpl(MethodImplOptions.InternalCall)] get; }
+		/// <returns>A valid object, if found, otherwise an invalid one is returned.</returns>
+		public Level this[string name]
+		{
+			get
+			{
+				return name.IsNullOrEmpty() ? new Level() : GetItem(name);
+			}
+		}
 		#endregion
 		#region Interface
 		/// <summary>
@@ -52,6 +75,13 @@ namespace CryCil.Engine.CryAction
 		{
 			return this.GetEnumerator();
 		}
+
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern int GetCount();
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern Level GetItemInt(int index, out bool outOfRange);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern Level GetItem(string name);
 		#endregion
 	}
 }

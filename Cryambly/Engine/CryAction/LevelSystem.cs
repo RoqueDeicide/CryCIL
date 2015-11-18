@@ -7,7 +7,6 @@ namespace CryCil.Engine.CryAction
 	/// <summary>
 	/// Provides access to CryEngine level system.
 	/// </summary>
-	[SuppressMessage("ReSharper", "ExceptionNotThrown")]
 	public static class LevelSystem
 	{
 		#region Fields
@@ -106,8 +105,15 @@ namespace CryCil.Engine.CryAction
 		/// <param name="name">Name of the level to load.</param>
 		/// <returns>Information about the loaded level.</returns>
 		/// <exception cref="ArgumentNullException">Name of the level to load cannot be null.</exception>
-		[MethodImpl(MethodImplOptions.InternalCall)]
-		public static extern Level Load(string name);
+		public static Level Load(string name)
+		{
+			if (name.IsNullOrEmpty())
+			{
+				throw new ArgumentNullException("name", "Name of the level to load cannot be null.");
+			}
+
+			return LoadInternal(name);
+		}
 		/// <summary>
 		/// Prepares loading of the next level.
 		/// </summary>
@@ -116,44 +122,56 @@ namespace CryCil.Engine.CryAction
 		/// <exception cref="ArgumentNullException">
 		/// Name of the level to prepare cannot be null.
 		/// </exception>
-		[MethodImpl(MethodImplOptions.InternalCall)]
-		public static extern void Prepare(string name);
+		public static void Prepare(string name)
+		{
+			if (name.IsNullOrEmpty())
+			{
+				throw new ArgumentNullException("name", "Name of the level to prepare cannot be null.");
+			}
+
+			PrepareInternal(name);
+		}
 		#endregion
 		#region Utilities
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern Level LoadInternal(string name);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void PrepareInternal(string name);
+
 		[RuntimeInvoke("Invoked by underlying framework to raise LevelNotFound event")]
 		private static void OnLevelNotFound(string name)
 		{
 			if (LevelNotFound != null) LevelNotFound(name);
 		}
 		[RuntimeInvoke("Invoked by underlying framework to raise LoadingStart event")]
-		private static void OnLoadingStart(IntPtr levelHandle)
+		private static void OnLoadingStart(Level levelHandle)
 		{
-			if (LoadingStart != null) LoadingStart(new Level(levelHandle));
+			if (LoadingStart != null) LoadingStart(levelHandle);
 		}
 		[RuntimeInvoke("Invoked by underlying framework to raise LoadingEntitiesStart event")]
-		private static void OnLoadingEntitiesStart(IntPtr levelHandle)
+		private static void OnLoadingEntitiesStart(Level levelHandle)
 		{
-			if (LoadingEntitiesStart != null) LoadingEntitiesStart(new Level(levelHandle));
+			if (LoadingEntitiesStart != null) LoadingEntitiesStart(levelHandle);
 		}
 		[RuntimeInvoke("Invoked by underlying framework to raise LoadingComplete event")]
-		private static void OnLoadingComplete(IntPtr levelHandle)
+		private static void OnLoadingComplete(Level levelHandle)
 		{
-			if (LoadingComplete != null) LoadingComplete(new Level(levelHandle));
+			if (LoadingComplete != null) LoadingComplete(levelHandle);
 		}
 		[RuntimeInvoke("Invoked by underlying framework to raise LevelNotFound event")]
-		private static void OnLoadingError(IntPtr levelHandle, string error)
+		private static void OnLoadingError(Level levelHandle, string error)
 		{
-			if (LoadingError != null) LoadingError(new Level(levelHandle), error);
+			if (LoadingError != null) LoadingError(levelHandle, error);
 		}
 		[RuntimeInvoke("Invoked by underlying framework to raise LoadingProgress event")]
-		private static void OnLoadingProgress(IntPtr levelHandle, int progress)
+		private static void OnLoadingProgress(Level levelHandle, int progress)
 		{
-			if (LoadingProgress != null) LoadingProgress(new Level(levelHandle), progress);
+			if (LoadingProgress != null) LoadingProgress(levelHandle, progress);
 		}
 		[RuntimeInvoke("Invoked by underlying framework to raise UnloadComplete event")]
-		private static void OnUnloadComplete(IntPtr levelHandle)
+		private static void OnUnloadComplete(Level levelHandle)
 		{
-			if (UnloadComplete != null) UnloadComplete(new Level(levelHandle));
+			if (UnloadComplete != null) UnloadComplete(levelHandle);
 		}
 		#endregion
 	}

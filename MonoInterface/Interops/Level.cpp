@@ -2,134 +2,145 @@
 
 #include "Level.h"
 
-#include <ILocalizationManager.h>
-
 void LevelInterop::OnRunTimeInitialized()
 {
-	REGISTER_METHOD(get_Name);
-	REGISTER_METHOD(get_DisplayName);
-	REGISTER_METHOD(get_Path);
-	REGISTER_METHOD(get_Paks);
-	REGISTER_METHOD(get_IsFromMod);
-	REGISTER_METHOD(get_PreviewPath);
-	REGISTER_METHOD(get_BackgroundPath);
-	REGISTER_METHOD(get_MinimapPath);
-	REGISTER_METHOD(get_Minimap);
-
-	REGISTER_METHOD(IsOfType);
+	REGISTER_METHOD(GetName);
+	REGISTER_METHOD(IsOfTypeInternal);
+	REGISTER_METHOD(GetPath);
+	REGISTER_METHOD(GetPaks);
+	REGISTER_METHOD(GetDisplayName);
+	REGISTER_METHOD(GetPreviewImagePath);
+	REGISTER_METHOD(GetBackgroundImagePath);
+	REGISTER_METHOD(GetMinimapImagePath);
+	REGISTER_METHOD(GetHeightmapSize);
+	REGISTER_METHOD(MetadataLoaded);
+	REGISTER_METHOD(GetIsModLevel);
+	REGISTER_METHOD(GetScanTag);
+	REGISTER_METHOD(GetLevelTag);
+	REGISTER_METHOD(GetGameTypeCount);
+	REGISTER_METHOD(GetGameType);
+	REGISTER_METHOD(SupportsGameType);
+	REGISTER_METHOD(GetDefaultGameType);
+	REGISTER_METHOD(GetGameRules);
+	REGISTER_METHOD(GetGameRulesCount);
+	REGISTER_METHOD(HasGameRules);
+	REGISTER_METHOD(GetDefaultGameRules);
+	REGISTER_METHOD(GetMinimapInfo);
 }
 
-mono::string LevelInterop::get_Name(mono::object levelObj)
+mono::string LevelInterop::GetName(ILevelInfo *handle)
 {
-	ILevelInfo *info = *GET_BOXED_OBJECT_DATA(ILevelInfo *, levelObj);
-	if (!info)
-	{
-		NullReferenceException("This level object is not valid.").Throw();
-	}
-
-	return ToMonoString(info->GetName());
+	return ToMonoString(handle->GetName());
 }
 
-mono::string LevelInterop::get_DisplayName(mono::object levelObj)
+bool LevelInterop::IsOfTypeInternal(ILevelInfo *handle, mono::string sType)
 {
-	ILevelInfo *info = *GET_BOXED_OBJECT_DATA(ILevelInfo *, levelObj);
-	if (!info)
-	{
-		NullReferenceException("This level object is not valid.").Throw();
-	}
-	string displayName;
-	gEnv->pSystem->GetLocalizationManager()->LocalizeLabel(NtText(info->GetDisplayName()), displayName);
-	return ToMonoString(displayName.c_str());
+	return handle->IsOfType(NtText(sType));
 }
 
-mono::string LevelInterop::get_Path(mono::object levelObj)
+mono::string LevelInterop::GetPath(ILevelInfo *handle)
 {
-	ILevelInfo *info = *GET_BOXED_OBJECT_DATA(ILevelInfo *, levelObj);
-	if (!info)
-	{
-		NullReferenceException("This level object is not valid.").Throw();
-	}
-
-	return ToMonoString(info->GetPath());
+	return ToMonoString(handle->GetPath());
 }
 
-mono::string LevelInterop::get_Paks(mono::object levelObj)
+mono::string LevelInterop::GetPaks(ILevelInfo *handle)
 {
-	ILevelInfo *info = *GET_BOXED_OBJECT_DATA(ILevelInfo *, levelObj);
-	if (!info)
-	{
-		NullReferenceException("This level object is not valid.").Throw();
-	}
-
-	return ToMonoString(info->GetPaks());
+	return ToMonoString(handle->GetPaks());
 }
 
-bool LevelInterop::get_IsFromMod(mono::object levelObj)
+mono::string LevelInterop::GetDisplayName(ILevelInfo *handle)
 {
-	ILevelInfo *info = *GET_BOXED_OBJECT_DATA(ILevelInfo *, levelObj);
-	if (!info)
-	{
-		NullReferenceException("This level object is not valid.").Throw();
-	}
-
-	return info->GetIsModLevel();
+	return ToMonoString(handle->GetDisplayName());
 }
 
-mono::string LevelInterop::get_PreviewPath(mono::object levelObj)
+mono::string LevelInterop::GetPreviewImagePath(ILevelInfo *handle)
 {
-	ILevelInfo *info = *GET_BOXED_OBJECT_DATA(ILevelInfo *, levelObj);
-	if (!info)
-	{
-		NullReferenceException("This level object is not valid.").Throw();
-	}
-
-	return ToMonoString(info->GetPreviewImagePath());
+	return ToMonoString(handle->GetPreviewImagePath());
 }
 
-mono::string LevelInterop::get_BackgroundPath(mono::object levelObj)
+mono::string LevelInterop::GetBackgroundImagePath(ILevelInfo *handle)
 {
-	ILevelInfo *info = *GET_BOXED_OBJECT_DATA(ILevelInfo *, levelObj);
-	if (!info)
-	{
-		NullReferenceException("This level object is not valid.").Throw();
-	}
-
-	return ToMonoString(info->GetBackgroundImagePath());
+	return ToMonoString(handle->GetBackgroundImagePath());
 }
 
-mono::string LevelInterop::get_MinimapPath(mono::object levelObj)
+mono::string LevelInterop::GetMinimapImagePath(ILevelInfo *handle)
 {
-	ILevelInfo *info = *GET_BOXED_OBJECT_DATA(ILevelInfo *, levelObj);
-	if (!info)
-	{
-		NullReferenceException("This level object is not valid.").Throw();
-	}
-
-	return ToMonoString(info->GetMinimapImagePath());
+	return ToMonoString(handle->GetMinimapImagePath());
 }
 
-ILevelInfo::SMinimapInfo LevelInterop::get_Minimap(mono::object levelObj)
+int LevelInterop::GetHeightmapSize(ILevelInfo *handle)
 {
-	ILevelInfo *info = *GET_BOXED_OBJECT_DATA(ILevelInfo *, levelObj);
-	if (!info)
-	{
-		NullReferenceException("This level object is not valid.").Throw();
-	}
-
-	return info->GetMinimapInfo();
+	return handle->GetHeightmapSize();
 }
 
-bool LevelInterop::IsOfType(mono::object levelObj, mono::string type)
+bool LevelInterop::MetadataLoaded(ILevelInfo *handle)
 {
-	ILevelInfo *info = *GET_BOXED_OBJECT_DATA(ILevelInfo *, levelObj);
-	if (!info)
+	return handle->MetadataLoaded();
+}
+
+bool LevelInterop::GetIsModLevel(ILevelInfo *handle)
+{
+	return handle->GetIsModLevel();
+}
+
+uint LevelInterop::GetScanTag(ILevelInfo *handle)
+{
+	return handle->GetScanTag();
+}
+
+uint LevelInterop::GetLevelTag(ILevelInfo *handle)
+{
+	return handle->GetLevelTag();
+}
+
+int LevelInterop::GetGameTypeCount(ILevelInfo *handle)
+{
+	return handle->GetGameTypeCount();
+}
+
+bool LevelInterop::GetGameType(ILevelInfo *handle, int gameType, MonoGameTypeInfo &info)
+{
+	if (gameType < 0 || gameType >= handle->GetGameTypeCount())
 	{
-		NullReferenceException("This level object is not valid.").Throw();
-	}
-	if (!type)
-	{
-		ArgumentNullException("Name of the level type cannot be null.").Throw();
+		return false;
 	}
 
-	return info->IsOfType(NtText(type));
+	info = *handle->GetGameType(gameType);
+
+	return true;
+}
+
+bool LevelInterop::SupportsGameType(ILevelInfo *handle, mono::string gameTypeName)
+{
+	return handle->SupportsGameType(NtText(gameTypeName));
+}
+
+void LevelInterop::GetDefaultGameType(ILevelInfo *handle, MonoGameTypeInfo &info)
+{
+	info = *handle->GetDefaultGameType();
+}
+
+mono::string LevelInterop::GetGameRules(ILevelInfo *handle, int index)
+{
+	return ToMonoString(handle->GetGameRules()[index].c_str());
+}
+
+int LevelInterop::GetGameRulesCount(ILevelInfo *handle)
+{
+	return handle->GetGameRules().size();
+}
+
+bool LevelInterop::HasGameRules(ILevelInfo *handle)
+{
+	return handle->HasGameRules();
+}
+
+mono::string LevelInterop::GetDefaultGameRules(ILevelInfo *handle)
+{
+	return ToMonoString(handle->GetDefaultGameRules());
+}
+
+MonoMinimapInfo LevelInterop::GetMinimapInfo(ILevelInfo *handle)
+{
+	return handle->GetMinimapInfo();
 }

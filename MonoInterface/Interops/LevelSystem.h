@@ -10,6 +10,8 @@ struct LevelSystemInterop : public IMonoInterop < false, true >, public ILevelSy
 	virtual const char *GetInteropClassName() override { return "LevelSystem"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.CryAction"; }
 
+	IMonoClass *GetMonoClass();
+
 	virtual void OnRunTimeInitialized() override;
 
 	virtual void OnLevelNotFound(const char *levelName) override;
@@ -20,11 +22,11 @@ struct LevelSystemInterop : public IMonoInterop < false, true >, public ILevelSy
 	virtual void OnLoadingProgress(ILevelInfo *pLevel, int progressAmount) override;
 	virtual void OnUnloadComplete(ILevel* pLevel) override;
 
-	static mono::object get_Current();
-	static bool         get_Loaded();
-	static uint64       get_LastLoadTime();
+	static ILevelInfo *get_Current();
+	static bool        get_Loaded();
+	static uint64      get_LastLoadTime();
 
-	static void         Unload();
-	static mono::object Load(mono::string name);
-	static void         Prepare(mono::string name);
+	static void        Unload();
+	static ILevelInfo *LoadInternal(mono::string name);
+	static void        PrepareInternal(mono::string name);
 };

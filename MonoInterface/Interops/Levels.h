@@ -2,6 +2,8 @@
 
 #include "IMonoInterface.h"
 
+struct ILevelInfo;
+
 struct LevelsInterop : public IMonoInterop < true, true >
 {
 	virtual const char *GetInteropClassName() override { return "Levels"; }
@@ -9,10 +11,7 @@ struct LevelsInterop : public IMonoInterop < true, true >
 
 	virtual void OnRunTimeInitialized() override;
 
-	static int          get_Count(mono::object obj);
-	static mono::object get_ItemInt(mono::object obj, int index);
-	static mono::object get_Item(mono::object obj, mono::string name);
-
-	static ILevelSystem     *system;
-	static IMonoConstructor *levelCtor;
+	static int         GetCount();
+	static ILevelInfo *GetItemInt(int index, bool &outOfRange);
+	static ILevelInfo *GetItem(mono::string name);
 };

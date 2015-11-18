@@ -3,6 +3,11 @@
 #include "LevelSystem.h"
 #include "TimeUtilities.h"
 
+IMonoClass *LevelSystemInterop::GetMonoClass()
+{
+	return MonoEnv->Cryambly->GetClass(this->GetInteropNameSpace(), this->GetInteropClassName());
+}
+
 LevelSystemInterop::~LevelSystemInterop()
 {
 	MonoEnv->CryAction->GetILevelSystem()->RemoveListener(this);
@@ -11,20 +16,18 @@ LevelSystemInterop::~LevelSystemInterop()
 void LevelSystemInterop::OnRunTimeInitialized()
 {
 	MonoEnv->CryAction->GetILevelSystem()->AddListener(this);
-	MonoEnv->RemoveListener(this);
 
 	REGISTER_METHOD(get_Current);
 	REGISTER_METHOD(get_Loaded);
 	REGISTER_METHOD(get_LastLoadTime);
 	REGISTER_METHOD(Unload);
-	REGISTER_METHOD(Load);
-	REGISTER_METHOD(Prepare);
+	REGISTER_METHOD(LoadInternal);
+	REGISTER_METHOD(PrepareInternal);
 }
 
 void LevelSystemInterop::OnLevelNotFound(const char *levelName)
 {
-	static IMonoStaticMethod *raise =
-		MonoEnv->Cryambly->GetClass(this->GetInteropNameSpace(), this->GetInteropClassName())->GetEvent("LevelNotFound")->Raise->ToStatic();
+	static IMonoStaticMethod *raise = this->GetMonoClass()->GetEvent("LevelNotFound")->Raise->ToStatic();
 	
 	void *params[1];
 	params[0] = ToMonoString(levelName);
@@ -33,8 +36,7 @@ void LevelSystemInterop::OnLevelNotFound(const char *levelName)
 
 void LevelSystemInterop::OnLoadingStart(ILevelInfo *pLevel)
 {
-	static IMonoStaticMethod *raise =
-		MonoEnv->Cryambly->GetClass(this->GetInteropNameSpace(), this->GetInteropClassName())->GetEvent("LoadingStart")->Raise->ToStatic();
+	static IMonoStaticMethod *raise = this->GetMonoClass()->GetEvent("LoadingStart")->Raise->ToStatic();
 
 	void *params[1];
 	params[0] = pLevel;
@@ -43,8 +45,7 @@ void LevelSystemInterop::OnLoadingStart(ILevelInfo *pLevel)
 
 void LevelSystemInterop::OnLoadingLevelEntitiesStart(ILevelInfo* pLevel)
 {
-	static IMonoStaticMethod *raise =
-		MonoEnv->Cryambly->GetClass(this->GetInteropNameSpace(), this->GetInteropClassName())->GetEvent("LoadingEntitiesStart")->Raise->ToStatic();
+	static IMonoStaticMethod *raise = this->GetMonoClass()->GetEvent("LoadingEntitiesStart")->Raise->ToStatic();
 
 	void *params[1];
 	params[0] = pLevel;
@@ -53,18 +54,16 @@ void LevelSystemInterop::OnLoadingLevelEntitiesStart(ILevelInfo* pLevel)
 
 void LevelSystemInterop::OnLoadingComplete(ILevel *pLevel)
 {
-	static IMonoStaticMethod *raise =
-		MonoEnv->Cryambly->GetClass(this->GetInteropNameSpace(), this->GetInteropClassName())->GetEvent("LoadingComplete")->Raise->ToStatic();
+	static IMonoStaticMethod *raise = this->GetMonoClass()->GetEvent("LoadingComplete")->Raise->ToStatic();
 
 	void *params[1];
-	params[0] = pLevel;
+	params[0] = pLevel->GetLevelInfo();
 	raise->Invoke(params);
 }
 
 void LevelSystemInterop::OnLoadingError(ILevelInfo *pLevel, const char *)
 {
-	static IMonoStaticMethod *raise =
-		MonoEnv->Cryambly->GetClass(this->GetInteropNameSpace(), this->GetInteropClassName())->GetEvent("LoadingError")->Raise->ToStatic();
+	static IMonoStaticMethod *raise = this->GetMonoClass()->GetEvent("LoadingError")->Raise->ToStatic();
 
 	void *params[1];
 	params[0] = pLevel;
@@ -73,8 +72,7 @@ void LevelSystemInterop::OnLoadingError(ILevelInfo *pLevel, const char *)
 
 void LevelSystemInterop::OnLoadingProgress(ILevelInfo *pLevel, int progressAmount)
 {
-	static IMonoStaticMethod *raise =
-		MonoEnv->Cryambly->GetClass(this->GetInteropNameSpace(), this->GetInteropClassName())->GetEvent("LoadingProgress")->Raise->ToStatic();
+	static IMonoStaticMethod *raise = this->GetMonoClass()->GetEvent("LoadingProgress")->Raise->ToStatic();
 
 	void *params[2];
 	params[0] = pLevel;
@@ -84,22 +82,16 @@ void LevelSystemInterop::OnLoadingProgress(ILevelInfo *pLevel, int progressAmoun
 
 void LevelSystemInterop::OnUnloadComplete(ILevel* pLevel)
 {
-	static IMonoStaticMethod *raise =
-		MonoEnv->Cryambly->GetClass(this->GetInteropNameSpace(), this->GetInteropClassName())->GetEvent("UnloadComplete")->Raise->ToStatic();
+	static IMonoStaticMethod *raise = this->GetMonoClass()->GetEvent("UnloadComplete")->Raise->ToStatic();
 
 	void *params[1];
-	params[0] = pLevel;
+	params[0] = pLevel->GetLevelInfo();
 	raise->Invoke(params);
 }
 
-mono::object LevelSystemInterop::get_Current()
+ILevelInfo *LevelSystemInterop::get_Current()
 {
-	static IMonoConstructor *ctor =
-		MonoEnv->Cryambly->GetClass("CryCil.Engine.CryAction", "Level")->GetConstructor(-1);
-
-	ILevelInfo *info = MonoEnv->CryAction->GetILevelSystem()->GetCurrentLevel()->GetLevelInfo();
-	void *param = &info;
-	return ctor->Create(&param);
+	return MonoEnv->CryAction->GetILevelSystem()->GetCurrentLevel()->GetLevelInfo();
 }
 
 bool LevelSystemInterop::get_Loaded()
@@ -117,27 +109,12 @@ void LevelSystemInterop::Unload()
 	MonoEnv->CryAction->GetILevelSystem()->UnLoadLevel();
 }
 
-mono::object LevelSystemInterop::Load(mono::string name)
+ILevelInfo *LevelSystemInterop::LoadInternal(mono::string name)
 {
-	static IMonoConstructor *ctor =
-		MonoEnv->Cryambly->GetClass("CryCil.Engine.CryAction", "Level")->GetConstructor(-1);
-
-	if (!name)
-	{
-		ArgumentNullException("Name of the level to load cannot be null.").Throw();
-	}
-
-	ILevelInfo *info = MonoEnv->CryAction->GetILevelSystem()->LoadLevel(NtText(name))->GetLevelInfo();
-	void *param = &info;
-	return ctor->Create(&param);
+	return MonoEnv->CryAction->GetILevelSystem()->LoadLevel(NtText(name))->GetLevelInfo();
 }
 
-void LevelSystemInterop::Prepare(mono::string name)
+void LevelSystemInterop::PrepareInternal(mono::string name)
 {
-	if (!name)
-	{
-		ArgumentNullException("Name of the level to prepare cannot be null.").Throw();
-	}
-
 	MonoEnv->CryAction->GetILevelSystem()->PrepareNextLevel(NtText(name));
 }

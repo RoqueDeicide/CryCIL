@@ -318,8 +318,6 @@ void MonoInterface::RegisterDefaultListeners()
 	this->broadcaster->listeners->Add(new LevelsInterop());
 	this->broadcaster->listeners->Add(new LevelSystemInterop());
 	this->broadcaster->listeners->Add(new LevelInterop());
-	this->broadcaster->listeners->Add(new LevelMissionsInterop());
-	this->broadcaster->listeners->Add(new LevelGameRulesInterop());
 	this->broadcaster->listeners->Add(new TerrainInterop());
 	this->broadcaster->listeners->Add(new OceanInterop());
 	this->broadcaster->listeners->Add(new CryXmlNodeInterop());

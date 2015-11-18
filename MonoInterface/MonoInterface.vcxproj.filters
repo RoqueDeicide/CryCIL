@@ -305,12 +305,6 @@
     <ClInclude Include="Interops\Levels.h">
       <Filter>Interops\Engine\CryAction</Filter>
     </ClInclude>
-    <ClInclude Include="Interops\LevelMissions.h">
-      <Filter>Interops\Engine\CryAction</Filter>
-    </ClInclude>
-    <ClInclude Include="Interops\LevelGameRules.h">
-      <Filter>Interops\Engine\CryAction</Filter>
-    </ClInclude>
     <ClInclude Include="TimeUtilities.h">
       <Filter>Extras</Filter>
     </ClInclude>
@@ -723,12 +717,6 @@
       <Filter>Interops\Engine\CryAction</Filter>
     </ClCompile>
     <ClCompile Include="Interops\Levels.cpp">
-      <Filter>Interops\Engine\CryAction</Filter>
-    </ClCompile>
-    <ClCompile Include="Interops\LevelMissions.cpp">
-      <Filter>Interops\Engine\CryAction</Filter>
-    </ClCompile>
-    <ClCompile Include="Interops\LevelGameRules.cpp">
       <Filter>Interops\Engine\CryAction</Filter>
     </ClCompile>
     <ClCompile Include="Interops\CryXmlNode.cpp">

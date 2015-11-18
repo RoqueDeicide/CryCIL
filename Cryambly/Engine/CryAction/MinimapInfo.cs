@@ -9,7 +9,10 @@ namespace CryCil.Engine.CryAction
 	[StructLayout(LayoutKind.Sequential)]
 	public struct MinimapInfo
 	{
-		private readonly IntPtr ntStr;
+		/// <summary>
+		/// Gets the name of the .dds file that contains the texture that is used as a minimap.
+		/// </summary>
+		public readonly string FileName;
 		/// <summary>
 		/// Width of the minimap in pixels.
 		/// </summary>
@@ -40,12 +43,5 @@ namespace CryCil.Engine.CryAction
 		/// </para>
 		/// </remarks>
 		public Vector2 Dimensions;
-		/// <summary>
-		/// Gets the name of the .dds file that contains the texture that is used as a minimap.
-		/// </summary>
-		public string FileName
-		{
-			get { return Marshal.PtrToStringAnsi(this.ntStr); }
-		}
 	}
 }

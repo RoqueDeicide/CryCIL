@@ -5,36 +5,31 @@
 
 void LevelsInterop::OnRunTimeInitialized()
 {
-	REGISTER_METHOD(get_Count);
-
-	this->RegisterInteropMethod("get_Item(int)",    get_ItemInt);
-	this->RegisterInteropMethod("get_Item(string)", get_Item);
-
-	system    = MonoEnv->CryAction->GetILevelSystem();
-	levelCtor = MonoEnv->Cryambly->GetClass(this->GetInteropNameSpace(), this->GetInteropClassName())->GetConstructor(1);
+	REGISTER_METHOD(GetCount);
+	REGISTER_METHOD(GetItemInt);
+	REGISTER_METHOD(GetItem);
 }
 
-int LevelsInterop::get_Count(mono::object)
+int LevelsInterop::GetCount()
 {
-	return system->GetLevelCount();
+	return MonoEnv->CryAction->GetILevelSystem()->GetLevelCount();
 }
 
-mono::object LevelsInterop::get_ItemInt(mono::object, int index)
+ILevelInfo *LevelsInterop::GetItemInt(int index, bool &outOfRange)
 {
-	void *param = system->GetLevelInfo(index);
-	return levelCtor->Create(&param);
-}
+	auto levelSystem = MonoEnv->CryAction->GetILevelSystem();
 
-mono::object LevelsInterop::get_Item(mono::object, mono::string name)
-{
-	if (!name)
+	if (index < 0 || index >= levelSystem->GetLevelCount())
 	{
+		outOfRange = true;
 		return nullptr;
 	}
 
-	void *param = system->GetLevelInfo(NtText(name));
-	return levelCtor->Create(&param);
+	outOfRange = false;
+	return levelSystem->GetLevelInfo(index);
 }
 
-ILevelSystem     *LevelsInterop::system;
-IMonoConstructor *LevelsInterop::levelCtor;
+ILevelInfo *LevelsInterop::GetItem(mono::string name)
+{
+	return MonoEnv->CryAction->GetILevelSystem()->GetLevelInfo(NtText(name));
+}
