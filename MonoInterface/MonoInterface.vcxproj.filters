@@ -824,9 +824,6 @@
     <ClCompile Include="TypeMapChecks\EntityXFormFlags.cpp">
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
-    <ClCompile Include="TypeMapChecks\EventPhysCollision.cpp">
-      <Filter>TypeMapChecks</Filter>
-    </ClCompile>
     <ClCompile Include="TypeMapChecks\RenderParameters.cpp">
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
@@ -863,17 +860,8 @@
     <ClCompile Include="TypeMapChecks\EntityQueryFlags.cpp">
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
-    <ClCompile Include="TypeMapChecks\PhysicalEntityFlags.cpp">
-      <Filter>TypeMapChecks</Filter>
-    </ClCompile>
-    <ClCompile Include="TypeMapChecks\PhysicalEntityType.cpp">
-      <Filter>TypeMapChecks</Filter>
-    </ClCompile>
     <ClCompile Include="Interops\PhysicalWorld.cpp">
       <Filter>Interops\Engine\Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="TypeMapChecks\SimClass.cpp">
-      <Filter>TypeMapChecks</Filter>
     </ClCompile>
     <ClCompile Include="Interops\PhysicalEntity.cpp">
       <Filter>Interops\Engine\Physics</Filter>
@@ -881,62 +869,20 @@
     <ClCompile Include="Interops\Lattice.cpp">
       <Filter>Interops\Engine\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="TypeMapChecks\PhysicsTypeEnumerations.cpp">
-      <Filter>TypeMapChecks</Filter>
-    </ClCompile>
-    <ClCompile Include="TypeMapChecks\PhysicsForeignIds.cpp">
-      <Filter>TypeMapChecks</Filter>
-    </ClCompile>
-    <ClCompile Include="TypeMapChecks\Primitives.cpp">
-      <Filter>TypeMapChecks</Filter>
-    </ClCompile>
-    <ClCompile Include="TypeMapChecks\JointFlagscpp.cpp">
-      <Filter>TypeMapChecks</Filter>
-    </ClCompile>
-    <ClCompile Include="TypeMapChecks\GeometryFlags.cpp">
-      <Filter>TypeMapChecks</Filter>
-    </ClCompile>
     <ClCompile Include="TypeMapChecks\StridedPointer.cpp">
-      <Filter>TypeMapChecks</Filter>
-    </ClCompile>
-    <ClCompile Include="TypeMapChecks\WaveSimParams.cpp">
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
     <ClCompile Include="TypeMapChecks\_constrflags.cpp">
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
-    <ClCompile Include="TypeMapChecks\UpdateMeshReason.cpp">
-      <Filter>TypeMapChecks</Filter>
-    </ClCompile>
-    <ClCompile Include="TypeMapChecks\PhysicalGeometry.cpp">
-      <Filter>TypeMapChecks</Filter>
-    </ClCompile>
-    <ClCompile Include="TypeMapChecks\PhysicsMeshFlags.cpp">
-      <Filter>TypeMapChecks</Filter>
-    </ClCompile>
     <ClCompile Include="Interops\IGeometry.cpp">
       <Filter>Interops\Engine\Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="TypeMapChecks\GeometryTypes.cpp">
-      <Filter>TypeMapChecks</Filter>
     </ClCompile>
     <ClCompile Include="Interops\WriteLockCond.cpp">
       <Filter>Interops\Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="TypeMapChecks\MeshUpdateTypes.cpp">
-      <Filter>TypeMapChecks</Filter>
-    </ClCompile>
     <ClCompile Include="Interops\PhysicalBody.cpp">
       <Filter>Interops\Engine\Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="TypeMapChecks\RwiFlags.cpp">
-      <Filter>TypeMapChecks</Filter>
-    </ClCompile>
-    <ClCompile Include="TypeMapChecks\SurfaceFlags.cpp">
-      <Filter>TypeMapChecks</Filter>
-    </ClCompile>
-    <ClCompile Include="TypeMapChecks\RayHit.cpp">
-      <Filter>TypeMapChecks</Filter>
     </ClCompile>
     <ClCompile Include="Interops\Ray.cpp">
       <Filter>Interops\Engine\Physics</Filter>
@@ -951,9 +897,6 @@
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
     <ClCompile Include="TypeMapChecks\DynamicArray.cpp">
-      <Filter>TypeMapChecks</Filter>
-    </ClCompile>
-    <ClCompile Include="TypeMapChecks\PhysicsGeomType.cpp">
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
     <ClCompile Include="TypeMapChecks\VertexFormatsAndPips.cpp">
@@ -1072,6 +1015,9 @@
     </ClCompile>
     <ClCompile Include="Interops\AttachmentProxy.cpp">
       <Filter>Interops\Engine\Models\Characters\Attachments</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\PhysicsTypes.cpp">
+      <Filter>TypeMapChecks</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
