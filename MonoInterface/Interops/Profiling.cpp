@@ -4,29 +4,29 @@
 
 void ProfilingInterop::OnRunTimeInitialized()
 {
-	MonoEnv->Functions->AddInternalCall(this->GetInteropNameSpace(), "Profiler", ".ctor", constructor);
-	MonoEnv->Functions->AddInternalCall(this->GetInteropNameSpace(), "Profiler", "Start", StartSection);
+	MonoEnv->Functions->AddInternalCall(this->GetInteropNameSpace(), "Profiler", "CreateProfiler", CreateProfiler);
+	MonoEnv->Functions->AddInternalCall(this->GetInteropNameSpace(), "Profiler", "StartSection", StartSection);
 
-	MonoEnv->Functions->AddInternalCall(this->GetInteropNameSpace(), "ProfilingSection", "Dispose", FinishSection);
+	MonoEnv->Functions->AddInternalCall(this->GetInteropNameSpace(), "ProfilingSection", "FinishSection", FinishSection);
 }
 
-void ProfilingInterop::constructor(mono::object profiler, mono::string name)
+CFrameProfiler *ProfilingInterop::CreateProfiler(mono::string name)
 {
 	auto frameProfiler = new CFrameProfiler(gEnv->pSystem, ToNativeString(name), PROFILE_SYSTEM);
-
-	*GET_BOXED_OBJECT_DATA(CFrameProfiler *, profiler) = frameProfiler;
 	
 	cryCilProfilers.Add(frameProfiler);
+
+	return frameProfiler;
 }
 
-CFrameProfilerSection *ProfilingInterop::StartSection(mono::object profiler)
+CFrameProfilerSection *ProfilingInterop::StartSection(CFrameProfiler *handle)
 {
-	return new CFrameProfilerSection(*GET_BOXED_OBJECT_DATA(CFrameProfiler *, profiler));
+	return new CFrameProfilerSection(handle);
 }
 
-void ProfilingInterop::FinishSection(CFrameProfilerSection **sectionPtr)
+void ProfilingInterop::FinishSection(CFrameProfilerSection *sectionPtr)
 {
-	delete *sectionPtr;
+	delete sectionPtr;
 }
 
 void ProfilingInterop::Shutdown()

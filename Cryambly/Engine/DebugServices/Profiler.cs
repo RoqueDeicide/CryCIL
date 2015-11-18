@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using CryCil.Annotations;
 
 #pragma warning disable 0169
 namespace CryCil.Engine.DebugServices
@@ -19,69 +18,48 @@ namespace CryCil.Engine.DebugServices
 	/// </para>
 	/// </remarks>
 	/// <example>
-	/// <code>
-	/// // 2 different profilers for 1 function each.
-	/// internal static readonly Profiler profiler1 = new Profiler("Part1 of ProcessingFunction");
-	/// internal static readonly Profiler profiler2 = new Profiler("Part2 of ProcessingFunction");
-	/// 
-	/// // This function is executed every time the entity is updated.
-	/// internal static void ProcessingFunction()
-	/// {
-	///     Part1();
-	/// 
-	///     Part2();
-	/// }
-	/// 
-	/// // First profiled function.
-	/// internal static void Part1()
-	/// {
-	///     var section = profiler1.Start();
-	///     try
-	///     {
-	///         // Do some work.
-	///     }
-	///     finally
-	///     {
-	///         section.Finish();
-	///     }
-	/// }
-	/// 
-	/// // Second profiled function.
-	/// internal static void Part2()
-	/// {
-	///     using (profiler2.Start())
-	///     {
-	///         // Do some work.
-	///     }
-	/// }
-	/// </code>
+	/// <code source="Profiling.cs"/>
 	/// </example>
 	public class Profiler
 	{
 		#region Fields
-		[UsedImplicitly] private IntPtr handle;
-		#endregion
-		#region Properties
-		#endregion
-		#region Events
+		private readonly IntPtr handle;
 		#endregion
 		#region Construction
 		/// <summary>
 		/// Creates new performance profiler.
 		/// </summary>
 		/// <param name="name">Name of the profiler.</param>
-		[MethodImpl(MethodImplOptions.InternalCall)]
-		public extern Profiler([UsedImplicitly] string name);
+		public Profiler(string name)
+		{
+			this.handle = CreateProfiler(name);
+		}
 		#endregion
 		#region Interface
 		/// <summary>
 		/// Starts a profiling section.
 		/// </summary>
 		/// <returns>An object that will close the profiling section, once it's disposed of.</returns>
-		[MethodImpl(MethodImplOptions.InternalCall)]
-		public extern ProfilingSection Start();
+		/// <exception cref="NullReferenceException">
+		/// This profiler wasn't properly initialized. This exception is only thrown in debug builds.
+		/// </exception>
+		public ProfilingSection Start()
+		{
+#if DEBUG
+			if (this.handle == IntPtr.Zero)
+			{
+				throw new NullReferenceException("This profiler wasn't properly initialized.");
+			}
+#endif
+
+			return StartSection(this.handle);
+		}
 		#endregion
 		#region Utilities
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern IntPtr CreateProfiler(string name);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern ProfilingSection StartSection(IntPtr handle);
 		#endregion
 	}
 	/// <summary>
@@ -90,7 +68,7 @@ namespace CryCil.Engine.DebugServices
 	[StructLayout(LayoutKind.Sequential)]
 	public struct ProfilingSection : IDisposable
 	{
-		[UsedImplicitly] private IntPtr handle;
+		private IntPtr handle;
 		/// <summary>
 		/// Finishes measurement on this profiling section.
 		/// </summary>
@@ -101,8 +79,18 @@ namespace CryCil.Engine.DebugServices
 		/// <summary>
 		/// Finishes measurement on this profiling section.
 		/// </summary>
+		public void Dispose()
+		{
+			if (this.handle == IntPtr.Zero)
+			{
+				return;
+			}
+
+			FinishSection(this.handle);
+			this.handle = IntPtr.Zero;
+		}
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		public extern void Dispose();
+		private static extern void FinishSection(IntPtr handle);
 	}
 }
 #pragma warning restore 0169
