@@ -872,9 +872,6 @@
     <ClCompile Include="TypeMapChecks\StridedPointer.cpp">
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
-    <ClCompile Include="TypeMapChecks\_constrflags.cpp">
-      <Filter>TypeMapChecks</Filter>
-    </ClCompile>
     <ClCompile Include="Interops\IGeometry.cpp">
       <Filter>Interops\Engine\Physics</Filter>
     </ClCompile>

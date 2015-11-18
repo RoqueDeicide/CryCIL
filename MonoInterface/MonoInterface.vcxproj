@@ -579,7 +579,6 @@
     <ClCompile Include="TypeMapChecks\StaticObjectStuff.cpp" />
     <ClCompile Include="TypeMapChecks\StridedPointer.cpp" />
     <ClCompile Include="TypeMapChecks\VertexFormatsAndPips.cpp" />
-    <ClCompile Include="TypeMapChecks\_constrflags.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
