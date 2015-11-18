@@ -3,8 +3,6 @@
 #include "IMonoInterface.h"
 #include "IParticles.h"
 
-struct MonoCryXmlNode;
-
 struct ParticleEffectInterop : public IMonoInterop<true, true>
 {
 	virtual const char *GetInteropClassName() override { return "ParticleEffect"; }
@@ -12,39 +10,40 @@ struct ParticleEffectInterop : public IMonoInterop<true, true>
 
 	virtual void OnRunTimeInitialized() override;
 
-	static IParticleEffect *GetDefault();
-	static void             SetDefault(IParticleEffect *effect);
-	static ParticleParams  *GetDefaultParameters();
-
-	static IParticleEmitter *Spawn
-		(IParticleEffect **effect, QuatTS location, EParticleEmitterFlags flags, SpawnParams *parameters);
-	
-	static IParticleEffect  *Create();
-	static void              Delete(IParticleEffect *effect);
-	static IParticleEffect  *Find(mono::string name, mono::string source, bool loadResources);
-	static IParticleEffect  *Load(mono::string name, MonoCryXmlNode *node, mono::string source, bool loadResources);
-	static bool              LoadLibrary(mono::string name, MonoCryXmlNode *node, bool loadResources);
-	static IParticleEmitter *CreateEmitterInternal(QuatTS loc, ParticleParams *parameters, uint flags, SpawnParams *spawnParameters);
-	static IParticleEmitter *CreateEmitterInternalDsp(QuatTS loc, ParticleParams *parameters, uint flags);
-	static IParticleEmitter *CreateEmitterInternalDfDsp(QuatTS loc, ParticleParams *parameters);
-	static void              DeleteEmitters(uint mask);
-
-	static bool             LoadResources  (IParticleEffect **effect);
-	static void             UnloadResources(IParticleEffect **effect);
-	static void             Serialize      (IParticleEffect **effect, mono::object xml, bool bChildren);
-	static void             Deserialize    (IParticleEffect **effect, mono::object xml, bool bChildren);
-	static void             Reload         (IParticleEffect **effect, bool bChildren);
-	static IParticleEffect *GetChild       (IParticleEffect **effect, int index);
-	static void             ClearChildren  (IParticleEffect **effect);
-	static void             InsertChild    (IParticleEffect **effect, int slot, IParticleEffect *child);
-	static int              IndexOfChild   (IParticleEffect **effect, IParticleEffect *child);
-	
-	static void             SetFullName   (IParticleEffect *handle, mono::string fullName);
-	static mono::string     GetMinimalName(IParticleEffect *handle);
-	static mono::string     GetFullName   (IParticleEffect *handle);
-	static void             SetEnabled    (IParticleEffect *handle, bool bEnabled);
-	static bool             IsEnabled     (IParticleEffect *handle);
-	static int              GetChildCount (IParticleEffect *handle);
-	static void             SetParent     (IParticleEffect *handle, IParticleEffect *parent);
-	static IParticleEffect *GetParent     (IParticleEffect *handle);
+	static IParticleEmitter     *SpawnEmitter(IParticleEffect *handle, const QuatTS &loc, EParticleEmitterFlags flags, const SpawnParams &parameters);
+	static IParticleEmitter     *SpawnEmitterDefault(IParticleEffect *handle, const QuatTS &loc, EParticleEmitterFlags flags);
+	static void                  SetName(IParticleEffect *handle, mono::string sFullName);
+	static mono::string          GetName(IParticleEffect *handle);
+	static mono::string          GetFullName(IParticleEffect *handle);
+	static void                  SetEnabled(IParticleEffect *handle, bool bEnabled);
+	static bool                  IsEnabled(IParticleEffect *handle);
+	static void                  SetParticleParams(IParticleEffect *handle, const ParticleParams &parameters);
+	static const ParticleParams &GetParticleParams(IParticleEffect *handle);
+	static const ParticleParams &GetDefaultParams(IParticleEffect *handle);
+	static int                   GetChildCount(IParticleEffect *handle);
+	static IParticleEffect      *GetChild(IParticleEffect *handle, int index);
+	static void                  ClearChilds(IParticleEffect *handle);
+	static void                  InsertChild(IParticleEffect *handle, int slot, IParticleEffect *pEffect);
+	static int                   FindChild(IParticleEffect *handle, IParticleEffect *pEffect);
+	static void                  SetParent(IParticleEffect *handle, IParticleEffect *pParent);
+	static IParticleEffect      *GetParent(IParticleEffect *handle);
+	static bool                  LoadResourcesInternal(IParticleEffect *handle);
+	static void                  UnloadResourcesInternal(IParticleEffect *handle);
+	static void                  Serialize(IParticleEffect *handle, IXmlNode *node, bool bLoading, bool bChildren);
+	static void                  ReloadInternal(IParticleEffect *handle, bool bChildren);
+	static void                  SetDefaultEffect(IParticleEffect *pEffect);
+	static IParticleEffect      *GetDefaultEffect();
+	static const ParticleParams &GetGlobalDefaultParams(int nVersion);
+	static IParticleEffect      *CreateEffect();
+	static void                  DeleteEffect(IParticleEffect *pEffect);
+	static IParticleEffect      *FindEffect(mono::string sEffectName, mono::string sSource, bool bLoadResources);
+	static IParticleEffect      *LoadEffect(mono::string sEffectName, IXmlNode *effectNode, bool bLoadResources, mono::string sSource);
+	static bool                  LoadLibraryInternal(mono::string sParticlesLibrary, IXmlNode *libNode, bool bLoadResources);
+	static bool                  LoadLibraryInternalFile(mono::string sParticlesLibrary, mono::string sParticlesLibraryFile, bool bLoadResources);
+	static IParticleEmitter     *CreateEmitterInternal(const QuatTS &loc, const ParticleParams &Params, uint uEmitterFlags, const SpawnParams &spawnParameters);
+	static IParticleEmitter     *CreateEmitterInternalDefaultParameters(const QuatTS &loc, const ParticleParams &Params, uint uEmitterFlags);
+	static IParticleEmitter     *CreateEmitterInternalDefaultFlagsDefaultParameters(const QuatTS &loc, const ParticleParams &Params);
+	static void                  DeleteEmitterInternal(IParticleEmitter *pPartEmitter);
+	static void                  DeleteEmittersInternal(uint mask);
+	static IParticleEmitter     *SerializeEmitter(ISerialize *ser, IParticleEmitter *pEmitter);
 };

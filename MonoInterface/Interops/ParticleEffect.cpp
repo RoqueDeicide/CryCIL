@@ -1,384 +1,231 @@
 #include "stdafx.h"
 
+#undef LoadLibrary
+
 #include "ParticleEffect.h"
 #include "MonoCryXmlNode.h"
+#include <ParticleParams.h>
 
 void ParticleEffectInterop::OnRunTimeInitialized()
 {
-	REGISTER_METHOD(GetDefault);
-	REGISTER_METHOD(SetDefault);
-	REGISTER_METHOD(GetDefaultParameters);
-
-	REGISTER_METHOD(Spawn);
-
-	REGISTER_METHOD(Create);
-	REGISTER_METHOD(Delete);
-	REGISTER_METHOD(Find);
-	REGISTER_METHOD(Load);
-	REGISTER_METHOD(LoadLibrary);
-	REGISTER_METHOD(CreateEmitterInternal);
-	REGISTER_METHOD(DeleteEmitters);
-
-	REGISTER_METHOD(LoadResources);
-	REGISTER_METHOD(UnloadResources);
-	REGISTER_METHOD(Serialize);
-	REGISTER_METHOD(Deserialize);
-	REGISTER_METHOD(Reload);
-	REGISTER_METHOD(GetChild);
-	REGISTER_METHOD(ClearChildren);
-	REGISTER_METHOD(InsertChild);
-	REGISTER_METHOD(IndexOfChild);
-
-	REGISTER_METHOD(SetFullName);
-	REGISTER_METHOD(GetMinimalName);
+	REGISTER_METHOD(SpawnEmitter);
+	REGISTER_METHOD(SpawnEmitterDefault);
+	REGISTER_METHOD(SetName);
+	REGISTER_METHOD(GetName);
 	REGISTER_METHOD(GetFullName);
 	REGISTER_METHOD(SetEnabled);
 	REGISTER_METHOD(IsEnabled);
+	REGISTER_METHOD(SetParticleParams);
+	REGISTER_METHOD(GetParticleParams);
+	REGISTER_METHOD(GetDefaultParams);
 	REGISTER_METHOD(GetChildCount);
+	REGISTER_METHOD(GetChild);
+	REGISTER_METHOD(ClearChilds);
+	REGISTER_METHOD(InsertChild);
+	REGISTER_METHOD(FindChild);
 	REGISTER_METHOD(SetParent);
 	REGISTER_METHOD(GetParent);
+	REGISTER_METHOD(LoadResourcesInternal);
+	REGISTER_METHOD(UnloadResourcesInternal);
+	REGISTER_METHOD(Serialize);
+	REGISTER_METHOD(ReloadInternal);
+	REGISTER_METHOD(SetDefaultEffect);
+	REGISTER_METHOD(GetDefaultEffect);
+	REGISTER_METHOD(GetGlobalDefaultParams);
+	REGISTER_METHOD(CreateEffect);
+	REGISTER_METHOD(DeleteEffect);
+	REGISTER_METHOD(FindEffect);
+	REGISTER_METHOD(LoadEffect);
+	REGISTER_METHOD(LoadLibraryInternal);
+	REGISTER_METHOD(LoadLibraryInternalFile);
+	REGISTER_METHOD(CreateEmitterInternal);
+	REGISTER_METHOD(CreateEmitterInternalDefaultParameters);
+	REGISTER_METHOD(CreateEmitterInternalDefaultFlagsDefaultParameters);
+	REGISTER_METHOD(DeleteEmitterInternal);
+	REGISTER_METHOD(DeleteEmittersInternal);
+	REGISTER_METHOD(SerializeEmitter);
 }
 
-IParticleEffect *ParticleEffectInterop::GetDefault()
+IParticleEmitter *ParticleEffectInterop::SpawnEmitter(IParticleEffect *handle, const QuatTS &loc, EParticleEmitterFlags flags, const SpawnParams &parameters)
 {
-	return const_cast<IParticleEffect *>(gEnv->pParticleManager->GetDefaultEffect());
+	return handle->Spawn(loc, flags, &parameters);
 }
 
-void ParticleEffectInterop::SetDefault(IParticleEffect *effect)
+IParticleEmitter *ParticleEffectInterop::SpawnEmitterDefault(IParticleEffect *handle, const QuatTS &loc, EParticleEmitterFlags flags)
 {
-	if (!effect)
-	{
-		ArgumentNullException("Cannot set invalid particle effect as default one.").Throw();
-	}
-
-	gEnv->pParticleManager->SetDefaultEffect(effect);
+	return handle->Spawn(loc, flags);
 }
 
-ParticleParams *ParticleEffectInterop::GetDefaultParameters()
+void ParticleEffectInterop::SetName(IParticleEffect *handle, mono::string sFullName)
 {
-	return const_cast<ParticleParams *>(&gEnv->pParticleManager->GetDefaultParams());
+	handle->SetName(NtText(sFullName));
 }
 
-IParticleEmitter *ParticleEffectInterop::Spawn(IParticleEffect **effect, QuatTS location, EParticleEmitterFlags flags, SpawnParams *parameters)
+mono::string ParticleEffectInterop::GetName(IParticleEffect *handle)
 {
-	IParticleEffect *e = *effect;
-	if (!e)
-	{
-		NullReferenceException("Instance object is invalid.").Throw();
-	}
-
-	return e->Spawn(location, flags, parameters);
-}
-
-IParticleEffect *ParticleEffectInterop::Create()
-{
-	return gEnv->pParticleManager->CreateEffect();
-}
-
-void ParticleEffectInterop::Delete(IParticleEffect *effect)
-{
-	if (effect)
-	{
-		gEnv->pParticleManager->DeleteEffect(effect);
-	}
-}
-
-IParticleEffect *ParticleEffectInterop::Find(mono::string name, mono::string source, bool loadResources)
-{
-	if (!name)
-	{
-		return nullptr;
-	}
-
-	return gEnv->pParticleManager->FindEffect(NtText(name), NtText(source), loadResources);
-}
-
-IParticleEffect *ParticleEffectInterop::Load(mono::string name, MonoCryXmlNode *node, mono::string source, bool loadResources)
-{
-	if (!name)
-	{
-		ArgumentNullException("The name of the particle effect to load cannot be null.").Throw();
-	}
-	NtText ntName(name);
-	if (ntName.Length == 0)
-	{
-		ArgumentException("The name of the particle effect to load cannot be an empty string.").Throw();
-	}
-	if (!node)
-	{
-		ArgumentNullException("The Xml data provider cannot be null.").Throw();
-	}
-	if (!node->handle)
-	{
-		ObjectDisposedException("The Xml data provider is not usable.").Throw();
-	}
-
-	XmlNodeRef nodeRef(node->handle);
-	return gEnv->pParticleManager->LoadEffect(ntName, nodeRef, loadResources, NtText(source));
-}
-
-bool ParticleEffectInterop::LoadLibrary(mono::string name, MonoCryXmlNode *node, bool loadResources)
-{
-	if (!name)
-	{
-		ArgumentNullException("The name of the particle effect library to load cannot be null.").Throw();
-	}
-	NtText ntName(name);
-	if (ntName.Length == 0)
-	{
-		ArgumentException("The name of the particle effect library to load cannot be an empty string.").Throw();
-	}
-	if (!node)
-	{
-		ArgumentNullException("The Xml data provider cannot be null.").Throw();
-	}
-	if (!node->handle)
-	{
-		ObjectDisposedException("The Xml data provider is not usable.").Throw();
-	}
-
-	XmlNodeRef nodeRef(node->handle);
-	return gEnv->pParticleManager->LoadLibrary(ntName, nodeRef, loadResources);
-}
-
-IParticleEmitter *ParticleEffectInterop::CreateEmitterInternal(QuatTS loc, ParticleParams *parameters, uint flags, SpawnParams *spawnParameters)
-{
-	if (!parameters)
-	{
-		ObjectDisposedException("The object that provides the particle parameters is not valid.").Throw();
-	}
-	return gEnv->pParticleManager->CreateEmitter(loc, *parameters, flags, spawnParameters);
-}
-
-IParticleEmitter *ParticleEffectInterop::CreateEmitterInternalDsp(QuatTS loc, ParticleParams *parameters, uint flags)
-{
-	if (!parameters)
-	{
-		ObjectDisposedException("The object that provides the particle parameters is not valid.").Throw();
-	}
-	return gEnv->pParticleManager->CreateEmitter(loc, *parameters, flags);
-}
-
-IParticleEmitter *ParticleEffectInterop::CreateEmitterInternalDfDsp(QuatTS loc, ParticleParams *parameters)
-{
-	if (!parameters)
-	{
-		ObjectDisposedException("The object that provides the particle parameters is not valid.").Throw();
-	}
-	return gEnv->pParticleManager->CreateEmitter(loc, *parameters);
-}
-
-void ParticleEffectInterop::DeleteEmitters(uint mask)
-{
-	gEnv->pParticleManager->DeleteEmitters(mask);
-}
-
-bool ParticleEffectInterop::LoadResources(IParticleEffect **effect)
-{
-	IParticleEffect *e = *effect;
-	if (!e)
-	{
-		NullReferenceException("Instance object is invalid.").Throw();
-	}
-
-	return e->LoadResources();
-}
-
-void ParticleEffectInterop::UnloadResources(IParticleEffect **effect)
-{
-	IParticleEffect *e = *effect;
-	if (!e)
-	{
-		NullReferenceException("Instance object is invalid.").Throw();
-	}
-
-	e->UnloadResources();
-}
-
-void ParticleEffectInterop::Serialize(IParticleEffect **effect, mono::object xml, bool bChildren)
-{
-	IParticleEffect *e = *effect;
-	if (!e)
-	{
-		NullReferenceException("Instance object is invalid.").Throw();
-	}
-	if (!xml)
-	{
-		ArgumentNullException("Xml data provider cannot be null.").Throw();
-	}
-	IXmlNode *node = *GET_BOXED_OBJECT_DATA(IXmlNode *, xml);
-
-	e->Serialize(node, false, bChildren);
-}
-
-void ParticleEffectInterop::Deserialize(IParticleEffect **effect, mono::object xml, bool bChildren)
-{
-	IParticleEffect *e = *effect;
-	if (!e)
-	{
-		NullReferenceException("Instance object is invalid.").Throw();
-	}
-	if (!xml)
-	{
-		ArgumentNullException("Xml data provider cannot be null.").Throw();
-	}
-	IXmlNode *node = *GET_BOXED_OBJECT_DATA(IXmlNode *, xml);
-
-	e->Serialize(node, true, bChildren);
-}
-
-void ParticleEffectInterop::Reload(IParticleEffect **effect, bool bChildren)
-{
-	IParticleEffect *e = *effect;
-	if (!e)
-	{
-		NullReferenceException("Instance object is invalid.").Throw();
-	}
-
-	e->Reload(bChildren);
-}
-
-IParticleEffect *ParticleEffectInterop::GetChild(IParticleEffect **effect, int index)
-{
-	IParticleEffect *e = *effect;
-	if (!e)
-	{
-		NullReferenceException("Instance object is invalid.").Throw();
-	}
-	if (index < 0)
-	{
-		IndexOutOfRangeException("Index cannot be less then 0.").Throw();
-	}
-	if (index >= e->GetChildCount())
-	{
-		IndexOutOfRangeException("Index cannot be greater then or equal to number of children.").Throw();
-	}
-
-	return e->GetChild(index);
-}
-
-void ParticleEffectInterop::ClearChildren(IParticleEffect **effect)
-{
-	IParticleEffect *e = *effect;
-	if (!e)
-	{
-		NullReferenceException("Instance object is invalid.").Throw();
-	}
-
-	e->ClearChilds();
-}
-
-void ParticleEffectInterop::InsertChild(IParticleEffect **effect, int slot, IParticleEffect *child)
-{
-	IParticleEffect *e = *effect;
-	if (!e)
-	{
-		NullReferenceException("Instance object is invalid.").Throw();
-	}
-	if (slot < 0)
-	{
-		IndexOutOfRangeException("Index cannot be less then 0.").Throw();
-	}
-	if (slot > e->GetChildCount())
-	{
-		IndexOutOfRangeException("Index cannot be greater then number of children.").Throw();
-	}
-
-	e->InsertChild(slot, child);
-}
-
-int ParticleEffectInterop::IndexOfChild(IParticleEffect **effect, IParticleEffect *child)
-{
-	IParticleEffect *e = *effect;
-	if (!e)
-	{
-		NullReferenceException("Instance object is invalid.").Throw();
-	}
-
-	if (!child)
-	{
-		return -1;
-	}
-
-	return e->FindChild(child);
-}
-
-void ParticleEffectInterop::SetFullName(IParticleEffect *handle, mono::string fullName)
-{
-	if (!handle)
-	{
-		NullReferenceException("Instance object is invalid.").Throw();
-	}
-
-	handle->SetName(NtText(fullName));
-}
-
-mono::string ParticleEffectInterop::GetMinimalName(IParticleEffect *handle)
-{
-	if (!handle)
-	{
-		NullReferenceException("Instance object is invalid.").Throw();
-	}
-
 	return ToMonoString(handle->GetName());
 }
 
 mono::string ParticleEffectInterop::GetFullName(IParticleEffect *handle)
 {
-	if (!handle)
-	{
-		NullReferenceException("Instance object is invalid.").Throw();
-	}
-
 	return ToMonoString(handle->GetFullName());
 }
 
 void ParticleEffectInterop::SetEnabled(IParticleEffect *handle, bool bEnabled)
 {
-	if (!handle)
-	{
-		NullReferenceException("Instance object is invalid.").Throw();
-	}
-
 	handle->SetEnabled(bEnabled);
 }
 
 bool ParticleEffectInterop::IsEnabled(IParticleEffect *handle)
 {
-	if (!handle)
-	{
-		NullReferenceException("Instance object is invalid.").Throw();
-	}
-
 	return handle->IsEnabled();
+}
+
+void ParticleEffectInterop::SetParticleParams(IParticleEffect *handle, const ParticleParams &parameters)
+{
+	ParticleParams params = parameters;
+	handle->SetParticleParams(params);
+}
+
+const ParticleParams &ParticleEffectInterop::GetParticleParams(IParticleEffect *handle)
+{
+	return handle->GetParticleParams();
+}
+
+const ParticleParams &ParticleEffectInterop::GetDefaultParams(IParticleEffect *handle)
+{
+	return handle->GetDefaultParams();
 }
 
 int ParticleEffectInterop::GetChildCount(IParticleEffect *handle)
 {
-	if (!handle)
-	{
-		NullReferenceException("Instance object is invalid.").Throw();
-	}
-
 	return handle->GetChildCount();
 }
 
-void ParticleEffectInterop::SetParent(IParticleEffect *handle, IParticleEffect *parent)
+IParticleEffect *ParticleEffectInterop::GetChild(IParticleEffect *handle, int index)
 {
-	if (!handle)
-	{
-		NullReferenceException("Instance object is invalid.").Throw();
-	}
+	return handle->GetChild(index);
+}
 
-	handle->SetParent(parent);
+void ParticleEffectInterop::ClearChilds(IParticleEffect *handle)
+{
+	handle->ClearChilds();
+}
+
+void ParticleEffectInterop::InsertChild(IParticleEffect *handle, int slot, IParticleEffect *pEffect)
+{
+	handle->InsertChild(slot, pEffect);
+}
+
+int ParticleEffectInterop::FindChild(IParticleEffect *handle, IParticleEffect *pEffect)
+{
+	return handle->FindChild(pEffect);
+}
+
+void ParticleEffectInterop::SetParent(IParticleEffect *handle, IParticleEffect *pParent)
+{
+	handle->SetParent(pParent);
 }
 
 IParticleEffect *ParticleEffectInterop::GetParent(IParticleEffect *handle)
 {
-	if (!handle)
-	{
-		NullReferenceException("Instance object is invalid.").Throw();
-	}
-
 	return handle->GetParent();
+}
+
+bool ParticleEffectInterop::LoadResourcesInternal(IParticleEffect *handle)
+{
+	return handle->LoadResources();
+}
+
+void ParticleEffectInterop::UnloadResourcesInternal(IParticleEffect *handle)
+{
+	handle->UnloadResources();
+}
+
+void ParticleEffectInterop::Serialize(IParticleEffect *handle, IXmlNode *node, bool bLoading, bool bChildren)
+{
+	handle->Serialize(node, bLoading, bChildren);
+}
+
+void ParticleEffectInterop::ReloadInternal(IParticleEffect *handle, bool bChildren)
+{
+	handle->Reload(bChildren);
+}
+
+void ParticleEffectInterop::SetDefaultEffect(IParticleEffect *pEffect)
+{
+	gEnv->pParticleManager->SetDefaultEffect(pEffect);
+}
+
+IParticleEffect *ParticleEffectInterop::GetDefaultEffect()
+{
+	return const_cast<IParticleEffect *>(gEnv->pParticleManager->GetDefaultEffect());
+}
+
+const ParticleParams & ParticleEffectInterop::GetGlobalDefaultParams(int nVersion)
+{
+	return gEnv->pParticleManager->GetDefaultParams(nVersion);
+}
+
+IParticleEffect *ParticleEffectInterop::CreateEffect()
+{
+	return gEnv->pParticleManager->CreateEffect();
+}
+
+void ParticleEffectInterop::DeleteEffect(IParticleEffect *pEffect)
+{
+	gEnv->pParticleManager->DeleteEffect(pEffect);
+}
+
+IParticleEffect *ParticleEffectInterop::FindEffect(mono::string sEffectName, mono::string sSource, bool bLoadResources)
+{
+	return gEnv->pParticleManager->FindEffect(NtText(sEffectName), NtText(sSource), bLoadResources);
+}
+
+IParticleEffect *ParticleEffectInterop::LoadEffect(mono::string sEffectName, IXmlNode *effectNode, bool bLoadResources, mono::string sSource)
+{
+	XmlNodeRef nodeRef = effectNode;
+	return gEnv->pParticleManager->LoadEffect(NtText(sEffectName), nodeRef, bLoadResources, NtText(sSource));
+}
+
+bool ParticleEffectInterop::LoadLibraryInternal(mono::string sParticlesLibrary, IXmlNode *libNode, bool bLoadResources)
+{
+	XmlNodeRef nodeRef = libNode;
+	NtText libName(sParticlesLibrary);
+	return gEnv->pParticleManager->LoadLibrary(libName, nodeRef, bLoadResources);
+}
+
+bool ParticleEffectInterop::LoadLibraryInternalFile(mono::string sParticlesLibrary, mono::string sParticlesLibraryFile, bool bLoadResources)
+{
+	return gEnv->pParticleManager->LoadLibrary(NtText(sParticlesLibrary), NtText(sParticlesLibraryFile), bLoadResources);
+}
+
+IParticleEmitter *ParticleEffectInterop::CreateEmitterInternal(const QuatTS &loc, const ParticleParams &Params, uint uEmitterFlags, const SpawnParams &spawnParameters)
+{
+	return gEnv->pParticleManager->CreateEmitter(loc, Params, uEmitterFlags, &spawnParameters);
+}
+
+IParticleEmitter *ParticleEffectInterop::CreateEmitterInternalDefaultParameters(const QuatTS &loc, const ParticleParams &Params, uint uEmitterFlags)
+{
+	return gEnv->pParticleManager->CreateEmitter(loc, Params, uEmitterFlags);
+}
+
+IParticleEmitter *ParticleEffectInterop::CreateEmitterInternalDefaultFlagsDefaultParameters(const QuatTS &loc, const ParticleParams &Params)
+{
+	return gEnv->pParticleManager->CreateEmitter(loc, Params);
+}
+
+void ParticleEffectInterop::DeleteEmitterInternal(IParticleEmitter *pPartEmitter)
+{
+	gEnv->pParticleManager->DeleteEmitter(pPartEmitter);
+}
+
+void ParticleEffectInterop::DeleteEmittersInternal(uint mask)
+{
+	gEnv->pParticleManager->DeleteEmitters(mask);
+}
+
+IParticleEmitter *ParticleEffectInterop::SerializeEmitter(ISerialize *ser, IParticleEmitter *pEmitter)
+{
+	return gEnv->pParticleManager->SerializeEmitter(ser, pEmitter);
 }
