@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using CryCil.Annotations;
 using CryCil.Geometry;
 using CryCil.Utilities;
 
@@ -14,13 +12,20 @@ namespace CryCil.Engine.Data
 	/// Represents an object that handles synchronization of objects.
 	/// </summary>
 	[StructLayout(LayoutKind.Sequential)]
-	[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 	public struct CrySync
 	{
 		#region Fields
-		[UsedImplicitly] private IntPtr handle;
+		private readonly IntPtr handle;
 		#endregion
 		#region Properties
+		/// <summary>
+		/// Determines whether this instance is usable.
+		/// </summary>
+		public bool IsValid
+		{
+			get { return this.handle != IntPtr.Zero; }
+		}
+
 		/// <summary>
 		/// Indicates whether the data is currently being received.
 		/// </summary>
@@ -29,7 +34,7 @@ namespace CryCil.Engine.Data
 		{
 			get
 			{
-				if (this.handle == IntPtr.Zero)
+				if (!this.IsValid)
 				{
 					throw new NullReferenceException("Instance object is invalid.");
 				}
@@ -46,7 +51,7 @@ namespace CryCil.Engine.Data
 		{
 			get
 			{
-				if (this.handle == IntPtr.Zero)
+				if (!this.IsValid)
 				{
 					throw new NullReferenceException("Instance object is invalid.");
 				}
@@ -63,7 +68,7 @@ namespace CryCil.Engine.Data
 		{
 			get
 			{
-				if (this.handle == IntPtr.Zero)
+				if (!this.IsValid)
 				{
 					throw new NullReferenceException("Instance object is invalid.");
 				}
@@ -85,7 +90,7 @@ namespace CryCil.Engine.Data
 		/// <exception cref="NullReferenceException">Instance object is invalid.</exception>
 		public void SignalPartialReception()
 		{
-			if (this.handle == IntPtr.Zero)
+			if (!this.IsValid)
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
@@ -104,7 +109,7 @@ namespace CryCil.Engine.Data
 		/// </exception>
 		public void BeginGroup(string name)
 		{
-			if (this.handle == IntPtr.Zero)
+			if (!this.IsValid)
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
@@ -150,7 +155,7 @@ namespace CryCil.Engine.Data
 		/// </exception>
 		public bool BeginOptionalGroup(string name, bool condition)
 		{
-			if (this.handle == IntPtr.Zero)
+			if (!this.IsValid)
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
@@ -172,7 +177,7 @@ namespace CryCil.Engine.Data
 		/// <exception cref="NullReferenceException">Instance object is invalid.</exception>
 		public void EndGroup()
 		{
-			if (this.handle == IntPtr.Zero)
+			if (!this.IsValid)
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
@@ -192,7 +197,7 @@ namespace CryCil.Engine.Data
 		/// </exception>
 		public void Sync(string name, ref string value)
 		{
-			if (this.handle == IntPtr.Zero)
+			if (!this.IsValid)
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
@@ -224,7 +229,7 @@ namespace CryCil.Engine.Data
 		/// </exception>
 		public void Sync(string name, ref string value, string @default)
 		{
-			if (this.handle == IntPtr.Zero)
+			if (!this.IsValid)
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
@@ -252,7 +257,7 @@ namespace CryCil.Engine.Data
 		/// </exception>
 		public void Sync(string name, ref bool value)
 		{
-			if (this.handle == IntPtr.Zero)
+			if (!this.IsValid)
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
@@ -284,7 +289,7 @@ namespace CryCil.Engine.Data
 		/// </exception>
 		public void Sync(string name, ref bool value, bool @default)
 		{
-			if (this.handle == IntPtr.Zero)
+			if (!this.IsValid)
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
@@ -312,7 +317,7 @@ namespace CryCil.Engine.Data
 		/// </exception>
 		public void Sync(string name, ref float value)
 		{
-			if (this.handle == IntPtr.Zero)
+			if (!this.IsValid)
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
@@ -344,7 +349,7 @@ namespace CryCil.Engine.Data
 		/// </exception>
 		public void Sync(string name, ref float value, float @default)
 		{
-			if (this.handle == IntPtr.Zero)
+			if (!this.IsValid)
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
@@ -372,7 +377,7 @@ namespace CryCil.Engine.Data
 		/// </exception>
 		public void Sync(string name, ref Vector2 value)
 		{
-			if (this.handle == IntPtr.Zero)
+			if (!this.IsValid)
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
@@ -404,7 +409,7 @@ namespace CryCil.Engine.Data
 		/// </exception>
 		public void Sync(string name, ref Vector2 value, Vector2 @default)
 		{
-			if (this.handle == IntPtr.Zero)
+			if (!this.IsValid)
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
@@ -432,7 +437,7 @@ namespace CryCil.Engine.Data
 		/// </exception>
 		public void Sync(string name, ref Vector3 value)
 		{
-			if (this.handle == IntPtr.Zero)
+			if (!this.IsValid)
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
@@ -464,7 +469,7 @@ namespace CryCil.Engine.Data
 		/// </exception>
 		public void Sync(string name, ref Vector3 value, Vector3 @default)
 		{
-			if (this.handle == IntPtr.Zero)
+			if (!this.IsValid)
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
@@ -492,7 +497,7 @@ namespace CryCil.Engine.Data
 		/// </exception>
 		public void Sync(string name, ref Quaternion value)
 		{
-			if (this.handle == IntPtr.Zero)
+			if (!this.IsValid)
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
@@ -524,7 +529,7 @@ namespace CryCil.Engine.Data
 		/// </exception>
 		public void Sync(string name, ref Quaternion value, Quaternion @default)
 		{
-			if (this.handle == IntPtr.Zero)
+			if (!this.IsValid)
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
@@ -552,7 +557,7 @@ namespace CryCil.Engine.Data
 		/// </exception>
 		public void Sync(string name, ref EulerAngles value)
 		{
-			if (this.handle == IntPtr.Zero)
+			if (!this.IsValid)
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
@@ -584,7 +589,7 @@ namespace CryCil.Engine.Data
 		/// </exception>
 		public void Sync(string name, ref EulerAngles value, EulerAngles @default)
 		{
-			if (this.handle == IntPtr.Zero)
+			if (!this.IsValid)
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
@@ -612,7 +617,7 @@ namespace CryCil.Engine.Data
 		/// </exception>
 		public void Sync(string name, ref sbyte value)
 		{
-			if (this.handle == IntPtr.Zero)
+			if (!this.IsValid)
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
@@ -644,7 +649,7 @@ namespace CryCil.Engine.Data
 		/// </exception>
 		public void Sync(string name, ref sbyte value, sbyte @default)
 		{
-			if (this.handle == IntPtr.Zero)
+			if (!this.IsValid)
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
@@ -672,7 +677,7 @@ namespace CryCil.Engine.Data
 		/// </exception>
 		public void Sync(string name, ref short value)
 		{
-			if (this.handle == IntPtr.Zero)
+			if (!this.IsValid)
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
@@ -704,7 +709,7 @@ namespace CryCil.Engine.Data
 		/// </exception>
 		public void Sync(string name, ref short value, short @default)
 		{
-			if (this.handle == IntPtr.Zero)
+			if (!this.IsValid)
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
@@ -732,7 +737,7 @@ namespace CryCil.Engine.Data
 		/// </exception>
 		public void Sync(string name, ref int value)
 		{
-			if (this.handle == IntPtr.Zero)
+			if (!this.IsValid)
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
@@ -764,7 +769,7 @@ namespace CryCil.Engine.Data
 		/// </exception>
 		public void Sync(string name, ref int value, int @default)
 		{
-			if (this.handle == IntPtr.Zero)
+			if (!this.IsValid)
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
@@ -792,7 +797,7 @@ namespace CryCil.Engine.Data
 		/// </exception>
 		public void Sync(string name, ref long value)
 		{
-			if (this.handle == IntPtr.Zero)
+			if (!this.IsValid)
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
@@ -824,7 +829,7 @@ namespace CryCil.Engine.Data
 		/// </exception>
 		public void Sync(string name, ref long value, long @default)
 		{
-			if (this.handle == IntPtr.Zero)
+			if (!this.IsValid)
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
@@ -852,7 +857,7 @@ namespace CryCil.Engine.Data
 		/// </exception>
 		public void Sync(string name, ref byte value)
 		{
-			if (this.handle == IntPtr.Zero)
+			if (!this.IsValid)
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
@@ -884,7 +889,7 @@ namespace CryCil.Engine.Data
 		/// </exception>
 		public void Sync(string name, ref byte value, byte @default)
 		{
-			if (this.handle == IntPtr.Zero)
+			if (!this.IsValid)
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
@@ -912,7 +917,7 @@ namespace CryCil.Engine.Data
 		/// </exception>
 		public void Sync(string name, ref ushort value)
 		{
-			if (this.handle == IntPtr.Zero)
+			if (!this.IsValid)
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
@@ -944,7 +949,7 @@ namespace CryCil.Engine.Data
 		/// </exception>
 		public void Sync(string name, ref ushort value, ushort @default)
 		{
-			if (this.handle == IntPtr.Zero)
+			if (!this.IsValid)
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
@@ -972,7 +977,7 @@ namespace CryCil.Engine.Data
 		/// </exception>
 		public void Sync(string name, ref uint value)
 		{
-			if (this.handle == IntPtr.Zero)
+			if (!this.IsValid)
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
@@ -1004,7 +1009,7 @@ namespace CryCil.Engine.Data
 		/// </exception>
 		public void Sync(string name, ref uint value, uint @default)
 		{
-			if (this.handle == IntPtr.Zero)
+			if (!this.IsValid)
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
@@ -1032,7 +1037,7 @@ namespace CryCil.Engine.Data
 		/// </exception>
 		public void Sync(string name, ref ulong value)
 		{
-			if (this.handle == IntPtr.Zero)
+			if (!this.IsValid)
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
@@ -1064,7 +1069,7 @@ namespace CryCil.Engine.Data
 		/// </exception>
 		public void Sync(string name, ref ulong value, ulong @default)
 		{
-			if (this.handle == IntPtr.Zero)
+			if (!this.IsValid)
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
@@ -1092,7 +1097,7 @@ namespace CryCil.Engine.Data
 		/// </exception>
 		public void Sync(string name, ref TimeSpan value)
 		{
-			if (this.handle == IntPtr.Zero)
+			if (!this.IsValid)
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
@@ -1131,7 +1136,7 @@ namespace CryCil.Engine.Data
 		/// </exception>
 		public void Sync(string name, ref TimeSpan value, TimeSpan @default)
 		{
-			if (this.handle == IntPtr.Zero)
+			if (!this.IsValid)
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
@@ -1166,7 +1171,7 @@ namespace CryCil.Engine.Data
 		/// </exception>
 		public void Sync(string name, ref CryXmlNode value)
 		{
-			if (this.handle == IntPtr.Zero)
+			if (!this.IsValid)
 			{
 				throw new NullReferenceException("Instance object is invalid.");
 			}
