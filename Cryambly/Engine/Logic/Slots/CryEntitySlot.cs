@@ -25,6 +25,14 @@ namespace CryCil.Engine.Logic
 		private readonly int index;
 		#endregion
 		#region Properties
+		internal IntPtr Handle
+		{
+			get { return this.entityHandle; }
+		}
+		internal int Slot
+		{
+			get { return this.index; }
+		}
 		/// <summary>
 		/// Indicates whether this slot object is valid.
 		/// </summary>
