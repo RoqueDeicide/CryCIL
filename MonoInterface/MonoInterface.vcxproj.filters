@@ -966,6 +966,9 @@
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
     <ClCompile Include="TypeMapChecks\DebugTypes.cpp" />
+    <ClCompile Include="TypeMapChecks\MathTypes.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">

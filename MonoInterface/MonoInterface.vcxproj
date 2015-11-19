@@ -555,6 +555,7 @@
     <ClCompile Include="TypeMapChecks\DynamicLightFlags.cpp" />
     <ClCompile Include="TypeMapChecks\EntityTypes.cpp" />
     <ClCompile Include="TypeMapChecks\InputTypes.cpp" />
+    <ClCompile Include="TypeMapChecks\MathTypes.cpp" />
     <ClCompile Include="TypeMapChecks\MeshTypes.cpp" />
     <ClCompile Include="TypeMapChecks\PhysicsTypes.cpp" />
     <ClCompile Include="TypeMapChecks\RenderParameters.cpp" />
