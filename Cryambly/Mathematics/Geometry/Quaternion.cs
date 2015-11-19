@@ -90,11 +90,7 @@ namespace CryCil.Geometry
 		/// </summary>
 		public float Norm
 		{
-			get
-			{
-				return (float)Math.Sqrt
-					(this.X * this.X + this.Y * this.Y + this.Z * this.Z + this.W * this.W);
-			}
+			get { return (float)Math.Sqrt(this.X * this.X + this.Y * this.Y + this.Z * this.Z + this.W * this.W); }
 		}
 		/// <summary>
 		/// Gets inverted quaternion.
@@ -193,6 +189,51 @@ namespace CryCil.Geometry
 								   2 * (this.Z * this.Z + this.W * this.W) - 1);
 			}
 		}
+		/// <summary>
+		/// Gets the imaginary part of the logarithm of a quaternion.
+		/// </summary>
+		public Vector3 Logarithm
+		{
+			get
+			{
+				float squaredLength = this.Vector.LengthSquared;
+
+				if (squaredLength < MathHelpers.ZeroTolerance)
+				{
+					return Vector3.Zero;
+				}
+
+				double length = Math.Sqrt(squaredLength);
+				double angle = Math.Atan2(length, this.W) / length;
+
+				return this.Vector * (float)angle;
+			}
+		}
+		/// <summary>
+		/// Overrides this quaternion with one restored from <see cref="Logarithm"/>.
+		/// </summary>
+		public Vector3 Exponent
+		{
+			set
+			{
+				float squaredLength = value.LengthSquared;
+
+				if (squaredLength < MathHelpers.ZeroTolerance)
+				{
+					this = Identity;
+					return;
+				}
+
+				float length = (float)Math.Sqrt(squaredLength);
+				float sine, cosine;
+				MathHelpers.SinCos(length, out sine, out cosine);
+				sine /= length;
+				this.W = cosine;
+				this.X = value.X * sine;
+				this.Y = value.Y * sine;
+				this.Z = value.Z * sine;
+			}
+		}
 		#endregion
 		#region Construction
 		/// <summary>
@@ -270,11 +311,7 @@ namespace CryCil.Geometry
 		/// <param name="desiredDirection"> 
 		/// Normalized <see cref="Vector3"/> that represents direction to finish rotation at.
 		/// </param>
-		public Quaternion
-			(
-			Vector3 originalDirection,
-			Vector3 desiredDirection
-			)
+		public Quaternion(Vector3 originalDirection, Vector3 desiredDirection)
 			: this()
 		{
 			Vector3 start = originalDirection;
@@ -292,8 +329,10 @@ namespace CryCil.Geometry
 					originalDirection.SelectiveOrthogonal
 					?? desiredDirection.SelectiveOrthogonal
 					?? Vector3.Up;
-				cosine = 0; // Cosine and sine of the half of the angle between vectors.
-				sine = 1; //
+
+				// Cosine and sine of the half of the angle between vectors.
+				cosine = 0;
+				sine = 1;
 			}
 			else
 			{
@@ -449,13 +488,11 @@ namespace CryCil.Geometry
 		/// Determines whether this quaternion is Identity quaternion.
 		/// </summary>
 		/// <seealso cref="Quaternion.Identity"/>
-
-		// ReSharper disable CompareOfFloatsByEqualityOperator
 		public bool IsIdentity
 		{
+			// ReSharper disable once CompareOfFloatsByEqualityOperator
 			get { return this.W == 1 && this.X == 0 && this.Y == 0 && this.Z == 0; }
 		}
-		// ReSharper restore CompareOfFloatsByEqualityOperator
 
 		/// <summary>
 		/// Determines whether modulus of this quaternion is equal 1.
@@ -464,7 +501,7 @@ namespace CryCil.Geometry
 		/// <returns>True, if modulus of this quaternion is approximately equal to 1.</returns>
 		public bool IsUnit(float epsilon = 0.05f)
 		{
-			return Math.Abs(1 - ((this | this))) < epsilon;
+			return Math.Abs(1 - (this | this)) < epsilon;
 		}
 		/// <summary>
 		/// Determines whether this quaternion is equal to another.
@@ -530,7 +567,7 @@ namespace CryCil.Geometry
 		/// <returns>Dot-product of two quaternions.</returns>
 		public static float operator |(Quaternion left, Quaternion right)
 		{
-			return (left.X * right.X + left.Y * right.Y + left.Z * right.Z + left.W * right.W);
+			return left.X * right.X + left.Y * right.Y + left.Z * right.Z + left.W * right.W;
 		}
 		/// <summary>
 		/// Concatenates rotations represented by two quaternions.
@@ -543,11 +580,40 @@ namespace CryCil.Geometry
 		/// </returns>
 		public static Quaternion operator *(Quaternion left, Quaternion right)
 		{
-			return new Quaternion(
-				left.W * right.W - (left.X * right.X + left.Y * right.Y + left.Z * right.Z),
-				left.Y * right.Z - left.Z * right.Y + left.W * right.X + left.X * right.W,
-				left.Z * right.X - left.X * right.Z + left.W * right.Y + left.Y * right.W,
-				left.X * right.Y - left.Y * right.X + left.W * right.Z + left.Z * right.W);
+			return new Quaternion(left.W * right.W - (left.X * right.X + left.Y * right.Y + left.Z * right.Z),
+								  left.Y * right.Z - left.Z * right.Y + left.W * right.X + left.X * right.W,
+								  left.Z * right.X - left.X * right.Z + left.W * right.Y + left.Y * right.W,
+								  left.X * right.Y - left.Y * right.X + left.W * right.Z + left.Z * right.W);
+		}
+		/// <summary>
+		/// Scales the quaternion.
+		/// </summary>
+		/// <param name="left"> Left operand.</param>
+		/// <param name="right">Right operand.</param>
+		/// <returns>Scaled quaternion.</returns>
+		public static Quaternion operator *(Quaternion left, float right)
+		{
+			return new Quaternion(left.X * right, left.Y * right, left.Z * right, left.W * right);
+		}
+		/// <summary>
+		/// Scales the quaternion.
+		/// </summary>
+		/// <param name="left"> Left operand.</param>
+		/// <param name="right">Right operand.</param>
+		/// <returns>Scaled quaternion.</returns>
+		public static Quaternion operator *(float left, Quaternion right)
+		{
+			return new Quaternion(right.X * left, right.Y * left, right.Z * left, right.W * left);
+		}
+		/// <summary>
+		/// Scales the quaternion down.
+		/// </summary>
+		/// <param name="left"> Left operand.</param>
+		/// <param name="right">Right operand.</param>
+		/// <returns>Scaled quaternion.</returns>
+		public static Quaternion operator /(Quaternion left, float right)
+		{
+			return new Quaternion(left.X / right, left.Y / right, left.Z / right, left.W / right);
 		}
 		#endregion
 		#endregion
