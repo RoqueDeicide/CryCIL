@@ -1,8 +1,9 @@
 #include "stdafx.h"
 
 #include "ParticleEmitter.h"
+#include <IEntitySystem.h>
 
-typedef void(*onCreateEmitterRawThunk)(IParticleEmitter* pEmitter, QuatTS, IParticleEffect*, uint32);
+typedef void(*onCreateEmitterRawThunk)(IParticleEmitter* pEmitter, const QuatTS &, IParticleEffect*, uint32);
 typedef void(*onDeleteEmitterRawThunk)(IParticleEmitter* pEmitter);
 
 void ParticleEmitterInterop::OnCreateEmitter(IParticleEmitter* pEmitter, const QuatTS& qLoc, const IParticleEffect* pEffect, uint32 uEmitterFlags)
@@ -25,20 +26,21 @@ void ParticleEmitterInterop::OnDeleteEmitter(IParticleEmitter* pEmitter)
 
 void ParticleEmitterInterop::OnRunTimeInitialized()
 {
-	REGISTER_METHOD(Activate);
-	REGISTER_METHOD(Deactivate);
-	REGISTER_METHOD(Kill);
-	REGISTER_METHOD(Prime);
-	REGISTER_METHOD(Restart);
-	REGISTER_METHOD(Emit);
-
 	REGISTER_METHOD(IsAlive);
 	REGISTER_METHOD(IsInstant);
+	REGISTER_METHOD(ActivateInternal);
+	REGISTER_METHOD(KillInternal);
+	REGISTER_METHOD(PrimeInternal);
+	REGISTER_METHOD(RestartInternal);
 	REGISTER_METHOD(SetEffect);
 	REGISTER_METHOD(GetEffect);
-	REGISTER_METHOD(SetSpawnParams);
-	REGISTER_METHOD(GetSpawnParams);
+	REGISTER_METHOD(SetSpawnParamsInternal);
+	REGISTER_METHOD(GetSpawnParamsInternal);
+	REGISTER_METHOD(SetEntity);
 	REGISTER_METHOD(SetLocation);
+	REGISTER_METHOD(SetTarget);
+	REGISTER_METHOD(EmitParticle);
+	REGISTER_METHOD(GetAttachedEntity);
 	REGISTER_METHOD(GetEmitterFlags);
 	REGISTER_METHOD(SetEmitterFlags);
 
@@ -50,168 +52,88 @@ void ParticleEmitterInterop::Shutdown()
 	gEnv->pParticleManager->RemoveEventListener(this);
 }
 
-void ParticleEmitterInterop::Activate(IParticleEmitter **handle)
-{
-	IParticleEmitter *emitter = *handle;
-	if (!emitter)
-	{
-		NullReferenceException("Instance object is invalid.").Throw();
-	}
-
-	emitter->Activate(true);
-}
-
-void ParticleEmitterInterop::Deactivate(IParticleEmitter **handle)
-{
-	IParticleEmitter *emitter = *handle;
-	if (!emitter)
-	{
-		NullReferenceException("Instance object is invalid.").Throw();
-	}
-
-	emitter->Activate(false);
-}
-
-void ParticleEmitterInterop::Kill(IParticleEmitter **handle)
-{
-	IParticleEmitter *emitter = *handle;
-	if (!emitter)
-	{
-		NullReferenceException("Instance object is invalid.").Throw();
-	}
-
-	emitter->Kill();
-}
-
-void ParticleEmitterInterop::Prime(IParticleEmitter **handle)
-{
-	IParticleEmitter *emitter = *handle;
-	if (!emitter)
-	{
-		NullReferenceException("Instance object is invalid.").Throw();
-	}
-
-	emitter->Prime();
-}
-
-void ParticleEmitterInterop::Restart(IParticleEmitter **handle)
-{
-	IParticleEmitter *emitter = *handle;
-	if (!emitter)
-	{
-		NullReferenceException("Instance object is invalid.").Throw();
-	}
-
-	emitter->Restart();
-}
-
-void ParticleEmitterInterop::Emit(IParticleEmitter **handle)
-{
-	IParticleEmitter *emitter = *handle;
-	if (!emitter)
-	{
-		NullReferenceException("Instance object is invalid.").Throw();
-	}
-
-	emitter->EmitParticle();
-}
-
 bool ParticleEmitterInterop::IsAlive(IParticleEmitter *handle)
 {
-	IParticleEmitter *emitter = handle;
-	if (!emitter)
-	{
-		NullReferenceException("Instance object is invalid.").Throw();
-	}
-
-	return emitter->IsAlive();
+	return handle->IsAlive();
 }
 
 bool ParticleEmitterInterop::IsInstant(IParticleEmitter *handle)
 {
-	IParticleEmitter *emitter = handle;
-	if (!emitter)
-	{
-		NullReferenceException("Instance object is invalid.").Throw();
-	}
+	return handle->IsInstant();
+}
 
-	return emitter->IsInstant();
+void ParticleEmitterInterop::ActivateInternal(IParticleEmitter *handle, bool bActive)
+{
+	handle->Activate(bActive);
+}
+
+void ParticleEmitterInterop::KillInternal(IParticleEmitter *handle)
+{
+	handle->Kill();
+}
+
+void ParticleEmitterInterop::PrimeInternal(IParticleEmitter *handle)
+{
+	handle->Prime();
+}
+
+void ParticleEmitterInterop::RestartInternal(IParticleEmitter *handle)
+{
+	handle->Restart();
 }
 
 void ParticleEmitterInterop::SetEffect(IParticleEmitter *handle, IParticleEffect *pEffect)
 {
-	IParticleEmitter *emitter = handle;
-	if (!emitter)
-	{
-		NullReferenceException("Instance object is invalid.").Throw();
-	}
-
-	emitter->SetEffect(pEffect);
+	handle->SetEffect(pEffect);
 }
 
 IParticleEffect *ParticleEmitterInterop::GetEffect(IParticleEmitter *handle)
 {
-	IParticleEmitter *emitter = handle;
-	if (!emitter)
-	{
-		NullReferenceException("Instance object is invalid.").Throw();
-	}
-
-	return const_cast<IParticleEffect *>(emitter->GetEffect());
+	return const_cast<IParticleEffect *>(handle->GetEffect());
 }
 
-void ParticleEmitterInterop::SetSpawnParams(IParticleEmitter *handle, SpawnParams spawnParams)
+void ParticleEmitterInterop::SetSpawnParamsInternal(IParticleEmitter *handle, const SpawnParams &spawnParams, GeomRef geom)
 {
-	IParticleEmitter *emitter = handle;
-	if (!emitter)
-	{
-		NullReferenceException("Instance object is invalid.").Throw();
-	}
-
-	emitter->SetSpawnParams(spawnParams);
+	handle->SetSpawnParams(spawnParams, geom);
 }
 
-SpawnParams ParticleEmitterInterop::GetSpawnParams(IParticleEmitter *handle)
+void ParticleEmitterInterop::GetSpawnParamsInternal(IParticleEmitter *handle, SpawnParams &spawnParams)
 {
-	IParticleEmitter *emitter = handle;
-	if (!emitter)
-	{
-		NullReferenceException("Instance object is invalid.").Throw();
-	}
-	SpawnParams params;
-	emitter->GetSpawnParams(params);
-	return params;
+	handle->GetSpawnParams(spawnParams);
 }
 
-void ParticleEmitterInterop::SetLocation(IParticleEmitter *handle, QuatTS loc)
+void ParticleEmitterInterop::SetEntity(IParticleEmitter *handle, IEntity *pEntity, int nSlot)
 {
-	IParticleEmitter *emitter = handle;
-	if (!emitter)
-	{
-		NullReferenceException("Instance object is invalid.").Throw();
-	}
+	handle->SetEntity(pEntity, nSlot);
+}
 
-	emitter->SetLocation(loc);
+void ParticleEmitterInterop::SetLocation(IParticleEmitter *handle, const QuatTS &loc)
+{
+	handle->SetLocation(loc);
+}
+
+void ParticleEmitterInterop::SetTarget(IParticleEmitter *handle, const ParticleTarget &target)
+{
+	handle->SetTarget(target);
+}
+
+void ParticleEmitterInterop::EmitParticle(IParticleEmitter *handle, EmitParticleData* pData)
+{
+	handle->EmitParticle(pData);
+}
+
+void ParticleEmitterInterop::GetAttachedEntity(IParticleEmitter *handle, IEntity *&entityHandle, int &slot)
+{
+	entityHandle = gEnv->pEntitySystem->GetEntity(handle->GetAttachedEntityId());
+	slot = handle->GetAttachedEntitySlot();
 }
 
 uint ParticleEmitterInterop::GetEmitterFlags(IParticleEmitter *handle)
 {
-	IParticleEmitter *emitter = handle;
-	if (!emitter)
-	{
-		NullReferenceException("Instance object is invalid.").Throw();
-	}
-
-	return emitter->GetEmitterFlags();
+	return handle->GetEmitterFlags();
 }
 
 void ParticleEmitterInterop::SetEmitterFlags(IParticleEmitter *handle, uint flags)
 {
-	IParticleEmitter *emitter = handle;
-	if (!emitter)
-	{
-		NullReferenceException("Instance object is invalid.").Throw();
-	}
-
-	emitter->SetEmitterFlags(flags);
+	handle->SetEmitterFlags(flags);
 }

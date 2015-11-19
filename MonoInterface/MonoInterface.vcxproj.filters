@@ -560,6 +560,9 @@
     <ClInclude Include="Interops\AttachmentProxy.h">
       <Filter>Interops\Engine\Models\Characters\Attachments</Filter>
     </ClInclude>
+    <ClInclude Include="TypeMapChecks\ParticleTypes.h">
+      <Filter>TypeMapChecks</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -789,9 +792,6 @@
       <Filter>Interops</Filter>
     </ClCompile>
     <ClCompile Include="TypeMapChecks\RenderParameters.cpp">
-      <Filter>TypeMapChecks</Filter>
-    </ClCompile>
-    <ClCompile Include="TypeMapChecks\SpawnParams.cpp">
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
     <ClCompile Include="Interops\ActionMapping.cpp">
