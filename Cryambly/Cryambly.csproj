@@ -75,6 +75,7 @@
   <ItemGroup>
     <Compile Include="Defaults.cs" />
     <Compile Include="Engine\Audio\AudioSystemImplementation.cs" />
+    <Compile Include="Engine\Audio\AudioSystemImplementationAttribute.cs" />
     <Compile Include="Engine\ConsoleFlags.cs" />
     <Compile Include="Engine\ConsoleVariable.cs" />
     <Compile Include="Engine\CryAction\GameTypeInfo.cs" />
@@ -569,6 +570,7 @@
     <Compile Include="Mathematics\Vectors\Vector3Int32.cs" />
     <Compile Include="NativeInvocationAttributes.cs" />
     <Compile Include="RunTime\DefaultInitializationStages.cs" />
+    <Compile Include="RunTime\Registration\AudioSystemImplementations.cs" />
     <Compile Include="RunTime\Registration\EntityRegistry.cs" />
     <Compile Include="RunTime\Registration\FlowNodeTypeRegistry.cs" />
     <Compile Include="RunTime\Registration\NamespaceDoc.cs" />
