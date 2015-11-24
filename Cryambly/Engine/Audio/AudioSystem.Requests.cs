@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using CryCil.Annotations;
 using CryCil.Engine.DebugServices;
 using CryCil.RunTime.Registration;
 
@@ -90,10 +91,28 @@ namespace CryCil.Engine.Audio
 			var consoleVariable = CryConsole.GetVariable("s_AudioSystemImplementationName");
 			consoleVariable.ValueString = name;
 		}
+		/// <summary>
+		/// Reserves an identifier for an audio object.
+		/// </summary>
+		/// <remarks>
+		/// <para>
+		/// There is no documentation available about reservation of identifiers and there are no known use
+		/// cases.
+		/// </para>
+		/// <para>Right now it's recommended to pass references to static fields.</para>
+		/// </remarks>
+		/// <param name="id">  Reference to the identifier to reserve.</param>
+		/// <param name="name">Name to associated with the reserved identifier.</param>
+		public static void ReserveAudioObjectId(ref uint id, [CanBeNull] string name)
+		{
+			RequestReserveAudioId(ref id, name);
+		}
 		#endregion
 		#region Utilities
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void RequestSetImpl(IntPtr implHandle);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void RequestReserveAudioId(ref uint id, string name);
 		#endregion
 	}
 }
