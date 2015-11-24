@@ -8,7 +8,7 @@ namespace CryCil.Engine.Audio
 	public abstract class AudioSystemImplementation
 	{
 		#region Fields
-		private readonly IntPtr handle;
+		private IntPtr handle;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -22,6 +22,7 @@ namespace CryCil.Engine.Audio
 		internal IntPtr Handle
 		{
 			get { return this.handle; }
+			set { this.handle = value; }
 		}
 		#endregion
 		#region Construction
