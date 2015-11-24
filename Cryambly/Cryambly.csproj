@@ -74,6 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Defaults.cs" />
+    <Compile Include="Engine\Audio\AudioSystemImplementation.cs" />
     <Compile Include="Engine\ConsoleFlags.cs" />
     <Compile Include="Engine\ConsoleVariable.cs" />
     <Compile Include="Engine\CryAction\GameTypeInfo.cs" />
