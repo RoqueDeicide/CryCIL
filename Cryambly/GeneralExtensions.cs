@@ -650,5 +650,31 @@ namespace CryCil
 			return (T)(object)info.CreateDelegate(typeof(T));
 		}
 		#endregion
+		#region Constructors
+		/// <summary>
+		/// Indicates whether one can create a default instance of this type.
+		/// </summary>
+		/// <param name="type">This type.</param>
+		/// <returns>True, if <paramref name="type"/> is a value-type or a reference type that has defined public parameterless constructor.</returns>
+		public static bool HasDefaultConstructor(this Type type)
+		{
+			return type.IsValueType || type.GetConstructor(Type.EmptyTypes) != null;
+		}
+		/// <summary>
+		/// Determines whether this type contains a constructor that accepts parameters of specified types.
+		/// </summary>
+		/// <param name="type">This type.</param>
+		/// <param name="parameterTypes">Array of types of respective parameters.</param>
+		/// <returns>True, if this type defines public constructor that accepts parameters of specified types.</returns>
+		public static bool HasConstructor(this Type type, params Type[] parameterTypes)
+		{
+			if (parameterTypes.IsNullOrEmpty())
+			{
+				return type.HasDefaultConstructor();
+			}
+
+			return type.GetConstructor(parameterTypes) != null;
+		}
+		#endregion
 	}
 }
