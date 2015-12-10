@@ -549,6 +549,7 @@
     </ClCompile>
     <ClCompile Include="Testing\TestStart.cpp" />
     <ClCompile Include="ThunkTables.cpp" />
+    <ClCompile Include="TypeMapChecks\AudioTypes.cpp" />
     <ClCompile Include="TypeMapChecks\CharacterTypes.cpp" />
     <ClCompile Include="TypeMapChecks\CryName.cpp" />
     <ClCompile Include="TypeMapChecks\DebugTypes.cpp" />
