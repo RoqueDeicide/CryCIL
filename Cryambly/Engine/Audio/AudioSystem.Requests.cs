@@ -107,12 +107,56 @@ namespace CryCil.Engine.Audio
 		{
 			RequestReserveAudioId(ref id, name);
 		}
+		/// <summary>
+		/// Requests a set of audio to be preloaded.
+		/// </summary>
+		/// <param name="id">Identifier of the set. Can be acquired through <see cref="TryGetPreloadRequestId"/>.</param>
+		public static void PreloadAudioRequest(uint id)
+		{
+			RequestPreloadAudioRequest(id);
+		}
+		/// <summary>
+		/// Requests a set of audio to be preloaded.
+		/// </summary>
+		/// <param name="name">Name of the set.</param>
+		public static void PreloadAudioRequest(string name)
+		{
+			uint id;
+			if (TryGetPreloadRequestId(name, out id))
+			{
+				RequestPreloadAudioRequest(id);
+			}
+		}
+		/// <summary>
+		/// Requests a set of audio to be unloaded.
+		/// </summary>
+		/// <param name="id">Identifier of the set. Can be acquired through <see cref="TryGetPreloadRequestId"/>.</param>
+		public static void UnloadAudioRequest(uint id)
+		{
+			RequestUnloadAudioRequest(id);
+		}
+		/// <summary>
+		/// Requests a set of audio to be unloaded.
+		/// </summary>
+		/// <param name="name">Name of the set.</param>
+		public static void UnloadAudioRequest(string name)
+		{
+			uint id;
+			if (TryGetPreloadRequestId(name, out id))
+			{
+				RequestUnloadAudioRequest(id);
+			}
+		}
 		#endregion
 		#region Utilities
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void RequestSetImpl(IntPtr implHandle);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void RequestReserveAudioId(ref uint id, string name);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void RequestPreloadAudioRequest(uint id);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void RequestUnloadAudioRequest(uint id);
 		#endregion
 	}
 }

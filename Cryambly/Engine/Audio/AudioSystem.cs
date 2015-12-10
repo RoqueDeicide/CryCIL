@@ -21,11 +21,23 @@ namespace CryCil.Engine.Audio
 		
 		#endregion
 		#region Interface
-		
+		/// <summary>
+		/// Attempts to acquire the identifier of the audio preload request.
+		/// </summary>
+		/// <param name="name">Name of the preload request.</param>
+		/// <param name="id">Resultant identifier.</param>
+		/// <returns>True, if preload request exists and valid identifier was assigned to <paramref name="id"/>.</returns>
+		public static bool TryGetPreloadRequestId(string name, out uint id)
+		{
+			id = 0;
+			return !name.IsNullOrEmpty() && GetPreloadRequestId(name, out id);
+		}
 		#endregion
 		#region Utilities
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern IntPtr CreateNativeImplementationObject(AudioSystemImplementation managedObject);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern bool GetPreloadRequestId(string name, out uint id);
 		virtual void					PushRequest(SAudioRequest const& rAudioRequestData) = 0;
 		virtual void					AddRequestListener(void (*func)(SAudioRequestInfo const* const), void* const pObjectToListenTo, EAudioRequestType const requestType = eART_AUDIO_ALL_REQUESTS, TATLEnumFlagsType const specificRequestMask = ALL_AUDIO_REQUEST_SPECIFIC_TYPE_FLAGS) = 0;
 		virtual void					RemoveRequestListener(void (*func)(SAudioRequestInfo const* const), void* const pObjectToListenTo) = 0;
