@@ -94,38 +94,15 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Actor.h" />
     <ClInclude Include="AllInterops.h" />
-    <ClInclude Include="EntityEventHandling.h" />
-    <ClInclude Include="Interops\Entities\Entity.h" />
-    <ClInclude Include="Interops\Entities\GameObject.h" />
-    <ClInclude Include="Interops\GameLogic\ActorSystem.h" />
     <ClInclude Include="Interops\GameLogic\GameRules.h" />
     <ClInclude Include="Interops\StaticObjects\CMesh.h" />
-    <ClInclude Include="Interops\StaticObjects\StaticObject.h" />
-    <ClInclude Include="ManagedGameLogic\ManagedEntity.h" />
-    <ClInclude Include="MonoEntity.h" />
-    <ClInclude Include="NativeEntity.h" />
-    <ClInclude Include="MonoEntityClass.h" />
-    <ClInclude Include="MonoEntityEventHandler.h" />
-    <ClInclude Include="MonoEntityPropertyHandler.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Actor.cpp" />
-    <ClCompile Include="EntityEventHandling.cpp" />
-    <ClCompile Include="Interops\Entities\Entity.cpp" />
-    <ClCompile Include="Interops\Entities\GameObject.cpp" />
-    <ClCompile Include="Interops\GameLogic\ActorSystem.cpp" />
     <ClCompile Include="Interops\GameLogic\GameRules.cpp" />
     <ClCompile Include="Interops\StaticObjects\CMesh.cpp" />
-    <ClCompile Include="Interops\StaticObjects\StaticObject.cpp" />
-    <ClCompile Include="ManagedGameLogic\ManagedEntity.cpp" />
-    <ClCompile Include="MonoEntity.cpp" />
-    <ClCompile Include="MonoEntityClass.cpp" />
-    <ClCompile Include="MonoEntityPropertyHandler.cpp" />
-    <ClCompile Include="NativeEntity.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
