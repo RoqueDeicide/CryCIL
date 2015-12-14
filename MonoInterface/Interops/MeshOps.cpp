@@ -3,72 +3,84 @@
 
 void MeshOpsInterop::OnRunTimeInitialized()
 {
-	REGISTER_METHOD(CombineInternal);
-	REGISTER_METHOD(IntersectInternal);
-	REGISTER_METHOD(SubtractInternal);
+	REGISTER_METHOD(CsgOpInternal);
 }
 
-List<Face> *MeshOpsInterop::CombineInternal(List<Face> *faces1, List<Face> *faces2)
+void CombineInternal(const List<Face> &faces1, const List<Face> &faces2, List<Face> &faces)
 {
-	BspNode *node1 = new BspNode(faces1);
-	BspNode *node2 = new BspNode(faces2);
+	BspNode node1(faces1);
+	BspNode node2(faces2);
 
-	node1->Unite(node2);
+	node1.Unite(&node2);
 
-	List<Face> *result = node1->AllFaces();
-
-	delete node1;
-	delete node2;
-
-	delete faces1;
-	delete faces2;
-
-	return result;
+	faces.AddRange(node1.AllFaces());
 }
 
-List<Face> *MeshOpsInterop::IntersectInternal(List<Face> *faces1, List<Face> *faces2)
+void IntersectInternal(const List<Face> &faces1, const List<Face> &faces2, List<Face> &faces)
 {
-	BspNode *node1 = new BspNode(faces1);
-	BspNode *node2 = new BspNode(faces2);
+	BspNode node1(faces1);
+	BspNode node2(faces2);
 
-	node1->Invert();				// Cut geometry that is not common for the meshes.
-	node2->CutTreeOut(node1);		//
-	node2->Invert();				//
-	node1->CutTreeOut(node2);		//
+	node1.Invert();				//
+	node2.CutTreeOut(node1);	// Cut geometry that is not common for the meshes.
+	node2.Invert();				//
+	node1.CutTreeOut(node2);	//
 	// Clean up remains.
-	node2->CutTreeOut(node1);
+	node2.CutTreeOut(node1);
 	// Combine geometry.
-	node1->AddFaces(node2->AllFaces());
+	node1.AddFaces(*node2.AllFaces());
 	// Invert everything.
-	node1->Invert();
+	node1.Invert();
 
-	List<Face> *result = node1->AllFaces();
-
-	delete node1;
-	delete node2;
-
-	delete faces1;
-	delete faces2;
-
-	return result;
+	faces.AddRange(node1.AllFaces());
 }
 
-List<Face> *MeshOpsInterop::SubtractInternal(List<Face> *faces1, List<Face> *faces2)
+void SubtractInternal(const List<Face> &faces1, const List<Face> &faces2, List<Face> &faces)
 {
-	BspNode *node1 = new BspNode(faces1);
-	BspNode *node2 = new BspNode(faces2);
+	BspNode node1(faces1);
+	BspNode node2(faces2);
 
-	node1->Invert();
-	node1->Unite(node2);
-	node1->Invert();
+	node1.Invert();
+	node1.Unite(&node2);
+	node1.Invert();
 
-	List<Face> *result = node1->AllFaces();
+	faces.AddRange(node1.AllFaces());
+}
 
-	delete node1;
-	delete node2;
+void MeshOpsInterop::DeleteListItems(Face* facesPtr)
+{
+	if (!facesPtr)
+	{
+		return;
+	}
 
-	delete faces1;
-	delete faces2;
+	delete[] facesPtr;
+}
 
-	return result;
+Face *MeshOpsInterop::CsgOpInternal(Face* facesPtr1, int faceCount1, Face* facesPtr2, int faceCount2, int op,
+									int &faceCount)
+{
+	List<Face> faces1(facesPtr1, faceCount1);
+	List<Face> faces2(facesPtr2, faceCount2);
+
+	List<Face> faces;
+	switch (op)
+	{
+	case CsgOpCode::Combine:
+		CombineInternal(faces1, faces2, faces);
+		break;
+	case CsgOpCode::Intersect:
+		IntersectInternal(faces1, faces2, faces);
+		break;
+	case CsgOpCode::Subtract:
+		SubtractInternal(faces1, faces2, faces);
+		break;
+	default:
+		break;
+	}
+
+	faces1.Detach(faceCount1);
+	faces2.Detach(faceCount2);
+
+	return faces.Detach(faceCount);
 }

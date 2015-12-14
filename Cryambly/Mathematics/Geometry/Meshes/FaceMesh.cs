@@ -8,12 +8,11 @@ using CryCil.Geometry.Csg.Base;
 
 namespace CryCil.Geometry
 {
-	[StructLayout(LayoutKind.Sequential)]
-	internal struct NativeListHeader
+	internal enum CsgOpCode
 	{
-		internal IntPtr ElementsPtr;
-		internal int Length;
-		internal int Capacity;
+		Combine,
+		Intersect,
+		Subtract
 	}
 	/// <summary>
 	/// Represents a triangular mesh where each face is a triangle with it's own set of vertices.
@@ -62,13 +61,22 @@ namespace CryCil.Geometry
 		/// </summary>
 		/// <param name="anotherMesh">Another mesh.</param>
 		/// <seealso cref="ConstructiveSolidGeometry.Union"/>
-		/// <exception cref="OutOfMemoryException">Unable to allocate native memory block.</exception>
+		/// <exception cref="OverflowException">The array is multidimensional and contains more than <see cref="F:System.Int32.MaxValue" /> elements.</exception>
 		public virtual void Combine(FaceMesh anotherMesh)
 		{
 			if (NativeCsg)
 			{
-				this.Faces = FromNativeFaceList(CombineInternal(ToNativeFaceList(this.Faces),
-																ToNativeFaceList(anotherMesh.Faces)));
+				var theseFaces = this.Faces.ToArray();
+				var otherFaces = anotherMesh.Faces.ToArray();
+				fixed (FullFace* theseFacesPtr = theseFaces)
+				fixed (FullFace* otherFacesPtr = otherFaces)
+				{
+					int faceCount;
+					var facesPtr = CsgOpInternal(theseFacesPtr, theseFaces.Length, otherFacesPtr, otherFaces.Length,
+												 CsgOpCode.Combine, out faceCount);
+					this.Faces = ToList(facesPtr, faceCount);
+					DeleteListItems(facesPtr);
+				}
 			}
 			else
 			{
@@ -83,13 +91,22 @@ namespace CryCil.Geometry
 		/// </summary>
 		/// <param name="anotherMesh">Another mesh.</param>
 		/// <seealso cref="ConstructiveSolidGeometry.Intersection"/>
-		/// <exception cref="OutOfMemoryException">Unable to allocate native memory block.</exception>
+		/// <exception cref="OverflowException">The array is multidimensional and contains more than <see cref="F:System.Int32.MaxValue" /> elements.</exception>
 		public virtual void Intersect(FaceMesh anotherMesh)
 		{
 			if (NativeCsg)
 			{
-				this.Faces = FromNativeFaceList(IntersectInternal(ToNativeFaceList(this.Faces),
-																  ToNativeFaceList(anotherMesh.Faces)));
+				var theseFaces = this.Faces.ToArray();
+				var otherFaces = anotherMesh.Faces.ToArray();
+				fixed (FullFace* theseFacesPtr = theseFaces)
+				fixed (FullFace* otherFacesPtr = otherFaces)
+				{
+					int faceCount;
+					var facesPtr = CsgOpInternal(theseFacesPtr, theseFaces.Length, otherFacesPtr, otherFaces.Length,
+												 CsgOpCode.Intersect, out faceCount);
+					this.Faces = ToList(facesPtr, faceCount);
+					DeleteListItems(facesPtr);
+				}
 			}
 			else
 			{
@@ -114,13 +131,22 @@ namespace CryCil.Geometry
 		/// </summary>
 		/// <param name="anotherMesh">Another mesh.</param>
 		/// <seealso cref="ConstructiveSolidGeometry.Subtract"/>
-		/// <exception cref="OutOfMemoryException">Unable to allocate native memory block.</exception>
+		/// <exception cref="OverflowException">The array is multidimensional and contains more than <see cref="F:System.Int32.MaxValue" /> elements.</exception>
 		public virtual void Subtract(FaceMesh anotherMesh)
 		{
 			if (NativeCsg)
 			{
-				this.Faces = FromNativeFaceList(SubtractInternal(ToNativeFaceList(this.Faces),
-																 ToNativeFaceList(anotherMesh.Faces)));
+				var theseFaces = this.Faces.ToArray();
+				var otherFaces = anotherMesh.Faces.ToArray();
+				fixed (FullFace* theseFacesPtr = theseFaces)
+				fixed (FullFace* otherFacesPtr = otherFaces)
+				{
+					int faceCount;
+					var facesPtr = CsgOpInternal(theseFacesPtr, theseFaces.Length, otherFacesPtr, otherFaces.Length,
+												 CsgOpCode.Subtract, out faceCount);
+					this.Faces = ToList(facesPtr, faceCount);
+					DeleteListItems(facesPtr);
+				}
 			}
 			else
 			{
@@ -143,44 +169,26 @@ namespace CryCil.Geometry
 		}
 		#endregion
 		#region Utilities
-		/// <exception cref="OutOfMemoryException">Unable to allocate native memory block.</exception>
-		internal static IntPtr ToNativeFaceList(List<FullFace> faces)
+		private static List<FullFace> ToList(FullFace* facesPtr, int faceCount)
 		{
-			// Allocate list header object in native memory.
-			NativeListHeader* listHeader = (NativeListHeader*)
-				CryMarshal.Allocate((ulong)Marshal.SizeOf(typeof(NativeListHeader))).ToPointer();
-			// Assign length and capacity.
-			listHeader->Length = faces.Count;
-			listHeader->Capacity = faces.Count;
-			// Allocate memory for faces.
-			listHeader->ElementsPtr =
-				CryMarshal.Allocate((ulong)(Marshal.SizeOf(typeof(FullFace)) * faces.Count));
-			// Copy faces to the list.
-			FullFace* facesPtr = (FullFace*)listHeader->ElementsPtr.ToPointer();
-			for (int i = 0; i < faces.Count; i++)
+			if (faceCount <= 0 || facesPtr == null)
 			{
-				facesPtr[i] = faces[i];
+				return null;
 			}
-			return new IntPtr(listHeader);
-		}
-		internal static List<FullFace> FromNativeFaceList(IntPtr facesPtr)
-		{
-			NativeListHeader* listHeader = (NativeListHeader*)facesPtr;
-			List<FullFace> list = new List<FullFace>(listHeader->Length);
-			FullFace* faces = (FullFace*)listHeader->ElementsPtr;
-			for (int i = 0; i < listHeader->Length; i++)
+
+			var faces = new List<FullFace>(faceCount);
+			for (int i = 0; i < faceCount; i++)
 			{
-				list.Add(faces[i]);
+				faces.Add(facesPtr[i]);
 			}
-			CryMarshal.Free(facesPtr);
-			return list;
+
+			return faces;
 		}
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		internal static extern IntPtr CombineInternal(IntPtr facesPtr1, IntPtr facesPtr2);
+		private static extern void DeleteListItems(FullFace* facesPtr);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		internal static extern IntPtr IntersectInternal(IntPtr facesPtr1, IntPtr facesPtr2);
-		[MethodImpl(MethodImplOptions.InternalCall)]
-		internal static extern IntPtr SubtractInternal(IntPtr facesPtr1, IntPtr facesPtr2);
+		private static extern FullFace* CsgOpInternal(FullFace* facesPtr1, int faceCount1, FullFace* facesPtr2,
+													   int faceCount2, CsgOpCode op, out int faceCount);
 		#endregion
 	}
 }

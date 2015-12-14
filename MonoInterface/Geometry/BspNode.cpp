@@ -175,9 +175,9 @@ List<Face> *BspNode::AllFaces()
 	return list;
 }
 
-void BspNode::AddFaces(List<Face> *faces)
+void BspNode::AddFaces(const List<Face> &faces)
 {
-	if (!faces || faces->Length == 0)
+	if (faces.Length == 0)
 	{
 		return;
 	}
@@ -185,14 +185,14 @@ void BspNode::AddFaces(List<Face> *faces)
 	// heuristics.
 	if (!NumberValid(this->Plane.d))
 	{
-		this->Plane = faces->At(0).GetPlane();
+		this->Plane = faces[0].GetPlane();
 	}
 	// Split elements into appropriate groups.
 	List<Face> *frontalElements = new List<Face>();
 	List<Face> *backElements = new List<Face>();
-	for (int i = 0; i < faces->Length; i++)
+	for (int i = 0; i < faces.Length; i++)
 	{
-		faces->At(0).Split
+		faces[0].Split
 		(
 			this->Plane,
 			this->Faces,			// Coplanars are assigned to this node.
@@ -239,7 +239,7 @@ void BspNode::Invert()
 	this->Back = temp;
 }
 
-List<Face> *BspNode::FilterList(List<Face> *faces)
+List<Face> *BspNode::FilterList(List<Face> *faces) const
 {
 	if (!NumberValid(this->Plane.d))
 	{
@@ -272,10 +272,10 @@ List<Face> *BspNode::FilterList(List<Face> *faces)
 	return fronts;
 }
 
-void BspNode::CutTreeOut(BspNode *node)
+void BspNode::CutTreeOut(const BspNode &node)
 {
 	List<Face> *temp = this->Faces;
-	this->Faces = node->FilterList(this->Faces);
+	this->Faces = node.FilterList(this->Faces);
 	delete temp;
 	if (this->Front) this->Front->CutTreeOut(node);
 	if (this->Back) this->Back->CutTreeOut(node);
@@ -284,14 +284,14 @@ void BspNode::CutTreeOut(BspNode *node)
 void BspNode::Unite(BspNode *node)
 {
 	// Cut overlapping geometry.
-	this->CutTreeOut(node);
-	node->CutTreeOut(this);
+	this->CutTreeOut(*node);
+	node->CutTreeOut(*this);
 	// Remove overlapping coplanar faces.
 	node->Invert();
-	node->CutTreeOut(this);
+	node->CutTreeOut(*this);
 	node->Invert();
 	// Combine geometry.
-	this->AddFaces(node->AllFaces());
+	this->AddFaces(*node->AllFaces());
 }
 
 void BspNode::AssignBranch(BspNode *&branch, List<Face> *faces)
@@ -300,15 +300,13 @@ void BspNode::AssignBranch(BspNode *&branch, List<Face> *faces)
 	{
 		branch = new BspNode();
 	}
-	branch->AddFaces(faces);
+	branch->AddFaces(*faces);
 }
 
-BspNode::BspNode(List<Face> *faces)
+BspNode::BspNode(const List<Face> &faces)
 	: Plane(Vec3Constants<float>::fVec3_Zero, F32NAN_SAFE)
 {
 	this->Faces = new List<Face>();
-	if (faces)
-	{
-		this->AddFaces(faces);
-	}
+	
+	this->AddFaces(faces);
 }

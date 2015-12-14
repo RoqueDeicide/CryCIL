@@ -99,10 +99,13 @@ struct BspNode
 
 	BspNode()
 		: Plane(Vec3Constants<float>::fVec3_Zero, F32NAN_SAFE)
+		, Front(nullptr)
+		, Back(nullptr)
 	{
 		this->Faces = new List<Face>();
 	}
-	BspNode(List<Face> *faces);
+	explicit BspNode(const List<Face> &faces);
+
 	~BspNode()
 	{
 		this->Plane.d = F32NAN_SAFE;
@@ -114,13 +117,13 @@ struct BspNode
 	//! Gets the list of all faces in this BSP tree.
 	List<Face> *AllFaces();
 	//! Adds a bunch of faces to this BSP tree.
-	void AddFaces(List<Face> *faces);
+	void AddFaces(const List<Face> &faces);
 	//! Inverts this BSP node.
 	void Invert();
 	//! Cuts given elements and removes parts that end up inside this tree.
-	List<Face> *FilterList(List<Face> *faces);
+	List<Face> *FilterList(List<Face> *faces) const;
 	//! Cuts elements inside this tree and removes ones that end up inside another one.
-	void CutTreeOut(BspNode *node);
+	void CutTreeOut(const BspNode &node);
 	//! Adds given BSP tree to this one.
 	void Unite(BspNode *node);
 private:
