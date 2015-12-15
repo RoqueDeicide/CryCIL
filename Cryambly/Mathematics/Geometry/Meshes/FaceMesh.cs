@@ -75,7 +75,8 @@ namespace CryCil.Geometry
 				{
 					First = new FullVertex(cryMesh, face.First),
 					Second = new FullVertex(cryMesh, face.Second),
-					Third = new FullVertex(cryMesh, face.Third)
+					Third = new FullVertex(cryMesh, face.Third),
+					SubsetIndex = face.Subset
 				});
 			}
 		}
