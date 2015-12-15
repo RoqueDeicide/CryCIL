@@ -776,6 +776,7 @@ TYPE_MIRROR enum PE_Status
 
 inline void CheckPhysicsTypeEnumerations()
 {
+#undef CHECK_ENUM
 #define CHECK_ENUM(x) CHECK_ENUM_TYPED(PE_Params, x)
 
 	CHECK_ENUM(ePE_params_pos);

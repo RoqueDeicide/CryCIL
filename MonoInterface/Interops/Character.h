@@ -74,11 +74,11 @@ struct CharacterInterop : IMonoInterop<true, true>
 	static bool LMG_LoadSynchronously(uint filePathCRC, IAnimationSet *pAnimationSet);
 	static EReloadCAFResult ReloadCAF(mono::string szFilePathCAF);
 	static int ReloadLMG(mono::string szFilePathCAF);
-	static void AddFrameTicks(ulong nTicks);
-	static void AddFrameSyncTicks(ulong nTicks);
+	static void AddFrameTicks(uint64 nTicks);
+	static void AddFrameSyncTicks(uint64 nTicks);
 	static void ResetFrameTicks();
-	static ulong NumFrameTicks();
-	static ulong NumFrameSyncTicks();
+	static uint64 NumFrameTicks();
+	static uint64 NumFrameSyncTicks();
 	static uint NumCharacters();
 
 	static uint GetNumInstancesPerModel(IDefaultSkeleton *rIDefaultSkeleton);
