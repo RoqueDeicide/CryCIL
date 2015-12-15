@@ -128,8 +128,8 @@ void Face::Split(Plane splitter, List<Face> *frontCoplanarFaces, List<Face> *bac
 			}
 			// Create front and back triangle(s) from vertices from
 			// corresponding lists.
-			if (frontFaces) Face::TriangulateLinearly(fvs, frontFaces);
-			if (backFaces) Face::TriangulateLinearly(bvs, backFaces);
+			if (frontFaces) Face::TriangulateLinearly(fvs, frontFaces, this->SubsetIndex);
+			if (backFaces) Face::TriangulateLinearly(bvs, backFaces, this->SubsetIndex);
 		}
 		break;
 	}
@@ -138,7 +138,7 @@ void Face::Split(Plane splitter, List<Face> *frontCoplanarFaces, List<Face> *bac
 	}
 }
 
-void Face::TriangulateLinearly(List<Vertex> &vertices, List<Face> *faceCollection)
+void Face::TriangulateLinearly(List<Vertex> &vertices, List<Face> *faceCollection, int subsetIndex)
 {
 	if (vertices.Length < 3)
 	{
@@ -146,13 +146,13 @@ void Face::TriangulateLinearly(List<Vertex> &vertices, List<Face> *faceCollectio
 	}
 	if (vertices.Length == 3)
 	{
-		faceCollection->Add(Face(vertices));
+		faceCollection->Add(Face(vertices, subsetIndex));
 		return;
 	}
 	int triangleCount = vertices.Length - 2;
 	for (int i = 0; i < triangleCount; i++)
 	{
-		faceCollection->Add(Face(vertices[0], vertices[i + 1], vertices[i + 2]));
+		faceCollection->Add(Face(vertices[0], vertices[i + 1], vertices[i + 2], subsetIndex));
 	}
 }
 

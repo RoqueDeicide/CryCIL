@@ -23,6 +23,10 @@ namespace CryCil.Geometry
 		/// </summary>
 		public FullVertex Third;
 		/// <summary>
+		/// Zero-based index of the mesh subset this face belongs to.
+		/// </summary>
+		public int SubsetIndex;
+		/// <summary>
 		/// Gets a plane this face is located on.
 		/// </summary>
 		public Plane Plane
@@ -201,8 +205,8 @@ namespace CryCil.Geometry
 							bvs.Add(splittingVertex);
 						}
 						// Create front and back triangle(s) from vertices from corresponding lists.
-						if (frontFaces != null) TriangulateLinearly(fvs, false, frontFaces);
-						if (backFaces != null) TriangulateLinearly(bvs, false, backFaces);
+						if (frontFaces != null) TriangulateLinearly(fvs, false, frontFaces, this.SubsetIndex);
+						if (backFaces != null) TriangulateLinearly(bvs, false, backFaces, this.SubsetIndex);
 					}
 					break;
 			}
@@ -227,12 +231,14 @@ namespace CryCil.Geometry
 		/// Indicates whether coplanarity of given polygon must be ensured. Pass false only if know, that
 		/// your polygon is on one plane.
 		/// </param>
+		/// <param name="subsetIndex">Index of the mesh subset to add the polygons to.</param>
 		/// <returns>An array of triangles.</returns>
 		/// <exception cref="ArgumentException">
 		/// Vertices that describe a border of a polygon for triangulation are not located on the same
 		/// plane.
 		/// </exception>
-		public static FullFace[] TriangulateLinearly(IList<FullVertex> vertices, bool checkForCoplanarity)
+		public static FullFace[] TriangulateLinearly(IList<FullVertex> vertices, bool checkForCoplanarity,
+			int subsetIndex)
 		{
 			if (vertices.IsNullOrEmpty())
 			{
@@ -259,7 +265,8 @@ namespace CryCil.Geometry
 				{
 					First = vertices[0],
 					Second = vertices[i + 1],
-					Third = vertices[i + 2]
+					Third = vertices[i + 2],
+					SubsetIndex = subsetIndex
 				};
 			}
 			return result;
@@ -275,12 +282,13 @@ namespace CryCil.Geometry
 		/// your polygon is on one plane.
 		/// </param>
 		/// <param name="polygons">           The list of polygon to which to add the triangles.</param>
+		/// <param name="subsetIndex">Index of the mesh subset to add the polygons to.</param>
 		/// <exception cref="ArgumentException">
 		/// Vertices that describe a border of a polygon for triangulation are not located on the same
 		/// plane.
 		/// </exception>
 		public static void TriangulateLinearly(IList<FullVertex> vertices, bool checkForCoplanarity,
-											   ICollection<FullFace> polygons)
+											   ICollection<FullFace> polygons, int subsetIndex)
 		{
 			if (vertices.IsNullOrEmpty())
 			{
@@ -307,7 +315,8 @@ namespace CryCil.Geometry
 				{
 					First = vertices[0],
 					Second = vertices[i + 1],
-					Third = vertices[i + 2]
+					Third = vertices[i + 2],
+					SubsetIndex = subsetIndex
 				});
 			}
 		}

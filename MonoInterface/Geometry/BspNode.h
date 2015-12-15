@@ -35,30 +35,35 @@ struct Vertex
 struct Face
 {
 	Vertex Vertices[3];						//!< Vertices that comprise this face.
+	int SubsetIndex;
 
 	Face()
 	{
 		this->Vertices[0] = Vertex();
 		this->Vertices[1] = Vertex();
 		this->Vertices[2] = Vertex();
+		this->SubsetIndex = 0;
 	}
-	Face(Vertex *vertices)
+	Face(Vertex *vertices, int subsetIndex)
 	{
 		this->Vertices[0] = vertices[0];
 		this->Vertices[1] = vertices[1];
 		this->Vertices[2] = vertices[2];
+		this->SubsetIndex = subsetIndex;
 	}
-	Face(List<Vertex> &vertices)
+	Face(List<Vertex> &vertices, int subsetIndex)
 	{
 		this->Vertices[0] = vertices[0];
 		this->Vertices[1] = vertices[1];
 		this->Vertices[2] = vertices[2];
+		this->SubsetIndex = subsetIndex;
 	}
-	Face(Vertex vertex0, Vertex vertex1, Vertex vertex2)
+	Face(Vertex vertex0, Vertex vertex1, Vertex vertex2, int subsetIndex)
 	{
 		this->Vertices[0] = vertex0;
 		this->Vertices[1] = vertex1;
 		this->Vertices[2] = vertex2;
+		this->SubsetIndex = subsetIndex;
 	}
 
 	//! Calculates the plane this face is on.
@@ -86,7 +91,7 @@ struct Face
 	//! @param vertices       A pointer to an array of vertices.
 	//! @param vertexCount    Number of vertices.
 	//! @param faceCollection A collection of faces to put resultant faces into.
-	static void TriangulateLinearly(List<Vertex> &vertices, List<Face> *faceCollection);
+	static void TriangulateLinearly(List<Vertex> &vertices, List<Face> *faceCollection, int subsetIndex);
 };
 
 //! Represents a node in a BSP tree.
