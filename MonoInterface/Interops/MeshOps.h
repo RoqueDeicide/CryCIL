@@ -4,6 +4,16 @@
 
 #include "Geometry/BspNode.h"
 
+struct CsgOpCode
+{
+	enum
+	{
+		Combine,
+		Intersect,
+		Subtract
+	};
+};
+
 struct MeshOpsInterop : public IMonoInterop<true, true>
 {
 	virtual const char *GetInteropClassName() override { return "FaceMesh"; }
@@ -11,7 +21,6 @@ struct MeshOpsInterop : public IMonoInterop<true, true>
 
 	virtual void OnRunTimeInitialized() override;
 
-	static List<Face> *CombineInternal  (List<Face> *faces1, List<Face> *faces2);
-	static List<Face> *IntersectInternal(List<Face> *faces1, List<Face> *faces2);
-	static List<Face> *SubtractInternal (List<Face> *faces1, List<Face> *faces2);
+	static void DeleteListItems(Face* facesPtr);
+	static Face *CsgOpInternal(Face* facesPtr1, int faceCount1, Face* facesPtr2, int faceCount2, int op, int &faceCount);
 };

@@ -1,15 +1,21 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
 namespace CryCil.Engine.Models.StaticObjects
 {
 	/// <summary>
 	/// This type is a mirror of CryEngine's general purpose mesh class.
 	/// </summary>
+	[StructLayout(LayoutKind.Explicit)]
 	public unsafe struct CryMesh : IEquatable<CryMesh>
 	{
 		#region Fields
-		private readonly CMeshInternals* handle;
+		[FieldOffset(0)] private readonly CMeshInternals* handle;
+		/// <summary>
+		/// An object that provides access to vertex data (aside from UV positions).
+		/// </summary>
+		[FieldOffset(0)] public CryVertexCollection Vertexes;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -30,19 +36,6 @@ namespace CryCil.Engine.Models.StaticObjects
 				this.AssertInstance();
 
 				return new CryMeshFaceCollection(this, this.handle);
-			}
-		}
-		/// <summary>
-		/// Gets the object that provides data that specifies the vertices of this mesh.
-		/// </summary>
-		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
-		public CryVertexCollection Vertexes
-		{
-			get
-			{
-				this.AssertInstance();
-
-				return new CryVertexCollection(this, this.handle);
 			}
 		}
 		/// <summary>
@@ -118,6 +111,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		#endregion
 		#region Construction
 		internal CryMesh(IntPtr handle)
+			: this()
 		{
 			this.handle = (CMeshInternals*)handle.ToPointer();
 		}

@@ -3,116 +3,32 @@
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="MonoEntityClass.h">
-      <Filter>EntitySystem</Filter>
-    </ClInclude>
-    <ClInclude Include="MonoEntityEventHandler.h">
-      <Filter>EntitySystem</Filter>
-    </ClInclude>
-    <ClInclude Include="MonoEntityPropertyHandler.h">
-      <Filter>EntitySystem</Filter>
-    </ClInclude>
-    <ClInclude Include="MonoEntity.h">
-      <Filter>EntitySystem</Filter>
-    </ClInclude>
-    <ClInclude Include="Actor.h">
-      <Filter>ActorSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="NativeEntity.h">
-      <Filter>EntitySystem\Native</Filter>
-    </ClInclude>
-    <ClInclude Include="EntityEventHandling.h">
-      <Filter>EntitySystem</Filter>
-    </ClInclude>
-    <ClInclude Include="Interops\Entities\Entity.h">
-      <Filter>Interops\Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="Interops\Entities\GameObject.h">
-      <Filter>Interops\Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="Interops\GameLogic\ActorSystem.h">
-      <Filter>Interops\Game Logic</Filter>
-    </ClInclude>
     <ClInclude Include="Interops\GameLogic\GameRules.h">
       <Filter>Interops\Game Logic</Filter>
     </ClInclude>
     <ClInclude Include="Interops\StaticObjects\CMesh.h">
       <Filter>Interops\StaticObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Interops\StaticObjects\StaticObject.h">
-      <Filter>Interops\StaticObjects</Filter>
-    </ClInclude>
     <ClInclude Include="AllInterops.h" />
-    <ClInclude Include="ManagedGameLogic\ManagedEntity.h">
-      <Filter>ManagedGameLogic</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="MonoEntityClass.cpp">
-      <Filter>EntitySystem</Filter>
-    </ClCompile>
-    <ClCompile Include="MonoEntityPropertyHandler.cpp">
-      <Filter>EntitySystem</Filter>
-    </ClCompile>
-    <ClCompile Include="MonoEntity.cpp">
-      <Filter>EntitySystem</Filter>
-    </ClCompile>
-    <ClCompile Include="Actor.cpp">
-      <Filter>ActorSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="NativeEntity.cpp">
-      <Filter>EntitySystem\Native</Filter>
-    </ClCompile>
-    <ClCompile Include="EntityEventHandling.cpp">
-      <Filter>EntitySystem</Filter>
-    </ClCompile>
-    <ClCompile Include="Interops\Entities\Entity.cpp">
-      <Filter>Interops\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="Interops\Entities\GameObject.cpp">
-      <Filter>Interops\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="Interops\GameLogic\ActorSystem.cpp">
-      <Filter>Interops\Game Logic</Filter>
-    </ClCompile>
     <ClCompile Include="Interops\GameLogic\GameRules.cpp">
       <Filter>Interops\Game Logic</Filter>
     </ClCompile>
     <ClCompile Include="Interops\StaticObjects\CMesh.cpp">
       <Filter>Interops\StaticObjects</Filter>
     </ClCompile>
-    <ClCompile Include="Interops\StaticObjects\StaticObject.cpp">
-      <Filter>Interops\StaticObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="ManagedGameLogic\ManagedEntity.cpp">
-      <Filter>ManagedGameLogic</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="EntitySystem">
-      <UniqueIdentifier>{f5c2f1b4-f7f2-4f27-be93-8c656a23cdb2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ActorSystem">
-      <UniqueIdentifier>{7519e88b-de7a-4729-919b-85c4612989e9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="EntitySystem\Native">
-      <UniqueIdentifier>{688b9b2f-020f-49e4-ad34-bd78bb1927e2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Interops">
       <UniqueIdentifier>{53346888-7df8-470b-b631-f549bf104199}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Interops\Entities">
-      <UniqueIdentifier>{b72986a0-1186-4c2d-9461-34d62b53b4fe}</UniqueIdentifier>
     </Filter>
     <Filter Include="Interops\Game Logic">
       <UniqueIdentifier>{55fd45df-3f95-4840-8eab-7d7170031ae0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Interops\StaticObjects">
       <UniqueIdentifier>{32b893d5-61d5-4bfc-9231-bf35d3233630}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ManagedGameLogic">
-      <UniqueIdentifier>{f7aae537-016d-424c-abe4-4948a9bb3443}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

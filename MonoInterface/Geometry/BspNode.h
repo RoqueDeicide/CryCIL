@@ -35,30 +35,35 @@ struct Vertex
 struct Face
 {
 	Vertex Vertices[3];						//!< Vertices that comprise this face.
+	int SubsetIndex;
 
 	Face()
 	{
 		this->Vertices[0] = Vertex();
 		this->Vertices[1] = Vertex();
 		this->Vertices[2] = Vertex();
+		this->SubsetIndex = 0;
 	}
-	Face(Vertex *vertices)
+	Face(Vertex *vertices, int subsetIndex)
 	{
 		this->Vertices[0] = vertices[0];
 		this->Vertices[1] = vertices[1];
 		this->Vertices[2] = vertices[2];
+		this->SubsetIndex = subsetIndex;
 	}
-	Face(List<Vertex> &vertices)
+	Face(List<Vertex> &vertices, int subsetIndex)
 	{
 		this->Vertices[0] = vertices[0];
 		this->Vertices[1] = vertices[1];
 		this->Vertices[2] = vertices[2];
+		this->SubsetIndex = subsetIndex;
 	}
-	Face(Vertex vertex0, Vertex vertex1, Vertex vertex2)
+	Face(Vertex vertex0, Vertex vertex1, Vertex vertex2, int subsetIndex)
 	{
 		this->Vertices[0] = vertex0;
 		this->Vertices[1] = vertex1;
 		this->Vertices[2] = vertex2;
+		this->SubsetIndex = subsetIndex;
 	}
 
 	//! Calculates the plane this face is on.
@@ -86,7 +91,7 @@ struct Face
 	//! @param vertices       A pointer to an array of vertices.
 	//! @param vertexCount    Number of vertices.
 	//! @param faceCollection A collection of faces to put resultant faces into.
-	static void TriangulateLinearly(List<Vertex> &vertices, List<Face> *faceCollection);
+	static void TriangulateLinearly(List<Vertex> &vertices, List<Face> *faceCollection, int subsetIndex);
 };
 
 //! Represents a node in a BSP tree.
@@ -99,10 +104,13 @@ struct BspNode
 
 	BspNode()
 		: Plane(Vec3Constants<float>::fVec3_Zero, F32NAN_SAFE)
+		, Front(nullptr)
+		, Back(nullptr)
 	{
 		this->Faces = new List<Face>();
 	}
-	BspNode(List<Face> *faces);
+	explicit BspNode(const List<Face> &faces);
+
 	~BspNode()
 	{
 		this->Plane.d = F32NAN_SAFE;
@@ -114,13 +122,13 @@ struct BspNode
 	//! Gets the list of all faces in this BSP tree.
 	List<Face> *AllFaces();
 	//! Adds a bunch of faces to this BSP tree.
-	void AddFaces(List<Face> *faces);
+	void AddFaces(const List<Face> &faces);
 	//! Inverts this BSP node.
 	void Invert();
 	//! Cuts given elements and removes parts that end up inside this tree.
-	List<Face> *FilterList(List<Face> *faces);
+	List<Face> *FilterList(List<Face> *faces) const;
 	//! Cuts elements inside this tree and removes ones that end up inside another one.
-	void CutTreeOut(BspNode *node);
+	void CutTreeOut(const BspNode &node);
 	//! Adds given BSP tree to this one.
 	void Unite(BspNode *node);
 private:

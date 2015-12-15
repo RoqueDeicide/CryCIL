@@ -228,7 +228,7 @@ float CharacterInterop::GetPlaybackScale(ICharacterInstance *handle)
 
 bool CharacterInterop::IsCharacterVisible(ICharacterInstance *handle)
 {
-	return handle->IsCharacterVisible();
+	return handle->IsCharacterVisible() != 0;
 }
 
 void CharacterInterop::SpawnSkeletonEffectInternal(ICharacterInstance *handle, int animID, mono::string animName, mono::string effectName, mono::string boneName, Vec3 &offset, Vec3 &dir, QuatTS &entityLoc)
@@ -376,12 +376,12 @@ int CharacterInterop::ReloadLMG(mono::string szFilePathCAF)
 	return gEnv->pCharacterManager->ReloadLMG(NtText(szFilePathCAF));
 }
 
-void CharacterInterop::AddFrameTicks(ulong nTicks)
+void CharacterInterop::AddFrameTicks(uint64 nTicks)
 {
 	gEnv->pCharacterManager->AddFrameTicks(nTicks);
 }
 
-void CharacterInterop::AddFrameSyncTicks(ulong nTicks)
+void CharacterInterop::AddFrameSyncTicks(uint64 nTicks)
 {
 	gEnv->pCharacterManager->AddFrameSyncTicks(nTicks);
 }
@@ -391,12 +391,12 @@ void CharacterInterop::ResetFrameTicks()
 	gEnv->pCharacterManager->ResetFrameTicks();
 }
 
-ulong CharacterInterop::NumFrameTicks()
+uint64 CharacterInterop::NumFrameTicks()
 {
 	return gEnv->pCharacterManager->NumFrameTicks();
 }
 
-ulong CharacterInterop::NumFrameSyncTicks()
+uint64 CharacterInterop::NumFrameSyncTicks()
 {
 	return gEnv->pCharacterManager->NumFrameSyncTicks();
 }

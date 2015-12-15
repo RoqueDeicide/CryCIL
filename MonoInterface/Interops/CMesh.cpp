@@ -25,6 +25,11 @@ void *CMeshInterop::GetStreamPtr(CMesh *handle, int stream, int *pElementCount)
 	return ptr;
 }
 
+void CMeshInterop::ReallocateStream(CMesh *handle, int stream, int newCount)
+{
+	handle->ReallocStream(stream, newCount);
+}
+
 int CMeshInterop::GetSubsetCount(CMesh *handle)
 {
 	return handle->m_subsets.size();
