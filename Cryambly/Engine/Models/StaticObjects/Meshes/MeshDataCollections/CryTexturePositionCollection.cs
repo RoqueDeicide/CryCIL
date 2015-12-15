@@ -28,6 +28,13 @@ namespace CryCil.Engine.Models.StaticObjects
 			}
 		}
 		/// <summary>
+		/// Indicates whether this instance is usable.
+		/// </summary>
+		public bool IsValid
+		{
+			get { return this.mesh.IsValid; }
+		}
+		/// <summary>
 		/// Gets or sets the number of elements in this collection. Setting this to negative value or 0
 		/// deallocates the array.
 		/// </summary>
@@ -124,6 +131,16 @@ namespace CryCil.Engine.Models.StaticObjects
 		public void RemoveAt(int index)
 		{
 			this.RemoveRange(index, 1);
+		}
+		/// <summary>
+		/// Removes all elements from this collection.
+		/// </summary>
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
+		public void Clear()
+		{
+			this.AssertInstance();
+
+			this.Count = 0;
 		}
 		#endregion
 		#region Utilities

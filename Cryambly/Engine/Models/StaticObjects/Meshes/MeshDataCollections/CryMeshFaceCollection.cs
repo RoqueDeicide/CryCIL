@@ -125,6 +125,16 @@ namespace CryCil.Engine.Models.StaticObjects
 		{
 			this.RemoveRange(index, 1);
 		}
+		/// <summary>
+		/// Removes all elements from this collection.
+		/// </summary>
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
+		public void Clear()
+		{
+			this.AssertInstance();
+
+			CryMesh.RemoveRangeFromStreamInternal(this.meshHandle, MainStreamId, 0, this.Count);
+		}
 		#endregion
 		#region Utilities
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>

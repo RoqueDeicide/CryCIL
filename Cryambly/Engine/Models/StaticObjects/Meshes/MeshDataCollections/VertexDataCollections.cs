@@ -15,6 +15,13 @@ namespace CryCil.Engine.Models.StaticObjects
 		#endregion
 		#region Properties
 		/// <summary>
+		/// Indicates whether this instance is usable.
+		/// </summary>
+		public bool IsValid
+		{
+			get { return this.ptr != null; }
+		}
+		/// <summary>
 		/// Gets or sets the element within this collection.
 		/// </summary>
 		/// <param name="index">Zero-based index of the element to get or set.</param>
@@ -103,6 +110,13 @@ namespace CryCil.Engine.Models.StaticObjects
 		private readonly int count;
 		#endregion
 		#region Properties
+		/// <summary>
+		/// Indicates whether this instance is usable.
+		/// </summary>
+		public bool IsValid
+		{
+			get { return this.ptr != null; }
+		}
 		/// <summary>
 		/// Gets or sets the element within this collection.
 		/// </summary>
@@ -193,6 +207,13 @@ namespace CryCil.Engine.Models.StaticObjects
 		#endregion
 		#region Properties
 		/// <summary>
+		/// Indicates whether this instance is usable.
+		/// </summary>
+		public bool IsValid
+		{
+			get { return this.ptr != null; }
+		}
+		/// <summary>
 		/// Gets or sets the element within this collection.
 		/// </summary>
 		/// <param name="index">Zero-based index of the element to get or set.</param>
@@ -281,6 +302,13 @@ namespace CryCil.Engine.Models.StaticObjects
 		private readonly int count;
 		#endregion
 		#region Properties
+		/// <summary>
+		/// Indicates whether this instance is usable.
+		/// </summary>
+		public bool IsValid
+		{
+			get { return this.ptr != null; }
+		}
 		/// <summary>
 		/// Gets or sets the element within this collection.
 		/// </summary>

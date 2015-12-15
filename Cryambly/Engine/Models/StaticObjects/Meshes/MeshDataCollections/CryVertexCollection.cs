@@ -6,12 +6,10 @@ namespace CryCil.Engine.Models.StaticObjects
 	/// <summary>
 	/// Provides access to mesh data that is specific to vertexes.
 	/// </summary>
-	[StructLayout(LayoutKind.Explicit)]
 	public unsafe struct CryVertexCollection
 	{
 		#region Fields
-		[FieldOffset(0)] private readonly CryMesh mesh;
-		[FieldOffset(0)] private readonly CMeshInternals* meshHandle;
+		private readonly CMeshInternals* meshHandle;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -146,6 +144,12 @@ namespace CryCil.Engine.Models.StaticObjects
 			}
 		}
 		#endregion
+		#region Construction
+		internal CryVertexCollection(CMeshInternals* meshHandle)
+		{
+			this.meshHandle = meshHandle;
+		}
+		#endregion
 		#region Interface
 		/// <summary>
 		/// Makes internal collection of primary colors of vertices accessible. If this method is not
@@ -195,19 +199,22 @@ namespace CryCil.Engine.Models.StaticObjects
 				CryMesh.ReallocateStream(this.meshHandle, GeneralMeshStreamId.VertexMaterials, vertexCount);
 			}
 		}
-		#endregion
-		#region Construction
-		internal CryVertexCollection(CryMesh mesh, CMeshInternals* meshHandle)
+		/// <summary>
+		/// Removes all vertex data from this collection.
+		/// </summary>
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
+		public void Clear()
 		{
-			this.mesh = mesh;
-			this.meshHandle = meshHandle;
+			this.AssertInstance();
+
+			this.Count = 0;
 		}
 		#endregion
 		#region Utilities
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		private void AssertInstance()
 		{
-			if (!this.mesh.IsValid)
+			if (this.meshHandle == null)
 			{
 				throw new NullReferenceException("This instance is not valid.");
 			}
