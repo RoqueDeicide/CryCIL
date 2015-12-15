@@ -4,7 +4,7 @@
 
 struct CMeshInterop : IMonoInterop<true, true>
 {
-	virtual const char *GetInteropClassName() override { return "GeneralCryMesh"; }
+	virtual const char *GetInteropClassName() override { return "CryMesh"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Models.StaticObjects"; }
 
 	virtual void OnRunTimeInitialized() override;
