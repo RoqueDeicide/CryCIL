@@ -348,3 +348,17 @@ inline void CheckAudioControlType()
 	CHECK_ENUM(eACT_PRELOAD);
 	CHECK_ENUM(eACT_ENVIRONMENT);
 }
+
+TYPE_MIRROR enum LipSyncMethod
+{
+	eLSM_None_check,
+	eLSM_MatchAnimationToSoundName_check
+};
+
+#define CHECK_ENUM(x) static_assert (LipSyncMethod::x ## _check == ELipSyncMethod::x, "ELipSyncMethod enumeration have been changed.")
+
+inline void CheckLipSyncMethod()
+{
+	CHECK_ENUM(eLSM_None);
+	CHECK_ENUM(eLSM_MatchAnimationToSoundName);
+}
