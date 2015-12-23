@@ -563,6 +563,9 @@
     <ClInclude Include="TypeMapChecks\ParticleTypes.h">
       <Filter>TypeMapChecks</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\AudioSystem.h">
+      <Filter>Interops\Engine\Audio</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -972,6 +975,9 @@
     <ClCompile Include="TypeMapChecks\AudioTypes.cpp">
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
+    <ClCompile Include="Interops\AudioSystem.cpp">
+      <Filter>Interops\Engine\Audio</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">
@@ -1096,6 +1102,9 @@
     </Filter>
     <Filter Include="Interops\Engine\Models\Characters\Attachments">
       <UniqueIdentifier>{9cdc558e-b1ef-4b5c-b4fd-acd6e2c78cb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interops\Engine\Audio">
+      <UniqueIdentifier>{1ab0388a-4f8c-444b-83a4-e5ba30b24ada}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

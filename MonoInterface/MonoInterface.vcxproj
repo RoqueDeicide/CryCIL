@@ -286,6 +286,7 @@
     <ClInclude Include="Interops\AttachmentSimulationParameters.h" />
     <ClInclude Include="Interops\AttachmentSkin.h" />
     <ClInclude Include="Interops\AttachmentSocket.h" />
+    <ClInclude Include="Interops\AudioSystem.h" />
     <ClInclude Include="Interops\AuxiliaryGeometry.h" />
     <ClInclude Include="Interops\BatchOps.h" />
     <ClInclude Include="Interops\Character.h" />
@@ -457,6 +458,7 @@
     <ClCompile Include="Interops\AttachmentSimulationParameters.cpp" />
     <ClCompile Include="Interops\AttachmentSkin.cpp" />
     <ClCompile Include="Interops\AttachmentSocket.cpp" />
+    <ClCompile Include="Interops\AudioSystem.cpp" />
     <ClCompile Include="Interops\AuxiliaryGeometry.cpp" />
     <ClCompile Include="Interops\BatchOps.cpp" />
     <ClCompile Include="Interops\Character.cpp" />
