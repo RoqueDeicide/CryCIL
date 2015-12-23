@@ -14,6 +14,25 @@ namespace CryCil.Engine.Audio
 			new List<AudioSystemImplementation>();
 		#endregion
 		#region Properties
+		/// <summary>
+		/// Sets the location of the audio listener.
+		/// </summary>
+		/// <remarks>
+		/// Audio listener is a player (in a simplest case).
+		/// </remarks>
+		/// <exception cref="ArgumentException">Matrix that represents the new location of the audio listener must be valid.</exception>
+		public static Matrix34 ListenerLocation
+		{
+			set
+			{
+				if (!value.IsValid)
+				{
+					throw new ArgumentException("Matrix that represents the new location of the audio listener must be valid.");
+				}
+
+				RequestSetPosition(ref value);
+			}
+		}
 		#endregion
 		#region Events
 		#endregion
@@ -119,13 +138,16 @@ namespace CryCil.Engine.Audio
 		/// Requests a set of audio to be preloaded.
 		/// </summary>
 		/// <param name="name">Name of the set.</param>
-		public static void PreloadAudioRequest(string name)
+		/// <returns>True, if request object with specified name was found.</returns>
+		public static bool PreloadAudioRequest(string name)
 		{
 			uint id;
 			if (TryGetPreloadRequestId(name, out id))
 			{
 				RequestPreloadAudioRequest(id);
+				return true;
 			}
+			return false;
 		}
 		/// <summary>
 		/// Requests a set of audio to be unloaded.
@@ -139,13 +161,179 @@ namespace CryCil.Engine.Audio
 		/// Requests a set of audio to be unloaded.
 		/// </summary>
 		/// <param name="name">Name of the set.</param>
-		public static void UnloadAudioRequest(string name)
+		/// <returns>True, if request object with specified name was found.</returns>
+		public static bool UnloadAudioRequest(string name)
 		{
 			uint id;
 			if (TryGetPreloadRequestId(name, out id))
 			{
 				RequestUnloadAudioRequest(id);
+				return true;
 			}
+			return false;
+		}
+		/// <summary>
+		/// Assigns a new value to the Real-Time Parameter Control (RTPC) object.
+		/// </summary>
+		/// <param name="id">Identifier of the RTPC object to change.</param>
+		/// <param name="value">A new value to set.</param>
+		public static void SetRtpcValue(uint id, float value)
+		{
+			RequestSetRtpcValue(id, value);
+		}
+		/// <summary>
+		/// Assigns a new value to the Real-Time Parameter Control (RTPC) object.
+		/// </summary>
+		/// <param name="name">Name of the RTPC object to set.</param>
+		/// <param name="value">A new value to set.</param>
+		/// <returns>True, if RTPC object with specified name was found.</returns>
+		public static bool SetRtpcValue(string name, float value)
+		{
+			uint id;
+			if (TryGetRtpcId(name, out id))
+			{
+				RequestSetRtpcValue(id, value);
+				return true;
+			}
+			return false;
+		}
+		/// <summary>
+		/// Changes the state of the audio switch.
+		/// </summary>
+		/// <param name="switchId">Identifier of the switch object.</param>
+		/// <param name="stateId">Identifier of the state of the switch object.</param>
+		public static void SetSwitchState(uint switchId, uint stateId)
+		{
+			RequestSetSwitchState(switchId, stateId);
+		}
+		/// <summary>
+		/// Changes the state of the audio switch.
+		/// </summary>
+		/// <param name="switchName">Name of the switch object.</param>
+		/// <param name="stateName">Name of the state of the switch object.</param>
+		/// <returns>True, if both <paramref name="switchName"/> and <paramref name="stateName"/> were valid names.</returns>
+		public static bool SetSwitchState(string switchName, string stateName)
+		{
+			uint switchId, stateId;
+			if (TryGetSwitchId(switchName, out switchId) &&
+				TryGetSwitchStateId(switchId, stateName, out stateId))
+			{
+				RequestSetSwitchState(switchId, stateId);
+				return true;
+			}
+			return false;
+		}
+		/// <summary>
+		/// Changes the state of the audio switch.
+		/// </summary>
+		/// <param name="switchId">Identifier of the switch object.</param>
+		/// <param name="stateName">Name of the state of the switch object.</param>
+		/// <returns>True, if <paramref name="stateName"/> was a valid name.</returns>
+		public static bool SetSwitchState(uint switchId, string stateName)
+		{
+			uint stateId;
+			if (TryGetSwitchStateId(switchId, stateName, out stateId))
+			{
+				RequestSetSwitchState(switchId, stateId);
+				return true;
+			}
+			return false;
+		}
+		/// <summary>
+		/// Changes the state of the audio switch.
+		/// </summary>
+		/// <param name="switchName">Name of the switch object.</param>
+		/// <param name="stateId">Identifier of the state of the switch object.</param>
+		/// <returns>True, if <paramref name="switchName"/> was a valid name.</returns>
+		public static bool SetSwitchState(string switchName, uint stateId)
+		{
+			uint switchId;
+			if (TryGetSwitchId(switchName, out switchId))
+			{
+				RequestSetSwitchState(switchId, stateId);
+				return true;
+			}
+			return false;
+		}
+		/// <summary>
+		/// Executes an audio trigger.
+		/// </summary>
+		/// <param name="triggerId">Identifier of the trigger.</param>
+		/// <param name="timeout">Time in milliseconds until the trigger execution is stopped (?). If equal to 0 then execution can only be stopped either by the trigger (?) or calling this function again or by calling <see cref="o:CryCil.Audio.AudioSystem.StopTrigger"/>.</param>
+		public static void ExecuteTrigger(uint triggerId, float timeout = 0)
+		{
+			RequestExecuteTrigger(triggerId, timeout);
+		}
+		/// <summary>
+		/// Executes an audio trigger.
+		/// </summary>
+		/// <param name="triggerId">Identifier of the trigger.</param>
+		/// <param name="timeout">Time in milliseconds until the trigger execution is stopped (?). If equal to <see cref="TimeSpan.Zero"/> then execution can only be stopped either by the trigger (?) or calling this function again or by calling <see cref="o:CryCil.Audio.AudioSystem.StopTrigger"/>.</param>
+		public static void ExecuteTrigger(uint triggerId, TimeSpan timeout = new TimeSpan())
+		{
+			RequestExecuteTrigger(triggerId, timeout.Milliseconds);
+		}
+		/// <summary>
+		/// Executes an audio trigger.
+		/// </summary>
+		/// <param name="triggerName">Name of the trigger.</param>
+		/// <param name="timeout">Time in milliseconds until the trigger execution is stopped (?). If equal to 0 then execution can only be stopped either by the trigger (?) or calling this function again or by calling <see cref="o:CryCil.Audio.AudioSystem.StopTrigger"/>.</param>
+		/// <returns>True, if trigger with specified name was found.</returns>
+		public static bool ExecuteTrigger(string triggerName, float timeout = 0)
+		{
+			uint id;
+			if (TryGetTriggerId(triggerName, out id))
+			{
+				RequestExecuteTrigger(id, timeout);
+				return true;
+			}
+			return false;
+		}
+		/// <summary>
+		/// Executes an audio trigger.
+		/// </summary>
+		/// <param name="triggerName">Name of the trigger.</param>
+		/// <param name="timeout">Time in milliseconds until the trigger execution is stopped (?). If equal to <see cref="TimeSpan.Zero"/> then execution can only be stopped either by the trigger (?) or calling this function again or by calling <see cref="o:CryCil.Audio.AudioSystem.StopTrigger"/>.</param>
+		/// <returns>True, if trigger with specified name was found.</returns>
+		public static bool ExecuteTrigger(string triggerName, TimeSpan timeout = new TimeSpan())
+		{
+			uint id;
+			if (TryGetTriggerId(triggerName, out id))
+			{
+				RequestExecuteTrigger(id, timeout.Milliseconds);
+				return true;
+			}
+			return false;
+		}
+		/// <summary>
+		/// Stops execution of an audio trigger.
+		/// </summary>
+		/// <param name="triggerId">Identifier of the trigger.</param>
+		public static void StopTrigger(uint triggerId)
+		{
+			RequestStopTrigger(triggerId);
+		}
+		/// <summary>
+		/// Stops execution of an audio trigger.
+		/// </summary>
+		/// <param name="triggerName">Name of the trigger.</param>
+		/// <returns>True, if trigger with specified name was found.</returns>
+		public static bool StopTrigger(string triggerName)
+		{
+			uint id;
+			if (TryGetTriggerId(triggerName, out id))
+			{
+				RequestStopTrigger(id);
+				return true;
+			}
+			return false;
+		}
+		/// <summary>
+		/// Stops execution of all audio triggers.
+		/// </summary>
+		public static void StopAllTriggers()
+		{
+			RequestStopAllTriggers();
 		}
 		#endregion
 		#region Utilities
@@ -157,6 +345,18 @@ namespace CryCil.Engine.Audio
 		private static extern void RequestPreloadAudioRequest(uint id);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void RequestUnloadAudioRequest(uint id);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void RequestSetRtpcValue(uint id, float value);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void RequestSetSwitchState(uint switchId, uint stateId);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void RequestExecuteTrigger(uint id, float timeout);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void RequestStopTrigger(uint id);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void RequestStopAllTriggers();
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void RequestSetPosition(ref Matrix34 tm);
 		#endregion
 	}
 }
