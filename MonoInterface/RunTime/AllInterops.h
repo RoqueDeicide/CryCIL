@@ -173,3 +173,5 @@
 #include "Interops/AttachmentSkin.h"
 
 #include "Interops/AttachmentProxy.h"
+
+#include "Interops/AudioSystem.h"

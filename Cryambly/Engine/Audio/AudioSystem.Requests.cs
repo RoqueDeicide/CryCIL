@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using CryCil.Annotations;
 using CryCil.Engine.DebugServices;
@@ -17,10 +18,10 @@ namespace CryCil.Engine.Audio
 		/// <summary>
 		/// Sets the location of the audio listener.
 		/// </summary>
-		/// <remarks>
-		/// Audio listener is a player (in a simplest case).
-		/// </remarks>
-		/// <exception cref="ArgumentException">Matrix that represents the new location of the audio listener must be valid.</exception>
+		/// <remarks>Audio listener is a player (in a simplest case).</remarks>
+		/// <exception cref="ArgumentException">
+		/// Matrix that represents the new location of the audio listener must be valid.
+		/// </exception>
 		public static Matrix34 ListenerLocation
 		{
 			set
@@ -33,10 +34,22 @@ namespace CryCil.Engine.Audio
 				RequestSetPosition(ref value);
 			}
 		}
-		#endregion
-		#region Events
-		#endregion
-		#region Construction
+		/// <summary>
+		/// Changes the master volume.
+		/// </summary>
+		/// <value>
+		/// The value is a value between 0 and 1 (presumably) where 0 means muting the sound and 1 means
+		/// full sound volume.
+		/// </value>
+		public static float Volume
+		{
+			set
+			{
+				value = MathHelpers.Clamp(value, 0, 1);
+
+				RequestSetVolume(value);
+			}
+		}
 		#endregion
 		#region Interface
 		/// <summary>
@@ -129,7 +142,9 @@ namespace CryCil.Engine.Audio
 		/// <summary>
 		/// Requests a set of audio to be preloaded.
 		/// </summary>
-		/// <param name="id">Identifier of the set. Can be acquired through <see cref="TryGetPreloadRequestId"/>.</param>
+		/// <param name="id">
+		/// Identifier of the set. Can be acquired through <see cref="TryGetPreloadRequestId"/>.
+		/// </param>
 		public static void PreloadAudioRequest(uint id)
 		{
 			RequestPreloadAudioRequest(id);
@@ -152,7 +167,9 @@ namespace CryCil.Engine.Audio
 		/// <summary>
 		/// Requests a set of audio to be unloaded.
 		/// </summary>
-		/// <param name="id">Identifier of the set. Can be acquired through <see cref="TryGetPreloadRequestId"/>.</param>
+		/// <param name="id">
+		/// Identifier of the set. Can be acquired through <see cref="TryGetPreloadRequestId"/>.
+		/// </param>
 		public static void UnloadAudioRequest(uint id)
 		{
 			RequestUnloadAudioRequest(id);
@@ -175,7 +192,7 @@ namespace CryCil.Engine.Audio
 		/// <summary>
 		/// Assigns a new value to the Real-Time Parameter Control (RTPC) object.
 		/// </summary>
-		/// <param name="id">Identifier of the RTPC object to change.</param>
+		/// <param name="id">   Identifier of the RTPC object to change.</param>
 		/// <param name="value">A new value to set.</param>
 		public static void SetRtpcValue(uint id, float value)
 		{
@@ -184,7 +201,7 @@ namespace CryCil.Engine.Audio
 		/// <summary>
 		/// Assigns a new value to the Real-Time Parameter Control (RTPC) object.
 		/// </summary>
-		/// <param name="name">Name of the RTPC object to set.</param>
+		/// <param name="name"> Name of the RTPC object to set.</param>
 		/// <param name="value">A new value to set.</param>
 		/// <returns>True, if RTPC object with specified name was found.</returns>
 		public static bool SetRtpcValue(string name, float value)
@@ -201,7 +218,7 @@ namespace CryCil.Engine.Audio
 		/// Changes the state of the audio switch.
 		/// </summary>
 		/// <param name="switchId">Identifier of the switch object.</param>
-		/// <param name="stateId">Identifier of the state of the switch object.</param>
+		/// <param name="stateId"> Identifier of the state of the switch object.</param>
 		public static void SetSwitchState(uint switchId, uint stateId)
 		{
 			RequestSetSwitchState(switchId, stateId);
@@ -210,8 +227,10 @@ namespace CryCil.Engine.Audio
 		/// Changes the state of the audio switch.
 		/// </summary>
 		/// <param name="switchName">Name of the switch object.</param>
-		/// <param name="stateName">Name of the state of the switch object.</param>
-		/// <returns>True, if both <paramref name="switchName"/> and <paramref name="stateName"/> were valid names.</returns>
+		/// <param name="stateName"> Name of the state of the switch object.</param>
+		/// <returns>
+		/// True, if both <paramref name="switchName"/> and <paramref name="stateName"/> were valid names.
+		/// </returns>
 		public static bool SetSwitchState(string switchName, string stateName)
 		{
 			uint switchId, stateId;
@@ -226,7 +245,7 @@ namespace CryCil.Engine.Audio
 		/// <summary>
 		/// Changes the state of the audio switch.
 		/// </summary>
-		/// <param name="switchId">Identifier of the switch object.</param>
+		/// <param name="switchId"> Identifier of the switch object.</param>
 		/// <param name="stateName">Name of the state of the switch object.</param>
 		/// <returns>True, if <paramref name="stateName"/> was a valid name.</returns>
 		public static bool SetSwitchState(uint switchId, string stateName)
@@ -243,7 +262,7 @@ namespace CryCil.Engine.Audio
 		/// Changes the state of the audio switch.
 		/// </summary>
 		/// <param name="switchName">Name of the switch object.</param>
-		/// <param name="stateId">Identifier of the state of the switch object.</param>
+		/// <param name="stateId">   Identifier of the state of the switch object.</param>
 		/// <returns>True, if <paramref name="switchName"/> was a valid name.</returns>
 		public static bool SetSwitchState(string switchName, uint stateId)
 		{
@@ -259,7 +278,11 @@ namespace CryCil.Engine.Audio
 		/// Executes an audio trigger.
 		/// </summary>
 		/// <param name="triggerId">Identifier of the trigger.</param>
-		/// <param name="timeout">Time in milliseconds until the trigger execution is stopped (?). If equal to 0 then execution can only be stopped either by the trigger (?) or calling this function again or by calling <see cref="o:CryCil.Audio.AudioSystem.StopTrigger"/>.</param>
+		/// <param name="timeout">  
+		/// Time in milliseconds until the trigger execution is stopped (?). If equal to 0 then execution
+		/// can only be stopped either by the trigger (?) or calling this function again or by calling
+		/// <see cref="o:CryCil.Audio.AudioSystem.StopTrigger"/>.
+		/// </param>
 		public static void ExecuteTrigger(uint triggerId, float timeout = 0)
 		{
 			RequestExecuteTrigger(triggerId, timeout);
@@ -268,7 +291,11 @@ namespace CryCil.Engine.Audio
 		/// Executes an audio trigger.
 		/// </summary>
 		/// <param name="triggerId">Identifier of the trigger.</param>
-		/// <param name="timeout">Time in milliseconds until the trigger execution is stopped (?). If equal to <see cref="TimeSpan.Zero"/> then execution can only be stopped either by the trigger (?) or calling this function again or by calling <see cref="o:CryCil.Audio.AudioSystem.StopTrigger"/>.</param>
+		/// <param name="timeout">  
+		/// Time in milliseconds until the trigger execution is stopped (?). If equal to
+		/// <see cref="TimeSpan.Zero"/> then execution can only be stopped either by the trigger (?) or
+		/// calling this function again or by calling <see cref="o:CryCil.Audio.AudioSystem.StopTrigger"/>.
+		/// </param>
 		public static void ExecuteTrigger(uint triggerId, TimeSpan timeout = new TimeSpan())
 		{
 			RequestExecuteTrigger(triggerId, timeout.Milliseconds);
@@ -277,7 +304,11 @@ namespace CryCil.Engine.Audio
 		/// Executes an audio trigger.
 		/// </summary>
 		/// <param name="triggerName">Name of the trigger.</param>
-		/// <param name="timeout">Time in milliseconds until the trigger execution is stopped (?). If equal to 0 then execution can only be stopped either by the trigger (?) or calling this function again or by calling <see cref="o:CryCil.Audio.AudioSystem.StopTrigger"/>.</param>
+		/// <param name="timeout">    
+		/// Time in milliseconds until the trigger execution is stopped (?). If equal to 0 then execution
+		/// can only be stopped either by the trigger (?) or calling this function again or by calling
+		/// <see cref="o:CryCil.Audio.AudioSystem.StopTrigger"/>.
+		/// </param>
 		/// <returns>True, if trigger with specified name was found.</returns>
 		public static bool ExecuteTrigger(string triggerName, float timeout = 0)
 		{
@@ -293,7 +324,11 @@ namespace CryCil.Engine.Audio
 		/// Executes an audio trigger.
 		/// </summary>
 		/// <param name="triggerName">Name of the trigger.</param>
-		/// <param name="timeout">Time in milliseconds until the trigger execution is stopped (?). If equal to <see cref="TimeSpan.Zero"/> then execution can only be stopped either by the trigger (?) or calling this function again or by calling <see cref="o:CryCil.Audio.AudioSystem.StopTrigger"/>.</param>
+		/// <param name="timeout">    
+		/// Time in milliseconds until the trigger execution is stopped (?). If equal to
+		/// <see cref="TimeSpan.Zero"/> then execution can only be stopped either by the trigger (?) or
+		/// calling this function again or by calling <see cref="o:CryCil.Audio.AudioSystem.StopTrigger"/>.
+		/// </param>
 		/// <returns>True, if trigger with specified name was found.</returns>
 		public static bool ExecuteTrigger(string triggerName, TimeSpan timeout = new TimeSpan())
 		{
@@ -335,6 +370,38 @@ namespace CryCil.Engine.Audio
 		{
 			RequestStopAllTriggers();
 		}
+		/// <summary>
+		/// Changes the strength of the environment effect.
+		/// </summary>
+		/// <param name="id">    Identifier of the effect.</param>
+		/// <param name="amount">Strength of the effect.</param>
+		public static void SetEnvironmentAmount(uint id, float amount)
+		{
+			RequestSetEnvironmentAmount(id, amount);
+		}
+		/// <summary>
+		/// Changes the strength of the environment effect.
+		/// </summary>
+		/// <param name="name">  Name of the effect.</param>
+		/// <param name="amount">Strength of the effect.</param>
+		/// <returns>True, if the effect with specified name was found.</returns>
+		public static bool SetEnvironmentAmount(string name, float amount)
+		{
+			uint id;
+			if (TryGetEnvironmentId(name, out id))
+			{
+				RequestSetEnvironmentAmount(id, amount);
+				return true;
+			}
+			return false;
+		}
+		/// <summary>
+		/// Resets strengths all environmental effects.
+		/// </summary>
+		public static void ResetEnvironments()
+		{
+			RequestResetEnvironments();
+		}
 		#endregion
 		#region Utilities
 		[MethodImpl(MethodImplOptions.InternalCall)]
@@ -357,6 +424,12 @@ namespace CryCil.Engine.Audio
 		private static extern void RequestStopAllTriggers();
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void RequestSetPosition(ref Matrix34 tm);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void RequestSetVolume(float volume);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void RequestSetEnvironmentAmount(uint id, float amount);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void RequestResetEnvironments();
 		#endregion
 	}
 }

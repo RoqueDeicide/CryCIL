@@ -362,3 +362,30 @@ inline void CheckLipSyncMethod()
 	CHECK_ENUM(eLSM_None);
 	CHECK_ENUM(eLSM_MatchAnimationToSoundName);
 }
+
+TYPE_MIRROR struct AudioSystemInfo
+{
+	size_t	nCountUsedAudioTriggers;
+	size_t	nCountUnusedAudioTriggers;
+	size_t	nCountUsedAudioEvents;
+	size_t	nCountUnusedAudioEvents;
+
+	Vec3		oListenerPos;
+
+	explicit AudioSystemInfo(const SAudioSystemInfo &other)
+	{
+		CHECK_TYPE_SIZE(AudioSystemInfo);
+
+		ASSIGN_FIELD(nCountUsedAudioTriggers);
+		ASSIGN_FIELD(nCountUnusedAudioTriggers);
+		ASSIGN_FIELD(nCountUsedAudioEvents);
+		ASSIGN_FIELD(nCountUnusedAudioEvents);
+		ASSIGN_FIELD(oListenerPos);
+
+		CHECK_TYPE(nCountUsedAudioTriggers);
+		CHECK_TYPE(nCountUnusedAudioTriggers);
+		CHECK_TYPE(nCountUsedAudioEvents);
+		CHECK_TYPE(nCountUnusedAudioEvents);
+		CHECK_TYPE(oListenerPos);
+	}
+};
