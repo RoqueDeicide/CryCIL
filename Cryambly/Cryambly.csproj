@@ -236,6 +236,7 @@
     <Compile Include="Mathematics\Hashing\NamespaceDoc.cs" />
     <Compile Include="Mathematics\Quantize.cs" />
     <Compile Include="Mathematics\RangeSingle.cs" />
+    <Compile Include="Mathematics\rational.cs" />
     <Compile Include="Mathematics\Specials\NamespaceDoc.cs" />
     <Compile Include="Mathematics\Vectors\Vector2Half.cs" />
     <Compile Include="Mathematics\Vectors\Vector4Int16.cs" />
