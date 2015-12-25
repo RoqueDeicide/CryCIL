@@ -609,6 +609,46 @@ namespace CryCil
 			return ((UInt32)value & mask) != mask;
 		}
 		/// <summary>
+		/// Extracts an exponent from the floating point number.
+		/// </summary>
+		/// <param name="value">Number to extract the exponent from.</param>
+		/// <returns>An actual exponent.</returns>
+		/// <exception cref="InvalidOperationException">Cannot extract exponent from an invalid value.</exception>
+		public static unsafe int Exponent(float value)
+		{
+			if (float.IsNaN(value) || float.IsNegativeInfinity(value) ||
+				float.IsPositiveInfinity(value) || float.IsInfinity(value))
+			{
+				throw new InvalidOperationException("Cannot extract exponent from an invalid value.");
+			}
+			
+			int bits = *(int*)&value;
+
+			int exp = (bits >> 23) & 255;
+
+			return exp - 127;	// Actual exponent.
+		}
+		/// <summary>
+		/// Extracts an exponent from the floating point number.
+		/// </summary>
+		/// <param name="value">Number to extract the exponent from.</param>
+		/// <returns>An actual exponent.</returns>
+		/// <exception cref="InvalidOperationException">Cannot extract exponent from an invalid value.</exception>
+		public static unsafe int Exponent(double value)
+		{
+			if (double.IsNaN(value) || double.IsNegativeInfinity(value) ||
+				double.IsPositiveInfinity(value) || double.IsInfinity(value))
+			{
+				throw new InvalidOperationException("Cannot extract exponent from an invalid value.");
+			}
+
+			long bits = *(long*)&value;
+
+			int exp = (int)((bits >> 52) & 2047);
+
+			return exp - 1023;	// Actual exponent.
+		}
+		/// <summary>
 		/// All positive numbers that are smaller than this value are considered equal to zero.
 		/// </summary>
 		public const float ZeroTolerance = 1e-6f;
