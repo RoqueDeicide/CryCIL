@@ -10,8 +10,6 @@ namespace CryCil.Engine.Audio
 	/// </summary>
 	public static partial class AudioSystem
 	{
-		#region Fields
-		#endregion
 		#region Properties
 		/// <summary>
 		/// Gets the path to the file (or folder) that contains the data that is used to configure the
@@ -46,8 +44,6 @@ namespace CryCil.Engine.Audio
 			}
 		}
 		#endregion
-		#region Events
-		#endregion
 		#region Construction
 		/// <summary>
 		/// Creates a default audio proxy object.
@@ -67,7 +63,7 @@ namespace CryCil.Engine.Audio
 		/// <returns>
 		/// True, if preload request exists and valid identifier was assigned to <paramref name="id"/>.
 		/// </returns>
-		public static bool TryGetPreloadRequestId(string name, out uint id)
+		public static bool TryGetPreloadRequestId(string name, out AudioId id)
 		{
 			id = 0;
 			return !name.IsNullOrEmpty() && GetPreloadRequestId(name, out id);
@@ -80,7 +76,7 @@ namespace CryCil.Engine.Audio
 		/// Resultant identifier that is only valid if this method returns <c>true</c>.
 		/// </param>
 		/// <returns>Indication whether identifier was acquired successfully.</returns>
-		public static bool TryGetRtpcId(string name, out uint id)
+		public static bool TryGetRtpcId(string name, out AudioId id)
 		{
 			id = 0;
 			return !name.IsNullOrEmpty() && GetAudioRtpcID(name, out id);
@@ -93,7 +89,7 @@ namespace CryCil.Engine.Audio
 		/// Resultant identifier that is only valid if this method returns <c>true</c>.
 		/// </param>
 		/// <returns>Indication whether identifier was acquired successfully.</returns>
-		public static bool TryGetSwitchId(string name, out uint id)
+		public static bool TryGetSwitchId(string name, out AudioId id)
 		{
 			id = 0;
 			return !name.IsNullOrEmpty() && GetAudioSwitchID(name, out id);
@@ -107,7 +103,7 @@ namespace CryCil.Engine.Audio
 		/// Resultant identifier that is only valid if this method returns <c>true</c>.
 		/// </param>
 		/// <returns>Indication whether identifier was acquired successfully.</returns>
-		public static bool TryGetSwitchStateId(uint switchId, string stateName, out uint stateId)
+		public static bool TryGetSwitchStateId(AudioId switchId, string stateName, out AudioId stateId)
 		{
 			stateId = 0;
 			return !stateName.IsNullOrEmpty() && GetAudioSwitchStateID(switchId, stateName, out stateId);
@@ -121,10 +117,10 @@ namespace CryCil.Engine.Audio
 		/// Resultant identifier that is only valid if this method returns <c>true</c>.
 		/// </param>
 		/// <returns>Indication whether identifier was acquired successfully.</returns>
-		public static bool TryGetSwitchStateId(string switchName, string stateName, out uint stateId)
+		public static bool TryGetSwitchStateId(string switchName, string stateName, out AudioId stateId)
 		{
 			stateId = 0;
-			uint switchId;
+			AudioId switchId;
 			return !stateName.IsNullOrEmpty() && TryGetSwitchId(switchName, out switchId) &&
 				   GetAudioSwitchStateID(switchId, stateName, out stateId);
 		}
@@ -136,7 +132,7 @@ namespace CryCil.Engine.Audio
 		/// Resultant identifier that is only valid if this method returns <c>true</c>.
 		/// </param>
 		/// <returns>Indication whether identifier was acquired successfully.</returns>
-		public static bool TryGetTriggerId(string triggerName, out uint id)
+		public static bool TryGetTriggerId(string triggerName, out AudioId id)
 		{
 			id = 0;
 			return !triggerName.IsNullOrEmpty() && GetAudioTriggerID(triggerName, out id);
@@ -149,7 +145,7 @@ namespace CryCil.Engine.Audio
 		/// Resultant identifier that is only valid if this method returns <c>true</c>.
 		/// </param>
 		/// <returns>Indication whether identifier was acquired successfully.</returns>
-		public static bool TryGetEnvironmentId(string name, out uint id)
+		public static bool TryGetEnvironmentId(string name, out AudioId id)
 		{
 			id = 0;
 			return !name.IsNullOrEmpty() && GetAudioEnvironmentID(name, out id);
@@ -172,7 +168,7 @@ namespace CryCil.Engine.Audio
 		/// <see cref="AudioControlType.AudioObject"/> or any value that is not in the enumeration, if
 		/// control with specified name is not found, otherwise returns <c>true</c>.
 		/// </returns>
-		public static bool TryGetAudioControlId(AudioControlType type, string name, out uint id,
+		public static bool TryGetAudioControlId(AudioControlType type, string name, out AudioId id,
 												string additionalName = null)
 		{
 			id = 0;
@@ -194,7 +190,7 @@ namespace CryCil.Engine.Audio
 				case AudioControlType.Switch:
 					return GetAudioSwitchID(name, out id);
 				case AudioControlType.SwitchState:
-					uint switchId;
+					AudioId switchId;
 					return GetAudioSwitchID(name, out switchId) &&
 						   GetAudioSwitchStateID(switchId, additionalName, out id);
 				case AudioControlType.Preload:
@@ -212,7 +208,7 @@ namespace CryCil.Engine.Audio
 		/// <param name="id">  Identifier of the audio control object.</param>
 		/// <returns>Name of the control object, or <c>null</c> if it wasn't found.</returns>
 		[CanBeNull]
-		public static string GetAudioControlName(AudioControlType type, uint id)
+		public static string GetAudioControlName(AudioControlType type, AudioId id)
 		{
 			return type == AudioControlType.None ? null : GetAudioControlNameInternal(type, id);
 		}
@@ -221,17 +217,17 @@ namespace CryCil.Engine.Audio
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern IntPtr CreateNativeImplementationObject(AudioSystemImplementation managedObject);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern bool GetPreloadRequestId(string name, out uint id);
+		private static extern bool GetPreloadRequestId(string name, out AudioId id);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern bool GetAudioTriggerID(string sAudioTriggerName, out uint rAudioTriggerID);
+		private static extern bool GetAudioTriggerID(string sAudioTriggerName, out AudioId rAudioTriggerID);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern bool GetAudioRtpcID(string audioRtpcName, out uint audioRtpcId);
+		private static extern bool GetAudioRtpcID(string audioRtpcName, out AudioId audioRtpcId);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern bool GetAudioSwitchID(string audioSwitchName, out uint audioSwitchId);
+		private static extern bool GetAudioSwitchID(string audioSwitchName, out AudioId audioSwitchId);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern bool GetAudioSwitchStateID(uint switchID, string audioTriggerName, out uint audioStateId);
+		private static extern bool GetAudioSwitchStateID(uint switchID, string audioTriggerName, out AudioId audioStateId);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern bool GetAudioEnvironmentID(string sAudioEnvironmentName, out uint rAudioEnvironmentID);
+		private static extern bool GetAudioEnvironmentID(string sAudioEnvironmentName, out AudioId rAudioEnvironmentID);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void GetInfo(out AudioSystemInfo rAudioSystemInfo);
 		[MethodImpl(MethodImplOptions.InternalCall)]
@@ -239,7 +235,7 @@ namespace CryCil.Engine.Audio
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern CryAudioProxy GetFreeAudioProxy();
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern string GetAudioControlNameInternal(AudioControlType eAudioEntityType, uint nAudioEntityID);
+		private static extern string GetAudioControlNameInternal(AudioControlType eAudioEntityType, AudioId nAudioEntityID);
 		#endregion
 	}
 }

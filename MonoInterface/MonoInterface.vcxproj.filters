@@ -566,6 +566,12 @@
     <ClInclude Include="Interops\AudioSystem.h">
       <Filter>Interops\Engine\Audio</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\CryAudioListener.h">
+      <Filter>Interops\Engine\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\CryAudioProxy.h">
+      <Filter>Interops\Engine\Audio</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -976,6 +982,12 @@
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
     <ClCompile Include="Interops\AudioSystem.cpp">
+      <Filter>Interops\Engine\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\CryAudioListener.cpp">
+      <Filter>Interops\Engine\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\CryAudioProxy.cpp">
       <Filter>Interops\Engine\Audio</Filter>
     </ClCompile>
   </ItemGroup>
