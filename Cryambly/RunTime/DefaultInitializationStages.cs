@@ -28,6 +28,11 @@ namespace CryCil.RunTime
 		/// Index of the initialization stage during which data required to register CryCIL flow nodes is
 		/// gathered.
 		/// </summary>
-		FlowNodeRecognitionStage = 4000000
+		FlowNodeRecognitionStage = 4000000,
+		/// <summary>
+		/// Index of the initialization stage during which managed implementations of the audio system are
+		/// registered.
+		/// </summary>
+		AudioSystemRegistrationStage = 5000000
 	}
 }

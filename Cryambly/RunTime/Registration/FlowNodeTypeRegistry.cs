@@ -32,10 +32,9 @@ namespace CryCil.RunTime.Registration
 		public static Type GetFlowNodeType(ushort id)
 		{
 			Type type;
-			return
-				registeredTypes.TryGetValue(id, out type)
-					? type
-					: null;
+			return registeredTypes.TryGetValue(id, out type)
+				? type
+				: null;
 		}
 		#endregion
 		#region Utilities
@@ -45,14 +44,11 @@ namespace CryCil.RunTime.Registration
 			compiledTypes =
 				MonoInterface.CryCilAssemblies
 							 .SelectMany(assembly => assembly.GetTypes())
-							 .Where
-					(
-					 type =>
-						 type.ContainsAttribute<FlowNodeAttribute>() &&
-						 !type.ContainsAttribute<ObsoleteAttribute>() &&
-						 type.Implements<FlowNode>() &&
-						 type.GetConstructor(new[] {typeof(ushort), typeof(IntPtr)}) != null
-					)
+							 .Where(type =>
+										type.ContainsAttribute<FlowNodeAttribute>() &&
+										!type.ContainsAttribute<ObsoleteAttribute>() &&
+										type.Implements<FlowNode>() &&
+										type.HasConstructor(typeof(ushort), typeof(IntPtr)))
 							 .ToArray();
 		}
 		internal static void RegisterAllTypes()
@@ -64,7 +60,7 @@ namespace CryCil.RunTime.Registration
 					foreach (Type type in compiledTypes)
 					{
 						string name = type.GetAttribute<FlowNodeAttribute>().Name;
-						if (String.IsNullOrWhiteSpace(name))
+						if (string.IsNullOrWhiteSpace(name))
 						{
 							name = type.FullName.Replace('.', ':');
 						}

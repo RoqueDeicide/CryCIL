@@ -391,6 +391,9 @@ void MonoInterface::RegisterDefaultListeners()
 	this->broadcaster->listeners->Add(new AttachmentSocketInterop());
 	this->broadcaster->listeners->Add(new AttachmentSkinInterop());
 	this->broadcaster->listeners->Add(new AttachmentProxyInterop());
+	this->broadcaster->listeners->Add(new AudioSystemInterop());
+	this->broadcaster->listeners->Add(new CryAudioListenerInterop());
+	this->broadcaster->listeners->Add(new CryAudioProxyInterop());
 }
 #pragma endregion
 #pragma region Thunks Initialization

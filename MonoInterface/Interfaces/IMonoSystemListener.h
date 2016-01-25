@@ -17,6 +17,8 @@
 //! Index of the initialization stage during which data required to register CryCIL flow nodes
 //! is gathered.
 #define FLOWNODE_RECOGNITION_STAGE DEFAULT_INITIALIZATION_STAGE 4000000
+//! Index of the initialization stage during which managed implementations of the audio system are registered.
+#define AUDIO_IMPLEMENTATION_REGISTRATION_STAGE DEFAULT_INITIALIZATION_STAGE 5000000
 
 //! Base interface for objects that subscribe to the events raised by IMonoInterface.
 //!

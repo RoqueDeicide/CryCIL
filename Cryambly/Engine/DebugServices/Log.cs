@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
+using CryCil.Annotations;
 
 namespace CryCil.Engine.DebugServices
 {
@@ -22,12 +23,52 @@ namespace CryCil.Engine.DebugServices
 			Post(LogPostType.Message, value);
 		}
 		/// <summary>
+		/// Writes a line into the log.
+		/// </summary>
+		/// <param name="format">String that specifies how to build the final text to post.</param>
+		/// <param name="args">  
+		/// An array of object which string representations must be inserted into final text according to
+		/// <paramref name="format"/>.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		/// <paramref name="format"/> or <paramref name="args"/> is null.
+		/// </exception>
+		/// <exception cref="FormatException">
+		/// <paramref name="format"/> is invalid.-or- The index of a format item is less than zero, or
+		/// greater than or equal to the length of the <paramref name="args"/> array.
+		/// </exception>
+		[StringFormatMethod("format")]
+		public static void Line(string format, params object[] args)
+		{
+			Post(LogPostType.Message, string.Format(format, args));
+		}
+		/// <summary>
 		/// Writes a line into the log that will be visible on any log verbosity level.
 		/// </summary>
 		/// <param name="value">Text to post.</param>
 		public static void Always(string value)
 		{
 			Post(LogPostType.Always, value);
+		}
+		/// <summary>
+		/// Writes a line into the log that will be visible on any log verbosity level.
+		/// </summary>
+		/// <param name="format">String that specifies how to build the final text to post.</param>
+		/// <param name="args">  
+		/// An array of object which string representations must be inserted into final text according to
+		/// <paramref name="format"/>.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		/// <paramref name="format"/> or <paramref name="args"/> is null.
+		/// </exception>
+		/// <exception cref="FormatException">
+		/// <paramref name="format"/> is invalid.-or- The index of a format item is less than zero, or
+		/// greater than or equal to the length of the <paramref name="args"/> array.
+		/// </exception>
+		[StringFormatMethod("format")]
+		public static void Always(string format, params object[] args)
+		{
+			Post(LogPostType.Always, string.Format(format, args));
 		}
 		/// <summary>
 		/// Writes a warning into the log. Displayed with yellow font.
@@ -39,6 +80,27 @@ namespace CryCil.Engine.DebugServices
 			Post(important ? LogPostType.WarningAlways : LogPostType.Warning, value);
 		}
 		/// <summary>
+		/// Writes a warning into the log. Displayed with yellow font.
+		/// </summary>
+		/// <param name="important">Indicates whether the message is very important to post.</param>
+		/// <param name="format">   String that specifies how to build the final text to post.</param>
+		/// <param name="args">     
+		/// An array of object which string representations must be inserted into final text according to
+		/// <paramref name="format"/>.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		/// <paramref name="format"/> or <paramref name="args"/> is null.
+		/// </exception>
+		/// <exception cref="FormatException">
+		/// <paramref name="format"/> is invalid.-or- The index of a format item is less than zero, or
+		/// greater than or equal to the length of the <paramref name="args"/> array.
+		/// </exception>
+		[StringFormatMethod("format")]
+		public static void Warning(bool important, string format, params object[] args)
+		{
+			Post(important ? LogPostType.WarningAlways : LogPostType.Warning, string.Format(format, args));
+		}
+		/// <summary>
 		/// Writes an error message into the log. Displayed with red font.
 		/// </summary>
 		/// <param name="value">    Text to post.</param>
@@ -48,12 +110,53 @@ namespace CryCil.Engine.DebugServices
 			Post(important ? LogPostType.ErrorAlways : LogPostType.Error, value);
 		}
 		/// <summary>
+		/// Writes an error message into the log. Displayed with red font.
+		/// </summary>
+		/// <param name="important">Indicates whether the message is very important to post.</param>
+		/// <param name="format">   String that specifies how to build the final text to post.</param>
+		/// <param name="args">     
+		/// An array of object which string representations must be inserted into final text according to
+		/// <paramref name="format"/>.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		/// <paramref name="format"/> or <paramref name="args"/> is null.
+		/// </exception>
+		/// <exception cref="FormatException">
+		/// <paramref name="format"/> is invalid.-or- The index of a format item is less than zero, or
+		/// greater than or equal to the length of the <paramref name="args"/> array.
+		/// </exception>
+		[StringFormatMethod("format")]
+		public static void Error(bool important, string format, params object[] args)
+		{
+			Post(important ? LogPostType.ErrorAlways : LogPostType.Error, string.Format(format, args));
+		}
+		/// <summary>
 		/// Posts a comment into the log.
 		/// </summary>
 		/// <param name="value">Text to post.</param>
 		public static void Comment(string value)
 		{
 			Post(LogPostType.Comment, value);
+		}
+		/// <summary>
+		/// Posts a comment into the log.
+		/// </summary>
+		/// <param name="format">String that specifies how to build the final text to post.</param>
+		/// <param name="args">  
+		/// An array of object which string representations must be inserted into final text according to
+		/// <paramref name="format"/>.
+		/// </param>
+		/// <exception cref="ArgumentNullException">
+		/// <paramref name="format"/> or <paramref name="args"/> is null.
+		/// </exception>
+		/// <exception cref="FormatException">
+		/// <paramref name="format"/> is invalid.-or- The index of a format item is less than zero, or
+		/// greater than or equal to the length of the <paramref name="args"/> array.
+		/// </exception>
+		[StringFormatMethod("format")]
+		public static void Comment(string format, params object[] args)
+		{
+			Post(LogPostType.Comment, string.Format(format, args));
 		}
 		/// <summary>
 		/// Posts a line of text to the log.
