@@ -133,45 +133,12 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Mathematics\Geometry\Meshes\CSG\SplittableTriangle.cs" />
-    <Compile Include="Mathematics\Geometry\Meshes\Mesh.CSG.cs" />
-    <Compile Include="Mathematics\Geometry\Meshes\IVertex.cs" />
-    <Compile Include="Mathematics\Geometry\Meshes\IVertex3D.cs" />
-    <Compile Include="Mathematics\Geometry\Meshes\MeshVertex.cs" />
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="RunTime\Registration\EntityRegister.cs" />
-    <Compile Include="RunTime\Registration\Exception.cs" />
     <Compile Include="Logic\GameRules\GameRulesInitializationParams.cs" />
     <Compile Include="Native\NamespaceDoc.cs" />
-    <Compile Include="Mathematics\Geometry\Meshes\Mesh.cs" />
-    <Compile Include="Mathematics\Geometry\Meshes\CommonTangentOperations.cs" />
-    <Compile Include="Mathematics\Geometry\Meshes\Solids\ConstructiveSolidGeometry.cs" />
-    <Compile Include="Mathematics\Geometry\Meshes\MeshConsistencyException.cs" />
-    <Compile Include="Mathematics\Geometry\Meshes\IndexedTriangleFace.cs" />
-    <Compile Include="Mathematics\Geometry\Meshes\IMesh.cs" />
-    <Compile Include="Mathematics\Geometry\Meshes\IMeshDetailsCollection.cs" />
-    <Compile Include="Mathematics\Geometry\Meshes\IQTangent.cs" />
-    <Compile Include="Mathematics\Geometry\Meshes\ITangent.cs" />
-    <Compile Include="Mathematics\Geometry\Meshes\NativeFaceCollection.cs" />
-    <Compile Include="Mathematics\Geometry\Meshes\NativeIndicesCollection.cs" />
-    <Compile Include="Mathematics\Geometry\Meshes\NativeMesh.cs" />
-    <Compile Include="Mathematics\Geometry\Meshes\NativeMeshDetailsCollection.cs" />
-    <Compile Include="Mathematics\Geometry\Meshes\NativeVertexColorCollections.cs" />
-    <Compile Include="Mathematics\Geometry\Meshes\NativeVertexNormalCollection.cs" />
-    <Compile Include="Mathematics\Geometry\Meshes\NativeVertexQTangentCollection.cs" />
-    <Compile Include="Mathematics\Geometry\Meshes\NativeVertexTangentCollection.cs" />
-    <Compile Include="Mathematics\Geometry\Meshes\NativeVertexPositionCollection.cs" />
-    <Compile Include="Mathematics\Geometry\Meshes\NativeVertexTextureCoordinatesCollection.cs" />
-    <Compile Include="Mathematics\Geometry\Meshes\TangentInt16.cs" />
-    <Compile Include="Mathematics\Geometry\Meshes\TangentSingle.cs" />
-    <Compile Include="Native\MeshInterop.cs" />
-    <Compile Include="Native\StaticObjectInterop.cs" />
-    <Compile Include="RunTime\Networking\RemoteInvocationException.cs" />
     <Compile Include="Native\GameRulesInterop.cs" />
-    <Compile Include="RunTime\Networking\RemoteInvocationAttribute.cs" />
     <Compile Include="Logic\GameRules\GameRules.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RunTime\UnusedMarker.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

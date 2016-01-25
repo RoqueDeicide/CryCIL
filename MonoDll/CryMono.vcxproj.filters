@@ -6,18 +6,12 @@
     <ClInclude Include="Interops\GameLogic\GameRules.h">
       <Filter>Interops\Game Logic</Filter>
     </ClInclude>
-    <ClInclude Include="Interops\StaticObjects\CMesh.h">
-      <Filter>Interops\StaticObjects</Filter>
-    </ClInclude>
     <ClInclude Include="AllInterops.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="Interops\GameLogic\GameRules.cpp">
       <Filter>Interops\Game Logic</Filter>
-    </ClCompile>
-    <ClCompile Include="Interops\StaticObjects\CMesh.cpp">
-      <Filter>Interops\StaticObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -26,9 +20,6 @@
     </Filter>
     <Filter Include="Interops\Game Logic">
       <UniqueIdentifier>{55fd45df-3f95-4840-8eab-7d7170031ae0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Interops\StaticObjects">
-      <UniqueIdentifier>{32b893d5-61d5-4bfc-9231-bf35d3233630}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

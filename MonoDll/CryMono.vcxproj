@@ -96,13 +96,11 @@ Xcopy "$(SolutionDir)..\Build\Bin64\*" "$(SolutionDir)..\..\..\Bin64\*" /d /y /i
   <ItemGroup>
     <ClInclude Include="AllInterops.h" />
     <ClInclude Include="Interops\GameLogic\GameRules.h" />
-    <ClInclude Include="Interops\StaticObjects\CMesh.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Interops\GameLogic\GameRules.cpp" />
-    <ClCompile Include="Interops\StaticObjects\CMesh.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
