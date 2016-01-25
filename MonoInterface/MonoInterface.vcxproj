@@ -306,6 +306,7 @@
     <ClInclude Include="Interops\CustomMarshaling.h" />
     <ClInclude Include="Interops\DebugDraw.h" />
     <ClInclude Include="Interops\CryFont.h" />
+    <ClInclude Include="Interops\Decal.h" />
     <ClInclude Include="Interops\DefaultSkeleton.h" />
     <ClInclude Include="Interops\DynArrayToMonoArray.h" />
     <ClInclude Include="Interops\Entity.h" />
@@ -345,6 +346,7 @@
     <ClInclude Include="Interops\MeshOps.h" />
     <ClInclude Include="Interops\MonoAnimationEvent.h" />
     <ClInclude Include="Interops\MonoCryXmlNode.h" />
+    <ClInclude Include="Interops\MonoDecalInfo.h" />
     <ClInclude Include="Interops\MonoEntitySpawnParams.h" />
     <ClInclude Include="Interops\MonoFlowNode.h" />
     <ClInclude Include="Interops\MonoFlowNodeFactory.h" />
@@ -479,6 +481,7 @@
     <ClCompile Include="Interops\CryXmlNode.cpp" />
     <ClCompile Include="Interops\CustomMarshaling.cpp" />
     <ClCompile Include="Interops\DebugDraw.cpp" />
+    <ClCompile Include="Interops\Decal.cpp" />
     <ClCompile Include="Interops\DefaultSkeleton.cpp" />
     <ClCompile Include="Interops\Entity.cpp" />
     <ClCompile Include="Interops\EntityClass.cpp" />

@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using CryCil.Annotations;
 using CryCil.Engine.Physics;
 using CryCil.Engine.Rendering;
+using CryCil.Engine.Rendering.Nodes;
 
 namespace CryCil.Engine.Logic
 {
@@ -314,6 +315,18 @@ namespace CryCil.Engine.Logic
 				return GetPhysics(this.handle);
 			}
 		}
+		/// <summary>
+		/// Gets the object that represents this entity in the render world.
+		/// </summary>
+		public CryRenderNode RenderNode
+		{
+			get
+			{
+				this.AssertEntity();
+
+				return GetRenderNode(this.handle);
+			}
+		}
 		#endregion
 		#region Construction
 		internal CryEntity(IntPtr handle)
@@ -621,6 +634,8 @@ namespace CryCil.Engine.Logic
 		private static extern void UnphysicalizeInternal(IntPtr handle);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern PhysicalEntity GetPhysics(IntPtr handle);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern CryRenderNode GetRenderNode(IntPtr handle);
 		#endregion
 	}
 }

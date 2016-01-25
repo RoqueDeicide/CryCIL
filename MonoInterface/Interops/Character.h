@@ -3,6 +3,8 @@
 #include "IMonoInterface.h"
 #include <ICryAnimation.h>
 
+struct MonoDecalInfo;
+
 struct CharacterInterop : IMonoInterop<true, true>
 {
 	virtual const char *GetInteropClassName() override { return "Character"; }
@@ -29,7 +31,7 @@ struct CharacterInterop : IMonoInterop<true, true>
 	static int GetObjectType(ICharacterInstance *handle);
 	static mono::string GetFilePath(ICharacterInstance *handle);
 	static void EnableDecalsInternal(ICharacterInstance *handle, bool enable);
-	static void CreateDecalInternal(ICharacterInstance *handle, CryEngineDecalInfo &DecalLCS);
+	static void CreateDecalInternal(ICharacterInstance *handle, MonoDecalInfo &DecalLCS);
 	static bool GetHasVertexAnimation(ICharacterInstance *handle);
 	static IMaterial *GetIMaterial(ICharacterInstance *handle);
 	static void SetIMaterial_Instance(ICharacterInstance *handle, IMaterial *pMaterial);

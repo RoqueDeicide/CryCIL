@@ -572,6 +572,12 @@
     <ClInclude Include="Interops\CryAudioProxy.h">
       <Filter>Interops\Engine\Audio</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\Decal.h">
+      <Filter>Interops\Engine\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\MonoDecalInfo.h">
+      <Filter>Interops\Engine\Effects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -989,6 +995,9 @@
     </ClCompile>
     <ClCompile Include="Interops\CryAudioProxy.cpp">
       <Filter>Interops\Engine\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\Decal.cpp">
+      <Filter>Interops\Engine\Effects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

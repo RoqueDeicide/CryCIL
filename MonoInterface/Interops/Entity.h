@@ -150,6 +150,7 @@ struct CryEntityInterop : public IMonoInterop < true, true >
 	static void         PhysicalizeInternal(IEntity *handle, EntityPhysicalizationParameters *parameters);
 	static void         UnphysicalizeInternal(IEntity *handle);
 	static IPhysicalEntity *GetPhysics(IEntity *handle);
+	static IRenderNode *GetRenderNode(IEntity *handle);
 };
 
 struct EntitySlotsInterop : IMonoInterop<true, true>

@@ -1,6 +1,7 @@
 ﻿#include "stdafx.h"
 
 #include "Character.h"
+#include "MonoDecalInfo.h"
 
 void CharacterInterop::OnRunTimeInitialized()
 {
@@ -171,9 +172,12 @@ void CharacterInterop::EnableDecalsInternal(ICharacterInstance *handle, bool ena
 	handle->EnableDecals(enable ? 1 : 0);
 }
 
-void CharacterInterop::CreateDecalInternal(ICharacterInstance *handle, CryEngineDecalInfo &DecalLCS)
+void CharacterInterop::CreateDecalInternal(ICharacterInstance *handle, MonoDecalInfo &DecalLCS)
 {
-	handle->CreateDecal(DecalLCS);
+	CryEngineDecalInfo info;
+	DecalLCS.Export(info);
+
+	handle->CreateDecal(info);
 }
 
 bool CharacterInterop::GetHasVertexAnimation(ICharacterInstance *handle)

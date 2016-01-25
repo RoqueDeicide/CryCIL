@@ -455,7 +455,7 @@ namespace CryCil.Engine.Models.Characters
 		/// character's local space.
 		/// </param>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
-		public void CreateDecal(ref CryEngineDecalInfo decal)
+		public void CreateDecal(ref DecalInfo decal)
 		{
 			this.AssertInstance();
 
@@ -678,7 +678,7 @@ namespace CryCil.Engine.Models.Characters
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void EnableDecalsInternal(IntPtr handle, bool enable);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern void CreateDecalInternal(IntPtr handle, ref CryEngineDecalInfo DecalLCS);
+		private static extern void CreateDecalInternal(IntPtr handle, ref DecalInfo DecalLCS);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern bool GetHasVertexAnimation(IntPtr handle);
 		[MethodImpl(MethodImplOptions.InternalCall)]

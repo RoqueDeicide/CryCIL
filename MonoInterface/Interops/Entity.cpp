@@ -670,6 +670,7 @@ void CryEntityInterop::OnRunTimeInitialized()
 	REGISTER_METHOD(PhysicalizeInternal);
 	REGISTER_METHOD(UnphysicalizeInternal);
 	REGISTER_METHOD(GetPhysics);
+	REGISTER_METHOD(GetRenderNode);
 }
 
 void CryEntityInterop::SetFlags(IEntity *handle, uint64 flags)
@@ -1032,6 +1033,18 @@ void CryEntityInterop::UnphysicalizeInternal(IEntity *handle)
 IPhysicalEntity *CryEntityInterop::GetPhysics(IEntity *handle)
 {
 	return handle->GetPhysics();
+}
+
+IRenderNode *CryEntityInterop::GetRenderNode(IEntity *handle)
+{
+	IEntityRenderProxy *proxy = static_cast<IEntityRenderProxy*>(handle->GetProxy(ENTITY_PROXY_RENDER));
+
+	if (!proxy)
+	{
+		return nullptr;
+	}
+
+	return proxy->GetRenderNode();
 }
 
 void EntitySlotsInterop::OnRunTimeInitialized()
