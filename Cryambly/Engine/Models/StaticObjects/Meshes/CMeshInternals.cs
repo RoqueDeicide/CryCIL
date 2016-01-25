@@ -28,7 +28,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		internal CryMeshBoneMappingByte* pExtraBoneMapping; //bone indices and weights for bones 5 to 8.
 
 		internal int nCoorCount; //number of texture coordinates in pTexCoord array
-		internal fixed int streamSize [GeneralMeshStreamId.LastStream];
+		internal fixed int streamSize [(int)GeneralMeshStreamId.LastStream];
 
 		// Bounding box.
 		internal BoundingBox bbox;
