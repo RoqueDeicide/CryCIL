@@ -21,7 +21,7 @@ namespace CryCil.Engine.Models.StaticObjects
 
 #pragma warning disable 1584,1711,1572,1581,1580
 		/// <summary>
-		/// Identifier of the vertex data format. <see cref="VertexFormat.P3F_C4B_T2F"/> is the default
+		/// Identifier of the vertex data format. <see cref="CryCil.Engine.Models.StaticObjects.VertexFormat.P3F_C4B_T2F"/> is the default
 		/// one.
 		/// </summary>
 		public VertexFormat VertexFormat;
