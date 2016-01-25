@@ -89,6 +89,7 @@ TYPE_MIRROR enum AudioTypesReservedValues
 	MAX_AUDIO_OBJECT_NAME_LENGTH_check = 256
 };
 
+#undef CHECK_ENUM
 #define CHECK_ENUM(x) static_assert (AudioTypesReservedValues::x ## _check == x, "Some values common to audio API have been changed.")
 
 inline void CheckAudioTypesReservedValues()
@@ -111,6 +112,7 @@ TYPE_MIRROR enum AudioRequestFlags
 	eARF_THREAD_SAFE_PUSH_check = BIT(6)
 };
 
+#undef CHECK_ENUM
 #define CHECK_ENUM(x) static_assert (AudioRequestFlags::x ## _check == EAudioRequestFlags::x, "EAudioRequestFlags enumeration have been changed.")
 
 inline void CheckAudioRequestFlags()
@@ -135,6 +137,7 @@ TYPE_MIRROR enum AudioRequestType
 	eART_AUDIO_ALL_REQUESTS_check = 0xFFFFFFFF
 };
 
+#undef CHECK_ENUM
 #define CHECK_ENUM(x) static_assert (AudioRequestType::x ## _check == EAudioRequestType::x, "EAudioRequestType enumeration have been changed.")
 
 inline void CheckAudioRequestType()
@@ -154,6 +157,7 @@ TYPE_MIRROR enum AudioRequestResult
 	eARR_FAILURE_check = 2
 };
 
+#undef CHECK_ENUM
 #define CHECK_ENUM(x) static_assert (AudioRequestResult::x ## _check == EAudioRequestResult::x, "EAudioRequestResult enumeration have been changed.")
 
 inline void CheckAudioRequestResult()
@@ -171,6 +175,7 @@ TYPE_MIRROR enum ATLDataScope
 	eADS_ALL_check = 3
 };
 
+#undef CHECK_ENUM
 #define CHECK_ENUM(x) static_assert (ATLDataScope::x ## _check == EATLDataScope::x, "EATLDataScope enumeration have been changed.")
 
 inline void CheckATLDataScope()
@@ -206,6 +211,7 @@ TYPE_MIRROR enum AudioManagerRequestType
 	eAMRT_RETRIGGER_AUDIO_CONTROLS_check = BIT(19)
 };
 
+#undef CHECK_ENUM
 #define CHECK_ENUM(x) static_assert (AudioManagerRequestType::x ## _check == EAudioManagerRequestType::x, "EAudioManagerRequestType enumeration have been changed.")
 
 inline void CheckAudioManagerRequestType()
@@ -241,6 +247,7 @@ TYPE_MIRROR enum AudioCallbackManagerRequestType
 	eACMRT_REPORT_PROCESSED_OBSTRUCTION_RAY_check = BIT(2)
 };
 
+#undef CHECK_ENUM
 #define CHECK_ENUM(x) static_assert (AudioCallbackManagerRequestType::x ## _check == EAudioCallbackManagerRequestType::x, "EAudioCallbackManagerRequestType enumeration have been changed.")
 
 inline void CheckAudioCallbackManagerRequestType()
@@ -257,6 +264,7 @@ TYPE_MIRROR enum AudioListenerRequestType
 	eALRT_SET_POSITION_check = BIT(0)
 };
 
+#undef CHECK_ENUM
 #define CHECK_ENUM(x) static_assert (AudioListenerRequestType::x ## _check == EAudioListenerRequestType::x, "EAudioListenerRequestType enumeration have been changed.")
 
 inline void CheckAudioListenerRequestType()
@@ -282,6 +290,7 @@ TYPE_MIRROR enum AudioObjectRequestType
 	eAORT_RELEASE_OBJECT_check = BIT(11)
 };
 
+#undef CHECK_ENUM
 #define CHECK_ENUM(x) static_assert (AudioObjectRequestType::x ## _check == EAudioObjectRequestType::x, "EAudioObjectRequestType enumeration have been changed.")
 
 inline void CheckAudioObjectRequestType()
@@ -311,6 +320,7 @@ TYPE_MIRROR enum AudioObjectObstructionCalcType
 	eAOOCT_COUNT_check
 };
 
+#undef CHECK_ENUM
 #define CHECK_ENUM(x) static_assert (AudioObjectObstructionCalcType::x ## _check == EAudioObjectObstructionCalcType::x, "EAudioObjectObstructionCalcType enumeration have been changed.")
 
 inline void CheckAudioObjectObstructionCalcType()
@@ -335,6 +345,7 @@ TYPE_MIRROR enum AudioControlType
 	eACT_ENVIRONMENT_check = 7
 };
 
+#undef CHECK_ENUM
 #define CHECK_ENUM(x) static_assert (AudioControlType::x ## _check == EAudioControlType::x, "EAudioControlType enumeration have been changed.")
 
 inline void CheckAudioControlType()
@@ -355,6 +366,7 @@ TYPE_MIRROR enum LipSyncMethod
 	eLSM_MatchAnimationToSoundName_check
 };
 
+#undef CHECK_ENUM
 #define CHECK_ENUM(x) static_assert (LipSyncMethod::x ## _check == ELipSyncMethod::x, "ELipSyncMethod enumeration have been changed.")
 
 inline void CheckLipSyncMethod()
