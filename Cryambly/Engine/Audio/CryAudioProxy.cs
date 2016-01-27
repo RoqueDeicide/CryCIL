@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using CryCil.Engine.Logic;
 
@@ -35,7 +36,8 @@ namespace CryCil.Engine.Audio
 			}
 		}
 		/// <summary>
-		/// Sets the type of algorithm that is used to determine whether sound emitted by this proxy is obstructed.
+		/// Sets the type of algorithm that is used to determine whether sound emitted by this proxy is
+		/// obstructed.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public ObstructionCalculationType ObstructionDetection
@@ -84,7 +86,7 @@ namespace CryCil.Engine.Audio
 		/// <summary>
 		/// Initializes this audio proxy, turning it into a valid audio object that can make sounds.
 		/// </summary>
-		/// <param name="name">Name of the object.</param>
+		/// <param name="name">     Name of the object.</param>
 		/// <param name="asyncInit">Indicates whether initialization must be done asynchronously.</param>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public void Initialize(string name, bool asyncInit = true)
@@ -117,7 +119,7 @@ namespace CryCil.Engine.Audio
 		/// Executes an audio trigger on this proxy.
 		/// </summary>
 		/// <param name="triggerId">Identifier of the trigger to execute.</param>
-		/// <param name="method">A lip-sync method to use.</param>
+		/// <param name="method">   A lip-sync method to use.</param>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public void ExecuteTrigger(AudioId triggerId, LipSyncMethod method = LipSyncMethod.None)
 		{
@@ -129,7 +131,7 @@ namespace CryCil.Engine.Audio
 		/// Executes an audio trigger on this proxy.
 		/// </summary>
 		/// <param name="triggerName">Name of the trigger to execute.</param>
-		/// <param name="method">A lip-sync method to use.</param>
+		/// <param name="method">     A lip-sync method to use.</param>
 		/// <returns>Indication whether the trigger of specified name was found.</returns>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public bool ExecuteTrigger(string triggerName, LipSyncMethod method = LipSyncMethod.None)
@@ -179,7 +181,7 @@ namespace CryCil.Engine.Audio
 		/// Changes the state of the switch on this proxy.
 		/// </summary>
 		/// <param name="switchId">Identifier of the switch to set the state for.</param>
-		/// <param name="stateId">Identifier of the state to set.</param>
+		/// <param name="stateId"> Identifier of the state to set.</param>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public void SetSwitchState(AudioId switchId, AudioId stateId)
 		{
@@ -191,7 +193,7 @@ namespace CryCil.Engine.Audio
 		/// Changes the state of the switch on this proxy.
 		/// </summary>
 		/// <param name="switchName">Identifier of the switch to set the state for.</param>
-		/// <param name="stateName">Identifier of the state to set.</param>
+		/// <param name="stateName"> Identifier of the state to set.</param>
 		/// <returns>Indication whether switch and state with specified names were found.</returns>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public bool SetSwitchState(string switchName, string stateName)
@@ -212,7 +214,7 @@ namespace CryCil.Engine.Audio
 		/// Changes the RTPC (Real-Time Parameter Control) value on this proxy.
 		/// </summary>
 		/// <param name="rtpcId">Identifier of the RTPC to set.</param>
-		/// <param name="value">A value to set.</param>
+		/// <param name="value"> A value to set.</param>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public void SetRtpcValue(AudioId rtpcId, float value)
 		{
@@ -224,7 +226,7 @@ namespace CryCil.Engine.Audio
 		/// Changes the RTPC (Real-Time Parameter Control) value on this proxy.
 		/// </summary>
 		/// <param name="rtpcName">Name of the RTPC to set.</param>
-		/// <param name="value">A value to set.</param>
+		/// <param name="value">   A value to set.</param>
 		/// <returns>Indication whether the RTPC of specified name was found.</returns>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public bool SetRtpcValue(string rtpcName, float value)
@@ -244,7 +246,7 @@ namespace CryCil.Engine.Audio
 		/// Sets the strength of the environment effect on this proxy.
 		/// </summary>
 		/// <param name="environmentId">Identifier of the environment effect to change.</param>
-		/// <param name="amount">Strength to set.</param>
+		/// <param name="amount">       Strength to set.</param>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public void SetEnvironmentAmount(AudioId environmentId, float amount)
 		{
@@ -256,7 +258,7 @@ namespace CryCil.Engine.Audio
 		/// Executes an audio trigger on this proxy.
 		/// </summary>
 		/// <param name="environmentName">Name of the environment effect to change.</param>
-		/// <param name="amount">Strength to set.</param>
+		/// <param name="amount">         Strength to set.</param>
 		/// <returns>Indication whether the environment effect of specified name was found.</returns>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public bool SetEnvironmentAmount(string environmentName, float amount)

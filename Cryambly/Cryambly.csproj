@@ -108,6 +108,7 @@
     <Compile Include="Engine\Input\NamespaceDoc.cs" />
     <Compile Include="Engine\Localization\NamespaceDoc.cs" />
     <Compile Include="Engine\Logic\EntityProxies\CryEntityAreaProxy.cs" />
+    <Compile Include="Engine\Logic\EntityProxies\CryEntityAudioProxy.cs" />
     <Compile Include="Engine\Logic\EntityProxies\EntityAreaType.cs" />
     <Compile Include="Engine\Logic\NamespaceDoc.cs" />
     <Compile Include="Engine\Memory\NamespaceDoc.cs" />

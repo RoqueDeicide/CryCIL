@@ -8,6 +8,12 @@ namespace CryCil.Engine.Audio
 	/// </summary>
 	public struct AudioId
 	{
+		#region Defaults
+		/// <summary>
+		/// Default identifier.
+		/// </summary>
+		public static readonly AudioId Default = 1;
+		#endregion
 		#region Fields
 		private uint id;
 		#endregion
