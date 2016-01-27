@@ -578,6 +578,9 @@
     <ClInclude Include="Interops\MonoDecalInfo.h">
       <Filter>Interops\Engine\Effects</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\CryEntityAreaProxy.h">
+      <Filter>Interops\Engine\Logic\Proxies</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -999,6 +1002,12 @@
     <ClCompile Include="Interops\Decal.cpp">
       <Filter>Interops\Engine\Effects</Filter>
     </ClCompile>
+    <ClCompile Include="TypeMapChecks\EntityProxyTypes.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\CryEntityAreaProxy.cpp">
+      <Filter>Interops\Engine\Logic\Proxies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">
@@ -1126,6 +1135,9 @@
     </Filter>
     <Filter Include="Interops\Engine\Audio">
       <UniqueIdentifier>{1ab0388a-4f8c-444b-83a4-e5ba30b24ada}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interops\Engine\Logic\Proxies">
+      <UniqueIdentifier>{71d07a5f-8097-457d-9a40-79f5f82a64e7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

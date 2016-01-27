@@ -181,3 +181,5 @@
 #include "Interops/CryAudioProxy.h"
 
 #include "Interops/Decal.h"
+
+#include "Interops/CryEntityAreaProxy.h"

@@ -395,6 +395,7 @@ void MonoInterface::RegisterDefaultListeners()
 	this->broadcaster->listeners->Add(new CryAudioListenerInterop());
 	this->broadcaster->listeners->Add(new CryAudioProxyInterop());
 	this->broadcaster->listeners->Add(new DecalInterop());
+	this->broadcaster->listeners->Add(new CryEntityAreaProxyInterop());
 }
 #pragma endregion
 #pragma region Thunks Initialization

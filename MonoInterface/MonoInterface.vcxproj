@@ -298,6 +298,7 @@
     <ClInclude Include="Interops\CryArchive.h" />
     <ClInclude Include="Interops\CryAudioListener.h" />
     <ClInclude Include="Interops\CryAudioProxy.h" />
+    <ClInclude Include="Interops\CryEntityAreaProxy.h" />
     <ClInclude Include="Interops\CryMarshal.h" />
     <ClInclude Include="Interops\CryFiles.h" />
     <ClInclude Include="Interops\CryPak.h" />
@@ -473,6 +474,7 @@
     <ClCompile Include="Interops\CryArchive.cpp" />
     <ClCompile Include="Interops\CryAudioListener.cpp" />
     <ClCompile Include="Interops\CryAudioProxy.cpp" />
+    <ClCompile Include="Interops\CryEntityAreaProxy.cpp" />
     <ClCompile Include="Interops\CryFont.cpp" />
     <ClCompile Include="Interops\CryMarshal.cpp" />
     <ClCompile Include="Interops\CryFiles.cpp" />
@@ -558,6 +560,7 @@
     </ClCompile>
     <ClCompile Include="Testing\TestStart.cpp" />
     <ClCompile Include="ThunkTables.cpp" />
+    <ClCompile Include="TypeMapChecks\EntityProxyTypes.cpp" />
     <ClCompile Include="TypeMapChecks\AudioTypes.cpp" />
     <ClCompile Include="TypeMapChecks\CharacterTypes.cpp" />
     <ClCompile Include="TypeMapChecks\CryName.cpp" />
