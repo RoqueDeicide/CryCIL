@@ -12,7 +12,7 @@ namespace CryCil.Engine.Logic
 	/// <summary>
 	/// Enumeration of types of areas to use when physicalizing entities as areas.
 	/// </summary>
-	public enum AreaType
+	public enum PhysicalAreaType
 	{
 		/// <summary>
 		/// Specifies the area to be a sphere.
@@ -45,7 +45,7 @@ namespace CryCil.Engine.Logic
 	public unsafe struct AreaDefinition
 	{
 		#region Fields
-		[UsedImplicitly] private AreaType areaType;
+		[UsedImplicitly] private PhysicalAreaType physicalAreaType;
 		[UsedImplicitly] private float fRadius;
 		[UsedImplicitly] private Vector3 boxmin, boxmax;
 		[UsedImplicitly] private Vector3* points;
@@ -144,21 +144,21 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Creates a valid object of this type.
 		/// </summary>
-		/// <param name="areaType">     Type of area to use.</param>
+		/// <param name="physicalAreaType">     Type of area to use.</param>
 		/// <param name="gravityParams">
 		/// A valid pointer to a structure that contains the gravity parameters.
 		/// </param>
 		/// <exception cref="ArgumentOutOfRangeException">Unknown area type.</exception>
-		public AreaDefinition(AreaType areaType, PhysicsParametersArea* gravityParams = null)
+		public AreaDefinition(PhysicalAreaType physicalAreaType, PhysicsParametersArea* gravityParams = null)
 			: this()
 		{
-			if (areaType < AreaType.Sphere || areaType > AreaType.Spline)
+			if (physicalAreaType < PhysicalAreaType.Sphere || physicalAreaType > PhysicalAreaType.Spline)
 			{
-				throw new ArgumentOutOfRangeException("areaType", "Unknown area type.");
+				throw new ArgumentOutOfRangeException("physicalAreaType", "Unknown area type.");
 			}
 			Contract.EndContractBlock();
 
-			this.areaType = areaType;
+			this.physicalAreaType = physicalAreaType;
 			this.pGravityParams = gravityParams;
 		}
 		#endregion
@@ -169,7 +169,7 @@ namespace CryCil.Engine.Logic
 		/// </exception>
 		internal void Validate()
 		{
-			if (this.areaType == AreaType.Shape || this.areaType == AreaType.Spline)
+			if (this.physicalAreaType == PhysicalAreaType.Shape || this.physicalAreaType == PhysicalAreaType.Spline)
 			{
 				if (this.points == null || this.pointsCount == 0)
 				{
