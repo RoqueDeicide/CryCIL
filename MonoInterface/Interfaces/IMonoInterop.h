@@ -107,9 +107,289 @@ template<> struct IMonoInterop < false, true > : public IMonoInteropBase
 	}
 };
 
+//! Registers an interop method within a method of a class that is derived from IMonoInterop.
+//!
+//! Use this macro when you want to register an internal call for a method that has no overloads.
+//!
+//! Examples:
+//!
+//! Managed class where internal call is declared.
+//!
+//! @code{.cs}
+//! internal static class ClassWithInternalCalls
+//! {
+//!     [MethodImpl(MethodImplOptions.InternalCall)]
+//!     internal static extern void Method(bool smth);
+//! }
+//! @endcode
+//!
+//! C++ class where internal call is implemented and registered.
+//!
+//! @code{.cpp}
+//! #include "IMonoInterface.h"
+//!
+//! struct ClassWithInternalCallsInterop : public IMonoInterop<true, false>
+//! {
+//!     virtual const char *GetInteropClassName() override { return "ClassWithInternalCalls"; }
+//!     virtual const char *GetInteropNameSpace() override { return "SomeNameSpace"; }
+//!
+//!     virtual void OnRunTimeInitialized() override
+//!     {
+//!         REGISTER_METHOD(Method);
+//!     }
+//!
+//!     static void Method(bool smth);
+//! }
+//! @endcode
+//!
+//! @param method Method that will be invoked via internal call and which name is used as a name of the
+//!               managed method.
 #define REGISTER_METHOD(method) this->RegisterInteropMethod(#method, method)
-#define REGISTER_METHOD_NAME(name, method) this->RegisterInteropMethod(name, method)
+//! Registers an interop method within a method of a class that is derived from IMonoInterop.
+//!
+//! Use this macro when you want to register an internal call for a method that has multiple overloads
+//! to specify which overload to use. You also need to use this macro when names of managed and native
+//! method are different.
+//!
+//! Examples:
+//!
+//! Managed classes where internal calls are declared.
+//!
+//! @code{.cs}
+//! internal static class ClassWithInternalCalls
+//! {
+//!     [MethodImpl(MethodImplOptions.InternalCall)]
+//!     internal static extern void Method(bool smth);
+//!     [MethodImpl(MethodImplOptions.InternalCall)]
+//!     internal static extern void Method(int smth);
+//! }
+//! @endcode
+//!
+//! C++ class where internal call is implemented and registered.
+//!
+//! @code{.cpp}
+//! #include "IMonoInterface.h"
+//!
+//! struct ClassWithInternalCallsInterop : public IMonoInterop<true, false>
+//! {
+//!     virtual const char *GetInteropClassName() override { return "ClassWithInternalCalls"; }
+//!     virtual const char *GetInteropNameSpace() override { return "SomeNameSpace"; }
+//!
+//!     virtual void OnRunTimeInitialized() override
+//!     {
+//!         REGISTER_METHOD_N("Method(bool)", Method);
+//!         REGISTER_METHOD_N("Method(int)",  Method2);
+//!     }
+//!
+//!     static void Method(bool smth);
+//!     static void Method2(int smth);
+//! }
+//! @endcode
+//!
+//! @param name   Name that is used as a name of the managed method.
+//! @param method Method that will be invoked via internal call.
+#define REGISTER_METHOD_N(name, method) this->RegisterInteropMethod(name, method)
+//! Registers an interop method.
+//!
+//! Use this macro when you want to register an internal call for a method that is defined in a different
+//! class to one specified in declaration of the interop class.
+//!
+//! Examples:
+//!
+//! Managed classes where internal calls are declared.
+//!
+//! @code{.cs}
+//! internal static class ClassWithInternalCalls
+//! {
+//!     [MethodImpl(MethodImplOptions.InternalCall)]
+//!     internal static extern void Method(bool smth);
+//!     [MethodImpl(MethodImplOptions.InternalCall)]
+//!     internal static extern void Method(int smth);
+//! }
+//! internal static class ClassWithInternalCalls2
+//! {
+//!     [MethodImpl(MethodImplOptions.InternalCall)]
+//!     internal static extern void Method(bool smth);
+//!     [MethodImpl(MethodImplOptions.InternalCall)]
+//!     internal static extern void Method(uint smth);
+//! }
+//! @endcode
+//!
+//! C++ class where internal call is implemented and registered.
+//!
+//! @code{.cpp}
+//! #include "IMonoInterface.h"
+//!
+//! struct ClassWithInternalCallsInterop : public IMonoInterop<true, false>
+//! {
+//!     // This class registers internal calls for multiple managed classes, therefore this method doesn't
+//!     // really matter.
+//!     virtual const char *GetInteropClassName() override { return ""; }
+//!     virtual const char *GetInteropNameSpace() override { return "SomeNameSpace"; }
+//!
+//!     virtual void OnRunTimeInitialized() override
+//!     {
+//!         const char *name_space = this->GetInteropNameSpace();
+//!         REGISTER_METHOD_NCN(name_space, "ClassWithInternalCalls",  "Method(bool)", Method);
+//!         REGISTER_METHOD_NCN(name_space, "ClassWithInternalCalls",  "Method(int)",  Method2);
+//!         REGISTER_METHOD_NCN(name_space, "ClassWithInternalCalls2", "Method(bool)", Method);
+//!         REGISTER_METHOD_NCN(name_space, "ClassWithInternalCalls2", "Method(uint)", Method3);
+//!     }
+//!
+//!     static void Method(bool smth);
+//!     static void Method2(int smth);
+//!     static void Method3(uint smth);
+//! }
+//! @endcode
+//!
+//! @param name_space Name space contains the class where managed method is defined.
+//! @param class_name Name of the class where managed method is defined.
+//! @param name       Name that is used as a name of the managed method.
+//! @param method     Method that will be invoked via internal call.
+#define REGISTER_METHOD_NCN(name_space, class_name, name, method) \
+	(this->monoInterface ? this->monoInterface : MonoEnv)->Functions->AddInternalCall(name_space, class_name, \
+																					  name, method);
+//! Registers an interop constructor within a method of a class that is derived from IMonoInterop.
+//!
+//! Use this macro when you want to register an internal call for a constructor that has no overloads.
+//!
+//! Examples:
+//!
+//! Managed class where internal call is declared.
+//!
+//! @code{.cs}
+//! internal static class ClassWithInternalCalls
+//! {
+//!     [MethodImpl(MethodImplOptions.InternalCall)]
+//!     internal static extern ClassWithInternalCalls(bool smth);
+//! }
+//! @endcode
+//!
+//! C++ class where internal call is implemented and registered.
+//!
+//! @code{.cpp}
+//! #include "IMonoInterface.h"
+//!
+//! struct ClassWithInternalCallsInterop : public IMonoInterop<true, false>
+//! {
+//!     virtual const char *GetInteropClassName() override { return "ClassWithInternalCalls"; }
+//!     virtual const char *GetInteropNameSpace() override { return "SomeNameSpace"; }
+//!
+//!     virtual void OnRunTimeInitialized() override
+//!     {
+//!         REGISTER_CTOR(Method);
+//!     }
+//!
+//!     static void Method(bool smth);
+//! }
+//! @endcode
+//!
+//! @param method Method that will be invoked via internal call.
 #define REGISTER_CTOR(method) this->RegisterInteropMethod(".ctor", method)
+//! Registers an interop constructor within a method of a class that is derived from IMonoInterop.
+//!
+//! Use this macro when you want to register an internal call for a constructor that has multiple overloads
+//! to specify which overload to use.
+//!
+//! Examples:
+//!
+//! Managed classes where internal calls are declared.
+//!
+//! @code{.cs}
+//! internal static class ClassWithInternalCalls
+//! {
+//!     [MethodImpl(MethodImplOptions.InternalCall)]
+//!     internal static extern ClassWithInternalCalls(bool smth);
+//!     [MethodImpl(MethodImplOptions.InternalCall)]
+//!     internal static extern ClassWithInternalCalls(int smth);
+//! }
+//! @endcode
+//!
+//! C++ class where internal call is implemented and registered.
+//!
+//! @code{.cpp}
+//! #include "IMonoInterface.h"
+//!
+//! struct ClassWithInternalCallsInterop : public IMonoInterop<true, false>
+//! {
+//!     virtual const char *GetInteropClassName() override { return "ClassWithInternalCalls"; }
+//!     virtual const char *GetInteropNameSpace() override { return "SomeNameSpace"; }
+//!
+//!     virtual void OnRunTimeInitialized() override
+//!     {
+//!         REGISTER_CTOR_N("bool", Method);
+//!         REGISTER_CTOR_N("int",  Method2);
+//!     }
+//!
+//!     static void Method(bool smth);
+//!     static void Method2(int smth);
+//! }
+//! @endcode
+//!
+//! @param argTypes Names of types of arguments that are accepted by the constructor.
+//! @param method   Method that will be invoked via internal call.
+#define REGISTER_CTOR_N(argTypes, method) this->RegisterInteropMethod(".ctor("##argTypes##")", method)
+//! Registers an interop constructor.
+//!
+//! Use this macro when you want to register an internal call for a constructor that is defined in a different
+//! class to one specified in declaration of the interop class.
+//!
+//! Examples:
+//!
+//! Managed classes where internal calls are declared.
+//!
+//! @code{.cs}
+//! internal static class ClassWithInternalCalls
+//! {
+//!     [MethodImpl(MethodImplOptions.InternalCall)]
+//!     internal static extern ClassWithInternalCalls(bool smth);
+//!     [MethodImpl(MethodImplOptions.InternalCall)]
+//!     internal static extern ClassWithInternalCalls(int smth);
+//! }
+//! internal static class ClassWithInternalCalls2
+//! {
+//!     [MethodImpl(MethodImplOptions.InternalCall)]
+//!     internal static extern ClassWithInternalCalls2(bool smth);
+//!     [MethodImpl(MethodImplOptions.InternalCall)]
+//!     internal static extern ClassWithInternalCalls2(uint smth);
+//! }
+//! @endcode
+//!
+//! C++ class where internal call is implemented and registered.
+//!
+//! @code{.cpp}
+//! #include "IMonoInterface.h"
+//!
+//! struct ClassWithInternalCallsInterop : public IMonoInterop<true, false>
+//! {
+//!     // This class registers internal calls for multiple managed classes, therefore this method doesn't
+//!     // really matter.
+//!     virtual const char *GetInteropClassName() override { return ""; }
+//!     virtual const char *GetInteropNameSpace() override { return "SomeNameSpace"; }
+//!
+//!     virtual void OnRunTimeInitialized() override
+//!     {
+//!         const char *name_space = this->GetInteropNameSpace();
+//!         REGISTER_CTOR_NCN(name_space, "ClassWithInternalCalls",  "bool", Method);
+//!         REGISTER_CTOR_NCN(name_space, "ClassWithInternalCalls",  "int",  Method2);
+//!         REGISTER_CTOR_NCN(name_space, "ClassWithInternalCalls2", "bool", Method);
+//!         REGISTER_CTOR_NCN(name_space, "ClassWithInternalCalls2", "uint", Method3);
+//!     }
+//!
+//!     static void Method(bool smth);
+//!     static void Method2(int smth);
+//!     static void Method3(uint smth);
+//! }
+//! @endcode
+//!
+//! @param name_space Name space contains the class where constructor is defined.
+//! @param class_name Name of the class where constructor is defined.
+//! @param argTypes   Names of types of arguments that are accepted by the constructor.
+//! @param method     Method that will be invoked via internal call.
+#define REGISTER_CTOR_NCN(name_space, class_name, argTypes, method) \
+	(this->monoInterface ? this->monoInterface : MonoEnv)->Functions->AddInternalCall(name_space, class_name, \
+																					  ".ctor("##argTypes##")", \
+																					  method);
 
 //! Specialization of IMonoInterop<,> template that relies on using MonoEnv variable
 //! instead of internal field and unregisters and destroys itself after registration

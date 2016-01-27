@@ -7,8 +7,6 @@ typedef void(__stdcall *ExecuteCommandThunk)(mono::string, mono::exception *);
 //! Interops with CryEngine Console API.
 struct ConsoleInterop : public IMonoInterop<true, true>
 {
-
-
 	virtual const char *GetInteropClassName() override { return "CryConsole"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine"; }
 

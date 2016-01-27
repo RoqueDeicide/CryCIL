@@ -4,8 +4,8 @@
 
 void SurfaceTypeInterop::OnRunTimeInitialized()
 {
-	this->RegisterInteropMethod("Get(System.String)", Get);
-	this->RegisterInteropMethod("Get(System.Int32)", GetInt);
+	REGISTER_METHOD_N("Get(System.String)", Get);
+	REGISTER_METHOD_N("Get(System.Int32)", GetInt);
 	
 	REGISTER_METHOD(Register);
 	REGISTER_METHOD(Unregister);

@@ -11,28 +11,14 @@ void ConsoleInterop::OnRunTimeInitialized()
 
 	REGISTER_METHOD(RegisterCommandInternal);
 	REGISTER_METHOD(UnregisterCommandInternal);
-	MonoEnv->Functions->AddInternalCall
-		(this->GetInteropNameSpace(), this->GetInteropClassName(), "ExecuteCommand(string,bool,bool)", ExecuteCommand);
+	REGISTER_METHOD_N("ExecuteCommand(string,bool,bool)", ExecuteCommand);
 
-	MonoEnv->Functions->AddInternalCall
-		(this->GetInteropNameSpace(), this->GetInteropClassName(),
-		"RegisterVariable(string,float&,float,CryCil.Engine.ConsoleFlags,string)", RegisterVariable);
-	MonoEnv->Functions->AddInternalCall
-		(this->GetInteropNameSpace(), this->GetInteropClassName(),
-		"RegisterVariable(string,int&,int,CryCil.Engine.ConsoleFlags,string)", RegisterVariableIntRef);
+	REGISTER_METHOD_N("RegisterVariable(string,float&,float,CryCil.Engine.ConsoleFlags,string)", RegisterVariable);
+	REGISTER_METHOD_N("RegisterVariable(string,int&,int,CryCil.Engine.ConsoleFlags,string)", RegisterVariableIntRef);
 
-	MonoEnv->Functions->AddInternalCall
-		(this->GetInteropNameSpace(), this->GetInteropClassName(),
-		"RegisterVariableInternal(string,float,CryCil.Engine.ConsoleFlags,intptr,string)",
-		RegisterVariableFloat);
-	MonoEnv->Functions->AddInternalCall
-		(this->GetInteropNameSpace(), this->GetInteropClassName(),
-		"RegisterVariableInternal(string,int,CryCil.Engine.ConsoleFlags,intptr,string)",
-		RegisterVariableInt);
-	MonoEnv->Functions->AddInternalCall
-		(this->GetInteropNameSpace(), this->GetInteropClassName(),
-		"RegisterVariableInternal(string,string,CryCil.Engine.ConsoleFlags,intptr,string)",
-		RegisterVariableString);
+	REGISTER_METHOD_N("RegisterVariableInternal(string,float,CryCil.Engine.ConsoleFlags,intptr,string)", RegisterVariableFloat);
+	REGISTER_METHOD_N("RegisterVariableInternal(string,int,CryCil.Engine.ConsoleFlags,intptr,string)", RegisterVariableInt);
+	REGISTER_METHOD_N("RegisterVariableInternal(string,string,CryCil.Engine.ConsoleFlags,intptr,string)", RegisterVariableString);
 
 	REGISTER_METHOD(GetVariable);
 }

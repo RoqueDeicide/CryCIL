@@ -4,13 +4,13 @@
 
 void CryPakInterop::OnRunTimeInitialized()
 {
-	this->RegisterInteropMethod("Open(string,CryCil.Engine.Files.PathResolutionRules)", OpenPack);
-	this->RegisterInteropMethod("Open(string,string,CryCil.Engine.Files.PathResolutionRules)", OpenPackRooted);
+	REGISTER_METHOD_N("Open(string,CryCil.Engine.Files.PathResolutionRules)", OpenPack);
+	REGISTER_METHOD_N("Open(string,string,CryCil.Engine.Files.PathResolutionRules)", OpenPackRooted);
 	
-	this->RegisterInteropMethod("Open(string,string[]&,CryCil.Engine.Files.PathResolutionRules)", OpenPacks);
-	this->RegisterInteropMethod("Open(string,string,string[]&,CryCil.Engine.Files.PathResolutionRules)", OpenPacksRooted);
+	REGISTER_METHOD_N("Open(string,string[]&,CryCil.Engine.Files.PathResolutionRules)", OpenPacks);
+	REGISTER_METHOD_N("Open(string,string,string[]&,CryCil.Engine.Files.PathResolutionRules)", OpenPacksRooted);
 	
-	this->RegisterInteropMethod("Close", ClosePack);
+	REGISTER_METHOD_N("Close", ClosePack);
 	
 	REGISTER_METHOD(Exist);
 

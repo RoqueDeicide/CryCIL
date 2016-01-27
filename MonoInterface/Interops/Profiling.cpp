@@ -4,10 +4,11 @@
 
 void ProfilingInterop::OnRunTimeInitialized()
 {
-	MonoEnv->Functions->AddInternalCall(this->GetInteropNameSpace(), "Profiler", "CreateProfiler", CreateProfiler);
-	MonoEnv->Functions->AddInternalCall(this->GetInteropNameSpace(), "Profiler", "StartSection", StartSection);
+	const char *nameSpace = this->GetInteropNameSpace();
+	REGISTER_METHOD_NCN(nameSpace, "Profiler", "CreateProfiler", CreateProfiler);
+	REGISTER_METHOD_NCN(nameSpace, "Profiler", "StartSection", StartSection);
 
-	MonoEnv->Functions->AddInternalCall(this->GetInteropNameSpace(), "ProfilingSection", "FinishSection", FinishSection);
+	REGISTER_METHOD_NCN(nameSpace, "ProfilingSection", "FinishSection", FinishSection);
 }
 
 CFrameProfiler *ProfilingInterop::CreateProfiler(mono::string name)

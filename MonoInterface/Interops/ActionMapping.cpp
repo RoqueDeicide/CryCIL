@@ -24,23 +24,23 @@ void ActionMappingInterop::OnRunTimeInitialized()
 	const char *actionMapsClass = "ActionMaps";
 	const char *cryActionMapClass = "CryActionMap";
 	const char *cryInputActionClass = "CryInputAction";
-	MonoEnv->Functions->AddInternalCall(nameSpace, actionMapsClass, "AddDeviceMapping", AddDeviceMapping);
-	MonoEnv->Functions->AddInternalCall(nameSpace, actionMapsClass, "GetActionEventField", GetActionEventField);
-	MonoEnv->Functions->AddInternalCall(nameSpace, actionMapsClass, "acquireActionHandler", acquireActionHandler);
-	MonoEnv->Functions->AddInternalCall(nameSpace, actionMapsClass, "CreateActionMap", CreateActionMap);
-	MonoEnv->Functions->AddInternalCall(nameSpace, actionMapsClass, "EnableActionMap", EnableActionMap);
-	MonoEnv->Functions->AddInternalCall(nameSpace, actionMapsClass, "SyncRebindDataWithFile", SyncRebindDataWithFile);
-	MonoEnv->Functions->AddInternalCall(nameSpace, actionMapsClass, "SyncRebindDataWithNode", SyncRebindDataWithNode);
+	REGISTER_METHOD_NCN(nameSpace, actionMapsClass, "AddDeviceMapping",       AddDeviceMapping);
+	REGISTER_METHOD_NCN(nameSpace, actionMapsClass, "GetActionEventField",    GetActionEventField);
+	REGISTER_METHOD_NCN(nameSpace, actionMapsClass, "acquireActionHandler",   acquireActionHandler);
+	REGISTER_METHOD_NCN(nameSpace, actionMapsClass, "CreateActionMap",        CreateActionMap);
+	REGISTER_METHOD_NCN(nameSpace, actionMapsClass, "EnableActionMap",        EnableActionMap);
+	REGISTER_METHOD_NCN(nameSpace, actionMapsClass, "SyncRebindDataWithFile", SyncRebindDataWithFile);
+	REGISTER_METHOD_NCN(nameSpace, actionMapsClass, "SyncRebindDataWithNode", SyncRebindDataWithNode);
 
 	// Internal calls for CryActionMap.
-	MonoEnv->Functions->AddInternalCall(nameSpace, cryActionMapClass, "GetAction", GetAction);
-	MonoEnv->Functions->AddInternalCall(nameSpace, cryActionMapClass, "CreateActionInternal", CreateActionInternal);
-	MonoEnv->Functions->AddInternalCall(nameSpace, cryActionMapClass, "RemoveActionInternal", RemoveActionInternal);
+	REGISTER_METHOD_NCN(nameSpace, cryActionMapClass, "GetAction",            GetAction);
+	REGISTER_METHOD_NCN(nameSpace, cryActionMapClass, "CreateActionInternal", CreateActionInternal);
+	REGISTER_METHOD_NCN(nameSpace, cryActionMapClass, "RemoveActionInternal", RemoveActionInternal);
 
 	// Internal calls for CryInputAction.
-	MonoEnv->Functions->AddInternalCall(nameSpace, cryInputActionClass, "AddInputInternal", AddInputInternal);
-	MonoEnv->Functions->AddInternalCall(nameSpace, cryInputActionClass, "RemoveInputInternal", RemoveInputInternal);
-	MonoEnv->Functions->AddInternalCall(nameSpace, cryInputActionClass, "RebindInputInternal", RebindInputInternal);
+	REGISTER_METHOD_NCN(nameSpace, cryInputActionClass, "AddInputInternal",    AddInputInternal);
+	REGISTER_METHOD_NCN(nameSpace, cryInputActionClass, "RemoveInputInternal", RemoveInputInternal);
+	REGISTER_METHOD_NCN(nameSpace, cryInputActionClass, "RebindInputInternal", RebindInputInternal);
 
 	MonoEnv->CryAction->GetIActionMapManager()->AddExtraActionListener(this);
 }

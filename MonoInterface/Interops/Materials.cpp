@@ -9,7 +9,7 @@ void MaterialInterop::OnRunTimeInitialized()
 	REGISTER_METHOD(GetDefaultLayers);
 	REGISTER_METHOD(GetDefaultHelper);
 
-	this->RegisterInteropMethod("GetName", GetMaterialName);
+	REGISTER_METHOD_N("GetName", GetMaterialName);
 	REGISTER_METHOD(SetName);
 	REGISTER_METHOD(GetIsDefault);
 	REGISTER_METHOD(SetCamera);
@@ -21,8 +21,8 @@ void MaterialInterop::OnRunTimeInitialized()
 	REGISTER_METHOD(LoadXml);
 
 	REGISTER_METHOD(Save);
-	this->RegisterInteropMethod("Clone(System.Int32)", CloneInt);
-	this->RegisterInteropMethod("Clone(System.String)", Clone);
+	REGISTER_METHOD_N("Clone(System.Int32)", CloneInt);
+	REGISTER_METHOD_N("Clone(System.String)", Clone);
 	REGISTER_METHOD(CopyTo);
 	REGISTER_METHOD(GetFloatParameter);
 	REGISTER_METHOD(GetVectorParameter);

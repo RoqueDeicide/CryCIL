@@ -6,9 +6,9 @@
 
 void FlowGraphInterop::OnRunTimeInitialized()
 {
-	MonoEnv->Functions->AddInternalCall("CryCil.RunTime.Registration", "FlowNodeTypeRegistry", "RegisterType", RegisterType);
-	MonoEnv->Functions->AddInternalCall("CryCil.Engine.Logic", "OutputPort", "ActivateInternal", ActivatePort);
-	MonoEnv->Functions->AddInternalCall("CryCil.Engine.Logic", "FlowNode", "Deactivate", DeactivateNode);
+	REGISTER_METHOD_NCN("CryCil.RunTime.Registration", "FlowNodeTypeRegistry", "RegisterType", RegisterType);
+	REGISTER_METHOD_NCN("CryCil.Engine.Logic", "OutputPort", "ActivateInternal", ActivatePort);
+	REGISTER_METHOD_NCN("CryCil.Engine.Logic", "FlowNode",   "Deactivate",       DeactivateNode);
 }
 
 ushort FlowGraphInterop::RegisterType(mono::string name)

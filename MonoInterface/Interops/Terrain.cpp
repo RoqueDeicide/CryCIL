@@ -7,8 +7,8 @@ void TerrainInterop::OnRunTimeInitialized()
 	REGISTER_METHOD(get_UnitSize);
 	REGISTER_METHOD(get_Size);
 	REGISTER_METHOD(get_SectorSize);
-	this->RegisterInteropMethod("Elevation(float,float)", Elevation);
-	this->RegisterInteropMethod("Elevation(int,int)", ElevationInt);
+	REGISTER_METHOD_N("Elevation(float,float)", Elevation);
+	REGISTER_METHOD_N("Elevation(int,int)", ElevationInt);
 	REGISTER_METHOD(IsHole);
 	REGISTER_METHOD(SurfaceNormal);
 }
