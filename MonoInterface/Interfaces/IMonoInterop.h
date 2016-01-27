@@ -108,6 +108,7 @@ template<> struct IMonoInterop < false, true > : public IMonoInteropBase
 };
 
 #define REGISTER_METHOD(method) this->RegisterInteropMethod(#method, method)
+#define REGISTER_METHOD_NAME(name, method) this->RegisterInteropMethod(name, method)
 #define REGISTER_CTOR(method) this->RegisterInteropMethod(".ctor", method)
 
 //! Specialization of IMonoInterop<,> template that relies on using MonoEnv variable
