@@ -584,6 +584,9 @@
     <ClInclude Include="Interops\CryEntityAudioProxy.h">
       <Filter>Interops\Engine\Logic\Proxies</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\CryEntityCameraProxy.h">
+      <Filter>Interops\Engine\Logic\Proxies</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -1012,6 +1015,9 @@
       <Filter>Interops\Engine\Logic\Proxies</Filter>
     </ClCompile>
     <ClCompile Include="Interops\CryEntityAudioProxy.cpp">
+      <Filter>Interops\Engine\Logic\Proxies</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\CryEntityCameraProxy.cpp">
       <Filter>Interops\Engine\Logic\Proxies</Filter>
     </ClCompile>
   </ItemGroup>
