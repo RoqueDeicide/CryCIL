@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using CryCil.Annotations;
 using CryCil.Engine.Data;
 using CryCil.Engine.Network;
+using CryCil.Engine.Physics;
 
 namespace CryCil.Engine.Logic
 {
@@ -104,8 +106,10 @@ namespace CryCil.Engine.Logic
 		/// A number in range [0; 7] that specifies the data format that has to be used to synchronize the
 		/// aspect data.
 		/// </param>
+		/// <param name="flags">  A set of flags that specify how to write the snapshot.</param>
 		/// <returns>True, if synchronization was successful.</returns>
-		public abstract bool SynchronizeWithNetwork(CrySync sync, EntityAspects aspect, byte profile);
+		public abstract bool SynchronizeWithNetwork(CrySync sync, EntityAspects aspect, byte profile,
+													SnapshotFlags flags);
 		/// <summary>
 		/// Informs the networking system that parts of this entity have changed and it must be
 		/// synchronized with its proxies on other game instances.
@@ -140,9 +144,9 @@ namespace CryCil.Engine.Logic
 			if (this.ClientInitialized != null) this.ClientInitialized(this, id);
 		}
 		[UnmanagedThunk("Invoked from underlying object to invoke SynchronizeWithNetwork method.")]
-		private bool NetSyncInternal(CrySync sync, EntityAspects aspect, byte profile)
+		private bool NetSyncInternal(CrySync sync, EntityAspects aspect, byte profile, SnapshotFlags flags)
 		{
-			return this.SynchronizeWithNetwork(sync, aspect, profile);
+			return this.SynchronizeWithNetwork(sync, aspect, profile, flags);
 		}
 		[UnmanagedThunk("Invoked from underlying object to raise either Authorized or Deauthorized events.")]
 		private void OnAuthorized(bool gainedAuthority)

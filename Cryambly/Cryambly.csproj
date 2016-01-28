@@ -233,6 +233,7 @@
     <Compile Include="Engine\Physics\Geometry\PhysicalGeometryType.cs" />
     <Compile Include="Engine\Physics\NamespaceDoc.cs" />
     <Compile Include="Engine\Physics\Primitives\NamespaceDoc.cs" />
+    <Compile Include="Engine\Physics\SnapshotFlags.cs" />
     <Compile Include="Engine\Rendering\NamespaceDoc.cs" />
     <Compile Include="Engine\Rendering\Nodes\CryRenderNode.cs" />
     <Compile Include="Engine\Rendering\Shading\Lighting\NamespaceDoc.cs" />

@@ -658,9 +658,9 @@ void MonoEntityExtension::FullSerialize(TSerialize ser)
 	ser.EndGroup();
 }
 
-typedef bool(__stdcall *NetSyncInternalThunk)(mono::object, ISerialize *, EEntityAspects, byte, mono::exception *);
+typedef bool(__stdcall *NetSyncInternalThunk)(mono::object, ISerialize *, EEntityAspects, byte, int, mono::exception *);
 
-bool MonoEntityExtension::NetSerialize(TSerialize ser, EEntityAspects aspect, uint8 profile, int)
+bool MonoEntityExtension::NetSerialize(TSerialize ser, EEntityAspects aspect, uint8 profile, int flags)
 {
 	if (!this->networking)
 	{
@@ -673,7 +673,7 @@ bool MonoEntityExtension::NetSerialize(TSerialize ser, EEntityAspects aspect, ui
 	if (mono::object obj = this->MonoWrapper)
 	{
 		mono::exception ex;
-		bool result = thunk(obj, *reinterpret_cast<ISerialize **>(&ser), aspect, profile, &ex);
+		bool result = thunk(obj, *reinterpret_cast<ISerialize **>(&ser), aspect, profile, flags, &ex);
 		if (ex)
 		{
 			MonoEnv->HandleException(ex);

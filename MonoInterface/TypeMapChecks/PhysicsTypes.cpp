@@ -1508,3 +1508,20 @@ inline void Check_constrflags()
 	CHECK_ENUM(constraint_no_enforcement);
 	CHECK_ENUM(constraint_no_tears);
 }
+
+TYPE_MIRROR enum _snapshot_flags
+{
+	ssf_compensate_time_diff_check=1,
+	ssf_checksum_only_check=2,
+	ssf_no_update_check=4
+};
+
+#undef CHECK_ENUM
+#define CHECK_ENUM(x) static_assert (_snapshot_flags::x ## _check == snapshot_flags::x, "snapshot_flags enumeration has been changed.")
+
+inline void Check_snapshot_flags()
+{
+	CHECK_ENUM(ssf_compensate_time_diff);
+	CHECK_ENUM(ssf_checksum_only);
+	CHECK_ENUM(ssf_no_update);
+}
