@@ -10,7 +10,7 @@ namespace CryCil.Engine.Logic
 		/// Gets or sets 3x4 matrix that represents a transformation of this entity in world space.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This entity is not usable.</exception>
-		public Matrix34 WorldTransformationMatrix
+		public Matrix34 WorldTransformation
 		{
 			get
 			{
