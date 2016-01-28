@@ -215,6 +215,16 @@ namespace CryCil.Graphics
 			return new Vector3(clr.R, clr.G, clr.B);
 		}
 		/// <summary>
+		/// Converts a color that is represented by 4 numbers between 0 and 1 to color that is represented by 4 numbers between 0 and 255.
+		/// </summary>
+		/// <param name="color">Color that is represented by 4 numbers between 0 and 1.</param>
+		/// <returns>Color that is represented by 4 numbers between 0 and 255.</returns>
+		public static explicit operator ColorByte(ColorSingle color)
+		{
+			return new ColorByte((byte)(color.R * 255), (byte)(color.G * 255),
+								 (byte)(color.B * 255), (byte)(color.A * 255));
+		}
+		/// <summary>
 		/// Inverts the color.
 		/// </summary>
 		/// <param name="color">Color to invert.</param>
