@@ -187,3 +187,6 @@
 #include "Interops/CryEntityAudioProxy.h"
 
 #include "Interops/CryEntityCameraProxy.h"
+
+#include "Interops/CryEntityPhysicalProxy.h"
+
