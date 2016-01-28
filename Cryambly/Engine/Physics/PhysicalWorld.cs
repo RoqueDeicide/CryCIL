@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using CryCil.Engine.Data;
 using CryCil.Engine.Physics.Primitives;
 
 namespace CryCil.Engine.Physics
@@ -29,14 +31,16 @@ namespace CryCil.Engine.Physics
 		/// An object that contains an array of entities that were affected by the explosion.
 		/// </returns>
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		public static extern ExplosionResult SimulateExplosion(ref ExplosionParameters parameters,
-															   PhysicalEntity[] entitiesToSkip = null,
-															   EntityQueryFlags types = EntityQueryFlags.Rigid |
-																						EntityQueryFlags.SleepingRigid |
-																						EntityQueryFlags.Living |
-																						EntityQueryFlags.Independent);
+		public static extern ExplosionResult SimulateExplosion
+			(ref ExplosionParameters parameters,
+			 PhysicalEntity[] entitiesToSkip = null,
+			 EntityQueryFlags types = EntityQueryFlags.Rigid |
+									  EntityQueryFlags.SleepingRigid |
+									  EntityQueryFlags.Living |
+									  EntityQueryFlags.Independent);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		internal static extern int AddExplosionShape(GeometryShape shape, float size, int index, float probability = 1.0f);
+		internal static extern int AddExplosionShape(GeometryShape shape, float size, int index,
+													 float probability = 1.0f);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		internal static extern void RemoveExplosionShape(int index);
 		[MethodImpl(MethodImplOptions.InternalCall)]
@@ -62,20 +66,22 @@ namespace CryCil.Engine.Physics
 												  EntityQueryFlags queryFlags, PhysicsGeometryFlags flagsAll,
 												  PhysicsGeometryFlags flagsAny,
 												  ref IntersectionParameters parameters,
-												  ref CollisionClass collisionClass, PhysicalEntity[] entitiesToSkip)
+												  ref CollisionClass collisionClass,
+												  PhysicalEntity[] entitiesToSkip)
 		{
 			int count;
 			if (entitiesToSkip == null)
 			{
-				count = PrimitiveIntersectionInternal(out contacts, ref primitive, primitiveType, queryFlags, flagsAll,
-													  flagsAny, ref parameters, ref collisionClass, null, 0);
+				count = PrimitiveIntersectionInternal(out contacts, ref primitive, primitiveType, queryFlags,
+													  flagsAll, flagsAny, ref parameters, ref collisionClass,
+													  null, 0);
 			}
 			else
 				fixed (PhysicalEntity* skip = entitiesToSkip)
 				{
-					count = PrimitiveIntersectionInternal(out contacts, ref primitive, primitiveType, queryFlags, flagsAll,
-														  flagsAny, ref parameters, ref collisionClass, skip,
-														  entitiesToSkip.Length);
+					count = PrimitiveIntersectionInternal(out contacts, ref primitive, primitiveType, queryFlags,
+														  flagsAll, flagsAny, ref parameters, ref collisionClass,
+														  skip, entitiesToSkip.Length);
 				}
 			return count;
 		}
@@ -92,27 +98,30 @@ namespace CryCil.Engine.Physics
 			float distance;
 			if (entitiesToSkip == null)
 			{
-				distance = PrimitiveCastInternal(out contact, ref primitive, primitiveType, ref sweepDirection, queryFlags, flagsAll,
-												 flagsAny, ref parameters, ref collisionClass, null, 0);
+				distance = PrimitiveCastInternal(out contact, ref primitive, primitiveType, ref sweepDirection,
+												 queryFlags, flagsAll, flagsAny, ref parameters, ref collisionClass,
+												 null, 0);
 			}
 			else
 				fixed (PhysicalEntity* skip = entitiesToSkip)
 				{
 					distance = PrimitiveCastInternal(out contact, ref primitive, primitiveType, ref sweepDirection,
-													 queryFlags, flagsAll, flagsAny, ref parameters, ref collisionClass,
-													 skip, entitiesToSkip.Length);
+													 queryFlags, flagsAll, flagsAny, ref parameters,
+													 ref collisionClass, skip, entitiesToSkip.Length);
 				}
 			return distance;
 		}
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern int PrimitiveIntersectionInternal(out GeometryContact[] contacts,
-																ref Primitive.BasePrimitive primitive, int primitiveType,
-																EntityQueryFlags queryFlags, PhysicsGeometryFlags flagsAll,
-																PhysicsGeometryFlags flagsAny,
-																ref IntersectionParameters parameters,
-																ref CollisionClass collisionClass,
-																PhysicalEntity* entitiesToSkip,
-																int skipCount);
+		private static extern int PrimitiveIntersectionInternal
+			(out GeometryContact[] contacts,
+			 ref Primitive.BasePrimitive primitive,
+			 int primitiveType,
+			 EntityQueryFlags queryFlags, PhysicsGeometryFlags flagsAll,
+			 PhysicsGeometryFlags flagsAny,
+			 ref IntersectionParameters parameters,
+			 ref CollisionClass collisionClass,
+			 PhysicalEntity* entitiesToSkip,
+			 int skipCount);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern float PrimitiveCastInternal(out GeometryContact contact,
 														  ref Primitive.BasePrimitive primitive,
@@ -130,8 +139,8 @@ namespace CryCil.Engine.Physics
 														   ForeignData foreignData,
 														   int id);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		internal static extern IntPtr CreatePhysicalEntityNoParams(PhysicalEntityType type, ForeignData foreignData,
-																   int id);
+		internal static extern IntPtr CreatePhysicalEntityNoParams
+			(PhysicalEntityType type, ForeignData foreignData, int id);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		internal static extern IntPtr CreatePhysicalEntityFromHolder(PhysicalEntityType type,
 																	 float lifeTime,
@@ -146,10 +155,12 @@ namespace CryCil.Engine.Physics
 																			 int id,
 																			 PhysicalEntity placeHolder);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		internal static extern IntPtr CreatePlaceHolder(PhysicalEntityType type, ref PhysicsParameters initialParameters,
+		internal static extern IntPtr CreatePlaceHolder(PhysicalEntityType type,
+														ref PhysicsParameters initialParameters,
 														ForeignData foreignData, int id);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		internal static extern IntPtr CreatePlaceHolderNoParams(PhysicalEntityType type, ForeignData foreignData, int id);
+		internal static extern IntPtr CreatePlaceHolderNoParams(PhysicalEntityType type, ForeignData foreignData,
+																int id);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		internal static extern int DestroyPhysicalEntity(IntPtr pent, int mode, int bThreadSafe);
 		[MethodImpl(MethodImplOptions.InternalCall)]
@@ -160,12 +171,40 @@ namespace CryCil.Engine.Physics
 														out SurfaceFlags flags);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		internal static extern int SetSurfaceParametersExt(int surfaceIdx, float bounciness, float friction,
-														   float damageReduction, float ricAngle, float ricDamReduction,
-														   float ricVelReduction, SurfaceFlags flags);
+														   float damageReduction, float ricAngle,
+														   float ricDamReduction, float ricVelReduction,
+														   SurfaceFlags flags);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		internal static extern int GetSurfaceParametersExt(int surfaceIdx, out float bounciness, out float friction,
 														   out float damage_reduction, out float ric_angle,
 														   out float ric_dam_reduction, out float ric_vel_reduction,
 														   out SurfaceFlags flags);
+		/// <summary>
+		/// Writes a typed snapshot that carries no useful data into network stream.
+		/// </summary>
+		/// <remarks>
+		/// This method is used when synchronizing the entity that uses physics over network when: 1)
+		/// writing to the network stream; 2) entity's physical proxy doesn't exist or physical entity that
+		/// is hosted by the proxy doesn't exist or when type of hosted physical entity is not equal to
+		/// <paramref name="snapshotType"/>.
+		/// </remarks>
+		/// <example>
+		/// <code source="GarbageTypedSnapshotUsage.cs"/>
+		/// </example>
+		/// <param name="sync">        
+		/// An object that represents the network stream the snapshot needs to be written to.
+		/// </param>
+		/// <param name="snapshotType">Physicalization type to assign to the snapshot.</param>
+		/// <param name="flags">       
+		/// A set of optional flags that specify how to write the snapshot.
+		/// </param>
+		public static void WriteGarbageTypedSnapshot(CrySync sync, PhysicalEntityType snapshotType,
+													 SnapshotFlags flags = 0)
+		{
+			SerializeGarbageTypedSnapshot(sync, snapshotType, flags);
+		}
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void SerializeGarbageTypedSnapshot(CrySync sync, PhysicalEntityType snapshotType,
+																 SnapshotFlags flags);
 	}
 }

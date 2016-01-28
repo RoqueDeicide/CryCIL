@@ -51,4 +51,5 @@ struct PhysicalWorldInterop : public IMonoInterop<true, true>
 	static int              GetSurfaceParametersExt(int surfaceIdx, float &bounciness, float &friction,
 													float &damage_reduction, float &ric_angle, float &ric_dam_reduction,
 													float &ric_vel_reduction, uint32 &flags);
+	static void             SerializeGarbageTypedSnapshot(ISerialize *sync, int snapshotType, int flags);
 };

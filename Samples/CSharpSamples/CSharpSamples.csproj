@@ -51,6 +51,7 @@
     <Compile Include="DebugServices\Painter.cs" />
     <Compile Include="FlagParameters.cs" />
     <Compile Include="FlowNode.cs" />
+    <Compile Include="GarbageTypedSnapshotUsage.cs" />
     <Compile Include="MeshRecoloring.cs" />
     <Compile Include="Profiling.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

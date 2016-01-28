@@ -27,6 +27,7 @@ void PhysicalWorldInterop::OnRunTimeInitialized()
 	REGISTER_METHOD(GetSurfaceParameters);
 	REGISTER_METHOD(SetSurfaceParametersExt);
 	REGISTER_METHOD(GetSurfaceParametersExt);
+	REGISTER_METHOD(SerializeGarbageTypedSnapshot);
 
 	RegisterEventClients();
 }
@@ -251,4 +252,9 @@ int PhysicalWorldInterop::GetSurfaceParametersExt(int surfaceIdx, float &bouncin
 {
 	return gEnv->pPhysicalWorld->GetSurfaceParameters(surfaceIdx, bounciness, friction, damage_reduction, ric_angle,
 													  ric_dam_reduction, ric_vel_reduction, flags);
+}
+
+void PhysicalWorldInterop::SerializeGarbageTypedSnapshot(ISerialize *sync, int snapshotType, int flags)
+{
+	gEnv->pPhysicalWorld->SerializeGarbageTypedSnapshot(sync, snapshotType, flags);
 }

@@ -44,6 +44,19 @@ namespace CryCil.Engine.Physics
 				SetPhysicalEntityId(this.handle, value);
 			}
 		}
+		/// <summary>
+		/// Gets the type of this entity.
+		/// </summary>
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
+		public PhysicalEntityType Type
+		{
+			get
+			{
+				this.AssertInstance();
+
+				return GetPhysicalType(this.handle);
+			}
+		}
 		#endregion
 		#region Construction
 		internal PhysicalEntity(IntPtr handle)
@@ -447,6 +460,8 @@ namespace CryCil.Engine.Physics
 			}
 		}
 
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern PhysicalEntityType GetPhysicalType(IntPtr handle);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern int SetParams(IntPtr handle, ref PhysicsParameters parameters, bool threadSafe);
 		[MethodImpl(MethodImplOptions.InternalCall)]

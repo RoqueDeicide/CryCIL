@@ -301,6 +301,7 @@
     <ClInclude Include="Interops\CryEntityAreaProxy.h" />
     <ClInclude Include="Interops\CryEntityAudioProxy.h" />
     <ClInclude Include="Interops\CryEntityCameraProxy.h" />
+    <ClInclude Include="Interops\CryEntityPhysicalProxy.h" />
     <ClInclude Include="Interops\CryMarshal.h" />
     <ClInclude Include="Interops\CryFiles.h" />
     <ClInclude Include="Interops\CryPak.h" />
@@ -479,6 +480,7 @@
     <ClCompile Include="Interops\CryEntityAreaProxy.cpp" />
     <ClCompile Include="Interops\CryEntityAudioProxy.cpp" />
     <ClCompile Include="Interops\CryEntityCameraProxy.cpp" />
+    <ClCompile Include="Interops\CryEntityPhysicalProxy.cpp" />
     <ClCompile Include="Interops\CryFont.cpp" />
     <ClCompile Include="Interops\CryMarshal.cpp" />
     <ClCompile Include="Interops\CryFiles.cpp" />

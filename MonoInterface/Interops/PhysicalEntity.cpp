@@ -4,6 +4,7 @@
 
 void PhysicalEntityInterop::OnRunTimeInitialized()
 {
+	REGISTER_METHOD(GetPhysicalType);
 	REGISTER_METHOD(SetParams);
 	REGISTER_METHOD(GetParams);
 	REGISTER_METHOD(GetStatusInternal);
@@ -14,6 +15,11 @@ void PhysicalEntityInterop::OnRunTimeInitialized()
 	REGISTER_METHOD(SetPhysicalEntityId);
 	REGISTER_METHOD(GetPhysicalEntityId);
 	REGISTER_METHOD(GetPhysicalEntityById);
+}
+
+pe_type PhysicalEntityInterop::GetPhysicalType(IPhysicalEntity *handle)
+{
+	return handle->GetType();
 }
 
 int PhysicalEntityInterop::SetParams(IPhysicalEntity *handle, PhysicsParameters *parameters, bool threadSafe)
