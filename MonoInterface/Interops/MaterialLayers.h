@@ -12,9 +12,9 @@ struct MaterialLayerCollectionInterop : public IMonoInterop<true, true>
 	static void SetLayerCount(IMaterial *handle, uint nCount);
 	static uint GetLayerCount(IMaterial *handle);
 	static void SetLayer(IMaterial *handle, uint nSlot, IMaterialLayer *pLayer);
-	static void SetLayerChecked(IMaterial *handle, uint nSlot, IMaterialLayer *pLayer);
+	static void SetLayerChecked(IMaterial *handle, uint nSlot, IMaterialLayer *pLayer, bool &error);
 	static IMaterialLayer *GetLayer(IMaterial *handle, uint nSlot);
-	static IMaterialLayer *GetLayerChecked(IMaterial *handle, uint nSlot);
+	static IMaterialLayer *GetLayerChecked(IMaterial *handle, uint nSlot, bool &error);
 };
 
 struct MaterialLayerInterop : public IMonoInterop<true, true>
@@ -24,7 +24,7 @@ struct MaterialLayerInterop : public IMonoInterop<true, true>
 
 	virtual void OnRunTimeInitialized() override;
 
-	static void Ctor(IMaterialLayer **handle, IMaterial *mat);
+	static IMaterialLayer *Ctor(IMaterial *mat);
 	static void EnableInternal(IMaterialLayer *handle, bool bEnable);
 	static bool IsEnabled(IMaterialLayer *handle);
 	static void FadeOutInternal(IMaterialLayer *handle, bool bFadeOut);

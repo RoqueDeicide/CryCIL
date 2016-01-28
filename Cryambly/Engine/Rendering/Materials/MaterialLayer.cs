@@ -96,8 +96,16 @@ namespace CryCil.Engine.Rendering
 		/// Creates a new layer for the material. Use at your own risk.
 		/// </summary>
 		/// <param name="mat">Material to create the layer for.</param>
-		[MethodImpl(MethodImplOptions.InternalCall)]
-		public extern MaterialLayer([UsedImplicitly] Material mat);
+		/// <exception cref="ArgumentNullException">Material handle cannot be null.</exception>
+		public MaterialLayer(Material mat)
+		{
+			if (!mat.IsValid)
+			{
+				throw new ArgumentNullException("mat", "Material handle cannot be null.");
+			}
+
+			this.handle = Ctor(mat);
+		}
 		#endregion
 		#region Interface
 		/// <summary>
@@ -150,6 +158,8 @@ namespace CryCil.Engine.Rendering
 		}
 		#endregion
 		#region Utilities
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern IntPtr Ctor(Material mat);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void EnableInternal(IntPtr handle, bool bEnable);
 		[MethodImpl(MethodImplOptions.InternalCall)]

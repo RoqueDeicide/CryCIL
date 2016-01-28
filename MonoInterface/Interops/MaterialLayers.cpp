@@ -27,12 +27,14 @@ void MaterialLayerCollectionInterop::SetLayer(IMaterial *handle, uint nSlot, IMa
 	handle->SetLayer(nSlot, pLayer);
 }
 
-void MaterialLayerCollectionInterop::SetLayerChecked(IMaterial *handle, uint nSlot, IMaterialLayer *pLayer)
+void MaterialLayerCollectionInterop::SetLayerChecked(IMaterial *handle, uint nSlot, IMaterialLayer *pLayer, bool &error)
 {
 	if (nSlot >= handle->GetLayerCount())
 	{
-		IndexOutOfRangeException("Index cannot be greater then or equal to number of layers in the collection.").Throw();
+		error = true;
+		return;
 	}
+	error = false;
 	handle->SetLayer(nSlot, pLayer);
 }
 
@@ -41,12 +43,14 @@ IMaterialLayer *MaterialLayerCollectionInterop::GetLayer(IMaterial *handle, uint
 	return const_cast<IMaterialLayer *>(handle->GetLayer(nSlot));
 }
 
-IMaterialLayer *MaterialLayerCollectionInterop::GetLayerChecked(IMaterial *handle, uint nSlot)
+IMaterialLayer *MaterialLayerCollectionInterop::GetLayerChecked(IMaterial *handle, uint nSlot, bool &error)
 {
 	if (nSlot >= handle->GetLayerCount())
 	{
-		IndexOutOfRangeException("Index cannot be greater then or equal to number of layers in the collection.").Throw();
+		error = true;
+		return nullptr;
 	}
+	error = false;
 	return const_cast<IMaterialLayer *>(handle->GetLayer(nSlot));
 }
 
@@ -63,13 +67,9 @@ void MaterialLayerInterop::OnRunTimeInitialized()
 	REGISTER_METHOD(GetFlags);
 }
 
-void MaterialLayerInterop::Ctor(IMaterialLayer **handle, IMaterial *mat)
+IMaterialLayer *MaterialLayerInterop::Ctor(IMaterial *mat)
 {
-	if (!mat)
-	{
-		ArgumentNullException("Material handle cannot be null.").Throw();
-	}
-	*handle = mat->CreateLayer();
+	return mat->CreateLayer();
 }
 
 void MaterialLayerInterop::EnableInternal(IMaterialLayer *handle, bool bEnable)

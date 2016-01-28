@@ -11,7 +11,6 @@ namespace CryCil.Engine.Rendering
 	/// Represents a collection of material layers.
 	/// </summary>
 	/// <remarks>This collection does not support search-related functions.</remarks>
-	[SuppressMessage("ReSharper", "ExceptionNotThrown")]
 	public struct MaterialLayerCollection : IList<MaterialLayer>
 	{
 		#region Fields
@@ -25,9 +24,6 @@ namespace CryCil.Engine.Rendering
 		/// <exception cref="ArgumentOutOfRangeException">
 		/// Number of objects in the collection cannot be less then 0.
 		/// </exception>
-		/// <exception cref="OverflowException">
-		/// Cannot convert the value between <see cref="Int32"/> and <see cref="UInt32"/>.
-		/// </exception>
 		public int Count
 		{
 			get
@@ -36,7 +32,7 @@ namespace CryCil.Engine.Rendering
 				{
 					throw new NullReferenceException("Instance object is not valid.");
 				}
-				return checked((int)GetLayerCount(this.handle));
+				return (int)GetLayerCount(this.handle);
 			}
 			set
 			{
@@ -48,7 +44,7 @@ namespace CryCil.Engine.Rendering
 				{
 					throw new ArgumentOutOfRangeException("value", "Number of objects in the collection cannot be less then 0.");
 				}
-				SetLayerCount(this.handle, checked((uint)value));
+				SetLayerCount(this.handle, (uint)value);
 			}
 		}
 		/// <summary>
@@ -77,9 +73,7 @@ namespace CryCil.Engine.Rendering
 		/// <exception cref="IndexOutOfRangeException">
 		/// Index cannot be greater then or equal to number of layers in the collection.
 		/// </exception>
-		/// <exception cref="OverflowException">
-		/// Cannot convert the value between <see cref="Int32"/> and <see cref="UInt32"/>.
-		/// </exception>
+		/// <exception cref="ArgumentOutOfRangeException">Index cannot be less then zero.</exception>
 		public MaterialLayer this[int index]
 		{
 			get
@@ -88,7 +82,17 @@ namespace CryCil.Engine.Rendering
 				{
 					throw new NullReferenceException("Instance object is not valid.");
 				}
-				return GetLayerChecked(this.handle, checked((uint)index));
+				if (index < 0)
+				{
+					throw new ArgumentOutOfRangeException("index", "Index cannot be less then zero.");
+				}
+				bool error;
+				var result = GetLayerChecked(this.handle, (uint)index, out error);
+				if (error)
+				{
+					throw new IndexOutOfRangeException("Index cannot be greater then or equal to number of layers in the collection.");
+				}
+				return result;
 			}
 			set
 			{
@@ -100,7 +104,16 @@ namespace CryCil.Engine.Rendering
 				{
 					throw new ArgumentNullException("value", "Material layer object is not initialized.");
 				}
-				SetLayerChecked(this.handle, checked((uint)index), value);
+				if (index < 0)
+				{
+					throw new ArgumentOutOfRangeException("index", "Index cannot be less then zero.");
+				}
+				bool error;
+				SetLayerChecked(this.handle, (uint)index, value, out error);
+				if (error)
+				{
+					throw new IndexOutOfRangeException("Index cannot be greater then or equal to number of layers in the collection.");
+				}
 			}
 		}
 		/// <summary>
@@ -319,11 +332,11 @@ namespace CryCil.Engine.Rendering
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void SetLayer(IntPtr handle, uint nSlot, MaterialLayer pLayer);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern void SetLayerChecked(IntPtr handle, uint nSlot, MaterialLayer pLayer);
+		private static extern void SetLayerChecked(IntPtr handle, uint nSlot, MaterialLayer pLayer, out bool error);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern MaterialLayer GetLayer(IntPtr handle, uint nSlot);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern MaterialLayer GetLayerChecked(IntPtr handle, uint nSlot);
+		private static extern MaterialLayer GetLayerChecked(IntPtr handle, uint nSlot, out bool error);
 		#endregion
 	}
 }
