@@ -111,6 +111,7 @@
     <Compile Include="Engine\Logic\EntityProxies\CryEntityAudioProxy.cs" />
     <Compile Include="Engine\Logic\EntityProxies\CryEntityCameraProxy.cs" />
     <Compile Include="Engine\Logic\EntityProxies\CryEntityPhysicalProxy.cs" />
+    <Compile Include="Engine\Logic\EntityProxies\CryEntityRenderProxy.cs" />
     <Compile Include="Engine\Logic\EntityProxies\EntityAreaType.cs" />
     <Compile Include="Engine\Logic\NamespaceDoc.cs" />
     <Compile Include="Engine\Memory\NamespaceDoc.cs" />
@@ -235,6 +236,8 @@
     <Compile Include="Engine\Physics\NamespaceDoc.cs" />
     <Compile Include="Engine\Physics\Primitives\NamespaceDoc.cs" />
     <Compile Include="Engine\Physics\SnapshotFlags.cs" />
+    <Compile Include="Engine\Rendering\Materials\MaterialLayerActivityFlags.cs" />
+    <Compile Include="Engine\Rendering\Materials\MaterialLayerBlendFlags.cs" />
     <Compile Include="Engine\Rendering\NamespaceDoc.cs" />
     <Compile Include="Engine\Rendering\Nodes\CryRenderNode.cs" />
     <Compile Include="Engine\Rendering\Shading\Lighting\NamespaceDoc.cs" />
