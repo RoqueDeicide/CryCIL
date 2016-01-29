@@ -593,6 +593,9 @@
     <ClInclude Include="Interops\CryEntityRenderProxy.h">
       <Filter>Interops\Engine\Logic\Proxies</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\CryEntityRopeProxy.h">
+      <Filter>Interops\Engine\Logic\Proxies</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -1033,6 +1036,9 @@
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
     <ClCompile Include="Interops\CryEntityRenderProxy.cpp">
+      <Filter>Interops\Engine\Logic\Proxies</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\CryEntityRopeProxy.cpp">
       <Filter>Interops\Engine\Logic\Proxies</Filter>
     </ClCompile>
   </ItemGroup>

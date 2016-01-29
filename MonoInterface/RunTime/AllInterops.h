@@ -191,3 +191,5 @@
 #include "Interops/CryEntityPhysicalProxy.h"
 
 #include "Interops/CryEntityRenderProxy.h"
+
+#include "Interops/CryEntityRopeProxy.h"

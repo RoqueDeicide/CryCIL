@@ -400,6 +400,7 @@ void MonoInterface::RegisterDefaultListeners()
 	this->broadcaster->listeners->Add(new CryEntityCameraProxyInterop());
 	this->broadcaster->listeners->Add(new CryEntityPhysicalProxyInterop());
 	this->broadcaster->listeners->Add(new CryEntityRenderProxyInterop());
+	this->broadcaster->listeners->Add(new CryEntityRopeProxyInterop());
 }
 #pragma endregion
 #pragma region Thunks Initialization
