@@ -19,6 +19,16 @@ struct StereoPhysicsEventData
 	IPhysicalEntity *secondEntity;
 	ForeignData firstForeignData;
 	ForeignData secondForeignData;
+
+	explicit StereoPhysicsEventData(const EventPhysStereo *_event)
+	{
+		this->firstEntity              = _event->pEntity[0];
+		this->firstForeignData.handle  = _event->pForeignData[0];
+		this->firstForeignData.id      = _event->iForeignData[0];
+		this->secondEntity             = _event->pEntity[1];
+		this->secondForeignData.handle = _event->pForeignData[1];
+		this->secondForeignData.id     = _event->iForeignData[1];
+	}
 };
 
 struct CollisionInfo
@@ -30,6 +40,17 @@ struct CollisionInfo
 	float impulse;
 	float size;
 	float decalSize;
+
+	explicit CollisionInfo(const EventPhysCollision *_event)
+	{
+		this->decalSize = _event->fDecalPlacementTestMaxSize;
+		this->idCollider = _event->idCollider;
+		this->impulse = _event->normImpulse;
+		this->normal = _event->n;
+		this->penetration = _event->penetration;
+		this->point = _event->pt;
+		this->size = _event->radius;
+	}
 };
 
 struct CollisionParticipantInfo
@@ -39,6 +60,15 @@ struct CollisionParticipantInfo
 	int partId;
 	short matId;
 	short iPrim;
+
+	explicit CollisionParticipantInfo(const EventPhysCollision *_event, int index)
+	{
+		this->iPrim = _event->iPrim[index];
+		this->mass = _event->mass[index];
+		this->matId = _event->idmat[index];
+		this->partId = _event->partid[index];
+		this->velocity = _event->vloc[index];
+	}
 };
 
 struct CreatedPartInfo
@@ -125,13 +155,7 @@ inline int clientName(const EventPhys*_event, bool logged) \
 	mono::exception ex; \
 	const eventType *_eventInfo = static_cast<const eventType *>(_event); \
 	 \
-	StereoPhysicsEventData data; \
-	data.firstEntity              = _eventInfo->pEntity[0]; \
-	data.firstForeignData.handle  = _eventInfo->pForeignData[0]; \
-	data.firstForeignData.id      = _eventInfo->iForeignData[0]; \
-	data.secondEntity             = _eventInfo->pEntity[1]; \
-	data.secondForeignData.handle = _eventInfo->pForeignData[1]; \
-	data.secondForeignData.id     = _eventInfo->iForeignData[1];
+	StereoPhysicsEventData data(_eventInfo);
 
 #define BEGIN_MONO_EVENT_CLIENT(clientName, thunkType, eventType, eventName) \
 inline int clientName(const EventPhys*_event, bool logged) \
@@ -159,28 +183,11 @@ auto result = raise(&data, logged, &ex);
 END_EVENT_CLIENT
 
 BEGIN_STEREO_EVENT_CLIENT(CollisionEventClient, CollisionPhysicsEventThunk, EventPhysCollision, "CollisionHappened")
-CollisionInfo collisionInfo;
-collisionInfo.decalSize   = _eventInfo->fDecalPlacementTestMaxSize;
-collisionInfo.idCollider  = _eventInfo->idCollider;
-collisionInfo.impulse     = _eventInfo->normImpulse;
-collisionInfo.normal      = _eventInfo->n;
-collisionInfo.penetration = _eventInfo->penetration;
-collisionInfo.point       = _eventInfo->pt;
-collisionInfo.size        = _eventInfo->radius;
+CollisionInfo collisionInfo(_eventInfo);
 
-CollisionParticipantInfo collider;
-collider.iPrim    = _eventInfo->iPrim[0];
-collider.mass     = _eventInfo->mass[0];
-collider.matId    = _eventInfo->idmat[0];
-collider.partId   = _eventInfo->partid[0];
-collider.velocity = _eventInfo->vloc[0];
+CollisionParticipantInfo collider(_eventInfo, 0);
 
-CollisionParticipantInfo collidee;
-collidee.iPrim    = _eventInfo->iPrim[1];
-collidee.mass     = _eventInfo->mass[1];
-collidee.matId    = _eventInfo->idmat[1];
-collidee.partId   = _eventInfo->partid[1];
-collidee.velocity = _eventInfo->vloc[1];
+CollisionParticipantInfo collidee(_eventInfo, 1);
 
 auto result = raise(&data, &collisionInfo, &collider, &collidee, logged, &ex);
 END_EVENT_CLIENT
