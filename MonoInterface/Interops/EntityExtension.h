@@ -128,7 +128,12 @@ private:
 //!          object has no connection to CryCIL.
 inline MonoEntityExtension *QueryMonoEntityExtension(IGameObject *gameObject, IEntity *entity)
 {
-	if (auto ext = gameObject->QueryExtension(entity->GetClass()->GetName()))
+	IEntityClass *klass = entity->GetClass();
+	auto ext = gameObject->QueryExtension(klass->GetName());
+	// We check whether event handler is equal to null, because it cannot be null when it's a managed entity,
+	// because managed entities use pointer to NullEntityEventHandler object. It does look like all normal
+	// entities do not use event handlers.
+	if (ext && klass->GetEventHandler())
 	{
 		return static_cast<MonoEntityExtension *>(ext);
 	}
