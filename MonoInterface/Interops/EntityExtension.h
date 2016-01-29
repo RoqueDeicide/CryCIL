@@ -122,34 +122,44 @@ private:
 	void raiseEntityEvent(arg0Type arg0, arg1Type arg1, arg2Type arg2, arg3Type arg3, arg4Type arg4, arg5Type arg5);
 };
 
+//! Attempts to acquire an extension that allows the game object to communicate with CryCIL.
+//!
+//! @returns A pointer to the object that handle entity<->CryCIL communication, or null pointer if this game
+//!          object has no connection to CryCIL.
+inline MonoEntityExtension *QueryMonoEntityExtension(IGameObject *gameObject, IEntity *entity)
+{
+	if (auto ext = gameObject->QueryExtension(entity->GetClass()->GetName()))
+	{
+		return static_cast<MonoEntityExtension *>(ext);
+	}
+	return nullptr;
+}
+
 //! Attempts to acquire an object that allows the entity to communicate with CryCIL.
 //!
-//! @returns A pointer to the object that handle entity<->CryCIL communication, or null pointer if this entity has no
-//!          connection to CryCIL.
+//! @returns A pointer to the object that handle entity<->CryCIL communication, or null pointer if this entity
+//!          has no connection to CryCIL.
 inline MonoEntityExtension *QueryMonoEntityExtension(IEntity *entity, EntityId id)
 {
 	if (IGameObject *gameObj = MonoEnv->CryAction->GetGameObject(id))
 	{
-		if (auto ext = gameObj->QueryExtension(entity->GetClass()->GetName()))
-		{
-			return static_cast<MonoEntityExtension *>(ext);
-		}
+		return QueryMonoEntityExtension(gameObj, entity);
 	}
 
 	return nullptr;
 }
 //! Attempts to acquire an object that allows the entity to communicate with CryCIL.
 //!
-//! @returns A pointer to the object that handle entity<->CryCIL communication, or null pointer if this entity has no
-//!          connection to CryCIL.
+//! @returns A pointer to the object that handle entity<->CryCIL communication, or null pointer if this entity
+//!          has no connection to CryCIL.
 inline MonoEntityExtension *QueryMonoEntityExtension(IEntity *entity)
 {
 	return QueryMonoEntityExtension(entity, entity->GetId());
 }
 //! Attempts to acquire an object that allows the entity to communicate with CryCIL.
 //!
-//! @returns A pointer to the object that handle entity<->CryCIL communication, or null pointer if this entity has no
-//!          connection to CryCIL.
+//! @returns A pointer to the object that handle entity<->CryCIL communication, or null pointer if this entity
+//!          has no connection to CryCIL.
 inline MonoEntityExtension *QueryMonoEntityExtension(EntityId id)
 {
 	return QueryMonoEntityExtension(gEnv->pEntitySystem->GetEntity(id), id);

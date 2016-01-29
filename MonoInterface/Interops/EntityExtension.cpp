@@ -20,6 +20,7 @@ IMonoClass *GetMonoNetEntityClass()
 MonoEntityExtension::MonoEntityExtension()
 	: objHandle(-1)
 	, networking(false)
+	, dontSyncProps(false)
 {
 
 }
