@@ -596,6 +596,12 @@
     <ClInclude Include="Interops\CryEntityRopeProxy.h">
       <Filter>Interops\Engine\Logic\Proxies</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\CryEntitySubstitutionProxy.h">
+      <Filter>Interops\Engine\Logic\Proxies</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\CryEntityTriggerProxy.h">
+      <Filter>Interops\Engine\Logic\Proxies</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -1039,6 +1045,12 @@
       <Filter>Interops\Engine\Logic\Proxies</Filter>
     </ClCompile>
     <ClCompile Include="Interops\CryEntityRopeProxy.cpp">
+      <Filter>Interops\Engine\Logic\Proxies</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\CryEntitySubstitutionProxy.cpp">
+      <Filter>Interops\Engine\Logic\Proxies</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\CryEntityTriggerProxy.cpp">
       <Filter>Interops\Engine\Logic\Proxies</Filter>
     </ClCompile>
   </ItemGroup>

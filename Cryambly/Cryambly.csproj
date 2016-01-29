@@ -113,6 +113,8 @@
     <Compile Include="Engine\Logic\EntityProxies\CryEntityPhysicalProxy.cs" />
     <Compile Include="Engine\Logic\EntityProxies\CryEntityRenderProxy.cs" />
     <Compile Include="Engine\Logic\EntityProxies\CryEntityRopeProxy.cs" />
+    <Compile Include="Engine\Logic\EntityProxies\CryEntitySubstitutionProxy.cs" />
+    <Compile Include="Engine\Logic\EntityProxies\CryEntityTriggerProxy.cs" />
     <Compile Include="Engine\Logic\EntityProxies\EntityAreaType.cs" />
     <Compile Include="Engine\Logic\NamespaceDoc.cs" />
     <Compile Include="Engine\Memory\NamespaceDoc.cs" />

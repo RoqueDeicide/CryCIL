@@ -304,6 +304,8 @@
     <ClInclude Include="Interops\CryEntityPhysicalProxy.h" />
     <ClInclude Include="Interops\CryEntityRenderProxy.h" />
     <ClInclude Include="Interops\CryEntityRopeProxy.h" />
+    <ClInclude Include="Interops\CryEntitySubstitutionProxy.h" />
+    <ClInclude Include="Interops\CryEntityTriggerProxy.h" />
     <ClInclude Include="Interops\CryMarshal.h" />
     <ClInclude Include="Interops\CryFiles.h" />
     <ClInclude Include="Interops\CryPak.h" />
@@ -485,6 +487,8 @@
     <ClCompile Include="Interops\CryEntityPhysicalProxy.cpp" />
     <ClCompile Include="Interops\CryEntityRenderProxy.cpp" />
     <ClCompile Include="Interops\CryEntityRopeProxy.cpp" />
+    <ClCompile Include="Interops\CryEntitySubstitutionProxy.cpp" />
+    <ClCompile Include="Interops\CryEntityTriggerProxy.cpp" />
     <ClCompile Include="Interops\CryFont.cpp" />
     <ClCompile Include="Interops\CryMarshal.cpp" />
     <ClCompile Include="Interops\CryFiles.cpp" />
