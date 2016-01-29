@@ -582,6 +582,7 @@
     <ClCompile Include="TypeMapChecks\DynamicArray.cpp" />
     <ClCompile Include="TypeMapChecks\DynamicLightFlags.cpp" />
     <ClCompile Include="TypeMapChecks\EntityTypes.cpp" />
+    <ClCompile Include="TypeMapChecks\RenderNodeTypes.cpp" />
     <ClCompile Include="TypeMapChecks\InputTypes.cpp" />
     <ClCompile Include="TypeMapChecks\MaterialTypes.cpp" />
     <ClCompile Include="TypeMapChecks\MathTypes.cpp" />

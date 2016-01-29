@@ -244,6 +244,7 @@
     <Compile Include="Engine\Rendering\NamespaceDoc.cs" />
     <Compile Include="Engine\Rendering\Nodes\CryRenderNode.cs" />
     <Compile Include="Engine\Rendering\Nodes\CryRopeRenderNode.cs" />
+    <Compile Include="Engine\Rendering\Nodes\RenderNodeType.cs" />
     <Compile Include="Engine\Rendering\Shading\Lighting\NamespaceDoc.cs" />
     <Compile Include="Engine\Rendering\Shading\ResourceRefreshFlags.cs" />
     <Compile Include="Engine\UserInterface\NamespaceDoc.cs" />

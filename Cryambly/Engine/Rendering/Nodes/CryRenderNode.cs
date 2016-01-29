@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 
 namespace CryCil.Engine.Rendering.Nodes
 {
@@ -27,7 +28,6 @@ namespace CryCil.Engine.Rendering.Nodes
 		}
 		#endregion
 		#region Interface
-
 		#endregion
 		#region Utilities
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>

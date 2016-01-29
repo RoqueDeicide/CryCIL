@@ -1053,6 +1053,9 @@
     <ClCompile Include="Interops\CryEntityTriggerProxy.cpp">
       <Filter>Interops\Engine\Logic\Proxies</Filter>
     </ClCompile>
+    <ClCompile Include="TypeMapChecks\RenderNodeTypes.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">
@@ -1183,6 +1186,9 @@
     </Filter>
     <Filter Include="Interops\Engine\Logic\Proxies">
       <UniqueIdentifier>{71d07a5f-8097-457d-9a40-79f5f82a64e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interops\Engine\Rendering\Nodes">
+      <UniqueIdentifier>{ddafdbe9-c6ca-490c-91e2-98cf381f55a9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
