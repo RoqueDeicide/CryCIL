@@ -36,13 +36,22 @@ namespace CryCil.Engine.Network
 		#endregion
 		#region Interface
 		/// <summary>
-		/// Implicitly converts this object to a 32-bit integer number.
+		/// Implicitly converts an object of this type to a 32-bit integer number.
 		/// </summary>
 		/// <param name="id">Object to convert.</param>
 		/// <returns>Underlying channel identifier represented by <see cref="int"/> type.</returns>
 		public static implicit operator int(ChannelId id)
 		{
 			return id.id;
+		}
+		/// <summary>
+		/// Implicitly converts 32-bit integer number to an object of this type.
+		/// </summary>
+		/// <param name="id">Object to convert.</param>
+		/// <returns>An identifier object.</returns>
+		public static implicit operator ChannelId(int id)
+		{
+			return new ChannelId((ushort)id);
 		}
 		#endregion
 		#region Utilities

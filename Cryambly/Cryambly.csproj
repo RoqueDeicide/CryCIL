@@ -116,6 +116,12 @@
     <Compile Include="Engine\Logic\EntityProxies\CryEntitySubstitutionProxy.cs" />
     <Compile Include="Engine\Logic\EntityProxies\CryEntityTriggerProxy.cs" />
     <Compile Include="Engine\Logic\EntityProxies\EntityAreaType.cs" />
+    <Compile Include="Engine\Logic\Modes\ChatMessageType.cs" />
+    <Compile Include="Engine\Logic\Modes\DisconnectionCause.cs" />
+    <Compile Include="Engine\Logic\Modes\GameCollisionInfo.cs" />
+    <Compile Include="Engine\Logic\Modes\GameRules.cs" />
+    <Compile Include="Engine\Logic\Modes\Attributes.cs" />
+    <Compile Include="Engine\Logic\Modes\TextMessageType.cs" />
     <Compile Include="Engine\Logic\NamespaceDoc.cs" />
     <Compile Include="Engine\Memory\NamespaceDoc.cs" />
     <Compile Include="Engine\Models\Characters\AnimationAssetFlags.cs" />
@@ -234,6 +240,7 @@
     <Compile Include="Engine\Models\StaticObjects\StaticSubObject.cs" />
     <Compile Include="Engine\Models\StaticObjects\StaticSubObjects.cs" />
     <Compile Include="Engine\Models\StaticObjects\StaticSubObjectType.cs" />
+    <Compile Include="Engine\Network\CryNetChannel.cs" />
     <Compile Include="Engine\Network\NamespaceDoc.cs" />
     <Compile Include="Engine\Physics\Geometry\PhysicalGeometryType.cs" />
     <Compile Include="Engine\Physics\NamespaceDoc.cs" />

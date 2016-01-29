@@ -602,6 +602,12 @@
     <ClInclude Include="Interops\CryEntityTriggerProxy.h">
       <Filter>Interops\Engine\Logic\Proxies</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\GameRules.h">
+      <Filter>Interops\Engine\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\GameCollisionInfo.h">
+      <Filter>Interops\Engine\Logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -1004,7 +1010,6 @@
     <ClCompile Include="TypeMapChecks\EntityTypes.cpp">
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
-    <ClCompile Include="TypeMapChecks\DebugTypes.cpp" />
     <ClCompile Include="TypeMapChecks\MathTypes.cpp">
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
@@ -1054,6 +1059,18 @@
       <Filter>Interops\Engine\Logic\Proxies</Filter>
     </ClCompile>
     <ClCompile Include="TypeMapChecks\RenderNodeTypes.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\GameRules.cpp">
+      <Filter>Interops\Engine\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\GameRulesTypes.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\GameRulesReg.cpp">
+      <Filter>Interops\Engine\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\DebugTypes.cpp">
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
   </ItemGroup>
