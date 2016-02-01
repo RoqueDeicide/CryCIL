@@ -26,7 +26,7 @@ public:
 	virtual bool GetEntityPoolSignature(TSerialize signature) override;
 	virtual void Release() override;
 	virtual void FullSerialize(TSerialize ser) override;
-	virtual bool NetSerialize(TSerialize ser, EEntityAspects aspect, uint8 profile, int pflags) override;
+	virtual bool NetSerialize(TSerialize ser, EEntityAspects aspect, uint8 profile, int flags) override;
 	//! This method is not needed because the same event goes through ProcessEvent method.
 	virtual void PostSerialize() override {}
 	//! Not used, we don't set the spawn serializer for Mono entities.
