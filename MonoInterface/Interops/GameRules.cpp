@@ -217,7 +217,20 @@ MonoGameRules::MonoGameRules()
 
 MonoGameRules::~MonoGameRules()
 {
+	static DisposeMonoEntityThunk thunk =
+		DisposeMonoEntityThunk(GetGameRulesClass()->GetFunction("DisposeInternal", -1)->UnmanagedThunk);
 
+	if (!this->objHandle.IsValid)
+	{
+		return;
+	}
+	// Release the abstraction layer.
+	mono::exception ex;
+	thunk(&ex);
+	if (ex)
+	{
+		MonoEnv->HandleException(ex);
+	}
 }
 #define define_game_rules_method_name(methodName) extern const char gameRulesMethodName##methodName[] = #methodName ## "Internal"
 
@@ -241,7 +254,17 @@ define_game_rules_method_name(SetRemainingGameTime);
 
 #undef define_game_rules_method_name
 
+#define define_game_rules_name(eventName) extern const char gameRulesEventName##eventName[] = "On" ## #eventName;
+
+define_game_rules_name(ResetInEditor);
+define_game_rules_name(GameStarted);
+define_game_rules_name(Synchronizing);
+define_game_rules_name(Synchronized);
+
+#undef define_entity_event_name
+
 #define method(name) gameRulesMethodName##name
+#define game_rules_event(eventName) gameRulesEventName##eventName
 
 bool MonoGameRules::ShouldKeepClient(int channelId, EDisconnectionCause cause, const char *desc) const
 {
@@ -339,95 +362,248 @@ void MonoGameRules::SetRemainingGameTime(float seconds)
 
 bool MonoGameRules::Init(IGameObject *pGameObject)
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	static CreateAbstractionLayerThunk create =
+		CreateAbstractionLayerThunk(GetGameRulesClass()->GetFunction("CreateAbstractionLayer")->UnmanagedThunk);
+	static RaiseOnInitThunk raise =
+		RaiseOnInitThunk(GetGameRulesClass()->GetEvent("Initializing")->GetRaise()->UnmanagedThunk);
+
+	this->SetGameObject(pGameObject);
+
+	IEntity *entity = this->GetEntity();
+	IEntityClass *entityClass = entity->GetClass();
+	EntityId entityId = entity->GetId();
+	// Create the abstraction layer.
+	mono::exception ex;
+	mono::object obj = create(ToMonoString(entityClass->GetName()), entityId, entity, &ex);
+	if (!obj)
+	{
+		return false;
+	}
+	this->objHandle = MonoEnv->GC->Keep(obj);
+
+	raise(this->objHandle.Object, &ex);
+	if (ex)
+	{
+		MonoEnv->HandleException(ex);
+		return false;
+	}
+
+	return pGameObject->BindToNetwork();
 }
 
-void MonoGameRules::PostInit(IGameObject *pGameObject)
+void MonoGameRules::PostInit(IGameObject *)
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	static RaiseOnInitThunk raise =
+		RaiseOnInitThunk(GetGameRulesClass()->GetEvent("Initialized")->GetRaise()->UnmanagedThunk);
+
+	if (this->objHandle.IsValid)
+	{
+		mono::exception ex;
+		raise(this->objHandle.Object, &ex);
+	}
+}
+
+void MonoGameRules::ProcessEvent(SEntityEvent& _event)
+{
+	auto _eventType = _event.event;
+	switch (_eventType)
+	{
+	case ENTITY_EVENT_RESET:
+	{
+		auto enterGameMode = _event.nParam[0] != 0;
+		this->CallProc<game_rules_event(ResetInEditor), bool>(enterGameMode);
+	}
+		break;
+	case ENTITY_EVENT_START_GAME:
+		this->CallProc<game_rules_event(GameStarted)>();
+		break;
+	case ENTITY_EVENT_PRE_SERIALIZE:
+		this->CallProc<game_rules_event(Synchronizing)>();
+		break;
+	case ENTITY_EVENT_POST_SERIALIZE:
+		this->CallProc<game_rules_event(Synchronized)>();
+		break;
+	default:
+		break;
+	}
+	
 }
 
 void MonoGameRules::InitClient(int channelId)
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	static ClientInitRaiseThunk thunk =
+		ClientInitRaiseThunk(GetGameRulesClass()->GetEvent("ClientInitializing")->Raise->UnmanagedThunk);
+
+	mono::exception ex;
+	thunk(this->objHandle.Object, channelId, &ex);
+	if (ex)
+	{
+		MonoEnv->HandleException(ex);
+	}
 }
 
 void MonoGameRules::PostInitClient(int channelId)
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	static ClientInitRaiseThunk thunk =
+		ClientInitRaiseThunk(GetGameRulesClass()->GetEvent("ClientInitialized")->Raise->UnmanagedThunk);
+
+	mono::exception ex;
+	thunk(this->objHandle.Object, channelId, &ex);
+	if (ex)
+	{
+		MonoEnv->HandleException(ex);
+	}
 }
 
-bool MonoGameRules::ReloadExtension(IGameObject *pGameObject, const SEntitySpawnParams &params)
+bool MonoGameRules::ReloadExtension(IGameObject *, const SEntitySpawnParams &params)
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	static ReloadEventThunk thunk =
+		ReloadEventThunk(GetGameRulesClass()->GetEvent("Reloading")->GetRaise()->UnmanagedThunk);
+
+	if (mono::object obj = this->objHandle.Object)
+	{
+		MonoEntitySpawnParams parameters(params);
+		mono::exception ex;
+		bool success = thunk(obj, &parameters, &ex);
+		if (ex)
+		{
+			MonoEnv->HandleException(ex);
+			return false;
+		}
+		return success;
+	}
+	return false;
 }
 
-void MonoGameRules::PostReloadExtension(IGameObject *pGameObject, const SEntitySpawnParams &params)
+void MonoGameRules::PostReloadExtension(IGameObject *, const SEntitySpawnParams &params)
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	static ReloadedEventThunk thunk =
+		ReloadedEventThunk(GetGameRulesClass()->GetEvent("Reloaded")->GetRaise()->UnmanagedThunk);
+
+	if (mono::object obj = this->objHandle.Object)
+	{
+		MonoEntitySpawnParams parameters(params);
+		mono::exception ex;
+		thunk(obj, &parameters, &ex);
+		if (ex)
+		{
+			MonoEnv->HandleException(ex);
+		}
+	}
 }
 
 bool MonoGameRules::GetEntityPoolSignature(TSerialize signature)
 {
-	throw std::logic_error("The method or operation is not implemented.");
-}
+	static GetSignatureThunk thunk =
+		GetSignatureThunk(GetGameRulesClass()->GetFunction("GetSignature", -1)->UnmanagedThunk);
 
-void MonoGameRules::Release()
-{
-	throw std::logic_error("The method or operation is not implemented.");
+	if (mono::object obj = this->objHandle.Object)
+	{
+		mono::exception ex;
+		bool result = thunk(obj, *reinterpret_cast<ISerialize **>(&signature), &ex);
+		if (ex)
+		{
+			MonoEnv->HandleException(ex);
+			return false;
+		}
+		return result;
+	}
+	return false;
 }
 
 void MonoGameRules::FullSerialize(TSerialize ser)
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	static SyncInternalThunk thunk =
+		SyncInternalThunk(GetGameRulesClass()->GetFunction("SyncInternal", -1)->UnmanagedThunk);
+
+	if (mono::object obj = this->objHandle.Object)
+	{
+		ser.BeginGroup("AbstractionLayer");
+
+		mono::exception ex;
+		thunk(obj, *reinterpret_cast<ISerialize **>(&ser), &ex);
+		if (ex)
+		{
+			MonoEnv->HandleException(ex);
+		}
+
+		ser.EndGroup();
+	}
 }
 
-bool MonoGameRules::NetSerialize(TSerialize ser, EEntityAspects aspect, uint8 profile, int pflags)
+bool MonoGameRules::NetSerialize(TSerialize ser, EEntityAspects aspect, uint8 profile, int flags)
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	static NetSyncInternalThunk thunk =
+		NetSyncInternalThunk(GetGameRulesClass()->GetFunction("NetSyncInternal", -1)->UnmanagedThunk);
+
+	if (mono::object obj = this->objHandle.Object)
+	{
+		mono::exception ex;
+		bool result = thunk(obj, *reinterpret_cast<ISerialize **>(&ser), aspect, profile, flags, &ex);
+		if (ex)
+		{
+			MonoEnv->HandleException(ex);
+			return false;
+		}
+		return result;
+	}
+	return false;
 }
 
-void MonoGameRules::PostSerialize()
+void MonoGameRules::Update(SEntityUpdateContext& ctx, int)
 {
-	throw std::logic_error("The method or operation is not implemented.");
-}
+	static UpdateEntityThunk update =
+		UpdateEntityThunk(GetGameRulesClass()->GetFunction("UpdateInternal")->UnmanagedThunk);
 
-void MonoGameRules::SerializeSpawnInfo(TSerialize ser)
-{
-	throw std::logic_error("The method or operation is not implemented.");
-}
-
-ISerializableInfoPtr MonoGameRules::GetSpawnInfo()
-{
-	throw std::logic_error("The method or operation is not implemented.");
-}
-
-void MonoGameRules::Update(SEntityUpdateContext& ctx, int updateSlot)
-{
-	throw std::logic_error("The method or operation is not implemented.");
-}
-
-void MonoGameRules::HandleEvent(const SGameObjectEvent& event)
-{
-	throw std::logic_error("The method or operation is not implemented.");
+	if (mono::object o = this->objHandle.Object)
+	{
+		mono::exception ex;
+		update(o, ctx, &ex);
+		if (ex)
+		{
+			MonoEnv->HandleException(ex);
+		}
+	}
 }
 
 void MonoGameRules::SetChannelId(uint16 id)
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	static IMonoField *channelIdField = GetGameRulesClass()->GetField("channelId");
+
+	if (mono::object obj = this->objHandle.Object)
+	{
+		channelIdField->Set(obj, &id);
+	}
 }
 
 void MonoGameRules::SetAuthority(bool auth)
 {
-	throw std::logic_error("The method or operation is not implemented.");
+	static OnAuthorizedEntityThunk update =
+		OnAuthorizedEntityThunk(GetGameRulesClass()->GetEvent("Authorized")->Raise->UnmanagedThunk);
+
+	if (mono::object o = this->objHandle.Object)
+	{
+		mono::exception ex;
+		update(o, auth, &ex);
+		if (ex)
+		{
+			MonoEnv->HandleException(ex);
+		}
+	}
 }
 
-void MonoGameRules::PostUpdate(float frameTime)
+void MonoGameRules::PostUpdate(float)
 {
-	throw std::logic_error("The method or operation is not implemented.");
-}
+	static PostUpdateEntityThunk update =
+		PostUpdateEntityThunk(GetGameRulesClass()->GetFunction("PostUpdateInternal")->UnmanagedThunk);
 
-void MonoGameRules::PostRemoteSpawn()
-{
-	throw std::logic_error("The method or operation is not implemented.");
+	if (mono::object o = this->objHandle.Object)
+	{
+		mono::exception ex;
+		update(o, &ex);
+		if (ex)
+		{
+			MonoEnv->HandleException(ex);
+		}
+	}
 }

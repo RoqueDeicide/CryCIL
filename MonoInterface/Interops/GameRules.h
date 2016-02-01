@@ -37,6 +37,7 @@ public:
 	virtual void ServerHit(const HitInfo &) override {}
 	virtual int GetHitTypeId(const uint32 ) const override { return 0; }
 	virtual int GetHitTypeId(const char *) const override { return 0; }
+
 	virtual const char *GetHitType(int) const override { return nullptr; }
 	virtual void OnVehicleDestroyed(EntityId) override {}
 	virtual void OnVehicleSubmerged(EntityId, float) override {}
@@ -67,42 +68,25 @@ public:
 
 	//IGameObjectExtension
 	virtual bool Init(IGameObject *pGameObject) override;
-
 	virtual void PostInit(IGameObject *pGameObject) override;
-
+	virtual void ProcessEvent(SEntityEvent& event) override;
 	virtual void InitClient(int channelId) override;
-
 	virtual void PostInitClient(int channelId) override;
-
 	virtual bool ReloadExtension(IGameObject *pGameObject, const SEntitySpawnParams &params) override;
-
 	virtual void PostReloadExtension(IGameObject *pGameObject, const SEntitySpawnParams &params) override;
-
 	virtual bool GetEntityPoolSignature(TSerialize signature) override;
-
-	virtual void Release() override;
-
+	virtual void Release() override { delete this; }
 	virtual void FullSerialize(TSerialize ser) override;
-
 	virtual bool NetSerialize(TSerialize ser, EEntityAspects aspect, uint8 profile, int pflags) override;
-
-	virtual void PostSerialize() override;
-
-	virtual void SerializeSpawnInfo(TSerialize ser) override;
-
-	virtual ISerializableInfoPtr GetSpawnInfo() override;
-
+	virtual void PostSerialize() override {}
+	virtual void SerializeSpawnInfo(TSerialize) override {}
+	virtual ISerializableInfoPtr GetSpawnInfo() override { return nullptr; }
 	virtual void Update(SEntityUpdateContext& ctx, int updateSlot) override;
-
-	virtual void HandleEvent(const SGameObjectEvent& event) override;
-
+	virtual void HandleEvent(const SGameObjectEvent&) override {}
 	virtual void SetChannelId(uint16 id) override;
-
 	virtual void SetAuthority(bool auth) override;
-
 	virtual void PostUpdate(float frameTime) override;
-
-	virtual void PostRemoteSpawn() override;
+	virtual void PostRemoteSpawn() override {}
 
 private:
 	template<const char *methodName, typename ResultType, typename TArg0, typename TArg1, typename TArg2, typename TArg3, typename TArg4>

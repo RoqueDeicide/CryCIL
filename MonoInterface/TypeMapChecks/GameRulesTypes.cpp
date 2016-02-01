@@ -83,6 +83,7 @@ TYPE_MIRROR enum TextMessageType
 	eTextMessageAnnouncement_check
 };
 
+#undef CHECK_ENUM
 #define CHECK_ENUM(x) static_assert (TextMessageType::x ## _check == ETextMessageType::x, "ETextMessageType enumeration has been changed.")
 
 inline void CheckTextMessageType()
@@ -102,6 +103,7 @@ TYPE_MIRROR enum ChatMessageType
 	eChatToAll_check
 };
 
+#undef CHECK_ENUM
 #define CHECK_ENUM(x) static_assert (ChatMessageType::x ## _check == EChatMessageType::x, "EChatMessageType enumeration has been changed.")
 
 inline void CheckChatMessageType()
