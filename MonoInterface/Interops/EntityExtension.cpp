@@ -274,8 +274,6 @@ define_entity_event_name(AnimationEvent);
 
 void MonoEntityExtension::ProcessEvent(SEntityEvent& _event)
 {
-	static 
-
 	auto _eventType = _event.event;
 	switch (_eventType)
 	{
