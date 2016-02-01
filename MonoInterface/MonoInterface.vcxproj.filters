@@ -608,6 +608,9 @@
     <ClInclude Include="Interops\GameCollisionInfo.h">
       <Filter>Interops\Engine\Logic</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\CryEntityProxies.h">
+      <Filter>Interops\Engine\Logic\Proxies</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -1072,6 +1075,9 @@
     </ClCompile>
     <ClCompile Include="TypeMapChecks\DebugTypes.cpp">
       <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\CryEntityProxies.cpp">
+      <Filter>Interops\Engine\Logic\Proxies</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -111,6 +111,7 @@
     <Compile Include="Engine\Logic\EntityProxies\CryEntityAudioProxy.cs" />
     <Compile Include="Engine\Logic\EntityProxies\CryEntityCameraProxy.cs" />
     <Compile Include="Engine\Logic\EntityProxies\CryEntityPhysicalProxy.cs" />
+    <Compile Include="Engine\Logic\EntityProxies\CryEntityProxies.cs" />
     <Compile Include="Engine\Logic\EntityProxies\CryEntityRenderProxy.cs" />
     <Compile Include="Engine\Logic\EntityProxies\CryEntityRopeProxy.cs" />
     <Compile Include="Engine\Logic\EntityProxies\CryEntitySubstitutionProxy.cs" />

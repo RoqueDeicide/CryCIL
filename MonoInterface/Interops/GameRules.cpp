@@ -6,6 +6,8 @@
 #include "MonoEntitySpawnParams.h"
 #include "GameCollisionInfo.h"
 
+// TODO: Use the method names as part of the template.
+
 IMonoClass *GetGameRulesClass()
 {
 	return MonoEnv->Cryambly->GetClass("CryCil.Engine.Logic", "GameRules");

@@ -197,3 +197,5 @@
 #include "Interops/CryEntitySubstitutionProxy.h"
 
 #include "Interops/CryEntityTriggerProxy.h"
+
+#include "Interops/CryEntityProxies.h"

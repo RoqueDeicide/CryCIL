@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
-using CryCil.Annotations;
+using System.Runtime.InteropServices;
+using CryCil.Engine.Logic.EntityProxies;
 using CryCil.Engine.Physics;
 using CryCil.Engine.Rendering;
 using CryCil.Engine.Rendering.Nodes;
@@ -10,10 +12,15 @@ namespace CryCil.Engine.Logic
 	/// <summary>
 	/// Represents a wrapper object for CryEngine entities.
 	/// </summary>
+	[StructLayout(LayoutKind.Explicit)]
 	public partial struct CryEntity : IForeignDataProvider
 	{
 		#region Fields
-		[UsedImplicitly] private IntPtr handle;
+		[FieldOffset(0)] private IntPtr handle;
+		/// <summary>
+		/// Provides access to entity's proxies.
+		/// </summary>
+		[FieldOffset(0)] public CryEntityProxies Proxies;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -330,6 +337,7 @@ namespace CryCil.Engine.Logic
 		#endregion
 		#region Construction
 		internal CryEntity(IntPtr handle)
+			: this()
 		{
 			this.handle = handle;
 		}
