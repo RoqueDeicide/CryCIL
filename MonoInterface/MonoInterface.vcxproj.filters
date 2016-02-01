@@ -602,9 +602,6 @@
     <ClInclude Include="Interops\CryEntityTriggerProxy.h">
       <Filter>Interops\Engine\Logic\Proxies</Filter>
     </ClInclude>
-    <ClInclude Include="Interops\GameRules.h">
-      <Filter>Interops\Engine\Logic</Filter>
-    </ClInclude>
     <ClInclude Include="Interops\GameCollisionInfo.h">
       <Filter>Interops\Engine\Logic</Filter>
     </ClInclude>
@@ -612,6 +609,12 @@
       <Filter>Interops\Engine\Logic\Proxies</Filter>
     </ClInclude>
     <ClInclude Include="Interops\EntityThunkDecls.h">
+      <Filter>Interops\Engine\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\MonoGameRules.h">
+      <Filter>Interops\Engine\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\GameRules.h">
       <Filter>Interops\Engine\Logic</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1067,9 +1070,6 @@
     <ClCompile Include="TypeMapChecks\RenderNodeTypes.cpp">
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
-    <ClCompile Include="Interops\GameRules.cpp">
-      <Filter>Interops\Engine\Logic</Filter>
-    </ClCompile>
     <ClCompile Include="TypeMapChecks\GameRulesTypes.cpp">
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
@@ -1081,6 +1081,12 @@
     </ClCompile>
     <ClCompile Include="Interops\CryEntityProxies.cpp">
       <Filter>Interops\Engine\Logic\Proxies</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\MonoGameRules.cpp">
+      <Filter>Interops\Engine\Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\GameRules.cpp">
+      <Filter>Interops\Engine\Logic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

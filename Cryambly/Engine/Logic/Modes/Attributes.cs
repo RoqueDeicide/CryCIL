@@ -48,4 +48,24 @@ namespace CryCil.Engine.Logic
 			this.Alias = alias;
 		}
 	}
+	/// <summary>
+	/// Registers a folder where that level system can look up levels that support the game rule set that is represented by the class this attribute marks.
+	/// </summary>
+	[BaseTypeRequired(typeof(GameRules))]
+	[AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = false)]
+	public sealed class GameRulesFileLocationAttribute : Attribute
+	{
+		/// <summary>
+		/// Gets the path to levels that support the game rule set.
+		/// </summary>
+		public string Path { get; private set; }
+		/// <summary>
+		/// Initializes a new instance of the <see cref="GameRulesAliasAttribute"/> class.
+		/// </summary>
+		/// <param name="path">Path to levels that support the game rule set.</param>
+		public GameRulesFileLocationAttribute(string path)
+		{
+			this.Path = path;
+		}
+	}
 }

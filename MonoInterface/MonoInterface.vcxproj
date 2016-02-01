@@ -340,6 +340,7 @@
     <ClInclude Include="Interops\ForeignData.h" />
     <ClInclude Include="Interops\Game.h" />
     <ClInclude Include="Interops\GameCollisionInfo.h" />
+    <ClInclude Include="Interops\GameRules.h" />
     <ClInclude Include="Interops\GeneralExtensions.h" />
     <ClInclude Include="Interops\IGeometry.h" />
     <ClInclude Include="Interops\IndexedMesh.h" />
@@ -361,7 +362,7 @@
     <ClInclude Include="Interops\MonoEntitySpawnParams.h" />
     <ClInclude Include="Interops\MonoFlowNode.h" />
     <ClInclude Include="Interops\MonoFlowNodeFactory.h" />
-    <ClInclude Include="Interops\GameRules.h" />
+    <ClInclude Include="Interops\MonoGameRules.h" />
     <ClInclude Include="Interops\MonoLightProperties.h" />
     <ClInclude Include="Interops\ParametricSampler.h" />
     <ClInclude Include="Interops\ParticleEffectIterator.h" />
@@ -522,6 +523,7 @@
     <ClCompile Include="Interops\FacialSentence.cpp" />
     <ClCompile Include="Interops\FlowGraph.cpp" />
     <ClCompile Include="Interops\Game.cpp" />
+    <ClCompile Include="Interops\GameRules.cpp" />
     <ClCompile Include="Interops\GameRulesReg.cpp" />
     <ClCompile Include="Interops\GeneralExtensions.cpp" />
     <ClCompile Include="Interops\IGeometry.cpp" />
@@ -540,7 +542,7 @@
     <ClCompile Include="Interops\MonoAnimationEvent.cpp" />
     <ClCompile Include="Interops\MonoFlowNode.cpp" />
     <ClCompile Include="Interops\MonoFlowNodeFactory.cpp" />
-    <ClCompile Include="Interops\GameRules.cpp" />
+    <ClCompile Include="Interops\MonoGameRules.cpp" />
     <ClCompile Include="Interops\MouseInterop.cpp" />
     <ClCompile Include="Interops\Console.cpp" />
     <ClCompile Include="Interops\Ocean.cpp" />
