@@ -611,6 +611,9 @@
     <ClInclude Include="Interops\CryEntityProxies.h">
       <Filter>Interops\Engine\Logic\Proxies</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\EntityThunkDecls.h">
+      <Filter>Interops\Engine\Logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />

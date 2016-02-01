@@ -105,27 +105,28 @@ public:
 	virtual void PostRemoteSpawn() override;
 
 private:
-	template<typename ResultType, typename TArg0, typename TArg1, typename TArg2, typename TArg3, typename TArg4>
-	ResultType CallFunc(const char *funcName, TArg0 arg0, TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4) const;
-	template<typename ResultType, typename TArg0, typename TArg1, typename TArg2, typename TArg3>
-	ResultType CallFunc(const char *funcName, TArg0 arg0, TArg1 arg1, TArg2 arg2, TArg3 arg3) const;
-	template<typename ResultType, typename TArg0, typename TArg1, typename TArg2>
-	ResultType CallFunc(const char *funcName, TArg0 arg0, TArg1 arg1, TArg2 arg2) const;
-	template<typename ResultType, typename TArg0, typename TArg1>
-	ResultType CallFunc(const char *funcName, TArg0 arg0, TArg1 arg1) const;
-	template<typename ResultType, typename TArg0>
-	ResultType CallFunc(const char *funcName, TArg0 arg0) const;
-	template<typename ResultType>
-	ResultType CallFunc(const char *funcName) const;
-	template<typename TArg0, typename TArg1, typename TArg2, typename TArg3, typename TArg4>
-	void CallProc(const char *funcName, TArg0 arg0, TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4) const;
-	template<typename TArg0, typename TArg1, typename TArg2, typename TArg3>
-	void CallProc(const char *funcName, TArg0 arg0, TArg1 arg1, TArg2 arg2, TArg3 arg3) const;
-	template<typename TArg0, typename TArg1, typename TArg2>
-	void CallProc(const char *funcName, TArg0 arg0, TArg1 arg1, TArg2 arg2) const;
-	template<typename TArg0, typename TArg1>
-	void CallProc(const char *funcName, TArg0 arg0, TArg1 arg1) const;
-	template<typename TArg0>
-	void CallProc(const char *funcName, TArg0 arg0) const;
-	void CallProc(const char *funcName) const;
+	template<const char *methodName, typename ResultType, typename TArg0, typename TArg1, typename TArg2, typename TArg3, typename TArg4>
+	ResultType CallFunc(TArg0 arg0, TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4) const;
+	template<const char *methodName, typename ResultType, typename TArg0, typename TArg1, typename TArg2, typename TArg3>
+	ResultType CallFunc(TArg0 arg0, TArg1 arg1, TArg2 arg2, TArg3 arg3) const;
+	template<const char *methodName, typename ResultType, typename TArg0, typename TArg1, typename TArg2>
+	ResultType CallFunc(TArg0 arg0, TArg1 arg1, TArg2 arg2) const;
+	template<const char *methodName, typename ResultType, typename TArg0, typename TArg1>
+	ResultType CallFunc(TArg0 arg0, TArg1 arg1) const;
+	template<const char *methodName, typename ResultType, typename TArg0>
+	ResultType CallFunc(TArg0 arg0) const;
+	template<const char *methodName, typename ResultType>
+	ResultType CallFunc() const;
+	template<const char *methodName, typename TArg0, typename TArg1, typename TArg2, typename TArg3, typename TArg4>
+	void CallProc(TArg0 arg0, TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4) const;
+	template<const char *methodName, typename TArg0, typename TArg1, typename TArg2, typename TArg3>
+	void CallProc(TArg0 arg0, TArg1 arg1, TArg2 arg2, TArg3 arg3) const;
+	template<const char *methodName, typename TArg0, typename TArg1, typename TArg2>
+	void CallProc(TArg0 arg0, TArg1 arg1, TArg2 arg2) const;
+	template<const char *methodName, typename TArg0, typename TArg1>
+	void CallProc(TArg0 arg0, TArg1 arg1) const;
+	template<const char *methodName, typename TArg0>
+	void CallProc(TArg0 arg0) const;
+	template<const char *methodName>
+	void CallProc() const;
 };

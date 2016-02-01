@@ -7,6 +7,7 @@
 
 #include <CryCharAnimationParams.h>
 #include "MonoAnimationEvent.h"
+#include "EntityThunkDecls.h"
 
 IMonoClass *GetMonoEntityClass()
 {
@@ -25,8 +26,6 @@ MonoEntityExtension::MonoEntityExtension()
 
 }
 
-typedef void(__stdcall *DisposeMonoEntityThunk)(mono::exception *);
-
 MonoEntityExtension::~MonoEntityExtension()
 {
 	static DisposeMonoEntityThunk thunk =
@@ -44,9 +43,6 @@ MonoEntityExtension::~MonoEntityExtension()
 		MonoEnv->HandleException(ex);
 	}
 }
-
-typedef mono::object(__stdcall *CreateAbstractionLayerThunk)(mono::string, EntityId, IEntity *, mono::exception *);
-typedef mono::object(__stdcall *RaiseOnInitThunk)(mono::object, mono::exception *);
 
 bool MonoEntityExtension::Init(IGameObject* pGameObject)
 {
@@ -502,8 +498,6 @@ void MonoEntityExtension::ProcessEvent(SEntityEvent& _event)
 
 #undef entity_event
 
-typedef void(__stdcall *ClientInitRaiseThunk)(mono::object, ushort, mono::exception *);
-
 void MonoEntityExtension::InitClient(int channelId)
 {
 	static ClientInitRaiseThunk thunk =
@@ -540,8 +534,6 @@ void MonoEntityExtension::PostInitClient(int channelId)
 	}
 }
 
-typedef bool(__stdcall *ReloadEventThunk)(mono::object, MonoEntitySpawnParams *, mono::exception *);
-
 bool MonoEntityExtension::ReloadExtension(IGameObject*, const SEntitySpawnParams& params)
 {
 	static ReloadEventThunk thunk =
@@ -562,8 +554,6 @@ bool MonoEntityExtension::ReloadExtension(IGameObject*, const SEntitySpawnParams
 	return false;
 }
 
-typedef void(__stdcall *ReloadedEventThunk)(mono::object, MonoEntitySpawnParams *, mono::exception *);
-
 void MonoEntityExtension::PostReloadExtension(IGameObject*, const SEntitySpawnParams& params)
 {
 	static ReloadedEventThunk thunk =
@@ -580,8 +570,6 @@ void MonoEntityExtension::PostReloadExtension(IGameObject*, const SEntitySpawnPa
 		}
 	}
 }
-
-typedef bool(__stdcall *GetSignatureThunk)(mono::object, ISerialize *, mono::exception *);
 
 bool MonoEntityExtension::GetEntityPoolSignature(TSerialize signature)
 {
@@ -606,8 +594,6 @@ void MonoEntityExtension::Release()
 {
 	delete this;
 }
-
-typedef bool(__stdcall *SyncInternalThunk)(mono::object, ISerialize *, mono::exception *);
 
 void MonoEntityExtension::FullSerialize(TSerialize ser)
 {
@@ -659,8 +645,6 @@ void MonoEntityExtension::FullSerialize(TSerialize ser)
 	ser.EndGroup();
 }
 
-typedef bool(__stdcall *NetSyncInternalThunk)(mono::object, ISerialize *, EEntityAspects, byte, int, mono::exception *);
-
 bool MonoEntityExtension::NetSerialize(TSerialize ser, EEntityAspects aspect, uint8 profile, int flags)
 {
 	if (!this->networking)
@@ -684,8 +668,6 @@ bool MonoEntityExtension::NetSerialize(TSerialize ser, EEntityAspects aspect, ui
 	}
 	return false;
 }
-
-typedef void(__stdcall *UpdateEntityThunk)(mono::object, SEntityUpdateContext&, mono::exception *);
 
 void MonoEntityExtension::Update(SEntityUpdateContext& ctx, int)
 {
@@ -718,8 +700,6 @@ void MonoEntityExtension::SetChannelId(uint16 id)
 	}
 }
 
-typedef void(__stdcall *OnAuthorizedEntityThunk)(mono::object, bool, mono::exception *);
-
 void MonoEntityExtension::SetAuthority(bool auth)
 {
 	static OnAuthorizedEntityThunk update =
@@ -735,8 +715,6 @@ void MonoEntityExtension::SetAuthority(bool auth)
 		}
 	}
 }
-
-typedef void(__stdcall *PostUpdateEntityThunk)(mono::object, mono::exception *);
 
 void MonoEntityExtension::PostUpdate(float)
 {

@@ -5,8 +5,7 @@
 #pragma region Helpers
 #include "MonoEntitySpawnParams.h"
 #include "GameCollisionInfo.h"
-
-// TODO: Use the method names as part of the template.
+#include "EntityThunkDecls.h"
 
 IMonoClass *GetGameRulesClass()
 {
@@ -21,17 +20,12 @@ ThunkType GetGameRulesThunk(const char *funcName)
 	return thunk;
 }
 
-inline NtText CreateFuncName(const char *funcName)
+template<const char *methodName, typename ResultType, typename TArg0, typename TArg1, typename TArg2, typename TArg3, typename TArg4>
+ResultType MonoGameRules::CallFunc(TArg0 arg0, TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4) const
 {
-	return NtText(2, funcName, "Internal");
-}
-
-template<typename ResultType, typename TArg0, typename TArg1, typename TArg2, typename TArg3, typename TArg4>
-ResultType MonoGameRules::CallFunc(const char *funcName, TArg0 arg0, TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4) const
-{
-	ResultType(__stdcall *thunk)(mono::object, TArg0, TArg1, TArg2, TArg3, TArg4, mono::exception *) =
+	static ResultType(__stdcall *thunk)(mono::object, TArg0, TArg1, TArg2, TArg3, TArg4, mono::exception *) =
 		reinterpret_cast<ResultType(__stdcall *)(mono::object, TArg0, TArg1, TArg2, TArg3, TArg4, mono::exception *)>
-		(GetGameRulesClass()->GetFunction(CreateFuncName(funcName), -1)->UnmanagedThunk);
+		(GetGameRulesClass()->GetFunction(methodName, -1)->UnmanagedThunk);
 
 	mono::exception ex;
 	ResultType result = thunk(this->objHandle.Object, arg0, arg1, arg2, arg3, arg4, &ex);
@@ -42,12 +36,12 @@ ResultType MonoGameRules::CallFunc(const char *funcName, TArg0 arg0, TArg1 arg1,
 	return result;
 }
 
-template<typename ResultType, typename TArg0, typename TArg1, typename TArg2, typename TArg3>
-ResultType MonoGameRules::CallFunc(const char *funcName, TArg0 arg0, TArg1 arg1, TArg2 arg2, TArg3 arg3) const
+template<const char *methodName, typename ResultType, typename TArg0, typename TArg1, typename TArg2, typename TArg3>
+ResultType MonoGameRules::CallFunc(TArg0 arg0, TArg1 arg1, TArg2 arg2, TArg3 arg3) const
 {
-	ResultType(__stdcall *thunk)(mono::object, TArg0, TArg1, TArg2, TArg3, mono::exception *) =
+	static ResultType(__stdcall *thunk)(mono::object, TArg0, TArg1, TArg2, TArg3, mono::exception *) =
 		reinterpret_cast<ResultType(__stdcall *)(mono::object, TArg0, TArg1, TArg2, TArg3, mono::exception *)>
-		(GetGameRulesClass()->GetFunction(funcName, -1)->UnmanagedThunk);
+		(GetGameRulesClass()->GetFunction(methodName, -1)->UnmanagedThunk);
 
 	mono::exception ex;
 	ResultType result = thunk(this->objHandle.Object, arg0, arg1, arg2, arg3, &ex);
@@ -58,12 +52,12 @@ ResultType MonoGameRules::CallFunc(const char *funcName, TArg0 arg0, TArg1 arg1,
 	return result;
 }
 
-template<typename ResultType, typename TArg0, typename TArg1, typename TArg2>
-ResultType MonoGameRules::CallFunc(const char *funcName, TArg0 arg0, TArg1 arg1, TArg2 arg2) const
+template<const char *methodName, typename ResultType, typename TArg0, typename TArg1, typename TArg2>
+ResultType MonoGameRules::CallFunc(TArg0 arg0, TArg1 arg1, TArg2 arg2) const
 {
-	ResultType(__stdcall *thunk)(mono::object, TArg0, TArg1, TArg2, mono::exception *) =
+	static ResultType(__stdcall *thunk)(mono::object, TArg0, TArg1, TArg2, mono::exception *) =
 		reinterpret_cast<ResultType(__stdcall *)(mono::object, TArg0, TArg1, TArg2, mono::exception *)>
-		(GetGameRulesClass()->GetFunction(CreateFuncName(funcName), -1)->UnmanagedThunk);
+		(GetGameRulesClass()->GetFunction(methodName, -1)->UnmanagedThunk);
 
 	mono::exception ex;
 	ResultType result = thunk(this->objHandle.Object, arg0, arg1, arg2, &ex);
@@ -74,12 +68,12 @@ ResultType MonoGameRules::CallFunc(const char *funcName, TArg0 arg0, TArg1 arg1,
 	return result;
 }
 
-template<typename ResultType, typename TArg0, typename TArg1>
-ResultType MonoGameRules::CallFunc(const char *funcName, TArg0 arg0, TArg1 arg1) const
+template<const char *methodName, typename ResultType, typename TArg0, typename TArg1>
+ResultType MonoGameRules::CallFunc(TArg0 arg0, TArg1 arg1) const
 {
-	ResultType(__stdcall *thunk)(mono::object, TArg0, TArg1, mono::exception *) =
+	static ResultType(__stdcall *thunk)(mono::object, TArg0, TArg1, mono::exception *) =
 		reinterpret_cast<ResultType(__stdcall *)(mono::object, TArg0, TArg1, mono::exception *)>
-		(GetGameRulesClass()->GetFunction(CreateFuncName(funcName), -1)->UnmanagedThunk);
+		(GetGameRulesClass()->GetFunction(methodName, -1)->UnmanagedThunk);
 
 	mono::exception ex;
 	ResultType result = thunk(this->objHandle.Object, arg0, arg1, &ex);
@@ -90,12 +84,12 @@ ResultType MonoGameRules::CallFunc(const char *funcName, TArg0 arg0, TArg1 arg1)
 	return result;
 }
 
-template<typename ResultType, typename TArg0>
-ResultType MonoGameRules::CallFunc(const char *funcName, TArg0 arg0) const
+template<const char *methodName, typename ResultType, typename TArg0>
+ResultType MonoGameRules::CallFunc(TArg0 arg0) const
 {
-	ResultType(__stdcall *thunk)(mono::object, TArg0, mono::exception *) =
+	static ResultType(__stdcall *thunk)(mono::object, TArg0, mono::exception *) =
 		reinterpret_cast<ResultType(__stdcall *)(mono::object, TArg0, mono::exception *)>
-		(GetGameRulesClass()->GetFunction(CreateFuncName(funcName), -1)->UnmanagedThunk);
+		(GetGameRulesClass()->GetFunction(methodName, -1)->UnmanagedThunk);
 
 	mono::exception ex;
 	ResultType result = thunk(this->objHandle.Object, arg0, &ex);
@@ -106,12 +100,12 @@ ResultType MonoGameRules::CallFunc(const char *funcName, TArg0 arg0) const
 	return result;
 }
 
-template<typename ResultType>
-ResultType MonoGameRules::CallFunc(const char *funcName) const
+template<const char *methodName, typename ResultType>
+ResultType MonoGameRules::CallFunc() const
 {
-	ResultType(__stdcall *thunk)(mono::object, mono::exception *) =
+	static ResultType(__stdcall *thunk)(mono::object, mono::exception *) =
 		reinterpret_cast<ResultType(__stdcall *)(mono::object, mono::exception *)>
-		(GetGameRulesClass()->GetFunction(CreateFuncName(funcName), -1)->UnmanagedThunk);
+		(GetGameRulesClass()->GetFunction(methodName, -1)->UnmanagedThunk);
 
 	mono::exception ex;
 	ResultType result = thunk(this->objHandle.Object, &ex);
@@ -123,12 +117,12 @@ ResultType MonoGameRules::CallFunc(const char *funcName) const
 }
 
 
-template<typename TArg0, typename TArg1, typename TArg2, typename TArg3, typename TArg4>
-void MonoGameRules::CallProc(const char *funcName, TArg0 arg0, TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4) const
+template<const char *methodName, typename TArg0, typename TArg1, typename TArg2, typename TArg3, typename TArg4>
+void MonoGameRules::CallProc(TArg0 arg0, TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4) const
 {
-	void(__stdcall *thunk)(mono::object, TArg0, TArg1, TArg2, TArg3, TArg4, mono::exception *) =
+	static void(__stdcall *thunk)(mono::object, TArg0, TArg1, TArg2, TArg3, TArg4, mono::exception *) =
 		reinterpret_cast<void(__stdcall *)(mono::object, TArg0, TArg1, TArg2, TArg3, TArg4, mono::exception *)>
-		(GetGameRulesClass()->GetFunction(CreateFuncName(funcName), -1)->UnmanagedThunk);
+		(GetGameRulesClass()->GetFunction(methodName, -1)->UnmanagedThunk);
 
 	mono::exception ex;
 	thunk(this->objHandle.Object, arg0, arg1, arg2, arg3, arg4, &ex);
@@ -138,12 +132,12 @@ void MonoGameRules::CallProc(const char *funcName, TArg0 arg0, TArg1 arg1, TArg2
 	}
 }
 
-template<typename TArg0, typename TArg1, typename TArg2, typename TArg3>
-void MonoGameRules::CallProc(const char *funcName, TArg0 arg0, TArg1 arg1, TArg2 arg2, TArg3 arg3) const
+template<const char *methodName, typename TArg0, typename TArg1, typename TArg2, typename TArg3>
+void MonoGameRules::CallProc(TArg0 arg0, TArg1 arg1, TArg2 arg2, TArg3 arg3) const
 {
-	void(__stdcall *thunk)(mono::object, TArg0, TArg1, TArg2, TArg3, mono::exception *) =
+	static void(__stdcall *thunk)(mono::object, TArg0, TArg1, TArg2, TArg3, mono::exception *) =
 		reinterpret_cast<void(__stdcall *)(mono::object, TArg0, TArg1, TArg2, TArg3, mono::exception *)>
-		(GetGameRulesClass()->GetFunction(CreateFuncName(funcName), -1)->UnmanagedThunk);
+		(GetGameRulesClass()->GetFunction(methodName, -1)->UnmanagedThunk);
 
 	mono::exception ex;
 	thunk(this->objHandle.Object, arg0, arg1, arg2, arg3, &ex);
@@ -153,12 +147,12 @@ void MonoGameRules::CallProc(const char *funcName, TArg0 arg0, TArg1 arg1, TArg2
 	}
 }
 
-template<typename TArg0, typename TArg1, typename TArg2>
-void MonoGameRules::CallProc(const char *funcName, TArg0 arg0, TArg1 arg1, TArg2 arg2) const
+template<const char *methodName, typename TArg0, typename TArg1, typename TArg2>
+void MonoGameRules::CallProc(TArg0 arg0, TArg1 arg1, TArg2 arg2) const
 {
-	void(__stdcall *thunk)(mono::object, TArg0, TArg1, TArg2, mono::exception *) =
+	static void(__stdcall *thunk)(mono::object, TArg0, TArg1, TArg2, mono::exception *) =
 		reinterpret_cast<void(__stdcall *)(mono::object, TArg0, TArg1, TArg2, mono::exception *)>
-		(GetGameRulesClass()->GetFunction(CreateFuncName(funcName), -1)->UnmanagedThunk);
+		(GetGameRulesClass()->GetFunction(methodName, -1)->UnmanagedThunk);
 
 	mono::exception ex;
 	thunk(this->objHandle.Object, arg0, arg1, arg2, &ex);
@@ -168,12 +162,12 @@ void MonoGameRules::CallProc(const char *funcName, TArg0 arg0, TArg1 arg1, TArg2
 	}
 }
 
-template<typename TArg0, typename TArg1>
-void MonoGameRules::CallProc(const char *funcName, TArg0 arg0, TArg1 arg1) const
+template<const char *methodName, typename TArg0, typename TArg1>
+void MonoGameRules::CallProc(TArg0 arg0, TArg1 arg1) const
 {
-	void(__stdcall *thunk)(mono::object, TArg0, TArg1, mono::exception *) =
+	static void(__stdcall *thunk)(mono::object, TArg0, TArg1, mono::exception *) =
 		reinterpret_cast<void(__stdcall *)(mono::object, TArg0, TArg1, mono::exception *)>
-		(GetGameRulesClass()->GetFunction(CreateFuncName(funcName), -1)->UnmanagedThunk);
+		(GetGameRulesClass()->GetFunction(methodName, -1)->UnmanagedThunk);
 
 	mono::exception ex;
 	thunk(this->objHandle.Object, arg0, arg1, &ex);
@@ -183,12 +177,12 @@ void MonoGameRules::CallProc(const char *funcName, TArg0 arg0, TArg1 arg1) const
 	}
 }
 
-template<typename TArg0>
-void MonoGameRules::CallProc(const char *funcName, TArg0 arg0) const
+template<const char *methodName, typename TArg0>
+void MonoGameRules::CallProc(TArg0 arg0) const
 {
-	void(__stdcall *thunk)(mono::object, TArg0, mono::exception *) =
+	static void(__stdcall *thunk)(mono::object, TArg0, mono::exception *) =
 		reinterpret_cast<void(__stdcall *)(mono::object, TArg0, mono::exception *)>
-		(GetGameRulesClass()->GetFunction(CreateFuncName(funcName), -1)->UnmanagedThunk);
+		(GetGameRulesClass()->GetFunction(methodName, -1)->UnmanagedThunk);
 
 	mono::exception ex;
 	thunk(this->objHandle.Object, arg0, &ex);
@@ -198,11 +192,12 @@ void MonoGameRules::CallProc(const char *funcName, TArg0 arg0) const
 	}
 }
 
-void MonoGameRules::CallProc(const char *funcName) const
+template<const char *methodName>
+void MonoGameRules::CallProc() const
 {
-	void(__stdcall *thunk)(mono::object, mono::exception *) =
+	static void(__stdcall *thunk)(mono::object, mono::exception *) =
 		reinterpret_cast<void(__stdcall *)(mono::object, mono::exception *)>
-		(GetGameRulesClass()->GetFunction(CreateFuncName(funcName), -1)->UnmanagedThunk);
+		(GetGameRulesClass()->GetFunction(methodName, -1)->UnmanagedThunk);
 
 	mono::exception ex;
 	thunk(this->objHandle.Object, &ex);
@@ -224,98 +219,122 @@ MonoGameRules::~MonoGameRules()
 {
 
 }
+#define define_game_rules_method_name(methodName) extern const char gameRulesMethodName##methodName[] = #methodName ## "Internal"
+
+define_game_rules_method_name(ShouldKeepClient);
+define_game_rules_method_name(PrecacheLevel);
+define_game_rules_method_name(OnConnect);
+define_game_rules_method_name(OnDisconnect);
+define_game_rules_method_name(OnClientConnect);
+define_game_rules_method_name(OnClientDisconnect);
+define_game_rules_method_name(OnClientEnteredGame);
+define_game_rules_method_name(OnEntitySpawn);
+define_game_rules_method_name(OnEntityRemoved);
+define_game_rules_method_name(OnEntityReused);
+define_game_rules_method_name(SendTextMessage);
+define_game_rules_method_name(SendChatMessage);
+define_game_rules_method_name(OnCollision);
+define_game_rules_method_name(ShowStatus);
+define_game_rules_method_name(IsTimeLimited);
+define_game_rules_method_name(GetRemainingGameTime);
+define_game_rules_method_name(SetRemainingGameTime);
+
+#undef define_game_rules_method_name
+
+#define method(name) gameRulesMethodName##name
 
 bool MonoGameRules::ShouldKeepClient(int channelId, EDisconnectionCause cause, const char *desc) const
 {
-	return this->CallFunc<bool, int, EDisconnectionCause, mono::string>
-		("ShouldKeepClient", channelId, cause, ToMonoString(desc));
+	return this->CallFunc<method(ShouldKeepClient), bool, int, EDisconnectionCause, mono::string>
+		(channelId, cause, ToMonoString(desc));
 }
 
 void MonoGameRules::PrecacheLevel()
 {
-	this->CallProc("PrecacheLevel");
+	this->CallProc<method(PrecacheLevel)>();
 }
 
 void MonoGameRules::OnConnect(struct INetChannel *pNetChannel)
 {
-	this->CallProc<INetChannel *>("OnConnect", pNetChannel);
+	this->CallProc<method(OnConnect), INetChannel *>(pNetChannel);
 }
 
 void MonoGameRules::OnDisconnect(EDisconnectionCause cause, const char *desc)
 {
-	this->CallProc<EDisconnectionCause, mono::string>("OnDisconnect", cause, ToMonoString(desc));
+	this->CallProc<method(OnDisconnect), EDisconnectionCause, mono::string>(cause, ToMonoString(desc));
 }
 
 bool MonoGameRules::OnClientConnect(int channelId, bool isReset)
 {
-	return this->CallFunc<bool, int, bool>("OnClientConnect", channelId, isReset);
+	return this->CallFunc<method(OnClientConnect), bool, int, bool>(channelId, isReset);
 }
 
 void MonoGameRules::OnClientDisconnect(int channelId, EDisconnectionCause cause, const char *desc,
 									   bool keepClient)
 {
-	this->CallProc<int, EDisconnectionCause, mono::string, bool>("OnClientDisconnect", channelId, cause,
-																 ToMonoString(desc), keepClient);
+	this->CallProc<method(OnClientDisconnect), int, EDisconnectionCause, mono::string, bool>
+		(channelId, cause, ToMonoString(desc), keepClient);
 }
 
 bool MonoGameRules::OnClientEnteredGame(int channelId, bool isReset)
 {
-	return this->CallFunc<bool, int, bool>("OnClientEnteredGame", channelId, isReset);
+	return this->CallFunc<method(OnClientEnteredGame), bool, int, bool>(channelId, isReset);
 }
 
 void MonoGameRules::OnEntitySpawn(IEntity *pEntity)
 {
-	this->CallProc<IEntity *>("OnEntitySpawn", pEntity);
+	this->CallProc<method(OnEntitySpawn), IEntity *>(pEntity);
 }
 
 void MonoGameRules::OnEntityRemoved(IEntity *pEntity)
 {
-	this->CallProc<IEntity *>("OnEntityRemoved", pEntity);
+	this->CallProc<method(OnEntityRemoved), IEntity *>(pEntity);
 }
 
 void MonoGameRules::OnEntityReused(IEntity *pEntity, SEntitySpawnParams &params, EntityId prevId)
 {
 	MonoEntitySpawnParams parameters(params);
-	this->CallProc<IEntity *, MonoEntitySpawnParams &, EntityId>("", pEntity, parameters, prevId);
+	this->CallProc<method(OnEntityReused), IEntity *, MonoEntitySpawnParams &, EntityId>(pEntity, parameters,
+																						 prevId);
 }
 
 void MonoGameRules::SendTextMessage(ETextMessageType type, const char *msg, uint32 to, int channelId,
 									const char *, const char *, const char *, const char *)
 {
-	this->CallProc<ETextMessageType, mono::string, uint32, int>("SendTextMessage", type, ToMonoString(msg), to,
-																channelId);
+	this->CallProc<method(SendTextMessage), ETextMessageType, mono::string, uint32, int>(type, ToMonoString(msg),
+																						 to, channelId);
 }
 
 void MonoGameRules::SendChatMessage(EChatMessageType type, EntityId sourceId, EntityId targetId, const char *msg)
 {
-	this->CallProc<EChatMessageType, EntityId, EntityId, mono::string>("SendChatMessage", type, sourceId,
+	this->CallProc<method(SendChatMessage), EChatMessageType, EntityId, EntityId, mono::string>(type, sourceId,
 																	   targetId, ToMonoString(msg));
 }
 
 bool MonoGameRules::OnCollision(const SGameCollision& _event)
 {
 	GameCollisionInfo info(_event);
-	return this->CallFunc<bool, GameCollisionInfo &>("OnCollision", info);
+	return this->CallFunc<method(OnCollision), bool, GameCollisionInfo &>(info);
 }
 
 void MonoGameRules::ShowStatus()
 {
-	this->CallProc("ShowStatus");
+	this->CallProc<method(ShowStatus)>();
 }
 
 bool MonoGameRules::IsTimeLimited() const
 {
-	return this->CallFunc<bool>("IsTimeLimited");
+	return this->CallFunc<method(IsTimeLimited), bool>();
 }
 
 float MonoGameRules::GetRemainingGameTime() const
 {
-	return this->CallFunc<float>("GetRemainingGameTime");
+	return this->CallFunc<method(GetRemainingGameTime), float>();
 }
 
 void MonoGameRules::SetRemainingGameTime(float seconds)
 {
-	this->CallProc<float>("SetRemainingGameTime", seconds);
+	this->CallProc<method(SetRemainingGameTime), float>(seconds);
 }
 
 bool MonoGameRules::Init(IGameObject *pGameObject)
