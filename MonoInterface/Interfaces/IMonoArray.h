@@ -2,6 +2,16 @@
 
 #include "IMonoAliases.h"
 
+#ifndef MONO_ZERO_LEN_ARRAY
+#define MONO_ZERO_LEN_ARRAY 1
+struct _MonoObject
+{
+	void *vtable;
+	void *sync;
+};
+typedef _MonoObject MonoObject;
+#endif
+
 typedef struct
 {
 	unsigned int length;
