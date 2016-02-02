@@ -2,7 +2,6 @@
 
 #include "Game.h"
 
-
 CryCilGame::CryCilGame()
 	: gameFramework(nullptr)
 {
@@ -25,9 +24,9 @@ bool CryCilGame::Init(IGameFramework *pFramework)
 	// Save the pointer to the framework object.
 	this->gameFramework = pFramework;
 	// Assign a GUID to the game.
-	//
-	// TODO: set the game GUID from CryCIL, since the latter is supposed to be already running at this point.
-	this->gameFramework->SetGameGUID(GAME_GUID);
+	IMonoField *field = MonoEnv->Cryambly->GetClass("CryCil", "Game")->GetField("guidText");
+	auto value = NtText(field->Get<mono::string>(nullptr));
+	this->gameFramework->SetGameGUID(value);
 	return true;
 }
 
@@ -45,14 +44,22 @@ int CryCilGame::Update(bool haveFocus, unsigned int updateFlags)
 
 const char *CryCilGame::GetLongName()
 {
-	// TODO: set the name from CryCIL, since the latter is supposed to be already running at this point.
-	return GAME_LONGNAME;
+	if (this->longGameName.Length == 0)
+	{
+		IMonoField *field = MonoEnv->Cryambly->GetClass("CryCil", "Game")->GetField("longName");
+		this->longGameName = NtText(field->Get<mono::string>(nullptr));
+	}
+	return this->longGameName;
 }
 
 const char *CryCilGame::GetName()
 {
-	// TODO: set the name from CryCIL, since the latter is supposed to be already running at this point.
-	return GAME_NAME;
+	if (this->gameName.Length == 0)
+	{
+		IMonoField *field = MonoEnv->Cryambly->GetClass("CryCil", "Game")->GetField("name");
+		this->gameName = NtText(field->Get<mono::string>(nullptr));
+	}
+	return this->gameName;
 }
 
 IGameFramework *CryCilGame::GetIGameFramework()

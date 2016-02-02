@@ -2,14 +2,12 @@
 
 #include "IMonoInterface.h"
 
-static const char* GAME_NAME = "CryCilGame";
-static const char* GAME_LONGNAME = "CryCIL Base Game";
-static const char* GAME_GUID = "{00000000-1111-2222-3333-444444444444}";
-
 //! Handles general game logic.
 class CryCilGame : public IGame
 {
 	IGameFramework *gameFramework;
+	NtText gameName;
+	NtText longGameName;
 public:
 	CryCilGame();
 	~CryCilGame();
