@@ -49,7 +49,8 @@ namespace CryCil.Engine.Logic
 		}
 	}
 	/// <summary>
-	/// Registers a folder where that level system can look up levels that support the game rule set that is represented by the class this attribute marks.
+	/// Registers a folder where that level system can look up levels that support the game rule set that
+	/// is represented by the class this attribute marks.
 	/// </summary>
 	[BaseTypeRequired(typeof(GameRules))]
 	[AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = false)]
@@ -67,5 +68,16 @@ namespace CryCil.Engine.Logic
 		{
 			this.Path = path;
 		}
+	}
+	/// <summary>
+	/// Marks the class that represents a set of game rules as a default set.
+	/// </summary>
+	/// <remarks>
+	/// If multiple classes are marked by this attribute, only last one registered will become default.
+	/// </remarks>
+	[BaseTypeRequired(typeof(GameRules))]
+	[AttributeUsage(AttributeTargets.Class, Inherited = false)]
+	public sealed class DefaultGameRulesAttribute : Attribute
+	{
 	}
 }

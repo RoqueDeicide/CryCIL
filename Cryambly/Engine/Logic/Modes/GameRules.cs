@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using CryCil.Annotations;
@@ -15,6 +16,7 @@ namespace CryCil.Engine.Logic
 	public abstract class GameRules : MonoNetEntity
 	{
 		#region Fields
+		private const string DefaultGameRulesCVarName = "sv_gamerulesdefault";
 		#endregion
 		#region Static Properties
 		/// <summary>
@@ -58,6 +60,55 @@ namespace CryCil.Engine.Logic
 		private void SetRemainingGameTimeInternal(float value)
 		{
 			this.RemainingGameTime = value;
+		}
+		/// <summary>
+		/// Gets the name of entity class that represents this entity.
+		/// </summary>
+		/// <exception cref="TypeLoadException">The custom attribute type cannot be loaded.</exception>
+		public override string EntityClassName
+		{
+			get
+			{
+				Contract.Requires<ObjectDisposedException>(!this.Disposed, "This entity doesn't exist.");
+				return this.EntityTypeName ??
+					   (this.EntityTypeName = this.GetType().GetAttribute<GameRulesAttribute>().Name);
+			}
+		}
+		/// <summary>
+		/// Gets or sets the value that indicates whether this object represents a default set of rules.
+		/// </summary>
+		/// <remarks>
+		/// When setting this property, only value of <c>true</c> will make a difference.
+		/// </remarks>
+		public bool IsDefault
+		{
+			get
+			{
+				Contract.Requires<ObjectDisposedException>(!this.Disposed, "This object will never be usable.");
+				try
+				{
+					return CryConsole.GetVariable(DefaultGameRulesCVarName).ValueString
+									 .Equals(this.EntityClassName);
+				}
+				catch (TypeLoadException)
+				{
+					return false;
+				}
+			}
+			set
+			{
+				Contract.Requires<ObjectDisposedException>(!this.Disposed, "This object will never be usable.");
+				try
+				{
+					if (value)
+					{
+						SetDefaultGameRules(this.EntityClassName);
+					}
+				}
+				catch (TypeLoadException)
+				{
+				}
+			}
 		}
 		#endregion
 		#region Events
@@ -172,6 +223,22 @@ namespace CryCil.Engine.Logic
 		{
 			return HaveGameRules(gameRules);
 		}
+		/// <summary>
+		/// Marks specified rule set as default.
+		/// </summary>
+		/// <param name="gameRules">Name of the rule set.</param>
+		/// <exception cref="ArgumentNullException">Name of the rule set cannot be null.</exception>
+		public static void SetDefaultGameRules(string gameRules)
+		{
+			if (gameRules.IsNullOrWhiteSpace())
+			{
+				throw new ArgumentNullException("gameRules", "Name of the rule set cannot be null.");
+			}
+
+			ConsoleVariable cvar = CryConsole.GetVariable(DefaultGameRulesCVarName);
+
+			cvar.ValueString = gameRules;
+		}
 		[InitializationStage((int)DefaultInitializationStages.GameModeRegistrationStage)]
 		private static void RegisterGameModes(int stageIndex)
 		{
@@ -182,7 +249,10 @@ namespace CryCil.Engine.Logic
 							  !attribute.Name.IsNullOrWhiteSpace()
 						select type;
 
-			foreach (Type type in types)
+			Type[] typesArray = types.ToArray();
+			bool firstAsDefault = !typesArray.Any(t => t.ContainsAttribute<DefaultGameRulesAttribute>());
+
+			foreach (Type type in typesArray)
 			{
 				GameRulesAttribute gameRulesAttribute = type.GetAttribute<GameRulesAttribute>();
 
@@ -196,7 +266,16 @@ namespace CryCil.Engine.Logic
 
 				EntityRegistry.DefinedEntityClasses.Add(gameRulesAttribute.Name, type);
 
-				RegisterGameRules(gameRulesAttribute.Name, type.Name, aliases.ToArray(), paths.ToArray());
+				RegisterGameRules(gameRulesAttribute.Name, type.Name, aliases.ToArray(), paths.ToArray(),
+								  type.ContainsAttribute<DefaultGameRulesAttribute>());
+
+				// If there is no default game rule set, the first will be set as one.
+				if (firstAsDefault)
+				{
+					SetDefaultGameRules(gameRulesAttribute.Name);
+
+					firstAsDefault = false;
+				}
 			}
 		}
 		#endregion
@@ -464,7 +543,8 @@ namespace CryCil.Engine.Logic
 		#endregion
 		#region Utilities
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern void RegisterGameRules(string name, string typeName, string[] aliases, string[] paths);
+		private static extern void RegisterGameRules(string name, string typeName, string[] aliases,
+													 string[] paths, bool @default);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void AddGameRulesAlias(string gamerules, string alias);
 		[MethodImpl(MethodImplOptions.InternalCall)]

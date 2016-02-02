@@ -21,7 +21,7 @@ void GameRulesInterop::OnRunTimeInitialized()
 void RegisterGameRulesHacked(const char *name, const char *typeName);
 
 void GameRulesInterop::RegisterGameRules(mono::string name, mono::string typeName, mono::Array aliases,
-										 mono::Array paths)
+										 mono::Array paths, bool _default)
 {
 	MonoGCHandle aliasesHandle = MonoEnv->GC->Pin(aliases);
 
@@ -57,6 +57,11 @@ void GameRulesInterop::RegisterGameRules(mono::string name, mono::string typeNam
 	for (int i = 0; i < pathsList.Length; i++)
 	{
 		gameRulesSystem->AddGameRulesLevelLocation(gameRulesName, pathsList[i]);
+	}
+
+	if (_default)
+	{
+		gEnv->pConsole->GetCVar("sv_gamerulesdefault")->Set(gameRulesName);
 	}
 }
 
