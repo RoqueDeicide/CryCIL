@@ -225,7 +225,6 @@ void EntitySystemInterop::OnRunTimeInitialized()
 	REGISTER_METHOD(SpawnMonoEntity);
 	REGISTER_METHOD(SpawnNetEntity);
 	REGISTER_METHOD(SpawnCryEntity);
-	throw std::logic_error("The method or operation is not implemented.");
 }
 
 struct EntityPropertyInfo
