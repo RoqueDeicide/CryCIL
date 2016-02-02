@@ -14,7 +14,7 @@ extern "C" IGameFramework *CreateGameFramework();
 
 #define DLL_INITFUNC_CREATEGAME "CreateGameFramework"
 
-void CryCilGameErrorObserver::OnAssert(const char *condition, const char *message, const char *fileName, unsigned int fileLineNumber)
+void CryCilGameErrorObserver::OnAssert(const char *, const char *, const char *, unsigned int)
 {
 }
 
@@ -35,11 +35,11 @@ IGameStartup *CryCilGameShell::Create()
 }
 
 CryCilGameShell::CryCilGameShell()
-	: game(nullptr)
+	: framework(nullptr)
+	, frameworkDll(nullptr)
+	, game(nullptr)
 	, gameReference(&game)
-	, framework(nullptr)
-	, frameworkDll(0)
-	, cryCilDll(0)
+	, cryCilDll(nullptr)
 	, fullscreenCVarSetup(false)
 {
 
@@ -89,7 +89,7 @@ IGameRef CryCilGameShell::Init(SSystemInitParams &startupParams)
 
 	// Initialize the game.
 	static char gameBuffer[sizeof(CryCilGame)];
-	this->game = new ((void*)gameBuffer)CryCilGame();
+	this->game = new (static_cast<void*>(gameBuffer))CryCilGame();
 
 	if (!this->game->Init(this->framework))
 	{
@@ -129,7 +129,7 @@ bool CryCilGameShell::InitializeGameFramework(SSystemInitParams& params)
 	}
 
 	IGameFramework::TEntryFunction CreateGameFramework =
-		(IGameFramework::TEntryFunction)CryGetProcAddress(this->frameworkDll, DLL_INITFUNC_CREATEGAME);
+		IGameFramework::TEntryFunction(CryGetProcAddress(this->frameworkDll, DLL_INITFUNC_CREATEGAME));
 
 	if (!CreateGameFramework)
 	{
@@ -226,7 +226,7 @@ bool CryCilGameShell::GetRestartLevel(char **levelName)
 	bool relaunch = GetISystem()->IsRelaunch();
 	if (relaunch)
 	{
-		*levelName = gEnv->pGame->GetIGameFramework()->GetLevelName;
+		*levelName = const_cast<char *>(gEnv->pGame->GetIGameFramework()->GetLevelName());
 	}
 	return relaunch;
 }
@@ -236,7 +236,7 @@ const char *CryCilGameShell::GetPatch() const
 	return nullptr;
 }
 
-bool CryCilGameShell::GetRestartMod(char *pModNameBuffer, int modNameBufferSizeInBytes)
+bool CryCilGameShell::GetRestartMod(char *, int)
 {
 	return false;
 }
@@ -249,7 +249,7 @@ int CryCilGameShell::Run(const char *autoStartLevelName)
 	if (autoStartLevelName)
 	{
 		//load the save-game, if this is a save-game file.
-		if (CryStringUtils::stristr(autoStartLevelName, CRY_SAVEGAME_FILE_EXT) != 0)
+		if (CryStringUtils::stristr(autoStartLevelName, CRY_SAVEGAME_FILE_EXT) != nullptr)
 		{
 			CryFixedStringT<256> fileName(autoStartLevelName);
 			// NOTE! two step trimming is intended!
@@ -288,13 +288,13 @@ int CryCilGameShell::Run(const char *autoStartLevelName)
 	return 0;
 }
 
-void CryCilGameShell::OnSystemEvent(ESystemEvent _event, UINT_PTR wparam, UINT_PTR lparam)
+void CryCilGameShell::OnSystemEvent(ESystemEvent _event, UINT_PTR wparam, UINT_PTR)
 {
 	switch (_event)
 	{
 	case ESYSTEM_EVENT_RANDOM_SEED:
 		// Modifies the global value that is used as a seed for random number generation using the wparam as the value.
-		cry_random_seed(gEnv->bNoRandomSeed ? 0 : (uint32)wparam);
+		cry_random_seed(gEnv->bNoRandomSeed ? 0 : uint32(wparam));
 		break;
 // 	case ESYSTEM_EVENT_RANDOM_ENABLE:
 // 		break;

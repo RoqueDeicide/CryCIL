@@ -31,12 +31,12 @@ bool CryCilGame::Init(IGameFramework *pFramework)
 	return true;
 }
 
-void CryCilGame::InitEditor(IGameToEditorInterface* pGameToEditor)
+void CryCilGame::InitEditor(IGameToEditorInterface*)
 {
 	// There is nothing useful that can be done at this point.
 }
 
-void CryCilGame::GetMemoryStatistics(ICrySizer * s)
+void CryCilGame::GetMemoryStatistics(ICrySizer *)
 {
 }
 
@@ -57,11 +57,11 @@ int CryCilGame::Update(bool haveFocus, unsigned int updateFlags)
 	return run ? 1 : 0;
 }
 
-void CryCilGame::EditorResetGame(bool bStart)
+void CryCilGame::EditorResetGame(bool)
 {
 }
 
-void CryCilGame::PlayerIdSet(EntityId playerId)
+void CryCilGame::PlayerIdSet(EntityId)
 {
 }
 
@@ -77,7 +77,7 @@ const char *CryCilGame::GetName()
 	return GAME_NAME;
 }
 
-void CryCilGame::LoadActionMaps(const char* filename)
+void CryCilGame::LoadActionMaps(const char *)
 {
 }
 
@@ -95,7 +95,7 @@ IGameFramework *CryCilGame::GetIGameFramework()
 	return this->gameFramework;
 }
 
-const char *CryCilGame::GetMappedLevelName(const char *levelName) const
+const char *CryCilGame::GetMappedLevelName(const char *) const
 {
 	return "";
 }
@@ -105,17 +105,18 @@ IAntiCheatManager *CryCilGame::GetAntiCheatManager()
 	return nullptr;
 }
 
+// ReSharper disable once CppConstValueFunctionReturnType
 const bool CryCilGame::DoInitialSavegame() const
 {
 	return true;
 }
 
-uint32 CryCilGame::AddGameWarning(const char* stringId, const char* paramMessage, IGameWarningsListener* pListener /*= NULL*/)
+uint32 CryCilGame::AddGameWarning(const char *, const char *, IGameWarningsListener *)
 {
 	return 0;
 }
 
-void CryCilGame::OnRenderScene(const SRenderingPassInfo &passInfo)
+void CryCilGame::OnRenderScene(const SRenderingPassInfo &)
 {
 }
 
@@ -123,21 +124,21 @@ void CryCilGame::RenderGameWarnings()
 {
 }
 
-void CryCilGame::RemoveGameWarning(const char* stringId)
+void CryCilGame::RemoveGameWarning(const char *)
 {
 }
 
-bool CryCilGame::GameEndLevel(const char* stringId)
+bool CryCilGame::GameEndLevel(const char *)
 {
 	return false;
 }
 
-IGameStateRecorder* CryCilGame::CreateGameStateRecorder(IGameplayListener* pL)
+IGameStateRecorder* CryCilGame::CreateGameStateRecorder(IGameplayListener *)
 {
 	return nullptr;
 }
 
-void CryCilGame::FullSerialize(TSerialize ser)
+void CryCilGame::FullSerialize(TSerialize)
 {
 }
 
@@ -145,12 +146,12 @@ void CryCilGame::PostSerialize()
 {
 }
 
-IGame::ExportFilesInfo CryCilGame::ExportLevelData(const char* levelName, const char* missionName) const
+IGame::ExportFilesInfo CryCilGame::ExportLevelData(const char *levelName, const char *) const
 {
-	return IGame::ExportLevelData(levelName, 0);
+	return IGame::ExportLevelData(levelName, nullptr);
 }
 
-void CryCilGame::LoadExportedLevelData(const char* levelName, const char* missionName)
+void CryCilGame::LoadExportedLevelData(const char *, const char *)
 {
 }
 

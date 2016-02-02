@@ -28,7 +28,7 @@ static void CleanupFrameworkDLL()
 {
 	assert(s_frameworkDLL);
 	CryFreeLibrary(s_frameworkDLL);
-	s_frameworkDLL = 0;
+	s_frameworkDLL = nullptr;
 }
 
 HMODULE GetFrameworkDLL(const char* binariesDir)

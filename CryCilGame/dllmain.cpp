@@ -5,10 +5,7 @@
 //! @param hModule            Pointer to this dll in virtual memory space.
 //! @param ul_reason_for_call Identifier of the reason this function was invoked.
 //! @param lpReserved         Extra markers for cases when dll is (de/a)ttached to/from the process.
-BOOL APIENTRY DllMain( HMODULE hModule,
-                       DWORD  ul_reason_for_call,
-                       LPVOID lpReserved
-					 )
+BOOL APIENTRY DllMain(HMODULE, DWORD  ul_reason_for_call, LPVOID)
 {
 	switch (ul_reason_for_call)
 	{
