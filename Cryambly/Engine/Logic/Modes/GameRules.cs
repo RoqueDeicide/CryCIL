@@ -131,7 +131,7 @@ namespace CryCil.Engine.Logic
 		/// <param name="gameRules">Name of the game rule set.</param>
 		/// <param name="alias">    Alias to give to the rule set.</param>
 		/// <exception cref="ArgumentNullException">
-		/// Game rule set name or alias cannot be null. Check <see cref="ArgumentNullException.ParamName"/>
+		/// Game rule set name or alias cannot be null. Check <see cref="ArgumentException.ParamName"/>
 		/// to see which one was null.
 		/// </exception>
 		public static void AddAlias(string gameRules, string alias)
@@ -153,7 +153,7 @@ namespace CryCil.Engine.Logic
 		/// <param name="gameRules">Name of the game rule set.</param>
 		/// <param name="path">     Path to levels that support this rule set.</param>
 		/// <exception cref="ArgumentNullException">
-		/// Game rule set name or path cannot be null. Check <see cref="ArgumentNullException.ParamName"/>
+		/// Game rule set name or path cannot be null. Check <see cref="ArgumentException.ParamName"/>
 		/// to see which one was null.
 		/// </exception>
 		public static void AddLevelLocation(string gameRules, string path)
