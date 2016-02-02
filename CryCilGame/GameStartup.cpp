@@ -166,6 +166,15 @@ bool CryCilGameShell::InitializeGameFramework(SSystemInitParams& params)
 	return true;
 }
 
+void CryCilGameShell::FullScreenCVarChanged(ICVar* pVar)
+{
+	if (GetISystem()->GetISystemEventDispatcher())
+	{
+		GetISystem()->GetISystemEventDispatcher()->OnSystemEvent(ESYSTEM_EVENT_TOGGLE_FULLSCREEN,
+																 pVar->GetIVal(), 0);
+	}
+}
+
 void CryCilGameShell::Shutdown()
 {
 	this->~CryCilGameShell();
