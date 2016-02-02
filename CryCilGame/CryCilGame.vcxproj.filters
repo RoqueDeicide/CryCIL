@@ -7,6 +7,9 @@
     <Filter Include="Game">
       <UniqueIdentifier>{ac72885e-d587-41c3-8638-6ad2d9577a8b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Interops">
+      <UniqueIdentifier>{f432012a-7356-453a-928f-d1c03c93fe36}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
