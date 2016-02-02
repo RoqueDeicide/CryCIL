@@ -404,6 +404,8 @@ void MonoInterface::RegisterDefaultListeners()
 	this->broadcaster->listeners->Add(new CryEntitySubstitutionProxyInterop());
 	this->broadcaster->listeners->Add(new CryEntityTriggerProxyInterop());
 	this->broadcaster->listeners->Add(new CryEntityProxiesInterop());
+	this->broadcaster->listeners->Add(new GameRulesInterop());
+	this->broadcaster->listeners->Add(new PostProcessingInterop());
 }
 #pragma endregion
 #pragma region Thunks Initialization

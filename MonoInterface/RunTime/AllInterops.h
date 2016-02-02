@@ -199,3 +199,7 @@
 #include "Interops/CryEntityTriggerProxy.h"
 
 #include "Interops/CryEntityProxies.h"
+
+#include "Interops/GameRules.h"
+
+#include "Interops/PostProcessing.h"

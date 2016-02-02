@@ -382,6 +382,7 @@
     <ClInclude Include="Interops\PhysicsParameterStructs.h" />
     <ClInclude Include="Interops\PhysicsStatusStructs.h" />
     <ClInclude Include="Interops\PhysicsStructConversionUtilities.h" />
+    <ClInclude Include="Interops\PostProcessing.h" />
     <ClInclude Include="Interops\Profiling.h" />
     <ClInclude Include="Interops\Ray.h" />
     <ClInclude Include="Interops\Renderer.h" />
@@ -555,6 +556,7 @@
     <ClCompile Include="Interops\PhysicalBody.cpp" />
     <ClCompile Include="Interops\PhysicalEntity.cpp" />
     <ClCompile Include="Interops\PhysicalWorld.cpp" />
+    <ClCompile Include="Interops\PostProcessing.cpp" />
     <ClCompile Include="Interops\Profiling.cpp" />
     <ClCompile Include="Interops\Ray.cpp" />
     <ClCompile Include="Interops\Renderer.cpp" />
