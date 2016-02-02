@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
+using System.Linq;
 using CryCil.Engine.Data;
 using CryCil.RunTime.Registration;
 
@@ -30,24 +32,57 @@ namespace CryCil.Engine.Logic
 	{
 		#region Fields
 		private readonly List<EntityReloadEventHandler> reloadingEventHandlers;
-		private string entityTypeName;
+		/// <summary>
+		/// The name of the IEntityClass that is used by this entity.
+		/// </summary>
+		protected string EntityTypeName;
+		private readonly EntityId id;
+		private readonly CryEntity entity;
 		#endregion
 		#region Properties
 		/// <summary>
 		/// Gets the identifier of this entity.
 		/// </summary>
-		public EntityId Id { get; private set; }
+		public EntityId Id
+		{
+			get
+			{
+				Contract.Requires<ObjectDisposedException>(!this.Disposed, "This entity doesn't exist.");
+				return this.id;
+			}
+		}
 		/// <summary>
 		/// Gets the underlying CryEngine entity object.
 		/// </summary>
-		public CryEntity Entity { get; private set; }
+		public CryEntity Entity
+		{
+			get
+			{
+				Contract.Requires<ObjectDisposedException>(!this.Disposed, "This entity doesn't exist.");
+				return this.entity;
+			}
+		}
+		/// <summary>
+		/// Indicates whether this entity has been disposed of.
+		/// </summary>
+		/// <remarks>
+		/// The entity becomes disposed after a call to
+		/// <see cref="M:CryCil.Logic.MonoEntity.Dispose(bool)"/> and a call to
+		/// <see cref="EntitySystem.RemoveEntity"/>.
+		/// </remarks>
+		public bool Disposed { get; private set; }
 		/// <summary>
 		/// Gets the name of entity class that represents this entity.
 		/// </summary>
 		/// <exception cref="TypeLoadException">The custom attribute type cannot be loaded.</exception>
-		public string EntityClassName
+		public virtual string EntityClassName
 		{
-			get { return this.entityTypeName ?? (this.entityTypeName = this.GetType().GetAttribute<EntityAttribute>().Name); }
+			get
+			{
+				Contract.Requires<ObjectDisposedException>(!this.Disposed, "This entity doesn't exist.");
+				return this.EntityTypeName ??
+					   (this.EntityTypeName = this.GetType().GetAttribute<EntityAttribute>().Name);
+			}
 		}
 		#endregion
 		#region Events
@@ -83,10 +118,10 @@ namespace CryCil.Engine.Logic
 		/// <param name="id">    Identifier of the entity.</param>
 		protected MonoEntity(CryEntity handle, EntityId id)
 		{
-			this.Entity = handle;
-			this.Id = id;
+			this.entity = handle;
+			this.id = id;
 			this.reloadingEventHandlers = new List<EntityReloadEventHandler>();
-			this.entityTypeName = null;
+			this.EntityTypeName = null;
 		}
 		#endregion
 		#region Interface
@@ -95,10 +130,16 @@ namespace CryCil.Engine.Logic
 		/// </summary>
 		public void Dispose()
 		{
+			if (this.Disposed)
+			{
+				return;
+			}
 			this.Dispose(false);
 			// Remove the entity from the world: since this layer is going down the entity has no reason to
 			// stay up.
 			EntitySystem.RemoveEntity(this.Id, true);
+
+			this.Disposed = true;
 		}
 		/// <summary>
 		/// When implemented in derived class, releases resources held by this entity.
