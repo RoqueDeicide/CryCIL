@@ -279,6 +279,14 @@ namespace CryCil.Engine.Logic
 				}
 			}
 
+			if (this.inputs == null)
+			{
+				this.inputs = new InputPort[0];
+			}
+			if (this.outputs == null)
+			{
+				this.outputs = new OutputPort[0];
+			}
 			config = new FlowNodeConfig
 			{
 				Description = StringPool.Get(this.description),
