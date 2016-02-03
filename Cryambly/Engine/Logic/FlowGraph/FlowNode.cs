@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using CryCil.Engine.Data;
@@ -77,16 +78,14 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Gets a sets an array of objects that represent input ports of this node.
 		/// </summary>
-		/// <exception cref="Exception">An array of input ports can only be set once.</exception>
 		public InputPort[] Inputs
 		{
 			get { return this.inputs; }
 			protected set
 			{
-				if (this.initData.HasFlag(InitializationDetails.Inputs))
-				{
-					throw new Exception("An array of input ports can only be set once.");
-				}
+				Contract.Assert(!this.initData.HasFlag(InitializationDetails.Inputs),
+								"An array of input ports can only be set once.");
+				
 				this.inputs = value;
 				this.initData |= InitializationDetails.Inputs;
 			}
@@ -94,16 +93,14 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Gets a sets an array of objects that represent output ports of this node.
 		/// </summary>
-		/// <exception cref="Exception">An array of output ports can only be set once.</exception>
 		public OutputPort[] Outputs
 		{
 			get { return this.outputs; }
 			protected set
 			{
-				if (this.initData.HasFlag(InitializationDetails.Outputs))
-				{
-					throw new Exception("An array of output ports can only be set once.");
-				}
+				Contract.Assert(!this.initData.HasFlag(InitializationDetails.Outputs),
+								"An array of output ports can only be set once.");
+
 				this.outputs = value;
 				this.initData |= InitializationDetails.Outputs;
 			}
@@ -287,6 +284,7 @@ namespace CryCil.Engine.Logic
 			{
 				this.outputs = new OutputPort[0];
 			}
+
 			config = new FlowNodeConfig
 			{
 				Description = StringPool.Get(this.description),
