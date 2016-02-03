@@ -203,3 +203,7 @@
 #include "Interops/GameRules.h"
 
 #include "Interops/PostProcessing.h"
+
+#include "Interops/CryView.h"
+
+#include "Interops/GameView.h"

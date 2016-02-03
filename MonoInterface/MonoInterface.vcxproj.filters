@@ -620,6 +620,12 @@
     <ClInclude Include="Interops\PostProcessing.h">
       <Filter>Interops\Engine\Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\CryView.h">
+      <Filter>Interops\Engine\Rendering\Views</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\ViewController.h">
+      <Filter>Interops\Engine\Rendering\Views</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -1094,6 +1100,15 @@
     <ClCompile Include="Interops\PostProcessing.cpp">
       <Filter>Interops\Engine\Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="TypeMapChecks\ViewTypes.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\CryView.cpp">
+      <Filter>Interops\Engine\Rendering\Views</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\ViewController.cpp">
+      <Filter>Interops\Engine\Rendering\Views</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">
@@ -1227,6 +1242,9 @@
     </Filter>
     <Filter Include="Interops\Engine\Rendering\Nodes">
       <UniqueIdentifier>{ddafdbe9-c6ca-490c-91e2-98cf381f55a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interops\Engine\Rendering\Views">
+      <UniqueIdentifier>{0ac3188a-6e75-4134-a7af-92ccc6342653}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -311,6 +311,7 @@
     <ClInclude Include="Interops\CryFiles.h" />
     <ClInclude Include="Interops\CryPak.h" />
     <ClInclude Include="Interops\CrySync.h" />
+    <ClInclude Include="Interops\CryView.h" />
     <ClInclude Include="Interops\CryXmlNode.h" />
     <ClInclude Include="Interops\CustomMarshaling.h" />
     <ClInclude Include="Interops\DebugDraw.h" />
@@ -341,6 +342,7 @@
     <ClInclude Include="Interops\Game.h" />
     <ClInclude Include="Interops\GameCollisionInfo.h" />
     <ClInclude Include="Interops\GameRules.h" />
+    <ClInclude Include="Interops\ViewController.h" />
     <ClInclude Include="Interops\GeneralExtensions.h" />
     <ClInclude Include="Interops\IGeometry.h" />
     <ClInclude Include="Interops\IndexedMesh.h" />
@@ -501,6 +503,7 @@
     <ClCompile Include="Interops\CryFiles.cpp" />
     <ClCompile Include="Interops\CryPak.cpp" />
     <ClCompile Include="Interops\CrySync.cpp" />
+    <ClCompile Include="Interops\CryView.cpp" />
     <ClCompile Include="Interops\CryXmlNode.cpp" />
     <ClCompile Include="Interops\CustomMarshaling.cpp" />
     <ClCompile Include="Interops\DebugDraw.cpp" />
@@ -526,6 +529,7 @@
     <ClCompile Include="Interops\Game.cpp" />
     <ClCompile Include="Interops\GameRules.cpp" />
     <ClCompile Include="Interops\GameRulesReg.cpp" />
+    <ClCompile Include="Interops\ViewController.cpp" />
     <ClCompile Include="Interops\GeneralExtensions.cpp" />
     <ClCompile Include="Interops\IGeometry.cpp" />
     <ClCompile Include="Interops\IndexedMesh.cpp" />
@@ -605,6 +609,7 @@
     <ClCompile Include="TypeMapChecks\StaticObjectStuff.cpp" />
     <ClCompile Include="TypeMapChecks\StridedPointer.cpp" />
     <ClCompile Include="TypeMapChecks\VertexFormatsAndPips.cpp" />
+    <ClCompile Include="TypeMapChecks\ViewTypes.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
