@@ -67,6 +67,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\GeometricEntity.cs" />
+    <Compile Include="Entities\Players\Extensions\PlayerView.cs" />
+    <Compile Include="Entities\Players\Player.cs" />
+    <Compile Include="Entities\SimpleEntityExtension.cs" />
     <Compile Include="FlowNodes\GeometricEntityNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
