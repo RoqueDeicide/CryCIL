@@ -53,6 +53,10 @@
     <DocumentationFile>..\Build\Output\Bin32\Modules\CryCIL\GameLibrary.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Cryambly, Version=2.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Cryambly.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -65,13 +69,6 @@
     <Compile Include="Entities\GeometricEntity.cs" />
     <Compile Include="FlowNodes\GeometricEntityNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Cryambly\Cryambly.csproj">
-      <Project>{46cd6f09-77e9-41ab-b982-b605f8a984ba}</Project>
-      <Name>Cryambly</Name>
-      <Private>False</Private>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
