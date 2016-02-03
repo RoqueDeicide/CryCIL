@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using CryCil.Annotations;
 using CryCil.Engine.Logic.EntityProxies;
 using CryCil.Engine.Physics;
 using CryCil.Engine.Rendering;
@@ -58,6 +59,21 @@ namespace CryCil.Engine.Logic
 		public bool IsValid
 		{
 			get { return this.handle != IntPtr.Zero; }
+		}
+
+		/// <summary>
+		/// Gets the object that derives from <see cref="MonoEntity"/> that represents this entity, or
+		/// <c>null</c>, if this entity is not managed by CLR.
+		/// </summary>
+		[CanBeNull]
+		public MonoEntity ManagedEntity
+		{
+			get
+			{
+				this.AssertEntity();
+
+				return GetMonoEntity(this.handle);
+			}
 		}
 		/// <summary>
 		/// Gets or sets flags that describe this entity.
@@ -571,6 +587,8 @@ namespace CryCil.Engine.Logic
 			}
 		}
 
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern MonoEntity GetMonoEntity(IntPtr handle);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void SetFlags(IntPtr handle, ulong flags);
 		[MethodImpl(MethodImplOptions.InternalCall)]

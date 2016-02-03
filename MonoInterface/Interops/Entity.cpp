@@ -608,6 +608,7 @@ void NetEntityInterop::ChangeNetworkStateInternal(EntityId id, uint32 aspects)
 
 void CryEntityInterop::OnRunTimeInitialized()
 {
+	REGISTER_METHOD(GetMonoEntity);
 	REGISTER_METHOD(SetFlags);
 	REGISTER_METHOD(GetFlags);
 	REGISTER_METHOD(AddFlagsInternal);
@@ -670,6 +671,16 @@ void CryEntityInterop::OnRunTimeInitialized()
 	REGISTER_METHOD(UnphysicalizeInternal);
 	REGISTER_METHOD(GetPhysics);
 	REGISTER_METHOD(GetRenderNode);
+}
+
+mono::object CryEntityInterop::GetMonoEntity(IEntity *handle)
+{
+	auto ext = QueryMonoEntityExtension(handle);
+	if (ext)
+	{
+		return ext->MonoWrapper;
+	}
+	return nullptr;
 }
 
 void CryEntityInterop::SetFlags(IEntity *handle, uint64 flags)
