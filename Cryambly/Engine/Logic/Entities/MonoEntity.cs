@@ -38,6 +38,10 @@ namespace CryCil.Engine.Logic
 		protected string EntityTypeName;
 		private readonly EntityId id;
 		private readonly CryEntity entity;
+		/// <summary>
+		/// Provides access to the collection of objects that extend functionality of this entity.
+		/// </summary>
+		public EntityExtensions Extensions;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -122,6 +126,7 @@ namespace CryCil.Engine.Logic
 			this.id = id;
 			this.reloadingEventHandlers = new List<EntityReloadEventHandler>();
 			this.EntityTypeName = null;
+			this.Extensions = new EntityExtensions(this);
 		}
 		#endregion
 		#region Interface
@@ -134,6 +139,7 @@ namespace CryCil.Engine.Logic
 			{
 				return;
 			}
+			this.Extensions.Clear(true);
 			this.Dispose(false);
 			// Remove the entity from the world: since this layer is going down the entity has no reason to
 			// stay up.
@@ -161,8 +167,11 @@ namespace CryCil.Engine.Logic
 		/// this entity.
 		/// </summary>
 		/// <remarks>Reloading only happens when the entity is returned to the entity pool.</remarks>
+		/// <param name="parameters">
+		/// Reference to the object that contains the parameters that were used to respawn this entity.
+		/// </param>
 		/// <returns>True, if reloading was a success.</returns>
-		public virtual bool Reload()
+		public virtual bool Reload(ref EntitySpawnParameters parameters)
 		{
 			return true;
 		}
@@ -221,11 +230,21 @@ namespace CryCil.Engine.Logic
 		private void UpdateInternal(ref EntityUpdateContext context)
 		{
 			this.Update(ref context);
+
+			for (int i = 0; i < this.Extensions.Count; i++)
+			{
+				this.Extensions[i].Update(ref context);
+			}
 		}
 		[UnmanagedThunk("Post-updates this object.")]
 		private void PostUpdateInternal()
 		{
 			this.PostUpdate();
+
+			for (int i = 0; i < this.Extensions.Count; i++)
+			{
+				this.Extensions[i].PostUpdate();
+			}
 		}
 		[UnmanagedThunk("Releases this object when the entity is removed by CryEngine.")]
 		private void DisposeInternal()
@@ -253,19 +272,38 @@ namespace CryCil.Engine.Logic
 		private void OnInitializing()
 		{
 			this.Initialize();
+
+			for (int i = 0; i < this.Extensions.Count; i++)
+			{
+				this.Extensions[i].Initialize();
+			}
+
 			if (this.Initializing != null) this.Initializing(this, EventArgs.Empty);
 		}
 		[UnmanagedThunk("Invoked from underlying object to raise the event Initialized.")]
 		private void OnInitialized()
 		{
 			this.PostInitialize();
+
+			for (int i = 0; i < this.Extensions.Count; i++)
+			{
+				this.Extensions[i].PostInitialize();
+			}
+
 			if (this.Initialized != null) this.Initialized(this, EventArgs.Empty);
 		}
 		[UnmanagedThunk("Invoked from underlying object to reload the entity.")]
 		private bool OnReloading(ref EntitySpawnParameters parameters)
 		{
-			if (this.Reload())
+			if (this.Reload(ref parameters))
 			{
+				for (int i = 0; i < this.Extensions.Count; i++)
+				{
+					if (!this.Extensions[i].Reload(ref parameters))
+					{
+						return false;
+					}
+				}
 				for (int i = 0; i < this.reloadingEventHandlers.Count; i++)
 				{
 					if (!this.reloadingEventHandlers[i](this, ref parameters))
@@ -280,6 +318,12 @@ namespace CryCil.Engine.Logic
 		private void OnReloaded(ref EntitySpawnParameters parameters)
 		{
 			this.PostReload();
+
+			for (int i = 0; i < this.Extensions.Count; i++)
+			{
+				this.Extensions[i].PostReload();
+			}
+
 			if (this.Reloaded != null) this.Reloaded(this, ref parameters);
 		}
 		[UnmanagedThunk("Invoked from underlying object to acquire entity's pool signature.")]
@@ -291,6 +335,11 @@ namespace CryCil.Engine.Logic
 		private void SyncInternal(CrySync sync)
 		{
 			this.Synchronize(sync);
+
+			for (int i = 0; i < this.Extensions.Count; i++)
+			{
+				this.Extensions[i].Synchronize(sync);
+			}
 		}
 		[UnmanagedThunk("Invoked to set one of the properties.")]
 		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]

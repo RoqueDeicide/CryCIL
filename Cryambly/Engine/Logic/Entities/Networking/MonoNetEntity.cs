@@ -135,18 +135,40 @@ namespace CryCil.Engine.Logic
 		private void OnClientInitializing(ChannelId id)
 		{
 			this.InitializeClient(id);
+
+			for (int i = 0; i < this.Extensions.Count; i++)
+			{
+				this.Extensions[i].InitializeClient(id);
+			}
+
 			if (this.ClientInitializing != null) this.ClientInitializing(this, id);
 		}
 		[UnmanagedThunk("Invoked from underlying object to raise the event ClientInitialized.")]
 		private void OnClientInitialized(ChannelId id)
 		{
 			this.PostInitializeClient(id);
+
+			for (int i = 0; i < this.Extensions.Count; i++)
+			{
+				this.Extensions[i].PostInitializeClient(id);
+			}
+
 			if (this.ClientInitialized != null) this.ClientInitialized(this, id);
 		}
 		[UnmanagedThunk("Invoked from underlying object to invoke SynchronizeWithNetwork method.")]
 		private bool NetSyncInternal(CrySync sync, EntityAspects aspect, byte profile, SnapshotFlags flags)
 		{
-			return this.SynchronizeWithNetwork(sync, aspect, profile, flags);
+			if (this.SynchronizeWithNetwork(sync, aspect, profile, flags))
+			{
+				for (int i = 0; i < this.Extensions.Count; i++)
+				{
+					if (!this.Extensions[i].SynchronizeWithNetwork(sync, aspect, profile, flags))
+					{
+						return false;
+					}
+				}
+			}
+			return true;
 		}
 		[UnmanagedThunk("Invoked from underlying object to raise either Authorized or Deauthorized events.")]
 		private void OnAuthorized(bool gainedAuthority)
