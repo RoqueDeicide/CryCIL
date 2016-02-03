@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using CryCil.Engine.Logic;
 using GameLibrary.Entities;
 
@@ -17,7 +18,6 @@ namespace GameLibrary.FlowNodes
 		private readonly OutputPortBool donePort;
 		#endregion
 		#region Properties
-		
 		#endregion
 		#region Construction
 		/// <summary>

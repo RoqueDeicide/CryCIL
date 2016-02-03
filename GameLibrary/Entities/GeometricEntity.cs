@@ -12,15 +12,18 @@ namespace GameLibrary.Entities
 	[Entity("A simple geometric object.", "", "", "prompt.bmp", EntityClassFlags.Default)]
 	public class GeometricEntity : MonoEntity
 	{
+		#region Fields
 		private string objectPath;
+		#endregion
+		#region Properties
 		/// <summary>
 		/// Gets or sets the path to the file to load geometry from.
 		/// </summary>
 		[EditableProperty(
-			folder:"Geometry",
-			defaultValue:"editor/objects/sphere.cgf",
-			uiControl:EditablePropertyUiControl.Object,
-			description:"Path to the file to load the geometry from.")]
+			folder: "Geometry",
+			defaultValue: "editor/objects/sphere.cgf",
+			uiControl: EditablePropertyUiControl.Object,
+			description: "Path to the file to load the geometry from.")]
 		public string ObjectModel
 		{
 			get { return this.objectPath; }
@@ -42,17 +45,22 @@ namespace GameLibrary.Entities
 				this.Entity.Slots[0].LoadStaticObject(this.objectPath);
 			}
 		}
+		#endregion
+		#region Construction
 		/// <summary>
 		/// Initializes base properties of all objects that serve as abstraction layers between CryEngine
 		/// entities and logic defined in CryCIL for them.
 		/// </summary>
 		/// <param name="handle">Pointer to the entity itself.</param>
 		/// <param name="id">    Identifier of the entity.</param>
-		public GeometricEntity(CryEntity handle, EntityId id) : base(handle, id)
+		public GeometricEntity(CryEntity handle, EntityId id)
+			: base(handle, id)
 		{
 		}
+		#endregion
+		#region Interface
 		/// <summary>
-		/// When implemented in derived class, releases resources held by this entity.
+		/// Releases resources held by this entity.
 		/// </summary>
 		/// <param name="invokedFromNativeCode">
 		/// Indicates whether this entity was released from native code.
@@ -61,14 +69,14 @@ namespace GameLibrary.Entities
 		{
 		}
 		/// <summary>
-		/// When implemented in derived class, performs preliminary initialization of this object.
+		/// Performs preliminary initialization of this object.
 		/// </summary>
 		public override void Initialize()
 		{
 			this.ResetInEditor += this.Reset;
 		}
 		/// <summary>
-		/// When implemented in derived class, performs final initialization of this object.
+		/// Performs final initialization of this object.
 		/// </summary>
 		public override void PostInitialize()
 		{
@@ -83,19 +91,20 @@ namespace GameLibrary.Entities
 		{
 		}
 		/// <summary>
-		/// When implemented in derived class updates logical state of this entity.
+		/// Updates logical state of this entity.
 		/// </summary>
 		/// <param name="context">The most up-to-date information for this frame.</param>
 		public override void Update(ref EntityUpdateContext context)
 		{
 		}
 		/// <summary>
-		/// When implemented in derived class updates logical state of this entity after most other stuff
-		/// is updated.
+		/// Updates logical state of this entity after most other stuff is updated.
 		/// </summary>
 		public override void PostUpdate()
 		{
 		}
+		#endregion
+		#region Utilities
 		private void Reset(MonoEntity sender, bool enteringGameMode)
 		{
 			if (!this.ObjectModel.IsNullOrWhiteSpace())
@@ -104,5 +113,6 @@ namespace GameLibrary.Entities
 				this.Entity.Slots[0].LoadStaticObject(this.objectPath);
 			}
 		}
+		#endregion
 	}
 }
