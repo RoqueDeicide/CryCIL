@@ -13,7 +13,7 @@ namespace CryCil.Engine.Logic
 	{
 		#region Fields
 		private readonly MonoEntity entity;
-		private readonly List<EntityExtension> Extensions;
+		private readonly List<EntityExtension> extensions;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -21,7 +21,7 @@ namespace CryCil.Engine.Logic
 		/// </summary>
 		public int Count
 		{
-			get { return this.Extensions.Count; }
+			get { return this.extensions.Count; }
 		}
 		/// <summary>
 		/// Gets the extension object.
@@ -37,7 +37,7 @@ namespace CryCil.Engine.Logic
 					throw new IndexOutOfRangeException("Index was out of range.");
 				}
 
-				return this.Extensions[index];
+				return this.extensions[index];
 			}
 		}
 		#endregion
@@ -48,7 +48,7 @@ namespace CryCil.Engine.Logic
 		internal EntityExtensions(MonoEntity entity)
 		{
 			this.entity = entity;
-			this.Extensions = new List<EntityExtension>(5);
+			this.extensions = new List<EntityExtension>(5);
 		}
 		#endregion
 		#region Interface
@@ -150,7 +150,7 @@ namespace CryCil.Engine.Logic
 			}
 			for (int i = 0; i < this.Count; i++)
 			{
-				if (this.Extensions[i].GetType() == extensionType)
+				if (this.extensions[i].GetType() == extensionType)
 				{
 					this.RemoveAtInternal(i, disposing);
 					return;
@@ -168,7 +168,7 @@ namespace CryCil.Engine.Logic
 		{
 			for (int i = 0; i < this.Count; i++)
 			{
-				if (this.Extensions[i] is ExtensionType)
+				if (this.extensions[i] is ExtensionType)
 				{
 					this.RemoveAtInternal(i, disposing);
 					return;
@@ -190,7 +190,7 @@ namespace CryCil.Engine.Logic
 			}
 			for (int i = 0; i < this.Count; i++)
 			{
-				if (this.Extensions[i].GetType() == extensionType)
+				if (this.extensions[i].GetType() == extensionType)
 				{
 					this.RemoveAtInternal(i--, disposing);
 				}
@@ -212,7 +212,7 @@ namespace CryCil.Engine.Logic
 
 			for (int i = 0; i < this.Count; i++)
 			{
-				if (this.Extensions[i] == extension)
+				if (this.extensions[i] == extension)
 				{
 					this.RemoveAtInternal(i, disposing);
 					return;
@@ -253,14 +253,14 @@ namespace CryCil.Engine.Logic
 		#region Utilities
 		private void AddInternal(EntityExtension extension)
 		{
-			this.Extensions.Add(extension);
+			this.extensions.Add(extension);
 			extension.Host = this.entity;
 			extension.Bind();
 		}
 		private void RemoveAtInternal(int index, bool disposing)
 		{
-			EntityExtension extension = this.Extensions[index];
-			this.Extensions.RemoveAt(index);
+			EntityExtension extension = this.extensions[index];
+			this.extensions.RemoveAt(index);
 			extension.Release(disposing);
 			extension.Host = null;
 		}
