@@ -50,6 +50,7 @@ namespace GameLibrary.Entities.Players
 		public override void PostInitialize()
 		{
 			this.Extensions.Add<PlayerView>();
+			this.Extensions.Add<PlayerInput>();
 		}
 		/// <summary>
 		/// Synchronizes the state of this entity with its representation in other place (e.g. a save game
