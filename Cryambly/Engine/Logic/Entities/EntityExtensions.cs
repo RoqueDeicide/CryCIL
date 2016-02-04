@@ -249,6 +249,29 @@ namespace CryCil.Engine.Logic
 				this.RemoveAtInternal(0, disposing);
 			}
 		}
+		/// <summary>
+		/// Gets the first extension of specified type.
+		/// </summary>
+		/// <typeparam name="ExtensionType">Type of extension to get.</typeparam>
+		/// <returns>
+		/// A valid object that is a first occurrence of <typeparamref name="ExtensionType"/> in the list
+		/// of extensions, if found. Otherwise, <c>null</c> is returned.
+		/// </returns>
+		public ExtensionType Get<ExtensionType>() where ExtensionType : EntityExtension, new()
+		{
+			ExtensionType extension = null;
+
+			for (int i = 0; i < this.extensions.Count; i++)
+			{
+				extension = this.extensions[i] as ExtensionType;
+				if (extension != null)
+				{
+					break;
+				}
+			}
+
+			return extension;
+		}
 		#endregion
 		#region Utilities
 		private void AddInternal(EntityExtension extension)
