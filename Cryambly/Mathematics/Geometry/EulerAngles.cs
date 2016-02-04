@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace CryCil.Geometry
@@ -138,6 +139,26 @@ namespace CryCil.Geometry
 		}
 		#endregion
 		#region Arithmetic Operators
+		/// <summary>
+		/// Combines 2 angle objects together.
+		/// </summary>
+		/// <param name="left"> Left operand.</param>
+		/// <param name="right">Right operand.</param>
+		/// <returns>Result of addition</returns>
+		public static EulerAngles operator +(EulerAngles left, EulerAngles right)
+		{
+			return new EulerAngles(left.Pitch + right.Pitch, left.Roll + right.Roll, left.Yaw + right.Yaw);
+		}
+		/// <summary>
+		/// Subtracts 1 angle object from another.
+		/// </summary>
+		/// <param name="left"> Left operand.</param>
+		/// <param name="right">Right operand.</param>
+		/// <returns>Result of subtraction.</returns>
+		public static EulerAngles operator -(EulerAngles left, EulerAngles right)
+		{
+			return new EulerAngles(left.Pitch - right.Pitch, left.Roll - right.Roll, left.Yaw - right.Yaw);
+		}
 		/// <summary>
 		/// Multiplies given instance of <see cref="EulerAngles"/> struct by given amount.
 		/// </summary>
