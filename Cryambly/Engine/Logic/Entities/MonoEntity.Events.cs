@@ -411,6 +411,10 @@ namespace CryCil.Engine.Logic
 		{
 			TimeSpan frameTime = TimeSpan.FromSeconds(frameTimeSeconds);
 			this.PrePhysicsUpdate(frameTime);
+			for (int i = 0; i < this.Extensions.Count; i++)
+			{
+				this.Extensions[i].PrePhysicsUpdate(frameTime);
+			}
 			var handler = this.BeforePhysicsUpdate;
 			if (handler != null) handler(this, frameTime);
 		}

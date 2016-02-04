@@ -138,6 +138,14 @@ namespace CryCil.Engine.Logic
 		/// method.
 		/// </remarks>
 		public abstract void Bind();
+		/// <summary>
+		/// Can be overridden in derived class to allow the extension to request changes to the entity's
+		/// positioning in physical world, before physics engine updates it.
+		/// </summary>
+		/// <param name="frameTime">Length of the last frame.</param>
+		public virtual void PrePhysicsUpdate(TimeSpan frameTime)
+		{
+		}
 		#endregion
 	}
 }
