@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 
 namespace CryCil.Engine.Network
 {
@@ -19,6 +20,19 @@ namespace CryCil.Engine.Network
 			get { return this.handle != IntPtr.Zero; }
 		}
 
+		/// <summary>
+		/// Indicates whether this channel is connected locally.
+		/// </summary>
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
+		public bool IsLocal
+		{
+			get
+			{
+				this.AssertInstance();
+
+				return GetIsLocal(this.handle);
+			}
+		}
 		#endregion
 		#region Construction
 		internal CryNetChannel(IntPtr handle)
@@ -39,7 +53,8 @@ namespace CryCil.Engine.Network
 			}
 		}
 
-
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern bool GetIsLocal(IntPtr handle);
 		#endregion
 	}
 }

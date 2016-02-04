@@ -289,6 +289,7 @@
     <ClInclude Include="Interops\AudioSystem.h" />
     <ClInclude Include="Interops\AuxiliaryGeometry.h" />
     <ClInclude Include="Interops\BatchOps.h" />
+    <ClInclude Include="Interops\ChannelId.h" />
     <ClInclude Include="Interops\Character.h" />
     <ClInclude Include="Interops\CharacterAnimation.h" />
     <ClInclude Include="Interops\CharacterSkin.h" />
@@ -309,6 +310,7 @@
     <ClInclude Include="Interops\CryEntityTriggerProxy.h" />
     <ClInclude Include="Interops\CryMarshal.h" />
     <ClInclude Include="Interops\CryFiles.h" />
+    <ClInclude Include="Interops\CryNetChannel.h" />
     <ClInclude Include="Interops\CryPak.h" />
     <ClInclude Include="Interops\CrySync.h" />
     <ClInclude Include="Interops\CryView.h" />
@@ -481,6 +483,7 @@
     <ClCompile Include="Interops\AudioSystem.cpp" />
     <ClCompile Include="Interops\AuxiliaryGeometry.cpp" />
     <ClCompile Include="Interops\BatchOps.cpp" />
+    <ClCompile Include="Interops\ChannelId.cpp" />
     <ClCompile Include="Interops\Character.cpp" />
     <ClCompile Include="Interops\CharacterAnimation.cpp" />
     <ClCompile Include="Interops\CharacterSkin.cpp" />
@@ -501,6 +504,7 @@
     <ClCompile Include="Interops\CryFont.cpp" />
     <ClCompile Include="Interops\CryMarshal.cpp" />
     <ClCompile Include="Interops\CryFiles.cpp" />
+    <ClCompile Include="Interops\CryNetChannel.cpp" />
     <ClCompile Include="Interops\CryPak.cpp" />
     <ClCompile Include="Interops\CrySync.cpp" />
     <ClCompile Include="Interops\CryView.cpp" />

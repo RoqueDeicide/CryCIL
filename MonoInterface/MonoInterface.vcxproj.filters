@@ -626,6 +626,12 @@
     <ClInclude Include="Interops\SystemEvents.h">
       <Filter>Interops\Engine</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\ChannelId.h">
+      <Filter>Interops\Engine\Network</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\CryNetChannel.h">
+      <Filter>Interops\Engine\Network</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -1118,6 +1124,12 @@
     <ClCompile Include="Interops\SystemEvents.cpp">
       <Filter>Interops\Engine</Filter>
     </ClCompile>
+    <ClCompile Include="Interops\ChannelId.cpp">
+      <Filter>Interops\Engine\Network</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\CryNetChannel.cpp">
+      <Filter>Interops\Engine\Network</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">
@@ -1254,6 +1266,9 @@
     </Filter>
     <Filter Include="Interops\Engine\Rendering\Views">
       <UniqueIdentifier>{0ac3188a-6e75-4134-a7af-92ccc6342653}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interops\Engine\Network">
+      <UniqueIdentifier>{b4fecaed-4f66-450c-b067-12222fc9ee9d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

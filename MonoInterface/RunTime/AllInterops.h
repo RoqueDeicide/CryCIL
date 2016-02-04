@@ -209,3 +209,7 @@
 #include "Interops/ViewController.h"
 
 #include "Interops/SystemEvents.h"
+
+#include "Interops/ChannelId.h"
+
+#include "Interops/CryNetChannel.h"
