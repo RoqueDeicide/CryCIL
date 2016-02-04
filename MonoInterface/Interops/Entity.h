@@ -64,9 +64,9 @@ public:
 									bool networked, bool dontSyncProps);
 
 	static void         RemoveEntity(EntityId id, bool now);
-	static mono::object SpawnMonoEntity(MonoEntitySpawnParams parameters);
-	static mono::object SpawnNetEntity(MonoEntitySpawnParams parameters, ushort channelId);
-	static IEntity     *SpawnCryEntity(MonoEntitySpawnParams parameters);
+	static mono::object SpawnMonoEntity(MonoEntitySpawnParams &parameters);
+	static mono::object SpawnNetEntity(MonoEntitySpawnParams &parameters, ushort channelId);
+	static IEntity     *SpawnCryEntity(MonoEntitySpawnParams &parameters);
 };
 
 struct NetEntityInterop : public IMonoInterop<true, true>

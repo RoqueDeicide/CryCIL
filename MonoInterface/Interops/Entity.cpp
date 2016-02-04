@@ -345,7 +345,7 @@ void EntitySystemInterop::RemoveEntity(EntityId id, bool now)
 	gEnv->pEntitySystem->RemoveEntity(id, now);
 }
 
-mono::object EntitySystemInterop::SpawnMonoEntity(MonoEntitySpawnParams parameters)
+mono::object EntitySystemInterop::SpawnMonoEntity(MonoEntitySpawnParams &parameters)
 {
 	auto params = parameters.ToNative();
 
@@ -382,7 +382,7 @@ mono::object EntitySystemInterop::SpawnMonoEntity(MonoEntitySpawnParams paramete
 	return ext->MonoWrapper;
 }
 
-mono::object EntitySystemInterop::SpawnNetEntity(MonoEntitySpawnParams parameters, ushort channelId)
+mono::object EntitySystemInterop::SpawnNetEntity(MonoEntitySpawnParams &parameters, ushort channelId)
 {
 	auto params = parameters.ToNative();
 
@@ -431,7 +431,7 @@ mono::object EntitySystemInterop::SpawnNetEntity(MonoEntitySpawnParams parameter
 	return ext->MonoWrapper;
 }
 
-IEntity *EntitySystemInterop::SpawnCryEntity(MonoEntitySpawnParams parameters)
+IEntity *EntitySystemInterop::SpawnCryEntity(MonoEntitySpawnParams &parameters)
 {
 	auto params = parameters.ToNative();
 

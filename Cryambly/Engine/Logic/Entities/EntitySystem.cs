@@ -31,7 +31,7 @@ namespace CryCil.Engine.Logic
 		/// EntitySystem.SpawnMonoEntity cannot be used to spawn entities that are not defined in CryCIL.
 		/// </exception>
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		public static extern MonoEntity SpawnMonoEntity(EntitySpawnParameters parameters);
+		public static extern MonoEntity SpawnMonoEntity(ref EntitySpawnParameters parameters);
 		/// <summary>
 		/// Spawns an entity that is defined in CryCIL that is bound to network.
 		/// </summary>
@@ -50,7 +50,7 @@ namespace CryCil.Engine.Logic
 		/// EntitySystem.SpawnNetEntity cannot be used to spawn entities that are not bound to network.
 		/// </exception>
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		public static extern MonoNetEntity SpawnNetEntity(EntitySpawnParameters parameters, ushort channelId);
+		public static extern MonoNetEntity SpawnNetEntity(ref EntitySpawnParameters parameters, ushort channelId);
 		/// <summary>
 		/// Spawns a CryEngine that is not necessarily defined in CryCIL.
 		/// </summary>
@@ -71,7 +71,7 @@ namespace CryCil.Engine.Logic
 		/// <returns>A handle of a newly spawned entity.</returns>
 		/// <exception cref="ArgumentException">Cannot create an entity without a valid class.</exception>
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		public static extern CryEntity SpawnCryEntity(EntitySpawnParameters parameters);
+		public static extern CryEntity SpawnCryEntity(ref EntitySpawnParameters parameters);
 		/// <summary>
 		/// Removes the entity from the game.
 		/// </summary>

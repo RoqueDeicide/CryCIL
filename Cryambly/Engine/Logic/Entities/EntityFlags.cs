@@ -5,6 +5,7 @@ namespace CryCil.Engine.Logic
 	/// <summary>
 	/// Enumeration of flags that specify the entity.
 	/// </summary>
+	[Flags]
 	public enum EntityFlags : ulong
 	{
 		/// <summary>

@@ -94,11 +94,12 @@ namespace CryCil.Engine.Logic
 			get { return this.name; }
 		}
 		/// <summary>
-		/// Gets flags that describe the entity.
+		/// Gets or sets flags that describe the entity.
 		/// </summary>
 		public EntityFlags Flags
 		{
 			get { return this.flags; }
+			set { this.flags = value; }
 		}
 		/// <summary>
 		/// Indicates whether this entity was created from an entity pool.
@@ -139,11 +140,12 @@ namespace CryCil.Engine.Logic
 		/// Creates new set of parameters that can be used to spawn an entity.
 		/// </summary>
 		/// <param name="className">Name of the class that will represent the new entity.</param>
-		/// <param name="id">       Id to assign to the new entity.</param>
-		/// <param name="guid">     Guid to assign to the new entity.</param>
 		/// <param name="name">     The name of the new entity.</param>
 		/// <param name="flags">    A set of flags to assign to the new entity.</param>
-		public EntitySpawnParameters(string className, EntityId id, EntityGUID guid, string name, EntityFlags flags)
+		/// <param name="id">       Id to assign to the new entity.</param>
+		/// <param name="guid">     Guid to assign to the new entity.</param>
+		public EntitySpawnParameters(string className, string name, EntityFlags flags,
+									 EntityId id = new EntityId(), EntityGUID guid = new EntityGUID())
 			: this()
 		{
 			this.pClass = className;
@@ -157,22 +159,36 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Creates new set of parameters that can be used to spawn an entity.
 		/// </summary>
-		/// <param name="className">Name of the class that will represent the new entity.</param>
+		/// <param name="entityClass">Type that represents the new managed entity.</param>
 		/// <param name="name">     The name of the new entity.</param>
 		/// <param name="flags">    A set of flags to assign to the new entity.</param>
-		public EntitySpawnParameters(string className, string name, EntityFlags flags)
+		/// <param name="id">       Id to assign to the new entity.</param>
+		/// <param name="guid">     Guid to assign to the new entity.</param>
+		/// <exception cref="ArgumentException">Given type is not a valid entity type.</exception>
+		/// <exception cref="ArgumentNullException"><paramref name="entityClass"/> is <see langword="null" />.</exception>
+		public EntitySpawnParameters(Type entityClass, string name, EntityFlags flags,
+									 EntityId id = new EntityId(), EntityGUID guid = new EntityGUID())
 			: this()
 		{
-			this.pClass = className;
+			if (entityClass == null)
+			{
+				throw new ArgumentNullException("entityClass");
+			}
+			if (!entityClass.Implements<MonoEntity>() || !entityClass.ContainsAttribute<EntityAttribute>())
+			{
+				throw new ArgumentException("Given type is not a valid entity type.");
+			}
+
+			// ReSharper disable once ExceptionNotDocumented
+			EntityAttribute attribute = entityClass.GetAttribute<EntityAttribute>();
+			this.pClass = attribute.Name ?? entityClass.Name;
 			this.name = name;
+			this.id = id;
+			this.guid = guid;
 			this.flags = flags;
 			this.rotation = Quaternion.Identity;
 			this.scale = new Vector3(1);
 		}
-		#endregion
-		#region Interface
-		#endregion
-		#region Utilities
 		#endregion
 	}
 }

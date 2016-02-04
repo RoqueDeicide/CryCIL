@@ -10,6 +10,12 @@ namespace CryCil.Engine.Logic
 	[StructLayout(LayoutKind.Sequential)]
 	public struct EntityId : IEquatable<EntityId>
 	{
+		#region Static Fields
+		/// <summary>
+		/// Identifier that should be used for the entity that represents local player.
+		/// </summary>
+		public static readonly EntityId LocalPlayerId = new EntityId(0x7777u);
+		#endregion
 		#region Fields
 		private readonly uint id;
 		#endregion
