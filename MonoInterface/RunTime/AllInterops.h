@@ -206,5 +206,6 @@
 
 #include "Interops/CryView.h"
 
-#include "Interops/GameView.h"
+#include "Interops/ViewController.h"
+
 #include "Interops/SystemEvents.h"
