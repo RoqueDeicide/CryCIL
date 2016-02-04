@@ -408,6 +408,7 @@ void MonoInterface::RegisterDefaultListeners()
 	this->broadcaster->listeners->Add(new PostProcessingInterop());
 	this->broadcaster->listeners->Add(new CryViewInterop());
 	this->broadcaster->listeners->Add(new ViewControllerInterop());
+	this->broadcaster->listeners->Add(new SystemEventsInterop());
 }
 #pragma endregion
 #pragma region Thunks Initialization

@@ -626,6 +626,9 @@
     <ClInclude Include="Interops\ViewController.h">
       <Filter>Interops\Engine\Rendering\Views</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\SystemEvents.h">
+      <Filter>Interops\Engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -1108,6 +1111,12 @@
     </ClCompile>
     <ClCompile Include="Interops\ViewController.cpp">
       <Filter>Interops\Engine\Rendering\Views</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\SystemEvent.cpp">
+      <Filter>TypeMapChecks</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\SystemEvents.cpp">
+      <Filter>Interops\Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

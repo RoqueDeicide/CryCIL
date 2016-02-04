@@ -342,6 +342,7 @@
     <ClInclude Include="Interops\Game.h" />
     <ClInclude Include="Interops\GameCollisionInfo.h" />
     <ClInclude Include="Interops\GameRules.h" />
+    <ClInclude Include="Interops\SystemEvents.h" />
     <ClInclude Include="Interops\ViewController.h" />
     <ClInclude Include="Interops\GeneralExtensions.h" />
     <ClInclude Include="Interops\IGeometry.h" />
@@ -529,6 +530,7 @@
     <ClCompile Include="Interops\Game.cpp" />
     <ClCompile Include="Interops\GameRules.cpp" />
     <ClCompile Include="Interops\GameRulesReg.cpp" />
+    <ClCompile Include="Interops\SystemEvents.cpp" />
     <ClCompile Include="Interops\ViewController.cpp" />
     <ClCompile Include="Interops\GeneralExtensions.cpp" />
     <ClCompile Include="Interops\IGeometry.cpp" />
@@ -608,6 +610,7 @@
     <ClCompile Include="TypeMapChecks\ResRefreshFlags.cpp" />
     <ClCompile Include="TypeMapChecks\StaticObjectStuff.cpp" />
     <ClCompile Include="TypeMapChecks\StridedPointer.cpp" />
+    <ClCompile Include="TypeMapChecks\SystemEvent.cpp" />
     <ClCompile Include="TypeMapChecks\VertexFormatsAndPips.cpp" />
     <ClCompile Include="TypeMapChecks\ViewTypes.cpp" />
   </ItemGroup>

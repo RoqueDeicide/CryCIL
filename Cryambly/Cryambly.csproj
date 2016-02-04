@@ -262,6 +262,7 @@
     <Compile Include="Engine\Rendering\Views\ViewController.cs" />
     <Compile Include="Engine\Rendering\Views\ShakeParameters.cs" />
     <Compile Include="Engine\Rendering\Views\ViewParameters.cs" />
+    <Compile Include="Engine\SystemEvents.cs" />
     <Compile Include="Engine\UserInterface\NamespaceDoc.cs" />
     <Compile Include="Mathematics\Geometry\Csg\Base\NamespaceDoc.cs" />
     <Compile Include="Mathematics\Geometry\Csg\NamespaceDoc.cs" />

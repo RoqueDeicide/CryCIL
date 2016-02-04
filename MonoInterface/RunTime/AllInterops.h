@@ -207,3 +207,4 @@
 #include "Interops/CryView.h"
 
 #include "Interops/GameView.h"
+#include "Interops/SystemEvents.h"
