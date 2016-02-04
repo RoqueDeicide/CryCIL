@@ -75,6 +75,7 @@
     <Compile Include="Entities\Players\Player.cs" />
     <Compile Include="Entities\SimpleEntityExtension.cs" />
     <Compile Include="FlowNodes\GeometricEntityNode.cs" />
+    <Compile Include="GameModes\SinglePlayerRules.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
