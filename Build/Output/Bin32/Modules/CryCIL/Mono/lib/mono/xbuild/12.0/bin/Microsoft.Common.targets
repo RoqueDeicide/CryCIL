@@ -105,7 +105,10 @@
 			Text="OutDir property must end with a slash."/>
 	</Target>
 
-	<Target Name="PrepareForBuild">
+	<PropertyGroup>
+		<PrepareForBuildDependsOn>AssignLinkMetadata</PrepareForBuildDependsOn>
+	</PropertyGroup>
+	<Target Name="PrepareForBuild" DependsOnTargets="$(PrepareForBuildDependsOn)">
 		<Message Importance="High" Text="Configuration: $(Configuration) Platform: $(Platform)"/>
 
 		<!-- Look for app.config, if $(AppConfig) is specified, then use that. Else look in
@@ -125,6 +128,18 @@
 		/>
 	</Target>
 
+	<Target Name="AssignLinkMetadata">
+	    <AssignLinkMetadata Items="@(EmbeddedResource)" Condition="'@(EmbeddedResource)' != '' and '%(EmbeddedResource.DefiningProjectFullPath)' != '$(MSBuildProjectFullPath)'">
+	      <Output TaskParameter="OutputItems" ItemName="_EmbeddedResourceWithLinkAssigned" />
+	    </AssignLinkMetadata>
+
+	    <ItemGroup>
+		<EmbeddedResource Remove="@(_EmbeddedResourceWithLinkAssigned)" />
+		<EmbeddedResource Include="@(_EmbeddedResourceWithLinkAssigned)" />
+		<_EmbeddedResourceWithLinkAssigned Remove="@(_EmbeddedResourceWithLinkAssigned)" />
+	    </ItemGroup>
+	</Target>
+
 	<PropertyGroup>
 		<GetFrameworkPathsDependsOn />
 	</PropertyGroup>
@@ -132,7 +147,7 @@
 		Condition="'$(TargetFrameworkIdentifier)' == '' or '$(TargetFrameworkIdentifier)' == '.NETFramework'"
 		DependsOnTargets="$(GetFrameworkPathsDependsOn)">
 		<GetFrameworkPath>
-			<Output Condition="'$(TargetFrameworkVersion)' == 'v4.5'"
+			<Output Condition="'$(TargetFrameworkVersion)' == 'v4.5' and '$(TargetFrameworkVersion)' == 'v4.5.1'"
 				TaskParameter="FrameworkVersion45Path"
 				ItemName="_CombinedTargetFrameworkDirectoriesItem"/>
 			<Output Condition="'$(TargetFrameworkVersion)' == 'v4.0'"
@@ -153,7 +168,7 @@
 		</CreateProperty>
 
 		<Warning Text="TargetFrameworkVersion '$(TargetFrameworkVersion)' not supported by this toolset (ToolsVersion: $(MSBuildToolsVersion))."
-			Condition="'$(TargetFrameworkVersion)' != 'v4.5' and '$(TargetFrameworkVersion)' != 'v4.0' and '$(TargetFrameworkVersion)' != 'v3.5' and '$(TargetFrameworkVersion)' != 'v3.0' and '$(TargetFrameworkVersion)' != 'v2.0'"/>
+			Condition="'$(TargetFrameworkVersion)' != 'v4.5.1' and '$(TargetFrameworkVersion)' != 'v4.5' and '$(TargetFrameworkVersion)' != 'v4.0' and '$(TargetFrameworkVersion)' != 'v3.5' and '$(TargetFrameworkVersion)' != 'v3.0' and '$(TargetFrameworkVersion)' != 'v2.0'"/>
 	</Target>
 
 	<PropertyGroup>
@@ -353,7 +368,7 @@
 			Properties="%(ProjectReferenceWithConfigurationExistent.SetConfiguration); %(ProjectReferenceWithConfigurationExistent.SetPlatform)"
 			Condition="'@(ProjectReferenceWithConfigurationExistent)' != '' and ('$(BuildingSolutionFile)' == 'true' or '$(BuildingInsideVisualStudio)' == 'true')">
 
-			<Output TaskParameter="TargetOutputs" ItemName="ChildProjectReferences" />
+			<Output TaskParameter="TargetOutputs" ItemName="ChildProjectReferences" Condition="'%(ProjectReferenceWithConfigurationExistent.ReferenceOutputAssembly)' != 'false'"/>
 		</MSBuild>
 
 		<!-- Building a project directly, build the referenced the projects also -->
@@ -362,7 +377,7 @@
 			Properties="%(ProjectReferenceWithConfigurationExistent.SetConfiguration); %(ProjectReferenceWithConfigurationExistent.SetPlatform)"
 			Condition="'@(ProjectReferenceWithConfigurationExistent)' != '' and '$(BuildingSolutionFile)' != 'true' and '$(BuildingInsideVisualStudio)' != 'true' ">
 
-			<Output TaskParameter="TargetOutputs" ItemName="ChildProjectReferences" />
+			<Output TaskParameter="TargetOutputs" ItemName="ChildProjectReferences" Condition="'%(ProjectReferenceWithConfigurationExistent.ReferenceOutputAssembly)' != 'false'"/>
 		</MSBuild>
 
 		<Warning Text="Referenced Project %(ProjectReferenceWithConfigurationNonExistent.Identity) not found, ignoring."

@@ -4,25 +4,25 @@ cmd_line=
 for option do
 	case "$option" in
 		-dest:*)
-			dir=`echo "$option" | sed 's/^-dest://'`
+			dir=`echo "$option" | sed 's/^-des"$(cygpath -w "${BASH_SOURCE%/*}"/../lib/mono//)"'`
 			cmd_line="$cmd_line -o \"$dir\""
 			;;
 		-dumptemplate)
 			cmd_line="$cmd_line --default-template"
 			;;
 		-ext:*)
-			ext=`echo "$option" | sed 's/^-ext://'`
+			ext=`echo "$option" | sed 's/^-ex"$(cygpath -w "${BASH_SOURCE%/*}"/../lib/mono//)"'`
 			cmd_line="$cmd_line --ext=$ext"
 			;;
 		-onlytype*)
 			# compat; ignore
 			;;
 		-source:*)
-			s=`echo "$option" | sed 's/^-source://'`
+			s=`echo "$option" | sed 's/^-sourc"$(cygpath -w "${BASH_SOURCE%/*}"/../lib/mono//)"'`
 			cmd_line="$cmd_line $s"
 			;;
 		-template:*)
-			template=`echo "$option" | sed 's/^-template://'`
+			template=`echo "$option" | sed 's/^-templat"$(cygpath -w "${BASH_SOURCE%/*}"/../lib/mono//)"'`
 			cmd_line="$cmd_line --template=$template"
 			;;
 		-V | -version)

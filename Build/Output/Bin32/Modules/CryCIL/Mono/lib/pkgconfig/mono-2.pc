@@ -6,6 +6,6 @@ sysconfdir=${prefix}/etc
 
 Name: Mono
 Description: Mono Runtime
-Version: 3.4.0
-Libs: -L${libdir} -Wl,--export-all-symbols -lmono-2.0 -mms-bitfields -mwindows  -lws2_32 -lpsapi -lole32 -lwinmm -loleaut32 -ladvapi32 -lversion
+Version: 4.2.2
+Libs: -L${libdir}  -lmono-2.0 -mms-bitfields -mwindows  -lws2_32 -lpsapi -lole32 -lwinmm -loleaut32 -ladvapi32 -lversion
 Cflags: -I${includedir} -mms-bitfields -mwindows

@@ -1,5 +1,4 @@
 @echo off
-echo Mono version 3.2.3 Build 0
-echo Prepending 'C:\PROGRA~2\MONO-3~1.3\bin' to PATH
-PATH=C:\PROGRA~2\MONO-3~1.3\bin;%PATH%
-
+echo Mono version 4.2.2
+echo Prepending '%~dp0' to PATH
+PATH=%~dp0;%PATH%

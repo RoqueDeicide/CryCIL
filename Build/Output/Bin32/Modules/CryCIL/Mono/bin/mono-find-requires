@@ -19,7 +19,7 @@ monolist=($(printf "%s\n" "${filelist[@]}" | egrep "\\.(exe|dll)\$"))
 configlist=($(printf "%s\n" "${filelist[@]}" | egrep "\\.config\$"))
 
 # Set the prefix, unless it is overriden (used when building mono rpms)
-: ${prefix=/usr/local}
+: ${prefix=/cygdrive/c/j/workspace/v/tmp/mono}
 
 # Can override .config scanning if specified
 : ${IGNORE_CONFIG_SCAN=0}
@@ -50,7 +50,7 @@ esac
 # set LD_LIBRARY_PATH to ensure that libmono is found
 export LD_LIBRARY_PATH=$libdir${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
 # and set MONO_PATH to ensure that mscorlib.dll can be found
-export MONO_PATH=$prefix/lib/mono/2.0
+export MONO_PATH=$prefix/lib/mono/4.5
 
 REQUIRES=$(
 	for i in "${monolist[@]}"; do

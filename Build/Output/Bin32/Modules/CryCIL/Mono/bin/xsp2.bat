@@ -1,1 +1,2 @@
-@"C:\PROGRA~2\MONO-3~1.3\bin\mono.exe" %MONO_OPTIONS% "C:\PROGRA~2\MONO-3~1.3\lib\mono\2.0\winhack\xsp2.exe" %*
+@echo off
+"%~dp0\mono.exe" %MONO_OPTIONS% "%~dp0\..\lib\mono\2.0\\xsp2.exe" %*

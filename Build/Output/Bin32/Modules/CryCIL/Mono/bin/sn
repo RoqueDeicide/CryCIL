@@ -1,3 +1,3 @@
 #!/bin/sh
 umask 077
-exec /usr/local/bin/mono $MONO_OPTIONS C:/cygwin/usr/local/lib/mono/4.5/sn.exe "$@"
+exec "${BASH_SOURCE%/*}"/mono $MONO_OPTIONS "$(cygpath -w "${BASH_SOURCE%/*}"/../lib/mono/4.5/)"sn.exe "$@"

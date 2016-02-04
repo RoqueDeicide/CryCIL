@@ -1,7 +1,7 @@
-assemblies_dir=/usr/local/lib/mono
+assemblies_dir=/cygdrive/c/j/workspace/v/tmp/mono/lib/mono
 Libraries=${assemblies_dir}/gac/Mono.Cecil/0.9.5.0__0738eb9f132ed756/Mono.Cecil.dll
 
 Name: Mono Internal -- Do not use.
 Description: Mono Internal Libraries -- Do not use 
-Version: 3.4.0
+Version: 4.2.2
 Libs: -r:Mono.Cecil.dll

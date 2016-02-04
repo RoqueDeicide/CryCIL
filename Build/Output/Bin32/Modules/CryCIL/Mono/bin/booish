@@ -1,7 +1,0 @@
-#!/bin/sh
-if [ -x C:/PROGRA~2/MONO-3~1.3/bin/cli ]; then
-    env C:/PROGRA~2/MONO-3~1.3/bin/cli $MONO_OPTIONS ${exec_prefix}/lib/boo/booish.exe $BOOISH_OPTIONS "$@"
-else
-    env C:/PROGRA~2/MONO-3~1.3/bin/mono $MONO_OPTIONS ${exec_prefix}/lib/boo/booish.exe $BOOISH_OPTIONS "$@"
-fi
-

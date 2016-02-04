@@ -1,2 +1,2 @@
 #!/bin/sh
-exec /usr/local/bin/pedump $MONO_OPTIONS --verify metadata,code "$@"
+exec "${BASH_SOURCE%/*}"/pedump $MONO_OPTIONS --verify metadata,code "$@"

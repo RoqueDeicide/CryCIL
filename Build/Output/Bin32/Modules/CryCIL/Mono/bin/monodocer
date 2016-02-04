@@ -4,7 +4,7 @@ cmd_line=
 for option do
 	case "$option" in
 		-assembly:*)
-			a=`echo "$option" | sed 's/^-assembly://'`
+			a=`echo "$option" | sed 's/^-assembl"$(cygpath -w "${BASH_SOURCE%/*}"/../lib/mono//)"'`
 			cmd_line="$cmd_line $a"
 			;;
 		-delete)
@@ -14,15 +14,15 @@ for option do
 			# ignore
 			;;
 		-import:*)
-			a=`echo "$option" | sed 's/^-import://'`
+			a=`echo "$option" | sed 's/^-impor"$(cygpath -w "${BASH_SOURCE%/*}"/../lib/mono//)"'`
 			cmd_line="$cmd_line -i $a"
 			;;
 		-importecmadoc:*)
-			a=`echo "$option" | sed 's/^-importecmadoc://'`
+			a=`echo "$option" | sed 's/^-importecmado"$(cygpath -w "${BASH_SOURCE%/*}"/../lib/mono//)"'`
 			cmd_line="$cmd_line -i $a"
 			;;
 		-importslashdoc:*)
-			a=`echo "$option" | sed 's/^-importslashdoc://'`
+			a=`echo "$option" | sed 's/^-importslashdo"$(cygpath -w "${BASH_SOURCE%/*}"/../lib/mono//)"'`
 			cmd_line="$cmd_line -i $a"
 			;;
 		-name:*)
@@ -35,18 +35,18 @@ for option do
 			# ignore
 			;;
 		-path:*)
-			a=`echo "$option" | sed 's/^-path://'`
+			a=`echo "$option" | sed 's/^-pat"$(cygpath -w "${BASH_SOURCE%/*}"/../lib/mono//)"'`
 			cmd_line="$cmd_line -o $a"
 			;;
 		-pretty)
 			# ignore
 			;;
 		-since:*)
-			a=`echo "$option" | sed 's/^-since://'`
+			a=`echo "$option" | sed 's/^-sinc"$(cygpath -w "${BASH_SOURCE%/*}"/../lib/mono//)"'`
 			cmd_line="$cmd_line --since $a"
 			;;
 		-type:*)
-			a=`echo "$option" | sed 's/^-type://'`
+			a=`echo "$option" | sed 's/^-typ"$(cygpath -w "${BASH_SOURCE%/*}"/../lib/mono//)"'`
 			cmd_line="$cmd_line --since $a"
 			;;
 		-updateto:*)
