@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using CryCil.Engine.Data;
 using CryCil.RunTime.Registration;
 
@@ -86,6 +87,84 @@ namespace CryCil.Engine.Logic
 				Contract.Requires<ObjectDisposedException>(!this.Disposed, "This entity doesn't exist.");
 				return this.EntityTypeName ??
 					   (this.EntityTypeName = this.GetType().GetAttribute<EntityAttribute>().Name);
+			}
+		}
+		/// <summary>
+		/// Sets the value that indicates whether this entity receives post updates.
+		/// </summary>
+		/// <remarks>
+		/// <para>Only entities for which this proeprty is <c>true</c> can have their <see cref="PostUpdate"/> method invoked.</para>
+		/// <para>By default entities do not receive post updates.</para>
+		/// </remarks>
+		/// <exception cref="ObjectDisposedException">This entity doesn't exist.</exception>
+		public bool PostUpdatesEnabled
+		{
+			set
+			{
+				if (this.Disposed)
+				{
+					throw new ObjectDisposedException("this", "This entity doesn't exist.");
+				}
+
+				EnablePostUpdates(this.entity, value);
+			}
+		}
+		/// <summary>
+		/// Gets or sets the value that indicates whether this entity receives updates.
+		/// </summary>
+		/// <remarks>
+		/// <para>Only entities for which this proeprty is <c>true</c> can have their <see cref="Update"/> method invoked.</para>
+		/// <para>By default entities do not receive updates unless they were spawned as active.</para>
+		/// </remarks>
+		/// <exception cref="ObjectDisposedException">This entity doesn't exist.</exception>
+		public bool UpdatesEnabled
+		{
+			get
+			{
+				if (this.Disposed)
+				{
+					throw new ObjectDisposedException("this", "This entity doesn't exist.");
+				}
+
+				return AreUpdatesEnabled(this.entity);
+			}
+			set
+			{
+				if (this.Disposed)
+				{
+					throw new ObjectDisposedException("this", "This entity doesn't exist.");
+				}
+
+				EnableUpdates(this.entity, value);
+			}
+		}
+		/// <summary>
+		/// Gets or sets the value that indicates whether this entity receives updates prior to update of the physical world.
+		/// </summary>
+		/// <remarks>
+		/// <para>Only entities for which this proeprty is <c>true</c> can have their <see cref="MonoEntity.PrePhysicsUpdate"/> method invoked.</para>
+		/// <para>By default entities do not receive pre-physics updates.</para>
+		/// </remarks>
+		/// <exception cref="ObjectDisposedException">This entity doesn't exist.</exception>
+		public bool PrePhysicsUpdatesEnabled
+		{
+			get
+			{
+				if (this.Disposed)
+				{
+					throw new ObjectDisposedException("this", "This entity doesn't exist.");
+				}
+
+				return ArePrePhysicsUpdatesEnabled(this.entity);
+			}
+			set
+			{
+				if (this.Disposed)
+				{
+					throw new ObjectDisposedException("this", "This entity doesn't exist.");
+				}
+
+				EnablePrePhysics(this.entity, value);
 			}
 		}
 		#endregion
@@ -353,6 +432,17 @@ namespace CryCil.Engine.Logic
 		{
 			return EntityRegistry.DefinedProperties[this.EntityClassName][index].Get(this);
 		}
+
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void EnablePostUpdates(CryEntity entity, bool receive);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void EnableUpdates(CryEntity entity, bool receive);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern bool AreUpdatesEnabled(CryEntity entity);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void EnablePrePhysics(CryEntity entity, bool receive);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern bool ArePrePhysicsUpdatesEnabled(CryEntity entity);
 		#endregion
 	}
 }

@@ -194,3 +194,17 @@ struct EntitySlotsInterop : IMonoInterop<true, true>
 	static void         UnphysicalizeSlot(IEntity *entityHandle, int slot);
 	static void         UpdateSlotPhysics(IEntity *entityHandle, int slot);
 };
+
+struct MonoEntityInterop : public IMonoInterop<true, true>
+{
+	virtual const char *GetInteropClassName() override { return "MonoEntity"; }
+	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Logic"; }
+
+	virtual void OnRunTimeInitialized() override;
+
+	static void EnablePostUpdates(IEntity *entity, bool receive);
+	static void EnableUpdates(IEntity *entity, bool receive);
+	static bool AreUpdatesEnabled(IEntity *entity);
+	static void EnablePrePhysics(IEntity *entity, bool receive);
+	static bool ArePrePhysicsUpdatesEnabled(IEntity *entity);
+};

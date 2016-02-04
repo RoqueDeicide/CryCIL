@@ -1255,3 +1255,56 @@ void EntitySlotsInterop::UpdateSlotPhysics(IEntity *entityHandle, int slot)
 {
 	entityHandle->UpdateSlotPhysics(slot);
 }
+
+void MonoEntityInterop::OnRunTimeInitialized()
+{
+	REGISTER_METHOD(EnablePostUpdates);
+	REGISTER_METHOD(EnableUpdates);
+	REGISTER_METHOD(AreUpdatesEnabled);
+	REGISTER_METHOD(EnablePrePhysics);
+	REGISTER_METHOD(ArePrePhysicsUpdatesEnabled);
+}
+
+void MonoEntityInterop::EnablePostUpdates(IEntity *entity, bool receive)
+{
+	auto obj = MonoEnv->CryAction->GetGameObject(entity->GetId());
+	auto ext = QueryMonoEntityExtension(obj, entity);
+	if (receive)
+	{
+		obj->EnablePostUpdates(ext);
+	}
+	else
+	{
+		obj->DisablePostUpdates(ext);
+	}
+}
+
+void MonoEntityInterop::EnableUpdates(IEntity *entity, bool receive)
+{
+	auto obj = MonoEnv->CryAction->GetGameObject(entity->GetId());
+	auto ext = QueryMonoEntityExtension(obj, entity);
+	if (receive)
+	{
+		obj->EnableUpdateSlot(ext, 0);
+	}
+	else
+	{
+		obj->DisableUpdateSlot(ext, 0);
+	}
+}
+
+bool MonoEntityInterop::AreUpdatesEnabled(IEntity *entity)
+{
+	return entity->IsActive();
+}
+
+void MonoEntityInterop::EnablePrePhysics(IEntity *entity, bool receive)
+{
+	auto obj = MonoEnv->CryAction->GetGameObject(entity->GetId());
+	obj->EnablePrePhysicsUpdate(receive ? ePPU_Always : ePPU_Never);
+}
+
+bool MonoEntityInterop::ArePrePhysicsUpdatesEnabled(IEntity *entity)
+{
+	return entity->IsPrePhysicsActive();
+}
