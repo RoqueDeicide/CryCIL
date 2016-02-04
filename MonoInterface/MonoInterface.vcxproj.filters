@@ -560,9 +560,6 @@
     <ClInclude Include="Interops\AttachmentProxy.h">
       <Filter>Interops\Engine\Models\Characters\Attachments</Filter>
     </ClInclude>
-    <ClInclude Include="TypeMapChecks\ParticleTypes.h">
-      <Filter>TypeMapChecks</Filter>
-    </ClInclude>
     <ClInclude Include="Interops\AudioSystem.h">
       <Filter>Interops\Engine\Audio</Filter>
     </ClInclude>
@@ -1111,6 +1108,9 @@
     </ClCompile>
     <ClCompile Include="Interops\ViewController.cpp">
       <Filter>Interops\Engine\Rendering\Views</Filter>
+    </ClCompile>
+    <ClCompile Include="TypeMapChecks\ParticleTypes.cpp">
+      <Filter>TypeMapChecks</Filter>
     </ClCompile>
     <ClCompile Include="TypeMapChecks\SystemEvent.cpp">
       <Filter>TypeMapChecks</Filter>
