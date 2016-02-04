@@ -1,3 +1,4 @@
 [submodule "mono"]
 	path = mono
-url=git://github.com/PoppermostProductions/mono.git
+	url = https://github.com/mono/mono.git
+	branch = master
