@@ -119,7 +119,9 @@ MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener
 	
 	// Load Cryambly.
 	const char *cryamblyFile = DirectoryStructure::GetCryamblyFile();
+	ReportComment("Creating a Cryambly object.");
 	this->cryambly = new CryamblyWrapper(cryamblyFile);
+	ReportComment("Creating a CoreLibrary object.");
 	this->corlib = new MonoCoreLibrary();
 	
 	ReportComment("Initializing main thunks.");
