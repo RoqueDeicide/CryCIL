@@ -10,9 +10,11 @@ typedef void(IMonoSystemListener::*SimpleEventHandler)();
 struct EventBroadcaster
 {
 private:
-	//! Value1 in each pair is an index of the removed listener in the main list. Value2 is a pointer itself and it's used
-	//! to skip removed listeners during initialization stages.
-	List<Pair<int, IMonoSystemListener *>> latestRemovedListeners;
+	//! Indicates whether we are going through initialization stages. During such stages listeners cannot be removed.
+	bool stages;
+	//! An index that is used when going through the listeners in order to be able to adjust it when listener
+	//! is removed.
+	int index;
 public:
 	List<IMonoSystemListener *> *listeners;
 	SortedList<int, List<IMonoSystemListener *> *> *stageMap;
@@ -54,6 +56,4 @@ public:
 private:
 	// Used for propagating events that don't have any extra data.
 	void SendSimpleEvent(SimpleEventHandler handler);
-	// Corrects the given index to account for listeners that were unregistered during the event.
-	void CorrectIndex(int &index);
 };

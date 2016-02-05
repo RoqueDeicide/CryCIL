@@ -68,6 +68,8 @@ public:
 	//!
 	//! Search is done using the pointer value.
 	//!
+	//! You cannot remove listeners during execution of any initialization stages!
+	//!
 	//! @param listener Pointer to the object that implements IMonoSystemListener.
 	VIRTUAL_API virtual void RemoveListener(IMonoSystemListener *listener) = 0;
 	// Properties.
