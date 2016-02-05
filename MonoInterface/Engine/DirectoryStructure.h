@@ -1,9 +1,9 @@
 #pragma once
 
 #if defined(PS3) || defined(LINUX) || defined(APPLE) || defined(ORBIS)
-#define PATH_SEPARATOR '/'
+#define PATH_SEPARATOR "/"
 #else
-#define PATH_SEPARATOR '\\'
+#define PATH_SEPARATOR "\\"
 #endif
 
 #define BIN32_FOLDER            "Bin32"

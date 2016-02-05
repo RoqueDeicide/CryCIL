@@ -3,7 +3,7 @@
 
 const char *DirectoryStructure::GetMonoConfigurationFolder()
 {
-	char s = PATH_SEPARATOR;
+	const char *s = PATH_SEPARATOR;
 	return NtText
 	(
 		10,
@@ -17,7 +17,7 @@ const char *DirectoryStructure::GetMonoConfigurationFolder()
 //! Returns a path to the folder that contains Mono libraries.
 const char *DirectoryStructure::GetMonoLibraryFolder()
 {
-	char s = PATH_SEPARATOR;
+	const char *s = PATH_SEPARATOR;
 	return NtText
 	(
 		10,
@@ -31,7 +31,7 @@ const char *DirectoryStructure::GetMonoLibraryFolder()
 //! Returns a path to the folder that contains CryCIL libraries.
 const char *DirectoryStructure::GetCryCilBinariesFolder()
 {
-	char s = PATH_SEPARATOR;
+	const char *s = PATH_SEPARATOR;
 	return NtText
 	(
 		6,
@@ -43,7 +43,7 @@ const char *DirectoryStructure::GetCryCilBinariesFolder()
 //! Returns a path to the file that contains Cryambly.
 const char *DirectoryStructure::GetCryamblyFile()
 {
-	char s = PATH_SEPARATOR;
+	const char *s = PATH_SEPARATOR;
 	return NtText
 	(
 		7,
@@ -56,7 +56,7 @@ const char *DirectoryStructure::GetCryamblyFile()
 //! Returns a path to the file that contains Pdb to Mdb converter.
 const char *DirectoryStructure::GetPdb2MdbFile()
 {
-	char s = PATH_SEPARATOR;
+	const char *s = PATH_SEPARATOR;
 	return NtText
 	(
 		7,
@@ -69,7 +69,7 @@ const char *DirectoryStructure::GetPdb2MdbFile()
 //! Returns a path to the file that contains configuration data for 4.5 version AppDomains.
 const char *DirectoryStructure::GetMonoAppDomainConfigurationFile()
 {
-	char s = PATH_SEPARATOR;
+	const char *s = PATH_SEPARATOR;
 	return NtText
 	(
 		15,
