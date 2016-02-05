@@ -156,7 +156,7 @@ bool CryCilGameShell::InitializeGameFramework(SSystemInitParams& params)
 		return false;
 	}
 
-	ModuleInitISystem(this->framework->GetISystem(), GAME_NAME);
+	ModuleInitISystem(this->framework->GetISystem(), "CryCilGame");
 
 #ifdef WIN32
 	// Allow to get to this object through the user-data pointer that is available for all windows.
