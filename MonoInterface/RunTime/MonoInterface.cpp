@@ -229,20 +229,18 @@ void MonoInterface::HandleException(mono::exception exception)
 //! Registers new object that receives notifications about CryCIL events.
 void MonoInterface::AddListener(IMonoSystemListener *listener)
 {
-	if (!this->running)
+	if (this->broadcaster)
 	{
-		return;
+		this->broadcaster->listeners->Add(listener);
 	}
-	this->broadcaster->listeners->Add(listener);
 }
 //! Unregisters an object that receives notifications about CryCIL events.
 void MonoInterface::RemoveListener(IMonoSystemListener *listener)
 {
-	if (!this->running)
+	if (this->broadcaster)
 	{
-		return;
+		this->broadcaster->RemoveListener(listener);
 	}
-	this->broadcaster->RemoveListener(listener);
 }
 #pragma endregion
 #pragma region IGameFrameworkListener Implementation.
