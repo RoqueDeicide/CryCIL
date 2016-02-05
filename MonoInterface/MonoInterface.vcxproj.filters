@@ -36,7 +36,6 @@
     <ClInclude Include="SortedList.h">
       <Filter>Extras</Filter>
     </ClInclude>
-    <ClInclude Include="Logs.h" />
     <ClInclude Include="Geometry\FaceMesh.h">
       <Filter>Geometry</Filter>
     </ClInclude>
@@ -632,6 +631,7 @@
     <ClInclude Include="Interops\CryNetChannel.h">
       <Filter>Interops\Engine\Network</Filter>
     </ClInclude>
+    <ClInclude Include="DebugHelpers.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />

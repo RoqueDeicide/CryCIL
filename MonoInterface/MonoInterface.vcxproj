@@ -406,7 +406,7 @@
     <ClInclude Include="Interops\Timing.h" />
     <ClInclude Include="Interops\WriteLockCond.h" />
     <ClInclude Include="List.h" />
-    <ClInclude Include="Logs.h" />
+    <ClInclude Include="DebugHelpers.h" />
     <ClInclude Include="MonoDefinitionFiles\MonoArray.h" />
     <ClInclude Include="MonoDefinitionFiles\MonoDelegate.h" />
     <ClInclude Include="MonoHeaders.h" />

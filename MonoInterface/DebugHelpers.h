@@ -2,8 +2,8 @@
 
 #include <ISystem.h>
 
-//#define HIGH_LOG_VERBOSITY
-//#define EXTRA_HIGH_LOG_VERBOSITY
+#define HIGH_LOG_VERBOSITY
+#define EXTRA_HIGH_LOG_VERBOSITY
 
 
 // General comments.

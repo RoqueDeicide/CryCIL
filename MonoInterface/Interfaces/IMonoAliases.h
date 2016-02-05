@@ -21,7 +21,7 @@
 #include "SortedList.h"
 #include "Tuples.h"
 
-#include "Logs.h"
+#include "DebugHelpers.h"
 
 namespace mono
 {
