@@ -28,12 +28,12 @@ void EventBroadcaster::RemoveListener(IMonoSystemListener *listener)
 		if (this->listeners->At(i) == listener)
 		{
 			listenerIndex = i;
+			break;
 		}
 	}
 
 	if (listenerIndex == -1)
 	{
-		ReportComment("Listener wasn't found.");
 		return;
 	}
 
@@ -48,7 +48,7 @@ void EventBroadcaster::RemoveListener(IMonoSystemListener *listener)
 		this->index--;
 	}
 
-	this->listeners->RemoveAt(index);
+	this->listeners->RemoveAt(listenerIndex);
 
 	// Remove listener from stage map.
 	this->stageMap->ForEach
@@ -201,16 +201,10 @@ void EventBroadcaster::Shutdown()
 
 void EventBroadcaster::SendSimpleEvent(SimpleEventHandler handler)
 {
-	CryLogAlways("Initial number of listeners: %d", this->listeners->Length);
-
 	for (this->index = 0; this->index < this->listeners->Length; this->index++)
 	{
-		CryLogAlways("Sending event to listener #%d", this->index);
-
-		CryLogAlways("Current listener count: %d", this->listeners->Length);
 		IMonoSystemListener *listener = this->listeners->At(this->index);
 		(listener->*handler)();
-		CryLogAlways("Sent event to listener #%d", this->index);
 	}
 
 	this->index = -1;
