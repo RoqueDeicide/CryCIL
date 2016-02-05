@@ -5,6 +5,11 @@
 #include "Implementation/MonoAssemblies.h"
 #include "RunTime/AllInterops.h"
 
+#if 1
+#define InterfaceMessage CryLogAlways
+#else
+#define InterfaceMessage(...) void(0)
+#endif
 
 void HandleSignalAbort(int error)
 {
@@ -41,6 +46,8 @@ MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener
 	if (listeners)
 	{
 		this->broadcaster->listeners->AddRange(listeners);
+		InterfaceMessage("Last listener is %d", this->broadcaster->listeners->At(119));
+		listeners->Clear();
 	}
 	// Set global variables.
 	MonoEnv = this;
@@ -50,9 +57,10 @@ MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener
 
 	this->broadcaster->OnPreInitialization();
 
+	InterfaceMessage("Sending RunTimeInitializing event");
 	this->broadcaster->OnRunTimeInitializing();
 	
-	ReportComment("Setting mono directories.");
+	InterfaceMessage("Setting mono directories.");
 	
 	// Tell Mono, where to look for the libraries and configuration files.
 	const char *assembly_dir = DirectoryStructure::GetMonoLibraryFolder();
@@ -60,23 +68,23 @@ MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener
 	mono_set_dirs(assembly_dir, config_dir);
 
 #ifdef _DEBUG
-	ReportComment("Setting up signal chaining.");
+	InterfaceMessage("Setting up signal chaining.");
 	
 	// Tell Mono to crash the game if there is an exception that wasn't handled.
 	mono_set_signal_chaining(true);
 	
-	ReportComment("Initializing Mono debugging.");
+	InterfaceMessage("Initializing Mono debugging.");
 	
 	// Load up mdb files.
 	mono_debug_init(MONO_DEBUG_FORMAT_MONO);
 #endif // _DEBUG
 	
-	ReportComment("Registering HandeSignalAbort.");
+	InterfaceMessage("Registering HandeSignalAbort.");
 	
 	// Register HandleSignalAbort function as a handler for SIGABRT.
 	signal(SIGABRT, HandleSignalAbort);
 	
-	ReportComment("Initializing the domain.");
+	InterfaceMessage("Initializing the domain.");
 	
 	// Initialize the AppDomain.
 	this->appDomain = mono_jit_init_version("CryCIL", "v4.0.30319");
@@ -85,7 +93,7 @@ MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener
 		CryFatalError("Unable to initialize Mono AppDomain.");
 	}
 	
-	ReportComment("Setting the config for domain.");
+	InterfaceMessage("Setting the config for domain.");
 	
 	// Manually tell AppDomain where to find the configuration for itself.
 	// Not calling this function results in exception when trying to get CodeDomProvider for C#.
@@ -103,7 +111,7 @@ MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener
 
 #ifdef _DEBUG
 	
-	ReportComment("Loading pdb2mdb.");
+	InterfaceMessage("Loading pdb2mdb.");
 	
 	// Load Pdb2Mdb.dll before everything else.
 	this->pdb2mdb = this->assemblies->Load(DirectoryStructure::GetPdb2MdbFile());
@@ -115,20 +123,20 @@ MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener
 		: nullptr;
 #endif // _DEBUG
 
-	ReportComment("Loading Cryambly.");
+	InterfaceMessage("Loading Cryambly.");
 	
 	// Load Cryambly.
 	const char *cryamblyFile = DirectoryStructure::GetCryamblyFile();
-	ReportComment("Creating a Cryambly object.");
+	InterfaceMessage("Creating a Cryambly object.");
 	this->cryambly = new CryamblyWrapper(cryamblyFile);
-	ReportComment("Creating a CoreLibrary object.");
+	InterfaceMessage("Creating a CoreLibrary object.");
 	this->corlib = new MonoCoreLibrary();
 	
-	ReportComment("Initializing main thunks.");
+	InterfaceMessage("Initializing main thunks.");
 	
 	this->InitializeThunks();
 	
-	ReportComment("Main thunks initialized.");
+	InterfaceMessage("Main thunks initialized.");
 
 	const char *ns = "CryCil.RunTime";
 	const char *cn = "MonoInterface";
@@ -423,12 +431,12 @@ void MonoInterface::RegisterDefaultListeners()
 	void MonoInterface::InitializeMonoInterfaceThunks()
 	{
 		CryLogAlways("Initializing mono interface thunks.");
-		MonoInterfaceThunks::DisplayException =
-			this->GetMethodThunk<DisplayExceptionThunk>
-			(this->cryambly, "CryCil.RunTime", "MonoInterface", "DisplayException", "System.Object");
 		MonoInterfaceThunks::Initialize =
 			this->GetMethodThunk<InitializeThunk>
 			(this->cryambly, "CryCil.RunTime", "MonoInterface", "Initialize", nullptr);
+		MonoInterfaceThunks::DisplayException =
+			this->GetMethodThunk<DisplayExceptionThunk>
+			(this->cryambly, "CryCil.RunTime", "MonoInterface", "DisplayException", "System.Object");
 		MonoInterfaceThunks::TriggerFlowNodesRegistration =
 			this->GetMethodThunk<RegisterFlowNodesThunk>
 			(this->cryambly, "CryCil.RunTime", "MonoInterface", "RegisterFlowGraphNodeTypes", nullptr);
@@ -448,9 +456,21 @@ void MonoInterface::RegisterDefaultListeners()
 	template<typename MethodSignature>
 	MethodSignature MonoInterface::GetMethodThunk(IMonoAssembly *assembly, const char *nameSpace, const char *className, const char *methodName, const char *params)
 	{
-		return MethodSignature(assembly->GetClass(nameSpace, className)
-									   ->GetFunction(methodName, params)
-									   ->UnmanagedThunk);
+		InterfaceMessage("Getting a thunk for a method %s(%s) in the class %s.%s.", methodName, params, nameSpace, className);
+
+		IMonoClass *klass = assembly->GetClass(nameSpace, className);
+
+		InterfaceMessage("Got the class wrapper.");
+
+		IMonoFunction *function = klass->GetFunction(methodName, params);
+
+		InterfaceMessage("Got the function.");
+
+		void *thunk = function->UnmanagedThunk;
+
+		InterfaceMessage("Got the thunk.");
+
+		return MethodSignature(thunk);
 	}
 #pragma endregion
 

@@ -2,6 +2,12 @@
 #include "MonoFunctions.h"
 #include "MonoClass.h"
 
+#if 1
+#define FunctionsMessage CryLogAlways
+#else
+#define FunctionsMessage(...) void(0)
+#endif
+
 IMonoClass *MonoFunctions::GetDeclaringClass(_MonoMethod *method)
 {
 	MonoClass *klass = mono_method_get_class(method);
@@ -98,7 +104,13 @@ mono::object MonoFunctions::InternalInvokeArray(_MonoMethod *func, void *object,
 
 void *MonoFunctions::GetThunk(_MonoMethod *func)
 {
-	return mono_method_get_unmanaged_thunk(func);
+	FunctionsMessage("Getting the thunk.");
+
+	void *thunk = mono_method_get_unmanaged_thunk(func);
+	
+	FunctionsMessage("Got the thunk.");
+
+	return thunk;
 }
 
 void *MonoFunctions::GetFunctionPointer(_MonoMethod *func)

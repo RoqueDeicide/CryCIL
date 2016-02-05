@@ -13,8 +13,11 @@ struct EarlyInitializer : IMonoSystemListener
 	//! Sets MonoEnv and removes itself.
 	virtual void SetInterface(IMonoInterface *handle) override
 	{
+		CryLogAlways("Initializing MonoEnv.");
 		MonoEnv = handle;
+		CryLogAlways("Initialized MonoEnv. Removing this listener.");
 		MonoEnv->RemoveListener(this);
+		CryLogAlways("Deleting this listener.");
 		delete this;
 	}
 	//! Not used since this listener is set to unregister itself after MonoEnv is set.
@@ -57,6 +60,7 @@ struct EarlyInitializer : IMonoSystemListener
 //! @param framework        Pointer to implementation of IGameFramework.
 //! @param listeners        Pointer to the array of persistent listeners to use.
 //!                         Can be null, if you don't want to register any.
+//!                         This list, if provided, will be cleared after use.
 //! @param earlyMonoEnvInit Indicates whether MonoEnv should be set to the appropriate value
 //!                         before initialization is complete. Setting this to false
 //!                         necessitates setting up some extra way of accessing uninitialized
