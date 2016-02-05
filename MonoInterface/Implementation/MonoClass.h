@@ -111,7 +111,7 @@ private:
 struct MonoClassCache
 {
 private:
-	static List<MonoClassWrapper *> cachedClasses;
+	static SortedList<MonoClass *, MonoClassWrapper *> cachedClasses;
 public:
 	//! Acquires a pointer to wrapper object for given Mono class.
 	//!

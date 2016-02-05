@@ -996,27 +996,27 @@ bool MonoClassWrapper::GetIsDelegate()
 	return mono_class_is_delegate(this->wrappedClass) != 0;
 }
 
-List<MonoClassWrapper *> MonoClassCache::cachedClasses(50);
+SortedList<MonoClass *, MonoClassWrapper *> MonoClassCache::cachedClasses(50);
 
 
 IMonoClass *MonoClassCache::Wrap(MonoClass *klass)
 {
-	for (int i = 0; i < cachedClasses.Length; i++)
+	ClassMessage("Looking for the class in the cache.", mono_class_get_name(klass));
+	MonoClassWrapper *wrapper;
+	if (cachedClasses.TryGet(klass, wrapper))
 	{
-		IMonoClass *wrapper = cachedClasses[i];
-		if (wrapper->GetWrappedPointer() == klass)
-		{
-			return wrapper;
-		}
+		return wrapper;
 	}
+	ClassMessage("Class is not in the cache.");
 	// Register a new one.
-	MonoClassWrapper *wrapper = new MonoClassWrapper(klass);
-	MonoClassCache::cachedClasses.Add(wrapper);
+	wrapper = new MonoClassWrapper(klass);
+	ClassMessage("Created a wrapper for a class %s.", mono_class_get_name(klass));
+	MonoClassCache::cachedClasses.Add(klass, wrapper);
+	ClassMessage("Added a wrapper to the cache.");
 	return wrapper;
 }
 
 void MonoClassCache::Dispose()
 {
-	cachedClasses.DeleteAll();
-	cachedClasses.Clear();
+	cachedClasses.Dispose();
 }
