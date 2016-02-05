@@ -18,7 +18,7 @@ void GameRulesInterop::OnRunTimeInitialized()
 	REGISTER_METHOD(GetCurrentGameRulesObject);
 }
 
-void RegisterGameRulesHacked(const char *name, const char *typeName);
+extern bool RegisterGameRulesHacked(const char *name, const char *typeName);
 
 void GameRulesInterop::RegisterGameRules(mono::string name, mono::string typeName, mono::Array aliases,
 										 mono::Array paths, bool _default)

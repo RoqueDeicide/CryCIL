@@ -10,7 +10,7 @@
 
 IEntityProxyPtr CreateGameRulesObject(IEntity *pEntity, SEntitySpawnParams &params, void *pUserData);
 
-inline bool RegisterGameRulesHacked(const char *name, const char *typeName)
+bool RegisterGameRulesHacked(const char *name, const char *typeName)
 {
 	IEntityClassRegistry::SEntityClassDesc ruleClass;
 

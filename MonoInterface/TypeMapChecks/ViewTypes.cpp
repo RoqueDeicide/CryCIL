@@ -120,6 +120,7 @@ TYPE_MIRROR enum DefaultViewIds
 	VIEWID_RAGDOLL_check = 3
 };
 
+#undef CHECK_ENUM
 #define CHECK_ENUM(x) static_assert (DefaultViewIds::x ## _check == x, "Defines for default view ids have been changed.")
 
 inline void CheckDefaultViewIds()
