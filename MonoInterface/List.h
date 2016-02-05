@@ -79,6 +79,21 @@ public:
 	void RemoveHere();
 };
 
+//! Default comparison function that uses KeyType's comparison operators.
+template<typename KeyType>
+inline int DefaultComparison(KeyType &k1, KeyType &k2)
+{
+	if (k1 > k2)
+	{
+		return 1;
+	}
+	if (k2 > k1)
+	{
+		return -1;
+	}
+	return 0;
+}
+
 //! Represents an expandable list of items.
 //!
 //! @tparam ElementType        Type that represents items this list contains.
@@ -275,6 +290,11 @@ public:
 	//! @param itemCount Number of elements to add.
 	void AddRange(ElementType *items, int itemCount)
 	{
+		if (itemCount <= 0)
+		{
+			return;
+		}
+
 		this->Expand(this->length + itemCount);
 		for (int i = 0; i < itemCount; i++)
 		{
@@ -286,6 +306,11 @@ public:
 	//! @param items A collection of items to add.
 	void AddRange(List<ElementType> *items)
 	{
+		if (!items || items->Length <= 0)
+		{
+			return;
+		}
+
 		this->Expand(this->length + items->length);
 		for (int i = 0; i < items->length; i++)
 		{
@@ -503,6 +528,71 @@ public:
 			func(this->elements[i], i);
 		}
 		this->length = 0;
+	}
+	//! Performs a binary search for an element.
+	//!
+	//! Don't use this method on lists that are not sorted.
+	//!
+	//! In order to ensure that the list is sorted, you must only insert new elements at indexes that
+	//! are represented by negated (bit-wise with a ~ (tilde) operator) indexes that are returned by this
+	//! method.
+	//!
+	//! Example:
+	//!
+	//! @code{.cpp}
+	//!
+	//! // Lets make a sorted list:
+	//! List<int> integers(5);
+	//!
+	//! integers.Insert(5, ~BinarySearch(5));
+	//! integers.Insert(1, ~BinarySearch(1));
+	//! integers.Insert(3, ~BinarySearch(3));
+	//! integers.Insert(4, ~BinarySearch(4));
+	//! integers.Insert(2, ~BinarySearch(2));
+	//!
+	//! for (int i = 0; i < integers.Length; i++)
+	//! {
+	//!     // Should print out 1, 2, 3, 4, 5 (with new lines in place of commas.)
+	//!     CryLogAlways("%d", integers[i]);
+	//! }
+	//!
+	//! @endcode
+	//!
+	//! @param element  An element we want to find.
+	//! @param comparer An optional object that performs comparison of objects within this list.
+	//!
+	//! @returns A zero-based index of the element, if it was found in the list.
+	int BinarySearch(ElementType &element, std::function<int(ElementType&, ElementType&)> comparer = nullptr)
+	{
+		std::function<int(ElementType&, ElementType&)> comparison;
+		if (comparer)
+		{
+			comparison = comparer;
+		}
+		else
+		{
+			comparison = DefaultComparison<ElementType>;
+		}
+		
+		int lo = 0;
+		int hi = this->Length - 1;
+		while (lo <= hi)
+		{
+			int i = lo + ((hi - lo) >> 1);
+			int order = comparison(this->elements[i], element);
+
+			if (order == 0) return i;
+			if (order < 0)
+			{
+				lo = i + 1;
+			}
+			else
+			{
+				hi = i - 1;
+			}
+		}
+
+		return ~lo;
 	}
 	//! Performs an action on each element within the list.
 	//!

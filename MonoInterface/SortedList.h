@@ -16,21 +16,6 @@
 
 #include "List.h"
 
-//! Default comparison function that uses KeyType's comparison operators.
-template<typename KeyType>
-inline int DefaultComparison(KeyType &k1, KeyType &k2)
-{
-	if (k1 > k2)
-	{
-		return 1;
-	}
-	if (k2 > k1)
-	{
-		return -1;
-	}
-	return 0;
-}
-
 //! Represents a sorted collection of key-value pairs.
 //!
 //! @tparam KeyType     Type of keys. Needs to overload comparison operators.
@@ -39,7 +24,6 @@ inline int DefaultComparison(KeyType &k1, KeyType &k2)
 template<typename KeyType,typename ElementType, bool Ascending = true>
 class SortedList
 {
-private:
 	List<KeyType>     keys;
 	List<ElementType> values;
 	std::function<int(KeyType&, KeyType&)> comparer;
@@ -94,12 +78,12 @@ public:
 	//! Determines whether there is a key in the collection.
 	bool Contains(KeyType key)
 	{
-		return this->BinarySearch(key) >= 0;
+		return this->keys.BinarySearch(key, this->comparer) >= 0;
 	}
 	//! Adds a key-value pair.
 	void Add(KeyType key, ElementType element)
 	{
-		int index = this->BinarySearch(key);
+		int index = this->keys.BinarySearch(key, this->comparer);
 		if (index >= 0)
 		{
 			FatalError("Attempt to insert a key that is already in the collection.");
@@ -110,7 +94,7 @@ public:
 	//! Removes a value mapped to a given key, and indicates removal.
 	bool Remove(KeyType key)
 	{
-		int index = this->BinarySearch(key);
+		int index = this->keys.BinarySearch(key, this->comparer);
 		if (index >= 0)
 		{
 			this->keys.RemoveAt(index);
@@ -122,7 +106,7 @@ public:
 	//! Provides read/write access to the value associated with given key.
 	ElementType &At(KeyType key)
 	{
-		int index = this->BinarySearch(key);
+		int index = this->keys.BinarySearch(key, this->comparer);
 		if (index >= 0)
 		{
 			return this->values[index];
@@ -133,7 +117,7 @@ public:
 	//! Attempts to get the value that is supposed to be associated with the key.
 	bool TryGet(KeyType key, ElementType &returnedValue)
 	{
-		int index = this->BinarySearch(key);
+		int index = this->keys.BinarySearch(key, this->comparer);
 		if (index >= 0)
 		{
 			returnedValue = this->values[index];
@@ -144,7 +128,7 @@ public:
 	//! Attempts to set the value that is supposed to be associated with the key.
 	bool TrySet(KeyType key, ElementType &value)
 	{
-		int index = this->BinarySearch(key);
+		int index = this->keys.BinarySearch(key, this->comparer);
 		if (index >= 0)
 		{
 			this->values[index] = value;
@@ -194,31 +178,5 @@ public:
 	ReadOnlyList<ElementType> *GetElements()
 	{
 		return reinterpret_cast<ReadOnlyList<ElementType> *>(&this->values);
-	}
-private:
-	int BinarySearch(KeyType key)
-	{
-		int lo = 0;
-		int hi = this->Length - 1;
-		while (lo <= hi)
-		{
-			int i = lo + ((hi - lo) >> 1);
-			int order =
-				(this->comparer)
-				? this->comparer(this->keys[i], key)
-				: DefaultComparison(this->keys[i], key);
-
-			if (order == 0) return i;
-			if (order < 0)
-			{
-				lo = i + 1;
-			}
-			else
-			{
-				hi = i - 1;
-			}
-		}
-
-		return ~lo;
 	}
 };
