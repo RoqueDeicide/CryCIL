@@ -7,6 +7,7 @@
 
 CryamblyWrapper::CryamblyWrapper(const char *fileName)
 {
+	ReportComment("Started creation of Cryambly object.");
 	MonoImageOpenStatus status;
 	this->assembly = mono_assembly_open(fileName, &status);
 
@@ -18,15 +19,22 @@ CryamblyWrapper::CryamblyWrapper(const char *fileName)
 	default:
 		break;
 	}
+	ReportComment("Opened the assembly.");
 
 	this->image = mono_assembly_get_image(this->assembly);
 
+	ReportComment("Getting the assembly names.");
+
 	auto names = GetAssemblyNames(this->image);
+
+	ReportComment("Acquired the assembly names.");
 
 	this->name = names.Value2;
 	this->fullName = names.Value1;
 	
 	this->fileName = new Text(fileName);
+
+	ReportComment("Starting caching the classes.");
 
 	this->matrix33    = MonoClassCache::Wrap(mono_class_from_name(this->image, "CryCil", "Matrix33"));
 	this->matrix34    = MonoClassCache::Wrap(mono_class_from_name(this->image, "CryCil", "Matrix34"));
@@ -44,9 +52,13 @@ CryamblyWrapper::CryamblyWrapper(const char *fileName)
 	this->colorByte   = MonoClassCache::Wrap(mono_class_from_name(this->image, "CryCil.Graphics", "ColorByte"));
 	this->colorSingle = MonoClassCache::Wrap(mono_class_from_name(this->image, "CryCil.Graphics", "ColorSingle"));
 
+	ReportComment("Finished caching the classes.");
+
 	List<IMonoAssembly *> *cryamblyList = new List<IMonoAssembly *>(1);
 	cryamblyList->Add(this);
+	ReportComment("Adding the Cryambly to the registry.");
 	static_cast<MonoAssemblies *>(MonoEnv->Assemblies)->AssemblyRegistry->Add(this->name, cryamblyList);
+	ReportComment("Added the Cryambly to the registry.");
 }
 
 CryamblyWrapper::~CryamblyWrapper()

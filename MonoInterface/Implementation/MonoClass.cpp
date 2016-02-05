@@ -5,19 +5,30 @@
 #include "MonoEvent.h"
 #include "MonoField.h"
 
+#if 0
+#define ClassMessage CryLogAlways
+#else
+#define ClassMessage(...) void(0)
+#endif
+
 MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 	: fullName(nullptr)
 	, fullNameIL(nullptr)
 	, events(30)
 	, fields(30)
 {
+	ClassMessage("Creating a wrapper.");
+
 	this->wrappedClass = klass;
+	ClassMessage("Stored a pointer to the class.");
 
 	this->name      = mono_class_get_name(klass);
 	this->nameSpace = mono_class_get_namespace(klass);
+	ClassMessage("Stored a name and a namespace of the class.");
 
 	this->methods    = SortedList<const char *, List<IMonoFunction *> *>(30, strcmp);
 	this->properties = SortedList<const char *, List<IMonoProperty *> *>(30, strcmp);
+	ClassMessage("Created lists for methods and properties.");
 	
 	MonoClass *base = klass;
 	while (base)
@@ -27,10 +38,13 @@ MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 		while (MonoMethod *met  = mono_class_get_methods(base, &iter))
 		{
 			const char *methodName = mono_method_get_name(met);
-
-			if (!this->methods.Contains(methodName))
+			ClassMessage("Found a method %s", methodName);
+			
+			List<IMonoFunction *> *overloads;
+			if (!this->methods.TryGet(methodName, overloads))
 			{
-				this->methods.At(methodName) = new List<IMonoFunction *>(5);
+				overloads = new List<IMonoFunction *>(5);
+				this->methods.Add(methodName, overloads);
 			}
 			IMonoFunction *methodWrapper;
 			if (strcmp(mono_method_get_name(met), ".ctor") == 0)
@@ -45,35 +59,47 @@ MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 			{
 				methodWrapper = new MonoStaticMethod(met, this);
 			}
+			ClassMessage("Created a wrapper for a method %s", methodName);
 
-			this->methods.At(methodName)->Add(methodWrapper);
+			overloads->Add(methodWrapper);
 		}
 		// Cache properties.
 		iter = nullptr;
 		while (MonoProperty *prop = mono_class_get_properties(base, &iter))
 		{
 			const char *propName = mono_property_get_name(prop);
+			ClassMessage("Found a property %s", propName);
 
-			if (!this->properties.Contains(propName))
+			List<IMonoProperty *> *overloads;
+			if (!this->properties.TryGet(propName, overloads))
 			{
-				this->properties.At(propName) = new List<IMonoProperty *>(5);
+				overloads = new List<IMonoProperty *>(5);
+				this->properties.Add(propName, overloads);
 			}
-			this->properties.At(propName)->Add(new MonoPropertyWrapper(prop));
+			overloads->Add(new MonoPropertyWrapper(prop, this));
 		}
 		// Cache events.
 		iter = nullptr;
 		while (MonoEvent *ev   = mono_class_get_events(base, &iter))
 		{
-			this->events.Add(new MonoEventWrapper(ev));
+			MonoEventWrapper *_event = new MonoEventWrapper(ev, this);
+			ClassMessage("Found an event %s", _event->Name);
+			this->events.Add(_event);
 		}
 		// Cache fields.
 		iter = nullptr;
 		while (MonoClassField *f = mono_class_get_fields(base, &iter))
 		{
+			MonoField *field = new MonoField(f, this);
+			ClassMessage("Found a field %s", field->Name);
 			this->fields.Add(new MonoField(f, this));
 		}
 
 		base = mono_class_get_parent(base);
+		if (base)
+		{
+			ClassMessage("Proceeding to the next base class.");
+		}
 	}
 
 	this->methods.Trim();
@@ -859,8 +885,7 @@ IMonoClass *MonoClassWrapper::GetBase()
 IMonoClass *MonoClassWrapper::GetNestedType(const char *name)
 {
 	void *iter;
-	MonoClass *nestedType;
-	while (nestedType = mono_class_get_nested_types(this->wrappedClass, &iter))
+	while (MonoClass *nestedType = mono_class_get_nested_types(this->wrappedClass, &iter))
 	{
 		if (strcmp(mono_class_get_name(nestedType), name) == 0)
 		{
