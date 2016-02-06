@@ -196,68 +196,62 @@ namespace CryCil.RunTime
 					new SortedList<int, InitializationStageFunction>();
 
 				Console.WriteLine("Collecting data about initialization stages.");
+				
 				// Get the types that are initialization classes.
-				List<Type> initializationTypes =
-					CryCilAssemblies
-						.SelectMany(x => x.GetTypes())
-						.Where(x => x.ContainsAttribute<InitializationClassAttribute>())
-						.ToList();
-				List<Tuple<InitializationStageFunction, int[]>> functionsMap =
-					initializationTypes
-						.SelectMany(x => x.GetMethods())
-						.Where
-						(
-						 method =>
-						 {
-							 // Get the methods that are initialization ones with appropriate signature.
-							 ParameterInfo[] pars = method.GetParameters();
-							 return
-								 method.ContainsAttribute<InitializationStageAttribute>() &&
-								 method.IsStatic &&
-								 pars.Length == 1 &&
-								 pars[0].ParameterType == typeof(int);
-						 }
-						)
-						// Parse the method info and gather usable data.
-						.Select
-						(
-						 method =>
-							 new Tuple<InitializationStageFunction, int[]>
-							 (
-							 method.CreateDelegate<InitializationStageFunction>(),
-							 method.GetCustomAttributes<InitializationStageAttribute>()
-								   .Select(attr => attr.StageIndex)
-								   .ToArray()
-							 )
-						).ToList();
-				// Create a map of functions and their indices.
-				functionsMap.Add
-					(
-					 // Add the native initialization function to the mix.
-					 new Tuple<InitializationStageFunction, int[]>
-						 (
-						 OnInitializationStageBind,
-						 GetSubscribedStagesBind()
-						 )
-					);
-				Console.WriteLine("Compiling data about initialization stages.");
-				// Switch keys and values in the function map.
-				for (int i = 0; i < functionsMap.Count; i++)
+				var initializationTypesEnum =
+					from assembly in CryCilAssemblies
+					from type in assembly.GetTypes()
+					where type.ContainsAttribute<InitializationClassAttribute>()
+					select type;
+				var initializationTypes = initializationTypesEnum.ToList();
+
+				// Get the functions that represent initialization stages.
+				BindingFlags publicNonPublic = BindingFlags.NonPublic | BindingFlags.Public;
+				var initFuncs = from initializationType in initializationTypes
+								from method in initializationType.GetMethods(publicNonPublic)
+								let pars = method.GetParameters()
+								where method.ContainsAttribute<InitializationStageAttribute>() &&
+									  method.IsStatic &&
+									  pars.Length == 1 &&
+									  pars[0].ParameterType == typeof(int)
+								select new
+								{
+									FunctionDelegate = method.CreateDelegate<InitializationStageFunction>(),
+									StageIndexes = (from a in method.GetAttributes<InitializationStageAttribute>()
+													select a.StageIndex).ToArray()
+								};
+
+				var initializationFunctions = initFuncs.ToList();
+
+				// Add native stages to the list.
+				initializationFunctions.Add(new
 				{
-					for (int j = 0; j < functionsMap[i].Item2.Length; j++)
+					FunctionDelegate = new InitializationStageFunction(OnInitializationStageBind),
+					StageIndexes = GetSubscribedStagesBind()
+				});
+
+				Console.WriteLine("Compiling data about initialization stages.");
+				
+				// Switch keys and values in the function map.
+				for (int i = 0; i < initializationFunctions.Count; i++)
+				{
+					var stageFuncObj = initializationFunctions[i];
+					for (int j = 0; j < stageFuncObj.StageIndexes.Length; j++)
 					{
-						int stageIndex = functionsMap[i].Item2[j];
+						int stageIndex = stageFuncObj.StageIndexes[j];
 						if (stages.ContainsKey(stageIndex))
 						{
-							stages[stageIndex] += functionsMap[i].Item1;
+							stages[stageIndex] += stageFuncObj.FunctionDelegate;
 						}
 						else
 						{
-							stages.Add(stageIndex, functionsMap[i].Item1);
+							stages.Add(stageIndex, stageFuncObj.FunctionDelegate);
 						}
 					}
 				}
+
 				Console.WriteLine("Commencing initialization stages.");
+
 				// Now invoke everything.
 				foreach (int key in stages.Keys)
 				{
