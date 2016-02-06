@@ -126,21 +126,20 @@ struct TimeStepInfo
 // Type defs for signatures of methods that raise events on C# side.
 //
 
-typedef bool(__stdcall *BBoxOverlapPhysicsEventThunk)(StereoPhysicsEventData *, bool, mono::exception *);
-typedef bool(__stdcall *CollisionPhysicsEventThunk)(StereoPhysicsEventData *, CollisionInfo *, CollisionParticipantInfo *,
-													CollisionParticipantInfo *, bool, mono::exception *);
-typedef bool(__stdcall *StateChangePhysicsEventThunk)(MonoPhysicsEventData *, PhysicalEntityStateInfo *,
-													  PhysicalEntityStateInfo *, float, bool, mono::exception *);
-typedef bool(__stdcall *EnvChangePhysicsEventThunk)(MonoPhysicsEventData *, IPhysicalEntity *, IPhysicalEntity *, bool,
-													mono::exception *);
-typedef bool(__stdcall *PostStepPhysicsEventThunk)(MonoPhysicsEventData *, TimeStepInfo *, bool, mono::exception *);
-typedef bool(__stdcall *UpdateMeshPhysicsEventThunk)(MonoPhysicsEventData *, int, bool, int, IGeometry *, bop_meshupdate *,
-													 Matrix34 *, IGeometry *, bool, mono::exception *);
-typedef bool(__stdcall *CreateEntityPartPhysicsEventThunk)(MonoPhysicsEventData *, CreatedPartInfo *, bool,
-														   mono::exception *);
-typedef bool(__stdcall *RevealEntityPartPhysicsEventThunk)(MonoPhysicsEventData *, int, bool, mono::exception *);
-typedef bool(__stdcall *JointBrokenPhysicsEventThunk)(StereoPhysicsEventData *, JointBreakInfo *, bool, mono::exception *);
-typedef bool(__stdcall *EntityDeletedPhysicsEventThunk)(MonoPhysicsEventData *, int, bool, mono::exception *);
+RAW_THUNK typedef bool(*BBoxOverlapPhysicsEventThunk)(StereoPhysicsEventData *, bool);
+RAW_THUNK typedef bool(*CollisionPhysicsEventThunk)(StereoPhysicsEventData *, CollisionInfo *,
+													CollisionParticipantInfo *, CollisionParticipantInfo *,
+													bool);
+RAW_THUNK typedef bool(*StateChangePhysicsEventThunk)(MonoPhysicsEventData *, PhysicalEntityStateInfo *,
+													  PhysicalEntityStateInfo *, float, bool);
+RAW_THUNK typedef bool(*EnvChangePhysicsEventThunk)(MonoPhysicsEventData *, IPhysicalEntity *, IPhysicalEntity *, bool);
+RAW_THUNK typedef bool(*PostStepPhysicsEventThunk)(MonoPhysicsEventData *, TimeStepInfo *, bool);
+RAW_THUNK typedef bool(*UpdateMeshPhysicsEventThunk)(MonoPhysicsEventData *, int, bool, int, IGeometry *,
+													 bop_meshupdate *, Matrix34 *, IGeometry *, bool);
+RAW_THUNK typedef bool(*CreateEntityPartPhysicsEventThunk)(MonoPhysicsEventData *, CreatedPartInfo *, bool);
+RAW_THUNK typedef bool(*RevealEntityPartPhysicsEventThunk)(MonoPhysicsEventData *, int, bool);
+RAW_THUNK typedef bool(*JointBrokenPhysicsEventThunk)(StereoPhysicsEventData *, JointBreakInfo *, bool);
+RAW_THUNK typedef bool(*EntityDeletedPhysicsEventThunk)(MonoPhysicsEventData *, int, bool);
 
 //
 // Macros that make definitions of physics event clients shorter.
@@ -150,9 +149,8 @@ typedef bool(__stdcall *EntityDeletedPhysicsEventThunk)(MonoPhysicsEventData *, 
 inline int clientName(const EventPhys*_event, bool logged) \
 { \
 	static thunkType raise = thunkType(MonoEnv->Cryambly->GetClass("CryCil.Engine.Physics", "PhysicalWorld") \
-														->GetEvent(eventName)->Raise->UnmanagedThunk); \
+														->GetEvent(eventName)->Raise->RawThunk); \
 		 \
-	mono::exception ex; \
 	const eventType *_eventInfo = static_cast<const eventType *>(_event); \
 	 \
 	StereoPhysicsEventData data(_eventInfo);
@@ -161,9 +159,8 @@ inline int clientName(const EventPhys*_event, bool logged) \
 inline int clientName(const EventPhys*_event, bool logged) \
 { \
 	static thunkType raise = thunkType(MonoEnv->Cryambly->GetClass("CryCil.Engine.Physics", "PhysicalWorld") \
-														->GetEvent(eventName)->Raise->UnmanagedThunk); \
+														->GetEvent(eventName)->Raise->RawThunk); \
 		 \
-	mono::exception ex; \
 	const eventType *_eventInfo = static_cast<const eventType *>(_event); \
 	 \
 	MonoPhysicsEventData data; \
@@ -179,7 +176,7 @@ inline int clientName(const EventPhys*_event, bool logged) \
 //
 
 BEGIN_STEREO_EVENT_CLIENT(BBoxOverlapEventClient, BBoxOverlapPhysicsEventThunk, EventPhysBBoxOverlap, "BoundingBoxOverlapped")
-auto result = raise(&data, logged, &ex);
+auto result = raise(&data, logged);
 END_EVENT_CLIENT
 
 BEGIN_STEREO_EVENT_CLIENT(CollisionEventClient, CollisionPhysicsEventThunk, EventPhysCollision, "CollisionHappened")
@@ -189,7 +186,7 @@ CollisionParticipantInfo collider(_eventInfo, 0);
 
 CollisionParticipantInfo collidee(_eventInfo, 1);
 
-auto result = raise(&data, &collisionInfo, &collider, &collidee, logged, &ex);
+auto result = raise(&data, &collisionInfo, &collider, &collidee, logged);
 END_EVENT_CLIENT
 
 BEGIN_MONO_EVENT_CLIENT(StateChangeEventClient, StateChangePhysicsEventThunk, EventPhysStateChange, "EntityStateChanged")
@@ -201,11 +198,11 @@ PhysicalEntityStateInfo newState;
 newState.simClass = _eventInfo->iSimClass[1];
 newState.boundingBox = AABB(_eventInfo->BBoxNew[0], _eventInfo->BBoxNew[1]);
 
-auto result = raise(&data, &oldState, &newState, _eventInfo->timeIdle, logged, &ex);
+auto result = raise(&data, &oldState, &newState, _eventInfo->timeIdle, logged);
 END_EVENT_CLIENT
 
 BEGIN_MONO_EVENT_CLIENT(EnvChangeEventClient, EnvChangePhysicsEventThunk, EventPhysEnvChange, "EnvironmentChanged")
-auto result = raise(&data, _eventInfo->pentSrc, _eventInfo->pentNew, logged, &ex);
+auto result = raise(&data, _eventInfo->pentSrc, _eventInfo->pentNew, logged);
 END_EVENT_CLIENT
 
 BEGIN_MONO_EVENT_CLIENT(PostStepEventClient, PostStepPhysicsEventThunk, EventPhysPostStep, "StepComplete")
@@ -215,7 +212,7 @@ step.idStep = _eventInfo->idStep;
 step.pos    = _eventInfo->pos;
 step.q      = _eventInfo->q;
 
-auto result = raise(&data, &step, logged, &ex);
+auto result = raise(&data, &step, logged);
 END_EVENT_CLIENT
 
 BEGIN_MONO_EVENT_CLIENT(UpdateMeshEventClient, UpdateMeshPhysicsEventThunk, EventPhysUpdateMesh, "MeshChanged")
@@ -223,7 +220,7 @@ BEGIN_MONO_EVENT_CLIENT(UpdateMeshEventClient, UpdateMeshPhysicsEventThunk, Even
 Matrix34 m = _eventInfo->mtxSkelToMesh;
 
 auto result = raise(&data, _eventInfo->partid, _eventInfo->bInvalid != 0, _eventInfo->iReason, _eventInfo->pMesh,
-					_eventInfo->pLastUpdate, &m, _eventInfo->pMeshSkel, logged, &ex);
+					_eventInfo->pLastUpdate, &m, _eventInfo->pMeshSkel, logged);
 END_EVENT_CLIENT
 
 BEGIN_MONO_EVENT_CLIENT(CreateEntityPartEventClient, CreateEntityPartPhysicsEventThunk, EventPhysCreateEntityPart, "PartCreated")
@@ -247,11 +244,11 @@ partInfo.oldPartId               = _eventInfo->partidSrc;
 partInfo.reason                  = _eventInfo->iReason;
 partInfo.totalPartCount          = _eventInfo->nTotParts;
 
-auto result = raise(&data, &partInfo, logged, &ex);
+auto result = raise(&data, &partInfo, logged);
 END_EVENT_CLIENT
 
 BEGIN_MONO_EVENT_CLIENT(RevealEntityPartEventClient, RevealEntityPartPhysicsEventThunk, EventPhysRevealEntityPart, "PartRevealed")
-auto result = raise(&data, _eventInfo->partId, logged, &ex);
+auto result = raise(&data, _eventInfo->partId, logged);
 END_EVENT_CLIENT
 
 BEGIN_STEREO_EVENT_CLIENT(JointBrokenEventClient, JointBrokenPhysicsEventThunk, EventPhysJointBroken, "JointBroken")
@@ -268,18 +265,18 @@ info.sourcePartMaterial = _eventInfo->partmat[0];
 info.targetPartMaterial = _eventInfo->partmat[1];
 info.zAxis              = _eventInfo->n;
 
-auto result = raise(&data, &info, logged, &ex);
+auto result = raise(&data, &info, logged);
 END_EVENT_CLIENT
 
 BEGIN_MONO_EVENT_CLIENT(EntityDeletedEventClient, EntityDeletedPhysicsEventThunk, EventPhysEntityDeleted, "EntityDeleted")
-auto result = raise(&data, _eventInfo->mode, logged, &ex);
+auto result = raise(&data, _eventInfo->mode, logged);
 END_EVENT_CLIENT
 
 //
 // Helpers for registration/unregistration of event clients in physical world.
 //
 
-typedef int(*EventClientFunc)(const EventPhys*, bool logged);
+RAW_THUNK typedef int(*EventClientFunc)(const EventPhys*, bool logged);
 
 template<EventClientFunc func, bool logged>
 inline int InvokeEventClient(const EventPhys *_event)

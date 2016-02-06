@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using CryCil.RunTime;
 
 namespace CryCil.Engine.Input
 {
@@ -89,40 +91,89 @@ namespace CryCil.Engine.Input
 		#region Interface
 		#endregion
 		#region Utilities
-		[UnmanagedThunk("Invoked by underlying framework to raise Button event.")]
+		[RawThunk("Invoked by underlying framework to raise Button event.")]
 		private static void OnButton(uint input, int modifiers, bool pressed, out bool blocked)
 		{
-			blocked = InputEventPropagator.Post(buttonHandlers, (InputId)input, new ModifierKeysStatus(modifiers), pressed);
+			try
+			{
+				blocked = InputEventPropagator.Post(buttonHandlers, (InputId)input,
+													new ModifierKeysStatus(modifiers), pressed);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+				blocked = false;
+			}
 		}
-		[UnmanagedThunk("Invoked by underlying framework to raise WheelUp event.")]
+		[RawThunk("Invoked by underlying framework to raise WheelUp event.")]
 		private static void OnWheelUp(int modifiers, int state, float value, out bool blocked)
 		{
-			blocked = InputEventPropagator.Post(wheelUpHandlers, InputId.MouseWheelUp, new ModifierKeysStatus(modifiers),
-												(InputState)state, value);
+			try
+			{
+				blocked = InputEventPropagator.Post(wheelUpHandlers, InputId.MouseWheelUp, new ModifierKeysStatus(modifiers),
+													(InputState)state, value);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+				blocked = false;
+			}
 		}
-		[UnmanagedThunk("Invoked by underlying framework to raise WheelDown event.")]
+		[RawThunk("Invoked by underlying framework to raise WheelDown event.")]
 		private static void OnWheelDown(int modifiers, int state, float value, out bool blocked)
 		{
-			blocked = InputEventPropagator.Post(wheelDownHandlers, InputId.MouseWheelDown, new ModifierKeysStatus(modifiers),
-												(InputState)state, value);
+			try
+			{
+				blocked = InputEventPropagator.Post(wheelDownHandlers, InputId.MouseWheelDown, new ModifierKeysStatus(modifiers),
+													(InputState)state, value);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+				blocked = false;
+			}
 		}
-		[UnmanagedThunk("Invoked by underlying framework to raise X event.")]
+		[RawThunk("Invoked by underlying framework to raise X event.")]
 		private static void OnX(int modifiers, float value, out bool blocked)
 		{
-			blocked = InputEventPropagator.Post(xHandlers, InputId.MouseX, new ModifierKeysStatus(modifiers),
-												InputState.Changed, value);
+			try
+			{
+				blocked = InputEventPropagator.Post(xHandlers, InputId.MouseX, new ModifierKeysStatus(modifiers),
+													InputState.Changed, value);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+				blocked = false;
+			}
 		}
-		[UnmanagedThunk("Invoked by underlying framework to raise Y event.")]
+		[RawThunk("Invoked by underlying framework to raise Y event.")]
 		private static void OnY(int modifiers, float value, out bool blocked)
 		{
-			blocked = InputEventPropagator.Post(yHandlers, InputId.MouseY, new ModifierKeysStatus(modifiers),
-												InputState.Changed, value);
+			try
+			{
+				blocked = InputEventPropagator.Post(yHandlers, InputId.MouseY, new ModifierKeysStatus(modifiers),
+													InputState.Changed, value);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+				blocked = false;
+			}
 		}
-		[UnmanagedThunk("Invoked by underlying framework to raise Z event.")]
+		[RawThunk("Invoked by underlying framework to raise Z event.")]
 		private static void OnZ(int modifiers, float value, out bool blocked)
 		{
-			blocked = InputEventPropagator.Post(zHandlers, InputId.MouseZ, new ModifierKeysStatus(modifiers),
-												InputState.Changed, value);
+			try
+			{
+				blocked = InputEventPropagator.Post(zHandlers, InputId.MouseZ, new ModifierKeysStatus(modifiers),
+													InputState.Changed, value);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+				blocked = false;
+			}
 		}
 		#endregion
 	}

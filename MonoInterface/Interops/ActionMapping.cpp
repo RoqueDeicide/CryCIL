@@ -6,7 +6,7 @@
 #include <CryCrc32.h>
 #include "MonoCryXmlNode.h"
 
-typedef void(__stdcall *ActivateActionThunk)(uint32, int32, float value, mono::exception *);
+UNMANAGED_THUNK typedef void(__stdcall *ActivateActionThunk)(uint32, int32, float value, mono::exception *);
 
 void ActionMappingInterop::OnAction(const ActionId& action, int activationMode, float value)
 {

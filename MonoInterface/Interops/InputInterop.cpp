@@ -64,7 +64,6 @@ bool InputInterop::OnInputEvent(const SInputEvent &_event)
 		return false;
 	}
 
-	mono::exception ex;
 	bool blocked = false;
 	switch (_event.deviceType)
 	{
@@ -81,32 +80,32 @@ bool InputInterop::OnInputEvent(const SInputEvent &_event)
 		case eKI_Mouse7:
 		case eKI_Mouse8:
 		{
-			onMouseButton(_event.keyId, _event.modifiers, _event.state == eIS_Pressed, &blocked, &ex);
+			onMouseButton(_event.keyId, _event.modifiers, _event.state == eIS_Pressed, &blocked);
 			break;
 		}
 		case eKI_MouseWheelUp:
 		{
-			onWheelUp(_event.modifiers, _event.state, _event.value, &blocked, &ex);
+			onWheelUp(_event.modifiers, _event.state, _event.value, &blocked);
 			break;
 		}
 		case eKI_MouseWheelDown:
 		{
-			onWheelDown(_event.modifiers, _event.state, _event.value, &blocked, &ex);
+			onWheelDown(_event.modifiers, _event.state, _event.value, &blocked);
 			break;
 		}
 		case eKI_MouseX:
 		{
-			onX(_event.modifiers, _event.value, &blocked, &ex);
+			onX(_event.modifiers, _event.value, &blocked);
 			break;
 		}
 		case eKI_MouseY:
 		{
-			onY(_event.modifiers, _event.value, &blocked, &ex);
+			onY(_event.modifiers, _event.value, &blocked);
 			break;
 		}
 		case eKI_MouseZ:
 		{
-			onZ(_event.modifiers, _event.value, &blocked, &ex);
+			onZ(_event.modifiers, _event.value, &blocked);
 			break;
 		}
 		default:
@@ -116,7 +115,7 @@ bool InputInterop::OnInputEvent(const SInputEvent &_event)
 	}
 	case eIDT_Keyboard:
 	{
-		onKeyChanged(_event.keyId, _event.modifiers, _event.state == eIS_Pressed, &blocked, &ex);
+		onKeyChanged(_event.keyId, _event.modifiers, _event.state == eIS_Pressed, &blocked);
 		break;
 	}
 	case eIDT_Joystick:
@@ -141,29 +140,29 @@ bool InputInterop::OnInputEvent(const SInputEvent &_event)
 			case eKI_XI_X:
 			case eKI_XI_Y:
 			{
-				onXboxButton(_event.keyId, _event.deviceIndex, _event.state == eIS_Pressed, &blocked, &ex);
+				onXboxButton(_event.keyId, _event.deviceIndex, _event.state == eIS_Pressed, &blocked);
 				break;
 			}
 			case eKI_XI_TriggerL:
 			case eKI_XI_TriggerLBtn:
 			{
-				onLeftTrigger(_event.keyId, _event.deviceIndex, _event.state, _event.value, &blocked, &ex);
+				onLeftTrigger(_event.keyId, _event.deviceIndex, _event.state, _event.value, &blocked);
 				break;
 			}
 			case eKI_XI_TriggerR:
 			case eKI_XI_TriggerRBtn:
 			{
-				onRightTrigger(_event.keyId, _event.deviceIndex, _event.state, _event.value, &blocked, &ex);
+				onRightTrigger(_event.keyId, _event.deviceIndex, _event.state, _event.value, &blocked);
 				break;
 			}
 			case eKI_XI_ThumbLX:
 			{
-				onLeftThumbX(_event.state, _event.deviceIndex, _event.value, &blocked, &ex);
+				onLeftThumbX(_event.state, _event.deviceIndex, _event.value, &blocked);
 				break;
 			}
 			case eKI_XI_ThumbLY:
 			{
-				onLeftThumbY(_event.state, _event.deviceIndex, _event.value, &blocked, &ex);
+				onLeftThumbY(_event.state, _event.deviceIndex, _event.value, &blocked);
 				break;
 			}
 			case eKI_XI_ThumbLUp:
@@ -175,17 +174,17 @@ bool InputInterop::OnInputEvent(const SInputEvent &_event)
 			case eKI_XI_ThumbRLeft:
 			case eKI_XI_ThumbRRight:
 			{
-				onThumbDirection(_event.keyId, _event.deviceIndex, _event.state == eIS_Pressed, &blocked, &ex);
+				onThumbDirection(_event.keyId, _event.deviceIndex, _event.state == eIS_Pressed, &blocked);
 				break;
 			}
 			case eKI_XI_ThumbRX:
 			{
-				onRightThumbX(_event.state, _event.deviceIndex, _event.value, &blocked, &ex);
+				onRightThumbX(_event.state, _event.deviceIndex, _event.value, &blocked);
 				break;
 			}
 			case eKI_XI_ThumbRY:
 			{
-				onRightThumbY(_event.state, _event.deviceIndex, _event.value, &blocked, &ex);
+				onRightThumbY(_event.state, _event.deviceIndex, _event.value, &blocked);
 				break;
 			}
 			default:
@@ -206,10 +205,9 @@ bool InputInterop::OnInputEventUI(const SUnicodeEvent &_event)
 		return false;
 	}
 
-	mono::exception ex;
 	bool blocked;
 
-	onCharacterInput(_event.inputChar, &blocked, &ex);
+	onCharacterInput(_event.inputChar, &blocked);
 
 	return blocked;
 }
@@ -222,8 +220,7 @@ void InputInterop::OnTouchEvent(const STouchEvent& _event)
 		return;
 	}
 
-	mono::exception ex;
-	onTouchEvent(_event.deviceType, _event.deviceIndex, _event.id, _event.pos.x, _event.pos.y, &ex);
+	onTouchEvent(_event.deviceType, _event.deviceIndex, _event.id, _event.pos.x, _event.pos.y);
 }
 
 void InputInterop::XboxRumble(float time, float strengthLeft, float strengthRight, byte deviceIndex)

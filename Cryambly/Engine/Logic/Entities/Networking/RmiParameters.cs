@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using CryCil.Engine.Data;
+using CryCil.RunTime;
 using CryCil.RunTime.Registration;
 
 namespace CryCil.Engine.Logic
@@ -9,14 +11,6 @@ namespace CryCil.Engine.Logic
 	/// </summary>
 	public abstract class RmiParameters
 	{
-		#region Fields
-		#endregion
-		#region Properties
-		#endregion
-		#region Events
-		#endregion
-		#region Construction
-		#endregion
 		#region Interface
 		/// <summary>
 		/// Synchronizes the RMI data.
@@ -26,11 +20,18 @@ namespace CryCil.Engine.Logic
 		protected abstract void Synchronize(CrySync sync);
 		#endregion
 		#region Utilities
-		[UnmanagedThunk("Invoked by underlying framework to acquire a default object of the type that derives from this" +
-						" class to receive incoming RMI data.")]
+		[RawThunk("Invoked by underlying framework to acquire a default object of the type that derives from this" +
+				  " class to receive incoming RMI data.")]
 		private static RmiParameters AcquireReceptor(string name)
 		{
-			return RmiParametersRegistry.AcquireReceptor(name);
+			try
+			{
+				return RmiParametersRegistry.AcquireReceptor(name);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		#endregion
 	}

@@ -75,87 +75,59 @@ void EntityPoolInterop::OnRunTimeInitialized()
 
 #include "MonoEntitySpawnParams.h"
 
-typedef void(__stdcall *OnPoolBookmarkCreatedThunk)(EntityId, MonoEntitySpawnParams, IXmlNode *, mono::exception *);
-typedef void(__stdcall *PoolMigrationHandlerThunk)(EntityId, IEntity *, mono::exception *);
-typedef void(__stdcall *PoolBookmarkSyncHandlerThunk)(ISerialize *, IEntity *, mono::exception *);
-typedef void(__stdcall *OnPoolDefinitionsLoadedThunk)(mono::exception *);
+RAW_THUNK typedef void(*OnPoolBookmarkCreatedThunk)(EntityId, MonoEntitySpawnParams *, IXmlNode *);
+RAW_THUNK typedef void(*PoolMigrationHandlerThunk)(EntityId, IEntity *);
+RAW_THUNK typedef void(*PoolBookmarkSyncHandlerThunk)(ISerialize *, IEntity *);
+RAW_THUNK typedef void(*OnPoolDefinitionsLoadedThunk)();
 
 void EntityPoolInterop::OnPoolBookmarkCreated(EntityId entityId, const SEntitySpawnParams& params, XmlNodeRef entityNode)
 {
 	static OnPoolBookmarkCreatedThunk thunk =
-		OnPoolBookmarkCreatedThunk(this->GetMonoClass()->GetFunction("OnPoolBookmarkCreated", 3)->UnmanagedThunk);
+		OnPoolBookmarkCreatedThunk(this->GetMonoClass()->GetFunction("OnPoolBookmarkCreated", 3)->RawThunk);
 
-	mono::exception ex;
-	thunk(entityId, params, entityNode, &ex);
-	if (ex)
-	{
-		MonoEnv->HandleException(ex);
-	}
+	MonoEntitySpawnParams parameters(params);
+
+	thunk(entityId, &parameters, entityNode);
 }
 
 void EntityPoolInterop::OnEntityPreparedFromPool(EntityId entityId, IEntity *pEntity)
 {
 	static PoolMigrationHandlerThunk thunk =
-		PoolMigrationHandlerThunk(this->GetMonoClass()->GetFunction("OnEntityPrepared", 2)->UnmanagedThunk);
+		PoolMigrationHandlerThunk(this->GetMonoClass()->GetFunction("OnEntityPrepared", 2)->RawThunk);
 
-	mono::exception ex;
-	thunk(entityId, pEntity, &ex);
-	if (ex)
-	{
-		MonoEnv->HandleException(ex);
-	}
+	thunk(entityId, pEntity);
 }
 
 void EntityPoolInterop::OnEntityReturningToPool(EntityId entityId, IEntity *pEntity)
 {
 	static PoolMigrationHandlerThunk thunk =
-		PoolMigrationHandlerThunk(this->GetMonoClass()->GetFunction("OnEntityReturning", 2)->UnmanagedThunk);
+		PoolMigrationHandlerThunk(this->GetMonoClass()->GetFunction("OnEntityReturning", 2)->RawThunk);
 
-	mono::exception ex;
-	thunk(entityId, pEntity, &ex);
-	if (ex)
-	{
-		MonoEnv->HandleException(ex);
-	}
+	thunk(entityId, pEntity);
 }
 
 void EntityPoolInterop::OnEntityReturnedToPool(EntityId entityId, IEntity *pEntity)
 {
 	static PoolMigrationHandlerThunk thunk =
-		PoolMigrationHandlerThunk(this->GetMonoClass()->GetFunction("OnEntityReturned", 2)->UnmanagedThunk);
+		PoolMigrationHandlerThunk(this->GetMonoClass()->GetFunction("OnEntityReturned", 2)->RawThunk);
 
-	mono::exception ex;
-	thunk(entityId, pEntity, &ex);
-	if (ex)
-	{
-		MonoEnv->HandleException(ex);
-	}
+	thunk(entityId, pEntity);
 }
 
 void EntityPoolInterop::OnPoolDefinitionsLoaded(size_t)
 {
 	static OnPoolDefinitionsLoadedThunk thunk =
-		OnPoolDefinitionsLoadedThunk(this->GetMonoClass()->GetFunction("OnDefinitionsLoaded", 0)->UnmanagedThunk);
+		OnPoolDefinitionsLoadedThunk(this->GetMonoClass()->GetFunction("OnDefinitionsLoaded", 0)->RawThunk);
 
-	mono::exception ex;
-	thunk(&ex);
-	if (ex)
-	{
-		MonoEnv->HandleException(ex);
-	}
+	thunk();
 }
 
 void EntityPoolInterop::OnBookmarkEntitySerialize(TSerialize serialize, void *pVEntity)
 {
 	static PoolBookmarkSyncHandlerThunk thunk =
-		PoolBookmarkSyncHandlerThunk(this->GetMonoClass()->GetFunction("OnBookmarkSyncing", 2)->UnmanagedThunk);
+		PoolBookmarkSyncHandlerThunk(this->GetMonoClass()->GetFunction("OnBookmarkSyncing", 2)->RawThunk);
 
-	mono::exception ex;
-	thunk(*reinterpret_cast<ISerialize **>(&serialize), static_cast<IEntity *>(pVEntity), &ex);
-	if (ex)
-	{
-		MonoEnv->HandleException(ex);
-	}
+	thunk(*reinterpret_cast<ISerialize **>(&serialize), static_cast<IEntity *>(pVEntity));
 }
 
 void EntityPoolInterop::Enable()

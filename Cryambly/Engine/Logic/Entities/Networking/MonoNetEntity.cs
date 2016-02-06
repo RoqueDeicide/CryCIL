@@ -5,6 +5,7 @@ using CryCil.Annotations;
 using CryCil.Engine.Data;
 using CryCil.Engine.Network;
 using CryCil.Engine.Physics;
+using CryCil.RunTime;
 
 namespace CryCil.Engine.Logic
 {
@@ -131,50 +132,78 @@ namespace CryCil.Engine.Logic
 		}
 		#endregion
 		#region Utilities
-		[UnmanagedThunk("Invoked from underlying object to raise the event ClientInitializing.")]
+		[RawThunk("Invoked from underlying object to raise the event ClientInitializing.")]
 		private void OnClientInitializing(ChannelId id)
 		{
-			this.InitializeClient(id);
-
-			for (int i = 0; i < this.Extensions.Count; i++)
+			try
 			{
-				this.Extensions[i].InitializeClient(id);
-			}
+				this.InitializeClient(id);
 
-			if (this.ClientInitializing != null) this.ClientInitializing(this, id);
-		}
-		[UnmanagedThunk("Invoked from underlying object to raise the event ClientInitialized.")]
-		private void OnClientInitialized(ChannelId id)
-		{
-			this.PostInitializeClient(id);
-
-			for (int i = 0; i < this.Extensions.Count; i++)
-			{
-				this.Extensions[i].PostInitializeClient(id);
-			}
-
-			if (this.ClientInitialized != null) this.ClientInitialized(this, id);
-		}
-		[UnmanagedThunk("Invoked from underlying object to invoke SynchronizeWithNetwork method.")]
-		private bool NetSyncInternal(CrySync sync, EntityAspects aspect, byte profile, SnapshotFlags flags)
-		{
-			if (this.SynchronizeWithNetwork(sync, aspect, profile, flags))
-			{
 				for (int i = 0; i < this.Extensions.Count; i++)
 				{
-					if (!this.Extensions[i].SynchronizeWithNetwork(sync, aspect, profile, flags))
+					this.Extensions[i].InitializeClient(id);
+				}
+
+				if (this.ClientInitializing != null) this.ClientInitializing(this, id);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
+		}
+		[RawThunk("Invoked from underlying object to raise the event ClientInitialized.")]
+		private void OnClientInitialized(ChannelId id)
+		{
+			try
+			{
+				this.PostInitializeClient(id);
+
+				for (int i = 0; i < this.Extensions.Count; i++)
+				{
+					this.Extensions[i].PostInitializeClient(id);
+				}
+
+				if (this.ClientInitialized != null) this.ClientInitialized(this, id);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
+		}
+		[RawThunk("Invoked from underlying object to invoke SynchronizeWithNetwork method.")]
+		private bool NetSyncInternal(CrySync sync, EntityAspects aspect, byte profile, SnapshotFlags flags)
+		{
+			try
+			{
+				if (this.SynchronizeWithNetwork(sync, aspect, profile, flags))
+				{
+					for (int i = 0; i < this.Extensions.Count; i++)
 					{
-						return false;
+						if (!this.Extensions[i].SynchronizeWithNetwork(sync, aspect, profile, flags))
+						{
+							return false;
+						}
 					}
 				}
 			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 			return true;
 		}
-		[UnmanagedThunk("Invoked from underlying object to raise either Authorized or Deauthorized events.")]
+		[RawThunk("Invoked from underlying object to raise either Authorized or Deauthorized events.")]
 		private void OnAuthorized(bool gainedAuthority)
 		{
-			NetEntityAuthorizationEventHandler handler = gainedAuthority ? this.Authorized : this.Deauthorized;
-			if (handler != null) handler(this, gainedAuthority);
+			try
+			{
+				var handler = gainedAuthority ? this.Authorized : this.Deauthorized;
+				if (handler != null) handler(this, gainedAuthority);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void SetChannelId(EntityId entityId, ChannelId channelId);

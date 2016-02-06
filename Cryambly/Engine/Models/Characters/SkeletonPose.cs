@@ -5,6 +5,7 @@ using CryCil.Engine.Models.StaticObjects;
 using CryCil.Engine.Physics;
 using CryCil.Engine.Rendering;
 using CryCil.Geometry;
+using CryCil.RunTime;
 
 namespace CryCil.Engine.Models.Characters
 {
@@ -528,15 +529,22 @@ namespace CryCil.Engine.Models.Characters
 		internal static extern Material GetMaterialOnJoint(IntPtr handle, int nId);
 
 		/// <exception cref="Exception">A delegate callback throws an exception.</exception>
-		[UnmanagedThunk("Invoked from underlying framework to invoke the callbacks.")]
+		[RawThunk("Invoked from underlying framework to invoke the callbacks.")]
 		private static void HandleBoneUpdates(ref CharacterBonesUpdateEventHandler handler, Character character)
 		{
-			// We are basically raising an event here.
-			var delegates = handler;
-
-			if (delegates != null)
+			try
 			{
-				delegates(character);
+				// We are basically raising an event here.
+				var delegates = handler;
+
+				if (delegates != null)
+				{
+					delegates(character);
+				}
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
 			}
 		}
 		#endregion

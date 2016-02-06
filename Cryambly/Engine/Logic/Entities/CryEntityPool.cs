@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using CryCil.Engine.Data;
+using CryCil.RunTime;
 using CryCil.Utilities;
 
 namespace CryCil.Engine.Logic
@@ -115,39 +117,81 @@ namespace CryCil.Engine.Logic
 		public static extern bool IsPreparingEntity(out EntityId entityId);
 		#endregion
 		#region Utilities
-		[UnmanagedThunk("Invoked to raise the event PoolBookmarkCreated.")]
-		private static void OnPoolBookmarkCreated(EntityId id, EntitySpawnParameters parameters, IntPtr entitynode)
+		[RawThunk("Invoked to raise the event PoolBookmarkCreated.")]
+		private static void OnPoolBookmarkCreated(EntityId id, ref EntitySpawnParameters parameters, IntPtr entitynode)
 		{
-			PoolBookmarkCreationHandler handler = PoolBookmarkCreated;
-			using (CryXmlNode node = new CryXmlNode(entitynode))
+			try
 			{
-				if (handler != null) handler(id, parameters, node);
+				PoolBookmarkCreationHandler handler = PoolBookmarkCreated;
+				using (CryXmlNode node = new CryXmlNode(entitynode))
+				{
+					if (handler != null) handler(id, parameters, node);
+				}
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
 			}
 		}
-		[UnmanagedThunk("Invoked to raise the event EntityPrepared.")]
+		[RawThunk("Invoked to raise the event EntityPrepared.")]
 		private static void OnEntityPrepared(EntityId id, CryEntity entity)
 		{
-			if (EntityPrepared != null) EntityPrepared(id, entity);
+			try
+			{
+				if (EntityPrepared != null) EntityPrepared(id, entity);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
-		[UnmanagedThunk("Invoked to raise the event EntityReturning.")]
+		[RawThunk("Invoked to raise the event EntityReturning.")]
 		private static void OnEntityReturning(EntityId id, CryEntity entity)
 		{
-			if (EntityReturning != null) EntityReturning(id, entity);
+			try
+			{
+				if (EntityReturning != null) EntityReturning(id, entity);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
-		[UnmanagedThunk("Invoked to raise the event EntityReturned.")]
+		[RawThunk("Invoked to raise the event EntityReturned.")]
 		private static void OnEntityReturned(EntityId id, CryEntity entity)
 		{
-			if (EntityReturned != null) EntityReturned(id, entity);
+			try
+			{
+				if (EntityReturned != null) EntityReturned(id, entity);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
-		[UnmanagedThunk("Invoked to raise the event DefinitionsLoaded.")]
+		[RawThunk("Invoked to raise the event DefinitionsLoaded.")]
 		private static void OnDefinitionsLoaded()
 		{
-			if (DefinitionsLoaded != null) DefinitionsLoaded();
+			try
+			{
+				if (DefinitionsLoaded != null) DefinitionsLoaded();
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
-		[UnmanagedThunk("Invoked to raise the event BookmarkSyncing.")]
+		[RawThunk("Invoked to raise the event BookmarkSyncing.")]
 		private static void OnBookmarkSyncing(CrySync sync, CryEntity entity)
 		{
-			if (BookmarkSyncing != null) BookmarkSyncing(sync, entity);
+			try
+			{
+				if (BookmarkSyncing != null) BookmarkSyncing(sync, entity);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		#endregion
 	}

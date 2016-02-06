@@ -51,15 +51,30 @@ namespace CryCil.Engine.Logic
 			// ReSharper disable once ValueParameterNotUsed
 			set { }
 		}
-		[UnmanagedThunk("Gets RemainingGameTime.")]
+		[RawThunk("Gets RemainingGameTime.")]
 		private float GetRemainingGameTimeInternal()
 		{
-			return this.RemainingGameTime;
+			try
+			{
+				return this.RemainingGameTime;
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+				return 0;
+			}
 		}
-		[UnmanagedThunk("Sets RemainingGameTime.")]
+		[RawThunk("Sets RemainingGameTime.")]
 		private void SetRemainingGameTimeInternal(float value)
 		{
-			this.RemainingGameTime = value;
+			try
+			{
+				this.RemainingGameTime = value;
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// Gets the name of entity class that represents this entity.
@@ -131,8 +146,8 @@ namespace CryCil.Engine.Logic
 		/// <param name="gameRules">Name of the game rule set.</param>
 		/// <param name="alias">    Alias to give to the rule set.</param>
 		/// <exception cref="ArgumentNullException">
-		/// Game rule set name or alias cannot be null. Check <see cref="ArgumentException.ParamName"/>
-		/// to see which one was null.
+		/// Game rule set name or alias cannot be null. Check <see cref="ArgumentException.ParamName"/> to
+		/// see which one was null.
 		/// </exception>
 		public static void AddAlias(string gameRules, string alias)
 		{
@@ -153,8 +168,8 @@ namespace CryCil.Engine.Logic
 		/// <param name="gameRules">Name of the game rule set.</param>
 		/// <param name="path">     Path to levels that support this rule set.</param>
 		/// <exception cref="ArgumentNullException">
-		/// Game rule set name or path cannot be null. Check <see cref="ArgumentException.ParamName"/>
-		/// to see which one was null.
+		/// Game rule set name or path cannot be null. Check <see cref="ArgumentException.ParamName"/> to
+		/// see which one was null.
 		/// </exception>
 		public static void AddLevelLocation(string gameRules, string path)
 		{
@@ -308,10 +323,18 @@ namespace CryCil.Engine.Logic
 				return true;
 			}
 		}
-		[UnmanagedThunk("Invokes ShouldKeepClient.")]
+		[RawThunk("Invokes ShouldKeepClient.")]
 		private bool ShouldKeepClientInternal(int client, DisconnectionCause cause, string description)
 		{
-			return this.ShouldKeepClient(client, cause, description);
+			try
+			{
+				return this.ShouldKeepClient(client, cause, description);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+				return false;
+			}
 		}
 		/// <summary>
 		/// Precaches the resources after loading the level.
@@ -320,20 +343,34 @@ namespace CryCil.Engine.Logic
 		public virtual void PrecacheLevel()
 		{
 		}
-		[UnmanagedThunk("Invokes PrecacheLevel.")]
+		[RawThunk("Invokes PrecacheLevel.")]
 		private void PrecacheLevelInternal()
 		{
-			this.PrecacheLevel();
+			try
+			{
+				this.PrecacheLevel();
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// This method is invoked on a client game when it connects to the server.
 		/// </summary>
 		/// <param name="channel">Network channel that is used to communicate with a server.</param>
 		public abstract void OnConnect(CryNetChannel channel);
-		[UnmanagedThunk("Invokes OnConnect.")]
+		[RawThunk("Invokes OnConnect.")]
 		private void OnConnectInternal(CryNetChannel channel)
 		{
-			this.OnConnect(channel);
+			try
+			{
+				this.OnConnect(channel);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// This method is invoked on a client game when it disconnects from the server.
@@ -343,10 +380,17 @@ namespace CryCil.Engine.Logic
 		/// Description of the cause. Can be used to specify a custom cause.
 		/// </param>
 		public abstract void OnDisconnect(DisconnectionCause cause, string description);
-		[UnmanagedThunk("Invokes OnDisconnect.")]
+		[RawThunk("Invokes OnDisconnect.")]
 		private void OnDisconnectInternal(DisconnectionCause cause, string description)
 		{
-			this.OnDisconnect(cause, description);
+			try
+			{
+				this.OnDisconnect(cause, description);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// This method is invoked when on a server when a client connects to it.
@@ -359,10 +403,17 @@ namespace CryCil.Engine.Logic
 		/// </param>
 		/// <returns>Value that indicates whether client was successfully connected.</returns>
 		public abstract bool OnClientConnect(ChannelId channel, bool isReset);
-		[UnmanagedThunk("Invokes OnClientConnect.")]
+		[RawThunk("Invokes OnClientConnect.")]
 		private void OnClientConnectInternal(int client, bool isReset)
 		{
-			this.OnClientConnect(client, isReset);
+			try
+			{
+				this.OnClientConnect(client, isReset);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// This method is invoked when on a server when a client disconnects from it.
@@ -379,11 +430,18 @@ namespace CryCil.Engine.Logic
 		/// </param>
 		public abstract void OnClientDisconnect(ChannelId channel, DisconnectionCause cause, string description,
 												bool keep);
-		[UnmanagedThunk("Invokes OnClientDisconnect.")]
+		[RawThunk("Invokes OnClientDisconnect.")]
 		private void OnClientDisconnectInternal(ChannelId channel, DisconnectionCause cause, string description,
 												bool keep)
 		{
-			this.OnClientDisconnect(channel, cause, description, keep);
+			try
+			{
+				this.OnClientDisconnect(channel, cause, description, keep);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// This method is invoked when a client enters current game.
@@ -398,10 +456,18 @@ namespace CryCil.Engine.Logic
 		{
 			return true;
 		}
-		[UnmanagedThunk("Invokes OnClientEnteredGame.")]
+		[RawThunk("Invokes OnClientEnteredGame.")]
 		private bool OnClientEnteredGameInternal(int channel, bool isReset)
 		{
-			return this.OnClientEnteredGame(channel, isReset);
+			try
+			{
+				return this.OnClientEnteredGame(channel, isReset);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+				return false;
+			}
 		}
 		/// <summary>
 		/// Notifies this object that the entity has been spawned via a game context.
@@ -414,10 +480,17 @@ namespace CryCil.Engine.Logic
 		public virtual void OnEntitySpawn(CryEntity entity)
 		{
 		}
-		[UnmanagedThunk("Invokes OnEntitySpawn.")]
+		[RawThunk("Invokes OnEntitySpawn.")]
 		private void OnEntitySpawnInternal(CryEntity entity)
 		{
-			this.OnEntitySpawn(entity);
+			try
+			{
+				this.OnEntitySpawn(entity);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// Notifies this object that the entity has been removed via a game context.
@@ -430,10 +503,17 @@ namespace CryCil.Engine.Logic
 		public virtual void OnEntityRemoved(CryEntity entity)
 		{
 		}
-		[UnmanagedThunk("Invokes OnEntityRemoved.")]
+		[RawThunk("Invokes OnEntityRemoved.")]
 		private void OnEntityRemovedInternal(CryEntity entity)
 		{
-			this.OnEntityRemoved(entity);
+			try
+			{
+				this.OnEntityRemoved(entity);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// Notifies this object that the entity has been reused via a game context.
@@ -449,11 +529,18 @@ namespace CryCil.Engine.Logic
 										   EntityId previousId)
 		{
 		}
-		[UnmanagedThunk("Invokes OnEntityRemoved.")]
+		[RawThunk("Invokes OnEntityRemoved.")]
 		private void OnEntityReusedInternal(CryEntity entity, ref EntitySpawnParameters parameters,
 											EntityId previousId)
 		{
-			this.OnEntityReused(entity, ref parameters, previousId);
+			try
+			{
+				this.OnEntityReused(entity, ref parameters, previousId);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// Sends a message to other clients or server.
@@ -471,10 +558,17 @@ namespace CryCil.Engine.Logic
 											ChannelId channel)
 		{
 		}
-		[UnmanagedThunk("Invokes SendTextMessage.")]
+		[RawThunk("Invokes SendTextMessage.")]
 		private void SendTextMessageInternal(TextMessageType type, string message, RmiTarget where, int channel)
 		{
-			this.SendTextMessage(type, message, where, channel);
+			try
+			{
+				this.SendTextMessage(type, message, where, channel);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// Sends a chat message to other clients.
@@ -491,10 +585,18 @@ namespace CryCil.Engine.Logic
 											EntityId target = new EntityId())
 		{
 		}
-		[UnmanagedThunk("Invokes SendTextMessage.")]
-		private void SendChatMessageInternal(ChatMessageType type, EntityId source, EntityId target, string message)
+		[RawThunk("Invokes SendTextMessage.")]
+		private void SendChatMessageInternal(ChatMessageType type, EntityId source, EntityId target,
+											 string message)
 		{
-			this.SendChatMessage(type, source, message, target);
+			try
+			{
+				this.SendChatMessage(type, source, message, target);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// Notifies about a collision between to physical entities that are hosted by CryEngine entities.
@@ -508,10 +610,18 @@ namespace CryCil.Engine.Logic
 		{
 			return true;
 		}
-		[UnmanagedThunk("Invokes OnCollision.")]
+		[RawThunk("Invokes OnCollision.")]
 		private bool OnCollisionInternal(ref GameCollisionInfo info)
 		{
-			return this.OnCollision(ref info);
+			try
+			{
+				return this.OnCollision(ref info);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+				return true;
+			}
 		}
 		/// <summary>
 		/// Invoked when "status" console command is used in a game that doesn't utilize CryTek's
@@ -521,10 +631,17 @@ namespace CryCil.Engine.Logic
 		public virtual void ShowStatus()
 		{
 		}
-		[UnmanagedThunk("Invokes ShowStatus.")]
+		[RawThunk("Invokes ShowStatus.")]
 		private void ShowStatusInternal()
 		{
-			this.ShowStatus();
+			try
+			{
+				this.ShowStatus();
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// Indicates whether this game mode has a time limit.
@@ -535,10 +652,18 @@ namespace CryCil.Engine.Logic
 		{
 			return false;
 		}
-		[UnmanagedThunk("Invokes IsTimeLimited.")]
+		[RawThunk("Invokes IsTimeLimited.")]
 		private bool IsTimeLimitedInternal()
 		{
-			return this.IsTimeLimited();
+			try
+			{
+				return this.IsTimeLimited();
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+				return false;
+			}
 		}
 		#endregion
 		#region Utilities

@@ -15,7 +15,7 @@ IMonoClass *GetGameRulesClass()
 template<typename ThunkType>
 ThunkType GetGameRulesThunk(const char *funcName)
 {
-	ThunkType thunk = GetGameRulesClass()->GetFunction(funcName, -1)->UnmanagedThunk;
+	ThunkType thunk = GetGameRulesClass()->GetFunction(funcName, -1)->RawThunk;
 
 	return thunk;
 }
@@ -23,188 +23,122 @@ ThunkType GetGameRulesThunk(const char *funcName)
 template<const char *methodName, typename ResultType, typename TArg0, typename TArg1, typename TArg2, typename TArg3, typename TArg4>
 ResultType MonoGameRules::CallFunc(TArg0 arg0, TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4) const
 {
-	static ResultType(__stdcall *thunk)(mono::object, TArg0, TArg1, TArg2, TArg3, TArg4, mono::exception *) =
-		reinterpret_cast<ResultType(__stdcall *)(mono::object, TArg0, TArg1, TArg2, TArg3, TArg4, mono::exception *)>
-		(GetGameRulesClass()->GetFunction(methodName, -1)->UnmanagedThunk);
+	static ResultType(*thunk)(mono::object, TArg0, TArg1, TArg2, TArg3, TArg4) =
+		reinterpret_cast<ResultType(*)(mono::object, TArg0, TArg1, TArg2, TArg3, TArg4)>
+		(GetGameRulesClass()->GetFunction(methodName, -1)->RawThunk);
 
-	mono::exception ex;
-	ResultType result = thunk(this->objHandle.Object, arg0, arg1, arg2, arg3, arg4, &ex);
-	if (ex)
-	{
-		MonoEnv->HandleException(ex);
-	}
-	return result;
+	return thunk(this->objHandle.Object, arg0, arg1, arg2, arg3, arg4);
 }
 
 template<const char *methodName, typename ResultType, typename TArg0, typename TArg1, typename TArg2, typename TArg3>
 ResultType MonoGameRules::CallFunc(TArg0 arg0, TArg1 arg1, TArg2 arg2, TArg3 arg3) const
 {
-	static ResultType(__stdcall *thunk)(mono::object, TArg0, TArg1, TArg2, TArg3, mono::exception *) =
-		reinterpret_cast<ResultType(__stdcall *)(mono::object, TArg0, TArg1, TArg2, TArg3, mono::exception *)>
-		(GetGameRulesClass()->GetFunction(methodName, -1)->UnmanagedThunk);
+	static ResultType(*thunk)(mono::object, TArg0, TArg1, TArg2, TArg3) =
+		reinterpret_cast<ResultType(*)(mono::object, TArg0, TArg1, TArg2, TArg3)>
+		(GetGameRulesClass()->GetFunction(methodName, -1)->RawThunk);
 
-	mono::exception ex;
-	ResultType result = thunk(this->objHandle.Object, arg0, arg1, arg2, arg3, &ex);
-	if (ex)
-	{
-		MonoEnv->HandleException(ex);
-	}
-	return result;
+	return thunk(this->objHandle.Object, arg0, arg1, arg2, arg3);
 }
 
 template<const char *methodName, typename ResultType, typename TArg0, typename TArg1, typename TArg2>
 ResultType MonoGameRules::CallFunc(TArg0 arg0, TArg1 arg1, TArg2 arg2) const
 {
-	static ResultType(__stdcall *thunk)(mono::object, TArg0, TArg1, TArg2, mono::exception *) =
-		reinterpret_cast<ResultType(__stdcall *)(mono::object, TArg0, TArg1, TArg2, mono::exception *)>
-		(GetGameRulesClass()->GetFunction(methodName, -1)->UnmanagedThunk);
+	static ResultType(*thunk)(mono::object, TArg0, TArg1, TArg2) =
+		reinterpret_cast<ResultType(*)(mono::object, TArg0, TArg1, TArg2)>
+		(GetGameRulesClass()->GetFunction(methodName, -1)->RawThunk);
 
-	mono::exception ex;
-	ResultType result = thunk(this->objHandle.Object, arg0, arg1, arg2, &ex);
-	if (ex)
-	{
-		MonoEnv->HandleException(ex);
-	}
-	return result;
+	return thunk(this->objHandle.Object, arg0, arg1, arg2);
 }
 
 template<const char *methodName, typename ResultType, typename TArg0, typename TArg1>
 ResultType MonoGameRules::CallFunc(TArg0 arg0, TArg1 arg1) const
 {
-	static ResultType(__stdcall *thunk)(mono::object, TArg0, TArg1, mono::exception *) =
-		reinterpret_cast<ResultType(__stdcall *)(mono::object, TArg0, TArg1, mono::exception *)>
-		(GetGameRulesClass()->GetFunction(methodName, -1)->UnmanagedThunk);
+	static ResultType(*thunk)(mono::object, TArg0, TArg1) =
+		reinterpret_cast<ResultType(*)(mono::object, TArg0, TArg1)>
+		(GetGameRulesClass()->GetFunction(methodName, -1)->RawThunk);
 
-	mono::exception ex;
-	ResultType result = thunk(this->objHandle.Object, arg0, arg1, &ex);
-	if (ex)
-	{
-		MonoEnv->HandleException(ex);
-	}
-	return result;
+	return thunk(this->objHandle.Object, arg0, arg1);
 }
 
 template<const char *methodName, typename ResultType, typename TArg0>
 ResultType MonoGameRules::CallFunc(TArg0 arg0) const
 {
-	static ResultType(__stdcall *thunk)(mono::object, TArg0, mono::exception *) =
-		reinterpret_cast<ResultType(__stdcall *)(mono::object, TArg0, mono::exception *)>
-		(GetGameRulesClass()->GetFunction(methodName, -1)->UnmanagedThunk);
+	static ResultType(*thunk)(mono::object, TArg0) =
+		reinterpret_cast<ResultType(*)(mono::object, TArg0)>
+		(GetGameRulesClass()->GetFunction(methodName, -1)->RawThunk);
 
-	mono::exception ex;
-	ResultType result = thunk(this->objHandle.Object, arg0, &ex);
-	if (ex)
-	{
-		MonoEnv->HandleException(ex);
-	}
-	return result;
+	return thunk(this->objHandle.Object, arg0);
 }
 
 template<const char *methodName, typename ResultType>
 ResultType MonoGameRules::CallFunc() const
 {
-	static ResultType(__stdcall *thunk)(mono::object, mono::exception *) =
-		reinterpret_cast<ResultType(__stdcall *)(mono::object, mono::exception *)>
-		(GetGameRulesClass()->GetFunction(methodName, -1)->UnmanagedThunk);
+	static ResultType(*thunk)(mono::object) =
+		reinterpret_cast<ResultType(*)(mono::object)>
+		(GetGameRulesClass()->GetFunction(methodName, -1)->RawThunk);
 
-	mono::exception ex;
-	ResultType result = thunk(this->objHandle.Object, &ex);
-	if (ex)
-	{
-		MonoEnv->HandleException(ex);
-	}
-	return result;
+	return thunk(this->objHandle.Object);
 }
 
 
 template<const char *methodName, typename TArg0, typename TArg1, typename TArg2, typename TArg3, typename TArg4>
 void MonoGameRules::CallProc(TArg0 arg0, TArg1 arg1, TArg2 arg2, TArg3 arg3, TArg4 arg4) const
 {
-	static void(__stdcall *thunk)(mono::object, TArg0, TArg1, TArg2, TArg3, TArg4, mono::exception *) =
-		reinterpret_cast<void(__stdcall *)(mono::object, TArg0, TArg1, TArg2, TArg3, TArg4, mono::exception *)>
-		(GetGameRulesClass()->GetFunction(methodName, -1)->UnmanagedThunk);
+	static void(*thunk)(mono::object, TArg0, TArg1, TArg2, TArg3, TArg4) =
+		reinterpret_cast<void(*)(mono::object, TArg0, TArg1, TArg2, TArg3, TArg4)>
+		(GetGameRulesClass()->GetFunction(methodName, -1)->RawThunk);
 
-	mono::exception ex;
-	thunk(this->objHandle.Object, arg0, arg1, arg2, arg3, arg4, &ex);
-	if (ex)
-	{
-		MonoEnv->HandleException(ex);
-	}
+	thunk(this->objHandle.Object, arg0, arg1, arg2, arg3, arg4);
 }
 
 template<const char *methodName, typename TArg0, typename TArg1, typename TArg2, typename TArg3>
 void MonoGameRules::CallProc(TArg0 arg0, TArg1 arg1, TArg2 arg2, TArg3 arg3) const
 {
-	static void(__stdcall *thunk)(mono::object, TArg0, TArg1, TArg2, TArg3, mono::exception *) =
-		reinterpret_cast<void(__stdcall *)(mono::object, TArg0, TArg1, TArg2, TArg3, mono::exception *)>
-		(GetGameRulesClass()->GetFunction(methodName, -1)->UnmanagedThunk);
+	static void(*thunk)(mono::object, TArg0, TArg1, TArg2, TArg3) =
+		reinterpret_cast<void(*)(mono::object, TArg0, TArg1, TArg2, TArg3)>
+		(GetGameRulesClass()->GetFunction(methodName, -1)->RawThunk);
 
-	mono::exception ex;
-	thunk(this->objHandle.Object, arg0, arg1, arg2, arg3, &ex);
-	if (ex)
-	{
-		MonoEnv->HandleException(ex);
-	}
+	thunk(this->objHandle.Object, arg0, arg1, arg2, arg3);
 }
 
 template<const char *methodName, typename TArg0, typename TArg1, typename TArg2>
 void MonoGameRules::CallProc(TArg0 arg0, TArg1 arg1, TArg2 arg2) const
 {
-	static void(__stdcall *thunk)(mono::object, TArg0, TArg1, TArg2, mono::exception *) =
-		reinterpret_cast<void(__stdcall *)(mono::object, TArg0, TArg1, TArg2, mono::exception *)>
-		(GetGameRulesClass()->GetFunction(methodName, -1)->UnmanagedThunk);
+	static void(*thunk)(mono::object, TArg0, TArg1, TArg2) =
+		reinterpret_cast<void(*)(mono::object, TArg0, TArg1, TArg2)>
+		(GetGameRulesClass()->GetFunction(methodName, -1)->RawThunk);
 
-	mono::exception ex;
-	thunk(this->objHandle.Object, arg0, arg1, arg2, &ex);
-	if (ex)
-	{
-		MonoEnv->HandleException(ex);
-	}
+	thunk(this->objHandle.Object, arg0, arg1, arg2);
 }
 
 template<const char *methodName, typename TArg0, typename TArg1>
 void MonoGameRules::CallProc(TArg0 arg0, TArg1 arg1) const
 {
-	static void(__stdcall *thunk)(mono::object, TArg0, TArg1, mono::exception *) =
-		reinterpret_cast<void(__stdcall *)(mono::object, TArg0, TArg1, mono::exception *)>
-		(GetGameRulesClass()->GetFunction(methodName, -1)->UnmanagedThunk);
+	static void(*thunk)(mono::object, TArg0, TArg1) =
+		reinterpret_cast<void(*)(mono::object, TArg0, TArg1)>
+		(GetGameRulesClass()->GetFunction(methodName, -1)->RawThunk);
 
-	mono::exception ex;
-	thunk(this->objHandle.Object, arg0, arg1, &ex);
-	if (ex)
-	{
-		MonoEnv->HandleException(ex);
-	}
+	thunk(this->objHandle.Object, arg0, arg1);
 }
 
 template<const char *methodName, typename TArg0>
 void MonoGameRules::CallProc(TArg0 arg0) const
 {
-	static void(__stdcall *thunk)(mono::object, TArg0, mono::exception *) =
-		reinterpret_cast<void(__stdcall *)(mono::object, TArg0, mono::exception *)>
-		(GetGameRulesClass()->GetFunction(methodName, -1)->UnmanagedThunk);
+	static void(*thunk)(mono::object, TArg0) =
+		reinterpret_cast<void(*)(mono::object, TArg0)>
+		(GetGameRulesClass()->GetFunction(methodName, -1)->RawThunk);
 
-	mono::exception ex;
-	thunk(this->objHandle.Object, arg0, &ex);
-	if (ex)
-	{
-		MonoEnv->HandleException(ex);
-	}
+	thunk(this->objHandle.Object, arg0);
 }
 
 template<const char *methodName>
 void MonoGameRules::CallProc() const
 {
-	static void(__stdcall *thunk)(mono::object, mono::exception *) =
-		reinterpret_cast<void(__stdcall *)(mono::object, mono::exception *)>
-		(GetGameRulesClass()->GetFunction(methodName, -1)->UnmanagedThunk);
+	static void(*thunk)(mono::object) =
+		reinterpret_cast<void(*)(mono::object)>
+		(GetGameRulesClass()->GetFunction(methodName, -1)->RawThunk);
 
-	mono::exception ex;
-	thunk(this->objHandle.Object, &ex);
-	if (ex)
-	{
-		MonoEnv->HandleException(ex);
-	}
+	thunk(this->objHandle.Object);
 }
 
 #pragma endregion
@@ -218,19 +152,14 @@ MonoGameRules::MonoGameRules()
 MonoGameRules::~MonoGameRules()
 {
 	static DisposeMonoEntityThunk thunk =
-		DisposeMonoEntityThunk(GetGameRulesClass()->GetFunction("DisposeInternal", -1)->UnmanagedThunk);
+		DisposeMonoEntityThunk(GetGameRulesClass()->GetFunction("DisposeInternal", -1)->RawThunk);
 
 	if (!this->objHandle.IsValid)
 	{
 		return;
 	}
 	// Release the abstraction layer.
-	mono::exception ex;
-	thunk(&ex);
-	if (ex)
-	{
-		MonoEnv->HandleException(ex);
-	}
+	thunk();
 
 	MonoEnv->CryAction->GetIGameRulesSystem()->SetCurrentGameRules(nullptr);
 }
@@ -365,9 +294,9 @@ void MonoGameRules::SetRemainingGameTime(float seconds)
 bool MonoGameRules::Init(IGameObject *pGameObject)
 {
 	static CreateAbstractionLayerThunk create =
-		CreateAbstractionLayerThunk(GetGameRulesClass()->GetFunction("CreateAbstractionLayer")->UnmanagedThunk);
+		CreateAbstractionLayerThunk(GetGameRulesClass()->GetFunction("CreateAbstractionLayer")->RawThunk);
 	static RaiseOnInitThunk raise =
-		RaiseOnInitThunk(GetGameRulesClass()->GetEvent("Initializing")->GetRaise()->UnmanagedThunk);
+		RaiseOnInitThunk(GetGameRulesClass()->GetEvent("Initializing")->GetRaise()->RawThunk);
 
 	this->SetGameObject(pGameObject);
 
@@ -375,20 +304,14 @@ bool MonoGameRules::Init(IGameObject *pGameObject)
 	IEntityClass *entityClass = entity->GetClass();
 	EntityId entityId = entity->GetId();
 	// Create the abstraction layer.
-	mono::exception ex;
-	mono::object obj = create(ToMonoString(entityClass->GetName()), entityId, entity, &ex);
+	mono::object obj = create(ToMonoString(entityClass->GetName()), entityId, entity);
 	if (!obj)
 	{
 		return false;
 	}
 	this->objHandle = MonoEnv->GC->Keep(obj);
 
-	raise(this->objHandle.Object, &ex);
-	if (ex)
-	{
-		MonoEnv->HandleException(ex);
-		return false;
-	}
+	raise(this->objHandle.Object);
 
 	return pGameObject->BindToNetwork();
 }
@@ -396,12 +319,11 @@ bool MonoGameRules::Init(IGameObject *pGameObject)
 void MonoGameRules::PostInit(IGameObject *)
 {
 	static RaiseOnInitThunk raise =
-		RaiseOnInitThunk(GetGameRulesClass()->GetEvent("Initialized")->GetRaise()->UnmanagedThunk);
+		RaiseOnInitThunk(GetGameRulesClass()->GetEvent("Initialized")->GetRaise()->RawThunk);
 
 	if (this->objHandle.IsValid)
 	{
-		mono::exception ex;
-		raise(this->objHandle.Object, &ex);
+		raise(this->objHandle.Object);
 	}
 }
 
@@ -434,45 +356,28 @@ void MonoGameRules::ProcessEvent(SEntityEvent& _event)
 void MonoGameRules::InitClient(int channelId)
 {
 	static ClientInitRaiseThunk thunk =
-		ClientInitRaiseThunk(GetGameRulesClass()->GetEvent("ClientInitializing")->Raise->UnmanagedThunk);
+		ClientInitRaiseThunk(GetGameRulesClass()->GetEvent("ClientInitializing")->Raise->RawThunk);
 
-	mono::exception ex;
-	thunk(this->objHandle.Object, channelId, &ex);
-	if (ex)
-	{
-		MonoEnv->HandleException(ex);
-	}
+	thunk(this->objHandle.Object, channelId);
 }
 
 void MonoGameRules::PostInitClient(int channelId)
 {
 	static ClientInitRaiseThunk thunk =
-		ClientInitRaiseThunk(GetGameRulesClass()->GetEvent("ClientInitialized")->Raise->UnmanagedThunk);
+		ClientInitRaiseThunk(GetGameRulesClass()->GetEvent("ClientInitialized")->Raise->RawThunk);
 
-	mono::exception ex;
-	thunk(this->objHandle.Object, channelId, &ex);
-	if (ex)
-	{
-		MonoEnv->HandleException(ex);
-	}
+	thunk(this->objHandle.Object, channelId);
 }
 
 bool MonoGameRules::ReloadExtension(IGameObject *, const SEntitySpawnParams &params)
 {
 	static ReloadEventThunk thunk =
-		ReloadEventThunk(GetGameRulesClass()->GetEvent("Reloading")->GetRaise()->UnmanagedThunk);
+		ReloadEventThunk(GetGameRulesClass()->GetEvent("Reloading")->GetRaise()->RawThunk);
 
 	if (mono::object obj = this->objHandle.Object)
 	{
 		MonoEntitySpawnParams parameters(params);
-		mono::exception ex;
-		bool success = thunk(obj, &parameters, &ex);
-		if (ex)
-		{
-			MonoEnv->HandleException(ex);
-			return false;
-		}
-		return success;
+		return thunk(obj, &parameters);
 	}
 	return false;
 }
@@ -480,35 +385,23 @@ bool MonoGameRules::ReloadExtension(IGameObject *, const SEntitySpawnParams &par
 void MonoGameRules::PostReloadExtension(IGameObject *, const SEntitySpawnParams &params)
 {
 	static ReloadedEventThunk thunk =
-		ReloadedEventThunk(GetGameRulesClass()->GetEvent("Reloaded")->GetRaise()->UnmanagedThunk);
+		ReloadedEventThunk(GetGameRulesClass()->GetEvent("Reloaded")->GetRaise()->RawThunk);
 
 	if (mono::object obj = this->objHandle.Object)
 	{
 		MonoEntitySpawnParams parameters(params);
-		mono::exception ex;
-		thunk(obj, &parameters, &ex);
-		if (ex)
-		{
-			MonoEnv->HandleException(ex);
-		}
+		thunk(obj, &parameters);
 	}
 }
 
 bool MonoGameRules::GetEntityPoolSignature(TSerialize signature)
 {
 	static GetSignatureThunk thunk =
-		GetSignatureThunk(GetGameRulesClass()->GetFunction("GetSignature", -1)->UnmanagedThunk);
+		GetSignatureThunk(GetGameRulesClass()->GetFunction("GetSignature", -1)->RawThunk);
 
 	if (mono::object obj = this->objHandle.Object)
 	{
-		mono::exception ex;
-		bool result = thunk(obj, *reinterpret_cast<ISerialize **>(&signature), &ex);
-		if (ex)
-		{
-			MonoEnv->HandleException(ex);
-			return false;
-		}
-		return result;
+		return thunk(obj, *reinterpret_cast<ISerialize **>(&signature));
 	}
 	return false;
 }
@@ -516,18 +409,13 @@ bool MonoGameRules::GetEntityPoolSignature(TSerialize signature)
 void MonoGameRules::FullSerialize(TSerialize ser)
 {
 	static SyncInternalThunk thunk =
-		SyncInternalThunk(GetGameRulesClass()->GetFunction("SyncInternal", -1)->UnmanagedThunk);
+		SyncInternalThunk(GetGameRulesClass()->GetFunction("SyncInternal", -1)->RawThunk);
 
 	if (mono::object obj = this->objHandle.Object)
 	{
 		ser.BeginGroup("AbstractionLayer");
 
-		mono::exception ex;
-		thunk(obj, *reinterpret_cast<ISerialize **>(&ser), &ex);
-		if (ex)
-		{
-			MonoEnv->HandleException(ex);
-		}
+		thunk(obj, *reinterpret_cast<ISerialize **>(&ser));
 
 		ser.EndGroup();
 	}
@@ -536,18 +424,11 @@ void MonoGameRules::FullSerialize(TSerialize ser)
 bool MonoGameRules::NetSerialize(TSerialize ser, EEntityAspects aspect, uint8 profile, int flags)
 {
 	static NetSyncInternalThunk thunk =
-		NetSyncInternalThunk(GetGameRulesClass()->GetFunction("NetSyncInternal", -1)->UnmanagedThunk);
+		NetSyncInternalThunk(GetGameRulesClass()->GetFunction("NetSyncInternal", -1)->RawThunk);
 
 	if (mono::object obj = this->objHandle.Object)
 	{
-		mono::exception ex;
-		bool result = thunk(obj, *reinterpret_cast<ISerialize **>(&ser), aspect, profile, flags, &ex);
-		if (ex)
-		{
-			MonoEnv->HandleException(ex);
-			return false;
-		}
-		return result;
+		return thunk(obj, *reinterpret_cast<ISerialize **>(&ser), aspect, profile, flags);
 	}
 	return false;
 }
@@ -555,16 +436,11 @@ bool MonoGameRules::NetSerialize(TSerialize ser, EEntityAspects aspect, uint8 pr
 void MonoGameRules::Update(SEntityUpdateContext& ctx, int)
 {
 	static UpdateEntityThunk update =
-		UpdateEntityThunk(GetGameRulesClass()->GetFunction("UpdateInternal")->UnmanagedThunk);
+		UpdateEntityThunk(GetGameRulesClass()->GetFunction("UpdateInternal")->RawThunk);
 
 	if (mono::object o = this->objHandle.Object)
 	{
-		mono::exception ex;
-		update(o, ctx, &ex);
-		if (ex)
-		{
-			MonoEnv->HandleException(ex);
-		}
+		update(o, ctx);
 	}
 }
 
@@ -581,31 +457,21 @@ void MonoGameRules::SetChannelId(uint16 id)
 void MonoGameRules::SetAuthority(bool auth)
 {
 	static OnAuthorizedEntityThunk update =
-		OnAuthorizedEntityThunk(GetGameRulesClass()->GetEvent("Authorized")->Raise->UnmanagedThunk);
+		OnAuthorizedEntityThunk(GetGameRulesClass()->GetEvent("Authorized")->Raise->RawThunk);
 
 	if (mono::object o = this->objHandle.Object)
 	{
-		mono::exception ex;
-		update(o, auth, &ex);
-		if (ex)
-		{
-			MonoEnv->HandleException(ex);
-		}
+		update(o, auth);
 	}
 }
 
 void MonoGameRules::PostUpdate(float)
 {
 	static PostUpdateEntityThunk update =
-		PostUpdateEntityThunk(GetGameRulesClass()->GetFunction("PostUpdateInternal")->UnmanagedThunk);
+		PostUpdateEntityThunk(GetGameRulesClass()->GetFunction("PostUpdateInternal")->RawThunk);
 
 	if (mono::object o = this->objHandle.Object)
 	{
-		mono::exception ex;
-		update(o, &ex);
-		if (ex)
-		{
-			MonoEnv->HandleException(ex);
-		}
+		update(o);
 	}
 }

@@ -4,8 +4,6 @@
 
 struct MonoFunctions : public IMonoFunctions
 {
-
-
 	virtual IMonoClass *GetDeclaringClass(_MonoMethod *method) override;
 	virtual const char *GetName(_MonoMethod *method) override;
 

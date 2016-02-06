@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using CryCil.RunTime;
 
 namespace CryCil.Engine.Input
 {
@@ -296,81 +298,149 @@ namespace CryCil.Engine.Input
 		public static extern bool Connected(ushort index);
 		#endregion
 		#region Utilities
-		[UnmanagedThunk("Invoked by underlying framework to raise Button event.")]
+		[RawThunk("Invoked by underlying framework to raise Button event.")]
 		private static void OnButton(uint input, byte deviceIndex, bool pressed, out bool blocked)
 		{
-			blocked = InputEventPropagator.Post(buttonHandlers, (InputId)input, deviceIndex, pressed);
+			try
+			{
+				blocked = InputEventPropagator.Post(buttonHandlers, (InputId)input, deviceIndex, pressed);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+				blocked = false;
+			}
 		}
-		[UnmanagedThunk("Invoked by underlying framework to raise LeftTrigger event.")]
+		[RawThunk("Invoked by underlying framework to raise LeftTrigger event.")]
 		private static void OnLeftTrigger(uint input, byte deviceIndex, int state, float value, out bool blocked)
 		{
-			blocked = InputEventPropagator.Post(leftTriggerHandlers, (InputId)input, deviceIndex, (InputState)state, value);
+			try
+			{
+				blocked = InputEventPropagator.Post(leftTriggerHandlers, (InputId)input, deviceIndex,
+													(InputState)state, value);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+				blocked = false;
+			}
 		}
-		[UnmanagedThunk("Invoked by underlying framework to raise RightTrigger event.")]
+		[RawThunk("Invoked by underlying framework to raise RightTrigger event.")]
 		private static void OnRightTrigger(uint input, byte deviceIndex, int state, float value, out bool blocked)
 		{
-			blocked = InputEventPropagator.Post(rightTriggerHandlers, (InputId)input, deviceIndex, (InputState)state, value);
+			try
+			{
+				blocked = InputEventPropagator.Post(rightTriggerHandlers, (InputId)input, deviceIndex,
+													(InputState)state, value);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+				blocked = false;
+			}
 		}
-		[UnmanagedThunk("Invoked by underlying framework to raise LeftThumbX event.")]
+		[RawThunk("Invoked by underlying framework to raise LeftThumbX event.")]
 		private static void OnLeftThumbX(int state, byte deviceIndex, float value, out bool blocked)
 		{
-			blocked = InputEventPropagator.Post(leftThumbXHandlers, InputId.XboxThumbLeftX, deviceIndex, (InputState)state, value);
+			try
+			{
+				blocked = InputEventPropagator.Post(leftThumbXHandlers, InputId.XboxThumbLeftX, deviceIndex,
+													(InputState)state, value);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+				blocked = false;
+			}
 		}
-		[UnmanagedThunk("Invoked by underlying framework to raise LeftThumbY event.")]
+		[RawThunk("Invoked by underlying framework to raise LeftThumbY event.")]
 		private static void OnLeftThumbY(int state, byte deviceIndex, float value, out bool blocked)
 		{
-			blocked = InputEventPropagator.Post(leftThumbYHandlers, InputId.XboxThumbLeftY, deviceIndex, (InputState)state, value);
+			try
+			{
+				blocked = InputEventPropagator.Post(leftThumbYHandlers, InputId.XboxThumbLeftY, deviceIndex,
+													(InputState)state, value);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+				blocked = false;
+			}
 		}
-		[UnmanagedThunk("Invoked by underlying framework to raise RightThumbX event.")]
+		[RawThunk("Invoked by underlying framework to raise RightThumbX event.")]
 		private static void OnRightThumbX(int state, byte deviceIndex, float value, out bool blocked)
 		{
-			blocked = InputEventPropagator.Post(rightThumbXHandlers, InputId.XboxThumbRightY, deviceIndex, (InputState)state,
-												value);
+			try
+			{
+				blocked = InputEventPropagator.Post(rightThumbXHandlers, InputId.XboxThumbRightY, deviceIndex,
+													(InputState)state, value);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+				blocked = false;
+			}
 		}
-		[UnmanagedThunk("Invoked by underlying framework to raise RightThumbY event.")]
+		[RawThunk("Invoked by underlying framework to raise RightThumbY event.")]
 		private static void OnRightThumbY(int state, byte deviceIndex, float value, out bool blocked)
 		{
-			blocked = InputEventPropagator.Post(rightThumbYHandlers, InputId.XboxThumbRightY, deviceIndex, (InputState)state,
-												value);
+			try
+			{
+				blocked = InputEventPropagator.Post(rightThumbYHandlers, InputId.XboxThumbRightY, deviceIndex,
+													(InputState)state, value);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+				blocked = false;
+			}
 		}
-		[UnmanagedThunk("Invoked by underlying framework to raise on the directional analog stick events.")]
+		[RawThunk("Invoked by underlying framework to raise on the directional analog stick events.")]
 		private static void OnThumbDirection(uint id, byte deviceIndex, bool pressed, out bool blocked)
 		{
-			List<GamepadKeyInputHandler> handlers;
-
-			InputId input = (InputId)id;
-			switch (input)
+			try
 			{
-				case InputId.XboxThumbLeftUp:
-					handlers = leftThumbUpHandlers;
-					break;
-				case InputId.XboxThumbLeftDown:
-					handlers = leftThumbDownHandlers;
-					break;
-				case InputId.XboxThumbLeftLeft:
-					handlers = leftThumbLeftHandlers;
-					break;
-				case InputId.XboxThumbLeftRight:
-					handlers = leftThumbRightHandlers;
-					break;
-				case InputId.XboxThumbRightUp:
-					handlers = rightThumbUpHandlers;
-					break;
-				case InputId.XboxThumbRightDown:
-					handlers = rightThumbDownHandlers;
-					break;
-				case InputId.XboxThumbRightLeft:
-					handlers = rightThumbLeftHandlers;
-					break;
-				case InputId.XboxThumbRightRight:
-					handlers = rightThumbRightHandlers;
-					break;
-				default:
-					blocked = false;
-					return;
-			}
+				List<GamepadKeyInputHandler> handlers;
 
-			blocked = InputEventPropagator.Post(handlers, input, deviceIndex, pressed);
+				InputId input = (InputId)id;
+				switch (input)
+				{
+					case InputId.XboxThumbLeftUp:
+						handlers = leftThumbUpHandlers;
+						break;
+					case InputId.XboxThumbLeftDown:
+						handlers = leftThumbDownHandlers;
+						break;
+					case InputId.XboxThumbLeftLeft:
+						handlers = leftThumbLeftHandlers;
+						break;
+					case InputId.XboxThumbLeftRight:
+						handlers = leftThumbRightHandlers;
+						break;
+					case InputId.XboxThumbRightUp:
+						handlers = rightThumbUpHandlers;
+						break;
+					case InputId.XboxThumbRightDown:
+						handlers = rightThumbDownHandlers;
+						break;
+					case InputId.XboxThumbRightLeft:
+						handlers = rightThumbLeftHandlers;
+						break;
+					case InputId.XboxThumbRightRight:
+						handlers = rightThumbRightHandlers;
+						break;
+					default:
+						blocked = false;
+						return;
+				}
+
+				blocked = InputEventPropagator.Post(handlers, input, deviceIndex, pressed);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+				blocked = false;
+			}
 		}
 		#endregion
 	}

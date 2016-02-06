@@ -29,27 +29,22 @@ MonoEntityExtension::MonoEntityExtension()
 MonoEntityExtension::~MonoEntityExtension()
 {
 	static DisposeMonoEntityThunk thunk =
-		DisposeMonoEntityThunk(GetMonoEntityClass()->GetFunction("DisposeInternal", -1)->UnmanagedThunk);
+		DisposeMonoEntityThunk(GetMonoEntityClass()->GetFunction("DisposeInternal", -1)->RawThunk);
 
 	if (!this->objHandle.IsValid)
 	{
 		return;
 	}
 	// Release the abstraction layer.
-	mono::exception ex;
-	thunk(&ex);
-	if (ex)
-	{
-		MonoEnv->HandleException(ex);
-	}
+	thunk();
 }
 
 bool MonoEntityExtension::Init(IGameObject* pGameObject)
 {
 	static CreateAbstractionLayerThunk create =
-		CreateAbstractionLayerThunk(GetMonoEntityClass()->GetFunction("CreateAbstractionLayer", -1)->UnmanagedThunk);
+		CreateAbstractionLayerThunk(GetMonoEntityClass()->GetFunction("CreateAbstractionLayer", -1)->RawThunk);
 	static RaiseOnInitThunk raise =
-		RaiseOnInitThunk(GetMonoEntityClass()->GetEvent("Initializing")->GetRaise()->UnmanagedThunk);
+		RaiseOnInitThunk(GetMonoEntityClass()->GetEvent("Initializing")->GetRaise()->RawThunk);
 
 	this->SetGameObject(pGameObject);
 
@@ -57,8 +52,7 @@ bool MonoEntityExtension::Init(IGameObject* pGameObject)
 	IEntityClass *entityClass = entity->GetClass();
 	EntityId entityId         = entity->GetId();
 	// Create the abstraction layer.
-	mono::exception ex;
-	mono::object obj = create(ToMonoString(entityClass->GetName()), entityId, entity, &ex);
+	mono::object obj = create(ToMonoString(entityClass->GetName()), entityId, entity);
 	if (!obj)
 	{
 		return false;
@@ -78,12 +72,7 @@ bool MonoEntityExtension::Init(IGameObject* pGameObject)
 		this->SetPropertyValue(prop.index, prop.value);
 	}
 
-	raise(this->objHandle.Object, &ex);
-	if (ex)
-	{
-		MonoEnv->HandleException(ex);
-		return false;
-	}
+	raise(this->objHandle.Object);
 
 	return this->networking ? pGameObject->BindToNetwork() : true;
 }
@@ -91,12 +80,11 @@ bool MonoEntityExtension::Init(IGameObject* pGameObject)
 void MonoEntityExtension::PostInit(IGameObject*)
 {
 	static RaiseOnInitThunk raise =
-		RaiseOnInitThunk(GetMonoEntityClass()->GetEvent("Initialized")->GetRaise()->UnmanagedThunk);
+		RaiseOnInitThunk(GetMonoEntityClass()->GetEvent("Initialized")->GetRaise()->RawThunk);
 
 	if (this->objHandle.IsValid)
 	{
-		mono::exception ex;
-		raise(this->objHandle.Object, &ex);
+		raise(this->objHandle.Object);
 	}
 }
 
@@ -104,122 +92,87 @@ void MonoEntityExtension::PostInit(IGameObject*)
 template<const char *eventName>
 void MonoEntityExtension::raiseEntityEvent()
 {
-	static void(__stdcall *raise)(mono::object, mono::exception *) =
-		reinterpret_cast<void(__stdcall *)(mono::object, mono::exception *)>
-		(GetMonoEntityClass()->GetEvent(eventName)->Raise->UnmanagedThunk);
+	static void(*raise)(mono::object) =
+		reinterpret_cast<void(*)(mono::object)>
+		(GetMonoEntityClass()->GetEvent(eventName)->Raise->RawThunk);
 
 	if (mono::object obj = this->MonoWrapper)
 	{
-		mono::exception ex;
-		raise(obj, &ex);
-		if (ex)
-		{
-			MonoEnv->HandleException(ex);
-		}
+		raise(obj);
 	}
 }
 template<const char *eventName, typename arg0Type>
 void MonoEntityExtension::raiseEntityEvent(arg0Type arg0)
 {
-	static void(__stdcall *raise)(mono::object, arg0Type, mono::exception *) =
-		reinterpret_cast<void(__stdcall *)(mono::object, arg0Type, mono::exception *)>
-		(GetMonoEntityClass()->GetEvent(eventName)->Raise->UnmanagedThunk);
+	static void(*raise)(mono::object, arg0Type) =
+		reinterpret_cast<void(*)(mono::object, arg0Type)>
+		(GetMonoEntityClass()->GetEvent(eventName)->Raise->RawThunk);
 
 	if (mono::object obj = this->MonoWrapper)
 	{
-		mono::exception ex;
-		raise(obj, arg0, &ex);
-		if (ex)
-		{
-			MonoEnv->HandleException(ex);
-		}
+		raise(obj, arg0);
 	}
 }
 template<const char *eventName, typename arg0Type, typename arg1Type>
 void MonoEntityExtension::raiseEntityEvent(arg0Type arg0, arg1Type arg1)
 {
-	static void(__stdcall *raise)(mono::object, arg0Type, arg1Type, mono::exception *) =
-		reinterpret_cast<void(__stdcall *)(mono::object, arg0Type, arg1Type, mono::exception *)>
-		(GetMonoEntityClass()->GetEvent(eventName)->Raise->UnmanagedThunk);
+	static void(*raise)(mono::object, arg0Type, arg1Type) =
+		reinterpret_cast<void(*)(mono::object, arg0Type, arg1Type)>
+		(GetMonoEntityClass()->GetEvent(eventName)->Raise->RawThunk);
 
 	if (mono::object obj = this->MonoWrapper)
 	{
-		mono::exception ex;
-		raise(obj, arg0, arg1, &ex);
-		if (ex)
-		{
-			MonoEnv->HandleException(ex);
-		}
+		raise(obj, arg0, arg1);
 	}
 }
 template<const char *eventName, typename arg0Type, typename arg1Type, typename arg2Type>
 void MonoEntityExtension::raiseEntityEvent(arg0Type arg0, arg1Type arg1, arg2Type arg2)
 {
-	static void(__stdcall *raise)(mono::object, arg0Type, arg1Type, arg2Type, mono::exception *) =
-		reinterpret_cast<void(__stdcall *)(mono::object, arg0Type, arg1Type, arg2Type, mono::exception *)>
-		(GetMonoEntityClass()->GetEvent(eventName)->Raise->UnmanagedThunk);
+	static void(*raise)(mono::object, arg0Type, arg1Type, arg2Type) =
+		reinterpret_cast<void(*)(mono::object, arg0Type, arg1Type, arg2Type)>
+		(GetMonoEntityClass()->GetEvent(eventName)->Raise->RawThunk);
 
 	if (mono::object obj = this->MonoWrapper)
 	{
-		mono::exception ex;
-		raise(obj, arg0, arg1, arg2, &ex);
-		if (ex)
-		{
-			MonoEnv->HandleException(ex);
-		}
+		raise(obj, arg0, arg1, arg2);
 	}
 }
 template<const char *eventName, typename arg0Type, typename arg1Type, typename arg2Type, typename arg3Type>
 void MonoEntityExtension::raiseEntityEvent(arg0Type arg0, arg1Type arg1, arg2Type arg2, arg3Type arg3)
 {
-	static void(__stdcall *raise)(mono::object, arg0Type, arg1Type, arg2Type, arg3Type, mono::exception *) =
-		reinterpret_cast<void(__stdcall *)(mono::object, arg0Type, arg1Type, arg2Type, arg3Type, mono::exception *)>
-		(GetMonoEntityClass()->GetEvent(eventName)->Raise->UnmanagedThunk);
+	static void(*raise)(mono::object, arg0Type, arg1Type, arg2Type, arg3Type) =
+		reinterpret_cast<void(*)(mono::object, arg0Type, arg1Type, arg2Type, arg3Type)>
+		(GetMonoEntityClass()->GetEvent(eventName)->Raise->RawThunk);
 
 	if (mono::object obj = this->MonoWrapper)
 	{
-		mono::exception ex;
-		raise(obj, arg0, arg1, arg2, arg3, &ex);
-		if (ex)
-		{
-			MonoEnv->HandleException(ex);
-		}
+		raise(obj, arg0, arg1, arg2, arg3);
 	}
 }
 template<const char *eventName, typename arg0Type, typename arg1Type, typename arg2Type, typename arg3Type, typename arg4Type>
 void MonoEntityExtension::raiseEntityEvent(arg0Type arg0, arg1Type arg1, arg2Type arg2, arg3Type arg3, arg4Type arg4)
 {
-	static void(__stdcall *raise)(mono::object, arg0Type, arg1Type, arg2Type, arg3Type, arg4Type, mono::exception *) =
-		reinterpret_cast<void(__stdcall *)
-		(mono::object, arg0Type, arg1Type, arg2Type, arg3Type, arg4Type, mono::exception *)>
-		(GetMonoEntityClass()->GetEvent(eventName)->Raise->UnmanagedThunk);
+	static void(*raise)(mono::object, arg0Type, arg1Type, arg2Type, arg3Type, arg4Type) =
+		reinterpret_cast<void(*)
+		(mono::object, arg0Type, arg1Type, arg2Type, arg3Type, arg4Type)>
+		(GetMonoEntityClass()->GetEvent(eventName)->Raise->RawThunk);
 
 	if (mono::object obj = this->MonoWrapper)
 	{
-		mono::exception ex;
-		raise(obj, arg0, arg1, arg2, arg3, arg4, &ex);
-		if (ex)
-		{
-			MonoEnv->HandleException(ex);
-		}
+		raise(obj, arg0, arg1, arg2, arg3, arg4);
 	}
 }
 template<const char *eventName, typename arg0Type, typename arg1Type, typename arg2Type, typename arg3Type, typename arg4Type, typename arg5Type>
 void MonoEntityExtension::raiseEntityEvent(arg0Type arg0, arg1Type arg1, arg2Type arg2, arg3Type arg3, arg4Type arg4, arg5Type arg5)
 {
-	static void(__stdcall *raise)(mono::object, arg0Type, arg1Type, arg2Type, arg3Type, arg4Type, arg5Type, mono::exception *) =
-		reinterpret_cast<void(__stdcall *)
-		(mono::object, arg0Type, arg1Type, arg2Type, arg3Type, arg4Type, arg5Type, mono::exception *)>
-		(GetMonoEntityClass()->GetEvent(eventName)->Raise->UnmanagedThunk);
+	static void(*raise)(mono::object, arg0Type, arg1Type, arg2Type, arg3Type, arg4Type, arg5Type) =
+		reinterpret_cast<void(*)
+		(mono::object, arg0Type, arg1Type, arg2Type, arg3Type, arg4Type, arg5Type)>
+		(GetMonoEntityClass()->GetEvent(eventName)->Raise->RawThunk);
 
 	if (mono::object obj = this->MonoWrapper)
 	{
-		mono::exception ex;
-		raise(obj, arg0, arg1, arg2, arg3, arg4, arg5, &ex);
-		if (ex)
-		{
-			MonoEnv->HandleException(ex);
-		}
+		raise(obj, arg0, arg1, arg2, arg3, arg4, arg5);
 	}
 }
 #pragma endregion
@@ -499,55 +452,38 @@ void MonoEntityExtension::ProcessEvent(SEntityEvent& _event)
 void MonoEntityExtension::InitClient(int channelId)
 {
 	static ClientInitRaiseThunk thunk =
-		ClientInitRaiseThunk(GetMonoNetEntityClass()->GetEvent("ClientInitializing")->Raise->UnmanagedThunk);
+		ClientInitRaiseThunk(GetMonoNetEntityClass()->GetEvent("ClientInitializing")->Raise->RawThunk);
 
 	if (!this->networking)
 	{
 		return;
 	}
 
-	mono::exception ex;
-	thunk(this->objHandle.Object, channelId, &ex);
-	if (ex)
-	{
-		MonoEnv->HandleException(ex);
-	}
+	thunk(this->objHandle.Object, channelId);
 }
 
 void MonoEntityExtension::PostInitClient(int channelId)
 {
 	static ClientInitRaiseThunk thunk =
-		ClientInitRaiseThunk(GetMonoNetEntityClass()->GetEvent("ClientInitialized")->Raise->UnmanagedThunk);
+		ClientInitRaiseThunk(GetMonoNetEntityClass()->GetEvent("ClientInitialized")->Raise->RawThunk);
 
 	if (!this->networking)
 	{
 		return;
 	}
 
-	mono::exception ex;
-	thunk(this->objHandle.Object, channelId, &ex);
-	if (ex)
-	{
-		MonoEnv->HandleException(ex);
-	}
+	thunk(this->objHandle.Object, channelId);
 }
 
 bool MonoEntityExtension::ReloadExtension(IGameObject*, const SEntitySpawnParams& params)
 {
 	static ReloadEventThunk thunk =
-		ReloadEventThunk(GetMonoEntityClass()->GetEvent("Reloading")->GetRaise()->UnmanagedThunk);
+		ReloadEventThunk(GetMonoEntityClass()->GetEvent("Reloading")->GetRaise()->RawThunk);
 
 	if (mono::object obj = this->MonoWrapper)
 	{
 		MonoEntitySpawnParams parameters(params);
-		mono::exception ex;
-		bool success = thunk(obj, &parameters, &ex);
-		if (ex)
-		{
-			MonoEnv->HandleException(ex);
-			return false;
-		}
-		return success;
+		return thunk(obj, &parameters);
 	}
 	return false;
 }
@@ -555,35 +491,23 @@ bool MonoEntityExtension::ReloadExtension(IGameObject*, const SEntitySpawnParams
 void MonoEntityExtension::PostReloadExtension(IGameObject*, const SEntitySpawnParams& params)
 {
 	static ReloadedEventThunk thunk =
-		ReloadedEventThunk(GetMonoEntityClass()->GetEvent("Reloaded")->GetRaise()->UnmanagedThunk);
+		ReloadedEventThunk(GetMonoEntityClass()->GetEvent("Reloaded")->GetRaise()->RawThunk);
 
 	if (mono::object obj = this->MonoWrapper)
 	{
 		MonoEntitySpawnParams parameters(params);
-		mono::exception ex;
-		thunk(obj, &parameters, &ex);
-		if (ex)
-		{
-			MonoEnv->HandleException(ex);
-		}
+		thunk(obj, &parameters);
 	}
 }
 
 bool MonoEntityExtension::GetEntityPoolSignature(TSerialize signature)
 {
 	static GetSignatureThunk thunk =
-		GetSignatureThunk(GetMonoEntityClass()->GetFunction("GetSignature", -1)->UnmanagedThunk);
+		GetSignatureThunk(GetMonoEntityClass()->GetFunction("GetSignature", -1)->RawThunk);
 
 	if (mono::object obj = this->MonoWrapper)
 	{
-		mono::exception ex;
-		bool result = thunk(obj, *reinterpret_cast<ISerialize **>(&signature), &ex);
-		if (ex)
-		{
-			MonoEnv->HandleException(ex);
-			return false;
-		}
-		return result;
+		return thunk(obj, *reinterpret_cast<ISerialize **>(&signature));
 	}
 	return false;
 }
@@ -596,18 +520,13 @@ void MonoEntityExtension::Release()
 void MonoEntityExtension::FullSerialize(TSerialize ser)
 {
 	static SyncInternalThunk thunk =
-		SyncInternalThunk(GetMonoEntityClass()->GetFunction("SyncInternal", -1)->UnmanagedThunk);
+		SyncInternalThunk(GetMonoEntityClass()->GetFunction("SyncInternal", -1)->RawThunk);
 
 	if (mono::object obj = this->MonoWrapper)
 	{
 		ser.BeginGroup("AbstractionLayer");
 
-		mono::exception ex;
-		thunk(obj, *reinterpret_cast<ISerialize **>(&ser), &ex);
-		if (ex)
-		{
-			MonoEnv->HandleException(ex);
-		}
+		thunk(obj, *reinterpret_cast<ISerialize **>(&ser));
 
 		ser.EndGroup();
 	}
@@ -651,18 +570,11 @@ bool MonoEntityExtension::NetSerialize(TSerialize ser, EEntityAspects aspect, ui
 	}
 
 	static NetSyncInternalThunk thunk =
-		NetSyncInternalThunk(GetMonoNetEntityClass()->GetFunction("NetSyncInternal", -1)->UnmanagedThunk);
+		NetSyncInternalThunk(GetMonoNetEntityClass()->GetFunction("NetSyncInternal", -1)->RawThunk);
 
 	if (mono::object obj = this->MonoWrapper)
 	{
-		mono::exception ex;
-		bool result = thunk(obj, *reinterpret_cast<ISerialize **>(&ser), aspect, profile, flags, &ex);
-		if (ex)
-		{
-			MonoEnv->HandleException(ex);
-			return false;
-		}
-		return result;
+		return thunk(obj, *reinterpret_cast<ISerialize **>(&ser), aspect, profile, flags);
 	}
 	return false;
 }
@@ -670,16 +582,11 @@ bool MonoEntityExtension::NetSerialize(TSerialize ser, EEntityAspects aspect, ui
 void MonoEntityExtension::Update(SEntityUpdateContext& ctx, int)
 {
 	static UpdateEntityThunk update =
-		UpdateEntityThunk(GetMonoEntityClass()->GetFunction("UpdateInternal")->UnmanagedThunk);
+		UpdateEntityThunk(GetMonoEntityClass()->GetFunction("UpdateInternal")->RawThunk);
 
 	if (mono::object o = this->MonoWrapper)
 	{
-		mono::exception ex;
-		update(o, ctx, &ex);
-		if (ex)
-		{
-			MonoEnv->HandleException(ex);
-		}
+		update(o, ctx);
 	}
 }
 
@@ -701,32 +608,22 @@ void MonoEntityExtension::SetChannelId(uint16 id)
 void MonoEntityExtension::SetAuthority(bool auth)
 {
 	static OnAuthorizedEntityThunk update =
-		OnAuthorizedEntityThunk(GetMonoEntityClass()->GetEvent("Authorized")->Raise->UnmanagedThunk);
+		OnAuthorizedEntityThunk(GetMonoEntityClass()->GetEvent("Authorized")->Raise->RawThunk);
 
 	if (mono::object o = this->MonoWrapper)
 	{
-		mono::exception ex;
-		update(o, auth, &ex);
-		if (ex)
-		{
-			MonoEnv->HandleException(ex);
-		}
+		update(o, auth);
 	}
 }
 
 void MonoEntityExtension::PostUpdate(float)
 {
 	static PostUpdateEntityThunk update =
-		PostUpdateEntityThunk(GetMonoEntityClass()->GetFunction("PostUpdateInternal")->UnmanagedThunk);
+		PostUpdateEntityThunk(GetMonoEntityClass()->GetFunction("PostUpdateInternal")->RawThunk);
 
 	if (mono::object o = this->MonoWrapper)
 	{
-		mono::exception ex;
-		update(o, &ex);
-		if (ex)
-		{
-			MonoEnv->HandleException(ex);
-		}
+		update(o);
 	}
 }
 
@@ -755,12 +652,12 @@ MonoEntityExtension::CryCilRMIParameters::CryCilRMIParameters
 , rmiDataType(rmiDataType)
 {}
 
-typedef mono::object(__stdcall *AcquireArgumentsReceptorThunk)(mono::string, mono::exception *);
+typedef mono::object(*AcquireArgumentsReceptorThunk)(mono::string);
 
 void MonoEntityExtension::CryCilRMIParameters::SerializeWith(TSerialize ser)
 {
 	static AcquireArgumentsReceptorThunk acquireReceptor =
-		AcquireArgumentsReceptorThunk(GetRmiParamsClass()->GetFunction("AcquireReceptor", 2)->UnmanagedThunk);
+		AcquireArgumentsReceptorThunk(GetRmiParamsClass()->GetFunction("AcquireReceptor", 2)->RawThunk);
 
 	// Synchronize the name and identifier of the target entity so we can identify the type of argument object on reception.
 	ser.Value("method", this->methodName);
@@ -775,13 +672,7 @@ void MonoEntityExtension::CryCilRMIParameters::SerializeWith(TSerialize ser)
 	if (this->arguments == -1)
 	{
 		// We are receiving the data, therefore we need to get the object that will hold received data.
-		mono::exception ex;
-		this->arguments = MonoEnv->GC->Keep(acquireReceptor(ToMonoString(this->rmiDataType.c_str()), &ex));
-		if (ex)
-		{
-			MonoEnv->HandleException(ex);
-			return;
-		}
+		this->arguments = MonoEnv->GC->Keep(acquireReceptor(ToMonoString(this->rmiDataType.c_str())));
 	}
 
 	// Synchronize the arguments.
@@ -796,55 +687,37 @@ void MonoEntityExtension::CryCilRMIParameters::SerializeWith(TSerialize ser)
 	}
 }
 
-typedef bool(__stdcall *ReceiveRMICallThunk)(mono::object, mono::string, mono::object, mono::exception *);
+typedef bool(*ReceiveRMICallThunk)(mono::object, mono::string, mono::object);
 
 bool MonoEntityExtension::ReceiveRmiCall(CryCilRMIParameters *params)
 {
 	static ReceiveRMICallThunk receiveCall =
-		ReceiveRMICallThunk(GetMonoNetEntityClass()->GetFunction("ReceiveRmi", -1)->UnmanagedThunk);
+		ReceiveRMICallThunk(GetMonoNetEntityClass()->GetFunction("ReceiveRmi", -1)->RawThunk);
 
-	mono::exception ex;
 	bool success = receiveCall(this->objHandle.Object, ToMonoString(params->methodName),
-							   MonoEnv->GC->GetGCHandleTarget(params->arguments), &ex);
+							   MonoEnv->GC->GetGCHandleTarget(params->arguments));
 	MonoEnv->GC->ReleaseGCHandle(params->arguments);			// We won't need this anymore.
-	if (ex)
-	{
-		MonoEnv->HandleException(ex);
-		return false;
-	}
 	return success;
 }
 
-typedef mono::string(__stdcall *GetEntityPropertyValueThunk)(mono::object, int, mono::exception *);
+typedef mono::string(*GetEntityPropertyValueThunk)(mono::object, int);
 
 const char *MonoEntityExtension::GetPropertyValue(int index)
 {
 	static GetEntityPropertyValueThunk get =
-		GetEntityPropertyValueThunk(GetMonoEntityClass()->GetFunction("GetEditableProperty", -1)->UnmanagedThunk);
+		GetEntityPropertyValueThunk(GetMonoEntityClass()->GetFunction("GetEditableProperty", -1)->RawThunk);
 
-	mono::exception ex;
-	auto value = ToNativeString(get(this->MonoWrapper, index, &ex));
-	if (ex)
-	{
-		MonoEnv->HandleException(ex);
-		return "";
-	}
-	return value;
+	return ToNativeString(get(this->MonoWrapper, index));
 }
 
-typedef void(__stdcall *SetEntityPropertyValueThunk)(mono::object, int, mono::string, mono::exception *);
+typedef void(*SetEntityPropertyValueThunk)(mono::object, int, mono::string);
 
 void MonoEntityExtension::SetPropertyValue(int index, const char *value)
 {
 	static SetEntityPropertyValueThunk set =
-		SetEntityPropertyValueThunk(GetMonoEntityClass()->GetFunction("SetEditableProperty", -1)->UnmanagedThunk);
+		SetEntityPropertyValueThunk(GetMonoEntityClass()->GetFunction("SetEditableProperty", -1)->RawThunk);
 
-	mono::exception ex;
-	set(this->MonoWrapper, index, ToMonoString(value), &ex);
-	if (ex)
-	{
-		MonoEnv->HandleException(ex);
-	}
+	set(this->MonoWrapper, index, ToMonoString(value));
 }
 
 bool MonoEntityExtension::IsInitialized()

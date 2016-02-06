@@ -142,7 +142,7 @@ inline IMonoClass *GetInteropClass()
 	return MonoEnv->Cryambly->GetClass("CryCil.Engine.Models.Characters", "SkeletonPose");
 }
 
-typedef void(__stdcall *HandleBoneUpdatesThunk)(void *, ICharacterInstance *, mono::exception *);
+RAW_THUNK typedef void(*HandleBoneUpdatesThunk)(void *, ICharacterInstance *);
 
 int HandleBoneUpdates(ICharacterInstance *character, void *handler)
 {
@@ -151,12 +151,7 @@ int HandleBoneUpdates(ICharacterInstance *character, void *handler)
 
 	if (thunk)
 	{
-		mono::exception ex;
-		thunk(handler, character, &ex);
-		if (ex)
-		{
-			MonoEnv->HandleException(ex);
-		}
+		thunk(handler, character);
 	}
 
 	return 1;

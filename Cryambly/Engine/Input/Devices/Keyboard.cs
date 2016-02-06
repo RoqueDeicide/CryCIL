@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CryCil.RunTime;
 using CryCil.Utilities;
 
 namespace CryCil.Engine.Input
@@ -59,16 +60,32 @@ namespace CryCil.Engine.Input
 		#region Interface
 		#endregion
 		#region Utilities
-		[UnmanagedThunk("Invoked by underlying framework to raise KeyChanged event.")]
+		[RawThunk("Invoked by underlying framework to raise KeyChanged event.")]
 		private static void OnKeyChanged(uint input, int modifiers, bool pressed, out bool blocked)
 		{
-			blocked = InputEventPropagator.Post(keyInputHandlers, (InputId)input,
-												new ModifierKeysStatus(modifiers), pressed);
+			try
+			{
+				blocked = InputEventPropagator.Post(keyInputHandlers, (InputId)input,
+													new ModifierKeysStatus(modifiers), pressed);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+				blocked = false;
+			}
 		}
-		[UnmanagedThunk("Invoked by underlying framework to raise CharacterInput event.")]
+		[RawThunk("Invoked by underlying framework to raise CharacterInput event.")]
 		private static void OnCharacterInput(uint input, out bool blocked)
 		{
-			blocked = InputEventPropagator.Post(textInputHandlers, new Utf32Char(input));
+			try
+			{
+				blocked = InputEventPropagator.Post(textInputHandlers, new Utf32Char(input));
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+				blocked = false;
+			}
 		}
 		#endregion
 	}

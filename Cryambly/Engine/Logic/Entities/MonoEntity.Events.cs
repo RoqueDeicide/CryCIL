@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using CryCil.Engine.Models.Characters;
 using CryCil.Engine.Physics;
 using CryCil.Engine.Rendering;
+using CryCil.RunTime;
 
 namespace CryCil.Engine.Logic
 {
@@ -139,153 +140,257 @@ namespace CryCil.Engine.Logic
 		/// Occurs when entity's X-Form transformation changes.
 		/// </summary>
 		public event EntityMovementEventHandler Moved;
-		[UnmanagedThunk("Invoked from underlying object to raise event Moved.")]
+		[RawThunk("Invoked from underlying object to raise event Moved.")]
 		private void OnMoved(EntityXFormChange why)
 		{
-			var handler = this.Moved;
-			if (handler != null) handler(this, why);
+			try
+			{
+				var handler = this.Moved;
+				if (handler != null) handler(this, why);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// Occurs when entity's X-Form transformation changes by the editor user outside of game mode.
 		/// </summary>
 		/// <remarks>This event is sent when the user releases the button.</remarks>
 		public event EntitySimpleEventHandler MovedInEditor;
-		[UnmanagedThunk("Invoked from underlying object to raise event MovedInEditor.")]
+		[RawThunk("Invoked from underlying object to raise event MovedInEditor.")]
 		private void OnMovedInEditor()
 		{
-			var handler = this.MovedInEditor;
-			if (handler != null) handler(this);
+			try
+			{
+				var handler = this.MovedInEditor;
+				if (handler != null) handler(this);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// Occurs when one of the timers that was started by this entity has finished counting.
 		/// </summary>
 		public event EntityTimerEventHandler TimedOut;
-		[UnmanagedThunk("Invoked from underlying object to raise event TimedOut.")]
-		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
+		[RawThunk("Invoked from underlying object to raise event TimedOut.")]
 		private void OnTimedOut(int timerId, int milliseconds)
 		{
-			var handler = this.TimedOut;
-			if (handler != null) handler(this, timerId, TimeSpan.FromMilliseconds(milliseconds));
+			try
+			{
+				var handler = this.TimedOut;
+				if (handler != null) handler(this, timerId, TimeSpan.FromMilliseconds(milliseconds));
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// Occurs when entity that is not removable is reset.
 		/// </summary>
 		public event EntitySimpleEventHandler Ressurected;
-		[UnmanagedThunk("Invoked from underlying object to raise event Ressurected.")]
+		[RawThunk("Invoked from underlying object to raise event Ressurected.")]
 		private void OnRessurected()
 		{
-			var handler = this.Ressurected;
-			if (handler != null) handler(this);
+			try
+			{
+				var handler = this.Ressurected;
+				if (handler != null) handler(this);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// Occurs before entity is removed.
 		/// </summary>
 		public event EntitySimpleEventHandler Done;
-		[UnmanagedThunk("Invoked from underlying object to raise event Done.")]
+		[RawThunk("Invoked from underlying object to raise event Done.")]
 		private void OnDone()
 		{
-			var handler = this.Done;
-			if (handler != null) handler(this);
+			try
+			{
+				var handler = this.Done;
+				if (handler != null) handler(this);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// Occurs before entity is returned to the pool.
 		/// </summary>
 		public event EntitySimpleEventHandler ReturningToPool;
-		[UnmanagedThunk("Invoked from underlying object to raise event ReturningToPool.")]
+		[RawThunk("Invoked from underlying object to raise event ReturningToPool.")]
 		private void OnReturningToPool()
 		{
-			var handler = this.ReturningToPool;
-			if (handler != null) handler(this);
+			try
+			{
+				var handler = this.ReturningToPool;
+				if (handler != null) handler(this);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// Occurs when entity gets reset when user switches to or from the game mode.
 		/// </summary>
 		public event EntityResetEventHandler ResetInEditor;
-		[UnmanagedThunk("Invoked from underlying object to raise event ResetInEditor.")]
+		[RawThunk("Invoked from underlying object to raise event ResetInEditor.")]
 		private void OnResetInEditor(bool enterGameMode)
 		{
-			var handler = this.ResetInEditor;
-			if (handler != null) handler(this, enterGameMode);
+			try
+			{
+				var handler = this.ResetInEditor;
+				if (handler != null) handler(this, enterGameMode);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// Occurs when another entity is attached to this one as a child.
 		/// </summary>
 		public event EntityAttachmentEventHandler Attached;
-		[UnmanagedThunk("Invoked from underlying object to raise event Attached.")]
+		[RawThunk("Invoked from underlying object to raise event Attached.")]
 		private void OnAttached(EntityId id)
 		{
-			var handler = this.Attached;
-			if (handler != null) handler(this, id);
+			try
+			{
+				var handler = this.Attached;
+				if (handler != null) handler(this, id);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// Occurs this entity is attached to another.
 		/// </summary>
 		public event EntityAttachmentEventHandler AttachedTo;
-		[UnmanagedThunk("Invoked from underlying object to raise event AttachedTo.")]
+		[RawThunk("Invoked from underlying object to raise event AttachedTo.")]
 		private void OnAttachedTo(EntityId id)
 		{
-			var handler = this.AttachedTo;
-			if (handler != null) handler(this, id);
+			try
+			{
+				var handler = this.AttachedTo;
+				if (handler != null) handler(this, id);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// Occurs when another entity is detached from this one.
 		/// </summary>
 		public event EntityAttachmentEventHandler Detached;
-		[UnmanagedThunk("Invoked from underlying object to raise event Detached.")]
+		[RawThunk("Invoked from underlying object to raise event Detached.")]
 		private void OnDetached(EntityId id)
 		{
-			var handler = this.Detached;
-			if (handler != null) handler(this, id);
+			try
+			{
+				var handler = this.Detached;
+				if (handler != null) handler(this, id);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// Occurs this entity is detached from another.
 		/// </summary>
 		public event EntityAttachmentEventHandler DetachedFrom;
-		[UnmanagedThunk("Invoked from underlying object to raise event DetachedFrom.")]
+		[RawThunk("Invoked from underlying object to raise event DetachedFrom.")]
 		private void OnDetachedFrom(EntityId id)
 		{
-			var handler = this.DetachedFrom;
-			if (handler != null) handler(this, id);
+			try
+			{
+				var handler = this.DetachedFrom;
+				if (handler != null) handler(this, id);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// Occurs when another entity becomes linked to this one.
 		/// </summary>
 		public event EntityLinkageEventHandler Linked;
-		[UnmanagedThunk("Invoked from underlying object to raise event Linked.")]
+		[RawThunk("Invoked from underlying object to raise event Linked.")]
 		private void OnLinked(string linkName, EntityId id, EntityGUID guid)
 		{
-			var handler = this.Linked;
-			if (handler != null) handler(this, linkName, id, guid);
+			try
+			{
+				var handler = this.Linked;
+				if (handler != null) handler(this, linkName, id, guid);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// Occurs when another entity is about to stop being linked to this one.
 		/// </summary>
 		public event EntityLinkageEventHandler Unlinked;
-		[UnmanagedThunk("Invoked from underlying object to raise event Unlinked.")]
+		[RawThunk("Invoked from underlying object to raise event Unlinked.")]
 		private void OnUnlinked(string linkName, EntityId id, EntityGUID guid)
 		{
-			var handler = this.Unlinked;
-			if (handler != null) handler(this, linkName, id, guid);
+			try
+			{
+				var handler = this.Unlinked;
+				if (handler != null) handler(this, linkName, id, guid);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// Occurs when this entity becomes hidden.
 		/// </summary>
 		public event EntityHidingEventHandler Hidden;
-		[UnmanagedThunk("Invoked from underlying object to raise event Hidden.")]
+		[RawThunk("Invoked from underlying object to raise event Hidden.")]
 		private void OnHidden()
 		{
-			var handler = this.Hidden;
-			if (handler != null) handler(this, true);
+			try
+			{
+				var handler = this.Hidden;
+				if (handler != null) handler(this, true);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// Occurs when this entity is no longer hidden.
 		/// </summary>
 		public event EntityHidingEventHandler NotHidden;
-		[UnmanagedThunk("Invoked from underlying object to raise event NotHidden.")]
+		[RawThunk("Invoked from underlying object to raise event NotHidden.")]
 		private void OnNotHidden()
 		{
-			var handler = this.NotHidden;
-			if (handler != null) handler(this, false);
+			try
+			{
+				var handler = this.NotHidden;
+				if (handler != null) handler(this, false);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// Occurs when physics processing for this entity is enabled.
@@ -295,18 +400,25 @@ namespace CryCil.Engine.Logic
 		/// Occurs when physics processing for this entity is disabled.
 		/// </summary>
 		public event EntityPhysicsChangeEventHandler PhysicsDisabled;
-		[UnmanagedThunk("Invoked from underlying object to raise event PhysicsEnabled or PhysicsDisabled.")]
+		[RawThunk("Invoked from underlying object to raise event PhysicsEnabled or PhysicsDisabled.")]
 		private void OnPhysicsEnabled(bool enable)
 		{
-			if (enable)
+			try
 			{
-				var handler = this.PhysicsEnabled;
-				if (handler != null) handler(this, false);
+				if (enable)
+				{
+					var handler = this.PhysicsEnabled;
+					if (handler != null) handler(this, false);
+				}
+				else
+				{
+					var handler = this.PhysicsDisabled;
+					if (handler != null) handler(this, false);
+				}
 			}
-			else
+			catch (Exception ex)
 			{
-				var handler = this.PhysicsDisabled;
-				if (handler != null) handler(this, false);
+				MonoInterface.DisplayException(ex);
 			}
 		}
 		/// <summary>
@@ -317,49 +429,77 @@ namespace CryCil.Engine.Logic
 		/// Occurs when physics processing for this entity is disabled.
 		/// </summary>
 		public event EntityPhysicsAwakeningEventHandler PutToSleep;
-		[UnmanagedThunk("Invoked from underlying object to raise event Awoken or PutToSleep.")]
+		[RawThunk("Invoked from underlying object to raise event Awoken or PutToSleep.")]
 		private void OnAwoken(bool awoken)
 		{
-			if (awoken)
+			try
 			{
-				var handler = this.Awoken;
-				if (handler != null) handler(this, false);
+				if (awoken)
+				{
+					var handler = this.Awoken;
+					if (handler != null) handler(this, false);
+				}
+				else
+				{
+					var handler = this.PutToSleep;
+					if (handler != null) handler(this, false);
+				}
 			}
-			else
+			catch (Exception ex)
 			{
-				var handler = this.PutToSleep;
-				if (handler != null) handler(this, false);
+				MonoInterface.DisplayException(ex);
 			}
 		}
 		/// <summary>
 		/// Occurs when another entity enters the area that targets this entity.
 		/// </summary>
 		public event EntityAreaBorderEventHandler AreaEntered;
-		[UnmanagedThunk("Invoked from underlying object to raise event AreaEntered.")]
+		[RawThunk("Invoked from underlying object to raise event AreaEntered.")]
 		private void OnAreaEntered(EntityId entity, int areaId, EntityId areaEntityId, float fadeFactor)
 		{
-			var handler = this.AreaEntered;
-			if (handler != null) handler(this, entity, areaId, areaEntityId, fadeFactor);
+			try
+			{
+				var handler = this.AreaEntered;
+				if (handler != null) handler(this, entity, areaId, areaEntityId, fadeFactor);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// Occurs when another entity leaves the area that targets this entity.
 		/// </summary>
 		public event EntityAreaBorderEventHandler AreaLeft;
-		[UnmanagedThunk("Invoked from underlying object to raise event AreaLeft.")]
+		[RawThunk("Invoked from underlying object to raise event AreaLeft.")]
 		private void OnAreaLeft(EntityId entity, int areaId, EntityId areaEntityId, float fadeFactor)
 		{
-			var handler = this.AreaLeft;
-			if (handler != null) handler(this, entity, areaId, areaEntityId, fadeFactor);
+			try
+			{
+				var handler = this.AreaLeft;
+				if (handler != null) handler(this, entity, areaId, areaEntityId, fadeFactor);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// Occurs when a breakable entity is broken.
 		/// </summary>
 		public event EntitySimpleEventHandler Broken;
-		[UnmanagedThunk("Invoked from underlying object to raise event Broken.")]
+		[RawThunk("Invoked from underlying object to raise event Broken.")]
 		private void OnBroken()
 		{
-			var handler = this.Broken;
-			if (handler != null) handler(this);
+			try
+			{
+				var handler = this.Broken;
+				if (handler != null) handler(this);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// Occurs when entity has <see cref="EntityFlags.SendNotSeenTimeout"/> flag set for it and has not
@@ -367,31 +507,52 @@ namespace CryCil.Engine.Logic
 		/// variable which is equal to 30 by default).
 		/// </summary>
 		public event EntitySimpleEventHandler NotSeen;
-		[UnmanagedThunk("Invoked from underlying object to raise event NotSeen.")]
+		[RawThunk("Invoked from underlying object to raise event NotSeen.")]
 		private void OnNotSeen()
 		{
-			var handler = this.NotSeen;
-			if (handler != null) handler(this);
+			try
+			{
+				var handler = this.NotSeen;
+				if (handler != null) handler(this);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// Occurs when entity collides with another.
 		/// </summary>
 		public event EntityCollisionEventHandler Collided;
-		[UnmanagedThunk("Invoked from underlying object to raise event Collided.")]
+		[RawThunk("Invoked from underlying object to raise event Collided.")]
 		private void OnCollided(ref CollisionEventInfo info, bool isTarget)
 		{
-			var handler = this.Collided;
-			if (handler != null) handler(this, ref info, isTarget);
+			try
+			{
+				var handler = this.Collided;
+				if (handler != null) handler(this, ref info, isTarget);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// Occurs before entity is rendered.
 		/// </summary>
 		public event EntityRenderEventHandler Rendered;
-		[UnmanagedThunk("Invoked from underlying object to raise event Rendered.")]
+		[RawThunk("Invoked from underlying object to raise event Rendered.")]
 		private void OnRendered(ref RenderParameters parameters)
 		{
-			var handler = this.Rendered;
-			if (handler != null) handler(this, ref parameters);
+			try
+			{
+				var handler = this.Rendered;
+				if (handler != null) handler(this, ref parameters);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// Occurs before entity is rendered.
@@ -405,143 +566,233 @@ namespace CryCil.Engine.Logic
 		public virtual void PrePhysicsUpdate(TimeSpan frameTime)
 		{
 		}
-		[UnmanagedThunk("Invoked from underlying object to raise event BeforePhysicsUpdate.")]
-		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
+		[RawThunk("Invoked from underlying object to raise event BeforePhysicsUpdate.")]
 		private void OnBeforePhysicsUpdate(float frameTimeSeconds)
 		{
-			TimeSpan frameTime = TimeSpan.FromSeconds(frameTimeSeconds);
-			this.PrePhysicsUpdate(frameTime);
-			for (int i = 0; i < this.Extensions.Count; i++)
+			try
 			{
-				this.Extensions[i].PrePhysicsUpdate(frameTime);
+				TimeSpan frameTime = TimeSpan.FromSeconds(frameTimeSeconds);
+				this.PrePhysicsUpdate(frameTime);
+				for (int i = 0; i < this.Extensions.Count; i++)
+				{
+					this.Extensions[i].PrePhysicsUpdate(frameTime);
+				}
+				var handler = this.BeforePhysicsUpdate;
+				if (handler != null) handler(this, frameTime);
 			}
-			var handler = this.BeforePhysicsUpdate;
-			if (handler != null) handler(this, frameTime);
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// Occurs when a level finishes loading.
 		/// </summary>
 		public event EntitySimpleEventHandler LevelLoaded;
-		[UnmanagedThunk("Invoked from underlying object to raise event LevelLoaded.")]
+		[RawThunk("Invoked from underlying object to raise event LevelLoaded.")]
 		private void OnLevelLoaded()
 		{
-			var handler = this.LevelLoaded;
-			if (handler != null) handler(this);
+			try
+			{
+				var handler = this.LevelLoaded;
+				if (handler != null) handler(this);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// Occurs when a game starts on a level for the first time.
 		/// </summary>
 		public event EntitySimpleEventHandler LevelStarted;
-		[UnmanagedThunk("Invoked from underlying object to raise event LevelStarted.")]
+		[RawThunk("Invoked from underlying object to raise event LevelStarted.")]
 		private void OnLevelStarted()
 		{
-			var handler = this.LevelStarted;
-			if (handler != null) handler(this);
+			try
+			{
+				var handler = this.LevelStarted;
+				if (handler != null) handler(this);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// Occurs when a game starts on a level. Unlike <see cref="LevelStarted"/> this event can be
 		/// raised multiple times within the level (in case of multiplayer matches).
 		/// </summary>
 		public event EntitySimpleEventHandler GameStarted;
-		[UnmanagedThunk("Invoked from underlying object to raise event GameStarted.")]
+		[RawThunk("Invoked from underlying object to raise event GameStarted.")]
 		private void OnGameStarted()
 		{
-			var handler = this.GameStarted;
-			if (handler != null) handler(this);
+			try
+			{
+				var handler = this.GameStarted;
+				if (handler != null) handler(this);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// Occurs before this entity is synchronized with it representation in the file (when saving and
 		/// loading games).
 		/// </summary>
 		public event EntitySimpleEventHandler Synchronizing;
-		[UnmanagedThunk("Invoked from underlying object to raise event Synchronizing.")]
+		[RawThunk("Invoked from underlying object to raise event Synchronizing.")]
 		private void OnSynchronizing()
 		{
-			var handler = this.Synchronizing;
-			if (handler != null) handler(this);
+			try
+			{
+				var handler = this.Synchronizing;
+				if (handler != null) handler(this);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// Occurs after this entity is synchronized with it representation in the file (when saving and
 		/// loading games).
 		/// </summary>
 		public event EntitySimpleEventHandler Synchronized;
-		[UnmanagedThunk("Invoked from underlying object to raise event Synchronized.")]
+		[RawThunk("Invoked from underlying object to raise event Synchronized.")]
 		private void OnSynchronized()
 		{
-			var handler = this.Synchronized;
-			if (handler != null) handler(this);
+			try
+			{
+				var handler = this.Synchronized;
+				if (handler != null) handler(this);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// Occurs when this entity becomes visible.
 		/// </summary>
 		public event EntitySimpleEventHandler BecameVisible;
-		[UnmanagedThunk("Invoked from underlying object to raise event BecameVisible.")]
+		[RawThunk("Invoked from underlying object to raise event BecameVisible.")]
 		private void OnBecameVisible()
 		{
-			var handler = this.BecameVisible;
-			if (handler != null) handler(this);
+			try
+			{
+				var handler = this.BecameVisible;
+				if (handler != null) handler(this);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// Occurs when this entity becomes invisible.
 		/// </summary>
 		public event EntitySimpleEventHandler BecameInvisible;
-		[UnmanagedThunk("Invoked from underlying object to raise event BecameInvisible.")]
+		[RawThunk("Invoked from underlying object to raise event BecameInvisible.")]
 		private void OnBecameInvisible()
 		{
-			var handler = this.BecameInvisible;
-			if (handler != null) handler(this);
+			try
+			{
+				var handler = this.BecameInvisible;
+				if (handler != null) handler(this);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// Occurs when this entity changes its material.
 		/// </summary>
 		public event EntityMaterialEventHandler MaterialChanged;
-		[UnmanagedThunk("Invoked from underlying object to raise event MaterialChanged.")]
+		[RawThunk("Invoked from underlying object to raise event MaterialChanged.")]
 		private void OnMaterialChanged(Material newMaterial)
 		{
-			var handler = this.MaterialChanged;
-			if (handler != null) handler(this, newMaterial);
+			try
+			{
+				var handler = this.MaterialChanged;
+				if (handler != null) handler(this, newMaterial);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// Occurs when a set of active material layers changes for this entity.
 		/// </summary>
 		public event EntityMaterialLayersEventHandler MaterialLayersChanged;
-		[UnmanagedThunk("Invoked from underlying object to raise event MaterialLayersChanged.")]
+		[RawThunk("Invoked from underlying object to raise event MaterialLayersChanged.")]
 		private void OnMaterialLayersChanged(byte @new, byte old)
 		{
-			var handler = this.MaterialLayersChanged;
-			if (handler != null) handler(this, @new, old);
+			try
+			{
+				var handler = this.MaterialLayersChanged;
+				if (handler != null) handler(this, @new, old);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// Occurs when this entity becomes active.
 		/// </summary>
 		/// <remarks>Active entities are updated each frame.</remarks>
 		public event EntitySimpleEventHandler Activated;
-		[UnmanagedThunk("Invoked from underlying object to raise event Activated.")]
+		[RawThunk("Invoked from underlying object to raise event Activated.")]
 		private void OnActivated()
 		{
-			var handler = this.Activated;
-			if (handler != null) handler(this);
+			try
+			{
+				var handler = this.Activated;
+				if (handler != null) handler(this);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// Occurs when this entity stops being active.
 		/// </summary>
 		/// <remarks>Active entities are updated each frame.</remarks>
 		public event EntitySimpleEventHandler Deactivated;
-		[UnmanagedThunk("Invoked from underlying object to raise event Deactivated.")]
+		[RawThunk("Invoked from underlying object to raise event Deactivated.")]
 		private void OnDeactivated()
 		{
-			var handler = this.Deactivated;
-			if (handler != null) handler(this);
+			try
+			{
+				var handler = this.Deactivated;
+				if (handler != null) handler(this);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 		/// <summary>
 		/// Occurs when an event happens during animation of the character that is used by this entity.
 		/// </summary>
 		public event EntityAnimationEventHandler AnimationEvent;
-		[UnmanagedThunk("Invoked from underlying object to raise event AnimationEvent.")]
+		[RawThunk("Invoked from underlying object to raise event AnimationEvent.")]
 		private void OnAnimationEvent(AnimationEvent @event, Character character)
 		{
-			var handler = this.AnimationEvent;
-			if (handler != null) handler(this, ref @event, character);
+			try
+			{
+				var handler = this.AnimationEvent;
+				if (handler != null) handler(this, ref @event, character);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
 	}
 }

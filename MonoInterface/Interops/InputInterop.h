@@ -4,17 +4,17 @@
 
 #include <IInput.h>
 
-typedef void(__stdcall *OnCharacterInputThunk)(uint32, bool *, mono::exception *);
-typedef void(__stdcall *OnKeyChangedThunk)(unsigned int, int, bool, bool *, mono::exception *);
+RAW_THUNK typedef void(*OnCharacterInputThunk)(uint32, bool *);
+RAW_THUNK typedef void(*OnKeyChangedThunk)(uint32, int, bool, bool *);
 
-typedef void(__stdcall *OnMouseWheelThunk)(int, int, float, bool *, mono::exception *);
-typedef void(__stdcall *OnAxisMoveThunk)(int, float, bool *, mono::exception *);
+RAW_THUNK typedef void(*OnMouseWheelThunk)(int, int, float, bool *);
+RAW_THUNK typedef void(*OnAxisMoveThunk)(int, float, bool *);
 
-typedef void(__stdcall *OnGamepadButtonThunk)(unsigned int, unsigned char, bool, bool *, mono::exception *);
-typedef void(__stdcall *OnTriggerThunk)(unsigned int, unsigned char, int, float, bool *, mono::exception *);
-typedef void(__stdcall *OnThumbAxisMoveThunk)(int, unsigned char, float, bool *, mono::exception *);
+RAW_THUNK typedef void(*OnGamepadButtonThunk)(uint32, uint8, bool, bool *);
+RAW_THUNK typedef void(*OnTriggerThunk)(uint32, uint8, int, float, bool *);
+RAW_THUNK typedef void(*OnThumbAxisMoveThunk)(int, uint8, float, bool *);
 
-typedef void(__stdcall *OnTouchEventThunk)(int, unsigned char, unsigned char, float, float, mono::exception *);
+RAW_THUNK typedef void(*OnTouchEventThunk)(int, uint8, uint8, float, float);
 
 struct InputInterop
 	: public IMonoInterop<false, true>

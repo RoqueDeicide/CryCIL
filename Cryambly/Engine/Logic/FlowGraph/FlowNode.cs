@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -85,7 +84,7 @@ namespace CryCil.Engine.Logic
 			{
 				Contract.Assert(!this.initData.HasFlag(InitializationDetails.Inputs),
 								"An array of input ports can only be set once.");
-				
+
 				this.inputs = value;
 				this.initData |= InitializationDetails.Inputs;
 			}
@@ -218,14 +217,21 @@ namespace CryCil.Engine.Logic
 		{
 			this.Id = 0;
 		}
-		[UnmanagedThunk("Invoked from underlying framework to create a wrapper for a new node.")]
-		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
+		[RawThunk("Invoked from underlying framework to create a wrapper for a new node.")]
 		private static object Create(IntPtr grapHandle, ushort typeId, ushort nodeId)
 		{
-			Type type = FlowNodeTypeRegistry.GetFlowNodeType(typeId);
-			return type == null
-				? null
-				: Activator.CreateInstance(type, nodeId, grapHandle);
+			try
+			{
+				Type type = FlowNodeTypeRegistry.GetFlowNodeType(typeId);
+				return type == null
+					? null
+					: Activator.CreateInstance(type, nodeId, grapHandle);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+				return null;
+			}
 		}
 		[RawThunk("Invoked from underlying framework when this node is removed completely from the game.")]
 		private void Release()
@@ -242,56 +248,63 @@ namespace CryCil.Engine.Logic
 				MonoInterface.DisplayException(ex);
 			}
 		}
-		[UnmanagedThunk("Invoked from underlying framework to inform the flow system about how this node works.")]
-		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
+		[RawThunk("Invoked from underlying framework to inform the flow system about how this node works.")]
 		private void GetConfiguration(out FlowNodeConfig config)
 		{
-			if (this.initData != InitializationDetails.All)
+			try
 			{
-				this.Define();
-
-				FlowNodeAttribute attribute = this.GetType().GetAttribute<FlowNodeAttribute>();
-				this.Flags = attribute.Flags;
-				this.Description = attribute.Description;
-
 				if (this.initData != InitializationDetails.All)
 				{
-					string errorText = string.Format("The node {0} is not fully initialized.", attribute.Name);
+					this.Define();
+
+					FlowNodeAttribute attribute = this.GetType().GetAttribute<FlowNodeAttribute>();
+					this.Flags = attribute.Flags;
+					this.Description = attribute.Description;
+
+					if (this.initData != InitializationDetails.All)
+					{
+						string errorText = string.Format("The node {0} is not fully initialized.", attribute.Name);
 #if DEBUG
-					throw new Exception(errorText);
+						throw new Exception(errorText);
 #else
-				Log.Error(errorText, true);
+						Log.Error(errorText, true);
 #endif
+					}
+
+					for (byte i = 0; i < this.outputs.Length; i++)
+					{
+						this.outputs[i].Graph = this.GraphHandle;
+						this.outputs[i].NodeId = this.Id;
+						this.outputs[i].PortId = i;
+					}
+					for (byte i = 0; i < this.inputs.Length; i++)
+					{
+						this.inputs[i].PortId = i;
+					}
 				}
 
-				for (byte i = 0; i < this.outputs.Length; i++)
+				if (this.inputs == null)
 				{
-					this.outputs[i].Graph = this.GraphHandle;
-					this.outputs[i].NodeId = this.Id;
-					this.outputs[i].PortId = i;
+					this.inputs = new InputPort[0];
 				}
-				for (byte i = 0; i < this.inputs.Length; i++)
+				if (this.outputs == null)
 				{
-					this.inputs[i].PortId = i;
+					this.outputs = new OutputPort[0];
 				}
-			}
 
-			if (this.inputs == null)
-			{
-				this.inputs = new InputPort[0];
+				config = new FlowNodeConfig
+				{
+					Description = StringPool.Get(this.description),
+					Flags = this.flags,
+					Inputs = this.inputs.Select(input => input.Config).ToArray(),
+					Outputs = this.outputs.Select(output => output.Config).ToArray()
+				};
 			}
-			if (this.outputs == null)
+			catch (Exception ex)
 			{
-				this.outputs = new OutputPort[0];
+				MonoInterface.DisplayException(ex);
+				config = new FlowNodeConfig();
 			}
-
-			config = new FlowNodeConfig
-			{
-				Description = StringPool.Get(this.description),
-				Flags = this.flags,
-				Inputs = this.inputs.Select(input => input.Config).ToArray(),
-				Outputs = this.outputs.Select(output => output.Config).ToArray()
-			};
 		}
 		[RawThunk("Invoked from underlying framework to save some data to Xml.")]
 		private bool SaveData(IntPtr xmlHandle)

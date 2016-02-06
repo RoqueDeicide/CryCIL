@@ -148,3 +148,11 @@
 //!
 //! @endcode
 #define SWAP_ASSIGNMENT
+
+//! This define marks a typedef that defines a signature of a special managed function that is used to
+//! invoke a managed method from unmanaged code in a safe manner.
+#define UNMANAGED_THUNK
+
+//! This define marks a typedef that defines a signature of a special managed function that is used to
+//! invoke a managed method from unmanaged code in an unsafe but faster manner.
+#define RAW_THUNK

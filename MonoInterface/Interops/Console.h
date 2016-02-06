@@ -2,7 +2,7 @@
 
 #include "IMonoInterface.h"
 
-typedef void(__stdcall *ExecuteCommandThunk)(mono::string, mono::exception *);
+UNMANAGED_THUNK typedef void(__stdcall *ExecuteCommandThunk)(mono::string, mono::exception *);
 
 //! Interops with CryEngine Console API.
 struct ConsoleInterop : public IMonoInterop<true, true>

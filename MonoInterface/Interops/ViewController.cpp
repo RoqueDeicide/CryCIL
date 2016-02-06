@@ -2,34 +2,24 @@
 
 #include "ViewController.h"
 
-typedef void(__stdcall *UpdateViewThunk)(mono::object, SViewParams &, mono::exception *);
+RAW_THUNK typedef void(*UpdateViewThunk)(mono::object, SViewParams &);
 
 void MonoViewController::UpdateView(SViewParams& params)
 {
 	static UpdateViewThunk thunk =
 		UpdateViewThunk(MonoEnv->Cryambly->GetClass("CryCil.Engine.Rendering.Views", "ViewController")
-										 ->GetFunction("OnUpdating", -1)->UnmanagedThunk);
+										 ->GetFunction("OnUpdating", -1)->RawThunk);
 
-	mono::exception ex;
-	thunk(this->managedObj, params, &ex);
-	if (ex)
-	{
-		MonoEnv->HandleException(ex);
-	}
+	thunk(this->managedObj, params);
 }
 
 void MonoViewController::PostUpdateView(SViewParams& params)
 {
 	static UpdateViewThunk thunk =
 		UpdateViewThunk(MonoEnv->Cryambly->GetClass("CryCil.Engine.Rendering.Views", "ViewController")
-										 ->GetFunction("OnUpdated", -1)->UnmanagedThunk);
+										 ->GetFunction("OnUpdated", -1)->RawThunk);
 
-	mono::exception ex;
-	thunk(this->managedObj, params, &ex);
-	if (ex)
-	{
-		MonoEnv->HandleException(ex);
-	}
+	thunk(this->managedObj, params);
 }
 
 void ViewControllerInterop::OnRunTimeInitialized()

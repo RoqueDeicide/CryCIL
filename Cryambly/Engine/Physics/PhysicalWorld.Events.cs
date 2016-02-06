@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using CryCil.RunTime;
 
 namespace CryCil.Engine.Physics
 {
@@ -422,249 +424,328 @@ namespace CryCil.Engine.Physics
 		#region Interface
 		#endregion
 		#region Utilities
-		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		private static bool IsHandlerForLogged(Delegate @delegate)
 		{
 			return !@delegate.Method.ContainsAttribute<ImmediatePhysicsEventHandlerAttribute>();
 		}
 
-		[UnmanagedThunk("Raises one of the physical events.")]
+		[RawThunk("Raises one of the physical events.")]
 		private static bool OnBoundingBoxOverlapped(ref StereoPhysicsEventData entities, bool logged)
 		{
-			var handlers = logged ? overlapHandlersLogged : overlapHandlers;
-			bool proceed = true;
-			lock (handlers)
+			try
 			{
-				handlers.BeginIteration();
-
-				int count = handlers.Count;
-				for (int i = 0; i < count; i++)
+				var handlers = logged ? overlapHandlersLogged : overlapHandlers;
+				bool proceed = true;
+				lock (handlers)
 				{
-					if (!handlers[i](ref entities))
-					{
-						proceed = false;
-						break;
-					}
-				}
+					handlers.BeginIteration();
 
-				handlers.EndIteration();
+					int count = handlers.Count;
+					for (int i = 0; i < count; i++)
+					{
+						if (!handlers[i](ref entities))
+						{
+							proceed = false;
+							break;
+						}
+					}
+
+					handlers.EndIteration();
+				}
+				return proceed;
 			}
-			return proceed;
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+				return true;
+			}
 		}
-		[UnmanagedThunk("Raises one of the physical events.")]
+		[RawThunk("Raises one of the physical events.")]
 		private static bool OnCollisionHappened(ref StereoPhysicsEventData entities, ref CollisionInfo collision,
 												ref CollisionParticipantInfo collider,
 												ref CollisionParticipantInfo collidee, bool logged)
 		{
-			var handlers = logged ? collisionHandlersLogged : collisionHandlers;
-			bool proceed = true;
-			lock (handlers)
+			try
 			{
-				handlers.BeginIteration();
-
-				int count = handlers.Count;
-				for (int i = 0; i < count; i++)
+				var handlers = logged ? collisionHandlersLogged : collisionHandlers;
+				bool proceed = true;
+				lock (handlers)
 				{
-					if (!handlers[i](ref entities, ref collision, ref collider, ref collidee))
-					{
-						proceed = false;
-						break;
-					}
-				}
+					handlers.BeginIteration();
 
-				handlers.EndIteration();
+					int count = handlers.Count;
+					for (int i = 0; i < count; i++)
+					{
+						if (!handlers[i](ref entities, ref collision, ref collider, ref collidee))
+						{
+							proceed = false;
+							break;
+						}
+					}
+
+					handlers.EndIteration();
+				}
+				return proceed;
 			}
-			return proceed;
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+				return true;
+			}
 		}
-		[UnmanagedThunk("Raises one of the physical events.")]
+		[RawThunk("Raises one of the physical events.")]
 		private static bool OnEntityStateChanged(ref MonoPhysicsEventData entity, ref PhysicalEntityStateInfo oldState,
 												 ref PhysicalEntityStateInfo newState, float idleTime, bool logged)
 		{
-			var handlers = logged ? entityStateHandlersLogged : entityStateHandlers;
-			bool proceed = true;
-			lock (handlers)
+			try
 			{
-				handlers.BeginIteration();
-
-				int count = handlers.Count;
-				for (int i = 0; i < count; i++)
+				var handlers = logged ? entityStateHandlersLogged : entityStateHandlers;
+				bool proceed = true;
+				lock (handlers)
 				{
-					if (!handlers[i](ref entity, ref oldState, ref newState, idleTime))
-					{
-						proceed = false;
-						break;
-					}
-				}
+					handlers.BeginIteration();
 
-				handlers.EndIteration();
+					int count = handlers.Count;
+					for (int i = 0; i < count; i++)
+					{
+						if (!handlers[i](ref entity, ref oldState, ref newState, idleTime))
+						{
+							proceed = false;
+							break;
+						}
+					}
+
+					handlers.EndIteration();
+				}
+				return proceed;
 			}
-			return proceed;
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+				return true;
+			}
 		}
-		[UnmanagedThunk("Raises one of the physical events.")]
+		[RawThunk("Raises one of the physical events.")]
 		private static bool OnEnvironmentChanged(ref MonoPhysicsEventData entity, PhysicalEntity brokenEntity,
 												 PhysicalEntity brokedOffEntity, bool logged)
 		{
-			var handlers = logged ? envStateHandlersLogged : envStateHandlers;
-			bool proceed = true;
-			lock (handlers)
+			try
 			{
-				handlers.BeginIteration();
-
-				int count = handlers.Count;
-				for (int i = 0; i < count; i++)
+				var handlers = logged ? envStateHandlersLogged : envStateHandlers;
+				bool proceed = true;
+				lock (handlers)
 				{
-					if (!handlers[i](ref entity, brokenEntity, brokedOffEntity))
-					{
-						proceed = false;
-						break;
-					}
-				}
+					handlers.BeginIteration();
 
-				handlers.EndIteration();
+					int count = handlers.Count;
+					for (int i = 0; i < count; i++)
+					{
+						if (!handlers[i](ref entity, brokenEntity, brokedOffEntity))
+						{
+							proceed = false;
+							break;
+						}
+					}
+
+					handlers.EndIteration();
+				}
+				return proceed;
 			}
-			return proceed;
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+				return true;
+			}
 		}
-		[UnmanagedThunk("Raises one of the physical events.")]
+		[RawThunk("Raises one of the physical events.")]
 		private static bool OnStepComplete(ref MonoPhysicsEventData entity, ref TimeStepInfo stepInfo, bool logged)
 		{
-			var handlers = logged ? stepHandlersLogged : stepHandlers;
-			bool proceed = true;
-			lock (handlers)
+			try
 			{
-				handlers.BeginIteration();
-
-				int count = handlers.Count;
-				for (int i = 0; i < count; i++)
+				var handlers = logged ? stepHandlersLogged : stepHandlers;
+				bool proceed = true;
+				lock (handlers)
 				{
-					if (!handlers[i](ref entity, ref stepInfo))
-					{
-						proceed = false;
-						break;
-					}
-				}
+					handlers.BeginIteration();
 
-				handlers.EndIteration();
+					int count = handlers.Count;
+					for (int i = 0; i < count; i++)
+					{
+						if (!handlers[i](ref entity, ref stepInfo))
+						{
+							proceed = false;
+							break;
+						}
+					}
+
+					handlers.EndIteration();
+				}
+				return proceed;
 			}
-			return proceed;
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+				return true;
+			}
 		}
-		[UnmanagedThunk("Raises one of the physical events.")]
+		[RawThunk("Raises one of the physical events.")]
 		private static unsafe bool OnMeshChanged(ref MonoPhysicsEventData entity, int partId, bool invalid,
 												 PhysicsMeshUpdateReason reason, GeometryShape mesh,
 												 MeshUpdate* lastUpdate, ref Matrix34 skeletonToMesh,
 												 GeometryShape skeletonMesh, bool logged)
 		{
-			var handlers = logged ? meshHandlersLogged : meshHandlers;
-			bool proceed = true;
-			lock (handlers)
+			try
 			{
-				handlers.BeginIteration();
-
-				int count = handlers.Count;
-				for (int i = 0; i < count; i++)
+				var handlers = logged ? meshHandlersLogged : meshHandlers;
+				bool proceed = true;
+				lock (handlers)
 				{
-					if (!handlers[i](ref entity, partId, invalid, reason, mesh, lastUpdate, ref skeletonToMesh,
-									 skeletonMesh))
-					{
-						proceed = false;
-						break;
-					}
-				}
+					handlers.BeginIteration();
 
-				handlers.EndIteration();
+					int count = handlers.Count;
+					for (int i = 0; i < count; i++)
+					{
+						if (!handlers[i](ref entity, partId, invalid, reason, mesh, lastUpdate, ref skeletonToMesh,
+										 skeletonMesh))
+						{
+							proceed = false;
+							break;
+						}
+					}
+
+					handlers.EndIteration();
+				}
+				return proceed;
 			}
-			return proceed;
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+				return true;
+			}
 		}
-		[UnmanagedThunk("Raises one of the physical events.")]
+		[RawThunk("Raises one of the physical events.")]
 		private static bool OnPartCreated(ref MonoPhysicsEventData entity, ref CreatedPartInfo partInfo, bool logged)
 		{
-			var handlers = logged ? createPartHandlersLogged : createPartHandlers;
-			bool proceed = true;
-			lock (handlers)
+			try
 			{
-				handlers.BeginIteration();
-
-				int count = handlers.Count;
-				for (int i = 0; i < count; i++)
+				var handlers = logged ? createPartHandlersLogged : createPartHandlers;
+				bool proceed = true;
+				lock (handlers)
 				{
-					if (!handlers[i](ref entity, ref partInfo))
-					{
-						proceed = false;
-						break;
-					}
-				}
+					handlers.BeginIteration();
 
-				handlers.EndIteration();
+					int count = handlers.Count;
+					for (int i = 0; i < count; i++)
+					{
+						if (!handlers[i](ref entity, ref partInfo))
+						{
+							proceed = false;
+							break;
+						}
+					}
+
+					handlers.EndIteration();
+				}
+				return proceed;
 			}
-			return proceed;
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+				return true;
+			}
 		}
-		[UnmanagedThunk("Raises one of the physical events.")]
+		[RawThunk("Raises one of the physical events.")]
 		private static bool OnPartRevealed(ref MonoPhysicsEventData entity, int partId, bool logged)
 		{
-			var handlers = logged ? revealPartHandlersLogged : revealPartHandlers;
-			bool proceed = true;
-			lock (handlers)
+			try
 			{
-				handlers.BeginIteration();
-
-				int count = handlers.Count;
-				for (int i = 0; i < count; i++)
+				var handlers = logged ? revealPartHandlersLogged : revealPartHandlers;
+				bool proceed = true;
+				lock (handlers)
 				{
-					if (!handlers[i](ref entity, partId))
-					{
-						proceed = false;
-						break;
-					}
-				}
+					handlers.BeginIteration();
 
-				handlers.EndIteration();
+					int count = handlers.Count;
+					for (int i = 0; i < count; i++)
+					{
+						if (!handlers[i](ref entity, partId))
+						{
+							proceed = false;
+							break;
+						}
+					}
+
+					handlers.EndIteration();
+				}
+				return proceed;
 			}
-			return proceed;
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+				return true;
+			}
 		}
-		[UnmanagedThunk("Raises one of the physical events.")]
+		[RawThunk("Raises one of the physical events.")]
 		private static bool OnJointBroken(ref StereoPhysicsEventData entities, ref JointBreakInfo info, bool logged)
 		{
-			var handlers = logged ? jointHandlersLogged : jointHandlers;
-			bool proceed = true;
-			lock (handlers)
+			try
 			{
-				handlers.BeginIteration();
-
-				int count = handlers.Count;
-				for (int i = 0; i < count; i++)
+				var handlers = logged ? jointHandlersLogged : jointHandlers;
+				bool proceed = true;
+				lock (handlers)
 				{
-					if (!handlers[i](ref entities, ref info))
-					{
-						proceed = false;
-						break;
-					}
-				}
+					handlers.BeginIteration();
 
-				handlers.EndIteration();
+					int count = handlers.Count;
+					for (int i = 0; i < count; i++)
+					{
+						if (!handlers[i](ref entities, ref info))
+						{
+							proceed = false;
+							break;
+						}
+					}
+
+					handlers.EndIteration();
+				}
+				return proceed;
 			}
-			return proceed;
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+				return true;
+			}
 		}
-		[UnmanagedThunk("Raises one of the physical events.")]
+		[RawThunk("Raises one of the physical events.")]
 		private static bool OnEntityDeleted(ref MonoPhysicsEventData entity, PhysicalEntityRemovalMode mode, bool logged)
 		{
-			var handlers = logged ? deleteHandlersLogged : deleteHandlers;
-			bool proceed = true;
-			lock (handlers)
+			try
 			{
-				handlers.BeginIteration();
-
-				int count = handlers.Count;
-				for (int i = 0; i < count; i++)
+				var handlers = logged ? deleteHandlersLogged : deleteHandlers;
+				bool proceed = true;
+				lock (handlers)
 				{
-					if (!handlers[i](ref entity, mode))
-					{
-						proceed = false;
-						break;
-					}
-				}
+					handlers.BeginIteration();
 
-				handlers.EndIteration();
+					int count = handlers.Count;
+					for (int i = 0; i < count; i++)
+					{
+						if (!handlers[i](ref entity, mode))
+						{
+							proceed = false;
+							break;
+						}
+					}
+
+					handlers.EndIteration();
+				}
+				return proceed;
 			}
-			return proceed;
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+				return true;
+			}
 		}
 		#endregion
 	}

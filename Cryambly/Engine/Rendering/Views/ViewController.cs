@@ -3,6 +3,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using CryCil.Annotations;
 using CryCil.Engine.Logic;
+using CryCil.RunTime;
 
 namespace CryCil.Engine.Rendering.Views
 {
@@ -109,22 +110,36 @@ namespace CryCil.Engine.Rendering.Views
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void Unlink(IntPtr handle, CryEntity entity);
 
-		[UnmanagedThunk("Raises event Updating")]
+		[RawThunk("Raises event Updating")]
 		private void OnUpdating(ref ViewParameters parameters)
 		{
-			var handler = this.Updating;
-			if (handler != null)
+			try
 			{
-				handler(this, ref parameters);
+				var handler = this.Updating;
+				if (handler != null)
+				{
+					handler(this, ref parameters);
+				}
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
 			}
 		}
-		[UnmanagedThunk("Raises event Updated")]
+		[RawThunk("Raises event Updated")]
 		private void OnUpdated(ref ViewParameters parameters)
 		{
-			var handler = this.Updated;
-			if (handler != null)
+			try
 			{
-				handler(this, ref parameters);
+				var handler = this.Updated;
+				if (handler != null)
+				{
+					handler(this, ref parameters);
+				}
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
 			}
 		}
 		#endregion

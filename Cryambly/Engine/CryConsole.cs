@@ -502,8 +502,6 @@ namespace CryCil.Engine
 																	   ConsoleFlags flags, IntPtr thunk,
 																	   string help = null);
 		[UnmanagedThunk("Invoked by underlying framework to execute appropriate console command.")]
-		[SuppressMessage("ReSharper", "ExceptionNotDocumentedOptional")]
-		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		private static void ExecuteMonoCommand(string commandLine)
 		{
 			string[] parts = commandLine.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);

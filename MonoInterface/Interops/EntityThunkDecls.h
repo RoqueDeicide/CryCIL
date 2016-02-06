@@ -4,25 +4,25 @@
 #include "MonoEntitySpawnParams.h"
 #include <IGameObject.h>
 
-typedef void(__stdcall *DisposeMonoEntityThunk)(mono::exception *);
+RAW_THUNK typedef void(*DisposeMonoEntityThunk)();
 
-typedef mono::object(__stdcall *CreateAbstractionLayerThunk)(mono::string, EntityId, IEntity *, mono::exception *);
-typedef mono::object(__stdcall *RaiseOnInitThunk)(mono::object, mono::exception *);
+RAW_THUNK typedef mono::object(*CreateAbstractionLayerThunk)(mono::string, EntityId, IEntity *);
+RAW_THUNK typedef mono::object(*RaiseOnInitThunk)(mono::object);
 
-typedef void(__stdcall *ClientInitRaiseThunk)(mono::object, ushort, mono::exception *);
+RAW_THUNK typedef void(*ClientInitRaiseThunk)(mono::object, ushort);
 
-typedef bool(__stdcall *ReloadEventThunk)(mono::object, MonoEntitySpawnParams *, mono::exception *);
+RAW_THUNK typedef bool(*ReloadEventThunk)(mono::object, MonoEntitySpawnParams *);
 
-typedef void(__stdcall *ReloadedEventThunk)(mono::object, MonoEntitySpawnParams *, mono::exception *);
+RAW_THUNK typedef void(*ReloadedEventThunk)(mono::object, MonoEntitySpawnParams *);
 
-typedef bool(__stdcall *GetSignatureThunk)(mono::object, ISerialize *, mono::exception *);
+RAW_THUNK typedef bool(*GetSignatureThunk)(mono::object, ISerialize *);
 
-typedef bool(__stdcall *SyncInternalThunk)(mono::object, ISerialize *, mono::exception *);
+RAW_THUNK typedef bool(*SyncInternalThunk)(mono::object, ISerialize *);
 
-typedef bool(__stdcall *NetSyncInternalThunk)(mono::object, ISerialize *, EEntityAspects, byte, int, mono::exception *);
+RAW_THUNK typedef bool(*NetSyncInternalThunk)(mono::object, ISerialize *, EEntityAspects, byte, int);
 
-typedef void(__stdcall *UpdateEntityThunk)(mono::object, SEntityUpdateContext&, mono::exception *);
+RAW_THUNK typedef void(*UpdateEntityThunk)(mono::object, SEntityUpdateContext&);
 
-typedef void(__stdcall *OnAuthorizedEntityThunk)(mono::object, bool, mono::exception *);
+RAW_THUNK typedef void(*OnAuthorizedEntityThunk)(mono::object, bool);
 
-typedef void(__stdcall *PostUpdateEntityThunk)(mono::object, mono::exception *);
+RAW_THUNK typedef void(*PostUpdateEntityThunk)(mono::object);

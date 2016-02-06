@@ -7,18 +7,17 @@ IMonoClass *GetFlowNodeClass()
 	return MonoEnv->Cryambly->GetClass("CryCil.Engine.Logic", "FlowNode");
 }
 
-typedef mono::object(__stdcall *CreateThunk)(IFlowGraph *, ushort, ushort, mono::exception *);
+RAW_THUNK typedef mono::object(*CreateThunk)(IFlowGraph *, ushort, ushort);
 
 MonoFlowNode::MonoFlowNode(TFlowNodeTypeId typeId, SActivationInfo *info, bool &cancel)
 	: refCount(0)
 	, objHandle(-1)
 	, targetsEntity(false)
 {
-	static CreateThunk thunk = CreateThunk(GetFlowNodeClass()->GetFunction("Create")->UnmanagedThunk);
+	static CreateThunk thunk = CreateThunk(GetFlowNodeClass()->GetFunction("Create")->RawThunk);
 
-	mono::exception ex;
-	mono::object obj = thunk(info->pGraph, typeId, info->myID, &ex);
-	if (ex || !obj)
+	mono::object obj = thunk(info->pGraph, typeId, info->myID);
+	if (!obj)
 	{
 		delete this;
 		cancel = true;
@@ -27,7 +26,7 @@ MonoFlowNode::MonoFlowNode(TFlowNodeTypeId typeId, SActivationInfo *info, bool &
 	cancel = false;
 }
 
-typedef void(*NodeReleaseThunk)(mono::object);
+RAW_THUNK typedef void(*NodeReleaseThunk)(mono::object);
 
 MonoFlowNode::~MonoFlowNode()
 {
@@ -101,12 +100,12 @@ struct MonoFlowNodeConfig
 	unsigned int flags;
 };
 
-typedef void(__stdcall *GetConfigurationThunk)(mono::object, MonoFlowNodeConfig *, mono::exception *);
+typedef void(*GetConfigurationThunk)(mono::object, MonoFlowNodeConfig *);
 
 void MonoFlowNode::GetConfiguration(SFlowNodeConfig &config)
 {
 	static GetConfigurationThunk thunk =
-		GetConfigurationThunk(GetFlowNodeClass()->GetFunction("GetConfiguration", 1)->UnmanagedThunk);
+		GetConfigurationThunk(GetFlowNodeClass()->GetFunction("GetConfiguration", 1)->RawThunk);
 
 	if (this->nodeConfig.sUIClassName != nullptr || !this->objHandle.IsValid)
 	{
@@ -115,13 +114,7 @@ void MonoFlowNode::GetConfiguration(SFlowNodeConfig &config)
 	}
 
 	MonoFlowNodeConfig conf;
-	mono::exception ex;
-	thunk(this->objHandle.Object, &conf, &ex);
-
-	if (ex)
-	{
-		MonoEnv->HandleException(ex);
-	}
+	thunk(this->objHandle.Object, &conf);
 
 	this->targetsEntity = (conf.flags & EFLN_TARGET_ENTITY) != 0;
 
@@ -154,7 +147,7 @@ void MonoFlowNode::GetConfiguration(SFlowNodeConfig &config)
 	this->nodeConfig = config;
 }
 
-typedef bool(*SaveLoadThunk)(mono::object, IXmlNode *);
+RAW_THUNK typedef bool(*SaveLoadThunk)(mono::object, IXmlNode *);
 
 bool MonoFlowNode::SerializeXML(SActivationInfo *, const XmlNodeRef& root, bool reading)
 {
@@ -176,7 +169,7 @@ bool MonoFlowNode::SerializeXML(SActivationInfo *, const XmlNodeRef& root, bool 
 	}
 }
 
-typedef void(*SerializeThunk)(mono::object, ISerialize *);
+RAW_THUNK typedef void(*SerializeThunk)(mono::object, ISerialize *);
 
 void MonoFlowNode::Serialize(SActivationInfo *, TSerialize ser)
 {
@@ -190,7 +183,7 @@ void MonoFlowNode::Serialize(SActivationInfo *, TSerialize ser)
 	thunk(this->objHandle.Object, *reinterpret_cast<ISerialize **>(&ser));
 }
 
-typedef void(*PostSerializeThunk)(mono::object);
+RAW_THUNK typedef void(*PostSerializeThunk)(mono::object);
 
 void MonoFlowNode::PostSerialize(SActivationInfo *)
 {

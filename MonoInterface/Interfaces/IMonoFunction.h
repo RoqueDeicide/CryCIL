@@ -220,7 +220,9 @@ public:
 	//!
 	//! 1) If the method through an exception and it's not handled, then there is no way to catch it.
 	//! 2) The method has to return mono::object unless it returns a built-in primitive type.
-	//! 3) It is not known if raw thunks can be used to invoke instance or virtual methods.
+	//! 3) It is not known if raw thunks can be used to invoke virtual methods.
+	//! 4) Raw thunks of instance methods take a mono::object (for classes) or pointer to the object
+	//! (for structures) as their first argument.
 	//!
 	//! On brighter side, you don't need to box value-type objects that you pass as arguments, allowing you
 	//! to completely avoid boxing values, which is very important for interop-calls with application loops
@@ -252,6 +254,33 @@ public:
 	//! @code{.cpp}
 	//!
 	//! typedef void(*InterpolateRawThunk)(Vec3, Vec3, float, Vec3 *);
+	//!
+	//! @endcode
+	//!
+	//! Here is an example of how raw thunks are used in CryCIL code.
+	//!
+	//! @code{.cs}
+	//!
+	//! private void EventRaiser(ref EventInfo info)
+	//! {
+	//!     try
+	//!     {
+	//!         var handler = Event;
+	//!         if (handler != null) handler(ref info);
+	//!     }
+	//!     catch (Exception ex)
+	//!     {
+	//!         // Show a window with information about the exception.
+	//!         MonoInterface.DisplayException(ex);
+	//!     }
+	//! }
+	//!
+	//! @endcode
+	//!
+	//! @code{.cpp}
+	//!
+	//! // TypeDef that defines a signature of the above method.
+	//! RAW_THUNK typedef void(* EventRaiserThunk)(const EventInfo &);
 	//!
 	//! @endcode
 	__declspec(property(get = GetFunctionPointer)) void *RawThunk;

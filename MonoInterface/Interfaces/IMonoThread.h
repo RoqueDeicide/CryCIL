@@ -26,21 +26,21 @@ enum ThreadPriority
 	Highest =     4,	//!< The Thread can be scheduled before threads with any other priority.
 };
 
-typedef void        (__stdcall *DetachThunk)       (mono::Thread,               mono::exception *);
-typedef void        (__stdcall *StartThunk)        (mono::Thread,               mono::exception *);
-typedef void        (__stdcall *StartObjThunk)     (mono::Thread, mono::object, mono::exception *);
-typedef void        (__stdcall *AbortThunk)        (mono::Thread,               mono::exception *);
-typedef void        (__stdcall *JoinThunk)         (mono::Thread,               mono::exception *);
-typedef bool        (__stdcall *JoinIntThunk)      (mono::Thread, int,          mono::exception *);
+UNMANAGED_THUNK typedef void        (__stdcall *DetachThunk)       (mono::Thread,               mono::exception *);
+UNMANAGED_THUNK typedef void        (__stdcall *StartThunk)        (mono::Thread,               mono::exception *);
+UNMANAGED_THUNK typedef void        (__stdcall *StartObjThunk)     (mono::Thread, mono::object, mono::exception *);
+UNMANAGED_THUNK typedef void        (__stdcall *AbortThunk)        (mono::Thread,               mono::exception *);
+UNMANAGED_THUNK typedef void        (__stdcall *JoinThunk)         (mono::Thread,               mono::exception *);
+UNMANAGED_THUNK typedef bool        (__stdcall *JoinIntThunk)      (mono::Thread, int,          mono::exception *);
 
-typedef mono::string(__stdcall *GetNameThunk)      (mono::Thread,               mono::exception *);
-typedef void        (__stdcall *SetNameThunk)      (mono::Thread, mono::string, mono::exception *);
-typedef int         (__stdcall *GetStateThunk)     (mono::Thread,               mono::exception *);
-typedef bool        (__stdcall *GetIsAliveThunk)   (mono::Thread,               mono::exception *);
-typedef bool        (__stdcall *GetBackgroundThunk)(mono::Thread,               mono::exception *);
-typedef void        (__stdcall *SetBackgroundThunk)(mono::Thread, bool,         mono::exception *);
-typedef int         (__stdcall *GetPriorityThunk)  (mono::Thread,               mono::exception *);
-typedef void        (__stdcall *SetPriorityThunk)  (mono::Thread, int,          mono::exception *);
+UNMANAGED_THUNK typedef mono::string(__stdcall *GetNameThunk)      (mono::Thread,               mono::exception *);
+UNMANAGED_THUNK typedef void        (__stdcall *SetNameThunk)      (mono::Thread, mono::string, mono::exception *);
+UNMANAGED_THUNK typedef int         (__stdcall *GetStateThunk)     (mono::Thread,               mono::exception *);
+UNMANAGED_THUNK typedef bool        (__stdcall *GetIsAliveThunk)   (mono::Thread,               mono::exception *);
+UNMANAGED_THUNK typedef bool        (__stdcall *GetBackgroundThunk)(mono::Thread,               mono::exception *);
+UNMANAGED_THUNK typedef void        (__stdcall *SetBackgroundThunk)(mono::Thread, bool,         mono::exception *);
+UNMANAGED_THUNK typedef int         (__stdcall *GetPriorityThunk)  (mono::Thread,               mono::exception *);
+UNMANAGED_THUNK typedef void        (__stdcall *SetPriorityThunk)  (mono::Thread, int,          mono::exception *);
 
 
 //! Wraps functionality of Mono threads.

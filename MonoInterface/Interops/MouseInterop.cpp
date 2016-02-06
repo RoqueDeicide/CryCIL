@@ -2,8 +2,8 @@
 
 #include "MouseInterop.h"
 
-typedef void(*positionThunk)(int, int, mono::exception *);
-typedef void(*wheelDeltaThunk)(int, mono::exception *);
+RAW_THUNK typedef void(*positionThunk)(int, int);
+RAW_THUNK typedef void(*wheelDeltaThunk)(int);
 
 void MouseInterop::OnRunTimeInitialized()
 {
@@ -53,41 +53,40 @@ void MouseInterop::OnHardwareMouseEvent(int iX, int iY, EHARDWAREMOUSEEVENT eHar
 	
 	static wheelDeltaThunk wheel = wheelDeltaThunk(klass->GetFunction("OnWheel", -1)->UnmanagedThunk);
 
-	mono::exception ex;
 	switch (eHardwareMouseEvent)
 	{
 	case HARDWAREMOUSEEVENT_MOVE:
-		moveM(iX, iY, &ex);
+		moveM(iX, iY);
 		break;
 	case HARDWAREMOUSEEVENT_LBUTTONDOWN:
-		rmbd(iX, iY, &ex);
+		rmbd(iX, iY);
 		break;
 	case HARDWAREMOUSEEVENT_LBUTTONUP:
-		rmbu(iX, iY, &ex);
+		rmbu(iX, iY);
 		break;
 	case HARDWAREMOUSEEVENT_LBUTTONDOUBLECLICK:
-		rmbdd(iX, iY, &ex);
+		rmbdd(iX, iY);
 		break;
 	case HARDWAREMOUSEEVENT_RBUTTONDOWN:
-		lmbd(iX, iY, &ex);
+		lmbd(iX, iY);
 		break;
 	case HARDWAREMOUSEEVENT_RBUTTONUP:
-		lmbu(iX, iY, &ex);
+		lmbu(iX, iY);
 		break;
 	case HARDWAREMOUSEEVENT_RBUTTONDOUBLECLICK:
-		lmbdd(iX, iY, &ex);
+		lmbdd(iX, iY);
 		break;
 	case HARDWAREMOUSEEVENT_MBUTTONDOWN:
-		mmbd(iX, iY, &ex);
+		mmbd(iX, iY);
 		break;
 	case HARDWAREMOUSEEVENT_MBUTTONUP:
-		mmbu(iX, iY, &ex);
+		mmbu(iX, iY);
 		break;
 	case HARDWAREMOUSEEVENT_MBUTTONDOUBLECLICK:
-		mmbdd(iX, iY, &ex);
+		mmbdd(iX, iY);
 		break;
 	case HARDWAREMOUSEEVENT_WHEEL:
-		wheel(wheelDelta, &ex);
+		wheel(wheelDelta);
 		break;
 	default:
 		break;

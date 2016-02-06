@@ -216,7 +216,7 @@ namespace CryCil.Engine.Models.Characters.Faces
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void Serialize(IntPtr handle, IntPtr xmlNodeHandle, bool bLoading);
 
-		[UnmanagedThunk("Invoked from underlying framework to call a visitor delegate.")]
+		[RawThunk("Invoked from underlying framework to call a visitor delegate.")]
 		private static void CallTheVisitor(EffectorsLibraryVisitor visitor, FacialEffector effector)
 		{
 			// We are not checking for null, because null visitors will not be allowed to proceed earlier

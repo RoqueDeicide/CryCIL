@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using CryCil.Engine.Data;
+using CryCil.RunTime;
 using CryCil.RunTime.Registration;
 
 namespace CryCil.Engine.Logic
@@ -93,7 +93,10 @@ namespace CryCil.Engine.Logic
 		/// Sets the value that indicates whether this entity receives post updates.
 		/// </summary>
 		/// <remarks>
-		/// <para>Only entities for which this proeprty is <c>true</c> can have their <see cref="PostUpdate"/> method invoked.</para>
+		/// <para>
+		/// Only entities for which this proeprty is <c>true</c> can have their <see cref="PostUpdate"/>
+		/// method invoked.
+		/// </para>
 		/// <para>By default entities do not receive post updates.</para>
 		/// </remarks>
 		/// <exception cref="ObjectDisposedException">This entity doesn't exist.</exception>
@@ -113,7 +116,10 @@ namespace CryCil.Engine.Logic
 		/// Gets or sets the value that indicates whether this entity receives updates.
 		/// </summary>
 		/// <remarks>
-		/// <para>Only entities for which this proeprty is <c>true</c> can have their <see cref="Update"/> method invoked.</para>
+		/// <para>
+		/// Only entities for which this proeprty is <c>true</c> can have their <see cref="Update"/> method
+		/// invoked.
+		/// </para>
 		/// <para>By default entities do not receive updates unless they were spawned as active.</para>
 		/// </remarks>
 		/// <exception cref="ObjectDisposedException">This entity doesn't exist.</exception>
@@ -139,10 +145,14 @@ namespace CryCil.Engine.Logic
 			}
 		}
 		/// <summary>
-		/// Gets or sets the value that indicates whether this entity receives updates prior to update of the physical world.
+		/// Gets or sets the value that indicates whether this entity receives updates prior to update of
+		/// the physical world.
 		/// </summary>
 		/// <remarks>
-		/// <para>Only entities for which this proeprty is <c>true</c> can have their <see cref="MonoEntity.PrePhysicsUpdate"/> method invoked.</para>
+		/// <para>
+		/// Only entities for which this proeprty is <c>true</c> can have their
+		/// <see cref="MonoEntity.PrePhysicsUpdate"/> method invoked.
+		/// </para>
 		/// <para>By default entities do not receive pre-physics updates.</para>
 		/// </remarks>
 		/// <exception cref="ObjectDisposedException">This entity doesn't exist.</exception>
@@ -305,132 +315,216 @@ namespace CryCil.Engine.Logic
 		public abstract void PostUpdate();
 		#endregion
 		#region Utilities
-		[UnmanagedThunk("Updates this object.")]
+		[RawThunk("Updates this object.")]
 		private void UpdateInternal(ref EntityUpdateContext context)
 		{
-			this.Update(ref context);
-
-			for (int i = 0; i < this.Extensions.Count; i++)
+			try
 			{
-				this.Extensions[i].Update(ref context);
+				this.Update(ref context);
+
+				for (int i = 0; i < this.Extensions.Count; i++)
+				{
+					this.Extensions[i].Update(ref context);
+				}
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
 			}
 		}
-		[UnmanagedThunk("Post-updates this object.")]
+		[RawThunk("Post-updates this object.")]
 		private void PostUpdateInternal()
 		{
-			this.PostUpdate();
-
-			for (int i = 0; i < this.Extensions.Count; i++)
+			try
 			{
-				this.Extensions[i].PostUpdate();
+				this.PostUpdate();
+
+				for (int i = 0; i < this.Extensions.Count; i++)
+				{
+					this.Extensions[i].PostUpdate();
+				}
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
 			}
 		}
-		[UnmanagedThunk("Releases this object when the entity is removed by CryEngine.")]
+		[RawThunk("Releases this object when the entity is removed by CryEngine.")]
 		private void DisposeInternal()
 		{
-			this.Dispose(true);
+			try
+			{
+				this.Dispose(true);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
-		[UnmanagedThunk("Creates a managed object that serves as abstraction layer between CryEngine entity and CryCIL.")]
+		[RawThunk("Creates a managed object that serves as abstraction layer between CryEngine entity and CryCIL.")]
 		private static MonoEntity CreateAbstractionLayer(string className, EntityId identifier, CryEntity handle)
 		{
-			Type entityType;
-			if (EntityRegistry.DefinedEntityClasses.TryGetValue(className, out entityType))
+			try
 			{
-				try
+				Type entityType;
+				if (EntityRegistry.DefinedEntityClasses.TryGetValue(className, out entityType))
 				{
-					return (MonoEntity)Activator.CreateInstance(entityType, handle, identifier);
+					try
+					{
+						return (MonoEntity)Activator.CreateInstance(entityType, handle, identifier);
+					}
+					catch (Exception)
+					{
+						return null;
+					}
 				}
-				catch (Exception)
-				{
-					return null;
-				}
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
 			}
 			return null;
 		}
-		[UnmanagedThunk("Invoked from underlying object to raise the event Initializing.")]
+		[RawThunk("Invoked from underlying object to raise the event Initializing.")]
 		private void OnInitializing()
 		{
-			this.Initialize();
-
-			for (int i = 0; i < this.Extensions.Count; i++)
+			try
 			{
-				this.Extensions[i].Initialize();
-			}
+				this.Initialize();
 
-			if (this.Initializing != null) this.Initializing(this, EventArgs.Empty);
-		}
-		[UnmanagedThunk("Invoked from underlying object to raise the event Initialized.")]
-		private void OnInitialized()
-		{
-			this.PostInitialize();
-
-			for (int i = 0; i < this.Extensions.Count; i++)
-			{
-				this.Extensions[i].PostInitialize();
-			}
-
-			if (this.Initialized != null) this.Initialized(this, EventArgs.Empty);
-		}
-		[UnmanagedThunk("Invoked from underlying object to reload the entity.")]
-		private bool OnReloading(ref EntitySpawnParameters parameters)
-		{
-			if (this.Reload(ref parameters))
-			{
 				for (int i = 0; i < this.Extensions.Count; i++)
 				{
-					if (!this.Extensions[i].Reload(ref parameters))
-					{
-						return false;
-					}
+					this.Extensions[i].Initialize();
 				}
-				for (int i = 0; i < this.reloadingEventHandlers.Count; i++)
+
+				if (this.Initializing != null) this.Initializing(this, EventArgs.Empty);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
+		}
+		[RawThunk("Invoked from underlying object to raise the event Initialized.")]
+		private void OnInitialized()
+		{
+			try
+			{
+				this.PostInitialize();
+
+				for (int i = 0; i < this.Extensions.Count; i++)
 				{
-					if (!this.reloadingEventHandlers[i](this, ref parameters))
+					this.Extensions[i].PostInitialize();
+				}
+
+				if (this.Initialized != null) this.Initialized(this, EventArgs.Empty);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
+		}
+		[RawThunk("Invoked from underlying object to reload the entity.")]
+		private bool OnReloading(ref EntitySpawnParameters parameters)
+		{
+			try
+			{
+				if (this.Reload(ref parameters))
+				{
+					for (int i = 0; i < this.Extensions.Count; i++)
 					{
-						return false;
+						if (!this.Extensions[i].Reload(ref parameters))
+						{
+							return false;
+						}
+					}
+					for (int i = 0; i < this.reloadingEventHandlers.Count; i++)
+					{
+						if (!this.reloadingEventHandlers[i](this, ref parameters))
+						{
+							return false;
+						}
 					}
 				}
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
 			}
 			return true;
 		}
-		[UnmanagedThunk("Invoked from underlying object after reloading the entity.")]
+		[RawThunk("Invoked from underlying object after reloading the entity.")]
 		private void OnReloaded(ref EntitySpawnParameters parameters)
 		{
-			this.PostReload();
-
-			for (int i = 0; i < this.Extensions.Count; i++)
+			try
 			{
-				this.Extensions[i].PostReload();
-			}
+				this.PostReload();
 
-			if (this.Reloaded != null) this.Reloaded(this, ref parameters);
+				for (int i = 0; i < this.Extensions.Count; i++)
+				{
+					this.Extensions[i].PostReload();
+				}
+
+				if (this.Reloaded != null) this.Reloaded(this, ref parameters);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
-		[UnmanagedThunk("Invoked from underlying object to acquire entity's pool signature.")]
+		[RawThunk("Invoked from underlying object to acquire entity's pool signature.")]
 		private bool GetSignature(CrySync signature)
 		{
-			return this.GetEntityPoolSignature(signature);
+			try
+			{
+				return this.GetEntityPoolSignature(signature);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
+			return false;
 		}
-		[UnmanagedThunk("Invoked from underlying object to invoke Synchronize method.")]
+		[RawThunk("Invoked from underlying object to invoke Synchronize method.")]
 		private void SyncInternal(CrySync sync)
 		{
-			this.Synchronize(sync);
-
-			for (int i = 0; i < this.Extensions.Count; i++)
+			try
 			{
-				this.Extensions[i].Synchronize(sync);
+				this.Synchronize(sync);
+
+				for (int i = 0; i < this.Extensions.Count; i++)
+				{
+					this.Extensions[i].Synchronize(sync);
+				}
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
 			}
 		}
-		[UnmanagedThunk("Invoked to set one of the properties.")]
-		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
+		[RawThunk("Invoked to set one of the properties.")]
 		private void SetEditableProperty(int index, string value)
 		{
-			EntityRegistry.DefinedProperties[this.EntityClassName][index].Set(this, value);
+			try
+			{
+				EntityRegistry.DefinedProperties[this.EntityClassName][index].Set(this, value);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
 		}
-		[UnmanagedThunk("Invoked to set one of the properties.")]
-		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
+		[RawThunk("Invoked to set one of the properties.")]
 		private string GetEditableProperty(int index)
 		{
-			return EntityRegistry.DefinedProperties[this.EntityClassName][index].Get(this);
+			try
+			{
+				return EntityRegistry.DefinedProperties[this.EntityClassName][index].Get(this);
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
+			return null;
 		}
 
 		[MethodImpl(MethodImplOptions.InternalCall)]

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using CryCil.RunTime;
 
 namespace CryCil.Engine.Input
 {
@@ -23,12 +25,19 @@ namespace CryCil.Engine.Input
 		public static event TouchHandler Event;
 		#endregion
 		#region Utilities
-		[UnmanagedThunk("Invoked by underlying framework to raise Event event.")]
+		[RawThunk("Invoked by underlying framework to raise Event event.")]
 		private static void OnEvent(int device, byte deviceIndex, byte id, float x, float y)
 		{
-			if (Event != null)
+			try
 			{
-				Event((InputDeviceType)device, deviceIndex, id, new Vector2(x, y));
+				if (Event != null)
+				{
+					Event((InputDeviceType)device, deviceIndex, id, new Vector2(x, y));
+				}
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
 			}
 		}
 		#endregion

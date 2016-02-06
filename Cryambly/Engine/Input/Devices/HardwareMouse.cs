@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using CryCil.RunTime;
 
 namespace CryCil.Engine.Input
 {
@@ -165,92 +167,169 @@ namespace CryCil.Engine.Input
 		public static extern void UseSystemCursor(bool useSystemCursor);
 		#endregion
 		#region Utilities
-		[UnmanagedThunk("Invoked from underlying framework to raise RightMouseButtonDown event.")]
+		[RawThunk("Invoked from underlying framework to raise RightMouseButtonDown event.")]
 		private static void OnRightMouseButtonDown(int x, int y)
 		{
-			if (RightMouseButtonDown != null)
+			try
 			{
-				RightMouseButtonDown(x, y);
+				if (RightMouseButtonDown != null)
+				{
+					RightMouseButtonDown(x, y);
+				}
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
 			}
 		}
-		[UnmanagedThunk("Invoked from underlying framework to raise RightMouseButtonUp event.")]
+		[RawThunk("Invoked from underlying framework to raise RightMouseButtonUp event.")]
 		private static void OnRightMouseButtonUp(int x, int y)
 		{
-			if (RightMouseButtonUp != null)
+			try
 			{
-				RightMouseButtonUp(x, y);
+				if (RightMouseButtonUp != null)
+				{
+					RightMouseButtonUp(x, y);
+				}
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
 			}
 		}
-		[UnmanagedThunk("Invoked from underlying framework to raise RightMouseButtonDoubleClick event.")]
+		[RawThunk("Invoked from underlying framework to raise RightMouseButtonDoubleClick event.")]
 		private static void OnRightMouseButtonDoubleClick(int x, int y)
 		{
-			if (RightMouseButtonDoubleClick != null)
+			try
 			{
-				RightMouseButtonDoubleClick(x, y);
+				if (RightMouseButtonDoubleClick != null)
+				{
+					RightMouseButtonDoubleClick(x, y);
+				}
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
 			}
 		}
-		[UnmanagedThunk("Invoked from underlying framework to raise LeftMouseButtonDown event.")]
+		[RawThunk("Invoked from underlying framework to raise LeftMouseButtonDown event.")]
 		private static void OnLeftMouseButtonDown(int x, int y)
 		{
-			if (LeftMouseButtonDown != null)
+			try
 			{
-				LeftMouseButtonDown(x, y);
+				if (LeftMouseButtonDown != null)
+				{
+					LeftMouseButtonDown(x, y);
+				}
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
 			}
 		}
-		[UnmanagedThunk("Invoked from underlying framework to raise LeftMouseButtonUp event.")]
+		[RawThunk("Invoked from underlying framework to raise LeftMouseButtonUp event.")]
 		private static void OnLeftMouseButtonUp(int x, int y)
 		{
-			if (LeftMouseButtonUp != null)
+			try
 			{
-				LeftMouseButtonUp(x, y);
+				if (LeftMouseButtonUp != null)
+				{
+					LeftMouseButtonUp(x, y);
+				}
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
 			}
 		}
-		[UnmanagedThunk("Invoked from underlying framework to raise LeftMouseButtonDoubleClick event.")]
+		[RawThunk("Invoked from underlying framework to raise LeftMouseButtonDoubleClick event.")]
 		private static void OnLeftMouseButtonDoubleClick(int x, int y)
 		{
-			if (LeftMouseButtonDoubleClick != null)
+			try
 			{
-				LeftMouseButtonDoubleClick(x, y);
+				if (LeftMouseButtonDoubleClick != null)
+				{
+					LeftMouseButtonDoubleClick(x, y);
+				}
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
 			}
 		}
-		[UnmanagedThunk("Invoked from underlying framework to raise MiddleMouseButtonDown event.")]
+		[RawThunk("Invoked from underlying framework to raise MiddleMouseButtonDown event.")]
 		private static void OnMiddleMouseButtonDown(int x, int y)
 		{
-			if (MiddleMouseButtonDown != null)
+			try
 			{
-				MiddleMouseButtonDown(x, y);
+				if (MiddleMouseButtonDown != null)
+				{
+					MiddleMouseButtonDown(x, y);
+				}
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
 			}
 		}
-		[UnmanagedThunk("Invoked from underlying framework to raise MiddleMouseButtonUp event.")]
+		[RawThunk("Invoked from underlying framework to raise MiddleMouseButtonUp event.")]
 		private static void OnMiddleMouseButtonUp(int x, int y)
 		{
-			if (MiddleMouseButtonUp != null)
+			try
 			{
-				MiddleMouseButtonUp(x, y);
+				if (MiddleMouseButtonUp != null)
+				{
+					MiddleMouseButtonUp(x, y);
+				}
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
 			}
 		}
-		[UnmanagedThunk("Invoked from underlying framework to raise MiddleMouseButtonDoubleClick event.")]
+		[RawThunk("Invoked from underlying framework to raise MiddleMouseButtonDoubleClick event.")]
 		private static void OnMiddleMouseButtonDoubleClick(int x, int y)
 		{
-			if (MiddleMouseButtonDoubleClick != null)
+			try
 			{
-				MiddleMouseButtonDoubleClick(x, y);
+				if (MiddleMouseButtonDoubleClick != null)
+				{
+					MiddleMouseButtonDoubleClick(x, y);
+				}
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
 			}
 		}
-		[UnmanagedThunk("Invoked from underlying framework to raise Move event.")]
+		[RawThunk("Invoked from underlying framework to raise Move event.")]
 		private static void OnMove(int x, int y)
 		{
-			if (Move != null)
+			try
 			{
-				Move(x, y);
+				if (Move != null)
+				{
+					Move(x, y);
+				}
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
 			}
 		}
-		[UnmanagedThunk("Invoked from underlying framework to raise Wheel event.")]
+		[RawThunk("Invoked from underlying framework to raise Wheel event.")]
 		private static void OnWheel(int delta)
 		{
-			if (Wheel != null)
+			try
 			{
-				Wheel(delta);
+				if (Wheel != null)
+				{
+					Wheel(delta);
+				}
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
 			}
 		}
 		#endregion

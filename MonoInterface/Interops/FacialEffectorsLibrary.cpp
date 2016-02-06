@@ -49,7 +49,7 @@ IFacialEffector *FacialEffectorsLibraryInterop::GetRoot(IFacialEffectorsLibrary 
 	return handle->GetRoot();
 }
 
-typedef void(__stdcall *CallTheVisitorThunk)(mono::delegat, IFacialEffector *, mono::exception *);
+RAW_THUNK typedef void(*CallTheVisitorThunk)(mono::delegat, IFacialEffector *);
 
 //! Wrapper for a visiting delegate.
 struct MonoFacialEffectorLibraryVisitor : IFacialEffectorsLibraryEffectorVisitor
@@ -67,10 +67,9 @@ public:
 	{
 		static CallTheVisitorThunk thunk =
 			CallTheVisitorThunk(MonoEnv->Cryambly->GetClass("CryCil.Engine.Models.Characters.Faces",
-			"FacialEffectorsLibrary")->GetFunction("CallTheVisitor", 2)->UnmanagedThunk);
+			"FacialEffectorsLibrary")->GetFunction("CallTheVisitor", 2)->RawThunk);
 
-		mono::exception ex;	// Won't be checked since all exceptions will be caught in the managed code.
-		thunk(this->delegat, pEffector, &ex);
+		thunk(this->delegat, pEffector);
 	}
 };
 
