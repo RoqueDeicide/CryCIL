@@ -109,6 +109,9 @@
     <Compile Include="Engine\Localization\NamespaceDoc.cs" />
     <Compile Include="Engine\Logic\Entities\EntityExtension.cs" />
     <Compile Include="Engine\Logic\Entities\EntityExtensions.cs" />
+    <Compile Include="Engine\Logic\Entities\Networking\SimpleNetEntity.cs" />
+    <Compile Include="Engine\Logic\Entities\SimpleEntityExtension.cs" />
+    <Compile Include="Engine\Logic\Entities\SimpleMonoEntity.cs" />
     <Compile Include="Engine\Logic\EntityProxies\CryEntityAreaProxy.cs" />
     <Compile Include="Engine\Logic\EntityProxies\CryEntityAudioProxy.cs" />
     <Compile Include="Engine\Logic\EntityProxies\CryEntityCameraProxy.cs" />

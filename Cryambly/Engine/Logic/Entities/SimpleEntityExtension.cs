@@ -1,14 +1,15 @@
 ﻿using System;
+using System.Linq;
 using CryCil.Engine.Data;
-using CryCil.Engine.Logic;
 
-namespace GameLibrary.Entities
+namespace CryCil.Engine.Logic
 {
 	/// <summary>
-	/// Provides default implementations for all methods in the entity extension.
+	/// Represents the most basic implementation of <see cref="EntityExtension"/>.
 	/// </summary>
-	public abstract class SimpleEntityExtension : EntityExtension
+	public class SimpleEntityExtension : EntityExtension
 	{
+		#region Interface
 		/// <summary>
 		/// When implemented in derived class, releases resources held by this extension.
 		/// </summary>
@@ -82,5 +83,6 @@ namespace GameLibrary.Entities
 		public override void Bind()
 		{
 		}
+		#endregion
 	}
 }

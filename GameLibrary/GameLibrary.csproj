@@ -74,7 +74,6 @@
     <Compile Include="Entities\Players\Extensions\PlayerMovement.cs" />
     <Compile Include="Entities\Players\Extensions\PlayerView.cs" />
     <Compile Include="Entities\Players\Player.cs" />
-    <Compile Include="Entities\SimpleEntityExtension.cs" />
     <Compile Include="FlowNodes\GeometricEntityNode.cs" />
     <Compile Include="GameModes\SinglePlayerRules.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
