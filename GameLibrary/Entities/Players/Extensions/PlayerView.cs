@@ -61,7 +61,7 @@ namespace GameLibrary.Entities.Players.Extensions
 			CryEntity entity = this.Host.Entity;
 			parameters.Position = entity.WorldPosition;
 			parameters.Rotation = entity.WorldOrientation;
-			parameters.Fov = fov;
+			parameters.Fov = Degree.ToRadian(fov);
 		}
 		#endregion
 	}
