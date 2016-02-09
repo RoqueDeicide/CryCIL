@@ -31,6 +31,7 @@ namespace CryCil.Engine.Logic
 			catch (Exception ex)
 			{
 				MonoInterface.DisplayException(ex);
+				return null;
 			}
 		}
 		#endregion
