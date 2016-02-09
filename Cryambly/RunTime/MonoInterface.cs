@@ -113,7 +113,6 @@ namespace CryCil.RunTime
 			// Add Cryambly to the list.
 			CryCilAssemblies.Add(Assembly.GetAssembly(typeof(MonoInterface)));
 			// A simple test for redirected console output.
-			Console.WriteLine("{0} CryCIL-specific assemblies are loaded.", CryCilAssemblies.Count);
 			Console.WriteLine("Proceeding to stage-based initialization.");
 			ProceedWithInitializationStages();
 		}
@@ -133,10 +132,7 @@ namespace CryCil.RunTime
 		private static void Initialize()
 		{
 			// Accessing static variable to trigger static constructor to start initialization process.
-
-// ReSharper disable UnusedVariable
-			var l = CryCilAssemblies;
-// ReSharper restore UnusedVariable
+			Console.WriteLine("{0} CryCIL-specific assemblies are loaded.", CryCilAssemblies.Count);
 		}
 		[UnmanagedThunk("Invoked from C++ code after FlowGraph is initialized" +
 						" to register FlowGraph nodes defined in CryCIL.")]
