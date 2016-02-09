@@ -5,7 +5,7 @@
 //! Signature of the method MonoInterface.DisplayException();
 typedef mono::nothing(__stdcall *DisplayExceptionThunk)(mono::object, mono::exception *);
 //! Signature of the method MonoInterface.Initialize();
-typedef mono::object(__stdcall *InitializeThunk)(mono::exception *);
+typedef mono::object(*InitializeThunk)();
 //! Signature of the method MonoInterface.RegisterFlowGraphNodeTypes();
 typedef mono::nothing(__stdcall *RegisterFlowNodesThunk)(mono::exception *);
 //! Signature of the method MonoInterface.Update();

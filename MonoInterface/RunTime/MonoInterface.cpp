@@ -72,6 +72,7 @@ MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener
 	
 	// Tell Mono to crash the game if there is an exception that wasn't handled.
 	mono_set_signal_chaining(true);
+	mono_set_crash_chaining(true);
 	
 	InterfaceMessage("Initializing Mono debugging.");
 	
@@ -149,14 +150,14 @@ MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener
 	this->broadcaster->OnRunTimeInitialized();
 	
 	// Initialize an instance of type MonoInterface.
-	mono::exception ex;
-	MonoInterfaceThunks::Initialize(&ex);
-	if (ex)
+	//mono::exception ex;
+	MonoInterfaceThunks::Initialize();
+	/*if (ex)
 	{
-		mono::exception eX;
-		MonoInterfaceThunks::DisplayException(ex, &eX);
-		CryFatalError("CryCil.RunTime.MonoInterface object was not initialized. Cannot continue.");
-	}
+	mono::exception eX;
+	MonoInterfaceThunks::DisplayException(ex, &eX);
+	CryFatalError("CryCil.RunTime.MonoInterface object was not initialized. Cannot continue.");
+	}*/
 	
 	this->framework->RegisterListener(this, "CryCIL", FRAMEWORKLISTENERPRIORITY_GAME);
 	gEnv->pSystem->GetISystemEventDispatcher()->RegisterListener(this);
@@ -458,15 +459,22 @@ void MonoInterface::RegisterDefaultListeners()
 	{
 		InterfaceMessage("Getting a thunk for a method %s(%s) in the class %s.%s.", methodName, params, nameSpace, className);
 
-		IMonoClass *klass = assembly->GetClass(nameSpace, className);
+		//IMonoClass *klass = assembly->GetClass(nameSpace, className);
+		MonoImage *image = mono_assembly_get_image(assembly->GetHandle<MonoAssembly>());
+		MonoClass *klass = mono_class_from_name(image, nameSpace, className);
 
 		InterfaceMessage("Got the class wrapper.");
 
-		IMonoFunction *function = klass->GetFunction(methodName, params);
+		//IMonoFunction *function = klass->GetFunction(methodName, params);
+		MonoMethod *method = mono_class_get_method_from_name(klass, methodName, -1);
+
+		/*MonoObject *ex;
+		mono_runtime_invoke(method, nullptr, nullptr, &ex);*/
 
 		InterfaceMessage("Got the function.");
 
-		void *thunk = function->UnmanagedThunk;
+		//void *thunk = function->RawThunk;
+		void *thunk = mono_compile_method(method);
 
 		InterfaceMessage("Got the thunk.");
 

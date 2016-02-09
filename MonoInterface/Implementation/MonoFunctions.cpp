@@ -115,9 +115,14 @@ void *MonoFunctions::GetThunk(_MonoMethod *func)
 
 void *MonoFunctions::GetFunctionPointer(_MonoMethod *func)
 {
+	FunctionsMessage("Querying the thunk.");
 	if (func)
 	{
-		return mono_compile_method(func);
+		FunctionsMessage("Getting the thunk.");
+		auto thunk = mono_compile_method(func);
+		FunctionsMessage("Got the thunk.");
+
+		return thunk;
 	}
 	return nullptr;
 }
