@@ -29,11 +29,6 @@ MonoAssemblyWrapper::MonoAssemblyWrapper(MonoAssembly *assembly)
 //! @param failed       Indicates whether this constructor was successful.
 MonoAssemblyWrapper::MonoAssemblyWrapper(const char *assemblyFile, bool &failed)
 {
-	if (Pdb2MdbThunks::Convert)
-	{
-		mono::exception ex;
-		Pdb2MdbThunks::Convert(ToMonoString(assemblyFile), &ex);
-	}
 	MonoImageOpenStatus status;
 	this->assembly = mono_assembly_open(assemblyFile, &status);
 	failed = status != MONO_IMAGE_OK;

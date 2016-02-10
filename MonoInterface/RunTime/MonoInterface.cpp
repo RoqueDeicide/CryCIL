@@ -114,9 +114,13 @@ MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener
 	
 	// Load Cryambly.
 	const char *cryamblyFile = DirectoryStructure::GetCryamblyFile();
+	
 	InterfaceMessage("Creating a Cryambly object.");
+	
 	this->cryambly = new CryamblyWrapper(cryamblyFile);
+	
 	InterfaceMessage("Creating a CoreLibrary object.");
+	
 	this->corlib = new MonoCoreLibrary();
 	
 	InterfaceMessage("Initializing main thunks.");
@@ -417,7 +421,8 @@ void MonoInterface::RegisterDefaultListeners()
 	}
 	void MonoInterface::InitializeMonoInterfaceThunks()
 	{
-		CryLogAlways("Initializing mono interface thunks.");
+		InterfaceMessage("Initializing mono interface thunks.");
+
 		MonoInterfaceThunks::Initialize =
 			this->GetMethodThunk<InitializeThunk>
 			(this->cryambly, "CryCil.RunTime", "MonoInterface", "Initialize", nullptr);

@@ -26,7 +26,7 @@ Pair<Text *, Text *> GetAssemblyNames(MonoImage *image)
 
 	//mono_assembly_name_free(aname);
 
-	UtilityMessage("Released internals of the name object.");
+	//UtilityMessage("Released internals of the name object.");
 
 	mono_free(aname);
 

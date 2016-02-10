@@ -27,14 +27,17 @@ public:
 
 		this->prop = prop;
 		this->klass = klass;
+
 		PropertyMessage("Stored pointers to the property and class.");
 		
 		MonoMethod *getterMethod = mono_property_get_get_method(prop);
 		MonoMethod *setterMethod = mono_property_get_set_method(prop);
+
 		PropertyMessage("Got the getter and setter methods.");
 
 		bool isStatic =
 			mono_signature_is_instance(mono_method_signature(getterMethod ? getterMethod : setterMethod)) != 0;
+		
 		PropertyMessage("Checked whether this property is static.");
 
 		if (getterMethod)
@@ -48,7 +51,9 @@ public:
 				this->getter = new MonoMethodWrapper(getterMethod, klass);
 			}
 		}
+		
 		PropertyMessage("Created wrapper for getter.");
+		
 		if (setterMethod)
 		{
 			if (isStatic)
@@ -60,6 +65,7 @@ public:
 				this->setter = new MonoMethodWrapper(setterMethod, klass);
 			}
 		}
+		
 		PropertyMessage("Created wrapper for setter.");
 	}
 	~MonoPropertyWrapper()

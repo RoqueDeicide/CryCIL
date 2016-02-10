@@ -18,7 +18,13 @@ private:
 	int raiseDefined;			//!< -1 - unchecked; 0 - raise method is not defined; 1 - defined.
 public:
 	MonoEventWrapper(MonoEvent *_event, IMonoClass *klass = nullptr)
-		: raiseDefined(-1)
+		: _event(nullptr)
+		, klass(nullptr)
+		, add(nullptr)
+		, remove(nullptr)
+		, raise(nullptr)
+		, isStatic(false)
+		, raiseDefined(-1)
 	{
 		this->_event = _event;
 		this->klass = klass;

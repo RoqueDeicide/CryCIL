@@ -19,7 +19,8 @@ const char *MonoFunctions::GetName(_MonoMethod *method)
 	return mono_method_get_name(method);
 }
 
-void MonoFunctions::AddInternalCall(const char *nameSpace, const char *className, const char *name, void *functionPointer)
+void MonoFunctions::AddInternalCall(const char *nameSpace, const char *className, const char *name,
+									void *functionPointer)
 {
 	mono_add_internal_call(NtText({ nameSpace, ".", className, "::", name }), functionPointer);
 }
@@ -29,7 +30,8 @@ void *MonoFunctions::LookupInternalCall(IMonoFunction *func)
 	return mono_lookup_internal_call(func->GetHandle<MonoMethod>());
 }
 
-mono::object MonoFunctions::InternalInvoke(_MonoMethod *func, void *object, void **args, mono::exception *ex, bool polymorph)
+mono::object MonoFunctions::InternalInvoke(_MonoMethod *func, void *object, void **args, mono::exception *ex,
+										   bool polymorph)
 {
 	MonoMethod *methodToInvoke;
 	if (polymorph)
@@ -65,7 +67,8 @@ mono::object MonoFunctions::InternalInvoke(_MonoMethod *func, void *object, void
 	return mono::object(result);
 }
 
-mono::object MonoFunctions::InternalInvokeArray(_MonoMethod *func, void *object, IMonoArray<> &args, mono::exception *ex, bool polymorph)
+mono::object MonoFunctions::InternalInvokeArray(_MonoMethod *func, void *object, IMonoArray<> &args,
+												mono::exception *ex, bool polymorph)
 {
 	MonoMethod *methodToInvoke;
 	if (polymorph)

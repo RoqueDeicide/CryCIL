@@ -20,14 +20,17 @@ MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 	ClassMessage("Creating a wrapper.");
 
 	this->wrappedClass = klass;
+
 	ClassMessage("Stored a pointer to the class.");
 
 	this->name      = mono_class_get_name(klass);
 	this->nameSpace = mono_class_get_namespace(klass);
+
 	ClassMessage("Stored a name and a namespace of the class.");
 
 	this->methods    = SortedList<const char *, List<IMonoFunction *> *>(30, strcmp);
 	this->properties = SortedList<const char *, List<IMonoProperty *> *>(30, strcmp);
+
 	ClassMessage("Created lists for methods and properties.");
 	
 	MonoClass *base = klass;
@@ -59,6 +62,7 @@ MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 			{
 				methodWrapper = new MonoStaticMethod(met, this);
 			}
+
 			ClassMessage("Created a wrapper for a method %s", methodName);
 
 			overloads->Add(methodWrapper);
@@ -83,7 +87,9 @@ MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 		while (MonoEvent *ev   = mono_class_get_events(base, &iter))
 		{
 			MonoEventWrapper *_event = new MonoEventWrapper(ev, this);
+
 			ClassMessage("Found an event %s", _event->Name);
+
 			this->events.Add(_event);
 		}
 		// Cache fields.
@@ -91,8 +97,10 @@ MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 		while (MonoClassField *f = mono_class_get_fields(base, &iter))
 		{
 			MonoField *field = new MonoField(f, this);
+
 			ClassMessage("Found a field %s", field->Name);
-			this->fields.Add(new MonoField(f, this));
+
+			this->fields.Add(field);
 		}
 
 		base = mono_class_get_parent(base);
@@ -106,6 +114,7 @@ MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 	this->properties.Trim();
 	this->events.Trim();
 	this->fields.Trim();
+
 	// Create a simple list of methods for occasions when a simple list needs to be iterated through.
 	this->flatMethodList = List<IMonoFunction *>(this->methods.Length * 2);
 	this->methods.ForEach
