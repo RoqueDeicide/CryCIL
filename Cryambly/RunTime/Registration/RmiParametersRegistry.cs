@@ -22,15 +22,8 @@ namespace CryCil.RunTime.Registration
 		#region Fields
 		private static SortedList<string, RmiTypeDesc> rmiParamTypes;
 		#endregion
-		#region Properties
-		#endregion
-		#region Events
-		#endregion
-		#region Construction
-		#endregion
 		#region Interface
 		[InitializationStage((int)DefaultInitializationStages.RmiRegistrationStage)]
-		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		private static void RegisterRmiParamTypes(int index)
 		{
 			var linq = from assembly in MonoInterface.CryCilAssemblies
@@ -62,17 +55,23 @@ namespace CryCil.RunTime.Registration
 		/// An object that is capable of receiving RMI data from remote machine, or <c>null</c>, if the
 		/// type with given name wasn't found.
 		/// </returns>
-		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		public static RmiParameters AcquireReceptor(string name)
 		{
-			RmiTypeDesc desc;
-			if (rmiParamTypes.TryGetValue(name, out desc))
+			try
 			{
-				if (desc.DefaultConstructor != null)
+				RmiTypeDesc desc;
+				if (rmiParamTypes.TryGetValue(name, out desc))
 				{
-					return desc.DefaultConstructor.Invoke(null) as RmiParameters;
+					if (desc.DefaultConstructor != null)
+					{
+						return desc.DefaultConstructor.Invoke(null) as RmiParameters;
+					}
+					return desc.GetReceptorMethod.Invoke(null, null) as RmiParameters;
 				}
-				return desc.GetReceptorMethod.Invoke(null, null) as RmiParameters;
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
 			}
 			return null;
 		}

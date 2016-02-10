@@ -73,7 +73,6 @@ namespace CryCil.RunTime
 			this.Close();
 		}
 
-		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		private void Terminate(object sender, EventArgs e)
 		{
 			Process.GetCurrentProcess().Kill();

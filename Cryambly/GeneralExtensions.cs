@@ -570,10 +570,10 @@ namespace CryCil
 		/// </returns>
 		/// <exception cref="TypeLoadException">The custom attribute type cannot be loaded.</exception>
 		[NotNull]
-		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		public static T[] GetAttributes<T>([NotNull] this ICustomAttributeProvider reflectionObject)
 			where T : Attribute
 		{
+			// ReSharper disable once ExceptionNotDocumented
 			return (T[])reflectionObject.GetCustomAttributes(typeof(T), true);
 		}
 		/// <summary>
@@ -601,10 +601,10 @@ namespace CryCil
 		/// </param>
 		/// <returns>True if the attribute exists.</returns>
 		/// <exception cref="TypeLoadException">The custom attribute type cannot be loaded.</exception>
-		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		public static bool TryGetAttribute<T>([NotNull] this ICustomAttributeProvider reflectionObject, out T attribute)
 			where T : Attribute
 		{
+			// ReSharper disable once ExceptionNotDocumented
 			var attributes = reflectionObject.GetCustomAttributes(typeof(T), true);
 
 			if (attributes.Length > 0)

@@ -6,6 +6,7 @@ using CryCil.Engine.Logic;
 using CryCil.Engine.Memory;
 using CryCil.Engine.Rendering;
 using CryCil.Geometry;
+using CryCil.RunTime;
 
 namespace CryCil.Engine.Physics
 {
@@ -156,7 +157,6 @@ namespace CryCil.Engine.Physics
 		/// Gets or sets an array of surface type mappings that are used the geometry of this part.
 		/// </summary>
 		[CanBeNull]
-		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		public int[] SurfaceTypesMapping
 		{
 			get { return this.matMappings; }
@@ -175,8 +175,18 @@ namespace CryCil.Engine.Physics
 					return;
 				}
 
-				this.nMats = value.Length;
-				int* mappings = (int*)CryMarshal.Allocate((ulong)(sizeof(int) * this.nMats), false).ToPointer();
+				int* mappings;
+
+				try
+				{
+					this.nMats = value.Length;
+					mappings = (int*)CryMarshal.Allocate((ulong)(sizeof(int) * this.nMats), false).ToPointer();
+				}
+				catch (Exception ex)
+				{
+					MonoInterface.DisplayException(ex);
+					return;
+				}
 
 				fixed (int* arrayPtr = value)
 				{

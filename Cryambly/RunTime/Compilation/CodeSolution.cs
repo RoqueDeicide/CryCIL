@@ -118,7 +118,6 @@ namespace CryCil.RunTime.Compilation
 		}
 		#endregion
 		#region Utilities
-		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		private static void ParseFile([PathReference] string file)
 		{
 			// Load up the file.

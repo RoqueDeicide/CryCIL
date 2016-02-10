@@ -40,9 +40,8 @@ namespace CryCil
 
 		private static uint[] GenerateMantissaTable()
 		{
-			// ReSharper disable LocalVariableHidesMember
 			uint[] mantissaTable = new uint[2048];
-			// ReSharper restore LocalVariableHidesMember
+
 			mantissaTable[0] = 0;
 			for (int i = 1; i < 1024; i++)
 			{
@@ -57,9 +56,8 @@ namespace CryCil
 		}
 		private static uint[] GenerateExponentTable()
 		{
-			// ReSharper disable LocalVariableHidesMember
 			uint[] exponentTable = new uint[64];
-			// ReSharper restore LocalVariableHidesMember
+
 			exponentTable[0] = 0;
 			for (int i = 1; i < 31; i++)
 			{
@@ -77,9 +75,8 @@ namespace CryCil
 		}
 		private static ushort[] GenerateOffsetTable()
 		{
-			// ReSharper disable LocalVariableHidesMember
 			ushort[] offsetTable = new ushort[64];
-			// ReSharper restore LocalVariableHidesMember
+
 			offsetTable[0] = 0;
 			for (int i = 1; i < 32; i++)
 			{
@@ -95,9 +92,8 @@ namespace CryCil
 		}
 		private static ushort[] GenerateBaseTable()
 		{
-			// ReSharper disable LocalVariableHidesMember
 			ushort[] baseTable = new ushort[512];
-			// ReSharper restore LocalVariableHidesMember
+
 			for (int i = 0; i < 256; ++i)
 			{
 				sbyte e = (sbyte)(127 - i);
@@ -137,9 +133,8 @@ namespace CryCil
 		}
 		private static sbyte[] GenerateShiftTable()
 		{
-			// ReSharper disable LocalVariableHidesMember
 			sbyte[] shiftTable = new sbyte[512];
-			// ReSharper restore LocalVariableHidesMember
+
 			for (int i = 0; i < 256; ++i)
 			{
 				sbyte e = (sbyte)(127 - i);

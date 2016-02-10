@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
+using CryCil.RunTime;
 
 namespace CryCil
 {
@@ -40,7 +41,6 @@ namespace CryCil
 		/// <summary>
 		/// Defines functions that perform math operations in batches.
 		/// </summary>
-		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		public static unsafe class Math
 		{
 			/// <summary>
@@ -75,7 +75,7 @@ namespace CryCil
 				}
 
 				results = new float[source.LongLength];
-				source.CopyTo(results, 0);
+				CopyToResults(source, results);
 
 				fixed (float* ptr = results)
 				{
@@ -114,7 +114,7 @@ namespace CryCil
 				}
 
 				results = new double[source.LongLength];
-				source.CopyTo(results, 0);
+				CopyToResults(source, results);
 
 				fixed (double* ptr = results)
 				{
@@ -153,7 +153,7 @@ namespace CryCil
 				}
 
 				results = new float[source.LongLength];
-				source.CopyTo(results, 0);
+				CopyToResults(source, results);
 
 				fixed (float* ptr = results)
 				{
@@ -192,7 +192,7 @@ namespace CryCil
 				}
 
 				results = new double[source.LongLength];
-				source.CopyTo(results, 0);
+				CopyToResults(source, results);
 
 				fixed (double* ptr = results)
 				{
@@ -231,7 +231,7 @@ namespace CryCil
 				}
 
 				results = new float[source.LongLength];
-				source.CopyTo(results, 0);
+				CopyToResults(source, results);
 
 				fixed (float* ptr = results)
 				{
@@ -270,7 +270,7 @@ namespace CryCil
 				}
 
 				results = new double[source.LongLength];
-				source.CopyTo(results, 0);
+				CopyToResults(source, results);
 
 				fixed (double* ptr = results)
 				{
@@ -309,7 +309,7 @@ namespace CryCil
 				}
 
 				results = new float[source.LongLength];
-				source.CopyTo(results, 0);
+				CopyToResults(source, results);
 
 				fixed (float* ptr = results)
 				{
@@ -348,7 +348,7 @@ namespace CryCil
 				}
 
 				results = new double[source.LongLength];
-				source.CopyTo(results, 0);
+				CopyToResults(source, results);
 
 				fixed (double* ptr = results)
 				{
@@ -387,7 +387,7 @@ namespace CryCil
 				}
 
 				results = new float[source.LongLength];
-				source.CopyTo(results, 0);
+				CopyToResults(source, results);
 
 				fixed (float* ptr = results)
 				{
@@ -426,7 +426,7 @@ namespace CryCil
 				}
 
 				results = new double[source.LongLength];
-				source.CopyTo(results, 0);
+				CopyToResults(source, results);
 
 				fixed (double* ptr = results)
 				{
@@ -465,7 +465,7 @@ namespace CryCil
 				}
 
 				results = new float[source.LongLength];
-				source.CopyTo(results, 0);
+				CopyToResults(source, results);
 
 				fixed (float* ptr = results)
 				{
@@ -504,7 +504,7 @@ namespace CryCil
 				}
 
 				results = new double[source.LongLength];
-				source.CopyTo(results, 0);
+				CopyToResults(source, results);
 
 				fixed (double* ptr = results)
 				{
@@ -543,7 +543,7 @@ namespace CryCil
 				}
 
 				results = new float[source.LongLength];
-				source.CopyTo(results, 0);
+				CopyToResults(source, results);
 
 				fixed (float* ptr = results)
 				{
@@ -582,7 +582,7 @@ namespace CryCil
 				}
 
 				results = new double[source.LongLength];
-				source.CopyTo(results, 0);
+				CopyToResults(source, results);
 
 				fixed (double* ptr = results)
 				{
@@ -621,7 +621,7 @@ namespace CryCil
 				}
 
 				results = new float[source.LongLength];
-				source.CopyTo(results, 0);
+				CopyToResults(source, results);
 
 				fixed (float* ptr = results)
 				{
@@ -660,7 +660,7 @@ namespace CryCil
 				}
 
 				results = new double[source.LongLength];
-				source.CopyTo(results, 0);
+				CopyToResults(source, results);
 
 				fixed (double* ptr = results)
 				{
@@ -699,7 +699,7 @@ namespace CryCil
 				}
 
 				results = new float[source.LongLength];
-				source.CopyTo(results, 0);
+				CopyToResults(source, results);
 
 				fixed (float* ptr = results)
 				{
@@ -738,7 +738,7 @@ namespace CryCil
 				}
 
 				results = new double[source.LongLength];
-				source.CopyTo(results, 0);
+				CopyToResults(source, results);
 
 				fixed (double* ptr = results)
 				{
@@ -777,7 +777,7 @@ namespace CryCil
 				}
 
 				results = new float[source.LongLength];
-				source.CopyTo(results, 0);
+				CopyToResults(source, results);
 
 				fixed (float* ptr = results)
 				{
@@ -816,7 +816,7 @@ namespace CryCil
 				}
 
 				results = new double[source.LongLength];
-				source.CopyTo(results, 0);
+				CopyToResults(source, results);
 
 				fixed (double* ptr = results)
 				{
@@ -855,7 +855,7 @@ namespace CryCil
 				}
 
 				results = new float[source.LongLength];
-				source.CopyTo(results, 0);
+				CopyToResults(source, results);
 
 				fixed (float* ptr = results)
 				{
@@ -894,7 +894,7 @@ namespace CryCil
 				}
 
 				results = new double[source.LongLength];
-				source.CopyTo(results, 0);
+				CopyToResults(source, results);
 
 				fixed (double* ptr = results)
 				{
@@ -933,7 +933,7 @@ namespace CryCil
 				}
 
 				results = new float[source.LongLength];
-				source.CopyTo(results, 0);
+				CopyToResults(source, results);
 
 				fixed (float* ptr = results)
 				{
@@ -972,7 +972,7 @@ namespace CryCil
 				}
 
 				results = new double[source.LongLength];
-				source.CopyTo(results, 0);
+				CopyToResults(source, results);
 
 				fixed (double* ptr = results)
 				{
@@ -1011,7 +1011,7 @@ namespace CryCil
 				}
 
 				results = new float[source.LongLength];
-				source.CopyTo(results, 0);
+				CopyToResults(source, results);
 
 				fixed (float* ptr = results)
 				{
@@ -1050,7 +1050,7 @@ namespace CryCil
 				}
 
 				results = new double[source.LongLength];
-				source.CopyTo(results, 0);
+				CopyToResults(source, results);
 
 				fixed (double* ptr = results)
 				{
@@ -1089,7 +1089,7 @@ namespace CryCil
 				}
 
 				results = new float[source.LongLength];
-				source.CopyTo(results, 0);
+				CopyToResults(source, results);
 
 				fixed (float* ptr = results)
 				{
@@ -1128,7 +1128,7 @@ namespace CryCil
 				}
 
 				results = new double[source.LongLength];
-				source.CopyTo(results, 0);
+				CopyToResults(source, results);
 
 				fixed (double* ptr = results)
 				{
@@ -1167,7 +1167,7 @@ namespace CryCil
 				}
 
 				results = new float[source.LongLength];
-				source.CopyTo(results, 0);
+				CopyToResults(source, results);
 
 				fixed (float* ptr = results)
 				{
@@ -1206,7 +1206,7 @@ namespace CryCil
 				}
 
 				results = new double[source.LongLength];
-				source.CopyTo(results, 0);
+				CopyToResults(source, results);
 
 				fixed (double* ptr = results)
 				{
@@ -1245,7 +1245,7 @@ namespace CryCil
 				}
 
 				results = new float[source.LongLength];
-				source.CopyTo(results, 0);
+				CopyToResults(source, results);
 
 				fixed (float* ptr = results)
 				{
@@ -1284,7 +1284,7 @@ namespace CryCil
 				}
 
 				results = new double[source.LongLength];
-				source.CopyTo(results, 0);
+				CopyToResults(source, results);
 
 				fixed (double* ptr = results)
 				{
@@ -1323,7 +1323,7 @@ namespace CryCil
 				}
 
 				results = new float[source.LongLength];
-				source.CopyTo(results, 0);
+				CopyToResults(source, results);
 
 				fixed (float* ptr = results)
 				{
@@ -1362,7 +1362,7 @@ namespace CryCil
 				}
 
 				results = new double[source.LongLength];
-				source.CopyTo(results, 0);
+				CopyToResults(source, results);
 
 				fixed (double* ptr = results)
 				{
@@ -1401,7 +1401,7 @@ namespace CryCil
 				}
 
 				results = new float[source.LongLength];
-				source.CopyTo(results, 0);
+				CopyToResults(source, results);
 
 				fixed (float* ptr = results)
 				{
@@ -1440,7 +1440,7 @@ namespace CryCil
 				}
 
 				results = new double[source.LongLength];
-				source.CopyTo(results, 0);
+				CopyToResults(source, results);
 
 				fixed (double* ptr = results)
 				{
@@ -1479,7 +1479,7 @@ namespace CryCil
 				}
 
 				results = new float[source.LongLength];
-				source.CopyTo(results, 0);
+				CopyToResults(source, results);
 
 				fixed (float* ptr = results)
 				{
@@ -1518,7 +1518,7 @@ namespace CryCil
 				}
 
 				results = new double[source.LongLength];
-				source.CopyTo(results, 0);
+				CopyToResults(source, results);
 
 				fixed (double* ptr = results)
 				{
@@ -1679,6 +1679,17 @@ namespace CryCil
 				fixed (Vector3Double* ptr = data)
 				{
 					Math3NumberOpDouble(ptr, data.LongLength, Math3NumberOperations.Arctangent2);
+				}
+			}
+			private static void CopyToResults<T>(T[] sourceArray, T[] resultsArray)
+			{
+				try
+				{
+					sourceArray.CopyTo(resultsArray, 0);
+				}
+				catch (Exception ex)
+				{
+					MonoInterface.DisplayException(ex);
 				}
 			}
 		}

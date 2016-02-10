@@ -15,7 +15,7 @@ namespace CryCil.Engine.Physics
 	public sealed class ImmediatePhysicsEventHandlerAttribute : Attribute
 	{
 	}
-	[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
+	// ReSharper disable ExceptionNotDocumented
 	internal class SafeIterationList<T> : IList<T>
 	{
 		#region Fields
@@ -149,6 +149,7 @@ namespace CryCil.Engine.Physics
 		}
 		#endregion
 	}
+	// ReSharper restore ExceptionNotDocumented
 
 	public partial class PhysicalWorld
 	{

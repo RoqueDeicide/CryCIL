@@ -755,7 +755,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Engine\CustomTypes\" />
-    <Folder Include="Miscellaneous\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="RunTime\Compilation\Reporting\CompilationProblemsReportForm.resx" />

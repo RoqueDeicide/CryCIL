@@ -23,7 +23,6 @@ namespace CryCil
 	/// link: http://grouper.ieee.org/groups/754/</item></list>
 	/// </remarks>
 	[Serializable]
-	[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 	public struct Half : IComparable, IFormattable, IConvertible, IComparable<Half>, IEquatable<Half>
 	{
 		/// <summary>

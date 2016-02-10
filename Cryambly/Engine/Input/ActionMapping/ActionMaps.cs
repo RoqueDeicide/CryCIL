@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
@@ -98,10 +99,10 @@ namespace CryCil.Engine.Input.ActionMapping
 		/// contains an exception for each type that could not be loaded.
 		/// </exception>
 		[InitializationStage((int)DefaultInitializationStages.ActionMapsRegistrationStage)]
-		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		private static void RegisterActionMaps(int stageIndex)
 		{
 			var assemblies = MonoInterface.CryCilAssemblies;
+
 			// Add device mappings.
 			var deviceMappingAttributes = from assembly in assemblies
 										  from attr in assembly.GetAttributes<DeviceMappingAttribute>()
@@ -110,10 +111,13 @@ namespace CryCil.Engine.Input.ActionMapping
 			{
 				AddDeviceMapping(deviceMappingAttribute.SupportedDevice);
 			}
+
 			// Form the list of action maps.
 			var actionMapTypes = from assembly in assemblies
 								 from type in assembly.GetTypes()
-								 where type.ContainsAttribute<ActionMapAttribute>() && type.IsAbstract && type.IsSealed
+								 where type.ContainsAttribute<ActionMapAttribute>() &&
+									   type.IsAbstract &&
+									   type.IsSealed
 								 select type;
 			var actionMapTypesList = actionMapTypes.ToList();
 			foreach (Type type in actionMapTypesList)
@@ -142,6 +146,7 @@ namespace CryCil.Engine.Input.ActionMapping
 
 					string actionName = actionAttribute.Name ?? actionEvent.Name;
 					uint nameHash = Crc32.ComputeLowercase(actionName);
+
 					// Check the hash.
 					if (registeredHashes.ContainsKey(nameHash))
 					{
@@ -165,16 +170,18 @@ namespace CryCil.Engine.Input.ActionMapping
 
 					registeredHashes.Add(nameHash, actionName);
 					Type declaringType = actionEvent.DeclaringType;
-					// ReSharper disable PossibleNullReferenceException
+
+					Debug.Assert(declaringType != null, "declaringType != null");
+
 					FieldInfo actionHandlerField = declaringType.GetField(actionEvent.Name, bindingFlags) ??
 												   declaringType.GetField("_" + actionEvent.Name);
-					// ReSharper restore PossibleNullReferenceException
 					if (actionHandlerField == null)
 					{
-						string message =
-							string.Format("Action named {0}, must either have default event implementation or its declaring class " +
-										  "must define static field named _{1}.",
-										  actionName, actionEvent.Name);
+						string message = string.Format("Action named {0}, must either have default event " +
+													   "implementation or its declaring class must define " +
+													   "static field named _{1}.",
+													   actionName, actionEvent.Name);
+
 						MonoInterface.DisplayException(new RegistrationException(message));
 						continue;
 					}

@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
 using CryCil.Geometry;
+using CryCil.RunTime;
 using CryCil.Utilities;
 
 namespace CryCil.Engine.Physics
@@ -346,16 +347,22 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the array of vectors that represent positions of points that connect the segments.
 		/// </summary>
-		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		public Vector3[] Points
 		{
 			get
 			{
 				Vector3[] points = new Vector3[this.nSegments + 1];
 
-				for (int i = 0; i < points.Length; i++)
+				try
 				{
-					points[i] = this.pPoints.GetVector3(i);
+					for (int i = 0; i < points.Length; i++)
+					{
+						points[i] = this.pPoints.GetVector3(i);
+					}
+				}
+				catch (Exception ex)
+				{
+					MonoInterface.DisplayException(ex);
 				}
 
 				return points;
@@ -364,16 +371,22 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the array of vectors that represent velocities of points that connect the segments.
 		/// </summary>
-		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		public Vector3[] Velocities
 		{
 			get
 			{
 				Vector3[] velocities = new Vector3[this.nSegments + 1];
 
-				for (int i = 0; i < velocities.Length; i++)
+				try
 				{
-					velocities[i] = this.pVelocities.GetVector3(i);
+					for (int i = 0; i < velocities.Length; i++)
+					{
+						velocities[i] = this.pVelocities.GetVector3(i);
+					}
+				}
+				catch (Exception ex)
+				{
+					MonoInterface.DisplayException(ex);
 				}
 
 				return velocities;

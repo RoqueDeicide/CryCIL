@@ -261,7 +261,6 @@ namespace CryCil.RunTime.Compilation
 		/// The array is multidimensional and contains more than <see cref="F:System.Int32.MaxValue"/>
 		/// elements.
 		/// </exception>
-		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		public bool Build()
 		{
 			CompilerParameters parameters = new CompilerParameters
@@ -348,6 +347,7 @@ namespace CryCil.RunTime.Compilation
 			CompilerResults results;
 			if (string.IsNullOrWhiteSpace(this.TargetFramework))
 			{
+				// ReSharper disable once ExceptionNotDocumented
 				results = this.Compiler.CompileAssemblyFromFile(parameters, this.CodeFiles);
 			}
 			else
@@ -357,6 +357,7 @@ namespace CryCil.RunTime.Compilation
 					{
 						{"CompilerVersion", this.TargetFramework == "v4.5" ? "v4.0" : this.TargetFramework}
 					})
+						// ReSharper disable once ExceptionNotDocumented
 						.CompileAssemblyFromFile(parameters, this.CodeFiles);
 			}
 

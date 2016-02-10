@@ -72,7 +72,6 @@ namespace CryCil.RunTime.Compilation
 		/// An instance of type that implements <see cref="IProject"/> that can parse given file format.
 		/// </returns>
 		[CanBeNull]
-		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		public static IProject Create([NotNull] string projectName, [NotNull] string projectFile)
 		{
 			// Check if file exists. If doesn't, then just ignore it.
@@ -87,7 +86,15 @@ namespace CryCil.RunTime.Compilation
 				return null;
 			}
 			Type projectType = projectTypes[extensionIndex];
-			return Activator.CreateInstance(projectType, projectName, projectFile) as IProject;
+			try
+			{
+				return Activator.CreateInstance(projectType, projectName, projectFile) as IProject;
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+				return null;
+			}
 		}
 	}
 	/// <summary>

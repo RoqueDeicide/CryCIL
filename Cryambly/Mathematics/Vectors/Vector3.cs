@@ -252,7 +252,6 @@ namespace CryCil
 		/// <summary>
 		/// Gets an array of bytes that forms this object.
 		/// </summary>
-		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		public byte[] Bytes
 		{
 			get
@@ -260,6 +259,7 @@ namespace CryCil
 				byte[] bytes = new byte[12];
 				float[] components = {this.X, this.Y, this.Z};
 
+				// ReSharper disable once ExceptionNotDocumented
 				Buffer.BlockCopy(components, 0, bytes, 0, bytes.Length);
 				return bytes;
 			}

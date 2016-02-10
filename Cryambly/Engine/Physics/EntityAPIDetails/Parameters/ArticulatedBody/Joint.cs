@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using CryCil.Annotations;
 using CryCil.Engine.Memory;
 using CryCil.Geometry;
+using CryCil.RunTime;
 
 namespace CryCil.Engine.Physics
 {
@@ -221,7 +222,6 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets or sets array of parts of the articulated body that can collide with each other.
 		/// </summary>
-		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		public int[] SelfCollidingParts
 		{
 			get { return this.selfCollidingParts; }
@@ -234,18 +234,25 @@ namespace CryCil.Engine.Physics
 				}
 				else
 				{
-					ulong size = (ulong)(Marshal.SizeOf(typeof(int)) * value.Length);
-					int* parts = (int*)CryMarshal.Allocate(size, false).ToPointer();
-
-					fixed (int* valuePtr = value)
+					try
 					{
-						for (int i = 0; i < value.Length; i++)
+						ulong size = (ulong)(Marshal.SizeOf(typeof(int)) * value.Length);
+						int* parts = (int*)CryMarshal.Allocate(size, false).ToPointer();
+
+						fixed (int* valuePtr = value)
 						{
-							parts[i] = valuePtr[i];
+							for (int i = 0; i < value.Length; i++)
+							{
+								parts[i] = valuePtr[i];
+							}
 						}
+						this.pSelfCollidingParts = parts;
+						this.nSelfCollidingParts = value.Length;
 					}
-					this.pSelfCollidingParts = parts;
-					this.nSelfCollidingParts = value.Length;
+					catch (Exception ex)
+					{
+						MonoInterface.DisplayException(ex);
+					}
 				}
 			}
 		}

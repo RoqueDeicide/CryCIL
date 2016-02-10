@@ -83,7 +83,6 @@ namespace CryCil.RunTime.Registration
 		#endregion
 		#region Interface
 		[InitializationStage((int)DefaultInitializationStages.EntityRegistrationStage)]
-		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		private static void RegisterEntities(int index)
 		{
 			var entityTypes =
@@ -132,7 +131,6 @@ namespace CryCil.RunTime.Registration
 		}
 		#endregion
 		#region Utilities
-		[SuppressMessage("ReSharper", "ExceptionNotDocumented")]
 		private static EditablePropertyInfo[] GetEditableProperties(Type type)
 		{
 			if (type == null)
