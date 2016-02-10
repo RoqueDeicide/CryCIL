@@ -9,6 +9,7 @@ using CryCil.Engine.DebugServices;
 using CryCil.RunTime.Compilation;
 using CryCil.RunTime.Logging;
 using CryCil.RunTime.Registration;
+using CryCil.Utilities;
 
 namespace CryCil.RunTime
 {
@@ -27,7 +28,7 @@ namespace CryCil.RunTime
 		/// All CryEngine related code, like entity and FlowGraph node definitions, is located in these
 		/// assemblies, so you don't have to loop through all base libraries to find those definitions.
 		/// </remarks>
-		public static readonly List<Assembly> CryCilAssemblies;
+		public static readonly List<Assembly> CryCilAssemblies = new List<Assembly>(50);
 		#endregion
 		#region Events
 		/// <summary>
@@ -55,68 +56,6 @@ namespace CryCil.RunTime
 		/// </summary>
 		public static event Action ShuttingDown;
 		#endregion
-		#region Construction
-		static MonoInterface()
-		{
-			Application.EnableVisualStyles();
-			// Register default handling of exceptions.
-			AppDomain.CurrentDomain.UnhandledException +=
-				(sender, args) => DisplayException(args.ExceptionObject);
-			// Redirect Console output.
-			Console.SetOut(new ConsoleLogWriter());
-			// Load all extra modules.
-			string gameModulesFolder = Path.Combine
-				(DirectoryStructure.ContentFolder, "Modules", "CryCIL");
-			string cryEngineModulesFolder = Path.Combine
-				(DirectoryStructure.PlatformFolder, "Modules", "CryCIL");
-			List<string> gameModules = new List<string>();
-			List<string> cryEngineModules = new List<string>();
-			if (Directory.Exists(gameModulesFolder))
-			{
-				gameModules.AddRange(Directory.GetFiles(gameModulesFolder, "*.dll"));
-			}
-			if (Directory.Exists(cryEngineModulesFolder))
-			{
-				cryEngineModules.AddRange(Directory.GetFiles(cryEngineModulesFolder, "*.dll"));
-			}
-
-			CryCilAssemblies = new List<Assembly>
-				(
-				from file in gameModules.Concat(cryEngineModules)
-				where AssemblyExtras.IsAssembly(file)
-				select Assembly.Load(AssemblyName.GetAssemblyName(file))
-				);
-			// Load and compile the solution.
-			OnCompilationStarted();
-			try
-			{
-				bool loadingSuccessful =
-					CodeSolution.Load
-						(
-						 Path.Combine
-							 (
-							  DirectoryStructure.ContentFolder,
-							  "Code", "Solutions", "CryCilCode.sln"
-							 )
-						);
-				if (!loadingSuccessful)
-				{
-					throw new Exception("Unable to load the solution.");
-				}
-				CryCilAssemblies.AddRange(CodeSolution.Build());
-				OnCompilationComplete(true);
-			}
-			catch (Exception)
-			{
-				OnCompilationComplete(false);
-			}
-			// Add Cryambly to the list.
-			CryCilAssemblies.Add(Assembly.GetAssembly(typeof(MonoInterface)));
-			// A simple test for redirected console output.
-			Console.WriteLine("Proceeding to stage-based initialization.");
-			ProceedWithInitializationStages();
-		}
-		#endregion
 		#region Interface
 		/// <summary>
 		/// Displays an exception to the user with an option to either continue or shutdown.
@@ -131,7 +70,64 @@ namespace CryCil.RunTime
 		[UnmanagedThunk("Called from C++ code to initialize CryCIL on managed side.")]
 		private static void Initialize()
 		{
-			// Accessing static variable to trigger static constructor to start initialization process.
+			Application.EnableVisualStyles();
+
+			// Register default handling of exceptions.
+			AppDomain.CurrentDomain.UnhandledException +=
+				(sender, args) => DisplayException(args.ExceptionObject);
+
+			// Redirect Console output.
+			Console.SetOut(new ConsoleLogWriter());
+
+			// Load all extra modules.
+			string gameModulesPath = Path.Combine(DirectoryStructure.ContentFolder, "Modules", "CryCIL");
+			string engineModulesPath = Path.Combine(DirectoryStructure.PlatformFolder, "Modules", "CryCIL");
+
+			List<string> gameModules = new List<string>();
+			List<string> cryEngineModules = new List<string>();
+
+			if (Directory.Exists(gameModulesPath))
+			{
+				gameModules.AddRange(Directory.GetFiles(gameModulesPath, "*.dll"));
+			}
+			if (Directory.Exists(engineModulesPath))
+			{
+				cryEngineModules.AddRange(Directory.GetFiles(engineModulesPath, "*.dll"));
+			}
+
+			CryCilAssemblies.AddRange(from file in gameModules.Concat(cryEngineModules)
+									  where AssemblyExtras.IsAssembly(file)
+									  select Assembly.Load(AssemblyName.GetAssemblyName(file)));
+
+			// Load and compile the solution.
+			OnCompilationStarted();
+			try
+			{
+				string solutionPath = Path.Combine(DirectoryStructure.ContentFolder,
+												   "Code", "Solutions", "CryCilCode.sln");
+
+				if (!CodeSolution.Load(solutionPath))
+				{
+					throw new Exception("Unable to load the solution.");
+				}
+
+				CryCilAssemblies.AddRange(CodeSolution.Build());
+
+				OnCompilationComplete(true);
+			}
+			catch (Exception)
+			{
+				OnCompilationComplete(false);
+			}
+
+			// Add Cryambly to the list.
+			CryCilAssemblies.Add(Assembly.GetAssembly(typeof(MonoInterface)));
+
+			// A simple test for redirected console output.
+			Console.WriteLine("Proceeding to stage-based initialization.");
+
+			ProceedWithInitializationStages();
+
 			Console.WriteLine("{0} CryCIL-specific assemblies are loaded.", CryCilAssemblies.Count);
 		}
 		[UnmanagedThunk("Invoked from C++ code after FlowGraph is initialized" +
