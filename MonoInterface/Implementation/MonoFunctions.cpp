@@ -2,7 +2,7 @@
 #include "MonoFunctions.h"
 #include "MonoClass.h"
 
-#if 1
+#if 0
 #define FunctionsMessage CryLogAlways
 #else
 #define FunctionsMessage(...) void(0)
@@ -102,7 +102,7 @@ mono::object MonoFunctions::InternalInvokeArray(_MonoMethod *func, void *object,
 	return mono::object(result);
 }
 
-void *MonoFunctions::GetThunk(_MonoMethod *func)
+void *MonoFunctions::GetUnmanagedThunk(_MonoMethod *func)
 {
 	FunctionsMessage("Getting the thunk.");
 
@@ -113,7 +113,7 @@ void *MonoFunctions::GetThunk(_MonoMethod *func)
 	return thunk;
 }
 
-void *MonoFunctions::GetFunctionPointer(_MonoMethod *func)
+void *MonoFunctions::GetRawThunk(_MonoMethod *func)
 {
 	FunctionsMessage("Querying the thunk.");
 	if (func)

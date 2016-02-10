@@ -226,9 +226,9 @@ struct IMonoFunctions
 		(_MonoMethod *func, void *object, IMonoArray<> &args, mono::exception *ex, bool polymorph) = 0;
 
 	//! @see IMonoFunction::UnmanagedThunk property.
-	VIRTUAL_API virtual void        *GetThunk(_MonoMethod *func) = 0;
+	VIRTUAL_API virtual void        *GetUnmanagedThunk(_MonoMethod *func) = 0;
 	//! @see IMonoFunction::RawThunk property.
-	VIRTUAL_API virtual void        *GetFunctionPointer(_MonoMethod *func) = 0;
+	VIRTUAL_API virtual void        *GetRawThunk(_MonoMethod *func) = 0;
 	//! Parses signature of given Mono method and fills a number of lists.
 	VIRTUAL_API virtual int          ParseSignature(_MonoMethod *func, List<const char *> &names, const char *&params) = 0;
 	//! @see IMonoFunction::ParameterClasses property.

@@ -13,8 +13,8 @@ struct MonoFunctions : public IMonoFunctions
 	virtual mono::object InternalInvoke(_MonoMethod *func, void *object, void **args, mono::exception *ex, bool polymorph) override;
 	virtual mono::object InternalInvokeArray(_MonoMethod *func, void *object, IMonoArray<> &args, mono::exception *ex, bool polymorph) override;
 
-	virtual void *GetThunk(_MonoMethod *func) override;
-	virtual void *GetFunctionPointer(_MonoMethod *func) override;
+	virtual void *GetUnmanagedThunk(_MonoMethod *func) override;
+	virtual void *GetRawThunk(_MonoMethod *func) override;
 	virtual int   ParseSignature(_MonoMethod *func, List<const char *> &names, const char *&params) override;
 	virtual void  GetParameterClasses(_MonoMethod *func, List<IMonoClass *> &classes) override;
 	

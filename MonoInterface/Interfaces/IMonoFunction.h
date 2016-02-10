@@ -310,13 +310,13 @@ public:
 
 	void *GetThunk()
 	{
-		return MonoEnv->Functions->GetThunk(this->wrappedMethod);
+		return MonoEnv->Functions->GetUnmanagedThunk(this->wrappedMethod);
 	}
 	void *GetFunctionPointer()
 	{
 		if (!this->rawThunk)
 		{
-			this->rawThunk = MonoEnv->Functions->GetFunctionPointer(this->wrappedMethod);
+			this->rawThunk = MonoEnv->Functions->GetRawThunk(this->wrappedMethod);
 		}
 		return this->rawThunk;
 	}
