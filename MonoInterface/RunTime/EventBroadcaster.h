@@ -56,4 +56,7 @@ public:
 private:
 	// Used for propagating events that don't have any extra data.
 	void SendSimpleEvent(SimpleEventHandler handler);
+	// Used for propagating events Update and PostUpdate. This function is the same as SendSimpleEvent
+	// but it doesn't have as much debug code.
+	void SendUpdateEvent(SimpleEventHandler handler);
 };

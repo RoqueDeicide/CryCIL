@@ -1,6 +1,12 @@
 #include "stdafx.h"
 #include "EventBroadcaster.h"
 
+#if 1
+#define EventMessage CryLogAlways
+#else
+#define EventMessage(...) void(0)
+#endif
+
 EventBroadcaster::EventBroadcaster()
 	: stages(false)
 	, index(-1)
@@ -11,16 +17,16 @@ EventBroadcaster::EventBroadcaster()
 
 EventBroadcaster::~EventBroadcaster()
 {
-	ReportComment("Deleting stage map.");
+	EventMessage("Deleting stage map.");
 	if (this->stageMap) { delete this->stageMap; this->stageMap = nullptr; }
-	ReportComment("Deleting listeners.");
+	EventMessage("Deleting listeners.");
 	if (this->listeners) { delete this->listeners; this->listeners = nullptr; }
 }
 
 
 void EventBroadcaster::RemoveListener(IMonoSystemListener *listener)
 {
-	ReportComment("Removing a listener.");
+	EventMessage("Removing a listener.");
 	// Delete the listener from the main list.
 	int listenerIndex = -1;
 	for (int i = 0; i < this->listeners->Length; i++)
@@ -111,11 +117,11 @@ void EventBroadcaster::OnCompilationComplete(bool success)
 //! Gathers initialization stages data for sending it to managed code.
 int *EventBroadcaster::GetSubscribedStagesInfo(int &stageCount)
 {
-	ReportComment("Going through listeners.");
+	EventMessage("Going through listeners.");
 	// Gather information about all stages.
 	for (this->index = 0; this->index < this->listeners->Length; this->index++)
 	{
-		ReportComment("Getting stage indices for the listener #%d.", this->index + 1);
+		EventMessage("Getting stage indices for the listener #%d.", this->index + 1);
 		// Get stages.
 		List<int> *stages = this->listeners->At(this->index)->GetSubscribedStages();
 		if (stages)
@@ -134,7 +140,7 @@ int *EventBroadcaster::GetSubscribedStagesInfo(int &stageCount)
 		}
 		else
 		{
-			ReportComment("Listener #%d is not subscribed to any stages.", this->index + 1);
+			EventMessage("Listener #%d is not subscribed to any stages.", this->index + 1);
 		}
 	}
 	// Get the stage indices.
@@ -186,12 +192,12 @@ void EventBroadcaster::OnPostInitialization()
 //! Broadcasts Update event.
 void EventBroadcaster::Update()
 {
-	this->SendSimpleEvent(&IMonoSystemListener::Update);
+	this->SendUpdateEvent(&IMonoSystemListener::Update);
 }
 //! Broadcasts PostUpdate event.
 void EventBroadcaster::PostUpdate()
 {
-	this->SendSimpleEvent(&IMonoSystemListener::PostUpdate);
+	this->SendUpdateEvent(&IMonoSystemListener::PostUpdate);
 }
 //! Broadcasts Shutdown event.
 void EventBroadcaster::Shutdown()
@@ -200,6 +206,33 @@ void EventBroadcaster::Shutdown()
 }
 
 void EventBroadcaster::SendSimpleEvent(SimpleEventHandler handler)
+{
+	EventMessage("Broadcasting the event.");
+
+	const int printEvery = 1;
+
+	for (this->index = 0; this->index < this->listeners->Length; this->index++)
+	{
+#if 1
+		if (this->index % printEvery == 0)
+		{
+			EventMessage("Sending the event to the listener #%d.", this->index);
+		}
+#endif
+		IMonoSystemListener *listener = this->listeners->At(this->index);
+		(listener->*handler)();
+#if 1
+		if (this->index % printEvery == 0)
+		{
+			EventMessage("Sent the event to the listener #%d.", this->index);
+		}
+#endif
+	}
+
+	this->index = -1;
+}
+
+void EventBroadcaster::SendUpdateEvent(SimpleEventHandler handler)
 {
 	for (this->index = 0; this->index < this->listeners->Length; this->index++)
 	{
