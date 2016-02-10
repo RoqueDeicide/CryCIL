@@ -423,12 +423,12 @@ void MonoInterface::RegisterDefaultListeners() const
 	{
 		InterfaceMessage("Initializing mono interface thunks.");
 
-		MonoInterfaceThunks::Initialize =
-			this->GetMethodThunk<InitializeThunk>
-			(this->cryambly, "CryCil.RunTime", "MonoInterface", "Initialize", nullptr);
 		MonoInterfaceThunks::DisplayException =
 			this->GetMethodThunk<DisplayExceptionThunk>
 			(this->cryambly, "CryCil.RunTime", "MonoInterface", "DisplayException", "System.Object");
+		MonoInterfaceThunks::Initialize =
+			this->GetMethodThunk<InitializeThunk>
+			(this->cryambly, "CryCil.RunTime", "MonoInterface", "Initialize", nullptr);
 		MonoInterfaceThunks::TriggerFlowNodesRegistration =
 			this->GetMethodThunk<RegisterFlowNodesThunk>
 			(this->cryambly, "CryCil.RunTime", "MonoInterface", "RegisterFlowGraphNodeTypes", nullptr);
@@ -458,7 +458,7 @@ void MonoInterface::RegisterDefaultListeners() const
 
 		IMonoFunction *function = klass->GetFunction(methodName, params);
 
-		InterfaceMessage("Got the function.");
+		InterfaceMessage("Got the function: %d.", function);
 
 		void *thunk = function->UnmanagedThunk;
 
