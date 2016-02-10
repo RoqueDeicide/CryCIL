@@ -10,6 +10,7 @@
 #else
 #define InterfaceMessage(...) void(0)
 #endif
+#include <Testing/TestStart.h>
 
 void HandleSignalAbort(int error)
 {
@@ -136,6 +137,8 @@ MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener
 	this->funcs->AddInternalCall(ns, cn, "OnCompilationCompleteBind", OnCompilationCompleteBind);
 	this->funcs->AddInternalCall(ns, cn, "GetSubscribedStagesBind",   GetSubscribedStagesBind);
 	this->funcs->AddInternalCall(ns, cn, "OnInitializationStageBind", OnInitializationStageBind);
+
+	BeginTheTest();
 	
 	this->broadcaster->OnRunTimeInitialized();
 	
