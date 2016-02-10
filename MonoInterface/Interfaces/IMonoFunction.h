@@ -336,7 +336,7 @@ public:
 		}
 		return this->rawThunk;
 	}
-	int GetParameterCount()
+	int GetParameterCount() const
 	{
 		return this->paramCount;
 	}
@@ -353,7 +353,7 @@ public:
 
 		return &this->paramClasses;
 	}
-	const char *GetParametersList()
+	const char *GetParametersList() const
 	{
 		return this->paramList;
 	}
