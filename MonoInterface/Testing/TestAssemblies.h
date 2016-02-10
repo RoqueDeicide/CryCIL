@@ -12,8 +12,15 @@ inline void TestAssemblies()
 	CryLogAlways("TEST: Loading an assembly that wasn't loaded previously.");
 	CryLogAlways("TEST:");
 
-	mainTestingAssembly =
-		MonoEnv->Assemblies->Load("Testing\\MainTestingAssembly.dll");
+	NtText testingAssemblyPath = 
+	{
+		"Bin32\\",
+		"Modules\\",
+		"CryCIL\\",
+		"Testing\\",
+		"MainTestingAssembly.dll"
+	};
+	mainTestingAssembly = MonoEnv->Assemblies->Load(testingAssemblyPath);
 
 	if (!mainTestingAssembly)
 	{
@@ -28,7 +35,7 @@ inline void TestAssemblies()
 	CryLogAlways("TEST: Acquiring a pointer to the wrapper of the assembly that was loaded previously.");
 	CryLogAlways("TEST:");
 
-	mainTestingAssembly = MonoEnv->Assemblies->Load("Testing\\MainTestingAssembly.dll");
+	mainTestingAssembly = MonoEnv->Assemblies->Load(testingAssemblyPath);
 
 	if (!mainTestingAssembly)
 	{
