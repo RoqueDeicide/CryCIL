@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-#if 1
+#if 0
 #define UtilityMessage CryLogAlways
 #else
 #define UtilityMessage(...) void(0)
