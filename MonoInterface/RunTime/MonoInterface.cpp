@@ -110,20 +110,6 @@ MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener
 	this->gc = new MonoGC();
 	this->objs = new MonoObjects();
 
-#ifdef _DEBUG
-	
-	InterfaceMessage("Loading pdb2mdb.");
-	
-	// Load Pdb2Mdb.dll before everything else.
-	this->pdb2mdb = this->assemblies->Load(DirectoryStructure::GetPdb2MdbFile());
-	
-	// Initialize conversion thunk immediately.
-	Pdb2MdbThunks::Convert = (this->pdb2mdb)
-		? this->GetMethodThunk<ConvertPdbThunk>
-		(this->pdb2mdb, "", "Driver", "Convert", "string")
-		: nullptr;
-#endif // _DEBUG
-
 	InterfaceMessage("Loading Cryambly.");
 	
 	// Load Cryambly.
@@ -150,14 +136,14 @@ MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener
 	this->broadcaster->OnRunTimeInitialized();
 	
 	// Initialize an instance of type MonoInterface.
-	//mono::exception ex;
-	MonoInterfaceThunks::Initialize();
-	/*if (ex)
+	mono::exception ex;
+	MonoInterfaceThunks::Initialize(&ex);
+	if (ex)
 	{
-	mono::exception eX;
-	MonoInterfaceThunks::DisplayException(ex, &eX);
-	CryFatalError("CryCil.RunTime.MonoInterface object was not initialized. Cannot continue.");
-	}*/
+		mono::exception eX;
+		MonoInterfaceThunks::DisplayException(ex, &eX);
+		CryFatalError("CryCil.RunTime.MonoInterface object was not initialized. Cannot continue.");
+	}
 	
 	this->framework->RegisterListener(this, "CryCIL", FRAMEWORKLISTENERPRIORITY_GAME);
 	gEnv->pSystem->GetISystemEventDispatcher()->RegisterListener(this);
@@ -455,26 +441,21 @@ void MonoInterface::RegisterDefaultListeners()
 			(this->cryambly, "CryCil.RunTime", "AssemblyLookUp", "LookUpAssembly", "System.String");
 	}
 	template<typename MethodSignature>
-	MethodSignature MonoInterface::GetMethodThunk(IMonoAssembly *assembly, const char *nameSpace, const char *className, const char *methodName, const char *params)
+	MethodSignature MonoInterface::GetMethodThunk(IMonoAssembly *assembly, const char *nameSpace,
+												  const char *className, const char *methodName,
+												  const char *params)
 	{
 		InterfaceMessage("Getting a thunk for a method %s(%s) in the class %s.%s.", methodName, params, nameSpace, className);
 
-		//IMonoClass *klass = assembly->GetClass(nameSpace, className);
-		MonoImage *image = mono_assembly_get_image(assembly->GetHandle<MonoAssembly>());
-		MonoClass *klass = mono_class_from_name(image, nameSpace, className);
+		IMonoClass *klass = assembly->GetClass(nameSpace, className);
 
 		InterfaceMessage("Got the class wrapper.");
 
-		//IMonoFunction *function = klass->GetFunction(methodName, params);
-		MonoMethod *method = mono_class_get_method_from_name(klass, methodName, -1);
-
-		/*MonoObject *ex;
-		mono_runtime_invoke(method, nullptr, nullptr, &ex);*/
+		IMonoFunction *function = klass->GetFunction(methodName, params);
 
 		InterfaceMessage("Got the function.");
 
-		//void *thunk = function->RawThunk;
-		void *thunk = mono_compile_method(method);
+		void *thunk = function->UnmanagedThunk;
 
 		InterfaceMessage("Got the thunk.");
 
