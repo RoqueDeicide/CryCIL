@@ -378,7 +378,7 @@ inline void TestGettingTheConstructors()
 	CryLogAlways("TEST: Getting constructor using a list of full type names.");
 	CryLogAlways("TEST:");
 
-	auto typeNameList = List<const char *>(3).Add("System.Char[]", "System.Int32", "System.Int32");
+	auto typeNameList = List<const char *>({ "System.Char[]", "System.Int32", "System.Int32" });
 
 	IMonoConstructor *ctorTypeNameList = stringClass->GetConstructor(typeNameList);
 
@@ -554,10 +554,10 @@ inline void TestGettingMethods()
 	CryLogAlways("TEST: Getting the methods.");
 	CryLogAlways("TEST:");
 
-	IMonoClass *mathClass   = MonoEnv->CoreLibrary->GetClass("System", "Math");
-	IMonoClass *typeClass   = MonoEnv->CoreLibrary->Type;
+	IMonoClass *mathClass = MonoEnv->CoreLibrary->GetClass("System", "Math");
+	IMonoClass *typeClass = MonoEnv->CoreLibrary->Type;
 	IMonoClass *stringClass = MonoEnv->CoreLibrary->String;
-	IMonoClass *arrayClass  = MonoEnv->CoreLibrary->Array;
+	IMonoClass *arrayClass = MonoEnv->CoreLibrary->Array;
 
 	CryLogAlways("TEST: Getting the method using an array of System.Type objects.");
 	CryLogAlways("TEST:");
@@ -581,7 +581,7 @@ inline void TestGettingMethods()
 	CryLogAlways("TEST: Getting the method using a list of IMonoClass objects.");
 	CryLogAlways("TEST:");
 
-	auto classes = List<IMonoClass *>(2).Add(stringClass, arrayClass);
+	auto classes = List<IMonoClass *>({ stringClass, arrayClass });
 
 	method = typeClass->GetFunction("GetMethod", classes)->ToInstance();
 
@@ -598,8 +598,8 @@ inline void TestGettingMethods()
 	CryLogAlways("TEST: Getting the method using a list of IMonoClass objects with post-fixes.");
 	CryLogAlways("TEST:");
 
-	auto specifiedClasses = List<ClassSpec>(3).Add(ClassSpec(stringClass, ""), ClassSpec(typeClass, ""),
-												   ClassSpec(typeClass, "[]"));
+	auto specifiedClasses = List<ClassSpec>(3).Add({ ClassSpec(stringClass, ""), ClassSpec(typeClass, ""),
+												   ClassSpec(typeClass, "[]") });
 
 	method = typeClass->GetFunction("GetProperty", specifiedClasses)->ToInstance();
 
@@ -616,7 +616,7 @@ inline void TestGettingMethods()
 	CryLogAlways("TEST: Getting the method using a list of type names.");
 	CryLogAlways("TEST:");
 
-	auto typeNames = List<const char *>(2).Add("System.Double", "System.Double");
+	auto typeNames = List<const char *>({ "System.Double", "System.Double" });
 
 	auto staticFunc = mathClass->GetFunction("Pow", typeNames)->ToStatic();
 

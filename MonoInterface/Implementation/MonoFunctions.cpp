@@ -21,7 +21,7 @@ const char *MonoFunctions::GetName(_MonoMethod *method)
 
 void MonoFunctions::AddInternalCall(const char *nameSpace, const char *className, const char *name, void *functionPointer)
 {
-	mono_add_internal_call(NtText(5, nameSpace, ".", className, "::", name), functionPointer);
+	mono_add_internal_call(NtText({ nameSpace, ".", className, "::", name }), functionPointer);
 }
 
 void *MonoFunctions::LookupInternalCall(IMonoFunction *func)

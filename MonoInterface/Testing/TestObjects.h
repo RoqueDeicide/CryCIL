@@ -180,7 +180,7 @@ inline void TestArrays()
 	Vec2 x1   = Vec2(1.0f, 0.0f);
 	Vec2 y1   = Vec2(0.0f, 1.0f);
 
-	auto indices = List<int>(2).Add(0, 0);
+	auto indices = List<int>({ 0, 0 });
 	for (int i = 0; i < vectors.GetLength(0); i++)
 	{
 		indices[0] = i;
@@ -582,19 +582,19 @@ inline const char *ToOrdinal(int number)
 	case 11:
 	case 12:
 	case 13:
-		return NtText(2, buffer, "th").Detach();
+		return NtText(buffer, "th").Detach();
 	}
 
 	switch (number % 10)
 	{
 	case 1:
-		return NtText(2, buffer, "st").Detach();
+		return NtText(buffer, "st").Detach();
 	case 2:
-		return NtText(2, buffer, "nd").Detach();
+		return NtText(buffer, "nd").Detach();
 	case 3:
-		return NtText(2, buffer, "rd").Detach();
+		return NtText(buffer, "rd").Detach();
 	default:
-		return NtText(2, buffer, "th").Detach();
+		return NtText(buffer, "th").Detach();
 	}
 }
 

@@ -179,40 +179,36 @@ public:
 
 	//! Constructs a text out of given parts.
 	//!
-	//! @param t1 Number of arguments in the chain.
-	NtTextTemplate(int count...)
+	//! @param parts A sequence of null-terminated strings to construct this one out of.
+	NtTextTemplate(std::initializer_list<const char *> parts)
 	{
-		// Gather the arguments into the list and calculate total length at the same time.
-		va_list va;
-		va_start(va, count);
-
-		auto parts = List<const SymbolType *>(count);
-
-		int length = 0;
-		for (int i = 0; i < count; i++)
+		if (parts.size() == 0)
 		{
-			const char *next = va_arg(va, const char *);
+			this->chars = nullptr;
+			return;
+		}
 
-			if (next)
+		int totalLength = 0;
+		for (auto current = parts.begin(); current < parts.end(); current++)
+		{
+			totalLength += _strlen(*current);
+		}
+
+		SymbolType *chars = new SymbolType[totalLength];
+		int currentLength = 0;
+
+		for (auto current = parts.begin(); current < parts.end(); current++)
+		{
+			const char *currentPart = *current;
+			int partLength = _strlen(currentPart);
+			for (int i = 0; i < partLength; i++)
 			{
-				length += _strlen(next);
-				parts.Add(next);
+				chars[currentLength++] = currentPart[i];
 			}
 		}
 
-		va_end(va);
-
-		this->chars = new SymbolType[length + 1];
-		// Copy the characters to this string.
-		int j = 0;
-		for (int i = 0; i < parts.Length; i++)
-		{
-			for (int k = 0; parts[i][k]; k++)
-			{
-				const_cast<SymbolType *>(this->chars)[j++] = parts[i][k];
-			}
-		}
-		const_cast<SymbolType *>(this->chars)[length] = '\0';
+		chars[currentLength] = '\0';
+		this->chars = const_cast<const SymbolType *>(chars);
 	}
 	virtual ~NtTextTemplate()
 	{

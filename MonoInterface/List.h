@@ -14,6 +14,8 @@
 
 #endif // CRYCIL_MODULE
 
+#include <initializer_list>
+
 template<typename ElementType> class List;
 
 //! Specializations of this template define the static field named "shift" are used by a list iterator to advance to next
@@ -138,7 +140,7 @@ public:
 	//! Creates a new list.
 	//!
 	//! @param collection Vector that contains elements to pre-populate this list with.
-	List(std::vector<ElementType> &collection)
+	explicit List(std::vector<ElementType> &collection)
 	{
 		this->length = 0;
 		int collectionSize = collection.size();
@@ -171,6 +173,39 @@ public:
 		this->capacity = capacity;
 		this->length   = capacity;
 		this->elements = elements;
+	}
+	//! Creates a new list with specified elements.
+	//!
+	//! Example:
+	//!
+	//! @code{.cpp}
+	//!
+	//! List<const char *> lines = { "First line", "Second line", "Third line", "Fourth line" };
+	//!
+	//! @endcode
+	//!
+	//! @param initialElements A sequence of elements that were specified inside the braced initialization
+	//!                        list.
+	List(std::initializer_list<ElementType> initialElements)
+		: length(0)
+	{
+		if (initialElements.size() == 0)
+		{
+			this->length = 0;
+			this->capacity = 10;
+			this->elements = new ElementType[this->capacity];
+		}
+		else
+		{
+			int length = initialElements.size();
+			this->capacity = length;
+			this->elements = new ElementType[length];
+
+			for (auto current = initialElements.begin(); current < initialElements.end(); current++)
+			{
+				this->elements[this->length++] = *current;
+			}
+		}
 	}
 	~List()
 	{
@@ -205,67 +240,21 @@ public:
 		this->elements[this->length++] = item;
 		return *this;
 	}
-	//! Adds 2 items to the list.
+	//! Adds a sequence of items to the list.
 	//!
 	//! @returns A reference to this object to allow chaining of Add() calls.
-	List<ElementType> &Add(ElementType el1, ElementType el2)
+	List<ElementType> &Add(std::initializer_list<ElementType> elements)
 	{
-		this->Expand(this->length + 2);
-		this->elements[this->length++] = el1;
-		this->elements[this->length++] = el2;
-		return *this;
-	}
-	//! Adds 3 items to the list.
-	//!
-	//! @returns A reference to this object to allow chaining of Add() calls.
-	List<ElementType> &Add(ElementType el1, ElementType el2, ElementType el3)
-	{
-		this->Expand(this->length + 3);
-		this->elements[this->length++] = el1;
-		this->elements[this->length++] = el2;
-		this->elements[this->length++] = el3;
-		return *this;
-	}
-	//! Adds 4 items to the list.
-	//!
-	//! @returns A reference to this object to allow chaining of Add() calls.
-	List<ElementType> &Add(ElementType el1, ElementType el2, ElementType el3,
-						   ElementType el4)
-	{
-		this->Expand(this->length + 4);
-		this->elements[this->length++] = el1;
-		this->elements[this->length++] = el2;
-		this->elements[this->length++] = el3;
-		this->elements[this->length++] = el4;
-		return *this;
-	}
-	//! Adds 5 items to the list.
-	//!
-	//! @returns A reference to this object to allow chaining of Add() calls.
-	List<ElementType> &Add(ElementType el1, ElementType el2, ElementType el3,
-						   ElementType el4, ElementType el5)
-	{
-		this->Expand(this->length + 5);
-		this->elements[this->length++] = el1;
-		this->elements[this->length++] = el2;
-		this->elements[this->length++] = el3;
-		this->elements[this->length++] = el4;
-		this->elements[this->length++] = el5;
-		return *this;
-	}
-	//! Adds 6 items to the list.
-	//!
-	//! @returns A reference to this object to allow chaining of Add() calls.
-	List<ElementType> &Add(ElementType el1, ElementType el2, ElementType el3,
-						   ElementType el4, ElementType el5, ElementType el6)
-	{
-		this->Expand(this->length + 6);
-		this->elements[this->length++] = el1;
-		this->elements[this->length++] = el2;
-		this->elements[this->length++] = el3;
-		this->elements[this->length++] = el4;
-		this->elements[this->length++] = el5;
-		this->elements[this->length++] = el6;
+		if (elements.size() == 0)
+		{
+			return *this;
+		}
+
+		this->Expand(this->length + elements.size());
+		for (auto i = elements.begin(); i < elements.end(); i++)
+		{
+			this->elements[this->length++] = *i;
+		}
 		return *this;
 	}
 	//! Adds a range of items to the end of the list.

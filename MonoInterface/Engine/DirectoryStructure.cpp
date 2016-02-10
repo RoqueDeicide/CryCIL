@@ -3,83 +3,71 @@
 
 const char *DirectoryStructure::GetMonoConfigurationFolder()
 {
-	const char *s = PATH_SEPARATOR;
 	return NtText
-	(
-		10,
-		BIN32_FOLDER, s,
-		MODULES_FOLDER, s,
-		CRYCIL_FOLDER, s,
-		MONO_FOLDER, s,
-		MONO_CONFIG_FOLDER, s
-	).Detach();
+	({
+		BIN32_FOLDER, PATH_SEPARATOR,
+		MODULES_FOLDER, PATH_SEPARATOR,
+		CRYCIL_FOLDER, PATH_SEPARATOR,
+		MONO_FOLDER, PATH_SEPARATOR,
+		MONO_CONFIG_FOLDER, PATH_SEPARATOR
+	}).Detach();
 }
 //! Returns a path to the folder that contains Mono libraries.
 const char *DirectoryStructure::GetMonoLibraryFolder()
 {
-	const char *s = PATH_SEPARATOR;
 	return NtText
-	(
-		10,
-		BIN32_FOLDER, s,
-		MODULES_FOLDER, s,
-		CRYCIL_FOLDER, s,
-		MONO_FOLDER, s,
-		MONO_LIBS_FOLDER, s
-	).Detach();
+	({
+		BIN32_FOLDER, PATH_SEPARATOR,
+		MODULES_FOLDER, PATH_SEPARATOR,
+		CRYCIL_FOLDER, PATH_SEPARATOR,
+		MONO_FOLDER, PATH_SEPARATOR,
+		MONO_LIBS_FOLDER, PATH_SEPARATOR
+	}).Detach();
 }
 //! Returns a path to the folder that contains CryCIL libraries.
 const char *DirectoryStructure::GetCryCilBinariesFolder()
 {
-	const char *s = PATH_SEPARATOR;
 	return NtText
-	(
-		6,
-		BIN32_FOLDER, s,
-		MODULES_FOLDER, s,
-		CRYCIL_FOLDER, s
-	).Detach();
+	({
+		BIN32_FOLDER, PATH_SEPARATOR,
+		MODULES_FOLDER, PATH_SEPARATOR,
+		CRYCIL_FOLDER, PATH_SEPARATOR
+	}).Detach();
 }
 //! Returns a path to the file that contains Cryambly.
 const char *DirectoryStructure::GetCryamblyFile()
 {
-	const char *s = PATH_SEPARATOR;
 	return NtText
-	(
-		7,
-		BIN32_FOLDER, s,
-		MODULES_FOLDER, s,
-		CRYCIL_FOLDER, s,
+	({
+		BIN32_FOLDER, PATH_SEPARATOR,
+		MODULES_FOLDER, PATH_SEPARATOR,
+		CRYCIL_FOLDER, PATH_SEPARATOR,
 		CRYAMBLY_FILE
-	).Detach();
+	}).Detach();
 }
 //! Returns a path to the file that contains Pdb to Mdb converter.
 const char *DirectoryStructure::GetPdb2MdbFile()
 {
-	const char *s = PATH_SEPARATOR;
 	return NtText
-	(
-		7,
-		BIN32_FOLDER, s,
-		MODULES_FOLDER, s,
-		CRYCIL_FOLDER, s,
+	({
+		BIN32_FOLDER, PATH_SEPARATOR,
+		MODULES_FOLDER, PATH_SEPARATOR,
+		CRYCIL_FOLDER, PATH_SEPARATOR,
 		MONO_DEBUG_UTILITY_FILE
-	).Detach();
+	}).Detach();
 }
 //! Returns a path to the file that contains configuration data for 4.5 version AppDomains.
 const char *DirectoryStructure::GetMonoAppDomainConfigurationFile()
 {
-	const char *s = PATH_SEPARATOR;
 	return NtText
-	(
-		15,
-		BIN32_FOLDER, s,
-		MODULES_FOLDER, s,
-		CRYCIL_FOLDER, s,
-		MONO_FOLDER, s,
-		MONO_CONFIG_FOLDER, s,
-		"mono", s,
-		"4.5", s,
+	({
+		BIN32_FOLDER, PATH_SEPARATOR,
+		MODULES_FOLDER, PATH_SEPARATOR,
+		CRYCIL_FOLDER, PATH_SEPARATOR,
+		MONO_FOLDER, PATH_SEPARATOR,
+		MONO_CONFIG_FOLDER, PATH_SEPARATOR,
+		"mono", PATH_SEPARATOR,
+		"4.5", PATH_SEPARATOR,
 		"machine.config"
-	).Detach();
+	}).Detach();
 }
