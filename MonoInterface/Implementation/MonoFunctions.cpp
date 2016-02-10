@@ -2,7 +2,7 @@
 #include "MonoFunctions.h"
 #include "MonoClass.h"
 
-#if 0
+#if 1
 #define FunctionsMessage CryLogAlways
 #else
 #define FunctionsMessage(...) void(0)
@@ -22,7 +22,9 @@ const char *MonoFunctions::GetName(_MonoMethod *method)
 void MonoFunctions::AddInternalCall(const char *nameSpace, const char *className, const char *name,
 									void *functionPointer)
 {
+	FunctionsMessage("Adding an internal call for the method %s.%s.%s", nameSpace, className, name);
 	mono_add_internal_call(NtText({ nameSpace, ".", className, "::", name }), functionPointer);
+	FunctionsMessage("Added the internal call.");
 }
 
 void *MonoFunctions::LookupInternalCall(IMonoFunction *func)
