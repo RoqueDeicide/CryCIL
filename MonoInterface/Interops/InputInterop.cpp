@@ -2,6 +2,12 @@
 
 #include "InputInterop.h"
 
+#if 1
+#define InputMessage CryLogAlways
+#else
+#define InputMessage(...) void(0)
+#endif
+
 template<typename thunkT>
 thunkT getThunk(IMonoClass *klass, const char *name)
 {
@@ -13,6 +19,8 @@ void InputInterop::OnRunTimeInitialized()
 	gEnv->pInput->AddEventListener(this);
 	gEnv->pInput->AddTouchEventListener(this, "CryCilInput");
 
+	InputMessage("Registered the listeners.");
+
 	auto cryambly = MonoEnv->Cryambly;
 
 	const char *nameSpace = this->GetInteropNameSpace();
@@ -21,6 +29,8 @@ void InputInterop::OnRunTimeInitialized()
 	auto mouseClass = cryambly->GetClass(nameSpace, "Mouse");
 	auto xboxClass = cryambly->GetClass(nameSpace, "XboxGamepad");
 	auto keyboardClass = cryambly->GetClass(nameSpace, "Keyboard");
+
+	InputMessage("Acquired the classes.");
 
 	// Touchy stuff.
 	onTouchEvent = getThunk<OnTouchEventThunk>(touchClass, "OnEvent");
@@ -46,6 +56,8 @@ void InputInterop::OnRunTimeInitialized()
 
 	thunksInitialized = true;
 
+	InputMessage("Acquired the thunks.");
+
 	REGISTER_METHOD_NCN(nameSpace, "XboxGamepad", "Rumble",          XboxRumble);
 	REGISTER_METHOD_NCN(nameSpace, "XboxGamepad", "SetDeadzone",     XboxSetDeadzone);
 	REGISTER_METHOD_NCN(nameSpace, "XboxGamepad", "RestoreDeadzone", XboxRestoreDeadzone);
@@ -55,6 +67,8 @@ void InputInterop::OnRunTimeInitialized()
 	REGISTER_METHOD_NCN(nameSpace, "Inputs", "GetModifiers",      GetModifiers);
 	REGISTER_METHOD_NCN(nameSpace, "Inputs", "ClearKeys",         ClearKeys);
 	REGISTER_METHOD_NCN(nameSpace, "Inputs", "ClearAnalogInputs", ClearAnalogInputs);
+
+	InputMessage("Added internal calls.");
 }
 
 bool InputInterop::OnInputEvent(const SInputEvent &_event)
