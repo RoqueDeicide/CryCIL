@@ -76,6 +76,14 @@ public:
 	//! Warning: Attempting to get unmanaged thunk of virtual method will result in
 	//!          InvalidProgramException being raised.
 	//!
+	//! WARNING: The process of acquiring of the unmanaged thunk of a static method involves
+	//!          invocation of the containing class's static constructor. Be aware of this
+	//!          if you want static constructor to be executed only at particular. If static
+	//!          constructor at any point of its invocation throws an unhandled exception
+	//!          that exception cannot be caught and will crash your program. You can detect
+	//!          such unhandled exceptions by looking at the console output, or by redirecting
+	//!          the standard output and errors streams of the process to a separate program.
+	//!
 	//! Examples of usage:
 	//!
 	//! Static method:
@@ -232,6 +240,14 @@ public:
 	//! You also don't need to specify __stdcall since __cdecl works as well.
 	//!
 	//! Other then all of the above, raw thunks are the same as unmanaged thunks.
+	//!
+	//! WARNING: The process of acquiring of the raw thunk of a static method involves
+	//!          invocation of the containing class's static constructor. Be aware of this
+	//!          if you want static constructor to be executed only at particular. If static
+	//!          constructor at any point of its invocation throws an unhandled exception
+	//!          that exception cannot be caught and will crash your program. You can detect
+	//!          such unhandled exceptions by looking at the console output, or by redirecting
+	//!          the standard output and errors streams of the process to a separate program.
 	//!
 	//! Perfect example of a function that can be invoked through a raw thunk:
 	//!
