@@ -3,6 +3,12 @@
 #include "Timing.h"
 #include "TimeUtilities.h"
 
+#if 0
+#define TimeMessage CryLogAlways
+#else
+#define TimeMessage(...) void(0)
+#endif
+
 void TimingInterop::Update()
 {
 	if (!gEnv || !gEnv->pTimer)
@@ -25,13 +31,25 @@ void TimingInterop::Update()
 
 void TimingInterop::OnRunTimeInitialized()
 {
-	setTimings = SetTimingsRawThunk(MonoEnv->Cryambly->GetClass(this->GetInteropNameSpace(), this->GetInteropClassName())
-										   ->GetFunction("SetTimings")->RawThunk);
+	TimeMessage("Timing Interop receiving the event.");
+
+	IMonoClass *klass =
+		MonoEnv->Cryambly->GetClass(this->GetInteropNameSpace(), this->GetInteropClassName());
+
+	TimeMessage("Got the class.");
+
+	IMonoFunction *func = klass->GetFunction("SetTimings", -1);
+
+	setTimings = SetTimingsRawThunk(func->RawThunk);
+
+	TimeMessage("Acquired SetTimings thunk.");
 
 	REGISTER_METHOD(get_Async);
 	REGISTER_METHOD(get_AsyncCurrent);
 	REGISTER_METHOD(SetTimeScale);
 	REGISTER_METHOD(ClearScaling);
+
+	TimeMessage("Added internal calls.");
 }
 
 int64 TimingInterop::get_Async()
