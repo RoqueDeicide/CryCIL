@@ -4,6 +4,12 @@ struct IMonoMethod;
 struct IMonoStaticMethod;
 struct IMonoConstructor;
 
+#if 1
+#define FuncMessage CryLogAlways
+#else
+#define FuncMessage(...) void(0)
+#endif
+
 //! Base interface for wrappers of Mono functions (type members defined as functions, e.g. methods and
 //! constructors).
 struct IMonoFunction : public IMonoMember
@@ -17,11 +23,13 @@ protected:
 	List<IMonoClass *> paramClasses;
 	List<const char *> paramTypeNames;
 	void *rawThunk;
+	void *unmanagedThunk;
 
 	IMonoClass *klass;
 
 	IMonoFunction(_MonoMethod *method, IMonoClass *klass = nullptr)
 		: rawThunk(nullptr)
+		, unmanagedThunk(nullptr)
 	{
 		if (!method)
 		{
@@ -220,7 +228,7 @@ public:
 	//!    }
 	//! @endcode
 	//! @example DoxygenExampleFiles\UnmanagedThunkExample.h
-	__declspec(property(get = GetThunk)) void *UnmanagedThunk;
+	__declspec(property(get = GetUnmanagedThunk)) void *UnmanagedThunk;
 	//! Gets a raw thunk of this function.
 	//!
 	//! Raw thunks are probably one of the fastest ways of invoking a method, however they have quite a few
@@ -299,7 +307,7 @@ public:
 	//! RAW_THUNK typedef void(* EventRaiserThunk)(const EventInfo &);
 	//!
 	//! @endcode
-	__declspec(property(get = GetFunctionPointer)) void *RawThunk;
+	__declspec(property(get = GetRawThunk)) void *RawThunk;
 	//! Gets number of arguments this function accepts.
 	__declspec(property(get = GetParameterCount)) int ParameterCount;
 	//! Gets a list of parameters this function accepts.
@@ -324,14 +332,36 @@ public:
 	//! @returns A result of static_cast of this object to IMonoConstructor.
 	__forceinline IMonoConstructor *ToCtor();			// Defined in IMonoConstructor.h
 
-	void *GetThunk()
+	void *GetUnmanagedThunk()
 	{
-		return MonoEnv->Functions->GetUnmanagedThunk(this->wrappedMethod);
+		FuncMessage("Method class: %d", this->klass);
+
+		FuncMessage("Method name: %s", this->name);
+
+		FuncMessage("Class name: %s", this->klass->FullName);
+
+		FuncMessage("Querying the thunk for the function %s.%s",
+					this->klass->FullName, this->name);
+
+		if (!this->unmanagedThunk)
+		{
+			CryLogAlways("Acquiring the unmanaged thunk for the function %s.%s",
+						 this->klass->FullName, this->name);
+
+			this->unmanagedThunk = MonoEnv->Functions->GetUnmanagedThunk(this->wrappedMethod);
+
+			FuncMessage("Got the thunk for the function %s.%s",
+						this->klass->FullName, this->name);
+		}
+		return this->unmanagedThunk;
 	}
-	void *GetFunctionPointer()
+	void *GetRawThunk()
 	{
 		if (!this->rawThunk)
 		{
+			CryLogAlways("Acquiring the raw thunk for the function %s.%s",
+						 this->klass->FullName, this->name);
+
 			this->rawThunk = MonoEnv->Functions->GetRawThunk(this->wrappedMethod);
 		}
 		return this->rawThunk;
