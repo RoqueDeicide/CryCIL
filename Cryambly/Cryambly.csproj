@@ -707,7 +707,7 @@
     <Compile Include="Mathematics\Vectors\Vector3d.Operations.cs" />
     <Compile Include="Mathematics\Vectors\Vector4.cs" />
     <Compile Include="Mathematics\Vectors\Vector4d.cs" />
-    <Compile Include="Miscellaneous\ITemporaryOverrider.cs" />
+    <Compile Include="Utilities\ITemporaryOverrider.cs" />
     <Compile Include="NamespaceDoc.cs" />
     <Compile Include="PathUtilities.cs" />
     <Compile Include="Properties\Annotations.cs" />
@@ -740,7 +740,7 @@
     <Compile Include="RunTime\Logging\ConsoleLogWriter.cs" />
     <Compile Include="RunTime\Logging\ConsoleLogWriter.Write.cs" />
     <Compile Include="RunTime\Logging\ConsoleLogWriter.WriteLine.cs" />
-    <Compile Include="Miscellaneous\ConsoleOutputLevel.cs" />
+    <Compile Include="Utilities\ConsoleOutputLevel.cs" />
     <Compile Include="RunTime\Logging\NamespaceDoc.cs" />
     <Compile Include="RunTime\MonoInterface.cs" />
     <Compile Include="RunTime\NamespaceDoc.cs" />
@@ -755,6 +755,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Engine\CustomTypes\" />
+    <Folder Include="Miscellaneous\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="RunTime\Compilation\Reporting\CompilationProblemsReportForm.resx" />
