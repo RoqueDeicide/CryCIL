@@ -26,7 +26,14 @@
 #include <CryThread.h>
 #include <Cry_Math.h>
 #include <ISystem.h>
+
+#pragma warning(push)
+#pragma warning(disable : 4316)
+
 #include <I3DEngine.h>
+
+#pragma warning(pop)
+
 #include <IInput.h>
 #include <IConsole.h>
 #include <ITimer.h>
