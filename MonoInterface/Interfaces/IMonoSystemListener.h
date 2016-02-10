@@ -31,6 +31,10 @@ struct IMonoSystemListener
 protected:
 	IMonoInterface *monoInterface;
 public:
+	IMonoSystemListener()
+		: monoInterface(nullptr)
+	{
+	}
 	virtual ~IMonoSystemListener() {}
 
 	//! Allows IMonoInterface implementation let the listener access it before global
