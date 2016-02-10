@@ -79,7 +79,7 @@ public:
 #pragma endregion
 private:
 #pragma region Default Listeners
-	void RegisterDefaultListeners();
+	void RegisterDefaultListeners() const;
 #pragma endregion
 #pragma region Thunks Initialization
 	void InitializeThunks();

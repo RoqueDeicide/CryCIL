@@ -287,7 +287,7 @@ void MonoInterface::OnSystemEvent(ESystemEvent, UINT_PTR, UINT_PTR)
 }
 #pragma endregion
 #pragma region Default Listeners
-void MonoInterface::RegisterDefaultListeners()
+void MonoInterface::RegisterDefaultListeners() const
 {
 	this->broadcaster->listeners->Add(new TimingInterop());			// This interop has to be first to make
 																	// sure that all timings are up-to-date.
