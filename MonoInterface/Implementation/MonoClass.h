@@ -5,8 +5,6 @@
 #include "ThunkTables.h"
 #include "Implementation/MonoMethod.h"
 
-#include <sstream>
-
 #include "List.h"
 
 //! Represents a wrapper around MonoClass object.
