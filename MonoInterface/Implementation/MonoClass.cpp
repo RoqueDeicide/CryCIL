@@ -667,6 +667,37 @@ __forceinline result_type *MonoClassWrapper::SearchTheList(List<result_type *> &
 	return nullptr;
 }
 
+const char *MonoClassWrapper::BuildFullName(bool ilStyle, const char *& field)
+{
+	ClassMessage("Querying the full name of the class.");
+
+	if (!field)
+	{
+		ClassMessage("Building the full name of the class.");
+
+		TextBuilder fullName(100);
+		if (MonoClass *nestingClass = mono_class_get_nesting_type(this->wrappedClass))
+		{
+			IMonoClass *nest = MonoClassCache::Wrap(nestingClass);
+
+			fullName << NtText(ilStyle ? nest->FullNameIL : nest->FullName) << '+';
+		}
+		else
+		{
+			fullName << this->nameSpace << '.';
+		}
+
+		fullName << this->nameSpace << "." << this->name;
+
+		ClassMessage("TextBuilder is done.");
+
+		field = fullName.ToNTString();
+
+		ClassMessage("Created a null-terminated version of the name.");
+	}
+	return field;
+}
+
 IMonoEvent *MonoClassWrapper::GetEvent(const char *name)
 {
 	for (int i = 0; i < this->events.Length; i++)
@@ -779,54 +810,12 @@ const char *MonoClassWrapper::GetNameSpace()
 
 const char *MonoClassWrapper::GetFullName()
 {
-	if (!this->fullName)
-	{
-		TextBuilder fullName;
-		if (MonoClass *nestingClass = mono_class_get_nesting_type(this->wrappedClass))
-		{
-			const char *nestingName = MonoClassCache::Wrap(nestingClass)->FullName;
-
-			fullName = TextBuilder(strlen(this->name) + strlen(nestingName) + 1);
-
-			fullName << nestingName << "." << this->name;
-
-			delete nestingName;
-		}
-		else
-		{
-			fullName = TextBuilder(strlen(this->name) + strlen(this->nameSpace) + 1);
-
-			fullName << this->nameSpace << "." << this->name;
-		}
-		this->fullName = fullName.ToNTString();
-	}
-	return this->fullName;
+	return this->BuildFullName(false, this->fullName);
 }
 
 const char *MonoClassWrapper::GetFullNameIL()
 {
-	if (!this->fullNameIL)
-	{
-		TextBuilder fullName;
-		if (MonoClass *nestingClass = mono_class_get_nesting_type(this->wrappedClass))
-		{
-			const char *nestingName = MonoClassCache::Wrap(nestingClass)->FullName;
-
-			fullName = TextBuilder(strlen(this->name) + strlen(nestingName) + 1);
-
-			fullName << nestingName << "+" << this->name;
-
-			delete nestingName;
-		}
-		else
-		{
-			fullName = TextBuilder(strlen(this->name) + strlen(this->nameSpace) + 1);
-
-			fullName << this->nameSpace << "." << this->name;
-		}
-		this->fullNameIL = fullName.ToNTString();
-	}
-	return this->fullNameIL;
+	return this->BuildFullName(true, this->fullNameIL);
 }
 
 IMonoAssembly *MonoClassWrapper::GetAssembly()

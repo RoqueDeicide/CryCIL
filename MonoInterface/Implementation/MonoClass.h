@@ -103,6 +103,8 @@ private:
 	__forceinline result_type *SearchTheList(List<result_type *> &list, List<const char *> &paramTypeNames);
 	template<typename result_type>
 	__forceinline result_type *SearchTheList(List<result_type *> &list, int paramCount);
+
+	const char *BuildFullName(bool ilStyle, const char *& field);
 };
 
 //! Caches MonoClassWrapper objects.
