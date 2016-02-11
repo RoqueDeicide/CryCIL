@@ -20,6 +20,7 @@
 #include <ISystem.h>
 
 #define FatalError(message) CryFatalError(message)
+#define ReportMessage CryLogAlways
 
 #else
 #include <iostream>
@@ -27,11 +28,19 @@
 #include <sstream>
 #include <vector>
 #include <stdexcept>
+#include <algorithm>
 #define FatalError(message) throw std::logic_error(message)
+#define ReportMessage(text,...) printf(text##"\n", __VA_ARGS__)
 
 #endif // CRYCIL_MODULE
 
 #include "List.h"
+
+#if 0
+#define TextBuilderMessage ReportMessage
+#else
+#define TextBuilderMessage(...) void(0)
+#endif
 
 //! Base class for Text and TextBuilder.
 class TextBase
@@ -156,17 +165,29 @@ public:
 		{
 			FatalError("Attempt to copy too many characters from the string.");
 		}
+
+		TextBuilderMessage("Building the null-terminated version of the text from index %d %d characters long.", index, count);
+
 		char *ntText = new char[count + 1];
-		ntText[count] = '\0';
-		for
-			(
-			int i = index, j = 0, counter = 0;
-		counter < count;					// Counter tells us where to stop.
-		i++, j++, counter++					//
-			)
+
+		TextBuilderMessage("Allocated memory.");
+
+		int i, j, counter;
+		for(i = index, j = 0, counter = 0;
+			counter < count;					// Counter tells us where to stop.
+			i++, j++, counter++)
 		{
+			//TextBuilderMessage("Copying a %c from index %d to index %d with counter on %d.",
+			//				   this->text[i], i, j, counter);
 			ntText[j] = this->text[i];
 		}
+
+		ntText[j] = '\0';
+
+		TextBuilderMessage("Last character is now null.");
+
+		TextBuilderMessage("Built the null-terminated version of the text: %s", ntText);
+
 		return const_cast<const char *>(ntText);
 	}
 	//! Copies characters from beginning of this text to the given character array.
@@ -319,7 +340,6 @@ private:
 //! unremovable memory leaks.
 class Text : public TextBase
 {
-private:
 public:
 	//! Creates an default text.
 	//!
@@ -356,38 +376,23 @@ public:
 #endif // USE_CRYCIL_API
 	//! Constructs a text out of given parts.
 	//!
-	//! @param t1 Number of arguments in the chain.
-	explicit Text(int count...)
+	//! @param parts An initializer list that contains the parts to build this object out of.
+	explicit Text(std::initializer_list<const char *> parts)
 	{
-		// Gather the arguments into the list and calculate total length at the same time.
-		va_list va;
-		va_start(va, count);
-
-		auto parts = List<const char *>(count);
-
-		int length = 0;
-		for (int i = 0; i < count; i++)
+		int totalLength = 0;
+		for (auto current = parts.begin(); current < parts.end(); current++)
 		{
-			const char *next = va_arg(va, const char *);
-
-			if (next)
-			{
-				length += strlen(next);
-				parts.Add(next);
-			}
+			totalLength += strlen(*current);
 		}
 
-		va_end(va);
+		this->text = new char[totalLength];
 
-		this->text = new char[length];
-		this->length = length;
-		// Copy the characters to this string.
-		int j = 0;
-		for (int i = 0; i < parts.Length; i++)
+		for (auto current = parts.begin(); current < parts.end(); current++)
 		{
-			for (int k = 0; parts[i][k]; k++)
+			int j = 0;
+			while (char c = (*current)[j++])
 			{
-				this->text[j++] = parts[i][k];
+				this->text[this->length++] = c;
 			}
 		}
 	}
@@ -528,11 +533,10 @@ public:
 //! Represents a string that can be changed.
 class TextBuilder : public TextBase
 {
-private:
 	int capacity;		//!< Size of the buffer.
 public:
 	//! Gets the capacity of the string.
-	__declspec(property(get=GetCapacity)) int Capacity;
+	__declspec(property(get = GetCapacity)) int Capacity;
 	//! Gets the capacity of the string.
 	int GetCapacity() const
 	{
@@ -544,21 +548,27 @@ public:
 		this->capacity = 0;
 	}
 	//! Assigns contents of the temporary object to the new one.
-	TextBuilder(TextBuilder &&other) : TextBase(std::move(other)) {}
+	TextBuilder(TextBuilder &&other)
+		: TextBase(std::move(other))
+		, capacity(other.capacity)
+	{
+		other.capacity = 0;
+	}
 	//! Creates a constructive text with desired capacity.
 	//!
 	//! @param capacity Amount of space to allocate for symbols before any of them are added.
-	TextBuilder(int capacity) : TextBase()
+	explicit TextBuilder(int capacity)
 	{
 		this->capacity = capacity;
-		this->text = static_cast<char *>(malloc(capacity * sizeof(char)));
+		this->length = 0;
+		this->text = new char[this->capacity];
 	}
 	//! Creates a new mutable string from given null-terminated one.
 	//!
 	//! Text from given string is copied into new object without a terminating null character.
 	//!
 	//! @param text Text to initialize this object with.
-	TextBuilder(const char *text)
+	explicit TextBuilder(const char *text)
 	{
 		this->Init(text, 0, strlen(text));
 	}
@@ -574,7 +584,7 @@ public:
 	//! Creates a new mutable string from a given immutable string.
 	//!
 	//! @param immutableString Immutable string which is used for initialization.
-	TextBuilder(Text *immutableString)
+	explicit TextBuilder(Text *immutableString)
 	{
 		this->Init(immutableString, 0, immutableString->Length);
 	}
@@ -589,38 +599,26 @@ public:
 	}
 	//! Constructs a text out of given parts.
 	//!
-	//! @param t1 Number of arguments in the chain.
-	TextBuilder(int capacity, int count...)
+	//! @param capacity Initial capacity. This value will only be selected as a capacity if
+	//!                 combined length of all parts is less.
+	//! @param parts    An initializer list that contains the parts to build this text out of.
+	TextBuilder(int capacity, std::initializer_list<const char *> parts)
 	{
-		// Gather the arguments into the list and calculate total length at the same time.
-		va_list va;
-		va_start(va, count);
-
-		auto parts = List<const char *>(count);
-
-		int length = 0;
-		for (int i = 0; i < count; i++)
+		int totalLength = 0;
+		for (auto current = parts.begin(); current < parts.end(); current++)
 		{
-			const char *next = va_arg(va, const char *);
-
-			if (next)
-			{
-				length += strlen(next);
-				parts.Add(next);
-			}
+			totalLength += strlen(*current);
 		}
 
-		va_end(va);
+		this->capacity = std::max(capacity, totalLength);
+		this->text = new char[this->capacity];
 
-		this->text = new char[(length > capacity) ? length : capacity];
-		this->length = length;
-		// Copy the characters to this string.
-		int j = 0;
-		for (int i = 0; i < parts.Length; i++)
+		for (auto current = parts.begin(); current < parts.end(); current++)
 		{
-			for (int k = 0; parts[i][k]; k++)
+			int j = 0;
+			while (char c = (*current)[j++])
 			{
-				this->text[j++] = parts[i][k];
+				this->text[this->length++] = c;
 			}
 		}
 	}
@@ -628,7 +626,7 @@ public:
 	{
 		if (this->text)
 		{
-			free(this->text);
+			delete this->text;
 			this->text = nullptr;
 			this->length = 0;
 			this->capacity = 0;
@@ -687,12 +685,11 @@ public:
 		return result;
 	}
 	//! Appends a symbol to the end of this text.
-	TextBuilder &operator <<(char str)
+	TextBuilder &operator <<(char character)
 	{
-		int combinedLength = this->length + 1;
-		this->Resize(combinedLength);
-		this->text[this->length] = str;
-		this->length = combinedLength;
+		TextBuilderMessage("Adding a %c character to the text.", character);
+		this->Resize(this->length + 1);
+		this->text[this->length++] = character;
 		return *this;
 	}
 	//! Appends a null-terminated string to the end of this text.
@@ -719,6 +716,9 @@ public:
 private:
 	void Append(char *bufferToCopy, int count)
 	{
+		TextBuilderMessage("Adding %d character text to the builder that is %d characters long.",
+						   count, this->length);
+
 		int combinedLength = this->length + count;
 		this->Resize(combinedLength);
 		// Copy data.
@@ -731,7 +731,7 @@ private:
 	void Init(const char *text, int index, int count)
 	{
 		this->capacity = this->length = count;
-		this->text = static_cast<char *>(malloc(capacity * sizeof(char)));
+		this->text = new char[this->capacity];
 		strncpy(this->text, text + index, this->capacity);
 	}
 	void Init(Text *immutableString, int index, int count)
@@ -741,7 +741,7 @@ private:
 			FatalError("Attempt to copy too many characters from the string.");
 		}
 		this->capacity = this->length = count;
-		this->text = static_cast<char *>(malloc(capacity * sizeof(char)));
+		this->text = new char[this->capacity];
 		immutableString->CopyTo(this->text, index, 0, this->length);
 	}
 	void Resize(int combinedLength)
@@ -750,7 +750,16 @@ private:
 		if (this->capacity < combinedLength)
 		{
 			// Allocate new memory.
-			this->text = static_cast<char *>(realloc(this->text, combinedLength * sizeof(char)));
+			char *newText = new char[combinedLength];
+			for (int i = 0; i < this->length; i++)
+			{
+				newText[i] = this->text[i];
+			}
+
+			// Deallocate old memory.
+			delete this->text;
+
+			this->text = newText;
 			this->capacity = combinedLength;
 		}
 	}
