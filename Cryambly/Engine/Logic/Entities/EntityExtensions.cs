@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using System.Security;
+using CryCil.Annotations;
+using CryCil.RunTime;
 
 namespace CryCil.Engine.Logic
 {
@@ -60,6 +62,7 @@ namespace CryCil.Engine.Logic
 		/// <c>DerivedEntityExtension();</c>.
 		/// </remarks>
 		/// <param name="extensionType">Type of object that represents the extension.</param>
+		/// <returns>An object that represents the added extension.</returns>
 		/// <exception cref="ArgumentNullException">
 		/// <paramref name="extensionType"/> is <see langword="null"/>.
 		/// </exception>
@@ -70,7 +73,8 @@ namespace CryCil.Engine.Logic
 		/// Unable to create an object of extension: No appropriate constructor was found. Check Remarks
 		/// section for signature of supported constructors.
 		/// </exception>
-		public void Add(Type extensionType)
+		[CanBeNull]
+		public EntityExtension Add(Type extensionType)
 		{
 			if (extensionType == null)
 			{
@@ -79,45 +83,65 @@ namespace CryCil.Engine.Logic
 
 			if (!extensionType.Implements<EntityExtension>())
 			{
-				throw new NotSupportedException(string.Format("Specified type must derive from {0}.", extensionType.FullName));
+				throw new NotSupportedException(string.Format("Specified type must derive from {0}.",
+															  extensionType.FullName));
 			}
 
 			ConstructorInfo ctor = extensionType.GetConstructor(Type.EmptyTypes);
 			if (ctor == null)
 			{
-				throw new ArgumentException(
-					string.Format("Unable to create an object of extension {0}: No appropriate constructor was found.",
-								  extensionType.FullName), "extensionType");
+				throw new ArgumentException(string.Format("Unable to create an object of extension {0}: " +
+														  "No appropriate constructor was found.",
+														  extensionType.FullName),
+											"extensionType");
 			}
 
 			try
 			{
-				this.AddInternal(ctor.Invoke(null) as EntityExtension);
+				return this.AddInternal(ctor.Invoke(null) as EntityExtension);
 			}
-			catch (MemberAccessException)
+			catch (Exception ex)
 			{
-			}
-			catch (TargetInvocationException)
-			{
-			}
-			catch (TargetParameterCountException)
-			{
-			}
-			catch (SecurityException)
-			{
+				string message = string.Format("An error has occurred when creating a new extension of " +
+											   "type {0}", extensionType.FullName);
+
+				var exception = new Exception(message, ex);
+
+				MonoInterface.DisplayException(exception);
+				return null;
 			}
 		}
 		/// <summary>
 		/// Adds an extension to this entity.
 		/// </summary>
 		/// <typeparam name="ExtensionType">Type of the extension to add.</typeparam>
-		public void Add<ExtensionType>() where ExtensionType : EntityExtension, new()
+		/// <returns>An object that represents the added extension.</returns>
+		[CanBeNull]
+		public EntityExtension Add<ExtensionType>() where ExtensionType : EntityExtension, new()
 		{
-			// ReSharper disable once PossibleNullReferenceException
+			Type type = typeof(ExtensionType);
 
-			// ReSharper disable ExceptionNotDocumented
-			this.AddInternal(typeof(ExtensionType).GetConstructor(Type.EmptyTypes).Invoke(null) as EntityExtension);
-			// ReSharper restore ExceptionNotDocumented
+			Debug.Assert(type != null, "Invalid type was used to inflate this generic method.");
+
+			try
+			{
+				ConstructorInfo ctor = type.GetConstructor(Type.EmptyTypes);
+
+				Debug.Assert(ctor != null, "Invalid type was used to inflate this generic method.");
+
+				return this.AddInternal(ctor.Invoke(null) as EntityExtension);
+			}
+			catch (Exception ex)
+			{
+				string message =
+					string.Format("An error has occurred when creating a new extension of type {0}",
+								  type.FullName);
+
+				var exception = new Exception(message, ex);
+
+				MonoInterface.DisplayException(exception);
+				return null;
+			}
 		}
 		/// <summary>
 		/// Adds an extension to this entity.
@@ -274,11 +298,13 @@ namespace CryCil.Engine.Logic
 		}
 		#endregion
 		#region Utilities
-		private void AddInternal(EntityExtension extension)
+		private EntityExtension AddInternal(EntityExtension extension)
 		{
 			this.extensions.Add(extension);
 			extension.Host = this.entity;
 			extension.Bind();
+
+			return extension;
 		}
 		private void RemoveAtInternal(int index, bool disposing)
 		{
