@@ -9,8 +9,7 @@ IMonoAssembly *mainTestingAssembly;
 
 void BeginTheTest()
 {
-
-	CryLogAlways("TEST: ");
+	CryLogAlways("TEST:");
 
 	TestAssemblies();
 

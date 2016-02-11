@@ -1130,6 +1130,15 @@
     <ClCompile Include="Interops\CryNetChannel.cpp">
       <Filter>Interops\Engine\Network</Filter>
     </ClCompile>
+    <ClCompile Include="Testing\TestAssemblies.cpp">
+      <Filter>Testing</Filter>
+    </ClCompile>
+    <ClCompile Include="Testing\TestClasses.cpp">
+      <Filter>Testing</Filter>
+    </ClCompile>
+    <ClCompile Include="Testing\TestObjects.cpp">
+      <Filter>Testing</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">
