@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using CryCil;
 using CryCil.Engine;
 using CryCil.Engine.Logic;
 using CryCil.Engine.Rendering.Views;
