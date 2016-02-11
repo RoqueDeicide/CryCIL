@@ -10,7 +10,7 @@ namespace GameLibrary.Entities
 	/// Represents an entity that is a simple geometric object.
 	/// </summary>
 	[Entity("A simple geometric object.", "", "", "prompt.bmp", EntityClassFlags.Default)]
-	public class GeometricEntity : MonoEntity
+	public class GeometricEntity : SimpleMonoEntity
 	{
 		#region Fields
 		private string objectPath;
@@ -60,15 +60,6 @@ namespace GameLibrary.Entities
 		#endregion
 		#region Interface
 		/// <summary>
-		/// Releases resources held by this entity.
-		/// </summary>
-		/// <param name="invokedFromNativeCode">
-		/// Indicates whether this entity was released from native code.
-		/// </param>
-		public override void Dispose(bool invokedFromNativeCode)
-		{
-		}
-		/// <summary>
 		/// Performs preliminary initialization of this object.
 		/// </summary>
 		public override void Initialize()
@@ -81,27 +72,6 @@ namespace GameLibrary.Entities
 		public override void PostInitialize()
 		{
 			this.Reset(null, false);
-		}
-		/// <summary>
-		/// Synchronizes the state of this entity with its representation in other place (e.g. a save game
-		/// file) .
-		/// </summary>
-		/// <param name="sync">Object that handles synchronization.</param>
-		public override void Synchronize(CrySync sync)
-		{
-		}
-		/// <summary>
-		/// Updates logical state of this entity.
-		/// </summary>
-		/// <param name="context">The most up-to-date information for this frame.</param>
-		public override void Update(ref EntityUpdateContext context)
-		{
-		}
-		/// <summary>
-		/// Updates logical state of this entity after most other stuff is updated.
-		/// </summary>
-		public override void PostUpdate()
-		{
 		}
 		#endregion
 		#region Utilities
