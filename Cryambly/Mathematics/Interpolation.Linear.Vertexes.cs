@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using CryCil.Geometry;
 
 namespace CryCil
@@ -17,7 +18,8 @@ namespace CryCil
 			/// Parameter that determines position of resultant vertex on the line that goes through the
 			/// first and second vertex relative to the first one.
 			/// </param>
-			public static void Apply(out FullVertex result, FullVertex first, FullVertex second, float parameter)
+			public static void Apply(out FullVertex result, FullVertex first, FullVertex second,
+									 float parameter)
 			{
 				result = new FullVertex
 				{

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using CryCil.Graphics;
 
 namespace CryCil
@@ -17,7 +18,8 @@ namespace CryCil
 			/// Scalar that describes difference between resultant color value and first color relative to
 			/// second color.
 			/// </param>
-			public static void Apply(out ColorByte result, ColorByte first, ColorByte second, float parameter)
+			public static void Apply(out ColorByte result, ColorByte first, ColorByte second,
+									 float parameter)
 			{
 				result = new ColorByte
 				{
@@ -57,7 +59,8 @@ namespace CryCil
 			/// Scalar that describes difference between resultant color value and first color relative to
 			/// second color.
 			/// </param>
-			public static void Apply(out ColorSingle result, ColorSingle first, ColorSingle second, float parameter)
+			public static void Apply(out ColorSingle result, ColorSingle first, ColorSingle second,
+									 float parameter)
 			{
 				result = new ColorSingle
 				{

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil
 {
@@ -30,14 +31,10 @@ namespace CryCil
 									 Vector2 t1, Vector2 t2, float parameter)
 			{
 				float part1, part2, part3, part4;
-				CalculateHermiteInterpolationFactors
-					(parameter, out part1, out part2, out part3, out part4);
+				CalculateHermiteInterpolationFactors(parameter, out part1, out part2, out part3, out part4);
 
-				result = new Vector2
-					(
-					v1.X * part1 + v2.X * part2 + t1.X * part3 + t2.X * part4,
-					v1.Y * part1 + v2.Y * part2 + t1.Y * part3 + t2.Y * part4
-					);
+				result = new Vector2(v1.X * part1 + v2.X * part2 + t1.X * part3 + t2.X * part4,
+									 v1.Y * part1 + v2.Y * part2 + t1.Y * part3 + t2.Y * part4);
 			}
 			/// <summary>
 			/// Creates a vector that is a result of Hermite interpolation.
@@ -55,14 +52,10 @@ namespace CryCil
 										 Vector2 t1, Vector2 t2, float parameter)
 			{
 				float part1, part2, part3, part4;
-				CalculateHermiteInterpolationFactors
-					(parameter, out part1, out part2, out part3, out part4);
+				CalculateHermiteInterpolationFactors(parameter, out part1, out part2, out part3, out part4);
 
-				return new Vector2
-					(
-					v1.X * part1 + v2.X * part2 + t1.X * part3 + t2.X * part4,
-					v1.Y * part1 + v2.Y * part2 + t1.Y * part3 + t2.Y * part4
-					);
+				return new Vector2(v1.X * part1 + v2.X * part2 + t1.X * part3 + t2.X * part4,
+								   v1.Y * part1 + v2.Y * part2 + t1.Y * part3 + t2.Y * part4);
 			}
 			/// <summary>
 			/// Applies Hermite interpolation to the given vector.
@@ -81,15 +74,11 @@ namespace CryCil
 									 Vector3 t1, Vector3 t2, float parameter)
 			{
 				float part1, part2, part3, part4;
-				CalculateHermiteInterpolationFactors
-					(parameter, out part1, out part2, out part3, out part4);
+				CalculateHermiteInterpolationFactors(parameter, out part1, out part2, out part3, out part4);
 
-				result = new Vector3
-					(
-					v1.X * part1 + v2.X * part2 + t1.X * part3 + t2.X * part4,
-					v1.Y * part1 + v2.Y * part2 + t1.Y * part3 + t2.Y * part4,
-					v1.Z * part1 + v2.Z * part2 + t1.Z * part3 + t2.Z * part4
-					);
+				result = new Vector3(v1.X * part1 + v2.X * part2 + t1.X * part3 + t2.X * part4,
+									 v1.Y * part1 + v2.Y * part2 + t1.Y * part3 + t2.Y * part4,
+									 v1.Z * part1 + v2.Z * part2 + t1.Z * part3 + t2.Z * part4);
 			}
 			/// <summary>
 			/// Creates a vector that is a result of Hermite interpolation.
@@ -107,15 +96,11 @@ namespace CryCil
 										 Vector3 t1, Vector3 t2, float parameter)
 			{
 				float part1, part2, part3, part4;
-				CalculateHermiteInterpolationFactors
-					(parameter, out part1, out part2, out part3, out part4);
+				CalculateHermiteInterpolationFactors(parameter, out part1, out part2, out part3, out part4);
 
-				return new Vector3
-					(
-					v1.X * part1 + v2.X * part2 + t1.X * part3 + t2.X * part4,
-					v1.Y * part1 + v2.Y * part2 + t1.Y * part3 + t2.Y * part4,
-					v1.Z * part1 + v2.Z * part2 + t1.Z * part3 + t2.Z * part4
-					);
+				return new Vector3(v1.X * part1 + v2.X * part2 + t1.X * part3 + t2.X * part4,
+								   v1.Y * part1 + v2.Y * part2 + t1.Y * part3 + t2.Y * part4,
+								   v1.Z * part1 + v2.Z * part2 + t1.Z * part3 + t2.Z * part4);
 			}
 			/// <summary>
 			/// Applies Hermite interpolation to the given vector.
@@ -134,16 +119,12 @@ namespace CryCil
 									 Vector4 t1, Vector4 t2, float parameter)
 			{
 				float part1, part2, part3, part4;
-				CalculateHermiteInterpolationFactors
-					(parameter, out part1, out part2, out part3, out part4);
+				CalculateHermiteInterpolationFactors(parameter, out part1, out part2, out part3, out part4);
 
-				result = new Vector4
-					(
-					v1.X * part1 + v2.X * part2 + t1.X * part3 + t2.X * part4,
-					v1.Y * part1 + v2.Y * part2 + t1.Y * part3 + t2.Y * part4,
-					v1.Z * part1 + v2.Z * part2 + t1.Z * part3 + t2.Z * part4,
-					v1.W * part1 + v2.W * part2 + t1.W * part3 + t2.W * part4
-					);
+				result = new Vector4(v1.X * part1 + v2.X * part2 + t1.X * part3 + t2.X * part4,
+									 v1.Y * part1 + v2.Y * part2 + t1.Y * part3 + t2.Y * part4,
+									 v1.Z * part1 + v2.Z * part2 + t1.Z * part3 + t2.Z * part4,
+									 v1.W * part1 + v2.W * part2 + t1.W * part3 + t2.W * part4);
 			}
 			/// <summary>
 			/// Creates a vector that is a result of Hermite interpolation.
@@ -161,16 +142,12 @@ namespace CryCil
 										 Vector4 t1, Vector4 t2, float parameter)
 			{
 				float part1, part2, part3, part4;
-				CalculateHermiteInterpolationFactors
-					(parameter, out part1, out part2, out part3, out part4);
+				CalculateHermiteInterpolationFactors(parameter, out part1, out part2, out part3, out part4);
 
-				return new Vector4
-					(
-					v1.X * part1 + v2.X * part2 + t1.X * part3 + t2.X * part4,
-					v1.Y * part1 + v2.Y * part2 + t1.Y * part3 + t2.Y * part4,
-					v1.Z * part1 + v2.Z * part2 + t1.Z * part3 + t2.Z * part4,
-					v1.W * part1 + v2.W * part2 + t1.W * part3 + t2.W * part4
-					);
+				return new Vector4(v1.X * part1 + v2.X * part2 + t1.X * part3 + t2.X * part4,
+								   v1.Y * part1 + v2.Y * part2 + t1.Y * part3 + t2.Y * part4,
+								   v1.Z * part1 + v2.Z * part2 + t1.Z * part3 + t2.Z * part4,
+								   v1.W * part1 + v2.W * part2 + t1.W * part3 + t2.W * part4);
 			}
 			private static void CalculateHermiteInterpolationFactors(float parameter,
 																	 out float part1, out float part2,
