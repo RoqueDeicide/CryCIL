@@ -225,6 +225,6 @@ inline void TestClassFromAssembly(IMonoClass *klass, const char *name)
 	}
 	else
 	{
-		CryLogAlways("TEST SUCCESS: Getting a wrapper for a klass %s was successful.", name);
+		CryLogAlways("TEST SUCCESS: Getting a wrapper for a klass %s was successful.", klass->FullName);
 	}
 }
