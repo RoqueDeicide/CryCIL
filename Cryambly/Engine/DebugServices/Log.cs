@@ -172,8 +172,12 @@ namespace CryCil.Engine.DebugServices
 		{
 			try
 			{
+				//Always("Redirecting the output.");
+
 				// Redirect Console output.
 				Console.SetOut(new ConsoleLogWriter());
+
+				//Always("Redirected the output.");
 
 				// A simple test for redirected console output.
 				Console.WriteLine("Standard output has been redirected.");

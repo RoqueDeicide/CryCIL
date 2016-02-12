@@ -15,7 +15,11 @@ LogPostingInterop::LogPostingInterop()
 
 void LogPostingInterop::Post(IMiniLog::ELogType postType, mono::string text)
 {
-	gEnv->pLog->LogV(postType, NtText(text), nullptr);
+	NtText message(text);
+
+	//CryLogAlways("Posting a message: %s", message);
+
+	gEnv->pLog->LogWithType(postType, message);
 }
 int LogPostingInterop::get_VerbosityLevel()
 {
