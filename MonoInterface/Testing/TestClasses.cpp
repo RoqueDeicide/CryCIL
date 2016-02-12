@@ -763,8 +763,7 @@ inline void TestStaticMethodInvocation()
 	CryLogAlways("TEST: Invoking static methods through IMonoStaticMethod.");
 	CryLogAlways("TEST:");
 
-	IMonoClass *lerpClass = MonoEnv->Cryambly->GetClass("CryCil", "Interpolation")
-		->GetNestedType("Linear");
+	IMonoClass *lerpClass = MonoEnv->Cryambly->GetClass("CryCil", "Interpolation")->GetNestedType("Linear");
 	IMonoClass *vector3Class = MonoEnv->Cryambly->Vector3;
 	IMonoClass *singleClass = MonoEnv->CoreLibrary->Single;
 
