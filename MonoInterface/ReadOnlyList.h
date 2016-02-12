@@ -20,11 +20,16 @@
 template<typename ElementType>
 class ReadOnlyList
 {
-private:
 	ElementType *elements;
 	int length;
 	int capacity;
 public:
+	ReadOnlyList(ElementType *elements, int length, int capacity)
+		: elements(elements)
+		, length(length)
+		, capacity(capacity)
+	{
+	}
 
 	//! Gets or sets capacity of this list.
 	__declspec(property(get = GetCapacity)) int Capacity;

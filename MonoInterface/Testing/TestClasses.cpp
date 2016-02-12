@@ -100,9 +100,9 @@ inline void TestMemberLists(IMonoClass *klass)
 
 	auto fields = klass->Fields;
 
-	for (int i = 0; i < fields->Length; i++)
+	for (int i = 0; i < fields.Length; i++)
 	{
-		CryLogAlways("TEST: Field #%d: %s", i, fields->At(i)->Name);
+		CryLogAlways("TEST: Field #%d: %s", i, fields[i]->Name);
 	}
 
 	CryLogAlways("TEST:");
@@ -111,9 +111,11 @@ inline void TestMemberLists(IMonoClass *klass)
 
 	auto properties = klass->Properties;
 
-	for (int i = 0; i < properties->Length; i++)
+	CryLogAlways("TEST: Acquired the read-only list of properties.");
+
+	for (int i = 0; i < properties.Length; i++)
 	{
-		CryLogAlways("TEST: Property #%d: %s", i, properties->At(i)->Name);
+		CryLogAlways("TEST: Property #%d: %s", i, properties[i]->Name);
 	}
 
 	CryLogAlways("TEST:");
@@ -122,9 +124,9 @@ inline void TestMemberLists(IMonoClass *klass)
 
 	auto methods = klass->Functions;
 
-	for (int i = 0; i < methods->Length; i++)
+	for (int i = 0; i < methods.Length; i++)
 	{
-		CryLogAlways("TEST: Method #%d: %s", i, methods->At(i)->Name);
+		CryLogAlways("TEST: Method #%d: %s", i, methods[i]->Name);
 	}
 	CryLogAlways("TEST:");
 }

@@ -15,6 +15,7 @@
 #endif // CRYCIL_MODULE
 
 #include <initializer_list>
+#include "ReadOnlyList.h"
 
 template<typename ElementType> class List;
 
@@ -793,6 +794,12 @@ public:
 	void Trim()
 	{
 		this->Capacity = this->length;
+	}
+	//! Creates an object that allows this list to be looked through without changing it.
+	__declspec(property(get = GetAsReadOnly)) ReadOnlyList<ElementType> AsReadOnly;
+	ReadOnlyList<ElementType> GetAsReadOnly()
+	{
+		return ReadOnlyList<ElementType>(this->elements, this->length, this->capacity);
 	}
 private:
 	void Expand(int size)

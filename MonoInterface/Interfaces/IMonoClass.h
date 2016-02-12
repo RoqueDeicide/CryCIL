@@ -37,13 +37,13 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//! Indicates whether this class is a delegate.
 	__declspec(property(get = GetIsDelegate))  bool                           IsDelegate;
 	//! Gets the list of fields available through this class.
-	__declspec(property(get = GetFields))      ReadOnlyList<IMonoField *>    *Fields;
+	__declspec(property(get = GetFields))      ReadOnlyList<IMonoField *>     Fields;
 	//! Gets the list of properties available through this class.
-	__declspec(property(get = GetProperties))  ReadOnlyList<IMonoProperty *> *Properties;
+	__declspec(property(get = GetProperties))  ReadOnlyList<IMonoProperty *>  Properties;
 	//! Gets the list of events available through this class.
-	__declspec(property(get = GetEvents))      ReadOnlyList<IMonoEvent *>    *Events;
+	__declspec(property(get = GetEvents))      ReadOnlyList<IMonoEvent *>     Events;
 	//! Gets the list of functions available through this class.
-	__declspec(property(get = GetFunctions))   ReadOnlyList<IMonoFunction *> *Functions;
+	__declspec(property(get = GetFunctions))   ReadOnlyList<IMonoFunction *>  Functions;
 	
 	//! Gets one of the constructors that can accept specified number of arguments.
 	//!
@@ -382,10 +382,10 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 
 	VIRTUAL_API virtual IMonoClass *GetBase() = 0;
 
-	VIRTUAL_API virtual ReadOnlyList<IMonoField *>    *GetFields() = 0;
-	VIRTUAL_API virtual ReadOnlyList<IMonoProperty *> *GetProperties() = 0;
-	VIRTUAL_API virtual ReadOnlyList<IMonoEvent *>    *GetEvents() = 0;
-	VIRTUAL_API virtual ReadOnlyList<IMonoFunction *> *GetFunctions() = 0;
+	VIRTUAL_API virtual ReadOnlyList<IMonoField *>    GetFields() = 0;
+	VIRTUAL_API virtual ReadOnlyList<IMonoProperty *> GetProperties() = 0;
+	VIRTUAL_API virtual ReadOnlyList<IMonoEvent *>    GetEvents() = 0;
+	VIRTUAL_API virtual ReadOnlyList<IMonoFunction *> GetFunctions() = 0;
 
 	//! Gets the value of the object's field.
 	//!

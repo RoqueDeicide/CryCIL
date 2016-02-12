@@ -16,6 +16,8 @@ MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 	, fullNameIL(nullptr)
 	, events(30)
 	, fields(30)
+	, flatMethodList(100)
+	, flatPropertyList(100)
 {
 	ClassMessage("Creating a wrapper.");
 
@@ -66,6 +68,8 @@ MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 			ClassMessage("Created a wrapper for a method %s", methodName);
 
 			overloads->Add(methodWrapper);
+
+			this->flatMethodList.Add(methodWrapper);
 		}
 		// Cache properties.
 		iter = nullptr;
@@ -80,7 +84,10 @@ MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 				overloads = new List<IMonoProperty *>(5);
 				this->properties.Add(propName, overloads);
 			}
-			overloads->Add(new MonoPropertyWrapper(prop, this));
+			auto wrapper = new MonoPropertyWrapper(prop, this);
+			overloads->Add(wrapper);
+
+			this->flatPropertyList.Add(wrapper);
 		}
 		// Cache events.
 		iter = nullptr;
@@ -115,20 +122,8 @@ MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 	this->events.Trim();
 	this->fields.Trim();
 
-	// Create a simple list of methods for occasions when a simple list needs to be iterated through.
-	this->flatMethodList = List<IMonoFunction *>(this->methods.Length * 2);
-	this->methods.ForEach
-	(
-		[this](const char *name, List<IMonoFunction *> *overloads)
-		{
-			for (int i = 0; i < overloads->Length; i++)
-			{
-				this->flatMethodList.Add(overloads->At(i));
-			}
-		}
-	);
-
 	this->flatMethodList.Trim();
+	this->flatPropertyList.Trim();
 
 	this->vtable = mono_class_vtable(mono_domain_get(), klass);
 }
@@ -959,24 +954,24 @@ mono::type MonoClassWrapper::MakePointerType()
 // 	return result;
 // }
 
-ReadOnlyList<IMonoField *> *MonoClassWrapper::GetFields()
+ReadOnlyList<IMonoField *> MonoClassWrapper::GetFields()
 {
-	return reinterpret_cast<ReadOnlyList<IMonoField *> *>(&this->fields);
+	return this->fields.AsReadOnly;
 }
 
-ReadOnlyList<IMonoFunction *> *MonoClassWrapper::GetFunctions()
+ReadOnlyList<IMonoFunction *> MonoClassWrapper::GetFunctions()
 {
-	return reinterpret_cast<ReadOnlyList<IMonoFunction *> *>(&this->flatMethodList);
+	return this->flatMethodList.AsReadOnly;
 }
 
-ReadOnlyList<IMonoProperty *> *MonoClassWrapper::GetProperties()
+ReadOnlyList<IMonoProperty *> MonoClassWrapper::GetProperties()
 {
-	return reinterpret_cast<ReadOnlyList<IMonoProperty *> *>(&this->properties);
+	return this->flatPropertyList.AsReadOnly;
 }
 
-ReadOnlyList<IMonoEvent *> *MonoClassWrapper::GetEvents()
+ReadOnlyList<IMonoEvent *> MonoClassWrapper::GetEvents()
 {
-	return reinterpret_cast<ReadOnlyList<IMonoEvent *> *>(&this->events);
+	return this->events.AsReadOnly;
 }
 
 bool MonoClassWrapper::GetIsValueType()

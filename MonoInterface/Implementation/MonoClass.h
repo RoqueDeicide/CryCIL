@@ -87,10 +87,10 @@ public:
 
 	virtual IMonoClass    *GetNestedType(const char *name) override;
 	
-	virtual ReadOnlyList<IMonoField *>    *GetFields() override;
-	virtual ReadOnlyList<IMonoProperty *> *GetProperties() override;
-	virtual ReadOnlyList<IMonoEvent *>    *GetEvents() override;
-	virtual ReadOnlyList<IMonoFunction *> *GetFunctions() override;
+	virtual ReadOnlyList<IMonoField *>    GetFields() override;
+	virtual ReadOnlyList<IMonoProperty *> GetProperties() override;
+	virtual ReadOnlyList<IMonoEvent *>    GetEvents() override;
+	virtual ReadOnlyList<IMonoFunction *> GetFunctions() override;
 private:
 	void GetFieldValue(mono::object obj, MonoClassField *field, void *value);
 	void SetFieldValue(mono::object obj, MonoClassField *field, void *value);
