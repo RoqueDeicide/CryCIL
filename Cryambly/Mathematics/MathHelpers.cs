@@ -568,9 +568,9 @@ namespace CryCil
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static bool IsNumberValid(double value)
 		{
-			const ulong mask = (UInt64)(255 << 55);
+			const ulong mask = (ulong)(255 << 55);
 
-			return ((UInt64)value & mask) != mask;
+			return ((ulong)value & mask) != mask;
 		}
 		/// <summary>
 		/// Determines whether given number is valid.
@@ -582,7 +582,7 @@ namespace CryCil
 		{
 			const int mask = 0xFF << 23;
 
-			return ((UInt32)value & mask) != mask;
+			return ((uint)value & mask) != mask;
 		}
 		/// <summary>
 		/// Extracts an exponent from the floating point number.
