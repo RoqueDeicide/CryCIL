@@ -5,7 +5,7 @@
 
 IMonoClass *LevelSystemInterop::GetMonoClass()
 {
-	return MonoEnv->Cryambly->GetClass(this->GetInteropNameSpace(), this->GetInteropClassName());
+	return this->GetInteropClass(MonoEnv->Cryambly);
 }
 
 LevelSystemInterop::~LevelSystemInterop()

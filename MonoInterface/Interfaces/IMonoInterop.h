@@ -30,6 +30,13 @@ struct IMonoInteropBase : public IMonoSystemListener
 	//! Returns the name space where the class that will declare managed counter-parts
 	//! of the internal calls is declared.
 	virtual const char *GetInteropNameSpace() = 0;
+	//! Gets managed class that is associated with this interop.
+	//!
+	//! @param assembly An object that represents the assembly to get the class from.
+	IMonoClass *GetInteropClass(IMonoAssembly *assembly)
+	{
+		return assembly->GetClass(this->GetInteropNameSpace(), this->GetInteropClassName());
+	}
 	//! Unnecessary for most interops.
 	virtual void OnPreInitialization() override
 	{}

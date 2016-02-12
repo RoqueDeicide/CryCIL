@@ -10,9 +10,8 @@ UNMANAGED_THUNK typedef void(__stdcall *ActivateActionThunk)(uint32, int32, floa
 
 void ActionMappingInterop::OnAction(const ActionId& action, int activationMode, float value)
 {
-	static ActivateActionThunk activate =
-		ActivateActionThunk(MonoEnv->Cryambly->GetClass(this->GetInteropNameSpace(), this->GetInteropClassName())
-											 ->GetFunction("ActivateAction", -1)->UnmanagedThunk);
+	static ActivateActionThunk activate = ActivateActionThunk(
+		this->GetInteropClass(MonoEnv->Cryambly)->GetFunction("ActivateAction", -1)->UnmanagedThunk);
 
 	mono::exception ex;
 	activate(CCrc32::ComputeLowercase(action.c_str()), activationMode, value, &ex);

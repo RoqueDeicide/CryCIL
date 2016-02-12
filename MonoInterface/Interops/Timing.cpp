@@ -33,8 +33,7 @@ void TimingInterop::OnRunTimeInitialized()
 {
 	TimeMessage("Timing Interop receiving the event.");
 
-	IMonoClass *klass =
-		MonoEnv->Cryambly->GetClass(this->GetInteropNameSpace(), this->GetInteropClassName());
+	IMonoClass *klass = this->GetInteropClass(MonoEnv->Cryambly);
 
 	TimeMessage("Got the class.");
 

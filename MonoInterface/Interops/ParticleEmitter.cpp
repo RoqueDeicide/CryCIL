@@ -9,8 +9,8 @@ typedef void(*onDeleteEmitterRawThunk)(IParticleEmitter* pEmitter);
 void ParticleEmitterInterop::OnCreateEmitter(IParticleEmitter* pEmitter, const QuatTS& qLoc, const IParticleEffect* pEffect, uint32 uEmitterFlags)
 {
 	static onCreateEmitterRawThunk thunk =
-		onCreateEmitterRawThunk(MonoEnv->Cryambly->GetClass(this->GetInteropNameSpace(), this->GetInteropClassName())
-									   ->GetEvent("Created")->GetRaise()->ToStatic()->RawThunk);
+		onCreateEmitterRawThunk(this->GetInteropClass(MonoEnv->Cryambly)->GetEvent("Created")->GetRaise()
+																		->ToStatic()->RawThunk);
 
 	thunk(pEmitter, qLoc, const_cast<IParticleEffect *>(pEffect), uEmitterFlags);
 }
@@ -18,8 +18,8 @@ void ParticleEmitterInterop::OnCreateEmitter(IParticleEmitter* pEmitter, const Q
 void ParticleEmitterInterop::OnDeleteEmitter(IParticleEmitter* pEmitter)
 {
 	static onDeleteEmitterRawThunk thunk =
-		onDeleteEmitterRawThunk(MonoEnv->Cryambly->GetClass(this->GetInteropNameSpace(), this->GetInteropClassName())
-									   ->GetEvent("Deleted")->GetRaise()->ToStatic()->RawThunk);
+		onDeleteEmitterRawThunk(this->GetInteropClass(MonoEnv->Cryambly)
+									->GetEvent("Deleted")->GetRaise()->ToStatic()->RawThunk);
 
 	thunk(pEmitter);
 }

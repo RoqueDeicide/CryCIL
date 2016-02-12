@@ -29,7 +29,7 @@ mono::object Box(Vec2_tpl<int> vector)
 
 void MouseInterop::OnHardwareMouseEvent(int iX, int iY, EHARDWAREMOUSEEVENT eHardwareMouseEvent, int wheelDelta /*= 0*/)
 {
-	static IMonoClass *klass = MonoEnv->Cryambly->GetClass(this->GetInteropNameSpace(), this->GetInteropClassName());
+	static IMonoClass *klass = this->GetInteropClass(MonoEnv->Cryambly);
 	static positionThunk rmbd =
 		positionThunk(klass->GetFunction("OnRightMouseButtonDown", -1)->UnmanagedThunk);
 	static positionThunk rmbu =
