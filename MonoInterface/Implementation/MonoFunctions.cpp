@@ -38,8 +38,7 @@ mono::object MonoFunctions::InternalInvoke(_MonoMethod *func, void *object, void
 	MonoMethod *methodToInvoke;
 	if (polymorph)
 	{
-		methodToInvoke =
-			mono_object_get_virtual_method(static_cast<MonoObject *>(object), func);
+		methodToInvoke = mono_object_get_virtual_method(static_cast<MonoObject *>(object), func);
 	}
 	else
 	{
@@ -75,8 +74,7 @@ mono::object MonoFunctions::InternalInvokeArray(_MonoMethod *func, void *object,
 	MonoMethod *methodToInvoke;
 	if (polymorph)
 	{
-		methodToInvoke =
-			mono_object_get_virtual_method(static_cast<MonoObject *>(object), func);
+		methodToInvoke = mono_object_get_virtual_method(static_cast<MonoObject *>(object), func);
 	}
 	else
 	{

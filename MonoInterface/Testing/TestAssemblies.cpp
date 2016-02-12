@@ -160,26 +160,26 @@ void TestAssemblies()
 	}
 
 	CryLogAlways("TEST:");
-	TestClassFromAssembly(corlib->Array, "System.Array");
-	TestClassFromAssembly(corlib->Boolean, "System.Boolean");
-	TestClassFromAssembly(corlib->Byte, "System.Byte");
-	TestClassFromAssembly(corlib->Char, "System.Char");
-	TestClassFromAssembly(corlib->Single, "System.Single");
-	TestClassFromAssembly(corlib->Double, "System.Double");
-	TestClassFromAssembly(corlib->Enum, "System.Enum");
+	TestClassFromAssembly(corlib->Array,     "System.Array");
+	TestClassFromAssembly(corlib->Boolean,   "System.Boolean");
+	TestClassFromAssembly(corlib->Byte,      "System.Byte");
+	TestClassFromAssembly(corlib->Char,      "System.Char");
+	TestClassFromAssembly(corlib->Single,    "System.Single");
+	TestClassFromAssembly(corlib->Double,    "System.Double");
+	TestClassFromAssembly(corlib->Enum,      "System.Enum");
 	TestClassFromAssembly(corlib->Exception, "System.Exception");
-	TestClassFromAssembly(corlib->Int16, "System.Int16");
-	TestClassFromAssembly(corlib->Int32, "System.Int32");
-	TestClassFromAssembly(corlib->Int64, "System.Int64");
-	TestClassFromAssembly(corlib->UInt16, "System.UInt16");
-	TestClassFromAssembly(corlib->UInt32, "System.UInt32");
-	TestClassFromAssembly(corlib->UInt64, "System.UInt64");
-	TestClassFromAssembly(corlib->IntPtr, "System.IntPtr");
-	TestClassFromAssembly(corlib->UIntPtr, "System.UIntPtr");
-	TestClassFromAssembly(corlib->Sbyte, "System.Sbyte");
-	TestClassFromAssembly(corlib->String, "System.String");
-	TestClassFromAssembly(corlib->Type, "System.Type");
-	TestClassFromAssembly(corlib->Thread, "System.Threading.Thread");
+	TestClassFromAssembly(corlib->Int16,     "System.Int16");
+	TestClassFromAssembly(corlib->Int32,     "System.Int32");
+	TestClassFromAssembly(corlib->Int64,     "System.Int64");
+	TestClassFromAssembly(corlib->UInt16,    "System.UInt16");
+	TestClassFromAssembly(corlib->UInt32,    "System.UInt32");
+	TestClassFromAssembly(corlib->UInt64,    "System.UInt64");
+	TestClassFromAssembly(corlib->IntPtr,    "System.IntPtr");
+	TestClassFromAssembly(corlib->UIntPtr,   "System.UIntPtr");
+	TestClassFromAssembly(corlib->Sbyte,     "System.Sbyte");
+	TestClassFromAssembly(corlib->String,    "System.String");
+	TestClassFromAssembly(corlib->Type,      "System.Type");
+	TestClassFromAssembly(corlib->Thread,    "System.Threading.Thread");
 
 	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Getting a wrapper for Cryambly.");
@@ -197,21 +197,21 @@ void TestAssemblies()
 	}
 
 	CryLogAlways("TEST:");
-	TestClassFromAssembly(cryambly->Matrix33, "CryCil.Matrix33");
-	TestClassFromAssembly(cryambly->Matrix34, "CryCil.Matrix34");
-	TestClassFromAssembly(cryambly->Matrix44, "CryCil.Matrix44");
-	TestClassFromAssembly(cryambly->AngleAxis, "CryCil.Geometry.AngleAxis");
+	TestClassFromAssembly(cryambly->Matrix33,    "CryCil.Matrix33");
+	TestClassFromAssembly(cryambly->Matrix34,    "CryCil.Matrix34");
+	TestClassFromAssembly(cryambly->Matrix44,    "CryCil.Matrix44");
+	TestClassFromAssembly(cryambly->AngleAxis,   "CryCil.Geometry.AngleAxis");
 	TestClassFromAssembly(cryambly->BoundingBox, "CryCil.Geometry.BoundingBox");
-	TestClassFromAssembly(cryambly->ColorByte, "CryCil.Graphics.ColorByte");
+	TestClassFromAssembly(cryambly->ColorByte,   "CryCil.Graphics.ColorByte");
 	TestClassFromAssembly(cryambly->ColorSingle, "CryCil.Graphics.ColorSingle");
 	TestClassFromAssembly(cryambly->EulerAngles, "CryCil.Geometry.EulerAngles");
-	TestClassFromAssembly(cryambly->Plane, "CryCil.Geometry.Plane");
-	TestClassFromAssembly(cryambly->Quaternion, "CryCil.Geometry.Quaternion");
-	TestClassFromAssembly(cryambly->Quatvec, "CryCil.Geometry.Quatvec");
-	TestClassFromAssembly(cryambly->Ray, "CryCil.Geometry.Ray");
-	TestClassFromAssembly(cryambly->Vector2, "CryCil.Vector2");
-	TestClassFromAssembly(cryambly->Vector3, "CryCil.Vector3");
-	TestClassFromAssembly(cryambly->Vector4, "CryCil.Vector4");
+	TestClassFromAssembly(cryambly->Plane,       "CryCil.Geometry.Plane");
+	TestClassFromAssembly(cryambly->Quaternion,  "CryCil.Geometry.Quaternion");
+	TestClassFromAssembly(cryambly->Quatvec,     "CryCil.Geometry.Quatvec");
+	TestClassFromAssembly(cryambly->Ray,         "CryCil.Geometry.Ray");
+	TestClassFromAssembly(cryambly->Vector2,     "CryCil.Vector2");
+	TestClassFromAssembly(cryambly->Vector3,     "CryCil.Vector3");
+	TestClassFromAssembly(cryambly->Vector4,     "CryCil.Vector4");
 	CryLogAlways("TEST:");
 }
 

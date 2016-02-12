@@ -27,8 +27,8 @@ public:
 	//! @returns A reference to the result of execution, if no unhandled exception was thrown.
 	//!          If result is of value-type, it's boxed.
 	//! @example DoxygenExampleFiles\MonoMethodInvocations.h
-	VIRTUAL_API virtual mono::object Invoke
-		(void *object, mono::exception *exc = nullptr, bool polymorph = false) = 0;
+	VIRTUAL_API virtual mono::object Invoke(void *object, mono::exception *exc = nullptr,
+											bool polymorph = false) = 0;
 	//! Invokes this method.
 	//!
 	//! Since extension methods are static by their internal nature, you can pass null
@@ -49,8 +49,8 @@ public:
 	//! @returns A reference to the result of execution, if no unhandled exception was thrown.
 	//!          If result is of value-type, it's boxed.
 	//! @example DoxygenExampleFiles\MonoMethodInvocations.h
-	VIRTUAL_API virtual mono::object Invoke
-		(void *object, IMonoArray<> &params, mono::exception *exc = nullptr, bool polymorph = false) = 0;
+	VIRTUAL_API virtual mono::object Invoke(void *object, IMonoArray<> &params,
+											mono::exception *exc = nullptr, bool polymorph = false) = 0;
 	//! Invokes this method.
 	//!
 	//! Since extension methods are static by their internal nature, you can pass null
@@ -71,8 +71,8 @@ public:
 	//! @returns A reference to the result of execution, if no unhandled exception was thrown.
 	//!          If result is of value-type, it's boxed.
 	//! @example DoxygenExampleFiles\MonoMethodInvocations.h
-	VIRTUAL_API virtual mono::object Invoke
-		(void *object, void **params, mono::exception *exc = nullptr, bool polymorph = false) = 0;
+	VIRTUAL_API virtual mono::object Invoke(void *object, void **params, mono::exception *exc = nullptr,
+											bool polymorph = false) = 0;
 };
 
 __forceinline IMonoMethod *IMonoFunction::ToInstance()
