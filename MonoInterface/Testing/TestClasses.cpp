@@ -760,7 +760,7 @@ inline void TestInvokingMethods()
 inline void TestStaticMethodInvocation()
 {
 	CryLogAlways("TEST:");
-	CryLogAlways("TEST: Invoking static methods through IMonoMethod.");
+	CryLogAlways("TEST: Invoking static methods through IMonoStaticMethod.");
 	CryLogAlways("TEST:");
 
 	IMonoClass *lerpClass = MonoEnv->Cryambly->GetClass("CryCil", "Interpolation")
