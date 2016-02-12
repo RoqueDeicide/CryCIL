@@ -454,6 +454,7 @@ inline void TestObjectCreation()
 	params[1] = &par2;
 	ctor2Integers->Create(params);
 
+	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Getting a constructor that accepts a Double and a reference to String.");
 	CryLogAlways("TEST:");
 
@@ -470,6 +471,8 @@ inline void TestObjectCreation()
 	params[0] = &doublePar;
 	params[1] = &textPar;
 	ctorDoubleStringRef->Create(params);
+	CryLogAlways("TEST: Returned string: %s", NtText(textPar).c_str());
+	CryLogAlways("TEST:");
 
 	CryLogAlways("TEST: Checking creation of compound objects.");
 	CryLogAlways("TEST:");
@@ -485,6 +488,9 @@ inline void TestObjectCreation()
 	param = const_cast<int *>(&seed);
 
 	mono::object randomObject = randomClass->GetConstructor(1)->Create(&param);
+
+	CryLogAlways("TEST: Random object: %d.", randomObject);
+	CryLogAlways("TEST:");
 
 	CryLogAlways("TEST: Creating a first component.");
 	CryLogAlways("TEST:");

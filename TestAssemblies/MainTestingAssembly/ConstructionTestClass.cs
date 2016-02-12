@@ -102,6 +102,17 @@ namespace MainTestingAssembly
 		/// <param name="randomSeed">Random component.</param>
 		public CtorTestComponent1(string text, Random randomSeed)
 		{
+			Console.WriteLine("TEST: Invoked the constructor of the first component.");
+			Console.WriteLine("TEST: Text argument: {0}.", text);
+			if (randomSeed == null)
+			{
+				Console.WriteLine("TEST: Random argument is null.");
+			}
+			else
+			{
+				Console.WriteLine("TEST: Random argument: {0}.", randomSeed);
+			}
+
 			this.Text = text;
 			this.RandomSeed = randomSeed;
 		}
@@ -127,6 +138,10 @@ namespace MainTestingAssembly
 		/// <param name="cube">Cube array.</param>
 		public CtorTestComponent2(byte @byte, int[, ,] cube)
 		{
+			Console.WriteLine("TEST: Invoked the constructor of the second component.");
+			Console.WriteLine("TEST: Byte argument: {0}.", @byte);
+			Console.WriteLine("TEST: Length of the second component: {0}.", cube.LongLength);
+
 			this.Byte = @byte;
 			this.CubeArray = cube;
 		}

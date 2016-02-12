@@ -5,20 +5,29 @@
 
 mono::object MonoConstructor::Create(mono::exception *ex /*= nullptr*/)
 {
-	return MonoEnv->Functions->InternalInvoke(this->wrappedMethod, mono_object_new(mono_domain_get(),
-		mono_method_get_class(this->wrappedMethod)), nullptr, ex, false);
+	MonoObject *obj = mono_object_new(mono_domain_get(), mono_method_get_class(this->wrappedMethod));
+
+	MonoEnv->Functions->InternalInvoke(this->wrappedMethod, obj, nullptr, ex, false);
+
+	return mono::object(obj);
 }
 
 mono::object MonoConstructor::Create(IMonoArray<> &args, mono::exception *ex /*= nullptr*/)
 {
-	return MonoEnv->Functions->InternalInvokeArray(this->wrappedMethod, mono_object_new(mono_domain_get(),
-		mono_method_get_class(this->wrappedMethod)), args, ex, false);
+	MonoObject *obj = mono_object_new(mono_domain_get(), mono_method_get_class(this->wrappedMethod));
+
+	MonoEnv->Functions->InternalInvokeArray(this->wrappedMethod, obj, args, ex, false);
+
+	return mono::object(obj);
 }
 
 mono::object MonoConstructor::Create(void **args, mono::exception *ex /*= nullptr*/)
 {
-	return MonoEnv->Functions->InternalInvoke(this->wrappedMethod, mono_object_new(mono_domain_get(),
-		mono_method_get_class(this->wrappedMethod)), args, ex, false);
+	MonoObject *obj = mono_object_new(mono_domain_get(), mono_method_get_class(this->wrappedMethod));
+
+	MonoEnv->Functions->InternalInvoke(this->wrappedMethod, obj, args, ex, false);
+
+	return mono::object(obj);
 }
 
 void MonoConstructor::Initialize(void *obj, mono::exception *ex /*= nullptr*/)
