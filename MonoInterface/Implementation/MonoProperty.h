@@ -19,55 +19,7 @@ private:
 	IMonoFunction *getter;
 	IMonoFunction *setter;
 public:
-	MonoPropertyWrapper(MonoProperty *prop, IMonoClass *klass = nullptr)
-		: getter(nullptr)
-		, setter(nullptr)
-	{
-		PropertyMessage("Started creation of the property wrapper.");
-
-		this->prop = prop;
-		this->klass = klass;
-
-		PropertyMessage("Stored pointers to the property and class.");
-		
-		MonoMethod *getterMethod = mono_property_get_get_method(prop);
-		MonoMethod *setterMethod = mono_property_get_set_method(prop);
-
-		PropertyMessage("Got the getter and setter methods.");
-
-		bool isStatic =
-			mono_signature_is_instance(mono_method_signature(getterMethod ? getterMethod : setterMethod)) != 0;
-		
-		PropertyMessage("Checked whether this property is static.");
-
-		if (getterMethod)
-		{
-			if (isStatic)
-			{
-				this->getter = new MonoStaticMethod(getterMethod, klass);
-			}
-			else
-			{
-				this->getter = new MonoMethodWrapper(getterMethod, klass);
-			}
-		}
-		
-		PropertyMessage("Created wrapper for getter.");
-		
-		if (setterMethod)
-		{
-			if (isStatic)
-			{
-				this->setter = new MonoStaticMethod(setterMethod, klass);
-			}
-			else
-			{
-				this->setter = new MonoMethodWrapper(setterMethod, klass);
-			}
-		}
-		
-		PropertyMessage("Created wrapper for setter.");
-	}
+	explicit MonoPropertyWrapper(MonoProperty *prop, IMonoClass *klass = nullptr);
 	~MonoPropertyWrapper()
 	{
 		if (this->getter) delete this->getter; this->getter = nullptr;
@@ -81,4 +33,7 @@ public:
 	virtual IMonoClass    *GetDeclaringClass() override;
 	virtual IMonoFunction *GetIdentifier() override;
 	virtual int            GetParameterCount() override;
+
+private:
+	IMonoFunction *GetFunctionWrapper(bool isStatic, MonoMethod *method, IMonoClass *klass) const;
 };

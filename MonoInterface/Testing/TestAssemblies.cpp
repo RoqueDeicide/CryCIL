@@ -140,9 +140,9 @@ void TestAssemblies()
 	CryLogAlways("TEST: Full assembly name from reflection object:");
 	CryLogAlways("TEST:");
 
-	const char *fullAssemblyName =
-		ToNativeString(refAssemblyWrapper.GetProperty("FullName")->Getter->ToInstance()->Invoke(refAssembly));
-	CryLogAlways("TEST: %s", NtText(fullAssemblyName));
+	IMonoMethod *getter = refAssemblyWrapper.GetProperty("FullName")->Getter->ToInstance();
+	NtText fullAssemblyName(getter->Invoke(refAssembly, nullptr, true));
+	CryLogAlways("TEST: %s", static_cast<const char *>(fullAssemblyName));
 
 	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Getting a wrapper for mscorlib.");
