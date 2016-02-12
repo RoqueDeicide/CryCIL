@@ -42,9 +42,6 @@
     <ClInclude Include="Geometry\BspNode.h">
       <Filter>Geometry\CSG</Filter>
     </ClInclude>
-    <ClInclude Include="Interops\MeshOps.h">
-      <Filter>Interops</Filter>
-    </ClInclude>
     <ClInclude Include="Interops\CryMarshal.h">
       <Filter>Interops</Filter>
     </ClInclude>
@@ -237,9 +234,6 @@
     </ClInclude>
     <ClInclude Include="Implementation\MonoFunctions.h">
       <Filter>Implementations\Metadata</Filter>
-    </ClInclude>
-    <ClInclude Include="Interops\BatchOps.h">
-      <Filter>Interops</Filter>
     </ClInclude>
     <ClInclude Include="Interops\MouseInterop.h">
       <Filter>Interops\Engine\Input</Filter>
@@ -635,6 +629,12 @@
     <ClInclude Include="Interops\MathHelpers.h">
       <Filter>Interops\Math</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\BatchOps.h">
+      <Filter>Interops\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\MeshOps.h">
+      <Filter>Interops\Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -658,9 +658,6 @@
     </ClCompile>
     <ClCompile Include="Geometry\BspNode.cpp">
       <Filter>Geometry\CSG</Filter>
-    </ClCompile>
-    <ClCompile Include="Interops\MeshOps.cpp">
-      <Filter>Interops</Filter>
     </ClCompile>
     <ClCompile Include="Interops\CryMarshal.cpp">
       <Filter>Interops</Filter>
@@ -727,9 +724,6 @@
     </ClCompile>
     <ClCompile Include="Implementation\MonoFunctions.cpp">
       <Filter>Implementations\Metadata</Filter>
-    </ClCompile>
-    <ClCompile Include="Interops\BatchOps.cpp">
-      <Filter>Interops</Filter>
     </ClCompile>
     <ClCompile Include="Interops\MouseInterop.cpp">
       <Filter>Interops\Engine\Input</Filter>
@@ -1143,6 +1137,12 @@
       <Filter>Testing</Filter>
     </ClCompile>
     <ClCompile Include="Interops\MathHelpers.cpp">
+      <Filter>Interops\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\BatchOps.cpp">
+      <Filter>Interops\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\MeshOps.cpp">
       <Filter>Interops\Math</Filter>
     </ClCompile>
   </ItemGroup>
