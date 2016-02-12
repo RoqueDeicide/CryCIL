@@ -795,7 +795,7 @@ inline void TestStaticMethodInvocation()
 
 	staticMethod->Invoke(params4);
 
-	CryLogAlways("Result of interpolation: (%*.2f, %*.2f, %*.2f)", res.x, res.y, res.z);
+	CryLogAlways("Result of interpolation: (%f, %f, %f).", res.x, res.y, res.z);
 
 	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Getting a method that accepts a reference to an array.");
