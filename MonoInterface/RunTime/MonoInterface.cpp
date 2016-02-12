@@ -138,6 +138,9 @@ MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener
 	this->funcs->AddInternalCall(ns, cn, "GetSubscribedStagesBind",   GetSubscribedStagesBind);
 	this->funcs->AddInternalCall(ns, cn, "OnInitializationStageBind", OnInitializationStageBind);
 
+	// Redirect console output to the CryEngine log.
+	LogPostingInterop();
+
 	BeginTheTest();
 	
 	this->broadcaster->OnRunTimeInitialized();
@@ -298,7 +301,6 @@ void MonoInterface::RegisterDefaultListeners() const
 #ifdef _DEBUG
 	this->broadcaster->listeners->Add(new DebugEventReporter());
 #endif // _DEBUG
-	this->broadcaster->listeners->Add(new LogPostingInterop());
 	this->broadcaster->listeners->Add(new CryMarshalInterop());
 	this->broadcaster->listeners->Add(new MeshOpsInterop());
 	this->broadcaster->listeners->Add(new BatchOps());

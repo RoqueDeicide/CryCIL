@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Linq;
 using CryCil.Annotations;
 
-namespace CryCil.RunTime.Logging
+namespace CryCil.Engine.DebugServices
 {
 	partial class ConsoleLogWriter
 	{
@@ -28,7 +29,7 @@ namespace CryCil.RunTime.Logging
 		public override void Write(char[] symbols)
 		{
 			this.buffer.Append(symbols);
-			if (this.buffer.ToString().Contains(Environment.NewLine))
+			if (this.buffer.ToString().Contains(System.Environment.NewLine))
 			{
 				this.Flush();
 			}
@@ -42,7 +43,7 @@ namespace CryCil.RunTime.Logging
 		public override void Write(char[] symbols, int index, int count)
 		{
 			this.buffer.Append(symbols, index, count);
-			if (this.buffer.ToString().Contains(Environment.NewLine))
+			if (this.buffer.ToString().Contains(System.Environment.NewLine))
 			{
 				this.Flush();
 			}
@@ -102,7 +103,7 @@ namespace CryCil.RunTime.Logging
 		public override void Write(string value)
 		{
 			this.buffer.Append(value);
-			if (this.buffer.ToString().Contains(Environment.NewLine))
+			if (this.buffer.ToString().Contains(System.Environment.NewLine))
 			{
 				this.Flush();
 			}
@@ -116,7 +117,7 @@ namespace CryCil.RunTime.Logging
 		public override void Write(string format, object arg0)
 		{
 			this.buffer.AppendFormat(format, arg0);
-			if (this.buffer.ToString().Contains(Environment.NewLine))
+			if (this.buffer.ToString().Contains(System.Environment.NewLine))
 			{
 				this.Flush();
 			}
@@ -131,7 +132,7 @@ namespace CryCil.RunTime.Logging
 		public override void Write(string format, object arg0, object arg1)
 		{
 			this.buffer.AppendFormat(format, arg0, arg1);
-			if (this.buffer.ToString().Contains(Environment.NewLine))
+			if (this.buffer.ToString().Contains(System.Environment.NewLine))
 			{
 				this.Flush();
 			}
@@ -147,7 +148,7 @@ namespace CryCil.RunTime.Logging
 		public override void Write(string format, object arg0, object arg1, object arg2)
 		{
 			this.buffer.AppendFormat(format, arg0, arg1, arg2);
-			if (this.buffer.ToString().Contains(Environment.NewLine))
+			if (this.buffer.ToString().Contains(System.Environment.NewLine))
 			{
 				this.Flush();
 			}
@@ -161,7 +162,7 @@ namespace CryCil.RunTime.Logging
 		public override void Write(string format, params object[] arg)
 		{
 			this.buffer.AppendFormat(format, arg);
-			if (this.buffer.ToString().Contains(Environment.NewLine))
+			if (this.buffer.ToString().Contains(System.Environment.NewLine))
 			{
 				this.Flush();
 			}

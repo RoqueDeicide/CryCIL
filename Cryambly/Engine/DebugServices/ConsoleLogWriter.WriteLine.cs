@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Linq;
 using CryCil.Annotations;
 
-namespace CryCil.RunTime.Logging
+namespace CryCil.Engine.DebugServices
 {
 	public partial class ConsoleLogWriter
 	{
@@ -10,7 +11,7 @@ namespace CryCil.RunTime.Logging
 		/// </summary>
 		public override void WriteLine()
 		{
-			this.buffer.Append(Environment.NewLine);
+			this.buffer.Append(System.Environment.NewLine);
 			this.Flush();
 		}
 		/// <summary>
@@ -20,7 +21,7 @@ namespace CryCil.RunTime.Logging
 		public override void WriteLine(bool value)
 		{
 			this.buffer.Append(value);
-			this.buffer.Append(Environment.NewLine);
+			this.buffer.Append(System.Environment.NewLine);
 			this.Flush();
 		}
 		/// <summary>
@@ -30,7 +31,7 @@ namespace CryCil.RunTime.Logging
 		public override void WriteLine(char value)
 		{
 			this.buffer.Append(value);
-			this.buffer.Append(Environment.NewLine);
+			this.buffer.Append(System.Environment.NewLine);
 			this.Flush();
 		}
 		/// <summary>
@@ -40,7 +41,7 @@ namespace CryCil.RunTime.Logging
 		public override void WriteLine(char[] symbols)
 		{
 			this.buffer.Append(symbols);
-			this.buffer.Append(Environment.NewLine);
+			this.buffer.Append(System.Environment.NewLine);
 			this.Flush();
 		}
 		/// <summary>
@@ -52,7 +53,7 @@ namespace CryCil.RunTime.Logging
 		public override void WriteLine(char[] symbols, int index, int count)
 		{
 			this.buffer.Append(symbols, index, count);
-			this.buffer.Append(Environment.NewLine);
+			this.buffer.Append(System.Environment.NewLine);
 			this.Flush();
 		}
 		/// <summary>
@@ -62,7 +63,7 @@ namespace CryCil.RunTime.Logging
 		public override void WriteLine(decimal value)
 		{
 			this.buffer.Append(value);
-			this.buffer.Append(Environment.NewLine);
+			this.buffer.Append(System.Environment.NewLine);
 			this.Flush();
 		}
 		/// <summary>
@@ -72,7 +73,7 @@ namespace CryCil.RunTime.Logging
 		public override void WriteLine(double value)
 		{
 			this.buffer.Append(value);
-			this.buffer.Append(Environment.NewLine);
+			this.buffer.Append(System.Environment.NewLine);
 			this.Flush();
 		}
 		/// <summary>
@@ -82,7 +83,7 @@ namespace CryCil.RunTime.Logging
 		public override void WriteLine(float value)
 		{
 			this.buffer.Append(value);
-			this.buffer.Append(Environment.NewLine);
+			this.buffer.Append(System.Environment.NewLine);
 			this.Flush();
 		}
 		/// <summary>
@@ -92,7 +93,7 @@ namespace CryCil.RunTime.Logging
 		public override void WriteLine(int value)
 		{
 			this.buffer.Append(value);
-			this.buffer.Append(Environment.NewLine);
+			this.buffer.Append(System.Environment.NewLine);
 			this.Flush();
 		}
 		/// <summary>
@@ -102,7 +103,7 @@ namespace CryCil.RunTime.Logging
 		public override void WriteLine(long value)
 		{
 			this.buffer.Append(value);
-			this.buffer.Append(Environment.NewLine);
+			this.buffer.Append(System.Environment.NewLine);
 			this.Flush();
 		}
 		/// <summary>
@@ -112,7 +113,7 @@ namespace CryCil.RunTime.Logging
 		public override void WriteLine(object value)
 		{
 			this.buffer.Append(value);
-			this.buffer.Append(Environment.NewLine);
+			this.buffer.Append(System.Environment.NewLine);
 			this.Flush();
 		}
 		/// <summary>
@@ -124,7 +125,7 @@ namespace CryCil.RunTime.Logging
 		public override void WriteLine(string format, object arg0)
 		{
 			this.buffer.AppendFormat(format, arg0);
-			this.buffer.Append(Environment.NewLine);
+			this.buffer.Append(System.Environment.NewLine);
 			this.Flush();
 		}
 		/// <summary>
@@ -137,7 +138,7 @@ namespace CryCil.RunTime.Logging
 		public override void WriteLine(string format, object arg0, object arg1)
 		{
 			this.buffer.AppendFormat(format, arg0, arg1);
-			this.buffer.Append(Environment.NewLine);
+			this.buffer.Append(System.Environment.NewLine);
 			this.Flush();
 		}
 		/// <summary>
@@ -150,7 +151,7 @@ namespace CryCil.RunTime.Logging
 		public override void WriteLine(string format, object arg0, object arg1, object arg2)
 		{
 			this.buffer.AppendFormat(format, arg0, arg1, arg2);
-			this.buffer.Append(Environment.NewLine);
+			this.buffer.Append(System.Environment.NewLine);
 			this.Flush();
 		}
 		/// <summary>
@@ -162,7 +163,7 @@ namespace CryCil.RunTime.Logging
 		public override void WriteLine(string format, params object[] arg)
 		{
 			this.buffer.AppendFormat(format, arg);
-			this.buffer.Append(Environment.NewLine);
+			this.buffer.Append(System.Environment.NewLine);
 			this.Flush();
 		}
 		/// <summary>
@@ -172,7 +173,7 @@ namespace CryCil.RunTime.Logging
 		public override void WriteLine(uint value)
 		{
 			this.buffer.Append(value);
-			this.buffer.Append(Environment.NewLine);
+			this.buffer.Append(System.Environment.NewLine);
 			this.Flush();
 		}
 		/// <summary>
@@ -182,7 +183,7 @@ namespace CryCil.RunTime.Logging
 		public override void WriteLine(ulong value)
 		{
 			this.buffer.Append(value);
-			this.buffer.Append(Environment.NewLine);
+			this.buffer.Append(System.Environment.NewLine);
 			this.Flush();
 		}
 		/// <summary>
@@ -192,7 +193,7 @@ namespace CryCil.RunTime.Logging
 		public override void WriteLine(string value)
 		{
 			this.buffer.Append(value);
-			this.buffer.Append(Environment.NewLine);
+			this.buffer.Append(System.Environment.NewLine);
 			this.Flush();
 		}
 	}

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Text;
-using CryCil.Engine.DebugServices;
 
-namespace CryCil.RunTime.Logging
+namespace CryCil.Engine.DebugServices
 {
 	/// <summary>
 	/// Represents an object that can be used to redirect output of <see cref="Console"/> class to
@@ -36,7 +36,7 @@ namespace CryCil.RunTime.Logging
 		public override void Flush()
 		{
 			string[] lines = // Don't remove empty entries.
-				this.buffer.ToString().Split(new[] {Environment.NewLine}, StringSplitOptions.None);
+				this.buffer.ToString().Split(new[] {System.Environment.NewLine}, StringSplitOptions.None);
 			if (lines.Length == 1) // Only happens when there is no new line symbol in the buffer.
 			{
 				// This code is executed when Flush is called from external class, which means we should

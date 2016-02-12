@@ -7,7 +7,6 @@ using System.Runtime.CompilerServices;
 using System.Windows.Forms;
 using CryCil.Engine.DebugServices;
 using CryCil.RunTime.Compilation;
-using CryCil.RunTime.Logging;
 using CryCil.RunTime.Registration;
 using CryCil.Utilities;
 
@@ -76,9 +75,6 @@ namespace CryCil.RunTime
 			AppDomain.CurrentDomain.UnhandledException +=
 				(sender, args) => DisplayException(args.ExceptionObject);
 
-			// Redirect Console output.
-			Console.SetOut(new ConsoleLogWriter());
-
 			// Load all extra modules.
 			string gameModulesPath = Path.Combine(DirectoryStructure.ContentFolder, "Modules", "CryCIL");
 			string engineModulesPath = Path.Combine(DirectoryStructure.PlatformFolder, "Modules", "CryCIL");
@@ -123,7 +119,6 @@ namespace CryCil.RunTime
 			// Add Cryambly to the list.
 			CryCilAssemblies.Add(Assembly.GetAssembly(typeof(MonoInterface)));
 
-			// A simple test for redirected console output.
 			Console.WriteLine("Proceeding to stage-based initialization.");
 
 			ProceedWithInitializationStages();
@@ -188,7 +183,7 @@ namespace CryCil.RunTime
 					new SortedList<int, InitializationStageFunction>();
 
 				Console.WriteLine("Collecting data about initialization stages.");
-				
+
 				// Get the types that are initialization classes.
 				var initializationTypesEnum =
 					from assembly in CryCilAssemblies
@@ -223,7 +218,7 @@ namespace CryCil.RunTime
 				});
 
 				Console.WriteLine("Compiling data about initialization stages.");
-				
+
 				// Switch keys and values in the function map.
 				for (int i = 0; i < initializationFunctions.Count; i++)
 				{

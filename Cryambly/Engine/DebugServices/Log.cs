@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 using CryCil.Annotations;
+using CryCil.RunTime;
 
 namespace CryCil.Engine.DebugServices
 {
@@ -165,6 +166,23 @@ namespace CryCil.Engine.DebugServices
 		/// <param name="text">    Text to post.</param>
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern void Post(LogPostType postType, string text);
+
+		[RawThunk("Invoked to redirect the standard output to the ConsoleLogWriter.")]
+		private static void RedirectStdOutput()
+		{
+			try
+			{
+				// Redirect Console output.
+				Console.SetOut(new ConsoleLogWriter());
+
+				// A simple test for redirected console output.
+				Console.WriteLine("Standard output has been redirected.");
+			}
+			catch (Exception ex)
+			{
+				MonoInterface.DisplayException(ex);
+			}
+		}
 	}
 	/// <summary>
 	/// Enumeration of types of posts that can be sent to the log.

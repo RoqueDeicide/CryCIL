@@ -737,11 +737,10 @@
       <DependentUpon>ExceptionDisplayForm.cs</DependentUpon>
     </Compile>
     <Compile Include="RunTime\InitializationAttributes.cs" />
-    <Compile Include="RunTime\Logging\ConsoleLogWriter.cs" />
-    <Compile Include="RunTime\Logging\ConsoleLogWriter.Write.cs" />
-    <Compile Include="RunTime\Logging\ConsoleLogWriter.WriteLine.cs" />
+    <Compile Include="Engine\DebugServices\ConsoleLogWriter.cs" />
+    <Compile Include="Engine\DebugServices\ConsoleLogWriter.Write.cs" />
+    <Compile Include="Engine\DebugServices\ConsoleLogWriter.WriteLine.cs" />
     <Compile Include="Utilities\ConsoleOutputLevel.cs" />
-    <Compile Include="RunTime\Logging\NamespaceDoc.cs" />
     <Compile Include="RunTime\MonoInterface.cs" />
     <Compile Include="RunTime\NamespaceDoc.cs" />
     <Compile Include="Utilities\CustomMarshaling.cs" />
