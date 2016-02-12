@@ -127,30 +127,6 @@ namespace CryCil
 			return value.CompareTo(max) > 0 ? max : value;
 		}
 		/// <summary>
-		/// Normalizes the angle and then clamps it into given range.
-		/// </summary>
-		/// <param name="angle">Angle to clamp.</param>
-		/// <param name="min">  Number that defines left bound of the range.</param>
-		/// <param name="max">  Number that defines right bound of the range.</param>
-		/// <returns>
-		/// <para><paramref name="angle"/> if it is within the range after normalization;</para>
-		/// <para>
-		/// <paramref name="min"/>, if <paramref name="angle"/> is less then <paramref name="min"/>;
-		/// </para>
-		/// <para>
-		/// <paramref name="max"/>, if <paramref name="angle"/> is greater then <paramref name="max"/>.
-		/// </para>
-		/// </returns>
-		public static float ClampAngle(float angle, float min, float max)
-		{
-			while (angle < -360)
-				angle += 360;
-			while (angle > 360)
-				angle -= 360;
-
-			return Clamp(angle, min, max);
-		}
-		/// <summary>
 		/// Determines which of two comparable values is the biggest one.
 		/// </summary>
 		/// <typeparam name="T">Type that implements <see cref="IComparable{T}"/> interface.</typeparam>
