@@ -396,7 +396,7 @@ inline void TestGettingTheConstructors()
 	CryLogAlways("TEST:");
 
 	IMonoConstructor *ctorTextParams =
-		stringClass->GetConstructor("System.Char[],System.Int32");
+		stringClass->GetConstructor("System.Char[],System.Int32,System.Int32");
 
 	if (ctorTextParams)
 	{
