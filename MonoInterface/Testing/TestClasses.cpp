@@ -213,11 +213,10 @@ inline void TestInterfaceImplementation()
 	CryLogAlways("TEST: Checking direct interface implementation detection.");
 	CryLogAlways("TEST:");
 
-	IMonoClass *vsProjectClass =
-		MonoEnv->Cryambly->GetClass("CryCil.RunTime.Compilation", "VisualStudioDotNetProject");
+	IMonoClass *vsProjectClass = MonoEnv->Cryambly->GetClass("CryCil.RunTime.Compilation",
+															 "VisualStudioDotNetProject");
 
-	IMonoClass *iProjectInterface =
-		MonoEnv->Cryambly->GetClass("CryCil.RunTime.Compilation", "IProject");
+	IMonoClass *iProjectInterface = MonoEnv->Cryambly->GetClass("CryCil.RunTime.Compilation", "IProject");
 
 	if (vsProjectClass->Implements(iProjectInterface))
 	{
@@ -232,11 +231,10 @@ inline void TestInterfaceImplementation()
 	CryLogAlways("TEST: Checking indirect interface implementation detection.");
 	CryLogAlways("TEST:");
 
-	IMonoClass *logWriterClass =
-		MonoEnv->Cryambly->GetClass("CryCil.RunTime.Logging", "ConsoleLogWriter");
+	IMonoClass *logWriterClass = MonoEnv->Cryambly->GetClass("CryCil.Engine.DebugServices",
+															 "ConsoleLogWriter");
 
-	IMonoClass *iDisposableInterface =
-		MonoEnv->CoreLibrary->GetClass("System", "IDisposable");
+	IMonoClass *iDisposableInterface = MonoEnv->CoreLibrary->GetClass("System", "IDisposable");
 
 	if (logWriterClass->Implements(iDisposableInterface))
 	{
