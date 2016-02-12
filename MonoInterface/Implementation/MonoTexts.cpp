@@ -2,6 +2,12 @@
 
 #include "MonoTexts.h"
 
+#if 0
+#define TextsMessage CryLogAlways
+#else
+#define TextsMessage(...) void(0)
+#endif
+
 mono::string MonoTexts::ToManaged(const char *text)
 {
 	return mono::string(mono_string_new(mono_domain_get(), text));
@@ -19,13 +25,19 @@ const char *MonoTexts::ToNative(mono::string text)
 	{
 		return nullptr;
 	}
+
+	TextsMessage("Getting the unmanaged version of text.");
+
 	MonoError er;
 	char *t = mono_string_to_utf8_checked(reinterpret_cast<MonoString *>(text), &er);
-	if (mono_error_ok(&er))
+	if (!mono_error_ok(&er))
 	{
 		gEnv->pLog->LogError("%s", mono_error_get_message(&er));
 		return nullptr;
 	}
+
+	TextsMessage("Got the unmanaged version of text.");
+
 	Text *tex = new Text(t);
 	mono_free(t);
 	t = const_cast<char *>(tex->ToNTString());
