@@ -441,6 +441,11 @@ public:
 	{
 		return this->chars;
 	}
+	//! Used when this object has to be passed to the function with variadic parameter list.
+	const SymbolType *c_str() const
+	{
+		return this->chars;
+	}
 
 	//! Counts number of characters in the string.
 	static int _strlen(const SymbolType *str);
