@@ -78,9 +78,9 @@ namespace CryCil
 		/// </summary>
 		/// <param name="value">Quaternion to calculate logarithm from.</param>
 		/// <returns>
-		/// Vector for which <see cref="Exp(Vector3)"/> returns <paramref name="value"/> .
+		/// Vector for which <see cref="Exponent(CryCil.Vector3)"/> returns <paramref name="value"/> .
 		/// </returns>
-		public static Vector3 Log(Quaternion value)
+		public static Vector3 Logarithm(Quaternion value)
 		{
 			var lensqr = value.Vector.LengthSquared;
 			if (!(lensqr > 0.0f))
@@ -97,7 +97,7 @@ namespace CryCil
 		/// </summary>
 		/// <param name="value">Vector to calculate quaternion from.</param>
 		/// <returns>A new unit quaternion.</returns>
-		public static Quaternion Exp(Vector3 value)
+		public static Quaternion Exponent(Vector3 value)
 		{
 			var lensqr = value.LengthSquared;
 			if (!(lensqr > 0.0f))
