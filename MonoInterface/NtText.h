@@ -146,6 +146,7 @@ public:
 #ifdef MONO_API
 		MonoError error;
 		char *ntText = mono_string_to_utf8_checked(managedString, &error);
+
 		if (mono_error_ok(&error))
 		{
 			int length = _strlen(ntText);
@@ -475,6 +476,7 @@ inline const SymbolType *NtTextTemplate<SymbolType>::_str_mono(mono_string str)
 #ifdef MONO_API
 	MonoError error;
 	char *ntText = mono_string_to_utf8_checked(static_cast<MonoString *>(str), &error);
+
 	if (mono_error_ok(&error))
 	{
 		int length = _strlen(ntText);
@@ -487,11 +489,9 @@ inline const SymbolType *NtTextTemplate<SymbolType>::_str_mono(mono_string str)
 		chars[length] = '\0';
 		return chars;
 	}
-	else
-	{
-		FatalError(mono_error_get_message(&error));
-		return nullptr;
-	}
+
+	FatalError(mono_error_get_message(&error));
+	return nullptr;
 #elif defined(USE_CRYCIL_API)
 	return ToNativeString(managedString);
 #else
