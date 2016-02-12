@@ -10,7 +10,7 @@ struct MathHelpersInterop : IMonoInterop<true, true>
 	virtual void OnRunTimeInitialized() override;
 
 	static float RsqrtSingle(float value);
-	static float RsqrtDouble(double value);
+	static double RsqrtDouble(double value);
 	static void SinCosSingle(float value, float &sine, float &cosine);
 	static void SinCosDouble(double value, double &sine, double &cosine);
 	static Vec3 LogQuat(Quat value);

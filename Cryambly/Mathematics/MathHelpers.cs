@@ -630,7 +630,7 @@ namespace CryCil
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern float RsqrtSingle(float value);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern float RsqrtDouble(double value);
+		private static extern double RsqrtDouble(double value);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void SinCosSingle(float value, out float sine, out float cosine);
 		[MethodImpl(MethodImplOptions.InternalCall)]

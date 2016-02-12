@@ -17,7 +17,7 @@ float MathHelpersInterop::RsqrtSingle(float value)
 	return 1 / sqrtf(value);
 }
 
-float MathHelpersInterop::RsqrtDouble(double value)
+double MathHelpersInterop::RsqrtDouble(double value)
 {
 	return 1 / sqrt(value);
 }
