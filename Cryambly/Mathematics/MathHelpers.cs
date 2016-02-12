@@ -38,7 +38,7 @@ namespace CryCil
 		/// <returns>1 / square root of <paramref name="value"/>.</returns>
 		public static double ReciprocalSquareRoot(double value)
 		{
-			return 1.0 / Math.Sqrt(value);
+			return RsqrtDouble(value);
 		}
 		/// <summary>
 		/// Returns reciprocal square root of the value.
@@ -47,7 +47,7 @@ namespace CryCil
 		/// <returns>1 / square root of <paramref name="value"/>.</returns>
 		public static float ReciprocalSquareRoot(float value)
 		{
-			return (float)(1.0 / Math.Sqrt(value));
+			return RsqrtSingle(value);
 		}
 		/// <summary>
 		/// Calculates sine and cosine at the same time.
@@ -57,9 +57,7 @@ namespace CryCil
 		/// <param name="cosine">Resultant cosine.</param>
 		public static void SinCos(double value, out double sine, out double cosine)
 		{
-			sine = Math.Sin(value);
-
-			cosine = Math.Sqrt(1.0 - sine * sine);
+			SinCosDouble(value, out sine, out cosine);
 		}
 		/// <summary>
 		/// Calculates sine and cosine at the same time.
@@ -69,9 +67,7 @@ namespace CryCil
 		/// <param name="cosine">Resultant cosine.</param>
 		public static void SinCos(float value, out float sine, out float cosine)
 		{
-			sine = (float)Math.Sin(value);
-
-			cosine = (float)Math.Sqrt(1.0f - sine * sine);
+			SinCosSingle(value, out sine, out cosine);
 		}
 		/// <summary>
 		/// Calculates logarithm of the quaternion.
@@ -82,15 +78,7 @@ namespace CryCil
 		/// </returns>
 		public static Vector3 Logarithm(Quaternion value)
 		{
-			var lensqr = value.Vector.LengthSquared;
-			if (!(lensqr > 0.0f))
-			{
-				// logarithm of a quaternion, imaginary part (the real part of the logarithm is always 0).
-				return new Vector3(0);
-			}
-			var len = Math.Sqrt(lensqr);
-			var angle = Math.Atan2(len, value.W) / len;
-			return value.Vector * (float)angle;
+			return LogQuat(value);
 		}
 		/// <summary>
 		/// Calculates a unit quaternion from a vector.
@@ -99,16 +87,7 @@ namespace CryCil
 		/// <returns>A new unit quaternion.</returns>
 		public static Quaternion Exponent(Vector3 value)
 		{
-			var lensqr = value.LengthSquared;
-			if (!(lensqr > 0.0f))
-			{
-				return Quaternion.Identity;
-			}
-			var len = (float)Math.Sqrt(lensqr);
-			float s, c;
-			SinCos(len, out s, out c);
-			s /= len;
-			return new Quaternion(c, value.X * s, value.Y * s, value.Z * s);
+			return ExpVector(value);
 		}
 		/// <summary>
 		/// Determines whether a value is inside the specified range.
@@ -648,6 +627,18 @@ namespace CryCil
 		}
 		#endregion
 		#region Utilities
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern float RsqrtSingle(float value);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern float RsqrtDouble(double value);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void SinCosSingle(float value, out float sine, out float cosine);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void SinCosDouble(double value, out double sine, out double cosine);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern Vector3 LogQuat(Quaternion value);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern Quaternion ExpVector(Vector3 value);
 		#endregion
 	}
 }

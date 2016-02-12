@@ -213,3 +213,5 @@
 #include "Interops/ChannelId.h"
 
 #include "Interops/CryNetChannel.h"
+
+#include "Interops/MathHelpers.h"

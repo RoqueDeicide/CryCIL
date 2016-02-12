@@ -294,6 +294,7 @@ void MonoInterface::RegisterDefaultListeners() const
 {
 	this->broadcaster->listeners->Add(new TimingInterop());			// This interop has to be first to make
 																	// sure that all timings are up-to-date.
+	this->broadcaster->listeners->Add(new MathHelpersInterop());
 #ifdef _DEBUG
 	this->broadcaster->listeners->Add(new DebugEventReporter());
 #endif // _DEBUG

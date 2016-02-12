@@ -632,6 +632,9 @@
       <Filter>Interops\Engine\Network</Filter>
     </ClInclude>
     <ClInclude Include="DebugHelpers.h" />
+    <ClInclude Include="Interops\MathHelpers.h">
+      <Filter>Interops\Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -1139,6 +1142,9 @@
     <ClCompile Include="Testing\TestObjects.cpp">
       <Filter>Testing</Filter>
     </ClCompile>
+    <ClCompile Include="Interops\MathHelpers.cpp">
+      <Filter>Interops\Math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="RunTime">
@@ -1278,6 +1284,9 @@
     </Filter>
     <Filter Include="Interops\Engine\Network">
       <UniqueIdentifier>{b4fecaed-4f66-450c-b067-12222fc9ee9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interops\Math">
+      <UniqueIdentifier>{b4d0ab2b-5709-4e89-a9a4-f55511db1950}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
