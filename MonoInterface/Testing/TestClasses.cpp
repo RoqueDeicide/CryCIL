@@ -856,39 +856,33 @@ inline void TestInstanceMethodInvocation()
 
 inline void TestVirtualMethodInvocation()
 {
-	float number = 1023.56f;
+	mono::string text = ToMonoString("Some text");
 
 	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Invoking virtual methods through IMonoMethod.");
 	CryLogAlways("TEST:");
 
-	IMonoClass *singleClass = MonoEnv->CoreLibrary->Single;
+	IMonoClass *objectClass = MonoEnv->CoreLibrary->String;
 
 	CryLogAlways("TEST: Getting the method wrapper.");
 	CryLogAlways("TEST:");
 
-	IMonoMethod *toStringFormatMethod = singleClass->GetFunction("ToString", 2)->ToInstance();
+	IMonoMethod *toStringFormatMethod = objectClass->GetFunction("ToString", 0)->ToInstance();
 
 	CryLogAlways("TEST: Invoking a virtual method using early binding.");
 	CryLogAlways("TEST:");
 
-	void *null = nullptr;
+	auto result = NtText(toStringFormatMethod->Invoke(text));
 
-	void *params[2];
-	params[0] = &null;
-	params[1] = &null;
-
-	auto result = NtText(toStringFormatMethod->Invoke(&number, params));
-
-	CryLogAlways("TEST: Result of early-bound invocation: %s.", result);
+	CryLogAlways("TEST: Result of early-bound invocation: %s.", result.c_str());
 
 	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Invoking a virtual method using late binding.");
 	CryLogAlways("TEST:");
 
-	result = NtText(toStringFormatMethod->Invoke(&number, params, nullptr, true));
+	result = NtText(toStringFormatMethod->Invoke(text, nullptr, true));
 
-	CryLogAlways("TEST: Result of late-bound invocation: %s.", result);
+	CryLogAlways("TEST: Result of late-bound invocation: %s.", result.c_str());
 	CryLogAlways("TEST:");
 }
 
@@ -952,36 +946,36 @@ inline void TestStaticThunkInvocation()
 	createValueThunk(number, testObj, &ex);
 
 	auto unboxedObj = Unbox<TestObject>(testObj);
-	CryLogAlways("TEST: Result of invocation = %s", NtText(unboxedObj.Text));
+	CryLogAlways("TEST: Result of invocation = %s", NtText(unboxedObj.Text).c_str());
 	CryLogAlways("TEST:");
 }
+
+typedef float(__stdcall *GetDistanceThunk)(mono::object, mono::object, mono::exception *);
 
 inline void TestInstanceThunkInvocation()
 {
 	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Invoking instance methods through unmanaged thunk.");
 	CryLogAlways("TEST:");
-	CryLogAlways("TEST: Getting the method wrapper of Byte::ToString(string).");
+	CryLogAlways("TEST: Getting the method wrapper of Vector3::GetDistance(CryCil.Vector3).");
 	CryLogAlways("TEST:");
 
-	IMonoFunction *method = MonoEnv->CoreLibrary->Byte->GetFunction("ToString", "System.String");
+	IMonoFunction *method = MonoEnv->Cryambly->Vector3->GetFunction("GetDistance", "CryCil.Vector3");
 
 	CryLogAlways("TEST: Getting the unmanaged thunk.");
 	CryLogAlways("TEST:");
 
-	mono::string(__stdcall *thunk)(mono::object, mono::string, mono::exception *) =
-		reinterpret_cast<mono::string(__stdcall *)(mono::object, mono::string, mono::exception *)>(method->UnmanagedThunk);
+	GetDistanceThunk thunk = GetDistanceThunk(method->UnmanagedThunk);
 
 	CryLogAlways("TEST: Invoking the unmanaged thunk.");
 	CryLogAlways("TEST:");
 
 	mono::exception ex;
-
-	mono::string textObj = thunk(Box(unsigned char(100)), nullptr, &ex);
+	float result = thunk(Box(Vec3(0, 0, 1)), Box(Vec3(1, 1, 1)), &ex);
 
 	if (!ex)
 	{
-		CryLogAlways("TEST: Result of invocation = %s", NtText(textObj));
+		CryLogAlways("TEST: Result of invocation = %f", result);
 	}
 	CryLogAlways("TEST:");
 }
@@ -1043,7 +1037,7 @@ inline void TestInstanceFields()
 	mono::string textValue;
 	fieldTestClass->GetField(obj, "Text", &textValue);
 
-	CryLogAlways("TEST: Acquired text value = %s", NtText(textValue));
+	CryLogAlways("TEST: Acquired text value = %s", NtText(textValue).c_str());
 
 	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Setting the values of fields.");
@@ -1076,7 +1070,7 @@ inline void TestInstanceFields()
 
 	textField->Get(obj, &textValue);
 
-	CryLogAlways("TEST: Acquired text value = %s", NtText(textValue));
+	CryLogAlways("TEST: Acquired text value = %s", NtText(textValue).c_str());
 	CryLogAlways("TEST:");
 }
 
