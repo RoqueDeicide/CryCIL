@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "EventBroadcaster.h"
 
-#if 1
+#if 0
 #define EventMessage CryLogAlways
 #else
 #define EventMessage(...) void(0)
