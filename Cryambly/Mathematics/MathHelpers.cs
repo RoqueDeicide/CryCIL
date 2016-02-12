@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using CryCil.Geometry;
 
@@ -9,79 +10,96 @@ namespace CryCil
 	/// </summary>
 	public static class MathHelpers
 	{
+		#region Fields
+		/// <summary>
+		/// All positive numbers that are smaller than this value are considered equal to zero.
+		/// </summary>
+		public const float ZeroTolerance = 1e-6f;
+		/// <summary>
+		/// All negative numbers that are greater than this value are considered equal to zero.
+		/// </summary>
+		public const float NZeroTolerance = -1e-6f;
+		/// <summary>
+		/// Doubled <see cref="Math.PI"/> .
+		/// </summary>
+		public const double PI2 = 2 * Math.PI;
+		#endregion
+		#region Properties
+		#endregion
+		#region Events
+		#endregion
+		#region Construction
+		#endregion
+		#region Interface
 		/// <summary>
 		/// Returns reciprocal square root of the value.
 		/// </summary>
-		/// <param name="d">Value to calculate reciprocal square root from.</param>
-		/// <returns>1 / <paramref name="d"/> .</returns>
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static double ReciprocalSquareRoot(double d)
+		/// <param name="value">Value to calculate reciprocal square root from.</param>
+		/// <returns>1 / square root of <paramref name="value"/>.</returns>
+		public static double ReciprocalSquareRoot(double value)
 		{
-			return 1.0 / Math.Sqrt(d);
+			return 1.0 / Math.Sqrt(value);
 		}
 		/// <summary>
 		/// Returns reciprocal square root of the value.
 		/// </summary>
-		/// <param name="d">Value to calculate reciprocal square root from.</param>
-		/// <returns>1 / <paramref name="d"/> .</returns>
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static float ReciprocalSquareRoot(float d)
+		/// <param name="value">Value to calculate reciprocal square root from.</param>
+		/// <returns>1 / square root of <paramref name="value"/>.</returns>
+		public static float ReciprocalSquareRoot(float value)
 		{
-			return (float)(1.0 / Math.Sqrt(d));
+			return (float)(1.0 / Math.Sqrt(value));
 		}
 		/// <summary>
 		/// Calculates sine and cosine at the same time.
 		/// </summary>
-		/// <param name="a">     Angle to calculate sine and cosine of.</param>
-		/// <param name="sinVal">Resultant sine.</param>
-		/// <param name="cosVal">Resultant cosine.</param>
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static void SinCos(double a, out double sinVal, out double cosVal)
+		/// <param name="value">     Angle to calculate sine and cosine of.</param>
+		/// <param name="sine">Resultant sine.</param>
+		/// <param name="cosine">Resultant cosine.</param>
+		public static void SinCos(double value, out double sine, out double cosine)
 		{
-			sinVal = Math.Sin(a);
+			sine = Math.Sin(value);
 
-			cosVal = Math.Sqrt(1.0 - sinVal * sinVal);
+			cosine = Math.Sqrt(1.0 - sine * sine);
 		}
 		/// <summary>
 		/// Calculates sine and cosine at the same time.
 		/// </summary>
-		/// <param name="a">     Angle to calculate sine and cosine of.</param>
-		/// <param name="sinVal">Resultant sine.</param>
-		/// <param name="cosVal">Resultant cosine.</param>
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		public static void SinCos(float a, out float sinVal, out float cosVal)
+		/// <param name="value">     Angle to calculate sine and cosine of.</param>
+		/// <param name="sine">Resultant sine.</param>
+		/// <param name="cosine">Resultant cosine.</param>
+		public static void SinCos(float value, out float sine, out float cosine)
 		{
-			sinVal = (float)Math.Sin(a);
+			sine = (float)Math.Sin(value);
 
-			cosVal = (float)Math.Sqrt(1.0f - sinVal * sinVal);
+			cosine = (float)Math.Sqrt(1.0f - sine * sine);
 		}
 		/// <summary>
 		/// Calculates logarithm of the quaternion.
 		/// </summary>
-		/// <param name="quaternion">Quaternion to calculate logarithm from.</param>
+		/// <param name="value">Quaternion to calculate logarithm from.</param>
 		/// <returns>
-		/// Vector for which <see cref="Exp(Vector3)"/> returns <paramref name="quaternion"/> .
+		/// Vector for which <see cref="Exp(Vector3)"/> returns <paramref name="value"/> .
 		/// </returns>
-		public static Vector3 Log(Quaternion quaternion)
+		public static Vector3 Log(Quaternion value)
 		{
-			var lensqr = quaternion.Vector.LengthSquared;
+			var lensqr = value.Vector.LengthSquared;
 			if (!(lensqr > 0.0f))
 			{
 				// logarithm of a quaternion, imaginary part (the real part of the logarithm is always 0).
 				return new Vector3(0);
 			}
 			var len = Math.Sqrt(lensqr);
-			var angle = Math.Atan2(len, quaternion.W) / len;
-			return quaternion.Vector * (float)angle;
+			var angle = Math.Atan2(len, value.W) / len;
+			return value.Vector * (float)angle;
 		}
 		/// <summary>
 		/// Calculates a unit quaternion from a vector.
 		/// </summary>
-		/// <param name="v">Vector to calculate quaternion from.</param>
+		/// <param name="value">Vector to calculate quaternion from.</param>
 		/// <returns>A new unit quaternion.</returns>
-		public static Quaternion Exp(Vector3 v)
+		public static Quaternion Exp(Vector3 value)
 		{
-			var lensqr = v.LengthSquared;
+			var lensqr = value.LengthSquared;
 			if (!(lensqr > 0.0f))
 			{
 				return Quaternion.Identity;
@@ -90,7 +108,7 @@ namespace CryCil
 			float s, c;
 			SinCos(len, out s, out c);
 			s /= len;
-			return new Quaternion(c, v.X * s, v.Y * s, v.Z * s);
+			return new Quaternion(c, value.X * s, value.Y * s, value.Z * s);
 		}
 		/// <summary>
 		/// Determines whether a value is inside the specified range.
@@ -589,7 +607,9 @@ namespace CryCil
 		/// </summary>
 		/// <param name="value">Number to extract the exponent from.</param>
 		/// <returns>An actual exponent.</returns>
-		/// <exception cref="InvalidOperationException">Cannot extract exponent from an invalid value.</exception>
+		/// <exception cref="InvalidOperationException">
+		/// Cannot extract exponent from an invalid value.
+		/// </exception>
 		public static unsafe int Exponent(float value)
 		{
 			if (float.IsNaN(value) || float.IsNegativeInfinity(value) ||
@@ -597,19 +617,21 @@ namespace CryCil
 			{
 				throw new InvalidOperationException("Cannot extract exponent from an invalid value.");
 			}
-			
+
 			int bits = *(int*)&value;
 
 			int exp = (bits >> 23) & 255;
 
-			return exp - 127;	// Actual exponent.
+			return exp - 127; // Actual exponent.
 		}
 		/// <summary>
 		/// Extracts an exponent from the floating point number.
 		/// </summary>
 		/// <param name="value">Number to extract the exponent from.</param>
 		/// <returns>An actual exponent.</returns>
-		/// <exception cref="InvalidOperationException">Cannot extract exponent from an invalid value.</exception>
+		/// <exception cref="InvalidOperationException">
+		/// Cannot extract exponent from an invalid value.
+		/// </exception>
 		public static unsafe int Exponent(double value)
 		{
 			if (double.IsNaN(value) || double.IsNegativeInfinity(value) ||
@@ -622,19 +644,10 @@ namespace CryCil
 
 			int exp = (int)((bits >> 52) & 2047);
 
-			return exp - 1023;	// Actual exponent.
+			return exp - 1023; // Actual exponent.
 		}
-		/// <summary>
-		/// All positive numbers that are smaller than this value are considered equal to zero.
-		/// </summary>
-		public const float ZeroTolerance = 1e-6f;
-		/// <summary>
-		/// All negative numbers that are greater than this value are considered equal to zero.
-		/// </summary>
-		public const float NZeroTolerance = -1e-6f;
-		/// <summary>
-		/// Doubled <see cref="Math.PI"/> .
-		/// </summary>
-		public const double PI2 = 2 * Math.PI;
+		#endregion
+		#region Utilities
+		#endregion
 	}
 }
