@@ -167,7 +167,7 @@ inline void TestInheritance(IMonoClass *klass)
 		else
 		{
 			ReportError("TEST %s: %s doesn't inherit from System.ValueType.",
-						klass->IsValueType ? "SUCCESS" : "FAILURE",
+						klass->IsValueType ? "FAILURE" : "SUCCESS",
 						klass->Name);
 		}
 
@@ -180,7 +180,7 @@ inline void TestInheritance(IMonoClass *klass)
 		else
 		{
 			ReportError("TEST %s: %s doesn't directly inherit from System.ValueType.",
-						klass->IsValueType ? "SUCCESS" : "FAILURE",
+						klass->IsValueType ? "FAILURE" : "SUCCESS",
 						klass->Name);
 		}
 	}
