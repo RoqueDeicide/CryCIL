@@ -926,12 +926,26 @@ IMonoClass *MonoClassWrapper::GetBase()
 	return MonoClassCache::Wrap(mono_class_get_parent(this->wrappedClass));
 }
 
+#if 0
+#define NestedTypeMessage CryLogAlways
+#else
+#define NestedTypeMessage(...) void(0)
+#endif
+
 IMonoClass *MonoClassWrapper::GetNestedType(const char *name)
 {
-	void *iter;
+	NestedTypeMessage("Getting the type %s that is supposed to be nested in %s.", name, this->FullName);
+
+	void *iter = nullptr;
 	while (MonoClass *nestedType = mono_class_get_nested_types(this->wrappedClass, &iter))
 	{
-		if (strcmp(mono_class_get_name(nestedType), name) == 0)
+		NestedTypeMessage("Checking the nested type.");
+
+		const char *nestedTypeName = mono_class_get_name(nestedType);
+
+		NestedTypeMessage("Type is named %s.", nestedTypeName);
+
+		if (strcmp(nestedTypeName, name) == 0)
 		{
 			return MonoClassCache::Wrap(nestedType);
 		}
