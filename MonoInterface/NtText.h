@@ -228,12 +228,24 @@ public:
 	//! @param another A reference to another NtTextTemplate object that will manage a pointer of this object.
 	SWAP_ASSIGNMENT NtTextTemplate &operator=(NtTextTemplate &another)
 	{
+		DebugReport("Swap assignment operator has been invoked.");
+
 		if (this->chars != another.chars)
 		{
 			const SymbolType *ptr = this->chars;
 			this->chars = another.chars;
 			another.chars = ptr;
 		}
+		return *this;
+	}
+	//! Moves the contents from the temporary object to another one.
+	MOVE_ASSIGNMENT NtTextTemplate &operator=(NtTextTemplate &&another)
+	{
+		DebugReport("Move assignment operator has been invoked.");
+
+		this->~NtTextTemplate();
+		this->chars = another.chars;
+		another.chars = nullptr;
 		return *this;
 	}
 	//! Assigns another null-terminated string to this one.

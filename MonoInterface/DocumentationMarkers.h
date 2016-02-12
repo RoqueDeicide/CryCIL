@@ -112,7 +112,26 @@
 //! Swapping assignment operators allow automatic memory deallocation in the scenario where object's
 //! destructor should be invoked automatically. This provides convenient means of preventing memory leaks.
 //!
-//! For instance NtText has swapping assignment operator declared, which allows this code to work without
+//! @code{.cpp}
+//!
+//! struct SomeText
+//! {
+//!     NtText text;
+//!     SomeText(const char *t)
+//!     {
+//!         NtText t2({t});    // Using the constructor with initializer list to force a deep copy to be
+//!                            // created.
+//!         
+//!         this->text = t2;   // Swaping constructor is invoked here.
+//!     }
+//! };
+//!
+//! @endcode
+#define SWAP_ASSIGNMENT
+
+//! Moving assignment operators are similar to swap operators, except they work with temporary objects.
+//!
+//! For instance NtText has moving assignment operator declared, which allows this code to work without
 //! leaks:
 //!
 //! @code{.cpp}
@@ -121,10 +140,8 @@
 //! const char *t2 = new char[100];
 //!
 //! NtText text = NtText(t1);
-//! text        = NtText(t2);       // Memory that was held by 'text' will gets transfered to the newly
-//!                                 // constructed object that has an expression access range, which
-//!                                 // means it will destroy itself and delete the t1 memory after the
-//!                                 // program moves on to the next expression.
+//! text        = NtText(t2);       // Memory that was held by 'text' will get released, while a new data
+//!                                 // will be moved to the original object.
 //!
 //! t1 = t2 = nullptr;
 //!
@@ -142,12 +159,12 @@
 //! NtText text = NtText(t1);
 //! text        = NtText(t2).Detach();  // t1 memory will not be deleted here.
 //!                                     //
-//! delete t1;                          // So we can delete ourselves.
+//! delete t1;                          // So we can delete it ourselves.
 //!
 //! t1 = t2 = nullptr;
 //!
 //! @endcode
-#define SWAP_ASSIGNMENT
+#define MOVE_ASSIGNMENT
 
 //! This define marks a typedef that defines a signature of a special managed function that is used to
 //! invoke a managed method from unmanaged code in a safe manner.
