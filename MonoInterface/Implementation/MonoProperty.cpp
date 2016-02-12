@@ -87,6 +87,8 @@ IMonoFunction *MonoPropertyWrapper::GetFunctionWrapper(bool isStatic, MonoMethod
 		return nullptr;
 	}
 
+	PropertyMessage("Creating a wrapper for a method %s.", mono_method_get_name(method));
+
 	IMonoFunction *func = isStatic
 		? static_cast<IMonoFunction *>(new MonoStaticMethod(method, klass))
 		: static_cast<IMonoFunction *>(new MonoMethodWrapper(method, klass));
