@@ -7,6 +7,7 @@
 
 #if 0
 #define ClassMessage CryLogAlways
+#define ClassDebug
 #else
 #define ClassMessage(...) void(0)
 #endif
@@ -19,21 +20,21 @@ MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 	, flatMethodList(100)
 	, flatPropertyList(100)
 {
-	ClassMessage("Creating a wrapper.");
+	//ClassMessage("Creating a wrapper.");
 
 	this->wrappedClass = klass;
 
-	ClassMessage("Stored a pointer to the class.");
+	//ClassMessage("Stored a pointer to the class.");
 
 	this->name      = mono_class_get_name(klass);
 	this->nameSpace = mono_class_get_namespace(klass);
 
-	ClassMessage("Stored a name and a namespace of the class.");
+	//ClassMessage("Stored a name and a namespace of the class.");
 
 	this->methods    = SortedList<const char *, List<IMonoFunction *> *>(30, strcmp);
 	this->properties = SortedList<const char *, List<IMonoProperty *> *>(30, strcmp);
 
-	ClassMessage("Created lists for methods and properties.");
+	//ClassMessage("Created lists for methods and properties.");
 	
 	MonoClass *base = klass;
 	while (base)
@@ -43,7 +44,8 @@ MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 		while (MonoMethod *met  = mono_class_get_methods(base, &iter))
 		{
 			const char *methodName = mono_method_get_name(met);
-			ClassMessage("Found a method %s", methodName);
+
+			//ClassMessage("Found a method %s", methodName);
 			
 			List<IMonoFunction *> *overloads;
 			if (!this->methods.TryGet(methodName, overloads))
@@ -65,7 +67,7 @@ MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 				methodWrapper = new MonoStaticMethod(met, this);
 			}
 
-			ClassMessage("Created a wrapper for a method %s", methodName);
+			//ClassMessage("Created a wrapper for a method %s", methodName);
 
 			overloads->Add(methodWrapper);
 
@@ -76,7 +78,8 @@ MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 		while (MonoProperty *prop = mono_class_get_properties(base, &iter))
 		{
 			const char *propName = mono_property_get_name(prop);
-			ClassMessage("Found a property %s", propName);
+
+			//ClassMessage("Found a property %s", propName);
 
 			List<IMonoProperty *> *overloads;
 			if (!this->properties.TryGet(propName, overloads))
@@ -95,7 +98,7 @@ MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 		{
 			MonoEventWrapper *_event = new MonoEventWrapper(ev, this);
 
-			ClassMessage("Found an event %s", _event->Name);
+			//ClassMessage("Found an event %s", _event->Name);
 
 			this->events.Add(_event);
 		}
@@ -105,7 +108,7 @@ MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 		{
 			MonoField *field = new MonoField(f, this);
 
-			ClassMessage("Found a field %s", field->Name);
+			//ClassMessage("Found a field %s", field->Name);
 
 			this->fields.Add(field);
 		}
@@ -113,7 +116,7 @@ MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 		base = mono_class_get_parent(base);
 		if (base)
 		{
-			ClassMessage("Proceeding to the next base class.");
+			//ClassMessage("Proceeding to the next base class.");
 		}
 	}
 
@@ -176,6 +179,8 @@ IMonoFunction *MonoClassWrapper::GetFunction(const char *name, int paramCount)
 
 IMonoFunction *MonoClassWrapper::GetFunction(const char *name, const char *params)
 {
+	ClassMessage("Looking for the function %s(%s).", name, params);
+
 	if (params == nullptr)
 	{
 		return this->GetFunction(name, int(0));
@@ -200,6 +205,17 @@ IMonoFunction *MonoClassWrapper::GetFunction(const char *name, const char *param
 	}
 	if (this->methods.TryGet(name, overloads))
 	{
+#ifdef ClassDebug
+
+		ClassMessage("Looking through overloads of the method %s.", name);
+
+		for (int i = 0; i < overloads->Length; i++)
+		{
+			ClassMessage("Overload #%d: %s", i + 1, overloads->At(i)->Parameters);
+		}
+
+#endif // ClassDebug
+
 		for (int i = 0; i < overloads->Length; i++)
 		{
 			IMonoFunction *m = overloads->At(i);
@@ -265,11 +281,30 @@ IMonoFunction *MonoClassWrapper::GetFunction(const char *name, List<IMonoClass *
 
 IMonoFunction *MonoClassWrapper::GetFunction(const char *name, List<ClassSpec> &specifiedClasses)
 {
+#ifdef ClassDebug
+	const char *argList = nullptr;
+	if (specifiedClasses.Length != 0)
+	{
+		TextBuilder builder(50);
+		ClassSpec spec = specifiedClasses[0];
+		builder << spec.Value1->FullName << spec.Value2;
+		for (int i = 1; i < specifiedClasses.Length; i++)
+		{
+			spec = specifiedClasses[i];
+			builder << ", " << spec.Value1->FullName << spec.Value2;
+		}
+
+		argList = builder.ToNTString();
+	}
+	ClassMessage("Getting the function %s(%s)", name, argList ? argList : "");
+	if (argList) delete argList;
+#endif // ClassDebug
+
 	auto paramTypeNames = List<const char *>(specifiedClasses.Length);
 
 	for (int i = 0; i < specifiedClasses.Length; i++)
 	{
-		TextBuilder typeName = TextBuilder(10);
+		TextBuilder typeName = TextBuilder(50);
 		typeName << specifiedClasses[i].Value1->FullNameIL << specifiedClasses[i].Value2;
 
 		const char *typeNameNt = typeName.ToNTString();
@@ -278,16 +313,30 @@ IMonoFunction *MonoClassWrapper::GetFunction(const char *name, List<ClassSpec> &
 
 	IMonoFunction *foundMethod = this->GetFunction(name, paramTypeNames);
 
-	for (int i = 0; i < paramTypeNames.Length; i++)
-	{
-		delete paramTypeNames[i];
-	}
+	paramTypeNames.DeleteAll();
 
 	return foundMethod;
 }
 
 IMonoFunction *MonoClassWrapper::GetFunction(const char *name, List<const char *> &paramTypeNames)
 {
+#ifdef ClassDebug
+	const char *argList = nullptr;
+	if (paramTypeNames.Length != 0)
+	{
+		TextBuilder builder(50);
+		builder << paramTypeNames[0];
+		for (int i = 1; i < paramTypeNames.Length; i++)
+		{
+			builder << ", " << paramTypeNames[i];
+		}
+
+		argList = builder.ToNTString();
+	}
+	ClassMessage("Getting the function %s(%s)", name, argList ? argList : "");
+	if (argList) delete argList;
+#endif // ClassDebug
+
 	List<IMonoFunction *> *overloads;
 	if (!name)
 	{
@@ -575,12 +624,14 @@ __forceinline result_type *MonoClassWrapper::SearchTheList(List<result_type *> &
 			continue;
 		}
 
+		ClassMessage("Found a method with %d parameters: %s(%s).", paramTypeNames.Length, m->Name, m->Parameters);
+
 		auto currentClasses = m->ParameterTypeNames;
 		bool match = true;
 
 		for (int j = 0; j < paramTypeNames.Length; j++)
 		{
-			if (currentClasses->At(j) != paramTypeNames[j])
+			if (strcmp(currentClasses->At(j), paramTypeNames[j]) != 0)
 			{
 				match = false;
 				break;
@@ -682,7 +733,7 @@ const char *MonoClassWrapper::BuildFullName(bool ilStyle, const char *& field)
 			fullName << this->nameSpace << '.';
 		}
 
-		fullName << this->nameSpace << "." << this->name;
+		fullName << this->name;
 
 		ClassMessage("TextBuilder is done.");
 
