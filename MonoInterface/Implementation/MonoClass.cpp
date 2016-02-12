@@ -728,7 +728,7 @@ bool MonoClassWrapper::Inherits(IMonoClass *klass)
 
 	while (base)
 	{
-		if (this->wrappedClass == klass->GetWrappedPointer())
+		if (base == klass->GetWrappedPointer())
 		{
 			return true;
 		}
@@ -767,12 +767,12 @@ bool MonoClassWrapper::Inherits(IMonoClass *klass, bool direct)
 
 	if (direct)
 	{
-		return this->wrappedClass == klass->GetWrappedPointer();
+		return base == klass->GetWrappedPointer();
 	}
 
 	while (base)
 	{
-		if (this->wrappedClass == klass->GetWrappedPointer())
+		if (base == klass->GetWrappedPointer())
 		{
 			return true;
 		}
