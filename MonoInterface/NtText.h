@@ -153,10 +153,10 @@ public:
 			this->chars = new SymbolType[length + 1];
 			for (int i = 0; i < length; i++)
 			{
-				reinterpret_cast<SymbolType *>(this->chars)[i] = ntText[i];
+				const_cast<SymbolType *>(this->chars)[i] = ntText[i];
 			}
 			mono_free(ntText);
-			reinterpret_cast<SymbolType *>(this->chars)[length] = '\0';
+			const_cast<SymbolType *>(this->chars)[length] = '\0';
 		}
 		else
 		{
