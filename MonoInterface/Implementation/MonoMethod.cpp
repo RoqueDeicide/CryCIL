@@ -3,7 +3,8 @@
 
 mono::object MonoMethodWrapper::Invoke(void *object, mono::exception *exc, bool polymorph)
 {
-	return MonoEnv->Functions->InternalInvoke(this->wrappedMethod, object, nullptr, exc, polymorph);
+	void *params = nullptr;
+	return MonoEnv->Functions->InternalInvoke(this->wrappedMethod, object, &params, exc, polymorph);
 }
 
 mono::object MonoMethodWrapper::Invoke

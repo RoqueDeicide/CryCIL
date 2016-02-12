@@ -38,7 +38,20 @@ mono::object MonoFunctions::InternalInvoke(_MonoMethod *func, void *object, void
 	MonoMethod *methodToInvoke;
 	if (polymorph)
 	{
-		methodToInvoke = mono_object_get_virtual_method(static_cast<MonoObject *>(object), func);
+		uint32 flags;
+		mono_method_get_flags(func, &flags);
+		if ((flags & METHOD_ATTRIBUTE_VIRTUAL) == 0)
+		{
+			methodToInvoke = func;
+		}
+		else
+		{
+			FunctionsMessage("Polymorphing the function %d.", func);
+
+			methodToInvoke = mono_object_get_virtual_method(static_cast<MonoObject *>(object), func);
+
+			FunctionsMessage("Acquired the late bound func %d.", methodToInvoke);
+		}
 	}
 	else
 	{
