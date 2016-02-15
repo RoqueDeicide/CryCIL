@@ -187,19 +187,19 @@ public:
 	//!
 	//! @param initialElements A sequence of elements that were specified inside the braced initialization
 	//!                        list.
-	List(std::initializer_list<ElementType> initialElements)
+	List(std::initializer_list<ElementType> initialElements, int capacity = -1)
 		: length(0)
 	{
 		if (initialElements.size() == 0)
 		{
 			this->length = 0;
-			this->capacity = 10;
+			this->capacity = capacity < 0 ? 10 : capacity;
 			this->elements = new ElementType[this->capacity];
 		}
 		else
 		{
 			int length = initialElements.size();
-			this->capacity = length;
+			this->capacity = capacity < length ? length : capacity;
 			this->elements = new ElementType[length];
 
 			for (auto current = initialElements.begin(); current < initialElements.end(); current++)

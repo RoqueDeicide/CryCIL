@@ -506,11 +506,8 @@ inline void TestObjectCreation()
 	CryLogAlways("TEST:");
 
 	unsigned char bytePar = 1;
-	unsigned int lengths[3];
-	lengths[0] = 3;
-	lengths[1] = 10;
-	lengths[2] = 2;
-	mono::Array arrayCube = MonoEnv->Objects->Arrays->Create(3, lengths, MonoEnv->CoreLibrary->Int32);
+	List<uintptr_t> lengths({ 3, 10, 2 });
+	mono::Array arrayCube = MonoEnv->Objects->Arrays->Create(lengths, MonoEnv->CoreLibrary->Int32);
 
 	params[0] = &bytePar;
 	params[1] = arrayCube;

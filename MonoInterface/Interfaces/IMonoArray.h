@@ -142,6 +142,16 @@ public:
 	// Gets the pointer to the first element in the array.
 	__declspec(property(get = GetData)) ElementType *Data;
 
+	//! Creates a default object of this type.
+	IMonoArray()
+		: IMonoObject(nullptr)
+		, elementSize(0)
+		, elementClass(nullptr)
+		, rank(0)
+
+	{
+	}
+
 	//! Creates new wrapper for given array.
 	IMonoArray(mono::Array ar)
 		: elementSize(0)
@@ -192,7 +202,7 @@ public:
 	ElementType& operator[](int index)
 	{
 		_MonoArray *a = reinterpret_cast<_MonoArray *>(this->obj);
-		return *reinterpret_cast<ElementType *>(reinterpret_cast<char*>((a)->vector) + this->elementSize * index);
+		return *reinterpret_cast<ElementType *>(reinterpret_cast<char*>(a->vector) + this->elementSize * index);
 	}
 	//! Provides read/write access to the element of the array.
 	//!
@@ -219,19 +229,34 @@ public:
 		{
 			CryFatalError("Unable to access an element of the array using invalid number of indices.");
 		}
-		int position = 0;
-		for (int i = 0; i < this->rank; i++)
+
+		int index;
+
+		if (this->rank == 1)
 		{
-			MonoArrayBounds bounds = a->bounds[i];
-			int index = indices[i];
-			if (index < bounds.lower_bound || index - bounds.lower_bound >= bounds.length)
+			index = indices[0];
+			if (a->bounds)
 			{
-				CryFatalError("The index #%d is out of range of the Mono array's dimension.", i);
+				// This array has a non-zero lower bound.
+				index -= a->bounds[0].lower_bound;
 			}
-			position *= bounds.length;
-			position += index - bounds.lower_bound;
 		}
-		return this->operator[](position);
+		else
+		{
+			for (int i = 0; i < this->rank; i++)
+			{
+				MonoArrayBounds bounds = a->bounds[i];
+				index = indices[i];
+				if (index >= bounds.length)
+				{
+					CryFatalError("The index #%d is out of range of the Mono array's dimension.", i);
+				}
+				index *= bounds.length;
+				index += index;
+			}
+		}
+		
+		return this->operator[](index);
 	}
 	//! Gets the length of the dimension of the array.
 	//!

@@ -127,6 +127,7 @@ inline void TestObjectHandles()
 inline void TestArrays()
 {
 	IMonoClass *matrix33Class = MonoEnv->Cryambly->Matrix33;
+	//IMonoClass *int32Class = MonoEnv->CoreLibrary->Int32;
 	IMonoArrays *arrays = MonoEnv->Objects->Arrays;
 
 	CryLogAlways("TEST:");
@@ -162,14 +163,11 @@ inline void TestArrays()
 		CryLogAlways("TEST: %d) %f;", i + 1, matrices[i].Determinant());
 	}
 
-	CryLogAlways("TEST: Creating 2D array of 2-component vectors.");
+	/*CryLogAlways("TEST: Creating 2D array of 2-component vectors.");
 	CryLogAlways("TEST:");
 
-	unsigned int lengths[2];
-	lengths[0] = 3;
-	lengths[1] = 3;
-	auto vectors =
-		IMonoArray<Vec2>(MonoEnv->Objects->Arrays->Create(2, lengths, MonoEnv->Cryambly->Vector2));
+	List<uintptr_t> lengths({ 3, 3 });
+	IMonoArray<Vec2> vectors = arrays->Create(lengths, MonoEnv->Cryambly->Vector2);
 
 	CryLogAlways("TEST: Pinning the array in place.");
 
@@ -184,10 +182,14 @@ inline void TestArrays()
 	Vec2 y1 = Vec2(0.0f, 1.0f);
 
 	auto indices = List<int>({ 0, 0 });
-	for (int i = 0; i < vectors.GetLength(0); i++)
+
+	int firstLength = vectors.GetLength(0);
+	int secondLength = vectors.GetLength(1);
+
+	for (int i = 0; i < firstLength; i++)
 	{
 		indices[0] = i;
-		for (int j = 0; j < vectors.GetLength(1); j++)
+		for (int j = 0; j < secondLength; j++)
 		{
 			vectors[indices.Set(1, j)] =
 				Vec2::CreateLerp(zero, x1, i / 3.0f) + Vec2::CreateLerp(zero, y1, j / 3.0f);
@@ -197,45 +199,53 @@ inline void TestArrays()
 	CryLogAlways("TEST: Printing the array.");
 	CryLogAlways("TEST:");
 
-	for (int i = 0; i < vectors.GetLength(0); i++)
+	for (int i = 0; i < firstLength; i++)
 	{
 		indices[0] = i;
-		for (int j = 0; j < vectors.GetLength(1); j++)
+		for (int j = 0; j < secondLength; j++)
 		{
-			CryLogAlways("TEST: %f", vectors[indices.Set(1, j)]);
+			Vec2 vec = vectors[indices.Set(1, j)];
+			CryLogAlways("TEST: x = %f, y = %f", vec.x, vec.y);
 		}
-	}
+	}*/
+	/*auto indices = List<int>({ 0, 0 });
 
 	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Creating a Pascal-style array of 10 integers with first index = 1.");
 	CryLogAlways("TEST:");
 
-	unsigned int pascalLength = 10;
-	int lowerBound = 1;
-	auto pascalArray = IMonoArray<int>(MonoEnv->Objects->Arrays->Create(1, &pascalLength, MonoEnv->CoreLibrary->Int32, &lowerBound));
+	intptr_t bound = 1;
+	uintptr_t pascalLength = 10;
+	IMonoArray<int> pascalArray = arrays->Create(pascalLength, int32Class, bound);
 
 	CryLogAlways("TEST: Pinning the array in place.");
 
 	handle = MonoEnv->GC->Pin(pascalArray);
 
+	bound = pascalArray.GetLowerBound(0);
+	pascalLength = pascalArray.GetLength(0);
+
+	CryLogAlways("TEST:");
+	CryLogAlways("TEST: The array's lower bound = %zd.", bound);
+	CryLogAlways("TEST:");
+	CryLogAlways("TEST: The array's length      = %zd.", pascalLength);
 	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Filling the array of integers.");
 	CryLogAlways("TEST:");
-
-	for (int i = pascalArray.GetLowerBound(0); i < pascalArray.GetLength(0) + pascalArray.GetLowerBound(0); i++)
+	for (int i = bound; i < pascalLength + bound; i++)
 	{
-		pascalArray[List<int>(1).Add(i)] = i * 3 - 1;
+		pascalArray[indices.Set(0, i)] = i * 3 - 1;
 	}
 
 	CryLogAlways("TEST: Printing the array of integers.");
 	CryLogAlways("TEST:");
 
-	for (int i = pascalArray.GetLowerBound(0); i < pascalArray.GetLength(0) + pascalArray.GetLowerBound(0); i++)
+	for (int i = bound; i < pascalLength + bound; i++)
 	{
-		CryLogAlways("TEST: %d", pascalArray[List<int>(1).Add(i)]);
+		CryLogAlways("TEST: %d", pascalArray[indices.Set(0, i)]);
 	}
 
-	CryLogAlways("TEST:");
+	CryLogAlways("TEST:");*/
 }
 
 inline void __cdecl NativeTestFunctionCdecl(int arg)

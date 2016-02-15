@@ -8,19 +8,17 @@ struct IMonoArrays
 	//!
 	//! Mono array objects are standard managed objects and are prone to GC.
 	//!
-	//! @param capacity Number of elements that can be held by the array.
-	//! @param klass    Pointer to the class that will represent objects within the array.
-	//!                 If null, System.Object will be used.
-	VIRTUAL_API virtual mono::Array Create(int capacity, IMonoClass *klass = nullptr) = 0;
+	//! @param capacity    Number of elements that can be held by the array.
+	//! @param klass       Pointer to the class that will represent objects within the array.
+	//!                    If null, System.Object will be used.
+	//! @param lowerBounds An optional value that specifies the index of the first element of the array.
+	VIRTUAL_API virtual mono::Array Create(int capacity, IMonoClass *klass = nullptr,
+										   intptr_t lowerBound = 0) = 0;
 	//! Creates a multi-dimensional array.
 	//!
 	//! Mono array objects are standard managed objects and are prone to GC.
 	//!
-	//! @param dimCount    Number of dimensions of the array.
-	//! @param lengths     An array of lengths of dimensions.
-	//! @param klass       Type of elements of the array. If null, System.Object will be used.
-	//! @param lowerBounds An optional array of lower bounds of dimensions. If null, zeros will
-	//!                    be used.
-	VIRTUAL_API virtual mono::Array Create
-		(int dimCount, unsigned int *lengths, IMonoClass *klass = nullptr, int *lowerBounds = nullptr) = 0;
+	//! @param lengths A list of lengths of each dimension.
+	//! @param klass   Type of elements of the array. If null, System.Object will be used.
+	VIRTUAL_API virtual mono::Array Create(const List<uintptr_t> &lengths, IMonoClass *klass = nullptr) = 0;
 };
