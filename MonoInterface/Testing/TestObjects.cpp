@@ -28,7 +28,7 @@ inline void TestObjectHandles()
 	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Testing IMonoHandle implementation.");
 
-	IMonoClass *testObjectClass = mainTestingAssembly->GetClass("Test", "TestObject");
+	IMonoClass *testObjectClass = mainTestingAssembly->GetClass("MainTestingAssembly", "TestObject");
 
 	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Creating an object.");
@@ -248,14 +248,14 @@ inline void __stdcall NativeTestFunctionStdCall(int arg)
 
 inline void TestDelegates()
 {
-	IMonoClass *staticTestDelegateClass = mainTestingAssembly->GetClass("Test", "StaticTestDelegate");
-	IMonoClass *instanceTestDelegateClass = mainTestingAssembly->GetClass("Test", "InstanceTestDelegate");
+	IMonoClass *staticTestDelegateClass = mainTestingAssembly->GetClass("MainTestingAssembly", "StaticTestDelegate");
+	IMonoClass *instanceTestDelegateClass = mainTestingAssembly->GetClass("MainTestingAssembly", "InstanceTestDelegate");
 
-	IMonoClass *staticTestClass = mainTestingAssembly->GetClass("Test", "StaticTest");
+	IMonoClass *staticTestClass = mainTestingAssembly->GetClass("MainTestingAssembly", "StaticTest");
 
-	IMonoClass *instanceTestClass1 = mainTestingAssembly->GetClass("Test", "InstanceTest1");
-	IMonoClass *instanceTestClass2 = mainTestingAssembly->GetClass("Test", "InstanceTest2");
-	IMonoClass *instanceTestClass3 = mainTestingAssembly->GetClass("Test", "InstanceTest3");
+	IMonoClass *instanceTestClass1 = mainTestingAssembly->GetClass("MainTestingAssembly", "InstanceTest1");
+	IMonoClass *instanceTestClass2 = mainTestingAssembly->GetClass("MainTestingAssembly", "InstanceTest2");
+	IMonoClass *instanceTestClass3 = mainTestingAssembly->GetClass("MainTestingAssembly", "InstanceTest3");
 
 	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Testing IMonoDelegate implementation.");
@@ -346,8 +346,8 @@ inline void TestDelegates()
 	CryLogAlways("TEST: Testing delegates that wrap function pointers.");
 	CryLogAlways("TEST:");
 
-	IMonoClass *nativeTestDelegateCdeclClass = mainTestingAssembly->GetClass("Test", "NativeTestDelegateCdecl");
-	IMonoClass *nativeTestDelegateStdCallClass = mainTestingAssembly->GetClass("Test", "NativeTestDelegateStdCall");
+	IMonoClass *nativeTestDelegateCdeclClass = mainTestingAssembly->GetClass("MainTestingAssembly", "NativeTestDelegateCdecl");
+	IMonoClass *nativeTestDelegateStdCallClass = mainTestingAssembly->GetClass("MainTestingAssembly", "NativeTestDelegateStdCall");
 
 	CryLogAlways("TEST: Creating 2 delegate objects.");
 	CryLogAlways("TEST:");

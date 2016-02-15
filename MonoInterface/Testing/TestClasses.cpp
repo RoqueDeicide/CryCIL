@@ -1197,9 +1197,12 @@ inline void TestEvents()
 
 	eventHandlerClass = MonoEnv->CoreLibrary->GetClass("System", "EventHandler");
 
-	IMonoClass *eventTestClass = mainTestingAssembly->GetClass("Test", "EventTest");
-	IMonoClass *eventTestClassClass = mainTestingAssembly->GetClass("Test", "EventTestClass");
-	IMonoClass *eventTestObjectClass = mainTestingAssembly->GetClass("Test", "EventTestObject");
+	CryLogAlways("TEST:");
+	CryLogAlways("TEST: Acquired the pointer to the delegate that represents the event handler.");
+
+	IMonoClass *eventTestClass = mainTestingAssembly->GetClass("MainTestingAssembly", "EventTest");
+	IMonoClass *eventTestClassClass = mainTestingAssembly->GetClass("MainTestingAssembly", "EventTestClass");
+	IMonoClass *eventTestObjectClass = mainTestingAssembly->GetClass("MainTestingAssembly", "EventTestObject");
 
 	CryLogAlways("TEST: Got all class wrappers for testing events.");
 	CryLogAlways("TEST:");
