@@ -99,7 +99,7 @@ mono::delegat MonoDelegates::Create(IMonoClass *delegateType, void *functionPoin
 	}
 
 	mono::exception ex;
-	mono::delegat res = createDelegateForFunctionPointer(delegateType->GetType(), functionPointer, &ex);
+	mono::delegat res = createDelegateForFunctionPointer(functionPointer, delegateTypeObj, &ex);
 
 	if (ex)
 	{

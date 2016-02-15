@@ -5,7 +5,7 @@
 typedef mono::delegat(__stdcall *CreateStaticDelegate)(mono::type, mono::object, mono::exception *);
 typedef mono::delegat(__stdcall *CreateInstanceDelegate)(mono::type, mono::object, mono::object,
 														 mono::exception *);
-typedef mono::delegat(__stdcall *CreateDelegateForFunctionPointer)(mono::type, void *, mono::exception *);
+typedef mono::delegat(__stdcall *CreateDelegateForFunctionPointer)(void *, mono::type, mono::exception *);
 
 struct MonoDelegates : public IMonoDelegates
 {
