@@ -7,7 +7,7 @@
 
 struct MonoConstructor : public IMonoConstructor
 {
-	MonoConstructor(MonoMethod *method, IMonoClass *klass = nullptr)
+	explicit MonoConstructor(MonoMethod *method, IMonoClass *klass = nullptr)
 		: IMonoConstructor(method, klass)
 	{}
 

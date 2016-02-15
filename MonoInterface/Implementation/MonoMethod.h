@@ -8,7 +8,8 @@
 
 struct MonoMethodWrapper : public IMonoMethod
 {
-	MonoMethodWrapper(MonoMethod *method, IMonoClass *klass = nullptr) : IMonoMethod(method, klass) {}
+	explicit MonoMethodWrapper(MonoMethod *method, IMonoClass *klass = nullptr)
+		: IMonoMethod(method, klass) {}
 	
 	virtual mono::object Invoke(void *object, mono::exception *exc = nullptr, bool polymorph = false) override;
 	virtual mono::object Invoke

@@ -19,7 +19,7 @@ private:
 	Text *fileName;					//!< Name of the file this assembly was loaded from.
 public:
 	//! Wraps given assembly.
-	MonoAssemblyWrapper(MonoAssembly *assembly);
+	explicit MonoAssemblyWrapper(MonoAssembly *assembly);
 	//! Attempts to load assembly located in the file.
 	MonoAssemblyWrapper(const char *assemblyFile, bool &failed);
 	~MonoAssemblyWrapper()
