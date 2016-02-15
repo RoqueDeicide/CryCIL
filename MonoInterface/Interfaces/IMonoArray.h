@@ -1,5 +1,11 @@
 #pragma once
 
+#if 0
+#define ArrayMessage CryLogAlways
+#else
+#define ArrayMessage(...) void(0)
+#endif
+
 #include "IMonoAliases.h"
 
 #ifndef MONO_ZERO_LEN_ARRAY
@@ -232,9 +238,12 @@ public:
 	//! @param dimensionIndex Zero-based index of the dimension which length to get.
 	int GetLength(int dimensionIndex) const
 	{
+		ArrayMessage("Getting the length of the dimension %d.", dimensionIndex);
+
 		MonoArray *arrayPtr = reinterpret_cast<MonoArray *>(this->obj);
 		if (!arrayPtr->bounds)
 		{
+			ArrayMessage("Array is a simple 1D array.");
 			return 0;
 		}
 		return arrayPtr->bounds[dimensionIndex].length;
@@ -244,9 +253,12 @@ public:
 	//! @param dimensionIndex Zero-based index of the dimension which lower bound to get.
 	int GetLowerBound(int dimensionIndex) const
 	{
+		ArrayMessage("Getting the lower bound of the dimension %d.", dimensionIndex);
+
 		MonoArray *arrayPtr = reinterpret_cast<MonoArray *>(this->obj);
 		if (!arrayPtr->bounds)
 		{
+			ArrayMessage("Array is a simple 1D array.");
 			return 0;
 		}
 		return arrayPtr->bounds[dimensionIndex].lower_bound;

@@ -1,5 +1,11 @@
 #pragma once
 
+#if 0
+#define GcHandleMessage CryLogAlways
+#else
+#define GcHandleMessage(...) void(0)
+#endif
+
 //! Represents a GC handle.
 //!
 //! GC handles are used to inform Mono run-time environment about references to managed objects from
@@ -64,6 +70,8 @@ public:
 	//! Use either Detach() or Separate() or Release() if you don't want the handle to be released.
 	MonoGCHandle &operator= (unsigned int other)
 	{
+		GcHandleMessage("Assigning a GC handle to this object.");
+
 		if (this->handle != other)
 		{
 			this->Release();
