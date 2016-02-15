@@ -2,21 +2,31 @@
 #include "MonoEvent.h"
 #include "MonoClass.h"
 
+#if 1
+#define EventMessage CryLogAlways
+#else
+#define EventMessage(...) void(0)
+#endif
+
+MonoEventWrapper::MonoEventWrapper(MonoEvent *_event, IMonoClass *klass /*= nullptr*/)
+	: _event(nullptr)
+	, klass(nullptr)
+	, add(nullptr)
+	, remove(nullptr)
+	, raise(nullptr)
+	, raiseDefined(-1)
+{
+	this->_event = _event;
+	this->klass = klass;
+}
 
 IMonoFunction *MonoEventWrapper::GetAdd()
 {
 	if (!this->add)
 	{
-		MonoMethod *addMethod = mono_event_get_add_method(_event);
+		const char *eventName = mono_event_get_name(this->_event);
 
-		if (isStatic)
-		{
-			this->add = new MonoStaticMethod(addMethod, klass);
-		}
-		else
-		{
-			this->add = new MonoMethodWrapper(addMethod, klass);
-		}
+		this->add = this->klass->GetFunction(NtText({ "add_", eventName }), -1);
 	}
 	return this->add;
 }
@@ -25,16 +35,9 @@ IMonoFunction *MonoEventWrapper::GetRemove()
 {
 	if (!this->remove)
 	{
-		MonoMethod *removeMethod = mono_event_get_remove_method(_event);
+		const char *eventName = mono_event_get_name(this->_event);
 
-		if (isStatic)
-		{
-			this->remove = new MonoStaticMethod(removeMethod, klass);
-		}
-		else
-		{
-			this->remove = new MonoMethodWrapper(removeMethod, klass);
-		}
+		this->remove = this->klass->GetFunction(NtText({ "remove_", eventName }), -1);
 	}
 	return this->remove;
 }
@@ -43,22 +46,13 @@ IMonoFunction *MonoEventWrapper::GetRaise()
 {
 	if (!this->raise && this->raiseDefined != 0)
 	{
-		MonoMethod *raiseMethod = mono_event_get_raise_method(_event);
+		const char *eventName = mono_event_get_name(this->_event);
 
-		if (isStatic)
-		{
-			this->raise = raiseMethod ? new MonoStaticMethod(raiseMethod, klass) : nullptr;
-		}
-		else
-		{
-			this->raise = raiseMethod ? new MonoMethodWrapper(raiseMethod, klass) : nullptr;
-		}
+		this->raise = this->klass->GetFunction(NtText({ "raise_", eventName }), -1);
 
 		if (!this->raise)
 		{
-			auto methodName = NtText({ "On", mono_event_get_name(this->_event) });
-
-			this->raise = this->klass->GetFunction(methodName, -1);
+			this->raise = this->klass->GetFunction(NtText({ "On", eventName }), -1);
 		}
 
 		this->raiseDefined = this->raise ? 1 : 0;
@@ -80,4 +74,3 @@ IMonoClass *MonoEventWrapper::GetDeclaringClass()
 {
 	return this->klass;
 }
-
