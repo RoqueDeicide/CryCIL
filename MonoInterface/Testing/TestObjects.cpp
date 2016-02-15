@@ -52,7 +52,7 @@ inline void TestObjectHandles()
 	mono::string fieldText;
 	obj.GetField("Text", &fieldText);
 
-	CryLogAlways("TEST: The text field's value: %s", NtText(fieldText));
+	CryLogAlways("TEST: The text field's value: %s", NtText(fieldText).c_str());
 
 	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Testing object's property.");
@@ -399,7 +399,7 @@ inline void TestExceptions()
 
 	IMonoException exc(ex);
 
-	CryLogAlways("TEST: Caught exception's details are: Message = \"%s\", Length of the stack-trace is %d.", NtText(exc.Message), NtText(exc.StackTrace).Length, exc.Class->FullName);
+	CryLogAlways("TEST: Caught exception's details are: Message = \"%s\", Length of the stack-trace is %d.", NtText(exc.Message).c_str(), NtText(exc.StackTrace).Length, exc.Class->FullName);
 	CryLogAlways("TEST:");
 
 	CryLogAlways("TEST:");
@@ -567,7 +567,7 @@ inline void TestStrings()
 	}
 
 	CryLogAlways("TEST:");
-	CryLogAlways("TEST: The interned string is: %s.", NtText(text.NativeUTF8));
+	CryLogAlways("TEST: The interned string is: %s.", NtText(text.NativeUTF8).c_str());
 	CryLogAlways("TEST:");
 }
 
@@ -611,7 +611,7 @@ inline void ThreadFunction()
 
 	thread.Name = ToMonoString("Unmanaged Worker");
 
-	CryLogAlways("TEST: Unmanaged Worker: This thread's name is now: [%s].", NtText(thread.Name));
+	CryLogAlways("TEST: Unmanaged Worker: This thread's name is now: [%s].", NtText(thread.Name).c_str());
 
 	ProcessStuffs(mainTestingAssembly->GetClass("MainTestingAssembly", "ThreadTestClass"), "Unmanaged Worker");
 
@@ -646,7 +646,7 @@ inline void ProcessStuffs(IMonoClass *klass, const char *threadName)
 	int accessCounter = klass->GetField<int>(nullptr, lockField) + 1;
 	klass->SetField(nullptr, lockField, &accessCounter);
 
-	CryLogAlways("TEST: %s: This thread was %d to enter critical section.", threadName, NtText(ToOrdinal(accessCounter)));
+	CryLogAlways("TEST: %s: This thread was %d to enter critical section.", threadName, NtText(ToOrdinal(accessCounter)).c_str());
 	CryLogAlways("TEST: %s: Leaving the critical section.", threadName);
 
 	MonoEnv->Objects->MonitorExit(lockObject);
