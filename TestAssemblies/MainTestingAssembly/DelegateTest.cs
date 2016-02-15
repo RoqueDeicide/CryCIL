@@ -82,7 +82,7 @@ namespace MainTestingAssembly
 		/// </summary>
 		public InstanceTest2()
 		{
-			SomeField = 19;
+			this.SomeField = 19;
 		}
 		/// <summary>
 		/// Prints first digits in the string.
@@ -91,7 +91,7 @@ namespace MainTestingAssembly
 		/// <returns>First digits in the string.</returns>
 		public void GetFirstDigit(string text)
 		{
-			Console.WriteLine((text.Any(Char.IsDigit)) ? text.First(Char.IsDigit) : -1);
+			Console.WriteLine((text.Any(char.IsDigit)) ? text.First(char.IsDigit) : -1);
 		}
 	}
 	/// <summary>
@@ -107,7 +107,7 @@ namespace MainTestingAssembly
 		public void GetParsedNumber(string text)
 		{
 			int res;
-			Console.WriteLine(Int32.TryParse(text, out res) ? res : -1);
+			Console.WriteLine(int.TryParse(text, out res) ? res : -1);
 		}
 	}
 }

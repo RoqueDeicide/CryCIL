@@ -97,8 +97,8 @@ namespace MainTestingAssembly
 		public event EventHandler Testing;
 		public event EventHandler Tested
 		{
-			add { handlers.Add(value); }
-			remove { handlers.Remove(value); }
+			add { this.handlers.Add(value); }
+			remove { this.handlers.Remove(value); }
 		}
 		#endregion
 		#region Construction
@@ -118,7 +118,7 @@ namespace MainTestingAssembly
 		protected void OnTested()
 		{
 			Console.WriteLine("Raising static event EventTestClass.TestHappened");
-			foreach (EventHandler handler in handlers)
+			foreach (EventHandler handler in this.handlers)
 			{
 				handler(null, EventArgs.Empty);
 			}

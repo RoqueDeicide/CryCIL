@@ -44,7 +44,7 @@ namespace MainTestingAssembly
 		/// <summary>
 		/// Used by underlying framework as an access counter for testing multi-threading API.
 		/// </summary>
-		public static int Counter = 0;
+		public static int Counter;
 		/// <summary>
 		/// Executed in a separate thread when testing.
 		/// </summary>
