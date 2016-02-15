@@ -12,6 +12,12 @@
 #define ClassMessage(...) void(0)
 #endif
 
+#if 0
+#define ClassCtorMessage CryLogAlways
+#else
+#define ClassCtorMessage(...) void(0)
+#endif
+
 MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 	: fullName(nullptr)
 	, fullNameIL(nullptr)
@@ -20,21 +26,21 @@ MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 	, flatMethodList(100)
 	, flatPropertyList(100)
 {
-	//ClassMessage("Creating a wrapper.");
+	ClassCtorMessage("Creating a wrapper.");
 
 	this->wrappedClass = klass;
 
-	//ClassMessage("Stored a pointer to the class.");
+	ClassCtorMessage("Stored a pointer to the class.");
 
 	this->name      = mono_class_get_name(klass);
 	this->nameSpace = mono_class_get_namespace(klass);
 
-	//ClassMessage("Stored a name and a namespace of the class.");
+	ClassCtorMessage("Stored a name and a namespace of the class.");
 
 	this->methods    = SortedList<const char *, List<IMonoFunction *> *>(30, strcmp);
 	this->properties = SortedList<const char *, List<IMonoProperty *> *>(30, strcmp);
 
-	//ClassMessage("Created lists for methods and properties.");
+	ClassCtorMessage("Created lists for methods and properties.");
 	
 	MonoClass *base = klass;
 	while (base)
@@ -45,7 +51,7 @@ MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 		{
 			const char *methodName = mono_method_get_name(met);
 
-			//ClassMessage("Found a method %s", methodName);
+			ClassCtorMessage("Found a method %s", methodName);
 			
 			List<IMonoFunction *> *overloads;
 			if (!this->methods.TryGet(methodName, overloads))
@@ -67,7 +73,7 @@ MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 				methodWrapper = new MonoStaticMethod(met, this);
 			}
 
-			//ClassMessage("Created a wrapper for a method %s", methodName);
+			ClassCtorMessage("Created a wrapper for a method %s", methodName);
 
 			overloads->Add(methodWrapper);
 
@@ -79,7 +85,7 @@ MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 		{
 			const char *propName = mono_property_get_name(prop);
 
-			//ClassMessage("Found a property %s", propName);
+			ClassCtorMessage("Found a property %s", propName);
 
 			List<IMonoProperty *> *overloads;
 			if (!this->properties.TryGet(propName, overloads))
@@ -98,7 +104,7 @@ MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 		{
 			MonoEventWrapper *_event = new MonoEventWrapper(ev, this);
 
-			//ClassMessage("Found an event %s", _event->Name);
+			ClassCtorMessage("Found an event %s", _event->Name);
 
 			this->events.Add(_event);
 		}
@@ -108,7 +114,7 @@ MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 		{
 			MonoField *field = new MonoField(f, this);
 
-			//ClassMessage("Found a field %s", field->Name);
+			ClassCtorMessage("Found a field %s", field->Name);
 
 			this->fields.Add(field);
 		}
@@ -116,7 +122,7 @@ MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 		base = mono_class_get_parent(base);
 		if (base)
 		{
-			//ClassMessage("Proceeding to the next base class.");
+			ClassCtorMessage("Proceeding to the next base class.");
 		}
 	}
 
@@ -1060,23 +1066,36 @@ bool MonoClassWrapper::GetIsDelegate()
 	return mono_class_is_delegate(this->wrappedClass) != 0;
 }
 
+#if 0
+#define ClassCacheMessage CryLogAlways
+#else
+#define ClassCacheMessage(...) void(0)
+#endif
+
 SortedList<MonoClass *, MonoClassWrapper *> MonoClassCache::cachedClasses(50);
 
 
 IMonoClass *MonoClassCache::Wrap(MonoClass *klass)
 {
-	ClassMessage("Looking for the class in the cache.", mono_class_get_name(klass));
+	ClassCacheMessage("Looking for the class %s in the cache.", mono_class_get_name(klass));
+
 	MonoClassWrapper *wrapper;
 	if (cachedClasses.TryGet(klass, wrapper))
 	{
 		return wrapper;
 	}
-	ClassMessage("Class is not in the cache.");
+
+	ClassCacheMessage("Class is not in the cache.");
+
 	// Register a new one.
 	wrapper = new MonoClassWrapper(klass);
-	ClassMessage("Created a wrapper for a class %s.", mono_class_get_name(klass));
+
+	ClassCacheMessage("Created a wrapper for a class %s.", mono_class_get_name(klass));
+
 	MonoClassCache::cachedClasses.Add(klass, wrapper);
-	ClassMessage("Added a wrapper to the cache.");
+
+	ClassCacheMessage("Added a wrapper to the cache.");
+
 	return wrapper;
 }
 
