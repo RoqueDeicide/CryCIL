@@ -46,11 +46,11 @@ mono::object MonoFunctions::InternalInvoke(_MonoMethod *func, void *object, void
 		}
 		else
 		{
-			FunctionsMessage("Polymorphing the function %d.", func);
+			FunctionsMessage("Polymorphing the function %p.", func);
 
 			methodToInvoke = mono_object_get_virtual_method(static_cast<MonoObject *>(object), func);
 
-			FunctionsMessage("Acquired the late bound func %d.", methodToInvoke);
+			FunctionsMessage("Acquired the late bound func %p.", methodToInvoke);
 		}
 	}
 	else

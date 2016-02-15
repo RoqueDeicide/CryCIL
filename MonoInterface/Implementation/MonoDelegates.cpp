@@ -107,7 +107,7 @@ mono::delegat MonoDelegates::Create(IMonoClass *delegateType, void *functionPoin
 
 	mono::type delegateTypeObj = delegateType->GetType();
 
-	DelegatesMessage("Delegate type object = %d.", delegateTypeObj);
+	DelegatesMessage("Delegate type object = %p.", delegateTypeObj);
 
 	mono::exception ex;
 	mono::delegat res = createDelegateForFunctionPointer(functionPointer, delegateTypeObj, &ex);

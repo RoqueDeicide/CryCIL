@@ -149,8 +149,8 @@ public:
 	//!        // Wrap the array.
 	//!        IMonoArray *vectorComponents = MonoEnv->Objects->Arrays->Wrap(componentsArray, true);
 	//!        // Print the components.
-	//!        CryLogAlways("X component of the vector = %d", vectorComponents->At<float>(0));
-	//!        CryLogAlways("Y component of the vector = %d", vectorComponents->At<float>(1));
+	//!        CryLogAlways("X component of the vector = %f", vectorComponents->At<float>(0));
+	//!        CryLogAlways("Y component of the vector = %f", vectorComponents->At<float>(1));
 	//!        // Release the array.
 	//!        vectorComponents->Release();
 	//!    }
@@ -188,8 +188,8 @@ public:
 	//!        // Unbox the "out" parameter.
 	//!        Vec2 vector = Unbox<Vec2>(result);
 	//!        // Print the components.
-	//!        CryLogAlways("X component of the vector = %d", vector.x);
-	//!        CryLogAlways("Y component of the vector = %d", vector.y);
+	//!        CryLogAlways("X component of the vector = %f", vector.x);
+	//!        CryLogAlways("Y component of the vector = %f", vector.y);
 	//!    }
 	//! @endcode
 	//!
@@ -222,9 +222,9 @@ public:
 	//!        // Unbox the result.
 	//!        Vec3 vector = Unbox<Vec3>(result);
 	//!        // Print the components.
-	//!        CryLogAlways("X component of the vector = %d", vector.x);
-	//!        CryLogAlways("Y component of the vector = %d", vector.y);
-	//!        CryLogAlways("Z component of the vector = %d", vector.z);
+	//!        CryLogAlways("X component of the vector = %f", vector.x);
+	//!        CryLogAlways("Y component of the vector = %f", vector.y);
+	//!        CryLogAlways("Z component of the vector = %f", vector.z);
 	//!    }
 	//! @endcode
 	//! @example DoxygenExampleFiles\UnmanagedThunkExample.h
@@ -334,7 +334,7 @@ public:
 
 	void *GetUnmanagedThunk()
 	{
-		FuncMessage("Method class: %d", this->klass);
+		FuncMessage("Method class: %p", this->klass);
 
 		FuncMessage("Method name: %s", this->name);
 

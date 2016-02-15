@@ -47,7 +47,6 @@ MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener
 	if (listeners)
 	{
 		this->broadcaster->listeners->AddRange(listeners);
-		InterfaceMessage("Last listener is %d", this->broadcaster->listeners->At(119));
 		listeners->Clear();
 	}
 	// Set global variables.
@@ -464,7 +463,7 @@ void MonoInterface::RegisterDefaultListeners() const
 
 		IMonoFunction *function = klass->GetFunction(methodName, params);
 
-		InterfaceMessage("Got the function: %d.", function);
+		InterfaceMessage("Got the function: %p.", function);
 
 		void *thunk = function->UnmanagedThunk;
 

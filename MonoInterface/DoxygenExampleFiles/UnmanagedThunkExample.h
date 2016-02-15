@@ -31,7 +31,7 @@ inline void example()
 		// Unbox the "out" parameter.
 		Vec2 vector = Unbox<Vec2>(result);
 		// Print the components.
-		CryLogAlways("X component of the vector = %d", vector.x);
-		CryLogAlways("Y component of the vector = %d", vector.y);
+		CryLogAlways("X component of the vector = %f", vector.x);
+		CryLogAlways("Y component of the vector = %f", vector.y);
 	}
 }
