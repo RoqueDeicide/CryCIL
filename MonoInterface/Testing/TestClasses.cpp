@@ -1046,7 +1046,7 @@ inline void TestInstanceFields()
 	CryLogAlways("TEST: Setting the text field value using the wrapper.");
 
 	textValue = ToMonoString("Some different text.");
-	fieldTestClass->SetField(obj, textField, &textValue);
+	fieldTestClass->SetField(obj, textField, textValue);
 
 	CryLogAlways("TEST: Setting the number field value through the name.");
 	CryLogAlways("TEST:");
@@ -1098,7 +1098,7 @@ inline void TestStaticFields()
 
 	IMonoField *field = fieldTestClass->GetField("ObjectField");
 
-	fieldTestClass->SetField(nullptr, field, &obj);
+	fieldTestClass->SetField(nullptr, field, obj);
 
 	CryLogAlways("TEST: Getting a static field.");
 	CryLogAlways("TEST:");
@@ -1110,7 +1110,7 @@ inline void TestStaticFields()
 
 	CryLogAlways("TEST: Numeric value = %d", number);
 
-	CryLogAlways("TEST: Text value = %s", NtText(text));
+	CryLogAlways("TEST: Text value = %s", NtText(text).c_str());
 	CryLogAlways("TEST:");
 }
 

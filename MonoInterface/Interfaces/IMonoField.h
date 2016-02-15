@@ -36,6 +36,9 @@ struct IMonoField : public IMonoMember
 	VIRTUAL_API virtual void Get(mono::object obj, void *value) = 0;
 	//! Sets the value of this field on the given object.
 	//!
+	//! Value parameter can either be a pointer to the value-type object to set, or it can be
+	//! a mono::object that represents a managed object to set.
+	//!
 	//! @param obj   Object for which to set the value on.
 	//! @param value Pointer to the object that contains the new value for the field.
 	VIRTUAL_API virtual void Set(mono::object obj, void *value) = 0;
@@ -56,7 +59,7 @@ struct IMonoField : public IMonoMember
 
 		return valueContainer;
 	}
-	//! Gets the value of the field.
+	//! Sets the value of the field.
 	//!
 	//! @param obj   Object of which field to get.
 	//! @param value A value to set.
@@ -65,5 +68,13 @@ struct IMonoField : public IMonoMember
 	template <typename FieldType> void Assign(mono::object obj, FieldType value)
 	{
 		this->Set(obj, &value);
+	}
+	//! Sets the value of the field.
+	//!
+	//! @param obj   Object of which field to get.
+	//! @param value A value to set.
+	void Assign(mono::object obj, mono::object value)
+	{
+		this->Set(obj, value);
 	}
 };

@@ -230,7 +230,9 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!
 	//! @param obj   Object which field to set. Use nullptr when working with a static field.
 	//! @param name  Name of the field which value to set.
-	//! @param value New value to assign to the field.
+	//! @param value New value to assign to the field. This pointer can be a mono::object
+	//!              when setting the managed-typed fields and it can be a pointer to
+	//!              value-type object when setting the value-typed fields.
 	//!
 	//! @seealso IMonoHandle::SetField
 	VIRTUAL_API virtual void SetField(mono::object obj, const char *name, void *value) = 0;
@@ -246,7 +248,9 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!
 	//! @param obj   Object which field to set. Use nullptr when working with a static field.
 	//! @param field Wrapper that identifies the field which value to set.
-	//! @param value New value to assign to the field.
+	//! @param value New value to assign to the field. This pointer can be a mono::object
+	//!              when setting the managed-typed fields and it can be a pointer to
+	//!              value-type object when setting the value-typed fields.
 	//!
 	//! @seealso IMonoHandle::SetField
 	VIRTUAL_API virtual void SetField(mono::object obj, IMonoField *field, void *value) = 0;
@@ -412,6 +416,17 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	{
 		this->SetField(obj, name, &value);
 	}
+	//! Sets the value of the object's field.
+	//!
+	//! @param obj   Object which field to set. Use nullptr when working with a static field.
+	//! @param name  Name of the field which value to set.
+	//! @param value New value to assign to the field.
+	//!
+	//! @seealso IMonoHandle::SetField
+	void AssignField(mono::object obj, const char *name, mono::object value)
+	{
+		this->SetField(obj, name, value);
+	}
 	//! Gets the value of the object's field.
 	//!
 	//! @param obj   Object which field to get. Use nullptr when working with a static field.
@@ -436,5 +451,16 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	template <typename FieldType> void AssignField(mono::object obj, IMonoField *field, FieldType value)
 	{
 		this->SetField(obj, field, &value);
+	}
+	//! Sets the value of the object's field.
+	//!
+	//! @param obj   Object which field to set. Use nullptr when working with a static field.
+	//! @param field Wrapper that identifies the field which value to set.
+	//! @param value New value to assign to the field.
+	//!
+	//! @seealso IMonoHandle::SetField
+	void AssignField(mono::object obj, IMonoField *field, mono::object value)
+	{
+		this->SetField(obj, field, value);
 	}
 };

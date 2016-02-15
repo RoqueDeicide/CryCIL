@@ -418,6 +418,9 @@ void MonoClassWrapper::GetField(mono::object obj, const char *name, void *value)
 	this->GetFieldValue(obj, mono_class_get_field_from_name(this->wrappedClass, name), value);
 }
 //! Sets the value of the object's field.
+//!
+//! Value parameter can either be a pointer to the value-type object to set, or it can be
+//! a mono::object that represents a managed object to set.
 void MonoClassWrapper::SetField(mono::object obj, const char *name, void *value)
 {
 	this->SetFieldValue(obj, mono_class_get_field_from_name(this->wrappedClass, name), value);
@@ -429,6 +432,9 @@ void MonoClassWrapper::GetField(mono::object obj, IMonoField *field, void *value
 }
 
 //! Sets the value of the object's field.
+//!
+//! Value parameter can either be a pointer to the value-type object to set, or it can be
+//! a mono::object that represents a managed object to set.
 void MonoClassWrapper::SetField(mono::object obj, IMonoField *field, void *value)
 {
 	this->SetFieldValue(obj, field->GetHandle<MonoClassField>(), value);
