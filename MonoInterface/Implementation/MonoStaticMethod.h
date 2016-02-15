@@ -2,8 +2,8 @@
 
 #include "IMonoInterface.h"
 
-#pragma warning(push)
-#pragma warning(disable : 4250)
+//#pragma warning(push)
+//#pragma warning(disable : 4250)
 
 struct MonoStaticMethod : public IMonoStaticMethod
 {
@@ -15,4 +15,4 @@ struct MonoStaticMethod : public IMonoStaticMethod
 	virtual mono::object Invoke(void **params, mono::exception *exc = nullptr) override;
 };
 
-#pragma warning(pop)
+//#pragma warning(pop)
