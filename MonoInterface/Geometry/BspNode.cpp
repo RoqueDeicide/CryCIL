@@ -24,7 +24,7 @@ Vertex Vertex::CreateLerp(Vertex &other, float parameter)
 	return vertex;
 }
 
-Plane Face::GetPlane()
+Plane Face::GetPlane() const
 {
 	Vec3 normal =
 		(this->Vertices[1].Position - this->Vertices[0].Position)
@@ -36,7 +36,7 @@ Plane Face::GetPlane()
 	return Plane(normal, distance);
 }
 
-Vec3 Face::GetNormal()
+Vec3 Face::GetNormal() const
 {
 	Vec3 normal =
 		(this->Vertices[1].Position - this->Vertices[0].Position)
@@ -53,7 +53,7 @@ void Face::Invert()
 	this->Vertices[2] = temp;
 }
 
-void Face::Split(Plane splitter, List<Face> *frontCoplanarFaces, List<Face> *backCoplanarFaces, List<Face> *frontFaces, List<Face> *backFaces)
+void Face::Split(Plane splitter, List<Face> *frontCoplanarFaces, List<Face> *backCoplanarFaces, List<Face> *frontFaces, List<Face> *backFaces) const
 {
 	PlanePosition triangleType = PlanePosition::Coplanar;
 	PlanePosition positions[3];
@@ -90,7 +90,7 @@ void Face::Split(Plane splitter, List<Face> *frontCoplanarFaces, List<Face> *bac
 		// Prepare to create a split of this triangle.
 		//
 		// Cash vertices into an array, so we can loop through it.
-		Vertex *vertices = this->Vertices;
+		Vertex *vertices = const_cast<Vertex *>(this->Vertices);
 		// Create lists for vertices on the front and back.
 		List<Vertex> fvs(4);
 		List<Vertex> bvs(4);

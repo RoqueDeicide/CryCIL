@@ -736,12 +736,34 @@ public:
 		return this->length;
 	}
 	//! Returns a reference to the element at specified index. No checks are performed.
-	ElementType &operator[](int index) const
+	ElementType &operator[](int index)
 	{
 		return this->elements[index];
 	}
+	//! Returns a reference to the element at specified index. No checks are performed.
+	const ElementType &operator[](int index) const
+	{
+		return this->elements[index];
+	}
+	ElementType *Data() const
+	{
+		return this->elements;
+	}
 	//! Returns a reference to the element at specified index. Index is clamped into the range.
 	ElementType &At(int index)
+	{
+		if (index < 0)
+		{
+			index = 0;
+		}
+		if (index >= this->length)
+		{
+			index = this->length - 1;
+		}
+		return this->elements[index];
+	}
+	//! Returns a reference to the element at specified index. Index is clamped into the range.
+	const ElementType &At(int index) const
 	{
 		if (index < 0)
 		{

@@ -67,9 +67,9 @@ struct Face
 	}
 
 	//! Calculates the plane this face is on.
-	Plane GetPlane();
+	Plane GetPlane() const;
 	//! Calculates the normal to the plane this face is on.
-	Vec3 GetNormal();
+	Vec3 GetNormal() const;
 	//! Flips this face.
 	void Invert();
 	//! Splits this face with a plane.
@@ -85,7 +85,7 @@ struct Face
 	//!                           the splitter.
 	void Split(Plane splitter,
 			   List<Face> *frontCoplanarFaces, List<Face> *backCoplanarFaces,
-			   List<Face> *frontFaces, List<Face> *backFaces);
+			   List<Face> *frontFaces, List<Face> *backFaces) const;
 	//! Splits this face with a plane.
 	//!
 	//! @param vertices       A pointer to an array of vertices.
