@@ -57,18 +57,30 @@ mono::object MonoFunctions::InternalInvoke(_MonoMethod *func, void *object, void
 	{
 		methodToInvoke = func;
 	}
+
 	MonoObject *exception;
 	MonoObject *result = mono_runtime_invoke(methodToInvoke, object, args, &exception);
+
 	if (exception)
 	{
+		FunctionsMessage("Unhandled exception has been caught.");
+
 		if (ex)
 		{
+			FunctionsMessage("Saving the pointer to the exception object.");
+
 			*ex = mono::exception(exception);
 		}
 		else
 		{
 #ifdef _DEBUG
+
+			FunctionsMessage("Handling the unhandled exception.");
+
 			MonoEnv->HandleException(mono::exception(exception));
+
+			FunctionsMessage("Handled the unhandled exception.");
+
 #else
 			MonoObject *messageString = &exception[3];
 			const char *message = mono_string_to_utf8((MonoString *)messageString);
