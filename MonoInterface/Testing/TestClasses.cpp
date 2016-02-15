@@ -1179,9 +1179,9 @@ inline void TestProperties()
 
 #pragma region Event Tests
 
-inline void UnmanagedEventHandler(mono::object, mono::object)
+inline void UnmanagedEventHandler(const char *text)
 {
-	CryLogAlways("TEST: Unmanaged event wrapper has been invoked.");
+	CryLogAlways("TEST: Unmanaged event wrapper has been invoked with text: %s", text);
 }
 
 void TestInstanceEvent(mono::object obj, IMonoEvent *_event);
@@ -1195,7 +1195,7 @@ inline void TestEvents()
 	CryLogAlways("TEST: Testing events.");
 	CryLogAlways("TEST:");
 
-	eventHandlerClass = MonoEnv->CoreLibrary->GetClass("System", "EventHandler");
+	eventHandlerClass = mainTestingAssembly->GetClass("MainTestingAssembly", "TestEventHandler");
 
 	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Acquired the pointer to the delegate that represents the event handler.");
@@ -1242,25 +1242,27 @@ inline void TestInstanceEvent(mono::object obj, IMonoEvent *_event)
 
 	_eventRaise->Invoke(obj);
 
-	CryLogAlways("TEST: Adding a delegate to the event that encapsulates an unmanaged function.");
+	CryLogAlways("TEST: Adding a delegate that encapsulates an unmanaged function to the event.");
 
-	mono::object fnPtrWrapper =
-		MonoEnv->Objects->Delegates->Create(eventHandlerClass, UnmanagedEventHandler);
+	mono::object fnPtrWrapper = MonoEnv->Objects->Delegates->Create(eventHandlerClass,
+																	UnmanagedEventHandler);
 
 	MonoGCHandle handle = MonoEnv->GC->Pin(fnPtrWrapper);
+
+	CryLogAlways("TEST: Created the delegate.");
 
 	void *param = fnPtrWrapper;
 	_eventAdd->Invoke(obj, &param);
 
-	CryLogAlways("TEST: Raising the event %s after adding unmanaged function delegate.");
+	CryLogAlways("TEST: Raising the event %s after adding unmanaged function delegate.", _event->Name);
 
 	_eventRaise->Invoke(obj);
 
 	CryLogAlways("TEST: Removing the delegate from the event's invocation list.");
 
-	_eventRemove->Invoke(&param);
+	_eventRemove->Invoke(obj, &param);
 
-	CryLogAlways("TEST: Raising the event %s after removing previously added delegate.");
+	CryLogAlways("TEST: Raising the event %s after removing previously added delegate.", _event->Name);
 
 	_eventRaise->Invoke(obj);
 }
@@ -1272,21 +1274,23 @@ inline void TestStaticEvent(IMonoEvent *_event)
 	IMonoStaticMethod *_eventRemove = _event->Remove->ToStatic();
 	IMonoStaticMethod *_eventRaise = _event->Raise->ToStatic();
 
-	CryLogAlways("TEST: Raising the event %s for the first time.");
+	CryLogAlways("TEST: Raising the event %s for the first time.", _event->Name);
 
 	_eventRaise->Invoke();
 
-	CryLogAlways("TEST: Adding a delegate to the event that encapsulates an unmanaged function.");
+	CryLogAlways("TEST: Adding a delegate that encapsulates an unmanaged function to the event.");
 
-	mono::object fnPtrWrapper =
-		MonoEnv->Objects->Delegates->Create(eventHandlerClass, UnmanagedEventHandler);
+	mono::object fnPtrWrapper = MonoEnv->Objects->Delegates->Create(eventHandlerClass,
+																	UnmanagedEventHandler);
 
 	MonoGCHandle handle = MonoEnv->GC->Pin(fnPtrWrapper);
+
+	CryLogAlways("TEST: Created the delegate.");
 
 	void *param = fnPtrWrapper;
 	_eventAdd->Invoke(&param);
 
-	CryLogAlways("TEST: Raising the event %s after adding unmanaged function delegate.");
+	CryLogAlways("TEST: Raising the event %s after adding unmanaged function delegate.", _event->Name);
 
 	_eventRaise->Invoke();
 
@@ -1294,7 +1298,7 @@ inline void TestStaticEvent(IMonoEvent *_event)
 
 	_eventRemove->Invoke(&param);
 
-	CryLogAlways("TEST: Raising the event %s after removing previously added delegate.");
+	CryLogAlways("TEST: Raising the event %s after removing previously added delegate.", _event->Name);
 
 	_eventRaise->Invoke();
 }

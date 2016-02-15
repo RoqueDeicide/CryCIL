@@ -1,12 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using CryCil;
 using MainTestingAssembly.Annotations;
 
 namespace MainTestingAssembly
 {
+	/// <summary>
+	/// Defines a signature of methods that can handle test events.
+	/// </summary>
+	/// <param name="text">A text message that is propagated when the event is raised. This parameter is marshaled as a null-terminated string when performing a P/Invoke.</param>
+	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+	public delegate void TestEventHandler([MarshalAs(UnmanagedType.LPStr)] string text);
 	/// <summary>
 	/// Used by underlying framework to setup testing ground for IMonoEvent implementation.
 	/// </summary>
@@ -22,25 +30,33 @@ namespace MainTestingAssembly
 		{
 			EventTestObject obj = new EventTestObject("Some object");
 
-			obj.Testing += (sender, args) =>
-				Console.WriteLine("First handler for instance TestHappening has been invoked.");
-			obj.Testing += (sender, args) =>
-				Console.WriteLine("Second handler for instance TestHappening has been invoked.");
+			obj.Testing += text =>
+				Console.WriteLine("First handler for instance Testing has been invoked with message: {0}",
+								  text);
+			obj.Testing += text =>
+				Console.WriteLine("Second handler for instance Testing has been invoked with message: {0}",
+								  text);
 
-			obj.Tested += (sender, args) =>
-				Console.WriteLine("First handler for instance TestHappened has been invoked.");
-			obj.Tested += (sender, args) =>
-				Console.WriteLine("Second handler for instance TestHappened has been invoked.");
+			obj.Tested += text =>
+				Console.WriteLine("First handler for instance Tested has been invoked with message: {0}",
+								  text);
+			obj.Tested += text =>
+				Console.WriteLine("Second handler for instance Tested has been invoked with message: {0}",
+								  text);
 
-			EventTestClass.Testing += (sender, args) =>
-				Console.WriteLine("First handler for static TestHappening has been invoked.");
-			EventTestClass.Testing += (sender, args) =>
-				Console.WriteLine("Second handler for static TestHappening has been invoked.");
+			EventTestClass.Testing += text =>
+				Console.WriteLine("First handler for static Testing has been invoked with message: {0}",
+								  text);
+			EventTestClass.Testing += text =>
+				Console.WriteLine("Second handler for static Testing has been invoked with message: {0}",
+								  text);
 
-			EventTestClass.Tested += (sender, args) =>
-				Console.WriteLine("First handler for static TestHappened has been invoked.");
-			EventTestClass.Tested += (sender, args) =>
-				Console.WriteLine("Second handler for static TestHappened has been invoked.");
+			EventTestClass.Tested += text =>
+				Console.WriteLine("First handler for static Tested has been invoked with message: {0}",
+								  text);
+			EventTestClass.Tested += text =>
+				Console.WriteLine("Second handler for static Tested has been invoked with message: {0}",
+								  text);
 
 			return obj;
 		}
@@ -50,10 +66,10 @@ namespace MainTestingAssembly
 	/// </summary>
 	public static class EventTestClass
 	{
-		private static readonly List<EventHandler> invocationList;
+		private static readonly List<TestEventHandler> invocationList;
 
-		public static event EventHandler Testing;
-		public static event EventHandler Tested
+		public static event TestEventHandler Testing;
+		public static event TestEventHandler Tested
 		{
 			add { invocationList.Add(value); }
 			remove { invocationList.Remove(value); }
@@ -61,23 +77,23 @@ namespace MainTestingAssembly
 
 		static EventTestClass()
 		{
-			invocationList = new List<EventHandler>();
+			invocationList = new List<TestEventHandler>();
 		}
 
-		[PublicAPI]
+		[RuntimeInvoke]
 		private static void OnTesting()
 		{
-			Console.WriteLine("Raising static event EventTestClass.TestHappening");
-			EventHandler handler = Testing;
-			if (handler != null) handler(null, EventArgs.Empty);
+			Console.WriteLine("Raising static event EventTestClass.Testing");
+			var handler = Testing;
+			if (handler != null) handler("Testing event Testing of EventTestClass.");
 		}
-		[PublicAPI]
+		[RuntimeInvoke]
 		private static void OnTested()
 		{
-			Console.WriteLine("Raising static event EventTestClass.TestHappened");
-			foreach (EventHandler handler in invocationList)
+			Console.WriteLine("Raising static event EventTestClass.Tested");
+			foreach (var handler in invocationList)
 			{
-				handler(null, EventArgs.Empty);
+				handler("Testing event Tested of EventTestClass.");
 			}
 		}
 	}
@@ -87,15 +103,15 @@ namespace MainTestingAssembly
 	public class EventTestObject
 	{
 		#region Fields
-		private readonly List<EventHandler> handlers;
+		private readonly List<TestEventHandler> handlers;
 		#endregion
 		#region Properties
 		public string Name { get; private set; }
 		#endregion
 		#region Events
 
-		public event EventHandler Testing;
-		public event EventHandler Tested
+		public event TestEventHandler Testing;
+		public event TestEventHandler Tested
 		{
 			add { this.handlers.Add(value); }
 			remove { this.handlers.Remove(value); }
@@ -105,22 +121,37 @@ namespace MainTestingAssembly
 		public EventTestObject(string name)
 		{
 			this.Name = name;
-			this.handlers = new List<EventHandler>();
+			this.handlers = new List<TestEventHandler>();
 		}
 		#endregion
 		#region Utilities
+		[RuntimeInvoke]
 		protected void OnTesting()
 		{
-			Console.WriteLine("Raising instance event EventTestClass.TestHappened");
-			EventHandler handler = this.Testing;
-			if (handler != null) handler(this, EventArgs.Empty);
+			Console.WriteLine("Raising instance event EventTestObject.Testing");
+			var handler = this.Testing;
+			if (handler != null)
+			{
+				string message =
+					string.Format("Testing event Testing of EventTestObject using the object named {0}.",
+								  this.Name);
+				handler(message);
+			}
 		}
+		[RuntimeInvoke]
 		protected void OnTested()
 		{
-			Console.WriteLine("Raising static event EventTestClass.TestHappened");
-			foreach (EventHandler handler in this.handlers)
+			Console.WriteLine("Raising static event EventTestObject.Tested");
+			string message = null;
+			if (this.handlers.Count != 0)
 			{
-				handler(null, EventArgs.Empty);
+				message =
+					string.Format("Testing event Tested of EventTestObject using the object named {0}.",
+								  this.Name);
+			}
+			foreach (var handler in this.handlers)
+			{
+				handler(message);
 			}
 		}
 		#endregion
