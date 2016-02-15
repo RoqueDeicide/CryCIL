@@ -1238,7 +1238,7 @@ inline void TestInstanceEvent(mono::object obj, IMonoEvent *_event)
 	IMonoMethod *_eventRemove = _event->Remove->ToInstance();
 	IMonoMethod *_eventRaise = _event->Raise->ToInstance();
 
-	CryLogAlways("TEST: Raising the event %s for the first time.");
+	CryLogAlways("TEST: Raising the event %s for the first time.", _event->Name);
 
 	_eventRaise->Invoke(obj);
 
