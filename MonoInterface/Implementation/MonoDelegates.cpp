@@ -2,6 +2,12 @@
 
 #include "MonoDelegates.h"
 
+#if 0
+#define DelegatesMessage CryLogAlways
+#else
+#define DelegatesMessage(...) void(0)
+#endif
+
 mono::delegat MonoDelegates::Create(IMonoClass *delegateType, IMonoStaticMethod *method)
 {
 	if (!delegateType)
@@ -17,16 +23,16 @@ mono::delegat MonoDelegates::Create(IMonoClass *delegateType, IMonoStaticMethod 
 
 	if (!createStaticDelegate)
 	{
-		createStaticDelegate = CreateStaticDelegate
-			(MonoEnv->CoreLibrary
-					->GetClass("System", "Delegate")
-					->GetFunction("CreateDelegate", "System.Type,System.Reflection.MethodInfo")
-					->UnmanagedThunk);
+		IMonoClass *delegateClass = MonoEnv->CoreLibrary->GetClass("System", "Delegate");
+
+		const char *params = "System.Type,System.Reflection.MethodInfo";
+		IMonoFunction *func = delegateClass->GetFunction("CreateDelegate", params);
+
+		createStaticDelegate = CreateStaticDelegate(func->UnmanagedThunk);
 	}
 
 	mono::exception ex;
-	mono::delegat res = createStaticDelegate
-		(delegateType->GetType(), method->ReflectionObject, &ex);
+	mono::delegat res = createStaticDelegate(delegateType->GetType(), method->ReflectionObject, &ex);
 
 	if (ex)
 	{
@@ -53,18 +59,16 @@ mono::delegat MonoDelegates::Create(IMonoClass *delegateType, IMonoMethod *metho
 
 	if (!createInstanceDelegate)
 	{
-		createInstanceDelegate = CreateInstanceDelegate(MonoEnv->CoreLibrary->GetClass("System", "Delegate")
-															   ->GetFunction
-															   (
-																   "CreateDelegate",
-																   "System.Type,System.Object,System.Reflection.MethodInfo"
-															   )
-															   ->UnmanagedThunk);
+		IMonoClass *delegateClass = MonoEnv->CoreLibrary->GetClass("System", "Delegate");
+
+		const char *params = "System.Type,System.Object,System.Reflection.MethodInfo";
+		IMonoFunction *func = delegateClass->GetFunction("CreateDelegate", params);
+
+		createInstanceDelegate = CreateInstanceDelegate(func->UnmanagedThunk);
 	}
 
 	mono::exception ex;
-	mono::delegat res = createInstanceDelegate
-		(delegateType->GetType(), target, method->ReflectionObject, &ex);
+	mono::delegat res = createInstanceDelegate(delegateType->GetType(), target, method->ReflectionObject, &ex);
 
 	if (ex)
 	{
@@ -91,15 +95,24 @@ mono::delegat MonoDelegates::Create(IMonoClass *delegateType, void *functionPoin
 
 	if (!createDelegateForFunctionPointer)
 	{
-		createDelegateForFunctionPointer =
-			CreateDelegateForFunctionPointer(MonoEnv->CoreLibrary
-													->GetClass("System.Runtime.InteropServices", "Marshal")
-													->GetFunction("GetDelegateForFunctionPointerInternal", 2)
-													->UnmanagedThunk);
+		DelegatesMessage("Getting the delegate creation thunk.");
+
+		IMonoClass *marshal = MonoEnv->CoreLibrary->GetClass("System.Runtime.InteropServices", "Marshal");
+		IMonoFunction *func = marshal->GetFunction("GetDelegateForFunctionPointerInternal", 2);
+
+		createDelegateForFunctionPointer = CreateDelegateForFunctionPointer(func->UnmanagedThunk);
+
+		DelegatesMessage("Got the delegate creation thunk.");
 	}
+
+	mono::type delegateTypeObj = delegateType->GetType();
+
+	DelegatesMessage("Delegate type object = %d.", delegateTypeObj);
 
 	mono::exception ex;
 	mono::delegat res = createDelegateForFunctionPointer(functionPointer, delegateTypeObj, &ex);
+
+	DelegatesMessage("Created the delegate object.");
 
 	if (ex)
 	{
