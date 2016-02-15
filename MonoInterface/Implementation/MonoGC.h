@@ -5,6 +5,12 @@
 #include <mono/metadata/object.h>
 #include <mono/metadata/mono-gc.h>
 
+#if 1
+#define GcMessage CryLogAlways
+#else
+#define GcMessage(...) void(0)
+#endif
+
 //! Implementation for IMonoGC.
 struct MonoGC : public IMonoGC
 {
@@ -12,7 +18,11 @@ struct MonoGC : public IMonoGC
 	
 	virtual void Collect(int generation = -1) override
 	{
-		mono_gc_collect(generation);
+		GcMessage("Triggering the garbage collection.");
+
+		mono_gc_collect(generation == -1 ? mono_gc_max_generation() : generation);
+
+		GcMessage("Triggered the garbage collection.");
 	}
 
 	virtual unsigned int Hold(mono::object obj) override

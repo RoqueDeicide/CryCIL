@@ -101,6 +101,8 @@ inline void TestObjectHandles()
 
 	MonoEnv->GC->Collect();
 
+	CryLogAlways("TEST: Garbage collection done.");
+
 	obj = handle.Object;
 
 	if (mono::object(obj))
