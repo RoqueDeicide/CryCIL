@@ -36,6 +36,8 @@ mono::delegat MonoDelegates::Create(IMonoClass *delegateType, IMonoStaticMethod 
 
 	if (ex)
 	{
+		MonoEnv->HandleException(ex);
+
 		ReportError("Unable to create a static delegate: unhandled exception was thrown.");
 
 		return nullptr;
@@ -72,6 +74,8 @@ mono::delegat MonoDelegates::Create(IMonoClass *delegateType, IMonoMethod *metho
 
 	if (ex)
 	{
+		MonoEnv->HandleException(ex);
+
 		ReportError("Unable to create an instance delegate: unhandled exception was thrown.");
 
 		return nullptr;

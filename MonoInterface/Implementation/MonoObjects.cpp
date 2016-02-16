@@ -8,6 +8,12 @@
 
 #include "MonoDefinitionFiles/MonoDelegate.h"
 
+#if 1
+#define ObjectsMessage CryLogAlways
+#else
+#define ObjectsMessage(...) void(0)
+#endif
+
 void *MonoObjects::Unbox(mono::object value)
 {
 	return mono_object_unbox(reinterpret_cast<MonoObject *>(value));
@@ -121,20 +127,36 @@ mono::object MonoObjects::GetDelegateTarget(mono::delegat delegat)
 	return mono::object(reinterpret_cast<MonoDelegate *>(delegat)->target);
 }
 
+typedef void *(*DelegateToFtnPtr)(mono::delegat);
+
 void *MonoObjects::GetDelegateTrampoline(mono::delegat delegat)
 {
-	static void *(*mono_delegate_to_ftnptr_FnPtr)(mono::delegat) = nullptr;
+	static DelegateToFtnPtr mono_delegate_to_ftnptr_FnPtr = nullptr;
 	
 	if (!mono_delegate_to_ftnptr_FnPtr)
 	{
+		ObjectsMessage("Getting the trampoline creation function.");
+
 		MonoClass *marshalClass =
 			mono_class_from_name(mono_get_corlib(), "System.Runtime.InteropServices", "Marshal");
+
+		ObjectsMessage("Marshal class = %p", marshalClass);
+
 		MonoMethod *method =
 			mono_class_get_method_from_name(marshalClass, "GetFunctionPointerForDelegateInternal", 1);
-		mono_delegate_to_ftnptr_FnPtr = reinterpret_cast<void *(*)(mono::delegat)>(mono_lookup_internal_call(method));
+
+		ObjectsMessage("Method = %p", method);
+
+		mono_delegate_to_ftnptr_FnPtr = DelegateToFtnPtr(mono_lookup_internal_call(method));
+
+		ObjectsMessage("Looked up internal call = %p.", mono_delegate_to_ftnptr_FnPtr);
 	}
 
-	return mono_delegate_to_ftnptr_FnPtr(delegat);
+	void *trampoline = mono_delegate_to_ftnptr_FnPtr(delegat);
+
+	ObjectsMessage("Created the trampoline: %p.", trampoline);
+
+	return trampoline;
 }
 
 mono::object MonoObjects::InvokeDelegate(mono::delegat delegat, void **params, mono::exception *ex)

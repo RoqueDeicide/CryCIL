@@ -15,8 +15,7 @@ namespace MainTestingAssembly
 	/// For testing instance methods with delegates.
 	/// </summary>
 	/// <param name="text">Some text.</param>
-	/// <returns>Some number.</returns>
-	public delegate int InstanceTestDelegate(string text);
+	public delegate void InstanceTestDelegate(string text);
 	/// <summary>
 	/// For testing wrapping native function pointers with managed delegates.
 	/// </summary>
@@ -32,26 +31,26 @@ namespace MainTestingAssembly
 	/// <summary>
 	/// Defines static functions for testing delegates.
 	/// </summary>
-	public class StaticTest
+	public static class StaticTest
 	{
 		/// <summary>
 		/// Does first thing.
 		/// </summary>
-		public void Test1()
+		public static void Test1()
 		{
 			Console.WriteLine("TEST: Static method 1 has been invoked.");
 		}
 		/// <summary>
 		/// Does second thing.
 		/// </summary>
-		public void Test2()
+		public static void Test2()
 		{
 			Console.WriteLine("TEST: Static method 2 has been invoked.");
 		}
 		/// <summary>
 		/// Does third thing.
 		/// </summary>
-		public void Test3()
+		public static void Test3()
 		{
 			Console.WriteLine("TEST: Static method 3 has been invoked.");
 		}
@@ -68,7 +67,14 @@ namespace MainTestingAssembly
 		/// <returns>Number of characters in the string.</returns>
 		public void GetCharCount(string text)
 		{
-			Console.WriteLine(text.Length);
+			if (text == null)
+			{
+				Console.WriteLine("Given text is null.");
+			}
+			else
+			{
+				Console.WriteLine(text.Length);
+			}
 		}
 	}
 	/// <summary>

@@ -248,6 +248,8 @@ inline void TestArrays()
 	CryLogAlways("TEST:");*/
 }
 
+typedef void(__stdcall *InstanceTestDelegateTrampoline)(/*mono::object, */mono::string);
+
 inline void __cdecl NativeTestFunctionCdecl(int arg)
 {
 	CryLogAlways("TEST: Native function has been invoked through the delegate with a number %d passed as an argument using C calling convention.", arg);
@@ -260,14 +262,17 @@ inline void __stdcall NativeTestFunctionStdCall(int arg)
 
 inline void TestDelegates()
 {
-	IMonoClass *staticTestDelegateClass = mainTestingAssembly->GetClass("MainTestingAssembly", "StaticTestDelegate");
-	IMonoClass *instanceTestDelegateClass = mainTestingAssembly->GetClass("MainTestingAssembly", "InstanceTestDelegate");
+	const char *nameSpace = "MainTestingAssembly";
+	IMonoDelegates *delegates = MonoEnv->Objects->Delegates;
 
-	IMonoClass *staticTestClass = mainTestingAssembly->GetClass("MainTestingAssembly", "StaticTest");
+	IMonoClass *staticTestDelegateClass = mainTestingAssembly->GetClass(nameSpace, "StaticTestDelegate");
+	IMonoClass *instanceTestDelegateClass = mainTestingAssembly->GetClass(nameSpace, "InstanceTestDelegate");
 
-	IMonoClass *instanceTestClass1 = mainTestingAssembly->GetClass("MainTestingAssembly", "InstanceTest1");
-	IMonoClass *instanceTestClass2 = mainTestingAssembly->GetClass("MainTestingAssembly", "InstanceTest2");
-	IMonoClass *instanceTestClass3 = mainTestingAssembly->GetClass("MainTestingAssembly", "InstanceTest3");
+	IMonoClass *staticTestClass = mainTestingAssembly->GetClass(nameSpace, "StaticTest");
+
+	IMonoClass *instanceTestClass1 = mainTestingAssembly->GetClass(nameSpace, "InstanceTest1");
+	IMonoClass *instanceTestClass2 = mainTestingAssembly->GetClass(nameSpace, "InstanceTest2");
+	IMonoClass *instanceTestClass3 = mainTestingAssembly->GetClass(nameSpace, "InstanceTest3");
 
 	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Testing IMonoDelegate implementation.");
@@ -277,9 +282,9 @@ inline void TestDelegates()
 	CryLogAlways("TEST: Creating 3 static delegate objects.");
 	CryLogAlways("TEST:");
 
-	IMonoDelegate staticDel1 = MonoEnv->Objects->Delegates->Create(staticTestDelegateClass, staticTestClass->GetFunction("Test1", -1)->ToStatic());
-	IMonoDelegate staticDel2 = MonoEnv->Objects->Delegates->Create(staticTestDelegateClass, staticTestClass->GetFunction("Test2", -1)->ToStatic());
-	IMonoDelegate staticDel3 = MonoEnv->Objects->Delegates->Create(staticTestDelegateClass, staticTestClass->GetFunction("Test3", -1)->ToStatic());
+	IMonoDelegate staticDel1 = delegates->Create(staticTestDelegateClass, staticTestClass->GetFunction("Test1", -1)->ToStatic());
+	IMonoDelegate staticDel2 = delegates->Create(staticTestDelegateClass, staticTestClass->GetFunction("Test2", -1)->ToStatic());
+	IMonoDelegate staticDel3 = delegates->Create(staticTestDelegateClass, staticTestClass->GetFunction("Test3", -1)->ToStatic());
 
 	CryLogAlways("TEST: Combining invocation lists of all delegates.");
 	CryLogAlways("TEST:");
@@ -311,9 +316,22 @@ inline void TestDelegates()
 	CryLogAlways("TEST: Creating 3 instance delegate objects.");
 	CryLogAlways("TEST:");
 
-	IMonoDelegate instanceDel1 = MonoEnv->Objects->Delegates->Create(instanceTestDelegateClass, instanceTestClass1->GetFunction(nullptr, 1)->ToInstance(), target1);
-	IMonoDelegate instanceDel2 = MonoEnv->Objects->Delegates->Create(instanceTestDelegateClass, instanceTestClass2->GetFunction(nullptr, 1)->ToInstance(), target2);
-	IMonoDelegate instanceDel3 = MonoEnv->Objects->Delegates->Create(instanceTestDelegateClass, instanceTestClass3->GetFunction(nullptr, 1)->ToInstance(), target3);
+	IMonoDelegate instanceDel1 = delegates->Create(instanceTestDelegateClass, instanceTestClass1->GetFunction(nullptr, "System.String")->ToInstance(), target1);
+	IMonoDelegate instanceDel2 = delegates->Create(instanceTestDelegateClass, instanceTestClass2->GetFunction(nullptr, "System.String")->ToInstance(), target2);
+	IMonoDelegate instanceDel3 = delegates->Create(instanceTestDelegateClass, instanceTestClass3->GetFunction(nullptr, "System.String")->ToInstance(), target3);
+
+	mono::string text = ToMonoString("Some text with a number 129 in it.");
+
+	CryLogAlways("TEST: Invoking first instance delegate through trampoline.");
+	CryLogAlways("TEST:");
+
+	void *_t = instanceDel1.Trampoline;
+	InstanceTestDelegateTrampoline trampoline = InstanceTestDelegateTrampoline(_t);
+
+	CryLogAlways("TEST: Got the trampoline.");
+	CryLogAlways("TEST:");
+
+	trampoline(/*target1, */text);
 
 	CryLogAlways("TEST: Combining invocation lists of all delegates.");
 	CryLogAlways("TEST:");
@@ -323,7 +341,6 @@ inline void TestDelegates()
 	CryLogAlways("TEST: Invoking the delegate.");
 	CryLogAlways("TEST:");
 
-	mono::string text = ToMonoString("Some text with a number 129 in it.");
 	void *param = text;
 	instanceDel1.Invoke(&param);
 
@@ -349,11 +366,6 @@ inline void TestDelegates()
 
 	CryLogAlways("TEST: Value of the field: %d.", fieldValue);
 	CryLogAlways("TEST:");
-
-	CryLogAlways("TEST: Invoking first instance delegate through trampoline");
-	CryLogAlways("TEST:");
-
-	reinterpret_cast<void(*)(mono::string)>(instanceDel1.Trampoline)(text);
 
 	CryLogAlways("TEST: Testing delegates that wrap function pointers.");
 	CryLogAlways("TEST:");
@@ -418,13 +430,10 @@ inline void TestExceptions()
 	CryLogAlways("TEST: Testing creation of exceptions via IMonoExceptions::Create.");
 	CryLogAlways("TEST:");
 
-	auto inner = MonoEnv->Objects->Exceptions
-		->Create
-		(mainTestingAssembly,
-		"MainTestingAssembly",
-		"CryCilTestException",
-		"Message for object that was created using IMonoExceptions::Create."
-		);
+	auto inner = MonoEnv->Objects->Exceptions->Create(mainTestingAssembly,
+													  "MainTestingAssembly",
+													  "CryCilTestException",
+													  "Message for object that was created using IMonoExceptions::Create.");
 
 	if (inner)
 	{

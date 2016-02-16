@@ -60,6 +60,9 @@ public:
 	//! Gets a raw function pointer that can be used to invoke this delegate.
 	//!
 	//! Returned function pointer ceases to exist after the delegate is GCed.
+	//!
+	//! This functionality is not tested enough, the only thing that can be said for sure:
+	//! Don't try getting the trampoline on non-freshly created delegate objects.
 	__declspec(property(get = GetTrampoline)) void *Trampoline;
 
 	//! Invokes this delegate.
