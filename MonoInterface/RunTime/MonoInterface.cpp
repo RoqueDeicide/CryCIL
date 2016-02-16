@@ -17,6 +17,10 @@ void HandleSignalAbort(int error)
 	CryLogAlways("Aborted %i", error);
 }
 
+void TestFramework()
+{
+	BeginTheTest();
+}
 
 #pragma region Property Methods
 //! Returns a pointer to app domain.
@@ -140,7 +144,12 @@ MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener
 	// Redirect console output to the CryEngine log.
 	LogPostingInterop();
 
-	BeginTheTest();
+	// Initiate testing.
+	this->funcs->AddInternalCall(ns, "TestLauncher", "Test", TestFramework);
+	IMonoClass *testLauncher = this->cryambly->GetClass(ns, "TestLauncher");
+	IMonoFunction *testFunc = testLauncher->GetFunction("StartTesting");
+	void *testThunk = testFunc->RawThunk;
+	static_cast<void(*)()>(testThunk)();
 	
 	this->broadcaster->OnRunTimeInitialized();
 	
