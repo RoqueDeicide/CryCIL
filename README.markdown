@@ -3,6 +3,9 @@ CryCIL - CRYENGINE game development on the .NET/Mono platform
 
 # Description
 CryCIL is a middleware module that allows to use .Net-based languages to create games powered by CryEngine.
+## Current CryEngine version
+CryCIL is currently being developed and tested for CryEngine 3.8.1. Update to 5 is planned in the future.
+
 # History
 ## Origins
 Historically engines from CryEngine family allowed to create games using C++ for low-to-mid level logic with Lua used for high level logic. In the 25th of June 2011, Sam Neirinck aka Ins has decided to change this and initiated project "cemono" which goal was to allow high level logic to be done with .Net langeuages (e.g. C#) utilizing the power of Mono.
