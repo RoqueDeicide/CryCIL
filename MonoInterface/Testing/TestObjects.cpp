@@ -387,6 +387,10 @@ inline void TestDelegates()
 	nativeDel1.Invoke(&param);
 	argInt = 19;
 	nativeDel2.Invoke(&param);
+
+	CryLogAlways("TEST:");
+	CryLogAlways("TEST: Invoked the delegates.");
+	CryLogAlways("TEST:");
 }
 
 inline void ThrowExceptionInternal(mono::exception ex)
@@ -396,18 +400,19 @@ inline void ThrowExceptionInternal(mono::exception ex)
 
 void TestExceptionObject(mono::exception ex, const char *typeName);
 
-inline void TestExceptions()
+void TestExceptions()
 {
+	CryLogAlways("TEST:");
+	CryLogAlways("TEST: Testing IMonoException implementation.");
+	CryLogAlways("TEST:");
+
 	MonoEnv->Functions->AddInternalCall("MainTestingAssembly",
 										"ExceptionTestingMethods",
 										"ThrowExceptionInternal",
 										ThrowExceptionInternal);
 
-	auto testClass = mainTestingAssembly->GetClass("MainTestingAssembly", "ExceptionTesting");
+	IMonoClass *testClass = mainTestingAssembly->GetClass("MainTestingAssembly", "ExceptionTesting");
 
-	CryLogAlways("TEST:");
-	CryLogAlways("TEST: Testing IMonoException implementation.");
-	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Trying to throw exception using CryCIL API.");
 	CryLogAlways("TEST:");
 
@@ -419,7 +424,16 @@ inline void TestExceptions()
 
 	mono::exception ex;
 	void *param = ToMonoString("Message for the exception object.");
-	testClass->GetFunction("MakeAndThrowException")->ToStatic()->Invoke(&param, &ex);
+
+	IMonoStaticMethod *func = testClass->GetFunction("MakeAndThrowException")->ToStatic();
+
+	CryLogAlways("TEST: Got the method that throws the exception.");
+	CryLogAlways("TEST:");
+
+	func->Invoke(&param, &ex);
+
+	CryLogAlways("TEST: Invoked the method that throws the exception.");
+	CryLogAlways("TEST:");
 
 	IMonoException exc(ex);
 
@@ -505,8 +519,7 @@ inline void TestExceptionObject(mono::exception ex, const char *typeName)
 	}
 	else
 	{
-		ReportError("TEST FAILURE: The exception object of type %s was not created.", typeName);
-		return;
+		ReportError("TEST FAILURE: The exception object of type %s was not created.", typeName);\
 	}
 }
 

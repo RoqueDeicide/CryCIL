@@ -8,7 +8,7 @@
 
 #include "MonoDefinitionFiles/MonoDelegate.h"
 
-#if 1
+#if 0
 #define ObjectsMessage CryLogAlways
 #else
 #define ObjectsMessage(...) void(0)
@@ -111,15 +111,9 @@ IMonoFunction *MonoObjects::GetDelegateFunction(mono::delegat delegat)
 		{
 			return new MonoConstructor(m, klass);
 		}
-		else
-		{
-			return new MonoMethodWrapper(m, klass);
-		}
+		return new MonoMethodWrapper(m, klass);
 	}
-	else
-	{
-		return new MonoStaticMethod(m, klass);
-	}
+	return new MonoStaticMethod(m, klass);
 }
 
 mono::object MonoObjects::GetDelegateTarget(mono::delegat delegat)
