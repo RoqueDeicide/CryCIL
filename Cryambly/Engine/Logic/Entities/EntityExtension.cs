@@ -11,8 +11,6 @@ namespace CryCil.Engine.Logic
 	/// </summary>
 	public abstract class EntityExtension
 	{
-		#region Fields
-		#endregion
 		#region Properties
 		/// <summary>
 		/// Gets the hosting entity.
@@ -71,8 +69,8 @@ namespace CryCil.Engine.Logic
 		/// <param name="context">The most up-to-date information for this frame.</param>
 		public abstract void Update(ref EntityUpdateContext context);
 		/// <summary>
-		/// When implemented in derived class updates logical state of this extension after most other
-		/// stuff is updated.
+		/// When implemented in derived class updates logical state of this extension after most other stuff
+		/// is updated.
 		/// </summary>
 		public abstract void PostUpdate();
 		/// <summary>
@@ -122,8 +120,7 @@ namespace CryCil.Engine.Logic
 		/// removed from the entity.
 		/// </summary>
 		/// <remarks>
-		/// <see cref="EntityExtension.Host"/> property still returns the hosting entity during this
-		/// method.
+		/// <see cref="Host"/> property still returns the hosting entity during this method.
 		/// </remarks>
 		/// <param name="disposing">
 		/// Indicates whether release was caused by the entity getting disposed of.
@@ -134,8 +131,7 @@ namespace CryCil.Engine.Logic
 		/// added to the entity.
 		/// </summary>
 		/// <remarks>
-		/// <see cref="EntityExtension.Host"/> property already returns the hosting entity during this
-		/// method.
+		/// <see cref="Host"/> property already returns the hosting entity during this method.
 		/// </remarks>
 		public abstract void Bind();
 		/// <summary>

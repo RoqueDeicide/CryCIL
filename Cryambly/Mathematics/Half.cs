@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Linq;
 
 namespace CryCil
 {
@@ -18,9 +19,17 @@ namespace CryCil
 	/// Note: All functions, where is used conversion half-&gt;float/float-&gt;half, are approx. ten times
 	/// slower than float-&gt;double/double-&gt;float, i.e. ~3ns on 2GHz CPU.
 	/// </para>
-	/// <list type="bullet">References: <item>Fast Half Float Conversions, Jeroen van der Zijp, link:
-	/// http: //www.fox-toolkit.org/ftp/fasthalffloatconversion.pdf</item><item>IEEE 754 revision,
-	/// link: http://grouper.ieee.org/groups/754/</item></list>
+	/// <list type="bullet">
+	/// References:
+	/// <item>
+	/// Fast Half Float Conversions, Jeroen van der Zijp, link:
+	/// http: //www.fox-toolkit.org/ftp/fasthalffloatconversion.pdf
+	/// </item>
+	/// <item>
+	/// IEEE 754 revision,
+	/// link: http://grouper.ieee.org/groups/754/
+	/// </item>
+	/// </list>
 	/// </remarks>
 	[Serializable]
 	public struct Half : IComparable, IFormattable, IConvertible, IComparable<Half>, IEquatable<Half>
@@ -97,16 +106,14 @@ namespace CryCil
 		{
 		}
 		/// <summary>
-		/// Initializes a new instance of System.Half to the value of the specified 32-bit unsigned
-		/// integer.
+		/// Initializes a new instance of System.Half to the value of the specified 32-bit unsigned integer.
 		/// </summary>
 		/// <param name="value">The value to represent as a System.Half.</param>
 		public Half(uint value) : this((float)value)
 		{
 		}
 		/// <summary>
-		/// Initializes a new instance of System.Half to the value of the specified 64-bit unsigned
-		/// integer.
+		/// Initializes a new instance of System.Half to the value of the specified 64-bit unsigned integer.
 		/// </summary>
 		/// <param name="value">The value to represent as a System.Half.</param>
 		public Half(ulong value) : this((float)value)
@@ -653,12 +660,12 @@ namespace CryCil
 		/// <returns>
 		/// A half-precision floating point number formed by two bytes beginning at startIndex.
 		/// </returns>
-		/// <exception cref="System.ArgumentException">
-		/// startIndex is greater than or equal to the length of value minus 1, and is less than or equal
-		/// to the length of value minus 1.
+		/// <exception cref="ArgumentException">
+		/// startIndex is greater than or equal to the length of value minus 1, and is less than or equal to
+		/// the length of value minus 1.
 		/// </exception>
-		/// <exception cref="System.ArgumentNullException">value is null.</exception>
-		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// <exception cref="ArgumentNullException">value is null.</exception>
+		/// <exception cref="ArgumentOutOfRangeException">
 		/// startIndex is less than zero or greater than the length of value minus 1.
 		/// </exception>
 		public static Half ToHalf(byte[] value, int startIndex)
@@ -718,31 +725,27 @@ namespace CryCil
 		/// Returns the larger of two half-precision floating-point numbers.
 		/// </summary>
 		/// <param name="value1">The first of two half-precision floating-point numbers to compare.</param>
-		/// <param name="value2">
-		/// The second of two half-precision floating-point numbers to compare.
-		/// </param>
+		/// <param name="value2">The second of two half-precision floating-point numbers to compare.</param>
 		/// <returns>
 		/// Parameter value1 or value2, whichever is larger. If value1, or value2, or both val1 and value2
 		/// are equal to System.Half.NaN, System.Half.NaN is returned.
 		/// </returns>
 		public static Half Max(Half value1, Half value2)
 		{
-			return (value1 < value2) ? value2 : value1;
+			return value1 < value2 ? value2 : value1;
 		}
 		/// <summary>
 		/// Returns the smaller of two half-precision floating-point numbers.
 		/// </summary>
 		/// <param name="value1">The first of two half-precision floating-point numbers to compare.</param>
-		/// <param name="value2">
-		/// The second of two half-precision floating-point numbers to compare.
-		/// </param>
+		/// <param name="value2">The second of two half-precision floating-point numbers to compare.</param>
 		/// <returns>
 		/// Parameter value1 or value2, whichever is smaller. If value1, or value2, or both val1 and value2
 		/// are equal to System.Half.NaN, System.Half.NaN is returned.
 		/// </returns>
 		public static Half Min(Half value1, Half value2)
 		{
-			return (value1 < value2) ? value1 : value2;
+			return value1 < value2 ? value1 : value2;
 		}
 		#endregion
 		/// <summary>
@@ -792,7 +795,7 @@ namespace CryCil
 		/// </summary>
 		/// <param name="value">The string representation of the number to convert.</param>
 		/// <returns>The System.Half number equivalent to the number contained in value.</returns>
-		/// <exception cref="System.ArgumentNullException">value is null.</exception>
+		/// <exception cref="ArgumentNullException">value is null.</exception>
 		/// <exception cref="System.FormatException">value is not in the correct format.</exception>
 		/// <exception cref="System.OverflowException">
 		/// value represents a number less than System.Half.MinValue or greater than System.Half.MaxValue.
@@ -802,8 +805,8 @@ namespace CryCil
 			return (Half)float.Parse(value, CultureInfo.InvariantCulture);
 		}
 		/// <summary>
-		/// Converts the string representation of a number to its System.Half equivalent using the
-		/// specified culture-specific format information.
+		/// Converts the string representation of a number to its System.Half equivalent using the specified
+		/// culture-specific format information.
 		/// </summary>
 		/// <param name="value">   The string representation of the number to convert.</param>
 		/// <param name="provider">
@@ -812,7 +815,7 @@ namespace CryCil
 		/// <returns>
 		/// The System.Half number equivalent to the number contained in s as specified by provider.
 		/// </returns>
-		/// <exception cref="System.ArgumentNullException">value is null.</exception>
+		/// <exception cref="ArgumentNullException">value is null.</exception>
 		/// <exception cref="System.FormatException">value is not in the correct format.</exception>
 		/// <exception cref="System.OverflowException">
 		/// value represents a number less than System.Half.MinValue or greater than System.Half.MaxValue.
@@ -834,7 +837,7 @@ namespace CryCil
 		/// <returns>
 		/// The System.Half number equivalent to the number contained in s as specified by style.
 		/// </returns>
-		/// <exception cref="System.ArgumentNullException">value is null.</exception>
+		/// <exception cref="ArgumentNullException">value is null.</exception>
 		/// <exception cref="System.ArgumentException">
 		/// style is not a System.Globalization.NumberStyles value.
 		/// - or- style is the System.Globalization.NumberStyles.AllowHexSpecifier value.
@@ -848,8 +851,8 @@ namespace CryCil
 			return (Half)float.Parse(value, style, CultureInfo.InvariantCulture);
 		}
 		/// <summary>
-		/// Converts the string representation of a number to its System.Half equivalent using the
-		/// specified style and culture-specific format.
+		/// Converts the string representation of a number to its System.Half equivalent using the specified
+		/// style and culture-specific format.
 		/// </summary>
 		/// <param name="value">   The string representation of the number to convert.</param>
 		/// <param name="style">   
@@ -865,7 +868,7 @@ namespace CryCil
 		/// The System.Half number equivalent to the number contained in s as specified by style and
 		/// provider.
 		/// </returns>
-		/// <exception cref="System.ArgumentNullException">value is null.</exception>
+		/// <exception cref="ArgumentNullException">value is null.</exception>
 		/// <exception cref="System.ArgumentException">
 		/// style is not a System.Globalization.NumberStyles value.
 		/// - or- style is the System.Globalization.NumberStyles.AllowHexSpecifier value.
@@ -904,9 +907,9 @@ namespace CryCil
 			return false;
 		}
 		/// <summary>
-		/// Converts the string representation of a number to its System.Half equivalent using the
-		/// specified style and culture-specific format. A return value indicates whether the conversion
-		/// succeeded or failed.
+		/// Converts the string representation of a number to its System.Half equivalent using the specified
+		/// style and culture-specific format. A return value indicates whether the conversion succeeded or
+		/// failed.
 		/// </summary>
 		/// <param name="value">   The string representation of the number to convert.</param>
 		/// <param name="style">   
@@ -914,8 +917,7 @@ namespace CryCil
 		/// format of value. A typical value to specify is System.Globalization.NumberStyles.Number.
 		/// </param>
 		/// <param name="provider">
-		/// An System.IFormatProvider object that supplies culture-specific parsing information about
-		/// value.
+		/// An System.IFormatProvider object that supplies culture-specific parsing information about value.
 		/// </param>
 		/// <param name="result">  
 		/// When this method returns, contains the System.Half number that is equivalent to the numeric
@@ -1056,7 +1058,7 @@ namespace CryCil
 		}
 		object IConvertible.ToType(Type conversionType, IFormatProvider provider)
 		{
-			return (((float)this) as IConvertible).ToType(conversionType, provider);
+			return ((float)this as IConvertible).ToType(conversionType, provider);
 		}
 		ushort IConvertible.ToUInt16(IFormatProvider provider)
 		{

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
@@ -21,10 +22,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 		/// <summary>
 		/// Gets the type of this geometry object, it can be a triangular mesh or some primitive.
 		/// </summary>
@@ -203,13 +201,12 @@ namespace CryCil.Engine.Physics
 		/// </param>
 		/// <param name="flags">                 A set of flags that specify the geometry.</param>
 		/// <param name="approximationTolerance">
-		/// A tolerance value to use when checking whether provided geometry resembles a primitive
-		/// geometric object.
+		/// A tolerance value to use when checking whether provided geometry resembles a primitive geometric
+		/// object.
 		/// </param>
 		/// <param name="minTrianglesPerNode">   
 		/// Minimal number of triangle that can be present in a single bounding volume tree node. If one of
-		/// the nodes has less then this number of triangles after split, a different one will be
-		/// attempted.
+		/// the nodes has less then this number of triangles after split, a different one will be attempted.
 		/// </param>
 		/// <param name="maxTrianglesPerNode">   
 		/// Maximal number of triangle that can be present in a single bounding volume tree node. If one of
@@ -247,29 +244,29 @@ namespace CryCil.Engine.Physics
 
 			if (vertices.IsNullOrTooSmall(3))
 			{
-				throw new ArgumentException("An array of vertices needs to have at least 3 vertices.", "vertices");
+				throw new ArgumentException("An array of vertices needs to have at least 3 vertices.", nameof(vertices));
 			}
 			if (indices == null)
 			{
-				throw new ArgumentNullException("indices", "An array of indexes cannot be null.");
+				throw new ArgumentNullException(nameof(indices), "An array of indexes cannot be null.");
 			}
 			if (indices.Length % 3 != 0)
 			{
-				throw new ArgumentException("Length of the array of indexes must be divisible by 3.", "indices");
+				throw new ArgumentException("Length of the array of indexes must be divisible by 3.", nameof(indices));
 			}
 			if (minTrianglesPerNode <= 0)
 			{
-				throw new ArgumentOutOfRangeException("minTrianglesPerNode",
+				throw new ArgumentOutOfRangeException(nameof(minTrianglesPerNode),
 													  "Minimal number of triangles per node must be greater then 0.");
 			}
 			if (maxTrianglesPerNode <= 0)
 			{
-				throw new ArgumentOutOfRangeException("maxTrianglesPerNode",
+				throw new ArgumentOutOfRangeException(nameof(maxTrianglesPerNode),
 													  "Maximal number of triangles per node must be greater then 0.");
 			}
 			if (vertices.Length > ushort.MaxValue)
 			{
-				throw new ArgumentOutOfRangeException("vertices", "An array of vertices cannot be longer then 65535.");
+				throw new ArgumentOutOfRangeException(nameof(vertices), "An array of vertices cannot be longer then 65535.");
 			}
 
 			fixed (Vector3* verticesPtr = vertices)
@@ -291,8 +288,8 @@ namespace CryCil.Engine.Physics
 		/// An object that provides the parameters that specify how to build the bounding volume tree.
 		/// </param>
 		/// <param name="approximationTolerance">
-		/// A tolerance value to use when checking whether provided geometry resembles a primitive
-		/// geometric object.
+		/// A tolerance value to use when checking whether provided geometry resembles a primitive geometric
+		/// object.
 		/// </param>
 		/// <exception cref="ArgumentException">
 		/// An array of vertices needs to have at least 3 vertices.
@@ -321,27 +318,29 @@ namespace CryCil.Engine.Physics
 
 			if (vertices.IsNullOrTooSmall(3))
 			{
-				throw new ArgumentException("An array of vertices needs to have at least 3 vertices.", "vertices");
+				throw new ArgumentException("An array of vertices needs to have at least 3 vertices.", nameof(vertices));
 			}
 			if (indices == null)
 			{
-				throw new ArgumentNullException("indices", "An array of indexes cannot be null.");
+				throw new ArgumentNullException(nameof(indices), "An array of indexes cannot be null.");
 			}
 			if (indices.Length % 3 != 0)
 			{
-				throw new ArgumentException("Length of the array of indexes must be divisible by 3.", "indices");
+				throw new ArgumentException("Length of the array of indexes must be divisible by 3.", nameof(indices));
 			}
 			if (bvParams.MinTrianglesPerNode <= 0)
 			{
-				throw new ArgumentOutOfRangeException("bvParams", "Minimal number of triangles per node must be greater then 0.");
+				throw new ArgumentOutOfRangeException(nameof(bvParams),
+													  "Minimal number of triangles per node must be greater then 0.");
 			}
 			if (bvParams.MaxTrianglesPerNode <= 0)
 			{
-				throw new ArgumentOutOfRangeException("bvParams", "Maximal number of triangles per node must be greater then 0.");
+				throw new ArgumentOutOfRangeException(nameof(bvParams),
+													  "Maximal number of triangles per node must be greater then 0.");
 			}
 			if (vertices.Length > ushort.MaxValue)
 			{
-				throw new ArgumentOutOfRangeException("vertices", "An array of vertices cannot be longer then 65535.");
+				throw new ArgumentOutOfRangeException(nameof(vertices), "An array of vertices cannot be longer then 65535.");
 			}
 
 			fixed (Vector3* verticesPtr = vertices)
@@ -366,8 +365,8 @@ namespace CryCil.Engine.Physics
 		/// An object that provides the parameters that specify how to build the bounding volume tree.
 		/// </param>
 		/// <param name="approximationTolerance">
-		/// A tolerance value to use when checking whether provided geometry resembles a primitive
-		/// geometric object.
+		/// A tolerance value to use when checking whether provided geometry resembles a primitive geometric
+		/// object.
 		/// </param>
 		/// <exception cref="ArgumentException">
 		/// An array of vertices needs to have at least 3 vertices.
@@ -399,31 +398,33 @@ namespace CryCil.Engine.Physics
 
 			if (vertices.IsNullOrTooSmall(3))
 			{
-				throw new ArgumentException("An array of vertices needs to have at least 3 vertices.", "vertices");
+				throw new ArgumentException("An array of vertices needs to have at least 3 vertices.", nameof(vertices));
 			}
 			if (indices == null)
 			{
-				throw new ArgumentNullException("indices", "An array of indexes cannot be null.");
+				throw new ArgumentNullException(nameof(indices), "An array of indexes cannot be null.");
 			}
 			if (indices.Length % 3 != 0)
 			{
-				throw new ArgumentException("Length of the array of indexes must be divisible by 3.", "indices");
+				throw new ArgumentException("Length of the array of indexes must be divisible by 3.", nameof(indices));
 			}
 			if (vgParams.MinTrianglesPerNode <= 0)
 			{
-				throw new ArgumentOutOfRangeException("vgParams", "Minimal number of triangles per node must be greater then 0.");
+				throw new ArgumentOutOfRangeException(nameof(vgParams),
+													  "Minimal number of triangles per node must be greater then 0.");
 			}
 			if (vgParams.MaxTrianglesPerNode <= 0)
 			{
-				throw new ArgumentOutOfRangeException("vgParams", "Maximal number of triangles per node must be greater then 0.");
+				throw new ArgumentOutOfRangeException(nameof(vgParams),
+													  "Maximal number of triangles per node must be greater then 0.");
 			}
 			if (vertices.Length > ushort.MaxValue)
 			{
-				throw new ArgumentOutOfRangeException("vertices", "An array of vertices cannot be longer then 65535.");
+				throw new ArgumentOutOfRangeException(nameof(vertices), "An array of vertices cannot be longer then 65535.");
 			}
 			if (vgParams.Size.X <= 0 || vgParams.Size.Y <= 0 || vgParams.Size.Z <= 0)
 			{
-				throw new ArgumentException("Dimensions of the voxel grid cannot be less then 0.", "vgParams");
+				throw new ArgumentException("Dimensions of the voxel grid cannot be less then 0.", nameof(vgParams));
 			}
 
 			fixed (Vector3* verticesPtr = vertices)
@@ -443,13 +444,12 @@ namespace CryCil.Engine.Physics
 		/// <param name="materialIds">           An array of indexes of materials per face.</param>
 		/// <param name="flags">                 A set of flags that specify the geometry.</param>
 		/// <param name="approximationTolerance">
-		/// A tolerance value to use when checking whether provided geometry resembles a primitive
-		/// geometric object.
+		/// A tolerance value to use when checking whether provided geometry resembles a primitive geometric
+		/// object.
 		/// </param>
 		/// <param name="minTrianglesPerNode">   
 		/// Minimal number of triangle that can be present in a single bounding volume tree node. If one of
-		/// the nodes has less then this number of triangles after split, a different one will be
-		/// attempted.
+		/// the nodes has less then this number of triangles after split, a different one will be attempted.
 		/// </param>
 		/// <param name="maxTrianglesPerNode">   
 		/// Maximal number of triangle that can be present in a single bounding volume tree node. If one of
@@ -490,29 +490,29 @@ namespace CryCil.Engine.Physics
 
 			if (vertices.IsNullOrTooSmall(3))
 			{
-				throw new ArgumentException("An array of vertices needs to have at least 3 vertices.", "vertices");
+				throw new ArgumentException("An array of vertices needs to have at least 3 vertices.", nameof(vertices));
 			}
 			if (indices == null)
 			{
-				throw new ArgumentNullException("indices", "An array of indexes cannot be null.");
+				throw new ArgumentNullException(nameof(indices), "An array of indexes cannot be null.");
 			}
 			if (indices.Length % 3 != 0)
 			{
-				throw new ArgumentException("Length of the array of indexes must be divisible by 3.", "indices");
+				throw new ArgumentException("Length of the array of indexes must be divisible by 3.", nameof(indices));
 			}
 			if (minTrianglesPerNode <= 0)
 			{
-				throw new ArgumentOutOfRangeException("minTrianglesPerNode",
+				throw new ArgumentOutOfRangeException(nameof(minTrianglesPerNode),
 													  "Minimal number of triangles per node must be greater then 0.");
 			}
 			if (maxTrianglesPerNode <= 0)
 			{
-				throw new ArgumentOutOfRangeException("maxTrianglesPerNode",
+				throw new ArgumentOutOfRangeException(nameof(maxTrianglesPerNode),
 													  "Maximal number of triangles per node must be greater then 0.");
 			}
 			if (vertices.Length > ushort.MaxValue)
 			{
-				throw new ArgumentOutOfRangeException("vertices", "An array of vertices cannot be longer then 65535.");
+				throw new ArgumentOutOfRangeException(nameof(vertices), "An array of vertices cannot be longer then 65535.");
 			}
 			int triangleCount = indices.Length / 3;
 			if (triangleCount != materialIds.Length)
@@ -541,8 +541,8 @@ namespace CryCil.Engine.Physics
 		/// An object that provides the parameters that specify how to build the bounding volume tree.
 		/// </param>
 		/// <param name="approximationTolerance">
-		/// A tolerance value to use when checking whether provided geometry resembles a primitive
-		/// geometric object.
+		/// A tolerance value to use when checking whether provided geometry resembles a primitive geometric
+		/// object.
 		/// </param>
 		/// <exception cref="ArgumentException">
 		/// An array of vertices needs to have at least 3 vertices.
@@ -574,27 +574,29 @@ namespace CryCil.Engine.Physics
 
 			if (vertices.IsNullOrTooSmall(3))
 			{
-				throw new ArgumentException("An array of vertices needs to have at least 3 vertices.", "vertices");
+				throw new ArgumentException("An array of vertices needs to have at least 3 vertices.", nameof(vertices));
 			}
 			if (indices == null)
 			{
-				throw new ArgumentNullException("indices", "An array of indexes cannot be null.");
+				throw new ArgumentNullException(nameof(indices), "An array of indexes cannot be null.");
 			}
 			if (indices.Length % 3 != 0)
 			{
-				throw new ArgumentException("Length of the array of indexes must be divisible by 3.", "indices");
+				throw new ArgumentException("Length of the array of indexes must be divisible by 3.", nameof(indices));
 			}
 			if (bvParams.MinTrianglesPerNode <= 0)
 			{
-				throw new ArgumentOutOfRangeException("bvParams", "Minimal number of triangles per node must be greater then 0.");
+				throw new ArgumentOutOfRangeException(nameof(bvParams),
+													  "Minimal number of triangles per node must be greater then 0.");
 			}
 			if (bvParams.MaxTrianglesPerNode <= 0)
 			{
-				throw new ArgumentOutOfRangeException("bvParams", "Maximal number of triangles per node must be greater then 0.");
+				throw new ArgumentOutOfRangeException(nameof(bvParams),
+													  "Maximal number of triangles per node must be greater then 0.");
 			}
 			if (vertices.Length > ushort.MaxValue)
 			{
-				throw new ArgumentOutOfRangeException("vertices", "An array of vertices cannot be longer then 65535.");
+				throw new ArgumentOutOfRangeException(nameof(vertices), "An array of vertices cannot be longer then 65535.");
 			}
 			int triangleCount = indices.Length / 3;
 			if (triangleCount != materialIds.Length)
@@ -626,8 +628,8 @@ namespace CryCil.Engine.Physics
 		/// An object that provides the parameters that specify how to build the bounding volume tree.
 		/// </param>
 		/// <param name="approximationTolerance">
-		/// A tolerance value to use when checking whether provided geometry resembles a primitive
-		/// geometric object.
+		/// A tolerance value to use when checking whether provided geometry resembles a primitive geometric
+		/// object.
 		/// </param>
 		/// <exception cref="ArgumentException">
 		/// An array of vertices needs to have at least 3 vertices.
@@ -662,27 +664,29 @@ namespace CryCil.Engine.Physics
 
 			if (vertices.IsNullOrTooSmall(3))
 			{
-				throw new ArgumentException("An array of vertices needs to have at least 3 vertices.", "vertices");
+				throw new ArgumentException("An array of vertices needs to have at least 3 vertices.", nameof(vertices));
 			}
 			if (indices == null)
 			{
-				throw new ArgumentNullException("indices", "An array of indexes cannot be null.");
+				throw new ArgumentNullException(nameof(indices), "An array of indexes cannot be null.");
 			}
 			if (indices.Length % 3 != 0)
 			{
-				throw new ArgumentException("Length of the array of indexes must be divisible by 3.", "indices");
+				throw new ArgumentException("Length of the array of indexes must be divisible by 3.", nameof(indices));
 			}
 			if (vgParams.MinTrianglesPerNode <= 0)
 			{
-				throw new ArgumentOutOfRangeException("vgParams", "Minimal number of triangles per node must be greater then 0.");
+				throw new ArgumentOutOfRangeException(nameof(vgParams),
+													  "Minimal number of triangles per node must be greater then 0.");
 			}
 			if (vgParams.MaxTrianglesPerNode <= 0)
 			{
-				throw new ArgumentOutOfRangeException("vgParams", "Maximal number of triangles per node must be greater then 0.");
+				throw new ArgumentOutOfRangeException(nameof(vgParams),
+													  "Maximal number of triangles per node must be greater then 0.");
 			}
 			if (vertices.Length > ushort.MaxValue)
 			{
-				throw new ArgumentOutOfRangeException("vertices", "An array of vertices cannot be longer then 65535.");
+				throw new ArgumentOutOfRangeException(nameof(vertices), "An array of vertices cannot be longer then 65535.");
 			}
 			int triangleCount = indices.Length / 3;
 			if (triangleCount != materialIds.Length)
@@ -691,7 +695,7 @@ namespace CryCil.Engine.Physics
 			}
 			if (vgParams.Size.X <= 0 || vgParams.Size.Y <= 0 || vgParams.Size.Z <= 0)
 			{
-				throw new ArgumentException("Dimensions of the voxel grid cannot be less then 0.", "vgParams");
+				throw new ArgumentException("Dimensions of the voxel grid cannot be less then 0.", nameof(vgParams));
 			}
 
 			fixed (Vector3* verticesPtr = vertices)
@@ -719,8 +723,7 @@ namespace CryCil.Engine.Physics
 
 			if (Array.BinarySearch(Primitive.RegisteredTypes, type) < 0)
 			{
-				throw new NotSupportedException(string.Format("Primitive type with identifier = {0} is not supported",
-															  type));
+				throw new NotSupportedException($"Primitive type with identifier = {type} is not supported");
 			}
 
 			this.handle = CreatePrimitive(type, ref primitive);
@@ -745,8 +748,8 @@ namespace CryCil.Engine.Physics
 		/// Decreases the internal reference count for this geometry object.
 		/// </summary>
 		/// <remarks>
-		/// Use this method when you were using the same geometry object for multiple parts or entities
-		/// when you don't need this geometry.
+		/// Use this method when you were using the same geometry object for multiple parts or entities when
+		/// you don't need this geometry.
 		/// </remarks>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public void DecrementReferenceCount()
@@ -837,7 +840,7 @@ namespace CryCil.Engine.Physics
 			this.AssertInstance();
 			if (!other.IsValid)
 			{
-				throw new ArgumentNullException("other", "An object that represents another geometry must not be valid.");
+				throw new ArgumentNullException(nameof(other), "An object that represents another geometry must not be valid.");
 			}
 
 			pparams.CompleteInitialization();
@@ -859,7 +862,7 @@ namespace CryCil.Engine.Physics
 			this.AssertInstance();
 			if (!other.IsValid)
 			{
-				throw new ArgumentNullException("other", "An object that represents another geometry must not be valid.");
+				throw new ArgumentNullException(nameof(other), "An object that represents another geometry must not be valid.");
 			}
 
 			return IntersectLockedDefault(this.handle, other);
@@ -964,13 +967,13 @@ namespace CryCil.Engine.Physics
 		/// Formula for pressure:
 		/// <code>
 		/// // k*dS*cos(surface_normal,direction to epicenter) / max(rmin, distance to epicenter)^2
-		/// 
+		///
 		/// float pressureModfier = k;
 		/// float surfaceArea = dS;
 		/// Vector3 surfaceNormal = surface_normal;
 		/// Vector3 directionToEpicenter = direction to epicenter;
 		/// float distance = Math.Max(rmin, distance to epicenter);
-		/// 
+		///
 		/// float pressure = pressureModfier * surfaceArea * (surfaceNormal * directionToEpicenter) / distance * distance;
 		/// </code>
 		/// </remarks>

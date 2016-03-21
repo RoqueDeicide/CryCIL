@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil.Engine.Rendering
 {
@@ -12,8 +13,8 @@ namespace CryCil.Engine.Rendering
 		/// </summary>
 		TriangleList,
 		/// <summary>
-		/// A strip of triangles where triangles are formed in order (1, 2, 3), (2, 4, 3), (3, 4, 5), (4,
-		/// 6, 5) and so on.
+		/// A strip of triangles where triangles are formed in order (1, 2, 3), (2, 4, 3), (3, 4, 5), (4, 6,
+		/// 5) and so on.
 		/// </summary>
 		TriangleStrip,
 		/// <summary>

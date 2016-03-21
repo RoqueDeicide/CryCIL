@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using CryCil.Engine.Data;
 
@@ -16,10 +17,7 @@ namespace CryCil.Engine.Models.Characters
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 		/// <summary>
 		/// Gets the object that handles sampling for animations.
 		/// </summary>

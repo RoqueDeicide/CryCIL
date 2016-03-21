@@ -1,12 +1,13 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
 
 namespace CryCil.Engine.Physics
 {
 	/// <summary>
-	/// Encapsulates description of the object that is used to query the number of parts the physical
-	/// entity currently has.
+	/// Encapsulates description of the object that is used to query the number of parts the physical entity
+	/// currently has.
 	/// </summary>
 	/// <remarks>
 	/// <para>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil.Engine.Logic
 {
@@ -17,8 +18,8 @@ namespace CryCil.Engine.Logic
 		/// </remarks>
 		PreAttach = 1,
 		/// <summary>
-		/// Specifies that RMI data should be transferred with the entity aspect data and be processed
-		/// after it.
+		/// Specifies that RMI data should be transferred with the entity aspect data and be processed after
+		/// it.
 		/// </summary>
 		/// <remarks>
 		/// Methods that use this flag will be invoked after

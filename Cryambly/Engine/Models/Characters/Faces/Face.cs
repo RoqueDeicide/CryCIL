@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using CryCil.Geometry;
@@ -6,8 +7,7 @@ using CryCil.Geometry;
 namespace CryCil.Engine.Models.Characters.Faces
 {
 	/// <summary>
-	/// Encapsulates information that is used when forcing facial skeleton joints into specific
-	/// orientation.
+	/// Encapsulates information that is used when forcing facial skeleton joints into specific orientation.
 	/// </summary>
 	public struct FacialAnimationForcedOrientationEntry
 	{
@@ -33,10 +33,7 @@ namespace CryCil.Engine.Models.Characters.Faces
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 		#endregion
 		#region Interface
 		/// <summary>
@@ -149,10 +146,7 @@ namespace CryCil.Engine.Models.Characters.Faces
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 		/// <summary>
 		/// Gets the layer of facial animation that is used to play animation sequences.
 		/// </summary>
@@ -202,10 +196,7 @@ namespace CryCil.Engine.Models.Characters.Faces
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 
 		/// <summary>
 		/// Gets the model of this face.
@@ -328,7 +319,7 @@ namespace CryCil.Engine.Models.Characters.Faces
 			this.AssertInstance();
 			if (!effector.IsValid)
 			{
-				throw new ArgumentNullException("effector", "Facial effector cannot be null.");
+				throw new ArgumentNullException(nameof(effector), "Facial effector cannot be null.");
 			}
 
 			return StartEffectorChannel(this.handle, effector, weight, fadeTime, lifeTime, repeatitionCount);

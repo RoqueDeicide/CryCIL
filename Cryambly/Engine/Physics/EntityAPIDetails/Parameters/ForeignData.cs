@@ -30,22 +30,15 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the foreign data that is assigned to this entity.
 		/// </summary>
-		public ForeignData Data
-		{
-			get { return this.data; }
-		}
+		public ForeignData Data => this.data;
 		/// <summary>
 		/// Gets any flags the owner would like to store.
 		/// </summary>
-		public int ForeignDataFlags
-		{
-			get { return this.iForeignFlags; }
-		}
+		public int ForeignDataFlags => this.iForeignFlags;
 		#endregion
 		#region Construction
 		/// <summary>
-		/// Creates an object of this type that can be passed to
-		/// <see cref="PhysicalEntity.GetParameters"/>.
+		/// Creates an object of this type that can be passed to <see cref="PhysicalEntity.GetParameters"/>.
 		/// </summary>
 		/// <returns>A valid object of this type.</returns>
 		public static PhysicsParametersForeignData Create()
@@ -60,8 +53,7 @@ namespace CryCil.Engine.Physics
 			};
 		}
 		/// <summary>
-		/// Creates an object of this type that can be passed to
-		/// <see cref="PhysicalEntity.SetParameters"/>.
+		/// Creates an object of this type that can be passed to <see cref="PhysicalEntity.SetParameters"/>.
 		/// </summary>
 		/// <param name="data">A new foreign data to assign to the physical entity.</param>
 		/// <returns>A valid object of this type.</returns>
@@ -77,8 +69,7 @@ namespace CryCil.Engine.Physics
 			};
 		}
 		/// <summary>
-		/// Creates an object of this type that can be passed to
-		/// <see cref="PhysicalEntity.SetParameters"/>.
+		/// Creates an object of this type that can be passed to <see cref="PhysicalEntity.SetParameters"/>.
 		/// </summary>
 		/// <param name="data"> A new foreign data to assign to the physical entity.</param>
 		/// <param name="flags">
@@ -97,8 +88,7 @@ namespace CryCil.Engine.Physics
 			};
 		}
 		/// <summary>
-		/// Creates an object of this type that can be passed to
-		/// <see cref="PhysicalEntity.SetParameters"/>.
+		/// Creates an object of this type that can be passed to <see cref="PhysicalEntity.SetParameters"/>.
 		/// </summary>
 		/// <param name="flags">
 		/// An object that specifies how to modify the flags that are assigned to the foreign data.

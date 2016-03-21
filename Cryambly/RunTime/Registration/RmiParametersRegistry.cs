@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using CryCil.Engine.Logic;
@@ -52,8 +51,8 @@ namespace CryCil.RunTime.Registration
 		/// </summary>
 		/// <param name="name">Name of the type an object of which to get.</param>
 		/// <returns>
-		/// An object that is capable of receiving RMI data from remote machine, or <c>null</c>, if the
-		/// type with given name wasn't found.
+		/// An object that is capable of receiving RMI data from remote machine, or <c>null</c>, if the type
+		/// with given name wasn't found.
 		/// </returns>
 		public static RmiParameters AcquireReceptor(string name)
 		{

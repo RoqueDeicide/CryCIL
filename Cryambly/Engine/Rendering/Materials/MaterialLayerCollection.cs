@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using CryCil.Annotations;
 
@@ -42,7 +42,7 @@ namespace CryCil.Engine.Rendering
 				}
 				if (value < 0)
 				{
-					throw new ArgumentOutOfRangeException("value", "Number of objects in the collection cannot be less then 0.");
+					throw new ArgumentOutOfRangeException(nameof(value), "Number of objects in the collection cannot be less then 0.");
 				}
 				SetLayerCount(this.handle, (uint)value);
 			}
@@ -84,7 +84,7 @@ namespace CryCil.Engine.Rendering
 				}
 				if (index < 0)
 				{
-					throw new ArgumentOutOfRangeException("index", "Index cannot be less then zero.");
+					throw new ArgumentOutOfRangeException(nameof(index), "Index cannot be less then zero.");
 				}
 				bool error;
 				var result = GetLayerChecked(this.handle, (uint)index, out error);
@@ -102,11 +102,11 @@ namespace CryCil.Engine.Rendering
 				}
 				if (!value.IsValid)
 				{
-					throw new ArgumentNullException("value", "Material layer object is not initialized.");
+					throw new ArgumentNullException(nameof(value), "Material layer object is not initialized.");
 				}
 				if (index < 0)
 				{
-					throw new ArgumentOutOfRangeException("index", "Index cannot be less then zero.");
+					throw new ArgumentOutOfRangeException(nameof(index), "Index cannot be less then zero.");
 				}
 				bool error;
 				SetLayerChecked(this.handle, (uint)index, value, out error);
@@ -119,10 +119,7 @@ namespace CryCil.Engine.Rendering
 		/// <summary>
 		/// Indicates whether this object is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 		#endregion
 		#region Construction
 		internal MaterialLayerCollection(IntPtr handle)
@@ -162,7 +159,7 @@ namespace CryCil.Engine.Rendering
 			}
 			if (!item.IsValid)
 			{
-				throw new ArgumentNullException("item", "Material layer object is not initialized.");
+				throw new ArgumentNullException(nameof(item), "Material layer object is not initialized.");
 			}
 			uint oldCount = GetLayerCount(this.handle);
 			SetLayerCount(this.handle, oldCount + 1);
@@ -209,7 +206,7 @@ namespace CryCil.Engine.Rendering
 			}
 			if (array.Length == 0)
 			{
-				throw new ArgumentNullException("array", "Given array cannot be of 0 length.");
+				throw new ArgumentNullException(nameof(array), "Given array cannot be of 0 length.");
 			}
 			if (arrayIndex < 0)
 			{
@@ -266,7 +263,7 @@ namespace CryCil.Engine.Rendering
 			}
 			if (!item.IsValid)
 			{
-				throw new ArgumentNullException("item", "Material layer object is not initialized.");
+				throw new ArgumentNullException(nameof(item), "Material layer object is not initialized.");
 			}
 			if (index < 0)
 			{

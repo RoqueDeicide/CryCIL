@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using CryCil.Annotations;
 
@@ -95,15 +96,12 @@ namespace CryCil.Geometry.Csg
 			List<T> backElements = new List<T>();
 			for (int i = 0; i < elements.Count; i++)
 			{
-				elements[i].Split
-					(
-					 this.Plane,
-					 this.Elements, // Coplanars are assigned to this node.
-					 this.Elements, //
-					 frontalElements, // This will go into front branch.
-					 backElements, // This will go into back branch.
-					 customData // This might be a reference to the mesh object.
-					);
+				elements[i].Split(this.Plane,
+								  this.Elements, // Coplanars are assigned to this node.
+								  this.Elements, //
+								  frontalElements, // This will go into front branch.
+								  backElements, // This will go into back branch.
+								  customData); // This might be a reference to the mesh object.
 			}
 			// Assign front and back branches.
 			BspNode<T> t = this.Front;
@@ -126,14 +124,10 @@ namespace CryCil.Geometry.Csg
 			{
 				this.Elements.ForEach(x => x.Invert());
 			}
-			if (this.Front != null)
-			{
-				this.Front.Invert();
-			}
-			if (this.Back != null)
-			{
-				this.Back.Invert();
-			}
+
+			this.Front?.Invert();
+			this.Back?.Invert();
+
 			BspNode<T> temp = this.Front;
 			this.Front = this.Back;
 			this.Back = temp;
@@ -150,13 +144,13 @@ namespace CryCil.Geometry.Csg
 			if (distance > MathHelpers.ZeroTolerance)
 			{
 				// If there is nothing in front of the node, then the point is outside.
-				return this.Front != null ? this.Front.PointPosition(point) : BspPointPosition.Outside;
+				return this.Front?.PointPosition(point) ?? BspPointPosition.Outside;
 			}
 			// If given point is behind this node's plane.
 			if (distance < MathHelpers.NZeroTolerance)
 			{
 				// If there is nothing behind the node, then the point is inside.
-				return this.Back != null ? this.Back.PointPosition(point) : BspPointPosition.Inside;
+				return this.Back?.PointPosition(point) ?? BspPointPosition.Inside;
 			}
 			// If given point is on a plane.
 
@@ -207,8 +201,8 @@ namespace CryCil.Geometry.Csg
 			{
 				fronts = this.Front.FilterList(fronts, customData);
 			}
-			// If this node has nothing behind it in the tree, then whatever is behind it in the list
-			// should be discarded.
+			// If this node has nothing behind it in the tree, then whatever is behind it in the list should
+			// be discarded.
 			if (this.Back != null)
 			{
 				fronts.AddRange(this.Back.FilterList(backs, customData));
@@ -225,8 +219,8 @@ namespace CryCil.Geometry.Csg
 		public void CutTreeOut(BspNode<T> bsp, [CanBeNull] object customData)
 		{
 			this.Elements = bsp.FilterList(this.Elements, customData);
-			if (this.Front != null) this.Front.CutTreeOut(bsp, customData);
-			if (this.Back != null) this.Back.CutTreeOut(bsp, customData);
+			this.Front?.CutTreeOut(bsp, customData);
+			this.Back?.CutTreeOut(bsp, customData);
 		}
 		/// <summary>
 		/// Adds given BSP tree to this one.
@@ -295,8 +289,8 @@ namespace CryCil.Geometry.Csg
 		/// <see cref="Plane"/> that splits the space that contains this object.
 		/// </param>
 		/// <param name="frontCoplanarElements">
-		/// An optional collection for parts of this object that are located on this plane and face the
-		/// same way.
+		/// An optional collection for parts of this object that are located on this plane and face the same
+		/// way.
 		/// </param>
 		/// <param name="backCoplanarElements"> 
 		/// An optional collection for parts of this object that are located on this plane and face the

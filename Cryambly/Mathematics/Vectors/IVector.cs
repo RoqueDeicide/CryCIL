@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil
 {
@@ -31,8 +32,8 @@ namespace CryCil
 		/// Gets the length of the vector.
 		/// </summary>
 		/// <remarks>
-		/// Length of the vector is a square root of sum of all components of this vector raised to power
-		/// of 2.
+		/// Length of the vector is a square root of sum of all components of this vector raised to power of
+		/// 2.
 		/// </remarks>
 		/// <example>
 		/// Implementation of this property in <see cref="Vector3"/>:

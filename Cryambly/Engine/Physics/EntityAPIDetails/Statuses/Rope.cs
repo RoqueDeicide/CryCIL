@@ -36,8 +36,8 @@ namespace CryCil.Engine.Physics
 	/// <remarks>
 	/// <para>
 	/// Acquiring the positions of all points that connect segments requires usage of 2 calls to
-	/// <see cref="PhysicalEntity.GetStatus"/>, the first call must be done with simple object and after
-	/// the call, another one will have to be made with the same object and that will actually retrieve
+	/// <see cref="PhysicalEntity.GetStatus"/>, the first call must be done with simple object and after the
+	/// call, another one will have to be made with the same object and that will actually retrieve
 	/// positions of points.
 	/// </para>
 	/// <para>
@@ -87,22 +87,22 @@ namespace CryCil.Engine.Physics
 		/// <code>
 		/// // Here is how you can acquire an array of points.
 		/// PhysicalEntity entity = GetEntity();
-		/// 
+		///
 		/// PhysicsStatusRope ropeStatus = new PhysicsStatusRope(0);
-		/// 
+		///
 		/// // First call will finish initialization of ropeStatus.
 		/// if (entity.GetStatus(ref ropeStatus.Base) != 0)
 		/// {
 		///     // Now that our object is initialized we now can get the points.
 		///     entity.GetStatus(ref ropeStatus.Base);
-		/// 
+		///
 		///     // Lets calculate the length of the rope.
 		///     float length = 0;
 		///     for (int i = 1; i &lt; ropeStatus.Points.Length; i++)
 		///     {
 		///         length += (ropeStatus.Points[i] - ropeStatus.Points[i - 1]).Length;
 		///     }
-		/// 
+		///
 		///     // Print the length in the console.
 		///     Console.WriteLine("Length of the rope = {0}", length);
 		/// }
@@ -112,10 +112,7 @@ namespace CryCil.Engine.Physics
 		/// }
 		/// </code>
 		/// </example>
-		public Vector3[] Points
-		{
-			get { return this.pPoints; }
-		}
+		public Vector3[] Points => this.pPoints;
 		/// <summary>
 		/// Gets the array of vertices that describe the shape of the rope that uses dynamic subdivision.
 		/// </summary>
@@ -127,29 +124,29 @@ namespace CryCil.Engine.Physics
 		/// <code>
 		/// // Here is how you can acquire an array of vertices.
 		/// PhysicalEntity entity = GetEntity();
-		/// 
+		///
 		/// PhysicsStatusRope ropeStatus = new PhysicsStatusRope(0)
 		/// {
 		///     // We must engage the read-only lock to make sure our ropeStatus object doesn't get invalidated.
 		///     Lock = RopeAccessLockMode.EngageLock
 		/// };
-		/// 
+		///
 		/// // First call will finish initialization of ropeStatus.
 		/// if (entity.GetStatus(ref ropeStatus.Base) != 0)
 		/// {
 		///     // We need to release the lock now, so the rope can actually be changed by the physics.
 		///     ropeStatus.Lock = RopeAccessLockMode.ReleaseLock;
-		/// 
+		///
 		///     // Now that our object is initialized we now can get the vertices.
 		///     entity.GetStatus(ref ropeStatus.Base);
-		/// 
+		///
 		///     // Lets calculate the length of the rope.
 		///     float length = 0;
 		///     for (int i = 1; i &lt; ropeStatus.Vertices.Length; i++)
 		///     {
 		///         length += (ropeStatus.Vertices[i] - ropeStatus.Vertices[i - 1]).Length;
 		///     }
-		/// 
+		///
 		///     // Print the length in the console.
 		///     Console.WriteLine("Length of the rope = {0}", length);
 		/// }
@@ -159,10 +156,7 @@ namespace CryCil.Engine.Physics
 		/// }
 		/// </code>
 		/// </example>
-		public Vector3[] Vertices
-		{
-			get { return this.pVtx; }
-		}
+		public Vector3[] Vertices => this.pVtx;
 		/// <summary>
 		/// Gets an array of velocities of points that connect segments of the rope together.
 		/// </summary>
@@ -170,46 +164,28 @@ namespace CryCil.Engine.Physics
 		/// <c>null</c>, if this object was passed to <see cref="PhysicalEntity.GetStatus"/> less then 2
 		/// times and it was created originally without valid segment count.
 		/// </returns>
-		public Vector3[] Velocities
-		{
-			get { return this.pVelocities; }
-		}
+		public Vector3[] Velocities => this.pVelocities;
 		/// <summary>
 		/// Gets the number of static objects this rope is contacting with.
 		/// </summary>
-		public int StaticContactCount
-		{
-			get { return this.nCollStat; }
-		}
+		public int StaticContactCount => this.nCollStat;
 		/// <summary>
 		/// Gets the number of dynamic objects this rope is contacting with.
 		/// </summary>
-		public int DynamicContactCount
-		{
-			get { return this.nCollDyn; }
-		}
+		public int DynamicContactCount => this.nCollDyn;
 		/// <summary>
 		/// Gets the target pose enforcement mode.
 		/// </summary>
-		public RopeTargetPoseMode TargetPoseMode
-		{
-			get { return (RopeTargetPoseMode)this.bTargetPoseActive; }
-		}
+		public RopeTargetPoseMode TargetPoseMode => (RopeTargetPoseMode)this.bTargetPoseActive;
 		/// <summary>
 		/// Gets the shape preserving stiffness.
 		/// </summary>
-		public float AnimationStiffness
-		{
-			get { return this.stiffnessAnim; }
-		}
+		public float AnimationStiffness => this.stiffnessAnim;
 		/// <summary>
 		/// Gets the value that indicates whether the rope is strained, either along the line, or wrapped
 		/// around the object.
 		/// </summary>
-		public bool Strained
-		{
-			get { return this.bStrained != 0; }
-		}
+		public bool Strained => this.bStrained != 0;
 		/// <summary>
 		/// Gets the array of entities the rope has a contact with.
 		/// </summary>
@@ -239,34 +215,22 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the last time stamp when the entity was awake.
 		/// </summary>
-		public float LastAwakeTime
-		{
-			get { return this.timeLastActive; }
-		}
+		public float LastAwakeTime => this.timeLastActive;
 		/// <summary>
 		/// Gets the position of the first entity part this rope was attached to when this status was
 		/// queried.
 		/// </summary>
-		public Vector3 AttachmentPointPosition
-		{
-			get { return this.posHost; }
-		}
+		public Vector3 AttachmentPointPosition => this.posHost;
 		/// <summary>
 		/// Gets the orientation of the first entity part this rope was attached to when this status was
 		/// queried.
 		/// </summary>
-		public Quaternion AttachmentPointOrientation
-		{
-			get { return this.qHost; }
-		}
+		public Quaternion AttachmentPointOrientation => this.qHost;
 		/// <summary>
 		/// Gets the value that is used to control the access lock on the rope when getting the array of
 		/// vertices of the rope that has sub-division mode on.
 		/// </summary>
-		public RopeAccessLockMode Lock
-		{
-			get { return (RopeAccessLockMode)this.@lock; }
-		}
+		public RopeAccessLockMode Lock => (RopeAccessLockMode)this.@lock;
 		#endregion
 		#region Construction
 		/// <summary>

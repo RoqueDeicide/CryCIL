@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CryCil.Engine.Models.StaticObjects
 {
@@ -17,10 +18,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.ptr != null; }
-		}
+		public bool IsValid => this.ptr != null;
 		/// <summary>
 		/// Gets or sets the element within this collection.
 		/// </summary>
@@ -113,10 +111,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.ptr != null; }
-		}
+		public bool IsValid => this.ptr != null;
 		/// <summary>
 		/// Gets or sets the element within this collection.
 		/// </summary>
@@ -209,10 +204,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.ptr != null; }
-		}
+		public bool IsValid => this.ptr != null;
 		/// <summary>
 		/// Gets or sets the element within this collection.
 		/// </summary>
@@ -305,10 +297,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.ptr != null; }
-		}
+		public bool IsValid => this.ptr != null;
 		/// <summary>
 		/// Gets or sets the element within this collection.
 		/// </summary>

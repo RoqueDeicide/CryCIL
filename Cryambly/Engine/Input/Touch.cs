@@ -30,10 +30,7 @@ namespace CryCil.Engine.Input
 		{
 			try
 			{
-				if (Event != null)
-				{
-					Event((InputDeviceType)device, deviceIndex, id, new Vector2(x, y));
-				}
+				Event?.Invoke((InputDeviceType)device, deviceIndex, id, new Vector2(x, y));
 			}
 			catch (Exception ex)
 			{

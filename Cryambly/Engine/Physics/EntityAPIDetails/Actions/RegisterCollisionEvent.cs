@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
 
@@ -22,8 +23,8 @@ namespace CryCil.Engine.Physics
 	{
 		#region Fields
 		/// <summary>
-		/// Pass reference to this field to the <see cref="PhysicalEntity.ActUpon"/> to apply this action
-		/// to the physical entity.
+		/// Pass reference to this field to the <see cref="PhysicalEntity.ActUpon"/> to apply this action to
+		/// the physical entity.
 		/// </summary>
 		[UsedImplicitly] public PhysicsAction Base;
 		[UsedImplicitly] private Vector3 pt;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using CryCil.Engine.Logic;
@@ -41,10 +42,7 @@ namespace CryCil.Engine
 		/// <summary>
 		/// Determines whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 
 		/// <summary>
 		/// Indicates whether this emitter is alive in the engine.
@@ -422,8 +420,8 @@ namespace CryCil.Engine
 		/// Changes a set of parameters that specify how to spawn the particles.
 		/// </summary>
 		/// <remarks>
-		/// <paramref name="geometry"/> can be used to engulf objects and characters in the particle
-		/// effect, e.g. when setting the character or wooden box on fire.
+		/// <paramref name="geometry"/> can be used to engulf objects and characters in the particle effect,
+		/// e.g. when setting the character or wooden box on fire.
 		/// </remarks>
 		/// <param name="parameters">Reference to the object that contains the parameters.</param>
 		/// <param name="geometry">  
@@ -445,7 +443,7 @@ namespace CryCil.Engine
 			try
 			{
 				var handler = Created;
-				if (handler != null) handler(emitter, ref location, effect, flags);
+				handler?.Invoke(emitter, ref location, effect, flags);
 			}
 			catch (Exception ex)
 			{
@@ -460,7 +458,7 @@ namespace CryCil.Engine
 			try
 			{
 				var handler = Deleted;
-				if (handler != null) handler(emitter);
+				handler?.Invoke(emitter);
 			}
 			catch (Exception ex)
 			{

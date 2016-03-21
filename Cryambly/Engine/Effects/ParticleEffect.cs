@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using CryCil.Engine.Data;
@@ -28,8 +29,8 @@ namespace CryCil.Engine
 		#endregion
 		#region Static Properties
 		/// <summary>
-		/// Gets or sets the particle effect that contains parameters that are used as default when
-		/// creating new effects and loading them from Xml.
+		/// Gets or sets the particle effect that contains parameters that are used as default when creating
+		/// new effects and loading them from Xml.
 		/// </summary>
 		/// <remarks>
 		/// If default particle effect has children, they will be used if they match the current sys_spec,
@@ -45,7 +46,7 @@ namespace CryCil.Engine
 			{
 				if (!value.IsValid)
 				{
-					throw new ArgumentNullException("value", "Cannot set invalid particle effect as default one.");
+					throw new ArgumentNullException(nameof(value), "Cannot set invalid particle effect as default one.");
 				}
 
 				SetDefaultEffect(value);
@@ -55,19 +56,14 @@ namespace CryCil.Engine
 		/// Gets the default particle parameters.
 		/// </summary>
 		/// <remarks>Latest version is used whatever that means.</remarks>
-		public static ParticleParameters DefaultParametersGlobal
-		{
-			get { return new ParticleParameters(GetGlobalDefaultParams()); }
-		}
+		public static ParticleParameters DefaultParametersGlobal =>
+			new ParticleParameters(GetGlobalDefaultParams());
 		#endregion
 		#region Properties
 		/// <summary>
 		/// Determines whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 
 		/// <summary>
 		/// Gets minimally qualified name of this particle effect.
@@ -221,9 +217,7 @@ namespace CryCil.Engine
 		/// Xml node object that describes the particle effect's properties.
 		/// </param>
 		/// <param name="source">       Optional client context, for diagnostics.</param>
-		/// <param name="loadResources">
-		/// Indicates if the resources for this effect should be loaded.
-		/// </param>
+		/// <param name="loadResources">Indicates if the resources for this effect should be loaded.</param>
 		/// <returns>An object that represents the particle effect.</returns>
 		/// <exception cref="ArgumentNullException">
 		/// The name of the particle effect to load cannot be null.
@@ -233,7 +227,7 @@ namespace CryCil.Engine
 		{
 			if (name.IsNullOrEmpty())
 			{
-				throw new ArgumentNullException("name", "The name of the particle effect to load cannot be null.");
+				throw new ArgumentNullException(nameof(name), "The name of the particle effect to load cannot be null.");
 			}
 			if (node == null || !node.IsValid)
 			{
@@ -259,7 +253,7 @@ namespace CryCil.Engine
 		{
 			if (name.IsNullOrEmpty())
 			{
-				throw new ArgumentNullException("name", "The name of the particle effect library to load cannot be null.");
+				throw new ArgumentNullException(nameof(name), "The name of the particle effect library to load cannot be null.");
 			}
 			if (node == null || !node.IsValid)
 			{
@@ -285,7 +279,7 @@ namespace CryCil.Engine
 		{
 			if (name.IsNullOrEmpty())
 			{
-				throw new ArgumentNullException("name", "The name of the particle effect library to load cannot be null.");
+				throw new ArgumentNullException(nameof(name), "The name of the particle effect library to load cannot be null.");
 			}
 			if (file.IsNullOrEmpty())
 			{
@@ -302,9 +296,7 @@ namespace CryCil.Engine
 		/// </param>
 		/// <param name="particleParameters">An object that describes that particle effect.</param>
 		/// <param name="flags">             Flags that specify the emitter.</param>
-		/// <param name="spawnParameters">   
-		/// An object that describes how the particles are spawned.
-		/// </param>
+		/// <param name="spawnParameters">   An object that describes how the particles are spawned.</param>
 		/// <returns>An object that represents the particle emitter.</returns>
 		/// <exception cref="ObjectDisposedException">
 		/// The object that provides the particle parameters is not valid.
@@ -328,9 +320,7 @@ namespace CryCil.Engine
 		/// </param>
 		/// <param name="particleParameters">An object that describes that particle effect.</param>
 		/// <param name="flags">             Flags that specify the emitter.</param>
-		/// <param name="spawnParameters">   
-		/// An object that describes how the particles are spawned.
-		/// </param>
+		/// <param name="spawnParameters">   An object that describes how the particles are spawned.</param>
 		/// <returns>An object that represents the particle emitter.</returns>
 		/// <exception cref="ObjectDisposedException">
 		/// The object that provides the particle parameters is not valid.
@@ -472,7 +462,7 @@ namespace CryCil.Engine
 		{
 			if (!sync.IsValid)
 			{
-				throw new ArgumentNullException("sync", "Object that handle synchronization must be valid.");
+				throw new ArgumentNullException(nameof(sync), "Object that handle synchronization must be valid.");
 			}
 			if (!sync.Writing)
 			{
@@ -496,7 +486,7 @@ namespace CryCil.Engine
 		{
 			if (!sync.IsValid)
 			{
-				throw new ArgumentNullException("sync", "Object that handle synchronization must be valid.");
+				throw new ArgumentNullException(nameof(sync), "Object that handle synchronization must be valid.");
 			}
 			if (!sync.Reading)
 			{
@@ -725,7 +715,7 @@ namespace CryCil.Engine
 
 			if (node == null || !node.IsValid)
 			{
-				throw new ArgumentNullException("node", "Provided Xml node must be valid.");
+				throw new ArgumentNullException(nameof(node), "Provided Xml node must be valid.");
 			}
 
 			Serialize(this.handle, node.Handle, false, children);
@@ -745,7 +735,7 @@ namespace CryCil.Engine
 
 			if (node == null || !node.IsValid)
 			{
-				throw new ArgumentNullException("node", "Provided Xml node must be valid.");
+				throw new ArgumentNullException(nameof(node), "Provided Xml node must be valid.");
 			}
 
 			Serialize(this.handle, node.Handle, true, children);

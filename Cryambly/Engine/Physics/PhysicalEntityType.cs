@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil.Engine.Physics
 {
@@ -26,8 +27,8 @@ namespace CryCil.Engine.Physics
 		/// </para>
 		/// <para>
 		/// Rigid bodies with mass of zero are similar to static entities with only difference being the
-		/// collision detection algorithm being more reliable for cases when the entity changes its
-		/// position via code.
+		/// collision detection algorithm being more reliable for cases when the entity changes its position
+		/// via code.
 		/// </para>
 		/// </remarks>
 		Rigid = 2,
@@ -55,8 +56,8 @@ namespace CryCil.Engine.Physics
 		/// Represents an articulated entity.
 		/// </summary>
 		/// <remarks>
-		/// Articulated entities consist of multiple physical entities that are rigid bodies that are
-		/// linked to each other into an hierarchy that represents a tree with a single root.
+		/// Articulated entities consist of multiple physical entities that are rigid bodies that are linked
+		/// to each other into an hierarchy that represents a tree with a single root.
 		/// </remarks>
 		Articulated = 6,
 		/// <summary>

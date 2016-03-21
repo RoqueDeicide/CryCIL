@@ -19,8 +19,8 @@ namespace CryCil.Engine.Logic
 	/// </param>
 	public delegate void PoolBookmarkCreationHandler(EntityId id, EntitySpawnParameters parameters, CryXmlNode entityNode);
 	/// <summary>
-	/// Defines signature of methods that can handle events related to migration of entities to and from
-	/// the pool.
+	/// Defines signature of methods that can handle events related to migration of entities to and from the
+	/// pool.
 	/// </summary>
 	/// <param name="id">    Identifier of migrating entity.</param>
 	/// <param name="entity">Wrapper that represents migrating entity.</param>
@@ -125,7 +125,7 @@ namespace CryCil.Engine.Logic
 				PoolBookmarkCreationHandler handler = PoolBookmarkCreated;
 				using (CryXmlNode node = new CryXmlNode(entitynode))
 				{
-					if (handler != null) handler(id, parameters, node);
+					handler?.Invoke(id, parameters, node);
 				}
 			}
 			catch (Exception ex)
@@ -138,7 +138,7 @@ namespace CryCil.Engine.Logic
 		{
 			try
 			{
-				if (EntityPrepared != null) EntityPrepared(id, entity);
+				EntityPrepared?.Invoke(id, entity);
 			}
 			catch (Exception ex)
 			{
@@ -150,7 +150,7 @@ namespace CryCil.Engine.Logic
 		{
 			try
 			{
-				if (EntityReturning != null) EntityReturning(id, entity);
+				EntityReturning?.Invoke(id, entity);
 			}
 			catch (Exception ex)
 			{
@@ -162,7 +162,7 @@ namespace CryCil.Engine.Logic
 		{
 			try
 			{
-				if (EntityReturned != null) EntityReturned(id, entity);
+				EntityReturned?.Invoke(id, entity);
 			}
 			catch (Exception ex)
 			{
@@ -174,7 +174,7 @@ namespace CryCil.Engine.Logic
 		{
 			try
 			{
-				if (DefinitionsLoaded != null) DefinitionsLoaded();
+				DefinitionsLoaded?.Invoke();
 			}
 			catch (Exception ex)
 			{
@@ -186,7 +186,7 @@ namespace CryCil.Engine.Logic
 		{
 			try
 			{
-				if (BookmarkSyncing != null) BookmarkSyncing(sync, entity);
+				BookmarkSyncing?.Invoke(sync, entity);
 			}
 			catch (Exception ex)
 			{

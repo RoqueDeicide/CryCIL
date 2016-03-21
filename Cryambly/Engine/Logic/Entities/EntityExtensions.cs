@@ -21,10 +21,7 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Gets the number of extensions in this entity.
 		/// </summary>
-		public int Count
-		{
-			get { return this.extensions.Count; }
-		}
+		public int Count => this.extensions.Count;
 		/// <summary>
 		/// Gets the extension object.
 		/// </summary>
@@ -78,22 +75,20 @@ namespace CryCil.Engine.Logic
 		{
 			if (extensionType == null)
 			{
-				throw new ArgumentNullException("extensionType");
+				throw new ArgumentNullException(nameof(extensionType));
 			}
 
 			if (!extensionType.Implements<EntityExtension>())
 			{
-				throw new NotSupportedException(string.Format("Specified type must derive from {0}.",
-															  extensionType.FullName));
+				throw new NotSupportedException($"Specified type must derive from {extensionType.FullName}.");
 			}
 
 			ConstructorInfo ctor = extensionType.GetConstructor(Type.EmptyTypes);
 			if (ctor == null)
 			{
-				throw new ArgumentException(string.Format("Unable to create an object of extension {0}: " +
-														  "No appropriate constructor was found.",
-														  extensionType.FullName),
-											"extensionType");
+				throw new ArgumentException(
+					$"Unable to create an object of extension {extensionType.FullName}: " + "No appropriate constructor was found.",
+					nameof(extensionType));
 			}
 
 			try
@@ -102,8 +97,7 @@ namespace CryCil.Engine.Logic
 			}
 			catch (Exception ex)
 			{
-				string message = string.Format("An error has occurred when creating a new extension of " +
-											   "type {0}", extensionType.FullName);
+				string message = "An error has occurred when creating a new extension of " + $"type {extensionType.FullName}";
 
 				var exception = new Exception(message, ex);
 
@@ -134,8 +128,7 @@ namespace CryCil.Engine.Logic
 			catch (Exception ex)
 			{
 				string message =
-					string.Format("An error has occurred when creating a new extension of type {0}",
-								  type.FullName);
+					$"An error has occurred when creating a new extension of type {type.FullName}";
 
 				var exception = new Exception(message, ex);
 
@@ -154,7 +147,7 @@ namespace CryCil.Engine.Logic
 		{
 			if (extension == null)
 			{
-				throw new ArgumentNullException("extension");
+				throw new ArgumentNullException(nameof(extension));
 			}
 
 			this.AddInternal(extension);
@@ -278,8 +271,8 @@ namespace CryCil.Engine.Logic
 		/// </summary>
 		/// <typeparam name="ExtensionType">Type of extension to get.</typeparam>
 		/// <returns>
-		/// A valid object that is a first occurrence of <typeparamref name="ExtensionType"/> in the list
-		/// of extensions, if found. Otherwise, <c>null</c> is returned.
+		/// A valid object that is a first occurrence of <typeparamref name="ExtensionType"/> in the list of
+		/// extensions, if found. Otherwise, <c>null</c> is returned.
 		/// </returns>
 		public ExtensionType Get<ExtensionType>() where ExtensionType : EntityExtension, new()
 		{

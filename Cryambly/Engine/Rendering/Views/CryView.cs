@@ -6,7 +6,8 @@ using CryCil.Geometry;
 namespace CryCil.Engine.Rendering.Views
 {
 	/// <summary>
-	/// Represents an object that provides functionality related to modification of the player's view camera as well as audio listener.
+	/// Represents an object that provides functionality related to modification of the player's view camera
+	/// as well as audio listener.
 	/// </summary>
 	public struct CryView
 	{
@@ -17,29 +18,17 @@ namespace CryCil.Engine.Rendering.Views
 		/// <summary>
 		/// Gets the default distance to the near-clipping plane.
 		/// </summary>
-		public float DefaultZNear
-		{
-			get
-			{
-				return GetDefaultZNear();
-			}
-		}
+		public float DefaultZNear => GetDefaultZNear();
 		/// <summary>
 		/// Indicates if a cutscene is currently being played.
 		/// </summary>
-		public bool IsCutscene
-		{
-			get { return IsPlayingCutScene(); }
-		}
+		public bool IsCutscene => IsPlayingCutScene();
 		#endregion
 		#region Properties
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 
 		/// <summary>
 		/// Gets the identifier of the entity this view is linked to.
@@ -169,8 +158,10 @@ namespace CryCil.Engine.Rendering.Views
 		/// <summary>
 		/// Gets the view that is linked to the specified entity.
 		/// </summary>
-		/// <param name="id">Identifier of the entity.</param>
-		/// <param name="forceCreate">Indicates whether a view needs to be created and linked to the entity, if it wasn't already.</param>
+		/// <param name="id">         Identifier of the entity.</param>
+		/// <param name="forceCreate">
+		/// Indicates whether a view needs to be created and linked to the entity, if it wasn't already.
+		/// </param>
 		/// <returns>An object that represents a view.</returns>
 		public static CryView GetView(EntityId id, bool forceCreate = false)
 		{
@@ -192,7 +183,7 @@ namespace CryCil.Engine.Rendering.Views
 		/// Updates logical state of this view. Not necessary, if this view is linked to an entity.
 		/// </summary>
 		/// <param name="frameTime">Length of the previous frame.</param>
-		/// <param name="active">Whether this view is supposed to be active(?).</param>
+		/// <param name="active">   Whether this view is supposed to be active(?).</param>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public void Update(float frameTime, bool active)
 		{
@@ -267,13 +258,17 @@ namespace CryCil.Engine.Rendering.Views
 		/// </summary>
 		/// <param name="shakeAngle">Maximal angle of shaking.</param>
 		/// <param name="shakeShift">Maximal offset of shaking.</param>
-		/// <param name="duration">Duration of shaking after fade-in and before fade-out in seconds.</param>
-		/// <param name="frequency">Frequency of shakes.</param>
+		/// <param name="duration">  
+		/// Duration of shaking after fade-in and before fade-out in seconds.
+		/// </param>
+		/// <param name="frequency"> Frequency of shakes.</param>
 		/// <param name="randomness">Randomness of shakes.</param>
-		/// <param name="shakeId">Identifier of the shake.</param>
+		/// <param name="shakeId">   Identifier of the shake.</param>
 		/// <param name="flipVector">Unknown.</param>
 		/// <param name="updateOnly">Unknown.</param>
-		/// <param name="groundOnly">Indicates whether shaking should be applied only when the player is on the ground.</param>
+		/// <param name="groundOnly">
+		/// Indicates whether shaking should be applied only when the player is on the ground.
+		/// </param>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public void SetViewShaking(EulerAngles shakeAngle, Vector3 shakeShift, float duration, float frequency,
 								   float randomness, int shakeId, bool flipVector = true, bool updateOnly = false,
@@ -374,7 +369,6 @@ namespace CryCil.Engine.Rendering.Views
 		private static extern void SetScale(IntPtr handle, float scale);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void SetZoomedScale(IntPtr handle, float scale);
-
 
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern CryView CreateView();

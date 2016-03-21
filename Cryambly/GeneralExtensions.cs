@@ -34,8 +34,8 @@ namespace CryCil
 		/// </summary>
 		/// <param name="text">This text.</param>
 		/// <returns>
-		/// True, if <paramref name="text"/> is equal to <c>null</c> or is a <c>string</c> with 0
-		/// characters in it.
+		/// True, if <paramref name="text"/> is equal to <c>null</c> or is a <c>string</c> with 0 characters
+		/// in it.
 		/// </returns>
 		[Pure]
 		[ContractAnnotation("text:null => true")]
@@ -48,8 +48,8 @@ namespace CryCil
 		/// </summary>
 		/// <param name="text">This text.</param>
 		/// <returns>
-		/// True, if <paramref name="text"/> is equal to <c>null</c> or is a <c>string</c> with 0
-		/// characters in it.
+		/// True, if <paramref name="text"/> is equal to <c>null</c> or is a <c>string</c> with 0 characters
+		/// in it.
 		/// </returns>
 		[Pure]
 		[ContractAnnotation("text:null => true")]
@@ -258,7 +258,9 @@ namespace CryCil
 			}
 			if (rangeLength <= 0)
 			{
-				throw new ArgumentOutOfRangeException("rangeLength", "Number of elements in the range must be greater then 0.");
+				throw new ArgumentOutOfRangeException(nameof(rangeLength),
+													  "Number of elements in the range must be greater " +
+													  "then 0.");
 			}
 			int count = list.Count;
 			if (desiredIndex > count - rangeLength)
@@ -642,9 +644,7 @@ namespace CryCil
 		/// </summary>
 		/// <typeparam name="T">Type of delegate to create.</typeparam>
 		/// <param name="info">Method.</param>
-		/// <returns>
-		/// Delegate that allows to invoke method represented by <paramref name="info"/>.
-		/// </returns>
+		/// <returns>Delegate that allows to invoke method represented by <paramref name="info"/>.</returns>
 		public static T CreateDelegate<T>(this MethodInfo info)
 		{
 			return (T)(object)info.CreateDelegate(typeof(T));
@@ -655,7 +655,10 @@ namespace CryCil
 		/// Indicates whether one can create a default instance of this type.
 		/// </summary>
 		/// <param name="type">This type.</param>
-		/// <returns>True, if <paramref name="type"/> is a value-type or a reference type that has defined public parameterless constructor.</returns>
+		/// <returns>
+		/// True, if <paramref name="type"/> is a value-type or a reference type that has defined public
+		/// parameterless constructor.
+		/// </returns>
 		public static bool HasDefaultConstructor(this Type type)
 		{
 			return type.IsValueType || type.GetConstructor(Type.EmptyTypes) != null;
@@ -663,9 +666,11 @@ namespace CryCil
 		/// <summary>
 		/// Determines whether this type contains a constructor that accepts parameters of specified types.
 		/// </summary>
-		/// <param name="type">This type.</param>
+		/// <param name="type">          This type.</param>
 		/// <param name="parameterTypes">Array of types of respective parameters.</param>
-		/// <returns>True, if this type defines public constructor that accepts parameters of specified types.</returns>
+		/// <returns>
+		/// True, if this type defines public constructor that accepts parameters of specified types.
+		/// </returns>
 		public static bool HasConstructor(this Type type, params Type[] parameterTypes)
 		{
 			if (parameterTypes.IsNullOrEmpty())

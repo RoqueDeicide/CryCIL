@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil.Engine.Rendering
 {
@@ -13,8 +14,8 @@ namespace CryCil.Engine.Rendering
 		/// </summary>
 		Nothing,
 		/// <summary>
-		/// When specified, indicates that the text should have center horizontal alignment. Otherwise
-		/// right or left alignment will be used.
+		/// When specified, indicates that the text should have center horizontal alignment. Otherwise right
+		/// or left alignment will be used.
 		/// </summary>
 		/// <remarks>
 		/// When both <see cref="AlignmentCentered"/> and <see cref="AlignmentRight"/> are not specified
@@ -22,8 +23,8 @@ namespace CryCil.Engine.Rendering
 		/// </remarks>
 		AlignmentCentered = 1 << 0,
 		/// <summary>
-		/// When specified, indicates that the text should have right horizontal alignment. Otherwise
-		/// center or left alignment will be used.
+		/// When specified, indicates that the text should have right horizontal alignment. Otherwise center
+		/// or left alignment will be used.
 		/// </summary>
 		/// <remarks>
 		/// When both <see cref="AlignmentCentered"/> and <see cref="AlignmentRight"/> are not specified
@@ -51,8 +52,8 @@ namespace CryCil.Engine.Rendering
 
 		/// <summary>
 		/// When specified, indicates that <see cref="Vector3.X"/> and <see cref="Vector3.Y"/> coordinates
-		/// of provided <see cref="Vector3"/> object are specifying a position on the screen, otherwise
-		/// that object specifies a position in 3D world space.
+		/// of provided <see cref="Vector3"/> object are specifying a position on the screen, otherwise that
+		/// object specifies a position in 3D world space.
 		/// </summary>
 		OnScreen = 1 << 4,
 
@@ -79,8 +80,8 @@ namespace CryCil.Engine.Rendering
 		Monospace = 1 << 7,
 
 		/// <summary>
-		/// When specified, indicates that text should be rendered with a transparent rectangle behind it
-		/// to ease readability independent from the background.
+		/// When specified, indicates that text should be rendered with a transparent rectangle behind it to
+		/// ease readability independent from the background.
 		/// </summary>
 		Framed = 1 << 8,
 

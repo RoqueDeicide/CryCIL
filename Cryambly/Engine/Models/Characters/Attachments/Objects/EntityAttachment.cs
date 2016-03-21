@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using CryCil.Engine.Logic;
 using CryCil.Geometry;
 
@@ -13,17 +14,11 @@ namespace CryCil.Engine.Models.Characters.Attachments
 		private readonly IntPtr handle;
 		#endregion
 		#region Properties
-		internal IntPtr Handle
-		{
-			get { return this.handle; }
-		}
+		internal IntPtr Handle => this.handle;
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 
 		/// <summary>
 		/// Gets the axis-aligned box that encompasses this attached object.

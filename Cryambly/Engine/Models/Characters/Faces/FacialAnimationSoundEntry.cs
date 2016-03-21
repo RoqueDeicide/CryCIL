@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace CryCil.Engine.Models.Characters.Faces
@@ -15,10 +16,7 @@ namespace CryCil.Engine.Models.Characters.Faces
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 
 		/// <summary>
 		/// Gets or sets the name of the file to use the sound from.

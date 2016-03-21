@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil.Geometry
 {
@@ -26,12 +27,12 @@ namespace CryCil.Geometry
 			/// parameters.
 			/// </para>
 			/// <para>
-			/// To apply the transformation to the vector use
-			/// <see cref="Transformation.Apply(ref Vector4,ref Matrix44)"/> function after applying the
-			/// view transformation using a matrix created by
+			/// To apply the transformation to the vector use <see cref="Apply(ref Vector4,ref Matrix44)"/>
+			/// function after applying the view transformation using a matrix created by
 			/// <see cref="O:CryCil.Geometry.Transformation.View.Create"/>. The view transformation is
 			/// needed because all provided arguments are only valid in camera space.
-			/// </para></summary>
+			/// </para>
+			/// </summary>
 			/// </overloads>
 			public static Matrix44 Create(float horizontalFov, float verticalFov, float nearPlaneDistance,
 										  float farPlaneDistance)

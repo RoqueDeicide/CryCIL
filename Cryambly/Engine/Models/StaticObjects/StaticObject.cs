@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
@@ -28,14 +29,8 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
-		internal IntPtr Handle
-		{
-			get { return this.handle; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
+		internal IntPtr Handle => this.handle;
 
 		/// <summary>
 		/// Gets or sets the flags that are assigned to this static object.
@@ -235,10 +230,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// <summary>
 		/// Gets the collection of sub-objects this static object consists of, if it's a compound object.
 		/// </summary>
-		public StaticSubObjects SubObjects
-		{
-			get { return this.subObjects; }
-		}
+		public StaticSubObjects SubObjects => this.subObjects;
 		/// <summary>
 		/// Gets the value that indicates whether this static object is a sub-object of another static
 		/// object.
@@ -368,8 +360,8 @@ namespace CryCil.Engine.Models.StaticObjects
 		#endregion
 		#region Interface
 		/// <summary>
-		/// Increases the reference count of this static object. Call this when you have multiple
-		/// references to the same static object.
+		/// Increases the reference count of this static object. Call this when you have multiple references
+		/// to the same static object.
 		/// </summary>
 		/// <returns>Current reference count(?).</returns>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
@@ -407,9 +399,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// <exception cref="ArgumentNullException">
 		/// An array of vertices cannot be null or empty.
 		/// </exception>
-		/// <exception cref="ArgumentNullException">
-		/// An array of normals cannot be null or empty.
-		/// </exception>
+		/// <exception cref="ArgumentNullException">An array of normals cannot be null or empty.</exception>
 		/// <exception cref="ArgumentException">Number of vertices and normals must be equal.</exception>
 		/// <exception cref="ArgumentOutOfRangeException">Not enough vertices are provided.</exception>
 		/// <exception cref="ArgumentOutOfRangeException">
@@ -423,11 +413,11 @@ namespace CryCil.Engine.Models.StaticObjects
 			this.AssertInstance();
 			if (vertices.IsNullOrEmpty())
 			{
-				throw new ArgumentNullException("vertices", "An array of vertices cannot be null or empty.");
+				throw new ArgumentNullException(nameof(vertices), "An array of vertices cannot be null or empty.");
 			}
 			if (normals.IsNullOrEmpty())
 			{
-				throw new ArgumentNullException("normals", "An array of normals cannot be null or empty.");
+				throw new ArgumentNullException(nameof(normals), "An array of normals cannot be null or empty.");
 			}
 			if (vertices.Length != normals.Length)
 			{
@@ -435,16 +425,16 @@ namespace CryCil.Engine.Models.StaticObjects
 			}
 			if (vertexCount > vertices.Length)
 			{
-				throw new ArgumentOutOfRangeException("vertexCount", "Not enough vertices are provided.");
+				throw new ArgumentOutOfRangeException(nameof(vertexCount), "Not enough vertices are provided.");
 			}
 			if (vertexCount < 0)
 			{
-				throw new ArgumentOutOfRangeException("vertexCount",
+				throw new ArgumentOutOfRangeException(nameof(vertexCount),
 													  "Number of vertices to update cannot be less then 0.");
 			}
 			if (firstVertex < 0)
 			{
-				throw new ArgumentOutOfRangeException("firstVertex",
+				throw new ArgumentOutOfRangeException(nameof(firstVertex),
 													  "Index of the first vertex to update cannot be less then 0.");
 			}
 
@@ -477,8 +467,7 @@ namespace CryCil.Engine.Models.StaticObjects
 				string texturesName = Enum.GetName(enumType, ResourceRefreshFlags.Textures);
 				string geometryName = Enum.GetName(enumType, ResourceRefreshFlags.Geometry);
 				string message =
-					string.Format("Only {0}, {1}, {2} flags from {3} can be accepted when refreshing static object.",
-								  shadersName, texturesName, geometryName, enumType.Name);
+					$"Only {shadersName}, {texturesName}, {geometryName} flags from {enumType.Name} can be accepted when refreshing static object.";
 				Log.Warning(message, false);
 			}
 #endif
@@ -576,8 +565,8 @@ namespace CryCil.Engine.Models.StaticObjects
 			FreeIndexedMesh(this.handle);
 		}
 		/// <summary>
-		/// Marks the render mesh and (optionally) physics mesh and forces them to be re-created from
-		/// hosted indexed mesh.
+		/// Marks the render mesh and (optionally) physics mesh and forces them to be re-created from hosted
+		/// indexed mesh.
 		/// </summary>
 		/// <param name="physics">  Indicates whether physics geometry must be recreated.</param>
 		/// <param name="tolerance">Unknown.</param>

@@ -42,39 +42,24 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the current angle of steering in radians.
 		/// </summary>
-		public float CurrentSteeringAngle
-		{
-			get { return this.steer; }
-		}
+		public float CurrentSteeringAngle => this.steer;
 		/// <summary>
-		/// Gets the current position of the 'pedal' that defines where and how quickly the vehicle wants
-		/// to go.
+		/// Gets the current position of the 'pedal' that defines where and how quickly the vehicle wants to
+		/// go.
 		/// </summary>
-		public float CurrentPedalPosition
-		{
-			get { return this.pedal; }
-		}
+		public float CurrentPedalPosition => this.pedal;
 		/// <summary>
 		/// Gets the value that indicates whether hand brake is active.
 		/// </summary>
-		public bool HandBrakeActive
-		{
-			get { return this.bHandBrake != 0; }
-		}
+		public bool HandBrakeActive => this.bHandBrake != 0;
 		/// <summary>
 		/// Gets the current velocity.
 		/// </summary>
-		public Vector3 Velocity
-		{
-			get { return this.vel; }
-		}
+		public Vector3 Velocity => this.vel;
 		/// <summary>
 		/// Gets the value that indicates whether at least one wheel is touching the ground.
 		/// </summary>
-		public bool ContactsGround
-		{
-			get { return this.bWheelContact != 0; }
-		}
+		public bool ContactsGround => this.bWheelContact != 0;
 		/// <summary>
 		/// Gets the zero-based index of the current gear.
 		/// </summary>
@@ -84,38 +69,23 @@ namespace CryCil.Engine.Physics
 		/// <para>1 - neutral;</para>
 		/// <para>2 and more - forward.</para>
 		/// </remarks>
-		public int CurrentGear
-		{
-			get { return this.iCurGear; }
-		}
+		public int CurrentGear => this.iCurGear;
 		/// <summary>
 		/// Gets the number of revolutions per minute the engine is currently operating at.
 		/// </summary>
-		public float EngineRotationFrequency
-		{
-			get { return this.engineRPM; }
-		}
+		public float EngineRotationFrequency => this.engineRPM;
 		/// <summary>
 		/// Gets the value from 0 to 1 that specifies the degree of clutch engagement.
 		/// </summary>
-		public float Clutch
-		{
-			get { return this.clutch; }
-		}
+		public float Clutch => this.clutch;
 		/// <summary>
 		/// Gets the current driving axle torque.
 		/// </summary>
-		public float DrivingTorque
-		{
-			get { return this.drivingTorque; }
-		}
+		public float DrivingTorque => this.drivingTorque;
 		/// <summary>
 		/// Gets the number of non-static entities this vehicle has contacts with.
 		/// </summary>
-		public int ActiveContactCount
-		{
-			get { return this.nActiveColliders; }
-		}
+		public int ActiveContactCount => this.nActiveColliders;
 		#endregion
 		#region Construction
 		/// <summary>

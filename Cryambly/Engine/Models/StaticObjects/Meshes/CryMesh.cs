@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -21,10 +22,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != null; }
-		}
+		public bool IsValid => this.handle != null;
 		/// <summary>
 		/// Gets the collection of faces that comprise this mesh.
 		/// </summary>

@@ -21,37 +21,22 @@ namespace CryCil.Engine.Physics
 		/// Currently known breakage events are: breakage, destroy, joint_shatter, joint_break,
 		/// freeze_vapor, freeze_shatter.
 		/// </remarks>
-		public string Type
-		{
-			get { return Marshal.PtrToStringAnsi(this.type); }
-		}
+		public string Type => Marshal.PtrToStringAnsi(this.type);
 		/// <summary>
 		/// Gets the name of the particle effect to use.
 		/// </summary>
-		public string ParticleEffect
-		{
-			get { return Marshal.PtrToStringAnsi(this.particleEffect); }
-		}
+		public string ParticleEffect => Marshal.PtrToStringAnsi(this.particleEffect);
 		/// <summary>
 		/// Unknown.
 		/// </summary>
-		public int CountPerUnit
-		{
-			get { return this.countPerUnit; }
-		}
+		public int CountPerUnit => this.countPerUnit;
 		/// <summary>
 		/// Unknown.
 		/// </summary>
-		public float CountScale
-		{
-			get { return this.countScale; }
-		}
+		public float CountScale => this.countScale;
 		/// <summary>
 		/// Gets the scale of the particle effect.
 		/// </summary>
-		public float Scale
-		{
-			get { return this.scale; }
-		}
+		public float Scale => this.scale;
 	}
 }

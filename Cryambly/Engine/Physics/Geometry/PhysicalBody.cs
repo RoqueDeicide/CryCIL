@@ -21,8 +21,8 @@ namespace CryCil.Engine.Physics
 #pragma warning restore 649
 	}
 	/// <summary>
-	/// Represents a geometric object that is physicalized (has its physical properties, inertia tensor,
-	/// etc calculated).
+	/// Represents a geometric object that is physicalized (has its physical properties, inertia tensor, etc
+	/// calculated).
 	/// </summary>
 	public unsafe struct PhysicalBody
 	{
@@ -33,10 +33,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != null; }
-		}
+		public bool IsValid => this.handle != null;
 		/// <summary>
 		/// Gets or sets the object that represents the shape of this body.
 		/// </summary>

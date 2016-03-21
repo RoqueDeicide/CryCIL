@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace CryCil.Engine.Logic
@@ -16,10 +17,7 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Gets the identifier itself.
 		/// </summary>
-		public ulong Id
-		{
-			get { return this.id; }
-		}
+		public ulong Id => this.id;
 		#endregion
 		#region Events
 		#endregion

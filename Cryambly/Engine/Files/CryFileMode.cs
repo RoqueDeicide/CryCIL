@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil.Engine.Files
 {
@@ -16,8 +17,7 @@ namespace CryCil.Engine.Files
 		/// </summary>
 		Write,
 		/// <summary>
-		/// File will be opened in 'Write' mode and it's stream position will be set to the end of the
-		/// file.
+		/// File will be opened in 'Write' mode and it's stream position will be set to the end of the file.
 		/// </summary>
 		Append
 	}

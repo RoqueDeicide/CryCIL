@@ -132,18 +132,12 @@ namespace CryCil
 		/// Gets determinant of this matrix.
 		/// </summary>
 		/// <remarks>This will only get you determinant of upper 3x3 submatrix.</remarks>
-		public float QuickDeterminant
-		{
-			get
-			{
-				return this.M00 * this.M11 * this.M22 +
-					   this.M01 * this.M12 * this.M20 +
-					   this.M02 * this.M10 * this.M21 -
-					   this.M02 * this.M11 * this.M20 -
-					   this.M00 * this.M12 * this.M21 -
-					   this.M01 * this.M10 * this.M22;
-			}
-		}
+		public float QuickDeterminant => this.M00 * this.M11 * this.M22 +
+										 this.M01 * this.M12 * this.M20 +
+										 this.M02 * this.M10 * this.M21 -
+										 this.M02 * this.M11 * this.M20 -
+										 this.M00 * this.M12 * this.M21 -
+										 this.M01 * this.M10 * this.M22;
 		/// <summary>
 		/// Gets actual determinant.
 		/// </summary>
@@ -171,16 +165,10 @@ namespace CryCil
 		/// <summary>
 		/// Gets new matrix that represents this matrix where rows and columns are swapped.
 		/// </summary>
-		public Matrix44 Transposed
-		{
-			get
-			{
-				return new Matrix44(this.M00, this.M10, this.M20, this.M30,
-									this.M01, this.M11, this.M21, this.M31,
-									this.M02, this.M12, this.M22, this.M32,
-									this.M03, this.M13, this.M23, this.M33);
-			}
-		}
+		public Matrix44 Transposed => new Matrix44(this.M00, this.M10, this.M20, this.M30,
+												   this.M01, this.M11, this.M21, this.M31,
+												   this.M02, this.M12, this.M22, this.M32,
+												   this.M03, this.M13, this.M23, this.M33);
 		/// <summary>
 		/// Gets or sets translation transformation that is represented by this matrix.
 		/// </summary>
@@ -197,10 +185,7 @@ namespace CryCil
 		/// <summary>
 		/// Indicates whether elements of this matrix are valid numbers.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.All(MathHelpers.IsNumberValid); }
-		}
+		public bool IsValid => this.All(MathHelpers.IsNumberValid);
 		/// <summary>
 		/// Gives access to specific element of this matrix.
 		/// </summary>
@@ -214,7 +199,7 @@ namespace CryCil
 			{
 				if ((index | 0xF) != 0xF) // index < 0 || index > 3
 				{
-					throw new ArgumentOutOfRangeException("index", "Attempt to access matrix row out of range [0, 2].");
+					throw new ArgumentOutOfRangeException(nameof(index), "Attempt to access matrix row out of range [0, 2].");
 				}
 				Contract.EndContractBlock();
 
@@ -227,7 +212,7 @@ namespace CryCil
 			{
 				if ((index | 0xF) != 0xF) // index < 0 || index > 3
 				{
-					throw new ArgumentOutOfRangeException("index", "Attempt to access matrix row out of range [0, 2].");
+					throw new ArgumentOutOfRangeException(nameof(index), "Attempt to access matrix row out of range [0, 2].");
 				}
 				Contract.EndContractBlock();
 
@@ -254,11 +239,11 @@ namespace CryCil
 			{
 				if ((row | 0x3) != 0x3) // row < 0 || row > 3
 				{
-					throw new ArgumentOutOfRangeException("row", "Attempt to access matrix row out of range [0, 2].");
+					throw new ArgumentOutOfRangeException(nameof(row), "Attempt to access matrix row out of range [0, 2].");
 				}
 				if ((column | 0x3) != 0x3) // column < 0 || column > 3
 				{
-					throw new ArgumentOutOfRangeException("row", "Attempt to access matrix column out of range [0, 2].");
+					throw new ArgumentOutOfRangeException(nameof(row), "Attempt to access matrix column out of range [0, 2].");
 				}
 				Contract.EndContractBlock();
 
@@ -271,11 +256,11 @@ namespace CryCil
 			{
 				if ((row | 0x3) != 0x3) // row < 0 || row > 3
 				{
-					throw new ArgumentOutOfRangeException("row", "Attempt to access matrix row out of range [0, 2].");
+					throw new ArgumentOutOfRangeException(nameof(row), "Attempt to access matrix row out of range [0, 2].");
 				}
 				if ((column | 0x3) != 0x3) // column < 0 || column > 3
 				{
-					throw new ArgumentOutOfRangeException("row", "Attempt to access matrix column out of range [0, 2].");
+					throw new ArgumentOutOfRangeException(nameof(row), "Attempt to access matrix column out of range [0, 2].");
 				}
 				Contract.EndContractBlock();
 
@@ -312,19 +297,13 @@ namespace CryCil
 		/// <summary>
 		/// Gets a 2D array of elements of this matrix.
 		/// </summary>
-		public float[,] Array2D
+		public float[,] Array2D => new[,]
 		{
-			get
-			{
-				return new[,]
-				{
-					{this.M00, this.M01, this.M02, this.M03},
-					{this.M10, this.M11, this.M12, this.M13},
-					{this.M20, this.M21, this.M22, this.M23},
-					{this.M30, this.M31, this.M32, this.M33}
-				};
-			}
-		}
+			{this.M00, this.M01, this.M02, this.M03},
+			{this.M10, this.M11, this.M12, this.M13},
+			{this.M20, this.M21, this.M22, this.M23},
+			{this.M30, this.M31, this.M32, this.M33}
+		};
 		#endregion
 		#region Contruction
 		/// <summary>
@@ -496,8 +475,8 @@ namespace CryCil
 		/// Calculate a real inversion of a Matrix44.
 		/// </summary>
 		/// <remarks>
-		/// Uses Cramer's Rule which is faster (branchless) but numerically more unstable than other
-		/// methods like Gaussian Elimination.
+		/// Uses Cramer's Rule which is faster (branchless) but numerically more unstable than other methods
+		/// like Gaussian Elimination.
 		/// </remarks>
 		/// <returns>False, if this matrix's determinant is equal to zero, otherwise true.</returns>
 		public bool Invert()
@@ -910,14 +889,12 @@ namespace CryCil
 		/// </summary>
 		/// <param name="i">Zero-based index of the column to set.</param>
 		/// <param name="v">Vector that supplies new values.</param>
-		/// <exception cref="ArgumentOutOfRangeException">
-		/// Index of the column must be in [0; 3].
-		/// </exception>
+		/// <exception cref="ArgumentOutOfRangeException">Index of the column must be in [0; 3].</exception>
 		public void SetColumn(int i, Vector3 v)
 		{
 			if (i < 0 || i > 3)
 			{
-				throw new ArgumentOutOfRangeException("i", "Index of the column must be in [0; 3].");
+				throw new ArgumentOutOfRangeException(nameof(i), "Index of the column must be in [0; 3].");
 			}
 			switch (i)
 			{
@@ -948,14 +925,12 @@ namespace CryCil
 		/// </summary>
 		/// <param name="i">Zero-based index of the column to set.</param>
 		/// <param name="v">Vector that supplies new values.</param>
-		/// <exception cref="ArgumentOutOfRangeException">
-		/// Index of the column must be in [0; 3].
-		/// </exception>
+		/// <exception cref="ArgumentOutOfRangeException">Index of the column must be in [0; 3].</exception>
 		public void SetColumn(int i, Vector4 v)
 		{
 			if (i < 0 || i > 3)
 			{
-				throw new ArgumentOutOfRangeException("i", "Index of the column must be in [0; 3].");
+				throw new ArgumentOutOfRangeException(nameof(i), "Index of the column must be in [0; 3].");
 			}
 			switch (i)
 			{
@@ -990,14 +965,12 @@ namespace CryCil
 		/// </summary>
 		/// <param name="i">Zero-based index of the column to get.</param>
 		/// <returns>Vector that contains values.</returns>
-		/// <exception cref="ArgumentOutOfRangeException">
-		/// Index of the column must be in [0; 3].
-		/// </exception>
+		/// <exception cref="ArgumentOutOfRangeException">Index of the column must be in [0; 3].</exception>
 		public Vector3 GetColumn(int i)
 		{
 			if (i < 0 || i > 3)
 			{
-				throw new ArgumentOutOfRangeException("i", "Index of the column must be in [0; 3].");
+				throw new ArgumentOutOfRangeException(nameof(i), "Index of the column must be in [0; 3].");
 			}
 			switch (i)
 			{
@@ -1018,14 +991,12 @@ namespace CryCil
 		/// </summary>
 		/// <param name="i">Zero-based index of the column to get.</param>
 		/// <returns>Vector that contains values.</returns>
-		/// <exception cref="ArgumentOutOfRangeException">
-		/// Index of the column must be in [0; 3].
-		/// </exception>
+		/// <exception cref="ArgumentOutOfRangeException">Index of the column must be in [0; 3].</exception>
 		public Vector4 GetColumn4(int i)
 		{
 			if (i < 0 || i > 3)
 			{
-				throw new ArgumentOutOfRangeException("i", "Index of the column must be in [0; 3].");
+				throw new ArgumentOutOfRangeException(nameof(i), "Index of the column must be in [0; 3].");
 			}
 			switch (i)
 			{
@@ -1071,7 +1042,7 @@ namespace CryCil
 		/// </returns>
 		public override bool Equals(object obj)
 		{
-			return !ReferenceEquals(null, obj) && (obj is Matrix44 && this.Equals((Matrix44)obj));
+			return !ReferenceEquals(null, obj) && obj is Matrix44 && this.Equals((Matrix44)obj);
 		}
 		/// <summary>
 		/// Calculates hash code of this matrix.

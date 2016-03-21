@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace MainTestingAssembly
 {
@@ -62,7 +59,7 @@ namespace MainTestingAssembly
 				Counter++;
 
 				Console.WriteLine("TEST: ManagedWorker: This thread was {0} to enter critical section.",
-					ToOrdinal(Counter));
+								  ToOrdinal(Counter));
 
 				Console.WriteLine("TEST: ManagedWorker: Leaving critical section.");
 			}
@@ -70,10 +67,7 @@ namespace MainTestingAssembly
 			Console.WriteLine("TEST: ManagedWorker: Joining to another worker thread.");
 
 			Thread thread = param as Thread;
-			if (thread != null)
-			{
-				thread.Join();
-			}
+			thread?.Join();
 
 			Console.WriteLine("TEST: ManagedWorker: Work complete.");
 		}

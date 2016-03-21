@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
 using System.Globalization;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
@@ -68,37 +69,37 @@ namespace CryCil.Geometry
 			return !left.Equals(right);
 		}
 		/// <summary>
-		/// Returns a <see cref="System.String"/> that represents this instance.
+		/// Returns a <see cref="string"/> that represents this instance.
 		/// </summary>
-		/// <returns>A <see cref="System.String"/> that represents this instance.</returns>
+		/// <returns>A <see cref="string"/> that represents this instance.</returns>
 		public override string ToString()
 		{
 			return string.Format(CultureInfo.CurrentCulture, "Position:{0} Direction:{1}", this.Position, this.Direction);
 		}
 		/// <summary>
-		/// Returns a <see cref="System.String"/> that represents this instance.
+		/// Returns a <see cref="string"/> that represents this instance.
 		/// </summary>
 		/// <param name="format">The format.</param>
-		/// <returns>A <see cref="System.String"/> that represents this instance.</returns>
+		/// <returns>A <see cref="string"/> that represents this instance.</returns>
 		public string ToString(string format)
 		{
 			return string.Format(CultureInfo.CurrentCulture, "Position:{0} Direction:{1}", this.Position, this.Direction);
 		}
 		/// <summary>
-		/// Returns a <see cref="System.String"/> that represents this instance.
+		/// Returns a <see cref="string"/> that represents this instance.
 		/// </summary>
 		/// <param name="formatProvider">The format provider.</param>
-		/// <returns>A <see cref="System.String"/> that represents this instance.</returns>
+		/// <returns>A <see cref="string"/> that represents this instance.</returns>
 		public string ToString(IFormatProvider formatProvider)
 		{
 			return string.Format(formatProvider, "Position:{0} Direction:{1}", this.Position, this.Direction);
 		}
 		/// <summary>
-		/// Returns a <see cref="System.String"/> that represents this instance.
+		/// Returns a <see cref="string"/> that represents this instance.
 		/// </summary>
 		/// <param name="format">        The format.</param>
 		/// <param name="formatProvider">The format provider.</param>
-		/// <returns>A <see cref="System.String"/> that represents this instance.</returns>
+		/// <returns>A <see cref="string"/> that represents this instance.</returns>
 		public string ToString(string format, IFormatProvider formatProvider)
 		{
 			return string.Format(formatProvider, "Position:{0} Direction:{1}", this.Position, this.Direction);
@@ -107,8 +108,8 @@ namespace CryCil.Geometry
 		/// Returns a hash code for this instance.
 		/// </summary>
 		/// <returns>
-		/// A hash code for this instance, suitable for use in hashing algorithms and data structures like
-		/// a hash table.
+		/// A hash code for this instance, suitable for use in hashing algorithms and data structures like a
+		/// hash table.
 		/// </returns>
 		public override int GetHashCode()
 		{
@@ -239,7 +240,7 @@ namespace CryCil.Geometry
 		{
 			if (maxHits <= 0)
 			{
-				throw new ArgumentOutOfRangeException("maxHits", "Maximal number of hits cannot be lass or equal to 0.");
+				throw new ArgumentOutOfRangeException(nameof(maxHits), "Maximal number of hits cannot be lass or equal to 0.");
 			}
 			Contract.EndContractBlock();
 

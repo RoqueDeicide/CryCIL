@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using CryCil.Geometry;
 
@@ -21,10 +22,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero && this.handle != new IntPtr(-10); }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero && this.handle != new IntPtr(-10);
 		/// <summary>
 		/// Gets or sets identifier of this physical entity.
 		/// </summary>
@@ -124,8 +122,8 @@ namespace CryCil.Engine.Physics
 		/// </summary>
 		/// <param name="type">       Type of physical entity to create.</param>
 		/// <param name="lifeTime">   
-		/// If <paramref name="placeHolder"/> is not specified then this parameter defines the time
-		/// interval before new entity will be destroyed, otherwise its the time that must pass since last
+		/// If <paramref name="placeHolder"/> is not specified then this parameter defines the time interval
+		/// before new entity will be destroyed, otherwise its the time that must pass since last
 		/// interaction before entity is converted back into place-holder.
 		/// </param>
 		/// <param name="parameters"> 
@@ -154,8 +152,8 @@ namespace CryCil.Engine.Physics
 		/// </summary>
 		/// <param name="type">       Type of physical entity to create.</param>
 		/// <param name="lifeTime">   
-		/// If <paramref name="placeHolder"/> is not specified then this parameter defines the time
-		/// interval before new entity will be destroyed, otherwise its the time that must pass since last
+		/// If <paramref name="placeHolder"/> is not specified then this parameter defines the time interval
+		/// before new entity will be destroyed, otherwise its the time that must pass since last
 		/// interaction before entity is converted back into place-holder.
 		/// </param>
 		/// <param name="foreignData">
@@ -197,7 +195,7 @@ namespace CryCil.Engine.Physics
 			this.AssertInstance();
 			if (!parameters.Initialized)
 			{
-				throw new ArgumentNullException("parameters",
+				throw new ArgumentNullException(nameof(parameters),
 												"An object that represents a set of parameters to set was created via default constructor which is not allowed.");
 			}
 
@@ -227,7 +225,7 @@ namespace CryCil.Engine.Physics
 			this.AssertInstance();
 			if (!parameters.Initialized)
 			{
-				throw new ArgumentNullException("parameters",
+				throw new ArgumentNullException(nameof(parameters),
 												"An object that represents a set of parameters to get was created via default constructor which is not allowed.");
 			}
 			switch (parameters.Type)
@@ -290,7 +288,7 @@ namespace CryCil.Engine.Physics
 				case PhysicsParametersTypes.Count:
 					break;
 				default:
-					throw new ArgumentOutOfRangeException("parameters", "Unknown type of physics parameters was used.");
+					throw new ArgumentOutOfRangeException(nameof(parameters), "Unknown type of physics parameters was used.");
 			}
 
 			return GetParams(this.handle, ref parameters) != 0;
@@ -313,7 +311,7 @@ namespace CryCil.Engine.Physics
 			this.AssertInstance();
 			if (!status.Initialized)
 			{
-				throw new ArgumentNullException("status",
+				throw new ArgumentNullException(nameof(status),
 												"An object that represents information to query was created via default constructor which is not allowed.");
 			}
 
@@ -340,7 +338,7 @@ namespace CryCil.Engine.Physics
 			this.AssertInstance();
 			if (!action.Initialized)
 			{
-				throw new ArgumentNullException("action",
+				throw new ArgumentNullException(nameof(action),
 												"An object that represents an action to execute was created via default constructor which is not allowed.");
 			}
 
@@ -367,8 +365,8 @@ namespace CryCil.Engine.Physics
 		/// The object that represents the physical body must be valid.
 		/// </exception>
 		/// <exception cref="ArgumentException">
-		/// The object that represents parameters that specify the physical body must not be created
-		/// through default constructor.
+		/// The object that represents parameters that specify the physical body must not be created through
+		/// default constructor.
 		/// </exception>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public int AddBody(PhysicalBody body, ref GeometryParameters parameters, int id = -1, bool threadSafe = false)
@@ -376,13 +374,13 @@ namespace CryCil.Engine.Physics
 			this.AssertInstance();
 			if (!body.IsValid)
 			{
-				throw new ArgumentNullException("body", "The object that represents the physical body must be valid.");
+				throw new ArgumentNullException(nameof(body), "The object that represents the physical body must be valid.");
 			}
 			if (!parameters.Initialized)
 			{
 				throw new ArgumentException(
 					"The object that represents parameters that specify the physical body must not be created through default constructor.",
-					"parameters");
+					nameof(parameters));
 			}
 
 			return AddGeometry(this.handle, body, ref parameters, id, threadSafe);
@@ -407,8 +405,7 @@ namespace CryCil.Engine.Physics
 		/// </summary>
 		/// <param name="ray">   
 		/// An object that describes the trajectory of sphere's movement. To detect collisions properly the
-		/// <see cref="Ray.Position"/> must be further then <paramref name="radius"/> away from this
-		/// entity.
+		/// <see cref="Ray.Position"/> must be further then <paramref name="radius"/> away from this entity.
 		/// </param>
 		/// <param name="radius">Radius of the sphere.</param>
 		/// <param name="hit">   
@@ -425,7 +422,7 @@ namespace CryCil.Engine.Physics
 			this.AssertInstance();
 			if (radius < MathHelpers.NZeroTolerance)
 			{
-				throw new ArgumentOutOfRangeException("radius", "Radius of the sphere cannot be less then 0.");
+				throw new ArgumentOutOfRangeException(nameof(radius), "Radius of the sphere cannot be less then 0.");
 			}
 
 			return CollideEntityWithBeam(this.handle, ref ray.Position, ref ray.Direction, radius, out hit);

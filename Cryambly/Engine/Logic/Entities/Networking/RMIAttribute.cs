@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Specialized;
+using System.Linq;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
 using CryCil.RunTime;
@@ -93,32 +94,20 @@ namespace CryCil.Engine.Logic
 		/// <see cref="RmiDataTransfer.PostAttach"/>).
 		/// </para>
 		/// </remarks>
-		public bool Reliable
-		{
-			get { return this.type.HasFlag(RmiType.Reliable); }
-		}
+		public bool Reliable => this.type.HasFlag(RmiType.Reliable);
 		/// <summary>
 		/// Specifies how and when RMI data is transferred via network.
 		/// </summary>
-		public RmiDataTransfer DataTransfer
-		{
-			get { return (RmiDataTransfer)(this.type & RmiType.AttachmentMask); }
-		}
+		public RmiDataTransfer DataTransfer => (RmiDataTransfer)(this.type & RmiType.AttachmentMask);
 		/// <summary>
 		/// Indicates whether marked method will be invoked from client to server (when value is
 		/// <c>true</c>), or from server to client (when value is <c>false</c>).
 		/// </summary>
-		public bool ToServer
-		{
-			get { return this.type.HasFlag(RmiType.ToServer); }
-		}
+		public bool ToServer => this.type.HasFlag(RmiType.ToServer);
 		/// <summary>
 		/// Indicates whether marked method must be invoked without waiting for the next frame.
 		/// </summary>
-		public bool Immediate
-		{
-			get { return this.type.HasFlag(RmiType.LowDelay); }
-		}
+		public bool Immediate => this.type.HasFlag(RmiType.LowDelay);
 		#endregion
 		#region Construction
 		/// <summary>
@@ -131,8 +120,7 @@ namespace CryCil.Engine.Logic
 		/// Specifies whether method will be invoked from the client. <see cref="ToServer"/> for details.
 		/// </param>
 		/// <param name="immediate">   
-		/// Specifies whether method will be invoked before next frame. <see cref="Immediate"/> for
-		/// details.
+		/// Specifies whether method will be invoked before next frame. <see cref="Immediate"/> for details.
 		/// </param>
 		/// <param name="reliable">    
 		/// Specifies whether RMI data will be transfered using more reliable way. <see cref="Reliable"/>

@@ -20,10 +20,7 @@ namespace CryCil.Engine.Logic.EntityProxies
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 
 		/// <summary>
 		/// Gets the bounds of this entity in world-space.
@@ -254,8 +251,7 @@ namespace CryCil.Engine.Logic.EntityProxies
 		}
 		/// <summary>
 		/// Sets the value that indicates whether this entity's rendering should be affected by the
-		/// interference filter that is applied to HUD, when this entity is rendered in Post 3D Render
-		/// mode.
+		/// interference filter that is applied to HUD, when this entity is rendered in Post 3D Render mode.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public bool IgnoreHudInterferenceFilter
@@ -286,8 +282,8 @@ namespace CryCil.Engine.Logic.EntityProxies
 			}
 		}
 		/// <summary>
-		/// Sets the value that indicates whether this entity's rendering should be done without bloom,
-		/// when this entity is rendered in Post 3D Render mode.
+		/// Sets the value that indicates whether this entity's rendering should be done without bloom, when
+		/// this entity is rendered in Post 3D Render mode.
 		/// </summary>
 		/// <remarks>Set this to <c>true</c> when it causes overglow and weird visual artifacts.</remarks>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
@@ -384,8 +380,8 @@ namespace CryCil.Engine.Logic.EntityProxies
 			}
 		}
 		/// <summary>
-		/// Gets or sets a set of 4 numbers from 0 to 255 that represent the color of the silhouette that
-		/// is render around this entity on HUD.
+		/// Gets or sets a set of 4 numbers from 0 to 255 that represent the color of the silhouette that is
+		/// render around this entity on HUD.
 		/// </summary>
 		/// <remarks>Can be used to highlight the interactive items in the world.</remarks>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
@@ -555,8 +551,8 @@ namespace CryCil.Engine.Logic.EntityProxies
 		/// </summary>
 		/// <param name="bounds">         Reference to the bounding box to force upon this entity.</param>
 		/// <param name="dontRecalculate">
-		/// Indicates whether entity must be prevented from attempting to recalculate the bounding box
-		/// after this change.
+		/// Indicates whether entity must be prevented from attempting to recalculate the bounding box after
+		/// this change.
 		/// </param>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public void ChangeBounds(ref BoundingBox bounds, bool dontRecalculate = true)
@@ -597,8 +593,8 @@ namespace CryCil.Engine.Logic.EntityProxies
 		/// </summary>
 		/// <param name="slot">Zero-based index of the slot to get the custom material from.</param>
 		/// <returns>
-		/// A valid <see cref="Material"/>, if a custom material was assigned to this slot before,
-		/// otherwise an invalid object is returned.
+		/// A valid <see cref="Material"/>, if a custom material was assigned to this slot before, otherwise
+		/// an invalid object is returned.
 		/// </returns>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public Material GetMaterial(int slot)
@@ -634,8 +630,8 @@ namespace CryCil.Engine.Logic.EntityProxies
 		/// </para>
 		/// </remarks>
 		/// <param name="enable"> 
-		/// Indicates whether this entity should be added to the post render stage, rather then removed
-		/// from it.
+		/// Indicates whether this entity should be added to the post render stage, rather then removed from
+		/// it.
 		/// </param>
 		/// <param name="groupId">Identifier of the group to render this entity in.</param>
 		/// <param name="p1">     

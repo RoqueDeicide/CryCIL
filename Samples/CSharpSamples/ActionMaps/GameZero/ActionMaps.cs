@@ -1,26 +1,30 @@
 ﻿// This file contains a set of sample Action maps that match the contents of "defaultProfile.xml" file in
 // GameZero.
 
+using System;
+using System.Linq;
 using CryCil.Engine.Input;
 using CryCil.Engine.Input.ActionMapping;
 
 #if WIN32 || Durango || Orbis
+
 [assembly: DeviceMapping(SupportedInputDevices.KeyboardMouse)]
 #endif
 #if WIN32 || Durango
+
 [assembly: DeviceMapping(SupportedInputDevices.XboxPad)]
 #endif
 #if WIN32 || Orbis
+
 [assembly: DeviceMapping(SupportedInputDevices.OrbisPad)]
 #endif
 
 // Important!
-// 
-// You have to disable warning CS0067, otherwise the compiler will complain about unused events. Don't
-// worry they are getting used.
+//
+// You have to disable warning CS0067, otherwise the compiler will complain about unused events. Don't worry
+// they are getting used.
 
 #pragma warning disable 67
-
 namespace CSharpSamples.ActionMaps.GameZero
 {
 	/// <summary>

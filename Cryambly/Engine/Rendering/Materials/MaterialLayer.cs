@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using CryCil.Annotations;
 
@@ -84,10 +85,7 @@ namespace CryCil.Engine.Rendering
 		/// <summary>
 		/// Indicates whether this object is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 		#endregion
 		#region Events
 		#endregion
@@ -101,7 +99,7 @@ namespace CryCil.Engine.Rendering
 		{
 			if (!mat.IsValid)
 			{
-				throw new ArgumentNullException("mat", "Material handle cannot be null.");
+				throw new ArgumentNullException(nameof(mat), "Material handle cannot be null.");
 			}
 
 			this.handle = Ctor(mat);

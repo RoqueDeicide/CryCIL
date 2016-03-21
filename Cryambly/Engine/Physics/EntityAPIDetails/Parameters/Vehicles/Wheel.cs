@@ -44,10 +44,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the zero-based index of the wheel to get/set parameters from/for.
 		/// </summary>
-		public int WheelIndex
-		{
-			get { return this.iWheel; }
-		}
+		public int WheelIndex => this.iWheel;
 		/// <summary>
 		/// Gets or sets the value that indicates whether this wheel is a driving wheel.
 		/// </summary>
@@ -113,7 +110,8 @@ namespace CryCil.Engine.Physics
 		/// Gets or sets the minimal amount of friction that can be induced by the wheel.
 		/// </summary>
 		/// <remarks>
-		/// <para>Amount of friction depends how deep the wheel is in the ground.</para></remarks>
+		/// <para>Amount of friction depends how deep the wheel is in the ground.</para>
+		/// </remarks>
 		public float MinimalTireFriction
 		{
 			get { return this.minFriction; }
@@ -123,7 +121,8 @@ namespace CryCil.Engine.Physics
 		/// Gets or sets the maximal amount of friction that can be induced by the wheel.
 		/// </summary>
 		/// <remarks>
-		/// <para>Amount of friction depends how deep the wheel is in the ground.</para></remarks>
+		/// <para>Amount of friction depends how deep the wheel is in the ground.</para>
+		/// </remarks>
 		public float MaximalTireFriction
 		{
 			get { return this.maxFriction; }
@@ -138,8 +137,8 @@ namespace CryCil.Engine.Physics
 			set { this.surface_idx = value.Index; }
 		}
 		/// <summary>
-		/// Gets or sets the value that indicates whether this wheel uses more simple ray-casting instead
-		/// of cylinder geometry.
+		/// Gets or sets the value that indicates whether this wheel uses more simple ray-casting instead of
+		/// cylinder geometry.
 		/// </summary>
 		public bool RayCasts
 		{

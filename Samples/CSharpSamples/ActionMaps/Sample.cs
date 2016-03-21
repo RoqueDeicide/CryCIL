@@ -1,20 +1,23 @@
 ﻿using System;
+using System.Linq;
 using CryCil.Engine.Input.ActionMapping;
 
 // Sample device mappings.
 #if WIN32 || Durango || Orbis
+
 [assembly: DeviceMapping(SupportedInputDevices.KeyboardMouse)]
 #endif
 #if WIN32 || Durango
+
 [assembly: DeviceMapping(SupportedInputDevices.XboxPad)]
 #endif
 #if WIN32 || Orbis
+
 [assembly: DeviceMapping(SupportedInputDevices.OrbisPad)]
 #endif
 
 // You must disable this warning when defining action maps, otherwise the compiler will complain.
 #pragma warning disable 67
-
 namespace CryCil.Engine.Input.ActionMapping
 {
 	/// <summary>

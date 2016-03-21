@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using CryCil.Engine.Logic;
@@ -110,8 +109,7 @@ namespace CryCil.RunTime.Registration
 					}
 					else
 					{
-						throw new Exception(string.Format("A class named {0} has already been registered.",
-														  entityClassName));
+						throw new Exception($"A class named {entityClassName} has already been registered.");
 					}
 				}
 				else
@@ -135,12 +133,11 @@ namespace CryCil.RunTime.Registration
 		{
 			if (type == null)
 			{
-				throw new ArgumentNullException("type", "Entity type cannot be null.");
+				throw new ArgumentNullException(nameof(type), "Entity type cannot be null.");
 			}
 			if (DefinedProperties.ContainsKey(type.Name))
 			{
-				throw new Exception(string.Format("A type with a name {0} had its editable properties already defined.",
-												  type.Name));
+				throw new Exception($"A type with a name {type.Name} had its editable properties already defined.");
 			}
 
 			var folders = new SortedList<string, List<EditableProperty>>();

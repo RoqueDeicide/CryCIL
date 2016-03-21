@@ -19,10 +19,7 @@ namespace CryCil.Engine.Logic.EntityProxies
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 
 		/// <summary>
 		/// Gets the Axis-Aligned Bounding Box that represents the bounding box of the physical entity in
@@ -179,8 +176,7 @@ namespace CryCil.Engine.Logic.EntityProxies
 		/// Creates a physical entity that will represent this entity in physical world.
 		/// </summary>
 		/// <param name="parameters">
-		/// Reference to the object that encapsulates a set of parameters that describe the physical
-		/// entity.
+		/// Reference to the object that encapsulates a set of parameters that describe the physical entity.
 		/// </param>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public void Physicalize(ref EntityPhysicalizationParameters parameters)
@@ -207,7 +203,7 @@ namespace CryCil.Engine.Logic.EntityProxies
 			this.AssertInstance();
 			if (!entity.IsValid)
 			{
-				throw new ArgumentNullException("entity", "Physical entity to attach this one to cannot be null.");
+				throw new ArgumentNullException(nameof(entity), "Physical entity to attach this one to cannot be null.");
 			}
 
 			ReattachSoftEntityVtx(this.handle, entity, partId);

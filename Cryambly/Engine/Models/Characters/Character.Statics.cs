@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using CryCil.Annotations;
 using CryCil.Hashing;
@@ -48,24 +49,15 @@ namespace CryCil.Engine.Models.Characters
 		/// <summary>
 		/// Gets the number of ticks that were accumulated by animation system.
 		/// </summary>
-		public static ulong TickCount
-		{
-			get { return NumFrameTicks(); }
-		}
+		public static ulong TickCount => NumFrameTicks();
 		/// <summary>
 		/// Gets the number of ticks that were accumulated by sync functions.
 		/// </summary>
-		public static ulong SyncTickCount
-		{
-			get { return NumFrameSyncTicks(); }
-		}
+		public static ulong SyncTickCount => NumFrameSyncTicks();
 		/// <summary>
 		/// Gets current number of characters.
 		/// </summary>
-		public static uint CharacterCount
-		{
-			get { return NumCharacters(); }
-		}
+		public static uint CharacterCount => NumCharacters();
 		#endregion
 		#region Interface
 		/// <summary>

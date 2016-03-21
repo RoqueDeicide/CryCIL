@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using CryCil.Engine.Physics;
@@ -27,10 +28,7 @@ namespace CryCil.Engine.Models.Characters.Attachments
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 		/// <summary>
 		/// Gets the character this object manages attachments and attachment proxies for.
 		/// </summary>

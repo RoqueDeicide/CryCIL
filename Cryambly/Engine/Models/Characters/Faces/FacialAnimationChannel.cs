@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using CryCil.Geometry.Splines;
@@ -6,8 +7,8 @@ using CryCil.Geometry.Splines;
 namespace CryCil.Engine.Models.Characters.Faces
 {
 	/// <summary>
-	/// Represents a collection of splines that specifies how the facial effector changes over the course
-	/// of animation.
+	/// Represents a collection of splines that specifies how the facial effector changes over the course of
+	/// animation.
 	/// </summary>
 	public struct FacialAnimationChannelCurves
 	{
@@ -18,10 +19,7 @@ namespace CryCil.Engine.Models.Characters.Faces
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 
 		/// <summary>
 		/// Gets the number of splines in this channel.
@@ -132,10 +130,7 @@ namespace CryCil.Engine.Models.Characters.Faces
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 
 		/// <summary>
 		/// Gets or sets the identifier of this channel.

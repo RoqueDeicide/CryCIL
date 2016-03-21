@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil.Graphics
 {
@@ -30,10 +31,7 @@ namespace CryCil.Graphics
 		/// Gets luminance value of this color.
 		/// </summary>
 		/// <remarks>Luminance formula is: r*0.30f + g*0.59f + b*0.11f.</remarks>
-		public float Luminance
-		{
-			get { return this.R * 0.3f + this.G * 0.59f + this.B * 0.11f; }
-		}
+		public float Luminance => this.R * 0.3f + this.G * 0.59f + this.B * 0.11f;
 		/// <summary>
 		/// Provides read/write access to the color component.
 		/// </summary>
@@ -56,7 +54,7 @@ namespace CryCil.Graphics
 					case 3:
 						return this.A;
 					default:
-						throw new ArgumentOutOfRangeException("index",
+						throw new ArgumentOutOfRangeException(nameof(index),
 															  "Attempt to access color component other then R, G, B or A.");
 				}
 			}
@@ -77,8 +75,8 @@ namespace CryCil.Graphics
 						this.A = value;
 						break;
 					default:
-						throw new ArgumentOutOfRangeException("index", "Attempt to access color" +
-																	   " component other then R, G, B or A.");
+						throw new ArgumentOutOfRangeException(nameof(index), "Attempt to access color" +
+																			 " component other then R, G, B or A.");
 				}
 			}
 		}
@@ -110,9 +108,7 @@ namespace CryCil.Graphics
 		/// <summary>
 		/// Constructs a new gray-scale color object.
 		/// </summary>
-		/// <param name="brightness">
-		/// The brightness of the object, where 0 is black, and 1 is white.
-		/// </param>
+		/// <param name="brightness">The brightness of the object, where 0 is black, and 1 is white.</param>
 		public ColorSingle(float brightness) : this(brightness, brightness, brightness)
 		{
 		}
@@ -151,7 +147,7 @@ namespace CryCil.Graphics
 		/// </returns>
 		public override string ToString()
 		{
-			return string.Format("R {0} G {1} B {2} A {3}", this.R, this.G, this.B, this.A);
+			return $"R {this.R} G {this.G} B {this.B} A {this.A}";
 		}
 		/// <summary>
 		/// Gets hash code of this color.
@@ -215,7 +211,8 @@ namespace CryCil.Graphics
 			return new Vector3(clr.R, clr.G, clr.B);
 		}
 		/// <summary>
-		/// Converts a color that is represented by 4 numbers between 0 and 1 to color that is represented by 4 numbers between 0 and 255.
+		/// Converts a color that is represented by 4 numbers between 0 and 1 to color that is represented
+		/// by 4 numbers between 0 and 255.
 		/// </summary>
 		/// <param name="color">Color that is represented by 4 numbers between 0 and 1.</param>
 		/// <returns>Color that is represented by 4 numbers between 0 and 255.</returns>

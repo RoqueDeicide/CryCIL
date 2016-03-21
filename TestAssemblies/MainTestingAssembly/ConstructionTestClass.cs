@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MainTestingAssembly
 {
 	/// <summary>
-	/// Used from embedded Mono framework to test functionality of IMonoConstructor
-	/// implementation.
+	/// Used from embedded Mono framework to test functionality of IMonoConstructor implementation.
 	/// </summary>
 	public class ConstructionTestClass
 	{
@@ -33,21 +29,21 @@ namespace MainTestingAssembly
 			Console.WriteLine("TEST: Second parameter is equal to :{0}", param2);
 		}
 		/// <summary>
-		/// Constructor that accepts a simple real number and a reference to the string
-		/// object.
+		/// Constructor that accepts a simple real number and a reference to the string object.
 		/// </summary>
 		/// <param name="realNumber">A number.</param>
 		/// <param name="output">    A string representation of the number.</param>
 		public ConstructionTestClass(double realNumber, out string output)
 		{
-			Console.WriteLine("TEST: Constructor that accepts 2 parameters and one of them is reference to String has been invoked.");
+			Console.WriteLine("TEST: Constructor that accepts 2 parameters and one of them is reference to " +
+							  "String has been invoked.");
 
 			output = realNumber.ToString(CultureInfo.InvariantCulture);
 		}
 	}
 	/// <summary>
-	/// Defines constructors that are used for testing creation of objects that require
-	/// creation of other objects.
+	/// Defines constructors that are used for testing creation of objects that require creation of other
+	/// objects.
 	/// </summary>
 	public class CtorTestCompound
 	{
@@ -60,8 +56,7 @@ namespace MainTestingAssembly
 		/// </summary>
 		public CtorTestComponent2 Component2;
 		/// <summary>
-		/// Constructor that is invoked from native code to test creation of objects with
-		/// other objects.
+		/// Constructor that is invoked from native code to test creation of objects with other objects.
 		/// </summary>
 		/// <param name="component1">First component of the compound object.</param>
 		/// <param name="component2">Second component of the compound object.</param>
@@ -82,8 +77,8 @@ namespace MainTestingAssembly
 		}
 	}
 	/// <summary>
-	/// Represents one of the objects that will be created to test construction of objects
-	/// that require construction of other objects.
+	/// Represents one of the objects that will be created to test construction of objects that require
+	/// construction of other objects.
 	/// </summary>
 	public class CtorTestComponent1
 	{
@@ -118,8 +113,8 @@ namespace MainTestingAssembly
 		}
 	}
 	/// <summary>
-	/// Represents one of the objects that will be created to test construction of objects
-	/// that require construction of other objects.
+	/// Represents one of the objects that will be created to test construction of objects that require
+	/// construction of other objects.
 	/// </summary>
 	public class CtorTestComponent2
 	{
@@ -130,13 +125,13 @@ namespace MainTestingAssembly
 		/// <summary>
 		/// Cubic array of integers.
 		/// </summary>
-		public int[, ,] CubeArray;
+		public int[,,] CubeArray;
 		/// <summary>
 		/// Creates a component.
 		/// </summary>
 		/// <param name="byte">Byte component.</param>
 		/// <param name="cube">Cube array.</param>
-		public CtorTestComponent2(byte @byte, int[, ,] cube)
+		public CtorTestComponent2(byte @byte, int[,,] cube)
 		{
 			Console.WriteLine("TEST: Invoked the constructor of the second component.");
 			Console.WriteLine("TEST: Byte argument: {0}.", @byte);

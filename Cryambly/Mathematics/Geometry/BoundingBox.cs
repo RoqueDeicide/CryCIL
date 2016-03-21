@@ -22,6 +22,7 @@
 
 using System;
 using System.Globalization;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace CryCil.Geometry
@@ -47,10 +48,7 @@ namespace CryCil.Geometry
 		/// <summary>
 		/// Checks whether the bounding box is valid.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.Minimum.IsValid && this.Maximum.IsValid; }
-		}
+		public bool IsValid => this.Minimum.IsValid && this.Maximum.IsValid;
 		/// <summary>
 		/// Gets an array of eight corners of the bounding box.
 		/// </summary>
@@ -97,7 +95,7 @@ namespace CryCil.Geometry
 		{
 #if !(RELEASE && RELEASE_DISABLE_CHECKS)
 			if (points == null)
-				throw new ArgumentNullException("points");
+				throw new ArgumentNullException(nameof(points));
 #endif
 
 			var min = new Vector3(float.MaxValue);
@@ -163,8 +161,8 @@ namespace CryCil.Geometry
 		/// </summary>
 		/// <param name="ray">  The ray to test.</param>
 		/// <param name="point">
-		/// When the method completes, contains the point of intersection, or <see cref="Vector3"/> if
-		/// there was no intersection.
+		/// When the method completes, contains the point of intersection, or <see cref="Vector3"/> if there
+		/// was no intersection.
 		/// </param>
 		/// <returns>Whether the two objects intersected.</returns>
 		public bool Intersects(ref Ray ray, out Vector3 point)
@@ -313,9 +311,9 @@ namespace CryCil.Geometry
 			return !left.Equals(right);
 		}
 		/// <summary>
-		/// Returns a <see cref="System.String"/> that represents this instance.
+		/// Returns a <see cref="string"/> that represents this instance.
 		/// </summary>
-		/// <returns>A <see cref="System.String"/> that represents this instance.</returns>
+		/// <returns>A <see cref="string"/> that represents this instance.</returns>
 		public override string ToString()
 		{
 			return string.Format(CultureInfo.CurrentCulture,
@@ -323,10 +321,10 @@ namespace CryCil.Geometry
 								 this.Minimum, this.Maximum);
 		}
 		/// <summary>
-		/// Returns a <see cref="System.String"/> that represents this instance.
+		/// Returns a <see cref="string"/> that represents this instance.
 		/// </summary>
 		/// <param name="format">The format.</param>
-		/// <returns>A <see cref="System.String"/> that represents this instance.</returns>
+		/// <returns>A <see cref="string"/> that represents this instance.</returns>
 		public string ToString(string format)
 		{
 			return format == null
@@ -336,20 +334,20 @@ namespace CryCil.Geometry
 								this.Minimum, this.Maximum);
 		}
 		/// <summary>
-		/// Returns a <see cref="System.String"/> that represents this instance.
+		/// Returns a <see cref="string"/> that represents this instance.
 		/// </summary>
 		/// <param name="formatProvider">The format provider.</param>
-		/// <returns>A <see cref="System.String"/> that represents this instance.</returns>
+		/// <returns>A <see cref="string"/> that represents this instance.</returns>
 		public string ToString(IFormatProvider formatProvider)
 		{
 			return string.Format(formatProvider, "Minimum:{0} Maximum:{1}", this.Minimum, this.Maximum);
 		}
 		/// <summary>
-		/// Returns a <see cref="System.String"/> that represents this instance.
+		/// Returns a <see cref="string"/> that represents this instance.
 		/// </summary>
 		/// <param name="format">        The format.</param>
 		/// <param name="formatProvider">The format provider.</param>
-		/// <returns>A <see cref="System.String"/> that represents this instance.</returns>
+		/// <returns>A <see cref="string"/> that represents this instance.</returns>
 		public string ToString(string format, IFormatProvider formatProvider)
 		{
 			return format == null
@@ -360,8 +358,8 @@ namespace CryCil.Geometry
 		/// Returns a hash code for this instance.
 		/// </summary>
 		/// <returns>
-		/// A hash code for this instance, suitable for use in hashing algorithms and data structures like
-		/// a hash table.
+		/// A hash code for this instance, suitable for use in hashing algorithms and data structures like a
+		/// hash table.
 		/// </returns>
 		public override int GetHashCode()
 		{
@@ -389,18 +387,16 @@ namespace CryCil.Geometry
 			return this.Minimum == value.Minimum && this.Maximum == value.Maximum;
 		}
 		/// <summary>
-		/// Determines whether the specified <see cref="System.Object"/> is equal to this instance.
+		/// Determines whether the specified <see cref="object"/> is equal to this instance.
 		/// </summary>
-		/// <param name="value">The <see cref="System.Object"/> to compare with this instance.</param>
+		/// <param name="value">The <see cref="object"/> to compare with this instance.</param>
 		/// <returns>
-		/// <c>true</c> if the specified <see cref="System.Object"/> is equal to this instance; otherwise,
+		/// <c>true</c> if the specified <see cref="object"/> is equal to this instance; otherwise,
 		/// <c>false</c>.
 		/// </returns>
 		public override bool Equals(object value)
 		{
-			return value != null
-				   && (value.GetType() == this.GetType()
-					   && this.Equals((BoundingBox)value));
+			return value != null && value.GetType() == this.GetType() && this.Equals((BoundingBox)value);
 		}
 		/// <summary>
 		/// Determines whether this bounding box is a point.
@@ -414,10 +410,7 @@ namespace CryCil.Geometry
 		/// Gets the <see cref="Vector3"/> object that encapsulates coordinates of the center of this
 		/// bounding box.
 		/// </summary>
-		public Vector3 Center
-		{
-			get { return (this.Minimum + this.Maximum) * 0.5f; }
-		}
+		public Vector3 Center => (this.Minimum + this.Maximum) * 0.5f;
 		#endregion
 	}
 

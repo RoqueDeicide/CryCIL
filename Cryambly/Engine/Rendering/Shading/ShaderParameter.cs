@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
 using CryCil.Graphics;
@@ -95,9 +96,9 @@ namespace CryCil.Engine.Rendering
 		#region Properties
 		#region General Values
 		/// <summary>
-		/// Gets or sets boolean value of this parameter. If any other numeric value is stored here, it
-		/// will be converted to <see cref="bool"/>. Avoid using it unless this is a parameter of that
-		/// type. <c>false</c> will be returned if this shader parameter is not an integer number.
+		/// Gets or sets boolean value of this parameter. If any other numeric value is stored here, it will
+		/// be converted to <see cref="bool"/>. Avoid using it unless this is a parameter of that type.
+		/// <c>false</c> will be returned if this shader parameter is not an integer number.
 		/// </summary>
 		public bool Bool
 		{
@@ -341,9 +342,8 @@ namespace CryCil.Engine.Rendering
 		}
 		/// <summary>
 		/// Gets or sets single-precision floating point number stored in this parameter. If any other
-		/// numeric value is stored here, it will be converted to <see cref="float"/>. Avoid using it
-		/// unless this is a parameter of that type. NaN will be returned if this shader parameter is not
-		/// numeric.
+		/// numeric value is stored here, it will be converted to <see cref="float"/>. Avoid using it unless
+		/// this is a parameter of that type. NaN will be returned if this shader parameter is not numeric.
 		/// </summary>
 		public float Float
 		{
@@ -362,7 +362,7 @@ namespace CryCil.Engine.Rendering
 					case ShaderParameterType.Float:
 						return this.value.bytes4.SingleFloat;
 					default:
-						return Single.NaN;
+						return float.NaN;
 				}
 			}
 			set
@@ -478,10 +478,7 @@ namespace CryCil.Engine.Rendering
 		/// Gets Camera pointer value of this parameter. Avoid using it unless this is a parameter of that
 		/// type.
 		/// </summary>
-		public Camera* Camera
-		{
-			get { return this.value.camera; }
-		}
+		public Camera* Camera => this.value.camera;
 		/// <summary>
 		/// Gets or sets internal type of this shader parameter.
 		/// </summary>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using CryCil;
 using CryCil.Engine.Data;
 using CryCil.Engine.DebugServices;
@@ -15,8 +16,7 @@ namespace CSharpSamples
 		"Counter",
 		"This node is an analog of a Counter gate from Red Power mod for Minecraft, it stores" +
 		" an integer value that can be manipulated.",
-		FlowNodeFlags.Approved // Use at least this flag so the node can show up in the UI.
-		)]
+		FlowNodeFlags.Approved)] // Use at least this flag so the node can show up in the UI.
 	public class CounterNode : FlowNode
 	{
 		#region Fields
@@ -168,8 +168,8 @@ namespace CSharpSamples
 		public override bool Save(CryXmlNode node)
 		{
 			node.SetAttribute("CounterNodeCount", this.count);
-			// We can dispose this node now because once this method returns the control will be back to
-			// the native code.
+			// We can dispose this node now because once this method returns the control will be back to the
+			// native code.
 			node.Dispose();
 			return true;
 		}
@@ -181,8 +181,8 @@ namespace CSharpSamples
 		public override bool Load(CryXmlNode node)
 		{
 			node.GetAttribute("CounterNodeCount", out this.count);
-			// We can dispose this node now because once this method returns the control will be back to
-			// the native code.
+			// We can dispose this node now because once this method returns the control will be back to the
+			// native code.
 			node.Dispose();
 			return true;
 		}

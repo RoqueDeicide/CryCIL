@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using CryCil.RunTime;
 using CryCil.Utilities;
@@ -23,10 +24,7 @@ namespace CryCil.Engine.Models.Characters.Faces
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 		/// <summary>
 		/// Gets or sets the file name of this library.
 		/// </summary>
@@ -69,8 +67,7 @@ namespace CryCil.Engine.Models.Characters.Faces
 		#endregion
 		#region Interface
 		/// <summary>
-		/// Increments the reference count of this library. Call this when you get an extra reference to
-		/// it.
+		/// Increments the reference count of this library. Call this when you get an extra reference to it.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public void IncrementReferenceCount()
@@ -144,8 +141,8 @@ namespace CryCil.Engine.Models.Characters.Faces
 		/// </summary>
 		/// <param name="other">    Another library.</param>
 		/// <param name="overwrite">
-		/// Indicates whether an effector in this library will be overwritten when there is another
-		/// effector in another library that has the same name.
+		/// Indicates whether an effector in this library will be overwritten when there is another effector
+		/// in another library that has the same name.
 		/// </param>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public void Merge(FacialEffectorsLibrary other, bool overwrite)
@@ -172,8 +169,8 @@ namespace CryCil.Engine.Models.Characters.Faces
 		/// Loads this library.
 		/// </summary>
 		/// <param name="node">
-		/// An object that represents the Xml node that was used as a root for Xml data that represents
-		/// this library.
+		/// An object that represents the Xml node that was used as a root for Xml data that represents this
+		/// library.
 		/// </param>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public void Load(CryXmlNode node)
@@ -219,8 +216,8 @@ namespace CryCil.Engine.Models.Characters.Faces
 		[RawThunk("Invoked from underlying framework to call a visitor delegate.")]
 		private static void CallTheVisitor(EffectorsLibraryVisitor visitor, FacialEffector effector)
 		{
-			// We are not checking for null, because null visitors will not be allowed to proceed earlier
-			// in the code.
+			// We are not checking for null, because null visitors will not be allowed to proceed earlier in
+			// the code.
 
 			try
 			{

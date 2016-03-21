@@ -64,11 +64,11 @@ namespace CryCil.Engine
 		{
 			if (name == null)
 			{
-				throw new ArgumentNullException("name", "Name of the command to register must not be null.");
+				throw new ArgumentNullException(nameof(name), "Name of the command to register must not be null.");
 			}
 			if (command == null)
 			{
-				throw new ArgumentNullException("command", "The delegate that represents a command cannot be null.");
+				throw new ArgumentNullException(nameof(command), "The delegate that represents a command cannot be null.");
 			}
 
 			bool registered = registeredCommands.ContainsKey(name);
@@ -98,7 +98,7 @@ namespace CryCil.Engine
 		{
 			if (name == null)
 			{
-				throw new ArgumentNullException("name",
+				throw new ArgumentNullException(nameof(name),
 												"Name of the command to unregister must not be null.");
 			}
 
@@ -111,19 +111,19 @@ namespace CryCil.Engine
 		/// </summary>
 		/// <remarks>
 		/// When executing on the console commands that was registered using <see cref="RegisterCommand"/>
-		/// function with <paramref name="silent"/> set to <c>true</c> and
-		/// <paramref name="deferExecution"/> set to <c>false</c> normal execution procedure is bypassed
-		/// and actual delegate is invoked immediately.
+		/// function with <paramref name="silent"/> set to <c>true</c> and <paramref name="deferExecution"/>
+		/// set to <c>false</c> normal execution procedure is bypassed and actual delegate is invoked
+		/// immediately.
 		/// </remarks>
 		/// <param name="name">          Name of the command to execute.</param>
 		/// <param name="arguments">     A list of arguments to pass to the command.</param>
 		/// <param name="silent">        
-		/// If true, suppresses error output when failing to execute the command and suppresses message
-		/// that would normally be printed containing the full command line.
+		/// If true, suppresses error output when failing to execute the command and suppresses message that
+		/// would normally be printed containing the full command line.
 		/// </param>
 		/// <param name="deferExecution">
-		/// If true, the command is stored in special FIFO collection that allows delayed execution by
-		/// using wait_seconds and wait_frames commands.
+		/// If true, the command is stored in special FIFO collection that allows delayed execution by using
+		/// wait_seconds and wait_frames commands.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
 		/// Name of the command to execute must not be null.
@@ -136,7 +136,7 @@ namespace CryCil.Engine
 		{
 			if (name == null)
 			{
-				throw new ArgumentNullException("name", "Name of the command to execute must not be null.");
+				throw new ArgumentNullException(nameof(name), "Name of the command to execute must not be null.");
 			}
 
 			int argumentsArrayLength;
@@ -186,12 +186,12 @@ namespace CryCil.Engine
 		/// </summary>
 		/// <param name="command">       A command line (e.g. "map testy", no leading slash).</param>
 		/// <param name="silent">        
-		/// If true, suppresses error output when failing to execute the command and suppresses message
-		/// that would normally be printed containing the full command line.
+		/// If true, suppresses error output when failing to execute the command and suppresses message that
+		/// would normally be printed containing the full command line.
 		/// </param>
 		/// <param name="deferExecution">
-		/// If true, the command is stored in special FIFO collection that allows delayed execution by
-		/// using wait_seconds and wait_frames commands.
+		/// If true, the command is stored in special FIFO collection that allows delayed execution by using
+		/// wait_seconds and wait_frames commands.
 		/// </param>
 		/// <exception cref="ArgumentNullException">
 		/// Name of the command to execute must not be null.
@@ -277,8 +277,7 @@ namespace CryCil.Engine
 		/// <param name="value">   Default value of the console variable.</param>
 		/// <param name="flags">   A set of flags that describes the variable in technical detail.</param>
 		/// <param name="callback">
-		/// Static method that will be invoked, when the value of the console variable changes. Can be
-		/// null.
+		/// Static method that will be invoked, when the value of the console variable changes. Can be null.
 		/// </param>
 		/// <param name="help">    
 		/// Text to display when the user enters the name of the console variable followed by the question
@@ -308,16 +307,14 @@ namespace CryCil.Engine
 		{
 			if (name == null)
 			{
-				throw new ArgumentNullException("name", "Cannot register a console variable using a null name.");
+				throw new ArgumentNullException(nameof(name), "Cannot register a console variable using a null name.");
 			}
 			if (callback != null && !callback.Method.IsStatic)
 			{
 				throw new ArgumentException("Unable to use instance method as a console variable callback.");
 			}
 
-			IntPtr fPtr = callback != null
-				? callback.Method.MethodHandle.GetFunctionPointer()
-				: IntPtr.Zero;
+			IntPtr fPtr = callback?.Method.MethodHandle.GetFunctionPointer() ?? IntPtr.Zero;
 
 			return RegisterVariableInternal(name, value, flags, fPtr, help);
 		}
@@ -345,8 +342,7 @@ namespace CryCil.Engine
 		/// <param name="value">   Default value of the console variable.</param>
 		/// <param name="flags">   A set of flags that describes the variable in technical detail.</param>
 		/// <param name="callback">
-		/// Static method that will be invoked, when the value of the console variable changes. Can be
-		/// null.
+		/// Static method that will be invoked, when the value of the console variable changes. Can be null.
 		/// </param>
 		/// <param name="help">    
 		/// Text to display when the user enters the name of the console variable followed by the question
@@ -376,16 +372,14 @@ namespace CryCil.Engine
 		{
 			if (name == null)
 			{
-				throw new ArgumentNullException("name", "Cannot register a console variable using a null name.");
+				throw new ArgumentNullException(nameof(name), "Cannot register a console variable using a null name.");
 			}
 			if (callback != null && !callback.Method.IsStatic)
 			{
 				throw new ArgumentException("Unable to use instance method as a console variable callback.");
 			}
 
-			IntPtr fPtr = callback != null
-				? callback.Method.MethodHandle.GetFunctionPointer()
-				: IntPtr.Zero;
+			IntPtr fPtr = callback?.Method.MethodHandle.GetFunctionPointer() ?? IntPtr.Zero;
 
 			return RegisterVariableInternal(name, value, flags, fPtr, help);
 		}
@@ -413,8 +407,7 @@ namespace CryCil.Engine
 		/// <param name="value">   Default value of the console variable.</param>
 		/// <param name="flags">   A set of flags that describes the variable in technical detail.</param>
 		/// <param name="callback">
-		/// Static method that will be invoked, when the value of the console variable changes. Can be
-		/// null.
+		/// Static method that will be invoked, when the value of the console variable changes. Can be null.
 		/// </param>
 		/// <param name="help">    
 		/// Text to display when the user enters the name of the console variable followed by the question
@@ -444,16 +437,14 @@ namespace CryCil.Engine
 		{
 			if (name == null)
 			{
-				throw new ArgumentNullException("name", "Cannot register a console variable using a null name.");
+				throw new ArgumentNullException(nameof(name), "Cannot register a console variable using a null name.");
 			}
 			if (callback != null && !callback.Method.IsStatic)
 			{
 				throw new ArgumentException("Unable to use instance method as a console variable callback.");
 			}
 
-			IntPtr fPtr = callback != null
-				? callback.Method.MethodHandle.GetFunctionPointer()
-				: IntPtr.Zero;
+			IntPtr fPtr = callback?.Method.MethodHandle.GetFunctionPointer() ?? IntPtr.Zero;
 
 			return RegisterVariableInternal(name, value, flags, fPtr, help);
 		}

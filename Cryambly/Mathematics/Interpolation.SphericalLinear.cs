@@ -159,7 +159,7 @@ namespace CryCil
 			{
 				var q2 = new Quaternion();
 
-				var cosine = (first | second);
+				var cosine = first | second;
 				if (cosine < 0.0f) // take shortest arc
 				{
 					cosine = -cosine;
@@ -203,7 +203,7 @@ namespace CryCil
 				Quaternion result;
 				var q2 = new Quaternion();
 
-				var cosine = (first | second);
+				var cosine = first | second;
 				if (cosine < 0.0f) // take shortest arc
 				{
 					cosine = -cosine;

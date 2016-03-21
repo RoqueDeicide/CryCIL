@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using CryCil.Engine.Data;
 using CryCil.Geometry;
@@ -18,10 +19,7 @@ namespace CryCil.Engine.Models.Characters.Attachments
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 
 		/// <summary>
 		/// Gets the name of this socket.
@@ -278,8 +276,8 @@ namespace CryCil.Engine.Models.Characters.Attachments
 		#endregion
 		#region Interface
 		/// <summary>
-		/// Increases the reference count of this socket. Call this when you have multiple references to
-		/// the same socket.
+		/// Increases the reference count of this socket. Call this when you have multiple references to the
+		/// same socket.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public void IncrementReferenceCount()

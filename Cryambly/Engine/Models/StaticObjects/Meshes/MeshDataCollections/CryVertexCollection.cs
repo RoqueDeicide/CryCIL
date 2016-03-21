@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Runtime.InteropServices;
+using System.Linq;
 
 namespace CryCil.Engine.Models.StaticObjects
 {
@@ -152,9 +152,9 @@ namespace CryCil.Engine.Models.StaticObjects
 		#endregion
 		#region Interface
 		/// <summary>
-		/// Makes internal collection of primary colors of vertices accessible. If this method is not
-		/// called on new mesh, <see cref="PrimaryColors"/> will return invalid object. This operation
-		/// cannot be done properly, if total number of vertices is 0.
+		/// Makes internal collection of primary colors of vertices accessible. If this method is not called
+		/// on new mesh, <see cref="PrimaryColors"/> will return invalid object. This operation cannot be
+		/// done properly, if total number of vertices is 0.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public void EnablePrimaryColors()

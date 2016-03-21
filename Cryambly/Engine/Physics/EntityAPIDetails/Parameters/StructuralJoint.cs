@@ -5,8 +5,7 @@ using CryCil.Annotations;
 namespace CryCil.Engine.Physics
 {
 	/// <summary>
-	/// Encapsulates a set of parameters that allows to specify the structural joint in the physical
-	/// entity.
+	/// Encapsulates a set of parameters that allows to specify the structural joint in the physical entity.
 	/// </summary>
 	/// <remarks>
 	/// Never use objects of this type that were created using a default constructor (they are not
@@ -46,17 +45,11 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the identifier of the joint.
 		/// </summary>
-		public int Id
-		{
-			get { return this.id; }
-		}
+		public int Id => this.id;
 		/// <summary>
 		/// Gets zero-based index of the joint.
 		/// </summary>
-		public int Index
-		{
-			get { return this.idx; }
-		}
+		public int Index => this.idx;
 		/// <summary>
 		/// Sets the value that indicates if when this object is passed to
 		/// <see cref="PhysicalEntity.SetParameters"/> a brand new joint will be created if this object was
@@ -236,8 +229,8 @@ namespace CryCil.Engine.Physics
 			set { this.bDirectBreaksOnly = value ? 1 : 0; }
 		}
 		/// <summary>
-		/// Gets or sets the size of geometry that is used to detect parts coming into range where the
-		/// joint can be restored if it was broken.
+		/// Gets or sets the size of geometry that is used to detect parts coming into range where the joint
+		/// can be restored if it was broken.
 		/// </summary>
 		public float ReattachmentRange
 		{

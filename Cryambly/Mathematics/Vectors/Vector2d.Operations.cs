@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace CryCil
@@ -26,8 +27,8 @@ namespace CryCil
 		/// <param name="left"> The vector to subtract from.</param>
 		/// <param name="right">The vector to subtract.</param>
 		/// <returns>
-		/// A new vector where each coordinate is a result of subtraction of respective coordinates of
-		/// given 2 vectors.
+		/// A new vector where each coordinate is a result of subtraction of respective coordinates of given
+		/// 2 vectors.
 		/// </returns>
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static Vector2d operator -(Vector2d left, Vector2d right)

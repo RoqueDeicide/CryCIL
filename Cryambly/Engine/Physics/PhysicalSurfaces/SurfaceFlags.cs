@@ -20,13 +20,10 @@ namespace CryCil.Engine.Physics
 		/// using bitwise AND operation with 0x0F as second operand.
 		/// </param>
 		/// <returns>
-		/// A new object of type <see cref="SurfaceFlags"/> that can be combine with other instances of
-		/// that type.
+		/// A new object of type <see cref="SurfaceFlags"/> that can be combine with other instances of that
+		/// type.
 		/// </returns>
-		public SurfaceFlags this[uint value]
-		{
-			get { return new SurfaceFlags(value & SurfaceFlags.pierceableMask); }
-		}
+		public SurfaceFlags this[uint value] => new SurfaceFlags(value & SurfaceFlags.pierceableMask);
 	}
 	/// <summary>
 	/// Represents a quasi-enumeration that is used to specify flags that are set for physical surfaces.

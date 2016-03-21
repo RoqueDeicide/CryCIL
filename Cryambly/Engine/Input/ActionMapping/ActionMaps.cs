@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -95,8 +94,8 @@ namespace CryCil.Engine.Input.ActionMapping
 		/// <see cref="P:System.Reflection.ReflectionTypeLoadException.Types"/> property of this exception
 		/// contains a <see cref="T:System.Type"/> object for each type that was loaded and null for each
 		/// type that could not be loaded, while the
-		/// <see cref="P:System.Reflection.ReflectionTypeLoadException.LoaderExceptions"/> property
-		/// contains an exception for each type that could not be loaded.
+		/// <see cref="P:System.Reflection.ReflectionTypeLoadException.LoaderExceptions"/> property contains
+		/// an exception for each type that could not be loaded.
 		/// </exception>
 		[InitializationStage((int)DefaultInitializationStages.ActionMapsRegistrationStage)]
 		private static void RegisterActionMaps(int stageIndex)
@@ -129,8 +128,7 @@ namespace CryCil.Engine.Input.ActionMapping
 
 				if (!actionMap.IsValid)
 				{
-					string message = string.Format("Action map named \"{0}\" couldn't have been created: one already exists.",
-												   actionMapName);
+					string message = $"Action map named \"{actionMapName}\" couldn't have been created: one already exists.";
 					MonoInterface.DisplayException(new RegistrationException(message));
 					continue;
 				}
@@ -151,8 +149,7 @@ namespace CryCil.Engine.Input.ActionMapping
 					if (registeredHashes.ContainsKey(nameHash))
 					{
 						string message =
-							string.Format("An action named \"{0}\" already exists its name has the same lowercase hash as {1}",
-										  actionName, registeredHashes[nameHash]);
+							$"An action named \"{actionName}\" already exists its name has the same lowercase hash as {registeredHashes[nameHash]}";
 						MonoInterface.DisplayException(new RegistrationException(message));
 						continue;
 					}
@@ -162,8 +159,7 @@ namespace CryCil.Engine.Input.ActionMapping
 					if (!action.IsValid)
 					{
 						string message =
-							string.Format("Action named \"{0}\" couldn't have been created: one already exists.",
-										  actionMapName);
+							$"Action named \"{actionMapName}\" couldn't have been created: one already exists.";
 						MonoInterface.DisplayException(new RegistrationException(message));
 						continue;
 					}
@@ -177,10 +173,8 @@ namespace CryCil.Engine.Input.ActionMapping
 												   declaringType.GetField("_" + actionEvent.Name);
 					if (actionHandlerField == null)
 					{
-						string message = string.Format("Action named {0}, must either have default event " +
-													   "implementation or its declaring class must define " +
-													   "static field named _{1}.",
-													   actionName, actionEvent.Name);
+						string message = $"Action named {actionName}, must either have default event " +
+										 "implementation or its declaring class must define " + $"static field named _{actionEvent.Name}.";
 
 						MonoInterface.DisplayException(new RegistrationException(message));
 						continue;
@@ -228,10 +222,8 @@ namespace CryCil.Engine.Input.ActionMapping
 			if (actions.TryGetValue(actionNameHash, out actionField))
 			{
 				InputActionHandler handler = AcquireActionHandler(actionField);
-				if (handler != null)
-				{
-					handler(registeredHashes[actionNameHash], (ActionActivationMode)activationMode, value);
-				}
+				handler?.Invoke(registeredHashes[actionNameHash],
+								(ActionActivationMode)activationMode, value);
 			}
 		}
 		[MethodImpl(MethodImplOptions.InternalCall)]

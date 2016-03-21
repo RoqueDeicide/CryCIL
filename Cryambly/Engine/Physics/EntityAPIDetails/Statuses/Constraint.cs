@@ -40,38 +40,23 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets current flags that are set for the constraint.
 		/// </summary>
-		public ConstraintFlags Flags
-		{
-			get { return (ConstraintFlags)this.flags; }
-		}
+		public ConstraintFlags Flags => (ConstraintFlags)this.flags;
 		/// <summary>
 		/// Gets the coordinates of the first point of the constraint.
 		/// </summary>
-		public Vector3 FirstPoint
-		{
-			get { return this.pt0; }
-		}
+		public Vector3 FirstPoint => this.pt0;
 		/// <summary>
 		/// Gets the coordinates of the second point of the constraint.
 		/// </summary>
-		public Vector3 SecondPoint
-		{
-			get { return this.pt1; }
-		}
+		public Vector3 SecondPoint => this.pt1;
 		/// <summary>
 		/// Some normal.
 		/// </summary>
-		public Vector3 Normal
-		{
-			get { return this.n; }
-		}
+		public Vector3 Normal => this.n;
 		/// <summary>
 		/// Gets the second constrained entity.
 		/// </summary>
-		public PhysicalEntity Buddy
-		{
-			get { return this.pBuddyEntity; }
-		}
+		public PhysicalEntity Buddy => this.pBuddyEntity;
 		#endregion
 		#region Construction
 		/// <summary>

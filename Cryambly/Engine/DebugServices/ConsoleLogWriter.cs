@@ -6,8 +6,8 @@ using System.Text;
 namespace CryCil.Engine.DebugServices
 {
 	/// <summary>
-	/// Represents an object that can be used to redirect output of <see cref="Console"/> class to
-	/// CryEngine <see cref="Log"/>.
+	/// Represents an object that can be used to redirect output of <see cref="Console"/> class to CryEngine
+	/// <see cref="Log"/>.
 	/// </summary>
 	public partial class ConsoleLogWriter : TextWriter
 	{
@@ -19,10 +19,7 @@ namespace CryCil.Engine.DebugServices
 		/// <summary>
 		/// Gets a simple encoding.
 		/// </summary>
-		public override Encoding Encoding
-		{
-			get { return Encoding.UTF8; }
-		}
+		public override Encoding Encoding => Encoding.UTF8;
 		/// <summary>
 		/// Creates a default instance of this class.
 		/// </summary>

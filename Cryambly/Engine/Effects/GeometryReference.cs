@@ -1,4 +1,6 @@
-﻿using CryCil.Engine.Models.Characters;
+﻿using System;
+using System.Linq;
+using CryCil.Engine.Models.Characters;
 using CryCil.Engine.Models.StaticObjects;
 using CryCil.Engine.Physics;
 

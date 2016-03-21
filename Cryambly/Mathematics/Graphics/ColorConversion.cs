@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil.Graphics
 {
@@ -88,12 +89,12 @@ namespace CryCil.Graphics
 						if (delta > MathHelpers.ZeroTolerance)
 						{
 							hsv.Y = delta / hsv.Z;
-							hsv.X = (240.0f / 360.0f) + (color.R - color.G) / delta * (60.0f / 360.0f);
+							hsv.X = 240.0f / 360.0f + (color.R - color.G) / delta * (60.0f / 360.0f);
 						}
 						else
 						{
 							hsv.Y = 0.0f;
-							hsv.X = (240.0f / 360.0f) + (color.R - color.G) * (60.0f / 360.0f);
+							hsv.X = 240.0f / 360.0f + (color.R - color.G) * (60.0f / 360.0f);
 						}
 						if (hsv.X < 0.0f) hsv.X += 1.0f;
 					}
@@ -113,12 +114,12 @@ namespace CryCil.Graphics
 						if (delta > MathHelpers.ZeroTolerance)
 						{
 							hsv.Y = delta / hsv.Z;
-							hsv.X = (120.0f / 360.0f) + (color.B - color.R) / delta * (60.0f / 360.0f);
+							hsv.X = 120.0f / 360.0f + (color.B - color.R) / delta * (60.0f / 360.0f);
 						}
 						else
 						{
 							hsv.Y = 0.0f;
-							hsv.X = (120.0f / 360.0f) + (color.B - color.R) * (60.0f / 360.0f);
+							hsv.X = 120.0f / 360.0f + (color.B - color.R) * (60.0f / 360.0f);
 						}
 						if (hsv.X < 0.0f) hsv.X += 1.0f;
 					}

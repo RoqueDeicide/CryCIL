@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
@@ -19,17 +20,11 @@ namespace CryCil.Utilities
 		/// <summary>
 		/// Determines whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 		/// <summary>
 		/// Gets the pointer to the underlying object.
 		/// </summary>
-		public IntPtr Handle
-		{
-			get { return this.handle; }
-		}
+		public IntPtr Handle => this.handle;
 		/// <summary>
 		/// Gets the name of the node.
 		/// </summary>
@@ -125,7 +120,7 @@ namespace CryCil.Utilities
 		{
 			if (name.IsNullOrEmpty())
 			{
-				throw new ArgumentNullException("name", "Name of the Xml node cannot be null.");
+				throw new ArgumentNullException(nameof(name), "Name of the Xml node cannot be null.");
 			}
 
 			this.handle = Ctor(name);
@@ -169,7 +164,7 @@ namespace CryCil.Utilities
 			this.AssertInstance();
 			if (node == null || !node.IsValid)
 			{
-				throw new ArgumentNullException("node", "Given node is not valid.");
+				throw new ArgumentNullException(nameof(node), "Given node is not valid.");
 			}
 
 			AddChildInternal(this.handle, node.handle);
@@ -186,7 +181,7 @@ namespace CryCil.Utilities
 			this.AssertInstance();
 			if (node == null || !node.IsValid)
 			{
-				throw new ArgumentNullException("node", "Given node is not valid.");
+				throw new ArgumentNullException(nameof(node), "Given node is not valid.");
 			}
 
 			InsertChildInternal(this.handle, index, node.handle);
@@ -202,7 +197,7 @@ namespace CryCil.Utilities
 			this.AssertInstance();
 			if (node == null || !node.IsValid)
 			{
-				throw new ArgumentNullException("node", "Given node is not valid.");
+				throw new ArgumentNullException(nameof(node), "Given node is not valid.");
 			}
 
 			RemoveChildInternal(this.handle, node.handle);

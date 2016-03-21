@@ -33,10 +33,7 @@ namespace CryCil.Engine
 		/// <summary>
 		/// Determines whether this console variable object is usable.
 		/// </summary>
-		public bool Valid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool Valid => this.handle != IntPtr.Zero;
 		/// <summary>
 		/// Gets or sets integer value of this console variable.
 		/// </summary>
@@ -64,25 +61,16 @@ namespace CryCil.Engine
 		/// <summary>
 		/// Gets primary type of this console variable.
 		/// </summary>
-		public ConsoleVariableType Type
-		{
-			get { return this.GetVariableType(); }
-		}
+		public ConsoleVariableType Type => this.GetVariableType();
 		/// <summary>
 		/// Gets the name of this console variable.
 		/// </summary>
-		public string Name
-		{
-			get { return this.GetNameVar(); }
-		}
+		public string Name => this.GetNameVar();
 		/// <summary>
 		/// Gets helpful description of this console variable if it was provided on registration.
 		/// </summary>
 		/// <returns>Null, if no help is available.</returns>
-		public string Help
-		{
-			get { return this.GetHelp(); }
-		}
+		public string Help => this.GetHelp();
 		#endregion
 		#region Events
 		#endregion

@@ -32,10 +32,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the full entity that corresponds to the place holder this was called on.
 		/// </summary>
-		public PhysicalEntity FullEntity
-		{
-			get { return this.pFullEntity; }
-		}
+		public PhysicalEntity FullEntity => this.pFullEntity;
 		#endregion
 		#region Construction
 		/// <summary>

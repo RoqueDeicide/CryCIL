@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
 using CryCil.Engine.Memory;
@@ -222,8 +223,8 @@ namespace CryCil.Engine.Physics
 			set { this.maxTimeStep = value; }
 		}
 		/// <summary>
-		/// Gets or sets minimal kinetic energy the vehicle can have without switching to 'sleep' state
-		/// when the vehicle is not touching anything with its body.
+		/// Gets or sets minimal kinetic energy the vehicle can have without switching to 'sleep' state when
+		/// the vehicle is not touching anything with its body.
 		/// </summary>
 		public float MinimalEnergy
 		{

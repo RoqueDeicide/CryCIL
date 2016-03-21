@@ -58,8 +58,8 @@ namespace CryCil.Engine.Logic
 		{
 		}
 		/// <summary>
-		/// When implemented in derived class updates logical state of this entity after most other stuff
-		/// is updated.
+		/// When implemented in derived class updates logical state of this entity after most other stuff is
+		/// updated.
 		/// </summary>
 		public override void PostUpdate()
 		{

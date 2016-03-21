@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil.Engine.Rendering
 {
@@ -19,7 +20,7 @@ namespace CryCil.Engine.Rendering
 		/// <summary>
 		/// Unknown.
 		/// </summary>
-		ScanCm = (1 << (int)ScanCmId),
+		ScanCm = 1 << (int)ScanCmId,
 		/// <summary>
 		/// Unknown.
 		/// </summary>
@@ -27,7 +28,7 @@ namespace CryCil.Engine.Rendering
 		/// <summary>
 		/// Unknown.
 		/// </summary>
-		ScanTextureWater = (1 << (int)ScanTextureWaterId),
+		ScanTextureWater = 1 << (int)ScanTextureWaterId,
 		/// <summary>
 		/// Unknown.
 		/// </summary>
@@ -35,7 +36,7 @@ namespace CryCil.Engine.Rendering
 		/// <summary>
 		/// Unknown.
 		/// </summary>
-		ScanTexture = (1 << (int)ScanTextureId),
+		ScanTexture = 1 << (int)ScanTextureId,
 		/// <summary>
 		/// Unknown.
 		/// </summary>
@@ -43,7 +44,7 @@ namespace CryCil.Engine.Rendering
 		/// <summary>
 		/// Unknown.
 		/// </summary>
-		ScanLcm = (1 << (int)ScanLcmId),
+		ScanLcm = 1 << (int)ScanLcmId,
 		/// <summary>
 		/// Unknown.
 		/// </summary>
@@ -51,7 +52,7 @@ namespace CryCil.Engine.Rendering
 		/// <summary>
 		/// Unknown.
 		/// </summary>
-		GenerateSprites = (1 << (int)GenerateSpritesId),
+		GenerateSprites = 1 << (int)GenerateSpritesId,
 		/// <summary>
 		/// Unknown.
 		/// </summary>
@@ -59,7 +60,7 @@ namespace CryCil.Engine.Rendering
 		/// <summary>
 		/// Unknown.
 		/// </summary>
-		CustomTexture = (1 << (int)CustomTextureId),
+		CustomTexture = 1 << (int)CustomTextureId,
 		/// <summary>
 		/// Unknown.
 		/// </summary>

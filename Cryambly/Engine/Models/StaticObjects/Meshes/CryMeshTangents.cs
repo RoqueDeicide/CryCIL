@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using CryCil.Geometry;
 
 namespace CryCil.Engine.Models.StaticObjects
@@ -28,10 +29,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// <summary>
 		/// Extracts orientation of normal vector relative to this pair of tangents.
 		/// </summary>
-		public short Sign
-		{
-			get { return Quantize.Int16ToInt16Reverse(this.tangent.W); }
-		}
+		public short Sign => Quantize.Int16ToInt16Reverse(this.tangent.W);
 		#endregion
 		#region Construction
 		/// <summary>
@@ -64,7 +62,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		{
 			short sign = 1;
 
-			if ((tangent % bitangent * normal) < 0)
+			if (tangent % bitangent * normal < 0)
 			{
 				sign = -1;
 			}
@@ -229,8 +227,8 @@ namespace CryCil.Engine.Models.StaticObjects
 			Vector3 tan = new Vector3(this.tangent.X, this.tangent.Y, this.tangent.Z);
 			Vector3 bitan = new Vector3(this.bitangent.X, this.bitangent.Y, this.bitangent.Z);
 
-			return tan * tangent >= (1 - epsilon) &&
-				   bitan * bitangent >= (1 - epsilon);
+			return tan * tangent >= 1 - epsilon &&
+				   bitan * bitangent >= 1 - epsilon;
 		}
 		/// <summary>
 		/// Applies transformation to this pair of tangents.

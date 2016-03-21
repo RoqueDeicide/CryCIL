@@ -33,17 +33,11 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the coordinates of the turning circle center.
 		/// </summary>
-		public Vector3 TurningPivot
-		{
-			get { return this.rotPivot; }
-		}
+		public Vector3 TurningPivot => this.rotPivot;
 		/// <summary>
 		/// Gets the maximal speed the vehicle can achieve along horizontal plane (steering is ignored).
 		/// </summary>
-		public float MaxSpeed
-		{
-			get { return this.maxVelocity; }
-		}
+		public float MaxSpeed => this.maxVelocity;
 		#endregion
 		#region Construction
 		/// <summary>

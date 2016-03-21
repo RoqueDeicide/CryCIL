@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using CryCil.Annotations;
 using CryCil.Utilities;
@@ -19,17 +20,11 @@ namespace CryCil.Engine.Models.Characters.Faces
 		/// Gets the name of the identifier.
 		/// </summary>
 		[CanBeNull]
-		public string Name
-		{
-			get { return CustomMarshaling.GetUtf8String(this.stringHandle); }
-		}
+		public string Name => CustomMarshaling.GetUtf8String(this.stringHandle);
 		/// <summary>
 		/// Gets the CRC32 hash code of this identifier.
 		/// </summary>
-		public uint Crc32
-		{
-			get { return this.crc32; }
-		}
+		public uint Crc32 => this.crc32;
 		#endregion
 		#region Construction
 		internal FaceIdentifier(IntPtr stringHandle, uint crc32)

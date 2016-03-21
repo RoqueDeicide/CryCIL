@@ -144,8 +144,8 @@ namespace CryCil.Engine
 			set { this.skipOverlappingTest = value; }
 		}
 		/// <summary>
-		/// Gets or sets the value that indicates whether the decal must be united with others, if there
-		/// are multiple decals in the same place.
+		/// Gets or sets the value that indicates whether the decal must be united with others, if there are
+		/// multiple decals in the same place.
 		/// </summary>
 		public bool Assemble
 		{

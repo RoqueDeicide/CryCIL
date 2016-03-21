@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil.Engine.Models.StaticObjects
 {
@@ -50,8 +51,8 @@ namespace CryCil.Engine.Models.StaticObjects
 		TP3F_C4B_T2F = 5,
 		/// <summary>
 		/// Vertex format where position of the vertex is expressed with 4 single-precision floating point
-		/// numbers, first set of texture coordinates - 2 single-precision floating point numbers and
-		/// second set of texture coordinates - 3 single-precision floating point numbers.
+		/// numbers, first set of texture coordinates - 2 single-precision floating point numbers and second
+		/// set of texture coordinates - 3 single-precision floating point numbers.
 		/// </summary>
 		/// <remarks>Used in miscellaneous data streams.</remarks>
 		TP3F_T2F_T3F = 6,
@@ -63,8 +64,8 @@ namespace CryCil.Engine.Models.StaticObjects
 		P3F_T3F = 7,
 		/// <summary>
 		/// Vertex format where position of the vertex is expressed with 3 single-precision floating point
-		/// numbers, first set of texture coordinates - 2 single-precision floating point numbers and
-		/// second set of texture coordinates - 3 single-precision floating point numbers.
+		/// numbers, first set of texture coordinates - 2 single-precision floating point numbers and second
+		/// set of texture coordinates - 3 single-precision floating point numbers.
 		/// </summary>
 		/// <remarks>Used in miscellaneous data streams.</remarks>
 		P3F_T2F_T3F = 8,

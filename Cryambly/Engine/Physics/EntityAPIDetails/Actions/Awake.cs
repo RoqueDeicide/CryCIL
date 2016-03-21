@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
 
@@ -21,8 +22,8 @@ namespace CryCil.Engine.Physics
 	{
 		#region Fields
 		/// <summary>
-		/// Pass reference to this field to the <see cref="PhysicalEntity.ActUpon"/> to apply this action
-		/// to the physical entity.
+		/// Pass reference to this field to the <see cref="PhysicalEntity.ActUpon"/> to apply this action to
+		/// the physical entity.
 		/// </summary>
 		[UsedImplicitly] public PhysicsAction Base;
 		[UsedImplicitly] private int bAwake;
@@ -36,8 +37,8 @@ namespace CryCil.Engine.Physics
 		/// Minimal amount of time the entity has to be awake for after execution of the action.
 		/// </param>
 		/// <param name="awake">       
-		/// Indicates whether entity should be awakened from sleep. If <c>false</c>, then the entity will
-		/// be put to sleep instead.
+		/// Indicates whether entity should be awakened from sleep. If <c>false</c>, then the entity will be
+		/// put to sleep instead.
 		/// </param>
 		public PhysicsActionAwake(float minAwakeTime, bool awake = true)
 		{

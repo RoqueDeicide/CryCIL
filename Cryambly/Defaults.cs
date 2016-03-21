@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 
 namespace CryCil
 {
@@ -19,13 +20,13 @@ namespace CryCil
 		/// </remarks>
 		public static readonly CultureInfo CultureToStringOnly = CultureInfo.CurrentCulture;
 		/// <summary>
-		/// Default culture that is used by methods that create text representations of objects with
-		/// defined parsing methods.
+		/// Default culture that is used by methods that create text representations of objects with defined
+		/// parsing methods.
 		/// </summary>
 		/// <remarks>
-		/// If Parse-type methods are defined by the class, then the text representations are intended to
-		/// be used for long-term storage which necessitates default culture to be the same on all machines
-		/// and configurations.
+		/// If Parse-type methods are defined by the class, then the text representations are intended to be
+		/// used for long-term storage which necessitates default culture to be the same on all machines and
+		/// configurations.
 		/// </remarks>
 		public static readonly CultureInfo CultureTwoWay = CultureInfo.InvariantCulture;
 	}

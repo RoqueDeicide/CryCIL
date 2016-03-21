@@ -93,10 +93,7 @@ namespace CryCil.Engine.Physics
 		private readonly uint flags;
 		#endregion
 		#region Properties
-		internal uint Flags
-		{
-			get { return this.flags; }
-		}
+		internal uint Flags => this.flags;
 		#endregion
 		#region Events
 		#endregion

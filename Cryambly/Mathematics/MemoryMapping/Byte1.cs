@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace CryCil.MemoryMapping
@@ -23,10 +24,7 @@ namespace CryCil.MemoryMapping
 		/// <summary>
 		/// Returns 1.
 		/// </summary>
-		public int Length
-		{
-			get { return 1; }
-		}
+		public int Length => 1;
 		/// <summary>
 		/// Gets or sets a byte.
 		/// </summary>
@@ -67,15 +65,15 @@ namespace CryCil.MemoryMapping
 		/// Unable to initialize new object of type Bytes4: Provided pointer is null.
 		/// </exception>
 		/// <exception cref="AccessViolationException">
-		/// Base address ( <paramref name="pointer"/>) plus offset byte ( <paramref name="index"/>)
-		/// produces a null or invalid address.
+		/// Base address ( <paramref name="pointer"/>) plus offset byte ( <paramref name="index"/>) produces
+		/// a null or invalid address.
 		/// </exception>
 		public Byte1(IntPtr pointer, int index)
 			: this()
 		{
 			if (pointer == null)
 			{
-				throw new ArgumentNullException("pointer",
+				throw new ArgumentNullException(nameof(pointer),
 												"Byte1.Constructor: Unable to initialize new object of type Byte1: Provided pointer is null.");
 			}
 			this.UnsignedByte = Marshal.ReadByte(pointer, index);
@@ -88,8 +86,8 @@ namespace CryCil.MemoryMapping
 		/// <param name="handle">Pointer to the beginning of native memory cluster.</param>
 		/// <param name="offset">Zero-based index of the byte within native memory cluster to get.</param>
 		/// <exception cref="AccessViolationException">
-		/// Base address ( <paramref name="handle"/>) plus offset byte ( <paramref name="offset"/>)
-		/// produces a null or invalid address.
+		/// Base address ( <paramref name="handle"/>) plus offset byte ( <paramref name="offset"/>) produces
+		/// a null or invalid address.
 		/// </exception>
 		public void Get(IntPtr handle, int offset)
 		{
@@ -105,8 +103,8 @@ namespace CryCil.MemoryMapping
 		/// <param name="handle">Pointer to the beginning of native memory cluster.</param>
 		/// <param name="offset">Zero-based index of the byte within native memory cluster to set.</param>
 		/// <exception cref="AccessViolationException">
-		/// Base address ( <paramref name="handle"/>) plus offset byte ( <paramref name="offset"/>)
-		/// produces a null or invalid address.
+		/// Base address ( <paramref name="handle"/>) plus offset byte ( <paramref name="offset"/>) produces
+		/// a null or invalid address.
 		/// </exception>
 		public void Set(IntPtr handle, int offset)
 		{

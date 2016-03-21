@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using CryCil.Graphics;
 
@@ -16,10 +17,7 @@ namespace CryCil.Engine.Logic.EntityProxies
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 
 		/// <summary>
 		/// Gets or sets the camera that is associated with the entity.
@@ -49,7 +47,6 @@ namespace CryCil.Engine.Logic.EntityProxies
 		}
 		#endregion
 		#region Interface
-
 		#endregion
 		#region Utilities
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
@@ -60,7 +57,7 @@ namespace CryCil.Engine.Logic.EntityProxies
 				throw new NullReferenceException("This instance is not valid.");
 			}
 		}
-		
+
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void SetCamera(IntPtr handle, ref Camera camera);
 		[MethodImpl(MethodImplOptions.InternalCall)]

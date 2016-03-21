@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.Serialization;
 
 namespace CryCil
@@ -24,8 +25,8 @@ namespace CryCil
 		{
 		}
 		/// <summary>
-		/// Creates a new instance of <see cref="BufferOverflowException"/> class with specified message
-		/// and exception object that caused new one to be created.
+		/// Creates a new instance of <see cref="BufferOverflowException"/> class with specified message and
+		/// exception object that caused new one to be created.
 		/// </summary>
 		/// <param name="message">Message to supply with exception.</param>
 		/// <param name="inner">  Exception that caused a new one to be created.</param>

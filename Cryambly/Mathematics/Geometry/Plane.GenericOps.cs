@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 
 namespace CryCil.Geometry
 {
@@ -96,8 +97,8 @@ namespace CryCil.Geometry
 		/// Returns a hash code for this instance.
 		/// </summary>
 		/// <returns>
-		/// A hash code for this instance, suitable for use in hashing algorithms and data structures like
-		/// a hash table.
+		/// A hash code for this instance, suitable for use in hashing algorithms and data structures like a
+		/// hash table.
 		/// </returns>
 		public override int GetHashCode()
 		{
@@ -125,11 +126,11 @@ namespace CryCil.Geometry
 			return this.Normal == value.Normal && Math.Abs(this.D - value.D) < MathHelpers.ZeroTolerance;
 		}
 		/// <summary>
-		/// Determines whether the specified <see cref="System.Object"/> is equal to this instance.
+		/// Determines whether the specified <see cref="object"/> is equal to this instance.
 		/// </summary>
-		/// <param name="value">The <see cref="System.Object"/> to compare with this instance.</param>
+		/// <param name="value">The <see cref="object"/> to compare with this instance.</param>
 		/// <returns>
-		/// <c>true</c> if the specified <see cref="System.Object"/> is equal to this instance; otherwise,
+		/// <c>true</c> if the specified <see cref="object"/> is equal to this instance; otherwise,
 		/// <c>false</c>.
 		/// </returns>
 		public override bool Equals(object value)

@@ -20,24 +20,15 @@ namespace CryCil
 		/// <summary>
 		/// Gets the name of this game.
 		/// </summary>
-		public static string Name
-		{
-			get { return name; }
-		}
+		public static string Name => name;
 		/// <summary>
 		/// Gets the long name of this game.
 		/// </summary>
-		public static string LongName
-		{
-			get { return longName; }
-		}
+		public static string LongName => longName;
 		/// <summary>
 		/// Gets the Globally Unique Identifier of this game.
 		/// </summary>
-		public static Guid Guid
-		{
-			get { return guid; }
-		}
+		public static Guid Guid => guid;
 
 		/// <summary>
 		/// Indicates whether this game was launched using Sandbox Editor.
@@ -152,7 +143,7 @@ namespace CryCil
 		/// <summary>
 		/// Gets the short name of the game.
 		/// </summary>
-		public string Name { get; private set; }
+		public string Name { get; }
 		/// <summary>
 		/// Creates a new instance of this class.
 		/// </summary>
@@ -171,7 +162,7 @@ namespace CryCil
 		/// <summary>
 		/// Gets the long name of the game.
 		/// </summary>
-		public string Name { get; private set; }
+		public string Name { get; }
 		/// <summary>
 		/// Creates a new instance of this class.
 		/// </summary>
@@ -190,7 +181,7 @@ namespace CryCil
 		/// <summary>
 		/// Gets the long name of the game.
 		/// </summary>
-		public Guid Guid { get; private set; }
+		public Guid Guid { get; }
 		/// <summary>
 		/// Creates a new instance of this class.
 		/// </summary>

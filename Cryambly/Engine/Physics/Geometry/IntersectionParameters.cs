@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using CryCil.Annotations;
 
 namespace CryCil.Engine.Physics
@@ -253,8 +254,8 @@ namespace CryCil.Engine.Physics
 			}
 		}
 		/// <summary>
-		/// Gets or sets the value that indicates whether intersection check must stop after first
-		/// collision detection.
+		/// Gets or sets the value that indicates whether intersection check must stop after first collision
+		/// detection.
 		/// </summary>
 		/// <exception cref="InvalidOperationException">This object is read-only.</exception>
 		public bool SingleContact

@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
 using CryCil.Geometry;
@@ -161,8 +161,8 @@ namespace CryCil.Engine.Physics
 			set { this.stiffnessAnim = value; }
 		}
 		/// <summary>
-		/// Gets or sets the value between 0 and 1 that defines how the shape preserving stiffness
-		/// decreases as the rope approaches its normal shape.
+		/// Gets or sets the value between 0 and 1 that defines how the shape preserving stiffness decreases
+		/// as the rope approaches its normal shape.
 		/// </summary>
 		/// <remarks>
 		/// The formula for the shape-preserving stiffness:
@@ -409,8 +409,8 @@ namespace CryCil.Engine.Physics
 			set { this.pEntTiedTo1 = value; }
 		}
 		/// <summary>
-		/// Gets or sets the value that indicates whether coordinates of points at which the rope is tied
-		/// to entities are in entity's or part's local space.
+		/// Gets or sets the value that indicates whether coordinates of points at which the rope is tied to
+		/// entities are in entity's or part's local space.
 		/// </summary>
 		public bool TiePointsInLocalSpace
 		{

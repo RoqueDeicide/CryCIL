@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using CryCil.RunTime;
 using CryCil.Utilities;
 
@@ -18,17 +19,11 @@ namespace CryCil.Engine.Input
 		/// <summary>
 		/// Determines whether a keyboard is connected to the machine.
 		/// </summary>
-		public static bool Available
-		{
-			get { return Inputs.DeviceAvailable(InputDeviceType.Keyboard); }
-		}
+		public static bool Available => Inputs.DeviceAvailable(InputDeviceType.Keyboard);
 		/// <summary>
 		/// Gets all modifier keys that are active at the moment.
 		/// </summary>
-		public static ModifierMask Modifiers
-		{
-			get { return (ModifierMask)Inputs.GetModifiers(); }
-		}
+		public static ModifierMask Modifiers => (ModifierMask)Inputs.GetModifiers();
 		#endregion
 		#region Events
 		/// <summary>
@@ -41,8 +36,8 @@ namespace CryCil.Engine.Input
 			remove { keyInputHandlers.Remove(value); }
 		}
 		/// <summary>
-		/// Occurs when one of the keys on the keyboard is pressed and system message about it is
-		/// translated into text input.
+		/// Occurs when one of the keys on the keyboard is pressed and system message about it is translated
+		/// into text input.
 		/// </summary>
 		public static event SymbolicInputHandler CharacterInput
 		{

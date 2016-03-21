@@ -39,10 +39,7 @@ namespace Microsoft.Cci.Pdb
 			bits.ReadInt32(out this.DirectoryRoot);     //  52..55
 		}
 
-		internal string Magic
-		{
-			get { return this.StringFromBytesUtf8(magic); }
-		}
+		internal string Magic => this.StringFromBytesUtf8(this.magic);
 
 		internal void Write(Stream writer, BitAccess bits)
 		{

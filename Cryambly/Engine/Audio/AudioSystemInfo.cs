@@ -19,38 +19,23 @@ namespace CryCil.Engine.Audio
 		/// <summary>
 		/// Gets the number of audio trigger that are used by the audio system at this moment.
 		/// </summary>
-		public long UsedAudioTriggersCount
-		{
-			get { return this.countUsedAudioTriggers.ToInt64(); }
-		}
+		public long UsedAudioTriggersCount => this.countUsedAudioTriggers.ToInt64();
 		/// <summary>
 		/// Gets the number of audio trigger that are used by the audio system at this moment.
 		/// </summary>
-		public long UnusedAudioTriggersCount
-		{
-			get { return this.countUnusedAudioTriggers.ToInt64(); }
-		}
+		public long UnusedAudioTriggersCount => this.countUnusedAudioTriggers.ToInt64();
 		/// <summary>
 		/// Gets the number of audio trigger that are used by the audio system at this moment.
 		/// </summary>
-		public long UsedAudioEventsCount
-		{
-			get { return this.countUsedAudioEvents.ToInt64(); }
-		}
+		public long UsedAudioEventsCount => this.countUsedAudioEvents.ToInt64();
 		/// <summary>
 		/// Gets the number of audio trigger that are used by the audio system at this moment.
 		/// </summary>
-		public long UnusedAudioEventsCount
-		{
-			get { return this.countUnusedAudioEvents.ToInt64(); }
-		}
+		public long UnusedAudioEventsCount => this.countUnusedAudioEvents.ToInt64();
 		/// <summary>
 		/// Gets the coordinates of the audio system listener.
 		/// </summary>
-		public Vector3 ListenerPosition
-		{
-			get { return this.listenerPos; }
-		}
+		public Vector3 ListenerPosition => this.listenerPos;
 		#endregion
 		#region Construction
 		internal AudioSystemInfo(IntPtr countUsedAudioTriggers, IntPtr countUnusedAudioTriggers,

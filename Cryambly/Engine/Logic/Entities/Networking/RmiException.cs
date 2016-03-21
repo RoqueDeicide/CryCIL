@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.Serialization;
 
 namespace CryCil.Engine.Logic
@@ -38,8 +39,8 @@ namespace CryCil.Engine.Logic
 		/// </summary>
 		SendingToClientAndItself,
 		/// <summary>
-		/// RMI error of this type is thrown when user attempts to call RMI directed to own client on
-		/// object that doesn't have own client.
+		/// RMI error of this type is thrown when user attempts to call RMI directed to own client on object
+		/// that doesn't have own client.
 		/// </summary>
 		SendingToItselfWithoutOwnClient
 	}

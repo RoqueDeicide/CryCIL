@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using CryCil.MemoryMapping;
 
 namespace CryCil.Engine.Physics
@@ -8,8 +9,7 @@ namespace CryCil.Engine.Physics
 	/// modify the flags that are assigned to the physical entity or parts of it.
 	/// </summary>
 	/// <example>
-	/// <code source="FlagParameters.cs">
-	/// </code>
+	/// <code source="FlagParameters.cs"></code>
 	/// </example>
 	public struct FlagParameters
 	{
@@ -205,8 +205,8 @@ namespace CryCil.Engine.Physics
 		/// </para>
 		/// <para>
 		/// When both operands were either created using
-		/// <see cref="O:CryCil.Engine.Physics.FlagParameters.Set"/> or were combined with objects that
-		/// were created using that function, all flags from both operands will be set.
+		/// <see cref="O:CryCil.Engine.Physics.FlagParameters.Set"/> or were combined with objects that were
+		/// created using that function, all flags from both operands will be set.
 		/// </para>
 		/// <para>
 		/// When both operands were either created using
@@ -217,9 +217,8 @@ namespace CryCil.Engine.Physics
 		/// <para/>
 		/// <para>Order of application of flags in the combined object:</para>
 		/// <para>
-		/// Value that was put into object using
-		/// <see cref="O:CryCil.Engine.Physics.FlagParameters.Assign"/> is assigned to the flags of the
-		/// object.
+		/// Value that was put into object using <see cref="O:CryCil.Engine.Physics.FlagParameters.Assign"/>
+		/// is assigned to the flags of the object.
 		/// </para>
 		/// <para>
 		/// All flags that were added to the object with

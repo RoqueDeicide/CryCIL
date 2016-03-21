@@ -168,27 +168,21 @@ namespace CryCil
 		/// <summary>
 		/// Gets inverted variation of this matrix.
 		/// </summary>
-		public Matrix34 InvertedFast
+		public Matrix34 InvertedFast => new Matrix34
 		{
-			get
-			{
-				return new Matrix34
-				{
-					M00 = this.M00,
-					M01 = this.M10,
-					M02 = this.M20,
-					M03 = -this.M03 * this.M00 - this.M13 * this.M10 - this.M23 * this.M20,
-					M10 = this.M01,
-					M11 = this.M11,
-					M12 = this.M21,
-					M13 = -this.M03 * this.M01 - this.M13 * this.M11 - this.M23 * this.M21,
-					M20 = this.M02,
-					M21 = this.M12,
-					M22 = this.M22,
-					M23 = -this.M03 * this.M02 - this.M13 * this.M12 - this.M23 * this.M22
-				};
-			}
-		}
+			M00 = this.M00,
+			M01 = this.M10,
+			M02 = this.M20,
+			M03 = -this.M03 * this.M00 - this.M13 * this.M10 - this.M23 * this.M20,
+			M10 = this.M01,
+			M11 = this.M11,
+			M12 = this.M21,
+			M13 = -this.M03 * this.M01 - this.M13 * this.M11 - this.M23 * this.M21,
+			M20 = this.M02,
+			M21 = this.M12,
+			M22 = this.M22,
+			M23 = -this.M03 * this.M02 - this.M13 * this.M12 - this.M23 * this.M22
+		};
 		/// <summary>
 		/// Gets first column in a for of a <see cref="Vector3"/> .
 		/// </summary>
@@ -257,18 +251,12 @@ namespace CryCil
 		/// <summary>
 		/// Calculates determinant of the matrix composed from first 3 columns of this matrix.
 		/// </summary>
-		public float Determinant
-		{
-			get
-			{
-				return this.M00 * this.M11 * this.M22 +
-					   this.M01 * this.M12 * this.M20 +
-					   this.M02 * this.M10 * this.M21 -
-					   this.M02 * this.M11 * this.M20 -
-					   this.M00 * this.M12 * this.M21 -
-					   this.M01 * this.M10 * this.M22;
-			}
-		}
+		public float Determinant => this.M00 * this.M11 * this.M22 +
+									this.M01 * this.M12 * this.M20 +
+									this.M02 * this.M10 * this.M21 -
+									this.M02 * this.M11 * this.M20 -
+									this.M00 * this.M12 * this.M21 -
+									this.M01 * this.M10 * this.M22;
 		/// <summary>
 		/// Gets or sets first 3 columns of this matrix.
 		/// </summary>
@@ -323,18 +311,12 @@ namespace CryCil
 		/// <summary>
 		/// Gets a 2D array of elements of this matrix.
 		/// </summary>
-		public float[,] Array2D
+		public float[,] Array2D => new[,]
 		{
-			get
-			{
-				return new[,]
-				{
-					{this.M00, this.M01, this.M02, this.M03},
-					{this.M10, this.M11, this.M12, this.M13},
-					{this.M20, this.M21, this.M22, this.M23}
-				};
-			}
-		}
+			{this.M00, this.M01, this.M02, this.M03},
+			{this.M10, this.M11, this.M12, this.M13},
+			{this.M20, this.M21, this.M22, this.M23}
+		};
 		/// <summary>
 		/// Gives access to specific element of this matrix.
 		/// </summary>
@@ -352,11 +334,11 @@ namespace CryCil
 			{
 				if (row < 0 || row > 2)
 				{
-					throw new ArgumentOutOfRangeException("row", "Attempt to access matrix row out of range [0, 2].");
+					throw new ArgumentOutOfRangeException(nameof(row), "Attempt to access matrix row out of range [0, 2].");
 				}
 				if ((column | 0x3) != 0x3) // column < 0 || column > 3
 				{
-					throw new ArgumentOutOfRangeException("row", "Attempt to access matrix column out of range [0, 2].");
+					throw new ArgumentOutOfRangeException(nameof(row), "Attempt to access matrix column out of range [0, 2].");
 				}
 				Contract.EndContractBlock();
 
@@ -369,11 +351,11 @@ namespace CryCil
 			{
 				if (row < 0 || row > 2)
 				{
-					throw new ArgumentOutOfRangeException("row", "Attempt to access matrix row out of range [0, 2].");
+					throw new ArgumentOutOfRangeException(nameof(row), "Attempt to access matrix row out of range [0, 2].");
 				}
 				if ((column | 0x3) != 0x3) // column < 0 || column > 3
 				{
-					throw new ArgumentOutOfRangeException("row", "Attempt to access matrix column out of range [0, 2].");
+					throw new ArgumentOutOfRangeException(nameof(row), "Attempt to access matrix column out of range [0, 2].");
 				}
 				Contract.EndContractBlock();
 
@@ -511,15 +493,11 @@ namespace CryCil
 		/// <summary>
 		/// Sets values of all columns of this matrix to one supplied by given vectors.
 		/// </summary>
-		/// <param name="vx">
-		/// <see cref="Vector3"/> object that provides values for the first column.
-		/// </param>
+		/// <param name="vx"><see cref="Vector3"/> object that provides values for the first column.</param>
 		/// <param name="vy">
 		/// <see cref="Vector3"/> object that provides values for the second column.
 		/// </param>
-		/// <param name="vz">
-		/// <see cref="Vector3"/> object that provides values for the third column.
-		/// </param>
+		/// <param name="vz"><see cref="Vector3"/> object that provides values for the third column.</param>
 		/// <param name="vw">
 		/// <see cref="Vector3"/> object that provides values for the fourth column.
 		/// </param>
@@ -541,15 +519,11 @@ namespace CryCil
 		/// <summary>
 		/// Creates a new matrix which columns are initialized with values supplied by given vectors.
 		/// </summary>
-		/// <param name="vx">
-		/// <see cref="Vector3"/> object that provides values for the first column.
-		/// </param>
+		/// <param name="vx"><see cref="Vector3"/> object that provides values for the first column.</param>
 		/// <param name="vy">
 		/// <see cref="Vector3"/> object that provides values for the second column.
 		/// </param>
-		/// <param name="vz">
-		/// <see cref="Vector3"/> object that provides values for the third column.
-		/// </param>
+		/// <param name="vz"><see cref="Vector3"/> object that provides values for the third column.</param>
 		/// <param name="vw">
 		/// <see cref="Vector3"/> object that provides values for the fourth column.
 		/// </param>
@@ -602,11 +576,11 @@ namespace CryCil
 			t.M02 = m.M12 * m.M01 - m.M02 * m.M11;
 			t.M12 = m.M02 * m.M10 - m.M12 * m.M00;
 			t.M22 = m.M00 * m.M11 - m.M10 * m.M01;
-			t.M03 = (m.M22 * m.M13 * m.M01 + m.M02 * m.M23 * m.M11 + m.M12 * m.M03 * m.M21) -
+			t.M03 = m.M22 * m.M13 * m.M01 + m.M02 * m.M23 * m.M11 + m.M12 * m.M03 * m.M21 -
 					(m.M12 * m.M23 * m.M01 + m.M22 * m.M03 * m.M11 + m.M02 * m.M13 * m.M21);
-			t.M13 = (m.M12 * m.M23 * m.M00 + m.M22 * m.M03 * m.M10 + m.M02 * m.M13 * m.M20) -
+			t.M13 = m.M12 * m.M23 * m.M00 + m.M22 * m.M03 * m.M10 + m.M02 * m.M13 * m.M20 -
 					(m.M22 * m.M13 * m.M00 + m.M02 * m.M23 * m.M10 + m.M12 * m.M03 * m.M20);
-			t.M23 = (m.M20 * m.M11 * m.M03 + m.M00 * m.M21 * m.M13 + m.M10 * m.M01 * m.M23) -
+			t.M23 = m.M20 * m.M11 * m.M03 + m.M00 * m.M21 * m.M13 + m.M10 * m.M01 * m.M23 -
 					(m.M10 * m.M21 * m.M03 + m.M20 * m.M01 * m.M13 + m.M00 * m.M11 * m.M23);
 
 			// Calculate "determinant".
@@ -666,11 +640,11 @@ namespace CryCil
 			Vector3 columnVector1 = this.ColumnVector1;
 			Vector3 columnVector2 = this.ColumnVector2;
 			return !(Math.Abs(columnVector0 * columnVector1) > threshold) &&
-				   (!(Math.Abs(columnVector0 * columnVector2) > threshold) &&
-					(!(Math.Abs(columnVector1 * columnVector2) > threshold) &&
-					 (Math.Abs(1 - columnVector0 * columnVector0) < threshold &&
-					  Math.Abs(1 - columnVector1 * columnVector1) < threshold &&
-					  Math.Abs(1 - columnVector2 * columnVector2) < threshold)));
+				   !(Math.Abs(columnVector0 * columnVector2) > threshold) &&
+				   !(Math.Abs(columnVector1 * columnVector2) > threshold) &&
+				   Math.Abs(1 - columnVector0 * columnVector0) < threshold &&
+				   Math.Abs(1 - columnVector1 * columnVector1) < threshold &&
+				   Math.Abs(1 - columnVector2 * columnVector2) < threshold;
 		}
 		/// <summary>
 		/// Determines whether this matrix has an orthonormal base in right-handed coordinate system.
@@ -691,8 +665,8 @@ namespace CryCil
 		/// </summary>
 		/// <param name="m">Another matrix.</param>
 		/// <param name="e">
-		/// <see cref="Single"/> object that represents maximal difference between two values that allows
-		/// to consider them equal.
+		/// <see cref="Single"/> object that represents maximal difference between two values that allows to
+		/// consider them equal.
 		/// </param>
 		/// <returns>
 		/// True, if difference between values of each corresponding pair is less then <paramref name="e"/>
@@ -872,8 +846,8 @@ namespace CryCil
 		/// Apples scaling to the columns of the matrix.
 		/// </summary>
 		/// <param name="s">
-		/// <see cref="Vector4"/> object which X component will scale first column, Y - second, Z - third,
-		/// W - fourth.
+		/// <see cref="Vector4"/> object which X component will scale first column, Y - second, Z - third, W
+		/// - fourth.
 		/// </param>
 		public void ScaleColumns(Vector4 s)
 		{

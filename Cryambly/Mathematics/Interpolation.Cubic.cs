@@ -7,8 +7,8 @@ namespace CryCil
 	{
 		/// <summary>
 		/// Cubic linear interpolation is a type of linear interpolation where the parameter is converted
-		/// into one-dimensional cubic spline. This allows achieving results that closely resemble
-		/// spherical interpolation when normalized.
+		/// into one-dimensional cubic spline. This allows achieving results that closely resemble spherical
+		/// interpolation when normalized.
 		/// </summary>
 		public static class Cubic
 		{

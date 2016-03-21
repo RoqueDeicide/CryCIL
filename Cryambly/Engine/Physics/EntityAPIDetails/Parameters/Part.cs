@@ -52,18 +52,12 @@ namespace CryCil.Engine.Physics
 		/// Gets identifier of the part these parameters will be assigned to or were taken from.
 		/// </summary>
 		/// <returns>- 1, if this object works with multiple parts.</returns>
-		public int PartIdentifier
-		{
-			get { return this.partid; }
-		}
+		public int PartIdentifier => this.partid;
 		/// <summary>
 		/// Gets zero-based index of the part these parameters will be assigned to or were taken from.
 		/// </summary>
 		/// <returns>- 1, if this object works with multiple parts.</returns>
-		public int PartIndex
-		{
-			get { return this.ipart; }
-		}
+		public int PartIndex => this.ipart;
 		/// <summary>
 		/// Gets or sets the value that indicates whether bounding box the part must be recalculated.
 		/// </summary>
@@ -173,10 +167,16 @@ namespace CryCil.Engine.Physics
 			}
 		}
 		/// <summary>
-		/// Sets the object that can specify: <list type="number"><item>A set of flags that must be set on
-		/// the part for the parameters to be assigned to it.</item><item>2 sets of flags that are used to
-		/// modify the flags that are assigned to the part.</item><item>2 sets of flags that are used to
-		/// modify the collision flags that are assigned to the part.</item></list>
+		/// Sets the object that can specify:
+		/// <list type="number">
+		/// <item>
+		/// A set of flags that must be set on the part for the parameters to be assigned to it.
+		/// </item>
+		/// <item>2 sets of flags that are used to modify the flags that are assigned to the part.</item>
+		/// <item>
+		/// 2 sets of flags that are used to modify the collision flags that are assigned to the part.
+		/// </item>
+		/// </list>
 		/// </summary>
 		/// <exception cref="InvalidOperationException">
 		/// Attempt was made to change an object that represents a set of parameters that represents
@@ -208,18 +208,12 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the flags that are assigned to the part, if this instance was used to query parameters.
 		/// </summary>
-		public PhysicsGeometryFlags PartFlags
-		{
-			get { return this.flagsOR; }
-		}
+		public PhysicsGeometryFlags PartFlags => this.flagsOR;
 		/// <summary>
 		/// Gets the flags that are assigned to the part collider, if this instance was used to query
 		/// parameters.
 		/// </summary>
-		public ColliderTypes PartColliderFlags
-		{
-			get { return this.flagsColliderOR; }
-		}
+		public ColliderTypes PartColliderFlags => this.flagsColliderOR;
 		/// <summary>
 		/// Gets or sets the mass of the part in kilograms.
 		/// </summary>
@@ -263,8 +257,8 @@ namespace CryCil.Engine.Physics
 			}
 		}
 		/// <summary>
-		/// Gets or sets the value that indicates how close another entity must be to this part, to make
-		/// the part report the contact.
+		/// Gets or sets the value that indicates how close another entity must be to this part, to make the
+		/// part report the contact.
 		/// </summary>
 		/// <exception cref="InvalidOperationException">
 		/// Attempt was made to change an object that represents a set of parameters that represents
@@ -326,8 +320,7 @@ namespace CryCil.Engine.Physics
 			}
 		}
 		/// <summary>
-		/// Gets or sets the breakability index that can be acquired from
-		/// <see cref="ExplosionShapes.Add"/>.
+		/// Gets or sets the breakability index that can be acquired from <see cref="ExplosionShapes.Add"/>.
 		/// </summary>
 		/// <exception cref="InvalidOperationException">
 		/// Attempt was made to change an object that represents a set of parameters that represents
@@ -385,10 +378,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets an array of surface type mappings that are used the geometry of this part.
 		/// </summary>
-		public int[] SurfaceTypesMapping
-		{
-			get { return this.matMappings; }
-		}
+		public int[] SurfaceTypesMapping => this.matMappings;
 		/// <summary>
 		/// Takes a table of surface type identifiers from the material that should be taken from the main
 		/// <see cref="CryEntity"/> object and puts into this object.
@@ -409,8 +399,8 @@ namespace CryCil.Engine.Physics
 			}
 		}
 		/// <summary>
-		/// Gets or sets the identifier of the part of the entity that must be broken in order for this
-		/// part to show up.
+		/// Gets or sets the identifier of the part of the entity that must be broken in order for this part
+		/// to show up.
 		/// </summary>
 		/// <exception cref="InvalidOperationException">
 		/// Attempt was made to change an object that represents a set of parameters that represents
@@ -478,8 +468,8 @@ namespace CryCil.Engine.Physics
 		/// part(s) of the entity.
 		/// </summary>
 		/// <param name="flags">
-		/// A value that designates the flags that must be set for parts to have these parameters applied
-		/// to them.
+		/// A value that designates the flags that must be set for parts to have these parameters applied to
+		/// them.
 		/// </param>
 		public PhysicsParametersPart(PhysicsGeometryFlags flags)
 		{
@@ -521,9 +511,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Creates a copy of parameters to be reassigned to another part.
 		/// </summary>
-		/// <param name="part">      
-		/// An object that specify the new part to apply the parameters to.
-		/// </param>
+		/// <param name="part">      An object that specify the new part to apply the parameters to.</param>
 		/// <param name="parameters">A set of parameters to copy.</param>
 		public PhysicsParametersPart(EntityPartSpec part, ref PhysicsParametersPart parameters)
 		{
@@ -544,8 +532,8 @@ namespace CryCil.Engine.Physics
 		/// Creates a copy of parameters to be reassigned to another part.
 		/// </summary>
 		/// <param name="flags">     
-		/// A value that designates the flags that must be set for parts to have these parameters applied
-		/// to them.
+		/// A value that designates the flags that must be set for parts to have these parameters applied to
+		/// them.
 		/// </param>
 		/// <param name="parameters">A set of parameters to copy.</param>
 		public PhysicsParametersPart(PhysicsGeometryFlags flags, ref PhysicsParametersPart parameters)

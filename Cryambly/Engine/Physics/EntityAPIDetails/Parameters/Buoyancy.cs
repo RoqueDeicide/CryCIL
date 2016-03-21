@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
 using CryCil.Engine.Physics.Primitives;
@@ -34,8 +35,8 @@ namespace CryCil.Engine.Physics
 		#endregion
 		#region Properties
 		/// <summary>
-		/// Gets or sets density of liquid. When set, overrides the density of liquid that is defined by
-		/// any the liquid volume this entity can be in.
+		/// Gets or sets density of liquid. When set, overrides the density of liquid that is defined by any
+		/// the liquid volume this entity can be in.
 		/// </summary>
 		public float Density
 		{

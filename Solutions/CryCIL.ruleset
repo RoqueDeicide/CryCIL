@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="Rules for CryCIL" Description="Code analysis rules for CryCIL assemblies." ToolsVersion="14.0">
+  <Rules AnalyzerId="Microsoft.Analyzers.ManagedCodeAnalysis" RuleNamespace="Microsoft.Rules.Managed">
+    <Rule Id="CA1001" Action="Warning" />
+    <Rule Id="CA1821" Action="Warning" />
+    <Rule Id="CA2213" Action="Warning" />
+    <Rule Id="CA2231" Action="Warning" />
+  </Rules>
+  <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp.Features" RuleNamespace="Microsoft.CodeAnalysis.CSharp.Features">
+    <Rule Id="IDE0005" Action="None" />
+  </Rules>
+</RuleSet>

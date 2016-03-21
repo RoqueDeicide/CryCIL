@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil.Engine.Input
 {
@@ -657,8 +658,8 @@ namespace CryCil.Engine.Input
 		/// </summary>
 		XboxTriggerLeftButton,
 		/// <summary>
-		/// Identifier of the event when the right trigger of the Xbox360 controller is pressed and
-		/// released in quick succession.
+		/// Identifier of the event when the right trigger of the Xbox360 controller is pressed and released
+		/// in quick succession.
 		/// </summary>
 		XboxTriggerRightButton,
 		/// <summary>

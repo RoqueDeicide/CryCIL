@@ -10,7 +10,7 @@ namespace CryCil.RunTime.Registration
 	internal static class AudioSystemImplementations
 	{
 		internal static SortedList<string, Type> RegisteredImplementations = new SortedList<string, Type>();
-		
+
 		[InitializationStage((int)DefaultInitializationStages.AudioSystemRegistrationStage)]
 		internal static void RegisterAudioSystemImplementations(int stageIndex)
 		{

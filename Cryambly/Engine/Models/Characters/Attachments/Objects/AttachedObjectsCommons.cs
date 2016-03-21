@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using CryCil.Engine.Logic;
 using CryCil.Engine.Models.StaticObjects;

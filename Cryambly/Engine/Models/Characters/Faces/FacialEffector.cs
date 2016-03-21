@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using CryCil.Geometry;
@@ -21,17 +22,13 @@ namespace CryCil.Engine.Models.Characters.Faces
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 		/// <summary>
 		/// Gets or sets the text value of this parameter.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		/// <exception cref="InvalidOperationException" accessor="get">
-		/// Text value can only be acquired from <see cref="FacialEffectorParameterId.BoneName"/>
-		/// parameter.
+		/// Text value can only be acquired from <see cref="FacialEffectorParameterId.BoneName"/> parameter.
 		/// </exception>
 		/// <exception cref="InvalidOperationException" accessor="set">
 		/// Text value can only be set for <see cref="FacialEffectorParameterId.BoneName"/> parameter.
@@ -173,10 +170,7 @@ namespace CryCil.Engine.Models.Characters.Faces
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 		/// <summary>
 		/// Gets the object that represents a parameter that specifies this facial effector.
 		/// </summary>
@@ -193,7 +187,7 @@ namespace CryCil.Engine.Models.Characters.Faces
 				this.AssertInstance();
 				if (id < FacialEffectorParameterId.BoneName || id > FacialEffectorParameterId.BonePositionAxis)
 				{
-					throw new ArgumentOutOfRangeException("id",
+					throw new ArgumentOutOfRangeException(nameof(id),
 														  "Identifier of the parameter must be a valid value from FacialEffectorParameterId enumeration.");
 				}
 
@@ -230,10 +224,7 @@ namespace CryCil.Engine.Models.Characters.Faces
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 		/// <summary>
 		/// Gets the number of elements in this collection.
 		/// </summary>
@@ -375,10 +366,7 @@ namespace CryCil.Engine.Models.Characters.Faces
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 		/// <summary>
 		/// Gets the number of elements in this collection.
 		/// </summary>
@@ -485,10 +473,7 @@ namespace CryCil.Engine.Models.Characters.Faces
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 
 		/// <summary>
 		/// Gets or sets the identifier of this effector.

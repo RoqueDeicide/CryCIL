@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using CryCil.Annotations;
 
 namespace CryCil.Engine.Input.ActionMapping
@@ -99,14 +100,14 @@ namespace CryCil.Engine.Input.ActionMapping
 		/// </remarks>
 		float BlockDuration { get; }
 		/// <summary>
-		/// When implemented in derived class, gets the index of the device which inputs must be blocked,
-		/// if equal to <see cref="byte.MaxValue"/> all devices of specific type will be blocked.
+		/// When implemented in derived class, gets the index of the device which inputs must be blocked, if
+		/// equal to <see cref="byte.MaxValue"/> all devices of specific type will be blocked.
 		/// </summary>
 		byte BlockedDevice { get; }
 
 		/// <summary>
-		/// When implemented in derived class, gets the time in seconds that must pass since key was
-		/// pressed until the action is triggered via a Press event.
+		/// When implemented in derived class, gets the time in seconds that must pass since key was pressed
+		/// until the action is triggered via a Press event.
 		/// </summary>
 		float PressTriggerDelay { get; }
 		/// <summary>
@@ -132,19 +133,19 @@ namespace CryCil.Engine.Input.ActionMapping
 		int PressDelayPriority { get; }
 
 		/// <summary>
-		/// When implemented in derived class, gets the time in seconds that must pass since key was
-		/// pressed until the action is triggered via a Hold event.
+		/// When implemented in derived class, gets the time in seconds that must pass since key was pressed
+		/// until the action is triggered via a Hold event.
 		/// </summary>
 		float HoldTriggerDelay { get; }
 		/// <summary>
-		/// When implemented in derived class, gets the time in seconds that must pass since last Hold
-		/// event until a new is triggered.
+		/// When implemented in derived class, gets the time in seconds that must pass since last Hold event
+		/// until a new is triggered.
 		/// </summary>
 		/// <remarks>If this property returns -1.0f, then Hold event is not repeated.</remarks>
 		float HoldTriggerRepeatDelay { get; }
 		/// <summary>
-		/// When implemented in derived class, gets the time in seconds that must pass since key was
-		/// pressed until Hold event is repeated for the last time.
+		/// When implemented in derived class, gets the time in seconds that must pass since key was pressed
+		/// until Hold event is repeated for the last time.
 		/// </summary>
 		/// <remarks>Ignored when left at its default value of -1.0f.</remarks>
 		float HoldTriggerRepeatDelayOverride { get; }
@@ -156,8 +157,8 @@ namespace CryCil.Engine.Input.ActionMapping
 		/// </summary>
 		float AnalogCompareValue { get; }
 		/// <summary>
-		/// When implemented in derived class, gets the value that indicates which kind of boolean
-		/// operation must be used to compare current analog input with <see cref="AnalogCompareValue"/>.
+		/// When implemented in derived class, gets the value that indicates which kind of boolean operation
+		/// must be used to compare current analog input with <see cref="AnalogCompareValue"/>.
 		/// </summary>
 		AnalogComparisonOperation ComparisonOperation { get; }
 	}
@@ -205,18 +206,12 @@ namespace CryCil.Engine.Input.ActionMapping
 		/// <see cref="InputActionAttribute.ActivationMode"/> property of any attributes that derive from
 		/// <see cref="InputActionAttribute"/> that are applied to the same action.
 		/// </remarks>
-		public ActionActivationMode ActivationMode
-		{
-			get { return this.MasterSpec.ActivationMode; }
-		}
+		public ActionActivationMode ActivationMode => this.MasterSpec.ActivationMode;
 		/// <summary>
 		/// Indicates whether this action is going to: 1) Do nothing special. 2) Block specific inputs for
 		/// specific amount of time from a specific device. 3) Stop any inputs from being blocked.
 		/// </summary>
-		public InputBlockMode BlockMode
-		{
-			get { return this.MasterSpec.BlockMode; }
-		}
+		public InputBlockMode BlockMode => this.MasterSpec.BlockMode;
 		/// <summary>
 		/// An array of identifiers of inputs that will be blocked when <see cref="BlockMode"/> is set to
 		/// <see cref="InputBlockMode.Block"/>.
@@ -225,101 +220,65 @@ namespace CryCil.Engine.Input.ActionMapping
 		/// This array should only contain identifiers of inputs that can come from one device type from
 		/// <see cref="AnalogComparisonOperation"/> enumeration.
 		/// </remarks>
-		public InputId[] BlockedInputs
-		{
-			get { return this.MasterSpec.BlockedInputs; }
-		}
+		public InputId[] BlockedInputs => this.MasterSpec.BlockedInputs;
 		/// <summary>
 		/// Amount of time in seconds the inputs specified in <see cref="BlockedInputs"/> will be blocked
 		/// for.
 		/// </summary>
-		public float BlockDuration
-		{
-			get { return this.MasterSpec.BlockDuration; }
-		}
+		public float BlockDuration => this.MasterSpec.BlockDuration;
 		/// <summary>
 		/// A zero-based index of the device (e.g. a controller) to block inputs from, if left at default
 		/// value of <see cref="Byte.MaxValue"/> all devices of types specified by
 		/// <see cref="BlockedInputs"/> will be blocked.
 		/// </summary>
-		public byte BlockedDevice
-		{
-			get { return this.MasterSpec.BlockedDevice; }
-		}
+		public byte BlockedDevice => this.MasterSpec.BlockedDevice;
 		/// <summary>
 		/// A time that must pass from the moment the key was pressed until the action is activated via a
 		/// Press event.
 		/// </summary>
-		public float PressTriggerDelay
-		{
-			get { return this.MasterSpec.PressTriggerDelay; }
-		}
+		public float PressTriggerDelay => this.MasterSpec.PressTriggerDelay;
 		/// <summary>
 		/// Gets the priority of the input when it comes to being delayed.
 		/// </summary>
 		/// <remarks>
 		/// When two inputs are delayed, one with a higher priority will override another.
 		/// </remarks>
-		public int PressDelayPriority
-		{
-			get { return this.MasterSpec.PressDelayPriority; }
-		}
+		public int PressDelayPriority => this.MasterSpec.PressDelayPriority;
 		/// <summary>
 		/// Indicates whether <see cref="PressTriggerDelay"/> can be overridden by repeating the input.
 		/// </summary>
-		public bool OverridePressTriggerDelayWithRepeat
-		{
-			get { return this.MasterSpec.OverridePressTriggerDelayWithRepeat; }
-		}
+		public bool OverridePressTriggerDelayWithRepeat => this.MasterSpec.OverridePressTriggerDelayWithRepeat;
 		/// <summary>
-		/// A time that must pass since the key was pressed until key is released to stop Release event
-		/// from activating the action. When left at default value of -1.0 it is ignored.
+		/// A time that must pass since the key was pressed until key is released to stop Release event from
+		/// activating the action. When left at default value of -1.0 it is ignored.
 		/// </summary>
-		public float ReleaseTriggerThreshold
-		{
-			get { return this.MasterSpec.ReleaseTriggerThreshold; }
-		}
+		public float ReleaseTriggerThreshold => this.MasterSpec.ReleaseTriggerThreshold;
 		/// <summary>
 		/// A time that must pass from the moment the key was pressed until the action is activated via a
 		/// Hold event.
 		/// </summary>
-		public float HoldTriggerDelay
-		{
-			get { return this.MasterSpec.HoldTriggerDelay; }
-		}
+		public float HoldTriggerDelay => this.MasterSpec.HoldTriggerDelay;
 		/// <summary>
 		/// A time that must pass from the moment the lest Hold event has activated the action until the
 		/// action is activated again via a Hold event.
 		/// </summary>
-		public float HoldTriggerRepeatDelay
-		{
-			get { return this.MasterSpec.HoldTriggerRepeatDelay; }
-		}
+		public float HoldTriggerRepeatDelay => this.MasterSpec.HoldTriggerRepeatDelay;
 		/// <summary>
 		/// A time that must pass from the moment the key was pressed until the action is activated via a
 		/// Hold event for the last time until the key is pressed again.
 		/// </summary>
-		public float HoldTriggerRepeatDelayOverride
-		{
-			get { return this.MasterSpec.HoldTriggerRepeatDelayOverride; }
-		}
+		public float HoldTriggerRepeatDelayOverride => this.MasterSpec.HoldTriggerRepeatDelayOverride;
 		/// <summary>
 		/// A boolean operation to use to compare analog input to <see cref="AnalogCompareValue"/>. Analog
 		/// input can only activate the action when this.MasterSpec comparison succeeds (returns
 		/// <c>true</c>). If left at its default value of <see cref="AnalogComparisonOperation.None"/>, no
 		/// comparison is done.
 		/// </summary>
-		public AnalogComparisonOperation ComparisonOperation
-		{
-			get { return this.MasterSpec.ComparisonOperation; }
-		}
+		public AnalogComparisonOperation ComparisonOperation => this.MasterSpec.ComparisonOperation;
 		/// <summary>
 		/// A value to compare analog input to using <see cref="ComparisonOperation"/>.
 		/// </summary>
-		public float AnalogCompareValue
-		{
-			get { return this.MasterSpec.AnalogCompareValue; }
-		}
+		public float AnalogCompareValue => this.MasterSpec.AnalogCompareValue;
 		/// <summary>
 		/// An optional value that represents the input from keyboard/mouse input device that can activate
 		/// the action.
@@ -468,22 +427,15 @@ namespace CryCil.Engine.Input.ActionMapping
 		/// </summary>
 		/// <remarks>
 		/// This value is combined with the value that is returned by
-		/// <see cref="ActionAttribute.ActivationMode"/> property of the attribute that defines this
-		/// action.
+		/// <see cref="ActionAttribute.ActivationMode"/> property of the attribute that defines this action.
 		/// </remarks>
-		public ActionActivationMode ActivationMode
-		{
-			get { return this.ExtraSpec.ActivationMode; }
-		}
+		public ActionActivationMode ActivationMode => this.ExtraSpec.ActivationMode;
 		/// <summary>
 		/// Indicates whether activation of the action via this input is going to: 1) Do nothing special.
 		/// 2) Block specific inputs for specific amount of time from a specific device. 3) Stop any inputs
 		/// from being blocked.
 		/// </summary>
-		public InputBlockMode BlockMode
-		{
-			get { return this.ExtraSpec.BlockMode; }
-		}
+		public InputBlockMode BlockMode => this.ExtraSpec.BlockMode;
 		/// <summary>
 		/// An array of identifiers of inputs that will be blocked when <see cref="BlockMode"/> is set to
 		/// <see cref="InputBlockMode.Block"/>.
@@ -492,100 +444,64 @@ namespace CryCil.Engine.Input.ActionMapping
 		/// This array should only contain identifiers of inputs that can come from one device type from
 		/// <see cref="AnalogComparisonOperation"/> enumeration.
 		/// </remarks>
-		public InputId[] BlockedInputs
-		{
-			get { return this.ExtraSpec.BlockedInputs; }
-		}
+		public InputId[] BlockedInputs => this.ExtraSpec.BlockedInputs;
 		/// <summary>
 		/// Amount of time in seconds the inputs specified in <see cref="BlockedInputs"/> will be blocked
 		/// for.
 		/// </summary>
-		public float BlockDuration
-		{
-			get { return this.ExtraSpec.BlockDuration; }
-		}
+		public float BlockDuration => this.ExtraSpec.BlockDuration;
 		/// <summary>
 		/// A zero-based index of the device (e.g. a controller) to block inputs from, if left at default
 		/// value of <see cref="Byte.MaxValue"/> all devices of type specified by
 		/// <see cref="BlockedInputs"/> will be blocked.
 		/// </summary>
-		public byte BlockedDevice
-		{
-			get { return this.ExtraSpec.BlockedDevice; }
-		}
+		public byte BlockedDevice => this.ExtraSpec.BlockedDevice;
 		/// <summary>
 		/// A time that must pass from the moment the key was pressed until the action is activated via a
 		/// Press event.
 		/// </summary>
-		public float PressTriggerDelay
-		{
-			get { return this.ExtraSpec.PressTriggerDelay; }
-		}
+		public float PressTriggerDelay => this.ExtraSpec.PressTriggerDelay;
 		/// <summary>
 		/// Gets the priority of the input when it comes to being delayed.
 		/// </summary>
 		/// <remarks>
 		/// When two inputs are delayed, one with a higher priority will override another.
 		/// </remarks>
-		public int PressDelayPriority
-		{
-			get { return this.ExtraSpec.PressDelayPriority; }
-		}
+		public int PressDelayPriority => this.ExtraSpec.PressDelayPriority;
 		/// <summary>
 		/// Indicates whether <see cref="PressTriggerDelay"/> can be overridden by repeating the input.
 		/// </summary>
-		public bool OverridePressTriggerDelayWithRepeat
-		{
-			get { return this.ExtraSpec.OverridePressTriggerDelayWithRepeat; }
-		}
+		public bool OverridePressTriggerDelayWithRepeat => this.ExtraSpec.OverridePressTriggerDelayWithRepeat;
 		/// <summary>
-		/// A time that must pass since the key was pressed until key is released to stop Release event
-		/// from activating the action. When left at default value of -1.0 it is ignored.
+		/// A time that must pass since the key was pressed until key is released to stop Release event from
+		/// activating the action. When left at default value of -1.0 it is ignored.
 		/// </summary>
-		public float ReleaseTriggerThreshold
-		{
-			get { return this.ExtraSpec.ReleaseTriggerThreshold; }
-		}
+		public float ReleaseTriggerThreshold => this.ExtraSpec.ReleaseTriggerThreshold;
 		/// <summary>
 		/// A time that must pass from the moment the key was pressed until the action is activated via a
 		/// Hold event.
 		/// </summary>
-		public float HoldTriggerDelay
-		{
-			get { return this.ExtraSpec.HoldTriggerDelay; }
-		}
+		public float HoldTriggerDelay => this.ExtraSpec.HoldTriggerDelay;
 		/// <summary>
 		/// A time that must pass from the moment the lest Hold event has activated the action until the
 		/// action is activated again via a Hold event.
 		/// </summary>
-		public float HoldTriggerRepeatDelay
-		{
-			get { return this.ExtraSpec.HoldTriggerRepeatDelay; }
-		}
+		public float HoldTriggerRepeatDelay => this.ExtraSpec.HoldTriggerRepeatDelay;
 		/// <summary>
 		/// A time that must pass from the moment the key was pressed until the action is activated via a
 		/// Hold event for the last time until the key is pressed again.
 		/// </summary>
-		public float HoldTriggerRepeatDelayOverride
-		{
-			get { return this.ExtraSpec.HoldTriggerRepeatDelayOverride; }
-		}
+		public float HoldTriggerRepeatDelayOverride => this.ExtraSpec.HoldTriggerRepeatDelayOverride;
 		/// <summary>
 		/// A boolean operation to use to compare analog input to <see cref="AnalogCompareValue"/>. Analog
 		/// input can only activate the action when this comparison succeeds (returns <c>true</c>). If left
 		/// at its default value of <see cref="AnalogComparisonOperation.None"/>, no comparison is done.
 		/// </summary>
-		public AnalogComparisonOperation ComparisonOperation
-		{
-			get { return this.ExtraSpec.ComparisonOperation; }
-		}
+		public AnalogComparisonOperation ComparisonOperation => this.ExtraSpec.ComparisonOperation;
 		/// <summary>
 		/// A value to compare analog input to using <see cref="ComparisonOperation"/>.
 		/// </summary>
-		public float AnalogCompareValue
-		{
-			get { return this.ExtraSpec.AnalogCompareValue; }
-		}
+		public float AnalogCompareValue => this.ExtraSpec.AnalogCompareValue;
 		#endregion
 		#region Construction
 		/// <summary>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace CryCil.Engine.Physics
@@ -11,8 +12,7 @@ namespace CryCil.Engine.Physics
 	{
 		/// <summary>
 		/// Minimal number of triangle that can be present in a single bounding volume tree node. If one of
-		/// the nodes has less then this number of triangles after split, a different one will be
-		/// attempted.
+		/// the nodes has less then this number of triangles after split, a different one will be attempted.
 		/// </summary>
 		public int MinTrianglesPerNode;
 		/// <summary>
@@ -35,8 +35,7 @@ namespace CryCil.Engine.Physics
 	{
 		/// <summary>
 		/// Minimal number of triangle that can be present in a single bounding volume tree node. If one of
-		/// the nodes has less then this number of triangles after split, a different one will be
-		/// attempted.
+		/// the nodes has less then this number of triangles after split, a different one will be attempted.
 		/// </summary>
 		public int MinTrianglesPerNode;
 		/// <summary>

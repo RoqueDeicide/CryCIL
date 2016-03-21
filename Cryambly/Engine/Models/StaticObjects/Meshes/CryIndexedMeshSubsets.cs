@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using CryCil.Engine.Physics;
 using CryCil.Engine.Rendering;
 
@@ -16,10 +17,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 
 		/// <summary>
 		/// Gets or sets the number of subsets in this collection.
@@ -66,9 +64,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// Sets the bounds of the mesh subset.
 		/// </summary>
 		/// <param name="index"> Zero-based index of the subset to set the bounds for.</param>
-		/// <param name="center">
-		/// Coordintes of the center of the sphere that encompasses the subset.
-		/// </param>
+		/// <param name="center">Coordintes of the center of the sphere that encompasses the subset.</param>
 		/// <param name="radius">Radius of the sphere that encompasses the subset.</param>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public void SetSubsetBounds(int index, ref Vector3 center, float radius)

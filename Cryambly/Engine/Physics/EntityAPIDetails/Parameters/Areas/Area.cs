@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
 
@@ -48,8 +49,8 @@ namespace CryCil.Engine.Physics
 			set { this.minhSpread = value; }
 		}
 		/// <summary>
-		/// Gets or sets the value that specifies assumed depth of the water layer where saves are
-		/// simulated (relative to cell size).
+		/// Gets or sets the value that specifies assumed depth of the water layer where saves are simulated
+		/// (relative to cell size).
 		/// </summary>
 		public float SimulatedDepth
 		{

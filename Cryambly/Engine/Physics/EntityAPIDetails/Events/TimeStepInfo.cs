@@ -20,31 +20,19 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the time it took to simulate the step.
 		/// </summary>
-		public float StepTime
-		{
-			get { return this.dt; }
-		}
+		public float StepTime => this.dt;
 		/// <summary>
 		/// Gets the position of the entity at the end of the step.
 		/// </summary>
-		public Vector3 Position
-		{
-			get { return this.pos; }
-		}
+		public Vector3 Position => this.pos;
 		/// <summary>
 		/// Gets the orientation of the entity at the end of the step.
 		/// </summary>
-		public Quaternion Orientation
-		{
-			get { return this.q; }
-		}
+		public Quaternion Orientation => this.q;
 		/// <summary>
 		/// Gets the identifier of the step.
 		/// </summary>
-		public int StepId
-		{
-			get { return this.idStep; }
-		}
+		public int StepId => this.idStep;
 		#endregion
 		#region Construction
 		internal TimeStepInfo(float dt, Vector3 pos, Quaternion q, int idStep)

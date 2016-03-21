@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil.Engine.Input.ActionMapping
 {
@@ -15,8 +16,8 @@ namespace CryCil.Engine.Input.ActionMapping
 		/// A combination of keyboard and a mouse.
 		/// </summary>
 		/// <remarks>
-		/// Typically supported by PCs, however default GameSDK implementation thinks that both Xbox One
-		/// and Play Station 4 can support these.
+		/// Typically supported by PCs, however default GameSDK implementation thinks that both Xbox One and
+		/// Play Station 4 can support these.
 		/// </remarks>
 		KeyboardMouse,
 		/// <summary>

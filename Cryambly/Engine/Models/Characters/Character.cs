@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using CryCil.Engine.Data;
 using CryCil.Engine.Models.Characters.Attachments;
@@ -20,10 +21,7 @@ namespace CryCil.Engine.Models.Characters
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 		/// <summary>
 		/// Queries current reference count of this object.
 		/// </summary>
@@ -161,8 +159,7 @@ namespace CryCil.Engine.Models.Characters
 			}
 		}
 		/// <summary>
-		/// Gets the identifier of the file format that was used by the file this character was loaded
-		/// from.
+		/// Gets the identifier of the file format that was used by the file this character was loaded from.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public AnimationFileFormatIds FileFormat
@@ -240,7 +237,7 @@ namespace CryCil.Engine.Models.Characters
 				this.AssertInstance();
 				if (!value.IsValid)
 				{
-					throw new ArgumentNullException("value", "Material instance cannot be null.");
+					throw new ArgumentNullException(nameof(value), "Material instance cannot be null.");
 				}
 
 				SetIMaterial_Instance(this.handle, value);
@@ -263,10 +260,13 @@ namespace CryCil.Engine.Models.Characters
 		/// Gets or sets the scale of animation playback speed.
 		/// </summary>
 		/// <value>
-		/// Some values and their effect on the animations: <list type="number"><item>0 - animations are
-		/// still (stuck on one frame).</item><item>1 - animations are played normally.</item><item>2 -
-		/// animations are played at double speed.</item><item>0.5 - animations are played at half
-		/// speed.</item></list>
+		/// Some values and their effect on the animations:
+		/// <list type="number">
+		/// <item>0 - animations are still (stuck on one frame).</item>
+		/// <item>1 - animations are played normally.</item>
+		/// <item>2 - animations are played at double speed.</item>
+		/// <item>0.5 - animations are played at half speed.</item>
+		/// </list>
 		/// </value>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public float PlaybackScale
@@ -387,8 +387,8 @@ namespace CryCil.Engine.Models.Characters
 			EnableStartAnimationInternal(this.handle, false);
 		}
 		/// <summary>
-		/// Forces underlying object to update the animation. Needs to be updated every frame unless this
-		/// is handled by something else (e.g. when this character is bound to the entity slot).
+		/// Forces underlying object to update the animation. Needs to be updated every frame unless this is
+		/// handled by something else (e.g. when this character is bound to the entity slot).
 		/// </summary>
 		/// <param name="parameters">
 		/// Reference to the object that contains information that is relevant for animation prosess.

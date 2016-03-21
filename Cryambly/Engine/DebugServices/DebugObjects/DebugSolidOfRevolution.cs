@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using CryCil.Geometry;
 
 namespace CryCil.Engine.DebugServices
@@ -8,8 +9,8 @@ namespace CryCil.Engine.DebugServices
 	/// </summary>
 	/// <remarks>
 	/// <para>
-	/// A solid of revolution is a solid figure obtained by rotating a plane curve around some straight
-	/// line (the axis) that lies on the same plane.
+	/// A solid of revolution is a solid figure obtained by rotating a plane curve around some straight line
+	/// (the axis) that lies on the same plane.
 	/// </para>
 	/// <para>Axis of revolution represents an "Up" axis of orientation of the solid.</para>
 	/// </remarks>

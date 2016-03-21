@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace CryCil.Engine.Models.Characters
@@ -116,10 +117,7 @@ namespace CryCil.Engine.Models.Characters
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != null; }
-		}
+		public bool IsValid => this.handle != null;
 		/// <summary>
 		/// Gets the type of this parametric group: i.e. I2M, M2I, MOVE, Idle-Step, Idle-Rot, etc...
 		/// </summary>

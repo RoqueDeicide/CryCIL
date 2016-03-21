@@ -41,9 +41,7 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Gets a sets of flags that describes this flow node.
 		/// </summary>
-		/// <exception cref="Exception">
-		/// Flags that describe this flow node can only be set once.
-		/// </exception>
+		/// <exception cref="Exception">Flags that describe this flow node can only be set once.</exception>
 		public FlowNodeFlags Flags
 		{
 			get { return this.flags; }
@@ -110,7 +108,7 @@ namespace CryCil.Engine.Logic
 		/// </summary>
 		public ushort Id { get; private set; }
 
-		internal IntPtr GraphHandle { get; private set; }
+		internal IntPtr GraphHandle { get; }
 		/// <summary>
 		/// Gets identifier of the entity this node targets.
 		/// </summary>
@@ -263,7 +261,7 @@ namespace CryCil.Engine.Logic
 
 					if (this.initData != InitializationDetails.All)
 					{
-						string errorText = string.Format("The node {0} is not fully initialized.", attribute.Name);
+						string errorText = $"The node {attribute.Name} is not fully initialized.";
 #if DEBUG
 						throw new Exception(errorText);
 #else

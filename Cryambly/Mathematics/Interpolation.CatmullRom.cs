@@ -33,12 +33,12 @@ namespace CryCil
 				float squared = parameter * parameter;
 				float cubed = parameter * squared;
 
-				result = new Vector2(0.5f * ((((2.0f * v2.X) + ((-v1.X + v3.X) * parameter)) +
-											  (((((2.0f * v1.X) - (5.0f * v2.X)) + (4.0f * v3.X)) - v4.X) * squared)) +
-											 ((((-v1.X + (3.0f * v2.X)) - (3.0f * v3.X)) + v4.X) * cubed)),
-									 0.5f * ((((2.0f * v2.Y) + ((-v1.Y + v3.Y) * parameter)) +
-											  (((((2.0f * v1.Y) - (5.0f * v2.Y)) + (4.0f * v3.Y)) - v4.Y) * squared)) +
-											 ((((-v1.Y + (3.0f * v2.Y)) - (3.0f * v3.Y)) + v4.Y) * cubed)));
+				result = new Vector2(0.5f * (2.0f * v2.X + (-v1.X + v3.X) * parameter +
+											 (2.0f * v1.X - 5.0f * v2.X + 4.0f * v3.X - v4.X) * squared +
+											 (-v1.X + 3.0f * v2.X - 3.0f * v3.X + v4.X) * cubed),
+									 0.5f * (2.0f * v2.Y + (-v1.Y + v3.Y) * parameter +
+											 (2.0f * v1.Y - 5.0f * v2.Y + 4.0f * v3.Y - v4.Y) * squared +
+											 (-v1.Y + 3.0f * v2.Y - 3.0f * v3.Y + v4.Y) * cubed));
 			}
 			/// <summary>
 			/// Creates a vector that is a result of Catmull-Rom interpolation.
@@ -58,12 +58,12 @@ namespace CryCil
 				float squared = parameter * parameter;
 				float cubed = parameter * squared;
 
-				return new Vector2(0.5f * ((((2.0f * v2.X) + ((-v1.X + v3.X) * parameter)) +
-											(((((2.0f * v1.X) - (5.0f * v2.X)) + (4.0f * v3.X)) - v4.X) * squared)) +
-										   ((((-v1.X + (3.0f * v2.X)) - (3.0f * v3.X)) + v4.X) * cubed)),
-								   0.5f * ((((2.0f * v2.Y) + ((-v1.Y + v3.Y) * parameter)) +
-											(((((2.0f * v1.Y) - (5.0f * v2.Y)) + (4.0f * v3.Y)) - v4.Y) * squared)) +
-										   ((((-v1.Y + (3.0f * v2.Y)) - (3.0f * v3.Y)) + v4.Y) * cubed)));
+				return new Vector2(0.5f * (2.0f * v2.X + (-v1.X + v3.X) * parameter +
+										   (2.0f * v1.X - 5.0f * v2.X + 4.0f * v3.X - v4.X) * squared +
+										   (-v1.X + 3.0f * v2.X - 3.0f * v3.X + v4.X) * cubed),
+								   0.5f * (2.0f * v2.Y + (-v1.Y + v3.Y) * parameter +
+										   (2.0f * v1.Y - 5.0f * v2.Y + 4.0f * v3.Y - v4.Y) * squared +
+										   (-v1.Y + 3.0f * v2.Y - 3.0f * v3.Y + v4.Y) * cubed));
 			}
 			/// <summary>
 			/// Applies Catmull-Rom interpolation to the given vector.
@@ -84,15 +84,15 @@ namespace CryCil
 				float squared = parameter * parameter;
 				float cubed = parameter * squared;
 
-				result = new Vector3(0.5f * ((((2.0f * v2.X) + ((-v1.X + v3.X) * parameter)) +
-											  (((((2.0f * v1.X) - (5.0f * v2.X)) + (4.0f * v3.X)) - v4.X) * squared)) +
-											 ((((-v1.X + (3.0f * v2.X)) - (3.0f * v3.X)) + v4.X) * cubed)),
-									 0.5f * ((((2.0f * v2.Y) + ((-v1.Y + v3.Y) * parameter)) +
-											  (((((2.0f * v1.Y) - (5.0f * v2.Y)) + (4.0f * v3.Y)) - v4.Y) * squared)) +
-											 ((((-v1.Y + (3.0f * v2.Y)) - (3.0f * v3.Y)) + v4.Y) * cubed)),
-									 0.5f * ((((2.0f * v2.Z) + ((-v1.Z + v3.Z) * parameter)) +
-											  (((((2.0f * v1.Z) - (5.0f * v2.Z)) + (4.0f * v3.Z)) - v4.Z) * squared)) +
-											 ((((-v1.Z + (3.0f * v2.Z)) - (3.0f * v3.Z)) + v4.Z) * cubed)));
+				result = new Vector3(0.5f * (2.0f * v2.X + (-v1.X + v3.X) * parameter +
+											 (2.0f * v1.X - 5.0f * v2.X + 4.0f * v3.X - v4.X) * squared +
+											 (-v1.X + 3.0f * v2.X - 3.0f * v3.X + v4.X) * cubed),
+									 0.5f * (2.0f * v2.Y + (-v1.Y + v3.Y) * parameter +
+											 (2.0f * v1.Y - 5.0f * v2.Y + 4.0f * v3.Y - v4.Y) * squared +
+											 (-v1.Y + 3.0f * v2.Y - 3.0f * v3.Y + v4.Y) * cubed),
+									 0.5f * (2.0f * v2.Z + (-v1.Z + v3.Z) * parameter +
+											 (2.0f * v1.Z - 5.0f * v2.Z + 4.0f * v3.Z - v4.Z) * squared +
+											 (-v1.Z + 3.0f * v2.Z - 3.0f * v3.Z + v4.Z) * cubed));
 			}
 			/// <summary>
 			/// Creates a vector that is a result of Catmull-Rom interpolation.
@@ -112,15 +112,15 @@ namespace CryCil
 				float squared = parameter * parameter;
 				float cubed = parameter * squared;
 
-				return new Vector3(0.5f * ((((2.0f * v2.X) + ((-v1.X + v3.X) * parameter)) +
-											(((((2.0f * v1.X) - (5.0f * v2.X)) + (4.0f * v3.X)) - v4.X) * squared)) +
-										   ((((-v1.X + (3.0f * v2.X)) - (3.0f * v3.X)) + v4.X) * cubed)),
-								   0.5f * ((((2.0f * v2.Y) + ((-v1.Y + v3.Y) * parameter)) +
-											(((((2.0f * v1.Y) - (5.0f * v2.Y)) + (4.0f * v3.Y)) - v4.Y) * squared)) +
-										   ((((-v1.Y + (3.0f * v2.Y)) - (3.0f * v3.Y)) + v4.Y) * cubed)),
-								   0.5f * ((((2.0f * v2.Z) + ((-v1.Z + v3.Z) * parameter)) +
-											(((((2.0f * v1.Z) - (5.0f * v2.Z)) + (4.0f * v3.Z)) - v4.Z) * squared)) +
-										   ((((-v1.Z + (3.0f * v2.Z)) - (3.0f * v3.Z)) + v4.Z) * cubed)));
+				return new Vector3(0.5f * (2.0f * v2.X + (-v1.X + v3.X) * parameter +
+										   (2.0f * v1.X - 5.0f * v2.X + 4.0f * v3.X - v4.X) * squared +
+										   (-v1.X + 3.0f * v2.X - 3.0f * v3.X + v4.X) * cubed),
+								   0.5f * (2.0f * v2.Y + (-v1.Y + v3.Y) * parameter +
+										   (2.0f * v1.Y - 5.0f * v2.Y + 4.0f * v3.Y - v4.Y) * squared +
+										   (-v1.Y + 3.0f * v2.Y - 3.0f * v3.Y + v4.Y) * cubed),
+								   0.5f * (2.0f * v2.Z + (-v1.Z + v3.Z) * parameter +
+										   (2.0f * v1.Z - 5.0f * v2.Z + 4.0f * v3.Z - v4.Z) * squared +
+										   (-v1.Z + 3.0f * v2.Z - 3.0f * v3.Z + v4.Z) * cubed));
 			}
 			/// <summary>
 			/// Applies Catmull-Rom interpolation to the given vector.
@@ -141,18 +141,18 @@ namespace CryCil
 				float squared = parameter * parameter;
 				float cubed = parameter * squared;
 
-				result = new Vector4(0.5f * ((((2.0f * v2.X) + ((-v1.X + v3.X) * parameter)) +
-											  (((((2.0f * v1.X) - (5.0f * v2.X)) + (4.0f * v3.X)) - v4.X) * squared)) +
-											 ((((-v1.X + (3.0f * v2.X)) - (3.0f * v3.X)) + v4.X) * cubed)),
-									 0.5f * ((((2.0f * v2.Y) + ((-v1.Y + v3.Y) * parameter)) +
-											  (((((2.0f * v1.Y) - (5.0f * v2.Y)) + (4.0f * v3.Y)) - v4.Y) * squared)) +
-											 ((((-v1.Y + (3.0f * v2.Y)) - (3.0f * v3.Y)) + v4.Y) * cubed)),
-									 0.5f * ((((2.0f * v2.Z) + ((-v1.Z + v3.Z) * parameter)) +
-											  (((((2.0f * v1.Z) - (5.0f * v2.Z)) + (4.0f * v3.Z)) - v4.Z) * squared)) +
-											 ((((-v1.Z + (3.0f * v2.Z)) - (3.0f * v3.Z)) + v4.Z) * cubed)),
-									 0.5f * ((((2.0f * v2.W) + ((-v1.W + v3.W) * parameter)) +
-											  (((((2.0f * v1.W) - (5.0f * v2.W)) + (4.0f * v3.W)) - v4.W) * squared)) +
-											 ((((-v1.W + (3.0f * v2.W)) - (3.0f * v3.W)) + v4.W) * cubed)));
+				result = new Vector4(0.5f * (2.0f * v2.X + (-v1.X + v3.X) * parameter +
+											 (2.0f * v1.X - 5.0f * v2.X + 4.0f * v3.X - v4.X) * squared +
+											 (-v1.X + 3.0f * v2.X - 3.0f * v3.X + v4.X) * cubed),
+									 0.5f * (2.0f * v2.Y + (-v1.Y + v3.Y) * parameter +
+											 (2.0f * v1.Y - 5.0f * v2.Y + 4.0f * v3.Y - v4.Y) * squared +
+											 (-v1.Y + 3.0f * v2.Y - 3.0f * v3.Y + v4.Y) * cubed),
+									 0.5f * (2.0f * v2.Z + (-v1.Z + v3.Z) * parameter +
+											 (2.0f * v1.Z - 5.0f * v2.Z + 4.0f * v3.Z - v4.Z) * squared +
+											 (-v1.Z + 3.0f * v2.Z - 3.0f * v3.Z + v4.Z) * cubed),
+									 0.5f * (2.0f * v2.W + (-v1.W + v3.W) * parameter +
+											 (2.0f * v1.W - 5.0f * v2.W + 4.0f * v3.W - v4.W) * squared +
+											 (-v1.W + 3.0f * v2.W - 3.0f * v3.W + v4.W) * cubed));
 			}
 			/// <summary>
 			/// Creates a vector that is a result of Catmull-Rom interpolation.
@@ -172,18 +172,18 @@ namespace CryCil
 				float squared = parameter * parameter;
 				float cubed = parameter * squared;
 
-				return new Vector4(0.5f * ((((2.0f * v2.X) + ((-v1.X + v3.X) * parameter)) +
-											(((((2.0f * v1.X) - (5.0f * v2.X)) + (4.0f * v3.X)) - v4.X) * squared)) +
-										   ((((-v1.X + (3.0f * v2.X)) - (3.0f * v3.X)) + v4.X) * cubed)),
-								   0.5f * ((((2.0f * v2.Y) + ((-v1.Y + v3.Y) * parameter)) +
-											(((((2.0f * v1.Y) - (5.0f * v2.Y)) + (4.0f * v3.Y)) - v4.Y) * squared)) +
-										   ((((-v1.Y + (3.0f * v2.Y)) - (3.0f * v3.Y)) + v4.Y) * cubed)),
-								   0.5f * ((((2.0f * v2.Z) + ((-v1.Z + v3.Z) * parameter)) +
-											(((((2.0f * v1.Z) - (5.0f * v2.Z)) + (4.0f * v3.Z)) - v4.Z) * squared)) +
-										   ((((-v1.Z + (3.0f * v2.Z)) - (3.0f * v3.Z)) + v4.Z) * cubed)),
-								   0.5f * ((((2.0f * v2.W) + ((-v1.W + v3.W) * parameter)) +
-											(((((2.0f * v1.W) - (5.0f * v2.W)) + (4.0f * v3.W)) - v4.W) * squared)) +
-										   ((((-v1.W + (3.0f * v2.W)) - (3.0f * v3.W)) + v4.W) * cubed)));
+				return new Vector4(0.5f * (2.0f * v2.X + (-v1.X + v3.X) * parameter +
+										   (2.0f * v1.X - 5.0f * v2.X + 4.0f * v3.X - v4.X) * squared +
+										   (-v1.X + 3.0f * v2.X - 3.0f * v3.X + v4.X) * cubed),
+								   0.5f * (2.0f * v2.Y + (-v1.Y + v3.Y) * parameter +
+										   (2.0f * v1.Y - 5.0f * v2.Y + 4.0f * v3.Y - v4.Y) * squared +
+										   (-v1.Y + 3.0f * v2.Y - 3.0f * v3.Y + v4.Y) * cubed),
+								   0.5f * (2.0f * v2.Z + (-v1.Z + v3.Z) * parameter +
+										   (2.0f * v1.Z - 5.0f * v2.Z + 4.0f * v3.Z - v4.Z) * squared +
+										   (-v1.Z + 3.0f * v2.Z - 3.0f * v3.Z + v4.Z) * cubed),
+								   0.5f * (2.0f * v2.W + (-v1.W + v3.W) * parameter +
+										   (2.0f * v1.W - 5.0f * v2.W + 4.0f * v3.W - v4.W) * squared +
+										   (-v1.W + 3.0f * v2.W - 3.0f * v3.W + v4.W) * cubed));
 			}
 		}
 	}

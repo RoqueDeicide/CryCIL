@@ -18,17 +18,11 @@ namespace CryCil.Engine.Network
 		/// <summary>
 		/// Determines whether this identifier is valid.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.id == 0; }
-		}
+		public bool IsValid => this.id == 0;
 		/// <summary>
 		/// Gets the object that represents the channel this object is an identifier of.
 		/// </summary>
-		public CryNetChannel Channel
-		{
-			get { return GetChannel(this.id); }
-		}
+		public CryNetChannel Channel => GetChannel(this.id);
 		#endregion
 		#region Construction
 		/// <summary>

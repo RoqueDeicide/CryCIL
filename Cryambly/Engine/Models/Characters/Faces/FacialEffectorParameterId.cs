@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using CryCil.Geometry;
 
 namespace CryCil.Engine.Models.Characters.Faces

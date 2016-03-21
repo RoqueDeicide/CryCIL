@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil.Engine.Models.Characters
 {
@@ -14,8 +15,8 @@ namespace CryCil.Engine.Models.Characters
 		/// <remarks>
 		/// <para>
 		/// User needs to set the time manually for any animations that being played with this flag set.
-		/// This is used for steering-wheels and mounted-weapons, where we convert the rotation of an
-		/// object into animation key-times.
+		/// This is used for steering-wheels and mounted-weapons, where we convert the rotation of an object
+		/// into animation key-times.
 		/// </para>
 		/// <para>
 		/// This flag overrides <see cref="LoopAnimation"/> and <see cref="RepeatLastKey"/> if it's set
@@ -66,8 +67,8 @@ namespace CryCil.Engine.Models.Characters
 		/// <remarks>Used for weapon recoil animation.</remarks>
 		AllowAnimationRestart = 0x000100,
 		/// <summary>
-		/// When set, specifies that no interpolation must be done between key-frames and 30Hz sampling
-		/// must be used instead.
+		/// When set, specifies that no interpolation must be done between key-frames and 30Hz sampling must
+		/// be used instead.
 		/// </summary>
 		KeyframeSample30Hz = 0x000200,
 		/// <summary>

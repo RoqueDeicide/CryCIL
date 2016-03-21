@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
+using System.Linq;
 using CryCil.Engine.Rendering;
 
 namespace CryCil.Engine.Models.Characters.Attachments
@@ -13,17 +14,11 @@ namespace CryCil.Engine.Models.Characters.Attachments
 		private readonly IntPtr handle;
 		#endregion
 		#region Properties
-		internal IntPtr Handle
-		{
-			get { return this.handle; }
-		}
+		internal IntPtr Handle => this.handle;
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 		/// <summary>
 		/// Gets or sets the skinning mesh that is hosted by this object.
 		/// </summary>

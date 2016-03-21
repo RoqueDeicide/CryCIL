@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
 using CryCil.Geometry;
@@ -6,8 +7,8 @@ using CryCil.Geometry;
 namespace CryCil.Engine.Physics
 {
 	/// <summary>
-	/// Encapsulates a set of parameters that allows to get/set a bounding box for the physical entity.
-	/// This type uses factory methods for construction.
+	/// Encapsulates a set of parameters that allows to get/set a bounding box for the physical entity. This
+	/// type uses factory methods for construction.
 	/// </summary>
 	/// <remarks>
 	/// Never use objects of this type that were created using a default constructor (they are not
@@ -54,8 +55,8 @@ namespace CryCil.Engine.Physics
 			return new PhysicsParametersBoundingBox(PhysicsParametersTypes.BoundingBox, new BoundingBox());
 		}
 		/// <summary>
-		/// Creates a new instance of this type that can be used to force the bounding box onto the
-		/// physical entity.
+		/// Creates a new instance of this type that can be used to force the bounding box onto the physical
+		/// entity.
 		/// </summary>
 		/// <param name="box">
 		/// A new bounding box for the entity. It will be overridden next the entity decides to recalculate

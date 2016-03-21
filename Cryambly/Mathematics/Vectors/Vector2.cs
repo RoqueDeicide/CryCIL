@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -38,10 +39,7 @@ namespace CryCil
 		/// <summary>
 		/// Gets a value indicting whether this instance is normalized.
 		/// </summary>
-		public bool IsNormalized
-		{
-			get { return Math.Abs((this.X * this.X) + (this.Y * this.Y) - 1f) < MathHelpers.ZeroTolerance; }
-		}
+		public bool IsNormalized => Math.Abs(this.X * this.X + this.Y * this.Y - 1f) < MathHelpers.ZeroTolerance;
 		/// <summary>
 		/// Gets or sets the component at the specified index.
 		/// </summary>
@@ -59,7 +57,7 @@ namespace CryCil
 			{
 				if ((index | 0x1) != 0x1) //index < 0 || index > 1
 				{
-					throw new ArgumentOutOfRangeException("index", "Attempt to access vector component other then X or Y.");
+					throw new ArgumentOutOfRangeException(nameof(index), "Attempt to access vector component other then X or Y.");
 				}
 				Contract.EndContractBlock();
 
@@ -72,7 +70,7 @@ namespace CryCil
 			{
 				if ((index | 0x1) != 0x1) //index < 0 || index > 1
 				{
-					throw new ArgumentOutOfRangeException("index", "Attempt to access vector component other then X or Y.");
+					throw new ArgumentOutOfRangeException(nameof(index), "Attempt to access vector component other then X or Y.");
 				}
 				Contract.EndContractBlock();
 
@@ -87,13 +85,10 @@ namespace CryCil
 		/// </summary>
 		/// <returns>The length of the vector.</returns>
 		/// <remarks>
-		/// <see cref="Vector2.LengthSquared"/> may be preferred when only the relative length is needed
-		/// and speed is of the essence.
+		/// <see cref="Vector2.LengthSquared"/> may be preferred when only the relative length is needed and
+		/// speed is of the essence.
 		/// </remarks>
-		public float Length
-		{
-			get { return (float)Math.Sqrt((this.X * this.X) + (this.Y * this.Y)); }
-		}
+		public float Length => (float)Math.Sqrt(this.X * this.X + this.Y * this.Y);
 		/// <summary>
 		/// Calculates the squared length of the vector.
 		/// </summary>
@@ -102,21 +97,12 @@ namespace CryCil
 		/// This method may be preferred to <see cref="Vector2.Length"/> when only a relative length is
 		/// needed and speed is of the essence.
 		/// </remarks>
-		public float LengthSquared
-		{
-			get { return (this.X * this.X) + (this.Y * this.Y); }
-		}
+		public float LengthSquared => this.X * this.X + this.Y * this.Y;
 		/// <summary>
 		/// Determines whether this vector is represented by valid numbers.
 		/// </summary>
-		public bool IsValid
-		{
-			get
-			{
-				return MathHelpers.IsNumberValid(this.X) &&
-					   MathHelpers.IsNumberValid(this.Y);
-			}
-		}
+		public bool IsValid => MathHelpers.IsNumberValid(this.X) &&
+							   MathHelpers.IsNumberValid(this.Y);
 		#endregion
 		#region Interface
 		#region Constructors
@@ -232,8 +218,8 @@ namespace CryCil
 		/// Creates a dictionary that contains components of this vector.
 		/// </summary>
 		/// <returns>
-		/// A dictionary which capacity is set to 2 where components of the vector can be accessed with
-		/// keys of same names.
+		/// A dictionary which capacity is set to 2 where components of the vector can be accessed with keys
+		/// of same names.
 		/// </returns>
 		public Dictionary<string, float> ToDictionary()
 		{
@@ -252,12 +238,12 @@ namespace CryCil
 		public static void Clamp(ref Vector2 value, ref Vector2 min, ref Vector2 max, out Vector2 result)
 		{
 			float x = value.X;
-			x = (x > max.X) ? max.X : x;
-			x = (x < min.X) ? min.X : x;
+			x = x > max.X ? max.X : x;
+			x = x < min.X ? min.X : x;
 
 			float y = value.Y;
-			y = (y > max.Y) ? max.Y : y;
-			y = (y < min.Y) ? min.Y : y;
+			y = y > max.Y ? max.Y : y;
+			y = y < min.Y ? min.Y : y;
 
 			result = new Vector2(x, y);
 		}
@@ -283,15 +269,15 @@ namespace CryCil
 		/// When the method completes, contains the distance between the two vectors.
 		/// </param>
 		/// <remarks>
-		/// <see cref="Vector2.DistanceSquared(ref Vector2, ref Vector2, out float)"/> may be preferred
-		/// when only the relative distance is needed and speed is of the essence.
+		/// <see cref="Vector2.DistanceSquared(ref Vector2, ref Vector2, out float)"/> may be preferred when
+		/// only the relative distance is needed and speed is of the essence.
 		/// </remarks>
 		public static void Distance(ref Vector2 value1, ref Vector2 value2, out float result)
 		{
 			float x = value1.X - value2.X;
 			float y = value1.Y - value2.Y;
 
-			result = (float)Math.Sqrt((x * x) + (y * y));
+			result = (float)Math.Sqrt(x * x + y * y);
 		}
 		/// <summary>
 		/// Calculates the distance between two vectors.
@@ -308,7 +294,7 @@ namespace CryCil
 			float x = value1.X - value2.X;
 			float y = value1.Y - value2.Y;
 
-			return (float)Math.Sqrt((x * x) + (y * y));
+			return (float)Math.Sqrt(x * x + y * y);
 		}
 		/// <summary>
 		/// Calculates the squared distance between two vectors.
@@ -321,17 +307,17 @@ namespace CryCil
 		/// <remarks>
 		/// Distance squared is the value before taking the square root. Distance squared can often be used
 		/// in place of distance if relative comparisons are being made. For example, consider three points
-		/// A, B, and C. To determine whether B or C is further from A, compare the distance between A and
-		/// B to the distance between A and C. Calculating the two distances involves two square roots,
-		/// which are computationally expensive. However, using distance squared provides the same
-		/// information and avoids calculating two square roots.
+		/// A, B, and C. To determine whether B or C is further from A, compare the distance between A and B
+		/// to the distance between A and C. Calculating the two distances involves two square roots, which
+		/// are computationally expensive. However, using distance squared provides the same information and
+		/// avoids calculating two square roots.
 		/// </remarks>
 		public static void DistanceSquared(ref Vector2 value1, ref Vector2 value2, out float result)
 		{
 			float x = value1.X - value2.X;
 			float y = value1.Y - value2.Y;
 
-			result = (x * x) + (y * y);
+			result = x * x + y * y;
 		}
 		/// <summary>
 		/// Calculates the squared distance between two vectors.
@@ -342,17 +328,17 @@ namespace CryCil
 		/// <remarks>
 		/// Distance squared is the value before taking the square root. Distance squared can often be used
 		/// in place of distance if relative comparisons are being made. For example, consider three points
-		/// A, B, and C. To determine whether B or C is further from A, compare the distance between A and
-		/// B to the distance between A and C. Calculating the two distances involves two square roots,
-		/// which are computationally expensive. However, using distance squared provides the same
-		/// information and avoids calculating two square roots.
+		/// A, B, and C. To determine whether B or C is further from A, compare the distance between A and B
+		/// to the distance between A and C. Calculating the two distances involves two square roots, which
+		/// are computationally expensive. However, using distance squared provides the same information and
+		/// avoids calculating two square roots.
 		/// </remarks>
 		public static float DistanceSquared(Vector2 value1, Vector2 value2)
 		{
 			float x = value1.X - value2.X;
 			float y = value1.Y - value2.Y;
 
-			return (x * x) + (y * y);
+			return x * x + y * y;
 		}
 		/// <summary>
 		/// Calculates the dot product of two vectors.
@@ -376,8 +362,8 @@ namespace CryCil
 		/// </param>
 		public static void Max(ref Vector2 left, ref Vector2 right, out Vector2 result)
 		{
-			result.X = (left.X > right.X) ? left.X : right.X;
-			result.Y = (left.Y > right.Y) ? left.Y : right.Y;
+			result.X = left.X > right.X ? left.X : right.X;
+			result.Y = left.Y > right.Y ? left.Y : right.Y;
 		}
 		/// <summary>
 		/// Returns a vector containing the largest components of the specified vectors.
@@ -402,8 +388,8 @@ namespace CryCil
 		/// </param>
 		public static void Min(ref Vector2 left, ref Vector2 right, out Vector2 result)
 		{
-			result.X = (left.X < right.X) ? left.X : right.X;
-			result.Y = (left.Y < right.Y) ? left.Y : right.Y;
+			result.X = left.X < right.X ? left.X : right.X;
+			result.Y = left.Y < right.Y ? left.Y : right.Y;
 		}
 		/// <summary>
 		/// Returns a vector containing the smallest components of the specified vectors.

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Security;
 using System.Xml;
 
@@ -30,17 +31,15 @@ namespace CryCil.RunTime.Compilation
 			XmlElement hintPath;
 			if (referenceElement.TryGetElement("HintPath", out hintPath))
 			{
-				this.Path =
-					PathUtilities.ToAbsolute(hintPath.FirstChild.Value, project.ProjectFolder);
+				this.Path = PathUtilities.ToAbsolute(hintPath.FirstChild.Value, project.ProjectFolder);
 			}
 			else
 			{
 				XmlElement customTargetFrameworkElement;
-				this.Path =
-					ReferenceHelper.GetLocation(referenceElement.GetAttribute("Include"),
-												referenceElement.TryGetElement("RequiredTargetFramework", out customTargetFrameworkElement)
-													? "v" + customTargetFrameworkElement.FirstChild.Value
-													: project.TargetFramework);
+				this.Path = ReferenceHelper.GetLocation(referenceElement.GetAttribute("Include"),
+														referenceElement.TryGetElement("RequiredTargetFramework", out customTargetFrameworkElement)
+															? "v" + customTargetFrameworkElement.FirstChild.Value
+															: project.TargetFramework);
 			}
 		}
 	}

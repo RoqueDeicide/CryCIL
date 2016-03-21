@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using CryCil.Engine.Physics.Primitives;
 
 namespace CryCil.Engine.Physics
@@ -85,8 +86,8 @@ namespace CryCil.Engine.Physics
 		/// </summary>
 		MultiContact1 = 0x200,
 		/// <summary>
-		/// When set, specifies that geometry physics simulation algorithms should not use any
-		/// optimizations that are based on contact count assumptions.
+		/// When set, specifies that geometry physics simulation algorithms should not use any optimizations
+		/// that are based on contact count assumptions.
 		/// </summary>
 		MultiContact2 = 0x400,
 		/// <summary>

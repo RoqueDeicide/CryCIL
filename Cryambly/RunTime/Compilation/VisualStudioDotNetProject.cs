@@ -1,7 +1,6 @@
 ﻿using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -41,8 +40,8 @@ namespace CryCil.RunTime.Compilation
 		/// <returns>An object that can compile the code.</returns>
 		public abstract CodeDomProvider CreateCompiler(IDictionary<string, string> options);
 		/// <summary>
-		/// When implemented in derived class, gets an object that will handle compilation of the code
-		/// files within this project.
+		/// When implemented in derived class, gets an object that will handle compilation of the code files
+		/// within this project.
 		/// </summary>
 		public abstract CodeDomProvider Compiler { get; }
 		/// <summary>
@@ -60,47 +59,47 @@ namespace CryCil.RunTime.Compilation
 		/// Gets the name of the project.
 		/// </summary>
 		[NotNull]
-		public string Name { get; private set; }
+		public string Name { get; }
 		/// <summary>
 		/// Gets the path to the project.
 		/// </summary>
 		[NotNull]
-		public string FileName { get; private set; }
+		public string FileName { get; }
 		/// <summary>
 		/// Path to the directory that contains compiled assembly after building.
 		/// </summary>
 		[CanBeNull]
-		public string OutputPath { get; private set; }
+		public string OutputPath { get; }
 		/// <summary>
 		/// Path to documentation file.
 		/// </summary>
 		[CanBeNull]
-		public string DocumentationFile { get; private set; }
+		public string DocumentationFile { get; }
 		/// <summary>
 		/// Target platform for the assembly.
 		/// </summary>
 		[CanBeNull]
-		public string TargetPlatform { get; private set; }
+		public string TargetPlatform { get; }
 		/// <summary>
 		/// Indicates whether unsafe code is allowed within the project.
 		/// </summary>
-		public bool AllowUnsafeCode { get; private set; }
+		public bool AllowUnsafeCode { get; }
 		/// <summary>
 		/// Indicates how much debug information must be saved during the build.
 		/// </summary>
-		public DebugInformationLevels DebugInformation { get; private set; }
+		public DebugInformationLevels DebugInformation { get; }
 		/// <summary>
 		/// Gets the list of defined constants, like DEBUG.
 		/// </summary>
-		public string DefinedConstants { get; private set; }
+		public string DefinedConstants { get; }
 		/// <summary>
 		/// Indicates whether compiler should consider compilation a failure, if there are any warnings.
 		/// </summary>
-		public bool TreatWarningsAsErrors { get; private set; }
+		public bool TreatWarningsAsErrors { get; }
 		/// <summary>
 		/// Indicates if the output should be optimized by the compiler.
 		/// </summary>
-		public bool OptimizeCode { get; private set; }
+		public bool OptimizeCode { get; }
 		/// <summary>
 		/// Gets compiled assembly.
 		/// </summary>
@@ -109,22 +108,19 @@ namespace CryCil.RunTime.Compilation
 		/// <summary>
 		/// Gets an array of paths to code files.
 		/// </summary>
-		public string[] CodeFiles { get; private set; }
+		public string[] CodeFiles { get; }
 		/// <summary>
 		/// Gets an array of paths to assemblies that this project references.
 		/// </summary>
-		public string[] References { get; private set; }
+		public string[] References { get; }
 		/// <summary>
 		/// Gets the name of target framework version.
 		/// </summary>
-		public string TargetFramework { get; private set; }
+		public string TargetFramework { get; }
 		/// <summary>
 		/// Gets the path to the folder that contains this project.
 		/// </summary>
-		public string ProjectFolder
-		{
-			get { return Path.GetDirectoryName(this.FileName); }
-		}
+		public string ProjectFolder => Path.GetDirectoryName(this.FileName);
 		#endregion
 		#region Construction
 		/// <summary>
@@ -140,7 +136,7 @@ namespace CryCil.RunTime.Compilation
 
 			if (!File.Exists(this.FileName))
 			{
-				throw new ArgumentException(string.Format("Couldn't locate a project file: {0}", this.FileName));
+				throw new ArgumentException($"Couldn't locate a project file: {this.FileName}");
 			}
 
 			const StringComparison icic = StringComparison.InvariantCultureIgnoreCase;
@@ -209,8 +205,7 @@ namespace CryCil.RunTime.Compilation
 			}
 			catch (Exception ex)
 			{
-				throw new ArgumentException(string.Format("File {0} is not a recognizable project file.", this.FileName),
-											ex);
+				throw new ArgumentException($"File {this.FileName} is not a recognizable project file.", ex);
 			}
 		}
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -281,8 +276,7 @@ namespace CryCil.RunTime.Compilation
 					if (ex is UnauthorizedAccessException || ex is IOException)
 					{
 						string message =
-							string.Format("Unable to compile the code: Assembly file {0} cannot be overwritten.",
-										  parameters.OutputAssembly);
+							$"Unable to compile the code: Assembly file {parameters.OutputAssembly} cannot be overwritten.";
 						throw new CodeCompilationException(message, ex);
 					}
 					throw;
@@ -417,7 +411,7 @@ namespace CryCil.RunTime.Compilation
 				XmlElement firstOrDefault =
 					propertyGroup.GetElementsByTagName(propName)
 								 .OfType<XmlElement>().FirstOrDefault();
-				return (firstOrDefault != null) ? firstOrDefault.FirstChild.Value : null;
+				return firstOrDefault?.FirstChild.Value;
 			}
 		}
 		/// <summary>

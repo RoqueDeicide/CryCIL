@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Linq;
 using CryCil.Engine.Rendering;
 using CryCil.Graphics;
 
@@ -23,8 +24,8 @@ namespace CryCil.Engine.UserInterface
 		/// Called when UI rendering needs to start.
 		/// </summary>
 		/// <remarks>
-		/// Always call this method when you are about to start using <see cref="UiRenderer"/>
-		/// functionality and always call <see cref="Finish"/> method after you are done.
+		/// Always call this method when you are about to start using <see cref="UiRenderer"/> functionality
+		/// and always call <see cref="Finish"/> method after you are done.
 		/// <para>This function is equivalent of UiDraw::PreRender in CryAction module.</para>
 		/// </remarks>
 		public static void Start()

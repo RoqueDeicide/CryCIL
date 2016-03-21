@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using CryCil.Engine.Audio;
 
@@ -16,10 +17,7 @@ namespace CryCil.Engine.Logic.EntityProxies
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 
 		/// <summary>
 		/// Gets or sets the fading distance for this audio object.
@@ -126,7 +124,9 @@ namespace CryCil.Engine.Logic.EntityProxies
 		/// <summary>
 		/// Destroys auxiliary audio object that moved with this entity.
 		/// </summary>
-		/// <param name="id">Identifier that was preveiously returned by <see cref="CreateAuxAudio"/>.</param>
+		/// <param name="id">
+		/// Identifier that was preveiously returned by <see cref="CreateAuxAudio"/>.
+		/// </param>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public void DestroyAuxAudio(AudioId id)
 		{
@@ -137,7 +137,9 @@ namespace CryCil.Engine.Logic.EntityProxies
 		/// <summary>
 		/// Sets the transformation of the auxiliary audio object in entity-space.
 		/// </summary>
-		/// <param name="id">Identifier of the auxiliary object to change the offset for.</param>
+		/// <param name="id">            
+		/// Identifier of the auxiliary object to change the offset for.
+		/// </param>
 		/// <param name="transformation">Reference to 3x4 matrix that represents the tranformation.</param>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public void SetAuxAudioOffset(AudioId id, ref Matrix34 transformation)
@@ -149,7 +151,7 @@ namespace CryCil.Engine.Logic.EntityProxies
 		/// <summary>
 		/// Gets the transformation of the auxiliary audio object in entity-space.
 		/// </summary>
-		/// <param name="id">Identifier of the auxiliary object to get the offset of.</param>
+		/// <param name="id">            Identifier of the auxiliary object to get the offset of.</param>
 		/// <param name="transformation">Resultant 3x4 matrix that represents the tranformation.</param>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public void GetAuxAudioOffset(AudioId id, out Matrix34 transformation)
@@ -162,8 +164,8 @@ namespace CryCil.Engine.Logic.EntityProxies
 		/// Executes an audio trigger on this proxy.
 		/// </summary>
 		/// <param name="triggerId">Identifier of the trigger to execute.</param>
-		/// <param name="method">A lip-sync method to use.</param>
-		/// <param name="auxAudio">Identifier of auxiliary audio object to act on.</param>
+		/// <param name="method">   A lip-sync method to use.</param>
+		/// <param name="auxAudio"> Identifier of auxiliary audio object to act on.</param>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public void ExecuteTrigger(AudioId triggerId, AudioId auxAudio, LipSyncMethod method = LipSyncMethod.None)
 		{
@@ -175,8 +177,8 @@ namespace CryCil.Engine.Logic.EntityProxies
 		/// Executes an audio trigger on this proxy.
 		/// </summary>
 		/// <param name="triggerName">Name of the trigger to execute.</param>
-		/// <param name="method">A lip-sync method to use.</param>
-		/// <param name="auxAudio">Identifier of auxiliary audio object to act on.</param>
+		/// <param name="method">     A lip-sync method to use.</param>
+		/// <param name="auxAudio">   Identifier of auxiliary audio object to act on.</param>
 		/// <returns>Indication whether the trigger of specified name was found.</returns>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public bool ExecuteTrigger(string triggerName, AudioId auxAudio, LipSyncMethod method = LipSyncMethod.None)
@@ -196,7 +198,7 @@ namespace CryCil.Engine.Logic.EntityProxies
 		/// Executes an audio trigger on this proxy.
 		/// </summary>
 		/// <param name="triggerId">Identifier of the trigger to execute.</param>
-		/// <param name="method">A lip-sync method to use.</param>
+		/// <param name="method">   A lip-sync method to use.</param>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public void ExecuteTrigger(AudioId triggerId, LipSyncMethod method = LipSyncMethod.None)
 		{
@@ -208,7 +210,7 @@ namespace CryCil.Engine.Logic.EntityProxies
 		/// Executes an audio trigger on this proxy.
 		/// </summary>
 		/// <param name="triggerName">Name of the trigger to execute.</param>
-		/// <param name="method">A lip-sync method to use.</param>
+		/// <param name="method">     A lip-sync method to use.</param>
 		/// <returns>Indication whether the trigger of specified name was found.</returns>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public bool ExecuteTrigger(string triggerName, LipSyncMethod method = LipSyncMethod.None)
@@ -228,7 +230,7 @@ namespace CryCil.Engine.Logic.EntityProxies
 		/// Halts execution of an audio trigger on this proxy.
 		/// </summary>
 		/// <param name="triggerId">Identifier of the trigger to execute.</param>
-		/// <param name="auxAudio">Identifier of auxiliary audio object to act on.</param>
+		/// <param name="auxAudio"> Identifier of auxiliary audio object to act on.</param>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public void StopTrigger(AudioId triggerId, AudioId auxAudio)
 		{
@@ -240,7 +242,7 @@ namespace CryCil.Engine.Logic.EntityProxies
 		/// Halts execution of an audio trigger on this proxy.
 		/// </summary>
 		/// <param name="triggerName">Name of the trigger to execute.</param>
-		/// <param name="auxAudio">Identifier of auxiliary audio object to act on.</param>
+		/// <param name="auxAudio">   Identifier of auxiliary audio object to act on.</param>
 		/// <returns>Indication whether the trigger of specified name was found.</returns>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public bool StopTrigger(string triggerName, AudioId auxAudio)
@@ -290,7 +292,7 @@ namespace CryCil.Engine.Logic.EntityProxies
 		/// Changes the state of the switch on this proxy.
 		/// </summary>
 		/// <param name="switchId">Identifier of the switch to set the state for.</param>
-		/// <param name="stateId">Identifier of the state to set.</param>
+		/// <param name="stateId"> Identifier of the state to set.</param>
 		/// <param name="auxAudio">Identifier of auxiliary audio object to act on.</param>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public void SetSwitchState(AudioId switchId, AudioId stateId, AudioId auxAudio)
@@ -303,8 +305,8 @@ namespace CryCil.Engine.Logic.EntityProxies
 		/// Changes the state of the switch on this proxy.
 		/// </summary>
 		/// <param name="switchName">Identifier of the switch to set the state for.</param>
-		/// <param name="stateName">Identifier of the state to set.</param>
-		/// <param name="auxAudio">Identifier of auxiliary audio object to act on.</param>
+		/// <param name="stateName"> Identifier of the state to set.</param>
+		/// <param name="auxAudio">  Identifier of auxiliary audio object to act on.</param>
 		/// <returns>Indication whether switch and state with specified names were found.</returns>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public bool SetSwitchState(string switchName, string stateName, AudioId auxAudio)
@@ -325,7 +327,7 @@ namespace CryCil.Engine.Logic.EntityProxies
 		/// Changes the state of the switch on this proxy.
 		/// </summary>
 		/// <param name="switchId">Identifier of the switch to set the state for.</param>
-		/// <param name="stateId">Identifier of the state to set.</param>
+		/// <param name="stateId"> Identifier of the state to set.</param>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public void SetSwitchState(AudioId switchId, AudioId stateId)
 		{
@@ -337,7 +339,7 @@ namespace CryCil.Engine.Logic.EntityProxies
 		/// Changes the state of the switch on this proxy.
 		/// </summary>
 		/// <param name="switchName">Identifier of the switch to set the state for.</param>
-		/// <param name="stateName">Identifier of the state to set.</param>
+		/// <param name="stateName"> Identifier of the state to set.</param>
 		/// <returns>Indication whether switch and state with specified names were found.</returns>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public bool SetSwitchState(string switchName, string stateName)
@@ -357,8 +359,8 @@ namespace CryCil.Engine.Logic.EntityProxies
 		/// <summary>
 		/// Changes the RTPC (Real-Time Parameter Control) value on this proxy.
 		/// </summary>
-		/// <param name="rtpcId">Identifier of the RTPC to set.</param>
-		/// <param name="value">A value to set.</param>
+		/// <param name="rtpcId">  Identifier of the RTPC to set.</param>
+		/// <param name="value">   A value to set.</param>
 		/// <param name="auxAudio">Identifier of auxiliary audio object to act on.</param>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public void SetRtpcValue(AudioId rtpcId, float value, AudioId auxAudio)
@@ -371,7 +373,7 @@ namespace CryCil.Engine.Logic.EntityProxies
 		/// Changes the RTPC (Real-Time Parameter Control) value on this proxy.
 		/// </summary>
 		/// <param name="rtpcName">Name of the RTPC to set.</param>
-		/// <param name="value">A value to set.</param>
+		/// <param name="value">   A value to set.</param>
 		/// <param name="auxAudio">Identifier of auxiliary audio object to act on.</param>
 		/// <returns>Indication whether the RTPC of specified name was found.</returns>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
@@ -392,7 +394,7 @@ namespace CryCil.Engine.Logic.EntityProxies
 		/// Changes the RTPC (Real-Time Parameter Control) value on this proxy.
 		/// </summary>
 		/// <param name="rtpcId">Identifier of the RTPC to set.</param>
-		/// <param name="value">A value to set.</param>
+		/// <param name="value"> A value to set.</param>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public void SetRtpcValue(AudioId rtpcId, float value)
 		{
@@ -404,7 +406,7 @@ namespace CryCil.Engine.Logic.EntityProxies
 		/// Changes the RTPC (Real-Time Parameter Control) value on this proxy.
 		/// </summary>
 		/// <param name="rtpcName">Name of the RTPC to set.</param>
-		/// <param name="value">A value to set.</param>
+		/// <param name="value">   A value to set.</param>
 		/// <returns>Indication whether the RTPC of specified name was found.</returns>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public bool SetRtpcValue(string rtpcName, float value)
@@ -424,7 +426,7 @@ namespace CryCil.Engine.Logic.EntityProxies
 		/// Sets the strength of the environment effect on this proxy.
 		/// </summary>
 		/// <param name="environmentId">Identifier of the environment effect to change.</param>
-		/// <param name="amount">Strength to set.</param>
+		/// <param name="amount">       Strength to set.</param>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public void SetEnvironmentAmount(AudioId environmentId, float amount)
 		{
@@ -436,8 +438,8 @@ namespace CryCil.Engine.Logic.EntityProxies
 		/// Executes an audio trigger on this proxy.
 		/// </summary>
 		/// <param name="environmentName">Name of the environment effect to change.</param>
-		/// <param name="amount">Strength to set.</param>
-		/// <param name="auxAudio">Identifier of auxiliary audio object to act on.</param>
+		/// <param name="amount">         Strength to set.</param>
+		/// <param name="auxAudio">       Identifier of auxiliary audio object to act on.</param>
 		/// <returns>Indication whether the environment effect of specified name was found.</returns>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public bool SetEnvironmentAmount(string environmentName, float amount, AudioId auxAudio)
@@ -457,7 +459,7 @@ namespace CryCil.Engine.Logic.EntityProxies
 		/// Executes an audio trigger on this proxy.
 		/// </summary>
 		/// <param name="environmentName">Name of the environment effect to change.</param>
-		/// <param name="amount">Strength to set.</param>
+		/// <param name="amount">         Strength to set.</param>
 		/// <returns>Indication whether the environment effect of specified name was found.</returns>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public bool SetEnvironmentAmount(string environmentName, float amount)
@@ -498,7 +500,7 @@ namespace CryCil.Engine.Logic.EntityProxies
 		/// Sets the type of algorithm that is used to determine whether sound emitted by this proxy is
 		/// obstructed.
 		/// </summary>
-		/// <param name="type">Type of algorithm.</param>
+		/// <param name="type">    Type of algorithm.</param>
 		/// <param name="auxAudio">Identifier of auxiliary audio object to act on.</param>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public void SetObstructionCalculationType(ObstructionCalculationType type, AudioId auxAudio)
@@ -535,23 +537,32 @@ namespace CryCil.Engine.Logic.EntityProxies
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern bool RemoveAuxAudioProxy(IntPtr handle, AudioId nAudioProxyLocalID);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern void SetAuxAudioProxyOffset(IntPtr handle, ref Matrix34 rOffset, AudioId nAudioProxyLocalID/* = AudioId.Default*/);
+		private static extern void SetAuxAudioProxyOffset(IntPtr handle, ref Matrix34 rOffset, AudioId nAudioProxyLocalID
+			/* = AudioId.Default*/);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern void GetAuxAudioProxyOffset(IntPtr handle, out Matrix34 offset, AudioId nAudioProxyLocalID/* = AudioId.Default*/);
+		private static extern void GetAuxAudioProxyOffset(IntPtr handle, out Matrix34 offset, AudioId nAudioProxyLocalID
+			/* = AudioId.Default*/);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern bool ExecuteTriggerInternal(IntPtr handle, AudioId nTriggerID, LipSyncMethod eLipSyncMethod, AudioId nAudioProxyLocalID/* = AudioId.Default*/);
+		private static extern bool ExecuteTriggerInternal(IntPtr handle, AudioId nTriggerID, LipSyncMethod eLipSyncMethod,
+														  AudioId nAudioProxyLocalID /* = AudioId.Default*/);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern void StopTriggerInternal(IntPtr handle, AudioId nTriggerID, AudioId nAudioProxyLocalID/* = AudioId.Default*/);
+		private static extern void StopTriggerInternal(IntPtr handle, AudioId nTriggerID, AudioId nAudioProxyLocalID
+			/* = AudioId.Default*/);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern void SetSwitchStateInternal(IntPtr handle, AudioId nSwitchID, AudioId nStateID, AudioId nAudioProxyLocalID/* = AudioId.Default*/);
+		private static extern void SetSwitchStateInternal(IntPtr handle, AudioId nSwitchID, AudioId nStateID,
+														  AudioId nAudioProxyLocalID /* = AudioId.Default*/);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern void SetRtpcValueInternal(IntPtr handle, AudioId nRtpcID, float fValue, AudioId nAudioProxyLocalID/* = AudioId.Default*/);
+		private static extern void SetRtpcValueInternal(IntPtr handle, AudioId nRtpcID, float fValue,
+														AudioId nAudioProxyLocalID /* = AudioId.Default*/);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern void SetObstructionCalcTypeInternal(IntPtr handle, ObstructionCalculationType eObstructionType, AudioId nAudioProxyLocalID/* = AudioId.Default*/);
+		private static extern void SetObstructionCalcTypeInternal(IntPtr handle, ObstructionCalculationType eObstructionType,
+																  AudioId nAudioProxyLocalID /* = AudioId.Default*/);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern void SetEnvironmentAmountInternal(IntPtr handle, AudioId nEnvironmentID, float fAmount, AudioId nAudioProxyLocalID/* = AudioId.Default*/);
+		private static extern void SetEnvironmentAmountInternal(IntPtr handle, AudioId nEnvironmentID, float fAmount,
+																AudioId nAudioProxyLocalID /* = AudioId.Default*/);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern void SetCurrentEnvironmentsInternal(IntPtr handle, AudioId nAudioProxyLocalID/* = AudioId.Default*/);
+		private static extern void SetCurrentEnvironmentsInternal(IntPtr handle, AudioId nAudioProxyLocalID
+			/* = AudioId.Default*/);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void AuxAudioProxiesMoveWithEntity(IntPtr handle, bool bCanMoveWithEntity);
 		#endregion

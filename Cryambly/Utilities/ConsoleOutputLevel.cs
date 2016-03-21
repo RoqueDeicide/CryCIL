@@ -8,7 +8,7 @@ namespace CryCil.Utilities
 	/// Represents an object that can be used to override custom console output importance level.
 	/// </summary>
 	/// <example>
-	/// <code source="ConsoleOutputLevelSample.cs" />
+	/// <code source="ConsoleOutputLevelSample.cs"/>
 	/// </example>
 	public struct ConsoleOutputLevel : ITemporaryOverrider
 	{

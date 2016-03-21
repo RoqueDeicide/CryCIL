@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Runtime.InteropServices;
 using CryCil.RunTime;
 
@@ -1529,9 +1529,9 @@ namespace CryCil
 			/// Calculates power of a sequence of numbers.
 			/// </summary>
 			/// <param name="data">
-			/// An array of 3D vectors where X-coordinate is a number that needs to be powered,
-			/// Y-coordinate is a powering factor and Z-coordinate becomes a result of calculation after
-			/// this function concludes.
+			/// An array of 3D vectors where X-coordinate is a number that needs to be powered, Y-coordinate
+			/// is a powering factor and Z-coordinate becomes a result of calculation after this function
+			/// concludes.
 			/// </param>
 			public static void Power(Vector3[] data)
 			{
@@ -1549,9 +1549,9 @@ namespace CryCil
 			/// Calculates power of a sequence of numbers.
 			/// </summary>
 			/// <param name="data">
-			/// An array of 3D vectors where X-coordinate is a number that needs to be powered,
-			/// Y-coordinate is a powering factor and Z-coordinate becomes a result of calculation after
-			/// this function concludes.
+			/// An array of 3D vectors where X-coordinate is a number that needs to be powered, Y-coordinate
+			/// is a powering factor and Z-coordinate becomes a result of calculation after this function
+			/// concludes.
 			/// </param>
 			public static void Power(Vector3Double[] data)
 			{

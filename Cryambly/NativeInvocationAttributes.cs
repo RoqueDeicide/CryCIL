@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using CryCil.Annotations;
 using CryCil.RunTime;
 
@@ -36,8 +37,8 @@ namespace CryCil
 	/// Marks a method that is invoked from native code using a raw thunk.
 	/// </summary>
 	/// <remarks>
-	/// Methods that are invoked through raw thunks have to have try/catch block that detects all errors
-	/// and handles them in some way (by invoking <see cref="MonoInterface.DisplayException"/> for
+	/// Methods that are invoked through raw thunks have to have try/catch block that detects all errors and
+	/// handles them in some way (by invoking <see cref="MonoInterface.DisplayException"/> for
 	/// instance) , otherwise any unhandled exception will crash the program.
 	/// </remarks>
 	[AttributeUsage(AttributeTargets.Method, Inherited = false)]

@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace CryCil.Engine.CryAction
@@ -67,9 +67,16 @@ namespace CryCil.Engine.CryAction
 		/// </summary>
 		/// <remarks>
 		/// <para>Event parameters:</para>
-		/// <list type="number"><item><description>level - a wrapper that represents the level during the
-		/// load of which the error has occurred.</description></item><item><description>error - text
-		/// message that describes the error.</description></item></list>
+		/// <list type="number">
+		/// <item>
+		/// <description>
+		/// level - a wrapper that represents the level during the load of which the error has occurred.
+		/// </description>
+		/// </item>
+		/// <item>
+		/// <description>error - text message that describes the error.</description>
+		/// </item>
+		/// </list>
 		/// </remarks>
 		public static event Action<Level, string> LoadingError;
 		/// <summary>
@@ -77,9 +84,16 @@ namespace CryCil.Engine.CryAction
 		/// </summary>
 		/// <remarks>
 		/// <para>Event parameters:</para>
-		/// <list type="number"><item><description>level - a wrapper that represents the level that is
-		/// being loaded.</description></item><item><description>progress - ratio of number of already
-		/// loaded object to total number of objects (probably).</description></item></list>
+		/// <list type="number">
+		/// <item>
+		/// <description>level - a wrapper that represents the level that is being loaded.</description>
+		/// </item>
+		/// <item>
+		/// <description>
+		/// progress - ratio of number of already loaded object to total number of objects (probably).
+		/// </description>
+		/// </item>
+		/// </list>
 		/// </remarks>
 		public static event Action<Level, int> LoadingProgress;
 		/// <summary>
@@ -109,7 +123,7 @@ namespace CryCil.Engine.CryAction
 		{
 			if (name.IsNullOrEmpty())
 			{
-				throw new ArgumentNullException("name", "Name of the level to load cannot be null.");
+				throw new ArgumentNullException(nameof(name), "Name of the level to load cannot be null.");
 			}
 
 			return LoadInternal(name);
@@ -119,14 +133,12 @@ namespace CryCil.Engine.CryAction
 		/// </summary>
 		/// <remarks>Call this before calling <see cref="Load"/>.</remarks>
 		/// <param name="name">Name of the next level.</param>
-		/// <exception cref="ArgumentNullException">
-		/// Name of the level to prepare cannot be null.
-		/// </exception>
+		/// <exception cref="ArgumentNullException">Name of the level to prepare cannot be null.</exception>
 		public static void Prepare(string name)
 		{
 			if (name.IsNullOrEmpty())
 			{
-				throw new ArgumentNullException("name", "Name of the level to prepare cannot be null.");
+				throw new ArgumentNullException(nameof(name), "Name of the level to prepare cannot be null.");
 			}
 
 			PrepareInternal(name);
@@ -141,37 +153,37 @@ namespace CryCil.Engine.CryAction
 		[RuntimeInvoke("Invoked by underlying framework to raise LevelNotFound event")]
 		private static void OnLevelNotFound(string name)
 		{
-			if (LevelNotFound != null) LevelNotFound(name);
+			LevelNotFound?.Invoke(name);
 		}
 		[RuntimeInvoke("Invoked by underlying framework to raise LoadingStart event")]
 		private static void OnLoadingStart(Level levelHandle)
 		{
-			if (LoadingStart != null) LoadingStart(levelHandle);
+			LoadingStart?.Invoke(levelHandle);
 		}
 		[RuntimeInvoke("Invoked by underlying framework to raise LoadingEntitiesStart event")]
 		private static void OnLoadingEntitiesStart(Level levelHandle)
 		{
-			if (LoadingEntitiesStart != null) LoadingEntitiesStart(levelHandle);
+			LoadingEntitiesStart?.Invoke(levelHandle);
 		}
 		[RuntimeInvoke("Invoked by underlying framework to raise LoadingComplete event")]
 		private static void OnLoadingComplete(Level levelHandle)
 		{
-			if (LoadingComplete != null) LoadingComplete(levelHandle);
+			LoadingComplete?.Invoke(levelHandle);
 		}
 		[RuntimeInvoke("Invoked by underlying framework to raise LevelNotFound event")]
 		private static void OnLoadingError(Level levelHandle, string error)
 		{
-			if (LoadingError != null) LoadingError(levelHandle, error);
+			LoadingError?.Invoke(levelHandle, error);
 		}
 		[RuntimeInvoke("Invoked by underlying framework to raise LoadingProgress event")]
 		private static void OnLoadingProgress(Level levelHandle, int progress)
 		{
-			if (LoadingProgress != null) LoadingProgress(levelHandle, progress);
+			LoadingProgress?.Invoke(levelHandle, progress);
 		}
 		[RuntimeInvoke("Invoked by underlying framework to raise UnloadComplete event")]
 		private static void OnUnloadComplete(Level levelHandle)
 		{
-			if (UnloadComplete != null) UnloadComplete(levelHandle);
+			UnloadComplete?.Invoke(levelHandle);
 		}
 		#endregion
 	}

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace CryCil.Specials
@@ -11,10 +12,6 @@ namespace CryCil.Specials
 	{
 		#region Fields
 		private readonly float val;
-		#endregion
-		#region Properties
-		#endregion
-		#region Events
 		#endregion
 		#region Construction
 		/// <summary>
@@ -51,8 +48,6 @@ namespace CryCil.Specials
 		{
 			return new UnitSingle(v);
 		}
-		#endregion
-		#region Utilities
 		#endregion
 	}
 }

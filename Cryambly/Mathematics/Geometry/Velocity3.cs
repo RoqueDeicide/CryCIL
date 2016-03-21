@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil.Geometry
 {
@@ -52,7 +53,7 @@ namespace CryCil.Geometry
 		public Velocity3(Quatvec location0, Quatvec location1, float time)
 		{
 			this.linearVelocity = (location1.Vector - location0.Vector) / time;
-			this.rotationalVelocity = ((location1.Quaternion * location0.Quaternion.Inverted) / time).Logarithm;
+			this.rotationalVelocity = (location1.Quaternion * location0.Quaternion.Inverted / time).Logarithm;
 		}
 		#endregion
 		#region Interface

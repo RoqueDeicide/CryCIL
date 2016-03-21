@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using CryCil.Engine.Physics;
 
 namespace CryCil.Engine.Models.StaticObjects
@@ -17,19 +18,14 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 		/// <summary>
 		/// Gets the static sub-object.
 		/// </summary>
 		/// <param name="index">Zero-based index of the sub-object to get.</param>
 		/// <returns>An object that wraps the sub-object.</returns>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
-		/// <exception cref="NotSupportedException">
-		/// Setting static sub-objects is not supported.
-		/// </exception>
+		/// <exception cref="NotSupportedException">Setting static sub-objects is not supported.</exception>
 		/// <exception cref="IndexOutOfRangeException">Index cannot be less then 0.</exception>
 		/// <exception cref="IndexOutOfRangeException">
 		/// Index cannot be greater then or equal to number of sub-objects. Not thrown in non-debug builds.
@@ -76,10 +72,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// <summary>
 		/// Returns <c>false</c>.
 		/// </summary>
-		bool ICollection<StaticSubObject>.IsReadOnly
-		{
-			get { return false; }
-		}
+		bool ICollection<StaticSubObject>.IsReadOnly => false;
 		#endregion
 		#region Construction
 		internal StaticSubObjects(IntPtr handle)
@@ -196,27 +189,27 @@ namespace CryCil.Engine.Models.StaticObjects
 			this.AssertInstance();
 			if (!source.IsValid)
 			{
-				throw new ArgumentNullException("source", "Static object to copy a sub-object from cannot be null.");
+				throw new ArgumentNullException(nameof(source), "Static object to copy a sub-object from cannot be null.");
 			}
 			if (sourceIndex < 0)
 			{
-				throw new ArgumentOutOfRangeException("sourceIndex",
+				throw new ArgumentOutOfRangeException(nameof(sourceIndex),
 													  "Index of the sub-object to copy cannot be less then 0.");
 			}
 			if (sourceIndex >= source.SubObjects.Count)
 			{
-				throw new ArgumentOutOfRangeException("sourceIndex",
+				throw new ArgumentOutOfRangeException(nameof(sourceIndex),
 													  "Index of the sub-object to copy cannot be greater then or equal " +
 													  "to number of sub-objects.");
 			}
 			if (destinationIndex < 0)
 			{
-				throw new ArgumentOutOfRangeException("destinationIndex",
+				throw new ArgumentOutOfRangeException(nameof(destinationIndex),
 													  "Index of the sub-object slot to copy to cannot be less then 0.");
 			}
 			if (destinationIndex >= this.Count)
 			{
-				throw new ArgumentOutOfRangeException("destinationIndex",
+				throw new ArgumentOutOfRangeException(nameof(destinationIndex),
 													  "Index of the sub-object slot to copy to cannot be greater then or " +
 													  "equal to number of sub-objects.");
 			}

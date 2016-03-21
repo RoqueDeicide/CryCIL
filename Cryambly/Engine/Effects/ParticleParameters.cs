@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using CryCil.Annotations;
 using CryCil.Geometry;
@@ -19,10 +20,7 @@ namespace CryCil.Engine
 		/// <summary>
 		/// Gets the pointer to the underlying object.
 		/// </summary>
-		public IntPtr Handle
-		{
-			get { return this.handle; }
-		}
+		public IntPtr Handle => this.handle;
 		#region Emitter
 		/// <summary>
 		/// Gets or sets the comment that describes this particle effect.
@@ -87,8 +85,7 @@ namespace CryCil.Engine
 		#endregion
 		#region Location
 		/// <summary>
-		/// Gets or sets a position where particles will be spawned relative to the position of the
-		/// emitter.
+		/// Gets or sets a position where particles will be spawned relative to the position of the emitter.
 		/// </summary>
 		public extern Vector3 PositionOffset { [MethodImpl(MethodImplOptions.InternalCall)] get;
 			[MethodImpl(MethodImplOptions.InternalCall)] set; }

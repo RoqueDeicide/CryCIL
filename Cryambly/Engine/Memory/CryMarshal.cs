@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace CryCil.Engine.Memory
@@ -60,9 +61,7 @@ namespace CryCil.Engine.Memory
 		/// <param name="track"> 
 		/// Indicates whether given memory block should be tracked by this class, if it wasn't already.
 		/// </param>
-		/// <returns>
-		/// Pointer to new memory block, or <see cref="IntPtr.Zero"/> if it was released.
-		/// </returns>
+		/// <returns>Pointer to new memory block, or <see cref="IntPtr.Zero"/> if it was released.</returns>
 		/// <exception cref="OutOfMemoryException">Unable to reallocate native memory block.</exception>
 		public static IntPtr Reallocate(IntPtr handle, ulong size, bool track = true)
 		{
@@ -123,7 +122,8 @@ namespace CryCil.Engine.Memory
 		{
 			if (handle == IntPtr.Zero)
 			{
-				throw new ArgumentNullException("handle", "Pointer to memory block to be released cannot be null.");
+				throw new ArgumentNullException(nameof(handle),
+												"Pointer to memory block to be released cannot be null.");
 			}
 
 			int index = allocatedBlocks.IndexOfKey(handle);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using CryCil.Annotations;
 using CryCil.Graphics;
@@ -368,7 +369,7 @@ namespace CryCil.Engine.Rendering
 		/// <summary>
 		/// Sets color operation mode for texture blending.
 		/// </summary>
-		/// <remarks>TODO: Research what this does.</remarks>
+		/// <remarks>Color operations specify how to blend corresponding texels of 2 textures.</remarks>
 		/// <param name="colorOp"> 
 		/// Presumably it's supposed a number from <see cref="ColorOperation"/>, defines a color operation
 		/// on texture blending.
@@ -448,7 +449,7 @@ namespace CryCil.Engine.Rendering
 				case PublicRenderPrimitiveType.LineStrip:
 					break;
 				default:
-					throw new ArgumentOutOfRangeException("primType", "Unknown primitive type specified.");
+					throw new ArgumentOutOfRangeException(nameof(primType), "Unknown primitive type specified.");
 			}
 
 			fixed (VertexPosition3FColor4BTex2F* verticesPtr = &vertexes[0])

@@ -160,8 +160,7 @@ namespace CryCil.Engine.Physics
 		}
 		/// <summary>
 		/// Gets or sets the object that specifies the strength of dampening of the respective angular
-		/// velocity of the joint when it reaches the vicinity of one of the limits of the respective
-		/// angle.
+		/// velocity of the joint when it reaches the vicinity of one of the limits of the respective angle.
 		/// </summary>
 		public EulerAngles DashpotStrength
 		{
@@ -170,8 +169,8 @@ namespace CryCil.Engine.Physics
 		}
 		/// <summary>
 		/// Gets or sets current angles of rotation of the joint relative to its base
-		/// <see cref="Orientation"/>. Only these angles are taken into account when dampening and
-		/// returning the joint to the base orientation.
+		/// <see cref="Orientation"/>. Only these angles are taken into account when dampening and returning
+		/// the joint to the base orientation.
 		/// </summary>
 		public EulerAngles Angles
 		{
@@ -192,14 +191,8 @@ namespace CryCil.Engine.Physics
 		/// Gets current effective angles of rotation of the joint relative to its base
 		/// <see cref="Orientation"/>.
 		/// </summary>
-		public EulerAngles EffectiveAngles
-		{
-			get
-			{
-				return new EulerAngles(this.q.Pitch + this.qext.Pitch, this.q.Roll + this.qext.Roll,
-									   this.q.Yaw + this.qext.Yaw);
-			}
-		}
+		public EulerAngles EffectiveAngles => new EulerAngles(this.q.Pitch + this.qext.Pitch, this.q.Roll + this.qext.Roll,
+															  this.q.Yaw + this.qext.Yaw);
 		/// <summary>
 		/// Gets or sets the identifier of the articulated body part that was specified using
 		/// <see cref="GeometryParametersArticulatedBody"/> that is a parent part of this joint.

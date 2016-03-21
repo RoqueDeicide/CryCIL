@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using CryCil.Annotations;
 using CryCil.Engine.Physics;
 using CryCil.Hashing;
@@ -17,10 +18,7 @@ namespace CryCil.Engine.Models.Characters.Attachments
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 		/// <summary>
 		/// Gets the socket in this collection.
 		/// </summary>
@@ -113,8 +111,8 @@ namespace CryCil.Engine.Models.Characters.Attachments
 		/// Optional name of the joint to use as a base for the socket, if it connects to the joint.
 		/// </param>
 		/// <param name="project">
-		/// Optional value that indicates whether thee socket needs to be projected(?) in order to be
-		/// placed on faces.
+		/// Optional value that indicates whether thee socket needs to be projected(?) in order to be placed
+		/// on faces.
 		/// </param>
 		/// <returns>A valid <see cref="AttachmentSocket"/> object, if successful.</returns>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
@@ -226,8 +224,8 @@ namespace CryCil.Engine.Models.Characters.Attachments
 		/// Removes physical representation of the socket(s).
 		/// </summary>
 		/// <param name="index"> 
-		/// Zero-based index of the socket to dephysicalize. If equal to <c>-1</c> then all attachments
-		/// will dephysicalized(?).
+		/// Zero-based index of the socket to dephysicalize. If equal to <c>-1</c> then all attachments will
+		/// dephysicalized(?).
 		/// </param>
 		/// <param name="entity">
 		/// Optional object that represents a physical entity that was used as a host for physical

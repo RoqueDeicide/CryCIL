@@ -17,17 +17,11 @@ namespace CryCil.Engine.Physics
 		/// Indicates whether an object of type that uses this object was not created using default
 		/// constructor.
 		/// </summary>
-		public bool Initialized
-		{
-			get { return this.initialized; }
-		}
+		public bool Initialized => this.initialized;
 		/// <summary>
 		/// Gets the type of this status query.
 		/// </summary>
-		public PhysicsStatusTypes Type
-		{
-			get { return this.type; }
-		}
+		public PhysicsStatusTypes Type => this.type;
 		/// <summary>
 		/// Initializes new instance of this type.
 		/// </summary>

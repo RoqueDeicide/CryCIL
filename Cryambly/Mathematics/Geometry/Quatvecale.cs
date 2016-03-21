@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace CryCil.Geometry
@@ -48,54 +49,31 @@ namespace CryCil.Geometry
 		/// <summary>
 		/// Gets the first column of the 3x4 matrix that represents the same transformation as this object.
 		/// </summary>
-		public Vector3 Column0
-		{
-			get { return this.Orientation.Column0; }
-		}
+		public Vector3 Column0 => this.Orientation.Column0;
 		/// <summary>
-		/// Gets the second column of the 3x4 matrix that represents the same transformation as this
-		/// object.
+		/// Gets the second column of the 3x4 matrix that represents the same transformation as this object.
 		/// </summary>
-		public Vector3 Column1
-		{
-			get { return this.Orientation.Column1; }
-		}
+		public Vector3 Column1 => this.Orientation.Column1;
 		/// <summary>
 		/// Gets the third column of the 3x4 matrix that represents the same transformation as this object.
 		/// </summary>
-		public Vector3 Column2
-		{
-			get { return this.Orientation.Column2; }
-		}
+		public Vector3 Column2 => this.Orientation.Column2;
 		/// <summary>
-		/// Gets the fourth column of the 3x4 matrix that represents the same transformation as this
-		/// object.
+		/// Gets the fourth column of the 3x4 matrix that represents the same transformation as this object.
 		/// </summary>
-		public Vector3 Column3
-		{
-			get { return this.Translation; }
-		}
+		public Vector3 Column3 => this.Translation;
 		/// <summary>
 		/// Gets the first row of the 3x4 matrix that represents the same transformation as this object.
 		/// </summary>
-		public Vector3 Row0
-		{
-			get { return this.Orientation.Row0; }
-		}
+		public Vector3 Row0 => this.Orientation.Row0;
 		/// <summary>
 		/// Gets the second row of the 3x4 matrix that represents the same transformation as this object.
 		/// </summary>
-		public Vector3 Row1
-		{
-			get { return this.Orientation.Row1; }
-		}
+		public Vector3 Row1 => this.Orientation.Row1;
 		/// <summary>
 		/// Gets the third row of the 3x4 matrix that represents the same transformation as this object.
 		/// </summary>
-		public Vector3 Row2
-		{
-			get { return this.Orientation.Row2; }
-		}
+		public Vector3 Row2 => this.Orientation.Row2;
 		#endregion
 		#region Construction
 		/// <summary>
@@ -132,15 +110,14 @@ namespace CryCil.Geometry
 		/// Creates new instance of this type.
 		/// </summary>
 		/// <param name="matrix">
-		/// <see cref="Matrix34"/> object that describes orientation and translation of an arbitrary
-		/// object.
+		/// <see cref="Matrix34"/> object that describes orientation and translation of an arbitrary object.
 		/// </param>
 		public Quatvecale(Matrix34 matrix)
 		{
 			this.Translation = matrix.Translation;
 
-			// The determinant of a matrix is the volume spanned by its base vectors. We need an
-			// approximate length scale, so we calculate the cube root of the determinant.
+			// The determinant of a matrix is the volume spanned by its base vectors. We need an approximate
+			// length scale, so we calculate the cube root of the determinant.
 			this.Scale = (float)Math.Pow(matrix.Determinant, 1.0 / 3.0);
 
 			// Orthonormalize using X and Z as anchors.
@@ -149,7 +126,7 @@ namespace CryCil.Geometry
 
 			Vector3 v0 = r0.Normalized;
 			Vector3 v1 = (r2 % r0).Normalized;
-			Vector3 v2 = (v0 % v1);
+			Vector3 v2 = v0 % v1;
 
 			Matrix33 m33 = new Matrix33 {Row0 = v0, Row1 = v1, Row2 = v2};
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil.Engine.Physics
 {
@@ -22,13 +23,11 @@ namespace CryCil.Engine.Physics
 		/// </summary>
 		Vehicle = 4,
 		/// <summary>
-		/// Identifier of the structure that is used to query status of the physical entity that is a
-		/// wheel.
+		/// Identifier of the structure that is used to query status of the physical entity that is a wheel.
 		/// </summary>
 		Wheel = 5,
 		/// <summary>
-		/// Identifier of the structure that is used to query status of the physical entity that is a
-		/// joint.
+		/// Identifier of the structure that is used to query status of the physical entity that is a joint.
 		/// </summary>
 		Joint = 6,
 		/// <summary>
@@ -76,8 +75,8 @@ namespace CryCil.Engine.Physics
 		/// </summary>
 		PlaceHolder = 16,
 		/// <summary>
-		/// Identifier of the structure that is used to query positions vertexes of the physical entity
-		/// that is a soft body.
+		/// Identifier of the structure that is used to query positions vertexes of the physical entity that
+		/// is a soft body.
 		/// </summary>
 		SoftBodyVertices = 17,
 		/// <summary>
@@ -106,8 +105,7 @@ namespace CryCil.Engine.Physics
 		/// </summary>
 		Water = 22,
 		/// <summary>
-		/// Identifier of the structure that is used to query status of the physical entity that is an
-		/// area.
+		/// Identifier of the structure that is used to query status of the physical entity that is an area.
 		/// </summary>
 		Area = 23,
 		/// <summary>

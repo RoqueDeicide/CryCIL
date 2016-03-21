@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
 using CryCil.Engine.Physics;
@@ -27,14 +28,8 @@ namespace CryCil.Utilities
 		/// <summary>
 		/// Indicates whether this instance is valid.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.data != null && this.stride > 0; }
-		}
-		internal void* Pointer
-		{
-			get { return this.data; }
-		}
+		public bool IsValid => this.data != null && this.stride > 0;
+		internal void* Pointer => this.data;
 		#endregion
 		#region Construction
 		/// <summary>

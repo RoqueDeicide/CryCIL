@@ -20,10 +20,7 @@ namespace CryCil.Engine.Logic.EntityProxies
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 
 		/// <summary>
 		/// Gets or sets the value that indicates whether this area needs to be updated when its points are
@@ -316,11 +313,11 @@ namespace CryCil.Engine.Logic.EntityProxies
 			this.AssertInstance();
 			if (points.IsNullOrEmpty())
 			{
-				throw new ArgumentNullException("points", "An array of points must have objects in it.");
+				throw new ArgumentNullException(nameof(points), "An array of points must have objects in it.");
 			}
 			if (soundObstructors.IsNullOrEmpty())
 			{
-				throw new ArgumentNullException("soundObstructors",
+				throw new ArgumentNullException(nameof(soundObstructors),
 												"An array of sound obstruction indicators must have objects in it.");
 			}
 			if (points.Length != soundObstructors.Length)
@@ -356,7 +353,7 @@ namespace CryCil.Engine.Logic.EntityProxies
 			this.AssertInstance();
 			if (points.IsNullOrEmpty())
 			{
-				throw new ArgumentNullException("points", "An array of points must have objects in it.");
+				throw new ArgumentNullException(nameof(points), "An array of points must have objects in it.");
 			}
 
 			fixed (Vector3* vectors = points)
@@ -401,7 +398,7 @@ namespace CryCil.Engine.Logic.EntityProxies
 			}
 			else
 			{
-				throw new ArgumentOutOfRangeException("soundObstructors",
+				throw new ArgumentOutOfRangeException(nameof(soundObstructors),
 													  "Too many objects in the list of sound obstructors. There cannot be more then 6.");
 			}
 		}
@@ -471,7 +468,7 @@ namespace CryCil.Engine.Logic.EntityProxies
 			this.AssertInstance();
 			if (points.IsNullOrTooSmall(3))
 			{
-				throw new ArgumentNullException("points", "An array of points must have more then 2 objects in it.");
+				throw new ArgumentNullException(nameof(points), "An array of points must have more then 2 objects in it.");
 			}
 
 			fixed (Vector3* vectors = points)
@@ -508,7 +505,7 @@ namespace CryCil.Engine.Logic.EntityProxies
 			this.AssertInstance();
 			if (points.IsNullOrTooSmall(3))
 			{
-				throw new ArgumentNullException("points", "An array of points must have more then 1 object in it.");
+				throw new ArgumentNullException(nameof(points), "An array of points must have more then 1 object in it.");
 			}
 
 			fixed (Vector3* vectors = points)
@@ -527,8 +524,8 @@ namespace CryCil.Engine.Logic.EntityProxies
 		/// </summary>
 		/// <remarks>
 		/// Depending on the type of the entity the elements can be: segments for
-		/// <see cref="EntityAreaType.Shape"/>, box sides for <see cref="EntityAreaType.Box"/>, polygons
-		/// for <see cref="EntityAreaType.Solid"/>.
+		/// <see cref="EntityAreaType.Shape"/>, box sides for <see cref="EntityAreaType.Box"/>, polygons for
+		/// <see cref="EntityAreaType.Solid"/>.
 		/// </remarks>
 		/// <param name="elementIndex">Zero-based index of the element to set the obstruction for.</param>
 		/// <param name="obstructs">   
@@ -542,8 +539,8 @@ namespace CryCil.Engine.Logic.EntityProxies
 			SetSoundObstructionOnAreaFace(this.handle, elementIndex, obstructs);
 		}
 		/// <summary>
-		/// Adds an entity to the list of entities that will receive area-related events whenever any
-		/// entity enters or leaves this area.
+		/// Adds an entity to the list of entities that will receive area-related events whenever any entity
+		/// enters or leaves this area.
 		/// </summary>
 		/// <param name="entity">Identifier of the entity to add.</param>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
@@ -620,8 +617,8 @@ namespace CryCil.Engine.Logic.EntityProxies
 		/// <remarks>
 		/// The only difference between this function and
 		/// <see cref="o:CryCil.Engine.Logic.EntityProxies.CryEntityAreaProxy.ComputeNearestSquaredDistance"/>
-		/// is that this one only takes the outer hull into account, which only makes the difference if
-		/// this area is of types <see cref="EntityAreaType.Shape"/>.
+		/// is that this one only takes the outer hull into account, which only makes the difference if this
+		/// area is of types <see cref="EntityAreaType.Shape"/>.
 		/// </remarks>
 		/// <param name="entity">
 		/// Identifier of the entity to associated with cached result. When this entity moves, its cache of
@@ -647,8 +644,8 @@ namespace CryCil.Engine.Logic.EntityProxies
 		/// <remarks>
 		/// The only difference between this function and
 		/// <see cref="o:CryCil.Engine.Logic.EntityProxies.CryEntityAreaProxy.ComputeNearestSquaredDistance"/>
-		/// is that this one only takes the outer hull into account, which only makes the difference if
-		/// this area is of types <see cref="EntityAreaType.Shape"/>.
+		/// is that this one only takes the outer hull into account, which only makes the difference if this
+		/// area is of types <see cref="EntityAreaType.Shape"/>.
 		/// </remarks>
 		/// <param name="point"> 
 		/// Coordinates of the point the distance between which and area's hull is calculated.

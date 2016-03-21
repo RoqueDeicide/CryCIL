@@ -59,10 +59,7 @@ namespace Microsoft.Cci.Pdb
 			return o;
 		}
 
-		internal bool IsEmpty
-		{
-			get { return size == 0; }
-		}
+		internal bool IsEmpty => this.size == 0;
 
 		internal bool GetWord(int index, out uint word)
 		{

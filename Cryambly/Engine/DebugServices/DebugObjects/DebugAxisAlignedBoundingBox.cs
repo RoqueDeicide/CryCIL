@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using CryCil.Geometry;
 
 namespace CryCil.Engine.DebugServices
@@ -22,7 +23,8 @@ namespace CryCil.Engine.DebugServices
 		public override void Render()
 		{
 			AuxiliaryGeometry.Flags = this.RenderingFlags;
-			BoundingBox b = new BoundingBox(this.Box.Minimum + this.Translation, this.Box.Maximum + this.Translation);
+			BoundingBox b = new BoundingBox(this.Box.Minimum + this.Translation,
+											this.Box.Maximum + this.Translation);
 			AuxiliaryGeometry.DrawAABB(ref b, true, this.Color);
 		}
 	}

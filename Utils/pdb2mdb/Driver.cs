@@ -109,15 +109,9 @@ namespace Pdb2Mdb
 			private readonly CompileUnitEntry comp_unit;
 			private readonly SourceFileEntry entry;
 
-			public SourceFileEntry Entry
-			{
-				get { return entry; }
-			}
+			public SourceFileEntry Entry => this.entry;
 
-			public CompileUnitEntry CompilationUnit
-			{
-				get { return comp_unit; }
-			}
+			public CompileUnitEntry CompilationUnit => this.comp_unit;
 
 			public SourceFile(CompileUnitEntry comp_unit, SourceFileEntry entry)
 			{

@@ -1,26 +1,30 @@
 ﻿// This file contains a set of sample Action maps that match the contents of "defaultProfile.xml" file in
 // GameSDK.
 
+using System;
+using System.Linq;
 using CryCil.Engine.Input;
 using CryCil.Engine.Input.ActionMapping;
 
 #if WIN32 || Durango || Orbis
+
 [assembly: DeviceMapping(SupportedInputDevices.KeyboardMouse)]
 #endif
 #if WIN32 || Durango
+
 [assembly: DeviceMapping(SupportedInputDevices.XboxPad)]
 #endif
 #if WIN32 || Orbis
+
 [assembly: DeviceMapping(SupportedInputDevices.OrbisPad)]
 #endif
 
 // Important!
-// 
-// You have to disable warning CS0067, otherwise the compiler will complain about unused events. Don't
-// worry they are getting used.
+//
+// You have to disable warning CS0067, otherwise the compiler will complain about unused events. Don't worry
+// they are getting used.
 
 #pragma warning disable 67
-
 namespace CSharpSamples.ActionMaps.GameSDK
 {
 	/// <summary>
@@ -112,8 +116,8 @@ namespace CSharpSamples.ActionMaps.GameSDK
 			KeyboardMouseInput = InputId.NumpadDivide)]
 		public static event InputActionHandler AiDebugCenterViewAgent;
 		/// <summary>
-		/// An action that toggles display of "helpers" for normally invisible objects, like triggers,
-		/// sound spots, etc.
+		/// An action that toggles display of "helpers" for normally invisible objects, like triggers, sound
+		/// spots, etc.
 		/// </summary>
 		[Action("togglepdrawhelpers", ActionActivationMode.OnPress | ActionActivationMode.NoModifiers,
 			KeyboardMouseInput = InputId.F10)]
@@ -657,9 +661,9 @@ namespace CSharpSamples.ActionMaps.GameSDK
 		[Action("weapon_change_firemode", ActionActivationMode.OnPress)]
 		[InputAction(InputId.RowDigit2)]
 		[InputAction(InputId.XboxDPadLeft, pressTriggerDelay: 0.15f, pressDelayPriority: 1,
-			blockedInputs: new[] { InputId.XboxDPadUp, InputId.XboxDPadDown }, blockDuration: 0.12f)]
+			blockedInputs: new[] {InputId.XboxDPadUp, InputId.XboxDPadDown}, blockDuration: 0.12f)]
 		[InputAction(InputId.OrbisLeft, pressTriggerDelay: 0.15f, pressDelayPriority: 1,
-			blockedInputs: new[] { InputId.OrbisUp, InputId.OrbisDown },
+			blockedInputs: new[] {InputId.OrbisUp, InputId.OrbisDown},
 			blockDuration: 0.12f)]
 		public static event InputActionHandler WeaponChangeFiremode;
 		/// <summary>
@@ -668,9 +672,9 @@ namespace CSharpSamples.ActionMaps.GameSDK
 		[Action("toggle_flashlight", ActionActivationMode.OnPress)]
 		[InputAction(InputId.L)]
 		[InputAction(InputId.XboxDPadDown, pressTriggerDelay: 0.15f, pressDelayPriority: 1,
-			blockedInputs: new[] { InputId.XboxDPadRight, InputId.XboxDPadLeft }, blockDuration: 0.12f)]
+			blockedInputs: new[] {InputId.XboxDPadRight, InputId.XboxDPadLeft}, blockDuration: 0.12f)]
 		[InputAction(InputId.OrbisDown, pressTriggerDelay: 0.15f, pressDelayPriority: 1,
-			blockedInputs: new[] { InputId.OrbisLeft },
+			blockedInputs: new[] {InputId.OrbisLeft},
 			blockDuration: 0.12f)]
 		public static event InputActionHandler ToggleFlashlight;
 		/// <summary>
@@ -679,9 +683,9 @@ namespace CSharpSamples.ActionMaps.GameSDK
 		[Action("toggle_explosive", ActionActivationMode.OnPress)]
 		[InputAction(InputId.RowDigit4)]
 		[InputAction(InputId.XboxDPadRight, pressTriggerDelay: 0.15f, pressDelayPriority: 1,
-			blockedInputs: new[] { InputId.XboxDPadUp, InputId.XboxDPadDown }, blockDuration: 0.12f)]
+			blockedInputs: new[] {InputId.XboxDPadUp, InputId.XboxDPadDown}, blockDuration: 0.12f)]
 		[InputAction(InputId.OrbisRight, pressTriggerDelay: 0.15f, pressDelayPriority: 1,
-			blockedInputs: new[] { InputId.OrbisUp, InputId.OrbisDown },
+			blockedInputs: new[] {InputId.OrbisUp, InputId.OrbisDown},
 			blockDuration: 0.12f)]
 		public static event InputActionHandler ToggleExplosive;
 		/// <summary>
@@ -690,9 +694,9 @@ namespace CSharpSamples.ActionMaps.GameSDK
 		[Action("toggle_special", ActionActivationMode.OnPress)]
 		[InputAction(InputId.RowDigit3)]
 		[InputAction(InputId.XboxDPadUp, pressTriggerDelay: 0.15f, pressDelayPriority: 1,
-			blockedInputs: new[] { InputId.XboxDPadRight, InputId.XboxDPadLeft }, blockDuration: 0.12f)]
+			blockedInputs: new[] {InputId.XboxDPadRight, InputId.XboxDPadLeft}, blockDuration: 0.12f)]
 		[InputAction(InputId.OrbisUp, pressTriggerDelay: 0.15f, pressDelayPriority: 1,
-			blockedInputs: new[] { InputId.OrbisRight, InputId.OrbisLeft },
+			blockedInputs: new[] {InputId.OrbisRight, InputId.OrbisLeft},
 			blockDuration: 0.12f)]
 		public static event InputActionHandler ToggleSpecial;
 		/// <summary>
@@ -917,14 +921,14 @@ namespace CSharpSamples.ActionMaps.GameSDK
 		[Action("xi_v_movex", XboxInput = InputId.XboxThumbLeftX, OrbisInput = InputId.OrbisStickLeftX)]
 		public static event InputActionHandler XiMoveX;
 		/// <summary>
-		/// An action that changes the camera orientation when the player is in a vehicle where driver's
-		/// and gunner's seats are combined (e.g. a tank).
+		/// An action that changes the camera orientation when the player is in a vehicle where driver's and
+		/// gunner's seats are combined (e.g. a tank).
 		/// </summary>
 		[Action("xi_rotateyaw", XboxInput = InputId.XboxThumbRightX, OrbisInput = InputId.OrbisStickRightX)]
 		public static event InputActionHandler RotateYaw;
 		/// <summary>
-		/// An action that changes the camera orientation when the player is in a vehicle where driver's
-		/// and gunner's seats are combined (e.g. a tank).
+		/// An action that changes the camera orientation when the player is in a vehicle where driver's and
+		/// gunner's seats are combined (e.g. a tank).
 		/// </summary>
 		[Action("xi_rotatepitch", XboxInput = InputId.XboxThumbRightY, OrbisInput = InputId.OrbisStickRightY)]
 		public static event InputActionHandler RotatePitch;

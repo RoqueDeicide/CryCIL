@@ -147,31 +147,28 @@ namespace CryCil.RunTime
 		private static void OnCompilationStarted()
 		{
 			OnCompilationStartingBind();
-			if (CompilationStarted != null) CompilationStarted();
+			CompilationStarted?.Invoke();
 		}
 		private static void OnCompilationComplete(bool success)
 		{
 			OnCompilationCompleteBind(success);
-			if (CompilationComplete != null)
-				CompilationComplete(success);
+			CompilationComplete?.Invoke(success);
 		}
 		private static void OnInitializationStageStarted(int index)
 		{
-			if (InitializationStageStarted != null)
-				InitializationStageStarted(index);
+			InitializationStageStarted?.Invoke(index);
 		}
 		private static void OnInitializationStageFinished(int index)
 		{
-			if (InitializationStageFinished != null)
-				InitializationStageFinished(index);
+			InitializationStageFinished?.Invoke(index);
 		}
 		private static void OnUpdated()
 		{
-			if (Updated != null) Updated();
+			Updated?.Invoke();
 		}
 		private static void OnShuttingDown()
 		{
-			if (ShuttingDown != null) ShuttingDown();
+			ShuttingDown?.Invoke();
 		}
 		#endregion
 		private static void ProceedWithInitializationStages()

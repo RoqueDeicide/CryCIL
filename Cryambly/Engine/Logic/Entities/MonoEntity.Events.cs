@@ -75,8 +75,8 @@ namespace CryCil.Engine.Logic
 	/// </param>
 	public delegate void EntityPhysicsAwakeningEventHandler(MonoEntity sender, bool awoken);
 	/// <summary>
-	/// Defines signature of methods that can handle <see cref="MonoEntity"/> events that are raised when
-	/// an entity enters/leaves the area that has <paramref name="sender"/> entity as one of its targets.
+	/// Defines signature of methods that can handle <see cref="MonoEntity"/> events that are raised when an
+	/// entity enters/leaves the area that has <paramref name="sender"/> entity as one of its targets.
 	/// </summary>
 	/// <param name="sender">      Entity that is targeted by the area.</param>
 	/// <param name="entity">      Identifier of the entity that has entered/left the area.</param>
@@ -130,9 +130,7 @@ namespace CryCil.Engine.Logic
 	/// </summary>
 	/// <param name="sender">   The entity that raised the event.</param>
 	/// <param name="event">    Reference to the object that contains information about the event.</param>
-	/// <param name="character">
-	/// Object that represents the animated character that caused the event.
-	/// </param>
+	/// <param name="character">Object that represents the animated character that caused the event.</param>
 	public delegate void EntityAnimationEventHandler(MonoEntity sender, ref AnimationEvent @event, Character character);
 	public partial class MonoEntity
 	{
@@ -146,7 +144,7 @@ namespace CryCil.Engine.Logic
 			try
 			{
 				var handler = this.Moved;
-				if (handler != null) handler(this, why);
+				handler?.Invoke(this, why);
 			}
 			catch (Exception ex)
 			{
@@ -164,7 +162,7 @@ namespace CryCil.Engine.Logic
 			try
 			{
 				var handler = this.MovedInEditor;
-				if (handler != null) handler(this);
+				handler?.Invoke(this);
 			}
 			catch (Exception ex)
 			{
@@ -181,7 +179,7 @@ namespace CryCil.Engine.Logic
 			try
 			{
 				var handler = this.TimedOut;
-				if (handler != null) handler(this, timerId, TimeSpan.FromMilliseconds(milliseconds));
+				handler?.Invoke(this, timerId, TimeSpan.FromMilliseconds(milliseconds));
 			}
 			catch (Exception ex)
 			{
@@ -198,7 +196,7 @@ namespace CryCil.Engine.Logic
 			try
 			{
 				var handler = this.Ressurected;
-				if (handler != null) handler(this);
+				handler?.Invoke(this);
 			}
 			catch (Exception ex)
 			{
@@ -215,7 +213,7 @@ namespace CryCil.Engine.Logic
 			try
 			{
 				var handler = this.Done;
-				if (handler != null) handler(this);
+				handler?.Invoke(this);
 			}
 			catch (Exception ex)
 			{
@@ -232,7 +230,7 @@ namespace CryCil.Engine.Logic
 			try
 			{
 				var handler = this.ReturningToPool;
-				if (handler != null) handler(this);
+				handler?.Invoke(this);
 			}
 			catch (Exception ex)
 			{
@@ -249,7 +247,7 @@ namespace CryCil.Engine.Logic
 			try
 			{
 				var handler = this.ResetInEditor;
-				if (handler != null) handler(this, enterGameMode);
+				handler?.Invoke(this, enterGameMode);
 			}
 			catch (Exception ex)
 			{
@@ -266,7 +264,7 @@ namespace CryCil.Engine.Logic
 			try
 			{
 				var handler = this.Attached;
-				if (handler != null) handler(this, id);
+				handler?.Invoke(this, id);
 			}
 			catch (Exception ex)
 			{
@@ -283,7 +281,7 @@ namespace CryCil.Engine.Logic
 			try
 			{
 				var handler = this.AttachedTo;
-				if (handler != null) handler(this, id);
+				handler?.Invoke(this, id);
 			}
 			catch (Exception ex)
 			{
@@ -300,7 +298,7 @@ namespace CryCil.Engine.Logic
 			try
 			{
 				var handler = this.Detached;
-				if (handler != null) handler(this, id);
+				handler?.Invoke(this, id);
 			}
 			catch (Exception ex)
 			{
@@ -317,7 +315,7 @@ namespace CryCil.Engine.Logic
 			try
 			{
 				var handler = this.DetachedFrom;
-				if (handler != null) handler(this, id);
+				handler?.Invoke(this, id);
 			}
 			catch (Exception ex)
 			{
@@ -334,7 +332,7 @@ namespace CryCil.Engine.Logic
 			try
 			{
 				var handler = this.Linked;
-				if (handler != null) handler(this, linkName, id, guid);
+				handler?.Invoke(this, linkName, id, guid);
 			}
 			catch (Exception ex)
 			{
@@ -351,7 +349,7 @@ namespace CryCil.Engine.Logic
 			try
 			{
 				var handler = this.Unlinked;
-				if (handler != null) handler(this, linkName, id, guid);
+				handler?.Invoke(this, linkName, id, guid);
 			}
 			catch (Exception ex)
 			{
@@ -368,7 +366,7 @@ namespace CryCil.Engine.Logic
 			try
 			{
 				var handler = this.Hidden;
-				if (handler != null) handler(this, true);
+				handler?.Invoke(this, true);
 			}
 			catch (Exception ex)
 			{
@@ -385,7 +383,7 @@ namespace CryCil.Engine.Logic
 			try
 			{
 				var handler = this.NotHidden;
-				if (handler != null) handler(this, false);
+				handler?.Invoke(this, false);
 			}
 			catch (Exception ex)
 			{
@@ -408,12 +406,12 @@ namespace CryCil.Engine.Logic
 				if (enable)
 				{
 					var handler = this.PhysicsEnabled;
-					if (handler != null) handler(this, false);
+					handler?.Invoke(this, false);
 				}
 				else
 				{
 					var handler = this.PhysicsDisabled;
-					if (handler != null) handler(this, false);
+					handler?.Invoke(this, false);
 				}
 			}
 			catch (Exception ex)
@@ -437,12 +435,12 @@ namespace CryCil.Engine.Logic
 				if (awoken)
 				{
 					var handler = this.Awoken;
-					if (handler != null) handler(this, false);
+					handler?.Invoke(this, false);
 				}
 				else
 				{
 					var handler = this.PutToSleep;
-					if (handler != null) handler(this, false);
+					handler?.Invoke(this, false);
 				}
 			}
 			catch (Exception ex)
@@ -460,7 +458,7 @@ namespace CryCil.Engine.Logic
 			try
 			{
 				var handler = this.AreaEntered;
-				if (handler != null) handler(this, entity, areaId, areaEntityId, fadeFactor);
+				handler?.Invoke(this, entity, areaId, areaEntityId, fadeFactor);
 			}
 			catch (Exception ex)
 			{
@@ -477,7 +475,7 @@ namespace CryCil.Engine.Logic
 			try
 			{
 				var handler = this.AreaLeft;
-				if (handler != null) handler(this, entity, areaId, areaEntityId, fadeFactor);
+				handler?.Invoke(this, entity, areaId, areaEntityId, fadeFactor);
 			}
 			catch (Exception ex)
 			{
@@ -494,7 +492,7 @@ namespace CryCil.Engine.Logic
 			try
 			{
 				var handler = this.Broken;
-				if (handler != null) handler(this);
+				handler?.Invoke(this);
 			}
 			catch (Exception ex)
 			{
@@ -513,7 +511,7 @@ namespace CryCil.Engine.Logic
 			try
 			{
 				var handler = this.NotSeen;
-				if (handler != null) handler(this);
+				handler?.Invoke(this);
 			}
 			catch (Exception ex)
 			{
@@ -530,7 +528,7 @@ namespace CryCil.Engine.Logic
 			try
 			{
 				var handler = this.Collided;
-				if (handler != null) handler(this, ref info, isTarget);
+				handler?.Invoke(this, ref info, isTarget);
 			}
 			catch (Exception ex)
 			{
@@ -547,7 +545,7 @@ namespace CryCil.Engine.Logic
 			try
 			{
 				var handler = this.Rendered;
-				if (handler != null) handler(this, ref parameters);
+				handler?.Invoke(this, ref parameters);
 			}
 			catch (Exception ex)
 			{
@@ -578,7 +576,7 @@ namespace CryCil.Engine.Logic
 					this.Extensions[i].PrePhysicsUpdate(frameTime);
 				}
 				var handler = this.BeforePhysicsUpdate;
-				if (handler != null) handler(this, frameTime);
+				handler?.Invoke(this, frameTime);
 			}
 			catch (Exception ex)
 			{
@@ -595,7 +593,7 @@ namespace CryCil.Engine.Logic
 			try
 			{
 				var handler = this.LevelLoaded;
-				if (handler != null) handler(this);
+				handler?.Invoke(this);
 			}
 			catch (Exception ex)
 			{
@@ -612,7 +610,7 @@ namespace CryCil.Engine.Logic
 			try
 			{
 				var handler = this.LevelStarted;
-				if (handler != null) handler(this);
+				handler?.Invoke(this);
 			}
 			catch (Exception ex)
 			{
@@ -620,8 +618,8 @@ namespace CryCil.Engine.Logic
 			}
 		}
 		/// <summary>
-		/// Occurs when a game starts on a level. Unlike <see cref="LevelStarted"/> this event can be
-		/// raised multiple times within the level (in case of multiplayer matches).
+		/// Occurs when a game starts on a level. Unlike <see cref="LevelStarted"/> this event can be raised
+		/// multiple times within the level (in case of multiplayer matches).
 		/// </summary>
 		public event EntitySimpleEventHandler GameStarted;
 		[RawThunk("Invoked from underlying object to raise event GameStarted.")]
@@ -630,7 +628,7 @@ namespace CryCil.Engine.Logic
 			try
 			{
 				var handler = this.GameStarted;
-				if (handler != null) handler(this);
+				handler?.Invoke(this);
 			}
 			catch (Exception ex)
 			{
@@ -648,7 +646,7 @@ namespace CryCil.Engine.Logic
 			try
 			{
 				var handler = this.Synchronizing;
-				if (handler != null) handler(this);
+				handler?.Invoke(this);
 			}
 			catch (Exception ex)
 			{
@@ -666,7 +664,7 @@ namespace CryCil.Engine.Logic
 			try
 			{
 				var handler = this.Synchronized;
-				if (handler != null) handler(this);
+				handler?.Invoke(this);
 			}
 			catch (Exception ex)
 			{
@@ -683,7 +681,7 @@ namespace CryCil.Engine.Logic
 			try
 			{
 				var handler = this.BecameVisible;
-				if (handler != null) handler(this);
+				handler?.Invoke(this);
 			}
 			catch (Exception ex)
 			{
@@ -700,7 +698,7 @@ namespace CryCil.Engine.Logic
 			try
 			{
 				var handler = this.BecameInvisible;
-				if (handler != null) handler(this);
+				handler?.Invoke(this);
 			}
 			catch (Exception ex)
 			{
@@ -717,7 +715,7 @@ namespace CryCil.Engine.Logic
 			try
 			{
 				var handler = this.MaterialChanged;
-				if (handler != null) handler(this, newMaterial);
+				handler?.Invoke(this, newMaterial);
 			}
 			catch (Exception ex)
 			{
@@ -734,7 +732,7 @@ namespace CryCil.Engine.Logic
 			try
 			{
 				var handler = this.MaterialLayersChanged;
-				if (handler != null) handler(this, @new, old);
+				handler?.Invoke(this, @new, old);
 			}
 			catch (Exception ex)
 			{
@@ -752,7 +750,7 @@ namespace CryCil.Engine.Logic
 			try
 			{
 				var handler = this.Activated;
-				if (handler != null) handler(this);
+				handler?.Invoke(this);
 			}
 			catch (Exception ex)
 			{
@@ -770,7 +768,7 @@ namespace CryCil.Engine.Logic
 			try
 			{
 				var handler = this.Deactivated;
-				if (handler != null) handler(this);
+				handler?.Invoke(this);
 			}
 			catch (Exception ex)
 			{
@@ -787,7 +785,7 @@ namespace CryCil.Engine.Logic
 			try
 			{
 				var handler = this.AnimationEvent;
-				if (handler != null) handler(this, ref @event, character);
+				handler?.Invoke(this, ref @event, character);
 			}
 			catch (Exception ex)
 			{

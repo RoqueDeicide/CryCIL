@@ -116,8 +116,7 @@ namespace CryCil.Engine.Input
 		/// </summary>
 		/// <remarks>
 		/// There is an internal counter that is in(de)cremented when <see cref="Show"/>(
-		/// <see cref="Hide()"/>) is invoked. When the counter is positive, the mouse appears on the
-		/// screen.
+		/// <see cref="Hide()"/>) is invoked. When the counter is positive, the mouse appears on the screen.
 		/// </remarks>
 		public static void Show()
 		{
@@ -128,8 +127,7 @@ namespace CryCil.Engine.Input
 		/// </summary>
 		/// <remarks>
 		/// There is an internal counter that is in(de)cremented when <see cref="Show"/>(
-		/// <see cref="Hide()"/>) is invoked. When the counter is positive, the mouse appears on the
-		/// screen.
+		/// <see cref="Hide()"/>) is invoked. When the counter is positive, the mouse appears on the screen.
 		/// </remarks>
 		public static void Hide()
 		{
@@ -172,10 +170,7 @@ namespace CryCil.Engine.Input
 		{
 			try
 			{
-				if (RightMouseButtonDown != null)
-				{
-					RightMouseButtonDown(x, y);
-				}
+				RightMouseButtonDown?.Invoke(x, y);
 			}
 			catch (Exception ex)
 			{
@@ -187,10 +182,7 @@ namespace CryCil.Engine.Input
 		{
 			try
 			{
-				if (RightMouseButtonUp != null)
-				{
-					RightMouseButtonUp(x, y);
-				}
+				RightMouseButtonUp?.Invoke(x, y);
 			}
 			catch (Exception ex)
 			{
@@ -202,10 +194,7 @@ namespace CryCil.Engine.Input
 		{
 			try
 			{
-				if (RightMouseButtonDoubleClick != null)
-				{
-					RightMouseButtonDoubleClick(x, y);
-				}
+				RightMouseButtonDoubleClick?.Invoke(x, y);
 			}
 			catch (Exception ex)
 			{
@@ -217,10 +206,7 @@ namespace CryCil.Engine.Input
 		{
 			try
 			{
-				if (LeftMouseButtonDown != null)
-				{
-					LeftMouseButtonDown(x, y);
-				}
+				LeftMouseButtonDown?.Invoke(x, y);
 			}
 			catch (Exception ex)
 			{
@@ -232,10 +218,7 @@ namespace CryCil.Engine.Input
 		{
 			try
 			{
-				if (LeftMouseButtonUp != null)
-				{
-					LeftMouseButtonUp(x, y);
-				}
+				LeftMouseButtonUp?.Invoke(x, y);
 			}
 			catch (Exception ex)
 			{
@@ -247,10 +230,7 @@ namespace CryCil.Engine.Input
 		{
 			try
 			{
-				if (LeftMouseButtonDoubleClick != null)
-				{
-					LeftMouseButtonDoubleClick(x, y);
-				}
+				LeftMouseButtonDoubleClick?.Invoke(x, y);
 			}
 			catch (Exception ex)
 			{
@@ -262,10 +242,7 @@ namespace CryCil.Engine.Input
 		{
 			try
 			{
-				if (MiddleMouseButtonDown != null)
-				{
-					MiddleMouseButtonDown(x, y);
-				}
+				MiddleMouseButtonDown?.Invoke(x, y);
 			}
 			catch (Exception ex)
 			{
@@ -277,10 +254,7 @@ namespace CryCil.Engine.Input
 		{
 			try
 			{
-				if (MiddleMouseButtonUp != null)
-				{
-					MiddleMouseButtonUp(x, y);
-				}
+				MiddleMouseButtonUp?.Invoke(x, y);
 			}
 			catch (Exception ex)
 			{
@@ -292,10 +266,7 @@ namespace CryCil.Engine.Input
 		{
 			try
 			{
-				if (MiddleMouseButtonDoubleClick != null)
-				{
-					MiddleMouseButtonDoubleClick(x, y);
-				}
+				MiddleMouseButtonDoubleClick?.Invoke(x, y);
 			}
 			catch (Exception ex)
 			{
@@ -307,10 +278,7 @@ namespace CryCil.Engine.Input
 		{
 			try
 			{
-				if (Move != null)
-				{
-					Move(x, y);
-				}
+				Move?.Invoke(x, y);
 			}
 			catch (Exception ex)
 			{
@@ -322,10 +290,7 @@ namespace CryCil.Engine.Input
 		{
 			try
 			{
-				if (Wheel != null)
-				{
-					Wheel(delta);
-				}
+				Wheel?.Invoke(delta);
 			}
 			catch (Exception ex)
 			{

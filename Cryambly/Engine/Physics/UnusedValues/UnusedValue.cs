@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using CryCil.Geometry;
 using CryCil.MemoryMapping;
 
@@ -65,7 +66,7 @@ namespace CryCil.Engine.Physics
 		/// <returns>True, if value wasn't marked as unused.</returns>
 		public static bool IsUsed(this double value)
 		{
-			return ((int)(new Bytes8(value).SignedLong) & 0xFFF40000) != 0xFFF40000;
+			return ((int)new Bytes8(value).SignedLong & 0xFFF40000) != 0xFFF40000;
 		}
 		/// <summary>
 		/// Indicates whether this value is used.

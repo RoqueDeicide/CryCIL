@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using CryCil.Engine.Rendering;
 using CryCil.Engine.Rendering.Lighting;
@@ -68,8 +69,8 @@ namespace CryCil.Engine.Logic
 
 		// Description: Loads character to the specified slot, or to next available slot. If same character
 		// is already loaded in this slot, operation is ignored. If this slot number is occupied by
-		// different kind of object it is overwritten. Return: Slot id where the object was loaded, or -1
-		// if loading failed.
+		// different kind of object it is overwritten. Return: Slot id where the object was loaded, or -1 if
+		// loading failed.
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		internal static extern int LoadCharacter(IntPtr entityHandle, int slot, string sFilename, int nLoadFlags = 0);
 

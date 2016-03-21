@@ -12,13 +12,10 @@ namespace CryCil.Engine.Audio
 	{
 		#region Properties
 		/// <summary>
-		/// Gets the path to the file (or folder) that contains the data that is used to configure the
-		/// audio system.
+		/// Gets the path to the file (or folder) that contains the data that is used to configure the audio
+		/// system.
 		/// </summary>
-		public static string ConfigurationPath
-		{
-			get { return GetConfigPath(); }
-		}
+		public static string ConfigurationPath => GetConfigPath();
 		/// <summary>
 		/// Gets information about the current state of the audio system.
 		/// </summary>

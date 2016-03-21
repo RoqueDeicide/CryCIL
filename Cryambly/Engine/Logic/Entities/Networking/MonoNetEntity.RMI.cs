@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -35,9 +34,7 @@ namespace CryCil.Engine.Logic
 		/// <exception cref="RmiException">
 		/// Specified method must be called from a client game instance.
 		/// </exception>
-		/// <exception cref="RmiException">
-		/// Specified method call must be directed to the server.
-		/// </exception>
+		/// <exception cref="RmiException">Specified method call must be directed to the server.</exception>
 		/// <exception cref="RmiException">
 		/// Attempt was made to call RMI and specifying that it must not be directed to both local and
 		/// remote game instances.
@@ -64,14 +61,13 @@ namespace CryCil.Engine.Logic
 		{
 			if (method == null)
 			{
-				throw new ArgumentNullException("method", "You must specify the method that must be invoked via RMI.");
+				throw new ArgumentNullException(nameof(method), "You must specify the method that must be invoked via RMI.");
 			}
 			Type type = this.GetType();
 			MethodInfo methodInfo = method.Method;
 			if (methodInfo != type.GetMethod(methodInfo.Name))
 			{
-				throw new MissingMethodException(string.Format("{0} type doesn't define method named {1}.",
-															   type.FullName, methodInfo.Name));
+				throw new MissingMethodException($"{type.FullName} type doesn't define method named {methodInfo.Name}.");
 			}
 			int rmiType = this.ValidateRmiMethod(methodInfo, null, where, false, false);
 
@@ -110,9 +106,7 @@ namespace CryCil.Engine.Logic
 		/// <exception cref="RmiException">
 		/// Specified method must be called from a client game instance.
 		/// </exception>
-		/// <exception cref="RmiException">
-		/// Specified method call must be directed to the server.
-		/// </exception>
+		/// <exception cref="RmiException">Specified method call must be directed to the server.</exception>
 		/// <exception cref="RmiException">
 		/// Attempt was made to call RMI and specifying that it must not be directed to both local and
 		/// remote game instances.
@@ -142,19 +136,18 @@ namespace CryCil.Engine.Logic
 		{
 			if (method == null)
 			{
-				throw new ArgumentNullException("method", "You must specify the method that must be invoked via RMI.");
+				throw new ArgumentNullException(nameof(method), "You must specify the method that must be invoked via RMI.");
 			}
 			if (parameters == null)
 			{
-				throw new ArgumentNullException("parameters",
+				throw new ArgumentNullException(nameof(parameters),
 												"You must specify the parameters for the method that must be invoked via RMI.");
 			}
 			Type type = this.GetType();
 			MethodInfo methodInfo = method.Method;
 			if (methodInfo != type.GetMethod(methodInfo.Name))
 			{
-				throw new MissingMethodException(string.Format("{0} type doesn't define method named {1}.",
-															   type.FullName, methodInfo.Name));
+				throw new MissingMethodException($"{type.FullName} type doesn't define method named {methodInfo.Name}.");
 			}
 			int rmiType = this.ValidateRmiMethod(methodInfo, parameters, where, false, false);
 
@@ -206,9 +199,7 @@ namespace CryCil.Engine.Logic
 		/// <exception cref="RmiException">
 		/// Specified method must be called from a client game instance.
 		/// </exception>
-		/// <exception cref="RmiException">
-		/// Specified method call must be directed to the server.
-		/// </exception>
+		/// <exception cref="RmiException">Specified method call must be directed to the server.</exception>
 		/// <exception cref="RmiException">
 		/// Attempt was made to call RMI and specifying that it must not be directed to both local and
 		/// remote game instances.
@@ -231,13 +222,12 @@ namespace CryCil.Engine.Logic
 		{
 			if (method == null)
 			{
-				throw new ArgumentNullException("method", "You must specify the method that must be invoked via RMI.");
+				throw new ArgumentNullException(nameof(method), "You must specify the method that must be invoked via RMI.");
 			}
 			Type type = this.GetType();
 			if (method != type.GetMethod(method.Name))
 			{
-				throw new MissingMethodException(string.Format("{0} type doesn't define method named {1}.",
-															   type.FullName, method.Name));
+				throw new MissingMethodException($"{type.FullName} type doesn't define method named {method.Name}.");
 			}
 			int rmiType = this.ValidateRmiMethod(method, parameters, where, true, true);
 
@@ -289,9 +279,7 @@ namespace CryCil.Engine.Logic
 		/// <exception cref="RmiException">
 		/// Specified method must be called from a client game instance.
 		/// </exception>
-		/// <exception cref="RmiException">
-		/// Specified method call must be directed to the server.
-		/// </exception>
+		/// <exception cref="RmiException">Specified method call must be directed to the server.</exception>
 		/// <exception cref="RmiException">
 		/// Attempt was made to call RMI and specifying that it must not be directed to both local and
 		/// remote game instances.
@@ -314,15 +302,14 @@ namespace CryCil.Engine.Logic
 		{
 			if (string.IsNullOrWhiteSpace(methodName))
 			{
-				throw new ArgumentNullException("methodName",
+				throw new ArgumentNullException(nameof(methodName),
 												"You must specify a name of the method that must be invoked via RMI.");
 			}
 			Type type = this.GetType();
 			MethodInfo method = type.GetMethod(methodName);
 			if (method == null)
 			{
-				throw new MissingMethodException(string.Format("{0} type doesn't define method named {1}.",
-															   type.FullName, methodName));
+				throw new MissingMethodException($"{type.FullName} type doesn't define method named {methodName}.");
 			}
 			int rmiType = this.ValidateRmiMethod(method, parameters, where, true, true);
 
@@ -344,8 +331,7 @@ namespace CryCil.Engine.Logic
 			if (checkReturnType && method.ReturnType != typeof(bool))
 			{
 				throw new ArgumentException(
-					string.Format("Method {0} of type {1} must return boolean value to be invoked via RMI framework.",
-								  methodName, type.FullName));
+					$"Method {methodName} of type {type.FullName} must return boolean value to be invoked via RMI framework.");
 			}
 			if (checkParameters)
 			{
@@ -353,31 +339,26 @@ namespace CryCil.Engine.Logic
 				if (pars.Length == 0 && parameters != null)
 				{
 					throw new ArgumentException(
-						string.Format("Method {0} of type {1} doesn't accept any parameters but it was " +
-									  "invoked with expectation that it accepts one parameter of type " +
-									  "{2}",
-									  methodName, type.FullName, parameters.GetType().FullName));
+						$"Method {methodName} of type {type.FullName} doesn't accept any parameters but it was " +
+						"invoked with expectation that it accepts one parameter of type " + $"{parameters.GetType().FullName}");
 				}
 				if (pars.Length > 0 && parameters == null)
 				{
 					throw new ArgumentException(
-						string.Format("Method {0} of type {1} does accept parameters but it was " +
-									  "invoked with expectation that it doesn't accept anything.",
-									  methodName, type.FullName));
+						$"Method {methodName} of type {type.FullName} does accept parameters but it was " +
+						"invoked with expectation that it doesn't accept anything.");
 				}
 				if (pars.Length > 1)
 				{
 					throw new ArgumentException(
-						string.Format("Method {0} of type {1} accepts more then 1 parameter but RMI methods must only accept " +
-									  "one parameter of type that derives from {2}.",
-									  methodName, type.FullName, typeof(RmiParameters).FullName));
+						$"Method {methodName} of type {type.FullName} accepts more then 1 parameter but RMI methods must only accept " +
+						$"one parameter of type that derives from {typeof(RmiParameters).FullName}.");
 				}
 				if (!pars[0].ParameterType.Implements<RmiParameters>())
 				{
 					throw new ArgumentException(
-						string.Format("Method {0} of type {1} accept one parameter of type that derives from {2} to be called " +
-									  "via RMI framework.",
-									  methodName, type.FullName, typeof(RmiParameters).FullName));
+						$"Method {methodName} of type {type.FullName} accept one parameter of type that derives from {typeof(RmiParameters).FullName} to be called " +
+						"via RMI framework.");
 				}
 			}
 			RMIAttribute attribute = method.GetAttribute<RMIAttribute>();
@@ -385,23 +366,20 @@ namespace CryCil.Engine.Logic
 			{
 				Type emiAttributeType = typeof(RMIAttribute);
 				throw new MissingAttributeException(emiAttributeType,
-													string.Format("Method {0} of type {1} must be marked by an attribute " +
-																  "named {2} to be called via RMI framework.",
-																  methodName, type.FullName, emiAttributeType.FullName));
+													$"Method {methodName} of type {type.FullName} must be marked by an attribute " +
+													$"named {emiAttributeType.FullName} to be called via RMI framework.");
 			}
 			if (attribute.ToServer && !Game.IsClient)
 			{
 				throw
 					new RmiException(RmiError.IsNotClient,
-									 string.Format("Method {0} of type {1} must be called from a client game instance.",
-												   methodName, type.FullName));
+									 $"Method {methodName} of type {type.FullName} must be called from a client game instance.");
 			}
 			if (attribute.ToServer && !where.HasFlag(RmiTarget.ToServer))
 			{
 				throw
 					new RmiException(RmiError.NotDirectedToServer,
-									 string.Format("RMI call of the method {0} of type {1} must be directed to the server.",
-												   methodName, type.FullName));
+									 $"RMI call of the method {methodName} of type {type.FullName} must be directed to the server.");
 			}
 
 			return (int)attribute.type;
@@ -444,37 +422,37 @@ namespace CryCil.Engine.Logic
 		{
 			try
 			{
-
 				Type type = this.GetType();
 				MethodInfo method = type.GetMethod(methodName, BindingFlags.Public | BindingFlags.NonPublic);
 				if (method == null)
 				{
-					Log.Error(string.Format("A request to invoke the method {0} of type {1} has been received from remote " +
-											"location, but the method is not defined.", methodName, type.FullName), true);
+					Log.Error(
+							  $"A request to invoke the method {methodName} of type {type.FullName} has been received from remote " +
+							  "location, but the method is not defined.", true);
 					return false;
 				}
 				RMIAttribute attribute = method.GetAttribute<RMIAttribute>();
 				if (attribute == null)
 				{
-					Log.Warning(string.Format("A request to invoke the method {0} of type {1} has been received from remote " +
-											  "location, but the method is not allowed to be invoked remotely.",
-											  method.Name, type.FullName), false);
+					Log.Warning(
+							    $"A request to invoke the method {method.Name} of type {type.FullName} has been received from remote " +
+								"location, but the method is not allowed to be invoked remotely.", false);
 					return false;
 				}
 				if (attribute.ToServer && !Game.IsServer)
 				{
-					Log.Warning(string.Format("A request to invoke the method {0} of type {1} has been received from remote " +
-											  "location, but the method is supposed to be invoked from the client to the server " +
-											  "and this game instance is not a server.",
-											  method.Name, type.FullName), false);
+					Log.Warning(
+							    $"A request to invoke the method {method.Name} of type {type.FullName} has been received from remote " +
+								"location, but the method is supposed to be invoked from the client to the server " +
+								"and this game instance is not a server.", false);
 					return false;
 				}
 				if (!attribute.ToServer && !Game.IsClient)
 				{
-					Log.Warning(string.Format("A request to invoke the method {0} of type {1} has been received from remote " +
-											  "location, but the method is supposed to be invoked from the server to the client " +
-											  "and this game instance is not a client.",
-											  method.Name, type.FullName), false);
+					Log.Warning(
+							    $"A request to invoke the method {method.Name} of type {type.FullName} has been received from remote " +
+								"location, but the method is supposed to be invoked from the server to the client " +
+								"and this game instance is not a client.", false);
 					return false;
 				}
 				try
@@ -490,22 +468,18 @@ namespace CryCil.Engine.Logic
 						if (parameters == null)
 						{
 							message =
-								string.Format("Method {0} of type {1} accepts parameters, but it was invoked with no arguments.",
-											  method.Name, type.FullName);
+								$"Method {method.Name} of type {type.FullName} accepts parameters, but it was invoked with no arguments.";
 						}
 						else if (pars.Length == 0)
 						{
 							message =
-								string.Format("Method {0} of type {1} doesn't accept any parameters, but was invoked with one.",
-											  method.Name, type.FullName);
+								$"Method {method.Name} of type {type.FullName} doesn't accept any parameters, but was invoked with one.";
 						}
 						else
 						{
 							message =
-								string.Format("Method {0} of type {1} must only accept one parameter of type {2}, " +
-											  "but it actually accepts {3} parameters of types {4}.",
-											  method.Name, type.FullName, parameters.GetType().FullName, pars.Length,
-											  pars.Select(t => t.ParameterType.FullName).ContentsToString(", "));
+								$"Method {method.Name} of type {type.FullName} must only accept one parameter of type {parameters.GetType().FullName}, " +
+								$"but it actually accepts {pars.Length} parameters of types {pars.Select(t => t.ParameterType.FullName).ContentsToString(", ")}.";
 						}
 						RmiException rex = new RmiException(message, ex);
 						MonoInterface.DisplayException(rex);
@@ -517,8 +491,7 @@ namespace CryCil.Engine.Logic
 					if (attribute.Reliable)
 					{
 						string message =
-							string.Format("An error has occurred when invoking method {0} of type {1} via RMI mechanism.",
-										  method.Name, type.FullName);
+							$"An error has occurred when invoking method {method.Name} of type {type.FullName} via RMI mechanism.";
 						RmiException rex = new RmiException(message, ex);
 						MonoInterface.DisplayException(rex);
 					}

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -19,10 +20,7 @@ namespace CryCil.Engine.Models.Characters.Faces
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 		/// <summary>
 		/// Gets the number of phonemes in the sentence.
 		/// </summary>
@@ -106,10 +104,7 @@ namespace CryCil.Engine.Models.Characters.Faces
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 		/// <summary>
 		/// Gets the number of words in the sentence.
 		/// </summary>
@@ -214,8 +209,7 @@ namespace CryCil.Engine.Models.Characters.Faces
 			/// The name of the phoneme can only include ASCII characters.
 			/// </exception>
 			/// <exception cref="ArgumentException">
-			/// The name of the phoneme can only be represented by a sequence of 4 ASCII characters at
-			/// most.
+			/// The name of the phoneme can only be represented by a sequence of 4 ASCII characters at most.
 			/// </exception>
 			public string Name
 			{
@@ -339,10 +333,7 @@ namespace CryCil.Engine.Models.Characters.Faces
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 
 		/// <summary>
 		/// Gets or sets the text in this sentence.

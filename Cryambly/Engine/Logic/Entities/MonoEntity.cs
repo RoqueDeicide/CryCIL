@@ -276,9 +276,7 @@ namespace CryCil.Engine.Logic
 		/// Can be overridden in derived class to define the entity's pool signature.
 		/// </summary>
 		/// <remarks>
-		/// <para>
-		/// Signature is formed by beginning and ending groups without syncing any actual data.
-		/// </para>
+		/// <para>Signature is formed by beginning and ending groups without syncing any actual data.</para>
 		/// <para>Generally there is no reason to return <c>false</c>.</para>
 		/// </remarks>
 		/// <example>
@@ -309,8 +307,8 @@ namespace CryCil.Engine.Logic
 		/// <param name="context">The most up-to-date information for this frame.</param>
 		public abstract void Update(ref EntityUpdateContext context);
 		/// <summary>
-		/// When implemented in derived class updates logical state of this entity after most other stuff
-		/// is updated.
+		/// When implemented in derived class updates logical state of this entity after most other stuff is
+		/// updated.
 		/// </summary>
 		public abstract void PostUpdate();
 		#endregion
@@ -397,7 +395,7 @@ namespace CryCil.Engine.Logic
 					this.Extensions[i].Initialize();
 				}
 
-				if (this.Initializing != null) this.Initializing(this, EventArgs.Empty);
+				this.Initializing?.Invoke(this, EventArgs.Empty);
 			}
 			catch (Exception ex)
 			{
@@ -416,7 +414,7 @@ namespace CryCil.Engine.Logic
 					this.Extensions[i].PostInitialize();
 				}
 
-				if (this.Initialized != null) this.Initialized(this, EventArgs.Empty);
+				this.Initialized?.Invoke(this, EventArgs.Empty);
 			}
 			catch (Exception ex)
 			{
@@ -464,7 +462,7 @@ namespace CryCil.Engine.Logic
 					this.Extensions[i].PostReload();
 				}
 
-				if (this.Reloaded != null) this.Reloaded(this, ref parameters);
+				this.Reloaded?.Invoke(this, ref parameters);
 			}
 			catch (Exception ex)
 			{

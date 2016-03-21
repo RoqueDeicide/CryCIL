@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil.Engine
 {
@@ -14,10 +15,7 @@ namespace CryCil.Engine
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 
 		/// <summary>
 		/// Gets number of children in this collection.
@@ -80,7 +78,7 @@ namespace CryCil.Engine
 			this.AssertInstance();
 			if (!child.IsValid)
 			{
-				throw new ArgumentNullException("child", "Child particle effect cannot be null.");
+				throw new ArgumentNullException(nameof(child), "Child particle effect cannot be null.");
 			}
 
 			ParticleEffect.InsertChild(this.handle, this.Count, child);
@@ -97,7 +95,7 @@ namespace CryCil.Engine
 			this.AssertInstance();
 			if (!child.IsValid)
 			{
-				throw new ArgumentNullException("child", "Child particle effect cannot be null.");
+				throw new ArgumentNullException(nameof(child), "Child particle effect cannot be null.");
 			}
 
 			ParticleEffect.InsertChild(this.handle, slot, child);

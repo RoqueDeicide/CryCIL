@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Security;
 
 namespace CryCil
@@ -29,8 +30,8 @@ namespace CryCil
 		/// example, "c:\").
 		/// </exception>
 		/// <exception cref="PathTooLongException">
-		/// The specified path, file name, or both exceed the system-defined maximum length. For example,
-		/// on Windows-based platforms, paths must be less than 248 characters, and file names must be less
+		/// The specified path, file name, or both exceed the system-defined maximum length. For example, on
+		/// Windows-based platforms, paths must be less than 248 characters, and file names must be less
 		/// than 260 characters.
 		/// </exception>
 		/// <exception cref="SecurityException">
@@ -57,8 +58,8 @@ namespace CryCil
 		/// "c:\").
 		/// </exception>
 		/// <exception cref="PathTooLongException">
-		/// The specified path, file name, or both exceed the system-defined maximum length. For example,
-		/// on Windows-based platforms, paths must be less than 248 characters, and file names must be less
+		/// The specified path, file name, or both exceed the system-defined maximum length. For example, on
+		/// Windows-based platforms, paths must be less than 248 characters, and file names must be less
 		/// than 260 characters.
 		/// </exception>
 		/// <exception cref="SecurityException">

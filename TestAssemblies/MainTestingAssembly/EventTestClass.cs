@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using CryCil;
-using MainTestingAssembly.Annotations;
 
 namespace MainTestingAssembly
 {
 	/// <summary>
 	/// Defines a signature of methods that can handle test events.
 	/// </summary>
-	/// <param name="text">A text message that is propagated when the event is raised. This parameter is marshaled as a null-terminated string when performing a P/Invoke.</param>
+	/// <param name="text">
+	/// A text message that is propagated when the event is raised. This parameter is marshaled as a
+	/// null-terminated string when performing a P/Invoke.
+	/// </param>
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 	public delegate void TestEventHandler([MarshalAs(UnmanagedType.LPStr)] string text);
 	/// <summary>
@@ -85,7 +85,7 @@ namespace MainTestingAssembly
 		{
 			Console.WriteLine("Raising static event EventTestClass.Testing");
 			var handler = Testing;
-			if (handler != null) handler("Testing event Testing of EventTestClass.");
+			handler?.Invoke("Testing event Testing of EventTestClass.");
 		}
 		[RuntimeInvoke]
 		private static void OnTested()
@@ -106,10 +106,9 @@ namespace MainTestingAssembly
 		private readonly List<TestEventHandler> handlers;
 		#endregion
 		#region Properties
-		public string Name { get; private set; }
+		public string Name { get; }
 		#endregion
 		#region Events
-
 		public event TestEventHandler Testing;
 		public event TestEventHandler Tested
 		{
@@ -133,8 +132,7 @@ namespace MainTestingAssembly
 			if (handler != null)
 			{
 				string message =
-					string.Format("Testing event Testing of EventTestObject using the object named {0}.",
-								  this.Name);
+					$"Testing event Testing of EventTestObject using the object named {this.Name}.";
 				handler(message);
 			}
 		}
@@ -146,8 +144,7 @@ namespace MainTestingAssembly
 			if (this.handlers.Count != 0)
 			{
 				message =
-					string.Format("Testing event Tested of EventTestObject using the object named {0}.",
-								  this.Name);
+					$"Testing event Tested of EventTestObject using the object named {this.Name}.";
 			}
 			foreach (var handler in this.handlers)
 			{

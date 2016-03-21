@@ -12,8 +12,8 @@ namespace CryCil.Engine.Logic
 	/// </param>
 	public delegate void FlowNodeSimpleEventHandler(FlowNode sender);
 	/// <summary>
-	/// Defines a signature of methods that can handle an event <see cref="FlowNode.EntityTargeted"/>
-	/// raised by objects that derive from <see cref="FlowNode"/>.
+	/// Defines a signature of methods that can handle an event <see cref="FlowNode.EntityTargeted"/> raised
+	/// by objects that derive from <see cref="FlowNode"/>.
 	/// </summary>
 	/// <param name="sender">
 	/// An object of type that derives from <see cref="FlowNode"/> that raised the event.
@@ -54,35 +54,35 @@ namespace CryCil.Engine.Logic
 		/// <param name="obj">Identifier of the target entity.</param>
 		protected virtual void OnEntityTargeted(EntityId obj)
 		{
-			if (this.EntityTargeted != null) this.EntityTargeted(this, obj);
+			this.EntityTargeted?.Invoke(this, obj);
 		}
 		/// <summary>
 		/// Raises the event <see cref="Initializing"/>.
 		/// </summary>
 		protected virtual void OnInitializing()
 		{
-			if (this.Initializing != null) this.Initializing(this);
+			this.Initializing?.Invoke(this);
 		}
 		/// <summary>
 		/// Raises the event <see cref="Initialized"/>.
 		/// </summary>
 		protected virtual void OnInitialized()
 		{
-			if (this.Initialized != null) this.Initialized(this);
+			this.Initialized?.Invoke(this);
 		}
 		/// <summary>
 		/// Raises the event <see cref="Suspended"/>.
 		/// </summary>
 		protected virtual void OnSuspended()
 		{
-			if (this.Suspended != null) this.Suspended(this);
+			this.Suspended?.Invoke(this);
 		}
 		/// <summary>
 		/// Raises the event <see cref="Resumed"/>.
 		/// </summary>
 		protected virtual void OnResumed()
 		{
-			if (this.Resumed != null) this.Resumed(this);
+			this.Resumed?.Invoke(this);
 		}
 		#endregion
 	}

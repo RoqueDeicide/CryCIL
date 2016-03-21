@@ -1,4 +1,6 @@
-﻿using CryCil.Engine.Data;
+﻿using System;
+using System.Linq;
+using CryCil.Engine.Data;
 using CryCil.Geometry;
 
 namespace CSharpSamples
@@ -43,9 +45,9 @@ namespace CSharpSamples
 				}
 			}
 
-			// Above method is robust, doesn't involve serializing extra data, but it requires a lot of
-			// code duplication since you have to write the code for both writing and reading the data.
-			// This does, however allow special coding for writing and reading.
+			// Above method is robust, doesn't involve serializing extra data, but it requires a lot of code
+			// duplication since you have to write the code for both writing and reading the data. This
+			// does, however allow special coding for writing and reading.
 
 			if (s.BeginOptionalGroup("group2", s.Reading || this.Condition2()))
 			{

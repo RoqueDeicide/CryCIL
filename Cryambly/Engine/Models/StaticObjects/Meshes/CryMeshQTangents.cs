@@ -15,19 +15,13 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// <summary>
 		/// Gets quaternion that packed into this object.
 		/// </summary>
-		public Quaternion Quaternion
+		public Quaternion Quaternion => new Quaternion
 		{
-			get
-			{
-				return new Quaternion
-				{
-					X = Quantize.Int16ToSingle(this.qTangent.X),
-					Y = Quantize.Int16ToSingle(this.qTangent.Y),
-					Z = Quantize.Int16ToSingle(this.qTangent.Z),
-					W = Quantize.Int16ToSingle(this.qTangent.W)
-				};
-			}
-		}
+			X = Quantize.Int16ToSingle(this.qTangent.X),
+			Y = Quantize.Int16ToSingle(this.qTangent.Y),
+			Z = Quantize.Int16ToSingle(this.qTangent.Z),
+			W = Quantize.Int16ToSingle(this.qTangent.W)
+		};
 		#endregion
 		#region Construction
 		/// <summary>

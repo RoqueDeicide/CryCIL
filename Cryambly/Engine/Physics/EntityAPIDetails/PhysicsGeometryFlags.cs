@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil.Engine.Physics
 {
@@ -40,8 +41,8 @@ namespace CryCil.Engine.Physics
 		/// </summary>
 		Squashy = 0x100000,
 		/// <summary>
-		/// When set, indicates that this geometry/part will cause a physics event whenever its bounding
-		/// box overlaps with anything.
+		/// When set, indicates that this geometry/part will cause a physics event whenever its bounding box
+		/// overlaps with anything.
 		/// </summary>
 		LogInteractions = 0x200000,
 		//monitor_contacts = 0x400000, // part needs collision callback from the solver (used internally)
@@ -54,8 +55,8 @@ namespace CryCil.Engine.Physics
 		/// processed.
 		/// </summary>
 		/// <remarks>
-		/// Current assumption is that this flag can be set if you don't want the entity to be bobbed
-		/// around by the collisions.
+		/// Current assumption is that this flag can be set if you don't want the entity to be bobbed around
+		/// by the collisions.
 		/// </remarks>
 		NoCollisionResponse = 0x1000000,
 		/// <summary>

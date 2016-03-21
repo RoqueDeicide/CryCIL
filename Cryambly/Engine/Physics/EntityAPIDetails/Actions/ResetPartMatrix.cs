@@ -1,12 +1,13 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
 
 namespace CryCil.Engine.Physics
 {
 	/// <summary>
-	/// Encapsulates description of the action that bakes the matrix of the part of the physical entity
-	/// into the entity's one and clears the former.
+	/// Encapsulates description of the action that bakes the matrix of the part of the physical entity into
+	/// the entity's one and clears the former.
 	/// </summary>
 	/// <remarks>
 	/// <para>
@@ -22,8 +23,8 @@ namespace CryCil.Engine.Physics
 	{
 		#region Fields
 		/// <summary>
-		/// Pass reference to this field to the <see cref="PhysicalEntity.ActUpon"/> to apply this action
-		/// to the physical entity.
+		/// Pass reference to this field to the <see cref="PhysicalEntity.ActUpon"/> to apply this action to
+		/// the physical entity.
 		/// </summary>
 		[UsedImplicitly] public PhysicsAction Base;
 		[UsedImplicitly] private int ipart;

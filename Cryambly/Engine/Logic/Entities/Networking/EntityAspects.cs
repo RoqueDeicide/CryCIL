@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil.Engine.Logic
 {
@@ -54,8 +55,7 @@ namespace CryCil.Engine.Logic
 		/// Script aspect. Not used in CryCIL.
 		/// </summary>
 		/// <remarks>
-		/// This aspect is used by CryEngine Lua script system and is never at any point used anywhere
-		/// else.
+		/// This aspect is used by CryEngine Lua script system and is never at any point used anywhere else.
 		/// </remarks>
 		Script = 0x02u,
 		// 0x04u // aspect 2
@@ -195,8 +195,8 @@ namespace CryCil.Engine.Logic
 		/// <seealso cref="EntityAspectCategories.Custom"/>
 		GameClientM = 0x01000000u, // aspect 24
 		/// <summary>
-		/// Custom client data aspect. This aspect is very special, because the data that is associated
-		/// with it will not be synchronized with clients that don't have authority over the entity.
+		/// Custom client data aspect. This aspect is very special, because the data that is associated with
+		/// it will not be synchronized with clients that don't have authority over the entity.
 		/// </summary>
 		/// <seealso cref="EntityAspectCategories.Client"/>
 		/// <seealso cref="EntityAspectCategories.Custom"/>

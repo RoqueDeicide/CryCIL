@@ -17,10 +17,7 @@ namespace Microsoft.Cci.Pdb
 			this.offset = 0;
 		}
 
-		internal byte[] Buffer
-		{
-			get { return buffer; }
-		}
+		internal byte[] Buffer => this.buffer;
 		private byte[] buffer;
 
 		internal void FillBuffer(Stream stream, int capacity)

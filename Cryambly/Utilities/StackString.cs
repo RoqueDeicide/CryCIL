@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
@@ -38,12 +39,6 @@ namespace CryCil.Utilities
 				}
 			}
 		}
-		#endregion
-		#region Events
-		#endregion
-		#region Construction
-		#endregion
-		#region Interface
 		#endregion
 		#region Utilities
 		[MethodImpl(MethodImplOptions.InternalCall)]

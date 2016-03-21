@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using CryCil.Geometry;
 
 namespace CryCil.Engine.Rendering.Lighting
@@ -142,6 +143,6 @@ namespace CryCil.Engine.Rendering.Lighting
 		/// <summary>
 		/// A mask that allows to check whether light source has a defined type.
 		/// </summary>
-		LightTypeMask = (Directional | Point | Project | AreaLight)
+		LightTypeMask = Directional | Point | Project | AreaLight
 	}
 }

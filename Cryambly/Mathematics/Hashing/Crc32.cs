@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using CryCil.Annotations;
 
 namespace CryCil.Hashing
@@ -7,8 +8,8 @@ namespace CryCil.Hashing
 	/// Represents a result of a CRC32 hash function.
 	/// </summary>
 	/// <remarks>
-	/// CRC32 hashes have low chance of clashes and are computed quickly, so they can be used to map
-	/// objects to strings without having to manipulate a lot of the latter.
+	/// CRC32 hashes have low chance of clashes and are computed quickly, so they can be used to map objects
+	/// to strings without having to manipulate a lot of the latter.
 	/// </remarks>
 	public unsafe struct Crc32
 	{
@@ -93,10 +94,7 @@ namespace CryCil.Hashing
 		/// <summary>
 		/// Gets current hash code.
 		/// </summary>
-		public uint Hash
-		{
-			get { return this.hash; }
-		}
+		public uint Hash => this.hash;
 		#endregion
 		#region Interface
 		/// <summary>
@@ -132,12 +130,11 @@ namespace CryCil.Hashing
 
 			for (int i = 0; i < byteCount; i++)
 			{
-				this.hash = (this.hash >> 8) ^ table[this.hash & 0xFF] ^ (*bytes++);
+				this.hash = (this.hash >> 8) ^ table[this.hash & 0xFF] ^ *bytes++;
 			}
 		}
 		/// <summary>
-		/// Bakes the hash code of the all-lower-case version of the string into current hash code
-		/// instance.
+		/// Bakes the hash code of the all-lower-case version of the string into current hash code instance.
 		/// </summary>
 		/// <param name="text">A string which hash code to bake into this instance.</param>
 		public void AddLowercase(string text)
@@ -245,16 +242,13 @@ namespace CryCil.Hashing
 		/// <summary>
 		/// Gets the stored hash code.
 		/// </summary>
-		public uint Hash
-		{
-			get { return this.hash; }
-		}
+		public uint Hash => this.hash;
 		/// <summary>
 		/// Creates a new object of this type.
 		/// </summary>
 		/// <param name="hash">
-		/// A number that is assumed to be a CRC32 hash code that was calculated from all-lower-case
-		/// version of some text.
+		/// A number that is assumed to be a CRC32 hash code that was calculated from all-lower-case version
+		/// of some text.
 		/// </param>
 		public LowerCaseCrc32(uint hash)
 		{

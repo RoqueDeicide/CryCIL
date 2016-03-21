@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil.Engine.Logic
 {
@@ -20,8 +21,7 @@ namespace CryCil.Engine.Logic
 		/// </summary>
 		Boolean,
 		/// <summary>
-		/// Single-precision floating point number. Underlying member has to be of type
-		/// <see cref="float"/>.
+		/// Single-precision floating point number. Underlying member has to be of type <see cref="float"/>.
 		/// </summary>
 		Float,
 		/// <summary>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using CryCil.Engine.Models.StaticObjects;
@@ -11,8 +12,8 @@ namespace CryCil.Engine.Models.Characters
 {
 	/// <summary>
 	/// Defines signature of methods that can be registered as callbacks that will be called by the
-	/// animation sub-system as soon as positions and orientations of all bones in the character's
-	/// skeletons are updated.
+	/// animation sub-system as soon as positions and orientations of all bones in the character's skeletons
+	/// are updated.
 	/// </summary>
 	/// <param name="character">Character which bone have just been updated.</param>
 	public delegate void CharacterBonesUpdateEventHandler(Character character);
@@ -33,10 +34,7 @@ namespace CryCil.Engine.Models.Characters
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 		/// <summary>
 		/// Gets or sets the physical entity that hosts physical representation of this character.
 		/// </summary>
@@ -210,9 +208,7 @@ namespace CryCil.Engine.Models.Characters
 		/// Gets the physical entity that hosts the auxiliary physical representation of the bone.
 		/// </summary>
 		/// <param name="id">Identifier that was returned by <see cref="CreateAuxilaryPhysics"/>.</param>
-		/// <returns>
-		/// Physical entity that hosts the auxiliary physical representation of the bone.
-		/// </returns>
+		/// <returns>Physical entity that hosts the auxiliary physical representation of the bone.</returns>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public PhysicalEntity GetAuxiliaryPhysics(int id)
 		{
@@ -407,8 +403,8 @@ namespace CryCil.Engine.Models.Characters
 		/// Assigns a function that should handle the event of bones positions getting updated.
 		/// </summary>
 		/// <param name="handler">
-		/// Reference to the static field (Important!) that contains the delegate that should be called
-		/// when the event occurs.
+		/// Reference to the static field (Important!) that contains the delegate that should be called when
+		/// the event occurs.
 		/// </param>
 		/// <example>
 		/// Here is the only valid way of using this method:
@@ -422,8 +418,8 @@ namespace CryCil.Engine.Models.Characters
 			SetPostProcessCallback(this.handle, ref handler);
 		}
 		/// <summary>
-		/// Removes the previously set bone update handler. This function will remove any handlers
-		/// including native ones.
+		/// Removes the previously set bone update handler. This function will remove any handlers including
+		/// native ones.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public void ClearBoneUpdateHandler()
@@ -537,10 +533,7 @@ namespace CryCil.Engine.Models.Characters
 				// We are basically raising an event here.
 				var delegates = handler;
 
-				if (delegates != null)
-				{
-					delegates(character);
-				}
+				delegates?.Invoke(character);
 			}
 			catch (Exception ex)
 			{

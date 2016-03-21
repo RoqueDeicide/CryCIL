@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using CryCil.Annotations;
 using CryCil.Geometry;
@@ -11,7 +12,7 @@ namespace CryCil.Engine.DebugServices
 	/// Defines access to CryEngine IPersistantDebug API.
 	/// </summary>
 	/// <example>
-	/// <code source="DebugServices/Graphics.cs" />
+	/// <code source="DebugServices/Graphics.cs"/>
 	/// </example>
 	public static class DebugGraphics
 	{
@@ -69,9 +70,7 @@ namespace CryCil.Engine.DebugServices
 		/// <param name="innerRadius">Inner radius of the disc.</param>
 		/// <param name="outerRadius">Outer radius of the disc.</param>
 		/// <param name="color">      Color to use when drawing.</param>
-		/// <param name="timeout">    
-		/// Timespan during which the object will be displayed in seconds.
-		/// </param>
+		/// <param name="timeout">    Timespan during which the object will be displayed in seconds.</param>
 		public static void DrawPlanarDisc(Vector3 position, float innerRadius, float outerRadius, ColorSingle color,
 										  float timeout)
 		{

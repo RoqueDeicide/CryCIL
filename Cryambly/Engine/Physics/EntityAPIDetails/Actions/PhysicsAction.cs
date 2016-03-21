@@ -4,8 +4,8 @@ using System.Runtime.InteropServices;
 namespace CryCil.Engine.Physics
 {
 	/// <summary>
-	/// Base part of all structures that encapsulate parameters that are used to perform actions on
-	/// physical entities.
+	/// Base part of all structures that encapsulate parameters that are used to perform actions on physical
+	/// entities.
 	/// </summary>
 	/// <remarks>Never create objects of this type directly.</remarks>
 	[StructLayout(LayoutKind.Sequential)]
@@ -17,17 +17,11 @@ namespace CryCil.Engine.Physics
 		/// Indicates whether an object of type that uses this object was not created using default
 		/// constructor.
 		/// </summary>
-		public bool Initialized
-		{
-			get { return this.initialized; }
-		}
+		public bool Initialized => this.initialized;
 		/// <summary>
 		/// Gets the type of this action.
 		/// </summary>
-		public PhysicsActionTypes Type
-		{
-			get { return this.type; }
-		}
+		public PhysicsActionTypes Type => this.type;
 		/// <summary>
 		/// Initializes new instance of this type.
 		/// </summary>

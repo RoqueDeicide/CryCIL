@@ -41,10 +41,7 @@ namespace CryCil.Engine.Physics
 		[UsedImplicitly] private int bRecalcBBox;
 		#endregion
 		#region Properties
-		internal bool Initialized
-		{
-			get { return this.initialized; }
-		}
+		internal bool Initialized => this.initialized;
 		/// <summary>
 		/// Gets the value that indicates whether a bounding box should be recalculated for this entity.
 		/// </summary>
@@ -107,8 +104,8 @@ namespace CryCil.Engine.Physics
 			set { this.pMtx3x4 = value; }
 		}
 		/// <summary>
-		/// Gets or sets the object that represents the surface that overrides one in corresponding
-		/// geometry object.
+		/// Gets or sets the object that represents the surface that overrides one in corresponding geometry
+		/// object.
 		/// </summary>
 		public PhysicalSurface Surface
 		{
@@ -136,8 +133,7 @@ namespace CryCil.Engine.Physics
 			set { this.flagsCollider = value; }
 		}
 		/// <summary>
-		/// Gets or sets the breakability index that can be acquired from
-		/// <see cref="ExplosionShapes.Add"/>.
+		/// Gets or sets the breakability index that can be acquired from <see cref="ExplosionShapes.Add"/>.
 		/// </summary>
 		public int BreakabilityIndex
 		{
@@ -219,8 +215,8 @@ namespace CryCil.Engine.Physics
 			}
 		}
 		/// <summary>
-		/// Gets or sets the value that indicates how close another entity must be to this part, to make
-		/// the part report the contact.
+		/// Gets or sets the value that indicates how close another entity must be to this part, to make the
+		/// part report the contact.
 		/// </summary>
 		public float MinimalContactDistance
 		{

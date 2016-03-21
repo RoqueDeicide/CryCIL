@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil
 {
@@ -31,10 +32,7 @@ namespace CryCil
 		/// <summary>
 		/// Gets next random floating-point number.
 		/// </summary>
-		public float Value
-		{
-			get { return (float)(new Random().NextDouble() * this.range + this.@base); }
-		}
+		public float Value => (float)(new Random().NextDouble() * this.range + this.@base);
 		#endregion
 		#region Interface
 		/// <summary>
@@ -67,7 +65,7 @@ namespace CryCil
 		public float Base
 		{
 			get { return this.@base; }
-			set { this.@base = MathHelpers.Clamp(value, 0.0f, Int32.MaxValue); }
+			set { this.@base = MathHelpers.Clamp(value, 0.0f, int.MaxValue); }
 		}
 		/// <summary>
 		/// Gets or sets a value between 0 and 1 that represents maximal variation of the base value.
@@ -80,10 +78,7 @@ namespace CryCil
 		/// <summary>
 		/// Gets next random floating-point number.
 		/// </summary>
-		public float Value
-		{
-			get { return (float)(new Random().NextDouble() * this.range + this.@base); }
-		}
+		public float Value => (float)(new Random().NextDouble() * this.range + this.@base);
 		#endregion
 		#region Interface
 		/// <summary>

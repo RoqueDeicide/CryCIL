@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
 
@@ -67,8 +68,7 @@ namespace CryCil.Engine.Physics
 		/// brake.
 		/// </summary>
 		/// <remarks>
-		/// This property is ignored when <see cref="Part"/> is equal to
-		/// <see cref="VehiclePartType.Body"/>.
+		/// This property is ignored when <see cref="Part"/> is equal to <see cref="VehiclePartType.Body"/>.
 		/// </remarks>
 		public bool LockableWithHandBrake
 		{
@@ -80,8 +80,7 @@ namespace CryCil.Engine.Physics
 		/// casting instead of geometry sweep check.
 		/// </summary>
 		/// <remarks>
-		/// This property is ignored when <see cref="Part"/> is equal to
-		/// <see cref="VehiclePartType.Body"/>.
+		/// This property is ignored when <see cref="Part"/> is equal to <see cref="VehiclePartType.Body"/>.
 		/// </remarks>
 		public bool RayCasting
 		{
@@ -92,8 +91,7 @@ namespace CryCil.Engine.Physics
 		/// Gets or sets the value that indicates whether this wheel can be used for steering.
 		/// </summary>
 		/// <remarks>
-		/// This property is ignored when <see cref="Part"/> is equal to
-		/// <see cref="VehiclePartType.Body"/>.
+		/// This property is ignored when <see cref="Part"/> is equal to <see cref="VehiclePartType.Body"/>.
 		/// </remarks>
 		public bool CanSteer
 		{
@@ -104,8 +102,7 @@ namespace CryCil.Engine.Physics
 		/// Gets or sets the position of the wheel's upper suspension point.
 		/// </summary>
 		/// <remarks>
-		/// This property is ignored when <see cref="Part"/> is equal to
-		/// <see cref="VehiclePartType.Body"/>.
+		/// This property is ignored when <see cref="Part"/> is equal to <see cref="VehiclePartType.Body"/>.
 		/// </remarks>
 		public Vector3 Pivot
 		{
@@ -116,8 +113,7 @@ namespace CryCil.Engine.Physics
 		/// Gets or sets the length of the suspension 'spring' in fully relaxed state.
 		/// </summary>
 		/// <remarks>
-		/// This property is ignored when <see cref="Part"/> is equal to
-		/// <see cref="VehiclePartType.Body"/>.
+		/// This property is ignored when <see cref="Part"/> is equal to <see cref="VehiclePartType.Body"/>.
 		/// </remarks>
 		public float RelaxedSuspensionLength
 		{
@@ -128,8 +124,7 @@ namespace CryCil.Engine.Physics
 		/// Gets or sets the length of the suspension 'spring' in rest state.
 		/// </summary>
 		/// <remarks>
-		/// This property is ignored when <see cref="Part"/> is equal to
-		/// <see cref="VehiclePartType.Body"/>.
+		/// This property is ignored when <see cref="Part"/> is equal to <see cref="VehiclePartType.Body"/>.
 		/// </remarks>
 		public float RestingSuspensionLength
 		{
@@ -142,8 +137,7 @@ namespace CryCil.Engine.Physics
 		/// <see cref="RestingSuspensionLength"/>.
 		/// </summary>
 		/// <remarks>
-		/// This property is ignored when <see cref="Part"/> is equal to
-		/// <see cref="VehiclePartType.Body"/>.
+		/// This property is ignored when <see cref="Part"/> is equal to <see cref="VehiclePartType.Body"/>.
 		/// </remarks>
 		public float SuspensionStiffness
 		{
@@ -155,8 +149,7 @@ namespace CryCil.Engine.Physics
 		/// <see cref="SuspensionStiffness"/>.
 		/// </summary>
 		/// <remarks>
-		/// This property is ignored when <see cref="Part"/> is equal to
-		/// <see cref="VehiclePartType.Body"/>.
+		/// This property is ignored when <see cref="Part"/> is equal to <see cref="VehiclePartType.Body"/>.
 		/// </remarks>
 		public float SuspensionStiffnessWeight
 		{
@@ -167,8 +160,7 @@ namespace CryCil.Engine.Physics
 		/// Gets or sets the damping value that is used calm down oscillations.
 		/// </summary>
 		/// <remarks>
-		/// This property is ignored when <see cref="Part"/> is equal to
-		/// <see cref="VehiclePartType.Body"/>.
+		/// This property is ignored when <see cref="Part"/> is equal to <see cref="VehiclePartType.Body"/>.
 		/// </remarks>
 		public float SuspensionDamping
 		{
@@ -181,8 +173,7 @@ namespace CryCil.Engine.Physics
 		/// <remarks>
 		/// <para>Amount of friction depends how deep the wheel is in the ground.</para>
 		/// <para>
-		/// This property is ignored when <see cref="Part"/> is equal to
-		/// <see cref="VehiclePartType.Body"/>.
+		/// This property is ignored when <see cref="Part"/> is equal to <see cref="VehiclePartType.Body"/>.
 		/// </para>
 		/// </remarks>
 		public float MinimalTireFriction
@@ -196,8 +187,7 @@ namespace CryCil.Engine.Physics
 		/// <remarks>
 		/// <para>Amount of friction depends how deep the wheel is in the ground.</para>
 		/// <para>
-		/// This property is ignored when <see cref="Part"/> is equal to
-		/// <see cref="VehiclePartType.Body"/>.
+		/// This property is ignored when <see cref="Part"/> is equal to <see cref="VehiclePartType.Body"/>.
 		/// </para>
 		/// </remarks>
 		public float MaximalTireFriction
@@ -209,8 +199,7 @@ namespace CryCil.Engine.Physics
 		/// Gets or sets lateral friction coefficient.
 		/// </summary>
 		/// <remarks>
-		/// This property is ignored when <see cref="Part"/> is equal to
-		/// <see cref="VehiclePartType.Body"/>.
+		/// This property is ignored when <see cref="Part"/> is equal to <see cref="VehiclePartType.Body"/>.
 		/// </remarks>
 		public float LateralFrictionCoefficient
 		{

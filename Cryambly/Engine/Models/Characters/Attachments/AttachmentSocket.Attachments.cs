@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil.Engine.Models.Characters.Attachments
 {
@@ -200,9 +201,7 @@ namespace CryCil.Engine.Models.Characters.Attachments
 		/// <summary>
 		/// Attaches a light source to this socket.
 		/// </summary>
-		/// <param name="light">
-		/// An object that represents a connection between an object and socket.
-		/// </param>
+		/// <param name="light">An object that represents a connection between an object and socket.</param>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public void Attach(LightAttachment light)
 		{

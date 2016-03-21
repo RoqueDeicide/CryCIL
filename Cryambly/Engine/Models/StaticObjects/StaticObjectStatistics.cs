@@ -42,87 +42,51 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// <summary>
 		/// Gets total number of vertices in this static object.
 		/// </summary>
-		public int Vertices
-		{
-			get { return this.vertices; }
-		}
+		public int Vertices => this.vertices;
 		/// <summary>
 		/// Gets total number of indices that form polygons in this static object.
 		/// </summary>
-		public int Indices
-		{
-			get { return this.indices; }
-		}
+		public int Indices => this.indices;
 		/// <summary>
 		/// Gets the size of mesh data in bytes(?).
 		/// </summary>
-		public int MeshSize
-		{
-			get { return this.meshSize; }
-		}
+		public int MeshSize => this.meshSize;
 		/// <summary>
 		/// Gets the size of mesh data that was loaded from .cgf file in bytes(?).
 		/// </summary>
-		public int MeshSizeLoaded
-		{
-			get { return this.meshSizeLoaded; }
-		}
+		public int MeshSizeLoaded => this.meshSizeLoaded;
 		/// <summary>
 		/// Gets the size of physical proxy data in bytes(?).
 		/// </summary>
-		public int PhysicalProxySize
-		{
-			get { return this.physProxySize; }
-		}
+		public int PhysicalProxySize => this.physProxySize;
 		/// <summary>
 		/// Gets the maximal size of physical proxy data in bytes(?).
 		/// </summary>
-		public int PhysicalProxySizeMax
-		{
-			get { return this.physProxySizeMax; }
-		}
+		public int PhysicalProxySizeMax => this.physProxySizeMax;
 		/// <summary>
 		/// Gets number of physical primitives that comprise this static object.
 		/// </summary>
-		public int PhysicalPrimitives
-		{
-			get { return this.physPrimitives; }
-		}
+		public int PhysicalPrimitives => this.physPrimitives;
 		/// <summary>
 		/// Gets number of draw calls that are required to render this static object.
 		/// </summary>
-		public int DrawCalls
-		{
-			get { return this.drawCalls; }
-		}
+		public int DrawCalls => this.drawCalls;
 		/// <summary>
 		/// Gets number of LOD models this static object contains.
 		/// </summary>
-		public int Lods
-		{
-			get { return this.lods; }
-		}
+		public int Lods => this.lods;
 		/// <summary>
 		/// Gets number of sub meshes.
 		/// </summary>
-		public int SubMeshCount
-		{
-			get { return this.subMeshCount; }
-		}
+		public int SubMeshCount => this.subMeshCount;
 		/// <summary>
 		/// Gets reference count.
 		/// </summary>
-		public int ReferenceCount
-		{
-			get { return this.numRefs; }
-		}
+		public int ReferenceCount => this.numRefs;
 		/// <summary>
 		/// Indicates whether LOD models were loaded from separate files.
 		/// </summary>
-		public bool SplitLods
-		{
-			get { return this.splitLods; }
-		}
+		public bool SplitLods => this.splitLods;
 		#endregion
 		#region Construction
 		internal StaticObjectStatistics(int vertices, int indices, int meshSize,

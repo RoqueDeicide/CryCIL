@@ -27,10 +27,7 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Gets the pointer to the ILevel object that can be used as foreign data.
 		/// </summary>
-		public ForeignData ForeignData
-		{
-			get { return new ForeignData(this); }
-		}
+		public ForeignData ForeignData => new ForeignData(this);
 		/// <summary>
 		/// Assigns foreign data to this object.
 		/// </summary>
@@ -42,24 +39,15 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Gets the identifier of foreign data type for this type.
 		/// </summary>
-		public ForeignDataIds ForeignDataId
-		{
-			get { return ForeignDataIds.Entity; }
-		}
+		public ForeignDataIds ForeignDataId => ForeignDataIds.Entity;
 		/// <summary>
 		/// Gets the pointer to the underlying object.
 		/// </summary>
-		public IntPtr Handle
-		{
-			get { return this.handle; }
-		}
+		public IntPtr Handle => this.handle;
 		/// <summary>
 		/// Indicates whether this object is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 
 		/// <summary>
 		/// Gets the object that derives from <see cref="MonoEntity"/> that represents this entity, or
@@ -126,15 +114,15 @@ namespace CryCil.Engine.Logic
 				this.AssertEntity();
 				if (value == null)
 				{
-					throw new ArgumentNullException("value", "Name of the entity cannot be null.");
+					throw new ArgumentNullException(nameof(value), "Name of the entity cannot be null.");
 				}
 
 				SetNameInternal(this.handle, value);
 			}
 		}
 		/// <summary>
-		/// Indicates whether this entity was created by the entity load manager using information stored
-		/// in the level file.
+		/// Indicates whether this entity was created by the entity load manager using information stored in
+		/// the level file.
 		/// </summary>
 		/// <remarks>Returns <c>false</c> for any entities created dynamically through code.</remarks>
 		/// <exception cref="NullReferenceException">This entity is not usable.</exception>
@@ -414,7 +402,8 @@ namespace CryCil.Engine.Logic
 		/// This function is a faster equivalent of the following code:
 		/// <code>
 		/// entity.Flags.HasFlag(someFlags);
-		/// </code>This function is faster because it doesn't involve boxing.
+		/// </code>
+		/// This function is faster because it doesn't involve boxing.
 		/// </remarks>
 		/// <param name="flagsToCheck">A combination of flags to check.</param>
 		/// <param name="all">         
@@ -456,7 +445,7 @@ namespace CryCil.Engine.Logic
 			this.AssertEntity();
 			if (timerId < 0)
 			{
-				throw new ArgumentOutOfRangeException("timerId", "Identifier of the timer cannot be less then 0.");
+				throw new ArgumentOutOfRangeException(nameof(timerId), "Identifier of the timer cannot be less then 0.");
 			}
 
 			try
@@ -501,11 +490,11 @@ namespace CryCil.Engine.Logic
 			this.AssertEntity();
 			if (string.IsNullOrEmpty(linkName))
 			{
-				throw new ArgumentNullException("linkName", "Name of the link cannot be null or empty.");
+				throw new ArgumentNullException(nameof(linkName), "Name of the link cannot be null or empty.");
 			}
 			if (linkName.Length > 31)
 			{
-				throw new ArgumentOutOfRangeException("linkName", "Name of the link cannot be longer then 31 symbol.");
+				throw new ArgumentOutOfRangeException(nameof(linkName), "Name of the link cannot be longer then 31 symbol.");
 			}
 			if (id == default(EntityId) && guid == default(EntityGUID))
 			{
@@ -529,7 +518,7 @@ namespace CryCil.Engine.Logic
 			this.AssertEntity();
 			if (!link.IsValid)
 			{
-				throw new ArgumentNullException("link", "Object that represents the link that must be removed cannot be null.");
+				throw new ArgumentNullException(nameof(link), "Object that represents the link that must be removed cannot be null.");
 			}
 
 			RemoveEntityLink(this.handle, link);
@@ -552,8 +541,7 @@ namespace CryCil.Engine.Logic
 		/// </param>
 		/// <exception cref="NullReferenceException">This entity is not usable.</exception>
 		/// <exception cref="PhysicalizationException">
-		/// An array of points must be provided when creating an area definition for a spline or shape
-		/// area.
+		/// An array of points must be provided when creating an area definition for a spline or shape area.
 		/// </exception>
 		/// <exception cref="PhysicalizationException">
 		/// Physicalization of entity as area requires a valid pointer to AreaDefinition structure.

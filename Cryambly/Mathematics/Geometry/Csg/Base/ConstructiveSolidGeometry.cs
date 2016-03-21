@@ -66,18 +66,18 @@ namespace CryCil.Geometry.Csg.Base
 	/// <example>
 	/// <code>
 	/// Example illustrated in Wikipedia: http://en.wikipedia.org/wiki/File:Csg_tree.png
-	/// 
+	///
 	/// // Prepare cylinders.
 	/// const float exampleCylinderLength = 10;
 	/// const float exampleCylinderRadius = 2;
-	/// 
+	///
 	/// Vector3 cylinderRight = new Vector3(exampleCylinderLength, 0, 0);
 	/// Vector3 cylinderFront = new Vector3(0, exampleCylinderLength, 0);
 	/// Vector3 cylinderTop = new Vector3(0, 0, exampleCylinderLength);
 	/// Vector3 cylinderLeft = new Vector3(-exampleCylinderLength, 0, 0);
 	/// Vector3 cylinderBack = new Vector3(0, -exampleCylinderLength, 0);
 	/// Vector3 cylinderBottom = new Vector3(0, 0, -exampleCylinderLength);
-	/// 
+	///
 	/// Solid cylinderX = Solid.Cylinder(cylinderLeft, cylinderRight, exampleCylinderRadius);
 	/// Solid cylinderY = Solid.Cylinder(cylinderBack, cylinderFront, exampleCylinderRadius);
 	/// Solid cylinderZ = Solid.Cylinder(cylinderBottom, cylinderTop, exampleCylinderRadius);
@@ -115,23 +115,23 @@ namespace CryCil.Geometry.Csg.Base
 		/// <code>
 		/// // Create 2x1x1 cuboid from two 1x1x1 cubes placed in a row.
 		/// const float blockSideLength = 1;
-		/// 
+		///
 		/// Solid block1 = Solid.Cuboid(new Vector3(), new Vector3(blockSideLength));
 		/// Solid block2 = Solid.Cuboid(new Vector3(blockSideLength / 2, 0, 0), new Vector3(blockSideLength));
-		/// 
+		///
 		/// Solid twoBlocksInARow = ConstructiveSolidGeometry.Union(block1, block2);
-		/// 
+		///
 		/// // Create capsule from two spheres and a cylinder.
 		/// const float capsuleHeight = 4;
 		/// const float capsuleRadius = 0.5f;
-		/// 
+		///
 		/// Vector3 capsuleBodyTop = new Vector3(0, 0, capsuleHeight / 2 - capsuleRadius);
 		/// Vector3 capsuleBodyBottom = new Vector3(0, 0, -(capsuleHeight / 2 - capsuleRadius));
-		/// 
+		///
 		/// Solid topCap = Solid.Sphere(capsuleBodyTop, capsuleRadius);
 		/// Solid bottomCap = Solid.Sphere(capsuleBodyBottom, capsuleRadius);
 		/// Solid capsuleBody = Solid.Cylinder(capsuleBodyBottom, capsuleBodyTop, capsuleRadius);
-		/// 
+		///
 		/// Solid capsule =
 		///      ConstructiveSolidGeometry.Union(topCap, ConstructiveSolidGeometry.Union(capsuleBody, bottomCap));
 		/// </code>
@@ -173,22 +173,22 @@ namespace CryCil.Geometry.Csg.Base
 		/// // Get portion of a sphere that intersects a cube.
 		/// const float radius = 0.5f;
 		/// const float length = 2;
-		/// 
+		///
 		/// Solid cube = Solid.Cuboid(null, new Vector3(length));
 		/// Solid sphere = Solid.Sphere(new Vector3(length, 0, 0), radius);
-		/// 
+		///
 		/// Solid affectedPortion = ConstructiveSolidGeometry.Intersection(cube, sphere);
-		/// 
+		///
 		/// // Clamp a cylinder into a sphere.
 		/// const float areaRadius = 2;
 		/// const float cylinderHeight = 4;
 		/// const float cylinderRadius = 0.5f;
-		/// 
+		///
 		/// Solid longCylinder = Solid.Cylinder(new Vector3(0, 0, -cylinderHeight / 2),
 		///                                     new Vector3(0, 0, cylinderHeight / 2),
 		///                                     cylinderRadius);
 		/// Solid sphericalArea = Solid.Sphere(null, areaRadius);
-		/// 
+		///
 		/// Solid clampedCylinder = ConstructiveSolidGeometry.Intersection(longCylinder, sphericalArea);
 		/// </code>
 		/// </example>
@@ -235,21 +235,21 @@ namespace CryCil.Geometry.Csg.Base
 		/// const float tubeOuterRadius = 2;
 		/// const float tubeShellThickness = 0.1f;
 		/// const float tubeLength = 100;
-		/// 
+		///
 		/// Vector3 leftCapPoint = new Vector3();
 		/// Vector3 rightCapPoint = new Vector3(tubeLength, 0, 0);
-		/// 
+		///
 		/// Solid outerCylinder = Solid.Cylinder(leftCapPoint, rightCapPoint, tubeOuterRadius);
 		/// Solid innerCylinder = Solid.Cylinder(leftCapPoint, rightCapPoint,
 		///                                      tubeOuterRadius - tubeShellThickness);
-		/// 
+		///
 		/// Solid tube = CSG.Subtract(outerCylinder, innerCylinder);
 		/// // Create a frame.
 		/// const float frameSize = 10;
 		/// const float frameThickness = 0.5f;
-		/// 
+		///
 		/// const float innerCuboidThickness = frameSize - frameThickness * 2;
-		/// 
+		///
 		/// Solid outerCube = Solid.Cuboid(null, new Vector3(frameSize));
 		/// Solid firstInnerCuboid = Solid.Cuboid
 		/// (
@@ -281,7 +281,7 @@ namespace CryCil.Geometry.Csg.Base
 		///         frameSize + 2
 		///     )
 		/// );
-		/// 
+		///
 		/// Solid cubeFrame =
 		///     ConstructiveSolidGeometry.Subtract
 		///     (
@@ -621,8 +621,8 @@ namespace CryCil.Geometry.Csg.Base
 			/// </summary>
 			public List<Vertex> Vertices;
 			/// <summary>
-			/// An identifier that can be shared between multiple polygons and associated with some
-			/// property (like surface color, or subset index).
+			/// An identifier that can be shared between multiple polygons and associated with some property
+			/// (like surface color, or subset index).
 			/// </summary>
 			public int Shared;
 			/// <summary>
@@ -690,7 +690,7 @@ namespace CryCil.Geometry.Csg.Base
 				// Check if the polygon is convex.
 				for (int i = 0; i < vertices.Count; i++)
 				{
-					Vector3 previousVertex = vertices[(i == 0) ? vertices.Count - 1 : i - 1].Position;
+					Vector3 previousVertex = vertices[i == 0 ? vertices.Count - 1 : i - 1].Position;
 					Vector3 currentVertex = vertices[i].Position;
 					Vector3 nextVertex = vertices[(i + 1) % vertices.Count].Position;
 					// Plane formed by edge between previous vertex and current one and a vector that is
@@ -735,17 +735,11 @@ namespace CryCil.Geometry.Csg.Base
 			/// Clones this vertex.
 			/// </summary>
 			/// <returns>New <see cref="Vertex"/> that is a copy of this one.</returns>
-			public Vertex Clone
+			public Vertex Clone => new Vertex
 			{
-				get
-				{
-					return new Vertex
-					{
-						Position = this.Position,
-						Normal = this.Normal
-					};
-				}
-			}
+				Position = this.Position,
+				Normal = this.Normal
+			};
 			/// <summary>
 			/// Flips the normal of this vertex.
 			/// </summary>
@@ -788,31 +782,19 @@ namespace CryCil.Geometry.Csg.Base
 			/// <summary>
 			/// Gets a flipped version of this plane.
 			/// </summary>
-			public Plane Flipped
+			public Plane Flipped => new Plane
 			{
-				get
-				{
-					return new Plane
-					{
-						Normal = -this.Normal,
-						W = -this.W
-					};
-				}
-			}
+				Normal = -this.Normal,
+				W = -this.W
+			};
 			/// <summary>
 			/// Gets a deep copy of this plane.
 			/// </summary>
-			public Plane Clone
+			public Plane Clone => new Plane
 			{
-				get
-				{
-					return new Plane
-					{
-						Normal = this.Normal,
-						W = this.W
-					};
-				}
-			}
+				Normal = this.Normal,
+				W = this.W
+			};
 			/// <summary>
 			/// Initializes default instance of this class.
 			/// </summary>
@@ -914,7 +896,7 @@ namespace CryCil.Geometry.Csg.Base
 				{
 					case PlaneRelativePositionClass.Coplanar:
 						// Just assign the polygon to either back or front coplanar.
-						((this.Normal.Dot(polygon.Plane.Normal) > 0)
+						(this.Normal.Dot(polygon.Plane.Normal) > 0
 							? frontCoplanarPolygons
 							: backCoplanarPolygons
 							).Add(polygon);
@@ -932,8 +914,7 @@ namespace CryCil.Geometry.Csg.Base
 						for (int i = 0; i < polygon.Vertices.Count; i++)
 						{
 							// Calculate index of the next vertex of the edge. Modulus operation wraps the
-							// index to the beginning of the list, when i - is the index of the last
-							// vertex.
+							// index to the beginning of the list, when i - is the index of the last vertex.
 							int j = (i + 1) % polygon.Vertices.Count;
 							// Get the values that indicate position of the edge relative to this plane.
 							PlaneRelativePositionClass edgeStartType = types[i];
@@ -951,7 +932,7 @@ namespace CryCil.Geometry.Csg.Base
 							{
 								// Put the start of the edge into the list of back vertices. Clone it if it
 								// is on this plane.
-								b.Add((edgeStartType != PlaneRelativePositionClass.Back)
+								b.Add(edgeStartType != PlaneRelativePositionClass.Back
 									? edgeStartVertex.Clone
 									: edgeStartVertex);
 							}
@@ -1067,10 +1048,7 @@ namespace CryCil.Geometry.Csg.Base
 			/// <summary>
 			/// Gets flipped vector.
 			/// </summary>
-			public Vector3 Flipped
-			{
-				get { return new Vector3(-this.X, -this.Y, -this.Z); }
-			}
+			public Vector3 Flipped => new Vector3(-this.X, -this.Y, -this.Z);
 			/// <summary>
 			/// Gets normalized vector.
 			/// </summary>
@@ -1325,11 +1303,11 @@ namespace CryCil.Geometry.Csg.Base
 				{
 					return new Node(null)
 					{
-						Plane = (this.Plane == null) ? null : this.Plane.Clone,
-						Front = (this.Front == null) ? null : this.Front.Clone,
-						Back = (this.Back == null) ? null : this.Back.Clone,
+						Plane = this.Plane?.Clone,
+						Front = this.Front?.Clone,
+						Back = this.Back?.Clone,
 						Polygons =
-							(this.Polygons == null) ? null : new List<Polygon>(this.Polygons.Select(x => x.Clone))
+							this.Polygons == null ? null : new List<Polygon>(this.Polygons.Select(x => x.Clone))
 					};
 				}
 			}
@@ -1353,8 +1331,8 @@ namespace CryCil.Geometry.Csg.Base
 			/// </summary>
 			/// <remarks>
 			/// When called on an existing tree, the new polygons are filtered down to the bottom of the
-			/// tree and become new nodes there. Each set of polygons is partitioned using the first
-			/// polygon (no heuristic is used to pick a good
+			/// tree and become new nodes there. Each set of polygons is partitioned using the first polygon
+			/// (no heuristic is used to pick a good
 			/// split) .
 			/// </remarks>
 			/// <param name="polygons">A list of polygons to build the BSP tree from.</param>
@@ -1410,22 +1388,16 @@ namespace CryCil.Geometry.Csg.Base
 			/// </summary>
 			public void Invert()
 			{
-				if (this.Plane != null)
-				{
-					this.Plane.Flip();
-				}
+				this.Plane?.Flip();
+
 				if (this.Polygons != null && this.Polygons.Count != 0)
 				{
 					this.Polygons.ForEach(x => x.Flip());
 				}
-				if (this.Front != null)
-				{
-					this.Front.Invert();
-				}
-				if (this.Back != null)
-				{
-					this.Back.Invert();
-				}
+
+				this.Front?.Invert();
+				this.Back?.Invert();
+
 				Node temp = this.Front;
 				this.Front = this.Back;
 				this.Back = temp;
@@ -1441,16 +1413,20 @@ namespace CryCil.Geometry.Csg.Base
 				{
 					return new List<Polygon>(polygons);
 				}
+
 				List<Polygon> front = new List<Polygon>();
 				List<Polygon> back = new List<Polygon>();
+
 				for (int i = 0; i < polygons.Count; i++)
 				{
 					this.Plane.SplitPolygon(polygons[i], ref front, ref back, ref front, ref back);
 				}
+
 				if (this.Front != null)
 				{
 					front = this.Front.ClipPolygons(front);
 				}
+
 				// If this node has nothing behind it in the tree, then whatever is behind it in the list
 				// should be discarded.
 				if (this.Back != null)
@@ -1466,8 +1442,9 @@ namespace CryCil.Geometry.Csg.Base
 			public void ClipTo(Node node)
 			{
 				this.Polygons = node.ClipPolygons(this.Polygons);
-				if (this.Front != null) this.Front.ClipTo(node);
-				if (this.Back != null) this.Back.ClipTo(node);
+
+				this.Front?.ClipTo(node);
+				this.Back?.ClipTo(node);
 			}
 		}
 	}

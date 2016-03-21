@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 using CryCil.Geometry;
 
@@ -104,11 +105,11 @@ namespace CryCil.Engine.Models.StaticObjects
 		public static bool operator <(CryMeshNormal left, CryMeshNormal right)
 		{
 			return
-				(left.normal.X != right.normal.X)
-					? (left.normal.X < right.normal.X)
-					: (left.normal.Y != right.normal.Y)
-						? (left.normal.Y < right.normal.Y)
-						: (left.normal.Z < right.normal.Z);
+				left.normal.X != right.normal.X
+					? left.normal.X < right.normal.X
+					: left.normal.Y != right.normal.Y
+						? left.normal.Y < right.normal.Y
+						: left.normal.Z < right.normal.Z;
 		}
 		/// <summary>
 		/// Determines whether left operand is greater then the right one.

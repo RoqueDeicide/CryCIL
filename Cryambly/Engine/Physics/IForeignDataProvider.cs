@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil.Engine.Physics
 {
@@ -8,8 +9,8 @@ namespace CryCil.Engine.Physics
 	public interface IForeignDataProvider
 	{
 		/// <summary>
-		/// Gets or sets the pointer to the piece of data that can be given to CryEngine object as a
-		/// foreign data.
+		/// Gets or sets the pointer to the piece of data that can be given to CryEngine object as a foreign
+		/// data.
 		/// </summary>
 		/// <remarks>Setter in this property is used for reverse conversion.</remarks>
 		ForeignData ForeignData { get; }

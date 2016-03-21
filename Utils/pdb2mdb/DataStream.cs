@@ -153,15 +153,9 @@ namespace Microsoft.Cci.Pdb
 			}
 		}
 
-		internal int Pages
-		{
-			get { return pages == null ? 0 : pages.Length; }
-		}
+		internal int Pages => this.pages == null ? 0 : this.pages.Length;
 
-		internal int Length
-		{
-			get { return contentSize; }
-		}
+		internal int Length => this.contentSize;
 
 		internal int GetPage(int index)
 		{

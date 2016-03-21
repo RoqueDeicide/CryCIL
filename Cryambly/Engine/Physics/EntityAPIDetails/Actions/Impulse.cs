@@ -49,49 +49,31 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets directional impulse that will be applied to the entity.
 		/// </summary>
-		public Vector3 Impulse
-		{
-			get { return this.impulse; }
-		}
+		public Vector3 Impulse => this.impulse;
 		/// <summary>
 		/// Gets angular impulse that will be applied to the entity.
 		/// </summary>
 		/// <returns><c>null</c>, if angular impulse won't be applied.</returns>
-		public Vector3? AngularImpulse
-		{
-			get { return this.angImpulse.IsUsed() ? this.angImpulse : (Vector3?)null; }
-		}
+		public Vector3? AngularImpulse => this.angImpulse.IsUsed() ? this.angImpulse : (Vector3?)null;
 		/// <summary>
 		/// Gets the coordinates of the point in world space the impulse will be applied at to the entity.
 		/// </summary>
 		/// <returns><c>null</c>, if not specified.</returns>
-		public Vector3? PointOfApplication
-		{
-			get { return this.point.IsUsed() ? this.point : (Vector3?)null; }
-		}
+		public Vector3? PointOfApplication => this.point.IsUsed() ? this.point : (Vector3?)null;
 		/// <summary>
 		/// Gets the identifier of the part of this entity to which the impulse will be applied.
 		/// </summary>
 		/// <returns><c>null</c>, if not specified or the part is identified by index.</returns>
-		public int? PartIdentifier
-		{
-			get { return this.partid.IsUsed() ? this.partid : (int?)null; }
-		}
+		public int? PartIdentifier => this.partid.IsUsed() ? this.partid : (int?)null;
 		/// <summary>
 		/// Gets the index of the part of this entity to which the impulse will be applied.
 		/// </summary>
 		/// <returns><c>null</c>, if not specified or the part is identified by identifier.</returns>
-		public int? PartIndex
-		{
-			get { return this.ipart.IsUsed() ? this.ipart : (int?)null; }
-		}
+		public int? PartIndex => this.ipart.IsUsed() ? this.ipart : (int?)null;
 		/// <summary>
 		/// Gets the value that indicates when to apply the impulse.
 		/// </summary>
-		public ImpulseApplicationTime ApplicationTime
-		{
-			get { return this.iApplyTime; }
-		}
+		public ImpulseApplicationTime ApplicationTime => this.iApplyTime;
 		#endregion
 		#region Construction
 		/// <summary>

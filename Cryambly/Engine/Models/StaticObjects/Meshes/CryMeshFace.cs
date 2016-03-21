@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace CryCil.Engine.Models.StaticObjects
@@ -10,8 +11,7 @@ namespace CryCil.Engine.Models.StaticObjects
 	public struct CryMeshFace
 	{
 		/// <summary>
-		/// Zero-based index that can be used to access information about first vertex that forms this
-		/// face.
+		/// Zero-based index that can be used to access information about first vertex that forms this face.
 		/// </summary>
 		public int First;
 		/// <summary>
@@ -20,8 +20,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// </summary>
 		public int Second;
 		/// <summary>
-		/// Zero-based index that can be used to access information about third vertex that forms this
-		/// face.
+		/// Zero-based index that can be used to access information about third vertex that forms this face.
 		/// </summary>
 		public int Third;
 		/// <summary>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using CryCil.Geometry;
@@ -159,8 +160,8 @@ namespace CryCil.Engine.DebugServices
 		/// this array is <c>null</c> or empty.
 		/// </param>
 		/// <param name="colors">   
-		/// An array of colors to use for the vertexes. Lines won't be drawn if this array is <c>null</c>
-		/// or empty.
+		/// An array of colors to use for the vertexes. Lines won't be drawn if this array is <c>null</c> or
+		/// empty.
 		/// </param>
 		/// <param name="thickness">Thickness of the lines.</param>
 		/// <exception cref="OverflowException">
@@ -254,8 +255,8 @@ namespace CryCil.Engine.DebugServices
 		/// if this array is <c>null</c> or empty.
 		/// </param>
 		/// <param name="colors">   
-		/// An array of colors to use for the vertexes. Lines won't be drawn if this array is <c>null</c>
-		/// or empty.
+		/// An array of colors to use for the vertexes. Lines won't be drawn if this array is <c>null</c> or
+		/// empty.
 		/// </param>
 		/// <param name="thickness">Thickness of the lines.</param>
 		/// <exception cref="OverflowException">
@@ -565,8 +566,8 @@ namespace CryCil.Engine.DebugServices
 		/// An object of type <see cref="BoundingBox"/> that describes the bounding box.
 		/// </param>
 		/// <param name="mat">  
-		/// <see cref="Matrix34"/> object that describes location and orientation of axes the box is
-		/// aligned along.
+		/// <see cref="Matrix34"/> object that describes location and orientation of axes the box is aligned
+		/// along.
 		/// </param>
 		/// <param name="solid">Indicates whether sides of the box should be rendered as solids.</param>
 		/// <param name="color">Color of the box.</param>
@@ -603,9 +604,7 @@ namespace CryCil.Engine.DebugServices
 		/// <summary>
 		/// Draws an oriented bounding box.
 		/// </summary>
-		/// <param name="box">  
-		/// An object of type <see cref="OBB"/> that describes the bounding box.
-		/// </param>
+		/// <param name="box">  An object of type <see cref="OBB"/> that describes the bounding box.</param>
 		/// <param name="solid">Indicates whether sides of all boxes should be rendered as solids.</param>
 		/// <param name="color">Color of the box.</param>
 		/// <param name="style">Style of rendering the box.</param>

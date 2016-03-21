@@ -30,46 +30,27 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Unknown.
 		/// </summary>
-		public int BreakableId
-		{
-			get { return this.breakableId; }
-		}
+		public int BreakableId => this.breakableId;
 		/// <summary>
 		/// Gets the amount of energy that needs to be delivered to the surface of the object to break it.
 		/// </summary>
-		public int BreakEnergy
-		{
-			get { return this.breakEnergy; }
-		}
+		public int BreakEnergy => this.breakEnergy;
 		/// <summary>
-		/// Gets the size of the hole that can be made in the object with this surface with a simple
-		/// impact.
+		/// Gets the size of the hole that can be made in the object with this surface with a simple impact.
 		/// </summary>
-		public float HoleSize
-		{
-			get { return this.holeSize; }
-		}
+		public float HoleSize => this.holeSize;
 		/// <summary>
 		/// Gets the size of the hole that can be made in the object with this surface with an explosion.
 		/// </summary>
-		public float HoleSizeExplosion
-		{
-			get { return this.holeSizeExplosion; }
-		}
+		public float HoleSizeExplosion => this.holeSizeExplosion;
 		/// <summary>
 		/// Gets the radius of the decal that represents a hit marker on the surface.
 		/// </summary>
-		public float HitRadius
-		{
-			get { return this.hitRadius; }
-		}
+		public float HitRadius => this.hitRadius;
 		/// <summary>
 		/// Gets the primary number of hit points the object with this surface can have.
 		/// </summary>
-		public float HitPoints
-		{
-			get { return this.hitPoints; }
-		}
+		public float HitPoints => this.hitPoints;
 		/// <summary>
 		/// Gets the primary number of hit points the object with this surface can have.
 		/// </summary>
@@ -77,97 +58,57 @@ namespace CryCil.Engine.Physics
 		/// Can be used to randomize number of hit points different objects with the same surface can have
 		/// (?).
 		/// </remarks>
-		public float HitPointsSecondary
-		{
-			get { return this.hitPointsSecondary; }
-		}
+		public float HitPointsSecondary => this.hitPointsSecondary;
 		/// <summary>
-		/// Gets maximal amount of damage that can be dealt to the object with this surface with one
-		/// impact.
+		/// Gets maximal amount of damage that can be dealt to the object with this surface with one impact.
 		/// </summary>
-		public float HitMaxDamage
-		{
-			get { return this.hitMaxDamage; }
-		}
+		public float HitMaxDamage => this.hitMaxDamage;
 		/// <summary>
 		/// Gets the time span it takes for the hit decal to disappear from the surface.
 		/// </summary>
-		public float HitLifeTime
-		{
-			get { return this.hitLifeTime; }
-		}
+		public float HitLifeTime => this.hitLifeTime;
 		/// <summary>
 		/// Gets the value that determines pierceability of the surface.
 		/// </summary>
-		public int Pierceability
-		{
-			get { return this.pierceability; }
-		}
+		public int Pierceability => this.pierceability;
 		/// <summary>
-		/// Gets the value that determines reduction of the damage inflicted by the bullet that pierced
-		/// this surface.
+		/// Gets the value that determines reduction of the damage inflicted by the bullet that pierced this
+		/// surface.
 		/// </summary>
-		public float DamageReduction
-		{
-			get { return this.damageReduction; }
-		}
+		public float DamageReduction => this.damageReduction;
 		/// <summary>
 		/// Gets the angle at which the impact object will ricochet off this surface.
 		/// </summary>
-		public float RicochetAngle
-		{
-			get { return this.ricochetAngle; }
-		}
+		public float RicochetAngle => this.ricochetAngle;
 		/// <summary>
 		/// Gets the value that determines reduction of the damage inflicted by the bullet that ricocheted
 		/// off this surface.
 		/// </summary>
-		public float RicochetDamageReduction
-		{
-			get { return this.ricochetDamageReduction; }
-		}
+		public float RicochetDamageReduction => this.ricochetDamageReduction;
 		/// <summary>
 		/// Gets the value that determines reduction of the velocity of the bullet that ricocheted off this
 		/// surface.
 		/// </summary>
-		public float RicochetVelocityReduction
-		{
-			get { return this.ricochetVelocityReduction; }
-		}
+		public float RicochetVelocityReduction => this.ricochetVelocityReduction;
 		/// <summary>
 		/// Gets the surface friction.
 		/// </summary>
-		public float Friction
-		{
-			get { return this.friction; }
-		}
+		public float Friction => this.friction;
 		/// <summary>
 		/// Gets the value that indicates how bouncy the surface is.
 		/// </summary>
-		public float Bouncyness
-		{
-			get { return this.bouncyness; }
-		}
+		public float Bouncyness => this.bouncyness;
 		/// <summary>
 		/// Unknown.
 		/// </summary>
-		public int Breakability
-		{
-			get { return this.breakability; }
-		}
+		public int Breakability => this.breakability;
 		/// <summary>
 		/// Unknown.
 		/// </summary>
-		public int CollisionType
-		{
-			get { return this.collType; }
-		}
+		public int CollisionType => this.collType;
 		/// <summary>
 		/// Gets the value that indicates how easy it is for the sound to penetrate.
 		/// </summary>
-		public float SoundObstruction
-		{
-			get { return this.soundObstruction; }
-		}
+		public float SoundObstruction => this.soundObstruction;
 	}
 }

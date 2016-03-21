@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil.Engine.Physics
 {
@@ -13,8 +14,8 @@ namespace CryCil.Engine.Physics
 		/// </summary>
 		/// <param name="shape">      Represents the shape of the carving.</param>
 		/// <param name="size">       
-		/// 'Characteristic size of the shape. When breakage occurs, desired size is specified and the
-		/// shape is scaled by desired_size / this_size.
+		/// 'Characteristic size of the shape. When breakage occurs, desired size is specified and the shape
+		/// is scaled by desired_size / this_size.
 		/// </param>
 		/// <param name="index">      
 		/// Breakability index to assign this shape to. It is possible to have multiple shapes assigned to
@@ -32,7 +33,7 @@ namespace CryCil.Engine.Physics
 		{
 			if (!shape.IsValid)
 			{
-				throw new ArgumentNullException("shape", "Cannot use null geometry for boolean carvings.");
+				throw new ArgumentNullException(nameof(shape), "Cannot use null geometry for boolean carvings.");
 			}
 			return PhysicalWorld.AddExplosionShape(shape, size, index, probability);
 		}

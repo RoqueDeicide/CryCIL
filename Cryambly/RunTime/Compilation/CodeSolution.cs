@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -20,7 +19,7 @@ namespace CryCil.RunTime.Compilation
 		/// <summary>
 		/// Project tag within solution file.
 		/// </summary>
-		public static readonly string ProjectTag = string.Format("{0}Project(", Environment.NewLine);
+		public static readonly string ProjectTag = $"{Environment.NewLine}Project(";
 		/// <summary>
 		/// EndProject tag within solution file.
 		/// </summary>
@@ -66,8 +65,8 @@ namespace CryCil.RunTime.Compilation
 			List<IProject> projects = new List<IProject>(Projects);
 			while (projects.Count != 0)
 			{
-				// Go through the list and put into the build list those who already have their
-				// dependencies in the build list.
+				// Go through the list and put into the build list those who already have their dependencies
+				// in the build list.
 				for (int i = 0; i < projects.Count; i++)
 				{
 					// If project has no extra dependencies, then just put it into the list.
@@ -102,7 +101,7 @@ namespace CryCil.RunTime.Compilation
 						var dependant = deps[0];
 						buildList.Remove(dependant);
 						failures.Add(dependant.Name,
-									 string.Format("Failed to compile this project, because it depends on failed project {0}", currentProject.Name));
+									 $"Failed to compile this project, because it depends on failed project {currentProject.Name}");
 					}
 				}
 			}

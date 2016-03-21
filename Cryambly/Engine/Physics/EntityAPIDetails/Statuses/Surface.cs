@@ -37,10 +37,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the object that represents the surface of requested geometry.
 		/// </summary>
-		public PhysicalSurface Surface
-		{
-			get { return new PhysicalSurface(this.id); }
-		}
+		public PhysicalSurface Surface => new PhysicalSurface(this.id);
 		#endregion
 		#region Construction
 		/// <summary>

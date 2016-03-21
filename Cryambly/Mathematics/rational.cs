@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CryCil
 {
@@ -22,41 +23,31 @@ namespace CryCil
 		/// <summary>
 		/// Gets an object that can be used as an equality comparer for rational numbers.
 		/// </summary>
-		public static IEqualityComparer<rational> FractionComparer
-		{
-			get { return fractionComparerInstance; }
-		}
+		public static IEqualityComparer<rational> FractionComparer => fractionComparerInstance;
 		#endregion
 		#region Properties
 		/// <summary>
 		/// Gets the number above the fraction.
 		/// </summary>
-		public int Numerator
-		{
-			get { return this.num; }
-		}
+		public int Numerator => this.num;
 		/// <summary>
 		/// Gets the number below the fraction.
 		/// </summary>
-		public uint Denominator
-		{
-			get { return this.den; }
-		}
+		public uint Denominator => this.den;
 		/// <summary>
 		/// Gets the ratio between numerator and denominator.
 		/// </summary>
-		public double Ratio
-		{
-			get { return this.num / (double)this.den; }
-		}
+		public double Ratio => this.num / (double)this.den;
 		#endregion
 		#region Construction
 		/// <summary>
 		/// Creates a new rational number.
 		/// </summary>
-		/// <param name="numerator">A number to use as a numerator.</param>
+		/// <param name="numerator">  A number to use as a numerator.</param>
 		/// <param name="denominator">A number to use as a denominator.</param>
-		/// <exception cref="DivideByZeroException">Attempted to create a rational number with denominator that is equal to zero.</exception>
+		/// <exception cref="DivideByZeroException">
+		/// Attempted to create a rational number with denominator that is equal to zero.
+		/// </exception>
 		public rational(int numerator, uint denominator)
 		{
 			this.num = numerator;
@@ -87,9 +78,10 @@ namespace CryCil
 		/// Indicates whether this instance and a specified object are equal.
 		/// </summary>
 		/// <returns>
-		/// true if <paramref name="obj"/> and this instance are the same type and represent the same value; otherwise, false.
+		/// true if <paramref name="obj"/> and this instance are the same type and represent the same value;
+		/// otherwise, false.
 		/// </returns>
-		/// <param name="obj">Another object to compare to. </param>
+		/// <param name="obj">Another object to compare to.</param>
 		public override bool Equals(object obj)
 		{
 			return obj is rational && this.Equals((rational)obj);
@@ -100,7 +92,8 @@ namespace CryCil
 		/// <param name="other">An object to compare with this object.</param>
 		/// <returns>
 		/// <para>
-		/// A value that indicates the relative order of the objects being compared. The return value has the following meanings:
+		/// A value that indicates the relative order of the objects being compared. The return value has
+		/// the following meanings:
 		/// </para>
 		/// <para>-1 - this object is less then another one.</para>
 		/// <para>0 - this object is equal to another one.</para>
@@ -119,14 +112,11 @@ namespace CryCil
 			return (this.num * other.den).CompareTo(other.num * this.den);
 		}
 		#endregion
-
 		#region Hashing
 		/// <summary>
 		/// Returns the hash code for this instance.
 		/// </summary>
-		/// <returns>
-		/// A 32-bit signed integer that is the hash code for this instance.
-		/// </returns>
+		/// <returns>A 32-bit signed integer that is the hash code for this instance.</returns>
 		public override int GetHashCode()
 		{
 			unchecked
@@ -141,7 +131,7 @@ namespace CryCil
 		/// <summary>
 		/// Determines whether 2 objects are not equal.
 		/// </summary>
-		/// <param name="left">Left operand.</param>
+		/// <param name="left"> Left operand.</param>
 		/// <param name="right">Right operand.</param>
 		/// <returns>True, if 2 operands are not equal.</returns>
 		public static bool operator ==(rational left, rational right)
@@ -151,7 +141,7 @@ namespace CryCil
 		/// <summary>
 		/// Determines whether 2 objects are equal.
 		/// </summary>
-		/// <param name="left">Left operand.</param>
+		/// <param name="left"> Left operand.</param>
 		/// <param name="right">Right operand.</param>
 		/// <returns>True, if 2 operands are equal.</returns>
 		public static bool operator !=(rational left, rational right)
@@ -161,7 +151,7 @@ namespace CryCil
 		/// <summary>
 		/// Determines whether left operand is less then right operand.
 		/// </summary>
-		/// <param name="left">Left operand.</param>
+		/// <param name="left"> Left operand.</param>
 		/// <param name="right">Right operand.</param>
 		/// <returns>True, if left operand is less then right operand.</returns>
 		public static bool operator <(rational left, rational right)
@@ -171,7 +161,7 @@ namespace CryCil
 		/// <summary>
 		/// Determines whether left operand is greater then right operand.
 		/// </summary>
-		/// <param name="left">Left operand.</param>
+		/// <param name="left"> Left operand.</param>
 		/// <param name="right">Right operand.</param>
 		/// <returns>True, if left operand is greater then right operand.</returns>
 		public static bool operator >(rational left, rational right)
@@ -194,7 +184,7 @@ namespace CryCil
 		/// <summary>
 		/// Adds 2 rational numbers together.
 		/// </summary>
-		/// <param name="left">Left operand.</param>
+		/// <param name="left"> Left operand.</param>
 		/// <param name="right">Right operand.</param>
 		/// <returns>Sum of 2 rational numbers.</returns>
 		public static rational operator +(rational left, rational right)
@@ -212,7 +202,7 @@ namespace CryCil
 		/// <summary>
 		/// Adds 2 numbers together.
 		/// </summary>
-		/// <param name="left">Left operand.</param>
+		/// <param name="left"> Left operand.</param>
 		/// <param name="right">Right operand.</param>
 		/// <returns>Sum of 2 numbers.</returns>
 		public static rational operator +(rational left, int right)
@@ -222,7 +212,7 @@ namespace CryCil
 		/// <summary>
 		/// Adds 2 numbers together.
 		/// </summary>
-		/// <param name="left">Left operand.</param>
+		/// <param name="left"> Left operand.</param>
 		/// <param name="right">Right operand.</param>
 		/// <returns>Sum of 2 numbers.</returns>
 		public static rational operator +(int left, rational right)
@@ -232,7 +222,7 @@ namespace CryCil
 		/// <summary>
 		/// Subtracts rational number from another.
 		/// </summary>
-		/// <param name="left">Left operand.</param>
+		/// <param name="left"> Left operand.</param>
 		/// <param name="right">Right operand.</param>
 		/// <returns>Difference between left and right rational numbers.</returns>
 		public static rational operator -(rational left, rational right)
@@ -242,7 +232,7 @@ namespace CryCil
 		/// <summary>
 		/// Subtracts number from another.
 		/// </summary>
-		/// <param name="left">Left operand.</param>
+		/// <param name="left"> Left operand.</param>
 		/// <param name="right">Right operand.</param>
 		/// <returns>Difference between left and right numbers.</returns>
 		public static rational operator -(rational left, int right)
@@ -252,7 +242,7 @@ namespace CryCil
 		/// <summary>
 		/// Subtracts number from another.
 		/// </summary>
-		/// <param name="left">Left operand.</param>
+		/// <param name="left"> Left operand.</param>
 		/// <param name="right">Right operand.</param>
 		/// <returns>Difference between left and right numbers.</returns>
 		public static rational operator -(int left, rational right)
@@ -262,7 +252,7 @@ namespace CryCil
 		/// <summary>
 		/// Multiplies 2 numbers.
 		/// </summary>
-		/// <param name="left">Left operand.</param>
+		/// <param name="left"> Left operand.</param>
 		/// <param name="right">Right operand.</param>
 		/// <returns>Result of multiplication</returns>
 		public static rational operator *(rational left, rational right)
@@ -272,7 +262,7 @@ namespace CryCil
 		/// <summary>
 		/// Multiplies 2 numbers.
 		/// </summary>
-		/// <param name="left">Left operand.</param>
+		/// <param name="left"> Left operand.</param>
 		/// <param name="right">Right operand.</param>
 		/// <returns>Result of multiplication</returns>
 		public static rational operator *(rational left, int right)
@@ -282,7 +272,7 @@ namespace CryCil
 		/// <summary>
 		/// Multiplies 2 numbers.
 		/// </summary>
-		/// <param name="left">Left operand.</param>
+		/// <param name="left"> Left operand.</param>
 		/// <param name="right">Right operand.</param>
 		/// <returns>Result of multiplication</returns>
 		public static rational operator *(int left, rational right)
@@ -292,7 +282,7 @@ namespace CryCil
 		/// <summary>
 		/// Multiplies 2 numbers.
 		/// </summary>
-		/// <param name="left">Left operand.</param>
+		/// <param name="left"> Left operand.</param>
 		/// <param name="right">Right operand.</param>
 		/// <returns>Result of multiplication</returns>
 		public static rational operator /(rational left, rational right)
@@ -302,7 +292,7 @@ namespace CryCil
 		/// <summary>
 		/// Multiplies 2 numbers.
 		/// </summary>
-		/// <param name="left">Left operand.</param>
+		/// <param name="left"> Left operand.</param>
 		/// <param name="right">Right operand.</param>
 		/// <returns>Result of multiplication</returns>
 		public static rational operator /(rational left, uint right)
@@ -312,7 +302,7 @@ namespace CryCil
 		/// <summary>
 		/// Multiplies 2 numbers.
 		/// </summary>
-		/// <param name="left">Left operand.</param>
+		/// <param name="left"> Left operand.</param>
 		/// <param name="right">Right operand.</param>
 		/// <returns>Result of multiplication</returns>
 		public static rational operator /(uint left, rational right)
@@ -395,7 +385,7 @@ namespace CryCil
 				else
 				{
 					d++;
-					n = (int)(value * d + 0.5f);// Simple rounding: add 0.5 and then truncate.
+					n = (int)(value * d + 0.5f); // Simple rounding: add 0.5 and then truncate.
 				}
 
 				fraction = n / (float)d;
@@ -541,10 +531,11 @@ namespace CryCil
 				// Remove all factors of 2 - they are not common.
 				while ((d2 & 1) == 0)
 				{
-					d2>>= 1;
+					d2 >>= 1;
 				}
 
-				// At this point both numbers are odd. We need to make sure that d2 > d1 and subtract d1 out of d2.
+				// At this point both numbers are odd. We need to make sure that d2 > d1 and subtract d1 out
+				// of d2.
 				if (d1 > d2)
 				{
 					uint t = d1;
@@ -561,7 +552,7 @@ namespace CryCil
 		private static uint LeastCommonFactor(uint d1, uint d2)
 		{
 			d1 /= GreatesCommonDivisor(d1, d2);
-			
+
 			return d1 * d2;
 		}
 		#endregion

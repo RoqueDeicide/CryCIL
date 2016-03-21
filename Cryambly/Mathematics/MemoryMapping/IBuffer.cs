@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
+using System.Linq;
 
 namespace CryCil.MemoryMapping
 {
@@ -40,7 +41,8 @@ namespace CryCil.MemoryMapping
 		{
 			get
 			{
-				Contract.Ensures(Contract.Result<int>() > 0, "Length of the buffer must be greater then zero.");
+				Contract.Ensures(Contract.Result<int>() > 0,
+								 "Length of the buffer must be greater then zero.");
 				return default(int);
 			}
 		}
@@ -48,8 +50,10 @@ namespace CryCil.MemoryMapping
 		{
 			get
 			{
-				Contract.Requires(index > -1, "Index of the byte to access must be greater or equal to zero.");
-				Contract.Requires(index < ((IBuffer)this).Length, "Index of the byte to access must be less then buffer length.");
+				Contract.Requires(index > -1,
+								  "Index of the byte to access must be greater or equal to zero.");
+				Contract.Requires(index < ((IBuffer)this).Length,
+								  "Index of the byte to access must be less then buffer length.");
 				return default(int);
 			}
 			// ReSharper disable ValueParameterNotUsed
@@ -57,7 +61,8 @@ namespace CryCil.MemoryMapping
 				// ReSharper restore ValueParameterNotUsed
 			{
 				Contract.Requires(index > -1, "Index of the byte to access must be greater or equal to zero.");
-				Contract.Requires(index < ((IBuffer)this).Length, "Index of the byte to access must be less then buffer length.");
+				Contract.Requires(index < ((IBuffer)this).Length,
+								  "Index of the byte to access must be less then buffer length.");
 			}
 		}
 		void IBuffer.Get(IntPtr handle, int offset)

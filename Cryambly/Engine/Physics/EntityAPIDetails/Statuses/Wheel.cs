@@ -51,128 +51,77 @@ namespace CryCil.Engine.Physics
 		/// This property is useful if you are querying the wheel by the identifier of the part that
 		/// represents it.
 		/// </remarks>
-		public int WheelIndex
-		{
-			get { return this.iWheel; }
-		}
+		public int WheelIndex => this.iWheel;
 		/// <summary>
 		/// Gets the identifier of the part that represents this wheel.
 		/// </summary>
 		/// <remarks>
 		/// This property is useful if you are querying the wheel by its zero-based index.
 		/// </remarks>
-		public int PartIdentifier
-		{
-			get { return this.partid; }
-		}
+		public int PartIdentifier => this.partid;
 		/// <summary>
 		/// Gets the value that indicates whether this wheel contacts the ground.
 		/// </summary>
-		public bool ContactsGround
-		{
-			get { return this.bContact != 0; }
-		}
+		public bool ContactsGround => this.bContact != 0;
 		/// <summary>
 		/// Gets the coordinates of the point where this wheel touches the ground, if
 		/// <see cref="ContactsGround"/> returns <c>true</c>.
 		/// </summary>
-		public Vector3 GroundContactPoint
-		{
-			get { return this.ptContact; }
-		}
+		public Vector3 GroundContactPoint => this.ptContact;
 		/// <summary>
 		/// Gets the direction of the normal to the ground surface this wheel is touching, if
 		/// <see cref="ContactsGround"/> returns <c>true</c>.
 		/// </summary>
-		public Vector3 GroundContactNormal
-		{
-			get { return this.normContact; }
-		}
+		public Vector3 GroundContactNormal => this.normContact;
 		/// <summary>
 		/// Gets the speed of this wheel's rotation around its axle.
 		/// </summary>
-		public float AngularSpeed
-		{
-			get { return this.w; }
-		}
+		public float AngularSpeed => this.w;
 		/// <summary>
 		/// Gets the value that indicates whether this wheel is slipping (has a velocity component that is
 		/// not caused by the wheel's rotation).
 		/// </summary>
-		public bool Slipping
-		{
-			get { return this.bSlip != 0; }
-		}
+		public bool Slipping => this.bSlip != 0;
 		/// <summary>
 		/// Gets the velocity component of this wheel that is not caused by the rotation of the wheel.
 		/// </summary>
-		public Vector3 SlippingVelocity
-		{
-			get { return this.velSlip; }
-		}
+		public Vector3 SlippingVelocity => this.velSlip;
 		/// <summary>
 		/// Gets an object that represents the ground surface.
 		/// </summary>
-		public PhysicalSurface GroundSurface
-		{
-			get { return new PhysicalSurface(this.contactSurfaceIdx); }
-		}
+		public PhysicalSurface GroundSurface => new PhysicalSurface(this.contactSurfaceIdx);
 		/// <summary>
 		/// Gets the current friction between the wheel and the surface.
 		/// </summary>
-		public float Friction
-		{
-			get { return this.friction; }
-		}
+		public float Friction => this.friction;
 		/// <summary>
 		/// Gets the current length of the suspension spring that is attached to this wheel.
 		/// </summary>
-		public float CurrentSuspensionLength
-		{
-			get { return this.suspLen; }
-		}
+		public float CurrentSuspensionLength => this.suspLen;
 		/// <summary>
 		/// Gets the normal length of the suspension spring that is attached to this wheel.
 		/// </summary>
-		public float NormalSuspensionLength
-		{
-			get { return this.suspLen0; }
-		}
+		public float NormalSuspensionLength => this.suspLen0;
 		/// <summary>
 		/// Gets the length of the suspension spring that is attached to this wheel in relaxed state.
 		/// </summary>
-		public float RelaxedSuspensionLength
-		{
-			get { return this.suspLenFull; }
-		}
+		public float RelaxedSuspensionLength => this.suspLenFull;
 		/// <summary>
 		/// Gets the radius of this wheel in meters.
 		/// </summary>
-		public float Radius
-		{
-			get { return this.r; }
-		}
+		public float Radius => this.r;
 		/// <summary>
 		/// Gets the current driving axle torque.
 		/// </summary>
-		public float Torque
-		{
-			get { return this.torque; }
-		}
+		public float Torque => this.torque;
 		/// <summary>
 		/// Gets the current steering angle if this wheel is a steering one.
 		/// </summary>
-		public float CurrentSteeringAngle
-		{
-			get { return this.steer; }
-		}
+		public float CurrentSteeringAngle => this.steer;
 		/// <summary>
 		/// Gets the entity that represents this wheel.
 		/// </summary>
-		public PhysicalEntity Collider
-		{
-			get { return this.pCollider; }
-		}
+		public PhysicalEntity Collider => this.pCollider;
 		#endregion
 		#region Construction
 		/// <summary>
@@ -183,8 +132,8 @@ namespace CryCil.Engine.Physics
 		/// index of the wheel. What it is is defined by <paramref name="getByPartId"/> argument.
 		/// </param>
 		/// <param name="getByPartId">
-		/// Indicates whether <paramref name="number"/> is an identifier of the part that represents a
-		/// wheel rather then a zero-based index of one.
+		/// Indicates whether <paramref name="number"/> is an identifier of the part that represents a wheel
+		/// rather then a zero-based index of one.
 		/// </param>
 		public PhysicsStatusWheel(int number, bool getByPartId = true)
 			: this()

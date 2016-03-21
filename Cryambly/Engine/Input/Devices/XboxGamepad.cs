@@ -291,8 +291,8 @@ namespace CryCil.Engine.Input
 		/// </summary>
 		/// <param name="index">Index of the device to query.</param>
 		/// <returns>
-		/// True, if a gamepad with specified index is connected to the machine. Warning: it can be a PS3
-		/// or PS4 controller.
+		/// True, if a gamepad with specified index is connected to the machine. Warning: it can be a PS3 or
+		/// PS4 controller.
 		/// </returns>
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern bool Connected(ushort index);

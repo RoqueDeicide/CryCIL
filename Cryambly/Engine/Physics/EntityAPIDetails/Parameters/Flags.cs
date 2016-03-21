@@ -30,10 +30,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the flags that are assigned to the entity.
 		/// </summary>
-		public PhysicalEntityFlags Flags
-		{
-			get { return (PhysicalEntityFlags)this.flags; }
-		}
+		public PhysicalEntityFlags Flags => (PhysicalEntityFlags)this.flags;
 		#endregion
 		#region Construction
 		/// <summary>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
+using System.Linq;
 
 namespace CryCil
 {
@@ -14,7 +15,7 @@ namespace CryCil
 		/// <summary>
 		/// Extra parameter that comes with the event.
 		/// </summary>
-		public ExtraDataType Parameter { get; private set; }
+		public ExtraDataType Parameter { get; }
 		#endregion
 		#region Construction
 		/// <summary>
@@ -108,7 +109,7 @@ namespace CryCil
 		public override string ToString()
 		{
 			Contract.Ensures(Contract.Result<string>() != null);
-			return string.Format("Parameter: {0}", this.Parameter);
+			return $"Parameter: {this.Parameter}";
 		}
 		#endregion
 	}

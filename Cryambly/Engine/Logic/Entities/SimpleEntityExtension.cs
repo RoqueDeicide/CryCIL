@@ -52,8 +52,8 @@ namespace CryCil.Engine.Logic
 		{
 		}
 		/// <summary>
-		/// When implemented in derived class updates logical state of this extension after most other
-		/// stuff is updated.
+		/// When implemented in derived class updates logical state of this extension after most other stuff
+		/// is updated.
 		/// </summary>
 		public override void PostUpdate()
 		{
@@ -63,8 +63,7 @@ namespace CryCil.Engine.Logic
 		/// removed from the entity.
 		/// </summary>
 		/// <remarks>
-		/// <see cref="EntityExtension.Host"/> property still returns the hosting entity during this
-		/// method.
+		/// <see cref="EntityExtension.Host"/> property still returns the hosting entity during this method.
 		/// </remarks>
 		/// <param name="disposing">
 		/// Indicates whether release was caused by the entity getting disposed of.

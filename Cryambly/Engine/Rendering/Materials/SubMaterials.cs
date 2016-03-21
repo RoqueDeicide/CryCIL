@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using CryCil.Annotations;
 
@@ -55,10 +56,7 @@ namespace CryCil.Engine.Rendering
 		/// <summary>
 		/// Returns false.
 		/// </summary>
-		public bool IsReadOnly
-		{
-			get { return false; }
-		}
+		public bool IsReadOnly => false;
 		#endregion
 		#region Construction
 		internal SubMaterials(IntPtr handle)
@@ -123,7 +121,7 @@ namespace CryCil.Engine.Rendering
 			}
 			if (!item.IsValid)
 			{
-				throw new ArgumentNullException("item", "Cannot insert invalid material into the collection.");
+				throw new ArgumentNullException(nameof(item), "Cannot insert invalid material into the collection.");
 			}
 
 			int initialCount = this.Count;
@@ -190,7 +188,7 @@ namespace CryCil.Engine.Rendering
 		{
 			if (array == null)
 			{
-				throw new ArgumentNullException("array", "Cannot copy sub-material to the null array.");
+				throw new ArgumentNullException(nameof(array), "Cannot copy sub-material to the null array.");
 			}
 			if (arrayIndex < 0)
 			{

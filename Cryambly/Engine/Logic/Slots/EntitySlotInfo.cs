@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
 using CryCil.Engine.Models.StaticObjects;
@@ -33,72 +34,45 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Gets a set of flags that describe this slot.
 		/// </summary>
-		public EntitySlotFlags Flags
-		{
-			get { return this.nFlags; }
-		}
+		public EntitySlotFlags Flags => this.nFlags;
 		/// <summary>
 		/// Gets a zero-based index of the entity slot that is set as a parent for this one. Returns -1 if
 		/// no parent is set.
 		/// </summary>
-		public int ParentSlot
-		{
-			get { return this.nParentSlot; }
-		}
+		public int ParentSlot => this.nParentSlot;
 		/// <summary>
 		/// Gets a 3x4 matrix that represents local transformation of this slot.
 		/// </summary>
-		public Matrix34 LocalTransformationMatrix
-		{
-			get { return *this.pLocalTM; }
-		}
+		public Matrix34 LocalTransformationMatrix => *this.pLocalTM;
 		/// <summary>
 		/// Gets a 3x4 matrix that represents world transformation of this slot.
 		/// </summary>
-		public Matrix34 WorldTransformationMatrix
-		{
-			get { return *this.pWorldTM; }
-		}
+		public Matrix34 WorldTransformationMatrix => *this.pWorldTM;
 		/// <summary>
 		/// Gets identifier of the entity that is bound to this slot (Returns invalid identifier, if no
 		/// entity is bound.)
 		/// </summary>
-		public EntityId BoundEntity
-		{
-			get { return this.entityId; }
-		}
+		public EntityId BoundEntity => this.entityId;
 		/// <summary>
 		/// Gets valid object that represents the particle emitter that is bound to this slot. Returned
 		/// object is not valid if the emitter is not bound to this slot.
 		/// </summary>
-		public ParticleEmitter BoundEmitter
-		{
-			get { return new ParticleEmitter(this.pParticleEmitter); }
-		}
+		public ParticleEmitter BoundEmitter => new ParticleEmitter(this.pParticleEmitter);
 		/// <summary>
 		/// Gets the static object that is bound to this slot. Returned object is not valid if the static
 		/// object is not bound to this slot.
 		/// </summary>
-		public StaticObject BoundStaticObject
-		{
-			get { return new StaticObject(this.pStatObj); }
-		}
+		public StaticObject BoundStaticObject => new StaticObject(this.pStatObj);
 		/// <summary>
 		/// Gets valid object that represents the light source that is bound to this slot. Returned object
 		/// is not valid if the light source is not bound to this slot.
 		/// </summary>
-		public LightSource BoundLight
-		{
-			get { return new LightSource(this.pLight); }
-		}
+		public LightSource BoundLight => new LightSource(this.pLight);
 
 		/// <summary>
 		/// Gets material that is used to render this slot.
 		/// </summary>
-		public Material Material
-		{
-			get { return this.pMaterial; }
-		}
+		public Material Material => this.pMaterial;
 		#endregion
 	}
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CryCil
 {
@@ -35,8 +36,8 @@ namespace CryCil
 		/// Calculates a real inversion of this matrix.
 		/// </summary>
 		/// <remarks>
-		/// Uses Cramer's Rule which is faster (branchless) but numerically more unstable than other
-		/// methods like Gaussian Elimination.
+		/// Uses Cramer's Rule which is faster (branchless) but numerically more unstable than other methods
+		/// like Gaussian Elimination.
 		/// </remarks>
 		/// <returns>False, if this matrix's determinant is equal to zero, otherwise true.</returns>
 		bool Invert();

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil.Geometry
 {
@@ -6,14 +7,14 @@ namespace CryCil.Geometry
 	/// Represents a combination of quaternion and a vector.
 	/// </summary>
 	/// <remarks>
-	/// Such combination allows one to represent two transformations: rotation and translation by using
-	/// only 7 numbers instead of 12 (when using <see cref="Matrix34"/>) or 16 (when using
+	/// Such combination allows one to represent two transformations: rotation and translation by using only
+	/// 7 numbers instead of 12 (when using <see cref="Matrix34"/>) or 16 (when using
 	/// <see cref="Matrix44"/>).
 	/// </remarks>
 	public struct Quatvec
 	{
 		/// <summary>
-		/// Combination of <see cref="CryCil.Geometry.Quaternion.Identity"/> and zeroed vector.
+		/// Combination of <see cref="Geometry.Quaternion.Identity"/> and zeroed vector.
 		/// </summary>
 		public static readonly Quatvec Identity = new Quatvec(new Vector3(), Quaternion.Identity);
 		#region Fields
@@ -42,9 +43,7 @@ namespace CryCil.Geometry
 		/// <summary>
 		/// Creates new instance of type <see cref="Quatvec"/>.
 		/// </summary>
-		/// <param name="m">
-		/// <see cref="Matrix34"/> that represents both translation and orientation.
-		/// </param>
+		/// <param name="m"><see cref="Matrix34"/> that represents both translation and orientation.</param>
 		public Quatvec(Matrix34 m)
 		{
 			this.Quaternion = new Quaternion(m);

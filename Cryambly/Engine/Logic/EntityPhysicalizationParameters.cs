@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics.Contracts;
+using System.Linq;
 using CryCil.Annotations;
 using CryCil.Engine.Memory;
 using CryCil.Engine.Physics;
@@ -144,8 +145,8 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Creates a valid object of this type.
 		/// </summary>
-		/// <param name="physicalAreaType">     Type of area to use.</param>
-		/// <param name="gravityParams">
+		/// <param name="physicalAreaType">Type of area to use.</param>
+		/// <param name="gravityParams">   
 		/// A valid pointer to a structure that contains the gravity parameters.
 		/// </param>
 		/// <exception cref="ArgumentOutOfRangeException">Unknown area type.</exception>
@@ -154,7 +155,7 @@ namespace CryCil.Engine.Logic
 		{
 			if (physicalAreaType < PhysicalAreaType.Sphere || physicalAreaType > PhysicalAreaType.Spline)
 			{
-				throw new ArgumentOutOfRangeException("physicalAreaType", "Unknown area type.");
+				throw new ArgumentOutOfRangeException(nameof(physicalAreaType), "Unknown area type.");
 			}
 			Contract.EndContractBlock();
 
@@ -164,8 +165,7 @@ namespace CryCil.Engine.Logic
 		#endregion
 		#region Interface
 		/// <exception cref="PhysicalizationException">
-		/// An array of points must be provided when creating an area definition for a spline or shape
-		/// area.
+		/// An array of points must be provided when creating an area definition for a spline or shape area.
 		/// </exception>
 		internal void Validate()
 		{
@@ -374,8 +374,8 @@ namespace CryCil.Engine.Logic
 			}
 		}
 		/// <summary>
-		/// Gets or sets the pointer to a set of parameters that specify dynamics parameters of this
-		/// entity, if it's a living entity.
+		/// Gets or sets the pointer to a set of parameters that specify dynamics parameters of this entity,
+		/// if it's a living entity.
 		/// </summary>
 		/// <exception cref="InvalidOperationException">
 		/// Cannot assign dynamics parameters to the entity that is not a living entity.

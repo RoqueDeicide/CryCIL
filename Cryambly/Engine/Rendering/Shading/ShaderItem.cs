@@ -20,17 +20,11 @@ namespace CryCil.Engine.Rendering
 		/// <summary>
 		/// Gets the shader that is assigned to this item.
 		/// </summary>
-		public Shader Shader
-		{
-			get { return this.shader; }
-		}
+		public Shader Shader => this.shader;
 		/// <summary>
 		/// Gets the object that contains parameters that specify how the shader should work.
 		/// </summary>
-		public RenderShaderResources ShaderResources
-		{
-			get { return this.shaderResources; }
-		}
+		public RenderShaderResources ShaderResources => this.shaderResources;
 		#endregion
 		#region Events
 		#endregion

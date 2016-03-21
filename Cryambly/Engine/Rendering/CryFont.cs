@@ -31,17 +31,11 @@ namespace CryCil.Engine.Rendering
 		/// <exception cref="CryEngineException">
 		/// Cannot fetch the list of loaded fonts: CryEngine is not loaded.
 		/// </exception>
-		public static string[] LoadedFontsArray
-		{
-			get { return LoadedFonts.Split(','); }
-		}
+		public static string[] LoadedFontsArray => LoadedFonts.Split(',');
 		/// <summary>
 		/// Gets the name of this font object.
 		/// </summary>
-		public string Name
-		{
-			get { return this.name; }
-		}
+		public string Name => this.name;
 		#endregion
 		#region Events
 		#endregion

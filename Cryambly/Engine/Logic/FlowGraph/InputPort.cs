@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace CryCil.Engine.Logic
@@ -29,14 +30,14 @@ namespace CryCil.Engine.Logic
 		/// </summary>
 		internal virtual void OnConnected()
 		{
-			if (this.Connected != null) this.Connected(this);
+			this.Connected?.Invoke(this);
 		}
 		/// <summary>
 		/// Raises the event <see cref="Disconnected"/>.
 		/// </summary>
 		internal virtual void OnDisconnected()
 		{
-			if (this.Disconnected != null) this.Disconnected(this);
+			this.Disconnected?.Invoke(this);
 		}
 		#endregion
 		#region Construction
@@ -75,19 +76,10 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Gets current value of this port.
 		/// </summary>
-		public FlowData Value
-		{
-			get { return this.value; }
-		}
-		internal override FlowPortConfig Config
-		{
-			get
-			{
-				// ReSharper disable ExceptionNotDocumented
-				return new FlowPortConfig(this.Name, this.DisplayName, this.DisplayName, null,
-										  new FlowData(FlowDataType.Any));
-			}
-		}
+		public FlowData Value => this.value;
+		internal override FlowPortConfig Config => new FlowPortConfig(this.Name, this.DisplayName,
+																	  this.DisplayName, null,
+																	  new FlowData(FlowDataType.Any));
 		#endregion
 		#region Construction
 		/// <summary>
@@ -110,7 +102,7 @@ namespace CryCil.Engine.Logic
 		#region Interface
 		internal override void Activate()
 		{
-			if (this.action != null) this.action(this.value);
+			this.action?.Invoke(this.value);
 		}
 		internal override void Assign(FlowData input)
 		{
@@ -127,14 +119,8 @@ namespace CryCil.Engine.Logic
 		private readonly Action action;
 		#endregion
 		#region Properties
-		internal override FlowPortConfig Config
-		{
-			get
-			{
-				return new FlowPortConfig(this.Name, this.DisplayName, this.DisplayName, null,
-										  new FlowData(FlowDataType.Void));
-			}
-		}
+		internal override FlowPortConfig Config => new FlowPortConfig(this.Name, this.DisplayName, this.DisplayName, null,
+																	  new FlowData(FlowDataType.Void));
 		#endregion
 		#region Construction
 		/// <summary>
@@ -156,7 +142,7 @@ namespace CryCil.Engine.Logic
 		#region Interface
 		internal override void Activate()
 		{
-			if (this.action != null) this.action();
+			this.action?.Invoke();
 		}
 		/// <exception cref="Exception">
 		/// Input port of type Void has been invoked with non-void data.
@@ -184,13 +170,8 @@ namespace CryCil.Engine.Logic
 		/// </summary>
 		public int Value { get; private set; }
 		internal override FlowPortConfig Config
-		{
-			get
-			{
-				return new FlowPortConfig(this.Name, this.DisplayName, this.DisplayName, this.UiConfig,
-										  new FlowData(this.Value));
-			}
-		}
+			=> new FlowPortConfig(this.Name, this.DisplayName, this.DisplayName, this.UiConfig,
+								  new FlowData(this.Value));
 		#endregion
 		#region Construction
 		/// <summary>
@@ -239,7 +220,7 @@ namespace CryCil.Engine.Logic
 		#region Interface
 		internal override void Activate()
 		{
-			if (this.action != null) this.action(this.Value);
+			this.action?.Invoke(this.Value);
 		}
 		/// <exception cref="Exception">
 		/// Input port of type Int has been invoked with non-integer data.
@@ -269,13 +250,8 @@ namespace CryCil.Engine.Logic
 		/// </summary>
 		public float Value { get; private set; }
 		internal override FlowPortConfig Config
-		{
-			get
-			{
-				return new FlowPortConfig(this.Name, this.DisplayName, this.DisplayName, this.UiConfig,
-										  new FlowData(this.Value));
-			}
-		}
+			=> new FlowPortConfig(this.Name, this.DisplayName, this.DisplayName, this.UiConfig,
+								  new FlowData(this.Value));
 		#endregion
 		#region Construction
 		/// <summary>
@@ -324,7 +300,7 @@ namespace CryCil.Engine.Logic
 		#region Interface
 		internal override void Activate()
 		{
-			if (this.action != null) this.action(this.Value);
+			this.action?.Invoke(this.Value);
 		}
 		/// <exception cref="Exception">
 		/// Input port of type Float has been invoked with non-floating-point data.
@@ -354,13 +330,8 @@ namespace CryCil.Engine.Logic
 		/// </summary>
 		public EntityId Value { get; private set; }
 		internal override FlowPortConfig Config
-		{
-			get
-			{
-				return new FlowPortConfig(this.Name, this.DisplayName, this.DisplayName, this.UiConfig,
-										  new FlowData(FlowDataType.EntityId));
-			}
-		}
+			=> new FlowPortConfig(this.Name, this.DisplayName, this.DisplayName, this.UiConfig,
+								  new FlowData(FlowDataType.EntityId));
 		#endregion
 		#region Construction
 		/// <summary>
@@ -382,7 +353,7 @@ namespace CryCil.Engine.Logic
 		#region Interface
 		internal override void Activate()
 		{
-			if (this.action != null) this.action(this.Value);
+			this.action?.Invoke(this.Value);
 		}
 		/// <exception cref="Exception">
 		/// Input port of type EntityId has been invoked with non-integer data.
@@ -412,13 +383,8 @@ namespace CryCil.Engine.Logic
 		/// </summary>
 		public Vector3 Value { get; private set; }
 		internal override FlowPortConfig Config
-		{
-			get
-			{
-				return new FlowPortConfig(this.Name, this.DisplayName, this.DisplayName, this.UiConfig,
-										  new FlowData(this.Value));
-			}
-		}
+			=> new FlowPortConfig(this.Name, this.DisplayName, this.DisplayName, this.UiConfig,
+								  new FlowData(this.Value));
 		#endregion
 		#region Construction
 		/// <summary>
@@ -443,7 +409,7 @@ namespace CryCil.Engine.Logic
 		#region Interface
 		internal override void Activate()
 		{
-			if (this.action != null) this.action(this.Value);
+			this.action?.Invoke(this.Value);
 		}
 		/// <exception cref="Exception">
 		/// Input port of type Vector3 has been invoked with non-vector data.
@@ -474,13 +440,8 @@ namespace CryCil.Engine.Logic
 		public string Value { get; private set; }
 		/// <exception cref="OutOfMemoryException">There is insufficient memory available.</exception>
 		internal override FlowPortConfig Config
-		{
-			get
-			{
-				return new FlowPortConfig(this.Name, this.DisplayName, this.DisplayName, this.UiConfig,
-										  new FlowData(this.Value));
-			}
-		}
+			=> new FlowPortConfig(this.Name, this.DisplayName, this.DisplayName, this.UiConfig,
+								  new FlowData(this.Value));
 		#endregion
 		#region Construction
 		/// <summary>
@@ -529,7 +490,7 @@ namespace CryCil.Engine.Logic
 		#region Interface
 		internal override void Activate()
 		{
-			if (this.action != null) this.action(this.Value);
+			this.action?.Invoke(this.Value);
 		}
 		/// <exception cref="Exception">
 		/// Input port of type String has been invoked with non-text data.
@@ -559,13 +520,8 @@ namespace CryCil.Engine.Logic
 		/// </summary>
 		public bool Value { get; private set; }
 		internal override FlowPortConfig Config
-		{
-			get
-			{
-				return new FlowPortConfig(this.Name, this.DisplayName, this.DisplayName, this.UiConfig,
-										  new FlowData(this.Value));
-			}
-		}
+			=> new FlowPortConfig(this.Name, this.DisplayName, this.DisplayName, this.UiConfig,
+								  new FlowData(this.Value));
 		#endregion
 		#region Construction
 		/// <summary>
@@ -590,7 +546,7 @@ namespace CryCil.Engine.Logic
 		#region Interface
 		internal override void Activate()
 		{
-			if (this.action != null) this.action(this.Value);
+			this.action?.Invoke(this.Value);
 		}
 		/// <exception cref="Exception">
 		/// Input port of type Bool has been invoked with non-boolean data.

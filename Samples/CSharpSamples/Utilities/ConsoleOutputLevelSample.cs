@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using CryCil.Engine.DebugServices;
 using CryCil.Utilities;
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 // ReSharper disable UnusedMember.Global
 
@@ -26,7 +27,7 @@ namespace CryCil.Annotations
 	/// {
 	///     return null;
 	/// }
-	/// 
+	///
 	/// public void UseTest()
 	/// {
 	///     var p = Test();
@@ -78,8 +79,8 @@ namespace CryCil.Annotations
 
 	/// <summary>
 	/// Indicates that the marked method builds string by format pattern and (optional) arguments.
-	/// Parameter, which contains format string, should be given in constructor. The format string should
-	/// be in <see cref="string.Format(IFormatProvider,string,object[])"/>-like form.
+	/// Parameter, which contains format string, should be given in constructor. The format string should be
+	/// in <see cref="string.Format(IFormatProvider,string,object[])"/>-like form.
 	/// </summary>
 	/// <example>
 	/// <code>
@@ -88,7 +89,7 @@ namespace CryCil.Annotations
 	/// {
 	///     /* do something */
 	/// }
-	/// 
+	///
 	/// public void Foo()
 	/// {
 	///   ShowError("Failed: {0}"); // Warning: Non-existing argument in format string
@@ -139,8 +140,8 @@ namespace CryCil.Annotations
 	}
 
 	/// <summary>
-	/// Indicates that the function argument should be string literal and match one of the parameters of
-	/// the caller function. For example, ReSharper annotates the parameter of
+	/// Indicates that the function argument should be string literal and match one of the parameters of the
+	/// caller function. For example, ReSharper annotates the parameter of
 	/// <see cref="System.ArgumentNullException"/>.
 	/// </summary>
 	/// <example>
@@ -161,14 +162,18 @@ namespace CryCil.Annotations
 
 	/// <summary>
 	/// Indicates that the method is contained in a type that implements
-	/// <c>System.ComponentModel.INotifyPropertyChanged</c> interface and this method is used to notify
-	/// that some property value changed.
+	/// <c>System.ComponentModel.INotifyPropertyChanged</c> interface and this method is used to notify that
+	/// some property value changed.
 	/// </summary>
 	/// <remarks>
 	/// The method should be non-static and conform to one of the supported signatures:
-	/// <list><item><c>NotifyChanged(string)</c></item><item><c>NotifyChanged(params
-	/// string[])</c></item><item><c>NotifyChanged{T}(Expression{Func{T}})</c></item><item><c>NotifyChanged{T,U}(Expression{Func{T,U}})</c></item><item><c>SetProperty{T}(ref
-	/// T, T, string)</c></item></list>
+	/// <list>
+	/// <item><c>NotifyChanged(string)</c></item>
+	/// <item><c>NotifyChanged(params string[])</c></item>
+	/// <item><c>NotifyChanged{T}(Expression{Func{T}})</c></item>
+	/// <item><c>NotifyChanged{T,U}(Expression{Func{T,U}})</c></item>
+	/// <item><c>SetProperty{T}(ref T, T, string)</c></item>
+	/// </list>
 	/// </remarks>
 	/// <example>
 	/// <code>
@@ -177,7 +182,7 @@ namespace CryCil.Annotations
 	///     public event PropertyChangedEventHandler PropertyChanged;
 	///     [NotifyPropertyChangedInvocator]
 	///     protected virtual void NotifyChanged(string propertyName) { ... }
-	/// 
+	///
 	///     private string _name;
 	///     public string Name
 	///     {
@@ -187,9 +192,12 @@ namespace CryCil.Annotations
 	/// }
 	/// </code>
 	/// Examples of generated notifications:
-	/// <list><item><c>NotifyChanged("Property")</c></item><item><c>NotifyChanged(() =&gt;
-	/// Property) </c></item><item><c>NotifyChanged((VM x) =&gt;
-	/// x.Property)</c></item><item><c>SetProperty(ref myField, value, "Property")</c></item></list>
+	/// <list>
+	/// <item><c>NotifyChanged("Property")</c></item>
+	/// <item><c>NotifyChanged(() =&gt; Property)</c></item>
+	/// <item><c>NotifyChanged((VM x) =&gt; x.Property)</c></item>
+	/// <item><c>SetProperty(ref myField, value, "Property")</c></item>
+	/// </list>
 	/// </example>
 	[AttributeUsage(AttributeTargets.Method)]
 	public sealed class NotifyPropertyChangedInvocatorAttribute : Attribute
@@ -221,39 +229,54 @@ namespace CryCil.Annotations
 	/// </summary>
 	/// <syntax>
 	/// <p>Function Definition Table syntax:</p>
-	/// <list><item>FDT ::= FDTRow [;FDTRow]*</item><item>FDTRow ::= Input =&gt; Output | Output &lt;=
-	/// Input</item><item>Input ::= ParameterName: Value [, Input]*</item><item>Output ::= [ParameterName:
-	/// Value]* {halt|stop|void|nothing|Value}</item><item>Value ::= true | false | null | notnull |
-	/// canbenull</item></list> If method has single input parameter, it's name could be omitted. <br/>
-	/// Using <c>halt</c> (or <c>void</c>/ <c>nothing</c>, which is the same) for method output means that
-	/// the method doesn't return normally. <br/><c>canbenull</c> annotation is only applicable for output
-	/// parameters. <br/> You can use multiple <c>[ContractAnnotation]</c> for each FDT row, or use single
-	/// attribute with rows separated by semicolon. <br/>
+	/// <list>
+	/// <item>FDT ::= FDTRow [;FDTRow]*</item>
+	/// <item>FDTRow ::= Input =&gt; Output | Output &lt;= Input</item>
+	/// <item>Input ::= ParameterName: Value [, Input]*</item>
+	/// <item>Output ::= [ParameterName: Value]* {halt|stop|void|nothing|Value}</item>
+	/// <item>Value ::= true | false | null | notnull | canbenull</item>
+	/// </list>
+	/// If method has single input parameter, it's name could be omitted. <br/> Using <c>halt</c> (or
+	/// <c>void</c>/ <c>nothing</c>, which is the same) for method output means that the method doesn't
+	/// return normally. <br/><c>canbenull</c> annotation is only applicable for output parameters. <br/>
+	/// You can use multiple <c>[ContractAnnotation]</c> for each FDT row, or use single attribute with rows
+	/// separated by semicolon. <br/>
 	/// </syntax>
 	/// <examples>
-	/// <list><item>
+	/// <list>
+	/// <item>
 	/// <code>
 	/// [ContractAnnotation("=&gt; halt")]
 	/// public void TerminationMethod()
-	/// </code></item><item>
+	/// </code>
+	/// </item>
+	/// <item>
 	/// <code>
 	/// [ContractAnnotation("halt &lt;= condition: false")]
 	/// public void Assert(bool condition, string text) // regular assertion method
-	/// </code></item><item>
+	/// </code>
+	/// </item>
+	/// <item>
 	/// <code>
 	/// [ContractAnnotation("s:null =&gt; true")]
 	/// public bool IsNullOrEmpty(string s) // string.IsNullOrEmpty()
-	/// </code></item><item>
+	/// </code>
+	/// </item>
+	/// <item>
 	/// <code>
 	/// // A method that returns null if the parameter is null,
 	/// // and not null if the parameter is not null
 	/// [ContractAnnotation("null =&gt; null; notnull =&gt; notnull")]
 	/// public object Transform(object data)
-	/// </code></item><item>
+	/// </code>
+	/// </item>
+	/// <item>
 	/// <code>
 	/// [ContractAnnotation("s:null=&gt;false; =&gt;true,result:notnull; =&gt;false, result:null")]
 	/// public bool TryParse(string s, out Person result)
-	/// </code></item></list>
+	/// </code>
+	/// </item>
+	/// </list>
 	/// </examples>
 	[AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
 	public sealed class ContractAnnotationAttribute : Attribute
@@ -332,7 +355,7 @@ namespace CryCil.Annotations
 	/// class NoEquality
 	/// {
 	/// }
-	/// 
+	///
 	/// class UsesNoEquality
 	/// {
 	///     public void Test()
@@ -362,7 +385,7 @@ namespace CryCil.Annotations
 	/// public class ComponentAttribute : Attribute
 	/// {
 	/// }
-	/// 
+	///
 	/// [Component] // ComponentAttribute requires implementing IComponent interface
 	/// public class MyComponent : IComponent
 	/// {
@@ -443,8 +466,8 @@ namespace CryCil.Annotations
 	}
 
 	/// <summary>
-	/// Should be used on attributes and causes ReSharper to not mark symbols marked with such attributes
-	/// as unused (as well as by other usage inspections)
+	/// Should be used on attributes and causes ReSharper to not mark symbols marked with such attributes as
+	/// unused (as well as by other usage inspections)
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Class | AttributeTargets.GenericParameter)]
 	public sealed class MeansImplicitUseAttribute : Attribute
@@ -598,7 +621,7 @@ namespace CryCil.Annotations
 	/// {
 	///     return x * y;
 	/// }
-	/// 
+	///
 	/// public void Foo()
 	/// {
 	///     const int a = 2, b = 2;
@@ -690,7 +713,8 @@ namespace CryCil.Annotations
 	///         //$ $END$
 	///     }
 	/// }
-	/// </code>Applying the attribute on a template method parameter:
+	/// </code>
+	/// Applying the attribute on a template method parameter:
 	/// <code>
 	/// [SourceTemplate]
 	/// public static void something(this Entity x, [Macro(Expression = "guid()", Editable = -1)] string newguid)
@@ -704,21 +728,20 @@ namespace CryCil.Annotations
 	public sealed class MacroAttribute : Attribute
 	{
 		/// <summary>
-		/// Allows specifying a macro that will be executed for a
-		/// <see cref="SourceTemplateAttribute">source template</see> parameter when the template is
-		/// expanded.
+		/// Allows specifying a macro that will be executed for a <see cref="SourceTemplateAttribute">source
+		/// template</see> parameter when the template is expanded.
 		/// </summary>
 		public string Expression { get; set; }
 
 		/// <summary>
-		/// Allows specifying which occurrence of the target parameter becomes editable when the template
-		/// is deployed.
+		/// Allows specifying which occurrence of the target parameter becomes editable when the template is
+		/// deployed.
 		/// </summary>
 		/// <remarks>
 		/// If the target parameter is used several times in the template, only one occurrence becomes
 		/// editable; other occurrences are changed synchronously. To specify the zero-based index of the
-		/// editable occurrence, use values &gt;= 0. To make the parameter non-editable when the template
-		/// is expanded, use -1.
+		/// editable occurrence, use values &gt;= 0. To make the parameter non-editable when the template is
+		/// expanded, use -1.
 		/// </remarks>
 		/// &gt;
 		public int Editable { get; set; }
@@ -878,9 +901,9 @@ namespace CryCil.Annotations
 	}
 
 	/// <summary>
-	/// XAML attribute. Indicates the property of some <c>BindingBase</c>-derived type, that is used to
-	/// bind some item of <c>ItemsControl</c>-derived type. This annotation will enable the
-	/// <c>DataContext</c> type resolve for XAML bindings for such properties.
+	/// XAML attribute. Indicates the property of some <c>BindingBase</c>-derived type, that is used to bind
+	/// some item of <c>ItemsControl</c>-derived type. This annotation will enable the <c>DataContext</c>
+	/// type resolve for XAML bindings for such properties.
 	/// </summary>
 	/// <remarks>
 	/// Property should have the tree ancestor of the <c>ItemsControl</c> type or marked with the

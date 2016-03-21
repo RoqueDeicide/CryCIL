@@ -16,10 +16,7 @@ namespace CryCil.Engine.Logic.EntityProxies
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 
 		/// <summary>
 		/// Gets the entity's proxy that allows the former to manifest itself as an area other entities can
@@ -116,8 +113,7 @@ namespace CryCil.Engine.Logic.EntityProxies
 			}
 		}
 		/// <summary>
-		/// Gets the entity's proxy that allows the former to manifest itself as a simple proximity
-		/// trigger.
+		/// Gets the entity's proxy that allows the former to manifest itself as a simple proximity trigger.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public CryEntityTriggerProxy Trigger

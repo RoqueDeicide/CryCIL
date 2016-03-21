@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MainTestingAssembly
 {
@@ -22,8 +20,7 @@ namespace MainTestingAssembly
 		public string Text;
 	}
 	/// <summary>
-	/// Used from embedded Mono framework to test functionality of IMonoMethod
-	/// implementation.
+	/// Used from embedded Mono framework to test functionality of IMonoMethod implementation.
 	/// </summary>
 	public class MethodTestClass
 	{
@@ -47,7 +44,7 @@ namespace MainTestingAssembly
 
 				int number = *numberPtr;
 
-				for (; number != 0; )
+				for (; number != 0;)
 				{
 					currentDigits.Add(number % 10);
 					number /= 10;

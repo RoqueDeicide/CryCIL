@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil.Engine.DebugServices
 {
@@ -11,8 +12,9 @@ namespace CryCil.Engine.DebugServices
 		/// <summary>
 		/// Constant that represents default rendering flags for 3D persistent debug objects.
 		/// </summary>
-		public const AuxiliaryGeometryRenderFlags DefaultRenderFlags = AuxiliaryGeometryRenderFlags.Default3DRenderFlags |
-																	   AuxiliaryGeometryRenderFlags.BlendingAlpha;
+		public const AuxiliaryGeometryRenderFlags DefaultRenderFlags =
+			AuxiliaryGeometryRenderFlags.Default3DRenderFlags |
+			AuxiliaryGeometryRenderFlags.BlendingAlpha;
 		#endregion
 		#region Construction
 		/// <summary>

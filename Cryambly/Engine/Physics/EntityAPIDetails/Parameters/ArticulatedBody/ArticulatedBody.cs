@@ -122,8 +122,8 @@ namespace CryCil.Engine.Physics
 			set { this.posHostPivot = value; }
 		}
 		/// <summary>
-		/// Gets or sets orientation of the joint that connects this articulated body with a ground
-		/// relative to the ground.
+		/// Gets or sets orientation of the joint that connects this articulated body with a ground relative
+		/// to the ground.
 		/// </summary>
 		public Quaternion GroundPivotOrientation
 		{
@@ -187,8 +187,8 @@ namespace CryCil.Engine.Physics
 		/// </summary>
 		/// <remarks>
 		/// Global animation speed is a value that is specific to each articulated body that is calculated
-		/// every time <see cref="PhysicsParametersJoint.ExtraAngles"/> is set for any joint (the value is
-		/// a difference between old value and a new one divided by
+		/// every time <see cref="PhysicsParametersJoint.ExtraAngles"/> is set for any joint (the value is a
+		/// difference between old value and a new one divided by
 		/// <see cref="PhysicsParametersJoint.AnimationTimeStep"/>).
 		/// </remarks>
 		public bool ApplyDeltaExtraAngles
@@ -199,10 +199,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Indicates whether this body is awake.
 		/// </summary>
-		public bool Awake
-		{
-			get { return this.bAwake != 0; }
-		}
+		public bool Awake => this.bAwake != 0;
 		/// <summary>
 		/// Gets or sets number of contacts that must be registered across all parts of this articulated
 		/// body that is needed to switch simulation mode into 'lying' mode that is used to rag dolls that

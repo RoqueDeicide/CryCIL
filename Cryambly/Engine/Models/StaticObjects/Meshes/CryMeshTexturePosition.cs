@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil.Engine.Models.StaticObjects
 {
@@ -14,10 +15,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// <summary>
 		/// Gets the vector that contains the UV coordinates that are stored in this object.
 		/// </summary>
-		public Vector2 UV
-		{
-			get { return new Vector2(this.s, this.t); }
-		}
+		public Vector2 UV => new Vector2(this.s, this.t);
 		#endregion
 		#region Construction
 		/// <summary>
@@ -143,7 +141,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// <returns>True, if left operand is less then the right one.</returns>
 		public static bool operator <(CryMeshTexturePosition left, CryMeshTexturePosition right)
 		{
-			return (left.s != right.s) ? (left.s < right.s) : (left.t < right.t);
+			return left.s != right.s ? left.s < right.s : left.t < right.t;
 		}
 		/// <summary>
 		/// Determines whether left operand is greater then the right one.

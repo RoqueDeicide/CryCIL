@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil
 {
@@ -28,8 +29,8 @@ namespace CryCil
 			return (short)(value * 32767);
 		}
 		/// <summary>
-		/// Quantizes the 16-bit integer number in range [-32768; 32767] into 16-bit integer number in
-		/// range [-1; 1];
+		/// Quantizes the 16-bit integer number in range [-32768; 32767] into 16-bit integer number in range
+		/// [-1; 1];
 		/// </summary>
 		/// <param name="value">Value to quantize.</param>
 		/// <returns>Quantized value.</returns>

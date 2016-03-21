@@ -17,8 +17,8 @@ namespace CryCil.RunTime.Registration
 		// Contains references and identifiers of all successfully registered flow node types.
 		[NotNull] private static readonly SortedList<ushort, Type> registeredTypes = new SortedList<ushort, Type>();
 		// Contains an array of all types that have [FlowNode] attribute. This data is gathered when CryCIL
-		// is initialized (which happens before flow graph is initialized) and types here will be
-		// registered later.
+		// is initialized (which happens before flow graph is initialized) and types here will be registered
+		// later.
 		[CanBeNull] private static Type[] compiledTypes;
 		#endregion
 		#region Interface
@@ -41,15 +41,15 @@ namespace CryCil.RunTime.Registration
 		[InitializationStage((int)DefaultInitializationStages.FlowNodeRecognitionStage)]
 		private static void CompileFlowNodeTypeData(int stageIndex)
 		{
-			compiledTypes =
-				MonoInterface.CryCilAssemblies
-							 .SelectMany(assembly => assembly.GetTypes())
-							 .Where(type =>
-										type.ContainsAttribute<FlowNodeAttribute>() &&
-										!type.ContainsAttribute<ObsoleteAttribute>() &&
-										type.Implements<FlowNode>() &&
-										type.HasConstructor(typeof(ushort), typeof(IntPtr)))
-							 .ToArray();
+			var types = from assembly in MonoInterface.CryCilAssemblies
+						from type in assembly.GetTypes()
+						where type.ContainsAttribute<FlowNodeAttribute>() &&
+							  !type.ContainsAttribute<ObsoleteAttribute>() &&
+							  type.Implements<FlowNode>() &&
+							  type.HasConstructor(typeof(ushort), typeof(IntPtr))
+						select type;
+
+			compiledTypes = types.ToArray();
 		}
 		internal static void RegisterAllTypes()
 		{
@@ -60,7 +60,7 @@ namespace CryCil.RunTime.Registration
 					foreach (Type type in compiledTypes)
 					{
 						string name = type.GetAttribute<FlowNodeAttribute>().Name;
-						if (string.IsNullOrWhiteSpace(name))
+						if (name.IsNullOrWhiteSpace())
 						{
 							name = type.FullName.Replace('.', ':');
 						}

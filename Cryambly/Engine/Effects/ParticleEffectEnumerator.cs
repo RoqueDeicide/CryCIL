@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
@@ -21,10 +22,7 @@ namespace CryCil.Engine
 		/// <summary>
 		/// Gets current particle effect.
 		/// </summary>
-		public ParticleEffect Current
-		{
-			get { return this.current; }
-		}
+		public ParticleEffect Current => this.current;
 		#endregion
 		#region Construction
 		/// <summary>
@@ -75,10 +73,7 @@ namespace CryCil.Engine
 		}
 		#endregion
 		#region Utilities
-		object IEnumerator.Current
-		{
-			get { return this.Current; }
-		}
+		object IEnumerator.Current => this.Current;
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern IntPtr Create();
 		[MethodImpl(MethodImplOptions.InternalCall)]

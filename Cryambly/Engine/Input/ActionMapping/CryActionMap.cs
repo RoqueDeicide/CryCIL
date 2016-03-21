@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace CryCil.Engine.Input.ActionMapping
@@ -15,10 +16,7 @@ namespace CryCil.Engine.Input.ActionMapping
 		/// <summary>
 		/// Indicates whether this object is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 		/// <summary>
 		/// Gets the action of specified name.
 		/// </summary>

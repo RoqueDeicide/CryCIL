@@ -37,27 +37,18 @@ namespace CryCil.Engine.Rendering
 		/// Indicates whether this shader will make the rendered object glow in some way.
 		/// </summary>
 		/// <exception cref="NullReferenceException">Instance object is invalid.</exception>
-		public bool IsGlowing
-		{
-			get { return this.GetStrength(ResourceTextureTypes.Glow) > 0.0f; }
-		}
+		public bool IsGlowing => this.GetStrength(ResourceTextureTypes.Glow) > 0.0f;
 		/// <summary>
 		/// Indicates whether this shader will make the rendered object opaque by having the strength value
 		/// of the opacity map less then 1.
 		/// </summary>
 		/// <exception cref="NullReferenceException">Instance object is invalid.</exception>
-		public bool IsTransparent
-		{
-			get { return this.GetStrength(ResourceTextureTypes.Opacity) < 1.0f; }
-		}
+		public bool IsTransparent => this.GetStrength(ResourceTextureTypes.Opacity) < 1.0f;
 		/// <summary>
 		/// Indicates whether this shader will make the rendered object alpha tested.
 		/// </summary>
 		/// <exception cref="NullReferenceException">Instance object is invalid.</exception>
-		public bool IsAlphaTested
-		{
-			get { return this.Transparency > 0.01f /*0.0f*/; }
-		}
+		public bool IsAlphaTested => this.Transparency > 0.01f;
 		/// <summary>
 		/// Indicates whether this shader will make the rendered object completely invisible.
 		/// </summary>
@@ -76,17 +67,11 @@ namespace CryCil.Engine.Rendering
 		/// Gets the collection of shader parameters.
 		/// </summary>
 		/// <exception cref="NullReferenceException">Instance object is invalid.</exception>
-		public ShaderParameters Parameters
-		{
-			get { return this.GetParameters(); }
-		}
+		public ShaderParameters Parameters => this.GetParameters();
 		/// <summary>
 		/// Indicates whether this object is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 		#endregion
 		#region Interface
 		/// <summary>

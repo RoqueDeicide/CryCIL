@@ -21,19 +21,13 @@ namespace CryCil.Engine.Rendering
 		/// Gets the parameters of this shader.
 		/// </summary>
 		/// <exception cref="NullReferenceException">Instance object is invalid.</exception>
-		public ShaderParameters Parameters
-		{
-			get { return GetParameters(this.handle); }
-		}
+		public ShaderParameters Parameters => GetParameters(this.handle);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern ShaderParameters GetParameters(IntPtr handle);
 		/// <summary>
 		/// Indicates whether this object is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 		#endregion
 		#region Events
 		#endregion

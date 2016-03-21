@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using CryCil.Annotations;
 
@@ -72,10 +73,7 @@ namespace CryCil.Engine.Models.Characters.Attachments
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != null; }
-		}
+		public bool IsValid => this.handle != null;
 
 		/// <summary>
 		/// Gets or sets the frame-rate of the simulation.
@@ -101,7 +99,7 @@ namespace CryCil.Engine.Models.Characters.Attachments
 			{
 				if (value < 10)
 				{
-					throw new ArgumentOutOfRangeException("value", "Frame-rate of the simulation cannot be less then ten.");
+					throw new ArgumentOutOfRangeException(nameof(value), "Frame-rate of the simulation cannot be less then ten.");
 				}
 
 				this.AssertInstance();
@@ -172,9 +170,7 @@ namespace CryCil.Engine.Models.Characters.Attachments
 		/// Gets the type of simulation that is used for this attachment.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
-		/// <exception cref="ArgumentOutOfRangeException">
-		/// Unknown simulation type was specified.
-		/// </exception>
+		/// <exception cref="ArgumentOutOfRangeException">Unknown simulation type was specified.</exception>
 		public RowAttachmentSimulationType SimulationType
 		{
 			get
@@ -187,7 +183,7 @@ namespace CryCil.Engine.Models.Characters.Attachments
 			{
 				if (value < 0 || value > RowAttachmentSimulationType.TranslationalProjection)
 				{
-					throw new ArgumentOutOfRangeException("value", "Unknown simulation type was specified.");
+					throw new ArgumentOutOfRangeException(nameof(value), "Unknown simulation type was specified.");
 				}
 
 				this.AssertInstance();
@@ -322,8 +318,8 @@ namespace CryCil.Engine.Models.Characters.Attachments
 			}
 		}
 		/// <summary>
-		/// Gets or sets the length of the rod of each pendulum in the row. This value defines the
-		/// frequency of pendulum oscillations.
+		/// Gets or sets the length of the rod of each pendulum in the row. This value defines the frequency
+		/// of pendulum oscillations.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public float RodLength
@@ -342,8 +338,8 @@ namespace CryCil.Engine.Models.Characters.Attachments
 			}
 		}
 		/// <summary>
-		/// Gets or sets the vector that provides parameters that describe the turbulence that is applied
-		/// to each pendulum in a row. See Remarks for details.
+		/// Gets or sets the vector that provides parameters that describe the turbulence that is applied to
+		/// each pendulum in a row. See Remarks for details.
 		/// </summary>
 		/// <remarks>
 		/// X-coordinate of the vector represents frequency of turbulence. Y-coordinate represents the
@@ -405,8 +401,8 @@ namespace CryCil.Engine.Models.Characters.Attachments
 			}
 		}
 		/// <summary>
-		/// Gets or sets the vector that represents orientation of the bounding volume shape that
-		/// constrains the movement of respective pendulum in socket-space.
+		/// Gets or sets the vector that represents orientation of the bounding volume shape that constrains
+		/// the movement of respective pendulum in socket-space.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public Vector3 BoundingVolumeDirection
@@ -489,8 +485,8 @@ namespace CryCil.Engine.Models.Characters.Attachments
 			}
 		}
 		/// <summary>
-		/// Gets or sets the vector where X-coordinate represents length of the capsule (?) and
-		/// Y-coordinate represents radius of the capsule (?).
+		/// Gets or sets the vector where X-coordinate represents length of the capsule (?) and Y-coordinate
+		/// represents radius of the capsule (?).
 		/// </summary>
 		/// <remarks>
 		/// Capsule is used to create physical representation of the pendulum rod allowing the most

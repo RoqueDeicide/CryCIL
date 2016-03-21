@@ -42,38 +42,23 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the number of points that form the border.
 		/// </summary>
-		public int Count
-		{
-			get { return this.nborderpt; }
-		}
+		public int Count => this.nborderpt;
 		/// <summary>
 		/// Indicates whether the border exists.
 		/// </summary>
-		public bool BorderExists
-		{
-			get { return this.ptborder != null; }
-		}
+		public bool BorderExists => this.ptborder != null;
 		/// <summary>
 		/// Indicates whether this border is closed.
 		/// </summary>
-		public bool Closed
-		{
-			get { return this.bClosed != 0; }
-		}
+		public bool Closed => this.bClosed != 0;
 		/// <summary>
 		/// Indicates whether points in this border are laid out in consecutive order.
 		/// </summary>
-		public bool Consecutive
-		{
-			get { return this.bBorderConsecutive; }
-		}
+		public bool Consecutive => this.bBorderConsecutive;
 		/// <summary>
 		/// Gets the geometric center of the border region.
 		/// </summary>
-		public Vector3 Center
-		{
-			get { return this.center; }
-		}
+		public Vector3 Center => this.center;
 		#endregion
 		#region Interface
 		/// <summary>
@@ -128,111 +113,66 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the time parameter that designates position of the contact along unprojection direction.
 		/// </summary>
-		public double TimeParameter
-		{
-			get { return this.t; }
-		}
+		public double TimeParameter => this.t;
 		/// <summary>
 		/// Gets coordinates of the point of contact.
 		/// </summary>
-		public Vector3 Point
-		{
-			get { return this.pt; }
-		}
+		public Vector3 Point => this.pt;
 		/// <summary>
 		/// Gets the direction of the normal to the point of contact.
 		/// </summary>
-		public Vector3 Normal
-		{
-			get { return this.n; }
-		}
+		public Vector3 Normal => this.n;
 		/// <summary>
 		/// Gets the direction of unprojection.
 		/// </summary>
-		public Vector3 Direction
-		{
-			get { return this.dir; }
-		}
+		public Vector3 Direction => this.dir;
 		/// <summary>
 		/// Gets the speed of the geometric object along the <see cref="Direction"/>. If its less then 0
 		/// then <see cref="Normal"/> was used instead of <see cref="Direction"/>.
 		/// </summary>
-		public float Speed
-		{
-			get { return this.vel; }
-		}
+		public float Speed => this.vel;
 		/// <summary>
 		/// Unknown.
 		/// </summary>
-		public int Id0
-		{
-			get { return this.id0; }
-		}
+		public int Id0 => this.id0;
 		/// <summary>
 		/// Unknown.
 		/// </summary>
-		public int Id1
-		{
-			get { return this.id1; }
-		}
+		public int Id1 => this.id1;
 		/// <summary>
 		/// Identifier of the object that contains the first geometry that made contact(?) (can be a part
 		/// identifier or physical entity identifier).
 		/// </summary>
-		public int ContainerId0
-		{
-			get { return this.iPrim0; }
-		}
+		public int ContainerId0 => this.iPrim0;
 		/// <summary>
 		/// Identifier of the object that contains the second geometry that made contact(?) (can be a part
 		/// identifier or physical entity identifier).
 		/// </summary>
-		public int ContainerId1
-		{
-			get { return this.iPrim1; }
-		}
+		public int ContainerId1 => this.iPrim1;
 		/// <summary>
 		/// Unknown.
 		/// </summary>
-		public int Feature0
-		{
-			get { return this.iFeature0; }
-		}
+		public int Feature0 => this.iFeature0;
 		/// <summary>
 		/// Unknown.
 		/// </summary>
-		public int Feature1
-		{
-			get { return this.iFeature1; }
-		}
+		public int Feature1 => this.iFeature1;
 		/// <summary>
 		/// Zero-based index of the BV-tree node of the first geometry.
 		/// </summary>
-		public int NodeIndex0
-		{
-			get { return this.iNode0; }
-		}
+		public int NodeIndex0 => this.iNode0;
 		/// <summary>
 		/// Zero-based index of the BV-tree node of the second geometry.
 		/// </summary>
-		public int NodeIndex1
-		{
-			get { return this.iNode1; }
-		}
+		public int NodeIndex1 => this.iNode1;
 		/// <summary>
 		/// Gets the object that represents a border of the areal contact.
 		/// </summary>
-		public GeometryContactBorder Border
-		{
-			get { return this.border; }
-		}
+		public GeometryContactBorder Border => this.border;
 		/// <summary>
 		/// Gets the value that indicates whether this contact is an areal contact with a border.
 		/// </summary>
-		public bool HasBorder
-		{
-			get { return this.border.BorderExists; }
-		}
+		public bool HasBorder => this.border.BorderExists;
 		#endregion
 		#region Interface
 		/// <summary>

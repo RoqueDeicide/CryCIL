@@ -16,17 +16,11 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the simulation class that is used for the entity.
 		/// </summary>
-		public PhysicsSimulationClass SimulationClass
-		{
-			get { return this.simClass; }
-		}
+		public PhysicsSimulationClass SimulationClass => this.simClass;
 		/// <summary>
 		/// Gets the axis-aligned bounding box that encompasses the entity.
 		/// </summary>
-		public BoundingBox BoundingBox
-		{
-			get { return this.boundingBox; }
-		}
+		public BoundingBox BoundingBox => this.boundingBox;
 		#endregion
 		#region Construction
 		internal PhysicalEntityStateInfo(PhysicsSimulationClass simClass, BoundingBox boundingBox)

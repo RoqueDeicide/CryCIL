@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
 using CryCil.Geometry;
@@ -38,8 +39,8 @@ namespace CryCil.Engine.Physics
 		#endregion
 		#region Construction
 		/// <summary>
-		/// Creates a new object that can be used to determine whether new position of the entity will
-		/// cause a collision.
+		/// Creates a new object that can be used to determine whether new position of the entity will cause
+		/// a collision.
 		/// </summary>
 		/// <param name="position">             New position of the entity.</param>
 		/// <param name="orientation">          New orientation of the entity.</param>
@@ -77,8 +78,8 @@ namespace CryCil.Engine.Physics
 			this.bUseCapsule = useCapsule ? 1 : 0;
 		}
 		/// <summary>
-		/// Creates a new object that can be used to determine whether new position of the entity will
-		/// cause a collision.
+		/// Creates a new object that can be used to determine whether new position of the entity will cause
+		/// a collision.
 		/// </summary>
 		/// <remarks>
 		/// This object will use <see cref="Vector3.Up"/> vector as unprojection direction and 0 as

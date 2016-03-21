@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil.Engine.Physics
 {
@@ -21,14 +22,14 @@ namespace CryCil.Engine.Physics
 		/// <remarks>This flag is specific to <see cref="PhysicalEntityType.Particle"/>.</remarks>
 		ParticleConstantOrientation = 0x02,
 		/// <summary>
-		/// When set, specifies that this physical entity is moving in 'sliding' mode: it's normal vector
-		/// is aligned with a ground normal.
+		/// When set, specifies that this physical entity is moving in 'sliding' mode: it's normal vector is
+		/// aligned with a ground normal.
 		/// </summary>
 		/// <remarks>This flag is specific to <see cref="PhysicalEntityType.Particle"/>.</remarks>
 		ParticleNoRoll = 0x04,
 		/// <summary>
-		/// When set, specifies that this physical entity's forward axis doesn't need to be aligned with
-		/// the movement trajectory.
+		/// When set, specifies that this physical entity's forward axis doesn't need to be aligned with the
+		/// movement trajectory.
 		/// </summary>
 		/// <remarks>This flag is specific to <see cref="PhysicalEntityType.Particle"/>.</remarks>
 		ParticleNoPathAlignment = 0x08,
@@ -43,21 +44,20 @@ namespace CryCil.Engine.Physics
 		/// <remarks>This flag is specific to <see cref="PhysicalEntityType.Particle"/>.</remarks>
 		ParticleNoSelfCollisions = 0x100,
 		/// <summary>
-		/// When set, specifies that this physical entity will not add hit impulse to other entities when
-		/// it collides with them.
+		/// When set, specifies that this physical entity will not add hit impulse to other entities when it
+		/// collides with them.
 		/// </summary>
 		/// <remarks>This flag is specific to <see cref="PhysicalEntityType.Particle"/>.</remarks>
 		ParticleNoImpulse = 0x200,
 
 		/// <summary>
-		/// When set, specifies that this physical entity will push other objects away when it collides
-		/// with them.
+		/// When set, specifies that this physical entity will push other objects away when it collides with
+		/// them.
 		/// </summary>
 		/// <remarks>This flag is specific to <see cref="PhysicalEntityType.Living"/>.</remarks>
 		LivingEntityPushObjects = 0x01,
 		/// <summary>
-		/// When set, specifies that this physical entity will push players away when it collides with
-		/// them.
+		/// When set, specifies that this physical entity will push players away when it collides with them.
 		/// </summary>
 		/// <remarks>This flag is specific to <see cref="PhysicalEntityType.Living"/>.</remarks>
 		LivingEntityPushPlayers = 0x02,
@@ -192,8 +192,8 @@ namespace CryCil.Engine.Physics
 		/// </remarks>
 		[Obsolete] RigidEntityCheckSumOutOfSync = 0x08,
 		/// <summary>
-		/// When set, specifies that this physical entity will trace rays against alive characters (used
-		/// for small and fast objects like bullets to make sure they don't go through any players without
+		/// When set, specifies that this physical entity will trace rays against alive characters (used for
+		/// small and fast objects like bullets to make sure they don't go through any players without
 		/// touching them). This flag is set internally when the entity is sufficiently small and fast.
 		/// </summary>
 		/// <remarks>
@@ -274,8 +274,8 @@ namespace CryCil.Engine.Physics
 		/// </summary>
 		NeverAffectTriggers = 0x8000,
 		/// <summary>
-		/// When set, specifies that this physical entity is invisible (certain optimizations are applied
-		/// to these).
+		/// When set, specifies that this physical entity is invisible (certain optimizations are applied to
+		/// these).
 		/// </summary>
 		Invisible = 0x10000,
 		/// <summary>

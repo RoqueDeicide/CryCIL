@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -135,9 +136,9 @@ namespace CryCil.Geometry
 		{
 #if !(RELEASE && RELEASE_DISABLE_CHECKS)
 			if (values == null)
-				throw new ArgumentNullException("values");
+				throw new ArgumentNullException(nameof(values));
 			if (values.Count != 4)
-				throw new ArgumentOutOfRangeException("values", "There must be four and only four input values for Plane.");
+				throw new ArgumentOutOfRangeException(nameof(values), "There must be four and only four input values for Plane.");
 #endif
 
 			this.X = values[0];
@@ -173,7 +174,7 @@ namespace CryCil.Geometry
 						return this.D;
 				}
 
-				throw new ArgumentOutOfRangeException("index", "Indices for Plane run from 0 to 3, inclusive.");
+				throw new ArgumentOutOfRangeException(nameof(index), "Indices for Plane run from 0 to 3, inclusive.");
 			}
 
 			set
@@ -193,7 +194,7 @@ namespace CryCil.Geometry
 						this.D = value;
 						break;
 					default:
-						throw new ArgumentOutOfRangeException("index", "Indices for Plane run from 0 to 3, inclusive.");
+						throw new ArgumentOutOfRangeException(nameof(index), "Indices for Plane run from 0 to 3, inclusive.");
 				}
 			}
 		}
@@ -256,9 +257,9 @@ namespace CryCil.Geometry
 			*/
 			result = new Plane
 			{
-				X = ((x * ((1.0f - yy) - zz)) + (y * (xy - wz))) + (z * (xz + wy)),
-				Y = ((x * (xy + wz)) + (y * ((1.0f - xx) - zz))) + (z * (yz - wx)),
-				Z = ((x * (xz - wy)) + (y * (yz + wx))) + (z * ((1.0f - xx) - yy)),
+				X = x * (1.0f - yy - zz) + y * (xy - wz) + z * (xz + wy),
+				Y = x * (xy + wz) + y * (1.0f - xx - zz) + z * (yz - wx),
+				Z = x * (xz - wy) + y * (yz + wx) + z * (1.0f - xx - yy),
 				D = plane.D
 			};
 		}
@@ -291,13 +292,10 @@ namespace CryCil.Geometry
 			 * Note:
 			 * Factor common arithmetic out of loop.
 			*/
-			return new Plane
-				(
-				((x * ((1.0f - yy) - zz)) + (y * (xy - wz))) + (z * (xz + wy)),
-				((x * (xy + wz)) + (y * ((1.0f - xx) - zz))) + (z * (yz - wx)),
-				((x * (xz - wy)) + (y * (yz + wx))) + (z * ((1.0f - xx) - yy)),
-				plane.D
-				);
+			return new Plane(x * (1.0f - yy - zz) + y * (xy - wz) + z * (xz + wy),
+							 x * (xy + wz) + y * (1.0f - xx - zz) + z * (yz - wx),
+							 x * (xz - wy) + y * (yz + wx) + z * (1.0f - xx - yy),
+							 plane.D);
 		}
 		/// <summary>
 		/// Transforms an array of normalized planes by a quaternion rotation.
@@ -311,7 +309,7 @@ namespace CryCil.Geometry
 		{
 #if !(RELEASE && RELEASE_DISABLE_CHECKS)
 			if (planes == null)
-				throw new ArgumentNullException("planes");
+				throw new ArgumentNullException(nameof(planes));
 #endif
 
 			float x2 = rotation.X + rotation.X;
@@ -337,9 +335,9 @@ namespace CryCil.Geometry
 				 * Note:
 				 * Factor common arithmetic out of loop.
 				*/
-				planes[i].X = ((x * ((1.0f - yy) - zz)) + (y * (xy - wz))) + (z * (xz + wy));
-				planes[i].Y = ((x * (xy + wz)) + (y * ((1.0f - xx) - zz))) + (z * (yz - wx));
-				planes[i].Z = ((x * (xz - wy)) + (y * (yz + wx))) + (z * ((1.0f - xx) - yy));
+				planes[i].X = x * (1.0f - yy - zz) + y * (xy - wz) + z * (xz + wy);
+				planes[i].Y = x * (xy + wz) + y * (1.0f - xx - zz) + z * (yz - wx);
+				planes[i].Z = x * (xz - wy) + y * (yz + wx) + z * (1.0f - xx - yy);
 			}
 		}
 		/// <summary>
@@ -375,8 +373,8 @@ namespace CryCil.Geometry
 		/// Determines relative position of the point in respect to position of this plane.
 		/// </summary>
 		/// <remarks>
-		/// This method allows to determine the relative position of the polygon by continuously invoking
-		/// it for all of the vertexes and using a dedicated flags object represented by
+		/// This method allows to determine the relative position of the polygon by continuously invoking it
+		/// for all of the vertexes and using a dedicated flags object represented by
 		/// <see cref="PlanePosition"/> enumeration.
 		/// </remarks>
 		/// <param name="point">               

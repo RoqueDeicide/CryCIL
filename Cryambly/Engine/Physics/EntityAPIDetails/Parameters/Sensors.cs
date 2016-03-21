@@ -36,10 +36,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets an array of sensors (All coordinates are in local entity coordinate space).
 		/// </summary>
-		public Ray[] Sensors
-		{
-			get { return this.sensorsAsRays; }
-		}
+		public Ray[] Sensors => this.sensorsAsRays;
 		#endregion
 		#region Construction
 		/// <summary>

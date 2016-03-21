@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil.Engine.Physics
 {
@@ -42,8 +43,8 @@ namespace CryCil.Engine.Physics
 		/// </summary>
 		SeparateImportantHits = SurfaceFlags.important,
 		/// <summary>
-		/// Number of bits to shift in order to store the flags from <see cref="ColliderTypes"/> in this
-		/// set of flags to specify which bits must be set on the part of the entity to register the hit.
+		/// Number of bits to shift in order to store the flags from <see cref="ColliderTypes"/> in this set
+		/// of flags to specify which bits must be set on the part of the entity to register the hit.
 		/// </summary>
 		CollisionTypeBitShift = 16,
 		/// <summary>

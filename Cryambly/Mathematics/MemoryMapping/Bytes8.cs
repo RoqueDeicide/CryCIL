@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace CryCil.MemoryMapping
@@ -35,10 +36,7 @@ namespace CryCil.MemoryMapping
 		/// <summary>
 		/// Returns 8.
 		/// </summary>
-		public int Length
-		{
-			get { return 8; }
-		}
+		public int Length => 8;
 		/// <summary>
 		/// Gets or sets a byte.
 		/// </summary>
@@ -103,12 +101,12 @@ namespace CryCil.MemoryMapping
 		{
 			if (array == null || array.Length == 0)
 			{
-				throw new ArgumentNullException("array",
+				throw new ArgumentNullException(nameof(array),
 												"Array which elements are supposed to be transferred to buffer is null or empty.");
 			}
 			if (array.LongLength - startIndex < count)
 			{
-				throw new ArgumentOutOfRangeException("count",
+				throw new ArgumentOutOfRangeException(nameof(count),
 													  "Too many elements are requested to be transferred to buffer.");
 			}
 			if (this.Length < count)
@@ -131,15 +129,15 @@ namespace CryCil.MemoryMapping
 		/// Unable to initialize new object of type Bytes8: Provided pointer is null.
 		/// </exception>
 		/// <exception cref="AccessViolationException">
-		/// Base address ( <paramref name="pointer"/>) plus offset byte ( <paramref name="index"/>)
-		/// produces a null or invalid address.
+		/// Base address ( <paramref name="pointer"/>) plus offset byte ( <paramref name="index"/>) produces
+		/// a null or invalid address.
 		/// </exception>
 		public Bytes8(IntPtr pointer, int index)
 			: this()
 		{
 			if (pointer == null)
 			{
-				throw new ArgumentNullException("pointer",
+				throw new ArgumentNullException(nameof(pointer),
 												"Unable to initialize new object of type Bytes8: Provided pointer is null.");
 			}
 			this.SignedLong = Marshal.ReadInt64(pointer, index);
@@ -170,8 +168,8 @@ namespace CryCil.MemoryMapping
 		/// Zero-based index of first of 8 bytes within native memory cluster to get.
 		/// </param>
 		/// <exception cref="AccessViolationException">
-		/// Base address ( <paramref name="handle"/>) plus offset byte ( <paramref name="offset"/>)
-		/// produces a null or invalid address.
+		/// Base address ( <paramref name="handle"/>) plus offset byte ( <paramref name="offset"/>) produces
+		/// a null or invalid address.
 		/// </exception>
 		public void Get(IntPtr handle, int offset)
 		{
@@ -185,8 +183,8 @@ namespace CryCil.MemoryMapping
 		/// Zero-based index of first of 8 bytes within native memory cluster to set.
 		/// </param>
 		/// <exception cref="AccessViolationException">
-		/// Base address ( <paramref name="handle"/>) plus offset byte ( <paramref name="offset"/>)
-		/// produces a null or invalid address.
+		/// Base address ( <paramref name="handle"/>) plus offset byte ( <paramref name="offset"/>) produces
+		/// a null or invalid address.
 		/// </exception>
 		public void Set(IntPtr handle, int offset)
 		{

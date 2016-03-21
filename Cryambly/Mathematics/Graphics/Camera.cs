@@ -85,7 +85,7 @@ namespace CryCil.Graphics
 				case FrustumPlanes.Bottom:
 					return this.bottom;
 				default:
-					throw new ArgumentOutOfRangeException("index");
+					throw new ArgumentOutOfRangeException(nameof(index));
 			}
 		}
 		/// <summary>
@@ -117,7 +117,7 @@ namespace CryCil.Graphics
 					this.bottom = value;
 					break;
 				default:
-					throw new ArgumentOutOfRangeException("index");
+					throw new ArgumentOutOfRangeException(nameof(index));
 			}
 			// Update the indexes.
 			Bytes4 x = new Bytes4(value.Normal.X);
@@ -313,10 +313,7 @@ namespace CryCil.Graphics
 		/// <exception cref="DivideByZeroException">
 		/// Attempt was made to invert a matrix which determinant is equal to 0.
 		/// </exception>
-		public Matrix34 ViewMatrix
-		{
-			get { return this.matrix.Inverted; }
-		}
+		public Matrix34 ViewMatrix => this.matrix.Inverted;
 		/// <summary>
 		/// Gets or sets vertical field of view in radians.
 		/// </summary>
@@ -336,24 +333,15 @@ namespace CryCil.Graphics
 		/// <summary>
 		/// Gets angular resolution of this camera.
 		/// </summary>
-		public float AngularResolution
-		{
-			get { return this.height / this.fov; }
-		}
+		public float AngularResolution => this.height / this.fov;
 		/// <summary>
 		/// Gets near plane clipping distance of this camera.
 		/// </summary>
-		public float NearDistance
-		{
-			get { return this.topLeftFar.Y; }
-		}
+		public float NearDistance => this.topLeftFar.Y;
 		/// <summary>
 		/// Gets far plane clipping distance of this camera.
 		/// </summary>
-		public float FarDistance
-		{
-			get { return this.topLeftNear.Y; }
-		}
+		public float FarDistance => this.topLeftNear.Y;
 		/// <summary>
 		/// Gets or sets position of this camera in world space.
 		/// </summary>
@@ -369,17 +357,11 @@ namespace CryCil.Graphics
 		/// <summary>
 		/// Gets the direction this camera is facing.
 		/// </summary>
-		public Vector3 ViewDirection
-		{
-			get { return this.matrix.ColumnVector1; }
-		}
+		public Vector3 ViewDirection => this.matrix.ColumnVector1;
 		/// <summary>
 		/// Gets Up direction of this camera.
 		/// </summary>
-		public Vector3 UpDirection
-		{
-			get { return this.matrix.ColumnVector2; }
-		}
+		public Vector3 UpDirection => this.matrix.ColumnVector2;
 		/// <summary>
 		/// Gets or sets a set of Euler angles that represent orientation of this camera in world space.
 		/// </summary>
@@ -407,31 +389,19 @@ namespace CryCil.Graphics
 		/// <summary>
 		/// Gets the ratio between width and height of the camera view surface.
 		/// </summary>
-		public float ProjectionRatio
-		{
-			get { return this.projectionRatio; }
-		}
+		public float ProjectionRatio => this.projectionRatio;
 		/// <summary>
 		/// Gets the ratio between width and height of individual pixels.
 		/// </summary>
-		public float PixelAspectRatio
-		{
-			get { return this.pixelAspectRatio; }
-		}
+		public float PixelAspectRatio => this.pixelAspectRatio;
 		/// <summary>
 		/// Gets the width of the camera view surface in pixels.
 		/// </summary>
-		public int Width
-		{
-			get { return this.width; }
-		}
+		public int Width => this.width;
 		/// <summary>
 		/// Gets the height of the camera view surface in pixels.
 		/// </summary>
-		public int Height
-		{
-			get { return this.height; }
-		}
+		public int Height => this.height;
 		/// <summary>
 		/// Gets or sets the value that indicates whether this camera has just been activated. Used for
 		/// motion blur.
@@ -444,24 +414,15 @@ namespace CryCil.Graphics
 		/// <summary>
 		/// Gets position of the top-left vertex of the near-plane.
 		/// </summary>
-		public Vector3 NearPlaneTopLeft
-		{
-			get { return this.topLeftNear; }
-		}
+		public Vector3 NearPlaneTopLeft => this.topLeftNear;
 		/// <summary>
 		/// Gets position of the top-left vertex of the projection-plane.
 		/// </summary>
-		public Vector3 ProjectionPlaneTopLeft
-		{
-			get { return this.topLeftProj; }
-		}
+		public Vector3 ProjectionPlaneTopLeft => this.topLeftProj;
 		/// <summary>
 		/// Gets position of the top-left vertex of the far-clip-plane.
 		/// </summary>
-		public Vector3 FarPlaneTopLeft
-		{
-			get { return this.topLeftFar; }
-		}
+		public Vector3 FarPlaneTopLeft => this.topLeftFar;
 		/// <summary>
 		/// Minimal bound of the range of the z-buffer to use for this camera.
 		/// </summary>
@@ -566,11 +527,8 @@ namespace CryCil.Graphics
 		{
 			// Set up the projection matrix.
 			Matrix44 projection =
-				Transformation.Projection.Create
-					(
-					 this.HorizontalFieldOfView, this.VerticalFieldOfView,
-					 this.NearDistance, this.FarDistance
-					);
+				Transformation.Projection.Create(this.HorizontalFieldOfView, this.VerticalFieldOfView,
+												 this.NearDistance, this.FarDistance);
 			// Set up the look-at matrix.
 			Vector3 cameraPosition = this.Position;
 			Matrix44 view = Transformation.View.Create(cameraPosition, cameraPosition + this.ViewDirection);
@@ -630,11 +588,8 @@ namespace CryCil.Graphics
 		{
 			// Set up the projection matrix.
 			Matrix44 projection =
-				Transformation.Projection.Create
-					(
-					 this.HorizontalFieldOfView, this.VerticalFieldOfView,
-					 this.NearDistance, this.FarDistance
-					);
+				Transformation.Projection.Create(this.HorizontalFieldOfView, this.VerticalFieldOfView,
+												 this.NearDistance, this.FarDistance);
 			// Set up the look-at matrix.
 			Vector3 cameraPosition = this.Position;
 			Matrix44 view = Transformation.View.Create(cameraPosition, cameraPosition + this.ViewDirection);
@@ -696,11 +651,8 @@ namespace CryCil.Graphics
 		{
 			// Set up the projection matrix.
 			Matrix44 projection =
-				Transformation.Projection.Create
-					(
-					 this.HorizontalFieldOfView, this.VerticalFieldOfView,
-					 this.NearDistance, this.FarDistance
-					);
+				Transformation.Projection.Create(this.HorizontalFieldOfView, this.VerticalFieldOfView,
+												 this.NearDistance, this.FarDistance);
 			// Set up the look-at matrix.
 			Vector3 cameraPosition = this.Position;
 			Matrix44 view = Transformation.View.Create(cameraPosition, cameraPosition + this.ViewDirection);
@@ -779,16 +731,18 @@ namespace CryCil.Graphics
 			this.pixelAspectRatio = pixelAspectRatio;
 
 			float projLeftTopX = -width * 0.5f;
-			float projLeftTopY = (float)((1.0f / Math.Tan(this.fov * 0.5f)) * (height * 0.5f));
+			float projLeftTopY = (float)(1.0f / Math.Tan(this.fov * 0.5f) * (height * 0.5f));
 			float projLeftTopZ = height * 0.5f;
 
 			this.topLeftProj.X = projLeftTopX;
 			this.topLeftProj.Y = projLeftTopY;
 			this.topLeftProj.Z = projLeftTopZ;
 
-			Contract.Assert(
-						    Math.Abs(Math.Acos(new Vector3(0, this.topLeftProj.Y, this.topLeftProj.Z).Normalized.Y) * 2 - this.fov) <
-							0.001);
+#if CONTRACTS_FULL
+			Vector3 topLeftProjYZ = new Vector3(0, this.topLeftProj.Y, this.topLeftProj.Z).Normalized;
+
+			Contract.Assert(Math.Abs(Math.Acos(topLeftProjYZ.Y) * 2 - this.fov) < 0.001);
+#endif
 
 			float invProjLeftTopY = 1.0f / projLeftTopY;
 			this.topLeftNear.X = nearPlane * projLeftTopX * invProjLeftTopY;
@@ -866,14 +820,11 @@ namespace CryCil.Graphics
 			//If the absolute value of the distance from the center of the OBB to the plane
 			//is larger then the "radius" of the OBB, then the OBB is outside the frustum.
 
-			return !this.CameraFrustumPlanes.Any
-				(
-				 plane =>
-				 {
-					 float t = plane.SignedDistance(p);
-					 return t > 0 && t > Math.Abs(plane.Normal * ax) + Math.Abs(plane.Normal * ay) + Math.Abs(plane.Normal * az);
-				 }
-				);
+			return !this.CameraFrustumPlanes.Any(plane =>
+			{
+				float t = plane.SignedDistance(p);
+				return t > 0 && t > Math.Abs(plane.Normal * ax) + Math.Abs(plane.Normal * ay) + Math.Abs(plane.Normal * az);
+			});
 		}
 		#endregion
 		#region Utilities

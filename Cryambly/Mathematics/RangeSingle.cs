@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace CryCil
 {
@@ -16,32 +17,20 @@ namespace CryCil
 		/// <summary>
 		/// Gets the length of this range.
 		/// </summary>
-		public float Length
-		{
-			get { return this.end - this.start; }
-		}
+		public float Length => this.end - this.start;
 		/// <summary>
 		/// Indicates whether this range is empty.
 		/// </summary>
 		/// <remarks>Length of empty range is zero.</remarks>
-		public bool IsEmpty
-		{
-			get { return Math.Abs(this.end - this.start) < MathHelpers.ZeroTolerance; }
-		}
+		public bool IsEmpty => Math.Abs(this.end - this.start) < MathHelpers.ZeroTolerance;
 		/// <summary>
 		/// Gets the starting value of the range.
 		/// </summary>
-		public float Start
-		{
-			get { return this.start; }
-		}
+		public float Start => this.start;
 		/// <summary>
 		/// Gets the ending value of the range.
 		/// </summary>
-		public float End
-		{
-			get { return this.end; }
-		}
+		public float End => this.end;
 		#endregion
 		#region Construction
 		/// <summary>
@@ -177,8 +166,8 @@ namespace CryCil
 		/// <param name="left"> Left operand.</param>
 		/// <param name="right">Right operand.</param>
 		/// <returns>
-		/// A range that contains common parts of given ranges if they intersect, otherwise returns an
-		/// empty range.
+		/// A range that contains common parts of given ranges if they intersect, otherwise returns an empty
+		/// range.
 		/// </returns>
 		public static RangeSingle operator &(RangeSingle left, RangeSingle right)
 		{

@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Runtime.Remoting.Messaging;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 using CryCil.Engine.DebugServices;
 
 namespace MainTestingAssembly
@@ -50,14 +46,13 @@ namespace MainTestingAssembly
 		{
 		}
 	}
-	static class ExceptionTestingMethods
+	internal static class ExceptionTestingMethods
 	{
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		internal static extern void ThrowExceptionInternal(Exception ex);
 	}
 	/// <summary>
-	/// Defines static methods that are used by underlying framework to test IMonoExceptions
-	/// implementation.
+	/// Defines static methods that are used by underlying framework to test IMonoExceptions implementation.
 	/// </summary>
 	public static class ExceptionTesting
 	{

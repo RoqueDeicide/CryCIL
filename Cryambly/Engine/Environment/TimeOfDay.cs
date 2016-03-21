@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
@@ -13,7 +13,6 @@ namespace CryCil.Engine.Environment
 	/// <summary>
 	/// Provides access to CryEngine Time-Of-Day API.
 	/// </summary>
-	[SuppressMessage("ReSharper", "ExceptionNotThrown")]
 	public static class TimeOfDay
 	{
 		#region Nested Types
@@ -36,38 +35,23 @@ namespace CryCil.Engine.Environment
 			/// <summary>
 			/// Internally used name of the variable.
 			/// </summary>
-			public string Name
-			{
-				get { return Marshal.PtrToStringAnsi(this.name); }
-			}
+			public string Name => Marshal.PtrToStringAnsi(this.name);
 			/// <summary>
 			/// Name of the variable that is displayed in the UI.
 			/// </summary>
-			public string DisplayName
-			{
-				get { return Marshal.PtrToStringAnsi(this.displayName); }
-			}
+			public string DisplayName => Marshal.PtrToStringAnsi(this.displayName);
 			/// <summary>
 			/// Name of the group this variable is part of.
 			/// </summary>
-			public string Group
-			{
-				get { return Marshal.PtrToStringAnsi(this.group); }
-			}
+			public string Group => Marshal.PtrToStringAnsi(this.@group);
 			/// <summary>
 			/// Identifier of this variable.
 			/// </summary>
-			public TimeOfDayParameterId Id
-			{
-				get { return this.id; }
-			}
+			public TimeOfDayParameterId Id => this.id;
 			/// <summary>
 			/// Indicates whether the value of this variable represents color.
 			/// </summary>
-			public bool IsColor
-			{
-				get { return this.isColor; }
-			}
+			public bool IsColor => this.isColor;
 			/// <summary>
 			/// Gets the value of the variable that is a single-precision floating point number.
 			/// </summary>
@@ -105,10 +89,7 @@ namespace CryCil.Engine.Environment
 			/// <summary>
 			/// Spline that describes how the value of this variable changes as the time advances.
 			/// </summary>
-			public CryEngineSpline Spline
-			{
-				get { return this.spline; }
-			}
+			public CryEngineSpline Spline => this.spline;
 			#endregion
 		}
 		#endregion

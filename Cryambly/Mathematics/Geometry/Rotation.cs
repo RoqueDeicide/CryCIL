@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil.Geometry
 {
@@ -31,7 +32,7 @@ namespace CryCil.Geometry
 			return
 				cosine - 1 < MathHelpers.ZeroTolerance
 					? new AngleAxis()
-					: new AngleAxis {Vector = (v1 % v2) * (float)Math.Acos(cosine)};
+					: new AngleAxis {Vector = v1 % v2 * (float)Math.Acos(cosine)};
 		}
 		/// <summary>
 		/// Calculates rotation between 2 vectors.
@@ -60,7 +61,7 @@ namespace CryCil.Geometry
 			return
 				cosine - 1 < MathHelpers.ZeroTolerance
 					? new AngleAxis()
-					: new AngleAxis {Vector = (v1 % v2) * (float)Math.Acos(cosine)};
+					: new AngleAxis {Vector = v1 % v2 * (float)Math.Acos(cosine)};
 		}
 		/// <summary>
 		/// Calculates rotation between 2 normalized vectors.

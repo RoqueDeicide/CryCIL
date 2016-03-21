@@ -29,10 +29,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets coordinates of the center of the explosion that is used for occlusion calculations.
 		/// </summary>
-		public Vector3 OcclusionEpicenter
-		{
-			get { return this.occlusionEpicenter; }
-		}
+		public Vector3 OcclusionEpicenter => this.occlusionEpicenter;
 		/// <summary>
 		/// Gets coordinates of the center of the explosion that is used for impulse calculations.
 		/// </summary>
@@ -44,53 +41,38 @@ namespace CryCil.Engine.Physics
 		/// float dS;				// Area of the surface.
 		/// Vector3 n;				// Normal to the surface.
 		/// Vector3 hitLocation;	// Coordinates of the point where the surface got hit.
-		/// 
+		///
 		/// float k                      = this.ImpulsivePressureAtRadius * this.Radius * this.Radius;
 		/// Vector3 pointToEpicenter     = this.ImpulseEpicenter - hitLocation;
 		/// Vector3 directionToEpicenter = pointToEpicenter.Normalized;
 		/// float distanceToEpicenter    = pointToEpicenter.Length;
-		/// 
+		///
 		/// float angularModifier  = Math.Max(0.0f, n * directionToEpicenter);
 		/// float distanceModifier = Math.Max(this.MinimalRadius, distanceToEpicenter);
-		/// 
+		///
 		/// Vector3 impulse = dS * k * n * angularModifier / (distanceModifier * distanceModifier);
 		/// </code>
 		/// </remarks>
-		public Vector3 ImpulseEpicenter
-		{
-			get { return this.impulseEpicenter; }
-		}
+		public Vector3 ImpulseEpicenter => this.impulseEpicenter;
 		/// <summary>
 		/// Gets the minimal distance from the <see cref="ImpulseEpicenter"/> that can be used to calculate
 		/// strength of the impulse.
 		/// </summary>
-		public float MinimalRadius
-		{
-			get { return this.minimalRadius; }
-		}
+		public float MinimalRadius => this.minimalRadius;
 		/// <summary>
-		/// Gets the maximal distance from the <see cref="ImpulseEpicenter"/> where the maximal impulse
-		/// will be felt (?).
+		/// Gets the maximal distance from the <see cref="ImpulseEpicenter"/> where the maximal impulse will
+		/// be felt (?).
 		/// </summary>
-		public float MaximalRadius
-		{
-			get { return this.maximalRadius; }
-		}
+		public float MaximalRadius => this.maximalRadius;
 		/// <summary>
 		/// Gets radius of the explosion.
 		/// </summary>
-		public float Radius
-		{
-			get { return this.radius; }
-		}
+		public float Radius => this.radius;
 		/// <summary>
-		/// Gets the magnitude of impulsive pressure the affected body is going to feel when its distance
-		/// to <see cref="ImpulseEpicenter"/> is close to <see cref="Radius"/>.
+		/// Gets the magnitude of impulsive pressure the affected body is going to feel when its distance to
+		/// <see cref="ImpulseEpicenter"/> is close to <see cref="Radius"/>.
 		/// </summary>
-		public float ImpulsivePressureAtRadius
-		{
-			get { return this.impulsivePressureAtRadius; }
-		}
+		public float ImpulsivePressureAtRadius => this.impulsivePressureAtRadius;
 		/// <summary>
 		/// Gets the resolution of occlusion cubemap.
 		/// </summary>
@@ -104,18 +86,12 @@ namespace CryCil.Engine.Physics
 		/// simulation. It can be used to apply explosion impulses to objects that spawn after it (like
 		/// debris) without having to calculate the cubemap again.
 		/// </value>
-		public int OcclusionResolution
-		{
-			get { return this.occlusionResolution; }
-		}
+		public int OcclusionResolution => this.occlusionResolution;
 		/// <summary>
 		/// Gets number of occlusion cubemap cells that can be created.
 		/// </summary>
 		/// <remarks>With sufficiently high number of cells the explosion can go around corners.</remarks>
-		public int Grow
-		{
-			get { return this.grow; }
-		}
+		public int Grow => this.grow;
 		/// <summary>
 		/// Gets the minimal distance from <see cref="OcclusionEpicenter"/> the geometry must be at to be
 		/// drawn onto occlusion cubemap.
@@ -124,42 +100,27 @@ namespace CryCil.Engine.Physics
 		/// This property can be used to prevent silly situations like steps of stairs or little stones
 		/// preventing a player for getting hit by the explosion.
 		/// </remarks>
-		public float MinimalOcclusionRadius
-		{
-			get { return this.minimalOcclusionRadius; }
-		}
+		public float MinimalOcclusionRadius => this.minimalOcclusionRadius;
 		/// <summary>
 		/// Gets the scale of the hole that will be created by this explosion in terrain (?).
 		/// </summary>
-		public float HoleSize
-		{
-			get { return this.holeSize; }
-		}
+		public float HoleSize => this.holeSize;
 		/// <summary>
 		/// Gets direction of propagation of the explosion.
 		/// </summary>
 		/// <remarks>
 		/// Original documentation for this is: hit direction, for aligning the explosion boolean shape.
 		/// </remarks>
-		public Vector3 ExplodingDirection
-		{
-			get { return this.explodingDirection; }
-		}
+		public Vector3 ExplodingDirection => this.explodingDirection;
 		/// <summary>
 		/// Gets the identifier of the type of hole that will be created by this explosion.
 		/// </summary>
 		/// <remarks>Types of holes are defined using <see cref="ExplosionShapes.Add"/>.</remarks>
-		public int HoleType
-		{
-			get { return this.holeType; }
-		}
+		public int HoleType => this.holeType;
 		/// <summary>
 		/// Gets the value that indicates whether this explosion has to deform the shape of entities.
 		/// </summary>
-		public bool ForceDeformEntities
-		{
-			get { return this.forceDeformEntities; }
-		}
+		public bool ForceDeformEntities => this.forceDeformEntities;
 		#endregion
 		#region Construction
 		/// <summary>

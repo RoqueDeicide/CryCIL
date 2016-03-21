@@ -22,18 +22,12 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the zero-based index of this vertex in resultant mesh.
 		/// </summary>
-		public int ResultantIndex
-		{
-			get { return this.idx; }
-		}
+		public int ResultantIndex => this.idx;
 		/// <summary>
 		/// Gets the zero-based index of this vertex in original mesh, if it existed in it.
 		/// </summary>
 		/// <returns>- 1, if this vertex didn't exist in original mesh.</returns>
-		public int OriginalIndex
-		{
-			get { return this.iBvtx; }
-		}
+		public int OriginalIndex => this.iBvtx;
 		#endregion
 	}
 	/// <summary>
@@ -56,32 +50,23 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the zero-based index of this triangle in resultant mesh.
 		/// </summary>
-		public int ResultantIndex
-		{
-			get { return this.idxNew; }
-		}
+		public int ResultantIndex => this.idxNew;
 		/// <summary>
 		/// Gets the zero-based index of this triangle in original mesh.
 		/// </summary>
-		public int OriginalIndex
-		{
-			get { return this.idxOrg; }
-		}
+		public int OriginalIndex => this.idxOrg;
 		/// <summary>
 		/// Gets the value that indicates whether this triangle was present in original mesh.
 		/// </summary>
-		public bool OriginalTriangle
-		{
-			get { return this.iop == 1; }
-		}
+		public bool OriginalTriangle => this.iop == 1;
 		/// <summary>
 		/// Gets a vector that contains 3 values that can be used to acquire the indices of this triangle's
 		/// vertices. See Remarks section for details.
 		/// </summary>
 		/// <remarks>
 		/// <para>
-		/// If the value is greater then or equal to 0 then it represents the zero-based index of the
-		/// vertex in resultant mesh.
+		/// If the value is greater then or equal to 0 then it represents the zero-based index of the vertex
+		/// in resultant mesh.
 		/// </para>
 		/// <para>
 		/// If the value is less then 0 then the index of the vertex must be acquired through the following
@@ -94,17 +79,11 @@ namespace CryCil.Engine.Physics
 		/// }
 		/// </code>
 		/// </remarks>
-		public Vector3Int32 VertexIndexes
-		{
-			get { return this.iVtx; }
-		}
+		public Vector3Int32 VertexIndexes => this.iVtx;
 		/// <summary>
 		/// Gets the original area of the triangle.
 		/// </summary>
-		public float OriginalArea
-		{
-			get { return this.areaOrg; }
-		}
+		public float OriginalArea => this.areaOrg;
 		#endregion
 		#region Interface
 		/// <summary>
@@ -154,42 +133,27 @@ namespace CryCil.Engine.Physics
 		/// Gets the zero-based index of the ABC triangle that is mentioned in Remarks section for
 		/// <see cref="JunctionVertexFix"/>.
 		/// </summary>
-		public int BigTriangleIndex
-		{
-			get { return this.iABC; }
-		}
+		public int BigTriangleIndex => this.iABC;
 		/// <summary>
 		/// Gets the zero-based index of the ACJ triangle that is mentioned in Remarks section for
 		/// <see cref="JunctionVertexFix"/>.
 		/// </summary>
-		public int SmallTriangleIndex
-		{
-			get { return this.iACJ; }
-		}
+		public int SmallTriangleIndex => this.iACJ;
 		/// <summary>
 		/// Gets the zero-based index of the CA edge in ABC triangle that is mentioned in Remarks section
 		/// for <see cref="JunctionVertexFix"/>.
 		/// </summary>
-		public int BigTriangleEdgeIndex
-		{
-			get { return this.iCA; }
-		}
+		public int BigTriangleEdgeIndex => this.iCA;
 		/// <summary>
 		/// Gets the zero-based index of the AC edge in ACJ triangle that is mentioned in Remarks section
 		/// for <see cref="JunctionVertexFix"/>.
 		/// </summary>
-		public int SmallTriangleEdgeIndex
-		{
-			get { return this.iAC; }
-		}
+		public int SmallTriangleEdgeIndex => this.iAC;
 		/// <summary>
 		/// Gets the zero-based index of the junction vertex that is mentioned in Remarks section for
 		/// <see cref="JunctionVertexFix"/>.
 		/// </summary>
-		public int JunctionVertexIndex
-		{
-			get { return this.iTJvtx; }
-		}
+		public int JunctionVertexIndex => this.iTJvtx;
 		#endregion
 	}
 	/// <summary>
@@ -223,10 +187,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the number of changed vertexes.
 		/// </summary>
-		public int Count
-		{
-			get { return this.nNewVtx; }
-		}
+		public int Count => this.nNewVtx;
 		#endregion
 	}
 	/// <summary>
@@ -260,10 +221,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the number of changed triangles.
 		/// </summary>
-		public int Count
-		{
-			get { return this.nNewTri; }
-		}
+		public int Count => this.nNewTri;
 		#endregion
 	}
 	/// <summary>
@@ -298,10 +256,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the number of fixes.
 		/// </summary>
-		public int Count
-		{
-			get { return this.nTJFixes; }
-		}
+		public int Count => this.nTJFixes;
 		#endregion
 	}
 	/// <summary>
@@ -335,10 +290,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the number of moved boxes.
 		/// </summary>
-		public int Count
-		{
-			get { return this.nMovedBoxes; }
-		}
+		public int Count => this.nMovedBoxes;
 		#endregion
 	}
 	/// <summary>
@@ -373,10 +325,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the number of removed vertexes.
 		/// </summary>
-		public int Count
-		{
-			get { return this.nRemovedVtx; }
-		}
+		public int Count => this.nRemovedVtx;
 		#endregion
 	}
 	/// <summary>
@@ -411,10 +360,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the number of removed triangles.
 		/// </summary>
-		public int Count
-		{
-			get { return this.nRemovedTri; }
-		}
+		public int Count => this.nRemovedTri;
 		#endregion
 	}
 	/// <summary>
@@ -442,10 +388,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the value that indicates whether this object is the last one in the sequence of updates.
 		/// </summary>
-		public bool IsLast
-		{
-			get { return this.next != null; }
-		}
+		public bool IsLast => this.next != null;
 		/// <summary>
 		/// Gets the next mesh update object in the linked list.
 		/// </summary>
@@ -466,67 +409,40 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the mesh that was created as a result of changes this object represents.
 		/// </summary>
-		public GeometryShape ResultantMesh
-		{
-			get { return this.result; }
-		}
+		public GeometryShape ResultantMesh => this.result;
 		/// <summary>
 		/// Gets the mesh that changed.
 		/// </summary>
-		public GeometryShape OriginalMesh
-		{
-			get { return this.original; }
-		}
+		public GeometryShape OriginalMesh => this.original;
 		/// <summary>
 		/// Gets the array of indexes of vertexes that were removed from <see cref="OriginalMesh"/>.
 		/// </summary>
-		public RemovedVertexes RemovedVertexes
-		{
-			get { return this.removedVertexes; }
-		}
+		public RemovedVertexes RemovedVertexes => this.removedVertexes;
 		/// <summary>
 		/// Gets the array of indexes of triangles that were removed from <see cref="OriginalMesh"/>.
 		/// </summary>
-		public RemovedTriangles RemovedTriangles
-		{
-			get { return this.removedTriangles; }
-		}
+		public RemovedTriangles RemovedTriangles => this.removedTriangles;
 		/// <summary>
 		/// Gets the array of objects that represent changes that were made to vertexes.
 		/// </summary>
-		public VertexChanges VertexChanges
-		{
-			get { return this.vertexChanges; }
-		}
+		public VertexChanges VertexChanges => this.vertexChanges;
 		/// <summary>
 		/// Gets the array of objects that represent changes that were made to triangles.
 		/// </summary>
-		public TriangleChanges TriangleChanges
-		{
-			get { return this.triangleChanges; }
-		}
+		public TriangleChanges TriangleChanges => this.triangleChanges;
 		/// <summary>
 		/// Gets the array of objects that describe fixes that were applied to solve problems that are
 		/// described in Remarks section of <see cref="JunctionVertexFix"/>.
 		/// </summary>
-		public JunctionVertexFixes JunctionVertexFixes
-		{
-			get { return this.fixes; }
-		}
+		public JunctionVertexFixes JunctionVertexFixes => this.fixes;
 		/// <summary>
 		/// Gets the array of new objects that represent the bounding volume boxes.
 		/// </summary>
-		public MovedBoxes MovedBoxes
-		{
-			get { return this.movedBoxes; }
-		}
+		public MovedBoxes MovedBoxes => this.movedBoxes;
 		/// <summary>
 		/// Gets the scale of resultant mesh relative to scale of the original mesh.
 		/// </summary>
-		public float RelativeScale
-		{
-			get { return this.relScale; }
-		}
+		public float RelativeScale => this.relScale;
 		#endregion
 		#region Interface
 		/// <summary>

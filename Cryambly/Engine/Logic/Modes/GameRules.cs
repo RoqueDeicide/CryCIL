@@ -35,10 +35,7 @@ namespace CryCil.Engine.Logic
 		/// Gets the object that represents current game rule set.
 		/// </summary>
 		[CanBeNull]
-		public static GameRules CurrentRules
-		{
-			get { return GetCurrentGameRulesObject(); }
-		}
+		public static GameRules CurrentRules => GetCurrentGameRulesObject();
 		#endregion
 		#region Properties
 		/// <summary>
@@ -92,9 +89,7 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Gets or sets the value that indicates whether this object represents a default set of rules.
 		/// </summary>
-		/// <remarks>
-		/// When setting this property, only value of <c>true</c> will make a difference.
-		/// </remarks>
+		/// <remarks>When setting this property, only value of <c>true</c> will make a difference.</remarks>
 		public bool IsDefault
 		{
 			get
@@ -153,11 +148,11 @@ namespace CryCil.Engine.Logic
 		{
 			if (gameRules.IsNullOrEmpty())
 			{
-				throw new ArgumentNullException("gameRules", "Game rule set name cannot be null.");
+				throw new ArgumentNullException(nameof(gameRules), "Game rule set name cannot be null.");
 			}
 			if (alias.IsNullOrEmpty())
 			{
-				throw new ArgumentNullException("alias", "Alias cannot be null.");
+				throw new ArgumentNullException(nameof(alias), "Alias cannot be null.");
 			}
 
 			AddGameRulesAlias(gameRules, alias);
@@ -175,11 +170,11 @@ namespace CryCil.Engine.Logic
 		{
 			if (gameRules.IsNullOrEmpty())
 			{
-				throw new ArgumentNullException("gameRules", "Game rule set name cannot be null.");
+				throw new ArgumentNullException(nameof(gameRules), "Game rule set name cannot be null.");
 			}
 			if (path.IsNullOrEmpty())
 			{
-				throw new ArgumentNullException("path", "Path cannot be null.");
+				throw new ArgumentNullException(nameof(path), "Path cannot be null.");
 			}
 
 			AddGameRulesLevelLocation(gameRules, path);
@@ -189,8 +184,8 @@ namespace CryCil.Engine.Logic
 		/// </summary>
 		/// <param name="gameRules">Rule set the levels must support.</param>
 		/// <param name="index">    
-		/// Zero-based index of the path that is used by the level system to look up the levels that
-		/// support specified rule set.
+		/// Zero-based index of the path that is used by the level system to look up the levels that support
+		/// specified rule set.
 		/// </param>
 		/// <returns>
 		/// A path to the folder where levels that support specified rule set are looked up, or <c>null</c>
@@ -247,7 +242,7 @@ namespace CryCil.Engine.Logic
 		{
 			if (gameRules.IsNullOrWhiteSpace())
 			{
-				throw new ArgumentNullException("gameRules", "Name of the rule set cannot be null.");
+				throw new ArgumentNullException(nameof(gameRules), "Name of the rule set cannot be null.");
 			}
 
 			ConsoleVariable cvar = CryConsole.GetVariable(DefaultGameRulesCVarName);
@@ -260,8 +255,7 @@ namespace CryCil.Engine.Logic
 			var types = from assembly in MonoInterface.CryCilAssemblies
 						from type in assembly.GetTypes()
 						let attribute = type.GetAttribute<GameRulesAttribute>()
-						where type.Implements<GameRules>() && attribute != null &&
-							  !attribute.Name.IsNullOrWhiteSpace()
+						where type.Implements<GameRules>() && !(attribute?.Name).IsNullOrWhiteSpace()
 						select type;
 
 			Type[] typesArray = types.ToArray();
@@ -300,8 +294,8 @@ namespace CryCil.Engine.Logic
 		/// </summary>
 		/// <remarks>
 		/// This default implementation reports <c>false</c> unless <paramref name="cause"/> is equal to
-		/// <see cref="DisconnectionCause.Timeout"/> or <paramref name="description"/> is equal to
-		/// "timeout" (comparison is not case-sensitive).
+		/// <see cref="DisconnectionCause.Timeout"/> or <paramref name="description"/> is equal to "timeout"
+		/// (comparison is not case-sensitive).
 		/// </remarks>
 		/// <param name="client">     
 		/// Identifier of the channel that is used to communicate with a client.
@@ -551,8 +545,7 @@ namespace CryCil.Engine.Logic
 		/// <param name="where">  A value that specifies where to send the message.</param>
 		/// <param name="channel">
 		/// Identifier of the channel that is used to communicate with a client this message has to be sent
-		/// to, if <paramref name="where"/> argument has a flag <see cref="RmiTarget.ToClientChannel"/>
-		/// set.
+		/// to, if <paramref name="where"/> argument has a flag <see cref="RmiTarget.ToClientChannel"/> set.
 		/// </param>
 		public virtual void SendTextMessage(TextMessageType type, string message, RmiTarget where,
 											ChannelId channel)
@@ -578,8 +571,8 @@ namespace CryCil.Engine.Logic
 		/// <param name="source"> An entity that sent the message.</param>
 		/// <param name="message">Text of the message.</param>
 		/// <param name="target"> 
-		/// An entity that must receive the message. Only needs to be specified when
-		/// <paramref name="type"/> is equal to <see cref="ChatMessageType.Target"/>.
+		/// An entity that must receive the message. Only needs to be specified when <paramref name="type"/>
+		/// is equal to <see cref="ChatMessageType.Target"/>.
 		/// </param>
 		public virtual void SendChatMessage(ChatMessageType type, EntityId source, string message,
 											EntityId target = new EntityId())

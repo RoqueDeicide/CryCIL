@@ -80,8 +80,8 @@ namespace CryCil.Geometry
 		/// </summary>
 		/// <param name="ray">  The ray to test.</param>
 		/// <param name="point">
-		/// When the method completes, contains the point of intersection, or <see cref="Vector3"/> if
-		/// there was no intersection.
+		/// When the method completes, contains the point of intersection, or <see cref="Vector3"/> if there
+		/// was no intersection.
 		/// </param>
 		/// <returns>Whether the two objects intersected.</returns>
 		public bool Intersects(ref Ray ray, out Vector3 point)
@@ -226,7 +226,7 @@ namespace CryCil.Geometry
 			float y = box.Minimum.Y - box.Maximum.Y;
 			float z = box.Minimum.Z - box.Maximum.Z;
 
-			var distance = Math.Sqrt((x * x) + (y * y) + (z * z));
+			var distance = Math.Sqrt(x * x + y * y + z * z);
 			result.Radius = (float)distance * 0.5f;
 		}
 		/// <summary>
@@ -241,8 +241,8 @@ namespace CryCil.Geometry
 			return result;
 		}
 		/// <summary>
-		/// Constructs a <see cref="BoundingSphere"/> that is the as large as the total combined area of
-		/// the two specified spheres.
+		/// Constructs a <see cref="BoundingSphere"/> that is the as large as the total combined area of the
+		/// two specified spheres.
 		/// </summary>
 		/// <param name="value1">The first sphere to merge.</param>
 		/// <param name="value2">The second sphere to merge.</param>
@@ -280,8 +280,8 @@ namespace CryCil.Geometry
 			result.Radius = max;
 		}
 		/// <summary>
-		/// Constructs a <see cref="BoundingSphere"/> that is the as large as the total combined area of
-		/// the two specified spheres.
+		/// Constructs a <see cref="BoundingSphere"/> that is the as large as the total combined area of the
+		/// two specified spheres.
 		/// </summary>
 		/// <param name="value1">The first sphere to merge.</param>
 		/// <param name="value2">The second sphere to merge.</param>
@@ -364,8 +364,8 @@ namespace CryCil.Geometry
 		/// Returns a hash code for this instance.
 		/// </summary>
 		/// <returns>
-		/// A hash code for this instance, suitable for use in hashing algorithms and data structures like
-		/// a hash table.
+		/// A hash code for this instance, suitable for use in hashing algorithms and data structures like a
+		/// hash table.
 		/// </returns>
 		public override int GetHashCode()
 		{
@@ -405,9 +405,7 @@ namespace CryCil.Geometry
 		public override bool Equals(object value)
 		{
 			return
-				value != null &&
-				(value.GetType() == this.GetType() &&
-				 this.Equals((BoundingSphere)value));
+				value != null && value.GetType() == this.GetType() && this.Equals((BoundingSphere)value);
 		}
 	}
 }

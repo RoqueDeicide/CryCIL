@@ -22,10 +22,7 @@ namespace CryCil.Engine.Input
 		/// <summary>
 		/// Determines whether a mouse is connected to the machine.
 		/// </summary>
-		public static bool Available
-		{
-			get { return Inputs.DeviceAvailable(InputDeviceType.Mouse); }
-		}
+		public static bool Available => Inputs.DeviceAvailable(InputDeviceType.Mouse);
 		#endregion
 		#region Events
 		/// <summary>

@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace CryCil.Engine.Files
@@ -9,12 +9,12 @@ namespace CryCil.Engine.Files
 	/// </summary>
 	/// <remarks>
 	/// <para>
-	/// Aliases are special identifiers that can be put into a path and unwrapped into a dynamically
-	/// defined path segment.
+	/// Aliases are special identifiers that can be put into a path and unwrapped into a dynamically defined
+	/// path segment.
 	/// </para>
 	/// <para>
-	/// Using aliases enhances portability since you can register the alias to different values depending
-	/// on the situation.
+	/// Using aliases enhances portability since you can register the alias to different values depending on
+	/// the situation.
 	/// </para>
 	/// <para>
 	/// There are no explicit references to the format of the alias names but the only example ("%USER%")
@@ -22,12 +22,11 @@ namespace CryCil.Engine.Files
 	/// </para>
 	/// <para>
 	/// WARNING: All internal path handling code uses only ASCII characters, which means, you should avoid
-	///          using aliases that may resolve into paths that have Unicode characters (like
-	///          aforementioned %USER% alias), or warn users about potential issues with using national
-	///          alphabets for stuff like Windows user names.
+	///          using aliases that may resolve into paths that have Unicode characters (like aforementioned
+	///          %USER% alias), or warn users about potential issues with using national alphabets for stuff
+	///          like Windows user names.
 	/// </para>
 	/// </remarks>
-	[SuppressMessage("ReSharper", "ExceptionNotThrown")]
 	public static class PathAliases
 	{
 		/// <summary>

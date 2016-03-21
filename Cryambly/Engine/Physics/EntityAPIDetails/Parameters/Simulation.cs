@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
 
@@ -63,7 +64,8 @@ namespace CryCil.Engine.Physics
 		/// The formula that is used for damping:
 		/// <code>
 		/// Vector3 velocity = originalVelocity * (1 - damping * timeInterval);
-		/// </code>.
+		/// </code>
+		/// .
 		/// </para>
 		/// <para>Damping is used to simulate environmental resistance (e.g. air friction).</para>
 		/// </remarks>

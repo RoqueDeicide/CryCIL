@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 
 namespace CryCil
 {
@@ -10,10 +11,7 @@ namespace CryCil
 		/// <summary>
 		/// Creates deep copy of this vector.
 		/// </summary>
-		Vector2d IVector<double, Vector2d>.DeepCopy
-		{
-			get { return this; }
-		}
+		Vector2d IVector<double, Vector2d>.DeepCopy => this;
 		/// <summary>
 		/// Calculates the dot product of this vector and another one.
 		/// </summary>
@@ -107,7 +105,7 @@ namespace CryCil
 		/// </returns>
 		public bool Equals(Vector2d other, double epsilon)
 		{
-			return (Math.Abs(other.X - this.X) < epsilon && Math.Abs(other.Y - this.Y) < epsilon);
+			return Math.Abs(other.X - this.X) < epsilon && Math.Abs(other.Y - this.Y) < epsilon;
 		}
 		#endregion
 		#region IComparable<Vector2d>
@@ -131,8 +129,8 @@ namespace CryCil
 		/// Returns a hash code for this instance.
 		/// </summary>
 		/// <returns>
-		/// A hash code for this instance, suitable for use in hashing algorithms and data structures like
-		/// a hash table.
+		/// A hash code for this instance, suitable for use in hashing algorithms and data structures like a
+		/// hash table.
 		/// </returns>
 		public override int GetHashCode()
 		{

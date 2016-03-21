@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using CryCil.Annotations;
@@ -17,11 +16,12 @@ namespace CryCil.RunTime.Compilation
 		static ProjectFactory()
 		{
 			// Find types in this assembly that implement IProjectFile interface.
-			projectTypes =
-				(from type in AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes())
-				 where type.ContainsAttribute<ProjectFileAttribute>()
-				 select type)
-					.ToList();
+			var types = from assembly in AppDomain.CurrentDomain.GetAssemblies()
+						from type in assembly.GetTypes()
+						where type.ContainsAttribute<ProjectFileAttribute>()
+						select type;
+
+			projectTypes = types.ToList();
 
 #if DEBUG
 			if (projectTypes.Count == 0)
@@ -32,12 +32,14 @@ namespace CryCil.RunTime.Compilation
 #endif
 			// Register extensions of project files.
 			Type[] ctorParameters = {typeof(string), typeof(string)};
-			projectExtensions =
-				(from projectType in projectTypes
-				 let attr = projectType.GetAttribute<ProjectFileAttribute>()
-				 where !string.IsNullOrWhiteSpace(attr.Extension) && projectType.GetConstructor(ctorParameters) != null
-				 select attr.Extension)
-					.ToList();
+
+			var extensions = from projectType in projectTypes
+							 let attr = projectType.GetAttribute<ProjectFileAttribute>()
+							 where !string.IsNullOrWhiteSpace(attr.Extension) &&
+								   projectType.GetConstructor(ctorParameters) != null
+							 select attr.Extension;
+
+			projectExtensions = extensions.ToList();
 		}
 		/// <summary>
 		/// Creates a project file wrapper object of type that corresponds given description.
@@ -102,7 +104,7 @@ namespace CryCil.RunTime.Compilation
 	/// </summary>
 	/// <remarks>
 	/// It is necessary for the project class to have constructor that takes two arguments of type
-	/// <see cref="String"/>, first one being a name, and last one being the path to the file.
+	/// <see cref="string"/>, first one being a name, and last one being the path to the file.
 	/// </remarks>
 	[BaseTypeRequired(typeof(IProject))]
 	[AttributeUsage(AttributeTargets.Class, Inherited = false)]

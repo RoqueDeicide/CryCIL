@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil.Engine.Audio
 {
@@ -14,10 +15,7 @@ namespace CryCil.Engine.Audio
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 
 		internal IntPtr Handle
 		{
@@ -32,7 +30,6 @@ namespace CryCil.Engine.Audio
 		}
 		#endregion
 		#region Interface
-
 		#endregion
 		#region Utilities
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
@@ -43,8 +40,6 @@ namespace CryCil.Engine.Audio
 				throw new NullReferenceException("This instance is not valid.");
 			}
 		}
-
-
 		#endregion
 	}
 }

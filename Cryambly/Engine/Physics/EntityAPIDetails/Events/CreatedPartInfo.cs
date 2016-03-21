@@ -32,141 +32,87 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the entity that was created to house the part that was broken off.
 		/// </summary>
-		public PhysicalEntity NewPartEntity
-		{
-			get { return this.newEntity; }
-		}
+		public PhysicalEntity NewPartEntity => this.newEntity;
 		/// <summary>
 		/// Gets the identifier that was used by the part when it was within original entity.
 		/// </summary>
-		public int OldPartId
-		{
-			get { return this.oldPartId; }
-		}
+		public int OldPartId => this.oldPartId;
 		/// <summary>
 		/// Gets the identifier that is used by the part within new entity.
 		/// </summary>
-		public int NewPartId
-		{
-			get { return this.newPartId; }
-		}
+		public int NewPartId => this.newPartId;
 		/// <summary>
 		/// Gets the total number of parts that were broken off the entity during the update, for each part
 		/// there is a separate event.
 		/// </summary>
-		public int TotalPartCount
-		{
-			get { return this.totalPartCount; }
-		}
+		public int TotalPartCount => this.totalPartCount;
 		/// <summary>
 		/// Gets the value that indicates whether the new mesh that is used by the part is invalid
 		/// (degenerated, flipped).
 		/// </summary>
-		public bool IsInvalidMesh
-		{
-			get { return this.invalid; }
-		}
+		public bool IsInvalidMesh => this.invalid;
 		/// <summary>
 		/// Gets the value that indicates why a new part was created.
 		/// </summary>
-		public PhysicsPartCreationReason Reason
-		{
-			get { return this.reason; }
-		}
+		public PhysicsPartCreationReason Reason => this.reason;
 		/// <summary>
 		/// Gets the vector that represents the impulse that caused the breakage.
 		/// </summary>
-		public Vector3 BreakageImpulse
-		{
-			get { return this.breakageImpulse; }
-		}
+		public Vector3 BreakageImpulse => this.breakageImpulse;
 		/// <summary>
 		/// Gets the object that represents the angular impulse that caused the breakage.
 		/// </summary>
-		public EulerAngles BreakageAngularImpulse
-		{
-			get { return this.breakageAngularImpulse; }
-		}
+		public EulerAngles BreakageAngularImpulse => this.breakageAngularImpulse;
 		/// <summary>
 		/// Gets the velocity that was assigned to the new entity upon creation.
 		/// </summary>
-		public Vector3 EjectionVelocity
-		{
-			get { return this.ejectionVelocity; }
-		}
+		public Vector3 EjectionVelocity => this.ejectionVelocity;
 		/// <summary>
 		/// Gets the angular velocity that was assigned to the new entity upon creation.
 		/// </summary>
-		public EulerAngles EjectionAngularVelocity
-		{
-			get { return this.ejectionAngularVelocity; }
-		}
+		public EulerAngles EjectionAngularVelocity => this.ejectionAngularVelocity;
 		/// <summary>
 		/// Gets the size of the explosion if the breakage was caused by explosion.
 		/// </summary>
-		public float BreakageSize
-		{
-			get { return this.breakageSize; }
-		}
+		public float BreakageSize => this.breakageSize;
 		/// <summary>
 		/// Gets the value that represents the radius of a cross section of a capsule, if a mesh of the new
 		/// part was successfully approximated with capsules.
 		/// </summary>
-		public float CutRadius
-		{
-			get { return this.cutRadius; }
-		}
+		public float CutRadius => this.cutRadius;
 		/// <summary>
 		/// Gets the position of the cut in local space of the source entity, if a mesh of the new part was
 		/// successfully approximated with capsules.
 		/// </summary>
-		public Vector3 CutSourcePosition
-		{
-			get { return this.cutSourcePosition; }
-		}
+		public Vector3 CutSourcePosition => this.cutSourcePosition;
 		/// <summary>
 		/// Gets the position of the cut in local space of the source entity, if a mesh of the new part was
 		/// successfully approximated with capsules.
 		/// </summary>
-		public Vector3 CutPartPosition
-		{
-			get { return this.cutPartPosition; }
-		}
+		public Vector3 CutPartPosition => this.cutPartPosition;
 		/// <summary>
 		/// Gets the normal to plane of the cut in local space of the new part entity, if a mesh of the new
 		/// part was successfully approximated with capsules.
 		/// </summary>
-		public Vector3 CutSourceNormal
-		{
-			get { return this.cutSourceNormal; }
-		}
+		public Vector3 CutSourceNormal => this.cutSourceNormal;
 		/// <summary>
 		/// Gets the normal to plane of the cut in local space of the new part entity, if a mesh of the new
 		/// part was successfully approximated with capsules.
 		/// </summary>
-		public Vector3 CutPartNormal
-		{
-			get { return this.cutPartNormal; }
-		}
+		public Vector3 CutPartNormal => this.cutPartNormal;
 		/// <summary>
 		/// Gets the object that represents the new mesh that is used by the part that has broken off.
 		/// </summary>
-		public GeometryShape NewMesh
-		{
-			get { return this.newMesh; }
-		}
+		public GeometryShape NewMesh => this.newMesh;
 		/// <summary>
 		/// Gets the pointer to the last mesh update that was applied to the geometry at the moment of this
 		/// event.
 		/// </summary>
 		/// <remarks>
-		/// Pass this pointer to <see cref="MeshUpdate.GetNext"/> if you want to traverse the linked list
-		/// of updates up-to this point.
+		/// Pass this pointer to <see cref="MeshUpdate.GetNext"/> if you want to traverse the linked list of
+		/// updates up-to this point.
 		/// </remarks>
-		public MeshUpdate* LastMeshUpdate
-		{
-			get { return this.lastUpdate; }
-		}
+		public MeshUpdate* LastMeshUpdate => this.lastUpdate;
 		#endregion
 		#region Construction
 		internal CreatedPartInfo(PhysicalEntity newEntity, int oldPartId, int newPartId, int totalPartCount,

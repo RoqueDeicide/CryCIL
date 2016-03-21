@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using CryCil.Engine.DebugServices;
 
 namespace CSharpSamples
@@ -9,7 +9,6 @@ namespace CSharpSamples
 	/// much time that work takes. The work is divided into 2 parts, so we have 2 frame profilers, 1 for
 	/// each part of the work.
 	/// </summary>
-	[SuppressMessage("ReSharper", "ExceptionNotDocumented", Justification = "Reviewed. This is a sample.")]
 	public static class Profiling
 	{
 		/// <summary>
@@ -36,8 +35,8 @@ namespace CSharpSamples
 		/// </summary>
 		public static void WorkPart1()
 		{
-			// This part of work we are going to measure by creating a profiling section and releasing it
-			// in "finally" block.
+			// This part of work we are going to measure by creating a profiling section and releasing it in
+			// "finally" block.
 
 			var profilingSection = Part1Profiler.Start();
 

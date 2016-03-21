@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace CryCil.Engine.Models.StaticObjects
@@ -30,10 +31,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.mesh.IsValid; }
-		}
+		public bool IsValid => this.mesh.IsValid;
 		/// <summary>
 		/// Gets or sets the number of elements in this collection. Setting this to negative value or 0
 		/// deallocates the array.

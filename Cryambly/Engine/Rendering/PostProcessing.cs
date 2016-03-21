@@ -58,8 +58,8 @@ namespace CryCil.Engine.Rendering
 		/// Grants read/write access to post-processing effect parameters.
 		/// </summary>
 		/// <remarks>
-		/// This property returns a reference thread-unique objects that changes every time getter
-		/// is invoked. Do not store these references in local variables or fields.
+		/// This property returns a reference thread-unique objects that changes every time getter is
+		/// invoked. Do not store these references in local variables or fields.
 		/// </remarks>
 		/// <param name="name">Name of the post-processing effect to get/set parameters for.</param>
 		public PostEffectParameter this[string name]

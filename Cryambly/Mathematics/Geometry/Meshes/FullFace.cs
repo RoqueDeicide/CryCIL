@@ -29,17 +29,12 @@ namespace CryCil.Geometry
 		/// <summary>
 		/// Gets a plane this face is located on.
 		/// </summary>
-		public Plane Plane
-		{
-			get { return new Plane(this.First.Position, this.Second.Position, this.Third.Position); }
-		}
+		public Plane Plane => new Plane(this.First.Position, this.Second.Position, this.Third.Position);
 		/// <summary>
 		/// Gets a normal to the plane this face is located on.
 		/// </summary>
-		public Vector3 Normal
-		{
-			get { return (this.Second.Position - this.First.Position) % (this.Third.Position - this.First.Position).Normalized; }
-		}
+		public Vector3 Normal => (this.Second.Position - this.First.Position %
+								  this.Third.Position - this.First.Position).Normalized;
 		/// <summary>
 		/// Gets a plane this face is located on.
 		/// </summary>
@@ -58,15 +53,13 @@ namespace CryCil.Geometry
 		/// <returns>Normalized <see cref="Vector3"/> that represents a normal.</returns>
 		public Vector3 GetNormal(object customData = null)
 		{
-			return (this.Second.Position - this.First.Position) % (this.Third.Position - this.First.Position).Normalized;
+			return (this.Second.Position - this.First.Position %
+					this.Third.Position - this.First.Position).Normalized;
 		}
 		/// <summary>
 		/// Gets a list of vertices.
 		/// </summary>
-		public FullVertex[] Vertices
-		{
-			get { return new[] {this.First, this.Second, this.Third}; }
-		}
+		public FullVertex[] Vertices => new[] {this.First, this.Second, this.Third};
 		/// <summary>
 		/// Creates new instance of type <see cref="FullFace"/> .
 		/// </summary>
@@ -147,18 +140,18 @@ namespace CryCil.Geometry
 					// See where this triangle is looking and it to corresponding list.
 					if (this.Normal * splitter.Normal > 0)
 					{
-						if (frontCoplanarFaces != null) frontCoplanarFaces.Add(this);
+						frontCoplanarFaces?.Add(this);
 					}
 					else
 					{
-						if (backCoplanarFaces != null) backCoplanarFaces.Add(this);
+						backCoplanarFaces?.Add(this);
 					}
 					break;
 				case PlanePosition.Front:
-					if (frontFaces != null) frontFaces.Add(this);
+					frontFaces?.Add(this);
 					break;
 				case PlanePosition.Back:
-					if (backFaces != null) backFaces.Add(this);
+					backFaces?.Add(this);
 					break;
 				case PlanePosition.Spanning:
 					if (frontFaces == null && backFaces == null)
@@ -166,14 +159,14 @@ namespace CryCil.Geometry
 						return; // Any calculations won't be saved anywhere.
 					}
 					// Prepare to create a split of this triangle.
-					// 
+					//
 					// Cash vertices into an array, so we can loop through it.
 					FullVertex[] vertices = this.Vertices;
 					// Create lists for vertices on the front and back.
 					List<FullVertex> fvs = new List<FullVertex>(4);
 					List<FullVertex> bvs = new List<FullVertex>(4);
 					// Process edges.
-					// 
+					//
 					// We go through the polygon edge by edge with i being index of the start of the edge,
 					// and j - end.
 					for (int i = 0, j = 1; i < 3; i++, j = (j + 1) % 3)
@@ -191,8 +184,8 @@ namespace CryCil.Geometry
 						// If this edge intersects the plane, split it.
 						if ((positions[i] | positions[j]) == PlanePosition.Spanning)
 						{
-							// Calculate fraction that describes position of splitting vertex along the
-							// line between start and end of the edge.
+							// Calculate fraction that describes position of splitting vertex along the line
+							// between start and end of the edge.
 							float positionParameter =
 								(splitter.D - splitter.Normal * vertices[i].Position)
 								/
@@ -231,14 +224,14 @@ namespace CryCil.Geometry
 		/// Indicates whether coplanarity of given polygon must be ensured. Pass false only if know, that
 		/// your polygon is on one plane.
 		/// </param>
-		/// <param name="subsetIndex">Index of the mesh subset to add the polygons to.</param>
+		/// <param name="subsetIndex">        Index of the mesh subset to add the polygons to.</param>
 		/// <returns>An array of triangles.</returns>
 		/// <exception cref="ArgumentException">
 		/// Vertices that describe a border of a polygon for triangulation are not located on the same
 		/// plane.
 		/// </exception>
 		public static FullFace[] TriangulateLinearly(IList<FullVertex> vertices, bool checkForCoplanarity,
-			int subsetIndex)
+													 int subsetIndex)
 		{
 			if (vertices.IsNullOrEmpty())
 			{
@@ -282,7 +275,7 @@ namespace CryCil.Geometry
 		/// your polygon is on one plane.
 		/// </param>
 		/// <param name="polygons">           The list of polygon to which to add the triangles.</param>
-		/// <param name="subsetIndex">Index of the mesh subset to add the polygons to.</param>
+		/// <param name="subsetIndex">        Index of the mesh subset to add the polygons to.</param>
 		/// <exception cref="ArgumentException">
 		/// Vertices that describe a border of a polygon for triangulation are not located on the same
 		/// plane.

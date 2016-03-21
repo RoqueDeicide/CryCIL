@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace CryCil.Engine.CryAction
@@ -15,10 +15,7 @@ namespace CryCil.Engine.CryAction
 		/// <summary>
 		/// Gets number of levels.
 		/// </summary>
-		public int Count
-		{
-			get { return GetCount(); }
-		}
+		public int Count => GetCount();
 		/// <summary>
 		/// Gets the information about a level using its index.
 		/// </summary>
@@ -48,13 +45,7 @@ namespace CryCil.Engine.CryAction
 		/// </summary>
 		/// <param name="name">Name of the level to get.</param>
 		/// <returns>A valid object, if found, otherwise an invalid one is returned.</returns>
-		public Level this[string name]
-		{
-			get
-			{
-				return name.IsNullOrEmpty() ? new Level() : GetItem(name);
-			}
-		}
+		public Level this[string name] => name.IsNullOrEmpty() ? new Level() : GetItem(name);
 		#endregion
 		#region Interface
 		/// <summary>

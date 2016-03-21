@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Text;
 using CryCil.MemoryMapping;
 using CryCil.Utilities;
@@ -20,21 +20,14 @@ namespace CryCil.Engine.Models.Characters.Faces
 		/// <summary>
 		/// Gets the IPA code of this phoneme.
 		/// </summary>
-		public char IPACode
-		{
-			get { return this.ipa; }
-		}
+		public char IPACode => this.ipa;
 		/// <summary>
 		/// Gets the sequence of ASCII characters that represent the name.
 		/// </summary>
-		public Bytes4 AsciiName
-		{
-			get { return this.asciiName; }
-		}
+		public Bytes4 AsciiName => this.asciiName;
 		/// <summary>
 		/// Gets the name of this phoneme.
 		/// </summary>
-		[SuppressMessage("ReSharper", "ExceptionNotDocumentedOptional", Justification = "Reviewed")]
 		public string Name
 		{
 			get
@@ -48,10 +41,7 @@ namespace CryCil.Engine.Models.Characters.Faces
 		/// <summary>
 		/// Gets the description of this phoneme.
 		/// </summary>
-		public string Description
-		{
-			get { return CustomMarshaling.GetUtf8String(new IntPtr(this.description)); }
-		}
+		public string Description => CustomMarshaling.GetUtf8String(new IntPtr(this.description));
 		#endregion
 		#region Construction
 		internal PhonemeInfo(char ipa, Bytes4 asciiName, byte* description)

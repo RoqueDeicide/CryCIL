@@ -38,17 +38,11 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets identifier of this part.
 		/// </summary>
-		public int PartId
-		{
-			get { return this.partid; }
-		}
+		public int PartId => this.partid;
 		/// <summary>
 		/// Gets zero-based index of this part.
 		/// </summary>
-		public int PartIndex
-		{
-			get { return this.ipart; }
-		}
+		public int PartIndex => this.ipart;
 		/// <summary>
 		/// Gets or sets value that defines skeleton's resistance to bending and shearing.
 		/// </summary>
@@ -126,9 +120,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Creates a new object of this type.
 		/// </summary>
-		/// <param name="part">
-		/// An object that specifies which part's skeleton parameters to get/set.
-		/// </param>
+		/// <param name="part">An object that specifies which part's skeleton parameters to get/set.</param>
 		public PhysicsParametersSkeleton(EntityPartSpec part)
 		{
 			this.Base = new PhysicsParameters(PhysicsParametersTypes.Skeleton);

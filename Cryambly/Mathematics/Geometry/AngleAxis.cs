@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil.Geometry
 {
@@ -72,8 +73,7 @@ namespace CryCil.Geometry
 			{
 				this.Vector = new Vector3(cz * cy * sx - sz * sy * cx,
 										  cz * sy * cx + sz * cy * sx,
-										  sz * cy * cx - cz * sy * sx
-					) * (float)(Math.Acos(w) * 2);
+										  sz * cy * cx - cz * sy * sx) * (float)(Math.Acos(w) * 2);
 			}
 		}
 		/// <summary>

@@ -18,33 +18,21 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the first entity that is associated with the event.
 		/// </summary>
-		public PhysicalEntity FirstEntity
-		{
-			get { return this.firstEntity; }
-		}
+		public PhysicalEntity FirstEntity => this.firstEntity;
 		/// <summary>
 		/// Gets the object that encapsulates foreign data that is associated with the
 		/// <see cref="FirstEntity"/>.
 		/// </summary>
-		public ForeignData ForeignData
-		{
-			get { return this.firstForeignData; }
-		}
+		public ForeignData ForeignData => this.firstForeignData;
 		/// <summary>
 		/// Gets the second entity that is associated with the event.
 		/// </summary>
-		public PhysicalEntity SecondEntity
-		{
-			get { return this.secondEntity; }
-		}
+		public PhysicalEntity SecondEntity => this.secondEntity;
 		/// <summary>
 		/// Gets the object that encapsulates foreign data that is associated with the
 		/// <see cref="SecondEntity"/>.
 		/// </summary>
-		public ForeignData SecondForeignData
-		{
-			get { return this.secondForeignData; }
-		}
+		public ForeignData SecondForeignData => this.secondForeignData;
 		#endregion
 		#region Construction
 		internal StereoPhysicsEventData(PhysicalEntity firstEntity, ForeignData firstForeignData,

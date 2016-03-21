@@ -1,13 +1,14 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
 
 namespace CryCil.Engine.Physics
 {
 	/// <summary>
-	/// Encapsulates a set of parameters that allows to change special simulation parameters of the
-	/// physical entity that is a living entity.
+	/// Encapsulates a set of parameters that allows to change special simulation parameters of the physical
+	/// entity that is a living entity.
 	/// </summary>
 	/// <remarks>
 	/// Never use objects of this type that were created using a default constructor (they are not
@@ -197,8 +198,7 @@ namespace CryCil.Engine.Physics
 		/// </summary>
 		/// <remarks>
 		/// Inactive entities have most of the simulation disabled. The entity can still move in the same
-		/// direction, and can only collide with physical entities of the same or higher simulation
-		/// classes.
+		/// direction, and can only collide with physical entities of the same or higher simulation classes.
 		/// </remarks>
 		public bool Active
 		{
@@ -218,8 +218,8 @@ namespace CryCil.Engine.Physics
 			set { this.iRequestedTime = value; }
 		}
 		/// <summary>
-		/// Gets or sets the value that indicates whether collider geometry that is used to check the
-		/// ground should be released when this entity becomes inactive.
+		/// Gets or sets the value that indicates whether collider geometry that is used to check the ground
+		/// should be released when this entity becomes inactive.
 		/// </summary>
 		/// <remarks>Probably stops checks against environment when entity is not active.</remarks>
 		public bool ReleaseGroundColliderWhenNotActive

@@ -32,10 +32,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != null; }
-		}
+		public bool IsValid => this.handle != null;
 		/// <summary>
 		/// Gets or sets the type of this static sub-object.
 		/// </summary>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CryCil
 {
@@ -9,10 +10,7 @@ namespace CryCil
 		/// <summary>
 		/// Creates deep copy of this vector.
 		/// </summary>
-		Vector3d IVector<double, Vector3d>.DeepCopy
-		{
-			get { return this; }
-		}
+		Vector3d IVector<double, Vector3d>.DeepCopy => this;
 		/// <summary>
 		/// Calculates the dot product of this vector and another one.
 		/// </summary>

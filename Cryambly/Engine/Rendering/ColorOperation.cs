@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil.Engine.Rendering
 {
@@ -67,8 +68,7 @@ namespace CryCil.Engine.Rendering
 		AddSigned2X = 13,
 		/// <summary>
 		/// Performs a multiply-accumulate operation. It takes the last two arguments, multiplies them
-		/// together, and adds them to the remaining input/source argument, and places that into the
-		/// result.
+		/// together, and adds them to the remaining input/source argument, and places that into the result.
 		/// </summary>
 		/// <remarks><c>ColorSingle result = arg1 + arg2 * arg3;</c></remarks>
 		MultiplyAdd = 14,
@@ -126,8 +126,8 @@ namespace CryCil.Engine.Rendering
 		/// </remarks>
 		DotProduct = 21,
 		/// <summary>
-		/// Linearly interpolates between the second and third source arguments by a proportion specified
-		/// in the first source argument.
+		/// Linearly interpolates between the second and third source arguments by a proportion specified in
+		/// the first source argument.
 		/// </summary>
 		/// <remarks><c>ColorSingle result = Arg1 * Arg2 + (1- Arg1) * Arg3</c></remarks>
 		Lerp = 22,

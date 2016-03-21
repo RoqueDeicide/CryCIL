@@ -11,9 +11,9 @@ namespace CryCil
 		/// </summary>
 		/// <remarks>
 		/// <para>
-		/// Linear interpolation is a process of calculating a value of N-dimensional vector that is
-		/// located on the line defined by two vectors (the order of which is important) and position of
-		/// that vector relative to the first line-defining one is denoted by a scalar value (a.k.a.
+		/// Linear interpolation is a process of calculating a value of N-dimensional vector that is located
+		/// on the line defined by two vectors (the order of which is important) and position of that vector
+		/// relative to the first line-defining one is denoted by a scalar value (a.k.a.
 		/// parameter) .
 		/// </para>
 		/// <para>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using CryCil.Engine.Models.StaticObjects;
 using CryCil.Graphics;
 
@@ -108,7 +109,7 @@ namespace CryCil.Geometry
 		/// <summary>
 		/// Determines whether 2 objects are not equal.
 		/// </summary>
-		/// <param name="left">Left operand.</param>
+		/// <param name="left"> Left operand.</param>
 		/// <param name="right">Right operand.</param>
 		/// <returns>True, if 2 operands are not equal.</returns>
 		public static bool operator ==(FullVertex left, FullVertex right)
@@ -118,7 +119,7 @@ namespace CryCil.Geometry
 		/// <summary>
 		/// Determines whether 2 objects are equal.
 		/// </summary>
-		/// <param name="left">Left operand.</param>
+		/// <param name="left"> Left operand.</param>
 		/// <param name="right">Right operand.</param>
 		/// <returns>True, if 2 operands are equal.</returns>
 		public static bool operator !=(FullVertex left, FullVertex right)

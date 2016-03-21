@@ -112,8 +112,8 @@ namespace CryCil.Engine.Logic
 		public abstract bool SynchronizeWithNetwork(CrySync sync, EntityAspects aspect, byte profile,
 													SnapshotFlags flags);
 		/// <summary>
-		/// Informs the networking system that parts of this entity have changed and it must be
-		/// synchronized with its proxies on other game instances.
+		/// Informs the networking system that parts of this entity have changed and it must be synchronized
+		/// with its proxies on other game instances.
 		/// </summary>
 		/// <param name="aspects">
 		/// A set of flags that indicate which aspects of the entity need to be synchronized.
@@ -144,7 +144,7 @@ namespace CryCil.Engine.Logic
 					this.Extensions[i].InitializeClient(id);
 				}
 
-				if (this.ClientInitializing != null) this.ClientInitializing(this, id);
+				this.ClientInitializing?.Invoke(this, id);
 			}
 			catch (Exception ex)
 			{
@@ -163,7 +163,7 @@ namespace CryCil.Engine.Logic
 					this.Extensions[i].PostInitializeClient(id);
 				}
 
-				if (this.ClientInitialized != null) this.ClientInitialized(this, id);
+				this.ClientInitialized?.Invoke(this, id);
 			}
 			catch (Exception ex)
 			{
@@ -198,7 +198,7 @@ namespace CryCil.Engine.Logic
 			try
 			{
 				var handler = gainedAuthority ? this.Authorized : this.Deauthorized;
-				if (handler != null) handler(this, gainedAuthority);
+				handler?.Invoke(this, gainedAuthority);
 			}
 			catch (Exception ex)
 			{

@@ -17,11 +17,11 @@ namespace CryCil.Engine.Logic
 		/// </summary>
 		public bool Inherit { get; private set; }
 		/// <summary>
-		/// Indicates whether <see cref="Flags"/> that are defined in this attribute should be combined
-		/// with flags that are defined in attributes that mark classes that are derived by one this
-		/// attribute marks using OR.
+		/// Indicates whether <see cref="Flags"/> that are defined in this attribute should be combined with
+		/// flags that are defined in attributes that mark classes that are derived by one this attribute
+		/// marks using OR.
 		/// </summary>
-		public bool CombineFlags { get; private set; }
+		public bool CombineFlags { get; }
 		/// <summary>
 		/// Gets the name of the entity class.
 		/// </summary>

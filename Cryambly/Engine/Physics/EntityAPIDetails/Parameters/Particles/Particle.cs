@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
 using CryCil.Geometry;
@@ -66,8 +67,8 @@ namespace CryCil.Engine.Physics
 			set { this.mass = value; }
 		}
 		/// <summary>
-		/// Gets or sets the radius of the sphere that is used by the particle to trace geometry in front
-		/// of it.
+		/// Gets or sets the radius of the sphere that is used by the particle to trace geometry in front of
+		/// it.
 		/// </summary>
 		public float FlyingRadius
 		{
@@ -124,8 +125,8 @@ namespace CryCil.Engine.Physics
 		/// Gets or sets the magnitude of acceleration of this particle along the <see cref="Heading"/>.
 		/// </summary>
 		/// <remarks>
-		/// You need to specify <see cref="AirResistance"/> and <see cref="Wateresistance"/> when using
-		/// this property otherwise the particle will gain infinite velocity.
+		/// You need to specify <see cref="AirResistance"/> and <see cref="Wateresistance"/> when using this
+		/// property otherwise the particle will gain infinite velocity.
 		/// </remarks>
 		public float Acceleration
 		{
@@ -136,8 +137,8 @@ namespace CryCil.Engine.Physics
 		/// Gets or sets the magnitude of acceleration of this particle along the - <see cref="Gravity"/>.
 		/// </summary>
 		/// <remarks>
-		/// You need to specify <see cref="AirResistance"/> and <see cref="Wateresistance"/> when using
-		/// this property otherwise the particle will gain infinite velocity.
+		/// You need to specify <see cref="AirResistance"/> and <see cref="Wateresistance"/> when using this
+		/// property otherwise the particle will gain infinite velocity.
 		/// </remarks>
 		public float LiftingAcceleration
 		{
@@ -215,8 +216,8 @@ namespace CryCil.Engine.Physics
 		/// Alignment can be disabled by passing <see cref="Vector3.Zero"/> (e.g. for spherical objects).
 		/// </remarks>
 		/// <example>
-		/// If the particle is a rocket, then this property would point along the line between the center
-		/// of its bottom and its tip.
+		/// If the particle is a rocket, then this property would point along the line between the center of
+		/// its bottom and its tip.
 		/// </example>
 		public Vector3 RollingAxis
 		{

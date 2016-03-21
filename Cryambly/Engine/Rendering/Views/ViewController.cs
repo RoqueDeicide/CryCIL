@@ -116,10 +116,7 @@ namespace CryCil.Engine.Rendering.Views
 			try
 			{
 				var handler = this.Updating;
-				if (handler != null)
-				{
-					handler(this, ref parameters);
-				}
+				handler?.Invoke(this, ref parameters);
 			}
 			catch (Exception ex)
 			{
@@ -132,10 +129,7 @@ namespace CryCil.Engine.Rendering.Views
 			try
 			{
 				var handler = this.Updated;
-				if (handler != null)
-				{
-					handler(this, ref parameters);
-				}
+				handler?.Invoke(this, ref parameters);
 			}
 			catch (Exception ex)
 			{

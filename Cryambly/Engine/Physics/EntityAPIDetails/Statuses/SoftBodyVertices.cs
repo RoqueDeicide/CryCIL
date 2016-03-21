@@ -61,60 +61,36 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the number of vertices this soft body consists of.
 		/// </summary>
-		public int VertexCount
-		{
-			get { return this.nVtx; }
-		}
+		public int VertexCount => this.nVtx;
 		/// <summary>
 		/// Gets the pointer to the internal array of vertices.
 		/// </summary>
-		public StridedPointer Vertices
-		{
-			get { return this.pVtx; }
-		}
+		public StridedPointer Vertices => this.pVtx;
 		/// <summary>
 		/// Gets the pointer to the internal array of normals to each vertex.
 		/// </summary>
-		public StridedPointer Normals
-		{
-			get { return this.pNormals; }
-		}
+		public StridedPointer Normals => this.pNormals;
 		/// <summary>
 		/// Gets the object that represents the current geometry. You need to engage the lock on the soft
 		/// body to make sure this geometry doesn't get invalidated while you use it.
 		/// </summary>
-		public GeometryShape Mesh
-		{
-			get { return this.pMesh; }
-		}
+		public GeometryShape Mesh => this.pMesh;
 		/// <summary>
 		/// Gets the position of the point the soft body was attached to when this status was queried.
 		/// </summary>
-		public Vector3 AttachmentPointPosition
-		{
-			get { return this.posHost; }
-		}
+		public Vector3 AttachmentPointPosition => this.posHost;
 		/// <summary>
 		/// Gets the orientation of the point the soft body was attached to when this status was queried.
 		/// </summary>
-		public Quaternion AttachmentPointOrientation
-		{
-			get { return this.qHost; }
-		}
+		public Quaternion AttachmentPointOrientation => this.qHost;
 		/// <summary>
 		/// Gets the position of the soft body at the moment of query.
 		/// </summary>
-		public Vector3 Position
-		{
-			get { return this.pos; }
-		}
+		public Vector3 Position => this.pos;
 		/// <summary>
 		/// Gets the orientation of the soft body at the moment of query.
 		/// </summary>
-		public Quaternion Orientation
-		{
-			get { return this.q; }
-		}
+		public Quaternion Orientation => this.q;
 		#endregion
 		#region Construction
 		/// <summary>

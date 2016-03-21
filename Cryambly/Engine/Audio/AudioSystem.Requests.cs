@@ -66,7 +66,7 @@ namespace CryCil.Engine.Audio
 		{
 			if (type == null)
 			{
-				throw new ArgumentNullException("type");
+				throw new ArgumentNullException(nameof(type));
 			}
 			if (!AudioSystemImplementations.RegisteredImplementations.ContainsKey(type.Name))
 			{
@@ -109,7 +109,7 @@ namespace CryCil.Engine.Audio
 		{
 			if (name.IsNullOrWhiteSpace())
 			{
-				throw new ArgumentNullException("name", "Name of the audio system implementation cannot be null.");
+				throw new ArgumentNullException(nameof(name), "Name of the audio system implementation cannot be null.");
 			}
 
 			Type registeredType;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
 using CryCil.Geometry;
@@ -23,8 +24,8 @@ namespace CryCil.Engine.Physics
 	{
 		#region Fields
 		/// <summary>
-		/// Pass reference to this field to the <see cref="PhysicalEntity.ActUpon"/> to apply this action
-		/// to the physical entity.
+		/// Pass reference to this field to the <see cref="PhysicalEntity.ActUpon"/> to apply this action to
+		/// the physical entity.
 		/// </summary>
 		[UsedImplicitly] public PhysicsAction Base;
 		[UsedImplicitly] private int idConstraint;
@@ -79,9 +80,9 @@ namespace CryCil.Engine.Physics
 		/// </summary>
 		/// <remarks>
 		/// Initial positions of entities indicate initial relative positioning. If both
-		/// <see cref="InitialPoint0"/> and <see cref="InitialPoint1"/> are specified and are different,
-		/// the solver will attempt to bring constrained entities together to make sure that relative
-		/// position is <see cref="Vector3.Zero"/>.
+		/// <see cref="InitialPoint0"/> and <see cref="InitialPoint1"/> are specified and are different, the
+		/// solver will attempt to bring constrained entities together to make sure that relative position
+		/// is <see cref="Vector3.Zero"/>.
 		/// </remarks>
 		public Vector3 InitialPoint0
 		{
@@ -93,17 +94,17 @@ namespace CryCil.Engine.Physics
 		/// </summary>
 		/// <remarks>
 		/// Initial positions of entities indicate initial relative positioning. If both
-		/// <see cref="InitialPoint0"/> and <see cref="InitialPoint1"/> are specified and are different,
-		/// the solver will attempt to bring constrained entities together to make sure that relative
-		/// position is <see cref="Vector3.Zero"/>.
+		/// <see cref="InitialPoint0"/> and <see cref="InitialPoint1"/> are specified and are different, the
+		/// solver will attempt to bring constrained entities together to make sure that relative position
+		/// is <see cref="Vector3.Zero"/>.
 		/// </remarks>
 		public Vector3 InitialPoint1
 		{
 			set { this.pt1 = value; }
 		}
 		/// <summary>
-		/// Can be set to specify the new orientation of the first constrained entity before attachment.
-		/// See Remarks for details.
+		/// Can be set to specify the new orientation of the first constrained entity before attachment. See
+		/// Remarks for details.
 		/// </summary>
 		public Quaternion InitialOrientation0
 		{

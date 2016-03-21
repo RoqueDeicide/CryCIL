@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace CryCil.Engine.Files
@@ -10,10 +11,9 @@ namespace CryCil.Engine.Files
 	/// <remarks>
 	/// <para>
 	/// WARNING: All internal path handling code uses only ASCII characters, which means, you should avoid
-	///          using absolute paths for anything, since it is entirely possible for a person with
-	///          national alphabet to have folders with Unicode characters in their names. Also warn any
-	///          mod-makers to only use ASCII characters in folder names within CryEngine installation
-	///          directory.
+	///          using absolute paths for anything, since it is entirely possible for a person with national
+	///          alphabet to have folders with Unicode characters in their names. Also warn any mod-makers
+	///          to only use ASCII characters in folder names within CryEngine installation directory.
 	/// </para>
 	/// </remarks>
 	public static class CryFiles
@@ -23,12 +23,6 @@ namespace CryCil.Engine.Files
 		/// Max length of the buffer in bytes that can be used to store the file path.
 		/// </summary>
 		public const int MaxFilePathLength = 2048;
-		#endregion
-		#region Properties
-		#endregion
-		#region Events
-		#endregion
-		#region Construction
 		#endregion
 		#region Interface
 		/// <summary>

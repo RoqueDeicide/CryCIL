@@ -36,10 +36,7 @@ namespace CryCil.Engine.Rendering
 		/// </summary>
 		/// <param name="index">Zero-based index of the parameter to get.</param>
 		/// <exception cref="NullReferenceException">Instance object is invalid.</exception>
-		public ShaderParameter* this[int index]
-		{
-			get { return GetItemInt(this.handle, index).Handle; }
-		}
+		public ShaderParameter* this[int index] => GetItemInt(this.handle, index).Handle;
 		/// <summary>
 		/// Gets the pointer to the shader parameter.
 		/// </summary>
@@ -52,25 +49,16 @@ namespace CryCil.Engine.Rendering
 		/// <exception cref="ArgumentException">
 		/// The name of the parameter cannot contain more then 32 ASCII symbols.
 		/// </exception>
-		public ShaderParameter* this[string name]
-		{
-			get { return GetItemString(this.handle, name); }
-		}
+		public ShaderParameter* this[string name] => GetItemString(this.handle, name);
 		/// <summary>
 		/// Gets the number of shader parameters accessible through this position.
 		/// </summary>
 		/// <exception cref="NullReferenceException">Instance object is invalid.</exception>
-		public int Count
-		{
-			get { return GetCount(this.handle); }
-		}
+		public int Count => GetCount(this.handle);
 		/// <summary>
 		/// Indicates whether this object is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 		#endregion
 		#region Events
 		#endregion

@@ -33,20 +33,14 @@ namespace CryCil.Engine.Physics
 		/// <remarks>
 		/// This property should only be used when you query the part or you are getting its parameters.
 		/// </remarks>
-		public int PartId
-		{
-			get { return this.partId; }
-		}
+		public int PartId => this.partId;
 		/// <summary>
 		/// Gets zero-based index of the part of the physical entity.
 		/// </summary>
 		/// <remarks>
 		/// This property should only be used when you query the part or you are getting its parameters.
 		/// </remarks>
-		public int PartIndex
-		{
-			get { return this.partIndex; }
-		}
+		public int PartIndex => this.partIndex;
 		#endregion
 		#region Construction
 		private EntityPartSpec(int partId, int partIndex)
@@ -56,8 +50,8 @@ namespace CryCil.Engine.Physics
 			this.partIsSpecified = true;
 		}
 		/// <summary>
-		/// Creates a new instance of type <see cref="EntityPartSpec"/> that can be used to specify the
-		/// part of the entity using its identifier.
+		/// Creates a new instance of type <see cref="EntityPartSpec"/> that can be used to specify the part
+		/// of the entity using its identifier.
 		/// </summary>
 		/// <param name="id">Identifier of the part of the entity.</param>
 		/// <returns>A valid object of type <see cref="EntityPartSpec"/>.</returns>
@@ -66,8 +60,8 @@ namespace CryCil.Engine.Physics
 			return new EntityPartSpec(id, UnusedValue.Int32);
 		}
 		/// <summary>
-		/// Creates a new instance of type <see cref="EntityPartSpec"/> that can be used to specify the
-		/// part of the entity using its index.
+		/// Creates a new instance of type <see cref="EntityPartSpec"/> that can be used to specify the part
+		/// of the entity using its index.
 		/// </summary>
 		/// <param name="index">Zero-based index of the part of the entity.</param>
 		/// <returns>A valid object of type <see cref="EntityPartSpec"/>.</returns>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil.Engine.Physics
 {
@@ -34,8 +35,7 @@ namespace CryCil.Engine.Physics
 													  ref CollisionParticipantInfo collider,
 													  ref CollisionParticipantInfo collidee);
 	/// <summary>
-	/// Defines a signature of methods that can handle <see cref="PhysicalWorld.EntityStateChanged"/>
-	/// event.
+	/// Defines a signature of methods that can handle <see cref="PhysicalWorld.EntityStateChanged"/> event.
 	/// </summary>
 	/// <param name="entity">  
 	/// A reference to an object that represents the entity which state was changed.
@@ -54,8 +54,7 @@ namespace CryCil.Engine.Physics
 															   ref PhysicalEntityStateInfo oldState,
 															   ref PhysicalEntityStateInfo newState, float idleTime);
 	/// <summary>
-	/// Defines a signature of methods that can handle <see cref="PhysicalWorld.EnvironmentChanged"/>
-	/// event.
+	/// Defines a signature of methods that can handle <see cref="PhysicalWorld.EnvironmentChanged"/> event.
 	/// </summary>
 	/// <param name="entity">         
 	/// A reference to an object that represents the entity around which environment state was changed.

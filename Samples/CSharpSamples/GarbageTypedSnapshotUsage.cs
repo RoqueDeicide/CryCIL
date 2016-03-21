@@ -28,21 +28,18 @@ namespace CSharpSamples
 		/// </param>
 		public override void Dispose(bool invokedFromNativeCode)
 		{
-			throw new NotImplementedException();
 		}
 		/// <summary>
 		/// When implemented in derived class, performs preliminary initialization of this object.
 		/// </summary>
 		public override void Initialize()
 		{
-			throw new NotImplementedException();
 		}
 		/// <summary>
 		/// When implemented in derived class, performs final initialization of this object.
 		/// </summary>
 		public override void PostInitialize()
 		{
-			throw new NotImplementedException();
 		}
 		/// <summary>
 		/// Synchronizes the state of this entity with its representation in other place (e.g. a save game
@@ -51,7 +48,6 @@ namespace CSharpSamples
 		/// <param name="sync">Object that handles synchronization.</param>
 		public override void Synchronize(CrySync sync)
 		{
-			throw new NotImplementedException();
 		}
 		/// <summary>
 		/// When implemented in derived class updates logical state of this entity.
@@ -59,7 +55,6 @@ namespace CSharpSamples
 		/// <param name="context">The most up-to-date information for this frame.</param>
 		public override void Update(ref EntityUpdateContext context)
 		{
-			throw new NotImplementedException();
 		}
 		/// <summary>
 		/// When implemented in derived class updates logical state of this entity after most other stuff
@@ -67,7 +62,6 @@ namespace CSharpSamples
 		/// </summary>
 		public override void PostUpdate()
 		{
-			throw new NotImplementedException();
 		}
 		/// <summary>
 		/// Synchronizes the state of this entity with its representatives on other machines over network.

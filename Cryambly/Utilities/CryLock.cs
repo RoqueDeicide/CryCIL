@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
@@ -27,10 +28,7 @@ namespace CryCil.Utilities
 		/// <summary>
 		/// Gets the internal handle of this object.
 		/// </summary>
-		public IntPtr Handle
-		{
-			get { return this.handle; }
-		}
+		public IntPtr Handle => this.handle;
 		#endregion
 		#region Events
 		#endregion

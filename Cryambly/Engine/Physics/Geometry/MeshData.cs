@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
 using CryCil.Utilities;
@@ -15,10 +16,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the vector that contains 3 indexes of triangles that are neighbors of this one.
 		/// </summary>
-		public Vector3Int32 NeighborIndexes
-		{
-			get { return this.buddies; }
-		}
+		public Vector3Int32 NeighborIndexes => this.buddies;
 	}
 	/// <summary>
 	/// Represents an array of objects that encapsulate information about neighbors of each edge of the
@@ -52,10 +50,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the number of triangles.
 		/// </summary>
-		public int Count
-		{
-			get { return this.nTris; }
-		}
+		public int Count => this.nTris;
 		#endregion
 		#region Construction
 		internal TriangleTopologyInfos(TriangleTopologyInfo* pTopology, int nTris)
@@ -85,10 +80,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the geometrical center of this island.
 		/// </summary>
-		public Vector3 Center
-		{
-			get { return this.center; }
-		}
+		public Vector3 Center => this.center;
 		#endregion
 	}
 	/// <summary>
@@ -123,10 +115,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the number of islands.
 		/// </summary>
-		public int Count
-		{
-			get { return this.nIslands; }
-		}
+		public int Count => this.nIslands;
 		#endregion
 	}
 	/// <summary>
@@ -172,11 +161,11 @@ namespace CryCil.Engine.Physics
 			{
 				if (triangleIndex < 0 || triangleIndex >= this.indexCount / 3)
 				{
-					throw new ArgumentOutOfRangeException("triangleIndex");
+					throw new ArgumentOutOfRangeException(nameof(triangleIndex));
 				}
 				if (vertexIndex < 0 || vertexIndex > 2)
 				{
-					throw new ArgumentOutOfRangeException("vertexIndex");
+					throw new ArgumentOutOfRangeException(nameof(vertexIndex));
 				}
 
 				return this.pIndices[triangleIndex * 3 + vertexIndex];
@@ -185,10 +174,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the number of indexes.
 		/// </summary>
-		public int Count
-		{
-			get { return this.indexCount; }
-		}
+		public int Count => this.indexCount;
 		#endregion
 		#region Construction
 		internal TriangleIndexes(int* indexes, int indexCount)
@@ -199,8 +185,8 @@ namespace CryCil.Engine.Physics
 		#endregion
 	}
 	/// <summary>
-	/// Represents an array of indexes of materials from material mapping that are assigned to
-	/// corresponding triangles.
+	/// Represents an array of indexes of materials from material mapping that are assigned to corresponding
+	/// triangles.
 	/// </summary>
 	[StructLayout(LayoutKind.Sequential)]
 	public unsafe struct TriangleMaterials
@@ -230,10 +216,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the number of triangles.
 		/// </summary>
-		public int Count
-		{
-			get { return this.triangleCount; }
-		}
+		public int Count => this.triangleCount;
 		#endregion
 		#region Construction
 		internal TriangleMaterials(byte* pMats, int triangleCount)
@@ -277,10 +260,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the number of vertexes.
 		/// </summary>
-		public int Count
-		{
-			get { return this.vertexCount; }
-		}
+		public int Count => this.vertexCount;
 		#endregion
 		#region Construction
 		internal MeshVertexes(StridedPointer vertices, int vertexCount)
@@ -321,10 +301,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the number of normals.
 		/// </summary>
-		public int Count
-		{
-			get { return this.normalCount; }
-		}
+		public int Count => this.normalCount;
 		#endregion
 		#region Construction
 		internal MeshVertexNormals(Vector3* normals, int normalCount)
@@ -366,10 +343,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the number of vertexes.
 		/// </summary>
-		public int Count
-		{
-			get { return this.vertexCount; }
-		}
+		public int Count => this.vertexCount;
 		#endregion
 		#region Construction
 		internal VertexMap(int* vertexes, int vertexCount)
@@ -402,53 +376,32 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the array of indices of vertexes that form triangles that form this mesh.
 		/// </summary>
-		public TriangleIndexes TriangleIndexes
-		{
-			get { return new TriangleIndexes(this.pIndices, this.nTris * 3); }
-		}
+		public TriangleIndexes TriangleIndexes => new TriangleIndexes(this.pIndices, this.nTris * 3);
 		/// <summary>
 		/// Gets the array of mapped indexes of materials for each triangle in this mesh.
 		/// </summary>
-		public TriangleMaterials TriangleMaterials
-		{
-			get { return new TriangleMaterials(this.pMats, this.nTris); }
-		}
+		public TriangleMaterials TriangleMaterials => new TriangleMaterials(this.pMats, this.nTris);
 		/// <summary>
 		/// Gets the array of vertexes that form this mesh.
 		/// </summary>
-		public MeshVertexes Vertexes
-		{
-			get { return new MeshVertexes(this.pVertices, this.nVertices); }
-		}
+		public MeshVertexes Vertexes => new MeshVertexes(this.pVertices, this.nVertices);
 		/// <summary>
 		/// Gets the array of normals for vertexes that form this mesh.
 		/// </summary>
-		public MeshVertexNormals Normals
-		{
-			get { return new MeshVertexNormals(this.pNormals, this.nVertices); }
-		}
+		public MeshVertexNormals Normals => new MeshVertexNormals(this.pNormals, this.nVertices);
 		/// <summary>
 		/// Gets the object that maps original vertex indices to merged vertex indices.
 		/// </summary>
-		public VertexMap VertexMap
-		{
-			get { return new VertexMap(this.pVtxMap, this.nVertices); }
-		}
+		public VertexMap VertexMap => new VertexMap(this.pVtxMap, this.nVertices);
 		/// <summary>
 		/// Gets the array of objects that provide indexes of triangles that are neighbors for the triangle
 		/// with respective index.
 		/// </summary>
-		public TriangleTopologyInfos Topology
-		{
-			get { return new TriangleTopologyInfos(this.pTopology, this.nTris); }
-		}
+		public TriangleTopologyInfos Topology => new TriangleTopologyInfos(this.pTopology, this.nTris);
 		/// <summary>
 		/// Gets the array of groups of connected triangles.
 		/// </summary>
-		public MeshIslands MeshIslands
-		{
-			get { return this.meshIslands; }
-		}
+		public MeshIslands MeshIslands => this.meshIslands;
 		#endregion
 	}
 }

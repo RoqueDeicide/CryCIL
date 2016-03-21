@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using CryCil.Engine.Memory;
 using CryCil.Engine.Models.StaticObjects;
 using CryCil.Geometry.Csg;
 using CryCil.Geometry.Csg.Base;
@@ -36,10 +35,7 @@ namespace CryCil.Geometry
 		/// <summary>
 		/// Creates a BSP tree from polygons that form this mesh.
 		/// </summary>
-		public BspNode<FullFace> BspTree
-		{
-			get { return new BspNode<FullFace>(this.Faces, null); }
-		}
+		public BspNode<FullFace> BspTree => new BspNode<FullFace>(this.Faces, null);
 		#endregion
 		#region Construction
 		/// <summary>
@@ -95,7 +91,10 @@ namespace CryCil.Geometry
 		/// </summary>
 		/// <param name="anotherMesh">Another mesh.</param>
 		/// <seealso cref="ConstructiveSolidGeometry.Union"/>
-		/// <exception cref="OverflowException">The array is multidimensional and contains more than <see cref="F:System.Int32.MaxValue" /> elements.</exception>
+		/// <exception cref="OverflowException">
+		/// The array is multidimensional and contains more than <see cref="F:System.Int32.MaxValue"/>
+		/// elements.
+		/// </exception>
 		public virtual void Combine(FaceMesh anotherMesh)
 		{
 			if (NativeCsg)
@@ -125,7 +124,10 @@ namespace CryCil.Geometry
 		/// </summary>
 		/// <param name="anotherMesh">Another mesh.</param>
 		/// <seealso cref="ConstructiveSolidGeometry.Intersection"/>
-		/// <exception cref="OverflowException">The array is multidimensional and contains more than <see cref="F:System.Int32.MaxValue" /> elements.</exception>
+		/// <exception cref="OverflowException">
+		/// The array is multidimensional and contains more than <see cref="F:System.Int32.MaxValue"/>
+		/// elements.
+		/// </exception>
 		public virtual void Intersect(FaceMesh anotherMesh)
 		{
 			if (NativeCsg)
@@ -146,15 +148,19 @@ namespace CryCil.Geometry
 			{
 				BspNode<FullFace> a = this.BspTree;
 				BspNode<FullFace> b = anotherMesh.BspTree;
+
 				// Cut geometry that is not common for the meshes.
 				a.Invert();
 				b.CutTreeOut(a, null);
 				b.Invert();
 				a.CutTreeOut(b, null);
+
 				// Clean up remains.
 				b.CutTreeOut(a, null);
+
 				// Combine geometry.
 				a.AddElements(b.AllElements, null);
+
 				// Invert everything.
 				a.Invert();
 				this.Set(a);
@@ -165,7 +171,10 @@ namespace CryCil.Geometry
 		/// </summary>
 		/// <param name="anotherMesh">Another mesh.</param>
 		/// <seealso cref="ConstructiveSolidGeometry.Subtract"/>
-		/// <exception cref="OverflowException">The array is multidimensional and contains more than <see cref="F:System.Int32.MaxValue" /> elements.</exception>
+		/// <exception cref="OverflowException">
+		/// The array is multidimensional and contains more than <see cref="F:System.Int32.MaxValue"/>
+		/// elements.
+		/// </exception>
 		public virtual void Subtract(FaceMesh anotherMesh)
 		{
 			if (NativeCsg)
@@ -186,9 +195,11 @@ namespace CryCil.Geometry
 			{
 				BspNode<FullFace> a = this.BspTree;
 				BspNode<FullFace> b = anotherMesh.BspTree;
+
 				a.Invert();
 				a.Unite(b, null);
 				a.Invert();
+
 				this.Set(a);
 			}
 		}
@@ -204,14 +215,13 @@ namespace CryCil.Geometry
 		/// <summary>
 		/// Exports face and vertex data from this mesh to the CryEngine mesh.
 		/// </summary>
-		/// <param name="mesh">
-		/// CryEngine mesh that will host this one.
-		/// </param>
+		/// <param name="mesh">    CryEngine mesh that will host this one.</param>
 		/// <param name="override">
 		/// Indicates whether data within <paramref name="mesh"/> must be overridden by data from this one.
 		/// </param>
-		/// <param name="fast">
-		/// Indicates whether duplicate vertices need to be merged together. Process of finding duplicates is quite lengthy.
+		/// <param name="fast">    
+		/// Indicates whether duplicate vertices need to be merged together. Process of finding duplicates
+		/// is quite lengthy.
 		/// </param>
 		public void Export(CryMesh mesh, bool @override = true, bool fast = true)
 		{
@@ -220,7 +230,8 @@ namespace CryCil.Geometry
 				return;
 			}
 
-			// Cache all parts of the mesh object so compiler doesn't complain about the error that is not the error.
+			// Cache all parts of the mesh object so compiler doesn't complain about the error that is not
+			// the error.
 			var facesCollection = mesh.Faces;
 			var vertexesCollection = mesh.Vertexes;
 			var positionsCollection = mesh.Vertexes.Positions;
@@ -236,9 +247,7 @@ namespace CryCil.Geometry
 				mesh.TexturePositions.Clear();
 			}
 
-			//
 			// Prepare vertex and face arrays for export.
-			//
 
 			List<FullVertex> vertexes = new List<FullVertex>(this.Faces.Count * 3);
 			List<CryMeshFace> faces = new List<CryMeshFace>(this.Faces.Count);
@@ -293,9 +302,7 @@ namespace CryCil.Geometry
 				faces.Add(currentFace);
 			}
 
-			//
 			// Export the data.
-			//
 
 			// Reallocate data and determine indexes of first slot to put the data in.
 			int firstVertexIndex = mesh.Vertexes.Count;
@@ -343,7 +350,7 @@ namespace CryCil.Geometry
 		private static extern void DeleteListItems(FullFace* facesPtr);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern FullFace* CsgOpInternal(FullFace* facesPtr1, int faceCount1, FullFace* facesPtr2,
-													   int faceCount2, CsgOpCode op, out int faceCount);
+													  int faceCount2, CsgOpCode op, out int faceCount);
 		#endregion
 	}
 }

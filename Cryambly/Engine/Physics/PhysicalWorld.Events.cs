@@ -25,14 +25,8 @@ namespace CryCil.Engine.Physics
 		private bool iterating;
 		#endregion
 		#region Properties
-		public int Count
-		{
-			get { return this.items.Count; }
-		}
-		public bool IsReadOnly
-		{
-			get { return false; }
-		}
+		public int Count => this.items.Count;
+		public bool IsReadOnly => false;
 		public T this[int index]
 		{
 			get

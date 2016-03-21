@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil.Engine.Models.Characters.Faces
 {
 	/// <summary>
-	/// Enumeration of flags that specify which aspects of sequence of facial animations must be
-	/// serialized.
+	/// Enumeration of flags that specify which aspects of sequence of facial animations must be serialized.
 	/// </summary>
 	[Flags]
 	public enum FacialAnimationSequenceSerializationFlags : uint

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil.Engine.Files
 {
@@ -17,8 +18,8 @@ namespace CryCil.Engine.Files
 		/// <para>Original CryEngine documentation:</para>
 		/// <para>
 		/// If used, the source path will be treated as the destination path and no transformations will be
-		/// done. Pass this flag when the path is to be the actual path on the disk/in the packs and
-		/// doesn't need adjustment (or after it has come through adjustments already) if this is set,
+		/// done. Pass this flag when the path is to be the actual path on the disk/in the packs and doesn't
+		/// need adjustment (or after it has come through adjustments already) if this is set,
 		/// AdjustFileName will not map the input path into the master folder (Ex: Shaders will not be
 		/// converted to Game\Shaders)
 		/// </para>

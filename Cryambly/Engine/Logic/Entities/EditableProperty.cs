@@ -36,17 +36,11 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Gets the underlying object of this property.
 		/// </summary>
-		public MemberInfo Member
-		{
-			get { return this.member; }
-		}
+		public MemberInfo Member => this.member;
 		/// <summary>
 		/// Gets the type of the property.
 		/// </summary>
-		public EditablePropertyType Type
-		{
-			get { return this.type; }
-		}
+		public EditablePropertyType Type => this.type;
 		#endregion
 		#region Events
 		#endregion
@@ -64,10 +58,7 @@ namespace CryCil.Engine.Logic
 			if (typeIndex == -1)
 			{
 				string message =
-					string.Format(
-								  "Attempt was made to register an editable property with type {0} that is not supported. Supported types are: {1}",
-								  type.FullName,
-								  supportedTypes.Select(supportedType => supportedType.FullName).ContentsToString(", "));
+					$"Attempt was made to register an editable property with type {type.FullName} that is not supported. Supported types are: {supportedTypes.Select(supportedType => supportedType.FullName).ContentsToString(", ")}";
 				throw new NotSupportedException(message);
 			}
 			this.type = (EditablePropertyType)typeIndex;
@@ -104,10 +95,7 @@ namespace CryCil.Engine.Logic
 				return field.GetValue(entity).ToString();
 			}
 			PropertyInfo propertyInfo = this.Member as PropertyInfo;
-			return
-				propertyInfo != null
-					? propertyInfo.GetValue(entity).ToString()
-					: null;
+			return propertyInfo?.GetValue(entity).ToString();
 		}
 		/// <summary>
 		/// Sets the value of the property.
@@ -134,15 +122,10 @@ namespace CryCil.Engine.Logic
 			object v = this.Parse(value);
 
 			FieldInfo field = this.Member as FieldInfo;
-			if (field != null)
-			{
-				field.SetValue(entity, v);
-			}
+			field?.SetValue(entity, v);
+
 			PropertyInfo propertyInfo = this.Member as PropertyInfo;
-			if (propertyInfo != null)
-			{
-				propertyInfo.SetValue(entity, v);
-			}
+			propertyInfo?.SetValue(entity, v);
 		}
 		#endregion
 		#region Utilities

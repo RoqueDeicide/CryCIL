@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
 
@@ -22,8 +23,8 @@ namespace CryCil.Engine.Physics
 	{
 		#region Fields
 		/// <summary>
-		/// Pass reference to this field to the <see cref="PhysicalEntity.ActUpon"/> to apply this action
-		/// to the physical entity.
+		/// Pass reference to this field to the <see cref="PhysicalEntity.ActUpon"/> to apply this action to
+		/// the physical entity.
 		/// </summary>
 		[UsedImplicitly] public PhysicsAction Base;
 		[UsedImplicitly] private PhysicalEntity pEntity;
@@ -36,8 +37,8 @@ namespace CryCil.Engine.Physics
 		#endregion
 		#region Construction
 		/// <summary>
-		/// Creates an object that can be used on soft bodies to automatically attach them to other
-		/// entities using the parameters from the lattice.
+		/// Creates an object that can be used on soft bodies to automatically attach them to other entities
+		/// using the parameters from the lattice.
 		/// </summary>
 		/// <param name="notUsed">Pass anything.</param>
 		public PhysicsActionAttachPoints([UsedImplicitly] int notUsed)
@@ -48,9 +49,7 @@ namespace CryCil.Engine.Physics
 		/// Creates an object that can be used on soft bodies to attach them to other entities.
 		/// </summary>
 		/// <param name="target">         An entity to attach this one to.</param>
-		/// <param name="vertexes">       
-		/// An array of indices of vertexes to attach to other entity.
-		/// </param>
+		/// <param name="vertexes">       An array of indices of vertexes to attach to other entity.</param>
 		/// <param name="vertexPositions">
 		/// An optional array of new positions of attached points. If <c>null</c> is passed, then current
 		/// positions are used.

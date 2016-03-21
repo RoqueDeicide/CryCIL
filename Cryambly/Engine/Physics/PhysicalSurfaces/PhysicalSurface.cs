@@ -12,10 +12,7 @@ namespace CryCil.Engine.Physics
 		private readonly int index;
 		#endregion
 		#region Properties
-		internal int Index
-		{
-			get { return this.index; }
-		}
+		internal int Index => this.index;
 		/// <summary>
 		/// Gets or sets restitution modifier of this surface.
 		/// </summary>

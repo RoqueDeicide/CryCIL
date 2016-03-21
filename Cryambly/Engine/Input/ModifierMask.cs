@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil.Engine.Input
 {
@@ -60,26 +61,26 @@ namespace CryCil.Engine.Input
 		/// <summary>
 		/// Mask for checking whether any of control keys have been toggled.
 		/// </summary>
-		Control = (LeftControl | RightControl),
+		Control = LeftControl | RightControl,
 		/// <summary>
 		/// Mask for checking whether any of shift keys have been toggled.
 		/// </summary>
-		Shift = (LeftShift | RightShift),
+		Shift = LeftShift | RightShift,
 		/// <summary>
 		/// Mask for checking whether any of alt keys have been toggled.
 		/// </summary>
-		Alt = (LeftAlt | RightAlt),
+		Alt = LeftAlt | RightAlt,
 		/// <summary>
 		/// Mask for checking whether any of Windows keys have been toggled.
 		/// </summary>
-		Windows = (LeftWindows | RightWindows),
+		Windows = LeftWindows | RightWindows,
 		/// <summary>
 		/// Mask for checking whether any of modifier keys have been toggled.
 		/// </summary>
-		Modifiers = (Control | Shift | Alt | Windows),
+		Modifiers = Control | Shift | Alt | Windows,
 		/// <summary>
 		/// Mask for checking whether any of lock keys have been toggled.
 		/// </summary>
-		LockKeys = (CapsLock | NumLock | ScrollLock)
+		LockKeys = CapsLock | NumLock | ScrollLock
 	}
 }

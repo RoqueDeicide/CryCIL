@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Diagnostics.Contracts;
+using System.Linq;
 
 namespace CryCil.Geometry
 {
 	public partial class Rotation
 	{
 		/// <summary>
-		/// Defines functions that work with rotations that use Euler angles applied in order
-		/// Yaw-Pitch-Roll (Z-X-Y).
+		/// Defines functions that work with rotations that use Euler angles applied in order Yaw-Pitch-Roll
+		/// (Z-X-Y).
 		/// </summary>
 		public static class YPR
 		{
@@ -53,12 +54,9 @@ namespace CryCil.Geometry
 
 				if (length > MathHelpers.ZeroTolerance)
 				{
-					return new EulerAngles
-						(
-						(float)Math.Atan2(-m.M01 / length, m.M11 / length),
-						(float)Math.Atan2(m.M21, length),
-						(float)Math.Atan2(-m.M20 / length, m.M22 / length)
-						);
+					return new EulerAngles((float)Math.Atan2(-m.M01 / length, m.M11 / length),
+										   (float)Math.Atan2(m.M21, length),
+										   (float)Math.Atan2(-m.M20 / length, m.M22 / length));
 				}
 				return new EulerAngles(0, (float)Math.Atan2(m.M21, length), 0);
 			}
@@ -79,12 +77,9 @@ namespace CryCil.Geometry
 
 				if (length > MathHelpers.ZeroTolerance)
 				{
-					return new EulerAngles
-						(
-						(float)Math.Atan2(-viewDirection.X / length, viewDirection.Y / length),
-						(float)Math.Atan2(viewDirection.Z, length),
-						roll
-						);
+					return new EulerAngles((float)Math.Atan2(-viewDirection.X / length, viewDirection.Y / length),
+										   (float)Math.Atan2(viewDirection.Z, length),
+										   roll);
 				}
 				return new EulerAngles(0, (float)Math.Atan2(viewDirection.Z, length), roll);
 			}

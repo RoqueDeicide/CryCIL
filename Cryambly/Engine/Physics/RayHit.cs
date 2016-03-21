@@ -27,67 +27,40 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the distance between the origin of the ray and point of the hit.
 		/// </summary>
-		public float Distance
-		{
-			get { return this.dist; }
-		}
+		public float Distance => this.dist;
 		/// <summary>
 		/// Gets the physical entity that was hit.
 		/// </summary>
-		public PhysicalEntity Collider
-		{
-			get { return this.pCollider; }
-		}
+		public PhysicalEntity Collider => this.pCollider;
 		/// <summary>
 		/// Gets the identifier of the part of <see cref="Collider"/> that was hit by the ray.
 		/// </summary>
-		public int PartId
-		{
-			get { return this.partid; }
-		}
+		public int PartId => this.partid;
 		/// <summary>
 		/// Gets zero-based index of the part of <see cref="Collider"/> that was hit by the ray.
 		/// </summary>
-		public int PartIndex
-		{
-			get { return this.ipart; }
-		}
+		public int PartIndex => this.ipart;
 		/// <summary>
 		/// Gets the object that represents the surface of the body that was hit by the ray.
 		/// </summary>
-		public PhysicalSurface Surface
-		{
-			get { return new PhysicalSurface(this.surface_idx); }
-		}
+		public PhysicalSurface Surface => new PhysicalSurface(this.surface_idx);
 		/// <summary>
 		/// Gets the normal identifier of the material of the body that was hit by the ray.
 		/// </summary>
-		public short MaterialId
-		{
-			get { return this.idmatOrg; }
-		}
+		public short MaterialId => this.idmatOrg;
 		/// <summary>
 		/// Gets the coordinates of the point of contact.
 		/// </summary>
-		public Vector3 Point
-		{
-			get { return this.pt; }
-		}
+		public Vector3 Point => this.pt;
 		/// <summary>
 		/// Gets the direction of the normal to surface of the body that was hit by the ray at the point of
 		/// contact.
 		/// </summary>
-		public Vector3 Normal
-		{
-			get { return this.n; }
-		}
+		public Vector3 Normal => this.n;
 		/// <summary>
 		/// Gets the value that indicates whether the body that was hit is terrain.
 		/// </summary>
-		public bool IsTerrain
-		{
-			get { return this.bTerrain != 0; }
-		}
+		public bool IsTerrain => this.bTerrain != 0;
 		#endregion
 		#region Construction
 		internal RayHit(float dist, PhysicalEntity pCollider, int ipart, int partid, short surfaceIdx, short idmatOrg,

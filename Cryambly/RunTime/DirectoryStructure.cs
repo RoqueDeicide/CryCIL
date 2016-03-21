@@ -26,7 +26,7 @@ namespace CryCil.RunTime
 		/// The CryEngine folder is the one that contains system.cfg that contains "sys_game_folder=" line
 		/// within.
 		/// </remarks>
-		public static string CryEngineFolder { get; private set; }
+		public static string CryEngineFolder { get; }
 		/// <summary>
 		/// Gets path to the platform-specific (x86 or x64) folder within main installation directory.
 		/// </summary>
@@ -48,6 +48,7 @@ namespace CryCil.RunTime
 			string contents;
 			string currentDirectory = Path.GetFullPath(AppDomain.CurrentDomain.BaseDirectory);
 			string root = Path.GetPathRoot(currentDirectory);
+
 			// Look for system.cfg
 			while (currentDirectory != root)
 			{
@@ -56,9 +57,8 @@ namespace CryCil.RunTime
 					break;
 				}
 				string systemFile =
-					Directory
-						.GetFiles(currentDirectory, "system.cfg", SearchOption.TopDirectoryOnly)
-						.FirstOrDefault();
+					Directory.GetFiles(currentDirectory, "system.cfg", SearchOption.TopDirectoryOnly)
+							 .FirstOrDefault();
 				if (systemFile != null)
 				{
 					// Found one, lets check it for presence of sys_game_folder
@@ -97,27 +97,12 @@ namespace CryCil.RunTime
 				throw new Exception("Unable to find location of game folder.");
 			}
 			int gameFolderNameStart = gameFolderLine.LastIndexOf('=') + 1;
-			ContentFolder =
-				Path.Combine
-					(
-					 CryEngineFolder,
-					 gameFolderLine.Substring
-						 (
-						  gameFolderNameStart,
-						  gameFolderLine.Length - gameFolderNameStart
-						 )
-					);
+			ContentFolder = Path.Combine(CryEngineFolder,
+										 gameFolderLine.Substring
+											 (gameFolderNameStart,
+											  gameFolderLine.Length - gameFolderNameStart));
 			// Get Mono lib folder.
-			AssembliesFolder =
-				Path.Combine
-					(
-					 CryEngineFolder,
-					 "Bin32",
-					 "Modules",
-					 "CryCIL",
-					 "Mono",
-					 "lib"
-					);
+			AssembliesFolder = Path.Combine(CryEngineFolder, "Bin32", "Modules", "CryCIL", "Mono", "lib");
 		}
 	}
 }

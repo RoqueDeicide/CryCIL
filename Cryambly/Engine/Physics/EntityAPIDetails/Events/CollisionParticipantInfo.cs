@@ -19,31 +19,19 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the velocity of the participant at the moment of contact.
 		/// </summary>
-		public Vector3 Velocity
-		{
-			get { return this.velocity; }
-		}
+		public Vector3 Velocity => this.velocity;
 		/// <summary>
 		/// Gets the mass of the participant at the moment of contact.
 		/// </summary>
-		public float Mass
-		{
-			get { return this.mass; }
-		}
+		public float Mass => this.mass;
 		/// <summary>
 		/// Gets the identifier of the part of the entity that represents a participant.
 		/// </summary>
-		public int PartIdentifier
-		{
-			get { return this.partId; }
-		}
+		public int PartIdentifier => this.partId;
 		/// <summary>
 		/// Gets the identifier of the material the participant used at the moment of contact.
 		/// </summary>
-		public short MaterialId
-		{
-			get { return this.matId; }
-		}
+		public short MaterialId => this.matId;
 		#endregion
 		#region Construction
 		internal CollisionParticipantInfo(Vector3 velocity, int partId, float mass, short matId, short iPrim)

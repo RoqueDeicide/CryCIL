@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using CryCil.Geometry;
 using CryCil.Hashing;
@@ -44,10 +45,7 @@ namespace CryCil.Engine.Models.Characters
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 		/// <summary>
 		/// Gets the name of this animation asset.
 		/// </summary>
@@ -172,8 +170,8 @@ namespace CryCil.Engine.Models.Characters
 		#endregion
 		#region Interface
 		/// <summary>
-		/// Increments the reference count of this animation asset. Use it if you are going to keep an
-		/// extra reference to it for some reason.
+		/// Increments the reference count of this animation asset. Use it if you are going to keep an extra
+		/// reference to it for some reason.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public void IncrementReferenceCount()
@@ -253,10 +251,7 @@ namespace CryCil.Engine.Models.Characters
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 		/// <summary>
 		/// Gets information about the animation asset.
 		/// </summary>

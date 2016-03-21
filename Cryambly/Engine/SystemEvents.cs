@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using CryCil.RunTime;
 
 namespace CryCil.Engine
@@ -47,7 +46,6 @@ namespace CryCil.Engine
 		#region Interface
 		#endregion
 		#region Utilities
-
 		[RawThunk("Invokes corresponding events.")]
 		private static void OnSystemEvent(SystemEventIds id, UIntPtr wparam, UIntPtr lparam)
 		{
@@ -169,7 +167,7 @@ namespace CryCil.Engine
 					case SystemEventIds.BeamPlayerToCameraPos:
 						break;
 					default:
-						throw new ArgumentOutOfRangeException("id", id, null);
+						throw new ArgumentOutOfRangeException(nameof(id), id, null);
 				}
 			}
 			catch (Exception ex)
@@ -181,12 +179,12 @@ namespace CryCil.Engine
 		private static void OnEvent(SystemEventIds id, UIntPtr wparam, UIntPtr lparam)
 		{
 			var handler = Event;
-			if (handler != null) handler(id, wparam, lparam);
+			handler?.Invoke(id, wparam, lparam);
 		}
 		private static void OnEditorGameModeChanged(bool istrue)
 		{
 			var handler = EditorGameModeChanged;
-			if (handler != null) handler(istrue);
+			handler?.Invoke(istrue);
 		}
 		#endregion
 	}

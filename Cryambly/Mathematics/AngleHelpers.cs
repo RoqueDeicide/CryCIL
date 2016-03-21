@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil
 {
@@ -29,8 +30,8 @@ namespace CryCil
 		/// Normalizes and clamps given angle.
 		/// </summary>
 		/// <param name="degrees">Angle to normalize and clamp.</param>
-		/// <param name="min">Minimal border of the range to clamp the angle into.</param>
-		/// <param name="max">Maximal border of the range to clamp the angle into.</param>
+		/// <param name="min">    Minimal border of the range to clamp the angle into.</param>
+		/// <param name="max">    Maximal border of the range to clamp the angle into.</param>
 		/// <returns>Degrees that were converted from radians.</returns>
 		public static float Clamp(float degrees, float min, float max)
 		{
@@ -45,8 +46,8 @@ namespace CryCil
 		/// Normalizes and clamps given angle.
 		/// </summary>
 		/// <param name="degrees">Angle to normalize and clamp.</param>
-		/// <param name="min">Minimal border of the range to clamp the angle into.</param>
-		/// <param name="max">Maximal border of the range to clamp the angle into.</param>
+		/// <param name="min">    Minimal border of the range to clamp the angle into.</param>
+		/// <param name="max">    Maximal border of the range to clamp the angle into.</param>
 		/// <returns>Degrees that were converted from radians.</returns>
 		public static double Clamp(double degrees, double min, double max)
 		{
@@ -85,8 +86,8 @@ namespace CryCil
 		/// Normalizes and clamps given angle.
 		/// </summary>
 		/// <param name="radians">Angle to normalize and clamp.</param>
-		/// <param name="min">Minimal border of the range to clamp the angle into.</param>
-		/// <param name="max">Maximal border of the range to clamp the angle into.</param>
+		/// <param name="min">    Minimal border of the range to clamp the angle into.</param>
+		/// <param name="max">    Maximal border of the range to clamp the angle into.</param>
 		/// <returns>Degrees that were converted from radians.</returns>
 		public static float Clamp(float radians, float min, float max)
 		{
@@ -101,8 +102,8 @@ namespace CryCil
 		/// Normalizes and clamps given angle.
 		/// </summary>
 		/// <param name="radians">Angle to normalize and clamp.</param>
-		/// <param name="min">Minimal border of the range to clamp the angle into.</param>
-		/// <param name="max">Maximal border of the range to clamp the angle into.</param>
+		/// <param name="min">    Minimal border of the range to clamp the angle into.</param>
+		/// <param name="max">    Maximal border of the range to clamp the angle into.</param>
 		/// <returns>Degrees that were converted from radians.</returns>
 		public static double Clamp(double radians, double min, double max)
 		{

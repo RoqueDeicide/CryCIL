@@ -18,26 +18,26 @@ namespace CryCil.Geometry.Splines
 	/// 				// get this point as a result.
 	/// Vector3 m0;		// This is a starting tangent point, it defines how the spline will go towards the ending point.
 	/// Vector3 m1;		// This is a ending tangent point, it defines how the spline will go towards the starting point.
-	/// 
+	///
 	/// // This is a function argument.
 	/// float t;		// This is a "time" parameter, it describes position of the interpolated point along the spline
 	/// 				// relative to the location of the starting point.
-	/// 
+	///
 	/// // We will need these:
 	/// float t2 = t * t;		// Squared "time" parameter.
 	/// float t3 = t2 * t;		// Cubed "time" parameter.
-	/// 
+	///
 	/// // Now, let's interpolate.
 	/// Vector3 result =
 	/// 	 (2 * t3 - 3 * t2 + 1) * p0 + (t3 - 2 * t2 + t) * m0 + (-2 * t3 + 3 * t2) * p1 + (t3 - t2) * m1;
-	/// 
+	///
 	/// // As you can see from the formula above calculations in parentheses only use the argument, that is why they
 	/// // are usually calculated separately and called "basis numbers". Here they are:
 	/// float pb0 = 2 * t3 - 3 * t2 + 1;		// Starting point basis number.
 	/// float pb1 = -2 * t3 + 3 * t2;			// Ending point basis number.
 	/// float mb0 = t3 - 2 * t2 + t;			// Starting tangent basis number.
 	/// float mb1 = t3 - t2;					// Ending tangent basis number.
-	/// 
+	///
 	/// // With the basis calculated the formula now looks a little shorter:
 	/// result = pb0 * p0 + mb0 * m0 + pb1 * p1 + mb1 * m1;
 	/// </code>
@@ -77,24 +77,16 @@ namespace CryCil.Geometry.Splines
 		/// <remarks>
 		/// It is generally recommended to keep the parameter somewhere rather then extracting it.
 		/// </remarks>
-		public float Time
-		{
-			get
-			{
-				return
-					(3 * this.EndingTangentBasis + this.EndingPointBasis)
-					/
-					(this.EndingPointBasis + 2 * this.EndingTangentBasis);
-			}
-		}
+		public float Time => (3 * this.EndingTangentBasis + this.EndingPointBasis)
+							 /
+							 (this.EndingPointBasis + 2 * this.EndingTangentBasis);
 		#endregion
 		#region Construction
 		/// <summary>
 		/// Creates a new Hermite basis.
 		/// </summary>
 		/// <remarks>
-		/// The number will be clamped into range [0; 1] in Release mode. In Debug mode an error will
-		/// occur.
+		/// The number will be clamped into range [0; 1] in Release mode. In Debug mode an error will occur.
 		/// </remarks>
 		/// <param name="t">A number between 0 and 1 that is used to calculate the basis numbers.</param>
 		public HermiteBasis(float t)
@@ -151,11 +143,10 @@ namespace CryCil.Geometry.Splines
 		public VectorType Interpolate<VectorType>(VectorType p0, VectorType m0, VectorType p1, VectorType m1)
 			where VectorType : IVector<float, VectorType>
 		{
-			return p0
-				.Scaled(this.StartingPointBasis)
-				.Added(m0.Scaled(this.StartingTangentBasis))
-				.Added(p1.Scaled(this.EndingPointBasis))
-				.Added(m1.Scaled(this.EndingTangentBasis));
+			return p0.Scaled(this.StartingPointBasis)
+					 .Added(m0.Scaled(this.StartingTangentBasis))
+					 .Added(p1.Scaled(this.EndingPointBasis))
+					 .Added(m1.Scaled(this.EndingTangentBasis));
 		}
 		/// <summary>
 		/// Interpolates the point along the spline.
@@ -174,11 +165,10 @@ namespace CryCil.Geometry.Splines
 		public VectorType InterpolatePrecise<VectorType>(VectorType p0, VectorType m0, VectorType p1, VectorType m1)
 			where VectorType : IVector<double, VectorType>
 		{
-			return p0
-				.Scaled(this.StartingPointBasis)
-				.Added(m0.Scaled(this.StartingTangentBasis))
-				.Added(p1.Scaled(this.EndingPointBasis))
-				.Added(m1.Scaled(this.EndingTangentBasis));
+			return p0.Scaled(this.StartingPointBasis)
+					 .Added(m0.Scaled(this.StartingTangentBasis))
+					 .Added(p1.Scaled(this.EndingPointBasis))
+					 .Added(m1.Scaled(this.EndingTangentBasis));
 		}
 		#endregion
 	}

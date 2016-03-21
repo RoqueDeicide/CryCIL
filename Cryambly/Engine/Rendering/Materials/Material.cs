@@ -24,37 +24,25 @@ namespace CryCil.Engine.Rendering
 		/// <summary>
 		/// Gets default engine material.
 		/// </summary>
-		public static Material Default
-		{
-			get { return GetDefault(); }
-		}
+		public static Material Default => GetDefault();
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern Material GetDefault();
 		/// <summary>
 		/// Gets default engine material for a terrain layer.
 		/// </summary>
-		public static Material DefaultTerrainLayer
-		{
-			get { return GetDefaultTerrainLayer(); }
-		}
+		public static Material DefaultTerrainLayer => GetDefaultTerrainLayer();
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern Material GetDefaultTerrainLayer();
 		/// <summary>
 		/// Gets default engine material with material layer presets.
 		/// </summary>
-		public static Material DefaultLayers
-		{
-			get { return GetDefaultLayers(); }
-		}
+		public static Material DefaultLayers => GetDefaultLayers();
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern Material GetDefaultLayers();
 		/// <summary>
 		/// Gets default engine material for drawing helpers.
 		/// </summary>
-		public static Material DefaultHelper
-		{
-			get { return GetDefaultHelper(); }
-		}
+		public static Material DefaultHelper => GetDefaultHelper();
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern Material GetDefaultHelper();
 		#endregion
@@ -76,28 +64,19 @@ namespace CryCil.Engine.Rendering
 		/// Indicates whether this material is a default one.
 		/// </summary>
 		/// <exception cref="NullReferenceException">Instance object is not valid.</exception>
-		public bool IsDefault
-		{
-			get { return this.GetIsDefault(); }
-		}
+		public bool IsDefault => this.GetIsDefault();
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private extern bool GetIsDefault();
 		/// <summary>
 		/// Gets a collection of sub-materials held by this one.
 		/// </summary>
 		/// <exception cref="NullReferenceException">Instance object is not valid.</exception>
-		public SubMaterials SubMaterials
-		{
-			get { return new SubMaterials(this.handle); }
-		}
+		public SubMaterials SubMaterials => new SubMaterials(this.handle);
 		/// <summary>
 		/// Indicates whether this object is usable.
 		/// </summary>
 		/// <exception cref="NullReferenceException">Instance object is not valid.</exception>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 		/// <summary>
 		/// Sets the camera assigned to this material.
 		/// </summary>
@@ -113,10 +92,7 @@ namespace CryCil.Engine.Rendering
 		/// Gets the shader item that specifies the rendering process of this material.
 		/// </summary>
 		/// <exception cref="NullReferenceException">Instance object is not valid.</exception>
-		public ShaderItem ShaderItem
-		{
-			get { return this.GetShaderItem(); }
-		}
+		public ShaderItem ShaderItem => this.GetShaderItem();
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private extern ShaderItem GetShaderItem();
 		/// <summary>
@@ -124,19 +100,13 @@ namespace CryCil.Engine.Rendering
 		/// applied to.
 		/// </summary>
 		/// <exception cref="NullReferenceException">Instance object is not valid.</exception>
-		public SurfaceType SurfaceType
-		{
-			get { return this.GetSurfaceType(); }
-		}
+		public SurfaceType SurfaceType => this.GetSurfaceType();
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private extern SurfaceType GetSurfaceType();
 		/// <summary>
 		/// Gets the collection of layers this material consists of.
 		/// </summary>
-		public MaterialLayerCollection Layers
-		{
-			get { return new MaterialLayerCollection(this.handle); }
-		}
+		public MaterialLayerCollection Layers => new MaterialLayerCollection(this.handle);
 		#endregion
 		#region Static Interface
 		/// <summary>
@@ -159,9 +129,7 @@ namespace CryCil.Engine.Rendering
 		/// <param name="nonRemovable">    
 		/// Indicates whether should not be allowed to be removed after loading.
 		/// </param>
-		/// <param name="previewMode">     
-		/// Indicates whether the material is loaded in preview mode.
-		/// </param>
+		/// <param name="previewMode">     Indicates whether the material is loaded in preview mode.</param>
 		/// <returns>A wrapper object for the material, or null if loading failed.</returns>
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern Material Load(string file, bool createIfNotFound = true,

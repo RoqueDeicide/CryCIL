@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using CryCil;
 using CryCil.Engine.DebugServices;
 using CryCil.Graphics;
 
 namespace CSharpSamples.DebugServices
 {
-	[SuppressMessage("ReSharper", "ExceptionNotDocumented", Justification = "Reviewed. This is a sample.")]
 	public static class Graphics
 	{
 		public static void DrawSampleGraphics()

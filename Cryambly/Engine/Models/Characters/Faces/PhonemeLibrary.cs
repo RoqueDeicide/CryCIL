@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using CryCil.MemoryMapping;
@@ -16,10 +16,7 @@ namespace CryCil.Engine.Models.Characters.Faces
 		/// <summary>
 		/// Gets the number of phonemes in this library.
 		/// </summary>
-		public static int Count
-		{
-			get { return GetPhonemeCount(); }
-		}
+		public static int Count => GetPhonemeCount();
 		#endregion
 		#region Interface
 		/// <summary>
@@ -49,7 +46,6 @@ namespace CryCil.Engine.Models.Characters.Faces
 		/// <exception cref="ArgumentException">
 		/// The name of the phoneme can only contain the ASCII characters.
 		/// </exception>
-		[SuppressMessage("ReSharper", "ExceptionNotDocumentedOptional", Justification = "Reviewed")]
 		public static int IndexOf(string phonemeName)
 		{
 			if (phonemeName == null)

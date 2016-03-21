@@ -32,10 +32,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Indicates whether this object was created via correct constructor.
 		/// </summary>
-		public bool Initialized
-		{
-			get { return this.initialized; }
-		}
+		public bool Initialized => this.initialized;
 		/// <summary>
 		/// Gets maximal number of cracks that can be created in the lattice per physics update.
 		/// </summary>
@@ -61,8 +58,7 @@ namespace CryCil.Engine.Physics
 			set { this.maxForcePull = value; }
 		}
 		/// <summary>
-		/// Gets or sets maximal shifting force that can be handled by the part of lattice before it
-		/// cracks.
+		/// Gets or sets maximal shifting force that can be handled by the part of lattice before it cracks.
 		/// </summary>
 		public float MaxForceShift
 		{
@@ -79,8 +75,7 @@ namespace CryCil.Engine.Physics
 			set { this.maxTorqueTwist = value; }
 		}
 		/// <summary>
-		/// Gets or sets maximal bending torque that can be handled by the part of lattice before it
-		/// cracks.
+		/// Gets or sets maximal bending torque that can be handled by the part of lattice before it cracks.
 		/// </summary>
 		public float MaxTorqueBend
 		{
@@ -110,8 +105,7 @@ namespace CryCil.Engine.Physics
 		/// Creates a valid default instance of this type.
 		/// </summary>
 		/// <param name="notUsed">
-		/// This parameter is not used, but it must be provided to make sure correct constructor is
-		/// invoked.
+		/// This parameter is not used, but it must be provided to make sure correct constructor is invoked.
 		/// </param>
 		public PhysicsParametersTetraLattice([UsedImplicitly] bool notUsed)
 		{

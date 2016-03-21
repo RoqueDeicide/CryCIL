@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 using CryCil.RunTime.Registration;
 
@@ -22,54 +23,33 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Name of the property.
 		/// </summary>
-		public string Name
-		{
-			get { return this.name; }
-		}
+		public string Name => this.name;
 		/// <summary>
 		/// Type of the property.
 		/// </summary>
-		public EditablePropertyType Type
-		{
-			get { return this.type; }
-		}
+		public EditablePropertyType Type => this.type;
 		/// <summary>
 		/// Prefix that designates which edit control to use.
 		/// </summary>
-		public string EditType
-		{
-			get { return this.editType; }
-		}
+		public string EditType => this.editType;
 		/// <summary>
 		/// Description of the property.
 		/// </summary>
-		public string Description
-		{
-			get { return this.description; }
-		}
+		public string Description => this.description;
 		/// <summary>
 		/// A set of flags that describes the property.
 		/// </summary>
 		/// <remarks>Not used.</remarks>
-		public uint Flags
-		{
-			get { return this.flags; }
-		}
+		public uint Flags => this.flags;
 		/// <summary>
 		/// 2D vector where <see cref="Vector2.X"/> field designates minimal value this property can take
 		/// and <see cref="Vector2.Y"/> field designates maximal one.
 		/// </summary>
-		public Vector2 Limits
-		{
-			get { return this.limits; }
-		}
+		public Vector2 Limits => this.limits;
 		/// <summary>
 		/// Text representation of the default value of this property.
 		/// </summary>
-		public string DefaultValue
-		{
-			get { return this.defaultValue; }
-		}
+		public string DefaultValue => this.defaultValue;
 		#endregion
 		#region Construction
 		/// <summary>
@@ -100,9 +80,8 @@ namespace CryCil.Engine.Logic
 			if (typeDesc.ManagedType != memberType)
 			{
 				string error =
-					string.Format("Ui control specified for the property {0} of type {1} cannot be used: it works only " +
-								  "with properties of type {2}",
-								  member.Name, memberType.FullName, typeDesc.ManagedType.FullName);
+					$"Ui control specified for the property {member.Name} of type {memberType.FullName} cannot be used: it works only " +
+					$"with properties of type {typeDesc.ManagedType.FullName}";
 				throw new Exception(error);
 			}
 			this.editType = typeDesc.Prefix;
@@ -118,8 +97,7 @@ namespace CryCil.Engine.Logic
 			else if (attribute.DefaultValue.GetType() != typeDesc.ManagedType)
 			{
 				string error =
-					string.Format("Default value for the property {0} of type {1} is of incompatible type {2}.",
-								  member.Name, memberType.FullName, attribute.DefaultValue.GetType().FullName);
+					$"Default value for the property {member.Name} of type {memberType.FullName} is of incompatible type {attribute.DefaultValue.GetType().FullName}.";
 				throw new Exception(error);
 			}
 			else

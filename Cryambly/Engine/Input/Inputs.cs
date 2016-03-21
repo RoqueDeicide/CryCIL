@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using CryCil.Utilities;
 
@@ -76,14 +77,6 @@ namespace CryCil.Engine.Input
 	/// </summary>
 	public static class Inputs
 	{
-		#region Fields
-		#endregion
-		#region Properties
-		#endregion
-		#region Events
-		#endregion
-		#region Construction
-		#endregion
 		#region Interface
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		internal static extern bool DeviceAvailable(InputDeviceType type);
@@ -99,8 +92,6 @@ namespace CryCil.Engine.Input
 		/// </summary>
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern void ClearAnalogInputs();
-		#endregion
-		#region Utilities
 		#endregion
 	}
 }

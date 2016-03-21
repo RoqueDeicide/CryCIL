@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
+using System.Linq;
 
 namespace CryCil.Engine.Rendering.Nodes
 {
@@ -15,11 +15,7 @@ namespace CryCil.Engine.Rendering.Nodes
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
-
+		public bool IsValid => this.handle != IntPtr.Zero;
 		#endregion
 		#region Construction
 		internal CryRenderNode(IntPtr handle)
@@ -38,8 +34,6 @@ namespace CryCil.Engine.Rendering.Nodes
 				throw new NullReferenceException("This instance is not valid.");
 			}
 		}
-
-
 		#endregion
 	}
 }

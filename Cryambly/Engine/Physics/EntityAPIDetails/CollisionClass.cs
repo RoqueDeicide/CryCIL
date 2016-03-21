@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace CryCil.Engine.Physics
@@ -24,9 +25,9 @@ namespace CryCil.Engine.Physics
 			set { this.type = value; }
 		}
 		/// <summary>
-		/// Gets or sets 'ignore' flags. If another entity that collided with that uses this collision
-		/// class has any bits from this entity's 'ignore' flags set in its 'type' flags, the collision
-		/// will be ignored.
+		/// Gets or sets 'ignore' flags. If another entity that collided with that uses this collision class
+		/// has any bits from this entity's 'ignore' flags set in its 'type' flags, the collision will be
+		/// ignored.
 		/// </summary>
 		public ColliderTypes Ignore
 		{

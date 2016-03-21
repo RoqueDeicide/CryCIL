@@ -37,18 +37,12 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the outer entity.
 		/// </summary>
-		public PhysicalEntity OuterEntity
-		{
-			get { return this.outerEntity; }
-		}
+		public PhysicalEntity OuterEntity => this.outerEntity;
 		/// <summary>
 		/// Gets the encompassing geometry (this geometry is used when querying containment of a certain
 		/// point using <see cref="PhysicsStatusContainsPoint"/>).
 		/// </summary>
-		public GeometryShape OuterGeometry
-		{
-			get { return this.outerGeometry; }
-		}
+		public GeometryShape OuterGeometry => this.outerGeometry;
 		#endregion
 		#region Construction
 		/// <summary>
@@ -72,9 +66,7 @@ namespace CryCil.Engine.Physics
 		/// Creates a new instance of this type that can be used to assign an outer entity to the physical
 		/// entity.
 		/// </summary>
-		/// <param name="outerEntity">
-		/// A physical entity that will serve as outer entity for another.
-		/// </param>
+		/// <param name="outerEntity">A physical entity that will serve as outer entity for another.</param>
 		/// <returns>
 		/// A valid object of type <see cref="PhysicsParametersOuterEntity"/> that can be passed to
 		/// <see cref="PhysicalEntity.SetParameters"/>.

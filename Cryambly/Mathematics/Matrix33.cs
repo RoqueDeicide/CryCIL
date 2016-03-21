@@ -167,10 +167,7 @@ namespace CryCil
 		/// <summary>
 		/// Determines whether all elements of this matrix are valid numbers.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.All(MathHelpers.IsNumberValid); }
-		}
+		public bool IsValid => this.All(MathHelpers.IsNumberValid);
 		/// <summary>
 		/// Determines whether this matrix is orthonormal.
 		/// </summary>
@@ -209,34 +206,21 @@ namespace CryCil
 		/// <summary>
 		/// Calculates determinant of this matrix.
 		/// </summary>
-		public float Determinant
-		{
-			get
-			{
-				return
-					(this.M00 * this.M11 * this.M22) +
-					(this.M01 * this.M12 * this.M20) +
-					(this.M02 * this.M10 * this.M21) -
-					(this.M02 * this.M11 * this.M20) -
-					(this.M00 * this.M12 * this.M21) -
-					(this.M01 * this.M10 * this.M22);
-			}
-		}
+		public float Determinant => this.M00 * this.M11 * this.M22 +
+									this.M01 * this.M12 * this.M20 +
+									this.M02 * this.M10 * this.M21 -
+									this.M02 * this.M11 * this.M20 -
+									this.M00 * this.M12 * this.M21 -
+									this.M01 * this.M10 * this.M22;
 		/// <summary>
 		/// Gets a 2D array of elements of this matrix.
 		/// </summary>
-		public float[,] Array2D
+		public float[,] Array2D => new[,]
 		{
-			get
-			{
-				return new[,]
-				{
-					{this.M00, this.M01, this.M02},
-					{this.M10, this.M11, this.M12},
-					{this.M20, this.M21, this.M22}
-				};
-			}
-		}
+			{this.M00, this.M01, this.M02},
+			{this.M10, this.M11, this.M12},
+			{this.M20, this.M21, this.M22}
+		};
 		/// <summary>
 		/// Gives access to specific element of this matrix.
 		/// </summary>
@@ -254,11 +238,11 @@ namespace CryCil
 			{
 				if (row < 0 || row > 2)
 				{
-					throw new ArgumentOutOfRangeException("row", "Attempt to access matrix row out of range [0, 2].");
+					throw new ArgumentOutOfRangeException(nameof(row), "Attempt to access matrix row out of range [0, 2].");
 				}
 				if (column < 0 || column > 2)
 				{
-					throw new ArgumentOutOfRangeException("row", "Attempt to access matrix column out of range [0, 2].");
+					throw new ArgumentOutOfRangeException(nameof(row), "Attempt to access matrix column out of range [0, 2].");
 				}
 				Contract.EndContractBlock();
 
@@ -271,11 +255,11 @@ namespace CryCil
 			{
 				if (row < 0 || row > 2)
 				{
-					throw new ArgumentOutOfRangeException("row", "Attempt to access matrix row out of range [0, 2].");
+					throw new ArgumentOutOfRangeException(nameof(row), "Attempt to access matrix row out of range [0, 2].");
 				}
 				if (column < 0 || column > 2)
 				{
-					throw new ArgumentOutOfRangeException("row", "Attempt to access matrix column out of range [0, 2].");
+					throw new ArgumentOutOfRangeException(nameof(row), "Attempt to access matrix column out of range [0, 2].");
 				}
 				Contract.EndContractBlock();
 
@@ -317,9 +301,7 @@ namespace CryCil
 		/// <summary>
 		/// Creates new instance of <see cref="Matrix33"/> struct.
 		/// </summary>
-		/// <param name="m">
-		/// <see cref="Matrix34"/> object from which first 3 columns will be copied.
-		/// </param>
+		/// <param name="m"><see cref="Matrix34"/> object from which first 3 columns will be copied.</param>
 		public Matrix33(Matrix34 m)
 			: this()
 		{
@@ -338,9 +320,7 @@ namespace CryCil
 		/// <summary>
 		/// Creates new instance of <see cref="Matrix33"/> struct.
 		/// </summary>
-		/// <param name="m">
-		/// <see cref="Matrix44"/> object from which first 3 columns will be copied.
-		/// </param>
+		/// <param name="m"><see cref="Matrix44"/> object from which first 3 columns will be copied.</param>
 		public Matrix33(Matrix44 m)
 			: this()
 		{
@@ -473,8 +453,8 @@ namespace CryCil
 		/// </summary>
 		/// <param name="m">Another matrix.</param>
 		/// <param name="e">
-		/// <see cref="Single"/> object that represents maximal difference between two values that allows
-		/// to consider them equal.
+		/// <see cref="Single"/> object that represents maximal difference between two values that allows to
+		/// consider them equal.
 		/// </param>
 		/// <returns>
 		/// True, if difference between values of each corresponding pair is less then <paramref name="e"/>

@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace CryCil.Engine.Files
@@ -7,7 +7,6 @@ namespace CryCil.Engine.Files
 	/// <summary>
 	/// Provides access to CryEngine pack-related API.
 	/// </summary>
-	[SuppressMessage("ReSharper", "ExceptionNotThrown")]
 	public static class CryPacks
 	{
 		/// <summary>
@@ -17,10 +16,10 @@ namespace CryCil.Engine.Files
 		/// <code>
 		/// // Open the file in the game folder.
 		/// string initialPath = Path.Combine(DirectoryStructure.ContentFolder, "coolstuff.pak");
-		/// 
+		///
 		/// // Open the file without extra adjustments to the path.
 		/// string actualPath = CryPacks.Open(initialPath);
-		/// 
+		///
 		/// if (actualPath != null)
 		/// {
 		///     // Close the pack using a returned path.
@@ -44,10 +43,10 @@ namespace CryCil.Engine.Files
 		/// // Open the file in the game folder.
 		/// string root = DirectoryStructure.ContentFolder;
 		/// string name = "coolstuff.pak";
-		/// 
+		///
 		/// // Open the file without extra adjustments to the path.
 		/// string actualPath = CryPacks.Open(root, name);
-		/// 
+		///
 		/// if (actualPath != null)
 		/// {
 		///     // Close the pack using a returned path.
@@ -83,7 +82,7 @@ namespace CryCil.Engine.Files
 		///         (
 		///             DirectoryStructure.ContentFolder, "Levels", levelName, "level*.pak"
 		///         );
-		/// 
+		///
 		///     // Open the file without extra adjustments to the path.
 		///     string[] paths;
 		///     if (CryPacks.Open(wildcard, out paths))
@@ -117,7 +116,7 @@ namespace CryCil.Engine.Files
 		///     // Open the packs that have level name in there names.
 		///     string root = Path.Combine(DirectoryStructure.ContentFolder, "Levels");
 		///     string wildcard = Path.Combine(levelName, "level*.pak");
-		/// 
+		///
 		///     // Open the file without extra adjustments to the path.
 		///     string[] paths;
 		///     if (CryPacks.Open(root, wildcard, out paths))
@@ -153,8 +152,7 @@ namespace CryCil.Engine.Files
 		/// <paramref name="rules"/>.
 		/// </para>
 		/// <para>
-		/// When closing multiple packs you better use the same wildcard pattern that you used to open
-		/// them.
+		/// When closing multiple packs you better use the same wildcard pattern that you used to open them.
 		/// </para>
 		/// </remarks>
 		/// <example>
@@ -163,17 +161,17 @@ namespace CryCil.Engine.Files
 		/// {
 		///     // Open the file in the game folder.
 		///     string initialPath = Path.Combine(DirectoryStructure.ContentFolder, packFileName);
-		/// 
+		///
 		///     // Open the file without extra adjustments to the path.
 		///     string actualPath = CryPacks.Open(initialPath);
-		/// 
+		///
 		///     if (actualPath != null)
 		///     {
 		///         // Close the pack using a returned path.
 		///         CryPacks.Close(actualPath);
 		///     }
 		/// }
-		/// 
+		///
 		/// // Open level-related packs.
 		/// void OpenLevelPacks(string levelName)
 		/// {
@@ -183,7 +181,7 @@ namespace CryCil.Engine.Files
 		///         (
 		///             DirectoryStructure.ContentFolder, "Levels", levelName, "level*.pak"
 		///         );
-		/// 
+		///
 		///     // Open the file without extra adjustments to the path.
 		///     string[] paths;
 		///     if (CryPacks.Open(wildcard, out paths))
@@ -191,7 +189,7 @@ namespace CryCil.Engine.Files
 		///         Console.WriteLine("Loaded .pak files for the level {0}", levelName);
 		///     }
 		/// }
-		/// 
+		///
 		/// void CloseLevelPacks(string levelName)
 		/// {
 		///    // Close the packs that have level name in there names.
@@ -200,7 +198,7 @@ namespace CryCil.Engine.Files
 		///         (
 		///             DirectoryStructure.ContentFolder, "Levels", levelName, "level*.pak"
 		///         );
-		/// 
+		///
 		///     if (CryPacks.Close(wildcard, true))
 		///     {
 		///         Console.WriteLine("Unloaded .pak files for the level {0}", levelName);

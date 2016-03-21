@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
@@ -33,8 +34,8 @@ namespace CryCil.Engine.Models.Characters.Attachments
 		/// <remarks>Spring simulation doesn't effect the orientation of attached object.</remarks>
 		SpringEllipsoid = 0x04,
 		/// <summary>
-		/// Specifies that attachment is constantly aligned with a joint it's attached to. Used when
-		/// working with attachment proxies.
+		/// Specifies that attachment is constantly aligned with a joint it's attached to. Used when working
+		/// with attachment proxies.
 		/// </summary>
 		TranslationalProjection = 0x05
 	}
@@ -87,10 +88,7 @@ namespace CryCil.Engine.Models.Characters.Attachments
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != null; }
-		}
+		public bool IsValid => this.handle != null;
 
 		/// <summary>
 		/// Gets or sets the radius of the disk in the middle of the bounding volume shape that limits the
@@ -133,8 +131,8 @@ namespace CryCil.Engine.Models.Characters.Attachments
 			}
 		}
 		/// <summary>
-		/// Gets or sets the scale of the second "hemisphere" that defines a bounding volume that limits
-		/// the movement of the attachment.
+		/// Gets or sets the scale of the second "hemisphere" that defines a bounding volume that limits the
+		/// movement of the attachment.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public float SecondHemisphereScale
@@ -173,8 +171,8 @@ namespace CryCil.Engine.Models.Characters.Attachments
 			}
 		}
 		/// <summary>
-		/// Gets or sets yaw rotation of the disk in the middle of the bounding volume shape that limits
-		/// the movement of the attachment.
+		/// Gets or sets yaw rotation of the disk in the middle of the bounding volume shape that limits the
+		/// movement of the attachment.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public float DiskRotationYaw
@@ -228,10 +226,7 @@ namespace CryCil.Engine.Models.Characters.Attachments
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != null; }
-		}
+		public bool IsValid => this.handle != null;
 
 		/// <summary>
 		/// Gets or sets the mass of the attached object that is used in spring simulation.
@@ -368,10 +363,7 @@ namespace CryCil.Engine.Models.Characters.Attachments
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != null; }
-		}
+		public bool IsValid => this.handle != null;
 
 		/// <summary>
 		/// Gets or sets the angle of maximal deviation of the pendulum from
@@ -449,10 +441,7 @@ namespace CryCil.Engine.Models.Characters.Attachments
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != null; }
-		}
+		public bool IsValid => this.handle != null;
 
 		/// <summary>
 		/// Gets or sets the vector which direction representation default orientation of the pendulum rod
@@ -579,8 +568,8 @@ namespace CryCil.Engine.Models.Characters.Attachments
 			}
 		}
 		/// <summary>
-		/// Gets or sets the vector where X-coordinate represents length of the capsule (?) and
-		/// Y-coordinate represents radius of the capsule (?).
+		/// Gets or sets the vector where X-coordinate represents length of the capsule (?) and Y-coordinate
+		/// represents radius of the capsule (?).
 		/// </summary>
 		/// <remarks>
 		/// Capsule is used to create physical representation of the pendulum rod allowing the most
@@ -637,8 +626,8 @@ namespace CryCil.Engine.Models.Characters.Attachments
 		/// </summary>
 		[FieldOffset(0)] public AttachmentSimulationParametersSpringParameters SpringParameters;
 		/// <summary>
-		/// Provides a set of simulation parameters that specify how to simulate the movement of
-		/// attachments that are connected to the socket with a pendulum.
+		/// Provides a set of simulation parameters that specify how to simulate the movement of attachments
+		/// that are connected to the socket with a pendulum.
 		/// </summary>
 		[FieldOffset(0)] public AttachmentSimulationParametersPendulumParameters PendulumParameters;
 		#endregion
@@ -646,18 +635,13 @@ namespace CryCil.Engine.Models.Characters.Attachments
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != null; }
-		}
+		public bool IsValid => this.handle != null;
 
 		/// <summary>
 		/// Gets the type of simulation that is used for this attachment.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
-		/// <exception cref="ArgumentOutOfRangeException">
-		/// Unknown simulation type was specified.
-		/// </exception>
+		/// <exception cref="ArgumentOutOfRangeException">Unknown simulation type was specified.</exception>
 		public AttachmentSimulationType SimulationType
 		{
 			get
@@ -670,7 +654,7 @@ namespace CryCil.Engine.Models.Characters.Attachments
 			{
 				if (value < 0 || value > AttachmentSimulationType.TranslationalProjection)
 				{
-					throw new ArgumentOutOfRangeException("value", "Unknown simulation type was specified.");
+					throw new ArgumentOutOfRangeException(nameof(value), "Unknown simulation type was specified.");
 				}
 
 				this.AssertInstance();
@@ -791,7 +775,7 @@ namespace CryCil.Engine.Models.Characters.Attachments
 			{
 				if (value < 10)
 				{
-					throw new ArgumentOutOfRangeException("value", "Frame-rate of the simulation cannot be less then ten.");
+					throw new ArgumentOutOfRangeException(nameof(value), "Frame-rate of the simulation cannot be less then ten.");
 				}
 
 				this.AssertInstance();

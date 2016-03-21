@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using CryCil.Engine.Memory;
@@ -25,31 +26,19 @@ namespace CryCil.Engine.Files
 		/// <summary>
 		/// Returns true if this stream is not closed.
 		/// </summary>
-		public override bool CanRead
-		{
-			get { return this.alive; }
-		}
+		public override bool CanRead => this.alive;
 		/// <summary>
 		/// Returns true if this stream is not closed.
 		/// </summary>
-		public override bool CanSeek
-		{
-			get { return this.alive; }
-		}
+		public override bool CanSeek => this.alive;
 		/// <summary>
 		/// Indicates whether this is possible to write the file.
 		/// </summary>
-		public override bool CanWrite
-		{
-			get { return this.canWrite && this.alive; }
-		}
+		public override bool CanWrite => this.canWrite && this.alive;
 		/// <summary>
 		/// Gets the length of the file.
 		/// </summary>
-		public override long Length
-		{
-			get { return this.length; }
-		}
+		public override long Length => this.length;
 		/// <summary>
 		/// Gets or sets position of this stream in the data sequence.
 		/// </summary>
@@ -155,11 +144,11 @@ namespace CryCil.Engine.Files
 			}
 			if (offset < 0)
 			{
-				throw new ArgumentOutOfRangeException("offset", "Zero-based index cannot be less then 0.");
+				throw new ArgumentOutOfRangeException(nameof(offset), "Zero-based index cannot be less then 0.");
 			}
 			if (count < 0)
 			{
-				throw new ArgumentOutOfRangeException("count", "Number of bytes to read cannot be less then 0.");
+				throw new ArgumentOutOfRangeException(nameof(count), "Number of bytes to read cannot be less then 0.");
 			}
 			if (offset > buffer.Length - count)
 			{
@@ -174,8 +163,8 @@ namespace CryCil.Engine.Files
 			return i;
 		}
 		/// <summary>
-		/// Moves position of the stream to one indicated by the given <paramref name="offset"/> relative
-		/// to the specified <paramref name="origin"/>.
+		/// Moves position of the stream to one indicated by the given <paramref name="offset"/> relative to
+		/// the specified <paramref name="origin"/>.
 		/// </summary>
 		/// <param name="offset">Zero-based index of the new position of the stream.</param>
 		/// <param name="origin">Origin position relative to which to move the current position.</param>
@@ -206,7 +195,7 @@ namespace CryCil.Engine.Files
 					this.Position = this.length + offset;
 					break;
 				default:
-					throw new ArgumentOutOfRangeException("origin", "Unknown origin was specified.");
+					throw new ArgumentOutOfRangeException(nameof(origin), "Unknown origin was specified.");
 			}
 
 			return this.position;
@@ -240,11 +229,11 @@ namespace CryCil.Engine.Files
 			}
 			if (value < 0)
 			{
-				throw new ArgumentOutOfRangeException("value", "Cannot set the length of the file to the negative value.");
+				throw new ArgumentOutOfRangeException(nameof(value), "Cannot set the length of the file to the negative value.");
 			}
 			if (value > uint.MaxValue)
 			{
-				throw new ArgumentOutOfRangeException("value", "Cannot set the length of the file to more then 4GB.");
+				throw new ArgumentOutOfRangeException(nameof(value), "Cannot set the length of the file to more then 4GB.");
 			}
 
 			ulong memSize = (ulong)value;
@@ -253,7 +242,7 @@ namespace CryCil.Engine.Files
 				IntPtr ptr = CryMarshal.Reallocate((IntPtr)this.bytes, memSize);
 				if (ptr == IntPtr.Zero)
 				{
-					throw new OutOfMemoryException(string.Format("Unable to expand the file length to {0} bytes.", value));
+					throw new OutOfMemoryException($"Unable to expand the file length to {value} bytes.");
 				}
 				this.bytes = (byte*)ptr;
 				this.length = (uint)memSize;
@@ -289,11 +278,11 @@ namespace CryCil.Engine.Files
 		{
 			if (offset < 0)
 			{
-				throw new ArgumentOutOfRangeException("offset", "Zero-based index cannot be less then 0.");
+				throw new ArgumentOutOfRangeException(nameof(offset), "Zero-based index cannot be less then 0.");
 			}
 			if (count < 0)
 			{
-				throw new ArgumentOutOfRangeException("count", "Number of bytes to write cannot be less then 0.");
+				throw new ArgumentOutOfRangeException(nameof(count), "Number of bytes to write cannot be less then 0.");
 			}
 			if (offset > buffer.Length - count)
 			{

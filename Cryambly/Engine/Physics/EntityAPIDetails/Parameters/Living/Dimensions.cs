@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
 
@@ -134,8 +135,8 @@ namespace CryCil.Engine.Physics
 			set { this.maxUnproj = value; }
 		}
 		/// <summary>
-		/// Gets or sets the value that indicates whether this entity uses a capsule instead of the
-		/// cylinder for collision detection.
+		/// Gets or sets the value that indicates whether this entity uses a capsule instead of the cylinder
+		/// for collision detection.
 		/// </summary>
 		public bool UseCapsule
 		{
@@ -143,8 +144,8 @@ namespace CryCil.Engine.Physics
 			set { this.bUseCapsule = value ? 1 : 0; }
 		}
 		/// <summary>
-		/// Gets or sets the value that indicates how far the entity's feet must be from the ground to
-		/// state loss of contact with the ground.
+		/// Gets or sets the value that indicates how far the entity's feet must be from the ground to state
+		/// loss of contact with the ground.
 		/// </summary>
 		/// <remarks>
 		/// By default this value is chosen using the following code: <c>Max(0.04, 0.01 *

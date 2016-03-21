@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil.Engine.Models.StaticObjects
 {
@@ -46,8 +47,8 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// </summary>
 		VbIbPushdown = 0x100,
 		/// <summary>
-		/// When set, specifies that VRAM must be accessed directly if target architecture supports it,
-		/// used internally.
+		/// When set, specifies that VRAM must be accessed directly if target architecture supports it, used
+		/// internally.
 		/// </summary>
 		Direct = 0x200,
 		/// <summary>
@@ -57,18 +58,18 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// <summary>
 		/// Combination of flags that is used to create new data stream in system memory.
 		/// </summary>
-		SystemCreate = (Write | Discard | System),
+		SystemCreate = Write | Discard | System,
 		/// <summary>
 		/// Combination of flags that is used to update data stream in system memory.
 		/// </summary>
-		SystemUpdate = (Write | System),
+		SystemUpdate = Write | System,
 		/// <summary>
 		/// Combination of flags that is used to create new data stream in video memory.
 		/// </summary>
-		VideoCreate = (Write | Discard | Video),
+		VideoCreate = Write | Discard | Video,
 		/// <summary>
 		/// Combination of flags that is used to update data stream in video memory.
 		/// </summary>
-		VideoUpdate = (Write | Video)
+		VideoUpdate = Write | Video
 	}
 }

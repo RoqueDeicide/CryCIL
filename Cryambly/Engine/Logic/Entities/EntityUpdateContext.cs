@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
 using CryCil.Graphics;
@@ -27,33 +28,21 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Gets identifier of the current rendering frame.
 		/// </summary>
-		public int FrameIdentifier
-		{
-			get { return this.frameID; }
-		}
+		public int FrameIdentifier => this.frameID;
 		/// <summary>
 		/// Gets pointer to the camera that is used to render the current frame.
 		/// </summary>
-		public Camera* Camera
-		{
-			get { return this.camera; }
-		}
+		public Camera* Camera => this.camera;
 		/// <summary>
 		/// Gets current system time.
 		/// </summary>
 		/// <remarks>This time is more up to date then <see cref="Time.FrameStart"/>.</remarks>
-		public DateTime CurrentTime
-		{
-			get { return Time.FromSeconds(this.currTime); }
-		}
+		public DateTime CurrentTime => Time.FromSeconds(this.currTime);
 		/// <summary>
 		/// Gets length of the last frame in seconds.
 		/// </summary>
 		/// <remarks>This time is more up to date then <see cref="Time.Frame"/>.</remarks>
-		public float FrameTime
-		{
-			get { return this.frameTime; }
-		}
+		public float FrameTime => this.frameTime;
 		#endregion
 	}
 }

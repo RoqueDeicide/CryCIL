@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace CryCil.Engine.Logic
@@ -10,10 +11,8 @@ namespace CryCil.Engine.Logic
 	{
 		#region Properties
 		/// <exception cref="OutOfMemoryException">There is insufficient memory available.</exception>
-		internal override FlowPortConfig Config
-		{
-			get { return new FlowPortConfig(this.Name, this.DisplayName, this.DisplayName, this.DataType); }
-		}
+		internal override FlowPortConfig Config => new FlowPortConfig(this.Name, this.DisplayName,
+																	  this.DisplayName, this.DataType);
 		// Needed for port activation.
 		internal IntPtr Graph { get; set; }
 		internal ushort NodeId { get; set; }
@@ -34,14 +33,14 @@ namespace CryCil.Engine.Logic
 		/// </summary>
 		internal virtual void OnConnected()
 		{
-			if (this.Connected != null) this.Connected(this);
+			this.Connected?.Invoke(this);
 		}
 		/// <summary>
 		/// Raises the event <see cref="Disconnected"/>.
 		/// </summary>
 		internal virtual void OnDisconnected()
 		{
-			if (this.Disconnected != null) this.Disconnected(this);
+			this.Disconnected?.Invoke(this);
 		}
 		#endregion
 		#region Construction

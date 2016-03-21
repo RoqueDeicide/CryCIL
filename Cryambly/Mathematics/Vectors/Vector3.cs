@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Globalization;
+using System.Linq;
 using System.Runtime.InteropServices;
 using CryCil.Geometry;
 
@@ -92,24 +92,15 @@ namespace CryCil
 		/// <summary>
 		/// Gets squared length of this vector.
 		/// </summary>
-		public float LengthSquared
-		{
-			get { return this.X * this.X + this.Y * this.Y + this.Z * this.Z; }
-		}
+		public float LengthSquared => this.X * this.X + this.Y * this.Y + this.Z * this.Z;
 		/// <summary>
 		/// Gets length of this vector projected onto XY plane.
 		/// </summary>
-		public float Length2D
-		{
-			get { return (float)Math.Sqrt(this.X * this.X + this.Y * this.Y); }
-		}
+		public float Length2D => (float)Math.Sqrt(this.X * this.X + this.Y * this.Y);
 		/// <summary>
 		/// Gets squared length of this vector projected onto XY plane.
 		/// </summary>
-		public float Length2DSquared
-		{
-			get { return this.X * this.X + this.Y * this.Y; }
-		}
+		public float Length2DSquared => this.X * this.X + this.Y * this.Y;
 		/// <summary>
 		/// Gets normalized vector.
 		/// </summary>
@@ -124,24 +115,15 @@ namespace CryCil
 		/// <summary>
 		/// Gets volume of the perpendicular cuboid defined by this vector.
 		/// </summary>
-		public float Volume
-		{
-			get { return this.X * this.Y * this.Z; }
-		}
+		public float Volume => this.X * this.Y * this.Z;
 		/// <summary>
 		/// Gets vector which components are absolute values of components of this vector.
 		/// </summary>
-		public Vector3 Absolute
-		{
-			get { return new Vector3(Math.Abs(this.X), Math.Abs(this.Y), Math.Abs(this.Z)); }
-		}
+		public Vector3 Absolute => new Vector3(Math.Abs(this.X), Math.Abs(this.Y), Math.Abs(this.Z));
 		/// <summary>
 		/// Gets flipped vector.
 		/// </summary>
-		public Vector3 Flipped
-		{
-			get { return -this; }
-		}
+		public Vector3 Flipped => -this;
 		/// <summary>
 		/// Gets simplest vector that is perpendicular to this one.
 		/// </summary>
@@ -211,8 +193,8 @@ namespace CryCil
 			{
 				if ((index | 0x1) != 0x1 && index != 2) //index < 0 || index > 2
 				{
-					throw new ArgumentOutOfRangeException("index", "Attempt to access vector" +
-																   " component other then X, Y or Z.");
+					throw new ArgumentOutOfRangeException(nameof(index), "Attempt to access vector" +
+																		 " component other then X, Y or Z.");
 				}
 				Contract.EndContractBlock();
 
@@ -225,8 +207,8 @@ namespace CryCil
 			{
 				if ((index | 0x1) != 0x1 && index != 2) //index < 0 || index > 2
 				{
-					throw new ArgumentOutOfRangeException("index", "Attempt to access vector" +
-																   " component other then X, Y or Z.");
+					throw new ArgumentOutOfRangeException(nameof(index), "Attempt to access vector" +
+																		 " component other then X, Y or Z.");
 				}
 				Contract.EndContractBlock();
 
@@ -239,16 +221,9 @@ namespace CryCil
 		/// <summary>
 		/// Determines whether this vector is represented by valid numbers.
 		/// </summary>
-		public bool IsValid
-		{
-			get
-			{
-				return
-					MathHelpers.IsNumberValid(this.X) &&
-					MathHelpers.IsNumberValid(this.Y) &&
-					MathHelpers.IsNumberValid(this.Z);
-			}
-		}
+		public bool IsValid => MathHelpers.IsNumberValid(this.X) &&
+							   MathHelpers.IsNumberValid(this.Y) &&
+							   MathHelpers.IsNumberValid(this.Z);
 		/// <summary>
 		/// Gets an array of bytes that forms this object.
 		/// </summary>
@@ -308,7 +283,7 @@ namespace CryCil
 			: this()
 		{
 			this.Y = (float)Math.Asin(Math.Max(-1.0f, Math.Min(1.0f, -(q.X * q.Z - q.W * q.Y) * 2)));
-			if (Math.Abs(Math.Abs(this.Y) - (Math.PI * 0.5f)) < 0.01f)
+			if (Math.Abs(Math.Abs(this.Y) - Math.PI * 0.5f) < 0.01f)
 			{
 				this.X = 0;
 				this.Z = (float)Math.Atan2(-2 * (q.X * q.Y - q.W * q.Z), 1 - (q.X * q.X + q.Z * q.Z) * 2);
@@ -393,8 +368,8 @@ namespace CryCil
 		/// Creates a dictionary that contains components of this vector.
 		/// </summary>
 		/// <returns>
-		/// A dictionary which capacity is set to 3 where components of the vector can be accessed with
-		/// keys of same names.
+		/// A dictionary which capacity is set to 3 where components of the vector can be accessed with keys
+		/// of same names.
 		/// </returns>
 		public Dictionary<string, float> ToDictionary()
 		{
@@ -463,7 +438,7 @@ namespace CryCil
 		{
 			if (offset < 0 || offset > 2)
 			{
-				throw new ArgumentOutOfRangeException("offset", "Offset must be belong to interval [0; 2].");
+				throw new ArgumentOutOfRangeException(nameof(offset), "Offset must be belong to interval [0; 2].");
 			}
 
 			Vector3 result = new Vector3(this.X, this.Y, this.Z);
@@ -495,7 +470,7 @@ namespace CryCil
 		public void ClampLength(float maxLength)
 		{
 			float sqrLength = this.LengthSquared;
-			if (sqrLength > (maxLength * maxLength))
+			if (sqrLength > maxLength * maxLength)
 			{
 				var scale = maxLength * MathHelpers.ReciprocalSquareRoot(sqrLength);
 				this.X *= scale;
@@ -526,16 +501,16 @@ namespace CryCil
 		public static void Clamp(ref Vector3 value, ref Vector3 min, ref Vector3 max, out Vector3 result)
 		{
 			float x = value.X;
-			x = (x > max.X) ? max.X : x;
-			x = (x < min.X) ? min.X : x;
+			x = x > max.X ? max.X : x;
+			x = x < min.X ? min.X : x;
 
 			float y = value.Y;
-			y = (y > max.Y) ? max.Y : y;
-			y = (y < min.Y) ? min.Y : y;
+			y = y > max.Y ? max.Y : y;
+			y = y < min.Y ? min.Y : y;
 
 			float z = value.Z;
-			z = (z > max.Z) ? max.Z : z;
-			z = (z < min.Z) ? min.Z : z;
+			z = z > max.Z ? max.Z : z;
+			z = z < min.Z ? min.Z : z;
 
 			result = new Vector3(x, y, z);
 		}
@@ -606,9 +581,9 @@ namespace CryCil
 		{
 			result = new Vector3
 			{
-				X = (left.X > right.X) ? left.X : right.X,
-				Y = (left.Y > right.Y) ? left.Y : right.Y,
-				Z = (left.Z > right.Z) ? left.Z : right.Z
+				X = left.X > right.X ? left.X : right.X,
+				Y = left.Y > right.Y ? left.Y : right.Y,
+				Z = left.Z > right.Z ? left.Z : right.Z
 			};
 		}
 		/// <summary>
@@ -636,9 +611,9 @@ namespace CryCil
 		{
 			result = new Vector3
 			{
-				X = (left.X < right.X) ? left.X : right.X,
-				Y = (left.Y < right.Y) ? left.Y : right.Y,
-				Z = (left.Z < right.Z) ? left.Z : right.Z
+				X = left.X < right.X ? left.X : right.X,
+				Y = left.Y < right.Y ? left.Y : right.Y,
+				Z = left.Z < right.Z ? left.Z : right.Z
 			};
 		}
 		/// <summary>
@@ -672,8 +647,7 @@ namespace CryCil
 		/// <param name="v1">     Another vector to compare this one with.</param>
 		/// <param name="epsilon">Precision of comparison.</param>
 		/// <returns>
-		/// True, if difference between this vector and another vector is within specified precision
-		/// bounds.
+		/// True, if difference between this vector and another vector is within specified precision bounds.
 		/// </returns>
 		public bool IsEquivalent(Vector3 v1, float epsilon = 0.05f)
 		{
@@ -731,9 +705,9 @@ namespace CryCil
 		#endregion
 		#region Text Conversions
 		/// <summary>
-		/// Returns a <see cref="System.String"/> that represents this instance.
+		/// Returns a <see cref="string"/> that represents this instance.
 		/// </summary>
-		/// <returns>A <see cref="System.String"/> that represents this instance.</returns>
+		/// <returns>A <see cref="string"/> that represents this instance.</returns>
 		public override string ToString()
 		{
 			return string.Format(CultureInfo.CurrentCulture, "{0},{1},{2}", this.X, this.Y, this.Z);
@@ -753,17 +727,17 @@ namespace CryCil
 		{
 			if (string.IsNullOrEmpty(value))
 			{
-				throw new ArgumentNullException("value", "Attempt to parse null or empty string as a vector.");
+				throw new ArgumentNullException(nameof(value), "Attempt to parse null or empty string as a vector.");
 			}
 			try
 			{
 				string[] split = value.Split(',');
-				return new Vector3(System.Convert.ToSingle(split[0]),
-								   System.Convert.ToSingle(split[1]), System.Convert.ToSingle(split[2]));
+				return new Vector3(Convert.ToSingle(split[0]),
+								   Convert.ToSingle(split[1]), Convert.ToSingle(split[2]));
 			}
 			catch (Exception ex)
 			{
-				throw new ArgumentException("Given string doesn't contain an equivalent of the vector.", "value", ex);
+				throw new ArgumentException("Given string doesn't contain an equivalent of the vector.", nameof(value), ex);
 			}
 		}
 		#endregion

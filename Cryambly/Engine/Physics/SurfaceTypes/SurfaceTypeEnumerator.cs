@@ -21,10 +21,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the current surface type.
 		/// </summary>
-		public SurfaceType Current
-		{
-			get { return this.current; }
-		}
+		public SurfaceType Current => this.current;
 		#endregion
 		#region Interface
 		/// <summary>
@@ -73,10 +70,7 @@ namespace CryCil.Engine.Physics
 		private static extern SurfaceType GetNext(IntPtr handle);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern SurfaceType Release(IntPtr handle);
-		object IEnumerator.Current
-		{
-			get { return this.Current; }
-		}
+		object IEnumerator.Current => this.Current;
 		#endregion
 	}
 }

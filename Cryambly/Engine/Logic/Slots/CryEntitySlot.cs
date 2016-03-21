@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using CryCil.Engine.Models.StaticObjects;
 using CryCil.Engine.Rendering;
 using CryCil.Engine.Rendering.Lighting;
@@ -25,25 +26,13 @@ namespace CryCil.Engine.Logic
 		private readonly int index;
 		#endregion
 		#region Properties
-		internal IntPtr Handle
-		{
-			get { return this.entityHandle; }
-		}
-		internal int Slot
-		{
-			get { return this.index; }
-		}
+		internal IntPtr Handle => this.entityHandle;
+		internal int Slot => this.index;
 		/// <summary>
 		/// Indicates whether this slot object is valid.
 		/// </summary>
-		public bool IsValid
-		{
-			get
-			{
-				return this.entityHandle != IntPtr.Zero && this.index >= 0 &&
-					   EntitySlotOps.IsSlotValid(this.entityHandle, this.index);
-			}
-		}
+		public bool IsValid => this.entityHandle != IntPtr.Zero && this.index >= 0 &&
+							   EntitySlotOps.IsSlotValid(this.entityHandle, this.index);
 		/// <summary>
 		/// Gets collective information about this slot.
 		/// </summary>
@@ -168,7 +157,7 @@ namespace CryCil.Engine.Logic
 				this.AssertSlotValidity();
 				if (!value.IsValid)
 				{
-					throw new ArgumentNullException("value", "Cannot set invalid slot as a parent for another.");
+					throw new ArgumentNullException(nameof(value), "Cannot set invalid slot as a parent for another.");
 				}
 				if (value.entityHandle != this.entityHandle)
 				{
@@ -204,7 +193,7 @@ namespace CryCil.Engine.Logic
 				this.AssertSlotValidity();
 				if (!value.IsValid)
 				{
-					throw new ArgumentNullException("value", "Cannot assign invalid material to the entity slot.");
+					throw new ArgumentNullException(nameof(value), "Cannot assign invalid material to the entity slot.");
 				}
 
 				EntitySlotOps.SetSlotMaterial(this.entityHandle, this.index, value);
@@ -235,9 +224,7 @@ namespace CryCil.Engine.Logic
 		/// </summary>
 		/// <exception cref="NullReferenceException">This entity slot object is not valid.</exception>
 		/// <exception cref="ObjectDisposedException">This entity slot doesn't exist.</exception>
-		/// <exception cref="ArgumentNullException">
-		/// Cannot bind null emitter to the entity slot.
-		/// </exception>
+		/// <exception cref="ArgumentNullException">Cannot bind null emitter to the entity slot.</exception>
 		public ParticleEmitter BoundEmitter
 		{
 			get
@@ -251,7 +238,7 @@ namespace CryCil.Engine.Logic
 				this.AssertSlotValidity();
 				if (!value.IsValid)
 				{
-					throw new ArgumentNullException("value", "Cannot bind null emitter to the entity slot.");
+					throw new ArgumentNullException(nameof(value), "Cannot bind null emitter to the entity slot.");
 				}
 
 				EntitySlotOps.SetParticleEmitter(this.entityHandle, this.index, value, true);
@@ -262,9 +249,7 @@ namespace CryCil.Engine.Logic
 		/// </summary>
 		/// <exception cref="NullReferenceException">This entity slot object is not valid.</exception>
 		/// <exception cref="ObjectDisposedException">This entity slot doesn't exist.</exception>
-		/// <exception cref="ArgumentNullException">
-		/// Cannot bind null emitter to the entity slot.
-		/// </exception>
+		/// <exception cref="ArgumentNullException">Cannot bind null emitter to the entity slot.</exception>
 		public StaticObject BoundStaticObject
 		{
 			get
@@ -278,7 +263,7 @@ namespace CryCil.Engine.Logic
 				this.AssertSlotValidity();
 				if (!value.IsValid)
 				{
-					throw new ArgumentNullException("value", "Cannot bind null emitter to the entity slot.");
+					throw new ArgumentNullException(nameof(value), "Cannot bind null emitter to the entity slot.");
 				}
 
 				float mass, density;
@@ -317,15 +302,13 @@ namespace CryCil.Engine.Logic
 		/// <param name="target">Identifier of the entity to move this slot to.</param>
 		/// <exception cref="NullReferenceException">This entity slot object is not valid.</exception>
 		/// <exception cref="ObjectDisposedException">This entity slot doesn't exist.</exception>
-		/// <exception cref="ArgumentNullException">
-		/// Cannot transfer a slot to an invalid entity.
-		/// </exception>
+		/// <exception cref="ArgumentNullException">Cannot transfer a slot to an invalid entity.</exception>
 		public void Transfer(EntityId target)
 		{
 			this.AssertSlotValidity();
 			if (!target.Entity.IsValid)
 			{
-				throw new ArgumentNullException("target", "Cannot transfer a slot to an invalid entity.");
+				throw new ArgumentNullException(nameof(target), "Cannot transfer a slot to an invalid entity.");
 			}
 
 			EntitySlotOps.MoveSlot(this.entityHandle, target.Entity, this.index);
@@ -340,15 +323,13 @@ namespace CryCil.Engine.Logic
 		/// <param name="target">Entity to move this slot to.</param>
 		/// <exception cref="NullReferenceException">This entity slot object is not valid.</exception>
 		/// <exception cref="ObjectDisposedException">This entity slot doesn't exist.</exception>
-		/// <exception cref="ArgumentNullException">
-		/// Cannot transfer a slot to an invalid entity.
-		/// </exception>
+		/// <exception cref="ArgumentNullException">Cannot transfer a slot to an invalid entity.</exception>
 		public void Transfer(CryEntity target)
 		{
 			this.AssertSlotValidity();
 			if (!target.IsValid)
 			{
-				throw new ArgumentNullException("target", "Cannot transfer a slot to an invalid entity.");
+				throw new ArgumentNullException(nameof(target), "Cannot transfer a slot to an invalid entity.");
 			}
 
 			EntitySlotOps.MoveSlot(this.entityHandle, target, this.index);
@@ -369,8 +350,8 @@ namespace CryCil.Engine.Logic
 			this.AssertSlotValidity();
 			if (!effect.IsValid)
 			{
-				throw new ArgumentNullException("effect", "Cannot use null particle effect to create an emitter that can " +
-														  "be bound to the entity slot.");
+				throw new ArgumentNullException(nameof(effect), "Cannot use null particle effect to create an emitter that can " +
+																"be bound to the entity slot.");
 			}
 
 			EntitySlotOps.LoadParticleEmitterDefault(this.entityHandle, this.index, effect, prime, sync);
@@ -395,8 +376,8 @@ namespace CryCil.Engine.Logic
 			this.AssertSlotValidity();
 			if (!effect.IsValid)
 			{
-				throw new ArgumentNullException("effect", "Cannot use null particle effect to create an emitter that can " +
-														  "be bound to the entity slot.");
+				throw new ArgumentNullException(nameof(effect), "Cannot use null particle effect to create an emitter that can " +
+																"be bound to the entity slot.");
 			}
 
 			EntitySlotOps.LoadParticleEmitter(this.entityHandle, this.index, effect, ref parameters, prime, sync);
@@ -430,9 +411,7 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Physicalizes this slot. Can only be done, if the entity was physicalized before.
 		/// </summary>
-		/// <param name="parameters">
-		/// Reference to object that describes how to physicalize the slot.
-		/// </param>
+		/// <param name="parameters">Reference to object that describes how to physicalize the slot.</param>
 		/// <returns>Some number, not sure what it means.</returns>
 		/// <exception cref="NullReferenceException">This entity slot object is not valid.</exception>
 		/// <exception cref="ObjectDisposedException">This entity slot doesn't exist.</exception>

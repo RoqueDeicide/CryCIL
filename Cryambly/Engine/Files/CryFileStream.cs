@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 
 namespace CryCil.Engine.Files
 {
@@ -17,24 +18,15 @@ namespace CryCil.Engine.Files
 		/// <summary>
 		/// Indicates whether this object can read from the file.
 		/// </summary>
-		public override bool CanRead
-		{
-			get { return this.opened && this.mode == CryFileMode.Read; }
-		}
+		public override bool CanRead => this.opened && this.mode == CryFileMode.Read;
 		/// <summary>
 		/// Indicates whether this stream can change its position.
 		/// </summary>
-		public override bool CanSeek
-		{
-			get { return this.opened; }
-		}
+		public override bool CanSeek => this.opened;
 		/// <summary>
 		/// Indicates whether it's possibly to write into this stream.
 		/// </summary>
-		public override bool CanWrite
-		{
-			get { return this.opened && this.mode == CryFileMode.Append || this.mode == CryFileMode.Write; }
-		}
+		public override bool CanWrite => this.opened && this.mode == CryFileMode.Append || this.mode == CryFileMode.Write;
 		/// <summary>
 		/// Gets the length of the file.
 		/// </summary>
@@ -104,7 +96,7 @@ namespace CryCil.Engine.Files
 		{
 			if (path == null)
 			{
-				throw new ArgumentNullException("path", "Cannot open a file using a null name.");
+				throw new ArgumentNullException(nameof(path), "Cannot open a file using a null name.");
 			}
 
 			uint encodedFlags = EncodeFlags(mode, type, directAccess);
@@ -113,8 +105,7 @@ namespace CryCil.Engine.Files
 			if (!CryFiles.Exists(path))
 			{
 				throw new FileNotFoundException(
-					string.Format("File could not be found in the virtual file system using a path = \"{0}\".",
-								  path));
+					$"File could not be found in the virtual file system using a path = \"{path}\".");
 			}
 
 			if (type == CryFileType.Text && CryFiles.Exists(path, SearchLocation.Pak))
@@ -152,9 +143,7 @@ namespace CryCil.Engine.Files
 		/// Reads file data into the given buffer.
 		/// </summary>
 		/// <param name="buffer">Array of bytes to write data into.</param>
-		/// <param name="offset">
-		/// Zero-based index of first byte inside the array to write data into.
-		/// </param>
+		/// <param name="offset">Zero-based index of first byte inside the array to write data into.</param>
 		/// <param name="count"> Max number of bytes to read.</param>
 		/// <returns>Number of bytes read.</returns>
 		/// <exception cref="ObjectDisposedException">Stream is closed.</exception>
@@ -176,11 +165,11 @@ namespace CryCil.Engine.Files
 			}
 			if (offset < 0)
 			{
-				throw new ArgumentOutOfRangeException("offset", "Zero-based index cannot be less then 0.");
+				throw new ArgumentOutOfRangeException(nameof(offset), "Zero-based index cannot be less then 0.");
 			}
 			if (count < 0)
 			{
-				throw new ArgumentOutOfRangeException("count", "Number of bytes to read cannot be less then 0.");
+				throw new ArgumentOutOfRangeException(nameof(count), "Number of bytes to read cannot be less then 0.");
 			}
 			if (offset > buffer.Length - count)
 			{
@@ -194,8 +183,8 @@ namespace CryCil.Engine.Files
 			return CryFiles.ReadBytes(this.fileHandle, buffer, offset, count);
 		}
 		/// <summary>
-		/// Moves position of the stream to one indicated by the given <paramref name="offset"/> relative
-		/// to the specified <paramref name="origin"/>.
+		/// Moves position of the stream to one indicated by the given <paramref name="offset"/> relative to
+		/// the specified <paramref name="origin"/>.
 		/// </summary>
 		/// <param name="offset">Zero-based index of the new position of the stream.</param>
 		/// <param name="origin">Origin position relative to which to move the current position.</param>
@@ -218,7 +207,7 @@ namespace CryCil.Engine.Files
 				case SeekOrigin.End:
 					break;
 				default:
-					throw new ArgumentOutOfRangeException("origin", "Unknown origin was specified.");
+					throw new ArgumentOutOfRangeException(nameof(origin), "Unknown origin was specified.");
 			}
 			if (offset > int.MaxValue)
 			{
@@ -262,11 +251,11 @@ namespace CryCil.Engine.Files
 			}
 			if (offset < 0)
 			{
-				throw new ArgumentOutOfRangeException("offset", "Zero-based index cannot be less then 0.");
+				throw new ArgumentOutOfRangeException(nameof(offset), "Zero-based index cannot be less then 0.");
 			}
 			if (count < 0)
 			{
-				throw new ArgumentOutOfRangeException("count", "Number of bytes to read cannot be less then 0.");
+				throw new ArgumentOutOfRangeException(nameof(count), "Number of bytes to read cannot be less then 0.");
 			}
 			if (offset > buffer.Length - count)
 			{
@@ -301,7 +290,7 @@ namespace CryCil.Engine.Files
 					flags |= (byte)'a' << 24;
 					break;
 				default:
-					throw new ArgumentOutOfRangeException("mode", "Invalid file opening mode specified.");
+					throw new ArgumentOutOfRangeException(nameof(mode), "Invalid file opening mode specified.");
 			}
 
 			switch (type)
@@ -313,7 +302,7 @@ namespace CryCil.Engine.Files
 					flags |= (byte)'t' << 16;
 					break;
 				default:
-					throw new ArgumentOutOfRangeException("type", "Invalid file recognition type specified.");
+					throw new ArgumentOutOfRangeException(nameof(type), "Invalid file recognition type specified.");
 			}
 
 			if (directAccess)

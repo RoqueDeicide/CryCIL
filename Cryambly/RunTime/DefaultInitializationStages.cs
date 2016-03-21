@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil.RunTime
 {
@@ -8,8 +9,8 @@ namespace CryCil.RunTime
 	public enum DefaultInitializationStages
 	{
 		/// <summary>
-		/// Index of the initialization stage during which types that represent objects that handle
-		/// transfer of data for RMI calls defined in CryCIL are registered.
+		/// Index of the initialization stage during which types that represent objects that handle transfer
+		/// of data for RMI calls defined in CryCIL are registered.
 		/// </summary>
 		RmiRegistrationStage = 1000000 - 1,
 		/// <summary>

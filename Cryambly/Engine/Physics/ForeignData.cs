@@ -24,7 +24,7 @@ namespace CryCil.Engine.Physics
 		/// Gets the identifier of the foreign data type that must be passed to the function in order for
 		/// the object to be extracted.
 		/// </summary>
-		public ForeignDataIds Id { get; private set; }
+		public ForeignDataIds Id { get; }
 		/// <summary>
 		/// Creates a new object of this type.
 		/// </summary>
@@ -55,10 +55,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets identifier of type of foreign data that is contained in this object.
 		/// </summary>
-		public ForeignDataIds Id
-		{
-			get { return this.id; }
-		}
+		public ForeignDataIds Id => this.id;
 		/// <summary>
 		/// Attempts to extract an object of type <see cref="CryEntity"/> from this object.
 		/// </summary>
@@ -66,10 +63,7 @@ namespace CryCil.Engine.Physics
 		/// A valid object of type <see cref="CryEntity"/> if <see cref="Id"/> is equal to
 		/// <see cref="ForeignDataIds.Entity"/>, an invalid one otherwise.
 		/// </returns>
-		public CryEntity Entity
-		{
-			get { return new CryEntity(this.id == ForeignDataIds.Entity ? this.handle : new IntPtr()); }
-		}
+		public CryEntity Entity => new CryEntity(this.id == ForeignDataIds.Entity ? this.handle : new IntPtr());
 		#endregion
 		#region Construction
 		/// <summary>
@@ -93,8 +87,8 @@ namespace CryCil.Engine.Physics
 			}
 			if (foreignDataId > ForeignDataIds.RagDoll && foreignDataId < ForeignDataIds.User)
 			{
-				throw new ArgumentOutOfRangeException("foreignDataId", "Identifier of custom foreign data has to be " +
-																	   "greater or equal to ForeignDataIds.User.");
+				throw new ArgumentOutOfRangeException(nameof(foreignDataId), "Identifier of custom foreign data has to be " +
+																			 "greater or equal to ForeignDataIds.User.");
 			}
 			this.handle = foreignDataHandle;
 			this.id = foreignDataId;
@@ -141,10 +135,9 @@ namespace CryCil.Engine.Physics
 				else
 				{
 					string foreignDataTypeIdName =
-						Enum.GetName(typeof(ForeignDataIds), this.id) ?? string.Format("UserType[{0}]", this.id);
+						Enum.GetName(typeof(ForeignDataIds), this.id) ?? $"UserType[{this.id}]";
 					string message =
-						string.Format("Type {0} doesn't define a valid extractor method for foreign data type identifier {1}.",
-									  typeof(UserForeignDataType).FullName, foreignDataTypeIdName);
+						$"Type {typeof(UserForeignDataType).FullName} doesn't define a valid extractor method for foreign data type identifier {foreignDataTypeIdName}.";
 					throw new NotSupportedException(message);
 				}
 			}

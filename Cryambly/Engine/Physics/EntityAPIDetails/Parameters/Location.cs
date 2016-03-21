@@ -43,21 +43,15 @@ namespace CryCil.Engine.Physics
 		/// <c>null</c>, if location of this entity will be set through the 3x4 matrix or won't be changed
 		/// at all.
 		/// </returns>
-		public Vector3? Position
-		{
-			get { return this.position.IsUsed() ? this.position : (Vector3?)null; }
-		}
+		public Vector3? Position => this.position.IsUsed() ? this.position : (Vector3?)null;
 		/// <summary>
 		/// Gets the quaternion that represents the new orientation of the entity.
 		/// </summary>
 		/// <returns>
-		/// <c>null</c>, if orientation of this entity will be set through the matrix or won't be changed
-		/// at all.
+		/// <c>null</c>, if orientation of this entity will be set through the matrix or won't be changed at
+		/// all.
 		/// </returns>
-		public Quaternion? Orientation
-		{
-			get { return this.orientation.IsUsed() ? this.orientation : (Quaternion?)null; }
-		}
+		public Quaternion? Orientation => this.orientation.IsUsed() ? this.orientation : (Quaternion?)null;
 		/// <summary>
 		/// Gets the new scale of the entity.
 		/// </summary>
@@ -65,10 +59,7 @@ namespace CryCil.Engine.Physics
 		/// <c>null</c>, if scale of this entity will be set through the 3x4 matrix or won't be changed at
 		/// all.
 		/// </returns>
-		public float? Scale
-		{
-			get { return this.scale.IsUsed() ? this.scale : (float?)null; }
-		}
+		public float? Scale => this.scale.IsUsed() ? this.scale : (float?)null;
 		/// <summary>
 		/// Gets the 3x3 matrix that represents the new orientation of the entity.
 		/// </summary>
@@ -76,10 +67,7 @@ namespace CryCil.Engine.Physics
 		/// <c>null</c>, if orientation of this entity will be set through the 3x4 matrix or quaternion or
 		/// won't be changed at all.
 		/// </returns>
-		public Matrix33? Matrix33
-		{
-			get { return this.pMtx3x3 != null ? *this.pMtx3x3 : (Matrix33?)null; }
-		}
+		public Matrix33? Matrix33 => this.pMtx3x3 != null ? *this.pMtx3x3 : (Matrix33?)null;
 		/// <summary>
 		/// Gets the 3x4 matrix that represents the new location of the entity.
 		/// </summary>
@@ -87,33 +75,21 @@ namespace CryCil.Engine.Physics
 		/// <c>null</c>, if location of this entity will be set through other means or won't be changed at
 		/// all.
 		/// </returns>
-		public Matrix34? Matrix34
-		{
-			get { return this.pMtx3x4 != null ? *this.pMtx3x4 : (Matrix34?)null; }
-		}
+		public Matrix34? Matrix34 => this.pMtx3x4 != null ? *this.pMtx3x4 : (Matrix34?)null;
 		/// <summary>
 		/// Gets the new simulation class for this entity.
 		/// </summary>
 		/// <returns><c>null</c>, if simulation class of this entity won't be changed.</returns>
-		public PhysicsSimulationClass? SimulationClass
-		{
-			get { return ((int)this.simClass).IsUsed() ? this.simClass : (PhysicsSimulationClass?)null; }
-		}
+		public PhysicsSimulationClass? SimulationClass => ((int)this.simClass).IsUsed() ? this.simClass : (PhysicsSimulationClass?)null;
 		/// <summary>
 		/// Gets the value that indicates whether a bounding box should be recalculated for this entity.
 		/// </summary>
-		public bool RacalculateBounds
-		{
-			get { return this.bRecalcBounds; }
-		}
+		public bool RacalculateBounds => this.bRecalcBounds;
 		/// <summary>
 		/// Gets the value that indicates whether an Oriented Bounding Box (OBB) should be used when
 		/// registering the new position of this entity in entity grid instead of AABB.
 		/// </summary>
-		public bool UseOBBInEntityGrid
-		{
-			get { return this.bEntGridUseOBB; }
-		}
+		public bool UseOBBInEntityGrid => this.bEntGridUseOBB;
 		#endregion
 		#region Construction
 		private PhysicsParametersLocation(Vector3 position, Quaternion orientation, float scale, Matrix34* pMtx3X4,
@@ -144,8 +120,8 @@ namespace CryCil.Engine.Physics
 		/// Optional value that indicates whether bounds of the entity must be recalculated.
 		/// </param>
 		/// <param name="useOBB">      
-		/// Optional value that indicates whether <see cref="OBB"/> must be used to register new position
-		/// of the entity in the entity grid instead of <see cref="BoundingBox"/>.
+		/// Optional value that indicates whether <see cref="OBB"/> must be used to register new position of
+		/// the entity in the entity grid instead of <see cref="BoundingBox"/>.
 		/// </param>
 		public PhysicsParametersLocation(Vector3 position, PhysicsSimulationClass simClass = PhysicsSimulationClass.Unused,
 										 bool recalcBounds = true, bool useOBB = false)
@@ -153,8 +129,7 @@ namespace CryCil.Engine.Physics
 		{
 		}
 		/// <summary>
-		/// Creates a set parameters that is used to change position and orientation of the physical
-		/// entity.
+		/// Creates a set parameters that is used to change position and orientation of the physical entity.
 		/// </summary>
 		/// <param name="position">    New position of the entity.</param>
 		/// <param name="orientation"> An object that represents new orientaiton of the entity.</param>
@@ -165,8 +140,8 @@ namespace CryCil.Engine.Physics
 		/// Optional value that indicates whether bounds of the entity must be recalculated.
 		/// </param>
 		/// <param name="useOBB">      
-		/// Optional value that indicates whether <see cref="OBB"/> must be used to register new position
-		/// of the entity in the entity grid instead of <see cref="BoundingBox"/>.
+		/// Optional value that indicates whether <see cref="OBB"/> must be used to register new position of
+		/// the entity in the entity grid instead of <see cref="BoundingBox"/>.
 		/// </param>
 		public PhysicsParametersLocation(Vector3 position, Quaternion orientation,
 										 PhysicsSimulationClass simClass = PhysicsSimulationClass.Unused, bool recalcBounds = true,
@@ -175,8 +150,7 @@ namespace CryCil.Engine.Physics
 		{
 		}
 		/// <summary>
-		/// Creates a set parameters that is used to change position and orientation of the physical
-		/// entity.
+		/// Creates a set parameters that is used to change position and orientation of the physical entity.
 		/// </summary>
 		/// <param name="position">    New position of the entity.</param>
 		/// <param name="orientation"> An object that represents new orientaiton of the entity.</param>
@@ -187,8 +161,8 @@ namespace CryCil.Engine.Physics
 		/// Optional value that indicates whether bounds of the entity must be recalculated.
 		/// </param>
 		/// <param name="useOBB">      
-		/// Optional value that indicates whether <see cref="OBB"/> must be used to register new position
-		/// of the entity in the entity grid instead of <see cref="BoundingBox"/>.
+		/// Optional value that indicates whether <see cref="OBB"/> must be used to register new position of
+		/// the entity in the entity grid instead of <see cref="BoundingBox"/>.
 		/// </param>
 		/// <exception cref="OutOfMemoryException">Unable to allocate native memory block.</exception>
 		public PhysicsParametersLocation(Vector3 position, Matrix33 orientation,
@@ -214,8 +188,8 @@ namespace CryCil.Engine.Physics
 		/// Optional value that indicates whether bounds of the entity must be recalculated.
 		/// </param>
 		/// <param name="useOBB">      
-		/// Optional value that indicates whether <see cref="OBB"/> must be used to register new position
-		/// of the entity in the entity grid instead of <see cref="BoundingBox"/>.
+		/// Optional value that indicates whether <see cref="OBB"/> must be used to register new position of
+		/// the entity in the entity grid instead of <see cref="BoundingBox"/>.
 		/// </param>
 		public PhysicsParametersLocation(Vector3 position, Quaternion orientation, float scale,
 										 PhysicsSimulationClass simClass = PhysicsSimulationClass.Unused, bool recalcBounds = true,
@@ -237,8 +211,8 @@ namespace CryCil.Engine.Physics
 		/// Optional value that indicates whether bounds of the entity must be recalculated.
 		/// </param>
 		/// <param name="useOBB">      
-		/// Optional value that indicates whether <see cref="OBB"/> must be used to register new position
-		/// of the entity in the entity grid instead of <see cref="BoundingBox"/>.
+		/// Optional value that indicates whether <see cref="OBB"/> must be used to register new position of
+		/// the entity in the entity grid instead of <see cref="BoundingBox"/>.
 		/// </param>
 		/// <exception cref="OutOfMemoryException">Unable to allocate native memory block.</exception>
 		public PhysicsParametersLocation(Vector3 position, Matrix33 orientation, float scale,
@@ -261,8 +235,8 @@ namespace CryCil.Engine.Physics
 		/// Optional value that indicates whether bounds of the entity must be recalculated.
 		/// </param>
 		/// <param name="useOBB">      
-		/// Optional value that indicates whether <see cref="OBB"/> must be used to register new position
-		/// of the entity in the entity grid instead of <see cref="BoundingBox"/>.
+		/// Optional value that indicates whether <see cref="OBB"/> must be used to register new position of
+		/// the entity in the entity grid instead of <see cref="BoundingBox"/>.
 		/// </param>
 		public PhysicsParametersLocation(Quaternion orientation,
 										 PhysicsSimulationClass simClass = PhysicsSimulationClass.Unused, bool recalcBounds = true,
@@ -281,8 +255,8 @@ namespace CryCil.Engine.Physics
 		/// Optional value that indicates whether bounds of the entity must be recalculated.
 		/// </param>
 		/// <param name="useOBB">      
-		/// Optional value that indicates whether <see cref="OBB"/> must be used to register new position
-		/// of the entity in the entity grid instead of <see cref="BoundingBox"/>.
+		/// Optional value that indicates whether <see cref="OBB"/> must be used to register new position of
+		/// the entity in the entity grid instead of <see cref="BoundingBox"/>.
 		/// </param>
 		/// <exception cref="OutOfMemoryException">Unable to allocate native memory block.</exception>
 		public PhysicsParametersLocation(Matrix33 orientation,
@@ -307,8 +281,8 @@ namespace CryCil.Engine.Physics
 		/// Optional value that indicates whether bounds of the entity must be recalculated.
 		/// </param>
 		/// <param name="useOBB">      
-		/// Optional value that indicates whether <see cref="OBB"/> must be used to register new position
-		/// of the entity in the entity grid instead of <see cref="BoundingBox"/>.
+		/// Optional value that indicates whether <see cref="OBB"/> must be used to register new position of
+		/// the entity in the entity grid instead of <see cref="BoundingBox"/>.
 		/// </param>
 		public PhysicsParametersLocation(Quaternion orientation, float scale,
 										 PhysicsSimulationClass simClass = PhysicsSimulationClass.Unused,
@@ -329,8 +303,8 @@ namespace CryCil.Engine.Physics
 		/// Optional value that indicates whether bounds of the entity must be recalculated.
 		/// </param>
 		/// <param name="useOBB">      
-		/// Optional value that indicates whether <see cref="OBB"/> must be used to register new position
-		/// of the entity in the entity grid instead of <see cref="BoundingBox"/>.
+		/// Optional value that indicates whether <see cref="OBB"/> must be used to register new position of
+		/// the entity in the entity grid instead of <see cref="BoundingBox"/>.
 		/// </param>
 		/// <exception cref="OutOfMemoryException">Unable to allocate native memory block.</exception>
 		public PhysicsParametersLocation(Matrix33 orientation, float scale,
@@ -353,8 +327,8 @@ namespace CryCil.Engine.Physics
 		/// Optional value that indicates whether bounds of the entity must be recalculated.
 		/// </param>
 		/// <param name="useOBB">      
-		/// Optional value that indicates whether <see cref="OBB"/> must be used to register new position
-		/// of the entity in the entity grid instead of <see cref="BoundingBox"/>.
+		/// Optional value that indicates whether <see cref="OBB"/> must be used to register new position of
+		/// the entity in the entity grid instead of <see cref="BoundingBox"/>.
 		/// </param>
 		public PhysicsParametersLocation(float scale,
 										 PhysicsSimulationClass simClass = PhysicsSimulationClass.Unused,
@@ -377,8 +351,8 @@ namespace CryCil.Engine.Physics
 		/// Optional value that indicates whether bounds of the entity must be recalculated.
 		/// </param>
 		/// <param name="useOBB">        
-		/// Optional value that indicates whether <see cref="OBB"/> must be used to register new position
-		/// of the entity in the entity grid instead of <see cref="BoundingBox"/>.
+		/// Optional value that indicates whether <see cref="OBB"/> must be used to register new position of
+		/// the entity in the entity grid instead of <see cref="BoundingBox"/>.
 		/// </param>
 		/// <exception cref="OutOfMemoryException">Unable to allocate native memory block.</exception>
 		public PhysicsParametersLocation(Matrix34 transformation,

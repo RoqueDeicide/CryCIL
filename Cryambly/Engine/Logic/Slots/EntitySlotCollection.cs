@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using CryCil.Engine.Models.StaticObjects;
 using CryCil.Engine.Rendering.Lighting;
 
@@ -19,10 +20,7 @@ namespace CryCil.Engine.Logic
 		/// Grants access to one of the slots.
 		/// </summary>
 		/// <param name="index">Identifier of the slot to get.</param>
-		public CryEntitySlot this[int index]
-		{
-			get { return new CryEntitySlot(this.entityHandle, index); }
-		}
+		public CryEntitySlot this[int index] => new CryEntitySlot(this.entityHandle, index);
 		/// <summary>
 		/// Gets number of slots that allocated for this entity.
 		/// </summary>
@@ -91,8 +89,8 @@ namespace CryCil.Engine.Logic
 			this.AssertEntity();
 			if (!effect.IsValid)
 			{
-				throw new ArgumentNullException("effect", "Cannot use null particle effect to create an emitter that can " +
-														  "be bound to the entity slot.");
+				throw new ArgumentNullException(nameof(effect), "Cannot use null particle effect to create an emitter that can " +
+																"be bound to the entity slot.");
 			}
 
 			return new CryEntitySlot(this.entityHandle,
@@ -121,8 +119,8 @@ namespace CryCil.Engine.Logic
 			this.AssertEntity();
 			if (!effect.IsValid)
 			{
-				throw new ArgumentNullException("effect", "Cannot use null particle effect to create an emitter that can " +
-														  "be bound to the entity slot.");
+				throw new ArgumentNullException(nameof(effect), "Cannot use null particle effect to create an emitter that can " +
+																"be bound to the entity slot.");
 			}
 
 			return new CryEntitySlot(this.entityHandle,
@@ -149,15 +147,13 @@ namespace CryCil.Engine.Logic
 		/// </param>
 		/// <returns>An object that represents a valid slot, if adding was successful.</returns>
 		/// <exception cref="NullReferenceException">Cannot access slots of an invalid entity.</exception>
-		/// <exception cref="ArgumentNullException">
-		/// Cannot bind null emitter to the entity slot.
-		/// </exception>
+		/// <exception cref="ArgumentNullException">Cannot bind null emitter to the entity slot.</exception>
 		public CryEntitySlot Add(ParticleEmitter emitter, bool sync = false)
 		{
 			this.AssertEntity();
 			if (!emitter.IsValid)
 			{
-				throw new ArgumentNullException("emitter", "Cannot bind null emitter to the entity slot.");
+				throw new ArgumentNullException(nameof(emitter), "Cannot bind null emitter to the entity slot.");
 			}
 
 			return new CryEntitySlot(this.entityHandle, EntitySlotOps.SetParticleEmitter(this.entityHandle, -1, emitter, sync));
@@ -180,7 +176,7 @@ namespace CryCil.Engine.Logic
 			this.AssertEntity();
 			if (!staticObject.IsValid)
 			{
-				throw new ArgumentNullException("staticObject", "Cannot bind null static object to the entity slot.");
+				throw new ArgumentNullException(nameof(staticObject), "Cannot bind null static object to the entity slot.");
 			}
 
 			return new CryEntitySlot(this.entityHandle,

@@ -43,69 +43,42 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets current velocity of the part/entity.
 		/// </summary>
-		public Vector3 Velocity
-		{
-			get { return this.v; }
-		}
+		public Vector3 Velocity => this.v;
 		/// <summary>
 		/// Gets current angular velocity of the part/entity.
 		/// </summary>
-		public Vector3 AngularVelocity
-		{
-			get { return this.w; }
-		}
+		public Vector3 AngularVelocity => this.w;
 		/// <summary>
 		/// Gets current acceleration of the part/entity.
 		/// </summary>
-		public Vector3 Acceleration
-		{
-			get { return this.a; }
-		}
+		public Vector3 Acceleration => this.a;
 		/// <summary>
 		/// Gets current angular acceleration of the part/entity.
 		/// </summary>
-		public Vector3 AngularAcceleration
-		{
-			get { return this.wa; }
-		}
+		public Vector3 AngularAcceleration => this.wa;
 		/// <summary>
 		/// Gets current position of the center of mass of the part/entity in world space (probably).
 		/// </summary>
-		public Vector3 CenterOfMass
-		{
-			get { return this.centerOfMass; }
-		}
+		public Vector3 CenterOfMass => this.centerOfMass;
 		/// <summary>
 		/// Gets the value between 0 and 1 that represents the fraction of the entity that is submerged
 		/// underwater.
 		/// </summary>
 		/// <remarks>Not supported for individual parts.</remarks>
-		public float SubmergedFraction
-		{
-			get { return this.submergedFraction; }
-		}
+		public float SubmergedFraction => this.submergedFraction;
 		/// <summary>
 		/// Gets the current mass of the part/entity.
 		/// </summary>
-		public float Mass
-		{
-			get { return this.mass; }
-		}
+		public float Mass => this.mass;
 		/// <summary>
 		/// Gets the current kinetic energy of this entity.
 		/// </summary>
 		/// <remarks>Only supported by articulated bodies.</remarks>
-		public float KineticEnergy
-		{
-			get { return this.energy; }
-		}
+		public float KineticEnergy => this.energy;
 		/// <summary>
 		/// Gets the current number of contacts this entity has with other entities.
 		/// </summary>
-		public int ContactCount
-		{
-			get { return this.nContacts; }
-		}
+		public int ContactCount => this.nContacts;
 		#endregion
 		#region Construction
 		/// <summary>

@@ -19,8 +19,7 @@ namespace CryCil.Engine.Files
 	{
 		/// <summary>
 		/// When set, indicates that the archive object will support complex path specifications (e.g.
-		/// absolute paths). All non-absolute paths are treated as relative to the CryEngine work
-		/// directory.
+		/// absolute paths). All non-absolute paths are treated as relative to the CryEngine work directory.
 		/// </summary>
 		/// <remarks>This flag and <see cref="SimplePaths"/> are mutually exclusive.</remarks>
 		ComplexPaths = 1,
@@ -45,8 +44,8 @@ namespace CryCil.Engine.Files
 		/// </remarks>
 		ReadOnly = 4,
 		/// <summary>
-		/// When set, disables update/remove operations for this archive and forces a number of quick
-		/// access and memory footprint optimizations.
+		/// When set, disables update/remove operations for this archive and forces a number of quick access
+		/// and memory footprint optimizations.
 		/// </summary>
 		OptimizedReadOnly = 8,
 		/// <summary>
@@ -112,17 +111,11 @@ namespace CryCil.Engine.Files
 		/// <summary>
 		/// Gets full path to the archive file.
 		/// </summary>
-		public string FullPath
-		{
-			get { return this.fullPath; }
-		}
+		public string FullPath => this.fullPath;
 		/// <summary>
 		/// Indicates whether this archive is opened in read-only mode.
 		/// </summary>
-		public bool ReadOnly
-		{
-			get { return (this.Flags & (ArchiveOptions.ReadOnly | ArchiveOptions.OptimizedReadOnly)) != 0; }
-		}
+		public bool ReadOnly => (this.Flags & (ArchiveOptions.ReadOnly | ArchiveOptions.OptimizedReadOnly)) != 0;
 		#endregion
 		#region Events
 		#endregion
@@ -131,9 +124,8 @@ namespace CryCil.Engine.Files
 		/// Opens an archive.
 		/// </summary>
 		/// <remarks>
-		/// It's important to note that .pak files inside the
-		/// <see cref="DirectoryStructure.ContentFolder"/> folder are loaded at the start with
-		/// <see cref="ArchiveOptions.ReadOnly"/> flag set.
+		/// It's important to note that .pak files inside the <see cref="DirectoryStructure.ContentFolder"/>
+		/// folder are loaded at the start with <see cref="ArchiveOptions.ReadOnly"/> flag set.
 		/// </remarks>
 		/// <param name="path">   Path to the archive file.</param>
 		/// <param name="options">A set of options that specify how the archive will be loaded.</param>
@@ -157,10 +149,8 @@ namespace CryCil.Engine.Files
 			{
 				if (File.Exists(path))
 				{
-					throw new FileAccessException(string.Format("Unable to open the archive file.{0}",
-																Directory.EnumerateFiles(DirectoryStructure.ContentFolder).Contains(path)
-																	? "The archives located inside the game content folder can only be opened in read-only mode."
-																	: string.Empty));
+					throw new FileAccessException(
+						$"Unable to open the archive file.{(Directory.EnumerateFiles(DirectoryStructure.ContentFolder).Contains(path) ? "The archives located inside the game content folder can only be opened in read-only mode." : string.Empty)}");
 				}
 				throw new FileNotFoundException("Unable to find the archive file.");
 			}
@@ -181,8 +171,8 @@ namespace CryCil.Engine.Files
 		/// </summary>
 		/// <param name="path">Path to the file within the archive.</param>
 		/// <returns>
-		/// A new object of type <see cref="ArchiveStream"/> that can read contents of the file, or null,
-		/// if file wasn't found.
+		/// A new object of type <see cref="ArchiveStream"/> that can read contents of the file, or null, if
+		/// file wasn't found.
 		/// </returns>
 		/// <exception cref="ObjectDisposedException">The archive is closed.</exception>
 		/// <exception cref="OutOfMemoryException">

@@ -24,81 +24,48 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the identifier of the broken joint.
 		/// </summary>
-		public int JointId
-		{
-			get { return this.jointId; }
-		}
+		public int JointId => this.jointId;
 		/// <summary>
 		/// Gets the value that indicates whether broken joint is a structural joint rather then dynamics
 		/// constraint.
 		/// </summary>
-		public bool IsStructuralJoint
-		{
-			get { return this.isJoint; }
-		}
+		public bool IsStructuralJoint => this.isJoint;
 		/// <summary>
 		/// Gets the identifier of the 'seed' part during the update.
 		/// </summary>
-		public int PartIdEpicenter
-		{
-			get { return this.partIdEpicenter; }
-		}
+		public int PartIdEpicenter => this.partIdEpicenter;
 		/// <summary>
 		/// Gets the position of the joint in local frame.
 		/// </summary>
-		public Vector3 JointPosition
-		{
-			get { return this.point; }
-		}
+		public Vector3 JointPosition => this.point;
 		/// <summary>
 		/// Gets the direction of Z-axis of the joint's local coordinate system.
 		/// </summary>
-		public Vector3 ZAxis
-		{
-			get { return this.zAxis; }
-		}
+		public Vector3 ZAxis => this.zAxis;
 		/// <summary>
 		/// Gets the identifier of the parent part of the joint.
 		/// </summary>
-		public int ParentPartId
-		{
-			get { return this.sourcePartId; }
-		}
+		public int ParentPartId => this.sourcePartId;
 		/// <summary>
 		/// Gets the identifier of the child part of the joint.
 		/// </summary>
-		public int ChildPartId
-		{
-			get { return this.targetPartId; }
-		}
+		public int ChildPartId => this.targetPartId;
 		/// <summary>
 		/// Gets the identifier of the material of parent part of the joint.
 		/// </summary>
-		public int ParentMaterialId
-		{
-			get { return this.sourcePartMaterial; }
-		}
+		public int ParentMaterialId => this.sourcePartMaterial;
 		/// <summary>
 		/// Gets the identifier of the material of child part of the joint.
 		/// </summary>
-		public int ChildMaterialId
-		{
-			get { return this.targetPartMaterial; }
-		}
+		public int ChildMaterialId => this.targetPartMaterial;
 		/// <summary>
 		/// Gets the parent entity of the joint, if the joint is dynamics constraint.
 		/// </summary>
-		public PhysicalEntity ParentEntity
-		{
-			get { return this.sourceEntity; }
-		}
+		public PhysicalEntity ParentEntity => this.sourceEntity;
 		/// <summary>
 		/// Gets the child entity of the joint, if the joint is dynamics constraint.
 		/// </summary>
-		public PhysicalEntity ChildEntity
-		{
-			get { return this.targetEntity; }
-		}
+		public PhysicalEntity ChildEntity => this.targetEntity;
 		#endregion
 		#region Construction
 		internal JointBreakInfo(int jointId, bool isJoint, int partIdEpicenter, Vector3 point, Vector3 zAxis,

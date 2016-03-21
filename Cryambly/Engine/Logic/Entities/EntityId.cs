@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -23,33 +24,20 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Gets a wrapper of a CryEngine entity this identifier represents.
 		/// </summary>
-		public CryEntity Entity
-		{
-			get { return GetEntity(this.id); }
-		}
+		public CryEntity Entity => GetEntity(this.id);
 
 		/// <summary>
 		/// Indicates whether this entity is bookmarked in the entity pool.
 		/// </summary>
-		public bool IsBookmarked
-		{
-			get { return IsEntityBookmarkedInternal(this); }
-		}
+		public bool IsBookmarked => IsEntityBookmarkedInternal(this);
 		/// <summary>
-		/// Gets the name of the class that represents this entity if this entity is bookmarked in the
-		/// pool.
+		/// Gets the name of the class that represents this entity if this entity is bookmarked in the pool.
 		/// </summary>
-		public string BookmarkedClassName
-		{
-			get { return GetBookmarkedClassNameInternal(this); }
-		}
+		public string BookmarkedClassName => GetBookmarkedClassNameInternal(this);
 		/// <summary>
 		/// Gets the name of the entity bookmark if this entity is bookmarked in the pool.
 		/// </summary>
-		public string BookmarkedName
-		{
-			get { return GetBookmarkedEntityNameInternal(this); }
-		}
+		public string BookmarkedName => GetBookmarkedEntityNameInternal(this);
 		#endregion
 		#region Events
 		#endregion

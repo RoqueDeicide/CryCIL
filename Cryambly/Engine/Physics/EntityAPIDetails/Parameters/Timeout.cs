@@ -36,10 +36,7 @@ namespace CryCil.Engine.Physics
 		/// <see cref="F:System.Double.PositiveInfinity"/>. Or it'is
 		/// <see cref="F:System.Double.NegativeInfinity"/>.
 		/// </exception>
-		public TimeSpan TimeSinceLastImpulse
-		{
-			get { return TimeSpan.FromSeconds(this.timeIdle); }
-		}
+		public TimeSpan TimeSinceLastImpulse => TimeSpan.FromSeconds(this.timeIdle);
 		/// <summary>
 		/// Gets or sets amount of time that must pass since entity's last interaction with physical world
 		/// or last reception of external impulse before the entity enters sleep state.

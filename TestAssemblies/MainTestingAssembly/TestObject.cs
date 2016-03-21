@@ -37,8 +37,8 @@ namespace MainTestingAssembly
 		/// </summary>
 		/// <param name="someNumber">A number to assign to the object.</param>
 		/// <exception cref="OverflowException">
-		/// <paramref name="someNumber"/> is greater than <see cref="F:System.Int32.MaxValue"/> or less
-		/// than <see cref="F:System.Int32.MinValue"/>.
+		/// <paramref name="someNumber"/> is greater than <see cref="int.MaxValue"/> or less than
+		/// <see cref="int.MinValue"/>.
 		/// </exception>
 		public TestObject(double someNumber)
 		{
@@ -67,15 +67,15 @@ namespace MainTestingAssembly
 			this.DecimalNumber = number;
 			this.Text = number.ToString("F", CultureInfo.CurrentUICulture);
 			this.Something += (sender, args) =>
-					Console.WriteLine("TEST: An event handler for an object that was created with a " +
-									  "number {0:F} has been invoked.", this.DecimalNumber);
+				Console.WriteLine("TEST: An event handler for an object that was created with a " +
+								  "number {0:F} has been invoked.", this.DecimalNumber);
 		}
 		#endregion
 		#region Utilities
 		protected virtual void OnSomething()
 		{
 			EventHandler handler = this.Something;
-			if (handler != null) handler(this, EventArgs.Empty);
+			handler?.Invoke(this, EventArgs.Empty);
 		}
 		#endregion
 	}

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil.Engine.Physics
 {
@@ -85,8 +86,8 @@ namespace CryCil.Engine.Physics
 		/// <remarks>Can only be used in <see cref="o:Ray.Cast"/>.</remarks>
 		Water = 0x200,
 		/// <summary>
-		/// When set, instruct to not have results activated(?). (Used by small background physical
-		/// objects, like fish and insects).
+		/// When set, instruct to not have results activated(?). (Used by small background physical objects,
+		/// like fish and insects).
 		/// </summary>
 		/// <remarks>Can only be used in <see cref="o:Ray.Cast"/>.</remarks>
 		NoOnDemandActivation = 0x80000, // can only be used in RayWorldIntersection

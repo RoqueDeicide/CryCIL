@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil.Engine.Models.Characters
 {
@@ -15,10 +16,7 @@ namespace CryCil.Engine.Models.Characters
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 		/// <summary>
 		/// Gets the number of animations in this layer.
 		/// </summary>
@@ -38,8 +36,8 @@ namespace CryCil.Engine.Models.Characters
 		/// <param name="index">Zero-based index of the animation object to get.</param>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		/// <exception cref="IndexOutOfRangeException">
-		/// Index of the animation must be less then number of animations in the layer. Only thrown in
-		/// Debug buids.
+		/// Index of the animation must be less then number of animations in the layer. Only thrown in Debug
+		/// buids.
 		/// </exception>
 		public CharacterAnimation this[uint index]
 		{
@@ -180,8 +178,8 @@ namespace CryCil.Engine.Models.Characters
 														triggerEvents);
 		}
 		/// <summary>
-		/// Makes sure that there is no animation that can cause a delay in transition. Use it when you
-		/// need to have an animation transitioned to immediately.
+		/// Makes sure that there is no animation that can cause a delay in transition. Use it when you need
+		/// to have an animation transitioned to immediately.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public void RemoveTransitionDelayConditions()
@@ -224,10 +222,7 @@ namespace CryCil.Engine.Models.Characters
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 		/// <summary>
 		/// Gets the object that represents a layer of skeleton animation.
 		/// </summary>

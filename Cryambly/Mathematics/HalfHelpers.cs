@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace CryCil
@@ -176,11 +177,11 @@ namespace CryCil
 		public static unsafe float HalfToSingle(Half half)
 		{
 			uint result = mantissaTable[offsetTable[half.value >> 10] + (half.value & 0x3ff)] + exponentTable[half.value >> 10];
-			return *((float*)&result);
+			return *(float*)&result;
 		}
 		public static unsafe Half SingleToHalf(float single)
 		{
-			uint value = *((uint*)&single);
+			uint value = *(uint*)&single;
 
 			ushort result = (ushort)(baseTable[(value >> 23) & 0x1ff] + ((value & 0x007fffff) >> shiftTable[value >> 23]));
 			return Half.ToHalf(result);
@@ -197,19 +198,19 @@ namespace CryCil
 
 		public static bool IsNaN(Half half)
 		{
-			return ((half.value & 0x7fff) > 0x7c00);
+			return (half.value & 0x7fff) > 0x7c00;
 		}
 		public static bool IsInfinity(Half half)
 		{
-			return ((half.value & 0x7fff) == 0x7c00);
+			return (half.value & 0x7fff) == 0x7c00;
 		}
 		public static bool IsPositiveInfinity(Half half)
 		{
-			return (half.value == 0x7c00);
+			return half.value == 0x7c00;
 		}
 		public static bool IsNegativeInfinity(Half half)
 		{
-			return (half.value == 0xfc00);
+			return half.value == 0xfc00;
 		}
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -25,10 +26,7 @@ namespace CryCil.Engine.CryAction
 		/// <summary>
 		/// Determines whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 
 		/// <summary>
 		/// Gets the name of this level.
@@ -225,7 +223,7 @@ namespace CryCil.Engine.CryAction
 			this.AssertInstance();
 			if (typeName == null)
 			{
-				throw new ArgumentNullException("typeName", "Name of the level type cannot be null.");
+				throw new ArgumentNullException(nameof(typeName), "Name of the level type cannot be null.");
 			}
 
 			return IsOfTypeInternal(this.handle, typeName);

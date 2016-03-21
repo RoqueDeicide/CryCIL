@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil.Engine.Input
 {
@@ -15,5 +16,6 @@ namespace CryCil.Engine.Input
 	/// True, if this method must be the last method to handle the event. If <c>true</c> is returned
 	/// propagation of the event will stop.
 	/// </returns>
-	public delegate bool AnalogInputHandler(InputId input, InputState state, float value, ModifierKeysStatus modifiers);
+	public delegate bool AnalogInputHandler(InputId input, InputState state, float value,
+											ModifierKeysStatus modifiers);
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using CryCil.Hashing;
 
 namespace CryCil.Engine.Models.Characters.Attachments
@@ -15,10 +16,7 @@ namespace CryCil.Engine.Models.Characters.Attachments
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 		/// <summary>
 		/// Gets the proxy in this collection.
 		/// </summary>
@@ -106,9 +104,7 @@ namespace CryCil.Engine.Models.Characters.Attachments
 		/// </summary>
 		/// <param name="name"> Name of the proxy to create.</param>
 		/// <param name="joint">Name of the joint to attach the proxy to.</param>
-		/// <returns>
-		/// A valid <see cref="AttachmentProxy"/> object, if it was created successfully.
-		/// </returns>
+		/// <returns>A valid <see cref="AttachmentProxy"/> object, if it was created successfully.</returns>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public AttachmentProxy Create(string name, string joint)
 		{

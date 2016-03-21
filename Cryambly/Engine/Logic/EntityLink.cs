@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using CryCil.Annotations;
 
 namespace CryCil.Engine.Logic
@@ -15,10 +16,7 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 		/// <summary>
 		/// Gets next link in the chain or invalid <see cref="EntityLink"/> object if this one is last.
 		/// </summary>
@@ -36,10 +34,7 @@ namespace CryCil.Engine.Logic
 		/// Indicates whether this link is last in the chain.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This instance object is not usable.</exception>
-		public bool IsLast
-		{
-			get { return !this.Next.IsValid; }
-		}
+		public bool IsLast => !this.Next.IsValid;
 		/// <summary>
 		/// Gets identifier of the linked entity.
 		/// </summary>

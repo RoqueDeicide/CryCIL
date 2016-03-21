@@ -155,9 +155,9 @@ namespace CryCil
 			{
 				float squared = parameter * parameter;
 				float cubed = parameter * squared;
-				part1 = ((2.0f * cubed) - (3.0f * squared)) + 1.0f;
-				part2 = (-2.0f * cubed) + (3.0f * squared);
-				part3 = (cubed - (2.0f * squared)) + parameter;
+				part1 = 2.0f * cubed - 3.0f * squared + 1.0f;
+				part2 = -2.0f * cubed + 3.0f * squared;
+				part3 = cubed - 2.0f * squared + parameter;
 				part4 = cubed - squared;
 			}
 		}

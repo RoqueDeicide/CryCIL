@@ -39,42 +39,27 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets a set of flags that is assigned to this joint.
 		/// </summary>
-		public JointFlags JointFlags
-		{
-			get { return new JointFlags(this.flags); }
-		}
+		public JointFlags JointFlags => new JointFlags(this.flags);
 		/// <summary>
 		/// Gets a set of Euler angles that represent rotation of this joint away from its base orientation
 		/// that is caused by the physical interactions.
 		/// </summary>
-		public EulerAngles CurrentPhysicalAngles
-		{
-			get { return this.q; }
-		}
+		public EulerAngles CurrentPhysicalAngles => this.q;
 		/// <summary>
 		/// Gets a set of Euler angles that represent rotation of this joint away from its base orientation
-		/// combined with rotation that is represented by <see cref="CurrentPhysicalAngles"/> that is
-		/// caused by the animation.
+		/// combined with rotation that is represented by <see cref="CurrentPhysicalAngles"/> that is caused
+		/// by the animation.
 		/// </summary>
-		public EulerAngles CurrentAnimationAngles
-		{
-			get { return this.qext; }
-		}
+		public EulerAngles CurrentAnimationAngles => this.qext;
 		/// <summary>
 		/// Gets current angular velocity of the joint.
 		/// </summary>
-		public EulerAngles CurrentAngularVelocity
-		{
-			get { return this.dq; }
-		}
+		public EulerAngles CurrentAngularVelocity => this.dq;
 		/// <summary>
 		/// Gets the quaternion that represents orientation of the joint in parent space when
 		/// <see cref="CurrentPhysicalAngles"/> and <see cref="CurrentAnimationAngles"/> are zeroed.
 		/// </summary>
-		public Quaternion BaseOrientation
-		{
-			get { return this.quat0; }
-		}
+		public Quaternion BaseOrientation => this.quat0;
 		#endregion
 		#region Construction
 		/// <summary>

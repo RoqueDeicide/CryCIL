@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -39,10 +40,7 @@ namespace CryCil
 		/// <summary>
 		/// Gets a value indicting whether this instance is normalized.
 		/// </summary>
-		public bool IsNormalized
-		{
-			get { return Math.Abs((this.X * this.X) + (this.Y * this.Y) - 1f) < MathHelpers.ZeroTolerance; }
-		}
+		public bool IsNormalized => Math.Abs(this.X * this.X + this.Y * this.Y - 1f) < MathHelpers.ZeroTolerance;
 		/// <summary>
 		/// Gets or sets the component at the specified index.
 		/// </summary>
@@ -60,7 +58,7 @@ namespace CryCil
 			{
 				if ((index | 0x1) != 0x1) //index < 0 || index > 1
 				{
-					throw new ArgumentOutOfRangeException("index",
+					throw new ArgumentOutOfRangeException(nameof(index),
 														  "Attempt to access vector component other then X or Y.");
 				}
 				Contract.EndContractBlock();
@@ -74,7 +72,7 @@ namespace CryCil
 			{
 				if ((index | 0x1) != 0x1) //index < 0 || index > 1
 				{
-					throw new ArgumentOutOfRangeException("index", "Attempt to access vector component other then X or Y.");
+					throw new ArgumentOutOfRangeException(nameof(index), "Attempt to access vector component other then X or Y.");
 				}
 				Contract.EndContractBlock();
 
@@ -92,10 +90,7 @@ namespace CryCil
 		/// <see cref="Vector2d.LengthSquared"/> may be preferred when only the relative length is needed
 		/// and speed is of the essence.
 		/// </remarks>
-		public double Length
-		{
-			get { return Math.Sqrt((this.X * this.X) + (this.Y * this.Y)); }
-		}
+		public double Length => Math.Sqrt(this.X * this.X + this.Y * this.Y);
 		/// <summary>
 		/// Calculates the squared length of the vector.
 		/// </summary>
@@ -104,17 +99,11 @@ namespace CryCil
 		/// This method may be preferred to <see cref="Vector2d.Length"/> when only a relative length is
 		/// needed and speed is of the essence.
 		/// </remarks>
-		public double LengthSquared
-		{
-			get { return (this.X * this.X) + (this.Y * this.Y); }
-		}
+		public double LengthSquared => this.X * this.X + this.Y * this.Y;
 		/// <summary>
 		/// Determines whether this vector is represented by valid numbers.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return MathHelpers.IsNumberValid(this.X) && MathHelpers.IsNumberValid(this.Y); }
-		}
+		public bool IsValid => MathHelpers.IsNumberValid(this.X) && MathHelpers.IsNumberValid(this.Y);
 		#endregion
 		#region Interface
 		#region Constructors
@@ -230,8 +219,8 @@ namespace CryCil
 		/// Creates a dictionary that contains components of this vector.
 		/// </summary>
 		/// <returns>
-		/// A dictionary which capacity is set to 2 where components of the vector can be accessed with
-		/// keys of same names.
+		/// A dictionary which capacity is set to 2 where components of the vector can be accessed with keys
+		/// of same names.
 		/// </returns>
 		public Dictionary<string, double> ToDictionary()
 		{
@@ -250,12 +239,12 @@ namespace CryCil
 		public static void Clamp(ref Vector2d value, ref Vector2d min, ref Vector2d max, out Vector2d result)
 		{
 			double x = value.X;
-			x = (x > max.X) ? max.X : x;
-			x = (x < min.X) ? min.X : x;
+			x = x > max.X ? max.X : x;
+			x = x < min.X ? min.X : x;
 
 			double y = value.Y;
-			y = (y > max.Y) ? max.Y : y;
-			y = (y < min.Y) ? min.Y : y;
+			y = y > max.Y ? max.Y : y;
+			y = y < min.Y ? min.Y : y;
 
 			result = new Vector2d(x, y);
 		}
@@ -289,7 +278,7 @@ namespace CryCil
 			double x = value1.X - value2.X;
 			double y = value1.Y - value2.Y;
 
-			result = Math.Sqrt((x * x) + (y * y));
+			result = Math.Sqrt(x * x + y * y);
 		}
 		/// <summary>
 		/// Calculates the distance between two vectors.
@@ -306,7 +295,7 @@ namespace CryCil
 			double x = value1.X - value2.X;
 			double y = value1.Y - value2.Y;
 
-			return Math.Sqrt((x * x) + (y * y));
+			return Math.Sqrt(x * x + y * y);
 		}
 		/// <summary>
 		/// Calculates the squared distance between two vectors.
@@ -319,17 +308,17 @@ namespace CryCil
 		/// <remarks>
 		/// Distance squared is the value before taking the square root. Distance squared can often be used
 		/// in place of distance if relative comparisons are being made. For example, consider three points
-		/// A, B, and C. To determine whether B or C is further from A, compare the distance between A and
-		/// B to the distance between A and C. Calculating the two distances involves two square roots,
-		/// which are computationally expensive. However, using distance squared provides the same
-		/// information and avoids calculating two square roots.
+		/// A, B, and C. To determine whether B or C is further from A, compare the distance between A and B
+		/// to the distance between A and C. Calculating the two distances involves two square roots, which
+		/// are computationally expensive. However, using distance squared provides the same information and
+		/// avoids calculating two square roots.
 		/// </remarks>
 		public static void DistanceSquared(ref Vector2d value1, ref Vector2d value2, out double result)
 		{
 			double x = value1.X - value2.X;
 			double y = value1.Y - value2.Y;
 
-			result = (x * x) + (y * y);
+			result = x * x + y * y;
 		}
 		/// <summary>
 		/// Calculates the squared distance between two vectors.
@@ -340,17 +329,17 @@ namespace CryCil
 		/// <remarks>
 		/// Distance squared is the value before taking the square root. Distance squared can often be used
 		/// in place of distance if relative comparisons are being made. For example, consider three points
-		/// A, B, and C. To determine whether B or C is further from A, compare the distance between A and
-		/// B to the distance between A and C. Calculating the two distances involves two square roots,
-		/// which are computationally expensive. However, using distance squared provides the same
-		/// information and avoids calculating two square roots.
+		/// A, B, and C. To determine whether B or C is further from A, compare the distance between A and B
+		/// to the distance between A and C. Calculating the two distances involves two square roots, which
+		/// are computationally expensive. However, using distance squared provides the same information and
+		/// avoids calculating two square roots.
 		/// </remarks>
 		public static double DistanceSquared(Vector2d value1, Vector2d value2)
 		{
 			double x = value1.X - value2.X;
 			double y = value1.Y - value2.Y;
 
-			return (x * x) + (y * y);
+			return x * x + y * y;
 		}
 		/// <summary>
 		/// Calculates the dot product of two vectors.
@@ -374,8 +363,8 @@ namespace CryCil
 		/// </param>
 		public static void Max(ref Vector2d left, ref Vector2d right, out Vector2d result)
 		{
-			result.X = (left.X > right.X) ? left.X : right.X;
-			result.Y = (left.Y > right.Y) ? left.Y : right.Y;
+			result.X = left.X > right.X ? left.X : right.X;
+			result.Y = left.Y > right.Y ? left.Y : right.Y;
 		}
 		/// <summary>
 		/// Returns a vector containing the largest components of the specified vectors.
@@ -400,8 +389,8 @@ namespace CryCil
 		/// </param>
 		public static void Min(ref Vector2d left, ref Vector2d right, out Vector2d result)
 		{
-			result.X = (left.X < right.X) ? left.X : right.X;
-			result.Y = (left.Y < right.Y) ? left.Y : right.Y;
+			result.X = left.X < right.X ? left.X : right.X;
+			result.Y = left.Y < right.Y ? left.Y : right.Y;
 		}
 		/// <summary>
 		/// Returns a vector containing the smallest components of the specified vectors.

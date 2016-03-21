@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
 
@@ -146,8 +147,8 @@ namespace CryCil.Engine.Physics
 			get { return (PhysicalEntityTypes)this.collTypes; }
 			set { this.collTypes = (int)value; }
 		}
-		// decreases mass from attached points to free ends; mass_free = mass_attached/(1+decay) (can
-		// impove stability)
+		// decreases mass from attached points to free ends; mass_free = mass_attached/(1+decay) (can impove
+		// stability)
 		/// <summary>
 		/// Gets or sets the value that indicates how mass decreases from points that are attached to other
 		/// entities to points that are free. Can improve stability.
@@ -188,8 +189,8 @@ namespace CryCil.Engine.Physics
 			set { this.stiffnessAnim = value; }
 		}
 		/// <summary>
-		/// Gets or sets the value between 0 and 1 that defines how the shape preserving stiffness
-		/// decreases as the soft body approaches its normal shape.
+		/// Gets or sets the value between 0 and 1 that defines how the shape preserving stiffness decreases
+		/// as the soft body approaches its normal shape.
 		/// </summary>
 		/// <remarks>
 		/// The formula for the shape-preserving stiffness:

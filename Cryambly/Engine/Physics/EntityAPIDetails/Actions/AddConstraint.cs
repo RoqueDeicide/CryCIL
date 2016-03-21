@@ -23,8 +23,8 @@ namespace CryCil.Engine.Physics
 	{
 		#region Fields
 		/// <summary>
-		/// Pass reference to this field to the <see cref="PhysicalEntity.ActUpon"/> to apply this action
-		/// to the physical entity.
+		/// Pass reference to this field to the <see cref="PhysicalEntity.ActUpon"/> to apply this action to
+		/// the physical entity.
 		/// </summary>
 		[UsedImplicitly] public PhysicsAction Base;
 		[UsedImplicitly] private int id;
@@ -72,23 +72,20 @@ namespace CryCil.Engine.Physics
 		/// </summary>
 		/// <remarks>
 		/// Initial positions of entities indicate initial relative positioning. If both
-		/// <see cref="InitialPoint0"/> and <see cref="InitialPoint1"/> are specified and are different,
-		/// the solver will attempt to bring constrained entities together to make sure that relative
-		/// position is <see cref="Vector3.Zero"/>.
+		/// <see cref="InitialPoint0"/> and <see cref="InitialPoint1"/> are specified and are different, the
+		/// solver will attempt to bring constrained entities together to make sure that relative position
+		/// is <see cref="Vector3.Zero"/>.
 		/// </remarks>
-		public Vector3 InitialPoint0
-		{
-			get { return this.pt0; }
-		}
+		public Vector3 InitialPoint0 => this.pt0;
 		/// <summary>
 		/// Gets or sets the position of the second constrained entity before attachment. See Remarks for
 		/// details.
 		/// </summary>
 		/// <remarks>
 		/// Initial positions of entities indicate initial relative positioning. If both
-		/// <see cref="InitialPoint0"/> and <see cref="InitialPoint1"/> are specified and are different,
-		/// the solver will attempt to bring constrained entities together to make sure that relative
-		/// position is <see cref="Vector3.Zero"/>.
+		/// <see cref="InitialPoint0"/> and <see cref="InitialPoint1"/> are specified and are different, the
+		/// solver will attempt to bring constrained entities together to make sure that relative position
+		/// is <see cref="Vector3.Zero"/>.
 		/// </remarks>
 		public Vector3 InitialPoint1
 		{
@@ -105,8 +102,8 @@ namespace CryCil.Engine.Physics
 			set { this.qframe0 = value; }
 		}
 		/// <summary>
-		/// Gets or sets the orientation of the second constrained entity before attachment. See Remarks
-		/// for details.
+		/// Gets or sets the orientation of the second constrained entity before attachment. See Remarks for
+		/// details.
 		/// </summary>
 		/// <remarks>
 		/// Initial orientations of entities indicate initial relative orientation. If both

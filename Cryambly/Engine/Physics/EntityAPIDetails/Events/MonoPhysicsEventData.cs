@@ -16,18 +16,11 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the entity that is associated with the event.
 		/// </summary>
-		public PhysicalEntity Entity
-		{
-			get { return this.entity; }
-		}
+		public PhysicalEntity Entity => this.entity;
 		/// <summary>
-		/// Gets the object that encapsulates foreign data that is associated with the
-		/// <see cref="Entity"/>.
+		/// Gets the object that encapsulates foreign data that is associated with the <see cref="Entity"/>.
 		/// </summary>
-		public ForeignData ForeignData
-		{
-			get { return this.foreignData; }
-		}
+		public ForeignData ForeignData => this.foreignData;
 		#endregion
 		#region Construction
 		internal MonoPhysicsEventData(PhysicalEntity entity, ForeignData foreignData)

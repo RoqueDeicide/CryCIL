@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
 
@@ -69,8 +70,7 @@ namespace CryCil.Engine.Physics.Primitives
 				}
 			}
 			/// <summary>
-			/// Gets or sets the coordinates of the origin point of the grid that represents the height
-			/// map.
+			/// Gets or sets the coordinates of the origin point of the grid that represents the height map.
 			/// </summary>
 			public Vector3 Origin
 			{

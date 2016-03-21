@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil.Geometry
 {
@@ -21,7 +22,7 @@ namespace CryCil.Geometry
 
 				Vector3 temp = vector;
 
-				vector.X = (float)(c * temp.X + (-s) * temp.Y);
+				vector.X = (float)(c * temp.X + -s * temp.Y);
 				vector.Y = (float)(s * temp.X + c * temp.Y);
 			}
 			/// <summary>
@@ -231,8 +232,8 @@ namespace CryCil.Geometry
 			/// </summary>
 			/// <remarks>
 			/// This function modifies given quaternion in such a way that transforming a vector by
-			/// resultant quaternion is equavalent of applying original transformation and follow it up
-			/// with rotation around Z-axis.
+			/// resultant quaternion is equavalent of applying original transformation and follow it up with
+			/// rotation around Z-axis.
 			/// </remarks>
 			/// <param name="quaternion">Quaternion to add rotation to.</param>
 			/// <param name="angle">     Angle of rotation in radians.</param>

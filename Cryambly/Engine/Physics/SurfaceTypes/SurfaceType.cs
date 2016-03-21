@@ -40,73 +40,43 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets the identifier of this surface type.
 		/// </summary>
-		public ushort Identifier
-		{
-			get { return GetId(this.handle); }
-		}
+		public ushort Identifier => GetId(this.handle);
 		/// <summary>
 		/// Gets the name of this surface type.
 		/// </summary>
-		public string Name
-		{
-			get { return GetSurfaceTypeName(this.handle); }
-		}
+		public string Name => GetSurfaceTypeName(this.handle);
 		/// <summary>
 		/// Gets the name of the type of this surface type.
 		/// </summary>
-		public string TypeName
-		{
-			get { return GetTypeName(this.handle); }
-		}
+		public string TypeName => GetTypeName(this.handle);
 		/// <summary>
 		/// Gets a set of flags that describe this surface type.
 		/// </summary>
-		public SurfaceTypeFlags Flags
-		{
-			get { return GetFlags(this.handle); }
-		}
+		public SurfaceTypeFlags Flags => GetFlags(this.handle);
 		/// <summary>
 		/// Indicates whether surfaces of this type are breakable.
 		/// </summary>
-		public bool Breakability
-		{
-			get { return GetBreakability(this.handle) != 0; }
-		}
+		public bool Breakability => GetBreakability(this.handle) != 0;
 		/// <summary>
 		/// Gets the amount of energy needed to break objects with this surface type.
 		/// </summary>
-		public float BreakEnergy
-		{
-			get { return GetBreakEnergy(this.handle); }
-		}
+		public float BreakEnergy => GetBreakEnergy(this.handle);
 		/// <summary>
 		/// Gets the number of hit-points this surface type has.
 		/// </summary>
-		public int HitPoints
-		{
-			get { return GetHitpoints(this.handle); }
-		}
+		public int HitPoints => GetHitpoints(this.handle);
 		/// <summary>
 		/// Gets a pointer to the object that describes physical properties of the surface type.
 		/// </summary>
-		public SurfaceTypePhysicalParameters* PhysicalParameters
-		{
-			get { return GetPhyscalParams(this.handle); }
-		}
+		public SurfaceTypePhysicalParameters* PhysicalParameters => GetPhyscalParams(this.handle);
 		/// <summary>
 		/// Gets a pointer to the object that provides additional information for breakable 2D planes.
 		/// </summary>
-		public SurfaceTypeBreakable2DParameters* Breakable2DParameters
-		{
-			get { return GetBreakable2DParams(this.handle); }
-		}
+		public SurfaceTypeBreakable2DParameters* Breakable2DParameters => GetBreakable2DParams(this.handle);
 		/// <summary>
 		/// Determines whether this object is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 		#endregion
 		#region Static Interface
 		/// <summary>

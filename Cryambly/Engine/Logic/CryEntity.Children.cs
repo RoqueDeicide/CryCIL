@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace CryCil.Engine.Logic
@@ -52,8 +53,8 @@ namespace CryCil.Engine.Logic
 			}
 		}
 		/// <summary>
-		/// Determines whether this entity is attached to another and the point of attachment is
-		/// represented by a valid 3x4 matrix.
+		/// Determines whether this entity is attached to another and the point of attachment is represented
+		/// by a valid 3x4 matrix.
 		/// </summary>
 		/// <remarks>
 		/// Can return <c>false</c> when this entite e.g. is attached to a geometry cache node but geometry
@@ -76,9 +77,7 @@ namespace CryCil.Engine.Logic
 		/// <param name="flags"> 
 		/// A set of flags that specifies how entities will be attached to each other.
 		/// </param>
-		/// <param name="target">
-		/// A name of GeomCache node and character bone to attach the child to.
-		/// </param>
+		/// <param name="target">A name of GeomCache node and character bone to attach the child to.</param>
 		/// <exception cref="ArgumentNullException">
 		/// Cannot attach a null entity as a child to another.
 		/// </exception>
@@ -88,7 +87,7 @@ namespace CryCil.Engine.Logic
 		{
 			if (!child.IsValid)
 			{
-				throw new ArgumentNullException("child", "Cannot attach a null entity as a child to another.");
+				throw new ArgumentNullException(nameof(child), "Cannot attach a null entity as a child to another.");
 			}
 			if (this.handle == child.handle)
 			{

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using CryCil.Annotations;
 using CryCil.Geometry;
 
@@ -45,54 +46,33 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Gets identifier of the entity that is currently representing it.
 		/// </summary>
-		public EntityId CurrentId
-		{
-			get { return this.id; }
-		}
+		public EntityId CurrentId => this.id;
 		/// <summary>
 		/// Gets identifier of the entity that was previously representing it.
 		/// </summary>
 		/// <remarks>Used when reloading.</remarks>
-		public EntityId PreviousId
-		{
-			get { return this.prevId; }
-		}
+		public EntityId PreviousId => this.prevId;
 		/// <summary>
 		/// Gets identifier of the entity that is currently representing it.
 		/// </summary>
-		public EntityGUID CurrentGuid
-		{
-			get { return this.guid; }
-		}
+		public EntityGUID CurrentGuid => this.guid;
 		/// <summary>
 		/// Gets identifier of the entity that was previously representing it.
 		/// </summary>
 		/// <remarks>Used when reloading.</remarks>
-		public EntityGUID PreviousGuid
-		{
-			get { return this.prevGuid; }
-		}
+		public EntityGUID PreviousGuid => this.prevGuid;
 		/// <summary>
 		/// Gets the name of the entity class.
 		/// </summary>
-		public string ClassName
-		{
-			get { return this.pClass; }
-		}
+		public string ClassName => this.pClass;
 		/// <summary>
 		/// Gets the name of the layer the entity resides in.
 		/// </summary>
-		public string LayerName
-		{
-			get { return this.layerName; }
-		}
+		public string LayerName => this.layerName;
 		/// <summary>
 		/// Gets the name of the entity.
 		/// </summary>
-		public string Name
-		{
-			get { return this.name; }
-		}
+		public string Name => this.name;
 		/// <summary>
 		/// Gets or sets flags that describe the entity.
 		/// </summary>
@@ -104,10 +84,7 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Indicates whether this entity was created from an entity pool.
 		/// </summary>
-		public bool CreatedThroughPool
-		{
-			get { return this.createdThroughPool; }
-		}
+		public bool CreatedThroughPool => this.createdThroughPool;
 		/// <summary>
 		/// Gets or sets initial position of the entity in world space.
 		/// </summary>
@@ -160,19 +137,21 @@ namespace CryCil.Engine.Logic
 		/// Creates new set of parameters that can be used to spawn an entity.
 		/// </summary>
 		/// <param name="entityClass">Type that represents the new managed entity.</param>
-		/// <param name="name">     The name of the new entity.</param>
-		/// <param name="flags">    A set of flags to assign to the new entity.</param>
-		/// <param name="id">       Id to assign to the new entity.</param>
-		/// <param name="guid">     Guid to assign to the new entity.</param>
+		/// <param name="name">       The name of the new entity.</param>
+		/// <param name="flags">      A set of flags to assign to the new entity.</param>
+		/// <param name="id">         Id to assign to the new entity.</param>
+		/// <param name="guid">       Guid to assign to the new entity.</param>
 		/// <exception cref="ArgumentException">Given type is not a valid entity type.</exception>
-		/// <exception cref="ArgumentNullException"><paramref name="entityClass"/> is <see langword="null" />.</exception>
+		/// <exception cref="ArgumentNullException">
+		/// <paramref name="entityClass"/> is <see langword="null"/>.
+		/// </exception>
 		public EntitySpawnParameters(Type entityClass, string name, EntityFlags flags,
 									 EntityId id = new EntityId(), EntityGUID guid = new EntityGUID())
 			: this()
 		{
 			if (entityClass == null)
 			{
-				throw new ArgumentNullException("entityClass");
+				throw new ArgumentNullException(nameof(entityClass));
 			}
 			if (!entityClass.Implements<MonoEntity>() || !entityClass.ContainsAttribute<EntityAttribute>())
 			{

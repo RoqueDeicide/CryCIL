@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace CryCil.Engine.Physics
@@ -15,10 +16,7 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 		/// <summary>
 		/// Gets or sets parameters for this lattice.
 		/// </summary>
@@ -80,16 +78,16 @@ namespace CryCil.Engine.Physics
 
 			if (points.IsNullOrTooSmall(4))
 			{
-				throw new ArgumentNullException("points",
+				throw new ArgumentNullException(nameof(points),
 												"Array of points that form the lattice needs to have at least 4 vectors.");
 			}
 			if (tetrahedra.IsNullOrEmpty())
 			{
-				throw new ArgumentNullException("tetrahedra", "The array of indexes cannot be null or empty.");
+				throw new ArgumentNullException(nameof(tetrahedra), "The array of indexes cannot be null or empty.");
 			}
 			if (tetrahedra.Length % 4 != 0)
 			{
-				throw new ArgumentException("Number of indexes that form tetrahedra must be divisible by 4.", "tetrahedra");
+				throw new ArgumentException("Number of indexes that form tetrahedra must be divisible by 4.", nameof(tetrahedra));
 			}
 
 			fixed (Vector3* pts = points)
@@ -115,7 +113,7 @@ namespace CryCil.Engine.Physics
 			this.AssertInstance();
 			if (maxTrianglesPerBVNode <= 0)
 			{
-				throw new ArgumentOutOfRangeException("maxTrianglesPerBVNode",
+				throw new ArgumentOutOfRangeException(nameof(maxTrianglesPerBVNode),
 													  "Maximal number of triangles per BV node must be more then 0.");
 			}
 

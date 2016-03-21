@@ -5,9 +5,8 @@ using CryCil.Annotations;
 namespace CryCil.Engine.Physics
 {
 	/// <summary>
-	/// Encapsulates a set of parameters that allows to set initial velocity for the part that was
-	/// connected to another using the structural joint before the joint is force-broken the physical
-	/// entity.
+	/// Encapsulates a set of parameters that allows to set initial velocity for the part that was connected
+	/// to another using the structural joint before the joint is force-broken the physical entity.
 	/// </summary>
 	/// <remarks>
 	/// Never use objects of this type that were created using a default constructor (they are not
@@ -31,24 +30,15 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets identifier of the part for which the initial velocity is specified.
 		/// </summary>
-		public int PartId
-		{
-			get { return this.partid; }
-		}
+		public int PartId => this.partid;
 		/// <summary>
 		/// Gets initial directional velocity.
 		/// </summary>
-		public Vector3 Velocity
-		{
-			get { return this.v; }
-		}
+		public Vector3 Velocity => this.v;
 		/// <summary>
 		/// Gets initial angular velocity.
 		/// </summary>
-		public Vector3 AngularVelocity
-		{
-			get { return this.w; }
-		}
+		public Vector3 AngularVelocity => this.w;
 		#endregion
 		#region Construction
 		/// <summary>

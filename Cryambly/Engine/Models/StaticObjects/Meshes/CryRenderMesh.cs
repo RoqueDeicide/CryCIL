@@ -21,10 +21,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 		/// <summary>
 		/// Indicates whether this render mesh is loaded into video memory for rendering.
 		/// </summary>
@@ -368,8 +365,8 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// </param>
 		/// <param name="copyFlags">   Unknown.</param>
 		/// <param name="requiresLock">
-		/// Indicates whether <paramref name="stream"/> needs to locked for thread access. If <c>true</c>
-		/// is passed, <see cref="CryRenderMesh.UnlockStream"/> will need to be called.
+		/// Indicates whether <paramref name="stream"/> needs to locked for thread access. If <c>true</c> is
+		/// passed, <see cref="CryRenderMesh.UnlockStream"/> will need to be called.
 		/// </param>
 		/// <returns>True, if successful.</returns>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
@@ -562,8 +559,8 @@ namespace CryCil.Engine.Models.StaticObjects
 			return new StridedPointer(ptr, stride);
 		}
 		/// <summary>
-		/// Grants access to the internal array of quaternion-based tangent space normals of vertices.
-		/// Check <see cref="CryRenderMesh.VertexCount"/> for number of elements in the array.
+		/// Grants access to the internal array of quaternion-based tangent space normals of vertices. Check
+		/// <see cref="CryRenderMesh.VertexCount"/> for number of elements in the array.
 		/// </summary>
 		/// <param name="flags"> A set of flags that specifies how to access the array.</param>
 		/// <param name="offset">Zero-based index of the first element in the array to get.</param>
@@ -628,9 +625,7 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// </summary>
 		/// <param name="flags"> A set of flags that specifies how the array must be accessed.</param>
 		/// <param name="offset">Optional zero-based index of the first element to access.</param>
-		/// <returns>
-		/// Pointer to the internal index data advanced by <paramref name="offset"/> * 4.
-		/// </returns>
+		/// <returns>Pointer to the internal index data advanced by <paramref name="offset"/> * 4.</returns>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public uint* GetIndexPointer(RenderMeshAccessFlags flags, int offset = 0)
 		{

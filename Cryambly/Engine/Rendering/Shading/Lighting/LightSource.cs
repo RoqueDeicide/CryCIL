@@ -15,10 +15,7 @@ namespace CryCil.Engine.Rendering.Lighting
 		/// <summary>
 		/// Indicates whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 		/// <summary>
 		/// Gets or sets a set of properties that define this light source.
 		/// </summary>

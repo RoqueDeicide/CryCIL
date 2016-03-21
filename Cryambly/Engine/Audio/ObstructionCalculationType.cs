@@ -1,4 +1,7 @@
-﻿namespace CryCil.Engine.Audio
+﻿using System;
+using System.Linq;
+
+namespace CryCil.Engine.Audio
 {
 	/// <summary>
 	/// Enumeration of types of calculation of obstruction that is used for audio.

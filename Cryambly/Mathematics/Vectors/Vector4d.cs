@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Globalization;
+using System.Linq;
 using System.Runtime.InteropServices;
 using CryCil.Geometry;
 
@@ -44,14 +45,8 @@ namespace CryCil
 		/// <summary>
 		/// Gets a value indicting whether this instance is normalized.
 		/// </summary>
-		public bool IsNormalized
-		{
-			get
-			{
-				return Math.Abs((this.X * this.X) + (this.Y * this.Y) + (this.Z * this.Z) + (this.W * this.W) - 1f) <
-					   MathHelpers.ZeroTolerance;
-			}
-		}
+		public bool IsNormalized => Math.Abs(this.X * this.X + this.Y * this.Y + this.Z * this.Z + this.W * this.W - 1f) <
+									MathHelpers.ZeroTolerance;
 		/// <summary>
 		/// Gets or sets the component at the specified index.
 		/// </summary>
@@ -70,8 +65,8 @@ namespace CryCil
 			{
 				if ((index | 0x3) != 0x3) //index < 0 || index > 3
 				{
-					throw new ArgumentOutOfRangeException("index", "Attempt to access vector" +
-																   " component other then X, Y, Z or W.");
+					throw new ArgumentOutOfRangeException(nameof(index), "Attempt to access vector" +
+																		 " component other then X, Y, Z or W.");
 				}
 				Contract.EndContractBlock();
 
@@ -84,8 +79,8 @@ namespace CryCil
 			{
 				if ((index | 0x3) != 0x3) //index < 0 || index > 3
 				{
-					throw new ArgumentOutOfRangeException("index", "Attempt to access vector" +
-																   " component other then X, Y, Z or W.");
+					throw new ArgumentOutOfRangeException(nameof(index), "Attempt to access vector" +
+																		 " component other then X, Y, Z or W.");
 				}
 				Contract.EndContractBlock();
 
@@ -98,30 +93,18 @@ namespace CryCil
 		/// <summary>
 		/// Calculates the length of the vector.
 		/// </summary>
-		public double Length
-		{
-			get { return Math.Sqrt((this.X * this.X) + (this.Y * this.Y) + (this.Z * this.Z) + (this.W * this.W)); }
-		}
+		public double Length => Math.Sqrt(this.X * this.X + this.Y * this.Y + this.Z * this.Z + this.W * this.W);
 		/// <summary>
 		/// Calculates the squared length of the vector.
 		/// </summary>
-		public double LengthSquared
-		{
-			get { return (this.X * this.X) + (this.Y * this.Y) + (this.Z * this.Z) + (this.W * this.W); }
-		}
+		public double LengthSquared => this.X * this.X + this.Y * this.Y + this.Z * this.Z + this.W * this.W;
 		/// <summary>
 		/// Determines whether this vector is represented by valid numbers.
 		/// </summary>
-		public bool IsValid
-		{
-			get
-			{
-				return MathHelpers.IsNumberValid(this.X) &&
-					   MathHelpers.IsNumberValid(this.Y) &&
-					   MathHelpers.IsNumberValid(this.Z) &&
-					   MathHelpers.IsNumberValid(this.W);
-			}
-		}
+		public bool IsValid => MathHelpers.IsNumberValid(this.X) &&
+							   MathHelpers.IsNumberValid(this.Y) &&
+							   MathHelpers.IsNumberValid(this.Z) &&
+							   MathHelpers.IsNumberValid(this.W);
 		#endregion
 		#region Interface
 		#region Constructors
@@ -240,17 +223,17 @@ namespace CryCil
 			if (values == null) return;
 			if (firstIndex < 0)
 			{
-				throw new ArgumentOutOfRangeException("firstIndex",
+				throw new ArgumentOutOfRangeException(nameof(firstIndex),
 													  "Index of the first element to copy cannot be negative.");
 			}
 			if (firstComponent < 0)
 			{
-				throw new ArgumentOutOfRangeException("firstComponent",
+				throw new ArgumentOutOfRangeException(nameof(firstComponent),
 													  "Index of the first component to assign cannot be negative.");
 			}
 			if (count > ComponentCount - firstComponent)
 			{
-				throw new ArgumentOutOfRangeException("count",
+				throw new ArgumentOutOfRangeException(nameof(count),
 													  "Number of elements to copy is bigger then number of components to assign.");
 			}
 			for (int i = firstComponent; i < ComponentCount || i < count; i++)
@@ -499,7 +482,7 @@ namespace CryCil
 		{
 			if (offset < 0 || offset > 2)
 			{
-				throw new ArgumentOutOfRangeException("offset", "Offset must be belong to interval [0; 3].");
+				throw new ArgumentOutOfRangeException(nameof(offset), "Offset must be belong to interval [0; 3].");
 			}
 
 			Vector4d result = new Vector4d(this.X, this.Y, this.Z, this.W);
@@ -536,20 +519,20 @@ namespace CryCil
 		public static Vector4d Clamp(Vector4d value, Vector4d min, Vector4d max)
 		{
 			double x = value.X;
-			x = (x > max.X) ? max.X : x;
-			x = (x < min.X) ? min.X : x;
+			x = x > max.X ? max.X : x;
+			x = x < min.X ? min.X : x;
 
 			double y = value.Y;
-			y = (y > max.Y) ? max.Y : y;
-			y = (y < min.Y) ? min.Y : y;
+			y = y > max.Y ? max.Y : y;
+			y = y < min.Y ? min.Y : y;
 
 			double z = value.Z;
-			z = (z > max.Z) ? max.Z : z;
-			z = (z < min.Z) ? min.Z : z;
+			z = z > max.Z ? max.Z : z;
+			z = z < min.Z ? min.Z : z;
 
 			double w = value.W;
-			w = (w > max.W) ? max.W : w;
-			w = (w < min.W) ? min.W : w;
+			w = w > max.W ? max.W : w;
+			w = w < min.W ? min.W : w;
 
 			return new Vector4d(x, y, z, w);
 		}
@@ -566,7 +549,7 @@ namespace CryCil
 			double z = value1.Z - value2.Z;
 			double w = value1.W - value2.W;
 
-			return Math.Sqrt((x * x) + (y * y) + (z * z) + (w * w));
+			return Math.Sqrt(x * x + y * y + z * z + w * w);
 		}
 		/// <summary>
 		/// Calculates the squared distance between two vectors.
@@ -581,7 +564,7 @@ namespace CryCil
 			double z = value1.Z - value2.Z;
 			double w = value1.W - value2.W;
 
-			return (x * x) + (y * y) + (z * z) + (w * w);
+			return x * x + y * y + z * z + w * w;
 		}
 		/// <summary>
 		/// Calculates the dot product of two vectors.
@@ -591,7 +574,7 @@ namespace CryCil
 		/// <returns>The dot product of the two vectors.</returns>
 		public static double Dot(Vector4d left, Vector4d right)
 		{
-			return (left.X * right.X) + (left.Y * right.Y) + (left.Z * right.Z) + (left.W * right.W);
+			return left.X * right.X + left.Y * right.Y + left.Z * right.Z + left.W * right.W;
 		}
 		/// <summary>
 		/// Converts the vector into a unit vector.
@@ -613,10 +596,10 @@ namespace CryCil
 		{
 			Vector4d result = new Vector4d
 			{
-				X = (left.X > right.X) ? left.X : right.X,
-				Y = (left.Y > right.Y) ? left.Y : right.Y,
-				Z = (left.Z > right.Z) ? left.Z : right.Z,
-				W = (left.W > right.W) ? left.W : right.W
+				X = left.X > right.X ? left.X : right.X,
+				Y = left.Y > right.Y ? left.Y : right.Y,
+				Z = left.Z > right.Z ? left.Z : right.Z,
+				W = left.W > right.W ? left.W : right.W
 			};
 			return result;
 		}
@@ -630,10 +613,10 @@ namespace CryCil
 		{
 			Vector4d result = new Vector4d
 			{
-				X = (left.X < right.X) ? left.X : right.X,
-				Y = (left.Y < right.Y) ? left.Y : right.Y,
-				Z = (left.Z < right.Z) ? left.Z : right.Z,
-				W = (left.W < right.W) ? left.W : right.W
+				X = left.X < right.X ? left.X : right.X,
+				Y = left.Y < right.Y ? left.Y : right.Y,
+				Z = left.Z < right.Z ? left.Z : right.Z,
+				W = left.W < right.W ? left.W : right.W
 			};
 			return result;
 		}
@@ -692,8 +675,8 @@ namespace CryCil
 		/// Returns a hash code for this instance.
 		/// </summary>
 		/// <returns>
-		/// A hash code for this instance, suitable for use in hashing algorithms and data structures like
-		/// a hash table.
+		/// A hash code for this instance, suitable for use in hashing algorithms and data structures like a
+		/// hash table.
 		/// </returns>
 		public override int GetHashCode()
 		{
@@ -741,11 +724,11 @@ namespace CryCil
 				   Math.Abs(other.W - this.W) < epsilon;
 		}
 		/// <summary>
-		/// Determines whether the specified <see cref="System.Object"/> is equal to this instance.
+		/// Determines whether the specified <see cref="object"/> is equal to this instance.
 		/// </summary>
-		/// <param name="obj">The <see cref="System.Object"/> to compare with this instance.</param>
+		/// <param name="obj">The <see cref="object"/> to compare with this instance.</param>
 		/// <returns>
-		/// <c>true</c> if the specified <see cref="System.Object"/> is equal to this instance; otherwise,
+		/// <c>true</c> if the specified <see cref="object"/> is equal to this instance; otherwise,
 		/// <c>false</c>.
 		/// </returns>
 		public override bool Equals(object obj)
@@ -781,8 +764,8 @@ namespace CryCil
 		/// Creates a dictionary that contains components of this vector.
 		/// </summary>
 		/// <returns>
-		/// A dictionary which capacity is set to 4 where components of the vector can be accessed with
-		/// keys of same names.
+		/// A dictionary which capacity is set to 4 where components of the vector can be accessed with keys
+		/// of same names.
 		/// </returns>
 		public Dictionary<string, double> ToDictionary()
 		{
@@ -824,10 +807,7 @@ namespace CryCil
 		/// <summary>
 		/// Creates deep copy of this vector.
 		/// </summary>
-		Vector4d IVector<double, Vector4d>.DeepCopy
-		{
-			get { return this; }
-		}
+		Vector4d IVector<double, Vector4d>.DeepCopy => this;
 		/// <summary>
 		/// Calculates the dot product of this vector and another one.
 		/// </summary>

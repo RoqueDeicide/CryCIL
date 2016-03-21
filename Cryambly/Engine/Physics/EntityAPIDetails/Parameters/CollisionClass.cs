@@ -29,15 +29,11 @@ namespace CryCil.Engine.Physics
 		/// <summary>
 		/// Gets current collision of the entity.
 		/// </summary>
-		public CollisionClass Class
-		{
-			get { return this.or; }
-		}
+		public CollisionClass Class => this.or;
 		#endregion
 		#region Construction
 		/// <summary>
-		/// Creates a new instance of this type that can be used to query the collision class of the
-		/// entity.
+		/// Creates a new instance of this type that can be used to query the collision class of the entity.
 		/// </summary>
 		/// <returns>A valid object of this type.</returns>
 		public static PhysicsParametersCollisionClass Create()

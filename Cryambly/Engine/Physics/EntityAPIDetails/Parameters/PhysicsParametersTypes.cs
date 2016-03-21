@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil.Engine.Physics
 {
@@ -22,8 +23,8 @@ namespace CryCil.Engine.Physics
 		/// </summary>
 		Vehicle = 2,
 		/// <summary>
-		/// Identifier of the type of physics parameters that are used to change particle-related
-		/// parameters of the physical entity.
+		/// Identifier of the type of physics parameters that are used to change particle-related parameters
+		/// of the physical entity.
 		/// </summary>
 		Particle = 3,
 		/// <summary>

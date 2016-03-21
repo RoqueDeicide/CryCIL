@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace CryCil.Engine.Logic
@@ -7,7 +7,6 @@ namespace CryCil.Engine.Logic
 	/// <summary>
 	/// Provides access to CryEngine entity system API.
 	/// </summary>
-	[SuppressMessage("ReSharper", "ExceptionNotThrown")]
 	public static class EntitySystem
 	{
 		#region Fields

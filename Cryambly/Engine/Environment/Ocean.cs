@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -203,8 +204,8 @@ namespace CryCil.Engine.Environment
 		/// <param name="position">Coordinates of the point where to check the water level.</param>
 		/// <param name="accurate">Indicates if calculations must be accurate. Very slow, if true.</param>
 		/// <returns>
-		/// Height of the water region above the point or <see cref="UnknownWaterLevel"/>, if no water
-		/// could be found at the specified position.
+		/// Height of the water region above the point or <see cref="UnknownWaterLevel"/>, if no water could
+		/// be found at the specified position.
 		/// </returns>
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern float GetWaterLevel(ref Vector3 position, bool accurate = false);

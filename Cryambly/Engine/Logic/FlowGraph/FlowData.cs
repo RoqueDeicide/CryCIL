@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace CryCil.Engine.Logic
@@ -36,8 +37,7 @@ namespace CryCil.Engine.Logic
 		[FieldOffset(0)] public bool Bool;
 		/// <summary>
 		/// Type of this input data. Don't use fields or properties within this structure, if its type is
-		/// <see cref="FlowDataType.Void"/>. Its type will never be equal to
-		/// <see cref="FlowDataType.Any"/>.
+		/// <see cref="FlowDataType.Void"/>. Its type will never be equal to <see cref="FlowDataType.Any"/>.
 		/// </summary>
 		[FieldOffset(12)] public FlowDataType DataType;
 		#endregion
@@ -45,10 +45,7 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Gets text information.
 		/// </summary>
-		public string String
-		{
-			get { return this.Text != IntPtr.Zero ? Marshal.PtrToStringAnsi(this.Text) : null; }
-		}
+		public string String => this.Text != IntPtr.Zero ? Marshal.PtrToStringAnsi(this.Text) : null;
 		#endregion
 		#region Construction
 		/// <summary>

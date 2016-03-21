@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil.Engine.Input.ActionMapping
 {
@@ -33,8 +34,8 @@ namespace CryCil.Engine.Input.ActionMapping
 
 		// Special modifiers.
 		/// <summary>
-		/// When set, indicates that the action was retriggered. Retriggering means sending out press
-		/// events for keys that are currently pressed.
+		/// When set, indicates that the action was retriggered. Retriggering means sending out press events
+		/// for keys that are currently pressed.
 		/// </summary>
 		Retriggerable = 1 << 4,
 		/// <summary>

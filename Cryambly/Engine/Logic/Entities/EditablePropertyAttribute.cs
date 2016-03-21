@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using CryCil.Annotations;
 
 namespace CryCil.Engine.Logic
@@ -19,9 +20,16 @@ namespace CryCil.Engine.Logic
 		/// </summary>
 		/// <example>
 		/// Without specifying this value the properties Name and FilePath will be listed in the following
-		/// order: <list type="bullet"><item>FilePath</item><item>Name</item></list> If you assign 0 to
-		/// Name property and 1 to FilePath, they will be listed in the different order:
-		/// <list type="bullet"><item>Name</item><item>FilePath</item></list>
+		/// order:
+		/// <list type="bullet">
+		/// <item>FilePath</item>
+		/// <item>Name</item>
+		/// </list>
+		/// If you assign 0 to Name property and 1 to FilePath, they will be listed in the different order:
+		/// <list type="bullet">
+		/// <item>Name</item>
+		/// <item>FilePath</item>
+		/// </list>
 		/// </example>
 		public int SortHelper { get; private set; }
 		/// <summary>
@@ -61,7 +69,7 @@ namespace CryCil.Engine.Logic
 										 string description = "", float min = 0,
 										 float max = 100)
 		{
-			if (folder == null) throw new ArgumentNullException("folder");
+			if (folder == null) throw new ArgumentNullException(nameof(folder));
 			this.SortHelper = sortHelper;
 			this.Folder = folder;
 			if (uiControl == EditablePropertyUiControl.Default)

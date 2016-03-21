@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Microsoft.Build.Utilities;
 
 namespace CryCil.RunTime.Compilation
@@ -49,8 +50,8 @@ namespace CryCil.RunTime.Compilation
 			for (int i = currentVersionIndex; i >= 0; i--)
 			{
 				TargetDotNetFrameworkVersion versionId = TargetFrameworkVersionMap[Versions[i]];
-				string path = Path.Combine(ToolLocationHelper.GetPathToDotNetFramework(versionId), VersionsShort[i],
-										   assemblyName);
+				string path = Path.Combine(ToolLocationHelper.GetPathToDotNetFramework(versionId),
+										   VersionsShort[i], assemblyName);
 				if (File.Exists(path))
 				{
 					return path;

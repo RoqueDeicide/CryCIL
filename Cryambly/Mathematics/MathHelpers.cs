@@ -52,8 +52,8 @@ namespace CryCil
 		/// <summary>
 		/// Calculates sine and cosine at the same time.
 		/// </summary>
-		/// <param name="value">     Angle to calculate sine and cosine of.</param>
-		/// <param name="sine">Resultant sine.</param>
+		/// <param name="value"> Angle to calculate sine and cosine of.</param>
+		/// <param name="sine">  Resultant sine.</param>
 		/// <param name="cosine">Resultant cosine.</param>
 		public static void SinCos(double value, out double sine, out double cosine)
 		{
@@ -62,8 +62,8 @@ namespace CryCil
 		/// <summary>
 		/// Calculates sine and cosine at the same time.
 		/// </summary>
-		/// <param name="value">     Angle to calculate sine and cosine of.</param>
-		/// <param name="sine">Resultant sine.</param>
+		/// <param name="value"> Angle to calculate sine and cosine of.</param>
+		/// <param name="sine">  Resultant sine.</param>
 		/// <param name="cosine">Resultant cosine.</param>
 		public static void SinCos(float value, out float sine, out float cosine)
 		{

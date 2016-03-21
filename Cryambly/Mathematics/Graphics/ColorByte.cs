@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 using CryCil.MemoryMapping;
 
@@ -141,8 +142,8 @@ namespace CryCil.Graphics
 		/// </summary>
 		/// <param name="color">Color to convert.</param>
 		/// <returns>
-		/// Instance of <see cref="Bytes4"/> type with each byte representing a color component in the
-		/// order - RGBA.
+		/// Instance of <see cref="Bytes4"/> type with each byte representing a color component in the order
+		/// - RGBA.
 		/// </returns>
 		public static explicit operator Bytes4(ColorByte color)
 		{
@@ -163,16 +164,16 @@ namespace CryCil.Graphics
 		/// <summary>
 		/// Creates text representation of this color object.
 		/// </summary>
-		/// <returns>Object of type <see cref="String"/> that represents this color.</returns>
+		/// <returns>Object of type <see cref="string"/> that represents this color.</returns>
 		public override string ToString()
 		{
-			return string.Format("[{0} {1} {2} {3}]", this.Red, this.Green, this.Blue, this.Alpha);
+			return $"[{this.Red} {this.Green} {this.Blue} {this.Alpha}]";
 		}
 		/// <summary>
 		/// Converts text representation of the color to type <see cref="ColorByte"/> .
 		/// </summary>
 		/// <param name="text">
-		/// Object of type <see cref="String"/> that is supposed to represent a color.
+		/// Object of type <see cref="string"/> that is supposed to represent a color.
 		/// </param>
 		/// <returns>
 		/// Object of type <see cref="ColorByte"/> that is represented by given <paramref name="text"/> .
@@ -186,12 +187,12 @@ namespace CryCil.Graphics
 		{
 			if (string.IsNullOrEmpty(text))
 			{
-				throw new ArgumentNullException("text", "Attempt to parse empty string as ColorByte.");
+				throw new ArgumentNullException(nameof(text), "Attempt to parse empty string as ColorByte.");
 			}
 			if (text[0] != '[')
 			{
-				throw new ArgumentException(
-					"Attempt to parse text that is not a recognizable ColorByte representation as object of that type.");
+				throw new ArgumentException("Attempt to parse text that is not a recognizable ColorByte " +
+											"representation as object of that type.");
 			}
 			string[] componentStrings = text.Substring(1, text.Length - 2).Split(' ');
 			try
@@ -207,15 +208,15 @@ namespace CryCil.Graphics
 			}
 			catch (Exception ex)
 			{
-				throw new ArgumentException(
-					"Attempt to parse text that is not a recognizable ColorByte representation as object of that type.", ex);
+				throw new ArgumentException("Attempt to parse text that is not a recognizable ColorByte " +
+											"representation as object of that type.", ex);
 			}
 		}
 		/// <summary>
 		/// Attempts to parse given text as object of type <see cref="ColorByte"/> .
 		/// </summary>
 		/// <param name="text"> 
-		/// Object of type <see cref="String"/> that might be a representation of type
+		/// Object of type <see cref="string"/> that might be a representation of type
 		/// <see cref="ColorByte"/> .
 		/// </param>
 		/// <param name="color">If conversion is successful this object will contain the result.</param>

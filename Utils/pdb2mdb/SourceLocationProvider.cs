@@ -21,16 +21,10 @@ namespace Microsoft.Cci
 			this.namespaceName = namespaceName;
 		}
 
-		public IName Alias
-		{
-			get { return this.alias; }
-		}
+		public IName Alias => this.alias;
 		private readonly IName alias;
 
-		public IName NamespaceName
-		{
-			get { return this.namespaceName; }
-		}
+		public IName NamespaceName => this.namespaceName;
 		private readonly IName namespaceName;
 	}
 
@@ -41,10 +35,7 @@ namespace Microsoft.Cci
 			this.usedNamespaces = usedNamespaces;
 		}
 
-		public IEnumerable<IUsedNamespace> UsedNamespaces
-		{
-			get { return this.usedNamespaces; }
-		}
+		public IEnumerable<IUsedNamespace> UsedNamespaces => this.usedNamespaces;
 		private readonly IEnumerable<IUsedNamespace> usedNamespaces;
 	}
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
 using CryCil.Geometry;
@@ -6,8 +7,8 @@ using CryCil.Geometry;
 namespace CryCil.Engine.Physics
 {
 	/// <summary>
-	/// Encapsulates description of the object that is used to query current location of the physical
-	/// entity that is registered on the server as a current location of the entity.
+	/// Encapsulates description of the object that is used to query current location of the physical entity
+	/// that is registered on the server as a current location of the entity.
 	/// </summary>
 	/// <remarks>
 	/// <para>

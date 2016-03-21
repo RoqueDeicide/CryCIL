@@ -1,4 +1,7 @@
-﻿namespace CryCil.Engine.CryAction
+﻿using System;
+using System.Linq;
+
+namespace CryCil.Engine.CryAction
 {
 	/// <summary>
 	/// Encapsulates details about a game type that is supported by the level.
@@ -14,24 +17,15 @@
 		/// <summary>
 		/// Gets the name of this game type.
 		/// </summary>
-		public string Name
-		{
-			get { return this.name; }
-		}
+		public string Name => this.name;
 		/// <summary>
 		/// Gets the path to the file that contains Xml data that describes this game type.
 		/// </summary>
-		public string File
-		{
-			get { return this.xmlFile; }
-		}
+		public string File => this.xmlFile;
 		/// <summary>
 		/// Gets the number of .cgf files that are involved in this game type.
 		/// </summary>
-		public int CgfCount
-		{
-			get { return this.cgfCount; }
-		}
+		public int CgfCount => this.cgfCount;
 		#endregion
 		#region Construction
 		internal GameTypeInfo(string name, string xmlFile, int cgfCount)

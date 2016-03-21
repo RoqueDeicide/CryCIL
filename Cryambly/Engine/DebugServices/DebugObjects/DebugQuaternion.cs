@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using CryCil.Geometry;
 using CryCil.Graphics;
 
@@ -64,9 +65,12 @@ namespace CryCil.Engine.DebugServices
 			AuxiliaryGeometry.Flags = this.RenderingFlags;
 			AuxiliaryGeometry.DrawOBB(ref obb, this.Position, false, this.Color,
 									  BoundingBoxRenderStyle.ExtremesColorEncoded);
-			AuxiliaryGeometry.DrawLine(this.Position, this.Position + this.x, red.ModifyAlpha(this.Color.Alpha));
-			AuxiliaryGeometry.DrawLine(this.Position, this.Position + this.y, green.ModifyAlpha(this.Color.Alpha));
-			AuxiliaryGeometry.DrawLine(this.Position, this.Position + this.z, blue.ModifyAlpha(this.Color.Alpha));
+			AuxiliaryGeometry.DrawLine(this.Position, this.Position + this.x,
+									   red.ModifyAlpha(this.Color.Alpha));
+			AuxiliaryGeometry.DrawLine(this.Position, this.Position + this.y,
+									   green.ModifyAlpha(this.Color.Alpha));
+			AuxiliaryGeometry.DrawLine(this.Position, this.Position + this.z,
+									   blue.ModifyAlpha(this.Color.Alpha));
 		}
 		#endregion
 	}

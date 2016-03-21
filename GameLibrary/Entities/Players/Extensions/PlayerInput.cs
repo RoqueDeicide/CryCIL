@@ -31,24 +31,15 @@ namespace GameLibrary.Entities.Players.Extensions
 		/// <summary>
 		/// Gets a set of Euler angles that describe the orientation of the player.
 		/// </summary>
-		public EulerAngles RotationAngles
-		{
-			get { return this.rotationAngles; }
-		}
+		public EulerAngles RotationAngles => this.rotationAngles;
 		/// <summary>
 		/// Gets the value that indicates whether player's movement is being boosted.
 		/// </summary>
-		public bool Boosting
-		{
-			get { return this.boost; }
-		}
+		public bool Boosting => this.boost;
 		/// <summary>
 		/// Gets the vector that specifies directions of movement.
 		/// </summary>
-		public Vector3 DeltaMovement
-		{
-			get { return this.deltaMovement; }
-		}
+		public Vector3 DeltaMovement => this.deltaMovement;
 		#endregion
 		#region Events
 

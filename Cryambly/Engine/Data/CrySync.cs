@@ -21,10 +21,7 @@ namespace CryCil.Engine.Data
 		/// <summary>
 		/// Determines whether this instance is usable.
 		/// </summary>
-		public bool IsValid
-		{
-			get { return this.handle != IntPtr.Zero; }
-		}
+		public bool IsValid => this.handle != IntPtr.Zero;
 
 		/// <summary>
 		/// Indicates whether the data is currently being received.
@@ -115,7 +112,7 @@ namespace CryCil.Engine.Data
 			}
 			if (string.IsNullOrEmpty(name))
 			{
-				throw new ArgumentNullException("name", "The name cannot be null or empty.");
+				throw new ArgumentNullException(nameof(name), "The name cannot be null or empty.");
 			}
 			if (name.Any(char.IsWhiteSpace))
 			{
@@ -161,7 +158,7 @@ namespace CryCil.Engine.Data
 			}
 			if (string.IsNullOrEmpty(name))
 			{
-				throw new ArgumentNullException("name", "The name cannot be null or empty.");
+				throw new ArgumentNullException(nameof(name), "The name cannot be null or empty.");
 			}
 			if (name.Any(char.IsWhiteSpace))
 			{
@@ -203,7 +200,7 @@ namespace CryCil.Engine.Data
 			}
 			if (string.IsNullOrEmpty(name))
 			{
-				throw new ArgumentNullException("name", "The name cannot be null or empty.");
+				throw new ArgumentNullException(nameof(name), "The name cannot be null or empty.");
 			}
 			if (name.Any(char.IsWhiteSpace))
 			{
@@ -235,7 +232,7 @@ namespace CryCil.Engine.Data
 			}
 			if (string.IsNullOrEmpty(name))
 			{
-				throw new ArgumentNullException("name", "The name cannot be null or empty.");
+				throw new ArgumentNullException(nameof(name), "The name cannot be null or empty.");
 			}
 			if (name.Any(char.IsWhiteSpace))
 			{
@@ -263,7 +260,7 @@ namespace CryCil.Engine.Data
 			}
 			if (string.IsNullOrEmpty(name))
 			{
-				throw new ArgumentNullException("name", "The name cannot be null or empty.");
+				throw new ArgumentNullException(nameof(name), "The name cannot be null or empty.");
 			}
 			if (name.Any(char.IsWhiteSpace))
 			{
@@ -295,7 +292,7 @@ namespace CryCil.Engine.Data
 			}
 			if (string.IsNullOrEmpty(name))
 			{
-				throw new ArgumentNullException("name", "The name cannot be null or empty.");
+				throw new ArgumentNullException(nameof(name), "The name cannot be null or empty.");
 			}
 			if (name.Any(char.IsWhiteSpace))
 			{
@@ -323,7 +320,7 @@ namespace CryCil.Engine.Data
 			}
 			if (string.IsNullOrEmpty(name))
 			{
-				throw new ArgumentNullException("name", "The name cannot be null or empty.");
+				throw new ArgumentNullException(nameof(name), "The name cannot be null or empty.");
 			}
 			if (name.Any(char.IsWhiteSpace))
 			{
@@ -355,7 +352,7 @@ namespace CryCil.Engine.Data
 			}
 			if (string.IsNullOrEmpty(name))
 			{
-				throw new ArgumentNullException("name", "The name cannot be null or empty.");
+				throw new ArgumentNullException(nameof(name), "The name cannot be null or empty.");
 			}
 			if (name.Any(char.IsWhiteSpace))
 			{
@@ -383,7 +380,7 @@ namespace CryCil.Engine.Data
 			}
 			if (string.IsNullOrEmpty(name))
 			{
-				throw new ArgumentNullException("name", "The name cannot be null or empty.");
+				throw new ArgumentNullException(nameof(name), "The name cannot be null or empty.");
 			}
 			if (name.Any(char.IsWhiteSpace))
 			{
@@ -415,7 +412,7 @@ namespace CryCil.Engine.Data
 			}
 			if (string.IsNullOrEmpty(name))
 			{
-				throw new ArgumentNullException("name", "The name cannot be null or empty.");
+				throw new ArgumentNullException(nameof(name), "The name cannot be null or empty.");
 			}
 			if (name.Any(char.IsWhiteSpace))
 			{
@@ -443,7 +440,7 @@ namespace CryCil.Engine.Data
 			}
 			if (string.IsNullOrEmpty(name))
 			{
-				throw new ArgumentNullException("name", "The name cannot be null or empty.");
+				throw new ArgumentNullException(nameof(name), "The name cannot be null or empty.");
 			}
 			if (name.Any(char.IsWhiteSpace))
 			{
@@ -475,7 +472,7 @@ namespace CryCil.Engine.Data
 			}
 			if (string.IsNullOrEmpty(name))
 			{
-				throw new ArgumentNullException("name", "The name cannot be null or empty.");
+				throw new ArgumentNullException(nameof(name), "The name cannot be null or empty.");
 			}
 			if (name.Any(char.IsWhiteSpace))
 			{
@@ -503,7 +500,7 @@ namespace CryCil.Engine.Data
 			}
 			if (string.IsNullOrEmpty(name))
 			{
-				throw new ArgumentNullException("name", "The name cannot be null or empty.");
+				throw new ArgumentNullException(nameof(name), "The name cannot be null or empty.");
 			}
 			if (name.Any(char.IsWhiteSpace))
 			{
@@ -535,7 +532,7 @@ namespace CryCil.Engine.Data
 			}
 			if (string.IsNullOrEmpty(name))
 			{
-				throw new ArgumentNullException("name", "The name cannot be null or empty.");
+				throw new ArgumentNullException(nameof(name), "The name cannot be null or empty.");
 			}
 			if (name.Any(char.IsWhiteSpace))
 			{
@@ -563,7 +560,7 @@ namespace CryCil.Engine.Data
 			}
 			if (string.IsNullOrEmpty(name))
 			{
-				throw new ArgumentNullException("name", "The name cannot be null or empty.");
+				throw new ArgumentNullException(nameof(name), "The name cannot be null or empty.");
 			}
 			if (name.Any(char.IsWhiteSpace))
 			{
@@ -595,7 +592,7 @@ namespace CryCil.Engine.Data
 			}
 			if (string.IsNullOrEmpty(name))
 			{
-				throw new ArgumentNullException("name", "The name cannot be null or empty.");
+				throw new ArgumentNullException(nameof(name), "The name cannot be null or empty.");
 			}
 			if (name.Any(char.IsWhiteSpace))
 			{
@@ -623,7 +620,7 @@ namespace CryCil.Engine.Data
 			}
 			if (string.IsNullOrEmpty(name))
 			{
-				throw new ArgumentNullException("name", "The name cannot be null or empty.");
+				throw new ArgumentNullException(nameof(name), "The name cannot be null or empty.");
 			}
 			if (name.Any(char.IsWhiteSpace))
 			{
@@ -655,7 +652,7 @@ namespace CryCil.Engine.Data
 			}
 			if (string.IsNullOrEmpty(name))
 			{
-				throw new ArgumentNullException("name", "The name cannot be null or empty.");
+				throw new ArgumentNullException(nameof(name), "The name cannot be null or empty.");
 			}
 			if (name.Any(char.IsWhiteSpace))
 			{
@@ -683,7 +680,7 @@ namespace CryCil.Engine.Data
 			}
 			if (string.IsNullOrEmpty(name))
 			{
-				throw new ArgumentNullException("name", "The name cannot be null or empty.");
+				throw new ArgumentNullException(nameof(name), "The name cannot be null or empty.");
 			}
 			if (name.Any(char.IsWhiteSpace))
 			{
@@ -715,7 +712,7 @@ namespace CryCil.Engine.Data
 			}
 			if (string.IsNullOrEmpty(name))
 			{
-				throw new ArgumentNullException("name", "The name cannot be null or empty.");
+				throw new ArgumentNullException(nameof(name), "The name cannot be null or empty.");
 			}
 			if (name.Any(char.IsWhiteSpace))
 			{
@@ -743,7 +740,7 @@ namespace CryCil.Engine.Data
 			}
 			if (string.IsNullOrEmpty(name))
 			{
-				throw new ArgumentNullException("name", "The name cannot be null or empty.");
+				throw new ArgumentNullException(nameof(name), "The name cannot be null or empty.");
 			}
 			if (name.Any(char.IsWhiteSpace))
 			{
@@ -775,7 +772,7 @@ namespace CryCil.Engine.Data
 			}
 			if (string.IsNullOrEmpty(name))
 			{
-				throw new ArgumentNullException("name", "The name cannot be null or empty.");
+				throw new ArgumentNullException(nameof(name), "The name cannot be null or empty.");
 			}
 			if (name.Any(char.IsWhiteSpace))
 			{
@@ -803,7 +800,7 @@ namespace CryCil.Engine.Data
 			}
 			if (string.IsNullOrEmpty(name))
 			{
-				throw new ArgumentNullException("name", "The name cannot be null or empty.");
+				throw new ArgumentNullException(nameof(name), "The name cannot be null or empty.");
 			}
 			if (name.Any(char.IsWhiteSpace))
 			{
@@ -835,7 +832,7 @@ namespace CryCil.Engine.Data
 			}
 			if (string.IsNullOrEmpty(name))
 			{
-				throw new ArgumentNullException("name", "The name cannot be null or empty.");
+				throw new ArgumentNullException(nameof(name), "The name cannot be null or empty.");
 			}
 			if (name.Any(char.IsWhiteSpace))
 			{
@@ -863,7 +860,7 @@ namespace CryCil.Engine.Data
 			}
 			if (string.IsNullOrEmpty(name))
 			{
-				throw new ArgumentNullException("name", "The name cannot be null or empty.");
+				throw new ArgumentNullException(nameof(name), "The name cannot be null or empty.");
 			}
 			if (name.Any(char.IsWhiteSpace))
 			{
@@ -895,7 +892,7 @@ namespace CryCil.Engine.Data
 			}
 			if (string.IsNullOrEmpty(name))
 			{
-				throw new ArgumentNullException("name", "The name cannot be null or empty.");
+				throw new ArgumentNullException(nameof(name), "The name cannot be null or empty.");
 			}
 			if (name.Any(char.IsWhiteSpace))
 			{
@@ -923,7 +920,7 @@ namespace CryCil.Engine.Data
 			}
 			if (string.IsNullOrEmpty(name))
 			{
-				throw new ArgumentNullException("name", "The name cannot be null or empty.");
+				throw new ArgumentNullException(nameof(name), "The name cannot be null or empty.");
 			}
 			if (name.Any(char.IsWhiteSpace))
 			{
@@ -955,7 +952,7 @@ namespace CryCil.Engine.Data
 			}
 			if (string.IsNullOrEmpty(name))
 			{
-				throw new ArgumentNullException("name", "The name cannot be null or empty.");
+				throw new ArgumentNullException(nameof(name), "The name cannot be null or empty.");
 			}
 			if (name.Any(char.IsWhiteSpace))
 			{
@@ -983,7 +980,7 @@ namespace CryCil.Engine.Data
 			}
 			if (string.IsNullOrEmpty(name))
 			{
-				throw new ArgumentNullException("name", "The name cannot be null or empty.");
+				throw new ArgumentNullException(nameof(name), "The name cannot be null or empty.");
 			}
 			if (name.Any(char.IsWhiteSpace))
 			{
@@ -1015,7 +1012,7 @@ namespace CryCil.Engine.Data
 			}
 			if (string.IsNullOrEmpty(name))
 			{
-				throw new ArgumentNullException("name", "The name cannot be null or empty.");
+				throw new ArgumentNullException(nameof(name), "The name cannot be null or empty.");
 			}
 			if (name.Any(char.IsWhiteSpace))
 			{
@@ -1043,7 +1040,7 @@ namespace CryCil.Engine.Data
 			}
 			if (string.IsNullOrEmpty(name))
 			{
-				throw new ArgumentNullException("name", "The name cannot be null or empty.");
+				throw new ArgumentNullException(nameof(name), "The name cannot be null or empty.");
 			}
 			if (name.Any(char.IsWhiteSpace))
 			{
@@ -1075,7 +1072,7 @@ namespace CryCil.Engine.Data
 			}
 			if (string.IsNullOrEmpty(name))
 			{
-				throw new ArgumentNullException("name", "The name cannot be null or empty.");
+				throw new ArgumentNullException(nameof(name), "The name cannot be null or empty.");
 			}
 			if (name.Any(char.IsWhiteSpace))
 			{
@@ -1103,7 +1100,7 @@ namespace CryCil.Engine.Data
 			}
 			if (string.IsNullOrEmpty(name))
 			{
-				throw new ArgumentNullException("name", "The name cannot be null or empty.");
+				throw new ArgumentNullException(nameof(name), "The name cannot be null or empty.");
 			}
 			if (name.Any(char.IsWhiteSpace))
 			{
@@ -1142,7 +1139,7 @@ namespace CryCil.Engine.Data
 			}
 			if (string.IsNullOrEmpty(name))
 			{
-				throw new ArgumentNullException("name", "The name cannot be null or empty.");
+				throw new ArgumentNullException(nameof(name), "The name cannot be null or empty.");
 			}
 			if (name.Any(char.IsWhiteSpace))
 			{
@@ -1177,7 +1174,7 @@ namespace CryCil.Engine.Data
 			}
 			if (string.IsNullOrEmpty(name))
 			{
-				throw new ArgumentNullException("name", "The name cannot be null or empty.");
+				throw new ArgumentNullException(nameof(name), "The name cannot be null or empty.");
 			}
 			if (name.Any(char.IsWhiteSpace))
 			{

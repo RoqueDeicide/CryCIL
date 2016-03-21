@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace CryCil.Engine
 {
@@ -37,18 +38,18 @@ namespace CryCil.Engine
 		/// </summary>
 		DumpToDisk = 0x00000100,
 		/// <summary>
-		/// When set for a console variable, indicates that the variable's value can be set but can never
-		/// be changed.
+		/// When set for a console variable, indicates that the variable's value can be set but can never be
+		/// changed.
 		/// </summary>
 		ReadOnly = 0x00000800,
 		/// <summary>
-		/// When set for a console variable, indicates that changes to the variable's value will take
-		/// effect after reloading the level.
+		/// When set for a console variable, indicates that changes to the variable's value will take effect
+		/// after reloading the level.
 		/// </summary>
 		RequireLevelReload = 0x00001000,
 		/// <summary>
-		/// When set for a console variable, indicates that changes to the variable's value will take
-		/// effect after reloading the game.
+		/// When set for a console variable, indicates that changes to the variable's value will take effect
+		/// after reloading the game.
 		/// </summary>
 		RequireAppRestart = 0x00002000,
 		/// <summary>
@@ -84,8 +85,8 @@ namespace CryCil.Engine
 		/// </summary>
 		Invisible = 0x00100000,
 		/// <summary>
-		/// When set for a console variable that was registered with a callback, indicates that the
-		/// callback should be invoked even when the value of the variable doesn't change.
+		/// When set for a console variable that was registered with a callback, indicates that the callback
+		/// should be invoked even when the value of the variable doesn't change.
 		/// </summary>
 		AlwaysOnChange = 0x00200000,
 		/// <summary>
@@ -104,8 +105,8 @@ namespace CryCil.Engine
 		/// </summary>
 		CheatAlwaysCheck = 0x01000000,
 		/// <summary>
-		/// When set for a console variable, indicates that variable's value is not critical for the
-		/// program and there is no need for paranoia.
+		/// When set for a console variable, indicates that variable's value is not critical for the program
+		/// and there is no need for paranoia.
 		/// </summary>
 		CheatNoCheck = 0x02000000,
 		/// <summary>

@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Linq;
 using CryCil;
 using CryCil.Engine.DebugServices;
 using CryCil.Graphics;
@@ -7,7 +8,6 @@ namespace CSharpSamples.DebugServices
 {
 	public static class Painter
 	{
-		[SuppressMessage("ReSharper", "ExceptionNotDocumented", Justification = "Reviewed. This is a sample.")]
 		public static void DrawSampleGraphics()
 		{
 			// Lets say, we have an explosion and a wind.

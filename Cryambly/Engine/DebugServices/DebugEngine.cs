@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Threading;
 using CryCil.RunTime;
 
@@ -74,15 +74,15 @@ namespace CryCil.Engine.DebugServices
 		#region Utilities
 		private static void OnRenderingOver(DebugObject obj)
 		{
-			if (RenderingOver != null) RenderingOver(obj);
+			RenderingOver?.Invoke(obj);
 		}
 		private static void OnFrameStart()
 		{
-			if (FrameStart != null) FrameStart();
+			FrameStart?.Invoke();
 		}
 		private static void OnFrameEnd()
 		{
-			if (FrameEnd != null) FrameEnd();
+			FrameEnd?.Invoke();
 		}
 		private static void RenderObjects()
 		{

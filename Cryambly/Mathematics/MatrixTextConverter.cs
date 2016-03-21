@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 
 namespace CryCil
@@ -40,8 +41,8 @@ namespace CryCil
 		/// </para>
 		/// <para></para>
 		/// <para>
-		/// Matrix format specification is a string consisting of letters only the following of which can
-		/// be recognized:
+		/// Matrix format specification is a string consisting of letters only the following of which can be
+		/// recognized:
 		/// </para>
 		/// <para>1) 'r' - specifies that each row of the matrix must be on a separate line.</para>
 		/// <para>
@@ -61,8 +62,8 @@ namespace CryCil
 		/// <para></para>
 		/// <para>
 		/// When only one part is provided, put '|' either at the left side of it or right one to specify
-		/// whether that part specifies a number or matrix format respectively. If '|' is not in the
-		/// string, default format will be used.
+		/// whether that part specifies a number or matrix format respectively. If '|' is not in the string,
+		/// default format will be used.
 		/// </para>
 		/// </remarks>
 		/// <example>
@@ -70,11 +71,11 @@ namespace CryCil
 		/// Matrix44 iden = Matrix44.Identity;
 		/// string text = iden.ToString("o(i{s|f0");
 		/// // Text stored in text variable:
-		/// 
+		///
 		/// // ({1 0 0 0};{0 1 0 0};{0 0 1 0};{0 0 0 1})
 		/// text = iden.ToString("ri]sc|f0");
 		/// // Text stored in text variable:
-		/// 
+		///
 		/// // [1, 0, 0, 0];
 		/// // [0, 1, 0, 0];
 		/// // [0, 0, 1, 0];
@@ -105,10 +106,10 @@ namespace CryCil
 				CommaElementDelimitation = parts[0].Contains("c"),
 				SemicolonRowDelimitation = parts[0].Contains("s"),
 				SeparateIntoRows = parts[0].Contains("r"),
-				OuterEnclosers = (outerEncloserIndex != -1)
+				OuterEnclosers = outerEncloserIndex != -1
 					? ExtractEnclosers(parts[0], outerEncloserIndex)
 					: null,
-				RowEnclosers = (innerEncloserIndex != -1)
+				RowEnclosers = innerEncloserIndex != -1
 					? ExtractEnclosers(parts[0], innerEncloserIndex)
 					: null,
 				NumberFormat = parts[1],
