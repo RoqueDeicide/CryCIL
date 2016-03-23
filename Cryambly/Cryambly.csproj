@@ -273,6 +273,7 @@
     <Compile Include="Engine\UserInterface\NamespaceDoc.cs" />
     <Compile Include="ExtensionMethods\CollectionExtensions.cs" />
     <Compile Include="ExtensionMethods\EnumExtas.cs" />
+    <Compile Include="ExtensionMethods\FlagExtensions.cs" />
     <Compile Include="ExtensionMethods\NumberExtensions.cs" />
     <Compile Include="ExtensionMethods\ReflectionExtensions.cs" />
     <Compile Include="ExtensionMethods\StringExtensions.cs" />

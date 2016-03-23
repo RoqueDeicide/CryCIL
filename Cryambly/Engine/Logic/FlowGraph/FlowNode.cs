@@ -47,7 +47,7 @@ namespace CryCil.Engine.Logic
 			get { return this.flags; }
 			private set
 			{
-				if (this.initData.HasFlag(InitializationDetails.Flags))
+				if (this.initData.FlagSet(InitializationDetails.Flags))
 				{
 					throw new Exception("Flags that describe this flow node can only be set once.");
 				}
@@ -64,7 +64,7 @@ namespace CryCil.Engine.Logic
 			get { return this.description; }
 			private set
 			{
-				if (this.initData.HasFlag(InitializationDetails.Description))
+				if (this.initData.FlagSet(InitializationDetails.Description))
 				{
 					throw new Exception("Description of this flow node can only be set once.");
 				}
@@ -80,7 +80,7 @@ namespace CryCil.Engine.Logic
 			get { return this.inputs; }
 			protected set
 			{
-				Contract.Assert(!this.initData.HasFlag(InitializationDetails.Inputs),
+				Contract.Assert(!this.initData.FlagSet(InitializationDetails.Inputs),
 								"An array of input ports can only be set once.");
 
 				this.inputs = value;
@@ -95,7 +95,7 @@ namespace CryCil.Engine.Logic
 			get { return this.outputs; }
 			protected set
 			{
-				Contract.Assert(!this.initData.HasFlag(InitializationDetails.Outputs),
+				Contract.Assert(!this.initData.FlagSet(InitializationDetails.Outputs),
 								"An array of output ports can only be set once.");
 
 				this.outputs = value;

@@ -375,7 +375,7 @@ namespace CryCil.Engine.Logic
 					new RmiException(RmiError.IsNotClient,
 									 $"Method {methodName} of type {type.FullName} must be called from a client game instance.");
 			}
-			if (attribute.ToServer && !where.HasFlag(RmiTarget.ToServer))
+			if (attribute.ToServer && !where.FlagSet(RmiTarget.ToServer))
 			{
 				throw
 					new RmiException(RmiError.NotDirectedToServer,
@@ -389,25 +389,25 @@ namespace CryCil.Engine.Logic
 		/// </exception>
 		private void ValidateRmiTarget(RmiTarget where, int channel)
 		{
-			if (where.HasFlag(RmiTarget.NoCall))
+			if (where.FlagSet(RmiTarget.NoCall))
 			{
 				throw new RmiException(RmiError.NoAllowedCalls, "Attempt was made to call RMI and specifying that it must " +
 																"not be directed to both local and remote game instances.");
 			}
-			if (where.HasFlag(RmiTarget.ToClientChannel))
+			if (where.FlagSet(RmiTarget.ToClientChannel))
 			{
 				if (channel <= 0)
 				{
 					throw new RmiException(RmiError.ClientNotSpecified,
 										   "Attempt was made to call RMI on a specific client without specifying its identifier.");
 				}
-				if (where.HasFlag(RmiTarget.ToOwnClient))
+				if (where.FlagSet(RmiTarget.ToOwnClient))
 				{
 					throw new RmiException(RmiError.SendingToClientAndItself,
 										   "Calling RMI on a specific client and own client is not supported.");
 				}
 			}
-			if (where.HasFlag(RmiTarget.ToOwnClient) && !this.channelId.IsValid)
+			if (where.FlagSet(RmiTarget.ToOwnClient) && !this.channelId.IsValid)
 			{
 				throw new RmiException(RmiError.SendingToItselfWithoutOwnClient,
 									   "Cannot send RMI call to sender's client instance because it doesn't have client instance.");

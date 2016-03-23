@@ -103,7 +103,7 @@ namespace CryCil.RunTime.Registration
 
 				if (DefinedEntityClasses.ContainsKey(entityClassName))
 				{
-					if (attribute.Flags.HasFlag(EntityClassFlags.ModifyExisting))
+					if (attribute.Flags.FlagSet(EntityClassFlags.ModifyExisting))
 					{
 						DefinedEntityClasses[entityClassName] = entityType;
 					}

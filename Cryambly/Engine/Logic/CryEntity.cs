@@ -401,7 +401,7 @@ namespace CryCil.Engine.Logic
 		/// <remarks>
 		/// This function is a faster equivalent of the following code:
 		/// <code>
-		/// entity.Flags.HasFlag(someFlags);
+		/// entity.Flags.FlagSet(someFlags);
 		/// </code>
 		/// This function is faster because it doesn't involve boxing.
 		/// </remarks>
