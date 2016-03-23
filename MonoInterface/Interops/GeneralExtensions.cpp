@@ -4,7 +4,7 @@
 
 void GeneralExtensionsInterop::OnRunTimeInitialized()
 {
-	REGISTER_METHOD(CopyToBuffer);
+	REGISTER_METHOD_NCN(this->GetInteropNameSpace(), "StringExtensions", "CopyToBuffer", CopyToBuffer);
 }
 
 void GeneralExtensionsInterop::CopyToBuffer(mono::string str, wchar_t *chars, int start, int count)

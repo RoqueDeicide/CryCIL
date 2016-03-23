@@ -271,6 +271,12 @@
     <Compile Include="Engine\Rendering\Views\ViewParameters.cs" />
     <Compile Include="Engine\SystemEvents.cs" />
     <Compile Include="Engine\UserInterface\NamespaceDoc.cs" />
+    <Compile Include="ExtensionMethods\CollectionExtensions.cs" />
+    <Compile Include="ExtensionMethods\EnumExtas.cs" />
+    <Compile Include="ExtensionMethods\NumberExtensions.cs" />
+    <Compile Include="ExtensionMethods\ReflectionExtensions.cs" />
+    <Compile Include="ExtensionMethods\StringExtensions.cs" />
+    <Compile Include="ExtensionMethods\XmlExtensions.cs" />
     <Compile Include="Mathematics\Geometry\Csg\Base\NamespaceDoc.cs" />
     <Compile Include="Mathematics\Geometry\Csg\NamespaceDoc.cs" />
     <Compile Include="Mathematics\Geometry\PositionNormal.cs" />
@@ -629,7 +635,6 @@
     <Compile Include="Utilities\CryLock.cs" />
     <Compile Include="Utilities\CryXmlNode.Attributes.cs" />
     <Compile Include="Utilities\CryXmlNode.cs" />
-    <Compile Include="GeneralExtensions.cs" />
     <Compile Include="GenericEventArgs.cs" />
     <Compile Include="Engine\Memory\CryMarshal.cs" />
     <Compile Include="Mathematics\BatchOps.cs" />
