@@ -759,6 +759,7 @@
     <Compile Include="Utilities\StridedPointer.cs" />
     <Compile Include="Utilities\StringPool.cs" />
     <Compile Include="Utilities\Utf32Char.cs" />
+    <Compile Include="Utilities\Cast.cs" />
     <Compile Include="VariousConstants.cs" />
     <Compile Include="Engine\Physics\PhysicalWorld.Events.cs" />
   </ItemGroup>
