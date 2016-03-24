@@ -184,33 +184,27 @@ namespace CryCil.Engine.Input.ActionMapping
 
 					// Add inputs to the action.
 
-					// Get master input specification. All other input specifications will inherit from the
-					// master.
-					ActionInputSpecification masterSpec = actionAttribute.MasterSpec;
-					masterSpec.Complete();
-
 					// Register inputs that specified in the Action attribute.
 					if (actionAttribute.KeyboardMouseInput != InputId.Unknown)
 					{
-						action.AddInput(actionAttribute.KeyboardMouseInput, masterSpec);
+						action.AddInput(actionAttribute.KeyboardMouseInput, actionAttribute);
 					}
 					if (actionAttribute.XboxInput != InputId.Unknown)
 					{
-						action.AddInput(actionAttribute.XboxInput, masterSpec);
+						action.AddInput(actionAttribute.XboxInput, actionAttribute);
 					}
 					if (actionAttribute.OrbisInput != InputId.Unknown)
 					{
-						action.AddInput(actionAttribute.OrbisInput, masterSpec);
+						action.AddInput(actionAttribute.OrbisInput, actionAttribute);
 					}
 
 					// Register inputs that are specified in InputAction attributes.
 					var extraInputs = actionEvent.GetAttributes<InputActionAttribute>();
 					foreach (var inputActionAttribute in extraInputs)
 					{
-						var extraSpec = inputActionAttribute.ExtraSpec;
-						extraSpec.Complete();
-						extraSpec.InheritFrom(masterSpec);
-						action.AddInput(inputActionAttribute.Input, extraSpec);
+						inputActionAttribute.Complete();
+						inputActionAttribute.InheritFrom(actionAttribute);
+						action.AddInput(inputActionAttribute.Input, inputActionAttribute);
 					}
 				}
 			}

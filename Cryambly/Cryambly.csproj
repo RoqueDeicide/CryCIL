@@ -108,6 +108,12 @@
     <Compile Include="Engine\Effects\ParticleEffectChildren.cs" />
     <Compile Include="Engine\Environment\NamespaceDoc.cs" />
     <Compile Include="Engine\Files\NamespaceDoc.cs" />
+    <Compile Include="Engine\Input\ActionMapping\ActionInputSpecification.cs" />
+    <Compile Include="Engine\Input\ActionMapping\ActionMapInputSpecifier.cs" />
+    <Compile Include="Engine\Input\ActionMapping\AnalogComparisonOperation.cs" />
+    <Compile Include="Engine\Input\ActionMapping\IActionMapHandler.cs" />
+    <Compile Include="Engine\Input\ActionMapping\InputBlockMode.cs" />
+    <Compile Include="Engine\Input\ActionMapping\InputSpecDefaults.cs" />
     <Compile Include="Engine\Input\ActionMapping\NamespaceDoc.cs" />
     <Compile Include="Engine\Input\NamespaceDoc.cs" />
     <Compile Include="Engine\Localization\NamespaceDoc.cs" />
@@ -391,9 +397,8 @@
     <Compile Include="Engine\Physics\Geometry\MeshUpdate.cs" />
     <Compile Include="Engine\Physics\Geometry\PhysicsMeshFlags.cs" />
     <Compile Include="Engine\Physics\IForeignDataProvider.cs" />
-    <Compile Include="Engine\Input\ActionMapping\Action.cs" />
+    <Compile Include="Engine\Input\ActionMapping\ActionAttributes.cs" />
     <Compile Include="Engine\Input\ActionMapping\ActionActivationMode.cs" />
-    <Compile Include="Engine\Input\ActionMapping\ActionInputSpecification.cs" />
     <Compile Include="Engine\Input\ActionMapping\ActionMap.cs" />
     <Compile Include="Engine\Input\ActionMapping\ActionMaps.cs" />
     <Compile Include="Engine\Input\ActionMapping\CryInputAction.cs" />

@@ -66,84 +66,28 @@ namespace CryCil.Engine.Input.ActionMapping
 		/// </summary>
 		public AnalogComparisonOperation ComparisonOperation;
 		/// <summary>
-		/// Finalizes this instance and makes it usable.
+		/// Creates an object that contains input specification from an attribute.
 		/// </summary>
-		public void Complete()
+		/// <param name="specifier">An attribute to extract input specification information from.</param>
+		public static implicit operator ActionInputSpecification(ActionMapInputSpecifier specifier)
 		{
-			if (this.ComparisonOperation != AnalogComparisonOperation.None)
+			return new ActionInputSpecification
 			{
-				this.ActivationMode |= ActionActivationMode.AnalogCompare;
-			}
-
-			if (!this.BlockedInputs.IsNullOrEmpty())
-			{
-				this.BlockMode = InputBlockMode.Block;
-			}
-		}
-		/// <summary>
-		/// Combines this specification with another.
-		/// </summary>
-		/// <param name="other">Another specification.</param>
-		public void InheritFrom(ActionInputSpecification other)
-		{
-			bool hasAnalogCompare = (this.ActivationMode & ActionActivationMode.AnalogCompare) != 0;
-
-			this.ActivationMode |= other.ActivationMode;
-			if (!hasAnalogCompare && (this.ActivationMode & ActionActivationMode.AnalogCompare) != 0)
-			{
-				this.ComparisonOperation = other.ComparisonOperation;
-				this.AnalogCompareValue = other.AnalogCompareValue;
-			}
-
-			if (this.BlockMode != InputBlockMode.Clear)
-			{
-				// If one of these has block duration greater then zero, then block inputs.
-				this.BlockMode =
-					this.BlockDuration + other.BlockDuration < 2 * MathHelpers.ZeroTolerance // Mathematics...
-						? InputBlockMode.None
-						: InputBlockMode.Block;
-				// If both are blocking inputs, then combine lists of inputs to block.
-				if (this.BlockMode == InputBlockMode.Block && other.BlockMode == InputBlockMode.Block)
-				{
-					this.BlockedInputs =
-						(this.BlockedInputs ?? new InputId[] {}).Concat(other.BlockedInputs ?? new InputId[] {}).ToArray();
-				}
-				// If we still don't have anything to block then don't block anything.
-				if (this.BlockedInputs.IsNullOrEmpty())
-				{
-					this.BlockMode = InputBlockMode.None;
-					this.BlockDuration = 0;
-				}
-			}
-			// Inherit everything else that is not specified.
-			if (this.PressTriggerDelay == InputSpecDefaults.DefaultPressTriggerDelay)
-			{
-				this.PressTriggerDelay = other.PressTriggerDelay;
-			}
-			if (this.OverridePressTriggerDelayWithRepeat == InputSpecDefaults.DefaultOverridePressDelay)
-			{
-				this.OverridePressTriggerDelayWithRepeat = other.OverridePressTriggerDelayWithRepeat;
-			}
-			if (this.PressDelayPriority == InputSpecDefaults.DefaultPressDelayPriority)
-			{
-				this.PressDelayPriority = other.PressDelayPriority;
-			}
-			if (this.ReleaseTriggerThreshold == InputSpecDefaults.DefaultReleaseThreshold)
-			{
-				this.ReleaseTriggerThreshold = other.ReleaseTriggerThreshold;
-			}
-			if (this.HoldTriggerDelay == InputSpecDefaults.DefaultHoldTriggerDelay)
-			{
-				this.HoldTriggerDelay = other.HoldTriggerDelay;
-			}
-			if (this.HoldTriggerRepeatDelay == InputSpecDefaults.DefaultHoldRepeatDelay)
-			{
-				this.HoldTriggerRepeatDelay = other.HoldTriggerRepeatDelay;
-			}
-			if (this.HoldTriggerRepeatDelayOverride == InputSpecDefaults.DefaultOverrideHoldRepeat)
-			{
-				this.HoldTriggerRepeatDelayOverride = other.HoldTriggerRepeatDelayOverride;
-			}
+				ActivationMode = specifier.ActivationMode,
+				AnalogCompareValue = specifier.AnalogCompareValue,
+				BlockDuration = specifier.BlockDuration,
+				BlockedDevice = specifier.BlockedDevice,
+				BlockedInputs = specifier.BlockedInputs,
+				BlockMode = specifier.BlockMode,
+				ComparisonOperation = specifier.ComparisonOperation,
+				HoldTriggerDelay = specifier.HoldTriggerDelay,
+				HoldTriggerRepeatDelay = specifier.HoldTriggerRepeatDelay,
+				HoldTriggerRepeatDelayOverride = specifier.HoldTriggerRepeatDelayOverride,
+				OverridePressTriggerDelayWithRepeat = specifier.OverridePressTriggerDelayWithRepeat,
+				PressDelayPriority = specifier.PressDelayPriority,
+				PressTriggerDelay = specifier.PressTriggerDelay,
+				ReleaseTriggerThreshold = specifier.ReleaseTriggerThreshold
+			};
 		}
 	}
 }
