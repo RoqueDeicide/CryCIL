@@ -116,7 +116,3 @@ namespace CSharpSamples.ActionMaps.GameZero
 		public static event InputActionHandler ControllerRotatePitch;
 	}
 }
-
-// Never hurts to restore the disabled warning.
-
-#pragma warning restore 67

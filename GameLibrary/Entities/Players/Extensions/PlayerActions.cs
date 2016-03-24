@@ -1,4 +1,5 @@
-﻿using CryCil.Engine.Input;
+﻿using System.Diagnostics.CodeAnalysis;
+using CryCil.Engine.Input;
 using CryCil.Engine.Input.ActionMapping;
 
 #pragma warning disable 67
@@ -94,5 +95,3 @@ namespace GameLibrary.Entities.Players.Extensions
 		public static event InputActionHandler ControllerRotatePitch;
 	}
 }
-
-#pragma warning restore 67

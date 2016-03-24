@@ -1289,7 +1289,3 @@ namespace CSharpSamples.ActionMaps.GameSDK
 		public static event InputActionHandler MouseWheelInfictionClose;
 	}
 }
-
-// Never hurts to restore the disabled warning.
-
-#pragma warning restore 67
