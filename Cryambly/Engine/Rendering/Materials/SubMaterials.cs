@@ -11,7 +11,6 @@ namespace CryCil.Engine.Rendering
 	/// <summary>
 	/// Provides access to sub-materials held by the material object.
 	/// </summary>
-	[SuppressMessage("ReSharper", "ExceptionNotThrown")]
 	public struct SubMaterials : IList<Material>
 	{
 		#region Fields
@@ -85,9 +84,8 @@ namespace CryCil.Engine.Rendering
 			}
 			catch (ArgumentNullException ex)
 			{
-				throw new ArgumentNullException(
-					"Cannot add null material to a sub-material slot, try using default material instead.",
-					ex);
+				throw new ArgumentNullException("Cannot add null material to a sub-material slot, try using " +
+												"default material instead.", ex);
 			}
 		}
 		/// <summary>

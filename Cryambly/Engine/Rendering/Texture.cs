@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
@@ -10,7 +9,6 @@ namespace CryCil.Engine.Rendering
 	/// Represents a texture.
 	/// </summary>
 	[StructLayout(LayoutKind.Sequential)]
-	[SuppressMessage("ReSharper", "ExceptionNotThrown")]
 	public class Texture : IDisposable
 	{
 		#region Fields
@@ -83,8 +81,6 @@ namespace CryCil.Engine.Rendering
 		/// </summary>
 		public bool Valid => this.handle != IntPtr.Zero;
 		#endregion
-		#region Events
-		#endregion
 		#region Construction
 		/// <summary>
 		/// Creates a wrapper for a texture using specified name.
@@ -95,16 +91,12 @@ namespace CryCil.Engine.Rendering
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public extern Texture([UsedImplicitly] [CanBeNull] string name, [UsedImplicitly] TextureFlags flags);
 		#endregion
-		#region Static Interface
-		#endregion
 		#region Interface
 		/// <summary>
 		/// Informs underlying object about release of this wrapper.
 		/// </summary>
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public extern void Dispose();
-		#endregion
-		#region Utilities
 		#endregion
 	}
 }

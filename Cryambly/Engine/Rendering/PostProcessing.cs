@@ -73,17 +73,11 @@ namespace CryCil.Engine.Rendering
 			}
 		}
 		#endregion
-		#region Events
-		#endregion
 		#region Construction
 		static PostEffectsParameters()
 		{
 			current = new PostEffectParameter();
 		}
-		#endregion
-		#region Interface
-		#endregion
-		#region Utilities
 		#endregion
 	}
 	/// <summary>
@@ -136,8 +130,6 @@ namespace CryCil.Engine.Rendering
 			}
 			set { PostProcessing.SetPostEffectParamString(this.ParameterName, value); }
 		}
-		#endregion
-		#region Events
 		#endregion
 		#region Construction
 		// Stop outsiders from trying to create objects of this type.

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using CryCil.Annotations;
@@ -72,45 +71,30 @@ namespace CryCil.Engine.Rendering
 		/// <param name="position">Position of the text.</param>
 		/// <param name="options"> Options that specify how text is rendered.</param>
 		/// <param name="color">   Color of the text.</param>
-		/// <param name="text">    A composite format string that defines structure of the text.</param>
-		/// <param name="args">    Arguments to be inserted into above format string.</param>
-		[StringFormatMethod("text")]
-		public static void DrawText(Vector3 position, TextRenderOptions options, ColorSingle color,
-									string text, params object[] args)
+		/// <param name="text">    An object that represents the text to draw.</param>
+		public static void DrawText(Vector3 position, TextRenderOptions options, ColorSingle color, string text)
 		{
-			DrawTextInternal(position, options, color, new Vector2(1, 1), string.Format(text, args));
+			DrawTextInternal(position, options, color, new Vector2(1, 1), text);
 		}
 		/// <summary>
 		/// Renders text using default color and scale.
 		/// </summary>
 		/// <param name="position">Position of the text.</param>
 		/// <param name="options"> Options that specify how text is rendered.</param>
-		/// <param name="text">    A composite format string that defines structure of the text.</param>
-		/// <param name="args">    Arguments to be inserted into above format string.</param>
-		[StringFormatMethod("text")]
-		public static void DrawText(Vector3 position, TextRenderOptions options, string text,
-									params object[] args)
+		/// <param name="text">    An object that represents the text to draw.</param>
+		public static void DrawText(Vector3 position, TextRenderOptions options, string text)
 		{
-			DrawTextInternal(position,
-							 options,
-							 new ColorSingle(1, 1, 1),
-							 new Vector2(1, 1),
-							 string.Format(text, args));
+			DrawTextInternal(position, options, new ColorSingle(1, 1, 1), new Vector2(1, 1), text);
 		}
 		/// <summary>
 		/// Renders text using default color, scale and options.
 		/// </summary>
 		/// <param name="position">Position of the text.</param>
-		/// <param name="text">    A composite format string that defines structure of the text.</param>
-		/// <param name="args">    Arguments to be inserted into above format string.</param>
-		[StringFormatMethod("text")]
-		public static void DrawText(Vector3 position, string text, params object[] args)
+		/// <param name="text">    An object that represents the text to draw.</param>
+		public static void DrawText(Vector3 position, string text)
 		{
-			DrawTextInternal(position,
-							 TextRenderOptions.Nothing,
-							 new ColorSingle(1, 1, 1),
-							 new Vector2(1, 1),
-							 string.Format(text, args));
+			DrawTextInternal(position, TextRenderOptions.Nothing, new ColorSingle(1, 1, 1), new Vector2(1, 1),
+							 text);
 		}
 		/// <summary>
 		/// Renders text.
@@ -119,13 +103,11 @@ namespace CryCil.Engine.Rendering
 		/// <param name="options"> Options that specify how text is rendered.</param>
 		/// <param name="color">   Color of the text.</param>
 		/// <param name="scale">   Scale of the text in local X and Y directions.</param>
-		/// <param name="text">    A composite format string that defines structure of the text.</param>
-		/// <param name="args">    Arguments to be inserted into above format string.</param>
-		[StringFormatMethod("text")]
+		/// <param name="text">    An object that represents the text to draw.</param>
 		public static void DrawText(Vector3 position, TextRenderOptions options, ColorSingle color,
-									Vector2 scale, string text, params object[] args)
+									Vector2 scale, string text)
 		{
-			DrawTextInternal(position, options, color, scale, string.Format(text, args));
+			DrawTextInternal(position, options, color, scale, text);
 		}
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void DrawTextInternal(Vector3 position, TextRenderOptions options,
@@ -165,7 +147,8 @@ namespace CryCil.Engine.Rendering
 		public static void Draw2DImage(Vector2 position, Vector2 size, int textureId, float angle = 0,
 									   float z = 1)
 		{
-			Draw2DImageInternal(position, size, textureId, new Vector2(), new Vector2(1), new ColorSingle(1), angle, z);
+			Draw2DImageInternal(position, size, textureId, new Vector2(), new Vector2(1), new ColorSingle(1),
+								angle, z);
 		}
 		/// <summary>
 		/// Draws a region of the 2D image on the screen.
@@ -481,7 +464,6 @@ namespace CryCil.Engine.Rendering
 		/// </exception>
 		/// <exception cref="ArgumentOutOfRangeException">Unknown primitive type specified.</exception>
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		[SuppressMessage("ReSharper", "ExceptionNotThrown")]
 		public static extern void DrawDynamicVertexBuffer(VertexPosition3FColor4BTex2F* vertexes,
 														  int vertexCount, ushort* indexes, int indexCount,
 														  PublicRenderPrimitiveType primType);
@@ -564,6 +546,7 @@ namespace CryCil.Engine.Rendering
 		/// </summary>
 		/// <param name="position">Coordinates of the point on the screen.</param>
 		/// <returns>Coordinates of the point in 3D world space.</returns>
+		[Pure]
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern Vector3 ScreenToWorld(Vector3 position);
 		/// <summary>
@@ -571,6 +554,7 @@ namespace CryCil.Engine.Rendering
 		/// </summary>
 		/// <param name="position">Coordinates of the point in the world.</param>
 		/// <returns>Coordinates of the point on the screen.</returns>
+		[Pure]
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern Vector3 WorldToScreen(Vector3 position);
 		#endregion

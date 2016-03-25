@@ -258,6 +258,31 @@ namespace CryCil
 		{
 			return (T)(object)info?.CreateDelegate(typeof(T));
 		}
+		/// <summary>
+		/// Determines whether a list of parameters of the method matches specified types.
+		/// </summary>
+		/// <param name="info">An object that represents the method.</param>
+		/// <param name="parameterTypes">An array of types of parameters the method's list must match.</param>
+		/// <returns>True, if method's parameter count matches the length of <paramref name="parameterTypes"/> array, and all respecitive types are equal to each other.</returns>
+		[Pure]
+		[ContractAnnotation("info:null => false")]
+		public static bool MatchesParameters(this MethodInfo info, params Type[] parameterTypes)
+		{
+			var parameters = info?.GetParameters();
+			if (parameters?.Length != parameterTypes.Length)
+			{
+				return false;
+			}
+
+			for (int i = 0; i < parameters.Length; i++)
+			{
+				if (parameters[i].ParameterType != parameterTypes[i])
+				{
+					return false;
+				}
+			}
+			return true;
+		}
 		#endregion
 		#region Constructors
 		/// <summary>

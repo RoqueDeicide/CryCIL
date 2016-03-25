@@ -14,7 +14,6 @@ namespace CryCil.Engine.Rendering
 	/// Represents a material that can be assigned to entities.
 	/// </summary>
 	[StructLayout(LayoutKind.Sequential)]
-	[SuppressMessage("ReSharper", "ExceptionNotThrown")]
 	public struct Material
 	{
 		#region Fields
@@ -236,8 +235,6 @@ namespace CryCil.Engine.Rendering
 		/// <exception cref="NullReferenceException">Instance object is not valid.</exception>
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public extern unsafe int* FillSurfaceTypesTable(out int filledItems);
-		#endregion
-		#region Utilities
 		#endregion
 	}
 }

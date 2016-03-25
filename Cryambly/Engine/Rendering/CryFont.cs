@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
@@ -10,7 +9,6 @@ namespace CryCil.Engine.Rendering
 	/// Provides access to CryEngine font API.
 	/// </summary>
 	[StructLayout(LayoutKind.Sequential)]
-	[SuppressMessage("ReSharper", "ExceptionNotThrown")]
 	public class CryFont : IDisposable
 	{
 		#region Fields
@@ -36,8 +34,6 @@ namespace CryCil.Engine.Rendering
 		/// Gets the name of this font object.
 		/// </summary>
 		public string Name => this.name;
-		#endregion
-		#region Events
 		#endregion
 		#region Construction
 		/// <summary>

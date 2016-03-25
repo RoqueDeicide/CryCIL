@@ -87,8 +87,6 @@ namespace CryCil.Engine.Rendering
 		/// </summary>
 		public bool IsValid => this.handle != IntPtr.Zero;
 		#endregion
-		#region Events
-		#endregion
 		#region Construction
 		/// <summary>
 		/// Creates a new layer for the material. Use at your own risk.

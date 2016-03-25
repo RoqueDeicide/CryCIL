@@ -10,7 +10,6 @@ namespace CryCil.Engine.Rendering
 	/// Represents an object that provides access to one of the rendering shaders.
 	/// </summary>
 	[StructLayout(LayoutKind.Sequential)]
-	[SuppressMessage("ReSharper", "ExceptionNotThrown")]
 	public struct Shader
 	{
 		#region Fields
@@ -28,14 +27,6 @@ namespace CryCil.Engine.Rendering
 		/// Indicates whether this object is usable.
 		/// </summary>
 		public bool IsValid => this.handle != IntPtr.Zero;
-		#endregion
-		#region Events
-		#endregion
-		#region Construction
-		#endregion
-		#region Interface
-		#endregion
-		#region Utilities
 		#endregion
 	}
 }

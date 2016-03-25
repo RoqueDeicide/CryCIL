@@ -9,12 +9,6 @@ namespace CryCil.Engine.UserInterface
 	/// </summary>
 	public class UiTexture : Texture
 	{
-		#region Fields
-		#endregion
-		#region Properties
-		#endregion
-		#region Events
-		#endregion
 		#region Construction
 		/// <summary>
 		/// Creates new wrapper for a texture.
@@ -39,10 +33,6 @@ namespace CryCil.Engine.UserInterface
 				throw new ArgumentException("Unable to load the texture properly.", nullReferenceException);
 			}
 		}
-		#endregion
-		#region Interface
-		#endregion
-		#region Utilities
 		#endregion
 	}
 }
