@@ -486,26 +486,75 @@ namespace CryCil.Engine.Rendering
 														  int vertexCount, ushort* indexes, int indexCount,
 														  PublicRenderPrimitiveType primType);
 		#endregion
-		#region Unsorted
+		#region ViewPort Scaling
 		/// <summary>
-		/// Unknown.
+		/// Rescales an X-coordinate from 800 / 600 scale to current viewport dimension scale.
 		/// </summary>
-		/// <param name="x">Unknown.</param>
-		/// <returns>Unknown.</returns>
+		/// <remarks>
+		/// In this method argument <paramref name="x"/> is put into the following formula: <c>result = x *
+		/// currentViewPortWidth / 800.0f;</c> This means that passing 0 will result in 0; passing 800 will
+		/// result in the number that is equal to width of current active viewport.
+		/// </remarks>
+		/// <example>
+		/// <code>
+		/// // Let's assume that we are playing in full-screen mode with screen resolution of 1600 / 900.
+		/// float x = Renderer.ScaleX(600);		// x will be equal to 1200 after this line is executed.
+		/// </code>
+		/// </example>
+		/// <param name="x">A number between 0 and 800 (preferable, but not necessary).</param>
+		/// <returns>A number rescaled to current viewport dimensions.</returns>
+		[Pure]
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern float ScaleX(float x);
 		/// <summary>
-		/// Unknown.
+		/// Rescales an Y-coordinate from 800 / 600 scale to current viewport dimension scale.
 		/// </summary>
-		/// <param name="y">Unknown.</param>
-		/// <returns>Unknown.</returns>
+		/// <remarks>
+		/// In this method argument <paramref name="y"/> is put into the following formula: <c>result = y *
+		/// currentViewPortHeight / 600.0f;</c> This means that passing 0 will result in 0; passing 600 will
+		/// result in the number that is equal to height of current active viewport.
+		/// </remarks>
+		/// <example>
+		/// <code>
+		/// // Let's assume that we are playing in full-screen mode with screen resolution of 1600 / 900.
+		/// float y = Renderer.ScaleY(300);		// y will be equal to 450 after this line is executed.
+		/// </code>
+		/// </example>
+		/// <param name="y">A number between 0 and 600 (preferable, but not necessary).</param>
+		/// <returns>A number rescaled to current viewport dimensions.</returns>
+		[Pure]
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern float ScaleY(float y);
 		/// <summary>
-		/// Unknown.
+		/// Rescales a vector from 800 / 600 scale to current viewport scale.
 		/// </summary>
-		/// <param name="x">Unknown.</param>
-		/// <param name="y">Unknown.</param>
+		/// <remarks>
+		/// In this method arguments <paramref name="x"/><paramref name="y"/> is put into the following
+		/// formula:
+		/// <code>
+		/// x *= currentViewPortWidth / 800.0f;
+		/// y *= currentViewPortHeight / 600.0f;
+		/// </code>
+		/// This means that passing (0; 0) will result in (0; 0); passing (800; 600) will result in the
+		/// vector that defines dimensions of current active viewport.
+		/// </remarks>
+		/// <example>
+		/// <code>
+		/// // Let's assume that we are playing in full-screen mode with screen resolution of 1600 / 900.
+		/// float x = 600;
+		/// float y = 300;
+		/// Renderer.ScaleXY(300);		// x will be equal to 1200 after this operator is executed.
+		/// 							// y will be equal to 450  after this operator is executed.
+		/// </code>
+		/// </example>
+		/// <param name="x">
+		/// A reference to the number in scale from 0 to 800 that will rescaled into current viewport
+		/// dimensions.
+		/// </param>
+		/// <param name="y">
+		/// A reference to the number in scale from 0 to 600 that will rescaled into current viewport
+		/// dimensions.
+		/// </param>
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		public static extern void ScaleXY(ref float x, ref float y);
 		#endregion
