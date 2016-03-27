@@ -73,7 +73,6 @@
   <ItemGroup>
     <Compile Include="DeviceMappings.cs" />
     <Compile Include="Entities\GeometricEntity.cs" />
-    <Compile Include="Entities\Players\Extensions\PlayerActions.cs" />
     <Compile Include="Entities\Players\Extensions\PlayerInput.cs" />
     <Compile Include="Entities\Players\Extensions\PlayerMovement.cs" />
     <Compile Include="Entities\Players\Extensions\PlayerView.cs" />

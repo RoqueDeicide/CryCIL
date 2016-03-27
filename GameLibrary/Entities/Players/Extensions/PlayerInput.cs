@@ -5,12 +5,15 @@ using CryCil.Engine.Data;
 using CryCil.Engine.Input.ActionMapping;
 using CryCil.Engine.Logic;
 using CryCil.Geometry;
+using static CryCil.Engine.Input.ActionMapping.ActionActivationMode;
+using static CryCil.Engine.Input.InputId;
 
 namespace GameLibrary.Entities.Players.Extensions
 {
 	/// <summary>
 	/// Represents an extension of the <see cref="Player"/> entity that handles input.
 	/// </summary>
+	[ActionMap("player")]
 	public class PlayerInput : SimpleEntityExtension
 	{
 		#region Static Fields
@@ -59,21 +62,7 @@ namespace GameLibrary.Entities.Players.Extensions
 		/// </summary>
 		public override void PostInitialize()
 		{
-			PlayerActions.MoveLeft += this.PlayerActionsOnMoveLeft;
-			PlayerActions.MoveRight += this.PlayerActionsOnMoveRight;
-			PlayerActions.MoveForward += this.PlayerActionsOnMoveForward;
-			PlayerActions.MoveBackward += this.PlayerActionsOnMoveBackward;
-			PlayerActions.MoveUp += this.PlayerActionsOnMoveUp;
-			PlayerActions.MoveDown += this.PlayerActionsOnMoveDown;
-			PlayerActions.Boost += this.PlayerActionsOnBoost;
-			PlayerActions.MouseRotateYaw += this.PlayerActionsOnMouseRotateYaw;
-			PlayerActions.MouseRotatePitch += this.PlayerActionsOnMouseRotatePitch;
-			PlayerActions.ControllerMoveY += this.PlayerActionsOnControllerMoveY;
-			PlayerActions.ControllerMoveX += this.PlayerActionsOnControllerMoveX;
-			PlayerActions.ControllerRotateYaw += this.PlayerActionsOnControllerRotateYaw;
-			PlayerActions.ControllerRotatePitch += this.PlayerActionsOnControllerRotatePitch;
-
-			ActionMaps.Enable("player");
+			this.ListeningToActions = true;
 
 			CryConsole.RegisterVariable(MouseSensCvarName, ref mouseSensitivity, 0.002f, ConsoleFlags.Null,
 										"Sensitivity of the mouse.");
@@ -93,21 +82,7 @@ namespace GameLibrary.Entities.Players.Extensions
 		/// </param>
 		public override void Release(bool disposing)
 		{
-			PlayerActions.MoveLeft -= this.PlayerActionsOnMoveLeft;
-			PlayerActions.MoveRight -= this.PlayerActionsOnMoveRight;
-			PlayerActions.MoveForward -= this.PlayerActionsOnMoveForward;
-			PlayerActions.MoveBackward -= this.PlayerActionsOnMoveBackward;
-			PlayerActions.MoveUp -= this.PlayerActionsOnMoveUp;
-			PlayerActions.MoveDown -= this.PlayerActionsOnMoveDown;
-			PlayerActions.Boost -= this.PlayerActionsOnBoost;
-			PlayerActions.MouseRotateYaw -= this.PlayerActionsOnMouseRotateYaw;
-			PlayerActions.MouseRotatePitch -= this.PlayerActionsOnMouseRotatePitch;
-			PlayerActions.ControllerMoveY -= this.PlayerActionsOnControllerMoveY;
-			PlayerActions.ControllerMoveX -= this.PlayerActionsOnControllerMoveX;
-			PlayerActions.ControllerRotateYaw -= this.PlayerActionsOnControllerRotateYaw;
-			PlayerActions.ControllerRotatePitch -= this.PlayerActionsOnControllerRotatePitch;
-
-			ActionMaps.Disable("player");
+			this.ListeningToActions = false;
 
 			CryConsole.UnregisterVariable(MouseSensCvarName);
 			CryConsole.UnregisterVariable(ControllerSensCvarName);
@@ -136,120 +111,159 @@ namespace GameLibrary.Entities.Players.Extensions
 		}
 		#endregion
 		#region Utilities
-		private void PlayerActionsOnControllerRotatePitch(string actionName, ActionActivationMode mode, float value)
+		#region Keyboard and Controller Button Actions
+		// An action that moves the player to the left.
+		[Action("move_left", OnPress | OnRelease | Retriggerable,
+			KeyboardMouseInput = A)]
+		private void MoveLeft(ActionActivationMode mode, float value)
 		{
-			this.rotationDelta.Pitch = (value * controllerSensitivity);
-			this.useControllerRotation = true;
+			switch (mode)
+			{
+				case OnPress:
+					this.AddX(-value);
+					break;
+				case OnRelease:
+					this.AddX(value);
+					break;
+			}
 		}
-		private void PlayerActionsOnControllerRotateYaw(string actionName, ActionActivationMode mode, float value)
+		// An action that moves the player to the right.
+		[Action("move_right", OnPress | OnRelease | Retriggerable,
+			KeyboardMouseInput = D)]
+		private void MoveRight(ActionActivationMode mode, float value)
+		{
+			switch (mode)
+			{
+				case OnPress:
+					this.AddX(value);
+					break;
+				case OnRelease:
+					this.AddX(-value);
+					break;
+			}
+		}
+		// An action that moves the player forwards.
+		[Action("move_forward", OnPress | OnRelease | Retriggerable,
+			KeyboardMouseInput = W)]
+		private void MoveForward(ActionActivationMode mode, float value)
+		{
+			switch (mode)
+			{
+				case OnPress:
+					this.AddY(value);
+					break;
+				case OnRelease:
+					this.AddY(-value);
+					break;
+			}
+		}
+		// An action that moves the player backwards.
+		[Action("move_backward", OnPress | OnRelease | Retriggerable,
+			KeyboardMouseInput = S)]
+		private void MoveBackward(ActionActivationMode mode, float value)
+		{
+			switch (mode)
+			{
+				case OnPress:
+					this.AddY(-value);
+					break;
+				case OnRelease:
+					this.AddY(value);
+					break;
+			}
+		}
+		// An action that moves the player up.
+		[Action("move_up", OnPress | OnRelease,
+			KeyboardMouseInput = Space, XboxInput = XboxA, OrbisInput = OrbisCross)]
+		private void MoveUp(ActionActivationMode mode, float value)
+		{
+			switch (mode)
+			{
+				case OnPress:
+					this.AddZ(value);
+					break;
+				case OnRelease:
+					this.AddZ(-value);
+					break;
+			}
+		}
+		// An action that moves the player down.
+		[Action("move_down", OnPress | OnRelease,
+			KeyboardMouseInput = LeftCtrl, XboxInput = XboxX, OrbisInput = OrbisSquare)]
+		private void MoveDown(ActionActivationMode mode, float value)
+		{
+			switch (mode)
+			{
+				case OnPress:
+					this.AddZ(-value);
+					break;
+				case OnRelease:
+					this.AddZ(value);
+					break;
+			}
+		}
+		// An action that boosts player's speed.
+		[Action("boost", OnPress | OnRelease | Retriggerable,
+			KeyboardMouseInput = LeftShift, XboxInput = XboxThumbLeft, OrbisInput = OrbisL3)]
+		private void Boost(ActionActivationMode mode, float value)
+		{
+			this.boost = mode == OnPress;
+		}
+		#endregion
+		#region Mouse Actions
+		// An action that change Yaw orientation of player's camera.
+		[Action("mouse_rotate_yaw", KeyboardMouseInput = MouseX)]
+		private void MouseRotateYaw(ActionActivationMode mode, float value)
+		{
+			if (this.useControllerRotation)
+			{
+				this.useControllerRotation = false;
+			}
+
+			float rotation = this.rotationAngles.Pitch - (value * mouseSensitivity);
+			this.rotationAngles.Pitch += Radian.Clamp(rotation, -(float)Math.PI / 2.0f, (float)Math.PI / 2.0f);
+		}
+		// An action that change Pitch orientation of player's camera.
+		[Action("mouse_rotate_pitch", KeyboardMouseInput = MouseY)]
+		private void MouseRotatePitch(ActionActivationMode mode, float value)
+		{
+			if (this.useControllerRotation)
+			{
+				this.useControllerRotation = false;
+			}
+
+			float rotation = this.rotationAngles.Pitch - (value * mouseSensitivity);
+			this.rotationAngles.Pitch += Radian.Clamp(rotation, -(float)Math.PI / 2.0f, (float)Math.PI / 2.0f);
+		}
+		#endregion
+		#region Controller Stick Actions
+		// An action that moves the player forwards and backwards when using the controller.
+		[Action("controller_move_y", XboxInput = XboxThumbLeftY, OrbisInput = OrbisStickLeftY)]
+		private void ControllerMoveY(ActionActivationMode mode, float value)
+		{
+			this.deltaMovement.Y = value;
+		}
+		// An action that moves the player left and right when using the controller.
+		[Action("controller_move_x", XboxInput = XboxThumbLeftX, OrbisInput = OrbisStickLeftX)]
+		private void ControllerMoveX(ActionActivationMode mode, float value)
+		{
+			this.deltaMovement.X = value;
+		}
+		// An action that changes Yaw orientation of player's camera when using the controller.
+		[Action("controller_rotate_yaw", XboxInput = XboxThumbRightX, OrbisInput = OrbisStickRightX)]
+		private void ControllerRotateYaw(ActionActivationMode mode, float value)
 		{
 			this.rotationDelta.Yaw = (-value * controllerSensitivity);
 			this.useControllerRotation = true;
 		}
-		private void PlayerActionsOnControllerMoveX(string actionName, ActionActivationMode mode, float value)
+		// An action that changes Pitch orientation of player's camera when using the controller.
+		[Action("controller_rotate_pitch", XboxInput = XboxThumbRightY, OrbisInput = OrbisStickRightY)]
+		private void ControllerRotatePitch(ActionActivationMode mode, float value)
 		{
-			this.deltaMovement.X = value;
+			this.rotationDelta.Pitch = (value * controllerSensitivity);
+			this.useControllerRotation = true;
 		}
-		private void PlayerActionsOnControllerMoveY(string actionName, ActionActivationMode mode, float value)
-		{
-			this.deltaMovement.Y = value;
-		}
-		private void PlayerActionsOnMouseRotatePitch(string actionName, ActionActivationMode mode, float value)
-		{
-			if (this.useControllerRotation)
-			{
-				this.useControllerRotation = false;
-			}
-
-			float rotation = this.rotationAngles.Pitch - (value * mouseSensitivity);
-			this.rotationAngles.Pitch += Radian.Clamp(rotation, -(float)Math.PI / 2.0f, (float)Math.PI / 2.0f);
-		}
-		private void PlayerActionsOnMouseRotateYaw(string actionName, ActionActivationMode mode, float value)
-		{
-			if (this.useControllerRotation)
-			{
-				this.useControllerRotation = false;
-			}
-
-			float rotation = this.rotationAngles.Pitch - (value * mouseSensitivity);
-			this.rotationAngles.Pitch += Radian.Clamp(rotation, -(float)Math.PI / 2.0f, (float)Math.PI / 2.0f);
-		}
-		private void PlayerActionsOnBoost(string actionName, ActionActivationMode mode, float value)
-		{
-			this.boost = mode == ActionActivationMode.OnPress;
-		}
-		private void PlayerActionsOnMoveDown(string actionName, ActionActivationMode mode, float value)
-		{
-			switch (mode)
-			{
-				case ActionActivationMode.OnPress:
-					this.AddZ(-value);
-					break;
-				case ActionActivationMode.OnRelease:
-					this.AddZ(value);
-					break;
-			}
-		}
-		private void PlayerActionsOnMoveUp(string actionName, ActionActivationMode mode, float value)
-		{
-			switch (mode)
-			{
-				case ActionActivationMode.OnPress:
-					this.AddZ(value);
-					break;
-				case ActionActivationMode.OnRelease:
-					this.AddZ(-value);
-					break;
-			}
-		}
-		private void PlayerActionsOnMoveBackward(string actionName, ActionActivationMode mode, float value)
-		{
-			switch (mode)
-			{
-				case ActionActivationMode.OnPress:
-					this.AddY(-value);
-					break;
-				case ActionActivationMode.OnRelease:
-					this.AddY(value);
-					break;
-			}
-		}
-		private void PlayerActionsOnMoveForward(string actionName, ActionActivationMode mode, float value)
-		{
-			switch (mode)
-			{
-				case ActionActivationMode.OnPress:
-					this.AddY(value);
-					break;
-				case ActionActivationMode.OnRelease:
-					this.AddY(-value);
-					break;
-			}
-		}
-		private void PlayerActionsOnMoveRight(string actionName, ActionActivationMode mode, float value)
-		{
-			switch (mode)
-			{
-				case ActionActivationMode.OnPress:
-					this.AddX(value);
-					break;
-				case ActionActivationMode.OnRelease:
-					this.AddX(-value);
-					break;
-			}
-		}
-		private void PlayerActionsOnMoveLeft(string actionName, ActionActivationMode mode, float value)
-		{
-			switch (mode)
-			{
-				case ActionActivationMode.OnPress:
-					this.AddX(-value);
-					break;
-				case ActionActivationMode.OnRelease:
-					this.AddX(value);
-					break;
-			}
-		}
+		#endregion
 		
 		private void SystemEventsOnEditorGameModeChanged(bool isTrue)
 		{
