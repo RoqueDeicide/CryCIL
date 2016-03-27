@@ -86,7 +86,13 @@
 
 #include "Interops/Game.h"
 
-#include "Interops/ActionMapping.h"
+#include "Interops/ActionMapHandler.h"
+
+#include "Interops/ActionMaps.h"
+
+#include "Interops/CryActionMap.h"
+
+#include "Interops/CryInputAction.h"
 
 #include "Interops/LightSource.h"
 

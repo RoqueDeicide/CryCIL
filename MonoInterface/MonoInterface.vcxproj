@@ -276,7 +276,9 @@
     <ClInclude Include="Interfaces\IMonoThread.h" />
     <ClInclude Include="Interfaces\IMonoThreads.h" />
     <ClInclude Include="Interfaces\MonoGCHandle.h" />
-    <ClInclude Include="Interops\ActionMapping.h" />
+    <ClInclude Include="Interops\ActionInputSpecification.h" />
+    <ClInclude Include="Interops\ActionMapHandler.h" />
+    <ClInclude Include="Interops\ActionMaps.h" />
     <ClInclude Include="Interops\Aliases.h" />
     <ClInclude Include="Interops\AnimationSet.h" />
     <ClInclude Include="Interops\ArchiveStream.h" />
@@ -297,6 +299,7 @@
     <ClInclude Include="Interops\CMesh.h" />
     <ClInclude Include="Interops\Console.h" />
     <ClInclude Include="Interops\ConsoleVariable.h" />
+    <ClInclude Include="Interops\CryActionMap.h" />
     <ClInclude Include="Interops\CryArchive.h" />
     <ClInclude Include="Interops\CryAudioListener.h" />
     <ClInclude Include="Interops\CryAudioProxy.h" />
@@ -309,6 +312,7 @@
     <ClInclude Include="Interops\CryEntityRopeProxy.h" />
     <ClInclude Include="Interops\CryEntitySubstitutionProxy.h" />
     <ClInclude Include="Interops\CryEntityTriggerProxy.h" />
+    <ClInclude Include="Interops\CryInputAction.h" />
     <ClInclude Include="Interops\CryMarshal.h" />
     <ClInclude Include="Interops\CryFiles.h" />
     <ClInclude Include="Interops\CryNetChannel.h" />
@@ -471,7 +475,9 @@
     <ClCompile Include="Implementation\MonoStaticMethod.cpp" />
     <ClCompile Include="Implementation\MonoTexts.cpp" />
     <ClCompile Include="Implementation\MonoThreads.cpp" />
-    <ClCompile Include="Interops\ActionMapping.cpp" />
+    <ClCompile Include="Interops\ActionInputSpecification.cpp" />
+    <ClCompile Include="Interops\ActionMapHandler.cpp" />
+    <ClCompile Include="Interops\ActionMaps.cpp" />
     <ClCompile Include="Interops\Aliases.cpp" />
     <ClCompile Include="Interops\AnimationSet.cpp" />
     <ClCompile Include="Interops\ArchiveStream.cpp" />
@@ -491,6 +497,7 @@
     <ClCompile Include="Interops\CharacterSkin.cpp" />
     <ClCompile Include="Interops\CMesh.cpp" />
     <ClCompile Include="Interops\ConsoleVariable.cpp" />
+    <ClCompile Include="Interops\CryActionMap.cpp" />
     <ClCompile Include="Interops\CryArchive.cpp" />
     <ClCompile Include="Interops\CryAudioListener.cpp" />
     <ClCompile Include="Interops\CryAudioProxy.cpp" />
@@ -504,6 +511,7 @@
     <ClCompile Include="Interops\CryEntitySubstitutionProxy.cpp" />
     <ClCompile Include="Interops\CryEntityTriggerProxy.cpp" />
     <ClCompile Include="Interops\CryFont.cpp" />
+    <ClCompile Include="Interops\CryInputAction.cpp" />
     <ClCompile Include="Interops\CryMarshal.cpp" />
     <ClCompile Include="Interops\CryFiles.cpp" />
     <ClCompile Include="Interops\CryNetChannel.cpp" />

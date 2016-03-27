@@ -90,7 +90,7 @@ void MonoEntityExtension::PostInit(IGameObject*)
 
 #pragma region Entity Event Raisers
 template<const char *eventName>
-void MonoEntityExtension::raiseEntityEvent()
+void MonoEntityExtension::raiseEntityEvent() const
 {
 	static void(*raise)(mono::object) =
 		reinterpret_cast<void(*)(mono::object)>
@@ -102,7 +102,7 @@ void MonoEntityExtension::raiseEntityEvent()
 	}
 }
 template<const char *eventName, typename arg0Type>
-void MonoEntityExtension::raiseEntityEvent(arg0Type arg0)
+void MonoEntityExtension::raiseEntityEvent(arg0Type arg0) const
 {
 	static void(*raise)(mono::object, arg0Type) =
 		reinterpret_cast<void(*)(mono::object, arg0Type)>
@@ -114,7 +114,7 @@ void MonoEntityExtension::raiseEntityEvent(arg0Type arg0)
 	}
 }
 template<const char *eventName, typename arg0Type, typename arg1Type>
-void MonoEntityExtension::raiseEntityEvent(arg0Type arg0, arg1Type arg1)
+void MonoEntityExtension::raiseEntityEvent(arg0Type arg0, arg1Type arg1) const
 {
 	static void(*raise)(mono::object, arg0Type, arg1Type) =
 		reinterpret_cast<void(*)(mono::object, arg0Type, arg1Type)>
@@ -126,7 +126,7 @@ void MonoEntityExtension::raiseEntityEvent(arg0Type arg0, arg1Type arg1)
 	}
 }
 template<const char *eventName, typename arg0Type, typename arg1Type, typename arg2Type>
-void MonoEntityExtension::raiseEntityEvent(arg0Type arg0, arg1Type arg1, arg2Type arg2)
+void MonoEntityExtension::raiseEntityEvent(arg0Type arg0, arg1Type arg1, arg2Type arg2) const
 {
 	static void(*raise)(mono::object, arg0Type, arg1Type, arg2Type) =
 		reinterpret_cast<void(*)(mono::object, arg0Type, arg1Type, arg2Type)>
@@ -138,7 +138,7 @@ void MonoEntityExtension::raiseEntityEvent(arg0Type arg0, arg1Type arg1, arg2Typ
 	}
 }
 template<const char *eventName, typename arg0Type, typename arg1Type, typename arg2Type, typename arg3Type>
-void MonoEntityExtension::raiseEntityEvent(arg0Type arg0, arg1Type arg1, arg2Type arg2, arg3Type arg3)
+void MonoEntityExtension::raiseEntityEvent(arg0Type arg0, arg1Type arg1, arg2Type arg2, arg3Type arg3) const
 {
 	static void(*raise)(mono::object, arg0Type, arg1Type, arg2Type, arg3Type) =
 		reinterpret_cast<void(*)(mono::object, arg0Type, arg1Type, arg2Type, arg3Type)>
@@ -150,7 +150,7 @@ void MonoEntityExtension::raiseEntityEvent(arg0Type arg0, arg1Type arg1, arg2Typ
 	}
 }
 template<const char *eventName, typename arg0Type, typename arg1Type, typename arg2Type, typename arg3Type, typename arg4Type>
-void MonoEntityExtension::raiseEntityEvent(arg0Type arg0, arg1Type arg1, arg2Type arg2, arg3Type arg3, arg4Type arg4)
+void MonoEntityExtension::raiseEntityEvent(arg0Type arg0, arg1Type arg1, arg2Type arg2, arg3Type arg3, arg4Type arg4) const
 {
 	static void(*raise)(mono::object, arg0Type, arg1Type, arg2Type, arg3Type, arg4Type) =
 		reinterpret_cast<void(*)
@@ -163,7 +163,7 @@ void MonoEntityExtension::raiseEntityEvent(arg0Type arg0, arg1Type arg1, arg2Typ
 	}
 }
 template<const char *eventName, typename arg0Type, typename arg1Type, typename arg2Type, typename arg3Type, typename arg4Type, typename arg5Type>
-void MonoEntityExtension::raiseEntityEvent(arg0Type arg0, arg1Type arg1, arg2Type arg2, arg3Type arg3, arg4Type arg4, arg5Type arg5)
+void MonoEntityExtension::raiseEntityEvent(arg0Type arg0, arg1Type arg1, arg2Type arg2, arg3Type arg3, arg4Type arg4, arg5Type arg5) const
 {
 	static void(*raise)(mono::object, arg0Type, arg1Type, arg2Type, arg3Type, arg4Type, arg5Type) =
 		reinterpret_cast<void(*)
@@ -175,6 +175,7 @@ void MonoEntityExtension::raiseEntityEvent(arg0Type arg0, arg1Type arg1, arg2Typ
 		raise(obj, arg0, arg1, arg2, arg3, arg4, arg5);
 	}
 }
+
 #pragma endregion
 #pragma region Entity Event Names
 // Gotta have these global variables here, cause simple string literals are not compile-time constants even with string
@@ -689,7 +690,7 @@ void MonoEntityExtension::CryCilRMIParameters::SerializeWith(TSerialize ser)
 
 typedef bool(*ReceiveRMICallThunk)(mono::object, mono::string, mono::object);
 
-bool MonoEntityExtension::ReceiveRmiCall(CryCilRMIParameters *params)
+bool MonoEntityExtension::ReceiveRmiCall(CryCilRMIParameters *params) const
 {
 	static ReceiveRMICallThunk receiveCall =
 		ReceiveRMICallThunk(GetMonoNetEntityClass()->GetFunction("ReceiveRmi", -1)->RawThunk);
@@ -702,7 +703,7 @@ bool MonoEntityExtension::ReceiveRmiCall(CryCilRMIParameters *params)
 
 typedef mono::string(*GetEntityPropertyValueThunk)(mono::object, int);
 
-const char *MonoEntityExtension::GetPropertyValue(int index)
+const char *MonoEntityExtension::GetPropertyValue(int index) const
 {
 	static GetEntityPropertyValueThunk get =
 		GetEntityPropertyValueThunk(GetMonoEntityClass()->GetFunction("GetEditableProperty", -1)->RawThunk);
@@ -712,7 +713,7 @@ const char *MonoEntityExtension::GetPropertyValue(int index)
 
 typedef void(*SetEntityPropertyValueThunk)(mono::object, int, mono::string);
 
-void MonoEntityExtension::SetPropertyValue(int index, const char *value)
+void MonoEntityExtension::SetPropertyValue(int index, const char *value) const
 {
 	static SetEntityPropertyValueThunk set =
 		SetEntityPropertyValueThunk(GetMonoEntityClass()->GetFunction("SetEditableProperty", -1)->RawThunk);
@@ -720,7 +721,7 @@ void MonoEntityExtension::SetPropertyValue(int index, const char *value)
 	set(this->MonoWrapper, index, ToMonoString(value));
 }
 
-bool MonoEntityExtension::IsInitialized()
+bool MonoEntityExtension::IsInitialized() const
 {
 	return this->objHandle.IsValid;
 }

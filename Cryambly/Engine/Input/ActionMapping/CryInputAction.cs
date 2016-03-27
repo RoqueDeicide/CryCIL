@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 
 namespace CryCil.Engine.Input.ActionMapping
@@ -67,6 +68,31 @@ namespace CryCil.Engine.Input.ActionMapping
 			this.AssertInstance();
 
 			return RebindInputInternal(this.handle, oldInput, newInput);
+		}
+		internal void AddInputs(ActionAttribute actionAttribute, ICustomAttributeProvider provider)
+		{
+			// Register inputs that specified in the Action attribute.
+			if (actionAttribute.KeyboardMouseInput != InputId.Unknown)
+			{
+				this.AddInput(actionAttribute.KeyboardMouseInput, actionAttribute);
+			}
+			if (actionAttribute.XboxInput != InputId.Unknown)
+			{
+				this.AddInput(actionAttribute.XboxInput, actionAttribute);
+			}
+			if (actionAttribute.OrbisInput != InputId.Unknown)
+			{
+				this.AddInput(actionAttribute.OrbisInput, actionAttribute);
+			}
+
+			// Register inputs that are specified in InputAction attributes.
+			var extraInputs = provider.GetAttributes<InputActionAttribute>();
+			foreach (var inputActionAttribute in extraInputs)
+			{
+				inputActionAttribute.Complete();
+				inputActionAttribute.InheritFrom(actionAttribute);
+				this.AddInput(inputActionAttribute.Input, inputActionAttribute);
+			}
 		}
 		#endregion
 		#region Utilities

@@ -32,6 +32,48 @@ namespace CryCil.Engine.Input.ActionMapping
 				return GetAction(this.handle, name);
 			}
 		}
+		/// <summary>
+		/// Gets or sets the value that indicates whether this action map should be active.
+		/// </summary>
+		public bool Enabled
+		{
+			get
+			{
+				this.AssertInstance();
+
+				return IsEnabled(this.handle);
+			}
+			set
+			{
+				this.AssertInstance();
+
+				Enable(this.handle, value);
+			}
+		}
+		/// <summary>
+		/// Gets the name of this action map.
+		/// </summary>
+		public string Name
+		{
+			get
+			{
+				this.AssertInstance();
+
+				return GetName(this.handle);
+			}
+		}
+		/// <summary>
+		/// Gets the CRC32 hash code of the lower-case version of the name of this action map.
+		/// </summary>
+		public uint NameHash
+		{
+			get
+			{
+				this.AssertInstance();
+
+				return GetNameHash(this.handle);
+			}
+		}
 		#endregion
 		#region Events
 		#endregion
@@ -85,6 +127,14 @@ namespace CryCil.Engine.Input.ActionMapping
 		private static extern CryInputAction CreateActionInternal(IntPtr handle, string name);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern bool RemoveActionInternal(IntPtr handle, string name);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern bool IsEnabled(IntPtr handle);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void Enable(IntPtr handle, bool enable);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern string GetName(IntPtr handle);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern uint GetNameHash(IntPtr handle);
 		#endregion
 	}
 }

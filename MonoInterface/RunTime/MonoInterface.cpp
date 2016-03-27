@@ -361,7 +361,10 @@ void MonoInterface::RegisterDefaultListeners() const
 	this->broadcaster->listeners->Add(new EntitySlotsInterop());
 	this->broadcaster->listeners->Add(new MonoEntityInterop());
 	this->broadcaster->listeners->Add(new GameInterop());
-	this->broadcaster->listeners->Add(new ActionMappingInterop());
+	this->broadcaster->listeners->Add(new ActionMapHandlerInterop());
+	this->broadcaster->listeners->Add(new ActionMapsInterop());
+	this->broadcaster->listeners->Add(new CryActionMapInterop());
+	this->broadcaster->listeners->Add(new CryInputActionInterop());
 	this->broadcaster->listeners->Add(new LightSourceInterop());
 	this->broadcaster->listeners->Add(new PhysicalWorldInterop());
 	this->broadcaster->listeners->Add(new PhysicalEntityInterop());

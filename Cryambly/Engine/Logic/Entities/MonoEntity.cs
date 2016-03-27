@@ -4,6 +4,7 @@ using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using CryCil.Engine.Data;
+using CryCil.Engine.Input.ActionMapping;
 using CryCil.RunTime;
 using CryCil.RunTime.Registration;
 
@@ -29,7 +30,7 @@ namespace CryCil.Engine.Logic
 	/// <summary>
 	/// Base class for CryEngine entities with custom logic that is defined in CryCIL.
 	/// </summary>
-	public abstract partial class MonoEntity : IDisposable
+	public abstract partial class MonoEntity : IDisposable, IActionMapHandler
 	{
 		#region Fields
 		private readonly List<EntityReloadEventHandler> reloadingEventHandlers;
@@ -43,6 +44,7 @@ namespace CryCil.Engine.Logic
 		/// Provides access to the collection of objects that extend functionality of this entity.
 		/// </summary>
 		public EntityExtensions Extensions;
+		private readonly ActionMapHandler actionHandler;
 		#endregion
 		#region Properties
 		/// <summary>
@@ -94,7 +96,7 @@ namespace CryCil.Engine.Logic
 		/// </summary>
 		/// <remarks>
 		/// <para>
-		/// Only entities for which this proeprty is <c>true</c> can have their <see cref="PostUpdate"/>
+		/// Only entities for which this property is <c>true</c> can have their <see cref="PostUpdate"/>
 		/// method invoked.
 		/// </para>
 		/// <para>By default entities do not receive post updates.</para>
@@ -117,7 +119,7 @@ namespace CryCil.Engine.Logic
 		/// </summary>
 		/// <remarks>
 		/// <para>
-		/// Only entities for which this proeprty is <c>true</c> can have their <see cref="Update"/> method
+		/// Only entities for which this property is <c>true</c> can have their <see cref="Update"/> method
 		/// invoked.
 		/// </para>
 		/// <para>By default entities do not receive updates unless they were spawned as active.</para>
@@ -150,8 +152,8 @@ namespace CryCil.Engine.Logic
 		/// </summary>
 		/// <remarks>
 		/// <para>
-		/// Only entities for which this proeprty is <c>true</c> can have their
-		/// <see cref="MonoEntity.PrePhysicsUpdate"/> method invoked.
+		/// Only entities for which this property is <c>true</c> can have their
+		/// <see cref="PrePhysicsUpdate"/> method invoked.
 		/// </para>
 		/// <para>By default entities do not receive pre-physics updates.</para>
 		/// </remarks>
@@ -175,6 +177,20 @@ namespace CryCil.Engine.Logic
 				}
 
 				EnablePrePhysics(this.entity, value);
+			}
+		}
+		/// <summary>
+		/// Gets or sets the value that indicates this object is listening to the action map.
+		/// </summary>
+		public bool ListeningToActions
+		{
+			get { return this.actionHandler != null && this.actionHandler.Active; }
+			set
+			{
+				if (this.actionHandler != null)
+				{
+					this.actionHandler.Active = value;
+				}
 			}
 		}
 		#endregion
@@ -216,6 +232,16 @@ namespace CryCil.Engine.Logic
 			this.reloadingEventHandlers = new List<EntityReloadEventHandler>();
 			this.EntityTypeName = null;
 			this.Extensions = new EntityExtensions(this);
+
+			Type type = this.GetType();
+			var attribute = type.GetAttribute<ActionMapAttribute>();
+			if (attribute != null)
+			{
+				this.actionHandler = new ActionMapHandler(type, this)
+				{
+					Active = attribute.AutoActive
+				};
+			}
 		}
 		#endregion
 		#region Interface
@@ -233,6 +259,8 @@ namespace CryCil.Engine.Logic
 			// Remove the entity from the world: since this layer is going down the entity has no reason to
 			// stay up.
 			EntitySystem.RemoveEntity(this.Id, true);
+
+			this.ListeningToActions = false;
 
 			this.Disposed = true;
 		}

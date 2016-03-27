@@ -305,6 +305,7 @@ namespace CryCil.Engine.Logic
 			this.extensions.RemoveAt(index);
 			extension.Release(disposing);
 			extension.Host = null;
+			extension.ListeningToActions = !extension.actionMapAttribute.AutoActive;
 		}
 		#endregion
 	}

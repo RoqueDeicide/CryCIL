@@ -25,17 +25,26 @@ namespace CryCil.Engine.Input.ActionMapping
 		/// <summary>
 		/// Gets custom name of this action map.
 		/// </summary>
-		public string Name { get; private set; }
+		public string Name { get; }
+		/// <summary>
+		/// Gets the value that indicates whether this action map must be enabled immediately upon
+		/// registration.
+		/// </summary>
+		public bool AutoActive { get; }
 		/// <summary>
 		/// Creates new instance of this type.
 		/// </summary>
-		/// <param name="name">
+		/// <param name="name">      
 		/// An optional name for the action, must not contain characters that are not valid in Xml tags. A
 		/// name of the event will be used as a name if this parameter is left at <c>null</c>.
 		/// </param>
-		public ActionMapAttribute(string name = null)
+		/// <param name="autoActive">
+		/// Indicates whether this action map must be enabled immediately upon registration.
+		/// </param>
+		public ActionMapAttribute(string name = null, bool autoActive = false)
 		{
 			this.Name = name;
+			this.AutoActive = autoActive;
 		}
 	}
 }

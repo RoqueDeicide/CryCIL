@@ -379,9 +379,6 @@
     <ClInclude Include="Interops\Game.h">
       <Filter>Interops</Filter>
     </ClInclude>
-    <ClInclude Include="Interops\ActionMapping.h">
-      <Filter>Interops\Engine\Input</Filter>
-    </ClInclude>
     <ClInclude Include="Interops\MonoLightProperties.h">
       <Filter>Interops\Engine\Rendering\Lighting</Filter>
     </ClInclude>
@@ -635,6 +632,21 @@
     <ClInclude Include="Interops\MeshOps.h">
       <Filter>Interops\Math</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\ActionMapHandler.h">
+      <Filter>Interops\Engine\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\ActionInputSpecification.h">
+      <Filter>Interops\Engine\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\ActionMaps.h">
+      <Filter>Interops\Engine\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\CryActionMap.h">
+      <Filter>Interops\Engine\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\CryInputAction.h">
+      <Filter>Interops\Engine\Input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -859,9 +871,6 @@
     </ClCompile>
     <ClCompile Include="TypeMapChecks\RenderParameters.cpp">
       <Filter>TypeMapChecks</Filter>
-    </ClCompile>
-    <ClCompile Include="Interops\ActionMapping.cpp">
-      <Filter>Interops\Engine\Input</Filter>
     </ClCompile>
     <ClCompile Include="TypeMapChecks\DynamicLightFlags.cpp">
       <Filter>TypeMapChecks</Filter>
@@ -1144,6 +1153,21 @@
     </ClCompile>
     <ClCompile Include="Interops\MeshOps.cpp">
       <Filter>Interops\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\ActionMapHandler.cpp">
+      <Filter>Interops\Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\ActionInputSpecification.cpp">
+      <Filter>Interops\Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\ActionMaps.cpp">
+      <Filter>Interops\Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\CryActionMap.cpp">
+      <Filter>Interops\Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\CryInputAction.cpp">
+      <Filter>Interops\Engine\Input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

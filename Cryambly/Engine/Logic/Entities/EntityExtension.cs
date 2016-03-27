@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using CryCil.Engine.Data;
+using CryCil.Engine.Input.ActionMapping;
 using CryCil.Engine.Network;
 using CryCil.Engine.Physics;
 
@@ -9,13 +10,51 @@ namespace CryCil.Engine.Logic
 	/// <summary>
 	/// Base class for objects that can be used to extend functionality of managed entities.
 	/// </summary>
-	public abstract class EntityExtension
+	public abstract class EntityExtension : IActionMapHandler
 	{
+		#region Fields
+		internal readonly ActionMapAttribute actionMapAttribute;
+		private readonly ActionMapHandler actionHandler;
+		#endregion
 		#region Properties
 		/// <summary>
 		/// Gets the hosting entity.
 		/// </summary>
 		public MonoEntity Host { get; internal set; }
+		/// <summary>
+		/// Gets or sets the value that indicates this object is listening to the action map.
+		/// </summary>
+		public bool ListeningToActions
+		{
+			get
+			{
+				return this.actionHandler != null && this.actionHandler.Active;
+			}
+			set
+			{
+				if (this.actionHandler != null)
+				{
+					this.actionHandler.Active = value;
+				}
+			}
+		}
+		#endregion
+		#region Construction
+		/// <summary>
+		/// Initializes base part of this extension.
+		/// </summary>
+		protected EntityExtension()
+		{
+			Type type = this.GetType();
+			this.actionMapAttribute = type.GetAttribute<ActionMapAttribute>();
+			if (this.actionMapAttribute != null)
+			{
+				this.actionHandler = new ActionMapHandler(type, this)
+				{
+					Active = this.actionMapAttribute.AutoActive
+				};
+			}
+		}
 		#endregion
 		#region Interface
 		/// <summary>

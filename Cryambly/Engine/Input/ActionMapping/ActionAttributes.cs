@@ -5,7 +5,7 @@ using CryCil.Annotations;
 namespace CryCil.Engine.Input.ActionMapping
 {
 	/// <summary>
-	/// Marks the event that is raised to handle input actions.
+	/// Marks either event or a method that is raised/invoked to handle input actions.
 	/// </summary>
 	/// <remarks>
 	/// <para>Important notes:</para>
@@ -30,7 +30,7 @@ namespace CryCil.Engine.Input.ActionMapping
 	/// <example>
 	/// <code source="ActionMaps/Sample.cs"/>
 	/// </example>
-	[AttributeUsage(AttributeTargets.Event)]
+	[AttributeUsage(AttributeTargets.Event | AttributeTargets.Method)]
 	[MeansImplicitUse]
 	public class ActionAttribute : ActionMapInputSpecifier
 	{
@@ -174,7 +174,7 @@ namespace CryCil.Engine.Input.ActionMapping
 	/// <summary>
 	/// Base class for attributes that provide information about inputs that can activate actions.
 	/// </summary>
-	[AttributeUsage(AttributeTargets.Event, AllowMultiple = true)]
+	[AttributeUsage(AttributeTargets.Event | AttributeTargets.Method, AllowMultiple = true)]
 	public class InputActionAttribute : ActionMapInputSpecifier
 	{
 		#region Properties

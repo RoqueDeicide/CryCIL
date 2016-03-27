@@ -4,16 +4,18 @@
 
 #include "IGameObject.h"
 
-//! Serves as an abstraction layer between logic defined in C# and CryEngine.
-struct MonoEntityExtension : CGameObjectExtensionHelper<MonoEntityExtension, IGameObjectExtension>
+//! Serves as an abstraction layer between logics defined in C# and CryEngine.
+struct MonoEntityExtension
+	: public CGameObjectExtensionHelper<MonoEntityExtension, IGameObjectExtension>
 {
 private:
-	MonoGCHandle objHandle;
-	bool networking;
-	bool dontSyncProps;
+	MonoGCHandle objHandle;		//!< GC handle for the managed object that represents this entity.
+	bool networking;			//!< Indicates whether the state of this entity has to be synced across the network.
+	bool dontSyncProps;			//!< Indicates whether editable properties should be synchronized.
 public:
 	MonoEntityExtension();
 	virtual ~MonoEntityExtension();
+
 	//IGameObjectExtension
 	virtual bool Init(IGameObject* pGameObject) override;
 	virtual void PostInit(IGameObject* pGameObject) override;
@@ -42,11 +44,12 @@ public:
 	virtual ComponentEventPriority GetEventPriority(const int eventID) const override;
 	//~IGameObjectExtension
 
-	const char  *GetPropertyValue(int index);
-	void         SetPropertyValue(int index, const char *value);
-	bool         IsInitialized();
-	mono::object GetManagedWrapper() { return this->objHandle.Object; }
+	const char  *GetPropertyValue(int index) const;
+	void         SetPropertyValue(int index, const char *value) const;
+	bool         IsInitialized() const;
+	mono::object GetManagedWrapper() const { return this->objHandle.Object; }
 	__declspec(property(get = GetManagedWrapper)) mono::object MonoWrapper;
+
 	//! Encapsulates name of a method that should be invoked remotely, identifier of the entity that is a target of
 	//! invocation and a set of arguments that will be passed to the method.
 	struct CryCilRMIParameters
@@ -102,24 +105,23 @@ public:
 	DECLARE_CLIENT_RMI_INDEPENDENT(clUnreliableIndependentCryCilRmi, CryCilRMIParameters, eNRT_UnreliableUnordered);
 
 	//! Invokes RMI method that is specified by the params object.
-	bool ReceiveRmiCall(CryCilRMIParameters *params);
-
+	bool ReceiveRmiCall(CryCilRMIParameters *params) const;
 
 private:
 	template<const char *eventName>
-	void raiseEntityEvent();
+	void raiseEntityEvent() const;
 	template<const char *eventName, typename arg0Type>
-	void raiseEntityEvent(arg0Type arg0);
+	void raiseEntityEvent(arg0Type arg0) const;
 	template<const char *eventName, typename arg0Type, typename arg1Type>
-	void raiseEntityEvent(arg0Type arg0, arg1Type arg1);
+	void raiseEntityEvent(arg0Type arg0, arg1Type arg1) const;
 	template<const char *eventName, typename arg0Type, typename arg1Type, typename arg2Type>
-	void raiseEntityEvent(arg0Type arg0, arg1Type arg1, arg2Type arg2);
+	void raiseEntityEvent(arg0Type arg0, arg1Type arg1, arg2Type arg2) const;
 	template<const char *eventName, typename arg0Type, typename arg1Type, typename arg2Type, typename arg3Type>
-	void raiseEntityEvent(arg0Type arg0, arg1Type arg1, arg2Type arg2, arg3Type arg3);
+	void raiseEntityEvent(arg0Type arg0, arg1Type arg1, arg2Type arg2, arg3Type arg3) const;
 	template<const char *eventName, typename arg0Type, typename arg1Type, typename arg2Type, typename arg3Type, typename arg4Type>
-	void raiseEntityEvent(arg0Type arg0, arg1Type arg1, arg2Type arg2, arg3Type arg3, arg4Type arg4);
+	void raiseEntityEvent(arg0Type arg0, arg1Type arg1, arg2Type arg2, arg3Type arg3, arg4Type arg4) const;
 	template<const char *eventName, typename arg0Type, typename arg1Type, typename arg2Type, typename arg3Type, typename arg4Type, typename arg5Type>
-	void raiseEntityEvent(arg0Type arg0, arg1Type arg1, arg2Type arg2, arg3Type arg3, arg4Type arg4, arg5Type arg5);
+	void raiseEntityEvent(arg0Type arg0, arg1Type arg1, arg2Type arg2, arg3Type arg3, arg4Type arg4, arg5Type arg5) const;
 };
 
 //! Attempts to acquire an extension that allows the game object to communicate with CryCIL.

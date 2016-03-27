@@ -109,7 +109,10 @@
     <Compile Include="Engine\Environment\NamespaceDoc.cs" />
     <Compile Include="Engine\Files\NamespaceDoc.cs" />
     <Compile Include="Engine\Input\ActionMapping\ActionInputSpecification.cs" />
+    <Compile Include="Engine\Input\ActionMapping\ActionMapHandler.cs" />
     <Compile Include="Engine\Input\ActionMapping\ActionMapInputSpecifier.cs" />
+    <Compile Include="Engine\Input\ActionMapping\ActionMaps.cs" />
+    <Compile Include="Engine\Input\ActionMapping\ActionMaps.Registration.cs" />
     <Compile Include="Engine\Input\ActionMapping\AnalogComparisonOperation.cs" />
     <Compile Include="Engine\Input\ActionMapping\IActionMapHandler.cs" />
     <Compile Include="Engine\Input\ActionMapping\InputBlockMode.cs" />
@@ -400,7 +403,6 @@
     <Compile Include="Engine\Input\ActionMapping\ActionAttributes.cs" />
     <Compile Include="Engine\Input\ActionMapping\ActionActivationMode.cs" />
     <Compile Include="Engine\Input\ActionMapping\ActionMap.cs" />
-    <Compile Include="Engine\Input\ActionMapping\ActionMaps.cs" />
     <Compile Include="Engine\Input\ActionMapping\CryInputAction.cs" />
     <Compile Include="Engine\Input\ActionMapping\CryActionMap.cs" />
     <Compile Include="Engine\Input\ActionMapping\DeviceMapping.cs" />

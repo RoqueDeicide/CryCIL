@@ -139,7 +139,7 @@ namespace CryCil.Engine.Input.ActionMapping
 				if (this.BlockMode == InputBlockMode.Block && other.BlockMode == InputBlockMode.Block)
 				{
 					this.BlockedInputs =
-						(this.BlockedInputs ?? new InputId[] { }).Concat(other.BlockedInputs ?? new InputId[] { }).ToArray();
+						(this.BlockedInputs ?? new InputId[] {}).Concat(other.BlockedInputs ?? new InputId[] {}).ToArray();
 				}
 				// If we still don't have anything to block then don't block anything.
 				if (this.BlockedInputs.IsNullOrEmpty())
