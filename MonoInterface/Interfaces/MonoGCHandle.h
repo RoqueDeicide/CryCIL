@@ -119,7 +119,7 @@ public:
 	{
 		return MonoEnv->GC->GetGCHandleTarget(this->handle);
 	}
-	bool GetIsValid()
+	bool GetIsValid() const
 	{
 		return this->handle != -1;
 	}

@@ -387,7 +387,7 @@ public:
 	{
 		return this->paramList;
 	}
-	mono::object GetReflectionObject()
+	mono::object GetReflectionObject() const
 	{
 		return MonoEnv->Functions->GetReflectionObject(this->wrappedMethod);
 	}

@@ -7,7 +7,7 @@
 struct DefaultBoxinator : public IDefaultBoxinator
 {
 private:
-	__forceinline mono::object box(MonoClass *klass, void *value)
+	static __forceinline mono::object box(MonoClass *klass, void *value)
 	{
 		return mono::object(mono_value_box(static_cast<MonoDomain *>(MonoEnv->AppDomain), klass, value));
 	}

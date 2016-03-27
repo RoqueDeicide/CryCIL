@@ -22,6 +22,8 @@ MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 	: fullName(nullptr)
 	, fullNameIL(nullptr)
 	, events(30)
+	, methods(30, strcmp)
+	, properties(30, strcmp)
 	, fields(30)
 	, flatMethodList(100)
 	, flatPropertyList(100)
@@ -36,11 +38,6 @@ MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 	this->nameSpace = mono_class_get_namespace(klass);
 
 	ClassCtorMessage("Stored a name and a namespace of the class.");
-
-	this->methods    = SortedList<const char *, List<IMonoFunction *> *>(30, strcmp);
-	this->properties = SortedList<const char *, List<IMonoProperty *> *>(30, strcmp);
-
-	ClassCtorMessage("Created lists for methods and properties.");
 	
 	MonoClass *base = klass;
 	while (base)
@@ -446,7 +443,7 @@ void MonoClassWrapper::SetField(mono::object obj, IMonoField *field, void *value
 	this->SetFieldValue(obj, field->GetHandle<MonoClassField>(), value);
 }
 
-void MonoClassWrapper::GetFieldValue(mono::object obj, MonoClassField *field, void *value)
+void MonoClassWrapper::GetFieldValue(mono::object obj, MonoClassField *field, void *value) const
 {
 	if (obj)
 	{
@@ -458,7 +455,7 @@ void MonoClassWrapper::GetFieldValue(mono::object obj, MonoClassField *field, vo
 	}
 }
 
-void MonoClassWrapper::SetFieldValue(mono::object obj, MonoClassField *field, void *value)
+void MonoClassWrapper::SetFieldValue(mono::object obj, MonoClassField *field, void *value) const
 {
 	if (obj)
 	{
@@ -725,7 +722,7 @@ __forceinline result_type *MonoClassWrapper::SearchTheList(List<result_type *> &
 	return nullptr;
 }
 
-const char *MonoClassWrapper::BuildFullName(bool ilStyle, const char *& field)
+const char *MonoClassWrapper::BuildFullName(bool ilStyle, const char *& field) const
 {
 	ClassMessage("Querying the full name of the class.");
 

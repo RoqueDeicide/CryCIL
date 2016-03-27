@@ -2,7 +2,8 @@
 
 #include "BspNode.h"
 
-void PointPosition(Plane plane, Vec3 point, PlanePosition &pointPlanePosition, PlanePosition &polygonPlanePosition)
+void PointPosition(Plane plane, Vec3 point, PlanePosition &pointPlanePosition,
+				   PlanePosition &polygonPlanePosition)
 {
 	float signedDistance = point * plane.n - plane.d;
 	if (signedDistance > 0.00000001)
@@ -13,7 +14,7 @@ void PointPosition(Plane plane, Vec3 point, PlanePosition &pointPlanePosition, P
 	polygonPlanePosition = PlanePosition(polygonPlanePosition | pointPlanePosition);
 }
 
-Vertex Vertex::CreateLerp(Vertex &other, float parameter)
+Vertex Vertex::CreateLerp(Vertex &other, float parameter) const
 {
 	Vertex vertex;
 	vertex.Position = Vec3::CreateLerp(this->Position, other.Position, parameter);
@@ -156,7 +157,7 @@ void Face::TriangulateLinearly(List<Vertex> &vertices, List<Face> *faceCollectio
 	}
 }
 
-List<Face> *BspNode::AllFaces()
+List<Face> *BspNode::AllFaces() const
 {
 	List<Face> *list = new List<Face>(this->Faces->Capacity * 2);
 	list->AddRange(this->Faces);
@@ -294,7 +295,7 @@ void BspNode::Unite(BspNode *node)
 	this->AddFaces(*node->AllFaces());
 }
 
-void BspNode::AssignBranch(BspNode *&branch, List<Face> *faces)
+void BspNode::AssignBranch(BspNode *&branch, List<Face> *faces) const
 {
 	if (!branch)
 	{

@@ -131,7 +131,7 @@ struct IMonoObjects
 	//! @param obj The object to lock.
 	//!
 	//! @returns A boolean value that indicates whether the lock has been successfully acquired.
-	bool MonitorEnter(mono::object obj)
+	bool MonitorEnter(mono::object obj) const
 	{
 		return this->MonitorTryEnter(obj, -1);
 	}
@@ -144,7 +144,7 @@ struct IMonoObjects
 	//!                indefinite period of time.
 	//!
 	//! @returns A boolean value that indicates whether the lock has been successfully acquired.
-	bool MonitorTryEnter(mono::object obj, unsigned int timeout = 0);	// Defined in IMonoInterface.h
+	bool MonitorTryEnter(mono::object obj, unsigned int timeout = 0) const;	// Defined in IMonoInterface.h
 	//! Releases exclusive lock that was previously acquired for the given object.
 	//!
 	//! @param obj The object to release.
@@ -155,6 +155,6 @@ struct IMonoObjects
 	//!
 	//! @returns True, if calling thread is in the position after MonitorTryEnter() was called with given
 	//!          object and before MonitorExit() with the same object.
-	bool MonitorIsEntered(mono::object obj);							// Defined in IMonoInterface.h
+	bool MonitorIsEntered(mono::object obj) const;							// Defined in IMonoInterface.h
 #pragma endregion
 };

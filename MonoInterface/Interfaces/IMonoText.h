@@ -64,12 +64,12 @@ struct IMonoText : public IMonoObject
 	__declspec(property(get = GetLength)) int Length;
 
 	//! Determines whether this string is equal to another.
-	bool Equals(IMonoText &other)
+	bool Equals(IMonoText &other) const
 	{
 		return MonoEnv->Objects->StringEquals(this->obj, other.obj);
 	}
 	//! Determines whether this string is equal to another.
-	bool Equals(mono::string other)
+	bool Equals(mono::string other) const
 	{
 		return MonoEnv->Objects->StringEquals(this->obj, other);
 	}
@@ -86,28 +86,28 @@ struct IMonoText : public IMonoObject
 	//! Gets reference to a character in UTF-16 encoding.
 	//!
 	//! @param index Zero-based index of the character to get.
-	wchar_t &operator[](int index)
+	wchar_t &operator[](int index) const
 	{
 		return MonoEnv->Objects->StringAt(this->obj, index);
 	}
 
-	int GetHashCode()
+	int GetHashCode() const
 	{
 		return MonoEnv->Objects->GetStringHashCode(this->obj);
 	}
-	bool IsInterned()
+	bool IsInterned() const
 	{
 		return MonoEnv->Objects->IsStringInterned(this->obj);
 	}
-	const char *ToNativeUTF8()
+	const char *ToNativeUTF8() const
 	{
 		return MonoEnv->Objects->StringToNativeUTF8(this->obj);
 	}
-	const wchar_t *ToNativeUTF16()
+	const wchar_t *ToNativeUTF16() const
 	{
 		return MonoEnv->Objects->StringToNativeUTF16(this->obj);
 	}
-	int GetLength()
+	int GetLength() const
 	{
 		return MonoEnv->Objects->StringLength(this->obj);
 	}

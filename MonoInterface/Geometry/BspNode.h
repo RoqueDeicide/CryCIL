@@ -28,7 +28,7 @@ struct Vertex
 	//! @param parameter Parameter that describes position of resultant vertex.
 	//!
 	//! @returns Result of interpolation.
-	Vertex CreateLerp(Vertex &other, float parameter);
+	Vertex CreateLerp(Vertex &other, float parameter) const;
 };
 
 //! Represents a triangle face.
@@ -120,7 +120,7 @@ struct BspNode
 	}
 
 	//! Gets the list of all faces in this BSP tree.
-	List<Face> *AllFaces();
+	List<Face> *AllFaces() const;
 	//! Adds a bunch of faces to this BSP tree.
 	void AddFaces(const List<Face> &faces);
 	//! Inverts this BSP node.
@@ -132,5 +132,5 @@ struct BspNode
 	//! Adds given BSP tree to this one.
 	void Unite(BspNode *node);
 private:
-	void AssignBranch(BspNode *&branch, List<Face> *faces);
+	void AssignBranch(BspNode *&branch, List<Face> *faces) const;
 };

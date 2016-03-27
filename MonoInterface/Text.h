@@ -196,7 +196,7 @@ public:
 	//! @param index       Zero-based index of the first symbol within destination array
 	//!                    to copy text to.
 	//! @param symbolCount Number of characters to copy.
-	void CopyTo(char *destination, int index, int symbolCount)
+	void CopyTo(char *destination, int index, int symbolCount) const
 	{
 		this->CopyTo(destination, 0, index, symbolCount);
 	}
@@ -207,7 +207,7 @@ public:
 	//! @param destinationIndex Zero-based index of the first symbol within destination array
 	//!                         to copy text to.
 	//! @param charCount        Number of characters to copy.
-	void CopyTo(char *destination, int sourceIndex, int destinationIndex, int charCount)
+	void CopyTo(char *destination, int sourceIndex, int destinationIndex, int charCount) const
 	{
 		if (sourceIndex + charCount > this->length)
 		{
@@ -237,7 +237,7 @@ public:
 	//!
 	//! @return A list of parts. Must be deleted after use. Before that though, each part
 	//!         must be deleted separately.
-	List<const char *> *Split(char symbol, bool removeEmptyParts)
+	List<const char *> *Split(char symbol, bool removeEmptyParts) const
 	{
 		List<const char *> *parts = new List<const char *>(6);
 
@@ -262,7 +262,7 @@ public:
 	//!
 	//! @return Zero-based index of the first occurrence of the given symbol.
 	//!         -1 is returned if symbol was not found.
-	int IndexOf(char symbol)
+	int IndexOf(char symbol) const
 	{
 		for (int i = 0; i < this->length; i++)
 		{
@@ -279,7 +279,7 @@ public:
 	//!
 	//! @return Zero-based index of the last occurrence of the given symbol.
 	//!         -1 is returned if symbol was not found.
-	int LastIndexOf(char symbol)
+	int LastIndexOf(char symbol) const
 	{
 		for (int i = this->length - 1; i >= 0; i--)
 		{
@@ -291,7 +291,7 @@ public:
 		return -1;
 	}
 	//! Determines whether this text is equal to one in the null-terminated string.
-	bool Equals(const char *ntString)
+	bool Equals(const char *ntString) const
 	{
 		return strlen(ntString) == this->length && strncmp(this->text, ntString, this->length) == 0;
 	}
@@ -458,7 +458,7 @@ public:
 	//! @param text Immutable string that will represent ending of the resultant string.
 	//!
 	//! @return New immutable string that needs to be assigned before used in another operator.
-	Text *operator +(Text text)
+	Text *operator +(Text text) const
 	{
 		int combinedLength = this->length + text.length;
 		if (combinedLength == 0)
@@ -487,7 +487,7 @@ public:
 	//! @param str Null-terminated string that will represent ending of the resultant string.
 	//!
 	//! @return New immutable string that needs to be assigned before used in another operator.
-	Text *operator +(const char *str)
+	Text *operator +(const char *str) const
 	{
 		int rightLength = str ? strlen(str) : 0;
 		int combinedLength = this->length + rightLength;
@@ -515,7 +515,7 @@ public:
 	//! @param symbol Symbol to add to the end of the resultant string.
 	//!
 	//! @return A brand new immutable string.
-	Text *operator +(char symbol)
+	Text *operator +(char symbol) const
 	{
 		int combinedLength = this->length + 1;
 		Text *result = new Text();

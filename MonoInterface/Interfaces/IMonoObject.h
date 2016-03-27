@@ -94,7 +94,7 @@ public:
 	//! @param name  Name of the field.
 	//! @param value Pointer to the memory that will store the value of the field after this
 	//!              function completes execution.
-	void GetField(const char *name, void *value)
+	void GetField(const char *name, void *value) const
 	{
 		if (this->klass && this->obj)
 		{
@@ -125,7 +125,7 @@ public:
 	//!
 	//! @param name  Name of the field.
 	//! @param value Pointer to the memory that stores the value that should be assigned to the field.
-	void SetField(const char *name, void *value)
+	void SetField(const char *name, void *value) const
 	{
 		if (this->klass && this->obj)
 		{
@@ -135,7 +135,7 @@ public:
 	//! Gets one of the properties of this object.
 	//!
 	//! @param name Name of the property to get.
-	IMonoProperty *GetProperty(const char *name)
+	IMonoProperty *GetProperty(const char *name) const
 	{
 		if (this->klass)
 		{
@@ -146,7 +146,7 @@ public:
 	//! Gets one of the events of this object.
 	//!
 	//! @param name Name of the event to get.
-	IMonoEvent *GetEvent(const char *name)
+	IMonoEvent *GetEvent(const char *name) const
 	{
 		if (this->klass)
 		{

@@ -46,6 +46,18 @@ protected:
 	IMonoObjects *objs;
 	IMonoFunctions *funcs;
 public:
+
+	IMonoInterface()
+		: running(false)
+		, assemblies(nullptr)
+		, cryambly(nullptr)
+		, corlib(nullptr)
+		, pdb2mdb(nullptr)
+		, gc(nullptr)
+		, framework(nullptr)
+		, objs(nullptr)
+		, funcs(nullptr) {}
+
 	virtual ~IMonoInterface()
 	{
 	}
@@ -96,39 +108,39 @@ public:
 	__declspec(property(get = GetFunctions)) IMonoFunctions *Functions;
 
 	VIRTUAL_API virtual void *GetAppDomain() = 0;
-	IMonoAssemblies *GetAssemblies()
+	IMonoAssemblies *GetAssemblies() const
 	{
 		return this->assemblies;
 	}
-	ICryambly *GetCryambly()
+	ICryambly *GetCryambly() const
 	{
 		return this->cryambly;
 	}
-	IMonoAssembly *GetPdbMdbAssembly()
+	IMonoAssembly *GetPdbMdbAssembly() const
 	{
 		return this->pdb2mdb;
 	}
-	IMonoCoreLibrary *GetCoreLibrary()
+	IMonoCoreLibrary *GetCoreLibrary() const
 	{
 		return this->corlib;
 	}
-	bool GetInitializedIndication()
+	bool GetInitializedIndication() const
 	{
 		return this->running;
 	}
-	IMonoGC *GetGC()
+	IMonoGC *GetGC() const
 	{
 		return this->gc;
 	}
-	IGameFramework *GetGameFramework()
+	IGameFramework *GetGameFramework() const
 	{
 		return this->framework;
 	}
-	IMonoObjects *GetObjects()
+	IMonoObjects *GetObjects() const
 	{
 		return this->objs;
 	}
-	IMonoFunctions *GetFunctions()
+	IMonoFunctions *GetFunctions() const
 	{
 		return this->funcs;
 	}
@@ -163,7 +175,7 @@ extern IMonoInterface *MonoEnv;
 
 typedef void(*try_enter_with_atomic_var_thunk)(mono::object, unsigned int, char *);
 
-inline bool IMonoObjects::MonitorTryEnter(mono::object obj, unsigned int timeout)
+inline bool IMonoObjects::MonitorTryEnter(mono::object obj, unsigned int timeout) const
 {
 	static try_enter_with_atomic_var_thunk try_enter_with_atomic_var = nullptr;
 	if (!try_enter_with_atomic_var)
@@ -180,7 +192,7 @@ inline bool IMonoObjects::MonitorTryEnter(mono::object obj, unsigned int timeout
 
 typedef int(*Monitor_test_owner_thunk)(mono::object);
 
-inline bool IMonoObjects::MonitorIsEntered(mono::object obj)
+inline bool IMonoObjects::MonitorIsEntered(mono::object obj) const
 {
 	static Monitor_test_owner_thunk Monitor_test_owner = nullptr;
 	if (!Monitor_test_owner)

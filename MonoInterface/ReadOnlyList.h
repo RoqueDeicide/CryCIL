@@ -33,13 +33,13 @@ public:
 
 	//! Gets or sets capacity of this list.
 	__declspec(property(get = GetCapacity)) int Capacity;
-	int GetCapacity()
+	int GetCapacity() const
 	{
 		return this->capacity;
 	}
 	//! Gets or sets number of elements within this list.
 	__declspec(property(get = GetLength)) int Length;
-	int GetLength()
+	int GetLength() const
 	{
 		return this->length;
 	}

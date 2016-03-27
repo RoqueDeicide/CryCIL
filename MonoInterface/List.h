@@ -615,7 +615,8 @@ public:
 	//! @param count Number of elements to iterate through.
 	void ForEach(Enumerator func, int index, int count)
 	{
-		for (int i = index, counter; counter < count; i++, counter++)
+		int counter = 0;
+		for (int i = index; counter < count; i++, counter++)
 		{
 			func(this->elements[i]);
 		}
@@ -654,7 +655,8 @@ public:
 	//! @param count Number of elements to iterate through.
 	void ThroughEach(EnumeratorIndex func, int index, int count)
 	{
-		for (int i = index, counter; counter < count; i++, counter++)
+		int counter = 0;
+		for (int i = index; counter < count; i++, counter++)
 		{
 			func(this->elements[i], i);
 		}
@@ -710,7 +712,7 @@ public:
 	}
 	//! Gets or sets capacity of this list.
 	__declspec(property(get=GetCapacity, put=SetCapacity)) int Capacity;
-	int GetCapacity()
+	int GetCapacity() const
 	{
 		return this->capacity;
 	}

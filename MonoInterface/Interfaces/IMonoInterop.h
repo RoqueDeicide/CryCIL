@@ -21,8 +21,9 @@ struct IMonoInteropBase : public IMonoSystemListener
 	//! @param functionPointer Pointer to the method that will be called internally.
 	virtual void RegisterInteropMethod(const char *methodName, void *functionPointer)
 	{
-		this->monoInterface->Functions->AddInternalCall
-			(this->GetInteropNameSpace(), this->GetInteropClassName(), methodName, functionPointer);
+		this->monoInterface->Functions->AddInternalCall(this->GetInteropNameSpace(),
+														this->GetInteropClassName(),
+														methodName, functionPointer);
 	}
 	//! Returns the name of the class that will declare managed counter-parts
 	//! of the internal calls.
@@ -416,7 +417,7 @@ template<> struct IMonoInterop < true, true > : public IMonoInteropBase
 	//! Registers internal calls through MonoEnv, since internal field is a null pointer.
 	virtual void RegisterInteropMethod(const char *methodName, void *functionPointer) override
 	{
-		MonoEnv->Functions->AddInternalCall
-			(this->GetInteropNameSpace(), this->GetInteropClassName(), methodName, functionPointer);
+		MonoEnv->Functions->AddInternalCall(this->GetInteropNameSpace(), this->GetInteropClassName(),
+											methodName, functionPointer);
 	}
 };

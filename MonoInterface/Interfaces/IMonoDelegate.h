@@ -72,7 +72,7 @@ public:
 	//! @param ex     A pointer to object reference that will be set to the reference to the exception
 	//!               object that represents unhandled exception if it was thrown during delegate execution.
 	//!               If set to null, then exception will caught and handled by CryCIL.
-	mono::object Invoke(void **params, mono::exception *ex = nullptr)
+	mono::object Invoke(void **params, mono::exception *ex = nullptr) const
 	{
 		if (!ex)
 		{
@@ -95,7 +95,7 @@ public:
 	//! @param del Another delegate.
 	//!
 	//! @returns A new delegate that encapsulates invocation lists of this and another delegates.
-	mono::delegat operator +(mono::delegat del)
+	mono::delegat operator +(mono::delegat del) const
 	{
 		if (strcmp(this->klass->Base->Name, "MulticastDelegate") != 0)
 		{
@@ -109,7 +109,7 @@ public:
 	//! @param del Another delegate.
 	//!
 	//! @returns A new delegate that encapsulates invocation lists of this and another delegates.
-	mono::delegat operator +(IMonoDelegate &del)
+	mono::delegat operator +(IMonoDelegate &del) const
 	{
 		if (strcmp(this->klass->Base->Name, "MulticastDelegate") != 0)
 		{
@@ -124,7 +124,7 @@ public:
 	//!
 	//! @returns A new delegate that represents invocation list of this delegate with another delegate's
 	//!          one removed from it.
-	mono::delegat operator -(mono::delegat del)
+	mono::delegat operator -(mono::delegat del) const
 	{
 		if (strcmp(this->klass->Base->Name, "MulticastDelegate") != 0)
 		{
@@ -139,7 +139,7 @@ public:
 	//!
 	//! @returns A new delegate that represents invocation list of this delegate with another delegate's
 	//!          one removed from it.
-	mono::delegat operator -(IMonoDelegate &del)
+	mono::delegat operator -(IMonoDelegate &del) const
 	{
 		if (strcmp(this->klass->Base->Name, "MulticastDelegate") != 0)
 		{
@@ -181,11 +181,11 @@ public:
 		}
 		return this->func;
 	}
-	mono::object GetTarget()
+	mono::object GetTarget() const
 	{
 		return MonoEnv->Objects->GetDelegateTarget(this->obj);
 	}
-	void *GetTrampoline()
+	void *GetTrampoline() const
 	{
 		return MonoEnv->Objects->GetDelegateTrampoline(this->obj);
 	}

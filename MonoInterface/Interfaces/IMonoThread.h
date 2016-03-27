@@ -74,7 +74,7 @@ struct IMonoThread : public IMonoObject
 	//! Detaches this thread from Mono run-time.
 	//!
 	//! Should be done when thread is finishing its work and when run-time is shutting down.
-	void Detach()
+	void Detach() const
 	{
 		MonoEnv->Objects->ThreadDetach(this->obj);
 	}
@@ -82,7 +82,7 @@ struct IMonoThread : public IMonoObject
 	//! Starts this thread, if it wasn't started already.
 	//!
 	//! @returns Indication whether this thread was not running before.
-	bool Start()
+	bool Start() const
 	{
 		static StartThunk thunk = StartThunk(this->klass->GetFunction("Start")->ToInstance()->UnmanagedThunk);
 
@@ -107,7 +107,7 @@ struct IMonoThread : public IMonoObject
 	//!
 	//! @returns Indication whether this thread was not running before or wasn't created using
 	//!          parameterless method.
-	bool Start(mono::object obj)
+	bool Start(mono::object obj) const
 	{
 		static StartObjThunk thunk = StartObjThunk(this->klass->GetFunction("Start", 1)->ToInstance()->UnmanagedThunk);
 
@@ -125,7 +125,7 @@ struct IMonoThread : public IMonoObject
 	}
 
 	//! Aborts this thread by sending ThreadAbortException into it.
-	void Abort()
+	void Abort() const
 	{
 		static AbortThunk thunk = AbortThunk(this->klass->GetFunction("Abort")->ToInstance()->UnmanagedThunk);
 
@@ -134,7 +134,7 @@ struct IMonoThread : public IMonoObject
 	}
 
 	//! Suspends calling thread until this thread terminates.
-	void Join()
+	void Join() const
 	{
 		static JoinThunk thunk = JoinThunk(this->klass->GetFunction("Join")->ToInstance()->UnmanagedThunk);
 
@@ -144,7 +144,7 @@ struct IMonoThread : public IMonoObject
 	//! Suspends calling thread until this thread terminates or until set amount of time passes.
 	//!
 	//! @param timeSpan Time in milliseconds to wait.
-	void Join(int timeSpan)
+	void Join(int timeSpan) const
 	{
 		static JoinIntThunk thunk = JoinIntThunk(this->klass->GetFunction("Join", 1)->ToInstance()->UnmanagedThunk);
 
@@ -153,21 +153,21 @@ struct IMonoThread : public IMonoObject
 	}
 
 
-	mono::string GetName()
+	mono::string GetName() const
 	{
 		static GetNameThunk thunk = GetNameThunk(this->klass->GetProperty("Name")->Getter->ToInstance()->UnmanagedThunk);
 
 		mono::exception ex;
 		return thunk(this->obj, &ex);
 	}
-	void SetName(mono::string value)
+	void SetName(mono::string value) const
 	{
 		static SetNameThunk thunk = SetNameThunk(this->klass->GetProperty("Name")->Setter->ToInstance()->UnmanagedThunk);
 
 		mono::exception ex;
 		thunk(this->obj, value, &ex);
 	}
-	ThreadState GetState()
+	ThreadState GetState() const
 	{
 		static GetStateThunk thunk = GetStateThunk(this->klass->GetProperty("ThreadState")->Getter->ToInstance()->UnmanagedThunk);
 
@@ -179,7 +179,7 @@ struct IMonoThread : public IMonoObject
 		}
 		return ThreadState(result);
 	}
-	ThreadPriority GetPriority()
+	ThreadPriority GetPriority() const
 	{
 		static GetPriorityThunk thunk = GetPriorityThunk(this->klass->GetProperty("Priority")->Getter->ToInstance()->UnmanagedThunk);
 
@@ -191,14 +191,14 @@ struct IMonoThread : public IMonoObject
 		}
 		return ThreadPriority(result);
 	}
-	void SetPriority(ThreadPriority value)
+	void SetPriority(ThreadPriority value) const
 	{
 		static SetPriorityThunk thunk = SetPriorityThunk(this->klass->GetProperty("Priority")->Setter->ToInstance()->UnmanagedThunk);
 
 		mono::exception ex;
 		thunk(this->obj, value, &ex);
 	}
-	bool IsAlive()
+	bool IsAlive() const
 	{
 		static GetIsAliveThunk thunk = GetIsAliveThunk(this->klass->GetProperty("IsAlive", 0)->Getter->ToInstance()->UnmanagedThunk);
 
@@ -210,7 +210,7 @@ struct IMonoThread : public IMonoObject
 		}
 		return result;
 	}
-	bool IsBackground()
+	bool IsBackground() const
 	{
 		static GetBackgroundThunk thunk = GetBackgroundThunk(this->klass->GetProperty("IsBackground", 0)->Getter->ToInstance()->UnmanagedThunk);
 
@@ -222,7 +222,7 @@ struct IMonoThread : public IMonoObject
 		}
 		return result;
 	}
-	void SetBackground(bool value)
+	void SetBackground(bool value) const
 	{
 		static SetBackgroundThunk thunk = SetBackgroundThunk(this->klass->GetProperty("IsBackground", 0)->Setter->ToInstance()->UnmanagedThunk);
 

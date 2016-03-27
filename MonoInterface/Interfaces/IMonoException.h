@@ -24,16 +24,16 @@ struct IMonoException : public IMonoObject
 	__declspec(property(get = GetInnerException)) mono::exception InnerException;
 
 	//! Raises this exception in the Mono run-time.
-	void Throw()
+	void Throw() const
 	{
 		MonoEnv->Objects->ThrowException(this->obj);
 	}
 
-	const char *GetErrorMessage()
+	const char *GetErrorMessage() const
 	{
 		return ToNativeString(this->klass->GetProperty("Message")->Getter->ToInstance()->Invoke(this->obj, nullptr, true));
 	}
-	const char *GetStackTrace()
+	const char *GetStackTrace() const
 	{
 		return ToNativeString(this->klass->GetProperty("StackTrace")->Getter->ToInstance()->Invoke(this->obj, nullptr, true));
 	}

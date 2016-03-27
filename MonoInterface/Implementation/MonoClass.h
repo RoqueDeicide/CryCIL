@@ -92,8 +92,8 @@ public:
 	virtual ReadOnlyList<IMonoEvent *>    GetEvents() override;
 	virtual ReadOnlyList<IMonoFunction *> GetFunctions() override;
 private:
-	void GetFieldValue(mono::object obj, MonoClassField *field, void *value);
-	void SetFieldValue(mono::object obj, MonoClassField *field, void *value);
+	void GetFieldValue(mono::object obj, MonoClassField *field, void *value) const;
+	void SetFieldValue(mono::object obj, MonoClassField *field, void *value) const;
 
 	template<typename result_type>
 	__forceinline result_type *SearchTheList(List<result_type *> &list, IMonoArray<> &types);
@@ -104,7 +104,7 @@ private:
 	template<typename result_type>
 	__forceinline result_type *SearchTheList(List<result_type *> &list, int paramCount);
 
-	const char *BuildFullName(bool ilStyle, const char *& field);
+	const char *BuildFullName(bool ilStyle, const char *& field) const;
 };
 
 //! Caches MonoClassWrapper objects.
