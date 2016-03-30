@@ -52,7 +52,7 @@
 #include "List.h"
 
 // Include monosgen.lib from relevant folder. (Folder is defined in project properties.)
-#pragma comment(lib, "monosgen")
+#pragma comment(lib, "monosgen-2.0")
 
 #include "targetver.h"
 
