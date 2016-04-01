@@ -322,14 +322,11 @@ public:
 			this->Add(item);
 			return false;
 		}
-		else
-		{
-			ElementType overridenItem = this->elements[index];
-			this->elements[index] = item;
+		ElementType overridenItem = this->elements[index];
+		this->elements[index] = item;
 
-			// We are not going to do anything about the overridden item: we just gonna let its destructor invoked.
-			return true;
-		}
+		// We are not going to do anything about the overridden item: we just gonna let its destructor invoked.
+		return true;
 	}
 	//! Inserts an item into specific position within the list.
 	//!

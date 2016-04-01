@@ -18,6 +18,7 @@ struct MonoFlowData
 	EFlowDataTypes DataType;
 
 	MonoFlowData()
+		: DataType(EFlowDataTypes::eFDT_Void)
 	{
 	}
 	MonoFlowData(TFlowInputData &data)
