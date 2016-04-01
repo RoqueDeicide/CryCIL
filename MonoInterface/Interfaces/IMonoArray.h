@@ -201,8 +201,16 @@ public:
 	//! @returns Reference to the element of the array.
 	ElementType& operator[](int index)
 	{
-		_MonoArray *a = reinterpret_cast<_MonoArray *>(this->obj);
-		return *reinterpret_cast<ElementType *>(reinterpret_cast<char*>(a->vector) + this->elementSize * index);
+		return this->GetElementWithSingleIndex(index);
+	}
+	//! Provides read-only access to the element of the array.
+	//!
+	//! @param index Zero-based index of the item to access.
+	//!
+	//! @returns Reference to the element of the array.
+	const ElementType& operator[](int index) const
+	{
+		return this->GetElementWithSingleIndex(index);
 	}
 	//! Provides read/write access to the element of the array.
 	//!
@@ -211,52 +219,34 @@ public:
 	//! @returns Reference to the element of the array.
 	ElementType& operator[](List<int> &indices)
 	{
-		_MonoArray *a = reinterpret_cast<_MonoArray *>(this->obj);
-		// Checking everything.
-		if (indices.Length == 0)
-		{
-			CryFatalError("Unable to access an element of the array using no indices.");
-		}
-		if (!a->bounds)
-		{
-			if (indices.Length == 1)
-			{
-				return this->operator[](indices[0]);
-			}
-			CryFatalError("Attempt was made to access an element of 1D array via more then 1 index.");
-		}
-		if (indices.Length != this->rank)
-		{
-			CryFatalError("Unable to access an element of the array using invalid number of indices.");
-		}
-
-		int index;
-
-		if (this->rank == 1)
-		{
-			index = indices[0];
-			if (a->bounds)
-			{
-				// This array has a non-zero lower bound.
-				index -= a->bounds[0].lower_bound;
-			}
-		}
-		else
-		{
-			for (int i = 0; i < this->rank; i++)
-			{
-				MonoArrayBounds bounds = a->bounds[i];
-				index = indices[i];
-				if (index >= bounds.length)
-				{
-					CryFatalError("The index #%d is out of range of the Mono array's dimension.", i);
-				}
-				index *= bounds.length;
-				index += index;
-			}
-		}
-		
-		return this->operator[](index);
+		return this->GetElementWithMultipleIndexes(indices.Data(), indices.Length);
+	}
+	//! Provides read only access to the element of the array.
+	//!
+	//! @param indices A list of indices that identify location of the element on the array.
+	//!
+	//! @returns Reference to the element of the array.
+	const ElementType& operator[](List<int> &indices) const
+	{
+		return this->GetElementWithMultipleIndexes(indices.Data(), indices.Length);
+	}
+	//! Provides read/write access to the element of the array.
+	//!
+	//! @param indices A list of indices that identify location of the element on the array.
+	//!
+	//! @returns Reference to the element of the array.
+	ElementType& operator[](std::initializer_list<int> indices)
+	{
+		return this->GetElementWithMultipleIndexes(indices.begin(), indices.size());
+	}
+	//! Provides read only access to the element of the array.
+	//!
+	//! @param indices A list of indices that identify location of the element on the array.
+	//!
+	//! @returns Reference to the element of the array.
+	const ElementType& operator[](std::initializer_list<int> indices) const
+	{
+		return this->GetElementWithMultipleIndexes(indices.begin(), indices.size());
 	}
 	//! Gets the length of the dimension of the array.
 	//!
@@ -315,5 +305,59 @@ public:
 
 		_MonoArray *a = reinterpret_cast<_MonoArray *>(this->obj);
 		return reinterpret_cast<ElementType *>(reinterpret_cast<char*>((a)->vector) + this->elementSize);
+	}
+	ElementType& GetElementWithSingleIndex(int index)
+	{
+		_MonoArray *a = reinterpret_cast<_MonoArray *>(this->obj);
+		return *reinterpret_cast<ElementType *>(reinterpret_cast<char*>(a->vector) + this->elementSize * index);
+	}
+	ElementType& GetElementWithMultipleIndexes(int *indexes, int indexCount)
+	{
+		_MonoArray *a = reinterpret_cast<_MonoArray *>(this->obj);
+		// Checking everything.
+		if (indexCount == 0)
+		{
+			CryFatalError("Unable to access an element of the array using no indices.");
+		}
+		if (!a->bounds)
+		{
+			if (indexCount == 1)
+			{
+				return this->operator[](indexes[0]);
+			}
+			CryFatalError("Attempt was made to access an element of 1D array via more then 1 index.");
+		}
+		if (indexCount != this->rank)
+		{
+			CryFatalError("Unable to access an element of the array using invalid number of indices.");
+		}
+
+		int index;
+
+		if (this->rank == 1)
+		{
+			index = indexes[0];
+			if (a->bounds)
+			{
+				// This array has a non-zero lower bound.
+				index -= a->bounds[0].lower_bound;
+			}
+		}
+		else
+		{
+			for (int i = 0; i < this->rank; i++)
+			{
+				MonoArrayBounds bounds = a->bounds[i];
+				index = indexes[i];
+				if (index >= bounds.length)
+				{
+					CryFatalError("The index #%d is out of range of the Mono array's dimension.", i);
+				}
+				index *= bounds.length;
+				index += index;
+			}
+		}
+
+		return this->GetElementWithSingleIndex(index);
 	}
 };
