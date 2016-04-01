@@ -3,7 +3,7 @@
 #include "FacialAnimationSkeletonAnimationEntry.h"
 #include <IFacialAnimation.h>
 
-void FacialAnimationSkeletonAnimationEntryInterop::OnRunTimeInitialized()
+void FacialAnimationSkeletonAnimationEntryInterop::InitializeInterops()
 {
 	REGISTER_METHOD(SetName);
 	REGISTER_METHOD(GetName);

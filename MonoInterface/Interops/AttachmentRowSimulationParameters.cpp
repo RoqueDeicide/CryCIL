@@ -4,7 +4,7 @@
 #include <IAttachment.h>
 #include "DynArrayToMonoArray.h"
 
-void AttachmentRowSimulationParametersInterop::OnRunTimeInitialized()
+void AttachmentRowSimulationParametersInterop::InitializeInterops()
 {
 	REGISTER_METHOD(GetProxyNames);
 	REGISTER_METHOD(SetProxyNames);

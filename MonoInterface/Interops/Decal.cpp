@@ -3,7 +3,7 @@
 #include "Decal.h"
 #include "MonoDecalInfo.h"
 
-void DecalInterop::OnRunTimeInitialized()
+void DecalInterop::InitializeInterops()
 {
 	REGISTER_METHOD(CreateDecal);
 	REGISTER_METHOD(DeleteDecalsInRange);

@@ -2,7 +2,7 @@
 
 #include "CryFont.h"
 
-void CryFontInterop::OnRunTimeInitialized()
+void CryFontInterop::InitializeInterops()
 {
 	REGISTER_CTOR(Ctor);
 

@@ -3,7 +3,7 @@
 #include "AttachmentSkin.h"
 #include <IAttachment.h>
 
-void AttachmentSkinInterop::OnRunTimeInitialized()
+void AttachmentSkinInterop::InitializeInterops()
 {
 	REGISTER_METHOD(AddRef);
 	REGISTER_METHOD(Release);

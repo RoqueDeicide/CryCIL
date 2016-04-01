@@ -2,7 +2,7 @@
 
 #include "AttachmentSocket.h"
 
-void AttachmentSocketInterop::OnRunTimeInitialized()
+void AttachmentSocketInterop::InitializeInterops()
 {
 	REGISTER_METHOD(AddRef);
 	REGISTER_METHOD(Release);

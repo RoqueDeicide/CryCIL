@@ -8,7 +8,7 @@ struct CryXmlNodeInterop : public IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "CryXmlNode"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Utilities"; }
 	
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static IXmlNode *Ctor(mono::string name);
 	static void      AddRef(IXmlNode *handle);

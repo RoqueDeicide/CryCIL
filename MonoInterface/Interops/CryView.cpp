@@ -2,7 +2,7 @@
 
 #include "CryView.h"
 
-void CryViewInterop::OnRunTimeInitialized()
+void CryViewInterop::InitializeInterops()
 {
 	REGISTER_METHOD(UpdateInternal);
 	REGISTER_METHOD(LinkToInternal);

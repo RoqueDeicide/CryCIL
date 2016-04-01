@@ -2,7 +2,7 @@
 
 #include "Level.h"
 
-void LevelInterop::OnRunTimeInitialized()
+void LevelInterop::InitializeInterops()
 {
 	REGISTER_METHOD(GetName);
 	REGISTER_METHOD(IsOfTypeInternal);

@@ -2,7 +2,7 @@
 
 #include "PhysicalBody.h"
 
-void PhysicalBodyInterop::OnRunTimeInitialized()
+void PhysicalBodyInterop::InitializeInterops()
 {
 	REGISTER_METHOD(RegisterGeometry);
 	REGISTER_METHOD(AddRefGeometry);

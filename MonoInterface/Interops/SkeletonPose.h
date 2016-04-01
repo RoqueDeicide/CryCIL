@@ -9,7 +9,7 @@ struct SkeletonPoseInterop : IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "SkeletonPose"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Models.Characters"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static void             BuildPhysicalEntityInternal(ISkeletonPose *handle, IPhysicalEntity *pent, float mass,
 														const Matrix34 &mtxloc, int surfaceIdx, float stiffnessScale,

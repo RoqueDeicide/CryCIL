@@ -12,7 +12,7 @@ struct SkeletonAnimationInterop : IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "SkeletonAnimation"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Models.Characters"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static void SetDebugging(ISkeletonAnim *handle, bool flags);
 	static void SetAnimationDrivenMotion(ISkeletonAnim *handle, bool ts);

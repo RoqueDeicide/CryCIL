@@ -7,7 +7,7 @@ struct CryEntityProxiesInterop : IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "CryEntityProxies"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Logic.EntityProxies"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static IEntityAreaProxy *GetAreaProxy(IEntity *handle);
 	static IEntityAudioProxy *GetAudioProxy(IEntity *handle);

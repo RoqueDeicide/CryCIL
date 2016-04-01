@@ -17,7 +17,7 @@ struct AttachedObjectsCommonsInterop : IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "AttachedObjectsCommons"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Models.Characters.Attachments"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static void                ProcessAttachment(IAttachmentObject *handle, IAttachment *pIAttachment);
 	static AABB                GetAabb(IAttachmentObject *handle);

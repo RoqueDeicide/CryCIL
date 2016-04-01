@@ -11,7 +11,7 @@ struct TimingInterop : public IMonoInterop<false, true>
 
 	virtual void Update() override;
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static int64 get_Async();
 	static int64 get_AsyncCurrent();

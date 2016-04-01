@@ -5,7 +5,7 @@
 RAW_THUNK typedef void(*positionThunk)(int, int);
 RAW_THUNK typedef void(*wheelDeltaThunk)(int);
 
-void MouseInterop::OnRunTimeInitialized()
+void MouseInterop::InitializeInterops()
 {
 	REGISTER_METHOD(IncrementCounter);
 	REGISTER_METHOD(DecrementCounter);

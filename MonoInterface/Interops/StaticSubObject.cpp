@@ -2,7 +2,7 @@
 
 #include "StaticSubObject.h"
 
-void StaticSubObjectInterop::OnRunTimeInitialized()
+void StaticSubObjectInterop::InitializeInterops()
 {
 	REGISTER_METHOD(GetName);
 	REGISTER_METHOD(SetName);

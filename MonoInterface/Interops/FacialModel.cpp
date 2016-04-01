@@ -3,7 +3,7 @@
 #include "FacialModel.h"
 #include <IFacialAnimation.h>
 
-void FacialModelInterop::OnRunTimeInitialized()
+void FacialModelInterop::InitializeInterops()
 {
 	REGISTER_METHOD(GetEffectorCount);
 	REGISTER_METHOD(GetEffector);

@@ -7,7 +7,7 @@ struct GameInterop : public IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "Game"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static bool get_IsEditor();
 	static bool get_IsEditing();

@@ -12,7 +12,7 @@ struct ParticleParametersInterop : public IMonoInterop < true, true >
 	virtual const char *GetInteropClassName() override { return "ParticleParameters"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static mono::string get_Comment(ParticleParametersObject *obj);
 	static void set_Comment(ParticleParametersObject *obj, mono::string value);

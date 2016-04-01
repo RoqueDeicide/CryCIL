@@ -2,7 +2,7 @@
 
 #include "Ocean.h"
 
-void OceanInterop::OnRunTimeInitialized()
+void OceanInterop::InitializeInterops()
 {
 	REGISTER_METHOD(get_RenderOptions);
 	REGISTER_METHOD(set_RenderOptions);

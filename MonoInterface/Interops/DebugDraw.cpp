@@ -2,7 +2,7 @@
 
 #include "DebugDraw.h"
 
-void DebugDrawInterop::OnRunTimeInitialized()
+void DebugDrawInterop::InitializeInterops()
 {
 	REGISTER_METHOD(AddSphere);
 	REGISTER_METHOD(AddDirection);

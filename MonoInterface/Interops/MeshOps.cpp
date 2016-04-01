@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "MeshOps.h"
 
-void MeshOpsInterop::OnRunTimeInitialized()
+void MeshOpsInterop::InitializeInterops()
 {
 	REGISTER_METHOD(CsgOpInternal);
 }

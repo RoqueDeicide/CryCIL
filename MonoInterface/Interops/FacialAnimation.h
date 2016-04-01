@@ -10,7 +10,7 @@ struct FacialAnimationInterop : IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "FacialAnimation"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Models.Characters.Faces"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static void                     ClearAllCachesInternal();
 	static IFacialEffectorsLibrary *CreateEffectorsLibraryInternal();

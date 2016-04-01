@@ -6,7 +6,7 @@ struct CryMarshalInterop : public IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "CryMarshal"; };
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Memory"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 	// Allocate an array of bytes of given length. Returns a pointer to the first byte.
 	// Allocated memory should not be referenced from unmanaged code, unless you have access
 	// to instance of INativeMemoryWrapper type that works with this memory and

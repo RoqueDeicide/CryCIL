@@ -3,7 +3,7 @@
 #include "DefaultSkeleton.h"
 #include <ICryAnimation.h>
 
-void DefaultSkeletonInterop::OnRunTimeInitialized()
+void DefaultSkeletonInterop::InitializeInterops()
 {
 	REGISTER_METHOD(GetJointCount);
 	REGISTER_METHOD(GetJointParentIDByID);

@@ -3,7 +3,7 @@
 #include "Spline.h"
 #include "ISplines.h"
 
-void SplineInterop::OnRunTimeInitialized()
+void SplineInterop::InitializeInterops()
 {
 	REGISTER_METHOD(GetNumDimensionsInternal);
 

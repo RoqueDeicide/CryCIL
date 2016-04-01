@@ -7,7 +7,7 @@ struct CryEntityCameraProxyInterop : IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "CryEntityCameraProxy"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Logic.EntityProxies"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static void SetCamera(IEntityCameraProxy *handle, CCamera &cam);
 	static void GetCamera(IEntityCameraProxy *handle, CCamera &cam);

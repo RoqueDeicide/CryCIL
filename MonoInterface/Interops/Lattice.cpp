@@ -2,7 +2,7 @@
 
 #include "Lattice.h"
 
-void LatticeInterop::OnRunTimeInitialized()
+void LatticeInterop::InitializeInterops()
 {
 	REGISTER_METHOD(GetParams);
 	REGISTER_METHOD(SetParams);

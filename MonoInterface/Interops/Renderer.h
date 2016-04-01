@@ -7,7 +7,7 @@ struct RendererInterop : public IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "Renderer"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Rendering"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static void DrawTextInternal(Vec3 position, int options, ColorF color, Vec2 scale, mono::string text);
 

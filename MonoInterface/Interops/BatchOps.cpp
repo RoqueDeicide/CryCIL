@@ -2,7 +2,7 @@
 
 #include "BatchOps.h"
 
-void BatchOps::OnRunTimeInitialized()
+void BatchOps::InitializeInterops()
 {
 	REGISTER_METHOD(MathSimpleOpSingle);
 	REGISTER_METHOD(MathSimpleOpDouble);

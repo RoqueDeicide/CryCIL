@@ -7,7 +7,7 @@ struct CryArchiveInterop : public IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "CryArchive"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Files"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static uint get_Flags(mono::object obj);
 	static void set_Flags(mono::object obj, uint _value);

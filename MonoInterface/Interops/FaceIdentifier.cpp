@@ -4,7 +4,7 @@
 #include <ICryAnimation.h>
 #include <IFacialAnimation.h>
 
-void FaceIdentifierInterop::OnRunTimeInitialized()
+void FaceIdentifierInterop::InitializeInterops()
 {
 	REGISTER_METHOD(CreateIdentifier);
 }

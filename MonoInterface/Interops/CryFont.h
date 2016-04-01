@@ -7,7 +7,7 @@ struct CryFontInterop : public IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return ""; }
 	virtual const char *GetInteropNameSpace() override { return ""; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static void Ctor(mono::object obj, mono::string name);
 	static void Release(mono::object obj);

@@ -2,7 +2,7 @@
 
 #include "CryEntityRopeProxy.h"
 
-void CryEntityRopeProxyInterop::OnRunTimeInitialized()
+void CryEntityRopeProxyInterop::InitializeInterops()
 {
 	REGISTER_METHOD(GetRopeRenderNode);
 }

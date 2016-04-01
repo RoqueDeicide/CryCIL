@@ -2,7 +2,7 @@
 
 #include "CryEntityCameraProxy.h"
 
-void CryEntityCameraProxyInterop::OnRunTimeInitialized()
+void CryEntityCameraProxyInterop::InitializeInterops()
 {
 	REGISTER_METHOD(SetCamera);
 	REGISTER_METHOD(GetCamera);

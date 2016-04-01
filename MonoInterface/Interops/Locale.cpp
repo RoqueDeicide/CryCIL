@@ -2,7 +2,7 @@
 
 #include "Locale.h"
 
-void LocaleInterop::OnRunTimeInitialized()
+void LocaleInterop::InitializeInterops()
 {
 	REGISTER_METHOD(Translate);
 	REGISTER_METHOD(TranslateLabel);

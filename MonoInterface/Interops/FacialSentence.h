@@ -8,7 +8,7 @@ struct FacialSentenceInterop : IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "FacialSentence"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Models.Characters.Faces"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static void             SetText(IFacialSentence *handle, mono::string text);
 	static mono::string     GetText(IFacialSentence *handle);

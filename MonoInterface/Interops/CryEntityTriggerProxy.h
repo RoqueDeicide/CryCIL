@@ -7,7 +7,7 @@ struct CryEntityTriggerProxyInterop : IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "CryEntityTriggerProxy"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Logic.EntityProxies"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static void SetTriggerBounds(IEntityTriggerProxy *handle, const AABB &bbox);
 	static void GetTriggerBounds(IEntityTriggerProxy *handle, AABB &bbox);

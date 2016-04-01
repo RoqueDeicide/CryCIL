@@ -13,7 +13,7 @@ LevelSystemInterop::~LevelSystemInterop()
 	MonoEnv->CryAction->GetILevelSystem()->RemoveListener(this);
 }
 
-void LevelSystemInterop::OnRunTimeInitialized()
+void LevelSystemInterop::InitializeInterops()
 {
 	MonoEnv->CryAction->GetILevelSystem()->AddListener(this);
 

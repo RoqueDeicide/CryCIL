@@ -2,7 +2,7 @@
 
 #include "CryAudioProxy.h"
 
-void CryAudioProxyInterop::OnRunTimeInitialized()
+void CryAudioProxyInterop::InitializeInterops()
 {
 	REGISTER_METHOD(Init);
 	REGISTER_METHOD(ReleaseInternal);

@@ -2,7 +2,7 @@
 
 #include "CryFiles.h"
 
-void CryFilesInterop::OnRunTimeInitialized()
+void CryFilesInterop::InitializeInterops()
 {
 	REGISTER_METHOD(Exists);
 	REGISTER_METHOD(IsFolder);

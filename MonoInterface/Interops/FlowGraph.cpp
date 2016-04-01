@@ -4,7 +4,7 @@
 #include "MonoFlowNodeFactory.h"
 #include "MonoFlowNode.h"
 
-void FlowGraphInterop::OnRunTimeInitialized()
+void FlowGraphInterop::InitializeInterops()
 {
 	REGISTER_METHOD_NCN("CryCil.RunTime.Registration", "FlowNodeTypeRegistry", "RegisterType", RegisterType);
 	REGISTER_METHOD_NCN("CryCil.Engine.Logic", "OutputPort", "ActivateInternal", ActivatePort);

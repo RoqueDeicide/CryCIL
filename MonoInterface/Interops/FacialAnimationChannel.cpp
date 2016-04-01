@@ -3,7 +3,7 @@
 #include "FacialAnimationChannel.h"
 #include <IFacialAnimation.h>
 
-void FacialAnimationChannelInterop::OnRunTimeInitialized()
+void FacialAnimationChannelInterop::InitializeInterops()
 {
 	REGISTER_METHOD(SetIdentifier);
 	REGISTER_METHOD(GetIdentifier);

@@ -2,7 +2,7 @@
 
 #include "ChannelId.h"
 
-void ChannelIdInterop::OnRunTimeInitialized()
+void ChannelIdInterop::InitializeInterops()
 {
 	REGISTER_METHOD(GetChannel);
 }

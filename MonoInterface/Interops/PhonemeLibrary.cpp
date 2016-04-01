@@ -4,7 +4,7 @@
 #include <ICryAnimation.h>
 #include <IFacialAnimation.h>
 
-void PhonemeLibraryInterop::OnRunTimeInitialized()
+void PhonemeLibraryInterop::InitializeInterops()
 {
 	REGISTER_METHOD(GetPhonemeCount);
 	REGISTER_METHOD(GetPhonemeInfo);

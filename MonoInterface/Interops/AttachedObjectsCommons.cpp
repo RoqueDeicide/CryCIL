@@ -3,7 +3,7 @@
 #include "AttachedObjectsCommons.h"
 #include <IAttachment.h>
 
-void AttachedObjectsCommonsInterop::OnRunTimeInitialized()
+void AttachedObjectsCommonsInterop::InitializeInterops()
 {
 	REGISTER_METHOD(ProcessAttachment);
 	REGISTER_METHOD(GetAabb);

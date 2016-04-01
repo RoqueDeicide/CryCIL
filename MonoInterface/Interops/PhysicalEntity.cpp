@@ -2,7 +2,7 @@
 
 #include "PhysicalEntity.h"
 
-void PhysicalEntityInterop::OnRunTimeInitialized()
+void PhysicalEntityInterop::InitializeInterops()
 {
 	REGISTER_METHOD(GetPhysicalType);
 	REGISTER_METHOD(SetParams);

@@ -2,7 +2,7 @@
 
 #include "ArchiveStream.h"
 
-void ArchiveStreamInterop::OnRunTimeInitialized()
+void ArchiveStreamInterop::InitializeInterops()
 {
 	REGISTER_METHOD(UpdateFile);
 }

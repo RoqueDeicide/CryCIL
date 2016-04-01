@@ -4,7 +4,7 @@
 #include <ICryAnimation.h>
 #include <IFacialAnimation.h>
 
-void FacialAnimationInterop::OnRunTimeInitialized()
+void FacialAnimationInterop::InitializeInterops()
 {
 	REGISTER_METHOD(ClearAllCachesInternal);
 	REGISTER_METHOD(CreateEffectorsLibraryInternal);

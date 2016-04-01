@@ -13,7 +13,7 @@ struct EntityIdInterop : public IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "EntityId"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Logic"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static IEntity     *GetEntity(uint id);
 	static bool         PrepareInternal(EntityId id, bool prepareNow);
@@ -30,7 +30,7 @@ struct EntityPoolInterop : public IMonoInterop<false, true>, public IEntityPoolL
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Logic"; }
 	IMonoClass *GetMonoClass();
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	virtual void OnPoolBookmarkCreated(EntityId entityId, const SEntitySpawnParams& params, XmlNodeRef entityNode) override;
 	virtual void OnEntityPreparedFromPool(EntityId entityId, IEntity *pEntity) override;
@@ -57,7 +57,7 @@ public:
 	static bool            IsMonoEntity(const char *className);
 	static IEntityProxyPtr CreateGameObjectForCryCilEntity(IEntity *pEntity, SEntitySpawnParams &params, void *pUserData);
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static bool RegisterEntityClass(mono::string name, mono::string category, mono::string editorHelper,
 									mono::string editorIcon, enum EEntityClassFlags flags, mono::object properties,
@@ -74,7 +74,7 @@ struct NetEntityInterop : public IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "MonoNetEntity"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Logic"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static void SetChannelId(EntityId entityId, ushort channelId);
 	static void InvokeRmi(EntityId sender, mono::string methodName, mono::object parameters, uint32 _where, int channel,
@@ -87,7 +87,7 @@ struct CryEntityInterop : public IMonoInterop < true, true >
 	virtual const char *GetInteropClassName() override { return "CryEntity"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Logic"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static mono::object GetMonoEntity(IEntity *handle);
 	static void         SetFlags(IEntity *handle, uint64 flags);
@@ -159,7 +159,7 @@ struct EntitySlotsInterop : IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "EntitySlotOps"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Logic"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static bool         IsSlotValid(IEntity *entityHandle, int nIndex);
 	static void         FreeSlot(IEntity *entityHandle, int nIndex);
@@ -200,7 +200,7 @@ struct MonoEntityInterop : public IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "MonoEntity"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Logic"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static void EnablePostUpdates(IEntity *entity, bool receive);
 	static void EnableUpdates(IEntity *entity, bool receive);

@@ -3,7 +3,7 @@
 #include "FaceState.h"
 #include <IFacialAnimation.h>
 
-void FaceStateInterop::OnRunTimeInitialized()
+void FaceStateInterop::InitializeInterops()
 {
 	REGISTER_METHOD(GetEffectorWeight);
 	REGISTER_METHOD(SetEffectorWeight);

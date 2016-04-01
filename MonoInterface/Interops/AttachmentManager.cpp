@@ -3,7 +3,7 @@
 #include "AttachmentManager.h"
 #include <IAttachment.h>
 
-void AttachmentManagerInterop::OnRunTimeInitialized()
+void AttachmentManagerInterop::InitializeInterops()
 {
 	REGISTER_METHOD(GetSkelInstance);
 	REGISTER_METHOD(LoadAttachmentList);

@@ -10,7 +10,7 @@ struct CryActionMapInterop : IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "CryActionMap"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Input.ActionMapping"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static IActionMapAction *GetAction(IActionMap *handle, mono::string name);
 	static IActionMapAction *CreateActionInternal(IActionMap *handle, mono::string name);

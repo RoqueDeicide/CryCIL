@@ -24,7 +24,7 @@ struct ViewControllerInterop : IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "ViewController"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Rendering.Views"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static MonoViewController *Create(mono::object view);
 	static void DeleteThis(MonoViewController *handle);

@@ -3,7 +3,7 @@
 #include "SkeletonAnimation.h"
 #include <ICryAnimation.h>
 
-void SkeletonAnimationInterop::OnRunTimeInitialized()
+void SkeletonAnimationInterop::InitializeInterops()
 {
 	REGISTER_METHOD(SetDebugging);
 	REGISTER_METHOD(SetAnimationDrivenMotion);

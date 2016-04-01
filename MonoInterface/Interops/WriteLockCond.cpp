@@ -2,7 +2,7 @@
 
 #include "WriteLockCond.h"
 
-void WriteLockCondInterop::OnRunTimeInitialized()
+void WriteLockCondInterop::InitializeInterops()
 {
 	REGISTER_METHOD(CreateLock);
 	REGISTER_METHOD(ReleaseLock);

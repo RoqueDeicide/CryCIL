@@ -2,7 +2,7 @@
 
 #include "ConsoleVariable.h"
 
-void ConsoleVariableInterop::OnRunTimeInitialized()
+void ConsoleVariableInterop::InitializeInterops()
 {
 	REGISTER_METHOD(Release);
 	REGISTER_METHOD(ClearFlags);

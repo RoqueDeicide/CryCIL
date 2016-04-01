@@ -7,7 +7,7 @@ struct CryPakInterop : public IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "CryPacks"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Files"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static mono::string OpenPack       (mono::string name, ICryPak::EPathResolutionRules rules);
 	static mono::string OpenPackRooted (mono::string root, mono::string name, ICryPak::EPathResolutionRules rules);

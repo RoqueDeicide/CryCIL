@@ -2,7 +2,7 @@
 
 #include "Texture.h"
 
-void TextureInterop::OnRunTimeInitialized()
+void TextureInterop::InitializeInterops()
 {
 	REGISTER_METHOD(set_Clamp);
 	REGISTER_METHOD(set_Filter);

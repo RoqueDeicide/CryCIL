@@ -7,7 +7,7 @@ struct TerrainInterop : public IMonoInterop < true, true >
 	virtual const char *GetInteropClassName() override { return "Terrain"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Environment"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static int   get_UnitSize();
 	static int   get_Size();

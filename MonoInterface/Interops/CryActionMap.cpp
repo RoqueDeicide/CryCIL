@@ -3,7 +3,7 @@
 #include "CryActionMap.h"
 #include <IActionMapManager.h>
 
-void CryActionMapInterop::OnRunTimeInitialized()
+void CryActionMapInterop::InitializeInterops()
 {
 	REGISTER_METHOD(GetAction);
 	REGISTER_METHOD(CreateActionInternal);

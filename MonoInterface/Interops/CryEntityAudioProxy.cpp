@@ -2,7 +2,7 @@
 
 #include "CryEntityAudioProxy.h"
 
-void CryEntityAudioProxyInterop::OnRunTimeInitialized()
+void CryEntityAudioProxyInterop::InitializeInterops()
 {
 	REGISTER_METHOD(SetFadeDistance);
 	REGISTER_METHOD(GetFadeDistance);

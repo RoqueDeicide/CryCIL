@@ -6,7 +6,7 @@
 #include "MonoCryXmlNode.h"
 #include <ParticleParams.h>
 
-void ParticleEffectInterop::OnRunTimeInitialized()
+void ParticleEffectInterop::InitializeInterops()
 {
 	REGISTER_METHOD(SpawnEmitter);
 	REGISTER_METHOD(SpawnEmitterDefault);

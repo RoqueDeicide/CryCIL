@@ -26,7 +26,7 @@ struct RandomizedSingle
 	}
 };
 
-void ParticleParametersInterop::OnRunTimeInitialized()
+void ParticleParametersInterop::InitializeInterops()
 {
 	REGISTER_METHOD(get_Comment);
 	REGISTER_METHOD(set_Comment);

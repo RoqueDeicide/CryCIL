@@ -10,7 +10,7 @@ struct CryInputActionInterop : IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "CryInputAction"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Input.ActionMapping"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static bool AddInputInternal(IActionMapAction *handle, EKeyId input, ActionInputSpecification spec);
 	static bool RemoveInputInternal(IActionMapAction *handle, EKeyId input);

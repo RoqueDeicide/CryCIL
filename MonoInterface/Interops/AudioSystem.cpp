@@ -2,7 +2,7 @@
 
 #include "AudioSystem.h"
 
-void AudioSystemInterop::OnRunTimeInitialized()
+void AudioSystemInterop::InitializeInterops()
 {
 	REGISTER_METHOD(CreateNativeImplementationObject);
 	REGISTER_METHOD(GetPreloadRequestId);

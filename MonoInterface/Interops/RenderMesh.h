@@ -7,7 +7,7 @@ struct RenderMeshInterop : IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "CryRenderMesh"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Models.StaticObjects"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static void AddRef(IRenderMesh *handle);
 	static int Release(IRenderMesh *handle);

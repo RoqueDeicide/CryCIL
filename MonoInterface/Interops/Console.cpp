@@ -4,7 +4,7 @@
 
 #undef GetCommandLine
 
-void ConsoleInterop::OnRunTimeInitialized()
+void ConsoleInterop::InitializeInterops()
 {
 	auto klass = this->GetInteropClass(MonoEnv->Cryambly);
 	executeCommand = ExecuteCommandThunk(klass->GetFunction("ExecuteMonoCommand", -1)->UnmanagedThunk);

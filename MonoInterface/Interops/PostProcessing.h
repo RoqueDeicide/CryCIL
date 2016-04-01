@@ -7,7 +7,7 @@ struct PostProcessingInterop : IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "PostProcessing"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Rendering"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static void SetPostEffectParam(mono::string pParam, float fValue, bool bForceValue);
 	static void SetPostEffectParamVec4(mono::string pParam, const Vec4 &pValue, bool bForceValue);

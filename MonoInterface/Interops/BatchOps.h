@@ -38,7 +38,7 @@ struct BatchOps : public IMonoInterop<true>
 	virtual const char *GetInteropClassName() override { return "BatchOps"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static void MathSimpleOpSingle(float* numbers, __int64 count, MathSimpleOperations op);
 	static void MathSimpleOpDouble(double* numbers, __int64 count, MathSimpleOperations op);

@@ -10,7 +10,7 @@ struct TimeOfDayInterop : public IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "TimeOfDay"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Environment"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static ITimeOfDay::SAdvancedInfo get_Cycle();
 	static void set_Cycle(ITimeOfDay::SAdvancedInfo value);

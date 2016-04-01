@@ -2,7 +2,7 @@
 
 #include "MathHelpers.h"
 
-void MathHelpersInterop::OnRunTimeInitialized()
+void MathHelpersInterop::InitializeInterops()
 {
 	REGISTER_METHOD(RsqrtSingle);
 	REGISTER_METHOD(RsqrtDouble);

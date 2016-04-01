@@ -2,7 +2,7 @@
 
 #include "LightSource.h"
 
-void LightSourceInterop::OnRunTimeInitialized()
+void LightSourceInterop::InitializeInterops()
 {
 	REGISTER_METHOD(SetLightProperties);
 	REGISTER_METHOD(GetLightProperties);

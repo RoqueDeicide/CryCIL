@@ -2,7 +2,7 @@
 
 #include "CustomMarshaling.h"
 
-void CustomMarshalingInterop::OnRunTimeInitialized()
+void CustomMarshalingInterop::InitializeInterops()
 {
 	REGISTER_METHOD(GetUtf8String);
 }

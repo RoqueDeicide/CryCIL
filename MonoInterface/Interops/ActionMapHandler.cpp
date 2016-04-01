@@ -4,7 +4,7 @@
 #include <CryCrc32.h>
 #include <ActionMap.h>
 
-void ActionMapHandlerInterop::OnRunTimeInitialized()
+void ActionMapHandlerInterop::InitializeInterops()
 {
 	REGISTER_METHOD(CreateInternal);
 	REGISTER_METHOD(DestroyInternal);

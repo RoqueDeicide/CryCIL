@@ -2,7 +2,7 @@
 
 #include "Game.h"
 
-void GameInterop::OnRunTimeInitialized()
+void GameInterop::InitializeInterops()
 {
 	REGISTER_METHOD(get_IsEditor);
 	REGISTER_METHOD(get_IsEditing);

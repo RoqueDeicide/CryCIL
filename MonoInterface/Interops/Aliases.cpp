@@ -2,7 +2,7 @@
 
 #include "Aliases.h"
 
-void AliasesInterop::OnRunTimeInitialized()
+void AliasesInterop::InitializeInterops()
 {
 	REGISTER_METHOD(Get);
 	REGISTER_METHOD(Set);

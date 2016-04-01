@@ -2,7 +2,7 @@
 
 #include "GeneralExtensions.h"
 
-void GeneralExtensionsInterop::OnRunTimeInitialized()
+void GeneralExtensionsInterop::InitializeInterops()
 {
 	REGISTER_METHOD_NCN(this->GetInteropNameSpace(), "StringExtensions", "CopyToBuffer", CopyToBuffer);
 }

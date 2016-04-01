@@ -6,7 +6,7 @@
 #include "PhysicsEventRaisers.h"
 #include "PhysicsStructConversionUtilities.h"
 
-void PhysicalWorldInterop::OnRunTimeInitialized()
+void PhysicalWorldInterop::InitializeInterops()
 {
 	REGISTER_METHOD(SimulateExplosion);
 	REGISTER_METHOD(AddExplosionShape);

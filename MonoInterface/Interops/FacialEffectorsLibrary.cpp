@@ -4,7 +4,7 @@
 #include <IFacialAnimation.h>
 #include "MergingUtility.h"
 
-void FacialEffectorsLibraryInterop::OnRunTimeInitialized()
+void FacialEffectorsLibraryInterop::InitializeInterops()
 {
 	REGISTER_METHOD(AddRef);
 	REGISTER_METHOD(Release);

@@ -7,7 +7,7 @@ struct MaterialLayerCollectionInterop : public IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "MaterialLayerCollection"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Rendering"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static void SetLayerCount(IMaterial *handle, uint nCount);
 	static uint GetLayerCount(IMaterial *handle);
@@ -22,7 +22,7 @@ struct MaterialLayerInterop : public IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "MaterialLayerCollection"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Rendering"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static IMaterialLayer *Ctor(IMaterial *mat);
 	static void EnableInternal(IMaterialLayer *handle, bool bEnable);

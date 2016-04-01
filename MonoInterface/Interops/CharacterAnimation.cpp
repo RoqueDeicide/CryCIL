@@ -3,7 +3,7 @@
 #include "CharacterAnimation.h"
 #include <CryCharAnimationParams.h>
 
-void CharacterAnimationInterop::OnRunTimeInitialized()
+void CharacterAnimationInterop::InitializeInterops()
 {
 	REGISTER_METHOD(Serialize);
 	REGISTER_METHOD(GetParametricSampler);

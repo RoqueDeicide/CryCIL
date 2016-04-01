@@ -3,7 +3,7 @@
 #include "CMesh.h"
 #include <IIndexedMesh.h>
 
-void CMeshInterop::OnRunTimeInitialized()
+void CMeshInterop::InitializeInterops()
 {
 	REGISTER_METHOD(GetStreamPtr);
 	REGISTER_METHOD(ReallocateStream);

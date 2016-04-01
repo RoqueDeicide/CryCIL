@@ -36,7 +36,7 @@ struct ActionMapsInterop : IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "ActionMaps"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Input.ActionMapping"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static void        AddDeviceMapping(SupportedInputDevices device);
 	static IActionMap *CreateActionMap(mono::string name);

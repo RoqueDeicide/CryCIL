@@ -2,7 +2,7 @@
 
 #include "AnimationSet.h"
 
-void AnimationSetInterop::OnRunTimeInitialized()
+void AnimationSetInterop::InitializeInterops()
 {
 	REGISTER_METHOD(GetAnimationCount);
 	REGISTER_METHOD(GetAnimIDByName);

@@ -8,7 +8,7 @@ struct AnimationSetInterop : IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "AnimationSet"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Models.Characters"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static uint         GetAnimationCount(IAnimationSet *handle);
 	static int          GetAnimIDByName(IAnimationSet *handle, mono::string szAnimationName);

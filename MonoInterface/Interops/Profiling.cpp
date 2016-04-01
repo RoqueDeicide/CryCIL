@@ -2,7 +2,7 @@
 
 #include "Profiling.h"
 
-void ProfilingInterop::OnRunTimeInitialized()
+void ProfilingInterop::InitializeInterops()
 {
 	const char *nameSpace = this->GetInteropNameSpace();
 	REGISTER_METHOD_NCN(nameSpace, "Profiler", "CreateProfiler", CreateProfiler);

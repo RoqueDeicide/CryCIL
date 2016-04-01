@@ -2,7 +2,7 @@
 
 #include "PostProcessing.h"
 
-void PostProcessingInterop::OnRunTimeInitialized()
+void PostProcessingInterop::InitializeInterops()
 {
 	REGISTER_METHOD(SetPostEffectParam);
 	REGISTER_METHOD(SetPostEffectParamVec4);

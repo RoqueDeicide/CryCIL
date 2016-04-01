@@ -2,7 +2,7 @@
 #include "IGeometry.h"
 #include "ForeignData.h"
 
-void IGeometryInterop::OnRunTimeInitialized()
+void IGeometryInterop::InitializeInterops()
 {
 	REGISTER_METHOD(CreateMesh);
 	REGISTER_METHOD(CreateMeshBv);

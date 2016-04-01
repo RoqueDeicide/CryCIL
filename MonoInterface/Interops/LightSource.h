@@ -8,7 +8,7 @@ struct LightSourceInterop : public IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "LightSource"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Rendering.Lighting"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static void          SetLightProperties(ILightSource *handle, const LightProperties &properties);
 	static void          GetLightProperties(ILightSource *handle, LightProperties &properties);

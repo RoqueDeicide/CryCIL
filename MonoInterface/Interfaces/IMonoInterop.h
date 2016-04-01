@@ -43,6 +43,53 @@ struct IMonoInteropBase : public IMonoSystemListener
 	{}
 	//! Unnecessary for most interops.
 	virtual void OnRunTimeInitializing() override {}
+	//! When implemented in derived class, initializes interop between CryEngine and Mono.
+	virtual void InitializeInterops() = 0;
+	//! Initiates initialization of the interop.
+	virtual void OnRunTimeInitialized() override
+	{
+		const char *nameSpace = this->GetInteropNameSpace();
+		const char *className = this->GetInteropClassName();
+		
+		bool noNameSpace = nameSpace == nullptr || nameSpace[0] == '\0';
+		bool noClass = className == nullptr || nameSpace[0] == '\0';
+		
+		if (noNameSpace && noClass)
+		{
+			CryLogAlways("Commencing initialization of interops for multiple types in multiple name-spaces.");
+		}
+		else if (noClass && !noNameSpace)
+		{
+			CryLogAlways("Commencing initialization of interops for multiple types in %s name-space.", nameSpace);
+		}
+		else if (noNameSpace && !noClass)
+		{
+			CryLogAlways("Commencing initialization of interops for %s type.", nameSpace);
+		}
+		else
+		{
+			CryLogAlways("Commencing initialization of interops for type %s.%s.", nameSpace, className);
+		}
+
+		this->InitializeInterops();
+
+		if (noNameSpace && noClass)
+		{
+			CryLogAlways("Initialization of interops for multiple types in multiple name-spaces complete.");
+		}
+		else if (noClass && !noNameSpace)
+		{
+			CryLogAlways("Initialization of interops for multiple types in %s name-space complete.", nameSpace);
+		}
+		else if (noNameSpace && !noClass)
+		{
+			CryLogAlways("Initialization of interops for %s type complete.", nameSpace);
+		}
+		else
+		{
+			CryLogAlways("Initialization of interops for type %s.%s complete.", nameSpace, className);
+		}
+	}
 	//! Unnecessary for most interops.
 	virtual void OnCryamblyInitilizing() override {}
 	//! Unnecessary for most interops.
@@ -79,7 +126,7 @@ struct IMonoInteropBase : public IMonoSystemListener
 //! Interface of objects that specialize on setting up interops between C++ and Mono.
 //!
 //! The earliest time for registration of internal calls is during invocation
-//! of OnRunTimeInitialized, which is why it is kept abstract.
+//! of InitializeInterops, which is why it is abstract.
 //!
 //! @typeparam callRegistrationOnly Indicates whether this interop object will unregister
 //!                                 and destroy itself after adding internal calls to Mono.
@@ -112,8 +159,8 @@ template<> struct IMonoInterop < false, true > : public IMonoInteropBase
 	//! Registers internal calls through MonoEnv, since internal field is a null pointer.
 	virtual void RegisterInteropMethod(const char *methodName, void *functionPointer) override
 	{
-		MonoEnv->Functions->AddInternalCall
-			(this->GetInteropNameSpace(), this->GetInteropClassName(), methodName, functionPointer);
+		MonoEnv->Functions->AddInternalCall(this->GetInteropNameSpace(), this->GetInteropClassName(),
+											methodName, functionPointer);
 	}
 };
 
@@ -143,7 +190,7 @@ template<> struct IMonoInterop < false, true > : public IMonoInteropBase
 //!     virtual const char *GetInteropClassName() override { return "ClassWithInternalCalls"; }
 //!     virtual const char *GetInteropNameSpace() override { return "SomeNameSpace"; }
 //!
-//!     virtual void OnRunTimeInitialized() override
+//!     virtual void InitializeInterops() override
 //!     {
 //!         REGISTER_METHOD(Method);
 //!     }
@@ -185,7 +232,7 @@ template<> struct IMonoInterop < false, true > : public IMonoInteropBase
 //!     virtual const char *GetInteropClassName() override { return "ClassWithInternalCalls"; }
 //!     virtual const char *GetInteropNameSpace() override { return "SomeNameSpace"; }
 //!
-//!     virtual void OnRunTimeInitialized() override
+//!     virtual void InitializeInterops() override
 //!     {
 //!         REGISTER_METHOD_N("Method(bool)", Method);
 //!         REGISTER_METHOD_N("Method(int)",  Method2);
@@ -237,7 +284,7 @@ template<> struct IMonoInterop < false, true > : public IMonoInteropBase
 //!     virtual const char *GetInteropClassName() override { return ""; }
 //!     virtual const char *GetInteropNameSpace() override { return "SomeNameSpace"; }
 //!
-//!     virtual void OnRunTimeInitialized() override
+//!     virtual void InitializeInterops() override
 //!     {
 //!         const char *name_space = this->GetInteropNameSpace();
 //!         REGISTER_METHOD_NCN(name_space, "ClassWithInternalCalls",  "Method(bool)", Method);
@@ -285,7 +332,7 @@ template<> struct IMonoInterop < false, true > : public IMonoInteropBase
 //!     virtual const char *GetInteropClassName() override { return "ClassWithInternalCalls"; }
 //!     virtual const char *GetInteropNameSpace() override { return "SomeNameSpace"; }
 //!
-//!     virtual void OnRunTimeInitialized() override
+//!     virtual void InitializeInterops() override
 //!     {
 //!         REGISTER_CTOR(Method);
 //!     }
@@ -325,7 +372,7 @@ template<> struct IMonoInterop < false, true > : public IMonoInteropBase
 //!     virtual const char *GetInteropClassName() override { return "ClassWithInternalCalls"; }
 //!     virtual const char *GetInteropNameSpace() override { return "SomeNameSpace"; }
 //!
-//!     virtual void OnRunTimeInitialized() override
+//!     virtual void InitializeInterops() override
 //!     {
 //!         REGISTER_CTOR_N("bool", Method);
 //!         REGISTER_CTOR_N("int",  Method2);
@@ -377,7 +424,7 @@ template<> struct IMonoInterop < false, true > : public IMonoInteropBase
 //!     virtual const char *GetInteropClassName() override { return ""; }
 //!     virtual const char *GetInteropNameSpace() override { return "SomeNameSpace"; }
 //!
-//!     virtual void OnRunTimeInitialized() override
+//!     virtual void InitializeInterops() override
 //!     {
 //!         const char *name_space = this->GetInteropNameSpace();
 //!         REGISTER_CTOR_NCN(name_space, "ClassWithInternalCalls",  "bool", Method);

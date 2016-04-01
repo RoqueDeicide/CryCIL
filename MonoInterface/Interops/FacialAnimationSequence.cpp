@@ -3,7 +3,7 @@
 #include "FacialAnimationSequence.h"
 #include "MergingUtility.h"
 
-void FacialAnimationSequenceInterop::OnRunTimeInitialized()
+void FacialAnimationSequenceInterop::InitializeInterops()
 {
 	REGISTER_METHOD(AddRef);
 	REGISTER_METHOD(Release);

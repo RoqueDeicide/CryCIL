@@ -3,7 +3,7 @@
 #include "Face.h"
 #include <IFacialAnimation.h>
 
-void FaceInterop::OnRunTimeInitialized()
+void FaceInterop::InitializeInterops()
 {
 	REGISTER_METHOD(GetFacialModel);
 	REGISTER_METHOD(GetFaceState);

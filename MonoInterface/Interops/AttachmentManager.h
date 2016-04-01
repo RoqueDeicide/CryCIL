@@ -11,7 +11,7 @@ struct AttachmentManagerInterop : IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "AttachmentManager"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Models.Characters.Attachments"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static ICharacterInstance *GetSkelInstance(IAttachmentManager *handle);
 	static uint         LoadAttachmentList(IAttachmentManager *handle, mono::string pathname);

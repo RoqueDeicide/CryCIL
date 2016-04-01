@@ -10,7 +10,7 @@ struct CharacterAnimationInterop : IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "CharacterAnimation"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Models.Characters"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static void Serialize(CAnimation *handle, ISerialize *ser);
 	static SParametricSampler *GetParametricSampler(CAnimation *handle);

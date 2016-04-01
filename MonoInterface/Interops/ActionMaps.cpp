@@ -5,7 +5,7 @@
 
 SortedList<unsigned int, ManagedActionMap *> ActionMapsInterop::ManagedActionMaps;
 
-void ActionMapsInterop::OnRunTimeInitialized()
+void ActionMapsInterop::InitializeInterops()
 {
 	REGISTER_METHOD(AddDeviceMapping);
 	REGISTER_METHOD(CreateActionMap);

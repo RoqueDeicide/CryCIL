@@ -3,7 +3,7 @@
 #include "SkeletonPose.h"
 #include <ICryAnimation.h>
 
-void SkeletonPoseInterop::OnRunTimeInitialized()
+void SkeletonPoseInterop::InitializeInterops()
 {
 	REGISTER_METHOD(BuildPhysicalEntityInternal);
 	REGISTER_METHOD(CreateCharacterPhysicsInternal);

@@ -3,7 +3,7 @@
 #include "CharacterSkin.h"
 #include <ICryAnimation.h>
 
-void CharacterSkinInterop::OnRunTimeInitialized()
+void CharacterSkinInterop::InitializeInterops()
 {
 	REGISTER_METHOD(GetIRenderMesh);
 	REGISTER_METHOD(GetModelFilePath);

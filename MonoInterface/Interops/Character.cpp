@@ -3,7 +3,7 @@
 #include "Character.h"
 #include "MonoDecalInfo.h"
 
-void CharacterInterop::OnRunTimeInitialized()
+void CharacterInterop::InitializeInterops()
 {
 	REGISTER_METHOD(AddRef);
 	REGISTER_METHOD(Release);

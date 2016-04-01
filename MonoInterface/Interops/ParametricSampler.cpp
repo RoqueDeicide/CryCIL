@@ -3,7 +3,7 @@
 #include "ParametricSampler.h"
 #include <CryCharAnimationParams.h>
 
-void ParametricSamplerInterop::OnRunTimeInitialized()
+void ParametricSamplerInterop::InitializeInterops()
 {
 	REGISTER_METHOD(GetCurrentSegmentIndexBSpace);
 }

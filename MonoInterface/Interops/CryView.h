@@ -8,7 +8,7 @@ struct CryViewInterop : IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "CryView"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Rendering.Views"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static void UpdateInternal(IView *handle, float frameTime, bool isActive);
 	static void LinkToInternal(IView *handle, IEntity *follow, bool gameObject);

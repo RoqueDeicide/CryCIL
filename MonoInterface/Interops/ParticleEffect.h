@@ -8,7 +8,7 @@ struct ParticleEffectInterop : public IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "ParticleEffect"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static IParticleEmitter     *SpawnEmitter(IParticleEffect *handle, const QuatTS &loc, EParticleEmitterFlags flags, const SpawnParams &parameters);
 	static IParticleEmitter     *SpawnEmitterDefault(IParticleEffect *handle, const QuatTS &loc, EParticleEmitterFlags flags);

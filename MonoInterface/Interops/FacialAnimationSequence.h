@@ -9,7 +9,7 @@ struct FacialAnimationSequenceInterop : IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "FacialAnimationSequence"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Models.Characters.Faces"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static void                 AddRef(IFacialAnimSequence *handle);
 	static void                 Release(IFacialAnimSequence *handle);

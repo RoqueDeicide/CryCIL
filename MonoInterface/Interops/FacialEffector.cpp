@@ -3,7 +3,7 @@
 #include "FacialEffector.h"
 #include <IFacialAnimation.h>
 
-void FacialEffectorInterop::OnRunTimeInitialized()
+void FacialEffectorInterop::InitializeInterops()
 {
 	REGISTER_METHOD(SetIdentifier);
 	REGISTER_METHOD(GetIdentifier);

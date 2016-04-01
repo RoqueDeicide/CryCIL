@@ -8,7 +8,7 @@ struct AudioSystemInterop : IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "AudioSystem"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Audio"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static IAudioSystemImplementation *CreateNativeImplementationObject(mono::object managedObject);
 	static bool GetPreloadRequestId(mono::string name, uint32 &id);

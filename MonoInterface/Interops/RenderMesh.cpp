@@ -4,7 +4,7 @@
 #include <IRenderMesh.h>
 #include <IIndexedMesh.h>
 
-void RenderMeshInterop::OnRunTimeInitialized()
+void RenderMeshInterop::InitializeInterops()
 {
 	REGISTER_METHOD(AddRef);
 	REGISTER_METHOD(Release);

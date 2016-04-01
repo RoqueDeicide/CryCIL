@@ -9,7 +9,7 @@
 IEntityPoolManager *poolManager;
 IEntitySystem *entitySystem;
 
-void EntityIdInterop::OnRunTimeInitialized()
+void EntityIdInterop::InitializeInterops()
 {
 	// Hopefully this function will be called before any other ones in this file.
 	entitySystem = gEnv->pEntitySystem;
@@ -64,7 +64,7 @@ IMonoClass *EntityPoolInterop::GetMonoClass()
 	return MonoEnv->Cryambly->GetClass(this->GetInteropNameSpace(), this->GetInteropClassName());
 }
 
-void EntityPoolInterop::OnRunTimeInitialized()
+void EntityPoolInterop::InitializeInterops()
 {
 	REGISTER_METHOD(Enable);
 	REGISTER_METHOD(Disable);
@@ -190,7 +190,7 @@ IEntityProxyPtr EntitySystemInterop::CreateGameObjectForCryCilEntity(IEntity *pE
 	return entityProxy;
 }
 
-void EntitySystemInterop::OnRunTimeInitialized()
+void EntitySystemInterop::InitializeInterops()
 {
 	REGISTER_METHOD(RegisterEntityClass);
 	REGISTER_METHOD(RemoveEntity);
@@ -417,7 +417,7 @@ IEntity *EntitySystemInterop::SpawnCryEntity(MonoEntitySpawnParams &parameters)
 	return gEnv->pEntitySystem->SpawnEntity(params, true);
 }
 
-void NetEntityInterop::OnRunTimeInitialized()
+void NetEntityInterop::InitializeInterops()
 {
 	REGISTER_METHOD(SetChannelId);
 	REGISTER_METHOD(InvokeRmi);
@@ -578,7 +578,7 @@ void NetEntityInterop::ChangeNetworkStateInternal(EntityId id, uint32 aspects)
 	gameObject->ChangedNetworkState(aspects);
 }
 
-void CryEntityInterop::OnRunTimeInitialized()
+void CryEntityInterop::InitializeInterops()
 {
 	REGISTER_METHOD(GetMonoEntity);
 	REGISTER_METHOD(SetFlags);
@@ -1029,7 +1029,7 @@ IRenderNode *CryEntityInterop::GetRenderNode(IEntity *handle)
 	return proxy->GetRenderNode();
 }
 
-void EntitySlotsInterop::OnRunTimeInitialized()
+void EntitySlotsInterop::InitializeInterops()
 {
 	REGISTER_METHOD(IsSlotValid);
 	REGISTER_METHOD(FreeSlot);
@@ -1228,7 +1228,7 @@ void EntitySlotsInterop::UpdateSlotPhysics(IEntity *entityHandle, int slot)
 	entityHandle->UpdateSlotPhysics(slot);
 }
 
-void MonoEntityInterop::OnRunTimeInitialized()
+void MonoEntityInterop::InitializeInterops()
 {
 	REGISTER_METHOD(EnablePostUpdates);
 	REGISTER_METHOD(EnableUpdates);

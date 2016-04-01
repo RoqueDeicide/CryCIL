@@ -7,7 +7,7 @@ struct CryNetChannelInterop : IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "CryNetChannel"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Network"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static bool GetIsLocal(INetChannel *handle);
 };

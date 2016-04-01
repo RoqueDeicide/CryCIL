@@ -2,7 +2,7 @@
 
 #include "SystemEvents.h"
 
-void SystemEventsInterop::OnRunTimeInitialized()
+void SystemEventsInterop::InitializeInterops()
 {
 	GetISystem()->GetISystemEventDispatcher()->RegisterListener(this);
 }

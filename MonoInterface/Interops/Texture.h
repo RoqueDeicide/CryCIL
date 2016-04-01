@@ -7,7 +7,7 @@ struct TextureInterop : public IMonoInterop<true,true>
 	virtual const char *GetInteropClassName() override { return "Texture"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Rendering"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static void set_Clamp(mono::object obj, bool value);
 	static void set_Filter(mono::object obj, int value);

@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 #include "Ray.h"
 
-void RayInterop::OnRunTimeInitialized()
+void RayInterop::InitializeInterops()
 {
 	REGISTER_METHOD(CastRay);
 }

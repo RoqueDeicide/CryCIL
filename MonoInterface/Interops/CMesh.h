@@ -7,7 +7,7 @@ struct CMeshInterop : IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "CryMesh"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Models.StaticObjects"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static void        *GetStreamPtr(CMesh *handle, int stream, int *pElementCount);
 	static void         ReallocateStream(CMesh *handle, int stream, int newCount);

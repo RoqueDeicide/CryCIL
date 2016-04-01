@@ -2,7 +2,7 @@
 
 #include "CryArchive.h"
 
-void CryArchiveInterop::OnRunTimeInitialized()
+void CryArchiveInterop::InitializeInterops()
 {
 	REGISTER_METHOD(get_Flags);
 	REGISTER_METHOD(set_Flags);

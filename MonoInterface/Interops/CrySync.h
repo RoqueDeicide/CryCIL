@@ -7,7 +7,7 @@ struct CrySyncInterop : public IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "CrySync"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Data"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static void FlagPartialRead(ISerialize *handle);
 	static void StartGroup(ISerialize *handle, const char *name);

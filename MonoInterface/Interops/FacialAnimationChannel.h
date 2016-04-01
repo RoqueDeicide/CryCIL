@@ -11,7 +11,7 @@ struct FacialAnimationChannelInterop : IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "FacialAnimationChannel"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Models.Characters.Faces"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static void                  SetIdentifier(IFacialAnimChannel *handle, CFaceIdentifierHandle ident);
 	static CFaceIdentifierHandle GetIdentifier(IFacialAnimChannel *handle);

@@ -9,7 +9,7 @@ struct FacialAnimationSkeletonAnimationEntryInterop : IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "FacialAnimationSkeletonAnimationEntry"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Models.Characters.Faces"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static void         SetName(IFacialAnimSkeletonAnimationEntry *handle, mono::string skeletonAnimationFile);
 	static mono::string GetName(IFacialAnimSkeletonAnimationEntry *handle);

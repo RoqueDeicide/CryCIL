@@ -4,7 +4,7 @@
 #include <IGameRulesSystem.h>
 #include "MonoGameRules.h"
 
-void GameRulesInterop::OnRunTimeInitialized()
+void GameRulesInterop::InitializeInterops()
 {
 	REGISTER_METHOD(RegisterGameRules);
 	REGISTER_METHOD(AddGameRulesAlias);

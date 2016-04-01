@@ -9,7 +9,7 @@ struct CharacterSkinInterop : IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "CharacterSkin"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Models.Characters"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static IRenderMesh *GetIRenderMesh(ISkin *handle, uint nLOD);
 	static mono::string GetModelFilePath(ISkin *handle);

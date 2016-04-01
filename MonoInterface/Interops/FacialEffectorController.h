@@ -8,7 +8,7 @@ struct FacialEffectorControllerInterop : IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "FacialEffectorController"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Models.Characters.Faces"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static IFacialEffCtrl::ControlType  GetControlType(IFacialEffCtrl *handle);
 	static void                         SetControlType(IFacialEffCtrl *handle, IFacialEffCtrl::ControlType t);

@@ -2,7 +2,7 @@
 
 #include "FacialEffectorController.h"
 
-void FacialEffectorControllerInterop::OnRunTimeInitialized()
+void FacialEffectorControllerInterop::InitializeInterops()
 {
 	REGISTER_METHOD(GetControlType);
 	REGISTER_METHOD(SetControlType);

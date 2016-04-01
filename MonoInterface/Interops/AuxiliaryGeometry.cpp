@@ -23,7 +23,7 @@ bool AuxiliaryGeometryInterop::CacheApi()
 	return false;
 }
 
-void AuxiliaryGeometryInterop::OnRunTimeInitialized()
+void AuxiliaryGeometryInterop::InitializeInterops()
 {
 	REGISTER_METHOD(GetFlags);
 	REGISTER_METHOD(SetFlags);

@@ -3,7 +3,7 @@
 #include "AttachmentProxy.h"
 #include <IAttachment.h>
 
-void AttachmentProxyInterop::OnRunTimeInitialized()
+void AttachmentProxyInterop::InitializeInterops()
 {
 	REGISTER_METHOD(GetName);
 	REGISTER_METHOD(GetNameCrc);

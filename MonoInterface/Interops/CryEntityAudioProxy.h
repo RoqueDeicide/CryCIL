@@ -7,7 +7,7 @@ struct CryEntityAudioProxyInterop : IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "CryEntityAudioProxy"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Logic.EntityProxies"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static void SetFadeDistance(IEntityAudioProxy *handle, float fFadeDistance);
 	static float GetFadeDistance(IEntityAudioProxy *handle);

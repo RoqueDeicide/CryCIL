@@ -9,7 +9,7 @@ struct CryEntityPhysicalProxyInterop : IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "CryEntityPhysicalProxy"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Logic.EntityProxies"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static void AssignPhysicalEntity(IEntityPhysicalProxy *handle, IPhysicalEntity *pPhysEntity, int nSlot);
 	static void GetWorldBounds(IEntityPhysicalProxy *handle, AABB &bounds);

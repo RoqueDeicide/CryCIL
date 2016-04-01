@@ -8,7 +8,7 @@ struct IndexedMeshInterop : IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "CryIndexedMesh"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Models.StaticObjects"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static void   ReleaseInternal(IIndexedMesh *handle);
 	static void   GetMeshDescription(IIndexedMesh *handle, IIndexedMesh::SMeshDescription &meshDesc);

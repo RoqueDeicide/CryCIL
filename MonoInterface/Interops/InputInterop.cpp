@@ -14,7 +14,7 @@ thunkT getThunk(IMonoClass *klass, const char *name)
 	return thunkT(klass->GetFunction(name, -1)->UnmanagedThunk);
 }
 
-void InputInterop::OnRunTimeInitialized()
+void InputInterop::InitializeInterops()
 {
 	gEnv->pInput->AddEventListener(this);
 	gEnv->pInput->AddTouchEventListener(this, "CryCilInput");

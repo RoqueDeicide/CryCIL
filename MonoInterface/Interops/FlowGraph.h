@@ -8,7 +8,7 @@ struct FlowGraphInterop : public IMonoInterop<false, true>
 	virtual const char *GetInteropClassName() override { return ""; }	// No class name is provided here, because this is a multi-class interop.
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Logic"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static ushort RegisterType(mono::string name);
 

@@ -22,7 +22,7 @@ void MonoViewController::PostUpdateView(SViewParams& params)
 	thunk(this->managedObj, params);
 }
 
-void ViewControllerInterop::OnRunTimeInitialized()
+void ViewControllerInterop::InitializeInterops()
 {
 	REGISTER_METHOD(Create);
 	REGISTER_METHOD(DeleteThis);

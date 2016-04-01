@@ -4,7 +4,7 @@
 #include "ActionInputSpecification.h"
 #include <ActionMap.h>
 
-void CryInputActionInterop::OnRunTimeInitialized()
+void CryInputActionInterop::InitializeInterops()
 {
 	REGISTER_METHOD(AddInputInternal);
 	REGISTER_METHOD(RemoveInputInternal);

@@ -7,7 +7,7 @@ struct MaterialInterop : public IMonoInterop < true, true >
 	virtual const char *GetInteropClassName() override { return "Material"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Rendering"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static IMaterial *GetDefault();
 	static IMaterial *GetDefaultTerrainLayer();
@@ -43,7 +43,7 @@ struct SubMaterialsInterop : public IMonoInterop < true, true >
 	virtual const char *GetInteropClassName() override { return "SubMaterials"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Rendering"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static IMaterial *GetItem(IMaterial *handle, int index);
 	static void SetItem(IMaterial *handle, int index, IMaterial *mat);

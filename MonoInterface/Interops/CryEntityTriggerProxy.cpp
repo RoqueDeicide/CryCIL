@@ -2,7 +2,7 @@
 
 #include "CryEntityTriggerProxy.h"
 
-void CryEntityTriggerProxyInterop::OnRunTimeInitialized()
+void CryEntityTriggerProxyInterop::InitializeInterops()
 {
 	REGISTER_METHOD(SetTriggerBounds);
 	REGISTER_METHOD(GetTriggerBounds);

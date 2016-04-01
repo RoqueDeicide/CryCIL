@@ -29,7 +29,7 @@ void TimingInterop::Update()
 	setTimings(frameStart, frameStartUi, frame, frameReal, scale, frameRate);
 }
 
-void TimingInterop::OnRunTimeInitialized()
+void TimingInterop::InitializeInterops()
 {
 	TimeMessage("Timing Interop receiving the event.");
 

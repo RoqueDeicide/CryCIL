@@ -2,7 +2,7 @@
 
 #include "Terrain.h"
 
-void TerrainInterop::OnRunTimeInitialized()
+void TerrainInterop::InitializeInterops()
 {
 	REGISTER_METHOD(get_UnitSize);
 	REGISTER_METHOD(get_Size);

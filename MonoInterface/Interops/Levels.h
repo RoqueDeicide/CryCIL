@@ -9,7 +9,7 @@ struct LevelsInterop : public IMonoInterop < true, true >
 	virtual const char *GetInteropClassName() override { return "Levels"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.CryAction"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static int         GetCount();
 	static ILevelInfo *GetItemInt(int index, bool &outOfRange);

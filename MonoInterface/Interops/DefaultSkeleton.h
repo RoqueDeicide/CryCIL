@@ -9,7 +9,7 @@ struct DefaultSkeletonInterop : IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "DefaultSkeleton"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Models.Characters"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static uint GetJointCount(IDefaultSkeleton *handle);
 	static int GetJointParentIDByID(IDefaultSkeleton *handle, int id);

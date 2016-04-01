@@ -2,7 +2,7 @@
 
 #include "CryPak.h"
 
-void CryPakInterop::OnRunTimeInitialized()
+void CryPakInterop::InitializeInterops()
 {
 	REGISTER_METHOD_N("Open(string,CryCil.Engine.Files.PathResolutionRules)", OpenPack);
 	REGISTER_METHOD_N("Open(string,string,CryCil.Engine.Files.PathResolutionRules)", OpenPackRooted);

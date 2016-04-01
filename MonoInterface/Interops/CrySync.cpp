@@ -3,7 +3,7 @@
 #include "CrySync.h"
 #include "TimeUtilities.h"
 
-void CrySyncInterop::OnRunTimeInitialized()
+void CrySyncInterop::InitializeInterops()
 {
 	REGISTER_METHOD(FlagPartialRead);
 	REGISTER_METHOD(StartGroup);

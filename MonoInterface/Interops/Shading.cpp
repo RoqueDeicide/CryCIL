@@ -2,7 +2,7 @@
 
 #include "Shading.h"
 
-void RenderShaderResourcesInterop::OnRunTimeInitialized()
+void RenderShaderResourcesInterop::InitializeInterops()
 {
 	REGISTER_METHOD(GetTransparency);
 	REGISTER_METHOD(SetTransparency);
@@ -94,7 +94,7 @@ DynArrayRef<SShaderParam> *RenderShaderResourcesInterop::GetParameters(IRenderSh
 	return &rsr->GetParameters();
 }
 
-void ShaderParametersInterop::OnRunTimeInitialized()
+void ShaderParametersInterop::InitializeInterops()
 {
 	REGISTER_METHOD(GetCount);
 	REGISTER_METHOD(GetItemInt);
@@ -152,7 +152,7 @@ SShaderParam *ShaderParametersInterop::GetItemString(DynArrayRef<SShaderParam> *
 	return nullptr;
 }
 
-void ShaderInterop::OnRunTimeInitialized()
+void ShaderInterop::InitializeInterops()
 {
 	REGISTER_METHOD(GetParameters);
 }

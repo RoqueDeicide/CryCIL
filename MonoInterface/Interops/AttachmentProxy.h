@@ -9,7 +9,7 @@ struct AttachmentProxyInterop : IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "AttachmentProxy"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Models.Characters.Attachments"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static mono::string GetName(IProxy *handle);
 	static uint  GetNameCrc(IProxy *handle);

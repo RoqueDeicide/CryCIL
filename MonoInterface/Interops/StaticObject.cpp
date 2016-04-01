@@ -3,7 +3,7 @@
 #include "StaticObject.h"
 #include "PhysicsGeometryStructs.h"
 
-void StaticObjectInterop::OnRunTimeInitialized()
+void StaticObjectInterop::InitializeInterops()
 {
 	REGISTER_METHOD(AddRef);
 	REGISTER_METHOD(Release);

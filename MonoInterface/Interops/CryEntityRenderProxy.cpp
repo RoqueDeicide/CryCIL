@@ -2,7 +2,7 @@
 
 #include "CryEntityRenderProxy.h"
 
-void CryEntityRenderProxyInterop::OnRunTimeInitialized()
+void CryEntityRenderProxyInterop::InitializeInterops()
 {
 	REGISTER_METHOD(GetWorldBounds);
 	REGISTER_METHOD(GetLocalBounds);

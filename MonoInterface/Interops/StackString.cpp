@@ -2,7 +2,7 @@
 
 #include "StackString.h"
 
-void StackStringInterop::OnRunTimeInitialized()
+void StackStringInterop::InitializeInterops()
 {
 	REGISTER_METHOD(AssignString);
 	REGISTER_METHOD(GetString);

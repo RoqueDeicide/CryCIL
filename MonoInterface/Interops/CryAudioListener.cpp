@@ -2,7 +2,7 @@
 
 #include "CryAudioListener.h"
 
-void CryAudioListenerInterop::OnRunTimeInitialized()
+void CryAudioListenerInterop::InitializeInterops()
 {
 	REGISTER_METHOD(GetId);
 	REGISTER_METHOD(GetActive);

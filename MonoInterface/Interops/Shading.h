@@ -7,7 +7,7 @@ struct RenderShaderResourcesInterop : public IMonoInterop < true, true >
 	virtual const char *GetInteropClassName() override { return "RenderShaderResources"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Rendering"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static float         GetTransparency     (IRenderShaderResources *rsr);
 	static void          SetTransparency     (IRenderShaderResources *rsr, float value);
@@ -25,7 +25,7 @@ struct ShaderParametersInterop : public IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "ShaderParameters"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Rendering"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static int           GetCount     (DynArrayRef<SShaderParam> *handle);
 	static SShaderParam *GetItemInt   (DynArrayRef<SShaderParam> *handle, int index);
@@ -37,7 +37,7 @@ struct ShaderInterop : public IMonoInterop < true, true >
 	virtual const char *GetInteropClassName() override { return "Shader"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Rendering"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static DynArrayRef<SShaderParam> *GetParameters(IShader *shader);
 };

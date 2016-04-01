@@ -9,7 +9,7 @@ struct DebugDrawInterop : public IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "DebugGraphics"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.DebugServices"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static void Begin(const char *name, bool clear);
 	

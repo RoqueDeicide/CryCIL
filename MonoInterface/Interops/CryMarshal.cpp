@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "CryMarshal.h"
 
-void CryMarshalInterop::OnRunTimeInitialized()
+void CryMarshalInterop::InitializeInterops()
 {
 	REGISTER_METHOD(AllocateMemory);
 	REGISTER_METHOD(ReallocateMemory);

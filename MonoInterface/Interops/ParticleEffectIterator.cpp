@@ -2,7 +2,7 @@
 
 #include "ParticleEffectIterator.h"
 
-void ParticleEffectIteratorInterop::OnRunTimeInitialized()
+void ParticleEffectIteratorInterop::InitializeInterops()
 {
 	REGISTER_METHOD(Create);
 	REGISTER_METHOD(Delete);

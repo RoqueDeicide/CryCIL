@@ -7,7 +7,7 @@ struct GameRulesInterop : IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "GameRules"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Logic"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static void         RegisterGameRules(mono::string name, mono::string typeName, mono::Array aliases,
 										  mono::Array paths, bool _default);

@@ -24,7 +24,7 @@ void ParticleEmitterInterop::OnDeleteEmitter(IParticleEmitter* pEmitter)
 	thunk(pEmitter);
 }
 
-void ParticleEmitterInterop::OnRunTimeInitialized()
+void ParticleEmitterInterop::InitializeInterops()
 {
 	REGISTER_METHOD(IsAlive);
 	REGISTER_METHOD(IsInstant);

@@ -2,7 +2,7 @@
 
 #include "CryEntityAreaProxy.h"
 
-void CryEntityAreaProxyInterop::OnRunTimeInitialized()
+void CryEntityAreaProxyInterop::InitializeInterops()
 {
 	REGISTER_METHOD(SetFlags);
 	REGISTER_METHOD(GetFlags);

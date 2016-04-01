@@ -2,7 +2,7 @@
 
 #include "CryXmlNode.h"
 
-void CryXmlNodeInterop::OnRunTimeInitialized()
+void CryXmlNodeInterop::InitializeInterops()
 {
 	REGISTER_METHOD(Ctor);
 	REGISTER_METHOD(AddRef);

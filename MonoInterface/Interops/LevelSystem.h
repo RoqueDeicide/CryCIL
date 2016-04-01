@@ -12,7 +12,7 @@ struct LevelSystemInterop : public IMonoInterop < false, true >, public ILevelSy
 
 	IMonoClass *GetMonoClass();
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	virtual void OnLevelNotFound(const char *levelName) override;
 	virtual void OnLoadingStart(ILevelInfo *pLevel) override;

@@ -3,7 +3,7 @@
 #include "CryEntityPhysicalProxy.h"
 #include "PhysicalizationParameters.h"
 
-void CryEntityPhysicalProxyInterop::OnRunTimeInitialized()
+void CryEntityPhysicalProxyInterop::InitializeInterops()
 {
 	REGISTER_METHOD(AssignPhysicalEntity);
 	REGISTER_METHOD(GetWorldBounds);

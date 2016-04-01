@@ -9,7 +9,7 @@ struct StaticObjectInterop : IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "StaticObject"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Models.StaticObjects"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static int AddRef(IStatObj *handle);
 	static int Release(IStatObj *handle);

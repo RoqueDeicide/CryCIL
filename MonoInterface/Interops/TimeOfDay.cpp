@@ -14,7 +14,7 @@ struct MonoTodVarInfo
 	ISplineInterpolator* pInterpolator; // Splines that control variable value
 };
 
-void TimeOfDayInterop::OnRunTimeInitialized()
+void TimeOfDayInterop::InitializeInterops()
 {
 	REGISTER_METHOD(get_Cycle);
 	REGISTER_METHOD(set_Cycle);

@@ -9,7 +9,7 @@ struct ConsoleVariableInterop : public IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "ConsoleVariable"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static void         Release        (ICVar **handle);
 	static void         ClearFlags     (ICVar **handle, int flags);

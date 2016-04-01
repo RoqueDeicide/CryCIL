@@ -2,7 +2,7 @@
 
 #include "CryEntitySubstitutionProxy.h"
 
-void CryEntitySubstitutionProxyInterop::OnRunTimeInitialized()
+void CryEntitySubstitutionProxyInterop::InitializeInterops()
 {
 	REGISTER_METHOD(SetSubstitute);
 	REGISTER_METHOD(GetSubstitute);

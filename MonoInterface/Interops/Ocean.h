@@ -16,7 +16,7 @@ struct OceanInterop : public IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "Ocean"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Environment"; }
 	
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static byte           get_RenderOptions();
 	static void           set_RenderOptions(byte flags);

@@ -31,7 +31,7 @@ public:
 	virtual const char *GetInteropClassName() override { return "ActionMapHandler"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Input.ActionMapping"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	virtual void OnAction(const ActionId& action, int activationMode, float value) override;
 

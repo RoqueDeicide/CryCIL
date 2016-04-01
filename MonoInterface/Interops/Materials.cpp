@@ -2,7 +2,7 @@
 
 #include "Materials.h"
 
-void MaterialInterop::OnRunTimeInitialized()
+void MaterialInterop::InitializeInterops()
 {
 	REGISTER_METHOD(GetDefault);
 	REGISTER_METHOD(GetDefaultTerrainLayer);
@@ -295,7 +295,7 @@ int *MaterialInterop::FillSurfaceTypesTable(IMaterial **handle, int &filledItems
 	return ids;
 }
 
-void SubMaterialsInterop::OnRunTimeInitialized()
+void SubMaterialsInterop::InitializeInterops()
 {
 	REGISTER_METHOD(GetItem);
 	REGISTER_METHOD(SetItem);

@@ -8,7 +8,7 @@ struct LocaleInterop : public IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "Translator"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Localization"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static mono::string Translate(mono::string text, bool forceEnglish);
 	static mono::string TranslateLabel(mono::string labelName, bool forceEnglish);

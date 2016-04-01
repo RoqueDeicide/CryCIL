@@ -2,7 +2,7 @@
 
 #include "IndexedMesh.h"
 
-void IndexedMeshInterop::OnRunTimeInitialized()
+void IndexedMeshInterop::InitializeInterops()
 {
 	REGISTER_METHOD(ReleaseInternal);
 	REGISTER_METHOD(GetMeshDescription);

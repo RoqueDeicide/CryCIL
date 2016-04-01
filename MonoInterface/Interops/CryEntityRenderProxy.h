@@ -7,7 +7,7 @@ struct CryEntityRenderProxyInterop : IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "CryEntityRenderProxy"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Logic.EntityProxies"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static void GetWorldBounds(IEntityRenderProxy *handle, AABB &bounds);
 	static void GetLocalBounds(IEntityRenderProxy *handle, AABB &bounds);

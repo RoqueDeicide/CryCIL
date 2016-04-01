@@ -3,7 +3,7 @@
 #include "FacialAnimationSoundEntry.h"
 #include <IFacialAnimation.h>
 
-void FacialAnimationSoundEntryInterop::OnRunTimeInitialized()
+void FacialAnimationSoundEntryInterop::InitializeInterops()
 {
 	REGISTER_METHOD(SetSoundFile);
 	REGISTER_METHOD(GetSoundFile);

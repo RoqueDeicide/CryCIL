@@ -17,7 +17,7 @@ struct LatticeInterop : public IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "Lattice"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Physics"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static PhysParamsLattice GetParams(ITetrLattice *handle);
 	static void              SetParams(ITetrLattice *handle, PhysParamsLattice &parameters);

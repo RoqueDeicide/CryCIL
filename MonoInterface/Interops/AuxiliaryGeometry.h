@@ -16,7 +16,7 @@ struct AuxiliaryGeometryInterop : public IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "AuxiliaryGeometry"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.DebugServices"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static bool CacheApi();
 

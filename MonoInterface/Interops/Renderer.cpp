@@ -2,7 +2,7 @@
 
 #include "Renderer.h"
 
-void RendererInterop::OnRunTimeInitialized()
+void RendererInterop::InitializeInterops()
 {
 	REGISTER_METHOD(DrawTextInternal);
 

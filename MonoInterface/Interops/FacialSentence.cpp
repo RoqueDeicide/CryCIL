@@ -2,7 +2,7 @@
 
 #include "FacialSentence.h"
 
-void FacialSentenceInterop::OnRunTimeInitialized()
+void FacialSentenceInterop::InitializeInterops()
 {
 	REGISTER_METHOD(SetText);
 	REGISTER_METHOD(GetText);

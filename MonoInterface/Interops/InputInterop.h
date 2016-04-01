@@ -36,7 +36,7 @@ struct InputInterop
 	virtual const char *GetInteropClassName() override { return ""; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Input"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	virtual bool OnInputEvent(const SInputEvent &_event) override;
 	virtual bool OnInputEventUI(const SUnicodeEvent &_event) override;

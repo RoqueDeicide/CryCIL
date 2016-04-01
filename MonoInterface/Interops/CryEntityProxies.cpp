@@ -2,7 +2,7 @@
 
 #include "CryEntityProxies.h"
 
-void CryEntityProxiesInterop::OnRunTimeInitialized()
+void CryEntityProxiesInterop::InitializeInterops()
 {
 	REGISTER_METHOD(GetAreaProxy);
 	REGISTER_METHOD(GetAudioProxy);

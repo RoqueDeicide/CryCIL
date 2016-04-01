@@ -2,7 +2,7 @@
 
 #include "SurfaceTypes.h"
 
-void SurfaceTypeInterop::OnRunTimeInitialized()
+void SurfaceTypeInterop::InitializeInterops()
 {
 	REGISTER_METHOD_N("Get(System.String)", Get);
 	REGISTER_METHOD_N("Get(System.Int32)", GetInt);
@@ -91,7 +91,7 @@ ISurfaceType::SBreakageParticles *SurfaceTypeInterop::GetBreakageParticles(ISurf
 	return handle->GetBreakageParticles(sType, bLookInDefault);
 }
 
-void SurfaceTypeEnumeratorInterop::OnRunTimeInitialized()
+void SurfaceTypeEnumeratorInterop::InitializeInterops()
 {
 	REGISTER_METHOD(Init);
 	REGISTER_METHOD(GetFirst);

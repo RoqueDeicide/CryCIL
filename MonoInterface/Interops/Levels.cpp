@@ -3,7 +3,7 @@
 #include "Levels.h"
 #include <ILevelSystem.h>
 
-void LevelsInterop::OnRunTimeInitialized()
+void LevelsInterop::InitializeInterops()
 {
 	REGISTER_METHOD(GetCount);
 	REGISTER_METHOD(GetItemInt);

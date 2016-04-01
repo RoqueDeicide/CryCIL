@@ -2,7 +2,7 @@
 
 #include "CryNetChannel.h"
 
-void CryNetChannelInterop::OnRunTimeInitialized()
+void CryNetChannelInterop::InitializeInterops()
 {
 	REGISTER_METHOD(GetIsLocal);
 }

@@ -11,7 +11,7 @@ struct FacialModelInterop : IMonoInterop<true, true>
 	virtual const char *GetInteropClassName() override { return "FacialModel"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Models.Characters.Faces"; }
 
-	virtual void OnRunTimeInitialized() override;
+	virtual void InitializeInterops() override;
 
 	static int                      GetEffectorCount(IFacialModel *handle);
 	static IFacialEffector         *GetEffector(IFacialModel *handle, int nIndex);

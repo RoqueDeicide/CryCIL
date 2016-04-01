@@ -2,7 +2,7 @@
 
 #include "MaterialLayers.h"
 
-void MaterialLayerCollectionInterop::OnRunTimeInitialized()
+void MaterialLayerCollectionInterop::InitializeInterops()
 {
 	REGISTER_METHOD(SetLayerCount);
 	REGISTER_METHOD(GetLayerCount);
@@ -54,7 +54,7 @@ IMaterialLayer *MaterialLayerCollectionInterop::GetLayerChecked(IMaterial *handl
 	return const_cast<IMaterialLayer *>(handle->GetLayer(nSlot));
 }
 
-void MaterialLayerInterop::OnRunTimeInitialized()
+void MaterialLayerInterop::InitializeInterops()
 {
 	REGISTER_CTOR(Ctor);
 
