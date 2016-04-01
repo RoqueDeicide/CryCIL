@@ -158,11 +158,16 @@ bool EntityPoolInterop::IsPreparingEntity(EntityId *entityId)
 	return b;
 }
 
-List<NtText> EntitySystemInterop::monoEntityClassNames;
+List<string> EntitySystemInterop::monoEntityClassNames;
 
 bool EntitySystemInterop::IsMonoEntity(const char *className)
 {
-	return monoEntityClassNames.Find([className](NtText &name) { return name.Equals(className); }) != nullptr;
+	auto predicate = [className](string &name)
+	{
+		return name.compare(className) == 0;
+	};
+
+	return monoEntityClassNames.Find(predicate) != nullptr;
 }
 
 IEntityProxyPtr EntitySystemInterop::CreateGameObjectForCryCilEntity(IEntity *pEntity, SEntitySpawnParams &,
@@ -247,9 +252,9 @@ bool EntitySystemInterop::RegisterEntityClass(mono::string name, mono::string ca
 	auto registry = gEnv->pEntitySystem->GetClassRegistry();
 
 	auto nameMatch =
-		[className](NtText &registeredName)
+		[className](string &registeredName)
 		{
-			return registeredName.Equals(className);
+			return registeredName.compare(className) == 0;
 		};
 
 	if ((flags && EEntityClassFlags::ECLF_MODIFY_EXISTING) == 0)
@@ -330,9 +335,9 @@ mono::object EntitySystemInterop::SpawnMonoEntity(MonoEntitySpawnParams &paramet
 
 	const char *className = entityClass->GetName();
 	auto nameMatch =
-		[className](NtText &name)
+		[className](string &name)
 	{
-		return name.Equals(className);
+		return name.compare(className) == 0;
 	};
 
 	if (monoEntityClassNames.Find(nameMatch) == nullptr)
@@ -367,9 +372,9 @@ mono::object EntitySystemInterop::SpawnNetEntity(MonoEntitySpawnParams &paramete
 
 	const char *className = entityClass->GetName();
 	auto nameMatch =
-		[className](NtText &name)
+		[className](string &name)
 	{
-		return name.Equals(className);
+		return name.compare(className) == 0;
 	};
 
 	if (monoEntityClassNames.Find(nameMatch) == nullptr)
