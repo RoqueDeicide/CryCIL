@@ -14,13 +14,13 @@ struct IMonoProperty : public IMonoMember
 	//! Gets the number of parameters this property uses.
 	__declspec(property(get = GetParameterCount)) int ParameterCount;
 
-	VIRTUAL_API virtual IMonoFunction *GetGetter() = 0;
-	VIRTUAL_API virtual IMonoFunction *GetSetter() = 0;
-	VIRTUAL_API virtual IMonoFunction *GetIdentifier() = 0;
-	VIRTUAL_API virtual int GetParameterCount() = 0;
+	VIRTUAL_API virtual const IMonoFunction *GetGetter() const = 0;
+	VIRTUAL_API virtual const IMonoFunction *GetSetter() const = 0;
+	VIRTUAL_API virtual const IMonoFunction *GetIdentifier() const = 0;
+	VIRTUAL_API virtual int GetParameterCount() const = 0;
 
 	// Internal method, just ignore it.
-	__forceinline IMonoFunction *GetFunc() const
+	__forceinline const IMonoFunction *GetFunc() const
 	{
 		return this->Identifier;
 	}

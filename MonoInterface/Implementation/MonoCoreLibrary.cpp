@@ -52,142 +52,142 @@ MonoCoreLibrary::~MonoCoreLibrary()
 	SAFE_DELETE(this->fileName);
 }
 
-IMonoClass *MonoCoreLibrary::GetBoolean()
+IMonoClass *MonoCoreLibrary::GetBoolean() const
 {
 	return this->boolean;
 }
 
-IMonoClass *MonoCoreLibrary::GetIntPtr()
+IMonoClass *MonoCoreLibrary::GetIntPtr() const
 {
 	return this->intPtr;
 }
 
-IMonoClass *MonoCoreLibrary::GetUIntPtr()
+IMonoClass *MonoCoreLibrary::GetUIntPtr() const
 {
 	return this->uintPtr;
 }
 
-IMonoClass *MonoCoreLibrary::GetChar()
+IMonoClass *MonoCoreLibrary::GetChar() const
 {
 	return this->char16;
 }
 
-IMonoClass *MonoCoreLibrary::GetSbyte()
+IMonoClass *MonoCoreLibrary::GetSbyte() const
 {
 	return this->int8;
 }
 
-IMonoClass *MonoCoreLibrary::GetByte()
+IMonoClass *MonoCoreLibrary::GetByte() const
 {
 	return this->uint8;
 }
 
-IMonoClass *MonoCoreLibrary::GetInt16()
+IMonoClass *MonoCoreLibrary::GetInt16() const
 {
 	return this->int16;
 }
 
-IMonoClass *MonoCoreLibrary::GetUInt16()
+IMonoClass *MonoCoreLibrary::GetUInt16() const
 {
 	return this->uint16;
 }
 
-IMonoClass *MonoCoreLibrary::GetInt32()
+IMonoClass *MonoCoreLibrary::GetInt32() const
 {
 	return this->int32;
 }
 
-IMonoClass *MonoCoreLibrary::GetUInt32()
+IMonoClass *MonoCoreLibrary::GetUInt32() const
 {
 	return this->uint32;
 }
 
-IMonoClass *MonoCoreLibrary::GetInt64()
+IMonoClass *MonoCoreLibrary::GetInt64() const
 {
 	return this->int64;
 }
 
-IMonoClass *MonoCoreLibrary::GetUInt64()
+IMonoClass *MonoCoreLibrary::GetUInt64() const
 {
 	return this->uint64;
 }
 
-IMonoClass *MonoCoreLibrary::GetSingle()
+IMonoClass *MonoCoreLibrary::GetSingle() const
 {
 	return this->float32;
 }
 
-IMonoClass *MonoCoreLibrary::GetDouble()
+IMonoClass *MonoCoreLibrary::GetDouble() const
 {
 	return this->float64;
 }
 
-IMonoClass *MonoCoreLibrary::GetString()
+IMonoClass *MonoCoreLibrary::GetString() const
 {
 	return this->text;
 }
 
-IMonoClass *MonoCoreLibrary::GetArray()
+IMonoClass *MonoCoreLibrary::GetArray() const
 {
 	return this->fixedArray;
 }
 
-IMonoClass *MonoCoreLibrary::GetType()
+IMonoClass *MonoCoreLibrary::GetType() const
 {
 	return this->typeInfo;
 }
 
-IMonoClass *MonoCoreLibrary::GetEnum()
+IMonoClass *MonoCoreLibrary::GetEnum() const
 {
 	return this->enumeration;
 }
 
-IMonoClass *MonoCoreLibrary::GetException()
+IMonoClass *MonoCoreLibrary::GetException() const
 {
 	return this->exception;
 }
 
-IMonoClass *MonoCoreLibrary::GetObjectClass()
+IMonoClass *MonoCoreLibrary::GetObjectClass() const
 {
 	return this->objClass;
 }
 
-IMonoClass *MonoCoreLibrary::GetValueType()
+IMonoClass *MonoCoreLibrary::GetValueType() const
 {
 	return this->valueType;
 }
 
-IMonoClass *MonoCoreLibrary::GetThread()
+IMonoClass *MonoCoreLibrary::GetThread() const
 {
 	return this->_thread;
 }
 
-IMonoClass *MonoCoreLibrary::GetClass(const char *nameSpace, const char *className)
+IMonoClass *MonoCoreLibrary::GetClass(const char *nameSpace, const char *className) const
 {
 	return MonoClassCache::Wrap(mono_class_from_name(this->image, nameSpace, className));
 }
 
-Text *MonoCoreLibrary::GetName()
+Text *MonoCoreLibrary::GetName() const
 {
 	return this->name;
 }
 
-Text *MonoCoreLibrary::GetFullName()
+Text *MonoCoreLibrary::GetFullName() const
 {
 	return this->fullName;
 }
 
-Text *MonoCoreLibrary::GetFileName()
+Text *MonoCoreLibrary::GetFileName() const
 {
 	return this->fileName;
 }
 
-mono::assembly MonoCoreLibrary::GetReflectionObject()
+mono::assembly MonoCoreLibrary::GetReflectionObject() const
 {
 	return mono::assembly(mono_assembly_get_object(mono_domain_get(), this->assembly));
 }
 
-void *MonoCoreLibrary::GetWrappedPointer()
+void *MonoCoreLibrary::GetWrappedPointer() const
 {
 	return this->assembly;
 }

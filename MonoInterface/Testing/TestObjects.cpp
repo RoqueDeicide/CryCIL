@@ -425,7 +425,7 @@ void TestExceptions()
 	mono::exception ex;
 	void *param = ToMonoString("Message for the exception object.");
 
-	IMonoStaticMethod *func = testClass->GetFunction("MakeAndThrowException")->ToStatic();
+	const IMonoStaticMethod *func = testClass->GetFunction("MakeAndThrowException")->ToStatic();
 
 	CryLogAlways("TEST: Got the method that throws the exception.");
 	CryLogAlways("TEST:");
@@ -617,19 +617,19 @@ inline const char *ToOrdinal(int number)
 	case 11:
 	case 12:
 	case 13:
-		return NtText(buffer, "th").Detach();
+		return NtText({ buffer, "th" }).Detach();
 	}
 
 	switch (number % 10)
 	{
 	case 1:
-		return NtText(buffer, "st").Detach();
+		return NtText({ buffer, "st" }).Detach();
 	case 2:
-		return NtText(buffer, "nd").Detach();
+		return NtText({ buffer, "nd" }).Detach();
 	case 3:
-		return NtText(buffer, "rd").Detach();
+		return NtText({ buffer, "rd" }).Detach();
 	default:
-		return NtText(buffer, "th").Detach();
+		return NtText({ buffer, "th" }).Detach();
 	}
 }
 
@@ -676,7 +676,7 @@ inline void ProcessStuffs(IMonoClass *klass, const char *threadName)
 		ReportError("TEST FAILURE: %s: This thread is not detected as one in the critical section.", threadName);
 	}
 
-	IMonoField *lockField = klass->GetField("Counter");
+	const IMonoField *lockField = klass->GetField("Counter");
 	int accessCounter = klass->GetField<int>(nullptr, lockField) + 1;
 	klass->SetField(nullptr, lockField, &accessCounter);
 

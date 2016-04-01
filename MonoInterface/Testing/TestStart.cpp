@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-IMonoAssembly *mainTestingAssembly;
+const IMonoAssembly *mainTestingAssembly;
 
 #include "TestStart.h"
 #include "TestAssemblies.h"

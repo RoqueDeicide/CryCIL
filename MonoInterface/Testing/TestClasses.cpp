@@ -1,6 +1,6 @@
 ﻿#include "stdafx.h"
 
-extern IMonoAssembly *mainTestingAssembly;
+extern const IMonoAssembly *mainTestingAssembly;
 
 void TestMemberLists(IMonoClass *);
 void TestInheritance(IMonoClass *);
@@ -137,7 +137,7 @@ inline void TestInheritance(IMonoClass *klass)
 	CryLogAlways("TEST: Finding out about base class of Vector3 class.");
 	CryLogAlways("TEST:");
 
-	IMonoClass *baseClass = klass->Base;
+	const IMonoClass *baseClass = klass->Base;
 
 	if (!baseClass)
 	{
@@ -324,7 +324,7 @@ inline void TestGettingTheConstructors()
 
 	CryLogAlways("TEST: Getting a String constructor that accepts [sbyte *], [int] and [int].");
 
-	IMonoConstructor *ctorTypes = stringClass->GetConstructor(typesArray);
+	const IMonoConstructor *ctorTypes = stringClass->GetConstructor(typesArray);
 
 	if (ctorTypes)
 	{
@@ -344,7 +344,7 @@ inline void TestGettingTheConstructors()
 	klassList.Add(MonoEnv->CoreLibrary->Char);
 	klassList.Add(MonoEnv->CoreLibrary->Int32);
 
-	IMonoConstructor *ctorSimpleList = stringClass->GetConstructor(klassList);
+	const IMonoConstructor *ctorSimpleList = stringClass->GetConstructor(klassList);
 
 	if (ctorSimpleList)
 	{
@@ -361,7 +361,7 @@ inline void TestGettingTheConstructors()
 
 	auto klassPostList = List<ClassSpec>(1).Add(ClassSpec(MonoEnv->CoreLibrary->Char, "[]"));
 
-	IMonoConstructor *ctorSpecifiedClassList = stringClass->GetConstructor(klassPostList);
+	const IMonoConstructor *ctorSpecifiedClassList = stringClass->GetConstructor(klassPostList);
 
 	if (ctorSpecifiedClassList)
 	{
@@ -378,7 +378,7 @@ inline void TestGettingTheConstructors()
 
 	auto typeNameList = List<const char *>({ "System.Char[]", "System.Int32", "System.Int32" });
 
-	IMonoConstructor *ctorTypeNameList = stringClass->GetConstructor(typeNameList);
+	const IMonoConstructor *ctorTypeNameList = stringClass->GetConstructor(typeNameList);
 
 	if (ctorTypeNameList)
 	{
@@ -393,7 +393,7 @@ inline void TestGettingTheConstructors()
 	CryLogAlways("TEST: Getting constructor using a text representation of the signature.");
 	CryLogAlways("TEST:");
 
-	IMonoConstructor *ctorTextParams =
+	const IMonoConstructor *ctorTextParams =
 		stringClass->GetConstructor("System.Char[],System.Int32,System.Int32");
 
 	if (ctorTextParams)
@@ -409,7 +409,7 @@ inline void TestGettingTheConstructors()
 	CryLogAlways("TEST: Getting the only String constructor that accepts 4 arguments.");
 	CryLogAlways("TEST:");
 
-	IMonoConstructor *ctor4Params = stringClass->GetConstructor(4);
+	const IMonoConstructor *ctor4Params = stringClass->GetConstructor(4);
 
 	if (ctor4Params)
 	{
@@ -433,7 +433,7 @@ inline void TestObjectCreation()
 	CryLogAlways("TEST: Getting a default constructor.");
 	CryLogAlways("TEST:");
 
-	IMonoConstructor *defaultCtor = ctorTestClass->GetConstructor();
+	const IMonoConstructor *defaultCtor = ctorTestClass->GetConstructor();
 
 	CryLogAlways("TEST: Invoking a default constructor.");
 	CryLogAlways("TEST:");
@@ -443,7 +443,7 @@ inline void TestObjectCreation()
 	CryLogAlways("TEST: Getting a constructor that accepts 2 simple integers.");
 	CryLogAlways("TEST:");
 
-	IMonoConstructor *ctor2Integers = ctorTestClass->GetConstructor("System.Int32,System.Int32");
+	const IMonoConstructor *ctor2Integers = ctorTestClass->GetConstructor("System.Int32,System.Int32");
 
 	CryLogAlways("TEST: Invoking a constructor.");
 	CryLogAlways("TEST:");
@@ -461,7 +461,7 @@ inline void TestObjectCreation()
 	auto typesDoubleStringRef = List<ClassSpec>(2);
 	typesDoubleStringRef.Add(ClassSpec(MonoEnv->CoreLibrary->Double, ""));
 	typesDoubleStringRef.Add(ClassSpec(MonoEnv->CoreLibrary->String, "&"));
-	IMonoConstructor *ctorDoubleStringRef = ctorTestClass->GetConstructor(typesDoubleStringRef);
+	const IMonoConstructor *ctorDoubleStringRef = ctorTestClass->GetConstructor(typesDoubleStringRef);
 
 	CryLogAlways("TEST: Invoking a constructor.");
 	CryLogAlways("TEST:");
@@ -567,7 +567,7 @@ inline void TestGettingMethods()
 
 	typesArray[0] = typeClass->MakeArrayType();
 
-	IMonoMethod *method = typeClass->GetFunction("GetConstructor", typesArray)->ToInstance();
+	const IMonoMethod *method = typeClass->GetFunction("GetConstructor", typesArray)->ToInstance();
 
 	if (method)
 	{
@@ -760,7 +760,7 @@ inline void TestStaticMethodInvocation()
 	CryLogAlways("TEST: Invoking static methods through IMonoStaticMethod.");
 	CryLogAlways("TEST:");
 
-	IMonoClass *lerpClass = MonoEnv->Cryambly->GetClass("CryCil", "Interpolation")->GetNestedType("Linear");
+	const IMonoClass *lerpClass = MonoEnv->Cryambly->GetClass("CryCil", "Interpolation")->GetNestedType("Linear");
 	IMonoClass *vector3Class = MonoEnv->Cryambly->Vector3;
 	IMonoClass *singleClass = MonoEnv->CoreLibrary->Single;
 
@@ -773,7 +773,7 @@ inline void TestStaticMethodInvocation()
 	specClasses.Add(ClassSpec(vector3Class, ""));
 	specClasses.Add(ClassSpec(singleClass, ""));
 
-	IMonoStaticMethod *staticMethod = lerpClass->GetFunction("Apply", specClasses)->ToStatic();
+	const IMonoStaticMethod *staticMethod = lerpClass->GetFunction("Apply", specClasses)->ToStatic();
 
 	CryLogAlways("TEST: Invoking a method.");
 	CryLogAlways("TEST:");
@@ -832,7 +832,7 @@ inline void TestInstanceMethodInvocation()
 	CryLogAlways("TEST: Invocation of the method that accepts 4 arguments and returns an signed integer.");
 	CryLogAlways("TEST:");
 
-	IMonoMethod *indexOfMethod = stringClass->GetFunction("IndexOf", 4)->ToInstance();
+	const IMonoMethod *indexOfMethod = stringClass->GetFunction("IndexOf", 4)->ToInstance();
 
 	wchar_t symbol = L't';
 	int searchStart = 5;
@@ -864,7 +864,7 @@ inline void TestVirtualMethodInvocation()
 	CryLogAlways("TEST: Getting the method wrapper.");
 	CryLogAlways("TEST:");
 
-	IMonoMethod *toStringFormatMethod = objectClass->GetFunction("ToString", 0)->ToInstance();
+	const IMonoMethod *toStringFormatMethod = objectClass->GetFunction("ToString", 0)->ToInstance();
 
 	CryLogAlways("TEST: Invoking a virtual method using early binding.");
 	CryLogAlways("TEST:");
@@ -900,7 +900,7 @@ inline void TestStaticThunkInvocation()
 	CryLogAlways("TEST: Getting the method wrapper of NumberToDigits.");
 	CryLogAlways("TEST:");
 
-	IMonoFunction *method = methodTestClass->GetFunction("NumberToDigits", 2);
+	const IMonoFunction *method = methodTestClass->GetFunction("NumberToDigits", 2);
 
 	CryLogAlways("TEST: Getting the unmanaged thunk.");
 	CryLogAlways("TEST:");
@@ -957,7 +957,7 @@ inline void TestInstanceThunkInvocation()
 	CryLogAlways("TEST: Getting the method wrapper of Vector3::GetDistance(CryCil.Vector3).");
 	CryLogAlways("TEST:");
 
-	IMonoFunction *method = MonoEnv->Cryambly->Vector3->GetFunction("GetDistance", "CryCil.Vector3");
+	const IMonoFunction *method = MonoEnv->Cryambly->Vector3->GetFunction("GetDistance", "CryCil.Vector3");
 
 	CryLogAlways("TEST: Getting the unmanaged thunk.");
 	CryLogAlways("TEST:");
@@ -1016,8 +1016,8 @@ inline void TestInstanceFields()
 	CryLogAlways("TEST: Getting the wrappers for both fields.");
 	CryLogAlways("TEST:");
 
-	IMonoField *numberField = fieldTestClass->GetField("Number");
-	IMonoField *textField = fieldTestClass->GetField("Text");
+	const IMonoField *numberField = fieldTestClass->GetField("Number");
+	const IMonoField *textField = fieldTestClass->GetField("Text");
 
 	CryLogAlways("TEST: Getting the number field value through the wrapper.");
 	CryLogAlways("TEST:");
@@ -1093,7 +1093,7 @@ inline void TestStaticFields()
 	CryLogAlways("TEST: Setting a static field.");
 	CryLogAlways("TEST:");
 
-	IMonoField *field = fieldTestClass->GetField("ObjectField");
+	const IMonoField *field = fieldTestClass->GetField("ObjectField");
 
 	fieldTestClass->SetField(nullptr, field, obj);
 
@@ -1127,11 +1127,11 @@ inline void TestProperties()
 	CryLogAlways("TEST: Testing instance properties.");
 	CryLogAlways("TEST:");
 
-	IMonoProperty *lengthProp = vector3Class->GetProperty("Length");
+	const IMonoProperty *lengthProp = vector3Class->GetProperty("Length");
 
 	Vec3 vector(10.0f, 30.0f, -15.0f);
 
-	IMonoMethod *lengthGetter = lengthProp->Getter->ToInstance();
+	const IMonoMethod *lengthGetter = lengthProp->Getter->ToInstance();
 
 	CryLogAlways("TEST: Length of the vector (10, 30, -15) = %f", Unbox<float>(lengthGetter->Invoke(&vector)));
 
@@ -1139,9 +1139,9 @@ inline void TestProperties()
 	CryLogAlways("TEST: Testing indexers.");
 	CryLogAlways("TEST:");
 
-	IMonoProperty *indexerProp = vector3Class->GetProperty("Item", 1);
+	const IMonoProperty *indexerProp = vector3Class->GetProperty("Item", 1);
 
-	IMonoMethod *indexerGetter = indexerProp->Getter->ToInstance();
+	const IMonoMethod *indexerGetter = indexerProp->Getter->ToInstance();
 
 	int index = 1;
 	void *param = &index;
@@ -1150,7 +1150,7 @@ inline void TestProperties()
 	CryLogAlways("TEST: Y-coordinate of the vector = %f", yComponent);
 	CryLogAlways("TEST:");
 
-	IMonoMethod *indexerSetter = indexerProp->Setter->ToInstance();
+	const IMonoMethod *indexerSetter = indexerProp->Setter->ToInstance();
 
 	index = 2;
 	float coord = 90;
@@ -1165,8 +1165,8 @@ inline void TestProperties()
 	CryLogAlways("TEST: Testing static properties.");
 	CryLogAlways("TEST:");
 
-	IMonoProperty *maxGenProp = gcClass->GetProperty("MaxGeneration");
-	IMonoStaticMethod *maxGenGetter = maxGenProp->Getter->ToStatic();
+	const IMonoProperty *maxGenProp = gcClass->GetProperty("MaxGeneration");
+	const IMonoStaticMethod *maxGenGetter = maxGenProp->Getter->ToStatic();
 
 	CryLogAlways("TEST: Max generation of the GC: %d", Unbox<int>(maxGenGetter->Invoke()));
 	CryLogAlways("TEST:");
@@ -1181,8 +1181,8 @@ inline void UnmanagedEventHandler(const char *text)
 	CryLogAlways("TEST: Unmanaged event wrapper has been invoked with text: %s", text);
 }
 
-void TestInstanceEvent(mono::object obj, IMonoEvent *_event);
-void TestStaticEvent(IMonoEvent *_event);
+void TestInstanceEvent(mono::object obj, const IMonoEvent *_event);
+void TestStaticEvent(const IMonoEvent *_event);
 
 IMonoClass *eventHandlerClass;
 
@@ -1227,13 +1227,13 @@ inline void TestEvents()
 	CryLogAlways("TEST:");
 }
 
-inline void TestInstanceEvent(mono::object obj, IMonoEvent *_event)
+inline void TestInstanceEvent(mono::object obj, const IMonoEvent *_event)
 {
 	CryLogAlways("TEST: Testing an instance event %s::%s.", _event->DeclaringClass->FullName, _event->Name);
 
-	IMonoMethod *_eventAdd = _event->Add->ToInstance();
-	IMonoMethod *_eventRemove = _event->Remove->ToInstance();
-	IMonoMethod *_eventRaise = _event->Raise->ToInstance();
+	const IMonoMethod *_eventAdd = _event->Add->ToInstance();
+	const IMonoMethod *_eventRemove = _event->Remove->ToInstance();
+	const IMonoMethod *_eventRaise = _event->Raise->ToInstance();
 
 	CryLogAlways("TEST: Raising the event %s for the first time.", _event->Name);
 
@@ -1263,13 +1263,13 @@ inline void TestInstanceEvent(mono::object obj, IMonoEvent *_event)
 
 	_eventRaise->Invoke(obj);
 }
-inline void TestStaticEvent(IMonoEvent *_event)
+inline void TestStaticEvent(const IMonoEvent *_event)
 {
 	CryLogAlways("TEST: Testing a static event %s::%s.", _event->DeclaringClass->FullName, _event->Name);
 
-	IMonoStaticMethod *_eventAdd = _event->Add->ToStatic();
-	IMonoStaticMethod *_eventRemove = _event->Remove->ToStatic();
-	IMonoStaticMethod *_eventRaise = _event->Raise->ToStatic();
+	const IMonoStaticMethod *_eventAdd = _event->Add->ToStatic();
+	const IMonoStaticMethod *_eventRemove = _event->Remove->ToStatic();
+	const IMonoStaticMethod *_eventRaise = _event->Raise->ToStatic();
 
 	CryLogAlways("TEST: Raising the event %s for the first time.", _event->Name);
 

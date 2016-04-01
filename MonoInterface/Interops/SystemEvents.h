@@ -8,7 +8,7 @@ struct SystemEventsInterop : IMonoSystemListener, ISystemEventListener
 
 	virtual void OnPreInitialization() override {}
 	virtual void OnRunTimeInitializing() override {}
-	virtual void InitializeInterops() override;
+	virtual void OnRunTimeInitialized() override;
 	virtual void OnCryamblyInitilizing() override {}
 	virtual void OnCompilationStarting() override {}
 	virtual void OnCompilationComplete(bool) override {}

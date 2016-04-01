@@ -10,6 +10,6 @@ struct IMonoMember : public IMonoFunctionalityWrapper
 	//! Gets a pointer to the class where this method is declared.
 	__declspec(property(get = GetDeclaringClass)) IMonoClass *DeclaringClass;
 
-	VIRTUAL_API virtual const char *GetName() = 0;
-	VIRTUAL_API virtual IMonoClass *GetDeclaringClass() = 0;
+	VIRTUAL_API virtual const char *GetName() const = 0;
+	VIRTUAL_API virtual IMonoClass *GetDeclaringClass() const = 0;
 };

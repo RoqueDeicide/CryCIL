@@ -54,8 +54,8 @@
 #include "NtText.h"
 #include "List.h"
 
-// Include monosgen.lib from relevant folder. (Folder is defined in project properties.)
-#pragma comment(lib, "monosgen-2.0")
+// Include monosgen-2.0.lib from relevant folder. (Folder is defined in project properties.)
+#pragma comment(lib, "monosgen-2.0.lib")
 
 #include "targetver.h"
 

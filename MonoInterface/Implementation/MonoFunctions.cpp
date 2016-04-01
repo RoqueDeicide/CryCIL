@@ -27,7 +27,7 @@ void MonoFunctions::AddInternalCall(const char *nameSpace, const char *className
 	FunctionsMessage("Added the internal call.");
 }
 
-void *MonoFunctions::LookupInternalCall(IMonoFunction *func)
+void *MonoFunctions::LookupInternalCall(const IMonoFunction *func)
 {
 	return mono_lookup_internal_call(func->GetHandle<MonoMethod>());
 }

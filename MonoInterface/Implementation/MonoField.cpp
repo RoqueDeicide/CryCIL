@@ -3,32 +3,32 @@
 #include "MonoField.h"
 
 
-const char *MonoField::GetName()
+const char *MonoField::GetName() const
 {
 	return this->name;
 }
 
-IMonoClass *MonoField::GetDeclaringClass()
+IMonoClass *MonoField::GetDeclaringClass() const
 {
 	return this->klass;
 }
 
-unsigned int MonoField::GetOffset()
+unsigned int MonoField::GetOffset() const
 {
 	return this->offset;
 }
 
-MonoFieldAttributes MonoField::GetAttributes()
+MonoFieldAttributes MonoField::GetAttributes() const
 {
 	return this->attrs;
 }
 
-void *MonoField::GetWrappedPointer()
+void *MonoField::GetWrappedPointer() const
 {
 	return this->field;
 }
 
-void MonoField::Get(mono::object obj, void *value)
+void MonoField::Get(mono::object obj, void *value) const
 {
 	if (obj)
 	{
@@ -40,7 +40,7 @@ void MonoField::Get(mono::object obj, void *value)
 	}
 }
 
-void MonoField::Set(mono::object obj, void *value)
+void MonoField::Set(mono::object obj, void *value) const
 {
 	if (obj)
 	{

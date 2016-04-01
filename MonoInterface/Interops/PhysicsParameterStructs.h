@@ -34,11 +34,11 @@ struct PhysicsParametersLocation
 
 		return params;
 	}
-	void FromParams(const pe_params *)
+	void FromParams(const pe_params *) const
 	{
 		// We do nothing because this type is not supposed to be used with GetParams.
 	}
-	void Dispose()
+	void Dispose() const
 	{
 		if (this->pMtx3x3) free(this->pMtx3x3);
 		if (this->pMtx3x4) free(this->pMtx3x4);
@@ -64,7 +64,7 @@ struct PhysicsParametersBoundingBox
 
 		this->aabb = AABB(params->BBox[0], params->BBox[1]);
 	}
-	void Dispose()
+	void Dispose() const
 	{
 	}
 };
@@ -90,7 +90,7 @@ struct PhysicsParametersOuterEntity
 		this->entity = params->pOuterEntity;
 		this->geom   = params->pBoundingGeometry;
 	}
-	void Dispose()
+	void Dispose() const
 	{}
 };
 
@@ -101,7 +101,7 @@ struct PhysicsParametersSensors
 	Vec3 *origins;
 	Vec3 *dirs;
 	int32 count;
-	pe_params *ToParams()
+	pe_params *ToParams() const
 	{
 		pe_params_sensors *params = new pe_params_sensors();
 
@@ -131,7 +131,7 @@ struct PhysicsParametersSensors
 
 		this->rays = rays;
 	}
-	void Dispose()
+	void Dispose() const
 	{
 		if (this->count != 0)	// Only possible when we set the sensors to an array that has elements in it.
 		{
@@ -198,7 +198,7 @@ struct PhysicsParametersSimulation
 		this->maxFriction         = params->maxFriction;
 		this->collTypes           = params->collTypes;
 	}
-	void Dispose()
+	void Dispose() const
 	{}
 };
 
@@ -295,7 +295,7 @@ struct PhysicsParametersPart
 
 		this->matMappings = mappings;
 	}
-	void Dispose()
+	void Dispose() const
 	{
 		if (this->nMats != 0 && this->pMatMapping && !is_unused(this->pMatMapping))
 		{
@@ -333,7 +333,7 @@ struct PhysicsParametersForeignData
 		this->iForeignFlagsAND = params->iForeignFlagsAND;
 		this->iForeignFlagsOR  = params->iForeignFlagsOR;
 	}
-	void Dispose()
+	void Dispose() const
 	{}
 };
 
@@ -381,7 +381,7 @@ struct PhysicsParametersBuoyancy
 		this->waterEmin        = params->waterEmin;
 		this->iMedium          = params->iMedium;
 	}
-	void Dispose()
+	void Dispose() const
 	{}
 };
 
@@ -409,7 +409,7 @@ struct PhysicsParametersFlags
 		this->flagsOR = params->flagsOR;
 		this->flagsAND = params->flagsAND;
 	}
-	void Dispose()
+	void Dispose() const
 	{}
 };
 
@@ -434,7 +434,7 @@ struct PhysicsParametersCollisionClass
 		this->or = params->collisionClassOR;
 		this->and = params->collisionClassAND;
 	}
-	void Dispose()
+	void Dispose() const
 	{}
 };
 
@@ -518,7 +518,7 @@ struct PhysicsParametersStructuralJoint
 		this->bBroken                         = params->bBroken;
 		this->partidEpicenter                 = params->partidEpicenter;
 	}
-	void Dispose()
+	void Dispose() const
 	{}
 };
 
@@ -547,7 +547,7 @@ struct PhysicsParametersStructuralInitialVelocity
 		this->v = params->v;
 		this->w = params->w;
 	}
-	void Dispose()
+	void Dispose() const
 	{}
 };
 
@@ -573,7 +573,7 @@ struct PhysicsParametersTimeout
 		this->timeIdle = params->timeIdle;
 		this->maxTimeIdle = params->maxTimeIdle;
 	}
-	void Dispose()
+	void Dispose() const
 	{}
 };
 
@@ -626,7 +626,7 @@ struct PhysicsParametersSkeleton
 		this->explosionScale = params->explosionScale;
 		this->bReset         = params->bReset;
 	}
-	void Dispose()
+	void Dispose() const
 	{}
 };
 
@@ -722,7 +722,7 @@ struct PhysicsParametersJoint
 			this->selfCollidingParts = idArray;
 		}
 	}
-	void Dispose()
+	void Dispose() const
 	{
 		if (this->nSelfCollidingParts > 0 && !is_unused(this->pSelfCollidingParts) && this->pSelfCollidingParts)
 		{
@@ -819,7 +819,7 @@ struct PhysicsParametersArticulatedBody
 		this->nJointsAlloc        = params->nJointsAlloc;
 		this->bRecalcJoints       = params->bRecalcJoints;
 	}
-	void Dispose()
+	void Dispose() const
 	{}
 };
 
@@ -869,7 +869,7 @@ struct PhysicsParametersDimensions
 		this->bUseCapsule      = params->bUseCapsule;
 		this->groundContactEps = params->groundContactEps;
 	}
-	void Dispose()
+	void Dispose() const
 	{}
 };
 
@@ -952,7 +952,7 @@ struct PhysicsParametersDynamics
 		this->iRequestedTime                      = params->iRequestedTime;
 		this->bReleaseGroundColliderWhenNotActive = params->bReleaseGroundColliderWhenNotActive;
 	}
-	void Dispose()
+	void Dispose() const
 	{}
 };
 
@@ -1044,7 +1044,7 @@ struct PhysicsParametersParticle
 		this->areaCheckPeriod = params->areaCheckPeriod;
 		this->dontPlayHitEffect = params->dontPlayHitEffect;
 	}
-	void Dispose()
+	void Dispose() const
 	{}
 };
 
@@ -1234,7 +1234,7 @@ struct PhysicsParametersWheel
 		this->Tscale           = params->Tscale;
 		this->w                = params->w;
 	}
-	void Dispose()
+	void Dispose() const
 	{
 	}
 };
@@ -1381,7 +1381,7 @@ struct PhysicsParametersRope
 		this->idPartTiedTo0      = params->idPartTiedTo[0];
 		this->idPartTiedTo1      = params->idPartTiedTo[1];
 	}
-	void Dispose()
+	void Dispose() const
 	{}
 };
 
@@ -1473,7 +1473,7 @@ struct PhysicsParametersSoftBody
 		this->maxDistAnim           = params->maxDistAnim;
 		this->hostSpaceSim          = params->hostSpaceSim;
 	}
-	void Dispose()
+	void Dispose() const
 	{}
 };
 
@@ -1535,6 +1535,6 @@ struct PhysicsParametersArea
 		this->waveSim               = params->waveSim;
 		this->growthReserve         = params->growthReserve;
 	}
-	void Dispose()
+	void Dispose() const
 	{}
 };

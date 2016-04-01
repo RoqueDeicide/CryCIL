@@ -81,7 +81,7 @@ struct MonoFlowPortConfig
 		}
 		return conf;
 	}
-	SOutputPortConfig ToOutput()
+	SOutputPortConfig ToOutput() const
 	{
 		SOutputPortConfig conf;
 		conf.name = name;

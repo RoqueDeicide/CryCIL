@@ -5,7 +5,8 @@
 struct MonoExceptions : IMonoExceptions
 {
 
-	virtual mono::exception Create(IMonoAssembly *assembly, const char *nameSpace, const char *name, const char *message = nullptr) override;
+	virtual mono::exception Create(const IMonoAssembly *assembly, const char *nameSpace, const char *name,
+								   const char *message = nullptr) override;
 
 	virtual mono::exception BaseException        (const char *message = nullptr, mono::exception inner = nullptr) override;
 	virtual mono::exception AppDomainUnloaded    (const char *message = nullptr, mono::exception inner = nullptr) override;
@@ -44,5 +45,5 @@ struct MonoExceptions : IMonoExceptions
 
 private:
 
-	mono::exception CreateExceptionObject(const char *name_space, const char *name, const char *message = nullptr, mono::exception inner = nullptr);
+	mono::exception CreateExceptionObject(const char *name_space, const char *name, const char *message = nullptr, mono::exception inner = nullptr) const;
 };

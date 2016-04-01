@@ -36,19 +36,19 @@ struct ICryambly : public IMonoAssembly
 	//! Gets the pointer to the wrapper for ColorSingle type definition.
 	__declspec(property(get = GetColorSingle)) IMonoClass *ColorSingle;
 
-	VIRTUAL_API virtual IMonoClass *GetMatrix33() = 0;
-	VIRTUAL_API virtual IMonoClass *GetMatrix34() = 0;
-	VIRTUAL_API virtual IMonoClass *GetMatrix44() = 0;
-	VIRTUAL_API virtual IMonoClass *GetVector2() = 0;
-	VIRTUAL_API virtual IMonoClass *GetVector3() = 0;
-	VIRTUAL_API virtual IMonoClass *GetVector4() = 0;
-	VIRTUAL_API virtual IMonoClass *GetAngleAxis() = 0;
-	VIRTUAL_API virtual IMonoClass *GetBoundingBox() = 0;
-	VIRTUAL_API virtual IMonoClass *GetEulerAngles() = 0;
-	VIRTUAL_API virtual IMonoClass *GetPlane() = 0;
-	VIRTUAL_API virtual IMonoClass *GetQuaternion() = 0;
-	VIRTUAL_API virtual IMonoClass *GetQuatvec() = 0;
-	VIRTUAL_API virtual IMonoClass *GetRay() = 0;
-	VIRTUAL_API virtual IMonoClass *GetColorByte() = 0;
-	VIRTUAL_API virtual IMonoClass *GetColorSingle() = 0;
+	VIRTUAL_API virtual IMonoClass *GetMatrix33() const = 0;
+	VIRTUAL_API virtual IMonoClass *GetMatrix34() const = 0;
+	VIRTUAL_API virtual IMonoClass *GetMatrix44() const = 0;
+	VIRTUAL_API virtual IMonoClass *GetVector2() const = 0;
+	VIRTUAL_API virtual IMonoClass *GetVector3() const = 0;
+	VIRTUAL_API virtual IMonoClass *GetVector4() const = 0;
+	VIRTUAL_API virtual IMonoClass *GetAngleAxis() const = 0;
+	VIRTUAL_API virtual IMonoClass *GetBoundingBox() const = 0;
+	VIRTUAL_API virtual IMonoClass *GetEulerAngles() const = 0;
+	VIRTUAL_API virtual IMonoClass *GetPlane() const = 0;
+	VIRTUAL_API virtual IMonoClass *GetQuaternion() const = 0;
+	VIRTUAL_API virtual IMonoClass *GetQuatvec() const = 0;
+	VIRTUAL_API virtual IMonoClass *GetRay() const = 0;
+	VIRTUAL_API virtual IMonoClass *GetColorByte() const = 0;
+	VIRTUAL_API virtual IMonoClass *GetColorSingle() const = 0;
 };

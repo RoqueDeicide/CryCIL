@@ -75,108 +75,108 @@ CryamblyWrapper::~CryamblyWrapper()
 }
 
 
-IMonoClass *CryamblyWrapper::GetMatrix33()
+IMonoClass *CryamblyWrapper::GetMatrix33() const
 {
 	return this->matrix33;
 }
 
-IMonoClass *CryamblyWrapper::GetMatrix34()
+IMonoClass *CryamblyWrapper::GetMatrix34() const
 {
 	return this->matrix34;
 }
 
-IMonoClass *CryamblyWrapper::GetMatrix44()
+IMonoClass *CryamblyWrapper::GetMatrix44() const
 {
 	return this->matrix44;
 }
 
-IMonoClass *CryamblyWrapper::GetVector2()
+IMonoClass *CryamblyWrapper::GetVector2() const
 {
 	return this->vector2;
 }
 
-IMonoClass *CryamblyWrapper::GetVector3()
+IMonoClass *CryamblyWrapper::GetVector3() const
 {
 	return this->vector3;
 }
 
-IMonoClass *CryamblyWrapper::GetVector4()
+IMonoClass *CryamblyWrapper::GetVector4() const
 {
 	return this->vector4;
 }
 
-IMonoClass *CryamblyWrapper::GetAngleAxis()
+IMonoClass *CryamblyWrapper::GetAngleAxis() const
 {
 	return this->angleAxis;
 }
 
-IMonoClass *CryamblyWrapper::GetBoundingBox()
+IMonoClass *CryamblyWrapper::GetBoundingBox() const
 {
 	return this->boundingBox;
 }
 
-IMonoClass *CryamblyWrapper::GetEulerAngles()
+IMonoClass *CryamblyWrapper::GetEulerAngles() const
 {
 	return this->eulerAngles;
 }
 
-IMonoClass *CryamblyWrapper::GetPlane()
+IMonoClass *CryamblyWrapper::GetPlane() const
 {
 	return this->plane;
 }
 
-IMonoClass *CryamblyWrapper::GetQuaternion()
+IMonoClass *CryamblyWrapper::GetQuaternion() const
 {
 	return this->quaternion;
 }
 
-IMonoClass *CryamblyWrapper::GetQuatvec()
+IMonoClass *CryamblyWrapper::GetQuatvec() const
 {
 	return this->quatvec;
 }
 
-IMonoClass *CryamblyWrapper::GetRay()
+IMonoClass *CryamblyWrapper::GetRay() const
 {
 	return this->ray;
 }
 
-IMonoClass *CryamblyWrapper::GetColorByte()
+IMonoClass *CryamblyWrapper::GetColorByte() const
 {
 	return this->colorByte;
 }
 
-IMonoClass *CryamblyWrapper::GetColorSingle()
+IMonoClass *CryamblyWrapper::GetColorSingle() const
 {
 	return this->colorSingle;
 }
 
 
-IMonoClass *CryamblyWrapper::GetClass(const char *nameSpace, const char *className)
+IMonoClass *CryamblyWrapper::GetClass(const char *nameSpace, const char *className) const
 {
 	return MonoClassCache::Wrap(mono_class_from_name(this->image, nameSpace, className));
 }
 
-Text *CryamblyWrapper::GetName()
+Text *CryamblyWrapper::GetName() const
 {
 	return this->name;
 }
 
-Text *CryamblyWrapper::GetFullName()
+Text *CryamblyWrapper::GetFullName() const
 {
 	return this->fullName;
 }
 
-Text *CryamblyWrapper::GetFileName()
+Text *CryamblyWrapper::GetFileName() const
 {
 	return this->fileName;
 }
 
-mono::assembly CryamblyWrapper::GetReflectionObject()
+mono::assembly CryamblyWrapper::GetReflectionObject() const
 {
 	return mono::assembly(mono_assembly_get_object(mono_domain_get(), this->assembly));
 }
 
-void *CryamblyWrapper::GetWrappedPointer()
+void *CryamblyWrapper::GetWrappedPointer() const
 {
 	return this->assembly;
 }

@@ -2,7 +2,7 @@
 
 #include "SystemEvents.h"
 
-void SystemEventsInterop::InitializeInterops()
+void SystemEventsInterop::OnRunTimeInitialized()
 {
 	GetISystem()->GetISystemEventDispatcher()->RegisterListener(this);
 }
@@ -17,9 +17,8 @@ void SystemEventsInterop::OnSystemEvent(ESystemEvent _event, UINT_PTR wparam, UI
 		GetISystem()->GetISystemEventDispatcher()->RemoveListener(this);
 	}
 
-	static OnSystemEventThunk thunk =
-		OnSystemEventThunk(MonoEnv->Cryambly->GetClass("CryCil.Engine", "SystemEvents")
-		->GetFunction("OnSystemEvent", -1)->RawThunk);
+	static OnSystemEventThunk thunk = MonoEnv->Cryambly->GetClass("CryCil.Engine", "SystemEvents")
+		->GetFunction("OnSystemEvent", -1)->GetRawThunk<OnSystemEventThunk>();
 
 	thunk(_event, wparam, lparam);
 }

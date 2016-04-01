@@ -17,7 +17,7 @@ struct IMonoEvent : public IMonoMember
 	//! OnClosed.
 	__declspec(property(get = GetRaise)) IMonoFunction *Raise;
 
-	VIRTUAL_API virtual IMonoFunction *GetAdd() = 0;
-	VIRTUAL_API virtual IMonoFunction *GetRemove() = 0;
-	VIRTUAL_API virtual IMonoFunction *GetRaise() = 0;
+	VIRTUAL_API virtual const IMonoFunction *GetAdd() const = 0;
+	VIRTUAL_API virtual const IMonoFunction *GetRemove() const = 0;
+	VIRTUAL_API virtual const IMonoFunction *GetRaise() const = 0;
 };

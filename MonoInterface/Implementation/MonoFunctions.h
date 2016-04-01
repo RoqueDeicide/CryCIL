@@ -9,7 +9,7 @@ struct MonoFunctions : public IMonoFunctions
 
 	virtual void  AddInternalCall(const char *nameSpace, const char *className, const char *name,
 								  void *functionPointer) override;
-	virtual void *LookupInternalCall(IMonoFunction *func) override;
+	virtual void *LookupInternalCall(const IMonoFunction *func) override;
 
 	virtual mono::object InternalInvoke(_MonoMethod *func, void *object, void **args, mono::exception *ex,
 										bool polymorph) override;

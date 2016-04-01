@@ -146,8 +146,8 @@ MonoInterface::MonoInterface(IGameFramework *framework, List<IMonoSystemListener
 
 	// Initiate testing.
 	this->funcs->AddInternalCall(ns, "TestLauncher", "Test", TestFramework);
-	IMonoClass *testLauncher = this->cryambly->GetClass(ns, "TestLauncher");
-	IMonoFunction *testFunc = testLauncher->GetFunction("StartTesting");
+	const IMonoClass *testLauncher = this->cryambly->GetClass(ns, "TestLauncher");
+	const IMonoFunction *testFunc = testLauncher->GetFunction("StartTesting");
 	void *testThunk = testFunc->RawThunk;
 	static_cast<void(*)()>(testThunk)();
 	
@@ -473,7 +473,7 @@ void MonoInterface::RegisterDefaultListeners() const
 
 		InterfaceMessage("Got the class wrapper.");
 
-		IMonoFunction *function = klass->GetFunction(methodName, params);
+		const IMonoFunction *function = klass->GetFunction(methodName, params);
 
 		InterfaceMessage("Got the function: %p.", function);
 

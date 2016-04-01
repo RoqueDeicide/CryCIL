@@ -42,7 +42,7 @@ struct MonoEntitySpawnParams
 		this->scale              = params.vScale;
 		this->staticEntityId     = params.bStaticEntityId;
 	}
-	SEntitySpawnParams ToNative()
+	SEntitySpawnParams ToNative() const
 	{
 		SEntitySpawnParams params;
 		params.bCreatedThroughPool = this->createdThroughPool;

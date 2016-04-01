@@ -173,11 +173,11 @@ public:
 		return *this;
 	}
 
-	IMonoFunction *GetFunction()
+	IMonoFunction *GetFunction() const
 	{
 		if (!this->func)
 		{
-			this->func = MonoEnv->Objects->GetDelegateFunction(this->obj);
+			const_cast<IMonoDelegate *>(this)->func = MonoEnv->Objects->GetDelegateFunction(this->obj);
 		}
 		return this->func;
 	}

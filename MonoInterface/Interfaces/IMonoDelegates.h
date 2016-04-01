@@ -12,13 +12,13 @@ struct IMonoDelegates
 	//! @param delegateType Type that represents the delegate that needs to be created.
 	//! @param name         Name of the delegate type.
 	//! @param method       Method for which the delegate is made.
-	VIRTUAL_API virtual mono::delegat Create(IMonoClass *delegateType, IMonoStaticMethod *method) = 0;
+	VIRTUAL_API virtual mono::delegat Create(IMonoClass *delegateType, const IMonoStaticMethod *method) = 0;
 	//! Creates a new delegate for an instance method.
 	//!
 	//! @param delegateType Type that represents the delegate that needs to be created.
 	//! @param method       Method for which the delegate is made.
 	//! @param target       Target of invocation.
-	VIRTUAL_API virtual mono::delegat Create(IMonoClass *delegateType, IMonoMethod *method,
+	VIRTUAL_API virtual mono::delegat Create(IMonoClass *delegateType, const IMonoMethod *method,
 											 mono::object target) = 0;
 	//! Creates a delegate that wraps an unmanaged function pointer.
 	//!

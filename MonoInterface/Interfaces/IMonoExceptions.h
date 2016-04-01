@@ -15,7 +15,7 @@ struct IMonoExceptions
 	//! @param message   Optional text message to supply with the exception.
 	//!
 	//! @returns An IMonoException wrapper.
-	VIRTUAL_API virtual mono::exception Create(IMonoAssembly *assembly, const char *nameSpace,
+	VIRTUAL_API virtual mono::exception Create(const IMonoAssembly *assembly, const char *nameSpace,
 											   const char *name, const char *message = nullptr) = 0;
 
 	//! Creates a new System.Exception object.

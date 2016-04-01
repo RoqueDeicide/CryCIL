@@ -135,7 +135,7 @@ public:
 	//! Gets one of the properties of this object.
 	//!
 	//! @param name Name of the property to get.
-	IMonoProperty *GetProperty(const char *name) const
+	const IMonoProperty *GetProperty(const char *name) const
 	{
 		if (this->klass)
 		{
@@ -146,7 +146,7 @@ public:
 	//! Gets one of the events of this object.
 	//!
 	//! @param name Name of the event to get.
-	IMonoEvent *GetEvent(const char *name) const
+	const IMonoEvent *GetEvent(const char *name) const
 	{
 		if (this->klass)
 		{

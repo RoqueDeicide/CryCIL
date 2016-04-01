@@ -30,7 +30,7 @@ struct PhysicsActionImpulse
 
 		return act;
 	}
-	void Dispose()
+	void Dispose() const
 	{
 	}
 };
@@ -48,7 +48,7 @@ struct PhysicsActionReset
 
 		return act;
 	}
-	void Dispose()
+	void Dispose() const
 	{}
 };
 
@@ -96,7 +96,7 @@ struct PhysicsActionAddConstraint
 
 		return act;
 	}
-	void Dispose()
+	void Dispose() const
 	{}
 };
 
@@ -134,7 +134,7 @@ struct PhysicsActionUpdateConstraint
 
 		return act;
 	}
-	void Dispose()
+	void Dispose() const
 	{}
 };
 
@@ -173,7 +173,7 @@ struct PhysicsActionRegisterCollisionEvent
 
 		return act;
 	}
-	void Dispose()
+	void Dispose() const
 	{}
 };
 
@@ -192,7 +192,7 @@ struct PhysicsActionAwake
 
 		return act;
 	}
-	void Dispose()
+	void Dispose() const
 	{}
 };
 
@@ -206,7 +206,7 @@ struct PhysicsActionRemoveAllParts
 
 		return act;
 	}
-	void Dispose()
+	void Dispose() const
 	{}
 };
 
@@ -225,7 +225,7 @@ struct PhysicsActionResetPartMatrix
 
 		return act;
 	}
-	void Dispose()
+	void Dispose() const
 	{}
 };
 
@@ -249,7 +249,7 @@ struct PhysicsActionSetVelocity
 
 		return act;
 	}
-	void Dispose()
+	void Dispose() const
 	{}
 };
 
@@ -268,7 +268,7 @@ struct PhysicsActionAutoPartDetachment
 
 		return act;
 	}
-	void Dispose()
+	void Dispose() const
 	{}
 };
 
@@ -292,7 +292,7 @@ struct PhysicsActionTransferParts
 
 		return act;
 	}
-	void Dispose()
+	void Dispose() const
 	{}
 };
 
@@ -406,7 +406,7 @@ struct PhysicsActionMove
 
 		return act;
 	}
-	void Dispose()
+	void Dispose() const
 	{}
 };
 
@@ -437,7 +437,7 @@ struct PhysicsActionDrive
 
 		return act;
 	}
-	void Dispose()
+	void Dispose() const
 	{}
 };
 

@@ -58,7 +58,7 @@ struct PhysicsStatusNetworkLocation
 	Ang3 AngularVelocity;
 	float TimeOffset;
 
-	pe_status *ToStatus()
+	pe_status *ToStatus() const
 	{
 		return new pe_status_netpos();
 	}
@@ -82,7 +82,7 @@ struct PhysicsStatusSensors
 	int flags;
 	int sensorCount;
 
-	pe_status *ToStatus()
+	pe_status *ToStatus() const
 	{
 		return new pe_status_sensors();
 	}
@@ -112,7 +112,7 @@ struct PhysicsStatusDynamics
 	int nContacts;
 	float time_interval;
 
-	pe_status *ToStatus()
+	pe_status *ToStatus() const
 	{
 		pe_status_dynamics *stat = new pe_status_dynamics();
 
@@ -150,7 +150,7 @@ struct PhysicsStatusSurfaceId
 	int bUseProxy; // use pPhysGeomProxy or pPhysGeom
 	int id; // surface id
 
-	pe_status *ToStatus()
+	pe_status *ToStatus() const
 	{
 		pe_status_id *stat = new pe_status_id();
 
@@ -176,11 +176,11 @@ struct PhysicsStatusPartCount
 {
 	PhysicsStatus Base;
 
-	pe_status *ToStatus()
+	pe_status *ToStatus() const
 	{
 		return new pe_status_nparts();
 	}
-	void FromStatus(const pe_status *)
+	void FromStatus(const pe_status *) const
 	{
 	}
 };
@@ -189,11 +189,11 @@ struct PhysicsStatusAwake
 {
 	PhysicsStatus Base;
 
-	pe_status *ToStatus()
+	pe_status *ToStatus() const
 	{
 		return new pe_status_awake();
 	}
-	void FromStatus(const pe_status *)
+	void FromStatus(const pe_status *) const
 	{}
 };
 
@@ -202,7 +202,7 @@ struct PhysicsStatusContainsPoint
 	PhysicsStatus Base;
 	Vec3 pt;
 
-	pe_status *ToStatus()
+	pe_status *ToStatus() const
 	{
 		pe_status_contains_point *stat = new pe_status_contains_point();
 
@@ -210,7 +210,7 @@ struct PhysicsStatusContainsPoint
 
 		return stat;
 	}
-	void FromStatus(const pe_status *)
+	void FromStatus(const pe_status *) const
 	{
 	}
 };
@@ -220,7 +220,7 @@ struct PhysicsStatusPlaceHolder
 	PhysicsStatus Base;
 	IPhysicalEntity *pFullEntity;
 
-	pe_status *ToStatus()
+	pe_status *ToStatus() const
 	{
 		return new pe_status_placeholder();
 	}
@@ -238,7 +238,7 @@ struct PhysicsStatusSampleContactArea
 	Vec3 ptTest;
 	Vec3 dirTest;
 
-	pe_status *ToStatus()
+	pe_status *ToStatus() const
 	{
 		pe_status_sample_contact_area *stat = new pe_status_sample_contact_area();
 
@@ -247,7 +247,7 @@ struct PhysicsStatusSampleContactArea
 
 		return stat;
 	}
-	void FromStatus(const pe_status *)
+	void FromStatus(const pe_status *) const
 	{}
 };
 
@@ -262,7 +262,7 @@ struct PhysicsStatusConstraint
 	IPhysicalEntity *pBuddyEntity;
 	IPhysicalEntity *pConstraintEntity;
 
-	pe_status *ToStatus()
+	pe_status *ToStatus() const
 	{
 		pe_status_constraint *stat = new pe_status_constraint();
 
@@ -305,7 +305,7 @@ struct PhysicsStatusLiving
 	int bStuck;
 	int bSquashed;
 
-	pe_status *ToStatus()
+	pe_status *ToStatus() const
 	{
 		return new pe_status_living();
 	}
@@ -343,7 +343,7 @@ struct PhysicsStatusCheckStance
 	float unproj;
 	int bUseCapsule;
 
-	pe_status *ToStatus()
+	pe_status *ToStatus() const
 	{
 		pe_status_check_stance *stat = new pe_status_check_stance();
 
@@ -357,7 +357,7 @@ struct PhysicsStatusCheckStance
 
 		return stat;
 	}
-	void FromStatus(const pe_status *)
+	void FromStatus(const pe_status *) const
 	{}
 };
 
@@ -376,7 +376,7 @@ struct PhysicsStatusVehicle
 	float drivingTorque;
 	int nActiveColliders;
 
-	pe_status *ToStatus()
+	pe_status *ToStatus() const
 	{
 		return new pe_status_vehicle();
 	}
@@ -419,7 +419,7 @@ struct PhysicsStatusWheel
 	float steer;
 	IPhysicalEntity *pCollider;
 
-	pe_status *ToStatus()
+	pe_status *ToStatus() const
 	{
 		pe_status_wheel *stat = new pe_status_wheel();
 
@@ -459,7 +459,7 @@ struct PhysicsStatusVehicleAbilities
 	Vec3 rotPivot;
 	float maxVelocity;
 
-	pe_status *ToStatus()
+	pe_status *ToStatus() const
 	{
 		pe_status_vehicle_abilities *stat = new pe_status_vehicle_abilities();
 
@@ -487,7 +487,7 @@ struct PhysicsStatusJoint
 	Ang3 dq;
 	Quat quat0;
 
-	pe_status *ToStatus()
+	pe_status *ToStatus() const
 	{
 		pe_status_joint *stat = new pe_status_joint();
 
@@ -593,7 +593,7 @@ struct PhysicsStatusSoftBodyVertices
 	Vec3 pos;
 	Quat q;
 
-	pe_status *ToStatus()
+	pe_status *ToStatus() const
 	{
 		pe_status_softvtx *stat = new pe_status_softvtx();
 

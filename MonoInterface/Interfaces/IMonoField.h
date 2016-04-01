@@ -33,7 +33,7 @@ struct IMonoField : public IMonoMember
 	//!
 	//! @param obj   Object for which to get the value from.
 	//! @param value Pointer to the object that will contain the value of the field.
-	VIRTUAL_API virtual void Get(mono::object obj, void *value) = 0;
+	VIRTUAL_API virtual void Get(mono::object obj, void *value) const = 0;
 	//! Sets the value of this field on the given object.
 	//!
 	//! Value parameter can either be a pointer to the value-type object to set, or it can be
@@ -41,17 +41,17 @@ struct IMonoField : public IMonoMember
 	//!
 	//! @param obj   Object for which to set the value on.
 	//! @param value Pointer to the object that contains the new value for the field.
-	VIRTUAL_API virtual void Set(mono::object obj, void *value) = 0;
+	VIRTUAL_API virtual void Set(mono::object obj, void *value) const = 0;
 
-	VIRTUAL_API virtual unsigned int GetOffset() = 0;
-	VIRTUAL_API virtual MonoFieldAttributes GetAttributes() = 0;
+	VIRTUAL_API virtual unsigned int GetOffset() const = 0;
+	VIRTUAL_API virtual MonoFieldAttributes GetAttributes() const = 0;
 
 	//! Gets the value of the field.
 	//!
 	//! @param obj Object of which field to get.
 	//!
 	//! @tparam Type of the field.
-	template<typename FieldType> FieldType Get(mono::object obj)
+	template<typename FieldType> FieldType Get(mono::object obj) const
 	{
 		FieldType valueContainer;
 
@@ -65,7 +65,7 @@ struct IMonoField : public IMonoMember
 	//! @param value A value to set.
 	//!
 	//! @tparam Type of the field.
-	template <typename FieldType> void Assign(mono::object obj, FieldType value)
+	template <typename FieldType> void Assign(mono::object obj, FieldType value) const
 	{
 		this->Set(obj, &value);
 	}
@@ -73,7 +73,7 @@ struct IMonoField : public IMonoMember
 	//!
 	//! @param obj   Object of which field to get.
 	//! @param value A value to set.
-	void Assign(mono::object obj, mono::object value)
+	void Assign(mono::object obj, mono::object value) const
 	{
 		this->Set(obj, value);
 	}

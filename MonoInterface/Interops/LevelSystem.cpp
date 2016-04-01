@@ -27,7 +27,7 @@ void LevelSystemInterop::InitializeInterops()
 
 void LevelSystemInterop::OnLevelNotFound(const char *levelName)
 {
-	static IMonoStaticMethod *raise = this->GetMonoClass()->GetEvent("LevelNotFound")->Raise->ToStatic();
+	static const IMonoStaticMethod *raise = this->GetMonoClass()->GetEvent("LevelNotFound")->Raise->ToStatic();
 	
 	void *params[1];
 	params[0] = ToMonoString(levelName);
@@ -36,7 +36,7 @@ void LevelSystemInterop::OnLevelNotFound(const char *levelName)
 
 void LevelSystemInterop::OnLoadingStart(ILevelInfo *pLevel)
 {
-	static IMonoStaticMethod *raise = this->GetMonoClass()->GetEvent("LoadingStart")->Raise->ToStatic();
+	static const IMonoStaticMethod *raise = this->GetMonoClass()->GetEvent("LoadingStart")->Raise->ToStatic();
 
 	void *params[1];
 	params[0] = pLevel;
@@ -45,7 +45,7 @@ void LevelSystemInterop::OnLoadingStart(ILevelInfo *pLevel)
 
 void LevelSystemInterop::OnLoadingLevelEntitiesStart(ILevelInfo* pLevel)
 {
-	static IMonoStaticMethod *raise = this->GetMonoClass()->GetEvent("LoadingEntitiesStart")->Raise->ToStatic();
+	static const IMonoStaticMethod *raise = this->GetMonoClass()->GetEvent("LoadingEntitiesStart")->Raise->ToStatic();
 
 	void *params[1];
 	params[0] = pLevel;
@@ -54,7 +54,7 @@ void LevelSystemInterop::OnLoadingLevelEntitiesStart(ILevelInfo* pLevel)
 
 void LevelSystemInterop::OnLoadingComplete(ILevel *pLevel)
 {
-	static IMonoStaticMethod *raise = this->GetMonoClass()->GetEvent("LoadingComplete")->Raise->ToStatic();
+	static const IMonoStaticMethod *raise = this->GetMonoClass()->GetEvent("LoadingComplete")->Raise->ToStatic();
 
 	void *params[1];
 	params[0] = pLevel->GetLevelInfo();
@@ -63,7 +63,7 @@ void LevelSystemInterop::OnLoadingComplete(ILevel *pLevel)
 
 void LevelSystemInterop::OnLoadingError(ILevelInfo *pLevel, const char *)
 {
-	static IMonoStaticMethod *raise = this->GetMonoClass()->GetEvent("LoadingError")->Raise->ToStatic();
+	static const IMonoStaticMethod *raise = this->GetMonoClass()->GetEvent("LoadingError")->Raise->ToStatic();
 
 	void *params[1];
 	params[0] = pLevel;
@@ -72,7 +72,7 @@ void LevelSystemInterop::OnLoadingError(ILevelInfo *pLevel, const char *)
 
 void LevelSystemInterop::OnLoadingProgress(ILevelInfo *pLevel, int progressAmount)
 {
-	static IMonoStaticMethod *raise = this->GetMonoClass()->GetEvent("LoadingProgress")->Raise->ToStatic();
+	static const IMonoStaticMethod *raise = this->GetMonoClass()->GetEvent("LoadingProgress")->Raise->ToStatic();
 
 	void *params[2];
 	params[0] = pLevel;
@@ -82,7 +82,7 @@ void LevelSystemInterop::OnLoadingProgress(ILevelInfo *pLevel, int progressAmoun
 
 void LevelSystemInterop::OnUnloadComplete(ILevel* pLevel)
 {
-	static IMonoStaticMethod *raise = this->GetMonoClass()->GetEvent("UnloadComplete")->Raise->ToStatic();
+	static const IMonoStaticMethod *raise = this->GetMonoClass()->GetEvent("UnloadComplete")->Raise->ToStatic();
 
 	void *params[1];
 	params[0] = pLevel->GetLevelInfo();

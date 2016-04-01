@@ -20,7 +20,7 @@ public:
 	//!           method in a default manner.
 	//!
 	//! @returns A reference to the created and initialized object.
-	VIRTUAL_API virtual mono::object Create(mono::exception *ex = nullptr) = 0;
+	VIRTUAL_API virtual mono::object Create(mono::exception *ex = nullptr) const = 0;
 	//! Creates a new object of the type where this class is defined.
 	//!
 	//! Use this method to create and initialize reference-type objects.
@@ -31,7 +31,7 @@ public:
 	//!             method in a default manner.
 	//!
 	//! @returns A reference to the created and initialized object.
-	VIRTUAL_API virtual mono::object Create(IMonoArray<> &args, mono::exception *ex = nullptr) = 0;
+	VIRTUAL_API virtual mono::object Create(IMonoArray<> &args, mono::exception *ex = nullptr) const = 0;
 	//! Creates a new object of the type where this class is defined.
 	//!
 	//! Use this method to create and initialize reference-type objects.
@@ -42,7 +42,7 @@ public:
 	//!             method in a default manner.
 	//!
 	//! @returns A reference to the created and initialized object.
-	VIRTUAL_API virtual mono::object Create(void **args, mono::exception *ex = nullptr) = 0;
+	VIRTUAL_API virtual mono::object Create(void **args, mono::exception *ex = nullptr) const = 0;
 
 	//! Initializes an object of the type where this class is defined.
 	//!
@@ -54,7 +54,7 @@ public:
 	//!            method in a default manner.
 	//!
 	//! @returns A reference to the created and initialized object.
-	VIRTUAL_API virtual void Initialize(void *obj, mono::exception *ex = nullptr) = 0;
+	VIRTUAL_API virtual void Initialize(void *obj, mono::exception *ex = nullptr) const = 0;
 	//! Initializes an object of the type where this class is defined.
 	//!
 	//! Use this method to initialize value-type objects.
@@ -66,7 +66,7 @@ public:
 	//!             method in a default manner.
 	//!
 	//! @returns A reference to the created and initialized object.
-	VIRTUAL_API virtual void Initialize(void *obj, IMonoArray<> &args, mono::exception *ex = nullptr) = 0;
+	VIRTUAL_API virtual void Initialize(void *obj, IMonoArray<> &args, mono::exception *ex = nullptr) const = 0;
 	//! Initializes an object of the type where this class is defined.
 	//!
 	//! Use this method to initialize value-type objects.
@@ -78,40 +78,40 @@ public:
 	//!             method in a default manner.
 	//!
 	//! @returns A reference to the created and initialized object.
-	VIRTUAL_API virtual void Initialize(void *obj, void **args, mono::exception *ex = nullptr) = 0;
+	VIRTUAL_API virtual void Initialize(void *obj, void **args, mono::exception *ex = nullptr) const = 0;
 };
 
-__forceinline IMonoConstructor *IMonoFunction::ToCtor()
+__forceinline const IMonoConstructor *IMonoFunction::ToCtor() const
 {
-	return static_cast<IMonoConstructor *>(this);
+	return static_cast<const IMonoConstructor *>(this);
 }
 
-__forceinline IMonoConstructor *IMonoClass::GetConstructor(int paramCount)
+__forceinline const IMonoConstructor *IMonoClass::GetConstructor(int paramCount) const
 {
 	return this->GetFunction(".ctor", paramCount)->ToCtor();
 }
 
-__forceinline IMonoConstructor *IMonoClass::GetConstructor(IMonoArray<> &types)
+__forceinline const IMonoConstructor *IMonoClass::GetConstructor(IMonoArray<> &types) const
 {
 	return this->GetFunction(".ctor", types)->ToCtor();
 }
 
-__forceinline IMonoConstructor *IMonoClass::GetConstructor(List<IMonoClass *> &classes)
+__forceinline const IMonoConstructor *IMonoClass::GetConstructor(List<IMonoClass *> &classes) const
 {
 	return this->GetFunction(".ctor", classes)->ToCtor();
 }
 
-__forceinline IMonoConstructor *IMonoClass::GetConstructor(List<ClassSpec> &specifiedClasses)
+__forceinline const IMonoConstructor *IMonoClass::GetConstructor(List<ClassSpec> &specifiedClasses) const
 {
 	return this->GetFunction(".ctor", specifiedClasses)->ToCtor();
 }
 
-__forceinline IMonoConstructor *IMonoClass::GetConstructor(const char *params)
+__forceinline const IMonoConstructor *IMonoClass::GetConstructor(const char *params) const
 {
 	return this->GetFunction(".ctor", params)->ToCtor();
 }
 
-__forceinline IMonoConstructor *IMonoClass::GetConstructor(List<const char *> &paramTypeNames)
+__forceinline const IMonoConstructor *IMonoClass::GetConstructor(List<const char *> &paramTypeNames) const
 {
 	return this->GetFunction(".ctor", paramTypeNames)->ToCtor();
 }

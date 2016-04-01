@@ -53,35 +53,36 @@ MonoAssemblyWrapper::MonoAssemblyWrapper(const char *assemblyFile, bool &failed)
 	}
 }
 
-IMonoClass *MonoAssemblyWrapper::GetClass(const char *nameSpace, const char *className)
+IMonoClass *MonoAssemblyWrapper::GetClass(const char *nameSpace, const char *className) const
 {
 	MonoClass *klass = mono_class_from_name(this->image, nameSpace, className);
 
 	return MonoClassCache::Wrap(klass);
 }
 
-Text *MonoAssemblyWrapper::GetName()
+Text *MonoAssemblyWrapper::GetName() const
 {
 	return this->shortName;
 }
 
-Text *MonoAssemblyWrapper::GetFullName()
+Text *MonoAssemblyWrapper::GetFullName() const
 {
 	return this->fullName;
 }
 
-Text *MonoAssemblyWrapper::GetFileName()
+Text *MonoAssemblyWrapper::GetFileName() const
 {
 	return this->fileName;
 }
 
 //! Returns a pointer to the MonoAssembly for Mono API calls.
-void *MonoAssemblyWrapper::GetWrappedPointer()
+void *MonoAssemblyWrapper::GetWrappedPointer() const
 {
 	return this->assembly;
 }
 
-mono::assembly MonoAssemblyWrapper::GetReflectionObject()
+mono::assembly MonoAssemblyWrapper::GetReflectionObject() const
 {
-	return mono::assembly(mono_assembly_get_object(static_cast<MonoDomain *>(MonoEnv->AppDomain), this->assembly));
+	return mono::assembly(mono_assembly_get_object(static_cast<MonoDomain *>(MonoEnv->AppDomain),
+												   this->assembly));
 }

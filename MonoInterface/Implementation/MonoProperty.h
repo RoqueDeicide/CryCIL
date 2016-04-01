@@ -16,8 +16,8 @@ struct MonoPropertyWrapper : public IMonoProperty
 private:
 	MonoProperty *prop;
 	IMonoClass *klass;
-	IMonoFunction *getter;
-	IMonoFunction *setter;
+	const IMonoFunction *getter;
+	const IMonoFunction *setter;
 public:
 	explicit MonoPropertyWrapper(MonoProperty *prop, IMonoClass *klass = nullptr);
 	~MonoPropertyWrapper()
@@ -26,14 +26,14 @@ public:
 		if (this->setter) delete this->setter; this->setter = nullptr;
 	}
 
-	virtual IMonoFunction *GetGetter() override;
-	virtual IMonoFunction *GetSetter() override;
-	virtual void          *GetWrappedPointer() override;
-	virtual const char    *GetName() override;
-	virtual IMonoClass    *GetDeclaringClass() override;
-	virtual IMonoFunction *GetIdentifier() override;
-	virtual int            GetParameterCount() override;
+	virtual const IMonoFunction *GetGetter() const override;
+	virtual const IMonoFunction *GetSetter() const override;
+	virtual void          *GetWrappedPointer() const override;
+	virtual const char    *GetName() const override;
+	virtual IMonoClass    *GetDeclaringClass() const override;
+	virtual const IMonoFunction *GetIdentifier() const override;
+	virtual int            GetParameterCount() const override;
 
 private:
-	IMonoFunction *GetFunctionWrapper(bool isStatic, MonoMethod *method, IMonoClass *klass) const;
+	static const IMonoFunction *GetFunctionWrapper(MonoMethod *method, IMonoClass *klass);
 };

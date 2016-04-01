@@ -30,7 +30,7 @@ void AudioSystemInterop::InitializeInterops()
 	REGISTER_METHOD(RequestResetEnvironments);
 }
 
-IAudioSystemImplementation *AudioSystemInterop::CreateNativeImplementationObject(mono::object managedObject)
+IAudioSystemImplementation *AudioSystemInterop::CreateNativeImplementationObject(mono::object)
 {
 	// TODO: Implement custom audio system implementations.
 	NotImplementedException().Throw();

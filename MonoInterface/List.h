@@ -549,7 +549,7 @@ public:
 	//! @param comparer An optional object that performs comparison of objects within this list.
 	//!
 	//! @returns A zero-based index of the element, if it was found in the list.
-	int BinarySearch(ElementType &element, std::function<int(ElementType&, ElementType&)> comparer = nullptr)
+	int BinarySearch(ElementType &element, std::function<int(ElementType&, ElementType&)> comparer = nullptr) const
 	{
 		std::function<int(ElementType&, ElementType&)> comparison;
 		if (comparer)
@@ -818,7 +818,7 @@ public:
 	}
 	//! Creates an object that allows this list to be looked through without changing it.
 	__declspec(property(get = GetAsReadOnly)) ReadOnlyList<ElementType> AsReadOnly;
-	ReadOnlyList<ElementType> GetAsReadOnly()
+	ReadOnlyList<ElementType> GetAsReadOnly() const
 	{
 		return ReadOnlyList<ElementType>(this->elements, this->length, this->capacity);
 	}

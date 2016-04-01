@@ -49,24 +49,24 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!
 	//! It's not easy to predict which one of the constructors will be acquired when there are several
 	//! of them that accept the same number of arguments.
-	__forceinline IMonoConstructor *GetConstructor(int paramCount = 0);			// Defined in IMonoConstructor.
+	__forceinline const IMonoConstructor *GetConstructor(int paramCount = 0) const;			// Defined in IMonoConstructor.
 	//! Gets constructor that can accept arguments of specified types.
 	//!
 	//! @param types An array of System.Type objects that specify constructor signature to use.
-	__forceinline IMonoConstructor *GetConstructor(IMonoArray<> &types);		// Defined in IMonoConstructor.
+	__forceinline const IMonoConstructor *GetConstructor(IMonoArray<> &types) const;		// Defined in IMonoConstructor.
 	//! Gets constructor that can accept arguments of specified types.
 	//!
 	//! Refer to documentation of corresponding GetMethod() overload for details.
 	//!
 	//! @param classes A list IMonoClass wrappers that specify constructor signature to use.
-	__forceinline IMonoConstructor *GetConstructor(List<IMonoClass *> &classes);// Defined in IMonoConstructor.
+	__forceinline const IMonoConstructor *GetConstructor(List<IMonoClass *> &classes) const;// Defined in IMonoConstructor.
 	//! Gets constructor that can accept arguments of specified types.
 	//!
 	//! Refer to documentation of corresponding GetMethod() overload for details.
 	//!
 	//! @param specifiedClasses A list of classes and postfixes that specify constructor signature
 	//!                         to use.
-	__forceinline IMonoConstructor *GetConstructor(List<ClassSpec> &specifiedClasses);// Defined in IMonoConstructor.
+	__forceinline const IMonoConstructor *GetConstructor(List<ClassSpec> &specifiedClasses) const;// Defined in IMonoConstructor.
 	//! Gets the constructor that matches given description.
 	//!
 	//! Refer to documentation of corresponding GetMethod() overload for details.
@@ -75,19 +75,19 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!
 	//! @returns A pointer to the wrapper to the found constructor. Null is returned if
 	//!          no constructor matching the description was found.
-	__forceinline IMonoConstructor *GetConstructor(const char *params);			// Defined in IMonoConstructor.
+	__forceinline const IMonoConstructor *GetConstructor(const char *params) const;			// Defined in IMonoConstructor.
 	//! Gets a constructor defined in this class.
 	//!
 	//! Refer to documentation of corresponding GetMethod() overload for details.
 	//!
 	//! @param paramTypeNames A list of full type names that specify the parameters the constructor
 	//!                       accepts.
-	__forceinline IMonoConstructor *GetConstructor(List<const char *> &paramTypeNames);	// Defined in IMonoConstructor.
+	__forceinline const IMonoConstructor *GetConstructor(List<const char *> &paramTypeNames) const;	// Defined in IMonoConstructor.
 	//! Gets method that can accept arguments of specified types.
 	//!
 	//! @param name  Name of the method to get. If null, then any name will suffice.
 	//! @param types An array of System.Type objects that specify method signature to use.
-	VIRTUAL_API virtual IMonoFunction *GetFunction(const char *name, IMonoArray<> &types) = 0;
+	VIRTUAL_API virtual const IMonoFunction *GetFunction(const char *name, IMonoArray<> &types) const = 0;
 	//! Gets method that can accept arguments of specified types.
 	//!
 	//! This method does not bother with checking how arguments are passed to the method.
@@ -116,7 +116,7 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!
 	//! @param name    Name of the method to get. If null, then any name will suffice.
 	//! @param classes A list IMonoClass wrappers that specify method signature to use.
-	VIRTUAL_API virtual IMonoFunction *GetFunction(const char *name, List<IMonoClass *> &classes) = 0;
+	VIRTUAL_API virtual const IMonoFunction *GetFunction(const char *name, List<IMonoClass *> &classes) const = 0;
 	//! Gets method that can accept arguments of specified types.
 	//!
 	//! Postfixes allow you to specify what kind of parameter to use.
@@ -132,7 +132,7 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!
 	//! @param name             Name of the method to get. If null, then any name will suffice.
 	//! @param specifiedClasses A list of classes and postfixes that specify method signature to use.
-	VIRTUAL_API virtual IMonoFunction *GetFunction(const char *name, List<ClassSpec> &specifiedClasses) = 0;
+	VIRTUAL_API virtual const IMonoFunction *GetFunction(const char *name, List<ClassSpec> &specifiedClasses) const = 0;
 	//! Gets the method that matches given description.
 	//!
 	//! The easiest way to learn the signature of the method is to use the following code:
@@ -167,7 +167,7 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!
 	//! @returns A pointer to the wrapper to the found method. Null is returned if
 	//!          no method matching the description was found.
-	VIRTUAL_API virtual IMonoFunction *GetFunction(const char *name, const char *params) = 0;
+	VIRTUAL_API virtual const IMonoFunction *GetFunction(const char *name, const char *params) const = 0;
 	//! Gets a method defined in this class.
 	//!
 	//! Examples:
@@ -189,13 +189,13 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!
 	//! @param name           Name of the method to find. If null, then any name will suffice.
 	//! @param paramTypeNames A list of full type names that specify the parameters the method accepts.
-	VIRTUAL_API virtual IMonoFunction *GetFunction(const char *name, List<const char *> &paramTypeNames) = 0;
+	VIRTUAL_API virtual const IMonoFunction *GetFunction(const char *name, List<const char *> &paramTypeNames) const = 0;
 	//! Gets the first method that matches given description.
 	//!
 	//! @param name       Name of the method to find. If null, then any name will suffice.
 	//! @param paramCount Number of arguments the method should take. If it's equal to -1 then parameter
 	//!                   count is ignored.
-	VIRTUAL_API virtual IMonoFunction *GetFunction(const char *name, int paramCount = 0) = 0;
+	VIRTUAL_API virtual const IMonoFunction *GetFunction(const char *name, int paramCount = 0) const = 0;
 	//! Gets an array of functions that matches given description.
 	//!
 	//! @param name       Name of the functions to find.
@@ -203,21 +203,21 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!
 	//! @returns A pointer to the first found method. You should release resultant array once
 	//!          you don't need it anymore.
-	VIRTUAL_API virtual List<IMonoFunction *> *GetFunctions(const char *name, int paramCount) = 0;
+	VIRTUAL_API virtual const List<IMonoFunction *> *GetFunctions(const char *name, int paramCount) const = 0;
 	//! Gets an array of overload of the method.
 	//!
 	//! @param name       Name of the method which overloads to find.
 	//!
 	//! @returns A pointer to the first found method. You should release resultant array once
 	//!          you don't need it anymore.
-	VIRTUAL_API virtual List<IMonoFunction *> *GetFunctions(const char *name) = 0;
+	VIRTUAL_API virtual const List<IMonoFunction *> *GetFunctions(const char *name) const = 0;
 	//! Gets a metadata wrapper for the field of this class.
 	//!
 	//! @param name Name of the field to get.
 	//!
 	//! @returns A pointer to the object that implements IMonoField that represents the field of interest,
 	//!          if found, otherwise null.
-	VIRTUAL_API virtual IMonoField *GetField(const char *name) = 0;
+	VIRTUAL_API virtual const IMonoField *GetField(const char *name) const = 0;
 	//! Gets the value of the object's field.
 	//!
 	//! @param obj   Object which field to get. Use nullptr when working with a static field.
@@ -225,7 +225,7 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//! @param value Pointer to the object that will contain the value of the field.
 	//!
 	//! @seealso IMonoHandle::SetField
-	VIRTUAL_API virtual void GetField(mono::object obj, const char *name, void *value) = 0;
+	VIRTUAL_API virtual void GetField(mono::object obj, const char *name, void *value) const = 0;
 	//! Sets the value of the object's field.
 	//!
 	//! @param obj   Object which field to set. Use nullptr when working with a static field.
@@ -235,7 +235,7 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!              value-type object when setting the value-typed fields.
 	//!
 	//! @seealso IMonoHandle::SetField
-	VIRTUAL_API virtual void SetField(mono::object obj, const char *name, void *value) = 0;
+	VIRTUAL_API virtual void SetField(mono::object obj, const char *name, void *value) const = 0;
 	//! Gets the value of the object's field.
 	//!
 	//! @param obj   Object which field to get. Use nullptr when working with a static field.
@@ -243,7 +243,7 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//! @param value Pointer to the object that will contain the value of the field.
 	//!
 	//! @seealso IMonoHandle::SetField
-	VIRTUAL_API virtual void GetField(mono::object obj, IMonoField *field, void *value) = 0;
+	VIRTUAL_API virtual void GetField(mono::object obj, const IMonoField *field, void *value) const = 0;
 	//! Sets the value of the object's field.
 	//!
 	//! @param obj   Object which field to set. Use nullptr when working with a static field.
@@ -253,45 +253,46 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!              value-type object when setting the value-typed fields.
 	//!
 	//! @seealso IMonoHandle::SetField
-	VIRTUAL_API virtual void SetField(mono::object obj, IMonoField *field, void *value) = 0;
+	VIRTUAL_API virtual void SetField(mono::object obj, const IMonoField *field, void *value) const = 0;
 	//! Gets a wrapper for a property defined in this class.
 	//!
 	//! @param name Name of the property to get.
-	VIRTUAL_API virtual IMonoProperty *GetProperty(const char *name) = 0;
+	VIRTUAL_API virtual const IMonoProperty *GetProperty(const char *name) const = 0;
 	//! Gets a wrapper for a property defined in this class.
 	//!
 	//! @param name  Name of the property to get. If null, then any name will suffice.
 	//! @param types An array of System.Type objects that specify property signature to use.
-	VIRTUAL_API virtual IMonoProperty *GetProperty(const char *name, IMonoArray<> &types) = 0;
+	VIRTUAL_API virtual const IMonoProperty *GetProperty(const char *name, IMonoArray<> &types) const = 0;
 	//! Gets a wrapper for a property defined in this class.
 	//!
 	//! @param name    Name of the property to get. If null, then any name will suffice.
 	//! @param classes A list IMonoClass wrappers that specify property signature to use.
-	VIRTUAL_API virtual IMonoProperty *GetProperty(const char *name, List<IMonoClass *> &classes) = 0;
+	VIRTUAL_API virtual const IMonoProperty *GetProperty(const char *name, List<IMonoClass *> &classes) const = 0;
 	//! Gets a wrapper for a property defined in this class.
 	//!
 	//! @param name             Name of the property to get. If null, then any name will suffice.
 	//! @param specifiedClasses A list of classes and postfixes that specify property signature to use.
-	VIRTUAL_API virtual IMonoProperty *GetProperty(const char *name, List<ClassSpec> &specifiedClasses) = 0;
+	VIRTUAL_API virtual const IMonoProperty *GetProperty(const char *name, List<ClassSpec> &specifiedClasses) const = 0;
 	//! Gets a wrapper for a property defined in this class.
 	//!
 	//! @param name           Name of the property to get. If null, then any name will suffice.
 	//! @param paramTypeNames A list of full type names that specify the parameters the property accepts.
-	VIRTUAL_API virtual IMonoProperty *GetProperty(const char *name, List<const char *> &paramTypeNames) = 0;
+	VIRTUAL_API virtual const IMonoProperty *GetProperty(const char *name,
+												   List<const char *> &paramTypeNames) const = 0;
 	//! Gets a wrapper for a property defined in this class.
 	//!
 	//! @param name       Name of the property to get. If null, then any name will suffice.
 	//! @param paramCount Number of arguments the getter or setter of the property should take. If it's
 	//!                   equal to -1 then parameter count is ignored.
-	VIRTUAL_API virtual IMonoProperty *GetProperty(const char *name, int paramCount) = 0;
+	VIRTUAL_API virtual const IMonoProperty *GetProperty(const char *name, int paramCount) const = 0;
 	//! Gets one of the events defined in this class.
 	//!
 	//! @param name Name of the event to get.
-	VIRTUAL_API virtual IMonoEvent *GetEvent(const char *name) = 0;
+	VIRTUAL_API virtual const IMonoEvent *GetEvent(const char *name) const = 0;
 	//! Gets the class or struct that is defined in this one.
 	//!
 	//! @param name Name of the class to get.
-	VIRTUAL_API virtual IMonoClass *GetNestedType(const char *name) = 0;
+	VIRTUAL_API virtual const IMonoClass *GetNestedType(const char *name) const = 0;
 	//! Determines whether this class inherits from specified class.
 	//!
 	//! Entire inheritance path will be searched for the specified class.
@@ -300,7 +301,7 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//! @param className Name of the class.
 	//!
 	//! @returns True, if this class is a subclass of specified one.
-	VIRTUAL_API virtual bool Inherits(const char *nameSpace, const char *className) = 0;
+	VIRTUAL_API virtual bool Inherits(const char *nameSpace, const char *className) const = 0;
 	//! Determines whether this class inherits from specified class.
 	//!
 	//! Entire inheritance path will be searched for the specified class.
@@ -309,7 +310,7 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!              must be determined.
 	//!
 	//! @returns True, if this class is a subclass of specified one.
-	VIRTUAL_API virtual bool Inherits(IMonoClass *klass) = 0;
+	VIRTUAL_API virtual bool Inherits(IMonoClass *klass) const = 0;
 	//! Determines whether this class inherits from specified class.
 	//!
 	//! @param nameSpace Full name of the name space where the class is located.
@@ -318,7 +319,7 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!                  inheritance path will be searched for specified class.
 	//!
 	//! @returns True, if this class is a subclass of specified one.
-	VIRTUAL_API virtual bool Inherits(const char *nameSpace, const char *className, bool direct) = 0;
+	VIRTUAL_API virtual bool Inherits(const char *nameSpace, const char *className, bool direct) const = 0;
 	//! Determines whether this class inherits from specified class.
 	//!
 	//! @param klass  Pointer to the wrapper that represents the class the fact of inheritance from which
@@ -327,7 +328,7 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!               inheritance path will be searched for specified class.
 	//!
 	//! @returns True, if this class is a subclass of specified one.
-	VIRTUAL_API virtual bool Inherits(IMonoClass *klass, bool direct) = 0;
+	VIRTUAL_API virtual bool Inherits(IMonoClass *klass, bool direct) const = 0;
 	//! Determines whether this class implements a certain interface.
 	//!
 	//! @param nameSpace         Full name of the name space where the interface is located.
@@ -336,7 +337,8 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!                          this interface.
 	//!
 	//! @returns True, if this class implements specified interface.
-	VIRTUAL_API virtual bool Implements(const char *nameSpace, const char *interfaceName, bool searchBaseClasses = true) = 0;
+	VIRTUAL_API virtual bool Implements(const char *nameSpace, const char *interfaceName,
+										bool searchBaseClasses = true) const = 0;
 	//! Determines whether this class implements a certain interface.
 	//!
 	//! @param interfacePtr      Pointer to the wrapper that represents the interface the fact of
@@ -345,23 +347,23 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!                          this interface.
 	//!
 	//! @returns True, if this class implements specified interface.
-	VIRTUAL_API virtual bool Implements(IMonoClass *interfacePtr, bool searchBaseClasses = true) = 0;
+	VIRTUAL_API virtual bool Implements(IMonoClass *interfacePtr, bool searchBaseClasses = true) const = 0;
 	//! Boxes given value.
 	//!
 	//! @returns Null if this class is not a value-type, or reference to the boxed object, if it is.
-	VIRTUAL_API virtual mono::object Box(void *value) = 0;
+	VIRTUAL_API virtual mono::object Box(void *value) const = 0;
 	//! Gets an instance of type System.Type that represents this class.
-	VIRTUAL_API virtual mono::type GetType() = 0;
+	VIRTUAL_API virtual mono::type GetType() const = 0;
 	//! Gets an instance of type System.Type that represents an array of instances of this class.
-	VIRTUAL_API virtual mono::type MakeArrayType() = 0;
+	VIRTUAL_API virtual mono::type MakeArrayType() const = 0;
 	//! Gets an instance of type System.Type that represents an array of instances of this class.
 	//!
 	//! @param rank Number of dimensions in the array.
-	VIRTUAL_API virtual mono::type MakeArrayType(int rank) = 0;
+	VIRTUAL_API virtual mono::type MakeArrayType(int rank) const = 0;
 	//! Gets an instance of type System.Type that represents a reference to objects of this class.
-	VIRTUAL_API virtual mono::type MakeByRefType() = 0;
+	VIRTUAL_API virtual mono::type MakeByRefType() const = 0;
 	//! Gets an instance of type System.Type that represents a pointer to objects of this class.
-	VIRTUAL_API virtual mono::type MakePointerType() = 0;
+	VIRTUAL_API virtual mono::type MakePointerType() const = 0;
 // 		//! Creates a generic type instantiation where type arguments are substituted with given types.
 // 		//!
 // 		//! Cache the resultant type, since inflation is quite costly.
@@ -373,23 +375,23 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 // 		//!          be returned.
 // 		VIRTUAL_API virtual IMonoClass *Inflate(List<IMonoClass *> &types) = 0;
 
-	VIRTUAL_API virtual const char *GetName() = 0;
-	VIRTUAL_API virtual const char *GetNameSpace() = 0;
-	VIRTUAL_API virtual const char *GetFullName() = 0;
-	VIRTUAL_API virtual const char *GetFullNameIL() = 0;
+	VIRTUAL_API virtual const char *GetName() const = 0;
+	VIRTUAL_API virtual const char *GetNameSpace() const = 0;
+	VIRTUAL_API virtual const char *GetFullName() const = 0;
+	VIRTUAL_API virtual const char *GetFullNameIL() const = 0;
 
-	VIRTUAL_API virtual bool GetIsValueType() = 0;
-	VIRTUAL_API virtual bool GetIsEnum() = 0;
-	VIRTUAL_API virtual bool GetIsDelegate() = 0;
+	VIRTUAL_API virtual bool GetIsValueType() const = 0;
+	VIRTUAL_API virtual bool GetIsEnum() const = 0;
+	VIRTUAL_API virtual bool GetIsDelegate() const = 0;
 
-	VIRTUAL_API virtual IMonoAssembly *GetAssembly() = 0;
+	VIRTUAL_API virtual const IMonoAssembly *GetAssembly() const = 0;
 
-	VIRTUAL_API virtual IMonoClass *GetBase() = 0;
+	VIRTUAL_API virtual const IMonoClass *GetBase() const = 0;
 
-	VIRTUAL_API virtual ReadOnlyList<IMonoField *>    GetFields() = 0;
-	VIRTUAL_API virtual ReadOnlyList<IMonoProperty *> GetProperties() = 0;
-	VIRTUAL_API virtual ReadOnlyList<IMonoEvent *>    GetEvents() = 0;
-	VIRTUAL_API virtual ReadOnlyList<IMonoFunction *> GetFunctions() = 0;
+	VIRTUAL_API virtual ReadOnlyList<IMonoField *>    GetFields() const = 0;
+	VIRTUAL_API virtual ReadOnlyList<IMonoProperty *> GetProperties() const = 0;
+	VIRTUAL_API virtual ReadOnlyList<IMonoEvent *>    GetEvents() const = 0;
+	VIRTUAL_API virtual ReadOnlyList<IMonoFunction *> GetFunctions() const = 0;
 
 	//! Gets the value of the object's field.
 	//!
@@ -397,7 +399,7 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//! @param name  Name of the field which value to get.
 	//!
 	//! @seealso IMonoHandle::SetField
-	template <typename FieldType> FieldType GetField(mono::object obj, const char *name)
+	template <typename FieldType> FieldType GetField(mono::object obj, const char *name) const
 	{
 		FieldType valueContainer;
 
@@ -412,7 +414,7 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//! @param value New value to assign to the field.
 	//!
 	//! @seealso IMonoHandle::SetField
-	template <typename FieldType> void AssignField(mono::object obj, const char *name, FieldType value)
+	template <typename FieldType> void AssignField(mono::object obj, const char *name, FieldType value) const
 	{
 		this->SetField(obj, name, &value);
 	}
@@ -423,7 +425,7 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//! @param value New value to assign to the field.
 	//!
 	//! @seealso IMonoHandle::SetField
-	void AssignField(mono::object obj, const char *name, mono::object value)
+	void AssignField(mono::object obj, const char *name, mono::object value) const
 	{
 		this->SetField(obj, name, value);
 	}
@@ -433,7 +435,7 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//! @param field Wrapper that identifies the field which value to get.
 	//!
 	//! @seealso IMonoHandle::SetField
-	template <typename FieldType> FieldType GetField(mono::object obj, IMonoField *field)
+	template <typename FieldType> FieldType GetField(mono::object obj, const IMonoField *field) const
 	{
 		FieldType valueContainer;
 
@@ -448,7 +450,7 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//! @param value New value to assign to the field.
 	//!
 	//! @seealso IMonoHandle::SetField
-	template <typename FieldType> void AssignField(mono::object obj, IMonoField *field, FieldType value)
+	template <typename FieldType> void AssignField(mono::object obj, const IMonoField *field, FieldType value) const
 	{
 		this->SetField(obj, field, &value);
 	}
@@ -459,7 +461,7 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//! @param value New value to assign to the field.
 	//!
 	//! @seealso IMonoHandle::SetField
-	void AssignField(mono::object obj, IMonoField *field, mono::object value)
+	void AssignField(mono::object obj, IMonoField *field, mono::object value) const
 	{
 		this->SetField(obj, field, value);
 	}

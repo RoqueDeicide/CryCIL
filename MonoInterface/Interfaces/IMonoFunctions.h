@@ -194,11 +194,12 @@ struct IMonoFunctions
 	//! @param className       Name of the class where managed method is declared.
 	//! @param name            Name of the managed method.
 	//! @param functionPointer Pointer to unmanaged thunk that needs to be exposed to Mono code.
-	VIRTUAL_API virtual void AddInternalCall(const char *nameSpace, const char *className, const char *name, void *functionPointer) = 0;
+	VIRTUAL_API virtual void AddInternalCall(const char *nameSpace, const char *className, const char *name,
+											 void *functionPointer) = 0;
 	//! Tries to get the function pointer that was registered as internal call.
 	//!
 	//! @param func Mono function that has been assigned to the internal call.
-	VIRTUAL_API virtual void *LookupInternalCall(IMonoFunction *func) = 0;
+	VIRTUAL_API virtual void *LookupInternalCall(const IMonoFunction *func) = 0;
 
 	//! Invokes provided method.
 	//!
@@ -210,8 +211,8 @@ struct IMonoFunctions
 	//!                  exception gets thrown.
 	//! @param polymorph Indicates whether attempt should be made to use late binding when invoking this
 	//!                  function.
-	VIRTUAL_API virtual mono::object InternalInvoke
-		(_MonoMethod *func, void *object, void **args, mono::exception *ex, bool polymorph) = 0;
+	VIRTUAL_API virtual mono::object InternalInvoke(_MonoMethod *func, void *object, void **args,
+													mono::exception *ex, bool polymorph) = 0;
 	//! Invokes provided method.
 	//!
 	//! @param func      Pointer to Mono runtime representation of the method.
@@ -222,15 +223,16 @@ struct IMonoFunctions
 	//!                  exception gets thrown.
 	//! @param polymorph Indicates whether attempt should be made to use late binding when invoking this
 	//!                  function.
-	VIRTUAL_API virtual mono::object InternalInvokeArray
-		(_MonoMethod *func, void *object, IMonoArray<> &args, mono::exception *ex, bool polymorph) = 0;
+	VIRTUAL_API virtual mono::object InternalInvokeArray(_MonoMethod *func, void *object, IMonoArray<> &args,
+														 mono::exception *ex, bool polymorph) = 0;
 
 	//! @see IMonoFunction::UnmanagedThunk property.
 	VIRTUAL_API virtual void        *GetUnmanagedThunk(_MonoMethod *func) = 0;
 	//! @see IMonoFunction::RawThunk property.
 	VIRTUAL_API virtual void        *GetRawThunk(_MonoMethod *func) = 0;
 	//! Parses signature of given Mono method and fills a number of lists.
-	VIRTUAL_API virtual int          ParseSignature(_MonoMethod *func, List<const char *> &names, const char *&params) = 0;
+	VIRTUAL_API virtual int          ParseSignature(_MonoMethod *func, List<const char *> &names,
+													const char *&params) = 0;
 	//! @see IMonoFunction::ParameterClasses property.
 	VIRTUAL_API virtual void         GetParameterClasses(_MonoMethod *func, List<IMonoClass *> &classes) = 0;
 	//! @see IMonoFunction::ReflectionObject property.

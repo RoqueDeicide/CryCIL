@@ -76,7 +76,7 @@ public:
 		this->~SortedList();
 	}
 	//! Determines whether there is a key in the collection.
-	bool Contains(KeyType key)
+	bool Contains(KeyType key) const
 	{
 		return this->keys.BinarySearch(key, this->comparer) >= 0;
 	}
@@ -114,6 +114,17 @@ public:
 		FatalError("Attempt to get a value that has no key associated with it in the collection.");
 		return this->values[0];
 	}
+	//! Provides read/write access to the value associated with given key.
+	ElementType &operator[](KeyType key)
+	{
+		int index = this->keys.BinarySearch(key, this->comparer);
+		if (index >= 0)
+		{
+			return this->values[index];
+		}
+		FatalError("Attempt to get a value that has no key associated with it in the collection.");
+		return this->values[0];
+	}
 	//! Attempts to get the value that is supposed to be associated with the key.
 	bool TryGet(KeyType key, ElementType &returnedValue)
 	{
@@ -121,6 +132,39 @@ public:
 		if (index >= 0)
 		{
 			returnedValue = this->values[index];
+			return true;
+		}
+		return false;
+	}
+	//! Provides read/write access to the value associated with given key.
+	const ElementType &At(KeyType key) const
+	{
+		int index = this->keys.BinarySearch(key, this->comparer);
+		if (index >= 0)
+		{
+			return this->values[index];
+		}
+		FatalError("Attempt to get a value that has no key associated with it in the collection.");
+		return this->values[0];
+	}
+	//! Provides read-only access to the value associated with given key.
+	const ElementType &operator[](KeyType key) const
+	{
+		int index = this->keys.BinarySearch(key, this->comparer);
+		if (index >= 0)
+		{
+			return this->values[index];
+		}
+		FatalError("Attempt to get a value that has no key associated with it in the collection.");
+		return this->values[0];
+	}
+	//! Attempts to get the value that is supposed to be associated with the key.
+	bool TryGet(KeyType key, const ElementType &returnedValue) const
+	{
+		int index = this->keys.BinarySearch(key, this->comparer);
+		if (index >= 0)
+		{
+			const_cast<ElementType &>(returnedValue) = this->values[index];
 			return true;
 		}
 		return false;
@@ -162,21 +206,21 @@ public:
 	}
 	//! Gets number of elements in the collection.
 	__declspec(property(get=GetLength)) int Length;
-	int GetLength()
+	int GetLength() const
 	{
 		return this->keys.Length;
 	}
 
 	//! Gets read/only access to the collection of keys.
-	__declspec(property(get = GetKeys)) ReadOnlyList<KeyType> *Keys;
-	ReadOnlyList<KeyType> *GetKeys()
+	__declspec(property(get = GetKeys)) ReadOnlyList<KeyType> Keys;
+	ReadOnlyList<KeyType> GetKeys() const
 	{
-		return reinterpret_cast<ReadOnlyList<KeyType> *>(&this->keys);
+		return this->keys.AsReadOnly;
 	}
 	//! Gets read/only access to the collection of elements.
-	__declspec(property(get = GetElements)) ReadOnlyList<ElementType> *Elements;
-	ReadOnlyList<ElementType> *GetElements()
+	__declspec(property(get = GetElements)) ReadOnlyList<ElementType> Elements;
+	ReadOnlyList<ElementType> GetElements() const
 	{
-		return reinterpret_cast<ReadOnlyList<ElementType> *>(&this->values);
+		return this->values.AsReadOnly;
 	}
 };

@@ -31,29 +31,29 @@ public:
 	CryamblyWrapper(const char *fileName);
 	~CryamblyWrapper();
 
-	virtual IMonoClass *GetMatrix33() override;
-	virtual IMonoClass *GetMatrix34() override;
-	virtual IMonoClass *GetMatrix44() override;
-	virtual IMonoClass *GetVector2() override;
-	virtual IMonoClass *GetVector3() override;
-	virtual IMonoClass *GetVector4() override;
-	virtual IMonoClass *GetAngleAxis() override;
-	virtual IMonoClass *GetBoundingBox() override;
-	virtual IMonoClass *GetEulerAngles() override;
-	virtual IMonoClass *GetPlane() override;
-	virtual IMonoClass *GetQuaternion() override;
-	virtual IMonoClass *GetQuatvec() override;
-	virtual IMonoClass *GetRay() override;
-	virtual IMonoClass *GetColorByte() override;
-	virtual IMonoClass *GetColorSingle() override;
+	virtual IMonoClass *GetMatrix33() const override;
+	virtual IMonoClass *GetMatrix34() const override;
+	virtual IMonoClass *GetMatrix44() const override;
+	virtual IMonoClass *GetVector2() const override;
+	virtual IMonoClass *GetVector3() const override;
+	virtual IMonoClass *GetVector4() const override;
+	virtual IMonoClass *GetAngleAxis() const override;
+	virtual IMonoClass *GetBoundingBox() const override;
+	virtual IMonoClass *GetEulerAngles() const override;
+	virtual IMonoClass *GetPlane() const override;
+	virtual IMonoClass *GetQuaternion() const override;
+	virtual IMonoClass *GetQuatvec() const override;
+	virtual IMonoClass *GetRay() const override;
+	virtual IMonoClass *GetColorByte() const override;
+	virtual IMonoClass *GetColorSingle() const override;
 
-	virtual IMonoClass *GetClass(const char *nameSpace, const char *className) override;
+	virtual IMonoClass *GetClass(const char *nameSpace, const char *className) const override;
 
-	virtual Text *GetName() override;
-	virtual Text *GetFullName() override;
-	virtual Text *GetFileName() override;
+	virtual Text *GetName() const override;
+	virtual Text *GetFullName() const override;
+	virtual Text *GetFileName() const override;
 
-	virtual mono::assembly GetReflectionObject() override;
-	virtual void *GetWrappedPointer() override;
+	virtual mono::assembly GetReflectionObject() const override;
+	virtual void *GetWrappedPointer() const override;
 
 };

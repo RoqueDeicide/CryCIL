@@ -446,7 +446,7 @@ void MonoGameRules::Update(SEntityUpdateContext& ctx, int)
 
 void MonoGameRules::SetChannelId(uint16 id)
 {
-	static IMonoField *channelIdField = GetGameRulesClass()->GetField("channelId");
+	static const IMonoField *channelIdField = GetGameRulesClass()->GetField("channelId");
 
 	if (mono::object obj = this->objHandle.Object)
 	{

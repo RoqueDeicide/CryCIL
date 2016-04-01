@@ -13,7 +13,7 @@ struct AreaDefinition
 	Vec3 center;
 	Vec3 axis;
 	PhysicsParametersArea* pGravityParams;
-	SEntityPhysicalizeParams::AreaDefinition *ToNativeObject()
+	SEntityPhysicalizeParams::AreaDefinition *ToNativeObject() const
 	{
 		SEntityPhysicalizeParams::AreaDefinition *areaDef = new SEntityPhysicalizeParams::AreaDefinition();
 
@@ -55,7 +55,7 @@ struct EntityPhysicalizationParameters
 	AreaDefinition* pAreaDef;
 	mono::string szPropsOverride;
 
-	void ToParams(SEntityPhysicalizeParams &params)
+	void ToParams(SEntityPhysicalizeParams &params) const
 	{
 		params.szPropsOverride      = NtText(this->szPropsOverride);
 		params.type                 = this->type;
@@ -76,7 +76,7 @@ struct EntityPhysicalizationParameters
 		params.pCar                 = static_cast<pe_params_car *>(this->pCar ? this->pCar->ToParams() : nullptr);
 		params.pAreaDef             = this->pAreaDef ? this->pAreaDef->ToNativeObject() : nullptr;
 	}
-	void Dispose(SEntityPhysicalizeParams &params)
+	void Dispose(SEntityPhysicalizeParams &params) const
 	{
 		SAFE_DELETE(params.pParticle);
 		SAFE_DELETE(params.pBuoyancy);

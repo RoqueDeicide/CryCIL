@@ -598,7 +598,7 @@ void MonoEntityExtension::SetChannelId(uint16 id)
 		return;
 	}
 
-	static IMonoField *channelIdField = GetMonoNetEntityClass()->GetField("channelId");
+	static const IMonoField *channelIdField = GetMonoNetEntityClass()->GetField("channelId");
 
 	if (mono::object obj = this->MonoWrapper)
 	{

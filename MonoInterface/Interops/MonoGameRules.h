@@ -88,7 +88,10 @@ public:
 	virtual void PostUpdate(float frameTime) override;
 	virtual void PostRemoteSpawn() override {}
 
-	mono::object GetManagedWrapper() { return this->objHandle.Object; }
+	mono::object GetManagedWrapper() const
+	{
+		return this->objHandle.Object;
+	}
 	__declspec(property(get = GetManagedWrapper)) mono::object MonoWrapper;
 private:
 	template<const char *methodName, typename ResultType, typename TArg0, typename TArg1, typename TArg2, typename TArg3, typename TArg4>

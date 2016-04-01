@@ -140,7 +140,7 @@ void TestAssemblies()
 	CryLogAlways("TEST: Full assembly name from reflection object:");
 	CryLogAlways("TEST:");
 
-	IMonoMethod *getter = refAssemblyWrapper.GetProperty("FullName")->Getter->ToInstance();
+	const IMonoMethod *getter = refAssemblyWrapper.GetProperty("FullName")->Getter->ToInstance();
 	NtText fullAssemblyName(getter->Invoke(refAssembly, nullptr, true));
 	CryLogAlways("TEST: %s", static_cast<const char *>(fullAssemblyName));
 

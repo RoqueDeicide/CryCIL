@@ -37,7 +37,7 @@ struct IMonoException : public IMonoObject
 	{
 		return ToNativeString(this->klass->GetProperty("StackTrace")->Getter->ToInstance()->Invoke(this->obj, nullptr, true));
 	}
-	mono::exception GetInnerException()
+	mono::exception GetInnerException() const
 	{
 		return this->GetProperty("InnerException")->Getter->ToInstance()->Invoke(this->obj);
 	}

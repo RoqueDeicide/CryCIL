@@ -18,46 +18,41 @@ MonoPropertyWrapper::MonoPropertyWrapper(MonoProperty *prop, IMonoClass *klass)
 
 	PropertyMessage("Got the getter and setter methods.");
 
-	auto sig = mono_method_signature(getterMethod ? getterMethod : setterMethod);
-	bool isStatic = mono_signature_is_instance(sig) != 0;
-
-	PropertyMessage("Checked whether this property is static.");
-
-	this->getter = GetFunctionWrapper(isStatic, getterMethod, klass);
+	this->getter = GetFunctionWrapper(getterMethod, klass);
 
 	PropertyMessage("Created wrapper for getter.");
 
-	this->setter = GetFunctionWrapper(isStatic, setterMethod, klass);
+	this->setter = GetFunctionWrapper(setterMethod, klass);
 
 	PropertyMessage("Created wrapper for setter.");
 }
 
-IMonoFunction *MonoPropertyWrapper::GetGetter()
+const IMonoFunction *MonoPropertyWrapper::GetGetter() const
 {
 	return this->getter;
 }
 
-IMonoFunction *MonoPropertyWrapper::GetSetter()
+const IMonoFunction *MonoPropertyWrapper::GetSetter() const
 {
 	return this->setter;
 }
 
-void *MonoPropertyWrapper::GetWrappedPointer()
+void *MonoPropertyWrapper::GetWrappedPointer() const
 {
 	return this->prop;
 }
 
-const char *MonoPropertyWrapper::GetName()
+const char *MonoPropertyWrapper::GetName() const
 {
 	return mono_property_get_name(this->prop);
 }
 
-IMonoClass *MonoPropertyWrapper::GetDeclaringClass()
+IMonoClass *MonoPropertyWrapper::GetDeclaringClass() const
 {
 	return this->klass;
 }
 
-IMonoFunction *MonoPropertyWrapper::GetIdentifier()
+const IMonoFunction *MonoPropertyWrapper::GetIdentifier() const
 {
 	if (this->getter)
 	{
@@ -66,7 +61,7 @@ IMonoFunction *MonoPropertyWrapper::GetIdentifier()
 	return this->setter;
 }
 
-int MonoPropertyWrapper::GetParameterCount()
+int MonoPropertyWrapper::GetParameterCount() const
 {
 	if (this->getter)
 	{
@@ -79,8 +74,7 @@ int MonoPropertyWrapper::GetParameterCount()
 	return -1;
 }
 
-IMonoFunction *MonoPropertyWrapper::GetFunctionWrapper(bool isStatic, MonoMethod *method,
-													   IMonoClass *klass) const
+const IMonoFunction *MonoPropertyWrapper::GetFunctionWrapper(MonoMethod *method, IMonoClass *klass)
 {
 	if (!method)
 	{
@@ -89,9 +83,9 @@ IMonoFunction *MonoPropertyWrapper::GetFunctionWrapper(bool isStatic, MonoMethod
 
 	PropertyMessage("Creating a wrapper for a method %s.", mono_method_get_name(method));
 
-	IMonoFunction *func = isStatic
-		? static_cast<IMonoFunction *>(new MonoStaticMethod(method, klass))
-		: static_cast<IMonoFunction *>(new MonoMethodWrapper(method, klass));
+	List<const char *> l1;
+	const char *parameters;
+	MonoEnv->Functions->ParseSignature(method, l1, parameters);
 
-	return klass->GetFunction(mono_method_get_name(method), func->Parameters);
+	return klass->GetFunction(mono_method_get_name(method), parameters);
 }

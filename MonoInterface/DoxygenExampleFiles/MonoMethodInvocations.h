@@ -8,7 +8,7 @@ inline void NoParameters_ValueTypeInstance_Virtual_DefaultExceptionHandling()
 	IMonoClass *int32Class = MonoEnv->CoreLibrary->GetClass("System", "Int32");
 
 	// Get "ToString" method, note that, that is a virtual method.
-	IMonoMethod *toStringMethod = int32Class->GetFunction("ToString", 0)->ToInstance();
+	const IMonoMethod *toStringMethod = int32Class->GetFunction("ToString", 0)->ToInstance();
 
 	// Invoke it on a simple integer. First use non-virtual invocation, then virtual one.
 	int number = 300;
@@ -34,7 +34,7 @@ inline void NoParameters_ReferenceTypeInstance_Virtual_NoExceptionHandling()
 	IMonoClass *stringClass = MonoEnv->CoreLibrary->GetClass("System", "String");
 
 	// Get "ToString" method, note that, that is a virtual method.
-	IMonoMethod *hashCode = stringClass->GetFunction("GetHashCode", 0)->ToInstance();
+	const IMonoMethod *hashCode = stringClass->GetFunction("GetHashCode", 0)->ToInstance();
 
 	// Create a sample string.
 	mono::string sampleText = ToMonoString("Sample Text");
@@ -50,7 +50,7 @@ inline void NoParameters_ReferenceTypeInstance_Virtual_NoExceptionHandling()
 inline void StackParameters_Static()
 {
 	// Get CryCil.Geometry.Rotation.AroundAxis class.
-	IMonoClass *aroundAxis = MonoEnv->Cryambly->GetClass("CryCil.Geometry", "Rotation")
+	const IMonoClass *aroundAxis = MonoEnv->Cryambly->GetClass("CryCil.Geometry", "Rotation")
 											  ->GetNestedType("AroundAxis");
 
 	// Get Override method for Matrix33.

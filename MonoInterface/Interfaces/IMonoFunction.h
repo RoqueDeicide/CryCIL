@@ -229,6 +229,11 @@ public:
 	//! @endcode
 	//! @example DoxygenExampleFiles\UnmanagedThunkExample.h
 	__declspec(property(get = GetUnmanagedThunk)) void *UnmanagedThunk;
+	template<typename ThunkType>
+	ThunkType GetUnmanagedThunk() const
+	{
+		return static_cast<ThunkType>(this->UnmanagedThunk);
+	}
 	//! Gets a raw thunk of this function.
 	//!
 	//! Raw thunks are probably one of the fastest ways of invoking a method, however they have quite a few
@@ -308,6 +313,11 @@ public:
 	//!
 	//! @endcode
 	__declspec(property(get = GetRawThunk)) void *RawThunk;
+	template<typename ThunkType>
+	ThunkType GetRawThunk() const
+	{
+		return static_cast<ThunkType>(this->RawThunk);
+	}
 	//! Gets number of arguments this function accepts.
 	__declspec(property(get = GetParameterCount)) int ParameterCount;
 	//! Gets a list of parameters this function accepts.
@@ -322,17 +332,17 @@ public:
 	//! Attempts to statically cast this object to IMonoMethod.
 	//!
 	//! @returns A result of static_cast of this object to IMonoMethod.
-	__forceinline IMonoMethod *ToInstance();			// Defined in IMonoMethod.h
+	__forceinline const IMonoMethod *ToInstance() const;			// Defined in IMonoMethod.h
 	//! Attempts to statically cast this object to IMonoStaticMethod.
 	//!
 	//! @returns A result of static_cast of this object to IMonoStaticMethod.
-	__forceinline IMonoStaticMethod *ToStatic();		// Defined in IMonoStaticMethod.h
+	__forceinline const IMonoStaticMethod *ToStatic() const;		// Defined in IMonoStaticMethod.h
 	//! Attempts to statically cast this object to IMonoConstructor.
 	//!
 	//! @returns A result of static_cast of this object to IMonoConstructor.
-	__forceinline IMonoConstructor *ToCtor();			// Defined in IMonoConstructor.h
+	__forceinline const IMonoConstructor *ToCtor() const;			// Defined in IMonoConstructor.h
 
-	void *GetUnmanagedThunk()
+	void *GetUnmanagedThunk() const
 	{
 		FuncMessage("Method class: %p", this->klass);
 
@@ -348,21 +358,23 @@ public:
 			CryLogAlways("Acquiring the unmanaged thunk for the function %s.%s",
 						 this->klass->FullName, this->name);
 
-			this->unmanagedThunk = MonoEnv->Functions->GetUnmanagedThunk(this->wrappedMethod);
+			const_cast<IMonoFunction *>(this)->unmanagedThunk =
+				MonoEnv->Functions->GetUnmanagedThunk(this->wrappedMethod);
 
 			FuncMessage("Got the thunk for the function %s.%s",
 						this->klass->FullName, this->name);
 		}
 		return this->unmanagedThunk;
 	}
-	void *GetRawThunk()
+	void *GetRawThunk() const
 	{
 		if (!this->rawThunk)
 		{
 			CryLogAlways("Acquiring the raw thunk for the function %s.%s",
 						 this->klass->FullName, this->name);
 
-			this->rawThunk = MonoEnv->Functions->GetRawThunk(this->wrappedMethod);
+			const_cast<IMonoFunction *>(this)->rawThunk =
+				MonoEnv->Functions->GetRawThunk(this->wrappedMethod);
 		}
 		return this->rawThunk;
 	}
@@ -370,15 +382,16 @@ public:
 	{
 		return this->paramCount;
 	}
-	List<const char *> *GetParameterTypeNames()
+	const List<const char *> *GetParameterTypeNames() const
 	{
 		return &this->paramTypeNames;
 	}
-	List<IMonoClass *> *GetParameterClasses()
+	const List<IMonoClass *> *GetParameterClasses() const
 	{
 		if (this->paramClasses.Length != this->paramCount)
 		{
-			MonoEnv->Functions->GetParameterClasses(this->wrappedMethod, this->paramClasses);
+			MonoEnv->Functions->GetParameterClasses(this->wrappedMethod,
+													const_cast<IMonoFunction *>(this)->paramClasses);
 		}
 
 		return &this->paramClasses;
@@ -392,23 +405,23 @@ public:
 		return MonoEnv->Functions->GetReflectionObject(this->wrappedMethod);
 	}
 
-	virtual const char *GetName() override
+	virtual const char *GetName() const override
 	{
 		return this->name;
 	}
 
-	virtual IMonoClass *GetDeclaringClass() override
+	virtual IMonoClass *GetDeclaringClass() const override
 	{
 		return this->klass;
 	}
 
-	virtual void *GetWrappedPointer() override
+	virtual void *GetWrappedPointer() const override
 	{
 		return this->wrappedMethod;
 	}
 
 	// Internal method, just ignore it.
-	__forceinline IMonoFunction *GetFunc()
+	__forceinline const IMonoFunction *GetFunc() const
 	{
 		return this;
 	}

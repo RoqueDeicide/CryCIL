@@ -37,7 +37,7 @@ void TimingInterop::InitializeInterops()
 
 	TimeMessage("Got the class.");
 
-	IMonoFunction *func = klass->GetFunction("SetTimings", -1);
+	const IMonoFunction *func = klass->GetFunction("SetTimings", -1);
 
 	setTimings = SetTimingsRawThunk(func->RawThunk);
 

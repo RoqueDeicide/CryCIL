@@ -14,7 +14,8 @@ private:
 	static CreateInstanceDelegate           createInstanceDelegate;
 	static CreateDelegateForFunctionPointer createDelegateForFunctionPointer;
 public:
-	virtual mono::delegat Create(IMonoClass *delegateType, IMonoStaticMethod *method) override;
-	virtual mono::delegat Create(IMonoClass *delegateType, IMonoMethod *method, mono::object target) override;
+	virtual mono::delegat Create(IMonoClass *delegateType, const IMonoStaticMethod *method) override;
+	virtual mono::delegat Create(IMonoClass *delegateType, const IMonoMethod *method,
+								 mono::object target) override;
 	virtual mono::delegat Create(IMonoClass *delegateType, void *functionPointer) override;
 };

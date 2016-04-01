@@ -19,7 +19,7 @@ public:
 	//! @returns A reference to the result of execution, if no unhandled exception was thrown.
 	//!          If result is of value-type, it's boxed.
 	//! @example DoxygenExampleFiles\MonoMethodInvocations.h
-	VIRTUAL_API virtual mono::object Invoke(mono::exception *exc = nullptr) = 0;
+	VIRTUAL_API virtual mono::object Invoke(mono::exception *exc = nullptr) const = 0;
 	//! Invokes this method.
 	//!
 	//! Since extension methods are static by their internal nature, you can pass null
@@ -34,7 +34,7 @@ public:
 	//! @returns A reference to the result of execution, if no unhandled exception was thrown.
 	//!          If result is of value-type, it's boxed.
 	//! @example DoxygenExampleFiles\MonoMethodInvocations.h
-	VIRTUAL_API virtual mono::object Invoke(IMonoArray<> &params, mono::exception *exc = nullptr) = 0;
+	VIRTUAL_API virtual mono::object Invoke(IMonoArray<> &params, mono::exception *exc = nullptr) const = 0;
 	//! Invokes this method.
 	//!
 	//! Since extension methods are static by their internal nature, you can pass null
@@ -49,10 +49,10 @@ public:
 	//! @returns A reference to the result of execution, if no unhandled exception was thrown.
 	//!          If result is of value-type, it's boxed.
 	//! @example DoxygenExampleFiles\MonoMethodInvocations.h
-	VIRTUAL_API virtual mono::object Invoke(void **params, mono::exception *exc = nullptr) = 0;
+	VIRTUAL_API virtual mono::object Invoke(void **params, mono::exception *exc = nullptr) const = 0;
 };
 
-__forceinline IMonoStaticMethod *IMonoFunction::ToStatic()
+__forceinline const IMonoStaticMethod *IMonoFunction::ToStatic() const
 {
-	return static_cast<IMonoStaticMethod *>(this);
+	return static_cast<const IMonoStaticMethod *>(this);
 }

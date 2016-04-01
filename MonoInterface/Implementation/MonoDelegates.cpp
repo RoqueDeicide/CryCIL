@@ -8,7 +8,7 @@
 #define DelegatesMessage(...) void(0)
 #endif
 
-mono::delegat MonoDelegates::Create(IMonoClass *delegateType, IMonoStaticMethod *method)
+mono::delegat MonoDelegates::Create(IMonoClass *delegateType, const IMonoStaticMethod *method)
 {
 	if (!delegateType)
 	{
@@ -26,7 +26,7 @@ mono::delegat MonoDelegates::Create(IMonoClass *delegateType, IMonoStaticMethod 
 		IMonoClass *delegateClass = MonoEnv->CoreLibrary->GetClass("System", "Delegate");
 
 		const char *params = "System.Type,System.Reflection.MethodInfo";
-		IMonoFunction *func = delegateClass->GetFunction("CreateDelegate", params);
+		auto func = delegateClass->GetFunction("CreateDelegate", params);
 
 		createStaticDelegate = CreateStaticDelegate(func->UnmanagedThunk);
 	}
@@ -46,7 +46,7 @@ mono::delegat MonoDelegates::Create(IMonoClass *delegateType, IMonoStaticMethod 
 	return res;
 }
 
-mono::delegat MonoDelegates::Create(IMonoClass *delegateType, IMonoMethod *method, mono::object target)
+mono::delegat MonoDelegates::Create(IMonoClass *delegateType, const IMonoMethod *method, mono::object target)
 {
 	if (!delegateType)
 	{
@@ -64,7 +64,7 @@ mono::delegat MonoDelegates::Create(IMonoClass *delegateType, IMonoMethod *metho
 		IMonoClass *delegateClass = MonoEnv->CoreLibrary->GetClass("System", "Delegate");
 
 		const char *params = "System.Type,System.Object,System.Reflection.MethodInfo";
-		IMonoFunction *func = delegateClass->GetFunction("CreateDelegate", params);
+		auto func = delegateClass->GetFunction("CreateDelegate", params);
 
 		createInstanceDelegate = CreateInstanceDelegate(func->UnmanagedThunk);
 	}
@@ -102,7 +102,7 @@ mono::delegat MonoDelegates::Create(IMonoClass *delegateType, void *functionPoin
 		DelegatesMessage("Getting the delegate creation thunk.");
 
 		IMonoClass *marshal = MonoEnv->CoreLibrary->GetClass("System.Runtime.InteropServices", "Marshal");
-		IMonoFunction *func = marshal->GetFunction("GetDelegateForFunctionPointerInternal", 2);
+		auto func = marshal->GetFunction("GetDelegateForFunctionPointerInternal", 2);
 
 		createDelegateForFunctionPointer = CreateDelegateForFunctionPointer(func->UnmanagedThunk);
 
