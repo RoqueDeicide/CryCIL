@@ -116,15 +116,14 @@ bool ActionMapHandlerInterop::IsActive(ActionMapHandlerInterop *handler)
 
 void ActionMapHandlerInterop::Activate(ActionMapHandlerInterop *handler, bool activate)
 {
-	CActionMap *map = static_cast<CActionMap *>(handler->actionMap);
-
+	auto manager = MonoEnv->CryAction->GetIActionMapManager();
 	if (activate)
 	{
-		map->AddExtraActionListener(handler);
+		manager->AddExtraActionListener(handler, handler->actionMap->GetName());
 	}
 	else
 	{
-		map->RemoveExtraActionListener(handler);
+		manager->RemoveExtraActionListener(handler, handler->actionMap->GetName());
 	}
 
 	handler->active = activate;
