@@ -184,6 +184,8 @@ struct Statistics
 		ASSIGN_FIELD(nSubMeshCount);
 		ASSIGN_FIELD(nNumRefs);
 		ASSIGN_FIELD(bSplitLods);
+		ASSIGN_FIELD(pTextureSizer);
+		ASSIGN_FIELD(pTextureSizer2);
 
 		CHECK_TYPE(nVertices);
 		CHECK_TYPE(nVerticesPerLod);
@@ -199,5 +201,7 @@ struct Statistics
 		CHECK_TYPE(nSubMeshCount);
 		CHECK_TYPE(nNumRefs);
 		CHECK_TYPE(bSplitLods);
+		CHECK_TYPE(pTextureSizer);
+		CHECK_TYPE(pTextureSizer2);
 	}
 };

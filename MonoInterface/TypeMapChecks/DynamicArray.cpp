@@ -7,7 +7,8 @@ TYPE_MIRROR struct DynamicArray
 	//void *vTable;
 	SMeshSubset *ptr;
 
-	explicit DynamicArray(DynArray<SMeshSubset> &other)
+	explicit DynamicArray(DynArray<SMeshSubset> &)
+		: ptr(nullptr)
 	{
 		CHECK_TYPES_SIZE(DynamicArray, DynArray<SMeshSubset>);
 	}

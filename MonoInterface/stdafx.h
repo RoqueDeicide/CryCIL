@@ -4,6 +4,9 @@
 //
 
 #pragma once
+
+#define _SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS
+
 #include <CryModuleDefs.h>
 
 #define _FORCEDLL
