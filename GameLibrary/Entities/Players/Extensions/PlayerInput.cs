@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Linq;
 using CryCil;
 using CryCil.Engine;
-using CryCil.Engine.Data;
 using CryCil.Engine.Input.ActionMapping;
 using CryCil.Engine.Logic;
 using CryCil.Geometry;
@@ -43,9 +43,6 @@ namespace GameLibrary.Entities.Players.Extensions
 		/// Gets the vector that specifies directions of movement.
 		/// </summary>
 		public Vector3 DeltaMovement => this.deltaMovement;
-		#endregion
-		#region Events
-
 		#endregion
 		#region Construction
 		/// <summary>
@@ -100,7 +97,8 @@ namespace GameLibrary.Entities.Players.Extensions
 		{
 			if (this.useControllerRotation)
 			{
-				// Controller works differently from the mouse, because it has sticks which deviation and not movement defines the motion.
+				// Controller works differently from the mouse, because it has sticks which deviation and
+				// not movement defines the motion.
 				this.rotationAngles = this.Host.Entity.WorldAngles;
 				this.rotationAngles += this.rotationDelta;
 
@@ -113,8 +111,7 @@ namespace GameLibrary.Entities.Players.Extensions
 		#region Utilities
 		#region Keyboard and Controller Button Actions
 		// An action that moves the player to the left.
-		[Action("move_left", OnPress | OnRelease | Retriggerable,
-			KeyboardMouseInput = A)]
+		[Action("move_left", OnPress | OnRelease | Retriggerable, KeyboardMouseInput = A)]
 		private void MoveLeft(ActionActivationMode mode, float value)
 		{
 			switch (mode)
@@ -128,8 +125,7 @@ namespace GameLibrary.Entities.Players.Extensions
 			}
 		}
 		// An action that moves the player to the right.
-		[Action("move_right", OnPress | OnRelease | Retriggerable,
-			KeyboardMouseInput = D)]
+		[Action("move_right", OnPress | OnRelease | Retriggerable, KeyboardMouseInput = D)]
 		private void MoveRight(ActionActivationMode mode, float value)
 		{
 			switch (mode)
@@ -143,8 +139,7 @@ namespace GameLibrary.Entities.Players.Extensions
 			}
 		}
 		// An action that moves the player forwards.
-		[Action("move_forward", OnPress | OnRelease | Retriggerable,
-			KeyboardMouseInput = W)]
+		[Action("move_forward", OnPress | OnRelease | Retriggerable, KeyboardMouseInput = W)]
 		private void MoveForward(ActionActivationMode mode, float value)
 		{
 			switch (mode)
@@ -158,8 +153,7 @@ namespace GameLibrary.Entities.Players.Extensions
 			}
 		}
 		// An action that moves the player backwards.
-		[Action("move_backward", OnPress | OnRelease | Retriggerable,
-			KeyboardMouseInput = S)]
+		[Action("move_backward", OnPress | OnRelease | Retriggerable, KeyboardMouseInput = S)]
 		private void MoveBackward(ActionActivationMode mode, float value)
 		{
 			switch (mode)
@@ -264,7 +258,6 @@ namespace GameLibrary.Entities.Players.Extensions
 			this.useControllerRotation = true;
 		}
 		#endregion
-		
 		private void SystemEventsOnEditorGameModeChanged(bool isTrue)
 		{
 			// Stop rotation with the controller.

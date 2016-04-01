@@ -1,4 +1,6 @@
-﻿using CryCil;
+﻿using System;
+using System.Linq;
+using CryCil;
 using CryCil.Engine;
 using CryCil.Engine.Logic;
 using CryCil.Geometry;
@@ -16,12 +18,12 @@ namespace GameLibrary.Entities.Players.Extensions
 
 		private static float movementSpeed;
 		private static float boostMultiplier;
-		
+
 		private PlayerInput input;
 		#endregion
 		#region Interface
 		/// <summary>
-		/// When implemented in derived class, performs final initialization of this extension.
+		/// Registers relevant console variables and activates post-updates for the entity that represents the player character.
 		/// </summary>
 		public override void PostInitialize()
 		{
@@ -35,8 +37,7 @@ namespace GameLibrary.Entities.Players.Extensions
 			this.input = this.Host.Extensions.Get<PlayerInput>();
 		}
 		/// <summary>
-		/// When implemented in derived class updates logical state of this extension after most other
-		/// stuff is updated.
+		/// Updates player character's position and orientation..
 		/// </summary>
 		public override void PostUpdate()
 		{
@@ -50,7 +51,8 @@ namespace GameLibrary.Entities.Players.Extensions
 			float boostFactor = this.input.Boosting ? boostMultiplier : 1;
 			float frameTimeInSeconds = Time.Frame.Milliseconds / 1000.0f;
 
-			// Not sure why we are getting world position. Seems like it relies on the player entity not being linked to anything.
+			// Not sure why we are getting world position. Seems like it relies on the player entity not
+			// being linked to anything.
 			Vector3 position = entity.WorldPosition;
 			Vector3 movement = delta * frameTimeInSeconds * boostFactor * movementSpeed;
 
@@ -72,9 +74,6 @@ namespace GameLibrary.Entities.Players.Extensions
 
 			this.input = null;
 		}
-		#endregion
-		#region Utilities
-
 		#endregion
 	}
 }

@@ -55,8 +55,8 @@ namespace CryCil.Engine.Logic
 		/// Adds an extension to this entity.
 		/// </summary>
 		/// <remarks>
-		/// In order to create an object of <paramref name="extensionType"/> a default is required:
-		/// <c>DerivedEntityExtension();</c>.
+		/// In order to create an object of <paramref name="extensionType"/> a default constructor is
+		/// required: <c>DerivedEntityExtension() {}</c>.
 		/// </remarks>
 		/// <param name="extensionType">Type of object that represents the extension.</param>
 		/// <returns>An object that represents the added extension.</returns>
@@ -80,15 +80,15 @@ namespace CryCil.Engine.Logic
 
 			if (!extensionType.Implements<EntityExtension>())
 			{
-				throw new NotSupportedException($"Specified type must derive from {extensionType.FullName}.");
+				throw new NotSupportedException($"Specified type must derive from {nameof(EntityExtension)}.");
 			}
 
 			ConstructorInfo ctor = extensionType.GetConstructor(Type.EmptyTypes);
 			if (ctor == null)
 			{
-				throw new ArgumentException(
-					$"Unable to create an object of extension {extensionType.FullName}: " + "No appropriate constructor was found.",
-					nameof(extensionType));
+				throw new ArgumentException($"Unable to create an object of extension {extensionType.FullName}" +
+											$": No appropriate constructor was found.",
+											nameof(extensionType));
 			}
 
 			try
@@ -97,7 +97,8 @@ namespace CryCil.Engine.Logic
 			}
 			catch (Exception ex)
 			{
-				string message = "An error has occurred when creating a new extension of " + $"type {extensionType.FullName}";
+				string message = $"An error has occurred when creating a new extension of " +
+								 $"type {extensionType.FullName}";
 
 				var exception = new Exception(message, ex);
 
@@ -278,13 +279,9 @@ namespace CryCil.Engine.Logic
 		{
 			ExtensionType extension = null;
 
-			for (int i = 0; i < this.extensions.Count; i++)
+			for (int i = 0; i < this.extensions.Count && extension == null; i++)
 			{
 				extension = this.extensions[i] as ExtensionType;
-				if (extension != null)
-				{
-					break;
-				}
 			}
 
 			return extension;

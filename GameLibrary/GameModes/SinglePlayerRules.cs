@@ -17,12 +17,6 @@ namespace GameLibrary.GameModes
 	[DefaultGameRules]
 	public class SinglePlayerRules : GameRules
 	{
-		#region Fields
-		#endregion
-		#region Properties
-		#endregion
-		#region Events
-		#endregion
 		#region Construction
 		/// <summary>
 		/// Delegates initialization to the constructor of the base class.
@@ -86,7 +80,8 @@ namespace GameLibrary.GameModes
 		/// </param>
 		/// <param name="flags">  A set of flags that specify how to write the snapshot.</param>
 		/// <returns>True, if synchronization was successful.</returns>
-		public override bool SynchronizeWithNetwork(CrySync sync, EntityAspects aspect, byte profile, SnapshotFlags flags)
+		public override bool SynchronizeWithNetwork(CrySync sync, EntityAspects aspect, byte profile,
+													SnapshotFlags flags)
 		{
 			return true;
 		}
@@ -159,7 +154,8 @@ namespace GameLibrary.GameModes
 		/// <param name="keep">       
 		/// Indicates whether information pertaining to the client should be kept alive.
 		/// </param>
-		public override void OnClientDisconnect(ChannelId channel, DisconnectionCause cause, string description, bool keep)
+		public override void OnClientDisconnect(ChannelId channel, DisconnectionCause cause, string description,
+												bool keep)
 		{
 		}
 		#endregion

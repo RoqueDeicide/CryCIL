@@ -16,13 +16,7 @@ namespace GameLibrary.Entities.Players.Extensions
 		private ViewController viewController;
 		private CryView view;
 		private static float fov;
-		private const string fovCvarName = "cl_fov";
-		#endregion
-		#region Properties
-		#endregion
-		#region Events
-		#endregion
-		#region Construction
+		private const string FovCvarName = "cl_fov";
 		#endregion
 		#region Interface
 		/// <summary>
@@ -37,7 +31,7 @@ namespace GameLibrary.Entities.Players.Extensions
 			this.viewController = new ViewController(this.Host);
 			this.viewController.Updating += this.UpdateView;
 
-			CryConsole.RegisterVariable(fovCvarName, ref fov, 60.0f, ConsoleFlags.Null,
+			CryConsole.RegisterVariable(FovCvarName, ref fov, 60.0f, ConsoleFlags.Null,
 										"Controls vertical Field-Of-View in degrees.");
 		}
 		/// <summary>
@@ -53,7 +47,7 @@ namespace GameLibrary.Entities.Players.Extensions
 
 			this.view.Release();
 
-			CryConsole.UnregisterVariable(fovCvarName);
+			CryConsole.UnregisterVariable(FovCvarName);
 		}
 		#endregion
 		#region Utilities
