@@ -20,10 +20,8 @@ IMonoAssembly *MonoAssemblies::Load(const char *path)
 	}
 	bool failed = false;
 	IMonoAssembly *wrapper = new MonoAssemblyWrapper(path, failed);
-	MonoImageOpenStatus status;
-	MonoAssembly *assembly = mono_assembly_open(path, &status);
 
-	if (status != MONO_IMAGE_OK)
+	if (failed)
 	{
 		delete wrapper;
 		// Try looking for the existing wrapper, since attempt to load the assembly may fail,
@@ -43,7 +41,7 @@ IMonoAssembly *MonoAssemblies::Load(const char *path)
 			}
 		);
 	}
-	return this->Wrap(assembly);
+	return wrapper;
 }
 
 IMonoAssembly *MonoAssemblies::Wrap(void *assemblyHandle)
@@ -91,19 +89,17 @@ IMonoAssembly *MonoAssemblies::GetAssembly(const char *name)
 		return nullptr;
 	}
 	IMonoAssembly *wrapper = nullptr;
-	this->AssemblyRegistry->ForEach
-	(
-		[&wrapper, name](Text *assemblyShortName, List<IMonoAssembly *> *assemblySet)
+	List<IMonoAssembly *> *assemblies;
+	if (this->AssemblyRegistry->TryGet(name, assemblies))
+	{
+		for (int i = 0; i < assemblies->Length; i++)
 		{
-			for (int i = 0; i < assemblySet->Length; i++)
+			if (assemblies->At(i)->Name == name)
 			{
-				if (assemblySet->At(i)->Name->Equals(name))
-				{
-					wrapper = assemblySet->At(i);
-				}
+				wrapper = assemblies->At(i);
 			}
 		}
-	);
+	}
 	if (!wrapper)
 	{
 		mono::exception ex;

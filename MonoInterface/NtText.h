@@ -143,26 +143,7 @@ public:
 	//! @param managedString Instance of type System.String.
 	NtTextTemplate(mono_string managedString)
 	{
-#ifdef MONO_API
-		MonoError error;
-		char *ntText = mono_string_to_utf8_checked(managedString, &error);
-
-		if (mono_error_ok(&error))
-		{
-			int length = _strlen(ntText);
-			this->chars = new SymbolType[length + 1];
-			for (int i = 0; i < length; i++)
-			{
-				const_cast<SymbolType *>(this->chars)[i] = ntText[i];
-			}
-			mono_free(ntText);
-			const_cast<SymbolType *>(this->chars)[length] = '\0';
-		}
-		else
-		{
-			FatalError(mono_error_get_message(&error));
-		}
-#elif defined(USE_CRYCIL_API)
+#if defined(MONO_API) || defined(USE_CRYCIL_API)
 		this->chars = _str_mono(managedString);
 #else
 		this->chars = nullptr;
@@ -300,12 +281,9 @@ public:
 		}
 		SymbolType *ntText = new SymbolType[count + 1];
 		ntText[count] = '\0';
-		for
-			(
-			int i = index, j = 0, counter = 0;
-		counter < count;					// Counter tells us where to stop.
-		i++, j++, counter++					//
-			)
+		for (int i = index, j = 0, counter = 0;
+			counter < count;					// Counter tells us where to stop.
+			i++, j++, counter++)					//
 		{
 			ntText[j] = this->chars[i];
 		}
@@ -335,12 +313,9 @@ public:
 		{
 			FatalError("Attempt to copy too many characters from the string.");
 		}
-		for
-			(
-			int i = sourceIndex, j = destinationIndex, counter = 0;
-		counter < charCount;						// Counter tells us where to stop.
-		i++, j++, counter++							//
-			)
+		for (int i = sourceIndex, j = destinationIndex, counter = 0;
+			counter < charCount;						// Counter tells us where to stop.
+			i++, j++, counter++)						//
 		{
 			destination[j] = this->chars[i];
 		}
