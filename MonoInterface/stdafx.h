@@ -60,6 +60,8 @@
 #include "targetver.h"
 
 #include <CryWindows.h>
+#include <CryLibrary.h>
+#undef RemoveDirectory
 
 //! Gets the pointer to the data represented by MonoObject instance.
 //!
