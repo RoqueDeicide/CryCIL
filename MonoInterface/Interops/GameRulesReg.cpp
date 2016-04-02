@@ -34,7 +34,7 @@ bool RegisterGameRulesHacked(const char *name, const char *typeName)
 
 inline IEntityProxyPtr CreateGameRulesObject(IEntity *pEntity, SEntitySpawnParams &, void *pUserData)
 {
-	NtText extensionName(static_cast<Text *>(pUserData)->ToNTString());
+	Text extensionName(*static_cast<Text *>(pUserData));
 	auto className = pEntity->GetClass()->GetName();
 
 

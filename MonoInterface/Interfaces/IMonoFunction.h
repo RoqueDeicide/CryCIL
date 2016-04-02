@@ -10,6 +10,8 @@ struct IMonoConstructor;
 #define FuncMessage(...) void(0)
 #endif
 
+#include "Text.h"
+
 //! Base interface for wrappers of Mono functions (type members defined as functions, e.g. methods and
 //! constructors).
 struct IMonoFunction : public IMonoMember
@@ -19,9 +21,9 @@ protected:
 	int paramCount;
 	const char *name;
 
-	const char *paramList;
+	Text paramList;
 	List<IMonoClass *> paramClasses;
-	List<const char *> paramTypeNames;
+	List<Text> paramTypeNames;
 	void *rawThunk;
 	void *unmanagedThunk;
 
@@ -44,15 +46,6 @@ protected:
 		this->wrappedMethod = method;
 	}
 public:
-	~IMonoFunction()
-	{
-		SAFE_DELETE(this->paramList);
-
-		for (int i = 0; i < this->paramTypeNames.Length; i++)
-		{
-			delete this->paramTypeNames[i];
-		}
-	}
 	//! Returns a pointer to a C-style function that can be invoked like a standard function pointer.
 	//!
 	//! Signature of the function pointer is defined by the following rules:
@@ -321,7 +314,7 @@ public:
 	//! Gets number of arguments this function accepts.
 	__declspec(property(get = GetParameterCount)) int ParameterCount;
 	//! Gets a list of parameters this function accepts.
-	__declspec(property(get = GetParameterTypeNames)) List<const char *> *ParameterTypeNames;
+	__declspec(property(get = GetParameterTypeNames)) ReadOnlyList<Text> ParameterTypeNames;
 	//! Gets a list of classes of parameters this function accepts.
 	__declspec(property(get = GetParameterClasses)) List<IMonoClass *> *ParameterClasses;
 	//! Gets a list of parameters this function accepts.
@@ -382,9 +375,9 @@ public:
 	{
 		return this->paramCount;
 	}
-	const List<const char *> *GetParameterTypeNames() const
+	ReadOnlyList<Text> GetParameterTypeNames() const
 	{
-		return &this->paramTypeNames;
+		return this->paramTypeNames.AsReadOnly;
 	}
 	const List<IMonoClass *> *GetParameterClasses() const
 	{

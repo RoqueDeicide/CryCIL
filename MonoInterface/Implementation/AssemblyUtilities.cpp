@@ -6,7 +6,7 @@
 #define UtilityMessage(...) void(0)
 #endif
 
-Pair<Text *, Text *> GetAssemblyNames(MonoImage *image)
+Pair<Text, Text> GetAssemblyNames(MonoImage *image)
 {
 	UtilityMessage("Getting names.");
 
@@ -32,8 +32,8 @@ Pair<Text *, Text *> GetAssemblyNames(MonoImage *image)
 
 	UtilityMessage("Released the name object.");
 
-	Text *fullNameText = new Text(fullNameNt);
-	Text *nameText = new Text(nameNt);
+	Text fullNameText(fullNameNt);
+	Text nameText(nameNt);
 
 	UtilityMessage("Created Text versions of names.");
 
@@ -42,5 +42,5 @@ Pair<Text *, Text *> GetAssemblyNames(MonoImage *image)
 
 	UtilityMessage("Released null-terminated versions.");
 
-	return Pair<Text *, Text *>(fullNameText, nameText);
+	return Pair<Text, Text>(fullNameText, nameText);
 }

@@ -18,7 +18,7 @@ struct MonoFunctions : public IMonoFunctions
 
 	virtual void *GetUnmanagedThunk(_MonoMethod *func) override;
 	virtual void *GetRawThunk(_MonoMethod *func) override;
-	virtual int   ParseSignature(_MonoMethod *func, List<const char *> &names, const char *&params) override;
+	virtual int   ParseSignature(_MonoMethod *func, List<Text> &names, Text &params) override;
 	virtual void  GetParameterClasses(_MonoMethod *func, List<IMonoClass *> &classes) override;
 	
 	virtual mono::object GetReflectionObject(_MonoMethod *func) override;

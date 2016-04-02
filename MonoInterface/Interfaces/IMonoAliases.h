@@ -192,6 +192,6 @@ struct IMonoInterface;
 struct MonoGCHandle;
 struct IMonoGC;
 
-class TextBase;
-class Text;
-class TextBuilder;
+template<typename symbol> struct TextTemplate;
+typedef TextTemplate<char> Text;
+typedef TextTemplate<wchar_t> Text16;

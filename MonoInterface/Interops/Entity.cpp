@@ -158,13 +158,13 @@ bool EntityPoolInterop::IsPreparingEntity(EntityId *entityId)
 	return b;
 }
 
-List<string> EntitySystemInterop::monoEntityClassNames;
+List<Text> EntitySystemInterop::monoEntityClassNames;
 
 bool EntitySystemInterop::IsMonoEntity(const char *className)
 {
-	auto predicate = [className](string &name)
+	auto predicate = [className](Text &name)
 	{
-		return name.compare(className) == 0;
+		return name == className;
 	};
 
 	return monoEntityClassNames.Find(predicate) != nullptr;
@@ -251,11 +251,10 @@ bool EntitySystemInterop::RegisterEntityClass(mono::string name, mono::string ca
 
 	auto registry = gEnv->pEntitySystem->GetClassRegistry();
 
-	auto nameMatch =
-		[className](string &registeredName)
-		{
-			return registeredName.compare(className) == 0;
-		};
+	auto nameMatch = [className](Text &registeredName)
+	{
+		return registeredName == className;
+	};
 
 	if ((flags && EEntityClassFlags::ECLF_MODIFY_EXISTING) == 0)
 	{
@@ -334,10 +333,9 @@ mono::object EntitySystemInterop::SpawnMonoEntity(MonoEntitySpawnParams &paramet
 	}
 
 	const char *className = entityClass->GetName();
-	auto nameMatch =
-		[className](string &name)
+	auto nameMatch = [className](Text &name)
 	{
-		return name.compare(className) == 0;
+		return name == className;
 	};
 
 	if (monoEntityClassNames.Find(nameMatch) == nullptr)
@@ -371,10 +369,9 @@ mono::object EntitySystemInterop::SpawnNetEntity(MonoEntitySpawnParams &paramete
 	}
 
 	const char *className = entityClass->GetName();
-	auto nameMatch =
-		[className](string &name)
+	auto nameMatch = [className](Text &name)
 	{
-		return name.compare(className) == 0;
+		return name == className;
 	};
 
 	if (monoEntityClassNames.Find(nameMatch) == nullptr)
@@ -487,10 +484,11 @@ enum CryCilRmiType
 
 #define INVOKE_CRYCIL_RMI(name) gameObject->InvokeRMI(MonoEntityExtension::name(), params, _where, channel);
 
-void NetEntityInterop::InvokeRmi(EntityId sender, mono::string methodName, mono::object parameters, uint32 _where, int channel, int rmiType)
+void NetEntityInterop::InvokeRmi(EntityId sender, mono::string methodName, mono::object parameters,
+								 uint32 _where, int channel, int rmiType)
 {
-	MonoEntityExtension::CryCilRMIParameters params
-		(NtText(methodName), MonoEnv->GC->Keep(parameters), IMonoObject(parameters).Class->FullName);
+	MonoEntityExtension::CryCilRMIParameters params(NtText(methodName), MonoEnv->GC->Keep(parameters),
+													IMonoObject(parameters).Class->FullName);
 
 	IGameObject *gameObject = MonoEnv->CryAction->GetGameObject(sender);
 	CryCilRmiType type = CryCilRmiType(rmiType);
@@ -709,10 +707,7 @@ bool CryEntityInterop::CheckFlagsInternal(IEntity *handle, uint64 flagsToCheck, 
 	{
 		return (currentFlags & flagsToCheck) == flagsToCheck;
 	}
-	else
-	{
-		return (currentFlags & flagsToCheck) != 0;
-	}
+	return (currentFlags & flagsToCheck) != 0;
 }
 
 bool CryEntityInterop::GetIsGarbage(IEntity *handle)
@@ -1164,12 +1159,14 @@ void EntitySlotsInterop::MoveSlot(IEntity *handle, IEntity *targetIEnt, int slot
 	handle->MoveSlot(targetIEnt, slot);
 }
 
-int EntitySlotsInterop::SetStatObj(IEntity *handle, IStatObj *pStatObj, int slot, bool bUpdatePhysics, float mass)
+int EntitySlotsInterop::SetStatObj(IEntity *handle, IStatObj *pStatObj, int slot, bool bUpdatePhysics,
+								   float mass)
 {
 	return handle->SetStatObj(pStatObj, slot, bUpdatePhysics, mass);
 }
 
-int EntitySlotsInterop::LoadGeometry(IEntity *handle, int slot, mono::string sFilename, mono::string sGeomName, int nLoadFlags)
+int EntitySlotsInterop::LoadGeometry(IEntity *handle, int slot, mono::string sFilename, mono::string sGeomName,
+									 int nLoadFlags)
 {
 	return handle->LoadGeometry(slot, NtText(sFilename), NtText(sGeomName), nLoadFlags);
 }
@@ -1184,17 +1181,20 @@ int EntitySlotsInterop::LoadGeomCache(IEntity *handle, int slot, mono::string sF
 	return handle->LoadGeomCache(slot, NtText(sFilename));
 }
 
-int EntitySlotsInterop::LoadParticleEmitterDefault(IEntity *handle, int slot, IParticleEffect *pEffect, bool bPrime, bool bSerialize)
+int EntitySlotsInterop::LoadParticleEmitterDefault(IEntity *handle, int slot, IParticleEffect *pEffect,
+												   bool bPrime, bool bSerialize)
 {
 	return handle->LoadParticleEmitter(slot, pEffect, nullptr, bPrime, bSerialize);
 }
 
-int EntitySlotsInterop::LoadParticleEmitter(IEntity *handle, int slot, IParticleEffect *pEffect, SpawnParams *parameters, bool bPrime, bool bSerialize)
+int EntitySlotsInterop::LoadParticleEmitter(IEntity *handle, int slot, IParticleEffect *pEffect,
+											SpawnParams *parameters, bool bPrime, bool bSerialize)
 {
 	return handle->LoadParticleEmitter(slot, pEffect, parameters, bPrime, bSerialize);
 }
 
-int EntitySlotsInterop::SetParticleEmitter(IEntity *handle, int slot, IParticleEmitter *pEmitter, bool bSerialize)
+int EntitySlotsInterop::SetParticleEmitter(IEntity *handle, int slot, IParticleEmitter *pEmitter,
+										   bool bSerialize)
 {
 	return handle->SetParticleEmitter(slot, pEmitter, bSerialize);
 }
@@ -1211,7 +1211,8 @@ int EntitySlotsInterop::GetSlotCount(IEntity *handle)
 	return handle->GetSlotCount();
 }
 
-int EntitySlotsInterop::PhysicalizeSlot(IEntity *entityHandle, int slot, EntityPhysicalizationParameters *parameters)
+int EntitySlotsInterop::PhysicalizeSlot(IEntity *entityHandle, int slot,
+										EntityPhysicalizationParameters *parameters)
 {
 	SEntityPhysicalizeParams params;
 	parameters->ToParams(params);

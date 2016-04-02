@@ -49,7 +49,8 @@ struct EntityPoolInterop : public IMonoInterop<false, true>, public IEntityPoolL
 struct EntitySystemInterop : public IMonoInterop<false, true>
 {
 private:
-	static List<string> monoEntityClassNames;		//!< A list of registered classes of entities that interact with CryCIL.
+	//! A list of registered classes of entities that interact with CryCIL.
+	static List<Text> monoEntityClassNames;
 public:
 	virtual const char *GetInteropClassName() override { return "EntitySystem"; }
 	virtual const char *GetInteropNameSpace() override { return "CryCil.Engine.Logic"; }

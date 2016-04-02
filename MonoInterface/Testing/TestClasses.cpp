@@ -722,19 +722,18 @@ inline void PrintDigitsArray(mono::Array digits)
 {
 	auto digitsArray = IMonoArray<int>(digits);
 
-	TextBuilder digitsText(30);
+	Text digitsText;
+	digitsText.Reserve(30);
 	char symbol[2];
 
-	digitsText << itoa(digitsArray[0], &symbol[0], 10);
+	digitsText.Append(itoa(digitsArray[0], &symbol[0], 10));
 	for (int i = 1; i < digitsArray.Length; i++)
 	{
-		digitsText << " ";
-		digitsText << itoa(digitsArray[i], &symbol[0], 10);
+		digitsText.Append(" ");
+		digitsText.Append(itoa(digitsArray[i], &symbol[0], 10));
 	}
 
-	const char *ntText = digitsText.ToNTString();
-	CryLogAlways("TEST: Digits are: %s", ntText);
-	delete ntText;
+	CryLogAlways("TEST: Digits are: %s", digitsText.c_str());
 }
 
 inline void TestInvokingMethods()

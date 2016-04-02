@@ -38,10 +38,12 @@ const char *MonoTexts::ToNative(mono::string text)
 
 	TextsMessage("Got the unmanaged version of text.");
 
-	Text *tex = new Text(t);
+	int length = strlen(t);
+	char *chars = new char[length];
+	memcpy(chars, t, length * sizeof(char));
+
 	mono_free(t);
-	t = const_cast<char *>(tex->ToNTString());
-	delete tex;
+
 	return t;
 }
 

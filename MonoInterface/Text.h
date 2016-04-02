@@ -1,7 +1,7 @@
-#pragma once
+﻿#pragma once
 
-// Stop compiler from complaining about strncpy.
-#pragma warning(disable:4996)
+//// Stop compiler from complaining about strncpy.
+//#pragma warning(disable:4996)
 
 #ifdef USE_CRYCIL_API
 
@@ -34,749 +34,785 @@
 
 #endif // CRYCIL_MODULE
 
-#include "List.h"
+#ifdef MONO_API
 
-#if 0
-#define TextBuilderMessage ReportMessage
+typedef MonoString *mono_string;
+
+#elif defined(USE_CRYCIL_API)
+
+typedef mono::string mono_string;
+
 #else
-#define TextBuilderMessage(...) void(0)
-#endif
 
-//! Base class for Text and TextBuilder.
-class TextBase
+typedef void *mono_string;
+
+#endif // MONO_API
+
+//! Represents a reference counted null-terminated header-prefixed string.
+//!
+//! This type is, basically, a reimplementation of CryString and std::string.
+//!
+//! When a new object of this type is created, it allocates enough memory to hold: header object with
+//! information about the text data, like reference count and length, and null-terminated string of characters
+//! itself.
+template<typename symbol>
+struct TextTemplate
 {
+#pragma region Memory Statistics
+	//! Gets the number of bytes that are currently allocated for all string objects of this type.
+	static size_t AllocatedMemory()
+	{
+		return ModifyAllocatedMemory(0);
+	}
+private:
+	static size_t ModifyAllocatedMemory(ptrdiff_t increment)
+	{
+		static size_t allocatedMemory = 0;
+		allocatedMemory += increment;
+		return allocatedMemory;
+	}
+#pragma endregion
 protected:
-	char *text;			//!< Pointer to the text within the memory. It is not null-terminated.
-	int length;			//!< Number of characters within the text.
+#pragma region Nested Types
+	struct TextHeader
+	{
+		int referenceCount;	//!< Number of live objects that reference the data that follows this header.
+		size_t length;			//!< Number of characters in the string that follows this header not counting the terminator.
+		size_t capacity;		//!< Number of characters that can fit into the memory block that was allocated for the string this object describes.
+	
+		//! Gets the pointer to the string data this header describes.
+		symbol *GetCharacters()
+		{
+			return reinterpret_cast<symbol *>(this + 1);
+		}
+		//! Increases number of live references to the data that is associated with this header.
+		void IncrementReferenceCount()
+		{
+			CryInterlockedIncrement(&this->referenceCount);
+		}
+		//! Decreases number of live references to the data that is associated with this header.
+		//!
+		//! @returns Number of references to the data after decrementing the count.
+		int DecrementReferenceCount()
+		{
+			return CryInterlockedDecrement(&this->referenceCount);
+		}
+		size_t AllocatedMemory() const
+		{
+			return sizeof(TextHeader) + (this->capacity + 1) * sizeof(symbol);
+		}
+	};
+	//! Provides access to the object that represents an empty string.
+	static TextHeader *EmptyHeader()
+	{
+		// This array consists of 2 objects: a header that describes the empty string, and the empty string
+		// itself.
+		static TextHeader emptyString[2] = { {-1, 0, 0}, {0, 0, 0} };
+
+		return &emptyString[0];
+	}
+#pragma endregion
+#pragma region Fields
+	symbol *str;
+#pragma endregion
+#pragma region Properties
+	//! Gets the object that describes this text.
+	__declspec(property(get = GetHeader)) TextHeader *Header;
+	TextHeader *GetHeader() const
+	{
+		return reinterpret_cast<TextHeader *>(const_cast<TextTemplate *>(this)) - 1;
+	}
+	//! Indicates whether this object shares its text data with others.
+	__declspec(property(get = IsShared)) bool Shared;
+	bool IsShared() const
+	{
+		return this->Header->referenceCount > 1;
+	}
 public:
-	//! Creates a default text.
-	//!
-	//! Only default text can be assigned to.
-	TextBase()
+	//! Gets the number of characters in this text.
+	__declspec(property(get = GetLength)) size_t Length;
+	size_t GetLength() const
 	{
-		this->text = nullptr;
-		this->length = 0;
+		return this->Header->length;
 	}
-	//! Assigns contents of the temporary object to the new one.
-	TextBase(TextBase &&other)
-		: text(other.text)
-		, length(other.length)
+	//! Gets the number of characters that can fit in the memory block that was allocated for this text.
+	__declspec(property(get = GetCapacity)) size_t Capacity;
+	size_t GetCapacity() const
 	{
-		other.text = nullptr;
-		other.length = 0;
+		return this->Header->capacity;
 	}
-	//! Creates a new immutable string from given null-terminated one.
-	//!
-	//! Text from given string is copied into new object without a terminating null character.
-	//!
-	//! @param t Text to initialize this object with.
-	TextBase(const char *t)
+	//! Indicates whether this string is empty.
+	__declspec(property(get = IsEmpty)) bool Empty;
+	bool IsEmpty() const
 	{
-		this->text = nullptr;
-		this->length = 0;
-		if (!t)
+		return this->Length == 0;
+	}
+#pragma endregion
+
+public:
+#pragma region Construction
+	//! Creates an empty text object.
+	TextTemplate()
+	{
+		this->InitEmpty();
+	}
+	//! A copy constructor.
+	TextTemplate(const TextTemplate &other)
+	{
+		// Make a shallow copy.
+		if (other.Header->referenceCount >= 0)
 		{
-			return;
+			this->str = other.str;
+			this->Header->IncrementReferenceCount();
 		}
-		this->FromNtString(t);
-	}
-	//! Creates a new immutable string from given char array.
-	//!
-	//! @param t         Text to initialize this object with.
-	//! @param index     Zero-based index of the first symbol to copy.
-	//! @param charCount Number of characters to copy.
-	TextBase(char *t, int index, int charCount)
-	{
-		this->text = nullptr;
-		this->length = 0;
-		if (!t)
+		else
 		{
-			return;
-		}
-		this->length = charCount;
-		this->text = new char[this->length];
-		for (int i = 0; i < this->length; i++)
-		{
-			this->text[i] = t[i + index];
+			this->InitEmpty();
 		}
 	}
-#ifdef CRYCIL_MODULE
-	//! Creates a new immutable string from given .Net/Mono string.
+	//! Creates a new object of this type that is a substring of another one.
+	//!
+	//! @param other  Reference to the string to get the substring out of.
+	//! @param offset Zero-based index of the first character in the sub-string. If this number is greater then
+	//!               number of characters in the given characters, then this object remains the same.
+	//! @param count  Number of characters in the sub-string. Will be trimmed, if necessary.
+	TextTemplate(const TextTemplate &other, size_t offset, size_t count)
+	{
+		this->InitEmpty();
+		this->Assign(other, offset, count);
+	}
+	//! Creates a new object that encapsulates a deep copy of specified number of characters.
+	TextTemplate(const symbol *chars, size_t length)
+	{
+		this->InitEmpty();
+
+		// Make a deep copy.
+		if (length != 0)
+		{
+			this->AllocateMemory(length);
+			CopyInternal(this->str, chars, length);
+		}
+	}
+	//! Creates a new object of this type that encapsulates a deep copy of given null-terminated string.
+	TextTemplate(const symbol *chars)
+		: TextTemplate(chars, _strlen(chars))
+	{
+	}
+	//! Creates a new object of this type that encapsulates a deep copy of a string delimited by 2 pointers.
+	//!
+	//! @param begin Pointer to the first character in the string.
+	//! @param end   Pointer to the first character after last character in the string.
+	TextTemplate(const symbol *begin, const symbol *end)
+		: TextTemplate(begin, size_t(end - begin))
+	{
+	}
+	//! Creates a new null-terminated string from given .Net/Mono string.
 	//!
 	//! @param managedString Instance of type System.String.
-	TextBase(MonoString *managedString)
+	TextTemplate(mono_string managedString)
 	{
+#if defined(MONO_API) || defined(USE_CRYCIL_API)
+		this->InitEmpty();
+
 		MonoError error;
-		char *ntText = mono_string_to_utf8_checked(managedString, &error);
+		symbol *ntText = mono_string_native(managedString, &error);
+
 		if (mono_error_ok(&error))
 		{
-			this->FromNtString(ntText);
+			this->Assign(ntText);
+
 			mono_free(ntText);
 		}
 		else
 		{
 			FatalError(mono_error_get_message(&error));
 		}
+#else
+		this->str = nullptr;
+#endif // MONO_API
 	}
-#endif // CRYCIL_MODULE
-
-#ifdef USE_CRYCIL_API
-
+#ifdef CRYCIL_MODULE
 	//! Creates a new null-terminated string from given .Net/Mono string.
 	//!
 	//! @param managedString Instance of type System.String.
-	TextBase(mono::string managedString)
-	{
-		this->FromNtString(ToNativeString(managedString));
-	}
-
-#endif // USE_CRYCIL_API
-	virtual ~TextBase()
-	{
-		if (this->text && this->length)
-		{
-			delete this->text;
-			this->text = nullptr;
-			this->length = 0;
-		}
-	}
-	//! Creates a null-terminated string from this object.
-	//!
-	//! Created string is allocated within the heap and needs to be deleted after use.
-	const char *ToNTString() const
-	{
-		return this->ToNTString(0, this->length);
-	}
-	//! Creates a null-terminated string from substring of this text.
-	//!
-	//! Created string is allocated within the heap and needs to be deleted after use.
-	//!
-	//! @param index Zero-based index of the first symbol of the substring to copy to
-	//!              null-terminated result.
-	//! @param count Number of characters to copy. Length of the resultant string will
-	//!              be count + 1 to accommodate the null character.
-	const char *ToNTString(int index, int count) const
-	{
-		if (!this->text)
-		{
-			return nullptr;
-		}
-		if (index + count > this->length)
-		{
-			FatalError("Attempt to copy too many characters from the string.");
-		}
-
-		TextBuilderMessage("Building the null-terminated version of the text from index %d %d characters long.", index, count);
-
-		char *ntText = new char[count + 1];
-
-		TextBuilderMessage("Allocated memory.");
-
-		int i, j, counter;
-		for(i = index, j = 0, counter = 0;
-			counter < count;					// Counter tells us where to stop.
-			i++, j++, counter++)
-		{
-			//TextBuilderMessage("Copying a %c from index %d to index %d with counter on %d.",
-			//				   this->text[i], i, j, counter);
-			ntText[j] = this->text[i];
-		}
-
-		ntText[j] = '\0';
-
-		TextBuilderMessage("Last character is now null.");
-
-		TextBuilderMessage("Built the null-terminated version of the text: %s", ntText);
-
-		return const_cast<const char *>(ntText);
-	}
-	//! Copies characters from beginning of this text to the given character array.
-	//!
-	//! @param destination Pointer to the beginning of the destination array.
-	//! @param index       Zero-based index of the first symbol within destination array
-	//!                    to copy text to.
-	//! @param symbolCount Number of characters to copy.
-	void CopyTo(char *destination, int index, int symbolCount) const
-	{
-		this->CopyTo(destination, 0, index, symbolCount);
-	}
-	//! Copies characters from substring of this text to the given character array.
-	//!
-	//! @param destination      Pointer to the beginning of the destination array.
-	//! @param sourceIndex      Zero-based index of the first symbol of this text to copy.
-	//! @param destinationIndex Zero-based index of the first symbol within destination array
-	//!                         to copy text to.
-	//! @param charCount        Number of characters to copy.
-	void CopyTo(char *destination, int sourceIndex, int destinationIndex, int charCount) const
-	{
-		if (sourceIndex + charCount > this->length)
-		{
-			FatalError("Attempt to copy too many characters from the string.");
-		}
-		for
-			(
-			int i = sourceIndex, j = destinationIndex, counter = 0;
-		counter < charCount;						// Counter tells us where to stop.
-		i++, j++, counter++							//
-			)
-		{
-			destination[j] = this->text[i];
-		}
-	}
-#ifdef CRYCIL_MODULE
-	//! Creates a managed string from this one.
-	MonoString *ToManagedString() const
-	{
-		return mono_string_new_len(mono_domain_get(), this->text, this->length);
-	}
+	TextTemplate(mono::string managedString);
 #endif // CRYCIL_MODULE
-	//! Splits this string into parts separated by the given symbol.
+	//! Creates a new string for a list of parts.
 	//!
-	//! @param symbol           Symbol that will separate the parts.
-	//! @param removeEmptyParts Indicates whether empty parts should be present in the result.
-	//!
-	//! @return A list of parts. Must be deleted after use. Before that though, each part
-	//!         must be deleted separately.
-	List<const char *> *Split(char symbol, bool removeEmptyParts) const
-	{
-		List<const char *> *parts = new List<const char *>(6);
-
-		int partStartIndex = 0;
-		for (int i = 0; i <= this->length; i++)
-		{
-			if (this->text[i] == symbol || i == this->length)
-			{
-				if (i != partStartIndex || !removeEmptyParts)
-				{
-					parts->Add(this->ToNTString(partStartIndex, i - partStartIndex));
-				}
-				partStartIndex = i + 1;
-			}
-		}
-
-		return parts;
-	}
-	//! Finds first occurrence of the given symbol.
-	//!
-	//! @param symbol Character to find.
-	//!
-	//! @return Zero-based index of the first occurrence of the given symbol.
-	//!         -1 is returned if symbol was not found.
-	int IndexOf(char symbol) const
-	{
-		for (int i = 0; i < this->length; i++)
-		{
-			if (this->text[i] == symbol)
-			{
-				return i;
-			}
-		}
-		return -1;
-	}
-	//! Finds last occurrence of the given symbol.
-	//!
-	//! @param symbol Character to find.
-	//!
-	//! @return Zero-based index of the last occurrence of the given symbol.
-	//!         -1 is returned if symbol was not found.
-	int LastIndexOf(char symbol) const
-	{
-		for (int i = this->length - 1; i >= 0; i--)
-		{
-			if (this->text[i] == symbol)
-			{
-				return i;
-			}
-		}
-		return -1;
-	}
-	//! Determines whether this text is equal to one in the null-terminated string.
-	bool Equals(const char *ntString) const
-	{
-		return strlen(ntString) == this->length && strncmp(this->text, ntString, this->length) == 0;
-	}
-	int CompareTo(TextBase *other)
-	{
-		int minLength = this->length > other->length ? other->length : this->length;
-		int comparison = strncmp(this->text, other->text, minLength);
-		if (comparison == 0 && this->length != other->length)
-		{
-			return this->length > other->length ? 1 : -1;
-		}
-		return comparison;
-	}
-	//! Gets the length of the string.
-	__declspec(property(get=GetLength)) int Length;
-	//! Gets the length of the string.
-	int GetLength() const
-	{
-		return this->length;
-	}
-	//! Gets the pointer to the buffer that contains the symbols of this text.
-	//! It is not very safe to use.
-	__declspec(property(get=GetTextBuffer)) const char *TextBuffer;
-	//! Gets the pointer to the buffer that contains the symbols of this text.
-	//! It is not very safe to use.
-	const char *GetTextBuffer() const
-	{
-		return this->text;
-	}
-private:
-	void FromNtString(const char *ntString)
-	{
-		this->length = strlen(ntString);
-		this->text = new char[this->length];
-		for (int i = 0; i < this->length; i++)
-		{
-			this->text[i] = ntString[i];
-		}
-	}
-};
-
-//! Represents immutable string.
-//!
-//! Since this is an immutable object, it's important to keep a reference to
-//! every object of this type that exists. Not abiding this rule will create
-//! unremovable memory leaks.
-class Text : public TextBase
-{
-public:
-	//! Creates an default text.
-	//!
-	//! Only default text can be assigned to.
-	Text() : TextBase() {}
-	//! Assigns contents of the temporary object to the new one.
-	Text(Text &&other) : TextBase(std::move(other)) {}
-	//! Creates a new immutable string from given null-terminated one.
-	//!
-	//! Text from given string is copied into new object without a terminating null character.
-	//!
-	//! @param t Text to initialize this object with.
-	explicit Text(const char *t) : TextBase(t) {}
-	//! Creates a new immutable string from given char array.
-	//!
-	//! @param t         Text to initialize this object with.
-	//! @param index     Zero-based index of the first symbol to copy.
-	//! @param charCount Number of characters to copy.
-	Text(char *t, int index, int charCount) : TextBase(t, index, charCount) {}
-#ifdef CRYCIL_MODULE
-	//! Creates a new immutable string from given .Net/Mono string.
-	//!
-	//! @param managedString Instance of type System.String.
-	explicit Text(MonoString *managedString) : TextBase(managedString) {}
-#endif // CRYCIL_MODULE
-
-#ifdef USE_CRYCIL_API
-
-	//! Creates a new null-terminated string from given .Net/Mono string.
-	//!
-	//! @param managedString Instance of type System.String.
-	explicit Text(mono::string managedString) : TextBase(managedString) {}
-
-#endif // USE_CRYCIL_API
-	//! Constructs a text out of given parts.
-	//!
-	//! @param parts An initializer list that contains the parts to build this object out of.
-	explicit Text(std::initializer_list<const char *> parts)
+	//! @param parts An initializer list that contains parts to build the new string out of.
+	TextTemplate(std::initializer_list<const symbol *> parts)
 	{
 		int totalLength = 0;
 		for (auto current = parts.begin(); current < parts.end(); current++)
 		{
-			totalLength += strlen(*current);
+			totalLength += _strlen(*current);
 		}
 
-		this->text = new char[totalLength];
+		if (totalLength == 0)
+		{
+			this->InitEmpty();
+			return;
+		}
 
+		this->AllocateMemory(totalLength);
 		for (auto current = parts.begin(); current < parts.end(); current++)
 		{
-			int j = 0;
-			while (char c = (*current)[j++])
+			this->Append(*current);
+		}
+	}
+#pragma endregion
+private:
+#pragma region Construction Utilities
+	void MakeUnique()
+	{
+		if (this->Header->referenceCount <= 0)
+		{
+			return;
+		}
+
+		TextHeader *oldHeader = this->Header;
+		this->Release();
+		this->AllocateMemory(oldHeader->capacity);
+		CopyInternal(this->str, oldHeader->GetCharacters(), oldHeader->length + 1);
+	}
+	static size_t CalculateMemoryToAllocate(size_t characterCapacity)
+	{
+		return sizeof(TextHeader) + (characterCapacity + 1) * sizeof(symbol);
+	}
+	//! Initializes an empty string object.
+	void InitEmpty()
+	{
+		// Thanks to this code, no empty objects consume excessive amounts of memory.
+		this->str = EmptyHeader()->GetCharacters();
+	}
+	//! @param capacity Number of characters to fit into allocated memory not counting the terminator.
+	void AllocateMemory(size_t capacity)
+	{
+		assert(capacity >= 0);
+		assert(capacity <= INT_MAX - 1);
+
+		if (capacity == 0)
+		{
+			this->InitEmpty();
+		}
+		else
+		{
+			auto byteCount = CalculateMemoryToAllocate(capacity);
+
+			TextHeader *header = static_cast<TextHeader *>(CryModuleMalloc(byteCount));
+
+			ModifyAllocatedMemory(byteCount);
+			header->referenceCount = 1;
+			header->length = capacity;
+			header->capacity = capacity;
+			this->str = header->GetCharacters();
+			this->str[capacity] = '\0';
+		}
+	}
+#pragma endregion
+public:
+#pragma region Destruction
+	//! Releases this text object.
+	~TextTemplate()
+	{
+		ReleaseData(this->Header);
+	}
+#pragma endregion
+private:
+#pragma region Destruction Utilities
+	//! Makes this object into an empty one.
+	void Release()
+	{
+		// Release, if not empty.
+		if (this->Header->referenceCount >= 0)
+		{
+			ReleaseData(this->Header);
+			this->InitEmpty();
+		}
+	}
+	//! Releases this object's data.
+	static void ReleaseData(TextHeader *header)
+	{
+		if (header->referenceCount >= 0)	// Check if empty.
+		{
+			if (!header->DecrementReferenceCount())		// Check, if has any live references.
 			{
-				this->text[this->length++] = c;
+				// Release.
+				ModifyAllocatedMemory(-ptrdiff_t(header->AllocatedMemory()));	// For stats.
+
+				CryModuleFree(header);
 			}
 		}
 	}
-	//! Creates a substring of this text.
-	//!
-	//! @param index Zero-based index of the first symbol of the substring to copy to the result.
-	//! @param count Number of characters to copy.
-	Text *Substring(int index, int count) const
-	{
-		if (!this->text)
-		{
-			return nullptr;
-		}
-		if (index + count > this->length)
-		{
-			FatalError("Attempt to copy too many characters from the string.");
-		}
-		Text *result = new Text();
-		result->length = count;
-		result->text = new char[result->length];
-		for (int i = 0; i < result->length; i++)
-		{
-			result->text[i] = this->text[i + index];
-		}
-		return result;
-	}
-	//! Assigns a null-terminated string to this object.
-	//!
-	//! Fatal error is thrown when this object is initialized already.
-	void operator=(const char *&t)
-	{
-		if (this->text)
-		{
-			FatalError("Attempt to modify immutable string.");
-		}
-		this->length = strlen(t);
-		this->text = new char[this->length];
-		for (int i = 0; i < this->length; i++)
-		{
-			this->text[i] = t[i];
-		}
-	}
-	//! Assigns an immutable string to this object.
-	//!
-	//! Fatal error is thrown when this object is initialized already.
-	void operator=(Text &t)
-	{
-		if (this->text)
-		{
-			FatalError("Attempt to modify immutable string.");
-		}
-		this->length = t.length;
-		this->text = new char[this->length];
-		for (int i = 0; i < this->length; i++)
-		{
-			this->text[i] = t.text[i];
-		}
-	}
-	//! Creates an immutable string that represents a combination of 2 other strings.
-	//!
-	//! Fatal error is thrown when there is an attempt to chain the operators.
-	//!
-	//! @param text Immutable string that will represent ending of the resultant string.
-	//!
-	//! @return New immutable string that needs to be assigned before used in another operator.
-	Text *operator +(Text text) const
-	{
-		int combinedLength = this->length + text.length;
-		if (combinedLength == 0)
-		{
-			return nullptr;
-		}
-		Text *result = new Text();
-		result->length = combinedLength;
-		result->text = new char[result->length];
-		int i = 0;											// Index within result.
-		int j;												// Index within left then right.
-		for (j = 0; j < this->length; j++, i++)				// Copy left.
-		{
-			result->text[i] = this->text[j];
-		}
-		for (j = 0; j < text.length; j++, i++)				// Copy right.
-		{
-			result->text[i] = text.text[j];
-		}
-		return result;
-	}
-	//! Creates an immutable string that represents a combination of 2 other strings.
-	//!
-	//! Fatal error is thrown when there is an attempt to chain the operators.
-	//!
-	//! @param str Null-terminated string that will represent ending of the resultant string.
-	//!
-	//! @return New immutable string that needs to be assigned before used in another operator.
-	Text *operator +(const char *str) const
-	{
-		int rightLength = str ? strlen(str) : 0;
-		int combinedLength = this->length + rightLength;
-		if (combinedLength == 0)
-		{
-			return nullptr;
-		}
-		Text *result = new Text();
-		result->length = combinedLength;
-		result->text = new char[result->length];
-		int i = 0;											// Index within result.
-		int j;												// Index within left then right.
-		for (j = 0; j < this->length; j++, i++)				// Copy left.
-		{
-			result->text[i] = this->text[j];
-		}
-		for (j = 0; j < rightLength; j++, i++)				// Copy right.
-		{
-			result->text[i] = str[j];
-		}
-		return result;
-	}
-	//! Creates a new immutable string that represents this one with a symbol added to it.
-	//!
-	//! @param symbol Symbol to add to the end of the resultant string.
-	//!
-	//! @return A brand new immutable string.
-	Text *operator +(char symbol) const
-	{
-		int combinedLength = this->length + 1;
-		Text *result = new Text();
-		result->length = combinedLength;
-		result->text = new char[result->length];
-		for (int i = 0; i < this->length; i++)				// Copy this text to result.
-		{
-			result->text[i] = this->text[i];
-		}
-		result->text[result->length - 1] = symbol;			// Put the symbol at the end.
-		return result;
-	}
-};
-
-//! Represents a string that can be changed.
-class TextBuilder : public TextBase
-{
-	int capacity;		//!< Size of the buffer.
+#pragma endregion
 public:
-	//! Gets the capacity of the string.
-	__declspec(property(get = GetCapacity)) int Capacity;
-	//! Gets the capacity of the string.
-	int GetCapacity() const
+#pragma region Interface
+	void Clear()
 	{
-		return this->capacity;
+		if (this->Empty)
+		{
+			return;
+		}
+		if (this->Header->referenceCount >= 0)
+		{
+			this->Release();
+		}
+		else
+		{
+			this->Resize(0);
+		}
 	}
-	//! Creates default constructive text.
-	TextBuilder() : TextBase()
-	{
-		this->capacity = 0;
-	}
-	//! Assigns contents of the temporary object to the new one.
-	TextBuilder(TextBuilder &&other)
-		: TextBase(std::move(other))
-		, capacity(other.capacity)
-	{
-		other.capacity = 0;
-	}
-	//! Creates a constructive text with desired capacity.
+	//! Creates a deep copy of text data that is held by this object.
 	//!
-	//! @param capacity Amount of space to allocate for symbols before any of them are added.
-	explicit TextBuilder(int capacity)
+	//! @returns A pointer to data that has to be deleted when no longer in use.
+	const symbol *Duplicate() const
 	{
-		this->capacity = capacity;
-		this->length = 0;
-		this->text = new char[this->capacity];
+		if (this->Empty)
+		{
+			return nullptr;
+		}
+
+		symbol *dup = new char[this->Length];
+		CopyInternal(dup, this->str, this.Length);
+		return dup;
 	}
-	//! Creates a new mutable string from given null-terminated one.
+#pragma region Assignment
+	//! Assigns a deep copy of a sub-string to this object.
 	//!
-	//! Text from given string is copied into new object without a terminating null character.
+	//! @param other  Reference to the object that contains a sub-string that will be assigned to this object.
+	//! @param offset Zero-based index of the first character in the sub-string. If this number is greater then
+	//!               number of characters in the given characters, then this object remains the same.
+	//! @param count  Number of characters in the sub-string. Will be trimmed, if necessary.
 	//!
-	//! @param text Text to initialize this object with.
-	explicit TextBuilder(const char *text)
+	//! @returns A reference to this object.
+	TextTemplate &Assign(const TextTemplate &other, size_t offset, size_t count)
 	{
-		this->Init(text, 0, strlen(text));
+		int length = other.Length;
+		if (offset > length)
+		{
+			// Assignment impossible.
+			return *this;
+		}
+		if (offset + count > length)
+		{
+			// Trim the count.
+			count = length - offset;
+		}
+
+		this->AssignInternal(other.str + offset, count);
+
+		return *this;
 	}
-	//! Creates a new mutable string from a portion of given character array.
+	//! Assigns a deep copy of a null-terminated string to this object.
 	//!
-	//! @param text  Pointer to the beginning of the array.
-	//! @param index Zero-based index of the first character within the array to copy.
-	//! @param count Number of characters to copy.
-	TextBuilder(const char *text, int index, int count)
+	//! @param chars Pointer to the null-terminated string to assign to this object.
+	//!
+	//! @returns A reference to this object.
+	TextTemplate &Assign(const symbol *chars)
 	{
-		this->Init(text, index, count);
+		if (chars)
+		{
+			this->AssignInternal(chars, _strlen(chars));
+		}
+
+		return *this;
 	}
-	//! Creates a new mutable string from a given immutable string.
+	//! Assigns a string built out of parts to this object.
 	//!
-	//! @param immutableString Immutable string which is used for initialization.
-	explicit TextBuilder(Text *immutableString)
-	{
-		this->Init(immutableString, 0, immutableString->Length);
-	}
-	//! Creates a new mutable string from a substring of given immutable string.
+	//! @param chars Pointer to the null-terminated string to assign to this object.
 	//!
-	//! @param immutableString  Immutable string which portion is used for initialization.
-	//! @param index            Zero-based index of the first character of the substring to copy.
-	//! @param count            Number of characters to copy.
-	TextBuilder(Text *immutableString, int index, int count)
-	{
-		this->Init(immutableString, index, count);
-	}
-	//! Constructs a text out of given parts.
-	//!
-	//! @param capacity Initial capacity. This value will only be selected as a capacity if
-	//!                 combined length of all parts is less.
-	//! @param parts    An initializer list that contains the parts to build this text out of.
-	TextBuilder(int capacity, std::initializer_list<const char *> parts)
+	//! @returns A reference to this object.
+	TextTemplate &Assign(std::initializer_list<const symbol *> parts)
 	{
 		int totalLength = 0;
 		for (auto current = parts.begin(); current < parts.end(); current++)
 		{
-			totalLength += strlen(*current);
+			totalLength += _strlen(*current);
 		}
 
-		this->capacity = std::max(capacity, totalLength);
-		this->text = new char[this->capacity];
+		if (totalLength == 0)
+		{
+			return *this;
+		}
 
+		if (this->Shared || this->Capacity < totalLength)
+		{
+			this->Release();
+			this->AllocateMemory(totalLength);
+		}
+		
+		this->Header->length = totalLength;
+		this->str[totalLength] = '\0';
+		size_t length = 0;
 		for (auto current = parts.begin(); current < parts.end(); current++)
 		{
-			int j = 0;
-			while (char c = (*current)[j++])
-			{
-				this->text[this->length++] = c;
-			}
+			size_t currentLength = _strlen(*current);
+			CopyInternal(this->str + length, *current, currentLength);
+			length += currentLength;
 		}
-	}
-	~TextBuilder()
-	{
-		if (this->text)
-		{
-			delete this->text;
-			this->text = nullptr;
-			this->length = 0;
-			this->capacity = 0;
-		}
-	}
-	//! Creates immutable string out of this one.
-	//!
-	//! Returned pointer points at the object in the heap.
-	//!
-	//! @return Pointer to the immutable string, null if this object is not initialized.
-	Text *ToText() const
-	{
-		return this->ToText(0, this->length);
-	}
-	//! Creates immutable string out of substring of this one.
-	//!
-	//! Returned pointer points at the object in the heap.
-	//!
-	//! @param index Zero-based index of the first symbol of the substring to copy.
-	//! @param count Number of characters to copy.
-	//!
-	//! @return Pointer to the immutable string, null if this object is not initialized.
-	Text *ToText(int index, int count) const
-	{
-		if (!this->text)
-		{
-			return nullptr;
-		}
-		if (index + count > this->length)
-		{
-			FatalError("Attempt to copy too many characters from the string.");
-		}
-		return new Text(this->text, index, count);
-	}
-	//! Creates a substring of this text.
-	//!
-	//! @param index Zero-based index of the first symbol of the substring to copy to the result.
-	//! @param count Number of characters to copy.
-	TextBuilder *Substring(int index, int count) const
-	{
-		if (!this->text)
-		{
-			return nullptr;
-		}
-		if (index + count > this->length)
-		{
-			FatalError("Attempt to copy too many characters from the string.");
-		}
-		TextBuilder *result = new TextBuilder();
-		result->length = count;
-		result->text = new char[result->length];
-		for (int i = 0; i < result->length; i++)
-		{
-			result->text[i] = this->text[i + index];
-		}
-		return result;
-	}
-	//! Appends a symbol to the end of this text.
-	TextBuilder &operator <<(char character)
-	{
-		TextBuilderMessage("Adding a %c character to the text.", character);
-		this->Resize(this->length + 1);
-		this->text[this->length++] = character;
-		return *this;
-	}
-	//! Appends a null-terminated string to the end of this text.
-	//!
-	//! Avoid invocation of this operator unless given string is a literal.
-	TextBuilder &operator <<(const char *str)
-	{
-		this->Append(const_cast<char *>(str), strlen(str));
-		return *this;
-	}
-	//! Appends an immutable string to the end of this text.
-	TextBuilder &operator <<(Text &text)
-	{
-		this->Append(const_cast<char *>(text.TextBuffer), text.Length);
-		return *this;
-	}
-	//! Appends a string to the end of this text.
-	TextBuilder &operator <<(TextBuilder &text)
-	{
-		this->Append(text.text, text.length);
-		return *this;
-	}
 
+		return *this;
+	}
+#pragma endregion
 private:
-	void Append(char *bufferToCopy, int count)
+#pragma region Assignment Utilities
+	void AssignInternal(const symbol *chars, size_t count)
 	{
-		TextBuilderMessage("Adding %d character text to the builder that is %d characters long.",
-						   count, this->length);
+		// Allocate more data, if this string is shared, or doesn't have enough allocated memory.
+		if (this->Shared || this->Capacity < count)
+		{
+			this->Release();
+			this->AllocateMemory(count);
+		}
 
-		int combinedLength = this->length + count;
-		this->Resize(combinedLength);
-		// Copy data.
-		for (int i = 0, j = this->length; j < combinedLength; i++, j++)
+		CopyInternal(this->str, chars, count);
+
+		this->Header->length = count;
+		this->str[count] = '\0';
+	}
+#pragma endregion
+public:
+#pragma region Size
+	//! Resizes this string and pads it with a filling character, if necessary.
+	void Resize(size_t newCount, symbol filler = 0)
+	{
+		this->MakeUnique();
+		auto length = this->Length;
+		if (newCount > length)
 		{
-			this->text[j] = bufferToCopy[i];
+			this->Append(newCount - length, filler);
 		}
-		this->length = combinedLength;
-	}
-	void Init(const char *text, int index, int count)
-	{
-		this->capacity = this->length = count;
-		this->text = new char[this->capacity];
-		strncpy(this->text, text + index, this->capacity);
-	}
-	void Init(Text *immutableString, int index, int count)
-	{
-		if (index + count > immutableString->Length)
+		else if (newCount < length)
 		{
-			FatalError("Attempt to copy too many characters from the string.");
+			this->Header->length = newCount;
+			this->str[newCount] = '\0';
 		}
-		this->capacity = this->length = count;
-		this->text = new char[this->capacity];
-		immutableString->CopyTo(this->text, index, 0, this->length);
 	}
-	void Resize(int combinedLength)
+	//! Expands the memory block to fit more text, if given new capacity is greater then current one, otherwise
+	//! trims the memory block to be exact size to fit current text.
+	void Reserve(size_t newCapacity)
 	{
-		// Check the capacity.
-		if (this->capacity < combinedLength)
+		auto oldCapacity = this->Capacity;
+		if (newCapacity > oldCapacity)
 		{
-			// Allocate new memory.
-			char *newText = new char[combinedLength];
-			for (int i = 0; i < this->length; i++)
+			TextHeader *oldHeader = this->Header;
+
+			this->AllocateMemory(newCapacity);
+			CopyInternal(this->str, oldHeader->GetCharacters(), oldHeader->length);
+			this->Header->length = oldHeader->length;
+			this->str[oldHeader->length] = '\0';
+			ReleaseData(oldHeader);
+		}
+		else if (oldCapacity != this->Length)
+		{
+			TextHeader *oldHeader = this->Header;
+
+			this->AllocateMemory(this->Length);
+			CopyInternal(this->str, oldHeader->GetCharacters(), oldHeader->length);
+			ReleaseData(oldHeader);
+		}
+	}
+#pragma endregion
+#pragma region Appending
+	//! Appends a number of specified characters to the end of this string.
+	TextTemplate &Append(size_t count, symbol character)
+	{
+		if (count <= 0)
+		{
+			return *this;
+		}
+
+		if (this->Shared || this->Length + count > this->Capacity)
+		{
+			TextHeader *oldHeader = this->Header;
+			this->AllocateMemory(this->Length + count);
+			CopyInternal(this->str, oldHeader->GetCharacters(), oldHeader->length);
+			SetInternal(this->str + oldHeader->length, character, count);
+			ReleaseData(oldHeader);
+		}
+		else
+		{
+			auto oldLength = this->Length;
+			SetInternal(this->str + oldLength, character, count);
+			this->Header->length = oldLength + count;
+			this->str[this->Length] = '\0';
+		}
+		
+		return *this;
+	}
+	//! Appends a null-terminated string to the end of this string.
+	TextTemplate &Append(const symbol *chars)
+	{
+		if (chars)
+		{
+			this->ConcatenateInPlace(chars, _strlen(chars));
+		}
+
+		return *this;
+	}
+#pragma endregion
+#pragma endregion
+public:
+#pragma region Operators
+	//! Assigns another string to this one.
+	TextTemplate &operator=(const TextTemplate &other)
+	{
+		if (this->str == other.str)
+		{
+			return *this;
+		}
+
+		if (this->Header->referenceCount < 0)
+		{
+			if (other.Header->referenceCount >= 0)
 			{
-				newText[i] = this->text[i];
+				this->str = other.str;
+				this->Header->IncrementReferenceCount();
+			}
+		}
+		else if (other.Header->referenceCount < 0)
+		{
+			this->Release();
+			this->str = other.str;
+		}
+		else
+		{
+			this->Release();
+			this->str = other.str;
+			this->Header->IncrementReferenceCount();
+		}
+		return *this;
+	}
+	//! Assigns another string to this one.
+	TextTemplate &operator=(const symbol *other)
+	{
+		this->Assign(other);
+
+		return *this;
+	}
+	//! Assigns another string to this one.
+	TextTemplate &operator=(std::initializer_list<const symbol *> parts)
+	{
+		this->Assign(parts);
+
+		return *this;
+	}
+
+	bool operator ==(const TextTemplate &other) const
+	{
+		return _compare(this->str, other.str) == 0;
+	}
+	bool operator !=(const TextTemplate &other) const
+	{
+		return _compare(this->str, other.str) != 0;
+	}
+	bool operator ==(const symbol *other) const
+	{
+		return _compare(this->str, other) == 0;
+	}
+	bool operator !=(const symbol *other) const
+	{
+		return _compare(this->str, other) != 0;
+	}
+
+	//! Implicit conversion. Returns wrapped pointer.
+	operator const symbol *() const
+	{
+		return this->str;
+	}
+	//! Used when this object has to be passed to the function with variadic parameter list.
+	const symbol *c_str() const
+	{
+		return this->str;
+	}
+#pragma endregion
+private:
+#pragma region Utilities
+	static void CopyInternal(symbol *destination, const symbol *source, size_t count)
+	{
+		if (destination != source)
+		{
+			memcpy(destination, source, count * sizeof(symbol));
+		}
+	}
+	static void SetInternal(symbol *destination, symbol filler, size_t count)
+	{
+			memset(destination, filler, count * sizeof(symbol));
+	}
+	void ConcatenateInPlace(const char *chars, size_t count)
+	{
+		if (count <= 0)
+		{
+			return;
+		}
+
+		if (this->Shared || this->Length + count > this->Capacity)
+		{
+			TextHeader *oldHeader = this->Header;
+			this->Concatenate(oldHeader->GetCharacters(), oldHeader->length, chars, count);
+			ReleaseData(oldHeader);
+		}
+		else
+		{
+			CopyInternal(this->str + this->Length, chars, count);
+			this->Header->length += count;
+			this->str[this->Length] = '\0';
+		}
+	}
+	void Concatenate(const char *chars1, size_t count1, const char *chars2, size_t count2)
+	{
+		auto sumLength = count1 + count2;
+
+		auto doubleCount1 = count1 * 2;
+		if (doubleCount1 > sumLength)
+		{
+			sumLength = doubleCount1;
+		}
+
+		if (sumLength != 0)
+		{
+			if (sumLength < 8)
+			{
+				sumLength = 8;
 			}
 
-			// Deallocate old memory.
-			delete this->text;
-
-			this->text = newText;
-			this->capacity = combinedLength;
+			this->AllocateMemory(sumLength);
+			CopyInternal(this->str, chars1, count1);
+			CopyInternal(this->str + count1, chars2, count2);
+			this->Header->length = count1 + count2;
+			this->str[count1 + count2] = 0;
 		}
 	}
+#pragma endregion
+#pragma region Specialization Utilities
+	//! Counts number of characters in the string.
+	static size_t _strlen(const symbol *str);
+	//! Compares 2 strings.
+	static int _compare(const symbol *str1, const symbol *str2);
+	//! To managed string.
+	static mono_string _mono_str(const symbol *str);
+	//! From managed string.
+	static symbol *mono_string_native(mono_string str, void *_error);
+	//! Checks for the presence of the substring.
+	static bool _contains_substring(const symbol *str0, const symbol *str1, bool ignoreCase);
+#pragma endregion
 };
 
-inline std::ostream &operator <<(std::ostream &out, Text &text)
+template<typename symbol>
+inline mono_string TextTemplate<symbol>::_mono_str(const symbol *str)
 {
-	const char *nt = text.ToNTString();
-	out << nt;
-	delete nt;
-	return out;
+#ifdef MONO_API
+	return mono_string_new(mono_domain_get(), str);
+#elif defined(USE_CRYCIL_API)
+	return ToMonoString(str);
+#else
+	return nullptr;
+#endif // MONO_API
 }
 
-inline std::ostream &operator <<(std::ostream &out, Text *text)
+template<typename symbol>
+inline symbol *TextTemplate<symbol>::mono_string_native(mono_string str, void *error)
 {
-	const char *nt = text->ToNTString();
-	out << nt;
-	delete nt;
-	return out;
+	if (!str)
+	{
+		return nullptr;
+	}
+#ifdef MONO_API
+	return mono_string_to_utf8_checked(static_cast<MonoString *>(str), static_cast<MonoError *>(error));
+#elif defined(USE_CRYCIL_API)
+	return ToNativeString(managedString);
+#else
+	return nullptr;
+#endif // MONO_API
 }
+
+template<typename symbol>
+inline int TextTemplate<symbol>::_compare(const symbol *str1, const symbol *str2)
+{
+	return strcmp(str1, str2);
+}
+
+template<typename symbol>
+inline size_t TextTemplate<symbol>::_strlen(const symbol *str)
+{
+	return strlen(str);
+}
+
+template<typename symbol>
+inline bool TextTemplate<symbol>::_contains_substring(const symbol *str0, const symbol *str1, bool ignoreCase)
+{
+	if (!ignoreCase)
+	{
+		return strstr(str0, str1) != nullptr;
+	}
+
+	int nSuperstringLength = int(strlen(str0));
+	int nSubstringLength = int(strlen(str1));
+
+	for (int nSubstringPos = 0; nSubstringPos <= nSuperstringLength - nSubstringLength; ++nSubstringPos)
+	{
+		if (strnicmp(str0 + nSubstringPos, str1, nSubstringLength) == 0)
+			return (str0 + nSubstringPos) != nullptr;
+	}
+	return false;
+}
+
+template<>
+inline mono_string TextTemplate<wchar_t>::_mono_str(const wchar_t *str)
+{
+#ifdef MONO_API
+	return mono_string_from_utf16(reinterpret_cast<mono_unichar2 *>(const_cast<wchar_t *>(str)));
+#elif defined(USE_CRYCIL_API)
+	return MonoEnv->Objects->Texts->ToManaged(str);
+#else
+	return nullptr;
+#endif // MONO_API
+}
+
+template<>
+inline wchar_t *TextTemplate<wchar_t>::mono_string_native(mono_string str, void *error)
+{
+#ifdef MONO_API
+	// Initialize the error object with no error message in it.
+	mono_error_init(static_cast<MonoError *>(error));
+	return reinterpret_cast<wchar_t *>(mono_string_to_utf16(str));
+#elif defined(USE_CRYCIL_API)
+	return MonoEnv->Objects->Texts->ToNative16(managedString);
+#else
+	return nullptr;
+#endif // MONO_API
+}
+
+template<>
+inline int TextTemplate<wchar_t>::_compare(const wchar_t *str1, const wchar_t *str2)
+{
+	return wcscmp(str1, str2);
+}
+
+template<>
+inline size_t TextTemplate<wchar_t>::_strlen(const wchar_t *str)
+{
+	return wcslen(str);
+}
+
+template<>
+inline bool TextTemplate<wchar_t>::_contains_substring(const wchar_t *str0, const wchar_t *str1, bool ignoreCase)
+{
+	if (!ignoreCase)
+	{
+		return wcsstr(str0, str1) != nullptr;
+	}
+
+	int superstringLength = int(wcslen(str0));
+	int substringLength = int(wcslen(str1));
+
+	for (int substringPos = 0; substringPos <= superstringLength - substringLength; ++substringPos)
+	{
+		if (wcsnicmp(str0 + substringPos, str1, substringLength) == 0)
+			return (str0 + substringPos) != nullptr;
+	}
+	return false;
+}
+
+typedef TextTemplate<char> Text;
+typedef TextTemplate<wchar_t> Text16;

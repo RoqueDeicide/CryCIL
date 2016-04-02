@@ -38,7 +38,7 @@ CryamblyWrapper::CryamblyWrapper(const char *fileName)
 	this->name = names.Value2;
 	this->fullName = names.Value1;
 	
-	this->fileName = new Text(fileName);
+	this->fileName = fileName;
 
 	CryamblyMessage("Starting caching the classes.");
 
@@ -69,9 +69,6 @@ CryamblyWrapper::CryamblyWrapper(const char *fileName)
 
 CryamblyWrapper::~CryamblyWrapper()
 {
-	SAFE_DELETE(this->name);
-	SAFE_DELETE(this->fullName);
-	SAFE_DELETE(this->fileName);
 }
 
 
@@ -156,17 +153,17 @@ IMonoClass *CryamblyWrapper::GetClass(const char *nameSpace, const char *classNa
 	return MonoClassCache::Wrap(mono_class_from_name(this->image, nameSpace, className));
 }
 
-Text *CryamblyWrapper::GetName() const
+const Text &CryamblyWrapper::GetName() const
 {
 	return this->name;
 }
 
-Text *CryamblyWrapper::GetFullName() const
+const Text &CryamblyWrapper::GetFullName() const
 {
 	return this->fullName;
 }
 
-Text *CryamblyWrapper::GetFileName() const
+const Text &CryamblyWrapper::GetFileName() const
 {
 	return this->fileName;
 }

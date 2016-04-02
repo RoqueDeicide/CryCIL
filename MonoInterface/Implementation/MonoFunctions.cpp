@@ -155,32 +155,32 @@ void *MonoFunctions::GetRawThunk(_MonoMethod *func)
 	return nullptr;
 }
 
-int MonoFunctions::ParseSignature(_MonoMethod *func, List<const char *> &names, const char *&params)
+int MonoFunctions::ParseSignature(_MonoMethod *func, List<Text> &names, Text &params)
 {
 	MonoMethodSignature *sig = mono_method_signature(func);
 	
 	int paramCount = mono_signature_get_param_count(sig);
 	
-	names = List<const char *>(paramCount);
+	names = List<Text>(paramCount);
 
-	TextBuilder paramsText = TextBuilder(100);
+	Text paramsText;
 	
 	void *iter = nullptr;
 	while (MonoType *paramType = mono_signature_get_params(sig, &iter))
 	{
 		if (names.Length != 0)
 		{
-			paramsText << ",";
+			paramsText.Append(",");
 		}
 		
-		const char *typeName = NtText(mono_type_get_name(paramType)).Detach();
+		Text typeName = mono_type_get_name(paramType);
 		
-		paramsText << typeName;
+		paramsText.Append(typeName);
 		
 		names.Add(typeName);
 	}
 
-	params = paramsText.ToNTString();
+	params = paramsText;
 
 	return paramCount;
 }

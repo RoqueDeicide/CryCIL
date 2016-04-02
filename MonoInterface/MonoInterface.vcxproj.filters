@@ -21,9 +21,6 @@
     <ClInclude Include="RunTime\AllInterops.h" />
     <ClInclude Include="API_ImplementationHeaders.h" />
     <ClInclude Include="CryCilHeader.h" />
-    <ClInclude Include="Text.h">
-      <Filter>Extras</Filter>
-    </ClInclude>
     <ClInclude Include="DoxygenExampleFiles\UnmanagedThunkExample.h">
       <Filter>DoxygenExampleFiles</Filter>
     </ClInclude>
@@ -646,6 +643,9 @@
     </ClInclude>
     <ClInclude Include="Interops\CryInputAction.h">
       <Filter>Interops\Engine\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Text.h">
+      <Filter>Extras</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

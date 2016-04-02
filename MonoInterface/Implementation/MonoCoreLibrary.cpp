@@ -15,7 +15,7 @@ MonoCoreLibrary::MonoCoreLibrary()
 	this->name = names.Value2;
 	this->fullName = names.Value1;
 
-	this->fileName = new Text("");
+	this->fileName = "";
 
 	this->intPtr      = MonoClassCache::Wrap(mono_get_intptr_class());
 	this->uintPtr     = MonoClassCache::Wrap(mono_get_uintptr_class());
@@ -47,9 +47,6 @@ MonoCoreLibrary::MonoCoreLibrary()
 
 MonoCoreLibrary::~MonoCoreLibrary()
 {
-	SAFE_DELETE(this->name);
-	SAFE_DELETE(this->fullName);
-	SAFE_DELETE(this->fileName);
 }
 
 IMonoClass *MonoCoreLibrary::GetBoolean() const
@@ -167,17 +164,17 @@ IMonoClass *MonoCoreLibrary::GetClass(const char *nameSpace, const char *classNa
 	return MonoClassCache::Wrap(mono_class_from_name(this->image, nameSpace, className));
 }
 
-Text *MonoCoreLibrary::GetName() const
+const Text &MonoCoreLibrary::GetName() const
 {
 	return this->name;
 }
 
-Text *MonoCoreLibrary::GetFullName() const
+const Text &MonoCoreLibrary::GetFullName() const
 {
 	return this->fullName;
 }
 
-Text *MonoCoreLibrary::GetFileName() const
+const Text &MonoCoreLibrary::GetFileName() const
 {
 	return this->fileName;
 }

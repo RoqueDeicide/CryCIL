@@ -14,9 +14,9 @@ private:
 	MonoImage *image;				//!< Pointer to the assembly image: region of the
 									//!  assembly that contains all of the code and metadata.
 
-	Text *shortName;				//!< Short name of the assembly.
-	Text *fullName;					//!< Full name of the assembly.
-	Text *fileName;					//!< Name of the file this assembly was loaded from.
+	Text shortName;					//!< Short name of the assembly.
+	Text fullName;					//!< Full name of the assembly.
+	Text fileName;					//!< Name of the file this assembly was loaded from.
 public:
 	//! Wraps given assembly.
 	explicit MonoAssemblyWrapper(MonoAssembly *assembly);
@@ -26,17 +26,13 @@ public:
 	{
 		this->assembly = nullptr;
 		this->image = nullptr;
-
-		SAFE_DELETE(this->shortName);
-		SAFE_DELETE(this->fullName);
-		SAFE_DELETE(this->fileName);
 	}
 	//! Gets the class.
 	virtual IMonoClass *GetClass(const char *nameSpace, const char *className) const override;
 
-	virtual Text *GetName() const override;
-	virtual Text *GetFullName() const override;
-	virtual Text *GetFileName() const override;
+	virtual const Text &GetName() const override;
+	virtual const Text &GetFullName() const override;
+	virtual const Text &GetFileName() const override;
 
 	virtual void *GetWrappedPointer() const override;
 	

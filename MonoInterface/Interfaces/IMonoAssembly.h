@@ -6,20 +6,20 @@
 struct IMonoAssembly : public IMonoFunctionalityWrapper
 {
 	//! Gets the short name of the assembly.
-	__declspec(property(get = GetName)) Text *Name;
+	__declspec(property(get = GetName)) const Text &Name;
 	//! Gets the full name of the assembly.
-	__declspec(property(get = GetFullName)) Text *FullName;
+	__declspec(property(get = GetFullName)) const Text &FullName;
 	//! Gets the full name of the assembly.
-	__declspec(property(get = GetFileName)) Text *FileName;
+	__declspec(property(get = GetFileName)) const Text &FileName;
 
 	//! Gets the class.
 	//!
 	//! @param nameSpace Name space where the class is defined.
 	//! @param className Name of the class to get.
 	VIRTUAL_API virtual IMonoClass *GetClass(const char *nameSpace, const char *className) const = 0;
-	VIRTUAL_API virtual Text *GetName() const = 0;
-	VIRTUAL_API virtual Text *GetFullName() const = 0;
-	VIRTUAL_API virtual Text *GetFileName() const = 0;
+	VIRTUAL_API virtual const Text &GetName() const = 0;
+	VIRTUAL_API virtual const Text &GetFullName() const = 0;
+	VIRTUAL_API virtual const Text &GetFileName() const = 0;
 	//! Gets the reference to the instance of type System.Reflection.Assembly.
 	__declspec(property(get = GetReflectionObject)) mono::assembly ReflectionObject;
 

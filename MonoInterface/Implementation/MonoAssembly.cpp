@@ -21,7 +21,7 @@ MonoAssemblyWrapper::MonoAssemblyWrapper(MonoAssembly *assembly)
 	this->fullName = names.Value1;
 	this->shortName = names.Value2;
 
-	this->fileName = new Text("Unknown file name.");
+	this->fileName = "Unknown file name.";
 }
 //! Attempts to load assembly located in the file.
 //!
@@ -42,7 +42,7 @@ MonoAssemblyWrapper::MonoAssemblyWrapper(const char *assemblyFile, bool &failed)
 		this->fullName = names.Value1;
 		this->shortName = names.Value2;
 
-		this->fileName = new Text(assemblyFile);
+		this->fileName = assemblyFile;
 	}
 	else
 	{
@@ -60,17 +60,17 @@ IMonoClass *MonoAssemblyWrapper::GetClass(const char *nameSpace, const char *cla
 	return MonoClassCache::Wrap(klass);
 }
 
-Text *MonoAssemblyWrapper::GetName() const
+const Text &MonoAssemblyWrapper::GetName() const
 {
 	return this->shortName;
 }
 
-Text *MonoAssemblyWrapper::GetFullName() const
+const Text &MonoAssemblyWrapper::GetFullName() const
 {
 	return this->fullName;
 }
 
-Text *MonoAssemblyWrapper::GetFileName() const
+const Text &MonoAssemblyWrapper::GetFileName() const
 {
 	return this->fileName;
 }

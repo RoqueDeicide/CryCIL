@@ -231,8 +231,7 @@ struct IMonoFunctions
 	//! @see IMonoFunction::RawThunk property.
 	VIRTUAL_API virtual void        *GetRawThunk(_MonoMethod *func) = 0;
 	//! Parses signature of given Mono method and fills a number of lists.
-	VIRTUAL_API virtual int          ParseSignature(_MonoMethod *func, List<const char *> &names,
-													const char *&params) = 0;
+	VIRTUAL_API virtual int          ParseSignature(_MonoMethod *func, List<Text> &names, Text &params) = 0;
 	//! @see IMonoFunction::ParameterClasses property.
 	VIRTUAL_API virtual void         GetParameterClasses(_MonoMethod *func, List<IMonoClass *> &classes) = 0;
 	//! @see IMonoFunction::ReflectionObject property.

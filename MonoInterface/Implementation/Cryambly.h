@@ -8,9 +8,9 @@ private:
 	MonoAssembly *assembly;
 	MonoImage *image;
 
-	Text *name;
-	Text *fullName;
-	Text *fileName;
+	Text name;
+	Text fullName;
+	Text fileName;
 
 	IMonoClass *matrix33;
 	IMonoClass *matrix34;
@@ -49,9 +49,9 @@ public:
 
 	virtual IMonoClass *GetClass(const char *nameSpace, const char *className) const override;
 
-	virtual Text *GetName() const override;
-	virtual Text *GetFullName() const override;
-	virtual Text *GetFileName() const override;
+	virtual const Text &GetName() const override;
+	virtual const Text &GetFullName() const override;
+	virtual const Text &GetFileName() const override;
 
 	virtual mono::assembly GetReflectionObject() const override;
 	virtual void *GetWrappedPointer() const override;

@@ -244,6 +244,19 @@ inline const wchar_t *ToNative16String(mono::string monoString)
 	return MonoEnv->Objects->Texts->ToNative16(monoString);
 }
 
+#ifdef CRYCIL_MODULE
+//! Creates a new null-terminated string from given .Net/Mono string.
+//!
+//! @param managedString Instance of type System.String.
+template<typename symbol>
+TextTemplate<symbol>::TextTemplate(mono::string managedString)
+{
+	const char *nt = ToNativeString(managedString);
+	this->Assign(nt);
+	delete nt;
+}
+#endif // CRYCIL_MODULE
+
 //! Unboxes a value-type object into another unmanaged value.
 //! @tparam T type of unmanaged object to create.
 //! @param value Value-type object to unbox.

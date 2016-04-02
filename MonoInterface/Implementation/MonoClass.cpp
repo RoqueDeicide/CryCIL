@@ -19,9 +19,7 @@
 #endif
 
 MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
-	: fullName(nullptr)
-	, fullNameIL(nullptr)
-	, events(30)
+	: events(30)
 	, methods(30, strcmp)
 	, properties(30, strcmp)
 	, fields(30)
@@ -135,10 +133,7 @@ MonoClassWrapper::MonoClassWrapper(MonoClass *klass)
 }
 MonoClassWrapper::~MonoClassWrapper()
 {
-	SAFE_DELETE(this->fullName);
-	SAFE_DELETE(this->fullNameIL);
-
-	auto deletePropertyOverloads = [](const char *name, List<IMonoProperty *> *&overloads)
+	auto deletePropertyOverloads = [](Text name, List<IMonoProperty *> *&overloads)
 	{
 		overloads->DeleteAll();
 		delete overloads;
@@ -147,7 +142,7 @@ MonoClassWrapper::~MonoClassWrapper()
 
 	this->events.DeleteAll();
 
-	auto deleteMethodOverloads = [](const char *name, List<IMonoFunction *> *&overloads)
+	auto deleteMethodOverloads = [](Text name, List<IMonoFunction *> *&overloads)
 	{
 		overloads->DeleteAll();
 		delete overloads;
@@ -303,20 +298,18 @@ const IMonoFunction *MonoClassWrapper::GetFunction(const char *name, List<ClassS
 	if (argList) delete argList;
 #endif // ClassDebug
 
-	auto paramTypeNames = List<const char *>(specifiedClasses.Length);
+	auto paramTypeNames = List<Text>(specifiedClasses.Length);
+	auto paramTypeNtNames = List<const char *>(specifiedClasses.Length);
 
 	for (int i = 0; i < specifiedClasses.Length; i++)
 	{
-		TextBuilder typeName = TextBuilder(50);
-		typeName << specifiedClasses[i].Value1->FullNameIL << specifiedClasses[i].Value2;
+		Text typeName({ specifiedClasses[i].Value1->FullNameIL , specifiedClasses[i].Value2 });
 
-		const char *typeNameNt = typeName.ToNTString();
-		paramTypeNames.Add(typeNameNt);
+		paramTypeNames.Add(typeName);
+		paramTypeNtNames.Add(typeName);
 	}
 
-	auto foundMethod = this->GetFunction(name, paramTypeNames);
-
-	paramTypeNames.DeleteAll();
+	auto foundMethod = this->GetFunction(name, paramTypeNtNames);
 
 	return foundMethod;
 }
@@ -534,23 +527,18 @@ const IMonoProperty *MonoClassWrapper::GetProperty(const char *name, List<IMonoC
 
 const IMonoProperty *MonoClassWrapper::GetProperty(const char *name, List<ClassSpec> &specifiedClasses) const
 {
-	auto paramTypeNames = List<const char *>(specifiedClasses.Length);
+	auto paramTypeNames = List<Text>(specifiedClasses.Length);
+	auto paramTypeNtNames = List<const char *>(specifiedClasses.Length);
 
 	for (int i = 0; i < specifiedClasses.Length; i++)
 	{
-		TextBuilder typeName = TextBuilder(10);
-		typeName << specifiedClasses[i].Value1->FullNameIL << specifiedClasses[i].Value2;
+		Text typeName({ specifiedClasses[i].Value1->FullNameIL , specifiedClasses[i].Value2 });
 
-		const char *typeNameNt = typeName.ToNTString();
-		paramTypeNames.Add(typeNameNt);
+		paramTypeNames.Add(typeName);
+		paramTypeNtNames.Add(typeName);
 	}
 
-	auto foundProp = this->GetProperty(name, paramTypeNames);
-
-	for (int i = 0; i < paramTypeNames.Length; i++)
-	{
-		delete paramTypeNames[i];
-	}
+	auto foundProp = this->GetProperty(name, paramTypeNtNames);
 
 	return foundProp;
 }
@@ -641,7 +629,7 @@ __forceinline result_type *MonoClassWrapper::SearchTheList(List<result_type *> &
 
 		for (int j = 0; j < paramTypeNames.Length; j++)
 		{
-			if (strcmp(currentClasses->At(j), paramTypeNames[j]) != 0)
+			if (strcmp(currentClasses[j], paramTypeNames[j]) != 0)
 			{
 				match = false;
 				break;
@@ -710,7 +698,7 @@ __forceinline result_type *MonoClassWrapper::SearchTheList(List<result_type *> &
 		{
 			// Look at definition of _MonoReflectionType in mono sources to see what is going on here.
 			MonoType *type = *GET_BOXED_OBJECT_DATA(MonoType *, types[j]);
-			if (strcmp(typeNames->At(j), mono_type_get_name(type)) != 0)
+			if (strcmp(typeNames[j], mono_type_get_name(type)) != 0)
 			{
 				match = false;
 				break;
@@ -724,33 +712,29 @@ __forceinline result_type *MonoClassWrapper::SearchTheList(List<result_type *> &
 	return nullptr;
 }
 
-const char *MonoClassWrapper::BuildFullName(bool ilStyle, const char *& field) const
+const char *MonoClassWrapper::BuildFullName(bool ilStyle, Text &field) const
 {
 	ClassMessage("Querying the full name of the class.");
 
-	if (!field)
+	if (!field.Empty)
 	{
 		ClassMessage("Building the full name of the class.");
 
-		TextBuilder fullName(100);
+		Text fullName;
 		if (MonoClass *nestingClass = mono_class_get_nesting_type(this->wrappedClass))
 		{
 			IMonoClass *nest = MonoClassCache::Wrap(nestingClass);
 
-			fullName << NtText(ilStyle ? nest->FullNameIL : nest->FullName) << '+';
+			fullName = { ilStyle ? nest->FullNameIL : nest->FullName, "+", this->name };
 		}
 		else
 		{
-			fullName << this->nameSpace << '.';
+			fullName = { this->nameSpace, ".", this->name };
 		}
 
-		fullName << this->name;
+		ClassMessage("Text construction is done.");
 
-		ClassMessage("TextBuilder is done.");
-
-		field = fullName.ToNTString();
-
-		ClassMessage("Created a null-terminated version of the name.");
+		field = fullName;
 	}
 	return field;
 }

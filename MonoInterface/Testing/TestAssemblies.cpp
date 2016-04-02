@@ -96,15 +96,9 @@ void TestAssemblies()
 	CryLogAlways("TEST: Getting assembly details.");
 	CryLogAlways("TEST:");
 
-	const char *detail = mainTestingAssembly->Name->ToNTString();
-	CryLogAlways("TEST: Assembly short name: %s", detail);
-	delete detail;
-	detail = mainTestingAssembly->FullName->ToNTString();
-	CryLogAlways("TEST: Assembly full name: %s", detail);
-	delete detail;
-	detail = mainTestingAssembly->FileName->ToNTString();
-	CryLogAlways("TEST: Assembly file name: %s", detail);
-	delete detail;
+	CryLogAlways("TEST: Assembly short name: %s", mainTestingAssembly->Name.c_str());
+	CryLogAlways("TEST: Assembly full name: %s", mainTestingAssembly->FullName.c_str());
+	CryLogAlways("TEST: Assembly file name: %s", mainTestingAssembly->FileName.c_str());
 
 	CryLogAlways("TEST:");
 	CryLogAlways("TEST: Getting assembly reflection object.");

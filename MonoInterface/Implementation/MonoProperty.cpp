@@ -83,8 +83,8 @@ const IMonoFunction *MonoPropertyWrapper::GetFunctionWrapper(MonoMethod *method,
 
 	PropertyMessage("Creating a wrapper for a method %s.", mono_method_get_name(method));
 
-	List<const char *> l1;
-	const char *parameters;
+	List<Text> l1;
+	Text parameters;
 	MonoEnv->Functions->ParseSignature(method, l1, parameters);
 
 	return klass->GetFunction(mono_method_get_name(method), parameters);

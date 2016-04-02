@@ -4,7 +4,7 @@
 #include "MonoAssembly.h"
 #include "ThunkTables.h"
 
-void DisposeAssemblyWrappers(Text *, List<IMonoAssembly *> *assemblySet)
+void DisposeAssemblyWrappers(Text, List<IMonoAssembly *> *assemblySet)
 {
 	for (int i = 0; i < assemblySet->Length; i++)
 	{
@@ -29,11 +29,11 @@ IMonoAssembly *MonoAssemblies::Load(const char *path)
 		wrapper = nullptr;
 		this->AssemblyRegistry->ForEach
 		(
-			[&wrapper, path](Text *assemblyShortName, List<IMonoAssembly *> *assemblySet)
+			[&wrapper, path](Text assemblyShortName, List<IMonoAssembly *> *assemblySet)
 			{
 				for (int i = 0; i < assemblySet->Length; i++)
 				{
-					if (assemblySet->At(i)->FileName->Equals(path))
+					if (assemblySet->At(i)->FileName == path)
 					{
 						wrapper = assemblySet->At(i);
 					}
@@ -53,7 +53,7 @@ IMonoAssembly *MonoAssemblies::Wrap(void *assemblyHandle)
 	IMonoAssembly *wrapper = nullptr;
 	this->AssemblyRegistry->ForEach
 	(
-		[&wrapper, assemblyHandle](Text *assemblyShortName, List<IMonoAssembly *> *assemblySet)
+		[&wrapper, assemblyHandle](Text assemblyShortName, List<IMonoAssembly *> *assemblySet)
 		{
 			for (int i = 0; i < assemblySet->Length; i++)
 			{
@@ -123,11 +123,11 @@ IMonoAssembly *MonoAssemblies::GetAssemblyFullName(const char *name)
 	IMonoAssembly *wrapper = nullptr;
 	this->AssemblyRegistry->ForEach
 	(
-		[&wrapper, name](Text *assemblyShortName, List<IMonoAssembly *> *assemblySet)
+		[&wrapper, name](Text assemblyShortName, List<IMonoAssembly *> *assemblySet)
 		{
 			for (int i = 0; i < assemblySet->Length; i++)
 			{
-				if (assemblySet->At(i)->Name->Equals(name))
+				if (assemblySet->At(i)->Name == name)
 				{
 					wrapper = assemblySet->At(i);
 				}

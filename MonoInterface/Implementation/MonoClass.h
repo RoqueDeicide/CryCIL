@@ -12,13 +12,13 @@ struct MonoClassWrapper : public IMonoClass
 {
 private:
 	MonoClass *wrappedClass;
-	const char *name;
-	const char *nameSpace;
-	const char *fullName;
-	const char *fullNameIL;
+	Text name;
+	Text nameSpace;
+	Text fullName;
+	Text fullNameIL;
 	List<IMonoEvent *> events;
-	SortedList<const char *, List<IMonoFunction *> *> methods;
-	SortedList<const char *, List<IMonoProperty *> *> properties;
+	SortedList<Text, List<IMonoFunction *> *> methods;
+	SortedList<Text, List<IMonoProperty *> *> properties;
 	List<IMonoField *> fields;
 	MonoVTable *vtable;
 	List<IMonoFunction *> flatMethodList;
@@ -104,7 +104,7 @@ private:
 	template<typename result_type>
 	__forceinline result_type *SearchTheList(List<result_type *> &list, int paramCount) const;
 
-	const char *BuildFullName(bool ilStyle, const char *& field) const;
+	const char *BuildFullName(bool ilStyle, Text &field) const;
 };
 
 //! Caches MonoClassWrapper objects.
