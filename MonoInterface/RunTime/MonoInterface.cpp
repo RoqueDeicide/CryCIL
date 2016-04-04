@@ -409,7 +409,6 @@ void MonoInterface::RegisterDefaultListeners() const
 	this->broadcaster->listeners->Add(new AttachmentSkinInterop());
 	this->broadcaster->listeners->Add(new AttachmentProxyInterop());
 	this->broadcaster->listeners->Add(new AudioSystemInterop());
-	this->broadcaster->listeners->Add(new CryAudioListenerInterop());
 	this->broadcaster->listeners->Add(new CryAudioProxyInterop());
 	this->broadcaster->listeners->Add(new DecalInterop());
 	this->broadcaster->listeners->Add(new CryEntityAreaProxyInterop());

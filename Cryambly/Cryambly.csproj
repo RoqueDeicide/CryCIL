@@ -80,7 +80,7 @@
     <Compile Include="Defaults.cs" />
     <Compile Include="Engine\Audio\AudioControlType.cs" />
     <Compile Include="Engine\Audio\AudioId.cs" />
-    <Compile Include="Engine\Audio\CryAudioListener.cs" />
+    <Compile Include="Engine\Audio\AudioObjectTransformation.cs" />
     <Compile Include="Engine\Audio\CryAudioProxy.cs" />
     <Compile Include="Engine\Audio\AudioSystem.cs" />
     <Compile Include="Engine\Audio\AudioSystem.Requests.cs" />
@@ -88,7 +88,7 @@
     <Compile Include="Engine\Audio\AudioSystemImplementationAttribute.cs" />
     <Compile Include="Engine\Audio\AudioSystemInfo.cs" />
     <Compile Include="Engine\Audio\LipSyncMethod.cs" />
-    <Compile Include="Engine\Audio\ObstructionCalculationType.cs" />
+    <Compile Include="Engine\Audio\AudioOcclusionType.cs" />
     <Compile Include="Engine\ConsoleFlags.cs" />
     <Compile Include="Engine\ConsoleVariable.cs" />
     <Compile Include="Engine\CryAction\GameTypeInfo.cs" />

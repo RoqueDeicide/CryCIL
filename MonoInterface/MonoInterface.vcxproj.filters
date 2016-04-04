@@ -550,9 +550,6 @@
     <ClInclude Include="Interops\AudioSystem.h">
       <Filter>Interops\Engine\Audio</Filter>
     </ClInclude>
-    <ClInclude Include="Interops\CryAudioListener.h">
-      <Filter>Interops\Engine\Audio</Filter>
-    </ClInclude>
     <ClInclude Include="Interops\CryAudioProxy.h">
       <Filter>Interops\Engine\Audio</Filter>
     </ClInclude>
@@ -563,9 +560,6 @@
       <Filter>Interops\Engine\Effects</Filter>
     </ClInclude>
     <ClInclude Include="Interops\CryEntityAreaProxy.h">
-      <Filter>Interops\Engine\Logic\Proxies</Filter>
-    </ClInclude>
-    <ClInclude Include="Interops\CryEntityAudioProxy.h">
       <Filter>Interops\Engine\Logic\Proxies</Filter>
     </ClInclude>
     <ClInclude Include="Interops\CryEntityCameraProxy.h">
@@ -646,6 +640,9 @@
     </ClInclude>
     <ClInclude Include="Text.h">
       <Filter>Extras</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\CryEntityAudioProxy.h">
+      <Filter>Interops\Engine\Logic\Proxies</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1049,9 +1046,6 @@
     <ClCompile Include="Interops\AudioSystem.cpp">
       <Filter>Interops\Engine\Audio</Filter>
     </ClCompile>
-    <ClCompile Include="Interops\CryAudioListener.cpp">
-      <Filter>Interops\Engine\Audio</Filter>
-    </ClCompile>
     <ClCompile Include="Interops\CryAudioProxy.cpp">
       <Filter>Interops\Engine\Audio</Filter>
     </ClCompile>
@@ -1062,9 +1056,6 @@
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
     <ClCompile Include="Interops\CryEntityAreaProxy.cpp">
-      <Filter>Interops\Engine\Logic\Proxies</Filter>
-    </ClCompile>
-    <ClCompile Include="Interops\CryEntityAudioProxy.cpp">
       <Filter>Interops\Engine\Logic\Proxies</Filter>
     </ClCompile>
     <ClCompile Include="Interops\CryEntityCameraProxy.cpp">
@@ -1168,6 +1159,9 @@
     </ClCompile>
     <ClCompile Include="Interops\CryInputAction.cpp">
       <Filter>Interops\Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\CryEntityAudioProxy.cpp">
+      <Filter>Interops\Engine\Logic\Proxies</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

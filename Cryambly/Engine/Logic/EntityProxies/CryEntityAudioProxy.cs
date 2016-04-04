@@ -67,13 +67,13 @@ namespace CryCil.Engine.Logic.EntityProxies
 			{
 				this.AssertInstance();
 
-				return GetEnvironmentID(this.handle);
+				return GetEnvironmentId(this.handle);
 			}
 			set
 			{
 				this.AssertInstance();
 
-				SetEnvironmentID(this.handle, value);
+				SetEnvironmentId(this.handle, value);
 			}
 		}
 		/// <summary>
@@ -81,7 +81,7 @@ namespace CryCil.Engine.Logic.EntityProxies
 		/// obstructed.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
-		public ObstructionCalculationType ObstructionDetection
+		public AudioOcclusionType ObstructionDetection
 		{
 			set
 			{
@@ -125,7 +125,7 @@ namespace CryCil.Engine.Logic.EntityProxies
 		/// Destroys auxiliary audio object that moved with this entity.
 		/// </summary>
 		/// <param name="id">
-		/// Identifier that was preveiously returned by <see cref="CreateAuxAudio"/>.
+		/// Identifier that was previously returned by <see cref="CreateAuxAudio"/>.
 		/// </param>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public void DestroyAuxAudio(AudioId id)
@@ -161,34 +161,74 @@ namespace CryCil.Engine.Logic.EntityProxies
 			GetAuxAudioProxyOffset(this.handle, out transformation, id);
 		}
 		/// <summary>
-		/// Executes an audio trigger on this proxy.
+		/// Plays an audio file.
 		/// </summary>
-		/// <param name="triggerId">Identifier of the trigger to execute.</param>
-		/// <param name="method">   A lip-sync method to use.</param>
-		/// <param name="auxAudio"> Identifier of auxiliary audio object to act on.</param>
-		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
-		public void ExecuteTrigger(AudioId triggerId, AudioId auxAudio, LipSyncMethod method = LipSyncMethod.None)
+		/// <param name="file">Path to the file to play.</param>
+		/// <param name="auxAudio">Identifier of the auxiliary audio proxy to play file on.</param>
+		public void PlayFile(string file, AudioId auxAudio)
 		{
 			this.AssertInstance();
 
-			ExecuteTriggerInternal(this.handle, triggerId, method, auxAudio);
+			PlayFileInternal(this.handle, file, auxAudio);
+		}
+		/// <summary>
+		/// Plays an audio file.
+		/// </summary>
+		/// <param name="file">Path to the file to play.</param>
+		public void PlayFile(string file)
+		{
+			this.AssertInstance();
+
+			PlayFileInternal(this.handle, file, AudioId.Default);
+		}
+		/// <summary>
+		/// Stops an audio file.
+		/// </summary>
+		/// <param name="file">Path to the file to stop playing.</param>
+		/// <param name="auxAudio">Identifier of the auxiliary audio proxy to stop playing file on.</param>
+		public void StopFile(string file, AudioId auxAudio)
+		{
+			this.AssertInstance();
+
+			StopFileInternal(this.handle, file, auxAudio);
+		}
+		/// <summary>
+		/// Stops an audio file.
+		/// </summary>
+		/// <param name="file">Path to the file to stop playing.</param>
+		public void StopFile(string file)
+		{
+			this.AssertInstance();
+
+			StopFileInternal(this.handle, file, AudioId.Default);
+		}
+		/// <summary>
+		/// Executes an audio trigger on this proxy.
+		/// </summary>
+		/// <param name="triggerId">Identifier of the trigger to execute.</param>
+		/// <param name="auxAudio"> Identifier of auxiliary audio object to act on.</param>
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
+		public void ExecuteTrigger(AudioId triggerId, AudioId auxAudio)
+		{
+			this.AssertInstance();
+
+			ExecuteTriggerInternal(this.handle, triggerId, auxAudio);
 		}
 		/// <summary>
 		/// Executes an audio trigger on this proxy.
 		/// </summary>
 		/// <param name="triggerName">Name of the trigger to execute.</param>
-		/// <param name="method">     A lip-sync method to use.</param>
 		/// <param name="auxAudio">   Identifier of auxiliary audio object to act on.</param>
 		/// <returns>Indication whether the trigger of specified name was found.</returns>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
-		public bool ExecuteTrigger(string triggerName, AudioId auxAudio, LipSyncMethod method = LipSyncMethod.None)
+		public bool ExecuteTrigger(string triggerName, AudioId auxAudio)
 		{
 			this.AssertInstance();
 
 			AudioId id;
 			if (AudioSystem.TryGetTriggerId(triggerName, out id))
 			{
-				ExecuteTriggerInternal(this.handle, id, method, auxAudio);
+				ExecuteTriggerInternal(this.handle, id, auxAudio);
 
 				return true;
 			}
@@ -198,29 +238,27 @@ namespace CryCil.Engine.Logic.EntityProxies
 		/// Executes an audio trigger on this proxy.
 		/// </summary>
 		/// <param name="triggerId">Identifier of the trigger to execute.</param>
-		/// <param name="method">   A lip-sync method to use.</param>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
-		public void ExecuteTrigger(AudioId triggerId, LipSyncMethod method = LipSyncMethod.None)
+		public void ExecuteTrigger(AudioId triggerId)
 		{
 			this.AssertInstance();
 
-			ExecuteTriggerInternal(this.handle, triggerId, method, AudioId.Default);
+			ExecuteTriggerInternal(this.handle, triggerId, AudioId.Default);
 		}
 		/// <summary>
 		/// Executes an audio trigger on this proxy.
 		/// </summary>
 		/// <param name="triggerName">Name of the trigger to execute.</param>
-		/// <param name="method">     A lip-sync method to use.</param>
 		/// <returns>Indication whether the trigger of specified name was found.</returns>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
-		public bool ExecuteTrigger(string triggerName, LipSyncMethod method = LipSyncMethod.None)
+		public bool ExecuteTrigger(string triggerName)
 		{
 			this.AssertInstance();
 
 			AudioId id;
 			if (AudioSystem.TryGetTriggerId(triggerName, out id))
 			{
-				ExecuteTriggerInternal(this.handle, id, method, AudioId.Default);
+				ExecuteTriggerInternal(this.handle, id, AudioId.Default);
 
 				return true;
 			}
@@ -503,7 +541,7 @@ namespace CryCil.Engine.Logic.EntityProxies
 		/// <param name="type">    Type of algorithm.</param>
 		/// <param name="auxAudio">Identifier of auxiliary audio object to act on.</param>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
-		public void SetObstructionCalculationType(ObstructionCalculationType type, AudioId auxAudio)
+		public void SetObstructionCalculationType(AudioOcclusionType type, AudioId auxAudio)
 		{
 			this.AssertInstance();
 
@@ -529,9 +567,9 @@ namespace CryCil.Engine.Logic.EntityProxies
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern float GetEnvironmentFadeDistance(IntPtr handle);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern void SetEnvironmentID(IntPtr handle, AudioId nEnvironmentID);
+		private static extern void SetEnvironmentId(IntPtr handle, AudioId nEnvironmentID);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern AudioId GetEnvironmentID(IntPtr handle);
+		private static extern AudioId GetEnvironmentId(IntPtr handle);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern AudioId CreateAuxAudioProxy(IntPtr handle);
 		[MethodImpl(MethodImplOptions.InternalCall)]
@@ -543,7 +581,11 @@ namespace CryCil.Engine.Logic.EntityProxies
 		private static extern void GetAuxAudioProxyOffset(IntPtr handle, out Matrix34 offset, AudioId nAudioProxyLocalID
 			/* = AudioId.Default*/);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern bool ExecuteTriggerInternal(IntPtr handle, AudioId nTriggerID, LipSyncMethod eLipSyncMethod,
+		private static extern void PlayFileInternal(IntPtr handle, string _szFile, AudioId _audioProxyId /* = AudioId.Default*/);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void StopFileInternal(IntPtr handle, string _szFile, AudioId _audioProxyId /* = AudioId.Default*/);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern bool ExecuteTriggerInternal(IntPtr handle, AudioId nTriggerID,
 														  AudioId nAudioProxyLocalID /* = AudioId.Default*/);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void StopTriggerInternal(IntPtr handle, AudioId nTriggerID, AudioId nAudioProxyLocalID
@@ -555,7 +597,7 @@ namespace CryCil.Engine.Logic.EntityProxies
 		private static extern void SetRtpcValueInternal(IntPtr handle, AudioId nRtpcID, float fValue,
 														AudioId nAudioProxyLocalID /* = AudioId.Default*/);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern void SetObstructionCalcTypeInternal(IntPtr handle, ObstructionCalculationType eObstructionType,
+		private static extern void SetObstructionCalcTypeInternal(IntPtr handle, AudioOcclusionType eObstructionType,
 																  AudioId nAudioProxyLocalID /* = AudioId.Default*/);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void SetEnvironmentAmountInternal(IntPtr handle, AudioId nEnvironmentID, float fAmount,

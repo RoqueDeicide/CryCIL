@@ -182,8 +182,6 @@
 
 #include "Interops/AudioSystem.h"
 
-#include "Interops/CryAudioListener.h"
-
 #include "Interops/CryAudioProxy.h"
 
 #include "Interops/Decal.h"

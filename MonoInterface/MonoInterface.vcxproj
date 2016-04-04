@@ -305,7 +305,6 @@
     <ClInclude Include="Interops\ConsoleVariable.h" />
     <ClInclude Include="Interops\CryActionMap.h" />
     <ClInclude Include="Interops\CryArchive.h" />
-    <ClInclude Include="Interops\CryAudioListener.h" />
     <ClInclude Include="Interops\CryAudioProxy.h" />
     <ClInclude Include="Interops\CryEntityAreaProxy.h" />
     <ClInclude Include="Interops\CryEntityAudioProxy.h" />
@@ -503,7 +502,6 @@
     <ClCompile Include="Interops\ConsoleVariable.cpp" />
     <ClCompile Include="Interops\CryActionMap.cpp" />
     <ClCompile Include="Interops\CryArchive.cpp" />
-    <ClCompile Include="Interops\CryAudioListener.cpp" />
     <ClCompile Include="Interops\CryAudioProxy.cpp" />
     <ClCompile Include="Interops\CryEntityAreaProxy.cpp" />
     <ClCompile Include="Interops\CryEntityAudioProxy.cpp" />
