@@ -19,9 +19,6 @@
 #ifdef CRYCIL_MODULE
 #include <ISystem.h>
 
-#define FatalError(message) CryFatalError(message)
-#define ReportMessage CryLogAlways
-
 #else
 #include <iostream>
 #include <string>
@@ -29,8 +26,6 @@
 #include <vector>
 #include <stdexcept>
 #include <algorithm>
-#define FatalError(message) throw std::logic_error(message)
-#define ReportMessage(text,...) printf(text##"\n", __VA_ARGS__)
 
 #endif // CRYCIL_MODULE
 
@@ -720,7 +715,7 @@ inline symbol *TextTemplate<symbol>::mono_string_native(mono_string str, void *e
 #ifdef MONO_API
 	return mono_string_to_utf8_checked(static_cast<MonoString *>(str), static_cast<MonoError *>(error));
 #elif defined(USE_CRYCIL_API)
-	return ToNativeString(managedString);
+	return ToNativeString(str);
 #else
 	return nullptr;
 #endif // MONO_API
@@ -777,7 +772,7 @@ inline wchar_t *TextTemplate<wchar_t>::mono_string_native(mono_string str, void 
 	mono_error_init(static_cast<MonoError *>(error));
 	return reinterpret_cast<wchar_t *>(mono_string_to_utf16(str));
 #elif defined(USE_CRYCIL_API)
-	return MonoEnv->Objects->Texts->ToNative16(managedString);
+	return const_cast<wchar_t *>(MonoEnv->Objects->Texts->ToNative16(str));
 #else
 	return nullptr;
 #endif // MONO_API
