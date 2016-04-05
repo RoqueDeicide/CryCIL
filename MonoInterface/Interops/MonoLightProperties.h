@@ -89,8 +89,6 @@ struct LightProperties
 	LightProjectionBox ProjectionBox;
 	float AttenuationBulbSize;
 	mono::string Name;
-	Matrix34 ClipBoxTransformation;
-	AABB FadeBox;
 	AreaLightDimensions AreaDimensions;
 
 	void ToCDLight(CDLight &light) const
@@ -104,8 +102,6 @@ struct LightProperties
 		this->EnvProbeProperties.ToCDLight(light);
 		this->ProjectionBox.ToCDLight(light);
 		light.m_fAttenuationBulbSize = this->AttenuationBulbSize;
-		light.m_ClipBox = this->ClipBoxTransformation;
-		light.m_vFadeAABB = this->FadeBox;
 		this->AreaDimensions.ToCDLight(light);
 	}
 	void FromCDLight(const CDLight &light)
@@ -118,8 +114,6 @@ struct LightProperties
 		this->EnvProbeProperties.FromCDLight(light);
 		this->ProjectionBox     .FromCDLight(light);
 		this->AttenuationBulbSize   = light.m_fAttenuationBulbSize;
-		this->ClipBoxTransformation = light.m_ClipBox;
-		this->FadeBox               = light.m_vFadeAABB;
 		this->AreaDimensions    .FromCDLight(light);
 	}
 };

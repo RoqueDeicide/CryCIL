@@ -50,14 +50,6 @@ namespace CryCil.Engine.Rendering.Lighting
 		/// </summary>
 		public string Name;
 		/// <summary>
-		/// Transformation that is applied to the clip volume.
-		/// </summary>
-		public Matrix34 ClipBoxTransformation;
-		/// <summary>
-		/// Defines the fading volume.
-		/// </summary>
-		public BoundingBox FadeBox;
-		/// <summary>
 		/// Dimensions of the are the light is lighting up.
 		/// </summary>
 		public AreaLightDimensions AreaDimensions;
