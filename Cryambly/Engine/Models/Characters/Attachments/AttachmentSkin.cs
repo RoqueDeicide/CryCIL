@@ -67,16 +67,17 @@ namespace CryCil.Engine.Models.Characters.Attachments
 		/// Gets the random point on the surface of this skinned mesh.
 		/// </summary>
 		/// <param name="aspect">Aspecto of geometry to get the point on.</param>
+		/// <param name="random">An object that is used for random generation.</param>
 		/// <returns>
 		/// An object that contains the coordinates of the point and normal to the surface at the point.
 		/// </returns>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
-		public PositionNormal RandomPosition(GeometryFormat aspect)
+		public PositionNormal RandomPosition(GeometryFormat aspect, LcgRandom random)
 		{
 			this.AssertInstance();
 
 			PositionNormal positionNormal;
-			GetRandomPos(this.handle, aspect, out positionNormal);
+			GetRandomPos(this.handle, aspect, ref random.State, out positionNormal);
 			return positionNormal;
 		}
 		#endregion
@@ -97,7 +98,8 @@ namespace CryCil.Engine.Models.Characters.Attachments
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern CharacterSkin GetISkin(IntPtr handle);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern void GetRandomPos(IntPtr handle, GeometryFormat aspect, out PositionNormal ran);
+		private static extern void GetRandomPos(IntPtr handle, GeometryFormat aspect, ref ulong seed,
+												out PositionNormal ran);
 		#endregion
 	}
 }

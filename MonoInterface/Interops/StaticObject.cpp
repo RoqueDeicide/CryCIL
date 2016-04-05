@@ -147,11 +147,11 @@ void StaticObjectInterop::RefreshInternal(IStatObj *handle, int nFlags)
 	handle->Refresh(nFlags);
 }
 
-PosNorm StaticObjectInterop::GetRandomPos(IStatObj *handle, EGeomForm eForm)
+PosNorm StaticObjectInterop::GetRandomPos(IStatObj *handle, EGeomForm eForm, CRndGen &seed)
 {
 	handle->GetExtent(eForm);
 	PosNorm posNorm;
-	handle->GetRandomPos(posNorm, eForm);
+	handle->GetRandomPos(posNorm, seed, eForm);
 	return posNorm;
 }
 

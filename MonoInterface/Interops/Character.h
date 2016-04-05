@@ -25,7 +25,7 @@ struct CharacterInterop : IMonoInterop<true, true>
 	static void StartAnimationProcessing(ICharacterInstance *handle, SAnimationProcessParams &parameters);
 	static AABB GetAABB(ICharacterInstance *handle);
 	static float GetRadiusSqr(ICharacterInstance *handle);
-	static void GetRandomPos(ICharacterInstance *handle, PosNorm &ran, EGeomForm eForm);
+	static void GetRandomPos(ICharacterInstance *handle, PosNorm &ran, CRndGen &seed, EGeomForm eForm);
 	static void SetFlags(ICharacterInstance *handle, int nFlags);
 	static int GetFlags(ICharacterInstance *handle);
 	static int GetObjectType(ICharacterInstance *handle);

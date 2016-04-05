@@ -26,8 +26,8 @@ ISkin *AttachmentSkinInterop::GetISkin(IAttachmentSkin *handle)
 	return handle->GetISkin();
 }
 
-void AttachmentSkinInterop::GetRandomPos(IAttachmentSkin *handle, EGeomForm aspect, PosNorm &ran)
+void AttachmentSkinInterop::GetRandomPos(IAttachmentSkin *handle, EGeomForm aspect, CRndGen &seed, PosNorm &ran)
 {
 	handle->GetExtent(aspect);
-	handle->GetRandomPos(ran, aspect);
+	handle->GetRandomPos(ran, seed, aspect);
 }

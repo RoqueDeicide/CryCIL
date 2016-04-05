@@ -404,16 +404,17 @@ namespace CryCil.Engine.Models.Characters
 		/// Gets the random point on this character's model surface.
 		/// </summary>
 		/// <param name="aspect">Aspect of chracter's geometry to find the point on.</param>
+		/// <param name="random">An object that is used for random generation.</param>
 		/// <returns>
 		/// An object that contains coordinates of the point and a normal to the surface at that point.
 		/// </returns>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
-		public PositionNormal GetRandomPosition(GeometryFormat aspect)
+		public PositionNormal GetRandomPosition(GeometryFormat aspect, LcgRandom random)
 		{
 			this.AssertInstance();
 
 			PositionNormal positionNormal;
-			GetRandomPos(this.handle, out positionNormal, aspect);
+			GetRandomPos(this.handle, out positionNormal, ref random.State, aspect);
 			return positionNormal;
 		}
 		/// <summary>
@@ -666,7 +667,7 @@ namespace CryCil.Engine.Models.Characters
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern float GetRadiusSqr(IntPtr handle);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern void GetRandomPos(IntPtr handle, out PositionNormal ran, GeometryFormat eForm);
+		private static extern void GetRandomPos(IntPtr handle, out PositionNormal ran, ref ulong seed, GeometryFormat eForm);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void SetFlags(IntPtr handle, CharacterRenderFlags nFlags);
 		[MethodImpl(MethodImplOptions.InternalCall)]

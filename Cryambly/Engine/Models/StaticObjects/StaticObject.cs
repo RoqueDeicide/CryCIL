@@ -477,13 +477,14 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// Gets the random point on this static object.
 		/// </summary>
 		/// <param name="aspect">Aspect of this static object's geometry to get the point on.</param>
+		/// <param name="random">An object to use to generate the numbers.</param>
 		/// <returns>A point on the surface and a normal to it.</returns>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
-		public PositionNormal GetRandomPoint(GeometryFormat aspect)
+		public PositionNormal GetRandomPoint(GeometryFormat aspect, LcgRandom random)
 		{
 			this.AssertInstance();
 
-			return GetRandomPos(this.handle, aspect);
+			return GetRandomPos(this.handle, aspect, ref random.State);
 		}
 		/// <summary>
 		/// Gets the static object that represents a LOD model for this static object.
@@ -772,7 +773,8 @@ namespace CryCil.Engine.Models.StaticObjects
 		//	const SRenderingPassInfo &passInfo);
 
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern PositionNormal GetRandomPos(IntPtr handle, GeometryFormat eForm);
+		private static extern PositionNormal GetRandomPos(IntPtr handle, GeometryFormat eForm,
+														  ref ulong seed);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern StaticObject GetLodObjectInternal(IntPtr handle, int nLodLevel, bool bReturnNearest);
 		[MethodImpl(MethodImplOptions.InternalCall)]

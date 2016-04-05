@@ -141,10 +141,10 @@ float CharacterInterop::GetRadiusSqr(ICharacterInstance *handle)
 	return handle->GetRadiusSqr();
 }
 
-void CharacterInterop::GetRandomPos(ICharacterInstance *handle, PosNorm &ran, EGeomForm eForm)
+void CharacterInterop::GetRandomPos(ICharacterInstance *handle, PosNorm &ran, CRndGen &seed, EGeomForm eForm)
 {
 	handle->GetExtent(eForm);
-	handle->GetRandomPos(ran, eForm);
+	handle->GetRandomPos(ran, seed, eForm);
 }
 
 void CharacterInterop::SetFlags(ICharacterInstance *handle, int nFlags)

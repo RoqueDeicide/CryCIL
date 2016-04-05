@@ -625,6 +625,18 @@ namespace CryCil
 
 			return exp - 1023; // Actual exponent.
 		}
+		/// <summary>
+		/// Swaps the values of 2 objects.
+		/// </summary>
+		/// <typeparam name="T">Type of objects.</typeparam>
+		/// <param name="first">Reference to the first object.</param>
+		/// <param name="second">Reference to the second object.</param>
+		public static void Swap<T>(ref T first, ref T second)
+		{
+			T temp = first;
+			first = second;
+			second = temp;
+		}
 		#endregion
 		#region Utilities
 		[MethodImpl(MethodImplOptions.InternalCall)]

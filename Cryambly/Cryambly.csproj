@@ -294,6 +294,7 @@
     <Compile Include="Mathematics\Geometry\Velocity3.cs" />
     <Compile Include="Mathematics\Hashing\NamespaceDoc.cs" />
     <Compile Include="Mathematics\Quantize.cs" />
+    <Compile Include="Mathematics\Random\LcgRandom.cs" />
     <Compile Include="Mathematics\RangeSingle.cs" />
     <Compile Include="Mathematics\rational.cs" />
     <Compile Include="Mathematics\Specials\NamespaceDoc.cs" />
