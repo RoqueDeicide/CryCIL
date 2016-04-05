@@ -295,14 +295,12 @@ namespace CryCil.Engine
 		/// <see cref="Quatvecale"/> object that defines position, orientation and scale of the emitter.
 		/// </param>
 		/// <param name="particleParameters">An object that describes that particle effect.</param>
-		/// <param name="flags">             Flags that specify the emitter.</param>
 		/// <param name="spawnParameters">   An object that describes how the particles are spawned.</param>
 		/// <returns>An object that represents the particle emitter.</returns>
 		/// <exception cref="ObjectDisposedException">
 		/// The object that provides the particle parameters is not valid.
 		/// </exception>
 		public static ParticleEmitter CreateEmitter(Quatvecale location, ParticleParameters particleParameters,
-													ParticleEmitterFlags flags,
 													ref ParticleSpawnParameters spawnParameters)
 		{
 			if (particleParameters.Handle == IntPtr.Zero)
@@ -310,7 +308,7 @@ namespace CryCil.Engine
 				throw new ObjectDisposedException("The object that provides the particle parameters is not valid.");
 			}
 
-			return CreateEmitterInternal(ref location, particleParameters.Handle, flags, ref spawnParameters);
+			return CreateEmitterInternal(ref location, particleParameters.Handle, ref spawnParameters);
 		}
 		/// <summary>
 		/// Creates an emitter that uses custom particle effect instead of on from the library.
@@ -319,14 +317,12 @@ namespace CryCil.Engine
 		/// <see cref="Matrix34"/> object that defines position, orientation and scale of the emitter.
 		/// </param>
 		/// <param name="particleParameters">An object that describes that particle effect.</param>
-		/// <param name="flags">             Flags that specify the emitter.</param>
 		/// <param name="spawnParameters">   An object that describes how the particles are spawned.</param>
 		/// <returns>An object that represents the particle emitter.</returns>
 		/// <exception cref="ObjectDisposedException">
 		/// The object that provides the particle parameters is not valid.
 		/// </exception>
 		public static ParticleEmitter CreateEmitter(Matrix34 location, ParticleParameters particleParameters,
-													ParticleEmitterFlags flags,
 													ref ParticleSpawnParameters spawnParameters)
 		{
 			if (particleParameters.Handle == IntPtr.Zero)
@@ -335,72 +331,7 @@ namespace CryCil.Engine
 			}
 
 			Quatvecale quatvecale = new Quatvecale(location);
-			return CreateEmitterInternal(ref quatvecale, particleParameters.Handle, flags, ref spawnParameters);
-		}
-		/// <summary>
-		/// Creates an emitter that uses custom particle effect instead of on from the library.
-		/// </summary>
-		/// <param name="location">          
-		/// <see cref="Quatvecale"/> object that defines position, orientation and scale of the emitter.
-		/// </param>
-		/// <param name="particleParameters">An object that describes that particle effect.</param>
-		/// <param name="flags">             Flags that specify the emitter.</param>
-		/// <returns>An object that represents the particle emitter.</returns>
-		/// <exception cref="ObjectDisposedException">
-		/// The object that provides the particle parameters is not valid.
-		/// </exception>
-		public static ParticleEmitter CreateEmitter(Quatvecale location, ParticleParameters particleParameters,
-													ParticleEmitterFlags flags)
-		{
-			if (particleParameters.Handle == IntPtr.Zero)
-			{
-				throw new ObjectDisposedException("The object that provides the particle parameters is not valid.");
-			}
-
-			return CreateEmitterInternalDefaultParameters(ref location, particleParameters.Handle, flags);
-		}
-		/// <summary>
-		/// Creates an emitter that uses custom particle effect instead of on from the library.
-		/// </summary>
-		/// <param name="location">          
-		/// <see cref="Matrix34"/> object that defines position, orientation and scale of the emitter.
-		/// </param>
-		/// <param name="particleParameters">An object that describes that particle effect.</param>
-		/// <param name="flags">             Flags that specify the emitter.</param>
-		/// <returns>An object that represents the particle emitter.</returns>
-		/// <exception cref="ObjectDisposedException">
-		/// The object that provides the particle parameters is not valid.
-		/// </exception>
-		public static ParticleEmitter CreateEmitter(Matrix34 location, ParticleParameters particleParameters,
-													ParticleEmitterFlags flags)
-		{
-			if (particleParameters.Handle == IntPtr.Zero)
-			{
-				throw new ObjectDisposedException("The object that provides the particle parameters is not valid.");
-			}
-
-			Quatvecale quatvecale = new Quatvecale(location);
-			return CreateEmitterInternalDefaultParameters(ref quatvecale, particleParameters.Handle, flags);
-		}
-		/// <summary>
-		/// Creates an emitter that uses custom particle effect instead of on from the library.
-		/// </summary>
-		/// <param name="location">          
-		/// <see cref="Quatvecale"/> object that defines position, orientation and scale of the emitter.
-		/// </param>
-		/// <param name="particleParameters">An object that describes that particle effect.</param>
-		/// <returns>An object that represents the particle emitter.</returns>
-		/// <exception cref="ObjectDisposedException">
-		/// The object that provides the particle parameters is not valid.
-		/// </exception>
-		public static ParticleEmitter CreateEmitter(Quatvecale location, ParticleParameters particleParameters)
-		{
-			if (particleParameters.Handle == IntPtr.Zero)
-			{
-				throw new ObjectDisposedException("The object that provides the particle parameters is not valid.");
-			}
-
-			return CreateEmitterInternalDefaultFlagsDefaultParameters(ref location, particleParameters.Handle);
+			return CreateEmitterInternal(ref quatvecale, particleParameters.Handle, ref spawnParameters);
 		}
 		/// <summary>
 		/// Creates an emitter that uses custom particle effect instead of on from the library.
@@ -421,7 +352,27 @@ namespace CryCil.Engine
 			}
 
 			Quatvecale quatvecale = new Quatvecale(location);
-			return CreateEmitterInternalDefaultFlagsDefaultParameters(ref quatvecale, particleParameters.Handle);
+			return CreateEmitterInternalDefaultParameters(ref quatvecale, particleParameters.Handle);
+		}
+		/// <summary>
+		/// Creates an emitter that uses custom particle effect instead of on from the library.
+		/// </summary>
+		/// <param name="location">          
+		/// <see cref="Quatvecale"/> object that defines position, orientation and scale of the emitter.
+		/// </param>
+		/// <param name="particleParameters">An object that describes that particle effect.</param>
+		/// <returns>An object that represents the particle emitter.</returns>
+		/// <exception cref="ObjectDisposedException">
+		/// The object that provides the particle parameters is not valid.
+		/// </exception>
+		public static ParticleEmitter CreateEmitter(Quatvecale location, ParticleParameters particleParameters)
+		{
+			if (particleParameters.Handle == IntPtr.Zero)
+			{
+				throw new ObjectDisposedException("The object that provides the particle parameters is not valid.");
+			}
+
+			return CreateEmitterInternalDefaultParameters(ref location, particleParameters.Handle);
 		}
 		/// <summary>
 		/// Deletes an emitter.
@@ -439,9 +390,6 @@ namespace CryCil.Engine
 		/// <summary>
 		/// Deletes all particle emitters that have specified flags set.
 		/// </summary>
-		/// <remarks>
-		/// This method is one of the reasons why <see cref="ParticleEmitterFlags.Custom"/> exists.
-		/// </remarks>
 		/// <param name="mask">A mask that represents the flags to check.</param>
 		public static void DeleteEmitters(uint mask)
 		{
@@ -504,16 +452,14 @@ namespace CryCil.Engine
 		/// <see cref="Quatvecale"/> object that describes position, orientation and scale of the particle
 		/// emitter.
 		/// </param>
-		/// <param name="flags">     A set of flags that describes the particle emitter.</param>
 		/// <param name="parameters">An object that provides more information about the emitter.</param>
 		/// <returns>Spawned particle emitter for this particle effect.</returns>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
-		public ParticleEmitter Spawn(ref Quatvecale location, ParticleEmitterFlags flags,
-									 ref ParticleSpawnParameters parameters)
+		public ParticleEmitter Spawn(ref Quatvecale location, ref ParticleSpawnParameters parameters)
 		{
 			this.AssertInstance();
 
-			return SpawnEmitter(this.handle, ref location, flags, ref parameters);
+			return SpawnEmitter(this.handle, ref location, ref parameters);
 		}
 		/// <summary>
 		/// Spawns this particle effect in the world.
@@ -528,12 +474,11 @@ namespace CryCil.Engine
 		/// <param name="scale">     
 		/// Floating point number that specifies the scale of the particle effect.
 		/// </param>
-		/// <param name="flags">     A set of flags that describes the particle emitter.</param>
 		/// <param name="parameters">An object that provides more information about the emitter.</param>
 		/// <returns>Spawned particle emitter for this particle effect.</returns>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public ParticleEmitter Spawn(Vector3 position, Vector3 direction, float scale,
-									 ParticleEmitterFlags flags, ref ParticleSpawnParameters parameters)
+									 ref ParticleSpawnParameters parameters)
 		{
 			Quatvecale qts = new Quatvecale(Quaternion.Identity, position, scale);
 			if (!direction.IsZero())
@@ -555,7 +500,7 @@ namespace CryCil.Engine
 					qts.Orientation = Rotation.AroundAxis.CreateQuaternion(ref aa);
 				}
 			}
-			return this.Spawn(ref qts, flags, ref parameters);
+			return this.Spawn(ref qts, ref parameters);
 		}
 		/// <summary>
 		/// Spawns this particle effect in the world.
@@ -567,14 +512,13 @@ namespace CryCil.Engine
 		/// <param name="direction"> 
 		/// <see cref="Vector3"/> object that provides direction the emitter must point at.
 		/// </param>
-		/// <param name="flags">     A set of flags that describes the particle emitter.</param>
 		/// <param name="parameters">An object that provides more information about the emitter.</param>
 		/// <returns>Spawned particle emitter for this particle effect.</returns>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
-		public ParticleEmitter Spawn(Vector3 position, Vector3 direction, ParticleEmitterFlags flags,
+		public ParticleEmitter Spawn(Vector3 position, Vector3 direction,
 									 ref ParticleSpawnParameters parameters)
 		{
-			return this.Spawn(position, direction, 1, flags, ref parameters);
+			return this.Spawn(position, direction, 1, ref parameters);
 		}
 		/// <summary>
 		/// Spawns this particle effect in the world.
@@ -583,14 +527,12 @@ namespace CryCil.Engine
 		/// <see cref="Vector3"/> object that provides coordinates of the location where to spawn the
 		/// particle effect.
 		/// </param>
-		/// <param name="flags">     A set of flags that describes the particle emitter.</param>
 		/// <param name="parameters">An object that provides more information about the emitter.</param>
 		/// <returns>Spawned particle emitter for this particle effect.</returns>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
-		public ParticleEmitter Spawn(Vector3 position, ParticleEmitterFlags flags,
-									 ref ParticleSpawnParameters parameters)
+		public ParticleEmitter Spawn(Vector3 position, ref ParticleSpawnParameters parameters)
 		{
-			return this.Spawn(position, Vector3.Up, 1, flags, ref parameters);
+			return this.Spawn(position, Vector3.Up, 1, ref parameters);
 		}
 		/// <summary>
 		/// Spawns this particle effect in the world.
@@ -599,14 +541,13 @@ namespace CryCil.Engine
 		/// <see cref="Quatvecale"/> object that describes position, orientation and scale of the particle
 		/// emitter.
 		/// </param>
-		/// <param name="flags">   A set of flags that describes the particle emitter.</param>
 		/// <returns>Spawned particle emitter for this particle effect.</returns>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
-		public ParticleEmitter Spawn(ref Quatvecale location, ParticleEmitterFlags flags)
+		public ParticleEmitter Spawn(ref Quatvecale location)
 		{
 			this.AssertInstance();
 
-			return SpawnEmitterDefault(this.handle, ref location, flags);
+			return SpawnEmitterDefault(this.handle, ref location);
 		}
 		/// <summary>
 		/// Spawns this particle effect in the world.
@@ -621,10 +562,9 @@ namespace CryCil.Engine
 		/// <param name="scale">    
 		/// Floating point number that specifies the scale of the particle effect.
 		/// </param>
-		/// <param name="flags">    A set of flags that describes the particle emitter.</param>
 		/// <returns>Spawned particle emitter for this particle effect.</returns>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
-		public ParticleEmitter Spawn(Vector3 position, Vector3 direction, float scale, ParticleEmitterFlags flags)
+		public ParticleEmitter Spawn(Vector3 position, Vector3 direction, float scale)
 		{
 			Quatvecale qts = new Quatvecale(Quaternion.Identity, position, scale);
 			if (!direction.IsZero())
@@ -646,7 +586,7 @@ namespace CryCil.Engine
 					qts.Orientation = Rotation.AroundAxis.CreateQuaternion(ref aa);
 				}
 			}
-			return this.Spawn(ref qts, flags);
+			return this.Spawn(ref qts);
 		}
 		/// <summary>
 		/// Spawns this particle effect in the world.
@@ -658,12 +598,11 @@ namespace CryCil.Engine
 		/// <param name="direction">
 		/// <see cref="Vector3"/> object that provides direction the emitter must point at.
 		/// </param>
-		/// <param name="flags">    A set of flags that describes the particle emitter.</param>
 		/// <returns>Spawned particle emitter for this particle effect.</returns>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
-		public ParticleEmitter Spawn(Vector3 position, Vector3 direction, ParticleEmitterFlags flags)
+		public ParticleEmitter Spawn(Vector3 position, Vector3 direction)
 		{
-			return this.Spawn(position, direction, 1, flags);
+			return this.Spawn(position, direction, 1);
 		}
 		/// <summary>
 		/// Spawns this particle effect in the world.
@@ -672,12 +611,11 @@ namespace CryCil.Engine
 		/// <see cref="Vector3"/> object that provides coordinates of the location where to spawn the
 		/// particle effect.
 		/// </param>
-		/// <param name="flags">   A set of flags that describes the particle emitter.</param>
 		/// <returns>Spawned particle emitter for this particle effect.</returns>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
-		public ParticleEmitter Spawn(Vector3 position, ParticleEmitterFlags flags)
+		public ParticleEmitter Spawn(Vector3 position)
 		{
-			return this.Spawn(position, Vector3.Up, 1, flags);
+			return this.Spawn(position, Vector3.Up, 1);
 		}
 		/// <summary>
 		/// Loads all resources needed for a particle effects.
@@ -765,11 +703,10 @@ namespace CryCil.Engine
 		}
 
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern ParticleEmitter SpawnEmitter(IntPtr handle, ref Quatvecale loc, ParticleEmitterFlags flags,
+		private static extern ParticleEmitter SpawnEmitter(IntPtr handle, ref Quatvecale loc,
 														   ref ParticleSpawnParameters parameters);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern ParticleEmitter SpawnEmitterDefault(IntPtr handle, ref Quatvecale loc,
-																  ParticleEmitterFlags flags);
+		private static extern ParticleEmitter SpawnEmitterDefault(IntPtr handle, ref Quatvecale loc);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void SetName(IntPtr handle, string sFullName);
 		[MethodImpl(MethodImplOptions.InternalCall)]
@@ -830,13 +767,9 @@ namespace CryCil.Engine
 														   bool bLoadResources);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern ParticleEmitter CreateEmitterInternal(ref Quatvecale loc, IntPtr Params,
-																	ParticleEmitterFlags uEmitterFlags, ref ParticleSpawnParameters spawnParameters);
+																	ref ParticleSpawnParameters spawnParameters);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern ParticleEmitter CreateEmitterInternalDefaultParameters(ref Quatvecale loc, IntPtr Params,
-																					 ParticleEmitterFlags uEmitterFlags);
-		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern ParticleEmitter CreateEmitterInternalDefaultFlagsDefaultParameters(ref Quatvecale loc,
-																								 IntPtr Params);
+		private static extern ParticleEmitter CreateEmitterInternalDefaultParameters(ref Quatvecale loc, IntPtr Params);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void DeleteEmitterInternal(ParticleEmitter pPartEmitter);
 		[MethodImpl(MethodImplOptions.InternalCall)]

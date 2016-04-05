@@ -207,6 +207,7 @@
     <Compile Include="Engine\Models\Characters\SkeletonAnimationLayers.cs" />
     <Compile Include="Engine\Models\Characters\SkeletonJoints.cs" />
     <Compile Include="Engine\Models\Characters\SkeletonPose.cs" />
+    <Compile Include="Engine\Models\MeshObject.cs" />
     <Compile Include="Engine\Models\StaticObjects\Meshes\CMeshInternals.cs" />
     <Compile Include="Engine\Models\StaticObjects\Meshes\CryIndexedMesh.cs" />
     <Compile Include="Engine\Models\StaticObjects\Meshes\CryIndexedMeshSubsets.cs" />
@@ -528,7 +529,6 @@
     <Compile Include="Engine\DebugServices\DebugObjects\DebugUiText.cs" />
     <Compile Include="Engine\Effects\ParticleEffect.cs" />
     <Compile Include="Engine\Effects\ParticleEmitter.cs" />
-    <Compile Include="Engine\Effects\ParticleEmitterFlags.cs" />
     <Compile Include="Engine\Effects\ParticleParameters.cs" />
     <Compile Include="Engine\Effects\ParticleSpawnIndirection.cs" />
     <Compile Include="Engine\Effects\ParticleSpawnParameters.cs" />

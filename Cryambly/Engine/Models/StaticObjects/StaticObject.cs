@@ -360,31 +360,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		#endregion
 		#region Interface
 		/// <summary>
-		/// Increases the reference count of this static object. Call this when you have multiple references
-		/// to the same static object.
-		/// </summary>
-		/// <returns>Current reference count(?).</returns>
-		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
-		public int IncrementReferenceCount()
-		{
-			this.AssertInstance();
-
-			return AddRef(this.handle);
-		}
-		/// <summary>
-		/// Decreases the reference count of this static object. Call this when you destroy an object that
-		/// held an extra reference to the this static object.
-		/// </summary>
-		/// <remarks>When reference count reaches zero, the object is deleted.</remarks>
-		/// <returns>Current reference count(?).</returns>
-		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
-		public int DecrementReferenceCount()
-		{
-			this.AssertInstance();
-
-			return Release(this.handle);
-		}
-		/// <summary>
 		/// Updates vertices and normals on the render mesh. Clones this static object, if necessary.
 		/// </summary>
 		/// <param name="vertices">   An array of new positions of vertices.</param>
@@ -714,6 +689,15 @@ namespace CryCil.Engine.Models.StaticObjects
 
 			return GetIndexedMeshInternal(this.handle, createIfNone);
 		}
+
+		/// <summary>
+		/// Converts this object to its native base class.
+		/// </summary>
+		/// <param name="staticObject">Object to convert.</param>
+		public static implicit operator MeshObject(StaticObject staticObject)
+		{
+			return staticObject.IsValid ? GetBase(staticObject.handle) : new MeshObject(new IntPtr());
+		}
 		#endregion
 		#region Utilities
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
@@ -725,10 +709,6 @@ namespace CryCil.Engine.Models.StaticObjects
 			}
 		}
 
-		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern int AddRef(IntPtr handle);
-		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern int Release(IntPtr handle);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void SetFlags(IntPtr handle, StaticObjectFlags nFlags);
 		[MethodImpl(MethodImplOptions.InternalCall)]
@@ -760,18 +740,6 @@ namespace CryCil.Engine.Models.StaticObjects
 		private static extern float GetRadius(IntPtr handle);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void RefreshInternal(IntPtr handle, ResourceRefreshFlags nFlags);
-
-		//// Description:
-		////     Registers the object elements into the renderer.
-		//// Arguments:
-		////     rParams   - Render parameters
-		////     nLogLevel - Level of the LOD
-		//// Summary:
-		////     Renders the object
-		//[MethodImpl(MethodImplOptions.InternalCall)]
-		//private static extern void Render(IntPtr handle, const struct SRendParams &rParams,
-		//	const SRenderingPassInfo &passInfo);
-
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern PositionNormal GetRandomPos(IntPtr handle, GeometryFormat eForm,
 														  ref ulong seed);
@@ -886,6 +854,9 @@ namespace CryCil.Engine.Models.StaticObjects
 		private static extern IntPtr CreateStatObjOptionalIndexedMesh(bool createIndexedMesh);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern IntPtr UpdateDeformableStatObj(GeometryShape pPhysGeom, MeshUpdate* pLastUpdate);
+
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern MeshObject GetBase(IntPtr handle);
 		#endregion
 	}
 }

@@ -168,7 +168,7 @@ void CryEntityAreaProxyInterop::AddEntityGuid(IEntityAreaProxy *handle, EntityGU
 
 void CryEntityAreaProxyInterop::ClearEntities(IEntityAreaProxy *handle)
 {
-	handle->ClearEntities();
+	handle->RemoveEntities();
 }
 
 void CryEntityAreaProxyInterop::SetProximity(IEntityAreaProxy *handle, float fProximity)

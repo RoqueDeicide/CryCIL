@@ -644,6 +644,12 @@
     <ClInclude Include="Interops\CryEntityAudioProxy.h">
       <Filter>Interops\Engine\Logic\Proxies</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\MonoParticleSpawnParameters.h">
+      <Filter>Interops\Engine\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\MeshObject.h">
+      <Filter>Interops\Engine\Models</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -1162,6 +1168,9 @@
     </ClCompile>
     <ClCompile Include="Interops\CryEntityAudioProxy.cpp">
       <Filter>Interops\Engine\Logic\Proxies</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\MeshObject.cpp">
+      <Filter>Interops\Engine\Models</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -427,6 +427,7 @@ void MonoInterface::RegisterDefaultListeners() const
 	this->broadcaster->listeners->Add(new SystemEventsInterop());
 	this->broadcaster->listeners->Add(new CryNetChannelInterop());
 	this->broadcaster->listeners->Add(new ChannelIdInterop());
+	this->broadcaster->listeners->Add(new MeshObjectInterop());
 }
 #pragma endregion
 #pragma region Thunks Initialization

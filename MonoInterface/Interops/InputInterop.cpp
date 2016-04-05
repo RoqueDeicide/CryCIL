@@ -135,7 +135,7 @@ bool InputInterop::OnInputEvent(const SInputEvent &_event)
 	case eIDT_Joystick:
 		break;
 	case eIDT_Gamepad:
-		if (_event.keyId < eKI_Orbis_Select)
+		if (_event.keyId < eKI_Orbis_Options)
 		{
 			switch (_event.keyId)
 			{

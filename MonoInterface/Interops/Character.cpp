@@ -71,6 +71,8 @@ void CharacterInterop::InitializeInterops()
 	REGISTER_METHOD(NumCharacters);
 	REGISTER_METHOD(GetNumInstancesPerModel);
 	REGISTER_METHOD(GetICharInstanceFromModel);
+
+	REGISTER_METHOD(GetBase);
 }
 
 void CharacterInterop::AddRef(ICharacterInstance *handle)
@@ -397,4 +399,9 @@ uint CharacterInterop::GetNumInstancesPerModel(IDefaultSkeleton *rIDefaultSkelet
 ICharacterInstance *CharacterInterop::GetICharInstanceFromModel(IDefaultSkeleton *rIDefaultSkeleton, uint num)
 {
 	return gEnv->pCharacterManager->GetICharInstanceFromModel(*rIDefaultSkeleton, num);
+}
+
+IMeshObj *CharacterInterop::GetBase(ICharacterInstance *handle)
+{
+	return handle;
 }

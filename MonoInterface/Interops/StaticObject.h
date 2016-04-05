@@ -73,4 +73,6 @@ struct StaticObjectInterop : IMonoInterop<true, true>
 	static void GetStatistics(IStatObj *handle, IStatObj::SStatistics &stats);
 	static IStatObj *CreateStatObjOptionalIndexedMesh(bool createIndexedMesh);
 	static IStatObj *UpdateDeformableStatObj(IGeometry *pPhysGeom, bop_meshupdate *pLastUpdate);
+
+	static IMeshObj *GetBase(IStatObj *handle);
 };

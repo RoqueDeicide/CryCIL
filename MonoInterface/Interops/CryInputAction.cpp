@@ -16,20 +16,20 @@ bool CryInputActionInterop::AddInputInternal(IActionMapAction *handle, EKeyId in
 	CActionMapAction *action = static_cast<CActionMapAction *>(handle);
 	SActionInput actionInput = spec.CreateActionInput(input);
 
-	return action->GetParentActionMap()->AddActionInput(handle->GetActionId(), actionInput);
+	return action->m_pParentActionMap->AddActionInput(handle->GetActionId(), actionInput);
 }
 
 bool CryInputActionInterop::RemoveInputInternal(IActionMapAction *handle, EKeyId input)
 {
 	CActionMapAction *action = static_cast<CActionMapAction *>(handle);
 
-	return action->GetParentActionMap()->RemoveActionInput(action->GetActionId(), GetInputName(input));
+	return action->m_pParentActionMap->RemoveActionInput(action->GetActionId(), GetInputName(input));
 }
 
 bool CryInputActionInterop::RebindInputInternal(IActionMapAction *handle, EKeyId oldInput, EKeyId newInput)
 {
 	CActionMapAction *action = static_cast<CActionMapAction *>(handle);
 
-	return action->GetParentActionMap()->ReBindActionInput(action->GetActionId(), GetInputName(oldInput),
+	return action->m_pParentActionMap->ReBindActionInput(action->GetActionId(), GetInputName(oldInput),
 														   GetInputName(newInput));
 }

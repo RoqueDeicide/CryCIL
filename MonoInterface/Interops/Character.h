@@ -82,4 +82,6 @@ struct CharacterInterop : IMonoInterop<true, true>
 
 	static uint GetNumInstancesPerModel(IDefaultSkeleton *rIDefaultSkeleton);
 	static ICharacterInstance *GetICharInstanceFromModel(IDefaultSkeleton *rIDefaultSkeleton, uint num);
+
+	static IMeshObj *GetBase(ICharacterInstance *handle);
 };

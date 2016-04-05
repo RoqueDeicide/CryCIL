@@ -14,14 +14,7 @@ namespace CryCil.Engine
 	/// Defines signature of methods that can handle <see cref="ParticleEmitter.Created"/> event.
 	/// </summary>
 	/// <param name="emitter"> An object that represents the created emitter.</param>
-	/// <param name="location">Reference to location of the emitter.</param>
-	/// <param name="effect">  
-	/// An object that represents the particle effect that is used by the created emitter.
-	/// </param>
-	/// <param name="flags">   A set of flags the emitter was created with.</param>
-	public delegate void EmitterCreatedEventHandler(
-		ParticleEmitter emitter, ref Quatvecale location, ParticleEffect effect,
-		ParticleEmitterFlags flags);
+	public delegate void EmitterCreatedEventHandler(ParticleEmitter emitter);
 	/// <summary>
 	/// Defines signature of methods that can handle <see cref="ParticleEmitter.Deleted"/> event.
 	/// </summary>
@@ -127,25 +120,6 @@ namespace CryCil.Engine
 			}
 		}
 		/// <summary>
-		/// Gets or sets a set of flags that specify this emitter.
-		/// </summary>
-		/// <exception cref="NullReferenceException">Instance object is invalid.</exception>
-		public ParticleEmitterFlags Flags
-		{
-			get
-			{
-				this.AssertInstance();
-
-				return GetEmitterFlags(this.handle);
-			}
-			set
-			{
-				this.AssertInstance();
-
-				SetEmitterFlags(this.handle, value);
-			}
-		}
-		/// <summary>
 		/// Sets the value that indicates whether this emitter is active.
 		/// </summary>
 		/// <remarks>
@@ -239,16 +213,6 @@ namespace CryCil.Engine
 			this.AssertInstance();
 
 			KillInternal(this.handle);
-		}
-		/// <summary>
-		/// Advances the emitter to its equilibrium state.
-		/// </summary>
-		/// <exception cref="NullReferenceException">Instance object is invalid.</exception>
-		public void Prime()
-		{
-			this.AssertInstance();
-
-			PrimeInternal(this.handle);
 		}
 		/// <summary>
 		/// Restarts this emitter from scratch (if active).
@@ -437,13 +401,12 @@ namespace CryCil.Engine
 		#endregion
 		#region Utilities
 		[RawThunk("Invoked from the underlying framework to raise event Created.")]
-		private static void OnCreated(ParticleEmitter emitter, ref Quatvecale location, ParticleEffect effect,
-									  ParticleEmitterFlags flags)
+		private static void OnCreated(ParticleEmitter emitter)
 		{
 			try
 			{
 				var handler = Created;
-				handler?.Invoke(emitter, ref location, effect, flags);
+				handler?.Invoke(emitter);
 			}
 			catch (Exception ex)
 			{
@@ -486,8 +449,6 @@ namespace CryCil.Engine
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void KillInternal(IntPtr handle);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern void PrimeInternal(IntPtr handle);
-		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void RestartInternal(IntPtr handle);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void SetEffect(IntPtr handle, ParticleEffect pEffect);
@@ -508,10 +469,6 @@ namespace CryCil.Engine
 		private static extern void EmitParticle(IntPtr handle, EmitParticleData* pData);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void GetAttachedEntity(IntPtr handle, out IntPtr entityHandle, out int slot);
-		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern ParticleEmitterFlags GetEmitterFlags(IntPtr handle);
-		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern void SetEmitterFlags(IntPtr handle, ParticleEmitterFlags flags);
 		#endregion
 	}
 }

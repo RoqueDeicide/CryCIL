@@ -148,15 +148,6 @@ namespace CryCil.Engine.Rendering
 		#endregion
 		#region Interface
 		/// <summary>
-		/// Saves information about this material to the Xml data node.
-		/// </summary>
-		/// <param name="xml">Xml date node object.</param>
-		/// <exception cref="NullReferenceException">Instance object is not valid.</exception>
-		/// <exception cref="ArgumentNullException">Xml data provider cannot be null.</exception>
-		/// <exception cref="ObjectDisposedException">The Xml data provider is not usable.</exception>
-		[MethodImpl(MethodImplOptions.InternalCall)]
-		public extern void Save(CryXmlNode xml);
-		/// <summary>
 		/// Clones this material.
 		/// </summary>
 		/// <param name="slot">

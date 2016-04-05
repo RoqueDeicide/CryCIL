@@ -353,6 +353,8 @@
     <ClInclude Include="Interops\GameCollisionInfo.h" />
     <ClInclude Include="Interops\GameRules.h" />
     <ClInclude Include="Interops\MathHelpers.h" />
+    <ClInclude Include="Interops\MeshObject.h" />
+    <ClInclude Include="Interops\MonoParticleSpawnParameters.h" />
     <ClInclude Include="Interops\SystemEvents.h" />
     <ClInclude Include="Interops\ViewController.h" />
     <ClInclude Include="Interops\GeneralExtensions.h" />
@@ -546,6 +548,7 @@
     <ClCompile Include="Interops\GameRules.cpp" />
     <ClCompile Include="Interops\GameRulesReg.cpp" />
     <ClCompile Include="Interops\MathHelpers.cpp" />
+    <ClCompile Include="Interops\MeshObject.cpp" />
     <ClCompile Include="Interops\SystemEvents.cpp" />
     <ClCompile Include="Interops\ViewController.cpp" />
     <ClCompile Include="Interops\GeneralExtensions.cpp" />

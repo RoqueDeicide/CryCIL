@@ -64,6 +64,7 @@ void StaticObjectInterop::InitializeInterops()
 	REGISTER_METHOD(GetStatistics);
 	REGISTER_METHOD(CreateStatObjOptionalIndexedMesh);
 	REGISTER_METHOD(UpdateDeformableStatObj);
+	REGISTER_METHOD(GetBase);
 }
 
 int StaticObjectInterop::AddRef(IStatObj *handle)
@@ -365,4 +366,9 @@ IStatObj *StaticObjectInterop::UpdateDeformableStatObj(IGeometry *pPhysGeom, bop
 IRenderMesh *StaticObjectInterop::GetRenderMesh(IStatObj *handle)
 {
 	return handle->GetRenderMesh();
+}
+
+IMeshObj *StaticObjectInterop::GetBase(IStatObj *handle)
+{
+	return handle;
 }

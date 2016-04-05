@@ -52,12 +52,12 @@ void LevelSystemInterop::OnLoadingLevelEntitiesStart(ILevelInfo* pLevel)
 	raise->Invoke(params);
 }
 
-void LevelSystemInterop::OnLoadingComplete(ILevel *pLevel)
+void LevelSystemInterop::OnLoadingComplete(ILevelInfo *pLevel)
 {
 	static const IMonoStaticMethod *raise = this->GetMonoClass()->GetEvent("LoadingComplete")->Raise->ToStatic();
 
 	void *params[1];
-	params[0] = pLevel->GetLevelInfo();
+	params[0] = pLevel;
 	raise->Invoke(params);
 }
 
@@ -80,18 +80,18 @@ void LevelSystemInterop::OnLoadingProgress(ILevelInfo *pLevel, int progressAmoun
 	raise->Invoke(params);
 }
 
-void LevelSystemInterop::OnUnloadComplete(ILevel* pLevel)
+void LevelSystemInterop::OnUnloadComplete(ILevelInfo* pLevel)
 {
 	static const IMonoStaticMethod *raise = this->GetMonoClass()->GetEvent("UnloadComplete")->Raise->ToStatic();
 
 	void *params[1];
-	params[0] = pLevel->GetLevelInfo();
+	params[0] = pLevel;
 	raise->Invoke(params);
 }
 
 ILevelInfo *LevelSystemInterop::get_Current()
 {
-	return MonoEnv->CryAction->GetILevelSystem()->GetCurrentLevel()->GetLevelInfo();
+	return MonoEnv->CryAction->GetILevelSystem()->GetCurrentLevel();
 }
 
 bool LevelSystemInterop::get_Loaded()
@@ -111,7 +111,7 @@ void LevelSystemInterop::Unload()
 
 ILevelInfo *LevelSystemInterop::LoadInternal(mono::string name)
 {
-	return MonoEnv->CryAction->GetILevelSystem()->LoadLevel(NtText(name))->GetLevelInfo();
+	return MonoEnv->CryAction->GetILevelSystem()->LoadLevel(NtText(name));
 }
 
 void LevelSystemInterop::PrepareInternal(mono::string name)

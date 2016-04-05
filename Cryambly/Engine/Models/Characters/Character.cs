@@ -572,6 +572,15 @@ namespace CryCil.Engine.Models.Characters
 
 			Serialize(this.handle, sync);
 		}
+
+		/// <summary>
+		/// Converts this object to its native base class.
+		/// </summary>
+		/// <param name="character">Object to convert.</param>
+		public static implicit operator MeshObject(Character character)
+		{
+			return character.IsValid ? GetBase(character.handle) : new MeshObject(new IntPtr());
+		}
 		#endregion
 		#region Utilities
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
@@ -663,6 +672,9 @@ namespace CryCil.Engine.Models.Characters
 
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void Serialize(IntPtr handle, CrySync ser);
+
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern MeshObject GetBase(IntPtr handle);
 		#endregion
 	}
 }
