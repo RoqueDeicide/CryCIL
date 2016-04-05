@@ -36,11 +36,11 @@ struct AttachmentSocketInterop : IMonoInterop<true, true>
 	static uint                 IsAttachmentHiddenInShadow(IAttachment *handle);
 	static void                 AlignJointAttachment(IAttachment *handle);
 	static uint                 GetJointID(IAttachment *handle);
-	static uint                 AddBinding(IAttachment *handle, IAttachmentObject *pModel, ISkin *pISkin);
+	static void                 AddBinding(IAttachment *handle, IAttachmentObject *pModel, ISkin *pISkin);
 	static IAttachmentObject   *GetIAttachmentObject(IAttachment *handle, IAttachmentObject::EType *type);
 	static IAttachmentSkin     *GetIAttachmentSkin(IAttachment *handle);
 	static void                 ClearBinding(IAttachment *handle, uint nLoadingFlags = 0);
-	static uint                 SwapBinding(IAttachment *handle, IAttachment *pNewAttachment);
+	static void                 SwapBinding(IAttachment *handle, IAttachment *pNewAttachment);
 	static SimulationParams    *GetSimulationParams(IAttachment *handle);
 	static RowSimulationParams *GetRowParams(IAttachment *handle);
 	static void                 Serialize(IAttachment *handle, ISerialize *ser);

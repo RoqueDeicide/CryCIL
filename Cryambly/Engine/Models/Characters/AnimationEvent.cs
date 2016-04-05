@@ -12,10 +12,6 @@ namespace CryCil.Engine.Models.Characters
 		#region Fields
 		private readonly float time;
 		private readonly float endTime;
-		private readonly uint animationIndexInQueue;
-		private readonly float animationPriority;
-		private readonly string animationName;
-		private readonly int animationId;
 		private readonly LowerCaseCrc32 eventNameHash;
 		private readonly string eventName;
 		private readonly string parameter;
@@ -34,24 +30,6 @@ namespace CryCil.Engine.Models.Characters
 		/// when the event is occurring.
 		/// </summary>
 		public float EndTime => this.endTime;
-		/// <summary>
-		/// Gets zero-based index of the slot in the transition queue that is occupied by the animation that
-		/// caused the event. It's not clear how to use this value to acquire the
-		/// <see cref="CharacterAnimation"/> object using this value.
-		/// </summary>
-		public uint AnimationIndexInQueue => this.animationIndexInQueue;
-		/// <summary>
-		/// Gets the value that represents the priority of the animation that raised the event.
-		/// </summary>
-		public float AnimationPriority => this.animationPriority;
-		/// <summary>
-		/// Gets the name of animation.
-		/// </summary>
-		public string AnimationName => this.animationName;
-		/// <summary>
-		/// Gets the identifier of the animation.
-		/// </summary>
-		public int AnimationId => this.animationId;
 		/// <summary>
 		/// Gets CRC32 hash code of the name of the animation.
 		/// </summary>
@@ -80,16 +58,11 @@ namespace CryCil.Engine.Models.Characters
 		public Vector3 Direction => this.direction;
 		#endregion
 		#region Construction
-		internal AnimationEvent(float time, float endTime, uint animationIndexInQueue, float animationPriority,
-								string animationName, int animationId, LowerCaseCrc32 eventNameHash, string eventName,
+		internal AnimationEvent(float time, float endTime, LowerCaseCrc32 eventNameHash, string eventName,
 								string parameter, string boneName, Vector3 offset, Vector3 direction)
 		{
 			this.time = time;
 			this.endTime = endTime;
-			this.animationIndexInQueue = animationIndexInQueue;
-			this.animationPriority = animationPriority;
-			this.animationName = animationName;
-			this.animationId = animationId;
 			this.eventNameHash = eventNameHash;
 			this.eventName = eventName;
 			this.parameter = parameter;

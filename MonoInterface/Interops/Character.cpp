@@ -23,8 +23,6 @@ void CharacterInterop::InitializeInterops()
 	REGISTER_METHOD(GetFlags);
 	REGISTER_METHOD(GetObjectType);
 	REGISTER_METHOD(GetFilePath);
-	REGISTER_METHOD(EnableDecalsInternal);
-	REGISTER_METHOD(CreateDecalInternal);
 	REGISTER_METHOD(GetHasVertexAnimation);
 	REGISTER_METHOD(GetIMaterial);
 	REGISTER_METHOD(SetIMaterial_Instance);
@@ -32,7 +30,6 @@ void CharacterInterop::InitializeInterops()
 	REGISTER_METHOD(GetFacialInstance);
 	REGISTER_METHOD(EnableFacialAnimationInternal);
 	REGISTER_METHOD(EnableProceduralFacialAnimationInternal);
-	REGISTER_METHOD(LipSyncWithSound);
 	REGISTER_METHOD(SetPlaybackScale);
 	REGISTER_METHOD(GetPlaybackScale);
 	REGISTER_METHOD(IsCharacterVisible);
@@ -167,19 +164,6 @@ mono::string CharacterInterop::GetFilePath(ICharacterInstance *handle)
 	return ToMonoString(handle->GetFilePath());
 }
 
-void CharacterInterop::EnableDecalsInternal(ICharacterInstance *handle, bool enable)
-{
-	handle->EnableDecals(enable ? 1 : 0);
-}
-
-void CharacterInterop::CreateDecalInternal(ICharacterInstance *handle, MonoDecalInfo &DecalLCS)
-{
-	CryEngineDecalInfo info;
-	DecalLCS.Export(info);
-
-	handle->CreateDecal(info);
-}
-
 bool CharacterInterop::GetHasVertexAnimation(ICharacterInstance *handle)
 {
 	return handle->HasVertexAnimation();
@@ -213,11 +197,6 @@ void CharacterInterop::EnableFacialAnimationInternal(ICharacterInstance *handle,
 void CharacterInterop::EnableProceduralFacialAnimationInternal(ICharacterInstance *handle, bool bEnable)
 {
 	handle->EnableProceduralFacialAnimation(bEnable);
-}
-
-void CharacterInterop::LipSyncWithSound(ICharacterInstance *handle, uint nSoundId, bool bStop)
-{
-	handle->LipSyncWithSound(nSoundId, bStop);
 }
 
 void CharacterInterop::SetPlaybackScale(ICharacterInstance *handle, float fSpeed)

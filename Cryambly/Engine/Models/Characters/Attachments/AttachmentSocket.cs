@@ -403,7 +403,7 @@ namespace CryCil.Engine.Models.Characters.Attachments
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern uint GetJointID(IntPtr handle);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern uint AddBinding(IntPtr handle, IntPtr pModel, CharacterSkin pISkin = new CharacterSkin());
+		private static extern void AddBinding(IntPtr handle, IntPtr pModel, CharacterSkin pISkin = new CharacterSkin());
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern IntPtr GetIAttachmentObject(IntPtr handle, out AttachmentObjectTypes type);
 		[MethodImpl(MethodImplOptions.InternalCall)]
@@ -411,7 +411,7 @@ namespace CryCil.Engine.Models.Characters.Attachments
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void ClearBinding(IntPtr handle, uint nLoadingFlags = 0);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern uint SwapBinding(IntPtr handle, AttachmentSocket pNewAttachment);
+		private static extern void SwapBinding(IntPtr handle, AttachmentSocket pNewAttachment);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern AttachmentSimulationParameters GetSimulationParams(IntPtr handle);
 		[MethodImpl(MethodImplOptions.InternalCall)]
