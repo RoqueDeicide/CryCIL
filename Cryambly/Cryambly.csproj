@@ -101,6 +101,7 @@
     <Compile Include="Engine\CryAction\NamespaceDoc.cs" />
     <Compile Include="Engine\CryConsole.cs" />
     <Compile Include="Engine\CryEngineException.cs" />
+    <Compile Include="Engine\DebugServices\ProfileDescription.cs" />
     <Compile Include="Engine\Effects\Decal.cs" />
     <Compile Include="Engine\Effects\DecalInfo.cs" />
     <Compile Include="Engine\Effects\EmitParticleData.cs" />

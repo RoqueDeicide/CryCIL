@@ -102,3 +102,28 @@ inline void CheckAuxGeomPublicRenderflags()
 	CHECK_ENUM(e_Def3DPublicRenderflags);
 	CHECK_ENUM(e_Def2DPublicRenderflags);
 }
+
+TYPE_MIRROR enum ProfileDescription
+{
+	UNDEFINED_check = 0,
+	FUNCTIONENTRY_check = 1,
+	SECTION_check = 2,
+	REGION_check = 3,
+	WAITING_check = BIT(2),
+	MARKER_check = BIT(3),
+	PUSHPOP_check = BIT(4)
+};
+
+#undef CHECK_ENUM
+#define CHECK_ENUM(x) static_assert (ProfileDescription::x ## _check == EProfileDescription::x, "EProfileDescription enumeration has been changed.")
+
+inline void CheckProfileDescription()
+{
+	CHECK_ENUM(UNDEFINED);
+	CHECK_ENUM(FUNCTIONENTRY);
+	CHECK_ENUM(SECTION);
+	CHECK_ENUM(REGION);
+	CHECK_ENUM(WAITING);
+	CHECK_ENUM(MARKER);
+	CHECK_ENUM(PUSHPOP);
+}

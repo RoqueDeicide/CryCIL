@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using CryCil.Annotations;
 using CryCil.Geometry;
 using CryCil.Graphics;
 using CryCil.Utilities;
@@ -136,26 +135,34 @@ namespace CryCil.Engine.DebugServices
 		/// <summary>
 		/// Draws text somewhere on the screen.
 		/// </summary>
-		/// <param name="size">  Font size.</param>
-		/// <param name="format">Formattable text to draw.</param>
-		/// <param name="args">  Arguments to insert into text with formatting.</param>
-		[StringFormatMethod("format")]
-		public void Text(float size, string format, params object[] args)
+		/// <param name="size">Font size.</param>
+		/// <param name="text">Text to draw.</param>
+		public void Text(float size, string text)
 		{
-			DebugGraphics.Add2DText(string.Format(format, args), size, this.color, this.timeout);
+			DebugGraphics.Add2DText(text, size, this.color, this.timeout);
 		}
 		/// <summary>
 		/// Draws text at the specified location on the screen.
 		/// </summary>
-		/// <param name="x">     X-coordinate of the text location.</param>
-		/// <param name="y">     Y-coordinate of the text location.</param>
-		/// <param name="size">  Font size.</param>
-		/// <param name="format">Formattable text to draw.</param>
-		/// <param name="args">  Arguments to insert into text with formatting.</param>
-		[StringFormatMethod("format")]
-		public void Text(float x, float y, float size, string format, params object[] args)
+		/// <param name="x">   X-coordinate of the text location.</param>
+		/// <param name="y">   Y-coordinate of the text location.</param>
+		/// <param name="size">Font size.</param>
+		/// <param name="text">Text to draw.</param>
+		public void Text(float x, float y, float size, string text)
 		{
-			DebugGraphics.AddText(x, y, size, this.color, this.timeout, string.Format(format, args));
+			DebugGraphics.AddText(x, y, size, this.color, this.timeout, text);
+		}
+		/// <summary>
+		/// Draws text at the specified location in the world.
+		/// </summary>
+		/// <param name="position">
+		/// Reference to the vector that specifies world-space location of the text.
+		/// </param>
+		/// <param name="size">    Font size.</param>
+		/// <param name="text">    Text to draw.</param>
+		public void Text(ref Vector3 position, float size, string text)
+		{
+			DebugGraphics.AddText3D(ref position, size, this.color, this.timeout, text);
 		}
 		/// <summary>
 		/// Draws Oriented Bounding Box (OBB).
