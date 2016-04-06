@@ -11,7 +11,7 @@ namespace CryCil.Engine.Rendering
 	public struct MaterialLayer
 	{
 		#region Fields
-		[UsedImplicitly] private IntPtr handle;
+		private readonly IntPtr handle;
 		#endregion
 		#region Properties
 		/// <summary>

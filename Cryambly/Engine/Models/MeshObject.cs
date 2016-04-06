@@ -83,9 +83,7 @@ namespace CryCil.Engine.Models
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public int IncrementReferenceCount()
 		{
-			this.AssertInstance();
-
-			return AddRef(this.handle);
+			return AddRef(this.AssertedHandle);
 		}
 		/// <summary>
 		/// Decreases the reference count of this static object. Call this when you destroy an object that
@@ -96,9 +94,7 @@ namespace CryCil.Engine.Models
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public int DecrementReferenceCount()
 		{
-			this.AssertInstance();
-
-			return Release(this.handle);
+			return Release(this.AssertedHandle);
 		}
 		/// <summary>
 		/// Gets the random point on this object.

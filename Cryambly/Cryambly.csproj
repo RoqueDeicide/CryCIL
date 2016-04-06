@@ -269,6 +269,7 @@
     <Compile Include="Engine\Physics\SnapshotFlags.cs" />
     <Compile Include="Engine\Rendering\Materials\MaterialLayerActivityFlags.cs" />
     <Compile Include="Engine\Rendering\Materials\MaterialLayerBlendFlags.cs" />
+    <Compile Include="Engine\Rendering\Materials\SurfaceTypeTable.cs" />
     <Compile Include="Engine\Rendering\NamespaceDoc.cs" />
     <Compile Include="Engine\Rendering\Nodes\CryRenderNode.cs" />
     <Compile Include="Engine\Rendering\Nodes\CryRopeRenderNode.cs" />

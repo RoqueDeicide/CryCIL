@@ -14,9 +14,23 @@ namespace CryCil.Engine.Rendering
 	public struct SubMaterials : IList<Material>
 	{
 		#region Fields
-		[UsedImplicitly] private IntPtr matHandle;
+		private readonly IntPtr handle;
 		#endregion
 		#region Properties
+		/// <summary>
+		/// Indicates whether this object is usable.
+		/// </summary>
+		/// <exception cref="NullReferenceException">Instance object is not valid.</exception>
+		public bool IsValid => this.handle != IntPtr.Zero;
+		private IntPtr AssertedHandle
+		{
+			get
+			{
+				this.AssertInstance();
+
+				return this.handle;
+			}
+		}
 		/// <summary>
 		/// Provides read/write access to a sub-material slot.
 		/// </summary>
@@ -24,19 +38,32 @@ namespace CryCil.Engine.Rendering
 		/// <exception cref="NullReferenceException">
 		/// Unable to access the sub-material of an invalid material object.
 		/// </exception>
-		/// <exception cref="IndexOutOfRangeException">
-		/// Index of the sub-material to access cannot be less then 0.
-		/// </exception>
-		/// <exception cref="IndexOutOfRangeException">
-		/// Index of the sub-material to access cannot be greater or equal to number of sub-material slots.
-		/// </exception>
-		/// <exception cref="ArgumentNullException">
-		/// Cannot assign null material to a sub-material slot, try assigning default material instead.
+		/// <exception cref="IndexOutOfRangeException">Index must not be less then zero and must be less then number of sub-materials.
 		/// </exception>
 		public Material this[int index]
 		{
-			get { return this.GetItem(index); }
-			set { this.SetItem(index, value); }
+			get
+			{
+				this.AssertInstance();
+				if (index < 0 || index >= this.Count)
+				{
+					throw new IndexOutOfRangeException("Index must not be less then zero and must be less then " +
+													   "number of sub-materials.");
+				}
+
+				return GetItem(this.handle, index);
+			}
+			set
+			{
+				this.AssertInstance();
+				if (index < 0 || index >= this.Count)
+				{
+					throw new IndexOutOfRangeException("Index must not be less then zero and must be less then " +
+													   "number of sub-materials.");
+				}
+
+				SetItem(this.handle, index, value);
+			}
 		}
 		/// <summary>
 		/// Gets or sets number of slots for sub-materials.
@@ -49,8 +76,16 @@ namespace CryCil.Engine.Rendering
 		/// </exception>
 		public int Count
 		{
-			get { return this.GetCount(); }
-			set { this.SetCount(value); }
+			get { return GetCount(this.AssertedHandle); }
+			set
+			{
+				if (value < 0)
+				{
+					throw new ArgumentOutOfRangeException(nameof(value),
+														  "Number of sub-material slots cannot be less then 0.");
+				}
+				SetCount(this.AssertedHandle, value);
+			}
 		}
 		/// <summary>
 		/// Returns false.
@@ -60,7 +95,7 @@ namespace CryCil.Engine.Rendering
 		#region Construction
 		internal SubMaterials(IntPtr handle)
 		{
-			this.matHandle = handle;
+			this.handle = handle;
 		}
 		#endregion
 		#region Interface
@@ -249,6 +284,14 @@ namespace CryCil.Engine.Rendering
 		}
 		#endregion
 		#region Utilities
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
+		private void AssertInstance()
+		{
+			if (!this.IsValid)
+			{
+				throw new NullReferenceException("This instance is not valid.");
+			}
+		}
 		/// <exception cref="NullReferenceException">
 		/// Unable to access the sub-material of an invalid material object.
 		/// </exception>
@@ -256,14 +299,16 @@ namespace CryCil.Engine.Rendering
 		{
 			return this.GetEnumerator();
 		}
+		#endregion
+		#region Internal Calls
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private extern Material GetItem(int index);
+		private static extern Material GetItem(IntPtr handle, int index);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private extern void SetItem(int index, Material mat);
+		private static extern void SetItem(IntPtr handle, int index, Material mat);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private extern int GetCount();
+		private static extern int GetCount(IntPtr handle);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private extern void SetCount(int newCount);
+		private static extern void SetCount(IntPtr handle, int newCount);
 		#endregion
 	}
 }
