@@ -1033,7 +1033,8 @@ void EntitySlotsInterop::InitializeInterops()
 {
 	REGISTER_METHOD(IsSlotValid);
 	REGISTER_METHOD(FreeSlot);
-	REGISTER_METHOD(GetSlotInfo);
+	REGISTER_METHOD(GetSlotMaterial);
+	REGISTER_METHOD(GetSlotParent);
 	REGISTER_METHOD(GetSlotWorldTM);
 	REGISTER_METHOD(GetSlotLocalTM);
 	REGISTER_METHOD(SetSlotLocalTM);
@@ -1074,9 +1075,18 @@ void EntitySlotsInterop::FreeSlot(IEntity *handle, int nIndex)
 	handle->FreeSlot(nIndex);
 }
 
-bool EntitySlotsInterop::GetSlotInfo(IEntity *handle, int nIndex, SEntitySlotInfo *slotInfo)
+IMaterial *EntitySlotsInterop::GetSlotMaterial(IEntity *entityHandle, int nIndex)
 {
-	return handle->GetSlotInfo(nIndex, *slotInfo);
+	SEntitySlotInfo info;
+	entityHandle->GetSlotInfo(nIndex, info);
+	return info.pMaterial;
+}
+
+int EntitySlotsInterop::GetSlotParent(IEntity *entityHandle, int nIndex)
+{
+	SEntitySlotInfo info;
+	entityHandle->GetSlotInfo(nIndex, info);
+	return info.nParentSlot;
 }
 
 void EntitySlotsInterop::GetSlotWorldTM(IEntity *handle, int slot, Matrix34 *matrix)

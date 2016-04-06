@@ -154,10 +154,18 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Unknown.
 		/// </summary>
+		AudioDisabled = 1 << 32,
+		/// <summary>
+		/// Unknown.
+		/// </summary>
 		NeedsMoveInside = 1 << 33,
 		/// <summary>
 		/// Unknown.
 		/// </summary>
-		CanCollideWithMergedMeshes = 1 << 34
+		CanCollideWithMergedMeshes = 1 << 34,
+		/// <summary>
+		/// Unknown.
+		/// </summary>
+		DynamicDistanceShadows = 1 << 32
 	}
 }

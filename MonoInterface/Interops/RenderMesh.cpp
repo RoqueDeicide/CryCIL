@@ -305,5 +305,5 @@ IRenderMesh *RenderMeshInterop::CreateRenderMesh(mono::string szType, mono::stri
 												 IRenderMesh::SInitParamerers *pInitParams, ERenderMeshType eBufType)
 {
 	auto renderMesh = gEnv->pRenderer->CreateRenderMesh(NtText(szType), NtText(szSourceName), pInitParams, eBufType);
-	return ReleaseOwnership(renderMesh);
+	return renderMesh.ReleaseOwnership();
 }

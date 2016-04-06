@@ -1,6 +1,7 @@
 #pragma once
 
 #include "IMonoInterface.h"
+#include <ITimeOfDay.h>
 
 struct MonoTodVarInfo;
 struct MonoCryXmlNode;

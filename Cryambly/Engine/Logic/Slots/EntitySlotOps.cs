@@ -13,7 +13,9 @@ namespace CryCil.Engine.Logic
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		internal static extern void FreeSlot(IntPtr entityHandle, int nIndex);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		internal static extern bool GetSlotInfo(IntPtr entityHandle, int nIndex, out EntitySlotInfo slotInfo);
+		internal static extern Material GetSlotMaterial(IntPtr entityHandle, int nIndex);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		internal static extern int GetSlotParent(IntPtr entityHandle, int nIndex);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		internal static extern void GetSlotWorldTM(IntPtr entityHandle, int slot, out Matrix34 matrix);
 		[MethodImpl(MethodImplOptions.InternalCall)]

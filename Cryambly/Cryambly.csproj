@@ -450,7 +450,6 @@
     <Compile Include="Engine\Logic\Entities\Networking\RmiTarget.cs" />
     <Compile Include="Engine\Logic\Slots\EntitySlotCollection.cs" />
     <Compile Include="Engine\Logic\Slots\EntitySlotFlags.cs" />
-    <Compile Include="Engine\Logic\Slots\EntitySlotInfo.cs" />
     <Compile Include="Engine\Logic\Slots\EntitySlotOps.cs" />
     <Compile Include="Engine\Logic\EntityUpdatePolicy.cs" />
     <Compile Include="Engine\Logic\FlowGraph\ActivationSet.cs" />
