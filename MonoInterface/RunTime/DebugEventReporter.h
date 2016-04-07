@@ -1,6 +1,7 @@
 #pragma once
 
 #include "IMonoInterface.h"
+
 //! Reports events that occur within CryCIL.
 struct DebugEventReporter : public IMonoSystemListener
 {

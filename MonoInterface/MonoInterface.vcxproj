@@ -355,6 +355,7 @@
     <ClInclude Include="Interops\MathHelpers.h" />
     <ClInclude Include="Interops\MeshObject.h" />
     <ClInclude Include="Interops\MonoParticleSpawnParameters.h" />
+    <ClInclude Include="Interops\MonoRenderParameters.h" />
     <ClInclude Include="Interops\SystemEvents.h" />
     <ClInclude Include="Interops\ViewController.h" />
     <ClInclude Include="Interops\GeneralExtensions.h" />
@@ -629,7 +630,6 @@
     <ClCompile Include="TypeMapChecks\MathTypes.cpp" />
     <ClCompile Include="TypeMapChecks\MeshTypes.cpp" />
     <ClCompile Include="TypeMapChecks\PhysicsTypes.cpp" />
-    <ClCompile Include="TypeMapChecks\RenderParameters.cpp" />
     <ClCompile Include="TypeMapChecks\ResRefreshFlags.cpp" />
     <ClCompile Include="TypeMapChecks\StaticObjectStuff.cpp" />
     <ClCompile Include="TypeMapChecks\StridedPointer.cpp" />

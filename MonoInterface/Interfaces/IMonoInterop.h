@@ -50,10 +50,10 @@ struct IMonoInteropBase : public IMonoSystemListener
 	{
 		const char *nameSpace = this->GetInteropNameSpace();
 		const char *className = this->GetInteropClassName();
-		
+
 		bool noNameSpace = nameSpace == nullptr || nameSpace[0] == '\0';
-		bool noClass = className == nullptr || nameSpace[0] == '\0';
-		
+		bool noClass     = className == nullptr || nameSpace[0] == '\0';
+
 		if (noNameSpace && noClass)
 		{
 			CryLogAlways("Commencing initialization of interops for multiple types in multiple name-spaces.");
@@ -137,8 +137,7 @@ struct IMonoInterop : public IMonoInteropBase
 {};
 //! Specialization of IMonoInterop<,> template that behaves in a default manner.
 template<> struct IMonoInterop<false, false> : public IMonoInteropBase
-{
-};
+{};
 //! Specialization of IMonoInterop<,> template that unregisters and destroys itself
 //! after registration of internal calls.
 template<> struct IMonoInterop<true, false> : public IMonoInteropBase
@@ -385,7 +384,7 @@ template<> struct IMonoInterop < false, true > : public IMonoInteropBase
 //!
 //! @param argTypes Names of types of arguments that are accepted by the constructor.
 //! @param method   Method that will be invoked via internal call.
-#define REGISTER_CTOR_N(argTypes, method) this->RegisterInteropMethod(".ctor("##argTypes##")", method)
+#define REGISTER_CTOR_N(argTypes, method) this->RegisterInteropMethod(".ctor(" ## argTypes ## ")", method)
 //! Registers an interop constructor.
 //!
 //! Use this macro when you want to register an internal call for a constructor that is defined in a different
@@ -445,7 +444,7 @@ template<> struct IMonoInterop < false, true > : public IMonoInteropBase
 //! @param method     Method that will be invoked via internal call.
 #define REGISTER_CTOR_NCN(name_space, class_name, argTypes, method) \
 	(this->monoInterface ? this->monoInterface : MonoEnv)->Functions->AddInternalCall(name_space, class_name, \
-																					  ".ctor("##argTypes##")", \
+																					  ".ctor(" ## argTypes ## ")", \
 																					  method);
 
 //! Specialization of IMonoInterop<,> template that relies on using MonoEnv variable

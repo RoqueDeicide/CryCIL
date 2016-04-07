@@ -2,26 +2,17 @@
 #include "EventBroadcaster.h"
 
 #if 0
-#define EventMessage CryLogAlways
+  #define EventMessage CryLogAlways
 #else
-#define EventMessage(...) void(0)
+  #define EventMessage(...) void(0)
 #endif
 
 EventBroadcaster::EventBroadcaster()
 	: stages(false)
 	, index(-1)
-{
-	this->listeners = new List<IMonoSystemListener *>(20);
-	this->stageMap = new SortedList<int, List<IMonoSystemListener *> *>(50);
-}
-
-EventBroadcaster::~EventBroadcaster()
-{
-	EventMessage("Deleting stage map.");
-	if (this->stageMap) { delete this->stageMap; this->stageMap = nullptr; }
-	EventMessage("Deleting listeners.");
-	if (this->listeners) { delete this->listeners; this->listeners = nullptr; }
-}
+	, listeners(20)
+	, stageMap(50)
+{}
 
 
 void EventBroadcaster::RemoveListener(IMonoSystemListener *listener)
@@ -29,9 +20,9 @@ void EventBroadcaster::RemoveListener(IMonoSystemListener *listener)
 	EventMessage("Removing a listener.");
 	// Delete the listener from the main list.
 	int listenerIndex = -1;
-	for (int i = 0; i < this->listeners->Length; i++)
+	for (int i = 0; i < this->listeners.Length; i++)
 	{
-		if (this->listeners->At(i) == listener)
+		if (this->listeners[i] == listener)
 		{
 			listenerIndex = i;
 			break;
@@ -54,10 +45,10 @@ void EventBroadcaster::RemoveListener(IMonoSystemListener *listener)
 		this->index--;
 	}
 
-	this->listeners->RemoveAt(listenerIndex);
+	this->listeners.RemoveAt(listenerIndex);
 
 	// Remove listener from stage map.
-	this->stageMap->ForEach
+	this->stageMap.ForEach
 	(
 		[&listener](int stageIndex, List<IMonoSystemListener *> *subscribers)
 		{
@@ -66,7 +57,7 @@ void EventBroadcaster::RemoveListener(IMonoSystemListener *listener)
 				if (subscribers->At(i) == listener)
 				{
 					subscribers->RemoveAt(i);
-					break;		// No need to proceed as there can only be one unique listener per stage.
+					break;      // No need to proceed as there can only be one unique listener per stage.
 				}
 			}
 		}
@@ -75,9 +66,9 @@ void EventBroadcaster::RemoveListener(IMonoSystemListener *listener)
 
 void EventBroadcaster::SetInterface(IMonoInterface *inter)
 {
-	for (this->index = 0; this->index < this->listeners->Length; this->index++)
+	for (this->index = 0; this->index < this->listeners.Length; this->index++)
 	{
-		this->listeners->At(this->index)->SetInterface(inter);
+		this->listeners[this->index]->SetInterface(inter);
 	}
 }
 
@@ -109,9 +100,9 @@ void EventBroadcaster::OnCompilationStarting()
 //! Broadcasts CompilationComplete event.
 void EventBroadcaster::OnCompilationComplete(bool success)
 {
-	for (this->index = 0; this->index < this->listeners->Length; this->index++)
+	for (this->index = 0; this->index < this->listeners.Length; this->index++)
 	{
-		this->listeners->At(this->index)->OnCompilationComplete(success);
+		this->listeners[this->index]->OnCompilationComplete(success);
 	}
 }
 //! Gathers initialization stages data for sending it to managed code.
@@ -119,22 +110,22 @@ int *EventBroadcaster::GetSubscribedStagesInfo(int &stageCount)
 {
 	EventMessage("Going through listeners.");
 	// Gather information about all stages.
-	for (this->index = 0; this->index < this->listeners->Length; this->index++)
+	for (this->index = 0; this->index < this->listeners.Length; this->index++)
 	{
 		EventMessage("Getting stage indices for the listener #%d.", this->index + 1);
 		// Get stages.
-		List<int> *stages = this->listeners->At(this->index)->GetSubscribedStages();
+		List<int> *stages = this->listeners[this->index]->GetSubscribedStages();
 		if (stages)
 		{
 			// Put the listeners into the map.
 			for (int j = 0; j < stages->Length; j++)
 			{
 				int currentStageIndex = stages->At(j);
-				if (!this->stageMap->Contains(currentStageIndex))
+				if (!this->stageMap.Contains(currentStageIndex))
 				{
-					this->stageMap->Add(currentStageIndex, new List<IMonoSystemListener *>(10));
+					this->stageMap.Add(currentStageIndex, List<IMonoSystemListener *>(10));
 				}
-				this->stageMap->At(currentStageIndex)->Add(this->listeners->At(this->index));
+				this->stageMap[currentStageIndex].Add(this->listeners[this->index]);
 			}
 			delete stages;
 		}
@@ -144,13 +135,13 @@ int *EventBroadcaster::GetSubscribedStagesInfo(int &stageCount)
 		}
 	}
 	// Get the stage indices.
-	stageCount = this->stageMap->Length;
+	stageCount = this->stageMap.Length;
 	int *stageIndices = new int[stageCount];
-	int i = 0;
-	this->stageMap->ForEach([stageIndices, &i](int stageIndex, List<IMonoSystemListener *> *subscribers)
-	{
-		stageIndices[i++] = stageIndex;
-	});
+	int  i            = 0;
+	this->stageMap.ForEach([stageIndices, &i](int stageIndex, List<IMonoSystemListener *> *subscribers)
+						   {
+							   stageIndices[i++] = stageIndex;
+						   });
 	return stageIndices;
 }
 //! Broadcasts InitializationStage event.
@@ -162,17 +153,12 @@ void EventBroadcaster::OnInitializationStage(int stageIndex)
 
 	this->stages = true;
 
-	List<IMonoSystemListener *> *stageList;
-	if (this->stageMap->TryGet(stageIndex, stageList))
+	List<IMonoSystemListener *> stageList;
+	if (this->stageMap.TryGet(stageIndex, stageList))
 	{
-		if (!stageList)
+		for (int i = 0; i < stageList.Length; i++)
 		{
-			return;
-		}
-
-		for (int i = 0; i < stageList->Length; i++)
-		{
-			IMonoSystemListener *stageListener = stageList->At(i);
+			IMonoSystemListener *stageListener = stageList[i];
 			stageListener->OnInitializationStage(stageIndex);
 		}
 	}
@@ -211,7 +197,7 @@ void EventBroadcaster::SendSimpleEvent(SimpleEventHandler handler)
 
 	const int printEvery = 1;
 
-	for (this->index = 0; this->index < this->listeners->Length; this->index++)
+	for (this->index = 0; this->index < this->listeners.Length; this->index++)
 	{
 #if 1
 		if (this->index % printEvery == 0)
@@ -219,7 +205,7 @@ void EventBroadcaster::SendSimpleEvent(SimpleEventHandler handler)
 			EventMessage("Sending the event to the listener #%d.", this->index);
 		}
 #endif
-		IMonoSystemListener *listener = this->listeners->At(this->index);
+		IMonoSystemListener *listener = this->listeners[this->index];
 		(listener->*handler)();
 #if 1
 		if (this->index % printEvery == 0)
@@ -234,9 +220,9 @@ void EventBroadcaster::SendSimpleEvent(SimpleEventHandler handler)
 
 void EventBroadcaster::SendUpdateEvent(SimpleEventHandler handler)
 {
-	for (this->index = 0; this->index < this->listeners->Length; this->index++)
+	for (this->index = 0; this->index < this->listeners.Length; this->index++)
 	{
-		IMonoSystemListener *listener = this->listeners->At(this->index);
+		IMonoSystemListener *listener = this->listeners[this->index];
 		(listener->*handler)();
 	}
 

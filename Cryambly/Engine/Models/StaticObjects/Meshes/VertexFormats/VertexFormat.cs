@@ -132,6 +132,11 @@ namespace CryCil.Engine.Models.StaticObjects
 		/// numbers.
 		/// </summary>
 		P3F_C4B_T2S = 18,
+		
+		/// <summary>
+		/// Vertex format where the vertex consists of one integer that represents an index.
+		/// </summary>
+		PI = 19,
 
 		/// <summary>
 		/// Maximal number of vertex formats.

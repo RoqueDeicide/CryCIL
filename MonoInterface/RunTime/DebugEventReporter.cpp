@@ -35,11 +35,11 @@ void DebugEventReporter::OnCompilationComplete(bool success)
 List<int> *DebugEventReporter::GetSubscribedStages()
 {
 	List<int> *stages = new List<int>(4);
-	stages->Add(ENTITY_REGISTRATION_STAGE);						// Entities registration.
-	stages->Add(ACTION_MAPS_REGISTRATION_STAGE);				// Action maps registration.
-	stages->Add(GAME_MODE_REGISTRATION_STAGE);					// Game modes registration.
-	stages->Add(FLOWNODE_RECOGNITION_STAGE);					// Flow graph nodes recognition.
-	stages->Add(AUDIO_IMPLEMENTATION_REGISTRATION_STAGE);		// Audio system implementations registration.
+	stages->Add(ENTITY_REGISTRATION_STAGE);                     // Entities registration.
+	stages->Add(ACTION_MAPS_REGISTRATION_STAGE);                // Action maps registration.
+	stages->Add(GAME_MODE_REGISTRATION_STAGE);                  // Game modes registration.
+	stages->Add(FLOWNODE_RECOGNITION_STAGE);                    // Flow graph nodes recognition.
+	stages->Add(AUDIO_IMPLEMENTATION_REGISTRATION_STAGE);       // Audio system implementations registration.
 	return stages;
 }
 

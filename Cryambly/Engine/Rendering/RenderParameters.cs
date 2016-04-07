@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using CryCil.Engine.Models.StaticObjects;
+using CryCil.Engine.Rendering.Nodes;
 using CryCil.Graphics;
 
 namespace CryCil.Engine.Rendering
@@ -32,11 +34,6 @@ namespace CryCil.Engine.Rendering
 		/// </summary>
 		public Matrix34* CurrentTransformation;
 		/// <summary>
-		/// Pointer to object that provides information about instancing of this object.
-		/// </summary>
-		/// <remarks>Used internally by the renderer.</remarks>
-		public IntPtr InstancingInformation; // SInstancingInfo *
-		/// <summary>
 		/// Matrix that represents all transformations that were applied to this object during last frame.
 		/// </summary>
 		/// <remarks>Used for motion blur.</remarks>
@@ -53,7 +50,7 @@ namespace CryCil.Engine.Rendering
 		/// <summary>
 		/// Pointer to material that overrides object's one(?).
 		/// </summary>
-		public IntPtr Material; // IMaterial *
+		public Material Material; // IMaterial *
 		/// <summary>
 		/// Pointer to object that provides skeleton implementation for bendable foliage.
 		/// </summary>
@@ -61,29 +58,17 @@ namespace CryCil.Engine.Rendering
 		/// <summary>
 		/// Pointer to render mesh that contains a stream of weight values used for deformation morphs.
 		/// </summary>
-		public IntPtr Weights; // IRenderMesh *
+		public CryRenderMesh Weights; // IRenderMesh *
 		/// <summary>
 		/// Pointer to Render Node object.
 		/// </summary>
 		/// <remarks>Original comment: Object Id for objects identification in renderer.</remarks>
-		public IntPtr RenderNode; // IRenderNode *
+		public CryRenderNode RenderNode; // IRenderNode *
 		/// <summary>
 		/// Unique identifier of the rendered object in the renderer.
 		/// </summary>
 		/// <remarks>Original comment: Unique object Id for objects identification in renderer.</remarks>
 		public void* Instance;
-		/// <summary>
-		/// Pointer to object that provides data for rendering grass.
-		/// </summary>
-		public IntPtr TerrainTextureInfo; // SSectorTextureSet *
-		/// <summary>
-		/// Pointer to the storage of LOD transition states.
-		/// </summary>
-		public IntPtr RNTmpData; // CRNTmpData **
-		/// <summary>
-		/// Dynamic render data object which can be set by the game.
-		/// </summary>
-		public IntPtr ShaderParameters; // DynArray<SShaderParam> *
 		/// <summary>
 		/// Object's ambient color.
 		/// </summary>
@@ -108,10 +93,6 @@ namespace CryCil.Engine.Rendering
 		/// Light mask to specify which light to use on the object.
 		/// </summary>
 		public uint DynamicLightMask;
-		// Summary: Approximate information about the lights not included into nDLightMask.
-
-		// SRestLightingInfo restLightInfo;
-
 		/// <summary>
 		/// Flags that specify rendering of the object.
 		/// </summary>
@@ -132,10 +113,6 @@ namespace CryCil.Engine.Rendering
 		/// Layer effects.
 		/// </summary>
 		public uint LayerEffectParams;
-		/// <summary>
-		/// Defines what pieces of pre-broken geometry have to be rendered.
-		/// </summary>
-		public ulong SubObjectHideMask;
 		/// <summary>
 		/// Defines per object float custom data.
 		/// </summary>
@@ -172,13 +149,5 @@ namespace CryCil.Engine.Rendering
 		/// Material layers bitmask &gt; which material layers are active.
 		/// </summary>
 		public byte MaterialLayers;
-		/// <summary>
-		/// Force a sort value for render elements.
-		/// </summary>
-		public byte RenderList;
-		/// <summary>
-		/// Special sorter to ensure correct ordering even if parts of the 3DEngine are run in parallel.
-		/// </summary>
-		public uint RenderItemSorter;
 	}
 }

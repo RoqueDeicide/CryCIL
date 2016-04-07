@@ -650,6 +650,9 @@
     <ClInclude Include="Interops\MeshObject.h">
       <Filter>Interops\Engine\Models</Filter>
     </ClInclude>
+    <ClInclude Include="Interops\MonoRenderParameters.h">
+      <Filter>Interops\Engine\Logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -871,9 +874,6 @@
     </ClCompile>
     <ClCompile Include="Interops\Game.cpp">
       <Filter>Interops</Filter>
-    </ClCompile>
-    <ClCompile Include="TypeMapChecks\RenderParameters.cpp">
-      <Filter>TypeMapChecks</Filter>
     </ClCompile>
     <ClCompile Include="TypeMapChecks\DynamicLightFlags.cpp">
       <Filter>TypeMapChecks</Filter>

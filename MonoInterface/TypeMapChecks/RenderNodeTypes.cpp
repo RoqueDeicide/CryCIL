@@ -21,7 +21,7 @@ TYPE_MIRROR enum ERType
 	eERType_Dummy_0_check,
 	eERType_Rope_check,
 	eERType_PrismObject_check,
-	eERType_Dummy_2_check,
+	eERType_TerrainSector_check,
 	eERType_LightPropagationVolume_check,
 	eERType_RenderProxy_check,
 	eERType_GameEffect_check,
@@ -53,7 +53,7 @@ inline void Check()
 	CHECK_ENUM(eERType_Dummy_0);
 	CHECK_ENUM(eERType_Rope);
 	CHECK_ENUM(eERType_PrismObject);
-	CHECK_ENUM(eERType_Dummy_2);
+	CHECK_ENUM(eERType_TerrainSector);
 	CHECK_ENUM(eERType_LightPropagationVolume);
 	CHECK_ENUM(eERType_RenderProxy);
 	CHECK_ENUM(eERType_GameEffect);
