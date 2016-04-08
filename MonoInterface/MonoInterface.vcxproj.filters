@@ -27,9 +27,6 @@
     <ClInclude Include="DoxygenExampleFiles\ListenerExample.h">
       <Filter>DoxygenExampleFiles\CryCIL Listeners\Native Listener</Filter>
     </ClInclude>
-    <ClInclude Include="List.h">
-      <Filter>Extras</Filter>
-    </ClInclude>
     <ClInclude Include="SortedList.h">
       <Filter>Extras</Filter>
     </ClInclude>
@@ -652,6 +649,9 @@
     </ClInclude>
     <ClInclude Include="Interops\MonoRenderParameters.h">
       <Filter>Interops\Engine\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="List.h">
+      <Filter>Extras</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,9 @@
-#pragma once
+﻿#pragma once
 
 #include <functional>
+#include <initializer_list>
+#include "ArrayHeader.h"
+#include "ReadOnlyList.h"
 
 #ifdef CRYCIL_MODULE
 #include <ISystem.h>
@@ -10,17 +13,15 @@
 #else
 
 #include <stdexcept>
+#include <assert.h>
 #define FatalError(message) throw std::logic_error(message)
 
 #endif // CRYCIL_MODULE
 
-#include <initializer_list>
-#include "ReadOnlyList.h"
+template<typename ElementType, typename AllocatorType> class List;
 
-template<typename ElementType> class List;
-
-//! Specializations of this template define the static field named "shift" are used by a list iterator to advance to next
-//! object.
+//! Specializations of this template define the static field named "shift" are used by a list iterator to advance
+//! to next object.
 template<bool normal>
 struct DirectionTraits
 {
@@ -42,22 +43,22 @@ struct DirectionTraits<false>
 //!
 //! @tparam ElementType     Type that represents items the list contains.
 //! @tparam NormalIteration Indicates whether the iterator will not reverse the order of iteration.
-template<typename ElementType, bool NormalIteration>
+template<typename ElementType, typename AllocatorType, bool NormalIteration>
 class ListIterator
 {
-	const List<ElementType> *list;
+	const List<ElementType, AllocatorType> *list;
 	int currentPosition;
 public:
 	//! Creates an iterator for a given list that starts iteration from a specified position.
 	//!
 	//! @param list 
-	ListIterator(const List<ElementType> *list, int initialPosition)
+	ListIterator(const List<ElementType, AllocatorType> *list, int initialPosition)
 	{
 		this->list = list;
 		this->currentPosition = initialPosition;
 	}
 	//! Determines whether this iterator is not on the same position within the same list as the other iterator.
-	bool operator !=(const ListIterator<ElementType, NormalIteration> &other) const
+	bool operator !=(const ListIterator &other) const
 	{
 		// I don't think that the second check is needed, but whatever, its mostly the same in terms of performance.
 		return this->currentPosition != other.currentPosition && this->list != other.list;
@@ -67,13 +68,13 @@ public:
 	//! Returns unmodifiable reference to the element this iterator is currently at.
 	const ElementType &operator *() const;
 	//! Moves this iterator to the next element in the list.
-	const ListIterator<ElementType, NormalIteration> &operator ++()
+	const ListIterator &operator ++()
 	{
 		this->currentPosition += DirectionTraits<NormalIteration>::shift;
 		return *this;
 	}
 	//! Moves this iterator to the previous element in the list.
-	const ListIterator<ElementType, NormalIteration> &operator --()
+	const ListIterator &operator --()
 	{
 		this->currentPosition -= DirectionTraits<NormalIteration>::shift;
 		return *this;
@@ -97,215 +98,388 @@ inline int DefaultComparison(KeyType &k1, KeyType &k2)
 	return 0;
 }
 
-//! Represents an expandable list of items.
+//! Defines static functions that can be used by objects of type List to manipulate memory for elements.
 //!
-//! @tparam ElementType        Type that represents items this list contains.
-template<typename ElementType>
+//! @typeparam T     Type of objects that are contained within the list.
+//! @typeparam align Optional value that specifies over-alignment of each element.
+template<typename T, size_t align = alignof(T)>
+struct DefaultListAllocator
+{
+	static_assert(align >= 1, "Cannot use negative values for alignment.");
+	static_assert(align >= alignof(T), "Alignment value must be greater then or equal to type's minimal alignment requirement.");
+
+	//! Allocates enough memory to fit "count" elements.
+	static T *alloc(size_t count)
+	{
+		return static_cast<T *>(_aligned_malloc(count * sizeof(T), align));
+	}
+	//! Reallocates enough memory to fit "count" elements.
+	static T *realloc(T *ptr, size_t count)
+	{
+		return static_cast<T *>(_aligned_realloc(ptr, count * sizeof(T), align));
+	}
+	//! Releases the memory.
+	static void free(T *ptr)
+	{
+		_aligned_free(ptr);
+	}
+};
+
+#pragma warning(push)
+#pragma warning(disable : 4522)
+
+//! Represents a mutable list of objects.
+//!
+//! @typeparam ElementType   Type of objects in this list.
+//! @typeparam AllocatorType A type that defines static functions alloc and free that are invoked by objects
+//!                          of this type to manipulate memory for elements. Look at @see DefaultListAllocator
+//!                          to see how it should be implemented.
+template<typename ElementType, typename AllocatorType = DefaultListAllocator<ElementType>>
 class List
 {
 public:
-	typedef std::function<void(ElementType&)> Enumerator;
-	typedef std::function<void(ElementType&, int)> EnumeratorIndex;
-	typedef std::function<bool(ElementType&)> Predicate;
-private:
-	ElementType *elements;
-	int length;
-	int capacity;
-public:
-	//! Assigns contents of the temporary object to the new one.
-	List(List<ElementType> &&other)
-		: elements(other.elements)
-		, length(other.length)
-		, capacity(other.length)
-	{
-		other.elements = nullptr;
-	}
-	//! Creates a default list.
-	//!
-	//! Default capacity is 10.
-	List()
-	{
-		this->length = 0;
-		this->capacity = 10;
-		this->elements = new ElementType[this->capacity];
-	}
-	//! Creates a new list.
-	//!
-	//! @param initialCapacity Number of items this list is planned to hold.
-	explicit List(int initialCapacity)
-	{
-		this->length = 0;
-		this->capacity = initialCapacity;
-		this->elements = new ElementType[this->capacity];
-	}
-	//! Creates a new list.
-	//!
-	//! @param collection Vector that contains elements to pre-populate this list with.
-	explicit List(std::vector<ElementType> &collection)
-	{
-		this->length = 0;
-		int collectionSize = collection.size();
-		if (collectionSize <= 0)
-		{
-			this->capacity = 10;
-		}
-		this->elements = new ElementType[this->capacity];
-		if (collectionSize > 0)
-		{
-			this->AddRange(collection);
-		}
-	}
-	//! Constructs a deep copy of the list.
-	List(const List<ElementType> &list)
-	{
-		this->capacity = list.capacity;
-		this->length = list.length;
-		this->elements = new ElementType[this->capacity];
-		for (int i = 0; i < this->length; i++)
-		{
-			this->elements[i] = list.elements[i];
-		}
-	}
-	//! Creates new list from data that was detached from another one.
-	//!
-	//! List should be trimmed before detachment.
-	List(ElementType *elements, int capacity)
-	{
-		this->capacity = capacity;
-		this->length   = capacity;
-		this->elements = elements;
-	}
-	//! Creates a new list with specified elements.
-	//!
-	//! Example:
-	//!
-	//! @code{.cpp}
-	//!
-	//! List<const char *> lines = { "First line", "Second line", "Third line", "Fourth line" };
-	//!
-	//! @endcode
-	//!
-	//! @param initialElements A sequence of elements that were specified inside the braced initialization
-	//!                        list.
-	List(std::initializer_list<ElementType> initialElements, int capacity = -1)
-		: length(0)
-	{
-		if (initialElements.size() == 0)
-		{
-			this->length = 0;
-			this->capacity = capacity < 0 ? 10 : capacity;
-			this->elements = new ElementType[this->capacity];
-		}
-		else
-		{
-			int length = initialElements.size();
-			this->capacity = capacity < length ? length : capacity;
-			this->elements = new ElementType[length];
+	// Type defs for everything.
+	typedef ElementType value_type;
+	typedef ElementType *pointer;
+	typedef const ElementType *const_pointer;
+	typedef ElementType &reference;
+	typedef const ElementType &const_reference;
 
-			for (auto current = initialElements.begin(); current < initialElements.end(); current++)
-			{
-				this->elements[this->length++] = *current;
-			}
+	typedef size_t size_type;
+	typedef ptrdiff_t difference_type;
+	
+	typedef std::function<void(reference)> Enumerator;
+	typedef std::function<void(reference,  size_type)> EnumeratorIndex;
+	typedef std::function<bool(reference)> Predicate;
+
+	typedef DefaultListAllocator<ElementType> allocator_type;
+private:
+	struct ListObj
+	{
+		int refCount;
+		size_type length;
+		size_type capacity;
+		pointer elements;
+
+		ListObj()
+			: refCount(1)
+			, length(0)
+			, capacity(0)
+			, elements(nullptr)
+		{
+		}
+	};
+	ListObj *list;
+public:
+	//! Returns a reference to the element at specified index. No checks are performed.
+	reference operator[](size_type index)
+	{
+		return this->list->elements[index];
+	}
+	//! Returns a reference to the element at specified index. No checks are performed.
+	const_reference operator[](size_type index) const
+	{
+		return this->list->elements[index];
+	}
+	//! Returns a reference to the element at specified index. Index is clamped into the range.
+	ElementType &At(int index)
+	{
+		if (index < 0)
+		{
+			index = 0;
+		}
+		if (index >= this->list->length)
+		{
+			index = this->list->length - 1;
+		}
+		return this->list->elements[index];
+	}
+	//! Returns a reference to the element at specified index. Index is clamped into the range.
+	const ElementType &At(int index) const
+	{
+		if (index < 0)
+		{
+			index = 0;
+		}
+		if (index >= this->list->length)
+		{
+			index = this->list->length - 1;
+		}
+		return this->list->elements[index];
+	}
+	ElementType *Data() const
+	{
+		return this->list->elements;
+	}
+
+	//! Gets or sets capacity of this list.
+	__declspec(property(get = GetCapacity, put = SetCapacity))size_type Capacity;
+	size_type GetCapacity() const
+	{
+		return this->list->capacity;
+	}
+	void SetCapacity(size_type value)
+	{
+		assert(value >= 0);
+
+		auto oldCapacity = this->list->capacity;
+
+		if (this->list->length > value)
+		{
+			// Destroy all items that are now outside of the list.
+			this->Length = value;
+		}
+
+		this->list->elements = allocator_type::realloc(this->list->elements, value);
+		this->list->capacity = value;
+	}
+
+	//! Gets the number of live objects in this list.
+	__declspec(property(get = GetLength, put = SetLength))size_type Length;
+	size_type GetLength() const
+	{
+		return this->list->length;
+	}
+private:
+	void SetLength(size_type value)
+	{
+		assert(value >= 0);
+
+		for (size_type i = this->list->length - 1; i >= value; i--)
+		{
+			this->list->elements[i].~value_type();
 		}
 	}
+public:
+	//! Creates a default object of this type.
+	List() : List(20) {}
+	//! Creates a new list that can fit certain number of items.
+	List(size_type initialCapacity)
+	{
+		this->list = new ListObj();
+		this->Capacity = initialCapacity;
+	}
+
 	~List()
 	{
-		if (this->elements)
-		{
-			//std::cout << "Trying to free elements:" << std::endl;
-			delete[] this->elements;
-			this->elements = nullptr;
-			this->length = 0;
-			this->capacity = 0;
-		}
+		std::cout << "Invoking the list destructor." << std::endl;
+
+		this->Release();
+
+		std::cout << "Invoked the list destructor." << std::endl;
 	}
-	//! Swaps internal data between too lists.
-	SWAP_ASSIGNMENT List<ElementType> &operator=(List<ElementType> &other)
+private:
+	void Release()
 	{
-		if (this->elements != other.elements)
+		std::cout << "Releasing the list. Reference count is " << this->list->refCount << std::endl;
+		if (--this->list->refCount == 0)
 		{
-			std::swap(this->elements, other.elements);
-			std::swap(this->length,   other.length);
-			std::swap(this->capacity, other.capacity);
-		}
-		return *this;
-	}
-	//! Places an item at the end of this list.
-	//!
-	//! @param item Item to add.
-	//!
-	//! @returns A reference to this object to allow chaining of Add() calls.
-	List<ElementType> &Add(ElementType item)
-	{
-		this->Expand(this->length + 1);
-		this->elements[this->length++] = item;
-		return *this;
-	}
-	//! Adds a sequence of items to the list.
-	//!
-	//! @returns A reference to this object to allow chaining of Add() calls.
-	List<ElementType> &Add(std::initializer_list<ElementType> elements)
-	{
-		if (elements.size() == 0)
-		{
-			return *this;
+			std::cout << "Destroying the elements. Reference count is " << this->list->refCount << std::endl;
+
+			// Destroy the elements.
+			for (size_type i = 0; i < this->list->length; i++)
+			{
+				this->list->elements[i].~value_type();
+			}
+
+			// Deallocate the memory.
+			allocator_type::free(this->list->elements);
+
+			// Delete the object.
+			delete this->list;
 		}
 
-		this->Expand(this->length + elements.size());
-		for (auto i = elements.begin(); i < elements.end(); i++)
+		this->list = nullptr;
+	}
+public:
+	//! Assigns a deep copy of another list to this one.
+	List &operator =(const List &other)
+	{
+		this->Release();
+
+		this->list = new ListObj();
+
+		this->Capacity = other.Capacity;
+		
+		for (size_type i = 0; i < other.list->length; i++)
 		{
-			this->elements[this->length++] = *i;
+			this->list->elements[i] = other.list->elements[i];
 		}
+		this->list->length = other.list->length;
+
 		return *this;
 	}
-	//! Adds a range of items to the end of the list.
-	//!
-	//! @param collection A collection of elements to add.
-	void AddRange(std::vector<ElementType> &collection)
+	//! Assigns a shallow copy of another list to this one.
+	List &operator =(List &other)
 	{
-		int collectionSize = collection.size();
-		if (collectionSize <= 0)
+		this->Release();
+
+		this->list = other.list;
+		this->list->refCount++;
+
+		return *this;
+	}
+	//! Assigns contents of the initializer list to this one.
+	List &operator =(std::initializer_list<value_type> objects)
+	{
+		// Destroy all objects.
+		this->Length = 0;
+
+		// Copy the objects.
+		for (auto current = objects.begin(); current != objects.end(); current++)
+		{
+			this->list->elements[this->list->length++] = *current;
+		}
+
+		return *this;
+	}
+
+	//! Inserts a new element at the end of this list.
+	List &operator <<(reference obj)
+	{
+		return this->Add(obj);
+	}
+	//! Inserts a set of elements at the end of this list.
+	List &operator <<(std::initializer_list<value_type> items)
+	{
+		return this->Add(items.begin(), items.size());
+	}
+	//! Inserts a set of elements at the end of this list.
+	List &operator <<(const List &items)
+	{
+		return this->Add(items.list->elements, items.list->length);
+	}
+
+	//! Adds a default object of type ElementType to the end of this list.
+	List &Add()
+	{
+		this->EnsureCapacity(this->Length + 1);
+
+		new (&this->list->elements[this->list->length++]) value_type();
+
+		return *this;
+	}
+	//! Inserts a default object of type ElementType into this list.
+	//!
+	//! @param index Zero-based index of the element to insert the object into. This value is clamped into
+	//!              [0; currentListLength] range before actual operation.
+	List &Insert(size_type index)
+	{
+		if (index >= this->list->length)
+		{
+			return this->Add();
+		}
+
+		this->EnsureCapacity(this->Length + 1);
+
+		this->MoveRange(index, index + 1, this->list->length - index);
+
+		new (&this->list->elements[index]) value_type();
+		this->list->length++;
+
+		return *this;
+	}
+	//! Adds a new object of type ElementType to the end of this list.
+	List &Add(reference item)
+	{
+		this->EnsureCapacity(this->Length + 1);
+
+		this->list->elements[this->list->length++] = item;
+
+		return *this;
+	}
+	//! Inserts an object of type ElementType into this list.
+	//!
+	//! @param index Zero-based index of the element to insert the object into. This value is clamped into
+	//!              [0; currentListLength] range before actual operation.
+	List &Insert(size_type index, reference item)
+	{
+		if (index >= this->list->length)
+		{
+			return this->Add();
+		}
+
+		this->EnsureCapacity(this->Length + 1);
+
+		this->MoveRange(index, index + 1, this->list->length - index);
+
+		this->list->elements[index] = item;
+		this->list->length++;
+
+		return *this;
+	}
+	//! Adds a set of items to the end of this list.
+	List &Add(std::initializer_list<value_type> items)
+	{
+		return this->Add(items.begin(), items.size());
+	}
+	//! Inserts a set of objects of type ElementType into this list.
+	//!
+	//! @param index Zero-based index of the element to insert the first object into. This value is clamped into
+	//!              [0; currentListLength] range before actual operation.
+	List &Insert(size_type index, std::initializer_list<value_type> items)
+	{
+		return this->Insert(index, items.begin(), items.size());
+	}
+	//! Adds a set of items to the end of this list.
+	List &Add(const List &items)
+	{
+		return this->Add(items.list->elements, items.list->length);
+	}
+	//! Inserts a set of objects of type ElementType into this list.
+	//!
+	//! @param index Zero-based index of the element to insert the first object into. This value is clamped into
+	//!              [0; currentListLength] range before actual operation.
+	List &Insert(size_type index, const List &items)
+	{
+		return this->Insert(index, items.list->elements, items.list->length);
+	}
+	//! Adds a set of items to the end of this list.
+	List &Add(const_pointer items, size_type count)
+	{
+		if (count == 0)
 		{
 			return;
 		}
-		this->Expand(this->length + collectionSize);
-		for (auto i = collection.begin(); i != collection.end(); i++)
+
+		this->EnsureCapacity(this->list->elements + count);
+
+		// Copy the objects.
+		for (size_type i = 0; i < count; i++)
 		{
-			this->elements[this->length++] = i;
+			this->list->elements[this->list->length++] = items[i];
 		}
+
+		return *this;
 	}
-	//! Adds a range of items to the end of the list.
+	//! Inserts a set of objects of type ElementType into this list.
 	//!
-	//! @param items     Pointer to the first element to add.
-	//! @param itemCount Number of elements to add.
-	void AddRange(ElementType *items, int itemCount)
+	//! @param index Zero-based index of the element to insert the first object into. This value is clamped into
+	//!              [0; currentListLength] range before actual operation.
+	List &Insert(size_type index, const_pointer items, size_type count)
 	{
-		if (itemCount <= 0)
+		if (count == 0)
 		{
 			return;
 		}
 
-		this->Expand(this->length + itemCount);
-		for (int i = 0; i < itemCount; i++)
+		if (index >= this->list->length)
 		{
-			this->elements[this->length++] = items[i];
-		}
-	}
-	//! Adds a range of items to the end of the list.
-	//!
-	//! @param items A collection of items to add.
-	void AddRange(List<ElementType> *items)
-	{
-		if (!items || items->Length <= 0)
-		{
-			return;
+			this->Add(items);
 		}
 
-		this->Expand(this->length + items->length);
-		for (int i = 0; i < items->length; i++)
+		this->EnsureCapacity(this->list->elements + count);
+
+		this->MoveRange(index, index + count, this->list->length - index + count);
+
+		// Copy the objects.
+		for (size_type i = 0; i < count; i++)
 		{
-			this->elements[this->length++] = items->At(i);
+			this->list->elements[index++] = items[i];
 		}
+		this->list->length += count;
+
+		return *this;
 	}
 	//! Linearly searches for a first item for which given condition is true and replaces it with given one, or just adds
 	//! the item to the end of the list, if there are no items in the list for which the condition is true.
@@ -314,102 +488,19 @@ public:
 	//! @param match An object that represents a condition that must be met for the item to be replaced with given one.
 	//!
 	//! @returns True, if the item was found and replaced, otherwise false.
-	bool AddOverride(ElementType item, Predicate match)
+	bool AddOverride(reference item, Predicate predicate)
 	{
-		int index = this->IndexOf(match);
+		difference_type index = this->IndexOf(predicate);
 		if (index == -1)
 		{
 			this->Add(item);
 			return false;
 		}
-		ElementType overridenItem = this->elements[index];
-		this->elements[index] = item;
+		ElementType overridenItem = this->list->elements[index];
+		this->list->elements[index] = item;
 
 		// We are not going to do anything about the overridden item: we just gonna let its destructor invoked.
 		return true;
-	}
-	//! Inserts an item into specific position within the list.
-	//!
-	//! @param item     Item to insert.
-	//! @param position Zero-based index of the position where the item will be located after
-	//!                 insertion. If position is less then 0 then it will be equated to zero.
-	//!                 If position is greater then length of the list, item will be added to
-	//!                 the end of the list.
-	void Insert(ElementType &item, int position)
-	{
-		if (position < 0)
-		{
-			position = 0;
-		}
-		if (position > this->length)
-		{
-			this->Add(item);
-		}
-		else
-		{
-			this->Expand(this->length + 1);
-			this->MoveRange(position, position + 1, this->length - position);
-			this->elements[position] = item;
-			this->length++;
-		}
-	}
-	//! Inserts a collection of items into specific position within the list.
-	//!
-	//! @param items     Pointer to the first element to copy.
-	//! @param itemCount Number of elements to copy.
-	//! @param position  Zero-based index of the position where the first element of
-	//!                  inserted collection will located after insertion.
-	//!                  If position is less then 0 then it will be equated to zero.
-	//!                  If position is greater then length of the list, item will be
-	//!                  added to the end of the list.
-	void InsertRange(ElementType *items, int itemCount, int position)
-	{
-		if (position < 0)
-		{
-			position = 0;
-		}
-		if (position > this->length)
-		{
-			this->AddRange(items, itemCount);
-		}
-		else
-		{
-			this->Expand(this->length + 1);
-			this->MoveRange(position, position + itemCount, this->length - position + itemCount);
-			for (int i = 0; i < itemCount; i++)
-			{
-				this->elements[position + i] = items[i];
-			}
-			this->length += itemCount;
-		}
-	}
-	//! Inserts a collection of items into specific position within the list.
-	//!
-	//! @param items    A collection of elements to copy.
-	//! @param position Zero-based index of the position where the first element of
-	//!                 inserted collection will located after insertion.
-	//!                 If position is less then 0 then it will be equated to zero.
-	//!                 If position is greater then length of the list, item will be
-	//!                 added to the end of the list.
-	void InsertRange(std::vector<ElementType> &items, int position)
-	{
-		if (items.size() <= 0)
-		{
-			return;
-		}
-		this->InsertRange(items.data(), items.size(), position);
-	}
-	//! Inserts a collection of items into specific position within the list.
-	//!
-	//! @param items    A collection of elements to copy.
-	//! @param position Zero-based index of the position where the first element of
-	//!                 inserted collection will located after insertion.
-	//!                 If position is less then 0 then it will be equated to zero.
-	//!                 If position is greater then length of the list, item will be
-	//!                 added to the end of the list.
-	void InsertRange(List<ElementType> &items, int position)
-	{
-		this->InsertRange(items.elements, items.length, position);
 	}
 	//! Removes an element at the specified position.
 	//!
@@ -419,19 +510,15 @@ public:
 	//!              removed from the end of the list.
 	//!
 	//! @return A removed element.
-	ElementType RemoveAt(int index)
+	ElementType RemoveAt(size_type index)
 	{
-		if (index < 0)
-		{
-			index = 0;
-		}
-		if (index > this->length)
+		if (index > this->list->length)
 		{
 			return this->RemoveBack();
 		}
-		ElementType removedElement = this->elements[index];
-		this->MoveRange(index + 1, index, this->length - index - 1);
-		this->length--;
+		ElementType removedElement = this->list->elements[index];
+		this->MoveRange(index + 1, index, this->list->length - index - 1);
+		this->list->length--;
 		return removedElement;
 	}
 	//! Removes an element at the specified position.
@@ -441,18 +528,15 @@ public:
 	//!              If position is greater then length of the list, item will be
 	//!              removed from the end of the list.
 	//! @param count Number of elements to remove.
-	void RemoveRangeAt(int index, int count)
+	void RemoveAt(size_type index, size_type count)
 	{
-		if (index < 0)
+		if (index > this->list->length)
 		{
-			index = 0;
+			return this->RemoveBack(count);
 		}
-		if (index > this->length)
-		{
-			return this->RemoveRangeBack(count);
-		}
-		this->MoveRange(index + count, index, this->length - index - count);
-		this->length -= count;
+
+		this->MoveRange(index + count, index, this->list->length - index - count);
+		this->Length -= count;
 	}
 	//! Removes an element from the end of the list.
 	//!
@@ -469,19 +553,23 @@ public:
 	//! @return A removed element.
 	ElementType RemoveBack()
 	{
-		return this->elements[--(this->length)];
+		if (this->list->length == 0)
+		{
+			return;
+		}
+		return this->list->elements[--(this->list->length)];
 	}
 	//! Removes a range of elements from the end of the list.
 	//!
 	//! @param count Number of elements to remove.
-	void RemoveRangeBack(int count)
+	void RemoveBack(size_type count)
 	{
-		this->length -= count;
+		this->Length -= count;
 	}
 	//! Clears the collection.
 	void Clear()
 	{
-		this->length = 0;
+		this->Length = 0;
 	}
 	//! Clears the collection while allowing an action to be done to the each element.
 	//!
@@ -489,18 +577,18 @@ public:
 	//!             that is invoked for each element within this list.
 	void Clear(Enumerator func)
 	{
-		for (int i = 0; i < this->length; i++)
+		for (int i = 0; i < this->list->length; i++)
 		{
-			func(this->elements[i]);
+			func(this->list->elements[i]);
 		}
-		this->length = 0;
+		this->Length = 0;
 	}
 	//! Applies delete operator to each element in this list.
 	void DeleteAll()
 	{
-		for (int i = 0; i < this->length; i++)
+		for (int i = 0; i < this->list->length; i++)
 		{
-			delete this->elements[i];
+			delete this->list->elements[i];
 		}
 	}
 	//! Clears the collection while allowing an action to be done to the each element.
@@ -510,11 +598,11 @@ public:
 	//!             list, within integer number being the index of the object.
 	void Clear(EnumeratorIndex func)
 	{
-		for (int i = 0; i < this->length; i++)
+		for (int i = 0; i < this->list->length; i++)
 		{
-			func(this->elements[i], i);
+			func(this->list->elements[i], i);
 		}
-		this->length = 0;
+		this->Length = 0;
 	}
 	//! Performs a binary search for an element.
 	//!
@@ -560,13 +648,13 @@ public:
 		{
 			comparison = DefaultComparison<ElementType>;
 		}
-		
-		int lo = 0;
-		int hi = this->Length - 1;
+
+		difference_type lo = 0;
+		difference_type hi = this->Length - 1;
 		while (lo <= hi)
 		{
 			int i = lo + ((hi - lo) >> 1);
-			int order = comparison(this->elements[i], element);
+			int order = comparison(this->list->elements[i], element);
 
 			if (order == 0) return i;
 			if (order < 0)
@@ -587,9 +675,9 @@ public:
 	//!             that is invoked for each element within this list.
 	void ForEach(Enumerator func)
 	{
-		for (int i = 0; i < this->length; i++)
+		for (int i = 0; i < this->list->length; i++)
 		{
-			func(this->elements[i]);
+			func(this->list->elements[i]);
 		}
 	}
 	//! Performs an action on each element within the list.
@@ -597,11 +685,11 @@ public:
 	//! @param func  Pointer to the function that takes an object of type ElementType
 	//!              that is invoked for each element within this list.
 	//! @param index Zero-based index of the first element with which to start iteration.
-	void ForEach(Enumerator func, int index)
+	void ForEach(Enumerator func, size_type index)
 	{
-		for (int i = index; i < this->length; i++)
+		for (int i = index; i < this->list->length; i++)
 		{
-			func(this->elements[i]);
+			func(this->list->elements[i]);
 		}
 	}
 	//! Performs an action on each element within the list.
@@ -610,12 +698,12 @@ public:
 	//!              that is invoked for each element within this list.
 	//! @param index Zero-based index of the first element with which to start iteration.
 	//! @param count Number of elements to iterate through.
-	void ForEach(Enumerator func, int index, int count)
+	void ForEach(Enumerator func, size_type index, size_type count)
 	{
 		int counter = 0;
 		for (int i = index; counter < count; i++, counter++)
 		{
-			func(this->elements[i]);
+			func(this->list->elements[i]);
 		}
 	}
 	//! Performs an action on each element within the list.
@@ -625,9 +713,9 @@ public:
 	//!             list, within integer number being the index of the object.
 	void ThroughEach(EnumeratorIndex func)
 	{
-		for (int i = 0; i < this->length; i++)
+		for (int i = 0; i < this->list->length; i++)
 		{
-			func(this->elements[i], i);
+			func(this->list->elements[i], i);
 		}
 	}
 	//! Performs an action on each element within the list.
@@ -636,11 +724,11 @@ public:
 	//!              and integer number that is invoked for each element within this
 	//!              list, within integer number being the index of the object.
 	//! @param index Zero-based index of the first element with which to start iteration.
-	void ThroughEach(EnumeratorIndex func, int index)
+	void ThroughEach(EnumeratorIndex func, size_type index)
 	{
-		for (int i = index; i < this->length; i++)
+		for (int i = index; i < this->list->length; i++)
 		{
-			func(this->elements[i], i);
+			func(this->list->elements[i], i);
 		}
 	}
 	//! Performs an action on each element within the list.
@@ -650,12 +738,12 @@ public:
 	//!              list, within integer number being the index of the object.
 	//! @param index Zero-based index of the first element with which to start iteration.
 	//! @param count Number of elements to iterate through.
-	void ThroughEach(EnumeratorIndex func, int index, int count)
+	void ThroughEach(EnumeratorIndex func, size_type index, size_type count)
 	{
 		int counter = 0;
-		for (int i = index; counter < count; i++, counter++)
+		for (int i = index; counter < count && i < this->list->length; i++, counter++)
 		{
-			func(this->elements[i], i);
+			func(this->list->elements[i], i);
 		}
 	}
 	//! Goes through the list and returns first element that satisfies a condition.
@@ -666,11 +754,11 @@ public:
 	//!         to the type of elements of the list is returned.
 	ElementType *Find(Predicate match)
 	{
-		for (int i = 0; i < this->length; i++)
+		for (int i = 0; i < this->list->length; i++)
 		{
-			if (match(this->elements[i]))
+			if (match(this->list->elements[i]))
 			{
-				return &this->elements[i];
+				return &this->list->elements[i];
 			}
 		}
 		return nullptr;
@@ -682,9 +770,9 @@ public:
 	//! @return Zero-based index of the first element that matched the condition, if any, otherwise -1.
 	int IndexOf(Predicate match)
 	{
-		for (int i = 0; i < this->length; i++)
+		for (int i = 0; i < this->list->length; i++)
 		{
-			if (match(this->elements[i]))
+			if (match(this->list->elements[i]))
 			{
 				return i;
 			}
@@ -698,138 +786,64 @@ public:
 	//! @return Zero-based index of the last element that matched the condition, if any, otherwise -1.
 	int LastIndexOf(Predicate match)
 	{
-		for (int i = this->length - 1; i >= 0; i--)
+		for (int i = this->list->length - 1; i >= 0; i--)
 		{
-			if (match(this->elements[i]))
+			if (match(this->list->elements[i]))
 			{
 				return i;
 			}
 		}
 		return -1;
 	}
-	//! Gets or sets capacity of this list.
-	__declspec(property(get=GetCapacity, put=SetCapacity)) int Capacity;
-	int GetCapacity() const
-	{
-		return this->capacity;
-	}
-	void SetCapacity(int value)
-	{
-		this->capacity = value;
-		// Allocate a new region in memory.
-		ElementType *newElements = new ElementType[this->capacity];
-		// Copy objects from old location to the new one.
-		for (int i = 0; i < this->length; i++)
-		{
-			newElements[i] = this->elements[i];
-		}
-		// Deallocate old array.
-		delete[] this->elements;
-		// Assign new array to this list.
-		this->elements = newElements;
-	}
-	//! Gets or sets number of elements within this list.
-	__declspec(property(get=GetLength)) int Length;
-	int GetLength() const
-	{
-		return this->length;
-	}
-	//! Returns a reference to the element at specified index. No checks are performed.
-	ElementType &operator[](int index)
-	{
-		return this->elements[index];
-	}
-	//! Returns a reference to the element at specified index. No checks are performed.
-	const ElementType &operator[](int index) const
-	{
-		return this->elements[index];
-	}
-	ElementType *Data() const
-	{
-		return this->elements;
-	}
-	//! Returns a reference to the element at specified index. Index is clamped into the range.
-	ElementType &At(int index)
-	{
-		if (index < 0)
-		{
-			index = 0;
-		}
-		if (index >= this->length)
-		{
-			index = this->length - 1;
-		}
-		return this->elements[index];
-	}
-	//! Returns a reference to the element at specified index. Index is clamped into the range.
-	const ElementType &At(int index) const
-	{
-		if (index < 0)
-		{
-			index = 0;
-		}
-		if (index >= this->length)
-		{
-			index = this->length - 1;
-		}
-		return this->elements[index];
-	}
-	List<ElementType> &Set(int index, ElementType& el)
-	{
-		if (index < 0)
-		{
-			index = 0;
-		}
-		if (index >= this->length)
-		{
-			index = this->length - 1;
-		}
-		this->elements[index] = el;
-		return *this;
-	}
-	//! Releases memory held by this list.
-	void Dispose()
-	{
-		this->~List();
-	}
-	//! Detaches underlying array of elements allowing this list object to be released without
-	//! releasing memory.
+	//! Creates a deep copy of this list.
 	//!
-	//! It is highly recommended to trim this list before detaching its data.
-	//!
-	//! @param capacity Number of elements that returned array can hold.
-	//!
-	//! @returns A pointer to the array of elements that used to be bound to this list.
-	ElementType *Detach(int &capacity)
+	//! @returns A pointer to array that will have to be deleted manually.
+	pointer Duplicate(size_type &itemCount)
 	{
-		capacity = this->capacity;
-		ElementType *elems = this->elements;
+		if (this->list->length == 0)
+		{
+			return nullptr;
+		}
 
-		this->elements = nullptr;
-		this->length = 0;
-		this->capacity = 0;
-		
-		return elems;
+		pointer items = new value_type[this->list->length];
+		itemCount = this->list->length;
+
+		for (size_type i = 0; i < itemCount; i++)
+		{
+			items[i] = this->list->elements[i];
+		}
+
+		return items;
 	}
 	//! Sets capacity of this list to number of valid elements it currently holds.
 	void Trim()
 	{
-		this->Capacity = this->length;
+		this->Capacity = this->list->length;
 	}
 	//! Creates an object that allows this list to be looked through without changing it.
 	__declspec(property(get = GetAsReadOnly)) ReadOnlyList<ElementType> AsReadOnly;
 	ReadOnlyList<ElementType> GetAsReadOnly() const
 	{
-		return ReadOnlyList<ElementType>(this->elements, this->length, this->capacity);
+		return ReadOnlyList<ElementType>(this->list->elements, this->list->length, this->list->capacity);
 	}
 private:
-	void Expand(int size)
+	void EnsureCapacity(size_type newSize)
 	{
-		if (this->capacity < size)
+		if (this->list->capacity >= newSize)
 		{
-			// Set new capacity.
-			this->Capacity = this->capacity * 2;
+			return;
 		}
+
+		// Determine new capacity.
+		size_type newCapacity = this->list->capacity != 0 ? this->list->capacity : 20;
+		while (this->list->capacity < newSize)
+		{
+			newCapacity *= 2;
+		}
+
+		// Reallocate the memory.
+		this->list->elements = allocator_type::realloc(this->list->elements, newCapacity);
+		this->list->capacity = newCapacity;
 	}
 	void MoveRange(int originalIndex, int destinationIndex, int count)
 	{
@@ -839,7 +853,7 @@ private:
 			// Move right to left.
 			for (int i = originalIndex + count - 1; i >= originalIndex; i--)
 			{
-				this->elements[i + offset] = this->elements[i];
+				this->list->elements[i + offset] = this->list->elements[i];
 			}
 		}
 		else if (offset < 0)
@@ -847,54 +861,54 @@ private:
 			// Move left to right.
 			for (int i = 0; i < count; i++)
 			{
-				this->elements[destinationIndex + i] = this->elements[originalIndex + i];
+				this->list->elements[destinationIndex + i] = this->list->elements[originalIndex + i];
 			}
 		}
 	}
 	// For STL-style iteration:
 public:
 	//! Creates an object that can iterate this list from the start.
-	ListIterator<ElementType, true> begin() const
+	ListIterator<ElementType, AllocatorType, true> begin() const
 	{
-		return ListIterator<ElementType, true>(this, 0);
+		return ListIterator<ElementType, AllocatorType, true>(this, 0);
 	}
 	//! Creates an object that can iterate this list from a specified position.
 	//!
 	//! @param start Zero-based index of the first element to start iteration from.
-	ListIterator<ElementType, true> begin_from(int start) const
+	ListIterator<ElementType, AllocatorType, true> begin_from(int start) const
 	{
-		return ListIterator<ElementType, true>(this, start);
+		return ListIterator<ElementType, AllocatorType, true>(this, start);
 	}
 	//! Creates an object that represents an iterator that reached the end of this list.
-	ListIterator<ElementType, true> end() const
+	ListIterator<ElementType, AllocatorType, true> end() const
 	{
-		return ListIterator<ElementType, true>(this, this->length);
+		return ListIterator<ElementType, AllocatorType, true>(this, this->list->length);
 	}
 	//! Used by this class when iterating through the list in reverse.
 	class ReversedList
 	{
-		const List<ElementType> *list;
+		const List<ElementType, allocator_type> *list;
 	public:
 		ReversedList(const List<ElementType> *list)
 		{
 			this->list = list;
 		}
 		//! Creates an object that can iterate this list from the last element.
-		ListIterator<ElementType, false> begin() const
+		ListIterator<ElementType, AllocatorType, false> begin() const
 		{
-			return ListIterator<ElementType, false>(this->list, this->list->length - 1);
+			return ListIterator<ElementType, AllocatorType, false>(this->list, this->list->length - 1);
 		}
 		//! Creates an object that can iterate this list from a specified position.
 		//!
 		//! @param start Zero-based index of the first element to start iteration from.
-		ListIterator<ElementType, false> begin_from(int start) const
+		ListIterator<ElementType, AllocatorType, false> begin_from(int start) const
 		{
-			return ListIterator<ElementType, false>(this, this->list->length - 1 - start);
+			return ListIterator<ElementType, AllocatorType, false>(this, this->list->length - 1 - start);
 		}
 		//! Creates an object that represents an iterator that reached the end of this list.
-		ListIterator<ElementType, false> end() const
+		ListIterator<ElementType, AllocatorType, false> end() const
 		{
-			return ListIterator<ElementType, false>(this, -1);
+			return ListIterator<ElementType, AllocatorType, false>(this, -1);
 		}
 	};
 	//! Gets the object that allows this list to be iterated in reversed order.
@@ -923,20 +937,22 @@ public:
 	}
 };
 
-template<typename ElementType, bool NormalIteration>
-inline const ElementType &ListIterator<ElementType, NormalIteration>::operator*() const
+#pragma warning(pop)
+
+template<typename ElementType, typename AllocatorType, bool NormalIteration>
+inline const ElementType &ListIterator<ElementType, AllocatorType, NormalIteration>::operator*() const
 {
 	return (*this->list)[this->currentPosition];
 }
 
-template<typename ElementType, bool NormalIteration>
-inline ElementType &ListIterator<ElementType, NormalIteration>::operator*()
+template<typename ElementType, typename AllocatorType, bool NormalIteration>
+inline ElementType &ListIterator<ElementType, AllocatorType, NormalIteration>::operator*()
 {
 	return (*this->list)[this->currentPosition];
 }
 
-template<typename ElementType, bool NormalIteration>
-inline void ListIterator<ElementType, NormalIteration>::RemoveHere()
+template<typename ElementType, typename AllocatorType, bool NormalIteration>
+inline void ListIterator<ElementType, AllocatorType, NormalIteration>::RemoveHere()
 {
 	this->list->RemoveAt(this->currentPosition);
 	if (NormalIteration)
