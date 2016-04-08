@@ -219,6 +219,7 @@
   <ItemGroup>
     <ClInclude Include="API_ImplementationHeaders.h" />
     <ClInclude Include="CryCilHeader.h" />
+    <ClInclude Include="ArrayHeader.h" />
     <ClInclude Include="DocumentationMarkers.h" />
     <ClInclude Include="DoxygenExampleFiles\ListenerExample.h" />
     <ClInclude Include="DoxygenExampleFiles\MonoMethodInvocations.h" />
@@ -419,6 +420,7 @@
     <ClInclude Include="Interops\WriteLockCond.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="DebugHelpers.h" />
+    <ClInclude Include="MemoryTrackingUtilities.h" />
     <ClInclude Include="MonoDefinitionFiles\MonoArray.h" />
     <ClInclude Include="MonoDefinitionFiles\MonoDelegate.h" />
     <ClInclude Include="MonoHeaders.h" />

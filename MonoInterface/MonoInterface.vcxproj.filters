@@ -650,7 +650,13 @@
     <ClInclude Include="Interops\MonoRenderParameters.h">
       <Filter>Interops\Engine\Logic</Filter>
     </ClInclude>
+    <ClInclude Include="ArrayHeader.h">
+      <Filter>Extras</Filter>
+    </ClInclude>
     <ClInclude Include="List.h">
+      <Filter>Extras</Filter>
+    </ClInclude>
+    <ClInclude Include="MemoryTrackingUtilities.h">
       <Filter>Extras</Filter>
     </ClInclude>
   </ItemGroup>

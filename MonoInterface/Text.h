@@ -14,6 +14,15 @@
 #include <mono/metadata/object.h>
 #include <mono/metadata/appdomain.h>
 
+inline void *AllocateText(size_t count)
+{
+	return CryModuleMalloc(count);
+}
+inline void FreeText(void *ptr)
+{
+	CryModuleFree(ptr);
+}
+
 #endif // CRYCIL_MODULE
 
 #ifdef CRYCIL_MODULE
@@ -26,6 +35,16 @@
 #include <vector>
 #include <stdexcept>
 #include <algorithm>
+
+inline void *AllocateText(size_t count)
+{
+	return malloc(count);
+}
+
+inline void FreeText(void *ptr)
+{
+	free(ptr);
+}
 
 #endif // CRYCIL_MODULE
 
@@ -43,6 +62,8 @@ typedef void *mono_string;
 
 #endif // MONO_API
 
+#include "MemoryTrackingUtilities.h"
+
 //! Represents a reference counted null-terminated header-prefixed string.
 //!
 //! This type is, basically, a reimplementation of CryString and std::string.
@@ -53,60 +74,9 @@ typedef void *mono_string;
 template<typename symbol>
 struct TextTemplate
 {
-#pragma region Memory Statistics
-	//! Gets the number of bytes that are currently allocated for all string objects of this type.
-	static size_t AllocatedMemory()
-	{
-		return ModifyAllocatedMemory(0);
-	}
-private:
-	static size_t ModifyAllocatedMemory(ptrdiff_t increment)
-	{
-		static size_t allocatedMemory = 0;
-		allocatedMemory += increment;
-		return allocatedMemory;
-	}
-#pragma endregion
 protected:
-#pragma region Nested Types
-	struct TextHeader
-	{
-		int referenceCount;	//!< Number of live objects that reference the data that follows this header.
-		size_t length;			//!< Number of characters in the string that follows this header not counting the terminator.
-		size_t capacity;		//!< Number of characters that can fit into the memory block that was allocated for the string this object describes.
-	
-		//! Gets the pointer to the string data this header describes.
-		symbol *GetCharacters()
-		{
-			return reinterpret_cast<symbol *>(this + 1);
-		}
-		//! Increases number of live references to the data that is associated with this header.
-		void IncrementReferenceCount()
-		{
-			CryInterlockedIncrement(&this->referenceCount);
-		}
-		//! Decreases number of live references to the data that is associated with this header.
-		//!
-		//! @returns Number of references to the data after decrementing the count.
-		int DecrementReferenceCount()
-		{
-			return CryInterlockedDecrement(&this->referenceCount);
-		}
-		size_t AllocatedMemory() const
-		{
-			return sizeof(TextHeader) + (this->capacity + 1) * sizeof(symbol);
-		}
-	};
-	//! Provides access to the object that represents an empty string.
-	static TextHeader *EmptyHeader()
-	{
-		// This array consists of 2 objects: a header that describes the empty string, and the empty string
-		// itself.
-		static TextHeader emptyString[2] = { {-1, 0, 0}, {0, 0, 0} };
-
-		return &emptyString[0];
-	}
-#pragma endregion
+	typedef NullTerminatedArrayHeader<symbol> TextHeader;
+	typedef MemoryTracker<TextTemplate> TextMemoryTracker;
 #pragma region Fields
 	symbol *str;
 #pragma endregion
@@ -115,26 +85,28 @@ protected:
 	__declspec(property(get = GetHeader)) TextHeader *Header;
 	TextHeader *GetHeader() const
 	{
-		return reinterpret_cast<TextHeader *>(const_cast<TextTemplate *>(this)) - 1;
+		TextTemplate *_this = const_cast<TextTemplate *>(this);
+		TextHeader *header = reinterpret_cast<TextHeader *>(_this->str) - 1;
+		return header;
 	}
 	//! Indicates whether this object shares its text data with others.
 	__declspec(property(get = IsShared)) bool Shared;
 	bool IsShared() const
 	{
-		return this->Header->referenceCount > 1;
+		return this->Header->ReferenceCount > 1;
 	}
 public:
 	//! Gets the number of characters in this text.
 	__declspec(property(get = GetLength)) size_t Length;
 	size_t GetLength() const
 	{
-		return this->Header->length;
+		return this->Header->Length;
 	}
 	//! Gets the number of characters that can fit in the memory block that was allocated for this text.
 	__declspec(property(get = GetCapacity)) size_t Capacity;
 	size_t GetCapacity() const
 	{
-		return this->Header->capacity;
+		return this->Header->Capacity;
 	}
 	//! Indicates whether this string is empty.
 	__declspec(property(get = IsEmpty)) bool Empty;
@@ -268,7 +240,7 @@ private:
 		TextHeader *oldHeader = this->Header;
 		this->Release();
 		this->AllocateMemory(oldHeader->capacity);
-		CopyInternal(this->str, oldHeader->GetCharacters(), oldHeader->length + 1);
+		CopyInternal(this->str, oldHeader->Elements, oldHeader->length + 1);
 	}
 	static size_t CalculateMemoryToAllocate(size_t characterCapacity)
 	{
@@ -278,7 +250,7 @@ private:
 	void InitEmpty()
 	{
 		// Thanks to this code, no empty objects consume excessive amounts of memory.
-		this->str = EmptyHeader()->GetCharacters();
+		this->str = TextHeader::EmptyHeader()->Elements;
 	}
 	//! @param capacity Number of characters to fit into allocated memory not counting the terminator.
 	void AllocateMemory(size_t capacity)
@@ -294,13 +266,13 @@ private:
 		{
 			auto byteCount = CalculateMemoryToAllocate(capacity);
 
-			TextHeader *header = static_cast<TextHeader *>(CryModuleMalloc(byteCount));
+			TextHeader *header = static_cast<TextHeader *>(AllocateText(byteCount));
 
-			ModifyAllocatedMemory(byteCount);
-			header->referenceCount = 1;
-			header->length = capacity;
-			header->capacity = capacity;
-			this->str = header->GetCharacters();
+			TextMemoryTracker::AddMemory(byteCount);
+			header->ReferenceCount = 1;
+			header->Length = capacity;
+			header->Capacity = capacity;
+			this->str = header->Elements;
 			this->str[capacity] = '\0';
 		}
 	}
@@ -328,14 +300,14 @@ private:
 	//! Releases this object's data.
 	static void ReleaseData(TextHeader *header)
 	{
-		if (header->referenceCount >= 0)	// Check if empty.
+		if (header->ReferenceCount >= 0)					// Check if empty.
 		{
-			if (!header->DecrementReferenceCount())		// Check, if has any live references.
+			if (!header->UnregisterReference())			// Check, if has any live references.
 			{
 				// Release.
-				ModifyAllocatedMemory(-ptrdiff_t(header->AllocatedMemory()));	// For stats.
+				TextMemoryTracker::UnregisterArray(*header);	// For stats.
 
-				CryModuleFree(header);
+				FreeText(header);
 			}
 		}
 	}
@@ -367,8 +339,10 @@ public:
 			return nullptr;
 		}
 
-		symbol *dup = new char[this->Length];
-		CopyInternal(dup, this->str, this.Length);
+		size_t charCount = this->Length;
+		symbol *dup = new char[charCount + 1];
+		CopyInternal(dup, this->str, charCount);
+		dup[charCount] = '\0';
 		return dup;
 	}
 #pragma region Assignment
@@ -436,7 +410,7 @@ public:
 			this->AllocateMemory(totalLength);
 		}
 		
-		this->Header->length = totalLength;
+		this->Header->Length = totalLength;
 		this->str[totalLength] = '\0';
 		size_t length = 0;
 		for (auto current = parts.begin(); current < parts.end(); current++)
@@ -462,7 +436,7 @@ private:
 
 		CopyInternal(this->str, chars, count);
 
-		this->Header->length = count;
+		this->Header->Length = count;
 		this->str[count] = '\0';
 	}
 #pragma endregion
@@ -479,7 +453,7 @@ public:
 		}
 		else if (newCount < length)
 		{
-			this->Header->length = newCount;
+			this->Header->Length = newCount;
 			this->str[newCount] = '\0';
 		}
 	}
@@ -493,8 +467,8 @@ public:
 			TextHeader *oldHeader = this->Header;
 
 			this->AllocateMemory(newCapacity);
-			CopyInternal(this->str, oldHeader->GetCharacters(), oldHeader->length);
-			this->Header->length = oldHeader->length;
+			CopyInternal(this->str, oldHeader->Elements, oldHeader->length);
+			this->Header->Length = oldHeader->length;
 			this->str[oldHeader->length] = '\0';
 			ReleaseData(oldHeader);
 		}
@@ -503,7 +477,7 @@ public:
 			TextHeader *oldHeader = this->Header;
 
 			this->AllocateMemory(this->Length);
-			CopyInternal(this->str, oldHeader->GetCharacters(), oldHeader->length);
+			CopyInternal(this->str, oldHeader->Elements, oldHeader->length);
 			ReleaseData(oldHeader);
 		}
 	}
@@ -521,7 +495,7 @@ public:
 		{
 			TextHeader *oldHeader = this->Header;
 			this->AllocateMemory(this->Length + count);
-			CopyInternal(this->str, oldHeader->GetCharacters(), oldHeader->length);
+			CopyInternal(this->str, oldHeader->Elements, oldHeader->length);
 			SetInternal(this->str + oldHeader->length, character, count);
 			ReleaseData(oldHeader);
 		}
@@ -529,7 +503,7 @@ public:
 		{
 			auto oldLength = this->Length;
 			SetInternal(this->str + oldLength, character, count);
-			this->Header->length = oldLength + count;
+			this->Header->Length = oldLength + count;
 			this->str[this->Length] = '\0';
 		}
 		
@@ -644,13 +618,13 @@ private:
 		if (this->Shared || this->Length + count > this->Capacity)
 		{
 			TextHeader *oldHeader = this->Header;
-			this->Concatenate(oldHeader->GetCharacters(), oldHeader->length, chars, count);
+			this->Concatenate(oldHeader->Elements, oldHeader->Length, chars, count);
 			ReleaseData(oldHeader);
 		}
 		else
 		{
 			CopyInternal(this->str + this->Length, chars, count);
-			this->Header->length += count;
+			this->Header->Length += count;
 			this->str[this->Length] = '\0';
 		}
 	}
@@ -674,7 +648,7 @@ private:
 			this->AllocateMemory(sumLength);
 			CopyInternal(this->str, chars1, count1);
 			CopyInternal(this->str + count1, chars2, count2);
-			this->Header->length = count1 + count2;
+			this->Header->Length = count1 + count2;
 			this->str[count1 + count2] = 0;
 		}
 	}
