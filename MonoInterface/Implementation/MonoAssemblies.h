@@ -6,11 +6,11 @@ void DisposeAssemblyWrappers(Text assemblyShortName, List<IMonoAssembly *> *asse
 
 struct MonoAssemblies : public IMonoAssemblies
 {
-	SortedList<Text, List<IMonoAssembly *> *> *AssemblyRegistry;
+	SortedList<Text, List<IMonoAssembly *>> *AssemblyRegistry;
 
 	MonoAssemblies()
 	{
-		this->AssemblyRegistry = new SortedList<Text, List<IMonoAssembly *> *>(100);
+		this->AssemblyRegistry = new SortedList<Text, List<IMonoAssembly *>>(100);
 	}
 	~MonoAssemblies()
 	{

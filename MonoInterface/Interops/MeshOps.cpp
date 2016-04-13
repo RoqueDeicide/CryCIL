@@ -13,7 +13,7 @@ void CombineInternal(const List<Face> &faces1, const List<Face> &faces2, List<Fa
 
 	node1.Unite(&node2);
 
-	faces.AddRange(node1.AllFaces());
+	faces.AddRange(*node1.AllFaces());
 }
 
 void IntersectInternal(const List<Face> &faces1, const List<Face> &faces2, List<Face> &faces)
@@ -32,7 +32,7 @@ void IntersectInternal(const List<Face> &faces1, const List<Face> &faces2, List<
 	// Invert everything.
 	node1.Invert();
 
-	faces.AddRange(node1.AllFaces());
+	faces.AddRange(*node1.AllFaces());
 }
 
 void SubtractInternal(const List<Face> &faces1, const List<Face> &faces2, List<Face> &faces)
@@ -44,7 +44,7 @@ void SubtractInternal(const List<Face> &faces1, const List<Face> &faces2, List<F
 	node1.Unite(&node2);
 	node1.Invert();
 
-	faces.AddRange(node1.AllFaces());
+	faces.AddRange(*node1.AllFaces());
 }
 
 void MeshOpsInterop::DeleteListItems(Face* facesPtr)
@@ -54,14 +54,14 @@ void MeshOpsInterop::DeleteListItems(Face* facesPtr)
 		return;
 	}
 
-	delete[] facesPtr;
+	DefaultAllocator<Face>().Deallocate(facesPtr);
 }
 
 Face *MeshOpsInterop::CsgOpInternal(Face* facesPtr1, int faceCount1, Face* facesPtr2, int faceCount2, int op,
-									int &faceCount)
+									uintptr_t &faceCount)
 {
-	List<Face> faces1(facesPtr1, faceCount1);
-	List<Face> faces2(facesPtr2, faceCount2);
+	List<Face> faces1(facesPtr1, facesPtr1 + faceCount1);
+	List<Face> faces2(facesPtr2, facesPtr2 + faceCount2);
 
 	List<Face> faces;
 	switch (op)
@@ -79,8 +79,5 @@ Face *MeshOpsInterop::CsgOpInternal(Face* facesPtr1, int faceCount1, Face* faces
 		break;
 	}
 
-	faces1.Detach(faceCount1);
-	faces2.Detach(faceCount2);
-
-	return faces.Detach(faceCount);
+	return faces.Duplicate(faceCount, DefaultAllocator<Face>());
 }

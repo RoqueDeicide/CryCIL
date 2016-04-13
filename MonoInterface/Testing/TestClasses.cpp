@@ -359,7 +359,7 @@ inline void TestGettingTheConstructors()
 	CryLogAlways("TEST: Getting constructor using a list of IMonoClass wrappers with postfix strings.");
 	CryLogAlways("TEST:");
 
-	auto klassPostList = List<ClassSpec>(1).Add(ClassSpec(MonoEnv->CoreLibrary->Char, "[]"));
+	auto klassPostList = List<ClassSpec>({ ClassSpec(MonoEnv->CoreLibrary->Char, "[]") });
 
 	const IMonoConstructor *ctorSpecifiedClassList = stringClass->GetConstructor(klassPostList);
 
@@ -599,8 +599,8 @@ inline void TestGettingMethods()
 	CryLogAlways("TEST: Getting the method using a list of IMonoClass objects with post-fixes.");
 	CryLogAlways("TEST:");
 
-	auto specifiedClasses = List<ClassSpec>(3).Add({ ClassSpec(stringClass, ""), ClassSpec(typeClass, ""),
-												   ClassSpec(typeClass, "[]") });
+	auto specifiedClasses = List<ClassSpec>({ ClassSpec(stringClass, ""), ClassSpec(typeClass, ""),
+											  ClassSpec(typeClass, "[]") });
 
 	method = typeClass->GetFunction("GetProperty", specifiedClasses)->ToInstance();
 
@@ -675,7 +675,7 @@ inline void TestGettingMethods()
 		for (int i = 0; i < funcs->Length; i++)
 		{
 			CryLogAlways("%d) %s::%s(%s);",
-						 i + 1, mathClass->FullName, funcs->At(i)->Name, funcs->At(i)->Parameters);
+						 i + 1, mathClass->FullName, (*funcs)[i]->Name, (*funcs)[i]->Parameters);
 		}
 
 		delete funcs;
@@ -700,7 +700,7 @@ inline void TestGettingMethods()
 		for (int i = 0; i < funcs->Length; i++)
 		{
 			CryLogAlways("%d) %s::%s(%s);",
-						 i + 1, mathClass->FullName, funcs->At(i)->Name, funcs->At(i)->Parameters);
+						 i + 1, mathClass->FullName, (*funcs)[i]->Name, (*funcs)[i]->Parameters);
 		}
 
 		delete funcs;

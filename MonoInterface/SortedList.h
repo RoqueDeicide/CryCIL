@@ -14,7 +14,7 @@
 
 #endif // CRYCIL_MODULE
 
-#include "List.h"
+#include "List.hpp"
 
 //! Represents a sorted collection of key-value pairs.
 //!
@@ -212,15 +212,15 @@ public:
 	}
 
 	//! Gets read/only access to the collection of keys.
-	__declspec(property(get = GetKeys)) ReadOnlyList<KeyType> Keys;
-	ReadOnlyList<KeyType> GetKeys() const
+	__declspec(property(get = GetKeys)) const List<KeyType> &Keys;
+	const List<KeyType> &GetKeys() const
 	{
-		return this->keys.AsReadOnly;
+		return this->keys;
 	}
 	//! Gets read/only access to the collection of elements.
-	__declspec(property(get = GetElements)) ReadOnlyList<ElementType> Elements;
-	ReadOnlyList<ElementType> GetElements() const
+	__declspec(property(get = GetElements)) const List<ElementType> &Elements;
+	const List<ElementType> &GetElements() const
 	{
-		return this->values.AsReadOnly;
+		return this->values;
 	}
 };

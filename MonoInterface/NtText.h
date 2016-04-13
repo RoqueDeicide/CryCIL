@@ -67,7 +67,7 @@ typedef void *mono_string;
 
 #endif // ENABLE_NTTEXT_DEBUG_REPORT
 
-#include "List.h"
+#include "List.hpp"
 
 //! Wraps a null-terminated string.
 //!
@@ -78,7 +78,7 @@ typedef void *mono_string;
 //!
 //! Check documentation for this object's assignment operator overload.
 //!
-//! @typeparam SymbolType Type that represents symbols that comprise this string.
+//! @tparam SymbolType Type that represents symbols that comprise this string.
 template<typename SymbolType>
 struct NtTextTemplate
 {

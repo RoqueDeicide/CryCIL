@@ -4,7 +4,7 @@
 
 //! Provides utilities for tracking amount of allocated memory that is used by the type.
 //!
-//! @typeparam TrackedType Type to track memory for.
+//! @tparam TrackedType Type to track memory for.
 template<typename TrackedType>
 struct MemoryTracker
 {
@@ -39,7 +39,7 @@ private:
 
 	//! Informs this tracker of allocation of specified number of objects.
 	//!
-	//! @typeparam ObjectType Type of objects that were allocated.
+	//! @tparam ObjectType Type of objects that were allocated.
 	//!
 	//! @param count Number of allocated objects.
 	template<typename ObjectType>
@@ -49,7 +49,7 @@ private:
 	}
 	//! Informs this tracker of deallocation of specified number of objects.
 	//!
-	//! @typeparam ObjectType Type of objects that were deallocated.
+	//! @tparam ObjectType Type of objects that were deallocated.
 	//!
 	//! @param count Number of deallocated objects.
 	template<typename ObjectType>

@@ -45,18 +45,18 @@ void EventBroadcaster::RemoveListener(IMonoSystemListener *listener)
 		this->index--;
 	}
 
-	this->listeners.RemoveAt(listenerIndex);
+	this->listeners.Erase(listenerIndex);
 
 	// Remove listener from stage map.
 	this->stageMap.ForEach
 	(
-		[&listener](int stageIndex, List<IMonoSystemListener *> *subscribers)
+		[&listener](int stageIndex, List<IMonoSystemListener *> &subscribers)
 		{
-			for (int i = 0; i < subscribers->Length; i++)
+			for (int i = 0; i < subscribers.Length; i++)
 			{
-				if (subscribers->At(i) == listener)
+				if (subscribers[i] == listener)
 				{
-					subscribers->RemoveAt(i);
+					subscribers.Erase(i);
 					break;      // No need to proceed as there can only be one unique listener per stage.
 				}
 			}
@@ -120,7 +120,7 @@ int *EventBroadcaster::GetSubscribedStagesInfo(int &stageCount)
 			// Put the listeners into the map.
 			for (int j = 0; j < stages->Length; j++)
 			{
-				int currentStageIndex = stages->At(j);
+				int currentStageIndex = (*stages)[j];
 				if (!this->stageMap.Contains(currentStageIndex))
 				{
 					this->stageMap.Add(currentStageIndex, List<IMonoSystemListener *>(10));

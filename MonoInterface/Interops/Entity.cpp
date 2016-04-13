@@ -162,12 +162,14 @@ List<Text> EntitySystemInterop::monoEntityClassNames;
 
 bool EntitySystemInterop::IsMonoEntity(const char *className)
 {
-	auto predicate = [className](Text &name)
+	for (const auto &current : monoEntityClassNames)
 	{
-		return name == className;
-	};
-
-	return monoEntityClassNames.Find(predicate) != nullptr;
+		if (current == className)
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 IEntityProxyPtr EntitySystemInterop::CreateGameObjectForCryCilEntity(IEntity *pEntity, SEntitySpawnParams &,
@@ -251,18 +253,16 @@ bool EntitySystemInterop::RegisterEntityClass(mono::string name, mono::string ca
 
 	auto registry = gEnv->pEntitySystem->GetClassRegistry();
 
-	auto nameMatch = [className](Text &registeredName)
-	{
-		return registeredName == className;
-	};
-
 	if ((flags && EEntityClassFlags::ECLF_MODIFY_EXISTING) == 0)
 	{
 		// If we are not modifying anything, then gotta make sure that the class wasn't registered before.
-		if (monoEntityClassNames.Find(nameMatch))
+		for (const auto &current : monoEntityClassNames)
 		{
-			MonoWarning("%s class is already registered as a CryCIL entity class.", className);
-			return false;
+			if (current == className)
+			{
+				MonoWarning("%s class is already registered as a CryCIL entity class.", className);
+				return false;
+			}
 		}
 		if (registry->FindClass(className) != nullptr)
 		{
@@ -286,7 +286,21 @@ bool EntitySystemInterop::RegisterEntityClass(mono::string name, mono::string ca
 		props[i] = propInfos[i].ToNative();
 	}
 
-	monoEntityClassNames.AddOverride(className, nameMatch);
+	bool added = false;
+	
+	for (size_t i = 0; i < monoEntityClassNames.Length; i++)
+	{
+		if (monoEntityClassNames[i] == className)
+		{
+			monoEntityClassNames.Replace(i, className);
+			added = true;
+			break;
+		}
+	}
+	if (!added)
+	{
+		monoEntityClassNames.Add(className);
+	}
 
 	IEntityClassRegistry::SEntityClassDesc description;
 	// Flags and a name.
@@ -338,7 +352,16 @@ mono::object EntitySystemInterop::SpawnMonoEntity(MonoEntitySpawnParams &paramet
 		return name == className;
 	};
 
-	if (monoEntityClassNames.Find(nameMatch) == nullptr)
+	bool isMonoEntity = false;
+	for (const auto &current : monoEntityClassNames)
+	{
+		if (current == className)
+		{
+			isMonoEntity = true;
+			break;
+		}
+	}
+	if (!isMonoEntity)
 	{
 		ArgumentException("EntitySystem.SpawnMonoEntity cannot be used to spawn entities that are not defined in CryCIL.").Throw();
 		return nullptr;
@@ -374,7 +397,16 @@ mono::object EntitySystemInterop::SpawnNetEntity(MonoEntitySpawnParams &paramete
 		return name == className;
 	};
 
-	if (monoEntityClassNames.Find(nameMatch) == nullptr)
+	bool isMonoEntity = false;
+	for (const auto &current : monoEntityClassNames)
+	{
+		if (current == className)
+		{
+			isMonoEntity = true;
+			break;
+		}
+	}
+	if (!isMonoEntity)
 	{
 		ArgumentException("EntitySystem.SpawnNetEntity cannot be used to spawn entities that are not defined in CryCIL.").Throw();
 		return nullptr;

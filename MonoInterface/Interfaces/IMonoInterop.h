@@ -128,10 +128,10 @@ struct IMonoInteropBase : public IMonoSystemListener
 //! The earliest time for registration of internal calls is during invocation
 //! of InitializeInterops, which is why it is abstract.
 //!
-//! @typeparam callRegistrationOnly Indicates whether this interop object will unregister
-//!                                 and destroy itself after adding internal calls to Mono.
-//! @typeparam useMonoEnv Indicates whether this interop object will override SetInterface
-//!                       to not save IMonoInterface implementation to the internal field.
+//! @tparam callRegistrationOnly Indicates whether this interop object will unregister and destroy itself after
+//!                              adding internal calls to Mono.
+//! @tparam useMonoEnv           Indicates whether this interop object will override SetInterface to not save
+//!                              IMonoInterface implementation to the internal field.
 template<bool callRegistrationOnly, bool useMonoEnv = false>
 struct IMonoInterop : public IMonoInteropBase
 {};

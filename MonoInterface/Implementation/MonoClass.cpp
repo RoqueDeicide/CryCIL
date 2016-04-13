@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "API_ImplementationHeaders.h"
-#include "List.h"
 #include "MonoProperty.h"
 #include "MonoEvent.h"
 #include "MonoField.h"
@@ -135,21 +134,21 @@ MonoClassWrapper::~MonoClassWrapper()
 {
 	auto deletePropertyOverloads = [](Text name, List<IMonoProperty *> *&overloads)
 	{
-		overloads->DeleteAll();
+		DeleteAll(*overloads);
 		delete overloads;
 	};
 	this->properties.ForEach(deletePropertyOverloads);
 
-	this->events.DeleteAll();
+	DeleteAll(this->events);
 
 	auto deleteMethodOverloads = [](Text name, List<IMonoFunction *> *&overloads)
 	{
-		overloads->DeleteAll();
+		DeleteAll(*overloads);
 		delete overloads;
 	};
 	this->methods.ForEach(deleteMethodOverloads);
 
-	this->fields.DeleteAll();
+	DeleteAll(this->fields);
 }
 
 const IMonoFunction *MonoClassWrapper::GetFunction(const char *name, int paramCount) const
@@ -193,7 +192,7 @@ const IMonoFunction *MonoClassWrapper::GetFunction(const char *name, const char 
 			overloads = this->methods.At(names[i]);
 			for (int j = 0; j < overloads->Length; j++)
 			{
-				IMonoFunction *m = overloads->At(j);
+				IMonoFunction *m = (*overloads)[j];
 				if (strcmp(m->Parameters, params) == 0)
 				{
 					return m;
@@ -209,14 +208,14 @@ const IMonoFunction *MonoClassWrapper::GetFunction(const char *name, const char 
 
 		for (int i = 0; i < overloads->Length; i++)
 		{
-			ClassMessage("Overload #%d: %s", i + 1, overloads->At(i)->Parameters);
+			ClassMessage("Overload #%d: %s", i + 1, (*overloads)[i]->Parameters);
 		}
 
 #endif // ClassDebug
 
 		for (int i = 0; i < overloads->Length; i++)
 		{
-			IMonoFunction *m = overloads->At(i);
+			IMonoFunction *m = (*overloads)[i];
 			if (strcmp(m->Parameters, params) == 0)
 			{
 				return m;
@@ -364,7 +363,7 @@ const List<IMonoFunction *> *MonoClassWrapper::GetFunctions(const char *name, in
 	{
 		for (int i = 0; i < overloads->Length; i++)
 		{
-			IMonoFunction *m = overloads->At(i);
+			IMonoFunction *m = (*overloads)[i];
 			
 			if (m->ParameterCount == paramCount)
 			{
@@ -387,7 +386,7 @@ const List<IMonoFunction *> *MonoClassWrapper::GetFunctions(const char *name) co
 	{
 		for (int i = 0; i < overloads->Length; i++)
 		{
-			foundMethods->Add(overloads->At(i));
+			foundMethods->Add((*overloads)[i]);
 		}
 	}
 
@@ -468,13 +467,13 @@ const IMonoProperty *MonoClassWrapper::GetProperty(const char *name) const
 	{
 		for (int i = 0; i < overloads->Length; i++)
 		{
-			IMonoProperty *prop = overloads->At(i);
+			IMonoProperty *prop = (*overloads)[i];
 			if (prop->Identifier->ParameterCount == 0)
 			{
 				return prop;
 			}
 		}
-		return overloads->At(0);
+		return (*overloads)[0];
 	}
 	return nullptr;
 }
@@ -1014,24 +1013,24 @@ mono::type MonoClassWrapper::MakePointerType() const
 // 	return result;
 // }
 
-ReadOnlyList<IMonoField *> MonoClassWrapper::GetFields() const
+const List<IMonoField *> &MonoClassWrapper::GetFields() const
 {
-	return this->fields.AsReadOnly;
+	return this->fields;
 }
 
-ReadOnlyList<IMonoFunction *> MonoClassWrapper::GetFunctions() const
+const List<IMonoFunction *> &MonoClassWrapper::GetFunctions() const
 {
-	return this->flatMethodList.AsReadOnly;
+	return this->flatMethodList;
 }
 
-ReadOnlyList<IMonoProperty *> MonoClassWrapper::GetProperties() const
+const List<IMonoProperty *> &MonoClassWrapper::GetProperties() const
 {
-	return this->flatPropertyList.AsReadOnly;
+	return this->flatPropertyList;
 }
 
-ReadOnlyList<IMonoEvent *> MonoClassWrapper::GetEvents() const
+const List<IMonoEvent *> &MonoClassWrapper::GetEvents() const
 {
-	return this->events.AsReadOnly;
+	return this->events;
 }
 
 bool MonoClassWrapper::GetIsValueType() const

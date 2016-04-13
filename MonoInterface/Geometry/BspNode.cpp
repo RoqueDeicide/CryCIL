@@ -160,17 +160,17 @@ void Face::TriangulateLinearly(List<Vertex> &vertices, List<Face> *faceCollectio
 List<Face> *BspNode::AllFaces() const
 {
 	List<Face> *list = new List<Face>(this->Faces->Capacity * 2);
-	list->AddRange(this->Faces);
+	list->AddRange(*this->Faces);
 	if (this->Front)
 	{
 		List<Face> *fronts = this->Front->AllFaces();
-		list->AddRange(fronts);
+		list->AddRange(*fronts);
 		delete fronts;
 	}
 	if (this->Back)
 	{
 		List<Face> *backs = this->Back->AllFaces();
-		list->AddRange(backs);
+		list->AddRange(*backs);
 		delete backs;
 	}
 	return list;
@@ -224,7 +224,7 @@ void BspNode::Invert()
 	{
 		for (int i = 0; i < this->Faces->Length; i++)
 		{
-			this->Faces->At(i).Invert();
+			(*this->Faces)[i].Invert();
 		}
 	}
 	if (this->Front)
@@ -252,7 +252,7 @@ List<Face> *BspNode::FilterList(List<Face> *faces) const
 	// Cut elements and separate them into 2 lists.
 	for (int i = 0; i < faces->Length; i++)
 	{
-		faces->At(i).Split(this->Plane, fronts, backs, fronts, backs);
+		(*faces)[i].Split(this->Plane, fronts, backs, fronts, backs);
 	}
 
 	if (this->Front)
@@ -265,7 +265,7 @@ List<Face> *BspNode::FilterList(List<Face> *faces) const
 	// in the list should be discarded.
 	if (this->Back)
 	{
-		fronts->AddRange(this->Back->FilterList(backs));
+		fronts->AddRange(*this->Back->FilterList(backs));
 	}
 	
 	delete backs;

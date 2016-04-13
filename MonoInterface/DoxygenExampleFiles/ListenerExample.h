@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "IMonoInterface.h"
-#include "List.h"
 
 #include <CryLibrary.h>
 

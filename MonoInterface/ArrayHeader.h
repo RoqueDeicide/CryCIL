@@ -4,10 +4,10 @@
 
 //! Represents an object that contains information about a reference-counted array of data.
 //!
-//! @typeparam DataType           Type of data that is contained in the array.
-//! @typeparam ReferenceCountType Type of object that represents a number of live references to the array.
-//! @typeparam CountType          Type of objects that represent number of objects in the array.
-//! @typeparam nullTerminated     Indicates whether this array is terminated by a special 'null' object.
+//! @tparam DataType           Type of data that is contained in the array.
+//! @tparam ReferenceCountType Type of object that represents a number of live references to the array.
+//! @tparam CountType          Type of objects that represent number of objects in the array.
+//! @tparam nullTerminated     Indicates whether this array is terminated by a special 'null' object.
 template<typename DataType, typename ReferenceCountType, typename CountType, bool nullTerminated>
 class RefCountedImmutableArrayHeaderTemplate
 {

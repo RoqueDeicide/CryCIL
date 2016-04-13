@@ -22,5 +22,6 @@ struct MeshOpsInterop : public IMonoInterop<true, true>
 	virtual void InitializeInterops() override;
 
 	static void DeleteListItems(Face* facesPtr);
-	static Face *CsgOpInternal(Face* facesPtr1, int faceCount1, Face* facesPtr2, int faceCount2, int op, int &faceCount);
+	static Face *CsgOpInternal(Face* facesPtr1, int faceCount1, Face* facesPtr2, int faceCount2, int op,
+							   uintptr_t &faceCount);
 };
