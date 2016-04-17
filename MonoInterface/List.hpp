@@ -7,26 +7,32 @@
 #include "Iteration.hpp"
 #include "ListObject.hpp"
 
-//! Default comparison function that uses KeyType's comparison operators.
-template<typename KeyType>
-inline int DefaultComparison(KeyType &k1, KeyType &k2)
+//! Represents a functor that compares objects using their comparison operators.
+template<typename ValType1, typename ValType2>
+struct DefaultComparison
 {
-	if (k1 > k2)
+	int operator()(const ValType1 &value1, const ValType2 &value2) const
 	{
-		return 1;
+		return value1 > value2
+			? 1
+			: value2 > value1
+			? -1
+			: 0;
 	}
-	if (k2 > k1)
-	{
-		return -1;
-	}
-	return 0;
-}
+};
 
 //! Represents a mutable reference-counted dynamic array of elements.
+//!
+//! This type resembles a fusion of std::vector from STL and System.Collections.Generic.List`1 from .Net.
+//!
+//! @tparam ElementType   Type of objects that are going to be contained within this array.
+//! @tparam AllocatorType Type of object to use to allocate and deallocate memory, initialize and destroy
+//!                       objects. Implementation of such is best done by specializing the DefaultAllocator`1
+//!                       template.
 template<typename ElementType, typename AllocatorType = DefaultAllocator<ElementType>>
 class List
 {
-	friend ListIteratorBase<List>;
+	friend ListIteratorConst<List>;
 public:
 	typedef ElementType value_type;
 	typedef ElementType &reference;
@@ -39,63 +45,64 @@ public:
 
 	typedef AllocatorType allocator_type;
 	typedef ListObject<value_type, allocator_type> list_object_type;
-	typedef ListIteratorBase<list_object_type> iterator_base;
-	typedef ListIterator<list_object_type> iterator_read_write;
-	typedef ListIteratorConst<list_object_type> iterator_read_only;
+	typedef ListIterator<list_object_type> iterator_type;
+	typedef ListIteratorConst<list_object_type> const_iterator_type;
 
 	typedef std::function<int(const_reference, const_reference)> Comparison;
 
 private:
 	//! A compressed pair of 2 objects: an allocator object that is used to work with memory and a pointer to
 	//! the list header object.
-	CompressedPair<allocator_type, list_object_type *> list;
-	
-	//! Gets the list object.
-	list_object_type *&Object()
+	list_object_type *list;
+	//! Gets appropriately decorated pointer to the list object.
+	list_object_type *Object()
 	{
-		return this->list.Second();
+		return this->list;
 	}
-	list_object_type * const &Object() const
+	const list_object_type *Object() const
 	{
-		return this->list.Second();
+		return this->list;
 	}
+
 	//! Gets the allocator object.
 	allocator_type &Allocator()
 	{
-		return this->list.First();
-	}
-	const allocator_type &Allocator() const
-	{
-		return this->list.First();
+		return this->Object()->Allocator();
 	}
 
 public:
+	//! Gets the object that is used to allocate and deallocate memory, and initialize and destroy objects.
+	const allocator_type &Allocator() const
+	{
+		return this->Object()->Allocator();
+	}
+
 	//! Gets the pointer to the first element in the list.
 	pointer &First()
 	{
-		return this->list.Second()->First();
+		return this->Object()->First();
 	}
-	const_pointer &First() const
+	const pointer &First() const
 	{
-		return this->list.Second()->First();
+		return this->Object()->First();
 	}
 	//! Gets the pointer to the element after last live object in the list.
 	pointer &Last()
 	{
-		return this->list.Second()->Last();
+		return this->Object()->Last();
 	}
-	const_pointer &Last() const
+	const pointer &Last() const
 	{
-		return this->list.Second()->Last();
+		return this->Object()->Last();
 	}
 	//! Gets the pointer to the element after last non-live object in the list.
 	pointer &End()
 	{
-		return this->list.Second()->End();
+		return this->Object()->End();
 	}
-	const_pointer &End() const
+	const pointer &End() const
 	{
-		return this->list.Second()->End();
+		return this->Object()->End();
 	}
 
 	//! Gets the number of live objects that can fit into this list before it has to expand.
@@ -114,7 +121,9 @@ public:
 	__declspec(property(get = GetLength)) size_type Length;
 	size_type GetLength() const
 	{
-		return this->Last() - this->First();
+		auto last = this->Last();
+		auto first = this->First();
+		return last - first;
 	}
 	//! Indicates whether this list is empty.
 	__declspec(property(get = IsEmpty)) bool Empty;
@@ -124,6 +133,8 @@ public:
 	}
 
 	//! Provides read/write access to the element in the list.
+	//!
+	//! @param index Zero-based index of the object to access.
 	reference operator [](size_type index)
 	{
 #ifdef DEBUG_ITERATION
@@ -133,45 +144,88 @@ public:
 		}
 #endif // DEBUG_ITERATION
 
-		return this->First() + index;
+		return *(this->First() + index);
 	}
 	//! Provides read-only access to the element in the list.
+	//!
+	//! @param index Zero-based index of the object to access.
 	const_reference operator[](size_type index) const
 	{
 		return (*this)[index];
 	}
+	//! Creates the iterator that can be used to start iteration of the list from.
+	//!
+	//! @param index A value that defines the position of the iterator; depending on the sign of this index
+	//!              it can represent position away from the start of the list (when it's not negative) or away
+	//!              from the last element in the list (when it's negative). Passing 0 is equivalent to calling
+	//!              @see begin(). Passing -1 is equivalent of calling @see end().
+	iterator_type from(difference_type index)
+	{
+		return iterator_type(this->GetPositionInternal(index), this->Object());
+	}
+	const_iterator_type from(difference_type index) const
+	{
+		return const_iterator_type(this->GetPositionInternal(index), this->Object());
+	}
+	//! Creates the iterator that can be used to finish iteration of the list at.
+	//!
+	//! @param index A value that defines the position of the iterator; depending on the sign of this index
+	//!              it can represent position away from the start of the list (when it's not negative) or away
+	//!              from the last element in the list (when it's negative). Passing 0 is equivalent to calling
+	//!              @see begin(). Passing -1 is equivalent of calling @see end().
+	iterator_type to(difference_type index)
+	{
+		return iterator_type(this->GetPositionInternal(index), this->Object());
+	}
+	const_iterator_type to(difference_type index) const
+	{
+		return const_iterator_type(this->GetPositionInternal(index), this->Object());
+	}
+private:
+	pointer GetPositionInternal(difference_type index)
+	{
+		if (index < 0)
+		{
+			return this->Last() + index + 1;
+		}
+		return this->First() + index;
+	}
+
 public:
 	//! Creates a new empty list.
 	//!
 	//! @param allocator An optional value that is an object to use to work with memory.
 	List(const allocator_type &allocator = allocator_type())
-		: list(OneToFirstRestToSecond(), allocator)
 	{
-		this->CreateObject();
+		this->CreateObject(allocator);
 	}
 	//! Creates a new empty list.
 	//!
 	//! @param allocator An optional value that is a temporary object to use to work with memory.
 	explicit List(allocator_type &&allocator)
-		: list(OneToFirstRestToSecond(), std::move(allocator))
 	{
-		this->CreateObject();
+		this->CreateObject(allocator);
 	}
 	//! Creates an empty that has enough memory to fit specified number of objects.
+	//!
+	//! @param initialCapacity Number of objects to allocate the memory for.
+	//! @param allocator       An optional object to use to work with the memory.
 	explicit List(size_type initialCapacity, const allocator_type &allocator = allocator_type())
-		: list(OneToFirstRestToSecond(), allocator)
 	{
-		this->CreateObject();
+		this->CreateObject(allocator);
 		
-		this->Object()->AllocateStorage(initialCapacity);
+		this->list->AllocateStorage(initialCapacity);
 	}
 	//! Creates a list that is filled with a number of copies of the object.
+	//!
+	//! @param initialSize Number of copies of given object to populate the new list with.
+	//! @param filler      An object to copy when pre-populating the new list.
+	//! @param allocator   An optional object to use to work with the memory.
 	List(size_type initialSize, const_reference filler, const allocator_type &allocator = allocator_type())
-		: list(OneToFirstRestToSecond(), allocator)
 	{
-		this->CreateObject();
+		this->CreateObject(allocator);
 
-		this->Object()->AllocateStorage(initialSize);
+		this->list->AllocateStorage(initialSize);
 
 		// Fill the memory with copies of the filler.
 		this->Allocator().InitializeRange(this->First(), this->End(), filler);
@@ -182,48 +236,56 @@ public:
 	//!
 	//! @tparam IteratorType Type of the iterators.
 	//!
-	//! @param left  An iterator that defines the start of the range.
-	//! @param right An iterator that defines the end of the range (points at the element after last element in
-	//!              the range).
+	//! @param left      An iterator that defines the start of the range.
+	//! @param right     An iterator that defines the end of the range (points at the element after last element
+	//!                  in the range).
+	//! @param allocator An optional object to use to work with the memory.
 	template<typename IteratorType, typename = typename EnableIf<IsIterator<IteratorType>::value, void>::type>
 	List(IteratorType left, IteratorType right, const allocator_type &allocator = allocator_type())
-		: list(OneToFirstRestToSecond(), allocator)
 	{
-		this->CreateObject();
+		this->CreateObject(allocator);
 
 		this->Build(left, right);
 	}
 	//! Creates a new list that is populated with copies of objects from the list.
+	//!
+	//! @param elements  A brace initialization list that contains objects to populate the new list with.
+	//! @param allocator An optional object to use to work with the memory.
 	List(std::initializer_list<value_type> elements, const allocator_type &allocator = allocator_type())
 		: List(elements.begin, elements.end, allocator)
 	{
 	}
 	//! Creates a shallow copy of another list.
+	//!
+	//! @param other Reference to another list.
 	List(const List &other)
 	{
 		this->list = other.list;
-		if (this->Object())
+		if (this->list)
 		{
-			this->Object()->RegisterReference();
+			this->list->RegisterReference();
 		}
 	}
 	//! Creates a deep copy of another list.
+	//!
+	//! @param other     Reference to another list.
+	//! @param allocator An object to use to work with memory.
 	List(const List &other, const allocator_type &allocator)
-		: list(OneToFirstRestToSecond(), allocator)
 	{
-		this->CreateObject();
+		this->CreateObject(allocator);
 
-		if (other.Object())
+		if (other.list)
 		{
 			this->Assign(other.First(), other.Last());
 		}
 	}
 	//! Moves a reference to the list object to this one without raising it's reference count.
+	//!
+	//! @param other Reference to the temporary list.
 	List(List &&other)
 	{
-		this->list.First() = std::move(other.list.First());		// Use move constructor here, since allocator is
-		this->list.Second() = other.list.Second();				// the only thing to actually moves, the list
-		other.Object() = nullptr;								// itself remains in the same place.
+		this->list = other.list;
+		other.list = nullptr;
 	}
 	//! Destroys this shallow copy of the list. Destroys the deep copy as well, if this is the last shallow one.
 	~List()
@@ -232,6 +294,8 @@ public:
 	}
 
 	//! Moves contents of another list to this one.
+	//!
+	//! @param other Reference to the temporary list.
 	List &operator =(List &&other)
 	{
 		if (this == &other)
@@ -239,26 +303,29 @@ public:
 			return;
 		}
 
-		this->list.First() = std::move(other.list.First());		// Use move constructor here, since allocator is
-		this->list.Second() = other.list.Second();				// the only thing to actually moves, the list
-		other.Object() = nullptr;								// itself remains in the same place.
+		this->list = other.list;
+		other.list = nullptr;
 
 		return *this;
 	}
 	//! Assigns a shallow copy of another list to this one.
+	//!
+	//! @param other Reference to another list.
 	List &operator =(const List &other)
 	{
 		this->ReleaseObject();
 
-		this->Object() = other.Object();
-		if (this->Object())
+		this->list = other.list;
+		if (this->list)
 		{
-			this->Object()->RegisterReference();
+			this->list->RegisterReference();
 		}
 
 		return *this;
 	}
 	//! Assigns a collection of items to this list.
+	//!
+	//! @param items A set of objects to fill this list with after clearing it.
 	List &operator =(std::initializer_list<value_type> items)
 	{
 		this->Assign(items.begin(), items.end());
@@ -281,27 +348,33 @@ public:
 	//! Ensure that this list can fit specified number of elements.
 	//!
 	//! The capacity grows exponentially.
+	//!
+	//! @param capacity The number of objects that must fit into this list before it has to expand after this
+	//!                 method is done.
 	void EnsureCapacity(size_type capacity)
 	{
 		if (this->First() == nullptr)
 		{
-			this->Object()->AllocateStorage(capacity);
+			this->list->AllocateStorage(capacity);
 			return;
 		}
 		
-		if (this->End() - this->First() < capacity)
+		if (this->Capacity < capacity)
 		{
 			// Gotta expand.
 			auto newCapacity = this->CalculateExpandedCapacity(capacity);
-			this->Object()->ReallocateStorage(newCapacity);
+			this->list->ReallocateStorage(newCapacity);
 		}
 	}
 	//! Ensures that this list can have _count_ items added to it.
 	//!
 	//! The capacity grows exponentially.
+	//!
+	//! @param count The number of objects that must be allowed to be added to this list without it having
+	//!              to expand after this method is done.
 	void Reserve(size_type count)
 	{
-		this->EnsureCapacity(count + this->End() - this->First());
+		this->EnsureCapacity(count + this->Last() - this->First());
 	}
 
 	//
@@ -309,38 +382,52 @@ public:
 	//
 
 	//! Copies an element into the end of the list.
+	//!
+	//! @param item Reference to the object to copy into this list.
 	void Add(const_reference item)
 	{
 		this->Reserve(1);
 
-		this->Object()->InvalidateIterators(this->Last());
+		pointer last = this->Last();
 
-		this->Allocator().Initialize(this->Last(), item);
-		++this->Last();
+		this->list->InvalidateIterators(last);
+
+		this->Allocator().Initialize(last, item);
+		this->Last() = last + 1;
 	}
 	//! Moves an element into the end of this list.
+	//!
+	//! @param item Reference to the object to move into this list.
 	void Add(value_type &&item)
 	{
 		this->Reserve(1);
 
-		this->Object()->InvalidateIterators(this->Last());
+		pointer last = this->Last();
 
-		this->Allocator().Initialize(this->Last(), std::forward<value_type>(item));
-		++this->Last();
+		this->list->InvalidateIterators(last);
+
+		this->Allocator().Initialize(last, std::forward<value_type>(item));
+		this->Last() = last + 1;
 	}
 	//! Adds an item to the end of this list.
+	//!
+	//! @param item Reference to the object to copy into this list.
 	List &operator <<(const_reference item)
 	{
 		this->Add(item);
 		return *this;
 	}
 	//! Adds an item to the end of this list.
+	//!
+	//! @param item Reference to the object to move into this list.
 	List &operator <<(value_type &&item)
 	{
 		this->Add(std::forward(item));
 		return *this;
 	}
 	//! Adds a bunch of items to the end of this list.
+	//!
+	//! @param items A list of items to add to this list.
 	List &operator <<(std::initializer_list<value_type> items)
 	{
 		this->AddRange(items);
@@ -361,6 +448,11 @@ public:
 	}
 
 	//! Adds a range of items to this collection.
+	//!
+	//! @tparam IteratorType Type of the iterators.
+	//!
+	//! @param left  An iterator that points at the first object to add to this list.
+	//! @param right An iterator that marks the end of the range.
 	template<typename IteratorType, typename = typename EnableIf<IsIterator<IteratorType>::value, void>::type>
 	void AddRange(IteratorType left, IteratorType right)
 	{
@@ -386,71 +478,126 @@ public:
 		}
 	}
 	//! Inserts another list into this one.
+	//!
+	//! @param other Reference to the list to add to this one.
 	void AddRange(const List &other)
 	{
 		this->AddRange(std::remove_reference<const_pointer>::type(other.First()),
 					   std::remove_reference<const_pointer>::type(other.Last()));
 	}
 	//! Inserts another list into this one.
+	//!
+	//! @param other Reference to the list to add to this one.
 	void AddRange(List &&other)
 	{
 		this->AddRange(std::remove_reference<const_pointer>::type(other.First()),
 					   std::remove_reference<const_pointer>::type(other.Last()));
 	}
 	//! Inserts another list into this one.
+	//!
+	//! @param other Reference to the list to add to this one.
 	void AddRange(std::initializer_list<value_type> other)
 	{
 		this->AddRange(other.begin(), other.end());
 	}
 
 	//! Inserts an item into this list by copying it into specified position.
+	//!
+	//! @param index Zero-based index of the position to insert the item into. If this value is out of list's
+	//!              range then the item is added to end.
+	//! @param item  Reference to the object to copy.
 	void Insert(size_type index, const_reference item)
 	{
-		const_pointer itemPtr = this->Allocator().Address(item);
-		this->InsertRange(index, itemPtr, itemPtr + 1);
+		this->Insert(this->First() + index, item);
 	}
 	//! Inserts an item into this list by copying it into specified position.
-	void Insert(const iterator_base &position, const_reference item)
+	//!
+	//! @param position Iterator that represents the position to insert the item into. If this value is out of
+	//!                 list's range then the item is added to end.
+	//! @param item     Reference to the object to copy.
+	void Insert(const_iterator_type position, const_reference item)
 	{
-		this->Insert(this->Object()->GetIteratorCurrentIndex(position), item);
+		this->Insert(this->GetUncheckedPosition(position), item);
 	}
 	//! Inserts an item into this list by moving it into specified position.
+	//!
+	//! @param index Zero-based index of the position to insert the item into. If this value is out of list's
+	//!              range then the item is added to end.
+	//! @param item  Reference to the object to move.
 	void Insert(size_type index, value_type &&item)
 	{
-		this->Emplace(index, std::forward(item));
+		this->Emplace(index, std::forward<value_type>(item));
 	}
 	//! Inserts an item into this list by moving it into specified position.
-	void Insert(const iterator_base &position, value_type &&item)
+	//!
+	//! @param position Iterator that represents the position to insert the item into. If this value is out of
+	//!                 list's range then the item is added to end.
+	//! @param item     Reference to the object to move.
+	void Insert(const_iterator_type position, value_type &&item)
 	{
-		this->Insert(this->Object()->GetIteratorCurrentIndex(position), std::forward<value_type>(item));
+		this->Insert(this->GetUncheckedPosition(position), std::forward<value_type>(item));
 	}
 
 	//! Inserts a range of elements into the position in the list.
+	//!
+	//! @tparam IteratorType Type of iterators.
+	//!
+	//! @param index Zero-based index of the position to insert the items into. If this value is out of list's
+	//!              range then the items are added to end.
+	//! @param first An iterator that represents the start of range of items to add.
+	//! @param last  An iterator that represents the end of the range of items.
 	template<typename IteratorType, typename = typename EnableIf<IsIterator<IteratorType>::value, void>::type>
 	void InsertRange(size_type index, IteratorType first, IteratorType last)
 	{
-		this->InsertRange(index, first, last, IteratorCategory(first));
+		this->InsertRange(this->First() + index, first, last);
+	}
+	//! Inserts a range of elements into the position in the list.
+	//!
+	//! @tparam IteratorType Type of iterators.
+	//!
+	//! @param position Iterator that represents the position to insert the items into. If this value is out of
+	//!                 list's range then the items are added to end.
+	//! @param first    An iterator that represents the start of range of items to add.
+	//! @param last     An iterator that represents the end of the range of items.
+	template<typename IteratorType, typename = typename EnableIf<IsIterator<IteratorType>::value, void>::type>
+	void InsertRange(const_iterator_type position, IteratorType first, IteratorType last)
+	{
+		this->InsertRange(this->GetUncheckedPosition(position), first, last);
 	}
 private:
-	template<typename IteratorType>
-	void InsertRange(size_type index, IteratorType first, IteratorType last, InputIteratorTag)
+	void Insert(pointer position, const_reference item)
 	{
-		if (index >= this->Length)
+		const_pointer itemPtr = this->Allocator().Address(item);
+		this->InsertRange(position, itemPtr, itemPtr + 1);
+	}
+	void Insert(pointer position, value_type &&item)
+	{
+		this->Emplace(position, std::forward<value_type>(item));
+	}
+	template<typename IteratorType>
+	void InsertRange(pointer position, IteratorType first, IteratorType last)
+	{
+		this->InsertRange(position, first, last, IteratorCategory(first));
+	}
+	template<typename IteratorType>
+	void InsertRange(pointer position, IteratorType first, IteratorType last, InputIteratorTag)
+	{
+		if (position >= this->Last())
 		{
 			this->AddRange(first, last);
 		}
 		for (; first != last; ++first)
 		{
-			this->Insert(index, *first);
+			this->Insert(position, *first);
 		}
 	}
 	template<typename IteratorType>
-	void InsertRange(size_type index, IteratorType first, IteratorType last, ForwardIteratorTag)
+	void InsertRange(pointer position, IteratorType first, IteratorType last, ForwardIteratorTag)
 	{
-		auto oldLength = this->Length;
-		if (index >= oldLength)
+		if (position >= this->Last())
 		{
 			this->AddRange(first, last);
+			return;
 		}
 		size_type rangeLength = last - first;
 		if (this->UnusedCapacity < rangeLength)
@@ -458,6 +605,9 @@ private:
 			// Allocate new memory for the list.
 			size_type oldCapacity = this->Capacity;
 			pointer oldMemory = this->First();
+
+			auto oldLength = this->Length;
+			size_type index = position - oldMemory;
 
 			size_type newCapacity = this->CalculateExpandedCapacity(oldCapacity + rangeLength);
 			pointer newMemory = this->Allocator().Allocate(newCapacity);
@@ -487,7 +637,7 @@ private:
 			}
 
 			// Deinitialize and deallocate old memory.
-			this->Object()->FreeStorage();
+			this->list->FreeStorage();
 
 			this->First() = newMemory;
 			this->Last() = newMemoryLast;
@@ -495,19 +645,22 @@ private:
 		}
 		else
 		{
-			pointer start = this->First();
-			pointer insertionRangeStart = start + index;
+			pointer insertionRangeStart = position;
 			pointer insertionRangeEnd = insertionRangeStart + rangeLength;
+			pointer insertionRangeLast =			// This value is used to prevent deinitialization of
+				insertionRangeEnd > this->Last()	// objects beyond usable bounds of the list.
+				? this->Last()
+				: insertionRangeEnd;
 
 			// Orphan iterators that are at the insertion point or beyond it.
-			this->Object()->InvalidateIterators(this->First() + index, this->Last());
+			this->list->InvalidateIterators(insertionRangeStart, this->Last());
 
 			// Move the range of last elements to make space for other elements.
 			this->ShiftRange(insertionRangeStart, this->Last(), insertionRangeEnd);
 			this->Last() += rangeLength;
 
 			// Deinitialize the elements in the hole.
-			this->Allocator().DeinitializeRange(insertionRangeStart, insertionRangeEnd);
+			this->Allocator().DeinitializeRange(insertionRangeStart, insertionRangeLast);
 
 			// Copy elements into the insertion hole.
 			pointer currentInsertionPoint = insertionRangeStart;
@@ -520,59 +673,155 @@ private:
 
 public:
 	//! Inserts another list into this one.
+	//!
+	//! @param index Zero-based index of the position to insert the items into. If this value is out of list's
+	//!              range then the items are added to end.
+	//! @param other Reference to the list to copy the items from.
 	void InsertRange(size_type index, const List &other)
 	{
-		this->InsertRange(index,
+		this->InsertRange(this->First() + index,
 						  std::remove_reference<const_pointer>::type(other.First()),
 						  std::remove_reference<const_pointer>::type(other.Last()));
 	}
 	//! Inserts another list into this one.
+	//!
+	//! @param position Iterator that represents the position to insert the items into. If this value is out of
+	//!                 list's range then the items are added to end.
+	//! @param other    Reference to the list to copy the items from.
+	void InsertRange(const_iterator_type position, const List &other)
+	{
+		this->InsertRange(this->GetUncheckedPosition(position),
+						  std::remove_reference<const_pointer>::type(other.First()),
+						  std::remove_reference<const_pointer>::type(other.Last()));
+	}
+	//! Inserts another list into this one.
+	//!
+	//! @param index Zero-based index of the position to insert the items into. If this value is out of list's
+	//!              range then the items are added to end.
+	//! @param other Reference to the list to copy the items from.
 	void InsertRange(size_type index, List &&other)
 	{
-		this->InsertRange(index,
-						  std::remove_reference<const_pointer>::type(other.First()),
-						  std::remove_reference<const_pointer>::type(other.Last()));
+		this->InsertRange(this->First() + index,
+						  std::remove_reference<pointer>::type(other.First()),
+						  std::remove_reference<pointer>::type(other.Last()));
 	}
 	//! Inserts another list into this one.
+	//!
+	//! @param position Iterator that represents the position to insert the items into. If this value is out of
+	//!                 list's range then the items are added to end.
+	//! @param other    Reference to the list to copy the items from.
+	void InsertRange(const_iterator_type position, List &&other)
+	{
+		this->InsertRange(this->GetUncheckedPosition(position),
+						  std::remove_reference<pointer>::type(other.First()),
+						  std::remove_reference<pointer>::type(other.Last()));
+	}
+	//! Inserts another list into this one.
+	//!
+	//! @param index Zero-based index of the position to insert the items into. If this value is out of list's
+	//!              range then the items are added to end.
+	//! @param other Reference to the list to copy the items from.
 	void InsertRange(size_type index, std::initializer_list<value_type> other)
 	{
-		this->InsertRange(index, other.begin(), other.end());
+		this->InsertRange(this->First() + index, other.begin(), other.end());
+	}
+	//! Inserts another list into this one.
+	//!
+	//! @param position Iterator that represents the position to insert the items into. If this value is out of
+	//!                 list's range then the items are added to end.
+	//! @param other    Reference to the list to copy the items from.
+	void InsertRange(const_iterator_type position, std::initializer_list<value_type> other)
+	{
+		this->InsertRange(this->GetUncheckedPosition(position), other.begin(), other.end());
 	}
 	//! Inserts a collection of items into this list.
+	//!
+	//! @tparam CollectionType A type of the collection that must satisfy the same conditions as one must satisfy
+	//!                        to be used in ranged for loop.
+	//!
+	//! @param index Zero-based index of the position to insert the items into. If this value is out of list's
+	//!              range then the items are added to end.
 	template<typename CollectionType>
 	void InsertCollection(size_type index, const CollectionType &collection)
 	{
 		for (const auto &current : collection)
 		{
-			this->Insert(index, current);
+			this->Insert(this->First() + index, current);
+		}
+	}
+	//! Inserts a collection of items into this list.
+	//!
+	//! @tparam CollectionType A type of the collection that must satisfy the same conditions as one must satisfy
+	//!                        to be used in ranged for loop.
+	//!
+	//! @param position Iterator that represents the position to insert the items into. If this value is out of
+	//!                 list's range then the items are added to end.
+	template<typename CollectionType>
+	void InsertCollection(const_iterator_type position, const CollectionType &collection)
+	{
+		for (const auto &current : collection)
+		{
+			this->Insert(this->GetUncheckedPosition(position), current);
 		}
 	}
 
 	//! Adds a new object at the end of the list by constructing it from provided arguments.
+	//!
+	//! @tparam ArgumentTypes Types of arguments to pass to the constructor.
+	//!
+	//! @param arguments A set of arguments to pass to the constructor.
 	template<typename... ArgumentTypes>
 	void Make(ArgumentTypes &&... arguments)
 	{
 		this->Reserve(1);
-		this->Object()->InvalidateIterators(this->Last());
+		this->list->InvalidateIterators(this->Last());
 
-		this->Allocator().Initialize(this->Last(), std::forward(arguments)...);
+		this->Allocator().Initialize(this->Last(), std::forward<ArgumentTypes>(arguments)...);
 		++this->Last();
 	}
 
 	//! Inserts an object that is constructed from provided arguments at the specified position in the list.
+	//!
+	//!
+	//! @tparam ArgumentTypes Types of arguments to pass to the constructor.
+	//!
+	//! @param index     Zero-based index of the position to insert the item into. If this value is out of list's
+	//!                  range then the item is added to end.
+	//! @param arguments A set of arguments to pass to the constructor.
 	template<typename... ArgumentTypes>
 	void Emplace(size_type index, ArgumentTypes &&... arguments)
 	{
-		auto oldLength = this->Length;
-		if (index >= oldLength)
+		this->Emplace(this->First() + index, std::forward<ArgumentTypes>(arguments)...);
+	}
+	//! Inserts an object that is constructed from provided arguments at the specified position in the list.
+	//!
+	//!
+	//! @tparam ArgumentTypes Types of arguments to pass to the constructor.
+	//!
+	//! @param position Iterator that represents the position to insert the item into. If this value is out of
+	//!                 list's range then the item is added to end.
+	//! @param arguments A set of arguments to pass to the constructor.
+	template<typename... ArgumentTypes>
+	void Emplace(const_iterator_type position, ArgumentTypes &&... arguments)
+	{
+		this->Emplace(this->GetUncheckedPosition(position), std::forward<ArgumentTypes>(arguments)...);
+	}
+private:
+	template<typename... ArgumentTypes>
+	void Emplace(pointer position, ArgumentTypes &&... arguments)
+	{
+		if (position >= this->Last())
 		{
-			this->Make(std::forward(arguments)...);
+			this->Make(std::forward<ArgumentTypes>(arguments)...);
+			return;
 		}
 		if (this->UnusedCapacity < 1)
 		{
 			// Allocate new memory for the list.
 			size_type oldCapacity = this->Capacity;
 			pointer oldMemory = this->First();
+			auto oldLength = this->Length;
+			size_type index = position - oldMemory;
 
 			size_type newCapacity = this->CalculateExpandedCapacity(oldCapacity + 1);
 			pointer newMemory = this->Allocator().Allocate(newCapacity);
@@ -590,7 +839,7 @@ public:
 			}
 
 			// Initialize the element.
-			this->Allocator().Initialize(currentDest, std::forward(arguments)...);
+			this->Allocator().Initialize(currentDest++, std::forward<ArgumentTypes>(arguments)...);
 
 			// Move the rest.
 			for (; currentDest != newMemoryLast; currentSource++, currentDest++)
@@ -599,7 +848,7 @@ public:
 			}
 
 			// Deinitialize and deallocate old memory.
-			this->Object()->FreeStorage();
+			this->list->FreeStorage();
 
 			this->First() = newMemory;
 			this->Last() = newMemoryLast;
@@ -607,108 +856,157 @@ public:
 		}
 		else
 		{
-			pointer start = this->First();
-			pointer insertionPoint = start + index;
-
 			// Orphan iterators that are at the insertion point or beyond it.
-			this->Object()->InvalidateIterators(this->First() + index, this->Last());
+			this->list->InvalidateIterators(position, this->Last());
 
 			// Move the range of last elements to make space for other elements.
-			this->ShiftRange(insertionPoint, this->Last(), insertionPoint + 1);
+			this->ShiftRange(position, this->Last(), position + 1);
 			this->Last()++;
 
 			// Deinitialize the elements in the hole.
-			this->Allocator().Deinitialize(insertionPoint);
+			this->Allocator().Deinitialize(position);
 
 			// Initialize the element in the insertion hole.
-			this->Allocator().Initialize(insertionPoint, std::forward(arguments)...);
+			this->Allocator().Initialize(position, std::forward<ArgumentTypes>(arguments)...);
 		}
 	}
 
+public:
 	//! Replaces an item at the specified position with another one.
+	//!
+	//! @param index Zero-based index of the item to replace.
+	//! @param item  Reference to the object which copy is going to replace the element in the list.
 	void Replace(size_type index, const value_type &item)
 	{
+		this->ReplaceInternal(this->First() + index, item);
+	}
+	//! Replaces an item at the specified position with another one.
+	//!
+	//! @param position Iterator that points at the item to replace.
+	//! @param item     Reference to the object which copy is going to replace the element in the list.
+	void Replace(const_iterator_type position, const value_type &item)
+	{
+		this->ReplaceInternal(this->GetUncheckedPosition(position), item);
+	}
+	//! Replaces an item at the specified position with another one.
+	//!
+	//! @param index Zero-based index of the item to replace.
+	//! @param item  Reference to the object which is going to replace the element in the list.
+	void Replace(size_type index, value_type &&item)
+	{
+		this->ReplaceInternal(this->First() + index, std::forward<value_type>(item));
+	}
+	//! Replaces an item at the specified position with another one.
+	//!
+	//! @param position Iterator that points at the item to replace.
+	//! @param item     Reference to the object which is going to replace the element in the list.
+	void Replace(const_iterator_type position, value_type &&item)
+	{
+		this->ReplaceInternal(this->GetUncheckedPosition(position), std::forward<value_type>(item));
+	}
+
+private:
+	void ReplaceInternal(pointer position, const value_type &item)
+	{
 #ifdef DEBUG_ITERATION
-		if (index >= this->Last())
+		if (position >= this->Last())
 		{
 			throw std::out_of_range("Attempted to access an element outside of the list.");
 		}
 #endif // DEBUG_ITERATION
-
-		pointer position = this->First() + index;
 
 		this->Allocator().Deinitialize(position);
 		this->Allocator().Initialize(position, item);
 	}
-	//! Replaces an item at the specified position with another one.
-	void Replace(size_type index, value_type &&item)
+	void ReplaceInternal(pointer position, value_type &&item)
 	{
 #ifdef DEBUG_ITERATION
-		if (index >= this->Last())
+		if (position >= this->Last())
 		{
 			throw std::out_of_range("Attempted to access an element outside of the list.");
 		}
 #endif // DEBUG_ITERATION
 
-		pointer position = this->First() + index;
-
 		this->Allocator().Deinitialize(position);
-		this->Allocator().Initialize(position, std::forward(item));
+		this->Allocator().Initialize(position, std::forward<value_type>(item));
 	}
 
-	//! Removes an element from the back of this list.
-	void Cut()
+public:
+
+	//! Removes specified number of elements from the back of this list.
+	//!
+	//! @param count Number of elements to remove.
+	void Cut(size_type count = 1)
 	{
-		if (this->Empty)
+		if (this->Empty || count == 0)
 		{
 			return;
 		}
-		this->Allocator().Deinitialize(this->Last()--);
-		this->Object()->InvalidateIterators(this->Last());
-	}
-	//! Removes specified number of elements from the back of this list.
-	void Cut(size_type count)
-	{
-		for (size_t i = 0; i < count && this->Last() != this->First(); i++)
+		auto length = this->Length;
+		if (count > length)
 		{
-			this->Allocator().Deinitialize(this->Last()--);
+			count = length;
 		}
-		this->Object()->InvalidateIterators(this->Last(), this->Last() + count - 1);
+		pointer firstToRemove = this->Last() - count;
+		this->Allocator().DeinitializeRange(firstToRemove, this->Last());
+		this->list->InvalidateIterators(firstToRemove, this->Last() - 1);
+		this->Last() -= count;
 	}
 	//! Removes a range of elements from this list.
-	void Erase(iterator_base left, iterator_base right)
+	//!
+	//! @param left  An iterator that represents the start of the range of elements to remove.
+	//! @param right An iterator that represents the end of the range of elements to remove.
+	void Erase(const_iterator_type left, const_iterator_type right)
 	{
-		this->Erase(this->Object()->GetIteratorCurrentIndex(left),
-					this->Object()->GetIteratorCurrentIndex(right));
+		this->Erase(left.GetUnchecked(), right.GetUnchecked());
+	}
+	//! Removes a range of elements from this list.
+	//!
+	//! @param index Zero-based index of the first element to erase.
+	//! @param count Number of elements to remove.
+	void Erase(size_type index, size_type count)
+	{
+		pointer start = this->First() + index;
+
+#ifdef DEBUG_ITERATION
+		if (start + count >= this->Last())
+		{
+			throw std::out_of_range("Attempted to remove elements outside the list.");
+		}
+#endif // DEBUG_ITERATION
+
+		this->Erase(start, start + count);
 	}
 	//! Removes an element from this list.
-	void Erase(iterator_base position)
+	//!
+	//! @param index Zero-based index of the element to erase.
+	void Erase(size_type index)
 	{
-		pointer pos = this->Object()->GetIteratorCurrentIndex(position);
-		this->Erase(pos, pos + 1);
-	}
-	//! Removes an element from this list.
-	void Erase(size_type position)
-	{
-		pointer pos = this->First() + position;
+		pointer pos = this->First() + index;
 #ifdef DEBUG_ITERATION
 		if (pos >= this->Last())
 		{
 			throw std::out_of_range("Attempted to remove an element outside the list.");
 		}
 #endif // DEBUG_ITERATION
-
 		this->Erase(pos, pos + 1);
 	}
+	//! Removes an element from this list.
+	//!
+	//! @param position Iterator that is at the element to erase.
+	void Erase(const_iterator_type position)
+	{
+		pointer pos = position.GetUnchecked();
+		this->Erase(pos, pos + 1);
+	}
+
 private:
 	//! Removes a range of elements from this list.
 	void Erase(pointer left, pointer right)
 	{
-		this->Object()->InvalidateIterators(left, right - 1);
+		this->list->InvalidateIterators(left, right - 1);
 
-		this->Allocator().DeinitializeRange(left, right);
-
-		this->ShiftRange(right, this->Last());
+		this->ShiftRange(right, this->Last(), left);
 
 		this->Cut(right - left);
 	}
@@ -721,7 +1019,7 @@ public:
 		{
 			return;
 		}
-		this->Object()->ReallocateStorage(this->Length);
+		this->list->ReallocateStorage(this->Length);
 	}
 	//! Performs a binary search for an element.
 	//!
@@ -754,26 +1052,69 @@ public:
 	//!
 	//! @param element  An element we want to find.
 	//! @param comparer An optional object that performs comparison of objects within this list.
+	//!                 This object must have a parentheses operator (like a function or functor) that can
+	//!                 accept 2 arguments. During the function execution this object will be invoked in the
+	//!                 following way: comparer(element in the list, provided element), so make sure the
+	//!                 parameters are of appropriate types.
 	//!
 	//! @returns A zero-based index of the element, if it was found in the list.
-	int BinarySearch(reference element, Comparison comparer = nullptr) const
+	template<typename ValType>
+	difference_type BinarySearch(const ValType &element) const
 	{
-		Comparison comparison;
-		if (comparer)
-		{
-			comparison = comparer;
-		}
-		else
-		{
-			comparison = DefaultComparison<ElementType>;
-		}
-
+		return this->BinarySearchInternal(element, DefaultComparison<ValType, ValType>());
+	}
+	//! Performs a binary search for an element.
+	//!
+	//! Don't use this method on lists that are not sorted.
+	//!
+	//! In order to ensure that the list is sorted, you must only insert new elements at indexes that
+	//! are represented by negated (bit-wise with a ~ (tilde) operator) indexes that are returned by this
+	//! method.
+	//!
+	//! Example:
+	//!
+	//! @code{.cpp}
+	//!
+	//! // Lets make a sorted list:
+	//! List<int> integers(5);
+	//!
+	//! integers.Insert(~integers.BinarySearch(5), 5);
+	//! integers.Insert(~integers.BinarySearch(1), 1);
+	//! integers.Insert(~integers.BinarySearch(3), 3);
+	//! integers.Insert(~integers.BinarySearch(4), 4);
+	//! integers.Insert(~integers.BinarySearch(2), 2);
+	//!
+	//! for (int i = 0; i < integers.Length; i++)
+	//! {
+	//!     // Should print out 1, 2, 3, 4, 5 (with new lines in place of commas.)
+	//!     CryLogAlways("%d", integers[i]);
+	//! }
+	//!
+	//! @endcode
+	//!
+	//! @param element  An element we want to find.
+	//! @param comparer An optional object that performs comparison of objects within this list.
+	//!                 This object must have a parentheses operator (like a function or functor) that can
+	//!                 accept 2 arguments. During the function execution this object will be invoked in the
+	//!                 following way: comparer(element in the list, provided element), so make sure the
+	//!                 parameters are of appropriate types.
+	//!
+	//! @returns A zero-based index of the element, if it was found in the list.
+	template<typename ValType, typename PredicateType>
+	difference_type BinarySearch(const ValType &element, PredicateType comparer) const
+	{
+		return this->BinarySearchInternal(element, comparer);
+	}
+private:
+	template<typename ValType, typename PredicateType>
+	difference_type BinarySearchInternal(const ValType &value, PredicateType predicate) const
+	{
 		difference_type lo = 0;
 		difference_type hi = this->Length - 1;
 		while (lo <= hi)
 		{
-			difference_type i = lo + (hi - lo >> 1);
-			int order = comparison(this->First()[i], element);
+			difference_type i = lo + ((hi - lo) >> 1);
+			int order = predicate(this->First()[i], value);
 
 			if (order == 0) return i;
 			if (order < 0)
@@ -788,6 +1129,7 @@ public:
 
 		return ~lo;
 	}
+public:
 
 	//! Creates a deep copy of this list.
 	//!
@@ -820,79 +1162,87 @@ public:
 	}
 
 	//! Creates an iterator that can be used to begin traversal of this list.
-	iterator_read_write begin()
+	iterator_type begin()
 	{
-		return iterator_read_write(this->First(), this->Object());
+		return iterator_type(this->First(), this->list);
 	}
 	//! Creates an iterator that can be used to finish traversal of this list.
-	iterator_read_write end()
+	iterator_type end()
 	{
-		return iterator_read_write(this->Last(), this->Object());
+		return iterator_type(this->Last(), this->list);
 	}
 	//! Creates an iterator that can be used to begin traversal of this list.
-	iterator_read_only begin() const
+	const_iterator_type begin() const
 	{
-		return iterator_read_only(this->First(), this->Object());
+		return const_iterator_type(this->First(), this->list);
 	}
 	//! Creates an iterator that can be used to finish traversal of this list.
-	iterator_read_only end() const
+	const_iterator_type end() const
 	{
-		return iterator_read_only(this->Last(), this->Object());
+		return const_iterator_type(this->Last(), this->list);
 	}
 	//! Creates an iterator that can be used to begin traversal of this list.
-	iterator_read_only cbegin() const
+	const_iterator_type cbegin() const
 	{
-		return iterator_read_only(this->First(), this->Object());
+		return const_iterator_type(this->First(), this->list);
 	}
 	//! Creates an iterator that can be used to finish traversal of this list.
-	iterator_read_only cend() const
+	const_iterator_type cend() const
 	{
-		return iterator_read_only(this->Last(), this->Object());
+		return const_iterator_type(this->Last(), this->list);
 	}
 	//! Creates an iterator that can be used to begin traversal of this list in reverse.
-	iterator_read_write rbegin()
+	iterator_type rbegin()
 	{
-		return iterator_read_write(this->Last() - 1, this->Object(), -1);
+		return iterator_type(this->Last() - 1, this->list, -1);
 	}
 	//! Creates an iterator that can be used to finish traversal of this list in reverse.
-	iterator_read_write rend()
+	iterator_type rend()
 	{
-		return iterator_read_write(this->First() - 1, this->Object(), -1);
+		return iterator_type(this->First() - 1, this->list, -1);
 	}
 	//! Creates an iterator that can be used to begin traversal of this list in reverse.
-	iterator_read_only rbegin() const
+	const_iterator_type rbegin() const
 	{
-		return iterator_read_only(this->Last() - 1, this->Object(), -1);
+		return const_iterator_type(this->Last() - 1, this->list, -1);
 	}
 	//! Creates an iterator that can be used to finish traversal of this list in reverse.
-	iterator_read_only rend() const
+	const_iterator_type rend() const
 	{
-		return iterator_read_only(this->First() - 1, this->Object(), -1);
+		return const_iterator_type(this->First() - 1, this->list, -1);
 	}
 	//! Creates an iterator that can be used to begin traversal of this list in reverse.
-	iterator_read_only crbegin() const
+	const_iterator_type crbegin() const
 	{
-		return iterator_read_only(this->Last() - 1, this->Object(), -1);
+		return const_iterator_type(this->Last() - 1, this->list, -1);
 	}
 	//! Creates an iterator that can be used to finish traversal of this list in reverse.
-	iterator_read_only crend() const
+	const_iterator_type crend() const
 	{
-		return iterator_read_only(this->First() - 1, this->Object(), -1);
+		return const_iterator_type(this->First() - 1, this->list, -1);
 	}
 
 private:
 	// Creates a list object.
-	void CreateObject()
+	template<typename AllocType>
+	void CreateObject(AllocType &&allocator)
 	{
-		typename allocator_type::template rebind<list_object_type>::other objectAllocator(this->Allocator());
+		// Create the allocator object from the forwarded reference.
+		AllocType allocObj(std::forward<AllocType>(allocator));
 
-		this->Object() = objectAllocator.Allocate(1);
-		objectAllocator.Initialize(this->Object(), list_object_type());
+		// Create a copy of the allocator object that can handle allocation of the ListObject.
+		typename allocator_type::template rebind<list_object_type>::other objectAllocator(allocObj);
+
+		// Allocate memory for the list object.
+		this->list = objectAllocator.Allocate(1);
+
+		// Initialize the list object with a moved allocator object.
+		objectAllocator.Initialize(this->list, std::move(allocObj));
 	}
 	// Destroys the list object, if its reference count reaches 0.
 	void ReleaseObject()
 	{
-		if (!this->Object() || this->Object()->UnregisterReference())
+		if (!this->list || this->list->UnregisterReference())
 		{
 			return;
 		}
@@ -900,8 +1250,8 @@ private:
 		// Delete the object, since there are no live references to it.
 		typename allocator_type::template rebind<list_object_type>::other objectAllocator(this->Allocator());
 
-		objectAllocator.Deallocate(this->Object());
-		this->Object() = nullptr;
+		objectAllocator.Deallocate(this->list);
+		this->list = nullptr;
 	}
 
 	void Assign(const_pointer left, const_pointer right)
@@ -940,44 +1290,53 @@ private:
 
 		return currentDestination;
 	}
+	// firstSource First element in the range.
+	// lastSource  Element after last element in the range.
 	void ShiftRange(pointer firstSource, pointer lastSource, pointer destination)
 	{
-		difference_type offset = destination - firstSource;
+		pointer lastItem = this->Last();
 
-		pointer last = this->Last();
+		difference_type shift = destination - firstSource;
 
-		if (offset > 0)
+		if (shift > 0)
 		{
-			pointer currentSource = lastSource;
-			pointer currentDestination = currentSource + offset;
+			// Shift a range to the right.
 
-			// Move right to left.
-			for (; currentSource != firstSource; currentSource--, currentDestination--)
+			// This is done by going through elements from right to left
+			pointer currentSource = lastSource - 1;
+			pointer currentDest = currentSource + shift;
+			pointer currentSourceEnd = firstSource - 1;
+
+			for (; currentSource != currentSourceEnd; currentSource--, currentDest--)
 			{
-				if (currentDestination < last)
+				// Destroy the item, if it is within this list.
+				if (currentDest < lastItem)
 				{
-					// Destroy the item, if it is within this list.
-					this->Allocator().Deinitialize(currentDestination);
+					this->Allocator().Deinitialize(currentDest);
 				}
 
-				this->Allocator().Initialize(currentDestination, std::move(*currentSource));
+				// Shift the element
+				this->Allocator().Initialize(currentDest, std::move(*currentSource));
 			}
 		}
-		else if (offset < 0)
+		else if (shift < 0)
 		{
-			pointer currentSource = firstSource;
-			pointer currentDestination = currentSource + offset;
+			// Shift the range to the left.
 
-			// Move right to left.
-			for (; currentSource != lastSource; currentSource++, currentDestination++)
+			// This is done by going through elements from left to right.
+			pointer currentSource = firstSource;
+			pointer currentDest = currentSource + shift;
+			pointer currentSourceEnd = lastSource;
+
+			for (; currentSource != currentSourceEnd; currentSource++, currentDest++)
 			{
-				if (currentDestination < last)
+				if (currentDest < lastItem)
 				{
 					// Destroy the item, if it is within this list.
-					this->Allocator().Deinitialize(currentDestination);
+					this->Allocator().Deinitialize(currentDest);
 				}
 
-				this->Allocator().Initialize(currentDestination, std::move(*currentSource));
+				this->Allocator().Initialize(currentDest, std::move(*currentSource));
 			}
 		}
 	}
@@ -985,7 +1344,7 @@ private:
 	{
 		size_type result = this->Capacity;
 
-		if (this->Allocator().MaxSize() - result / 2 < result)
+		if (this->Allocator().MaxLength() - result / 2 < result)
 		{
 			result = 0;	// Too big for normal expansion.
 		}
@@ -1021,6 +1380,10 @@ private:
 		{
 			this->Allocator().Initialize(this->Last()++, *first);	// Make a copy.
 		}
+	}
+	pointer GetUncheckedPosition(const const_iterator_type &iter)
+	{
+		return pointer(iter.GetUnchecked());
 	}
 };
 

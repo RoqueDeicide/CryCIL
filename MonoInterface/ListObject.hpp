@@ -7,6 +7,7 @@ template<typename ElementType, typename AllocatorType>
 class ListObject
 {
 	friend List<ElementType, AllocatorType>;
+	friend ListIteratorConst<ListObject>;
 public:
 	typedef ElementType value_type;
 	typedef ElementType &reference;
@@ -18,7 +19,7 @@ public:
 	typedef ptrdiff_t difference_type;
 
 	typedef AllocatorType allocator_type;
-	typedef ListIteratorBase<ListObject> iterator_type;
+	typedef ListIteratorConst<ListObject> iterator_type;
 
 	//
 	// Fields.
@@ -36,6 +37,12 @@ private:
 			: First(first)
 			, Last(last)
 			, End(end)
+		{
+		}
+		ListDimensions()
+			: First(nullptr)
+			, Last(nullptr)
+			, End(nullptr)
 		{
 		}
 	};
@@ -62,38 +69,55 @@ private:
 	{
 		return this->AllocDimensionsPair.First();
 	}
+	//! Gets the object that defines dimensions of this list.
+	ListDimensions &Dimensions()
+	{
+		return this->AllocDimensionsPair.Second();
+	}
+	const ListDimensions &Dimensions() const
+	{
+		return this->AllocDimensionsPair.Second();
+	}
 
 public:
 	//! Gets the pointer to the first element in the list.
 	pointer &First()
 	{
-		return this->AllocDimensionsPair.Second()->First;
+		return this->Dimensions().First;
 	}
-	const_pointer &First() const
+	const pointer &First() const
 	{
-		return this->AllocDimensionsPair.Second()->First;
+		return this->Dimensions().First;
 	}
 	//! Gets the pointer to the element after last live object in the list.
 	pointer &Last()
 	{
-		return this->AllocDimensionsPair.Second()->Last;
+		return this->Dimensions().Last;
 	}
-	const_pointer &Last() const
+	const pointer &Last() const
 	{
-		return this->AllocDimensionsPair.Second()->Last;
+		return this->Dimensions().Last;
 	}
 	//! Gets the pointer to the element after last non-live object in the list.
 	pointer &End()
 	{
-		return this->AllocDimensionsPair.Second()->End;
+		return this->Dimensions().End;
 	}
-	const_pointer &End() const
+	const pointer &End() const
 	{
-		return this->AllocDimensionsPair.Second()->End;
+		return this->Dimensions().End;
 	}
 
-	explicit ListObject(allocator_type allocator = allocator_type())
+	explicit ListObject(const allocator_type &allocator = allocator_type())
 		: AllocDimensionsPair(OneToFirstRestToSecond(), allocator, nullptr, nullptr, nullptr)
+		, ReferenceCount(1)
+#ifdef DEBUG_ITERATION
+		, FirstIterator(nullptr)
+#endif // DEBUG_ITERATION
+	{
+	}
+	explicit ListObject(allocator_type &&allocator)
+		: AllocDimensionsPair(OneToFirstRestToSecond(), std::move(allocator), nullptr, nullptr, nullptr)
 		, ReferenceCount(1)
 #ifdef DEBUG_ITERATION
 		, FirstIterator(nullptr)
@@ -210,13 +234,13 @@ private:
 	//! If this list already has memory allocated, an error is thrown.
 	void AllocateStorage(size_type capacity)
 	{
-		if (capacity >= this->Allocator().MaxSize())
+		if (capacity >= this->Allocator().MaxLength())
 		{
-			throw std::bad_alloc("Attempted to locate too much memory.");
+			throw std::length_error("Attempted to locate too much memory.");
 		}
 		if (this->First())
 		{
-			throw std::bad_alloc("Attempted to allocate new memory for the list before discarding old memory.");
+			throw std::length_error("Attempted to allocate new memory for the list before discarding old memory.");
 		}
 		if (capacity == 0)
 		{
@@ -234,9 +258,9 @@ private:
 	//! Reallocates the memory that is used by this list.
 	void ReallocateStorage(size_type newCapacity)
 	{
-		if (newCapacity >= this->Allocator().MaxSize())
+		if (newCapacity >= this->Allocator().MaxLength())
 		{
-			throw std::bad_alloc("Attempted to locate too much memory.");
+			throw std::length_error("Attempted to locate too much memory.");
 		}
 		
 		if (!this->First())
@@ -249,50 +273,46 @@ private:
 			this->FreeStorage();
 		}
 
+		pointer oldMemory = this->First();
+		pointer oldLast = this->Last();
+
 		// Allocate new memory.
 		pointer newMemory = this->Allocator().Allocate(newCapacity);
+		pointer newEnd = newMemory + newCapacity;
+		pointer currentNew = newMemory;
 
 		// Copy all old data to the new memory while invoking move constructors to inform objects about their
 		// new locations.
 		{
-			pointer currentOldPtr = this->First();
-			size_type currentNewIndex = 0;
-			while (currentOldPtr < this->Last() && currentNewIndex < newCapacity)
+			pointer currentOld = oldMemory;
+			for (; currentOld < oldLast && currentNew < newEnd; currentNew++, currentOld++)
 			{
-				this->Allocator().Initialize(newMemory + currentNewIndex++, std::move(*(currentOldPtr++)));
+				this->Allocator().Initialize(currentNew, std::move(*currentOld));
+				this->Allocator().Deinitialize(currentOld);
 			}
 
 			// If new capacity is not enough to fit all live objects, then deinitialize the remainder.
-			if (currentOldPtr < this->Last())
+			if (currentOld < oldLast)
 			{
-				this->Allocator().DeinitializeRange(currentOldPtr, this->Last());
+				this->Allocator().DeinitializeRange(currentOld, oldLast);
 			}
 		}
 
 		// Deallocate old memory.
-		this->Allocator().Deallocate(this->First());
+		this->Allocator().Deallocate(oldMemory);
 
 		// Update pointers.
-		size_type oldLength = this->Last() - this->First();
-
 		this->First() = newMemory;
-		if (oldLength > newCapacity)
-		{
-			this->Last() = newMemory + newCapacity;
-			this->End() = this->Last();
-		}
-		else
-		{
-			this->Last() = newMemory + oldLength;
-			this->End() = newMemory + newCapacity;
-		}
+		this->Last() = currentNew;
+		this->End() = newEnd;
 	}
 	//! Releases memory that is taken up by this list.
 	void FreeStorage()
 	{
 		if (!this->First())
 		{
-			throw std::logic_error("Attempted to release memory that wasn't allocated.");
+			return;
+			//throw std::logic_error("Attempted to release memory that wasn't allocated.");
 		}
 
 		// Deconstruct the objects.
@@ -311,24 +331,5 @@ private:
 	bool IsInside(const_pointer ptr, const_pointer left, const_pointer right)
 	{
 		return ptr >= left && ptr < right;
-	}
-	// This is a bit of an awkward function, but, whatever.
-	//
-	// This is here because, unlike with std::vector's iterators, both usable iterators for the List are
-	// derived from one type and that type doesn't have public means of accessing its current position.
-	size_type GetIteratorCurrentIndex(iterator_type iter)
-	{
-#ifdef DEBUG_ITERATION
-		if (iter.parent != this)
-		{
-			throw std::logic_error("Attempt to access the list with an iterator that is not of this list.");
-		}
-		if (iter.current < this->First() || iter.current >= this->Last())
-		{
-			throw std::out_of_range("Attempt to access the list with an iterator that is out of range.");
-		}
-#endif // DEBUG_ITERATION
-
-		return iter.current - this->First();
 	}
 };

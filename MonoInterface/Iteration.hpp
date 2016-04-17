@@ -3,11 +3,6 @@
 #include <stdexcept>
 #include "ExtraTypeTraits.h"
 
-// Use 2 mecros to make __LINE__ expand into the actual line number in quotes, rather then "__LINE__".
-#define STRINGIFY(x) #x
-#define STRINGIFY2(x) STRINGIFY(x)
-#define LINE_STRING STRINGIFY2(__LINE__)
-
 #ifdef _DEBUG
 #define DEBUG_ITERATION
 #endif // _DEBUG
@@ -51,14 +46,15 @@ struct RandomAccessIteratorTag : ForwardIteratorTag
 // Base list iterator.
 //
 
-//! Represents an object that can be used to more or less safely iterate through the list.
+//! Represents an object that can be used to more or less safely iterate through the list in read-only mode.
 template<typename ListType>
-class ListIteratorBase
+class ListIteratorConst
 {
+	friend ListType;
 public:
 	typedef RandomAccessIteratorTag iterator_category;
 	typedef typename ListType::value_type value_type;
-	typedef typename ListType::pointer pointer;
+	typedef typename ListType::const_pointer pointer;
 	typedef typename ListType::const_pointer const_pointer;
 	typedef typename ListType::reference reference;
 	typedef typename ListType::const_reference const_reference;
@@ -66,44 +62,44 @@ public:
 	typedef typename ListType::size_type size_type;
 	typedef typename ListType::difference_type difference_type;
 
-private:
-	ListType *parent;			//!< The list this iterator is going through.
-	ListIteratorBase *next;		//!< Next iterator in the chain of iterators that share the same parent.
-	int direction;				//!< Either 1 or -1 that represents direction of iteration.
 protected:
+	ListType *parent;			//!< The list this iterator is going through.
+	ListIteratorConst *next;	//!< Next iterator in the chain of iterators that share the same parent.
+	int direction;				//!< Either 1 or -1 that represents direction of iteration.
 	pointer current;			//!< Pointer to the value in the list this iterator is currently on.
 
 public:
 	//! Creates an orphan iterator.
-	ListIteratorBase() : parent(nullptr), next(nullptr), direction(1), current(nullptr)
+	ListIteratorConst() : parent(nullptr), next(nullptr), direction(1), current(nullptr)
 	{
 	}
 	//! Copies another iterator.
-	ListIteratorBase(const ListIteratorBase &other)
+	ListIteratorConst(const ListIteratorConst &other)
+		: ListIteratorConst()
 	{
 		*this = other;
 	}
 	//! Creates a new iterator for the list that is initialized to be at the specified position.
-	ListIteratorBase(pointer element, const ListType *list, int direction)
-		:direction(direction), current(element)
+	ListIteratorConst(pointer element, const ListType *list, int direction = 1)
+		: parent(nullptr), next(nullptr), direction(direction), current(element)
 	{
-		this->BecomeAdopted(list);
+		this->BecomeAdopted(const_cast<ListType *>(list));
 	}
-	~ListIteratorBase()
+	~ListIteratorConst()
 	{
 		this->BecomeOrphaned();
 	}
 	//! Assigns a copy of another iterator to this one.
-	ListIteratorBase& operator=(const ListIteratorBase &other)
+	ListIteratorConst& operator=(const ListIteratorConst &other)
 	{
-		if (this->parent == other->parent)
+		if (this->parent == other.parent)
 		{
 			// Don't do anything since both iterators are adopted by the same list.
 		}
-		else if (other->parent != nullptr)
+		else if (other.parent != nullptr)
 		{
 			// Switch this iterator to the new parent.
-			this->BecomeAdopted(other->parent);
+			this->BecomeAdopted(other.parent);
 		}
 		else
 		{
@@ -112,11 +108,13 @@ public:
 			this->BecomeOrphaned();
 #endif // DEBUG_ITERATION
 		}
+		this->current = other.current;
+		this->direction = other.direction;
 		return (*this);
 	}
 
 	//! Changes a parent of this iterator.
-	void BecomeAdopted(const ListType *list)
+	void BecomeAdopted(ListType *list)
 	{
 		if (this->parent != list)
 		{
@@ -133,7 +131,7 @@ public:
 #ifdef DEBUG_ITERATION
 		// Let the parent know that we are adopted by inserting ourselves at the start of the chain of iterators.
 		this->next = list->FirstIterator;
-		list->FirtsIterator = this;
+		list->FirstIterator = this;
 #endif // DEBUG_ITERATION
 
 		this->parent = list;
@@ -148,7 +146,7 @@ public:
 		}
 
 		// Find the address of a field that points at this iterator.
-		ListIteratorBase **next = &this->parent->FirstIterator;
+		ListIteratorConst **next = &this->parent->FirstIterator;
 		while (*next != nullptr && *next != this)
 		{
 			next = &(*next)->next;
@@ -156,7 +154,7 @@ public:
 
 		if (*next == nullptr)
 		{
-			throw std::logic_error("Attempt was made to orphan the iterator which wasn't in the chain. File: "__FILE__" Line: "LINE_STRING);
+			throw std::logic_error("Attempt was made to orphan the iterator which wasn't in the chain.");
 		}
 
 		*next = this->next;
@@ -170,65 +168,131 @@ public:
 	}
 
 	//
+	// Optimization functions.
+	//
+	
+	//! Gets the pointer to the current element of the list this iterator is currently at, allowing unsafe but
+	//! fast access to the list.
+	pointer GetUnchecked() const
+	{
+#ifdef DEBUG_ITERATION
+		// Check the iterator for validity.
+		if (!this->parent)
+		{
+			throw std::logic_error("The iterator cannot be dereferenced: no connection to the parent.");
+		}
+		if (!this->current)
+		{
+			throw std::logic_error("The iterator cannot be dereferenced: position is not set.");
+		}
+		if (this->current < this->parent->First() || this->current >= this->parent->Last())
+		{
+			throw std::out_of_range("The iterator cannot be dereferenced: current position is outside the list.");
+		}
+#endif // DEBUG_ITERATION
+
+		return this->current;
+	}
+	//! Sets position of this iterator to the specified one.
+	//!
+	//! This method is used to update the iterator after its position was changed after it was acquired via
+	//! @see GetUnchecked() method.
+	void SetRechecked(pointer position)
+	{
+		this->current = position;
+	}
+
+	//
+	// Element access operators.
+	//
+
+	//! Gets the reference to the element of the list this iterator is currently at.
+	reference operator *() const
+	{
+		return *this->operator->();
+	}
+	//! Gets the pointer to the current element in the list.
+	pointer operator->() const
+	{
+#ifdef DEBUG_ITERATION
+		// Check the iterator for validity.
+		if (!this->parent)
+		{
+			throw std::logic_error("The iterator cannot be dereferenced: no connection to the parent.");
+		}
+		if (!this->current)
+		{
+			throw std::logic_error("The iterator cannot be dereferenced: position is not set.");
+		}
+		if (this->current < this->parent->First() || this->current >= this->parent->Last())
+		{
+			throw std::out_of_range("The iterator cannot be dereferenced: current position is outside the list.");
+		}
+#endif // DEBUG_ITERATION
+
+		return this->current;
+	}
+
+	//
 	// Movement operators.
 	//
 
 	//! Advances this iterator to the next element in the list. This is a pre-increment operator.
-	ListIteratorBase &operator++()
+	ListIteratorConst &operator++()
 	{
 		this->Move(1);
 
 		return *this;
 	}
 	//! Advances this iterator to the next element in the list. This is a post-increment operator.
-	ListIteratorBase operator++(int)
+	ListIteratorConst operator++(int)
 	{
-		ListIteratorBase temp = *this;
+		ListIteratorConst temp = *this;
 		++*this;
 		return temp;
 	}
 	//! Retracts this iterator to the previous element in the list. This is a pre-decrement operator.
-	ListIteratorBase &operator--()
+	ListIteratorConst &operator--()
 	{
 		this->Move(-1);
 
 		return *this;
 	}
 	//! Retracts this iterator to the previous element in the list. This is a post-decrement operator.
-	ListIteratorBase operator--(int)
+	ListIteratorConst operator--(int)
 	{
-		ListIteratorBase temp = *this;
+		ListIteratorConst temp = *this;
 		--*this;
 		return temp;
 	}
 
 	//! Advances this iterator by specified number of elements.
-	ListIteratorBase &operator+=(difference_type delta)
+	ListIteratorConst &operator+=(difference_type delta)
 	{
 		this->Move(delta);
 
 		return *this;
 	}
 	//! Creates a new iterator that is this iterator but advanced by specified number of elements.
-	ListIteratorBase operator+(difference_type delta) const
+	ListIteratorConst operator+(difference_type delta) const
 	{
-		ListIteratorBase result = *this;
+		ListIteratorConst result = *this;
 
 		return result += delta;
 	}
 	//! Retracts this iterator by specified number of elements.
-	ListIteratorBase &operator-=(difference_type delta)
+	ListIteratorConst &operator-=(difference_type delta)
 	{
 		return *this += -delta;
 	}
 	//! Creates a new iterator that is this iterator but retracted by specified number of elements.
-	ListIteratorBase operator-(difference_type delta) const
+	ListIteratorConst operator-(difference_type delta) const
 	{
 		return *this + -delta;
 	}
 
 	//! Gets the difference between this and other iterators.
-	difference_type operator-(const ListIteratorBase &other) const
+	difference_type operator-(const ListIteratorConst &other) const
 	{
 		this->AssertCompatibility(other);
 		return this->current - other.current;
@@ -246,44 +310,44 @@ public:
 	//
 
 	//! Determines whether 2 iterators are on the same position of the list.
-	bool operator== (const ListIteratorBase &other) const
+	bool operator== (const ListIteratorConst &other) const
 	{
 		this->AssertCompatibility(other);
 		return this->current == other.current;
 	}
 	//! Determines whether 2 iterators are not on the same position of the list.
-	bool operator!= (const ListIteratorBase &other) const
+	bool operator!= (const ListIteratorConst &other) const
 	{
 		return !(*this == other);
 	}
 	//! Determines whether this iterator is at the position that is after the other iterator.
-	bool operator >(const ListIteratorBase &other) const
+	bool operator >(const ListIteratorConst &other) const
 	{
 		this->AssertCompatibility(other);
 		return this->current > other.current;
 	}
 	//! Determines whether this iterator is at the position that is before the other iterator.
-	bool operator <(const ListIteratorBase &other) const
+	bool operator <(const ListIteratorConst &other) const
 	{
 		this->AssertCompatibility(other);
 		return this->current < other.current;
 	}
 	//! Determines whether this iterator is at the position that is after the other iterator or is on the same
 	//! one.
-	bool operator >=(const ListIteratorBase &other) const
+	bool operator >=(const ListIteratorConst &other) const
 	{
 		this->AssertCompatibility(other);
 		return this->current >= other.current;
 	}
 	//! Determines whether this iterator is at the position that is before the other iterator or is on the same
 	//! one.
-	bool operator <=(const ListIteratorBase &other) const
+	bool operator <=(const ListIteratorConst &other) const
 	{
 		this->AssertCompatibility(other);
 		return this->current <= other.current;
 	}
 private:
-	void AssertCompatibility(const ListIteratorBase &
+	void AssertCompatibility(const ListIteratorConst &
 #ifdef DEBUG_ITERATION
 							 other
 #endif
@@ -317,7 +381,8 @@ private:
 		{
 			throw std::logic_error("The iterator cannot be moved: position is not set.");
 		}
-		if (this->current + delta < this->parent->First || this->current + delta >= this->parent->Last)
+		if (this->current + delta - 1 < this->parent->First() ||
+			this->current + delta - 1 >= this->parent->Last())
 		{
 			throw std::out_of_range("The iterator cannot be moved: new position is outside of the list.");
 		}
@@ -328,9 +393,10 @@ private:
 
 //! Represents an iterator that can be used for read/write access to the list's contents.
 template<typename ListType>
-class ListIterator : public ListIteratorBase<ListType>
+class ListIterator : public ListIteratorConst<ListType>
 {
 public:
+	typedef ListIteratorConst<ListType> BaseType;
 	typedef typename ListType::value_type value_type;
 	typedef typename ListType::pointer pointer;
 	typedef typename ListType::const_pointer const_pointer;
@@ -342,26 +408,23 @@ public:
 
 	//! Copies another iterator.
 	ListIterator(const ListIterator &other)
+		: ListIteratorConst()
 	{
-		*this = other;
+		static_cast<ListIteratorConst<ListType> *>(this)->operator=(other);
 	}
 	//! Creates a new iterator for the list that is initialized to be at the specified position.
 	ListIterator(pointer element, const ListType *list, int direction = 1)
-		: ListIteratorBase(element, list, direction)
+		: ListIteratorConst(element, list, direction)
 	{
 	}
 
 	//
-	// Element access operators.
+	// Optimization functions.
 	//
 
-	//! Gets the reference to the element of the list this iterator is currently at.
-	reference operator *() const
-	{
-		return *this->operator->();
-	}
-	//! Gets the pointer to the current element in the list.
-	pointer operator->() const
+	//! Gets the pointer to the current element of the list this iterator is currently at, allowing unsafe but
+	//! fast access to the list.
+	pointer GetUnchecked() const
 	{
 #ifdef DEBUG_ITERATION
 		// Check the iterator for validity.
@@ -373,7 +436,7 @@ public:
 		{
 			throw std::logic_error("The iterator cannot be dereferenced: position is not set.");
 		}
-		if (this->current < this->parent->First || this->current >= this->parent->Last)
+		if (this->current < this->parent->First() || this->current >= this->parent->Last())
 		{
 			throw std::out_of_range("The iterator cannot be dereferenced: current position is outside the list.");
 		}
@@ -381,29 +444,13 @@ public:
 
 		return this->current;
 	}
-};
-
-//! Represents an iterator that can only be used for read-only access to the list's contents.
-template<typename ListType>
-class ListIteratorConst : public ListIteratorBase<ListType>
-{
-public:
-	typedef typename ListType::value_type value_type;
-	typedef typename ListType::const_pointer pointer;		// Gotta do this for the iterator traits.
-	typedef typename ListType::const_reference reference;
-
-	typedef typename ListType::size_type size_type;
-	typedef typename ListType::difference_type difference_type;
-
-	//! Copies another iterator.
-	ListIteratorConst(const ListIteratorConst &other)
+	//! Sets position of this iterator to the specified one.
+	//!
+	//! This method is used to update the iterator after its position was changed after it was acquired via
+	//! @see GetUnchecked() method.
+	void SetRechecked(pointer position)
 	{
-		*this = other;
-	}
-	//! Creates a new iterator for the list that is initialized to be at the specified position.
-	ListIteratorConst(pointer element, const ListType *list, int direction = 1)
-		: ListIteratorBase(element, list, direction)
-	{
+		this->current = position;
 	}
 
 	//
@@ -413,28 +460,84 @@ public:
 	//! Gets the reference to the element of the list this iterator is currently at.
 	reference operator *() const
 	{
-		return *this->operator->();
+		return static_cast<const BaseType *>(this)->operator *();
 	}
 	//! Gets the pointer to the current element in the list.
 	pointer operator->() const
 	{
-#ifdef DEBUG_ITERATION
-		// Check the iterator for validity.
-		if (!this->parent)
-		{
-			throw std::logic_error("The iterator cannot be dereferenced: no connection to the parent.");
-		}
-		if (!this->current)
-		{
-			throw std::logic_error("The iterator cannot be dereferenced: position is not set.");
-		}
-		if (this->current < this->parent->First || this->current >= this->parent->Last)
-		{
-			throw std::out_of_range("The iterator cannot be dereferenced: current position is outside the list.");
-		}
-#endif // DEBUG_ITERATION
+		return static_cast<const BaseType *>(this)->operator->();
+	}
 
-		return this->current;
+	//
+	// Movement operators.
+	//
+
+	//! Advances this iterator to the next element in the list. This is a pre-increment operator.
+	ListIterator &operator++()
+	{
+		static_cast<BaseType *>(this)->operator++();
+		return *this;
+	}
+	//! Advances this iterator to the next element in the list. This is a post-increment operator.
+	ListIterator operator++(int)
+	{
+		ListIterator t = *this;
+		static_cast<BaseType *>(this)->operator++();
+		return t;
+	}
+	//! Retracts this iterator to the previous element in the list. This is a pre-decrement operator.
+	ListIterator &operator--()
+	{
+		static_cast<BaseType *>(this)->operator--();
+		return *this;
+	}
+	//! Retracts this iterator to the previous element in the list. This is a post-decrement operator.
+	ListIterator operator--(int)
+	{
+		ListIterator t = *this;
+		static_cast<BaseType *>(this)->operator--();
+		return t;
+	}
+
+	//! Advances this iterator by specified number of elements.
+	ListIterator &operator+=(difference_type delta)
+	{
+		static_cast<BaseType *>(this)->operator+=(delta);
+		return *this;
+	}
+	//! Creates a new iterator that is this iterator but advanced by specified number of elements.
+	ListIterator operator+(difference_type delta) const
+	{
+		ListIterator result = *this;
+
+		return result += delta;
+	}
+	//! Retracts this iterator by specified number of elements.
+	ListIterator &operator-=(difference_type delta)
+	{
+		static_cast<BaseType *>(this)->operator-=(delta);
+		return *this;
+	}
+	//! Creates a new iterator that is this iterator but retracted by specified number of elements.
+	ListIterator operator-(difference_type delta) const
+	{
+		ListIterator result = *this;
+
+		return result -= delta;
+	}
+
+	//! Gets the difference between this and other iterators.
+	difference_type operator-(const ListIterator &other) const
+	{
+		this->AssertCompatibility(other);
+		return this->current - other.current;
+	}
+
+	//! Gets the reference to the element of the list that is specified number of elements away from this
+	//! iterator.
+	reference operator[](difference_type delta) const
+	{
+		return static_cast<const BaseType *>(this)->operator [](delta);
 	}
 };
 
@@ -459,17 +562,12 @@ struct IsIterator<ObjectType *>
 };
 //! Specializations that specify that objects of type ListIteratorBase are valid iterators.
 template<typename ListType>
-struct IsIterator<ListIteratorBase<ListType>>
+struct IsIterator<ListIteratorConst<ListType>>
 {
 	static constexpr bool value = true;
 };
 template<typename ListType>
 struct IsIterator<ListIterator<ListType>>
-{
-	static constexpr bool value = true;
-};
-template<typename ListType>
-struct IsIterator<ListIteratorConst<ListType>>
 {
 	static constexpr bool value = true;
 };
