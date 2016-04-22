@@ -15,8 +15,8 @@ private:
 	Text fullName;
 	Text fullNameIL;
 	List<IMonoEvent *> events;
-	SortedList<Text, List<IMonoFunction *> *> methods;
-	SortedList<Text, List<IMonoProperty *> *> properties;
+	SortedList<Text, List<IMonoFunction *>> methods;
+	SortedList<Text, List<IMonoProperty *>> properties;
 	List<IMonoField *> fields;
 	MonoVTable *vtable;
 	List<IMonoFunction *> flatMethodList;
@@ -32,8 +32,8 @@ public:
 	virtual const IMonoFunction *GetFunction(const char *name, const char *params) const override;
 	virtual const IMonoFunction *GetFunction(const char *name, int paramCount) const override;
 
-	virtual const List<IMonoFunction *> *GetFunctions(const char *name, int paramCount) const override;
-	virtual const List<IMonoFunction *> *GetFunctions(const char *name) const override;
+	virtual List<IMonoFunction *> GetFunctions(const char *name, int paramCount) const override;
+	virtual List<IMonoFunction *> GetFunctions(const char *name) const override;
 	
 	virtual mono::type GetType() const override;
 	virtual mono::type MakeArrayType() const override;

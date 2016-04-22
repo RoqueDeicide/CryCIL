@@ -74,7 +74,7 @@ public:
 	//! @returns A pointer to a list of integer numbers that represent indices of
 	//!          initialization stages this listener wants to subscribe to.
 	//!          Null can be return if the listener doesn't want to subscribe to anything.
-	virtual List<int> *GetSubscribedStages() = 0;
+	virtual List<int> GetSubscribedStages() = 0;
 	//! Invoked when one of initialization stages this listener has subscribed to begins.
 	//!
 	//! @param stageIndex Zero-based index of the stage.

@@ -61,8 +61,8 @@ CryamblyWrapper::CryamblyWrapper(const char *fileName)
 	CryamblyMessage("Finished caching the classes.");
 
 	CryamblyMessage("Adding the Cryambly to the registry.");
-	static_cast<MonoAssemblies *>(MonoEnv->Assemblies)->AssemblyRegistry->Add(this->name,
-																			  List<IMonoAssembly *>({ this }));
+	static_cast<MonoAssemblies *>(MonoEnv->Assemblies)->AssemblyRegistry.Add(this->name,
+																			 List<IMonoAssembly *>({ this }));
 	CryamblyMessage("Added the Cryambly to the registry.");
 }
 

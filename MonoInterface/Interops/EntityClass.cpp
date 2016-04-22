@@ -72,11 +72,8 @@ void MonoEntityPropertyHandler::SetProperty(IEntity *entity, int index, const ch
 	else
 	{
 		// The game hasn't started yet, so we have to save the value for later.
-		if (!this->queuedProperties.Contains(id))
-		{
-			this->queuedProperties.Add(id, List<QueuedProperty>(10));
-		}
-		List<QueuedProperty> &props = this->queuedProperties.At(id);
+		auto &props = this->queuedProperties.Establish(id, 10);
+
 		bool queued = false;
 		for (auto &current : props)
 		{

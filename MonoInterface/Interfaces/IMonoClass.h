@@ -203,14 +203,14 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!
 	//! @returns A pointer to the first found method. You should release resultant array once
 	//!          you don't need it anymore.
-	VIRTUAL_API virtual const List<IMonoFunction *> *GetFunctions(const char *name, int paramCount) const = 0;
+	VIRTUAL_API virtual List<IMonoFunction *> GetFunctions(const char *name, int paramCount) const = 0;
 	//! Gets an array of overload of the method.
 	//!
 	//! @param name       Name of the method which overloads to find.
 	//!
 	//! @returns A pointer to the first found method. You should release resultant array once
 	//!          you don't need it anymore.
-	VIRTUAL_API virtual const List<IMonoFunction *> *GetFunctions(const char *name) const = 0;
+	VIRTUAL_API virtual List<IMonoFunction *> GetFunctions(const char *name) const = 0;
 	//! Gets a metadata wrapper for the field of this class.
 	//!
 	//! @param name Name of the field to get.

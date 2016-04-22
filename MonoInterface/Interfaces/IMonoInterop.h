@@ -99,9 +99,9 @@ struct IMonoInteropBase : public IMonoSystemListener
 	virtual void OnCompilationComplete(bool) override
 	{}
 	//! Unnecessary for most interops.
-	virtual List<int> *GetSubscribedStages() override
+	virtual List<int> GetSubscribedStages() override
 	{
-		return nullptr;
+		return List<int>(0);
 	}
 	//! Unnecessary for most interops.
 	virtual void OnInitializationStage(int) override

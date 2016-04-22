@@ -162,14 +162,7 @@ List<Text> EntitySystemInterop::monoEntityClassNames;
 
 bool EntitySystemInterop::IsMonoEntity(const char *className)
 {
-	for (const auto &current : monoEntityClassNames)
-	{
-		if (current == className)
-		{
-			return true;
-		}
-	}
-	return false;
+	return monoEntityClassNames.Contains(className);
 }
 
 IEntityProxyPtr EntitySystemInterop::CreateGameObjectForCryCilEntity(IEntity *pEntity, SEntitySpawnParams &,
@@ -256,13 +249,10 @@ bool EntitySystemInterop::RegisterEntityClass(mono::string name, mono::string ca
 	if ((flags && EEntityClassFlags::ECLF_MODIFY_EXISTING) == 0)
 	{
 		// If we are not modifying anything, then gotta make sure that the class wasn't registered before.
-		for (const auto &current : monoEntityClassNames)
+		if (monoEntityClassNames.Contains(className))
 		{
-			if (current == className)
-			{
-				MonoWarning("%s class is already registered as a CryCIL entity class.", className);
-				return false;
-			}
+			MonoWarning("%s class is already registered as a CryCIL entity class.", className);
+			return false;
 		}
 		if (registry->FindClass(className) != nullptr)
 		{
@@ -285,35 +275,28 @@ bool EntitySystemInterop::RegisterEntityClass(mono::string name, mono::string ca
 	{
 		props[i] = propInfos[i].ToNative();
 	}
-
-	bool added = false;
 	
-	for (size_t i = 0; i < monoEntityClassNames.Length; i++)
-	{
-		if (monoEntityClassNames[i] == className)
-		{
-			monoEntityClassNames.Replace(i, className);
-			added = true;
-			break;
-		}
-	}
-	if (!added)
+	if (!monoEntityClassNames.Contains(className))
 	{
 		monoEntityClassNames.Add(className);
 	}
 
 	IEntityClassRegistry::SEntityClassDesc description;
+
 	// Flags and a name.
 	description.sName = className;
 	description.flags = flags;
+
 	// Information for the editor.
 	description.editorClassInfo.sCategory = ToNativeString(category);
 	description.editorClassInfo.sHelper   = ToNativeString(editorHelper);
 	description.editorClassInfo.sIcon     = ToNativeString(editorIcon);
+
 	// Handlers.
 	static NullEntityEventHandler eventHandler;
 	description.pEventHandler = &eventHandler;
 	description.pPropertyHandler = new MonoEntityPropertyHandler(props);
+
 	// For now this all user data that will come with a class.
 	description.pUserProxyCreateFunc = CreateGameObjectForCryCilEntity;
 	description.pUserProxyData = new MonoEntityClassUserData(networked, dontSyncProps);
@@ -347,21 +330,8 @@ mono::object EntitySystemInterop::SpawnMonoEntity(MonoEntitySpawnParams &paramet
 	}
 
 	const char *className = entityClass->GetName();
-	auto nameMatch = [className](Text &name)
-	{
-		return name == className;
-	};
 
-	bool isMonoEntity = false;
-	for (const auto &current : monoEntityClassNames)
-	{
-		if (current == className)
-		{
-			isMonoEntity = true;
-			break;
-		}
-	}
-	if (!isMonoEntity)
+	if (!monoEntityClassNames.Contains(className))
 	{
 		ArgumentException("EntitySystem.SpawnMonoEntity cannot be used to spawn entities that are not defined in CryCIL.").Throw();
 		return nullptr;
@@ -392,21 +362,8 @@ mono::object EntitySystemInterop::SpawnNetEntity(MonoEntitySpawnParams &paramete
 	}
 
 	const char *className = entityClass->GetName();
-	auto nameMatch = [className](Text &name)
-	{
-		return name == className;
-	};
 
-	bool isMonoEntity = false;
-	for (const auto &current : monoEntityClassNames)
-	{
-		if (current == className)
-		{
-			isMonoEntity = true;
-			break;
-		}
-	}
-	if (!isMonoEntity)
+	if (!monoEntityClassNames.Contains(className))
 	{
 		ArgumentException("EntitySystem.SpawnNetEntity cannot be used to spawn entities that are not defined in CryCIL.").Throw();
 		return nullptr;

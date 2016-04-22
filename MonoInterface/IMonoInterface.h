@@ -80,7 +80,9 @@ public:
 	//!
 	//! Search is done using the pointer value.
 	//!
-	//! You cannot remove listeners during execution of any initialization stages!
+	//! If the listener is removed within a function that is a handler of the event or is an initialization
+	//! stage, then the actual removal happens after propagation of the event or execution of initialization
+	//! stages is complete.
 	//!
 	//! @param listener Pointer to the object that implements IMonoSystemListener.
 	VIRTUAL_API virtual void RemoveListener(IMonoSystemListener *listener) = 0;

@@ -2,20 +2,22 @@
 
 #include "IMonoInterface.h"
 
-void DisposeAssemblyWrappers(Text assemblyShortName, List<IMonoAssembly *> *assemblySet);
+void DisposeAssemblyWrappers(Text assemblyShortName, List<IMonoAssembly *> &assemblySet);
 
 struct MonoAssemblies : public IMonoAssemblies
 {
-	SortedList<Text, List<IMonoAssembly *>> *AssemblyRegistry;
+	SortedList<Text, List<IMonoAssembly *>> AssemblyRegistry;
 
 	MonoAssemblies()
 	{
-		this->AssemblyRegistry = new SortedList<Text, List<IMonoAssembly *>>(100);
 	}
 	~MonoAssemblies()
 	{
-		this->AssemblyRegistry->ForEach(DisposeAssemblyWrappers);
-		delete this->AssemblyRegistry;
+		for (auto current = this->AssemblyRegistry.ascend(); current != this->AssemblyRegistry.top(); ++current)
+		{
+			auto currentPair = *current;
+			DisposeAssemblyWrappers(currentPair.Value1, currentPair.Value2);
+		}
 	}
 	
 	virtual IMonoAssembly *Load(const char *path) override;

@@ -666,19 +666,16 @@ inline void TestGettingMethods()
 
 	auto funcs = mathClass->GetFunctions("Min");
 
-	if (funcs)
+	if (!funcs.Empty)
 	{
 		CryLogAlways("TEST SUCCESS: Got a list of Min method overloads.");
 
 		CryLogAlways("TEST: A list of methods:");
 
-		for (int i = 0; i < funcs->Length; i++)
+		for (int i = 0; i < funcs.Length; i++)
 		{
-			CryLogAlways("%d) %s::%s(%s);",
-						 i + 1, mathClass->FullName, (*funcs)[i]->Name, (*funcs)[i]->Parameters);
+			CryLogAlways("%d) %s::%s(%s);", i + 1, mathClass->FullName, funcs[i]->Name, funcs[i]->Parameters);
 		}
-
-		delete funcs;
 	}
 	else
 	{
@@ -691,19 +688,16 @@ inline void TestGettingMethods()
 
 	funcs = mathClass->GetFunctions("Round", 2);
 
-	if (funcs)
+	if (!funcs.Empty)
 	{
 		CryLogAlways("TEST SUCCESS: Got a list of Round method overloads.");
 
 		CryLogAlways("TEST: A list of methods:");
 
-		for (int i = 0; i < funcs->Length; i++)
+		for (int i = 0; i < funcs.Length; i++)
 		{
-			CryLogAlways("%d) %s::%s(%s);",
-						 i + 1, mathClass->FullName, (*funcs)[i]->Name, (*funcs)[i]->Parameters);
+			CryLogAlways("%d) %s::%s(%s);", i + 1, mathClass->FullName, funcs[i]->Name, funcs[i]->Parameters);
 		}
-
-		delete funcs;
 	}
 	else
 	{

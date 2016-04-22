@@ -66,7 +66,7 @@ bool MonoEntityExtension::Init(IGameObject* pGameObject)
 	
 	// Set all queued properties.
 	auto propHandler = static_cast<MonoEntityPropertyHandler *>(entityClass->GetPropertyHandler());
-	List<QueuedProperty> &queuedProps = propHandler->GetQueuedProperties()->At(entityId);
+	List<QueuedProperty> &queuedProps = propHandler->GetQueuedProperties()[entityId];
 	for (int i = 0; i < queuedProps.Length; i++)
 	{
 		auto prop = queuedProps[i];

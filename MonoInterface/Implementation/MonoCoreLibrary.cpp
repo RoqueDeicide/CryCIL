@@ -40,8 +40,8 @@ MonoCoreLibrary::MonoCoreLibrary()
 	this->valueType   = MonoClassCache::Wrap(mono_class_from_name(this->image, "System", "ValueType"));
 	this->_thread     = MonoClassCache::Wrap(mono_get_thread_class());
 
-	static_cast<MonoAssemblies *>(MonoEnv->Assemblies)->AssemblyRegistry->Add(this->name,
-																			  List<IMonoAssembly *>({ this }));
+	static_cast<MonoAssemblies *>(MonoEnv->Assemblies)->AssemblyRegistry.Add(this->name,
+																			 List<IMonoAssembly *>({ this }));
 }
 
 MonoCoreLibrary::~MonoCoreLibrary()

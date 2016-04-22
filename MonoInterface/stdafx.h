@@ -21,6 +21,7 @@
 #include <vector>
 #include <memory>
 #include <list>
+#include <map>
 #include <functional>
 #include <limits>
 
