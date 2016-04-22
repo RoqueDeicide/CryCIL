@@ -656,16 +656,25 @@
     <ClInclude Include="Allocation.hpp">
       <Filter>Extras</Filter>
     </ClInclude>
-    <ClInclude Include="Iteration.hpp">
-      <Filter>Extras</Filter>
-    </ClInclude>
-    <ClInclude Include="ListObject.hpp">
-      <Filter>Extras</Filter>
-    </ClInclude>
     <ClInclude Include="ExtraTypeTraits.h">
       <Filter>Extras</Filter>
     </ClInclude>
     <ClInclude Include="List.hpp">
+      <Filter>Extras</Filter>
+    </ClInclude>
+    <ClInclude Include="Collection.hpp">
+      <Filter>Extras</Filter>
+    </ClInclude>
+    <ClInclude Include="SortedList.Object.hpp">
+      <Filter>Extras</Filter>
+    </ClInclude>
+    <ClInclude Include="SortedList.Iteration.hpp">
+      <Filter>Extras</Filter>
+    </ClInclude>
+    <ClInclude Include="List.Iteration.hpp">
+      <Filter>Extras</Filter>
+    </ClInclude>
+    <ClInclude Include="List.Object.hpp">
       <Filter>Extras</Filter>
     </ClInclude>
   </ItemGroup>

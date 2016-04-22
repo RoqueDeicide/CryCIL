@@ -219,6 +219,7 @@
   <ItemGroup>
     <ClInclude Include="Allocation.hpp" />
     <ClInclude Include="API_ImplementationHeaders.h" />
+    <ClInclude Include="Collection.hpp" />
     <ClInclude Include="List.hpp" />
     <ClInclude Include="CryCilHeader.h" />
     <ClInclude Include="ArrayHeader.h" />
@@ -421,9 +422,9 @@
     <ClInclude Include="Interops\TimeOfDay.h" />
     <ClInclude Include="Interops\Timing.h" />
     <ClInclude Include="Interops\WriteLockCond.h" />
-    <ClInclude Include="Iteration.hpp" />
+    <ClInclude Include="List.Iteration.hpp" />
     <ClInclude Include="DebugHelpers.h" />
-    <ClInclude Include="ListObject.hpp" />
+    <ClInclude Include="List.Object.hpp" />
     <ClInclude Include="MemoryTrackingUtilities.h" />
     <ClInclude Include="MonoDefinitionFiles\MonoArray.h" />
     <ClInclude Include="MonoDefinitionFiles\MonoDelegate.h" />
@@ -434,6 +435,8 @@
     <ClInclude Include="RunTime\EventBroadcaster.h" />
     <ClInclude Include="RunTime\MonoInterface.h" />
     <ClInclude Include="SortedList.h" />
+    <ClInclude Include="SortedList.Iteration.hpp" />
+    <ClInclude Include="SortedList.Object.hpp" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Testing\TestAssemblies.h" />

@@ -4,8 +4,11 @@ template<typename ElementType, typename AllocatorType> class List;
 
 //! Represents a header of the list. All shallow copies of the same list point at the same header object.
 template<typename ElementType, typename AllocatorType>
-class ListObject
+class ListObject : public CollectionBase
 {
+	// Whoever invented name hiding can go die in hell.
+	using CollectionBase::InvalidateIterators;
+
 	friend List<ElementType, AllocatorType>;
 	friend ListIteratorConst<ListObject>;
 public:
@@ -50,11 +53,6 @@ private:
 	CompressedPair<allocator_type, ListDimensions> AllocDimensionsPair;
 
 	size_type ReferenceCount;	//!< Number of live references to this list.
-
-#ifdef DEBUG_ITERATION
-	//! Pointer to the first iterator_type in the chain of all iterators that work on this list.
-	iterator_type *FirstIterator;
-#endif // DEBUG_ITERATION
 
 	//
 	// Properties.
@@ -111,18 +109,18 @@ public:
 	explicit ListObject(const allocator_type &allocator = allocator_type())
 		: AllocDimensionsPair(OneToFirstRestToSecond(), allocator, nullptr, nullptr, nullptr)
 		, ReferenceCount(1)
-#ifdef DEBUG_ITERATION
-		, FirstIterator(nullptr)
-#endif // DEBUG_ITERATION
 	{
+		this->AllocateIteratorChain();
 	}
 	explicit ListObject(allocator_type &&allocator)
 		: AllocDimensionsPair(OneToFirstRestToSecond(), std::move(allocator), nullptr, nullptr, nullptr)
 		, ReferenceCount(1)
-#ifdef DEBUG_ITERATION
-		, FirstIterator(nullptr)
-#endif // DEBUG_ITERATION
 	{
+		this->AllocateIteratorChain();
+	}
+	~ListObject()
+	{
+		this->ReleaseIteratorChain();
 	}
 	//! Registers a live reference to this object.
 	void RegisterReference()
@@ -145,17 +143,6 @@ public:
 	// Iterator management.
 	//
 
-	// Marks all iterators as invalid.
-	void InvalidateIterators()
-	{
-#ifdef DEBUG_ITERATION
-		for (iterator_type **next = &this->FirstIterator; *next != 0; *next = (*next)->next)
-		{
-			(*next)->BecomeDisowned();
-		}
-		this->FirstIterator = nullptr;
-#endif // DEBUG_ITERATION
-	}
 	// Marks iterators that currently in the provided inclusive range as invalid.
 	void InvalidateIterators(pointer
 #ifdef DEBUG_ITERATION
@@ -168,7 +155,7 @@ public:
 							 )
 	{
 #ifdef DEBUG_ITERATION
-		iterator_type **next = &this->FirstIterator;
+		IteratorBase **next = this->GetIteratorsChain();
 		if (!(*next))
 		{
 			return;
@@ -177,17 +164,17 @@ public:
 		// Orphan iterators within the range.
 		while (*next)
 		{
-			auto current = (*next)->current;
+			auto current = static_cast<iterator_type *>(*next)->current;
 			if (current >= first && current <= last)
 			{
 				// Orphan this iterator.
 				(*next)->BecomeDisowned();
-				*next = (*next)->next;
+				*next = (*next)->nextIterator;
 			}
 			else
 			{
 				// Advance to the next iterator.
-				next = &(*next)->next;
+				next = &(*next)->nextIterator;
 			}
 		}
 #endif // DEBUG_ITERATION
@@ -200,7 +187,7 @@ public:
 							 )
 	{
 #ifdef DEBUG_ITERATION
-		iterator_type **next = &this->FirstIterator;
+		IteratorBase **next = this->GetIteratorsChain();
 		if (!(*next))
 		{
 			return;
@@ -209,16 +196,16 @@ public:
 		// Orphan iterators at the element.
 		while (*next)
 		{
-			if ((*next)->current == element)
+			if (static_cast<iterator_type *>(*next)->current == element)
 			{
 				// Orphan this iterator.
 				(*next)->BecomeDisowned();
-				*next = (*next)->next;
+				*next = (*next)->nextIterator;
 			}
 			else
 			{
 				// Advance to the next iterator.
-				next = &(*next)->next;
+				next = &(*next)->nextIterator;
 			}
 		}
 #endif // DEBUG_ITERATION
@@ -331,5 +318,20 @@ private:
 	bool IsInside(const_pointer ptr, const_pointer left, const_pointer right)
 	{
 		return ptr >= left && ptr < right;
+	}
+	void AllocateIteratorChain()
+	{
+		typename allocator_type::template rebind<CollectionIterators>::other chainAllocator(this->Allocator());
+		this->iterators = chainAllocator.Allocate(1);
+		chainAllocator.Initialize(this->iterators, CollectionIterators());
+		this->iterators->collection = this;
+	}
+	void ReleaseIteratorChain()
+	{
+		typename allocator_type::template rebind<CollectionIterators>::other chainAllocator(this->Allocator());
+		this->InvalidateIterators();
+		chainAllocator.Deinitialize(this->iterators);
+		chainAllocator.Deallocate(this->iterators);
+		this->iterators = nullptr;
 	}
 };

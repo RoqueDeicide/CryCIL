@@ -4,8 +4,9 @@
 #include "ExtraTypeTraits.h"
 #include "Tuples.h"
 #include "Allocation.hpp"
-#include "Iteration.hpp"
-#include "ListObject.hpp"
+#include "Collection.hpp"
+#include "List.Iteration.hpp"
+#include "List.Object.hpp"
 
 //! Represents a functor that compares objects using their comparison operators.
 template<typename ValType1, typename ValType2>
@@ -134,6 +135,9 @@ public:
 
 	//! Provides read/write access to the element in the list.
 	//!
+	//! Only use this operator for setting the value, if the ElementType is a simple type without custom
+	//! destructor. In case it is a complex type, use Replace() method instead.
+	//!
 	//! @param index Zero-based index of the object to access.
 	reference operator [](size_type index)
 	{
@@ -151,7 +155,7 @@ public:
 	//! @param index Zero-based index of the object to access.
 	const_reference operator[](size_type index) const
 	{
-		return (*this)[index];
+		return const_cast<List *>(this)->operator[](index);
 	}
 	//! Creates the iterator that can be used to start iteration of the list from.
 	//!
@@ -302,6 +306,8 @@ public:
 		{
 			return;
 		}
+
+		this->ReleaseObject();
 
 		this->list = other.list;
 		other.list = nullptr;
@@ -874,6 +880,9 @@ private:
 public:
 	//! Replaces an item at the specified position with another one.
 	//!
+	//! It is highly recommended to use this method if ElementType is complex type with a destructor to
+	//! ensure proper release of any resources.
+	//!
 	//! @param index Zero-based index of the item to replace.
 	//! @param item  Reference to the object which copy is going to replace the element in the list.
 	void Replace(size_type index, const value_type &item)
@@ -881,6 +890,9 @@ public:
 		this->ReplaceInternal(this->First() + index, item);
 	}
 	//! Replaces an item at the specified position with another one.
+	//!
+	//! It is highly recommended to use this method if ElementType is complex type with a destructor to
+	//! ensure proper release of any resources.
 	//!
 	//! @param position Iterator that points at the item to replace.
 	//! @param item     Reference to the object which copy is going to replace the element in the list.
@@ -890,6 +902,9 @@ public:
 	}
 	//! Replaces an item at the specified position with another one.
 	//!
+	//! It is highly recommended to use this method if ElementType is complex type with a destructor to
+	//! ensure proper release of any resources.
+	//!
 	//! @param index Zero-based index of the item to replace.
 	//! @param item  Reference to the object which is going to replace the element in the list.
 	void Replace(size_type index, value_type &&item)
@@ -897,6 +912,9 @@ public:
 		this->ReplaceInternal(this->First() + index, std::forward<value_type>(item));
 	}
 	//! Replaces an item at the specified position with another one.
+	//!
+	//! It is highly recommended to use this method if ElementType is complex type with a destructor to
+	//! ensure proper release of any resources.
 	//!
 	//! @param position Iterator that points at the item to replace.
 	//! @param item     Reference to the object which is going to replace the element in the list.
@@ -1020,6 +1038,150 @@ public:
 			return;
 		}
 		this->list->ReallocateStorage(this->Length);
+	}
+	//! Performs a linear search for the element using a comparator that compares the value to elements using
+	//! the equality operator ==.
+	//!
+	//! @tparam Type of reference to the value to look for in this list.
+	//!
+	//! @param value Value to look for in this list.
+	//!
+	//! @returns True, if a value was found in the list, otherwise false.
+	template<typename ValType>
+	bool Contains(ValType &&value) const
+	{
+		const_pointer last = this->Last();
+		for (const_pointer current = this->First(); current != last; current++)
+		{
+			if (*current == std::forward<ValType>(value))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	//! Performs a linear search for the element using a comparator that compares the value to elements using
+	//! the equality operator ==.
+	//!
+	//! @tparam ValType        Type of reference to the value to look for in this list.
+	//! @tparam ComparatorType Type of object to use to compare the values. This type needs to define the
+	//!                        function call operator that accepts to arguments (constant reference to the value
+	//!                        of the same type as elements of this list, constant reference to the value of the
+	//!                        same type as ValType), returns integer value that is equal to zero, if 2 arguments
+	//!                        are equal to each other.
+	//!
+	//! @param value      Value to look for in this list.
+	//! @param comparator An object to use to compare the values.
+	//!
+	//! @returns True, if a value was found in the list, otherwise false.
+	template<typename ValType, typename ComparatorType>
+	bool Contains(ValType &&value, ComparatorType comparator) const
+	{
+		const_pointer last = this->Last();
+		for (const_pointer current = this->First(); current != last; current++)
+		{
+			if (comparator(*current, std::forward<ValType>(value)))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	//! Performs a linear search for the value in the list using a comparator that compares the value to elements
+	//! using the equality operator == and returns its address.
+	//!
+	//! @tparam ValType Type of reference to the value to look for.
+	//!
+	//! @param value Reference to the value to look for.
+	//!
+	//! @returns Address of the element in the list if the value was found, a null pointer otherwise.
+	template<typename ValType>
+	iterator_type Find(ValType &&value)
+	{
+		pointer last = this->Last();
+		for (pointer current = this->First(); current != last; current++)
+		{
+			if (*current == std::forward<ValType>(value))
+			{
+				return iterator_type(current, this->list);
+			}
+		}
+		return nullptr;
+	}
+	//! Performs a linear search for the value in the list using a comparator that compares the value to elements
+	//! using the equality operator == and returns its address.
+	//!
+	//! @tparam ValType Type of reference to the value to look for.
+	//!
+	//! @param value Reference to the value to look for.
+	//!
+	//! @returns Address of the element in the list if the value was found, a null pointer otherwise.
+	template<typename ValType>
+	const_iterator_type Find(ValType &&value) const
+	{
+		const_pointer last = this->Last();
+		for (const_pointer current = this->First(); current != last; current++)
+		{
+			if (*current == std::forward<ValType>(value))
+			{
+				return const_iterator_type(current, this->list);
+			}
+		}
+		return nullptr;
+	}
+	//! Performs a linear search for the value in the list using a comparator that compares the value to elements
+	//! using the equality operator == and returns its address.
+	//!
+	//! @tparam ValType        Type of reference to the value to look for.
+	//! @tparam ComparatorType Type of object to use to compare the values. This type needs to define the
+	//!                        function call operator that accepts to arguments (constant reference to the value
+	//!                        of the same type as elements of this list, constant reference to the value of the
+	//!                        same type as ValType), returns integer value that is equal to zero, if 2 arguments
+	//!                        are equal to each other.
+	//!
+	//! @param value      Reference to the value to look for.
+	//! @param comparator An object to use to compare the values.
+	//!
+	//! @returns Address of the element in the list if the value was found, a null pointer otherwise.
+	template<typename ValType, typename ComparatorType>
+	iterator_type Find(ValType &&value, ComparatorType comparator)
+	{
+		pointer last = this->Last();
+		for (pointer current = this->First(); current != last; current++)
+		{
+			if (comparator(*current, std::forward<ValType>(value)))
+			{
+				return iterator_type(current, this->list);
+			}
+		}
+		return nullptr;
+	}
+	//! Performs a linear search for the value in the list using a comparator that compares the value to elements
+	//! using the equality operator == and returns its address.
+	//!
+	//! @tparam ValType        Type of reference to the value to look for.
+	//! @tparam ComparatorType Type of object to use to compare the values. This type needs to define the
+	//!                        function call operator that accepts to arguments (constant reference to the value
+	//!                        of the same type as elements of this list, constant reference to the value of the
+	//!                        same type as ValType), returns integer value that is equal to zero, if 2 arguments
+	//!                        are equal to each other.
+	//!
+	//! @param value      Reference to the value to look for.
+	//! @param comparator An object to use to compare the values.
+	//!
+	//! @returns Address of the element in the list if the value was found, a null pointer otherwise.
+	template<typename ValType, typename ComparatorType>
+	const_iterator_type Find(ValType &&value, ComparatorType comparator) const
+	{
+		const_pointer last = this->Last();
+		for (const_pointer current = this->First(); current != last; current++)
+		{
+			if (comparator(*current, std::forward<ValType>(value)))
+			{
+				return const_iterator_type(current, this->list);
+			}
+		}
+		return nullptr;
 	}
 	//! Performs a binary search for an element.
 	//!

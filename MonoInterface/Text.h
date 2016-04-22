@@ -62,6 +62,7 @@ typedef void *mono_string;
 
 #endif // MONO_API
 
+#include <cwchar>
 #include "MemoryTrackingUtilities.h"
 
 //! Represents a reference counted null-terminated header-prefixed string.
@@ -127,10 +128,10 @@ public:
 	TextTemplate(const TextTemplate &other)
 	{
 		// Make a shallow copy.
-		if (other.Header->referenceCount >= 0)
+		if (other.Header->ReferenceCount >= 0)
 		{
 			this->str = other.str;
-			this->Header->IncrementReferenceCount();
+			this->Header->RegisterReference();
 		}
 		else
 		{
@@ -192,7 +193,7 @@ public:
 		}
 		else
 		{
-			FatalError(mono_error_get_message(&error));
+			std::logic_error(mono_error_get_message(&error));
 		}
 #else
 		this->str = nullptr;
@@ -291,7 +292,7 @@ private:
 	void Release()
 	{
 		// Release, if not empty.
-		if (this->Header->referenceCount >= 0)
+		if (this->Header->ReferenceCount >= 0)
 		{
 			ReleaseData(this->Header);
 			this->InitEmpty();
@@ -344,6 +345,11 @@ public:
 		CopyInternal(dup, this->str, charCount);
 		dup[charCount] = '\0';
 		return dup;
+	}
+	//! Determines relative order of this object and another one in sequence that is sorted in ascending order.
+	int CompareTo(const TextTemplate &other) const
+	{
+		return _compare(this->str, other.str);
 	}
 #pragma region Assignment
 	//! Assigns a deep copy of a sub-string to this object.
@@ -531,15 +537,15 @@ public:
 			return *this;
 		}
 
-		if (this->Header->referenceCount < 0)
+		if (this->Header->ReferenceCount < 0)
 		{
-			if (other.Header->referenceCount >= 0)
+			if (other.Header->ReferenceCount >= 0)
 			{
 				this->str = other.str;
-				this->Header->IncrementReferenceCount();
+				this->Header->RegisterReference();
 			}
 		}
-		else if (other.Header->referenceCount < 0)
+		else if (other.Header->ReferenceCount < 0)
 		{
 			this->Release();
 			this->str = other.str;
@@ -548,7 +554,7 @@ public:
 		{
 			this->Release();
 			this->str = other.str;
-			this->Header->IncrementReferenceCount();
+			this->Header->RegisterReference();
 		}
 		return *this;
 	}
@@ -785,3 +791,13 @@ inline bool TextTemplate<wchar_t>::_contains_substring(const wchar_t *str0, cons
 
 typedef TextTemplate<char> Text;
 typedef TextTemplate<wchar_t> Text16;
+
+//! Allows Text to be used in SortedList as key type.
+template<typename SymbolType>
+struct DefaultComparison<TextTemplate<SymbolType>, TextTemplate<SymbolType>>
+{
+	int operator()(const TextTemplate<SymbolType> &value1, const TextTemplate<SymbolType> &value2) const
+	{
+		return value1.CompareTo(value2);
+	}
+};

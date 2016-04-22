@@ -3,52 +3,13 @@
 #include <stdexcept>
 #include "ExtraTypeTraits.h"
 
-#ifdef _DEBUG
-#define DEBUG_ITERATION
-#endif // _DEBUG
-
-//
-// Tags.
-//
-
-//! A special structure that represents a tag that identifies iterators that can provide read access to the
-//! element in the collection via a single pass.
-struct InputIteratorTag
-{
-};
-//! A special structure that represents a tag that identifies iterators that can provide read/write access
-//! to the element in the collection.
-struct MutableItaratorTag
-{
-};
-//! A special structure that represents a tag that identifies iterators that can provide write access
-//! to the element in the collection via a single pass.
-struct OutputIteratorTag : MutableItaratorTag
-{
-};
-//! A special structure that represents a tag that identifies iterators that can provide read/write access
-//! to the element in the collection via multiple passes in single direction.
-struct ForwardIteratorTag : InputIteratorTag, MutableItaratorTag
-{
-};
-//! A special structure that represents a tag that identifies iterators that can provide read/write access
-//! to the element in the collection via multiple passes in both directions.
-struct BidirectionalIteratorTag : ForwardIteratorTag
-{
-};
-//! A special structure that represents a tag that identifies iterators that can provide read/write access
-//! to any randomly accessible element in the collection.
-struct RandomAccessIteratorTag : ForwardIteratorTag
-{
-};
-
 //
 // Base list iterator.
 //
 
 //! Represents an object that can be used to more or less safely iterate through the list in read-only mode.
 template<typename ListType>
-class ListIteratorConst
+class ListIteratorConst : public IteratorBase
 {
 	friend ListType;
 public:
@@ -63,108 +24,27 @@ public:
 	typedef typename ListType::difference_type difference_type;
 
 protected:
-	ListType *parent;			//!< The list this iterator is going through.
-	ListIteratorConst *next;	//!< Next iterator in the chain of iterators that share the same parent.
-	int direction;				//!< Either 1 or -1 that represents direction of iteration.
-	pointer current;			//!< Pointer to the value in the list this iterator is currently on.
+	int direction;		//!< Either 1 or -1 that represents direction of iteration.
+	pointer current;	//!< Pointer to the value in the list this iterator is currently on.
 
+	const ListType *GetList() const
+	{
+		return static_cast<const ListType *>(this->GetCollection());
+	}
 public:
 	//! Creates an orphan iterator.
-	ListIteratorConst() : parent(nullptr), next(nullptr), direction(1), current(nullptr)
+	ListIteratorConst() : direction(1), current(nullptr)
 	{
-	}
-	//! Copies another iterator.
-	ListIteratorConst(const ListIteratorConst &other)
-		: ListIteratorConst()
-	{
-		*this = other;
 	}
 	//! Creates a new iterator for the list that is initialized to be at the specified position.
-	ListIteratorConst(pointer element, const ListType *list, int direction = 1)
-		: parent(nullptr), next(nullptr), direction(direction), current(element)
+	ListIteratorConst(pointer element, const CollectionBase *list, int direction = 1)
+		: direction(direction), current(element)
 	{
-		this->BecomeAdopted(const_cast<ListType *>(list));
+		this->BecomeAdopted(list);
 	}
 	~ListIteratorConst()
 	{
 		this->BecomeOrphaned();
-	}
-	//! Assigns a copy of another iterator to this one.
-	ListIteratorConst& operator=(const ListIteratorConst &other)
-	{
-		if (this->parent == other.parent)
-		{
-			// Don't do anything since both iterators are adopted by the same list.
-		}
-		else if (other.parent != nullptr)
-		{
-			// Switch this iterator to the new parent.
-			this->BecomeAdopted(other.parent);
-		}
-		else
-		{
-#ifdef DEBUG_ITERATION
-			// Just become an orphan.
-			this->BecomeOrphaned();
-#endif // DEBUG_ITERATION
-		}
-		this->current = other.current;
-		this->direction = other.direction;
-		return (*this);
-	}
-
-	//! Changes a parent of this iterator.
-	void BecomeAdopted(ListType *list)
-	{
-		if (this->parent != list)
-		{
-			// Cut the ties to the existing parent.
-			this->BecomeOrphaned();
-		}
-
-		if (!list || this->parent == list)
-		{
-			// Either we are not supposed to get adopted, or we are already adopted by that parent.
-			return;
-		}
-
-#ifdef DEBUG_ITERATION
-		// Let the parent know that we are adopted by inserting ourselves at the start of the chain of iterators.
-		this->next = list->FirstIterator;
-		list->FirstIterator = this;
-#endif // DEBUG_ITERATION
-
-		this->parent = list;
-	}
-	//! Cuts ties with a parent.
-	void BecomeOrphaned()
-	{
-#ifdef DEBUG_ITERATION
-		if (!this->parent)
-		{
-			return;
-		}
-
-		// Find the address of a field that points at this iterator.
-		ListIteratorConst **next = &this->parent->FirstIterator;
-		while (*next != nullptr && *next != this)
-		{
-			next = &(*next)->next;
-		}
-
-		if (*next == nullptr)
-		{
-			throw std::logic_error("Attempt was made to orphan the iterator which wasn't in the chain.");
-		}
-
-		*next = this->next;
-		this->parent = nullptr;
-#endif // DEBUG_ITERATION
-	}
-	//! Clears the info about the parent without going through the iterator chain.
-	void BecomeDisowned()
-	{
-		this->parent = nullptr;
 	}
 
 	//
@@ -177,7 +57,7 @@ public:
 	{
 #ifdef DEBUG_ITERATION
 		// Check the iterator for validity.
-		if (!this->parent)
+		if (!this->GetList())
 		{
 			throw std::logic_error("The iterator cannot be dereferenced: no connection to the parent.");
 		}
@@ -185,7 +65,7 @@ public:
 		{
 			throw std::logic_error("The iterator cannot be dereferenced: position is not set.");
 		}
-		if (this->current < this->parent->First() || this->current >= this->parent->Last())
+		if (this->current < this->GetList()->First() || this->current >= this->GetList()->Last())
 		{
 			throw std::out_of_range("The iterator cannot be dereferenced: current position is outside the list.");
 		}
@@ -203,6 +83,17 @@ public:
 	}
 
 	//
+	// Validity check.
+	//
+
+	//! Indicates whether this iterator is valid.
+	operator bool() const
+	{
+		auto list = this->GetList();
+		return list && this->current && this->current >= list->First() && this->current < list->Last();
+	}
+
+	//
 	// Element access operators.
 	//
 
@@ -216,7 +107,7 @@ public:
 	{
 #ifdef DEBUG_ITERATION
 		// Check the iterator for validity.
-		if (!this->parent)
+		if (!this->GetList())
 		{
 			throw std::logic_error("The iterator cannot be dereferenced: no connection to the parent.");
 		}
@@ -224,7 +115,7 @@ public:
 		{
 			throw std::logic_error("The iterator cannot be dereferenced: position is not set.");
 		}
-		if (this->current < this->parent->First() || this->current >= this->parent->Last())
+		if (this->current < this->GetList()->First() || this->current >= this->GetList()->Last())
 		{
 			throw std::out_of_range("The iterator cannot be dereferenced: current position is outside the list.");
 		}
@@ -354,11 +245,11 @@ private:
 							 ) const
 	{
 #ifdef DEBUG_ITERATION
-		if (!this->parent)
+		if (!this->GetList())
 		{
 			throw std::logic_error("This iterator is not compatible with the other: it's an orphan.");
 		}
-		if (this->parent != other.parent)
+		if (this->GetList() != other.GetList())
 		{
 			throw std::invalid_argument("This iterator is not compatible with the other: its parent is different.");
 		}
@@ -373,18 +264,13 @@ private:
 		delta *= direction;
 #ifdef DEBUG_ITERATION
 		// Check the iterator for validity.
-		if (!this->parent)
+		if (!this->GetList())
 		{
-			throw std::logic_error("The iterator cannot be moved: no connection to the parent.");
+			throw std::logic_error("The iterator cannot be moved: no connection to the GetList().");
 		}
 		if (!this->current)
 		{
 			throw std::logic_error("The iterator cannot be moved: position is not set.");
-		}
-		if (this->current + delta - 1 < this->parent->First() ||
-			this->current + delta - 1 >= this->parent->Last())
-		{
-			throw std::out_of_range("The iterator cannot be moved: new position is outside of the list.");
 		}
 #endif // DEBUG_ITERATION
 		this->current += delta;
@@ -406,14 +292,8 @@ public:
 	typedef typename ListType::size_type size_type;
 	typedef typename ListType::difference_type difference_type;
 
-	//! Copies another iterator.
-	ListIterator(const ListIterator &other)
-		: ListIteratorConst()
-	{
-		static_cast<ListIteratorConst<ListType> *>(this)->operator=(other);
-	}
 	//! Creates a new iterator for the list that is initialized to be at the specified position.
-	ListIterator(pointer element, const ListType *list, int direction = 1)
+	ListIterator(pointer element, const CollectionBase *list, int direction = 1)
 		: ListIteratorConst(element, list, direction)
 	{
 	}
@@ -428,7 +308,7 @@ public:
 	{
 #ifdef DEBUG_ITERATION
 		// Check the iterator for validity.
-		if (!this->parent)
+		if (!this->GetList())
 		{
 			throw std::logic_error("The iterator cannot be dereferenced: no connection to the parent.");
 		}
@@ -436,7 +316,7 @@ public:
 		{
 			throw std::logic_error("The iterator cannot be dereferenced: position is not set.");
 		}
-		if (this->current < this->parent->First() || this->current >= this->parent->Last())
+		if (this->current < this->GetList()->First() || this->current >= this->GetList()->Last())
 		{
 			throw std::out_of_range("The iterator cannot be dereferenced: current position is outside the list.");
 		}
@@ -545,21 +425,6 @@ public:
 // Iterator determination.
 //
 
-//! Special type that indicates whether _TypeToCheck_ is an iterator type.
-//!
-//! @tparam TypeToCheck A type to check for being an iterator.
-template<typename TypeToCheck>
-struct IsIterator
-{
-	//! Indicates whether _TypeToCheck_ is an iterator type.
-	static constexpr bool value = false;
-};
-//! Specialization that specifies that simple pointers to types are valid iterators.
-template<typename ObjectType>
-struct IsIterator<ObjectType *>
-{
-	static constexpr bool value = true;
-};
 //! Specializations that specify that objects of type ListIteratorBase are valid iterators.
 template<typename ListType>
 struct IsIterator<ListIteratorConst<ListType>>
@@ -571,62 +436,3 @@ struct IsIterator<ListIterator<ListType>>
 {
 	static constexpr bool value = true;
 };
-
-//
-// Traits.
-//
-
-//! Base class for types that provide information about iterators.
-template<typename IteratorType, bool = IsIterator<IteratorType>::value>
-struct IteratorTraitsBase
-{
-	typedef typename IteratorType::iterator_category iterator_category;
-	typedef typename IteratorType::value_type value_type;
-	typedef typename IteratorType::difference_type difference_type;
-
-	typedef typename IteratorType::pointer pointer;
-	typedef typename IteratorType::reference reference;
-};
-//! Specialization for the case when given type is not a normal iterator in which case all typedefs must be
-//! defined by the derived type's specialization.
-template<typename IteratorType>
-struct IteratorTraitsBase<IteratorType, false>
-{
-	// No typedefs here, they must be defined by the derived type's specialization.
-};
-
-//! Provides information about the iterator type.
-template<typename IteratorType>
-struct IteratorTraits : public IteratorTraitsBase<IteratorType>
-{
-	// Inherit base typedefs.
-};
-//! Specialization that defines traits for non-const pointers.
-template<typename ObjectType>
-struct IteratorTraits<ObjectType *>
-{
-	typedef RandomAccessIteratorTag iterator_category;
-	typedef ObjectType value_type;
-	typedef ptrdiff_t difference_type;
-
-	typedef ObjectType *pointer;
-	typedef ObjectType &reference;
-};
-//! Specialization that defines traits for const pointers.
-template<typename ObjectType>
-struct IteratorTraits<const ObjectType *>
-{
-	typedef RandomAccessIteratorTag iterator_category;
-	typedef ObjectType value_type;
-	typedef ptrdiff_t difference_type;
-
-	typedef const ObjectType *pointer;
-	typedef const ObjectType &reference;
-};
-
-//! Gets an object that identifies the category the iterator belongs to.
-template<typename IteratorType>
-inline typename IteratorTraits<IteratorType>::iterator_category IteratorCategory(const IteratorType &)
-{
-	return typename IteratorTraits<IteratorType>::iterator_category();
-}
