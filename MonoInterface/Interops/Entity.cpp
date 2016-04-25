@@ -162,7 +162,7 @@ List<Text> EntitySystemInterop::monoEntityClassNames;
 
 bool EntitySystemInterop::IsMonoEntity(const char *className)
 {
-	return monoEntityClassNames.Contains(className);
+	return monoEntityClassNames.BinarySearch(className) >= 0;
 }
 
 IEntityProxyPtr EntitySystemInterop::CreateGameObjectForCryCilEntity(IEntity *pEntity, SEntitySpawnParams &,
@@ -242,14 +242,14 @@ bool EntitySystemInterop::RegisterEntityClass(mono::string name, mono::string ca
 										mono::string editorIcon, EEntityClassFlags flags, mono::Array properties,
 										bool networked, bool dontSyncProps)
 {
-	const char *className = ToNativeString(name);
+	Text className(name);
 
 	auto registry = gEnv->pEntitySystem->GetClassRegistry();
 
 	if ((flags && EEntityClassFlags::ECLF_MODIFY_EXISTING) == 0)
 	{
 		// If we are not modifying anything, then gotta make sure that the class wasn't registered before.
-		if (monoEntityClassNames.Contains(className))
+		if (monoEntityClassNames.BinarySearch(className) >= 0)
 		{
 			MonoWarning("%s class is already registered as a CryCIL entity class.", className);
 			return false;
@@ -276,9 +276,10 @@ bool EntitySystemInterop::RegisterEntityClass(mono::string name, mono::string ca
 		props[i] = propInfos[i].ToNative();
 	}
 	
-	if (!monoEntityClassNames.Contains(className))
+	auto insertionIndex = monoEntityClassNames.BinarySearch(className);
+	if (insertionIndex < 0)
 	{
-		monoEntityClassNames.Add(className);
+		monoEntityClassNames.Insert(~insertionIndex, className);
 	}
 
 	IEntityClassRegistry::SEntityClassDesc description;
@@ -331,7 +332,7 @@ mono::object EntitySystemInterop::SpawnMonoEntity(MonoEntitySpawnParams &paramet
 
 	const char *className = entityClass->GetName();
 
-	if (!monoEntityClassNames.Contains(className))
+	if (monoEntityClassNames.BinarySearch(className) < 0)
 	{
 		ArgumentException("EntitySystem.SpawnMonoEntity cannot be used to spawn entities that are not defined in CryCIL.").Throw();
 		return nullptr;
@@ -363,7 +364,7 @@ mono::object EntitySystemInterop::SpawnNetEntity(MonoEntitySpawnParams &paramete
 
 	const char *className = entityClass->GetName();
 
-	if (!monoEntityClassNames.Contains(className))
+	if (monoEntityClassNames.BinarySearch(className) < 0)
 	{
 		ArgumentException("EntitySystem.SpawnNetEntity cannot be used to spawn entities that are not defined in CryCIL.").Throw();
 		return nullptr;
