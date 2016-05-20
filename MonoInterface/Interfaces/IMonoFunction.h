@@ -314,7 +314,7 @@ public:
 	//! Gets number of arguments this function accepts.
 	__declspec(property(get = GetParameterCount)) int ParameterCount;
 	//! Gets a list of parameters this function accepts.
-	__declspec(property(get = GetParameterTypeNames)) ReadOnlyList<Text> ParameterTypeNames;
+	__declspec(property(get = GetParameterTypeNames)) const List<Text> &ParameterTypeNames;
 	//! Gets a list of classes of parameters this function accepts.
 	__declspec(property(get = GetParameterClasses)) List<IMonoClass *> *ParameterClasses;
 	//! Gets a list of parameters this function accepts.
@@ -375,9 +375,9 @@ public:
 	{
 		return this->paramCount;
 	}
-	ReadOnlyList<Text> GetParameterTypeNames() const
+	const List<Text> &GetParameterTypeNames() const
 	{
-		return this->paramTypeNames.AsReadOnly;
+		return this->paramTypeNames;
 	}
 	const List<IMonoClass *> *GetParameterClasses() const
 	{

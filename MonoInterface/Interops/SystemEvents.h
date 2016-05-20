@@ -12,7 +12,7 @@ struct SystemEventsInterop : IMonoSystemListener, ISystemEventListener
 	virtual void OnCryamblyInitilizing() override {}
 	virtual void OnCompilationStarting() override {}
 	virtual void OnCompilationComplete(bool) override {}
-	virtual List<int> *GetSubscribedStages() override { return nullptr; }
+	virtual List<int> GetSubscribedStages() override { return List<int>(0); }
 	virtual void OnInitializationStage(int) override {}
 	virtual void OnCryamblyInitilized() override {}
 	virtual void OnPostInitialization() override {}

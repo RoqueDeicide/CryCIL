@@ -5,6 +5,7 @@
 #include "ParticleEffect.h"
 #include "MonoCryXmlNode.h"
 #include <ParticleParams.h>
+#include "MonoParticleSpawnParameters.h"
 
 void ParticleEffectInterop::InitializeInterops()
 {
@@ -40,20 +41,22 @@ void ParticleEffectInterop::InitializeInterops()
 	REGISTER_METHOD(LoadLibraryInternalFile);
 	REGISTER_METHOD(CreateEmitterInternal);
 	REGISTER_METHOD(CreateEmitterInternalDefaultParameters);
-	REGISTER_METHOD(CreateEmitterInternalDefaultFlagsDefaultParameters);
 	REGISTER_METHOD(DeleteEmitterInternal);
 	REGISTER_METHOD(DeleteEmittersInternal);
 	REGISTER_METHOD(SerializeEmitter);
 }
 
-IParticleEmitter *ParticleEffectInterop::SpawnEmitter(IParticleEffect *handle, const QuatTS &loc, EParticleEmitterFlags flags, const SpawnParams &parameters)
+IParticleEmitter *ParticleEffectInterop::SpawnEmitter(IParticleEffect *handle, const QuatTS &loc,
+													  const MonoParticleSpawnParameters &parameters)
 {
-	return handle->Spawn(loc, flags, &parameters);
+	SpawnParams params;
+	parameters.ToNative(params);
+	return handle->Spawn(loc, &params);
 }
 
-IParticleEmitter *ParticleEffectInterop::SpawnEmitterDefault(IParticleEffect *handle, const QuatTS &loc, EParticleEmitterFlags flags)
+IParticleEmitter *ParticleEffectInterop::SpawnEmitterDefault(IParticleEffect *handle, const QuatTS &loc)
 {
-	return handle->Spawn(loc, flags);
+	return handle->Spawn(loc);
 }
 
 void ParticleEffectInterop::SetName(IParticleEffect *handle, mono::string sFullName)
@@ -177,40 +180,45 @@ void ParticleEffectInterop::DeleteEffect(IParticleEffect *pEffect)
 	gEnv->pParticleManager->DeleteEffect(pEffect);
 }
 
-IParticleEffect *ParticleEffectInterop::FindEffect(mono::string sEffectName, mono::string sSource, bool bLoadResources)
+IParticleEffect *ParticleEffectInterop::FindEffect(mono::string sEffectName, mono::string sSource,
+												   bool bLoadResources)
 {
 	return gEnv->pParticleManager->FindEffect(NtText(sEffectName), NtText(sSource), bLoadResources);
 }
 
-IParticleEffect *ParticleEffectInterop::LoadEffect(mono::string sEffectName, IXmlNode *effectNode, bool bLoadResources, mono::string sSource)
+IParticleEffect *ParticleEffectInterop::LoadEffect(mono::string sEffectName, IXmlNode *effectNode,
+												   bool bLoadResources, mono::string sSource)
 {
 	XmlNodeRef nodeRef = effectNode;
 	return gEnv->pParticleManager->LoadEffect(NtText(sEffectName), nodeRef, bLoadResources, NtText(sSource));
 }
 
-bool ParticleEffectInterop::LoadLibraryInternal(mono::string sParticlesLibrary, IXmlNode *libNode, bool bLoadResources)
+bool ParticleEffectInterop::LoadLibraryInternal(mono::string sParticlesLibrary, IXmlNode *libNode,
+												bool bLoadResources)
 {
 	XmlNodeRef nodeRef = libNode;
 	NtText libName(sParticlesLibrary);
 	return gEnv->pParticleManager->LoadLibrary(libName, nodeRef, bLoadResources);
 }
 
-bool ParticleEffectInterop::LoadLibraryInternalFile(mono::string sParticlesLibrary, mono::string sParticlesLibraryFile, bool bLoadResources)
+bool ParticleEffectInterop::LoadLibraryInternalFile(mono::string sParticlesLibrary,
+													mono::string sParticlesLibraryFile, bool bLoadResources)
 {
-	return gEnv->pParticleManager->LoadLibrary(NtText(sParticlesLibrary), NtText(sParticlesLibraryFile), bLoadResources);
+	return gEnv->pParticleManager->LoadLibrary(NtText(sParticlesLibrary), NtText(sParticlesLibraryFile),
+											   bLoadResources);
 }
 
-IParticleEmitter *ParticleEffectInterop::CreateEmitterInternal(const QuatTS &loc, const ParticleParams &Params, uint uEmitterFlags, const SpawnParams &spawnParameters)
+IParticleEmitter *ParticleEffectInterop::CreateEmitterInternal(const QuatTS &loc,
+															   const ParticleParams &Params,
+															   const MonoParticleSpawnParameters &spawnParameters)
 {
-	return gEnv->pParticleManager->CreateEmitter(loc, Params, uEmitterFlags, &spawnParameters);
+	SpawnParams params;
+	spawnParameters.ToNative(params);
+	return gEnv->pParticleManager->CreateEmitter(loc, Params, &params);
 }
 
-IParticleEmitter *ParticleEffectInterop::CreateEmitterInternalDefaultParameters(const QuatTS &loc, const ParticleParams &Params, uint uEmitterFlags)
-{
-	return gEnv->pParticleManager->CreateEmitter(loc, Params, uEmitterFlags);
-}
-
-IParticleEmitter *ParticleEffectInterop::CreateEmitterInternalDefaultFlagsDefaultParameters(const QuatTS &loc, const ParticleParams &Params)
+IParticleEmitter *ParticleEffectInterop::CreateEmitterInternalDefaultParameters(const QuatTS &loc,
+																				const ParticleParams &Params)
 {
 	return gEnv->pParticleManager->CreateEmitter(loc, Params);
 }

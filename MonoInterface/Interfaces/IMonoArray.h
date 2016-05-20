@@ -217,24 +217,6 @@ public:
 	//! @param indices A list of indices that identify location of the element on the array.
 	//!
 	//! @returns Reference to the element of the array.
-	ElementType& operator[](List<int> &indices)
-	{
-		return this->GetElementWithMultipleIndexes(indices.Data(), indices.Length);
-	}
-	//! Provides read only access to the element of the array.
-	//!
-	//! @param indices A list of indices that identify location of the element on the array.
-	//!
-	//! @returns Reference to the element of the array.
-	const ElementType& operator[](List<int> &indices) const
-	{
-		return this->GetElementWithMultipleIndexes(indices.Data(), indices.Length);
-	}
-	//! Provides read/write access to the element of the array.
-	//!
-	//! @param indices A list of indices that identify location of the element on the array.
-	//!
-	//! @returns Reference to the element of the array.
 	ElementType& operator[](std::initializer_list<int> indices)
 	{
 		return this->GetElementWithMultipleIndexes(indices.begin(), indices.size());

@@ -12,7 +12,8 @@ struct ProfilingInterop : public IMonoInterop<false, true>
 	virtual void Shutdown() override;
 
 	static void FinishSection(CFrameProfilerSection *sectionPtr);
-	static CFrameProfiler *CreateProfiler(mono::string name);
+	static CFrameProfiler *CreateProfiler(EProfileDescription desc, mono::string name, mono::string file,
+										  uint32 line);
 	static CFrameProfilerSection *StartSection(CFrameProfiler *handle);
 
 	static List<CFrameProfiler *> cryCilProfilers;

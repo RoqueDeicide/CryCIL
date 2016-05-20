@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using CryCil.Annotations;
 using CryCil.Engine.Logic;
+using CryCil.Engine.Memory;
 using CryCil.Engine.Rendering;
 using CryCil.Geometry;
 
@@ -395,7 +396,14 @@ namespace CryCil.Engine.Physics
 			{
 				this.AssertAssignment();
 
-				this.pMatMapping = value.FillSurfaceTypesTable(out this.nMats);
+				if (!value.IsValid)
+				{
+					throw new ArgumentNullException(nameof(value), "Given material is null");
+				}
+				var table = value.SurfaceTypeIds;
+				this.pMatMapping = (int*)CryMarshal.Allocate((ulong)(sizeof(SurfaceTypeTable) - 4), false);
+				*this.pMatMapping = *(int*)&table;
+				this.nMats = table.Count;
 			}
 		}
 		/// <summary>

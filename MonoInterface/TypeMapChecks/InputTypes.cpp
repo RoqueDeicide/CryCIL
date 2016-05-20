@@ -72,10 +72,10 @@ inline void CheckActionInputBlockType()
 }
 
 #define _KI_KEYBOARD_BASE	0
-#define _KI_MOUSE_BASE			256
+#define _KI_MOUSE_BASE		256
 #define _KI_XINPUT_BASE		512
-#define _KI_ORBIS_BASE				1024
-#define _KI_SYS_BASE				2048
+#define _KI_ORBIS_BASE		1024
+#define _KI_SYS_BASE		4096
 
 TYPE_MIRROR enum KeyId
 {
@@ -243,10 +243,9 @@ TYPE_MIRROR enum KeyId
 	eKI_XI_Disconnect_check,	// should be deprecated because all devices can be disconnected, use eKI_SYS_DisconnectDevice instead
 
 	// Orbis controller.
-	eKI_Orbis_Select_check = KI_ORBIS_BASE,
+	eKI_Orbis_Options_check = KI_ORBIS_BASE,
 	eKI_Orbis_L3_check,
 	eKI_Orbis_R3_check,
-	eKI_Orbis_Start_check,
 	eKI_Orbis_Up_check,
 	eKI_Orbis_Right_check,
 	eKI_Orbis_Down_check,
@@ -270,6 +269,8 @@ TYPE_MIRROR enum KeyId
 	eKI_Orbis_RotX_KeyR_check,
 	eKI_Orbis_RotZ_KeyD_check,
 	eKI_Orbis_RotZ_KeyU_check,
+	eKI_Orbis_LeftTrigger_check,                         //!< L2 as trigger, for button use L2.
+	eKI_Orbis_RightTrigger_check,                        //!< R2 as trigger, for button use R2.
 
 	// Orbis specific
 	eKI_Orbis_Touch_check,
@@ -457,10 +458,9 @@ inline void CheckKeyId()
 	CHECK_ENUM(eKI_XI_Connect);
 	CHECK_ENUM(eKI_XI_Disconnect);
 
-	CHECK_ENUM(eKI_Orbis_Select);
+	CHECK_ENUM(eKI_Orbis_Options);
 	CHECK_ENUM(eKI_Orbis_L3);
 	CHECK_ENUM(eKI_Orbis_R3);
-	CHECK_ENUM(eKI_Orbis_Start);
 	CHECK_ENUM(eKI_Orbis_Up);
 	CHECK_ENUM(eKI_Orbis_Right);
 	CHECK_ENUM(eKI_Orbis_Down);
@@ -484,6 +484,8 @@ inline void CheckKeyId()
 	CHECK_ENUM(eKI_Orbis_RotX_KeyR);
 	CHECK_ENUM(eKI_Orbis_RotZ_KeyD);
 	CHECK_ENUM(eKI_Orbis_RotZ_KeyU);
+	CHECK_ENUM(eKI_Orbis_LeftTrigger);
+	CHECK_ENUM(eKI_Orbis_RightTrigger);
 
 	CHECK_ENUM(eKI_Orbis_Touch);
 

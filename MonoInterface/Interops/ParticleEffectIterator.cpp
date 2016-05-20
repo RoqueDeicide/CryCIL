@@ -12,7 +12,7 @@ void ParticleEffectIteratorInterop::InitializeInterops()
 IParticleEffectIterator *ParticleEffectIteratorInterop::Create()
 {
 	auto iter = gEnv->pParticleManager->GetEffectIterator();
-	return ReleaseOwnership(iter);
+	return iter.ReleaseOwnership();
 }
 
 void ParticleEffectIteratorInterop::Delete(IParticleEffectIterator *handle)

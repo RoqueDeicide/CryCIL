@@ -34,22 +34,6 @@ namespace CryCil.Engine.Logic
 		public bool IsValid => this.entityHandle != IntPtr.Zero && this.index >= 0 &&
 							   EntitySlotOps.IsSlotValid(this.entityHandle, this.index);
 		/// <summary>
-		/// Gets collective information about this slot.
-		/// </summary>
-		/// <exception cref="NullReferenceException">This entity slot object is not valid.</exception>
-		/// <exception cref="ObjectDisposedException">This entity slot doesn't exist.</exception>
-		public EntitySlotInfo Information
-		{
-			get
-			{
-				this.AssertSlotValidity();
-
-				EntitySlotInfo info;
-				EntitySlotOps.GetSlotInfo(this.entityHandle, this.index, out info);
-				return info;
-			}
-		}
-		/// <summary>
 		/// Gets world transformation matrix for this slot.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This entity slot object is not valid.</exception>
@@ -131,11 +115,6 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Gets or sets a zero-based index of the slot that is a parent of this one.
 		/// </summary>
-		/// <remarks>
-		/// Invocation of the getter of this property involves invocation of the getter for
-		/// <see cref="Information"/> property, so use that when you need to acquire a lot of information
-		/// about this slot at once.
-		/// </remarks>
 		/// <exception cref="NullReferenceException">This entity slot object is not valid.</exception>
 		/// <exception cref="ObjectDisposedException">This entity slot doesn't exist.</exception>
 		/// <exception cref="ArgumentNullException">
@@ -150,7 +129,8 @@ namespace CryCil.Engine.Logic
 			{
 				this.AssertSlotValidity();
 
-				return new CryEntitySlot(this.entityHandle, this.Information.ParentSlot);
+				return new CryEntitySlot(this.entityHandle,
+										 EntitySlotOps.GetSlotParent(this.entityHandle, this.index));
 			}
 			set
 			{
@@ -170,11 +150,6 @@ namespace CryCil.Engine.Logic
 		/// <summary>
 		/// Gets or sets a material this slot uses for rendering.
 		/// </summary>
-		/// <remarks>
-		/// Invocation of the getter of this property involves invocation of the getter for
-		/// <see cref="Information"/> property, so use that when you need to acquire a lot of information
-		/// about this slot at once.
-		/// </remarks>
 		/// <exception cref="NullReferenceException">This entity slot object is not valid.</exception>
 		/// <exception cref="ObjectDisposedException">This entity slot doesn't exist.</exception>
 		/// <exception cref="ArgumentNullException">
@@ -186,7 +161,7 @@ namespace CryCil.Engine.Logic
 			{
 				this.AssertSlotValidity();
 
-				return this.Information.Material;
+				return EntitySlotOps.GetSlotMaterial(this.entityHandle, this.index);
 			}
 			set
 			{

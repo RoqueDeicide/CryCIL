@@ -1,14 +1,13 @@
 #include "stdafx.h"
 #include "IMonoInterface.h"
-#include "List.h"
 
 #include <CryLibrary.h>
 
 struct SimpleListener : public IMonoSystemListener
 {
-private:
+	private:
 	IMonoInterface *monoEnv;
-public:
+	public:
 	SimpleListener() : monoEnv(nullptr) {}
 
 	virtual void SetInterface(IMonoInterface *handle) override
@@ -32,9 +31,10 @@ public:
 	virtual void OnRunTimeInitialized() override
 	{
 		// Now we can use Mono.
-		mono::nothing(*BeepFunc)(mono::exception *);
-		BeepFunc = reinterpret_cast<mono::nothing(*)(mono::exception *)>
-			(this->monoEnv->CoreLibrary->GetClass("Console", "System")->GetFunction("Beep")->UnmanagedThunk);
+		mono::nothing (*BeepFunc)(mono::exception *);
+		auto          klass = this->monoEnv->CoreLibrary->GetClass("Console", "System");
+		auto          func  = klass->GetFunction("Beep");
+		BeepFunc = reinterpret_cast<mono::nothing (*)(mono::exception *)>(func->UnmanagedThunk);
 		// Beep!
 		mono::exception ex;
 		BeepFunc(&ex);
@@ -43,18 +43,17 @@ public:
 	virtual void OnCryamblyInitilizing() override
 	{
 		// Cryambly is loaded, now we can do stuff like working with quaternions.
-		Vec3 up(0, 0, 1);
+		Vec3  up(0, 0, 1);
 		float rads = 60 * PI / 180;
 
-		auto thunk =
-			reinterpret_cast<mono::quaternion(*)(mono::vector3, float, mono::exception *)>
-			(this->monoEnv->Cryambly->GetClass("Rotation", "CryCil.Geometry")
-									->GetNestedType("AroundAxis")
-									->GetFunction("CreateQuaternion", 2)
-									->UnmanagedThunk);
+		auto klass       = this->monoEnv->Cryambly->GetClass("Rotation", "CryCil.Geometry");
+		auto nestedKlass = klass->GetNestedType("AroundAxis");
+		auto func        = nestedKlass->GetFunction("CreateQuaternion", 2);
+		auto thunk       = reinterpret_cast<mono::quaternion (*)(mono::vector3, float, mono::exception *)>
+						   (func->UnmanagedThunk);
 
 		mono::exception ex;
-		Quat rotation = Unbox<Quat>((thunk)(Box(up), rads, &ex));
+		Quat            rotation = Unbox<Quat>((thunk)(Box(up), rads, &ex));
 		CryLogAlways("Quat = %s, %s, %s, %s", rotation.v.x, rotation.v.y, rotation.v.z, rotation.w);
 	}
 
@@ -75,17 +74,17 @@ public:
 		}
 	}
 
-	virtual List<int> *GetSubscribedStages() override
+	virtual List<int> GetSubscribedStages() override
 	{
-		List<int> *stages = new List<int>(8);
-		stages->Add(ENTITY_REGISTRATION_STAGE - 1);			// Before entities registration.
-		stages->Add(ENTITY_REGISTRATION_STAGE + 1);			// After entities registration.
-		stages->Add(ACTION_MAPS_REGISTRATION_STAGE - 1);			// Before actors registration.
-		stages->Add(ACTION_MAPS_REGISTRATION_STAGE + 1);			// After actors registration.
-		stages->Add(GAME_MODE_REGISTRATION_STAGE - 1);		// Before game modes registration.
-		stages->Add(GAME_MODE_REGISTRATION_STAGE + 1);		// After game modes registration.
-		stages->Add(FLOWNODE_RECOGNITION_STAGE - 1);		// Before flow graph nodes recognition.
-		stages->Add(FLOWNODE_RECOGNITION_STAGE + 1);		// After flow graph nodes recognition.
+		List<int> stages(8);
+		stages.Add(ENTITY_REGISTRATION_STAGE - 1);      // Before entities registration.
+		stages.Add(ENTITY_REGISTRATION_STAGE + 1);      // After entities registration.
+		stages.Add(ACTION_MAPS_REGISTRATION_STAGE - 1); // Before actors registration.
+		stages.Add(ACTION_MAPS_REGISTRATION_STAGE + 1); // After actors registration.
+		stages.Add(GAME_MODE_REGISTRATION_STAGE - 1);   // Before game modes registration.
+		stages.Add(GAME_MODE_REGISTRATION_STAGE + 1);   // After game modes registration.
+		stages.Add(FLOWNODE_RECOGNITION_STAGE - 1);     // Before flow graph nodes recognition.
+		stages.Add(FLOWNODE_RECOGNITION_STAGE + 1);     // After flow graph nodes recognition.
 		return stages;
 	}
 
@@ -153,11 +152,14 @@ inline void HowToRegisterListeners()
 	// We have to pass listeners to InitializeModule if you them to react to initialization events.
 	auto listeners = List<IMonoSystemListener *>(1);
 	listeners.Add(new SimpleListener());
+
 	// Now we can initialize CryCIL.
 	HMODULE monoInterfaceDll = CryLoadLibrary(MONOINTERFACE_LIBRARY);
 	if (monoInterfaceDll)
 	{
-		auto init = reinterpret_cast<InitializeMonoInterface>(CryGetProcAddress(monoInterfaceDll, MONO_INTERFACE_INIT));
+		auto init = reinterpret_cast<InitializeMonoInterface>(CryGetProcAddress(monoInterfaceDll,
+																				MONO_INTERFACE_INIT));
+
 		// Replace nullptr with a pointer to IGameFramework.
 		init(nullptr, &listeners);
 	}

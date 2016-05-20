@@ -42,7 +42,7 @@ void CMeshInterop::SetSubsetCount(CMesh *handle, int count)
 
 void CMeshInterop::CopyMesh(CMesh *handle, CMesh &mesh)
 {
-	handle->Copy(mesh);
+	handle->CopyFrom(mesh);
 }
 
 bool CMeshInterop::CompareStreams(CMesh *handle, CMesh &mesh)
@@ -52,7 +52,7 @@ bool CMeshInterop::CompareStreams(CMesh *handle, CMesh &mesh)
 
 mono::string CMeshInterop::AppendData(CMesh *handle, CMesh &mesh, bool returnErrorMessage)
 {
-	auto message = handle->Append(mesh);
+	auto message = handle->AppendStreamsFrom(mesh);
 	if (returnErrorMessage)
 	{
 		return ToMonoString(message);
@@ -63,7 +63,7 @@ mono::string CMeshInterop::AppendData(CMesh *handle, CMesh &mesh, bool returnErr
 
 mono::string CMeshInterop::AppendSpecificData(CMesh *handle, CMesh &mesh, int fromVertex, int vertexCount, int fromFace, int faceCount, bool returnErrorMessage)
 {
-	auto message = handle->Append(mesh, fromVertex, vertexCount, fromFace, faceCount);
+	auto message = handle->AppendStreamsFrom(mesh, fromVertex, vertexCount, fromFace, faceCount);
 	if (returnErrorMessage)
 	{
 		return ToMonoString(message);

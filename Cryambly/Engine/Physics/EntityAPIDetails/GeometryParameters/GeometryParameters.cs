@@ -204,14 +204,14 @@ namespace CryCil.Engine.Physics
 		{
 			set
 			{
-				try
+				if (!value.IsValid)
 				{
-					this.pMatMapping = value.FillSurfaceTypesTable(out this.nMats);
+					throw new ArgumentNullException(nameof(value), "Given material is null");
 				}
-				catch (NullReferenceException nullReferenceException)
-				{
-					throw new ArgumentNullException("Given material is null", nullReferenceException);
-				}
+				var table = value.SurfaceTypeIds;
+				this.pMatMapping = (int*)CryMarshal.Allocate((ulong)(sizeof(SurfaceTypeTable) - 4), false);
+				*this.pMatMapping = *(int*)&table;
+				this.nMats = table.Count;
 			}
 		}
 		/// <summary>

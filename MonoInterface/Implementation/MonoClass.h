@@ -5,8 +5,6 @@
 #include "ThunkTables.h"
 #include "Implementation/MonoMethod.h"
 
-#include "List.h"
-
 //! Represents a wrapper around MonoClass object.
 struct MonoClassWrapper : public IMonoClass
 {
@@ -17,8 +15,8 @@ private:
 	Text fullName;
 	Text fullNameIL;
 	List<IMonoEvent *> events;
-	SortedList<Text, List<IMonoFunction *> *> methods;
-	SortedList<Text, List<IMonoProperty *> *> properties;
+	SortedList<Text, List<IMonoFunction *>> methods;
+	SortedList<Text, List<IMonoProperty *>> properties;
 	List<IMonoField *> fields;
 	MonoVTable *vtable;
 	List<IMonoFunction *> flatMethodList;
@@ -34,8 +32,8 @@ public:
 	virtual const IMonoFunction *GetFunction(const char *name, const char *params) const override;
 	virtual const IMonoFunction *GetFunction(const char *name, int paramCount) const override;
 
-	virtual const List<IMonoFunction *> *GetFunctions(const char *name, int paramCount) const override;
-	virtual const List<IMonoFunction *> *GetFunctions(const char *name) const override;
+	virtual List<IMonoFunction *> GetFunctions(const char *name, int paramCount) const override;
+	virtual List<IMonoFunction *> GetFunctions(const char *name) const override;
 	
 	virtual mono::type GetType() const override;
 	virtual mono::type MakeArrayType() const override;
@@ -87,10 +85,10 @@ public:
 
 	virtual const IMonoClass    *GetNestedType(const char *name) const override;
 	
-	virtual ReadOnlyList<IMonoField *>    GetFields() const override;
-	virtual ReadOnlyList<IMonoProperty *> GetProperties() const override;
-	virtual ReadOnlyList<IMonoEvent *>    GetEvents() const override;
-	virtual ReadOnlyList<IMonoFunction *> GetFunctions() const override;
+	virtual const List<IMonoField *>    &GetFields() const override;
+	virtual const List<IMonoProperty *> &GetProperties() const override;
+	virtual const List<IMonoEvent *>    &GetEvents() const override;
+	virtual const List<IMonoFunction *> &GetFunctions() const override;
 private:
 	void GetFieldValue(mono::object obj, MonoClassField *field, void *value) const;
 	void SetFieldValue(mono::object obj, MonoClassField *field, void *value) const;

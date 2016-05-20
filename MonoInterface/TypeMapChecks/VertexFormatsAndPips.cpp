@@ -325,15 +325,9 @@ struct PipTangents
 	Vec4sf Tangent;
 	Vec4sf Bitangent;
 
-	explicit PipTangents(SPipTangents &other)
+	explicit PipTangents(SPipTangents &) : Tangent(ZERO), Bitangent(ZERO)
 	{
 		CHECK_TYPE_SIZE(PipTangents);
-
-		ASSIGN_FIELD(Tangent);
-		ASSIGN_FIELD(Bitangent);
-
-		CHECK_TYPE(Tangent);
-		CHECK_TYPE(Bitangent);
 	}
 };
 
@@ -341,13 +335,9 @@ struct PipQTangents
 {
 	Vec4sf QTangent;
 
-	explicit PipQTangents(SPipQTangents &other)
+	explicit PipQTangents(SPipQTangents &) : QTangent(ZERO)
 	{
 		CHECK_TYPE_SIZE(PipQTangents);
-
-		ASSIGN_FIELD(QTangent);
-
-		CHECK_TYPE(QTangent);
 	}
 };
 

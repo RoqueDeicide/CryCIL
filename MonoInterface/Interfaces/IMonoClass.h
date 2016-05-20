@@ -37,13 +37,13 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//! Indicates whether this class is a delegate.
 	__declspec(property(get = GetIsDelegate))  bool                           IsDelegate;
 	//! Gets the list of fields available through this class.
-	__declspec(property(get = GetFields))      ReadOnlyList<IMonoField *>     Fields;
+	__declspec(property(get = GetFields))      const List<IMonoField *>     &Fields;
 	//! Gets the list of properties available through this class.
-	__declspec(property(get = GetProperties))  ReadOnlyList<IMonoProperty *>  Properties;
+	__declspec(property(get = GetProperties))  const List<IMonoProperty *>  &Properties;
 	//! Gets the list of events available through this class.
-	__declspec(property(get = GetEvents))      ReadOnlyList<IMonoEvent *>     Events;
+	__declspec(property(get = GetEvents))      const List<IMonoEvent *>     &Events;
 	//! Gets the list of functions available through this class.
-	__declspec(property(get = GetFunctions))   ReadOnlyList<IMonoFunction *>  Functions;
+	__declspec(property(get = GetFunctions))   const List<IMonoFunction *>  &Functions;
 	
 	//! Gets one of the constructors that can accept specified number of arguments.
 	//!
@@ -203,14 +203,14 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 	//!
 	//! @returns A pointer to the first found method. You should release resultant array once
 	//!          you don't need it anymore.
-	VIRTUAL_API virtual const List<IMonoFunction *> *GetFunctions(const char *name, int paramCount) const = 0;
+	VIRTUAL_API virtual List<IMonoFunction *> GetFunctions(const char *name, int paramCount) const = 0;
 	//! Gets an array of overload of the method.
 	//!
 	//! @param name       Name of the method which overloads to find.
 	//!
 	//! @returns A pointer to the first found method. You should release resultant array once
 	//!          you don't need it anymore.
-	VIRTUAL_API virtual const List<IMonoFunction *> *GetFunctions(const char *name) const = 0;
+	VIRTUAL_API virtual List<IMonoFunction *> GetFunctions(const char *name) const = 0;
 	//! Gets a metadata wrapper for the field of this class.
 	//!
 	//! @param name Name of the field to get.
@@ -388,10 +388,10 @@ struct IMonoClass : public IMonoFunctionalityWrapper
 
 	VIRTUAL_API virtual const IMonoClass *GetBase() const = 0;
 
-	VIRTUAL_API virtual ReadOnlyList<IMonoField *>    GetFields() const = 0;
-	VIRTUAL_API virtual ReadOnlyList<IMonoProperty *> GetProperties() const = 0;
-	VIRTUAL_API virtual ReadOnlyList<IMonoEvent *>    GetEvents() const = 0;
-	VIRTUAL_API virtual ReadOnlyList<IMonoFunction *> GetFunctions() const = 0;
+	VIRTUAL_API virtual const List<IMonoField *>    &GetFields() const = 0;
+	VIRTUAL_API virtual const List<IMonoProperty *> &GetProperties() const = 0;
+	VIRTUAL_API virtual const List<IMonoEvent *>    &GetEvents() const = 0;
+	VIRTUAL_API virtual const List<IMonoFunction *> &GetFunctions() const = 0;
 
 	//! Gets the value of the object's field.
 	//!

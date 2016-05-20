@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using CryCil.Engine.Models;
 using CryCil.Engine.Models.Characters;
 using CryCil.Engine.Models.StaticObjects;
 using CryCil.Engine.Physics;
@@ -12,26 +14,17 @@ namespace CryCil.Engine
 	public struct GeometryReference
 	{
 		#region Fields
-		private StaticObject staticObject;
-		private Character character;
+		private MeshObject meshObject;
 		private PhysicalEntity physicalEntity;
 		#endregion
 		#region Properties
 		/// <summary>
-		/// Gets or sets the static object to attach particle effect to.
+		/// Gets or sets the static or animated object to attach the particle effect to.
 		/// </summary>
-		public StaticObject StaticObject
+		public MeshObject MeshObject
 		{
-			get { return this.staticObject; }
-			set { this.staticObject = value; }
-		}
-		/// <summary>
-		/// Gets or sets the animated character to attach particle effect to.
-		/// </summary>
-		public Character Character
-		{
-			get { return this.character; }
-			set { this.character = value; }
+			get { return this.meshObject; }
+			set { this.meshObject = value; }
 		}
 		/// <summary>
 		/// Gets or sets the physical entity to attach particle effect to.

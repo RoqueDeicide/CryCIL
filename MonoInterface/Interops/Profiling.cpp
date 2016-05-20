@@ -11,10 +11,12 @@ void ProfilingInterop::InitializeInterops()
 	REGISTER_METHOD_NCN(nameSpace, "ProfilingSection", "FinishSection", FinishSection);
 }
 
-CFrameProfiler *ProfilingInterop::CreateProfiler(mono::string name)
+CFrameProfiler *ProfilingInterop::CreateProfiler(EProfileDescription desc, mono::string name,
+												 mono::string file, uint32 line)
 {
-	auto frameProfiler = new CFrameProfiler(gEnv->pSystem, ToNativeString(name), PROFILE_SYSTEM);
-	
+	auto frameProfiler = new CFrameProfiler(PROFILE_SYSTEM, desc, ToNativeString(name),
+											ToNativeString(file), line);
+
 	cryCilProfilers.Add(frameProfiler);
 
 	return frameProfiler;
@@ -22,7 +24,7 @@ CFrameProfiler *ProfilingInterop::CreateProfiler(mono::string name)
 
 CFrameProfilerSection *ProfilingInterop::StartSection(CFrameProfiler *handle)
 {
-	return new CFrameProfilerSection(handle);
+	return new CFrameProfilerSection(handle, nullptr, nullptr, EProfileDescription::REGION);
 }
 
 void ProfilingInterop::FinishSection(CFrameProfilerSection *sectionPtr)

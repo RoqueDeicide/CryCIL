@@ -29,7 +29,7 @@ struct StaticObjectInterop : IMonoInterop<true, true>
 	static void SetBBox(IStatObj *handle, AABB vBBoxMin);
 	static float GetRadius(IStatObj *handle);
 	static void RefreshInternal(IStatObj *handle, int nFlags);
-	static PosNorm GetRandomPos(IStatObj *handle, EGeomForm eForm);
+	static PosNorm GetRandomPos(IStatObj *handle, EGeomForm eForm, CRndGen &seed);
 	static IStatObj *GetLodObjectInternal(IStatObj *handle, int nLodLevel, bool bReturnNearest);
 	static IStatObj *GetLowestLodInternal(IStatObj *handle);
 	static int FindNearesLoadedLodInternal(IStatObj *handle, int nLodIn, bool bSearchUp);
@@ -73,4 +73,6 @@ struct StaticObjectInterop : IMonoInterop<true, true>
 	static void GetStatistics(IStatObj *handle, IStatObj::SStatistics &stats);
 	static IStatObj *CreateStatObjOptionalIndexedMesh(bool createIndexedMesh);
 	static IStatObj *UpdateDeformableStatObj(IGeometry *pPhysGeom, bop_meshupdate *pLastUpdate);
+
+	static IMeshObj *GetBase(IStatObj *handle);
 };

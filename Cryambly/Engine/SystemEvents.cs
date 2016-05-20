@@ -383,6 +383,10 @@ namespace CryCil.Engine
 		/// </summary>
 		EditorSimulationModeChanged,
 		/// <summary>
+		/// Occurs when environment settings are reloaded.
+		/// </summary>
+		EnvironmentSettingsChanged,
+		/// <summary>
 		/// Occurs when front-end is reloaded.
 		/// </summary>
 		FrontendReloaded,
@@ -410,6 +414,13 @@ namespace CryCil.Engine
 		/// Occurs after loading of the new audio implementation.
 		/// </summary>
 		AudioImplementationLoaded,
+		/// <summary>
+		/// Occurs when one of the systems tries to communicate to another one.
+		/// </summary>
+		/// <example>
+		/// A module Plugin can send and event with a message "I'm doing this" and any other module that react to this event.
+		/// </example>
+		Uri,
 
 		/// <summary>
 		/// User events are past this id.
@@ -418,6 +429,13 @@ namespace CryCil.Engine
 		/// <summary>
 		/// Unknown.
 		/// </summary>
-		BeamPlayerToCameraPos
+		BeamPlayerToCameraPos,
+		/// <summary>
+		/// Occurs when CrySystem engine module is initialized successfully.
+		/// </summary>
+		/// <remarks>
+		/// It's currently not known whether this event can ever occur in CryCIL v2.
+		/// </remarks>
+		CrySystemInitializationDone
 	}
 }

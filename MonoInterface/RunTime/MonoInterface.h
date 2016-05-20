@@ -15,7 +15,7 @@
 #include "RunTime/DebugEventReporter.h"
 #include "RunTime/EventBroadcaster.h"
 
-#include "List.h"
+#include "List.hpp"
 
 //! Handles interface between CryEngine and Mono.
 class MonoInterface

@@ -67,7 +67,7 @@ typedef void *mono_string;
 
 #endif // ENABLE_NTTEXT_DEBUG_REPORT
 
-#include "List.h"
+#include "List.hpp"
 
 //! Wraps a null-terminated string.
 //!
@@ -78,7 +78,7 @@ typedef void *mono_string;
 //!
 //! Check documentation for this object's assignment operator overload.
 //!
-//! @typeparam SymbolType Type that represents symbols that comprise this string.
+//! @tparam SymbolType Type that represents symbols that comprise this string.
 template<typename SymbolType>
 struct NtTextTemplate
 {
@@ -162,7 +162,7 @@ public:
 	//! Constructs a text out of given parts.
 	//!
 	//! @param parts A sequence of null-terminated strings to construct this one out of.
-	NtTextTemplate(std::initializer_list<const char *> parts)
+	NtTextTemplate(std::initializer_list<const SymbolType *> parts)
 	{
 		if (parts.size() == 0)
 		{
@@ -181,7 +181,7 @@ public:
 
 		for (auto current = parts.begin(); current < parts.end(); current++)
 		{
-			const char *currentPart = *current;
+			const SymbolType *currentPart = *current;
 			int partLength = _strlen(currentPart);
 			for (int i = 0; i < partLength; i++)
 			{
@@ -485,7 +485,7 @@ inline const SymbolType *NtTextTemplate<SymbolType>::_str_mono(mono_string str)
 	FatalError(mono_error_get_message(&error));
 	return nullptr;
 #elif defined(USE_CRYCIL_API)
-	return ToNativeString(managedString);
+	return ToNativeString(str);
 #else
 	return nullptr;
 #endif // MONO_API
@@ -549,7 +549,7 @@ inline const wchar_t *NtTextTemplate<wchar_t>::_str_mono(mono_string str)
 	chars[length] = '\0';
 	return chars;
 #elif defined(USE_CRYCIL_API)
-	return MonoEnv->Objects->Texts->ToNative16(managedString);
+	return MonoEnv->Objects->Texts->ToNative16(str);
 #else
 	return nullptr;
 #endif // MONO_API

@@ -158,7 +158,7 @@ uint AttachmentSocketInterop::GetJointID(IAttachment *handle)
 	return handle->GetJointID();
 }
 
-uint AttachmentSocketInterop::AddBinding(IAttachment *handle, IAttachmentObject *pModel, ISkin *pISkin)
+void AttachmentSocketInterop::AddBinding(IAttachment *handle, IAttachmentObject *pModel, ISkin *pISkin)
 {
 	return handle->AddBinding(pModel, pISkin);
 }
@@ -181,7 +181,7 @@ void AttachmentSocketInterop::ClearBinding(IAttachment *handle, uint nLoadingFla
 	handle->ClearBinding(nLoadingFlags);
 }
 
-uint AttachmentSocketInterop::SwapBinding(IAttachment *handle, IAttachment *pNewAttachment)
+void AttachmentSocketInterop::SwapBinding(IAttachment *handle, IAttachment *pNewAttachment)
 {
 	return handle->SwapBinding(pNewAttachment);
 }

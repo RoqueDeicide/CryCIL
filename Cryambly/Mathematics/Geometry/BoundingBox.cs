@@ -68,6 +68,24 @@ namespace CryCil.Geometry
 				return results;
 			}
 		}
+		/// <summary>
+		/// Determines whether this bounding box is a point.
+		/// </summary>
+		public bool IsEmpty => this.Minimum == this.Maximum;
+		/// <summary>
+		/// Gets the <see cref="Vector3"/> object that encapsulates coordinates of the center of this
+		/// bounding box.
+		/// </summary>
+		public Vector3 Center => (this.Minimum + this.Maximum) * 0.5f;
+		/// <summary>
+		/// Gets squared length of the halved vector that is a difference between maximal and minimal vectors of this box.
+		/// </summary>
+		public float RadiusSquared =>
+			this.IsResetSelect(0, ((this.Maximum - this.Minimum) / 2.0f).LengthSquared);
+		/// <summary>
+		/// Gets length of the halved vector that is a difference between maximal and minimal vectors of this box.
+		/// </summary>
+		public float Radius => this.IsResetSelect(0, (this.Maximum - this.Minimum).Length / 2.0f);
 		#endregion
 		#region Events
 		#endregion
@@ -253,9 +271,6 @@ namespace CryCil.Geometry
 		{
 			return Collision.BoxContainsSphere(ref this, ref sphere);
 		}
-		#endregion
-		#region Utilities
-		#endregion
 		/// <summary>
 		/// Constructs a <see cref="BoundingBox"/> that is as large as the total combined area of the two
 		/// specified boxes.
@@ -398,19 +413,14 @@ namespace CryCil.Geometry
 		{
 			return value != null && value.GetType() == this.GetType() && this.Equals((BoundingBox)value);
 		}
-		/// <summary>
-		/// Determines whether this bounding box is a point.
-		/// </summary>
-		#region Properties
-		public bool IsEmpty
+		#endregion
+		#region Utilities
+		private float IsResetSelect(float ifReset, float ifNotReset)
 		{
-			get { return this.Minimum == this.Maximum; }
+			return this.Maximum.X - this.Minimum.X < 0
+				? ifReset
+				: ifNotReset;
 		}
-		/// <summary>
-		/// Gets the <see cref="Vector3"/> object that encapsulates coordinates of the center of this
-		/// bounding box.
-		/// </summary>
-		public Vector3 Center => (this.Minimum + this.Maximum) * 0.5f;
 		#endregion
 	}
 

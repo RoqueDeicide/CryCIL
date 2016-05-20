@@ -180,9 +180,9 @@
 
 #include "Interops/AttachmentProxy.h"
 
-#include "Interops/AudioSystem.h"
+#include "Interops/MeshObject.h"
 
-#include "Interops/CryAudioListener.h"
+#include "Interops/AudioSystem.h"
 
 #include "Interops/CryAudioProxy.h"
 

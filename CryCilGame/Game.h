@@ -6,11 +6,13 @@
 class CryCilGame : public IGame
 {
 	IGameFramework *gameFramework;
-	NtText gameName;
-	NtText longGameName;
+	NtText          gameName;
+	NtText          longGameName;
+
 public:
 	CryCilGame();
 	~CryCilGame();
+
 	//! Performs initialization that became possible after initialization of the game framework.
 	//!
 	//! @param pFramework A pointer to the object that represents the game framework that will be saved in this object.
@@ -43,10 +45,7 @@ public:
 	virtual IGameFramework *GetIGameFramework() override;
 	//! Does nothing.
 	virtual const char *GetMappedLevelName(const char *) const override { return ""; }
-	//! Does nothing.
-	virtual IAntiCheatManager *GetAntiCheatManager() override;
-	//! Does nothing.
-	
+
 	// ReSharper disable once CppConstValueFunctionReturnType
 	virtual const bool DoInitialSavegame() const override { return true; }
 	//! Does nothing.
@@ -78,5 +77,4 @@ public:
 	virtual IGamePhysicsSettings *GetIGamePhysicsSettings() override { return nullptr; }
 	//! Does nothing.
 	virtual void *GetGameInterface() override { return nullptr; }
-
 };

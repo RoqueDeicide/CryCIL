@@ -21,6 +21,7 @@ struct DebugDrawInterop : public IMonoInterop<true, true>
 	static void AddCylinder  (Vec3 pos, Vec3 dir, float radius, float height, ColorF color, float timeout);
 	static void Add2DText    (mono::string text, float size, ColorF color, float timeout);
 	static void AddText      (float x, float y, float size, ColorF color, float timeout, mono::string fmt);
+	static void AddText3D    (const Vec3 &pos, float size, ColorF color, float timeout, mono::string text);
 	static void Add2DLine    (float x1, float y1, float x2, float y2, ColorF color, float timeout);
 	static void AddQuat      (Vec3 pos, Quat q, float r, ColorF color, float timeout);
 	static void AddAABB      (Vec3 min, Vec3 max, ColorF color, float timeout);

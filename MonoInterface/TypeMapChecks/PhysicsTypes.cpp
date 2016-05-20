@@ -951,9 +951,9 @@ TYPE_MIRROR struct grid : primitive
 	Matrix33 Basis;
 	int bOriented;
 	Vec3 origin;
-	vector2df step, stepr;
-	vector2di size;
-	vector2di stride;
+	Vec2 step, stepr;
+	Vec2i size;
+	Vec2i stride;
 	int bCyclic;
 
 	grid()

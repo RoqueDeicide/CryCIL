@@ -4,11 +4,11 @@
 #include "MonoAssembly.h"
 #include "ThunkTables.h"
 
-void DisposeAssemblyWrappers(Text, List<IMonoAssembly *> *assemblySet)
+void DisposeAssemblyWrappers(Text, List<IMonoAssembly *> &assemblySet)
 {
-	for (int i = 0; i < assemblySet->Length; i++)
+	for (auto current : assemblySet)
 	{
-		delete assemblySet->At(i);
+		delete current;
 	}
 }
 
@@ -27,19 +27,17 @@ IMonoAssembly *MonoAssemblies::Load(const char *path)
 		// Try looking for the existing wrapper, since attempt to load the assembly may fail,
 		// if it was already loaded.
 		wrapper = nullptr;
-		this->AssemblyRegistry->ForEach
-		(
-			[&wrapper, path](Text assemblyShortName, List<IMonoAssembly *> *assemblySet)
+		for (auto &currentPair : this->AssemblyRegistry)
+		{
+			auto &currentWrappersList = currentPair.Value2;
+			for (auto currentWrapper : currentWrappersList)
 			{
-				for (int i = 0; i < assemblySet->Length; i++)
+				if (currentWrapper->FileName == path)
 				{
-					if (assemblySet->At(i)->FileName == path)
-					{
-						wrapper = assemblySet->At(i);
-					}
+					wrapper = currentWrapper;
 				}
 			}
-		);
+		}
 	}
 	return wrapper;
 }
@@ -51,33 +49,23 @@ IMonoAssembly *MonoAssemblies::Wrap(void *assemblyHandle)
 		return nullptr;
 	}
 	IMonoAssembly *wrapper = nullptr;
-	this->AssemblyRegistry->ForEach
-	(
-		[&wrapper, assemblyHandle](Text assemblyShortName, List<IMonoAssembly *> *assemblySet)
+	for (auto &currentPair : this->AssemblyRegistry)
+	{
+		auto &currentWrappersList = currentPair.Value2;
+		for (auto currentWrapper : currentWrappersList)
 		{
-			for (int i = 0; i < assemblySet->Length; i++)
+			if (currentWrapper->GetWrappedPointer() == assemblyHandle)
 			{
-				if (assemblySet->At(i)->GetWrappedPointer() == assemblyHandle)
-				{
-					wrapper = assemblySet->At(i);
-				}
+				wrapper = currentWrapper;
 			}
 		}
-	);
+	}
 	if (!wrapper)
 	{
 		// Register this wrapper.
 		wrapper = new MonoAssemblyWrapper(static_cast<MonoAssembly *>(assemblyHandle));
-		if (this->AssemblyRegistry->Contains(wrapper->Name))
-		{
-			this->AssemblyRegistry->At(wrapper->Name)->Add(wrapper);
-		}
-		else
-		{
-			List<IMonoAssembly *> *list = new List<IMonoAssembly *>(1);
-			list->Add(wrapper);
-			this->AssemblyRegistry->Add(wrapper->Name, list);
-		}
+		auto &assemblySet = this->AssemblyRegistry.Establish(wrapper->Name, 1);
+		assemblySet.Add(wrapper);
 	}
 	return wrapper;
 }
@@ -89,14 +77,14 @@ IMonoAssembly *MonoAssemblies::GetAssembly(const char *name)
 		return nullptr;
 	}
 	IMonoAssembly *wrapper = nullptr;
-	List<IMonoAssembly *> *assemblies;
-	if (this->AssemblyRegistry->TryGet(name, assemblies))
+	List<IMonoAssembly *> assemblies;
+	if (this->AssemblyRegistry.TryGet(name, assemblies))
 	{
-		for (int i = 0; i < assemblies->Length; i++)
+		for (auto current : assemblies)
 		{
-			if (assemblies->At(i)->Name == name)
+			if (current->Name == name)
 			{
-				wrapper = assemblies->At(i);
+				wrapper = current;
 			}
 		}
 	}
@@ -121,19 +109,17 @@ IMonoAssembly *MonoAssemblies::GetAssemblyFullName(const char *name)
 		return nullptr;
 	}
 	IMonoAssembly *wrapper = nullptr;
-	this->AssemblyRegistry->ForEach
-	(
-		[&wrapper, name](Text assemblyShortName, List<IMonoAssembly *> *assemblySet)
+	for (auto &currentPair : this->AssemblyRegistry)
+	{
+		auto &currentWrappersList = currentPair.Value2;
+		for (auto currentWrapper : currentWrappersList)
 		{
-			for (int i = 0; i < assemblySet->Length; i++)
+			if (currentWrapper->Name == name)
 			{
-				if (assemblySet->At(i)->Name == name)
-				{
-					wrapper = assemblySet->At(i);
-				}
+				wrapper = currentWrapper;
 			}
 		}
-	);
+	}
 	if (!wrapper)
 	{
 		MonoAssemblyName *aname = mono_assembly_name_new(name);

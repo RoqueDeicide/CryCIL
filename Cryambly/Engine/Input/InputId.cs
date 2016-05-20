@@ -672,9 +672,9 @@ namespace CryCil.Engine.Input
 		XboxDisconnect,
 
 		/// <summary>
-		/// Identifier of the Select button on the Orbis controller.
+		/// Identifier of the Options button on the Orbis controller.
 		/// </summary>
-		OrbisSelect = InputIdBase.OrbisController,
+		OrbisOptions = InputIdBase.OrbisController,
 		/// <summary>
 		/// Identifier of the L3 analog stick on the Orbis controller.
 		/// </summary>
@@ -683,10 +683,6 @@ namespace CryCil.Engine.Input
 		/// Identifier of the R3 analog stick on the Orbis controller.
 		/// </summary>
 		OrbisR3,
-		/// <summary>
-		/// Identifier of the Start button on the Orbis controller.
-		/// </summary>
-		OrbisStart,
 		/// <summary>
 		/// Identifier of the Up button on the Orbis controller.
 		/// </summary>
@@ -779,6 +775,14 @@ namespace CryCil.Engine.Input
 		/// Unknown.
 		/// </summary>
 		OrbisRotZKeyU,
+		/// <summary>
+		/// An input that is sent when using L2 as a trigger.
+		/// </summary>
+		OrbisLeftTrigger,
+		/// <summary>
+		/// An input that is sent when using R2 as a trigger.
+		/// </summary>
+		OrbisRightTrigger,
 
 		/// <summary>
 		/// Identifier of the touch pad on the Play Station 4 controller.

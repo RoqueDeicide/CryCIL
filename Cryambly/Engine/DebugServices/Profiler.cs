@@ -31,9 +31,12 @@ namespace CryCil.Engine.DebugServices
 		/// Creates new performance profiler.
 		/// </summary>
 		/// <param name="name">Name of the profiler.</param>
-		public Profiler(string name)
+		/// <param name="description">A set of flags that specify how to colorize the frame profiler.</param>
+		/// <param name="file">Name of the file that contains the profiling sections.</param>
+		/// <param name="line">Index of the line this profiler is associated with.</param>
+		public Profiler(string name, ProfileDescription description, string file, uint line)
 		{
-			this.handle = CreateProfiler(name);
+			this.handle = CreateProfiler(description, name, file, line);
 		}
 		#endregion
 		#region Interface
@@ -58,7 +61,8 @@ namespace CryCil.Engine.DebugServices
 		#endregion
 		#region Utilities
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern IntPtr CreateProfiler(string name);
+		private static extern IntPtr CreateProfiler(ProfileDescription description, string name,
+													string file, uint line);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern ProfilingSection StartSection(IntPtr handle);
 		#endregion

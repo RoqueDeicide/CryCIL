@@ -162,12 +162,7 @@ List<Text> EntitySystemInterop::monoEntityClassNames;
 
 bool EntitySystemInterop::IsMonoEntity(const char *className)
 {
-	auto predicate = [className](Text &name)
-	{
-		return name == className;
-	};
-
-	return monoEntityClassNames.Find(predicate) != nullptr;
+	return monoEntityClassNames.BinarySearch(className) >= 0;
 }
 
 IEntityProxyPtr EntitySystemInterop::CreateGameObjectForCryCilEntity(IEntity *pEntity, SEntitySpawnParams &,
@@ -247,19 +242,14 @@ bool EntitySystemInterop::RegisterEntityClass(mono::string name, mono::string ca
 										mono::string editorIcon, EEntityClassFlags flags, mono::Array properties,
 										bool networked, bool dontSyncProps)
 {
-	const char *className = ToNativeString(name);
+	Text className(name);
 
 	auto registry = gEnv->pEntitySystem->GetClassRegistry();
-
-	auto nameMatch = [className](Text &registeredName)
-	{
-		return registeredName == className;
-	};
 
 	if ((flags && EEntityClassFlags::ECLF_MODIFY_EXISTING) == 0)
 	{
 		// If we are not modifying anything, then gotta make sure that the class wasn't registered before.
-		if (monoEntityClassNames.Find(nameMatch))
+		if (monoEntityClassNames.BinarySearch(className) >= 0)
 		{
 			MonoWarning("%s class is already registered as a CryCIL entity class.", className);
 			return false;
@@ -285,21 +275,29 @@ bool EntitySystemInterop::RegisterEntityClass(mono::string name, mono::string ca
 	{
 		props[i] = propInfos[i].ToNative();
 	}
-
-	monoEntityClassNames.AddOverride(className, nameMatch);
+	
+	auto insertionIndex = monoEntityClassNames.BinarySearch(className);
+	if (insertionIndex < 0)
+	{
+		monoEntityClassNames.Insert(~insertionIndex, className);
+	}
 
 	IEntityClassRegistry::SEntityClassDesc description;
+
 	// Flags and a name.
 	description.sName = className;
 	description.flags = flags;
+
 	// Information for the editor.
 	description.editorClassInfo.sCategory = ToNativeString(category);
 	description.editorClassInfo.sHelper   = ToNativeString(editorHelper);
 	description.editorClassInfo.sIcon     = ToNativeString(editorIcon);
+
 	// Handlers.
 	static NullEntityEventHandler eventHandler;
 	description.pEventHandler = &eventHandler;
 	description.pPropertyHandler = new MonoEntityPropertyHandler(props);
+
 	// For now this all user data that will come with a class.
 	description.pUserProxyCreateFunc = CreateGameObjectForCryCilEntity;
 	description.pUserProxyData = new MonoEntityClassUserData(networked, dontSyncProps);
@@ -333,12 +331,8 @@ mono::object EntitySystemInterop::SpawnMonoEntity(MonoEntitySpawnParams &paramet
 	}
 
 	const char *className = entityClass->GetName();
-	auto nameMatch = [className](Text &name)
-	{
-		return name == className;
-	};
 
-	if (monoEntityClassNames.Find(nameMatch) == nullptr)
+	if (monoEntityClassNames.BinarySearch(className) < 0)
 	{
 		ArgumentException("EntitySystem.SpawnMonoEntity cannot be used to spawn entities that are not defined in CryCIL.").Throw();
 		return nullptr;
@@ -369,12 +363,8 @@ mono::object EntitySystemInterop::SpawnNetEntity(MonoEntitySpawnParams &paramete
 	}
 
 	const char *className = entityClass->GetName();
-	auto nameMatch = [className](Text &name)
-	{
-		return name == className;
-	};
 
-	if (monoEntityClassNames.Find(nameMatch) == nullptr)
+	if (monoEntityClassNames.BinarySearch(className) < 0)
 	{
 		ArgumentException("EntitySystem.SpawnNetEntity cannot be used to spawn entities that are not defined in CryCIL.").Throw();
 		return nullptr;
@@ -1033,7 +1023,8 @@ void EntitySlotsInterop::InitializeInterops()
 {
 	REGISTER_METHOD(IsSlotValid);
 	REGISTER_METHOD(FreeSlot);
-	REGISTER_METHOD(GetSlotInfo);
+	REGISTER_METHOD(GetSlotMaterial);
+	REGISTER_METHOD(GetSlotParent);
 	REGISTER_METHOD(GetSlotWorldTM);
 	REGISTER_METHOD(GetSlotLocalTM);
 	REGISTER_METHOD(SetSlotLocalTM);
@@ -1074,9 +1065,18 @@ void EntitySlotsInterop::FreeSlot(IEntity *handle, int nIndex)
 	handle->FreeSlot(nIndex);
 }
 
-bool EntitySlotsInterop::GetSlotInfo(IEntity *handle, int nIndex, SEntitySlotInfo *slotInfo)
+IMaterial *EntitySlotsInterop::GetSlotMaterial(IEntity *entityHandle, int nIndex)
 {
-	return handle->GetSlotInfo(nIndex, *slotInfo);
+	SEntitySlotInfo info;
+	entityHandle->GetSlotInfo(nIndex, info);
+	return info.pMaterial;
+}
+
+int EntitySlotsInterop::GetSlotParent(IEntity *entityHandle, int nIndex)
+{
+	SEntitySlotInfo info;
+	entityHandle->GetSlotInfo(nIndex, info);
+	return info.nParentSlot;
 }
 
 void EntitySlotsInterop::GetSlotWorldTM(IEntity *handle, int slot, Matrix34 *matrix)

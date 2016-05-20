@@ -64,6 +64,7 @@ void StaticObjectInterop::InitializeInterops()
 	REGISTER_METHOD(GetStatistics);
 	REGISTER_METHOD(CreateStatObjOptionalIndexedMesh);
 	REGISTER_METHOD(UpdateDeformableStatObj);
+	REGISTER_METHOD(GetBase);
 }
 
 int StaticObjectInterop::AddRef(IStatObj *handle)
@@ -147,11 +148,11 @@ void StaticObjectInterop::RefreshInternal(IStatObj *handle, int nFlags)
 	handle->Refresh(nFlags);
 }
 
-PosNorm StaticObjectInterop::GetRandomPos(IStatObj *handle, EGeomForm eForm)
+PosNorm StaticObjectInterop::GetRandomPos(IStatObj *handle, EGeomForm eForm, CRndGen &seed)
 {
 	handle->GetExtent(eForm);
 	PosNorm posNorm;
-	handle->GetRandomPos(posNorm, eForm);
+	handle->GetRandomPos(posNorm, seed, eForm);
 	return posNorm;
 }
 
@@ -365,4 +366,9 @@ IStatObj *StaticObjectInterop::UpdateDeformableStatObj(IGeometry *pPhysGeom, bop
 IRenderMesh *StaticObjectInterop::GetRenderMesh(IStatObj *handle)
 {
 	return handle->GetRenderMesh();
+}
+
+IMeshObj *StaticObjectInterop::GetBase(IStatObj *handle)
+{
+	return handle;
 }

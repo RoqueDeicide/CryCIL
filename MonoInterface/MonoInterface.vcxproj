@@ -22,6 +22,7 @@
     <ProjectGuid>{72A32EAB-16AA-4A8C-A36A-2389EAD83AAA}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>MonoInterface</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -68,19 +69,19 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)..\Build\Output\Bin32\</OutDir>
+    <OutDir>$(SolutionDir)..\Build\Output\bin\win_x86\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)..\Build\Output\Bin64\</OutDir>
+    <OutDir>$(SolutionDir)..\Build\Output\bin\win_x64\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)..\Build\Output\Bin32\</OutDir>
+    <OutDir>$(SolutionDir)..\Build\Output\bin\win_x86\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)..\Build\Output\Bin64\</OutDir>
+    <OutDir>$(SolutionDir)..\Build\Output\bin\win_x64\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -217,13 +218,18 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Allocation.hpp" />
     <ClInclude Include="API_ImplementationHeaders.h" />
+    <ClInclude Include="Collection.hpp" />
+    <ClInclude Include="List.hpp" />
     <ClInclude Include="CryCilHeader.h" />
+    <ClInclude Include="ArrayHeader.h" />
     <ClInclude Include="DocumentationMarkers.h" />
     <ClInclude Include="DoxygenExampleFiles\ListenerExample.h" />
     <ClInclude Include="DoxygenExampleFiles\MonoMethodInvocations.h" />
     <ClInclude Include="DoxygenExampleFiles\UnmanagedThunkExample.h" />
     <ClInclude Include="Engine\DirectoryStructure.h" />
+    <ClInclude Include="ExtraTypeTraits.h" />
     <ClInclude Include="Geometry\BspNode.h" />
     <ClInclude Include="Geometry\FaceMesh.h" />
     <ClInclude Include="IMonoInterface.h" />
@@ -305,7 +311,6 @@
     <ClInclude Include="Interops\ConsoleVariable.h" />
     <ClInclude Include="Interops\CryActionMap.h" />
     <ClInclude Include="Interops\CryArchive.h" />
-    <ClInclude Include="Interops\CryAudioListener.h" />
     <ClInclude Include="Interops\CryAudioProxy.h" />
     <ClInclude Include="Interops\CryEntityAreaProxy.h" />
     <ClInclude Include="Interops\CryEntityAudioProxy.h" />
@@ -354,6 +359,9 @@
     <ClInclude Include="Interops\GameCollisionInfo.h" />
     <ClInclude Include="Interops\GameRules.h" />
     <ClInclude Include="Interops\MathHelpers.h" />
+    <ClInclude Include="Interops\MeshObject.h" />
+    <ClInclude Include="Interops\MonoParticleSpawnParameters.h" />
+    <ClInclude Include="Interops\MonoRenderParameters.h" />
     <ClInclude Include="Interops\SystemEvents.h" />
     <ClInclude Include="Interops\ViewController.h" />
     <ClInclude Include="Interops\GeneralExtensions.h" />
@@ -415,18 +423,21 @@
     <ClInclude Include="Interops\TimeOfDay.h" />
     <ClInclude Include="Interops\Timing.h" />
     <ClInclude Include="Interops\WriteLockCond.h" />
-    <ClInclude Include="List.h" />
+    <ClInclude Include="List.Iteration.hpp" />
     <ClInclude Include="DebugHelpers.h" />
+    <ClInclude Include="List.Object.hpp" />
+    <ClInclude Include="MemoryTrackingUtilities.h" />
     <ClInclude Include="MonoDefinitionFiles\MonoArray.h" />
     <ClInclude Include="MonoDefinitionFiles\MonoDelegate.h" />
     <ClInclude Include="MonoHeaders.h" />
     <ClInclude Include="NtText.h" />
-    <ClInclude Include="ReadOnlyList.h" />
     <ClInclude Include="RunTime\AllInterops.h" />
     <ClInclude Include="RunTime\DebugEventReporter.h" />
     <ClInclude Include="RunTime\EventBroadcaster.h" />
     <ClInclude Include="RunTime\MonoInterface.h" />
     <ClInclude Include="SortedList.h" />
+    <ClInclude Include="SortedList.Iteration.hpp" />
+    <ClInclude Include="SortedList.Object.hpp" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Testing\TestAssemblies.h" />
@@ -503,7 +514,6 @@
     <ClCompile Include="Interops\ConsoleVariable.cpp" />
     <ClCompile Include="Interops\CryActionMap.cpp" />
     <ClCompile Include="Interops\CryArchive.cpp" />
-    <ClCompile Include="Interops\CryAudioListener.cpp" />
     <ClCompile Include="Interops\CryAudioProxy.cpp" />
     <ClCompile Include="Interops\CryEntityAreaProxy.cpp" />
     <ClCompile Include="Interops\CryEntityAudioProxy.cpp" />
@@ -548,6 +558,7 @@
     <ClCompile Include="Interops\GameRules.cpp" />
     <ClCompile Include="Interops\GameRulesReg.cpp" />
     <ClCompile Include="Interops\MathHelpers.cpp" />
+    <ClCompile Include="Interops\MeshObject.cpp" />
     <ClCompile Include="Interops\SystemEvents.cpp" />
     <ClCompile Include="Interops\ViewController.cpp" />
     <ClCompile Include="Interops\GeneralExtensions.cpp" />
@@ -628,7 +639,6 @@
     <ClCompile Include="TypeMapChecks\MathTypes.cpp" />
     <ClCompile Include="TypeMapChecks\MeshTypes.cpp" />
     <ClCompile Include="TypeMapChecks\PhysicsTypes.cpp" />
-    <ClCompile Include="TypeMapChecks\RenderParameters.cpp" />
     <ClCompile Include="TypeMapChecks\ResRefreshFlags.cpp" />
     <ClCompile Include="TypeMapChecks\StaticObjectStuff.cpp" />
     <ClCompile Include="TypeMapChecks\StridedPointer.cpp" />

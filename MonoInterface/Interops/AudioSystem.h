@@ -10,18 +10,18 @@ struct AudioSystemInterop : IMonoInterop<true, true>
 
 	virtual void InitializeInterops() override;
 
-	static IAudioSystemImplementation *CreateNativeImplementationObject(mono::object managedObject);
+	static CryAudio::Impl::IAudioImpl *CreateNativeImplementationObject(mono::object managedObject);
 	static bool GetPreloadRequestId(mono::string name, uint32 &id);
-	static bool GetAudioTriggerID(mono::string sAudioTriggerName, uint32 &rAudioTriggerID);
-	static bool GetAudioRtpcID(mono::string audioRtpcName, uint32 &audioRtpcId);
-	static bool GetAudioSwitchID(mono::string audioSwitchName, uint32 &audioSwitchId);
-	static bool GetAudioSwitchStateID(uint32 switchID, mono::string audioTriggerName, uint32 &audioStateId);
-	static bool GetAudioEnvironmentID(mono::string sAudioEnvironmentName, uint32 &rAudioEnvironmentID);
+	static bool GetAudioTriggerId(mono::string sAudioTriggerName, uint32 &rAudioTriggerId);
+	static bool GetAudioRtpcId(mono::string audioRtpcName, uint32 &audioRtpcId);
+	static bool GetAudioSwitchId(mono::string audioSwitchName, uint32 &audioSwitchId);
+	static bool GetAudioSwitchStateId(uint32 switchId, mono::string audioTriggerName, uint32 &audioStateId);
+	static bool GetAudioEnvironmentId(mono::string sAudioEnvironmentName, uint32 &rAudioEnvironmentId);
 	static void GetInfo(SAudioSystemInfo &rAudioSystemInfo);
 	static mono::string GetConfigPath();
 	static IAudioProxy *GetFreeAudioProxy();
-	static mono::string GetAudioControlNameInternal(EAudioControlType eAudioEntityType, uint32 nAudioEntityID);
-	static void RequestSetImpl(IAudioSystemImplementation *implHandle);
+	static mono::string GetAudioControlNameInternal(EAudioControlType eAudioEntityType, uint32 nAudioEntityId);
+	static void RequestSetImpl(CryAudio::Impl::IAudioImpl *implHandle);
 	static void RequestReserveAudioId(uint32 *const id, mono::string name);
 	static void RequestPreloadAudioRequest(uint32 id);
 	static void RequestUnloadAudioRequest(uint32 id);
@@ -30,7 +30,7 @@ struct AudioSystemInterop : IMonoInterop<true, true>
 	static void RequestExecuteTrigger(uint32 id, float timeout);
 	static void RequestStopTrigger(uint32 id);
 	static void RequestStopAllTriggers();
-	static void RequestSetPosition(const Matrix34 &tm);
+	static void RequestSetPosition(const CAudioObjectTransformation &tm);
 	static void RequestSetVolume(float volume);
 	static void RequestSetEnvironmentAmount(uint32 id, float amount);
 	static void RequestResetEnvironments();

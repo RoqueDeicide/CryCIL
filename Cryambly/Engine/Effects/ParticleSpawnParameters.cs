@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Linq;
-using CryCil.Annotations;
+using CryCil.Engine.Audio;
 using CryCil.Geometry;
-using CryCil.Utilities;
 
 namespace CryCil.Engine
 {
@@ -24,14 +23,18 @@ namespace CryCil.Engine
 		/// </summary>
 		public bool CountPerUnit;
 		/// <summary>
-		/// Indicates whether audio should be enabled for this particle effect.
+		/// Indicates whether the emitter's age must be advanced to its equilibrium state.
 		/// </summary>
-		public bool EnableAudio;
+		public bool Prime;
 		/// <summary>
 		/// Indicates whether bounding box should be used to register this effect in VisArea instead of
 		/// position.
 		/// </summary>
 		public bool RegisterByBoundingBox;
+		/// <summary>
+		/// Indicates whether the emitter is outside of the level.
+		/// </summary>
+		public bool Nowhere;
 		/// <summary>
 		/// Factor that multiplies the particle count (on top of <see cref="CountPerUnit"/> if set).
 		/// </summary>
@@ -56,14 +59,17 @@ namespace CryCil.Engine
 		/// Controls parameter strength curves.
 		/// </summary>
 		public float Strength;
-		[UsedImplicitly] private StackString audioRtpc;
 		/// <summary>
-		/// Gets or sets the name of the audio RTPC this particle effect instance drives.
+		/// Indicates whether audio should be enabled for this particle effect.
 		/// </summary>
-		public string AudioRtpc
-		{
-			get { return this.audioRtpc.Text; }
-			set { this.audioRtpc.Text = value; }
-		}
+		public bool EnableAudio;
+		/// <summary>
+		/// Audio obstruction/occlusion calculation type.
+		/// </summary>
+		public AudioOcclusionType OcclusionType;
+		/// <summary>
+		/// Indicates what audio RTPC this particle effect instance drives.
+		/// </summary>
+		public string AudioRtpc;
 	}
 }

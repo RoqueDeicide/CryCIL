@@ -15,6 +15,7 @@ CryCilGame::~CryCilGame()
 	{
 		this->gameFramework->EndGameContext();
 	}
+
 	// Tell the system that this object is no longer usable.
 	GetISystem()->SetIGame(nullptr);
 }
@@ -23,8 +24,9 @@ bool CryCilGame::Init(IGameFramework *pFramework)
 {
 	// Save the pointer to the framework object.
 	this->gameFramework = pFramework;
+
 	// Assign a GUID to the game.
-	IMonoField *field = MonoEnv->Cryambly->GetClass("CryCil", "Game")->GetField("guidText");
+	auto field = MonoEnv->Cryambly->GetClass("CryCil", "Game")->GetField("guidText");
 	auto value = NtText(field->Get<mono::string>(nullptr));
 	this->gameFramework->SetGameGUID(value);
 	return true;
@@ -46,7 +48,7 @@ const char *CryCilGame::GetLongName()
 {
 	if (this->longGameName.Length == 0)
 	{
-		IMonoField *field = MonoEnv->Cryambly->GetClass("CryCil", "Game")->GetField("longName");
+		auto field         = MonoEnv->Cryambly->GetClass("CryCil", "Game")->GetField("longName");
 		this->longGameName = NtText(field->Get<mono::string>(nullptr));
 	}
 	return this->longGameName;
@@ -56,7 +58,7 @@ const char *CryCilGame::GetName()
 {
 	if (this->gameName.Length == 0)
 	{
-		IMonoField *field = MonoEnv->Cryambly->GetClass("CryCil", "Game")->GetField("name");
+		auto field     = MonoEnv->Cryambly->GetClass("CryCil", "Game")->GetField("name");
 		this->gameName = NtText(field->Get<mono::string>(nullptr));
 	}
 	return this->gameName;
@@ -65,10 +67,6 @@ const char *CryCilGame::GetName()
 IGameFramework *CryCilGame::GetIGameFramework()
 {
 	return this->gameFramework;
-}
-IAntiCheatManager *CryCilGame::GetAntiCheatManager()
-{
-	return nullptr;
 }
 
 void CryCilGame::RegisterGameFlowNodes()

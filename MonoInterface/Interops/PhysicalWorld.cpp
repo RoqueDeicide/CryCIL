@@ -98,15 +98,25 @@ void PhysicalWorldInterop::SetWaterManagerParameters(const WaterManagerParameter
 }
 
 int PhysicalWorldInterop::PrimitiveIntersectionInternal(mono::Array *contacts, primitives::primitive *primitive,
-														int primitiveType, int queryFlags, int flagsAll, int flagsAny,
-														intersection_params *parameters, SCollisionClass collisionClass,
+														int primitiveType, int queryFlags, int flagsAll,
+														int flagsAny, intersection_params *parameters,
+														SCollisionClass collisionClass,
 														IPhysicalEntity **entitiesToSkip, int skipCount)
 {
 	geom_contact *contactsPtr = nullptr;
 
 	IPhysicalWorld::SPWIParams params;
-	params.Init(primitiveType, primitive, Vec3(ZERO), queryFlags, &contactsPtr, flagsAll, flagsAny, collisionClass,
-				parameters, nullptr, 0, entitiesToSkip, skipCount);
+	params.itype = primitiveType;
+	params.pprim = primitive;
+	params.entTypes = queryFlags;
+	params.ppcontact = &contactsPtr;
+	params.geomFlagsAll = flagsAll;
+	params.geomFlagsAny = flagsAny;
+	params.pip = parameters;
+	params.nSkipEnts = skipCount;
+	params.pSkipEnts = entitiesToSkip;
+	params.collclass = collisionClass;
+
 	WriteLockCond _lock;
 	float result = gEnv->pPhysicalWorld->PrimitiveWorldIntersection(params, &_lock);
 
@@ -132,14 +142,24 @@ int PhysicalWorldInterop::PrimitiveIntersectionInternal(mono::Array *contacts, p
 }
 
 float PhysicalWorldInterop::PrimitiveCastInternal(geom_contact *contact, primitives::primitive *primitive,
-												  int primitiveType, Vec3 *sweepDirection, int queryFlags, int flagsAll,
-												  int flagsAny, intersection_params *parameters,
-												  SCollisionClass collisionClass, IPhysicalEntity **entitiesToSkip,
-												  int skipCount)
+												  int primitiveType, Vec3 *sweepDirection, int queryFlags,
+												  int flagsAll, int flagsAny, intersection_params *parameters,
+												  SCollisionClass collisionClass,
+												  IPhysicalEntity **entitiesToSkip, int skipCount)
 {
 	IPhysicalWorld::SPWIParams params;
-	params.Init(primitiveType, primitive, *sweepDirection, queryFlags, &contact, flagsAll, flagsAny, collisionClass,
-				parameters, nullptr, 0, entitiesToSkip, skipCount);
+	params.itype = primitiveType;
+	params.pprim = primitive;
+	params.sweepDir = *sweepDirection;
+	params.entTypes = queryFlags;
+	params.ppcontact = &contact;
+	params.geomFlagsAll = flagsAll;
+	params.geomFlagsAny = flagsAny;
+	params.pip = parameters;
+	params.nSkipEnts = skipCount;
+	params.pSkipEnts = entitiesToSkip;
+	params.collclass = collisionClass;
+
 	WriteLockCond _lock;
 	return gEnv->pPhysicalWorld->PrimitiveWorldIntersection(params, &_lock);
 }

@@ -110,8 +110,6 @@ mono::Array GameRulesInterop::GetGameRulesLevelLocations(mono::string gamerules)
 		aliasesArray[i] = alias;
 	}
 
-	delete aliasesList.Detach(i);
-
 	return _array;
 }
 

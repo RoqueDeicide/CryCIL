@@ -23,11 +23,6 @@ namespace CryCil.Engine.Rendering.Lighting
 		/// </summary>
 		BoxProjected = 1 << 2,
 		/// <summary>
-		/// When set, specifies that the light source has a <see cref="BoundingBox"/> defined for it that
-		/// defines the dimensions along which this light will fade.
-		/// </summary>
-		LightBoxFalloff = 1 << 3,
-		/// <summary>
 		/// When set, specifies that the light source is rendered after everything else (can be used to
 		/// light up first-person UI, like menus).
 		/// </summary>
@@ -75,13 +70,10 @@ namespace CryCil.Engine.Rendering.Lighting
 		/// </summary>
 		AreaLight = 1 << 14,
 		/// <summary>
-		/// When set, specifies that the light source has defined clipping bounds.
+		/// When set, specifies that the light source can be used for SVOGI (Spacial Voxel Octree Global
+		/// Illumination).
 		/// </summary>
-		HasClipBound = 1 << 15,
-		/// <summary>
-		/// When set, specifies that the light source has defined clipping geometry.
-		/// </summary>
-		HasClipGeometry = 1 << 16,
+		UseForSvogi = 1 << 15,
 		/// <summary>
 		/// When set, specifies that the light source is fake (used for Flares, beams and such).
 		/// </summary>

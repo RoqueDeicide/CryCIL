@@ -29,7 +29,7 @@ namespace CryCil.Engine.Audio
 			{
 				this.AssertInstance();
 
-				return GetAudioObjectID(this.handle);
+				return GetAudioObjectId(this.handle);
 			}
 		}
 		/// <summary>
@@ -37,7 +37,7 @@ namespace CryCil.Engine.Audio
 		/// obstructed.
 		/// </summary>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
-		public ObstructionCalculationType ObstructionDetection
+		public AudioOcclusionType ObstructionDetection
 		{
 			set
 			{
@@ -113,32 +113,50 @@ namespace CryCil.Engine.Audio
 			ResetInternal(this.handle);
 		}
 		/// <summary>
-		/// Executes an audio trigger on this proxy.
+		/// Plays an audio file.
 		/// </summary>
-		/// <param name="triggerId">Identifier of the trigger to execute.</param>
-		/// <param name="method">   A lip-sync method to use.</param>
-		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
-		public void ExecuteTrigger(AudioId triggerId, LipSyncMethod method = LipSyncMethod.None)
+		/// <param name="file">Path to the file to play.</param>
+		public void PlayFile(string file)
 		{
 			this.AssertInstance();
 
-			ExecuteTriggerInternal(this.handle, triggerId, method);
+			PlayFileInternal(this.handle, file);
+		}
+		/// <summary>
+		/// Stops an audio file.
+		/// </summary>
+		/// <param name="file">Path to the file to stop playing.</param>
+		public void StopFile(string file)
+		{
+			this.AssertInstance();
+
+			StopFileInternal(this.handle, file);
+		}
+		/// <summary>
+		/// Executes an audio trigger on this proxy.
+		/// </summary>
+		/// <param name="triggerId">Identifier of the trigger to execute.</param>
+		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
+		public void ExecuteTrigger(AudioId triggerId)
+		{
+			this.AssertInstance();
+
+			ExecuteTriggerInternal(this.handle, triggerId);
 		}
 		/// <summary>
 		/// Executes an audio trigger on this proxy.
 		/// </summary>
 		/// <param name="triggerName">Name of the trigger to execute.</param>
-		/// <param name="method">     A lip-sync method to use.</param>
 		/// <returns>Indication whether the trigger of specified name was found.</returns>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
-		public bool ExecuteTrigger(string triggerName, LipSyncMethod method = LipSyncMethod.None)
+		public bool ExecuteTrigger(string triggerName)
 		{
 			this.AssertInstance();
 
 			AudioId id;
 			if (AudioSystem.TryGetTriggerId(triggerName, out id))
 			{
-				ExecuteTriggerInternal(this.handle, id, method);
+				ExecuteTriggerInternal(this.handle, id);
 
 				return true;
 			}
@@ -300,7 +318,11 @@ namespace CryCil.Engine.Audio
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void ResetInternal(IntPtr handle);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern void ExecuteTriggerInternal(IntPtr handle, AudioId nTriggerID, LipSyncMethod eLipSyncMethod);
+		private static extern void PlayFileInternal(IntPtr handle, string file);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void StopFileInternal(IntPtr handle, string file);
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern void ExecuteTriggerInternal(IntPtr handle, AudioId nTriggerID);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void StopTriggerInternal(IntPtr handle, AudioId nTriggerID);
 		[MethodImpl(MethodImplOptions.InternalCall)]
@@ -308,7 +330,7 @@ namespace CryCil.Engine.Audio
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void SetRtpcValueInternal(IntPtr handle, AudioId nRtpcID, float fValue);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern void SetObstructionCalcTypeInternal(IntPtr handle, ObstructionCalculationType eObstructionType);
+		private static extern void SetObstructionCalcTypeInternal(IntPtr handle, AudioOcclusionType eObstructionType);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void SetTransformation(IntPtr handle, ref Matrix34 rPosition);
 		[MethodImpl(MethodImplOptions.InternalCall)]
@@ -318,7 +340,7 @@ namespace CryCil.Engine.Audio
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void SetCurrentEnvironmentsInternal(IntPtr handle, EntityId nEntityToIgnore);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern AudioId GetAudioObjectID(IntPtr handle);
+		private static extern AudioId GetAudioObjectId(IntPtr handle);
 		#endregion
 	}
 }

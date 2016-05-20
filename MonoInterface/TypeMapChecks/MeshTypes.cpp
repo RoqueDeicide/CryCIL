@@ -150,15 +150,9 @@ struct MeshTexCoord
 {
 	float s, t;
 
-	explicit MeshTexCoord(SMeshTexCoord &other)
+	explicit MeshTexCoord(SMeshTexCoord &) : s(0), t(0)
 	{
 		CHECK_TYPE_SIZE(MeshTexCoord);
-
-		ASSIGN_FIELD(s);
-		ASSIGN_FIELD(t);
-
-		CHECK_TYPE(s);
-		CHECK_TYPE(t);
 	}
 };
 
@@ -166,19 +160,9 @@ struct MeshColor
 {
 	uint8 r, g, b, a;
 
-	explicit MeshColor(SMeshColor &other)
+	explicit MeshColor(SMeshColor &) : r(0), g(0), b(0), a(0)
 	{
 		CHECK_TYPE_SIZE(MeshColor);
-
-		ASSIGN_FIELD(r);
-		ASSIGN_FIELD(g);
-		ASSIGN_FIELD(b);
-		ASSIGN_FIELD(a);
-
-		CHECK_TYPE(r);
-		CHECK_TYPE(g);
-		CHECK_TYPE(b);
-		CHECK_TYPE(a);
 	}
 };
 
@@ -203,13 +187,9 @@ struct MeshNormal
 {
 	Vec3 Normal;
 
-	explicit MeshNormal(SMeshNormal &other)
+	explicit MeshNormal(SMeshNormal &) : Normal(ZERO)
 	{
 		CHECK_TYPE_SIZE(MeshNormal);
-
-		ASSIGN_FIELD(Normal);
-
-		CHECK_TYPE(Normal);
 	}
 };
 
@@ -218,15 +198,9 @@ struct MeshTangents
 	Vec4sf Tangent;
 	Vec4sf Bitangent;
 
-	explicit MeshTangents(SMeshTangents &other)
+	explicit MeshTangents(SMeshTangents &) : Tangent(ZERO), Bitangent(ZERO)
 	{
 		CHECK_TYPE_SIZE(MeshTangents);
-
-		ASSIGN_FIELD(Tangent);
-		ASSIGN_FIELD(Bitangent);
-
-		CHECK_TYPE(Tangent);
-		CHECK_TYPE(Bitangent);
 	}
 };
 
@@ -234,13 +208,9 @@ struct MeshQTangents
 {
 	Vec4sf TangentBitangent;
 
-	explicit MeshQTangents(SMeshQTangents &other)
+	explicit MeshQTangents(SMeshQTangents &) : TangentBitangent(ZERO)
 	{
 		CHECK_TYPE_SIZE(MeshQTangents);
-
-		ASSIGN_FIELD(TangentBitangent);
-
-		CHECK_TYPE(TangentBitangent);
 	}
 };
 
@@ -402,6 +372,7 @@ TYPE_MIRROR enum VertexFormat
 
 	eVF_P2S_N4B_C4B_T1F_check = 17,
 	eVF_P3F_C4B_T2S_check = 18,
+	eVF_PI_check = 19,
 
 	eVF_Max_check
 };
@@ -430,6 +401,7 @@ inline void CheckVertexFormats()
 	CHECK_ENUM(eVF_P2F_T4F_T4F_C4F);
 	CHECK_ENUM(eVF_P2S_N4B_C4B_T1F);
 	CHECK_ENUM(eVF_P3F_C4B_T2S);
+	CHECK_ENUM(eVF_PI);
 	CHECK_ENUM(eVF_Max);
 }
 

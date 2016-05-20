@@ -22,15 +22,10 @@ namespace CryCil.Engine.Audio
 		/// <exception cref="ArgumentException">
 		/// Matrix that represents the new location of the audio listener must be valid.
 		/// </exception>
-		public static Matrix34 ListenerLocation
+		public static AudioObjectTransformation ListenerLocation
 		{
 			set
 			{
-				if (!value.IsValid)
-				{
-					throw new ArgumentException("Matrix that represents the new location of the audio listener must be valid.");
-				}
-
 				RequestSetPosition(ref value);
 			}
 		}
@@ -423,7 +418,7 @@ namespace CryCil.Engine.Audio
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void RequestStopAllTriggers();
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern void RequestSetPosition(ref Matrix34 tm);
+		private static extern void RequestSetPosition(ref AudioObjectTransformation tm);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void RequestSetVolume(float volume);
 		[MethodImpl(MethodImplOptions.InternalCall)]

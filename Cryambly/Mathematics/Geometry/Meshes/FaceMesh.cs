@@ -8,8 +8,6 @@ using CryCil.Geometry.Csg.Base;
 
 namespace CryCil.Geometry
 {
-	// ReSharper disable ExceptionNotDocumentedOptional
-
 	internal enum CsgOpCode
 	{
 		Combine,
@@ -104,9 +102,9 @@ namespace CryCil.Geometry
 				fixed (FullFace* theseFacesPtr = theseFaces)
 				fixed (FullFace* otherFacesPtr = otherFaces)
 				{
-					int faceCount;
-					var facesPtr = CsgOpInternal(theseFacesPtr, theseFaces.Length, otherFacesPtr, otherFaces.Length,
-												 CsgOpCode.Combine, out faceCount);
+					UIntPtr faceCount;
+					var facesPtr = CsgOpInternal(theseFacesPtr, theseFaces.Length, otherFacesPtr,
+												 otherFaces.Length, CsgOpCode.Combine, out faceCount);
 					this.Faces = ToList(facesPtr, faceCount);
 					DeleteListItems(facesPtr);
 				}
@@ -137,9 +135,9 @@ namespace CryCil.Geometry
 				fixed (FullFace* theseFacesPtr = theseFaces)
 				fixed (FullFace* otherFacesPtr = otherFaces)
 				{
-					int faceCount;
-					var facesPtr = CsgOpInternal(theseFacesPtr, theseFaces.Length, otherFacesPtr, otherFaces.Length,
-												 CsgOpCode.Intersect, out faceCount);
+					UIntPtr faceCount;
+					var facesPtr = CsgOpInternal(theseFacesPtr, theseFaces.Length, otherFacesPtr,
+												 otherFaces.Length, CsgOpCode.Intersect, out faceCount);
 					this.Faces = ToList(facesPtr, faceCount);
 					DeleteListItems(facesPtr);
 				}
@@ -184,9 +182,9 @@ namespace CryCil.Geometry
 				fixed (FullFace* theseFacesPtr = theseFaces)
 				fixed (FullFace* otherFacesPtr = otherFaces)
 				{
-					int faceCount;
-					var facesPtr = CsgOpInternal(theseFacesPtr, theseFaces.Length, otherFacesPtr, otherFaces.Length,
-												 CsgOpCode.Subtract, out faceCount);
+					UIntPtr faceCount;
+					var facesPtr = CsgOpInternal(theseFacesPtr, theseFaces.Length, otherFacesPtr,
+												 otherFaces.Length, CsgOpCode.Subtract, out faceCount);
 					this.Faces = ToList(facesPtr, faceCount);
 					DeleteListItems(facesPtr);
 				}
@@ -331,15 +329,16 @@ namespace CryCil.Geometry
 		}
 		#endregion
 		#region Utilities
-		private static List<FullFace> ToList(FullFace* facesPtr, int faceCount)
+		private static List<FullFace> ToList(FullFace* facesPtr, UIntPtr faceCount)
 		{
-			if (faceCount <= 0 || facesPtr == null)
+			ulong count = faceCount.ToUInt64();
+			if (facesPtr == null)
 			{
 				return null;
 			}
 
-			var faces = new List<FullFace>(faceCount);
-			for (int i = 0; i < faceCount; i++)
+			var faces = new List<FullFace>((int)count);
+			for (ulong i = 0; i < count; i++)
 			{
 				faces.Add(facesPtr[i]);
 			}
@@ -350,7 +349,7 @@ namespace CryCil.Geometry
 		private static extern void DeleteListItems(FullFace* facesPtr);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern FullFace* CsgOpInternal(FullFace* facesPtr1, int faceCount1, FullFace* facesPtr2,
-													  int faceCount2, CsgOpCode op, out int faceCount);
+													  int faceCount2, CsgOpCode op, out UIntPtr faceCount);
 		#endregion
 	}
 }

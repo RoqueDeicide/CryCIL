@@ -45,7 +45,7 @@ mono::Array MonoArrays::Create(const List<uintptr_t> &lengths, IMonoClass *klass
 
 	intptr_t lowerBounds[255];
 	memset(lowerBounds, 0, 255 * sizeof(intptr_t));
-	auto ar = mono_array_new_full(domain, arrayClass, lengths.Data(), lowerBounds);
+	auto ar = mono_array_new_full(domain, arrayClass, const_cast<uintptr_t *>(lengths.First()), lowerBounds);
 
 	ArraysMessage("Got the array.");
 

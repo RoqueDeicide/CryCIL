@@ -17,10 +17,10 @@ struct LevelSystemInterop : public IMonoInterop < false, true >, public ILevelSy
 	virtual void OnLevelNotFound(const char *levelName) override;
 	virtual void OnLoadingStart(ILevelInfo *pLevel) override;
 	virtual void OnLoadingLevelEntitiesStart(ILevelInfo* pLevel) override;
-	virtual void OnLoadingComplete(ILevel *pLevel) override;
+	virtual void OnLoadingComplete(ILevelInfo *pLevel) override;
 	virtual void OnLoadingError(ILevelInfo *pLevel, const char *error) override;
 	virtual void OnLoadingProgress(ILevelInfo *pLevel, int progressAmount) override;
-	virtual void OnUnloadComplete(ILevel* pLevel) override;
+	virtual void OnUnloadComplete(ILevelInfo* pLevel) override;
 
 	static ILevelInfo *get_Current();
 	static bool        get_Loaded();

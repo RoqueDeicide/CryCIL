@@ -27,9 +27,6 @@
     <ClInclude Include="DoxygenExampleFiles\ListenerExample.h">
       <Filter>DoxygenExampleFiles\CryCIL Listeners\Native Listener</Filter>
     </ClInclude>
-    <ClInclude Include="List.h">
-      <Filter>Extras</Filter>
-    </ClInclude>
     <ClInclude Include="SortedList.h">
       <Filter>Extras</Filter>
     </ClInclude>
@@ -197,9 +194,6 @@
     </ClInclude>
     <ClInclude Include="Implementation\MonoField.h">
       <Filter>Implementations\Metadata</Filter>
-    </ClInclude>
-    <ClInclude Include="ReadOnlyList.h">
-      <Filter>Extras</Filter>
     </ClInclude>
     <ClInclude Include="Interfaces\IMonoMember.h">
       <Filter>Interfaces\Metadata</Filter>
@@ -550,9 +544,6 @@
     <ClInclude Include="Interops\AudioSystem.h">
       <Filter>Interops\Engine\Audio</Filter>
     </ClInclude>
-    <ClInclude Include="Interops\CryAudioListener.h">
-      <Filter>Interops\Engine\Audio</Filter>
-    </ClInclude>
     <ClInclude Include="Interops\CryAudioProxy.h">
       <Filter>Interops\Engine\Audio</Filter>
     </ClInclude>
@@ -563,9 +554,6 @@
       <Filter>Interops\Engine\Effects</Filter>
     </ClInclude>
     <ClInclude Include="Interops\CryEntityAreaProxy.h">
-      <Filter>Interops\Engine\Logic\Proxies</Filter>
-    </ClInclude>
-    <ClInclude Include="Interops\CryEntityAudioProxy.h">
       <Filter>Interops\Engine\Logic\Proxies</Filter>
     </ClInclude>
     <ClInclude Include="Interops\CryEntityCameraProxy.h">
@@ -645,6 +633,48 @@
       <Filter>Interops\Engine\Input</Filter>
     </ClInclude>
     <ClInclude Include="Text.h">
+      <Filter>Extras</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\CryEntityAudioProxy.h">
+      <Filter>Interops\Engine\Logic\Proxies</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\MonoParticleSpawnParameters.h">
+      <Filter>Interops\Engine\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\MeshObject.h">
+      <Filter>Interops\Engine\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Interops\MonoRenderParameters.h">
+      <Filter>Interops\Engine\Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="ArrayHeader.h">
+      <Filter>Extras</Filter>
+    </ClInclude>
+    <ClInclude Include="MemoryTrackingUtilities.h">
+      <Filter>Extras</Filter>
+    </ClInclude>
+    <ClInclude Include="Allocation.hpp">
+      <Filter>Extras</Filter>
+    </ClInclude>
+    <ClInclude Include="ExtraTypeTraits.h">
+      <Filter>Extras</Filter>
+    </ClInclude>
+    <ClInclude Include="List.hpp">
+      <Filter>Extras</Filter>
+    </ClInclude>
+    <ClInclude Include="Collection.hpp">
+      <Filter>Extras</Filter>
+    </ClInclude>
+    <ClInclude Include="SortedList.Object.hpp">
+      <Filter>Extras</Filter>
+    </ClInclude>
+    <ClInclude Include="SortedList.Iteration.hpp">
+      <Filter>Extras</Filter>
+    </ClInclude>
+    <ClInclude Include="List.Iteration.hpp">
+      <Filter>Extras</Filter>
+    </ClInclude>
+    <ClInclude Include="List.Object.hpp">
       <Filter>Extras</Filter>
     </ClInclude>
   </ItemGroup>
@@ -869,9 +899,6 @@
     <ClCompile Include="Interops\Game.cpp">
       <Filter>Interops</Filter>
     </ClCompile>
-    <ClCompile Include="TypeMapChecks\RenderParameters.cpp">
-      <Filter>TypeMapChecks</Filter>
-    </ClCompile>
     <ClCompile Include="TypeMapChecks\DynamicLightFlags.cpp">
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
@@ -1049,9 +1076,6 @@
     <ClCompile Include="Interops\AudioSystem.cpp">
       <Filter>Interops\Engine\Audio</Filter>
     </ClCompile>
-    <ClCompile Include="Interops\CryAudioListener.cpp">
-      <Filter>Interops\Engine\Audio</Filter>
-    </ClCompile>
     <ClCompile Include="Interops\CryAudioProxy.cpp">
       <Filter>Interops\Engine\Audio</Filter>
     </ClCompile>
@@ -1062,9 +1086,6 @@
       <Filter>TypeMapChecks</Filter>
     </ClCompile>
     <ClCompile Include="Interops\CryEntityAreaProxy.cpp">
-      <Filter>Interops\Engine\Logic\Proxies</Filter>
-    </ClCompile>
-    <ClCompile Include="Interops\CryEntityAudioProxy.cpp">
       <Filter>Interops\Engine\Logic\Proxies</Filter>
     </ClCompile>
     <ClCompile Include="Interops\CryEntityCameraProxy.cpp">
@@ -1168,6 +1189,12 @@
     </ClCompile>
     <ClCompile Include="Interops\CryInputAction.cpp">
       <Filter>Interops\Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\CryEntityAudioProxy.cpp">
+      <Filter>Interops\Engine\Logic\Proxies</Filter>
+    </ClCompile>
+    <ClCompile Include="Interops\MeshObject.cpp">
+      <Filter>Interops\Engine\Models</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

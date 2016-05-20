@@ -12,6 +12,7 @@ void DebugDrawInterop::InitializeInterops()
 	REGISTER_METHOD(AddCylinder);
 	REGISTER_METHOD(Add2DText);
 	REGISTER_METHOD(AddText);
+	REGISTER_METHOD(AddText3D);
 	REGISTER_METHOD(Add2DLine);
 	REGISTER_METHOD(AddQuat);
 	REGISTER_METHOD(AddAABB);
@@ -121,6 +122,18 @@ void DebugDrawInterop::AddText(float x, float y, float size, ColorF color, float
 		if (d)
 		{
 			d->AddText(x, y, size, color, timeout, NtText(fmt));
+		}
+	}
+}
+
+void DebugDrawInterop::AddText3D(const Vec3 &pos, float size, ColorF color, float timeout, mono::string text)
+{
+	if (gEnv && gEnv->pGame && gEnv->pGame->GetIGameFramework())
+	{
+		auto d = gEnv->pGame->GetIGameFramework()->GetIPersistantDebug();
+		if (d)
+		{
+			d->AddText3D(pos, size, color, timeout, NtText(text));
 		}
 	}
 }

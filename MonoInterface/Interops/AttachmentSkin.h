@@ -15,5 +15,5 @@ struct AttachmentSkinInterop : IMonoInterop<true, true>
 	static void   AddRef(IAttachmentSkin *handle);
 	static void   Release(IAttachmentSkin *handle);
 	static ISkin *GetISkin(IAttachmentSkin *handle);
-	static void   GetRandomPos(IAttachmentSkin *handle, EGeomForm aspect, PosNorm &ran);
+	static void   GetRandomPos(IAttachmentSkin *handle, EGeomForm aspect, CRndGen &seed, PosNorm &ran);
 };

@@ -9,27 +9,36 @@ void MaterialInterop::InitializeInterops()
 	REGISTER_METHOD(GetDefaultLayers);
 	REGISTER_METHOD(GetDefaultHelper);
 
-	REGISTER_METHOD_N("GetName", GetMaterialName);
+	REGISTER_METHOD(CreateInternal);
+	REGISTER_METHOD(LoadInternal);
+	REGISTER_METHOD(LoadXmlInternal);
+
+	REGISTER_METHOD(AddRef);
+	REGISTER_METHOD(Release);
+	REGISTER_METHOD(GetNumRefs);
 	REGISTER_METHOD(SetName);
+	REGISTER_METHOD(GetName);
+	REGISTER_METHOD(SetFlags);
+	REGISTER_METHOD(GetFlags);
 	REGISTER_METHOD(GetIsDefault);
-	REGISTER_METHOD(SetCamera);
-	REGISTER_METHOD(GetShaderItem);
+	REGISTER_METHOD(GetSurfaceTypeId);
+	REGISTER_METHOD(SetSurfaceTypeId);
+	REGISTER_METHOD(SetSurfaceType);
 	REGISTER_METHOD(GetSurfaceType);
-
-	REGISTER_METHOD(Create);
-	REGISTER_METHOD(Load);
-	REGISTER_METHOD(LoadXml);
-
-	REGISTER_METHOD(Save);
-	REGISTER_METHOD_N("Clone(System.Int32)", CloneInt);
-	REGISTER_METHOD_N("Clone(System.String)", Clone);
-	REGISTER_METHOD(CopyTo);
-	REGISTER_METHOD(GetFloatParameter);
-	REGISTER_METHOD(GetVectorParameter);
-	REGISTER_METHOD(SetFloatParameter);
-	REGISTER_METHOD(SetVectorParameter);
-	REGISTER_METHOD(GetSurfaceTypesTable);
-	REGISTER_METHOD(FillSurfaceTypesTable);
+	REGISTER_METHOD(SetSurfaceTypeName);
+	REGISTER_METHOD(GetSurfaceTypeName);
+	REGISTER_METHOD(SetShaderItem);
+	REGISTER_METHOD(GetShaderItem);
+	REGISTER_METHOD(FillSurfaceTypeIds);
+	REGISTER_METHOD(SetGetMaterialParamFloat);
+	REGISTER_METHOD(SetGetMaterialParamVec3);
+	REGISTER_METHOD(SetTextureInternal);
+	REGISTER_METHOD(SetCamera);
+	REGISTER_METHOD(SetMaterialLinkName);
+	REGISTER_METHOD(GetMaterialLinkName);
+	REGISTER_METHOD(CloneInternal);
+	REGISTER_METHOD(CloneInternalName);
+	REGISTER_METHOD(CopyToInternal);
 }
 
 IMaterial *MaterialInterop::GetDefault()
@@ -52,247 +61,153 @@ IMaterial *MaterialInterop::GetDefaultHelper()
 	return gEnv->p3DEngine->GetMaterialManager()->GetDefaultHelperMaterial();
 }
 
-mono::string MaterialInterop::GetMaterialName(IMaterial **handle)
+IMaterial *MaterialInterop::CreateInternal(mono::string name, int flags)
 {
-	IMaterial *mat = *handle;
-	if (!mat)
-	{
-		NullReferenceException("Instance object is not valid.").Throw();
-	}
-	return ToMonoString(mat->GetName());
+	return gEnv->p3DEngine->GetMaterialManager()->CreateMaterial(NtText(name), flags);
 }
 
-void MaterialInterop::SetName(IMaterial **handle, mono::string name)
+IMaterial *MaterialInterop::LoadInternal(mono::string file, bool createIfNotFound, bool nonRemovable,
+										 bool previewMode)
 {
-	IMaterial *mat = *handle;
-	if (!mat)
-	{
-		NullReferenceException("Instance object is not valid.").Throw();
-	}
-	mat->SetName(NtText(name));
+	auto manager = gEnv->p3DEngine->GetMaterialManager();
+	return manager->LoadMaterial(NtText(file), createIfNotFound, nonRemovable,
+								 previewMode ? IMaterialManager::ELoadingFlagsPreviewMode : 0);
 }
 
-bool MaterialInterop::GetIsDefault(IMaterial **handle)
+IMaterial *MaterialInterop::LoadXmlInternal(mono::string name, IXmlNode *xml)
 {
-	IMaterial *mat = *handle;
-	if (!mat)
-	{
-		NullReferenceException("Instance object is not valid.").Throw();
-	}
-	return mat->IsDefault();
+	return gEnv->p3DEngine->GetMaterialManager()->LoadMaterialFromXml(NtText(name), xml);
 }
 
-void MaterialInterop::SetCamera(IMaterial **handle, CCamera value)
+void MaterialInterop::AddRef(IMaterial *handle)
 {
-	IMaterial *mat = *handle;
-	if (!mat)
-	{
-		NullReferenceException("Instance object is not valid.").Throw();
-	}
-	mat->SetCamera(value);
+	handle->AddRef();
 }
 
-SShaderItem MaterialInterop::GetShaderItem(IMaterial **handle)
+void MaterialInterop::Release(IMaterial *handle)
 {
-	IMaterial *mat = *handle;
-	if (!mat)
-	{
-		NullReferenceException("Instance object is not valid.").Throw();
-	}
-	return mat->GetShaderItem();
+	handle->Release();
 }
 
-ISurfaceType* MaterialInterop::GetSurfaceType(IMaterial **handle)
+int MaterialInterop::GetNumRefs(IMaterial *handle)
 {
-	IMaterial *mat = *handle;
-	if (!mat)
-	{
-		NullReferenceException("Instance object is not valid.").Throw();
-	}
-	return mat->GetSurfaceType();
+	return handle->GetNumRefs();
 }
 
-IMaterial *MaterialInterop::Create(mono::string name, int flags)
+mono::string MaterialInterop::GetName(IMaterial *handle)
 {
-	if (!name)
-	{
-		ArgumentNullException("Name of the material cannot be null.").Throw();
-	}
-	NtText ntName(name);
-	if (ntName.Length == 0)
-	{
-		ArgumentException("Name of the material cannot be an empty string.").Throw();
-	}
-
-	return gEnv->p3DEngine->GetMaterialManager()->CreateMaterial(ntName, flags);
+	return ToMonoString(handle->GetName());
 }
 
-IMaterial *MaterialInterop::Load(mono::string file, bool createIfNotFound, bool nonRemovable, bool previewMode)
+void MaterialInterop::SetName(IMaterial *handle, mono::string name)
 {
-	return
-		gEnv->p3DEngine->GetMaterialManager()->LoadMaterial
-		(
-			NtText(file),
-			createIfNotFound,
-			nonRemovable,
-			previewMode ? IMaterialManager::ELoadingFlagsPreviewMode : 0
-		);
+	handle->SetName(NtText(name));
 }
 
-IMaterial *MaterialInterop::LoadXml(mono::string name, mono::object xml)
+void MaterialInterop::SetFlags(IMaterial *handle, int flags)
 {
-	if (!name)
-	{
-		ArgumentNullException("Name of the material cannot be null.").Throw();
-	}
-	NtText ntName(name);
-	if (ntName.Length == 0)
-	{
-		ArgumentException("Name of the material cannot be an empty string.").Throw();
-	}
-	if (!xml)
-	{
-		ArgumentNullException("Xml data provider cannot be null.").Throw();
-	}
-	IXmlNode *node = *GET_BOXED_OBJECT_DATA(IXmlNode *, xml);
-	if (!node)
-	{
-		ObjectDisposedException("The Xml data provider is not usable.").Throw();
-	}
-
-	return gEnv->p3DEngine->GetMaterialManager()->LoadMaterialFromXml(ntName, node);
+	handle->SetFlags(flags);
 }
 
-void MaterialInterop::Save(IMaterial **handle, mono::object xml)
+int MaterialInterop::GetFlags(IMaterial *handle)
 {
-	IMaterial *mat = *handle;
-	if (!mat)
-	{
-		NullReferenceException("Instance object is not valid.").Throw();
-	}
-	if (!xml)
-	{
-		ArgumentNullException("Xml data provider cannot be null.").Throw();
-	}
-	IXmlNode *node = *GET_BOXED_OBJECT_DATA(IXmlNode *, xml);
-	if (!node)
-	{
-		ObjectDisposedException("The Xml data provider is not usable.").Throw();
-	}
-
-	gEnv->p3DEngine->GetMaterialManager()->SaveMaterial(node, mat);
+	return handle->GetFlags();
 }
 
-IMaterial *MaterialInterop::CloneInt(IMaterial **handle, int slot /*= -1*/)
+bool MaterialInterop::GetIsDefault(IMaterial *handle)
 {
-	IMaterial *mat = *handle;
-	if (!mat)
-	{
-		NullReferenceException("Instance object is not valid.").Throw();
-	}
-
-	return gEnv->p3DEngine->GetMaterialManager()->CloneMaterial(mat, slot);
+	return handle->IsDefault();
 }
 
-IMaterial *MaterialInterop::Clone(IMaterial **handle, mono::string slotName)
+int MaterialInterop::GetSurfaceTypeId(IMaterial *handle)
 {
-	IMaterial *mat = *handle;
-	if (!mat)
-	{
-		NullReferenceException("Instance object is not valid.").Throw();
-	}
-
-	return gEnv->p3DEngine->GetMaterialManager()->CloneMultiMaterial(mat, NtText(slotName));
+	return handle->GetSurfaceTypeId();
 }
 
-void MaterialInterop::CopyTo(IMaterial **handle, IMaterial *material, EMaterialCopyFlags flags)
+void MaterialInterop::SetSurfaceTypeId(IMaterial *handle, int id)
 {
-	IMaterial *mat = *handle;
-	if (!mat)
-	{
-		NullReferenceException("Instance object is not valid.").Throw();
-	}
-
-	gEnv->p3DEngine->GetMaterialManager()->CopyMaterial(mat, material, flags);
+	handle->SetSurfaceType(handle->GetMaterialManager()->GetSurfaceType(id)->GetName());
 }
 
-bool MaterialInterop::GetFloatParameter(IMaterial **handle, mono::string name, float *value)
+void MaterialInterop::SetSurfaceType(IMaterial *handle, ISurfaceType *sSurfaceTypeName)
 {
-	IMaterial *mat = *handle;
-	if (!mat)
-	{
-		NullReferenceException("Instance object is not valid.").Throw();
-	}
-
-	return mat->SetGetMaterialParamFloat(NtText(name), *value, true);
+	handle->SetSurfaceType(sSurfaceTypeName->GetName());
 }
 
-bool MaterialInterop::GetVectorParameter(IMaterial **handle, mono::string name, Vec3 *value)
+ISurfaceType *MaterialInterop::GetSurfaceType(IMaterial *handle)
 {
-	IMaterial *mat = *handle;
-	if (!mat)
-	{
-		NullReferenceException("Instance object is not valid.").Throw();
-	}
-
-	return mat->SetGetMaterialParamVec3(NtText(name), *value, true);
+	return handle->GetSurfaceType();
 }
 
-bool MaterialInterop::SetFloatParameter(IMaterial **handle, mono::string name, float value)
+void MaterialInterop::SetSurfaceTypeName(IMaterial *handle, mono::string sSurfaceTypeName)
 {
-	IMaterial *mat = *handle;
-	if (!mat)
-	{
-		NullReferenceException("Instance object is not valid.").Throw();
-	}
-
-	return mat->SetGetMaterialParamFloat(NtText(name), value, false);
+	handle->SetSurfaceType(NtText(sSurfaceTypeName));
 }
 
-bool MaterialInterop::SetVectorParameter(IMaterial **handle, mono::string name, Vec3 value)
+mono::string MaterialInterop::GetSurfaceTypeName(IMaterial *handle)
 {
-	IMaterial *mat = *handle;
-	if (!mat)
-	{
-		NullReferenceException("Instance object is not valid.").Throw();
-	}
-
-	return mat->SetGetMaterialParamVec3(NtText(name), value, false);
+	return ToMonoString(handle->GetSurfaceType()->GetName());
 }
 
-mono::Array MaterialInterop::GetSurfaceTypesTable(IMaterial **handle)
+void MaterialInterop::SetShaderItem(IMaterial *handle, const SShaderItem &item)
 {
-	IMaterial *material = *handle;
-	if (!material)
-	{
-		NullReferenceException("Instance object is not valid.").Throw();
-	}
-
-	int ids[MAX_SUB_MATERIALS];
-	int idCount = material->FillSurfaceTypeIds(ids);
-
-	IMonoArray<int> idArray = MonoEnv->Objects->Arrays->Create(idCount);
-	MonoGCHandle gcHandle = MonoEnv->GC->Pin(idArray);
-
-	for (int i = 0; i < idCount; i++)
-	{
-		idArray[i] = ids[i];
-	}
-
-	return idArray;
+	handle->SetShaderItem(item);
 }
 
-int *MaterialInterop::FillSurfaceTypesTable(IMaterial **handle, int &filledItems)
+void MaterialInterop::GetShaderItem(IMaterial *handle, SShaderItem &item)
 {
-	IMaterial *material = *handle;
-	if (!material)
-	{
-		NullReferenceException("Instance object is not valid.").Throw();
-	}
+	item = handle->GetShaderItem();
+}
 
-	int *ids = static_cast<int *>(malloc(sizeof(int) * MAX_SUB_MATERIALS));
-	filledItems = material->FillSurfaceTypeIds(ids);
-	return ids;
+int MaterialInterop::FillSurfaceTypeIds(IMaterial *handle, SurfaceTypeTable &table)
+{
+	table.count = handle->FillSurfaceTypeIds(table.ids);
+	return table.count;
+}
+
+bool MaterialInterop::SetGetMaterialParamFloat(IMaterial *handle, mono::string sParamName, float &v, bool bGet)
+{
+	return handle->SetGetMaterialParamFloat(NtText(sParamName), v, bGet);
+}
+
+bool MaterialInterop::SetGetMaterialParamVec3(IMaterial *handle, mono::string sParamName, Vec3 &v, bool bGet)
+{
+	return handle->SetGetMaterialParamVec3(NtText(sParamName), v, bGet);
+}
+
+void MaterialInterop::SetTextureInternal(IMaterial *handle, int textureId, int textureSlot)
+{
+	handle->SetTexture(textureId, textureSlot);
+}
+
+void MaterialInterop::SetCamera(IMaterial *handle, CCamera &cam)
+{
+	handle->SetCamera(cam);
+}
+
+void MaterialInterop::SetMaterialLinkName(IMaterial *handle, mono::string name)
+{
+	handle->SetMaterialLinkName(NtText(name));
+}
+
+mono::string MaterialInterop::GetMaterialLinkName(IMaterial *handle)
+{
+	return ToMonoString(handle->GetMaterialLinkName());
+}
+
+IMaterial *MaterialInterop::CloneInternal(IMaterial *handle, int slot)
+{
+	return handle->GetMaterialManager()->CloneMaterial(handle, slot);
+}
+
+IMaterial *MaterialInterop::CloneInternalName(IMaterial *handle, mono::string slotName)
+{
+	return handle->GetMaterialManager()->CloneMultiMaterial(handle, NtText(slotName));
+}
+
+void MaterialInterop::CopyToInternal(IMaterial *handle, IMaterial *material, EMaterialCopyFlags flags)
+{
+	handle->GetMaterialManager()->CopyMaterial(handle, material, flags);
 }
 
 void SubMaterialsInterop::InitializeInterops()
@@ -305,64 +220,20 @@ void SubMaterialsInterop::InitializeInterops()
 
 IMaterial *SubMaterialsInterop::GetItem(IMaterial *handle, int index)
 {
-	if (!handle)
-	{
-		NullReferenceException("Unable to access the sub-material of an invalid material object.").Throw();
-	}
-	if (index < 0)
-	{
-		IndexOutOfRangeException("Index of the sub-material to access cannot be less then 0.").Throw();
-	}
-	if (index >= handle->GetSubMtlCount())
-	{
-		IndexOutOfRangeException("Index of the sub-material to access cannot be greater or equal to number of sub-material slots.").Throw();
-	}
-
 	return handle->GetSubMtl(index);
 }
 
 void SubMaterialsInterop::SetItem(IMaterial *handle, int index, IMaterial *mat)
 {
-	if (!handle)
-	{
-		NullReferenceException("Unable to access the sub-material of an invalid material object.").Throw();
-	}
-	if (index < 0)
-	{
-		IndexOutOfRangeException("Index of the sub-material to access cannot be less then 0.").Throw();
-	}
-	if (index >= handle->GetSubMtlCount())
-	{
-		IndexOutOfRangeException("Index of the sub-material to access cannot be greater or equal to number of sub-material slots.").Throw();
-	}
-	if (!mat)
-	{
-		ArgumentNullException("Cannot assign null material to a sub-material slot, try assigning default material instead.").Throw();
-	}
-
 	handle->SetSubMtl(index, mat);
 }
 
 int SubMaterialsInterop::GetCount(IMaterial *handle)
 {
-	if (!handle)
-	{
-		NullReferenceException("Unable to access number of sub-material slots of an invalid material object.").Throw();
-	}
-
 	return handle->GetSubMtlCount();
 }
 
 void SubMaterialsInterop::SetCount(IMaterial *handle, int newCount)
 {
-	if (!handle)
-	{
-		NullReferenceException("Unable to access number of sub-material slots of an invalid material object.").Throw();
-	}
-	if (newCount < 0)
-	{
-		ArgumentOutOfRangeException("Number of sub-material slots cannot be less then 0.").Throw();
-	}
-
 	handle->SetSubMtlCount(newCount);
 }

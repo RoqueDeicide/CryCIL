@@ -8,10 +8,6 @@ struct MonoAnimationEvent
 {
 	float time;
 	float endTime;
-	uint animationIndexInQueue;
-	float animationPriority;
-	mono::string animationName;
-	int animationId;
 	uint eventNameLowercaseCrc32;
 	mono::string eventName;
 	mono::string parameter;

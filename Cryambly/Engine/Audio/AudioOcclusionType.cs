@@ -4,12 +4,12 @@ using System.Linq;
 namespace CryCil.Engine.Audio
 {
 	/// <summary>
-	/// Enumeration of types of calculation of obstruction that is used for audio.
+	/// Enumeration of types of occlusion algorithms that are used for audio.
 	/// </summary>
-	public enum ObstructionCalculationType
+	public enum AudioOcclusionType
 	{
 		/// <summary>
-		/// No obstruction calculation must be done.
+		/// No occlusion calculation must be done.
 		/// </summary>
 		None = 0,
 		/// <summary>
@@ -17,16 +17,16 @@ namespace CryCil.Engine.Audio
 		/// </summary>
 		Ignore = 1,
 		/// <summary>
-		/// Obstructions must be determined by casting a singular ray.
+		/// Occluders must be detected by casting a singular ray.
 		/// </summary>
 		SingleRay = 2,
 		/// <summary>
-		/// Obstructions must be determined by casting multiple rays.
+		/// Occluders must be detected by casting multiple rays.
 		/// </summary>
 		MultiRay = 3,
 
 		/// <summary>
-		/// Number of obstruction calculation types.
+		/// Number of occlusion algorithm types.
 		/// </summary>
 		Count
 	}

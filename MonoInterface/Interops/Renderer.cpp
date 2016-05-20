@@ -11,8 +11,6 @@ void RendererInterop::InitializeInterops()
 
 	REGISTER_METHOD(get_Width);
 	REGISTER_METHOD(get_Height);
-	REGISTER_METHOD(get_NativeWidth);
-	REGISTER_METHOD(get_NativeHeight);
 	REGISTER_METHOD(get_AspectRatio);
 	REGISTER_METHOD(get_Camera);
 	//REGISTER_METHOD(set_Camera);
@@ -91,26 +89,6 @@ int RendererInterop::get_Height()
 	}
 
 	return gEnv->pRenderer->GetHeight();
-}
-
-int RendererInterop::get_NativeWidth()
-{
-	if (!gEnv || !gEnv->pRenderer)
-	{
-		return -1;
-	}
-
-	return gEnv->pRenderer->GetNativeWidth();
-}
-
-int RendererInterop::get_NativeHeight()
-{
-	if (!gEnv || !gEnv->pRenderer)
-	{
-		return -1;
-	}
-
-	return gEnv->pRenderer->GetNativeHeight();
 }
 
 float RendererInterop::get_AspectRatio()

@@ -2,17 +2,18 @@
 
 #include "ParticleEmitter.h"
 #include <IEntitySystem.h>
+#include "MonoParticleSpawnParameters.h"
 
-typedef void(*onCreateEmitterRawThunk)(IParticleEmitter* pEmitter, const QuatTS &, IParticleEffect*, uint32);
+typedef void(*onCreateEmitterRawThunk)(IParticleEmitter* pEmitter);
 typedef void(*onDeleteEmitterRawThunk)(IParticleEmitter* pEmitter);
 
-void ParticleEmitterInterop::OnCreateEmitter(IParticleEmitter* pEmitter, const QuatTS& qLoc, const IParticleEffect* pEffect, uint32 uEmitterFlags)
+void ParticleEmitterInterop::OnCreateEmitter(IParticleEmitter* pEmitter)
 {
 	static onCreateEmitterRawThunk thunk =
 		onCreateEmitterRawThunk(this->GetInteropClass(MonoEnv->Cryambly)->GetEvent("Created")->GetRaise()
 																		->ToStatic()->RawThunk);
 
-	thunk(pEmitter, qLoc, const_cast<IParticleEffect *>(pEffect), uEmitterFlags);
+	thunk(pEmitter);
 }
 
 void ParticleEmitterInterop::OnDeleteEmitter(IParticleEmitter* pEmitter)
@@ -30,7 +31,6 @@ void ParticleEmitterInterop::InitializeInterops()
 	REGISTER_METHOD(IsInstant);
 	REGISTER_METHOD(ActivateInternal);
 	REGISTER_METHOD(KillInternal);
-	REGISTER_METHOD(PrimeInternal);
 	REGISTER_METHOD(RestartInternal);
 	REGISTER_METHOD(SetEffect);
 	REGISTER_METHOD(GetEffect);
@@ -41,8 +41,6 @@ void ParticleEmitterInterop::InitializeInterops()
 	REGISTER_METHOD(SetTarget);
 	REGISTER_METHOD(EmitParticle);
 	REGISTER_METHOD(GetAttachedEntity);
-	REGISTER_METHOD(GetEmitterFlags);
-	REGISTER_METHOD(SetEmitterFlags);
 
 	gEnv->pParticleManager->AddEventListener(this);
 }
@@ -72,11 +70,6 @@ void ParticleEmitterInterop::KillInternal(IParticleEmitter *handle)
 	handle->Kill();
 }
 
-void ParticleEmitterInterop::PrimeInternal(IParticleEmitter *handle)
-{
-	handle->Prime();
-}
-
 void ParticleEmitterInterop::RestartInternal(IParticleEmitter *handle)
 {
 	handle->Restart();
@@ -92,14 +85,21 @@ IParticleEffect *ParticleEmitterInterop::GetEffect(IParticleEmitter *handle)
 	return const_cast<IParticleEffect *>(handle->GetEffect());
 }
 
-void ParticleEmitterInterop::SetSpawnParamsInternal(IParticleEmitter *handle, const SpawnParams &spawnParams, GeomRef geom)
+void ParticleEmitterInterop::SetSpawnParamsInternal(IParticleEmitter *handle,
+													const MonoParticleSpawnParameters &spawnParams,
+													GeomRef geom)
 {
-	handle->SetSpawnParams(spawnParams, geom);
+	SpawnParams params;
+	spawnParams.ToNative(params);
+	handle->SetSpawnParams(params, geom);
 }
 
-void ParticleEmitterInterop::GetSpawnParamsInternal(IParticleEmitter *handle, SpawnParams &spawnParams)
+void ParticleEmitterInterop::GetSpawnParamsInternal(IParticleEmitter *handle,
+													MonoParticleSpawnParameters &spawnParams)
 {
-	handle->GetSpawnParams(spawnParams);
+	SpawnParams params;
+	handle->GetSpawnParams(params);
+	spawnParams = params;
 }
 
 void ParticleEmitterInterop::SetEntity(IParticleEmitter *handle, IEntity *pEntity, int nSlot)
@@ -126,14 +126,4 @@ void ParticleEmitterInterop::GetAttachedEntity(IParticleEmitter *handle, IEntity
 {
 	entityHandle = gEnv->pEntitySystem->GetEntity(handle->GetAttachedEntityId());
 	slot = handle->GetAttachedEntitySlot();
-}
-
-uint ParticleEmitterInterop::GetEmitterFlags(IParticleEmitter *handle)
-{
-	return handle->GetEmitterFlags();
-}
-
-void ParticleEmitterInterop::SetEmitterFlags(IParticleEmitter *handle, uint flags)
-{
-	handle->SetEmitterFlags(flags);
 }

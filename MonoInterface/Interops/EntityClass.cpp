@@ -19,15 +19,20 @@ void MonoEntityPropertyHandler::LoadEntityXMLProperties(IEntity* entity, const X
 
 		props->getAttributeByIndex(i, &name, &value);
 
-		int index = this->definedProperties.IndexOf([name](MonoEntityProperty p) { return strcmp(p.info.name, name) != 0; });
-		if (index == -1)
+		bool set = false;
+		for (size_t j = 0; j < this->definedProperties.Length; j++)
+		{
+			if (strcmp(this->definedProperties[j].info.name, name) == 0)
+			{
+				this->SetProperty(entity, j, value);
+				set = true;
+				break;
+			}
+		}
+		if (!set)
 		{
 			gEnv->pLog->LogWarning("An unknown entity property [%s] was found in Xml node for entity of type %s",
 								   name, entity->GetClass()->GetName());
-		}
-		else
-		{
-			this->SetProperty(entity, index, value);
 		}
 	}
 }
@@ -67,17 +72,19 @@ void MonoEntityPropertyHandler::SetProperty(IEntity *entity, int index, const ch
 	else
 	{
 		// The game hasn't started yet, so we have to save the value for later.
-		if (!this->queuedProperties.Contains(id))
+		auto &props = this->queuedProperties.Establish(id, 10);
+
+		bool queued = false;
+		for (auto &current : props)
 		{
-			this->queuedProperties.Add(id, List<QueuedProperty>(10));
+			if (strcmp(current.name, propInfo.name) == 0)
+			{
+				current.value = value;
+				queued = true;
+				break;
+			}
 		}
-		List<QueuedProperty> &props = this->queuedProperties.At(id);
-		if (QueuedProperty *q = props.Find([&propInfo](QueuedProperty &prop) { return strcmp(prop.name, propInfo.name) == 0; }))
-		{
-			// The value for the property was already queued, so we just update it.
-			q->value = value;
-		}
-		else
+		if (!queued)
 		{
 			QueuedProperty qp;
 			qp.name = propInfo.name;

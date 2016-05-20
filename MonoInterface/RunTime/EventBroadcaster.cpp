@@ -2,83 +2,32 @@
 #include "EventBroadcaster.h"
 
 #if 0
-#define EventMessage CryLogAlways
+  #define EventMessage CryLogAlways
 #else
-#define EventMessage(...) void(0)
+  #define EventMessage(...) void(0)
 #endif
 
 EventBroadcaster::EventBroadcaster()
-	: stages(false)
-	, index(-1)
-{
-	this->listeners = new List<IMonoSystemListener *>(20);
-	this->stageMap = new SortedList<int, List<IMonoSystemListener *> *>(50);
-}
-
-EventBroadcaster::~EventBroadcaster()
-{
-	EventMessage("Deleting stage map.");
-	if (this->stageMap) { delete this->stageMap; this->stageMap = nullptr; }
-	EventMessage("Deleting listeners.");
-	if (this->listeners) { delete this->listeners; this->listeners = nullptr; }
-}
+	: listeners(20)
+	, listenersToRemove(5)
+{}
 
 
 void EventBroadcaster::RemoveListener(IMonoSystemListener *listener)
 {
-	EventMessage("Removing a listener.");
-	// Delete the listener from the main list.
-	int listenerIndex = -1;
-	for (int i = 0; i < this->listeners->Length; i++)
-	{
-		if (this->listeners->At(i) == listener)
-		{
-			listenerIndex = i;
-			break;
-		}
-	}
+	EventMessage("Scheduling removal of a listener.");
 
-	if (listenerIndex == -1)
-	{
-		return;
-	}
-
-	if (this->stages)
-	{
-		CryFatalError("Cannot remove a listener #%d during the initialization stage.", listenerIndex);
-	}
-
-	if (this->index <= listenerIndex && this->index != -1)
-	{
-		// Adjust the current index.
-		this->index--;
-	}
-
-	this->listeners->RemoveAt(listenerIndex);
-
-	// Remove listener from stage map.
-	this->stageMap->ForEach
-	(
-		[&listener](int stageIndex, List<IMonoSystemListener *> *subscribers)
-		{
-			for (int i = 0; i < subscribers->Length; i++)
-			{
-				if (subscribers->At(i) == listener)
-				{
-					subscribers->RemoveAt(i);
-					break;		// No need to proceed as there can only be one unique listener per stage.
-				}
-			}
-		}
-	);
+	this->listenersToRemove.Add(listener);
 }
 
 void EventBroadcaster::SetInterface(IMonoInterface *inter)
 {
-	for (this->index = 0; this->index < this->listeners->Length; this->index++)
+	for (auto currentListener : this->listeners)
 	{
-		this->listeners->At(this->index)->SetInterface(inter);
+		currentListener->SetInterface(inter);
 	}
+
+	this->ClearRemovedListeners();
 }
 
 //! Broadcasts PreInitialization event.
@@ -109,48 +58,46 @@ void EventBroadcaster::OnCompilationStarting()
 //! Broadcasts CompilationComplete event.
 void EventBroadcaster::OnCompilationComplete(bool success)
 {
-	for (this->index = 0; this->index < this->listeners->Length; this->index++)
+	for (auto currentListener : this->listeners)
 	{
-		this->listeners->At(this->index)->OnCompilationComplete(success);
+		currentListener->OnCompilationComplete(success);
 	}
+
+	this->ClearRemovedListeners();
 }
 //! Gathers initialization stages data for sending it to managed code.
 int *EventBroadcaster::GetSubscribedStagesInfo(int &stageCount)
 {
-	EventMessage("Going through listeners.");
+	EventMessage("Gathering information about the native initialization stages.");
+
 	// Gather information about all stages.
-	for (this->index = 0; this->index < this->listeners->Length; this->index++)
+	for (auto currentListener : this->listeners)
 	{
-		EventMessage("Getting stage indices for the listener #%d.", this->index + 1);
-		// Get stages.
-		List<int> *stages = this->listeners->At(this->index)->GetSubscribedStages();
-		if (stages)
+		// Get the stages.
+		List<int> stages = currentListener->GetSubscribedStages();
+
+		// Put the stages into the map.
+		for (auto currentStageIndex : stages)
 		{
-			// Put the listeners into the map.
-			for (int j = 0; j < stages->Length; j++)
-			{
-				int currentStageIndex = stages->At(j);
-				if (!this->stageMap->Contains(currentStageIndex))
-				{
-					this->stageMap->Add(currentStageIndex, new List<IMonoSystemListener *>(10));
-				}
-				this->stageMap->At(currentStageIndex)->Add(this->listeners->At(this->index));
-			}
-			delete stages;
-		}
-		else
-		{
-			EventMessage("Listener #%d is not subscribed to any stages.", this->index + 1);
+			auto &stageList = this->stageMap.Ensure(currentStageIndex, List<IMonoSystemListener *>(10));
+
+			stageList.Add(currentListener);
 		}
 	}
-	// Get the stage indices.
-	stageCount = this->stageMap->Length;
+
+	this->ClearRemovedListeners();
+
+	// Get the array of stage indices to pass to managed code that is going to invoke the stages.
+	stageCount = this->stageMap.Length;
+
 	int *stageIndices = new int[stageCount];
-	int i = 0;
-	this->stageMap->ForEach([stageIndices, &i](int stageIndex, List<IMonoSystemListener *> *subscribers)
+	int  i            = 0;
+
+	for (auto current = this->stageMap.ascend(); current != this->stageMap.top(); ++current)
 	{
-		stageIndices[i++] = stageIndex;
-	});
+		stageIndices[i++] = current.Key();
+	}
+
 	return stageIndices;
 }
 //! Broadcasts InitializationStage event.
@@ -160,24 +107,16 @@ void EventBroadcaster::OnInitializationStage(int stageIndex)
 {
 	CryLogAlways("Commencing initialization stage #%d", stageIndex);
 
-	this->stages = true;
-
-	List<IMonoSystemListener *> *stageList;
-	if (this->stageMap->TryGet(stageIndex, stageList))
+	List<IMonoSystemListener *> stageList;
+	if (this->stageMap.TryGet(stageIndex, stageList))
 	{
-		if (!stageList)
+		for (auto stageListener : stageList)
 		{
-			return;
-		}
-
-		for (int i = 0; i < stageList->Length; i++)
-		{
-			IMonoSystemListener *stageListener = stageList->At(i);
 			stageListener->OnInitializationStage(stageIndex);
 		}
 	}
 
-	this->stages = false;
+	this->ClearRemovedListeners();
 }
 //! Broadcasts CryamblyInitilized event.
 void EventBroadcaster::OnCryamblyInitilized()
@@ -205,40 +144,76 @@ void EventBroadcaster::Shutdown()
 	this->SendSimpleEvent(&IMonoSystemListener::Shutdown);
 }
 
+#if 1
+#define DebugSimpleEvents
+#endif
+
 void EventBroadcaster::SendSimpleEvent(SimpleEventHandler handler)
 {
 	EventMessage("Broadcasting the event.");
 
 	const int printEvery = 1;
+	size_t current = 0;
 
-	for (this->index = 0; this->index < this->listeners->Length; this->index++)
+	for (auto currentListener : this->listeners)
 	{
-#if 1
-		if (this->index % printEvery == 0)
+#ifdef DebugSimpleEvents
+		if (current % printEvery == 0)
 		{
-			EventMessage("Sending the event to the listener #%d.", this->index);
+			EventMessage("Sending the event to the listener #%d.", current);
 		}
 #endif
-		IMonoSystemListener *listener = this->listeners->At(this->index);
-		(listener->*handler)();
-#if 1
-		if (this->index % printEvery == 0)
+
+		(currentListener->*handler)();
+
+#ifdef DebugSimpleEvents
+		if (current % printEvery == 0)
 		{
-			EventMessage("Sent the event to the listener #%d.", this->index);
+			EventMessage("Sent the event to the listener #%d.", current);
 		}
 #endif
+
+		current++;
 	}
 
-	this->index = -1;
+	this->ClearRemovedListeners();
 }
 
 void EventBroadcaster::SendUpdateEvent(SimpleEventHandler handler)
 {
-	for (this->index = 0; this->index < this->listeners->Length; this->index++)
+	for (auto currentListener : this->listeners)
 	{
-		IMonoSystemListener *listener = this->listeners->At(this->index);
-		(listener->*handler)();
+		(currentListener->*handler)();
 	}
 
-	this->index = -1;
+	this->ClearRemovedListeners();
+}
+
+void EventBroadcaster::ClearRemovedListeners()
+{
+	EventMessage("Removing listeners that were scheduled for deletion.");
+	
+	for (const auto &currentListenerToRemove : this->listenersToRemove)
+	{
+		// Delete the listener from the main list.
+		if (auto listenerToRemove = this->listeners.Find(currentListenerToRemove))
+		{
+			this->listeners.Erase(listenerToRemove);
+		}
+
+		// Clear it from the stage map.
+		for (auto current = this->stageMap.ascend(); current != this->stageMap.top(); ++current)
+		{
+			auto &currentListOfSubs = current.Value();
+			if (auto currentSubToRemove = currentListOfSubs.Find(currentListenerToRemove))
+			{
+				currentListOfSubs.Erase(currentSubToRemove);
+			}
+
+			if (currentListOfSubs.IsEmpty())
+			{
+				this->stageMap.Remove(current--.Key());
+			}
+		}
+	}
 }

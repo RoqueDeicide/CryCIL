@@ -8,6 +8,8 @@
 #include "GameStartup.h"
 #include "EditorGame.h"
 
+#include <stdlib.h>
+
 extern "C"
 {
 	GAME_API IGameStartup *CreateGameStartup()
@@ -31,7 +33,7 @@ static void CleanupFrameworkDLL()
 	s_frameworkDLL = nullptr;
 }
 
-HMODULE GetFrameworkDLL(const char* binariesDir)
+HMODULE GetFrameworkDLL(const char *binariesDir)
 {
 	MEMSTAT_CONTEXT_FMT(EMemStatContextTypes::MSC_Other, 0, "Load %s", GAME_FRAMEWORK_FILENAME);
 	if (!s_frameworkDLL)

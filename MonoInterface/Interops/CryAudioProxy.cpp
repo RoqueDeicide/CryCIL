@@ -7,6 +7,8 @@ void CryAudioProxyInterop::InitializeInterops()
 	REGISTER_METHOD(Init);
 	REGISTER_METHOD(ReleaseInternal);
 	REGISTER_METHOD(ResetInternal);
+	REGISTER_METHOD(PlayFileInternal);
+	REGISTER_METHOD(StopFileInternal);
 	REGISTER_METHOD(ExecuteTriggerInternal);
 	REGISTER_METHOD(StopTriggerInternal);
 	REGISTER_METHOD(SetSwitchStateInternal);
@@ -16,7 +18,7 @@ void CryAudioProxyInterop::InitializeInterops()
 	REGISTER_METHOD(SetPosition);
 	REGISTER_METHOD(SetEnvironmentAmountInternal);
 	REGISTER_METHOD(SetCurrentEnvironmentsInternal);
-	REGISTER_METHOD(GetAudioObjectID);
+	REGISTER_METHOD(GetAudioObjectId);
 }
 
 void CryAudioProxyInterop::Init(IAudioProxy *handle, mono::string sObjectName, bool bInitAsync)
@@ -34,9 +36,19 @@ void CryAudioProxyInterop::ResetInternal(IAudioProxy *handle)
 	handle->Reset();
 }
 
-void CryAudioProxyInterop::ExecuteTriggerInternal(IAudioProxy *handle, uint nTriggerID, ELipSyncMethod eLipSyncMethod)
+void CryAudioProxyInterop::PlayFileInternal(IAudioProxy *handle, mono::string file)
 {
-	handle->ExecuteTrigger(nTriggerID, eLipSyncMethod);
+	handle->PlayFile(NtText(file));
+}
+
+void CryAudioProxyInterop::StopFileInternal(IAudioProxy *handle, mono::string file)
+{
+	handle->StopFile(NtText(file));
+}
+
+void CryAudioProxyInterop::ExecuteTriggerInternal(IAudioProxy *handle, uint nTriggerID)
+{
+	handle->ExecuteTrigger(nTriggerID);
 }
 
 void CryAudioProxyInterop::StopTriggerInternal(IAudioProxy *handle, uint nTriggerID)
@@ -54,14 +66,14 @@ void CryAudioProxyInterop::SetRtpcValueInternal(IAudioProxy *handle, uint nRtpcI
 	handle->SetRtpcValue(nRtpcID, fValue);
 }
 
-void CryAudioProxyInterop::SetObstructionCalcTypeInternal(IAudioProxy *handle, EAudioObjectObstructionCalcType eObstructionType)
+void CryAudioProxyInterop::SetObstructionCalcTypeInternal(IAudioProxy *handle, EAudioOcclusionType eOcclusionType)
 {
-	handle->SetObstructionCalcType(eObstructionType);
+	handle->SetOcclusionType(eOcclusionType);
 }
 
 void CryAudioProxyInterop::SetTransformation(IAudioProxy *handle, const Matrix34 &rPosition)
 {
-	handle->SetPosition(rPosition);
+	handle->SetTransformation(rPosition);
 }
 
 void CryAudioProxyInterop::SetPosition(IAudioProxy *handle, const Vec3 &rPosition)
@@ -79,7 +91,7 @@ void CryAudioProxyInterop::SetCurrentEnvironmentsInternal(IAudioProxy *handle, E
 	handle->SetCurrentEnvironments(nEntityToIgnore);
 }
 
-uint CryAudioProxyInterop::GetAudioObjectID(IAudioProxy *handle)
+uint CryAudioProxyInterop::GetAudioObjectId(IAudioProxy *handle)
 {
-	return handle->GetAudioObjectID();
+	return handle->GetAudioObjectId();
 }

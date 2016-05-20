@@ -25,13 +25,11 @@ struct CharacterInterop : IMonoInterop<true, true>
 	static void StartAnimationProcessing(ICharacterInstance *handle, SAnimationProcessParams &parameters);
 	static AABB GetAABB(ICharacterInstance *handle);
 	static float GetRadiusSqr(ICharacterInstance *handle);
-	static void GetRandomPos(ICharacterInstance *handle, PosNorm &ran, EGeomForm eForm);
+	static void GetRandomPos(ICharacterInstance *handle, PosNorm &ran, CRndGen &seed, EGeomForm eForm);
 	static void SetFlags(ICharacterInstance *handle, int nFlags);
 	static int GetFlags(ICharacterInstance *handle);
 	static int GetObjectType(ICharacterInstance *handle);
 	static mono::string GetFilePath(ICharacterInstance *handle);
-	static void EnableDecalsInternal(ICharacterInstance *handle, bool enable);
-	static void CreateDecalInternal(ICharacterInstance *handle, MonoDecalInfo &DecalLCS);
 	static bool GetHasVertexAnimation(ICharacterInstance *handle);
 	static IMaterial *GetIMaterial(ICharacterInstance *handle);
 	static void SetIMaterial_Instance(ICharacterInstance *handle, IMaterial *pMaterial);
@@ -39,7 +37,6 @@ struct CharacterInterop : IMonoInterop<true, true>
 	static IFacialInstance *GetFacialInstance(ICharacterInstance *handle);
 	static void EnableFacialAnimationInternal(ICharacterInstance *handle, bool bEnable);
 	static void EnableProceduralFacialAnimationInternal(ICharacterInstance *handle, bool bEnable);
-	static void LipSyncWithSound(ICharacterInstance *handle, uint nSoundId, bool bStop);
 	static void SetPlaybackScale(ICharacterInstance *handle, float fSpeed);
 	static float GetPlaybackScale(ICharacterInstance *handle);
 	static bool IsCharacterVisible(ICharacterInstance *handle);
@@ -85,4 +82,6 @@ struct CharacterInterop : IMonoInterop<true, true>
 
 	static uint GetNumInstancesPerModel(IDefaultSkeleton *rIDefaultSkeleton);
 	static ICharacterInstance *GetICharInstanceFromModel(IDefaultSkeleton *rIDefaultSkeleton, uint num);
+
+	static IMeshObj *GetBase(ICharacterInstance *handle);
 };

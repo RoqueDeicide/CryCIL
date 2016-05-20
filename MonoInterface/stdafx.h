@@ -21,6 +21,7 @@
 #include <vector>
 #include <memory>
 #include <list>
+#include <map>
 #include <functional>
 #include <limits>
 
@@ -52,7 +53,7 @@
 #include "IMonoInterface.h"
 #include "Text.h"
 #include "NtText.h"
-#include "List.h"
+#include "List.hpp"
 
 // Include monosgen-2.0.lib from relevant folder. (Folder is defined in project properties.)
 #pragma comment(lib, "monosgen-2.0.lib")

@@ -16,8 +16,7 @@
 #include <ISerialize.h>
 #include <IGameFramework.h>
 
-#include "List.h"
-#include "ReadOnlyList.h"
+#include "List.hpp"
 #include "SortedList.h"
 #include "Tuples.h"
 

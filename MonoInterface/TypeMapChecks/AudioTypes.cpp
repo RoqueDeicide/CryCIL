@@ -2,49 +2,49 @@
 
 #include "CheckingBasics.h"
 
-typedef uint32 ATLIDType;
+typedef uint32 TestAudioIdType;
 
-typedef ATLIDType AudioObjectID;
-#define INVALID_AUDIO_OBJECT_ID_check ((AudioObjectID)(0))
-#define GLOBAL_AUDIO_OBJECT_ID_check ((AudioObjectID)(1))
-typedef ATLIDType AudioControlID;
-#define INVALID_AUDIO_CONTROL_ID_check ((AudioControlID)(0))
-typedef ATLIDType AudioSwitchStateID;
-#define INVALID_AUDIO_SWITCH_STATE_ID_check ((AudioSwitchStateID)(0))
-typedef ATLIDType AudioEnvironmentID;
-#define INVALID_AUDIO_ENVIRONMENT_ID_check ((AudioEnvironmentID)(0))
-typedef ATLIDType AudioPreloadRequestID;
-#define INVALID_AUDIO_PRELOAD_REQUEST_ID_check ((AudioPreloadRequestID)(0))
-typedef ATLIDType AudioEventID;
-#define INVALID_AUDIO_EVENT_ID_check ((AudioEventID)(0))
-typedef ATLIDType AudioFileEntryID;
-#define INVALID_AUDIO_FILE_ENTRY_ID_check ((AudioFileEntryID)(0))
-typedef ATLIDType AudioTriggerImplID;
-#define INVALID_AUDIO_TRIGGER_IMPL_ID_check ((AudioTriggerImplID)(0))
-typedef ATLIDType AudioTriggerInstanceID;
-#define INVALID_AUDIO_TRIGGER_INSTANCE_ID_check ((AudioTriggerInstanceID)(0))
-typedef ATLIDType ATLEnumFlagsType;
-#define INVALID_AUDIO_ENUM_FLAG_TYPE_check ((ATLEnumFlagsType)(0))
-#define ALL_AUDIO_REQUEST_SPECIFIC_TYPE_FLAGS_check ((ATLEnumFlagsType)(0xFFFFFFFF))
-typedef ATLIDType AudioProxyID;
-#define INVALID_AUDIO_PROXY_ID_check ((AudioProxyID)(0))
-#define DEFAULT_AUDIO_PROXY_ID_check ((AudioProxyID)(1))
+typedef TestAudioIdType TestAudioObjectId;
+#define INVALID_AUDIO_OBJECT_ID_check ((TestAudioObjectId)(0))
+#define GLOBAL_AUDIO_OBJECT_ID_check ((TestAudioObjectId)(1))
+typedef TestAudioIdType TestAudioControlId;
+#define INVALID_AUDIO_CONTROL_ID_check ((TestAudioControlId)(0))
+typedef TestAudioIdType TestAudioSwitchStateId;
+#define INVALID_AUDIO_SWITCH_STATE_ID_check ((TestAudioSwitchStateId)(0))
+typedef TestAudioIdType TestAudioEnvironmentId;
+#define INVALID_AUDIO_ENVIRONMENT_ID_check ((TestAudioEnvironmentId)(0))
+typedef TestAudioIdType TestAudioPreloadRequestId;
+#define INVALID_AUDIO_PRELOAD_REQUEST_ID_check ((TestAudioPreloadRequestId)(0))
+typedef TestAudioIdType TestAudioEventId;
+#define INVALID_AUDIO_EVENT_ID_check ((TestAudioEventId)(0))
+typedef TestAudioIdType TestAudioFileEntryId;
+#define INVALID_AUDIO_FILE_ENTRY_ID_check ((TestAudioFileEntryId)(0))
+typedef TestAudioIdType TestAudioTriggerImplId;
+#define INVALID_AUDIO_TRIGGER_IMPL_ID_check ((TestAudioTriggerImplId)(0))
+typedef TestAudioIdType TestAudioTriggerInstanceId;
+#define INVALID_AUDIO_TRIGGER_INSTANCE_ID_check ((TestAudioTriggerInstanceId)(0))
+typedef TestAudioIdType TestAudioEnumFlagsType;
+#define INVALID_AUDIO_ENUM_FLAG_TYPE_check ((TestAudioEnumFlagsType)(0))
+#define ALL_AUDIO_REQUEST_SPECIFIC_TYPE_FLAGS_check ((TestAudioEnumFlagsType)(0xFFFFFFFF))
+typedef TestAudioIdType TestAudioProxyId;
+#define INVALID_AUDIO_PROXY_ID_check ((TestAudioProxyId)(0))
+#define DEFAULT_AUDIO_PROXY_ID_check ((TestAudioProxyId)(1))
 
-#define CHECK_BASE_AUDIO_TYPE(type) static_assert(is_same_type<type, T##type>::value, "T"#type" now uses different base type.")
+#define CHECK_BASE_AUDIO_TYPE(type) static_assert(is_same_type<type, Test##type>::value, #type" now uses different base type.")
 
 inline void CheckAudioTypes()
 {
-	CHECK_BASE_AUDIO_TYPE(ATLIDType);
-	CHECK_BASE_AUDIO_TYPE(AudioControlID);
-	CHECK_BASE_AUDIO_TYPE(AudioSwitchStateID);
-	CHECK_BASE_AUDIO_TYPE(AudioEnvironmentID);
-	CHECK_BASE_AUDIO_TYPE(AudioPreloadRequestID);
-	CHECK_BASE_AUDIO_TYPE(AudioEventID);
-	CHECK_BASE_AUDIO_TYPE(AudioFileEntryID);
-	CHECK_BASE_AUDIO_TYPE(AudioTriggerImplID);
-	CHECK_BASE_AUDIO_TYPE(AudioTriggerInstanceID);
-	CHECK_BASE_AUDIO_TYPE(ATLEnumFlagsType);
-	CHECK_BASE_AUDIO_TYPE(AudioProxyID);
+	CHECK_BASE_AUDIO_TYPE(AudioIdType);
+	CHECK_BASE_AUDIO_TYPE(AudioControlId);
+	CHECK_BASE_AUDIO_TYPE(AudioSwitchStateId);
+	CHECK_BASE_AUDIO_TYPE(AudioEnvironmentId);
+	CHECK_BASE_AUDIO_TYPE(AudioPreloadRequestId);
+	CHECK_BASE_AUDIO_TYPE(AudioEventId);
+	CHECK_BASE_AUDIO_TYPE(AudioFileEntryId);
+	CHECK_BASE_AUDIO_TYPE(AudioTriggerImplId);
+	CHECK_BASE_AUDIO_TYPE(AudioTriggerInstanceId);
+	CHECK_BASE_AUDIO_TYPE(AudioEnumFlagsType);
+	CHECK_BASE_AUDIO_TYPE(AudioProxyId);
 }
 
 #define CHECK_AUDIO_SPECIAL_VALUE(name) static_assert(name == name##_check, #name" has been changed.")
@@ -67,17 +67,23 @@ inline void CheckAudioObjectSpecialValues()
 	CHECK_AUDIO_SPECIAL_VALUE(DEFAULT_AUDIO_PROXY_ID);
 }
 
-TYPE_MIRROR struct ATLWorldPosition
+TYPE_MIRROR struct AudioObjectTransformation
 {
-	Matrix34 mPosition;
+	Vec3 m_position;
+	Vec3 m_forward;
+	Vec3 m_up;
 
-	explicit ATLWorldPosition(const SATLWorldPosition &other)
+	explicit AudioObjectTransformation(const CAudioObjectTransformation &other)
 	{
-		CHECK_TYPE_SIZE(ATLWorldPosition);
+		static_assert(sizeof(AudioObjectTransformation) == sizeof(CAudioObjectTransformation), "CAudioObjectTransformation structure has been changed.");
 
-		ASSIGN_FIELD(mPosition);
+		ASSIGN_FIELD(m_position);
+		ASSIGN_FIELD(m_forward);
+		ASSIGN_FIELD(m_up);
 
-		CHECK_TYPE(mPosition);
+		CHECK_TYPE(m_position);
+		CHECK_TYPE(m_forward);
+		CHECK_TYPE(m_up);
 	}
 };
 
@@ -102,14 +108,14 @@ inline void CheckAudioTypesReservedValues()
 
 TYPE_MIRROR enum AudioRequestFlags
 {
-	eARF_NONE_check = 0,
-	eARF_PRIORITY_NORMAL_check = BIT(0),
-	eARF_PRIORITY_HIGH_check = BIT(1),
-	eARF_EXECUTE_BLOCKING_check = BIT(2),
-	eARF_SYNC_CALLBACK_check = BIT(3),
-	eARF_SYNC_FINISHED_CALLBACK_check = BIT(4),
-	eARF_STAY_IN_MEMORY_check = BIT(5),
-	eARF_THREAD_SAFE_PUSH_check = BIT(6)
+	eAudioRequestFlags_None_check = 0,
+	eAudioRequestFlags_PriorityNormal_check = BIT(0),
+	eAudioRequestFlags_PriorityHigh_check = BIT(1),
+	eAudioRequestFlags_ExecuteBlocking_check = BIT(2),
+	eAudioRequestFlags_SyncCallback_check = BIT(3),
+	eAudioRequestFlags_SyncFinishedCallback_check = BIT(4),
+	eAudioRequestFlags_StayInMemory_check = BIT(5),
+	eAudioRequestFlags_ThreadSafePush_check = BIT(6)
 };
 
 #undef CHECK_ENUM
@@ -117,24 +123,24 @@ TYPE_MIRROR enum AudioRequestFlags
 
 inline void CheckAudioRequestFlags()
 {
-	CHECK_ENUM(eARF_NONE);
-	CHECK_ENUM(eARF_PRIORITY_NORMAL);
-	CHECK_ENUM(eARF_PRIORITY_HIGH);
-	CHECK_ENUM(eARF_EXECUTE_BLOCKING);
-	CHECK_ENUM(eARF_SYNC_CALLBACK);
-	CHECK_ENUM(eARF_SYNC_FINISHED_CALLBACK);
-	CHECK_ENUM(eARF_STAY_IN_MEMORY);
-	CHECK_ENUM(eARF_THREAD_SAFE_PUSH);
+	CHECK_ENUM(eAudioRequestFlags_None);
+	CHECK_ENUM(eAudioRequestFlags_PriorityNormal);
+	CHECK_ENUM(eAudioRequestFlags_PriorityHigh);
+	CHECK_ENUM(eAudioRequestFlags_ExecuteBlocking);
+	CHECK_ENUM(eAudioRequestFlags_SyncCallback);
+	CHECK_ENUM(eAudioRequestFlags_SyncFinishedCallback);
+	CHECK_ENUM(eAudioRequestFlags_StayInMemory);
+	CHECK_ENUM(eAudioRequestFlags_ThreadSafePush);
 }
 
 TYPE_MIRROR enum AudioRequestType
 {
-	eART_NONE_check = 0,
-	eART_AUDIO_MANAGER_REQUEST_check = 1,
-	eART_AUDIO_CALLBACK_MANAGER_REQUEST_check = 2,
-	eART_AUDIO_OBJECT_REQUEST_check = 3,
-	eART_AUDIO_LISTENER_REQUEST_check = 4,
-	eART_AUDIO_ALL_REQUESTS_check = 0xFFFFFFFF
+	eAudioRequestType_None_check = 0,
+	eAudioRequestType_AudioManagerRequest_check = 1,
+	eAudioRequestType_AudioCallbackManagerRequest_check = 2,
+	eAudioRequestType_AudioObjectRequest_check = 3,
+	eAudioRequestType_AudioListenerRequest_check = 4,
+	eAudioRequestType_AudioAllRequests_check = 0xFFFFFFFF
 };
 
 #undef CHECK_ENUM
@@ -142,19 +148,19 @@ TYPE_MIRROR enum AudioRequestType
 
 inline void CheckAudioRequestType()
 {
-	CHECK_ENUM(eART_NONE);
-	CHECK_ENUM(eART_AUDIO_MANAGER_REQUEST);
-	CHECK_ENUM(eART_AUDIO_CALLBACK_MANAGER_REQUEST);
-	CHECK_ENUM(eART_AUDIO_OBJECT_REQUEST);
-	CHECK_ENUM(eART_AUDIO_LISTENER_REQUEST);
-	CHECK_ENUM(eART_AUDIO_ALL_REQUESTS);
+	CHECK_ENUM(eAudioRequestType_None);
+	CHECK_ENUM(eAudioRequestType_AudioManagerRequest);
+	CHECK_ENUM(eAudioRequestType_AudioCallbackManagerRequest);
+	CHECK_ENUM(eAudioRequestType_AudioObjectRequest);
+	CHECK_ENUM(eAudioRequestType_AudioListenerRequest);
+	CHECK_ENUM(eAudioRequestType_AudioAllRequests);
 }
 
 TYPE_MIRROR enum AudioRequestResult
 {
-	eARR_NONE_check = 0,
-	eARR_SUCCESS_check = 1,
-	eARR_FAILURE_check = 2
+	eAudioRequestResult_None_check = 0,
+	eAudioRequestResult_Success_check = 1,
+	eAudioRequestResult_Failure_check = 2
 };
 
 #undef CHECK_ENUM
@@ -162,53 +168,56 @@ TYPE_MIRROR enum AudioRequestResult
 
 inline void CheckAudioRequestResult()
 {
-	CHECK_ENUM(eARR_NONE);
-	CHECK_ENUM(eARR_SUCCESS);
-	CHECK_ENUM(eARR_FAILURE);
+	CHECK_ENUM(eAudioRequestResult_None);
+	CHECK_ENUM(eAudioRequestResult_Success);
+	CHECK_ENUM(eAudioRequestResult_Failure);
 }
 
-TYPE_MIRROR enum ATLDataScope
+TYPE_MIRROR enum AudioDataScope
 {
-	eADS_NONE_check = 0,
-	eADS_GLOBAL_check = 1,
-	eADS_LEVEL_SPECIFIC_check = 2,
-	eADS_ALL_check = 3
+	eAudioDataScope_None_check = 0,
+	eAudioDataScope_Global_check = 1,
+	eAudioDataScope_LevelSpecific_check = 2,
+	eAudioDataScope_All_check = 3
 };
 
 #undef CHECK_ENUM
-#define CHECK_ENUM(x) static_assert (ATLDataScope::x ## _check == EATLDataScope::x, "EATLDataScope enumeration have been changed.")
+#define CHECK_ENUM(x) static_assert (AudioDataScope::x ## _check == EAudioDataScope::x, "EAudioDataScope enumeration have been changed.")
 
-inline void CheckATLDataScope()
+inline void CheckAudioDataScope()
 {
-	CHECK_ENUM(eADS_NONE);
-	CHECK_ENUM(eADS_GLOBAL);
-	CHECK_ENUM(eADS_LEVEL_SPECIFIC);
-	CHECK_ENUM(eADS_ALL);
+	CHECK_ENUM(eAudioDataScope_None);
+	CHECK_ENUM(eAudioDataScope_Global);
+	CHECK_ENUM(eAudioDataScope_LevelSpecific);
+	CHECK_ENUM(eAudioDataScope_All);
 }
 
 TYPE_MIRROR enum AudioManagerRequestType
 {
-	eAMRT_NONE_check = 0,
-	eAMRT_SET_AUDIO_IMPL_check = BIT(0),
-	eAMRT_REFRESH_AUDIO_SYSTEM_check = BIT(1),
-	eAMRT_RESERVE_AUDIO_OBJECT_ID_check = BIT(2),
-	eAMRT_LOSE_FOCUS_check = BIT(3),
-	eAMRT_GET_FOCUS_check = BIT(4),
-	eAMRT_MUTE_ALL_check = BIT(5),
-	eAMRT_UNMUTE_ALL_check = BIT(6),
-	eAMRT_STOP_ALL_SOUNDS_check = BIT(7),
-	eAMRT_PARSE_CONTROLS_DATA_check = BIT(8),
-	eAMRT_PARSE_PRELOADS_DATA_check = BIT(9),
-	eAMRT_CLEAR_CONTROLS_DATA_check = BIT(10),
-	eAMRT_CLEAR_PRELOADS_DATA_check = BIT(11),
-	eAMRT_PRELOAD_SINGLE_REQUEST_check = BIT(12),
-	eAMRT_UNLOAD_SINGLE_REQUEST_check = BIT(13),
-	eAMRT_UNLOAD_AFCM_DATA_BY_SCOPE_check = BIT(14),
-	eAMRT_DRAW_DEBUG_INFO_check = BIT(15),	// Only used internally!
-	eAMRT_ADD_REQUEST_LISTENER_check = BIT(16),
-	eAMRT_REMOVE_REQUEST_LISTENER_check = BIT(17),
-	eAMRT_CHANGE_LANGUAGE_check = BIT(18),
-	eAMRT_RETRIGGER_AUDIO_CONTROLS_check = BIT(19)
+	eAudioManagerRequestType_None_check = 0,
+	eAudioManagerRequestType_SetAudioImpl_check = BIT(0),
+	eAudioManagerRequestType_ReleaseAudioImpl_check = BIT(1),
+	eAudioManagerRequestType_RefreshAudioSystem_check = BIT(2),
+	eAudioManagerRequestType_ReserveAudioObjectId_check = BIT(3),
+	eAudioManagerRequestType_LoseFocus_check = BIT(4),
+	eAudioManagerRequestType_GetFocus_check = BIT(5),
+	eAudioManagerRequestType_MuteAll_check = BIT(6),
+	eAudioManagerRequestType_UnmuteAll_check = BIT(7),
+	eAudioManagerRequestType_StopAllSounds_check = BIT(8),
+	eAudioManagerRequestType_ParseControlsData_check = BIT(9),
+	eAudioManagerRequestType_ParsePreloadsData_check = BIT(10),
+	eAudioManagerRequestType_ClearControlsData_check = BIT(11),
+	eAudioManagerRequestType_ClearPreloadsData_check = BIT(12),
+	eAudioManagerRequestType_PreloadSingleRequest_check = BIT(13),
+	eAudioManagerRequestType_UnloadSingleRequest_check = BIT(14),
+	eAudioManagerRequestType_UnloadAFCMDataByScope_check = BIT(15),
+	eAudioManagerRequestType_DrawDebugInfo_check = BIT(16),	// Only used internally!
+	eAudioManagerRequestType_AddRequestListener_check = BIT(17),
+	eAudioManagerRequestType_RemoveRequestListener_check = BIT(18),
+	eAudioManagerRequestType_ChangeLanguage_check = BIT(19),
+	eAudioManagerRequestType_RetriggerAudioControls_check = BIT(20),
+	eAudioManagerRequestType_ReleasePendingRays_check = BIT(21),               //!< Only used internally!
+	eAudioManagerRequestType_ReloadControlsData_check = BIT(22)
 };
 
 #undef CHECK_ENUM
@@ -216,35 +225,43 @@ TYPE_MIRROR enum AudioManagerRequestType
 
 inline void CheckAudioManagerRequestType()
 {
-	CHECK_ENUM(eAMRT_NONE);
-	CHECK_ENUM(eAMRT_SET_AUDIO_IMPL);
-	CHECK_ENUM(eAMRT_REFRESH_AUDIO_SYSTEM);
-	CHECK_ENUM(eAMRT_RESERVE_AUDIO_OBJECT_ID);
-	CHECK_ENUM(eAMRT_LOSE_FOCUS);
-	CHECK_ENUM(eAMRT_GET_FOCUS);
-	CHECK_ENUM(eAMRT_MUTE_ALL);
-	CHECK_ENUM(eAMRT_UNMUTE_ALL);
-	CHECK_ENUM(eAMRT_STOP_ALL_SOUNDS);
-	CHECK_ENUM(eAMRT_PARSE_CONTROLS_DATA);
-	CHECK_ENUM(eAMRT_PARSE_PRELOADS_DATA);
-	CHECK_ENUM(eAMRT_CLEAR_CONTROLS_DATA);
-	CHECK_ENUM(eAMRT_CLEAR_PRELOADS_DATA);
-	CHECK_ENUM(eAMRT_PRELOAD_SINGLE_REQUEST);
-	CHECK_ENUM(eAMRT_UNLOAD_SINGLE_REQUEST);
-	CHECK_ENUM(eAMRT_UNLOAD_AFCM_DATA_BY_SCOPE);
-	CHECK_ENUM(eAMRT_DRAW_DEBUG_INFO);	// Only used internally!
-	CHECK_ENUM(eAMRT_ADD_REQUEST_LISTENER);
-	CHECK_ENUM(eAMRT_REMOVE_REQUEST_LISTENER);
-	CHECK_ENUM(eAMRT_CHANGE_LANGUAGE);
-	CHECK_ENUM(eAMRT_RETRIGGER_AUDIO_CONTROLS);
+	CHECK_ENUM(eAudioManagerRequestType_None);
+	CHECK_ENUM(eAudioManagerRequestType_SetAudioImpl);
+	CHECK_ENUM(eAudioManagerRequestType_ReleaseAudioImpl);
+	CHECK_ENUM(eAudioManagerRequestType_RefreshAudioSystem);
+	CHECK_ENUM(eAudioManagerRequestType_ReserveAudioObjectId);
+	CHECK_ENUM(eAudioManagerRequestType_LoseFocus);
+	CHECK_ENUM(eAudioManagerRequestType_GetFocus);
+	CHECK_ENUM(eAudioManagerRequestType_MuteAll);
+	CHECK_ENUM(eAudioManagerRequestType_UnmuteAll);
+	CHECK_ENUM(eAudioManagerRequestType_StopAllSounds);
+	CHECK_ENUM(eAudioManagerRequestType_ParseControlsData);
+	CHECK_ENUM(eAudioManagerRequestType_ParsePreloadsData);
+	CHECK_ENUM(eAudioManagerRequestType_ClearControlsData);
+	CHECK_ENUM(eAudioManagerRequestType_ClearPreloadsData);
+	CHECK_ENUM(eAudioManagerRequestType_PreloadSingleRequest);
+	CHECK_ENUM(eAudioManagerRequestType_UnloadSingleRequest);
+	CHECK_ENUM(eAudioManagerRequestType_UnloadAFCMDataByScope);
+	CHECK_ENUM(eAudioManagerRequestType_DrawDebugInfo);	// Only used internally!
+	CHECK_ENUM(eAudioManagerRequestType_AddRequestListener);
+	CHECK_ENUM(eAudioManagerRequestType_RemoveRequestListener);
+	CHECK_ENUM(eAudioManagerRequestType_ChangeLanguage);
+	CHECK_ENUM(eAudioManagerRequestType_RetriggerAudioControls);
+	CHECK_ENUM(eAudioManagerRequestType_ReleasePendingRays);
+	CHECK_ENUM(eAudioManagerRequestType_ReloadControlsData);
 }
 
 TYPE_MIRROR enum AudioCallbackManagerRequestType
 {
-	eACMRT_NONE_check = 0,
-	eACMRT_REPORT_FINISHED_EVENT_check = BIT(0),	// Only used internally!
-	eACMRT_REPORT_FINISHED_TRIGGER_INSTANCE_check = BIT(1),	// Only used internally!
-	eACMRT_REPORT_PROCESSED_OBSTRUCTION_RAY_check = BIT(2)
+	eAudioCallbackManagerRequestType_None_check = 0,
+	eAudioCallbackManagerRequestType_ReportStartedEvent_check = BIT(0), //!< Only relevant for delayed playback.
+	eAudioCallbackManagerRequestType_ReportFinishedEvent_check = BIT(1), //!< Only used internally!
+	eAudioCallbackManagerRequestType_ReportFinishedTriggerInstance_check = BIT(2), //!< Only used internally!
+	eAudioCallbackManagerRequestType_ReportStartedFile_check = BIT(3), //!< Only used internally!
+	eAudioCallbackManagerRequestType_ReportStoppedFile_check = BIT(4), //!< Only used internally!
+	eAudioCallbackManagerRequestType_ReportProcessedObstructionRay_check = BIT(5), //!< Only used internally!
+	eAudioCallbackManagerRequestType_ReportVirtualizedEvent_check = BIT(6), //!< Only used internally!
+	eAudioCallbackManagerRequestType_ReportPhysicalizedEvent_check = BIT(7)
 };
 
 #undef CHECK_ENUM
@@ -252,16 +269,21 @@ TYPE_MIRROR enum AudioCallbackManagerRequestType
 
 inline void CheckAudioCallbackManagerRequestType()
 {
-	CHECK_ENUM(eACMRT_NONE);
-	CHECK_ENUM(eACMRT_REPORT_FINISHED_EVENT);	// Only used internally!
-	CHECK_ENUM(eACMRT_REPORT_FINISHED_TRIGGER_INSTANCE);	// Only used internally!
-	CHECK_ENUM(eACMRT_REPORT_PROCESSED_OBSTRUCTION_RAY);
+	CHECK_ENUM(eAudioCallbackManagerRequestType_None);
+	CHECK_ENUM(eAudioCallbackManagerRequestType_ReportStartedEvent);
+	CHECK_ENUM(eAudioCallbackManagerRequestType_ReportFinishedEvent);
+	CHECK_ENUM(eAudioCallbackManagerRequestType_ReportFinishedTriggerInstance);
+	CHECK_ENUM(eAudioCallbackManagerRequestType_ReportStartedFile);
+	CHECK_ENUM(eAudioCallbackManagerRequestType_ReportStoppedFile);
+	CHECK_ENUM(eAudioCallbackManagerRequestType_ReportProcessedObstructionRay);
+	CHECK_ENUM(eAudioCallbackManagerRequestType_ReportVirtualizedEvent);
+	CHECK_ENUM(eAudioCallbackManagerRequestType_ReportPhysicalizedEvent);
 }
 
 TYPE_MIRROR enum AudioListenerRequestType
 {
-	eALRT_NONE_check = 0,
-	eALRT_SET_POSITION_check = BIT(0)
+	eAudioListenerRequestType_None_check = 0,
+	eAudioListenerRequestType_SetTransformation_check = BIT(0)
 };
 
 #undef CHECK_ENUM
@@ -269,25 +291,27 @@ TYPE_MIRROR enum AudioListenerRequestType
 
 inline void CheckAudioListenerRequestType()
 {
-	CHECK_ENUM(eALRT_NONE);
-	CHECK_ENUM(eALRT_SET_POSITION);
+	CHECK_ENUM(eAudioListenerRequestType_None);
+	CHECK_ENUM(eAudioListenerRequestType_SetTransformation);
 }
 
 TYPE_MIRROR enum AudioObjectRequestType
 {
-	eAORT_NONE_check = 0,
-	eAORT_PREPARE_TRIGGER_check = BIT(0),
-	eAORT_UNPREPARE_TRIGGER_check = BIT(1),
-	eAORT_EXECUTE_TRIGGER_check = BIT(2),
-	eAORT_STOP_TRIGGER_check = BIT(3),
-	eAORT_STOP_ALL_TRIGGERS_check = BIT(4),
-	eAORT_SET_POSITION_check = BIT(5),
-	eAORT_SET_RTPC_VALUE_check = BIT(6),
-	eAORT_SET_SWITCH_STATE_check = BIT(7),
-	eAORT_SET_VOLUME_check = BIT(8),
-	eAORT_SET_ENVIRONMENT_AMOUNT_check = BIT(9),
-	eAORT_RESET_ENVIRONMENTS_check = BIT(10),
-	eAORT_RELEASE_OBJECT_check = BIT(11)
+	eAudioObjectRequestType_None_check = 0,
+	eAudioObjectRequestType_PrepareTrigger_check = BIT(0),
+	eAudioObjectRequestType_UnprepareTrigger_check = BIT(1),
+	eAudioObjectRequestType_PlayFile_check = BIT(2),
+	eAudioObjectRequestType_StopFile_check = BIT(3),
+	eAudioObjectRequestType_ExecuteTrigger_check = BIT(4),
+	eAudioObjectRequestType_StopTrigger_check = BIT(5),
+	eAudioObjectRequestType_StopAllTriggers_check = BIT(6),
+	eAudioObjectRequestType_SetTransformation_check = BIT(7),
+	eAudioObjectRequestType_SetRtpcValue_check = BIT(8),
+	eAudioObjectRequestType_SetSwitchState_check = BIT(9),
+	eAudioObjectRequestType_SetVolume_check = BIT(10),
+	eAudioObjectRequestType_SetEnvironmentAmount_check = BIT(11),
+	eAudioObjectRequestType_ResetEnvironments_check = BIT(12),
+	eAudioObjectRequestType_ReleaseObject_check = BIT(13)
 };
 
 #undef CHECK_ENUM
@@ -295,54 +319,56 @@ TYPE_MIRROR enum AudioObjectRequestType
 
 inline void CheckAudioObjectRequestType()
 {
-	CHECK_ENUM(eAORT_NONE);
-	CHECK_ENUM(eAORT_PREPARE_TRIGGER);
-	CHECK_ENUM(eAORT_UNPREPARE_TRIGGER);
-	CHECK_ENUM(eAORT_EXECUTE_TRIGGER);
-	CHECK_ENUM(eAORT_STOP_TRIGGER);
-	CHECK_ENUM(eAORT_STOP_ALL_TRIGGERS);
-	CHECK_ENUM(eAORT_SET_POSITION);
-	CHECK_ENUM(eAORT_SET_RTPC_VALUE);
-	CHECK_ENUM(eAORT_SET_SWITCH_STATE);
-	CHECK_ENUM(eAORT_SET_VOLUME);
-	CHECK_ENUM(eAORT_SET_ENVIRONMENT_AMOUNT);
-	CHECK_ENUM(eAORT_RESET_ENVIRONMENTS);
-	CHECK_ENUM(eAORT_RELEASE_OBJECT);
+	CHECK_ENUM(eAudioObjectRequestType_None);
+	CHECK_ENUM(eAudioObjectRequestType_PrepareTrigger);
+	CHECK_ENUM(eAudioObjectRequestType_UnprepareTrigger);
+	CHECK_ENUM(eAudioObjectRequestType_PlayFile);
+	CHECK_ENUM(eAudioObjectRequestType_StopFile);
+	CHECK_ENUM(eAudioObjectRequestType_ExecuteTrigger);
+	CHECK_ENUM(eAudioObjectRequestType_StopTrigger);
+	CHECK_ENUM(eAudioObjectRequestType_StopAllTriggers);
+	CHECK_ENUM(eAudioObjectRequestType_SetTransformation);
+	CHECK_ENUM(eAudioObjectRequestType_SetRtpcValue);
+	CHECK_ENUM(eAudioObjectRequestType_SetSwitchState);
+	CHECK_ENUM(eAudioObjectRequestType_SetVolume);
+	CHECK_ENUM(eAudioObjectRequestType_SetEnvironmentAmount);
+	CHECK_ENUM(eAudioObjectRequestType_ResetEnvironments);
+	CHECK_ENUM(eAudioObjectRequestType_ReleaseObject);
 }
 
-TYPE_MIRROR enum AudioObjectObstructionCalcType
+TYPE_MIRROR enum AudioOcclusionType
 {
-	eAOOCT_NONE_check = 0,
-	eAOOCT_IGNORE_check = 1,
-	eAOOCT_SINGLE_RAY_check = 2,
-	eAOOCT_MULTI_RAY_check = 3,
+	eAudioOcclusionType_None_check = 0,
+	eAudioOcclusionType_Ignore_check = 1,
+	eAudioOcclusionType_SingleRay_check = 2,
+	eAudioOcclusionType_MultiRay_check = 3,
 
-	eAOOCT_COUNT_check
+	eAudioOcclusionType_Count_check
 };
 
 #undef CHECK_ENUM
-#define CHECK_ENUM(x) static_assert (AudioObjectObstructionCalcType::x ## _check == EAudioObjectObstructionCalcType::x, "EAudioObjectObstructionCalcType enumeration have been changed.")
+#define CHECK_ENUM(x) static_assert (AudioOcclusionType::x ## _check == EAudioOcclusionType::x, "EAudioOcclusionType enumeration have been changed.")
 
 inline void CheckAudioObjectObstructionCalcType()
 {
-	CHECK_ENUM(eAOOCT_NONE);
-	CHECK_ENUM(eAOOCT_IGNORE);
-	CHECK_ENUM(eAOOCT_SINGLE_RAY);
-	CHECK_ENUM(eAOOCT_MULTI_RAY);
+	CHECK_ENUM(eAudioOcclusionType_None);
+	CHECK_ENUM(eAudioOcclusionType_Ignore);
+	CHECK_ENUM(eAudioOcclusionType_SingleRay);
+	CHECK_ENUM(eAudioOcclusionType_MultiRay);
 
-	CHECK_ENUM(eAOOCT_COUNT);
+	CHECK_ENUM(eAudioOcclusionType_Count);
 }
 
 TYPE_MIRROR enum AudioControlType
 {
-	eACT_NONE_check = 0,
-	eACT_AUDIO_OBJECT_check = 1,
-	eACT_TRIGGER_check = 2,
-	eACT_RTPC_check = 3,
-	eACT_SWITCH_check = 4,
-	eACT_SWITCH_STATE_check = 5,
-	eACT_PRELOAD_check = 6,
-	eACT_ENVIRONMENT_check = 7
+	eAudioControlType_None_check = 0,
+	eAudioControlType_AudioObject_check = 1,
+	eAudioControlType_Trigger_check = 2,
+	eAudioControlType_Rtpc_check = 3,
+	eAudioControlType_Switch_check = 4,
+	eAudioControlType_SwitchState_check = 5,
+	eAudioControlType_Preload_check = 6,
+	eAudioControlType_Environment_check = 7
 };
 
 #undef CHECK_ENUM
@@ -350,14 +376,14 @@ TYPE_MIRROR enum AudioControlType
 
 inline void CheckAudioControlType()
 {
-	CHECK_ENUM(eACT_NONE);
-	CHECK_ENUM(eACT_AUDIO_OBJECT);
-	CHECK_ENUM(eACT_TRIGGER);
-	CHECK_ENUM(eACT_RTPC);
-	CHECK_ENUM(eACT_SWITCH);
-	CHECK_ENUM(eACT_SWITCH_STATE);
-	CHECK_ENUM(eACT_PRELOAD);
-	CHECK_ENUM(eACT_ENVIRONMENT);
+	CHECK_ENUM(eAudioControlType_None);
+	CHECK_ENUM(eAudioControlType_AudioObject);
+	CHECK_ENUM(eAudioControlType_Trigger);
+	CHECK_ENUM(eAudioControlType_Rtpc);
+	CHECK_ENUM(eAudioControlType_Switch);
+	CHECK_ENUM(eAudioControlType_SwitchState);
+	CHECK_ENUM(eAudioControlType_Preload);
+	CHECK_ENUM(eAudioControlType_Environment);
 }
 
 TYPE_MIRROR enum LipSyncMethod
@@ -377,27 +403,27 @@ inline void CheckLipSyncMethod()
 
 TYPE_MIRROR struct AudioSystemInfo
 {
-	size_t	nCountUsedAudioTriggers;
-	size_t	nCountUnusedAudioTriggers;
-	size_t	nCountUsedAudioEvents;
-	size_t	nCountUnusedAudioEvents;
+	size_t numUsedAudioTriggers;
+	size_t numUnusedAudioTriggers;
+	size_t numUsedAudioEvents;
+	size_t numUnusedAudioEvents;
 
-	Vec3		oListenerPos;
+	Vec3 listenerPos;
 
 	explicit AudioSystemInfo(const SAudioSystemInfo &other)
 	{
 		CHECK_TYPE_SIZE(AudioSystemInfo);
 
-		ASSIGN_FIELD(nCountUsedAudioTriggers);
-		ASSIGN_FIELD(nCountUnusedAudioTriggers);
-		ASSIGN_FIELD(nCountUsedAudioEvents);
-		ASSIGN_FIELD(nCountUnusedAudioEvents);
-		ASSIGN_FIELD(oListenerPos);
+		ASSIGN_FIELD(numUsedAudioTriggers);
+		ASSIGN_FIELD(numUnusedAudioTriggers);
+		ASSIGN_FIELD(numUsedAudioEvents);
+		ASSIGN_FIELD(numUnusedAudioEvents);
+		ASSIGN_FIELD(listenerPos);
 
-		CHECK_TYPE(nCountUsedAudioTriggers);
-		CHECK_TYPE(nCountUnusedAudioTriggers);
-		CHECK_TYPE(nCountUsedAudioEvents);
-		CHECK_TYPE(nCountUnusedAudioEvents);
-		CHECK_TYPE(oListenerPos);
+		CHECK_TYPE(numUsedAudioTriggers);
+		CHECK_TYPE(numUnusedAudioTriggers);
+		CHECK_TYPE(numUsedAudioEvents);
+		CHECK_TYPE(numUnusedAudioEvents);
+		CHECK_TYPE(listenerPos);
 	}
 };

@@ -50,10 +50,10 @@ struct IMonoInteropBase : public IMonoSystemListener
 	{
 		const char *nameSpace = this->GetInteropNameSpace();
 		const char *className = this->GetInteropClassName();
-		
+
 		bool noNameSpace = nameSpace == nullptr || nameSpace[0] == '\0';
-		bool noClass = className == nullptr || nameSpace[0] == '\0';
-		
+		bool noClass     = className == nullptr || nameSpace[0] == '\0';
+
 		if (noNameSpace && noClass)
 		{
 			CryLogAlways("Commencing initialization of interops for multiple types in multiple name-spaces.");
@@ -99,9 +99,9 @@ struct IMonoInteropBase : public IMonoSystemListener
 	virtual void OnCompilationComplete(bool) override
 	{}
 	//! Unnecessary for most interops.
-	virtual List<int> *GetSubscribedStages() override
+	virtual List<int> GetSubscribedStages() override
 	{
-		return nullptr;
+		return List<int>(0);
 	}
 	//! Unnecessary for most interops.
 	virtual void OnInitializationStage(int) override
@@ -128,17 +128,16 @@ struct IMonoInteropBase : public IMonoSystemListener
 //! The earliest time for registration of internal calls is during invocation
 //! of InitializeInterops, which is why it is abstract.
 //!
-//! @typeparam callRegistrationOnly Indicates whether this interop object will unregister
-//!                                 and destroy itself after adding internal calls to Mono.
-//! @typeparam useMonoEnv Indicates whether this interop object will override SetInterface
-//!                       to not save IMonoInterface implementation to the internal field.
+//! @tparam callRegistrationOnly Indicates whether this interop object will unregister and destroy itself after
+//!                              adding internal calls to Mono.
+//! @tparam useMonoEnv           Indicates whether this interop object will override SetInterface to not save
+//!                              IMonoInterface implementation to the internal field.
 template<bool callRegistrationOnly, bool useMonoEnv = false>
 struct IMonoInterop : public IMonoInteropBase
 {};
 //! Specialization of IMonoInterop<,> template that behaves in a default manner.
 template<> struct IMonoInterop<false, false> : public IMonoInteropBase
-{
-};
+{};
 //! Specialization of IMonoInterop<,> template that unregisters and destroys itself
 //! after registration of internal calls.
 template<> struct IMonoInterop<true, false> : public IMonoInteropBase
@@ -385,7 +384,7 @@ template<> struct IMonoInterop < false, true > : public IMonoInteropBase
 //!
 //! @param argTypes Names of types of arguments that are accepted by the constructor.
 //! @param method   Method that will be invoked via internal call.
-#define REGISTER_CTOR_N(argTypes, method) this->RegisterInteropMethod(".ctor("##argTypes##")", method)
+#define REGISTER_CTOR_N(argTypes, method) this->RegisterInteropMethod(".ctor(" ## argTypes ## ")", method)
 //! Registers an interop constructor.
 //!
 //! Use this macro when you want to register an internal call for a constructor that is defined in a different
@@ -445,7 +444,7 @@ template<> struct IMonoInterop < false, true > : public IMonoInteropBase
 //! @param method     Method that will be invoked via internal call.
 #define REGISTER_CTOR_NCN(name_space, class_name, argTypes, method) \
 	(this->monoInterface ? this->monoInterface : MonoEnv)->Functions->AddInternalCall(name_space, class_name, \
-																					  ".ctor("##argTypes##")", \
+																					  ".ctor(" ## argTypes ## ")", \
 																					  method);
 
 //! Specialization of IMonoInterop<,> template that relies on using MonoEnv variable

@@ -6,11 +6,11 @@ void AudioSystemInterop::InitializeInterops()
 {
 	REGISTER_METHOD(CreateNativeImplementationObject);
 	REGISTER_METHOD(GetPreloadRequestId);
-	REGISTER_METHOD(GetAudioTriggerID);
-	REGISTER_METHOD(GetAudioRtpcID);
-	REGISTER_METHOD(GetAudioSwitchID);
-	REGISTER_METHOD(GetAudioSwitchStateID);
-	REGISTER_METHOD(GetAudioEnvironmentID);
+	REGISTER_METHOD(GetAudioTriggerId);
+	REGISTER_METHOD(GetAudioRtpcId);
+	REGISTER_METHOD(GetAudioSwitchId);
+	REGISTER_METHOD(GetAudioSwitchStateId);
+	REGISTER_METHOD(GetAudioEnvironmentId);
 	REGISTER_METHOD(GetInfo);
 	REGISTER_METHOD(GetConfigPath);
 	REGISTER_METHOD(GetFreeAudioProxy);
@@ -30,7 +30,7 @@ void AudioSystemInterop::InitializeInterops()
 	REGISTER_METHOD(RequestResetEnvironments);
 }
 
-IAudioSystemImplementation *AudioSystemInterop::CreateNativeImplementationObject(mono::object)
+CryAudio::Impl::IAudioImpl *AudioSystemInterop::CreateNativeImplementationObject(mono::object)
 {
 	// TODO: Implement custom audio system implementations.
 	NotImplementedException().Throw();
@@ -39,32 +39,32 @@ IAudioSystemImplementation *AudioSystemInterop::CreateNativeImplementationObject
 
 bool AudioSystemInterop::GetPreloadRequestId(mono::string name, uint32 &id)
 {
-	return gEnv->pAudioSystem->GetAudioPreloadRequestID(NtText(name), id);
+	return gEnv->pAudioSystem->GetAudioPreloadRequestId(NtText(name), id);
 }
 
-bool AudioSystemInterop::GetAudioTriggerID(mono::string sAudioTriggerName, uint32 &rAudioTriggerID)
+bool AudioSystemInterop::GetAudioTriggerId(mono::string sAudioTriggerName, uint32 &rAudioTriggerId)
 {
-	return gEnv->pAudioSystem->GetAudioTriggerID(NtText(sAudioTriggerName), rAudioTriggerID);
+	return gEnv->pAudioSystem->GetAudioTriggerId(NtText(sAudioTriggerName), rAudioTriggerId);
 }
 
-bool AudioSystemInterop::GetAudioRtpcID(mono::string audioRtpcName, uint32 &audioRtpcId)
+bool AudioSystemInterop::GetAudioRtpcId(mono::string audioRtpcName, uint32 &audioRtpcId)
 {
-	return gEnv->pAudioSystem->GetAudioRtpcID(NtText(audioRtpcName), audioRtpcId);
+	return gEnv->pAudioSystem->GetAudioRtpcId(NtText(audioRtpcName), audioRtpcId);
 }
 
-bool AudioSystemInterop::GetAudioSwitchID(mono::string audioSwitchName, uint32 &audioSwitchId)
+bool AudioSystemInterop::GetAudioSwitchId(mono::string audioSwitchName, uint32 &audioSwitchId)
 {
-	return gEnv->pAudioSystem->GetAudioSwitchID(NtText(audioSwitchName), audioSwitchId);
+	return gEnv->pAudioSystem->GetAudioSwitchId(NtText(audioSwitchName), audioSwitchId);
 }
 
-bool AudioSystemInterop::GetAudioSwitchStateID(uint32 switchID, mono::string audioTriggerName, uint32 &audioStateId)
+bool AudioSystemInterop::GetAudioSwitchStateId(uint32 switchId, mono::string audioTriggerName, uint32 &audioStateId)
 {
-	return gEnv->pAudioSystem->GetAudioSwitchStateID(switchID, NtText(audioTriggerName), audioStateId);
+	return gEnv->pAudioSystem->GetAudioSwitchStateId(switchId, NtText(audioTriggerName), audioStateId);
 }
 
-bool AudioSystemInterop::GetAudioEnvironmentID(mono::string sAudioEnvironmentName, uint32 &rAudioEnvironmentID)
+bool AudioSystemInterop::GetAudioEnvironmentId(mono::string sAudioEnvironmentName, uint32 &rAudioEnvironmentId)
 {
-	return gEnv->pAudioSystem->GetAudioEnvironmentID(NtText(sAudioEnvironmentName), rAudioEnvironmentID);
+	return gEnv->pAudioSystem->GetAudioEnvironmentId(NtText(sAudioEnvironmentName), rAudioEnvironmentId);
 }
 
 void AudioSystemInterop::GetInfo(SAudioSystemInfo &rAudioSystemInfo)
@@ -82,19 +82,19 @@ IAudioProxy *AudioSystemInterop::GetFreeAudioProxy()
 	return gEnv->pAudioSystem->GetFreeAudioProxy();
 }
 
-mono::string AudioSystemInterop::GetAudioControlNameInternal(EAudioControlType eAudioEntityType, uint32 nAudioEntityID)
+mono::string AudioSystemInterop::GetAudioControlNameInternal(EAudioControlType eAudioEntityType, uint32 nAudioEntityId)
 {
-	return ToMonoString(gEnv->pAudioSystem->GetAudioControlName(eAudioEntityType, nAudioEntityID));
+	return ToMonoString(gEnv->pAudioSystem->GetAudioControlName(eAudioEntityType, nAudioEntityId));
 }
 
-void AudioSystemInterop::RequestSetImpl(IAudioSystemImplementation *implHandle)
+void AudioSystemInterop::RequestSetImpl(CryAudio::Impl::IAudioImpl *implHandle)
 {
 	// TODO: Implement custom audio system implementations.
 	NotImplementedException().Throw();
 
 	SAudioRequest request;
 
-	SAudioManagerRequestData<eAMRT_SET_AUDIO_IMPL> data(implHandle);
+	SAudioManagerRequestData<eAudioManagerRequestType_SetAudioImpl> data(implHandle);
 
 	request.pData = &data;
 
@@ -105,7 +105,7 @@ void AudioSystemInterop::RequestReserveAudioId(uint32 *const id, mono::string na
 {
 	SAudioRequest request;
 
-	SAudioManagerRequestData<eAMRT_RESERVE_AUDIO_OBJECT_ID> data(id, NtText(name));
+	SAudioManagerRequestData<eAudioManagerRequestType_ReserveAudioObjectId> data(id, NtText(name));
 
 	request.pData = &data;
 
@@ -116,7 +116,7 @@ void AudioSystemInterop::RequestPreloadAudioRequest(uint32 id)
 {
 	SAudioRequest request;
 
-	SAudioManagerRequestData<eAMRT_PRELOAD_SINGLE_REQUEST> data(id);
+	SAudioManagerRequestData<eAudioManagerRequestType_PreloadSingleRequest> data(id, true);
 
 	request.pData = &data;
 
@@ -127,7 +127,7 @@ void AudioSystemInterop::RequestUnloadAudioRequest(uint32 id)
 {
 	SAudioRequest request;
 
-	SAudioManagerRequestData<eAMRT_UNLOAD_SINGLE_REQUEST> data(id);
+	SAudioManagerRequestData<eAudioManagerRequestType_UnloadSingleRequest> data(id);
 
 	request.pData = &data;
 
@@ -138,7 +138,7 @@ void AudioSystemInterop::RequestSetRtpcValue(uint32 id, float value)
 {
 	SAudioRequest request;
 
-	SAudioObjectRequestData<eAORT_SET_RTPC_VALUE> data(id, value);
+	SAudioObjectRequestData<eAudioObjectRequestType_SetRtpcValue> data(id, value);
 
 	request.pData = &data;
 
@@ -149,7 +149,7 @@ void AudioSystemInterop::RequestSetSwitchState(uint32 switchId, uint32 stateId)
 {
 	SAudioRequest request;
 
-	SAudioObjectRequestData<eAORT_SET_SWITCH_STATE> data(switchId, stateId);
+	SAudioObjectRequestData<eAudioObjectRequestType_SetSwitchState> data(switchId, stateId);
 
 	request.pData = &data;
 
@@ -160,7 +160,7 @@ void AudioSystemInterop::RequestExecuteTrigger(uint32 id, float timeout)
 {
 	SAudioRequest request;
 
-	SAudioObjectRequestData<eAORT_EXECUTE_TRIGGER> data(id, timeout);
+	SAudioObjectRequestData<eAudioObjectRequestType_ExecuteTrigger> data(id, timeout);
 
 	request.pData = &data;
 
@@ -171,7 +171,7 @@ void AudioSystemInterop::RequestStopTrigger(uint32 id)
 {
 	SAudioRequest request;
 
-	SAudioObjectRequestData<eAORT_STOP_TRIGGER> data(id);
+	SAudioObjectRequestData<eAudioObjectRequestType_StopTrigger> data(id);
 
 	request.pData = &data;
 
@@ -182,18 +182,18 @@ void AudioSystemInterop::RequestStopAllTriggers()
 {
 	SAudioRequest request;
 
-	SAudioObjectRequestData<eAORT_STOP_ALL_TRIGGERS> data;
+	SAudioObjectRequestData<eAudioObjectRequestType_StopAllTriggers> data;
 
 	request.pData = &data;
 
 	gEnv->pAudioSystem->PushRequest(request);
 }
 
-void AudioSystemInterop::RequestSetPosition(const Matrix34 &tm)
+void AudioSystemInterop::RequestSetPosition(const CAudioObjectTransformation &tm)
 {
 	SAudioRequest request;
 
-	SAudioObjectRequestData<eAORT_SET_POSITION> data(tm);
+	SAudioObjectRequestData<EAudioObjectRequestType::eAudioObjectRequestType_SetTransformation> data(tm);
 
 	request.pData = &data;
 
@@ -204,7 +204,7 @@ void AudioSystemInterop::RequestSetVolume(float volume)
 {
 	SAudioRequest request;
 
-	SAudioObjectRequestData<eAORT_SET_VOLUME> data(volume);
+	SAudioObjectRequestData<eAudioObjectRequestType_SetVolume> data(volume);
 
 	request.pData = &data;
 
@@ -215,7 +215,7 @@ void AudioSystemInterop::RequestSetEnvironmentAmount(uint32 id, float amount)
 {
 	SAudioRequest request;
 
-	SAudioObjectRequestData<eAORT_SET_ENVIRONMENT_AMOUNT> data(id, amount);
+	SAudioObjectRequestData<eAudioObjectRequestType_SetEnvironmentAmount> data(id, amount);
 
 	request.pData = &data;
 
@@ -226,7 +226,7 @@ void AudioSystemInterop::RequestResetEnvironments()
 {
 	SAudioRequest request;
 
-	SAudioObjectRequestData<eAORT_RESET_ENVIRONMENTS> data;
+	SAudioObjectRequestData<eAudioObjectRequestType_ResetEnvironments> data;
 
 	request.pData = &data;
 

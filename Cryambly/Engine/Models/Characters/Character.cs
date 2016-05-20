@@ -391,7 +391,7 @@ namespace CryCil.Engine.Models.Characters
 		/// handled by something else (e.g. when this character is bound to the entity slot).
 		/// </summary>
 		/// <param name="parameters">
-		/// Reference to the object that contains information that is relevant for animation prosess.
+		/// Reference to the object that contains information that is relevant for animation process.
 		/// </param>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
 		public void UpdateAnimationProcessing(ref AnimationProcessParameters parameters)
@@ -404,62 +404,18 @@ namespace CryCil.Engine.Models.Characters
 		/// Gets the random point on this character's model surface.
 		/// </summary>
 		/// <param name="aspect">Aspect of chracter's geometry to find the point on.</param>
+		/// <param name="random">An object that is used for random generation.</param>
 		/// <returns>
 		/// An object that contains coordinates of the point and a normal to the surface at that point.
 		/// </returns>
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
-		public PositionNormal GetRandomPosition(GeometryFormat aspect)
+		public PositionNormal GetRandomPosition(GeometryFormat aspect, LcgRandom random)
 		{
 			this.AssertInstance();
 
 			PositionNormal positionNormal;
-			GetRandomPos(this.handle, out positionNormal, aspect);
+			GetRandomPos(this.handle, out positionNormal, ref random.State, aspect);
 			return positionNormal;
-		}
-		/// <summary>
-		/// Enables/disables decals on this character.
-		/// </summary>
-		/// <param name="enable">Indicates whether decals must be enabled or disabled.</param>
-		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
-		public void SwitchDecals(bool enable)
-		{
-			this.AssertInstance();
-
-			EnableDecalsInternal(this.handle, enable);
-		}
-		/// <summary>
-		/// Enables decals on this character.
-		/// </summary>
-		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
-		public void EnableDecals()
-		{
-			this.AssertInstance();
-
-			EnableDecalsInternal(this.handle, true);
-		}
-		/// <summary>
-		/// Disables decals on this character.
-		/// </summary>
-		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
-		public void DisableDecals()
-		{
-			this.AssertInstance();
-
-			EnableDecalsInternal(this.handle, false);
-		}
-		/// <summary>
-		/// Puts a decal on this character.
-		/// </summary>
-		/// <param name="decal">
-		/// Reference to the object that contains definition of the decal. All coordinates are in
-		/// character's local space.
-		/// </param>
-		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
-		public void CreateDecal(ref DecalInfo decal)
-		{
-			this.AssertInstance();
-
-			CreateDecalInternal(this.handle, ref decal);
 		}
 		/// <summary>
 		/// Enables/disables facial animations on this character.
@@ -524,18 +480,6 @@ namespace CryCil.Engine.Models.Characters
 			this.AssertInstance();
 
 			EnableProceduralFacialAnimationInternal(this.handle, false);
-		}
-		/// <summary>
-		/// Starts lip-syncing with the sound.
-		/// </summary>
-		/// <param name="soundId">Identifier of the sound to sync the lips with.</param>
-		/// <param name="stop">   Indicates whether lip syncing should stop rather then start.</param>
-		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
-		public void SyncLips(uint soundId, bool stop = false)
-		{
-			this.AssertInstance();
-
-			LipSyncWithSound(this.handle, soundId, stop);
 		}
 		/// <summary>
 		/// Spawns an effect on the bone of the skeleton.
@@ -628,6 +572,15 @@ namespace CryCil.Engine.Models.Characters
 
 			Serialize(this.handle, sync);
 		}
+
+		/// <summary>
+		/// Converts this object to its native base class.
+		/// </summary>
+		/// <param name="character">Object to convert.</param>
+		public static implicit operator MeshObject(Character character)
+		{
+			return character.IsValid ? GetBase(character.handle) : new MeshObject(new IntPtr());
+		}
 		#endregion
 		#region Utilities
 		/// <exception cref="NullReferenceException">This instance is not valid.</exception>
@@ -666,7 +619,7 @@ namespace CryCil.Engine.Models.Characters
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern float GetRadiusSqr(IntPtr handle);
 		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern void GetRandomPos(IntPtr handle, out PositionNormal ran, GeometryFormat eForm);
+		private static extern void GetRandomPos(IntPtr handle, out PositionNormal ran, ref ulong seed, GeometryFormat eForm);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void SetFlags(IntPtr handle, CharacterRenderFlags nFlags);
 		[MethodImpl(MethodImplOptions.InternalCall)]
@@ -675,10 +628,6 @@ namespace CryCil.Engine.Models.Characters
 		private static extern AnimationFileFormatIds GetObjectType(IntPtr handle);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern string GetFilePath(IntPtr handle);
-		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern void EnableDecalsInternal(IntPtr handle, bool enable);
-		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern void CreateDecalInternal(IntPtr handle, ref DecalInfo DecalLCS);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern bool GetHasVertexAnimation(IntPtr handle);
 		[MethodImpl(MethodImplOptions.InternalCall)]
@@ -693,8 +642,6 @@ namespace CryCil.Engine.Models.Characters
 		private static extern void EnableFacialAnimationInternal(IntPtr handle, bool bEnable);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void EnableProceduralFacialAnimationInternal(IntPtr handle, bool bEnable);
-		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern void LipSyncWithSound(IntPtr handle, uint nSoundId, bool bStop);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void SetPlaybackScale(IntPtr handle, float fSpeed);
 		[MethodImpl(MethodImplOptions.InternalCall)]
@@ -725,6 +672,9 @@ namespace CryCil.Engine.Models.Characters
 
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern void Serialize(IntPtr handle, CrySync ser);
+
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		private static extern MeshObject GetBase(IntPtr handle);
 		#endregion
 	}
 }

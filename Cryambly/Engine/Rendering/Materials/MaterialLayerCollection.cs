@@ -14,7 +14,7 @@ namespace CryCil.Engine.Rendering
 	public struct MaterialLayerCollection : IList<MaterialLayer>
 	{
 		#region Fields
-		[UsedImplicitly] private IntPtr handle;
+		private readonly IntPtr handle;
 		#endregion
 		#region Properties
 		/// <summary>

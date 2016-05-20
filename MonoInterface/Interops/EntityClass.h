@@ -75,7 +75,7 @@ public:
 		: definedProperties(properties)
 	{
 	}
-	SortedList<EntityId, List<QueuedProperty>> *GetQueuedProperties() { return &this->queuedProperties; }
+	SortedList<EntityId, List<QueuedProperty>> &GetQueuedProperties() { return this->queuedProperties; }
 	virtual ~MonoEntityPropertyHandler() {}
 	//! Doesn't do anything. Not sure what this method is supposed to do.
 	virtual void RefreshProperties() override {}

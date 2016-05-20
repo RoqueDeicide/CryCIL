@@ -4,23 +4,17 @@
 #include "SortedList.h"
 
 //! Represents a signature of most member functions in IMonoSystemListener struct.
-typedef void(IMonoSystemListener::*SimpleEventHandler)();
+typedef void (IMonoSystemListener::*SimpleEventHandler)();
 
 //! Broadcasts events to listeners.
 struct EventBroadcaster
 {
-private:
-	//! Indicates whether we are going through initialization stages. During such stages listeners cannot be removed.
-	bool stages;
-	//! An index that is used when going through the listeners in order to be able to adjust it when listener
-	//! is removed.
-	int index;
-public:
-	List<IMonoSystemListener *> *listeners;
-	SortedList<int, List<IMonoSystemListener *> *> *stageMap;
+	List<IMonoSystemListener *>                   listeners;
+	SortedList<int, List<IMonoSystemListener *> > stageMap;
+	List<IMonoSystemListener *>                   listenersToRemove;
+
 	//! Initializes event broadcaster.
 	EventBroadcaster();
-	~EventBroadcaster();
 	//! Removes a listener from broadcasting list and stages map.
 	void RemoveListener(IMonoSystemListener *listener);
 	//! Gives listeners a pointer to IMonoInterface.
@@ -53,10 +47,14 @@ public:
 	void PostUpdate();
 	//! Broadcasts Shutdown event.
 	void Shutdown();
-private:
+
+	private:
+
 	// Used for propagating events that don't have any extra data.
 	void SendSimpleEvent(SimpleEventHandler handler);
 	// Used for propagating events Update and PostUpdate. This function is the same as SendSimpleEvent
 	// but it doesn't have as much debug code.
 	void SendUpdateEvent(SimpleEventHandler handler);
+	// Performs actual removal of all listeners that are supposed to be removed.
+	void ClearRemovedListeners();
 };

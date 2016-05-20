@@ -8,6 +8,7 @@
 #include <CryCharAnimationParams.h>
 #include "MonoAnimationEvent.h"
 #include "EntityThunkDecls.h"
+#include "MonoRenderParameters.h"
 
 IMonoClass *GetMonoEntityClass()
 {
@@ -65,7 +66,7 @@ bool MonoEntityExtension::Init(IGameObject* pGameObject)
 	
 	// Set all queued properties.
 	auto propHandler = static_cast<MonoEntityPropertyHandler *>(entityClass->GetPropertyHandler());
-	List<QueuedProperty> &queuedProps = propHandler->GetQueuedProperties()->At(entityId);
+	List<QueuedProperty> &queuedProps = propHandler->GetQueuedProperties()[entityId];
 	for (int i = 0; i < queuedProps.Length; i++)
 	{
 		auto prop = queuedProps[i];
@@ -369,8 +370,9 @@ void MonoEntityExtension::ProcessEvent(SEntityEvent& _event)
 		break;
 	case ENTITY_EVENT_RENDER:
 	{
-		auto infoPointer = reinterpret_cast<void *>(_event.nParam[0]);
-		this->raiseEntityEvent<entity_event(Rendered), void *>(infoPointer);
+		auto infoPointer = reinterpret_cast<SRendParams *>(_event.nParam[0]);
+		MonoRenderParameters parameters(*infoPointer);
+		this->raiseEntityEvent<entity_event(Rendered), MonoRenderParameters &>(parameters);
 	}
 		break;
 	case ENTITY_EVENT_PREPHYSICSUPDATE:
