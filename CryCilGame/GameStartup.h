@@ -3,38 +3,38 @@
 #include <IGameFramework.h>
 
 #ifdef WIN32
-#include <CryWindows.h>
+  #include <CryWindows.h>
 #endif // WIN32
 
 #define GAME_FRAMEWORK_FILENAME CryLibraryDefName("CryAction")
 #define GAME_WINDOW_CLASSNAME "CRYENGINE"
 
-extern HMODULE GetFrameworkDLL(const char* dllLocalDir);
+extern HMODULE GetFrameworkDLL(const char *dllLocalDir);
 
 //! This is a game-specific error observation class.
 class CryCilGameErrorObserver : public IErrorObserver
 {
 public:
 	//! Currently does nothing.
-	virtual void OnAssert(const char* condition, const char* message, const char* fileName, unsigned int fileLineNumber) override;
+	virtual void OnAssert(const char *condition, const char *message, const char *fileName, unsigned int fileLineNumber) override;
 	//! Prints the message along with a call stack (the latter is printed only on Windows system).
 	//!
 	//! @param message Text message that describes the error.
-	virtual void OnFatalError(const char* message) override;
+	virtual void OnFatalError(const char *message) override;
 };
 
 //! An object of this class represents an application shell around the game: it handle the case of the game starting,
 //! running the main loop and shutting down.
 class CryCilGameShell : public IGameStartup, public ISystemEventListener
 {
-private:
 	CryCilGameErrorObserver errorObs;
-	IGameFramework *framework;
-	HMODULE frameworkDll;
-	IGame *game;
-	IGameRef gameReference;
-	HMODULE cryCilDll;
-	bool fullscreenCVarSetup;			//!< Indicates whether we've setup a console variable for a full-screen mode.
+	IGameFramework         *framework;
+	HMODULE                 frameworkDll;
+	IGame                  *game;
+	IGameRef                gameReference;
+	HMODULE                 cryCilDll;
+	bool                    fullscreenCVarSetup; //!< Indicates whether we've setup a console variable for a full-screen mode.
+
 public:
 	CryCilGameShell();
 	~CryCilGameShell();
@@ -76,14 +76,14 @@ public:
 	//! @param autoStartLevelName Name of the level to start, used when the game has been restarted (e.g. to apply new game
 	//!                           settings).
 	virtual int Run(const char *autoStartLevelName) override;
-	
+
 	//! Processes the system event.
 	virtual void OnSystemEvent(ESystemEvent _event, UINT_PTR wparam, UINT_PTR lparam) override;
 private:
 	// Initializes the game framework system.
 	//
 	// @returns True, if initialization was successful, otherwise false.
-	bool InitializeGameFramework(SSystemInitParams& params);
+	bool InitializeGameFramework(SSystemInitParams &params);
 	// Raises ESYSTEM_EVENT_TOGGLE_FULLSCREEN event.
-	static void FullScreenCVarChanged(ICVar* pVar);
+	static void FullScreenCVarChanged(ICVar *pVar);
 };
