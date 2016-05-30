@@ -3,7 +3,7 @@
 
 #include "stdafx.h"
 
-#include <CryLibrary.h>
+#include <CryCore/Platform/CryLibrary.h>
 
 #include "GameStartup.h"
 #include "EditorGame.h"

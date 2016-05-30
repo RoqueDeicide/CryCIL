@@ -4,17 +4,18 @@
 #define PI 3.14159265358979323f
 #endif
 
-#include <CryThread.h>
-#include <Cry_Math.h>
-#include <ISystem.h>
-#include <I3DEngine.h>
-#include <IInput.h>
-#include <IConsole.h>
-#include <ITimer.h>
-#include <ILog.h>
+#include <CryThreading/CryThread.h>
+#include <CryMath/Cry_Math.h>
+#include <CrySystem/ISystem.h>
+#include <Cry3DEngine/I3DEngine.h>
+#include <CryInput/IInput.h>
+#include <CrySystem/IConsole.h>
+#include <CrySystem/ITimer.h>
+#include <CrySystem/ILog.h>
 #include <IGameplayRecorder.h>
-#include <ISerialize.h>
-#include <IGameFramework.h>
+#include <CryNetwork/ISerialize.h>
+#include <CryGame/IGameFramework.h>
+#include <CryPhysics/physinterface.h>
 
 #include "List.hpp"
 #include "SortedList.h"

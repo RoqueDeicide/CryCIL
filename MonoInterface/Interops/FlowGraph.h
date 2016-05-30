@@ -1,7 +1,7 @@
 #pragma once
 
 #include "IMonoInterface.h"
-#include "IFlowSystem.h"
+#include "CryFlowGraph/IFlowSystem.h"
 
 struct FlowGraphInterop : public IMonoInterop<false, true>
 {

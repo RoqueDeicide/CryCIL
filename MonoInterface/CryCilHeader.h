@@ -3,10 +3,12 @@
 // Only include this header into one cpp file, or face linker complaining about symbols
 // being defined in too many places.
 
-#include <CryLibrary.h>
+#include <CryCore/Platform/CryLibrary.h>
 #include "IMonoInterface.h"
+
 // Define the external variable that was declared in IMonoInterface.h
 IMonoInterface *MonoEnv = nullptr;
+
 //! Represents an event listener that initializes MonoEnv, when needed.
 struct EarlyInitializer : IMonoSystemListener
 {

@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 
 #include "Face.h"
-#include <IFacialAnimation.h>
+#include <CryAnimation/IFacialAnimation.h>
 
 void FaceInterop::InitializeInterops()
 {

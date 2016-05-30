@@ -1,7 +1,7 @@
 #pragma once
 
 #include "IMonoInterface.h"
-#include <ITimeOfDay.h>
+#include <Cry3DEngine/ITimeOfDay.h>
 
 struct MonoTodVarInfo;
 struct MonoCryXmlNode;

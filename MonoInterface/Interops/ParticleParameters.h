@@ -1,7 +1,7 @@
 #pragma once
 
 #include "IMonoInterface.h"
-#include "ParticleParams.h"
+#include "CryParticleSystem/ParticleParams.h"
 
 //! Represents a Mono object that is a wrapper for particle parameters struct.
 struct ParticleParametersObject;

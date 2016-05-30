@@ -13,8 +13,8 @@ void CryInputActionInterop::InitializeInterops()
 
 bool CryInputActionInterop::AddInputInternal(IActionMapAction *handle, EKeyId input, ActionInputSpecification spec)
 {
-	CActionMapAction *action = static_cast<CActionMapAction *>(handle);
-	SActionInput actionInput = spec.CreateActionInput(input);
+	CActionMapAction *action      = static_cast<CActionMapAction *>(handle);
+	SActionInput      actionInput = spec.CreateActionInput(input);
 
 	return action->m_pParentActionMap->AddActionInput(handle->GetActionId(), actionInput);
 }
@@ -31,5 +31,5 @@ bool CryInputActionInterop::RebindInputInternal(IActionMapAction *handle, EKeyId
 	CActionMapAction *action = static_cast<CActionMapAction *>(handle);
 
 	return action->m_pParentActionMap->ReBindActionInput(action->GetActionId(), GetInputName(oldInput),
-														   GetInputName(newInput));
+														 GetInputName(newInput));
 }

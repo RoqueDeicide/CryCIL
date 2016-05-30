@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 
 #include "ParametricSampler.h"
-#include <CryCharAnimationParams.h>
+#include <CryAnimation/CryCharAnimationParams.h>
 
 void ParametricSamplerInterop::InitializeInterops()
 {

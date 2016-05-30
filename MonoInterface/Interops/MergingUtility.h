@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include <IFacialAnimation.h>
+#include <CryAnimation/IFacialAnimation.h>
 
 // Defines some utility functionality for merging various objects in facial animation system.
 

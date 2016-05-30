@@ -1,7 +1,7 @@
 #include "stdafx.h"
 
 #include "EditorGame.h"
-#include <IEntitySystem.h>
+#include <CryEntitySystem/IEntitySystem.h>
 #include <IGameRulesSystem.h>
 #include <ILevelSystem.h>
 

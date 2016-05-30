@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 
 #include "ActionMapHandler.h"
-#include <CryCrc32.h>
+#include <CryCore/CryCrc32.h>
 #include <ActionMap.h>
 
 void ActionMapHandlerInterop::InitializeInterops()

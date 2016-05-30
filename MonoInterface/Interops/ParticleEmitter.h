@@ -1,7 +1,7 @@
 #pragma once
 
 #include "IMonoInterface.h"
-#include <IParticles.h>
+#include <CryParticleSystem/IParticles.h>
 
 struct MonoParticleSpawnParameters;
 

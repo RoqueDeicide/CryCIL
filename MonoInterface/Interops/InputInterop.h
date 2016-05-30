@@ -2,7 +2,7 @@
 
 #include "IMonoInterface.h"
 
-#include <IInput.h>
+#include <CryInput/IInput.h>
 
 RAW_THUNK typedef void(*OnCharacterInputThunk)(uint32, bool *);
 RAW_THUNK typedef void(*OnKeyChangedThunk)(uint32, int, bool, bool *);

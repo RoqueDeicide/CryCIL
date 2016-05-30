@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "IMonoInterface.h"
-#include <IFacialAnimation.h>
+#include <CryAnimation/IFacialAnimation.h>
 
 struct FacialEffectorControllerInterop : IMonoInterop<true, true>
 {

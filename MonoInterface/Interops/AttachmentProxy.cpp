@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 
 #include "AttachmentProxy.h"
-#include <IAttachment.h>
+#include <CryAnimation/IAttachment.h>
 
 void AttachmentProxyInterop::InitializeInterops()
 {

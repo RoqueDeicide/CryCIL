@@ -7,7 +7,7 @@
 
 #define _SILENCE_STDEXT_HASH_DEPRECATION_WARNINGS
 
-#include <CryModuleDefs.h>
+#include <CryCore/Project/CryModuleDefs.h>
 
 #define _FORCEDLL
 
@@ -16,7 +16,7 @@
 #endif
 
 // Insert your headers here
-#include <platform.h>
+#include <CryCore/Platform/platform.h>
 #include <algorithm>
 #include <vector>
 #include <memory>
@@ -25,26 +25,27 @@
 #include <functional>
 #include <limits>
 
-#include <smartptr.h>
+#include <CryCore/smartptr.h>
 
-#include <CryThread.h>
-#include <Cry_Math.h>
-#include <ISystem.h>
+#include <CryThreading/CryThread.h>
+#include <CryMath/Cry_Math.h>
+#include <CrySystem/ISystem.h>
 
 #pragma warning(push)
 #pragma warning(disable : 4316)
 
-#include <I3DEngine.h>
+#include <Cry3DEngine/I3DEngine.h>
 
 #pragma warning(pop)
 
-#include <IInput.h>
-#include <IConsole.h>
-#include <ITimer.h>
-#include <ILog.h>
+#include <CryInput/IInput.h>
+#include <CrySystem/IConsole.h>
+#include <CrySystem/ITimer.h>
+#include <CrySystem/ILog.h>
 #include <IGameplayRecorder.h>
-#include <ISerialize.h>
-#include <IGameFramework.h>
+#include <CryNetwork/ISerialize.h>
+#include <CryGame/IGameFramework.h>
+#include <CryPhysics/physinterface.h>
 
 #define USE_CRYCIL_API
 
@@ -60,8 +61,8 @@
 
 #include "targetver.h"
 
-#include <CryWindows.h>
-#include <CryLibrary.h>
+#include <CryCore/Platform/CryWindows.h>
+#include <CryCore/Platform/CryLibrary.h>
 #undef RemoveDirectory
 
 //! Gets the pointer to the data represented by MonoObject instance.

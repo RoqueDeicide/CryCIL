@@ -2,7 +2,7 @@
 
 #include "CheckingBasics.h"
 
-#include <IIndexedMesh.h>
+#include <Cry3DEngine/IIndexedMesh.h>
 
 TYPE_MIRROR enum MeshStreams
 {

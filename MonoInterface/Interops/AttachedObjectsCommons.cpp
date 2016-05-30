@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 
 #include "AttachedObjectsCommons.h"
-#include <IAttachment.h>
+#include <CryAnimation/IAttachment.h>
 
 void AttachedObjectsCommonsInterop::InitializeInterops()
 {

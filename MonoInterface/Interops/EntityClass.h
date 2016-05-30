@@ -2,7 +2,7 @@
 
 #include "IMonoInterface.h"
 
-#include <IEntityClass.h>
+#include <CryEntitySystem/IEntityClass.h>
 #include <IGameObjectSystem.h>
 
 //! Represents implementation of IEntityEventHandler type that doesn't do anything.

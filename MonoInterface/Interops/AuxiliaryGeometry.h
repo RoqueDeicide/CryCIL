@@ -1,7 +1,7 @@
 #pragma once
 
 #include "IMonoInterface.h"
-#include "IRenderAuxGeom.h"
+#include "CryRenderer/IRenderAuxGeom.h"
 
 struct AuxiliaryGeometryInterop : public IMonoInterop<true, true>
 {

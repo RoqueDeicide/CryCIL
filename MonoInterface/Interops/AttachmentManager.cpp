@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 
 #include "AttachmentManager.h"
-#include <IAttachment.h>
+#include <CryAnimation/IAttachment.h>
 
 void AttachmentManagerInterop::InitializeInterops()
 {

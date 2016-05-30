@@ -1,7 +1,8 @@
 ﻿#pragma once
 
 #include "IMonoInterface.h"
-#include <IAttachment.h>
+#include <CryAnimation/ICryAnimation.h>
+#include <CryAnimation/IAttachment.h>
 
 enum AttachmentTypes;
 

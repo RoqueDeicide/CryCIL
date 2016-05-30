@@ -2,6 +2,7 @@
 
 #include "IMonoInterface.h"
 #include "PhysicsParameterStructs.h"
+#include <CryPhysics/primitives.h>
 
 struct ForeignData;
 struct WaterManagerParameters;
@@ -16,7 +17,8 @@ struct PhysicalWorldInterop : public IMonoInterop<true, true>
 	virtual void InitializeInterops() override;
 	virtual void Shutdown() override;
 
-	static ExplosionResult SimulateExplosion(const ExplosionParameters &parameters, mono::Array entitiesToSkip, int types);
+	static ExplosionResult SimulateExplosion(const ExplosionParameters &parameters, mono::Array entitiesToSkip,
+											 int types);
 	static int             AddExplosionShape(IGeometry *shape, float size, int index, float probability = 1.0f);
 	static void            RemoveExplosionShape(int index);
 	static void            RemoveAllExplosionShapes();

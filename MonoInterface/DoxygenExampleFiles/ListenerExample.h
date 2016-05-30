@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "IMonoInterface.h"
 
-#include <CryLibrary.h>
+#include <CryCore/Platform/CryLibrary.h>
 
 struct SimpleListener : public IMonoSystemListener
 {

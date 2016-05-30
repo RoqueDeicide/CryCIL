@@ -1,6 +1,7 @@
 #include "stdafx.h"
 
 #include "CheckingBasics.h"
+#include <CryCore/stridedptr.h>
 
 TYPE_MIRROR struct StridedPointerMirror
 {

@@ -5,14 +5,14 @@
 
 #ifdef USE_CRYCIL_API
 
-#include "IMonoInterface.h"
+  #include "IMonoInterface.h"
 
 #endif // USE_CRYCIL_API
 
 #ifdef CRYCIL_MODULE
 
-#include <mono/metadata/object.h>
-#include <mono/metadata/appdomain.h>
+  #include <mono/metadata/object.h>
+  #include <mono/metadata/appdomain.h>
 
 inline void *AllocateText(size_t count)
 {
@@ -26,15 +26,15 @@ inline void FreeText(void *ptr)
 #endif // CRYCIL_MODULE
 
 #ifdef CRYCIL_MODULE
-#include <ISystem.h>
+  #include <CrySystem/ISystem.h>
 
 #else
-#include <iostream>
-#include <string>
-#include <sstream>
-#include <vector>
-#include <stdexcept>
-#include <algorithm>
+  #include <iostream>
+  #include <string>
+  #include <sstream>
+  #include <vector>
+  #include <stdexcept>
+  #include <algorithm>
 
 inline void *AllocateText(size_t count)
 {
@@ -78,16 +78,16 @@ struct TextTemplate
 protected:
 	typedef NullTerminatedArrayHeader<symbol> TextHeader;
 	typedef MemoryTracker<TextTemplate> TextMemoryTracker;
-#pragma region Fields
+	#pragma region Fields
 	symbol *str;
-#pragma endregion
-#pragma region Properties
+	#pragma endregion
+	#pragma region Properties
 	//! Gets the object that describes this text.
-	__declspec(property(get = GetHeader)) TextHeader *Header;
+	__declspec(property(get = GetHeader)) TextHeader * Header;
 	TextHeader *GetHeader() const
 	{
-		TextTemplate *_this = const_cast<TextTemplate *>(this);
-		TextHeader *header = reinterpret_cast<TextHeader *>(_this->str) - 1;
+		TextTemplate *_this  = const_cast<TextTemplate *>(this);
+		TextHeader   *header = reinterpret_cast<TextHeader *>(_this->str) - 1;
 		return header;
 	}
 	//! Indicates whether this object shares its text data with others.
@@ -96,6 +96,7 @@ protected:
 	{
 		return this->Header->ReferenceCount > 1;
 	}
+
 public:
 	//! Gets the number of characters in this text.
 	__declspec(property(get = GetLength)) size_t Length;
@@ -115,10 +116,10 @@ public:
 	{
 		return this->Length == 0;
 	}
-#pragma endregion
+	#pragma endregion
 
 public:
-#pragma region Construction
+	#pragma region Construction
 	//! Creates an empty text object.
 	TextTemplate()
 	{
@@ -183,7 +184,7 @@ public:
 		this->InitEmpty();
 
 		MonoError error;
-		symbol *ntText = mono_string_native(managedString, &error);
+		symbol   *ntText = mono_string_native(managedString, &error);
 
 		if (mono_error_ok(&error))
 		{
@@ -205,9 +206,9 @@ public:
 	//! @param managedString Instance of type System.String.
 	TextTemplate(mono::string managedString);
 #endif // CRYCIL_MODULE
-	//! Creates a new string for a list of parts.
-	//!
-	//! @param parts An initializer list that contains parts to build the new string out of.
+	   //! Creates a new string for a list of parts.
+	   //!
+	   //! @param parts An initializer list that contains parts to build the new string out of.
 	TextTemplate(std::initializer_list<const symbol *> parts)
 	{
 		int totalLength = 0;
@@ -228,9 +229,9 @@ public:
 			this->Append(*current);
 		}
 	}
-#pragma endregion
+	#pragma endregion
 private:
-#pragma region Construction Utilities
+	#pragma region Construction Utilities
 	void MakeUnique()
 	{
 		if (this->Header->referenceCount <= 0)
@@ -271,23 +272,23 @@ private:
 
 			TextMemoryTracker::AddMemory(byteCount);
 			header->ReferenceCount = 1;
-			header->Length = capacity;
-			header->Capacity = capacity;
-			this->str = header->Elements;
-			this->str[capacity] = '\0';
+			header->Length         = capacity;
+			header->Capacity       = capacity;
+			this->str              = header->Elements;
+			this->str[capacity]    = '\0';
 		}
 	}
-#pragma endregion
+	#pragma endregion
 public:
-#pragma region Destruction
+	#pragma region Destruction
 	//! Releases this text object.
 	~TextTemplate()
 	{
 		ReleaseData(this->Header);
 	}
-#pragma endregion
+	#pragma endregion
 private:
-#pragma region Destruction Utilities
+	#pragma region Destruction Utilities
 	//! Makes this object into an empty one.
 	void Release()
 	{
@@ -301,20 +302,20 @@ private:
 	//! Releases this object's data.
 	static void ReleaseData(TextHeader *header)
 	{
-		if (header->ReferenceCount >= 0)					// Check if empty.
+		if (header->ReferenceCount >= 0)                     // Check if empty.
 		{
-			if (!header->UnregisterReference())			// Check, if has any live references.
+			if (!header->UnregisterReference())              // Check, if has any live references.
 			{
 				// Release.
-				TextMemoryTracker::UnregisterArray(*header);	// For stats.
+				TextMemoryTracker::UnregisterArray(*header); // For stats.
 
 				FreeText(header);
 			}
 		}
 	}
-#pragma endregion
+	#pragma endregion
 public:
-#pragma region Interface
+	#pragma region Interface
 	void Clear()
 	{
 		if (this->Empty)
@@ -340,8 +341,8 @@ public:
 			return nullptr;
 		}
 
-		size_t charCount = this->Length;
-		symbol *dup = new char[charCount + 1];
+		size_t  charCount = this->Length;
+		symbol *dup       = new char[charCount + 1];
 		CopyInternal(dup, this->str, charCount);
 		dup[charCount] = '\0';
 		return dup;
@@ -351,7 +352,7 @@ public:
 	{
 		return _compare(this->str, other.str);
 	}
-#pragma region Assignment
+	#pragma region Assignment
 	//! Assigns a deep copy of a sub-string to this object.
 	//!
 	//! @param other  Reference to the object that contains a sub-string that will be assigned to this object.
@@ -415,8 +416,8 @@ public:
 			this->Release();
 			this->AllocateMemory(totalLength);
 		}
-		
-		this->Header->Length = totalLength;
+
+		this->Header->Length   = totalLength;
 		this->str[totalLength] = '\0';
 		size_t length = 0;
 		for (auto current = parts.begin(); current < parts.end(); current++)
@@ -428,9 +429,9 @@ public:
 
 		return *this;
 	}
-#pragma endregion
+	#pragma endregion
 private:
-#pragma region Assignment Utilities
+	#pragma region Assignment Utilities
 	void AssignInternal(const symbol *chars, size_t count)
 	{
 		// Allocate more data, if this string is shared, or doesn't have enough allocated memory.
@@ -443,11 +444,11 @@ private:
 		CopyInternal(this->str, chars, count);
 
 		this->Header->Length = count;
-		this->str[count] = '\0';
+		this->str[count]     = '\0';
 	}
-#pragma endregion
+	#pragma endregion
 public:
-#pragma region Size
+	#pragma region Size
 	//! Resizes this string and pads it with a filling character, if necessary.
 	void Resize(size_t newCount, symbol filler = 0)
 	{
@@ -460,7 +461,7 @@ public:
 		else if (newCount < length)
 		{
 			this->Header->Length = newCount;
-			this->str[newCount] = '\0';
+			this->str[newCount]  = '\0';
 		}
 	}
 	//! Expands the memory block to fit more text, if given new capacity is greater then current one, otherwise
@@ -474,7 +475,7 @@ public:
 
 			this->AllocateMemory(newCapacity);
 			CopyInternal(this->str, oldHeader->Elements, oldHeader->length);
-			this->Header->Length = oldHeader->length;
+			this->Header->Length         = oldHeader->length;
 			this->str[oldHeader->length] = '\0';
 			ReleaseData(oldHeader);
 		}
@@ -487,8 +488,8 @@ public:
 			ReleaseData(oldHeader);
 		}
 	}
-#pragma endregion
-#pragma region Appending
+	#pragma endregion
+	#pragma region Appending
 	//! Appends a number of specified characters to the end of this string.
 	TextTemplate &Append(size_t count, symbol character)
 	{
@@ -509,10 +510,10 @@ public:
 		{
 			auto oldLength = this->Length;
 			SetInternal(this->str + oldLength, character, count);
-			this->Header->Length = oldLength + count;
+			this->Header->Length    = oldLength + count;
 			this->str[this->Length] = '\0';
 		}
-		
+
 		return *this;
 	}
 	//! Appends a null-terminated string to the end of this string.
@@ -525,10 +526,10 @@ public:
 
 		return *this;
 	}
-#pragma endregion
-#pragma endregion
+	#pragma endregion
+	#pragma endregion
 public:
-#pragma region Operators
+	#pragma region Operators
 	//! Assigns another string to this one.
 	TextTemplate &operator=(const TextTemplate &other)
 	{
@@ -600,9 +601,9 @@ public:
 	{
 		return this->str;
 	}
-#pragma endregion
+	#pragma endregion
 private:
-#pragma region Utilities
+	#pragma region Utilities
 	static void CopyInternal(symbol *destination, const symbol *source, size_t count)
 	{
 		if (destination != source)
@@ -612,7 +613,7 @@ private:
 	}
 	static void SetInternal(symbol *destination, symbol filler, size_t count)
 	{
-			memset(destination, filler, count * sizeof(symbol));
+		memset(destination, filler, count * sizeof(symbol));
 	}
 	void ConcatenateInPlace(const char *chars, size_t count)
 	{
@@ -630,7 +631,7 @@ private:
 		else
 		{
 			CopyInternal(this->str + this->Length, chars, count);
-			this->Header->Length += count;
+			this->Header->Length   += count;
 			this->str[this->Length] = '\0';
 		}
 	}
@@ -652,14 +653,14 @@ private:
 			}
 
 			this->AllocateMemory(sumLength);
-			CopyInternal(this->str, chars1, count1);
+			CopyInternal(this->str,          chars1, count1);
 			CopyInternal(this->str + count1, chars2, count2);
-			this->Header->Length = count1 + count2;
+			this->Header->Length       = count1 + count2;
 			this->str[count1 + count2] = 0;
 		}
 	}
-#pragma endregion
-#pragma region Specialization Utilities
+	#pragma endregion
+	#pragma region Specialization Utilities
 	//! Counts number of characters in the string.
 	static size_t _strlen(const symbol *str);
 	//! Compares 2 strings.
@@ -670,7 +671,7 @@ private:
 	static symbol *mono_string_native(mono_string str, void *_error);
 	//! Checks for the presence of the substring.
 	static bool _contains_substring(const symbol *str0, const symbol *str1, bool ignoreCase);
-#pragma endregion
+	#pragma endregion
 };
 
 template<typename symbol>
@@ -722,7 +723,7 @@ inline bool TextTemplate<symbol>::_contains_substring(const symbol *str0, const 
 	}
 
 	int nSuperstringLength = int(strlen(str0));
-	int nSubstringLength = int(strlen(str1));
+	int nSubstringLength   = int(strlen(str1));
 
 	for (int nSubstringPos = 0; nSubstringPos <= nSuperstringLength - nSubstringLength; ++nSubstringPos)
 	{
@@ -779,7 +780,7 @@ inline bool TextTemplate<wchar_t>::_contains_substring(const wchar_t *str0, cons
 	}
 
 	int superstringLength = int(wcslen(str0));
-	int substringLength = int(wcslen(str1));
+	int substringLength   = int(wcslen(str1));
 
 	for (int substringPos = 0; substringPos <= superstringLength - substringLength; ++substringPos)
 	{
@@ -794,7 +795,7 @@ typedef TextTemplate<wchar_t> Text16;
 
 //! Allows Text to be used in SortedList as key type.
 template<typename SymbolType>
-struct DefaultComparison<TextTemplate<SymbolType>, TextTemplate<SymbolType>>
+struct DefaultComparison<TextTemplate<SymbolType>, TextTemplate<SymbolType> >
 {
 	int operator()(const TextTemplate<SymbolType> &value1, const TextTemplate<SymbolType> &value2) const
 	{

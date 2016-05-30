@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 
 #include "AttachmentSimulationParameters.h"
-#include <IAttachment.h>
+#include <CryAnimation/IAttachment.h>
 #include "DynArrayToMonoArray.h"
 
 void AttachmentSimulationParametersInterop::InitializeInterops()

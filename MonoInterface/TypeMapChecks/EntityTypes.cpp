@@ -78,7 +78,7 @@ inline void CheckEntityAspects()
 	CHECK_ENUM(eEA_Aspect31);
 }
 
-#include <IEntityClass.h>
+#include <CryEntitySystem/IEntityClass.h>
 
 TYPE_MIRROR enum EntityClassFlags
 {

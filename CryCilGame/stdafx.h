@@ -5,11 +5,11 @@
 
 #pragma once
 
-#include <CryModuleDefs.h>
+#include <CryCore/Project/CryModuleDefs.h>
 #define eCryModule eCryM_Game
 #define GAME_API DLL_EXPORT
 
-#include <platform.h>
+#include <CryCore/Platform/platform.h>
 #include <algorithm>
 #include <vector>
 #include <memory>
@@ -18,24 +18,25 @@
 #include <limits>
 #include <math.h>
 
-#include <smartptr.h>
+#include <CryCore/smartptr.h>
 
-#include <CryThread.h>
-#include <Cry_Math.h>
-#include <ISystem.h>
-#include <I3DEngine.h>
-#include <IInput.h>
-#include <IConsole.h>
-#include <ITimer.h>
-#include <ILog.h>
+#include <CryThreading/CryThread.h>
+#include <CryMath/Cry_Math.h>
+#include <CrySystem/ISystem.h>
+#include <Cry3DEngine/I3DEngine.h>
+#include <CryInput/IInput.h>
+#include <CrySystem/IConsole.h>
+#include <CrySystem/ITimer.h>
+#include <CrySystem/ILog.h>
 #include <IGameplayRecorder.h>
-#include <ISerialize.h>
-#include <IGameFramework.h>
+#include <CryNetwork/ISerialize.h>
+#include <CryGame/IGameFramework.h>
+#include <CryPhysics/physinterface.h>
 
 #include "targetver.h"
 
-#include <CryWindows.h>
-#include <CryLibrary.h>
+#include <CryCore/Platform/CryWindows.h>
+#include <CryCore/Platform/CryLibrary.h>
 #undef RemoveDirectory
 
 #include "IMonoInterface.h"

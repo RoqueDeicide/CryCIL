@@ -1,6 +1,7 @@
 #pragma once
 
 #include "IMonoInterface.h"
+#include <CryCore/stridedptr.h>
 
 struct PhysicsAction
 {

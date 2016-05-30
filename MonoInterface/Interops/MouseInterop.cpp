@@ -144,7 +144,7 @@ void MouseInterop::Hide(bool hide)
 
 void MouseInterop::UseSystemCursor(bool useSystemCursor)
 {
-#ifdef WIN32
+#if CRY_PLATFORM_WINDOWS
 	gEnv->pHardwareMouse->UseSystemCursor(useSystemCursor);
 #endif
 }
