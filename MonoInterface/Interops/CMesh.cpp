@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 
 #include "CMesh.h"
-#include <IIndexedMesh.h>
+#include <Cry3DEngine/IIndexedMesh.h>
 
 void CMeshInterop::InitializeInterops()
 {

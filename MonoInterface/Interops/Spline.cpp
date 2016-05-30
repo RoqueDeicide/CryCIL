@@ -1,7 +1,7 @@
 #include "stdafx.h"
 
 #include "Spline.h"
-#include "ISplines.h"
+#include <CryMath/ISplines.h>
 
 void SplineInterop::InitializeInterops()
 {

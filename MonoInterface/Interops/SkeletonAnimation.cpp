@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 
 #include "SkeletonAnimation.h"
-#include <ICryAnimation.h>
+#include <CryAnimation/ICryAnimation.h>
 
 void SkeletonAnimationInterop::InitializeInterops()
 {

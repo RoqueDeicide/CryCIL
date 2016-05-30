@@ -1,8 +1,8 @@
 ﻿#include "stdafx.h"
 
 #include "RenderMesh.h"
-#include <IRenderMesh.h>
-#include <IIndexedMesh.h>
+#include <CryRenderer/IRenderMesh.h>
+#include <Cry3DEngine/IIndexedMesh.h>
 
 void RenderMeshInterop::InitializeInterops()
 {

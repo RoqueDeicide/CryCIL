@@ -1,6 +1,7 @@
 #pragma once
 
 #include "IMonoInterface.h"
+#include <Cry3DEngine/CGF/CryHeaders.h>
 
 struct SurfaceTypeTable
 {

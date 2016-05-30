@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 
 #include "MonoAnimationEvent.h"
-#include <CryCharAnimationParams.h>
+#include <CryAnimation/CryCharAnimationParams.h>
 
 MonoAnimationEvent::MonoAnimationEvent(const AnimEventInstance &eventInstance)
 {

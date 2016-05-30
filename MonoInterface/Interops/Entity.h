@@ -1,8 +1,8 @@
 #pragma once
 
 #include "IMonoInterface.h"
-#include "IEntitySystem.h"
-#include "IEntityPoolManager.h"
+#include "CryEntitySystem/IEntitySystem.h"
+#include "CryEntitySystem/IEntityPoolManager.h"
 
 struct EntityPhysicalizationParameters;
 struct LightProperties;

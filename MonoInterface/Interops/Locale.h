@@ -1,7 +1,7 @@
 #pragma once
 
 #include "IMonoInterface.h"
-#include "ILocalizationManager.h"
+#include "CrySystem/ILocalizationManager.h"
 
 struct LocaleInterop : public IMonoInterop<true, true>
 {

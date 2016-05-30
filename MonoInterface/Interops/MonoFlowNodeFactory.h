@@ -1,7 +1,7 @@
 #pragma once
 
 #include "IMonoInterface.h"
-#include "IFlowSystem.h"
+#include "CryFlowGraph/IFlowSystem.h"
 
 //! This factory is separated from interop class unlike in CryMono in order to be able to get the identifier of the node
 //! type without having to register a hook every time CryCIL-based flow node is created.

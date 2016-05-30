@@ -1,8 +1,8 @@
 ﻿#include "stdafx.h"
 
 #include "PhonemeLibrary.h"
-#include <ICryAnimation.h>
-#include <IFacialAnimation.h>
+#include <CryAnimation/ICryAnimation.h>
+#include <CryAnimation/IFacialAnimation.h>
 
 void PhonemeLibraryInterop::InitializeInterops()
 {

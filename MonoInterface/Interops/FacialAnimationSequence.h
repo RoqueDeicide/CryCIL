@@ -1,8 +1,8 @@
 ﻿#pragma once
 
 #include "IMonoInterface.h"
-#include <Range.h>
-#include <IFacialAnimation.h>
+#include <CryMath/Range.h>
+#include <CryAnimation/IFacialAnimation.h>
 
 struct FacialAnimationSequenceInterop : IMonoInterop<true, true>
 {

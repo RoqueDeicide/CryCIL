@@ -7,16 +7,16 @@
 
 #ifdef USE_CRYCIL_API
 
-#include "IMonoInterface.h"
+  #include "IMonoInterface.h"
 
-#endif // USE_CRYCIL_API
+#endif   // USE_CRYCIL_API
 
 #ifdef MONO_API
 
-#include <mono/metadata/object.h>
-#include <mono/metadata/appdomain.h>
+  #include <mono/metadata/object.h>
+  #include <mono/metadata/appdomain.h>
 
-#endif // MONO_API
+#endif   // MONO_API
 
 #ifdef MONO_API
 
@@ -30,42 +30,42 @@ typedef mono::string mono_string;
 
 typedef void *mono_string;
 
-#endif // MONO_API
+#endif   // MONO_API
 
 
 #ifdef CRYCIL_MODULE
-#include <ISystem.h>
+  #include <CrySystem/ISystem.h>
 
-#define FatalError(message) CryFatalError(message)
+  #define FatalError(message) CryFatalError(message)
 
 #else
-#include <iostream>
-#include <string>
-#include <sstream>
-#include <vector>
-#include <stdexcept>
-#define FatalError(message) throw std::logic_error(message)
+  #include <iostream>
+  #include <string>
+  #include <sstream>
+  #include <vector>
+  #include <stdexcept>
+  #define FatalError(message) throw std::logic_error(message)
 
-#endif // CRYCIL_MODULE
+#endif   // CRYCIL_MODULE
 
 #ifdef ENABLE_NTTEXT_DEBUG_REPORT
 
-#ifdef CRYCIL_MODULE
-#include <ISystem.h>
+  #ifdef CRYCIL_MODULE
+	#include <ISystem.h>
 
-#define DebugReport(message) CryLogAlways(message);
+	#define DebugReport(message) CryLogAlways(message);
+
+  #else
+
+	#define DebugReport(message) std::cout << message << std::endl;
+
+  #endif // CRYCIL_MODULE
 
 #else
 
-#define DebugReport(message) std::cout << message << std::endl;
+  #define DebugReport(message)
 
-#endif // CRYCIL_MODULE
-
-#else
-
-#define DebugReport(message)
-
-#endif // ENABLE_NTTEXT_DEBUG_REPORT
+#endif   // ENABLE_NTTEXT_DEBUG_REPORT
 
 #include "List.hpp"
 
@@ -176,13 +176,13 @@ public:
 			totalLength += _strlen(*current);
 		}
 
-		SymbolType *chars = new SymbolType[totalLength];
-		int currentLength = 0;
+		SymbolType *chars         = new SymbolType[totalLength];
+		int         currentLength = 0;
 
 		for (auto current = parts.begin(); current < parts.end(); current++)
 		{
 			const SymbolType *currentPart = *current;
-			int partLength = _strlen(currentPart);
+			int               partLength  = _strlen(currentPart);
 			for (int i = 0; i < partLength; i++)
 			{
 				chars[currentLength++] = currentPart[i];
@@ -190,7 +190,7 @@ public:
 		}
 
 		chars[currentLength] = '\0';
-		this->chars = const_cast<const SymbolType *>(chars);
+		this->chars          = const_cast<const SymbolType *>(chars);
 	}
 	virtual ~NtTextTemplate()
 	{
@@ -214,7 +214,7 @@ public:
 		if (this->chars != another.chars)
 		{
 			const SymbolType *ptr = this->chars;
-			this->chars = another.chars;
+			this->chars   = another.chars;
 			another.chars = ptr;
 		}
 		return *this;
@@ -225,7 +225,7 @@ public:
 		DebugReport("Move assignment operator has been invoked.");
 
 		this->~NtTextTemplate();
-		this->chars = another.chars;
+		this->chars   = another.chars;
 		another.chars = nullptr;
 		return *this;
 	}
@@ -251,7 +251,7 @@ public:
 		{
 			return nullptr;
 		}
-		int count = _strlen(this->chars);
+		int         count  = _strlen(this->chars);
 		SymbolType *ntText = new SymbolType[count + 1];
 		ntText[count] = '\0';
 		for (int i = 0; i < count; i++)
@@ -282,8 +282,8 @@ public:
 		SymbolType *ntText = new SymbolType[count + 1];
 		ntText[count] = '\0';
 		for (int i = index, j = 0, counter = 0;
-			counter < count;					// Counter tells us where to stop.
-			i++, j++, counter++)					//
+			 counter < count;                   // Counter tells us where to stop.
+			 i++, j++, counter++)               //
 		{
 			ntText[j] = this->chars[i];
 		}
@@ -314,8 +314,8 @@ public:
 			FatalError("Attempt to copy too many characters from the string.");
 		}
 		for (int i = sourceIndex, j = destinationIndex, counter = 0;
-			counter < charCount;						// Counter tells us where to stop.
-			i++, j++, counter++)						//
+			 counter < charCount;                       // Counter tells us where to stop.
+			 i++, j++, counter++)                       //
 		{
 			destination[j] = this->chars[i];
 		}
@@ -334,8 +334,8 @@ public:
 	//!         must be deleted separately.
 	List<const SymbolType *> *Split(SymbolType symbol, bool removeEmptyParts)
 	{
-		int length = _strlen(this->chars);
-		List<const char *> *parts = new List<const char *>(6);
+		int                 length = _strlen(this->chars);
+		List<const char *> *parts  = new List<const char *>(6);
 
 		int partStartIndex = 0;
 		for (int i = 0; i <= length; i++)
@@ -424,7 +424,7 @@ public:
 		return ptr;
 	}
 	//! Implicit conversion. Returns wrapped pointer.
-	operator const SymbolType*() const
+	operator const SymbolType *() const
 	{
 		return this->chars;
 	}
@@ -467,12 +467,12 @@ inline const SymbolType *NtTextTemplate<SymbolType>::_str_mono(mono_string str)
 	}
 #ifdef MONO_API
 	MonoError error;
-	char *ntText = mono_string_to_utf8_checked(static_cast<MonoString *>(str), &error);
+	char     *ntText = mono_string_to_utf8_checked(static_cast<MonoString *>(str), &error);
 
 	if (mono_error_ok(&error))
 	{
-		int length = _strlen(ntText);
-		char *chars = new char[length + 1];
+		int   length = _strlen(ntText);
+		char *chars  = new char[length + 1];
 		for (int i = 0; i < length; i++)
 		{
 			chars[i] = ntText[i];
@@ -512,7 +512,7 @@ inline bool NtTextTemplate<SymbolType>::_contains_substring(const SymbolType *st
 	}
 
 	int nSuperstringLength = int(strlen(str0));
-	int nSubstringLength = int(strlen(str1));
+	int nSubstringLength   = int(strlen(str1));
 
 	for (int nSubstringPos = 0; nSubstringPos <= nSuperstringLength - nSubstringLength; ++nSubstringPos)
 	{
@@ -539,8 +539,8 @@ inline const wchar_t *NtTextTemplate<wchar_t>::_str_mono(mono_string str)
 {
 #ifdef MONO_API
 	wchar_t *ntText = reinterpret_cast<wchar_t *>(mono_string_to_utf16(str));
-	int length = wcslen(ntText);
-	wchar_t *chars = new wchar_t[length + 1];
+	int      length = wcslen(ntText);
+	wchar_t *chars  = new wchar_t[length + 1];
 	for (int i = 0; i < length; i++)
 	{
 		chars[i] = ntText[i];
@@ -576,7 +576,7 @@ inline bool NtTextTemplate<wchar_t>::_contains_substring(const wchar_t *str0, co
 	}
 
 	int superstringLength = int(wcslen(str0));
-	int substringLength = int(wcslen(str1));
+	int substringLength   = int(wcslen(str1));
 
 	for (int substringPos = 0; substringPos <= superstringLength - substringLength; ++substringPos)
 	{

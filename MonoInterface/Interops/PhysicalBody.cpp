@@ -1,6 +1,7 @@
 #include "stdafx.h"
 
 #include "PhysicalBody.h"
+#include <Cry3DEngine/CGF/CryHeaders.h>
 
 void PhysicalBodyInterop::InitializeInterops()
 {

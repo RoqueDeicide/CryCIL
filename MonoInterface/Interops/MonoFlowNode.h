@@ -2,7 +2,7 @@
 
 #include "IMonoInterface.h"
 
-#include "IFlowSystem.h"
+#include "CryFlowGraph/IFlowSystem.h"
 
 struct MonoFlowData
 {

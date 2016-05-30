@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "IMonoInterface.h"
-#include <IIndexedMesh.h>
+#include <Cry3DEngine/IIndexedMesh.h>
 
 struct IndexedMeshInterop : IMonoInterop<true, true>
 {

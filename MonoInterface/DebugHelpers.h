@@ -1,6 +1,6 @@
 #pragma once
 
-#include <ISystem.h>
+#include <CrySystem/ISystem.h>
 
 #define HIGH_LOG_VERBOSITY
 #define EXTRA_HIGH_LOG_VERBOSITY

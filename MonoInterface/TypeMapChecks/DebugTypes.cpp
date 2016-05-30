@@ -2,7 +2,7 @@
 
 #include "CheckingBasics.h"
 
-#include <IRenderAuxGeom.h>
+#include <CryRenderer/IRenderAuxGeom.h>
 
 TYPE_MIRROR enum AuxGeomPublicRenderflagBitMasks
 {

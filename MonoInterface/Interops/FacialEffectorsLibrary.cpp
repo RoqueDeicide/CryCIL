@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 
 #include "FacialEffectorsLibrary.h"
-#include <IFacialAnimation.h>
+#include <CryAnimation/IFacialAnimation.h>
 #include "MergingUtility.h"
 
 void FacialEffectorsLibraryInterop::InitializeInterops()

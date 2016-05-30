@@ -11,7 +11,6 @@ void AudioSystemInterop::InitializeInterops()
 	REGISTER_METHOD(GetAudioSwitchId);
 	REGISTER_METHOD(GetAudioSwitchStateId);
 	REGISTER_METHOD(GetAudioEnvironmentId);
-	REGISTER_METHOD(GetInfo);
 	REGISTER_METHOD(GetConfigPath);
 	REGISTER_METHOD(GetFreeAudioProxy);
 	REGISTER_METHOD(GetAudioControlNameInternal);
@@ -65,11 +64,6 @@ bool AudioSystemInterop::GetAudioSwitchStateId(uint32 switchId, mono::string aud
 bool AudioSystemInterop::GetAudioEnvironmentId(mono::string sAudioEnvironmentName, uint32 &rAudioEnvironmentId)
 {
 	return gEnv->pAudioSystem->GetAudioEnvironmentId(NtText(sAudioEnvironmentName), rAudioEnvironmentId);
-}
-
-void AudioSystemInterop::GetInfo(SAudioSystemInfo &rAudioSystemInfo)
-{
-	gEnv->pAudioSystem->GetInfo(rAudioSystemInfo);
 }
 
 mono::string AudioSystemInterop::GetConfigPath()

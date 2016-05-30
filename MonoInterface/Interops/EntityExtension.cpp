@@ -1,11 +1,11 @@
 #include "stdafx.h"
 
 #include "EntityExtension.h"
-#include "IComponent.h"
+#include "CryEntitySystem/IComponent.h"
 #include "EntityClass.h"
 #include "MonoEntitySpawnParams.h"
 
-#include <CryCharAnimationParams.h>
+#include <CryAnimation/CryCharAnimationParams.h>
 #include "MonoAnimationEvent.h"
 #include "EntityThunkDecls.h"
 #include "MonoRenderParameters.h"

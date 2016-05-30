@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 
 #include "CharacterAnimation.h"
-#include <CryCharAnimationParams.h>
+#include <CryAnimation/CryCharAnimationParams.h>
 
 void CharacterAnimationInterop::InitializeInterops()
 {

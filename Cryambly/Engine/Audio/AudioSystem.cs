@@ -16,30 +16,6 @@ namespace CryCil.Engine.Audio
 		/// system.
 		/// </summary>
 		public static string ConfigurationPath => GetConfigPath();
-		/// <summary>
-		/// Gets information about the current state of the audio system.
-		/// </summary>
-		public static AudioSystemInfo Information
-		{
-			get
-			{
-				AudioSystemInfo info;
-				GetInfo(out info);
-				return info;
-			}
-		}
-		/// <summary>
-		/// Gets current position of the audio system listener.
-		/// </summary>
-		public static Vector3 ListenerPosition
-		{
-			get
-			{
-				AudioSystemInfo info;
-				GetInfo(out info);
-				return info.ListenerPosition;
-			}
-		}
 		#endregion
 		#region Construction
 		/// <summary>
@@ -225,8 +201,6 @@ namespace CryCil.Engine.Audio
 		private static extern bool GetAudioSwitchStateId(uint switchId, string audioTriggerName, out AudioId audioStateId);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern bool GetAudioEnvironmentId(string sAudioEnvironmentName, out AudioId rAudioEnvironmentId);
-		[MethodImpl(MethodImplOptions.InternalCall)]
-		private static extern void GetInfo(out AudioSystemInfo rAudioSystemInfo);
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		private static extern string GetConfigPath();
 		[MethodImpl(MethodImplOptions.InternalCall)]

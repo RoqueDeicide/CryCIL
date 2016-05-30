@@ -86,7 +86,6 @@
     <Compile Include="Engine\Audio\AudioSystem.Requests.cs" />
     <Compile Include="Engine\Audio\AudioSystemImplementation.cs" />
     <Compile Include="Engine\Audio\AudioSystemImplementationAttribute.cs" />
-    <Compile Include="Engine\Audio\AudioSystemInfo.cs" />
     <Compile Include="Engine\Audio\LipSyncMethod.cs" />
     <Compile Include="Engine\Audio\AudioOcclusionType.cs" />
     <Compile Include="Engine\ConsoleFlags.cs" />

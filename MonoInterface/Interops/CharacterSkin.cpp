@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 
 #include "CharacterSkin.h"
-#include <ICryAnimation.h>
+#include <CryAnimation/ICryAnimation.h>
 
 void CharacterSkinInterop::InitializeInterops()
 {

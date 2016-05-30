@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "IMonoInterface.h"
-#include <ICryAnimation.h>
+#include <CryAnimation/ICryAnimation.h>
 
 struct MonoDecalInfo;
 

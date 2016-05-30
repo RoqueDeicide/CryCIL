@@ -4,7 +4,7 @@
 
 #include "ParticleEffect.h"
 #include "MonoCryXmlNode.h"
-#include <ParticleParams.h>
+#include <CryParticleSystem/ParticleParams.h>
 #include "MonoParticleSpawnParameters.h"
 
 void ParticleEffectInterop::InitializeInterops()

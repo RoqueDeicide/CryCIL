@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include <IParticles.h>
+#include <CryParticleSystem/IParticles.h>
 
 struct MonoParticleSpawnParameters
 {

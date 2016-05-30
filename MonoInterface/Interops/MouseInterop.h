@@ -1,7 +1,7 @@
 #pragma once
 
 #include "IMonoInterface.h"
-#include <IHardwareMouse.h>
+#include <CryInput/IHardwareMouse.h>
 
 struct MouseInterop : public IMonoInterop<false, true>, public IHardwareMouseEventListener
 {

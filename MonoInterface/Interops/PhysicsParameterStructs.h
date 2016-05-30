@@ -1,6 +1,8 @@
 #pragma once
 
 #include "IMonoInterface.h"
+#include <CryPhysics/primitives.h>
+#include <CryCore/stridedptr.h>
 
 struct PhysicsParameters
 {

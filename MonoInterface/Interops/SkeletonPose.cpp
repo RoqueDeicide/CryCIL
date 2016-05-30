@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 
 #include "SkeletonPose.h"
-#include <ICryAnimation.h>
+#include <CryAnimation/ICryAnimation.h>
 
 void SkeletonPoseInterop::InitializeInterops()
 {

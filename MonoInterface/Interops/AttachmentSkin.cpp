@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 
 #include "AttachmentSkin.h"
-#include <IAttachment.h>
+#include <CryAnimation/IAttachment.h>
 
 void AttachmentSkinInterop::InitializeInterops()
 {

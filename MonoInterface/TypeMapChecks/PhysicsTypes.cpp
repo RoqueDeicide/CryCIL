@@ -1,6 +1,7 @@
 ﻿#include "stdafx.h"
 
 #include "CheckingBasics.h"
+#include <CryPhysics/primitives.h>
 
 TYPE_MIRROR struct EventPhysicsCollision
 {
@@ -874,8 +875,6 @@ inline void CheckPhysicsTypeEnumerations()
 
 	CHECK_ENUM(ePE_Status_Count);
 }
-
-#include <primitives.h>
 
 TYPE_MIRROR struct primitive
 {};

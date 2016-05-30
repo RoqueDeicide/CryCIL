@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 
 #include "FacialAnimationSoundEntry.h"
-#include <IFacialAnimation.h>
+#include <CryAnimation/IFacialAnimation.h>
 
 void FacialAnimationSoundEntryInterop::InitializeInterops()
 {

@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 
 #include "CheckingBasics.h"
-#include <IParticles.h>
+#include <CryParticleSystem/IParticles.h>
 
 struct SGeomRef
 {

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 
 #include "ParticleEmitter.h"
-#include <IEntitySystem.h>
+#include <CryEntitySystem/IEntitySystem.h>
 #include "MonoParticleSpawnParameters.h"
 
 typedef void(*onCreateEmitterRawThunk)(IParticleEmitter* pEmitter);
