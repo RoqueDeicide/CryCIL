@@ -1,10 +1,10 @@
 #pragma once
 
-#include <IGameFramework.h>
+#include <CryGame/IGameFramework.h>
 
-#ifdef WIN32
-  #include <CryWindows.h>
-#endif // WIN32
+#if CRY_PLATFORM_WINDOWS
+  #include <CryCore/Platform/CryWindows.h>
+#endif // CRY_PLATFORM_WINDOWS
 
 #define GAME_FRAMEWORK_FILENAME CryLibraryDefName("CryAction")
 #define GAME_WINDOW_CLASSNAME "CRYENGINE"

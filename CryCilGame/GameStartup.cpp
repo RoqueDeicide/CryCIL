@@ -2,9 +2,9 @@
 
 #include "Game.h"
 #include "GameStartup.h"
-#include <platform_impl.inl>
-#include <CryLibrary.h>
-#include <IHardwareMouse.h>
+#include <CryCore/Platform/platform_impl.inl>
+#include <CryCore/Platform/CryLibrary.h>
+#include <CryInput/IHardwareMouse.h>
 #include <CryCilHeader.h>
 
 // If we are using static linking than the Dll will be loaded by the OS-specific loader.

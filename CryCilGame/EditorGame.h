@@ -2,7 +2,7 @@
 
 #include "IMonoInterface.h"
 
-#include <IEditorGame.h>
+#include <CrySandbox/IEditorGame.h>
 
 class CryCilEditorGame : public IEditorGame
 {
