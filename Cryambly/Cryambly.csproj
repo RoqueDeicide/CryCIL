@@ -64,6 +64,9 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <LangVersion>6</LangVersion>
   </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Build.Utilities.v4.0" />
     <Reference Include="System" />
@@ -783,7 +786,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>Xcopy "$(SolutionDir)..\Build\Output\*" "$(SolutionDir)..\..\..\*" /d /y /i /s</PostBuildEvent>
+    <PostBuildEvent>$(SolutionDir)CopyBuildOutput.exe $(TargetDir)..\..\ $(SolutionDir)..\Build\ $(SolutionDir)..\..\..\</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
